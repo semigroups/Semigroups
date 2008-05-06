@@ -1,0 +1,50 @@
+\begin{thebibliography}{ABM07}
+
+\bibitem[ABM07]{computing}
+J.~Araujo, P.~v. Bunau, and J.~D. Mitchell.
+\newblock Computing automorphisms of semigroups.
+\newblock 2007.
+\newblock submitted for publication.
+
+\bibitem[AR00]{arthur1}
+Robert~E. Arthur and N.~Ruskuc.
+\newblock Presentations for two extensions of the monoid of order-preserving
+  mappings on a finite chain.
+\newblock {\em Southeast Asian Bull. Math.}, 24(1):1--7, 2000.
+
+\bibitem[GH92]{gomes1}
+Gracinda M.~S. Gomes and John~M. Howie.
+\newblock On the ranks of certain semigroups of order-preserving
+  transformations.
+\newblock {\em Semigroup Forum}, 45(3):272--282, 1992.
+
+\bibitem[GM05]{largest}
+R.~Gray and J.~D. Mitchell.
+\newblock Largest subsemigroups of the full transformation monoid.
+\newblock {\em Discrete Math.}, 2005.
+\newblock to appear.
+
+\bibitem[How95]{howie}
+John~M. Howie.
+\newblock {\em Fundamentals of semigroup theory}, volume~12 of {\em London
+  Mathematical Society Monographs. New Series}.
+\newblock The Clarendon Press Oxford University Press, New York, 1995.
+\newblock Oxford Science Publications.
+
+\bibitem[LM90]{lallement}
+G.~Lallement and R.~McFadden.
+\newblock On the determination of {G}reen's relations in finite transformation
+  semigroups.
+\newblock {\em J. Symbolic Comput.}, 10(5):481--498, 1990.
+
+\bibitem[LPRRa]{pfeiffer2}
+S.~A. Linton, G.~Pfeiffer, E.~F. Robertson, and N.~Ruskuc.
+\newblock Computing transformation semigroups.
+\newblock {\em J. Symbolic Comput.}, 33:145--162.
+
+\bibitem[LPRRb]{pfeiffer1}
+S.~A. Linton, G.~Pfeiffer, E.~F. Robertson, and N.~Ruskuc.
+\newblock Groups and actions in transformation semigroups.
+\newblock {\em Math. Z.}, 228:435--450.
+
+\end{thebibliography}

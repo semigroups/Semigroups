@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (MONOID) - Chapter 2: Transformations</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+</head>
+<body>
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap1.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap3.html">Next Chapter</a>&nbsp;  </div>
+
+<p><a id="X860026B880BCB2A5" name="X860026B880BCB2A5"></a></p>
+<div class="ChapSects"><a href="chap2.html#X860026B880BCB2A5">2 <span class="Heading">Transformations</span></a>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap2.html#X847EBE5C789D85B6">2.1 <span class="Heading">More Functions for Transformations</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7856A73E80DAF56F">2.1-1 IsRegularTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79E9FFC97AFCEE61">2.1-2 IsTransversal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85D1071484CE004C">2.1-3 <span class="Heading">Idempotent</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X781E031C8298ADDC">2.1-4 PermRepTrans</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8475448F87E8CB8A">2.1-5 RandomTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X863216CB7AF88BED">2.1-6 IndexPeriodOfTransformation</a></span>
+</div>
+</div>
+
+<h3>2 <span class="Heading">Transformations</span></h3>
+
+<p><a id="X847EBE5C789D85B6" name="X847EBE5C789D85B6"></a></p>
+
+<h4>2.1 <span class="Heading">More Functions for Transformations</span></h4>
+
+<p>The functions described in this section extend the functionality of <strong class="pkg">GAP</strong> relating to transformations.</p>
+
+<p><a id="X7856A73E80DAF56F" name="X7856A73E80DAF56F"></a></p>
+
+<h5>2.1-1 IsRegularTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsRegularTransformation</code>( <var class="Arg">S, f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>if <code class="code">f</code> is a regular element of the transformation semigroup <code class="code">S</code>, then <code class="code">true</code> is returned. Otherwise <code class="code">false</code> is returned.</p>
+
+<p>A transformation <code class="code">f</code> is regular inside a transformation semigroup <code class="code">S</code> if it lies inside a regular D-class. This is equivalent to the orbit of the image of <code class="code">f</code> containing a transversal of the kernel of <code class="code">f</code>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; g1:=Transformation([2,2,4,4,5,6]);;
+gap&gt; g2:=Transformation([5,3,4,4,6,6]);;
+gap&gt; m1:=Monoid(g1,g2);;
+gap&gt; IsRegularTransformation(m1, g1);
+true
+gap&gt; img:=ImageSetOfTransformation(g1);
+[ 2, 4, 5, 6 ]
+gap&gt; ker:=KernelOfTransformation(g1);
+[ [ 1, 2 ], [ 3, 4 ], [ 5 ], [ 6 ] ]
+gap&gt; ForAny(MonoidOrbit(m1, img), x-&gt; IsTransversal(ker, x));
+true
+gap&gt; IsRegularTransformation(m1, g2);
+false
+gap&gt; IsRegularTransformation(FullTransformationSemigroup(6), g2);
+true
+	</pre></td></tr></table>
+
+<p><a id="X79E9FFC97AFCEE61" name="X79E9FFC97AFCEE61"></a></p>
+
+<h5>2.1-2 IsTransversal</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsTransversal</code>( <var class="Arg">ker, img</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>If <code class="code">ker</code> is a partition of the set <code class="code">{1,2,...,n}</code> and <code class="code">img</code> a subset of the same set, then <code class="code">IsTransversal</code> returns <code class="code">true</code> if <code class="code">img</code> is a transversal of <code class="code">ker</code>. That is, if every class in <code class="code">ker</code> contains exactly one element in <code class="code">img</code>. Otherwise <code class="code">false</code> is returned.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; g1:=Transformation([2,2,4,4,5,6]);;
+  gap&gt; g2:=Transformation([5,3,4,4,6,6]);;
+  gap&gt; ker:=KernelOfTransformation(g2*g1);
+  [ [ 1 ], [ 2, 3, 4 ], [ 5, 6 ] ] 
+  gap&gt; im:=ImageListOfTransformation(g2);
+  [ 5, 3, 4, 4, 6, 6 ]
+  gap&gt; IsTransversal(ker, im);
+  false
+  gap&gt; IsTransversal([[1,2,3],[4,5],[6,7]], [1,5,6]);
+  true
+  </pre></td></tr></table>
+
+<p><a id="X85D1071484CE004C" name="X85D1071484CE004C"></a></p>
+
+<h5>2.1-3 <span class="Heading">Idempotent</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IdempotentNC</code>( <var class="Arg">ker, img</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; Idempotent</code>( <var class="Arg">ker, img</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p><code class="code">IdempotentNC</code> returns an idempotent with kernel <code class="code">ker</code> and image <code class="code">img</code> without checking <code class="func">IsTransversal</code> (<a href="chap2.html#X79E9FFC97AFCEE61"><b>2.1-2</b></a>) with arguments <code class="code">ker</code> and <code class="code">im</code>.</p>
+
+<p><code class="code">Idempotent</code> returns an idempotent with kernel <code class="code">ker</code> and image <code class="code">img</code> after checking that <code class="func">IsTransversal</code> (<a href="chap2.html#X79E9FFC97AFCEE61"><b>2.1-2</b></a>) with arguments <code class="code">ker</code> and <code class="code">im</code> returns <code class="code">true</code>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; g1:=Transformation([2,2,4,4,5,6]);;
+  gap&gt; g2:=Transformation([5,3,4,4,6,6]);;
+  gap&gt; ker:=KernelOfTransformation(g2*g1);;
+  gap&gt; im:=ImageListOfTransformation(g2);;
+  gap&gt; Idempotent(ker, im);
+  Error,  the image must be a transversal of the kernel
+  [ ... ]
+  gap&gt; Idempotent([[1,2,3],[4,5],[6,7]], [1,5,6]);
+  Transformation( [ 1, 1, 1, 5, 5, 6, 6 ] )
+  gap&gt; IdempotentNC([[1,2,3],[4,5],[6,7]], [1,5,6]);
+  Transformation( [ 1, 1, 1, 5, 5, 6, 6 ] )
+</pre></td></tr></table>
+
+<p><a id="X781E031C8298ADDC" name="X781E031C8298ADDC"></a></p>
+
+<h5>2.1-4 PermRepTrans</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; PermRepTrans</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>converts a transformation <code class="code">f</code> that is a permutation of its image into that permutation.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; f:=Transformation([1,2,9,9,9,8,8,8,4]);
+  Transformation( [ 1, 2, 9, 9, 9, 8, 8, 8, 4 ] )
+  gap&gt; PermRepTrans(f);
+  (4,9)
+  gap&gt; f*last;
+  Transformation( [ 1, 2, 4, 4, 4, 8, 8, 8, 9 ] )
+  gap&gt; PermRepTrans(last);
+  ()
+</pre></td></tr></table>
+
+<p><a id="X8475448F87E8CB8A" name="X8475448F87E8CB8A"></a></p>
+
+<h5>2.1-5 RandomTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RandomTransformation</code>( <var class="Arg">ker, img</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>This is a new method for the existing library function <code class="func">RandomTransformation</code>. A random transformation is returned that has the given image <code class="code">img</code> and kernel <code class="code">ker</code>. Note that <code class="code">ker</code> must have the same number of classes as <code class="code">img</code> has elements.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; f:=RandomTransformation([[1,2,3], [4,5], [6,7,8]], [1,2,3]);;
+gap&gt; KernelOfTransformation(f)=[[1,2,3], [4,5], [6,7,8]];
+true
+gap&gt; ImageSetOfTransformation(f)=[1,2,3];
+true
+</pre></td></tr></table>
+
+<p><a id="X863216CB7AF88BED" name="X863216CB7AF88BED"></a></p>
+
+<h5>2.1-6 IndexPeriodOfTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IndexPeriodOfTransformation</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns the minimum numbers <code class="code">m, r</code> such that <code class="code">f^(m+r)=f^m</code>; known as the <em>index</em> and <em>period</em> of the transformation.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; f:=Transformation( [ 3, 4, 4, 6, 1, 3, 3, 7, 1 ] );;
+  gap&gt; IndexPeriodOfTransformation(f);
+  [ 2, 3 ]
+  gap&gt; f^2=f^5;
+  true
+</pre></td></tr></table>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap1.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap3.html">Next Chapter</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

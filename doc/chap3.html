@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (MONOID) - Chapter 3: Monoid Actions and Orbits </title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+</head>
+<body>
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap2.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap4.html">Next Chapter</a>&nbsp;  </div>
+
+<p><a id="X849149EF79F824D1" name="X849149EF79F824D1"></a></p>
+<div class="ChapSects"><a href="chap3.html#X849149EF79F824D1">3 <span class="Heading">Monoid Actions and Orbits </span></a>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X7DFB63A97E67C0A1">3.1 <span class="Heading">Introduction</span></a>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X833C5DA683E4EA15">3.2 <span class="Heading">Actions</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X785CA2537B553454">3.2-1 OnTuplesOfSetsAntiAction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X849A43DE7AF3C639">3.2-2 OnKernelsAntiAction</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X8545BED37C1BD760">3.3 <span class="Heading">General Orbits</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8647538A7C892DCB">3.3-1 MonoidOrbit</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F6DD5368778DC55">3.3-2 MonoidOrbits</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X84E7C5037BA23DEE">3.3-3 StrongOrbit</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7989C5CE8053CC70">3.3-4 StrongOrbits</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X811F9D387CE86748">3.3-5 GradedOrbit</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87F0AFE17E02E878">3.3-6 ShortOrbit</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87632B32847A5B87">3.3-7 GradedStrongOrbit</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7C957B0B810C99F1">3.3-8 ShortStrongOrbit</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X7EF224A884952A63">3.4 <span class="Heading">Some Specific Orbits</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D8663D5847540E3">3.4-1 ImagesTransformationMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7ABF8509866CC117">3.4-2 GradedImagesTransformationMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X78CD79877DCF9F06">3.4-3 KernelsTransformationMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X789A45107F40E30B">3.4-4 GradedKernelsTransformationMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7E53FA7D85258453">3.4-5 StrongOrbitOfImage</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X80BA8DD07E0E00D5">3.4-6 StrongOrbitsOfImages</a></span>
+</div>
+</div>
+
+<h3>3 <span class="Heading">Monoid Actions and Orbits </span></h3>
+
+<p><a id="X7DFB63A97E67C0A1" name="X7DFB63A97E67C0A1"></a></p>
+
+<h4>3.1 <span class="Heading">Introduction</span></h4>
+
+<p>The functions described in this section relate to how a transformation semigroup acts on its underlying set.</p>
+
+<p>Let <code class="code">S</code> be a transformation semigroup of degree <code class="code">n</code>. Then the <em>orbit</em> of <code class="code">i</code> in <code class="code">{1,...,n}</code> is the set of elements <code class="code">j</code> in <code class="code">{1,...,n}</code> such that there exists <code class="code">f</code> in <code class="code">S</code> where <code class="code">(i)f=j</code>. Note that the essential difference between monoid orbits and group orbits is that monoid orbits do not describe an equivalence relation on <code class="code">S</code>. In particular, the relation described by monoid orbits is not symmetric.</p>
+
+<p>The <em>strong orbit</em> of <code class="code">i</code> in <code class="code">{1,...,n}</code> is the set of elements <code class="code">j</code> in <code class="code">{1,...,n}</code> such that there exists <code class="code">f, g</code> in <code class="code">S</code> where <code class="code">(i)f=j</code> and <code class="code">(j)g=i</code>.</p>
+
+<p>Recall that a <em>grading</em> is a function <code class="code">f</code> from a transformation semigroup <code class="code">S</code> of degree <code class="code">n</code> to the natural numbers such that if <code class="code">s</code> in <code class="code">S</code> and <code class="code">X</code> is a subset of <code class="code">{1,...,n}</code>, then <code class="code">(Xs)f</code> is at most <code class="code">(X)f</code>.</p>
+
+<p><a id="X833C5DA683E4EA15" name="X833C5DA683E4EA15"></a></p>
+
+<h4>3.2 <span class="Heading">Actions</span></h4>
+
+<p>In addition to the actions define in the reference manual <a href="/Users/jdm/gapdev/doc/ref/chap39.html#X81B8F9CD868CD953"><b>Reference: Basic Actions</b></a> the following two actions are available in <strong class="pkg">MONOID</strong>.</p>
+
+<p><a id="X785CA2537B553454" name="X785CA2537B553454"></a></p>
+
+<h5>3.2-1 OnTuplesOfSetsAntiAction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; OnTuplesOfSetsAntiAction</code>( <var class="Arg">tup, f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>returns the preimages of each of the sets in the tuple of sets <code class="code">tup</code> under the transformation <code class="code">f</code>. The tuple of sets <code class="code">tup</code> can have any number of elements.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
+  gap&gt; OnTuplesOfSetsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ] ], f);
+  [ [ 5 ], [ 4, 6 ], [ 3 ] ]
+</pre></td></tr></table>
+
+<p><a id="X849A43DE7AF3C639" name="X849A43DE7AF3C639"></a></p>
+
+<h5>3.2-2 OnKernelsAntiAction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; OnKernelsAntiAction</code>( <var class="Arg">ker, f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>returns the kernel of the product <code class="code">f*g</code> of the transformation <code class="code">f</code> with a transformation <code class="code">g</code> having kernel <code class="code">ker</code>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
+  gap&gt; OnKernelsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6, 7, 8 ] ], f);
+  [ [ 1, 2, 7, 8 ], [ 3 ], [ 4, 6 ], [ 5 ] ]
+</pre></td></tr></table>
+
+<p><a id="X8545BED37C1BD760" name="X8545BED37C1BD760"></a></p>
+
+<h4>3.3 <span class="Heading">General Orbits</span></h4>
+
+<p>The following functions allow the calculation of arbitrary orbits in transformation semigroups. Several more specific orbits that are often useful are given in Section <a href="chap3.html#X7EF224A884952A63"><b>3.4</b></a>.</p>
+
+<p><a id="X8647538A7C892DCB" name="X8647538A7C892DCB"></a></p>
+
+<h5>3.3-1 MonoidOrbit</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; MonoidOrbit</code>( <var class="Arg">S, obj[, act]</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns the orbit of <code class="code">obj</code> under the action <code class="code">act</code> of the transformation semigroup <code class="code">S</code>. Usually, <code class="code">obj</code> would be a point, list of points, or list of lists, and <code class="code">act</code> would be <code class="func">OnPoints</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7FE417DD837987B4"><b>Reference: OnPoints</b></a>), <code class="func">OnSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X85AA04347CD117F9"><b>Reference: OnSets</b></a>), <code class="func">OnTuples</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X832CC5F87EEA4A7E"><b>Reference: OnTuples</b></a>), or another action defined in <a href="/Users/jdm/gapdev/doc/ref/chap39.html#X81B8F9CD868CD953"><b>Reference: Basic Actions</b></a>. The argument <code class="code">act</code> can be any function.</p>
+
+<p>If the optional third argument <code class="code">act</code> is not given, then <code class="func">OnPoints</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7FE417DD837987B4"><b>Reference: OnPoints</b></a>), <code class="func">OnSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X85AA04347CD117F9"><b>Reference: OnSets</b></a>), or <code class="func">OnSetsSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7C10492081D72376"><b>Reference: OnSetsSets</b></a>) is used as the default action depending on what <code class="code">obj</code> is.</p>
+
+<p>Further details can be found in Algorithm A and B of <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
+  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
+  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
+  gap&gt; S:=Monoid(g1,g2,g3);;
+  gap&gt; MonoidOrbit(S, 1);
+  [ 1, 3, 4, 2, 6 ]
+  gap&gt; MonoidOrbit(S, [1,2], OnSets);
+  [ [ 1, 2 ], [ 3 ], [ 4 ], [ 2 ], [ 6 ], [ 1 ] ]
+  gap&gt; MonoidOrbit(S, [1,2], OnTuples);
+  [ [ 1, 2 ], [ 3, 3 ], [ 4, 4 ], [ 2, 2 ], [ 6, 6 ], [ 1, 1 ] ]
+  gap&gt; MonoidOrbit(S, 2, OnPoints);
+  [ 2, 3, 4, 6, 1 ]
+</pre></td></tr></table>
+
+<p><a id="X7F6DD5368778DC55" name="X7F6DD5368778DC55"></a></p>
+
+<h5>3.3-2 MonoidOrbits</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; MonoidOrbits</code>( <var class="Arg">S, list[, act]</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns a list of the orbits of the elements of <code class="code">list</code> under the action <code class="code">act</code> of the transformation semigroup <code class="code">S</code> using the <code class="func">MonoidOrbit</code> (<a href="chap3.html#X8647538A7C892DCB"><b>3.3-1</b></a>) function.</p>
+
+<p>If the optional third argument <code class="code">act</code> is not given, then <code class="func">OnPoints</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7FE417DD837987B4"><b>Reference: OnPoints</b></a>), <code class="func">OnSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X85AA04347CD117F9"><b>Reference: OnSets</b></a>), or <code class="func">OnSetsSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7C10492081D72376"><b>Reference: OnSetsSets</b></a>) is used as the default action depending on what <code class="code">obj</code> is.</p>
+
+<p>Further details can be found in Algorithm A and B of <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
+  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
+  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
+  gap&gt; S:=Monoid(g1,g2,g3);;
+  gap&gt; MonoidOrbits(S, [1,2]);
+  [ [ 1, 3, 4, 2, 6 ], [ 2, 3, 4, 6, 1 ] ]
+  gap&gt; MonoidOrbits(S, [[1,2], [2,3]], OnSets);
+  [ [ [ 1, 2 ], [ 3 ], [ 4 ], [ 2 ], [ 6 ], [ 1 ] ], 
+    [ [ 2, 3 ], [ 4, 6 ], [ 1, 3 ] ] ]
+</pre></td></tr></table>
+
+<p><a id="X84E7C5037BA23DEE" name="X84E7C5037BA23DEE"></a></p>
+
+<h5>3.3-3 StrongOrbit</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; StrongOrbit</code>( <var class="Arg">S, obj[, act]</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns the strong orbit of <code class="code">obj</code> under the action <code class="code">act</code> of the transformation semigroup <code class="code">S</code>. Usually, <code class="code">obj</code> would be a point, list of points, or list of lists, and <code class="code">act</code> would be <code class="func">OnPoints</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7FE417DD837987B4"><b>Reference: OnPoints</b></a>), <code class="func">OnSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X85AA04347CD117F9"><b>Reference: OnSets</b></a>), <code class="func">OnTuples</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X832CC5F87EEA4A7E"><b>Reference: OnTuples</b></a>), or another action defined in <a href="/Users/jdm/gapdev/doc/ref/chap39.html#X81B8F9CD868CD953"><b>Reference: Basic Actions</b></a>. The argument <code class="code">act</code> can be any function.</p>
+
+<p>If the optional third argument <code class="code">act</code> is not given and <code class="code">obj</code> is a point, then <code class="func">OnPoints</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7FE417DD837987B4"><b>Reference: OnPoints</b></a>) is the default action.</p>
+
+<p>Further details can be found in Algorithm A and B of <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
+  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
+  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
+  gap&gt; S:=Monoid(g1,g2,g3);;
+  gap&gt; StrongOrbit(S, 4, OnPoints);
+  [ 1, 3, 2, 4, 6 ]
+  gap&gt; StrongOrbit(S, 4); 
+  [ 1, 3, 2, 4, 6 ]
+  gap&gt; StrongOrbit(S, [2,3], OnSets);
+  [ [ 2, 3 ], [ 4, 6 ], [ 1, 3 ] ] 
+  gap&gt; StrongOrbit(S, [2,3], OnTuples);
+  [ [ 2, 3 ], [ 3, 2 ], [ 4, 6 ], [ 6, 4 ], [ 1, 3 ], [ 3, 1 ] ]
+</pre></td></tr></table>
+
+<p><a id="X7989C5CE8053CC70" name="X7989C5CE8053CC70"></a></p>
+
+<h5>3.3-4 StrongOrbits</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; StrongOrbits</code>( <var class="Arg">S, obj[, act]</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns a list of the strong orbits of the elements of <code class="code">list</code> under the action <code class="code">act</code> of the transformation semigroup <code class="code">S</code> using the <code class="func">StrongOrbit</code> (<a href="chap3.html#X84E7C5037BA23DEE"><b>3.3-3</b></a>) function.</p>
+
+<p>If the optional third argument <code class="code">act</code> is not given, then <code class="func">OnPoints</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7FE417DD837987B4"><b>Reference: OnPoints</b></a>), <code class="func">OnSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X85AA04347CD117F9"><b>Reference: OnSets</b></a>), or <code class="func">OnSetsSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7C10492081D72376"><b>Reference: OnSetsSets</b></a>) is used as the default action depending on what <code class="code">obj</code> is.</p>
+
+<p>Further details can be found in Algorithm A and B of <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
+  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
+  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
+  gap&gt; S:=Monoid(g1,g2,g3);;
+  gap&gt; StrongOrbits(S, [1..6]);
+  [ [ 1, 3, 2, 4, 6 ], [ 5 ] ]
+  gap&gt; StrongOrbits(S, [[1,2],[2,3]], OnSets);
+  [ [ [ 1, 2 ] ], [ [ 2, 3 ], [ 4, 6 ], [ 1, 3 ] ] ]
+  gap&gt; StrongOrbits(S, [[1,2],[2,3]], OnTuples);
+  [ [ [ 1, 2 ] ], [ [ 2, 3 ], [ 3, 2 ], [ 4, 6 ], [ 6, 4 ], 
+    [ 1, 3 ], [ 3, 1 ] ] ]
+</pre></td></tr></table>
+
+<p><a id="X811F9D387CE86748" name="X811F9D387CE86748"></a></p>
+
+<h5>3.3-5 GradedOrbit</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; GradedOrbit</code>( <var class="Arg">S, obj[, act], grad</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns the orbit of <code class="code">obj</code> under the action <code class="code">act</code> of the transformation semigroup <code class="code">S</code> partitioned by the grading <code class="code">grad</code>. That is, two elements lie in the same class if they have the same value under <code class="code">grad</code>.</p>
+
+<p>(Recall that a <em>grading</em> is a function <code class="code">f</code> from a transformation semigroup <code class="code">S</code> of degree <code class="code">n</code> to the natural numbers such that if <code class="code">s</code> in <code class="code">S</code> and <code class="code">X</code> is a subset of <code class="code">{1,...,n}</code>, then <code class="code">(Xs)f</code> is at most <code class="code">(X)f</code>. )</p>
+
+<p>Note that this function will not check if <code class="code">grad</code> actually defines a grading or not.</p>
+
+<p>If the optional third argument <code class="code">act</code> is not given, then <code class="func">OnPoints</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7FE417DD837987B4"><b>Reference: OnPoints</b></a>), <code class="func">OnSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X85AA04347CD117F9"><b>Reference: OnSets</b></a>), or <code class="func">OnSetsSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7C10492081D72376"><b>Reference: OnSetsSets</b></a>) is used as the default action depending on what <code class="code">obj</code> is.</p>
+
+<p>Further details can be found in Algorithm A and B of <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
+  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
+  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
+  gap&gt; S:=Monoid(g1,g2,g3);;
+  gap&gt; GradedOrbit(S, [1,2], OnSets, Size);
+  [ [ [ 3 ], [ 4 ], [ 2 ], [ 6 ], [ 1 ] ], [ [ 1, 2 ] ] ]
+  gap&gt; GradedOrbit(S, [1,2], Size);
+  [ [ [ 3 ], [ 4 ], [ 2 ], [ 6 ], [ 1 ] ], [ [ 1, 2 ] ] ]
+  gap&gt; GradedOrbit(S, [1,3,4], OnTuples, function(x)
+  &gt; if 1 in x then return 2;
+  &gt; else return 1;
+  &gt; fi;
+  &gt; end); 
+  [ [ [ 3, 2, 6 ], [ 2, 3, 4 ], [ 6, 4, 3 ], [ 4, 6, 2 ] ], 
+    [ [ 1, 3, 4 ], [ 4, 6, 1 ], [ 3, 1, 6 ] ] ]
+</pre></td></tr></table>
+
+<p><a id="X87F0AFE17E02E878" name="X87F0AFE17E02E878"></a></p>
+
+<h5>3.3-6 ShortOrbit</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; ShortOrbit</code>( <var class="Arg">S, obj[, act], grad</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns the elements of the orbit of <code class="code">obj</code> under the action <code class="code">act</code> of the transformation semigroup <code class="code">S</code> with the same value as <code class="code">obj</code> under the grading <code class="code">grad</code>.</p>
+
+<p>(Recall that a <em>grading</em> is a function <code class="code">f</code> from a transformation semigroup <code class="code">S</code> of degree <code class="code">n</code> to the natural numbers such that if <code class="code">s</code> in <code class="code">S</code> and <code class="code">X</code> is a subset of <code class="code">{1,...,n}</code>, then <code class="code">(Xs)f</code> is at most <code class="code">(X)f</code>. )</p>
+
+<p>Note that this function will not check if <code class="code">grad</code> actually defines a grading or not.</p>
+
+<p>If the optional third argument <code class="code">act</code> is not given, then <code class="func">OnPoints</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7FE417DD837987B4"><b>Reference: OnPoints</b></a>), <code class="func">OnSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X85AA04347CD117F9"><b>Reference: OnSets</b></a>), or <code class="func">OnSetsSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7C10492081D72376"><b>Reference: OnSetsSets</b></a>) is used as the default action depending on what <code class="code">obj</code> is.</p>
+
+<p>Further details can be found in Algorithm A and B of <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
+  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
+  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
+  gap&gt; S:=Monoid(g1,g2,g3);;
+  gap&gt; ShortOrbit(S, [1,2], Size);
+  [ [ 1, 2 ] ]
+  gap&gt; ShortOrbit(S, [2,4], Size);
+  [ [ 2, 4 ], [ 3, 6 ], [ 1, 4 ] ]
+  gap&gt; ShortOrbit(S, [1,2], OnTuples, Size);
+  [ [ 1, 2 ], [ 3, 3 ], [ 4, 4 ], [ 2, 2 ], [ 6, 6 ], [ 1, 1 ] ]
+</pre></td></tr></table>
+
+<p><a id="X87632B32847A5B87" name="X87632B32847A5B87"></a></p>
+
+<h5>3.3-7 GradedStrongOrbit</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; GradedStrongOrbit</code>( <var class="Arg">S, obj[, act], grad</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns the strong orbit of <code class="code">obj</code> under the action <code class="code">act</code> of the transformation semigroup <code class="code">S</code> partitioned by the grading <code class="code">grad</code>. That is, two elements lie in the same class if they have the same value under <code class="code">grad</code>.</p>
+
+<p>(Recall that a <em>grading</em> is a function <code class="code">f</code> from a transformation semigroup <code class="code">S</code> of degree <code class="code">n</code> to the natural numbers such that if <code class="code">s</code> in <code class="code">S</code> and <code class="code">X</code> is a subset of <code class="code">{1,...,n}</code>, then <code class="code">(Xs)f</code> is at most <code class="code">(X)f</code>. )</p>
+
+<p>Note that this function will not check if <code class="code">grad</code> actually defines a grading or not.</p>
+
+<p>If the optional third argument <code class="code">act</code> is not given, then <code class="func">OnPoints</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7FE417DD837987B4"><b>Reference: OnPoints</b></a>), <code class="func">OnSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X85AA04347CD117F9"><b>Reference: OnSets</b></a>), or <code class="func">OnSetsSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7C10492081D72376"><b>Reference: OnSetsSets</b></a>) is used as the default action depending on what <code class="code">obj</code> is.</p>
+
+<p>Further details can be found in Algorithm A and B of <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
+  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
+  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
+  gap&gt; S:=Monoid(g1,g2,g3);;
+  gap&gt; GradedStrongOrbit(S, [1,3,4], OnTuples, function(x)
+  &gt; if 1 in x then return 2; else return 1; fi; end);
+  [ [ [ 3, 2, 6 ], [ 2, 3, 4 ], [ 6, 4, 3 ], [ 4, 6, 2 ] ], 
+    [ [ 1, 3, 4 ], [ 4, 6, 1 ], [ 3, 1, 6 ] ] ]
+  gap&gt; GradedStrongOrbit(S, [1,3,4], OnTuples, Size);
+  [ [ [ 1, 3, 4 ], [ 3, 2, 6 ], [ 4, 6, 1 ], [ 2, 3, 4 ], [ 6, 4, 3 ], 
+    [ 4, 6, 2 ], [ 3, 1, 6 ] ] ]
+</pre></td></tr></table>
+
+<p><a id="X7C957B0B810C99F1" name="X7C957B0B810C99F1"></a></p>
+
+<h5>3.3-8 ShortStrongOrbit</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; ShortStrongOrbit</code>( <var class="Arg">S, obj[, act], grad</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns the elements of the orbit of <code class="code">obj</code> under the action <code class="code">act</code> of the transformation semigroup <code class="code">S</code> with the same value as <code class="code">obj</code> under the grading <code class="code">grad</code>.</p>
+
+<p>(Recall that a <em>grading</em> is a function <code class="code">f</code> from a transformation semigroup <code class="code">S</code> of degree <code class="code">n</code> to the natural numbers such that if <code class="code">s</code> in <code class="code">S</code> and <code class="code">X</code> is a subset of <code class="code">{1,...,n}</code>, then <code class="code">(Xs)f</code> is at most <code class="code">(X)f</code>. )</p>
+
+<p>Note that this function will not check if <code class="code">grad</code> actually defines a grading or not.</p>
+
+<p>If the optional third argument <code class="code">act</code> is not given, then <code class="func">OnPoints</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7FE417DD837987B4"><b>Reference: OnPoints</b></a>), <code class="func">OnSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X85AA04347CD117F9"><b>Reference: OnSets</b></a>), or <code class="func">OnSetsSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X7C10492081D72376"><b>Reference: OnSetsSets</b></a>) is used as the default action depending on what <code class="code">obj</code> is.</p>
+
+<p>Further details can be found in Algorithm A and B of <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
+  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
+  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
+  gap&gt; S:=Monoid(g1,g2,g3);;
+  gap&gt;ShortStrongOrbit(S, [1,3,4], OnTuples, function(x) 
+  &gt;  if 1 in x then return 2; else return 1; fi; end);
+  [ [ 1, 3, 4 ], [ 4, 6, 1 ], [ 3, 1, 6 ] ]
+</pre></td></tr></table>
+
+<p><a id="X7EF224A884952A63" name="X7EF224A884952A63"></a></p>
+
+<h4>3.4 <span class="Heading">Some Specific Orbits</span></h4>
+
+<p>The following specific orbits are used in the computation of Green's relations and to test if an arbitrary transformation semigroup has a particular property; see Chapter <a href="chap4.html#X80C6C718801855E9"><b>4</b></a> and Chapter <a href="chap5.html#X78274024827F306D"><b>5</b></a>.</p>
+
+<p><a id="X7D8663D5847540E3" name="X7D8663D5847540E3"></a></p>
+
+<h5>3.4-1 ImagesTransformationMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; ImagesTransformationMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the set of all the image sets that elements of <code class="code">S</code> admit.</p>
+
+<p>This is just the union of the orbits of the images of the generators of <code class="code">S</code> under the action <code class="func">OnSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X85AA04347CD117F9"><b>Reference: OnSets</b></a>).</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), 
+  &gt; Transformation( [ 4, 4, 5, 2, 2 ] ) ];;
+  gap&gt; S:=Semigroup(gens);;
+  gap&gt; ImagesTransformationMonoid(S);
+  [ [ 1 ], [ 1, 5 ], [ 2 ], [ 2, 4 ], [ 2, 4, 5 ], [ 4 ], [ 5 ] ]
+  </pre></td></tr></table>
+
+<p><a id="X7ABF8509866CC117" name="X7ABF8509866CC117"></a></p>
+
+<h5>3.4-2 GradedImagesTransformationMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; GradedImagesTransformationMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the set of all the image sets that elements of <code class="code">S</code> admit in a list where the <code class="code">i</code>th entry contains all the images with size <code class="code">i</code> (including the empty list when there are no image sets with size <code class="code">i</code>).</p>
+
+<p>This is just the union of the orbits of the images of the generators of <code class="code">S</code> under the action <code class="func">OnSets</code> (<a href="/Users/jdm/gapdev/doc/ref/chap39.html#X85AA04347CD117F9"><b>Reference: OnSets</b></a>) graded according to size.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), 
+  &gt; Transformation( [ 4, 4, 5, 2, 2 ] ) ];;
+  gap&gt; S:=Semigroup(gens);;
+  gap&gt; GradedImagesTransformationMonoid(S);
+  [ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], 
+    [  ], [ [ 1 .. 5 ] ] ]
+</pre></td></tr></table>
+
+<p><a id="X78CD79877DCF9F06" name="X78CD79877DCF9F06"></a></p>
+
+<h5>3.4-3 KernelsTransformationMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; KernelsTransformationMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the set of all the kernels that elements of <code class="code">S</code> admit.</p>
+
+<p>This is just the union of the orbits of the kernels of the generators of <code class="code">S</code> under the action <code class="func">OnKernelsAntiAction</code> (<a href="chap3.html#X849A43DE7AF3C639"><b>3.2-2</b></a>).</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), 
+  &gt; Transformation( [ 2, 5, 3, 2, 3 ] ) ];;
+  gap&gt; S:=Semigroup(gens);;
+  gap&gt; KernelsTransformationMonoid(S);
+  [ [ [ 1, 2, 3, 4, 5 ] ], [ [ 1, 2, 4 ], [ 3 ], [ 5 ] ], 
+  [ [ 1, 2, 4 ], [ 3, 5 ] ], [ [ 1, 2, 4, 5 ], [ 3 ] ], 
+  [ [ 1, 4 ], [ 2 ], [ 3, 5 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ] ]
+</pre></td></tr></table>
+
+<p><a id="X789A45107F40E30B" name="X789A45107F40E30B"></a></p>
+
+<h5>3.4-4 GradedKernelsTransformationMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; GradedKernelsTransformationMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the set of all the kernels that elements of <code class="code">S</code> admit in a list where the <code class="code">i</code>th entry contains all the kernels with <code class="code">i</code> classes (including the empty list when there are no kernels with <code class="code">i</code> classes).</p>
+
+<p>This is just the union of the orbits of the kernels of the generators of <code class="code">S</code> under the action <code class="func">OnKernelsAntiAction</code> (<a href="chap3.html#X849A43DE7AF3C639"><b>3.2-2</b></a>) graded according to size.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), 
+  &gt; Transformation( [ 2, 5, 3, 2, 3 ] ) ];;
+  gap&gt; S:=Semigroup(gens);;
+  gap&gt; GradedKernelsTransformationMonoid(S);
+  [ [ [ [ 1, 2, 3, 4, 5 ] ] ], 
+    [ [ [ 1, 2, 4, 5 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ], 
+        [ [ 1, 2, 4 ], [ 3, 5 ] ] ], 
+    [ [ [ 1, 2, 4 ], [ 3 ], [ 5 ] ], [ [ 1, 4 ], [ 2 ], [ 3, 5 ] ] ], [  ], 
+    [ [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ] ] ] ]
+</pre></td></tr></table>
+
+<p><a id="X7E53FA7D85258453" name="X7E53FA7D85258453"></a></p>
+
+<h5>3.4-5 StrongOrbitOfImage</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; StrongOrbitOfImage</code>( <var class="Arg">S, f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns a triple where</p>
+
+
+<ul>
+<li><p>the first entry <code class="code">imgs</code> is the strong orbit of the image set <code class="code">A</code> of <code class="code">f</code> under the action of <code class="code">S</code>. That is, the set of image sets <code class="code">B</code> of elements of <code class="code">S</code> such that there exist <code class="code">g,h</code> in <code class="code">S</code> with <code class="code">OnSets(A, g)=B</code> and <code class="code">OnSet(B, h)=A</code>. If the strong orbit of the image of <code class="code">f</code> has already been calculated, then the image of <code class="code">f</code> might not be the first entry in the list <code class="code">imgs</code>.</p>
+
+</li>
+<li><p>the second entry is a list of permutations <code class="code">mults</code> such that <code class="code">OnSets(imgs[i], mults[i])=imgs[1]</code>.</p>
+
+</li>
+<li><p>the third entry is the Right Schutzenberger group associated to the first entry in the list <code class="code">imgs</code> (that is, the group of permutations arising from elements of the semigroup that stabilise the set <code class="code">imgs[1]</code>).</p>
+
+</li>
+</ul>
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
+  &gt; Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
+  gap&gt; S:=Semigroup(gens);;
+  gap&gt; f:=Transformation( [ 2, 1, 1, 1, 5 ] );;
+  gap&gt; StrongOrbitOfImage(S, f);        
+  [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
+        [ 2, 4, 5 ], [ 3, 4, 5 ] ], 
+    [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
+        (1,3,2,4) ], Group([ (), (2,5), (1,5) ]) ]
+</pre></td></tr></table>
+
+<p><a id="X80BA8DD07E0E00D5" name="X80BA8DD07E0E00D5"></a></p>
+
+<h5>3.4-6 StrongOrbitsOfImages</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; StrongOrbitsOfImages</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>this is a mutable attribute that stores the result of <code class="func">StrongOrbitOfImage</code> (<a href="chap3.html#X7E53FA7D85258453"><b>3.4-5</b></a>) every time it is used. If <code class="func">StrongOrbitOfImage</code> (<a href="chap3.html#X7E53FA7D85258453"><b>3.4-5</b></a>) has not been invoked for <code class="code">S</code>, then an error is returned.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
+  &gt; Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
+  gap&gt; S:=Semigroup(gens);;
+  gap&gt; f:=Transformation( [ 2, 1, 1, 1, 5 ] );;
+  gap&gt; StrongOrbitOfImage(S, f);;
+  gap&gt; StrongOrbitsOfImages(S);
+  [ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
+            [ 2, 4, 5 ], [ 3, 4, 5 ] ] ], 
+    [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
+            (1,3,2,4) ] ], [ Group([ (), (2,5), (1,5) ]) ] ]
+  gap&gt; f:=Transformation( [ 5, 5, 5, 5, 2 ] );
+  gap&gt; StrongOrbitOfImage(S, f);;
+  gap&gt; StrongOrbitsOfImages(S); 
+  [ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
+            [ 2, 4, 5 ], [ 3, 4, 5 ] ], 
+        [ [ 2, 5 ], [ 1, 5 ], [ 1, 3 ], [ 2, 3 ], [ 2, 4 ], [ 4, 5 ], [ 3, 5 ], 
+            [ 1, 2 ], [ 3, 4 ] ] ], 
+    [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
+            (1,3,2,4) ], 
+        [ (), (1,5,2), (1,2)(3,5,4), (2,5,4,3), (2,5,4), (2,3,4,5), (2,3), 
+            (1,5,4,3), (2,3)(4,5) ] ], 
+    [ Group([ (), (2,5), (1,5) ]), Group([ (), (2,5) ]) ] ]
+</pre></td></tr></table>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap2.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap4.html">Next Chapter</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

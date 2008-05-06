@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (MONOID) - Chapter 4: Green's Relations</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+</head>
+<body>
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap3.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap5.html">Next Chapter</a>&nbsp;  </div>
+
+<p><a id="X80C6C718801855E9" name="X80C6C718801855E9"></a></p>
+<div class="ChapSects"><a href="chap4.html#X80C6C718801855E9">4 <span class="Heading">Green's Relations</span></a>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap4.html#X7DFB63A97E67C0A1">4.1 <span class="Heading">Introduction</span></a>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap4.html#X81F7D3887DA80890">4.2 <span class="Heading">Data Structures</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7B9C0CC77C24D4F8">4.2-1 GreensData</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X833F00AE810DCF28">4.2-2 GreensRClassData</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X80A97BBB8273D151">4.2-3 GreensLClassData</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X8037C1BC7D372310">4.2-4 GreensHClassData</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81940FB4814D25B7">4.2-5 GreensDClassData</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X82F882B37DFAA974">4.2-6 <span class="Heading">IsGreensData</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X780966E58045F9E8">4.2-7 <span class="Heading">XClassData</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81ECD8BE78E41393">4.2-8 <span class="Heading">IsGreensXClassDataRep</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7F75BAA87A79F569">4.2-9 IsAssociatedSemigpTransSemigp</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X84F1321E8217D2A8">4.2-10 SchutzenbergerGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X83F1C306846DF26B">4.2-11 PartialOrderOfDClasses</a></span>
+</div>
+</div>
+
+<h3>4 <span class="Heading">Green's Relations</span></h3>
+
+<p><a id="X7DFB63A97E67C0A1" name="X7DFB63A97E67C0A1"></a></p>
+
+<h4>4.1 <span class="Heading">Introduction</span></h4>
+
+<p>This chapter contains instructions on how to use the algorithms for computing Green's relations and related notions for transformation semigroups and monoids that are implemented in <strong class="pkg">MONOID</strong>.</p>
+
+<p>The theory behind these algorithms is developed in <a href="chapBib.html#biBpfeiffer1">[LPRR98]</a> and the algorithms themselves are described in <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>. Another reference is <a href="chapBib.html#biBlallement">[LM90]</a>.</p>
+
+<p>Calculation of Green's relations using the <strong class="pkg">MONOID</strong> package are invoked in the same way as they are in <strong class="pkg">GAP</strong> without the <strong class="pkg">MONOID </strong> package loaded; see <a href="/Users/jdm/gapdev/doc/ref/chap49.html#X80AF5F307DBDC2B4"><b>Reference: Semigroups</b></a>. For example, in <strong class="pkg">GAP</strong> with the <strong class="pkg">MONOID</strong> package loaded:</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; a:=Transformation([2,1,1,2,1]);;
+gap&gt; b:=Transformation([3,4,3,4,4]);;
+gap&gt; c:=Transformation([3,4,3,4,3]);;
+gap&gt; d:=Transformation([4,3,3,4,4]);;
+gap&gt; S:=Semigroup(a,b,c,d);
+&lt;semigroup with 4 generators&gt;
+gap&gt; GreensRClasses(S);
+[ {Transformation( [ 2, 1, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}
+  , {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
+{Transformation( [ 2, 1, 1, 2, 2 ] )} ]
+</pre></td></tr></table>
+
+<p>Without the <strong class="pkg">MONOID</strong> package loaded:</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; a:=Transformation([2,1,1,2,1]);;
+gap&gt; b:=Transformation([3,4,3,4,4]);;
+gap&gt; c:=Transformation([3,4,3,4,3]);;
+gap&gt; d:=Transformation([4,3,3,4,4]);;
+gap&gt; S:=Semigroup(a,b,c,d);
+&lt;semigroup with 4 generators&gt;
+gap&gt; GreensRClasses(S);
+[ {Transformation( [ 1, 2, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}
+  , {Transformation( [ 1, 2, 2, 1, 1 ] )}, 
+{Transformation( [ 1, 2, 2, 1, 2 ] )} ]
+</pre></td></tr></table>
+
+<p>The only noticable differences are the representatives of the classes and the order the classes appear in the list. These differences are caused by the differences in the methods used to behind the function <code class="code">GreensRClasses</code> in <strong class="pkg">MONOID </strong> and the <strong class="pkg">GAP</strong> library.</p>
+
+<p>Most of the commands in this section relate to how Green's relations are calculated in <strong class="pkg">MONOID</strong>. Although some of the commands might be used for other purposes, if all that is required is to calculate Green's classes, relations and so on, then this is done in the exactly the same way as described in the <strong class="pkg">GAP</strong> manual; see <a href="/Users/jdm/gapdev/doc/ref/chap49.html#X80C6C718801855E9"><b>Reference: Green's Relations</b></a>.</p>
+
+<p>Due to inherent difficulties with computing Green's L- and D-classes, the methods used to compute with Green's R-classes are the most efficient available in <strong class="pkg">MONOID</strong>. Thus wherever possible it is advisable to use the commands relating to Green's R-classes rather than those relating to Green's L-classes, D-classes, or H-classes.</p>
+
+<p>For small examples of semigroups, say with fewer than 40 elements, it may be more efficient to use the methods from the library than those in <strong class="pkg">MONOID</strong>. This stems from the fact that there are higher overheads in the methods used in <strong class="pkg">MONOID</strong>. In either case, with such small examples computing Green's relations does not take much time.</p>
+
+<p>The methods in <strong class="pkg">MONOID</strong> allow the computation of individual Green's classes without the need to compute all the elements of the underlying semigroup. It is also possible to compute all the R-classes, the number of elements and test membership in a transformation semigroup without computing all the elements. This may be useful if you want to study a very large semigroup where computing all the elements of the semigroup would take too long.</p>
+
+<p><a id="X81F7D3887DA80890" name="X81F7D3887DA80890"></a></p>
+
+<h4>4.2 <span class="Heading">Data Structures</span></h4>
+
+<p><a id="X7B9C0CC77C24D4F8" name="X7B9C0CC77C24D4F8"></a></p>
+
+<h5>4.2-1 GreensData</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; GreensData</code>( <var class="Arg">C</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+
+<ul>
+<li><p>if <code class="code">C</code> satisfies <code class="func">IsGreensRClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensRClass</b></a>), then <code class="code">GreensData</code> returns the value of <code class="func">GreensRClassData</code> (<a href="chap4.html#X833F00AE810DCF28"><b>4.2-2</b></a>) with argument <code class="code">C</code>.</p>
+
+</li>
+<li><p>if <code class="code">C</code> satisfies <code class="func">IsGreensLClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensLClass</b></a>), then <code class="code">GreensData</code> returns the value of <code class="func">GreensLClassData</code> (<a href="chap4.html#X80A97BBB8273D151"><b>4.2-3</b></a>) with argument <code class="code">C</code>.</p>
+
+</li>
+<li><p>if <code class="code">C</code> satisfies <code class="func">IsGreensHClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensHClass</b></a>), then <code class="code">GreensData</code> returns the value of <code class="func">GreensHClassData</code> (<a href="chap4.html#X8037C1BC7D372310"><b>4.2-4</b></a>) with argument <code class="code">C</code>.</p>
+
+</li>
+<li><p>if <code class="code">C</code> satisfies <code class="func">IsGreensDClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensDClass</b></a>), then <code class="code">GreensData</code> returns the value of <code class="func">GreensDClassData</code> (<a href="chap4.html#X81940FB4814D25B7"><b>4.2-5</b></a>) with argument <code class="code">C</code>.</p>
+
+</li>
+</ul>
+<p><a id="X833F00AE810DCF28" name="X833F00AE810DCF28"></a></p>
+
+<h5>4.2-2 GreensRClassData</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; GreensRClassData</code>( <var class="Arg">C</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>if <code class="code">C</code> satisfies <code class="func">IsGreensRClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensRClass</b></a>), then <code class="code">GreensRClassData</code> returns an object in the category <code class="func">IsGreensRClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>) with representation <code class="func">IsGreensRClassDataRep</code> (<a href="chap4.html#X81ECD8BE78E41393"><b>4.2-8</b></a>) and the following four components:</p>
+
+
+<ul>
+<li><p><code class="code">rep</code> the representative of the R-class.</p>
+
+</li>
+<li><p><code class="code">strongorb</code> the strong orbit of the image of <code class="code">rep</code> under the action of the semigroup on sets.</p>
+
+</li>
+<li><p><code class="code">perms</code> a list of permutations that map the image of <code class="code">rep</code> to the corresponding image in <code class="code">strongorb</code>, that is, <code class="code">OnSets(imgs[i], perms[i]=imgs[1]</code>.</p>
+
+</li>
+<li><p><code class="code">schutz</code> the group of permutations arising from elements of the semigroup that stabilise the image of <code class="code">rep</code> (called the <em> (generalized) right Schutzenberger group</em>).</p>
+
+</li>
+</ul>
+<p>The components <code class="code">strongorb</code>, <code class="code">perms</code>, and <code class="code">schutz</code> are obtained using the function <code class="func">StrongOrbitOfImage</code> (<a href="chap3.html#X7E53FA7D85258453"><b>3.4-5</b></a>). Further details can be found in Algorithm C, D, E, F, and U of <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
+  gap&gt; b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
+  gap&gt; M:=Semigroup(a,b);;
+  gap&gt; rc:=GreensRClassOfElement(M, a*b*a);
+  {Transformation( [ 4, 1, 6, 5, 2, 2 ] )}
+  gap&gt; GreensRClassData(rc);
+  GreensRClassData( Transformation( [ 4, 1, 6, 5, 2, 2 ] ), [ [ 1, 2, 4, 5, 6 ], 
+  [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ], [ 1, 2, 3, 4, 5 ] ], [ (), (1,2)
+  (3,6,5,4), (3,5)(4,6), (1,6,3,2)(4,5) ], Group( [ (), (2,4,6), (2,6,4), 
+  (1,2,6)(4,5) ] ) )
+</pre></td></tr></table>
+
+<p><a id="X80A97BBB8273D151" name="X80A97BBB8273D151"></a></p>
+
+<h5>4.2-3 GreensLClassData</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; GreensLClassData</code>( <var class="Arg">S, f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>if <code class="code">C</code> satisfies <code class="func">IsGreensLClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensLClass</b></a>), then <code class="code">GreensLClassData</code> returns an object in the category <code class="func">IsGreensLClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>) with representation <code class="func">IsGreensLClassDataRep</code> (<a href="chap4.html#X81ECD8BE78E41393"><b>4.2-8</b></a>) and the following five components:</p>
+
+
+<ul>
+<li><p><code class="code">rep</code> the representative of the L-class.</p>
+
+</li>
+<li><p><code class="code">strongorb</code> the strong orbit of the kernel of <code class="code">rep</code> under the action of the semigroup by <code class="func">OnTuplesOfSetsAntiAction</code> (<a href="chap3.html#X785CA2537B553454"><b>3.2-1</b></a>).</p>
+
+</li>
+<li><p><code class="code">relts</code> a list of relations such that</p>
+
+
+<pre class="normal">
+KernelOfTransformation(relts[i]*x)=strongorb[1]
+</pre>
+
+<p>whenever <code class="code">x</code> has</p>
+
+
+<pre class="normal">
+KernelOfTransformation(x)=strongorb[i].
+</pre>
+
+</li>
+<li><p><code class="code">invrelts</code> the inverses of the relations <code class="code">relts</code>, so that</p>
+
+
+<pre class="normal">
+KernelOfTransformation(invrelts[i]*rep)=strongorb[i].
+</pre>
+
+</li>
+<li><p><code class="code">schutz</code> the (generalised) left Schutzenberger group.</p>
+
+</li>
+</ul>
+<p>Further details can be found in Algorithm G, H, I, and J of <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; gens:=[ Transformation( [ 4, 1, 4, 5, 3 ] ),
+  &gt; Transformation( [ 5, 3, 5, 4, 3 ] ) ];;
+  gap&gt; S:=Semigroup(gens);;
+  gap&gt; C:=GreensLClassOfElement(S, gens[1]*gens[2]*gens[1]);
+  {Transformation( [ 5, 3, 5, 4, 3 ] )}
+  gap&gt; GreensLClassData(C);
+  GreensLClassData( Transformation( [ 5, 3, 5, 4, 3 ] ), 
+  [ [ [ 1, 3 ], [ 2, 5 ], [ 4 ] ] ], [ Binary Relation on 5 points ], 
+  [ Binary Relation on 5 points ], Group( [ (), (3,5,4), (3,5) ] ) )
+</pre></td></tr></table>
+
+<p><a id="X8037C1BC7D372310" name="X8037C1BC7D372310"></a></p>
+
+<h5>4.2-4 GreensHClassData</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; GreensHClassData</code>( <var class="Arg">S, f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>if <code class="code">C</code> satisfies <code class="func">IsGreensHClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensHClass</b></a>), then <code class="code">GreensLClassData</code> returns an object in the category <code class="func">IsGreensHClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>) with representation <code class="func">IsGreensHClassDataRep</code> (<a href="chap4.html#X81ECD8BE78E41393"><b>4.2-8</b></a>) and the following two components:</p>
+
+
+<ul>
+<li><p><code class="code">rep</code> the representative of the H-class.</p>
+
+</li>
+<li><p><code class="code">schutz</code> the intersection of the left Schutzenberger group and right Schutzenberger group of the L-class and R-class containing the representative <code class="code">rep</code> (that is, the intersection of the <code class="code">schutz</code> component of <code class="func">GreensRClassData</code> (<a href="chap4.html#X833F00AE810DCF28"><b>4.2-2</b></a>) and the <code class="code">schutz</code> component of <code class="func">GreensLClassData</code> (<a href="chap4.html#X80A97BBB8273D151"><b>4.2-3</b></a>)).</p>
+
+</li>
+</ul>
+<p>Further details can be found in Algorithm K, L, M, and N of <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; gens:=[ Transformation( [ 2, 2, 5, 2, 3 ] ), 
+  &gt; Transformation( [ 2, 5, 3, 5, 3 ] ) ];;
+  gap&gt; S:=Semigroup(gens);;
+  gap&gt; f:=Transformation( [ 5, 5, 3, 5, 3 ] );;
+  gap&gt; GreensHClassData(GreensHClassOfElement(S, f));
+  GreensHClassData( Transformation( [ 5, 5, 3, 5, 3 ] ), Group( () ) )
+</pre></td></tr></table>
+
+<p><a id="X81940FB4814D25B7" name="X81940FB4814D25B7"></a></p>
+
+<h5>4.2-5 GreensDClassData</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; GreensDClassData</code>( <var class="Arg">S, f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>if <code class="code">C</code> satisfies <code class="func">IsGreensDClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensDClass</b></a>), then <code class="code">GreensDClassData</code> returns an object in the category <code class="func">IsGreensDClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>) with representation <code class="func">IsGreensDClassDataRep</code> (<a href="chap4.html#X81ECD8BE78E41393"><b>4.2-8</b></a>) and the following five components:</p>
+
+
+<ul>
+<li><p><code class="code">rep</code> the representative of the D-class.</p>
+
+</li>
+<li><p><code class="code">R</code> the result of <code class="func">GreensRClassData</code> (<a href="chap4.html#X833F00AE810DCF28"><b>4.2-2</b></a>) with argument <code class="code">rep</code>.</p>
+
+</li>
+<li><p><code class="code">L</code> the result of <code class="func">GreensLClassData</code> (<a href="chap4.html#X80A97BBB8273D151"><b>4.2-3</b></a>) with argument <code class="code">rep</code>.</p>
+
+</li>
+<li><p><code class="code">H</code> the result of <code class="func">GreensHClassData</code> (<a href="chap4.html#X8037C1BC7D372310"><b>4.2-4</b></a>) with argument <code class="code">rep</code>.</p>
+
+</li>
+<li><p><code class="code">cosets</code> a transversal of right cosets of the Schutzenberger group of <code class="code">H</code> in the Schutzenberger group of <code class="code">R</code>.</p>
+
+</li>
+</ul>
+<p>Note that only the first three components are displayed. Further details can be found in Algorithm O, P, Q, R, S, and T of <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; gens:=[ Transformation( [ 4, 1, 5, 2, 4 ] ), 
+  &gt; Transformation( [ 4, 4, 1, 5, 3 ] ) ];;
+  gap&gt; S:=Semigroup(gens);;
+  gap&gt; f:=Transformation( [ 5, 5, 3, 3, 3 ] );;
+  gap&gt; GreensDClassData(GreensDClassOfElement(S, f));
+  GreensDClassData( Transformation( [ 5, 5, 3, 3, 3 
+  ] ), GreensRClassData( Transformation( [ 5, 5, 3, 3, 3 
+  ] ) ), GreensLClassData( Transformation( [ 5, 5, 3, 3, 3 ] ) ) )
+</pre></td></tr></table>
+
+<p><a id="X82F882B37DFAA974" name="X82F882B37DFAA974"></a></p>
+
+<h5>4.2-6 <span class="Heading">IsGreensData</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsGreensData</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsGreensRClassData</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsGreensLClassData</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsGreensHClassData</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsGreensDClassData</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>returns <code class="code">true</code> if <code class="code">obj</code> lies in the category <code class="code">IsGreensData</code>, <code class="code">IsGreensRClassData</code>, <code class="code">IsGreensLClassData</code>, <code class="code">IsGreensHClassData</code>, <code class="code">IsGreensDClassData</code>, respectively. The objects created using the functions <code class="func">RClassData</code> (<a href="chap4.html#X780966E58045F9E8"><b>4.2-7</b></a>), <code class="func">LClassData</code> (<a href="chap4.html#X780966E58045F9E8"><b>4.2-7</b></a>), <code class="func">HClassData</code> (<a href="chap4.html#X780966E58045F9E8"><b>4.2-7</b></a>), and <code class="func">DClassData</code> (<a href="chap4.html#X780966E58045F9E8"><b>4.2-7</b></a>) lie in the categories <code class="code">IsGreensRClassData</code>, <code class="code">IsGreensLClassData</code>, <code class="code">IsGreensHClassData</code>, <code class="code">IsGreensDClassData</code>, respectively, and all these categories are contained in the category <code class="code">IsGreensData</code>.</p>
+
+<p><a id="X780966E58045F9E8" name="X780966E58045F9E8"></a></p>
+
+<h5>4.2-7 <span class="Heading">XClassData</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RClassData</code>( <var class="Arg">rec</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; LClassData</code>( <var class="Arg">rec</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; HClassData</code>( <var class="Arg">rec</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; DClassData</code>( <var class="Arg">rec</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>These function construct objects in the categories <code class="func">IsGreensRClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>), <code class="func">IsGreensLClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>), <code class="func">IsGreensHClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>), and <code class="func">IsGreensDClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>) subcategories of <code class="func">IsGreensData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>) using the output from <code class="func">GreensRClassData</code> (<a href="chap4.html#X833F00AE810DCF28"><b>4.2-2</b></a>), <code class="func">GreensLClassData</code> (<a href="chap4.html#X80A97BBB8273D151"><b>4.2-3</b></a>), <code class="func">GreensHClassData</code> (<a href="chap4.html#X8037C1BC7D372310"><b>4.2-4</b></a>), <code class="func">GreensDClassData</code> (<a href="chap4.html#X81940FB4814D25B7"><b>4.2-5</b></a>).</p>
+
+<p><a id="X81ECD8BE78E41393" name="X81ECD8BE78E41393"></a></p>
+
+<h5>4.2-8 <span class="Heading">IsGreensXClassDataRep</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsGreensRClassDataRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsGreensLClassDataRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsGreensHClassDataRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsGreensDClassDataRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<p>returns <code class="code">true</code> if <code class="code">obj</code> has <code class="code">IsGreensRClassDataRep</code>, <code class="code">IsGreensLClassDataRep</code>, <code class="code">IsGreensHClassDataRep</code>, or <code class="code">IsGreensDClassDataRep</code>, respectively as a representation.</p>
+
+<p>These representations each have several components detailed in <code class="func">GreensRClassData</code> (<a href="chap4.html#X833F00AE810DCF28"><b>4.2-2</b></a>), <code class="func">GreensLClassData</code> (<a href="chap4.html#X80A97BBB8273D151"><b>4.2-3</b></a>), <code class="func">GreensHClassData</code> (<a href="chap4.html#X8037C1BC7D372310"><b>4.2-4</b></a>), <code class="func">GreensDClassData</code> (<a href="chap4.html#X81940FB4814D25B7"><b>4.2-5</b></a>), respectively.</p>
+
+<p><a id="X7F75BAA87A79F569" name="X7F75BAA87A79F569"></a></p>
+
+<h5>4.2-9 IsAssociatedSemigpTransSemigp</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsAssociatedSemigpTransSemigp</code>( <var class="Arg">C</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>returns <code class="code">true</code> if <code class="code">C</code> is a Green's class of a transformation semigroup and returns <code class="code">false</code> otherwise.</p>
+
+<p>This attribute is required so that a Green's class knowns that it belongs to a transformation semigroup, so that the methods defined in the <strong class="pkg">MONOID</strong> are used in preference to those in the library.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
+  gap&gt; b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
+  gap&gt; M:=Semigroup(a,b);;
+  gap&gt; GreensLClassOfElement(M,a);
+  {Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
+  gap&gt; IsAssociatedSemigpTransSemigp(last);
+  true
+  gap&gt; f:=FreeSemigroup(3);;
+  gap&gt; a:=f.1;; b:=f.2;; c:=f.3;; 
+  gap&gt; s:=f/[[a^2, a], [b^2,b], [c^2,c], [a*b,a], [b*a,b], [a*c,a], 
+  &gt; [c*a,c], [b*c,b],[c*b,c]];
+  &lt;fp semigroup on the generators [ s1, s2, s3 ]&gt;
+  gap&gt; Size(s);
+  3
+  gap&gt; GreensLClassOfElement(s,a);
+  {s1}
+  gap&gt; IsAssociatedSemigpTransSemigp(last);
+  false
+</pre></td></tr></table>
+
+<p><a id="X84F1321E8217D2A8" name="X84F1321E8217D2A8"></a></p>
+
+<h5>4.2-10 SchutzenbergerGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; SchutzenbergerGroup</code>( <var class="Arg">D</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>if <code class="code">D</code> satisfies <code class="func">IsGreensRClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>), <code class="func">IsGreensLClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>), <code class="func">IsGreensHClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>), or <code class="func">IsGreensDClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>), then <code class="code">SchutzenbergerGroup</code> returns the <code class="code">schutz</code> component of <code class="code">D</code>.</p>
+
+<p>If <code class="code">D</code> satisfies <code class="func">IsGreensRClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensRClass</b></a>), <code class="func">IsGreensLClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensLClass</b></a>), <code class="func">IsGreensHClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensHClass</b></a>), <code class="func">IsGreensDClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensDClass</b></a>), then <code class="code">SchutzenbergerGroup</code> returns the <code class="code">schutz</code> component of <code class="code">GreensData</code> with argument <code class="code">D</code>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; gens:=[ Transformation( [ 4, 4, 3, 5, 3 ] ), 
+  &gt; Transformation( [ 5, 1, 1, 4, 1 ] ), 
+  &gt; Transformation( [ 5, 5, 4, 4, 5 ] ) ];;
+  gap&gt; f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
+  gap&gt; SchutzenbergerGroup(GreensDClassOfElement(S, f));
+  Group([ (), (4,5) ])
+  gap&gt; SchutzenbergerGroup(GreensRClassOfElement(S, f));
+  Group([ (), (4,5) ])
+  gap&gt; SchutzenbergerGroup(GreensLClassOfElement(S, f));
+  Group([ (), (4,5) ])
+  gap&gt; SchutzenbergerGroup(GreensHClassOfElement(S, f));
+  Group([ (), (4,5) ])
+</pre></td></tr></table>
+
+<p><a id="X83F1C306846DF26B" name="X83F1C306846DF26B"></a></p>
+
+<h5>4.2-11 PartialOrderOfDClasses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; PartialOrderOfDClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the partial order of the <code class="code">D</code>-classes of <code class="code">S</code> as a directed graph in <strong class="pkg">GRAPE</strong>, if it is installed, using the command</p>
+
+
+<table class="example">
+<tr><td><pre>
+Graph(Group(()), [1..Length(GreensDClasses(S))], OnPoints, function(x,y)
+return y in poset[x]; end, true); ;
+</pre></td></tr></table>
+
+<p>where <code class="code">y</code> in <code class="code">poset[x]</code> if and only if <code class="code">S^1yS^1</code> is a subset of <code class="code">S^1 xS^1</code>.</p>
+
+<p>If <strong class="pkg">GRAPE</strong> is not loaded, then the list <code class="code">poset</code> is returned instead.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap3.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap5.html">Next Chapter</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

@@ -1,0 +1,180 @@
+  
+  
+                               [1XThe [5XMONOID[0m[1X Package[0m
+  
+  
+                                  Version 3.1
+  
+  
+                                 J. D. Mitchell
+  
+  
+  
+  J. D. Mitchell
+      Email:    [7Xmailto:jdm3@st-and.ac.uk[0m
+  
+  -------------------------------------------------------
+  [1XCopyright[0m
+  © 2008 J. D. Mitchell.
+  
+  
+  -------------------------------------------------------
+  [1XAcknowledgements[0m
+  The  author  would  like  to  thank  P.  v. Bunau, A. Distler, S. Linton, J.
+  Neubueser,  V.  Maltcev, M. Neuhoeffer, M. R. Quick, E. F. Robertson, and N.
+  Ruskuc  for  their  help and suggestions. Special thanks go to J. Araujo for
+  his mathematical suggestions.
+  
+  I  would  also  like  to acknowledge the support of Centre of Algebra at the
+  University  of  Lisbon,  and  the  financial  support  of EPSRC grant number
+  GR/S/56085/01.
+  
+  
+  -------------------------------------------------------
+  [1XColophon[0m
+  If you use the [5XMONOID[0m package, I would really appreciate it if you would let
+  me  know  by  sending me an email to [7Xmailto:jdm3@st-and.ac.uk[0m. If you notice
+  that  there  are any features missing that you think are important or if you
+  find a bug, please let me know.
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (MONOID)[0X
+  
+  1 The [5XMONOID[0m package
+    1.1 Introduction
+    1.2 Installing [5XMONOID[0m
+    1.3 Testing [5XMONOID[0m
+    1.4 What's New?
+    1.5 Forthcoming Features
+  2 Transformations
+    2.1 More Functions for Transformations
+      2.1-1 IsRegularTransformation
+      2.1-2 IsTransversal
+      2.1-3 Idempotent
+      2.1-4 PermRepTrans
+      2.1-5 RandomTransformation
+      2.1-6 IndexPeriodOfTransformation
+  3 Monoid Actions and Orbits
+    3.1 Introduction
+    3.2 Actions
+      3.2-1 OnTuplesOfSetsAntiAction
+      3.2-2 OnKernelsAntiAction
+    3.3 General Orbits
+      3.3-1 MonoidOrbit
+      3.3-2 MonoidOrbits
+      3.3-3 StrongOrbit
+      3.3-4 StrongOrbits
+      3.3-5 GradedOrbit
+      3.3-6 ShortOrbit
+      3.3-7 GradedStrongOrbit
+      3.3-8 ShortStrongOrbit
+    3.4 Some Specific Orbits
+      3.4-1 ImagesTransformationMonoid
+      3.4-2 GradedImagesTransformationMonoid
+      3.4-3 KernelsTransformationMonoid
+      3.4-4 GradedKernelsTransformationMonoid
+      3.4-5 StrongOrbitOfImage
+      3.4-6 StrongOrbitsOfImages
+  4 Green's Relations
+    4.1 Introduction
+    4.2 Data Structures
+      4.2-1 GreensData
+      4.2-2 GreensRClassData
+      4.2-3 GreensLClassData
+      4.2-4 GreensHClassData
+      4.2-5 GreensDClassData
+      4.2-6 IsGreensData
+      4.2-7 XClassData
+      4.2-8 IsGreensXClassDataRep
+      4.2-9 IsAssociatedSemigpTransSemigp
+      4.2-10 SchutzenbergerGroup
+      4.2-11 PartialOrderOfDClasses
+  5 Properties of Semigroups
+    5.1 Introduction
+    5.2 Property Tests
+      5.2-1 IsCompletelyRegularSemigroup
+      5.2-2 IsSimpleSemigroup
+      5.2-3 IsGroupAsSemigroup
+      5.2-4 IsCommutativeSemigroup
+      5.2-5 IsRegularSemigroup
+      5.2-6 IsInverseSemigroup
+      5.2-7 IsCliffordSemigroup
+      5.2-8 IsBand
+      5.2-9 IsRectangularBand
+      5.2-10 IsSemiBand
+      5.2-11 IsOrthodoxSemigroup
+      5.2-12 IsRightZeroSemigroup
+      5.2-13 IsLeftZeroSemigroup
+      5.2-14 IsZeroSemigroup
+      5.2-15 IsZeroGroup
+      5.2-16 MultiplicativeZero
+  6 Special Classes of Semigroup
+    6.1 Introduction
+    6.2 Transformation Semigroup
+      6.2-1 SingularSemigroup
+      6.2-2 OrderPreservingSemigroup
+    6.3 Zero Groups and Zero Semigroups
+      6.3-1 ZeroSemigroup
+      6.3-2 ZeroSemigroupElt
+      6.3-3 ZeroGroup
+      6.3-4 ZeroGroupElt
+      6.3-5 UnderlyingGroupOfZG
+      6.3-6 UnderlyingGroupEltOfZGElt
+    6.4 Random Semigroups
+      6.4-1 RandomMonoid
+      6.4-2 RandomSemigroup
+      6.4-3 RandomReesMatrixSemigroup
+      6.4-4 RandomReesZeroMatrixSemigroup
+  7 Semigroup Homomorphisms
+    7.1 Introduction
+      7.1-1 InfoAutos
+    7.2 Creating Homomorphisms
+      7.2-1 SemigroupHomomorphismByFunction
+      7.2-2 SemigroupHomomorphismByImagesOfGens
+      7.2-3 SemigroupHomomorphismByImages
+    7.3 Inner Automorphisms
+      7.3-1 InnerAutomorphismOfSemigroup
+      7.3-2 ConjugatorOfInnerAutomorphismOfSemigroup
+      7.3-3 IsInnerAutomorphismOfSemigroup
+      7.3-4 InnerAutomorphismsOfSemigroup
+      7.3-5 InnerAutomorphismsOfSemigroupInGroup
+      7.3-6 InnerAutomorphismsAutomorphismGroup
+      7.3-7 IsInnerAutomorphismsOfSemigroup
+      7.3-8 IsInnerAutomorphismsOfZeroGroup
+    7.4 Automorphism Groups
+      7.4-1 AutomorphismGroup
+      7.4-2 AutomorphismsSemigroupInGroup
+      7.4-3 IsAutomorphismGroupOfSemigroup
+      7.4-4 IsAutomorphismGroupOfSimpleSemigp
+      7.4-5 IsAutomorphismGroupOfZeroGroup
+      7.4-6 IsAutomorphismGroupOfZeroSemigroup
+      7.4-7 IsAutomorphismGroupOfRMS
+      7.4-8 IsAutomorphismGroupOfRZMS
+    7.5 Rees Matrix Semigroups
+      7.5-1 RMSIsoByTriple
+      7.5-2 RZMSIsoByTriple
+      7.5-3 IsRMSIsoByTripleRep
+      7.5-4 IsRZMSIsoByTripleRep
+      7.5-5 RMSInducedFunction
+      7.5-6 RZMSInducedFunction
+      7.5-7 RZMStoRZMSInducedFunction
+      7.5-8 RZMSGraph
+      7.5-9 RightTransStabAutoGroup
+    7.6 Zero Groups
+      7.6-1 ZeroGroupAutomorphism
+      7.6-2 IsZeroGroupAutomorphismRep
+      7.6-3 UnderlyingGroupAutoOfZeroGroupAuto
+    7.7 Isomorphisms
+      7.7-1 IsomorphismAutomorphismGroupOfRMS
+      7.7-2 IsomorphismPermGroup
+      7.7-3 IsomorphismFpSemigroup
+      7.7-4 IsomorphismFpMonoid
+      7.7-5 IsomorphismSemigroups
+      7.7-6 IsomorphismReesMatrixSemigroupOfDClass
+      7.7-7 IsomorphismReesMatrixSemigroup
+  
+  
+  -------------------------------------------------------

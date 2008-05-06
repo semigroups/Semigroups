@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE Book SYSTEM "gapdoc.dtd">
+<!--  MakeGAPDocDoc("/Users/jdm/Desktop/Maths/Computation/GAP/gapdev/4.0/pkg/MONOID/doc/", "monoid.xml", [ "../gap/general.gd", "../gap/autos.gd", "../gap/transform.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd",  "../gap/semigroups.gd", "../gap/semihomo.gd"], "manual");; -->
+
+<Book Name="MONOID">
+
+<TitlePage>
+	<Title>The <Package>MONOID</Package> Package</Title>
+	<Version>Version 3.1</Version>
+	<Author>J. D. Mitchell
+		<Email>jdm3@st-and.ac.uk</Email>
+	</Author>
+
+	<Copyright>&copyright; 2008 J. D. Mitchell.<P/>
+	</Copyright>
+
+	<Colophon>
+		If you use the <Package>MONOID</Package> package, I would really appreciate it if you would let me know by sending me an email to <Email>jdm3@st-and.ac.uk</Email>.  If you notice that there are any features missing that you think are important or if you find a bug, please let me know.
+	</Colophon>
+
+	<Acknowledgements>
+		The author would like to thank P. v. Bunau, A. Distler, S. Linton, J. 
+		Neubueser, V. Maltcev, M. Neuhoeffer, M. R. Quick, E. F. Robertson, and N.
+		Ruskuc for their help and suggestions.  Special thanks go to J. Araujo for 
+		his mathematical suggestions. <P/>
+
+		I would also like to acknowledge the support of Centre of Algebra at the 
+		University of Lisbon, and the financial support of EPSRC grant number 
+		GR/S/56085/01. <Br/><Br/>
+	</Acknowledgements>
+
+</TitlePage>
+
+<TableOfContents/>
+
+<Body>
+	<Chapter Label="Monoid"> <Heading>The <Package>MONOID</Package> package</Heading>
+	<!-- ############### -->
+	
+	<Section><Heading>Introduction</Heading>
+This  manual  describes the <Package>MONOID</Package> package version 3.1 for 
+computing with transformation semigroups.
+  <Package>MONOID</Package> 3.1 is an updated version of the package with the same name for &GAP; 3; see <P/>
+
+<URL>http://schmidt.nuigalway.ie/monoid/index.html</URL><P/>
+
+for more information about the original <Package>MONOID</Package> by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc. <P/>
+
+<Package>MONOID</Package> 3.1 retains all the functionality of the original <Package>MONOID</Package> package. 
+In particular,  <Package>MONOID</Package>  3.1 contains more efficient 
+methods than those  available in the &GAP; library for computing orbits, calculating Green's 
+classes, finding the size, the elements, and testing membership in transformation semigroups; see Chapters <Ref Chap="orbits"/> and <Ref Chap="greens"/>. After <Package>MONOID</Package> 
+has been loaded many of these methods are automatically used in preference to 
+those in the library and do not need to be called explicitly by the user.  
+These methods
+are described in  <Cite Key="pfeiffer1"/> and the algorithms themselves are
+described in <Cite Key="pfeiffer2"/>.<P/>  
+
+In addition, there are new methods for testing if a semigroup satisfies a particular property, such as if it is regular, 
+simple, inverse, or completely regular, see Chapter <Ref Chap="properties"/>;
+methods for computing the automorphism group of a transformation semigroup see 
+Section  <Ref Sect="autos"/>; methods for finding
+homomorphisms and isomorphism between some types of semigroups 
+see Chapter <Ref Chap="homo"/>; and functions to 
+create some well-known semigroups see Chapter 
+<Ref Chap="special"/>.  The property testing methods are described in <Cite Key="largest"/> and the method for computing the automorphism group of a semigroup is described in <Cite Key="computing"/>. <P/>
+
+The <Package>MONOID</Package> package is written in &GAP; code only but relies on 
+the <Package>GRAPE</Package> package Version 4.2 or higher in the methods for 
+computing the automorphism group of a semigroup.
+ The
+following functions can only be used fully if <Package>GRAPE</Package> is fully installed (and loaded):
+<List>
+<Item> <Ref Attr="AutomorphismGroup"/> with argument satisfying <Ref Prop="IsTransformationSemigroup" BookName="ref"/> or <Ref Prop="IsReesZeroMatrixSemigroup" BookName="ref"/></Item>
+<Item> <Ref Oper="RightTransStabAutoGroup"/> with argument satisfying <Ref Prop="IsReesZeroMatrixSemigroup" BookName="ref"/></Item> 
+<Item><Ref Func="RZMSGraph"/></Item>
+<Item><Ref Oper="RZMSInducedFunction"/></Item> 
+<Item><Ref Oper="RZMStoRZMSInducedFunction"/></Item>  
+<Item><Ref Oper="IsomorphismSemigroups"/> with both arguments satisfying <Ref Prop="IsReesZeroMatrixSemigroup" BookName="ref"/></Item>
+</List>
+ Installation of <Package>GRAPE</Package> is
+described in the <C>README</C> file of the <Package>GRAPE</Package> distribution and in the section entitled `Installing the 
+GRAPE Package' of the <Package>GRAPE</Package> manual; see<P/>
+<URL>
+http://www.maths.qmul.ac.uk/~leonard/grape/
+</URL><P/>
+or the main &GAP; webpages for more information. <P/>
+
+ If you want to take advantage 
+of the online help facilities in <Package>MONOID</Package>, then the 
+<Package>gapdoc</Package> package Version 1.1 or higher is also required; see <P/>
+<URL>
+http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/
+</URL> <P/>
+for further details of how to obtain and install <Package>gapdoc</Package>.
+</Section>
+
+<!-- ############### -->
+
+<Section Label="install"><Heading>Installing <Package>MONOID</Package></Heading>
+
+In this section we give a brief description of 
+how to start using  <Package>MONOID</Package>. If you have any 
+problems getting <Package>MONOID</Package> working, then please email me 
+directly at <Email>jdm3@st-and.ac.uk</Email>. <P/>
+
+It is assumed that you have a working copy of &GAP; with version number 4.4.10 
+or higher. The most up-to-date version of &GAP; and instructions on how to 
+install it can be obtained from the main &GAP; webpage<P/>
+<URL>
+http://www.gap-system.org
+</URL><P/>
+
+ Those functions in <Package>MONOID</Package> described in Chapter
+<Ref Chap="homo"/> relating to automorphism 
+groups of semigroups require the <Package>GRAPE</Package> (for computing with 
+graphs and groups) to be loaded.  In particular, <Package>GRAPE</Package> must 
+be installed in a UNIX operating system so that the 
+automorphism group and isomorphism testing functions (for graphs) can be used.<P/>
+
+Please go to <P/>
+<URL>
+http://www.maths.qmul.ac.uk/~leonard/grape/
+</URL><P/>
+or the main &GAP; webpage for further details on how to obtain and install 
+<Package>GRAPE</Package>. <P/>
+
+The following is a summary of the steps that 
+should lead to a successful installation of <Package>MONOID</Package>. 
+
+<List>
+<Item> download the package archive <C>monoid3r1.tar.gz</C> or <C>monoid3r1.tar.bz2</C> from <P/>
+<URL>http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html
+</URL><P/>
+</Item>
+<Item> unzip &amp; untar the file, this should create a directory called <C>MONOID</C>.</Item>
+<Item>  move the directory <C>MONOID</C> into the <C>pkg</C> directory of your &GAP; directory (the one containing the directories <C>lib</C>, <C>doc</C>, <C>pkg</C>, and so on)</Item>
+<Item> start &GAP; in the usual way</Item>
+<Item> type <C>LoadPackage("monoid");</C></Item>
+</List>
+
+Below is an example of an installation of <Package>MONOID</Package> in UNIX 
+where <C>GAPROOT</C>  should be substituted with the main &GAP; directory (the 
+one containing the folders `bin', `lib', and so on) in your installation of 
+&GAP;.<P/>
+
+<Example>
+&gt; gunzip monoid3r1.tar.gz 
+&gt; tar -xf monoid3r1.tar 
+&gt; mv MONOID GAPROOT/pkg
+&gt; gap 
+
+[ ... ]
+
+gap&gt; LoadPackage("monoid");
+Loading MONOID 3.1
+by James Mitchell (www-groups.mcs.st-and.ac.uk/~jamesm)
+For help, type: ?the monoid package 
+true
+gap&gt; 
+</Example>
+
+Presuming that the above steps can be completed successfully you will be running 
+the <Package>MONOID</Package> package!<P/>
+
+If you want to check that the package is working correctly, please see Section <Ref Sect="testing"/>.
+<P/>
+
+<B>Please note:</B> before you can used <Package>MONOID</Package> fully you must install <Package>GRAPE</Package> as described above.
+
+</Section>
+
+<!-- ############### -->
+<Section Label="testing"><Heading>Testing <Package>MONOID</Package></Heading>
+
+In this section we describe how to test that <Package>MONOID</Package> is
+ working as intended.  To test that <Package>MONOID</Package> is installed correctly copy the following lines into &GAP;. 
+<Log>
+LoadPackage( "monoid" );;
+dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
+Read(Filename( dirs, "installtest.g" ) );
+</Log>
+and press <C>return</C>. Please note that it will take a few moments before 
+the tests are complete.<P/>
+
+If the output looks like the following, then it is probable that you have a fully working copy of <Package>MONOID</Package> 3.1.<P/>
+
+<Example>
+gap> LoadPackage( "monoid" );;
+gap> dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
+gap> Read( Filename( dirs, "installtest.g" ) );;
++ install_no_grape.tst 3.1
++ GAP4stones: 1
++ install_with_grape.tst 3.1
++ GAP4stones: 2
+</Example>
+
+If you want to perform more extensive tests, then copy the following lines into &GAP;.
+<Log>
+LoadPackage( "monoid" );;
+dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
+Read(Filename( dirs, "testall.g" ) );
+</Log>
+Please note that these tests could take a long time to finish.<P/>
+
+ If something goes wrong, then please review the instructions in Section <Ref Sect="install"/> and ensure that <Package>MONOID</Package> has been properly installed.  If you continue having problems,  please email me at 
+ <Email>jdm3@st-and.ac.uk</Email>.
+
+</Section>
+
+<!-- ############### -->
+
+<Section><Heading>What's New?</Heading>
+
+The main new features in Version 3.1 of <Package>MONOID</Package> are:
+
+<List>
+<Item> new methods for testing if a semigroup satisfies a particular property, such as if it is regular, 
+simple, inverse, or completely regular, see Chapter <Ref Chap="properties"/>;</Item>
+<Item> implementations of new algorithms for computing the automorphism group of an arbitrary semigroup generated by transformations including an interactive function that allows the user to decide how the computation should proceed, see Chapter <Ref Chap="homo"/>; 
+</Item>
+<Item> functions for finding automorphisms of Rees matrix semigroups and Rees <C>0</C>-matrix semigroups; see Section <Ref Sect="rees"/>.</Item>
+<Item> functions for defining homomorphisms and isomorphisms between some types of semigroups; see Chapter <Ref Chap="homo"/>.</Item>
+</List>
+
+</Section>
+
+<!-- ############### -->
+
+<Section><Heading>Forthcoming Features</Heading>
+
+The features are currently under development and will be available in a future version of <Package>MONOID</Package>:
+
+<List>
+<Item> the number of special types of semigroups available in <Package>MONOID</Package> will be expanded to include all of the standard examples of transformation semigroups and some matrix semigroups.
+</Item>
+<Item> methods analogous to those used to find Green's relations and other structural properties of transformation semigroups in the current version of <Package>MONOID</Package> but for semigroups generated by partial transformations, binary relations, and matrix semigroups.
+</Item>
+<Item> a suite of functions for computing with inverse semigroups generated by partial bijections, including finding faithful representations of smaller degree and small generating sets.
+</Item>
+<Item> an algorithm for finding a small generating set of a semigroup.
+</Item> 
+<!--<Item> an algorithm for determining the congruences of a completely simple or regular semigroup.
+</Item>
+<Item> methods to construct completely regular semigroups as a semilattice of simple semigroups and Clifford semigroups as strong semilattices of groups.
+</Item>-->
+</List>
+</Section>
+
+</Chapter>
+
+<!-- ############### -->
+
+<Chapter Label="general"><Heading>Transformations</Heading>
+	<!--<Section><Heading>General Functions</Heading>
+		<#Include Label="generaltop">
+		<#Include Label="EnumeratorOfCartesian">
+		<#Include Label="MONOIDPermListList">
+	</Section> -->
+	<Section><Heading>More Functions for Transformations</Heading>
+		The functions described in this section extend the functionality of &GAP; relating to transformations. 
+
+		<#Include Label="IsRegularTransformation">
+		<#Include Label="IsTransversal">
+		<#Include Label="Idempotent">
+		<#Include Label="PermRepTrans">
+		<#Include Label="RandomTransformation">
+		<#Include Label="IndexPeriodOfTransformation">
+	</Section>
+	
+</Chapter>
+
+<!-- ############### -->
+
+<Chapter Label="orbits"><Heading>Monoid Actions and Orbits </Heading>
+<Section><Heading>Introduction</Heading>
+The functions described in this section relate to how a transformation semigroup 
+acts on its underlying set. <P/>
+
+Let <C>S</C> be a transformation semigroup of degree 
+<C>n</C>. Then the <E>orbit</E> of <C>i</C> in <C>{1,...,n}</C> is the set 
+of elements <C>j</C> in <C>{1,...,n}</C> such that there exists <C>f</C> 
+in <C>S</C> where <C>(i)f=j</C>. Note that the essential difference between 
+monoid orbits and group orbits is that monoid orbits do not describe an 
+equivalence relation on <C>S</C>. 
+In particular, the relation described by monoid orbits is 
+not symmetric. <P/>
+
+The <E>strong orbit</E> of <C>i</C> in <C>{1,...,n}</C> is the set 
+of elements <C>j</C> in <C>{1,...,n}</C> such that there exists 
+<C>f, g</C> in <C>S</C> where <C>(i)f=j</C> and <C>(j)g=i</C>.<P/>
+
+Recall that a <E>grading</E> is a function <C>f</C> from a transformation 
+semigroup <C>S</C> of degree <C>n</C> to the natural 
+numbers such that if <C>s</C> in <C>S</C> and <C>X</C> is a subset of 
+<C>{1,...,n}</C>, then <C>(Xs)f</C> is at most <C>(X)f</C>. 
+</Section>
+
+<!-- ############### -->
+
+<Section><Heading>Actions</Heading>
+In addition to the actions define in the reference manual
+<Ref Sect="Basic Actions" BookName="ref"/> the following two actions are 
+available in <Package>MONOID</Package>.
+
+<#Include Label="OnTuplesOfSetsAntiAction">
+<#Include Label="OnKernelsAntiAction">
+</Section>
+
+<!-- ############### -->
+
+<Section><Heading>General Orbits</Heading>
+The following functions allow the calculation of arbitrary orbits in 
+transformation semigroups. Several more specific orbits that are often useful 
+are given in Section <Ref Sect="specorbits"/>.
+
+<#Include Label="MonoidOrbit">
+<#Include Label="MonoidOrbits">
+<#Include Label="StrongOrbit">
+<#Include Label="StrongOrbits">
+<#Include Label="GradedOrbit">
+<#Include Label="ShortOrbit">
+<#Include Label="GradedStrongOrbit">
+<#Include Label="ShortStrongOrbit">
+</Section>
+
+<!-- ############### -->
+
+<Section Label="specorbits"><Heading>Some Specific Orbits</Heading>
+The following specific orbits are used in the computation of Green's relations 
+and to test if an arbitrary transformation semigroup has a particular property;  
+see Chapter <Ref Chap="greens"/> and Chapter <Ref Chap="properties"/>.
+
+<#Include Label="ImagesTransformationMonoid">
+<#Include Label="GradedImagesTransformationMonoid">
+<#Include Label="KernelsTransformationMonoid">
+<#Include Label="GradedKernelsTransformationMonoid">
+<#Include Label="StrongOrbitOfImage">
+<#Include Label="StrongOrbitsOfImages">
+</Section>	
+
+<!-- ############### -->
+
+</Chapter>
+
+<!-- ############### -->
+
+<Chapter Label="greens"><Heading>Green's Relations</Heading>
+	<Section><Heading>Introduction</Heading>
+	
+		This chapter contains instructions on how to use the algorithms for 
+		computing Green's relations and related notions for transformation 
+		semigroups and monoids that are implemented in 
+		<Package>MONOID</Package>. <P/>
+		
+		The theory behind these algorithms is developed in <Cite Key="pfeiffer1"/> and the algorithms themselves are described in <Cite Key="pfeiffer2"/>.
+		Another reference is <Cite Key="lallement"/>.<P/>
+		
+		Calculation of Green's relations using the <Package>MONOID</Package> package 
+		are invoked in the same way as they are in &GAP; without the <Package>MONOID
+		</Package> package loaded; see <Ref Chap="Semigroups" BookName="ref"/>. For 
+		example, in &GAP; with the <Package>MONOID</Package> package loaded:
+
+<Example>
+gap&gt; a:=Transformation([2,1,1,2,1]);;
+gap&gt; b:=Transformation([3,4,3,4,4]);;
+gap&gt; c:=Transformation([3,4,3,4,3]);;
+gap&gt; d:=Transformation([4,3,3,4,4]);;
+gap&gt; S:=Semigroup(a,b,c,d);
+&lt;semigroup with 4 generators&gt;
+gap&gt; GreensRClasses(S);
+[ {Transformation( [ 2, 1, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}
+  , {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
+{Transformation( [ 2, 1, 1, 2, 2 ] )} ]
+</Example>
+Without the <Package>MONOID</Package> package loaded:
+<Example>
+gap&gt; a:=Transformation([2,1,1,2,1]);;
+gap&gt; b:=Transformation([3,4,3,4,4]);;
+gap&gt; c:=Transformation([3,4,3,4,3]);;
+gap&gt; d:=Transformation([4,3,3,4,4]);;
+gap&gt; S:=Semigroup(a,b,c,d);
+&lt;semigroup with 4 generators&gt;
+gap&gt; GreensRClasses(S);
+[ {Transformation( [ 1, 2, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}
+  , {Transformation( [ 1, 2, 2, 1, 1 ] )}, 
+{Transformation( [ 1, 2, 2, 1, 2 ] )} ]
+</Example>
+		The only noticable differences are the representatives of the classes and 
+		the order the classes appear in the list. These differences are caused by 
+		the differences in the methods used to behind the function <C>GreensRClasses</C> in <Package>MONOID
+		</Package> and the &GAP; library. <P/>
+		
+		Most of the commands in this section relate 
+		to how Green's relations are calculated in <Package>MONOID</Package>. Although 
+		some of the commands might be used for other purposes, if all that is required 
+		is to calculate Green's classes, relations and so on, then this is done in the 
+		exactly the same way as described in the &GAP; manual; see 
+		<Ref Chap="Green's Relations" BookName="ref"/>.<P/>
+		
+		Due to inherent difficulties with computing Green's L- and D-classes, the 
+		methods used to compute with Green's R-classes are the most efficient 
+		available in <Package>MONOID</Package>.  Thus wherever possible it is 
+		advisable to use the commands relating to Green's R-classes rather than 
+		those relating to Green's L-classes, D-classes, or H-classes.<P/>
+		
+		For small examples of semigroups, say with fewer than 40 elements, it may be 
+		more efficient to use the methods from the library than those in 
+		<Package>MONOID</Package>. This stems from the fact that there are higher 
+		overheads in the methods used in <Package>MONOID</Package>.
+		In either case, with such small examples computing Green's relations does 
+		not take much time. <P/>
+		
+		The methods in <Package>MONOID</Package> allow the computation of individual 
+		Green's classes without the need to compute all the elements of the 
+		underlying semigroup.  It is also possible to compute all the R-classes, the 
+		number of elements and test membership in a transformation semigroup without 
+		computing all the elements. This may be useful if you want to study 
+		a very large semigroup 
+		where computing all the elements of the semigroup would take too long. 
+	</Section>
+	
+	<!-- ############### -->
+	
+	<Section><Heading>Data Structures</Heading>
+		<#Include Label="GreensData">
+		<#Include Label="GreensRClassData">
+		<#Include Label="GreensLClassData">
+		<#Include Label="GreensHClassData">
+		<#Include Label="GreensDClassData">
+		<#Include Label="IsGreensData">
+		<#Include Label="RClassData">
+		<#Include Label="IsGreensRClassDataRep">
+		<#Include Label="IsAssociatedSemigpTransSemigp">
+		<#Include Label="SchutzenbergerGroup">
+		<#Include Label="PartialOrderOfDClasses">
+	</Section>
+</Chapter>
+
+<!-- ############### -->
+
+<Chapter Label="properties"> <Heading>Properties of Semigroups</Heading>
+<Section><Heading>Introduction</Heading>
+		
+		In this section we give the theoretical results and the corresponding 
+		&GAP; functions that can be used to determine whether a set of
+		transformations generates a semigroup of a given type. Let <C>S</C> be a semigroup. Then 
+		<List>
+			<Item> <C>S</C> is a <E>left zero semigroup</E> if <C>xy=x</C> for all <C>x,y</C> in <C>S</C>.</Item>
+			<Item> <C>S</C> is a <E>right zero semigroup</E> if <C>xy=y</C> for all <C>x,y</C> in <C>S</C>.</Item>
+			<Item><C>S</C> is <E>commutative</E> if <C>xy=yx</C> for all <C>x,y</C> in <C>S</C>.</Item>
+			<Item> <C>S</C> is <E>simple</E> if it has no proper two-sided ideals.</Item>
+			<Item> <C>S</C> is <E>regular</E> if for all <C>x</C> in <C>S</C> there exists <C>y</C> in <C>S</C> such that <C>xyx=x</C>.</Item>
+			<Item> <C>S</C> is <E>completely regular</E> if every element of <C>S</C>  lies in a subgroup. </Item>
+			<Item> <C>S</C> is an <E>inverse semigroup</E> if for all elements <C>x</C> in <C>S</C> there exists a unique semigroup inverse, that is, a unique element <C>y</C> such that <C>xyx=x</C> and <C>yxy=y</C>.  </Item>
+			<Item> <C>S</C> is a <E>Clifford semigroup</E> if it is a regular semigroup whose idempotents are central, that is, for all <C>e</C> in <C>S</C> with <C>e^2=e</C> and <C>x</C> in <C>S</C> we have that <C>ex=xe</C>. </Item>
+			<Item> <C>S</C> is a <E>band</E> if every element is an idempotent, that is, <C>x^2=x</C> for all <C>x</C> in <C>S</C>.</Item>
+			<Item> <C>S</C> is a <E>rectangular band</E> if for all <C>x,y,z</C> in <C>S</C> we have that <C>x^2=x</C> and <C>xyz=xz</C>.</Item>
+			<Item> <C>S</C> is a <E>semiband</E> if it is generated by its idempotent elements, that is, elements satisfying <C>x^2=x</C>.</Item>
+			<Item> <C>S</C> is an <E>orthodox semigroup</E> if its idempotents (elements satisfying <C>x^2=x</C>) form a subsemigroup.</Item>
+			<Item><C>S</C> is a <E>zero semigroup</E> if there exists an element <C>0</C> in <C>S</C> such that <C>xy=0</C> for all <C>x,y</C> in <C>S</C>.</Item>
+			<Item><C>S</C> is a <E>zero group</E> if there exists an element <C>0</C> in <C>S</C> such that <C>S</C> without <C>0</C> is a group and for all <C>x</C> in <C>S</C> we have that <C>x0=0x=0</C>.</Item>
+			</List>
+		
+		The following results provide efficient methods to determine if an 
+		arbitrary transformation semigroup is a left zero, right zero, simple, completely regular, inverse or Clifford semigroup. 
+		Proofs of these results can be found in <Cite Key="largest"/>.<P/>
+
+Let <C>S</C> be a semigroup generated by a set of transformations <C>U</C> on a finite set. Then the following hold:
+<List>
+<Item> <C>S</C> is a left zero semigroup if and only if for all <C>f, g</C> in <C>U</C> the image of <C>f</C> equals the image of <C>g</C> and <C>f^2=f</C>.</Item> 
+<Item> <C>S</C> is a right zero semigroup if and only if for all <C>f, g</C> in <C>U</C> the kernel of <C>f</C> equals the kernel of <C>g</C> and <C>f^2=f</C>.</Item>
+<Item> <C>S</C> is simple if and only if for all <C>f, g</C> in <C>U</C> every class of the kernel of <C>f</C> contains exactly <C>1</C> element of the image of <C>g</C>.</Item>
+<Item> <C>S</C> is completely regular if and only if for all <C>f</C> in 
+<C>U</C> and <C>g</C> in <C>S</C>, every class of the kernel of <C>f</C> contains at most <C>1</C> element of the set found by applying <C>g</C> to the image of <C>f</C>.</Item> 
+<Item> <C>S</C> is inverse if and only if it is regular and there is a bijection <C>\phi</C> from the set of kernels of elements of <C>S</C> to the set of images of elements of <C>S</C> such that every class of a kernel <C>K</C> contains exactly <C>1</C> element in <C>(K)\phi</C>.</Item> 
+<Item> <C>S</C> is a Clifford semigroup if and only if for all  <C>f, g</C> in 
+<C>U</C>
+<List>
+<Item> <C>f</C> permutes its image</Item>
+<Item> <C>f</C> commutes with the power of <C>g</C> that acts as the identity on its image.</Item> 
+</List></Item>
+</List>
+
+It is straightforward to verify that a transformation semigroup <C>S</C> 
+generated by <C>U</C> is a group if and only if for all <C>f, g</C> in <C>U</C> 
+<List>
+<Item> the kernel of <C>f</C> equals the kernel of <C>g</C>. </Item> 
+<Item> the image of <C>f</C> equals the image of <C>g</C>. </Item> 
+<Item> <C>f</C> permutes its image.</Item> 
+</List><P/>
+
+At first glance it might not be obvious why these conditions are an improvement 
+over the original definitions. The main 
+point is that it can be easily determined whether a semigroup <C>S</C> generated
+by a set <C>U</C> of mappings satisfies these conditions by 
+considering the generators <C>U</C> and their action on the underlying set only.
+</Section>
+
+<!-- ############### -->
+
+<Section><Heading>Property Tests</Heading>
+
+	<#Include Label="IsCompletelyRegularSemigroup">
+	<#Include Label="IsCompletelySimpleSemigroup">
+	<#Include Label="IsGroupAsSemigroup">
+	<#Include Label="IsCommutativeSemigroup">
+	<#Include Label="IsRegularSemigroup">
+	<#Include Label="IsInverseSemigroup">
+	<#Include Label="IsCliffordSemigroup">
+	<#Include Label="IsBand">
+	<#Include Label="IsRectangularBand">
+	<#Include Label="IsSemiBand">
+	<#Include Label="IsOrthodoxSemigroup">
+	<#Include Label="IsRightZeroSemigroup">
+	<#Include Label="IsLeftZeroSemigroup">
+	<#Include Label="IsZeroSemigroup">
+	<#Include Label="IsZeroGroup">
+	<#Include Label="MultiplicativeZero">
+	
+	
+</Section>
+</Chapter>
+
+<!-- ############### -->
+
+<Chapter Label="special"> <Heading>Special Classes of Semigroup</Heading>
+<Section><Heading>Introduction</Heading>
+In this chapter functions for creating certain semigroups are given. 
+In Section <Ref Sect="trans"/> we give functions for creating the following standard transformation semigroups:
+<List>
+<Item> the semigroup of all <E>singular transformations</E> of the <C>n</C>-element set <C>{1,2,...,n}</C>.  That is, the non-invertible mappings on this set.  This semigroup is known to be regular, idempotent generated (satisfies <Ref Prop="IsSemiBand"/>), and has size <C>n^n-n!</C>.</Item>
+<Item> the semigroup of all <E>order preserving transformations</E> of the <C>n</C>-element set <C>{1,2,...,n}</C>. That is, the mappings <C>f</C> such that <C>i</C> is at most  <C>j</C> implies <C>f(i)</C> is at most <C>f(j)</C> for all <C>i,j</C> in <C>{1,2,...,n}</C>.  This semigroup is known to be regular, idempotent generated (satisfies <Ref Prop="IsSemiBand"/>), and has size <C>Binomial(2*n-1, n-1)</C>.</Item>
+</List>
+
+In Section <Ref Sect="zeros"/> we give functions for creating the following semigroups:
+
+<List>
+<Item> the <E>zero semigroup</E> <C>S</C> of order <C>n</C>. That is, the unique semigroup up to isomorphism of order <C>n</C> such that there exists an element <C>0</C> in <C>S</C> such that <C>xy=0</C> for all <C>x,y</C> in <C>S</C>.</Item>
+<Item> <E>zero groups</E> with underlying group <C>G</C>. That is, the monoid <C>S</C> obtained by adjoining a zero element <C>0</C> to a group <C>G</C> with <C>g0=0g=0</C> for all <C>g</C> in <C>S</C>.</Item>
+</List>
+
+In Section <Ref Sect="random"/> we give functions for randomly creating semigroups of different types. These functions are included so that the user has a ready supply of examples should they be required.
+
+</Section>
+
+<!-- ############### -->
+
+<Section Label="trans"><Heading>Transformation Semigroup</Heading>
+	<#Include Label="SingularSemigroup">
+	<#Include Label="OrderPreservingSemigroup">
+</Section>
+
+<!-- ############### -->
+
+<Section Label="zeros"><Heading>Zero Groups and Zero Semigroups</Heading>
+	<#Include Label="ZeroSemigroup">
+	<#Include Label="ZeroSemigroupElt">
+	<#Include Label="ZeroGroup">
+	<#Include Label="ZeroGroupElt">
+	<#Include Label="UnderlyingGroupOfZG">
+	<#Include Label="UnderlyingGroupEltOfZGElt">
+</Section>
+
+<!-- ############### -->
+
+<Section Label="random"><Heading>Random Semigroups</Heading>
+	<#Include Label="RandomMonoid">
+	<#Include Label="RandomSemigroup">
+	<#Include Label="RandomReesMatrixSemigroup">
+	<#Include Label="RandomReesZeroMatrixSemigroup">
+</Section>
+
+</Chapter>
+
+<!-- ############### -->
+
+<Chapter Label="homo"> <Heading>Semigroup Homomorphisms</Heading>
+<Section><Heading>Introduction</Heading>
+In this chapter we give instructions on how to create semigroup homomorphisms 
+using <Package>MONOID</Package> in several different ways.  <P/>
+
+In Section <Ref Sect="create"/>, we give functions for creating arbitrary 
+semigroup homomorphism specified by a function on the elements, the images of 
+the generators, or the images of all the semigroup elements.
+These functions were written to support the functions for  
+computing the automorphism group of an arbitrary transformation semigroup 
+and to specify isomorphisms between different classes of semigroup, such as 
+finitely presented semigroups and transformation semigroups.<P/>
+ 
+In Section <Ref Sect="inner"/>, we show how to specify and compute the inner 
+automorphisms of a transformation semigroup.  The functions that can be used to 
+find the entire automorphism group of an arbitrary transformation semigroup are 
+given in Section <Ref Sect="autos"/>.  The <Ref Attr="AutomorphismGroup"/> has an interactive mode that allows the user to decide how the computation should proceed. This can be invoked by using the command <C>SetInfoLevel(InfoAutos, 4);</C> see <Ref InfoClass="InfoAutos"/>.<P/>
+
+In Section <Ref Sect="rees"/>, commands for 
+creating automorphisms and finding all automorphisms of Rees matrix semigroups 
+and Rees <C>0</C>-matrix semigroups are given.  <P/>
+
+In Section <Ref Sect="zerogp"/>, 
+functions for specifying the automorphisms of a zero group are given. <P/>
+
+In the
+final section (<Ref Sect="iso"/>), functions for finding isomorphisms between various kinds of semigroups are given. <P/>
+
+The methods behind the commands in this chapter are taken
+from <Cite Key="computing"/>.<P/>
+
+<B>Please note</B>: the 
+following functions can only be used fully if <Package>GRAPE</Package> is fully installed (and loaded):
+<List>
+<Item> <Ref Attr="AutomorphismGroup"/> with argument satisfying <Ref Prop="IsTransformationSemigroup" BookName="ref"/> or <Ref Prop="IsReesZeroMatrixSemigroup" BookName="ref"/></Item>
+<Item> <Ref Oper="RightTransStabAutoGroup"/> with argument satisfying <Ref Prop="IsReesZeroMatrixSemigroup" BookName="ref"/></Item> 
+<Item><Ref Func="RZMSGraph"/></Item>
+<Item><Ref Oper="RZMSInducedFunction"/></Item> 
+<Item><Ref Oper="RZMStoRZMSInducedFunction"/></Item>  
+<Item><Ref Oper="IsomorphismSemigroups"/> with both arguments satisfying <Ref Prop="IsReesZeroMatrixSemigroup" BookName="ref"/></Item>
+</List>
+Please see Chapter <Ref Sect="Monoid"/> for further details on how to obtain <Package>GRAPE</Package>.
+
+		<#Include Label="InfoAutos">
+</Section>
+
+	<!-- ############### -->
+
+<Section Label="create"><Heading>Creating Homomorphisms</Heading>
+The principal functions for creating arbitrary  semigroup homomorphisms are the 
+following three. 
+
+	<!-- ############### -->
+
+	<#Include Label="SemigroupHomomorphismByFunction">
+	<#Include Label="SemigroupHomomorphismByImagesOfGens">
+	<#Include Label="SemigroupHomomorphismByImages">
+	</Section>
+
+<!-- ############### -->
+	
+	<Section Label="inner"><Heading>Inner Automorphisms</Heading>
+		<#Include Label="InnerAutomorphismOfSemigroup">
+		<#Include Label="ConjugatorOfInnerAutomorphismOfSemigroup">
+		<#Include Label="IsInnerAutomorphismOfSemigroup">
+		<#Include Label="InnerAutomorphismsOfSemigroup">
+		<#Include Label="InnerAutomorphismsOfSemigroupInGroup">
+		<#Include Label="InnerAutomorphismsAutomorphismGroup">
+		<#Include Label="IsInnerAutomorphismsOfSemigroup">
+		<#Include Label="IsInnerAutomorphismsOfZeroGroup">
+	</Section>
+	
+<!-- ############### -->
+	
+		<Section Label="autos"><Heading>Automorphism Groups</Heading>
+		<#Include Label="AutomorphismGroup">
+		<#Include Label="AutomorphismsSemigroupInGroup">
+		<#Include Label="IsAutomorphismGroupOfSemigroup">
+		<#Include Label="IsAutomorphismGroupOfSimpleSemigp">
+		<#Include Label="IsAutomorphismGroupOfZeroGroup">
+		<#Include Label="IsAutomorphismGroupOfZeroSemigroup">
+		<#Include Label="IsAutomorphismGroupOfRMS">
+		<#Include Label="IsAutomorphismGroupOfRZMS">
+	</Section>
+	
+<!-- ############### -->
+	
+	<Section Label="rees"><Heading>Rees Matrix Semigroups</Heading>
+		<#Include Label="RMSIsoByTriple">
+		<#Include Label="RZMSIsoByTriple">
+		<#Include Label="IsRMSIsoByTripleRep">
+		<#Include Label="IsRZMSIsoByTripleRep">
+		<#Include Label="RMSInducedFunction">
+		<#Include Label="RZMSInducedFunction">
+		<#Include Label="RZMStoRZMSInducedFunction">
+		<#Include Label="RZMSGraph">
+		<#Include Label="RightTransStabAutoGroup">
+	</Section>
+	
+<!-- ############### -->
+	
+	<Section Label="zerogp"><Heading>Zero Groups</Heading>
+		<#Include Label="ZeroGroupAutomorphism">
+		<#Include Label="IsZeroGroupAutomorphismRep">
+		<#Include Label="UnderlyingGroupAutoOfZeroGroupAuto">
+	</Section>
+	
+<!-- ############### -->
+
+	<Section Label="iso"><Heading>Isomorphisms</Heading>
+		<#Include Label="IsomorphismAutomorphismGroupOfRMS">
+		<#Include Label="IsomorphismPermGroup">
+		<#Include Label="IsomorphismFpSemigroup">
+		<#Include Label="IsomorphismFpMonoid">
+		<#Include Label="IsomorphismSemigroups">
+		<#Include Label="IsomorphismReesMatrixSemigroupOfDClass">
+		<#Include Label="IsomorphismReesMatrixSemigroup">
+	</Section>
+</Chapter>
+
+</Body>
+
+<Bibliography Databases="MONOID" />
+<TheIndex/>
+
+</Book>
+

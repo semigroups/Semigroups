@@ -1,0 +1,1270 @@
+  
+  [1X7 Semigroup Homomorphisms[0X
+  
+  
+  [1X7.1 Introduction[0X
+  
+  In   this   chapter   we  give  instructions  on  how  to  create  semigroup
+  homomorphisms using [5XMONOID[0m in several different ways.
+  
+  In   Section  [14X7.2[0m,  we  give  functions  for  creating  arbitrary  semigroup
+  homomorphism  specified  by  a  function  on the elements, the images of the
+  generators,  or  the  images  of all the semigroup elements. These functions
+  were  written  to support the functions for computing the automorphism group
+  of an arbitrary transformation semigroup and to specify isomorphisms between
+  different  classes  of  semigroup, such as finitely presented semigroups and
+  transformation semigroups.
+  
+  In  Section  [14X7.3[0m, we show how to specify and compute the inner automorphisms
+  of  a  transformation  semigroup. The functions that can be used to find the
+  entire automorphism group of an arbitrary transformation semigroup are given
+  in  Section  [14X7.4[0m. The [2XAutomorphismGroup[0m ([14X7.4-1[0m) has an interactive mode that
+  allows  the  user  to decide how the computation should proceed. This can be
+  invoked  by  using  the  command  [10XSetInfoLevel(InfoAutos,  4);[0m see [2XInfoAutos[0m
+  ([14X7.1-1[0m).
+  
+  In  Section  [14X7.5[0m,  commands  for  creating  automorphisms  and  finding  all
+  automorphisms  of  Rees  matrix  semigroups and Rees [10X0[0m-matrix semigroups are
+  given.
+  
+  In  Section  [14X7.6[0m, functions for specifying the automorphisms of a zero group
+  are given.
+  
+  In  the  final  section  ([14X7.7[0m),  functions  for finding isomorphisms between
+  various kinds of semigroups are given.
+  
+  The methods behind the commands in this chapter are taken from [ABM07].
+  
+  [12XPlease  note[0m:  the  following  functions  can only be used fully if [5XGRAPE[0m is
+  fully installed (and loaded):
+  
+  --    [2XAutomorphismGroup[0m      ([14X7.4-1[0m)      with      argument      satisfying
+        [2XIsTransformationSemigroup[0m  ([14XReference:  IsTransformationSemigroup[0m)  or
+        [2XIsReesZeroMatrixSemigroup[0m ([14XReference: IsReesZeroMatrixSemigroup[0m)
+  
+  --    [2XRightTransStabAutoGroup[0m     ([14X7.5-9[0m)     with    argument    satisfying
+        [2XIsReesZeroMatrixSemigroup[0m ([14XReference: IsReesZeroMatrixSemigroup[0m)
+  
+  --    [2XRZMSGraph[0m ([14X7.5-8[0m)
+  
+  --    [2XRZMSInducedFunction[0m ([14X7.5-6[0m)
+  
+  --    [2XRZMStoRZMSInducedFunction[0m ([14X7.5-7[0m)
+  
+  --    [2XIsomorphismSemigroups[0m   ([14X7.7-5[0m)   with   both   arguments   satisfying
+        [2XIsReesZeroMatrixSemigroup[0m ([14XReference: IsReesZeroMatrixSemigroup[0m)
+  
+  Please see Chapter [14X1[0m for further details on how to obtain [5XGRAPE[0m.
+  
+  [1X7.1-1 InfoAutos[0m
+  
+  [2X> InfoAutos_______________________________________________________[0Xinfo class
+  
+  This  is  the InfoClass for the functions in this chapter. Setting the value
+  of  [10XInfoAutos[0m  to  [10X1,  2, 3,[0m or [10X4[0m using the command [2XSetInfoLevel[0m ([14XReference:
+  SetInfoLevel[0m)  will  give  different levels of information about what [10XGAP[0m is
+  doing  during a computation. In particular, if the level of [10XInfoAutos[0m is set
+  to [10X4[0m, then [2XAutomorphismGroup[0m ([14X7.4-1[0m) runs in interactive mode.
+  
+  
+  [1X7.2 Creating Homomorphisms[0X
+  
+  The  principal  functions for creating arbitrary semigroup homomorphisms are
+  the following three.
+  
+  
+  [1X7.2-1 SemigroupHomomorphismByFunction[0X
+  
+  [2X> SemigroupHomomorphismByFunction( [0X[3XS, T, func[0X[2X ) ___________________[0Xoperation
+  [2X> SemigroupHomomorphismByFunctionNC( [0X[3XS, T, func[0X[2X ) _________________[0Xoperation
+  
+  returns      a      semigroup      homomorphism      with     representation
+  [10XIsSemigroupHomomorphismByFunctionRep[0m from the semigroup [10XS[0m to the semigroup [10XT[0m
+  defined by the function [10Xfunc[0m.
+  
+  [10XSemigroupHomomorphismByFunction[0m  will  find  an  isomorphism  from  [10XS[0m  to  a
+  finitely presented semigroup or monoid (using [2XIsomorphismFpSemigroup[0m ([14X7.7-3[0m)
+  or [2XIsomorphismFpMonoid[0m ([14X7.7-4[0m)) and then check that the list of values under
+  [10Xfunc[0m of the generators of [10XS[0m satisfy the relations of this presentation.
+  
+  [10XSemigroupHomomorphismByFunctionNC[0m   does  not  check  that  [10Xfunc[0m  defines  a
+  homomorphism  and,  in  this  case  [10XS[0m  and  [10XT[0m  can be semigroups, D-classes,
+  H-classes or any combination of these.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4X  gap> gens:=[ Transformation( [ 1, 4, 3, 5, 2 ] ), [0X
+    [4X  > Transformation( [ 2, 3, 1, 1, 2 ] ) ];;[0X
+    [4X  gap> S:=Semigroup(gens);;[0X
+    [4X  gap> gens:=[ Transformation( [ 1, 5, 1, 2, 1 ] ), [0X
+    [4X  > Transformation( [ 5, 1, 4, 3, 2 ] ) ];;[0X
+    [4X  gap> T:=Semigroup(gens);;[0X
+    [4X  gap> idem:=Random(Idempotents(T));;[0X
+    [4X  gap> hom:=SemigroupHomomorphismByFunction(S, T, x-> idem);[0X
+    [4X  SemigroupHomomorphism ( <semigroup with 2 generators>-><semigroup with [0X
+    [4X  2 generators>)[0X
+    [4X  gap> hom:=SemigroupHomomorphismByFunctionNC(S, T, x-> idem);[0X
+    [4X  SemigroupHomomorphism ( <semigroup with 2 generators>-><semigroup with [0X
+    [4X  2 generators>)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X7.2-2 SemigroupHomomorphismByImagesOfGens[0X
+  
+  [2X> SemigroupHomomorphismByImagesOfGens( [0X[3XS, T, list[0X[2X ) _______________[0Xoperation
+  [2X> SemigroupHomomorphismByImagesOfGensNC( [0X[3XS, T, list[0X[2X ) _____________[0Xoperation
+  
+  returns      a      semigroup      homomorphism      with     representation
+  [10XIsSemigroupHomomorphismByImagesOfGensRep[0m  from [10XS[0m to [10XT[0m where the image of the
+  [10Xi[0mth generator of [10XS[0m is the [10Xi[0mth position in [10Xlist[0m.
+  
+  [10XSemigroupHomomorphismByImagesOfGens[0m  will  find  an  isomorphism from [10XS[0m to a
+  finitely presented semigroup or monoid (using [2XIsomorphismFpSemigroup[0m ([14X7.7-3[0m)
+  or  [2XIsomorphismFpMonoid[0m  ([14X7.7-4[0m))  and  then  check  that [10Xlist[0m satisfies the
+  relations of this presentation.
+  
+  [10XSemigroupHomomorphismByImagesOfGensNC[0m  does  not  check  that [10Xlist[0m induces a
+  homomorphism.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4X  gap> gens:=[ Transformation( [ 1, 4, 3, 5, 2 ] ), [0X
+    [4X  > Transformation( [ 2, 3, 1, 1, 2 ] ) ];;[0X
+    [4X  gap> S:=Semigroup(gens);;[0X
+    [4X  gap> gens:=[ Transformation( [ 1, 5, 1, 2, 1 ] ), [0X
+    [4X  > Transformation( [ 5, 1, 4, 3, 2 ] ) ];;[0X
+    [4X  gap> T:=Semigroup(gens);;[0X
+    [4X  gap> SemigroupHomomorphismByImagesOfGens(S, T, GeneratorsOfSemigroup(T));[0X
+    [4X  fail[0X
+    [4X  gap> SemigroupHomomorphismByImagesOfGens(S, S, GeneratorsOfSemigroup(S));[0X
+    [4X  SemigroupHomomorphismByImagesOfGens ( <trans. semigroup of size 161 with [0X
+    [4X  2 generators>-><trans. semigroup of size 161 with 2 generators>)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X7.2-3 SemigroupHomomorphismByImages[0X
+  
+  [2X> SemigroupHomomorphismByImages( [0X[3XS, T, list[0X[2X ) _____________________[0Xoperation
+  [2X> SemigroupHomomorphismByImagesNC( [0X[3XS, T, list[0X[2X ) ___________________[0Xoperation
+  
+  returns      a      semigroup      homomorphism      with     representation
+  [10XIsSemigroupHomomorphismByImagesRep[0m  from  [10XS[0m  to [10XT[0m where the image of the [10Xi[0mth
+  element of [10XS[0m is the [10Xi[0mth position in [10Xlist[0m.
+  
+  [10XSemigroupHomomorphismByImages[0m  will find an isomorphism from [10XS[0m to a finitely
+  presented  semigroup  or  monoid  (using  [2XIsomorphismFpSemigroup[0m  ([14X7.7-3[0m) or
+  [2XIsomorphismFpMonoid[0m   ([14X7.7-4[0m))  and  then  check  that  [10Xlist[0m  satisfies  the
+  relations of this presentation.
+  
+  [10XSemigroupHomomorphismByImagesNC[0m   does   not   check  that  [10Xlist[0m  induces  a
+  homomorphism.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4X  gap> gens:=[ Transformation( [ 2, 3, 4, 2, 4 ] ),[0X
+    [4X  > Transformation( [ 3, 4, 2, 1, 4 ] ) ];;[0X
+    [4X  gap> S:=Semigroup(gens);;[0X
+    [4X  gap> gens:=[ Transformation( [ 2, 4, 4, 1, 2 ] ),[0X
+    [4X  > Transformation( [ 5, 1, 1, 5, 1 ] ) ];;[0X
+    [4X  gap> T:=Semigroup(gens);;[0X
+    [4X  gap> idem:=Transformation( [ 5, 5, 5, 5, 5 ] );;[0X
+    [4X  gap> list:=List([1..Size(S)], x-> idem);;[0X
+    [4X  gap> hom:=SemigroupHomomorphismByImages(S, T, list);[0X
+    [4X  SemigroupHomomorphismByImagesOfGens ( <trans. semigroup of size 164 with [0X
+    [4X  2 generators>-><trans. semigroup with 2 generators>)[0X
+    [4X  gap> SemigroupHomomorphismByImagesNC(S, T, list);[0X
+    [4X  SemigroupHomomorphismByImages ( <trans. semigroup of size 164 with [0X
+    [4X  2 generators>-><trans. semigroup with 2 generators>)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X7.3 Inner Automorphisms[0X
+  
+  [1X7.3-1 InnerAutomorphismOfSemigroup[0m
+  
+  [2X> InnerAutomorphismOfSemigroup( [0X[3XS, perm[0X[2X ) _________________________[0Xoperation
+  [2X> InnerAutomorphismOfSemigroupNC( [0X[3XS, perm[0X[2X ) _______________________[0Xoperation
+  
+  returns  the  inner  automorphism of the transformation semigroup [10XS[0m given by
+  the permutation [10Xperm[0m. The degree of [10Xperm[0m should be at most the degree of [10XS[0m.
+  
+  The  notion  of inner automorphisms of semigroups differs from the notion of
+  the  same name for groups. Indeed, if [10XS[0m is a semigroup of transformations of
+  degree [10Xn[0m, then [10Xg[0m in the symmetric group [10XS_n[0m induces an inner automorphism of
+  [10XS[0m if the mapping that takes [10Xs[0m to [10Xg^-1sg[0m for all [10Xs[0m in [10XS[0m is an automorphism of
+  [10XS[0m.
+  
+  [10XInnerAutomorphismOfSemigroup[0m  checks  that the mapping induced by [10Xperm[0m is an
+  automorphism and [10XInnerAutomorphismOfSemigroupNC[0m only creates the appropriate
+  object  without  performing a check that the permutation actually induces an
+  automorphism.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4X  gap> gens:=[ Transformation( [ 6, 2, 7, 5, 3, 5, 4 ] ), [0X
+    [4X  > Transformation( [ 7, 7, 5, 7, 2, 4, 3 ] ) ];;[0X
+    [4X  gap> S:=Monoid(gens);;[0X
+    [4X  gap> InnerAutomorphismOfSemigroup(S, (1,2,3,4,5));  [0X
+    [4X  fail[0X
+    [4X  gap> InnerAutomorphismOfSemigroupNC(S, (1,2,3,4,5));[0X
+    [4X  ^(1,2,3,4,5)[0X
+    [4X  gap> InnerAutomorphismOfSemigroup(S, ());[0X
+    [4X  ^()[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.3-2 ConjugatorOfInnerAutomorphismOfSemigroup[0m
+  
+  [2X> ConjugatorOfInnerAutomorphismOfSemigroup( [0X[3Xf[0X[2X ) ___________________[0Xattribute
+  
+  returns the permutation [10Xperm[0m used to construct the inner automorphism [10Xf[0m of a
+  semigroup; see [2XInnerAutomorphismOfSemigroup[0m ([14X7.3-1[0m) for further details.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4X  gap> S:=RandomSemigroup(3,8);;[0X
+    [4X  gap> f:=InnerAutomorphismOfSemigroupNC(S, (1,2)(3,4));[0X
+    [4X  ^(1,2)(3,4)[0X
+    [4X  gap> ConjugatorOfInnerAutomorphismOfSemigroup(f);[0X
+    [4X  (1,2)(3,4)[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.3-3 IsInnerAutomorphismOfSemigroup[0m
+  
+  [2X> IsInnerAutomorphismOfSemigroup( [0X[3Xf[0X[2X ) ______________________________[0Xproperty
+  
+  returns  [10Xtrue[0m  if  the  general  mapping  [10Xf[0m  is  an  inner automorphism of a
+  semigroup; see [2XInnerAutomorphismOfSemigroup[0m ([14X7.3-1[0m) for further details.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4X  gap> S:=RandomSemigroup(2,9);;[0X
+    [4X  gap> f:=InnerAutomorphismOfSemigroupNC(S, (1,2)(3,4));[0X
+    [4X  ^(1,2)(3,4)[0X
+    [4X  gap> IsInnerAutomorphismOfSemigroup(f);[0X
+    [4X  true[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.3-4 InnerAutomorphismsOfSemigroup[0m
+  
+  [2X> InnerAutomorphismsOfSemigroup( [0X[3XS[0X[2X ) ______________________________[0Xattribute
+  
+  [10XInnerAutomorphismsOfSemigroup[0m  returns  the  group of inner automorphisms of
+  the transformation semigroup [10XS[0m.
+  
+  The      same      result      can      be      obtained     by     applying
+  [2XInnerAutomorphismsAutomorphismGroup[0m     ([14X7.3-6[0m)    to    the    result    of
+  [2XAutomorphismGroup[0m  ([14X7.4-1[0m)  of [10XS[0m. It is possible that the inner automorphism
+  of  [10XS[0m have been calculated at the same time as the entire automorphism group
+  of [10XS[0m but it might not be. If the degree of [10XS[0m is high, then this function may
+  take a long time to return a value.
+  
+  The  notion  of inner automorphisms of semigroups differs from the notion of
+  the  same name for groups. Indeed, if [10XS[0m is a semigroup of transformations of
+  degree [10Xn[0m, then [10Xg[0m in the symmetric group [10XS_n[0m induces an inner automorphism of
+  [10XS[0m if the mapping that takes [10Xs[0m to [10Xg^-1sg[0m for all [10Xs[0m in [10XS[0m is an automorphism of
+  [10XS[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> x:=Transformation([2,3,4,5,6,7,8,9,1]);;[0X
+    [4Xgap> y:=Transformation([4,2,3,4,5,6,7,8,9]);;[0X
+    [4Xgap> S:=Semigroup(x,y);;[0X
+    [4Xgap> G:=InnerAutomorphismsOfSemigroup(S);[0X
+    [4X<group of size 54 with 2 generators>[0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.3-5 InnerAutomorphismsOfSemigroupInGroup[0m
+  
+  [2X> InnerAutomorphismsOfSemigroupInGroup( [0X[3XS, G[, bval][0X[2X ) ____________[0Xoperation
+  
+  [10XInnerAutomorphismsOfSemigroupInGroup[0m    returns    the    group   of   inner
+  automorphisms  of  the  transformation  semigroup  [10XS[0m that also belong to the
+  group  [10XG[0m.  The  default  setting  is  that  the inner automorphisms of [10XS[0m are
+  calculated first, then filtered to see which elements also belong to [10XG[0m.
+  
+  If  the  optional  argument  [10Xbval[0m is present and [10Xtrue[0m, then the filtering is
+  done  as  the  inner automorphisms are found rather than after they have all
+  been    found.    Otherwise,    then    this    is   equivalent   to   doing
+  [10XInnerAutomorphismsOfSemigroupInGroup(S, G)[0m.
+  
+  If [2XInfoAutos[0m ([14X7.1-1[0m) is set to level [10X4[0m, then a prompt will appear during the
+  procedure  to let you decide when the filtering should be done. In this case
+  the value of [10Xbval[0m is irrelevant.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> gens:=[ Transformation( [1,8,11,2,5,16,13,14,3,6,15,10,7,4,9,12 ] ), [0X
+    [4X>   Transformation( [1,16,9,6,5,8,13,12,15,2,3,4,7,10,11,14] ), [0X
+    [4X>   Transformation( [1,3,7,9,1,15,5,11,13,11,13,3,5,15,7,9 ] ) ];;[0X
+    [4Xgap> S:=Semigroup(gens);;[0X
+    [4Xgap> InnerAutomorphismsOfSemigroup(S);[0X
+    [4X<group of size 16 with 3 generators>[0X
+    [4Xgap> G:=Group(SemigroupHomomorphismByImagesOfGensNC(S, S, gens));[0X
+    [4X<group with 1 generators>[0X
+    [4Xgap> InnerAutomorphismsOfSemigroupInGroup(S, G);[0X
+    [4X<group of size 1 with 1 generators>[0X
+    [4Xgap> InnerAutomorphismsOfSemigroupInGroup(S, G, true);[0X
+    [4X<group of size 1 with 1 generators>[0X
+    [4Xgap> InnerAutomorphismsOfSemigroupInGroup(S, G, false);[0X
+    [4X<group of size 1 with 1 generators>[0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.3-6 InnerAutomorphismsAutomorphismGroup[0m
+  
+  [2X> InnerAutomorphismsAutomorphismGroup( [0X[3Xautgroup[0X[2X ) _________________[0Xattribute
+  
+  If  [10Xautgroup[0m  satisfies  [2XIsAutomorphismGroupOfSemigroup[0m  ([14X7.4-3[0m)  then, this
+  attribute  stores  the  subgroup  of  inner  automorphisms  of  the original
+  semigroup.
+  
+  It is possible that the inner automorphisms of [10Xautgroup[0m have been calculated
+  at  the  same  time as [10Xautgroup[0m was calculated but they might not be. If the
+  degree  of  underlying semigroup is high, then this function may take a long
+  time to return a value.
+  
+  The  notion  of inner automorphisms of semigroups differs from the notion of
+  the  same name for groups. Indeed, if [10XS[0m is a semigroup of transformations of
+  degree [10Xn[0m, then [10Xg[0m in the symmetric group [10XS_n[0m induces an inner automorphism of
+  [10XS[0m if the mapping that takes [10Xs[0m to [10Xg^-1sg[0m for all [10Xs[0m in [10XS[0m is an automorphism of
+  [10XS[0m.
+  
+  If   [10Xautgroup[0m   satisfies   [2XIsAutomorphismGroupOfZeroGroup[0m   ([14X7.4-5[0m),   then
+  [10XInnerAutomorphismsAutomorphismGroup[0m    returns   the   subgroup   of   inner
+  automorphisms  inside  the automorphism group of the zero group by computing
+  the  inner automorphisms of the underlying group. Note that in this case the
+  notion  of  inner  automorphisms  corresponds to that of the group theoretic
+  notion.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> g1:=Transformation([3,3,2,6,2,4,4,6]);;[0X
+    [4Xgap> g2:=Transformation([5,1,7,8,7,5,8,1]);;[0X
+    [4Xgap> m6:=Semigroup(g1,g2);;[0X
+    [4Xgap> A:=AutomorphismGroup(m6);[0X
+    [4X<group of size 12 with 2 generators>[0X
+    [4Xgap> InnerAutomorphismsAutomorphismGroup(A);[0X
+    [4X<group of size 12 with 2 generators> [0X
+    [4Xgap> last=InnerAutomorphismsOfSemigroup(m6); [0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.3-7 IsInnerAutomorphismsOfSemigroup[0m
+  
+  [2X> IsInnerAutomorphismsOfSemigroup( [0X[3XG[0X[2X ) _____________________________[0Xproperty
+  
+  returns  [10Xtrue[0m  if  [10XG[0m  is  the  inner  automorphism group of a transformation
+  semigroup.
+  
+  The  notion  of inner automorphisms of semigroups differs from the notion of
+  the  same name for groups. Indeed, if [10XS[0m is a semigroup of transformations of
+  degree [10Xn[0m, then [10Xg[0m in the symmetric group [10XS_n[0m induces an inner automorphism of
+  [10XS[0m if the mapping that takes [10Xs[0m to [10Xg^-1sg[0m for all [10Xs[0m in [10XS[0m is an automorphism of
+  [10XS[0m.
+  
+  Note  that  this  property  is set to [10Xtrue[0m when the computation of the inner
+  automorphisms  is  performed.  Otherwise,  there is no method to check if an
+  arbitrary group satisfies this property.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> S:=RandomSemigroup(5,5);[0X
+    [4X<semigroup with 5 generators>[0X
+    [4Xgap> I:=InnerAutomorphismsOfSemigroup(S);;[0X
+    [4Xgap> IsInnerAutomorphismsOfSemigroup(I);[0X
+    [4Xtrue[0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.3-8 IsInnerAutomorphismsOfZeroGroup[0m
+  
+  [2X> IsInnerAutomorphismsOfZeroGroup( [0X[3XG[0X[2X ) _____________________________[0Xproperty
+  
+  returns  [10Xtrue[0m  if  [10XG[0m  is  the inner automorphism group of a zero group. This
+  property is set to [10Xtrue[0m when the computation of the inner automorphism group
+  of the zero group is performed. Otherwise, there is no method to check if an
+  arbitrary group satisfies this property.
+  
+  Every  inner  automorphism  of a zero group is just an inner automorphism of
+  the  underlying  group that fixes the zero element. So, this notion of inner
+  automorphism corresponds to the notion of inner automorphisms of a group.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> zg:=ZeroGroup(CyclicGroup(70));[0X
+    [4X<zero group with 4 generators>[0X
+    [4Xgap> I:=InnerAutomorphismsAutomorphismGroup(AutomorphismGroup(zg));[0X
+    [4X<group of size 1 with 1 generators>[0X
+    [4Xgap> IsInnerAutomorphismsOfZeroGroup(I);[0X
+    [4Xtrue[0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X7.4 Automorphism Groups[0X
+  
+  [1X7.4-1 AutomorphismGroup[0m
+  
+  [2X> AutomorphismGroup( [0X[3XS[0X[2X ) __________________________________________[0Xattribute
+  
+  [10XAutomorphismGroup[0m  returns  the group of automorphisms of the transformation
+  semigroup,  zero  group,  zero  semigroup,  Rees  matrix  semigroup, or Rees
+  0-matrix   semigroup  [10XS[0m;  that  is,  semigroups  satisfying  the  properties
+  [2XIsTransformationSemigroup[0m       ([14XReference:      IsTransformationSemigroup[0m),
+  [2XIsZeroGroup[0m   ([14X5.2-15[0m),   [2XIsZeroSemigroup[0m   ([14X5.2-14[0m),  [2XIsReesMatrixSemigroup[0m
+  ([14XReference: IsReesMatrixSemigroup[0m), or [2XIsReesZeroMatrixSemigroup[0m ([14XReference:
+  IsReesZeroMatrixSemigroup[0m).
+  
+  If  [10XS[0m  is  a  transformation  semigroup, then [10XAutomorphismGroup[0m computes the
+  automorphism group of [10XS[0m using the algorithm described in [ABM07].
+  
+  If   [10XS[0m   is   a  (completely)  simple  transformation  semigroup,  then  the
+  automorphism  group  is  computed  by  passing  to an isomorphic Rees matrix
+  semigroup.  If  [10XS[0m  is a transformation group, then the automorphism group is
+  computed  by  passing to an isomorphic permutation group. If [10XS[0m has order [10X<10[0m
+  and    knows    its    Cayley    table    ([2XMultiplicationTable[0m   ([14XReference:
+  MultiplicationTable[0m)),  then the automorphism group is calculated by finding
+  the  setwise stabilizer of the Cayley table in the symmetric group of degree
+  [10X|S|[0m under the action on the Cayley table.
+  
+  If [10XS[0m is a zero group, then [10XAutomorphismGroup[0m computes the automorphism group
+  of  the  underlying  group. Obviously, every automorphism of a zero group is
+  the extension of an automorphism of the underlying group that fixes the zero
+  element.
+  
+  If  [10XS[0m  is a zero semigroup, then every permutation of the elements of [10XS[0m that
+  fixes  the zero element is an automorphism. Thus the automorphism group of a
+  zero  semigroup  of  order  [10Xn[0m  is  isomorphic  to the symmetric group on [10Xn-1[0m
+  elements.
+  
+  If  [10XS[0m  is  a  Rees  matrix  semigroup or a Rees 0-matrix semigroup, then the
+  automorphism  group  of  [10XS[0m  is  calculated  using the algorithm described in
+  [ABM07,  Section 2]. In this case, the returned group has as many generators
+  as elements. This may be changed in the future.
+  
+  If  [2XInfoAutos[0m ([14X7.1-1[0m) is set to level [10X4[0m, then prompts will appear during the
+  procedure to allow you interactive control over the computation.
+  
+  [12XPlease note:[0m if [5Xgrape[0m is not loaded, then this function will not work when [10XS[0m
+  satisfies  [2XIsTransformationSemigroup[0m  ([14XReference: IsTransformationSemigroup[0m)
+  or [2XIsReesZeroMatrixSemigroup[0m ([14XReference: IsReesZeroMatrixSemigroup[0m).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> g1:=Transformation([5,4,4,2,1]);;[0X
+    [4Xgap> g2:=Transformation([2,5,5,4,1]);;[0X
+    [4Xgap> m2:=Monoid(g1,g2);;[0X
+    [4Xgap> IsTransformationSemigroup(m2);[0X
+    [4Xtrue[0X
+    [4Xgap> AutomorphismGroup(m2);[0X
+    [4X<group of size 24 with 5 generators>[0X
+    [4Xgap> IsAutomorphismGroupOfSemigroup(last);[0X
+    [4Xtrue[0X
+    [4Xgap> zg:=ZeroGroup(CyclicGroup(70));[0X
+    [4X<zero group with 4 generators>[0X
+    [4Xgap> IsZeroGroup(zg);[0X
+    [4Xtrue[0X
+    [4Xgap> AutomorphismGroup(zg);[0X
+    [4X<group with 3 generators>[0X
+    [4Xgap> IsAutomorphismGroupOfZeroGroup(last);[0X
+    [4Xtrue[0X
+    [4Xgap> InnerAutomorphismsOfSemigroup(zg);[0X
+    [4X<group of size 1 with 1 generators>[0X
+    [4Xgap> InnerAutomorphismsAutomorphismGroup(AutomorphismGroup(zg));[0X
+    [4X<group of size 1 with 1 generators>[0X
+    [4Xgap> last2=InnerAutomorphismsAutomorphismGroup(AutomorphismGroup(zg));[0X
+    [4Xtrue[0X
+    [4Xgap> S:=ZeroSemigroup(10);[0X
+    [4X<zero semigroup with 10 elements>[0X
+    [4Xgap> Size(S);[0X
+    [4X10[0X
+    [4Xgap> Elements(S);[0X
+    [4X[ 0, z1, z2, z3, z4, z5, z6, z7, z8, z9 ][0X
+    [4Xgap> A:=AutomorphismGroup(S);[0X
+    [4X<group with 2 generators>[0X
+    [4Xgap> IsAutomorphismGroupOfZeroSemigroup(A);[0X
+    [4Xtrue[0X
+    [4Xgap> Factorial(9)=Size(A);[0X
+    [4Xtrue[0X
+    [4Xgap> G:=Group([ (2,5)(3,4) ]);;[0X
+    [4Xgap> mat:=[ [ (), (), (), (), () ], [0X
+    [4X>   [ (), (), (2,5)(3,4), (2,5)(3,4), () ], [0X
+    [4X>   [ (), (), (), (2,5)(3,4), (2,5)(3,4) ], [0X
+    [4X>   [ (), (2,5)(3,4), (), (2,5)(3,4), () ], [0X
+    [4X>   [ (), (2,5)(3,4), (), (2,5)(3,4), () ] ];;[0X
+    [4Xgap> rms:=ReesMatrixSemigroup(G, mat);[0X
+    [4XRees Matrix Semigroup over Group([ (2,5)(3,4) ])[0X
+    [4Xgap> A:=AutomorphismGroup(rms);[0X
+    [4X<group of size 12 with 12 generators>[0X
+    [4Xgap> IsAutomorphismGroupOfRMS(A);[0X
+    [4Xtrue[0X
+    [4Xgap> G:=ZeroGroup(Group([ (1,3)(2,5), (1,3,2,5) ]));;[0X
+    [4Xgap> elts:=Elements(G);;[0X
+    [4Xgap> mat:=[ [ elts[7], elts[1], elts[9], elts[1], elts[1] ], [0X
+    [4X>   [ elts[1], elts[1], elts[1], elts[9], elts[1] ], [0X
+    [4X>   [ elts[9], elts[1], elts[1], elts[4], elts[9] ], [0X
+    [4X>   [ elts[1], elts[1], elts[1], elts[1], elts[1] ], [0X
+    [4X>   [ elts[1], elts[5], elts[1], elts[1], elts[1] ] ];;[0X
+    [4Xgap> rzms:=ReesZeroMatrixSemigroup(G, mat);;[0X
+    [4Xgap> AutomorphismGroup(rzms);[0X
+    [4Xgap> IsAutomorphismGroupOfRZMS(A);[0X
+    [4Xtrue[0X
+    [4X<group of size 512 with 512 generators>[0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.4-2 AutomorphismsSemigroupInGroup[0m
+  
+  [2X> AutomorphismsSemigroupInGroup( [0X[3XS, G[, bvals][0X[2X ) __________________[0Xoperation
+  
+  [10XAutomorphismsSemigroupInGroup[0m  returns  the  group  of  automorphisms of the
+  transformation  semigroup [10XS[0m that also belong to the group [10XG[0m. If the value of
+  [10XG[0m  is  [10Xfail[0m,  then  [10XAutomorphismsSemigroupInGroup[0m  returns the same value as
+  [2XAutomorphismGroup[0m  ([14X7.4-1[0m). The default setting is that the automorphisms of
+  [10XS[0m  are  calculated first, then filtered to see which elements also belong to
+  [10XG[0m.
+  
+  The optional argument [10Xbvals[0m is a list of [10X5[0m Boolean variables that correspond
+  to the following options:
+  
+  --    if [10Xbvals[1][0m is [10Xtrue[0m, then [5XGAP[0m will run a cheap check to see if all the
+        automorphisms  are inner. Note that this can return [10Xfalse[0m when all the
+        automorphisms  are  inner, that is the condition is sufficient but not
+        necessary. The default setting is [10Xfalse[0m.
+  
+  --    if  [10Xbvals[2][0m  is  [10Xtrue[0m,  then  [5XGAP[0m  will  try  to  compute  the  inner
+        automorphisms of [10XS[0m before computing the entire automorphism group. For
+        semigroups  of  large  degree  this  may  not be sensible. The default
+        setting is [10Xfalse[0m.
+  
+  --    if  [10Xbvals[3][0m  is  [10Xtrue[0m,  then  [5XGAP[0m  will  test  elements  in the inner
+        automorphism  search  space  to  see  if  they  are  in [10XG[0m as the inner
+        automorphisms  are  found  rather than after they have all been found.
+        The default setting is [10Xfalse[0m.
+  
+  --    if  [10Xbvals[4][0m  is  [10Xtrue[0m, then [5XGAP[0m will test elements in the outer (i.e.
+        not  inner)  automorphism search space to see if they are in [10XG[0m as they
+        are  found  rather  than  after  they have all been found. The default
+        setting is [10Xfalse[0m.
+  
+  --    if  [10Xbvals[5][0m is [10Xtrue[0m, then [5XGAP[0m will keep track of non-automorphisms in
+        the search for outer automorphisms. The default setting is [10Xfalse[0m.
+  
+  [12XPlease note:[0m if [5Xgrape[0m is not loaded, then this function will not work when [10XS[0m
+  satisfies  [2XIsTransformationSemigroup[0m  ([14XReference: IsTransformationSemigroup[0m)
+  or [2XIsReesZeroMatrixSemigroup[0m ([14XReference: IsReesZeroMatrixSemigroup[0m).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> g1:=Transformation([5,4,4,2,1]);;[0X
+    [4Xgap> g2:=Transformation([2,5,5,4,1]);;[0X
+    [4Xgap> m2:=Monoid(g1,g2);;[0X
+    [4Xgap> A:=AutomorphismsSemigroupInGroup(m2, fail, [0X
+    [4X> [false, true, true, false, true]);[0X
+    [4X<group of size 24 with 3 generators>[0X
+    [4Xgap> g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;[0X
+    [4Xgap> g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;[0X
+    [4Xgap> m7:=Monoid(g1,g2);;[0X
+    [4Xgap> A:=AutomorphismsSemigroupInGroup(m7, fail, [0X
+    [4X> [false, true, false, false, true]);[0X
+    [4X<group of size 2 with 2 generators>[0X
+    [4Xgap> imgs:=[ [ Transformation( [ 1, 1, 5, 4, 3, 6, 7, 8, 9, 10, 11, 12 ] ), [0X
+    [4X>       Transformation( [ 1, 1, 5, 7, 4, 3, 6, 8, 9, 10, 11, 12 ] ), [0X
+    [4X>       Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 8 ] ) ], [0X
+    [4X>   [ Transformation( [ 1, 1, 5, 4, 3, 6, 7, 8, 9, 10, 11, 12 ] ), [0X
+    [4X>       Transformation( [ 1, 1, 5, 3, 7, 4, 6, 8, 9, 10, 11, 12 ] ), [0X
+    [4X>       Transformation( [ 1, 2, 3, 4, 5, 6, 7, 11, 12, 8, 9, 10 ] ) ] ];;[0X
+    [4Xgap> gens:=List(imgs, x-> SemigroupHomomorphismByImagesOfGensNC(S, S, x));;[0X
+    [4Xgap> G:=Group(gens);[0X
+    [4X<group with 2 generators>[0X
+    [4Xgap> A:=AutomorphismsSemigroupInGroup(S, G, [0X
+    [4X> [false, false, false, true, false]);[0X
+    [4X<group of size 48 with 4 generators>[0X
+    [4Xgap> Size(G);[0X
+    [4X48[0X
+    [4Xgap> A:=AutomorphismsSemigroupInGroup(S, G);[0X
+    [4X<group of size 48 with 4 generators>[0X
+    [4Xgap> gens:=[ Transformation( [ 1, 1, 4, 3, 5, 6, 7, 8, 9, 10, 11, 12 ] ), [0X
+    [4X>   Transformation( [ 1, 1, 4, 5, 6, 7, 3, 8, 9, 10, 11, 12 ] ), [0X
+    [4X>   Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 8 ] ) ];;[0X
+    [4Xgap> S:=Semigroup(gens);;[0X
+    [4Xgap> A:=AutomorphismsSemigroupInGroup(S, G);[0X
+    [4X<group of size 48 with 4 generators>[0X
+    [4Xgap> HasAutomorphismGroup(S);[0X
+    [4Xtrue[0X
+    [4Xgap> AutomorphismGroup(S);[0X
+    [4X<group of size 480 with 7 generators>[0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.4-3 IsAutomorphismGroupOfSemigroup[0m
+  
+  [2X> IsAutomorphismGroupOfSemigroup( [0X[3XG[0X[2X ) ______________________________[0Xproperty
+  
+  returns  [10Xtrue[0m  if [10XG[0m is the automorphism group of a semigroup. Note that this
+  property  is  set  to [10Xtrue[0m when the computation of the automorphism group is
+  performed.  Otherwise,  there  is  no  method to check if an arbitrary group
+  satisfies this property; see [2XAutomorphismGroup[0m ([14X7.4-1[0m) for an example of the
+  usage of this command.
+  
+  [1X7.4-4 IsAutomorphismGroupOfSimpleSemigp[0m
+  
+  [2X> IsAutomorphismGroupOfSimpleSemigp( [0X[3XG[0X[2X ) ___________________________[0Xproperty
+  
+  returns  [10Xtrue[0m  if  [10XG[0m  is  the  automorphism group of a simple transformation
+  semigroup.  This  property  is  set  to  [10Xtrue[0m  when  the  computation of the
+  automorphism  group  of  the  simple  transformation semigroup is performed.
+  Otherwise,  there is no method to check if an arbitrary group satisfies this
+  property;  see [2XAutomorphismGroup[0m ([14X7.4-1[0m) for an example of the usage of this
+  command.
+  
+  [1X7.4-5 IsAutomorphismGroupOfZeroGroup[0m
+  
+  [2X> IsAutomorphismGroupOfZeroGroup( [0X[3XG[0X[2X ) ______________________________[0Xproperty
+  
+  returns  [10Xtrue[0m  if [10XG[0m is the automorphism group of a zero group. This property
+  is  set  to  [10Xtrue[0m when the computation of the automorphism group of the zero
+  group  is  performed. Otherwise, there is no method to check if an arbitrary
+  group  satisfies this property; see [2XAutomorphismGroup[0m ([14X7.4-1[0m) for an example
+  of the usage of this command.
+  
+  Every automorphism of a zero group is just an automorphism of the underlying
+  group that fixes the zero element.
+  
+  [1X7.4-6 IsAutomorphismGroupOfZeroSemigroup[0m
+  
+  [2X> IsAutomorphismGroupOfZeroSemigroup( [0X[3XG[0X[2X ) __________________________[0Xproperty
+  
+  returns  [10Xtrue[0m  if  [10XG[0m  is  the  automorphism  group of a zero semigroup. This
+  property  is  set  to [10Xtrue[0m when the computation of the automorphism group of
+  the  zero  semigroup is performed. Otherwise, there is no method to check if
+  an  arbitrary  group  satisfies this property; see [2XAutomorphismGroup[0m ([14X7.4-1[0m)
+  for an example of the usage of this command.
+  
+  Every  permutation  of  a  zero  semigroup that fixes the zero element is an
+  automorphism.  Thus the automorphism group of a zero semigroup of order [10Xn[0m is
+  isomorphic to the symmetric group on [10Xn-1[0m elements.
+  
+  [1X7.4-7 IsAutomorphismGroupOfRMS[0m
+  
+  [2X> IsAutomorphismGroupOfRMS( [0X[3XG[0X[2X ) ____________________________________[0Xproperty
+  
+  returns [10Xtrue[0m if [10XG[0m is the automorphism group of a Rees matrix semigroup; that
+  is,  a  semigroup  created using the command [2XReesMatrixSemigroup[0m ([14XReference:
+  ReesMatrixSemigroup[0m)  and/or  satisfying  [2XIsReesMatrixSemigroup[0m  ([14XReference:
+  IsReesMatrixSemigroup[0m).
+  
+  Note  that  this  property  is  set  to  [10Xtrue[0m  when  the  computation of the
+  automorphism  group  is performed. Otherwise, there is no method to check if
+  an  arbitrary  group  satisfies this property; see [2XAutomorphismGroup[0m ([14X7.4-1[0m)
+  for an example of the usage of this command.
+  
+  [1X7.4-8 IsAutomorphismGroupOfRZMS[0m
+  
+  [2X> IsAutomorphismGroupOfRZMS( [0X[3XG[0X[2X ) ___________________________________[0Xproperty
+  
+  returns [10Xtrue[0m if [10XG[0m is the automorphism group of a Rees matrix semigroup; that
+  is,   a   semigroup   created   using  the  command  [2XReesZeroMatrixSemigroup[0m
+  ([14XReference:         ReesZeroMatrixSemigroup[0m)        and/or        satisfying
+  [2XIsReesZeroMatrixSemigroup[0m ([14XReference: IsReesZeroMatrixSemigroup[0m).
+  
+  Note  that  this  property  is  set  to  [10Xtrue[0m  when  the  computation of the
+  automorphism  group  is performed. Otherwise, there is no method to check if
+  an  arbitrary  group  satisfies this property; see [2XAutomorphismGroup[0m ([14X7.4-1[0m)
+  for an example of the usage of this command.
+  
+  
+  [1X7.5 Rees Matrix Semigroups[0X
+  
+  [1X7.5-1 RMSIsoByTriple[0m
+  
+  [2X> RMSIsoByTriple( [0X[3Xrms1, rms2, triple[0X[2X ) _____________________________[0Xfunction
+  
+  this  is  a  function  to  create  an  isomorphism  between  the Rees matrix
+  semigroups  [10Xrms1[0m  and  [10Xrms2[0m defined by [10Xtriple[0m. The first component of [10Xtriple[0m
+  should be an isomorphism from the underlying group of [10Xrms1[0m to the underlying
+  group  of [10Xrms2[0m, the second component should be an isomorphism from the graph
+  associated  to the matrix of [10Xrms1[0m to the graph associated with the matrix of
+  [10Xrms2[0m, and the third component should be a function (given as a list of image
+  elements)  from  the index sets of [10Xrms1[0m to the underlying group of [10Xrms2[0m; see
+  [ABM07, Section 2] for further details.
+  
+  Note   that  this  function  only  creates  an  object  with  representation
+  [2XIsRMSIsoByTripleRep[0m  ([14X7.5-3[0m) and does not check that [10Xtriple[0m actually defines
+  an  isomorphism  from [10Xrms1[0m to [10Xrms2[0m or that the arguments even make sense. To
+  create an isomorphism from [10Xrms1[0m to [10Xrms2[0m use [2XIsomorphismSemigroups[0m ([14X7.7-5[0m).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> G:=Group((1,4,3,5,2));;[0X
+    [4Xgap> mat:=[ [ (), (), () ], [ (), (1,4,3,5,2), () ], [ (), (1,3,2,4,5), () ] ];;[0X
+    [4Xgap> rms:=ReesMatrixSemigroup(G, mat);;[0X
+    [4Xgap> l:=(4,6);;[0X
+    [4Xgap> g:=GroupHomomorphismByImages(G, G, [(1,4,3,5,2)], [(1,2,5,3,4)]);[0X
+    [4X[ (1,4,3,5,2) ] -> [ (1,2,5,3,4) ][0X
+    [4Xgap> map:=[(), (1,5,4,2,3), (), (), (), () ];;[0X
+    [4Xgap> RMSIsoByTriple(rms, rms, [l, g, map]);[0X
+    [4X[ (4,6), GroupHomomorphismByImages( Group( [ (1,4,3,5,2) ] ), Group( [0X
+    [4X  [ (1,4,3,5,2) ] ), [ (1,4,3,5,2) ], [ (1,2,5,3,4) ] ), [0X
+    [4X  [ (), (1,5,4,2,3), (), (), (), () ] ][0X
+    [4Xgap> IsRMSIsoByTripleRep(last);[0X
+    [4Xtrue[0X
+    [4Xgap> #the previous actually defines an automorphism of rms[0X
+    [4Xgap> #on the other hand, the next example is nonsense but no error[0X
+    [4Xgap> #is given[0X
+    [4Xgap> RMSIsoByTriple(rms, rms, [l, g, [()]]);[0X
+    [4X[ (4,6), GroupHomomorphismByImages( Group( [ (1,4,3,5,2) ] ), Group( [0X
+    [4X  [ (1,4,3,5,2) ] ), [ (1,4,3,5,2) ], [ (1,2,5,3,4) ] ), [ () ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.5-2 RZMSIsoByTriple[0m
+  
+  [2X> RZMSIsoByTriple( [0X[3Xrzms1, rzms2, triple[0X[2X ) __________________________[0Xfunction
+  
+  this  is  a  function  to  create  an  isomorphism between the Rees 0-matrix
+  semigroups  [10Xrzms1[0m and [10Xrzms2[0m defined by [10Xtriple[0m. The first component of [10Xtriple[0m
+  should  be  an  isomorphism  from  the underlying zero group of [10Xrzms1[0m to the
+  underlying   zero  group  of  [10Xrzms2[0m,  the  second  component  should  be  an
+  isomorphism  from  the  graph associated to the matrix of [10Xrzms1[0m to the graph
+  associated  with  the  matrix  of [10Xrzms2[0m, and the third component should be a
+  function (given as a list of image elements) from the index sets of [10Xrzms1[0m to
+  the  underlying  zero  group  of  [10Xrzms2[0m;  see [ABM07, Section 2] for further
+  details.
+  
+  Note   that  this  function  only  creates  an  object  with  representation
+  [2XIsRZMSIsoByTripleRep[0m ([14X7.5-4[0m) and does not check that [10Xtriple[0m actually defines
+  an isomorphism from [10Xrzms1[0m to [10Xrzms2[0m or that the arguments even make sense. To
+  create an isomorphism from [10Xrzms1[0m to [10Xrzms2[0m use [2XIsomorphismSemigroups[0m ([14X7.7-5[0m).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> G:=Group((1,4,3,5,2));;[0X
+    [4Xgap> ZG:=ZeroGroup(G);[0X
+    [4X<zero group with 2 generators>[0X
+    [4Xgap> mat:=[ [ (), (), () ], [ (), (1,4,3,5,2), () ], [ (), (1,3,2,4,5), () ] ];;[0X
+    [4Xgap> mat:=List(mat, x-> List(x, ZeroGroupElt));[0X
+    [4X[ [ (), (), () ], [ (), (1,4,3,5,2), () ], [ (), (1,3,2,4,5), () ] ][0X
+    [4Xgap> rms:=ReesZeroMatrixSemigroup(ZG, mat);[0X
+    [4XRees Zero Matrix Semigroup over <zero group with 2 generators>[0X
+    [4Xgap> l:=(4,6);;[0X
+    [4Xgap> g:=GroupHomomorphismByImages(G, G, [(1,4,3,5,2)], [(1,2,5,3,4)]);[0X
+    [4X[ (1,4,3,5,2) ] -> [ (1,2,5,3,4) ][0X
+    [4Xgap> g:=ZeroGroupAutomorphism(ZG, g);[0X
+    [4X<mapping: <zero group with 2 generators> -> <zero group with 2 generators> >[0X
+    [4Xgap>  map:=List([(), (1,5,4,2,3), (), (), (), () ], ZeroGroupElt);;[0X
+    [4Xgap> RZMSIsoByTriple(rms, rms, [l, g, map]);[0X
+    [4X[ (4,6), <mapping: <zero group with 2 generators> -> <zero group with [0X
+    [4X  2 generators> >, [0X
+    [4X[ ZeroGroup(()), ZeroGroup((1,5,4,2,3)), ZeroGroup(()), ZeroGroup(()), [0X
+    [4X    ZeroGroup(()), ZeroGroup(()) ] ][0X
+    [4Xgap> RZMSIsoByTriple(rms, rms, [l, g, [()]]);[0X
+    [4X[ (4,6), <mapping: <zero group with 2 generators> -> <zero group with [0X
+    [4X  2 generators> >, [ () ] ][0X
+    [4Xgap> IsRZMSIsoByTripleRep(last);[0X
+    [4Xtrue    [0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.5-3 IsRMSIsoByTripleRep[0m
+  
+  [2X> IsRMSIsoByTripleRep( [0X[3Xf[0X[2X ) ___________________________________[0XRepresentation
+  
+  returns [10Xtrue[0m if the object [10Xf[0m is represented as an isomorphism of Rees matrix
+  semigroups   by   a   triple;  as  explained  in  [ABM07,  Section  2];  see
+  [2XRMSIsoByTriple[0m ([14X7.5-1[0m) for an example of the usage of this command.
+  
+  [1X7.5-4 IsRZMSIsoByTripleRep[0m
+  
+  [2X> IsRZMSIsoByTripleRep( [0X[3Xf[0X[2X ) __________________________________[0XRepresentation
+  
+  returns [10Xtrue[0m if the object [10Xf[0m is represented as an isomorphism of Rees matrix
+  semigroups   by   a   triple;  as  explained  in  [ABM07,  Section  2];  see
+  [2XRZMSIsoByTriple[0m ([14X7.5-2[0m) for an example of the usage of this command.
+  
+  [1X7.5-5 RMSInducedFunction[0m
+  
+  [2X> RMSInducedFunction( [0X[3XRMS, lambda, gamma, g[0X[2X ) _____________________[0Xoperation
+  
+  [10Xlambda[0m  is  an  automorphism  of  the  graph  associated  to the Rees matrix
+  semigroup  [10XRMS[0m,  [10Xgamma[0m an automorphism of the underlying group of [10XRMS[0m, and [10Xg[0m
+  an  element  of the underlying group of [10XRMS[0m. The function [10XRMSInducedFunction[0m
+  attempts  to find the function determined by [10Xlambda[0m and [10Xgamma[0m from the union
+  of  the  index  sets [10XI[0m and [10XJ[0m to the group [10XG[0m of the Rees matrix semigroup [10XRMS[0m
+  over  [10XG[0m,  [10XI[0m, and [10XJ[0m with respect to [10XP[0m where the first element is given by the
+  element  [10Xg[0m. If a conflict is found, then [10Xfalse[0m is returned together with the
+  induced map; see [ABM07, Section 2] for further details.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> G:=Group([ (1,2) ]);;[0X
+    [4Xgap> mat:=[ [ (), (), () ], [ (), (1,2), () ], [ (), (1,2), (1,2) ], [0X
+    [4X>    [ (), (), () ], [ (), (1,2), () ] ];;[0X
+    [4Xgap> rms:=ReesMatrixSemigroup(G, mat);;[0X
+    [4Xgap> l:=(1,2)(4,5,6);[0X
+    [4X(1,2)(4,5,6)[0X
+    [4Xgap> gam:=One(AutomorphismGroup(G));[0X
+    [4XIdentityMapping( Group([ (1,2) ]) )[0X
+    [4Xgap> g:=(1,2);[0X
+    [4Xgap> RMSInducedFunction(rms, l, gam, g);[0X
+    [4X[ false, [ (1,2), (), (), (), (), (1,2), (1,2), () ] ][0X
+    [4Xgap> RMSInducedFunction(rms, (4,7), gam, ());[0X
+    [4X[ true, [ (), (), (), (), (), (), (), () ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.5-6 RZMSInducedFunction[0m
+  
+  [2X> RZMSInducedFunction( [0X[3XRZMS, lambda, gamma, g, comp[0X[2X ) _____________[0Xoperation
+  
+  [10Xlambda[0m  is  an  automorphism  of  the graph associated to the Rees 0- matrix
+  semigroup  [10XRZMS[0m, [10Xgamma[0m an automorphism of the underlying zero group of [10XRZMS[0m,
+  [10Xcomp[0m  is  a connected component of the graph associated to [10XRZMS[0m, and [10Xg[0m is an
+  element   of   the   underlying   zero   group   of   [10XRZMS[0m.   The   function
+  [10XRZMSInducedFunction[0m  attempts  to  find  the  partial function determined by
+  [10Xlambda[0m  and  [10Xgamma[0m from [10Xcomp[0m to the zero group [10XG^0[0m of [10XG[0m of the Rees 0-matrix
+  semigroup  [10XRZMS[0m  over [10XG^0[0m, [10XI[0m, and [10XJ[0m with respect to [10XP[0m where the image of the
+  first  element  in  [10Xcomp[0m  is given by the element [10Xg[0m. If a conflict is found,
+  then [10Xfail[0m is returned; see [ABM07, Section 2] for further details.
+  
+  [12XPlease note:[0m if [5Xgrape[0m is not loaded, then this function will not work.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> zg:=ZeroGroup(Group(()));;[0X
+    [4Xgap> z:=Elements(zg)[1];[0X
+    [4X0[0X
+    [4Xgap> x:=Elements(zg)[2];[0X
+    [4X()[0X
+    [4Xgap> mat:=[ [ z, z, z ], [ x, z, z ], [ x, x, z ] ];;[0X
+    [4Xgap> rzms:=ReesZeroMatrixSemigroup(zg, mat);;[0X
+    [4Xgap> RZMSInducedFunction(rzms, (), One(AutomorphismGroup(zg)), x, [0X
+    [4X> [1,2,5,6])[0X
+    [4X[ (), (),,, (), () ][0X
+    [4Xgap> RZMSInducedFunction(rzms, (), One(AutomorphismGroup(zg)), x, [3]);     [0X
+    [4X[ ,, () ][0X
+    [4Xgap> RZMSInducedFunction(rzms, (), One(AutomorphismGroup(zg)), x, [4]);[0X
+    [4X[ ,,, () ][0X
+    [4Xgap> zg:=ZeroGroup(Group([ (1,5,2,3), (1,4)(2,3) ]));;[0X
+    [4Xgap> elts:=Elements(zg);;[0X
+    [4Xgap> mat:=[ [ elts[1], elts[1], elts[11], elts[1], elts[1] ], [0X
+    [4X>    [ elts[1], elts[13], elts[21], elts[1], elts[1] ], [0X
+    [4X>    [ elts[1], elts[16], elts[1], elts[16], elts[3] ], [0X
+    [4X>    [ elts[10], elts[17], elts[1], elts[1], elts[1] ], [0X
+    [4X>    [ elts[1], elts[1], elts[1], elts[4], elts[1] ] ];[0X
+    [4Xgap> rzms:=ReesZeroMatrixSemigroup(zg, mat);                                   [0X
+    [4Xgap> RZMSInducedFunction(rzms, (), Random(AutomorphismGroup(zg)), [0X
+    [4X> Random(elts), [1..10])=fail;[0X
+    [4Xfalse[0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.5-7 RZMStoRZMSInducedFunction[0m
+  
+  [2X> RZMStoRZMSInducedFunction( [0X[3XRZMS1, RZMS2, lambda, gamma, elts[0X[2X ) __[0Xoperation
+  
+  [10Xlambda[0m  is  an  automorphism  of  the graph associated to the Rees 0- matrix
+  semigroup  [10XRZMS1[0m  composed  with isomorphism from that graph to the graph of
+  [10XRZMS2[0m, [10Xgamma[0m an automorphism of the underlying zero group of [10XRZMS1[0m, and [10Xelts[0m
+  is  a  list  of elements of the underlying zero group of [10XRZMS2[0m. The function
+  [10XRZMStoRZMSInducedFunction[0m attempts to find the function determined by [10Xlambda[0m
+  and  [10Xgamma[0m  from  the  union  of the index sets [10XI[0m and [10XJ[0m of [10XRZMS1[0m to the zero
+  group [10XG^0[0m of the Rees 0-matrix semigroup [10XRZMS2[0m over the zero group [10XG^0[0m, sets
+  [10XI[0m  and  [10XJ[0m,  and  matrix  [10XP[0m  where  the image of the first element in the [10Xi[0mth
+  connected component of the associated graph of [10XRZMS1[0m is given by [10Xelts[i][0m. If
+  a  conflict  is  found,  then  [10Xfalse[0m is returned; see [ABM07, Section 2] for
+  further details.
+  
+  [12XPlease note:[0m if [5Xgrape[0m is not loaded, then this function will not work.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> gens:=[ Transformation( [ 4, 4, 8, 8, 8, 8, 4, 8 ] ), [0X
+    [4X  Transformation( [ 8, 2, 8, 2, 5, 5, 8, 8 ] ), [0X
+    [4X  Transformation( [ 8, 8, 3, 7, 8, 3, 7, 8 ] ), [0X
+    [4X  Transformation( [ 8, 6, 6, 8, 6, 8, 8, 8 ] ) ];;[0X
+    [4Xgap> S:=Semigroup(gens);;[0X
+    [4Xgap> D:=GreensDClasses(S);;[0X
+    [4Xgap> rms1:=Range(IsomorphismReesMatrixSemigroupOfDClass(D[1]));[0X
+    [4XRees Zero Matrix Semigroup over <zero group with 2 generators>[0X
+    [4Xgap> rms2:=Range(IsomorphismReesMatrixSemigroupOfDClass(D[4]));[0X
+    [4XRees Zero Matrix Semigroup over <zero group with 2 generators>[0X
+    [4Xgap> gam:=One(AutomorphismGroup[0X
+    [4X> (UnderlyingSemigroupOfReesZeroMatrixSemigroup(Group(rms1))));[0X
+    [4XIdentityMapping( <zero group with 2 generators> )[0X
+    [4Xgap> g:=One(UnderlyingSemigroupOfReesZeroMatrixSemigroup(rms2));[0X
+    [4X()[0X
+    [4Xgap> RZMStoRZMSInducedFunction(rms1, rms2, (2,3)(5,6), gam, [g]);[0X
+    [4X[ (), (), (), (), (), () ][0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.5-8 RZMSGraph[0m
+  
+  [2X> RZMSGraph( [0X[3Xrzms[0X[2X ) _______________________________________________[0Xattribute
+  
+  if  [10Xrzms[0m  is a Rees 0-matrix semigroup over a zero group [10XG^0[0m, 3 index sets [10XI[0m
+  and  [10XJ[0m,  and matrix [10XP[0m, then [10XRZMSGraph[0m returns the undirected bipartite graph
+  with  [10X|I|+|J|[0m  vertices  and  edge  [10X(i,j)[0m  if and only if [10Xi<|I|+1[0m, [10Xj>|I|[0m and
+  [10Xp_{j-|I|, i}[0m is not zero.
+  
+  The  returned object is a simple undirected graph created in [5XGRAPE[0m using the
+  command
+  
+  
+       Graph(Group(()), [1..n+m], OnPoints, adj, true);
+  
+  
+  where  [10Xadj[0m  is  [10Xtrue[0m  if  and only if [10Xi<|I|+1[0m, [10Xj>|I|[0m and [10Xp_{j-|I|, i}[0m is not
+  zero.
+  
+  [12XPlease note:[0m if [5Xgrape[0m is not loaded, then this function will not work.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> zg:=ZeroGroup(Group(()));;[0X
+    [4Xgap> z:=Elements(zg)[1];[0X
+    [4X0[0X
+    [4Xgap> x:=Elements(zg)[2];[0X
+    [4X()[0X
+    [4Xgap> mat:=[ [ 0, 0, 0 ], [ (), 0, 0 ], [ (), (), 0 ] ];;[0X
+    [4Xgap> rzms:=ReesZeroMatrixSemigroup(zg, mat);;[0X
+    [4Xgap> RZMSGraph(rzms);[0X
+    [4Xrec( isGraph := true, order := 6, group := Group(()), [0X
+    [4X  schreierVector := [ -1, -2, -3, -4, -5, -6 ], [0X
+    [4X  adjacencies := [ [ 5, 6 ], [ 6 ], [  ], [  ], [ 1 ], [ 1, 2 ] ], [0X
+    [4X  representatives := [ 1, 2, 3, 4, 5, 6 ], names := [ 1, 2, 3, 4, 5, 6 ] )[0X
+    [4Xgap> UndirectedEdges(last);[0X
+    [4X[ [ 1, 5 ], [ 1, 6 ], [ 2, 6 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.5-9 RightTransStabAutoGroup[0m
+  
+  [2X> RightTransStabAutoGroup( [0X[3XS, elts, func[0X[2X ) ________________________[0Xoperation
+  
+  returns  a  right transversal of the stabilizer w.r.t the action [10Xfunc[0m of the
+  elements  [10Xelts[0m  in the automorphism group of the zero semigroup, Rees matrix
+  semigroup,   or   Rees   0-matrix   semigroup   [10XS[0m.  That  is,  [10XS[0m  satisfying
+  [2XIsZeroSemigroup[0m       ([14X5.2-14[0m),       [2XIsReesMatrixSemigroup[0m      ([14XReference:
+  IsReesMatrixSemigroup[0m),     or     [2XIsReesZeroMatrixSemigroup[0m     ([14XReference:
+  IsReesZeroMatrixSemigroup[0m).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> S:=ZeroSemigroup(6);[0X
+    [4X<zero semigroup with 6 elements>[0X
+    [4Xgap> elts:=Elements(S);[0X
+    [4X[ 0, z1, z2, z3, z4, z5 ][0X
+    [4Xgap> Length(RightTransStabAutoGroup(S, [elts[1]], OnSets));[0X
+    [4X1[0X
+    [4Xgap> Length(RightTransStabAutoGroup(S, [elts[1], elts[2]], OnSets));[0X
+    [4X5[0X
+    [4Xgap> Length(RightTransStabAutoGroup(S, [elts[1], elts[2]], OnTuples));[0X
+    [4X5[0X
+    [4Xgap> G:=Group([ (1,2) ]);;[0X
+    [4Xgap> mat:=[ [ (), (), () ], [ (), (1,2), () ], [ (), (1,2), (1,2) ], [0X
+    [4X>    [ (), (), () ], [ (), (1,2), () ] ];;[0X
+    [4Xgap> rms:=ReesMatrixSemigroup(G, mat);;[0X
+    [4Xgap> Size(rms);[0X
+    [4X30[0X
+    [4Xgap> GeneratorsOfSemigroup(rms);[0X
+    [4X[ (1,(),2), (1,(),3), (1,(),4), (1,(),5), (2,(),1), (3,(),1), (1,(1,2),1) ][0X
+    [4Xgap> Length(RightTransStabAutoGroup(rms, last, OnSets));[0X
+    [4X4[0X
+    [4Xgap> Length(RightTransStabAutoGroup(rms, GeneratorsOfSemigroup(rms), [0X
+    [4X> OnTuples));[0X
+    [4X8[0X
+    [4Xgap> G:=ZeroGroup(Group([ (1,3) ]));;[0X
+    [4Xgap> z:=MultiplicativeZero(G);; x:=Elements(G)[2];;[0X
+    [4Xgap> mat:=[ [ z, z, z ], [ z, z, z ], [ z, z, z ], [ z, z, z ], [ z, x, z ] ];;[0X
+    [4Xgap> rzms:=ReesZeroMatrixSemigroup(G, mat);[0X
+    [4Xgap> Size(rzms);[0X
+    [4X31[0X
+    [4Xgap> Size(GeneratorsOfSemigroup(rzms));[0X
+    [4X6[0X
+    [4Xgap> Length(RightTransStabAutoGroup(rzms, GeneratorsOfSemigroup(rzms), [0X
+    [4X> OnSets));[0X
+    [4X512[0X
+    [4Xgap> A:=AutomorphismGroup(rzms);[0X
+    [4X<group of size 3072 with 3072 generators>[0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X7.6 Zero Groups[0X
+  
+  [1X7.6-1 ZeroGroupAutomorphism[0m
+  
+  [2X> ZeroGroupAutomorphism( [0X[3XZG, f[0X[2X ) ___________________________________[0Xfunction
+  
+  converts  the group automorphism [10Xf[0m of the underlying group of the zero group
+  [10XZG[0m into an automorphism of the zero group [10XZG[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> G:=Random(AllGroups(20));[0X
+    [4X<pc group of size 20 with 3 generators>[0X
+    [4Xgap> A:=AutomorphismGroup(G);[0X
+    [4X<group with 2 generators>[0X
+    [4Xgap> f:=Random(A);[0X
+    [4X[ f1*f2^4*f3 ] -> [ f1*f2^2 ][0X
+    [4Xgap> ZG:=ZeroGroup(G);[0X
+    [4X<zero group with 4 generators>[0X
+    [4Xgap> ZeroGroupAutomorphism(ZG, f);[0X
+    [4X<mapping: <zero group with 4 generators> -> <zero group with 4 generators> >[0X
+    [4Xgap> IsZeroGroupAutomorphismRep(last);[0X
+    [4Xtrue[0X
+    [4Xgap> UnderlyingGroupAutoOfZeroGroupAuto(last2)=f;[0X
+    [4Xtrue[0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.6-2 IsZeroGroupAutomorphismRep[0m
+  
+  [2X> IsZeroGroupAutomorphismRep( [0X[3Xf[0X[2X ) ____________________________[0XRepresentation
+  
+  returns  [10Xtrue[0m  if  the  object [10Xf[0m is represented as an automorphism of a zero
+  group; see [2XZeroGroupAutomorphism[0m ([14X7.6-1[0m) for an example of the usage of this
+  command.
+  
+  [1X7.6-3 UnderlyingGroupAutoOfZeroGroupAuto[0m
+  
+  [2X> UnderlyingGroupAutoOfZeroGroupAuto( [0X[3Xf[0X[2X ) _________________________[0Xattribute
+  
+  returns  the underlying group automorphism of the zero group automorphism [10Xf[0m.
+  That  is,  the  restriction  of  [10Xf[0m  to  its  source  without  the  zero; see
+  [2XZeroGroupAutomorphism[0m ([14X7.6-1[0m) for an example of the usage of this command.
+  
+  
+  [1X7.7 Isomorphisms[0X
+  
+  [1X7.7-1 IsomorphismAutomorphismGroupOfRMS[0m
+  
+  [2X> IsomorphismAutomorphismGroupOfRMS( [0X[3XG[0X[2X ) __________________________[0Xattribute
+  
+  if  [10XG[0m  is  the automorphism group of a simple transformation semigroup, then
+  [10XIsomorphismAutomorphismGroupOfRMS[0m    returns   a   [2XGroupHomomorphismByImages[0m
+  ([14XReference:  GroupHomomorphismByImages[0m)  from the automorphism group of [10XG[0m to
+  the  automorphism  group of an isomorphic Rees matrix semigroup, obtained by
+  using [2XIsomorphismReesMatrixSemigroup[0m ([14X7.7-7[0m).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> g1:=Transformation([1,2,2,1,2]);;[0X
+    [4Xgap> g2:=Transformation([3,4,3,4,4]);;[0X
+    [4Xgap> g3:=Transformation([3,4,3,4,3]);;[0X
+    [4Xgap> g4:=Transformation([4,3,3,4,4]);;[0X
+    [4Xgap> cs5:=Semigroup(g1,g2,g3,g4);;[0X
+    [4Xgap> AutomorphismGroup(cs5);[0X
+    [4X<group of size 16 with 3 generators>[0X
+    [4Xgap> IsomorphismAutomorphismGroupOfRMS(last);[0X
+    [4X[ SemigroupHomomorphism ( <semigroup with 4 generators>-><semigroup with [0X
+    [4X    4 generators>), SemigroupHomomorphism ( <semigroup with [0X
+    [4X    4 generators>-><semigroup with 4 generators>), [0X
+    [4X  SemigroupHomomorphism ( <semigroup with 4 generators>-><semigroup with [0X
+    [4X    4 generators>) ] -> [0X
+    [4X[ [ (1,4)(2,3)(5,6), IdentityMapping( Group( [ (1,2) ] ) ), [0X
+    [4X      [ (), (1,2), (1,2), (), (), () ] ], [0X
+    [4X  [ (1,3,4,2), IdentityMapping( Group( [ (1,2) ] ) ), [0X
+    [4X      [ (), (), (), (), (), (1,2) ] ], [0X
+    [4X  [ (1,3)(2,4), IdentityMapping( Group( [ (1,2) ] ) ), [0X
+    [4X      [ (), (), (), (), (), (1,2) ] ] ] [0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.7-2 IsomorphismPermGroup[0m
+  
+  [2X> IsomorphismPermGroup( [0X[3XG[0X[2X ) _______________________________________[0Xattribute
+  
+  if    [10XG[0m    satisfies    [2XIsAutomorphismGroupOfSimpleSemigp[0m    ([14X7.4-4[0m),   then
+  [10XIsomorphismPermGroup[0m returns an isomorphism from [10XG[0m to a permutation group by
+  composing  the  result  [10Xf[0m  of [2XIsomorphismAutomorphismGroupOfRMS[0m ([14X7.7-1[0m) on [10XG[0m
+  with the result of [10XIsomorphismPermGroup[0m on [10XRange(f)[0m.
+  
+  if [10XG[0m satisfies [2XIsAutomorphismGroupOfRMS[0m ([14X7.4-7[0m) or [2XIsAutomorphismGroupOfRZMS[0m
+  ([14X7.4-8[0m),  then  [10XIsomorphismPermGroup[0m  returns  an  isomorphism  from  [10XG[0m to a
+  permutation group acting either on the elements of [10XS[0m or on itself, whichever
+  gives a permutation group of lower degree.
+  
+  if  [10XG[0m  is  a  transformation  semigroup  that  satisfies  [2XIsGroupAsSemigroup[0m
+  ([14X5.2-3[0m),  then  [10XIsomorphismPermGroup[0m  returns  an  isomorphism from [10XG[0m to the
+  permutation  group  obtained by applying [2XPermRepTrans[0m ([14X2.1-4[0m) to any element
+  of [10XG[0m.
+  
+  if   [10XG[0m   is   a   group   [10XH[0m-class   of   a  transformation  semigroup,  then
+  [10XIsomorphismPermGroup[0m  returns an isomorphism from [10XG[0m to the permutation group
+  obtained by applying [2XPermRepTrans[0m ([14X2.1-4[0m) to any element of [10XG[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> g1:=Transformation([3,3,2,6,2,4,4,6]);;[0X
+    [4Xgap> g2:=Transformation([5,1,7,8,7,5,8,1]);;[0X
+    [4Xgap> cs1:=Semigroup(g1,g2);;[0X
+    [4Xgap> AutomorphismGroup(cs1);[0X
+    [4X<group of size 12 with 2 generators>[0X
+    [4Xgap> IsomorphismPermGroup(last);[0X
+    [4X[ SemigroupHomomorphism ( <semigroup with 2 generators>-><semigroup with [0X
+    [4X    2 generators>), SemigroupHomomorphism ( <semigroup with [0X
+    [4X    2 generators>-><semigroup with 2 generators>) ] -> [0X
+    [4X[ (1,11,2,12,3,10)(4,8,5,9,6,7), (1,6)(2,5)(3,4)(7,10)(8,12)(9,11) ][0X
+    [4Xgap> Size(cs1);[0X
+    [4X96[0X
+    [4Xgap> a:=IdempotentNC([[1,3,4],[2,5],[6],[7],[8]],[3,5,6,7,8])*(3,5);;[0X
+    [4Xgap> b:=IdempotentNC([[1,3,4],[2,5],[6],[7],[8]],[3,5,6,7,8])*(3,6,7,8);;[0X
+    [4Xgap> S:=Semigroup(a,b);;[0X
+    [4Xgap> IsGroupAsTransSemigroup(S);[0X
+    [4Xtrue[0X
+    [4Xgap> IsomorphismPermGroup(S);[0X
+    [4XSemigroupHomomorphism ( <semigroup with 2 generators>->Group([0X
+    [4X[ (3,5), (3,6,7,8) ]))[0X
+    [4Xgap> gens:=[Transformation([3,5,3,3,5,6]), Transformation([6,2,4,2,2,6])];;[0X
+    [4Xgap> S:=Semigroup(gens);;[0X
+    [4Xgap> H:=GroupHClassOfGreensDClass(GreensDClassOfElement(S, Elements(S)[1]));[0X
+    [4X{Transformation( [ 2, 2, 2, 2, 2, 6 ] )}[0X
+    [4Xgap> IsomorphismPermGroup(H);[0X
+    [4XSemigroupHomomorphism ( {Transformation( [ 2, 2, 2, 2, 2, 6 ] )}->Group(()))[0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.7-3 IsomorphismFpSemigroup[0m
+  
+  [2X> IsomorphismFpSemigroup( [0X[3XS[0X[2X ) _____________________________________[0Xattribute
+  
+  returns   an   isomorphism  to  a  finitely  presented  semigroup  from  the
+  transformation  semigroup  [10XS[0m.  This  currently works by running the function
+  [2XFroidurePinExtendedAlg[0m ([14XFroidurePinExtendedAlg???[0m) in the library.
+  
+  If   [10XS[0m   satisfies   [2XIsMonoid[0m   ([14XReference:   IsMonoid[0m),   use  the  command
+  [2XIsomorphismFpMonoid[0m ([14X7.7-4[0m) instead.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> gens:=[ Transformation( [1,8,11,2,5,16,13,14,3,6,15,10,7,4,9,12 ] ), [0X
+    [4X>   Transformation( [1,16,9,6,5,8,13,12,15,2,3,4,7,10,11,14] ), [0X
+    [4X>   Transformation( [1,3,7,9,1,15,5,11,13,11,13,3,5,15,7,9 ] ) ];[0X
+    [4Xgap> S:=Semigroup(gens);[0X
+    [4X<semigroup with 3 generators>[0X
+    [4Xgap> IsomorphismFpSemigroup(last);[0X
+    [4XSemigroupHomomorphismByImages ( <trans. semigroup of size 16 with [0X
+    [4X3 generators>->Semigroup( [ s1, s2, s3 ] ))[0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.7-4 IsomorphismFpMonoid[0m
+  
+  [2X> IsomorphismFpMonoid( [0X[3XS[0X[2X ) ________________________________________[0Xattribute
+  
+  returns   an   isomorphism   to   a   finitely  presented  monoid  from  the
+  transformation   monoid   [10XS[0m.   Currently   works  by  running  the  function
+  [2XFroidurePinExtendedAlg[0m ([14XFroidurePinExtendedAlg???[0m) in the library.
+  
+  If  [10XS[0m  satisfies  [2XIsSemigroup[0m  ([14XReference:  IsSemigroup[0m),  use  the  command
+  [2XIsomorphismFpSemigroup[0m ([14X7.7-3[0m) instead.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> x:=Transformation([2,3,4,5,6,7,8,9,1]);;[0X
+    [4Xgap> y:=Transformation([4,2,3,4,5,6,7,8,9]);;[0X
+    [4Xgap> S:=Monoid(x,y);;[0X
+    [4Xgap> IsomorphismFpMonoid(last);[0X
+    [4XSemigroupHomomorphismByImages ( <trans. semigroup of size 40266 with [0X
+    [4X3 generators>->Monoid( [ m1, m2 ], ... ))[0X
+    [4Xgap> Length(RelationsOfFpMonoid(Range(last)));[0X
+    [4X932[0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.7-5 IsomorphismSemigroups[0m
+  
+  [2X> IsomorphismSemigroups( [0X[3XS, T[0X[2X ) ___________________________________[0Xoperation
+  
+  this  operation returns an isomorphism from the semigroup [10XS[0m to the semigroup
+  [10XT[0m if one exists and returns [10Xfail[0m otherwise.
+  
+  [12XPlease  note:[0m  this  function  currently  only  works  for zero groups, zero
+  semigroups, Rees matrix semigroups, and Rees 0-matrix semigroups.
+  
+  [12XPlease note:[0m if [5Xgrape[0m is not loaded, then this function will not work when [10XS[0m
+  and        [10XT[0m       satisfy       [2XIsReesZeroMatrixSemigroup[0m       ([14XReference:
+  IsReesZeroMatrixSemigroup[0m).
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> ZG1:=ZeroGroup(Group((1,2,3,5,4)));[0X
+    [4X<zero group with 2 generators>[0X
+    [4Xgap> ZG2:=ZeroGroup(Group((1,2,3,4,5)));[0X
+    [4X<zero group with 2 generators>[0X
+    [4Xgap> IsomorphismSemigroups(ZG1, ZG2);[0X
+    [4XSemigroupHomomorphismByImagesOfGens ( <zero group with [0X
+    [4X2 generators>-><zero group with 2 generators>)[0X
+    [4Xgap> ZG2:=ZeroGroup(Group((1,2,3,4)));[0X
+    [4X<zero group with 2 generators>[0X
+    [4Xgap> IsomorphismSemigroups(ZG1, ZG2);[0X
+    [4Xfail[0X
+    [4Xgap> IsomorphismSemigroups(ZeroSemigroup(5),ZeroSemigroup(5));[0X
+    [4XIdentityMapping( <zero semigroup with 5 elements> )[0X
+    [4Xgap> IsomorphismSemigroups(ZeroSemigroup(5),ZeroSemigroup(6));[0X
+    [4Xfail[0X
+    [4Xgap> gens:=[ Transformation( [ 4, 4, 8, 8, 8, 8, 4, 8 ] ), [0X
+    [4X>   Transformation( [ 8, 2, 8, 2, 5, 5, 8, 8 ] ), [0X
+    [4X>   Transformation( [ 8, 8, 3, 7, 8, 3, 7, 8 ] ), [0X
+    [4X>   Transformation( [ 8, 6, 6, 8, 6, 8, 8, 8 ] ) ];;[0X
+    [4Xgap> S:=Semigroup(gens);;[0X
+    [4Xgap> D:=GreensDClasses(S);;[0X
+    [4Xgap> rms1:=Range(IsomorphismReesMatrixSemigroupOfDClass(D[1]));;[0X
+    [4Xgap> rms2:=Range(IsomorphismReesMatrixSemigroupOfDClass(D[4]));;[0X
+    [4Xgap> IsomorphismSemigroups(rms1, rms2);[0X
+    [4X[ (2,3)(5,6), IdentityMapping( <zero group with 2 generators> ), [0X
+    [4X  [ ZeroGroup(()), ZeroGroup(()), ZeroGroup(()), ZeroGroup(()), [0X
+    [4X      ZeroGroup(()), ZeroGroup(()) ] ][0X
+    [4Xgap> IsomorphismSemigroups(rms2, rms1);[0X
+    [4X[ (2,3)(5,6), IdentityMapping( <zero group with 2 generators> ), [0X
+    [4X  [ ZeroGroup(()), ZeroGroup(()), ZeroGroup(()), ZeroGroup(()),  [0X
+    [4X      ZeroGroup(()), ZeroGroup(()) ] ][0X
+    [4Xgap> rms2:=Range(IsomorphismReesMatrixSemigroupOfDClass(D[2]));[0X
+    [4XGroup(())[0X
+    [4Xgap> IsomorphismSemigroups(rms2, rms1);[0X
+    [4Xfail[0X
+    [4Xgap> rms2:=RandomReesZeroMatrixSemigroup(5,5,5);[0X
+    [4XRees Zero Matrix Semigroup over <zero group with 2 generators>[0X
+    [4Xgap> IsomorphismSemigroups(rms2, rms1);[0X
+    [4Xfail[0X
+    [4Xgap> rms2:=RandomReesMatrixSemigroup(5,5,5);[0X
+    [4XRees Matrix Semigroup over Group([ (1,2)(3,4,5), (2,4,3), (1,4,5,3), [0X
+    [4X  (1,4,5,2) ])[0X
+    [4Xgap> IsomorphismSemigroups(rms2, rms1);[0X
+    [4Xfail[0X
+    [4Xgap> IsomorphismSemigroups(rms1, rms2);[0X
+    [4Xfail[0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.7-6 IsomorphismReesMatrixSemigroupOfDClass[0m
+  
+  [2X> IsomorphismReesMatrixSemigroupOfDClass( [0X[3XD[0X[2X ) _____________________[0Xattribute
+  
+  The [13Xprincipal factor[0m of the [10XD[0m-class [10XD[0m is the semigroup with elements [10XD[0m and [10X0[0m
+  and  multiplication  [10Xx*y[0m  defined  to  be  the  product  [10Xxy[0m in the semigroup
+  containing [10XD[0m if [10Xxy[0m in [10XD[0m and [10X0[0m otherwise.
+  
+  [10XIsomorphismReesMatrixSemigroupOfDClass[0m   returns  an  isomorphism  from  the
+  principal  factor  of  the [10XD[0m-class [10XD[0m to a Rees matrix, Rees 0-matrix or zero
+  semigroup,  as  given  by the Rees-Suschewitsch Theorem; see [How95, Theorem
+  3.2.3].
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> g1:=Transformation( [ 4, 6, 3, 8, 5, 6, 10, 4, 3, 7 ] );;[0X
+    [4Xgap> g2:=Transformation( [ 5, 6, 6, 3, 8, 6, 3, 7, 8, 4 ] );;[0X
+    [4Xgap> g3:=Transformation( [ 8, 6, 3, 2, 8, 10, 9, 2, 6, 2 ] );;[0X
+    [4Xgap> m23:=Monoid(g1,g2,g3);;[0X
+    [4Xgap> D:=GreensDClasses(m23)[17];[0X
+    [4X{Transformation( [ 7, 6, 6, 6, 7, 4, 8, 6, 6, 6 ] )}[0X
+    [4Xgap> IsomorphismReesMatrixSemigroupOfDClass(D);[0X
+    [4XSemigroupHomomorphism ( {Transformation( [ 7, 6, 6, 6, 7, 4, 8, 6, 6, 6 [0X
+    [4X ] )}-><zero semigroup with 3 elements>)[0X
+    [4Xgap> D:=GreensDClasses(m23)[77];[0X
+    [4X{Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ] )}[0X
+    [4Xgap> IsomorphismReesMatrixSemigroupOfDClass(D);[0X
+    [4XSemigroupHomomorphism ( {Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 [0X
+    [4X ] )}->Rees Matrix Semigroup over Group(()))[0X
+    [4Xgap> D:=GreensDClasses(m23)[1];[0X
+    [4X{Transformation( [ 1 .. 10 ] )}[0X
+    [4Xgap> IsomorphismReesMatrixSemigroupOfDClass(D);[0X
+    [4XSemigroupHomomorphism ( {Transformation( [ 1 .. 10 ] )}->Group(()))[0X
+    [4Xgap> D:=GreensDClasses(m23)[23];[0X
+    [4X{Transformation( [ 6, 7, 3, 6, 6, 6, 6, 6, 7, 6 ] )}[0X
+    [4Xgap> IsomorphismReesMatrixSemigroupOfDClass(D);[0X
+    [4XSemigroupHomomorphism ( {Transformation( [ 6, 7, 3, 6, 6, 6, 6, 6, 7, 6 [0X
+    [4X ] )}->Rees Zero Matrix Semigroup over <zero group with 3 generators>)[0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X7.7-7 IsomorphismReesMatrixSemigroup[0m
+  
+  [2X> IsomorphismReesMatrixSemigroup( [0X[3XS[0X[2X ) _____________________________[0Xoperation
+  
+  returns an isomorphism from the (completely) simple transformation semigroup
+  [10XS[0m to a Rees matrix semigroup, as given by the Rees-Suschewitsch Theorem; see
+  [How95, Theorem 3.2.3].
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> g1:=Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] );;[0X
+    [4Xgap> g2:=Transformation( [ 2, 3, 4, 5, 6, 8, 7, 1, 2, 2 ] );;[0X
+    [4Xgap> cs2:=Semigroup(g1,g2);;[0X
+    [4Xgap> IsomorphismReesMatrixSemigroup(cs2);[0X
+    [4XSemigroupHomomorphism ( <semigroup with [0X
+    [4X2 generators>->Rees Matrix Semigroup over Group([0X
+    [4X[ (2,5)(3,8)(4,6), (1,6,3)(5,8) ]))[0X
+  [4X------------------------------------------------------------------[0X
+  

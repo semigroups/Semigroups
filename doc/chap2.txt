@@ -1,0 +1,138 @@
+  
+  [1X2 Transformations[0X
+  
+  
+  [1X2.1 More Functions for Transformations[0X
+  
+  The  functions  described  in  this  section extend the functionality of [5XGAP[0m
+  relating to transformations.
+  
+  [1X2.1-1 IsRegularTransformation[0m
+  
+  [2X> IsRegularTransformation( [0X[3XS, f[0X[2X ) _________________________________[0Xoperation
+  
+  if  [10Xf[0m  is  a regular element of the transformation semigroup [10XS[0m, then [10Xtrue[0m is
+  returned. Otherwise [10Xfalse[0m is returned.
+  
+  A transformation [10Xf[0m is regular inside a transformation semigroup [10XS[0m if it lies
+  inside  a regular D-class. This is equivalent to the orbit of the image of [10Xf[0m
+  containing a transversal of the kernel of [10Xf[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> g1:=Transformation([2,2,4,4,5,6]);;[0X
+    [4Xgap> g2:=Transformation([5,3,4,4,6,6]);;[0X
+    [4Xgap> m1:=Monoid(g1,g2);;[0X
+    [4Xgap> IsRegularTransformation(m1, g1);[0X
+    [4Xtrue[0X
+    [4Xgap> img:=ImageSetOfTransformation(g1);[0X
+    [4X[ 2, 4, 5, 6 ][0X
+    [4Xgap> ker:=KernelOfTransformation(g1);[0X
+    [4X[ [ 1, 2 ], [ 3, 4 ], [ 5 ], [ 6 ] ][0X
+    [4Xgap> ForAny(MonoidOrbit(m1, img), x-> IsTransversal(ker, x));[0X
+    [4Xtrue[0X
+    [4Xgap> IsRegularTransformation(m1, g2);[0X
+    [4Xfalse[0X
+    [4Xgap> IsRegularTransformation(FullTransformationSemigroup(6), g2);[0X
+    [4Xtrue[0X
+    [4X	[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X2.1-2 IsTransversal[0m
+  
+  [2X> IsTransversal( [0X[3Xker, img[0X[2X ) ________________________________________[0Xfunction
+  
+  If  [10Xker[0m  is  a partition of the set [10X{1,2,...,n}[0m and [10Ximg[0m a subset of the same
+  set,  then  [10XIsTransversal[0m  returns [10Xtrue[0m if [10Ximg[0m is a transversal of [10Xker[0m. That
+  is,  if  every  class  in [10Xker[0m contains exactly one element in [10Ximg[0m. Otherwise
+  [10Xfalse[0m is returned.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4X  gap> g1:=Transformation([2,2,4,4,5,6]);;[0X
+    [4X  gap> g2:=Transformation([5,3,4,4,6,6]);;[0X
+    [4X  gap> ker:=KernelOfTransformation(g2*g1);[0X
+    [4X  [ [ 1 ], [ 2, 3, 4 ], [ 5, 6 ] ] [0X
+    [4X  gap> im:=ImageListOfTransformation(g2);[0X
+    [4X  [ 5, 3, 4, 4, 6, 6 ][0X
+    [4X  gap> IsTransversal(ker, im);[0X
+    [4X  false[0X
+    [4X  gap> IsTransversal([[1,2,3],[4,5],[6,7]], [1,5,6]);[0X
+    [4X  true[0X
+    [4X  [0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X2.1-3 Idempotent[0X
+  
+  [2X> IdempotentNC( [0X[3Xker, img[0X[2X ) _________________________________________[0Xfunction
+  [2X> Idempotent( [0X[3Xker, img[0X[2X ) ___________________________________________[0Xfunction
+  
+  [10XIdempotentNC[0m  returns  an  idempotent  with kernel [10Xker[0m and image [10Ximg[0m without
+  checking [2XIsTransversal[0m ([14X2.1-2[0m) with arguments [10Xker[0m and [10Xim[0m.
+  
+  [10XIdempotent[0m  returns  an  idempotent  with  kernel  [10Xker[0m  and  image [10Ximg[0m after
+  checking that [2XIsTransversal[0m ([14X2.1-2[0m) with arguments [10Xker[0m and [10Xim[0m returns [10Xtrue[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4X  gap> g1:=Transformation([2,2,4,4,5,6]);;[0X
+    [4X  gap> g2:=Transformation([5,3,4,4,6,6]);;[0X
+    [4X  gap> ker:=KernelOfTransformation(g2*g1);;[0X
+    [4X  gap> im:=ImageListOfTransformation(g2);;[0X
+    [4X  gap> Idempotent(ker, im);[0X
+    [4X  Error,  the image must be a transversal of the kernel[0X
+    [4X  [ ... ][0X
+    [4X  gap> Idempotent([[1,2,3],[4,5],[6,7]], [1,5,6]);[0X
+    [4X  Transformation( [ 1, 1, 1, 5, 5, 6, 6 ] )[0X
+    [4X  gap> IdempotentNC([[1,2,3],[4,5],[6,7]], [1,5,6]);[0X
+    [4X  Transformation( [ 1, 1, 1, 5, 5, 6, 6 ] )[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X2.1-4 PermRepTrans[0m
+  
+  [2X> PermRepTrans( [0X[3Xf[0X[2X ) _______________________________________________[0Xoperation
+  
+  converts  a  transformation  [10Xf[0m  that is a permutation of its image into that
+  permutation.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4X  gap> f:=Transformation([1,2,9,9,9,8,8,8,4]);[0X
+    [4X  Transformation( [ 1, 2, 9, 9, 9, 8, 8, 8, 4 ] )[0X
+    [4X  gap> PermRepTrans(f);[0X
+    [4X  (4,9)[0X
+    [4X  gap> f*last;[0X
+    [4X  Transformation( [ 1, 2, 4, 4, 4, 8, 8, 8, 9 ] )[0X
+    [4X  gap> PermRepTrans(last);[0X
+    [4X  ()[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X2.1-5 RandomTransformation[0m
+  
+  [2X> RandomTransformation( [0X[3Xker, img[0X[2X ) ________________________________[0Xoperation
+  
+  This  is a new method for the existing library function [2XRandomTransformation[0m
+  ([14XReference:  RandomTransformation[0m). A random transformation is returned that
+  has  the  given  image  [10Ximg[0m and kernel [10Xker[0m. Note that [10Xker[0m must have the same
+  number of classes as [10Ximg[0m has elements.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> f:=RandomTransformation([[1,2,3], [4,5], [6,7,8]], [1,2,3]);;[0X
+    [4Xgap> KernelOfTransformation(f)=[[1,2,3], [4,5], [6,7,8]];[0X
+    [4Xtrue[0X
+    [4Xgap> ImageSetOfTransformation(f)=[1,2,3];[0X
+    [4Xtrue[0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X2.1-6 IndexPeriodOfTransformation[0m
+  
+  [2X> IndexPeriodOfTransformation( [0X[3Xf[0X[2X ) ________________________________[0Xoperation
+  
+  returns  the  minimum numbers [10Xm, r[0m such that [10Xf^(m+r)=f^m[0m; known as the [13Xindex[0m
+  and [13Xperiod[0m of the transformation.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4X  gap> f:=Transformation( [ 3, 4, 4, 6, 1, 3, 3, 7, 1 ] );;[0X
+    [4X  gap> IndexPeriodOfTransformation(f);[0X
+    [4X  [ 2, 3 ][0X
+    [4X  gap> f^2=f^5;[0X
+    [4X  true[0X
+  [4X------------------------------------------------------------------[0X
+  

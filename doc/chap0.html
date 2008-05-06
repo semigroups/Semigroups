@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (MONOID) - Contents</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+</head>
+<body>
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap1.html">Next Chapter</a>&nbsp;  </div>
+
+<p><a id="X7D2C85EC87DD46E5" name="X7D2C85EC87DD46E5"></a></p>
+<div class="pcenter">
+
+<h1>The <strong class="pkg">MONOID</strong> Package</h1>
+
+<p>Version 3.1</p>
+
+</div>
+<p><b>J. D. Mitchell
+		
+	</b>
+<br />Email: <span class="URL"><a href="mailto:jdm3@st-and.ac.uk">jdm3@st-and.ac.uk</a></span>
+</p>
+
+<p><a id="X81488B807F2A1CF1" name="X81488B807F2A1CF1"></a></p>
+<h3>Copyright</h3>
+<p>© 2008 J. D. Mitchell.</p>
+
+<p><a id="X82A988D47DFAFCFA" name="X82A988D47DFAFCFA"></a></p>
+<h3>Acknowledgements</h3>
+<p>The author would like to thank P. v. Bunau, A. Distler, S. Linton, J. Neubueser, V. Maltcev, M. Neuhoeffer, M. R. Quick, E. F. Robertson, and N. Ruskuc for their help and suggestions. Special thanks go to J. Araujo for his mathematical suggestions.</p>
+
+<p>I would also like to acknowledge the support of Centre of Algebra at the University of Lisbon, and the financial support of EPSRC grant number GR/S/56085/01. <br /> <br /></p>
+
+<p><a id="X7982162280BC7A61" name="X7982162280BC7A61"></a></p>
+<h3>Colophon</h3>
+<p>If you use the <strong class="pkg">MONOID</strong> package, I would really appreciate it if you would let me know by sending me an email to <span class="URL"><a href="mailto:jdm3@st-and.ac.uk">jdm3@st-and.ac.uk</a></span>. If you notice that there are any features missing that you think are important or if you find a bug, please let me know.</p>
+
+<p><a id="X8537FEB07AF2BEC8" name="X8537FEB07AF2BEC8"></a></p>
+
+<div class="contents">
+<h3>Contents</h3>
+
+<div class="ContChap"><a href="chap1.html#X7E0DB6BF8569166D">1 <span class="Heading">The <strong class="pkg">MONOID</strong> package</span></a>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X7DFB63A97E67C0A1">1.1 <span class="Heading">Introduction</span></a>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X7F6B07EE7F61869F">1.2 <span class="Heading">Installing <strong class="pkg">MONOID</strong></span></a>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X8098672E7B4EC324">1.3 <span class="Heading">Testing <strong class="pkg">MONOID</strong></span></a>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X7EDD2DF282C7BCFF">1.4 <span class="Heading">What's New?</span></a>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X8246DD5B7AF0099A">1.5 <span class="Heading">Forthcoming Features</span></a>
+</div>
+</div>
+<div class="ContChap"><a href="chap2.html#X860026B880BCB2A5">2 <span class="Heading">Transformations</span></a>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap2.html#X847EBE5C789D85B6">2.1 <span class="Heading">More Functions for Transformations</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7856A73E80DAF56F">2.1-1 IsRegularTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79E9FFC97AFCEE61">2.1-2 IsTransversal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85D1071484CE004C">2.1-3 <span class="Heading">Idempotent</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X781E031C8298ADDC">2.1-4 PermRepTrans</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8475448F87E8CB8A">2.1-5 RandomTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X863216CB7AF88BED">2.1-6 IndexPeriodOfTransformation</a></span>
+</div>
+</div>
+<div class="ContChap"><a href="chap3.html#X849149EF79F824D1">3 <span class="Heading">Monoid Actions and Orbits </span></a>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X7DFB63A97E67C0A1">3.1 <span class="Heading">Introduction</span></a>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X833C5DA683E4EA15">3.2 <span class="Heading">Actions</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X785CA2537B553454">3.2-1 OnTuplesOfSetsAntiAction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X849A43DE7AF3C639">3.2-2 OnKernelsAntiAction</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X8545BED37C1BD760">3.3 <span class="Heading">General Orbits</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8647538A7C892DCB">3.3-1 MonoidOrbit</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F6DD5368778DC55">3.3-2 MonoidOrbits</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X84E7C5037BA23DEE">3.3-3 StrongOrbit</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7989C5CE8053CC70">3.3-4 StrongOrbits</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X811F9D387CE86748">3.3-5 GradedOrbit</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87F0AFE17E02E878">3.3-6 ShortOrbit</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87632B32847A5B87">3.3-7 GradedStrongOrbit</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7C957B0B810C99F1">3.3-8 ShortStrongOrbit</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap3.html#X7EF224A884952A63">3.4 <span class="Heading">Some Specific Orbits</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D8663D5847540E3">3.4-1 ImagesTransformationMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7ABF8509866CC117">3.4-2 GradedImagesTransformationMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X78CD79877DCF9F06">3.4-3 KernelsTransformationMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X789A45107F40E30B">3.4-4 GradedKernelsTransformationMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7E53FA7D85258453">3.4-5 StrongOrbitOfImage</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X80BA8DD07E0E00D5">3.4-6 StrongOrbitsOfImages</a></span>
+</div>
+</div>
+<div class="ContChap"><a href="chap4.html#X80C6C718801855E9">4 <span class="Heading">Green's Relations</span></a>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap4.html#X7DFB63A97E67C0A1">4.1 <span class="Heading">Introduction</span></a>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap4.html#X81F7D3887DA80890">4.2 <span class="Heading">Data Structures</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7B9C0CC77C24D4F8">4.2-1 GreensData</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X833F00AE810DCF28">4.2-2 GreensRClassData</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X80A97BBB8273D151">4.2-3 GreensLClassData</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X8037C1BC7D372310">4.2-4 GreensHClassData</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81940FB4814D25B7">4.2-5 GreensDClassData</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X82F882B37DFAA974">4.2-6 <span class="Heading">IsGreensData</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X780966E58045F9E8">4.2-7 <span class="Heading">XClassData</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81ECD8BE78E41393">4.2-8 <span class="Heading">IsGreensXClassDataRep</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7F75BAA87A79F569">4.2-9 IsAssociatedSemigpTransSemigp</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X84F1321E8217D2A8">4.2-10 SchutzenbergerGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X83F1C306846DF26B">4.2-11 PartialOrderOfDClasses</a></span>
+</div>
+</div>
+<div class="ContChap"><a href="chap5.html#X78274024827F306D">5 <span class="Heading">Properties of Semigroups</span></a>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap5.html#X7DFB63A97E67C0A1">5.1 <span class="Heading">Introduction</span></a>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap5.html#X86E50CE27AB1317A">5.2 <span class="Heading">Property Tests</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7AFA23AF819FBF3D">5.2-1 IsCompletelyRegularSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X836F4692839F4874">5.2-2 <span class="Heading">IsSimpleSemigroup</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X852F29E8795FA489">5.2-3 IsGroupAsSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X843EFDA4807FDC31">5.2-4 IsCommutativeSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7C4663827C5ACEF1">5.2-5 IsRegularSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X83F1529479D56665">5.2-6 IsInverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X81DE11987BB81017">5.2-7 IsCliffordSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7C8DB14587D1B55A">5.2-8 IsBand</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7E9B674D781B072C">5.2-9 IsRectangularBand</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8434E7C287DBFE1B">5.2-10 IsSemiBand</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7935C476808C8773">5.2-11 IsOrthodoxSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7CB099958658F979">5.2-12 IsRightZeroSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7E9261367C8C52C0">5.2-13 IsLeftZeroSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X81A1882181B75CC9">5.2-14 IsZeroSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X85F7E5CD86F0643B">5.2-15 IsZeroGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7B39F93C8136D642">5.2-16 MultiplicativeZero</a></span>
+</div>
+</div>
+<div class="ContChap"><a href="chap6.html#X853D15F87F14D36E">6 <span class="Heading">Special Classes of Semigroup</span></a>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap6.html#X7DFB63A97E67C0A1">6.1 <span class="Heading">Introduction</span></a>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap6.html#X8204C32F79D7CAF8">6.2 <span class="Heading">Transformation Semigroup</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79B1A1127B3B784A">6.2-1 SingularSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87554F5A85484046">6.2-2 OrderPreservingSemigroup</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap6.html#X7A88BC6E7AC4E444">6.3 <span class="Heading">Zero Groups and Zero Semigroups</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X801FC1D97D832A6F">6.3-1 ZeroSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86A1D1D7832BEA9C">6.3-2 ZeroSemigroupElt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81E319198527F824">6.3-3 ZeroGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X81DB162A78350E28">6.3-4 ZeroGroupElt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AA4B9577DC35D54">6.3-5 UnderlyingGroupOfZG</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AEC4E5E7EAE3CA5">6.3-6 UnderlyingGroupEltOfZGElt</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap6.html#X7C3F130B8362D55A">6.4 <span class="Heading">Random Semigroups</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7ECD900879DA1FD7">6.4-1 RandomMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X789DE9AB79FCFEB5">6.4-2 RandomSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X858CBA2B7BD64141">6.4-3 RandomReesMatrixSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F637CA981EFC6BE">6.4-4 RandomReesZeroMatrixSemigroup</a></span>
+</div>
+</div>
+<div class="ContChap"><a href="chap7.html#X861935DB81A478C2">7 <span class="Heading">Semigroup Homomorphisms</span></a>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X7DFB63A97E67C0A1">7.1 <span class="Heading">Introduction</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X86E4761480D700DF">7.1-1 InfoAutos</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X7DB1B2FD7DFAEBEC">7.2 <span class="Heading">Creating Homomorphisms</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X8199CBA57C36C666">7.2-1 <span class="Heading">SemigroupHomomorphismByFunction</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X8662F27B868CE7F2">7.2-2 <span class="Heading">SemigroupHomomorphismByImagesOfGens</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7D3A1B087C95CD84">7.2-3 <span class="Heading">SemigroupHomomorphismByImages</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X7EC237ED7E1978B0">7.3 <span class="Heading">Inner Automorphisms</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7BED661C83148D0C">7.3-1 InnerAutomorphismOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X87562E2079AE7608">7.3-2 ConjugatorOfInnerAutomorphismOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X87254FED7D1E0881">7.3-3 IsInnerAutomorphismOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X84B1A484829EC33E">7.3-4 InnerAutomorphismsOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B03F09484162578">7.3-5 InnerAutomorphismsOfSemigroupInGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X8476738A7BF9BADA">7.3-6 InnerAutomorphismsAutomorphismGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X85FD796978788EF5">7.3-7 IsInnerAutomorphismsOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B4BB2FF799D0D36">7.3-8 IsInnerAutomorphismsOfZeroGroup</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X7A007A0C80D26351">7.4 <span class="Heading">Automorphism Groups</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X87677B0787B4461A">7.4-1 AutomorphismGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7F13DCF886671C0C">7.4-2 AutomorphismsSemigroupInGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X8196EC9384EC69BC">7.4-3 IsAutomorphismGroupOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7EBC9D1C7CEE5DC1">7.4-4 IsAutomorphismGroupOfSimpleSemigp</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7F20270581708C15">7.4-5 IsAutomorphismGroupOfZeroGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7C8903DD85C40824">7.4-6 IsAutomorphismGroupOfZeroSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7F77F02583731C84">7.4-7 IsAutomorphismGroupOfRMS</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X868D5404867566F9">7.4-8 IsAutomorphismGroupOfRZMS</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X8225A9EC87A255E6">7.5 <span class="Heading">Rees Matrix Semigroups</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X82B0BDCD7CBDCC2E">7.5-1 RMSIsoByTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X8169BFEA84877310">7.5-2 RZMSIsoByTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7A5A209283929D7C">7.5-3 IsRMSIsoByTripleRep</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7FFE01D17DC054E8">7.5-4 IsRZMSIsoByTripleRep</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7F0CCB2B83C07D54">7.5-5 RMSInducedFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7D17056F79E5649F">7.5-6 RZMSInducedFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X84BA41977C43EAA3">7.5-7 RZMStoRZMSInducedFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X781757FD7938C9DD">7.5-8 RZMSGraph</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X78060D7C8331F340">7.5-9 RightTransStabAutoGroup</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X7CF67DF77AC73EA9">7.6 <span class="Heading">Zero Groups</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7D528F958733E3D0">7.6-1 ZeroGroupAutomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X862AACCF7C528811">7.6-2 IsZeroGroupAutomorphismRep</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7DDB3B727B0C7CA5">7.6-3 UnderlyingGroupAutoOfZeroGroupAuto</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X7D702EA087C1C5EF">7.7 <span class="Heading">Isomorphisms</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7965B0D07EFFBDA0">7.7-1 IsomorphismAutomorphismGroupOfRMS</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X80B7B1C783AA1567">7.7-2 IsomorphismPermGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X869F966B8196F28C">7.7-3 IsomorphismFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7F2ADC587DF698A2">7.7-4 IsomorphismFpMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X8248C522825E2684">7.7-5 IsomorphismSemigroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7FE2262679DD9D52">7.7-6 IsomorphismReesMatrixSemigroupOfDClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7964B5C97FB9C07D">7.7-7 IsomorphismReesMatrixSemigroup</a></span>
+</div>
+</div>
+<br />
+</div>
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap1.html">Next Chapter</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

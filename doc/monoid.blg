@@ -1,0 +1,59 @@
+This is BibTeX, Version 0.99c (Web2C 7.5.6)
+The top-level auxiliary file: monoid.aux
+The style file: alpha.bst
+Database file #1: MONOID.bib
+I was expecting a `,' or a `}'---line 48 of file MONOID.bib
+ :       
+ :       year = {1998},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 59 of file MONOID.bib
+ :       
+ :       year = {2002},      MRCLASS = {20M20 (68W30) },
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--empty journal in computing
+Warning--empty year in pfeiffer2
+Warning--empty year in pfeiffer1
+You've used 8 entries,
+            2543 wiz_defined-function locations,
+            611 strings with 5527 characters,
+and the built_in function-call counts, 3212 in all, are:
+= -- 323
+> -- 171
+< -- 2
++ -- 60
+- -- 59
+* -- 248
+:= -- 556
+add.period$ -- 27
+call.type$ -- 8
+change.case$ -- 51
+chr.to.int$ -- 7
+cite$ -- 11
+duplicate$ -- 113
+empty$ -- 211
+format.name$ -- 68
+if$ -- 625
+int.to.chr$ -- 2
+int.to.str$ -- 0
+missing$ -- 9
+newline$ -- 46
+num.names$ -- 24
+pop$ -- 44
+preamble$ -- 1
+purify$ -- 60
+quote$ -- 0
+skip$ -- 91
+stack$ -- 0
+substring$ -- 169
+swap$ -- 9
+text.length$ -- 2
+text.prefix$ -- 1
+top$ -- 0
+type$ -- 60
+warning$ -- 3
+while$ -- 33
+width$ -- 10
+write$ -- 108
+(There were 2 error messages)

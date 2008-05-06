@@ -1,0 +1,1182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (MONOID) - Chapter 7: Semigroup Homomorphisms</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+</head>
+<body>
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap6.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chapBib.html">Next Chapter</a>&nbsp;  </div>
+
+<p><a id="X861935DB81A478C2" name="X861935DB81A478C2"></a></p>
+<div class="ChapSects"><a href="chap7.html#X861935DB81A478C2">7 <span class="Heading">Semigroup Homomorphisms</span></a>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X7DFB63A97E67C0A1">7.1 <span class="Heading">Introduction</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X86E4761480D700DF">7.1-1 InfoAutos</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X7DB1B2FD7DFAEBEC">7.2 <span class="Heading">Creating Homomorphisms</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X8199CBA57C36C666">7.2-1 <span class="Heading">SemigroupHomomorphismByFunction</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X8662F27B868CE7F2">7.2-2 <span class="Heading">SemigroupHomomorphismByImagesOfGens</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7D3A1B087C95CD84">7.2-3 <span class="Heading">SemigroupHomomorphismByImages</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X7EC237ED7E1978B0">7.3 <span class="Heading">Inner Automorphisms</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7BED661C83148D0C">7.3-1 InnerAutomorphismOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X87562E2079AE7608">7.3-2 ConjugatorOfInnerAutomorphismOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X87254FED7D1E0881">7.3-3 IsInnerAutomorphismOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X84B1A484829EC33E">7.3-4 InnerAutomorphismsOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B03F09484162578">7.3-5 InnerAutomorphismsOfSemigroupInGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X8476738A7BF9BADA">7.3-6 InnerAutomorphismsAutomorphismGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X85FD796978788EF5">7.3-7 IsInnerAutomorphismsOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7B4BB2FF799D0D36">7.3-8 IsInnerAutomorphismsOfZeroGroup</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X7A007A0C80D26351">7.4 <span class="Heading">Automorphism Groups</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X87677B0787B4461A">7.4-1 AutomorphismGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7F13DCF886671C0C">7.4-2 AutomorphismsSemigroupInGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X8196EC9384EC69BC">7.4-3 IsAutomorphismGroupOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7EBC9D1C7CEE5DC1">7.4-4 IsAutomorphismGroupOfSimpleSemigp</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7F20270581708C15">7.4-5 IsAutomorphismGroupOfZeroGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7C8903DD85C40824">7.4-6 IsAutomorphismGroupOfZeroSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7F77F02583731C84">7.4-7 IsAutomorphismGroupOfRMS</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X868D5404867566F9">7.4-8 IsAutomorphismGroupOfRZMS</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X8225A9EC87A255E6">7.5 <span class="Heading">Rees Matrix Semigroups</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X82B0BDCD7CBDCC2E">7.5-1 RMSIsoByTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X8169BFEA84877310">7.5-2 RZMSIsoByTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7A5A209283929D7C">7.5-3 IsRMSIsoByTripleRep</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7FFE01D17DC054E8">7.5-4 IsRZMSIsoByTripleRep</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7F0CCB2B83C07D54">7.5-5 RMSInducedFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7D17056F79E5649F">7.5-6 RZMSInducedFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X84BA41977C43EAA3">7.5-7 RZMStoRZMSInducedFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X781757FD7938C9DD">7.5-8 RZMSGraph</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X78060D7C8331F340">7.5-9 RightTransStabAutoGroup</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X7CF67DF77AC73EA9">7.6 <span class="Heading">Zero Groups</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7D528F958733E3D0">7.6-1 ZeroGroupAutomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X862AACCF7C528811">7.6-2 IsZeroGroupAutomorphismRep</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7DDB3B727B0C7CA5">7.6-3 UnderlyingGroupAutoOfZeroGroupAuto</a></span>
+</div>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap7.html#X7D702EA087C1C5EF">7.7 <span class="Heading">Isomorphisms</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7965B0D07EFFBDA0">7.7-1 IsomorphismAutomorphismGroupOfRMS</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X80B7B1C783AA1567">7.7-2 IsomorphismPermGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X869F966B8196F28C">7.7-3 IsomorphismFpSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7F2ADC587DF698A2">7.7-4 IsomorphismFpMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X8248C522825E2684">7.7-5 IsomorphismSemigroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7FE2262679DD9D52">7.7-6 IsomorphismReesMatrixSemigroupOfDClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7964B5C97FB9C07D">7.7-7 IsomorphismReesMatrixSemigroup</a></span>
+</div>
+</div>
+
+<h3>7 <span class="Heading">Semigroup Homomorphisms</span></h3>
+
+<p><a id="X7DFB63A97E67C0A1" name="X7DFB63A97E67C0A1"></a></p>
+
+<h4>7.1 <span class="Heading">Introduction</span></h4>
+
+<p>In this chapter we give instructions on how to create semigroup homomorphisms using <strong class="pkg">MONOID</strong> in several different ways.</p>
+
+<p>In Section <a href="chap7.html#X7DB1B2FD7DFAEBEC"><b>7.2</b></a>, we give functions for creating arbitrary semigroup homomorphism specified by a function on the elements, the images of the generators, or the images of all the semigroup elements. These functions were written to support the functions for computing the automorphism group of an arbitrary transformation semigroup and to specify isomorphisms between different classes of semigroup, such as finitely presented semigroups and transformation semigroups.</p>
+
+<p>In Section <a href="chap7.html#X7EC237ED7E1978B0"><b>7.3</b></a>, we show how to specify and compute the inner automorphisms of a transformation semigroup. The functions that can be used to find the entire automorphism group of an arbitrary transformation semigroup are given in Section <a href="chap7.html#X7A007A0C80D26351"><b>7.4</b></a>. The <code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) has an interactive mode that allows the user to decide how the computation should proceed. This can be invoked by using the command <code class="code">SetInfoLevel(InfoAutos, 4);</code> see <code class="func">InfoAutos</code> (<a href="chap7.html#X86E4761480D700DF"><b>7.1-1</b></a>).</p>
+
+<p>In Section <a href="chap7.html#X8225A9EC87A255E6"><b>7.5</b></a>, commands for creating automorphisms and finding all automorphisms of Rees matrix semigroups and Rees <code class="code">0</code>-matrix semigroups are given.</p>
+
+<p>In Section <a href="chap7.html#X7CF67DF77AC73EA9"><b>7.6</b></a>, functions for specifying the automorphisms of a zero group are given.</p>
+
+<p>In the final section (<a href="chap7.html#X7D702EA087C1C5EF"><b>7.7</b></a>), functions for finding isomorphisms between various kinds of semigroups are given.</p>
+
+<p>The methods behind the commands in this chapter are taken from <a href="chapBib.html#biBcomputing">[ABM07]</a>.</p>
+
+<p><strong class="button">Please note</strong>: the following functions can only be used fully if <strong class="pkg">GRAPE</strong> is fully installed (and loaded):</p>
+
+
+<ul>
+<li><p><code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) with argument satisfying <code class="func">IsTransformationSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EAF835D7FE4026F"><b>Reference: IsTransformationSemigroup</b></a>) or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>)</p>
+
+</li>
+<li><p><code class="func">RightTransStabAutoGroup</code> (<a href="chap7.html#X78060D7C8331F340"><b>7.5-9</b></a>) with argument satisfying <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>)</p>
+
+</li>
+<li><p><code class="func">RZMSGraph</code> (<a href="chap7.html#X781757FD7938C9DD"><b>7.5-8</b></a>)</p>
+
+</li>
+<li><p><code class="func">RZMSInducedFunction</code> (<a href="chap7.html#X7D17056F79E5649F"><b>7.5-6</b></a>)</p>
+
+</li>
+<li><p><code class="func">RZMStoRZMSInducedFunction</code> (<a href="chap7.html#X84BA41977C43EAA3"><b>7.5-7</b></a>)</p>
+
+</li>
+<li><p><code class="func">IsomorphismSemigroups</code> (<a href="chap7.html#X8248C522825E2684"><b>7.7-5</b></a>) with both arguments satisfying <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>)</p>
+
+</li>
+</ul>
+<p>Please see Chapter <a href="chap1.html#X7E0DB6BF8569166D"><b>1</b></a> for further details on how to obtain <strong class="pkg">GRAPE</strong>.</p>
+
+<p><a id="X86E4761480D700DF" name="X86E4761480D700DF"></a></p>
+
+<h5>7.1-1 InfoAutos</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; InfoAutos</code></td><td class="tdright">( info class )</td></tr></table></div>
+<p>This is the InfoClass for the functions in this chapter. Setting the value of <code class="code">InfoAutos</code> to <code class="code">1, 2, 3,</code> or <code class="code">4</code> using the command <code class="func">SetInfoLevel</code> (<a href="/Users/jdm/gapdev/doc/ref/chap7.html#X7A43B9E68765EE9E"><b>Reference: SetInfoLevel</b></a>) will give different levels of information about what <code class="code">GAP</code> is doing during a computation. In particular, if the level of <code class="code">InfoAutos</code> is set to <code class="code">4</code>, then <code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) runs in interactive mode.</p>
+
+<p><a id="X7DB1B2FD7DFAEBEC" name="X7DB1B2FD7DFAEBEC"></a></p>
+
+<h4>7.2 <span class="Heading">Creating Homomorphisms</span></h4>
+
+<p>The principal functions for creating arbitrary semigroup homomorphisms are the following three.</p>
+
+<p><a id="X8199CBA57C36C666" name="X8199CBA57C36C666"></a></p>
+
+<h5>7.2-1 <span class="Heading">SemigroupHomomorphismByFunction</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; SemigroupHomomorphismByFunction</code>( <var class="Arg">S, T, func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; SemigroupHomomorphismByFunctionNC</code>( <var class="Arg">S, T, func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns a semigroup homomorphism with representation <code class="code">IsSemigroupHomomorphismByFunctionRep</code> from the semigroup <code class="code">S</code> to the semigroup <code class="code">T</code> defined by the function <code class="code">func</code>.</p>
+
+<p><code class="code">SemigroupHomomorphismByFunction</code> will find an isomorphism from <code class="code">S</code> to a finitely presented semigroup or monoid (using <code class="func">IsomorphismFpSemigroup</code> (<a href="chap7.html#X869F966B8196F28C"><b>7.7-3</b></a>) or <code class="func">IsomorphismFpMonoid</code> (<a href="chap7.html#X7F2ADC587DF698A2"><b>7.7-4</b></a>)) and then check that the list of values under <code class="code">func</code> of the generators of <code class="code">S</code> satisfy the relations of this presentation.</p>
+
+<p><code class="code">SemigroupHomomorphismByFunctionNC</code> does not check that <code class="code">func</code> defines a homomorphism and, in this case <code class="code">S</code> and <code class="code">T</code> can be semigroups, D-classes, H-classes or any combination of these.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; gens:=[ Transformation( [ 1, 4, 3, 5, 2 ] ), 
+  &gt; Transformation( [ 2, 3, 1, 1, 2 ] ) ];;
+  gap&gt; S:=Semigroup(gens);;
+  gap&gt; gens:=[ Transformation( [ 1, 5, 1, 2, 1 ] ), 
+  &gt; Transformation( [ 5, 1, 4, 3, 2 ] ) ];;
+  gap&gt; T:=Semigroup(gens);;
+  gap&gt; idem:=Random(Idempotents(T));;
+  gap&gt; hom:=SemigroupHomomorphismByFunction(S, T, x-&gt; idem);
+  SemigroupHomomorphism ( &lt;semigroup with 2 generators&gt;-&gt;&lt;semigroup with 
+  2 generators&gt;)
+  gap&gt; hom:=SemigroupHomomorphismByFunctionNC(S, T, x-&gt; idem);
+  SemigroupHomomorphism ( &lt;semigroup with 2 generators&gt;-&gt;&lt;semigroup with 
+  2 generators&gt;)
+</pre></td></tr></table>
+
+<p><a id="X8662F27B868CE7F2" name="X8662F27B868CE7F2"></a></p>
+
+<h5>7.2-2 <span class="Heading">SemigroupHomomorphismByImagesOfGens</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; SemigroupHomomorphismByImagesOfGens</code>( <var class="Arg">S, T, list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; SemigroupHomomorphismByImagesOfGensNC</code>( <var class="Arg">S, T, list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns a semigroup homomorphism with representation <code class="code">IsSemigroupHomomorphismByImagesOfGensRep</code> from <code class="code">S</code> to <code class="code">T</code> where the image of the <code class="code">i</code>th generator of <code class="code">S</code> is the <code class="code">i</code>th position in <code class="code">list</code>.</p>
+
+<p><code class="code">SemigroupHomomorphismByImagesOfGens</code> will find an isomorphism from <code class="code">S</code> to a finitely presented semigroup or monoid (using <code class="func">IsomorphismFpSemigroup</code> (<a href="chap7.html#X869F966B8196F28C"><b>7.7-3</b></a>) or <code class="func">IsomorphismFpMonoid</code> (<a href="chap7.html#X7F2ADC587DF698A2"><b>7.7-4</b></a>)) and then check that <code class="code">list</code> satisfies the relations of this presentation.</p>
+
+<p><code class="code">SemigroupHomomorphismByImagesOfGensNC</code> does not check that <code class="code">list</code> induces a homomorphism.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; gens:=[ Transformation( [ 1, 4, 3, 5, 2 ] ), 
+  &gt; Transformation( [ 2, 3, 1, 1, 2 ] ) ];;
+  gap&gt; S:=Semigroup(gens);;
+  gap&gt; gens:=[ Transformation( [ 1, 5, 1, 2, 1 ] ), 
+  &gt; Transformation( [ 5, 1, 4, 3, 2 ] ) ];;
+  gap&gt; T:=Semigroup(gens);;
+  gap&gt; SemigroupHomomorphismByImagesOfGens(S, T, GeneratorsOfSemigroup(T));
+  fail
+  gap&gt; SemigroupHomomorphismByImagesOfGens(S, S, GeneratorsOfSemigroup(S));
+  SemigroupHomomorphismByImagesOfGens ( &lt;trans. semigroup of size 161 with 
+  2 generators&gt;-&gt;&lt;trans. semigroup of size 161 with 2 generators&gt;)
+</pre></td></tr></table>
+
+<p><a id="X7D3A1B087C95CD84" name="X7D3A1B087C95CD84"></a></p>
+
+<h5>7.2-3 <span class="Heading">SemigroupHomomorphismByImages</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; SemigroupHomomorphismByImages</code>( <var class="Arg">S, T, list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; SemigroupHomomorphismByImagesNC</code>( <var class="Arg">S, T, list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns a semigroup homomorphism with representation <code class="code">IsSemigroupHomomorphismByImagesRep</code> from <code class="code">S</code> to <code class="code">T</code> where the image of the <code class="code">i</code>th element of <code class="code">S</code> is the <code class="code">i</code>th position in <code class="code">list</code>.</p>
+
+<p><code class="code">SemigroupHomomorphismByImages</code> will find an isomorphism from <code class="code">S</code> to a finitely presented semigroup or monoid (using <code class="func">IsomorphismFpSemigroup</code> (<a href="chap7.html#X869F966B8196F28C"><b>7.7-3</b></a>) or <code class="func">IsomorphismFpMonoid</code> (<a href="chap7.html#X7F2ADC587DF698A2"><b>7.7-4</b></a>)) and then check that <code class="code">list</code> satisfies the relations of this presentation.</p>
+
+<p><code class="code">SemigroupHomomorphismByImagesNC</code> does not check that <code class="code">list</code> induces a homomorphism.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; gens:=[ Transformation( [ 2, 3, 4, 2, 4 ] ),
+  &gt; Transformation( [ 3, 4, 2, 1, 4 ] ) ];;
+  gap&gt; S:=Semigroup(gens);;
+  gap&gt; gens:=[ Transformation( [ 2, 4, 4, 1, 2 ] ),
+  &gt; Transformation( [ 5, 1, 1, 5, 1 ] ) ];;
+  gap&gt; T:=Semigroup(gens);;
+  gap&gt; idem:=Transformation( [ 5, 5, 5, 5, 5 ] );;
+  gap&gt; list:=List([1..Size(S)], x-&gt; idem);;
+  gap&gt; hom:=SemigroupHomomorphismByImages(S, T, list);
+  SemigroupHomomorphismByImagesOfGens ( &lt;trans. semigroup of size 164 with 
+  2 generators&gt;-&gt;&lt;trans. semigroup with 2 generators&gt;)
+  gap&gt; SemigroupHomomorphismByImagesNC(S, T, list);
+  SemigroupHomomorphismByImages ( &lt;trans. semigroup of size 164 with 
+  2 generators&gt;-&gt;&lt;trans. semigroup with 2 generators&gt;)
+</pre></td></tr></table>
+
+<p><a id="X7EC237ED7E1978B0" name="X7EC237ED7E1978B0"></a></p>
+
+<h4>7.3 <span class="Heading">Inner Automorphisms</span></h4>
+
+<p><a id="X7BED661C83148D0C" name="X7BED661C83148D0C"></a></p>
+
+<h5>7.3-1 InnerAutomorphismOfSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; InnerAutomorphismOfSemigroup</code>( <var class="Arg">S, perm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; InnerAutomorphismOfSemigroupNC</code>( <var class="Arg">S, perm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns the inner automorphism of the transformation semigroup <code class="code">S</code> given by the permutation <code class="code">perm</code>. The degree of <code class="code">perm</code> should be at most the degree of <code class="code">S</code>.</p>
+
+<p>The notion of inner automorphisms of semigroups differs from the notion of the same name for groups. Indeed, if <code class="code">S</code> is a semigroup of transformations of degree <code class="code">n</code>, then <code class="code">g</code> in the symmetric group <code class="code">S_n</code> induces an inner automorphism of <code class="code">S</code> if the mapping that takes <code class="code">s</code> to <code class="code">g^-1sg</code> for all <code class="code">s</code> in <code class="code">S</code> is an automorphism of <code class="code">S</code>.</p>
+
+<p><code class="code">InnerAutomorphismOfSemigroup</code> checks that the mapping induced by <code class="code">perm</code> is an automorphism and <code class="code">InnerAutomorphismOfSemigroupNC</code> only creates the appropriate object without performing a check that the permutation actually induces an automorphism.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; gens:=[ Transformation( [ 6, 2, 7, 5, 3, 5, 4 ] ), 
+  &gt; Transformation( [ 7, 7, 5, 7, 2, 4, 3 ] ) ];;
+  gap&gt; S:=Monoid(gens);;
+  gap&gt; InnerAutomorphismOfSemigroup(S, (1,2,3,4,5));  
+  fail
+  gap&gt; InnerAutomorphismOfSemigroupNC(S, (1,2,3,4,5));
+  ^(1,2,3,4,5)
+  gap&gt; InnerAutomorphismOfSemigroup(S, ());
+  ^()
+</pre></td></tr></table>
+
+<p><a id="X87562E2079AE7608" name="X87562E2079AE7608"></a></p>
+
+<h5>7.3-2 ConjugatorOfInnerAutomorphismOfSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; ConjugatorOfInnerAutomorphismOfSemigroup</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the permutation <code class="code">perm</code> used to construct the inner automorphism <code class="code">f</code> of a semigroup; see <code class="func">InnerAutomorphismOfSemigroup</code> (<a href="chap7.html#X7BED661C83148D0C"><b>7.3-1</b></a>) for further details.</p>
+
+
+<table class="example">
+<tr><td><pre> 
+  gap&gt; S:=RandomSemigroup(3,8);;
+  gap&gt; f:=InnerAutomorphismOfSemigroupNC(S, (1,2)(3,4));
+  ^(1,2)(3,4)
+  gap&gt; ConjugatorOfInnerAutomorphismOfSemigroup(f);
+  (1,2)(3,4)
+</pre></td></tr></table>
+
+<p><a id="X87254FED7D1E0881" name="X87254FED7D1E0881"></a></p>
+
+<h5>7.3-3 IsInnerAutomorphismOfSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsInnerAutomorphismOfSemigroup</code>( <var class="Arg">f</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>returns <code class="code">true</code> if the general mapping <code class="code">f</code> is an inner automorphism of a semigroup; see <code class="func">InnerAutomorphismOfSemigroup</code> (<a href="chap7.html#X7BED661C83148D0C"><b>7.3-1</b></a>) for further details.</p>
+
+
+<table class="example">
+<tr><td><pre> 
+  gap&gt; S:=RandomSemigroup(2,9);;
+  gap&gt; f:=InnerAutomorphismOfSemigroupNC(S, (1,2)(3,4));
+  ^(1,2)(3,4)
+  gap&gt; IsInnerAutomorphismOfSemigroup(f);
+  true
+</pre></td></tr></table>
+
+<p><a id="X84B1A484829EC33E" name="X84B1A484829EC33E"></a></p>
+
+<h5>7.3-4 InnerAutomorphismsOfSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; InnerAutomorphismsOfSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p><code class="code">InnerAutomorphismsOfSemigroup</code> returns the group of inner automorphisms of the transformation semigroup <code class="code">S</code>.</p>
+
+<p>The same result can be obtained by applying <code class="func">InnerAutomorphismsAutomorphismGroup</code> (<a href="chap7.html#X8476738A7BF9BADA"><b>7.3-6</b></a>) to the result of <code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) of <code class="code">S</code>. It is possible that the inner automorphism of <code class="code">S</code> have been calculated at the same time as the entire automorphism group of <code class="code">S</code> but it might not be. If the degree of <code class="code">S</code> is high, then this function may take a long time to return a value.</p>
+
+<p>The notion of inner automorphisms of semigroups differs from the notion of the same name for groups. Indeed, if <code class="code">S</code> is a semigroup of transformations of degree <code class="code">n</code>, then <code class="code">g</code> in the symmetric group <code class="code">S_n</code> induces an inner automorphism of <code class="code">S</code> if the mapping that takes <code class="code">s</code> to <code class="code">g^-1sg</code> for all <code class="code">s</code> in <code class="code">S</code> is an automorphism of <code class="code">S</code>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; x:=Transformation([2,3,4,5,6,7,8,9,1]);;
+gap&gt; y:=Transformation([4,2,3,4,5,6,7,8,9]);;
+gap&gt; S:=Semigroup(x,y);;
+gap&gt; G:=InnerAutomorphismsOfSemigroup(S);
+&lt;group of size 54 with 2 generators&gt;
+	</pre></td></tr></table>
+
+<p><a id="X7B03F09484162578" name="X7B03F09484162578"></a></p>
+
+<h5>7.3-5 InnerAutomorphismsOfSemigroupInGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; InnerAutomorphismsOfSemigroupInGroup</code>( <var class="Arg">S, G[, bval]</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p><code class="code">InnerAutomorphismsOfSemigroupInGroup</code> returns the group of inner automorphisms of the transformation semigroup <code class="code">S</code> that also belong to the group <code class="code">G</code>. The default setting is that the inner automorphisms of <code class="code">S</code> are calculated first, then filtered to see which elements also belong to <code class="code">G</code>.</p>
+
+<p>If the optional argument <code class="code">bval</code> is present and <code class="code">true</code>, then the filtering is done as the inner automorphisms are found rather than after they have all been found. Otherwise, then this is equivalent to doing <code class="code">InnerAutomorphismsOfSemigroupInGroup(S, G)</code>.</p>
+
+<p>If <code class="func">InfoAutos</code> (<a href="chap7.html#X86E4761480D700DF"><b>7.1-1</b></a>) is set to level <code class="code">4</code>, then a prompt will appear during the procedure to let you decide when the filtering should be done. In this case the value of <code class="code">bval</code> is irrelevant.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; gens:=[ Transformation( [1,8,11,2,5,16,13,14,3,6,15,10,7,4,9,12 ] ), 
+&gt;   Transformation( [1,16,9,6,5,8,13,12,15,2,3,4,7,10,11,14] ), 
+&gt;   Transformation( [1,3,7,9,1,15,5,11,13,11,13,3,5,15,7,9 ] ) ];;
+gap&gt; S:=Semigroup(gens);;
+gap&gt; InnerAutomorphismsOfSemigroup(S);
+&lt;group of size 16 with 3 generators&gt;
+gap&gt; G:=Group(SemigroupHomomorphismByImagesOfGensNC(S, S, gens));
+&lt;group with 1 generators&gt;
+gap&gt; InnerAutomorphismsOfSemigroupInGroup(S, G);
+&lt;group of size 1 with 1 generators&gt;
+gap&gt; InnerAutomorphismsOfSemigroupInGroup(S, G, true);
+&lt;group of size 1 with 1 generators&gt;
+gap&gt; InnerAutomorphismsOfSemigroupInGroup(S, G, false);
+&lt;group of size 1 with 1 generators&gt;
+	</pre></td></tr></table>
+
+<p><a id="X8476738A7BF9BADA" name="X8476738A7BF9BADA"></a></p>
+
+<h5>7.3-6 InnerAutomorphismsAutomorphismGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; InnerAutomorphismsAutomorphismGroup</code>( <var class="Arg">autgroup</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>If <code class="code">autgroup</code> satisfies <code class="func">IsAutomorphismGroupOfSemigroup</code> (<a href="chap7.html#X8196EC9384EC69BC"><b>7.4-3</b></a>) then, this attribute stores the subgroup of inner automorphisms of the original semigroup.</p>
+
+<p>It is possible that the inner automorphisms of <code class="code">autgroup</code> have been calculated at the same time as <code class="code">autgroup</code> was calculated but they might not be. If the degree of underlying semigroup is high, then this function may take a long time to return a value.</p>
+
+<p>The notion of inner automorphisms of semigroups differs from the notion of the same name for groups. Indeed, if <code class="code">S</code> is a semigroup of transformations of degree <code class="code">n</code>, then <code class="code">g</code> in the symmetric group <code class="code">S_n</code> induces an inner automorphism of <code class="code">S</code> if the mapping that takes <code class="code">s</code> to <code class="code">g^-1sg</code> for all <code class="code">s</code> in <code class="code">S</code> is an automorphism of <code class="code">S</code>.</p>
+
+<p>If <code class="code">autgroup</code> satisfies <code class="func">IsAutomorphismGroupOfZeroGroup</code> (<a href="chap7.html#X7F20270581708C15"><b>7.4-5</b></a>), then <code class="code">InnerAutomorphismsAutomorphismGroup</code> returns the subgroup of inner automorphisms inside the automorphism group of the zero group by computing the inner automorphisms of the underlying group. Note that in this case the notion of inner automorphisms corresponds to that of the group theoretic notion.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6]);;
+gap&gt; g2:=Transformation([5,1,7,8,7,5,8,1]);;
+gap&gt; m6:=Semigroup(g1,g2);;
+gap&gt; A:=AutomorphismGroup(m6);
+&lt;group of size 12 with 2 generators&gt;
+gap&gt; InnerAutomorphismsAutomorphismGroup(A);
+&lt;group of size 12 with 2 generators&gt; 
+gap&gt; last=InnerAutomorphismsOfSemigroup(m6); 
+	</pre></td></tr></table>
+
+<p><a id="X85FD796978788EF5" name="X85FD796978788EF5"></a></p>
+
+<h5>7.3-7 IsInnerAutomorphismsOfSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsInnerAutomorphismsOfSemigroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>returns <code class="code">true</code> if <code class="code">G</code> is the inner automorphism group of a transformation semigroup.</p>
+
+<p>The notion of inner automorphisms of semigroups differs from the notion of the same name for groups. Indeed, if <code class="code">S</code> is a semigroup of transformations of degree <code class="code">n</code>, then <code class="code">g</code> in the symmetric group <code class="code">S_n</code> induces an inner automorphism of <code class="code">S</code> if the mapping that takes <code class="code">s</code> to <code class="code">g^-1sg</code> for all <code class="code">s</code> in <code class="code">S</code> is an automorphism of <code class="code">S</code>.</p>
+
+<p>Note that this property is set to <code class="code">true</code> when the computation of the inner automorphisms is performed. Otherwise, there is no method to check if an arbitrary group satisfies this property.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; S:=RandomSemigroup(5,5);
+&lt;semigroup with 5 generators&gt;
+gap&gt; I:=InnerAutomorphismsOfSemigroup(S);;
+gap&gt; IsInnerAutomorphismsOfSemigroup(I);
+true
+	</pre></td></tr></table>
+
+<p><a id="X7B4BB2FF799D0D36" name="X7B4BB2FF799D0D36"></a></p>
+
+<h5>7.3-8 IsInnerAutomorphismsOfZeroGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsInnerAutomorphismsOfZeroGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>returns <code class="code">true</code> if <code class="code">G</code> is the inner automorphism group of a zero group. This property is set to <code class="code">true</code> when the computation of the inner automorphism group of the zero group is performed. Otherwise, there is no method to check if an arbitrary group satisfies this property.</p>
+
+<p>Every inner automorphism of a zero group is just an inner automorphism of the underlying group that fixes the zero element. So, this notion of inner automorphism corresponds to the notion of inner automorphisms of a group.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; zg:=ZeroGroup(CyclicGroup(70));
+&lt;zero group with 4 generators&gt;
+gap&gt; I:=InnerAutomorphismsAutomorphismGroup(AutomorphismGroup(zg));
+&lt;group of size 1 with 1 generators&gt;
+gap&gt; IsInnerAutomorphismsOfZeroGroup(I);
+true
+	</pre></td></tr></table>
+
+<p><a id="X7A007A0C80D26351" name="X7A007A0C80D26351"></a></p>
+
+<h4>7.4 <span class="Heading">Automorphism Groups</span></h4>
+
+<p><a id="X87677B0787B4461A" name="X87677B0787B4461A"></a></p>
+
+<h5>7.4-1 AutomorphismGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; AutomorphismGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p><code class="code">AutomorphismGroup</code> returns the group of automorphisms of the transformation semigroup, zero group, zero semigroup, Rees matrix semigroup, or Rees 0-matrix semigroup <code class="code">S</code>; that is, semigroups satisfying the properties <code class="func">IsTransformationSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EAF835D7FE4026F"><b>Reference: IsTransformationSemigroup</b></a>), <code class="func">IsZeroGroup</code> (<a href="chap5.html#X85F7E5CD86F0643B"><b>5.2-15</b></a>), <code class="func">IsZeroSemigroup</code> (<a href="chap5.html#X81A1882181B75CC9"><b>5.2-14</b></a>), <code class="func">IsReesMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X780BB78A79275244"><b>Reference: IsReesMatrixSemigroup</b></a>), or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
+
+<p>If <code class="code">S</code> is a transformation semigroup, then <code class="code">AutomorphismGroup</code> computes the automorphism group of <code class="code">S</code> using the algorithm described in <a href="chapBib.html#biBcomputing">[ABM07]</a>.</p>
+
+<p>If <code class="code">S</code> is a (completely) simple transformation semigroup, then the automorphism group is computed by passing to an isomorphic Rees matrix semigroup. If <code class="code">S</code> is a transformation group, then the automorphism group is computed by passing to an isomorphic permutation group. If <code class="code">S</code> has order <code class="code">&lt;10</code> and knows its Cayley table (<code class="func">MultiplicationTable</code> (<a href="/Users/jdm/gapdev/doc/ref/chap33.html#X849BDCC27C4C3191"><b>Reference: MultiplicationTable</b></a>)), then the automorphism group is calculated by finding the setwise stabilizer of the Cayley table in the symmetric group of degree <code class="code">|S|</code> under the action on the Cayley table.</p>
+
+<p>If <code class="code">S</code> is a zero group, then <code class="code">AutomorphismGroup</code> computes the automorphism group of the underlying group. Obviously, every automorphism of a zero group is the extension of an automorphism of the underlying group that fixes the zero element.</p>
+
+<p>If <code class="code">S</code> is a zero semigroup, then every permutation of the elements of <code class="code">S</code> that fixes the zero element is an automorphism. Thus the automorphism group of a zero semigroup of order <code class="code">n</code> is isomorphic to the symmetric group on <code class="code">n-1</code> elements.</p>
+
+<p>If <code class="code">S</code> is a Rees matrix semigroup or a Rees 0-matrix semigroup, then the automorphism group of <code class="code">S</code> is calculated using the algorithm described in <a href="chapBib.html#biBcomputing">[ABM07, Section 2]</a>. In this case, the returned group has as many generators as elements. This may be changed in the future.</p>
+
+<p>If <code class="func">InfoAutos</code> (<a href="chap7.html#X86E4761480D700DF"><b>7.1-1</b></a>) is set to level <code class="code">4</code>, then prompts will appear during the procedure to allow you interactive control over the computation.</p>
+
+<p><strong class="button">Please note:</strong> if <strong class="pkg">grape</strong> is not loaded, then this function will not work when <code class="code">S</code> satisfies <code class="func">IsTransformationSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EAF835D7FE4026F"><b>Reference: IsTransformationSemigroup</b></a>) or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; g1:=Transformation([5,4,4,2,1]);;
+gap&gt; g2:=Transformation([2,5,5,4,1]);;
+gap&gt; m2:=Monoid(g1,g2);;
+gap&gt; IsTransformationSemigroup(m2);
+true
+gap&gt; AutomorphismGroup(m2);
+&lt;group of size 24 with 5 generators&gt;
+gap&gt; IsAutomorphismGroupOfSemigroup(last);
+true
+gap&gt; zg:=ZeroGroup(CyclicGroup(70));
+&lt;zero group with 4 generators&gt;
+gap&gt; IsZeroGroup(zg);
+true
+gap&gt; AutomorphismGroup(zg);
+&lt;group with 3 generators&gt;
+gap&gt; IsAutomorphismGroupOfZeroGroup(last);
+true
+gap&gt; InnerAutomorphismsOfSemigroup(zg);
+&lt;group of size 1 with 1 generators&gt;
+gap&gt; InnerAutomorphismsAutomorphismGroup(AutomorphismGroup(zg));
+&lt;group of size 1 with 1 generators&gt;
+gap&gt; last2=InnerAutomorphismsAutomorphismGroup(AutomorphismGroup(zg));
+true
+gap&gt; S:=ZeroSemigroup(10);
+&lt;zero semigroup with 10 elements&gt;
+gap&gt; Size(S);
+10
+gap&gt; Elements(S);
+[ 0, z1, z2, z3, z4, z5, z6, z7, z8, z9 ]
+gap&gt; A:=AutomorphismGroup(S);
+&lt;group with 2 generators&gt;
+gap&gt; IsAutomorphismGroupOfZeroSemigroup(A);
+true
+gap&gt; Factorial(9)=Size(A);
+true
+gap&gt; G:=Group([ (2,5)(3,4) ]);;
+gap&gt; mat:=[ [ (), (), (), (), () ], 
+&gt;   [ (), (), (2,5)(3,4), (2,5)(3,4), () ], 
+&gt;   [ (), (), (), (2,5)(3,4), (2,5)(3,4) ], 
+&gt;   [ (), (2,5)(3,4), (), (2,5)(3,4), () ], 
+&gt;   [ (), (2,5)(3,4), (), (2,5)(3,4), () ] ];;
+gap&gt; rms:=ReesMatrixSemigroup(G, mat);
+Rees Matrix Semigroup over Group([ (2,5)(3,4) ])
+gap&gt; A:=AutomorphismGroup(rms);
+&lt;group of size 12 with 12 generators&gt;
+gap&gt; IsAutomorphismGroupOfRMS(A);
+true
+gap&gt; G:=ZeroGroup(Group([ (1,3)(2,5), (1,3,2,5) ]));;
+gap&gt; elts:=Elements(G);;
+gap&gt; mat:=[ [ elts[7], elts[1], elts[9], elts[1], elts[1] ], 
+&gt;   [ elts[1], elts[1], elts[1], elts[9], elts[1] ], 
+&gt;   [ elts[9], elts[1], elts[1], elts[4], elts[9] ], 
+&gt;   [ elts[1], elts[1], elts[1], elts[1], elts[1] ], 
+&gt;   [ elts[1], elts[5], elts[1], elts[1], elts[1] ] ];;
+gap&gt; rzms:=ReesZeroMatrixSemigroup(G, mat);;
+gap&gt; AutomorphismGroup(rzms);
+gap&gt; IsAutomorphismGroupOfRZMS(A);
+true
+&lt;group of size 512 with 512 generators&gt;
+	</pre></td></tr></table>
+
+<p><a id="X7F13DCF886671C0C" name="X7F13DCF886671C0C"></a></p>
+
+<h5>7.4-2 AutomorphismsSemigroupInGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; AutomorphismsSemigroupInGroup</code>( <var class="Arg">S, G[, bvals]</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p><code class="code">AutomorphismsSemigroupInGroup</code> returns the group of automorphisms of the transformation semigroup <code class="code">S</code> that also belong to the group <code class="code">G</code>. If the value of <code class="code">G</code> is <code class="code">fail</code>, then <code class="code">AutomorphismsSemigroupInGroup</code> returns the same value as <code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>). The default setting is that the automorphisms of <code class="code">S</code> are calculated first, then filtered to see which elements also belong to <code class="code">G</code>.</p>
+
+<p>The optional argument <code class="code">bvals</code> is a list of <code class="code">5</code> Boolean variables that correspond to the following options:</p>
+
+
+<ul>
+<li><p>if <code class="code">bvals[1]</code> is <code class="code">true</code>, then <strong class="pkg">GAP</strong> will run a cheap check to see if all the automorphisms are inner. Note that this can return <code class="code">false</code> when all the automorphisms are inner, that is the condition is sufficient but not necessary. The default setting is <code class="code">false</code>.</p>
+
+</li>
+<li><p>if <code class="code">bvals[2]</code> is <code class="code">true</code>, then <strong class="pkg">GAP</strong> will try to compute the inner automorphisms of <code class="code">S</code> before computing the entire automorphism group. For semigroups of large degree this may not be sensible. The default setting is <code class="code">false</code>.</p>
+
+</li>
+<li><p>if <code class="code">bvals[3]</code> is <code class="code">true</code>, then <strong class="pkg">GAP</strong> will test elements in the inner automorphism search space to see if they are in <code class="code">G</code> as the inner automorphisms are found rather than after they have all been found. The default setting is <code class="code">false</code>.</p>
+
+</li>
+<li><p>if <code class="code">bvals[4]</code> is <code class="code">true</code>, then <strong class="pkg">GAP</strong> will test elements in the outer (i.e. not inner) automorphism search space to see if they are in <code class="code">G</code> as they are found rather than after they have all been found. The default setting is <code class="code">false</code>.</p>
+
+</li>
+<li><p>if <code class="code">bvals[5]</code> is <code class="code">true</code>, then <strong class="pkg">GAP</strong> will keep track of non-automorphisms in the search for outer automorphisms. The default setting is <code class="code">false</code>.</p>
+
+</li>
+</ul>
+<p><strong class="button">Please note:</strong> if <strong class="pkg">grape</strong> is not loaded, then this function will not work when <code class="code">S</code> satisfies <code class="func">IsTransformationSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EAF835D7FE4026F"><b>Reference: IsTransformationSemigroup</b></a>) or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; g1:=Transformation([5,4,4,2,1]);;
+gap&gt; g2:=Transformation([2,5,5,4,1]);;
+gap&gt; m2:=Monoid(g1,g2);;
+gap&gt; A:=AutomorphismsSemigroupInGroup(m2, fail, 
+&gt; [false, true, true, false, true]);
+&lt;group of size 24 with 3 generators&gt;
+gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
+gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
+gap&gt; m7:=Monoid(g1,g2);;
+gap&gt; A:=AutomorphismsSemigroupInGroup(m7, fail, 
+&gt; [false, true, false, false, true]);
+&lt;group of size 2 with 2 generators&gt;
+gap&gt; imgs:=[ [ Transformation( [ 1, 1, 5, 4, 3, 6, 7, 8, 9, 10, 11, 12 ] ), 
+&gt;       Transformation( [ 1, 1, 5, 7, 4, 3, 6, 8, 9, 10, 11, 12 ] ), 
+&gt;       Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 8 ] ) ], 
+&gt;   [ Transformation( [ 1, 1, 5, 4, 3, 6, 7, 8, 9, 10, 11, 12 ] ), 
+&gt;       Transformation( [ 1, 1, 5, 3, 7, 4, 6, 8, 9, 10, 11, 12 ] ), 
+&gt;       Transformation( [ 1, 2, 3, 4, 5, 6, 7, 11, 12, 8, 9, 10 ] ) ] ];;
+gap&gt; gens:=List(imgs, x-&gt; SemigroupHomomorphismByImagesOfGensNC(S, S, x));;
+gap&gt; G:=Group(gens);
+&lt;group with 2 generators&gt;
+gap&gt; A:=AutomorphismsSemigroupInGroup(S, G, 
+&gt; [false, false, false, true, false]);
+&lt;group of size 48 with 4 generators&gt;
+gap&gt; Size(G);
+48
+gap&gt; A:=AutomorphismsSemigroupInGroup(S, G);
+&lt;group of size 48 with 4 generators&gt;
+gap&gt; gens:=[ Transformation( [ 1, 1, 4, 3, 5, 6, 7, 8, 9, 10, 11, 12 ] ), 
+&gt;   Transformation( [ 1, 1, 4, 5, 6, 7, 3, 8, 9, 10, 11, 12 ] ), 
+&gt;   Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 8 ] ) ];;
+gap&gt; S:=Semigroup(gens);;
+gap&gt; A:=AutomorphismsSemigroupInGroup(S, G);
+&lt;group of size 48 with 4 generators&gt;
+gap&gt; HasAutomorphismGroup(S);
+true
+gap&gt; AutomorphismGroup(S);
+&lt;group of size 480 with 7 generators&gt;
+	</pre></td></tr></table>
+
+<p><a id="X8196EC9384EC69BC" name="X8196EC9384EC69BC"></a></p>
+
+<h5>7.4-3 IsAutomorphismGroupOfSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsAutomorphismGroupOfSemigroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>returns <code class="code">true</code> if <code class="code">G</code> is the automorphism group of a semigroup. Note that this property is set to <code class="code">true</code> when the computation of the automorphism group is performed. Otherwise, there is no method to check if an arbitrary group satisfies this property; see <code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) for an example of the usage of this command.</p>
+
+<p><a id="X7EBC9D1C7CEE5DC1" name="X7EBC9D1C7CEE5DC1"></a></p>
+
+<h5>7.4-4 IsAutomorphismGroupOfSimpleSemigp</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsAutomorphismGroupOfSimpleSemigp</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>returns <code class="code">true</code> if <code class="code">G</code> is the automorphism group of a simple transformation semigroup. This property is set to <code class="code">true</code> when the computation of the automorphism group of the simple transformation semigroup is performed. Otherwise, there is no method to check if an arbitrary group satisfies this property; see <code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) for an example of the usage of this command.</p>
+
+<p><a id="X7F20270581708C15" name="X7F20270581708C15"></a></p>
+
+<h5>7.4-5 IsAutomorphismGroupOfZeroGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsAutomorphismGroupOfZeroGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>returns <code class="code">true</code> if <code class="code">G</code> is the automorphism group of a zero group. This property is set to <code class="code">true</code> when the computation of the automorphism group of the zero group is performed. Otherwise, there is no method to check if an arbitrary group satisfies this property; see <code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) for an example of the usage of this command.</p>
+
+<p>Every automorphism of a zero group is just an automorphism of the underlying group that fixes the zero element.</p>
+
+<p><a id="X7C8903DD85C40824" name="X7C8903DD85C40824"></a></p>
+
+<h5>7.4-6 IsAutomorphismGroupOfZeroSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsAutomorphismGroupOfZeroSemigroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>returns <code class="code">true</code> if <code class="code">G</code> is the automorphism group of a zero semigroup. This property is set to <code class="code">true</code> when the computation of the automorphism group of the zero semigroup is performed. Otherwise, there is no method to check if an arbitrary group satisfies this property; see <code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) for an example of the usage of this command.</p>
+
+<p>Every permutation of a zero semigroup that fixes the zero element is an automorphism. Thus the automorphism group of a zero semigroup of order <code class="code">n</code> is isomorphic to the symmetric group on <code class="code">n-1</code> elements.</p>
+
+<p><a id="X7F77F02583731C84" name="X7F77F02583731C84"></a></p>
+
+<h5>7.4-7 IsAutomorphismGroupOfRMS</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsAutomorphismGroupOfRMS</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>returns <code class="code">true</code> if <code class="code">G</code> is the automorphism group of a Rees matrix semigroup; that is, a semigroup created using the command <code class="func">ReesMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X8526AA557CDF6C49"><b>Reference: ReesMatrixSemigroup</b></a>) and/or satisfying <code class="func">IsReesMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X780BB78A79275244"><b>Reference: IsReesMatrixSemigroup</b></a>).</p>
+
+<p>Note that this property is set to <code class="code">true</code> when the computation of the automorphism group is performed. Otherwise, there is no method to check if an arbitrary group satisfies this property; see <code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) for an example of the usage of this command.</p>
+
+<p><a id="X868D5404867566F9" name="X868D5404867566F9"></a></p>
+
+<h5>7.4-8 IsAutomorphismGroupOfRZMS</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsAutomorphismGroupOfRZMS</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>returns <code class="code">true</code> if <code class="code">G</code> is the automorphism group of a Rees matrix semigroup; that is, a semigroup created using the command <code class="func">ReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X872CEF99839085B1"><b>Reference: ReesZeroMatrixSemigroup</b></a>) and/or satisfying <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
+
+<p>Note that this property is set to <code class="code">true</code> when the computation of the automorphism group is performed. Otherwise, there is no method to check if an arbitrary group satisfies this property; see <code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) for an example of the usage of this command.</p>
+
+<p><a id="X8225A9EC87A255E6" name="X8225A9EC87A255E6"></a></p>
+
+<h4>7.5 <span class="Heading">Rees Matrix Semigroups</span></h4>
+
+<p><a id="X82B0BDCD7CBDCC2E" name="X82B0BDCD7CBDCC2E"></a></p>
+
+<h5>7.5-1 RMSIsoByTriple</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RMSIsoByTriple</code>( <var class="Arg">rms1, rms2, triple</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>this is a function to create an isomorphism between the Rees matrix semigroups <code class="code">rms1</code> and <code class="code">rms2</code> defined by <code class="code">triple</code>. The first component of <code class="code">triple</code> should be an isomorphism from the underlying group of <code class="code">rms1</code> to the underlying group of <code class="code">rms2</code>, the second component should be an isomorphism from the graph associated to the matrix of <code class="code">rms1</code> to the graph associated with the matrix of <code class="code">rms2</code>, and the third component should be a function (given as a list of image elements) from the index sets of <code class="code">rms1</code> to the underlying group of <code class="code">rms2</code>; see <a href="chapBib.html#biBcomputing">[ABM07, Section 2]</a> for further details.</p>
+
+<p>Note that this function only creates an object with representation <code class="func">IsRMSIsoByTripleRep</code> (<a href="chap7.html#X7A5A209283929D7C"><b>7.5-3</b></a>) and does not check that <code class="code">triple</code> actually defines an isomorphism from <code class="code">rms1</code> to <code class="code">rms2</code> or that the arguments even make sense. To create an isomorphism from <code class="code">rms1</code> to <code class="code">rms2</code> use <code class="func">IsomorphismSemigroups</code> (<a href="chap7.html#X8248C522825E2684"><b>7.7-5</b></a>).</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; G:=Group((1,4,3,5,2));;
+gap&gt; mat:=[ [ (), (), () ], [ (), (1,4,3,5,2), () ], [ (), (1,3,2,4,5), () ] ];;
+gap&gt; rms:=ReesMatrixSemigroup(G, mat);;
+gap&gt; l:=(4,6);;
+gap&gt; g:=GroupHomomorphismByImages(G, G, [(1,4,3,5,2)], [(1,2,5,3,4)]);
+[ (1,4,3,5,2) ] -&gt; [ (1,2,5,3,4) ]
+gap&gt; map:=[(), (1,5,4,2,3), (), (), (), () ];;
+gap&gt; RMSIsoByTriple(rms, rms, [l, g, map]);
+[ (4,6), GroupHomomorphismByImages( Group( [ (1,4,3,5,2) ] ), Group( 
+  [ (1,4,3,5,2) ] ), [ (1,4,3,5,2) ], [ (1,2,5,3,4) ] ), 
+  [ (), (1,5,4,2,3), (), (), (), () ] ]
+gap&gt; IsRMSIsoByTripleRep(last);
+true
+gap&gt; #the previous actually defines an automorphism of rms
+gap&gt; #on the other hand, the next example is nonsense but no error
+gap&gt; #is given
+gap&gt; RMSIsoByTriple(rms, rms, [l, g, [()]]);
+[ (4,6), GroupHomomorphismByImages( Group( [ (1,4,3,5,2) ] ), Group( 
+  [ (1,4,3,5,2) ] ), [ (1,4,3,5,2) ], [ (1,2,5,3,4) ] ), [ () ] ]
+</pre></td></tr></table>
+
+<p><a id="X8169BFEA84877310" name="X8169BFEA84877310"></a></p>
+
+<h5>7.5-2 RZMSIsoByTriple</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RZMSIsoByTriple</code>( <var class="Arg">rzms1, rzms2, triple</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>this is a function to create an isomorphism between the Rees 0-matrix semigroups <code class="code">rzms1</code> and <code class="code">rzms2</code> defined by <code class="code">triple</code>. The first component of <code class="code">triple</code> should be an isomorphism from the underlying zero group of <code class="code">rzms1</code> to the underlying zero group of <code class="code">rzms2</code>, the second component should be an isomorphism from the graph associated to the matrix of <code class="code">rzms1</code> to the graph associated with the matrix of <code class="code">rzms2</code>, and the third component should be a function (given as a list of image elements) from the index sets of <code class="code">rzms1</code> to the underlying zero group of <code class="code">rzms2</code>; see <a href="chapBib.html#biBcomputing">[ABM07, Section 2]</a> for further details.</p>
+
+<p>Note that this function only creates an object with representation <code class="func">IsRZMSIsoByTripleRep</code> (<a href="chap7.html#X7FFE01D17DC054E8"><b>7.5-4</b></a>) and does not check that <code class="code">triple</code> actually defines an isomorphism from <code class="code">rzms1</code> to <code class="code">rzms2</code> or that the arguments even make sense. To create an isomorphism from <code class="code">rzms1</code> to <code class="code">rzms2</code> use <code class="func">IsomorphismSemigroups</code> (<a href="chap7.html#X8248C522825E2684"><b>7.7-5</b></a>).</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; G:=Group((1,4,3,5,2));;
+gap&gt; ZG:=ZeroGroup(G);
+&lt;zero group with 2 generators&gt;
+gap&gt; mat:=[ [ (), (), () ], [ (), (1,4,3,5,2), () ], [ (), (1,3,2,4,5), () ] ];;
+gap&gt; mat:=List(mat, x-&gt; List(x, ZeroGroupElt));
+[ [ (), (), () ], [ (), (1,4,3,5,2), () ], [ (), (1,3,2,4,5), () ] ]
+gap&gt; rms:=ReesZeroMatrixSemigroup(ZG, mat);
+Rees Zero Matrix Semigroup over &lt;zero group with 2 generators&gt;
+gap&gt; l:=(4,6);;
+gap&gt; g:=GroupHomomorphismByImages(G, G, [(1,4,3,5,2)], [(1,2,5,3,4)]);
+[ (1,4,3,5,2) ] -&gt; [ (1,2,5,3,4) ]
+gap&gt; g:=ZeroGroupAutomorphism(ZG, g);
+&lt;mapping: &lt;zero group with 2 generators&gt; -&gt; &lt;zero group with 2 generators&gt; &gt;
+gap&gt;  map:=List([(), (1,5,4,2,3), (), (), (), () ], ZeroGroupElt);;
+gap&gt; RZMSIsoByTriple(rms, rms, [l, g, map]);
+[ (4,6), &lt;mapping: &lt;zero group with 2 generators&gt; -&gt; &lt;zero group with 
+  2 generators&gt; &gt;, 
+[ ZeroGroup(()), ZeroGroup((1,5,4,2,3)), ZeroGroup(()), ZeroGroup(()), 
+    ZeroGroup(()), ZeroGroup(()) ] ]
+gap&gt; RZMSIsoByTriple(rms, rms, [l, g, [()]]);
+[ (4,6), &lt;mapping: &lt;zero group with 2 generators&gt; -&gt; &lt;zero group with 
+  2 generators&gt; &gt;, [ () ] ]
+gap&gt; IsRZMSIsoByTripleRep(last);
+true    
+</pre></td></tr></table>
+
+<p><a id="X7A5A209283929D7C" name="X7A5A209283929D7C"></a></p>
+
+<h5>7.5-3 IsRMSIsoByTripleRep</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsRMSIsoByTripleRep</code>( <var class="Arg">f</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<p>returns <code class="code">true</code> if the object <code class="code">f</code> is represented as an isomorphism of Rees matrix semigroups by a triple; as explained in <a href="chapBib.html#biBcomputing">[ABM07, Section 2]</a>; see <code class="func">RMSIsoByTriple</code> (<a href="chap7.html#X82B0BDCD7CBDCC2E"><b>7.5-1</b></a>) for an example of the usage of this command.</p>
+
+<p><a id="X7FFE01D17DC054E8" name="X7FFE01D17DC054E8"></a></p>
+
+<h5>7.5-4 IsRZMSIsoByTripleRep</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsRZMSIsoByTripleRep</code>( <var class="Arg">f</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<p>returns <code class="code">true</code> if the object <code class="code">f</code> is represented as an isomorphism of Rees matrix semigroups by a triple; as explained in <a href="chapBib.html#biBcomputing">[ABM07, Section 2]</a>; see <code class="func">RZMSIsoByTriple</code> (<a href="chap7.html#X8169BFEA84877310"><b>7.5-2</b></a>) for an example of the usage of this command.</p>
+
+<p><a id="X7F0CCB2B83C07D54" name="X7F0CCB2B83C07D54"></a></p>
+
+<h5>7.5-5 RMSInducedFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RMSInducedFunction</code>( <var class="Arg">RMS, lambda, gamma, g</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p><code class="code">lambda</code> is an automorphism of the graph associated to the Rees matrix semigroup <code class="code">RMS</code>, <code class="code">gamma</code> an automorphism of the underlying group of <code class="code">RMS</code>, and <code class="code">g</code> an element of the underlying group of <code class="code">RMS</code>. The function <code class="code">RMSInducedFunction</code> attempts to find the function determined by <code class="code">lambda</code> and <code class="code">gamma</code> from the union of the index sets <code class="code">I</code> and <code class="code">J</code> to the group <code class="code">G</code> of the Rees matrix semigroup <code class="code">RMS</code> over <code class="code">G</code>, <code class="code">I</code>, and <code class="code">J</code> with respect to <code class="code">P</code> where the first element is given by the element <code class="code">g</code>. If a conflict is found, then <code class="code">false</code> is returned together with the induced map; see <a href="chapBib.html#biBcomputing">[ABM07, Section 2]</a> for further details.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; G:=Group([ (1,2) ]);;
+gap&gt; mat:=[ [ (), (), () ], [ (), (1,2), () ], [ (), (1,2), (1,2) ], 
+&gt;    [ (), (), () ], [ (), (1,2), () ] ];;
+gap&gt; rms:=ReesMatrixSemigroup(G, mat);;
+gap&gt; l:=(1,2)(4,5,6);
+(1,2)(4,5,6)
+gap&gt; gam:=One(AutomorphismGroup(G));
+IdentityMapping( Group([ (1,2) ]) )
+gap&gt; g:=(1,2);
+gap&gt; RMSInducedFunction(rms, l, gam, g);
+[ false, [ (1,2), (), (), (), (), (1,2), (1,2), () ] ]
+gap&gt; RMSInducedFunction(rms, (4,7), gam, ());
+[ true, [ (), (), (), (), (), (), (), () ] ]
+</pre></td></tr></table>
+
+<p><a id="X7D17056F79E5649F" name="X7D17056F79E5649F"></a></p>
+
+<h5>7.5-6 RZMSInducedFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RZMSInducedFunction</code>( <var class="Arg">RZMS, lambda, gamma, g, comp</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p><code class="code">lambda</code> is an automorphism of the graph associated to the Rees 0- matrix semigroup <code class="code">RZMS</code>, <code class="code">gamma</code> an automorphism of the underlying zero group of <code class="code">RZMS</code>, <code class="code">comp</code> is a connected component of the graph associated to <code class="code">RZMS</code>, and <code class="code">g</code> is an element of the underlying zero group of <code class="code">RZMS</code>. The function <code class="code">RZMSInducedFunction</code> attempts to find the partial function determined by <code class="code">lambda</code> and <code class="code">gamma</code> from <code class="code">comp</code> to the zero group <code class="code">G^0</code> of <code class="code">G</code> of the Rees 0-matrix semigroup <code class="code">RZMS</code> over <code class="code">G^0</code>, <code class="code">I</code>, and <code class="code">J</code> with respect to <code class="code">P</code> where the image of the first element in <code class="code">comp</code> is given by the element <code class="code">g</code>. If a conflict is found, then <code class="code">fail</code> is returned; see <a href="chapBib.html#biBcomputing">[ABM07, Section 2]</a> for further details.</p>
+
+<p><strong class="button">Please note:</strong> if <strong class="pkg">grape</strong> is not loaded, then this function will not work.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; zg:=ZeroGroup(Group(()));;
+gap&gt; z:=Elements(zg)[1];
+0
+gap&gt; x:=Elements(zg)[2];
+()
+gap&gt; mat:=[ [ z, z, z ], [ x, z, z ], [ x, x, z ] ];;
+gap&gt; rzms:=ReesZeroMatrixSemigroup(zg, mat);;
+gap&gt; RZMSInducedFunction(rzms, (), One(AutomorphismGroup(zg)), x, 
+&gt; [1,2,5,6])
+[ (), (),,, (), () ]
+gap&gt; RZMSInducedFunction(rzms, (), One(AutomorphismGroup(zg)), x, [3]);     
+[ ,, () ]
+gap&gt; RZMSInducedFunction(rzms, (), One(AutomorphismGroup(zg)), x, [4]);
+[ ,,, () ]
+gap&gt; zg:=ZeroGroup(Group([ (1,5,2,3), (1,4)(2,3) ]));;
+gap&gt; elts:=Elements(zg);;
+gap&gt; mat:=[ [ elts[1], elts[1], elts[11], elts[1], elts[1] ], 
+&gt;    [ elts[1], elts[13], elts[21], elts[1], elts[1] ], 
+&gt;    [ elts[1], elts[16], elts[1], elts[16], elts[3] ], 
+&gt;    [ elts[10], elts[17], elts[1], elts[1], elts[1] ], 
+&gt;    [ elts[1], elts[1], elts[1], elts[4], elts[1] ] ];
+gap&gt; rzms:=ReesZeroMatrixSemigroup(zg, mat);                                   
+gap&gt; RZMSInducedFunction(rzms, (), Random(AutomorphismGroup(zg)), 
+&gt; Random(elts), [1..10])=fail;
+false
+	</pre></td></tr></table>
+
+<p><a id="X84BA41977C43EAA3" name="X84BA41977C43EAA3"></a></p>
+
+<h5>7.5-7 RZMStoRZMSInducedFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RZMStoRZMSInducedFunction</code>( <var class="Arg">RZMS1, RZMS2, lambda, gamma, elts</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p><code class="code">lambda</code> is an automorphism of the graph associated to the Rees 0- matrix semigroup <code class="code">RZMS1</code> composed with isomorphism from that graph to the graph of <code class="code">RZMS2</code>, <code class="code">gamma</code> an automorphism of the underlying zero group of <code class="code">RZMS1</code>, and <code class="code">elts</code> is a list of elements of the underlying zero group of <code class="code">RZMS2</code>. The function <code class="code">RZMStoRZMSInducedFunction</code> attempts to find the function determined by <code class="code">lambda</code> and <code class="code">gamma</code> from the union of the index sets <code class="code">I</code> and <code class="code">J</code> of <code class="code">RZMS1</code> to the zero group <code class="code">G^0</code> of the Rees 0-matrix semigroup <code class="code">RZMS2</code> over the zero group <code class="code">G^0</code>, sets <code class="code">I</code> and <code class="code">J</code>, and matrix <code class="code">P</code> where the image of the first element in the <code class="code">i</code>th connected component of the associated graph of <code class="code">RZMS1</code> is given by <code class="code">elts[i]</code>. If a conflict is found, then <code class="code">false</code> is returned; see <a href="chapBib.html#biBcomputing">[ABM07, Section 2]</a> for further details.</p>
+
+<p><strong class="button">Please note:</strong> if <strong class="pkg">grape</strong> is not loaded, then this function will not work.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; gens:=[ Transformation( [ 4, 4, 8, 8, 8, 8, 4, 8 ] ), 
+  Transformation( [ 8, 2, 8, 2, 5, 5, 8, 8 ] ), 
+  Transformation( [ 8, 8, 3, 7, 8, 3, 7, 8 ] ), 
+  Transformation( [ 8, 6, 6, 8, 6, 8, 8, 8 ] ) ];;
+gap&gt; S:=Semigroup(gens);;
+gap&gt; D:=GreensDClasses(S);;
+gap&gt; rms1:=Range(IsomorphismReesMatrixSemigroupOfDClass(D[1]));
+Rees Zero Matrix Semigroup over &lt;zero group with 2 generators&gt;
+gap&gt; rms2:=Range(IsomorphismReesMatrixSemigroupOfDClass(D[4]));
+Rees Zero Matrix Semigroup over &lt;zero group with 2 generators&gt;
+gap&gt; gam:=One(AutomorphismGroup
+&gt; (UnderlyingSemigroupOfReesZeroMatrixSemigroup(Group(rms1))));
+IdentityMapping( &lt;zero group with 2 generators&gt; )
+gap&gt; g:=One(UnderlyingSemigroupOfReesZeroMatrixSemigroup(rms2));
+()
+gap&gt; RZMStoRZMSInducedFunction(rms1, rms2, (2,3)(5,6), gam, [g]);
+[ (), (), (), (), (), () ]
+	</pre></td></tr></table>
+
+<p><a id="X781757FD7938C9DD" name="X781757FD7938C9DD"></a></p>
+
+<h5>7.5-8 RZMSGraph</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RZMSGraph</code>( <var class="Arg">rzms</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>if <code class="code">rzms</code> is a Rees 0-matrix semigroup over a zero group <code class="code">G^0</code>, 3 index sets <code class="code">I</code> and <code class="code">J</code>, and matrix <code class="code">P</code>, then <code class="code">RZMSGraph</code> returns the undirected bipartite graph with <code class="code">|I|+|J|</code> vertices and edge <code class="code">(i,j)</code> if and only if <code class="code">i&lt;|I|+1</code>, <code class="code">j&gt;|I|</code> and <code class="code">p_{j-|I|, i}</code> is not zero.</p>
+
+<p>The returned object is a simple undirected graph created in <strong class="pkg">GRAPE</strong> using the command</p>
+
+<p class="pcenter">
+	Graph(Group(()), [1..n+m], OnPoints, adj, true);
+	</p>
+
+<p>where <code class="code">adj</code> is <code class="code">true</code> if and only if <code class="code">i&lt;|I|+1</code>, <code class="code">j&gt;|I|</code> and <code class="code">p_{j-|I|, i}</code> is not zero.</p>
+
+<p><strong class="button">Please note:</strong> if <strong class="pkg">grape</strong> is not loaded, then this function will not work.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; zg:=ZeroGroup(Group(()));;
+gap&gt; z:=Elements(zg)[1];
+0
+gap&gt; x:=Elements(zg)[2];
+()
+gap&gt; mat:=[ [ 0, 0, 0 ], [ (), 0, 0 ], [ (), (), 0 ] ];;
+gap&gt; rzms:=ReesZeroMatrixSemigroup(zg, mat);;
+gap&gt; RZMSGraph(rzms);
+rec( isGraph := true, order := 6, group := Group(()), 
+  schreierVector := [ -1, -2, -3, -4, -5, -6 ], 
+  adjacencies := [ [ 5, 6 ], [ 6 ], [  ], [  ], [ 1 ], [ 1, 2 ] ], 
+  representatives := [ 1, 2, 3, 4, 5, 6 ], names := [ 1, 2, 3, 4, 5, 6 ] )
+gap&gt; UndirectedEdges(last);
+[ [ 1, 5 ], [ 1, 6 ], [ 2, 6 ] ]
+</pre></td></tr></table>
+
+<p><a id="X78060D7C8331F340" name="X78060D7C8331F340"></a></p>
+
+<h5>7.5-9 RightTransStabAutoGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RightTransStabAutoGroup</code>( <var class="Arg">S, elts, func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns a right transversal of the stabilizer w.r.t the action <code class="code">func</code> of the elements <code class="code">elts</code> in the automorphism group of the zero semigroup, Rees matrix semigroup, or Rees 0-matrix semigroup <code class="code">S</code>. That is, <code class="code">S</code> satisfying <code class="func">IsZeroSemigroup</code> (<a href="chap5.html#X81A1882181B75CC9"><b>5.2-14</b></a>), <code class="func">IsReesMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X780BB78A79275244"><b>Reference: IsReesMatrixSemigroup</b></a>), or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; S:=ZeroSemigroup(6);
+&lt;zero semigroup with 6 elements&gt;
+gap&gt; elts:=Elements(S);
+[ 0, z1, z2, z3, z4, z5 ]
+gap&gt; Length(RightTransStabAutoGroup(S, [elts[1]], OnSets));
+1
+gap&gt; Length(RightTransStabAutoGroup(S, [elts[1], elts[2]], OnSets));
+5
+gap&gt; Length(RightTransStabAutoGroup(S, [elts[1], elts[2]], OnTuples));
+5
+gap&gt; G:=Group([ (1,2) ]);;
+gap&gt; mat:=[ [ (), (), () ], [ (), (1,2), () ], [ (), (1,2), (1,2) ], 
+&gt;    [ (), (), () ], [ (), (1,2), () ] ];;
+gap&gt; rms:=ReesMatrixSemigroup(G, mat);;
+gap&gt; Size(rms);
+30
+gap&gt; GeneratorsOfSemigroup(rms);
+[ (1,(),2), (1,(),3), (1,(),4), (1,(),5), (2,(),1), (3,(),1), (1,(1,2),1) ]
+gap&gt; Length(RightTransStabAutoGroup(rms, last, OnSets));
+4
+gap&gt; Length(RightTransStabAutoGroup(rms, GeneratorsOfSemigroup(rms), 
+&gt; OnTuples));
+8
+gap&gt; G:=ZeroGroup(Group([ (1,3) ]));;
+gap&gt; z:=MultiplicativeZero(G);; x:=Elements(G)[2];;
+gap&gt; mat:=[ [ z, z, z ], [ z, z, z ], [ z, z, z ], [ z, z, z ], [ z, x, z ] ];;
+gap&gt; rzms:=ReesZeroMatrixSemigroup(G, mat);
+gap&gt; Size(rzms);
+31
+gap&gt; Size(GeneratorsOfSemigroup(rzms));
+6
+gap&gt; Length(RightTransStabAutoGroup(rzms, GeneratorsOfSemigroup(rzms), 
+&gt; OnSets));
+512
+gap&gt; A:=AutomorphismGroup(rzms);
+&lt;group of size 3072 with 3072 generators&gt;
+</pre></td></tr></table>
+
+<p><a id="X7CF67DF77AC73EA9" name="X7CF67DF77AC73EA9"></a></p>
+
+<h4>7.6 <span class="Heading">Zero Groups</span></h4>
+
+<p><a id="X7D528F958733E3D0" name="X7D528F958733E3D0"></a></p>
+
+<h5>7.6-1 ZeroGroupAutomorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; ZeroGroupAutomorphism</code>( <var class="Arg">ZG, f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>converts the group automorphism <code class="code">f</code> of the underlying group of the zero group <code class="code">ZG</code> into an automorphism of the zero group <code class="code">ZG</code>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; G:=Random(AllGroups(20));
+&lt;pc group of size 20 with 3 generators&gt;
+gap&gt; A:=AutomorphismGroup(G);
+&lt;group with 2 generators&gt;
+gap&gt; f:=Random(A);
+[ f1*f2^4*f3 ] -&gt; [ f1*f2^2 ]
+gap&gt; ZG:=ZeroGroup(G);
+&lt;zero group with 4 generators&gt;
+gap&gt; ZeroGroupAutomorphism(ZG, f);
+&lt;mapping: &lt;zero group with 4 generators&gt; -&gt; &lt;zero group with 4 generators&gt; &gt;
+gap&gt; IsZeroGroupAutomorphismRep(last);
+true
+gap&gt; UnderlyingGroupAutoOfZeroGroupAuto(last2)=f;
+true
+	</pre></td></tr></table>
+
+<p><a id="X862AACCF7C528811" name="X862AACCF7C528811"></a></p>
+
+<h5>7.6-2 IsZeroGroupAutomorphismRep</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsZeroGroupAutomorphismRep</code>( <var class="Arg">f</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<p>returns <code class="code">true</code> if the object <code class="code">f</code> is represented as an automorphism of a zero group; see <code class="func">ZeroGroupAutomorphism</code> (<a href="chap7.html#X7D528F958733E3D0"><b>7.6-1</b></a>) for an example of the usage of this command.</p>
+
+<p><a id="X7DDB3B727B0C7CA5" name="X7DDB3B727B0C7CA5"></a></p>
+
+<h5>7.6-3 UnderlyingGroupAutoOfZeroGroupAuto</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; UnderlyingGroupAutoOfZeroGroupAuto</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns the underlying group automorphism of the zero group automorphism <code class="code">f</code>. That is, the restriction of <code class="code">f</code> to its source without the zero; see <code class="func">ZeroGroupAutomorphism</code> (<a href="chap7.html#X7D528F958733E3D0"><b>7.6-1</b></a>) for an example of the usage of this command.</p>
+
+<p><a id="X7D702EA087C1C5EF" name="X7D702EA087C1C5EF"></a></p>
+
+<h4>7.7 <span class="Heading">Isomorphisms</span></h4>
+
+<p><a id="X7965B0D07EFFBDA0" name="X7965B0D07EFFBDA0"></a></p>
+
+<h5>7.7-1 IsomorphismAutomorphismGroupOfRMS</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsomorphismAutomorphismGroupOfRMS</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>if <code class="code">G</code> is the automorphism group of a simple transformation semigroup, then <code class="code">IsomorphismAutomorphismGroupOfRMS</code> returns a <code class="func">GroupHomomorphismByImages</code> (<a href="/Users/jdm/gapdev/doc/ref/chap38.html#X7F348F497C813BE0"><b>Reference: GroupHomomorphismByImages</b></a>) from the automorphism group of <code class="code">G</code> to the automorphism group of an isomorphic Rees matrix semigroup, obtained by using <code class="func">IsomorphismReesMatrixSemigroup</code> (<a href="chap7.html#X7964B5C97FB9C07D"><b>7.7-7</b></a>).</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; g1:=Transformation([1,2,2,1,2]);;
+gap&gt; g2:=Transformation([3,4,3,4,4]);;
+gap&gt; g3:=Transformation([3,4,3,4,3]);;
+gap&gt; g4:=Transformation([4,3,3,4,4]);;
+gap&gt; cs5:=Semigroup(g1,g2,g3,g4);;
+gap&gt; AutomorphismGroup(cs5);
+&lt;group of size 16 with 3 generators&gt;
+gap&gt; IsomorphismAutomorphismGroupOfRMS(last);
+[ SemigroupHomomorphism ( &lt;semigroup with 4 generators&gt;-&gt;&lt;semigroup with 
+    4 generators&gt;), SemigroupHomomorphism ( &lt;semigroup with 
+    4 generators&gt;-&gt;&lt;semigroup with 4 generators&gt;), 
+  SemigroupHomomorphism ( &lt;semigroup with 4 generators&gt;-&gt;&lt;semigroup with 
+    4 generators&gt;) ] -&gt; 
+[ [ (1,4)(2,3)(5,6), IdentityMapping( Group( [ (1,2) ] ) ), 
+      [ (), (1,2), (1,2), (), (), () ] ], 
+  [ (1,3,4,2), IdentityMapping( Group( [ (1,2) ] ) ), 
+      [ (), (), (), (), (), (1,2) ] ], 
+  [ (1,3)(2,4), IdentityMapping( Group( [ (1,2) ] ) ), 
+      [ (), (), (), (), (), (1,2) ] ] ] 
+	</pre></td></tr></table>
+
+<p><a id="X80B7B1C783AA1567" name="X80B7B1C783AA1567"></a></p>
+
+<h5>7.7-2 IsomorphismPermGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsomorphismPermGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>if <code class="code">G</code> satisfies <code class="func">IsAutomorphismGroupOfSimpleSemigp</code> (<a href="chap7.html#X7EBC9D1C7CEE5DC1"><b>7.4-4</b></a>), then <code class="code">IsomorphismPermGroup</code> returns an isomorphism from <code class="code">G</code> to a permutation group by composing the result <code class="code">f</code> of <code class="func">IsomorphismAutomorphismGroupOfRMS</code> (<a href="chap7.html#X7965B0D07EFFBDA0"><b>7.7-1</b></a>) on <code class="code">G</code> with the result of <code class="code">IsomorphismPermGroup</code> on <code class="code">Range(f)</code>.</p>
+
+<p>if <code class="code">G</code> satisfies <code class="func">IsAutomorphismGroupOfRMS</code> (<a href="chap7.html#X7F77F02583731C84"><b>7.4-7</b></a>) or <code class="func">IsAutomorphismGroupOfRZMS</code> (<a href="chap7.html#X868D5404867566F9"><b>7.4-8</b></a>), then <code class="code">IsomorphismPermGroup</code> returns an isomorphism from <code class="code">G</code> to a permutation group acting either on the elements of <code class="code">S</code> or on itself, whichever gives a permutation group of lower degree.</p>
+
+<p>if <code class="code">G</code> is a transformation semigroup that satisfies <code class="func">IsGroupAsSemigroup</code> (<a href="chap5.html#X852F29E8795FA489"><b>5.2-3</b></a>), then <code class="code">IsomorphismPermGroup</code> returns an isomorphism from <code class="code">G</code> to the permutation group obtained by applying <code class="func">PermRepTrans</code> (<a href="chap2.html#X781E031C8298ADDC"><b>2.1-4</b></a>) to any element of <code class="code">G</code>.</p>
+
+<p>if <code class="code">G</code> is a group <code class="code">H</code>-class of a transformation semigroup, then <code class="code">IsomorphismPermGroup</code> returns an isomorphism from <code class="code">G</code> to the permutation group obtained by applying <code class="func">PermRepTrans</code> (<a href="chap2.html#X781E031C8298ADDC"><b>2.1-4</b></a>) to any element of <code class="code">G</code>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6]);;
+gap&gt; g2:=Transformation([5,1,7,8,7,5,8,1]);;
+gap&gt; cs1:=Semigroup(g1,g2);;
+gap&gt; AutomorphismGroup(cs1);
+&lt;group of size 12 with 2 generators&gt;
+gap&gt; IsomorphismPermGroup(last);
+[ SemigroupHomomorphism ( &lt;semigroup with 2 generators&gt;-&gt;&lt;semigroup with 
+    2 generators&gt;), SemigroupHomomorphism ( &lt;semigroup with 
+    2 generators&gt;-&gt;&lt;semigroup with 2 generators&gt;) ] -&gt; 
+[ (1,11,2,12,3,10)(4,8,5,9,6,7), (1,6)(2,5)(3,4)(7,10)(8,12)(9,11) ]
+gap&gt; Size(cs1);
+96
+gap&gt; a:=IdempotentNC([[1,3,4],[2,5],[6],[7],[8]],[3,5,6,7,8])*(3,5);;
+gap&gt; b:=IdempotentNC([[1,3,4],[2,5],[6],[7],[8]],[3,5,6,7,8])*(3,6,7,8);;
+gap&gt; S:=Semigroup(a,b);;
+gap&gt; IsGroupAsTransSemigroup(S);
+true
+gap&gt; IsomorphismPermGroup(S);
+SemigroupHomomorphism ( &lt;semigroup with 2 generators&gt;-&gt;Group(
+[ (3,5), (3,6,7,8) ]))
+gap&gt; gens:=[Transformation([3,5,3,3,5,6]), Transformation([6,2,4,2,2,6])];;
+gap&gt; S:=Semigroup(gens);;
+gap&gt; H:=GroupHClassOfGreensDClass(GreensDClassOfElement(S, Elements(S)[1]));
+{Transformation( [ 2, 2, 2, 2, 2, 6 ] )}
+gap&gt; IsomorphismPermGroup(H);
+SemigroupHomomorphism ( {Transformation( [ 2, 2, 2, 2, 2, 6 ] )}-&gt;Group(()))
+	</pre></td></tr></table>
+
+<p><a id="X869F966B8196F28C" name="X869F966B8196F28C"></a></p>
+
+<h5>7.7-3 IsomorphismFpSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsomorphismFpSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns an isomorphism to a finitely presented semigroup from the transformation semigroup <code class="code">S</code>. This currently works by running the function <code class="func">FroidurePinExtendedAlg</code> (<b>???</b>) in the library.</p>
+
+<p>If <code class="code">S</code> satisfies <code class="func">IsMonoid</code> (<a href="/Users/jdm/gapdev/doc/ref/chap50.html#X861C523483C6248C"><b>Reference: IsMonoid</b></a>), use the command <code class="func">IsomorphismFpMonoid</code> (<a href="chap7.html#X7F2ADC587DF698A2"><b>7.7-4</b></a>) instead.</p>
+
+
+<table class="example">
+<tr><td><pre> 
+gap&gt; gens:=[ Transformation( [1,8,11,2,5,16,13,14,3,6,15,10,7,4,9,12 ] ), 
+&gt;   Transformation( [1,16,9,6,5,8,13,12,15,2,3,4,7,10,11,14] ), 
+&gt;   Transformation( [1,3,7,9,1,15,5,11,13,11,13,3,5,15,7,9 ] ) ];
+gap&gt; S:=Semigroup(gens);
+&lt;semigroup with 3 generators&gt;
+gap&gt; IsomorphismFpSemigroup(last);
+SemigroupHomomorphismByImages ( &lt;trans. semigroup of size 16 with 
+3 generators&gt;-&gt;Semigroup( [ s1, s2, s3 ] ))
+	</pre></td></tr></table>
+
+<p><a id="X7F2ADC587DF698A2" name="X7F2ADC587DF698A2"></a></p>
+
+<h5>7.7-4 IsomorphismFpMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsomorphismFpMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>returns an isomorphism to a finitely presented monoid from the transformation monoid <code class="code">S</code>. Currently works by running the function <code class="func">FroidurePinExtendedAlg</code> (<b>???</b>) in the library.</p>
+
+<p>If <code class="code">S</code> satisfies <code class="func">IsSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7B412E5B8543E9B7"><b>Reference: IsSemigroup</b></a>), use the command <code class="func">IsomorphismFpSemigroup</code> (<a href="chap7.html#X869F966B8196F28C"><b>7.7-3</b></a>) instead.</p>
+
+
+<table class="example">
+<tr><td><pre> 
+gap&gt; x:=Transformation([2,3,4,5,6,7,8,9,1]);;
+gap&gt; y:=Transformation([4,2,3,4,5,6,7,8,9]);;
+gap&gt; S:=Monoid(x,y);;
+gap&gt; IsomorphismFpMonoid(last);
+SemigroupHomomorphismByImages ( &lt;trans. semigroup of size 40266 with 
+3 generators&gt;-&gt;Monoid( [ m1, m2 ], ... ))
+gap&gt; Length(RelationsOfFpMonoid(Range(last)));
+932
+	</pre></td></tr></table>
+
+<p><a id="X8248C522825E2684" name="X8248C522825E2684"></a></p>
+
+<h5>7.7-5 IsomorphismSemigroups</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsomorphismSemigroups</code>( <var class="Arg">S, T</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>this operation returns an isomorphism from the semigroup <code class="code">S</code> to the semigroup <code class="code">T</code> if one exists and returns <code class="code">fail</code> otherwise.</p>
+
+<p><strong class="button">Please note:</strong> this function currently only works for zero groups, zero semigroups, Rees matrix semigroups, and Rees 0-matrix semigroups.</p>
+
+<p><strong class="button">Please note:</strong> if <strong class="pkg">grape</strong> is not loaded, then this function will not work when <code class="code">S</code> and <code class="code">T</code> satisfy <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; ZG1:=ZeroGroup(Group((1,2,3,5,4)));
+&lt;zero group with 2 generators&gt;
+gap&gt; ZG2:=ZeroGroup(Group((1,2,3,4,5)));
+&lt;zero group with 2 generators&gt;
+gap&gt; IsomorphismSemigroups(ZG1, ZG2);
+SemigroupHomomorphismByImagesOfGens ( &lt;zero group with 
+2 generators&gt;-&gt;&lt;zero group with 2 generators&gt;)
+gap&gt; ZG2:=ZeroGroup(Group((1,2,3,4)));
+&lt;zero group with 2 generators&gt;
+gap&gt; IsomorphismSemigroups(ZG1, ZG2);
+fail
+gap&gt; IsomorphismSemigroups(ZeroSemigroup(5),ZeroSemigroup(5));
+IdentityMapping( &lt;zero semigroup with 5 elements&gt; )
+gap&gt; IsomorphismSemigroups(ZeroSemigroup(5),ZeroSemigroup(6));
+fail
+gap&gt; gens:=[ Transformation( [ 4, 4, 8, 8, 8, 8, 4, 8 ] ), 
+&gt;   Transformation( [ 8, 2, 8, 2, 5, 5, 8, 8 ] ), 
+&gt;   Transformation( [ 8, 8, 3, 7, 8, 3, 7, 8 ] ), 
+&gt;   Transformation( [ 8, 6, 6, 8, 6, 8, 8, 8 ] ) ];;
+gap&gt; S:=Semigroup(gens);;
+gap&gt; D:=GreensDClasses(S);;
+gap&gt; rms1:=Range(IsomorphismReesMatrixSemigroupOfDClass(D[1]));;
+gap&gt; rms2:=Range(IsomorphismReesMatrixSemigroupOfDClass(D[4]));;
+gap&gt; IsomorphismSemigroups(rms1, rms2);
+[ (2,3)(5,6), IdentityMapping( &lt;zero group with 2 generators&gt; ), 
+  [ ZeroGroup(()), ZeroGroup(()), ZeroGroup(()), ZeroGroup(()), 
+      ZeroGroup(()), ZeroGroup(()) ] ]
+gap&gt; IsomorphismSemigroups(rms2, rms1);
+[ (2,3)(5,6), IdentityMapping( &lt;zero group with 2 generators&gt; ), 
+  [ ZeroGroup(()), ZeroGroup(()), ZeroGroup(()), ZeroGroup(()),  
+      ZeroGroup(()), ZeroGroup(()) ] ]
+gap&gt; rms2:=Range(IsomorphismReesMatrixSemigroupOfDClass(D[2]));
+Group(())
+gap&gt; IsomorphismSemigroups(rms2, rms1);
+fail
+gap&gt; rms2:=RandomReesZeroMatrixSemigroup(5,5,5);
+Rees Zero Matrix Semigroup over &lt;zero group with 2 generators&gt;
+gap&gt; IsomorphismSemigroups(rms2, rms1);
+fail
+gap&gt; rms2:=RandomReesMatrixSemigroup(5,5,5);
+Rees Matrix Semigroup over Group([ (1,2)(3,4,5), (2,4,3), (1,4,5,3), 
+  (1,4,5,2) ])
+gap&gt; IsomorphismSemigroups(rms2, rms1);
+fail
+gap&gt; IsomorphismSemigroups(rms1, rms2);
+fail
+	</pre></td></tr></table>
+
+<p><a id="X7FE2262679DD9D52" name="X7FE2262679DD9D52"></a></p>
+
+<h5>7.7-6 IsomorphismReesMatrixSemigroupOfDClass</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsomorphismReesMatrixSemigroupOfDClass</code>( <var class="Arg">D</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>The <em>principal factor</em> of the <code class="code">D</code>-class <code class="code">D</code> is the semigroup with elements <code class="code">D</code> and <code class="code">0</code> and multiplication <code class="code">x*y</code> defined to be the product <code class="code">xy</code> in the semigroup containing <code class="code">D</code> if <code class="code">xy</code> in <code class="code">D</code> and <code class="code">0</code> otherwise.</p>
+
+<p><code class="code">IsomorphismReesMatrixSemigroupOfDClass</code> returns an isomorphism from the principal factor of the <code class="code">D</code>-class <code class="code">D</code> to a Rees matrix, Rees 0-matrix or zero semigroup, as given by the Rees-Suschewitsch Theorem; see <a href="chapBib.html#biBhowie">[How95, Theorem 3.2.3]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre> 
+gap&gt; g1:=Transformation( [ 4, 6, 3, 8, 5, 6, 10, 4, 3, 7 ] );;
+gap&gt; g2:=Transformation( [ 5, 6, 6, 3, 8, 6, 3, 7, 8, 4 ] );;
+gap&gt; g3:=Transformation( [ 8, 6, 3, 2, 8, 10, 9, 2, 6, 2 ] );;
+gap&gt; m23:=Monoid(g1,g2,g3);;
+gap&gt; D:=GreensDClasses(m23)[17];
+{Transformation( [ 7, 6, 6, 6, 7, 4, 8, 6, 6, 6 ] )}
+gap&gt; IsomorphismReesMatrixSemigroupOfDClass(D);
+SemigroupHomomorphism ( {Transformation( [ 7, 6, 6, 6, 7, 4, 8, 6, 6, 6 
+ ] )}-&gt;&lt;zero semigroup with 3 elements&gt;)
+gap&gt; D:=GreensDClasses(m23)[77];
+{Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ] )}
+gap&gt; IsomorphismReesMatrixSemigroupOfDClass(D);
+SemigroupHomomorphism ( {Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 
+ ] )}-&gt;Rees Matrix Semigroup over Group(()))
+gap&gt; D:=GreensDClasses(m23)[1];
+{Transformation( [ 1 .. 10 ] )}
+gap&gt; IsomorphismReesMatrixSemigroupOfDClass(D);
+SemigroupHomomorphism ( {Transformation( [ 1 .. 10 ] )}-&gt;Group(()))
+gap&gt; D:=GreensDClasses(m23)[23];
+{Transformation( [ 6, 7, 3, 6, 6, 6, 6, 6, 7, 6 ] )}
+gap&gt; IsomorphismReesMatrixSemigroupOfDClass(D);
+SemigroupHomomorphism ( {Transformation( [ 6, 7, 3, 6, 6, 6, 6, 6, 7, 6 
+ ] )}-&gt;Rees Zero Matrix Semigroup over &lt;zero group with 3 generators&gt;)
+	</pre></td></tr></table>
+
+<p><a id="X7964B5C97FB9C07D" name="X7964B5C97FB9C07D"></a></p>
+
+<h5>7.7-7 IsomorphismReesMatrixSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsomorphismReesMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns an isomorphism from the (completely) simple transformation semigroup <code class="code">S</code> to a Rees matrix semigroup, as given by the Rees-Suschewitsch Theorem; see <a href="chapBib.html#biBhowie">[How95, Theorem 3.2.3]</a>.</p>
+
+
+<table class="example">
+<tr><td><pre>
+gap&gt; g1:=Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] );;
+gap&gt; g2:=Transformation( [ 2, 3, 4, 5, 6, 8, 7, 1, 2, 2 ] );;
+gap&gt; cs2:=Semigroup(g1,g2);;
+gap&gt; IsomorphismReesMatrixSemigroup(cs2);
+SemigroupHomomorphism ( &lt;semigroup with 
+2 generators&gt;-&gt;Rees Matrix Semigroup over Group(
+[ (2,5)(3,8)(4,6), (1,6,3)(5,8) ]))
+</pre></td></tr></table>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap6.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chapBib.html">Next Chapter</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
