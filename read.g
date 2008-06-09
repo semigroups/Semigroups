@@ -1,7 +1,7 @@
 ##
 ## read.g
-## Version 3.1
-## Fri May  2 17:42:56 BST 2008
+## Version 3.1.1
+## Mon Jun  9 09:26:11 BST 2008
 ##
 
 
@@ -14,10 +14,11 @@ ReadPkg("monoid/gap/transform.gi");
 ReadPkg("monoid/gap/properties.gi");
 ReadPkg("monoid/gap/autos.gi");
 
-if IsBound(AutGroupGraph) and IsIsomorphicGraph( JohnsonGraph(7,3), JohnsonGraph(7,4) ) and Size(AutGroupGraph( JohnsonGraph(4,2) ) )=48 then 
+if not ARCH_IS_UNIX() or ForAny( ["drcanon4", "dreadnautB", "drtogap4", "gap4todr"], file -> Filename(DirectoriesPackagePrograms("grape"), file) = fail ) or not IsIsomorphicGraph( JohnsonGraph(7,3), JohnsonGraph(7,4) ) or not Size(AutGroupGraph( JohnsonGraph(4,2) ) )=48 then
+	Info(InfoWarning, 1, "the `grape' package is not fully installed and so some of the functions");
+	Info(InfoWarning, 1, "in MONOID will not work. Type `?the monoid package' for more infomation.");
+else 
 	ReadPkg("monoid/gap/grape.gi");
-else
-	Print("#I It appears that the `grape' package is not fully installed. As a \n#I consequence some of the functions in MONOID will not work. Please\n#I refer to the MONOID manual for further details.\n");
 fi;
 
 ReadPkg("monoid/gap/compat.g");

@@ -1,13 +1,13 @@
 ##
 ## properties.tst
-## Version 3.1
-## Fri May  2 17:42:56 BST 2008
+## Version 3.1.1
+## Mon Jun  9 09:26:11 BST 2008
 ##
 
 #dirs := DirectoriesPackageLibrary( "monoid", "tst" );
 #ReadTest( Filename( dirs, "properties.tst" ) );
 
-gap> START_TEST("properties.tst 3.1");
+gap> START_TEST("properties.tst 3.1.1");
 gap> LoadPackage("monoid");;
 gap> g1:=Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] );;
 gap> g2:=Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] );;
@@ -361,4 +361,4 @@ gap> T:=Range(iso);
 <semigroup with 4 generators>
 gap> IsZeroGroup(T);
 true
-gap> STOP_TEST( "properties.tst 3.1", 10000);
+gap> STOP_TEST( "properties.tst 3.1.1", 10000);

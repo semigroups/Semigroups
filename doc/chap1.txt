@@ -4,8 +4,8 @@
   
   [1X1.1 Introduction[0X
   
-  This  manual  describes  the  [5XMONOID[0m  package version 3.1 for computing with
-  transformation  semigroups.  [5XMONOID[0m 3.1 is an updated version of the package
+  This  manual  describes  the [5XMONOID[0m package version 3.1.1 for computing with
+  transformation semigroups. [5XMONOID[0m 3.1.1 is an updated version of the package
   with the same name for [5XGAP[0m 3; see
   
   [7Xhttp://schmidt.nuigalway.ie/monoid/index.html[0m
@@ -13,14 +13,15 @@
   for  more  information about the original [5XMONOID[0m by Goetz Pfeiffer and Steve
   A. Linton, Edmund F. Robertson and Nik Ruskuc.
   
-  [5XMONOID[0m  3.1 retains all the functionality of the original [5XMONOID[0m package. In
-  particular,  [5XMONOID[0m 3.1 contains more efficient methods than those available
-  in  the  [5XGAP[0m  library  for  computing  orbits,  calculating Green's classes,
-  finding  the  size,  the  elements, and testing membership in transformation
-  semigroups; see Chapters [14X3[0m and [14X4[0m. After [5XMONOID[0m has been loaded many of these
-  methods  are automatically used in preference to those in the library and do
-  not need to be called explicitly by the user. These methods are described in
-  [LPRR98] and the algorithms themselves are described in [LPRR02].
+  [5XMONOID[0m  3.1.1  retains all the functionality of the original [5XMONOID[0m package.
+  In  particular,  [5XMONOID[0m  3.1.1  contains  more  efficient methods than those
+  available  in  the  [5XGAP[0m  library  for  computing orbits, calculating Green's
+  classes,   finding  the  size,  the  elements,  and  testing  membership  in
+  transformation  semigroups;  see  Chapters  [14X3[0m  and  [14X4[0m. After [5XMONOID[0m has been
+  loaded  many  of these methods are automatically used in preference to those
+  in  the  library  and do not need to be called explicitly by the user. These
+  methods  are  described  in  [LPRR98]  and  the  algorithms  themselves  are
+  described in [LPRR02].
   
   In  addition,  there  are new methods for testing if a semigroup satisfies a
   particular  property,  such  as  if  it  is  regular,  simple,  inverse,  or
@@ -96,7 +97,7 @@
   The  following  is  a  summary of the steps that should lead to a successful
   installation of [5XMONOID[0m.
   
-  --    download  the  package  archive  [10Xmonoid3r1.tar.gz[0m or [10Xmonoid3r1.tar.bz2[0m
+  --    download the package archive [10Xmonoid3p1r1.tar.gz[0m or [10Xmonoid3p1r1.tar.bz2[0m
         from
   
         [7Xhttp://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html[0m
@@ -115,15 +116,15 @@
   folders `bin', `lib', and so on) in your installation of [5XGAP[0m.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4X> gunzip monoid3r1.tar.gz [0X
-    [4X> tar -xf monoid3r1.tar [0X
+    [4X> gunzip monoid3p1r1.tar.gz [0X
+    [4X> tar -xf monoid3p1r1.tar [0X
     [4X> mv MONOID GAPROOT/pkg[0X
     [4X> gap [0X
     [4X[0X
     [4X[ ... ][0X
     [4X[0X
     [4Xgap> LoadPackage("monoid");[0X
-    [4XLoading MONOID 3.1[0X
+    [4XLoading MONOID 3.1.1[0X
     [4Xby James Mitchell (www-groups.mcs.st-and.ac.uk/~jamesm)[0X
     [4XFor help, type: ?the monoid package [0X
     [4Xtrue[0X
@@ -156,15 +157,15 @@
   tests are complete.
   
   If  the output looks like the following, then it is probable that you have a
-  fully working copy of [5XMONOID[0m 3.1.
+  fully working copy of [5XMONOID[0m 3.1.1.
   
   [4X---------------------------  Example  ----------------------------[0X
     [4Xgap> LoadPackage( "monoid" );;[0X
     [4Xgap> dirs := DirectoriesPackageLibrary( "monoid", "tst" );;[0X
     [4Xgap> Read( Filename( dirs, "installtest.g" ) );;[0X
-    [4X+ install_no_grape.tst 3.1[0X
+    [4X+ install_no_grape.tst 3.1.1[0X
     [4X+ GAP4stones: 1[0X
-    [4X+ install_with_grape.tst 3.1[0X
+    [4X+ install_with_grape.tst 3.1.1[0X
     [4X+ GAP4stones: 2[0X
   [4X------------------------------------------------------------------[0X
   
@@ -186,7 +187,7 @@
   
   [1X1.4 What's New?[0X
   
-  The main new features in Version 3.1 of [5XMONOID[0m are:
+  The main new features in Version 3.1.1 of [5XMONOID[0m are:
   
   --    new  methods  for  testing  if  a  semigroup  satisfies  a  particular
         property,  such  as  if  it is regular, simple, inverse, or completely

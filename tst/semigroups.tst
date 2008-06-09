@@ -1,13 +1,13 @@
 ##
 ## semigroups.tst
-## Version 3.1
-## Fri May  2 17:42:56 BST 2008
+## Version 3.1.1
+## Mon Jun  9 09:26:11 BST 2008
 ##
 
 #dirs := DirectoriesPackageLibrary( "monoid", "tst" );
 #ReadTest( Filename( dirs, "semigroups.tst" ) );
 
-gap> START_TEST("semigroups.tst 3.1");
+gap> START_TEST("semigroups.tst 3.1.1");
 gap> LoadPackage("monoid");;
 gap> if not IsBound(BruteForceZeroIsoCheck) then 
 > BruteForceZeroIsoCheck:=function(iso)
@@ -309,4 +309,4 @@ gap> IsRegularSemigroup(S);
 true
 gap> Size(S)=Binomial(2*5-1, 5-1);
 true
-gap> STOP_TEST( "semigroups.tst 3.1", 10000);
+gap> STOP_TEST( "semigroups.tst 3.1.1", 10000);

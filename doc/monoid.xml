@@ -7,7 +7,7 @@
 
 <TitlePage>
 	<Title>The <Package>MONOID</Package> Package</Title>
-	<Version>Version 3.1</Version>
+	<Version>Version 3.1.1</Version>
 	<Author>J. D. Mitchell
 		<Email>jdm3@st-and.ac.uk</Email>
 	</Author>
@@ -39,16 +39,16 @@
 	<!-- ############### -->
 	
 	<Section><Heading>Introduction</Heading>
-This  manual  describes the <Package>MONOID</Package> package version 3.1 for 
+This  manual  describes the <Package>MONOID</Package> package version 3.1.1 for 
 computing with transformation semigroups.
-  <Package>MONOID</Package> 3.1 is an updated version of the package with the same name for &GAP; 3; see <P/>
+  <Package>MONOID</Package> 3.1.1 is an updated version of the package with the same name for &GAP; 3; see <P/>
 
 <URL>http://schmidt.nuigalway.ie/monoid/index.html</URL><P/>
 
 for more information about the original <Package>MONOID</Package> by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc. <P/>
 
-<Package>MONOID</Package> 3.1 retains all the functionality of the original <Package>MONOID</Package> package. 
-In particular,  <Package>MONOID</Package>  3.1 contains more efficient 
+<Package>MONOID</Package> 3.1.1 retains all the functionality of the original <Package>MONOID</Package> package. 
+In particular,  <Package>MONOID</Package>  3.1.1 contains more efficient 
 methods than those  available in the &GAP; library for computing orbits, calculating Green's 
 classes, finding the size, the elements, and testing membership in transformation semigroups; see Chapters <Ref Chap="orbits"/> and <Ref Chap="greens"/>. After <Package>MONOID</Package> 
 has been loaded many of these methods are automatically used in preference to 
@@ -130,7 +130,7 @@ The following is a summary of the steps that
 should lead to a successful installation of <Package>MONOID</Package>. 
 
 <List>
-<Item> download the package archive <C>monoid3r1.tar.gz</C> or <C>monoid3r1.tar.bz2</C> from <P/>
+<Item> download the package archive <C>monoid3p1r1.tar.gz</C> or <C>monoid3p1r1.tar.bz2</C> from <P/>
 <URL>http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html
 </URL><P/>
 </Item>
@@ -146,15 +146,15 @@ one containing the folders `bin', `lib', and so on) in your installation of
 &GAP;.<P/>
 
 <Example>
-&gt; gunzip monoid3r1.tar.gz 
-&gt; tar -xf monoid3r1.tar 
+&gt; gunzip monoid3p1r1.tar.gz 
+&gt; tar -xf monoid3p1r1.tar 
 &gt; mv MONOID GAPROOT/pkg
 &gt; gap 
 
 [ ... ]
 
 gap&gt; LoadPackage("monoid");
-Loading MONOID 3.1
+Loading MONOID 3.1.1
 by James Mitchell (www-groups.mcs.st-and.ac.uk/~jamesm)
 For help, type: ?the monoid package 
 true
@@ -184,15 +184,15 @@ Read(Filename( dirs, "installtest.g" ) );
 and press <C>return</C>. Please note that it will take a few moments before 
 the tests are complete.<P/>
 
-If the output looks like the following, then it is probable that you have a fully working copy of <Package>MONOID</Package> 3.1.<P/>
+If the output looks like the following, then it is probable that you have a fully working copy of <Package>MONOID</Package> 3.1.1.<P/>
 
 <Example>
 gap> LoadPackage( "monoid" );;
 gap> dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
 gap> Read( Filename( dirs, "installtest.g" ) );;
-+ install_no_grape.tst 3.1
++ install_no_grape.tst 3.1.1
 + GAP4stones: 1
-+ install_with_grape.tst 3.1
++ install_with_grape.tst 3.1.1
 + GAP4stones: 2
 </Example>
 
@@ -213,7 +213,7 @@ Please note that these tests could take a long time to finish.<P/>
 
 <Section><Heading>What's New?</Heading>
 
-The main new features in Version 3.1 of <Package>MONOID</Package> are:
+The main new features in Version 3.1.1 of <Package>MONOID</Package> are:
 
 <List>
 <Item> new methods for testing if a semigroup satisfies a particular property, such as if it is regular, 

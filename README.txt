@@ -1,11 +1,11 @@
 ##
 ## README.txt
-## Version 3.1
-## Fri May  2 17:42:56 BST 2008
+## Version 3.1.1
+## Mon Jun  9 09:26:11 BST 2008
 ##
 
-This is the README file of the MONOID package version 3.1 for 
-computing with transformation semigroups. MONOID 3.1 is an updated version of 
+This is the README file of the MONOID package version 3.1.1 for 
+computing with transformation semigroups. MONOID 3.1.1 is an updated version of 
 the package with the same name for GAP 3; see 
 
 http://schmidt.nuigalway.ie/monoid/index.html
@@ -13,8 +13,8 @@ http://schmidt.nuigalway.ie/monoid/index.html
 for more information about the original MONOID by Goetz 
 Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc.
 
-MONOID 3.1 retains all the functionality of the original MONOID package. 
-In particular, MONOID 3.1 contains more efficient methods than those  available
+MONOID 3.1.1 retains all the functionality of the original MONOID package. 
+In particular, MONOID 3.1.1 contains more efficient methods than those  available
 in the GAP library for computing orbits, calculating Green's 
 classes, finding the size, the elements, and testing membership in 
 transformation semigroups. After MONOID has been loaded many of these methods 
@@ -62,8 +62,8 @@ and files: `doc', `examples', `gap', `init.g', `PackageInfo.g', `read.g',
 Installation
 ------------
 
-1) unpack the file (for example, by using `gunzip monoid3r1.tar.gz' and then 
-`tar -xf monoid3r1.tar' in UNIX).
+1) unpack the file (for example, by using `gunzip monoid3p1r1.tar.gz' and then 
+`tar -xf monoid3p1r1.tar' in UNIX).
 
 2) move the resultant directory `MONOID' into the `pkg' directory of your GAP 
 directory (the directory containing the directories `lib', `doc', `pkg', and so 
@@ -80,15 +80,15 @@ installed in a UNIX environment.
 Example Installation
 --------------------
 
-unix> gunzip monoid3r1.tar.gz 
-unix> tar -xf monoid3r1.tar 
+unix> gunzip monoid3p1r1.tar.gz 
+unix> tar -xf monoid3p1r1.tar 
 unix> mv MONOID GAPROOT/pkg
 unix> gap
 
 [ ... ]
 
 gap> LoadPackage("MONOID");
-Loading  MONOID 3.1
+Loading  MONOID 3.1.1
 by James Mitchell (http://www-groups.mcs.st-and.ac.uk/~jamesm)
 For help, type: ?the monoid package
 true

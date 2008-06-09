@@ -37,13 +37,13 @@
 
 <h4>1.1 <span class="Heading">Introduction</span></h4>
 
-<p>This manual describes the <strong class="pkg">MONOID</strong> package version 3.1 for computing with transformation semigroups. <strong class="pkg">MONOID</strong> 3.1 is an updated version of the package with the same name for <strong class="pkg">GAP</strong> 3; see</p>
+<p>This manual describes the <strong class="pkg">MONOID</strong> package version 3.1.1 for computing with transformation semigroups. <strong class="pkg">MONOID</strong> 3.1.1 is an updated version of the package with the same name for <strong class="pkg">GAP</strong> 3; see</p>
 
 <p><span class="URL"><a href="http://schmidt.nuigalway.ie/monoid/index.html">http://schmidt.nuigalway.ie/monoid/index.html</a></span></p>
 
 <p>for more information about the original <strong class="pkg">MONOID</strong> by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc.</p>
 
-<p><strong class="pkg">MONOID</strong> 3.1 retains all the functionality of the original <strong class="pkg">MONOID</strong> package. In particular, <strong class="pkg">MONOID</strong> 3.1 contains more efficient methods than those available in the <strong class="pkg">GAP</strong> library for computing orbits, calculating Green's classes, finding the size, the elements, and testing membership in transformation semigroups; see Chapters <a href="chap3.html#X849149EF79F824D1"><b>3</b></a> and <a href="chap4.html#X80C6C718801855E9"><b>4</b></a>. After <strong class="pkg">MONOID</strong> has been loaded many of these methods are automatically used in preference to those in the library and do not need to be called explicitly by the user. These methods are described in <a href="chapBib.html#biBpfeiffer1">[LPRR98]</a> and the algorithms themselves are described in <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
+<p><strong class="pkg">MONOID</strong> 3.1.1 retains all the functionality of the original <strong class="pkg">MONOID</strong> package. In particular, <strong class="pkg">MONOID</strong> 3.1.1 contains more efficient methods than those available in the <strong class="pkg">GAP</strong> library for computing orbits, calculating Green's classes, finding the size, the elements, and testing membership in transformation semigroups; see Chapters <a href="chap3.html#X849149EF79F824D1"><b>3</b></a> and <a href="chap4.html#X80C6C718801855E9"><b>4</b></a>. After <strong class="pkg">MONOID</strong> has been loaded many of these methods are automatically used in preference to those in the library and do not need to be called explicitly by the user. These methods are described in <a href="chapBib.html#biBpfeiffer1">[LPRR98]</a> and the algorithms themselves are described in <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
 
 <p>In addition, there are new methods for testing if a semigroup satisfies a particular property, such as if it is regular, simple, inverse, or completely regular, see Chapter <a href="chap5.html#X78274024827F306D"><b>5</b></a>; methods for computing the automorphism group of a transformation semigroup see Section <a href="chap7.html#X7A007A0C80D26351"><b>7.4</b></a>; methods for finding homomorphisms and isomorphism between some types of semigroups see Chapter <a href="chap7.html#X861935DB81A478C2"><b>7</b></a>; and functions to create some well-known semigroups see Chapter <a href="chap6.html#X853D15F87F14D36E"><b>6</b></a>. The property testing methods are described in <a href="chapBib.html#biBlargest">[GM05]</a> and the method for computing the automorphism group of a semigroup is described in <a href="chapBib.html#biBcomputing">[ABM07]</a>.</p>
 
@@ -104,7 +104,7 @@
 
 
 <ul>
-<li><p>download the package archive <code class="code">monoid3r1.tar.gz</code> or <code class="code">monoid3r1.tar.bz2</code> from</p>
+<li><p>download the package archive <code class="code">monoid3p1r1.tar.gz</code> or <code class="code">monoid3p1r1.tar.bz2</code> from</p>
 
 <p><span class="URL"><a href="http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html ">http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html </a></span></p>
 
@@ -127,15 +127,15 @@
 
 <table class="example">
 <tr><td><pre>
-&gt; gunzip monoid3r1.tar.gz 
-&gt; tar -xf monoid3r1.tar 
+&gt; gunzip monoid3p1r1.tar.gz 
+&gt; tar -xf monoid3p1r1.tar 
 &gt; mv MONOID GAPROOT/pkg
 &gt; gap 
 
 [ ... ]
 
 gap&gt; LoadPackage("monoid");
-Loading MONOID 3.1
+Loading MONOID 3.1.1
 by James Mitchell (www-groups.mcs.st-and.ac.uk/~jamesm)
 For help, type: ?the monoid package 
 true
@@ -164,7 +164,7 @@ Read(Filename( dirs, "installtest.g" ) );
 
 <p>and press <code class="code">return</code>. Please note that it will take a few moments before the tests are complete.</p>
 
-<p>If the output looks like the following, then it is probable that you have a fully working copy of <strong class="pkg">MONOID</strong> 3.1.</p>
+<p>If the output looks like the following, then it is probable that you have a fully working copy of <strong class="pkg">MONOID</strong> 3.1.1.</p>
 
 
 <table class="example">
@@ -172,9 +172,9 @@ Read(Filename( dirs, "installtest.g" ) );
 gap&gt; LoadPackage( "monoid" );;
 gap&gt; dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
 gap&gt; Read( Filename( dirs, "installtest.g" ) );;
-+ install_no_grape.tst 3.1
++ install_no_grape.tst 3.1.1
 + GAP4stones: 1
-+ install_with_grape.tst 3.1
++ install_with_grape.tst 3.1.1
 + GAP4stones: 2
 </pre></td></tr></table>
 
@@ -196,7 +196,7 @@ Read(Filename( dirs, "testall.g" ) );
 
 <h4>1.4 <span class="Heading">What's New?</span></h4>
 
-<p>The main new features in Version 3.1 of <strong class="pkg">MONOID</strong> are:</p>
+<p>The main new features in Version 3.1.1 of <strong class="pkg">MONOID</strong> are:</p>
 
 
 <ul>

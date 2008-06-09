@@ -1,13 +1,13 @@
 ##
 ## autos3.tst
-## Version 3.1
-## Fri May  2 17:42:56 BST 2008
+## Version 3.1.1
+## Mon Jun  9 09:26:11 BST 2008
 ##
 
 #dirs := DirectoriesPackageLibrary( "monoid", "tst" );
 #ReadTest( Filename( dirs, "autos3.tst" ) );
 
-gap> START_TEST("autos3.tst 3.1");
+gap> START_TEST("autos3.tst 3.1.1");
 gap> LoadPackage("monoid");;
 gap> S:=RandomSemigroup(5,5);
 <semigroup with 5 generators>
@@ -243,4 +243,4 @@ gap> f:=InnerAutomorphismOfSemigroupNC(S, (1,2)(3,4));
 ^(1,2)(3,4)
 gap> ConjugatorOfInnerAutomorphismOfSemigroup(f);
 (1,2)(3,4)
-gap> STOP_TEST( "autos3.tst 3.1", 10000);
+gap> STOP_TEST( "autos3.tst 3.1.1", 10000);

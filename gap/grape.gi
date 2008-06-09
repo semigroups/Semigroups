@@ -1,7 +1,7 @@
 ##
 ## grape.gi
-## Version 3.1
-## Fri May  2 17:42:56 BST 2008
+## Version 3.1.1
+## Mon Jun  9 09:26:11 BST 2008
 ##
 
 ## The functions in this file require the grape package to be loaded and are not 

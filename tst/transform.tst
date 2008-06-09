@@ -1,13 +1,13 @@
 ##
 ## transform.tst
-## Version 3.1
-## Fri May  2 17:42:56 BST 2008
+## Version 3.1.1
+## Mon Jun  9 09:26:11 BST 2008
 ##
 
 #dirs := DirectoriesPackageLibrary( "monoid", "tst" );
 #ReadTest( Filename( dirs, "transform.tst" ) );
 
-gap> START_TEST("transform.tst 3.1");
+gap> START_TEST("transform.tst 3.1.1");
 gap> LoadPackage("monoid");;
 gap> if not IsBound(BruteForceIsoCheck) then 
 > BruteForceIsoCheck:=function(iso)
@@ -326,4 +326,4 @@ gap> IndexPeriodOfTransformation(x);
 [ 2, 3 ]
 gap> x^2=x^5;
 true
-gap> STOP_TEST( "transform.tst 3.1", 10000);
+gap> STOP_TEST( "transform.tst 3.1.1", 10000);
