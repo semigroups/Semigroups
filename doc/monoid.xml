@@ -130,7 +130,7 @@ The following is a summary of the steps that
 should lead to a successful installation of <Package>MONOID</Package>. 
 
 <List>
-<Item> download the package archive <C>monoid3p1r1.tar.gz</C> or <C>monoid3p1r1.tar.bz2</C> from <P/>
+<Item> download the package archive <C>monoid3r1p1.tar.gz</C> or <C>monoid3r1p1.tar.bz2</C> from <P/>
 <URL>http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html
 </URL><P/>
 </Item>
@@ -146,8 +146,8 @@ one containing the folders `bin', `lib', and so on) in your installation of
 &GAP;.<P/>
 
 <Example>
-&gt; gunzip monoid3p1r1.tar.gz 
-&gt; tar -xf monoid3p1r1.tar 
+&gt; gunzip monoid3r1p1.tar.gz 
+&gt; tar -xf monoid3r1p1.tar 
 &gt; mv MONOID GAPROOT/pkg
 &gt; gap 
 

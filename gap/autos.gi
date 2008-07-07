@@ -1,7 +1,7 @@
 ##
 ## autos.gi
 ## Version 3.1.1
-## Mon Jun  9 09:26:11 BST 2008
+## Mon Jun  9 17:02:20 BST 2008
 ##
 
 ##  <#GAPDoc Label="autostop">

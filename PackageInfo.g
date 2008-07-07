@@ -1,16 +1,16 @@
 ##
 ## PackageInfo.g
 ## Version 3.1.1
-## Mon Jun  9 09:26:11 BST 2008
+## Mon Jun  9 17:02:20 BST 2008
 ##
 
 SetPackageInfo( rec(
 PackageName := "MONOID",
-Subtitle := "Computing with transformation monoids, for updates, see www-groups.mcs.st-andrews.ac.uk/~jamesm/monoid/index.html",
+Subtitle := "Computing with transformation semigroups and monoids",
 Version := "3.1.1",
 Date := "09/06/2008",
 ArchiveURL := 
-          "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/monoid/monoid3p1r1",
+          "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/monoid/monoid3r1p1",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 

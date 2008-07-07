@@ -1,7 +1,7 @@
 ##
 ## semigroups.gi
 ## Version 3.1.1
-## Mon Jun  9 09:26:11 BST 2008
+## Mon Jun  9 17:02:20 BST 2008
 ##
 
 # the functions in this file define different types of semigroups and 
@@ -123,35 +123,48 @@ v:=List([1..n-1], i-> Transformation(subtract([1..n], n-i+1)));
 gens:=Concatenation(u,v);
 M:=Monoid(gens);
 
-free:=Concatenation(List([1..n-1], x-> Concatenation("u", String(x))), 
-		List([1..n-1], x-> Concatenation("v", String(x))));
-F:=FreeMonoid(free);
-u:=GeneratorsOfMonoid(F){[1..n-1]};
-v:=GeneratorsOfMonoid(F){[n..2*n-2]};
+#free:=Concatenation(List([1..n-1], x-> Concatenation("u", String(x))), List([1..n-1], x-> Concatenation("v", String(x))));
+#F:=FreeMonoid(free);
+#u:=GeneratorsOfMonoid(F){[1..n-1]};
+#v:=GeneratorsOfMonoid(F){[n..2*n-2]};
 
-rels:=[[u[1]*u[2]*u[1], u[1]*u[2]], [v[1]*v[2]*v[1], v[1]*v[2]]];
+#rels:=[[u[1]*u[2]*u[1], u[1]*u[2]], [v[1]*v[2]*v[1], v[1]*v[2]]];
 
-for i in [1..n-1] do 
-	if not i=1 then 
-		Add(rels, [v[n-i]*u[i], u[i]*v[n-i+1]]);
-		Add(rels, [u[n-i]*v[i], v[i]*u[n-i+1]]);
-	fi;
-	Add(rels, [v[n-i]*u[i], u[i]]);
-	Add(rels, [u[n-i]*v[i], v[i]]);
-	for j in Difference([1..n-1], [n-i, n-i+1]) do
-		Add(rels, [u[i]*v[j], v[j]*u[i]]);
-	od;
-od;
+#for i in [1..n-1] do 
+#	if not i=1 then 
+#		Add(rels, [v[n-i]*u[i], u[i]*v[n-i+1]]);
+#		Add(rels, [u[n-i]*v[i], v[i]*u[n-i+1]]);
+#	fi;
+#	Add(rels, [v[n-i]*u[i], u[i]]);
+#	Add(rels, [u[n-i]*v[i], v[i]]);
+#	for j in Difference([1..n-1], [n-i, n-i+1]) do
+#		Add(rels, [u[i]*v[j], v[j]*u[i]]);
+#	od;
+#od;
 
-fpM:=F/rels;
+#fpM:=F/rels;
 
-iso:=SemigroupHomomorphismByImagesOfGensNC(fpM, M, gens);
+#iso:=SemigroupHomomorphismByImagesOfGensNC(fpM, M, gens);
+#inv:=SemigroupHomomorphismByImagesOfGensNC(M, fpM, GeneratorsOfMonoid(fpM));
 
-SetIsomorphismFpMonoid(M, InverseGeneralMapping(iso));
-SetIsomorphismTransformationSemigroup(fpM, iso); 
+#SetInverseGeneralMapping(inv, iso);
+#SetInverseGeneralMapping(iso, inv);
+
+#SetIsInjective(iso, true);
+#SetIsSingleValued(iso, true);
+#SetIsSurjective(iso, true);
+#SetIsTotal(iso, true);
+
+#SetIsInjective(inv, true);
+#SetIsSingleValued(inv, true);
+#SetIsSurjective(inv, true);
+#SetIsTotal(inv, true);
+
+#SetIsomorphismFpMonoid(M, inv);
+#SetIsomorphismTransformationSemigroup(fpM, iso); 
 
 SetSize(M, Binomial(2*n-1, n-1));
-SetSize(fpM, Binomial(2*n-1, n-1));
+#SetSize(fpM, Binomial(2*n-1, n-1));
 SetSmallGeneratingSet(M, Concatenation(u, [Transformation(Concatenation([1], [1..n-1]))]));
 
 return M;

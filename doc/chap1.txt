@@ -97,7 +97,7 @@
   The  following  is  a  summary of the steps that should lead to a successful
   installation of [5XMONOID[0m.
   
-  --    download the package archive [10Xmonoid3p1r1.tar.gz[0m or [10Xmonoid3p1r1.tar.bz2[0m
+  --    download the package archive [10Xmonoid3r1p1.tar.gz[0m or [10Xmonoid3r1p1.tar.bz2[0m
         from
   
         [7Xhttp://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html[0m
@@ -116,8 +116,8 @@
   folders `bin', `lib', and so on) in your installation of [5XGAP[0m.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4X> gunzip monoid3p1r1.tar.gz [0X
-    [4X> tar -xf monoid3p1r1.tar [0X
+    [4X> gunzip monoid3r1p1.tar.gz [0X
+    [4X> tar -xf monoid3r1p1.tar [0X
     [4X> mv MONOID GAPROOT/pkg[0X
     [4X> gap [0X
     [4X[0X

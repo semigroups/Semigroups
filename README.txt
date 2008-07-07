@@ -1,7 +1,7 @@
 ##
 ## README.txt
 ## Version 3.1.1
-## Mon Jun  9 09:26:11 BST 2008
+## Mon Jun  9 17:02:20 BST 2008
 ##
 
 This is the README file of the MONOID package version 3.1.1 for 
@@ -62,8 +62,8 @@ and files: `doc', `examples', `gap', `init.g', `PackageInfo.g', `read.g',
 Installation
 ------------
 
-1) unpack the file (for example, by using `gunzip monoid3p1r1.tar.gz' and then 
-`tar -xf monoid3p1r1.tar' in UNIX).
+1) unpack the file (for example, by using `gunzip monoid3r1p1.tar.gz' and then 
+`tar -xf monoid3r1p1.tar' in UNIX).
 
 2) move the resultant directory `MONOID' into the `pkg' directory of your GAP 
 directory (the directory containing the directories `lib', `doc', `pkg', and so 
@@ -80,8 +80,8 @@ installed in a UNIX environment.
 Example Installation
 --------------------
 
-unix> gunzip monoid3p1r1.tar.gz 
-unix> tar -xf monoid3p1r1.tar 
+unix> gunzip monoid3r1p1.tar.gz 
+unix> tar -xf monoid3r1p1.tar 
 unix> mv MONOID GAPROOT/pkg
 unix> gap
 

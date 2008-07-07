@@ -1,7 +1,7 @@
 ##
 ## semihomo.gi
 ## Version 3.1.1
-## Mon Jun  9 09:26:11 BST 2008
+## Mon Jun  9 17:02:20 BST 2008
 ##
 
 ###########################################################################
@@ -558,7 +558,7 @@ end);
 
 ################
 
-InstallMethod(ImagesRepresentative, "for semigroup homomorphism by images",  FamSourceEqFamElm, [IsSemigroupHomomorphism and IsSemigroupHomomorphismByImagesOfGensRep, IsMultiplicativeElement], 
+InstallMethod(ImagesRepresentative, "for semigroup homomorphism by images of gens",  FamSourceEqFamElm, [IsSemigroupHomomorphism and IsSemigroupHomomorphismByImagesOfGensRep, IsMultiplicativeElement], 
 function(hom, elt)
 local pos, iso, imgs, gens;
 
@@ -650,7 +650,7 @@ end);
 
 ################
 
-InstallMethod(PreImagesRepresentative,  "for semigroup homomorphism by images",  FamRangeEqFamElm, [IsSemigroupHomomorphism and IsSemigroupHomomorphismByImagesOfGensRep and IsInjective and IsSurjective and IsTotal, IsMultiplicativeElement],
+InstallMethod(PreImagesRepresentative,  "for semigroup homomorphism by images of gens",  FamRangeEqFamElm, [IsSemigroupHomomorphism and IsSemigroupHomomorphismByImagesOfGensRep and IsInjective and IsSurjective and IsTotal, IsMultiplicativeElement],
 function(hom, elt)
 
 return First(Source(hom), x-> ImageElm(hom, x)=elt);

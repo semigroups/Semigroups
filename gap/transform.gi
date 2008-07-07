@@ -1,7 +1,7 @@
 ##
 ## transform.gi
 ## Version 3.1.1
-## Mon Jun  9 09:26:11 BST 2008
+## Mon Jun  9 17:02:20 BST 2008
 ##
 
 
@@ -111,9 +111,10 @@ InstallGlobalFunction(IsTransversal,
 function(ker, img)
 
 if not Length(ker)=Length(img) then 
-   return false; #JDM error instead? 
+   return fail; 
 else 
    return ForAll(ker, k-> Number(k, i-> i in img) = 1);
+   #return ForAll(ker, k-> ForAny(k, i-> i in img));
 fi;
    
 end);
@@ -157,7 +158,7 @@ function(ker, img)
       for l in ker do  
          e{l}:= 0*l + Intersection(l, img)[1];  
       od;
-      #JDM return TransformationNC(e);
+      #return TransformationNC(e);
       return Transformation(e);
 end);
 
@@ -287,7 +288,7 @@ end);
 ##	<#/GAPDoc>
 ##	</Description>
 
-InstallOtherMethod(IndexPeriodOfTransformation, "for a transformation", true, [IsTransformation], 0, 
+InstallMethod(IndexPeriodOfTransformation, "for a transformation", true, [IsTransformation], 0, 
 function(x)
 local i, y;
 
