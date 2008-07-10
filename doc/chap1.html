@@ -25,7 +25,7 @@
 </div>
 <div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X8098672E7B4EC324">1.3 <span class="Heading">Testing <strong class="pkg">MONOID</strong></span></a>
 </div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X7EDD2DF282C7BCFF">1.4 <span class="Heading">What's New?</span></a>
+<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X816AD93B7EE39FB9">1.4 <span class="Heading">Changes</span></a>
 </div>
 <div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X8246DD5B7AF0099A">1.5 <span class="Heading">Forthcoming Features</span></a>
 </div>
@@ -51,10 +51,10 @@
 
 
 <ul>
-<li><p><code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) with argument satisfying <code class="func">IsTransformationSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EAF835D7FE4026F"><b>Reference: IsTransformationSemigroup</b></a>) or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>)</p>
+<li><p><code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) with argument satisfying <code class="func">IsTransformationSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EAF835D7FE4026F"><b>Reference: IsTransformationSemigroup</b></a>) or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>)</p>
 
 </li>
-<li><p><code class="func">RightTransStabAutoGroup</code> (<a href="chap7.html#X78060D7C8331F340"><b>7.5-9</b></a>) with argument satisfying <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>)</p>
+<li><p><code class="func">RightTransStabAutoGroup</code> (<a href="chap7.html#X78060D7C8331F340"><b>7.5-9</b></a>) with argument satisfying <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>)</p>
 
 </li>
 <li><p><code class="func">RZMSGraph</code> (<a href="chap7.html#X781757FD7938C9DD"><b>7.5-8</b></a>)</p>
@@ -66,7 +66,7 @@
 <li><p><code class="func">RZMStoRZMSInducedFunction</code> (<a href="chap7.html#X84BA41977C43EAA3"><b>7.5-7</b></a>)</p>
 
 </li>
-<li><p><code class="func">IsomorphismSemigroups</code> (<a href="chap7.html#X8248C522825E2684"><b>7.7-5</b></a>) with both arguments satisfying <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>)</p>
+<li><p><code class="func">IsomorphismSemigroups</code> (<a href="chap7.html#X8248C522825E2684"><b>7.7-5</b></a>) with both arguments satisfying <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>)</p>
 
 </li>
 </ul>
@@ -192,11 +192,55 @@ Read(Filename( dirs, "testall.g" ) );
 
 <p>If something goes wrong, then please review the instructions in Section <a href="chap1.html#X7F6B07EE7F61869F"><b>1.2</b></a> and ensure that <strong class="pkg">MONOID</strong> has been properly installed. If you continue having problems, please email me at <span class="URL"><a href="mailto:jdm3@st-and.ac.uk">jdm3@st-and.ac.uk</a></span>.</p>
 
-<p><a id="X7EDD2DF282C7BCFF" name="X7EDD2DF282C7BCFF"></a></p>
+<p><a id="X816AD93B7EE39FB9" name="X816AD93B7EE39FB9"></a></p>
 
-<h4>1.4 <span class="Heading">What's New?</span></h4>
+<h4>1.4 <span class="Heading">Changes</span></h4>
 
-<p>The main new features in Version 3.1.1 of <strong class="pkg">MONOID</strong> are:</p>
+
+<ul>
+<li><p>from 3.1.1 to 3.1.2:</p>
+
+
+<ul>
+<li><p>the following new functions have been introduced: <code class="func">TransformationActionNC</code> (<a href="chap2.html#X814B3E6E7D3F1036"><b>2.1-6</b></a>), <code class="func">SmallestIdempotentPower</code> (<a href="chap2.html#X84E1A41F84B70DBB"><b>2.2-6</b></a>), <code class="func">IsKerImgOfTransformation</code> (<a href="chap2.html#X79A3FCED7E8A8B1B"><b>2.2-2</b></a>), <code class="func">TransformationByKernelAndImage</code> (<a href="chap2.html#X82CB17E47CBCFA69"><b>2.1-1</b></a>), <code class="func">AllTransformationsWithKerAndImgNC</code> (<a href="chap2.html#X7D1937FF85B76BB3"><b>2.1-2</b></a>), <code class="func">AsBooleanMatrix</code> (<a href="chap2.html#X7F867C337B18D84E"><b>2.3-1</b></a>), <code class="func">KerImgOfTransformation</code> (<a href="chap2.html#X7E72E6117BFFC74E"><b>2.2-3</b></a>), <code class="func">RandomIdempotent</code> (<a href="chap2.html#X7C5BED247F770ECB"><b>2.1-4</b></a>), <code class="func">InversesOfTransformation</code> (<a href="chap2.html#X846B9EBB86A69BDC"><b>2.2-7</b></a>), <code class="func">KiselmanSemigroup</code> (<a href="chap6.html#X7A6FC6F179394E66"><b>6.1-3</b></a>), <code class="func">FullMatrixSemigroup</code> (<a href="chap6.html#X789DEE5B78DA4181"><b>6.1-4</b></a>), <code class="func">GeneralLinearSemigroup</code> (<a href="chap6.html#X789DEE5B78DA4181"><b>6.1-4</b></a>), <code class="func">IsFullMatrixSemigroup</code> (<a href="chap6.html#X82C0B1738620C3A0"><b>6.1-5</b></a>), <code class="func">IsGeneralLinearSemigroup</code> (<a href="chap6.html#X82C0B1738620C3A0"><b>6.1-5</b></a>)</p>
+
+</li>
+<li><p>the following functions were renamed:</p>
+
+
+<ul>
+<li><p><code class="code">PermRepTrans</code> was renamed <code class="code">AsPermOfRange</code></p>
+
+</li>
+<li><p><code class="code">ImagesTransformationMonoid</code> was renamed <code class="code">ImagesOfTransSemigroup</code></p>
+
+</li>
+<li><p><code class="code">GradedImagesTransformationMonoid</code> was renamed <code class="code">GradedImagesOfTransSemigroup</code></p>
+
+</li>
+<li><p><code class="code">KernelsTransformationMonoid</code> was renamed <code class="code">KernelsOfTransSemigroup</code></p>
+
+</li>
+<li><p><code class="code">GradedKernelsTransformationMonoid</code> was renamed <code class="code">GradedKernelsOfTransSemigroup</code></p>
+
+</li>
+</ul>
+</li>
+<li><p>the following bugs were fixed:</p>
+
+
+<ul>
+<li><p>a bug relating to the definition of the semigroup of order preserving functions was resolved</p>
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>from 3.1 to 3.1.1: fixed a bug that produced an error when loading MONOID with the GRAPE package present but not fully installed.</p>
+
+</li>
+<li><p>from 2 to 3:</p>
 
 
 <ul>
@@ -211,6 +255,8 @@ Read(Filename( dirs, "testall.g" ) );
 </li>
 <li><p>functions for defining homomorphisms and isomorphisms between some types of semigroups; see Chapter <a href="chap7.html#X861935DB81A478C2"><b>7</b></a>.</p>
 
+</li>
+</ul>
 </li>
 </ul>
 <p><a id="X8246DD5B7AF0099A" name="X8246DD5B7AF0099A"></a></p>

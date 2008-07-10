@@ -35,7 +35,8 @@
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7F75BAA87A79F569">4.2-9 IsAssociatedSemigpTransSemigp</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X84F1321E8217D2A8">4.2-10 SchutzenbergerGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X83F1C306846DF26B">4.2-11 PartialOrderOfDClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7C651C9C78398FFF">4.2-11 Idempotents</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X83F1C306846DF26B">4.2-12 PartialOrderOfDClasses</a></span>
 </div>
 </div>
 
@@ -49,7 +50,7 @@
 
 <p>The theory behind these algorithms is developed in <a href="chapBib.html#biBpfeiffer1">[LPRR98]</a> and the algorithms themselves are described in <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>. Another reference is <a href="chapBib.html#biBlallement">[LM90]</a>.</p>
 
-<p>Calculation of Green's relations using the <strong class="pkg">MONOID</strong> package are invoked in the same way as they are in <strong class="pkg">GAP</strong> without the <strong class="pkg">MONOID </strong> package loaded; see <a href="/Users/jdm/gapdev/doc/ref/chap49.html#X80AF5F307DBDC2B4"><b>Reference: Semigroups</b></a>. For example, in <strong class="pkg">GAP</strong> with the <strong class="pkg">MONOID</strong> package loaded:</p>
+<p>Calculation of Green's relations using the <strong class="pkg">MONOID</strong> package are invoked in the same way as they are in <strong class="pkg">GAP</strong> without the <strong class="pkg">MONOID </strong> package loaded; see <a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X80AF5F307DBDC2B4"><b>Reference: Semigroups</b></a>. For example, in <strong class="pkg">GAP</strong> with the <strong class="pkg">MONOID</strong> package loaded:</p>
 
 
 <table class="example">
@@ -85,7 +86,7 @@ gap&gt; GreensRClasses(S);
 
 <p>The only noticable differences are the representatives of the classes and the order the classes appear in the list. These differences are caused by the differences in the methods used to behind the function <code class="code">GreensRClasses</code> in <strong class="pkg">MONOID </strong> and the <strong class="pkg">GAP</strong> library.</p>
 
-<p>Most of the commands in this section relate to how Green's relations are calculated in <strong class="pkg">MONOID</strong>. Although some of the commands might be used for other purposes, if all that is required is to calculate Green's classes, relations and so on, then this is done in the exactly the same way as described in the <strong class="pkg">GAP</strong> manual; see <a href="/Users/jdm/gapdev/doc/ref/chap49.html#X80C6C718801855E9"><b>Reference: Green's Relations</b></a>.</p>
+<p>Most of the commands in this section relate to how Green's relations are calculated in <strong class="pkg">MONOID</strong>. Although some of the commands might be used for other purposes, if all that is required is to calculate Green's classes, relations and so on, then this is done in the exactly the same way as described in the <strong class="pkg">GAP</strong> manual; see <a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X80C6C718801855E9"><b>Reference: Green's Relations</b></a>.</p>
 
 <p>Due to inherent difficulties with computing Green's L- and D-classes, the methods used to compute with Green's R-classes are the most efficient available in <strong class="pkg">MONOID</strong>. Thus wherever possible it is advisable to use the commands relating to Green's R-classes rather than those relating to Green's L-classes, D-classes, or H-classes.</p>
 
@@ -104,16 +105,16 @@ gap&gt; GreensRClasses(S);
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; GreensData</code>( <var class="Arg">C</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 
 <ul>
-<li><p>if <code class="code">C</code> satisfies <code class="func">IsGreensRClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensRClass</b></a>), then <code class="code">GreensData</code> returns the value of <code class="func">GreensRClassData</code> (<a href="chap4.html#X833F00AE810DCF28"><b>4.2-2</b></a>) with argument <code class="code">C</code>.</p>
+<li><p>if <code class="code">C</code> satisfies <code class="func">IsGreensRClass</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensRClass</b></a>), then <code class="code">GreensData</code> returns the value of <code class="func">GreensRClassData</code> (<a href="chap4.html#X833F00AE810DCF28"><b>4.2-2</b></a>) with argument <code class="code">C</code>.</p>
 
 </li>
-<li><p>if <code class="code">C</code> satisfies <code class="func">IsGreensLClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensLClass</b></a>), then <code class="code">GreensData</code> returns the value of <code class="func">GreensLClassData</code> (<a href="chap4.html#X80A97BBB8273D151"><b>4.2-3</b></a>) with argument <code class="code">C</code>.</p>
+<li><p>if <code class="code">C</code> satisfies <code class="func">IsGreensLClass</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensLClass</b></a>), then <code class="code">GreensData</code> returns the value of <code class="func">GreensLClassData</code> (<a href="chap4.html#X80A97BBB8273D151"><b>4.2-3</b></a>) with argument <code class="code">C</code>.</p>
 
 </li>
-<li><p>if <code class="code">C</code> satisfies <code class="func">IsGreensHClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensHClass</b></a>), then <code class="code">GreensData</code> returns the value of <code class="func">GreensHClassData</code> (<a href="chap4.html#X8037C1BC7D372310"><b>4.2-4</b></a>) with argument <code class="code">C</code>.</p>
+<li><p>if <code class="code">C</code> satisfies <code class="func">IsGreensHClass</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensHClass</b></a>), then <code class="code">GreensData</code> returns the value of <code class="func">GreensHClassData</code> (<a href="chap4.html#X8037C1BC7D372310"><b>4.2-4</b></a>) with argument <code class="code">C</code>.</p>
 
 </li>
-<li><p>if <code class="code">C</code> satisfies <code class="func">IsGreensDClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensDClass</b></a>), then <code class="code">GreensData</code> returns the value of <code class="func">GreensDClassData</code> (<a href="chap4.html#X81940FB4814D25B7"><b>4.2-5</b></a>) with argument <code class="code">C</code>.</p>
+<li><p>if <code class="code">C</code> satisfies <code class="func">IsGreensDClass</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensDClass</b></a>), then <code class="code">GreensData</code> returns the value of <code class="func">GreensDClassData</code> (<a href="chap4.html#X81940FB4814D25B7"><b>4.2-5</b></a>) with argument <code class="code">C</code>.</p>
 
 </li>
 </ul>
@@ -122,7 +123,7 @@ gap&gt; GreensRClasses(S);
 <h5>4.2-2 GreensRClassData</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; GreensRClassData</code>( <var class="Arg">C</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>if <code class="code">C</code> satisfies <code class="func">IsGreensRClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensRClass</b></a>), then <code class="code">GreensRClassData</code> returns an object in the category <code class="func">IsGreensRClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>) with representation <code class="func">IsGreensRClassDataRep</code> (<a href="chap4.html#X81ECD8BE78E41393"><b>4.2-8</b></a>) and the following four components:</p>
+<p>if <code class="code">C</code> satisfies <code class="func">IsGreensRClass</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensRClass</b></a>), then <code class="code">GreensRClassData</code> returns an object in the category <code class="func">IsGreensRClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>) with representation <code class="func">IsGreensRClassDataRep</code> (<a href="chap4.html#X81ECD8BE78E41393"><b>4.2-8</b></a>) and the following four components:</p>
 
 
 <ul>
@@ -161,7 +162,7 @@ gap&gt; GreensRClasses(S);
 <h5>4.2-3 GreensLClassData</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; GreensLClassData</code>( <var class="Arg">S, f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>if <code class="code">C</code> satisfies <code class="func">IsGreensLClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensLClass</b></a>), then <code class="code">GreensLClassData</code> returns an object in the category <code class="func">IsGreensLClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>) with representation <code class="func">IsGreensLClassDataRep</code> (<a href="chap4.html#X81ECD8BE78E41393"><b>4.2-8</b></a>) and the following five components:</p>
+<p>if <code class="code">C</code> satisfies <code class="func">IsGreensLClass</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensLClass</b></a>), then <code class="code">GreensLClassData</code> returns an object in the category <code class="func">IsGreensLClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>) with representation <code class="func">IsGreensLClassDataRep</code> (<a href="chap4.html#X81ECD8BE78E41393"><b>4.2-8</b></a>) and the following five components:</p>
 
 
 <ul>
@@ -219,7 +220,7 @@ KernelOfTransformation(invrelts[i]*rep)=strongorb[i].
 <h5>4.2-4 GreensHClassData</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; GreensHClassData</code>( <var class="Arg">S, f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>if <code class="code">C</code> satisfies <code class="func">IsGreensHClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensHClass</b></a>), then <code class="code">GreensLClassData</code> returns an object in the category <code class="func">IsGreensHClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>) with representation <code class="func">IsGreensHClassDataRep</code> (<a href="chap4.html#X81ECD8BE78E41393"><b>4.2-8</b></a>) and the following two components:</p>
+<p>if <code class="code">C</code> satisfies <code class="func">IsGreensHClass</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensHClass</b></a>), then <code class="code">GreensLClassData</code> returns an object in the category <code class="func">IsGreensHClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>) with representation <code class="func">IsGreensHClassDataRep</code> (<a href="chap4.html#X81ECD8BE78E41393"><b>4.2-8</b></a>) and the following two components:</p>
 
 
 <ul>
@@ -248,7 +249,7 @@ KernelOfTransformation(invrelts[i]*rep)=strongorb[i].
 <h5>4.2-5 GreensDClassData</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; GreensDClassData</code>( <var class="Arg">S, f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>if <code class="code">C</code> satisfies <code class="func">IsGreensDClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensDClass</b></a>), then <code class="code">GreensDClassData</code> returns an object in the category <code class="func">IsGreensDClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>) with representation <code class="func">IsGreensDClassDataRep</code> (<a href="chap4.html#X81ECD8BE78E41393"><b>4.2-8</b></a>) and the following five components:</p>
+<p>if <code class="code">C</code> satisfies <code class="func">IsGreensDClass</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensDClass</b></a>), then <code class="code">GreensDClassData</code> returns an object in the category <code class="func">IsGreensDClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>) with representation <code class="func">IsGreensDClassDataRep</code> (<a href="chap4.html#X81ECD8BE78E41393"><b>4.2-8</b></a>) and the following five components:</p>
 
 
 <ul>
@@ -355,7 +356,7 @@ KernelOfTransformation(invrelts[i]*rep)=strongorb[i].
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; SchutzenbergerGroup</code>( <var class="Arg">D</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>if <code class="code">D</code> satisfies <code class="func">IsGreensRClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>), <code class="func">IsGreensLClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>), <code class="func">IsGreensHClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>), or <code class="func">IsGreensDClassData</code> (<a href="chap4.html#X82F882B37DFAA974"><b>4.2-6</b></a>), then <code class="code">SchutzenbergerGroup</code> returns the <code class="code">schutz</code> component of <code class="code">D</code>.</p>
 
-<p>If <code class="code">D</code> satisfies <code class="func">IsGreensRClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensRClass</b></a>), <code class="func">IsGreensLClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensLClass</b></a>), <code class="func">IsGreensHClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensHClass</b></a>), <code class="func">IsGreensDClass</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensDClass</b></a>), then <code class="code">SchutzenbergerGroup</code> returns the <code class="code">schutz</code> component of <code class="code">GreensData</code> with argument <code class="code">D</code>.</p>
+<p>If <code class="code">D</code> satisfies <code class="func">IsGreensRClass</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensRClass</b></a>), <code class="func">IsGreensLClass</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensLClass</b></a>), <code class="func">IsGreensHClass</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensHClass</b></a>), <code class="func">IsGreensDClass</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X82A11A087AFB3EB0"><b>Reference: IsGreensDClass</b></a>), then <code class="code">SchutzenbergerGroup</code> returns the <code class="code">schutz</code> component of <code class="code">GreensData</code> with argument <code class="code">D</code>.</p>
 
 
 <table class="example">
@@ -374,9 +375,38 @@ KernelOfTransformation(invrelts[i]*rep)=strongorb[i].
   Group([ (), (4,5) ])
 </pre></td></tr></table>
 
+<p><a id="X7C651C9C78398FFF" name="X7C651C9C78398FFF"></a></p>
+
+<h5>4.2-11 Idempotents</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; Idempotents</code>( <var class="Arg">X[, n]</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>returns a list of the idempotents in the transformation semigroup or Green's class <code class="code">X</code>.</p>
+
+<p>If the optional second argument <code class="code">n</code> is present, then a list of the idempotents in <code class="code">S</code> of rank <code class="code">n</code> is returned. If you are only interested in the idempotents of a given rank, then the second version of the function will likely be faster.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
+  &gt; Transformation( [ 3, 3, 1, 1 ] ) ]);;
+  gap&gt; Idempotents(S, 1);
+  [  ]
+  gap&gt; Idempotents(S, 2);                        
+  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+    Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
+  gap&gt; Idempotents(S, 3);                        
+  [  ]
+  gap&gt; Idempotents(S, 4);                        
+  [ Transformation( [ 1, 2, 3, 4 ] ) ]
+  gap&gt; Idempotents(S);
+  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 2, 3, 4 ] ), 
+    Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
+    Transformation( [ 4, 2, 2, 4 ] ) ]
+</pre></td></tr></table>
+
 <p><a id="X83F1C306846DF26B" name="X83F1C306846DF26B"></a></p>
 
-<h5>4.2-11 PartialOrderOfDClasses</h5>
+<h5>4.2-12 PartialOrderOfDClasses</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; PartialOrderOfDClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>returns the partial order of the <code class="code">D</code>-classes of <code class="code">S</code> as a directed graph in <strong class="pkg">GRAPE</strong>, if it is installed, using the command</p>

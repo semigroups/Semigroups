@@ -952,3 +952,164 @@ else
 	return elt;
 fi;
 end);
+
+###########################################################################
+##
+##	<#GAPDoc Label="KiselmanSemigroup">
+##	<ManSection>
+##	<Oper Name="KiselmanSemigroup" Arg="n"/>
+##	<Description>
+##	returns the Kiselman semigroup with <C>n</C> generators. That is, the 
+##	semigroup defined in <Cite Key="mazorchuk"/> with the presentation
+##	<Display>
+##	&lt;a_1, a_2, ... , a_n | a_i^2=a_i (i=1,...n) a_ia_ja_i=a_ja_ia_j=a_ja_i 
+##	(1&lte; i&lt; j&lte;n&rt;.
+##	</Display>
+##	<Example>
+##  gap&gt; S:=KiselmanSemigroup(3);
+##  &lt;fp monoid on the generators [ m1, m2, m3 ]&gt;
+##  gap&gt; Elements(S);
+##  [ &;lt;identity ...&gt;, m1, m2, m3, m1*m2, m1*m3, m2*m1, m2*m3, m3*m1, m3*m2, 
+##    m1*m2*m3, m1*m3*m2, m2*m1*m3, m2*m3*m1, m3*m1*m2, m3*m2*m1, m2*m1*m3*m2, 
+##    m2*m3*m1*m2 ]
+##  gap&gt; Idempotents(S);
+##  [ 1, m1, m2*m1, m3*m2*m1, m3*m1, m2, m3*m2, m3 ]
+##  gap&gt; SetInfoLevel(InfoAutos, 0);
+##  gap&gt; AutomorphismGroup(Range(IsomorphismTransformationSemigroup(S)));
+##  &lt;group of size 1 with 1 generators&gt;
+##  </Example>
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
+
+InstallMethod(KiselmanSemigroup, "for a pos int", true, [IsPosInt], 0, 
+function(n)
+local F, a, rels, i, j, S;
+F:=FreeMonoid(n);
+a:=GeneratorsOfMonoid(F);
+
+rels:=List([1..n], i-> [a[i]^2, a[i]]);
+
+for i in [1..n-1] do 
+	for j in [i+1..n] do 
+		Add(rels, [a[i]*a[j]*a[i], a[j]*a[i]*a[j]]);
+		Add(rels, [a[j]*a[i]*a[j], a[j]*a[i]]);
+	od;
+od;
+
+S:=F/rels;
+SetIsFinite(S, true);
+SetAutomorphismGroup(S, Group(IdentityMapping(S)));
+SetIdempotents(S, List(Combinations([1..n]), x-> Product(List(Reversed(x), y-> a[y]))));
+#SetIsomorphismMatrixSemigroup
+
+return S;
+end);
+
+###########################################################################
+##
+##	<#GAPDoc Label="FullMatrixSemigroup">
+##	<ManSection><Heading>FullMatrixSemigroup &amp; GeneralLinearSemigroup
+##	</Heading>
+##	<Oper Name="FullMatrixSemigroup" Arg="d,q"/>
+##	<Oper Name="GeneralLinearSemigroup" Arg="d,q"/>
+##	<Description>
+##	these two functions are synonyms for each other. They both return the full 
+##	matrix semigroup, or if you prefer the general linear semigroup, of all 
+##	<C>d</C> by <C>d</C> matrices with entries over the field with <C>q</C> 
+##	elements.  This semigroup has <M>q^(d^2)</M> elements. 
+##	<Example>
+##  gap&gt; FullMatrixSemigroup(3,4);
+##  &lt;3x3 full matrix semigroup over GF(2^2)&gt;
+##  gap&gt; Size(last);
+##  262144
+##  </Example>
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
+
+InstallMethod(FullMatrixSemigroup, "for 2 pos ints", true, [IsPosInt, IsPosInt], 0, 
+function(d,q)
+local g, S;
+
+#g:=List([1..d], x-> List([1..d], function(y) if y=x and not y=d then
+# return Z(q)^0; else return 0*Z(q); fi; end));
+g:=OneMutable(GeneratorsOfGroup(GL(d,q))[1]);
+g[d][d]:=Z(q)*0; 
+
+S:=Monoid(Concatenation(GeneratorsOfGroup(GL(d,q)), [g]));
+SetIsFullMatrixSemigroup(S, true);
+SetIsGeneralLinearSemigroup(S, true); 
+SetIsFinite(S, true);
+SetSize(S, q^(d^2));
+
+#JDM set Green's relations etc too
+
+return S;
+end);
+
+##############
+
+InstallMethod(GeneralLinearSemigroup, "for 2 pos ints", true, [IsPosInt, IsPosInt], 0, 
+function(d,q)
+
+return FullMatrixSemigroup(d,q);
+end);
+
+###########################################################################
+##
+##	<#GAPDoc Label="IsFullMatrixSemigroup">
+##	<ManSection><Heading>IsFullMatrixSemigroup &amp; IsGeneralLinearSemigroup
+##	</Heading>
+##	<Prop Name="IsFullMatrixSemigroup" Arg="S"/>
+##	<Prop Name="IsGeneralLinearSemigroup" Arg="S"/>
+##	<Description>
+##	these two functions are synonyms for each other. They both return 
+##	<C>true</C> if the semigroup <C>S</C> was created using either of the 
+##	commands <Ref Oper="FullMatrixSemigroup"/> or 
+##	<Ref Oper="GeneralLinearSemigroup"/> and <C>false</C> otherwise. 
+##	<Example>
+##  gap&gt; S:=RandomSemigroup(4,4);
+##  &lt;semigroup with 4 generators&gt;
+##  gap&gt; IsFullMatrixSemigroup(S);
+##  false
+##  gap&gt; S:=GeneralLinearSemigroup(3,3);
+##  &lt;3x3 full matrix semigroup over GF(3)&gt;
+##  gap&gt; IsFullMatrixSemigroup(S);
+##  true
+##  </Example>
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
+
+InstallMethod(IsFullMatrixSemigroup, "for a semigroup", true, [IsMonoid], ReturnFalse);
+
+##############
+
+InstallOtherMethod(IsGeneralLinearSemigroup, "for a semigroup", true, [IsSemigroup], ReturnFalse);
+
+##############
+
+InstallMethod( ViewObj, "for full matrix semigroup",[IsFullMatrixSemigroup], 10,
+function( obj )
+Print( "<", Length(GeneratorsOfMonoid(obj)[1][1]), "x", Length(GeneratorsOfMonoid(obj)[1][1]), " full matrix semigroup over ", BaseDomain(GeneratorsOfMonoid(obj)[1][1]), ">");
+end );
+
+##############
+
+InstallMethod(IsomorphismTransformationSemigroup, "for a full matrix semigroup", true, [IsFullMatrixSemigroup], 0, 
+function(S)
+local F, gens, T;
+
+gens:=GeneratorsOfMonoid(S);
+F:=BaseDomain(gens[1]);
+gens:=List(gens, x-> TransformationActionNC(Elements(F^Size(F)), OnRight, x));
+#JDM is the previous line correct? 
+T:=Monoid(gens);
+SetIsFinite(T, true);
+SetSize(T, Size(S));
+
+return SemigroupHomomorphismByFunctionNC(S, T, x-> TransformationActionNC(Elements(F^Size(F)), OnRight, x));
+end);
+
+##############

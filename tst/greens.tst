@@ -250,7 +250,7 @@ gap> gens:=[ Transformation( [ 4, 5, 7, 1, 8, 6, 1, 7 ] ),
 >  Transformation( [ 5, 7, 4, 4, 1, 4, 4, 4 ] ), 
 >  Transformation( [ 7, 1, 4, 3, 6, 1, 3, 7 ] ) ];;
 gap> m:=Semigroup(gens);;
-gap> ImagesTransformationMonoid(m);
+gap> ImagesOfTransSemigroup(m);
 [ [ 1 ], [ 1, 3 ], [ 1, 3, 4 ], [ 1, 3, 4, 6, 7 ], [ 1, 3, 4, 7 ], 
   [ 1, 3, 6 ], [ 1, 3, 6, 7 ], [ 1, 3, 7 ], [ 1, 4 ], [ 1, 4, 5 ], 
   [ 1, 4, 5, 6, 7, 8 ], [ 1, 4, 5, 7 ], [ 1, 4, 6 ], [ 1, 4, 6, 7 ], 
@@ -270,7 +270,7 @@ gap> gens:=[ Transformation( [ 1, 5, 2, 2, 3, 5, 2 ] ),
 >  Transformation( [ 7, 3, 6, 5, 2, 4, 1 ] ), 
 >  Transformation( [ 7, 5, 3, 2, 5, 5, 6 ] ) ];;
 gap> m:=Monoid(gens);;
-gap> ImagesTransformationMonoid(m);
+gap> ImagesOfTransSemigroup(m);
 [ [ 1, 2 ], [ 1, 2, 3 ], [ 1, 2, 3, 4, 5 ], [ 1 .. 7 ], [ 1, 2, 3, 4, 6 ], 
   [ 1, 2, 3, 5 ], [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 6 ], [ 1, 2, 4 ], 
   [ 1, 2, 4, 5 ], [ 1, 2, 4, 5, 6 ], [ 1, 2, 5 ], [ 1, 2, 6 ], [ 1, 3 ], 
@@ -287,7 +287,7 @@ gap> ImagesTransformationMonoid(m);
   [ 3, 7 ], [ 4 ], [ 4, 5 ], [ 4, 5, 6 ], [ 4, 5, 6, 7 ], [ 4, 5, 7 ], 
   [ 4, 6 ], [ 4, 6, 7 ], [ 4, 7 ], [ 5 ], [ 5, 6 ], [ 5, 6, 7 ], [ 5, 7 ], 
   [ 6 ], [ 6, 7 ] ]
-gap> GradedImagesTransformationMonoid(m);
+gap> GradedImagesOfTransSemigroup(m);
 [ [ [ 5 ], [ 2 ], [ 3 ], [ 6 ], [ 4 ] ],
   [ [ 2, 5 ], [ 3, 5 ], [ 5, 7 ], [ 5, 6 ], [ 2, 3 ], [ 1, 5 ], [ 1, 2 ],
       [ 2, 6 ], [ 2, 4 ], [ 3, 6 ], [ 1, 3 ], [ 2, 7 ], [ 3, 7 ], [ 3, 4 ],
@@ -307,12 +307,12 @@ gap> GradedImagesTransformationMonoid(m);
       [ 2, 3, 4, 6, 7 ], [ 1, 3, 4, 5, 6 ], [ 2, 4, 5, 6, 7 ],
       [ 1, 2, 3, 4, 5 ] ], [  ], [ [ 1 .. 7 ] ] ]
 gap> grad:=last;;
-gap> Set(Concatenation(grad))=ImagesTransformationMonoid(m);
+gap> Set(Concatenation(grad))=ImagesOfTransSemigroup(m);
 true
-gap> ForAll(GradedImagesTransformationMonoid(m), x-> ForAll(x, y-> Length(y)
+gap> ForAll(GradedImagesOfTransSemigroup(m), x-> ForAll(x, y-> Length(y)
 > =Length(x[1])));
 true
-gap> KernelsTransformationMonoid(m);
+gap> KernelsOfTransSemigroup(m);
 [ [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ] ],
   [ [ 1 ], [ 2 ], [ 3, 4 ], [ 5, 6, 7 ] ],
   [ [ 1 ], [ 2 ], [ 3, 4, 5 ], [ 6 ], [ 7 ] ],
@@ -430,8 +430,8 @@ gap> KernelsTransformationMonoid(m);
   [ [ 1, 7 ], [ 2, 6 ], [ 3, 4, 5 ] ] ]
 gap> Length(last);
 206
-gap> Set(Concatenation(GradedKernelsTransformationMonoid(m)))
-> =KernelsTransformationMonoid(m);
+gap> Set(Concatenation(GradedKernelsOfTransSemigroup(m)))
+> =KernelsOfTransSemigroup(m);
 true
 gap> gens:=[ [ Transformation( [ 3, 4, 4, 3, 1, 1, 5 ] ) ], 
 > [ Transformation( [ 1, 1, 4, 3 ] ), Transformation( [ 2, 2, 2, 2 ] ), 
@@ -837,7 +837,6 @@ gap> res:=List(semis, x-> [Length(GreensLClasses(x)), Size(x)]);
   [ 333, 1382 ], [ 74, 1074 ], [ 2, 2 ], [ 28, 535 ], [ 3, 6 ], [ 3, 3 ],
   [ 35, 1834 ], [ 93, 1776 ], [ 18, 326 ], [ 16, 45 ], [ 25, 379 ],
   [ 33, 149 ] ]
-# this agrees with the output from GAP447... 
 gap> ForAll(GreensLClasses(m), x-> ForAll(Idempotents(x), y-> y in x));                 
 true
 gap> idem:=Set(Concatenation(List(GreensLClasses(m), Idempotents)));
@@ -971,11 +970,9 @@ gap> idem:=Set(Concatenation(List(GreensLClasses(m), Idempotents)));
   Transformation( [ 7, 7, 7, 7, 6, 6, 7 ] ),
   Transformation( [ 7, 7, 7, 7, 7, 6, 7 ] ),
   Transformation( [ 7, 7, 7, 7, 7, 7, 7 ] ) ]
-gap> 
 gap> idem=Set(Idempotents(m));
 true
-gap> m:=semis[30];          
-<semigroup with 2 generators>
+gap> m:=semis[30];;
 gap> r:=GreensLClassOfElement(m, Transformation( [ 3, 3, 3, 3, 3, 3, 5 ] ));;
 gap> d:=DClassOfLClass(r);;
 gap> dr:=GreensLClasses(d);;
@@ -998,9 +995,9 @@ gap> List(semis, s-> Length(GreensHClasses(s)));
   14, 29, 274, 22, 17, 26, 253, 10, 1, 2, 13, 64, 605, 20, 25, 33, 2, 1,
   1520, 307, 9625, 41, 1885, 945, 54, 1297, 58, 18, 1, 173, 1, 25, 737, 2807,
   636, 495, 2, 201, 3, 3, 471, 715, 118, 28, 197, 88 ]
-# this agrees with GAP 447
 gap> ForAll(semis, s-> Number(GreensHClasses(s), IsGroupHClass)=Length(Idempotents(s)));
 true
+#JDM
 gap> List(semis, s-> Number(GreensDClasses(s), IsRegularDClass));
 [ 1, 2, 2, 4, 3, 6, 1, 5, 4, 1, 6, 3, 3, 4, 3, 3, 4, 4, 1, 4, 6, 4, 4, 4, 1,
   2, 1, 3, 5, 5, 3, 5, 3, 3, 5, 4, 6, 1, 1, 4, 4, 3, 3, 4, 4, 4, 4, 3, 1, 4,
@@ -1211,4 +1208,68 @@ gap> SchutzenbergerGroup(GreensLClassOfElement(S, f));
 Group([ (), (4,5) ])
 gap> SchutzenbergerGroup(GreensHClassOfElement(S, f));
 Group([ (), (4,5) ])
+gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
+> Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ]);;
+gap> ImagesOfTransSemigroup(S, 6);
+[  ]
+gap> ImagesOfTransSemigroup(S, 5);
+[  ]
+gap> ImagesOfTransSemigroup(S, 4);
+[ [ 1, 2, 5, 6 ] ]
+gap> ImagesOfTransSemigroup(S, 3);
+[ [ 1, 4, 6 ], [ 2, 5, 6 ] ]
+gap> ImagesOfTransSemigroup(S, 2);
+[ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ]
+gap> ImagesOfTransSemigroup(S, 1);
+[ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ]
+gap> ImagesOfTransSemigroup(S);
+[ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], 
+  [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
+gap> S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
+> Transformation( [ 3, 3, 1, 1 ] ) ]);;
+gap> Idempotents(S, 1);
+[  ]
+gap> Idempotents(S, 2);                        
+[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+  Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
+gap> Idempotents(S, 3);                        
+[  ]
+gap> Idempotents(S, 4);                        
+[ Transformation( [ 1, 2, 3, 4 ] ) ]
+gap> Idempotents(S);
+[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 2, 3, 4 ] ), 
+  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
+  Transformation( [ 4, 2, 2, 4 ] ) ]
+gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
+> Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ]);;
+gap> ImagesOfTransSemigroup(S, 6);
+[  ]
+gap> ImagesOfTransSemigroup(S, 5);
+[  ]
+gap> ImagesOfTransSemigroup(S, 4);
+[ [ 1, 2, 5, 6 ] ]
+gap> ImagesOfTransSemigroup(S, 3);
+[ [ 1, 4, 6 ], [ 2, 5, 6 ] ]
+gap> ImagesOfTransSemigroup(S, 2);
+[ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ]
+gap> ImagesOfTransSemigroup(S, 1);
+[ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ]
+gap> ImagesOfTransSemigroup(S);
+[ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], 
+  [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
+gap> S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
+> Transformation( [ 3, 3, 4, 1 ] ) ]);
+gap> KernelsOfTransSemigroup(S);   
+[ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], 
+  [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], 
+  [ [ 1, 4 ], [ 2 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
+gap> KernelsOfTransSemigroup(S,1);
+[ [ [ 1, 2, 3, 4 ] ] ]
+gap> KernelsOfTransSemigroup(S,2);
+[ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], 
+  [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
+gap> KernelsOfTransSemigroup(S,3);
+[ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ]
+gap> KernelsOfTransSemigroup(S,4);
+[  ]
 gap> STOP_TEST( "greens.tst 3.1.1", 10000);

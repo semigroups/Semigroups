@@ -1164,11 +1164,11 @@ DeclareAttribute("IsomorphismAutomorphismGroupOfRMS", IsAutomorphismGroupOfSimpl
 ##	if <C>G</C> is a transformation semigroup that satisfies 
 ##	<Ref Prop="IsGroupAsSemigroup"/>, then <C>IsomorphismPermGroup</C> 
 ##	returns an isomorphism from <C>G</C> to the permutation group obtained by 
-##	applying <Ref Func="PermRepTrans"/> to any element of <C>G</C>.<P/>
+##	applying <Ref Func="AsPermOfRange"/> to any element of <C>G</C>.<P/>
 ##
 ##	if <C>G</C> is a group <C>H</C>-class of a transformation semigroup, then 
 ##	<C>IsomorphismPermGroup</C> returns an isomorphism from <C>G</C> to the 
-##	permutation group obtained by applying <Ref Func="PermRepTrans"/> to any
+##	permutation group obtained by applying <Ref Func="AsPermOfRange"/> to any
 ##	element of <C>G</C>.
 ##	<Example>
 ##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6]);;

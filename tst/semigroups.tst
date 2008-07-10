@@ -309,4 +309,27 @@ gap> IsRegularSemigroup(S);
 true
 gap> Size(S)=Binomial(2*5-1, 5-1);
 true
+gap> S:=KiselmanSemigroup(3);
+<fp monoid on the generators [ m1, m2, m3 ]>
+gap> Elements(S);
+[ <identity ...>, m1, m2, m3, m1*m2, m1*m3, m2*m1, m2*m3, m3*m1, m3*m2, 
+  m1*m2*m3, m1*m3*m2, m2*m1*m3, m2*m3*m1, m3*m1*m2, m3*m2*m1, m2*m1*m3*m2, 
+  m2*m3*m1*m2 ]
+gap> Idempotents(S);
+[ 1, m1, m2*m1, m3*m2*m1, m3*m1, m2, m3*m2, m3 ]
+gap> SetInfoLevel(InfoAutos, 0);
+gap> AutomorphismGroup(Range(IsomorphismTransformationSemigroup(S)));
+<group of size 1 with 1 generators>
+gap> FullMatrixSemigroup(3,4);
+<3x3 full matrix semigroup over GF(2^2)>
+gap> Size(last);
+262144
+gap> S:=RandomSemigroup(4,4);
+<semigroup with 4 generators>
+gap> IsFullMatrixSemigroup(S);
+false
+gap> S:=GeneralLinearSemigroup(3,3);
+<3x3 full matrix semigroup over GF(3)>
+gap> IsFullMatrixSemigroup(S);
+true
 gap> STOP_TEST( "semigroups.tst 3.1.1", 10000);

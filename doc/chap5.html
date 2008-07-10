@@ -221,7 +221,7 @@
 <h5>5.2-4 IsCommutativeSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsCommutativeSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<p>returns <code class="code">true</code> if the transformation semigroup <code class="code">S</code> is commutative and <code class="code">false</code> otherwise. The function <code class="func">IsCommutative</code> (<a href="/Users/jdm/gapdev/doc/ref/chap33.html#X830A4A4C795FBC2D"><b>Reference: IsCommutative</b></a>) can also be used to test if a semigroup is commutative.</p>
+<p>returns <code class="code">true</code> if the transformation semigroup <code class="code">S</code> is commutative and <code class="code">false</code> otherwise. The function <code class="func">IsCommutative</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap33.html#X830A4A4C795FBC2D"><b>Reference: IsCommutative</b></a>) can also be used to test if a semigroup is commutative.</p>
 
 <p>A semigroup <code class="code">S</code> is <em>commutative</em> if <code class="code">xy=yx</code> for all <code class="code">x,y</code> in <code class="code">S</code>.</p>
 
@@ -242,7 +242,7 @@
 <h5>5.2-5 IsRegularSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsRegularSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<p>returns <code class="code">true</code> if the transformation semigroup <code class="code">S</code> is a regular semigroup and <code class="code">false</code> otherwise. The algorithm used here is essentially the same algorithm as that used for <code class="func">GreensRClasses</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X844D20467A644811"><b>Reference: GreensRClasses</b></a>) in <strong class="pkg">MONOID</strong>. If <code class="code">S</code> is regular, then <code class="code">S</code> will have the attribute <code class="code">GreensRClasses</code> after <code class="code">IsRegularSemigroup</code> is invoked.</p>
+<p>returns <code class="code">true</code> if the transformation semigroup <code class="code">S</code> is a regular semigroup and <code class="code">false</code> otherwise. The algorithm used here is essentially the same algorithm as that used for <code class="func">GreensRClasses</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X844D20467A644811"><b>Reference: GreensRClasses</b></a>) in <strong class="pkg">MONOID</strong>. If <code class="code">S</code> is regular, then <code class="code">S</code> will have the attribute <code class="code">GreensRClasses</code> after <code class="code">IsRegularSemigroup</code> is invoked.</p>
 
 <p>A semigroup <code class="code">S</code> is <em>regular</em> if for all <code class="code">x</code> in <code class="code">S</code> there exists <code class="code">y</code> in <code class="code">S</code> such that <code class="code">xyx=x</code>.</p>
 
@@ -431,7 +431,7 @@
 <h5>5.2-14 IsZeroSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsZeroSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<p>returns <code class="code">true</code> if the transformation semigroup <code class="code">S</code> is a zero semigroup or if <code class="code">S</code> was created using the <code class="func">ZeroSemigroup</code> (<a href="chap6.html#X801FC1D97D832A6F"><b>6.3-1</b></a>) command. Otherwise <code class="code">false</code> is returned.</p>
+<p>returns <code class="code">true</code> if the transformation semigroup <code class="code">S</code> is a zero semigroup or if <code class="code">S</code> was created using the <code class="func">ZeroSemigroup</code> (<a href="chap6.html#X801FC1D97D832A6F"><b>6.2-1</b></a>) command. Otherwise <code class="code">false</code> is returned.</p>
 
 <p>A semigroup <code class="code">S</code> is a <em>zero semigroup</em> if there exists an element <code class="code">0</code> in <code class="code">S</code> such that <code class="code">xy=0</code> for all <code class="code">x,y</code> in <code class="code">S</code>.</p>
 
@@ -453,7 +453,7 @@
 <h5>5.2-15 IsZeroGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsZeroGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<p>returns <code class="code">true</code> if the transformation semigroup <code class="code">S</code> is a zero group or if <code class="code">S</code> was created using the <code class="func">ZeroGroup</code> (<a href="chap6.html#X81E319198527F824"><b>6.3-3</b></a>) command. Otherwise <code class="code">false</code> is returned.</p>
+<p>returns <code class="code">true</code> if the transformation semigroup <code class="code">S</code> is a zero group or if <code class="code">S</code> was created using the <code class="func">ZeroGroup</code> (<a href="chap6.html#X81E319198527F824"><b>6.2-3</b></a>) command. Otherwise <code class="code">false</code> is returned.</p>
 
 <p>A semigroup <code class="code">S</code> <code class="code">S</code> is a <em>zero group</em> if there exists an element <code class="code">0</code> in <code class="code">S</code> such that <code class="code">S</code> without <code class="code">0</code> is a group and for all <code class="code">x</code> in <code class="code">S</code> we have that <code class="code">x0=0x=0</code>.</p>
 

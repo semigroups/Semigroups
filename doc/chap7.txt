@@ -1063,12 +1063,12 @@
   
   if  [10XG[0m  is  a  transformation  semigroup  that  satisfies  [2XIsGroupAsSemigroup[0m
   ([14X5.2-3[0m),  then  [10XIsomorphismPermGroup[0m  returns  an  isomorphism from [10XG[0m to the
-  permutation  group  obtained by applying [2XPermRepTrans[0m ([14X2.1-4[0m) to any element
+  permutation  group obtained by applying [2XAsPermOfRange[0m ([14X2.3-2[0m) to any element
   of [10XG[0m.
   
   if   [10XG[0m   is   a   group   [10XH[0m-class   of   a  transformation  semigroup,  then
   [10XIsomorphismPermGroup[0m  returns an isomorphism from [10XG[0m to the permutation group
-  obtained by applying [2XPermRepTrans[0m ([14X2.1-4[0m) to any element of [10XG[0m.
+  obtained by applying [2XAsPermOfRange[0m ([14X2.3-2[0m) to any element of [10XG[0m.
   
   [4X---------------------------  Example  ----------------------------[0X
     [4Xgap> g1:=Transformation([3,3,2,6,2,4,4,6]);;[0X

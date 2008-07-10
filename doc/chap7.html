@@ -101,10 +101,10 @@
 
 
 <ul>
-<li><p><code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) with argument satisfying <code class="func">IsTransformationSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EAF835D7FE4026F"><b>Reference: IsTransformationSemigroup</b></a>) or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>)</p>
+<li><p><code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) with argument satisfying <code class="func">IsTransformationSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EAF835D7FE4026F"><b>Reference: IsTransformationSemigroup</b></a>) or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>)</p>
 
 </li>
-<li><p><code class="func">RightTransStabAutoGroup</code> (<a href="chap7.html#X78060D7C8331F340"><b>7.5-9</b></a>) with argument satisfying <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>)</p>
+<li><p><code class="func">RightTransStabAutoGroup</code> (<a href="chap7.html#X78060D7C8331F340"><b>7.5-9</b></a>) with argument satisfying <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>)</p>
 
 </li>
 <li><p><code class="func">RZMSGraph</code> (<a href="chap7.html#X781757FD7938C9DD"><b>7.5-8</b></a>)</p>
@@ -116,7 +116,7 @@
 <li><p><code class="func">RZMStoRZMSInducedFunction</code> (<a href="chap7.html#X84BA41977C43EAA3"><b>7.5-7</b></a>)</p>
 
 </li>
-<li><p><code class="func">IsomorphismSemigroups</code> (<a href="chap7.html#X8248C522825E2684"><b>7.7-5</b></a>) with both arguments satisfying <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>)</p>
+<li><p><code class="func">IsomorphismSemigroups</code> (<a href="chap7.html#X8248C522825E2684"><b>7.7-5</b></a>) with both arguments satisfying <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>)</p>
 
 </li>
 </ul>
@@ -127,7 +127,7 @@
 <h5>7.1-1 InfoAutos</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; InfoAutos</code></td><td class="tdright">( info class )</td></tr></table></div>
-<p>This is the InfoClass for the functions in this chapter. Setting the value of <code class="code">InfoAutos</code> to <code class="code">1, 2, 3,</code> or <code class="code">4</code> using the command <code class="func">SetInfoLevel</code> (<a href="/Users/jdm/gapdev/doc/ref/chap7.html#X7A43B9E68765EE9E"><b>Reference: SetInfoLevel</b></a>) will give different levels of information about what <code class="code">GAP</code> is doing during a computation. In particular, if the level of <code class="code">InfoAutos</code> is set to <code class="code">4</code>, then <code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) runs in interactive mode.</p>
+<p>This is the InfoClass for the functions in this chapter. Setting the value of <code class="code">InfoAutos</code> to <code class="code">1, 2, 3,</code> or <code class="code">4</code> using the command <code class="func">SetInfoLevel</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap7.html#X7A43B9E68765EE9E"><b>Reference: SetInfoLevel</b></a>) will give different levels of information about what <code class="code">GAP</code> is doing during a computation. In particular, if the level of <code class="code">InfoAutos</code> is set to <code class="code">4</code>, then <code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) runs in interactive mode.</p>
 
 <p><a id="X7DB1B2FD7DFAEBEC" name="X7DB1B2FD7DFAEBEC"></a></p>
 
@@ -415,11 +415,11 @@ true
 <h5>7.4-1 AutomorphismGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; AutomorphismGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p><code class="code">AutomorphismGroup</code> returns the group of automorphisms of the transformation semigroup, zero group, zero semigroup, Rees matrix semigroup, or Rees 0-matrix semigroup <code class="code">S</code>; that is, semigroups satisfying the properties <code class="func">IsTransformationSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EAF835D7FE4026F"><b>Reference: IsTransformationSemigroup</b></a>), <code class="func">IsZeroGroup</code> (<a href="chap5.html#X85F7E5CD86F0643B"><b>5.2-15</b></a>), <code class="func">IsZeroSemigroup</code> (<a href="chap5.html#X81A1882181B75CC9"><b>5.2-14</b></a>), <code class="func">IsReesMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X780BB78A79275244"><b>Reference: IsReesMatrixSemigroup</b></a>), or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
+<p><code class="code">AutomorphismGroup</code> returns the group of automorphisms of the transformation semigroup, zero group, zero semigroup, Rees matrix semigroup, or Rees 0-matrix semigroup <code class="code">S</code>; that is, semigroups satisfying the properties <code class="func">IsTransformationSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EAF835D7FE4026F"><b>Reference: IsTransformationSemigroup</b></a>), <code class="func">IsZeroGroup</code> (<a href="chap5.html#X85F7E5CD86F0643B"><b>5.2-15</b></a>), <code class="func">IsZeroSemigroup</code> (<a href="chap5.html#X81A1882181B75CC9"><b>5.2-14</b></a>), <code class="func">IsReesMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X780BB78A79275244"><b>Reference: IsReesMatrixSemigroup</b></a>), or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
 
 <p>If <code class="code">S</code> is a transformation semigroup, then <code class="code">AutomorphismGroup</code> computes the automorphism group of <code class="code">S</code> using the algorithm described in <a href="chapBib.html#biBcomputing">[ABM07]</a>.</p>
 
-<p>If <code class="code">S</code> is a (completely) simple transformation semigroup, then the automorphism group is computed by passing to an isomorphic Rees matrix semigroup. If <code class="code">S</code> is a transformation group, then the automorphism group is computed by passing to an isomorphic permutation group. If <code class="code">S</code> has order <code class="code">&lt;10</code> and knows its Cayley table (<code class="func">MultiplicationTable</code> (<a href="/Users/jdm/gapdev/doc/ref/chap33.html#X849BDCC27C4C3191"><b>Reference: MultiplicationTable</b></a>)), then the automorphism group is calculated by finding the setwise stabilizer of the Cayley table in the symmetric group of degree <code class="code">|S|</code> under the action on the Cayley table.</p>
+<p>If <code class="code">S</code> is a (completely) simple transformation semigroup, then the automorphism group is computed by passing to an isomorphic Rees matrix semigroup. If <code class="code">S</code> is a transformation group, then the automorphism group is computed by passing to an isomorphic permutation group. If <code class="code">S</code> has order <code class="code">&lt;10</code> and knows its Cayley table (<code class="func">MultiplicationTable</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap33.html#X849BDCC27C4C3191"><b>Reference: MultiplicationTable</b></a>)), then the automorphism group is calculated by finding the setwise stabilizer of the Cayley table in the symmetric group of degree <code class="code">|S|</code> under the action on the Cayley table.</p>
 
 <p>If <code class="code">S</code> is a zero group, then <code class="code">AutomorphismGroup</code> computes the automorphism group of the underlying group. Obviously, every automorphism of a zero group is the extension of an automorphism of the underlying group that fixes the zero element.</p>
 
@@ -429,7 +429,7 @@ true
 
 <p>If <code class="func">InfoAutos</code> (<a href="chap7.html#X86E4761480D700DF"><b>7.1-1</b></a>) is set to level <code class="code">4</code>, then prompts will appear during the procedure to allow you interactive control over the computation.</p>
 
-<p><strong class="button">Please note:</strong> if <strong class="pkg">grape</strong> is not loaded, then this function will not work when <code class="code">S</code> satisfies <code class="func">IsTransformationSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EAF835D7FE4026F"><b>Reference: IsTransformationSemigroup</b></a>) or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
+<p><strong class="button">Please note:</strong> if <strong class="pkg">grape</strong> is not loaded, then this function will not work when <code class="code">S</code> satisfies <code class="func">IsTransformationSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EAF835D7FE4026F"><b>Reference: IsTransformationSemigroup</b></a>) or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
 
 
 <table class="example">
@@ -522,7 +522,7 @@ true
 
 </li>
 </ul>
-<p><strong class="button">Please note:</strong> if <strong class="pkg">grape</strong> is not loaded, then this function will not work when <code class="code">S</code> satisfies <code class="func">IsTransformationSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EAF835D7FE4026F"><b>Reference: IsTransformationSemigroup</b></a>) or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
+<p><strong class="button">Please note:</strong> if <strong class="pkg">grape</strong> is not loaded, then this function will not work when <code class="code">S</code> satisfies <code class="func">IsTransformationSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EAF835D7FE4026F"><b>Reference: IsTransformationSemigroup</b></a>) or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
 
 
 <table class="example">
@@ -604,7 +604,7 @@ gap&gt; AutomorphismGroup(S);
 <h5>7.4-7 IsAutomorphismGroupOfRMS</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsAutomorphismGroupOfRMS</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<p>returns <code class="code">true</code> if <code class="code">G</code> is the automorphism group of a Rees matrix semigroup; that is, a semigroup created using the command <code class="func">ReesMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X8526AA557CDF6C49"><b>Reference: ReesMatrixSemigroup</b></a>) and/or satisfying <code class="func">IsReesMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X780BB78A79275244"><b>Reference: IsReesMatrixSemigroup</b></a>).</p>
+<p>returns <code class="code">true</code> if <code class="code">G</code> is the automorphism group of a Rees matrix semigroup; that is, a semigroup created using the command <code class="func">ReesMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X8526AA557CDF6C49"><b>Reference: ReesMatrixSemigroup</b></a>) and/or satisfying <code class="func">IsReesMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X780BB78A79275244"><b>Reference: IsReesMatrixSemigroup</b></a>).</p>
 
 <p>Note that this property is set to <code class="code">true</code> when the computation of the automorphism group is performed. Otherwise, there is no method to check if an arbitrary group satisfies this property; see <code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) for an example of the usage of this command.</p>
 
@@ -613,7 +613,7 @@ gap&gt; AutomorphismGroup(S);
 <h5>7.4-8 IsAutomorphismGroupOfRZMS</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsAutomorphismGroupOfRZMS</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<p>returns <code class="code">true</code> if <code class="code">G</code> is the automorphism group of a Rees matrix semigroup; that is, a semigroup created using the command <code class="func">ReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X872CEF99839085B1"><b>Reference: ReesZeroMatrixSemigroup</b></a>) and/or satisfying <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
+<p>returns <code class="code">true</code> if <code class="code">G</code> is the automorphism group of a Rees matrix semigroup; that is, a semigroup created using the command <code class="func">ReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X872CEF99839085B1"><b>Reference: ReesZeroMatrixSemigroup</b></a>) and/or satisfying <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
 
 <p>Note that this property is set to <code class="code">true</code> when the computation of the automorphism group is performed. Otherwise, there is no method to check if an arbitrary group satisfies this property; see <code class="func">AutomorphismGroup</code> (<a href="chap7.html#X87677B0787B4461A"><b>7.4-1</b></a>) for an example of the usage of this command.</p>
 
@@ -842,7 +842,7 @@ gap&gt; UndirectedEdges(last);
 <h5>7.5-9 RightTransStabAutoGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RightTransStabAutoGroup</code>( <var class="Arg">S, elts, func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>returns a right transversal of the stabilizer w.r.t the action <code class="code">func</code> of the elements <code class="code">elts</code> in the automorphism group of the zero semigroup, Rees matrix semigroup, or Rees 0-matrix semigroup <code class="code">S</code>. That is, <code class="code">S</code> satisfying <code class="func">IsZeroSemigroup</code> (<a href="chap5.html#X81A1882181B75CC9"><b>5.2-14</b></a>), <code class="func">IsReesMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X780BB78A79275244"><b>Reference: IsReesMatrixSemigroup</b></a>), or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
+<p>returns a right transversal of the stabilizer w.r.t the action <code class="code">func</code> of the elements <code class="code">elts</code> in the automorphism group of the zero semigroup, Rees matrix semigroup, or Rees 0-matrix semigroup <code class="code">S</code>. That is, <code class="code">S</code> satisfying <code class="func">IsZeroSemigroup</code> (<a href="chap5.html#X81A1882181B75CC9"><b>5.2-14</b></a>), <code class="func">IsReesMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X780BB78A79275244"><b>Reference: IsReesMatrixSemigroup</b></a>), or <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
 
 
 <table class="example">
@@ -938,7 +938,7 @@ true
 <h5>7.7-1 IsomorphismAutomorphismGroupOfRMS</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsomorphismAutomorphismGroupOfRMS</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>if <code class="code">G</code> is the automorphism group of a simple transformation semigroup, then <code class="code">IsomorphismAutomorphismGroupOfRMS</code> returns a <code class="func">GroupHomomorphismByImages</code> (<a href="/Users/jdm/gapdev/doc/ref/chap38.html#X7F348F497C813BE0"><b>Reference: GroupHomomorphismByImages</b></a>) from the automorphism group of <code class="code">G</code> to the automorphism group of an isomorphic Rees matrix semigroup, obtained by using <code class="func">IsomorphismReesMatrixSemigroup</code> (<a href="chap7.html#X7964B5C97FB9C07D"><b>7.7-7</b></a>).</p>
+<p>if <code class="code">G</code> is the automorphism group of a simple transformation semigroup, then <code class="code">IsomorphismAutomorphismGroupOfRMS</code> returns a <code class="func">GroupHomomorphismByImages</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap38.html#X7F348F497C813BE0"><b>Reference: GroupHomomorphismByImages</b></a>) from the automorphism group of <code class="code">G</code> to the automorphism group of an isomorphic Rees matrix semigroup, obtained by using <code class="func">IsomorphismReesMatrixSemigroup</code> (<a href="chap7.html#X7964B5C97FB9C07D"><b>7.7-7</b></a>).</p>
 
 
 <table class="example">
@@ -973,9 +973,9 @@ gap&gt; IsomorphismAutomorphismGroupOfRMS(last);
 
 <p>if <code class="code">G</code> satisfies <code class="func">IsAutomorphismGroupOfRMS</code> (<a href="chap7.html#X7F77F02583731C84"><b>7.4-7</b></a>) or <code class="func">IsAutomorphismGroupOfRZMS</code> (<a href="chap7.html#X868D5404867566F9"><b>7.4-8</b></a>), then <code class="code">IsomorphismPermGroup</code> returns an isomorphism from <code class="code">G</code> to a permutation group acting either on the elements of <code class="code">S</code> or on itself, whichever gives a permutation group of lower degree.</p>
 
-<p>if <code class="code">G</code> is a transformation semigroup that satisfies <code class="func">IsGroupAsSemigroup</code> (<a href="chap5.html#X852F29E8795FA489"><b>5.2-3</b></a>), then <code class="code">IsomorphismPermGroup</code> returns an isomorphism from <code class="code">G</code> to the permutation group obtained by applying <code class="func">PermRepTrans</code> (<a href="chap2.html#X781E031C8298ADDC"><b>2.1-4</b></a>) to any element of <code class="code">G</code>.</p>
+<p>if <code class="code">G</code> is a transformation semigroup that satisfies <code class="func">IsGroupAsSemigroup</code> (<a href="chap5.html#X852F29E8795FA489"><b>5.2-3</b></a>), then <code class="code">IsomorphismPermGroup</code> returns an isomorphism from <code class="code">G</code> to the permutation group obtained by applying <code class="func">AsPermOfRange</code> (<a href="chap2.html#X7A249D7781F31C22"><b>2.3-2</b></a>) to any element of <code class="code">G</code>.</p>
 
-<p>if <code class="code">G</code> is a group <code class="code">H</code>-class of a transformation semigroup, then <code class="code">IsomorphismPermGroup</code> returns an isomorphism from <code class="code">G</code> to the permutation group obtained by applying <code class="func">PermRepTrans</code> (<a href="chap2.html#X781E031C8298ADDC"><b>2.1-4</b></a>) to any element of <code class="code">G</code>.</p>
+<p>if <code class="code">G</code> is a group <code class="code">H</code>-class of a transformation semigroup, then <code class="code">IsomorphismPermGroup</code> returns an isomorphism from <code class="code">G</code> to the permutation group obtained by applying <code class="func">AsPermOfRange</code> (<a href="chap2.html#X7A249D7781F31C22"><b>2.3-2</b></a>) to any element of <code class="code">G</code>.</p>
 
 
 <table class="example">
@@ -1015,7 +1015,7 @@ SemigroupHomomorphism ( {Transformation( [ 2, 2, 2, 2, 2, 6 ] )}-&gt;Group(()))
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsomorphismFpSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>returns an isomorphism to a finitely presented semigroup from the transformation semigroup <code class="code">S</code>. This currently works by running the function <code class="func">FroidurePinExtendedAlg</code> (<b>???</b>) in the library.</p>
 
-<p>If <code class="code">S</code> satisfies <code class="func">IsMonoid</code> (<a href="/Users/jdm/gapdev/doc/ref/chap50.html#X861C523483C6248C"><b>Reference: IsMonoid</b></a>), use the command <code class="func">IsomorphismFpMonoid</code> (<a href="chap7.html#X7F2ADC587DF698A2"><b>7.7-4</b></a>) instead.</p>
+<p>If <code class="code">S</code> satisfies <code class="func">IsMonoid</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap50.html#X861C523483C6248C"><b>Reference: IsMonoid</b></a>), use the command <code class="func">IsomorphismFpMonoid</code> (<a href="chap7.html#X7F2ADC587DF698A2"><b>7.7-4</b></a>) instead.</p>
 
 
 <table class="example">
@@ -1037,7 +1037,7 @@ SemigroupHomomorphismByImages ( &lt;trans. semigroup of size 16 with
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsomorphismFpMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>returns an isomorphism to a finitely presented monoid from the transformation monoid <code class="code">S</code>. Currently works by running the function <code class="func">FroidurePinExtendedAlg</code> (<b>???</b>) in the library.</p>
 
-<p>If <code class="code">S</code> satisfies <code class="func">IsSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7B412E5B8543E9B7"><b>Reference: IsSemigroup</b></a>), use the command <code class="func">IsomorphismFpSemigroup</code> (<a href="chap7.html#X869F966B8196F28C"><b>7.7-3</b></a>) instead.</p>
+<p>If <code class="code">S</code> satisfies <code class="func">IsSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7B412E5B8543E9B7"><b>Reference: IsSemigroup</b></a>), use the command <code class="func">IsomorphismFpSemigroup</code> (<a href="chap7.html#X869F966B8196F28C"><b>7.7-3</b></a>) instead.</p>
 
 
 <table class="example">
@@ -1061,7 +1061,7 @@ gap&gt; Length(RelationsOfFpMonoid(Range(last)));
 
 <p><strong class="button">Please note:</strong> this function currently only works for zero groups, zero semigroups, Rees matrix semigroups, and Rees 0-matrix semigroups.</p>
 
-<p><strong class="button">Please note:</strong> if <strong class="pkg">grape</strong> is not loaded, then this function will not work when <code class="code">S</code> and <code class="code">T</code> satisfy <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
+<p><strong class="button">Please note:</strong> if <strong class="pkg">grape</strong> is not loaded, then this function will not work when <code class="code">S</code> and <code class="code">T</code> satisfy <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="/Users/jdm/Maths/Computation/GAP/gapdev/doc/ref/chap49.html#X7EEBAEE9857C5EBA"><b>Reference: IsReesZeroMatrixSemigroup</b></a>).</p>
 
 
 <table class="example">

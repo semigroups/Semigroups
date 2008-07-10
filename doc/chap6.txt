@@ -1,41 +1,12 @@
   
   [1X6 Special Classes of Semigroup[0X
   
-  
-  [1X6.1 Introduction[0X
-  
-  In  this  chapter  functions  for  creating certain semigroups are given. In
-  Section   [14X6.2[0m   we  give  functions  for  creating  the  following  standard
-  transformation semigroups:
-  
-  --    the  semigroup  of  all  [13Xsingular transformations[0m of the [10Xn[0m-element set
-        [10X{1,2,...,n}[0m.  That  is,  the non-invertible mappings on this set. This
-        semigroup  is  known  to  be  regular, idempotent generated (satisfies
-        [2XIsSemiBand[0m ([14X5.2-10[0m)), and has size [10Xn^n-n![0m.
-  
-  --    the semigroup of all [13Xorder preserving transformations[0m of the [10Xn[0m-element
-        set  [10X{1,2,...,n}[0m.  That  is,  the  mappings [10Xf[0m such that [10Xi[0m is at most [10Xj[0m
-        implies  [10Xf(i)[0m  is  at  most  [10Xf(j)[0m  for  all  [10Xi,j[0m  in [10X{1,2,...,n}[0m. This
-        semigroup  is  known  to  be  regular, idempotent generated (satisfies
-        [2XIsSemiBand[0m ([14X5.2-10[0m)), and has size [10XBinomial(2*n-1, n-1)[0m.
-  
-  In Section [14X6.3[0m we give functions for creating the following semigroups:
-  
-  --    the  [13Xzero  semigroup[0m [10XS[0m of order [10Xn[0m. That is, the unique semigroup up to
-        isomorphism  of  order [10Xn[0m such that there exists an element [10X0[0m in [10XS[0m such
-        that [10Xxy=0[0m for all [10Xx,y[0m in [10XS[0m.
-  
-  --    [13Xzero groups[0m with underlying group [10XG[0m. That is, the monoid [10XS[0m obtained by
-        adjoining a zero element [10X0[0m to a group [10XG[0m with [10Xg0=0g=0[0m for all [10Xg[0m in [10XS[0m.
-  
-  In  Section  [14X6.4[0m  we  give  functions  for  randomly  creating semigroups of
-  different  types.  These functions are included so that the user has a ready
-  supply of examples should they be required.
+  In this chapter functions for creating certain semigroups are given.
   
   
-  [1X6.2 Transformation Semigroup[0X
+  [1X6.1 Some Classes of Semigroup[0X
   
-  [1X6.2-1 SingularSemigroup[0m
+  [1X6.1-1 SingularSemigroup[0m
   
   [2X> SingularSemigroup( [0X[3Xn[0X[2X ) ___________________________________________[0Xfunction
   
@@ -60,7 +31,7 @@
     [4X  true[0X
   [4X------------------------------------------------------------------[0X
   
-  [1X6.2-2 OrderPreservingSemigroup[0m
+  [1X6.1-2 OrderPreservingSemigroup[0m
   
   [2X> OrderPreservingSemigroup( [0X[3Xn[0X[2X ) ___________________________________[0Xoperation
   
@@ -105,10 +76,78 @@
     [4X  true[0X
   [4X------------------------------------------------------------------[0X
   
+  [1X6.1-3 KiselmanSemigroup[0m
   
-  [1X6.3 Zero Groups and Zero Semigroups[0X
+  [2X> KiselmanSemigroup( [0X[3Xn[0X[2X ) __________________________________________[0Xoperation
   
-  [1X6.3-1 ZeroSemigroup[0m
+  returns  the  Kiselman  semigroup  with [10Xn[0m generators. That is, the semigroup
+  defined in with the presentation
+  
+  
+       <a_1, a_2, ... , a_n | a_i^2=a_i (i=1,...n)
+       a_ia_ja_i=a_ja_ia_j=a_ja_i (1<=i< j<=n)>.
+  
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4X  gap> S:=KiselmanSemigroup(3);[0X
+    [4X  <fp monoid on the generators [ m1, m2, m3 ]>[0X
+    [4X  gap> Elements(S);[0X
+    [4X  [ <identity ...>, m1, m2, m3, m1*m2, m1*m3, m2*m1, m2*m3, m3*m1, m3*m2, [0X
+    [4X    m1*m2*m3, m1*m3*m2, m2*m1*m3, m2*m3*m1, m3*m1*m2, m3*m2*m1, m2*m1*m3*m2, [0X
+    [4X    m2*m3*m1*m2 ][0X
+    [4X  gap> Idempotents(S);[0X
+    [4X  [ 1, m1, m2*m1, m3*m2*m1, m3*m1, m2, m3*m2, m3 ][0X
+    [4X  gap> SetInfoLevel(InfoAutos, 0);[0X
+    [4X  gap> AutomorphismGroup(Range(IsomorphismTransformationSemigroup(S)));[0X
+    [4X  <group of size 1 with 1 generators>[0X
+    [4X  [0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X6.1-4 FullMatrixSemigroup & GeneralLinearSemigroup[0X
+  
+  [2X> FullMatrixSemigroup( [0X[3Xd, q[0X[2X ) _____________________________________[0Xoperation
+  [2X> GeneralLinearSemigroup( [0X[3Xd, q[0X[2X ) __________________________________[0Xoperation
+  
+  these  two  functions are synonyms for each other. They both return the full
+  matrix semigroup, or if you prefer the general linear semigroup, of all [10Xd[0m by
+  [10Xd[0m  matrices  with entries over the field with [10Xq[0m elements. This semigroup has
+  [10Xq^(d^2)[0m elements.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4X  gap> FullMatrixSemigroup(3,4);[0X
+    [4X  <3x3 full matrix semigroup over GF(2^2)>[0X
+    [4X  gap> Size(last);[0X
+    [4X  262144[0X
+    [4X  [0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X6.1-5 IsFullMatrixSemigroup & IsGeneralLinearSemigroup[0X
+  
+  [2X> IsFullMatrixSemigroup( [0X[3XS[0X[2X ) _______________________________________[0Xproperty
+  [2X> IsGeneralLinearSemigroup( [0X[3XS[0X[2X ) ____________________________________[0Xproperty
+  
+  these  two  functions  are synonyms for each other. They both return [10Xtrue[0m if
+  the semigroup [10XS[0m was created using either of the commands [2XFullMatrixSemigroup[0m
+  ([14X6.1-4[0m) or [2XGeneralLinearSemigroup[0m ([14X6.1-4[0m) and [10Xfalse[0m otherwise.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4X  gap> S:=RandomSemigroup(4,4);[0X
+    [4X  <semigroup with 4 generators>[0X
+    [4X  gap> IsFullMatrixSemigroup(S);[0X
+    [4X  false[0X
+    [4X  gap> S:=GeneralLinearSemigroup(3,3);[0X
+    [4X  <3x3 full matrix semigroup over GF(3)>[0X
+    [4X  gap> IsFullMatrixSemigroup(S);[0X
+    [4X  true[0X
+    [4X  [0X
+  [4X------------------------------------------------------------------[0X
+  
+  
+  [1X6.2 Zero Groups and Zero Semigroups[0X
+  
+  [1X6.2-1 ZeroSemigroup[0m
   
   [2X> ZeroSemigroup( [0X[3Xn[0X[2X ) ______________________________________________[0Xoperation
   
@@ -134,7 +173,7 @@
     [4X  [ {0}, {z1}, {z2}, {z3}, {z4}, {z5}, {z6}, {z7}, {z8}, {z9} ][0X
   [4X------------------------------------------------------------------[0X
   
-  [1X6.3-2 ZeroSemigroupElt[0m
+  [1X6.2-2 ZeroSemigroupElt[0m
   
   [2X> ZeroSemigroupElt( [0X[3Xn[0X[2X ) ___________________________________________[0Xoperation
   
@@ -151,7 +190,7 @@
     [4X  z4[0X
   [4X------------------------------------------------------------------[0X
   
-  [1X6.3-3 ZeroGroup[0m
+  [1X6.2-3 ZeroGroup[0m
   
   [2X> ZeroGroup( [0X[3XG[0X[2X ) __________________________________________________[0Xoperation
   
@@ -171,13 +210,13 @@
     [4X  [ {<adjoined zero>}, {ZeroGroup(<identity> of ...)} ][0X
   [4X------------------------------------------------------------------[0X
   
-  [1X6.3-4 ZeroGroupElt[0m
+  [1X6.2-4 ZeroGroupElt[0m
   
   [2X> ZeroGroupElt( [0X[3Xg[0X[2X ) _______________________________________________[0Xoperation
   
   returns  the  zero  group  element corresponding to the group element [10Xg[0m. The
   function  [10XZeroGroupElt[0m  is  only  used  to  create  an object in the correct
-  category during the creation of a zero group using [2XZeroGroup[0m ([14X6.3-3[0m).
+  category during the creation of a zero group using [2XZeroGroup[0m ([14X6.2-3[0m).
   
   [4X---------------------------  Example  ----------------------------[0X
     [4X  gap> ZeroGroupElt(Random(DihedralGroup(10)));;[0X
@@ -185,7 +224,7 @@
     [4X  true[0X
   [4X------------------------------------------------------------------[0X
   
-  [1X6.3-5 UnderlyingGroupOfZG[0m
+  [1X6.2-5 UnderlyingGroupOfZG[0m
   
   [2X> UnderlyingGroupOfZG( [0X[3XZG[0X[2X ) _______________________________________[0Xattribute
   
@@ -198,7 +237,7 @@
     [4X  true[0X
   [4X------------------------------------------------------------------[0X
   
-  [1X6.3-6 UnderlyingGroupEltOfZGElt[0m
+  [1X6.2-6 UnderlyingGroupEltOfZGElt[0m
   
   [2X> UnderlyingGroupEltOfZGElt( [0X[3Xg[0X[2X ) __________________________________[0Xattribute
   
@@ -218,9 +257,9 @@
   [4X------------------------------------------------------------------[0X
   
   
-  [1X6.4 Random Semigroups[0X
+  [1X6.3 Random Semigroups[0X
   
-  [1X6.4-1 RandomMonoid[0m
+  [1X6.3-1 RandomMonoid[0m
   
   [2X> RandomMonoid( [0X[3Xm, n[0X[2X ) _____________________________________________[0Xfunction
   
@@ -231,7 +270,7 @@
     [4X  <semigroup with 5 generators>[0X
   [4X------------------------------------------------------------------[0X
   
-  [1X6.4-2 RandomSemigroup[0m
+  [1X6.3-2 RandomSemigroup[0m
   
   [2X> RandomSemigroup( [0X[3Xm, n[0X[2X ) __________________________________________[0Xfunction
   
@@ -242,7 +281,7 @@
     [4X  <semigroup with 5 generators>[0X
   [4X------------------------------------------------------------------[0X
   
-  [1X6.4-3 RandomReesMatrixSemigroup[0m
+  [1X6.3-3 RandomReesMatrixSemigroup[0m
   
   [2X> RandomReesMatrixSemigroup( [0X[3Xi, j, deg[0X[2X ) ___________________________[0Xfunction
   
@@ -258,7 +297,7 @@
     [4X  [ (), (), (1,3,5)(2,4), (2,4), (2,4) ] ][0X
   [4X------------------------------------------------------------------[0X
   
-  [1X6.4-4 RandomReesZeroMatrixSemigroup[0m
+  [1X6.3-4 RandomReesZeroMatrixSemigroup[0m
   
   [2X> RandomReesZeroMatrixSemigroup( [0X[3Xi, j, deg[0X[2X ) _______________________[0Xfunction
   

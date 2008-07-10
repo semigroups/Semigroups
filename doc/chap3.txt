@@ -320,27 +320,43 @@
   relations  and  to  test  if  an  arbitrary  transformation  semigroup has a
   particular property; see Chapter [14X4[0m and Chapter [14X5[0m.
   
-  [1X3.4-1 ImagesTransformationMonoid[0m
+  [1X3.4-1 ImagesOfTransSemigroup[0m
   
-  [2X> ImagesTransformationMonoid( [0X[3XS[0X[2X ) _________________________________[0Xattribute
+  [2X> ImagesOfTransSemigroup( [0X[3XS[, n][0X[2X ) ________________________________[0Xattribute
   
-  returns the set of all the image sets that elements of [10XS[0m admit.
+  returns the set of all the image sets that elements of [10XS[0m admit. That is, the
+  union  of  the  orbits  of  the  image sets of the generators of [10XS[0m under the
+  action [2XOnSets[0m ([14XReference: OnSets[0m).
   
-  This  is  just  the union of the orbits of the images of the generators of [10XS[0m
-  under the action [2XOnSets[0m ([14XReference: OnSets[0m).
+  If  the optional second argument [10Xn[0m (a positive integer) is present, then the
+  list  of image sets of size [10Xn[0m is returned. If you are only interested in the
+  images  of a given size, then the second version of the function will likely
+  be faster.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4X  gap> gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), [0X
-    [4X  > Transformation( [ 4, 4, 5, 2, 2 ] ) ];;[0X
-    [4X  gap> S:=Semigroup(gens);;[0X
-    [4X  gap> ImagesTransformationMonoid(S);[0X
-    [4X  [ [ 1 ], [ 1, 5 ], [ 2 ], [ 2, 4 ], [ 2, 4, 5 ], [ 4 ], [ 5 ] ][0X
+    [4X  gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), [0X
+    [4X  > Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;[0X
+    [4X  gap> ImagesOfTransSemigroup(S, 6);[0X
+    [4X  [  ][0X
+    [4X  gap> ImagesOfTransSemigroup(S, 5);[0X
+    [4X  [  ][0X
+    [4X  gap> ImagesOfTransSemigroup(S, 4);[0X
+    [4X  [ [ 1, 2, 5, 6 ] ][0X
+    [4X  gap> ImagesOfTransSemigroup(S, 3);[0X
+    [4X  [ [ 1, 4, 6 ], [ 2, 5, 6 ] ][0X
+    [4X  gap> ImagesOfTransSemigroup(S, 2);[0X
+    [4X  [ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ][0X
+    [4X  gap> ImagesOfTransSemigroup(S, 1);[0X
+    [4X  [ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ][0X
+    [4X  gap> ImagesOfTransSemigroup(S);[0X
+    [4X  [ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], [0X
+    [4X    [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ][0X
     [4X  [0X
   [4X------------------------------------------------------------------[0X
   
-  [1X3.4-2 GradedImagesTransformationMonoid[0m
+  [1X3.4-2 GradedImagesOfTransSemigroup[0m
   
-  [2X> GradedImagesTransformationMonoid( [0X[3XS[0X[2X ) ___________________________[0Xattribute
+  [2X> GradedImagesOfTransSemigroup( [0X[3XS[0X[2X ) _______________________________[0Xattribute
   
   returns  the  set  of  all the image sets that elements of [10XS[0m admit in a list
   where the [10Xi[0mth entry contains all the images with size [10Xi[0m (including the empty
@@ -353,33 +369,46 @@
     [4X  gap> gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), [0X
     [4X  > Transformation( [ 4, 4, 5, 2, 2 ] ) ];;[0X
     [4X  gap> S:=Semigroup(gens);;[0X
-    [4X  gap> GradedImagesTransformationMonoid(S);[0X
+    [4X  gap> GradedImagesOfTransSemigroup(S);[0X
     [4X  [ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], [0X
     [4X    [  ], [ [ 1 .. 5 ] ] ][0X
   [4X------------------------------------------------------------------[0X
   
-  [1X3.4-3 KernelsTransformationMonoid[0m
+  [1X3.4-3 KernelsOfTransSemigroup[0m
   
-  [2X> KernelsTransformationMonoid( [0X[3XS[0X[2X ) ________________________________[0Xattribute
+  [2X> KernelsOfTransSemigroup( [0X[3XS[, n][0X[2X ) _______________________________[0Xattribute
   
-  returns the set of all the kernels that elements of [10XS[0m admit.
+  returns  the  set  of all the kernels that elements of [10XS[0m admit. This is just
+  the  union  of  the  orbits  of the kernels of the generators of [10XS[0m under the
+  action [2XOnKernelsAntiAction[0m ([14X3.2-2[0m).
   
-  This  is  just the union of the orbits of the kernels of the generators of [10XS[0m
-  under the action [2XOnKernelsAntiAction[0m ([14X3.2-2[0m).
+  If  the optional second argument [10Xn[0m (a positive integer) is present, then the
+  list  of image sets of size [10Xn[0m is returned. If you are only interested in the
+  images  of a given size, then the second version of the function will likely
+  be faster.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4X  gap> gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), [0X
-    [4X  > Transformation( [ 2, 5, 3, 2, 3 ] ) ];;[0X
-    [4X  gap> S:=Semigroup(gens);;[0X
-    [4X  gap> KernelsTransformationMonoid(S);[0X
-    [4X  [ [ [ 1, 2, 3, 4, 5 ] ], [ [ 1, 2, 4 ], [ 3 ], [ 5 ] ], [0X
-    [4X  [ [ 1, 2, 4 ], [ 3, 5 ] ], [ [ 1, 2, 4, 5 ], [ 3 ] ], [0X
-    [4X  [ [ 1, 4 ], [ 2 ], [ 3, 5 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ] ][0X
+    [4X  gap>  S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),[0X
+    [4X  > Transformation( [ 3, 3, 4, 1 ] ) ]);[0X
+    [4X  gap>  KernelsOfTransSemigroup(S);   [0X
+    [4X  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [0X
+    [4X  [ 4 ] ], [0X
+    [4X    [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], [0X
+    [4X    [ [ 1, 4 ], [ 2 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ][0X
+    [4X  gap>  KernelsOfTransSemigroup(S,1);[0X
+    [4X  [ [ [ 1, 2, 3, 4 ] ] ][0X
+    [4X  gap>  KernelsOfTransSemigroup(S,2);[0X
+    [4X  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [0X
+    [4X    [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ][0X
+    [4X  gap>  KernelsOfTransSemigroup(S,3);[0X
+    [4X  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ][0X
+    [4X  gap>  KernelsOfTransSemigroup(S,4);[0X
+    [4X  [  ][0X
   [4X------------------------------------------------------------------[0X
   
-  [1X3.4-4 GradedKernelsTransformationMonoid[0m
+  [1X3.4-4 GradedKernelsOfTransSemigroup[0m
   
-  [2X> GradedKernelsTransformationMonoid( [0X[3XS[0X[2X ) __________________________[0Xattribute
+  [2X> GradedKernelsOfTransSemigroup( [0X[3XS[0X[2X ) ______________________________[0Xattribute
   
   returns  the set of all the kernels that elements of [10XS[0m admit in a list where
   the  [10Xi[0mth  entry contains all the kernels with [10Xi[0m classes (including the empty
@@ -392,7 +421,7 @@
     [4X  gap> gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), [0X
     [4X  > Transformation( [ 2, 5, 3, 2, 3 ] ) ];;[0X
     [4X  gap> S:=Semigroup(gens);;[0X
-    [4X  gap> GradedKernelsTransformationMonoid(S);[0X
+    [4X  gap> GradedKernelsOfTransSemigroup(S);[0X
     [4X  [ [ [ [ 1, 2, 3, 4, 5 ] ] ], [0X
     [4X    [ [ [ 1, 2, 4, 5 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ], [0X
     [4X        [ [ 1, 2, 4 ], [ 3, 5 ] ] ], [0X

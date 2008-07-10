@@ -573,31 +573,48 @@ end) ;
 
 ###########################################################################
 ##
-##	<#GAPDoc Label="ImagesTransformationMonoid">
+##	<#GAPDoc Label="ImagesOfTransSemigroup">
 ##	<ManSection>
-##	<Attr Name="ImagesTransformationMonoid" Arg="S"/>
+##	<Attr Name="ImagesOfTransSemigroup" Arg="S[,n]"/>
 ##	<Description>
-##	returns the set of all the image sets that elements of <C>S</C> admit.
+##	returns the set of all the image sets that elements of <C>S</C> admit. That 
+##	is, the union of the orbits of the image sets of the generators of 
+##	<C>S</C> under the action <Ref Func="OnSets" BookName="ref"/>. <P/>
+##
+##	If the 
+##	optional second argument <C>n</C> (a positive integer) is present, then the 
+##	list of image sets of size <C>n</C> is returned.  If you are only interested 
+##	in the images of a given size, then the second version of the function will 
+##	likely be faster.
 ##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), 
-##  &gt; Transformation( [ 4, 4, 5, 2, 2 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; ImagesTransformationMonoid(S);
-##  [ [ 1 ], [ 1, 5 ], [ 2 ], [ 2, 4 ], [ 2, 4, 5 ], [ 4 ], [ 5 ] ]
-##  </Example> <!-- greens.tst -->
+##  gap&gt;  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
+##  &gt; Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;
+##  gap&gt; ImagesOfTransSemigroup(S, 6);
+##  [  ]
+##  gap&gt; ImagesOfTransSemigroup(S, 5);
+##  [  ]
+##  gap&gt; ImagesOfTransSemigroup(S, 4);
+##  [ [ 1, 2, 5, 6 ] ]
+##  gap&gt; ImagesOfTransSemigroup(S, 3);
+##  [ [ 1, 4, 6 ], [ 2, 5, 6 ] ]
+##  gap&gt; ImagesOfTransSemigroup(S, 2);
+##  [ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ]
+##  gap&gt; ImagesOfTransSemigroup(S, 1);
+##  [ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ]
+##  gap&gt; ImagesOfTransSemigroup(S);
+##  [ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], 
+##    [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
+##  </Example> 
 ##	</Description>
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-InstallMethod(ImagesTransformationMonoid, 
- "images that elts of a transformation monoid admit", 
- true, [IsTransformationSemigroup], 0, 
-
+InstallMethod(ImagesOfTransSemigroup, "for a transformation semigroup", true, [IsTransformationSemigroup], 0, 
 function(M)
 local gens, orb, imgs, x, y, new, limit, n;
  
-if HasGradedImagesTransformationMonoid(M) then 
-	return Set(Concatenation(GradedImagesTransformationMonoid(M)));
+if HasGradedImagesOfTransSemigroup(M) then 
+	return Union(GradedImagesOfTransSemigroup(M));
 else
 
 	n:=DegreeOfTransformationSemigroup(M);
@@ -610,7 +627,7 @@ else
 	imgs:=SetX(GeneratorsOfSemigroup(M), ImageSetOfTransformation);
 
 	if HasParentAttr(M) and Length(GeneratorsOfSemigroup(ParentAttr(M)))<Length(gens) then 
-		limit:=Length(ImagesTransformationMonoid(ParentAttr(M)));
+		limit:=Length(ImagesOfTransSemigroup(ParentAttr(M)));
 	else 
 		limit:=Sum([1..Maximum(List(gens, DegreeOfTransformation))], x-> 
 		Binomial(n, x));
@@ -638,11 +655,66 @@ else
 fi;
 end );
 
+################
+
+InstallOtherMethod(ImagesOfTransSemigroup, "for  a trans. semigroup and a pos. int.", true, [IsTransformationSemigroup, IsPosInt], 0, 
+function(S, m)
+local n, gens, imgs, limit, orb, i, x, j, y, new, setorb;
+
+#if HasGradedImagesOfTransSemigroup(M) then 
+#	return Set(Concatenation(GradedImagesOfTransSemigroup(M)));
+#else
+
+n:=DegreeOfTransformationSemigroup(S);
+
+if m>n then 
+	return fail;
+fi;
+
+if IsTransformationMonoid(S) then 
+	gens:=GeneratorsOfMonoid(S);
+else
+	gens:=GeneratorsOfSemigroup(S); 
+fi;
+
+imgs:=List(GeneratorsOfSemigroup(S), x-> AsSet(x![1]));
+imgs:=Set(Filtered(imgs, x->Length(x)=m));
+
+limit:=Binomial(n, m);
+
+if not Length(imgs)=limit and ForAny(gens, x-> Length(AsSet(x![1]))>= m) then 
+	orb:=List(GeneratorsOfSemigroup(S), x-> AsSet(x![1]));
+	setorb:=Set(orb);
+	i:=0;
+	
+	repeat
+		i:=i+1;
+		x:=orb[i];
+		j:=0;
+		repeat
+			j:=j+1;
+			y:=gens[j];
+			new:=OnSets(x,y);
+			if Length(new)>=m and not new in setorb then 
+				AddSet(setorb, new);
+				Add(orb, new);
+				if Length(new)=m then 
+					AddSet(imgs, new);
+				fi;
+			fi;
+		until Length(imgs)=limit or j=Length(gens);
+	until Length(imgs)=limit or i=Length(orb);
+fi;
+
+return imgs;
+end );
+
+
 #############################################################################
 ##
-##	<#GAPDoc Label="GradedImagesTransformationMonoid">
+##	<#GAPDoc Label="GradedImagesOfTransSemigroup">
 ##	<ManSection>
-##	<Attr Name="GradedImagesTransformationMonoid" Arg="S"/>
+##	<Attr Name="GradedImagesOfTransSemigroup" Arg="S"/>
 ##	<Description>
 ##	returns the set of all the image sets that elements of <C>S</C> admit in a 
 ##	list where the <M>i</M>th entry contains all the images with size <M>i</M>
@@ -651,46 +723,126 @@ end );
 ##  gap&gt; gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), 
 ##  &gt; Transformation( [ 4, 4, 5, 2, 2 ] ) ];;
 ##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; GradedImagesTransformationMonoid(S);
+##  gap&gt; GradedImagesOfTransSemigroup(S);
 ##  [ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], 
 ##    [  ], [ [ 1 .. 5 ] ] ]
-##	</Example> <!-- greens.tst -->
+##	</Example> 
 ##	</Description>
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-InstallMethod(GradedImagesTransformationMonoid, "for a transformation semigroup", true, [IsTransformationSemigroup], 0, 
-x-> GradedOrbit(x, [1..DegreeOfTransformationSemigroup(x)], OnSets, Size));
+InstallMethod(GradedImagesOfTransSemigroup, "for a transformation semigroup", true, [IsTransformationSemigroup], 0, 
+function(S)
+local imgs;
+imgs:=GradedOrbit(S, [1..DegreeOfTransformationSemigroup(S)], OnSets, Size);
+
+if One(S)=fail then 
+	imgs[DegreeOfTransformationSemigroup(S)]:=[];
+fi;
+return imgs;
+end);
 
 ###########################################################################
 ##
-##	<#GAPDoc Label="KernelsTransformationMonoid">
+##	<#GAPDoc Label="KernelsOfTransSemigroup">
 ##	<ManSection>
-##	<Attr Name="KernelsTransformationMonoid" Arg="S"/>
+##	<Attr Name="KernelsOfTransSemigroup" Arg="S[,n]"/>
 ##	<Description>
-##	returns the set of all the kernels that elements of <C>S</C> admit.
+##	returns the set of all the kernels that elements of <C>S</C> admit. 
+##	If the 
+##	optional second argument <C>n</C> (a positive integer) is present, then the 
+##	list of kernels of size <C>n</C> is returned.  If you are only interested 
+##	in the images of a given size, then the second version of the function will 
+##	likely be faster.
 ##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), 
-##  &gt; Transformation( [ 2, 5, 3, 2, 3 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; KernelsTransformationMonoid(S);
-##  [ [ [ 1, 2, 3, 4, 5 ] ], [ [ 1, 2, 4 ], [ 3 ], [ 5 ] ], 
-##  [ [ 1, 2, 4 ], [ 3, 5 ] ], [ [ 1, 2, 4, 5 ], [ 3 ] ], 
-##  [ [ 1, 4 ], [ 2 ], [ 3, 5 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ] ]
+##  gap&gt; 
+##  gap&gt;  S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
+##  &gt; Transformation( [ 3, 3, 4, 1 ] ) ]);
+##  gap&gt;  KernelsOfTransSemigroup(S);   
+##  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], 
+##  [ 4 ] ], 
+##    [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], 
+##    [ [ 1, 4 ], [ 2 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
+##  gap&gt;  KernelsOfTransSemigroup(S,1);
+##  [ [ [ 1, 2, 3, 4 ] ] ]
+##  gap&gt;  KernelsOfTransSemigroup(S,2);
+##  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], 
+##    [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
+##  gap&gt;  KernelsOfTransSemigroup(S,3);
+##  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ]
+##  gap&gt;  KernelsOfTransSemigroup(S,4);
+##  [  ]
 ##	</Example> <!-- greens.tst -->
 ##	</Description>
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-InstallMethod(KernelsTransformationMonoid, "for a transformation monoid", true, 
+InstallOtherMethod(KernelsOfTransSemigroup, "for a trans. semigroup", true, 
+[IsTransformationSemigroup, IsPosInt], 0, 
+function(S, m)
+local n, gens, imgs, limit, orb, i, x, j, y, new, setorb;
+
+#if HasGradedKernelsOfTransSemigroup(M) then 
+#	return Set(Concatenation(GradedKernelsOfTransSemigroup(M)));
+#elif HasInternalKernels(M) then 
+#	return Set(Concatenation(InternalKernels(M))); 
+#else
+
+n:=DegreeOfTransformationSemigroup(S);
+
+if m>n then 
+	return fail;
+fi;
+
+if IsTransformationMonoid(S) then 
+	gens:=GeneratorsOfMonoid(S);
+else
+	gens:=GeneratorsOfSemigroup(S); 
+fi;
+
+imgs:=List(GeneratorsOfSemigroup(S), KernelOfTransformation);
+imgs:=Set(Filtered(imgs, x->Length(x)=m));
+
+limit:=Stirling2(n, m);
+
+if not Length(imgs)=limit and ForAny(gens, x-> Length(KernelOfTransformation(x))>= m) then 
+	orb:=List(GeneratorsOfSemigroup(S), KernelOfTransformation);
+	setorb:=Set(orb);
+	i:=0;
+	
+	repeat
+		i:=i+1;
+		x:=orb[i];
+		j:=0;
+		repeat
+			j:=j+1;
+			y:=gens[j];
+			new:=OnKernelsAntiAction(x,y);
+			if Length(new)>=m and not new in setorb then 
+				AddSet(setorb, new);
+				Add(orb, new);
+				if Length(new)=m then 
+					AddSet(imgs, new);
+				fi;
+			fi;
+		until Length(imgs)=limit or j=Length(gens);
+	until Length(imgs)=limit or i=Length(orb);
+fi;
+
+return imgs;
+end );
+
+###############
+
+InstallMethod(KernelsOfTransSemigroup, "for a transformation monoid", true, 
 [IsTransformationSemigroup], 0, 
 function(M)
 local gens, imgs, orb, x, y, new, ker, n, limit;
 
-if HasGradedKernelsTransformationMonoid(M) then 
-	return Set(Concatenation(GradedKernelsTransformationMonoid(M)));
+if HasGradedKernelsOfTransSemigroup(M) then 
+	return Union(GradedKernelsOfTransSemigroup(M));
 elif HasInternalKernels(M) then 
-	return Set(Concatenation(InternalKernels(M))); 
+	return Union(InternalKernels(M)); 
 else
 
 	n:=DegreeOfTransformationSemigroup(M);
@@ -706,7 +858,7 @@ else
 	imgs:=SetX(GeneratorsOfSemigroup(M), KernelOfTransformation);
 
 	if HasParentAttr(M) and Length(GeneratorsOfSemigroup(ParentAttr(M)))<Length(gens) then 
-		limit:=Length(KernelsTransformationMonoid(ParentAttr(M)));
+		limit:=Length(KernelsOfTransSemigroup(ParentAttr(M)));
 	else 
 		limit:=Sum([1..Maximum(List(gens, RankOfTransformation))], x-> 
 		Stirling2(n, x));
@@ -736,18 +888,19 @@ end);
 
 #############################################################################
 ##
-##	<#GAPDoc Label="GradedKernelsTransformationMonoid">
+##	<#GAPDoc Label="GradedKernelsOfTransSemigroup">
 ##	<ManSection>
-##	<Attr Name="GradedKernelsTransformationMonoid" Arg="S"/>
+##	<Attr Name="GradedKernelsOfTransSemigroup" Arg="S"/>
 ##	<Description>
 ##	returns the set of all the kernels that elements of <C>S</C> admit in a 
-##	list where the <M>i</M>th entry contains all the kernels with <M>i</M> classes
+##	list where the <M>i</M>th entry contains all the kernels with <M>i</M> 
+##	classes
 ##	(including the empty list when there are no kernels with <M>i</M> classes).
 ##	<Example>
 ##  gap&gt; gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), 
 ##  &gt; Transformation( [ 2, 5, 3, 2, 3 ] ) ];;
 ##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; GradedKernelsTransformationMonoid(S);
+##  gap&gt; GradedKernelsOfTransSemigroup(S);
 ##  [ [ [ [ 1, 2, 3, 4, 5 ] ] ], 
 ##    [ [ [ 1, 2, 4, 5 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ], 
 ##        [ [ 1, 2, 4 ], [ 3, 5 ] ] ], 
@@ -758,10 +911,17 @@ end);
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-## JDM could be improved.
+InstallMethod(GradedKernelsOfTransSemigroup, "for a transformation semigroup", true,[IsTransformationSemigroup], 0, 
+function(S)
+local kers;
+kers:=GradedOrbit( S, List([1..DegreeOfTransformationSemigroup(S)], x-> [x]), OnKernelsAntiAction, Size);
 
-InstallMethod(GradedKernelsTransformationMonoid, "for a transformation semigroup", true,[IsTransformationSemigroup], 0, 
-x-> GradedOrbit( x, List([1..DegreeOfTransformationSemigroup(x)], x-> [x]), OnKernelsAntiAction, Size)); 
+if One(S)=fail then 
+	kers[DegreeOfTransformationSemigroup(S)]:=[];
+fi;
+
+return kers;
+end);
 
 #############################################################################
 ##
@@ -784,8 +944,8 @@ x-> GradedOrbit( x, List([1..DegreeOfTransformationSemigroup(x)], x-> [x]), OnKe
 ##	<C>OnSets(imgs[i], mults[i])=imgs[1]</C></Item>
 ##	<Item>the third entry is the Right Schutzenberger group associated to the
 ##	first entry in the list <C>imgs</C> (that is, the group of permutations 
-##	arising 
-##	from elements of the semigroup that stabilise the set <C>imgs[1]</C>).</Item>
+##	arising from elements of the semigroup that stabilise the set 
+##	<C>imgs[1]</C>).</Item>
 ##	</List>
 ##	<Example>
 ##  gap&gt; gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
@@ -1032,7 +1192,7 @@ od;
 
 SetPositionsRClasses(M, positions);
 SetGradedRClasses(M, classespart);
-SetGradedImagesTransformationMonoid( M, images);
+SetGradedImagesOfTransSemigroup( M, images);
 SetInternalKernels(M, kernels);
 SetGreensRClassReps(M, reps); 
 
@@ -2191,48 +2351,40 @@ end);
 
 #############################################################################
 
-
-#############################################################################
+###########################################################################
 ##
-#F  Idempotents( <M> )  
-##
-##  returns idempotents of the transformation semigroup <M>. 
-## 
-## SECOND METHOD BELOW!!
-
-InstallOtherMethod( Idempotents, "for a transformation semigroup", true,[IsTransformationSemigroup], 0,
-function(M)
-local idempotent, pt, ker, img, kers, imgs, i, n, idm, one, x;
-
-idm:= [];
-kers:=GradedKernelsTransformationMonoid(M);
-imgs:=GradedImagesTransformationMonoid(M);
-n:=Size(kers);
-
-# loop over all ranks.
-for i in [1..n] do
-	# loop over the kernels.
-	for ker in kers[i] do
-		# loop over the images.
-		for img in imgs[i] do
-			# check for cross section.
-			if IsTransversal(ker, img) then
-				x:=Idempotent(ker, img);
-				if (HasIsRegularSemigroup(M) and IsRegularSemigroup(M)) or x in M then 
-					Add(idm, x);#JDM ought to test if IsRegularSemigroup
-											#JDM since \in requires RClasses
-				fi;
-			fi;
-		od;
-	od;
-od;
-
-# return the set of idempotents.
-return Set(idm);
-
-end);
-
-######################
+##	<#GAPDoc Label="Idempotents">
+##	<ManSection>
+##	<Func Name="Idempotents" Arg="S"/>
+##	<Func Name="Idempotents" Arg="S, n"/>
+##	<Description>
+##	the first version of the function returns a list of the idempotents in 
+##	<C>S</C>. The second version of the function returns a list of the 
+##	idempotents in <C>S</C> of rank <C>n</C>. If you are only interested in the 
+##	idempotents of a given rank, then the second version of the function will 
+##	likely be faster.
+##	<Example>
+##  gap&gt; S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
+##  &gt; Transformation( [ 3, 3, 1, 1 ] ) ]);;
+##  gap&gt; Idempotents(S, 1);
+##  [  ]
+##  gap&gt; Idempotents(S, 2);                        
+##  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+##    Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
+##  gap&gt; Idempotents(S, 3);                        
+##  [  ]
+##  gap&gt; Idempotents(S, 4);                        
+##  [ Transformation( [ 1, 2, 3, 4 ] ) ]
+##  gap&gt; Idempotents(S);
+##  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 2, 3, 4 ] ), 
+##    Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
+##    Transformation( [ 4, 2, 2, 4 ] ) ]
+##  gap&gt; Idempotents(S, 5);
+##  fail
+##	</Example> 
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
 
 InstallOtherMethod( Idempotents, "for a transformation semigroup", true, 
 [IsTransformationSemigroup], 0,
@@ -2244,8 +2396,8 @@ if not IsCompletelyRegularSemigroup(M) then
 fi;
 
 idm:= [];
-kers:=GradedKernelsTransformationMonoid(M);
-imgs:=GradedImagesTransformationMonoid(M);
+kers:=GradedKernelsOfTransSemigroup(M);
+imgs:=GradedImagesOfTransSemigroup(M);
 n:=Size(kers);
 
 # loop over all ranks.
@@ -2256,6 +2408,7 @@ for i in [1..n] do
 		for img in imgs[i] do
 			# check for cross section.
 			if IsTransversal(ker, img) then
+			
 				x:=IdempotentNC(ker, img);
 				if IsRegularSemigroup(M) or x in M then 
 					Add(idm, x);
@@ -2272,6 +2425,51 @@ od;
 return Set(idm);
 end);
 
+#####################
+
+InstallOtherMethod(Idempotents, "for a transformation semigroup and positive integer", true, 
+[IsTransformationSemigroup, IsPosInt], 0,
+function(M, i)
+local idempotent, pt, ker, img, kers, imgs, n, idm, one, x;
+
+if i>DegreeOfTransformationSemigroup(M) then 
+	return fail;
+fi;
+
+if HasIdempotents(M) then 
+	return Filtered(Idempotents(M), x-> RankOfTransformation(x)=i);
+fi;
+
+if not IsCompletelyRegularSemigroup(M) then
+	GreensRClasses(M);
+fi;
+
+idm:= [];
+kers:=GradedKernelsOfTransSemigroup(M);
+imgs:=GradedImagesOfTransSemigroup(M);
+n:=Size(kers); #=Size(imgs)
+
+# loop over the kernels.
+for ker in kers[i] do
+
+	# loop over the images.
+	for img in imgs[i] do
+		# check for cross section.
+		if IsTransversal(ker, img) then
+			x:=IdempotentNC(ker, img);     
+			if IsRegularSemigroup(M) or x in M then 
+				Add(idm, x);
+			fi;
+				## IsRegularSemigroup will calculate the R-classes if it is 
+				## regular or return false otherwise requiring the calculation
+				## of the R-classes for the \in test.
+		fi;
+	od;
+od;
+
+# return the set of idempotents.
+return Set(idm);
+end);
 
 ############################################################################
 ##
@@ -2300,7 +2498,7 @@ InstallOtherMethod(AsSSortedList, "for a transformation semigroup", true, [IsTra
 function(M)
 local elts, rrel;
 
-elts:=Set(Concatenation(List(GreensRClasses(M), Elements)));
+elts:=Union(List(GreensRClasses(M), Elements));
 if not HasSize(M) then
 	SetSize(M, Size(elts));
 fi;
@@ -2330,7 +2528,7 @@ fi;
 
 GreensRClasses(M);
 k:= RankOfTransformation(x);
-pos:= Position(GradedImagesTransformationMonoid(M)[k], ImageSetOfTransformation(x));
+pos:= Position(GradedImagesOfTransSemigroup(M)[k], ImageSetOfTransformation(x));
 
 if pos = fail then
 	return false;
@@ -2449,3 +2647,4 @@ return poset;
 #return Graph(Group(()), [1..Length(class)], OnPoints, function(x,y) return y in poset[x]; end, true); ;
 
 end);
+

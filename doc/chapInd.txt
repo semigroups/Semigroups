@@ -2,12 +2,18 @@
   
   [1XIndex[0X
   
+  [2XAllTransformationsWithKerAndImg[0X  2.1-2
+  [2XAllTransformationsWithKerAndImgNC[0X  2.1-2
+  [2XAsBooleanMatrix[0X  2.3-1
+  [2XAsPermOfRange[0X  2.3-2
   [2XAutomorphismGroup[0X  7.4-1
   [2XAutomorphismsSemigroupInGroup[0X  7.4-2
   [2XConjugatorOfInnerAutomorphismOfSemigroup[0X  7.3-2
   [2XDClassData[0X  4.2-7
-  [2XGradedImagesTransformationMonoid[0X  3.4-2
-  [2XGradedKernelsTransformationMonoid[0X  3.4-4
+  [2XFullMatrixSemigroup[0X  6.1-4
+  [2XGeneralLinearSemigroup[0X  6.1-4
+  [2XGradedImagesOfTransSemigroup[0X  3.4-2
+  [2XGradedKernelsOfTransSemigroup[0X  3.4-4
   [2XGradedOrbit[0X  3.3-5
   [2XGradedStrongOrbit[0X  3.3-7
   [2XGreensData[0X  4.2-1
@@ -18,14 +24,17 @@
   [2XHClassData[0X  4.2-7
   [2XIdempotent[0X  2.1-3
   [2XIdempotentNC[0X  2.1-3
-  [2XImagesTransformationMonoid[0X  3.4-1
-  [2XIndexPeriodOfTransformation[0X  2.1-6
+  [2XIdempotents[0X  4.2-11
+  [2XImagesOfTransSemigroup[0X  3.4-1
+  [2XIndexPeriodOfTransformation[0X  2.2-5
   [2XInfoAutos[0X  7.1-1
   [2XInnerAutomorphismOfSemigroup[0X  7.3-1
   [2XInnerAutomorphismOfSemigroupNC[0X  7.3-1
   [2XInnerAutomorphismsAutomorphismGroup[0X  7.3-6
   [2XInnerAutomorphismsOfSemigroup[0X  7.3-4
   [2XInnerAutomorphismsOfSemigroupInGroup[0X  7.3-5
+  [2XInversesOfTransformation[0X  2.2-7
+  [2XInversesOfTransformationNC[0X  2.2-7
   [2XIsAssociatedSemigpTransSemigp[0X  4.2-9
   [2XIsAutomorphismGroupOfRMS[0X  7.4-7
   [2XIsAutomorphismGroupOfRZMS[0X  7.4-8
@@ -38,6 +47,8 @@
   [2XIsCommutativeSemigroup[0X  5.2-4
   [2XIsCompletelyRegularSemigroup[0X  5.2-1
   [2XIsCompletelySimpleSemigroup[0X  5.2-2
+  [2XIsFullMatrixSemigroup[0X  6.1-5
+  [2XIsGeneralLinearSemigroup[0X  6.1-5
   [2XIsGreensData[0X  4.2-6
   [2XIsGreensDClassData[0X  4.2-6
   [2XIsGreensDClassDataRep[0X  4.2-8
@@ -52,6 +63,7 @@
   [2XIsInnerAutomorphismsOfSemigroup[0X  7.3-7
   [2XIsInnerAutomorphismsOfZeroGroup[0X  7.3-8
   [2XIsInverseSemigroup[0X  5.2-6
+  [2XIsKerImgOfTransformation[0X  2.2-2
   [2XIsLeftZeroSemigroup[0X  5.2-13
   [2XIsomorphismAutomorphismGroupOfRMS[0X  7.7-1
   [2XIsomorphismFpMonoid[0X  7.7-4
@@ -63,31 +75,35 @@
   [2XIsOrthodoxSemigroup[0X  5.2-11
   [2XIsRectangularBand[0X  5.2-9
   [2XIsRegularSemigroup[0X  5.2-5
-  [2XIsRegularTransformation[0X  2.1-1
+  [2XIsRegularTransformation[0X  2.2-4
   [2XIsRightZeroSemigroup[0X  5.2-12
   [2XIsRMSIsoByTripleRep[0X  7.5-3
   [2XIsRZMSIsoByTripleRep[0X  7.5-4
   [2XIsSemiBand[0X  5.2-10
   [2XIsSimpleSemigroup[0X  5.2-2
-  [2XIsTransversal[0X  2.1-2
+  [2XIsTransversal[0X  2.2-1
   [2XIsZeroGroup[0X  5.2-15
   [2XIsZeroGroupAutomorphismRep[0X  7.6-2
   [2XIsZeroSemigroup[0X  5.2-14
-  [2XKernelsTransformationMonoid[0X  3.4-3
+  [2XKerImgOfTransformation[0X  2.2-3
+  [2XKernelsOfTransSemigroup[0X  3.4-3
+  [2XKiselmanSemigroup[0X  6.1-3
   [2XLClassData[0X  4.2-7
   [2XMonoidOrbit[0X  3.3-1
   [2XMonoidOrbits[0X  3.3-2
   [2XMultiplicativeZero[0X  5.2-16
   [2XOnKernelsAntiAction[0X  3.2-2
   [2XOnTuplesOfSetsAntiAction[0X  3.2-1
-  [2XOrderPreservingSemigroup[0X  6.2-2
-  [2XPartialOrderOfDClasses[0X  4.2-11
-  [2XPermRepTrans[0X  2.1-4
-  [2XRandomMonoid[0X  6.4-1
-  [2XRandomReesMatrixSemigroup[0X  6.4-3
-  [2XRandomReesZeroMatrixSemigroup[0X  6.4-4
-  [2XRandomSemigroup[0X  6.4-2
+  [2XOrderPreservingSemigroup[0X  6.1-2
+  [2XPartialOrderOfDClasses[0X  4.2-12
+  [2XRandomIdempotent[0X  2.1-4
+  [2XRandomIdempotentNC[0X  2.1-4
+  [2XRandomMonoid[0X  6.3-1
+  [2XRandomReesMatrixSemigroup[0X  6.3-3
+  [2XRandomReesZeroMatrixSemigroup[0X  6.3-4
+  [2XRandomSemigroup[0X  6.3-2
   [2XRandomTransformation[0X  2.1-5
+  [2XRandomTransformationNC[0X  2.1-5
   [2XRClassData[0X  4.2-7
   [2XRightTransStabAutoGroup[0X  7.5-9
   [2XRMSInducedFunction[0X  7.5-5
@@ -105,19 +121,23 @@
   [2XSemigroupHomomorphismByImagesOfGensNC[0X  7.2-2
   [2XShortOrbit[0X  3.3-6
   [2XShortStrongOrbit[0X  3.3-8
-  [2XSingularSemigroup[0X  6.2-1
+  [2XSingularSemigroup[0X  6.1-1
+  [2XSmallestIdempotentPower[0X  2.2-6
   [2XStrongOrbit[0X  3.3-3
   [2XStrongOrbitOfImage[0X  3.4-5
   [2XStrongOrbits[0X  3.3-4
   [2XStrongOrbitsOfImages[0X  3.4-6
+  [2XTransformationActionNC[0X  2.1-6
+  [2XTransformationByKernelAndImage[0X  2.1-1
+  [2XTransformationByKernelAndImageNC[0X  2.1-1
   [2XUnderlyingGroupAutoOfZeroGroupAuto[0X  7.6-3
-  [2XUnderlyingGroupEltOfZGElt[0X  6.3-6
-  [2XUnderlyingGroupOfZG[0X  6.3-5
-  [2XZeroGroup[0X  6.3-3
+  [2XUnderlyingGroupEltOfZGElt[0X  6.2-6
+  [2XUnderlyingGroupOfZG[0X  6.2-5
+  [2XZeroGroup[0X  6.2-3
   [2XZeroGroupAutomorphism[0X  7.6-1
-  [2XZeroGroupElt[0X  6.3-4
-  [2XZeroSemigroup[0X  6.3-1
-  [2XZeroSemigroupElt[0X  6.3-2
+  [2XZeroGroupElt[0X  6.2-4
+  [2XZeroSemigroup[0X  6.2-1
+  [2XZeroSemigroupElt[0X  6.2-2
   
   
   -------------------------------------------------------

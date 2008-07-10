@@ -173,12 +173,12 @@ gap> Length(filt);
 21
 ########
 ########
-gap> perms:=List(filt, PermRepTrans);
+gap> perms:=List(filt, AsPermOfRange);
 [ (), (), (), (), (), (2,3), (), (1,2), (1,2), (1,2), (), (), (1,2,3), (2,3), 
   (1,3), (1,3,2), (1,3), (), (1,3), (2,3), () ]
 gap> rand:=RandomSemigroup(2,6);;
 gap> idem:=Idempotents(rand);;
-gap> List(idem, PermRepTrans);;
+gap> List(idem, AsPermOfRange);;
 gap> ForAll(last, x-> x=());
 true
 ########
@@ -310,11 +310,11 @@ Transformation( [ 1, 1, 1, 5, 5, 6, 6 ] )
 gap> IdempotentNC([[1,2,3],[4,5],[6,7]], [1,5,6]);
 Transformation( [ 1, 1, 1, 5, 5, 6, 6 ] )
 gap> t:=Transformation([1,2,9,9,9,8,8,8,4]);;
-gap> PermRepTrans(t);
+gap> AsPermOfRange(t);
 (4,9)
 gap> t*last;
 Transformation( [ 1, 2, 4, 4, 4, 8, 8, 8, 9 ] )
-gap> PermRepTrans(last);
+gap> AsPermOfRange(last);
 ()
 gap> x:=RandomTransformation([[1,2,3], [4,5], [6,7,8]], [1,2,3]);;
 gap> KernelOfTransformation(x)=[[1,2,3], [4,5], [6,7,8]];
@@ -325,5 +325,81 @@ gap> x:=Transformation( [ 3, 4, 4, 6, 1, 3, 3, 7, 1 ] );;
 gap> IndexPeriodOfTransformation(x);
 [ 2, 3 ]
 gap> x^2=x^5;
+true
+gap> mat:=OneMutable(GeneratorsOfGroup(GL(3,3))[1]);;
+gap> mat[3][3]:=Z(3)*0;;
+gap> F:=BaseDomain(mat);;
+gap> TransformationActionNC(Elements(F^3), OnRight, mat);
+Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 10, 10, 10, 13, 13, 13, 16, 16, 
+  16, 19, 19, 19, 22, 22, 22, 25, 25, 25 ] )
+gap> t:=Transformation( [ 6, 7, 4, 1, 7, 4, 6, 1, 3, 4 ] );;
+gap> SmallestIdempotentPower(t);
+6
+gap> t:=Transformation( [ 6, 6, 6, 2, 7, 1, 5, 3, 10, 6 ] );;
+gap> SmallestIdempotentPower(t);
+4
+gap> ker:=[[1,2,3],[5,6],[8]];;
+gap> img:=[1,2,9];;
+gap> IsKerImgOfTransformation(ker,img);
+false
+gap> ker:=[[1,2,3,4],[5,6,7],[8]];;
+gap> IsKerImgOfTransformation(ker,img);
+false
+gap> img:=[1,2,8];;
+gap> IsKerImgOfTransformation(ker,img);
+true
+gap> TransformationByKernelAndImageNC([[1,2,3,4],[5,6,7],[8]],[1,2,8]);
+Transformation( [ 1, 1, 1, 1, 2, 2, 2, 8 ] )
+gap> TransformationByKernelAndImageNC([[1,6],[2,5],[3,4]], [4,5,6]);
+Transformation( [ 4, 5, 6, 6, 5, 4 ] )
+gap> AllTransformationsWithKerAndImg([[1,6],[2,5],[3,4]], [4,5,6]);
+[ Transformation( [ 4, 5, 6, 6, 5, 4 ] ), 
+  Transformation( [ 6, 5, 4, 4, 5, 6 ] ), 
+  Transformation( [ 6, 4, 5, 5, 4, 6 ] ), 
+  Transformation( [ 4, 6, 5, 5, 6, 4 ] ), 
+  Transformation( [ 5, 6, 4, 4, 6, 5 ] ), 
+  Transformation( [ 5, 4, 6, 6, 4, 5 ] ) ]
+gap> t:=Transformation( [ 4, 2, 2, 1 ] );;
+gap> AsBooleanMatrix(t);
+[ [ 0, 0, 0, 1 ], [ 0, 1, 0, 0 ], [ 0, 1, 0, 0 ], [ 1, 0, 0, 0 ] ]
+gap> t:=(1,4,5);;
+gap> AsBooleanMatrix(t);
+[ [ 0, 0, 0, 1, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1 ],
+  [ 1, 0, 0, 0, 0 ] ]
+gap> AsBooleanMatrix(t,3);
+fail
+gap> AsBooleanMatrix(t,5);
+[ [ 0, 0, 0, 1, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1 ],
+  [ 1, 0, 0, 0, 0 ] ]
+gap> AsBooleanMatrix(t,6);
+[ [ 0, 0, 0, 1, 0, 0 ], [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], 
+  [ 0, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1 ] ]
+gap> t:=Transformation( [ 10, 8, 7, 2, 8, 2, 2, 6, 4, 1 ] );;
+gap> KerImgOfTransformation(t);
+[ [ [ 1 ], [ 2, 5 ], [ 3 ], [ 4, 6, 7 ], [ 8 ], [ 9 ], [ 10 ] ], 
+  [ 1, 2, 4, 6, 7, 8, 10 ] ]
+gap> RandomTransformation([[1,2,3], [4,5], [6,7,8]], [1,2,3]);;
+gap> RandomTransformation([[1,2,3],[5,7],[4,6]]);;
+gap> RandomTransformation([[1,2,3],[5,7],[4,6]]);;
+gap> RandomTransformationNC([[1,2,3],[5,7],[4,6]]);;
+gap> RandomTransformation([1,2,3], 6);;
+gap> RandomTransformationNC([1,2,3], 6);;
+gap> RandomTransformation([[1,2,3], [4,5], [6,7,8]], [1,2,3]);;
+gap> RandomIdempotent([1,2,3],5);;
+gap> RandomIdempotent([[1,6], [2,4], [3,5]]);;
+gap> S:=Semigroup([ Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] ), 
+> Transformation( [ 5, 7, 8, 8, 7, 5, 9, 1, 9 ] ), 
+> Transformation( [ 7, 6, 2, 8, 4, 7, 5, 8, 3 ] ) ]);;
+gap> f:=Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] );;
+gap> InversesOfTransformationNC(S, f);
+[  ]
+gap> IsRegularTransformation(S, f);
+false
+gap> f:=Transformation( [ 1, 9, 7, 5, 5, 1, 9, 5, 1 ] );;
+gap> inv:=InversesOfTransformation(S, f);
+[ Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ), 
+  Transformation( [ 1, 5, 1, 2, 5, 1, 3, 2, 2 ] ), 
+  Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ) ]
+gap> IsRegularTransformation(S, f);
 true
 gap> STOP_TEST( "transform.tst 3.1.1", 10000);

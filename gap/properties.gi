@@ -383,7 +383,7 @@ else
 
       SetPositionsRClasses( M, positions);
       SetGradedRClasses(M, classespart);
-      SetGradedImagesTransformationMonoid( M, images);
+      SetGradedImagesOfTransSemigroup( M, images);
       SetInternalKernels(M, kernels);
       SetGreensRClassReps(M, reps); #JDM can this be a flat list???
 
@@ -429,8 +429,8 @@ if not IsRegularSemigroup(M) then
 elif IsCompletelyRegularSemigroup(M) and not HasGreensRClasses(M) then
    return IsCliffordSemigroup(M);
 else 
-  imgs:=ImagesTransformationMonoid(M);
-  kers:=KernelsTransformationMonoid(M);
+  imgs:=ImagesOfTransSemigroup(M);
+  kers:=KernelsOfTransSemigroup(M);
   
   if not Length(imgs)=Length(kers) then 
      return false;
@@ -897,11 +897,11 @@ function(S)
 local n, imgs, m, kers, idem;
 
 n:=DegreeOfTransformationSemigroup(S);
-imgs:=GradedImagesTransformationMonoid(S);
+imgs:=GradedImagesOfTransSemigroup(S);
 m:=PositionProperty([1..n], x-> not Length(imgs[x])=0);
 
 if Length(imgs[m])=1 then
-	kers:=GradedKernelsTransformationMonoid(S); 
+	kers:=GradedKernelsOfTransSemigroup(S); 
 	if Length(kers[m])=1 then 
 		idem:=Idempotent(kers[m][1], imgs[m][1]);
 		if not idem=fail and Size(GreensHClassOfElement(S, idem))=1 then 

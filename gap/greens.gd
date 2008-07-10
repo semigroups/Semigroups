@@ -185,34 +185,53 @@ DeclareGlobalFunction("OnKernelsAntiAction");
 
 ###########################################################################
 ##
-##	<#GAPDoc Label="ImagesTransformationMonoid">
+##	<#GAPDoc Label="ImagesOfTransSemigroup">
 ##	<ManSection>
-##	<Attr Name="ImagesTransformationMonoid" Arg="S"/>
+##	<Attr Name="ImagesOfTransSemigroup" Arg="S[,n]"/>
 ##	<Description>
-##	returns the set of all the image sets that elements of <C>S</C> admit.<P/>
+##	returns the set of all the image sets that elements of <C>S</C> admit. That 
+##	is, the union of the orbits of the image sets of the generators of 
+##	<C>S</C> under the action <Ref Func="OnSets" BookName="ref"/>. <P/>
 ##
-##	This is just the union of the orbits of the images of the generators of 
-##	<C>S</C> under the action <Ref Func="OnSets" BookName="ref"/>.
+##	If the 
+##	optional second argument <C>n</C> (a positive integer) is present, then the 
+##	list of image sets of size <C>n</C> is returned.  If you are only interested 
+##	in the images of a given size, then the second version of the function will 
+##	likely be faster.
 ##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), 
-##  &gt; Transformation( [ 4, 4, 5, 2, 2 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; ImagesTransformationMonoid(S);
-##  [ [ 1 ], [ 1, 5 ], [ 2 ], [ 2, 4 ], [ 2, 4, 5 ], [ 4 ], [ 5 ] ]
-##  </Example> <!-- greens.tst -->
+##  gap&gt;  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
+##  &gt; Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;
+##  gap&gt; ImagesOfTransSemigroup(S, 6);
+##  [  ]
+##  gap&gt; ImagesOfTransSemigroup(S, 5);
+##  [  ]
+##  gap&gt; ImagesOfTransSemigroup(S, 4);
+##  [ [ 1, 2, 5, 6 ] ]
+##  gap&gt; ImagesOfTransSemigroup(S, 3);
+##  [ [ 1, 4, 6 ], [ 2, 5, 6 ] ]
+##  gap&gt; ImagesOfTransSemigroup(S, 2);
+##  [ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ]
+##  gap&gt; ImagesOfTransSemigroup(S, 1);
+##  [ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ]
+##  gap&gt; ImagesOfTransSemigroup(S);
+##  [ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], 
+##    [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
+##  </Example> 
 ##	</Description>
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-## JDM why are these mutable?
+#DeclareOperation("ImagesOfTransSemigroup", [IsTransformationSemigroup, IsPosInt]);
 
-DeclareAttribute("ImagesTransformationMonoid", IsTransformationSemigroup, "mutable");
+## JDM why is this mutable?
+
+DeclareAttribute("ImagesOfTransSemigroup", IsTransformationSemigroup, "mutable");
 
 #############################################################################
 ##
-##	<#GAPDoc Label="GradedImagesTransformationMonoid">
+##	<#GAPDoc Label="GradedImagesOfTransSemigroup">
 ##	<ManSection>
-##	<Attr Name="GradedImagesTransformationMonoid" Arg="S"/>
+##	<Attr Name="GradedImagesOfTransSemigroup" Arg="S"/>
 ##	<Description>
 ##	returns the set of all the image sets that elements of <C>S</C> admit in a 
 ##	list where the <C>i</C>th entry contains all the images with size <C>i</C>
@@ -226,7 +245,7 @@ DeclareAttribute("ImagesTransformationMonoid", IsTransformationSemigroup, "mutab
 ##  gap&gt; gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), 
 ##  &gt; Transformation( [ 4, 4, 5, 2, 2 ] ) ];;
 ##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; GradedImagesTransformationMonoid(S);
+##  gap&gt; GradedImagesOfTransSemigroup(S);
 ##  [ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], 
 ##    [  ], [ [ 1 .. 5 ] ] ]
 ##	</Example> <!-- greens.tst -->
@@ -236,27 +255,39 @@ DeclareAttribute("ImagesTransformationMonoid", IsTransformationSemigroup, "mutab
 
 ## JDM why are these mutable?
 
-DeclareAttribute("GradedImagesTransformationMonoid", IsTransformationSemigroup, "mutable");
+DeclareAttribute("GradedImagesOfTransSemigroup", IsTransformationSemigroup, "mutable");
 
 ###########################################################################
 ##
-##	<#GAPDoc Label="KernelsTransformationMonoid">
+##	<#GAPDoc Label="KernelsOfTransSemigroup">
 ##	<ManSection>
-##	<Attr Name="KernelsTransformationMonoid" Arg="S"/>
+##	<Attr Name="KernelsOfTransSemigroup" Arg="S[, n]"/>
 ##	<Description>
-##	returns the set of all the kernels that elements of <C>S</C> admit.<P/>
-##
+##	returns the set of all the kernels that elements of <C>S</C> admit.
 ##	This is just the union of the orbits of the kernels of the generators of 
-##	<C>S</C> under the action <Ref Func="OnKernelsAntiAction"/>.
-##	
+##	<C>S</C> under the action <Ref Func="OnKernelsAntiAction"/>.<P/>
+##
+##	If the optional second argument <C>n</C> (a positive integer) is present, 
+##	then the list of image sets of size <C>n</C> is returned.  If you are only 
+##	interested in the images of a given size, then the second version of the 
+##	function will likely be faster.
 ##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), 
-##  &gt; Transformation( [ 2, 5, 3, 2, 3 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; KernelsTransformationMonoid(S);
-##  [ [ [ 1, 2, 3, 4, 5 ] ], [ [ 1, 2, 4 ], [ 3 ], [ 5 ] ], 
-##  [ [ 1, 2, 4 ], [ 3, 5 ] ], [ [ 1, 2, 4, 5 ], [ 3 ] ], 
-##  [ [ 1, 4 ], [ 2 ], [ 3, 5 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ] ]
+##  gap&gt;  S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
+##  &gt; Transformation( [ 3, 3, 4, 1 ] ) ]);
+##  gap&gt;  KernelsOfTransSemigroup(S);   
+##  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], 
+##  [ 4 ] ], 
+##    [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], 
+##    [ [ 1, 4 ], [ 2 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
+##  gap&gt;  KernelsOfTransSemigroup(S,1);
+##  [ [ [ 1, 2, 3, 4 ] ] ]
+##  gap&gt;  KernelsOfTransSemigroup(S,2);
+##  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], 
+##    [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
+##  gap&gt;  KernelsOfTransSemigroup(S,3);
+##  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ]
+##  gap&gt;  KernelsOfTransSemigroup(S,4);
+##  [  ]
 ##	</Example> <!-- greens.tst -->
 ##	</Description>
 ##	</ManSection>
@@ -264,13 +295,13 @@ DeclareAttribute("GradedImagesTransformationMonoid", IsTransformationSemigroup, 
 
 ##  JDM why are these mutable?
 
-DeclareAttribute("KernelsTransformationMonoid", IsTransformationSemigroup, "mutable");
+DeclareAttribute("KernelsOfTransSemigroup", IsTransformationSemigroup, "mutable");
 
 #############################################################################
 ##
-##	<#GAPDoc Label="GradedKernelsTransformationMonoid">
+##	<#GAPDoc Label="GradedKernelsOfTransSemigroup">
 ##	<ManSection>
-##	<Attr Name="GradedKernelsTransformationMonoid" Arg="S"/>
+##	<Attr Name="GradedKernelsOfTransSemigroup" Arg="S"/>
 ##	<Description>
 ##	returns the set of all the kernels that elements of <C>S</C> admit in a 
 ##	list where the <C>i</C>th entry contains all the kernels with <C>i</C> 
@@ -284,7 +315,7 @@ DeclareAttribute("KernelsTransformationMonoid", IsTransformationSemigroup, "muta
 ##  gap&gt; gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), 
 ##  &gt; Transformation( [ 2, 5, 3, 2, 3 ] ) ];;
 ##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; GradedKernelsTransformationMonoid(S);
+##  gap&gt; GradedKernelsOfTransSemigroup(S);
 ##  [ [ [ [ 1, 2, 3, 4, 5 ] ] ], 
 ##    [ [ [ 1, 2, 4, 5 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ], 
 ##        [ [ 1, 2, 4 ], [ 3, 5 ] ] ], 
@@ -300,7 +331,7 @@ DeclareAttribute("KernelsTransformationMonoid", IsTransformationSemigroup, "muta
 ## JDM why are these mutable?
 
 DeclareAttribute("InternalKernels", IsTransformationSemigroup, "mutable");
-DeclareAttribute("GradedKernelsTransformationMonoid", IsTransformationSemigroup, "mutable");
+DeclareAttribute("GradedKernelsOfTransSemigroup", IsTransformationSemigroup, "mutable");
 
 #############################################################################
 ##
@@ -719,6 +750,41 @@ DeclareAttribute("SchutzenbergerGroup", IsGreensData);
 ##	<#/GAPDoc>
 
 DeclareAttribute("PartialOrderOfDClasses", IsSemigroup, "mutable");
+
+###########################################################################
+##
+##	<#GAPDoc Label="Idempotents">
+##	<ManSection>
+##	<Func Name="Idempotents" Arg="X[,n]"/>
+##	<Description>
+##	returns a list of the idempotents in the transformation semigroup or Green's 
+##	class <C>X</C>. <P/>
+##
+##	If the optional second argument <C>n</C> is present, then a list of the 
+##	idempotents in <C>S</C> of rank <C>n</C> is returned. If you are only 
+##	interested in the 
+##	idempotents of a given rank, then the second version of the function will 
+##	likely be faster.
+##	<Example>
+##  gap&gt; S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
+##  &gt; Transformation( [ 3, 3, 1, 1 ] ) ]);;
+##  gap&gt; Idempotents(S, 1);
+##  [  ]
+##  gap&gt; Idempotents(S, 2);                        
+##  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+##    Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
+##  gap&gt; Idempotents(S, 3);                        
+##  [  ]
+##  gap&gt; Idempotents(S, 4);                        
+##  [ Transformation( [ 1, 2, 3, 4 ] ) ]
+##  gap&gt; Idempotents(S);
+##  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 2, 3, 4 ] ), 
+##    Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
+##    Transformation( [ 4, 2, 2, 4 ] ) ]
+##	</Example> 
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
 
 #############################################################################
 #############################################################################

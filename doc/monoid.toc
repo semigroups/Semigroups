@@ -2,131 +2,145 @@
 \contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Introduction}}{7}{section.1.1}
 \contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Installing \textsf {MONOID}}}{8}{section.1.2}
 \contentsline {section}{\numberline {1.3}\leavevmode {\color {Chapter }Testing \textsf {MONOID}}}{9}{section.1.3}
-\contentsline {section}{\numberline {1.4}\leavevmode {\color {Chapter }What's New?}}{10}{section.1.4}
+\contentsline {section}{\numberline {1.4}\leavevmode {\color {Chapter }Changes}}{10}{section.1.4}
 \contentsline {section}{\numberline {1.5}\leavevmode {\color {Chapter }Forthcoming Features}}{10}{section.1.5}
-\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Transformations}}{11}{chapter.2}
-\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }More Functions for Transformations}}{11}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }IsRegularTransformation}}{11}{subsection.2.1.1}
-\contentsline {subsection}{\numberline {2.1.2}\leavevmode {\color {Chapter }IsTransversal}}{11}{subsection.2.1.2}
-\contentsline {subsection}{\numberline {2.1.3}\leavevmode {\color {Chapter }Idempotent}}{12}{subsection.2.1.3}
-\contentsline {subsection}{\numberline {2.1.4}\leavevmode {\color {Chapter }PermRepTrans}}{12}{subsection.2.1.4}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Transformations}}{12}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Creating Transformations}}{12}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }TransformationByKernelAndImage}}{12}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}\leavevmode {\color {Chapter }AllTransformationsWithKerAndImg}}{12}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}\leavevmode {\color {Chapter }Idempotent}}{13}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}\leavevmode {\color {Chapter }RandomIdempotent}}{13}{subsection.2.1.4}
 \contentsline {subsection}{\numberline {2.1.5}\leavevmode {\color {Chapter }RandomTransformation}}{13}{subsection.2.1.5}
-\contentsline {subsection}{\numberline {2.1.6}\leavevmode {\color {Chapter }IndexPeriodOfTransformation}}{13}{subsection.2.1.6}
-\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Monoid Actions and Orbits }}{14}{chapter.3}
-\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Introduction}}{14}{section.3.1}
-\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Actions}}{14}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }OnTuplesOfSetsAntiAction}}{14}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }OnKernelsAntiAction}}{14}{subsection.3.2.2}
-\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }General Orbits}}{15}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }MonoidOrbit}}{15}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}\leavevmode {\color {Chapter }MonoidOrbits}}{15}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}\leavevmode {\color {Chapter }StrongOrbit}}{16}{subsection.3.3.3}
-\contentsline {subsection}{\numberline {3.3.4}\leavevmode {\color {Chapter }StrongOrbits}}{16}{subsection.3.3.4}
-\contentsline {subsection}{\numberline {3.3.5}\leavevmode {\color {Chapter }GradedOrbit}}{17}{subsection.3.3.5}
-\contentsline {subsection}{\numberline {3.3.6}\leavevmode {\color {Chapter }ShortOrbit}}{17}{subsection.3.3.6}
-\contentsline {subsection}{\numberline {3.3.7}\leavevmode {\color {Chapter }GradedStrongOrbit}}{18}{subsection.3.3.7}
-\contentsline {subsection}{\numberline {3.3.8}\leavevmode {\color {Chapter }ShortStrongOrbit}}{18}{subsection.3.3.8}
-\contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Some Specific Orbits}}{19}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }ImagesTransformationMonoid}}{19}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }GradedImagesTransformationMonoid}}{19}{subsection.3.4.2}
-\contentsline {subsection}{\numberline {3.4.3}\leavevmode {\color {Chapter }KernelsTransformationMonoid}}{20}{subsection.3.4.3}
-\contentsline {subsection}{\numberline {3.4.4}\leavevmode {\color {Chapter }GradedKernelsTransformationMonoid}}{20}{subsection.3.4.4}
-\contentsline {subsection}{\numberline {3.4.5}\leavevmode {\color {Chapter }StrongOrbitOfImage}}{20}{subsection.3.4.5}
-\contentsline {subsection}{\numberline {3.4.6}\leavevmode {\color {Chapter }StrongOrbitsOfImages}}{21}{subsection.3.4.6}
-\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Green's Relations}}{22}{chapter.4}
-\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Introduction}}{22}{section.4.1}
-\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Data Structures}}{23}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }GreensData}}{23}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}\leavevmode {\color {Chapter }GreensRClassData}}{23}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}\leavevmode {\color {Chapter }GreensLClassData}}{24}{subsection.4.2.3}
-\contentsline {subsection}{\numberline {4.2.4}\leavevmode {\color {Chapter }GreensHClassData}}{25}{subsection.4.2.4}
-\contentsline {subsection}{\numberline {4.2.5}\leavevmode {\color {Chapter }GreensDClassData}}{25}{subsection.4.2.5}
-\contentsline {subsection}{\numberline {4.2.6}\leavevmode {\color {Chapter }IsGreensData}}{26}{subsection.4.2.6}
-\contentsline {subsection}{\numberline {4.2.7}\leavevmode {\color {Chapter }XClassData}}{26}{subsection.4.2.7}
-\contentsline {subsection}{\numberline {4.2.8}\leavevmode {\color {Chapter }IsGreensXClassDataRep}}{26}{subsection.4.2.8}
-\contentsline {subsection}{\numberline {4.2.9}\leavevmode {\color {Chapter }IsAssociatedSemigpTransSemigp}}{27}{subsection.4.2.9}
-\contentsline {subsection}{\numberline {4.2.10}\leavevmode {\color {Chapter }SchutzenbergerGroup}}{27}{subsection.4.2.10}
-\contentsline {subsection}{\numberline {4.2.11}\leavevmode {\color {Chapter }PartialOrderOfDClasses}}{28}{subsection.4.2.11}
-\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Properties of Semigroups}}{29}{chapter.5}
-\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Introduction}}{29}{section.5.1}
-\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Property Tests}}{30}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }IsCompletelyRegularSemigroup}}{30}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}\leavevmode {\color {Chapter }IsSimpleSemigroup}}{31}{subsection.5.2.2}
-\contentsline {subsection}{\numberline {5.2.3}\leavevmode {\color {Chapter }IsGroupAsSemigroup}}{31}{subsection.5.2.3}
-\contentsline {subsection}{\numberline {5.2.4}\leavevmode {\color {Chapter }IsCommutativeSemigroup}}{31}{subsection.5.2.4}
-\contentsline {subsection}{\numberline {5.2.5}\leavevmode {\color {Chapter }IsRegularSemigroup}}{32}{subsection.5.2.5}
-\contentsline {subsection}{\numberline {5.2.6}\leavevmode {\color {Chapter }IsInverseSemigroup}}{32}{subsection.5.2.6}
-\contentsline {subsection}{\numberline {5.2.7}\leavevmode {\color {Chapter }IsCliffordSemigroup}}{32}{subsection.5.2.7}
-\contentsline {subsection}{\numberline {5.2.8}\leavevmode {\color {Chapter }IsBand}}{33}{subsection.5.2.8}
-\contentsline {subsection}{\numberline {5.2.9}\leavevmode {\color {Chapter }IsRectangularBand}}{33}{subsection.5.2.9}
-\contentsline {subsection}{\numberline {5.2.10}\leavevmode {\color {Chapter }IsSemiBand}}{33}{subsection.5.2.10}
-\contentsline {subsection}{\numberline {5.2.11}\leavevmode {\color {Chapter }IsOrthodoxSemigroup}}{34}{subsection.5.2.11}
-\contentsline {subsection}{\numberline {5.2.12}\leavevmode {\color {Chapter }IsRightZeroSemigroup}}{34}{subsection.5.2.12}
-\contentsline {subsection}{\numberline {5.2.13}\leavevmode {\color {Chapter }IsLeftZeroSemigroup}}{34}{subsection.5.2.13}
-\contentsline {subsection}{\numberline {5.2.14}\leavevmode {\color {Chapter }IsZeroSemigroup}}{35}{subsection.5.2.14}
-\contentsline {subsection}{\numberline {5.2.15}\leavevmode {\color {Chapter }IsZeroGroup}}{35}{subsection.5.2.15}
-\contentsline {subsection}{\numberline {5.2.16}\leavevmode {\color {Chapter }MultiplicativeZero}}{35}{subsection.5.2.16}
-\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Special Classes of Semigroup}}{37}{chapter.6}
-\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }Introduction}}{37}{section.6.1}
-\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }Transformation Semigroup}}{37}{section.6.2}
-\contentsline {subsection}{\numberline {6.2.1}\leavevmode {\color {Chapter }SingularSemigroup}}{37}{subsection.6.2.1}
-\contentsline {subsection}{\numberline {6.2.2}\leavevmode {\color {Chapter }OrderPreservingSemigroup}}{38}{subsection.6.2.2}
-\contentsline {section}{\numberline {6.3}\leavevmode {\color {Chapter }Zero Groups and Zero Semigroups}}{39}{section.6.3}
-\contentsline {subsection}{\numberline {6.3.1}\leavevmode {\color {Chapter }ZeroSemigroup}}{39}{subsection.6.3.1}
-\contentsline {subsection}{\numberline {6.3.2}\leavevmode {\color {Chapter }ZeroSemigroupElt}}{39}{subsection.6.3.2}
-\contentsline {subsection}{\numberline {6.3.3}\leavevmode {\color {Chapter }ZeroGroup}}{39}{subsection.6.3.3}
-\contentsline {subsection}{\numberline {6.3.4}\leavevmode {\color {Chapter }ZeroGroupElt}}{40}{subsection.6.3.4}
-\contentsline {subsection}{\numberline {6.3.5}\leavevmode {\color {Chapter }UnderlyingGroupOfZG}}{40}{subsection.6.3.5}
-\contentsline {subsection}{\numberline {6.3.6}\leavevmode {\color {Chapter }UnderlyingGroupEltOfZGElt}}{40}{subsection.6.3.6}
-\contentsline {section}{\numberline {6.4}\leavevmode {\color {Chapter }Random Semigroups}}{40}{section.6.4}
-\contentsline {subsection}{\numberline {6.4.1}\leavevmode {\color {Chapter }RandomMonoid}}{40}{subsection.6.4.1}
-\contentsline {subsection}{\numberline {6.4.2}\leavevmode {\color {Chapter }RandomSemigroup}}{41}{subsection.6.4.2}
-\contentsline {subsection}{\numberline {6.4.3}\leavevmode {\color {Chapter }RandomReesMatrixSemigroup}}{41}{subsection.6.4.3}
-\contentsline {subsection}{\numberline {6.4.4}\leavevmode {\color {Chapter }RandomReesZeroMatrixSemigroup}}{41}{subsection.6.4.4}
-\contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }Semigroup Homomorphisms}}{42}{chapter.7}
-\contentsline {section}{\numberline {7.1}\leavevmode {\color {Chapter }Introduction}}{42}{section.7.1}
-\contentsline {subsection}{\numberline {7.1.1}\leavevmode {\color {Chapter }InfoAutos}}{43}{subsection.7.1.1}
-\contentsline {section}{\numberline {7.2}\leavevmode {\color {Chapter }Creating Homomorphisms}}{43}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}\leavevmode {\color {Chapter }SemigroupHomomorphismByFunction}}{43}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {7.2.2}\leavevmode {\color {Chapter }SemigroupHomomorphismByImagesOfGens}}{44}{subsection.7.2.2}
-\contentsline {subsection}{\numberline {7.2.3}\leavevmode {\color {Chapter }SemigroupHomomorphismByImages}}{44}{subsection.7.2.3}
-\contentsline {section}{\numberline {7.3}\leavevmode {\color {Chapter }Inner Automorphisms}}{45}{section.7.3}
-\contentsline {subsection}{\numberline {7.3.1}\leavevmode {\color {Chapter }InnerAutomorphismOfSemigroup}}{45}{subsection.7.3.1}
-\contentsline {subsection}{\numberline {7.3.2}\leavevmode {\color {Chapter }ConjugatorOfInnerAutomorphismOfSemigroup}}{45}{subsection.7.3.2}
-\contentsline {subsection}{\numberline {7.3.3}\leavevmode {\color {Chapter }IsInnerAutomorphismOfSemigroup}}{45}{subsection.7.3.3}
-\contentsline {subsection}{\numberline {7.3.4}\leavevmode {\color {Chapter }InnerAutomorphismsOfSemigroup}}{46}{subsection.7.3.4}
-\contentsline {subsection}{\numberline {7.3.5}\leavevmode {\color {Chapter }InnerAutomorphismsOfSemigroupInGroup}}{46}{subsection.7.3.5}
-\contentsline {subsection}{\numberline {7.3.6}\leavevmode {\color {Chapter }InnerAutomorphismsAutomorphismGroup}}{47}{subsection.7.3.6}
-\contentsline {subsection}{\numberline {7.3.7}\leavevmode {\color {Chapter }IsInnerAutomorphismsOfSemigroup}}{47}{subsection.7.3.7}
-\contentsline {subsection}{\numberline {7.3.8}\leavevmode {\color {Chapter }IsInnerAutomorphismsOfZeroGroup}}{48}{subsection.7.3.8}
-\contentsline {section}{\numberline {7.4}\leavevmode {\color {Chapter }Automorphism Groups}}{48}{section.7.4}
-\contentsline {subsection}{\numberline {7.4.1}\leavevmode {\color {Chapter }AutomorphismGroup}}{48}{subsection.7.4.1}
-\contentsline {subsection}{\numberline {7.4.2}\leavevmode {\color {Chapter }AutomorphismsSemigroupInGroup}}{50}{subsection.7.4.2}
-\contentsline {subsection}{\numberline {7.4.3}\leavevmode {\color {Chapter }IsAutomorphismGroupOfSemigroup}}{52}{subsection.7.4.3}
-\contentsline {subsection}{\numberline {7.4.4}\leavevmode {\color {Chapter }IsAutomorphismGroupOfSimpleSemigp}}{52}{subsection.7.4.4}
-\contentsline {subsection}{\numberline {7.4.5}\leavevmode {\color {Chapter }IsAutomorphismGroupOfZeroGroup}}{52}{subsection.7.4.5}
-\contentsline {subsection}{\numberline {7.4.6}\leavevmode {\color {Chapter }IsAutomorphismGroupOfZeroSemigroup}}{52}{subsection.7.4.6}
-\contentsline {subsection}{\numberline {7.4.7}\leavevmode {\color {Chapter }IsAutomorphismGroupOfRMS}}{52}{subsection.7.4.7}
-\contentsline {subsection}{\numberline {7.4.8}\leavevmode {\color {Chapter }IsAutomorphismGroupOfRZMS}}{53}{subsection.7.4.8}
-\contentsline {section}{\numberline {7.5}\leavevmode {\color {Chapter }Rees Matrix Semigroups}}{53}{section.7.5}
-\contentsline {subsection}{\numberline {7.5.1}\leavevmode {\color {Chapter }RMSIsoByTriple}}{53}{subsection.7.5.1}
-\contentsline {subsection}{\numberline {7.5.2}\leavevmode {\color {Chapter }RZMSIsoByTriple}}{54}{subsection.7.5.2}
-\contentsline {subsection}{\numberline {7.5.3}\leavevmode {\color {Chapter }IsRMSIsoByTripleRep}}{54}{subsection.7.5.3}
-\contentsline {subsection}{\numberline {7.5.4}\leavevmode {\color {Chapter }IsRZMSIsoByTripleRep}}{55}{subsection.7.5.4}
-\contentsline {subsection}{\numberline {7.5.5}\leavevmode {\color {Chapter }RMSInducedFunction}}{55}{subsection.7.5.5}
-\contentsline {subsection}{\numberline {7.5.6}\leavevmode {\color {Chapter }RZMSInducedFunction}}{55}{subsection.7.5.6}
-\contentsline {subsection}{\numberline {7.5.7}\leavevmode {\color {Chapter }RZMStoRZMSInducedFunction}}{56}{subsection.7.5.7}
-\contentsline {subsection}{\numberline {7.5.8}\leavevmode {\color {Chapter }RZMSGraph}}{57}{subsection.7.5.8}
-\contentsline {subsection}{\numberline {7.5.9}\leavevmode {\color {Chapter }RightTransStabAutoGroup}}{57}{subsection.7.5.9}
-\contentsline {section}{\numberline {7.6}\leavevmode {\color {Chapter }Zero Groups}}{58}{section.7.6}
-\contentsline {subsection}{\numberline {7.6.1}\leavevmode {\color {Chapter }ZeroGroupAutomorphism}}{58}{subsection.7.6.1}
-\contentsline {subsection}{\numberline {7.6.2}\leavevmode {\color {Chapter }IsZeroGroupAutomorphismRep}}{59}{subsection.7.6.2}
-\contentsline {subsection}{\numberline {7.6.3}\leavevmode {\color {Chapter }UnderlyingGroupAutoOfZeroGroupAuto}}{59}{subsection.7.6.3}
-\contentsline {section}{\numberline {7.7}\leavevmode {\color {Chapter }Isomorphisms}}{59}{section.7.7}
-\contentsline {subsection}{\numberline {7.7.1}\leavevmode {\color {Chapter }IsomorphismAutomorphismGroupOfRMS}}{59}{subsection.7.7.1}
-\contentsline {subsection}{\numberline {7.7.2}\leavevmode {\color {Chapter }IsomorphismPermGroup}}{60}{subsection.7.7.2}
-\contentsline {subsection}{\numberline {7.7.3}\leavevmode {\color {Chapter }IsomorphismFpSemigroup}}{61}{subsection.7.7.3}
-\contentsline {subsection}{\numberline {7.7.4}\leavevmode {\color {Chapter }IsomorphismFpMonoid}}{61}{subsection.7.7.4}
-\contentsline {subsection}{\numberline {7.7.5}\leavevmode {\color {Chapter }IsomorphismSemigroups}}{61}{subsection.7.7.5}
-\contentsline {subsection}{\numberline {7.7.6}\leavevmode {\color {Chapter }IsomorphismReesMatrixSemigroupOfDClass}}{63}{subsection.7.7.6}
-\contentsline {subsection}{\numberline {7.7.7}\leavevmode {\color {Chapter }IsomorphismReesMatrixSemigroup}}{63}{subsection.7.7.7}
+\contentsline {subsection}{\numberline {2.1.6}\leavevmode {\color {Chapter }TransformationActionNC}}{14}{subsection.2.1.6}
+\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }Properties \& Attributes}}{14}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }IsTransversal}}{14}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }IsKerImgOfTransformation}}{15}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}\leavevmode {\color {Chapter }KerImgOfTransformation}}{15}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}\leavevmode {\color {Chapter }IsRegularTransformation}}{16}{subsection.2.2.4}
+\contentsline {subsection}{\numberline {2.2.5}\leavevmode {\color {Chapter }IndexPeriodOfTransformation}}{16}{subsection.2.2.5}
+\contentsline {subsection}{\numberline {2.2.6}\leavevmode {\color {Chapter }SmallestIdempotentPower}}{16}{subsection.2.2.6}
+\contentsline {subsection}{\numberline {2.2.7}\leavevmode {\color {Chapter }InversesOfTransformation}}{17}{subsection.2.2.7}
+\contentsline {section}{\numberline {2.3}\leavevmode {\color {Chapter }Changing Representation}}{17}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}\leavevmode {\color {Chapter }AsBooleanMatrix}}{17}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}\leavevmode {\color {Chapter }AsPermOfRange}}{18}{subsection.2.3.2}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Monoid Actions and Orbits }}{19}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Introduction}}{19}{section.3.1}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Actions}}{19}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }OnTuplesOfSetsAntiAction}}{19}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }OnKernelsAntiAction}}{19}{subsection.3.2.2}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }General Orbits}}{20}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }MonoidOrbit}}{20}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}\leavevmode {\color {Chapter }MonoidOrbits}}{20}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}\leavevmode {\color {Chapter }StrongOrbit}}{21}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}\leavevmode {\color {Chapter }StrongOrbits}}{21}{subsection.3.3.4}
+\contentsline {subsection}{\numberline {3.3.5}\leavevmode {\color {Chapter }GradedOrbit}}{22}{subsection.3.3.5}
+\contentsline {subsection}{\numberline {3.3.6}\leavevmode {\color {Chapter }ShortOrbit}}{22}{subsection.3.3.6}
+\contentsline {subsection}{\numberline {3.3.7}\leavevmode {\color {Chapter }GradedStrongOrbit}}{23}{subsection.3.3.7}
+\contentsline {subsection}{\numberline {3.3.8}\leavevmode {\color {Chapter }ShortStrongOrbit}}{23}{subsection.3.3.8}
+\contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Some Specific Orbits}}{24}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }ImagesOfTransSemigroup}}{24}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }GradedImagesOfTransSemigroup}}{25}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}\leavevmode {\color {Chapter }KernelsOfTransSemigroup}}{25}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}\leavevmode {\color {Chapter }GradedKernelsOfTransSemigroup}}{25}{subsection.3.4.4}
+\contentsline {subsection}{\numberline {3.4.5}\leavevmode {\color {Chapter }StrongOrbitOfImage}}{26}{subsection.3.4.5}
+\contentsline {subsection}{\numberline {3.4.6}\leavevmode {\color {Chapter }StrongOrbitsOfImages}}{26}{subsection.3.4.6}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Green's Relations}}{28}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Introduction}}{28}{section.4.1}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Data Structures}}{29}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }GreensData}}{29}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\leavevmode {\color {Chapter }GreensRClassData}}{29}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\leavevmode {\color {Chapter }GreensLClassData}}{30}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}\leavevmode {\color {Chapter }GreensHClassData}}{31}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}\leavevmode {\color {Chapter }GreensDClassData}}{31}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.6}\leavevmode {\color {Chapter }IsGreensData}}{32}{subsection.4.2.6}
+\contentsline {subsection}{\numberline {4.2.7}\leavevmode {\color {Chapter }XClassData}}{32}{subsection.4.2.7}
+\contentsline {subsection}{\numberline {4.2.8}\leavevmode {\color {Chapter }IsGreensXClassDataRep}}{32}{subsection.4.2.8}
+\contentsline {subsection}{\numberline {4.2.9}\leavevmode {\color {Chapter }IsAssociatedSemigpTransSemigp}}{33}{subsection.4.2.9}
+\contentsline {subsection}{\numberline {4.2.10}\leavevmode {\color {Chapter }SchutzenbergerGroup}}{33}{subsection.4.2.10}
+\contentsline {subsection}{\numberline {4.2.11}\leavevmode {\color {Chapter }Idempotents}}{34}{subsection.4.2.11}
+\contentsline {subsection}{\numberline {4.2.12}\leavevmode {\color {Chapter }PartialOrderOfDClasses}}{34}{subsection.4.2.12}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Properties of Semigroups}}{35}{chapter.5}
+\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Introduction}}{35}{section.5.1}
+\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Property Tests}}{36}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }IsCompletelyRegularSemigroup}}{36}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}\leavevmode {\color {Chapter }IsSimpleSemigroup}}{37}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}\leavevmode {\color {Chapter }IsGroupAsSemigroup}}{37}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}\leavevmode {\color {Chapter }IsCommutativeSemigroup}}{37}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {5.2.5}\leavevmode {\color {Chapter }IsRegularSemigroup}}{38}{subsection.5.2.5}
+\contentsline {subsection}{\numberline {5.2.6}\leavevmode {\color {Chapter }IsInverseSemigroup}}{38}{subsection.5.2.6}
+\contentsline {subsection}{\numberline {5.2.7}\leavevmode {\color {Chapter }IsCliffordSemigroup}}{38}{subsection.5.2.7}
+\contentsline {subsection}{\numberline {5.2.8}\leavevmode {\color {Chapter }IsBand}}{39}{subsection.5.2.8}
+\contentsline {subsection}{\numberline {5.2.9}\leavevmode {\color {Chapter }IsRectangularBand}}{39}{subsection.5.2.9}
+\contentsline {subsection}{\numberline {5.2.10}\leavevmode {\color {Chapter }IsSemiBand}}{39}{subsection.5.2.10}
+\contentsline {subsection}{\numberline {5.2.11}\leavevmode {\color {Chapter }IsOrthodoxSemigroup}}{40}{subsection.5.2.11}
+\contentsline {subsection}{\numberline {5.2.12}\leavevmode {\color {Chapter }IsRightZeroSemigroup}}{40}{subsection.5.2.12}
+\contentsline {subsection}{\numberline {5.2.13}\leavevmode {\color {Chapter }IsLeftZeroSemigroup}}{40}{subsection.5.2.13}
+\contentsline {subsection}{\numberline {5.2.14}\leavevmode {\color {Chapter }IsZeroSemigroup}}{41}{subsection.5.2.14}
+\contentsline {subsection}{\numberline {5.2.15}\leavevmode {\color {Chapter }IsZeroGroup}}{41}{subsection.5.2.15}
+\contentsline {subsection}{\numberline {5.2.16}\leavevmode {\color {Chapter }MultiplicativeZero}}{41}{subsection.5.2.16}
+\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Special Classes of Semigroup}}{43}{chapter.6}
+\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }Some Classes of Semigroup}}{43}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }SingularSemigroup}}{43}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}\leavevmode {\color {Chapter }OrderPreservingSemigroup}}{43}{subsection.6.1.2}
+\contentsline {subsection}{\numberline {6.1.3}\leavevmode {\color {Chapter }KiselmanSemigroup}}{44}{subsection.6.1.3}
+\contentsline {subsection}{\numberline {6.1.4}\leavevmode {\color {Chapter }FullMatrixSemigroup \& GeneralLinearSemigroup }}{44}{subsection.6.1.4}
+\contentsline {subsection}{\numberline {6.1.5}\leavevmode {\color {Chapter }IsFullMatrixSemigroup \& IsGeneralLinearSemigroup }}{45}{subsection.6.1.5}
+\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }Zero Groups and Zero Semigroups}}{45}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}\leavevmode {\color {Chapter }ZeroSemigroup}}{45}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}\leavevmode {\color {Chapter }ZeroSemigroupElt}}{46}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}\leavevmode {\color {Chapter }ZeroGroup}}{46}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.4}\leavevmode {\color {Chapter }ZeroGroupElt}}{46}{subsection.6.2.4}
+\contentsline {subsection}{\numberline {6.2.5}\leavevmode {\color {Chapter }UnderlyingGroupOfZG}}{47}{subsection.6.2.5}
+\contentsline {subsection}{\numberline {6.2.6}\leavevmode {\color {Chapter }UnderlyingGroupEltOfZGElt}}{47}{subsection.6.2.6}
+\contentsline {section}{\numberline {6.3}\leavevmode {\color {Chapter }Random Semigroups}}{47}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}\leavevmode {\color {Chapter }RandomMonoid}}{47}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}\leavevmode {\color {Chapter }RandomSemigroup}}{47}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {6.3.3}\leavevmode {\color {Chapter }RandomReesMatrixSemigroup}}{48}{subsection.6.3.3}
+\contentsline {subsection}{\numberline {6.3.4}\leavevmode {\color {Chapter }RandomReesZeroMatrixSemigroup}}{48}{subsection.6.3.4}
+\contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }Semigroup Homomorphisms}}{49}{chapter.7}
+\contentsline {section}{\numberline {7.1}\leavevmode {\color {Chapter }Introduction}}{49}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}\leavevmode {\color {Chapter }InfoAutos}}{50}{subsection.7.1.1}
+\contentsline {section}{\numberline {7.2}\leavevmode {\color {Chapter }Creating Homomorphisms}}{50}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}\leavevmode {\color {Chapter }SemigroupHomomorphismByFunction}}{50}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.2}\leavevmode {\color {Chapter }SemigroupHomomorphismByImagesOfGens}}{51}{subsection.7.2.2}
+\contentsline {subsection}{\numberline {7.2.3}\leavevmode {\color {Chapter }SemigroupHomomorphismByImages}}{51}{subsection.7.2.3}
+\contentsline {section}{\numberline {7.3}\leavevmode {\color {Chapter }Inner Automorphisms}}{52}{section.7.3}
+\contentsline {subsection}{\numberline {7.3.1}\leavevmode {\color {Chapter }InnerAutomorphismOfSemigroup}}{52}{subsection.7.3.1}
+\contentsline {subsection}{\numberline {7.3.2}\leavevmode {\color {Chapter }ConjugatorOfInnerAutomorphismOfSemigroup}}{52}{subsection.7.3.2}
+\contentsline {subsection}{\numberline {7.3.3}\leavevmode {\color {Chapter }IsInnerAutomorphismOfSemigroup}}{52}{subsection.7.3.3}
+\contentsline {subsection}{\numberline {7.3.4}\leavevmode {\color {Chapter }InnerAutomorphismsOfSemigroup}}{53}{subsection.7.3.4}
+\contentsline {subsection}{\numberline {7.3.5}\leavevmode {\color {Chapter }InnerAutomorphismsOfSemigroupInGroup}}{53}{subsection.7.3.5}
+\contentsline {subsection}{\numberline {7.3.6}\leavevmode {\color {Chapter }InnerAutomorphismsAutomorphismGroup}}{54}{subsection.7.3.6}
+\contentsline {subsection}{\numberline {7.3.7}\leavevmode {\color {Chapter }IsInnerAutomorphismsOfSemigroup}}{54}{subsection.7.3.7}
+\contentsline {subsection}{\numberline {7.3.8}\leavevmode {\color {Chapter }IsInnerAutomorphismsOfZeroGroup}}{55}{subsection.7.3.8}
+\contentsline {section}{\numberline {7.4}\leavevmode {\color {Chapter }Automorphism Groups}}{55}{section.7.4}
+\contentsline {subsection}{\numberline {7.4.1}\leavevmode {\color {Chapter }AutomorphismGroup}}{55}{subsection.7.4.1}
+\contentsline {subsection}{\numberline {7.4.2}\leavevmode {\color {Chapter }AutomorphismsSemigroupInGroup}}{57}{subsection.7.4.2}
+\contentsline {subsection}{\numberline {7.4.3}\leavevmode {\color {Chapter }IsAutomorphismGroupOfSemigroup}}{59}{subsection.7.4.3}
+\contentsline {subsection}{\numberline {7.4.4}\leavevmode {\color {Chapter }IsAutomorphismGroupOfSimpleSemigp}}{59}{subsection.7.4.4}
+\contentsline {subsection}{\numberline {7.4.5}\leavevmode {\color {Chapter }IsAutomorphismGroupOfZeroGroup}}{59}{subsection.7.4.5}
+\contentsline {subsection}{\numberline {7.4.6}\leavevmode {\color {Chapter }IsAutomorphismGroupOfZeroSemigroup}}{59}{subsection.7.4.6}
+\contentsline {subsection}{\numberline {7.4.7}\leavevmode {\color {Chapter }IsAutomorphismGroupOfRMS}}{59}{subsection.7.4.7}
+\contentsline {subsection}{\numberline {7.4.8}\leavevmode {\color {Chapter }IsAutomorphismGroupOfRZMS}}{60}{subsection.7.4.8}
+\contentsline {section}{\numberline {7.5}\leavevmode {\color {Chapter }Rees Matrix Semigroups}}{60}{section.7.5}
+\contentsline {subsection}{\numberline {7.5.1}\leavevmode {\color {Chapter }RMSIsoByTriple}}{60}{subsection.7.5.1}
+\contentsline {subsection}{\numberline {7.5.2}\leavevmode {\color {Chapter }RZMSIsoByTriple}}{61}{subsection.7.5.2}
+\contentsline {subsection}{\numberline {7.5.3}\leavevmode {\color {Chapter }IsRMSIsoByTripleRep}}{61}{subsection.7.5.3}
+\contentsline {subsection}{\numberline {7.5.4}\leavevmode {\color {Chapter }IsRZMSIsoByTripleRep}}{62}{subsection.7.5.4}
+\contentsline {subsection}{\numberline {7.5.5}\leavevmode {\color {Chapter }RMSInducedFunction}}{62}{subsection.7.5.5}
+\contentsline {subsection}{\numberline {7.5.6}\leavevmode {\color {Chapter }RZMSInducedFunction}}{62}{subsection.7.5.6}
+\contentsline {subsection}{\numberline {7.5.7}\leavevmode {\color {Chapter }RZMStoRZMSInducedFunction}}{63}{subsection.7.5.7}
+\contentsline {subsection}{\numberline {7.5.8}\leavevmode {\color {Chapter }RZMSGraph}}{64}{subsection.7.5.8}
+\contentsline {subsection}{\numberline {7.5.9}\leavevmode {\color {Chapter }RightTransStabAutoGroup}}{64}{subsection.7.5.9}
+\contentsline {section}{\numberline {7.6}\leavevmode {\color {Chapter }Zero Groups}}{65}{section.7.6}
+\contentsline {subsection}{\numberline {7.6.1}\leavevmode {\color {Chapter }ZeroGroupAutomorphism}}{65}{subsection.7.6.1}
+\contentsline {subsection}{\numberline {7.6.2}\leavevmode {\color {Chapter }IsZeroGroupAutomorphismRep}}{66}{subsection.7.6.2}
+\contentsline {subsection}{\numberline {7.6.3}\leavevmode {\color {Chapter }UnderlyingGroupAutoOfZeroGroupAuto}}{66}{subsection.7.6.3}
+\contentsline {section}{\numberline {7.7}\leavevmode {\color {Chapter }Isomorphisms}}{66}{section.7.7}
+\contentsline {subsection}{\numberline {7.7.1}\leavevmode {\color {Chapter }IsomorphismAutomorphismGroupOfRMS}}{66}{subsection.7.7.1}
+\contentsline {subsection}{\numberline {7.7.2}\leavevmode {\color {Chapter }IsomorphismPermGroup}}{67}{subsection.7.7.2}
+\contentsline {subsection}{\numberline {7.7.3}\leavevmode {\color {Chapter }IsomorphismFpSemigroup}}{68}{subsection.7.7.3}
+\contentsline {subsection}{\numberline {7.7.4}\leavevmode {\color {Chapter }IsomorphismFpMonoid}}{68}{subsection.7.7.4}
+\contentsline {subsection}{\numberline {7.7.5}\leavevmode {\color {Chapter }IsomorphismSemigroups}}{68}{subsection.7.7.5}
+\contentsline {subsection}{\numberline {7.7.6}\leavevmode {\color {Chapter }IsomorphismReesMatrixSemigroupOfDClass}}{70}{subsection.7.7.6}
+\contentsline {subsection}{\numberline {7.7.7}\leavevmode {\color {Chapter }IsomorphismReesMatrixSemigroup}}{70}{subsection.7.7.7}

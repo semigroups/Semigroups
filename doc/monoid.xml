@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd">
-<!--  MakeGAPDocDoc("/Users/jdm/Desktop/Maths/Computation/GAP/gapdev/4.0/pkg/MONOID/doc/", "monoid.xml", [ "../gap/general.gd", "../gap/autos.gd", "../gap/transform.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd",  "../gap/semigroups.gd", "../gap/semihomo.gd"], "manual");; -->
+<!--  MakeGAPDocDoc("/Users/jdm/Maths/Computation/GAP/gapdev/pkg/monoid/doc/", "monoid.xml", [ "../gap/general.gd", "../gap/autos.gd", "../gap/transform.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd",  "../gap/semigroups.gd", "../gap/semihomo.gd"], "manual");; -->
 
 <Book Name="MONOID">
 
@@ -211,9 +211,43 @@ Please note that these tests could take a long time to finish.<P/>
 
 <!-- ############### -->
 
-<Section><Heading>What's New?</Heading>
+<Section><Heading>Changes</Heading>
 
-The main new features in Version 3.1.1 of <Package>MONOID</Package> are:
+<List>
+<Item>from 3.1.1 to 3.1.2: 
+<List><Item>the following new functions have been introduced:
+ <Ref Oper="TransformationActionNC"/>,
+ <Ref Attr="SmallestIdempotentPower"/>,
+ <Ref Func="IsKerImgOfTransformation"/>,
+ <Ref Oper="TransformationByKernelAndImage"/>,
+ <Ref Oper="AllTransformationsWithKerAndImgNC"/>,
+ <Ref Oper="AsBooleanMatrix"/>,
+ <Ref Func="KerImgOfTransformation"/>,
+ <Ref Oper="RandomIdempotent"/>,
+ <Ref Attr="InversesOfTransformation"/>,
+ <Ref Oper="KiselmanSemigroup"/>,
+ <Ref Oper="FullMatrixSemigroup"/>,
+ <Ref Oper="GeneralLinearSemigroup"/>,
+ <Ref Prop="IsFullMatrixSemigroup"/>,
+ <Ref Prop="IsGeneralLinearSemigroup"/></Item>
+
+<Item>the following functions were renamed:
+<List>
+<Item> <C>PermRepTrans</C> was renamed <C>AsPermOfRange</C></Item>
+<Item> <C>ImagesTransformationMonoid</C> was renamed <C>ImagesOfTransSemigroup</C></Item>
+<Item> <C>GradedImagesTransformationMonoid</C> was renamed <C>GradedImagesOfTransSemigroup</C></Item>
+<Item> <C>KernelsTransformationMonoid</C> was renamed <C>KernelsOfTransSemigroup</C></Item>
+<Item> <C>GradedKernelsTransformationMonoid</C> was renamed <C>GradedKernelsOfTransSemigroup</C></Item>
+</List></Item>
+
+<Item>the following bugs were fixed:
+<List>
+<Item> a bug relating to the definition of the semigroup of order preserving functions was resolved</Item>
+</List></Item>
+</List></Item>
+
+<Item>from 3.1 to 3.1.1: fixed a bug that produced an error when loading MONOID with the GRAPE package present but not fully installed.</Item>
+<Item>from 2 to 3:
 
 <List>
 <Item> new methods for testing if a semigroup satisfies a particular property, such as if it is regular, 
@@ -223,8 +257,11 @@ simple, inverse, or completely regular, see Chapter <Ref Chap="properties"/>;</I
 <Item> functions for finding automorphisms of Rees matrix semigroups and Rees <C>0</C>-matrix semigroups; see Section <Ref Sect="rees"/>.</Item>
 <Item> functions for defining homomorphisms and isomorphisms between some types of semigroups; see Chapter <Ref Chap="homo"/>.</Item>
 </List>
-
+</Item>
+</List>
 </Section>
+
+
 
 <!-- ############### -->
 
@@ -253,20 +290,29 @@ The features are currently under development and will be available in a future v
 <!-- ############### -->
 
 <Chapter Label="general"><Heading>Transformations</Heading>
-	<!--<Section><Heading>General Functions</Heading>
-		<#Include Label="generaltop">
-		<#Include Label="EnumeratorOfCartesian">
-		<#Include Label="MONOIDPermListList">
-	</Section> -->
-	<Section><Heading>More Functions for Transformations</Heading>
-		The functions described in this section extend the functionality of &GAP; relating to transformations. 
+The functions described in this section extend the functionality of &GAP; relating to transformations. 
 
-		<#Include Label="IsRegularTransformation">
-		<#Include Label="IsTransversal">
+	<Section><Heading>Creating Transformations</Heading>
+		<#Include Label="TransformationByKernelAndImage">
+		<#Include Label="AllTransformationsWithKerAndImg">
 		<#Include Label="Idempotent">
-		<#Include Label="PermRepTrans">
+		<#Include Label="RandomIdempotent">
 		<#Include Label="RandomTransformation">
+		<#Include Label="TransformationActionNC">
+	</Section>
+	<Section><Heading>Properties &amp; Attributes</Heading>
+		<#Include Label="IsTransversal">
+		<#Include Label="IsKerImgOfTransformation">
+		<#Include Label="KerImgOfTransformation">
+		<#Include Label="IsRegularTransformation">
 		<#Include Label="IndexPeriodOfTransformation">
+		<#Include Label="SmallestIdempotentPower">
+		<#Include Label="InversesOfTransformation">
+	</Section>
+	
+	<Section><Heading>Changing Representation</Heading>
+		<#Include Label="AsBooleanMatrix">
+		<#Include Label="AsPermOfRange">
 	</Section>
 	
 </Chapter>
@@ -332,10 +378,10 @@ The following specific orbits are used in the computation of Green's relations
 and to test if an arbitrary transformation semigroup has a particular property;  
 see Chapter <Ref Chap="greens"/> and Chapter <Ref Chap="properties"/>.
 
-<#Include Label="ImagesTransformationMonoid">
-<#Include Label="GradedImagesTransformationMonoid">
-<#Include Label="KernelsTransformationMonoid">
-<#Include Label="GradedKernelsTransformationMonoid">
+<#Include Label="ImagesOfTransSemigroup">
+<#Include Label="GradedImagesOfTransSemigroup">
+<#Include Label="KernelsOfTransSemigroup">
+<#Include Label="GradedKernelsOfTransSemigroup">
 <#Include Label="StrongOrbitOfImage">
 <#Include Label="StrongOrbitsOfImages">
 </Section>	
@@ -434,6 +480,7 @@ gap&gt; GreensRClasses(S);
 		<#Include Label="IsGreensRClassDataRep">
 		<#Include Label="IsAssociatedSemigpTransSemigp">
 		<#Include Label="SchutzenbergerGroup">
+		<#Include Label="Idempotents">
 		<#Include Label="PartialOrderOfDClasses">
 	</Section>
 </Chapter>
@@ -526,9 +573,9 @@ considering the generators <C>U</C> and their action on the underlying set only.
 <!-- ############### -->
 
 <Chapter Label="special"> <Heading>Special Classes of Semigroup</Heading>
-<Section><Heading>Introduction</Heading>
+
 In this chapter functions for creating certain semigroups are given. 
-In Section <Ref Sect="trans"/> we give functions for creating the following standard transformation semigroups:
+<!--In Section <Ref Sect="trans"/> we give functions for creating the following standard transformation semigroups:
 <List>
 <Item> the semigroup of all <E>singular transformations</E> of the <C>n</C>-element set <C>{1,2,...,n}</C>.  That is, the non-invertible mappings on this set.  This semigroup is known to be regular, idempotent generated (satisfies <Ref Prop="IsSemiBand"/>), and has size <C>n^n-n!</C>.</Item>
 <Item> the semigroup of all <E>order preserving transformations</E> of the <C>n</C>-element set <C>{1,2,...,n}</C>. That is, the mappings <C>f</C> such that <C>i</C> is at most  <C>j</C> implies <C>f(i)</C> is at most <C>f(j)</C> for all <C>i,j</C> in <C>{1,2,...,n}</C>.  This semigroup is known to be regular, idempotent generated (satisfies <Ref Prop="IsSemiBand"/>), and has size <C>Binomial(2*n-1, n-1)</C>.</Item>
@@ -543,13 +590,16 @@ In Section <Ref Sect="zeros"/> we give functions for creating the following semi
 
 In Section <Ref Sect="random"/> we give functions for randomly creating semigroups of different types. These functions are included so that the user has a ready supply of examples should they be required.
 
-</Section>
+</Section>-->
 
 <!-- ############### -->
 
-<Section Label="trans"><Heading>Transformation Semigroup</Heading>
+<Section Label="trans"><Heading>Some Classes of Semigroup</Heading>
 	<#Include Label="SingularSemigroup">
 	<#Include Label="OrderPreservingSemigroup">
+	<#Include Label="KiselmanSemigroup">
+	<#Include Label="FullMatrixSemigroup">
+	<#Include Label="IsFullMatrixSemigroup">
 </Section>
 
 <!-- ############### -->

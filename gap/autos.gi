@@ -230,7 +230,7 @@ fi;
 	
 #########
 
-constants:=Set(Flat(GradedImagesTransformationMonoid(S)[1]));
+constants:=Set(Flat(GradedImagesOfTransSemigroup(S)[1]));
 n:=DegreeOfTransformationSemigroup(S);
 Info(InfoAutos, 2, "InnerAutomorphisms: computing stabiliser of images");
 
@@ -246,8 +246,8 @@ stop:=false;
 
 repeat 
 	m:=m+1;
-	if not IsEmpty(GradedImagesTransformationMonoid(S)[m]) then 
-		inner:=Stabilizer(inner, Set(GradedImagesTransformationMonoid(S)[m]), OnSetsSets);
+	if not IsEmpty(GradedImagesOfTransSemigroup(S)[m]) then 
+		inner:=Stabilizer(inner, Set(GradedImagesOfTransSemigroup(S)[m]), OnSetsSets);
 		if IsTrivial(inner) then 
 			stop:=true;		
 		fi;
@@ -267,8 +267,8 @@ if not IsTrivial(inner) then
 
 	repeat 
 		m:=m+1;
-		if not IsEmpty(GradedKernelsTransformationMonoid(S)[m]) then 
-			inner:=Stabilizer(inner, Set(GradedKernelsTransformationMonoid(S)[m]), OnSets3);
+		if not IsEmpty(GradedKernelsOfTransSemigroup(S)[m]) then 
+			inner:=Stabilizer(inner, Set(GradedKernelsOfTransSemigroup(S)[m]), OnSets3);
 			if IsTrivial(inner) then 
 				stop:=true;		
 			fi;
@@ -1998,17 +1998,17 @@ if  IsRegularDClass(D) then
 	
 	if Length(lreps)=1 and Length(rreps)=1 then #it is a group
 		rms:=g;
-		func:=PermRepTrans;
+		func:=AsPermOfRange;
 		invfunc:=x-> IdempotentNC(KernelOfTransformation(rep), ImageSetOfTransformation(rep))*x;
-		#hom:=SemigroupHomomorphismByFunctionNC(D, g, PermRepTrans);
-		#return SemigroupHomomorphismByFunctionNC(D, g, PermRepTrans);
+		#hom:=SemigroupHomomorphismByFunctionNC(D, g, AsPermOfRange);
+		#return SemigroupHomomorphismByFunctionNC(D, g, AsPermOfRange);
 	else
 
 		RMS:=true;
 	
 		mat:=List(lreps, x-> List(rreps, function(y)
 			if x*y in D then 
-				return PermRepTrans(x*y);
+				return AsPermOfRange(x*y);
 			else
 				RMS:=false;
 				return MultiplicativeZero(zg);
@@ -2022,9 +2022,9 @@ if  IsRegularDClass(D) then
 				col:=PositionProperty(lreps, x-> ImageSetOfTransformation(d)=ImageSetOfTransformation(x));
 				row:=PositionProperty(rreps, x-> KernelOfTransformation(d)=KernelOfTransformation(x));    
 				return ReesMatrixSemigroupElementNC(rms, row,
-					PermRepTrans(lreps[col]*rreps[row])^-1*
-					PermRepTrans(lreps[col]*d*rreps[row])*
-					PermRepTrans(lreps[col]*rreps[row])^-1, col);
+					AsPermOfRange(lreps[col]*rreps[row])^-1*
+					AsPermOfRange(lreps[col]*d*rreps[row])*
+					AsPermOfRange(lreps[col]*rreps[row])^-1, col);
 			end;
 		
 			invfunc:=function(rmselt)
@@ -2063,7 +2063,7 @@ if  IsRegularDClass(D) then
 		if not col=fail then 
 			row:=PositionProperty(rreps, x-> KernelOfTransformation(d)=KernelOfTransformation(x));    
 
-			return ReesZeroMatrixSemigroupElementNC(rms, row, ZeroGroupElt(PermRepTrans(invrreps[row]*d*invlreps[col])), col);
+			return ReesZeroMatrixSemigroupElementNC(rms, row, ZeroGroupElt(AsPermOfRange(invrreps[row]*d*invlreps[col])), col);
 		fi;
 	
 		return MultiplicativeZero(rms);
@@ -2176,7 +2176,7 @@ if IsCompletelySimpleSemigroup(S) #and not IsGroupAsTransSemigroup(S)
   lreps:= List(List(GreensHClasses(r), x-> ImageSetOfTransformation
            (Representative(x))), y-> IdempotentNC(ker, y)); 
 
-  mat:=List(lreps, x-> List(rreps, y-> PermRepTrans(x*y)));
+  mat:=List(lreps, x-> List(rreps, y-> AsPermOfRange(x*y)));
 
   rms:=ReesMatrixSemigroup(g, mat);
   
@@ -2189,9 +2189,9 @@ if IsCompletelySimpleSemigroup(S) #and not IsGroupAsTransSemigroup(S)
 		=KernelOfTransformation(x));    
 
     return ReesMatrixSemigroupElementNC(rms, row, 
-	    PermRepTrans(lreps[col]*rreps[row])^-1*
-            PermRepTrans(lreps[col]*d*rreps[row])*
-            PermRepTrans(lreps[col]*rreps[row])^-1, col);
+	    AsPermOfRange(lreps[col]*rreps[row])^-1*
+            AsPermOfRange(lreps[col]*d*rreps[row])*
+            AsPermOfRange(lreps[col]*rreps[row])^-1, col);
     end;
    
     invfunc:=function(rmselt)
@@ -2216,8 +2216,8 @@ if IsCompletelySimpleSemigroup(S) #and not IsGroupAsTransSemigroup(S)
   #elif IsGroupAsTransSemigroup(S) then
 	#	#JDM should there be split cases here for semigroups and monoids
 	#	
-  #	G:=Group(List(GeneratorsOfSemigroup(S), x-> PermRepTrans(x)));
-	#	hom:=SemigroupHomomorphismByFunctionNC(S, G, PermRepTrans);
+  #	G:=Group(List(GeneratorsOfSemigroup(S), x-> AsPermOfRange(x)));
+	#	hom:=SemigroupHomomorphismByFunctionNC(S, G, AsPermOfRange);
 	#	SetInverseGeneralMapping(hom, SemigroupHomomorphismByFunctionNC(G, S, x->Idempotents(S)[1]*x));
 	#	SetIsBijective(hom, true); SetIsTotal(hom, true);
 	#	return hom;
@@ -2248,11 +2248,11 @@ end);
 ##	if <C>G</C> is a transformation semigroup that satisfies 
 ##	<Ref Prop="IsGroupAsSemigroup"/>, then <C>IsomorphismPermGroup</C> 
 ##	returns an isomorphism from <C>G</C> to the permutation group obtained by 
-##	applying <Ref Func="PermRepTrans"/> to any element of <C>G</C>.<P/>
+##	applying <Ref Func="AsPermOfRange"/> to any element of <C>G</C>.<P/>
 ##
 ##	if <C>G</C> is a group <M>H</M>-class of a transformation semigroup, then 
 ##	<C>IsomorphismPermGroup</C> returns an isomorphism from <C>G</C> to the 
-##	permutation group obtained by applying <Ref Func="PermRepTrans"/> to any
+##	permutation group obtained by applying <Ref Func="AsPermOfRange"/> to any
 ##	element of <C>G</C>.
 ##	<Example>
 ##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6]);;
@@ -2392,8 +2392,8 @@ if not IsGroupHClass( hc )  then
 fi;
 
 elms:=AsSSortedList( hc ); 
-gp:=Group(List(elms, PermRepTrans));
-mapfun := x-> PermRepTrans(x); 
+gp:=Group(List(elms, AsPermOfRange));
+mapfun := x-> AsPermOfRange(x); 
 
 return 	SemigroupHomomorphismByFunctionNC(hc, Group(SmallGeneratingSet(gp)), mapfun );
 
@@ -2410,8 +2410,8 @@ if not IsGroupAsSemigroup(S)  then
    Error( "can only create isomorphism groups for semigroups that are groups" );
 fi;
 
-gens:=List(GeneratorsOfSemigroup(S), PermRepTrans);
-mapfun := x-> PermRepTrans(x); 
+gens:=List(GeneratorsOfSemigroup(S), AsPermOfRange);
+mapfun := x-> AsPermOfRange(x); 
 
 return 	SemigroupHomomorphismByFunctionNC(S, Group(gens), mapfun );
 

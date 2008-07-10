@@ -4,4 +4,39 @@
 ## Mon Jun  9 17:02:20 BST 2008
 ##
 
-# CHANGES since the release of version 3.1.1 of MONOID
+# CHANGES since the release of version 3.1 of MONOID
+
+###############
+
+-from 3.1.1 to 3.1.2: the following new functions have been introduced:
+
+--- TransformationActionNC
+--- SmallestIdempotentPower 
+--- IsKerImgOfTransformation
+--- TransformationByKernelAndImage
+--- AllTransformationsWithKerAndImgNC
+--- AsBooleanMatrix
+--- KerImgOfTransformation
+--- RandomIdempotent
+--- InversesOfTransformation
+--- KiselmanSemigroup
+--- FullMatrixSemigroup
+--- GeneralLinearSemigroup
+--- IsFullMatrixSemigroup
+--- IsGeneralLinearSemigroup
+
+the following functions were renamed:
+
+--- PermRepTrans was renamed AsPermOfRange 
+--- ImagesTransformationMonoid was renamed ImagesOfTransSemigroup
+--- GradedImagesTransformationMonoid was renamed GradedImagesOfTransSemigroup
+--- KernelsTransformationMonoid was renamed KernelsOfTransSemigroup
+--- GradedKernelsTransformationMonoid was renamed GradedKernelsOfTransSemigroup
+
+the following bugs were fixed:
+
+--- a bug relating to the definition of the semigroup of order preserving functions was resolved
+
+###############
+
+- from 3.1 to 3.1.1: fixed a bug that produced an error when loading MONOID with the GRAPE package present but not fully installed.

@@ -512,7 +512,7 @@ else
 	Info(InfoAutos, 1, "AutomorphismGroup: semigroup is not completely simple");
 	
 	n:=DegreeOfTransformationSemigroup(S);
-	constants:=Set(Flat(GradedImagesTransformationMonoid(S)[1]));
+	constants:=Set(Flat(GradedImagesOfTransSemigroup(S)[1]));
 	Info(InfoAutos, 2, "AutomorphismGroup: ", Length(constants), " constants");
 	allinner:=false;
 	bad:=[];
@@ -796,8 +796,8 @@ else
 
 		repeat 
 			m:=m+1;
-			if not IsEmpty(GradedImagesTransformationMonoid(S)[m]) then 
-				inner:=Stabilizer(inner, Set(GradedImagesTransformationMonoid(S)[m]), OnSetsSets);
+			if not IsEmpty(GradedImagesOfTransSemigroup(S)[m]) then 
+				inner:=Stabilizer(inner, Set(GradedImagesOfTransSemigroup(S)[m]), OnSetsSets);
 				if IsTrivial(inner) then 
 					stop:=true;		
 				fi;
@@ -818,8 +818,8 @@ else
 		
 			repeat 
 				m:=m+1;
-				if not IsEmpty(GradedKernelsTransformationMonoid(S)[m]) then 
-					inner:=Stabilizer(inner, Set(GradedKernelsTransformationMonoid(S)[m]), OnSets3);
+				if not IsEmpty(GradedKernelsOfTransSemigroup(S)[m]) then 
+					inner:=Stabilizer(inner, Set(GradedKernelsOfTransSemigroup(S)[m]), OnSets3);
 					if IsTrivial(inner) then 
 						stop:=true;		
 					fi;

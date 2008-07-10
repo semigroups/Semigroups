@@ -369,7 +369,7 @@
   [2X> IsZeroSemigroup( [0X[3XS[0X[2X ) _____________________________________________[0Xproperty
   
   returns  [10Xtrue[0m  if the transformation semigroup [10XS[0m is a zero semigroup or if [10XS[0m
-  was  created  using  the  [2XZeroSemigroup[0m  ([14X6.3-1[0m) command. Otherwise [10Xfalse[0m is
+  was  created  using  the  [2XZeroSemigroup[0m  ([14X6.2-1[0m) command. Otherwise [10Xfalse[0m is
   returned.
   
   A  semigroup  [10XS[0m  is  a [13Xzero semigroup[0m if there exists an element [10X0[0m in [10XS[0m such
@@ -391,7 +391,7 @@
   [2X> IsZeroGroup( [0X[3XS[0X[2X ) _________________________________________________[0Xproperty
   
   returns  [10Xtrue[0m  if the transformation semigroup [10XS[0m is a zero group or if [10XS[0m was
-  created using the [2XZeroGroup[0m ([14X6.3-3[0m) command. Otherwise [10Xfalse[0m is returned.
+  created using the [2XZeroGroup[0m ([14X6.2-3[0m) command. Otherwise [10Xfalse[0m is returned.
   
   A  semigroup [10XS[0m [10XS[0m is a [13Xzero group[0m if there exists an element [10X0[0m in [10XS[0m such that
   [10XS[0m without [10X0[0m is a group and for all [10Xx[0m in [10XS[0m we have that [10Xx0=0x=0[0m.
