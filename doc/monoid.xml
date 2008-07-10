@@ -7,7 +7,7 @@
 
 <TitlePage>
 	<Title>The <Package>MONOID</Package> Package</Title>
-	<Version>Version 3.1.1</Version>
+	<Version>Version 3.1.2</Version>
 	<Author>J. D. Mitchell
 		<Email>jdm3@st-and.ac.uk</Email>
 	</Author>
@@ -39,16 +39,16 @@
 	<!-- ############### -->
 	
 	<Section><Heading>Introduction</Heading>
-This  manual  describes the <Package>MONOID</Package> package version 3.1.1 for 
+This  manual  describes the <Package>MONOID</Package> package version 3.1.2 for 
 computing with transformation semigroups.
-  <Package>MONOID</Package> 3.1.1 is an updated version of the package with the same name for &GAP; 3; see <P/>
+  <Package>MONOID</Package> 3.1.2 is an updated version of the package with the same name for &GAP; 3; see <P/>
 
-<URL>http://schmidt.nuigalway.ie/monoid/index.html</URL><P/>
+<URL>http://schmidt.nuigalway.ie/monoid/index.html</URL>
 
 for more information about the original <Package>MONOID</Package> by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc. <P/>
 
-<Package>MONOID</Package> 3.1.1 retains all the functionality of the original <Package>MONOID</Package> package. 
-In particular,  <Package>MONOID</Package>  3.1.1 contains more efficient 
+<Package>MONOID</Package> 3.1.2 retains all the functionality of the original <Package>MONOID</Package> package. 
+In particular,  <Package>MONOID</Package>  3.1.2 contains more efficient 
 methods than those  available in the &GAP; library for computing orbits, calculating Green's 
 classes, finding the size, the elements, and testing membership in transformation semigroups; see Chapters <Ref Chap="orbits"/> and <Ref Chap="greens"/>. After <Package>MONOID</Package> 
 has been loaded many of these methods are automatically used in preference to 
@@ -84,7 +84,7 @@ described in the <C>README</C> file of the <Package>GRAPE</Package> distribution
 GRAPE Package' of the <Package>GRAPE</Package> manual; see<P/>
 <URL>
 http://www.maths.qmul.ac.uk/~leonard/grape/
-</URL><P/>
+</URL>
 or the main &GAP; webpages for more information. <P/>
 
  If you want to take advantage 
@@ -92,7 +92,7 @@ of the online help facilities in <Package>MONOID</Package>, then the
 <Package>gapdoc</Package> package Version 1.1 or higher is also required; see <P/>
 <URL>
 http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/
-</URL> <P/>
+</URL>
 for further details of how to obtain and install <Package>gapdoc</Package>.
 </Section>
 
@@ -112,7 +112,7 @@ install it can be obtained from the main &GAP; webpage<P/>
 http://www.gap-system.org
 </URL><P/>
 
- Those functions in <Package>MONOID</Package> described in Chapter
+Those functions in <Package>MONOID</Package> described in Chapter
 <Ref Chap="homo"/> relating to automorphism 
 groups of semigroups require the <Package>GRAPE</Package> (for computing with 
 graphs and groups) to be loaded.  In particular, <Package>GRAPE</Package> must 
@@ -122,7 +122,7 @@ automorphism group and isomorphism testing functions (for graphs) can be used.<P
 Please go to <P/>
 <URL>
 http://www.maths.qmul.ac.uk/~leonard/grape/
-</URL><P/>
+</URL>
 or the main &GAP; webpage for further details on how to obtain and install 
 <Package>GRAPE</Package>. <P/>
 
@@ -154,7 +154,7 @@ one containing the folders `bin', `lib', and so on) in your installation of
 [ ... ]
 
 gap&gt; LoadPackage("monoid");
-Loading MONOID 3.1.1
+Loading MONOID 3.1.2
 by James Mitchell (www-groups.mcs.st-and.ac.uk/~jamesm)
 For help, type: ?the monoid package 
 true
@@ -184,15 +184,15 @@ Read(Filename( dirs, "installtest.g" ) );
 and press <C>return</C>. Please note that it will take a few moments before 
 the tests are complete.<P/>
 
-If the output looks like the following, then it is probable that you have a fully working copy of <Package>MONOID</Package> 3.1.1.<P/>
+If the output looks like the following, then it is probable that you have a fully working copy of <Package>MONOID</Package> 3.1.2.<P/>
 
 <Example>
 gap> LoadPackage( "monoid" );;
 gap> dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
 gap> Read( Filename( dirs, "installtest.g" ) );;
-+ install_no_grape.tst 3.1.1
++ install_no_grape.tst 3.1.2
 + GAP4stones: 1
-+ install_with_grape.tst 3.1.1
++ install_with_grape.tst 3.1.2
 + GAP4stones: 2
 </Example>
 
@@ -226,10 +226,7 @@ Please note that these tests could take a long time to finish.<P/>
  <Ref Oper="RandomIdempotent"/>,
  <Ref Attr="InversesOfTransformation"/>,
  <Ref Oper="KiselmanSemigroup"/>,
- <Ref Oper="FullMatrixSemigroup"/>,
- <Ref Oper="GeneralLinearSemigroup"/>,
- <Ref Prop="IsFullMatrixSemigroup"/>,
- <Ref Prop="IsGeneralLinearSemigroup"/></Item>
+</Item>
 
 <Item>the following functions were renamed:
 <List>
@@ -598,8 +595,6 @@ In Section <Ref Sect="random"/> we give functions for randomly creating semigrou
 	<#Include Label="SingularSemigroup">
 	<#Include Label="OrderPreservingSemigroup">
 	<#Include Label="KiselmanSemigroup">
-	<#Include Label="FullMatrixSemigroup">
-	<#Include Label="IsFullMatrixSemigroup">
 </Section>
 
 <!-- ############### -->

@@ -3,7 +3,7 @@
                                [1XThe [5XMONOID[0m[1X Package[0m
   
   
-                                 Version 3.1.1
+                                 Version 3.1.2
   
   
                                  J. D. Mitchell
@@ -128,8 +128,6 @@
       6.1-1 SingularSemigroup
       6.1-2 OrderPreservingSemigroup
       6.1-3 KiselmanSemigroup
-      6.1-4 FullMatrixSemigroup & GeneralLinearSemigroup
-      6.1-5 IsFullMatrixSemigroup & IsGeneralLinearSemigroup
     6.2 Zero Groups and Zero Semigroups
       6.2-1 ZeroSemigroup
       6.2-2 ZeroSemigroupElt

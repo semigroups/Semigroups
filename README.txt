@@ -1,11 +1,11 @@
 ##
 ## README.txt
-## Version 3.1.1
-## Mon Jun  9 17:02:20 BST 2008
+## Version 3.1.2
+## Thu 10 Jul 2008 17:50:33 BST
 ##
 
-This is the README file of the MONOID package version 3.1.1 for 
-computing with transformation semigroups. MONOID 3.1.1 is an updated version of 
+This is the README file of the MONOID package version 3.1.2 for 
+computing with transformation semigroups. MONOID 3.1.2 is an updated version of 
 the package with the same name for GAP 3; see 
 
 http://schmidt.nuigalway.ie/monoid/index.html
@@ -13,8 +13,8 @@ http://schmidt.nuigalway.ie/monoid/index.html
 for more information about the original MONOID by Goetz 
 Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc.
 
-MONOID 3.1.1 retains all the functionality of the original MONOID package. 
-In particular, MONOID 3.1.1 contains more efficient methods than those  available
+MONOID 3.1.2 retains all the functionality of the original MONOID package. 
+In particular, MONOID 3.1.2 contains more efficient methods than those  available
 in the GAP library for computing orbits, calculating Green's 
 classes, finding the size, the elements, and testing membership in 
 transformation semigroups. After MONOID has been loaded many of these methods 
@@ -88,7 +88,7 @@ unix> gap
 [ ... ]
 
 gap> LoadPackage("MONOID");
-Loading  MONOID 3.1.1
+Loading  MONOID 3.1.2
 by James Mitchell (http://www-groups.mcs.st-and.ac.uk/~jamesm)
 For help, type: ?the monoid package
 true

@@ -1,13 +1,13 @@
 ##
 ## transform.tst
-## Version 3.1.1
-## Mon Jun  9 17:02:20 BST 2008
+## Version 3.1.2
+## Thu 10 Jul 2008 20:25:38 BST
 ##
 
 #dirs := DirectoriesPackageLibrary( "monoid", "tst" );
 #ReadTest( Filename( dirs, "transform.tst" ) );
 
-gap> START_TEST("transform.tst 3.1.1");
+gap> START_TEST("transform.tst 3.1.2");
 gap> LoadPackage("monoid");;
 gap> if not IsBound(BruteForceIsoCheck) then 
 > BruteForceIsoCheck:=function(iso)
@@ -328,10 +328,10 @@ gap> x^2=x^5;
 true
 gap> mat:=OneMutable(GeneratorsOfGroup(GL(3,3))[1]);;
 gap> mat[3][3]:=Z(3)*0;;
-gap> F:=BaseDomain(mat);;
-gap> TransformationActionNC(Elements(F^3), OnRight, mat);
-Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 10, 10, 10, 13, 13, 13, 16, 16, 
-  16, 19, 19, 19, 22, 22, 22, 25, 25, 25 ] )
+#gap> F:=BaseDomain(mat);;
+#gap> TransformationActionNC(Elements(F^3), OnRight, mat);
+#Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 10, 10, 10, 13, 13, 13, 16, 16, 
+#  16, 19, 19, 19, 22, 22, 22, 25, 25, 25 ] )
 gap> t:=Transformation( [ 6, 7, 4, 1, 7, 4, 6, 1, 3, 4 ] );;
 gap> SmallestIdempotentPower(t);
 6
@@ -402,4 +402,4 @@ gap> inv:=InversesOfTransformation(S, f);
   Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ) ]
 gap> IsRegularTransformation(S, f);
 true
-gap> STOP_TEST( "transform.tst 3.1.1", 10000);
+gap> STOP_TEST( "transform.tst 3.1.2", 10000);

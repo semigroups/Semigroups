@@ -10,8 +10,6 @@
   [2XAutomorphismsSemigroupInGroup[0X  7.4-2
   [2XConjugatorOfInnerAutomorphismOfSemigroup[0X  7.3-2
   [2XDClassData[0X  4.2-7
-  [2XFullMatrixSemigroup[0X  6.1-4
-  [2XGeneralLinearSemigroup[0X  6.1-4
   [2XGradedImagesOfTransSemigroup[0X  3.4-2
   [2XGradedKernelsOfTransSemigroup[0X  3.4-4
   [2XGradedOrbit[0X  3.3-5
@@ -47,8 +45,6 @@
   [2XIsCommutativeSemigroup[0X  5.2-4
   [2XIsCompletelyRegularSemigroup[0X  5.2-1
   [2XIsCompletelySimpleSemigroup[0X  5.2-2
-  [2XIsFullMatrixSemigroup[0X  6.1-5
-  [2XIsGeneralLinearSemigroup[0X  6.1-5
   [2XIsGreensData[0X  4.2-6
   [2XIsGreensDClassData[0X  4.2-6
   [2XIsGreensDClassDataRep[0X  4.2-8

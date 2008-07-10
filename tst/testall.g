@@ -1,7 +1,7 @@
 ##
 ## testall.g
-## Version 3.1.1
-## Mon Jun  9 17:02:20 BST 2008
+## Version 3.1.2
+## Thu 10 Jul 2008 20:25:38 BST
 ##
 
 #LoadPackage( "monoid" );;

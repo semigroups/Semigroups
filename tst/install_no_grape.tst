@@ -1,13 +1,13 @@
 ##
 ## install_no_grape.tst
-## Version 3.1.1
-## Mon Jun  9 17:02:20 BST 2008
+## Version 3.1.2
+## Thu 10 Jul 2008 20:25:38 BST
 ##
 
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "install_no_grape.tst" ) );
 
-gap> START_TEST("install_no_grape.tst 3.1.1");
+gap> START_TEST("install_no_grape.tst 3.1.2");
 gap> LoadPackage("monoid");;
 gap> SetInfoLevel(InfoAutos, 0);
 gap> gens:=[ Transformation( [1,8,11,2,5,16,13,14,3,6,15,10,7,4,9,12 ] ), 
@@ -183,4 +183,4 @@ SemigroupHomomorphismByImagesOfGens ( <trans. semigroup of size 164 with
 gap> SemigroupHomomorphismByImagesNC(S, T, list);
 SemigroupHomomorphismByImages ( <trans. semigroup of size 164 with 
 2 generators>-><trans. semigroup with 2 generators>)
-gap> STOP_TEST( "install_no_grape.tst 3.1.1", 10000);
+gap> STOP_TEST( "install_no_grape.tst 3.1.2", 10000);

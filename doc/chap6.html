@@ -23,12 +23,6 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79B1A1127B3B784A">6.1-1 SingularSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X87554F5A85484046">6.1-2 OrderPreservingSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A6FC6F179394E66">6.1-3 KiselmanSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X789DEE5B78DA4181">6.1-4 <span class="Heading">FullMatrixSemigroup &amp; GeneralLinearSemigroup
-</span></a>
-</span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X82C0B1738620C3A0">6.1-5 <span class="Heading">IsFullMatrixSemigroup &amp; IsGeneralLinearSemigroup
-</span></a>
-</span>
 </div>
 <div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap6.html#X7A88BC6E7AC4E444">6.2 <span class="Heading">Zero Groups and Zero Semigroups</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X801FC1D97D832A6F">6.2-1 ZeroSemigroup</a></span>
@@ -150,46 +144,6 @@ v_n-2:=Transformation([1,2,2,...,n]), v_n-3:=Transformation
   gap&gt; SetInfoLevel(InfoAutos, 0);
   gap&gt; AutomorphismGroup(Range(IsomorphismTransformationSemigroup(S)));
   &lt;group of size 1 with 1 generators&gt;
-  </pre></td></tr></table>
-
-<p><a id="X789DEE5B78DA4181" name="X789DEE5B78DA4181"></a></p>
-
-<h5>6.1-4 <span class="Heading">FullMatrixSemigroup &amp; GeneralLinearSemigroup
-</span></h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; FullMatrixSemigroup</code>( <var class="Arg">d, q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; GeneralLinearSemigroup</code>( <var class="Arg">d, q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>these two functions are synonyms for each other. They both return the full matrix semigroup, or if you prefer the general linear semigroup, of all <code class="code">d</code> by <code class="code">d</code> matrices with entries over the field with <code class="code">q</code> elements. This semigroup has <code class="code">q^(d^2)</code> elements.</p>
-
-
-<table class="example">
-<tr><td><pre>
-  gap&gt; FullMatrixSemigroup(3,4);
-  &lt;3x3 full matrix semigroup over GF(2^2)&gt;
-  gap&gt; Size(last);
-  262144
-  </pre></td></tr></table>
-
-<p><a id="X82C0B1738620C3A0" name="X82C0B1738620C3A0"></a></p>
-
-<h5>6.1-5 <span class="Heading">IsFullMatrixSemigroup &amp; IsGeneralLinearSemigroup
-</span></h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsFullMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; IsGeneralLinearSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<p>these two functions are synonyms for each other. They both return <code class="code">true</code> if the semigroup <code class="code">S</code> was created using either of the commands <code class="func">FullMatrixSemigroup</code> (<a href="chap6.html#X789DEE5B78DA4181"><b>6.1-4</b></a>) or <code class="func">GeneralLinearSemigroup</code> (<a href="chap6.html#X789DEE5B78DA4181"><b>6.1-4</b></a>) and <code class="code">false</code> otherwise.</p>
-
-
-<table class="example">
-<tr><td><pre>
-  gap&gt; S:=RandomSemigroup(4,4);
-  &lt;semigroup with 4 generators&gt;
-  gap&gt; IsFullMatrixSemigroup(S);
-  false
-  gap&gt; S:=GeneralLinearSemigroup(3,3);
-  &lt;3x3 full matrix semigroup over GF(3)&gt;
-  gap&gt; IsFullMatrixSemigroup(S);
-  true
   </pre></td></tr></table>
 
 <p><a id="X7A88BC6E7AC4E444" name="X7A88BC6E7AC4E444"></a></p>

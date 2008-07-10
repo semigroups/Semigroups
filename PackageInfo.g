@@ -1,14 +1,14 @@
 ##
 ## PackageInfo.g
-## Version 3.1.1
-## Mon Jun  9 17:02:20 BST 2008
+## Version 3.1.2
+## Thu 10 Jul 2008 17:50:33 BST
 ##
 
 SetPackageInfo( rec(
 PackageName := "MONOID",
 Subtitle := "Computing with transformation semigroups and monoids",
-Version := "3.1.1",
-Date := "09/06/2008",
+Version := "3.1.2",
+Date := "10/07/2008",
 ArchiveURL := 
           "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/monoid/monoid3r1p1",
 ArchiveFormats := ".tar.gz",
@@ -22,8 +22,8 @@ Persons := [
     WWWHome       := "http://www-groups.mcs.st-and.ac.uk/~jamesm",
     PostalAddress := Concatenation( [
                        "Mathematical Institute,",
-                       "North Haugh", "St Andrews", "Fife", "KY16 9SS", 
-                       "Scotland"] ),
+                       " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,", 
+                       " Scotland"] ),
     Place         := "St Andrews",
     Institution   := "University of St Andrews"
   )],

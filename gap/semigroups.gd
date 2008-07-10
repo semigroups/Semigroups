@@ -1,7 +1,7 @@
 ##
 ## semigroups.gd
-## Version 3.1.1
-## Mon Jun  9 17:02:20 BST 2008
+## Version 3.1.2
+## Thu 10 Jul 2008 20:25:38 BST
 ##
 
 ###########################################################################
@@ -374,57 +374,3 @@ DeclareGlobalFunction("ReesZeroMatrixSemigroupElementNC");
 ##	<#/GAPDoc>
 
 DeclareOperation("KiselmanSemigroup", [IsPosInt]);
-
-###########################################################################
-##
-##	<#GAPDoc Label="FullMatrixSemigroup">
-##	<ManSection><Heading>FullMatrixSemigroup &amp; GeneralLinearSemigroup
-##	</Heading>
-##	<Oper Name="FullMatrixSemigroup" Arg="d, q"/>
-##	<Oper Name="GeneralLinearSemigroup" Arg="d, q"/>
-##	<Description>
-##	these two functions are synonyms for each other. They both return the full 
-##	matrix semigroup, or if you prefer the general linear semigroup, of all 
-##	<C>d</C> by <C>d</C> matrices with entries over the field with <C>q</C> 
-##	elements.  This semigroup has <C>q^(d^2)</C> elements. 
-##	<Example>
-##  gap&gt; FullMatrixSemigroup(3,4);
-##  &lt;3x3 full matrix semigroup over GF(2^2)&gt;
-##  gap&gt; Size(last);
-##  262144
-##  </Example>
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-DeclareOperation("FullMatrixSemigroup", [IsPosInt, IsPosInt]);
-DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
-
-###########################################################################
-##
-##	<#GAPDoc Label="IsFullMatrixSemigroup">
-##	<ManSection><Heading>IsFullMatrixSemigroup &amp; IsGeneralLinearSemigroup
-##	</Heading>
-##	<Prop Name="IsFullMatrixSemigroup" Arg="S"/>
-##	<Prop Name="IsGeneralLinearSemigroup" Arg="S"/>
-##	<Description>
-##	these two functions are synonyms for each other. They both return 
-##	<C>true</C> if the semigroup <C>S</C> was created using either of the 
-##	commands <Ref Oper="FullMatrixSemigroup"/> or 
-##	<Ref Oper="GeneralLinearSemigroup"/> and <C>false</C> otherwise. 
-##	<Example>
-##  gap&gt; S:=RandomSemigroup(4,4);
-##  &lt;semigroup with 4 generators&gt;
-##  gap&gt; IsFullMatrixSemigroup(S);
-##  false
-##  gap&gt; S:=GeneralLinearSemigroup(3,3);
-##  &lt;3x3 full matrix semigroup over GF(3)&gt;
-##  gap&gt; IsFullMatrixSemigroup(S);
-##  true
-##  </Example>
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-DeclareProperty("IsFullMatrixSemigroup", IsMonoid);
-DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);

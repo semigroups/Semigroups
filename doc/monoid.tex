@@ -47,7 +47,7 @@
 \begin{center}{\Huge \textbf{The \textsf{MONOID} Package\mbox{}}}\\[1cm]
 \hypersetup{pdftitle=The \textsf{MONOID} Package}
 \markright{\scriptsize \mbox{}\hfill The \textsf{MONOID} Package \hfill\mbox{}}
-{Version 3.1.1\mbox{}}\\[1cm]
+{Version 3.1.2\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\large \textbf{J. D. Mitchell  \mbox{}}}\\
 \hypersetup{pdfauthor=J. D. Mitchell  }
@@ -100,13 +100,11 @@ important or if you find a bug, please let me know. \mbox{}}\\[1cm]
 \section{\textcolor{Chapter }{Introduction}}\logpage{[ 1, 1, 0 ]}
 \hyperdef{L}{X7DFB63A97E67C0A1}{}
 {
- This manual describes the \textsf{MONOID} package version 3.1.1 for computing with transformation semigroups. \textsf{MONOID} 3.1.1 is an updated version of the package with the same name for \textsf{GAP} 3; see 
+ This manual describes the \textsf{MONOID} package version 3.1.2 for computing with transformation semigroups. \textsf{MONOID} 3.1.2 is an updated version of the package with the same name for \textsf{GAP} 3; see 
 
- \href{http://schmidt.nuigalway.ie/monoid/index.html} {\texttt{http://schmidt.nuigalway.ie/monoid/index.html}}
+ \href{http://schmidt.nuigalway.ie/monoid/index.html} {\texttt{http://schmidt.nuigalway.ie/monoid/index.html}} for more information about the original \textsf{MONOID} by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc. 
 
- for more information about the original \textsf{MONOID} by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc. 
-
- \textsf{MONOID} 3.1.1 retains all the functionality of the original \textsf{MONOID} package. In particular, \textsf{MONOID} 3.1.1 contains more efficient methods than those available in the \textsf{GAP} library for computing orbits, calculating Green's classes, finding the size,
+ \textsf{MONOID} 3.1.2 retains all the functionality of the original \textsf{MONOID} package. In particular, \textsf{MONOID} 3.1.2 contains more efficient methods than those available in the \textsf{GAP} library for computing orbits, calculating Green's classes, finding the size,
 the elements, and testing membership in transformation semigroups; see
 Chapters \ref{orbits} and \ref{greens}. After \textsf{MONOID} has been loaded many of these methods are automatically used in preference to
 those in the library and do not need to be called explicitly by the user.
@@ -131,15 +129,11 @@ group of a semigroup. The following functions can only be used fully if \textsf{
 \end{itemize}
  Installation of \textsf{GRAPE} is described in the \texttt{README} file of the \textsf{GRAPE} distribution and in the section entitled `Installing the GRAPE Package' of the \textsf{GRAPE} manual; see
 
- \href{ http://www.maths.qmul.ac.uk/~leonard/grape/ } {\texttt{ http://www.maths.qmul.ac.uk/\texttt{\symbol{126}}leonard/grape/ }}
-
- or the main \textsf{GAP} webpages for more information. 
+ \href{ http://www.maths.qmul.ac.uk/~leonard/grape/ } {\texttt{ http://www.maths.qmul.ac.uk/\texttt{\symbol{126}}leonard/grape/ }} or the main \textsf{GAP} webpages for more information. 
 
  If you want to take advantage of the online help facilities in \textsf{MONOID}, then the \textsf{gapdoc} package Version 1.1 or higher is also required; see 
 
- \href{ http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/ } {\texttt{ http://www.math.rwth-aachen.de/\texttt{\symbol{126}}Frank.Luebeck/GAPDoc/ }} 
-
- for further details of how to obtain and install \textsf{gapdoc}. }
+ \href{ http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/ } {\texttt{ http://www.math.rwth-aachen.de/\texttt{\symbol{126}}Frank.Luebeck/GAPDoc/ }} for further details of how to obtain and install \textsf{gapdoc}. }
 
   
 \section{\textcolor{Chapter }{Installing \textsf{MONOID}}}\label{install}
@@ -157,9 +151,7 @@ and isomorphism testing functions (for graphs) can be used.
 
  Please go to 
 
- \href{ http://www.maths.qmul.ac.uk/~leonard/grape/ } {\texttt{ http://www.maths.qmul.ac.uk/\texttt{\symbol{126}}leonard/grape/ }}
-
- or the main \textsf{GAP} webpage for further details on how to obtain and install \textsf{GRAPE}. 
+ \href{ http://www.maths.qmul.ac.uk/~leonard/grape/ } {\texttt{ http://www.maths.qmul.ac.uk/\texttt{\symbol{126}}leonard/grape/ }} or the main \textsf{GAP} webpage for further details on how to obtain and install \textsf{GRAPE}. 
 
  The following is a summary of the steps that should lead to a successful
 installation of \textsf{MONOID}. 
@@ -187,7 +179,7 @@ installation of \textsf{GAP}.
   [ ... ]
   
   gap> LoadPackage("monoid");
-  Loading MONOID 3.1.1
+  Loading MONOID 3.1.2
   by James Mitchell (www-groups.mcs.st-and.ac.uk/~jamesm)
   For help, type: ?the monoid package 
   true
@@ -214,16 +206,16 @@ running the \textsf{MONOID} package!
  and press \texttt{return}. Please note that it will take a few moments before the tests are complete.
 
  If the output looks like the following, then it is probable that you have a
-fully working copy of \textsf{MONOID} 3.1.1.
+fully working copy of \textsf{MONOID} 3.1.2.
 
  
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
   gap> LoadPackage( "monoid" );;
   gap> dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
   gap> Read( Filename( dirs, "installtest.g" ) );;
-  + install_no_grape.tst 3.1.1
+  + install_no_grape.tst 3.1.2
   + GAP4stones: 1
-  + install_with_grape.tst 3.1.1
+  + install_with_grape.tst 3.1.2
   + GAP4stones: 2
 \end{Verbatim}
  If you want to perform more extensive tests, then copy the following lines
@@ -246,7 +238,7 @@ at \href{mailto://jdm3@st-and.ac.uk} {\texttt{jdm3@st-and.ac.uk}}. }
 \begin{itemize}
 \item from 3.1.1 to 3.1.2: 
 \begin{itemize}
-\item the following new functions have been introduced: \texttt{TransformationActionNC} (\ref{TransformationActionNC}), \texttt{SmallestIdempotentPower} (\ref{SmallestIdempotentPower}), \texttt{IsKerImgOfTransformation} (\ref{IsKerImgOfTransformation}), \texttt{TransformationByKernelAndImage} (\ref{TransformationByKernelAndImage}), \texttt{AllTransformationsWithKerAndImgNC} (\ref{AllTransformationsWithKerAndImgNC}), \texttt{AsBooleanMatrix} (\ref{AsBooleanMatrix}), \texttt{KerImgOfTransformation} (\ref{KerImgOfTransformation}), \texttt{RandomIdempotent} (\ref{RandomIdempotent}), \texttt{InversesOfTransformation} (\ref{InversesOfTransformation}), \texttt{KiselmanSemigroup} (\ref{KiselmanSemigroup}), \texttt{FullMatrixSemigroup} (\ref{FullMatrixSemigroup}), \texttt{GeneralLinearSemigroup} (\ref{GeneralLinearSemigroup}), \texttt{IsFullMatrixSemigroup} (\ref{IsFullMatrixSemigroup}), \texttt{IsGeneralLinearSemigroup} (\ref{IsGeneralLinearSemigroup})
+\item the following new functions have been introduced: \texttt{TransformationActionNC} (\ref{TransformationActionNC}), \texttt{SmallestIdempotentPower} (\ref{SmallestIdempotentPower}), \texttt{IsKerImgOfTransformation} (\ref{IsKerImgOfTransformation}), \texttt{TransformationByKernelAndImage} (\ref{TransformationByKernelAndImage}), \texttt{AllTransformationsWithKerAndImgNC} (\ref{AllTransformationsWithKerAndImgNC}), \texttt{AsBooleanMatrix} (\ref{AsBooleanMatrix}), \texttt{KerImgOfTransformation} (\ref{KerImgOfTransformation}), \texttt{RandomIdempotent} (\ref{RandomIdempotent}), \texttt{InversesOfTransformation} (\ref{InversesOfTransformation}), \texttt{KiselmanSemigroup} (\ref{KiselmanSemigroup}), 
 \item the following functions were renamed: 
 \begin{itemize}
 \item  \texttt{PermRepTrans} was renamed \texttt{AsPermOfRange}
@@ -2240,55 +2232,6 @@ j<=n)>. \]
     gap> SetInfoLevel(InfoAutos, 0);
     gap> AutomorphismGroup(Range(IsomorphismTransformationSemigroup(S)));
     <group of size 1 with 1 generators>
-    
-\end{Verbatim}
- }
-
- 
-\subsection{\textcolor{Chapter }{FullMatrixSemigroup \& GeneralLinearSemigroup }}\logpage{[ 6, 1, 4 ]}
-\hyperdef{L}{X789DEE5B78DA4181}{}
-{
-\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{FullMatrixSemigroup({\slshape d, q})\index{FullMatrixSemigroup@\texttt{FullMatrixSemigroup}}
-\label{FullMatrixSemigroup}
-}\hfill{\scriptsize (operation)}}\\
-\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{GeneralLinearSemigroup({\slshape d, q})\index{GeneralLinearSemigroup@\texttt{GeneralLinearSemigroup}}
-\label{GeneralLinearSemigroup}
-}\hfill{\scriptsize (operation)}}\\
-
-
- these two functions are synonyms for each other. They both return the full
-matrix semigroup, or if you prefer the general linear semigroup, of all \texttt{d} by \texttt{d} matrices with entries over the field with \texttt{q} elements. This semigroup has \texttt{q\texttt{\symbol{94}}(d\texttt{\symbol{94}}2)} elements. 
-\begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> FullMatrixSemigroup(3,4);
-    <3x3 full matrix semigroup over GF(2^2)>
-    gap> Size(last);
-    262144
-    
-\end{Verbatim}
- }
-
- 
-\subsection{\textcolor{Chapter }{IsFullMatrixSemigroup \& IsGeneralLinearSemigroup }}\logpage{[ 6, 1, 5 ]}
-\hyperdef{L}{X82C0B1738620C3A0}{}
-{
-\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{IsFullMatrixSemigroup({\slshape S})\index{IsFullMatrixSemigroup@\texttt{IsFullMatrixSemigroup}}
-\label{IsFullMatrixSemigroup}
-}\hfill{\scriptsize (property)}}\\
-\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{IsGeneralLinearSemigroup({\slshape S})\index{IsGeneralLinearSemigroup@\texttt{IsGeneralLinearSemigroup}}
-\label{IsGeneralLinearSemigroup}
-}\hfill{\scriptsize (property)}}\\
-
-
- these two functions are synonyms for each other. They both return \texttt{true} if the semigroup \texttt{S} was created using either of the commands \texttt{FullMatrixSemigroup} (\ref{FullMatrixSemigroup}) or \texttt{GeneralLinearSemigroup} (\ref{GeneralLinearSemigroup}) and \texttt{false} otherwise. 
-\begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> S:=RandomSemigroup(4,4);
-    <semigroup with 4 generators>
-    gap> IsFullMatrixSemigroup(S);
-    false
-    gap> S:=GeneralLinearSemigroup(3,3);
-    <3x3 full matrix semigroup over GF(3)>
-    gap> IsFullMatrixSemigroup(S);
-    true
     
 \end{Verbatim}
  }

@@ -1,7 +1,7 @@
 ##
 ## semigroups.gi
-## Version 3.1.1
-## Mon Jun  9 17:02:20 BST 2008
+## Version 3.1.2
+## Thu 10 Jul 2008 20:25:38 BST
 ##
 
 # the functions in this file define different types of semigroups and 
@@ -1006,110 +1006,5 @@ SetIdempotents(S, List(Combinations([1..n]), x-> Product(List(Reversed(x), y-> a
 return S;
 end);
 
-###########################################################################
-##
-##	<#GAPDoc Label="FullMatrixSemigroup">
-##	<ManSection><Heading>FullMatrixSemigroup &amp; GeneralLinearSemigroup
-##	</Heading>
-##	<Oper Name="FullMatrixSemigroup" Arg="d,q"/>
-##	<Oper Name="GeneralLinearSemigroup" Arg="d,q"/>
-##	<Description>
-##	these two functions are synonyms for each other. They both return the full 
-##	matrix semigroup, or if you prefer the general linear semigroup, of all 
-##	<C>d</C> by <C>d</C> matrices with entries over the field with <C>q</C> 
-##	elements.  This semigroup has <M>q^(d^2)</M> elements. 
-##	<Example>
-##  gap&gt; FullMatrixSemigroup(3,4);
-##  &lt;3x3 full matrix semigroup over GF(2^2)&gt;
-##  gap&gt; Size(last);
-##  262144
-##  </Example>
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-InstallMethod(FullMatrixSemigroup, "for 2 pos ints", true, [IsPosInt, IsPosInt], 0, 
-function(d,q)
-local g, S;
-
-#g:=List([1..d], x-> List([1..d], function(y) if y=x and not y=d then
-# return Z(q)^0; else return 0*Z(q); fi; end));
-g:=OneMutable(GeneratorsOfGroup(GL(d,q))[1]);
-g[d][d]:=Z(q)*0; 
-
-S:=Monoid(Concatenation(GeneratorsOfGroup(GL(d,q)), [g]));
-SetIsFullMatrixSemigroup(S, true);
-SetIsGeneralLinearSemigroup(S, true); 
-SetIsFinite(S, true);
-SetSize(S, q^(d^2));
-
-#JDM set Green's relations etc too
-
-return S;
-end);
-
-##############
-
-InstallMethod(GeneralLinearSemigroup, "for 2 pos ints", true, [IsPosInt, IsPosInt], 0, 
-function(d,q)
-
-return FullMatrixSemigroup(d,q);
-end);
-
-###########################################################################
-##
-##	<#GAPDoc Label="IsFullMatrixSemigroup">
-##	<ManSection><Heading>IsFullMatrixSemigroup &amp; IsGeneralLinearSemigroup
-##	</Heading>
-##	<Prop Name="IsFullMatrixSemigroup" Arg="S"/>
-##	<Prop Name="IsGeneralLinearSemigroup" Arg="S"/>
-##	<Description>
-##	these two functions are synonyms for each other. They both return 
-##	<C>true</C> if the semigroup <C>S</C> was created using either of the 
-##	commands <Ref Oper="FullMatrixSemigroup"/> or 
-##	<Ref Oper="GeneralLinearSemigroup"/> and <C>false</C> otherwise. 
-##	<Example>
-##  gap&gt; S:=RandomSemigroup(4,4);
-##  &lt;semigroup with 4 generators&gt;
-##  gap&gt; IsFullMatrixSemigroup(S);
-##  false
-##  gap&gt; S:=GeneralLinearSemigroup(3,3);
-##  &lt;3x3 full matrix semigroup over GF(3)&gt;
-##  gap&gt; IsFullMatrixSemigroup(S);
-##  true
-##  </Example>
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-InstallMethod(IsFullMatrixSemigroup, "for a semigroup", true, [IsMonoid], ReturnFalse);
-
-##############
-
-InstallOtherMethod(IsGeneralLinearSemigroup, "for a semigroup", true, [IsSemigroup], ReturnFalse);
-
-##############
-
-InstallMethod( ViewObj, "for full matrix semigroup",[IsFullMatrixSemigroup], 10,
-function( obj )
-Print( "<", Length(GeneratorsOfMonoid(obj)[1][1]), "x", Length(GeneratorsOfMonoid(obj)[1][1]), " full matrix semigroup over ", BaseDomain(GeneratorsOfMonoid(obj)[1][1]), ">");
-end );
-
-##############
-
-InstallMethod(IsomorphismTransformationSemigroup, "for a full matrix semigroup", true, [IsFullMatrixSemigroup], 0, 
-function(S)
-local F, gens, T;
-
-gens:=GeneratorsOfMonoid(S);
-F:=BaseDomain(gens[1]);
-gens:=List(gens, x-> TransformationActionNC(Elements(F^Size(F)), OnRight, x));
-#JDM is the previous line correct? 
-T:=Monoid(gens);
-SetIsFinite(T, true);
-SetSize(T, Size(S));
-
-return SemigroupHomomorphismByFunctionNC(S, T, x-> TransformationActionNC(Elements(F^Size(F)), OnRight, x));
-end);
 
 ##############

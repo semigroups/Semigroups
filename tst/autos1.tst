@@ -1,13 +1,13 @@
 ##
 ## autos1.tst
-## Version 3.1.1
-## Mon Jun  9 17:02:20 BST 2008
+## Version 3.1.2
+## Thu 10 Jul 2008 20:25:38 BST
 ##
 
 #dirs := DirectoriesPackageLibrary( "monoid", "tst" );
 #ReadTest( Filename( dirs, "autos1.tst" ) );
 
-gap> START_TEST("autos1.tst 3.1.1");
+gap> START_TEST("autos1.tst 3.1.2");
 gap> LoadPackage("monoid");;
 gap> SetInfoLevel(InfoAutos, 0);
 gap> gens:=[ Transformation( [1,8,11,2,5,16,13,14,3,6,15,10,7,4,9,12 ] ), 
@@ -178,4 +178,4 @@ gap> InnerAutomorphismsOfSemigroupInGroup(S, G);
 <group of size 6 with 1 generators>
 gap> InnerAutomorphismsOfSemigroupInGroup(S, G, true);
 <group of size 6 with 1 generators>
-gap> STOP_TEST( "autos1.tst 3.1.1", 10000);
+gap> STOP_TEST( "autos1.tst 3.1.2", 10000);

@@ -1,7 +1,7 @@
 ##
 ## autos2.tst
-## Version 3.1.1
-## Mon Jun  9 17:02:20 BST 2008
+## Version 3.1.2
+## Thu 10 Jul 2008 20:25:38 BST
 ##
 
 ## don't run this file if grape is not loaded. 
@@ -9,7 +9,7 @@
 #dirs := DirectoriesPackageLibrary( "monoid", "tst" );
 #ReadTest( Filename( dirs, "autos2.tst" ) );
 
-gap> START_TEST("autos2.tst 3.1.1");
+gap> START_TEST("autos2.tst 3.1.2");
 gap> LoadPackage("monoid");;
 gap> g1:=Transformation([3,3,2,6,2,4,4,6]);;
 gap> g2:=Transformation([5,1,7,8,7,5,8,1]);;
@@ -431,4 +431,4 @@ fail
 gap> IsomorphismSemigroups(rms1, rms2);
 fail
 
-gap> STOP_TEST( "autos2.tst 3.1.1", 10000);
+gap> STOP_TEST( "autos2.tst 3.1.2", 10000);

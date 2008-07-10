@@ -1,7 +1,7 @@
 ##
 ## transform.gi
-## Version 3.1.1
-## Mon Jun  9 17:02:20 BST 2008
+## Version 3.1.2
+## Thu 10 Jul 2008 20:25:38 BST
 ##
 
 
@@ -432,7 +432,8 @@ InstallMethod(AsPermOfRange, "for a transformation", true, [IsTransformation], 0
 function(f)
 local p, img, t;
 
-p:=AsPermutation(f);
+#p:=AsPermutation(f); #JDM can be reincluded when AsPermutation is available in the release version 
+p:=fail;
 
 if p=fail then 
 	img:=AsSet(f![1]);
@@ -878,5 +879,3 @@ fi;
 
 return fail;
 end);
-
-

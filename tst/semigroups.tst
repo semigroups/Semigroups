@@ -1,13 +1,13 @@
 ##
 ## semigroups.tst
-## Version 3.1.1
-## Mon Jun  9 17:02:20 BST 2008
+## Version 3.1.2
+## Thu 10 Jul 2008 20:25:38 BST
 ##
 
 #dirs := DirectoriesPackageLibrary( "monoid", "tst" );
 #ReadTest( Filename( dirs, "semigroups.tst" ) );
 
-gap> START_TEST("semigroups.tst 3.1.1");
+gap> START_TEST("semigroups.tst 3.1.2");
 gap> LoadPackage("monoid");;
 gap> if not IsBound(BruteForceZeroIsoCheck) then 
 > BruteForceZeroIsoCheck:=function(iso)
@@ -320,16 +320,16 @@ gap> Idempotents(S);
 gap> SetInfoLevel(InfoAutos, 0);
 gap> AutomorphismGroup(Range(IsomorphismTransformationSemigroup(S)));
 <group of size 1 with 1 generators>
-gap> FullMatrixSemigroup(3,4);
-<3x3 full matrix semigroup over GF(2^2)>
-gap> Size(last);
-262144
-gap> S:=RandomSemigroup(4,4);
-<semigroup with 4 generators>
-gap> IsFullMatrixSemigroup(S);
-false
-gap> S:=GeneralLinearSemigroup(3,3);
-<3x3 full matrix semigroup over GF(3)>
-gap> IsFullMatrixSemigroup(S);
-true
-gap> STOP_TEST( "semigroups.tst 3.1.1", 10000);
+#gap> FullMatrixSemigroup(3,4);
+#<3x3 full matrix semigroup over GF(2^2)>
+#gap> Size(last);
+#262144
+#gap> S:=RandomSemigroup(4,4);
+#<semigroup with 4 generators>
+#gap> IsFullMatrixSemigroup(S);
+#false
+#gap> S:=GeneralLinearSemigroup(3,3);
+#<3x3 full matrix semigroup over GF(3)>
+#gap> IsFullMatrixSemigroup(S);
+#true
+gap> STOP_TEST( "semigroups.tst 3.1.2", 10000);

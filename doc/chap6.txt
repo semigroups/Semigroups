@@ -104,47 +104,6 @@
   [4X------------------------------------------------------------------[0X
   
   
-  [1X6.1-4 FullMatrixSemigroup & GeneralLinearSemigroup[0X
-  
-  [2X> FullMatrixSemigroup( [0X[3Xd, q[0X[2X ) _____________________________________[0Xoperation
-  [2X> GeneralLinearSemigroup( [0X[3Xd, q[0X[2X ) __________________________________[0Xoperation
-  
-  these  two  functions are synonyms for each other. They both return the full
-  matrix semigroup, or if you prefer the general linear semigroup, of all [10Xd[0m by
-  [10Xd[0m  matrices  with entries over the field with [10Xq[0m elements. This semigroup has
-  [10Xq^(d^2)[0m elements.
-  
-  [4X---------------------------  Example  ----------------------------[0X
-    [4X  gap> FullMatrixSemigroup(3,4);[0X
-    [4X  <3x3 full matrix semigroup over GF(2^2)>[0X
-    [4X  gap> Size(last);[0X
-    [4X  262144[0X
-    [4X  [0X
-  [4X------------------------------------------------------------------[0X
-  
-  
-  [1X6.1-5 IsFullMatrixSemigroup & IsGeneralLinearSemigroup[0X
-  
-  [2X> IsFullMatrixSemigroup( [0X[3XS[0X[2X ) _______________________________________[0Xproperty
-  [2X> IsGeneralLinearSemigroup( [0X[3XS[0X[2X ) ____________________________________[0Xproperty
-  
-  these  two  functions  are synonyms for each other. They both return [10Xtrue[0m if
-  the semigroup [10XS[0m was created using either of the commands [2XFullMatrixSemigroup[0m
-  ([14X6.1-4[0m) or [2XGeneralLinearSemigroup[0m ([14X6.1-4[0m) and [10Xfalse[0m otherwise.
-  
-  [4X---------------------------  Example  ----------------------------[0X
-    [4X  gap> S:=RandomSemigroup(4,4);[0X
-    [4X  <semigroup with 4 generators>[0X
-    [4X  gap> IsFullMatrixSemigroup(S);[0X
-    [4X  false[0X
-    [4X  gap> S:=GeneralLinearSemigroup(3,3);[0X
-    [4X  <3x3 full matrix semigroup over GF(3)>[0X
-    [4X  gap> IsFullMatrixSemigroup(S);[0X
-    [4X  true[0X
-    [4X  [0X
-  [4X------------------------------------------------------------------[0X
-  
-  
   [1X6.2 Zero Groups and Zero Semigroups[0X
   
   [1X6.2-1 ZeroSemigroup[0m

@@ -1,13 +1,13 @@
 ##
 ## greens.tst
-## Version 3.1.1
-## Mon Jun  9 17:02:20 BST 2008
+## Version 3.1.2
+## Thu 10 Jul 2008 20:25:38 BST
 ##
 
 #dirs := DirectoriesPackageLibrary( "monoid", "tst" );
 #ReadTest( Filename( dirs, "greens.tst"));
 
-gap> START_TEST("greens.tst 3.1.1");
+gap> START_TEST("greens.tst 3.1.2");
 gap> LoadPackage("monoid");;
 gap> tups:=[ [ [ 1, 4 ], [ 2 ], [ 3 ], [ 5 ], [ 6, 7, 8 ] ], 
 >  [ [ 1, 4 ], [ 2 ], [ 3 ], [ 5, 6 ], [ 7 ], [ 8 ] ], 
@@ -1258,7 +1258,7 @@ gap> ImagesOfTransSemigroup(S);
 [ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], 
   [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
 gap> S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
-> Transformation( [ 3, 3, 4, 1 ] ) ]);
+> Transformation( [ 3, 3, 4, 1 ] ) ]);;
 gap> KernelsOfTransSemigroup(S);   
 [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], 
   [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], 
@@ -1272,4 +1272,4 @@ gap> KernelsOfTransSemigroup(S,3);
 [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ]
 gap> KernelsOfTransSemigroup(S,4);
 [  ]
-gap> STOP_TEST( "greens.tst 3.1.1", 10000);
+gap> STOP_TEST( "greens.tst 3.1.2", 10000);

@@ -1,7 +1,7 @@
 ##
 ## greens.gi
-## Version 3.1.1
-## Mon Jun  9 17:02:20 BST 2008
+## Version 3.1.2
+## Thu 10 Jul 2008 20:25:38 BST
 ##
 
 ##  This file contains the `fast' algorithms for computing Green's relations
@@ -2647,4 +2647,3 @@ return poset;
 #return Graph(Group(()), [1..Length(class)], OnPoints, function(x,y) return y in poset[x]; end, true); ;
 
 end);
-
