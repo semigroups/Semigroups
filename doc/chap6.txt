@@ -81,7 +81,7 @@
   [2X> KiselmanSemigroup( [0X[3Xn[0X[2X ) __________________________________________[0Xoperation
   
   returns  the  Kiselman  semigroup  with [10Xn[0m generators. That is, the semigroup
-  defined in with the presentation
+  defined in [?mazorchuk?] with the presentation
   
   
        <a_1, a_2, ... , a_n | a_i^2=a_i (i=1,...n)

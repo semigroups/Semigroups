@@ -1,7 +1,7 @@
 ##
 ## semigroups.gi
 ## Version 3.1.2
-## Thu 10 Jul 2008 20:25:38 BST
+## Fri 11 Jul 2008 13:36:12 BST
 ##
 
 # the functions in this file define different types of semigroups and 

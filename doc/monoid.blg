@@ -2,58 +2,59 @@ This is BibTeX, Version 0.99c (Web2C 7.5.6)
 The top-level auxiliary file: monoid.aux
 The style file: alpha.bst
 Database file #1: MONOID.bib
-I was expecting a `,' or a `}'---line 48 of file MONOID.bib
+I was expecting a `,' or a `}'---line 56 of file MONOID.bib
  :       
  :       year = {1998},
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 59 of file MONOID.bib
+I was expecting a `,' or a `}'---line 67 of file MONOID.bib
  :       
  :       year = {2002},      MRCLASS = {20M20 (68W30) },
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
 Warning--empty journal in computing
+Warning--empty journal in mazorchuk
 Warning--empty year in pfeiffer2
 Warning--empty year in pfeiffer1
-You've used 8 entries,
+You've used 9 entries,
             2543 wiz_defined-function locations,
-            611 strings with 5527 characters,
-and the built_in function-call counts, 3212 in all, are:
-= -- 323
-> -- 171
+            615 strings with 5613 characters,
+and the built_in function-call counts, 3541 in all, are:
+= -- 356
+> -- 190
 < -- 2
-+ -- 60
-- -- 59
-* -- 248
-:= -- 556
-add.period$ -- 27
-call.type$ -- 8
-change.case$ -- 51
-chr.to.int$ -- 7
-cite$ -- 11
-duplicate$ -- 113
-empty$ -- 211
-format.name$ -- 68
-if$ -- 625
++ -- 66
+- -- 65
+* -- 267
+:= -- 615
+add.period$ -- 31
+call.type$ -- 9
+change.case$ -- 57
+chr.to.int$ -- 8
+cite$ -- 13
+duplicate$ -- 126
+empty$ -- 231
+format.name$ -- 75
+if$ -- 689
 int.to.chr$ -- 2
 int.to.str$ -- 0
-missing$ -- 9
-newline$ -- 46
-num.names$ -- 24
-pop$ -- 44
+missing$ -- 10
+newline$ -- 52
+num.names$ -- 27
+pop$ -- 50
 preamble$ -- 1
-purify$ -- 60
+purify$ -- 67
 quote$ -- 0
-skip$ -- 91
+skip$ -- 104
 stack$ -- 0
-substring$ -- 169
+substring$ -- 176
 swap$ -- 9
 text.length$ -- 2
 text.prefix$ -- 1
 top$ -- 0
-type$ -- 60
-warning$ -- 3
-while$ -- 33
-width$ -- 10
-write$ -- 108
+type$ -- 68
+warning$ -- 4
+while$ -- 36
+width$ -- 11
+write$ -- 121
 (There were 2 error messages)

@@ -25,9 +25,8 @@
   Ruskuc  for  their  help and suggestions. Special thanks go to J. Araujo for
   his mathematical suggestions.
   
-  I  would  also  like  to acknowledge the support of Centre of Algebra at the
-  University  of  Lisbon,  and  the  financial  support  of EPSRC grant number
-  GR/S/56085/01.
+  I would also like to acknowledge the support of the Centre of Algebra at the
+  University of Lisbon, and of EPSRC grant number GR/S/56085/01.
   
   
   -------------------------------------------------------

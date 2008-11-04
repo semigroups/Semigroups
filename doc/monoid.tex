@@ -73,9 +73,8 @@ Neubueser, V. Maltcev, M. Neuhoeffer, M. R. Quick, E. F. Robertson, and N.
 Ruskuc for their help and suggestions. Special thanks go to J. Araujo for his
 mathematical suggestions. 
 
- I would also like to acknowledge the support of Centre of Algebra at the
-University of Lisbon, and the financial support of EPSRC grant number
-GR/S/56085/01. \\
+ I would also like to acknowledge the support of the Centre of Algebra at the
+University of Lisbon, and of EPSRC grant number GR/S/56085/01. \\
 \\
  \mbox{}}\\[1cm]
 {\small 
@@ -100,9 +99,7 @@ important or if you find a bug, please let me know. \mbox{}}\\[1cm]
 \section{\textcolor{Chapter }{Introduction}}\logpage{[ 1, 1, 0 ]}
 \hyperdef{L}{X7DFB63A97E67C0A1}{}
 {
- This manual describes the \textsf{MONOID} package version 3.1.2 for computing with transformation semigroups. \textsf{MONOID} 3.1.2 is an updated version of the package with the same name for \textsf{GAP} 3; see 
-
- \href{http://schmidt.nuigalway.ie/monoid/index.html} {\texttt{http://schmidt.nuigalway.ie/monoid/index.html}} for more information about the original \textsf{MONOID} by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc. 
+ This manual describes the \textsf{MONOID} package version 3.1.2 for computing with transformation semigroups. \textsf{MONOID} 3.1.2 is an updated version of the package with the same name for \textsf{GAP} 3; see \href{http://schmidt.nuigalway.ie/monoid/index.html} {\texttt{http://schmidt.nuigalway.ie/monoid/index.html}} for more information about the original \textsf{MONOID} by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc. 
 
  \textsf{MONOID} 3.1.2 retains all the functionality of the original \textsf{MONOID} package. In particular, \textsf{MONOID} 3.1.2 contains more efficient methods than those available in the \textsf{GAP} library for computing orbits, calculating Green's classes, finding the size,
 the elements, and testing membership in transformation semigroups; see
@@ -127,13 +124,9 @@ group of a semigroup. The following functions can only be used fully if \textsf{
 \item \texttt{RZMStoRZMSInducedFunction} (\ref{RZMStoRZMSInducedFunction})
 \item \texttt{IsomorphismSemigroups} (\ref{IsomorphismSemigroups}) with both arguments satisfying \texttt{IsReesZeroMatrixSemigroup} (\textbf{Reference: IsReesZeroMatrixSemigroup})
 \end{itemize}
- Installation of \textsf{GRAPE} is described in the \texttt{README} file of the \textsf{GRAPE} distribution and in the section entitled `Installing the GRAPE Package' of the \textsf{GRAPE} manual; see
+ Installation of \textsf{GRAPE} is described in the \texttt{README} file of the \textsf{GRAPE} distribution and in the section entitled `Installing the GRAPE Package' of the \textsf{GRAPE} manual; see \href{ http://www.maths.qmul.ac.uk/~leonard/grape/ } {\texttt{ http://www.maths.qmul.ac.uk/\texttt{\symbol{126}}leonard/grape/ }} or the main \textsf{GAP} webpages for more information. 
 
- \href{ http://www.maths.qmul.ac.uk/~leonard/grape/ } {\texttt{ http://www.maths.qmul.ac.uk/\texttt{\symbol{126}}leonard/grape/ }} or the main \textsf{GAP} webpages for more information. 
-
- If you want to take advantage of the online help facilities in \textsf{MONOID}, then the \textsf{gapdoc} package Version 1.1 or higher is also required; see 
-
- \href{ http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/ } {\texttt{ http://www.math.rwth-aachen.de/\texttt{\symbol{126}}Frank.Luebeck/GAPDoc/ }} for further details of how to obtain and install \textsf{gapdoc}. }
+ If you want to take advantage of the online help facilities in \textsf{MONOID}, then the \textsf{gapdoc} package Version 1.1 or higher is also required; see \href{ http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/ } {\texttt{ http://www.math.rwth-aachen.de/\texttt{\symbol{126}}Frank.Luebeck/GAPDoc/ }} for further details of how to obtain and install \textsf{gapdoc}. }
 
   
 \section{\textcolor{Chapter }{Installing \textsf{MONOID}}}\label{install}
@@ -142,25 +135,15 @@ group of a semigroup. The following functions can only be used fully if \textsf{
 {
  In this section we give a brief description of how to start using \textsf{MONOID}. If you have any problems getting \textsf{MONOID} working, then please email me directly at \href{mailto://jdm3@st-and.ac.uk} {\texttt{jdm3@st-and.ac.uk}}. 
 
- It is assumed that you have a working copy of \textsf{GAP} with version number 4.4.10 or higher. The most up-to-date version of \textsf{GAP} and instructions on how to install it can be obtained from the main \textsf{GAP} webpage
-
- \href{ http://www.gap-system.org } {\texttt{ http://www.gap-system.org }}
-
- Those functions in \textsf{MONOID} described in Chapter \ref{homo} relating to automorphism groups of semigroups require the \textsf{GRAPE} (for computing with graphs and groups) to be loaded. In particular, \textsf{GRAPE} must be installed in a UNIX operating system so that the automorphism group
+ It is assumed that you have a working copy of \textsf{GAP} with version number 4.4.10 or higher. The most up-to-date version of \textsf{GAP} and instructions on how to install it can be obtained from the main \textsf{GAP} webpage \href{ http://www.gap-system.org } {\texttt{ http://www.gap-system.org }} Those functions in \textsf{MONOID} described in Chapter \ref{homo} relating to automorphism groups of semigroups require the \textsf{GRAPE} (for computing with graphs and groups) to be loaded. In particular, \textsf{GRAPE} must be installed in a UNIX operating system so that the automorphism group
 and isomorphism testing functions (for graphs) can be used.
 
- Please go to 
-
- \href{ http://www.maths.qmul.ac.uk/~leonard/grape/ } {\texttt{ http://www.maths.qmul.ac.uk/\texttt{\symbol{126}}leonard/grape/ }} or the main \textsf{GAP} webpage for further details on how to obtain and install \textsf{GRAPE}. 
+ Please go to \href{ http://www.maths.qmul.ac.uk/~leonard/grape/ } {\texttt{ http://www.maths.qmul.ac.uk/\texttt{\symbol{126}}leonard/grape/ }} or the main \textsf{GAP} webpage for further details on how to obtain and install \textsf{GRAPE}. 
 
  The following is a summary of the steps that should lead to a successful
 installation of \textsf{MONOID}. 
 \begin{itemize}
-\item  download the package archive \texttt{monoid3r1p1.tar.gz} or \texttt{monoid3r1p1.tar.bz2} from 
-
- \href{http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html } {\texttt{http://www-history.mcs.st-and.ac.uk/\texttt{\symbol{126}}jamesm/monoid/index.html }}
-
- 
+\item  download the package archive \texttt{monoid3r1p1.tar.gz} or \texttt{monoid3r1p1.tar.bz2} from \href{http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html } {\texttt{http://www-history.mcs.st-and.ac.uk/\texttt{\symbol{126}}jamesm/monoid/index.html }} 
 \item  unzip \& untar the file, this should create a directory called \texttt{MONOID}.
 \item  move the directory \texttt{MONOID} into the \texttt{pkg} directory of your \textsf{GAP} directory (the one containing the directories \texttt{lib}, \texttt{doc}, \texttt{pkg}, and so on)
 \item  start \textsf{GAP} in the usual way
@@ -2216,7 +2199,7 @@ given in \cite{arthur1} and \cite{gomes1}. That is, \texttt{OrderPreservingSemig
 }\hfill{\scriptsize (operation)}}\\
 
 
- returns the Kiselman semigroup with \texttt{n} generators. That is, the semigroup defined in  with the presentation 
+ returns the Kiselman semigroup with \texttt{n} generators. That is, the semigroup defined in \cite{mazorchuk} with the presentation 
 \[ <a_1, a_2, ... , a_n | a_i^2=a_i (i=1,...n) a_ia_ja_i=a_ja_ia_j=a_ja_i (1<=i<
 j<=n)>. \]
  

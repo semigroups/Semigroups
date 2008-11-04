@@ -6,8 +6,7 @@
   
   This  manual  describes  the [5XMONOID[0m package version 3.1.2 for computing with
   transformation semigroups. [5XMONOID[0m 3.1.2 is an updated version of the package
-  with the same name for [5XGAP[0m 3; see
-  
+  with        the       same       name       for       [5XGAP[0m       3;       see
   [7Xhttp://schmidt.nuigalway.ie/monoid/index.html[0m for more information about the
   original  [5XMONOID[0m  by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson
   and Nik Ruskuc.
@@ -54,14 +53,11 @@
   
   Installation  of  [5XGRAPE[0m  is  described  in  the  [10XREADME[0m  file  of  the [5XGRAPE[0m
   distribution  and  in the section entitled `Installing the GRAPE Package' of
-  the [5XGRAPE[0m manual; see
-  
-  [7Xhttp://www.maths.qmul.ac.uk/~leonard/grape/[0m  or  the  main  [5XGAP[0m webpages for
-  more information.
+  the  [5XGRAPE[0m  manual;  see  [7Xhttp://www.maths.qmul.ac.uk/~leonard/grape/[0m or the
+  main [5XGAP[0m webpages for more information.
   
   If  you want to take advantage of the online help facilities in [5XMONOID[0m, then
-  the [5Xgapdoc[0m package Version 1.1 or higher is also required; see
-  
+  the   [5Xgapdoc[0m   package   Version   1.1  or  higher  is  also  required;  see
   [7Xhttp://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/[0m for further details of
   how to obtain and install [5Xgapdoc[0m.
   
@@ -74,28 +70,21 @@
   
   It is assumed that you have a working copy of [5XGAP[0m with version number 4.4.10
   or  higher.  The  most  up-to-date version of [5XGAP[0m and instructions on how to
-  install it can be obtained from the main [5XGAP[0m webpage
+  install    it    can    be    obtained    from    the   main   [5XGAP[0m   webpage
+  [7Xhttp://www.gap-system.org[0m  Those  functions in [5XMONOID[0m described in Chapter [14X7[0m
+  relating  to  automorphism  groups  of  semigroups  require  the  [5XGRAPE[0m (for
+  computing with graphs and groups) to be loaded. In particular, [5XGRAPE[0m must be
+  installed  in  a  UNIX  operating  system so that the automorphism group and
+  isomorphism testing functions (for graphs) can be used.
   
-  [7Xhttp://www.gap-system.org[0m
-  
-  Those  functions  in  [5XMONOID[0m described in Chapter [14X7[0m relating to automorphism
-  groups  of  semigroups  require  the  [5XGRAPE[0m  (for  computing with graphs and
-  groups)  to  be  loaded.  In  particular,  [5XGRAPE[0m must be installed in a UNIX
-  operating  system  so  that  the  automorphism group and isomorphism testing
-  functions (for graphs) can be used.
-  
-  Please go to
-  
-  [7Xhttp://www.maths.qmul.ac.uk/~leonard/grape/[0m  or  the  main  [5XGAP[0m  webpage for
-  further details on how to obtain and install [5XGRAPE[0m.
+  Please  go  to  [7Xhttp://www.maths.qmul.ac.uk/~leonard/grape/[0m  or the main [5XGAP[0m
+  webpage for further details on how to obtain and install [5XGRAPE[0m.
   
   The  following  is  a  summary of the steps that should lead to a successful
   installation of [5XMONOID[0m.
   
   --    download the package archive [10Xmonoid3r1p1.tar.gz[0m or [10Xmonoid3r1p1.tar.bz2[0m
-        from
-  
-        [7Xhttp://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html[0m
+        from [7Xhttp://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html[0m
   
   --    unzip & untar the file, this should create a directory called [10XMONOID[0m.
   

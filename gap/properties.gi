@@ -1,7 +1,7 @@
 ##
 ## properties.gi
 ## Version 3.1.2
-## Thu 10 Jul 2008 20:25:38 BST
+## Fri 11 Jul 2008 13:36:12 BST
 ##
 
 ##  The functions in this file are used to test whether a given 

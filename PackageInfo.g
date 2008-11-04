@@ -8,9 +8,9 @@ SetPackageInfo( rec(
 PackageName := "MONOID",
 Subtitle := "Computing with transformation semigroups and monoids",
 Version := "3.1.2",
-Date := "10/07/2008",
+Date := "11/07/2008",
 ArchiveURL := 
-          "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/monoid/monoid3r1p1",
+          "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/monoid/monoid3r1p2",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 

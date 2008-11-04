@@ -1,7 +1,7 @@
 ##
 ## install_with_grape.tst
 ## Version 3.1.2
-## Thu 10 Jul 2008 20:25:38 BST
+## Fri 11 Jul 2008 13:36:12 BST
 ##
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "install_with_grape.tst" ) );

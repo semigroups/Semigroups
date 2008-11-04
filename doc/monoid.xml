@@ -25,8 +25,8 @@
 		Ruskuc for their help and suggestions.  Special thanks go to J. Araujo for 
 		his mathematical suggestions. <P/>
 
-		I would also like to acknowledge the support of Centre of Algebra at the 
-		University of Lisbon, and the financial support of EPSRC grant number 
+		I would also like to acknowledge the support of the Centre of Algebra at the 
+		University of Lisbon, and of EPSRC grant number 
 		GR/S/56085/01. <Br/><Br/>
 	</Acknowledgements>
 
@@ -41,9 +41,7 @@
 	<Section><Heading>Introduction</Heading>
 This  manual  describes the <Package>MONOID</Package> package version 3.1.2 for 
 computing with transformation semigroups.
-  <Package>MONOID</Package> 3.1.2 is an updated version of the package with the same name for &GAP; 3; see <P/>
-
-<URL>http://schmidt.nuigalway.ie/monoid/index.html</URL>
+  <Package>MONOID</Package> 3.1.2 is an updated version of the package with the same name for &GAP; 3; see <URL>http://schmidt.nuigalway.ie/monoid/index.html</URL>
 
 for more information about the original <Package>MONOID</Package> by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc. <P/>
 
@@ -81,7 +79,7 @@ following functions can only be used fully if <Package>GRAPE</Package> is fully 
 </List>
  Installation of <Package>GRAPE</Package> is
 described in the <C>README</C> file of the <Package>GRAPE</Package> distribution and in the section entitled `Installing the 
-GRAPE Package' of the <Package>GRAPE</Package> manual; see<P/>
+GRAPE Package' of the <Package>GRAPE</Package> manual; see
 <URL>
 http://www.maths.qmul.ac.uk/~leonard/grape/
 </URL>
@@ -89,7 +87,7 @@ or the main &GAP; webpages for more information. <P/>
 
  If you want to take advantage 
 of the online help facilities in <Package>MONOID</Package>, then the 
-<Package>gapdoc</Package> package Version 1.1 or higher is also required; see <P/>
+<Package>gapdoc</Package> package Version 1.1 or higher is also required; see 
 <URL>
 http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/
 </URL>
@@ -107,10 +105,10 @@ directly at <Email>jdm3@st-and.ac.uk</Email>. <P/>
 
 It is assumed that you have a working copy of &GAP; with version number 4.4.10 
 or higher. The most up-to-date version of &GAP; and instructions on how to 
-install it can be obtained from the main &GAP; webpage<P/>
+install it can be obtained from the main &GAP; webpage
 <URL>
 http://www.gap-system.org
-</URL><P/>
+</URL>
 
 Those functions in <Package>MONOID</Package> described in Chapter
 <Ref Chap="homo"/> relating to automorphism 
@@ -119,7 +117,7 @@ graphs and groups) to be loaded.  In particular, <Package>GRAPE</Package> must
 be installed in a UNIX operating system so that the 
 automorphism group and isomorphism testing functions (for graphs) can be used.<P/>
 
-Please go to <P/>
+Please go to 
 <URL>
 http://www.maths.qmul.ac.uk/~leonard/grape/
 </URL>
@@ -130,9 +128,9 @@ The following is a summary of the steps that
 should lead to a successful installation of <Package>MONOID</Package>. 
 
 <List>
-<Item> download the package archive <C>monoid3r1p1.tar.gz</C> or <C>monoid3r1p1.tar.bz2</C> from <P/>
+<Item> download the package archive <C>monoid3r1p1.tar.gz</C> or <C>monoid3r1p1.tar.bz2</C> from 
 <URL>http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html
-</URL><P/>
+</URL>
 </Item>
 <Item> unzip &amp; untar the file, this should create a directory called <C>MONOID</C>.</Item>
 <Item>  move the directory <C>MONOID</C> into the <C>pkg</C> directory of your &GAP; directory (the one containing the directories <C>lib</C>, <C>doc</C>, <C>pkg</C>, and so on)</Item>

@@ -1,7 +1,7 @@
 ##
 ## greens.gi
 ## Version 3.1.2
-## Thu 10 Jul 2008 20:25:38 BST
+## Fri 11 Jul 2008 13:36:12 BST
 ##
 
 ##  This file contains the `fast' algorithms for computing Green's relations
@@ -2526,13 +2526,20 @@ if not IsTransformation(x) or DegreeOfTransformation(x) <> DegreeOfTransformatio
 	return false;
 fi;
 
-GreensRClasses(M);
 k:= RankOfTransformation(x);
+
+if k>Maximum(List(GeneratorsOfSemigroup(M), RankOfTransformation)) then 
+	return false;
+fi;
+
+GreensRClasses(M);
 pos:= Position(GradedImagesOfTransSemigroup(M)[k], ImageSetOfTransformation(x));
 
 if pos = fail then
 	return false;
 fi;
+
+GreensRClasses(M);
 
 # locate representing R class.
 j:= PositionsRClasses(M)[k][pos];

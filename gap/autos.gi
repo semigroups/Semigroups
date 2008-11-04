@@ -1,7 +1,7 @@
 ##
 ## autos.gi
 ## Version 3.1.2
-## Thu 10 Jul 2008 20:25:38 BST
+## Fri 11 Jul 2008 13:36:12 BST
 ##
 
 ##  <#GAPDoc Label="autostop">
@@ -295,6 +295,7 @@ if IsTrivial(inner) then
 fi;
 
 Info(InfoAutos, 2, "InnerAutomorphisms: computing the stabilizer of generators under \n#I  the action of the stabilizers of images and kernels");
+
 G:=OrbitStabilizer(inner, AsSet(gens), OnSets); #setwise stabilizer
 H:=OrbitStabilizer(G.stabilizer, gens, OnTuples); #pointwise stabilizer
 
@@ -330,7 +331,6 @@ repeat
 	l:=l+1; 
 	x:=perms[l];
 	image:=OnTuples(gens, x);
-	#JDM consider moving this or changing it to InnerAutomorphismOfSemigroup())
 	if not image=gens then
 		if not x in inner and not x in bad then
 			if ForAll(image, x-> x in S) then 
@@ -340,15 +340,15 @@ repeat
 						inner:=ClosureGroupDefault(inner, x);
 					fi;
 				else
-					Info(InfoAutos, 4, "InnerAutomorphisms: images don't generate");
+					#Info(InfoAutos, 4, "InnerAutomorphisms: images don't generate");
 					bad:=Union(bad, Orbit(inner, image, OnTuples)); 
 				fi;
 			else
-				Info(InfoAutos, 4, "InnerAutomorphisms: images not all in semigroup");
+				#Info(InfoAutos, 4, "InnerAutomorphisms: images not all in semigroup");
 			fi;
 		fi;
 	fi;
-	Info(InfoAutos, 4, "InnerAutomorphisms: automorphisms ", Size(inner), " nonautomorphisms ", Length(bad), " counter ", l);
+	Print("InnerAutomorphisms: automorphisms ", Size(inner), " nonautomorphisms ", Length(bad), " counter ", l, "\r");
 until 2*Size(inner)+Length(bad)>Length(perms) or l=Length(perms);
 
 if not bval and not superlist=fail then 
@@ -365,11 +365,13 @@ if not bval and not superlist=fail then
 	inner:=new;
 fi;
 
+Print("\n");
+
 autos:=Group(List(SmallGeneratingSet(inner), x-> InnerAutomorphismOfSemigroupNC(S, x)));
 SetAsSSortedList(autos, SetX(inner, x-> InnerAutomorphismOfSemigroupNC(S, x)));
 SetIsInnerAutomorphismsOfSemigroup(autos, true);
 #SetInnerAutomorphismsOfSemigroup(S, autos);
-
+#SetIsomorphismPermGroup(autos, inner...)
 return autos;
 
 end);

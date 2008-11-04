@@ -37,9 +37,7 @@
 
 <h4>1.1 <span class="Heading">Introduction</span></h4>
 
-<p>This manual describes the <strong class="pkg">MONOID</strong> package version 3.1.2 for computing with transformation semigroups. <strong class="pkg">MONOID</strong> 3.1.2 is an updated version of the package with the same name for <strong class="pkg">GAP</strong> 3; see</p>
-
-<p><span class="URL"><a href="http://schmidt.nuigalway.ie/monoid/index.html">http://schmidt.nuigalway.ie/monoid/index.html</a></span> for more information about the original <strong class="pkg">MONOID</strong> by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc.</p>
+<p>This manual describes the <strong class="pkg">MONOID</strong> package version 3.1.2 for computing with transformation semigroups. <strong class="pkg">MONOID</strong> 3.1.2 is an updated version of the package with the same name for <strong class="pkg">GAP</strong> 3; see <span class="URL"><a href="http://schmidt.nuigalway.ie/monoid/index.html">http://schmidt.nuigalway.ie/monoid/index.html</a></span> for more information about the original <strong class="pkg">MONOID</strong> by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc.</p>
 
 <p><strong class="pkg">MONOID</strong> 3.1.2 retains all the functionality of the original <strong class="pkg">MONOID</strong> package. In particular, <strong class="pkg">MONOID</strong> 3.1.2 contains more efficient methods than those available in the <strong class="pkg">GAP</strong> library for computing orbits, calculating Green's classes, finding the size, the elements, and testing membership in transformation semigroups; see Chapters <a href="chap3.html#X849149EF79F824D1"><b>3</b></a> and <a href="chap4.html#X80C6C718801855E9"><b>4</b></a>. After <strong class="pkg">MONOID</strong> has been loaded many of these methods are automatically used in preference to those in the library and do not need to be called explicitly by the user. These methods are described in <a href="chapBib.html#biBpfeiffer1">[LPRR98]</a> and the algorithms themselves are described in <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
 
@@ -68,13 +66,9 @@
 
 </li>
 </ul>
-<p>Installation of <strong class="pkg">GRAPE</strong> is described in the <code class="code">README</code> file of the <strong class="pkg">GRAPE</strong> distribution and in the section entitled `Installing the GRAPE Package' of the <strong class="pkg">GRAPE</strong> manual; see</p>
+<p>Installation of <strong class="pkg">GRAPE</strong> is described in the <code class="code">README</code> file of the <strong class="pkg">GRAPE</strong> distribution and in the section entitled `Installing the GRAPE Package' of the <strong class="pkg">GRAPE</strong> manual; see <span class="URL"><a href=" http://www.maths.qmul.ac.uk/~leonard/grape/ "> http://www.maths.qmul.ac.uk/~leonard/grape/ </a></span> or the main <strong class="pkg">GAP</strong> webpages for more information.</p>
 
-<p><span class="URL"><a href=" http://www.maths.qmul.ac.uk/~leonard/grape/ "> http://www.maths.qmul.ac.uk/~leonard/grape/ </a></span> or the main <strong class="pkg">GAP</strong> webpages for more information.</p>
-
-<p>If you want to take advantage of the online help facilities in <strong class="pkg">MONOID</strong>, then the <strong class="pkg">gapdoc</strong> package Version 1.1 or higher is also required; see</p>
-
-<p><span class="URL"><a href=" http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/ "> http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/ </a></span> for further details of how to obtain and install <strong class="pkg">gapdoc</strong>.</p>
+<p>If you want to take advantage of the online help facilities in <strong class="pkg">MONOID</strong>, then the <strong class="pkg">gapdoc</strong> package Version 1.1 or higher is also required; see <span class="URL"><a href=" http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/ "> http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/ </a></span> for further details of how to obtain and install <strong class="pkg">gapdoc</strong>.</p>
 
 <p><a id="X7F6B07EE7F61869F" name="X7F6B07EE7F61869F"></a></p>
 
@@ -82,23 +76,15 @@
 
 <p>In this section we give a brief description of how to start using <strong class="pkg">MONOID</strong>. If you have any problems getting <strong class="pkg">MONOID</strong> working, then please email me directly at <span class="URL"><a href="mailto:jdm3@st-and.ac.uk">jdm3@st-and.ac.uk</a></span>.</p>
 
-<p>It is assumed that you have a working copy of <strong class="pkg">GAP</strong> with version number 4.4.10 or higher. The most up-to-date version of <strong class="pkg">GAP</strong> and instructions on how to install it can be obtained from the main <strong class="pkg">GAP</strong> webpage</p>
+<p>It is assumed that you have a working copy of <strong class="pkg">GAP</strong> with version number 4.4.10 or higher. The most up-to-date version of <strong class="pkg">GAP</strong> and instructions on how to install it can be obtained from the main <strong class="pkg">GAP</strong> webpage <span class="URL"><a href=" http://www.gap-system.org "> http://www.gap-system.org </a></span> Those functions in <strong class="pkg">MONOID</strong> described in Chapter <a href="chap7.html#X861935DB81A478C2"><b>7</b></a> relating to automorphism groups of semigroups require the <strong class="pkg">GRAPE</strong> (for computing with graphs and groups) to be loaded. In particular, <strong class="pkg">GRAPE</strong> must be installed in a UNIX operating system so that the automorphism group and isomorphism testing functions (for graphs) can be used.</p>
 
-<p><span class="URL"><a href=" http://www.gap-system.org "> http://www.gap-system.org </a></span></p>
-
-<p>Those functions in <strong class="pkg">MONOID</strong> described in Chapter <a href="chap7.html#X861935DB81A478C2"><b>7</b></a> relating to automorphism groups of semigroups require the <strong class="pkg">GRAPE</strong> (for computing with graphs and groups) to be loaded. In particular, <strong class="pkg">GRAPE</strong> must be installed in a UNIX operating system so that the automorphism group and isomorphism testing functions (for graphs) can be used.</p>
-
-<p>Please go to</p>
-
-<p><span class="URL"><a href=" http://www.maths.qmul.ac.uk/~leonard/grape/ "> http://www.maths.qmul.ac.uk/~leonard/grape/ </a></span> or the main <strong class="pkg">GAP</strong> webpage for further details on how to obtain and install <strong class="pkg">GRAPE</strong>.</p>
+<p>Please go to <span class="URL"><a href=" http://www.maths.qmul.ac.uk/~leonard/grape/ "> http://www.maths.qmul.ac.uk/~leonard/grape/ </a></span> or the main <strong class="pkg">GAP</strong> webpage for further details on how to obtain and install <strong class="pkg">GRAPE</strong>.</p>
 
 <p>The following is a summary of the steps that should lead to a successful installation of <strong class="pkg">MONOID</strong>.</p>
 
 
 <ul>
-<li><p>download the package archive <code class="code">monoid3r1p1.tar.gz</code> or <code class="code">monoid3r1p1.tar.bz2</code> from</p>
-
-<p><span class="URL"><a href="http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html ">http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html </a></span></p>
+<li><p>download the package archive <code class="code">monoid3r1p1.tar.gz</code> or <code class="code">monoid3r1p1.tar.bz2</code> from <span class="URL"><a href="http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html ">http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html </a></span></p>
 
 </li>
 <li><p>unzip &amp; untar the file, this should create a directory called <code class="code">MONOID</code>.</p>

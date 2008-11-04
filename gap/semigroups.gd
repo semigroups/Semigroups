@@ -1,7 +1,7 @@
 ##
 ## semigroups.gd
 ## Version 3.1.2
-## Thu 10 Jul 2008 20:25:38 BST
+## Fri 11 Jul 2008 13:36:12 BST
 ##
 
 ###########################################################################
@@ -351,7 +351,7 @@ DeclareGlobalFunction("ReesZeroMatrixSemigroupElementNC");
 ##	<Oper Name="KiselmanSemigroup" Arg="n"/>
 ##	<Description>
 ##	returns the Kiselman semigroup with <C>n</C> generators. That is, the 
-##	semigroup defined in <!--<Cite Key="mazorchuk"/>--> with the presentation
+##	semigroup defined in <Cite Key="mazorchuk"/> with the presentation
 ##	<Display>
 ##	&lt;a_1, a_2, ... , a_n | a_i^2=a_i (i=1,...n) a_ia_ja_i=a_ja_ia_j=a_ja_i 
 ##	(1&lt;=i&lt; j&lt;=n)&gt;.

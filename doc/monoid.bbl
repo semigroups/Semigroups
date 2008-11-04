@@ -31,6 +31,12 @@ John~M. Howie.
 \newblock The Clarendon Press Oxford University Press, New York, 1995.
 \newblock Oxford Science Publications.
 
+\bibitem[KM05]{mazorchuk}
+G.~Kudryavtseva and V.~Mazorchuk.
+\newblock On kiselman's semigroup.
+\newblock 2005.
+\newblock arXiv:math/0511374v1.
+
 \bibitem[LM90]{lallement}
 G.~Lallement and R.~McFadden.
 \newblock On the determination of {G}reen's relations in finite transformation
