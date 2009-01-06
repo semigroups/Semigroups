@@ -7,7 +7,7 @@
 
 <TitlePage>
 	<Title>The <Package>MONOID</Package> Package</Title>
-	<Version>Version 3.1.2</Version>
+	<Version>Version 3.1.3</Version>
 	<Author>J. D. Mitchell
 		<Email>jdm3@st-and.ac.uk</Email>
 	</Author>
@@ -39,14 +39,14 @@
 	<!-- ############### -->
 	
 	<Section><Heading>Introduction</Heading>
-This  manual  describes the <Package>MONOID</Package> package version 3.1.2 for 
+This  manual  describes the <Package>MONOID</Package> package version 3.1.3 for 
 computing with transformation semigroups.
-  <Package>MONOID</Package> 3.1.2 is an updated version of the package with the same name for &GAP; 3; see <URL>http://schmidt.nuigalway.ie/monoid/index.html</URL>
+  <Package>MONOID</Package> 3.1.3 is an updated version of the package with the same name for &GAP; 3; see <URL>http://schmidt.nuigalway.ie/monoid/index.html</URL>
 
 for more information about the original <Package>MONOID</Package> by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc. <P/>
 
-<Package>MONOID</Package> 3.1.2 retains all the functionality of the original <Package>MONOID</Package> package. 
-In particular,  <Package>MONOID</Package>  3.1.2 contains more efficient 
+<Package>MONOID</Package> 3.1.3 retains all the functionality of the original <Package>MONOID</Package> package. 
+In particular,  <Package>MONOID</Package>  3.1.3 contains more efficient 
 methods than those  available in the &GAP; library for computing orbits, calculating Green's 
 classes, finding the size, the elements, and testing membership in transformation semigroups; see Chapters <Ref Chap="orbits"/> and <Ref Chap="greens"/>. After <Package>MONOID</Package> 
 has been loaded many of these methods are automatically used in preference to 
@@ -128,7 +128,7 @@ The following is a summary of the steps that
 should lead to a successful installation of <Package>MONOID</Package>. 
 
 <List>
-<Item> download the package archive <C>monoid3r1p1.tar.gz</C> or <C>monoid3r1p1.tar.bz2</C> from 
+<Item> download the package archive <C>monoid3r1p3.tar.gz</C> or <C>monoid3r1p3.tar.bz2</C> from 
 <URL>http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html
 </URL>
 </Item>
@@ -144,15 +144,15 @@ one containing the folders `bin', `lib', and so on) in your installation of
 &GAP;.<P/>
 
 <Example>
-&gt; gunzip monoid3r1p1.tar.gz 
-&gt; tar -xf monoid3r1p1.tar 
+&gt; gunzip monoid3r1p3.tar.gz 
+&gt; tar -xf monoid3r1p3.tar 
 &gt; mv MONOID GAPROOT/pkg
 &gt; gap 
 
 [ ... ]
 
 gap&gt; LoadPackage("monoid");
-Loading MONOID 3.1.2
+Loading MONOID 3.1.3
 by James Mitchell (www-groups.mcs.st-and.ac.uk/~jamesm)
 For help, type: ?the monoid package 
 true
@@ -182,15 +182,15 @@ Read(Filename( dirs, "installtest.g" ) );
 and press <C>return</C>. Please note that it will take a few moments before 
 the tests are complete.<P/>
 
-If the output looks like the following, then it is probable that you have a fully working copy of <Package>MONOID</Package> 3.1.2.<P/>
+If the output looks like the following, then it is probable that you have a fully working copy of <Package>MONOID</Package> 3.1.3.<P/>
 
 <Example>
 gap> LoadPackage( "monoid" );;
 gap> dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
 gap> Read( Filename( dirs, "installtest.g" ) );;
-+ install_no_grape.tst 3.1.2
++ install_no_grape.tst 3.1.3
 + GAP4stones: 1
-+ install_with_grape.tst 3.1.2
++ install_with_grape.tst 3.1.3
 + GAP4stones: 2
 </Example>
 
@@ -212,6 +212,8 @@ Please note that these tests could take a long time to finish.<P/>
 <Section><Heading>Changes</Heading>
 
 <List>
+<Item>from 3.1.2 to 3.1.3: the method for <A>PreImagesRepresentative</A> for a semigroup homomorphism by function now tests whether the homomorphism is bijective and total before trying to find preimages. Some other minor corrections were made to the documentation and webpages.</Item>
+
 <Item>from 3.1.1 to 3.1.2: 
 <List><Item>the following new functions have been introduced:
  <Ref Oper="TransformationActionNC"/>,
@@ -390,18 +392,20 @@ see Chapter <Ref Chap="greens"/> and Chapter <Ref Chap="properties"/>.
 <Chapter Label="greens"><Heading>Green's Relations</Heading>
 	<Section><Heading>Introduction</Heading>
 	
-		This chapter contains instructions on how to use the algorithms for 
+		This chapter contains instructions on how to use the functions for 
 		computing Green's relations and related notions for transformation 
 		semigroups and monoids that are implemented in 
 		<Package>MONOID</Package>. <P/>
 		
-		The theory behind these algorithms is developed in <Cite Key="pfeiffer1"/> and the algorithms themselves are described in <Cite Key="pfeiffer2"/>.
+		The theory behind these algorithms is developed in <Cite Key="pfeiffer1"/> 
+		and the algorithms themselves are described in <Cite Key="pfeiffer2"/>.
 		Another reference is <Cite Key="lallement"/>.<P/>
 		
-		Calculation of Green's relations using the <Package>MONOID</Package> package 
-		are invoked in the same way as they are in &GAP; without the <Package>MONOID
-		</Package> package loaded; see <Ref Chap="Semigroups" BookName="ref"/>. For 
-		example, in &GAP; with the <Package>MONOID</Package> package loaded:
+		Green's relations can be calculated when  <Package>MONOID</Package> 
+		is loaded using the same commands that you would used when 
+		<Package>MONOID</Package> is not loaded; see 
+		<Ref Chap="Semigroups" BookName="ref"/>. For example, in &GAP; with 
+		the <Package>MONOID</Package> package loaded:
 
 <Example>
 gap&gt; a:=Transformation([2,1,1,2,1]);;
@@ -430,19 +434,19 @@ gap&gt; GreensRClasses(S);
 </Example>
 		The only noticable differences are the representatives of the classes and 
 		the order the classes appear in the list. These differences are caused by 
-		the differences in the methods used to behind the function <C>GreensRClasses</C> in <Package>MONOID
+		the differences in the methods for <C>GreensRClasses</C> in <Package>MONOID
 		</Package> and the &GAP; library. <P/>
 		
 		Most of the commands in this section relate 
-		to how Green's relations are calculated in <Package>MONOID</Package>. Although 
-		some of the commands might be used for other purposes, if all that is required 
-		is to calculate Green's classes, relations and so on, then this is done in the 
-		exactly the same way as described in the &GAP; manual; see 
+		to how Green's relations are calculated in <Package>MONOID</Package>. 
+		Although some of the commands might be used for other purposes, if all that 
+		is required is to calculate Green's classes, relations and so on, then this 
+		is done in the exactly the same way as described in the &GAP; manual; see 
 		<Ref Chap="Green's Relations" BookName="ref"/>.<P/>
 		
 		Due to inherent difficulties with computing Green's L- and D-classes, the 
 		methods used to compute with Green's R-classes are the most efficient 
-		available in <Package>MONOID</Package>.  Thus wherever possible it is 
+		in <Package>MONOID</Package>.  Thus wherever possible it is 
 		advisable to use the commands relating to Green's R-classes rather than 
 		those relating to Green's L-classes, D-classes, or H-classes.<P/>
 		
@@ -459,7 +463,7 @@ gap&gt; GreensRClasses(S);
 		number of elements and test membership in a transformation semigroup without 
 		computing all the elements. This may be useful if you want to study 
 		a very large semigroup 
-		where computing all the elements of the semigroup would take too long. 
+		where computing all the elements of the semigroup is infeasible. 
 	</Section>
 	
 	<!-- ############### -->

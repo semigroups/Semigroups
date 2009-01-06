@@ -1,13 +1,13 @@
 ##
 ## semihomo.tst
-## Version 3.1.2
-## Fri 11 Jul 2008 13:36:12 BST
+## Version 3.1.3
+## Fri  7 Nov 2008 17:45:12 GMT
 ##
 
 #dirs := DirectoriesPackageLibrary( "monoid", "tst" );
 #ReadTest( Filename( dirs, "semihomo.tst" ) );
 
-gap> START_TEST("semihomo.tst 3.1.2");
+gap> START_TEST("semihomo.tst 3.1.3");
 gap> LoadPackage("monoid");;
 gap> gens:=[ Transformation( [ 1, 4, 3, 5, 2 ] ), 
 > Transformation( [ 2, 3, 1, 1, 2 ] ) ];;
@@ -87,4 +87,4 @@ SemigroupHomomorphism ( {Transformation( [ 1, 1, 1, 1, 2, 1, 8, 1
 gap> SetX(D, x-> ImageElm(hom, x));;
 gap> SetX(D, x-> ImageElm(hom, x))=Elements(D);
 false
-gap> STOP_TEST( "semihomo.tst 3.1.2", 10000);
+gap> STOP_TEST( "semihomo.tst 3.1.3", 10000);

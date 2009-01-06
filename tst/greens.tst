@@ -1,13 +1,13 @@
 ##
 ## greens.tst
-## Version 3.1.2
-## Fri 11 Jul 2008 13:36:12 BST
+## Version 3.1.3
+## Fri  7 Nov 2008 17:45:12 GMT
 ##
 
 #dirs := DirectoriesPackageLibrary( "monoid", "tst" );
 #ReadTest( Filename( dirs, "greens.tst"));
 
-gap> START_TEST("greens.tst 3.1.2");
+gap> START_TEST("greens.tst 3.1.3");
 gap> LoadPackage("monoid");;
 gap> tups:=[ [ [ 1, 4 ], [ 2 ], [ 3 ], [ 5 ], [ 6, 7, 8 ] ], 
 >  [ [ 1, 4 ], [ 2 ], [ 3 ], [ 5, 6 ], [ 7 ], [ 8 ] ], 
@@ -1272,4 +1272,4 @@ gap> KernelsOfTransSemigroup(S,3);
 [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ]
 gap> KernelsOfTransSemigroup(S,4);
 [  ]
-gap> STOP_TEST( "greens.tst 3.1.2", 10000);
+gap> STOP_TEST( "greens.tst 3.1.3", 10000);

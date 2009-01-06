@@ -2,12 +2,12 @@ This is BibTeX, Version 0.99c (Web2C 7.5.6)
 The top-level auxiliary file: monoid.aux
 The style file: alpha.bst
 Database file #1: MONOID.bib
-I was expecting a `,' or a `}'---line 56 of file MONOID.bib
+I was expecting a `,' or a `}'---line 57 of file MONOID.bib
  :       
  :       year = {1998},
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 67 of file MONOID.bib
+I was expecting a `,' or a `}'---line 68 of file MONOID.bib
  :       
  :       year = {2002},      MRCLASS = {20M20 (68W30) },
 (Error may have been on previous line)

@@ -75,9 +75,9 @@
 
 <table class="example">
 <tr><td><pre>
-  gap&gt; f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
-  gap&gt; OnTuplesOfSetsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ] ], f);
-  [ [ 5 ], [ 4, 6 ], [ 3 ] ]
+gap&gt; f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
+gap&gt; OnTuplesOfSetsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ] ], f);
+[ [ 5 ], [ 4, 6 ], [ 3 ] ]
 </pre></td></tr></table>
 
 <p><a id="X849A43DE7AF3C639" name="X849A43DE7AF3C639"></a></p>
@@ -90,9 +90,9 @@
 
 <table class="example">
 <tr><td><pre>
-  gap&gt; f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
-  gap&gt; OnKernelsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6, 7, 8 ] ], f);
-  [ [ 1, 2, 7, 8 ], [ 3 ], [ 4, 6 ], [ 5 ] ]
+gap&gt; f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
+gap&gt; OnKernelsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6, 7, 8 ] ], f);
+[ [ 1, 2, 7, 8 ], [ 3 ], [ 4, 6 ], [ 5 ] ]
 </pre></td></tr></table>
 
 <p><a id="X8545BED37C1BD760" name="X8545BED37C1BD760"></a></p>
@@ -350,23 +350,23 @@
 
 <table class="example">
 <tr><td><pre>
-  gap&gt;  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
-  &gt; Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;
-  gap&gt; ImagesOfTransSemigroup(S, 6);
-  [  ]
-  gap&gt; ImagesOfTransSemigroup(S, 5);
-  [  ]
-  gap&gt; ImagesOfTransSemigroup(S, 4);
-  [ [ 1, 2, 5, 6 ] ]
-  gap&gt; ImagesOfTransSemigroup(S, 3);
-  [ [ 1, 4, 6 ], [ 2, 5, 6 ] ]
-  gap&gt; ImagesOfTransSemigroup(S, 2);
-  [ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ]
-  gap&gt; ImagesOfTransSemigroup(S, 1);
-  [ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ]
-  gap&gt; ImagesOfTransSemigroup(S);
-  [ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], 
-    [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
+gap&gt;  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
+&gt; Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;
+gap&gt; ImagesOfTransSemigroup(S, 6);
+[  ]
+gap&gt; ImagesOfTransSemigroup(S, 5);
+[  ]
+gap&gt; ImagesOfTransSemigroup(S, 4);
+[ [ 1, 2, 5, 6 ] ]
+gap&gt; ImagesOfTransSemigroup(S, 3);
+[ [ 1, 4, 6 ], [ 2, 5, 6 ] ]
+gap&gt; ImagesOfTransSemigroup(S, 2);
+[ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ]
+gap&gt; ImagesOfTransSemigroup(S, 1);
+[ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ]
+gap&gt; ImagesOfTransSemigroup(S);
+[ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], 
+  [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
   </pre></td></tr></table>
 
 <p><a id="X8763B61787D60EB5" name="X8763B61787D60EB5"></a></p>
@@ -381,12 +381,12 @@
 
 <table class="example">
 <tr><td><pre>
-  gap&gt; gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), 
-  &gt; Transformation( [ 4, 4, 5, 2, 2 ] ) ];;
-  gap&gt; S:=Semigroup(gens);;
-  gap&gt; GradedImagesOfTransSemigroup(S);
-  [ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], 
-    [  ], [ [ 1 .. 5 ] ] ]
+gap&gt; gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), 
+&gt; Transformation( [ 4, 4, 5, 2, 2 ] ) ];;
+gap&gt; S:=Semigroup(gens);;
+gap&gt; GradedImagesOfTransSemigroup(S);
+[ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], 
+  [  ], [ [ 1 .. 5 ] ] ]
 </pre></td></tr></table>
 
 <p><a id="X785C76B28671B8FC" name="X785C76B28671B8FC"></a></p>
@@ -401,22 +401,22 @@
 
 <table class="example">
 <tr><td><pre>
-  gap&gt;  S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
-  &gt; Transformation( [ 3, 3, 4, 1 ] ) ]);
-  gap&gt;  KernelsOfTransSemigroup(S);   
-  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], 
-  [ 4 ] ], 
-    [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], 
-    [ [ 1, 4 ], [ 2 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
-  gap&gt;  KernelsOfTransSemigroup(S,1);
-  [ [ [ 1, 2, 3, 4 ] ] ]
-  gap&gt;  KernelsOfTransSemigroup(S,2);
-  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], 
-    [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
-  gap&gt;  KernelsOfTransSemigroup(S,3);
-  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ]
-  gap&gt;  KernelsOfTransSemigroup(S,4);
-  [  ]
+gap&gt;  S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
+&gt; Transformation( [ 3, 3, 4, 1 ] ) ]);
+gap&gt;  KernelsOfTransSemigroup(S);   
+[ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], 
+[ 4 ] ], 
+  [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], 
+  [ [ 1, 4 ], [ 2 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
+gap&gt;  KernelsOfTransSemigroup(S,1);
+[ [ [ 1, 2, 3, 4 ] ] ]
+gap&gt;  KernelsOfTransSemigroup(S,2);
+[ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], 
+  [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
+gap&gt;  KernelsOfTransSemigroup(S,3);
+[ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ]
+gap&gt;  KernelsOfTransSemigroup(S,4);
+[  ]
 </pre></td></tr></table>
 
 <p><a id="X8550CC457B87C8C1" name="X8550CC457B87C8C1"></a></p>
@@ -431,15 +431,15 @@
 
 <table class="example">
 <tr><td><pre>
-  gap&gt; gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), 
-  &gt; Transformation( [ 2, 5, 3, 2, 3 ] ) ];;
-  gap&gt; S:=Semigroup(gens);;
-  gap&gt; GradedKernelsOfTransSemigroup(S);
-  [ [ [ [ 1, 2, 3, 4, 5 ] ] ], 
-    [ [ [ 1, 2, 4, 5 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ], 
-        [ [ 1, 2, 4 ], [ 3, 5 ] ] ], 
-    [ [ [ 1, 2, 4 ], [ 3 ], [ 5 ] ], [ [ 1, 4 ], [ 2 ], [ 3, 5 ] ] ], [  ], 
-    [ [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ] ] ] ]
+gap&gt; gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), 
+&gt; Transformation( [ 2, 5, 3, 2, 3 ] ) ];;
+gap&gt; S:=Semigroup(gens);;
+gap&gt; GradedKernelsOfTransSemigroup(S);
+[ [ [ [ 1, 2, 3, 4, 5 ] ] ], 
+  [ [ [ 1, 2, 4, 5 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ], 
+      [ [ 1, 2, 4 ], [ 3, 5 ] ] ], 
+  [ [ [ 1, 2, 4 ], [ 3 ], [ 5 ] ], [ [ 1, 4 ], [ 2 ], [ 3, 5 ] ] ], [  ], 
+  [ [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ] ] ] ]
 </pre></td></tr></table>
 
 <p><a id="X7E53FA7D85258453" name="X7E53FA7D85258453"></a></p>
@@ -464,15 +464,15 @@
 
 <table class="example">
 <tr><td><pre>
-  gap&gt; gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
-  &gt; Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
-  gap&gt; S:=Semigroup(gens);;
-  gap&gt; f:=Transformation( [ 2, 1, 1, 1, 5 ] );;
-  gap&gt; StrongOrbitOfImage(S, f);        
-  [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
-        [ 2, 4, 5 ], [ 3, 4, 5 ] ], 
-    [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
-        (1,3,2,4) ], Group([ (), (2,5), (1,5) ]) ]
+gap&gt; gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
+&gt; Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
+gap&gt; S:=Semigroup(gens);;
+gap&gt; f:=Transformation( [ 2, 1, 1, 1, 5 ] );;
+gap&gt; StrongOrbitOfImage(S, f);        
+[ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
+      [ 2, 4, 5 ], [ 3, 4, 5 ] ], 
+  [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
+      (1,3,2,4) ], Group([ (), (2,5), (1,5) ]) ]
 </pre></td></tr></table>
 
 <p><a id="X80BA8DD07E0E00D5" name="X80BA8DD07E0E00D5"></a></p>
@@ -485,28 +485,28 @@
 
 <table class="example">
 <tr><td><pre>
-  gap&gt; gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
-  &gt; Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
-  gap&gt; S:=Semigroup(gens);;
-  gap&gt; f:=Transformation( [ 2, 1, 1, 1, 5 ] );;
-  gap&gt; StrongOrbitOfImage(S, f);;
-  gap&gt; StrongOrbitsOfImages(S);
-  [ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
-            [ 2, 4, 5 ], [ 3, 4, 5 ] ] ], 
-    [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
-            (1,3,2,4) ] ], [ Group([ (), (2,5), (1,5) ]) ] ]
-  gap&gt; f:=Transformation( [ 5, 5, 5, 5, 2 ] );
-  gap&gt; StrongOrbitOfImage(S, f);;
-  gap&gt; StrongOrbitsOfImages(S); 
-  [ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
-            [ 2, 4, 5 ], [ 3, 4, 5 ] ], 
-        [ [ 2, 5 ], [ 1, 5 ], [ 1, 3 ], [ 2, 3 ], [ 2, 4 ], [ 4, 5 ], [ 3, 5 ], 
-            [ 1, 2 ], [ 3, 4 ] ] ], 
-    [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
-            (1,3,2,4) ], 
-        [ (), (1,5,2), (1,2)(3,5,4), (2,5,4,3), (2,5,4), (2,3,4,5), (2,3), 
-            (1,5,4,3), (2,3)(4,5) ] ], 
-    [ Group([ (), (2,5), (1,5) ]), Group([ (), (2,5) ]) ] ]
+gap&gt; gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
+&gt; Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
+gap&gt; S:=Semigroup(gens);;
+gap&gt; f:=Transformation( [ 2, 1, 1, 1, 5 ] );;
+gap&gt; StrongOrbitOfImage(S, f);;
+gap&gt; StrongOrbitsOfImages(S);
+[ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
+          [ 2, 4, 5 ], [ 3, 4, 5 ] ] ], 
+  [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
+          (1,3,2,4) ] ], [ Group([ (), (2,5), (1,5) ]) ] ]
+gap&gt; f:=Transformation( [ 5, 5, 5, 5, 2 ] );
+gap&gt; StrongOrbitOfImage(S, f);;
+gap&gt; StrongOrbitsOfImages(S); 
+[ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
+          [ 2, 4, 5 ], [ 3, 4, 5 ] ], 
+      [ [ 2, 5 ], [ 1, 5 ], [ 1, 3 ], [ 2, 3 ], [ 2, 4 ], [ 4, 5 ], [ 3, 5 ], 
+          [ 1, 2 ], [ 3, 4 ] ] ], 
+  [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
+          (1,3,2,4) ], 
+      [ (), (1,5,2), (1,2)(3,5,4), (2,5,4,3), (2,5,4), (2,3,4,5), (2,3), 
+          (1,5,4,3), (2,3)(4,5) ] ], 
+  [ Group([ (), (2,5), (1,5) ]), Group([ (), (2,5) ]) ] ]
 </pre></td></tr></table>
 
 

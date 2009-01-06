@@ -4,15 +4,15 @@
   
   [1X1.1 Introduction[0X
   
-  This  manual  describes  the [5XMONOID[0m package version 3.1.2 for computing with
-  transformation semigroups. [5XMONOID[0m 3.1.2 is an updated version of the package
+  This  manual  describes  the [5XMONOID[0m package version 3.1.3 for computing with
+  transformation semigroups. [5XMONOID[0m 3.1.3 is an updated version of the package
   with        the       same       name       for       [5XGAP[0m       3;       see
   [7Xhttp://schmidt.nuigalway.ie/monoid/index.html[0m for more information about the
   original  [5XMONOID[0m  by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson
   and Nik Ruskuc.
   
-  [5XMONOID[0m  3.1.2  retains all the functionality of the original [5XMONOID[0m package.
-  In  particular,  [5XMONOID[0m  3.1.2  contains  more  efficient methods than those
+  [5XMONOID[0m  3.1.3  retains all the functionality of the original [5XMONOID[0m package.
+  In  particular,  [5XMONOID[0m  3.1.3  contains  more  efficient methods than those
   available  in  the  [5XGAP[0m  library  for  computing orbits, calculating Green's
   classes,   finding  the  size,  the  elements,  and  testing  membership  in
   transformation  semigroups;  see  Chapters  [14X3[0m  and  [14X4[0m. After [5XMONOID[0m has been
@@ -83,7 +83,7 @@
   The  following  is  a  summary of the steps that should lead to a successful
   installation of [5XMONOID[0m.
   
-  --    download the package archive [10Xmonoid3r1p1.tar.gz[0m or [10Xmonoid3r1p1.tar.bz2[0m
+  --    download the package archive [10Xmonoid3r1p3.tar.gz[0m or [10Xmonoid3r1p3.tar.bz2[0m
         from [7Xhttp://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html[0m
   
   --    unzip & untar the file, this should create a directory called [10XMONOID[0m.
@@ -100,15 +100,15 @@
   folders `bin', `lib', and so on) in your installation of [5XGAP[0m.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4X> gunzip monoid3r1p1.tar.gz [0X
-    [4X> tar -xf monoid3r1p1.tar [0X
+    [4X> gunzip monoid3r1p3.tar.gz [0X
+    [4X> tar -xf monoid3r1p3.tar [0X
     [4X> mv MONOID GAPROOT/pkg[0X
     [4X> gap [0X
     [4X[0X
     [4X[ ... ][0X
     [4X[0X
     [4Xgap> LoadPackage("monoid");[0X
-    [4XLoading MONOID 3.1.2[0X
+    [4XLoading MONOID 3.1.3[0X
     [4Xby James Mitchell (www-groups.mcs.st-and.ac.uk/~jamesm)[0X
     [4XFor help, type: ?the monoid package [0X
     [4Xtrue[0X
@@ -141,15 +141,15 @@
   tests are complete.
   
   If  the output looks like the following, then it is probable that you have a
-  fully working copy of [5XMONOID[0m 3.1.2.
+  fully working copy of [5XMONOID[0m 3.1.3.
   
   [4X---------------------------  Example  ----------------------------[0X
     [4Xgap> LoadPackage( "monoid" );;[0X
     [4Xgap> dirs := DirectoriesPackageLibrary( "monoid", "tst" );;[0X
     [4Xgap> Read( Filename( dirs, "installtest.g" ) );;[0X
-    [4X+ install_no_grape.tst 3.1.2[0X
+    [4X+ install_no_grape.tst 3.1.3[0X
     [4X+ GAP4stones: 1[0X
-    [4X+ install_with_grape.tst 3.1.2[0X
+    [4X+ install_with_grape.tst 3.1.3[0X
     [4X+ GAP4stones: 2[0X
   [4X------------------------------------------------------------------[0X
   
@@ -170,6 +170,11 @@
   
   
   [1X1.4 Changes[0X
+  
+  --    from  3.1.2  to  3.1.3:  the  method for [3XPreImagesRepresentative[0m for a
+        semigroup  homomorphism by function now tests whether the homomorphism
+        is  bijective  and  total  before trying to find preimages. Some other
+        minor corrections were made to the documentation and webpages.
   
   --    from 3.1.1 to 3.1.2:
   

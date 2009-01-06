@@ -20,6 +20,9 @@
   Press  Oxford  University Press, London Mathematical Society Monographs.
   New Series, [19X12[15X, New York (1995), x+351, (Oxford Science Publications)
   
+  [[20XKM05[15X]  [16XKudryavtseva,  G.  and  Mazorchuk, V.[15X, [17XOn Kiselman's semigroup[15X, [18X[15X
+  (2005), (arXiv:math/0511374v1)
+  
   [[20XLM90[15X]  [16XLallement,  G. and McFadden, R.[15X, [17XOn the determination of Green's
   relations  in finite transformation semigroups[15X, [18XJ. Symbolic Comput.[15X, [19X10[15X,
   5 (1990), 481--498

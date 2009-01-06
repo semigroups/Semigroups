@@ -1,7 +1,7 @@
 ##
 ## general.gi
-## Version 3.1.2
-## Fri 11 Jul 2008 13:36:12 BST
+## Version 3.1.3
+## Fri  7 Nov 2008 17:45:12 GMT
 ##
 
 ##  <#GAPDoc Label="generaltop">

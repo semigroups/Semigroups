@@ -1,7 +1,7 @@
 ##
 ## read.g
-## Version 3.1.2
-## Thu 10 Jul 2008 17:50:33 BST
+## Version 3.1.3
+## Fri  7 Nov 2008 17:45:12 GMT
 ##
 
 

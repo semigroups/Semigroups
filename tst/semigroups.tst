@@ -1,13 +1,13 @@
 ##
 ## semigroups.tst
-## Version 3.1.2
-## Fri 11 Jul 2008 13:36:12 BST
+## Version 3.1.3
+## Fri  7 Nov 2008 17:45:12 GMT
 ##
 
 #dirs := DirectoriesPackageLibrary( "monoid", "tst" );
 #ReadTest( Filename( dirs, "semigroups.tst" ) );
 
-gap> START_TEST("semigroups.tst 3.1.2");
+gap> START_TEST("semigroups.tst 3.1.3");
 gap> LoadPackage("monoid");;
 gap> if not IsBound(BruteForceZeroIsoCheck) then 
 > BruteForceZeroIsoCheck:=function(iso)
@@ -332,4 +332,4 @@ gap> AutomorphismGroup(Range(IsomorphismTransformationSemigroup(S)));
 #<3x3 full matrix semigroup over GF(3)>
 #gap> IsFullMatrixSemigroup(S);
 #true
-gap> STOP_TEST( "semigroups.tst 3.1.2", 10000);
+gap> STOP_TEST( "semigroups.tst 3.1.3", 10000);

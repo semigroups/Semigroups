@@ -1,12 +1,12 @@
 ##
 ## install_with_grape.tst
-## Version 3.1.2
-## Fri 11 Jul 2008 13:36:12 BST
+## Version 3.1.3
+## Fri  7 Nov 2008 17:45:12 GMT
 ##
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "install_with_grape.tst" ) );
 
-gap> START_TEST("install_with_grape.tst 3.1.2");
+gap> START_TEST("install_with_grape.tst 3.1.3");
 gap> LoadPackage("monoid");;
 gap> SetInfoLevel(InfoAutos, 0);
 gap> g1:=Transformation([3,3,2,6,2,4,4,6]);;
@@ -24,4 +24,4 @@ gap> HasInnerAutomorphismsOfSemigroup(m5);
 false
 gap> InnerAutomorphismsOfSemigroup(m5);
 <group of size 1 with 1 generators>
-gap> STOP_TEST( "install_with_grape.tst 3.1.2", 10000);
+gap> STOP_TEST( "install_with_grape.tst 3.1.3", 10000);

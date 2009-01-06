@@ -1,7 +1,7 @@
 ##
 ## semigroups.gi
-## Version 3.1.2
-## Fri 11 Jul 2008 13:36:12 BST
+## Version 3.1.3
+## Fri  7 Nov 2008 17:45:12 GMT
 ##
 
 # the functions in this file define different types of semigroups and 
@@ -828,10 +828,11 @@ end);
 ##
 ##	<#GAPDoc Label="RandomReesMatrixSemigroup">
 ##	<ManSection>
-##	<Func Name="RandomReesMatrixSemigroup" Arg="i, j, deg"/>
+##	<Func Name="RandomReesMatrixSemigroup" Arg="i, j, n"/>
 ##	<Description>
 ##	returns a random Rees matrix semigroup with a <M>i</M> by <M>j</M> sandwich 
-##	matrix over a permutation group with maximum degree <M>deg</M>. 
+##	matrix over a permutation group with size <M>n</M>.  The group is chosen 
+##	from list of all groups with order <M>n</M> with uniform distribution.
 ##	<Example>
 ##  gap&gt; S:=RandomReesMatrixSemigroup(4,5,5);
 ##  Rees Matrix Semigroup over Group([ (1,5,3,4), (1,3,4,2,5) ])
@@ -845,16 +846,11 @@ end);
 ##	<#/GAPDoc>
 
 InstallGlobalFunction(RandomReesMatrixSemigroup, 
-function(rows, cols, maxdeg)
-local n, gens, G, mat;
+function(rows, cols, n)
+local G, mat;
 
-repeat
-	n:=AbsoluteValue(Random(Integers));
-until not n=0;
-
-gens:=List([1..n], x-> Random(SymmetricGroup(maxdeg)));
-
-G:=Group(gens);
+G:=SmallGroup(n, Random([1..NrSmallGroups(n)]));
+G:=Range(IsomorphismPermGroup(G));
 
 #regular matrix
 

@@ -1,184 +1,184 @@
 \begin{theindex}
 
-  \item \texttt  {AllTransformationsWithKerAndImg}, \hyperpage{11}
-  \item \texttt  {AllTransformationsWithKerAndImgNC}, \hyperpage{11}
-  \item \texttt  {AsBooleanMatrix}, \hyperpage{16}
-  \item \texttt  {AsPermOfRange}, \hyperpage{17}
-  \item \texttt  {AutomorphismGroup}, \hyperpage{53}
-  \item \texttt  {AutomorphismsSemigroupInGroup}, \hyperpage{55}
+  \item \texttt  {AllTransformationsWithKerAndImg}, \hyperpage{12}
+  \item \texttt  {AllTransformationsWithKerAndImgNC}, \hyperpage{12}
+  \item \texttt  {AsBooleanMatrix}, \hyperpage{17}
+  \item \texttt  {AsPermOfRange}, \hyperpage{18}
+  \item \texttt  {AutomorphismGroup}, \hyperpage{54}
+  \item \texttt  {AutomorphismsSemigroupInGroup}, \hyperpage{56}
 
   \indexspace
 
   \item \texttt  {ConjugatorOfInnerAutomorphismOfSemigroup}, 
-		\hyperpage{50}
+		\hyperpage{51}
 
   \indexspace
 
-  \item \texttt  {DClassData}, \hyperpage{31}
+  \item \texttt  {DClassData}, \hyperpage{32}
 
   \indexspace
 
-  \item \texttt  {GradedImagesOfTransSemigroup}, \hyperpage{24}
-  \item \texttt  {GradedKernelsOfTransSemigroup}, \hyperpage{24}
-  \item \texttt  {GradedOrbit}, \hyperpage{21}
-  \item \texttt  {GradedStrongOrbit}, \hyperpage{22}
-  \item \texttt  {GreensData}, \hyperpage{28}
-  \item \texttt  {GreensDClassData}, \hyperpage{30}
-  \item \texttt  {GreensHClassData}, \hyperpage{30}
-  \item \texttt  {GreensLClassData}, \hyperpage{29}
-  \item \texttt  {GreensRClassData}, \hyperpage{28}
+  \item \texttt  {GradedImagesOfTransSemigroup}, \hyperpage{25}
+  \item \texttt  {GradedKernelsOfTransSemigroup}, \hyperpage{25}
+  \item \texttt  {GradedOrbit}, \hyperpage{22}
+  \item \texttt  {GradedStrongOrbit}, \hyperpage{23}
+  \item \texttt  {GreensData}, \hyperpage{29}
+  \item \texttt  {GreensDClassData}, \hyperpage{31}
+  \item \texttt  {GreensHClassData}, \hyperpage{31}
+  \item \texttt  {GreensLClassData}, \hyperpage{30}
+  \item \texttt  {GreensRClassData}, \hyperpage{29}
 
   \indexspace
 
-  \item \texttt  {HClassData}, \hyperpage{31}
+  \item \texttt  {HClassData}, \hyperpage{32}
 
   \indexspace
 
-  \item \texttt  {Idempotent}, \hyperpage{12}
-  \item \texttt  {IdempotentNC}, \hyperpage{12}
-  \item \texttt  {Idempotents}, \hyperpage{33}
-  \item \texttt  {ImagesOfTransSemigroup}, \hyperpage{23}
-  \item \texttt  {IndexPeriodOfTransformation}, \hyperpage{15}
-  \item \texttt  {InfoAutos}, \hyperpage{48}
-  \item \texttt  {InnerAutomorphismOfSemigroup}, \hyperpage{50}
-  \item \texttt  {InnerAutomorphismOfSemigroupNC}, \hyperpage{50}
-  \item \texttt  {InnerAutomorphismsAutomorphismGroup}, \hyperpage{52}
-  \item \texttt  {InnerAutomorphismsOfSemigroup}, \hyperpage{51}
-  \item \texttt  {InnerAutomorphismsOfSemigroupInGroup}, \hyperpage{51}
-  \item \texttt  {InversesOfTransformation}, \hyperpage{16}
-  \item \texttt  {InversesOfTransformationNC}, \hyperpage{16}
-  \item \texttt  {IsAssociatedSemigpTransSemigp}, \hyperpage{32}
-  \item \texttt  {IsAutomorphismGroupOfRMS}, \hyperpage{57}
-  \item \texttt  {IsAutomorphismGroupOfRZMS}, \hyperpage{58}
-  \item \texttt  {IsAutomorphismGroupOfSemigroup}, \hyperpage{57}
-  \item \texttt  {IsAutomorphismGroupOfSimpleSemigp}, \hyperpage{57}
-  \item \texttt  {IsAutomorphismGroupOfZeroGroup}, \hyperpage{57}
-  \item \texttt  {IsAutomorphismGroupOfZeroSemigroup}, \hyperpage{57}
-  \item \texttt  {IsBand}, \hyperpage{38}
-  \item \texttt  {IsCliffordSemigroup}, \hyperpage{37}
-  \item \texttt  {IsCommutativeSemigroup}, \hyperpage{36}
-  \item \texttt  {IsCompletelyRegularSemigroup}, \hyperpage{35}
-  \item \texttt  {IsCompletelySimpleSemigroup}, \hyperpage{36}
-  \item \texttt  {IsGreensData}, \hyperpage{31}
-  \item \texttt  {IsGreensDClassData}, \hyperpage{31}
-  \item \texttt  {IsGreensDClassDataRep}, \hyperpage{31}
-  \item \texttt  {IsGreensHClassData}, \hyperpage{31}
-  \item \texttt  {IsGreensHClassDataRep}, \hyperpage{31}
-  \item \texttt  {IsGreensLClassData}, \hyperpage{31}
-  \item \texttt  {IsGreensLClassDataRep}, \hyperpage{31}
-  \item \texttt  {IsGreensRClassData}, \hyperpage{31}
-  \item \texttt  {IsGreensRClassDataRep}, \hyperpage{31}
-  \item \texttt  {IsGroupAsSemigroup}, \hyperpage{36}
-  \item \texttt  {IsInnerAutomorphismOfSemigroup}, \hyperpage{50}
-  \item \texttt  {IsInnerAutomorphismsOfSemigroup}, \hyperpage{52}
-  \item \texttt  {IsInnerAutomorphismsOfZeroGroup}, \hyperpage{53}
-  \item \texttt  {IsInverseSemigroup}, \hyperpage{37}
-  \item \texttt  {IsKerImgOfTransformation}, \hyperpage{14}
-  \item \texttt  {IsLeftZeroSemigroup}, \hyperpage{39}
-  \item \texttt  {IsomorphismAutomorphismGroupOfRMS}, \hyperpage{64}
-  \item \texttt  {IsomorphismFpMonoid}, \hyperpage{66}
-  \item \texttt  {IsomorphismFpSemigroup}, \hyperpage{66}
-  \item \texttt  {IsomorphismPermGroup}, \hyperpage{65}
-  \item \texttt  {IsomorphismReesMatrixSemigroup}, \hyperpage{68}
+  \item \texttt  {Idempotent}, \hyperpage{13}
+  \item \texttt  {IdempotentNC}, \hyperpage{13}
+  \item \texttt  {Idempotents}, \hyperpage{34}
+  \item \texttt  {ImagesOfTransSemigroup}, \hyperpage{24}
+  \item \texttt  {IndexPeriodOfTransformation}, \hyperpage{16}
+  \item \texttt  {InfoAutos}, \hyperpage{49}
+  \item \texttt  {InnerAutomorphismOfSemigroup}, \hyperpage{51}
+  \item \texttt  {InnerAutomorphismOfSemigroupNC}, \hyperpage{51}
+  \item \texttt  {InnerAutomorphismsAutomorphismGroup}, \hyperpage{53}
+  \item \texttt  {InnerAutomorphismsOfSemigroup}, \hyperpage{52}
+  \item \texttt  {InnerAutomorphismsOfSemigroupInGroup}, \hyperpage{52}
+  \item \texttt  {InversesOfTransformation}, \hyperpage{17}
+  \item \texttt  {InversesOfTransformationNC}, \hyperpage{17}
+  \item \texttt  {IsAssociatedSemigpTransSemigp}, \hyperpage{33}
+  \item \texttt  {IsAutomorphismGroupOfRMS}, \hyperpage{58}
+  \item \texttt  {IsAutomorphismGroupOfRZMS}, \hyperpage{59}
+  \item \texttt  {IsAutomorphismGroupOfSemigroup}, \hyperpage{58}
+  \item \texttt  {IsAutomorphismGroupOfSimpleSemigp}, \hyperpage{58}
+  \item \texttt  {IsAutomorphismGroupOfZeroGroup}, \hyperpage{58}
+  \item \texttt  {IsAutomorphismGroupOfZeroSemigroup}, \hyperpage{58}
+  \item \texttt  {IsBand}, \hyperpage{39}
+  \item \texttt  {IsCliffordSemigroup}, \hyperpage{38}
+  \item \texttt  {IsCommutativeSemigroup}, \hyperpage{37}
+  \item \texttt  {IsCompletelyRegularSemigroup}, \hyperpage{36}
+  \item \texttt  {IsCompletelySimpleSemigroup}, \hyperpage{37}
+  \item \texttt  {IsGreensData}, \hyperpage{32}
+  \item \texttt  {IsGreensDClassData}, \hyperpage{32}
+  \item \texttt  {IsGreensDClassDataRep}, \hyperpage{32}
+  \item \texttt  {IsGreensHClassData}, \hyperpage{32}
+  \item \texttt  {IsGreensHClassDataRep}, \hyperpage{32}
+  \item \texttt  {IsGreensLClassData}, \hyperpage{32}
+  \item \texttt  {IsGreensLClassDataRep}, \hyperpage{32}
+  \item \texttt  {IsGreensRClassData}, \hyperpage{32}
+  \item \texttt  {IsGreensRClassDataRep}, \hyperpage{32}
+  \item \texttt  {IsGroupAsSemigroup}, \hyperpage{37}
+  \item \texttt  {IsInnerAutomorphismOfSemigroup}, \hyperpage{51}
+  \item \texttt  {IsInnerAutomorphismsOfSemigroup}, \hyperpage{53}
+  \item \texttt  {IsInnerAutomorphismsOfZeroGroup}, \hyperpage{54}
+  \item \texttt  {IsInverseSemigroup}, \hyperpage{38}
+  \item \texttt  {IsKerImgOfTransformation}, \hyperpage{15}
+  \item \texttt  {IsLeftZeroSemigroup}, \hyperpage{40}
+  \item \texttt  {IsomorphismAutomorphismGroupOfRMS}, \hyperpage{65}
+  \item \texttt  {IsomorphismFpMonoid}, \hyperpage{67}
+  \item \texttt  {IsomorphismFpSemigroup}, \hyperpage{67}
+  \item \texttt  {IsomorphismPermGroup}, \hyperpage{66}
+  \item \texttt  {IsomorphismReesMatrixSemigroup}, \hyperpage{69}
   \item \texttt  {IsomorphismReesMatrixSemigroupOfDClass}, 
-		\hyperpage{68}
-  \item \texttt  {IsomorphismSemigroups}, \hyperpage{66}
-  \item \texttt  {IsOrthodoxSemigroup}, \hyperpage{39}
-  \item \texttt  {IsRectangularBand}, \hyperpage{38}
-  \item \texttt  {IsRegularSemigroup}, \hyperpage{37}
-  \item \texttt  {IsRegularTransformation}, \hyperpage{15}
-  \item \texttt  {IsRightZeroSemigroup}, \hyperpage{39}
-  \item \texttt  {IsRMSIsoByTripleRep}, \hyperpage{59}
-  \item \texttt  {IsRZMSIsoByTripleRep}, \hyperpage{60}
-  \item \texttt  {IsSemiBand}, \hyperpage{38}
-  \item \texttt  {IsSimpleSemigroup}, \hyperpage{36}
-  \item \texttt  {IsTransversal}, \hyperpage{13}
-  \item \texttt  {IsZeroGroup}, \hyperpage{40}
-  \item \texttt  {IsZeroGroupAutomorphismRep}, \hyperpage{64}
-  \item \texttt  {IsZeroSemigroup}, \hyperpage{40}
+		\hyperpage{69}
+  \item \texttt  {IsomorphismSemigroups}, \hyperpage{67}
+  \item \texttt  {IsOrthodoxSemigroup}, \hyperpage{40}
+  \item \texttt  {IsRectangularBand}, \hyperpage{39}
+  \item \texttt  {IsRegularSemigroup}, \hyperpage{38}
+  \item \texttt  {IsRegularTransformation}, \hyperpage{16}
+  \item \texttt  {IsRightZeroSemigroup}, \hyperpage{40}
+  \item \texttt  {IsRMSIsoByTripleRep}, \hyperpage{60}
+  \item \texttt  {IsRZMSIsoByTripleRep}, \hyperpage{61}
+  \item \texttt  {IsSemiBand}, \hyperpage{39}
+  \item \texttt  {IsSimpleSemigroup}, \hyperpage{37}
+  \item \texttt  {IsTransversal}, \hyperpage{14}
+  \item \texttt  {IsZeroGroup}, \hyperpage{41}
+  \item \texttt  {IsZeroGroupAutomorphismRep}, \hyperpage{65}
+  \item \texttt  {IsZeroSemigroup}, \hyperpage{41}
 
   \indexspace
 
-  \item \texttt  {KerImgOfTransformation}, \hyperpage{14}
-  \item \texttt  {KernelsOfTransSemigroup}, \hyperpage{24}
-  \item \texttt  {KiselmanSemigroup}, \hyperpage{43}
+  \item \texttt  {KerImgOfTransformation}, \hyperpage{15}
+  \item \texttt  {KernelsOfTransSemigroup}, \hyperpage{25}
+  \item \texttt  {KiselmanSemigroup}, \hyperpage{44}
 
   \indexspace
 
-  \item \texttt  {LClassData}, \hyperpage{31}
+  \item \texttt  {LClassData}, \hyperpage{32}
 
   \indexspace
 
-  \item \texttt  {MonoidOrbit}, \hyperpage{19}
-  \item \texttt  {MonoidOrbits}, \hyperpage{19}
-  \item \texttt  {MultiplicativeZero}, \hyperpage{40}
+  \item \texttt  {MonoidOrbit}, \hyperpage{20}
+  \item \texttt  {MonoidOrbits}, \hyperpage{20}
+  \item \texttt  {MultiplicativeZero}, \hyperpage{41}
 
   \indexspace
 
-  \item \texttt  {OnKernelsAntiAction}, \hyperpage{18}
-  \item \texttt  {OnTuplesOfSetsAntiAction}, \hyperpage{18}
-  \item \texttt  {OrderPreservingSemigroup}, \hyperpage{42}
+  \item \texttt  {OnKernelsAntiAction}, \hyperpage{19}
+  \item \texttt  {OnTuplesOfSetsAntiAction}, \hyperpage{19}
+  \item \texttt  {OrderPreservingSemigroup}, \hyperpage{43}
 
   \indexspace
 
-  \item \texttt  {PartialOrderOfDClasses}, \hyperpage{33}
+  \item \texttt  {PartialOrderOfDClasses}, \hyperpage{34}
 
   \indexspace
 
-  \item \texttt  {RandomIdempotent}, \hyperpage{12}
-  \item \texttt  {RandomIdempotentNC}, \hyperpage{12}
-  \item \texttt  {RandomMonoid}, \hyperpage{45}
-  \item \texttt  {RandomReesMatrixSemigroup}, \hyperpage{46}
-  \item \texttt  {RandomReesZeroMatrixSemigroup}, \hyperpage{46}
-  \item \texttt  {RandomSemigroup}, \hyperpage{46}
-  \item \texttt  {RandomTransformation}, \hyperpage{12}
-  \item \texttt  {RandomTransformationNC}, \hyperpage{12}
-  \item \texttt  {RClassData}, \hyperpage{31}
-  \item \texttt  {RightTransStabAutoGroup}, \hyperpage{62}
-  \item \texttt  {RMSInducedFunction}, \hyperpage{60}
-  \item \texttt  {RMSIsoByTriple}, \hyperpage{58}
-  \item \texttt  {RZMSGraph}, \hyperpage{62}
-  \item \texttt  {RZMSInducedFunction}, \hyperpage{60}
-  \item \texttt  {RZMSIsoByTriple}, \hyperpage{59}
-  \item \texttt  {RZMStoRZMSInducedFunction}, \hyperpage{61}
+  \item \texttt  {RandomIdempotent}, \hyperpage{13}
+  \item \texttt  {RandomIdempotentNC}, \hyperpage{13}
+  \item \texttt  {RandomMonoid}, \hyperpage{46}
+  \item \texttt  {RandomReesMatrixSemigroup}, \hyperpage{47}
+  \item \texttt  {RandomReesZeroMatrixSemigroup}, \hyperpage{47}
+  \item \texttt  {RandomSemigroup}, \hyperpage{47}
+  \item \texttt  {RandomTransformation}, \hyperpage{13}
+  \item \texttt  {RandomTransformationNC}, \hyperpage{13}
+  \item \texttt  {RClassData}, \hyperpage{32}
+  \item \texttt  {RightTransStabAutoGroup}, \hyperpage{63}
+  \item \texttt  {RMSInducedFunction}, \hyperpage{61}
+  \item \texttt  {RMSIsoByTriple}, \hyperpage{59}
+  \item \texttt  {RZMSGraph}, \hyperpage{63}
+  \item \texttt  {RZMSInducedFunction}, \hyperpage{61}
+  \item \texttt  {RZMSIsoByTriple}, \hyperpage{60}
+  \item \texttt  {RZMStoRZMSInducedFunction}, \hyperpage{62}
 
   \indexspace
 
-  \item \texttt  {SchutzenbergerGroup}, \hyperpage{32}
-  \item \texttt  {SemigroupHomomorphismByFunction}, \hyperpage{48}
-  \item \texttt  {SemigroupHomomorphismByFunctionNC}, \hyperpage{48}
-  \item \texttt  {SemigroupHomomorphismByImages}, \hyperpage{49}
-  \item \texttt  {SemigroupHomomorphismByImagesNC}, \hyperpage{49}
-  \item \texttt  {SemigroupHomomorphismByImagesOfGens}, \hyperpage{49}
+  \item \texttt  {SchutzenbergerGroup}, \hyperpage{33}
+  \item \texttt  {SemigroupHomomorphismByFunction}, \hyperpage{49}
+  \item \texttt  {SemigroupHomomorphismByFunctionNC}, \hyperpage{49}
+  \item \texttt  {SemigroupHomomorphismByImages}, \hyperpage{50}
+  \item \texttt  {SemigroupHomomorphismByImagesNC}, \hyperpage{50}
+  \item \texttt  {SemigroupHomomorphismByImagesOfGens}, \hyperpage{50}
   \item \texttt  {SemigroupHomomorphismByImagesOfGensNC}, 
-		\hyperpage{49}
-  \item \texttt  {ShortOrbit}, \hyperpage{21}
-  \item \texttt  {ShortStrongOrbit}, \hyperpage{22}
-  \item \texttt  {SingularSemigroup}, \hyperpage{42}
-  \item \texttt  {SmallestIdempotentPower}, \hyperpage{15}
-  \item \texttt  {StrongOrbit}, \hyperpage{20}
-  \item \texttt  {StrongOrbitOfImage}, \hyperpage{25}
-  \item \texttt  {StrongOrbits}, \hyperpage{20}
-  \item \texttt  {StrongOrbitsOfImages}, \hyperpage{25}
+		\hyperpage{50}
+  \item \texttt  {ShortOrbit}, \hyperpage{22}
+  \item \texttt  {ShortStrongOrbit}, \hyperpage{23}
+  \item \texttt  {SingularSemigroup}, \hyperpage{43}
+  \item \texttt  {SmallestIdempotentPower}, \hyperpage{16}
+  \item \texttt  {StrongOrbit}, \hyperpage{21}
+  \item \texttt  {StrongOrbitOfImage}, \hyperpage{26}
+  \item \texttt  {StrongOrbits}, \hyperpage{21}
+  \item \texttt  {StrongOrbitsOfImages}, \hyperpage{26}
 
   \indexspace
 
-  \item \texttt  {TransformationActionNC}, \hyperpage{13}
-  \item \texttt  {TransformationByKernelAndImage}, \hyperpage{11}
-  \item \texttt  {TransformationByKernelAndImageNC}, \hyperpage{11}
+  \item \texttt  {TransformationActionNC}, \hyperpage{14}
+  \item \texttt  {TransformationByKernelAndImage}, \hyperpage{12}
+  \item \texttt  {TransformationByKernelAndImageNC}, \hyperpage{12}
 
   \indexspace
 
-  \item \texttt  {UnderlyingGroupAutoOfZeroGroupAuto}, \hyperpage{64}
-  \item \texttt  {UnderlyingGroupEltOfZGElt}, \hyperpage{45}
-  \item \texttt  {UnderlyingGroupOfZG}, \hyperpage{45}
+  \item \texttt  {UnderlyingGroupAutoOfZeroGroupAuto}, \hyperpage{65}
+  \item \texttt  {UnderlyingGroupEltOfZGElt}, \hyperpage{46}
+  \item \texttt  {UnderlyingGroupOfZG}, \hyperpage{46}
 
   \indexspace
 
-  \item \texttt  {ZeroGroup}, \hyperpage{44}
-  \item \texttt  {ZeroGroupAutomorphism}, \hyperpage{63}
-  \item \texttt  {ZeroGroupElt}, \hyperpage{45}
-  \item \texttt  {ZeroSemigroup}, \hyperpage{44}
-  \item \texttt  {ZeroSemigroupElt}, \hyperpage{44}
+  \item \texttt  {ZeroGroup}, \hyperpage{45}
+  \item \texttt  {ZeroGroupAutomorphism}, \hyperpage{64}
+  \item \texttt  {ZeroGroupElt}, \hyperpage{46}
+  \item \texttt  {ZeroSemigroup}, \hyperpage{45}
+  \item \texttt  {ZeroSemigroupElt}, \hyperpage{45}
 
 \end{theindex}

@@ -47,7 +47,7 @@
 \begin{center}{\Huge \textbf{The \textsf{MONOID} Package\mbox{}}}\\[1cm]
 \hypersetup{pdftitle=The \textsf{MONOID} Package}
 \markright{\scriptsize \mbox{}\hfill The \textsf{MONOID} Package \hfill\mbox{}}
-{Version 3.1.2\mbox{}}\\[1cm]
+{Version 3.1.3\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\large \textbf{J. D. Mitchell  \mbox{}}}\\
 \hypersetup{pdfauthor=J. D. Mitchell  }
@@ -99,9 +99,9 @@ important or if you find a bug, please let me know. \mbox{}}\\[1cm]
 \section{\textcolor{Chapter }{Introduction}}\logpage{[ 1, 1, 0 ]}
 \hyperdef{L}{X7DFB63A97E67C0A1}{}
 {
- This manual describes the \textsf{MONOID} package version 3.1.2 for computing with transformation semigroups. \textsf{MONOID} 3.1.2 is an updated version of the package with the same name for \textsf{GAP} 3; see \href{http://schmidt.nuigalway.ie/monoid/index.html} {\texttt{http://schmidt.nuigalway.ie/monoid/index.html}} for more information about the original \textsf{MONOID} by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc. 
+ This manual describes the \textsf{MONOID} package version 3.1.3 for computing with transformation semigroups. \textsf{MONOID} 3.1.3 is an updated version of the package with the same name for \textsf{GAP} 3; see \href{http://schmidt.nuigalway.ie/monoid/index.html} {\texttt{http://schmidt.nuigalway.ie/monoid/index.html}} for more information about the original \textsf{MONOID} by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc. 
 
- \textsf{MONOID} 3.1.2 retains all the functionality of the original \textsf{MONOID} package. In particular, \textsf{MONOID} 3.1.2 contains more efficient methods than those available in the \textsf{GAP} library for computing orbits, calculating Green's classes, finding the size,
+ \textsf{MONOID} 3.1.3 retains all the functionality of the original \textsf{MONOID} package. In particular, \textsf{MONOID} 3.1.3 contains more efficient methods than those available in the \textsf{GAP} library for computing orbits, calculating Green's classes, finding the size,
 the elements, and testing membership in transformation semigroups; see
 Chapters \ref{orbits} and \ref{greens}. After \textsf{MONOID} has been loaded many of these methods are automatically used in preference to
 those in the library and do not need to be called explicitly by the user.
@@ -143,7 +143,7 @@ and isomorphism testing functions (for graphs) can be used.
  The following is a summary of the steps that should lead to a successful
 installation of \textsf{MONOID}. 
 \begin{itemize}
-\item  download the package archive \texttt{monoid3r1p1.tar.gz} or \texttt{monoid3r1p1.tar.bz2} from \href{http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html } {\texttt{http://www-history.mcs.st-and.ac.uk/\texttt{\symbol{126}}jamesm/monoid/index.html }} 
+\item  download the package archive \texttt{monoid3r1p3.tar.gz} or \texttt{monoid3r1p3.tar.bz2} from \href{http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html } {\texttt{http://www-history.mcs.st-and.ac.uk/\texttt{\symbol{126}}jamesm/monoid/index.html }} 
 \item  unzip \& untar the file, this should create a directory called \texttt{MONOID}.
 \item  move the directory \texttt{MONOID} into the \texttt{pkg} directory of your \textsf{GAP} directory (the one containing the directories \texttt{lib}, \texttt{doc}, \texttt{pkg}, and so on)
 \item  start \textsf{GAP} in the usual way
@@ -154,15 +154,15 @@ installation of \textsf{GAP}.
 
  
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-  > gunzip monoid3r1p1.tar.gz 
-  > tar -xf monoid3r1p1.tar 
+  > gunzip monoid3r1p3.tar.gz 
+  > tar -xf monoid3r1p3.tar 
   > mv MONOID GAPROOT/pkg
   > gap 
   
   [ ... ]
   
   gap> LoadPackage("monoid");
-  Loading MONOID 3.1.2
+  Loading MONOID 3.1.3
   by James Mitchell (www-groups.mcs.st-and.ac.uk/~jamesm)
   For help, type: ?the monoid package 
   true
@@ -189,16 +189,16 @@ running the \textsf{MONOID} package!
  and press \texttt{return}. Please note that it will take a few moments before the tests are complete.
 
  If the output looks like the following, then it is probable that you have a
-fully working copy of \textsf{MONOID} 3.1.2.
+fully working copy of \textsf{MONOID} 3.1.3.
 
  
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
   gap> LoadPackage( "monoid" );;
   gap> dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
   gap> Read( Filename( dirs, "installtest.g" ) );;
-  + install_no_grape.tst 3.1.2
+  + install_no_grape.tst 3.1.3
   + GAP4stones: 1
-  + install_with_grape.tst 3.1.2
+  + install_with_grape.tst 3.1.3
   + GAP4stones: 2
 \end{Verbatim}
  If you want to perform more extensive tests, then copy the following lines
@@ -219,6 +219,9 @@ at \href{mailto://jdm3@st-and.ac.uk} {\texttt{jdm3@st-and.ac.uk}}. }
 {
  
 \begin{itemize}
+\item from 3.1.2 to 3.1.3: the method for \mbox{\texttt{\slshape PreImagesRepresentative}} for a semigroup homomorphism by function now tests whether the homomorphism is
+bijective and total before trying to find preimages. Some other minor
+corrections were made to the documentation and webpages.
 \item from 3.1.1 to 3.1.2: 
 \begin{itemize}
 \item the following new functions have been introduced: \texttt{TransformationActionNC} (\ref{TransformationActionNC}), \texttt{SmallestIdempotentPower} (\ref{SmallestIdempotentPower}), \texttt{IsKerImgOfTransformation} (\ref{IsKerImgOfTransformation}), \texttt{TransformationByKernelAndImage} (\ref{TransformationByKernelAndImage}), \texttt{AllTransformationsWithKerAndImgNC} (\ref{AllTransformationsWithKerAndImgNC}), \texttt{AsBooleanMatrix} (\ref{AsBooleanMatrix}), \texttt{KerImgOfTransformation} (\ref{KerImgOfTransformation}), \texttt{RandomIdempotent} (\ref{RandomIdempotent}), \texttt{InversesOfTransformation} (\ref{InversesOfTransformation}), \texttt{KiselmanSemigroup} (\ref{KiselmanSemigroup}), 
@@ -752,9 +755,9 @@ that monoid orbits do not describe an equivalence relation on \texttt{S}. In par
 
  returns the preimages of each of the sets in the tuple of sets \texttt{tup} under the transformation \texttt{f}. The tuple of sets \texttt{tup} can have any number of elements. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
-    gap> OnTuplesOfSetsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ] ], f);
-    [ [ 5 ], [ 4, 6 ], [ 3 ] ]
+  gap> f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
+  gap> OnTuplesOfSetsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ] ], f);
+  [ [ 5 ], [ 4, 6 ], [ 3 ] ]
 \end{Verbatim}
   }
 
@@ -770,9 +773,9 @@ that monoid orbits do not describe an equivalence relation on \texttt{S}. In par
 
  returns the kernel of the product \texttt{f*g} of the transformation \texttt{f} with a transformation \texttt{g} having kernel \texttt{ker}. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
-    gap> OnKernelsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6, 7, 8 ] ], f);
-    [ [ 1, 2, 7, 8 ], [ 3 ], [ 4, 6 ], [ 5 ] ]
+  gap> f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
+  gap> OnKernelsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6, 7, 8 ] ], f);
+  [ [ 1, 2, 7, 8 ], [ 3 ], [ 4, 6 ], [ 5 ] ]
 \end{Verbatim}
   }
 
@@ -1065,23 +1068,23 @@ property; see Chapter \ref{greens} and Chapter \ref{properties}.
  If the optional second argument \texttt{n} (a positive integer) is present, then the list of image sets of size \texttt{n} is returned. If you are only interested in the images of a given size, then
 the second version of the function will likely be faster. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
-    > Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;
-    gap> ImagesOfTransSemigroup(S, 6);
-    [  ]
-    gap> ImagesOfTransSemigroup(S, 5);
-    [  ]
-    gap> ImagesOfTransSemigroup(S, 4);
-    [ [ 1, 2, 5, 6 ] ]
-    gap> ImagesOfTransSemigroup(S, 3);
-    [ [ 1, 4, 6 ], [ 2, 5, 6 ] ]
-    gap> ImagesOfTransSemigroup(S, 2);
-    [ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ]
-    gap> ImagesOfTransSemigroup(S, 1);
-    [ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ]
-    gap> ImagesOfTransSemigroup(S);
-    [ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], 
-      [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
+  gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
+  > Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;
+  gap> ImagesOfTransSemigroup(S, 6);
+  [  ]
+  gap> ImagesOfTransSemigroup(S, 5);
+  [  ]
+  gap> ImagesOfTransSemigroup(S, 4);
+  [ [ 1, 2, 5, 6 ] ]
+  gap> ImagesOfTransSemigroup(S, 3);
+  [ [ 1, 4, 6 ], [ 2, 5, 6 ] ]
+  gap> ImagesOfTransSemigroup(S, 2);
+  [ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ]
+  gap> ImagesOfTransSemigroup(S, 1);
+  [ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ]
+  gap> ImagesOfTransSemigroup(S);
+  [ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], 
+    [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
     
 \end{Verbatim}
  }
@@ -1100,12 +1103,12 @@ the second version of the function will likely be faster.
 
  This is just the union of the orbits of the images of the generators of \texttt{S} under the action \texttt{OnSets} (\textbf{Reference: OnSets}) graded according to size. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), 
-    > Transformation( [ 4, 4, 5, 2, 2 ] ) ];;
-    gap> S:=Semigroup(gens);;
-    gap> GradedImagesOfTransSemigroup(S);
-    [ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], 
-      [  ], [ [ 1 .. 5 ] ] ]
+  gap> gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), 
+  > Transformation( [ 4, 4, 5, 2, 2 ] ) ];;
+  gap> S:=Semigroup(gens);;
+  gap> GradedImagesOfTransSemigroup(S);
+  [ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], 
+    [  ], [ [ 1 .. 5 ] ] ]
 \end{Verbatim}
   }
 
@@ -1125,22 +1128,22 @@ of \texttt{S} under the action \texttt{OnKernelsAntiAction} (\ref{OnKernelsAntiA
  If the optional second argument \texttt{n} (a positive integer) is present, then the list of image sets of size \texttt{n} is returned. If you are only interested in the images of a given size, then
 the second version of the function will likely be faster. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap>  S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
-    > Transformation( [ 3, 3, 4, 1 ] ) ]);
-    gap>  KernelsOfTransSemigroup(S);   
-    [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], 
-    [ 4 ] ], 
-      [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], 
-      [ [ 1, 4 ], [ 2 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
-    gap>  KernelsOfTransSemigroup(S,1);
-    [ [ [ 1, 2, 3, 4 ] ] ]
-    gap>  KernelsOfTransSemigroup(S,2);
-    [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], 
-      [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
-    gap>  KernelsOfTransSemigroup(S,3);
-    [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ]
-    gap>  KernelsOfTransSemigroup(S,4);
-    [  ]
+  gap>  S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
+  > Transformation( [ 3, 3, 4, 1 ] ) ]);
+  gap>  KernelsOfTransSemigroup(S);   
+  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], 
+  [ 4 ] ], 
+    [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], 
+    [ [ 1, 4 ], [ 2 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
+  gap>  KernelsOfTransSemigroup(S,1);
+  [ [ [ 1, 2, 3, 4 ] ] ]
+  gap>  KernelsOfTransSemigroup(S,2);
+  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], 
+    [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
+  gap>  KernelsOfTransSemigroup(S,3);
+  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ]
+  gap>  KernelsOfTransSemigroup(S,4);
+  [  ]
 \end{Verbatim}
   }
 
@@ -1158,15 +1161,15 @@ the second version of the function will likely be faster.
 
  This is just the union of the orbits of the kernels of the generators of \texttt{S} under the action \texttt{OnKernelsAntiAction} (\ref{OnKernelsAntiAction}) graded according to size. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), 
-    > Transformation( [ 2, 5, 3, 2, 3 ] ) ];;
-    gap> S:=Semigroup(gens);;
-    gap> GradedKernelsOfTransSemigroup(S);
-    [ [ [ [ 1, 2, 3, 4, 5 ] ] ], 
-      [ [ [ 1, 2, 4, 5 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ], 
-          [ [ 1, 2, 4 ], [ 3, 5 ] ] ], 
-      [ [ [ 1, 2, 4 ], [ 3 ], [ 5 ] ], [ [ 1, 4 ], [ 2 ], [ 3, 5 ] ] ], [  ], 
-      [ [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ] ] ] ]
+  gap> gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), 
+  > Transformation( [ 2, 5, 3, 2, 3 ] ) ];;
+  gap> S:=Semigroup(gens);;
+  gap> GradedKernelsOfTransSemigroup(S);
+  [ [ [ [ 1, 2, 3, 4, 5 ] ] ], 
+    [ [ [ 1, 2, 4, 5 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ], 
+        [ [ 1, 2, 4 ], [ 3, 5 ] ] ], 
+    [ [ [ 1, 2, 4 ], [ 3 ], [ 5 ] ], [ [ 1, 4 ], [ 2 ], [ 3, 5 ] ] ], [  ], 
+    [ [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ] ] ] ]
 \end{Verbatim}
   }
 
@@ -1190,15 +1193,15 @@ that stabilise the set \texttt{imgs[1]}).
 \end{itemize}
  
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
-    > Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
-    gap> S:=Semigroup(gens);;
-    gap> f:=Transformation( [ 2, 1, 1, 1, 5 ] );;
-    gap> StrongOrbitOfImage(S, f);        
-    [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
-          [ 2, 4, 5 ], [ 3, 4, 5 ] ], 
-      [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
-          (1,3,2,4) ], Group([ (), (2,5), (1,5) ]) ]
+  gap> gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
+  > Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
+  gap> S:=Semigroup(gens);;
+  gap> f:=Transformation( [ 2, 1, 1, 1, 5 ] );;
+  gap> StrongOrbitOfImage(S, f);        
+  [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
+        [ 2, 4, 5 ], [ 3, 4, 5 ] ], 
+    [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
+        (1,3,2,4) ], Group([ (), (2,5), (1,5) ]) ]
 \end{Verbatim}
   }
 
@@ -1214,28 +1217,28 @@ that stabilise the set \texttt{imgs[1]}).
 
  this is a mutable attribute that stores the result of \texttt{StrongOrbitOfImage} (\ref{StrongOrbitOfImage}) every time it is used. If \texttt{StrongOrbitOfImage} (\ref{StrongOrbitOfImage}) has not been invoked for \texttt{S}, then an error is returned. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
-    > Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
-    gap> S:=Semigroup(gens);;
-    gap> f:=Transformation( [ 2, 1, 1, 1, 5 ] );;
-    gap> StrongOrbitOfImage(S, f);;
-    gap> StrongOrbitsOfImages(S);
-    [ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
-              [ 2, 4, 5 ], [ 3, 4, 5 ] ] ], 
-      [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
-              (1,3,2,4) ] ], [ Group([ (), (2,5), (1,5) ]) ] ]
-    gap> f:=Transformation( [ 5, 5, 5, 5, 2 ] );
-    gap> StrongOrbitOfImage(S, f);;
-    gap> StrongOrbitsOfImages(S); 
-    [ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
-              [ 2, 4, 5 ], [ 3, 4, 5 ] ], 
-          [ [ 2, 5 ], [ 1, 5 ], [ 1, 3 ], [ 2, 3 ], [ 2, 4 ], [ 4, 5 ], [ 3, 5 ], 
-              [ 1, 2 ], [ 3, 4 ] ] ], 
-      [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
-              (1,3,2,4) ], 
-          [ (), (1,5,2), (1,2)(3,5,4), (2,5,4,3), (2,5,4), (2,3,4,5), (2,3), 
-              (1,5,4,3), (2,3)(4,5) ] ], 
-      [ Group([ (), (2,5), (1,5) ]), Group([ (), (2,5) ]) ] ]
+  gap> gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
+  > Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
+  gap> S:=Semigroup(gens);;
+  gap> f:=Transformation( [ 2, 1, 1, 1, 5 ] );;
+  gap> StrongOrbitOfImage(S, f);;
+  gap> StrongOrbitsOfImages(S);
+  [ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
+            [ 2, 4, 5 ], [ 3, 4, 5 ] ] ], 
+    [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
+            (1,3,2,4) ] ], [ Group([ (), (2,5), (1,5) ]) ] ]
+  gap> f:=Transformation( [ 5, 5, 5, 5, 2 ] );
+  gap> StrongOrbitOfImage(S, f);;
+  gap> StrongOrbitsOfImages(S); 
+  [ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
+            [ 2, 4, 5 ], [ 3, 4, 5 ] ], 
+        [ [ 2, 5 ], [ 1, 5 ], [ 1, 3 ], [ 2, 3 ], [ 2, 4 ], [ 4, 5 ], [ 3, 5 ], 
+            [ 1, 2 ], [ 3, 4 ] ] ], 
+    [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
+            (1,3,2,4) ], 
+        [ (), (1,5,2), (1,2)(3,5,4), (2,5,4,3), (2,5,4), (2,3,4,5), (2,3), 
+            (1,5,4,3), (2,3)(4,5) ] ], 
+    [ Group([ (), (2,5), (1,5) ]), Group([ (), (2,5) ]) ] ]
 \end{Verbatim}
  }
 
@@ -1252,13 +1255,13 @@ that stabilise the set \texttt{imgs[1]}).
 \section{\textcolor{Chapter }{Introduction}}\logpage{[ 4, 1, 0 ]}
 \hyperdef{L}{X7DFB63A97E67C0A1}{}
 {
- This chapter contains instructions on how to use the algorithms for computing
+ This chapter contains instructions on how to use the functions for computing
 Green's relations and related notions for transformation semigroups and
 monoids that are implemented in \textsf{MONOID}. 
 
  The theory behind these algorithms is developed in \cite{pfeiffer1} and the algorithms themselves are described in \cite{pfeiffer2}. Another reference is \cite{lallement}.
 
- Calculation of Green's relations using the \textsf{MONOID} package are invoked in the same way as they are in \textsf{GAP} without the \textsf{MONOID } package loaded; see  (\textbf{Reference: Semigroups}). For example, in \textsf{GAP} with the \textsf{MONOID} package loaded: 
+ Green's relations can be calculated when \textsf{MONOID} is loaded using the same commands that you would used when \textsf{MONOID} is not loaded; see  (\textbf{Reference: Semigroups}). For example, in \textsf{GAP} with the \textsf{MONOID} package loaded: 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
   gap> a:=Transformation([2,1,1,2,1]);;
   gap> b:=Transformation([3,4,3,4,4]);;
@@ -1286,7 +1289,7 @@ monoids that are implemented in \textsf{MONOID}.
 \end{Verbatim}
  The only noticable differences are the representatives of the classes and the
 order the classes appear in the list. These differences are caused by the
-differences in the methods used to behind the function \texttt{GreensRClasses} in \textsf{MONOID } and the \textsf{GAP} library. 
+differences in the methods for \texttt{GreensRClasses} in \textsf{MONOID } and the \textsf{GAP} library. 
 
  Most of the commands in this section relate to how Green's relations are
 calculated in \textsf{MONOID}. Although some of the commands might be used for other purposes, if all that
@@ -1294,8 +1297,7 @@ is required is to calculate Green's classes, relations and so on, then this is
 done in the exactly the same way as described in the \textsf{GAP} manual; see  (\textbf{Reference: Green's Relations}).
 
  Due to inherent difficulties with computing Green's L- and D-classes, the
-methods used to compute with Green's R-classes are the most efficient
-available in \textsf{MONOID}. Thus wherever possible it is advisable to use the commands relating to
+methods used to compute with Green's R-classes are the most efficient in \textsf{MONOID}. Thus wherever possible it is advisable to use the commands relating to
 Green's R-classes rather than those relating to Green's L-classes, D-classes,
 or H-classes.
 
@@ -1309,7 +1311,7 @@ compute all the elements of the underlying semigroup. It is also possible to
 compute all the R-classes, the number of elements and test membership in a
 transformation semigroup without computing all the elements. This may be
 useful if you want to study a very large semigroup where computing all the
-elements of the semigroup would take too long. }
+elements of the semigroup is infeasible. }
 
   
 \section{\textcolor{Chapter }{Data Structures}}\logpage{[ 4, 2, 0 ]}
@@ -1348,22 +1350,22 @@ elements of the semigroup would take too long. }
 \begin{itemize}
 \item  \texttt{rep} the representative of the $R$-class.
 \item  \texttt{strongorb} the strong orbit of the image of \texttt{rep} under the action of the semigroup on sets.
-\item \texttt{perms} a list of permutations that map the image of \texttt{rep} to the corresponding image in \texttt{strongorb}, that is, \texttt{OnSets(imgs[i], perms[i]=imgs[1]}. 
+\item \texttt{perms} a list of permutations that map the image of \texttt{rep} to the corresponding image in \texttt{strongorb}, that is, \texttt{OnSets(strongorb[i], perms[i])=strongorb[1]}. 
 \item  \texttt{schutz} the group of permutations arising from elements of the semigroup that
 stabilise the image of \texttt{rep} (called the \emph{ (generalized) right Schutzenberger group}).
 \end{itemize}
  The components \texttt{strongorb}, \texttt{perms}, and \texttt{schutz} are obtained using the function \texttt{StrongOrbitOfImage} (\ref{StrongOrbitOfImage}). Further details can be found in Algorithm C, D, E, F, and U of \cite{pfeiffer2}. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
-    gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
-    gap> M:=Semigroup(a,b);;
-    gap> rc:=GreensRClassOfElement(M, a*b*a);
-    {Transformation( [ 4, 1, 6, 5, 2, 2 ] )}
-    gap> GreensRClassData(rc);
-    GreensRClassData( Transformation( [ 4, 1, 6, 5, 2, 2 ] ), [ [ 1, 2, 4, 5, 6 ], 
-    [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ], [ 1, 2, 3, 4, 5 ] ], [ (), (1,2)
-    (3,6,5,4), (3,5)(4,6), (1,6,3,2)(4,5) ], Group( [ (), (2,4,6), (2,6,4), 
-    (1,2,6)(4,5) ] ) )
+  gap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
+  gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
+  gap> M:=Semigroup(a,b);;
+  gap> rc:=GreensRClassOfElement(M, a*b*a);
+  {Transformation( [ 4, 1, 6, 5, 2, 2 ] )}
+  gap> GreensRClassData(rc);
+  GreensRClassData( Transformation( [ 4, 1, 6, 5, 2, 2 ] ), [ [ 1, 2, 4, 5, 6 ], 
+  [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ], [ 1, 2, 3, 4, 5 ] ], [ (), (1,2)
+  (3,6,5,4), (3,5)(4,6), (1,6,3,2)(4,5) ], Group( [ (), (2,4,6), (2,6,4), 
+  (1,2,6)(4,5) ] ) )
 \end{Verbatim}
  }
 
@@ -1396,15 +1398,15 @@ stabilise the image of \texttt{rep} (called the \emph{ (generalized) right Schut
 \end{itemize}
  Further details can be found in Algorithm G, H, I, and J of \cite{pfeiffer2}. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> gens:=[ Transformation( [ 4, 1, 4, 5, 3 ] ),
-    > Transformation( [ 5, 3, 5, 4, 3 ] ) ];;
-    gap> S:=Semigroup(gens);;
-    gap> C:=GreensLClassOfElement(S, gens[1]*gens[2]*gens[1]);
-    {Transformation( [ 5, 3, 5, 4, 3 ] )}
-    gap> GreensLClassData(C);
-    GreensLClassData( Transformation( [ 5, 3, 5, 4, 3 ] ), 
-    [ [ [ 1, 3 ], [ 2, 5 ], [ 4 ] ] ], [ Binary Relation on 5 points ], 
-    [ Binary Relation on 5 points ], Group( [ (), (3,5,4), (3,5) ] ) )
+  gap> gens:=[ Transformation( [ 4, 1, 4, 5, 3 ] ),
+  > Transformation( [ 5, 3, 5, 4, 3 ] ) ];;
+  gap> S:=Semigroup(gens);;
+  gap> C:=GreensLClassOfElement(S, gens[1]*gens[2]*gens[1]);
+  {Transformation( [ 5, 3, 5, 4, 3 ] )}
+  gap> GreensLClassData(C);
+  GreensLClassData( Transformation( [ 5, 3, 5, 4, 3 ] ), 
+  [ [ [ 1, 3 ], [ 2, 5 ], [ 4 ] ] ], [ Binary Relation on 5 points ], 
+  [ Binary Relation on 5 points ], Group( [ (), (3,5,4), (3,5) ] ) )
 \end{Verbatim}
   }
 
@@ -1426,12 +1428,12 @@ group of the $L$-class and $R$-class containing the representative \texttt{rep} 
 \end{itemize}
  Further details can be found in Algorithm K, L, M, and N of \cite{pfeiffer2}. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> gens:=[ Transformation( [ 2, 2, 5, 2, 3 ] ), 
-    > Transformation( [ 2, 5, 3, 5, 3 ] ) ];;
-    gap> S:=Semigroup(gens);;
-    gap> f:=Transformation( [ 5, 5, 3, 5, 3 ] );;
-    gap> GreensHClassData(GreensHClassOfElement(S, f));
-    GreensHClassData( Transformation( [ 5, 5, 3, 5, 3 ] ), Group( () ) )
+  gap> gens:=[ Transformation( [ 2, 2, 5, 2, 3 ] ), 
+  > Transformation( [ 2, 5, 3, 5, 3 ] ) ];;
+  gap> S:=Semigroup(gens);;
+  gap> f:=Transformation( [ 5, 5, 3, 5, 3 ] );;
+  gap> GreensHClassData(GreensHClassOfElement(S, f));
+  GreensHClassData( Transformation( [ 5, 5, 3, 5, 3 ] ), Group( () ) )
 \end{Verbatim}
   }
 
@@ -1456,14 +1458,14 @@ group of the $L$-class and $R$-class containing the representative \texttt{rep} 
  Note that only the first three components are displayed. Further details can
 be found in Algorithm O, P, Q, R, S, and T of \cite{pfeiffer2}. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> gens:=[ Transformation( [ 4, 1, 5, 2, 4 ] ), 
-    > Transformation( [ 4, 4, 1, 5, 3 ] ) ];;
-    gap> S:=Semigroup(gens);;
-    gap> f:=Transformation( [ 5, 5, 3, 3, 3 ] );;
-    gap> GreensDClassData(GreensDClassOfElement(S, f));
-    GreensDClassData( Transformation( [ 5, 5, 3, 3, 3 
-    ] ), GreensRClassData( Transformation( [ 5, 5, 3, 3, 3 
-    ] ) ), GreensLClassData( Transformation( [ 5, 5, 3, 3, 3 ] ) ) )
+  gap> gens:=[ Transformation( [ 4, 1, 5, 2, 4 ] ), 
+  > Transformation( [ 4, 4, 1, 5, 3 ] ) ];;
+  gap> S:=Semigroup(gens);;
+  gap> f:=Transformation( [ 5, 5, 3, 3, 3 ] );;
+  gap> GreensDClassData(GreensDClassOfElement(S, f));
+  GreensDClassData( Transformation( [ 5, 5, 3, 3, 3 
+  ] ), GreensRClassData( Transformation( [ 5, 5, 3, 3, 3 
+  ] ) ), GreensLClassData( Transformation( [ 5, 5, 3, 3, 3 ] ) ) )
 \end{Verbatim}
   }
 
@@ -1547,24 +1549,24 @@ be found in Algorithm O, P, Q, R, S, and T of \cite{pfeiffer2}.
  This attribute is required so that a Green's class knowns that it belongs to a
 transformation semigroup, so that the methods defined in the \textsf{MONOID} are used in preference to those in the library. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
-    gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
-    gap> M:=Semigroup(a,b);;
-    gap> GreensLClassOfElement(M,a);
-    {Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
-    gap> IsAssociatedSemigpTransSemigp(last);
-    true
-    gap> f:=FreeSemigroup(3);;
-    gap> a:=f.1;; b:=f.2;; c:=f.3;; 
-    gap> s:=f/[[a^2, a], [b^2,b], [c^2,c], [a*b,a], [b*a,b], [a*c,a], 
-    > [c*a,c], [b*c,b],[c*b,c]];
-    <fp semigroup on the generators [ s1, s2, s3 ]>
-    gap> Size(s);
-    3
-    gap> GreensLClassOfElement(s,a);
-    {s1}
-    gap> IsAssociatedSemigpTransSemigp(last);
-    false
+  gap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
+  gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
+  gap> M:=Semigroup(a,b);;
+  gap> GreensLClassOfElement(M,a);
+  {Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
+  gap> IsAssociatedSemigpTransSemigp(last);
+  true
+  gap> f:=FreeSemigroup(3);;
+  gap> a:=f.1;; b:=f.2;; c:=f.3;; 
+  gap> s:=f/[[a^2, a], [b^2,b], [c^2,c], [a*b,a], [b*a,b], [a*c,a], 
+  > [c*a,c], [b*c,b],[c*b,c]];
+  <fp semigroup on the generators [ s1, s2, s3 ]>
+  gap> Size(s);
+  3
+  gap> GreensLClassOfElement(s,a);
+  {s1}
+  gap> IsAssociatedSemigpTransSemigp(last);
+  false
 \end{Verbatim}
   }
 
@@ -1582,18 +1584,18 @@ transformation semigroup, so that the methods defined in the \textsf{MONOID} are
 
  If \texttt{D} satisfies \texttt{IsGreensRClass} (\textbf{Reference: IsGreensRClass}), \texttt{IsGreensLClass} (\textbf{Reference: IsGreensLClass}), \texttt{IsGreensHClass} (\textbf{Reference: IsGreensHClass}), \texttt{IsGreensDClass} (\textbf{Reference: IsGreensDClass}), then \texttt{SchutzenbergerGroup} returns the \texttt{schutz} component of \texttt{GreensData} with argument \texttt{D}. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> gens:=[ Transformation( [ 4, 4, 3, 5, 3 ] ), 
-    > Transformation( [ 5, 1, 1, 4, 1 ] ), 
-    > Transformation( [ 5, 5, 4, 4, 5 ] ) ];;
-    gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
-    gap> SchutzenbergerGroup(GreensDClassOfElement(S, f));
-    Group([ (), (4,5) ])
-    gap> SchutzenbergerGroup(GreensRClassOfElement(S, f));
-    Group([ (), (4,5) ])
-    gap> SchutzenbergerGroup(GreensLClassOfElement(S, f));
-    Group([ (), (4,5) ])
-    gap> SchutzenbergerGroup(GreensHClassOfElement(S, f));
-    Group([ (), (4,5) ])
+  gap> gens:=[ Transformation( [ 4, 4, 3, 5, 3 ] ), 
+  > Transformation( [ 5, 1, 1, 4, 1 ] ), 
+  > Transformation( [ 5, 5, 4, 4, 5 ] ) ];;
+  gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
+  gap> SchutzenbergerGroup(GreensDClassOfElement(S, f));
+  Group([ (), (4,5) ])
+  gap> SchutzenbergerGroup(GreensRClassOfElement(S, f));
+  Group([ (), (4,5) ])
+  gap> SchutzenbergerGroup(GreensLClassOfElement(S, f));
+  Group([ (), (4,5) ])
+  gap> SchutzenbergerGroup(GreensHClassOfElement(S, f));
+  Group([ (), (4,5) ])
 \end{Verbatim}
   }
 
@@ -1613,21 +1615,21 @@ class \texttt{X}.
  If the optional second argument \texttt{n} is present, then a list of the idempotents in \texttt{S} of rank \texttt{n} is returned. If you are only interested in the idempotents of a given rank,
 then the second version of the function will likely be faster. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
-    > Transformation( [ 3, 3, 1, 1 ] ) ]);;
-    gap> Idempotents(S, 1);
-    [  ]
-    gap> Idempotents(S, 2);                        
-    [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
-      Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
-    gap> Idempotents(S, 3);                        
-    [  ]
-    gap> Idempotents(S, 4);                        
-    [ Transformation( [ 1, 2, 3, 4 ] ) ]
-    gap> Idempotents(S);
-    [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 2, 3, 4 ] ), 
-      Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
-      Transformation( [ 4, 2, 2, 4 ] ) ]
+  gap> S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
+  > Transformation( [ 3, 3, 1, 1 ] ) ]);;
+  gap> Idempotents(S, 1);
+  [  ]
+  gap> Idempotents(S, 2);                        
+  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+    Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
+  gap> Idempotents(S, 3);                        
+  [  ]
+  gap> Idempotents(S, 4);                        
+  [ Transformation( [ 1, 2, 3, 4 ] ) ]
+  gap> Idempotents(S);
+  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 2, 3, 4 ] ), 
+    Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
+    Transformation( [ 4, 2, 2, 4 ] ) ]
 \end{Verbatim}
  }
 

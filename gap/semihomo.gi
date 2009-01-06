@@ -1,7 +1,7 @@
 ##
 ## semihomo.gi
-## Version 3.1.2
-## Fri 11 Jul 2008 13:36:12 BST
+## Version 3.1.3
+## Fri  7 Nov 2008 17:45:12 GMT
 ##
 
 ###########################################################################
@@ -403,10 +403,17 @@ end);
 
 ################
 
-InstallMethod(PreImagesRepresentative,  "for semigroup homomorphism by function",  FamRangeEqFamElm, [IsSemigroupHomomorphism and IsSemigroupHomomorphismByFunctionRep and IsInjective and IsSurjective and IsTotal, IsMultiplicativeElement],
+InstallMethod(PreImagesRepresentative,  "for semigroup homomorphism by function",  FamRangeEqFamElm, [IsSemigroupHomomorphism and IsSemigroupHomomorphismByFunctionRep, IsMultiplicativeElement],
 function(hom, elt)
 
-return First(Source(hom), x-> ImageElm(hom, x)=elt);
+if IsInjective(hom) and IsSurjective(hom) and IsTotal(hom) then 
+#JDM wanted to test for IsInjective, IsSurjective and IsTotal in 
+#JDM the definition of the method (to avoid testing if not known)
+#JDM think about what the best thing to do with this is!
+	return First(Source(hom), x-> ImageElm(hom, x)=elt);
+else
+	return fail; #JDM probably improve this!
+fi;
 
 end);
 

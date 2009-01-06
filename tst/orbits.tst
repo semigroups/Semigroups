@@ -1,13 +1,13 @@
 ##
 ## orbits.tst
-## Version 3.1.2
-## Fri 11 Jul 2008 13:36:12 BST
+## Version 3.1.3
+## Fri  7 Nov 2008 17:45:12 GMT
 ##
 
 #dirs := DirectoriesPackageLibrary( "monoid", "tst" );
 #ReadTest( Filename( dirs, "orbits.tst" ) );
 
-gap> START_TEST("orbits.tst 3.1.2");
+gap> START_TEST("orbits.tst 3.1.3");
 gap> LoadPackage("monoid");;
 gap> g1:=Transformation( [ 2, 6, 5, 10, 6, 9, 2, 8, 2, 7 ] );;
 gap> g2:=Transformation( [ 7, 8, 7, 2, 8, 6, 9, 10, 6, 1 ] );;
@@ -275,4 +275,4 @@ gap> GradedStrongOrbit(m8, [1,3,4], OnTuples, Size);
 gap> ShortStrongOrbit(m8, [1,3,4], OnTuples, function(x) 
 >  if 1 in x then return 2; else return 1; fi; end);
 [ [ 1, 3, 4 ], [ 4, 6, 1 ], [ 3, 1, 6 ] ]
-gap> STOP_TEST( "properties.tst 3.1.2", 10000);
+gap> STOP_TEST( "properties.tst 3.1.3", 10000);

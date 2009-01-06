@@ -1,7 +1,7 @@
 ##
 ## autos.gi
-## Version 3.1.2
-## Fri 11 Jul 2008 13:36:12 BST
+## Version 3.1.3
+## Fri  7 Nov 2008 17:45:12 GMT
 ##
 
 ##  <#GAPDoc Label="autostop">
@@ -348,7 +348,7 @@ repeat
 			fi;
 		fi;
 	fi;
-	Print("InnerAutomorphisms: automorphisms ", Size(inner), " nonautomorphisms ", Length(bad), " counter ", l, "\r");
+	#Print("InnerAutomorphisms: automorphisms ", Size(inner), " nonautomorphisms ", Length(bad), " counter ", l, "\r");
 until 2*Size(inner)+Length(bad)>Length(perms) or l=Length(perms);
 
 if not bval and not superlist=fail then 
@@ -365,7 +365,7 @@ if not bval and not superlist=fail then
 	inner:=new;
 fi;
 
-Print("\n");
+#Print("\n");
 
 autos:=Group(List(SmallGeneratingSet(inner), x-> InnerAutomorphismOfSemigroupNC(S, x)));
 SetAsSSortedList(autos, SetX(inner, x-> InnerAutomorphismOfSemigroupNC(S, x)));
@@ -967,6 +967,8 @@ function(rms, elts, func)
 Print("#I It appears that the `grape' package is not fully installed. As a\n#I consequence this function is not currently available.\n");
 return fail;
 
+#JDM see grape.gi!!
+
 end);
 
 #############################################################################
@@ -1030,7 +1032,7 @@ function(rms1, rms2, triple)
 IsSPGeneralMapping and IsTotal and IsSingleValued and IsInjective and IsSurjective and RespectsMultiplication and IsRMSIsoByTripleRep), map);
   SetSource(map, rms1);
   SetRange(map, rms2);
-  IsOne(map);		
+  IsOne(map);
   
   return map;
 end);
