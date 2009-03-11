@@ -818,6 +818,8 @@ DeclareRepresentation("IsRMSIsoByTripleRep",  IsAttributeStoringRep, ["triple"])
 ##	<#/GAPDoc>
 
 DeclareOperation("RightTransStabAutoGroup", [IsSemigroup, IsMultiplicativeElementCollection, IsFunction]);
+DeclareOperation("RightTransStabAutoGroupNC", [IsSemigroup, IsMultiplicativeElementCollection, IsFunction]);
+
 
 #############################################################################
 ##

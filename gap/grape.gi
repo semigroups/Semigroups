@@ -1133,13 +1133,13 @@ fi; #JDM make NC version? to omit this?
 mat:=SandwichMatrixOfReesZeroMatrixSemigroup(rms);
 m:=Length(mat[1]); n:=Length(mat);
 
-Info(InfoAutos, 2, "computing automorphism group of graph");
+Info(InfoAutos, 2, "computing automorphisms of graph...");
 autograph:=AutGroupGraph(RZMSGraph(rms), [[1..m],[m+1..n+m]]);
-Info(InfoAutos, 2, "the automorphism group of the graph has size ", Size(autograph));
+Info(InfoAutos, 2, Size(autograph), "graph automorphisms");
 
 components:=ConnectedComponents(RZMSGraph(rms));
 r:=Length(components);
-Info(InfoAutos, 2, "the graph has ", r, " connected components");
+Info(InfoAutos, 2, "graph has ", r, " connected components");
 
 ZG:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(rms);
 
@@ -1201,7 +1201,93 @@ od;
 
 return trans;
 #JDM return tuples too?
+#return [trans,tuples];
 end);
+
+
+####################
+
+InstallOtherMethod(RightTransStabAutoGroupNC, "for a RZMS", true, [IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroupElementCollection, IsFunction], 0,
+function(rms, elts, func)
+local mat, m, n, autograph, r, autogroup, inner, transversal1, ZG, G, transversal2, A, l, t, tup, new, trans, tuples, rmsgens, indices, components, transversal3, x, i, g, B, stab;
+
+mat:=SandwichMatrixOfReesZeroMatrixSemigroup(rms);
+m:=Length(mat[1]); n:=Length(mat);
+
+Info(InfoAutos, 3, "computing automorphisms of graph...");
+autograph:=AutGroupGraph(RZMSGraph(rms), [[1..m],[m+1..n+m]]);
+Info(InfoAutos, 3, Size(autograph), "graph automorphisms");
+
+components:=ConnectedComponents(RZMSGraph(rms));
+r:=Length(components);
+Info(InfoAutos, 3, "graph has ", r, " connected components");
+
+ZG:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(rms);
+
+Info(InfoAutos, 3, "computing automorphism group of underlying zero group");
+autogroup:=AutomorphismGroup(ZG);
+Info(InfoAutos, 3, Size(autogroup), "automorphisms of underlying zero group");
+
+Info(InfoAutos, 3, "computing inner automorphisms of underlying zero group...");
+if not IsTrivial(autogroup) then 
+	inner:=InnerAutomorphismsAutomorphismGroup(autogroup);
+	transversal1:=RightTransversal(autogroup, inner);
+else
+	transversal1:=Elements(autogroup);
+fi;
+Info(InfoAutos, 3, "Aut G/Inn G has size ", Length(transversal1));
+
+G:=UnderlyingGroupOfZG(ZG);
+transversal2:=List(RightTransversal(G, Centre(G)), ZeroGroupElt);
+G:=List(G, ZeroGroupElt);
+
+Info(InfoAutos, 3, "|G/Z(G)|+", r-1, "|G| equals ", Length(transversal2)+(r-1)*Size(G));
+
+Info(InfoAutos, 3, "search space has ", Size(autograph), "x", Length(transversal1), "x", Length(transversal2)+(r-1)*Size(G), "=", Size(autograph)*Length(transversal1)*(Length(transversal2)+(r-1)*Size(G)), " elements");
+
+trans:=[];
+tuples:=[];
+stab:=[];
+
+m:=0;
+for l in autograph do 
+
+	for t in transversal1 do 
+	
+		B:=List([1..r], x->[]);
+		for i in [1..r] do 
+			if not i=1 then 
+				transversal3:=G;
+			else 
+				transversal3:=transversal2;
+			fi;
+			for g in transversal3 do 
+				new:=RZMSInducedFunction(rms, l, t, g, components[i]); 	
+				if not new=fail then
+					Add(B[i], new);
+				fi;
+			od;
+		od;
+
+		for x in Cartesian(B) do
+			new:=RZMSIsoByTriple(rms, rms, [l, t, Sum(x)]);
+			tup:=func(elts, new);
+			if tup=elts then 
+				Add(stab, new);
+			elif not tup in tuples then
+				AddSet(tuples, tup); 
+				Add(trans, new);
+			fi;
+		od;
+		
+	od;
+od;
+
+return trans;
+#JDM return tuples too?
+#return [trans,tuples,stab];
+end);
+
 
 
 #############################################################################

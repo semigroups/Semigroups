@@ -862,10 +862,13 @@ local imgs, iso, stab;
 imgs:=List(elts, x->x![1]+1);
 
 iso:=IsomorphismPermGroup(AutomorphismGroup(S));
-stab:=Stabilizer(Range(iso), imgs, func);
+stab:=OrbitStabilizer(Range(iso), imgs, func);
 
-#JDM could use enumerator here instead of AsList.
-return OnTuples(AsList(RightTransversal(Range(iso), stab)), InverseGeneralMapping(iso));
+
+#return [OnTuples(AsList(RightTransversal(Range(iso), stab.stabilizer)), InverseGeneralMapping(iso)), List(stab.orbit, x-> List(x, y-> ZeroSemigroupElt(y-1)))]; 
+
+#JDM could use enumerator here instead of AsList?
+return OnTuples(AsList(RightTransversal(Range(iso), stab.stabilizer)), InverseGeneralMapping(iso));
 
 end);
 
@@ -951,8 +954,9 @@ for l in autograph do
 	od;
 od;
 
-return trans;
+#return [trans, tuples]; #JDM changes
 #JDM could also return <tuples> if desirable
+return trans;
 
 end);
 
