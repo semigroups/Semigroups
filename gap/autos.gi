@@ -1024,22 +1024,26 @@ end);
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-InstallGlobalFunction(RMSIsoByTriple, 
-function(rms1, rms2, triple)
-  local fam1, fam2, mapfam, map;
+#JDM JDM JDM the following is only commented out to allow for a new method in the dev
+# version. If doing a new release before moving things over from dev, then uncomment
+# this function.
 
-  fam1 :=  ElementsFamily(FamilyObj(rms1));
-  fam2 :=  ElementsFamily(FamilyObj(rms2));
-  mapfam := GeneralMappingsFamily(fam1,fam2);	
-  map := rec( triple := triple);
-  Objectify(NewType(mapfam, IsGeneralMapping and 
-IsSPGeneralMapping and IsTotal and IsSingleValued and IsInjective and IsSurjective and RespectsMultiplication and IsRMSIsoByTripleRep), map);
-  SetSource(map, rms1);
-  SetRange(map, rms2);
-  IsOne(map);
-  
-  return map;
-end);
+#InstallGlobalFunction(RMSIsoByTriple, 
+#function(rms1, rms2, triple)
+#  local fam1, fam2, mapfam, map;
+#
+#  fam1 :=  ElementsFamily(FamilyObj(rms1));
+#  fam2 :=  ElementsFamily(FamilyObj(rms2));
+#  mapfam := GeneralMappingsFamily(fam1,fam2);	
+#  map := rec( triple := triple);
+#  Objectify(NewType(mapfam, IsGeneralMapping and 
+#IsSPGeneralMapping and IsTotal and IsSingleValued and IsInjective and IsSurjective and #RespectsMultiplication and IsRMSIsoByTripleRep), map);
+#  SetSource(map, rms1);
+#  SetRange(map, rms2);
+#  IsOne(map);
+#  
+#  return map;
+#end);
 
 ###########################################################################
 ##
@@ -1168,7 +1172,7 @@ end);
 
 #############
 
-InstallMethod(IsOne, "for objects in `IsRMSIsoByTriple'", true, [IsEndoGeneralMapping and IsRMSIsoByTripleRep], 0, 
+InstallMethod(IsOne, "for objects in `IsRMSIsoByTriple'", true, [IsGeneralMapping and IsRMSIsoByTripleRep], 99, 
 function(triple)
 
 return IsOne(triple!.triple[1]) and IsOne(triple!.triple[2]) and ForAll(triple!.triple[3], IsOne);
@@ -2692,7 +2696,7 @@ InstallMethod( CompositionMapping2,
 #####################
 
     InstallMethod( CompositionMapping2,
-    "for  semigroup homomorphism and inner automorphisms of semigroups",
+    "for semigroup homomorphism and inner automorphisms of semigroups",
     IsIdenticalObj,
     [ IsSemigroupHomomorphism , IsInnerAutomorphismOfSemigroup], 0,
     function( hom, inn )

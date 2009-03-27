@@ -849,8 +849,14 @@ InstallGlobalFunction(RandomReesMatrixSemigroup,
 function(rows, cols, n)
 local G, mat;
 
-G:=SmallGroup(n, Random([1..NrSmallGroups(n)]));
-G:=Range(IsomorphismPermGroup(G));
+if IsPosInt(n) then 
+	G:=SmallGroup(n, Random([1..NrSmallGroups(n)]));
+	G:=Range(IsomorphismPermGroup(G));
+elif IsPermGroup(n) then 
+	G:=n;
+else
+	Error("3rd argument must be a pos. int. or a perm. group");
+fi;
 
 #regular matrix
 
