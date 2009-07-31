@@ -399,7 +399,7 @@ end);
 ##	<#/GAPDoc>
 
 InstallMethod(ZeroGroup, [IsGroup and HasGeneratorsOfGroup], 
-function( s )	
+function( s )
 local m, gens;
 
 gens:=List(GeneratorsOfGroup(s), ZeroGroupElt);

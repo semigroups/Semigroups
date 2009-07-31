@@ -1318,9 +1318,9 @@ elts:= [];
 for m in R!.perms do
 	for g in grp do 
 		prod:=x*(g*m^-1);
-		if not prod in elts then 
+		#if not prod in elts then  JDM recent change here!!
 			AddSet(elts, prod); 
-		fi;
+		#fi;
 	od;
 od;
 
