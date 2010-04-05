@@ -28,39 +28,6 @@
 
 
 ###########################################################################
-##
-##	<#GAPDoc Label="IsAssociatedSemigpTransSemigp">
-##	<ManSection>
-##	<Prop Name="IsAssociatedSemigpTransSemigp" Arg="C"/>
-##	<Description>
-##	returns <C>true</C> if <C>C</C> is a Green's class of a transformation 
-##	semigroup and returns <C>false</C> otherwise.
-##	This attribute is required so that a Green's class knowns that it belongs to 
-##	a transformation semigroup, so that the methods defined in the
-##	<Package>MONOID</Package> are used in preference to those in the library.
-##	<Example>
-##  gap&gt; a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
-##  gap&gt; b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
-##  gap&gt; M:=Semigroup(a,b);;
-##  gap&gt; GreensLClassOfElement(M,a);
-##  {Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
-##  gap&gt; IsAssociatedSemigpTransSemigp(last);
-##  true
-##  gap&gt; f:=FreeSemigroup(3);;
-##  gap&gt; a:=f.1;; b:=f.2;; c:=f.3;; 
-##  gap&gt; s:=f/[[a^2, a], [b^2,b], [c^2,c], [a*b,a], [b*a,b], [a*c,a], 
-##  &gt; [c*a,c], [b*c,b],[c*b,c]];
-##  &lt;fp semigroup on the generators [ s1, s2, s3 ]&gt;
-##  gap&gt; Size(s);
-##  3
-##  gap&gt; GreensLClassOfElement(s,a);
-##  {s1}
-##  gap&gt; IsAssociatedSemigpTransSemigp(last);
-##  false
-##	</Example> <!-- greens.tst -->
-##	</Description>
-##  </ManSection>
-##	<#/GAPDoc>
 
 InstallMethod(IsAssociatedSemigpTransSemigp, "for a Green's class", true, [IsGreensClass], 0, function(class)
 
@@ -69,22 +36,6 @@ return IsTransformationSemigroup(ParentAttr(class));
 end);
 
 #############################################################################
-##
-##  The following operations are constructors for Green's class with
-##  a given element as a representative. The call is for semigroups
-##  and an element in the semigroup. This function doesn't check that
-##  the element is actually a member of the semigroup.
-##
-#O  GreensRClassOfElement(<semigroup>, <representative>)
-#O  GreensLClassOfElement(<semigroup>, <representative>)
-#O  GreensJClassOfElement(<semigroup>, <representative>)
-#O  GreensDClassOfElement(<semigroup>, <representative>)
-#O  GreensHClassOfElement(<semigroup>, <representative>)
-##
-##  These are just copies of the functions from the GAP library with 
-##  the addition that the resultant class has IsAssociatedSemigpTransSemigp 
-##  set to true. 
-##  
 
 InstallOtherMethod(GreensRClassOfElement, "for a semigroup", true, 
 [IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject], 0,
@@ -100,7 +51,7 @@ local ec;
 
 end);
 
-######################
+#############################################################################
 
 InstallOtherMethod(GreensLClassOfElement, "for a semigroup", true, 
 [IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject], 0,
@@ -116,7 +67,7 @@ local ec;
 
 end);
 
-######################
+#############################################################################
 
 InstallOtherMethod(GreensHClassOfElement, "for a semigroup", true, 
 [IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject], 0,
@@ -132,7 +83,7 @@ local ec;
 
 end);
 
-######################
+#############################################################################
 
 InstallOtherMethod(GreensDClassOfElement, "for a semigroup", true, 
 [IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject], 0,
@@ -148,7 +99,7 @@ return ec;
 
 end);
 
-######################
+#############################################################################
 
 InstallOtherMethod(GreensJClassOfElement, "for a semigroup", true, [IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject], 0,
 function(s,e)
@@ -164,118 +115,30 @@ local ec;
 end);
 
 ###########################################################################
-##
-##	<#GAPDoc Label="RClassData">
-##	<ManSection>
-##	<Func Name="RClassData" Arg="rec"/>
-##	<Description>
-##	This function constructs an object in the category <C>IsGreensRClassData</C> 
-##	a subcategory of <Ref Func="IsGreensData"/>.  <C>RClassData</C> has as an 
-##	argument a record <C>rec</C> with four components: 
-##	<List>
-##		<Item> <C>rep</C> the representative of the <M>R</M>-class</Item>
-##		<Item> <C>strongorb</C> the strong orbit of the image of <C>rep</C> under 
-##		the action of the semigroup on sets</Item>
-##		<Item><C>perms</C> a list of permutations that map the image of <C>rep</C> 
-##		to the corresponding image in <C>strongorb</C>, that is, 
-##		<C>OnSets(imgs[i], mults[i])=imgs[1]</C>
-##		</Item>
-##		<Item> <C>schutz</C> the group of permutations arising from elements 
-##		of the semigroup that stabilise the image of <C>rep</C> (called the <E>
-##		(generalized) right Schutzenberger group</E>).</Item>
-##	</List>
-##	</Description>
-##  </ManSection>
-##	<#/GAPDoc>
 
 InstallGlobalFunction(RClassData, function(list)
 return Objectify(NewType(NewFamily("Green's R Class Data", IsGreensRClassData), IsGreensRClassData and IsGreensRClassDataRep), list);
 end);
 
 ###########################################################################
-##
-##	<#GAPDoc Label="LClassData">
-##	<ManSection>
-##	<Func Name="LClassData" Arg="rec"/>
-##	<Description>
-##	This function constructs an object in the category <C>IsGreensLClassData</C> 
-##	a subcategory of <Ref Func="IsGreensData"/>.  <C>LClassData</C> has as an 
-##	argument a record <C>rec</C> with five components: 
-##	<List>
-##		<Item><C>rep</C> the representative of the <M>L</M>-class</Item>
-##		<Item><C>strongorb</C> the strong orbit of the kernel of <C>rep</C> under 
-##		the action of the semigroup by <Ref Func="OnTuplesOfSetsAntiAction"/>
-##		</Item>
-##		<Item><C>relts</C> a list of relations such that 
-##		<C>KernelOfTransformation(relts[i]*x)=strongorb[1]</C> whenever <C>x</C> 
-##		has <C>KernelOfTransformation(x)=strongorb[i]</C></Item>
-##		<Item><C>invrelts</C> the inverses of the relations <C>relts</C> 
-##		(<C>KernelOfTransformation(invrelts[i]*rep)=strongorb[i]</C>)</Item>
-##		<Item><C>schutz</C> the (generalised) left Schutzenberger group.</Item>
-##	</List>
-##	</Description>
-##  </ManSection>
-##	<#/GAPDoc>
 
 InstallGlobalFunction(LClassData, function(list)
 return Objectify(NewType(NewFamily("Green's L Class Data", IsGreensLClassData), IsGreensLClassData and IsGreensLClassDataRep), list);
 end);
 
 ###########################################################################
-##
-##	<#GAPDoc Label="DClassData">
-##	<ManSection>
-##	<Func Name="DClassData" Arg="rec"/>
-##	<Description>
-##	This function constructs an object in the category <C>IsGreensDClassData</C> 
-##	a subcategory of <Ref Func="IsGreensData"/>.  <C>DClassData</C> has as an 
-##	argument a record <C>rec</C> with five components: 
-##	<List>
-##		<Item><C>rep</C> the representative of the <M>D</M>-class</Item>
-##		<Item><C>R</C> the result of <Ref Func="GreensRClassData"/> with argument 
-##		<C>rep</C></Item>
-##		<Item><C>L</C> the result of <Ref Func="GreensLClassData"/> with argument 
-##		<C>rep</C></Item>
-##		<Item><C>H</C> the result of <Ref Func="GreensHClassData"/> with argument 
-##		<C>rep</C></Item>
-##		<Item> <C>cosets</C> a transversal of right cosets of the 
-##		Schutzenberger group of <C>H</C> in the Schutzenberger group of 
-##		<C>R</C>.</Item>
-##	</List>
-##	</Description>
-##  </ManSection>
-##	<#/GAPDoc>
 
 InstallGlobalFunction(DClassData, function(list)
 return Objectify(NewType(NewFamily("Green's D Class Data", IsGreensDClassData), IsGreensDClassData and IsGreensDClassDataRep), list);
 end);
 
 ###########################################################################
-##
-##	<#GAPDoc Label="HClassData">
-##	<ManSection>
-##	<Func Name="HClassData" Arg="rec"/>
-##	<Description>
-##	This function constructs an object in the category <C>IsGreensHClassData</C> 
-##	a subcategory of <Ref Func="IsGreensData"/>.  <C>HClassData</C> has as an 
-##	argument a record <C>rec</C> with two components: 
-##	<List>
-##		<Item><C>rep</C> the representative of the <M>H</M>-class</Item>
-##		<Item><C>schutz</C> the intersection of the left Schutzenberger group and 
-##		right Schutzenberger group of the <M>L</M>-class and <M>R</M>-class 
-##		containing the representative <C>rep</C> (that is, the intersection of the 
-##		<C>schutz</C> component of <Ref Func="GreensRClassData"/> and the 
-##		<C>schutz</C> component of <Ref Func="GreensLClassData"/>).</Item>
-##	</List>
-##	</Description>
-##  </ManSection>
-##	<#/GAPDoc>
 
 InstallGlobalFunction(HClassData, function(list)
 return Objectify(NewType(NewFamily("Green's H Class Data", IsGreensHClassData), IsGreensHClassData and IsGreensHClassDataRep), list);
 end);
 
-######################
+#############################################################################
 
 InstallMethod( ViewObj, "for object in `IsGreensRClassData'",
 [IsGreensRClassData and IsGreensRClassDataRep],
@@ -283,7 +146,7 @@ function( obj )
 Print( "GreensRClassData( ", obj!.rep, ", ", obj!.strongorb,", ", obj!.perms,", ", obj!.schutz, " )" );
 end );
 
-######################
+#############################################################################
 
 InstallMethod( PrintObj, "for object in `IsGreensRClassData'",
 [ IsGreensRClassData and IsGreensRClassDataRep],
@@ -291,7 +154,7 @@ function( obj )
 Print( "GreensRClassData( ", obj!.rep,  " )" );
 end );
 
-######################
+#############################################################################
 
 InstallMethod( ViewObj, "for object in `IsGreensLClassData'",
 [ IsGreensLClassData and IsGreensLClassDataRep],
@@ -299,7 +162,7 @@ function( obj )
 Print( "GreensLClassData( ", obj!.rep, ", ", obj!.strongorb,", ", obj!.relts,", ", obj!.invrelts,", ", obj!.schutz, " )" );
 end );
 
-######################
+#############################################################################
 
 InstallMethod( PrintObj, "for object in `IsGreensLClassData'",
 [ IsGreensLClassData and IsGreensLClassDataRep],
@@ -307,7 +170,7 @@ function( obj )
 Print( "GreensLClassData( ", obj!.rep,  " )" );
 end );
 
-######################
+#############################################################################
 
 InstallMethod( ViewObj, "for object in `IsGreensDClassData'",
 [ IsGreensDClassData and IsGreensDClassDataRep],
@@ -315,7 +178,7 @@ function( obj )
 Print( "GreensDClassData( ", obj!.rep, ", ", obj!.R,", ", obj!.L, " )" );
 end );
 
-######################
+#############################################################################
 
 InstallMethod( PrintObj, "for object in `IsGreensDClassData'",
 [ IsGreensDClassData and IsGreensDClassDataRep],
@@ -323,7 +186,7 @@ function( obj )
 Print( "GreensDClassData( ", obj!.rep,  " )" );
 end );
 
-######################
+#############################################################################
 
 InstallMethod( ViewObj, "for object in `IsGreensHClassData'",
 [ IsGreensHClassData and IsGreensHClassDataRep],
@@ -331,37 +194,8 @@ function( obj )
 Print( "GreensHClassData( ", obj!.rep, ", ", obj!.schutz, " )" );
 end );
 
-###########################################################################
-
-#####################################################################
 ## Commands to integrate MONOID functions with those in semirel.g* ##
 #####################################################################
-
-###########################################################################
-
-###########################################################################
-##
-##	<#GAPDoc Label="GreensData">
-##	<ManSection>
-##	<Oper Name="GreensData" Arg="C"/>
-##	<Description>
-##	<List>
-##	<Item> if <C>C</C> satisfies <Ref Prop="IsGreensRClass" BookName="ref"/>, 
-##	then <C>GreensData</C> returns the value of <Ref Oper="GreensRClassData"/> 
-##	with argument <C>C</C>.</Item>
-##	<Item> if <C>C</C> satisfies <Ref Prop="IsGreensLClass" BookName="ref"/>, 
-##	then <C>GreensData</C> returns the value of <Ref Oper="GreensLClassData"/> 
-##	with argument <C>C</C>.</Item>
-##	<Item> if <C>C</C> satisfies <Ref Prop="IsGreensHClass" BookName="ref"/>, 
-##	then <C>GreensData</C> returns the value of <Ref Oper="GreensHClassData"/> 
-##	with argument <C>C</C>.</Item>
-##	<Item> if <C>C</C> satisfies <Ref Prop="IsGreensDClass" BookName="ref"/>, 
-##	then <C>GreensData</C> returns the value of <Ref Oper="GreensDClassData"/> 
-##	with argument <C>C</C>.</Item>
-##	</List>
-##	</Description>
-##  </ManSection>
-##	<#/GAPDoc>
 
 InstallMethod(GreensData, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsAssociatedSemigpTransSemigp], 0, 
 function(class)
@@ -381,43 +215,28 @@ fi;
 end);
 
 #############################################################################
-##
-#M  <transformation> in <class>;
-#M  Size( <class> ); 
-#M  AsSSortedList( <class> );
-#M  Idempotents( <class> );
-##
-##  membership test etc. for a Green's class of a transformation semigroup, 
-##  does the corresponding check in GreensData(<class>).
-##
 
 InstallMethod( \in, "for a Green's Class of a transformation semigroup", true, [IsTransformation, IsGreensClass and IsAssociatedSemigpTransSemigp], 0, 
 function (elm, class)
 	return elm in GreensData(class);
 end); 
 
-######################
+#############################################################################
 
 InstallMethod( Size, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsAssociatedSemigpTransSemigp], 0,
 x-> Size(GreensData(x)));
 
-######################
+#############################################################################
 
 InstallMethod( AsSSortedList, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsAssociatedSemigpTransSemigp], 0, 
 x-> AsSSortedList(GreensData(x)));
 
-######################
+#############################################################################
 
 InstallOtherMethod( Idempotents, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsAssociatedSemigpTransSemigp], 0, 
 x-> Idempotents(GreensData(x)));
 
 #############################################################################
-##
-#M  <data1> < <data2> ;
-##
-##  returns if the representative of <data1> is \< that of <data2> where
-##  <data1> and <data2> are GreensData of the same type and the same semigroup.
-##
 
 InstallMethod(\<, "for Green's data", true, [IsGreensData, IsGreensData], 0, 
 function(data1, data2)
@@ -440,12 +259,8 @@ fi;
 
 end);
 
-#############################################################################
-##
-#M  <data1> = <data2> ;
-##
 ##  returns if the representative of <data1> is in <data2>.
-##
+#############################################################################
 
 InstallMethod(\=, "= for GreensData", true, 
 [IsGreensData, IsGreensData], 0, 
@@ -468,12 +283,8 @@ else
 fi;
 end);
 
-#############################################################################
-##
-#M  Representative( <data> ) ;
-##
 ##  user friendly return of data!.rep 
-##
+#############################################################################
 
 InstallOtherMethod(Representative, "for GreensData", true, 
 [IsGreensData],0,
@@ -482,22 +293,7 @@ function(data)
 end);
 
 ###########################################################################
-##
-##	<#GAPDoc Label="OnTuplesOfSetsAntiAction">
-##	<ManSection>
-##	<Func Name="OnTuplesOfSetsAntiAction" Arg="tup, f"/>
-##	<Description>
-##	returns the preimages of each of the sets in the tuple of sets <C>tup</C> 
-##	under the transformation <C>f</C>. The tuple of sets <C>tup</C> can have 
-##	any number of elements.
-##	<Example>
-##  gap&gt; f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
-##  gap&gt; OnTuplesOfSetsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ] ], f);
-##  [ [ 5 ], [ 4, 6 ], [ 3 ] ]
-##	</Example> <!-- greens.tst -->
-##	</Description>
-##  </ManSection>
-##	<#/GAPDoc>
+#JDM here
 
 InstallGlobalFunction(OnTuplesOfSetsAntiAction, [IsObject, IsTransformation], 
 function(tup, s)
@@ -615,6 +411,8 @@ local gens, orb, imgs, x, y, new, limit, n;
  
 if HasGradedImagesOfTransSemigroup(M) then 
 	return Union(GradedImagesOfTransSemigroup(M));
+elif HasAsSSortedList(M) then #JDM new for 3.4.1
+	return Set(List(Elements(M), x-> AsSet(x![1])));
 else
 
 	n:=DegreeOfTransformationSemigroup(M);
@@ -2525,6 +2323,14 @@ local i, j, k, pos, R, ker, kers, rrel;
 if not IsTransformation(x) or DegreeOfTransformation(x) <> DegreeOfTransformationSemigroup(M) then
 	return false;
 fi;
+
+#JDM new for 3.1.4
+
+if HasAsSSortedList(M) then 
+	return x in AsSSortedList(M);
+fi;
+
+#JDM end
 
 k:= RankOfTransformation(x);
 

@@ -13,6 +13,91 @@
 
 ###########################################################################
 ##
+##	<#GAPDoc Label="IsBand">
+##	<ManSection>
+##	<Prop Name="IsBand" Arg="S"/>
+##	<Description>
+##	returns <C>true</C> if the transformation semigroup <C>S</C> is a band and 
+##	<C>false</C> otherwise.<P/>
+##
+##	A semigroup <C>S</C> is a <E>band</E> if every element is an idempotent, 
+##	that is, <C>x^2=x</C> for all <C>x</C> in <C>S</C>.
+##
+##	<Example>
+##  gap&gt; gens:=[ Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 1 ] ), 
+##  &gt; Transformation( [ 2, 2, 2, 5, 5, 5, 8, 8, 8, 2 ] ), 
+##  &gt; Transformation( [ 3, 3, 3, 6, 6, 6, 9, 9, 9, 3 ] ), 
+##  &gt; Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 4 ] ), 
+##  &gt; Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 7 ] ) ];;
+##  gap&gt; S:=Semigroup(gens);;
+##  gap&gt; IsBand(S);
+##  true
+##	</Example> <!-- properties.tst -->
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
+
+DeclareProperty("IsBand", IsTransformationSemigroup);
+
+###########################################################################
+##
+##	<#GAPDoc Label="IsCliffordSemigroup">
+##	<ManSection>
+##	<Prop Name="IsCliffordSemigroup" Arg="S"/>
+##	<Description>
+##	returns <C>true</C> if the transformation semigroup <C>S</C> is a Clifford 
+##	semigroup and <C>false</C> otherwise.<P/>
+##
+##  A semigroup <C>S</C> is a <E>Clifford 
+##	semigroup</E> if it is a regular semigroup whose idempotents are central,
+##	 that is, for all <C>e</C> in <C>S</C> with <C>e^2=e</C> and <C>x</C> in 
+##	<C>S</C> we have that <C>ex=xe</C>.
+##
+##	<Example>
+##  gap&gt; gens:=[Transformation([1,2,4,5,6,3,7,8]),
+##  &gt; Transformation([3,3,4,5,6,2,7,8]),
+##  &gt;Transformation([1,2,5,3,6,8,4,4])];;
+##  gap&gt; S:=Semigroup(gens);;
+##  gap&gt; IsCliffordSemigroup(S);
+##  true
+##	</Example> <!-- properties.tst -->
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
+
+DeclareProperty("IsCliffordSemigroup", IsTransformationSemigroup);
+
+###########################################################################
+##
+##	<#GAPDoc Label="IsCommutativeSemigroup">
+##	<ManSection>
+##	<Prop Name="IsCommutativeSemigroup" Arg="S"/>
+##	<Description>
+##	returns <C>true</C> if the transformation semigroup <C>S</C> is commutative 
+##	and <C>false</C> otherwise. The function 
+##	<Ref Prop="IsCommutative" BookName="ref"/> can also be used to test if a 
+##	semigroup is commutative.  <P/>
+##
+##	A semigroup <C>S</C> is <E>commutative</E> if 
+##	<C>xy=yx</C> for all <C>x,y</C> in <C>S</C>.
+##
+##	<Example>
+##  gap&gt; gens:=[ Transformation( [ 2, 4, 5, 3, 7, 8, 6, 9, 1 ] ), 
+##  &gt;  Transformation( [ 3, 5, 6, 7, 8, 1, 9, 2, 4 ] ) ];;
+##  gap&gt; S:=Semigroup(gens);;
+##  gap&gt; IsCommutativeSemigroup(S);
+##  true
+##  gap&gt; IsCommutative(S);
+##  true
+##	</Example> <!-- properties.tst -->
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
+
+DeclareProperty("IsCommutativeSemigroup", IsTransformationSemigroup);
+
+###########################################################################
+##
 ##	<#GAPDoc Label="IsCompletelyRegularSemigroup">
 ##	<ManSection>
 ##	<Prop Name="IsCompletelyRegularSemigroup" Arg="S"/>
@@ -103,59 +188,6 @@ DeclareProperty("IsGroupAsSemigroup", IsTransformationSemigroup);
 
 ###########################################################################
 ##
-##	<#GAPDoc Label="IsCommutativeSemigroup">
-##	<ManSection>
-##	<Prop Name="IsCommutativeSemigroup" Arg="S"/>
-##	<Description>
-##	returns <C>true</C> if the transformation semigroup <C>S</C> is commutative 
-##	and <C>false</C> otherwise. The function 
-##	<Ref Prop="IsCommutative" BookName="ref"/> can also be used to test if a 
-##	semigroup is commutative.  <P/>
-##
-##	A semigroup <C>S</C> is <E>commutative</E> if 
-##	<C>xy=yx</C> for all <C>x,y</C> in <C>S</C>.
-##
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 2, 4, 5, 3, 7, 8, 6, 9, 1 ] ), 
-##  &gt;  Transformation( [ 3, 5, 6, 7, 8, 1, 9, 2, 4 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; IsCommutativeSemigroup(S);
-##  true
-##  gap&gt; IsCommutative(S);
-##  true
-##	</Example> <!-- properties.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-DeclareProperty("IsCommutativeSemigroup", IsTransformationSemigroup);
-
-###########################################################################
-##
-##	<#GAPDoc Label="IsRegularSemigroup">
-##	<ManSection>
-##	<Prop Name="IsRegularSemigroup" Arg="S"/>
-##	<Description>
-##	returns <C>true</C> if the transformation semigroup <C>S</C> is a regular
-##	semigroup and <C>false</C> otherwise. The algorithm used here is essentially 
-##	the same algorithm as that used for 
-##	<Ref Attr="GreensRClasses" BookName="ref"/> in <Package>MONOID</Package>. If 
-##	<C>S</C> is regular, then <C>S</C> will have the attribute 
-##	<C>GreensRClasses</C> after <C>IsRegularSemigroup</C> is invoked. <P/>
-##
-##	A semigroup <C>S</C> is <E>regular</E> if for all <C>x</C> in <C>S</C> there 
-##	exists <C>y</C> in <C>S</C> such that <C>xyx=x</C>.
-##
-##	<Example>
-##  gap&gt; IsRegularSemigroup(FullTransformationSemigroup(5));
-##  true
-##	</Example> <!-- properties.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-###########################################################################
-##
 ##	<#GAPDoc Label="IsInverseSemigroup">
 ##	<ManSection>
 ##	<Prop Name="IsInverseSemigroup" Arg="S"/>
@@ -178,174 +210,6 @@ DeclareProperty("IsCommutativeSemigroup", IsTransformationSemigroup);
 ##	</Description>
 ##	</ManSection>
 ##	<#/GAPDoc>
-
-###########################################################################
-##
-##	<#GAPDoc Label="IsCliffordSemigroup">
-##	<ManSection>
-##	<Prop Name="IsCliffordSemigroup" Arg="S"/>
-##	<Description>
-##	returns <C>true</C> if the transformation semigroup <C>S</C> is a Clifford 
-##	semigroup and <C>false</C> otherwise.<P/>
-##
-##  A semigroup <C>S</C> is a <E>Clifford 
-##	semigroup</E> if it is a regular semigroup whose idempotents are central,
-##	 that is, for all <C>e</C> in <C>S</C> with <C>e^2=e</C> and <C>x</C> in 
-##	<C>S</C> we have that <C>ex=xe</C>.
-##
-##	<Example>
-##  gap&gt; gens:=[Transformation([1,2,4,5,6,3,7,8]),
-##  &gt; Transformation([3,3,4,5,6,2,7,8]),
-##  &gt;Transformation([1,2,5,3,6,8,4,4])];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; IsCliffordSemigroup(S);
-##  true
-##	</Example> <!-- properties.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-DeclareProperty("IsCliffordSemigroup", IsTransformationSemigroup);
-
-###########################################################################
-##
-##	<#GAPDoc Label="IsBand">
-##	<ManSection>
-##	<Prop Name="IsBand" Arg="S"/>
-##	<Description>
-##	returns <C>true</C> if the transformation semigroup <C>S</C> is a band and 
-##	<C>false</C> otherwise.<P/>
-##
-##	A semigroup <C>S</C> is a <E>band</E> if every element is an idempotent, 
-##	that is, <C>x^2=x</C> for all <C>x</C> in <C>S</C>.
-##
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 1 ] ), 
-##  &gt; Transformation( [ 2, 2, 2, 5, 5, 5, 8, 8, 8, 2 ] ), 
-##  &gt; Transformation( [ 3, 3, 3, 6, 6, 6, 9, 9, 9, 3 ] ), 
-##  &gt; Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 4 ] ), 
-##  &gt; Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 7 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; IsBand(S);
-##  true
-##	</Example> <!-- properties.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-DeclareProperty("IsBand", IsTransformationSemigroup);
-
-###########################################################################
-##
-##	<#GAPDoc Label="IsRectangularBand">
-##	<ManSection>
-##	<Prop Name="IsRectangularBand" Arg="S"/>
-##	<Description>
-##	returns <C>true</C> if the transformation semigroup <C>S</C> is a 
-##	rectangular band and <C>false</C> otherwise.<P/>
-##
-##	A semigroup <C>S</C> is a <E>rectangular band</E> if for all <C>x,y,z</C> in 
-##	<C>S</C> we have that <C>x^2=x</C> and <C>xyz=xz</C>.
-##
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 1 ] ), 
-##  &gt; Transformation( [ 2, 2, 2, 5, 5, 5, 8, 8, 8, 2 ] ), 
-##  &gt; Transformation( [ 3, 3, 3, 6, 6, 6, 9, 9, 9, 3 ] ), 
-##  &gt; Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 4 ] ), 
-##  &gt; Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 7 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; IsRectangularBand(S);
-##  true
-##	</Example> <!-- properties.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-DeclareProperty("IsRectangularBand", IsTransformationSemigroup);
-
-###########################################################################
-##
-##	<#GAPDoc Label="IsSemiBand">
-##	<ManSection>
-##	<Prop Name="IsSemiBand" Arg="S"/>
-##	<Description>
-##	returns <C>true</C> if the transformation semigroup <C>S</C> is a 
-##	semiband and <C>false</C> otherwise.<P/>
-##
-##	A semigroup <C>S</C> is a <E>semiband</E> if it is generated by its 
-##	idempotent elements, that is, elements satisfying <C>x^2=x</C>.
-##
-##	<Example>
-##  gap&gt; S:=FullTransformationSemigroup(4);;
-##  gap&gt; x:=Transformation( [ 1, 2, 3, 1 ] );;
-##  gap&gt; D:=GreensDClassOfElement(S, x);;
-##  gap&gt; T:=Semigroup(Elements(D));;
-##  gap&gt; IsSemiBand(T);
-##  true
-##	</Example> <!-- properties.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-DeclareProperty("IsSemiBand", IsTransformationSemigroup);
-
-###########################################################################
-##
-##	<#GAPDoc Label="IsOrthodoxSemigroup">
-##	<ManSection>
-##	<Prop Name="IsOrthodoxSemigroup" Arg="S"/>
-##	<Description>
-##	returns <C>true</C> if the transformation semigroup <C>S</C> is 
-##	orthodox and <C>false</C> otherwise.<P/>
-##	
-##	A semigroup is an <E>orthodox semigroup</E> if its idempotent elements 
-##	form a subsemigroup.
-##
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 1, 1, 1, 4, 5, 4 ] ), 
-##  &gt;  Transformation( [ 1, 2, 3, 1, 1, 2 ] ), 
-##  &gt;  Transformation( [ 1, 2, 3, 1, 1, 3 ] ), 
-##  &gt;  Transformation( [ 5, 5, 5, 5, 5, 5 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; IsOrthodoxSemigroup(S);
-##  true
-##	</Example> <!-- properties.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-DeclareProperty("IsOrthodoxSemigroup", IsTransformationSemigroup);
-
-###########################################################################
-##
-##	<#GAPDoc Label="IsRightZeroSemigroup">
-##	<ManSection>
-##	<Prop Name="IsRightZeroSemigroup" Arg="S"/>
-##	<Description>
-##	returns <C>true</C> if the transformation semigroup <C>S</C> is 
-##	a right zero semigroup and <C>false</C> otherwise.<P/>
-##
-##	A semigroup <C>S</C> is a <E>right zero semigroup</E> if <C>xy=y</C> for all 
-##	<C>x,y</C> in <C>S</C>.
-##
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 2, 1, 4, 3, 5 ] ), 
-##  &gt;  Transformation( [ 3, 2, 3, 1, 1 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; IsRightZeroSemigroup(S);
-##  false
-##  gap&gt; gens:=[Transformation( [ 1, 2, 3, 3, 1 ] ), 
-##  &gt;  Transformation( [ 1, 2, 4, 4, 1 ] )];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; IsRightZeroSemigroup(S);
-##  true
-##	</Example> <!-- properties.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-
-DeclareProperty("IsRightZeroSemigroup", IsTransformationSemigroup);
 
 ###########################################################################
 ##
@@ -379,23 +243,138 @@ DeclareProperty("IsLeftZeroSemigroup", IsTransformationSemigroup);
 
 ###########################################################################
 ##
-##	<#GAPDoc Label="MultiplicativeZero">
+##	<#GAPDoc Label="IsOrthodoxSemigroup">
 ##	<ManSection>
-##	<Prop Name="MultiplicativeZero" Arg="S"/>
-##	<Description> 
-##	returns the multiplicative zero of the transformation semigroup <C>S</C> if 
-##	it has one and returns <C>fail</C> otherwise. 
+##	<Prop Name="IsOrthodoxSemigroup" Arg="S"/>
+##	<Description>
+##	returns <C>true</C> if the transformation semigroup <C>S</C> is 
+##	orthodox and <C>false</C> otherwise.<P/>
+##	
+##	A semigroup is an <E>orthodox semigroup</E> if its idempotent elements 
+##	form a subsemigroup.
 ##
 ##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ), 
-##  &gt; Transformation( [ 1, 6, 3, 6, 2, 1, 6 ] ) ];;
+##  gap&gt; gens:=[ Transformation( [ 1, 1, 1, 4, 5, 4 ] ), 
+##  &gt;  Transformation( [ 1, 2, 3, 1, 1, 2 ] ), 
+##  &gt;  Transformation( [ 1, 2, 3, 1, 1, 3 ] ), 
+##  &gt;  Transformation( [ 5, 5, 5, 5, 5, 5 ] ) ];;
 ##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; MultiplicativeZero(S);
-##  Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
+##  gap&gt; IsOrthodoxSemigroup(S);
+##  true
 ##	</Example> <!-- properties.tst -->
 ##	</Description>
 ##	</ManSection>
 ##	<#/GAPDoc>
+
+DeclareProperty("IsOrthodoxSemigroup", IsTransformationSemigroup);
+
+###########################################################################
+##
+##	<#GAPDoc Label="IsRectangularBand">
+##	<ManSection>
+##	<Prop Name="IsRectangularBand" Arg="S"/>
+##	<Description>
+##	returns <C>true</C> if the transformation semigroup <C>S</C> is a 
+##	rectangular band and <C>false</C> otherwise.<P/>
+##
+##	A semigroup <C>S</C> is a <E>rectangular band</E> if for all <C>x,y,z</C> in 
+##	<C>S</C> we have that <C>x^2=x</C> and <C>xyz=xz</C>.
+##
+##	<Example>
+##  gap&gt; gens:=[ Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 1 ] ), 
+##  &gt; Transformation( [ 2, 2, 2, 5, 5, 5, 8, 8, 8, 2 ] ), 
+##  &gt; Transformation( [ 3, 3, 3, 6, 6, 6, 9, 9, 9, 3 ] ), 
+##  &gt; Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 4 ] ), 
+##  &gt; Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 7 ] ) ];;
+##  gap&gt; S:=Semigroup(gens);;
+##  gap&gt; IsRectangularBand(S);
+##  true
+##	</Example> <!-- properties.tst -->
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
+
+DeclareProperty("IsRectangularBand", IsTransformationSemigroup);
+
+###########################################################################
+##
+##	<#GAPDoc Label="IsRegularSemigroup">
+##	<ManSection>
+##	<Prop Name="IsRegularSemigroup" Arg="S"/>
+##	<Description>
+##	returns <C>true</C> if the transformation semigroup <C>S</C> is a regular
+##	semigroup and <C>false</C> otherwise. The algorithm used here is essentially 
+##	the same algorithm as that used for 
+##	<Ref Attr="GreensRClasses" BookName="ref"/> in <Package>MONOID</Package>. If 
+##	<C>S</C> is regular, then <C>S</C> will have the attribute 
+##	<C>GreensRClasses</C> after <C>IsRegularSemigroup</C> is invoked. <P/>
+##
+##	A semigroup <C>S</C> is <E>regular</E> if for all <C>x</C> in <C>S</C> there 
+##	exists <C>y</C> in <C>S</C> such that <C>xyx=x</C>.
+##
+##	<Example>
+##  gap&gt; IsRegularSemigroup(FullTransformationSemigroup(5));
+##  true
+##	</Example> <!-- properties.tst -->
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
+
+###########################################################################
+##
+##	<#GAPDoc Label="IsRightZeroSemigroup">
+##	<ManSection>
+##	<Prop Name="IsRightZeroSemigroup" Arg="S"/>
+##	<Description>
+##	returns <C>true</C> if the transformation semigroup <C>S</C> is 
+##	a right zero semigroup and <C>false</C> otherwise.<P/>
+##
+##	A semigroup <C>S</C> is a <E>right zero semigroup</E> if <C>xy=y</C> for all 
+##	<C>x,y</C> in <C>S</C>.
+##
+##	<Example>
+##  gap&gt; gens:=[ Transformation( [ 2, 1, 4, 3, 5 ] ), 
+##  &gt;  Transformation( [ 3, 2, 3, 1, 1 ] ) ];;
+##  gap&gt; S:=Semigroup(gens);;
+##  gap&gt; IsRightZeroSemigroup(S);
+##  false
+##  gap&gt; gens:=[Transformation( [ 1, 2, 3, 3, 1 ] ), 
+##  &gt;  Transformation( [ 1, 2, 4, 4, 1 ] )];;
+##  gap&gt; S:=Semigroup(gens);;
+##  gap&gt; IsRightZeroSemigroup(S);
+##  true
+##	</Example> <!-- properties.tst -->
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
+
+DeclareProperty("IsRightZeroSemigroup", IsTransformationSemigroup);
+
+###########################################################################
+##
+##	<#GAPDoc Label="IsSemiBand">
+##	<ManSection>
+##	<Prop Name="IsSemiBand" Arg="S"/>
+##	<Description>
+##	returns <C>true</C> if the transformation semigroup <C>S</C> is a 
+##	semiband and <C>false</C> otherwise.<P/>
+##
+##	A semigroup <C>S</C> is a <E>semiband</E> if it is generated by its 
+##	idempotent elements, that is, elements satisfying <C>x^2=x</C>.
+##
+##	<Example>
+##  gap&gt; S:=FullTransformationSemigroup(4);;
+##  gap&gt; x:=Transformation( [ 1, 2, 3, 1 ] );;
+##  gap&gt; D:=GreensDClassOfElement(S, x);;
+##  gap&gt; T:=Semigroup(Elements(D));;
+##  gap&gt; IsSemiBand(T);
+##  true
+##	</Example> <!-- properties.tst -->
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
+
+DeclareProperty("IsSemiBand", IsTransformationSemigroup);
 
 ###########################################################################
 ##
@@ -451,3 +430,25 @@ DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
 ##	<#/GAPDoc>
 
 #DeclareAttribute("IsZeroGroup", IsSemigroup);
+
+###########################################################################
+##
+##	<#GAPDoc Label="MultiplicativeZero">
+##	<ManSection>
+##	<Prop Name="MultiplicativeZero" Arg="S"/>
+##	<Description> 
+##	returns the multiplicative zero of the transformation semigroup <C>S</C> if 
+##	it has one and returns <C>fail</C> otherwise. 
+##
+##	<Example>
+##  gap&gt; gens:=[ Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ), 
+##  &gt; Transformation( [ 1, 6, 3, 6, 2, 1, 6 ] ) ];;
+##  gap&gt; S:=Semigroup(gens);;
+##  gap&gt; MultiplicativeZero(S);
+##  Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
+##	</Example> <!-- properties.tst -->
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
+
+

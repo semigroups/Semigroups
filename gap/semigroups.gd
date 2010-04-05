@@ -188,7 +188,9 @@ DeclareAttribute("ZeroGroupDefaultType", IsFamily);
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-DeclareOperation("ZeroGroup", [IsGroup]);
+if not IsBound(ZeroGroup) then 
+	DeclareOperation("ZeroGroup", [IsGroup]);
+fi;
 
 ###########################################################################
 ##

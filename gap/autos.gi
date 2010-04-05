@@ -1024,9 +1024,9 @@ end);
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-#JDM JDM JDM the following is only commented out to allow for a new method in the dev
-# version. If doing a new release before moving things over from dev, then uncomment
-# this function.
+#JDM JDM JDM the following is only commented out to allow for a new method in 
+#the dev version. If doing a new release before moving things over from dev, 
+#then uncomment this function.
 
 #InstallGlobalFunction(RMSIsoByTriple, 
 #function(rms1, rms2, triple)
@@ -1235,22 +1235,26 @@ end);
 ##	</ManSection>
 ##	<#/GAPDoc>
 
+#JDM JDM JDM the following is only commented out to allow for a new method in 
+#the dev version. If doing a new release before moving things over from dev, 
+#then uncomment this function.
 
-InstallGlobalFunction(RZMSIsoByTriple, 
-function(rms1, rms2, triple)
-  local fam1, fam2, mapfam, map;
-
-  fam1 :=  ElementsFamily(FamilyObj(rms1));
-  fam2 :=  ElementsFamily(FamilyObj(rms2));
-  mapfam := GeneralMappingsFamily(fam1,fam2);	
-  map := rec( triple := triple);
-  Objectify(NewType(mapfam, IsGeneralMapping and 
-IsSPGeneralMapping and IsTotal and IsSingleValued and IsInjective and IsSurjective and RespectsMultiplication and IsRZMSIsoByTripleRep), map);
-  SetSource(map, rms1);
-  SetRange(map, rms2);
-  
-  return map;
-end);
+#InstallGlobalFunction(RZMSIsoByTriple, 
+#function(rms1, rms2, triple)
+#  local fam1, fam2, mapfam, map;
+#
+#  fam1 :=  ElementsFamily(FamilyObj(rms1));
+#  fam2 :=  ElementsFamily(FamilyObj(rms2));
+#  mapfam := GeneralMappingsFamily(fam1,fam2);	
+#  map := rec( triple := triple);
+#  Objectify(NewType(mapfam, IsGeneralMapping and 
+#IsSPGeneralMapping and IsTotal and IsSingleValued and IsInjective and 
+#IsSurjective and RespectsMultiplication and IsRZMSIsoByTripleRep), map);
+#  SetSource(map, rms1);
+#  SetRange(map, rms2);
+#  
+#  return map;
+#end);
 
 ###########################################################################
 ##
@@ -2506,8 +2510,9 @@ InstallMethod(UnderlyingGroupAutoOfZeroGroupAuto, "for a zero group automorphism
 ##	automorphisms.
 ##
 
-InstallMethod(ImagesRepresentative, "for a zero group automorphism",FamSourceEqFamElm, 
-[ IsTotal and IsSingleValued and IsEndoGeneralMapping and IsZeroGroupAutomorphismRep, IsZeroGroupElt ],
+InstallMethod(ImagesRepresentative, "for a zero group automorphism", 
+true, [ IsTotal and IsSingleValued and IsEndoGeneralMapping and 
+IsZeroGroupAutomorphismRep, IsZeroGroupElt ],
 function( aut, x)
 
 if IsMultiplicativeZero(x) then 
@@ -2517,6 +2522,9 @@ fi;
 return ZeroGroupElt(ImagesRepresentative(aut!.grpauto, UnderlyingGroupEltOfZGElt(x)));
 
 end);
+
+#JDM Add method for OnPoints and OnTuples currently inside Automorphism group in 
+#dev/gap/grape.gi
 
 #############
 
@@ -2580,9 +2588,7 @@ return a1!.grpauto<a2!.grpauto;
 
 end);
 
-
 #############
-
 
 #############################################################################
 ##
