@@ -777,7 +777,7 @@ pos:=PositionProperty(sorbit[1], a-> img in a);
 
 if pos=fail then 
 	gens:=GeneratorsOfSemigroup(M);
-	n:=Length(img);i:=0;
+	n:=Length(img); i:=0;
 	orb:=[img]; sets:=[img]; graph:=[[]]; reps:=[x];
 
 	for y in orb do
@@ -797,6 +797,7 @@ if pos=fail then
 	od;
 
 	scc:=STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(graph);
+	
 	schutzgps:=[]; perms:=[]; sccimgs:=[]; orbimgs:=[];
 
 	for i in [1..Length(scc)] do 

@@ -57,7 +57,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.4.10",
   NeededOtherPackages := [],
-  SuggestedOtherPackages := [["genss", "0.96"], ["grape", ">=4.2"], ["gapdoc", ">=1.1"]],
+  SuggestedOtherPackages := [["orb", "3.4"], ["genss", "0.96"], ["grape", ">=4.2"], ["gapdoc", ">=1.1"]],
   ExternalConditions := []),
 AvailabilityTest := ReturnTrue,
 BannerString := Concatenation( 
