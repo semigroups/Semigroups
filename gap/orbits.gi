@@ -5,46 +5,9 @@
 ##
 
 ###########################################################################
-##
-##	<#GAPDoc Label="MonoidOrbit">
-##	<ManSection>
-##	<Oper Name="MonoidOrbit" Arg="S, obj[, act]"/>
-##	<Description>
-##	returns the orbit of <C>obj</C> under the action <C>act</C> of the 
-##	transformation semigroup <C>S</C>. Usually, <C>obj</C> would be a point, 
-##	list of points, or list of lists, and <C>act</C> would be 
-##	<Ref Func="OnPoints" BookName="ref"/>, <Ref Func="OnSets" BookName="ref"/>, 
-##	<Ref Func="OnTuples" BookName="ref"/>, or other actions defined in 
-##	<Ref Sect="Basic Actions" BookName="ref"/>. The argument <C>act</C> can be 
-##	any function.<P/>
-##
-##	If the optional third argument 
-##	<C>act</C> is not given, then <Ref Func="OnPoints" BookName="ref"/>, 
-##	<Ref Func="OnSets" BookName="ref"/>, or 
-##	<Ref Func="OnSetsSets" BookName="ref"/> is used as the default action 
-##	depending on what <C>obj</C> is.<P/>
-##
-##	Further details can be found in Algorithm A and B of 
-##	<Cite Key="computing"/>.
-##	<Example>
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
-##  gap&gt; S:=Monoid(g1,g2,g3);;
-##  gap&gt; MonoidOrbit(S, 1);
-##  [ 1, 3, 4, 2, 6 ]
-##  gap&gt; MonoidOrbit(S, [1,2], OnSets);
-##  [ [ 1, 2 ], [ 3 ], [ 4 ], [ 2 ], [ 6 ], [ 1 ] ]
-##  gap&gt; MonoidOrbit(S, [1,2], OnTuples);
-##  [ [ 1, 2 ], [ 3, 3 ], [ 4, 4 ], [ 2, 2 ], [ 6, 6 ], [ 1, 1 ] ]
-##  gap&gt; MonoidOrbit(S, 2, OnPoints);
-##  [ 2, 3, 4, 6, 1 ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
-InstallMethod(MonoidOrbit, "for an arbitrary object and action", true, [IsTransformationSemigroup, IsObject, IsFunction], 0, 
+InstallMethod(MonoidOrbit, "for an arbitrary object and action",
+[IsTransformationSemigroup, IsObject, IsFunction],
 function(M, pt, action)
 local orbit, gens, x, y, new;
    	
@@ -64,9 +27,11 @@ return orbit;
 
 end);
 
-#####################
+###########################################################################
 
-InstallOtherMethod(MonoidOrbit, "for an integer, set of integers, or set of sets of integers", true, [IsTransformationSemigroup, IsObject], 0, 
+InstallOtherMethod(MonoidOrbit, 
+"for an integer, set of integers, or set of sets of integers",
+ [IsTransformationSemigroup, IsObject],
 function(M, pt)
 
 if IsPosInt(pt) then
@@ -80,105 +45,26 @@ fi;
 end);
 
 ###########################################################################
-##
-##	<#GAPDoc Label="MonoidOrbits">
-##	<ManSection>
-##	<Oper Name="MonoidOrbits" Arg="S, list[, act]"/>
-##	<Description>
-##	returns a list of the orbits of the elements of <C>list</C> under the action 
-##	<C>act</C> of the transformation semigroup <C>S</C> using the 
-##	<Ref Oper="MonoidOrbit"/> function.<P/>
-##
-##	If the optional third argument 
-##	<C>act</C> is not given, then <Ref Func="OnPoints" BookName="ref"/>, 
-##	<Ref Func="OnSets" BookName="ref"/>, or 
-##	<Ref Func="OnSetsSets" BookName="ref"/> is used as the default action 
-##	depending on what <C>obj</C> is.<P/>
-##
-##	Further details can be found in Algorithm A and B of 
-##	<Cite Key="computing"/>.
-##	<Example>
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
-##  gap&gt; S:=Monoid(g1,g2,g3);;
-##  gap&gt; MonoidOrbits(S, [1,2]);
-##  [ [ 1, 3, 4, 2, 6 ], [ 2, 3, 4, 6, 1 ] ]
-##  gap&gt; MonoidOrbits(S, [[1,2], [2,3]], OnSets);
-##  [ [ [ 1, 2 ], [ 3 ], [ 4 ], [ 2 ], [ 6 ], [ 1 ] ], 
-##    [ [ 2, 3 ], [ 4, 6 ], [ 1, 3 ] ] ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
+#JDM this could probably be improved to avoid duplicate computations
 
-InstallMethod(MonoidOrbits, "for an arbitrary list and action", true, [IsTransformationSemigroup, IsList, IsFunction], 0, 
+InstallMethod(MonoidOrbits, "for an arbitrary list and action", 
+[IsTransformationSemigroup, IsList, IsFunction],
 function(M, objt, action)
-
-return List(objt, x->MonoidOrbit(M, x, action));
-
-end);
-
-#####################
-
-InstallOtherMethod(MonoidOrbits, "for a list of integers and OnPoints", true, [IsTransformationSemigroup, IsCyclotomicCollection], 0, 
-function(M, list)
-
-return MonoidOrbits(M, list, OnPoints);
-
+return List(objt, x-> MonoidOrbit(M, x, action));
 end);
 
 ###########################################################################
-##
-##	<#GAPDoc Label="GradedOrbit">
-##	<ManSection>
-##	<Oper Name="GradedOrbit" Arg="S, obj[, act], grad"/>
-##	<Description>
-##	returns the orbit of <C>obj</C> under the action 
-##	<C>act</C> of the transformation semigroup <C>S</C> partitioned by the 
-##	grading <C>grad</C>. That is, two elements lie in the same class if they 
-##	have the same value under <C>grad</C>.<P/>
-##	
-##	(Recall that a <E>grading</E> is a function <M>f</M> from a transformation 
-##	semigroup <M>S</M> of degree <M>n</M> to the natural 
-##	numbers such that if <M>s\in S</M> and <M>X</M> is a subset of 
-##	<M>\{1,\ldots, n\}</M>, then <M>(Xs)f\leq (X)f</M>, that is the value of 
-##	<M>Xs</M> under <M>f</M> is not greater than the value of <M>X</M> under 
-##	<M>f</M>.)<P/>
-##	
-##	Note that this function will not check if <C>grad</C> actually defines a 
-##	grading or not.<P/>
-##	
-##	If the optional third argument 
-##	<C>act</C> is not given, then <Ref Func="OnPoints" BookName="ref"/>, 
-##	<Ref Func="OnSets" BookName="ref"/>, or 
-##	<Ref Func="OnSetsSets" BookName="ref"/> is used as the default action 
-##	depending on what <C>obj</C> is.<P/>
-##
-##	Further details can be found in Algorithm A and B of 
-##	<Cite Key="computing"/>.
-##	<Example>
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
-##  gap&gt; S:=Monoid(g1,g2,g3);;
-##  gap&gt; GradedOrbit(S, [1,2], OnSets, Size);
-##  [ [ [ 3 ], [ 4 ], [ 2 ], [ 6 ], [ 1 ] ], [ [ 1, 2 ] ] ]
-##  gap&gt; GradedOrbit(S, [1,2], Size);
-##  [ [ [ 3 ], [ 4 ], [ 2 ], [ 6 ], [ 1 ] ], [ [ 1, 2 ] ] ]
-##  gap&gt; GradedOrbit(S, [1,3,4], OnTuples, function(x)
-##  &gt; if 1 in x then return 2;
-##  &gt; else return 1;
-##  &gt; fi;
-##  &gt; end); 
-##  [ [ [ 3, 2, 6 ], [ 2, 3, 4 ], [ 6, 4, 3 ], [ 4, 6, 2 ] ], 
-##    [ [ 1, 3, 4 ], [ 4, 6, 1 ], [ 3, 1, 6 ] ] ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
-InstallMethod(GradedOrbit, "for an arbitary object, action, and grading", true, [IsTransformationSemigroup, IsObject, IsFunction, IsFunction], 0, 
+InstallOtherMethod(MonoidOrbits, "for a list of integers and OnPoints", [IsTransformationSemigroup, IsCyclotomicCollection], 
+function(M, list)
+return MonoidOrbits(M, list, OnPoints);
+end);
+
+###########################################################################
+
+InstallMethod(GradedOrbit, 
+"for a trans. semigroup, an arbitary object, action, and grading",
+[IsTransformationSemigroup, IsObject, IsFunction, IsFunction],
 function(M, obj, action, grad)
 local orbit, gens, gradorbit, x, y, z, new, g, n;
  
@@ -219,48 +105,6 @@ fi;
 end);
 
 ###########################################################################
-##
-##	<#GAPDoc Label="ShortOrbit">
-##	<ManSection>
-##	<Oper Name="ShortOrbit" Arg="S, obj[, act], grad"/>
-##	<Description>
-##	returns the elements of the orbit of <C>obj</C> under the action 
-##	<C>act</C> of the transformation semigroup <C>S</C> with the same value as 
-##	<C>obj</C> under the grading <C>grad</C>.<P/>
-##	
-##	(Recall that a <E>grading</E> is a function <M>f</M> from a transformation 
-##	semigroup <M>S</M> of degree <M>n</M> to the natural 
-##	numbers such that if <M>s\in S</M> and <M>X</M> is a subset of 
-##	<M>\{1,\ldots, n\}</M>, then <M>(Xs)f\leq (X)f</M>, that is the value of 
-##	<M>Xs</M> under <M>f</M> is not greater than the value of <M>X</M> under 
-##	<M>f</M>.)<P/>
-##	
-##	Note that this function will not check if <C>grad</C> actually defines a 
-##	grading or not.<P/>
-##	
-##	If the optional third argument 
-##	<C>act</C> is not given, then <Ref Func="OnPoints" BookName="ref"/>, 
-##	<Ref Func="OnSets" BookName="ref"/>, or 
-##	<Ref Func="OnSetsSets" BookName="ref"/> is used as the default action 
-##	depending on what <C>obj</C> is.<P/>
-##
-##	Further details can be found in Algorithm A and B of 
-##	<Cite Key="computing"/>.
-##	<Example>
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
-##  gap&gt; S:=Monoid(g1,g2,g3);;
-##  gap&gt; ShortOrbit(S, [1,2], Size);
-##  [ [ 1, 2 ] ]
-##  gap&gt; ShortOrbit(S, [2,4], Size);
-##  [ [ 2, 4 ], [ 3, 6 ], [ 1, 4 ] ]
-##  gap&gt; ShortOrbit(S, [1,2], OnTuples, Size);
-##  [ [ 1, 2 ], [ 3, 3 ], [ 4, 4 ], [ 2, 2 ], [ 6, 6 ], [ 1, 1 ] ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
 InstallMethod(ShortOrbit, "for an arbitary object, action, and grading", true, [IsTransformationSemigroup, IsObject, IsFunction, IsFunction], 0, 
 
@@ -299,91 +143,34 @@ fi;
 end);
 
 ###########################################################################
-##
-##	<#GAPDoc Label="StrongOrbit">
-##	<ManSection>
-##	<Oper Name="StrongOrbit" Arg="S, obj[, act]"/>
-##	<Description>
-##	returns the strong orbit of <C>obj</C> under the action <C>act</C> of the 
-##	transformation semigroup <C>S</C>. Usually, <C>obj</C> would be a point, 
-##	list of points, or list of lists, and <C>act</C> would be 
-##	<Ref Func="OnPoints" BookName="ref"/>, <Ref Func="OnSets" BookName="ref"/>, 
-##	<Ref Func="OnTuples" BookName="ref"/>, or other actions defined in 
-##	<Ref Sect="Basic Actions" BookName="ref"/>. The argument <C>act</C> can be 
-##	any function.<P/>
-##
-##	If the optional third argument <C>act</C> is not given and <C>obj</C> is a 
-##	point, then <Ref Func="OnPoints" BookName="ref"/> is the default action.<P/>
-##
-##	Further details can be found in Algorithm A and B of 
-##	<Cite Key="computing"/>.
-##	<Example>
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
-##  gap&gt; S:=Monoid(g1,g2,g3);;
-##  gap&gt; StrongOrbit(S, 4, OnPoints);
-##  [ 1, 3, 2, 4, 6 ]
-##  gap&gt; StrongOrbit(S, 4); 
-##  [ 1, 3, 2, 4, 6 ]
-##  gap&gt; StrongOrbit(S, [2,3], OnSets);
-##  [ [ 2, 3 ], [ 4, 6 ], [ 1, 3 ] ] 
-##  gap&gt; StrongOrbit(S, [2,3], OnTuples);
-##  [ [ 2, 3 ], [ 3, 2 ], [ 4, 6 ], [ 6, 4 ], [ 1, 3 ], [ 3, 1 ] ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
-InstallMethod(StrongOrbit, "for arbitrary object and action", true, [IsTransformationSemigroup, IsObject, IsFunction], 0,  
+InstallMethod(StrongOrbit, "for a trans. semigroup, object and action", 
+[IsTransformationSemigroup, IsObject, IsFunction],
+function(s, obj, action)
+local orbit, i, j, graph, x, pos, new, gens;
 
-function(M, obj, action)
+orbit:=[obj];
+i:=0;
+graph:=[[]];
 
-local orbit, i, j, back, s, pnt, new, a, n;
+gens:=GeneratorsOfSemigroup(s);
+#JDM include if IsMonoid blah blah..
 
-if IsPosInt(obj) and action=OnPoints then 
-   return StrongOrbit(M, obj);
-else
-   # initialize.
-   orbit:= [obj];  i:= 0;  back:= [[]]; 
+for x in orbit do
+	i:=i+1;
+	for j in [1..Length(gens)] do
+		new:= action(x, gens[j]);
+		pos:=Position(orbit, new);
+		if pos=fail then 
+			 Add(orbit, new);
+			 Add(graph, []);
+			 pos:=Length(orbit);
+		fi; 
+			AddSet(graph[i], pos);
+	od;
+od;
 
-   # form the (weak, but graded) orbit.
-   for pnt in orbit do
-
-      # keep track of position of 'pnt'.
-      i:= i+1;
-
-      # loop over the generators.
-      for s in GeneratorsOfMonoid(M) do
-         new:=action(pnt,s);
-         j:= Position(orbit, new);
-   
-         # install new point, if necessary.
-         if j = fail then
-            Add(orbit, new);  Add(back, []);
-            j:= Length(orbit);
-         fi;
-   
-         # remember predecessor.
-         AddSet(back[j], i);
-      od;
-   od;
-
-   # form the transitive closure.
-   n:= Length(orbit);
-   for j in [1..n] do
-      for i in [1..n] do
-         if j in back[i] then
-            UniteSet(back[i], back[j]);
-         fi;
-      od;
-   od; #JDM make use of STRONGLY_CONNECTED_COMPONENTS_DIGRAPH here?
-
-   # return predecessors of point 1.
-   AddSet(back[1], 1);
-   return orbit{back[1]};
-fi;
-
+return orbit{First(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(graph), x-> 1 in x)};
 end );
 
 #####################
@@ -414,39 +201,6 @@ return First(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(cones), x-> int in x);
 end);
 
 ###########################################################################
-##
-##	<#GAPDoc Label="StrongOrbits">
-##	<ManSection>
-##	<Oper Name="StrongOrbits" Arg="S, obj[, act]"/>
-##	<Description>
-##	returns a list of the strong orbits of the elements of <C>list</C> under the 
-##	action <C>act</C> of the transformation semigroup <C>S</C> using the 
-##	<Ref Oper="StrongOrbit"/> function.<P/>
-##
-##	If the optional third argument 
-##	<C>act</C> is not given, then <Ref Func="OnPoints" BookName="ref"/>, 
-##	<Ref Func="OnSets" BookName="ref"/>, or 
-##	<Ref Func="OnSetsSets" BookName="ref"/> is used as the default action 
-##	depending on what <C>obj</C> is.<P/>
-##
-##	Further details can be found in Algorithm A and B of 
-##	<Cite Key="computing"/>.
-##	<Example>
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
-##  gap&gt; S:=Monoid(g1,g2,g3);;
-##  gap&gt; StrongOrbits(S, [1..6]);
-##  [ [ 1, 3, 2, 4, 6 ], [ 5 ] ]
-##  gap&gt; StrongOrbits(S, [[1,2],[2,3]], OnSets);
-##  [ [ [ 1, 2 ] ], [ [ 2, 3 ], [ 4, 6 ], [ 1, 3 ] ] ]
-##  gap&gt; StrongOrbits(S, [[1,2],[2,3]], OnTuples);
-##  [ [ [ 1, 2 ] ], [ [ 2, 3 ], [ 3, 2 ], [ 4, 6 ], [ 6, 4 ], 
-##    [ 1, 3 ], [ 3, 1 ] ] ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
 InstallMethod(StrongOrbits, "for arbitrary object and action", true, [IsTransformationSemigroup, IsObject, IsFunction], 0,   
 
@@ -516,50 +270,6 @@ fi;
 end);
 
 ###########################################################################
-##
-##	<#GAPDoc Label="GradedStrongOrbit">
-##	<ManSection>
-##	<Oper Name="GradedStrongOrbit" Arg="S, obj[, act], grad"/>
-##	<Description>
-##	returns the strong orbit of <C>obj</C> under the action 
-##	<C>act</C> of the transformation semigroup <C>S</C> partitioned by the 
-##	grading <C>grad</C>. That is, two elements lie in the same class if they 
-##	have the same value under <C>grad</C>.<P/>
-##	
-##	(Recall that a <E>grading</E> is a function <M>f</M> from a transformation 
-##	semigroup <M>S</M> of degree <M>n</M> to the natural 
-##	numbers such that if <M>s\in S</M> and <M>X</M> is a subset of 
-##	<M>\{1,\ldots, n\}</M>, then <M>(Xs)f\leq (X)f</M>, that is the value of 
-##	<M>Xs</M> under <M>f</M> is not greater than the value of <M>X</M> under 
-##	<M>f</M>.)<P/>
-##	
-##	Note that this function will not check if <C>grad</C> actually defines a 
-##	grading or not.<P/>
-##	
-##	If the optional third argument 
-##	<C>act</C> is not given, then <Ref Func="OnPoints" BookName="ref"/>, 
-##	<Ref Func="OnSets" BookName="ref"/>, or 
-##	<Ref Func="OnSetsSets" BookName="ref"/> is used as the default action 
-##	depending on what <C>obj</C> is.<P/>
-##
-##	Further details can be found in Algorithm A and B of 
-##	<Cite Key="computing"/>.
-##	<Example>
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
-##  gap&gt; S:=Monoid(g1,g2,g3);;
-##  gap&gt; GradedStrongOrbit(S, [1,3,4], OnTuples, function(x)
-##  &gt; if 1 in x then return 2; else return 1; fi; end);
-##  [ [ [ 3, 2, 6 ], [ 2, 3, 4 ], [ 6, 4, 3 ], [ 4, 6, 2 ] ], 
-##    [ [ 1, 3, 4 ], [ 4, 6, 1 ], [ 3, 1, 6 ] ] ]
-##  gap&gt; GradedStrongOrbit(S, [1,3,4], OnTuples, Size);
-##  [ [ [ 1, 3, 4 ], [ 3, 2, 6 ], [ 4, 6, 1 ], [ 2, 3, 4 ], [ 6, 4, 3 ], 
-##    [ 4, 6, 2 ], [ 3, 1, 6 ] ] ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
 InstallMethod( GradedStrongOrbit, "for an arbitrary object, action, and grading", true, [IsTransformationSemigroup, IsObject, IsFunction, IsFunction], 0,  
 function(M, obj, action, grad)
@@ -580,46 +290,6 @@ return GradedStrongOrbit(M, int, OnPoints, grad);
 end);
 
 ###########################################################################
-##
-##	<#GAPDoc Label="ShortStrongOrbit">
-##	<ManSection>
-##	<Oper Name="ShortStrongOrbit" Arg="S, obj[, act], grad"/>
-##	<Description>
-##	returns the elements of the orbit of <C>obj</C> under the action 
-##	<C>act</C> of the transformation semigroup <C>S</C> with the same value as 
-##	<C>obj</C> under the grading <C>grad</C>.<P/>
-##	
-##	(Recall that a <E>grading</E> is a function <M>f</M> from a transformation 
-##	semigroup <M>S</M> of degree <M>n</M> to the natural 
-##	numbers such that if <M>s\in S</M> and <M>X</M> is a subset of 
-##	<M>\{1,\ldots, n\}</M>, then <M>(Xs)f\leq (X)f</M>, that is the value of 
-##	<M>Xs</M> under <M>f</M> is not greater than the value of <M>X</M> under 
-##	<M>f</M>.)<P/>
-##	
-##	Note that this function will not check if <C>grad</C> actually defines a 
-##	grading or not.<P/>
-##	
-##	If the optional third argument 
-##	<C>act</C> is not given, then <Ref Func="OnPoints" BookName="ref"/>, 
-##	<Ref Func="OnSets" BookName="ref"/>, or 
-##	<Ref Func="OnSetsSets" BookName="ref"/> is used as the default action 
-##	depending on what <C>obj</C> is.<P/>
-##
-##	Further details can be found in Algorithm A and B of 
-##	<Cite Key="computing"/>.
-##	<Example>
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
-##  gap&gt; S:=Monoid(g1,g2,g3);;
-##  gap&gt;ShortStrongOrbit(S, [1,3,4], OnTuples, function(x) 
-##  &gt;  if 1 in x then return 2; else return 1; fi; end);
-##  [ [ 1, 3, 4 ], [ 4, 6, 1 ], [ 3, 1, 6 ] ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
 ##  JDM is this valid?? NO!
 ##
 
