@@ -61,11 +61,14 @@ Dependencies := rec(
   ExternalConditions := []),
 AvailabilityTest := ReturnTrue,
 BannerString := Concatenation( 
-	"-----------------------------------------------------------------------------------\n",
+	"------------------------------------------",
+  "-----------------------------------\n",
   "Loading MONOID ", ~.Version, "\n",
   "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
         " (", ~.Persons[1].WWWHome, ")\n",
- "For help, type: ?the monoid package \n", "-----------------------------------------------------------------------------------\n" ),
+ "For help, type: ?the monoid package \n", 
+ "---------------------------------------------",
+  "--------------------------------\n" ),
 Autoload := false,
 TestFile := "tst/testall.g",
 Keywords := ["transformation semigroups", "green's relations"]
