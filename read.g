@@ -8,7 +8,7 @@
 ReadPkg("monoid/gap/general.gi");
 ReadPkg("monoid/gap/semigroups.gi");
 ReadPkg("monoid/gap/semihomo.gi");
-#ReadPkg("monoid/gap/orbits.gi");
+ReadPkg("monoid/gap/orbits.gi");
 ReadPkg("monoid/gap/greens.gi");
 ReadPkg("monoid/gap/transform.gi");
 ReadPkg("monoid/gap/properties.gi");
@@ -25,15 +25,15 @@ fi;
 
 #check that the orb package is loaded
 
-if  Filename(DirectoriesPackagePrograms("orb"), "orb.so") = fail then 
+#if LoadPackage("orb") then 
+if IsBound(GAPInfo.PackagesInfo.orb) and CompareVersionNumbers("3.4", "orb") 
+ then 
+	ReadPkg("monoid/gap/orbits_orb.gi");
+else
 	Info(InfoWarning, 1, "the `orb' package is not fully installed and so some functions");
 	Info(InfoWarning, 1, "in MONOID will not be as efficient as they would be if `orb' were loaded.");
 	ReadPkg("monoid/gap/orbits_no_orb.gi");
-else
-	ReadPkg("monoid/gap/orbits_orb.gi");
 fi;
-
-
 
 ReadPkg("monoid/gap/compat.g");
 

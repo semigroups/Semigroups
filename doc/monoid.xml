@@ -364,8 +364,8 @@ are given in Section <Ref Sect="specorbits"/>.
 <#Include Label="StrongOrbits">
 <#Include Label="GradedOrbit">
 <#Include Label="ShortOrbit">
-<#Include Label="GradedStrongOrbit">
 <#Include Label="ShortStrongOrbit">
+<#Include Label="StrongOrbitsInForwardOrbit">
 </Section>
 
 <!-- ############### -->
