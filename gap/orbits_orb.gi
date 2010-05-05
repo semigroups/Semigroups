@@ -75,7 +75,7 @@ od;
 #Objectify( ForwardOrbitType, o);
 #return o;
 
-return graded;
+return Compacted(graded);
 end);
 
 #############################################################################
@@ -148,7 +148,7 @@ val:=grading(seed);
 for x in orbit do
 	i:=i+1;
 	for j in [1..Length(gens)] do
-		new:= grading(x, gens[j]);
+		new:= action(x, gens[j]);
 		if HTValue(ht, new)=fail and grading(new)=val then 
 			Add(orbit, new);
 			Add(schreier, Concatenation(schreier[i], [j])); 
