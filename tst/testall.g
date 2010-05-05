@@ -5,8 +5,8 @@
 ##
 
 #LoadPackage( "monoid" );;
-#dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
-#Read( Filename( dirs, "testall.g" ) );;
+#dirs := ;;
+#Read( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "testall.g" ) );;
 
 dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
 ReadTest( Filename( dirs, "autos1.tst" ) );

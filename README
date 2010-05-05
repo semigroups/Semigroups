@@ -1,8 +1,36 @@
-##
-## README.txt
-## Version 3.1.3
-## Fri  7 Nov 2008 17:45:12 GMT
-##
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++                                                                           +
++   Copyright (C) 2008-2010          Andreas Distler & James D. Mitchell    +
++                                                                           +
++   'Monoid' is free software: you can redistribute it and/or modify     +
++   it under the terms of the GNU General Public License as published by    +
++   the Free Software Foundation, either version 3 of the license, or       +
++   (at your option) any later version.                                     +
++                                                                           +
++   'Monoid' is distributed in the hope that it will be useful,          +
++   but WITHOUT ANY WARRANTY; without even the implied warranty of          +
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           +
++   GNU General Public License for more details.                            +
++                                                                           +
++   A copy of the GNU General Public License is available in the file       +
++   'GPLv3'; or for later versions see <http://www.gnu.org/licenses/>.      +
++                                                                           +
++   You can find information on how to contact us at the end of the         +
++   README file and on the front page of the documentation.                 +
++                                                                           +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+       This is the 
+                   README
+                   ======
+                          file for the
+                                       GAP 4
+                                       =====
+                                             package
+                                                     'Monoid'.
+                                                     ===========
+
+
 
 This is the README file of the MONOID package version 3.1.3 for 
 computing with transformation semigroups. MONOID 3.1.3 is an updated version of 
@@ -109,21 +137,4 @@ If you use the MONOID package, please let me know by sending me an email.
 If you notice any features missing that you think are important or if you find a 
 bug, I would very much appreciate it if you would let me know.
 
-James Mitchell, St Andrews, 10th of January 2008.
-
-#****************************************************************************
-#
-# Copyright (C) 2008 James Mitchell 
-# <jdm3@st-and.ac.uk>
-#
-#  Distributed under the terms of the GNU General Public License (GPL)
-#
-#    This code is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty
-#    of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#
-#  See the GNU General Public License for more details; the full text
-#  is available at:
-#
-#  http://www.gnu.org/licenses/
-#
+James Mitchell, St Andrews, 5th of May 2010.

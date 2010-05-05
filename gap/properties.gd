@@ -1,15 +1,24 @@
+#############################################################################
 ##
-## properties.gd
-## Version 3.1.3
-## Fri  7 Nov 2008 17:45:12 GMT
+#W  properties.gd
+#Y  Copyright (C) 2006-2010                             James D. Mitchell
 ##
-
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+## $Id$
+##
 ##  The functions in this file are used to test whether a given transformation
 ##  semigroup has a given property. The algorithms can be found in:
 ##  
 ##  R. Gray and J. D. Mitchell, Largest subsemigroups of the full transformation 
 ##  monoid, to appear in Discrete Math.
 ##
+#############################################################################
+#############################################################################
+
+
 
 ###########################################################################
 ##

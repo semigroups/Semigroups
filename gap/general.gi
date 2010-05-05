@@ -1,8 +1,15 @@
+#############################################################################
 ##
-## general.gi
-## Version 3.1.3
-## Fri  7 Nov 2008 17:45:12 GMT
+#W  general.gi
+#Y  Copyright (C) 2006-2010                             James D. Mitchell
 ##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+## $Id$
+##
+
 
 ##  <#GAPDoc Label="generaltop">
 ##  This chapter contains general functions needed to support functions in the 

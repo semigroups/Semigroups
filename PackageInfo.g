@@ -1,7 +1,13 @@
+#############################################################################
 ##
-## PackageInfo.g
-## Version 3.1.3
-## Fri  7 Nov 2008 17:45:12 GMT
+#W  PackageInfo.g
+#Y  Copyright (C) 2006-2010                             James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+## $Id$
 ##
 
 SetPackageInfo( rec(
@@ -60,15 +66,6 @@ Dependencies := rec(
   SuggestedOtherPackages := [["orb", "3.4"], ["genss", "0.96"], ["grape", ">=4.2"], ["gapdoc", ">=1.1"]],
   ExternalConditions := []),
 AvailabilityTest := ReturnTrue,
-BannerString := Concatenation( 
-	"------------------------------------------",
-  "-----------------------------------\n",
-  "Loading MONOID ", ~.Version, "\n",
-  "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
-        " (", ~.Persons[1].WWWHome, ")\n",
- "For help, type: ?the monoid package \n", 
- "---------------------------------------------",
-  "--------------------------------\n" ),
 Autoload := false,
 TestFile := "tst/testall.g",
 Keywords := ["transformation semigroups", "green's relations"]

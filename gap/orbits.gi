@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  orbits.gi                          monoid 
-#Y  Copyright (C) 2006-2010            James D. Mitchell
+#W  orbits_no_orb.gi
+#Y  Copyright (C) 2006-2010                             James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
