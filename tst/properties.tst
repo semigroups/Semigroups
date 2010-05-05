@@ -1,7 +1,13 @@
+#############################################################################
 ##
-## properties.tst
-## Version 3.1.3
-## Fri  7 Nov 2008 17:45:12 GMT
+#W  properties.tst
+#Y  Copyright (C) 2006-2010                             James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+## $Id$
 ##
 
 #dirs := DirectoriesPackageLibrary( "monoid", "tst" );
