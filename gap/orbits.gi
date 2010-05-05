@@ -7,7 +7,7 @@
 ##
 #############################################################################
 ##
-## $Id: orbits_orb.gi 21 2010-05-04 17:46:08Z jamesm $
+## $Id$
 ##
 
 ## this file contains the functions for forward orbits that do not depend
