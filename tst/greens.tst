@@ -10,8 +10,7 @@
 ## $Id$
 ##
 
-#dirs := DirectoriesPackageLibrary( "monoid", "tst" );
-#ReadTest( Filename( dirs, "greens.tst"));
+#ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "greens.tst"));
 
 gap> START_TEST("greens.tst 3.1.3");
 gap> LoadPackage("monoid");;
@@ -293,31 +292,6 @@ gap> ImagesOfTransSemigroup(m);
   [ 3, 7 ], [ 4 ], [ 4, 5 ], [ 4, 5, 6 ], [ 4, 5, 6, 7 ], [ 4, 5, 7 ], 
   [ 4, 6 ], [ 4, 6, 7 ], [ 4, 7 ], [ 5 ], [ 5, 6 ], [ 5, 6, 7 ], [ 5, 7 ], 
   [ 6 ], [ 6, 7 ] ]
-gap> GradedImagesOfTransSemigroup(m);
-[ [ [ 5 ], [ 2 ], [ 3 ], [ 6 ], [ 4 ] ],
-  [ [ 2, 5 ], [ 3, 5 ], [ 5, 7 ], [ 5, 6 ], [ 2, 3 ], [ 1, 5 ], [ 1, 2 ],
-      [ 2, 6 ], [ 2, 4 ], [ 3, 6 ], [ 1, 3 ], [ 2, 7 ], [ 3, 7 ], [ 3, 4 ],
-      [ 4, 6 ], [ 6, 7 ], [ 1, 6 ], [ 4, 5 ], [ 1, 4 ], [ 4, 7 ] ],
-  [ [ 2, 3, 5 ], [ 3, 5, 6 ], [ 1, 2, 5 ], [ 2, 5, 7 ], [ 3, 5, 7 ],
-      [ 2, 5, 6 ], [ 2, 3, 6 ], [ 2, 4, 6 ], [ 1, 3, 5 ], [ 2, 3, 7 ],
-      [ 1, 2, 3 ], [ 1, 2, 6 ], [ 2, 3, 4 ], [ 3, 4, 6 ], [ 3, 4, 5 ],
-      [ 2, 6, 7 ], [ 1, 3, 6 ], [ 3, 6, 7 ], [ 3, 4, 7 ], [ 4, 5, 6 ],
-      [ 1, 3, 4 ], [ 4, 6, 7 ], [ 1, 4, 6 ], [ 1, 5, 6 ], [ 2, 4, 5 ],
-      [ 5, 6, 7 ], [ 1, 4, 5 ], [ 4, 5, 7 ], [ 2, 4, 7 ], [ 1, 2, 4 ] ],
-  [ [ 1, 2, 3, 5 ], [ 2, 3, 5, 7 ], [ 2, 3, 5, 6 ], [ 2, 3, 6, 7 ],
-      [ 1, 2, 3, 6 ], [ 2, 3, 4, 6 ], [ 1, 3, 4, 6 ], [ 3, 4, 6, 7 ],
-      [ 3, 4, 5, 6 ], [ 4, 5, 6, 7 ], [ 1, 4, 5, 6 ], [ 2, 4, 5, 6 ],
-      [ 1, 2, 4, 5 ], [ 2, 4, 5, 7 ], [ 2, 3, 4, 5 ] ],
-  [ [ 2, 3, 5, 6, 7 ], [ 1, 2, 3, 4, 6 ], [ 3, 4, 5, 6, 7 ],
-      [ 1, 2, 4, 5, 6 ], [ 2, 3, 4, 5, 7 ], [ 1, 2, 3, 5, 6 ],
-      [ 2, 3, 4, 6, 7 ], [ 1, 3, 4, 5, 6 ], [ 2, 4, 5, 6, 7 ],
-      [ 1, 2, 3, 4, 5 ] ], [  ], [ [ 1 .. 7 ] ] ]
-gap> grad:=last;;
-gap> Set(Concatenation(grad))=ImagesOfTransSemigroup(m);
-true
-gap> ForAll(GradedImagesOfTransSemigroup(m), x-> ForAll(x, y-> Length(y)
-> =Length(x[1])));
-true
 gap> KernelsOfTransSemigroup(m);
 [ [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ] ],
   [ [ 1 ], [ 2 ], [ 3, 4 ], [ 5, 6, 7 ] ],
@@ -436,9 +410,6 @@ gap> KernelsOfTransSemigroup(m);
   [ [ 1, 7 ], [ 2, 6 ], [ 3, 4, 5 ] ] ]
 gap> Length(last);
 206
-gap> Set(Concatenation(GradedKernelsOfTransSemigroup(m)))
-> =KernelsOfTransSemigroup(m);
-true
 gap> gens:=[ [ Transformation( [ 3, 4, 4, 3, 1, 1, 5 ] ) ], 
 > [ Transformation( [ 1, 1, 4, 3 ] ), Transformation( [ 2, 2, 2, 2 ] ), 
 > Transformation( [ 3, 3, 1, 4 ] ) ], [ Transformation( [ 4, 4, 2, 3, 3 ]), 

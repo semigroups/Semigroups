@@ -10,8 +10,7 @@
 ## $Id$
 ##
 
-#dirs := DirectoriesPackageLibrary( "monoid", "tst" );
-#ReadTest( Filename( dirs, "semigroups.tst" ) );
+#ReadTest( Filename(  DirectoriesPackageLibrary( "monoid", "tst" ), "semigroups.tst" ) );
 
 gap> START_TEST("semigroups.tst 3.1.3");
 gap> LoadPackage("monoid");;
@@ -323,7 +322,7 @@ gap> Elements(S);
   m2*m3*m1*m2 ]
 gap> Idempotents(S);
 [ 1, m1, m2*m1, m3*m2*m1, m3*m1, m2, m3*m2, m3 ]
-gap> SetInfoLevel(InfoAutos, 0);
+gap> SetInfoLevel(InfoMonoidAutos, 0);
 gap> AutomorphismGroup(Range(IsomorphismTransformationSemigroup(S)));
 <group of size 1 with 1 generators>
 #gap> FullMatrixSemigroup(3,4);

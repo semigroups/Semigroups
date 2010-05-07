@@ -10,44 +10,57 @@
 ## $Id$
 ##
 
-# CHANGES since the release of version 3.1 of MONOID
+# CHANGES since the release of version 3.1 of MONOID.
+
+# see also the file RENAMED for a list of functions that have been removed or 
+# renamed in the latest release. 
 
 -from 3.1.3 to 3.1.4
 
-
+	MonoidOrbit, GradedOrbits, and so on now accept a transformation collection
+	as a first argument. 
+	
+	If the `orb' package is available, then hash tables are used instead of 
+	plain lists when computing orbits. This dramatically increases the efficiency
+	of these computations.
+	
+	the function StrongOrbitsInForwardOrbit was introduced.
+	
 
 ###############
 
 -from 3.1.2 to 3.1.3: 
 
---- the method for PreImagesRepresentative for a semigroup homomorphism by function now tests whether the homomorphism is bijective and total before trying to find preimages.  
+	the method for PreImagesRepresentative for a semigroup homomorphism by function now tests 
+	whether the homomorphism is bijective and total before trying to find preimages.  
 
 ###############
 
 -from 3.1.1 to 3.1.2: the following new functions have been introduced:
 
---- TransformationActionNC
---- SmallestIdempotentPower 
---- IsKerImgOfTransformation
---- TransformationByKernelAndImage
---- AllTransformationsWithKerAndImgNC
---- AsBooleanMatrix
---- KerImgOfTransformation
---- RandomIdempotent
---- InversesOfTransformation
---- KiselmanSemigroup
+	TransformationActionNC
+	SmallestIdempotentPower 
+	IsKerImgOfTransformation
+	TransformationByKernelAndImage
+	AllTransformationsWithKerAndImgNC
+	AsBooleanMatrix
+	KerImgOfTransformation
+	RandomIdempotent
+	InversesOfTransformation
+	KiselmanSemigroup
 
 the following functions were renamed:
 
---- PermRepTrans was renamed AsPermOfRange 
---- ImagesTransformationMonoid was renamed ImagesOfTransSemigroup
---- GradedImagesTransformationMonoid was renamed GradedImagesOfTransSemigroup
---- KernelsTransformationMonoid was renamed KernelsOfTransSemigroup
---- GradedKernelsTransformationMonoid was renamed GradedKernelsOfTransSemigroup
+	PermRepTrans was renamed AsPermOfRange 
+	ImagesTransformationMonoid was renamed ImagesOfTransSemigroup
+	GradedImagesTransformationMonoid was renamed GradedImagesOfTransSemigroup
+	KernelsTransformationMonoid was renamed KernelsOfTransSemigroup
+	GradedKernelsTransformationMonoid was renamed GradedKernelsOfTransSemigroup
 
 the following bugs were fixed:
 
---- a bug relating to the definition of the semigroup of order preserving functions was resolved
+	a bug relating to the definition of the semigroup of order preserving functions was
+	resolved
 
 ###############
 

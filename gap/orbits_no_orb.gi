@@ -53,6 +53,94 @@ return Compacted(graded);
 end);
 
 ###########################################################################
+# the following has its own method rather than using GradedOrbit, as for 
+# convenience the output should be a list of lists where the <i>th position
+# is the list of images of <s> of size <i> including the empty list. 
+
+InstallMethod(GradedImagesOfTransSemigroup, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(s)
+local gens, graded, grading_of_seed, x, y, z, new, val, grading, action, seed;
+
+if IsMonoid(s) then  
+	gens:= GeneratorsOfMonoid(s);
+elif IsSemigroup(s) then
+	gens:=GeneratorsOfSemigroup(s);
+else
+	gens:=s;
+fi;
+
+seed:=[1..DegreeOfTransformationSemigroup(s)]; grading:=Size; action:=OnSets;
+
+graded:=List([1..DegreeOfTransformationSemigroup(s)], x-> []);
+grading_of_seed:=grading(seed);
+Add(graded[grading_of_seed], seed);
+
+for x in [grading_of_seed, grading_of_seed-1..1] do
+	x:=graded[x];
+	for y in x do
+		for z in gens do
+			new:= action(y, z);
+			val:= grading(new);
+			if not new in graded[val] then   
+				Add(graded[val], new);
+			fi;
+		od;
+	od;
+od;
+
+if One(s)=fail then 
+	graded[DegreeOfTransformationSemigroup(s)]:=[];
+fi;
+
+return graded;
+end);
+
+#############################################################################
+# see comment before GradedImagesOfTransSemigroup for explaination of why 
+# this method exists.
+
+InstallMethod(GradedKernelsOfTransSemigroup, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(s)
+local gens, graded, grading_of_seed, x, y, z, new, val, grading, action, seed;
+
+if IsMonoid(s) then  
+	gens:= GeneratorsOfMonoid(s);
+elif IsSemigroup(s) then
+	gens:=GeneratorsOfSemigroup(s);
+else
+	gens:=s;
+fi;
+
+seed:=List([1..DegreeOfTransformationSemigroup(s)], x-> [x]); 
+grading:=Size; action:=OnKernelsAntiAction;
+
+graded:=List([1..DegreeOfTransformationSemigroup(s)], x-> []);
+grading_of_seed:=grading(seed);
+Add(graded[grading_of_seed], seed);
+
+for x in [grading_of_seed, grading_of_seed-1..1] do
+	x:=graded[x];
+	for y in x do
+		for z in gens do
+			new:= action(y, z);
+			val:= grading(new);
+			if not new in graded[val] then   
+				Add(graded[val], new);
+			fi;
+		od;
+	od;
+od;
+
+if One(s)=fail then 
+	graded[DegreeOfTransformationSemigroup(s)]:=[];
+fi;
+
+return graded;
+end);
+
+###########################################################################
 
 InstallMethod(MonoidOrbit, "for a trans. collection, object, and action",
 [IsTransformationCollection, IsObject, IsFunction],

@@ -30,13 +30,13 @@ fi;
 
 #check that the orb package is loaded
 
-#if LoadPackage("orb") then 
 if IsBound(GAPInfo.PackagesInfo.orb) and CompareVersionNumbers("3.4", "orb") 
  then 
 	ReadPkg("monoid/gap/orbits_orb.gi");
 else
-	Info(InfoWarning, 1, "the `orb' package is not fully installed and so some functions");
-	Info(InfoWarning, 1, "in MONOID will not be as efficient as they would be if `orb' were loaded.");
+	Info(InfoWarning, 1, 
+	 "the `orb' package is not fully installed and so MONOID will not be as");
+	Info(InfoWarning, 1, "efficient as if `orb' were loaded.");
 	ReadPkg("monoid/gap/orbits_no_orb.gi");
 fi;
 

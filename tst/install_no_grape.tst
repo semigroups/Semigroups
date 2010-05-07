@@ -10,12 +10,11 @@
 ## $Id$
 ##
 
-
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "install_no_grape.tst" ) );
 
 gap> START_TEST("install_no_grape.tst 3.1.3");
 gap> LoadPackage("monoid");;
-gap> SetInfoLevel(InfoAutos, 0);
+gap> SetInfoLevel(InfoMonoidAutos, 0);
 gap> gens:=[ Transformation( [1,8,11,2,5,16,13,14,3,6,15,10,7,4,9,12 ] ), 
 >   Transformation( [1,16,9,6,5,8,13,12,15,2,3,4,7,10,11,14] ), 
 >   Transformation( [1,3,7,9,1,15,5,11,13,11,13,3,5,15,7,9 ] ) ];;

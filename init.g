@@ -30,7 +30,8 @@ ReadPkg("MONOID/gap/autos.gd");
 InfoMonoid:=NewInfoClass("InfoMonoid");;
 
 #JDM remove
-SetInfoLevel(InfoAutos, 4);
+
+SetInfoLevel(InfoMonoidAutos, 4);
 
 dir:=Concatenation(PackageInfo("MONOID")[1]!.InstallationPath,"/dev/gap");
 files:=DirectoryContents(dir);

@@ -35,7 +35,8 @@
 
 ###########################################################################
 
-InstallMethod(IsAssociatedSemigpTransSemigp, "for a Green's class", true, [IsGreensClass], 0, function(class)
+InstallMethod(IsAssociatedSemigpTransSemigp, "for a Green's class", true, 
+[IsGreensClass], 0, function(class)
 
 return IsTransformationSemigroup(ParentAttr(class));
 
@@ -514,37 +515,6 @@ return imgs;
 end );
 
 
-#############################################################################
-##
-##	<#GAPDoc Label="GradedImagesOfTransSemigroup">
-##	<ManSection>
-##	<Attr Name="GradedImagesOfTransSemigroup" Arg="S"/>
-##	<Description>
-##	returns the set of all the image sets that elements of <C>S</C> admit in a 
-##	list where the <M>i</M>th entry contains all the images with size <M>i</M>
-##	(including the empty list when there are no image sets with size <M>i</M>).
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), 
-##  &gt; Transformation( [ 4, 4, 5, 2, 2 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; GradedImagesOfTransSemigroup(S);
-##  [ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], 
-##    [  ], [ [ 1 .. 5 ] ] ]
-##	</Example> 
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-InstallMethod(GradedImagesOfTransSemigroup, "for a transformation semigroup", true, [IsTransformationSemigroup], 0, 
-function(S)
-local imgs;
-imgs:=GradedOrbit(S, [1..DegreeOfTransformationSemigroup(S)], OnSets, Size);
-
-if One(S)=fail then 
-	imgs[DegreeOfTransformationSemigroup(S)]:=[];
-fi;
-return imgs;
-end);
 
 ###########################################################################
 ##
@@ -691,80 +661,6 @@ fi;
 end); 
 
 #############################################################################
-##
-##	<#GAPDoc Label="GradedKernelsOfTransSemigroup">
-##	<ManSection>
-##	<Attr Name="GradedKernelsOfTransSemigroup" Arg="S"/>
-##	<Description>
-##	returns the set of all the kernels that elements of <C>S</C> admit in a 
-##	list where the <M>i</M>th entry contains all the kernels with <M>i</M> 
-##	classes
-##	(including the empty list when there are no kernels with <M>i</M> classes).
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), 
-##  &gt; Transformation( [ 2, 5, 3, 2, 3 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; GradedKernelsOfTransSemigroup(S);
-##  [ [ [ [ 1, 2, 3, 4, 5 ] ] ], 
-##    [ [ [ 1, 2, 4, 5 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ], 
-##        [ [ 1, 2, 4 ], [ 3, 5 ] ] ], 
-##    [ [ [ 1, 2, 4 ], [ 3 ], [ 5 ] ], [ [ 1, 4 ], [ 2 ], [ 3, 5 ] ] ], [  ], 
-##    [ [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ] ] ] ]
-##	</Example> <!-- greens.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-InstallMethod(GradedKernelsOfTransSemigroup, "for a transformation semigroup", true,[IsTransformationSemigroup], 0, 
-function(S)
-local kers;
-kers:=GradedOrbit( S, List([1..DegreeOfTransformationSemigroup(S)], x-> [x]), OnKernelsAntiAction, Size);
-
-if One(S)=fail then 
-	kers[DegreeOfTransformationSemigroup(S)]:=[];
-fi;
-
-return kers;
-end);
-
-#############################################################################
-##
-##	<#GAPDoc Label="StrongOrbitOfImage">
-##	<ManSection>
-##	<Oper Name="StrongOrbitOfImage" Arg="S, f"/>
-##	<Description>
-##	returns a triple where
-##	<List>
-##	<Item>the first entry <C>imgs</C> is the strong orbit of the image set 
-##	<C>A</C> 
-##	of <C>f</C> under the action of  <C>S</C>. That is, the set of image sets 
-##	<C>B</C> of 
-##	elements of <C>S</C> such that there exist <C>g,h</C> in <C>S</C> with 
-##	<C>OnSets(A, g)=B</C> and <C>OnSet(B, h)=A</C>. If the strong orbit of the 
-##	image of <C>f</C> has 
-##	already been calculated, then the image of <C>f</C> might not be the first 
-##	entry in the list <C>imgs</C>.</Item>
-##	<Item>the second entry is a list of permutations <C>mults</C> such that 
-##	<C>OnSets(imgs[i], mults[i])=imgs[1]</C></Item>
-##	<Item>the third entry is the Right Schutzenberger group associated to the
-##	first entry in the list <C>imgs</C> (that is, the group of permutations 
-##	arising from elements of the semigroup that stabilise the set 
-##	<C>imgs[1]</C>).</Item>
-##	</List>
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
-##  &gt; Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; f:=Transformation( [ 2, 1, 1, 1, 5 ] );;
-##  gap&gt; StrongOrbitOfImage(S, f);        
-##  [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
-##        [ 2, 4, 5 ], [ 3, 4, 5 ] ], 
-##    [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
-##        (1,3,2,4) ], Group([ (), (2,5), (1,5) ]) ]
-##	</Example> <!-- greens.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
 ##  JDM reduce number of local variable names!
 

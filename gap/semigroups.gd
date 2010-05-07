@@ -373,7 +373,7 @@ DeclareGlobalFunction("ReesZeroMatrixSemigroupElementNC");
 ##    m2*m3*m1*m2 ]
 ##  gap&gt; Idempotents(S);
 ##  [ 1, m1, m2*m1, m3*m2*m1, m3*m1, m2, m3*m2, m3 ]
-##  gap&gt; SetInfoLevel(InfoAutos, 0);
+##  gap&gt; SetInfoLevel(InfoMonoidAutos, 0);
 ##  gap&gt; AutomorphismGroup(Range(IsomorphismTransformationSemigroup(S)));
 ##  &lt;group of size 1 with 1 generators&gt;
 ##  </Example>

@@ -121,7 +121,7 @@ end);
 ##	returned group has as many generators as elements. This may be changed in 
 ##	the future.<P/>
 ##
-##	If <Ref InfoClass="InfoAutos"/> is set to level <C>4</C>, then prompts may 
+##	If <Ref InfoClass="InfoMonoidAutos"/> is set to level <C>4</C>, then prompts may 
 ##	appear during the procedure to let you choose how the computation proceeds. 
 ##	<P/>
 ##	<Example>
@@ -196,36 +196,36 @@ local mat, m, n, autograph, r, autogroup, inner, transversal1, ZG, G, transversa
 mat:=SandwichMatrixOfReesZeroMatrixSemigroup(rms);
 m:=Length(mat[1]); n:=Length(mat);
 
-Info(InfoAutos, 2, "computing automorphism group of graph");
+Info(InfoMonoidAutos, 2, "computing automorphism group of graph");
 autograph:=AutGroupGraph(RZMSGraph(rms), [[1..m],[m+1..n+m]]);
-Info(InfoAutos, 2, "the automorphism group of the graph has size ", Size(autograph));
+Info(InfoMonoidAutos, 2, "the automorphism group of the graph has size ", Size(autograph));
 components:=ConnectedComponents(RZMSGraph(rms));
 r:=Length(components);
-Info(InfoAutos, 2, "the graph has ", r, " connected components");
+Info(InfoMonoidAutos, 2, "the graph has ", r, " connected components");
 
 ZG:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(rms);
 
-Info(InfoAutos, 2, "computing automorphism group of underlying zero group");
+Info(InfoMonoidAutos, 2, "computing automorphism group of underlying zero group");
 autogroup:=AutomorphismGroup(ZG);
-Info(InfoAutos, 2, "the automorphism group of underlying zero group has size ", Size(autogroup));
+Info(InfoMonoidAutos, 2, "the automorphism group of underlying zero group has size ", Size(autogroup));
 
-Info(InfoAutos, 3, "computing inner automorphisms of underlying zero group");
+Info(InfoMonoidAutos, 3, "computing inner automorphisms of underlying zero group");
 if not IsTrivial(autogroup) then 
 	inner:=InnerAutomorphismsAutomorphismGroup(autogroup);
 	transversal1:=RightTransversal(autogroup, inner);
 else
 	transversal1:=Elements(autogroup);
 fi;
-Info(InfoAutos, 2, "Aut G/Inn G has size ", Length(transversal1));
+Info(InfoMonoidAutos, 2, "Aut G/Inn G has size ", Length(transversal1));
 
 G:=UnderlyingGroupOfZG(ZG);
 
 transversal2:=List(RightTransversal(G, Centre(G)), ZeroGroupElt);
 G:=List(G, ZeroGroupElt);
 
-Info(InfoAutos, 2, "|G/Z(G)|+", r-1, "|G| equals ", Length(transversal2)+(r-1)*Size(G));
+Info(InfoMonoidAutos, 2, "|G/Z(G)|+", r-1, "|G| equals ", Length(transversal2)+(r-1)*Size(G));
 
-Info(InfoAutos, 2, "search space has ", Size(autograph), "x", Length(transversal1), "x", Length(transversal2)+(r-1)*Size(G), "=", Size(autograph)*Length(transversal1)*(Length(transversal2)+(r-1)*Size(G)), " elements");
+Info(InfoMonoidAutos, 2, "search space has ", Size(autograph), "x", Length(transversal1), "x", Length(transversal2)+(r-1)*Size(G), "=", Size(autograph)*Length(transversal1)*(Length(transversal2)+(r-1)*Size(G)), " elements");
 A:=[];
 
 for l in autograph do 
@@ -363,8 +363,8 @@ else
 fi;
 
 if not superlist=fail and HasAutomorphismGroup(S) then 
-	Info(InfoAutos, 2, "##################################################################");
-	Info(InfoAutos, 2, "AutomorphismGroup: finding the intersection of the super group and the \n#I  automorphism group"); 
+	Info(InfoMonoidAutos, 2, "##################################################################");
+	Info(InfoMonoidAutos, 2, "AutomorphismGroup: finding the intersection of the super group and the \n#I  automorphism group"); 
 	id:=SemigroupHomomorphismByImagesOfGensNC(S, S, gens);
 	SetIsOne(id, true);
 	new:=Group(id);
@@ -383,7 +383,7 @@ fi;
 	
 
 if Size(S)<10 and HasMultiplicationTable(S) then 
-	Info(InfoAutos, 1, "AutomorphismGroup: semigroup is small");
+	Info(InfoMonoidAutos, 1, "AutomorphismGroup: semigroup is small");
 	action:=function(table, perm)
 		return List(Permuted(List(table, x-> OnTuples(x, perm)), perm), x->		Permuted(x, perm));
 	end;
@@ -392,8 +392,8 @@ if Size(S)<10 and HasMultiplicationTable(S) then
 	
 	if not superlist=fail then 
 
-		Info(InfoAutos, 2, "######################################################################");
-		Info(InfoAutos, 2, "AutomorphismGroup: finding the intersection of the super group and the \n#I  automorphism group"); 
+		Info(InfoMonoidAutos, 2, "######################################################################");
+		Info(InfoMonoidAutos, 2, "AutomorphismGroup: finding the intersection of the super group and the \n#I  automorphism group"); 
 		new:=Group(());
 		SetAsSSortedList(new, [()]);
 	
@@ -444,23 +444,23 @@ if Size(S)<10 and HasMultiplicationTable(S) then
 
 elif IsCompletelySimpleSemigroup(S) then 
 
-	Info(InfoAutos, 1, "AutomorphismGroup: semigroup is completely simple");
+	Info(InfoMonoidAutos, 1, "AutomorphismGroup: semigroup is completely simple");
 
-	Info(InfoAutos, 2, "AutomorphismGroup: computing an isomorphic Rees Matrix semigroup");
+	Info(InfoMonoidAutos, 2, "AutomorphismGroup: computing an isomorphic Rees Matrix semigroup");
 	iso:=IsomorphismReesMatrixSemigroup(S);
 
-	Info(InfoAutos, 2, "AutomorphismGroup: computing the automorphism group of \n#I  the Rees Matrix semigroup");
+	Info(InfoMonoidAutos, 2, "AutomorphismGroup: computing the automorphism group of \n#I  the Rees Matrix semigroup");
 	autos1:=AutomorphismGroup(Range(iso));
 	
 	if not superlist=fail then 
-		Info(InfoAutos, 2, "######################################################################");
-		Info(InfoAutos, 2, "AutomorphismGroup: finding the intersection of the super group and the \n#I  automorphism group"); 
+		Info(InfoMonoidAutos, 2, "######################################################################");
+		Info(InfoMonoidAutos, 2, "AutomorphismGroup: finding the intersection of the super group and the \n#I  automorphism group"); 
 		autos1:=Group(Filtered(autos1, x-> iso*x*InverseGeneralMapping(iso) in superlist));
 	fi;
 
-	Info(InfoAutos, 3, "AutomorphismGroup: group with size ", Size(autos1), " and ", Length(GeneratorsOfGroup(autos1)), " generators");
+	Info(InfoMonoidAutos, 3, "AutomorphismGroup: group with size ", Size(autos1), " and ", Length(GeneratorsOfGroup(autos1)), " generators");
 
-	Info(InfoAutos, 2, "AutomorphismGroup: conjugating the generators of the automorphism group");
+	Info(InfoMonoidAutos, 2, "AutomorphismGroup: conjugating the generators of the automorphism group");
 	
 	gens:=List(SmallGeneratingSet(autos1), function(x)
 	local new;
@@ -503,10 +503,10 @@ else
 		elif keyed ='n' or keyed = 'N' then 
 			out:=false;
 		elif keyed ='h' or keyed = 'H' then 
-			Info(InfoAutos, 4, helptext);
+			Info(InfoMonoidAutos, 4, helptext);
 			out:=fail;
 		else
-			Info(InfoAutos, 4, "Error: input must be y, n, or h (for help)!");
+			Info(InfoMonoidAutos, 4, "Error: input must be y, n, or h (for help)!");
 			out:=fail;
 		fi;
 	until not out=fail;
@@ -515,11 +515,11 @@ else
 	
 	#########
 
-	Info(InfoAutos, 1, "AutomorphismGroup: semigroup is not completely simple");
+	Info(InfoMonoidAutos, 1, "AutomorphismGroup: semigroup is not completely simple");
 	
 	n:=DegreeOfTransformationSemigroup(S);
 	constants:=Set(Flat(GradedImagesOfTransSemigroup(S)[1]));
-	Info(InfoAutos, 2, "AutomorphismGroup: ", Length(constants), " constants");
+	Info(InfoMonoidAutos, 2, "AutomorphismGroup: ", Length(constants), " constants");
 	allinner:=false;
 	bad:=[];
 	
@@ -528,10 +528,10 @@ else
 	autos:=Group(id);
 	SetAsSSortedList(autos, [id]);
 	
-	if InfoLevel(InfoAutos)=4 and not Length(constants)=0 then
-		Info(InfoAutos, 4, "##################################################################");
-		Info(InfoAutos, 4, "AutomorphismGroup: Check if all automorphisms are inner? (y/n/h) #"); 
-		Info(InfoAutos, 4, "##################################################################");
+	if InfoLevel(InfoMonoidAutos)=4 and not Length(constants)=0 then
+		Info(InfoMonoidAutos, 4, "##################################################################");
+		Info(InfoMonoidAutos, 4, "AutomorphismGroup: Check if all automorphisms are inner? (y/n/h) #"); 
+		Info(InfoMonoidAutos, 4, "##################################################################");
 		bvals[1]:=useryn("It is advisable to answer yes if the size of the semigroup is not \n#I  too large.");
 	elif Length(constants)=0 then
 		allinner:=false;
@@ -544,7 +544,7 @@ else
 		
 		allinner:=true; 
 	
-		Info(InfoAutos, 2, "AutomorphismGroup: checking if all automorphisms are inner");
+		Info(InfoMonoidAutos, 2, "AutomorphismGroup: checking if all automorphisms are inner");
 		#JDM should really be an enumerator in the code, then 
 		#JDM this would all get simpler.
 		if not Length(constants)=n and not HasAsSSortedList(S) then 
@@ -589,7 +589,7 @@ else
 		fi;
 		#JDM 
 		
-		Info(InfoAutos, 2, "AutomorphismGroup: ", allinner);
+		Info(InfoMonoidAutos, 2, "AutomorphismGroup: ", allinner);
 		
 	fi; #check if all autos are inner
 	
@@ -602,16 +602,16 @@ else
 		return inner;
 	elif not allinner then 
 
-		Info(InfoAutos, 2, "AutomorphismGroup: computing D-classes");
+		Info(InfoMonoidAutos, 2, "AutomorphismGroup: computing D-classes");
 		dclasses:=GreensDClasses(S);
-		Info(InfoAutos, 2, "AutomorphismGroup: semigroup has size ", Size(S));
-		Info(InfoAutos, 2, "AutomorphismGroup: ", Length(dclasses), " D-classes in total");
+		Info(InfoMonoidAutos, 2, "AutomorphismGroup: semigroup has size ", Size(S));
+		Info(InfoMonoidAutos, 2, "AutomorphismGroup: ", Length(dclasses), " D-classes in total");
 
 		#positions of D-classes containing generators
 
 		pos:=SetX(gens, x-> PositionProperty(dclasses, y-> x in y));
 
-		Info(InfoAutos, 2, "AutomorphismGroup: ", Length(pos), " D-classes of generators");
+		Info(InfoMonoidAutos, 2, "AutomorphismGroup: ", Length(pos), " D-classes of generators");
 
 		info:=List(dclasses{pos}, c-> [Size(c), IsRegularDClass(c), 
 		Length(GreensLClasses(c)), Length(GreensRClasses(c)), 
@@ -624,7 +624,7 @@ else
 		idem:=SetX(dclasses{pos}, c-> Length(Idempotents(c)));
 
 		colours:=List([1..Length(pos)], x-> []);
-		Info(InfoAutos, 2, "AutomorphismGroup: partitioning D-classes");
+		Info(InfoMonoidAutos, 2, "AutomorphismGroup: partitioning D-classes");
 
 		for i in [1..Length(dclasses)] do 
 			c:=dclasses[i];
@@ -646,7 +646,7 @@ else
 
 		colours:=Filtered(colours, x-> not x=[]);
 
-		Info(InfoAutos, 2, "AutomorphismGroup: computing isomorphisms to Rees Matrix Semigroups \n#I  for D-classes of generators");
+		Info(InfoMonoidAutos, 2, "AutomorphismGroup: computing isomorphisms to Rees Matrix Semigroups \n#I  for D-classes of generators");
 
 		RMS:=List([1..Length(dclasses)], function(x)
 				if x in pos then 
@@ -666,7 +666,7 @@ else
 		if ForAll(colours, x-> Length(x)=1) then
 			poset:=Group(());
 		else
-			Info(InfoAutos, 2, "AutomorphismGroup: computing automorphism group of poset of D-classes"); 
+			Info(InfoMonoidAutos, 2, "AutomorphismGroup: computing automorphism group of poset of D-classes"); 
 			poset:=AutGroupGraph(PartialOrderOfDClasses(S), colours);
 
 		#partition the orbit of the D-class containing each generator w.r.t.
@@ -678,7 +678,7 @@ else
 
 				if not ForAll(orbits, x-> Length(x)=1) then 
 
-					Info(InfoAutos, 2, "AutomorphismGroup: partitioning orbits by isomorphism of D-classes"); 
+					Info(InfoMonoidAutos, 2, "AutomorphismGroup: partitioning orbits by isomorphism of D-classes"); 
 					part:=[];
 
 					for orb in orbits do
@@ -725,7 +725,7 @@ else
 							fi;
 						fi;  
 					od;
-					Info(InfoAutos, 2, "AutomorphismGroup: computing the intersection of stabilizers \n#I  of newly partitioned orbits of D-classes");
+					Info(InfoMonoidAutos, 2, "AutomorphismGroup: computing the intersection of stabilizers \n#I  of newly partitioned orbits of D-classes");
 					if not part=orbits then  
 						poset:=Intersection(List(part, x-> Stabilizer(poset, x, OnSets)));
 					fi;
@@ -737,7 +737,7 @@ else
 			fi;
 		fi;
 
-		Info(InfoAutos, 2, "AutomorphismGroup: automorphism group of poset of D-classes has size ", Size(poset), "\n#I  and moves ", NrMovedPoints(poset), " points"); 
+		Info(InfoMonoidAutos, 2, "AutomorphismGroup: automorphism group of poset of D-classes has size ", Size(poset), "\n#I  and moves ", NrMovedPoints(poset), " points"); 
 
 		pos_list:=List(gens, x-> PositionProperty(dclasses, y-> x in y));
 		#do not change the pos_list line! It is necessary.
@@ -746,10 +746,10 @@ else
 
 		for j in pos do 
 			subgens:=AsSSortedList(gens{Filtered([1..Length(gens)], x-> pos_list[x]=j)});
-			Info(InfoAutos, 3, "AutomorphismGroup: finding automorphism group of D-class ", j);
+			Info(InfoMonoidAutos, 3, "AutomorphismGroup: finding automorphism group of D-class ", j);
 
 			if IsGroup(Range(RMS[j])) then 
-				Info(InfoAutos, 3, "AutomorphismGroup: D-class is a group with size ", Size(Range(RMS[j])), " of degree ", LargestMovedPoint(Range(RMS[j])));
+				Info(InfoMonoidAutos, 3, "AutomorphismGroup: D-class is a group with size ", Size(Range(RMS[j])), " of degree ", LargestMovedPoint(Range(RMS[j])));
 				A:=AutomorphismGroup(Range(RMS[j]));
 				
 				if not IsTrivial(A) and IsHandledByNiceMonomorphism(A) then 
@@ -766,11 +766,11 @@ else
 					A:=RightTransversal(A, Stabilizer(A, subgens, OnTuples)); 
 				fi;
 			else
-				Info(InfoAutos, 3, "AutomorphismGroup: D-class is a Rees matrix semigroup with size ", Size(Range(RMS[j])));
+				Info(InfoMonoidAutos, 3, "AutomorphismGroup: D-class is a Rees matrix semigroup with size ", Size(Range(RMS[j])));
 				A:=RightTransStabAutoGroup(Range(RMS[j]), OnTuples(subgens, RMS[j]), OnTuples);
 				#RightTransversal(AutomorphismGroup(Range(RMS[j])), Stabilizer(AutomorphismGroup(Range(RMS[j])), subgens));
 			fi;
-			Info(InfoAutos, 3, "AutomorphismGroup: automorphism group of D-class has size ", Size(A));
+			Info(InfoMonoidAutos, 3, "AutomorphismGroup: automorphism group of D-class has size ", Size(A));
 			mappings[j]:=Enumerator(A);
 				
 		od;
@@ -778,10 +778,10 @@ else
 		mappings:=EnumeratorOfCartesian(mappings);
 	fi;
 	
-	if InfoLevel(InfoAutos)=4 and not HasInnerAutomorphismsOfSemigroup(S) then #and not allinner then 
-		Info(InfoAutos, 4, "################################################################");
-		Info(InfoAutos, 4, "AutomorphismGroup: Try to compute inner automorphisms? (y/n/h) #");
-		Info(InfoAutos, 4, "################################################################");
+	if InfoLevel(InfoMonoidAutos)=4 and not HasInnerAutomorphismsOfSemigroup(S) then #and not allinner then 
+		Info(InfoMonoidAutos, 4, "################################################################");
+		Info(InfoMonoidAutos, 4, "AutomorphismGroup: Try to compute inner automorphisms? (y/n/h) #");
+		Info(InfoMonoidAutos, 4, "################################################################");
 
 		bvals[2]:=useryn("It might help to find an result more quickly if yes is the answer. \n#I  However, if the degree of the semigroup is large (>20 approx.), \n#I  then the answer should probably be no.");;
 	fi;
@@ -789,7 +789,7 @@ else
 	if HasInnerAutomorphismsOfSemigroup(S) then 
 		autos:=InnerAutomorphismsOfSemigroup(S);
 	elif bvals[2] then #compute inner autos
-		Info(InfoAutos, 3, "AutomorphismGroup: computing stabiliser of images");
+		Info(InfoMonoidAutos, 3, "AutomorphismGroup: computing stabiliser of images");
 		m:=0;
 
 		if not Length(constants)=0 and not Length(constants)=n then 
@@ -810,14 +810,14 @@ else
 			fi;
 		until m=n-1 or stop;
 
-		Info(InfoAutos, 4, "AutomorphismGroup: stabilizer has size ", Size(inner));
+		Info(InfoMonoidAutos, 4, "AutomorphismGroup: stabilizer has size ", Size(inner));
 
 		if not IsTrivial(inner) then 
 			OnSets3:=function(x, g)
 				return Set(List( x, i-> OnSetsSets(i, g)));
 			end;
 	
-			Info(InfoAutos, 3, "AutomorphismGroup: computing stabiliser of kernels");
+			Info(InfoMonoidAutos, 3, "AutomorphismGroup: computing stabiliser of kernels");
 
 			m:=1;
 			stop:=false;
@@ -832,11 +832,11 @@ else
 				fi;
 			until m=n-1 or stop;
 	
-			Info(InfoAutos, 4, "AutomorphismGroup: stabilizer has size ", Size(inner));
+			Info(InfoMonoidAutos, 4, "AutomorphismGroup: stabilizer has size ", Size(inner));
 		fi; #stabilizer of kernels
 
 		if IsTrivial(inner) then
-			Info(InfoAutos, 2, "AutomorphismGroup: inner automorphisms are trivial");
+			Info(InfoMonoidAutos, 2, "AutomorphismGroup: inner automorphisms are trivial");
 			SetIsInnerAutomorphismsOfSemigroup(autos, true);
 			SetInnerAutomorphismsOfSemigroup(S, autos);
 			if allinner then
@@ -846,20 +846,20 @@ else
 				return autos; 
 			fi;
 		else 
-			Info(InfoAutos, 3, "AutomorphismGroup: computing the stabilizer of generators under \n#I  the action of the stabilizers of images and kernels");
+			Info(InfoMonoidAutos, 3, "AutomorphismGroup: computing the stabilizer of generators under \n#I  the action of the stabilizers of images and kernels");
 			G:=OrbitStabilizer(inner, AsSet(gens), OnSets); #setwise stabilizer
 			H:=OrbitStabilizer(G.stabilizer, gens, OnTuples); #pointwise stabilizer
 
 			if not allinner then 
-				Info(InfoAutos, 2, "AutomorphismGroup: the outer automorphism search space contains \n#I  ", Length(mappings)*Size(poset), " elements");
+				Info(InfoMonoidAutos, 2, "AutomorphismGroup: the outer automorphism search space contains \n#I  ", Length(mappings)*Size(poset), " elements");
 			fi;
-			Info(InfoAutos, 2, "AutomorphismGroup: the inner automorphism search space contains \n#I  ", Length(G.orbit), " elements");
+			Info(InfoMonoidAutos, 2, "AutomorphismGroup: the inner automorphism search space contains \n#I  ", Length(G.orbit), " elements");
 
-			if InfoLevel(InfoAutos)=4 then 
+			if InfoLevel(InfoMonoidAutos)=4 then 
 
-				Info(InfoAutos, 4, "####################################################################");
-				Info(InfoAutos, 4, "AutomorphismGroup: proceed with inner automorphism search? (y/n/h) #"); 
-				Info(InfoAutos, 4, "####################################################################");
+				Info(InfoMonoidAutos, 4, "####################################################################");
+				Info(InfoMonoidAutos, 4, "AutomorphismGroup: proceed with inner automorphism search? (y/n/h) #"); 
+				Info(InfoMonoidAutos, 4, "####################################################################");
 				doit:=useryn("If the size of the inner search space is comparable or smaller in size \n#I  to that of the outer search space, then it is probably best to answer \n#I  yes. If the size of the inner space is much bigger than the outer, then  \n#I  it will probably be quicker to answer no.");;
 			elif allinner or Length(mappings)*Size(poset)<=2*Length(G.orbit) or Length(G.orbit)<=Length(mappings)*Size(poset) then 
 				doit:=true;
@@ -872,17 +872,17 @@ else
 				perms:=AsList(RightTransversal(inner, G.stabilizer));
 				orb:=RightTransversal(G.stabilizer, H.stabilizer);
 				
-				if InfoLevel(InfoAutos)=4 and not superlist=fail then 
-					Info(InfoAutos, 4, "AutomorphismGroup: the size of the super group is ", Size(superlist));
-					Info(InfoAutos, 4, "######################################################################");
-					Info(InfoAutos, 4, "AutomorphismGroup: Filter elements in the super group online? (y/n/h) #");
-					Info(InfoAutos, 4, "######################################################################");
+				if InfoLevel(InfoMonoidAutos)=4 and not superlist=fail then 
+					Info(InfoMonoidAutos, 4, "AutomorphismGroup: the size of the super group is ", Size(superlist));
+					Info(InfoMonoidAutos, 4, "######################################################################");
+					Info(InfoMonoidAutos, 4, "AutomorphismGroup: Filter elements in the super group online? (y/n/h) #");
+					Info(InfoMonoidAutos, 4, "######################################################################");
 					bvals[3]:=useryn("Filtering the elements online is only advisable if the length of \n#I  the super group is comparable or less than the size of the inner search \n#I  space. You will prompted to ask if you want to filter after the \n#I  search for inner automorphisms.");
 				elif superlist=fail then 
 					bvals[3]:=false;
 				fi; 
 
-				Info(InfoAutos, 1, "AutomorphismGroup: computing inner automorphisms");
+				Info(InfoMonoidAutos, 1, "AutomorphismGroup: computing inner automorphisms");
 
 				l:=0;
 				inner:=Group(orb);
@@ -906,16 +906,16 @@ else
 										fi;
 									fi;
 								else
-									Info(InfoAutos, 4, "AutomorphismGroup: images don't generate");
+									Info(InfoMonoidAutos, 4, "AutomorphismGroup: images don't generate");
 									bad:=Union(bad, Orbit(inner, image, OnTuples)); 
 								fi;
 							fi;
 						else
-							Info(InfoAutos, 4, "AutomorphismGroup: images not all in semigroup");
+							Info(InfoMonoidAutos, 4, "AutomorphismGroup: images not all in semigroup");
 						fi;
 					fi;
 					
-					Info(InfoAutos, 4, "AutomorphismGroup: automorphisms ", Size(inner), " nonautomorphisms ", Length(bad), " counter ", l);
+					Info(InfoMonoidAutos, 4, "AutomorphismGroup: automorphisms ", Size(inner), " nonautomorphisms ", Length(bad), " counter ", l);
 				until 2*Size(inner)+Length(bad)>Length(perms) or l=Length(perms);
 				
 				autos:=Group(List(SmallGeneratingSet(inner), x-> InnerAutomorphismOfSemigroupNC(S, x)));
@@ -929,21 +929,21 @@ else
 					SetIsAutomorphismGroupOfSemigroup(autos, true);
 					return autos;
 				elif IsTrivial(autos) then 
-					Info(InfoAutos, 2, "AutomorphismGroup: inner automorphisms are trivial");
+					Info(InfoMonoidAutos, 2, "AutomorphismGroup: inner automorphisms are trivial");
 				else 
-					Info(InfoAutos, 4,	"AutomorphismGroup: inner automorphism group has ", Length(GeneratorsOfGroup(autos)), " generators and size ", Size(autos)); 
+					Info(InfoMonoidAutos, 4,	"AutomorphismGroup: inner automorphism group has ", Length(GeneratorsOfGroup(autos)), " generators and size ", Size(autos)); 
 				fi;
 			fi; 
 		fi; 
 	fi;  
 	
 	l:=0;
-	Info(InfoAutos, 2, "AutomorphismGroup: the outer automorphism search space contains \n#I  ", Length(mappings)*Size(poset), " elements");
-	if InfoLevel(InfoAutos)=4 and not superlist=fail then 
-		Info(InfoAutos, 4, "AutomorphismGroup: the length of the super group is ", Size(superlist));
-		Info(InfoAutos, 4, "#################################################################");
-		Info(InfoAutos, 4, "AutomorphismGroup: In the search for outer automorphisms, filter \n#I  elements in the super group online? (y/n/h) ");
-		Info(InfoAutos, 4, "#################################################################");
+	Info(InfoMonoidAutos, 2, "AutomorphismGroup: the outer automorphism search space contains \n#I  ", Length(mappings)*Size(poset), " elements");
+	if InfoLevel(InfoMonoidAutos)=4 and not superlist=fail then 
+		Info(InfoMonoidAutos, 4, "AutomorphismGroup: the length of the super group is ", Size(superlist));
+		Info(InfoMonoidAutos, 4, "#################################################################");
+		Info(InfoMonoidAutos, 4, "AutomorphismGroup: In the search for outer automorphisms, filter \n#I  elements in the super group online? (y/n/h) ");
+		Info(InfoMonoidAutos, 4, "#################################################################");
 		bvals[4]:=useryn("Filtering the elements online is probably not advisable unless the \n#I  search space is very big or unless the final automorphism group is \n#I  very large.");
 		
 	elif superlist=fail then  
@@ -954,19 +954,19 @@ else
 			autos:=Group(Filtered(GeneratorsOfGroup(autos), x-> x in superlist));
 	fi;
 	
-	if InfoLevel(InfoAutos)=4 then
+	if InfoLevel(InfoMonoidAutos)=4 then
 		if superlist=fail then 
-			Info(InfoAutos, 4, "#################################################################");
+			Info(InfoMonoidAutos, 4, "#################################################################");
 		fi;
 
-		Info(InfoAutos, 4, "AutomorphismGroup: In the search for outer automorphisms, keep \n#I  track of nonautomorphisms? (y/n/h) ");
+		Info(InfoMonoidAutos, 4, "AutomorphismGroup: In the search for outer automorphisms, keep \n#I  track of nonautomorphisms? (y/n/h) ");
 
-		Info(InfoAutos, 4, "#################################################################");
+		Info(InfoMonoidAutos, 4, "#################################################################");
 
 		bvals[5]:=useryn("keeping track of nonautomorphisms may make the computation faster \n#I  it may also use more memory. So, if the space is very large, better \n#I  answer no. ");
 	fi;
 
-	Info(InfoAutos, 1, "AutomorphismGroup: computing outer automorphisms");
+	Info(InfoMonoidAutos, 1, "AutomorphismGroup: computing outer automorphisms");
 	counter:=0;
 	stop:=false;
 	poset:=Enumerator(poset);
@@ -979,13 +979,13 @@ else
 		while k<Length(poset) and not stop do
 			map:=mappings[l];
 			counter:=counter+1;
-			Info(InfoAutos, 4, "AutomorphismGroup: automorphisms ", Size(autos), " nonautomorphisms ", Length(bad), " counter ", counter);
+			Info(InfoMonoidAutos, 4, "AutomorphismGroup: automorphisms ", Size(autos), " nonautomorphisms ", Length(bad), " counter ", counter);
 			if 2*Size(autos)+Length(bad)>Length(mappings)*Size(poset) then 
 				stop:=true;
 			else 
 				k:=k+1;
 				i:=poset[k];
-				Info(InfoAutos, 4, "AutomorphismGroup: automorphism of poset is: ", i);
+				Info(InfoMonoidAutos, 4, "AutomorphismGroup: automorphism of poset is: ", i);
 				
 				for j in pos do
 					iso:=isom[j][j^i];
@@ -1016,25 +1016,25 @@ else
 									SetIsBijective(hom, true);
 									autos:=ClosureGroupDefault(autos, hom);
 								else
-									Info(InfoAutos, 4, "AutomorphismGroup: mapping already known to be a nonautomorphism");
+									Info(InfoMonoidAutos, 4, "AutomorphismGroup: mapping already known to be a nonautomorphism");
 								fi;
 							else
-								Info(InfoAutos, 4, "AutomorphismGroup: images don't generate");
+								Info(InfoMonoidAutos, 4, "AutomorphismGroup: images don't generate");
 								if bvals[5] then  
 									bad:=Union(bad, Orbit(autos, image, OnTuples));
 								fi;
 							fi;
 						else
-							Info(InfoAutos, 4, "AutomorphismGroup: relations don't hold");
+							Info(InfoMonoidAutos, 4, "AutomorphismGroup: relations don't hold");
 							if bvals[5] then 
 								bad:=Union(bad, Orbit(autos, image, OnTuples));
 							fi;
 						fi;
 					else 
-						Info(InfoAutos, 4, "AutomorphismGroup: mapping already known to be an automorphism");
+						Info(InfoMonoidAutos, 4, "AutomorphismGroup: mapping already known to be an automorphism");
 					fi;
 				else 
-					Info(InfoAutos, 4, "AutomorphismGroup: not in super group");
+					Info(InfoMonoidAutos, 4, "AutomorphismGroup: not in super group");
 			fi;
 				fi;
 			fi;
@@ -1045,13 +1045,13 @@ fi;
 SetIsAutomorphismGroup(autos, true);
 SetIsAutomorphismGroupOfSemigroup(autos, true);
 
-Info(InfoAutos, 4, "AutomorphismGroup: automorphisms ", Size(autos), " nonautomorphisms ", Length(bad), " counter ", counter);
+Info(InfoMonoidAutos, 4, "AutomorphismGroup: automorphisms ", Size(autos), " nonautomorphisms ", Length(bad), " counter ", counter);
 
 if not bvals[4] and not superlist=fail then 
 	SetAutomorphismGroup(S, autos); 
 	
-	Info(InfoAutos, 2, "##################################################################");
-	Info(InfoAutos, 2, "AutomorphismGroup: finding the intersection of the superlist and the \n#I  automorphism group"); 
+	Info(InfoMonoidAutos, 2, "##################################################################");
+	Info(InfoMonoidAutos, 2, "AutomorphismGroup: finding the intersection of the superlist and the \n#I  automorphism group"); 
 	new:=Group(id);
 	SetAsSSortedList(new, [id]);
 	
@@ -1139,36 +1139,36 @@ fi; #JDM make NC version? to omit this?
 mat:=SandwichMatrixOfReesZeroMatrixSemigroup(rms);
 m:=Length(mat[1]); n:=Length(mat);
 
-Info(InfoAutos, 2, "computing automorphisms of graph...");
+Info(InfoMonoidAutos, 2, "computing automorphisms of graph...");
 autograph:=AutGroupGraph(RZMSGraph(rms), [[1..m],[m+1..n+m]]);
-Info(InfoAutos, 2, Size(autograph), "graph automorphisms");
+Info(InfoMonoidAutos, 2, Size(autograph), "graph automorphisms");
 
 components:=ConnectedComponents(RZMSGraph(rms));
 r:=Length(components);
-Info(InfoAutos, 2, "graph has ", r, " connected components");
+Info(InfoMonoidAutos, 2, "graph has ", r, " connected components");
 
 ZG:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(rms);
 
-Info(InfoAutos, 2, "computing automorphism group of underlying zero group");
+Info(InfoMonoidAutos, 2, "computing automorphism group of underlying zero group");
 autogroup:=AutomorphismGroup(ZG);
-Info(InfoAutos, 4, "the automorphism group of underlying zero group has size ", Size(autogroup));
+Info(InfoMonoidAutos, 4, "the automorphism group of underlying zero group has size ", Size(autogroup));
 
-Info(InfoAutos, 3, "computing inner automorphisms of underlying zero group");
+Info(InfoMonoidAutos, 3, "computing inner automorphisms of underlying zero group");
 if not IsTrivial(autogroup) then 
 	inner:=InnerAutomorphismsAutomorphismGroup(autogroup);
 	transversal1:=RightTransversal(autogroup, inner);
 else
 	transversal1:=Elements(autogroup);
 fi;
-Info(InfoAutos, 2, "Aut G/Inn G has size ", Length(transversal1));
+Info(InfoMonoidAutos, 2, "Aut G/Inn G has size ", Length(transversal1));
 
 G:=UnderlyingGroupOfZG(ZG);
 transversal2:=List(RightTransversal(G, Centre(G)), ZeroGroupElt);
 G:=List(G, ZeroGroupElt);
 
-Info(InfoAutos, 2, "|G/Z(G)|+", r-1, "|G| equals ", Length(transversal2)+(r-1)*Size(G));
+Info(InfoMonoidAutos, 2, "|G/Z(G)|+", r-1, "|G| equals ", Length(transversal2)+(r-1)*Size(G));
 
-Info(InfoAutos, 2, "search space has ", Size(autograph), "x", Length(transversal1), "x", Length(transversal2)+(r-1)*Size(G), "=", Size(autograph)*Length(transversal1)*(Length(transversal2)+(r-1)*Size(G)), " elements");
+Info(InfoMonoidAutos, 2, "search space has ", Size(autograph), "x", Length(transversal1), "x", Length(transversal2)+(r-1)*Size(G), "=", Size(autograph)*Length(transversal1)*(Length(transversal2)+(r-1)*Size(G)), " elements");
 
 trans:=[];
 tuples:=[];
@@ -1220,36 +1220,36 @@ local mat, m, n, autograph, r, autogroup, inner, transversal1, ZG, G, transversa
 mat:=SandwichMatrixOfReesZeroMatrixSemigroup(rms);
 m:=Length(mat[1]); n:=Length(mat);
 
-Info(InfoAutos, 3, "computing automorphisms of graph...");
+Info(InfoMonoidAutos, 3, "computing automorphisms of graph...");
 autograph:=AutGroupGraph(RZMSGraph(rms), [[1..m],[m+1..n+m]]);
-Info(InfoAutos, 3, Size(autograph), "graph automorphisms");
+Info(InfoMonoidAutos, 3, Size(autograph), "graph automorphisms");
 
 components:=ConnectedComponents(RZMSGraph(rms));
 r:=Length(components);
-Info(InfoAutos, 3, "graph has ", r, " connected components");
+Info(InfoMonoidAutos, 3, "graph has ", r, " connected components");
 
 ZG:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(rms);
 
-Info(InfoAutos, 3, "computing automorphism group of underlying zero group");
+Info(InfoMonoidAutos, 3, "computing automorphism group of underlying zero group");
 autogroup:=AutomorphismGroup(ZG);
-Info(InfoAutos, 3, Size(autogroup), "automorphisms of underlying zero group");
+Info(InfoMonoidAutos, 3, Size(autogroup), "automorphisms of underlying zero group");
 
-Info(InfoAutos, 3, "computing inner automorphisms of underlying zero group...");
+Info(InfoMonoidAutos, 3, "computing inner automorphisms of underlying zero group...");
 if not IsTrivial(autogroup) then 
 	inner:=InnerAutomorphismsAutomorphismGroup(autogroup);
 	transversal1:=RightTransversal(autogroup, inner);
 else
 	transversal1:=Elements(autogroup);
 fi;
-Info(InfoAutos, 3, "Aut G/Inn G has size ", Length(transversal1));
+Info(InfoMonoidAutos, 3, "Aut G/Inn G has size ", Length(transversal1));
 
 G:=UnderlyingGroupOfZG(ZG);
 transversal2:=List(RightTransversal(G, Centre(G)), ZeroGroupElt);
 G:=List(G, ZeroGroupElt);
 
-Info(InfoAutos, 3, "|G/Z(G)|+", r-1, "|G| equals ", Length(transversal2)+(r-1)*Size(G));
+Info(InfoMonoidAutos, 3, "|G/Z(G)|+", r-1, "|G| equals ", Length(transversal2)+(r-1)*Size(G));
 
-Info(InfoAutos, 3, "search space has ", Size(autograph), "x", Length(transversal1), "x", Length(transversal2)+(r-1)*Size(G), "=", Size(autograph)*Length(transversal1)*(Length(transversal2)+(r-1)*Size(G)), " elements");
+Info(InfoMonoidAutos, 3, "search space has ", Size(autograph), "x", Length(transversal1), "x", Length(transversal2)+(r-1)*Size(G), "=", Size(autograph)*Length(transversal1)*(Length(transversal2)+(r-1)*Size(G)), " elements");
 
 trans:=[];
 tuples:=[];

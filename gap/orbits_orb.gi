@@ -16,9 +16,9 @@ end;
 
 #############################################################################
 
-InstallMethod( ChooseHashFunction, "for transformations",
+InstallMethod( ChooseHashFunction, "for transformations and pos. int.",
 [IsTransformation, IsInt],
-function(p,hashlen)
+function(p, hashlen)
 return rec(func := _HashFunctionForTransformation, data := [101, 
 NextPrimeInt(hashlen)]);
 end);
@@ -76,6 +76,110 @@ od;
 #return o;
 
 return Compacted(graded);
+end);
+
+###########################################################################
+# the following has its own method rather than using GradedOrbit, as for 
+# convenience the output should be a list of lists where the <i>th position
+# is the list of images of <s> of size <i> including the empty list. 
+
+InstallMethod(GradedImagesOfTransSemigroup, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(s)
+local gens, ht, orbit, i, graded, val, x, j, new, seed, grading, action;
+
+if IsMonoid(s) then  
+	gens:= GeneratorsOfMonoid(s);
+elif IsSemigroup(s) then
+	gens:=GeneratorsOfSemigroup(s);
+else
+	gens:=s;
+fi;
+
+seed:=[1..DegreeOfTransformationSemigroup(s)]; grading:=Size; action:=OnSets;
+
+ht:=HTCreate(seed);
+HTAdd(ht, seed, true);
+orbit:=[seed];
+#schreier:=[[]];
+i:=0;
+
+graded:=List([1..DegreeOfTransformationSemigroup(s)], x->[]);
+val:=grading(seed);
+Add(graded[val], seed);
+
+for x in orbit do
+	i:=i+1;
+	for j in [1..Length(gens)] do
+		new:= action(x, gens[j]);
+		if HTValue(ht, new)=fail then 
+			Add(orbit, new);
+			#Add(schreier, Concatenation(schreier[i], [j]));
+			HTAdd(ht,  new, true);
+			val:=grading(new);
+			
+			Add(graded[val], new);
+		fi;
+	od;
+od;
+ 
+#o:=rec(ht:=ht, orbit:=orbit, schreier:=schreier, graded:=Compacted(graded));
+#Objectify( ForwardOrbitType, o);
+#return o;
+
+return graded;
+end);
+
+#############################################################################
+# see comment before GradedImagesOfTransSemigroup for explaination of why 
+# this method exists.
+
+InstallMethod(GradedKernelsOfTransSemigroup, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(s)
+local gens, ht, orbit, i, graded, val, x, j, new, seed, grading, action;
+
+if IsMonoid(s) then  
+	gens:= GeneratorsOfMonoid(s);
+elif IsSemigroup(s) then
+	gens:=GeneratorsOfSemigroup(s);
+else
+	gens:=s;
+fi;
+
+seed:=List([1..DegreeOfTransformationSemigroup(s)], x-> [x]); 
+grading:=Size; action:=OnKernelsAntiAction;
+
+ht:=HTCreate(seed);
+HTAdd(ht, seed, true);
+orbit:=[seed];
+#schreier:=[[]];
+i:=0;
+
+graded:=List([1..DegreeOfTransformationSemigroup(s)], x->[]);
+val:=grading(seed);
+Add(graded[val], seed);
+
+for x in orbit do
+	i:=i+1;
+	for j in [1..Length(gens)] do
+		new:= action(x, gens[j]);
+		if HTValue(ht, new)=fail then 
+			Add(orbit, new);
+			#Add(schreier, Concatenation(schreier[i], [j]));
+			HTAdd(ht,  new, true);
+			val:=grading(new);
+			
+			Add(graded[val], new);
+		fi;
+	od;
+od;
+ 
+#o:=rec(ht:=ht, orbit:=orbit, schreier:=schreier, graded:=Compacted(graded));
+#Objectify( ForwardOrbitType, o);
+#return o;
+
+return graded;
 end);
 
 #############################################################################

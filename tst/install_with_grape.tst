@@ -14,7 +14,7 @@
 
 gap> START_TEST("install_with_grape.tst 3.1.3");
 gap> LoadPackage("monoid");;
-gap> SetInfoLevel(InfoAutos, 0);
+gap> SetInfoLevel(InfoMonoidAutos, 0);
 gap> g1:=Transformation([3,3,2,6,2,4,4,6]);;
 gap> g2:=Transformation([5,1,7,8,7,5,8,1]);;
 gap> cs1:=Semigroup(g1,g2);;

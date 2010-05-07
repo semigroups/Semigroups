@@ -10,8 +10,7 @@
 ## $Id$
 ##
 
-#dirs := DirectoriesPackageLibrary( "monoid", "tst" );
-#ReadTest( Filename( dirs, "transform.tst" ) );
+#ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "transform.tst" ) );
 
 gap> START_TEST("transform.tst 3.1.3");
 gap> LoadPackage("monoid");;

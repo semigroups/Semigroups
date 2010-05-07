@@ -12,8 +12,7 @@
 
 ## don't run this file if grape is not loaded. 
 
-#dirs := DirectoriesPackageLibrary( "monoid", "tst" );
-#ReadTest( Filename( dirs, "autos2.tst" ) );
+#ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "autos2.tst" ) );
 
 gap> START_TEST("autos2.tst 3.1.3");
 gap> LoadPackage("monoid");;
@@ -218,8 +217,7 @@ gap> gens:=[ Transformation( [1,8,11,2,5,16,13,14,3,6,15,10,7,4,9,12 ] ),
 >   Transformation( [1,3,7,9,1,15,5,11,13,11,13,3,5,15,7,9 ] ) ];;
 gap> S:=Semigroup(gens);
 <semigroup with 3 generators>
-gap> A:=AutomorphismGroup(S);
-<group of size 16 with 5 generators>
+gap> A:=AutomorphismGroup(S);;
 gap> StructureDescription(last);
 "C2 x D8"
 gap> gens:=[Transformation([4,4,8,8,8,8,4,8]), Transformation([8,2,8,2,5,5,8,8]), 
@@ -436,5 +434,4 @@ gap> IsomorphismSemigroups(rms2, rms1);
 fail
 gap> IsomorphismSemigroups(rms1, rms2);
 fail
-
 gap> STOP_TEST( "autos2.tst 3.1.3", 10000);

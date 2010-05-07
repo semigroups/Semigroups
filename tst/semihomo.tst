@@ -10,8 +10,7 @@
 ## $Id$
 ##
 
-#dirs := DirectoriesPackageLibrary( "monoid", "tst" );
-#ReadTest( Filename( dirs, "semihomo.tst" ) );
+#ReadTest( Filename(DirectoriesPackageLibrary( "monoid", "tst" ), "semihomo.tst" ) );
 
 gap> START_TEST("semihomo.tst 3.1.3");
 gap> LoadPackage("monoid");;
