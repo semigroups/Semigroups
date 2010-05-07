@@ -64,11 +64,11 @@
   
   [2X> MonoidOrbit( [0X[3XS, obj[, act][0X[2X ) ____________________________________[0Xoperation
   
-  returns  the  orbit  of  [10Xobj[0m  under  the  action  [10Xact[0m  of the transformation
-  semigroup  [10XS[0m.  Usually,  [10Xobj[0m  would  be  a point, list of points, or list of
-  lists,  and  [10Xact[0m would be [2XOnPoints[0m ([14XReference: OnPoints[0m), [2XOnSets[0m ([14XReference:
-  OnSets[0m),  [2XOnTuples[0m  ([14XReference:  OnTuples[0m),  or  another  action  defined in
-  [14X'Reference: Basic Actions'[0m. The argument [10Xact[0m can be any function.
+  returns   the  orbit  of  the  object  [10Xobj[0m  under  the  action  [10Xact[0m  of  the
+  transformation  collection [10XS[0m. Usually, [10Xobj[0m would be a point, list of points,
+  or  list  of  lists, and [10Xact[0m would be [2XOnPoints[0m ([14XReference: OnPoints[0m), [2XOnSets[0m
+  ([14XReference:  OnSets[0m),  [2XOnTuples[0m  ([14XReference:  OnTuples[0m),  or  another action
+  defined in [14X'Reference: Basic Actions'[0m. The argument [10Xact[0m can be any function.
   
   If  the  optional third argument [10Xact[0m is not given, then [2XOnPoints[0m ([14XReference:
   OnPoints[0m), [2XOnSets[0m ([14XReference: OnSets[0m), or [2XOnSetsSets[0m ([14XReference: OnSetsSets[0m)
@@ -96,7 +96,7 @@
   [2X> MonoidOrbits( [0X[3XS, list[, act][0X[2X ) __________________________________[0Xoperation
   
   returns a list of the orbits of the elements of [10Xlist[0m under the action [10Xact[0m of
-  the transformation semigroup [10XS[0m using the [2XMonoidOrbit[0m ([14X3.3-1[0m) function.
+  the transformation collection [10XS[0m using the [2XMonoidOrbit[0m ([14X3.3-1[0m) function.
   
   If  the  optional third argument [10Xact[0m is not given, then [2XOnPoints[0m ([14XReference:
   OnPoints[0m), [2XOnSets[0m ([14XReference: OnSets[0m), or [2XOnSetsSets[0m ([14XReference: OnSetsSets[0m)
@@ -121,7 +121,7 @@
   [2X> StrongOrbit( [0X[3XS, obj[, act][0X[2X ) ____________________________________[0Xoperation
   
   returns  the  strong orbit of [10Xobj[0m under the action [10Xact[0m of the transformation
-  semigroup  [10XS[0m.  Usually,  [10Xobj[0m  would  be  a point, list of points, or list of
+  collection  [10XS[0m.  Usually,  [10Xobj[0m  would  be a point, list of points, or list of
   lists,  and  [10Xact[0m would be [2XOnPoints[0m ([14XReference: OnPoints[0m), [2XOnSets[0m ([14XReference:
   OnSets[0m),  [2XOnTuples[0m  ([14XReference:  OnTuples[0m),  or  another  action  defined in
   [14X'Reference: Basic Actions'[0m. The argument [10Xact[0m can be any function.
@@ -148,10 +148,10 @@
   
   [1X3.3-4 StrongOrbits[0m
   
-  [2X> StrongOrbits( [0X[3XS, obj[, act][0X[2X ) ___________________________________[0Xoperation
+  [2X> StrongOrbits( [0X[3XS, list[, act][0X[2X ) __________________________________[0Xoperation
   
   returns a list of the strong orbits of the elements of [10Xlist[0m under the action
-  [10Xact[0m  of  the  transformation  semigroup  [10XS[0m  using  the  [2XStrongOrbit[0m  ([14X3.3-3[0m)
+  [10Xact[0m  of  the  transformation  collection  [10XS[0m  using  the  [2XStrongOrbit[0m ([14X3.3-3[0m)
   function.
   
   If  the  optional third argument [10Xact[0m is not given, then [2XOnPoints[0m ([14XReference:
@@ -178,9 +178,9 @@
   
   [2X> GradedOrbit( [0X[3XS, obj[, act], grad[0X[2X ) ______________________________[0Xoperation
   
-  returns  the  orbit  of  [10Xobj[0m  under  the  action  [10Xact[0m  of the transformation
-  semigroup  [10XS[0m  partitioned  by the grading [10Xgrad[0m. That is, two elements lie in
-  the same class if they have the same value under [10Xgrad[0m.
+  returns   the  orbit  of  the  object  [10Xobj[0m  under  the  action  [10Xact[0m  of  the
+  transformation  collection  [10XS[0m  partitioned by the grading [10Xgrad[0m. That is, two
+  elements lie in the same class if they have the same value under [10Xgrad[0m.
   
   (Recall  that a [13Xgrading[0m is a function [10Xf[0m from a transformation semigroup [10XS[0m of
   degree  [10Xn[0m  to  the  natural numbers such that if [10Xs[0m in [10XS[0m and [10XX[0m is a subset of
@@ -218,7 +218,7 @@
   [2X> ShortOrbit( [0X[3XS, obj[, act], grad[0X[2X ) _______________________________[0Xoperation
   
   returns  the  elements  of  the  orbit  of  [10Xobj[0m  under the action [10Xact[0m of the
-  transformation  semigroup  [10XS[0m  with  the  same value as [10Xobj[0m under the grading
+  transformation  collection  [10XS[0m  with  the same value as [10Xobj[0m under the grading
   [10Xgrad[0m.
   
   (Recall  that a [13Xgrading[0m is a function [10Xf[0m from a transformation semigroup [10XS[0m of
@@ -247,52 +247,17 @@
     [4X  [ [ 1, 2 ], [ 3, 3 ], [ 4, 4 ], [ 2, 2 ], [ 6, 6 ], [ 1, 1 ] ][0X
   [4X------------------------------------------------------------------[0X
   
-  [1X3.3-7 GradedStrongOrbit[0m
-  
-  [2X> GradedStrongOrbit( [0X[3XS, obj[, act], grad[0X[2X ) ________________________[0Xoperation
-  
-  returns  the  strong orbit of [10Xobj[0m under the action [10Xact[0m of the transformation
-  semigroup  [10XS[0m  partitioned  by the grading [10Xgrad[0m. That is, two elements lie in
-  the same class if they have the same value under [10Xgrad[0m.
-  
-  (Recall  that a [13Xgrading[0m is a function [10Xf[0m from a transformation semigroup [10XS[0m of
-  degree  [10Xn[0m  to  the  natural numbers such that if [10Xs[0m in [10XS[0m and [10XX[0m is a subset of
-  [10X{1,...,n}[0m, then [10X(Xs)f[0m is at most [10X(X)f[0m. )
-  
-  Note that this function will not check if [10Xgrad[0m actually defines a grading or
-  not.
-  
-  If  the  optional third argument [10Xact[0m is not given, then [2XOnPoints[0m ([14XReference:
-  OnPoints[0m), [2XOnSets[0m ([14XReference: OnSets[0m), or [2XOnSetsSets[0m ([14XReference: OnSetsSets[0m)
-  is used as the default action depending on what [10Xobj[0m is.
-  
-  Further details can be found in Algorithm A and B of [LPRR02].
-  
-  [4X---------------------------  Example  ----------------------------[0X
-    [4X  gap> g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;[0X
-    [4X  gap> g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;[0X
-    [4X  gap> g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;[0X
-    [4X  gap> S:=Monoid(g1,g2,g3);;[0X
-    [4X  gap> GradedStrongOrbit(S, [1,3,4], OnTuples, function(x)[0X
-    [4X  > if 1 in x then return 2; else return 1; fi; end);[0X
-    [4X  [ [ [ 3, 2, 6 ], [ 2, 3, 4 ], [ 6, 4, 3 ], [ 4, 6, 2 ] ], [0X
-    [4X    [ [ 1, 3, 4 ], [ 4, 6, 1 ], [ 3, 1, 6 ] ] ][0X
-    [4X  gap> GradedStrongOrbit(S, [1,3,4], OnTuples, Size);[0X
-    [4X  [ [ [ 1, 3, 4 ], [ 3, 2, 6 ], [ 4, 6, 1 ], [ 2, 3, 4 ], [ 6, 4, 3 ], [0X
-    [4X    [ 4, 6, 2 ], [ 3, 1, 6 ] ] ][0X
-  [4X------------------------------------------------------------------[0X
-  
-  [1X3.3-8 ShortStrongOrbit[0m
+  [1X3.3-7 ShortStrongOrbit[0m
   
   [2X> ShortStrongOrbit( [0X[3XS, obj[, act], grad[0X[2X ) _________________________[0Xoperation
   
-  returns  the  elements  of  the  orbit  of  [10Xobj[0m  under the action [10Xact[0m of the
-  transformation  semigroup  [10XS[0m  with  the  same value as [10Xobj[0m under the grading
-  [10Xgrad[0m.
-  
-  (Recall  that a [13Xgrading[0m is a function [10Xf[0m from a transformation semigroup [10XS[0m of
-  degree  [10Xn[0m  to  the  natural numbers such that if [10Xs[0m in [10XS[0m and [10XX[0m is a subset of
-  [10X{1,...,n}[0m, then [10X(Xs)f[0m is at most [10X(X)f[0m. )
+  returns  the  strong orbit of [10Xobj[0m under the action [10Xact[0m of the transformation
+  collection  [10XS[0m. During the computation of this orbit the grading [10Xgrad[0m is used
+  to  quickly  disregard  elements that cannot be in the strong orbit as their
+  value  under [10Xgrad[0m is strictly less than the value of [10Xobj[0m under [10Xgrad[0m. (Recall
+  that a [13Xgrading[0m is a function [10Xf[0m from a transformation semigroup [10XS[0m of degree [10Xn[0m
+  to  the  natural numbers such that if [10Xs[0m in [10XS[0m and [10XX[0m is a subset of [10X{1,...,n}[0m,
+  then [10X(Xs)f[0m is at most [10X(X)f[0m. )
   
   Note that this function will not check if [10Xgrad[0m actually defines a grading or
   not.
@@ -308,9 +273,27 @@
     [4X  gap> g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;[0X
     [4X  gap> g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;[0X
     [4X  gap> S:=Monoid(g1,g2,g3);;[0X
-    [4X  gap>ShortStrongOrbit(S, [1,3,4], OnTuples, function(x) [0X
-    [4X  >  if 1 in x then return 2; else return 1; fi; end);[0X
-    [4X  [ [ 1, 3, 4 ], [ 4, 6, 1 ], [ 3, 1, 6 ] ][0X
+    [4X  gap> ShortStrongOrbit(m8, [1,3,4], OnTuples, Size);[0X
+    [4X  [ [ 1, 3, 4 ], [ 3, 2, 6 ], [ 2, 3, 4 ], [ 4, 6, 1 ], [ 6, 4, 3 ],[0X
+    [4X    [ 4, 6, 2 ], [ 3, 1, 6 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X3.3-8 StrongOrbitsInForwardOrbit[0m
+  
+  [2X> StrongOrbitsInForwardOrbit( [0X[3Xs, x, act[0X[2X ) _________________________[0Xoperation
+  
+  returns  a  list  of the strong orbits contained in the orbit of [10Xx[0m under the
+  action [10Xact[0m of the transformation collection [10Xs[0m.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4Xgap> StrongOrbitsInForwardOrbit(s, [1,2,3,4,5,6], OnSets);[0X
+    [4X[ [ [ 1 ], [ 5 ], [ 3 ], [ 6 ], [ 4 ] ], [0X
+    [4X  [ [ 1, 6 ], [ 1, 5 ], [ 5, 6 ], [ 3, 6 ], [ 4, 5 ], [ 1, 3 ], [ 1, 4 ], [0X
+    [4X    [ 3, 5 ], [ 3, 4 ] ], [ [ 1, 3, 4 ], [ 1, 5, 6 ], [ 3, 5, 6 ], [0X
+    [4X		[ 3, 4, 5 ], [ 1, 3, 5 ] ], [0X
+    [4X[ [ 1, 3, 4, 5 ] ], [ [ 1, 3, 5, 6 ] ], [ [ 1, 2, 3, 4, 5, 6 ] ] ][0X
+    [4Xgap> StrongOrbit(s, [1,2,3,4,5,6], OnSets);               [0X
+    [4X[ [ 1, 2, 3, 4, 5, 6 ] ][0X
   [4X------------------------------------------------------------------[0X
   
   
@@ -366,11 +349,11 @@
   under the action [2XOnSets[0m ([14XReference: OnSets[0m) graded according to size.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), [0X
-    [4X> Transformation( [ 4, 4, 5, 2, 2 ] ) ];;[0X
-    [4Xgap> S:=Semigroup(gens);;[0X
-    [4Xgap> GradedImagesOfTransSemigroup(S);[0X
-    [4X[ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], [0X
+    [4X  gap> gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), [0X
+    [4X  > Transformation( [ 4, 4, 5, 2, 2 ] ) ];;[0X
+    [4X  gap> S:=Semigroup(gens);;[0X
+    [4X  gap> GradedImagesOfTransSemigroup(S);[0X
+    [4X  [ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], [0X
     [4X  [  ], [ [ 1 .. 5 ] ] ][0X
   [4X------------------------------------------------------------------[0X
   
@@ -418,15 +401,15 @@
   under the action [2XOnKernelsAntiAction[0m ([14X3.2-2[0m) graded according to size.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), [0X
-    [4X> Transformation( [ 2, 5, 3, 2, 3 ] ) ];;[0X
-    [4Xgap> S:=Semigroup(gens);;[0X
-    [4Xgap> GradedKernelsOfTransSemigroup(S);[0X
-    [4X[ [ [ [ 1, 2, 3, 4, 5 ] ] ], [0X
-    [4X  [ [ [ 1, 2, 4, 5 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ], [0X
-    [4X      [ [ 1, 2, 4 ], [ 3, 5 ] ] ], [0X
-    [4X  [ [ [ 1, 2, 4 ], [ 3 ], [ 5 ] ], [ [ 1, 4 ], [ 2 ], [ 3, 5 ] ] ], [  ], [0X
-    [4X  [ [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ] ] ] ][0X
+    [4X  gap> gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), [0X
+    [4X  > Transformation( [ 2, 5, 3, 2, 3 ] ) ];;[0X
+    [4X  gap> S:=Semigroup(gens);;[0X
+    [4X  gap> GradedKernelsOfTransSemigroup(S);[0X
+    [4X  [ [ [ [ 1, 2, 3, 4, 5 ] ] ], [0X
+    [4X    [ [ [ 1, 2, 4, 5 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ], [0X
+    [4X        [ [ 1, 2, 4 ], [ 3, 5 ] ] ], [0X
+    [4X    [ [ [ 1, 2, 4 ], [ 3 ], [ 5 ] ], [ [ 1, 4 ], [ 2 ], [ 3, 5 ] ] ], [  ], [0X
+    [4X    [ [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ] ] ] ][0X
   [4X------------------------------------------------------------------[0X
   
   [1X3.4-5 StrongOrbitOfImage[0m

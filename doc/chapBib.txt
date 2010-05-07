@@ -3,37 +3,38 @@
   [1XReferences[0X
   
   [[20XABM07[15X]  [16XAraujo,  J.,  Bunau,  P.  v.  and  Mitchell,  J.  D.[15X, [17XComputing
-  automorphisms of semigroups[15X, [18X[15X (2007), (submitted for publication)
+  automorphisms of semigroups[15X, [18X[15X (2007), ((submitted for publication)).
   
   [[20XAR00[15X] [16XArthur, R. E. and Ruskuc, N.[15X, [17XPresentations for two extensions of
   the  monoid  of  order-preserving  mappings on a finite chain[15X, [18XSoutheast
-  Asian Bull. Math.[15X, [19X24[15X, 1 (2000), 1--7
+  Asian Bull. Math.[15X, [19X24[15X, 1 (2000), 1--7.
   
   [[20XGH92[15X]  [16XGomes,  G.  M.  S.  and  Howie,  J.  M.[15X, [17XOn the ranks of certain
   semigroups  of  order-preserving transformations[15X, [18XSemigroup Forum[15X, [19X45[15X, 3
-  (1992), 272--282
+  (1992), 272--282.
   
   [[20XGM05[15X]  [16XGray,  R. and Mitchell, J. D.[15X, [17XLargest subsemigroups of the full
-  transformation monoid[15X, [18XDiscrete Math.[15X (2005), (to appear)
+  transformation monoid[15X, [18XDiscrete Math.[15X (2005), ((to appear)).
   
   [[20XHow95[15X]  [16XHowie,  J.  M.[15X, [17XFundamentals of semigroup theory[15X, The Clarendon
   Press  Oxford  University Press, London Mathematical Society Monographs.
-  New Series, [19X12[15X, New York (1995), x+351, (Oxford Science Publications)
+  New   Series,  [19X12[15X,  New  York  (1995),  x+351  pages,  ((Oxford  Science
+  Publications)).
   
   [[20XKM05[15X]  [16XKudryavtseva,  G.  and  Mazorchuk, V.[15X, [17XOn Kiselman's semigroup[15X, [18X[15X
-  (2005), (arXiv:math/0511374v1)
+  (2005), ((arXiv:math/0511374v1)).
   
   [[20XLM90[15X]  [16XLallement,  G. and McFadden, R.[15X, [17XOn the determination of Green's
   relations  in finite transformation semigroups[15X, [18XJ. Symbolic Comput.[15X, [19X10[15X,
-  5 (1990), 481--498
+  5 (1990), 481--498.
   
   [[20XLPRR98[15X]  [16XLinton,  S. A., Pfeiffer, G., Robertson, E. F. and Ruskuc, N.[15X,
   [17XGroups  and  actions  in  transformation  semigroups[15X,  [18X  Math. Z.[15X, [19X 228 [15X
-  (1998), 435--450
+  (1998), 435--450.
   
   [[20XLPRR02[15X]  [16XLinton,  S. A., Pfeiffer, G., Robertson, E. F. and Ruskuc, N.[15X,
   [17XComputing transformation semigroups[15X, [18X J. Symbolic Comput. [15X, [19X 33 [15X (2002),
-  145--162
+  145--162.
   
   
   

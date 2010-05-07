@@ -18,10 +18,9 @@
 
   \indexspace
 
-  \item \texttt  {GradedImagesOfTransSemigroup}, \hyperpage{25}
+  \item \texttt  {GradedImagesOfTransSemigroup}, \hyperpage{24}
   \item \texttt  {GradedKernelsOfTransSemigroup}, \hyperpage{25}
   \item \texttt  {GradedOrbit}, \hyperpage{22}
-  \item \texttt  {GradedStrongOrbit}, \hyperpage{23}
   \item \texttt  {GreensData}, \hyperpage{29}
   \item \texttt  {GreensDClassData}, \hyperpage{31}
   \item \texttt  {GreensHClassData}, \hyperpage{31}
@@ -39,7 +38,7 @@
   \item \texttt  {Idempotents}, \hyperpage{34}
   \item \texttt  {ImagesOfTransSemigroup}, \hyperpage{24}
   \item \texttt  {IndexPeriodOfTransformation}, \hyperpage{16}
-  \item \texttt  {InfoAutos}, \hyperpage{49}
+  \item \texttt  {InfoMonoidAutos}, \hyperpage{49}
   \item \texttt  {InnerAutomorphismOfSemigroup}, \hyperpage{51}
   \item \texttt  {InnerAutomorphismOfSemigroupNC}, \hyperpage{51}
   \item \texttt  {InnerAutomorphismsAutomorphismGroup}, \hyperpage{53}
@@ -159,6 +158,7 @@
   \item \texttt  {StrongOrbit}, \hyperpage{21}
   \item \texttt  {StrongOrbitOfImage}, \hyperpage{26}
   \item \texttt  {StrongOrbits}, \hyperpage{21}
+  \item \texttt  {StrongOrbitsInForwardOrbit}, \hyperpage{23}
   \item \texttt  {StrongOrbitsOfImages}, \hyperpage{26}
 
   \indexspace

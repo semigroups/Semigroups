@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd">
-<!--  MakeGAPDocDoc("/Users/jdm/Maths/Computation/GAP/gapdev/pkg/monoid/doc/", "monoid.xml", [ "../gap/general.gd", "../gap/autos.gd", "../gap/transform.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd",  "../gap/semigroups.gd", "../gap/semihomo.gd"], "manual");; -->
+<!--  MakeGAPDocDoc("~/Desktop/gap4r4/pkg/monoid/doc/", "monoid.xml", [ "../gap/general.gd", "../gap/autos.gd", "../gap/transform.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd",  "../gap/semigroups.gd", "../gap/semihomo.gd"], "manual");; -->
 
 <Book Name="MONOID">
 
@@ -257,8 +257,6 @@ simple, inverse, or completely regular, see Chapter <Ref Chap="properties"/>;</I
 </Item>
 </List>
 </Section>
-
-
 
 <!-- ############### -->
 
@@ -639,7 +637,7 @@ finitely presented semigroups and transformation semigroups.<P/>
 In Section <Ref Sect="inner"/>, we show how to specify and compute the inner 
 automorphisms of a transformation semigroup.  The functions that can be used to 
 find the entire automorphism group of an arbitrary transformation semigroup are 
-given in Section <Ref Sect="autos"/>.  The <Ref Attr="AutomorphismGroup"/> has an interactive mode that allows the user to decide how the computation should proceed. This can be invoked by using the command <C>SetInfoLevel(InfoAutos, 4);</C> see <Ref InfoClass="InfoAutos"/>.<P/>
+given in Section <Ref Sect="autos"/>.  The <Ref Attr="AutomorphismGroup"/> has an interactive mode that allows the user to decide how the computation should proceed. This can be invoked by using the command <C>SetInfoLevel(InfoMonoidAutos, 4);</C> see <Ref InfoClass="InfoMonoidAutos"/>.<P/>
 
 In Section <Ref Sect="rees"/>, commands for 
 creating automorphisms and finding all automorphisms of Rees matrix semigroups 
@@ -666,7 +664,7 @@ following functions can only be used fully if <Package>GRAPE</Package> is fully 
 </List>
 Please see Chapter <Ref Sect="Monoid"/> for further details on how to obtain <Package>GRAPE</Package>.
 
-		<#Include Label="InfoAutos">
+		<#Include Label="InfoMonoidAutos">
 </Section>
 
 	<!-- ############### -->

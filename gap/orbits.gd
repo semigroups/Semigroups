@@ -379,10 +379,18 @@ IsList, IsFunction]);
 ##	<ManSection>
 ##	<Oper Name="StrongOrbitsInForwardOrbit" Arg="s, x, act"/>
 ##	<Description>
-##	returns a list of the strong orbits contained in the orbit of <c>x</c> under  
+##	returns a list of the strong orbits contained in the orbit of <C>x</C> under  
 ##	the action <C>act</C> of the transformation collection <C>s</C>.<P/>
 ##
 ##	<Example>
+##	gap> StrongOrbitsInForwardOrbit(s, [1,2,3,4,5,6], OnSets);
+##	[ [ [ 1 ], [ 5 ], [ 3 ], [ 6 ], [ 4 ] ], 
+##	  [ [ 1, 6 ], [ 1, 5 ], [ 5, 6 ], [ 3, 6 ], [ 4, 5 ], [ 1, 3 ], [ 1, 4 ], 
+##	    [ 3, 5 ], [ 3, 4 ] ], [ [ 1, 3, 4 ], [ 1, 5, 6 ], [ 3, 5, 6 ], 
+##			[ 3, 4, 5 ], [ 1, 3, 5 ] ], 
+##	[ [ 1, 3, 4, 5 ] ], [ [ 1, 3, 5, 6 ] ], [ [ 1, 2, 3, 4, 5, 6 ] ] ]
+##	gap> StrongOrbit(s, [1,2,3,4,5,6], OnSets);               
+##	[ [ 1, 2, 3, 4, 5, 6 ] ]
 ##	</Example>
 ##	</Description>
 ##	</ManSection>

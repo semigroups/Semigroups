@@ -13,7 +13,6 @@
   [2XGradedImagesOfTransSemigroup[0X  3.4-2
   [2XGradedKernelsOfTransSemigroup[0X  3.4-4
   [2XGradedOrbit[0X  3.3-5
-  [2XGradedStrongOrbit[0X  3.3-7
   [2XGreensData[0X  4.2-1
   [2XGreensDClassData[0X  4.2-5
   [2XGreensHClassData[0X  4.2-4
@@ -25,7 +24,7 @@
   [2XIdempotents[0X  4.2-11
   [2XImagesOfTransSemigroup[0X  3.4-1
   [2XIndexPeriodOfTransformation[0X  2.2-5
-  [2XInfoAutos[0X  7.1-1
+  [2XInfoMonoidAutos[0X  7.1-1
   [2XInnerAutomorphismOfSemigroup[0X  7.3-1
   [2XInnerAutomorphismOfSemigroupNC[0X  7.3-1
   [2XInnerAutomorphismsAutomorphismGroup[0X  7.3-6
@@ -116,12 +115,13 @@
   [2XSemigroupHomomorphismByImagesOfGens[0X  7.2-2
   [2XSemigroupHomomorphismByImagesOfGensNC[0X  7.2-2
   [2XShortOrbit[0X  3.3-6
-  [2XShortStrongOrbit[0X  3.3-8
+  [2XShortStrongOrbit[0X  3.3-7
   [2XSingularSemigroup[0X  6.1-1
   [2XSmallestIdempotentPower[0X  2.2-6
   [2XStrongOrbit[0X  3.3-3
   [2XStrongOrbitOfImage[0X  3.4-5
   [2XStrongOrbits[0X  3.3-4
+  [2XStrongOrbitsInForwardOrbit[0X  3.3-8
   [2XStrongOrbitsOfImages[0X  3.4-6
   [2XTransformationActionNC[0X  2.1-6
   [2XTransformationByKernelAndImage[0X  2.1-1

@@ -35,11 +35,11 @@
 \contentsline {subsection}{\numberline {3.3.4}\leavevmode {\color {Chapter }StrongOrbits}}{21}{subsection.3.3.4}
 \contentsline {subsection}{\numberline {3.3.5}\leavevmode {\color {Chapter }GradedOrbit}}{22}{subsection.3.3.5}
 \contentsline {subsection}{\numberline {3.3.6}\leavevmode {\color {Chapter }ShortOrbit}}{22}{subsection.3.3.6}
-\contentsline {subsection}{\numberline {3.3.7}\leavevmode {\color {Chapter }GradedStrongOrbit}}{23}{subsection.3.3.7}
-\contentsline {subsection}{\numberline {3.3.8}\leavevmode {\color {Chapter }ShortStrongOrbit}}{23}{subsection.3.3.8}
+\contentsline {subsection}{\numberline {3.3.7}\leavevmode {\color {Chapter }ShortStrongOrbit}}{23}{subsection.3.3.7}
+\contentsline {subsection}{\numberline {3.3.8}\leavevmode {\color {Chapter }StrongOrbitsInForwardOrbit}}{23}{subsection.3.3.8}
 \contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Some Specific Orbits}}{24}{section.3.4}
 \contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }ImagesOfTransSemigroup}}{24}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }GradedImagesOfTransSemigroup}}{25}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }GradedImagesOfTransSemigroup}}{24}{subsection.3.4.2}
 \contentsline {subsection}{\numberline {3.4.3}\leavevmode {\color {Chapter }KernelsOfTransSemigroup}}{25}{subsection.3.4.3}
 \contentsline {subsection}{\numberline {3.4.4}\leavevmode {\color {Chapter }GradedKernelsOfTransSemigroup}}{25}{subsection.3.4.4}
 \contentsline {subsection}{\numberline {3.4.5}\leavevmode {\color {Chapter }StrongOrbitOfImage}}{26}{subsection.3.4.5}
@@ -97,7 +97,7 @@
 \contentsline {subsection}{\numberline {6.3.4}\leavevmode {\color {Chapter }RandomReesZeroMatrixSemigroup}}{47}{subsection.6.3.4}
 \contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }Semigroup Homomorphisms}}{48}{chapter.7}
 \contentsline {section}{\numberline {7.1}\leavevmode {\color {Chapter }Introduction}}{48}{section.7.1}
-\contentsline {subsection}{\numberline {7.1.1}\leavevmode {\color {Chapter }InfoAutos}}{49}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.1}\leavevmode {\color {Chapter }InfoMonoidAutos}}{49}{subsection.7.1.1}
 \contentsline {section}{\numberline {7.2}\leavevmode {\color {Chapter }Creating Homomorphisms}}{49}{section.7.2}
 \contentsline {subsection}{\numberline {7.2.1}\leavevmode {\color {Chapter }SemigroupHomomorphismByFunction}}{49}{subsection.7.2.1}
 \contentsline {subsection}{\numberline {7.2.2}\leavevmode {\color {Chapter }SemigroupHomomorphismByImagesOfGens}}{50}{subsection.7.2.2}

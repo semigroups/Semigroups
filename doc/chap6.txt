@@ -97,7 +97,7 @@
     [4X    m2*m3*m1*m2 ][0X
     [4X  gap> Idempotents(S);[0X
     [4X  [ 1, m1, m2*m1, m3*m2*m1, m3*m1, m2, m3*m2, m3 ][0X
-    [4X  gap> SetInfoLevel(InfoAutos, 0);[0X
+    [4X  gap> SetInfoLevel(InfoMonoidAutos, 0);[0X
     [4X  gap> AutomorphismGroup(Range(IsomorphismTransformationSemigroup(S)));[0X
     [4X  <group of size 1 with 1 generators>[0X
     [4X  [0X

@@ -20,8 +20,8 @@
   entire automorphism group of an arbitrary transformation semigroup are given
   in  Section  [14X7.4[0m. The [2XAutomorphismGroup[0m ([14X7.4-1[0m) has an interactive mode that
   allows  the  user  to decide how the computation should proceed. This can be
-  invoked  by  using  the  command  [10XSetInfoLevel(InfoAutos,  4);[0m see [2XInfoAutos[0m
-  ([14X7.1-1[0m).
+  invoked   by   using   the  command  [10XSetInfoLevel(InfoMonoidAutos,  4);[0m  see
+  [2XInfoMonoidAutos[0m ([14X7.1-1[0m).
   
   In  Section  [14X7.5[0m,  commands  for  creating  automorphisms  and  finding  all
   automorphisms  of  Rees  matrix  semigroups and Rees [10X0[0m-matrix semigroups are
@@ -56,15 +56,16 @@
   
   Please see Chapter [14X1[0m for further details on how to obtain [5XGRAPE[0m.
   
-  [1X7.1-1 InfoAutos[0m
+  [1X7.1-1 InfoMonoidAutos[0m
   
-  [2X> InfoAutos_______________________________________________________[0Xinfo class
+  [2X> InfoMonoidAutos_________________________________________________[0Xinfo class
   
   This  is  the InfoClass for the functions in this chapter. Setting the value
-  of  [10XInfoAutos[0m  to  [10X1,  2, 3,[0m or [10X4[0m using the command [2XSetInfoLevel[0m ([14XReference:
-  SetInfoLevel[0m)  will  give  different levels of information about what [10XGAP[0m is
-  doing  during a computation. In particular, if the level of [10XInfoAutos[0m is set
-  to [10X4[0m, then [2XAutomorphismGroup[0m ([14X7.4-1[0m) runs in interactive mode.
+  of  [10XInfoMonoidAutos[0m  to  [10X1,  2,  3,[0m  or  [10X4[0m  using  the  command [2XSetInfoLevel[0m
+  ([14XReference:  SetInfoLevel[0m)  will  give different levels of information about
+  what  [10XGAP[0m  is  doing  during  a  computation. In particular, if the level of
+  [10XInfoMonoidAutos[0m  is  set  to  [10X4[0m,  then  [2XAutomorphismGroup[0m  ([14X7.4-1[0m)  runs  in
+  interactive mode.
   
   
   [1X7.2 Creating Homomorphisms[0X
@@ -281,9 +282,9 @@
   been    found.    Otherwise,    then    this    is   equivalent   to   doing
   [10XInnerAutomorphismsOfSemigroupInGroup(S, G)[0m.
   
-  If [2XInfoAutos[0m ([14X7.1-1[0m) is set to level [10X4[0m, then a prompt will appear during the
-  procedure  to let you decide when the filtering should be done. In this case
-  the value of [10Xbval[0m is irrelevant.
+  If  [2XInfoMonoidAutos[0m  ([14X7.1-1[0m)  is  set  to level [10X4[0m, then a prompt will appear
+  during the procedure to let you decide when the filtering should be done. In
+  this case the value of [10Xbval[0m is irrelevant.
   
   [4X---------------------------  Example  ----------------------------[0X
     [4Xgap> gens:=[ Transformation( [1,8,11,2,5,16,13,14,3,6,15,10,7,4,9,12 ] ), [0X
@@ -432,8 +433,8 @@
   [ABM07,  Section 2]. In this case, the returned group has as many generators
   as elements. This may be changed in the future.
   
-  If  [2XInfoAutos[0m ([14X7.1-1[0m) is set to level [10X4[0m, then prompts will appear during the
-  procedure to allow you interactive control over the computation.
+  If  [2XInfoMonoidAutos[0m  ([14X7.1-1[0m)  is  set  to  level [10X4[0m, then prompts will appear
+  during the procedure to allow you interactive control over the computation.
   
   [12XPlease note:[0m if [5Xgrape[0m is not loaded, then this function will not work when [10XS[0m
   satisfies  [2XIsTransformationSemigroup[0m  ([14XReference: IsTransformationSemigroup[0m)

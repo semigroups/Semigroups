@@ -27,10 +27,10 @@
 \indexentry{StrongOrbits@\texttt  {StrongOrbits}|hyperpage}{21}
 \indexentry{GradedOrbit@\texttt  {GradedOrbit}|hyperpage}{22}
 \indexentry{ShortOrbit@\texttt  {ShortOrbit}|hyperpage}{22}
-\indexentry{GradedStrongOrbit@\texttt  {GradedStrongOrbit}|hyperpage}{23}
 \indexentry{ShortStrongOrbit@\texttt  {ShortStrongOrbit}|hyperpage}{23}
+\indexentry{StrongOrbitsInForwardOrbit@\texttt  {StrongOrbitsInForwardOrbit}|hyperpage}{23}
 \indexentry{ImagesOfTransSemigroup@\texttt  {ImagesOfTransSemigroup}|hyperpage}{24}
-\indexentry{GradedImagesOfTransSemigroup@\texttt  {GradedImagesOfTransSemigroup}|hyperpage}{25}
+\indexentry{GradedImagesOfTransSemigroup@\texttt  {GradedImagesOfTransSemigroup}|hyperpage}{24}
 \indexentry{KernelsOfTransSemigroup@\texttt  {KernelsOfTransSemigroup}|hyperpage}{25}
 \indexentry{GradedKernelsOfTransSemigroup@\texttt  {GradedKernelsOfTransSemigroup}|hyperpage}{25}
 \indexentry{StrongOrbitOfImage@\texttt  {StrongOrbitOfImage}|hyperpage}{26}
@@ -87,7 +87,7 @@
 \indexentry{RandomSemigroup@\texttt  {RandomSemigroup}|hyperpage}{47}
 \indexentry{RandomReesMatrixSemigroup@\texttt  {RandomReesMatrixSemigroup}|hyperpage}{47}
 \indexentry{RandomReesZeroMatrixSemigroup@\texttt  {RandomReesZeroMatrixSemigroup}|hyperpage}{47}
-\indexentry{InfoAutos@\texttt  {InfoAutos}|hyperpage}{49}
+\indexentry{InfoMonoidAutos@\texttt  {InfoMonoidAutos}|hyperpage}{49}
 \indexentry{SemigroupHomomorphismByFunction@\texttt  {SemigroupHomomorphismByFunction}|hyperpage}{49}
 \indexentry{SemigroupHomomorphismByFunctionNC@\texttt  {SemigroupHomomorphismByFunctionNC}|hyperpage}{49}
 \indexentry{SemigroupHomomorphismByImagesOfGens@\texttt  {SemigroupHomomorphismByImagesOfGens}|hyperpage}{50}
