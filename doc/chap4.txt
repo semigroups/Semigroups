@@ -17,31 +17,31 @@
   Semigroups'[0m. For example, in [5XGAP[0m with the [5XMONOID[0m package loaded:
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> a:=Transformation([2,1,1,2,1]);;[0X
-    [4Xgap> b:=Transformation([3,4,3,4,4]);;[0X
-    [4Xgap> c:=Transformation([3,4,3,4,3]);;[0X
-    [4Xgap> d:=Transformation([4,3,3,4,4]);;[0X
-    [4Xgap> S:=Semigroup(a,b,c,d);[0X
-    [4X<semigroup with 4 generators>[0X
-    [4Xgap> GreensRClasses(S);[0X
-    [4X[ {Transformation( [ 2, 1, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}[0X
-    [4X  , {Transformation( [ 1, 2, 1, 2, 1 ] )}, [0X
-    [4X{Transformation( [ 2, 1, 1, 2, 2 ] )} ][0X
+    [4X  gap> a:=Transformation([2,1,1,2,1]);;[0X
+    [4X  gap> b:=Transformation([3,4,3,4,4]);;[0X
+    [4X  gap> c:=Transformation([3,4,3,4,3]);;[0X
+    [4X  gap> d:=Transformation([4,3,3,4,4]);;[0X
+    [4X  gap> S:=Semigroup(a,b,c,d);[0X
+    [4X  <semigroup with 4 generators>[0X
+    [4X  gap> GreensRClasses(S);[0X
+    [4X  [ {Transformation( [ 2, 1, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}[0X
+    [4X    , {Transformation( [ 1, 2, 1, 2, 1 ] )}, [0X
+    [4X  {Transformation( [ 2, 1, 1, 2, 2 ] )} ][0X
   [4X------------------------------------------------------------------[0X
   
   Without the [5XMONOID[0m package loaded:
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> a:=Transformation([2,1,1,2,1]);;[0X
-    [4Xgap> b:=Transformation([3,4,3,4,4]);;[0X
-    [4Xgap> c:=Transformation([3,4,3,4,3]);;[0X
-    [4Xgap> d:=Transformation([4,3,3,4,4]);;[0X
-    [4Xgap> S:=Semigroup(a,b,c,d);[0X
-    [4X<semigroup with 4 generators>[0X
-    [4Xgap> GreensRClasses(S);[0X
-    [4X[ {Transformation( [ 1, 2, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}[0X
-    [4X  , {Transformation( [ 1, 2, 2, 1, 1 ] )}, [0X
-    [4X{Transformation( [ 1, 2, 2, 1, 2 ] )} ][0X
+    [4X  gap> a:=Transformation([2,1,1,2,1]);;[0X
+    [4X  gap> b:=Transformation([3,4,3,4,4]);;[0X
+    [4X  gap> c:=Transformation([3,4,3,4,3]);;[0X
+    [4X  gap> d:=Transformation([4,3,3,4,4]);;[0X
+    [4X  gap> S:=Semigroup(a,b,c,d);[0X
+    [4X  <semigroup with 4 generators>[0X
+    [4X  gap> GreensRClasses(S);[0X
+    [4X  [ {Transformation( [ 1, 2, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )},[0X
+    [4X   {Transformation( [ 1, 2, 2, 1, 1 ] )}, [0X
+    [4X  {Transformation( [ 1, 2, 2, 1, 2 ] )} ][0X
   [4X------------------------------------------------------------------[0X
   
   The  only  noticable  differences are the representatives of the classes and

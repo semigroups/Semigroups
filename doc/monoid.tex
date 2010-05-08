@@ -1254,29 +1254,29 @@ monoids that are implemented in \textsf{MONOID}.
 
  Green's relations can be calculated when \textsf{MONOID} is loaded using the same commands that you would used when \textsf{MONOID} is not loaded; see  (\textbf{Reference: Semigroups}). For example, in \textsf{GAP} with the \textsf{MONOID} package loaded: 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-  gap> a:=Transformation([2,1,1,2,1]);;
-  gap> b:=Transformation([3,4,3,4,4]);;
-  gap> c:=Transformation([3,4,3,4,3]);;
-  gap> d:=Transformation([4,3,3,4,4]);;
-  gap> S:=Semigroup(a,b,c,d);
-  <semigroup with 4 generators>
-  gap> GreensRClasses(S);
-  [ {Transformation( [ 2, 1, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}
-    , {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
-  {Transformation( [ 2, 1, 1, 2, 2 ] )} ]
+    gap> a:=Transformation([2,1,1,2,1]);;
+    gap> b:=Transformation([3,4,3,4,4]);;
+    gap> c:=Transformation([3,4,3,4,3]);;
+    gap> d:=Transformation([4,3,3,4,4]);;
+    gap> S:=Semigroup(a,b,c,d);
+    <semigroup with 4 generators>
+    gap> GreensRClasses(S);
+    [ {Transformation( [ 2, 1, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}
+      , {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
+    {Transformation( [ 2, 1, 1, 2, 2 ] )} ]
 \end{Verbatim}
  Without the \textsf{MONOID} package loaded: 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-  gap> a:=Transformation([2,1,1,2,1]);;
-  gap> b:=Transformation([3,4,3,4,4]);;
-  gap> c:=Transformation([3,4,3,4,3]);;
-  gap> d:=Transformation([4,3,3,4,4]);;
-  gap> S:=Semigroup(a,b,c,d);
-  <semigroup with 4 generators>
-  gap> GreensRClasses(S);
-  [ {Transformation( [ 1, 2, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}
-    , {Transformation( [ 1, 2, 2, 1, 1 ] )}, 
-  {Transformation( [ 1, 2, 2, 1, 2 ] )} ]
+    gap> a:=Transformation([2,1,1,2,1]);;
+    gap> b:=Transformation([3,4,3,4,4]);;
+    gap> c:=Transformation([3,4,3,4,3]);;
+    gap> d:=Transformation([4,3,3,4,4]);;
+    gap> S:=Semigroup(a,b,c,d);
+    <semigroup with 4 generators>
+    gap> GreensRClasses(S);
+    [ {Transformation( [ 1, 2, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )},
+     {Transformation( [ 1, 2, 2, 1, 1 ] )}, 
+    {Transformation( [ 1, 2, 2, 1, 2 ] )} ]
 \end{Verbatim}
  The only noticable differences are the representatives of the classes and the
 order the classes appear in the list. These differences are caused by the

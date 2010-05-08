@@ -198,7 +198,7 @@ the tests are complete.<P/>
 
 If the output looks like the following, then it is probable that you have a fully working copy of <Package>MONOID</Package> 3.1.4.<P/>
 
-<Example>
+<Log>
 gap> LoadPackage( "monoid" );;
 gap> dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
 gap> Read( Filename( dirs, "installtest.g" ) );;
@@ -206,7 +206,7 @@ gap> Read( Filename( dirs, "installtest.g" ) );;
 + GAP4stones: 1
 + install_with_grape.tst 3.1.4
 + GAP4stones: 2
-</Example>
+</Log>
 
 If you want to perform more extensive tests, then copy the following lines into &GAP;.
 <Log>
@@ -442,29 +442,29 @@ see Chapter <Ref Chap="greens"/> and Chapter <Ref Chap="properties"/>.
 		the <Package>MONOID</Package> package loaded:
 
 <Example>
-gap&gt; a:=Transformation([2,1,1,2,1]);;
-gap&gt; b:=Transformation([3,4,3,4,4]);;
-gap&gt; c:=Transformation([3,4,3,4,3]);;
-gap&gt; d:=Transformation([4,3,3,4,4]);;
-gap&gt; S:=Semigroup(a,b,c,d);
-&lt;semigroup with 4 generators&gt;
-gap&gt; GreensRClasses(S);
-[ {Transformation( [ 2, 1, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}
-  , {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
-{Transformation( [ 2, 1, 1, 2, 2 ] )} ]
+  gap&gt; a:=Transformation([2,1,1,2,1]);;
+  gap&gt; b:=Transformation([3,4,3,4,4]);;
+  gap&gt; c:=Transformation([3,4,3,4,3]);;
+  gap&gt; d:=Transformation([4,3,3,4,4]);;
+  gap&gt; S:=Semigroup(a,b,c,d);
+  &lt;semigroup with 4 generators&gt;
+  gap&gt; GreensRClasses(S);
+  [ {Transformation( [ 2, 1, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}
+    , {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
+  {Transformation( [ 2, 1, 1, 2, 2 ] )} ]
 </Example>
 Without the <Package>MONOID</Package> package loaded:
 <Example>
-gap&gt; a:=Transformation([2,1,1,2,1]);;
-gap&gt; b:=Transformation([3,4,3,4,4]);;
-gap&gt; c:=Transformation([3,4,3,4,3]);;
-gap&gt; d:=Transformation([4,3,3,4,4]);;
-gap&gt; S:=Semigroup(a,b,c,d);
-&lt;semigroup with 4 generators&gt;
-gap&gt; GreensRClasses(S);
-[ {Transformation( [ 1, 2, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}
-  , {Transformation( [ 1, 2, 2, 1, 1 ] )}, 
-{Transformation( [ 1, 2, 2, 1, 2 ] )} ]
+  gap&gt; a:=Transformation([2,1,1,2,1]);;
+  gap&gt; b:=Transformation([3,4,3,4,4]);;
+  gap&gt; c:=Transformation([3,4,3,4,3]);;
+  gap&gt; d:=Transformation([4,3,3,4,4]);;
+  gap&gt; S:=Semigroup(a,b,c,d);
+  &lt;semigroup with 4 generators&gt;
+  gap&gt; GreensRClasses(S);
+  [ {Transformation( [ 1, 2, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )},
+   {Transformation( [ 1, 2, 2, 1, 1 ] )}, 
+  {Transformation( [ 1, 2, 2, 1, 2 ] )} ]
 </Example>
 		The only noticable differences are the representatives of the classes and 
 		the order the classes appear in the list. These differences are caused by 

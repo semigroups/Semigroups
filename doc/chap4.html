@@ -55,16 +55,16 @@
 
 <table class="example">
 <tr><td><pre>
-gap&gt; a:=Transformation([2,1,1,2,1]);;
-gap&gt; b:=Transformation([3,4,3,4,4]);;
-gap&gt; c:=Transformation([3,4,3,4,3]);;
-gap&gt; d:=Transformation([4,3,3,4,4]);;
-gap&gt; S:=Semigroup(a,b,c,d);
-&lt;semigroup with 4 generators&gt;
-gap&gt; GreensRClasses(S);
-[ {Transformation( [ 2, 1, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}
-  , {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
-{Transformation( [ 2, 1, 1, 2, 2 ] )} ]
+  gap&gt; a:=Transformation([2,1,1,2,1]);;
+  gap&gt; b:=Transformation([3,4,3,4,4]);;
+  gap&gt; c:=Transformation([3,4,3,4,3]);;
+  gap&gt; d:=Transformation([4,3,3,4,4]);;
+  gap&gt; S:=Semigroup(a,b,c,d);
+  &lt;semigroup with 4 generators&gt;
+  gap&gt; GreensRClasses(S);
+  [ {Transformation( [ 2, 1, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}
+    , {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
+  {Transformation( [ 2, 1, 1, 2, 2 ] )} ]
 </pre></td></tr></table>
 
 <p>Without the <strong class="pkg">MONOID</strong> package loaded:</p>
@@ -72,16 +72,16 @@ gap&gt; GreensRClasses(S);
 
 <table class="example">
 <tr><td><pre>
-gap&gt; a:=Transformation([2,1,1,2,1]);;
-gap&gt; b:=Transformation([3,4,3,4,4]);;
-gap&gt; c:=Transformation([3,4,3,4,3]);;
-gap&gt; d:=Transformation([4,3,3,4,4]);;
-gap&gt; S:=Semigroup(a,b,c,d);
-&lt;semigroup with 4 generators&gt;
-gap&gt; GreensRClasses(S);
-[ {Transformation( [ 1, 2, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )}
-  , {Transformation( [ 1, 2, 2, 1, 1 ] )}, 
-{Transformation( [ 1, 2, 2, 1, 2 ] )} ]
+  gap&gt; a:=Transformation([2,1,1,2,1]);;
+  gap&gt; b:=Transformation([3,4,3,4,4]);;
+  gap&gt; c:=Transformation([3,4,3,4,3]);;
+  gap&gt; d:=Transformation([4,3,3,4,4]);;
+  gap&gt; S:=Semigroup(a,b,c,d);
+  &lt;semigroup with 4 generators&gt;
+  gap&gt; GreensRClasses(S);
+  [ {Transformation( [ 1, 2, 1, 2, 1 ] )}, {Transformation( [ 1, 2, 1, 2, 2 ] )},
+   {Transformation( [ 1, 2, 2, 1, 1 ] )}, 
+  {Transformation( [ 1, 2, 2, 1, 2 ] )} ]
 </pre></td></tr></table>
 
 <p>The only noticable differences are the representatives of the classes and the order the classes appear in the list. These differences are caused by the differences in the methods for <code class="code">GreensRClasses</code> in <strong class="pkg">MONOID </strong> and the <strong class="pkg">GAP</strong> library.</p>
