@@ -366,4 +366,10 @@ gap> T:=Range(iso);
 <semigroup with 4 generators>
 gap> IsZeroGroup(T);
 true
+gap> s:=RandomReesMatrixSemigroup(2,2,2);
+Rees Matrix Semigroup over Group([ (1,2) ])
+gap> t:=Range(IsomorphismTransformationSemigroup(s));
+<semigroup with 3 generators>
+gap> IsCompletelySimpleSemigroup(t);
+true
 gap> STOP_TEST( "properties.tst 3.1.3", 10000);

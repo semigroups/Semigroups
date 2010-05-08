@@ -166,12 +166,19 @@ DeclareProperty("IsCompletelyRegularSemigroup", IsTransformationSemigroup);
 ##	</ManSection>
 ##	<#/GAPDoc>
 
+
 if not IsBound(IsCompletelySimpleSemigroup) then 
-	DeclareSynonymAttr("IsCompletelySimpleSemigroup", IsFinite and 
-		IsSimpleSemigroup);
+	DeclareProperty("IsCompletelySimpleSemigroup", IsSemigroup);
+	InstallTrueMethod(IsCompletelySimpleSemigroup, IsFinite and 
+	IsSimpleSemigroup);
 fi;
 
-#DeclareProperty("IsCompletelySimpleSemigroup", IsTransformationSemigroup);
+# the below is not used to avoid conflicts with smallsemi!
+
+#if not IsBound(IsCompletelySimpleSemigroup) then 
+#	DeclareSynonymAttr("IsCompletelySimpleSemigroup", IsFinite and 
+#		IsSimpleSemigroup);
+#fi;
 
 ###########################################################################
 ##

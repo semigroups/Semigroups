@@ -271,12 +271,17 @@ InstallMethod(PrintObj, [IsZeroSemigroupElt],
 end);
 
 ###########################################################################
+# for compatibility with Smallsemi
+
+if not IsBound(GAPInfo.PackagesInfo.smallsemi) then 
 
 InstallMethod(ViewObj, [IsZeroSemigroup], 
-function(S)
-Print("<zero semigroup with ", Size(S), " elements>");
+function(s)
+Print("<zero semigroup with ", Size(s), " elements>");
 return;
 end);
+
+fi;
 
 ###########################################################################
 

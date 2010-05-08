@@ -50,7 +50,8 @@ end) ;
 ##  JDM could include if IsCompletelyRegular and HasGreensDClasses etc
 ##  JDM but this is so fast it might not be worthwhile...
 
-InstallMethod( IsSimpleSemigroup, "for a transformation semigroup", true, [IsTransformationSemigroup], 0,  
+InstallMethod( IsSimpleSemigroup, "for a transformation semigroup", true, 
+[IsTransformationSemigroup], 0,  
 function(M)
 local pnt, orbit, gens, s, new, g, image;
    	
@@ -79,10 +80,20 @@ return true;
 
 end) ;
 
+###########################################################################
+# this test required to avoid conflict with Smallsemi
+
+InstallMethod( IsCompletelySimpleSemigroup, "for a trans. semigroup",
+[IsTransformationSemigroup],
+function(s)
+return IsSimpleSemigroup(s) and IsFinite(s);
+end);
+
+
 #############################################################################
 ## for simple transformation semigroups... 
 
-InstallOtherMethod(Size, "for a simple transformation semigroup", true, [IsCompletelySimpleSemigroup and IsTransformationSemigroup], 0,
+InstallOtherMethod(Size, "for a simple transformation semigroup", true, [IsSimpleSemigroup and IsTransformationSemigroup], 0,
 function(M)
 local gens, ims, kers, H;
 
@@ -340,10 +351,10 @@ true, [IsTransformationSemigroup], 0,
 function(M)
 local x,y,z, gens;
 
-if not IsCompletelySimpleSemigroup(M) then 
+if not IsSimpleSemigroup(M) then 
    return false;
 elif HasIsBand(M) then
-   return IsBand(M) and IsCompletelySimpleSemigroup(M);
+   return IsBand(M) and IsSimpleSemigroup(M);
 else
    #check the generators
 

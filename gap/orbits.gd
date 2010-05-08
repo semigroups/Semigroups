@@ -383,14 +383,12 @@ IsList, IsFunction]);
 ##	the action <C>act</C> of the transformation collection <C>s</C>.<P/>
 ##
 ##	<Example>
-##	gap> StrongOrbitsInForwardOrbit(s, [1,2,3,4,5,6], OnSets);
-##	[ [ [ 1 ], [ 5 ], [ 3 ], [ 6 ], [ 4 ] ], 
-##	  [ [ 1, 6 ], [ 1, 5 ], [ 5, 6 ], [ 3, 6 ], [ 4, 5 ], [ 1, 3 ], [ 1, 4 ], 
-##	    [ 3, 5 ], [ 3, 4 ] ], [ [ 1, 3, 4 ], [ 1, 5, 6 ], [ 3, 5, 6 ], 
-##			[ 3, 4, 5 ], [ 1, 3, 5 ] ], 
-##	[ [ 1, 3, 4, 5 ] ], [ [ 1, 3, 5, 6 ] ], [ [ 1, 2, 3, 4, 5, 6 ] ] ]
-##	gap> StrongOrbit(s, [1,2,3,4,5,6], OnSets);               
-##	[ [ 1, 2, 3, 4, 5, 6 ] ]
+##  gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 2, 4, 1, 2 ] ), 
+##  > Transformation( [ 3, 1, 1, 3 ] ), Transformation( [ 3, 3, 4, 1 ] ) ];;
+##  gap> s:=Semigroup(gens);;
+##  gap> StrongOrbitsInForwardOrbit(s, [1,3,4], OnSets);
+##  [ [ [ 3 ], [ 1 ], [ 2 ], [ 4 ] ], [ [ 1, 4 ], [ 1, 3 ], [ 1, 2 ], [ 2, 4 ], [ 3, 4 ] ], 
+##    [ [ 1, 3, 4 ] ] ]
 ##	</Example>
 ##	</Description>
 ##	</ManSection>
