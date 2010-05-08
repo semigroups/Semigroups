@@ -323,8 +323,6 @@ gap> Elements(S);
 gap> Idempotents(S);
 [ 1, m1, m2*m1, m3*m2*m1, m3*m1, m2, m3*m2, m3 ]
 gap> SetInfoLevel(InfoMonoidAutos, 0);
-gap> AutomorphismGroup(Range(IsomorphismTransformationSemigroup(S)));
-<group of size 1 with 1 generators>
 #gap> FullMatrixSemigroup(3,4);
 #<3x3 full matrix semigroup over GF(2^2)>
 #gap> Size(last);

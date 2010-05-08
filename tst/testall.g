@@ -15,9 +15,6 @@
 
 dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
 
-
-
-
 if IsBound(GAPInfo.PackagesInfo.orb) and CompareVersionNumbers("3.4", "orb") 
  then 
 	ReadTest( Filename( dirs, "orbits_orb.tst" ) );

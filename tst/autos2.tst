@@ -434,4 +434,6 @@ gap> IsomorphismSemigroups(rms2, rms1);
 fail
 gap> IsomorphismSemigroups(rms1, rms2);
 fail
+gap> AutomorphismGroup(Range(IsomorphismTransformationSemigroup(KiselmanSemigroup(3))));
+<group of size 1 with 1 generators>
 gap> STOP_TEST( "autos2.tst 3.1.3", 10000);
