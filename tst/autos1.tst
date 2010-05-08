@@ -13,7 +13,7 @@
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "autos1.tst" ) );
 
-gap> START_TEST("autos1.tst 3.1.3");
+gap> START_TEST("autos1.tst 3.1.4");
 gap> LoadPackage("monoid");;
 gap> SetInfoLevel(InfoMonoidAutos, 0);
 gap> gens:=[ Transformation( [1,8,11,2,5,16,13,14,3,6,15,10,7,4,9,12 ] ), 
@@ -184,4 +184,4 @@ gap> InnerAutomorphismsOfSemigroupInGroup(S, G);
 <group of size 6 with 1 generators>
 gap> InnerAutomorphismsOfSemigroupInGroup(S, G, true);
 <group of size 6 with 1 generators>
-gap> STOP_TEST( "autos1.tst 3.1.3", 10000);
+gap> STOP_TEST( "autos1.tst 3.1.4", 10000);

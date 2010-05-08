@@ -12,7 +12,7 @@
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "install_with_grape.tst" ) );
 
-gap> START_TEST("install_with_grape.tst 3.1.3");
+gap> START_TEST("install_with_grape.tst 3.1.4");
 gap> LoadPackage("monoid");;
 gap> SetInfoLevel(InfoMonoidAutos, 0);
 gap> g1:=Transformation([3,3,2,6,2,4,4,6]);;
@@ -30,4 +30,4 @@ gap> HasInnerAutomorphismsOfSemigroup(m5);
 false
 gap> InnerAutomorphismsOfSemigroup(m5);
 <group of size 1 with 1 generators>
-gap> STOP_TEST( "install_with_grape.tst 3.1.3", 10000);
+gap> STOP_TEST( "install_with_grape.tst 3.1.4", 10000);

@@ -271,17 +271,19 @@ InstallMethod(PrintObj, [IsZeroSemigroupElt],
 end);
 
 ###########################################################################
-# for compatibility with Smallsemi
+# for compatibility with Smallsemi, waiting for AD response re: proposed 
+# solutions. The test files have been modified when the following is 
+# reinstated/resolved.
 
-if not IsBound(GAPInfo.PackagesInfo.smallsemi) then 
+#if not IsBound(GAPInfo.PackagesInfo.smallsemi) then 
 
-InstallMethod(ViewObj, [IsZeroSemigroup], 
-function(s)
-Print("<zero semigroup with ", Size(s), " elements>");
-return;
-end);
+#InstallMethod(ViewObj, [IsZeroSemigroup], 
+#function(s)
+#Print("<zero semigroup with ", Size(s), " elements>");
+#return;
+#end);
 
-fi;
+#fi;
 
 ###########################################################################
 

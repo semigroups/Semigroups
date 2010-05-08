@@ -13,11 +13,11 @@
 SetPackageInfo( rec(
 PackageName := "MONOID",
 Subtitle := "Computing with transformation semigroups and monoids",
-Version := "3.1.3",
-Date := "07/11/2008",
+Version := "3.1.4",
+Date := "08/05/2010",
 ArchiveURL := 
-          "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/monoid/monoid3r1p3",
-ArchiveFormats := ".tar.gz",
+          "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/monoid/monoid3r1p4",
+ArchiveFormats := ".tar.gz .tar.bz2",
 Persons := [
   rec( 
     LastName      := "Mitchell",
@@ -34,9 +34,6 @@ Persons := [
     Institution   := "University of St Andrews"
   )],
 Status := "deposited",
-
-# CommunicatedBy := "Mike Atkinson (St. Andrews)",
-# AcceptDate := " Tue Mar 13 16:32:52 GMT 2007 ",
 
 README_URL := 
   "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/monoid/README.txt",
@@ -61,9 +58,9 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.4.10",
+  GAP := ">=4.4.12",
   NeededOtherPackages := [],
-  SuggestedOtherPackages := [["orb", "3.4"], ["genss", "0.96"], ["grape", ">=4.2"], ["gapdoc", ">=1.1"]],
+  SuggestedOtherPackages := [["orb", "3.4"], ["grape", ">=4.3"], ["gapdoc", ">=1.1"]],
   ExternalConditions := []),
 AvailabilityTest := ReturnTrue,
 Autoload := false,

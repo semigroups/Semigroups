@@ -14,7 +14,7 @@
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "autos2.tst" ) );
 
-gap> START_TEST("autos2.tst 3.1.3");
+gap> START_TEST("autos2.tst 3.1.4");
 gap> LoadPackage("monoid");;
 gap> g1:=Transformation([3,3,2,6,2,4,4,6]);;
 gap> g2:=Transformation([5,1,7,8,7,5,8,1]);;
@@ -436,4 +436,4 @@ gap> IsomorphismSemigroups(rms1, rms2);
 fail
 gap> AutomorphismGroup(Range(IsomorphismTransformationSemigroup(KiselmanSemigroup(3))));
 <group of size 1 with 1 generators>
-gap> STOP_TEST( "autos2.tst 3.1.3", 10000);
+gap> STOP_TEST( "autos2.tst 3.1.4", 10000);

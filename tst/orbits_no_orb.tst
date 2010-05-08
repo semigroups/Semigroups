@@ -13,7 +13,7 @@
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "orbits_no_orb.tst" ) );
 
-gap> START_TEST("orbits_no_orb.tst 3.1.3");
+gap> START_TEST("orbits_no_orb.tst 3.1.4");
 gap> LoadPackage("monoid");;
 gap> g1:=Transformation( [ 2, 6, 5, 10, 6, 9, 2, 8, 2, 7 ] );;
 gap> g2:=Transformation( [ 7, 8, 7, 2, 8, 6, 9, 10, 6, 1 ] );;
@@ -375,4 +375,4 @@ gap> StrongOrbitsInForwardOrbit(s, [1,2,3,4], OnSets);
       [ 1, 2, 8, 10 ], [ 2, 3, 6, 7 ], [ 3, 4, 7, 9 ], [ 5, 6, 7, 8 ],
       [ 1, 5, 8, 10 ], [ 2, 5, 8, 10 ], [ 4, 5, 6, 7 ], [ 3, 5, 6, 7 ],
       [ 3, 5, 6, 9 ], [ 4, 5, 8, 9 ] ] ]
-gap> STOP_TEST( "orbits_no_orb.tst 3.1.3", 10000);
+gap> STOP_TEST( "orbits_no_orb.tst 3.1.4", 10000);

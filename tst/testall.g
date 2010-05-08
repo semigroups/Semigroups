@@ -10,8 +10,9 @@
 ## $Id$
 ##
 
-#LoadPackage( "monoid" );;
 #Read( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "testall.g" ) );;
+
+LoadPackage( "monoid" );;
 
 dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
 
@@ -34,3 +35,5 @@ ReadTest( Filename( dirs, "properties.tst" ) );
 ReadTest( Filename( dirs, "semigroups.tst" ) );
 ReadTest( Filename( dirs, "semihomo.tst" ) );
 ReadTest( Filename( dirs, "transform.tst" ) );
+
+Read(Filename(dirs, "installtest.g"));

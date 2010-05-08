@@ -26,7 +26,21 @@
 	
 	the function StrongOrbitsInForwardOrbit was introduced.
 	
+	an improved method for RandomReesMatrixSemigroup has been installed so that 
+	if the third argument is a positive integer a randomly selected small group
+	of that size is used to create the semigroup. 
+		
+	several other minor bugs have been fixed. 
+	
+Renamed in 3.1.4:
 
+	InfoAutos -> InfoMonoidAutos
+	
+Removed from 3.1.4:
+
+	GradedStrongOrbits - any two elements in a StrongOrbit have equal grading and hence there 
+	is no need for this function!
+	
 ###############
 
 -from 3.1.2 to 3.1.3: 

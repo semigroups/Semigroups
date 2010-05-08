@@ -10,10 +10,9 @@
 ## $Id$
 ##
 
-#dirs := DirectoriesPackageLibrary( "monoid", "tst" );
-#ReadTest( Filename( dirs, "autos3.tst" ) );
+#ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "autos3.tst" ) );
 
-gap> START_TEST("autos3.tst 3.1.3");
+gap> START_TEST("autos3.tst 3.1.4");
 gap> LoadPackage("monoid");;
 gap> S:=RandomSemigroup(5,5);
 <semigroup with 5 generators>
@@ -69,7 +68,7 @@ gap> Size(last);
 gap> last2=InnerAutomorphismsAutomorphismGroup(AutomorphismGroup(zg));
 true
 gap> S:=ZeroSemigroup(10);
-<zero semigroup with 10 elements>
+<semigroup with 9 generators>
 gap> Size(S);
 10
 gap> Elements(S);
@@ -122,13 +121,13 @@ true
 gap> UnderlyingGroupAutoOfZeroGroupAuto(last2)=f;
 true
 gap> S:=ZeroSemigroup(11);
-<zero semigroup with 11 elements>
+<semigroup with 10 generators>
 gap> AutomorphismGroup(S);
 <group with 2 generators>
 gap> IsAutomorphismGroupOfZeroSemigroup(last);
 true
 gap> S:=ZeroSemigroup(6);
-<zero semigroup with 6 elements>
+<semigroup with 5 generators>
 gap> elts:=Elements(S);
 [ 0, z1, z2, z3, z4, z5 ]
 gap> Length(RightTransStabAutoGroup(S, [elts[1]], OnSets));
@@ -205,7 +204,7 @@ gap> ZG2:=ZeroGroup(Group((1,2,3,4)));
 gap> IsomorphismSemigroups(ZG1, ZG2);
 fail
 gap> IsomorphismSemigroups(ZeroSemigroup(5),ZeroSemigroup(5));
-IdentityMapping( <zero semigroup with 5 elements> )
+IdentityMapping( <semigroup with 4 generators> )
 gap> IsomorphismSemigroups(ZeroSemigroup(5),ZeroSemigroup(6));
 fail
 gap> g1:=Transformation( [ 4, 6, 3, 8, 5, 6, 10, 4, 3, 7 ] );;
@@ -216,7 +215,7 @@ gap> D:=GreensDClasses(m23)[17];
 {Transformation( [ 7, 6, 6, 6, 7, 4, 8, 6, 6, 6 ] )}
 gap> IsomorphismReesMatrixSemigroupOfDClass(D);
 SemigroupHomomorphism ( {Transformation( [ 7, 6, 6, 6, 7, 4, 8, 6, 6, 6 
- ] )}-><zero semigroup with 3 elements>)
+ ] )}-><semigroup with 2 generators>)
 gap> D:=GreensDClasses(m23)[77];
 {Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ] )}
 gap> IsomorphismReesMatrixSemigroupOfDClass(D);
@@ -249,4 +248,4 @@ gap> f:=InnerAutomorphismOfSemigroupNC(S, (1,2)(3,4));
 ^(1,2)(3,4)
 gap> ConjugatorOfInnerAutomorphismOfSemigroup(f);
 (1,2)(3,4)
-gap> STOP_TEST( "autos3.tst 3.1.3", 10000);
+gap> STOP_TEST( "autos3.tst 3.1.4", 10000);

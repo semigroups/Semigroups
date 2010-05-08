@@ -12,7 +12,7 @@
 
 #ReadTest( Filename(  DirectoriesPackageLibrary( "monoid", "tst" ), "semigroups.tst" ) );
 
-gap> START_TEST("semigroups.tst 3.1.3");
+gap> START_TEST("semigroups.tst 3.1.4");
 gap> LoadPackage("monoid");;
 gap> if not IsBound(BruteForceZeroIsoCheck) then 
 > BruteForceZeroIsoCheck:=function(iso)
@@ -39,7 +39,7 @@ gap> if not IsBound(BruteForceZeroIsoCheck) then
 > end;;
 > fi;
 gap> z:=ZeroSemigroup(19);
-<zero semigroup with 19 elements>
+<semigroup with 18 generators>
 gap> Size(z);
 19
 gap> Elements(z);
@@ -81,7 +81,7 @@ gap> List(Elements(z), IsMultiplicativeZero);
 [ true, false, false, false, false, false, false, false, false, false, false,
   false, false, false, false, false, false, false, false ]
 gap> z25:=ZeroSemigroup(25);
-<zero semigroup with 25 elements>
+<semigroup with 24 generators>
 gap> Elements(z25)[4] in z;
 true
 gap> Elements(z25)[4]=Elements(z)[4];
@@ -271,7 +271,7 @@ true
 gap> IsSemiBand(S);
 true
 gap> S:=ZeroSemigroup(10);
-<zero semigroup with 10 elements>
+<semigroup with 9 generators>
 gap> Size(S);
 10
 gap> GeneratorsOfSemigroup(S);
@@ -335,4 +335,4 @@ gap> SetInfoLevel(InfoMonoidAutos, 0);
 #<3x3 full matrix semigroup over GF(3)>
 #gap> IsFullMatrixSemigroup(S);
 #true
-gap> STOP_TEST( "semigroups.tst 3.1.3", 10000);
+gap> STOP_TEST( "semigroups.tst 3.1.4", 10000);

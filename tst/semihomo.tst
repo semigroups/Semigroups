@@ -12,7 +12,7 @@
 
 #ReadTest( Filename(DirectoriesPackageLibrary( "monoid", "tst" ), "semihomo.tst" ) );
 
-gap> START_TEST("semihomo.tst 3.1.3");
+gap> START_TEST("semihomo.tst 3.1.4");
 gap> LoadPackage("monoid");;
 gap> gens:=[ Transformation( [ 1, 4, 3, 5, 2 ] ), 
 > Transformation( [ 2, 3, 1, 1, 2 ] ) ];;
@@ -92,4 +92,4 @@ SemigroupHomomorphism ( {Transformation( [ 1, 1, 1, 1, 2, 1, 8, 1
 gap> SetX(D, x-> ImageElm(hom, x));;
 gap> SetX(D, x-> ImageElm(hom, x))=Elements(D);
 false
-gap> STOP_TEST( "semihomo.tst 3.1.3", 10000);
+gap> STOP_TEST( "semihomo.tst 3.1.4", 10000);

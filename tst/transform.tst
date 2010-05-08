@@ -12,7 +12,7 @@
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "transform.tst" ) );
 
-gap> START_TEST("transform.tst 3.1.3");
+gap> START_TEST("transform.tst 3.1.4");
 gap> LoadPackage("monoid");;
 gap> if not IsBound(BruteForceIsoCheck) then 
 > BruteForceIsoCheck:=function(iso)
@@ -407,4 +407,4 @@ gap> inv:=InversesOfTransformation(S, f);
   Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ) ]
 gap> IsRegularTransformation(S, f);
 true
-gap> STOP_TEST( "transform.tst 3.1.3", 10000);
+gap> STOP_TEST( "transform.tst 3.1.4", 10000);

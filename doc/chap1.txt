@@ -4,15 +4,15 @@
   
   [1X1.1 Introduction[0X
   
-  This  manual  describes  the [5XMONOID[0m package version 3.1.3 for computing with
-  transformation semigroups. [5XMONOID[0m 3.1.3 is an updated version of the package
+  This  manual  describes  the [5XMONOID[0m package version 3.1.4 for computing with
+  transformation semigroups. [5XMONOID[0m 3.1.4 is an updated version of the package
   with        the       same       name       for       [5XGAP[0m       3;       see
   [7Xhttp://schmidt.nuigalway.ie/monoid/index.html[0m for more information about the
   original  [5XMONOID[0m  by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson
   and Nik Ruskuc.
   
-  [5XMONOID[0m  3.1.3  retains all the functionality of the original [5XMONOID[0m package.
-  In  particular,  [5XMONOID[0m  3.1.3  contains  more  efficient methods than those
+  [5XMONOID[0m  3.1.4  retains all the functionality of the original [5XMONOID[0m package.
+  In  particular,  [5XMONOID[0m  3.1.4  contains  more  efficient methods than those
   available  in  the  [5XGAP[0m  library  for  computing orbits, calculating Green's
   classes,   finding  the  size,  the  elements,  and  testing  membership  in
   transformation  semigroups;  see  Chapters  [14X3[0m  and  [14X4[0m. After [5XMONOID[0m has been
@@ -30,10 +30,11 @@
   property  testing  methods  are  described  in  [GM05]  and  the  method for
   computing the automorphism group of a semigroup is described in [ABM07].
   
-  The  [5XMONOID[0m  package  is  written  in  [5XGAP[0m code only but relies on the [5XGRAPE[0m
-  package  Version 4.2 or higher in the methods for computing the automorphism
-  group  of  a  semigroup.  The  following functions can only be used fully if
-  [5XGRAPE[0m is fully installed (and loaded):
+  The  [5XMONOID[0m  package  is written in [5XGAP[0m code only but uses the [5XGRAPE[0m and [5Xorb[0m
+  packages.
+  
+  The  following  functions can only be used fully if [5XGRAPE[0m is fully installed
+  (and loaded):
   
   --    [2XAutomorphismGroup[0m      ([14X7.4-1[0m)      with      argument      satisfying
         [2XIsTransformationSemigroup[0m  ([14XReference:  IsTransformationSemigroup[0m)  or
@@ -55,6 +56,13 @@
   distribution  and  in the section entitled `Installing the GRAPE Package' of
   the  [5XGRAPE[0m  manual;  see  [7Xhttp://www.maths.qmul.ac.uk/~leonard/grape/[0m or the
   main [5XGAP[0m webpages for more information.
+  
+  [5Xorb[0m   is   used  to  provide  efficient  methods  for  computing  orbits  in
+  transformation  semigroups that underpin most of the features of [5XMONOID[0m. The
+  [5XMONOID[0m package can be used without [5Xorb[0m but is much less efficient. We highly
+  recommended         that         you         install         [5Xorb[0m.        See
+  [7Xhref="http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html"[0m
+  or the main [5XGAP[0m webpages for more information.
   
   If  you want to take advantage of the online help facilities in [5XMONOID[0m, then
   the   [5Xgapdoc[0m   package   Version   1.1  or  higher  is  also  required;  see
@@ -83,7 +91,7 @@
   The  following  is  a  summary of the steps that should lead to a successful
   installation of [5XMONOID[0m.
   
-  --    download the package archive [10Xmonoid3r1p3.tar.gz[0m or [10Xmonoid3r1p3.tar.bz2[0m
+  --    download the package archive [10Xmonoid3r1p4.tar.gz[0m or [10Xmonoid3r1p4.tar.bz2[0m
         from [7Xhttp://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html[0m
   
   --    unzip & untar the file, this should create a directory called [10XMONOID[0m.
@@ -100,15 +108,15 @@
   folders `bin', `lib', and so on) in your installation of [5XGAP[0m.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4X> gunzip monoid3r1p3.tar.gz [0X
-    [4X> tar -xf monoid3r1p3.tar [0X
+    [4X> gunzip monoid3r1p4.tar.gz [0X
+    [4X> tar -xf monoid3r1p4.tar [0X
     [4X> mv MONOID GAPROOT/pkg[0X
     [4X> gap [0X
     [4X[0X
     [4X[ ... ][0X
     [4X[0X
     [4Xgap> LoadPackage("monoid");[0X
-    [4XLoading MONOID 3.1.3[0X
+    [4XLoading MONOID 3.1.4[0X
     [4Xby James Mitchell (www-groups.mcs.st-and.ac.uk/~jamesm)[0X
     [4XFor help, type: ?the monoid package [0X
     [4Xtrue[0X
@@ -141,15 +149,15 @@
   tests are complete.
   
   If  the output looks like the following, then it is probable that you have a
-  fully working copy of [5XMONOID[0m 3.1.3.
+  fully working copy of [5XMONOID[0m 3.1.4.
   
   [4X---------------------------  Example  ----------------------------[0X
     [4Xgap> LoadPackage( "monoid" );;[0X
     [4Xgap> dirs := DirectoriesPackageLibrary( "monoid", "tst" );;[0X
     [4Xgap> Read( Filename( dirs, "installtest.g" ) );;[0X
-    [4X+ install_no_grape.tst 3.1.3[0X
+    [4X+ install_no_grape.tst 3.1.4[0X
     [4X+ GAP4stones: 1[0X
-    [4X+ install_with_grape.tst 3.1.3[0X
+    [4X+ install_with_grape.tst 3.1.4[0X
     [4X+ GAP4stones: 2[0X
   [4X------------------------------------------------------------------[0X
   
@@ -170,6 +178,30 @@
   
   
   [1X1.4 Changes[0X
+  
+  --    from 3.1.3 to 3.1.4:
+  
+  --          MonoidOrbit, GradedOrbits, and so on now accept a transformation
+              collection as a first argument.
+  
+  --          If  the  `orb'  package  is available, then hash tables are used
+              instead  of plain lists when computing orbits. This dramatically
+              increases the efficiency of these computations.
+  
+  --          the function StrongOrbitsInForwardOrbit was introduced.
+  
+  --          an   improved  method  for  RandomReesMatrixSemigroup  has  been
+              installed  so that if the third argument is a positive integer a
+              randomly selected small group of that size is used to create the
+              semigroup.
+  
+  --          several other minor bugs have been fixed.
+  
+  --          the  following  functions  were  renamed  in 3.1.4: InfoAutos ->
+              InfoMonoidAutos.
+  
+  --          the    following    functions    were    removed   from   3.1.4:
+              GradedStrongOrbits.
   
   --    from  3.1.2  to  3.1.3:  the  method for [3XPreImagesRepresentative[0m for a
         semigroup  homomorphism by function now tests whether the homomorphism

@@ -1,13 +1,13 @@
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 +                                                                           +
-+   Copyright (C) 2008-2010          Andreas Distler & James D. Mitchell    +
++   Copyright (C) 2008-2010          	                 James D. Mitchell    +
 +                                                                           +
-+   'Monoid' is free software: you can redistribute it and/or modify     +
++   'Monoid' is free software: you can redistribute it and/or modify        +
 +   it under the terms of the GNU General Public License as published by    +
 +   the Free Software Foundation, either version 3 of the license, or       +
 +   (at your option) any later version.                                     +
 +                                                                           +
-+   'Monoid' is distributed in the hope that it will be useful,          +
++   'Monoid' is distributed in the hope that it will be useful,             +
 +   but WITHOUT ANY WARRANTY; without even the implied warranty of          +
 +   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           +
 +   GNU General Public License for more details.                            +
@@ -32,8 +32,8 @@
 
 
 
-This is the README file of the MONOID package version 3.1.3 for 
-computing with transformation semigroups. MONOID 3.1.3 is an updated version of 
+This is the README file of the MONOID package version 3.1.4 for 
+computing with transformation semigroups. MONOID 3.1.4 is an updated version of 
 the package with the same name for GAP 3; see 
 
 http://schmidt.nuigalway.ie/monoid/index.html
@@ -41,8 +41,8 @@ http://schmidt.nuigalway.ie/monoid/index.html
 for more information about the original MONOID by Goetz 
 Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc.
 
-MONOID 3.1.3 retains all the functionality of the original MONOID package. 
-In particular, MONOID 3.1.3 contains more efficient methods than those  available
+MONOID 3.1.4 retains all the functionality of the original MONOID package. 
+In particular, MONOID 3.1.4 contains more efficient methods than those  available
 in the GAP library for computing orbits, calculating Green's 
 classes, finding the size, the elements, and testing membership in 
 transformation semigroups. After MONOID has been loaded many of these methods 
@@ -55,19 +55,30 @@ regular; computing the automorphism group of a transformation semigroup;
 homomorphisms and isomorphism between some types of semigroup; and functions to 
 create some well-known transformation semigroups. 
 
-The MONOID package is written in GAP code only but relies on the GRAPE package 
-in the methods for computing the automorphism group of a semigroup. The 
-following functions can only be used fully if GRAPE is fully installed.  That
+The MONOID package is written in GAP code only but uses 
+the `grape' and `orb' packages. 
+
+`grape' package in the methods for computing the automorphism group of a semigroup. The 
+following functions can only be used fully if `grape' is fully installed.  That
 is, `AutomorphismGroup' with argument a transformation semigroup or a Rees zero 
 matrix semigroup, `RightTransStabAutoGroup' for a Rees zero matrix 
 semigroup, `RZMSGraph', `RZMSInducedFunction', `RZMStoRZMSInducedFunction', and 
 `IsomorphismSemigroups' with both arguments Rees zero matrix semigroups.  Please 
 see the manual entries for these functions for further information.
-Installation of GRAPE is described in the README file of the GRAPE distribution 
-and in the section entitled `Installing the GRAPE Package' of the GRAPE manual. 
-See
+Installation of `grape' is described in the README file of the `grape' distribution 
+and in the section entitled `Installing the `grape' Package' of the `grape' manual. 
+See:
 
 http://www.maths.qmul.ac.uk/~leonard/grape/
+
+or the main GAP webpages for more information. 
+
+`orb' is used to provide efficient methods for computing orbits in transformation 
+semigroups that underpin most of the features of MONOID. The MONOID package can be 
+used without `orb' but is much less efficient. We highly recommended that you install 
+`orb'. See:
+
+http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
 
 or the main GAP webpages for more information. 
 
@@ -90,15 +101,15 @@ and files: `doc', `examples', `gap', `init.g', `PackageInfo.g', `read.g',
 Installation
 ------------
 
-1) unpack the file (for example, by using `gunzip monoid3r1p1.tar.gz' and then 
-`tar -xf monoid3r1p1.tar' in UNIX).
+1) unpack the file (for example, by using `gunzip monoid3r1p4.tar.gz' and then 
+`tar -xf monoid3r1p4.tar' in UNIX).
 
 2) move the resultant directory `MONOID' into the `pkg' directory of your GAP 
 directory (the directory containing the directories `lib', `doc', `pkg', and so 
 on).
 
 3) if you want to make use of the methods for finding automorphism groups of 
-semigroups, as mentioned above, make sure that the GRAPE package is fully 
+semigroups, as mentioned above, make sure that the `grape' package is fully 
 installed in a UNIX environment.
 
 4) start GAP in the usual way.
@@ -108,17 +119,18 @@ installed in a UNIX environment.
 Example Installation
 --------------------
 
-unix> gunzip monoid3r1p1.tar.gz 
-unix> tar -xf monoid3r1p1.tar 
+unix> gunzip monoid3r1p4.tar.gz 
+unix> tar -xf monoid3r1p4.tar 
 unix> mv MONOID GAPROOT/pkg
 unix> gap
 
 [ ... ]
 
 gap> LoadPackage("MONOID");
-Loading  MONOID 3.1.3
-by James Mitchell (http://www-groups.mcs.st-and.ac.uk/~jamesm)
-For help, type: ?the monoid package
+-----------------------------------------------------------------------------------------
+Loading  MONOID 3.1.4 (MONOID: computing with transformation semigroups)
+by James Mitchell (http://www-groups.mcs.st-and.ac.uk/~jamesm).
+-----------------------------------------------------------------------------------------
 true
 gap> 
 
