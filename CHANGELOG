@@ -38,8 +38,8 @@ Renamed in 3.1.4:
 	
 Removed from 3.1.4:
 
-	GradedStrongOrbits - any two elements in a StrongOrbit have equal grading and hence there 
-	is no need for this function!
+	GradedStrongOrbits - any two elements in a StrongOrbit have equal grading and 
+	hence there is no need for this function!
 	
 ###############
 
