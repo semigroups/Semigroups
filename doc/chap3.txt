@@ -35,9 +35,9 @@
   transformation [10Xf[0m. The tuple of sets [10Xtup[0m can have any number of elements.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;[0X
-    [4Xgap> OnTuplesOfSetsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ] ], f);[0X
-    [4X[ [ 5 ], [ 4, 6 ], [ 3 ] ][0X
+    [4X  gap> f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;[0X
+    [4X  gap> OnTuplesOfSetsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ] ], f);[0X
+    [4X  [ [ 5 ], [ 4, 6 ], [ 3 ] ][0X
   [4X------------------------------------------------------------------[0X
   
   [1X3.2-2 OnKernelsAntiAction[0m
@@ -48,9 +48,9 @@
   transformation [10Xg[0m having kernel [10Xker[0m.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;[0X
-    [4Xgap> OnKernelsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6, 7, 8 ] ], f);[0X
-    [4X[ [ 1, 2, 7, 8 ], [ 3 ], [ 4, 6 ], [ 5 ] ][0X
+    [4X  gap> f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;[0X
+    [4X  gap> OnKernelsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6, 7, 8 ] ], f);[0X
+    [4X  [ [ 1, 2, 7, 8 ], [ 3 ], [ 4, 6 ], [ 5 ] ][0X
   [4X------------------------------------------------------------------[0X
   
   
@@ -286,12 +286,13 @@
   action [10Xact[0m of the transformation collection [10Xs[0m.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4X  gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 2, 4, 1, 2 ] ), [0X
-    [4X  > Transformation( [ 3, 1, 1, 3 ] ), Transformation( [ 3, 3, 4, 1 ] ) ];;[0X
+    [4X  gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ), [0X
+    [4X  > Transformation( [ 2, 4, 1, 2 ] ), Transformation( [ 3, 1, 1, 3 ] ),[0X
+    [4X  > Transformation( [ 3, 3, 4, 1 ] ) ];;[0X
     [4X  gap> s:=Semigroup(gens);;[0X
     [4X  gap> StrongOrbitsInForwardOrbit(s, [1,3,4], OnSets);[0X
-    [4X  [ [ [ 3 ], [ 1 ], [ 2 ], [ 4 ] ], [ [ 1, 4 ], [ 1, 3 ], [ 1, 2 ], [ 2, 4 ], [ 3, 4 ] ], [0X
-    [4X    [ [ 1, 3, 4 ] ] ][0X
+    [4X  [ [ [ 3 ], [ 1 ], [ 2 ], [ 4 ] ], [ [ 1, 4 ], [ 1, 3 ], [ 1, 2 ], [0X
+    [4X  [ 2, 4 ], [ 3, 4 ] ], [ [ 1, 3, 4 ] ] ][0X
   [4X------------------------------------------------------------------[0X
   
   
@@ -315,23 +316,23 @@
   be faster.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), [0X
-    [4X> Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;[0X
-    [4Xgap> ImagesOfTransSemigroup(S, 6);[0X
-    [4X[  ][0X
-    [4Xgap> ImagesOfTransSemigroup(S, 5);[0X
-    [4X[  ][0X
-    [4Xgap> ImagesOfTransSemigroup(S, 4);[0X
-    [4X[ [ 1, 2, 5, 6 ] ][0X
-    [4Xgap> ImagesOfTransSemigroup(S, 3);[0X
-    [4X[ [ 1, 4, 6 ], [ 2, 5, 6 ] ][0X
-    [4Xgap> ImagesOfTransSemigroup(S, 2);[0X
-    [4X[ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ][0X
-    [4Xgap> ImagesOfTransSemigroup(S, 1);[0X
-    [4X[ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ][0X
-    [4Xgap> ImagesOfTransSemigroup(S);[0X
-    [4X[ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], [0X
-    [4X  [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ][0X
+    [4X  gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), [0X
+    [4X  > Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;[0X
+    [4X  gap> ImagesOfTransSemigroup(S, 6);[0X
+    [4X  [  ][0X
+    [4X  gap> ImagesOfTransSemigroup(S, 5);[0X
+    [4X  [  ][0X
+    [4X  gap> ImagesOfTransSemigroup(S, 4);[0X
+    [4X  [ [ 1, 2, 5, 6 ] ][0X
+    [4X  gap> ImagesOfTransSemigroup(S, 3);[0X
+    [4X  [ [ 1, 4, 6 ], [ 2, 5, 6 ] ][0X
+    [4X  gap> ImagesOfTransSemigroup(S, 2);[0X
+    [4X  [ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ][0X
+    [4X  gap> ImagesOfTransSemigroup(S, 1);[0X
+    [4X  [ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ][0X
+    [4X  gap> ImagesOfTransSemigroup(S);[0X
+    [4X  [ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], [0X
+    [4X    [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ][0X
     [4X  [0X
   [4X------------------------------------------------------------------[0X
   
@@ -369,22 +370,22 @@
   be faster.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap>  S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),[0X
-    [4X> Transformation( [ 3, 3, 4, 1 ] ) ]);[0X
-    [4Xgap>  KernelsOfTransSemigroup(S);   [0X
-    [4X[ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [0X
-    [4X[ 4 ] ], [0X
-    [4X  [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], [0X
-    [4X  [ [ 1, 4 ], [ 2 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ][0X
-    [4Xgap>  KernelsOfTransSemigroup(S,1);[0X
-    [4X[ [ [ 1, 2, 3, 4 ] ] ][0X
-    [4Xgap>  KernelsOfTransSemigroup(S,2);[0X
-    [4X[ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [0X
-    [4X  [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ][0X
-    [4Xgap>  KernelsOfTransSemigroup(S,3);[0X
-    [4X[ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ][0X
-    [4Xgap>  KernelsOfTransSemigroup(S,4);[0X
-    [4X[  ][0X
+    [4X  gap>  S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),[0X
+    [4X  > Transformation( [ 3, 3, 4, 1 ] ) ]);[0X
+    [4X  gap>  KernelsOfTransSemigroup(S);   [0X
+    [4X  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [0X
+    [4X  [ 4 ] ], [0X
+    [4X    [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], [0X
+    [4X    [ [ 1, 4 ], [ 2 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ][0X
+    [4X  gap>  KernelsOfTransSemigroup(S,1);[0X
+    [4X  [ [ [ 1, 2, 3, 4 ] ] ][0X
+    [4X  gap>  KernelsOfTransSemigroup(S,2);[0X
+    [4X  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [0X
+    [4X    [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ][0X
+    [4X  gap>  KernelsOfTransSemigroup(S,3);[0X
+    [4X  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ][0X
+    [4X  gap>  KernelsOfTransSemigroup(S,4);[0X
+    [4X  [  ][0X
   [4X------------------------------------------------------------------[0X
   
   [1X3.4-4 GradedKernelsOfTransSemigroup[0m
@@ -431,15 +432,15 @@
         [10Ximgs[1][0m).
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), [0X
-    [4X> Transformation( [ 4, 3, 2, 1, 5 ] ) ];;[0X
-    [4Xgap> S:=Semigroup(gens);;[0X
-    [4Xgap> f:=Transformation( [ 2, 1, 1, 1, 5 ] );;[0X
-    [4Xgap> StrongOrbitOfImage(S, f);        [0X
-    [4X[ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], [0X
-    [4X      [ 2, 4, 5 ], [ 3, 4, 5 ] ], [0X
-    [4X  [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), [0X
-    [4X      (1,3,2,4) ], Group([ (), (2,5), (1,5) ]) ][0X
+    [4X  gap> gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), [0X
+    [4X  > Transformation( [ 4, 3, 2, 1, 5 ] ) ];;[0X
+    [4X  gap> S:=Semigroup(gens);;[0X
+    [4X  gap> f:=Transformation( [ 2, 1, 1, 1, 5 ] );;[0X
+    [4X  gap> StrongOrbitOfImage(S, f);        [0X
+    [4X  [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], [0X
+    [4X        [ 2, 4, 5 ], [ 3, 4, 5 ] ], [0X
+    [4X    [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), [0X
+    [4X        (1,3,2,4) ], Group([ (), (2,5), (1,5) ]) ][0X
   [4X------------------------------------------------------------------[0X
   
   [1X3.4-6 StrongOrbitsOfImages[0m
@@ -451,27 +452,27 @@
   invoked for [10XS[0m, then an error is returned.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), [0X
-    [4X> Transformation( [ 4, 3, 2, 1, 5 ] ) ];;[0X
-    [4Xgap> S:=Semigroup(gens);;[0X
-    [4Xgap> f:=Transformation( [ 2, 1, 1, 1, 5 ] );;[0X
-    [4Xgap> StrongOrbitOfImage(S, f);;[0X
-    [4Xgap> StrongOrbitsOfImages(S);[0X
-    [4X[ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], [0X
-    [4X          [ 2, 4, 5 ], [ 3, 4, 5 ] ] ], [0X
-    [4X  [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), [0X
-    [4X          (1,3,2,4) ] ], [ Group([ (), (2,5), (1,5) ]) ] ][0X
-    [4Xgap> f:=Transformation( [ 5, 5, 5, 5, 2 ] );[0X
-    [4Xgap> StrongOrbitOfImage(S, f);;[0X
-    [4Xgap> StrongOrbitsOfImages(S); [0X
-    [4X[ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], [0X
-    [4X          [ 2, 4, 5 ], [ 3, 4, 5 ] ], [0X
-    [4X      [ [ 2, 5 ], [ 1, 5 ], [ 1, 3 ], [ 2, 3 ], [ 2, 4 ], [ 4, 5 ], [ 3, 5 ], [0X
-    [4X          [ 1, 2 ], [ 3, 4 ] ] ], [0X
-    [4X  [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), [0X
-    [4X          (1,3,2,4) ], [0X
-    [4X      [ (), (1,5,2), (1,2)(3,5,4), (2,5,4,3), (2,5,4), (2,3,4,5), (2,3), [0X
-    [4X          (1,5,4,3), (2,3)(4,5) ] ], [0X
-    [4X  [ Group([ (), (2,5), (1,5) ]), Group([ (), (2,5) ]) ] ][0X
+    [4X  gap> gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), [0X
+    [4X  > Transformation( [ 4, 3, 2, 1, 5 ] ) ];;[0X
+    [4X  gap> S:=Semigroup(gens);;[0X
+    [4X  gap> f:=Transformation( [ 2, 1, 1, 1, 5 ] );;[0X
+    [4X  gap> StrongOrbitOfImage(S, f);;[0X
+    [4X  gap> StrongOrbitsOfImages(S);[0X
+    [4X  [ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], [0X
+    [4X            [ 2, 4, 5 ], [ 3, 4, 5 ] ] ], [0X
+    [4X    [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), [0X
+    [4X            (1,3,2,4) ] ], [ Group([ (), (2,5), (1,5) ]) ] ][0X
+    [4X  gap> f:=Transformation( [ 5, 5, 5, 5, 2 ] );[0X
+    [4X  gap> StrongOrbitOfImage(S, f);;[0X
+    [4X  gap> StrongOrbitsOfImages(S); [0X
+    [4X  [ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], [0X
+    [4X            [ 2, 4, 5 ], [ 3, 4, 5 ] ], [0X
+    [4X        [ [ 2, 5 ], [ 1, 5 ], [ 1, 3 ], [ 2, 3 ], [ 2, 4 ], [ 4, 5 ], [ 3, 5 ], [0X
+    [4X            [ 1, 2 ], [ 3, 4 ] ] ], [0X
+    [4X    [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), [0X
+    [4X            (1,3,2,4) ], [0X
+    [4X        [ (), (1,5,2), (1,2)(3,5,4), (2,5,4,3), (2,5,4), (2,3,4,5), (2,3), [0X
+    [4X            (1,5,4,3), (2,3)(4,5) ] ], [0X
+    [4X    [ Group([ (), (2,5), (1,5) ]), Group([ (), (2,5) ]) ] ][0X
   [4X------------------------------------------------------------------[0X
   

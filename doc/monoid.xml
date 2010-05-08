@@ -3,6 +3,8 @@
 <!DOCTYPE Book SYSTEM "gapdoc.dtd">
 <!--  MakeGAPDocDoc("~/Desktop/gap4r4/pkg/monoid/doc/", "monoid.xml", [ "../gap/general.gd", "../gap/autos.gd", "../gap/transform.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd",  "../gap/semigroups.gd", "../gap/semihomo.gd"], "manual");; -->
 
+<!-- SizeScreen([80]); SetInfoLevel(InfoWarning, 0); TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1], "monoid.xml", ["../gap/autos.gd", "../gap/general.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd", "../gap/semigroups.gd", "../gap/semihomo.gd", "../gap/transform.gd"] );-->
+
 <Book Name="MONOID">
 
 <TitlePage>
@@ -93,7 +95,7 @@ transformation semigroups that underpin most of the features of <Package>MONOID<
 The <Package>MONOID</Package> package can be used without <Package>orb</Package> but is much 
 less efficient. We highly recommended that you install <Package>orb</Package>. 
 See
-<URL>href="http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html"</URL>
+<URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html</URL>
 or the main &GAP; webpages for more information. <P/>
 
  If you want to take advantage 
@@ -114,7 +116,7 @@ how to start using  <Package>MONOID</Package>. If you have any
 problems getting <Package>MONOID</Package> working, then please email me 
 directly at <Email>jdm3@st-and.ac.uk</Email>. <P/>
 
-It is assumed that you have a working copy of &GAP; with version number 4.4.10 
+It is assumed that you have a working copy of &GAP; with version number 4.4.12 
 or higher. The most up-to-date version of &GAP; and instructions on how to 
 install it can be obtained from the main &GAP; webpage
 <URL>
@@ -154,7 +156,7 @@ where <C>GAPROOT</C>  should be substituted with the main &GAP; directory (the
 one containing the folders `bin', `lib', and so on) in your installation of 
 &GAP;.<P/>
 
-<Example>
+<Log>
 &gt; gunzip monoid3r1p4.tar.gz 
 &gt; tar -xf monoid3r1p4.tar 
 &gt; mv MONOID GAPROOT/pkg
@@ -163,12 +165,13 @@ one containing the folders `bin', `lib', and so on) in your installation of
 [ ... ]
 
 gap&gt; LoadPackage("monoid");
-Loading MONOID 3.1.4
-by James Mitchell (www-groups.mcs.st-and.ac.uk/~jamesm)
-For help, type: ?the monoid package 
+-----------------------------------------------------------------------------
+Loading  MONOID 3.1.4 (MONOID: computing with transformation semigroups)
+by James Mitchell (http://www-groups.mcs.st-and.ac.uk/~jamesm).
+-----------------------------------------------------------------------------
 true
 gap&gt; 
-</Example>
+</Log>
 
 Presuming that the above steps can be completed successfully you will be running 
 the <Package>MONOID</Package> package!<P/>
@@ -291,7 +294,7 @@ simple, inverse, or completely regular, see Chapter <Ref Chap="properties"/>;</I
 </List>
 </Section>
 
-<!-- ############### -->
+<!-- ############### 
 
 <Section><Heading>Forthcoming Features</Heading>
 
@@ -309,9 +312,9 @@ The features are currently under development and will be available in a future v
 <!--<Item> an algorithm for determining the congruences of a completely simple or regular semigroup.
 </Item>
 <Item> methods to construct completely regular semigroups as a semilattice of simple semigroups and Clifford semigroups as strong semilattices of groups.
-</Item>-->
+</Item>
 </List>
-</Section>
+</Section>-->
 
 </Chapter>
 

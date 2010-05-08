@@ -1,10 +1,9 @@
-\begin{thebibliography}{ABM07}
+\begin{thebibliography}{ABMN10}
 
-\bibitem[ABM07]{computing}
-J.~Araujo, P.~v. Bunau, and J.~D. Mitchell.
+\bibitem[ABMN10]{computing}
+J.~Ara{\'u}jo, P.~V. B{\"u}nau, J.~D. Mitchell, and M.~Neunh{\"o}ffer.
 \newblock Computing automorphisms of semigroups.
-\newblock 2007.
-\newblock submitted for publication.
+\newblock {\em J. Symbolic Comput.}, 45(3):373--392, 2010.
 
 \bibitem[AR00]{arthur1}
 Robert~E. Arthur and N.~Ruskuc.
@@ -18,11 +17,10 @@ Gracinda M.~S. Gomes and John~M. Howie.
   transformations.
 \newblock {\em Semigroup Forum}, 45(3):272--282, 1992.
 
-\bibitem[GM05]{largest}
+\bibitem[GM08]{largest}
 R.~Gray and J.~D. Mitchell.
 \newblock Largest subsemigroups of the full transformation monoid.
-\newblock {\em Discrete Math.}, 2005.
-\newblock to appear.
+\newblock {\em Discrete Math.}, 308(20):4801--4810, 2008.
 
 \bibitem[How95]{howie}
 John~M. Howie.
@@ -31,11 +29,10 @@ John~M. Howie.
 \newblock The Clarendon Press Oxford University Press, New York, 1995.
 \newblock Oxford Science Publications.
 
-\bibitem[KM05]{mazorchuk}
-G.~Kudryavtseva and V.~Mazorchuk.
-\newblock On kiselman's semigroup.
-\newblock 2005.
-\newblock arXiv:math/0511374v1.
+\bibitem[KM09]{mazorchuk}
+Ganna Kudryavtseva and Volodymyr Mazorchuk.
+\newblock On {K}iselman's semigroup.
+\newblock {\em Yokohama Math. J.}, 55(1):21--46, 2009.
 
 \bibitem[LM90]{lallement}
 G.~Lallement and R.~McFadden.
@@ -43,14 +40,14 @@ G.~Lallement and R.~McFadden.
   semigroups.
 \newblock {\em J. Symbolic Comput.}, 10(5):481--498, 1990.
 
-\bibitem[LPRRa]{pfeiffer2}
-S.~A. Linton, G.~Pfeiffer, E.~F. Robertson, and N.~Ruskuc.
-\newblock Computing transformation semigroups.
-\newblock {\em J. Symbolic Comput.}, 33:145--162.
-
-\bibitem[LPRRb]{pfeiffer1}
-S.~A. Linton, G.~Pfeiffer, E.~F. Robertson, and N.~Ruskuc.
+\bibitem[LPRR98]{pfeiffer1}
+S.~A. Linton, G.~Pfeiffer, E.~F. Robertson, and N.~Ru{\v{s}}kuc.
 \newblock Groups and actions in transformation semigroups.
-\newblock {\em Math. Z.}, 228:435--450.
+\newblock {\em Math. Z.}, 228(3):435--450, 1998.
+
+\bibitem[LPRR02]{pfeiffer2}
+S.~A. Linton, G.~Pfeiffer, E.~F. Robertson, and N.~Ru{\v{s}}kuc.
+\newblock Computing transformation semigroups.
+\newblock {\em J. Symbolic Comput.}, 33(2):145--162, 2002.
 
 \end{thebibliography}

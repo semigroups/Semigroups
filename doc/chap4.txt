@@ -124,16 +124,16 @@
   E, F, and U of [LPRR02].
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;[0X
-    [4Xgap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;[0X
-    [4Xgap> M:=Semigroup(a,b);;[0X
-    [4Xgap> rc:=GreensRClassOfElement(M, a*b*a);[0X
-    [4X{Transformation( [ 4, 1, 6, 5, 2, 2 ] )}[0X
-    [4Xgap> GreensRClassData(rc);[0X
-    [4XGreensRClassData( Transformation( [ 4, 1, 6, 5, 2, 2 ] ), [ [ 1, 2, 4, 5, 6 ], [0X
-    [4X[ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ], [ 1, 2, 3, 4, 5 ] ], [ (), (1,2)[0X
-    [4X(3,6,5,4), (3,5)(4,6), (1,6,3,2)(4,5) ], Group( [ (), (2,4,6), (2,6,4), [0X
-    [4X(1,2,6)(4,5) ] ) )[0X
+    [4X  gap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;[0X
+    [4X  gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;[0X
+    [4X  gap> M:=Semigroup(a,b);;[0X
+    [4X  gap> rc:=GreensRClassOfElement(M, a*b*a);[0X
+    [4X  {Transformation( [ 4, 1, 6, 5, 2, 2 ] )}[0X
+    [4X  gap> GreensRClassData(rc);[0X
+    [4X  GreensRClassData( Transformation( [ 4, 1, 6, 5, 2, 2 ] ), [ [ 1, 2, 4, 5, 6 ], [0X
+    [4X  [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ], [ 1, 2, 3, 4, 5 ] ], [ (), (1,2)[0X
+    [4X  (3,6,5,4), (3,5)(4,6), (1,6,3,2)(4,5) ], Group( [ (), (2,4,6), (2,6,4), [0X
+    [4X  (1,2,6)(4,5) ] ) )[0X
   [4X------------------------------------------------------------------[0X
   
   [1X4.2-3 GreensLClassData[0m
@@ -167,15 +167,15 @@
   Further details can be found in Algorithm G, H, I, and J of [LPRR02].
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> gens:=[ Transformation( [ 4, 1, 4, 5, 3 ] ),[0X
-    [4X> Transformation( [ 5, 3, 5, 4, 3 ] ) ];;[0X
-    [4Xgap> S:=Semigroup(gens);;[0X
-    [4Xgap> C:=GreensLClassOfElement(S, gens[1]*gens[2]*gens[1]);[0X
-    [4X{Transformation( [ 5, 3, 5, 4, 3 ] )}[0X
-    [4Xgap> GreensLClassData(C);[0X
-    [4XGreensLClassData( Transformation( [ 5, 3, 5, 4, 3 ] ), [0X
-    [4X[ [ [ 1, 3 ], [ 2, 5 ], [ 4 ] ] ], [ Binary Relation on 5 points ], [0X
-    [4X[ Binary Relation on 5 points ], Group( [ (), (3,5,4), (3,5) ] ) )[0X
+    [4X  gap> gens:=[ Transformation( [ 4, 1, 4, 5, 3 ] ),[0X
+    [4X  > Transformation( [ 5, 3, 5, 4, 3 ] ) ];;[0X
+    [4X  gap> S:=Semigroup(gens);;[0X
+    [4X  gap> C:=GreensLClassOfElement(S, gens[1]*gens[2]*gens[1]);[0X
+    [4X  {Transformation( [ 5, 3, 5, 4, 3 ] )}[0X
+    [4X  gap> GreensLClassData(C);[0X
+    [4X  GreensLClassData( Transformation( [ 5, 3, 5, 4, 3 ] ), [0X
+    [4X  [ [ [ 1, 3 ], [ 2, 5 ], [ 4 ] ] ], [ Binary Relation on 5 points ], [0X
+    [4X  [ Binary Relation on 5 points ], Group( [ (), (3,5,4), (3,5) ] ) )[0X
   [4X------------------------------------------------------------------[0X
   
   [1X4.2-4 GreensHClassData[0m
@@ -198,12 +198,12 @@
   Further details can be found in Algorithm K, L, M, and N of [LPRR02].
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> gens:=[ Transformation( [ 2, 2, 5, 2, 3 ] ), [0X
-    [4X> Transformation( [ 2, 5, 3, 5, 3 ] ) ];;[0X
-    [4Xgap> S:=Semigroup(gens);;[0X
-    [4Xgap> f:=Transformation( [ 5, 5, 3, 5, 3 ] );;[0X
-    [4Xgap> GreensHClassData(GreensHClassOfElement(S, f));[0X
-    [4XGreensHClassData( Transformation( [ 5, 5, 3, 5, 3 ] ), Group( () ) )[0X
+    [4X  gap> gens:=[ Transformation( [ 2, 2, 5, 2, 3 ] ), [0X
+    [4X  > Transformation( [ 2, 5, 3, 5, 3 ] ) ];;[0X
+    [4X  gap> S:=Semigroup(gens);;[0X
+    [4X  gap> f:=Transformation( [ 5, 5, 3, 5, 3 ] );;[0X
+    [4X  gap> GreensHClassData(GreensHClassOfElement(S, f));[0X
+    [4X  GreensHClassData( Transformation( [ 5, 5, 3, 5, 3 ] ), Group( () ) )[0X
   [4X------------------------------------------------------------------[0X
   
   [1X4.2-5 GreensDClassData[0m
@@ -230,14 +230,14 @@
   be found in Algorithm O, P, Q, R, S, and T of [LPRR02].
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> gens:=[ Transformation( [ 4, 1, 5, 2, 4 ] ), [0X
-    [4X> Transformation( [ 4, 4, 1, 5, 3 ] ) ];;[0X
-    [4Xgap> S:=Semigroup(gens);;[0X
-    [4Xgap> f:=Transformation( [ 5, 5, 3, 3, 3 ] );;[0X
-    [4Xgap> GreensDClassData(GreensDClassOfElement(S, f));[0X
-    [4XGreensDClassData( Transformation( [ 5, 5, 3, 3, 3 [0X
-    [4X] ), GreensRClassData( Transformation( [ 5, 5, 3, 3, 3 [0X
-    [4X] ) ), GreensLClassData( Transformation( [ 5, 5, 3, 3, 3 ] ) ) )[0X
+    [4X  gap> gens:=[ Transformation( [ 4, 1, 5, 2, 4 ] ), [0X
+    [4X  > Transformation( [ 4, 4, 1, 5, 3 ] ) ];;[0X
+    [4X  gap> S:=Semigroup(gens);;[0X
+    [4X  gap> f:=Transformation( [ 5, 5, 3, 3, 3 ] );;[0X
+    [4X  gap> GreensDClassData(GreensDClassOfElement(S, f));[0X
+    [4X  GreensDClassData( Transformation( [ 5, 5, 3, 3, 3 [0X
+    [4X  ] ), GreensRClassData( Transformation( [ 5, 5, 3, 3, 3 [0X
+    [4X  ] ) ), GreensLClassData( Transformation( [ 5, 5, 3, 3, 3 ] ) ) )[0X
   [4X------------------------------------------------------------------[0X
   
   
@@ -299,24 +299,24 @@
   used in preference to those in the library.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;[0X
-    [4Xgap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;[0X
-    [4Xgap> M:=Semigroup(a,b);;[0X
-    [4Xgap> GreensLClassOfElement(M,a);[0X
-    [4X{Transformation( [ 2, 1, 4, 5, 6, 3 ] )}[0X
-    [4Xgap> IsAssociatedSemigpTransSemigp(last);[0X
-    [4Xtrue[0X
-    [4Xgap> f:=FreeSemigroup(3);;[0X
-    [4Xgap> a:=f.1;; b:=f.2;; c:=f.3;; [0X
-    [4Xgap> s:=f/[[a^2, a], [b^2,b], [c^2,c], [a*b,a], [b*a,b], [a*c,a], [0X
-    [4X> [c*a,c], [b*c,b],[c*b,c]];[0X
-    [4X<fp semigroup on the generators [ s1, s2, s3 ]>[0X
-    [4Xgap> Size(s);[0X
-    [4X3[0X
-    [4Xgap> GreensLClassOfElement(s,a);[0X
-    [4X{s1}[0X
-    [4Xgap> IsAssociatedSemigpTransSemigp(last);[0X
-    [4Xfalse[0X
+    [4X  gap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;[0X
+    [4X  gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;[0X
+    [4X  gap> M:=Semigroup(a,b);;[0X
+    [4X  gap> GreensLClassOfElement(M,a);[0X
+    [4X  {Transformation( [ 2, 1, 4, 5, 6, 3 ] )}[0X
+    [4X  gap> IsAssociatedSemigpTransSemigp(last);[0X
+    [4X  true[0X
+    [4X  gap> f:=FreeSemigroup(3);;[0X
+    [4X  gap> a:=f.1;; b:=f.2;; c:=f.3;; [0X
+    [4X  gap> s:=f/[[a^2, a], [b^2,b], [c^2,c], [a*b,a], [b*a,b], [a*c,a], [0X
+    [4X  > [c*a,c], [b*c,b],[c*b,c]];[0X
+    [4X  <fp semigroup on the generators [ s1, s2, s3 ]>[0X
+    [4X  gap> Size(s);[0X
+    [4X  3[0X
+    [4X  gap> GreensLClassOfElement(s,a);[0X
+    [4X  {s1}[0X
+    [4X  gap> IsAssociatedSemigpTransSemigp(last);[0X
+    [4X  false[0X
   [4X------------------------------------------------------------------[0X
   
   [1X4.2-10 SchutzenbergerGroup[0m
@@ -333,18 +333,18 @@
   the [10Xschutz[0m component of [10XGreensData[0m with argument [10XD[0m.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> gens:=[ Transformation( [ 4, 4, 3, 5, 3 ] ), [0X
-    [4X> Transformation( [ 5, 1, 1, 4, 1 ] ), [0X
-    [4X> Transformation( [ 5, 5, 4, 4, 5 ] ) ];;[0X
-    [4Xgap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;[0X
-    [4Xgap> SchutzenbergerGroup(GreensDClassOfElement(S, f));[0X
-    [4XGroup([ (), (4,5) ])[0X
-    [4Xgap> SchutzenbergerGroup(GreensRClassOfElement(S, f));[0X
-    [4XGroup([ (), (4,5) ])[0X
-    [4Xgap> SchutzenbergerGroup(GreensLClassOfElement(S, f));[0X
-    [4XGroup([ (), (4,5) ])[0X
-    [4Xgap> SchutzenbergerGroup(GreensHClassOfElement(S, f));[0X
-    [4XGroup([ (), (4,5) ])[0X
+    [4X  gap> gens:=[ Transformation( [ 4, 4, 3, 5, 3 ] ), [0X
+    [4X  > Transformation( [ 5, 1, 1, 4, 1 ] ), [0X
+    [4X  > Transformation( [ 5, 5, 4, 4, 5 ] ) ];;[0X
+    [4X  gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;[0X
+    [4X  gap> SchutzenbergerGroup(GreensDClassOfElement(S, f));[0X
+    [4X  Group([ (), (4,5) ])[0X
+    [4X  gap> SchutzenbergerGroup(GreensRClassOfElement(S, f));[0X
+    [4X  Group([ (), (4,5) ])[0X
+    [4X  gap> SchutzenbergerGroup(GreensLClassOfElement(S, f));[0X
+    [4X  Group([ (), (4,5) ])[0X
+    [4X  gap> SchutzenbergerGroup(GreensHClassOfElement(S, f));[0X
+    [4X  Group([ (), (4,5) ])[0X
   [4X------------------------------------------------------------------[0X
   
   [1X4.2-11 Idempotents[0m
@@ -359,21 +359,21 @@
   a given rank, then the second version of the function will likely be faster.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4Xgap> S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), [0X
-    [4X> Transformation( [ 3, 3, 1, 1 ] ) ]);;[0X
-    [4Xgap> Idempotents(S, 1);[0X
-    [4X[  ][0X
-    [4Xgap> Idempotents(S, 2);                        [0X
-    [4X[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), [0X
-    [4X  Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ][0X
-    [4Xgap> Idempotents(S, 3);                        [0X
-    [4X[  ][0X
-    [4Xgap> Idempotents(S, 4);                        [0X
-    [4X[ Transformation( [ 1, 2, 3, 4 ] ) ][0X
-    [4Xgap> Idempotents(S);[0X
-    [4X[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 2, 3, 4 ] ), [0X
-    [4X  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), [0X
-    [4X  Transformation( [ 4, 2, 2, 4 ] ) ][0X
+    [4X  gap> S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), [0X
+    [4X  > Transformation( [ 3, 3, 1, 1 ] ) ]);;[0X
+    [4X  gap> Idempotents(S, 1);[0X
+    [4X  [  ][0X
+    [4X  gap> Idempotents(S, 2);                        [0X
+    [4X  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), [0X
+    [4X    Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ][0X
+    [4X  gap> Idempotents(S, 3);                        [0X
+    [4X  [  ][0X
+    [4X  gap> Idempotents(S, 4);                        [0X
+    [4X  [ Transformation( [ 1, 2, 3, 4 ] ) ][0X
+    [4X  gap> Idempotents(S);[0X
+    [4X  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 2, 3, 4 ] ), [0X
+    [4X    Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), [0X
+    [4X    Transformation( [ 4, 2, 2, 4 ] ) ][0X
   [4X------------------------------------------------------------------[0X
   
   [1X4.2-12 PartialOrderOfDClasses[0m

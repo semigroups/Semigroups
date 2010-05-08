@@ -27,8 +27,6 @@
 </div>
 <div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X816AD93B7EE39FB9">1.4 <span class="Heading">Changes</span></a>
 </div>
-<div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap1.html#X8246DD5B7AF0099A">1.5 <span class="Heading">Forthcoming Features</span></a>
-</div>
 </div>
 
 <h3>1 <span class="Heading">The <strong class="pkg">MONOID</strong> package</span></h3>
@@ -41,7 +39,7 @@
 
 <p><strong class="pkg">MONOID</strong> 3.1.4 retains all the functionality of the original <strong class="pkg">MONOID</strong> package. In particular, <strong class="pkg">MONOID</strong> 3.1.4 contains more efficient methods than those available in the <strong class="pkg">GAP</strong> library for computing orbits, calculating Green's classes, finding the size, the elements, and testing membership in transformation semigroups; see Chapters <a href="chap3.html#X849149EF79F824D1"><b>3</b></a> and <a href="chap4.html#X80C6C718801855E9"><b>4</b></a>. After <strong class="pkg">MONOID</strong> has been loaded many of these methods are automatically used in preference to those in the library and do not need to be called explicitly by the user. These methods are described in <a href="chapBib.html#biBpfeiffer1">[LPRR98]</a> and the algorithms themselves are described in <a href="chapBib.html#biBpfeiffer2">[LPRR02]</a>.</p>
 
-<p>In addition, there are new methods for testing if a semigroup satisfies a particular property, such as if it is regular, simple, inverse, or completely regular, see Chapter <a href="chap5.html#X78274024827F306D"><b>5</b></a>; methods for computing the automorphism group of a transformation semigroup see Section <a href="chap7.html#X7A007A0C80D26351"><b>7.4</b></a>; methods for finding homomorphisms and isomorphism between some types of semigroups see Chapter <a href="chap7.html#X861935DB81A478C2"><b>7</b></a>; and functions to create some well-known semigroups see Chapter <a href="chap6.html#X853D15F87F14D36E"><b>6</b></a>. The property testing methods are described in <a href="chapBib.html#biBlargest">[GM05]</a> and the method for computing the automorphism group of a semigroup is described in <a href="chapBib.html#biBcomputing">[ABM07]</a>.</p>
+<p>In addition, there are new methods for testing if a semigroup satisfies a particular property, such as if it is regular, simple, inverse, or completely regular, see Chapter <a href="chap5.html#X78274024827F306D"><b>5</b></a>; methods for computing the automorphism group of a transformation semigroup see Section <a href="chap7.html#X7A007A0C80D26351"><b>7.4</b></a>; methods for finding homomorphisms and isomorphism between some types of semigroups see Chapter <a href="chap7.html#X861935DB81A478C2"><b>7</b></a>; and functions to create some well-known semigroups see Chapter <a href="chap6.html#X853D15F87F14D36E"><b>6</b></a>. The property testing methods are described in <a href="chapBib.html#biBlargest">[GM08]</a> and the method for computing the automorphism group of a semigroup is described in <a href="chapBib.html#biBcomputing">[ABMN10]</a>.</p>
 
 <p>The <strong class="pkg">MONOID</strong> package is written in <strong class="pkg">GAP</strong> code only but uses the <strong class="pkg">GRAPE</strong> and <strong class="pkg">orb</strong> packages.</p>
 
@@ -70,7 +68,7 @@
 </ul>
 <p>Installation of <strong class="pkg">GRAPE</strong> is described in the <code class="code">README</code> file of the <strong class="pkg">GRAPE</strong> distribution and in the section entitled `Installing the GRAPE Package' of the <strong class="pkg">GRAPE</strong> manual; see <span class="URL"><a href=" http://www.maths.qmul.ac.uk/~leonard/grape/ "> http://www.maths.qmul.ac.uk/~leonard/grape/ </a></span> or the main <strong class="pkg">GAP</strong> webpages for more information.</p>
 
-<p><strong class="pkg">orb</strong> is used to provide efficient methods for computing orbits in transformation semigroups that underpin most of the features of <strong class="pkg">MONOID</strong>. The <strong class="pkg">MONOID</strong> package can be used without <strong class="pkg">orb</strong> but is much less efficient. We highly recommended that you install <strong class="pkg">orb</strong>. See <span class="URL"><a href="href="http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html"">href="http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html"</a></span> or the main <strong class="pkg">GAP</strong> webpages for more information.</p>
+<p><strong class="pkg">orb</strong> is used to provide efficient methods for computing orbits in transformation semigroups that underpin most of the features of <strong class="pkg">MONOID</strong>. The <strong class="pkg">MONOID</strong> package can be used without <strong class="pkg">orb</strong> but is much less efficient. We highly recommended that you install <strong class="pkg">orb</strong>. See <span class="URL"><a href="http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html">http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html</a></span> or the main <strong class="pkg">GAP</strong> webpages for more information.</p>
 
 <p>If you want to take advantage of the online help facilities in <strong class="pkg">MONOID</strong>, then the <strong class="pkg">gapdoc</strong> package Version 1.1 or higher is also required; see <span class="URL"><a href=" http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/ "> http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/ </a></span> for further details of how to obtain and install <strong class="pkg">gapdoc</strong>.</p>
 
@@ -80,7 +78,7 @@
 
 <p>In this section we give a brief description of how to start using <strong class="pkg">MONOID</strong>. If you have any problems getting <strong class="pkg">MONOID</strong> working, then please email me directly at <span class="URL"><a href="mailto:jdm3@st-and.ac.uk">jdm3@st-and.ac.uk</a></span>.</p>
 
-<p>It is assumed that you have a working copy of <strong class="pkg">GAP</strong> with version number 4.4.10 or higher. The most up-to-date version of <strong class="pkg">GAP</strong> and instructions on how to install it can be obtained from the main <strong class="pkg">GAP</strong> webpage <span class="URL"><a href=" http://www.gap-system.org "> http://www.gap-system.org </a></span> Those functions in <strong class="pkg">MONOID</strong> described in Chapter <a href="chap7.html#X861935DB81A478C2"><b>7</b></a> relating to automorphism groups of semigroups require the <strong class="pkg">GRAPE</strong> (for computing with graphs and groups) to be loaded. In particular, <strong class="pkg">GRAPE</strong> must be installed in a UNIX operating system so that the automorphism group and isomorphism testing functions (for graphs) can be used.</p>
+<p>It is assumed that you have a working copy of <strong class="pkg">GAP</strong> with version number 4.4.12 or higher. The most up-to-date version of <strong class="pkg">GAP</strong> and instructions on how to install it can be obtained from the main <strong class="pkg">GAP</strong> webpage <span class="URL"><a href=" http://www.gap-system.org "> http://www.gap-system.org </a></span> Those functions in <strong class="pkg">MONOID</strong> described in Chapter <a href="chap7.html#X861935DB81A478C2"><b>7</b></a> relating to automorphism groups of semigroups require the <strong class="pkg">GRAPE</strong> (for computing with graphs and groups) to be loaded. In particular, <strong class="pkg">GRAPE</strong> must be installed in a UNIX operating system so that the automorphism group and isomorphism testing functions (for graphs) can be used.</p>
 
 <p>Please go to <span class="URL"><a href=" http://www.maths.qmul.ac.uk/~leonard/grape/ "> http://www.maths.qmul.ac.uk/~leonard/grape/ </a></span> or the main <strong class="pkg">GAP</strong> webpage for further details on how to obtain and install <strong class="pkg">GRAPE</strong>.</p>
 
@@ -117,9 +115,10 @@
 [ ... ]
 
 gap&gt; LoadPackage("monoid");
-Loading MONOID 3.1.4
-by James Mitchell (www-groups.mcs.st-and.ac.uk/~jamesm)
-For help, type: ?the monoid package 
+-----------------------------------------------------------------------------
+Loading  MONOID 3.1.4 (MONOID: computing with transformation semigroups)
+by James Mitchell (http://www-groups.mcs.st-and.ac.uk/~jamesm).
+-----------------------------------------------------------------------------
 true
 gap&gt; 
 </pre></td></tr></table>
@@ -269,27 +268,6 @@ Read(Filename( dirs, "testall.g" ) );
 
 </li>
 </ul>
-</li>
-</ul>
-<p><a id="X8246DD5B7AF0099A" name="X8246DD5B7AF0099A"></a></p>
-
-<h4>1.5 <span class="Heading">Forthcoming Features</span></h4>
-
-<p>The features are currently under development and will be available in a future version of <strong class="pkg">MONOID</strong>:</p>
-
-
-<ul>
-<li><p>the number of special types of semigroups available in <strong class="pkg">MONOID</strong> will be expanded to include all of the standard examples of transformation semigroups and some matrix semigroups.</p>
-
-</li>
-<li><p>methods analogous to those used to find Green's relations and other structural properties of transformation semigroups in the current version of <strong class="pkg">MONOID</strong> but for semigroups generated by partial transformations, binary relations, and matrix semigroups.</p>
-
-</li>
-<li><p>a suite of functions for computing with inverse semigroups generated by partial bijections, including finding faithful representations of smaller degree and small generating sets.</p>
-
-</li>
-<li><p>an algorithm for finding a small generating set of a semigroup.</p>
-
 </li>
 </ul>
 

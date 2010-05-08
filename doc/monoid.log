@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2007.5.18)  8 MAY 2010 15:57
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2007.5.18)  8 MAY 2010 16:49
 entering extended mode
  %&-line parsing enabled.
 **monoid
@@ -363,9 +363,16 @@ h-ods for com-put-ing or-bits in trans-for-ma-tion semi-
  []
 
 
-Overfull \hbox (15.27301pt too wide) in paragraph at lines 130--132
-[][]\OT1/pcr/m/n/10.95 href="http://www-groups.mcs.st-and.ac.uk/~neunhoef/Compu
-ter/Software/Gap/orb.html"[][]
+Underfull \hbox (badness 3118) in paragraph at lines 130--132
+\OT1/ptm/m/n/10.95 with-out \OT1/phv/m/n/10.95 orb \OT1/ptm/m/n/10.95 but is mu
+ch less ef-fi-cient. We highly rec-om-mended that you in-stall \OT1/phv/m/n/10.
+95 orb\OT1/ptm/m/n/10.95 .
+ []
+
+
+Underfull \hbox (badness 3291) in paragraph at lines 130--132
+\OT1/ptm/m/n/10.95 See [][]\OT1/pcr/m/n/10.95 http://www-groups.mcs.st-and.ac.u
+k/~neunhoef/Computer/Software/Gap/orb.html[][]
  []
 
 
@@ -398,41 +405,41 @@ p4.tar.gz \OT1/ptm/m/n/10.95 or \OT1/pcr/m/n/10.95 monoid3r1p4.tar.bz2 \OT1/ptm
  []
 
 [8] [9]
-LaTeX Font Info:    Try loading font information for OML+ptm on input line 238.
+LaTeX Font Info:    Try loading font information for OML+ptm on input line 239.
 
  (/usr/local/texlive/2007/texmf-dist/tex/latex/psnfss/omlptm.fd
 File: omlptm.fd 
 )
 LaTeX Font Info:    Font shape `OML/ptm/m/n' in size <10.95> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 238.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 239.
 
-Underfull \hbox (badness 3557) in paragraph at lines 248--249
+Underfull \hbox (badness 3557) in paragraph at lines 249--250
 []\OT1/ptm/m/n/10.95 the fol-low-ing new func-tions have been in-tro-duced: \OT
 1/pcr/m/n/10.95 TransformationActionNC
  []
 
 
-Underfull \hbox (badness 2626) in paragraph at lines 248--249
+Underfull \hbox (badness 2626) in paragraph at lines 249--250
 \OT1/ptm/m/n/10.95 ([][]2.1.6[][]), \OT1/pcr/m/n/10.95 SmallestIdempotentPower 
 \OT1/ptm/m/n/10.95 ([][]2.2.6[][]), \OT1/pcr/m/n/10.95 IsKerImgOfTransformation
  \OT1/ptm/m/n/10.95 ([][]2.2.2[][]),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 248--249
+Underfull \hbox (badness 10000) in paragraph at lines 249--250
 \OT1/ptm/m/n/10.95 ([][]2.1.2[][]), \OT1/pcr/m/n/10.95 AsBooleanMatrix \OT1/ptm
 /m/n/10.95 ([][]2.3.1[][]), \OT1/pcr/m/n/10.95 KerImgOfTransformation \OT1/ptm/
 m/n/10.95 ([][]2.2.3[][]),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 253--254
+Underfull \hbox (badness 10000) in paragraph at lines 254--255
 []\OT1/pcr/m/n/10.95 GradedImagesTransformationMonoid \OT1/ptm/m/n/10.95 was re
 -named
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 255--256
+Underfull \hbox (badness 10000) in paragraph at lines 256--257
 []\OT1/pcr/m/n/10.95 GradedKernelsTransformationMonoid \OT1/ptm/m/n/10.95 was r
 e-named
  []
@@ -440,93 +447,93 @@ e-named
 [10] [11]
 Chapter 2.
 
-Underfull \hbox (badness 10000) in paragraph at lines 318--324
+Underfull \hbox (badness 10000) in paragraph at lines 300--306
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 341--347
+Underfull \hbox (badness 10000) in paragraph at lines 323--329
 
  []
 
 [12
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 367--373
+Underfull \hbox (badness 10000) in paragraph at lines 349--355
 
  []
 
 
-Underfull \hbox (badness 1320) in paragraph at lines 375--376
+Underfull \hbox (badness 1320) in paragraph at lines 357--358
 []\OT1/pcr/m/n/10.95 IdempotentNC \OT1/ptm/m/n/10.95 re-turns an idem-po-tent w
 ith ker-nel \OT1/pcr/m/n/10.95 ker \OT1/ptm/m/n/10.95 and im-age \OT1/pcr/m/n/1
 0.95 img \OT1/ptm/m/n/10.95 with-out check-ing
  []
 
 
-Underfull \hbox (badness 1454) in paragraph at lines 377--378
+Underfull \hbox (badness 1454) in paragraph at lines 359--360
 []\OT1/pcr/m/n/10.95 Idempotent \OT1/ptm/m/n/10.95 re-turns an idem-po-tent wit
 h ker-nel \OT1/pcr/m/n/10.95 ker \OT1/ptm/m/n/10.95 and im-age \OT1/pcr/m/n/10.
 95 img \OT1/ptm/m/n/10.95 af-ter check-ing that
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 399--405
+Underfull \hbox (badness 10000) in paragraph at lines 381--387
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 428--434
+Underfull \hbox (badness 10000) in paragraph at lines 410--416
 
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 469--472
+Underfull \hbox (badness 10000) in paragraph at lines 451--454
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 500--503
+Underfull \hbox (badness 10000) in paragraph at lines 482--485
 
  []
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 526--529
+Underfull \hbox (badness 10000) in paragraph at lines 508--511
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 556--559
+Underfull \hbox (badness 10000) in paragraph at lines 538--541
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 575--578
+Underfull \hbox (badness 10000) in paragraph at lines 557--560
 
  []
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 609--612
+Underfull \hbox (badness 10000) in paragraph at lines 591--594
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 629--632
+Underfull \hbox (badness 10000) in paragraph at lines 611--614
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 649--655
+Underfull \hbox (badness 10000) in paragraph at lines 631--637
 
  []
 
 [16]
-Underfull \hbox (badness 10000) in paragraph at lines 688--691
+Underfull \hbox (badness 10000) in paragraph at lines 670--673
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 722--725
+Underfull \hbox (badness 10000) in paragraph at lines 704--707
 
  []
 
@@ -536,92 +543,92 @@ pdfTeX warning (ext4): destination with the same identifier (name{L.X7DFB63A97E
 67C0A1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.751 \hyperdef{L}{X7DFB63A97E67C0A1}{}
+l.733 \hyperdef{L}{X7DFB63A97E67C0A1}{}
                                        
-Underfull \hbox (badness 10000) in paragraph at lines 772--775
+Underfull \hbox (badness 10000) in paragraph at lines 754--757
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 790--793
+Underfull \hbox (badness 10000) in paragraph at lines 772--775
 
  []
 
 [19
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 816--819
+Underfull \hbox (badness 10000) in paragraph at lines 798--801
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 847--850
+Underfull \hbox (badness 10000) in paragraph at lines 829--832
 
  []
 
 [20]
-Underfull \hbox (badness 10000) in paragraph at lines 875--878
+Underfull \hbox (badness 10000) in paragraph at lines 857--860
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 906--909
+Underfull \hbox (badness 10000) in paragraph at lines 888--891
 
  []
 
 [21]
-Underfull \hbox (badness 10000) in paragraph at lines 936--939
+Underfull \hbox (badness 10000) in paragraph at lines 918--921
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 975--978
+Underfull \hbox (badness 10000) in paragraph at lines 957--960
 
  []
 
 [22]
-Underfull \hbox (badness 10000) in paragraph at lines 1008--1011
+Underfull \hbox (badness 10000) in paragraph at lines 990--993
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1037--1040
+Underfull \hbox (badness 10000) in paragraph at lines 1019--1022
 
  []
 
 [23]
-Underfull \hbox (badness 10000) in paragraph at lines 1069--1072
+Underfull \hbox (badness 10000) in paragraph at lines 1052--1055
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1105--1108
+Underfull \hbox (badness 10000) in paragraph at lines 1088--1091
 
  []
 
 [24]
-Underfull \hbox (badness 10000) in paragraph at lines 1128--1131
+Underfull \hbox (badness 10000) in paragraph at lines 1111--1114
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1163--1166
+Underfull \hbox (badness 10000) in paragraph at lines 1146--1149
 
  []
 
 [25]
-Underfull \hbox (badness 10000) in paragraph at lines 1189--1192
+Underfull \hbox (badness 10000) in paragraph at lines 1172--1175
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1197--1198
+Underfull \hbox (badness 10000) in paragraph at lines 1180--1181
 []\OT1/ptm/m/n/10.95 the sec-ond en-try is a list of per-mu-ta-tions \OT1/pcr/m
 /n/10.95 mults \OT1/ptm/m/n/10.95 such that \OT1/pcr/m/n/10.95 OnSets(imgs[i],
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1221--1224
+Underfull \hbox (badness 10000) in paragraph at lines 1204--1207
 
  []
 
@@ -631,21 +638,21 @@ pdfTeX warning (ext4): destination with the same identifier (name{L.X7DFB63A97E
 67C0A1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1264 \hyperdef{L}{X7DFB63A97E67C0A1}{}
+l.1247 \hyperdef{L}{X7DFB63A97E67C0A1}{}
                                          [28
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 1333--1336
+Underfull \hbox (badness 10000) in paragraph at lines 1316--1319
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1352--1355
+Underfull \hbox (badness 10000) in paragraph at lines 1335--1338
 
  []
 
 
-Underfull \hbox (badness 2126) in paragraph at lines 1357--1358
+Underfull \hbox (badness 2126) in paragraph at lines 1340--1341
 []\OT1/ptm/m/n/10.95 if \OT1/pcr/m/n/10.95 C \OT1/ptm/m/n/10.95 sat-is-fies \OT
 1/pcr/m/n/10.95 IsGreensRClass \OT1/ptm/m/n/10.95 (\OT1/ptm/b/n/10.95 Reference
 : Is-Green-sR-Class\OT1/ptm/m/n/10.95 ), then \OT1/pcr/m/n/10.95 GreensRClassDa
@@ -653,25 +660,25 @@ ta
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1357--1358
+Underfull \hbox (badness 10000) in paragraph at lines 1340--1341
 \OT1/ptm/m/n/10.95 re-turns an ob-ject in the cat-e-gory \OT1/pcr/m/n/10.95 IsG
 reensRClassData \OT1/ptm/m/n/10.95 ([][]4.2.6[][]) with rep-re-sen-ta-tion
  []
 
 [29]
-Underfull \hbox (badness 10000) in paragraph at lines 1365--1366
+Underfull \hbox (badness 10000) in paragraph at lines 1348--1349
 \OT1/ptm/m/n/10.95 The com-po-nents \OT1/pcr/m/n/10.95 strongorb\OT1/ptm/m/n/10
 .95 , \OT1/pcr/m/n/10.95 perms\OT1/ptm/m/n/10.95 , and \OT1/pcr/m/n/10.95 schut
 z \OT1/ptm/m/n/10.95 are ob-tained us-ing the func-tion
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1385--1388
+Underfull \hbox (badness 10000) in paragraph at lines 1368--1371
 
  []
 
 
-Underfull \hbox (badness 2229) in paragraph at lines 1390--1391
+Underfull \hbox (badness 2229) in paragraph at lines 1373--1374
 []\OT1/ptm/m/n/10.95 if \OT1/pcr/m/n/10.95 C \OT1/ptm/m/n/10.95 sat-is-fies \OT
 1/pcr/m/n/10.95 IsGreensLClass \OT1/ptm/m/n/10.95 (\OT1/ptm/b/n/10.95 Reference
 : Is-GreensLClass\OT1/ptm/m/n/10.95 ), then \OT1/pcr/m/n/10.95 GreensLClassData
@@ -679,18 +686,18 @@ Underfull \hbox (badness 2229) in paragraph at lines 1390--1391
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1390--1391
+Underfull \hbox (badness 10000) in paragraph at lines 1373--1374
 \OT1/ptm/m/n/10.95 re-turns an ob-ject in the cat-e-gory \OT1/pcr/m/n/10.95 IsG
 reensLClassData \OT1/ptm/m/n/10.95 ([][]4.2.6[][]) with rep-re-sen-ta-tion
  []
 
 [30]
-Underfull \hbox (badness 10000) in paragraph at lines 1426--1429
+Underfull \hbox (badness 10000) in paragraph at lines 1409--1412
 
  []
 
 
-Underfull \hbox (badness 2027) in paragraph at lines 1431--1432
+Underfull \hbox (badness 2027) in paragraph at lines 1414--1415
 []\OT1/ptm/m/n/10.95 if \OT1/pcr/m/n/10.95 C \OT1/ptm/m/n/10.95 sat-is-fies \OT
 1/pcr/m/n/10.95 IsGreensHClass \OT1/ptm/m/n/10.95 (\OT1/ptm/b/n/10.95 Reference
 : Is-Green-sH-Class\OT1/ptm/m/n/10.95 ), then \OT1/pcr/m/n/10.95 GreensLClassDa
@@ -698,18 +705,18 @@ ta
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1431--1432
+Underfull \hbox (badness 10000) in paragraph at lines 1414--1415
 \OT1/ptm/m/n/10.95 re-turns an ob-ject in the cat-e-gory \OT1/pcr/m/n/10.95 IsG
 reensHClassData \OT1/ptm/m/n/10.95 ([][]4.2.6[][]) with rep-re-sen-ta-tion
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1453--1456
+Underfull \hbox (badness 10000) in paragraph at lines 1436--1439
 
  []
 
 
-Underfull \hbox (badness 2126) in paragraph at lines 1458--1459
+Underfull \hbox (badness 2126) in paragraph at lines 1441--1442
 []\OT1/ptm/m/n/10.95 if \OT1/pcr/m/n/10.95 C \OT1/ptm/m/n/10.95 sat-is-fies \OT
 1/pcr/m/n/10.95 IsGreensDClass \OT1/ptm/m/n/10.95 (\OT1/ptm/b/n/10.95 Reference
 : Is-Greens-D-Class\OT1/ptm/m/n/10.95 ), then \OT1/pcr/m/n/10.95 GreensDClassDa
@@ -717,18 +724,18 @@ ta
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1458--1459
+Underfull \hbox (badness 10000) in paragraph at lines 1441--1442
 \OT1/ptm/m/n/10.95 re-turns an ob-ject in the cat-e-gory \OT1/pcr/m/n/10.95 IsG
 reensDClassData \OT1/ptm/m/n/10.95 ([][]4.2.6[][]) with rep-re-sen-ta-tion
  []
 
 [31]
-Underfull \hbox (badness 10000) in paragraph at lines 1484--1499
+Underfull \hbox (badness 10000) in paragraph at lines 1467--1482
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1501--1502
+Underfull \hbox (badness 10000) in paragraph at lines 1484--1485
 []\OT1/ptm/m/n/10.95 returns \OT1/pcr/m/n/10.95 true \OT1/ptm/m/n/10.95 if \OT1
 /pcr/m/n/10.95 obj \OT1/ptm/m/n/10.95 lies in the cat-e-gory \OT1/pcr/m/n/10.95
  IsGreensData\OT1/ptm/m/n/10.95 , \OT1/pcr/m/n/10.95 IsGreensRClassData\OT1/ptm
@@ -736,44 +743,44 @@ Underfull \hbox (badness 10000) in paragraph at lines 1501--1502
  []
 
 
-Underfull \hbox (badness 1648) in paragraph at lines 1501--1502
+Underfull \hbox (badness 1648) in paragraph at lines 1484--1485
 \OT1/pcr/m/n/10.95 IsGreensLClassData\OT1/ptm/m/n/10.95 , \OT1/pcr/m/n/10.95 Is
 GreensHClassData\OT1/ptm/m/n/10.95 , \OT1/pcr/m/n/10.95 IsGreensDClassData\OT1/
 ptm/m/n/10.95 , re-spec-tively. The ob-
  []
 
 
-Underfull \hbox (badness 1917) in paragraph at lines 1501--1502
+Underfull \hbox (badness 1917) in paragraph at lines 1484--1485
 \OT1/ptm/m/n/10.95 and \OT1/pcr/m/n/10.95 DClassData \OT1/ptm/m/n/10.95 ([][]4.
 2.7[][]) lie in the cat-e-gories \OT1/pcr/m/n/10.95 IsGreensRClassData\OT1/ptm/
 m/n/10.95 , \OT1/pcr/m/n/10.95 IsGreensLClassData\OT1/ptm/m/n/10.95 ,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1507--1519
+Underfull \hbox (badness 10000) in paragraph at lines 1490--1502
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1521--1522
+Underfull \hbox (badness 10000) in paragraph at lines 1504--1505
 []\OT1/ptm/m/n/10.95 These func-tion con-struct ob-jects in the cat-e-gories \O
 T1/pcr/m/n/10.95 IsGreensRClassData \OT1/ptm/m/n/10.95 ([][]4.2.6[][]),
  []
 
 
-Underfull \hbox (badness 2922) in paragraph at lines 1521--1522
+Underfull \hbox (badness 2922) in paragraph at lines 1504--1505
 \OT1/ptm/m/n/10.95 sub-cat-e-gories of \OT1/pcr/m/n/10.95 IsGreensData \OT1/ptm
 /m/n/10.95 ([][]4.2.6[][]) us-ing the out-put from \OT1/pcr/m/n/10.95 GreensRCl
 assData \OT1/ptm/m/n/10.95 ([][]4.2.2[][]),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1527--1539
+Underfull \hbox (badness 10000) in paragraph at lines 1510--1522
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1541--1542
+Underfull \hbox (badness 10000) in paragraph at lines 1524--1525
 []\OT1/ptm/m/n/10.95 returns \OT1/pcr/m/n/10.95 true \OT1/ptm/m/n/10.95 if \OT1
 /pcr/m/n/10.95 obj \OT1/ptm/m/n/10.95 has \OT1/pcr/m/n/10.95 IsGreensRClassData
 Rep\OT1/ptm/m/n/10.95 , \OT1/pcr/m/n/10.95 IsGreensLClassDataRep\OT1/ptm/m/n/10
@@ -781,36 +788,36 @@ Rep\OT1/ptm/m/n/10.95 , \OT1/pcr/m/n/10.95 IsGreensLClassDataRep\OT1/ptm/m/n/10
  []
 
 [32]
-Underfull \hbox (badness 10000) in paragraph at lines 1550--1553
+Underfull \hbox (badness 10000) in paragraph at lines 1533--1536
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1586--1589
+Underfull \hbox (badness 10000) in paragraph at lines 1569--1572
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1591--1592
+Underfull \hbox (badness 10000) in paragraph at lines 1574--1575
 []\OT1/ptm/m/n/10.95 if \OT1/pcr/m/n/10.95 D \OT1/ptm/m/n/10.95 sat-is-fies \OT
 1/pcr/m/n/10.95 IsGreensRClassData \OT1/ptm/m/n/10.95 ([][]4.2.6[][]), \OT1/pcr
 /m/n/10.95 IsGreensLClassData \OT1/ptm/m/n/10.95 ([][]4.2.6[][]),
  []
 
 
-Underfull \hbox (badness 1655) in paragraph at lines 1591--1592
+Underfull \hbox (badness 1655) in paragraph at lines 1574--1575
 \OT1/pcr/m/n/10.95 IsGreensHClassData \OT1/ptm/m/n/10.95 ([][]4.2.6[][]), or \O
 T1/pcr/m/n/10.95 IsGreensDClassData \OT1/ptm/m/n/10.95 ([][]4.2.6[][]), then \O
 T1/pcr/m/n/10.95 SchutzenbergerGroup
  []
 
 [33]
-Underfull \hbox (badness 10000) in paragraph at lines 1615--1618
+Underfull \hbox (badness 10000) in paragraph at lines 1598--1601
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1649--1652
+Underfull \hbox (badness 10000) in paragraph at lines 1632--1635
 
  []
 
@@ -820,98 +827,98 @@ pdfTeX warning (ext4): destination with the same identifier (name{L.X7DFB63A97E
 67C0A1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1674 \hyperdef{L}{X7DFB63A97E67C0A1}{}
+l.1657 \hyperdef{L}{X7DFB63A97E67C0A1}{}
                                          [35
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 1734--1737
+Underfull \hbox (badness 10000) in paragraph at lines 1717--1720
 
  []
 
 [36]
-Underfull \hbox (badness 10000) in paragraph at lines 1759--1765
+Underfull \hbox (badness 10000) in paragraph at lines 1742--1748
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1792--1795
+Underfull \hbox (badness 10000) in paragraph at lines 1775--1778
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1812--1815
+Underfull \hbox (badness 10000) in paragraph at lines 1795--1798
 
  []
 
 [37]
-Underfull \hbox (badness 10000) in paragraph at lines 1836--1839
+Underfull \hbox (badness 10000) in paragraph at lines 1819--1822
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1856--1859
+Underfull \hbox (badness 10000) in paragraph at lines 1839--1842
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1879--1882
+Underfull \hbox (badness 10000) in paragraph at lines 1862--1865
 
  []
 
 [38]
-Underfull \hbox (badness 10000) in paragraph at lines 1902--1905
+Underfull \hbox (badness 10000) in paragraph at lines 1885--1888
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1927--1930
+Underfull \hbox (badness 10000) in paragraph at lines 1910--1913
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1952--1955
+Underfull \hbox (badness 10000) in paragraph at lines 1935--1938
 
  []
 
 [39]
-Underfull \hbox (badness 10000) in paragraph at lines 1975--1978
+Underfull \hbox (badness 10000) in paragraph at lines 1958--1961
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1999--2002
+Underfull \hbox (badness 10000) in paragraph at lines 1982--1985
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2026--2029
+Underfull \hbox (badness 10000) in paragraph at lines 2009--2012
 
  []
 
 [40]
-Underfull \hbox (badness 10000) in paragraph at lines 2053--2056
+Underfull \hbox (badness 10000) in paragraph at lines 2036--2039
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2078--2081
+Underfull \hbox (badness 10000) in paragraph at lines 2061--2064
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2100--2103
+Underfull \hbox (badness 10000) in paragraph at lines 2083--2086
 
  []
 
 [41] [42]
 Chapter 6.
 
-Underfull \hbox (badness 10000) in paragraph at lines 2134--2137
+Underfull \hbox (badness 10000) in paragraph at lines 2117--2120
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2161--2164
+Underfull \hbox (badness 10000) in paragraph at lines 2144--2147
 
  []
 
@@ -925,64 +932,64 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.2189 
+l.2172 
        
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2207--2210
+Underfull \hbox (badness 10000) in paragraph at lines 2190--2193
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2244--2247
+Underfull \hbox (badness 10000) in paragraph at lines 2227--2230
 
  []
 
 [44]
-Underfull \hbox (badness 10000) in paragraph at lines 2274--2277
+Underfull \hbox (badness 10000) in paragraph at lines 2257--2260
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2295--2298
+Underfull \hbox (badness 10000) in paragraph at lines 2278--2281
 
  []
 
 [45]
-Underfull \hbox (badness 10000) in paragraph at lines 2319--2322
+Underfull \hbox (badness 10000) in paragraph at lines 2302--2305
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2338--2341
+Underfull \hbox (badness 10000) in paragraph at lines 2321--2324
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2357--2360
+Underfull \hbox (badness 10000) in paragraph at lines 2340--2343
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2388--2391
+Underfull \hbox (badness 10000) in paragraph at lines 2371--2374
 
  []
 
 [46]
+Underfull \hbox (badness 10000) in paragraph at lines 2388--2391
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 2405--2408
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2422--2425
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2443--2446
+Underfull \hbox (badness 10000) in paragraph at lines 2426--2429
 
  []
 
@@ -992,15 +999,15 @@ pdfTeX warning (ext4): destination with the same identifier (name{L.X7DFB63A97E
 67C0A1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2468 \hyperdef{L}{X7DFB63A97E67C0A1}{}
+l.2451 \hyperdef{L}{X7DFB63A97E67C0A1}{}
                                         
-Underfull \hbox (badness 7486) in paragraph at lines 2498--2499
+Underfull \hbox (badness 7486) in paragraph at lines 2481--2482
 []\OT1/pcr/m/n/10.95 AutomorphismGroup \OT1/ptm/m/n/10.95 ([][]7.4.1[][]) with 
 ar-gu-ment sat-is-fy-ing \OT1/pcr/m/n/10.95 IsTransformationSemigroup
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2503--2504
+Underfull \hbox (badness 10000) in paragraph at lines 2486--2487
 []\OT1/pcr/m/n/10.95 IsomorphismSemigroups \OT1/ptm/m/n/10.95 ([][]7.7.5[][]) w
 ith both ar-gu-ments sat-is-fy-ing
  []
@@ -1008,143 +1015,143 @@ ith both ar-gu-ments sat-is-fy-ing
 [48
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 2510--2513
+Underfull \hbox (badness 10000) in paragraph at lines 2493--2496
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2529--2535
+Underfull \hbox (badness 10000) in paragraph at lines 2512--2518
 
  []
 
 
-Overfull \hbox (20.22646pt too wide) in paragraph at lines 2537--2538
+Overfull \hbox (20.22646pt too wide) in paragraph at lines 2520--2521
 []\OT1/ptm/m/n/10.95 returns a semi-group ho-mo-mor-phism with rep-re-sen-ta-ti
 on \OT1/pcr/m/n/10.95 IsSemigroupHomomorphismByFunctionRep
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2565--2571
+Underfull \hbox (badness 10000) in paragraph at lines 2548--2554
 
  []
 
 [49]
-Overfull \hbox (42.56435pt too wide) in paragraph at lines 2573--2574
+Overfull \hbox (42.56435pt too wide) in paragraph at lines 2556--2557
 []\OT1/ptm/m/n/10.95 returns a semi-group ho-mo-mor-phism with rep-re-sen-ta-ti
 on \OT1/pcr/m/n/10.95 IsSemigroupHomomorphismByImagesOfGensRep
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2599--2605
+Underfull \hbox (badness 10000) in paragraph at lines 2582--2588
 
  []
 
 
-Overfull \hbox (9.05751pt too wide) in paragraph at lines 2607--2608
+Overfull \hbox (9.05751pt too wide) in paragraph at lines 2590--2591
 []\OT1/ptm/m/n/10.95 returns a semi-group ho-mo-mor-phism with rep-re-sen-ta-ti
 on \OT1/pcr/m/n/10.95 IsSemigroupHomomorphismByImagesRep
  []
 
 [50]
-Underfull \hbox (badness 10000) in paragraph at lines 2644--2650
+Underfull \hbox (badness 10000) in paragraph at lines 2627--2633
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2677--2680
+Underfull \hbox (badness 10000) in paragraph at lines 2660--2663
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2697--2700
+Underfull \hbox (badness 10000) in paragraph at lines 2680--2683
 
  []
 
 
-Underfull \hbox (badness 1418) in paragraph at lines 2702--2703
+Underfull \hbox (badness 1418) in paragraph at lines 2685--2686
 []\OT1/ptm/m/n/10.95 returns \OT1/pcr/m/n/10.95 true \OT1/ptm/m/n/10.95 if the 
 gen-eral map-ping \OT1/pcr/m/n/10.95 f \OT1/ptm/m/n/10.95 is an in-ner au-to-mo
 r-phism of a semi-group; see
  []
 
 [51]
-Underfull \hbox (badness 10000) in paragraph at lines 2717--2720
+Underfull \hbox (badness 10000) in paragraph at lines 2700--2703
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2743--2746
+Underfull \hbox (badness 10000) in paragraph at lines 2726--2729
 
  []
 
 [52]
-Underfull \hbox (badness 10000) in paragraph at lines 2781--2784
+Underfull \hbox (badness 10000) in paragraph at lines 2764--2767
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2795--2799
+Underfull \hbox (badness 10000) in paragraph at lines 2778--2782
 []\OT1/ptm/m/n/10.95 If \OT1/pcr/m/n/10.95 autgroup \OT1/ptm/m/n/10.95 sat-is-f
 ies \OT1/pcr/m/n/10.95 IsAutomorphismGroupOfZeroGroup \OT1/ptm/m/n/10.95 ([][]7
 .4.5[][]), then
  []
 
 
-Underfull \hbox (badness 2189) in paragraph at lines 2795--2799
+Underfull \hbox (badness 2189) in paragraph at lines 2778--2782
 \OT1/pcr/m/n/10.95 InnerAutomorphismsAutomorphismGroup \OT1/ptm/m/n/10.95 re-tu
 rns the sub-group of in-ner au-to-mor-phisms in-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2817--2820
+Underfull \hbox (badness 10000) in paragraph at lines 2800--2803
 
  []
 
 [53]
-Underfull \hbox (badness 10000) in paragraph at lines 2844--2847
+Underfull \hbox (badness 10000) in paragraph at lines 2827--2830
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2879--2882
+Underfull \hbox (badness 10000) in paragraph at lines 2862--2865
 
  []
 
-LaTeX Font Info:    Try loading font information for OML+pcr on input line 2891
+LaTeX Font Info:    Try loading font information for OML+pcr on input line 2874
 .
 (/usr/local/texlive/2007/texmf-dist/tex/latex/psnfss/omlpcr.fd
 File: omlpcr.fd 
 )
 LaTeX Font Info:    Font shape `OML/pcr/m/n' in size <10.95> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 2891.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 2874.
 
  [54]
-Underfull \hbox (badness 3568) in paragraph at lines 2908--2909
+Underfull \hbox (badness 3568) in paragraph at lines 2891--2892
 []\OT1/ptm/m/sc/10.95 Please note: \OT1/ptm/m/n/10.95 if \OT1/phv/m/n/10.95 gra
 pe \OT1/ptm/m/n/10.95 is not loaded, then this func-tion will not work when \OT
 1/pcr/m/n/10.95 S
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2908--2909
+Underfull \hbox (badness 10000) in paragraph at lines 2891--2892
 \OT1/ptm/m/n/10.95 sat-is-fies \OT1/pcr/m/n/10.95 IsTransformationSemigroup \OT
 1/ptm/m/n/10.95 (\OT1/ptm/b/n/10.95 Reference: Is-Trans-for-ma-tion-Semi-group\
 OT1/ptm/m/n/10.95 ) or
  []
 
 [55]
-Underfull \hbox (badness 10000) in paragraph at lines 2978--2981
+Underfull \hbox (badness 10000) in paragraph at lines 2961--2964
 
  []
 
 
-Underfull \hbox (badness 2027) in paragraph at lines 2983--2984
+Underfull \hbox (badness 2027) in paragraph at lines 2966--2967
 []\OT1/pcr/m/n/10.95 AutomorphismsSemigroupInGroup \OT1/ptm/m/n/10.95 re-turns 
 the group of au-to-mor-phisms of the trans-for-
  []
 
 
-Underfull \hbox (badness 2617) in paragraph at lines 2983--2984
+Underfull \hbox (badness 2617) in paragraph at lines 2966--2967
 \OT1/ptm/m/n/10.95 ma-tion semi-group \OT1/pcr/m/n/10.95 S \OT1/ptm/m/n/10.95 t
 hat also be-long to the group \OT1/pcr/m/n/10.95 G\OT1/ptm/m/n/10.95 . If the v
 alue of \OT1/pcr/m/n/10.95 G \OT1/ptm/m/n/10.95 is \OT1/pcr/m/n/10.95 fail\OT1/
@@ -1152,25 +1159,30 @@ ptm/m/n/10.95 , then
  []
 
 [56]
-Underfull \hbox (badness 2790) in paragraph at lines 3001--3002
+Underfull \hbox (badness 2790) in paragraph at lines 2984--2985
 \OT1/ptm/m/sc/10.95 Please note: \OT1/ptm/m/n/10.95 if \OT1/phv/m/n/10.95 grape
  \OT1/ptm/m/n/10.95 is not loaded, then this func-tion will not work when \OT1/
 pcr/m/n/10.95 S \OT1/ptm/m/n/10.95 sat-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3001--3002
+Underfull \hbox (badness 10000) in paragraph at lines 2984--2985
 \OT1/ptm/m/n/10.95 is-fies \OT1/pcr/m/n/10.95 IsTransformationSemigroup \OT1/pt
 m/m/n/10.95 (\OT1/ptm/b/n/10.95 Reference: Is-Trans-for-ma-tion-Semi-group\OT1/
 ptm/m/n/10.95 ) or
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3050--3053
+Underfull \hbox (badness 10000) in paragraph at lines 3033--3036
 
  []
 
 [57]
+Underfull \hbox (badness 10000) in paragraph at lines 3048--3051
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 3065--3068
 
  []
@@ -1185,169 +1197,158 @@ Underfull \hbox (badness 10000) in paragraph at lines 3099--3102
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 3116--3119
-
- []
-
 [58]
-Underfull \hbox (badness 10000) in paragraph at lines 3134--3137
+Underfull \hbox (badness 10000) in paragraph at lines 3117--3120
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3159--3162
+Underfull \hbox (badness 10000) in paragraph at lines 3142--3145
 
  []
 
 [59]
-Underfull \hbox (badness 10000) in paragraph at lines 3197--3200
+Underfull \hbox (badness 10000) in paragraph at lines 3180--3183
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3241--3244
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 3256--3259
+Underfull \hbox (badness 10000) in paragraph at lines 3224--3227
 
  []
 
 [60]
-Underfull \hbox (badness 10000) in paragraph at lines 3271--3274
+Underfull \hbox (badness 10000) in paragraph at lines 3239--3242
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3299--3302
+Underfull \hbox (badness 10000) in paragraph at lines 3254--3257
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3282--3285
 
  []
 
 [61]
-Underfull \hbox (badness 10000) in paragraph at lines 3342--3345
+Underfull \hbox (badness 10000) in paragraph at lines 3325--3328
 
  []
 
 [62]
-Underfull \hbox (badness 10000) in paragraph at lines 3377--3380
+Underfull \hbox (badness 10000) in paragraph at lines 3360--3363
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3412--3415
+Underfull \hbox (badness 10000) in paragraph at lines 3395--3398
 
  []
 
 [63]
-Underfull \hbox (badness 10000) in paragraph at lines 3471--3474
+Underfull \hbox (badness 10000) in paragraph at lines 3454--3457
 
  []
 
 [64]
-Underfull \hbox (badness 10000) in paragraph at lines 3501--3504
+Underfull \hbox (badness 10000) in paragraph at lines 3484--3487
 
  []
 
 
-Underfull \hbox (badness 1552) in paragraph at lines 3506--3507
+Underfull \hbox (badness 1552) in paragraph at lines 3489--3490
 []\OT1/ptm/m/n/10.95 returns \OT1/pcr/m/n/10.95 true \OT1/ptm/m/n/10.95 if the 
 ob-ject \OT1/pcr/m/n/10.95 f \OT1/ptm/m/n/10.95 is rep-re-sented as an au-to-mo
 r-phism of a zero group; see
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3513--3516
+Underfull \hbox (badness 10000) in paragraph at lines 3496--3499
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3532--3535
+Underfull \hbox (badness 10000) in paragraph at lines 3515--3518
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3537--3539
+Underfull \hbox (badness 10000) in paragraph at lines 3520--3522
 []\OT1/ptm/m/n/10.95 if \OT1/pcr/m/n/10.95 G \OT1/ptm/m/n/10.95 is the au-to-mo
 r-phism group of a sim-ple trans-for-ma-tion semi-group, then
  []
 
 
-Underfull \hbox (badness 2277) in paragraph at lines 3537--3539
+Underfull \hbox (badness 2277) in paragraph at lines 3520--3522
 \OT1/pcr/m/n/10.95 IsomorphismAutomorphismGroupOfRMS \OT1/ptm/m/n/10.95 re-turn
 s a \OT1/pcr/m/n/10.95 GroupHomomorphismByImages \OT1/ptm/m/n/10.95 (\OT1/ptm/b
 /n/10.95 Reference:
  []
 
 [65]
-Underfull \hbox (badness 10000) in paragraph at lines 3568--3571
+Underfull \hbox (badness 10000) in paragraph at lines 3551--3554
 
  []
 
 
-Underfull \hbox (badness 3635) in paragraph at lines 3573--3574
+Underfull \hbox (badness 3635) in paragraph at lines 3556--3557
 \OT1/ptm/m/n/10.95 re-turns an iso-mor-phism from \OT1/pcr/m/n/10.95 G \OT1/ptm
 /m/n/10.95 to a per-mu-ta-tion group by com-pos-ing the re-sult \OT1/pcr/m/n/10
 .95 f \OT1/ptm/m/n/10.95 of
  []
 
 
-Underfull \hbox (badness 4686) in paragraph at lines 3577--3578
+Underfull \hbox (badness 4686) in paragraph at lines 3560--3561
 []\OT1/ptm/m/n/10.95 if \OT1/pcr/m/n/10.95 G \OT1/ptm/m/n/10.95 is a trans-for-
 ma-tion semi-group that sat-is-fies \OT1/pcr/m/n/10.95 IsGroupAsSemigroup \OT1/
 ptm/m/n/10.95 ([][]5.2.3[][]), then
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 3616--3619
+[66]
+Underfull \hbox (badness 10000) in paragraph at lines 3599--3602
 
  []
 
-[66]
-Underfull \hbox (badness 1210) in paragraph at lines 3621--3623
+
+Underfull \hbox (badness 1210) in paragraph at lines 3604--3606
 []\OT1/ptm/m/n/10.95 returns an iso-mor-phism to a finitely pre-sented semi-gro
 up from the trans-for-ma-tion semi-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3643--3646
+Underfull \hbox (badness 10000) in paragraph at lines 3626--3629
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3651--3652
+Underfull \hbox (badness 10000) in paragraph at lines 3634--3635
 []\OT1/ptm/m/n/10.95 If \OT1/pcr/m/n/10.95 S \OT1/ptm/m/n/10.95 sat-is-fies \OT
 1/pcr/m/n/10.95 IsSemigroup \OT1/ptm/m/n/10.95 (\OT1/ptm/b/n/10.95 Reference: I
 s-Semi-group\OT1/ptm/m/n/10.95 ), use the com-mand
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3670--3673
+Underfull \hbox (badness 10000) in paragraph at lines 3653--3656
 
  []
 
-[67]
-Underfull \hbox (badness 10000) in paragraph at lines 3737--3740
+[67] [68]
+Underfull \hbox (badness 10000) in paragraph at lines 3720--3723
 
  []
 
-[68]
-Underfull \hbox (badness 10000) in paragraph at lines 3779--3782
+
+Underfull \hbox (badness 10000) in paragraph at lines 3762--3765
 
  []
 
-(./monoid.bbl (./monoid.brf)
+[69] (./monoid.bbl (./monoid.brf)
 \tf@brf=\write7
 \openout7 = `monoid.brf'.
 
- [69]
-Underfull \hbox (badness 7963) in paragraph at lines 39--39
-[]\OT1/ptm/m/n/10.95 G. Kudryavt-seva and V. Ma-zorchuk.  On kisel-man's semi-g
-roup.  2005.
- []
-
-) (./monoid.ind [70
+ [70]) (./monoid.ind [71
 
 ]
 Overfull \hbox (9.78952pt too wide) in paragraph at lines 12--14
@@ -1366,19 +1367,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 82--84
 
  []
 
-[71
+[72
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 152--154
 []\OT1/pcr/m/n/10.95 SemigroupHomomorphismByImagesOfGensNC\OT1/ptm/m/n/10.95 ,
  []
 
-[72]) (./monoid.aux) ) 
+[73]) (./monoid.aux) ) 
 Here is how much of TeX's memory you used:
- 4348 strings out of 94073
- 62815 string characters out of 1162984
- 117912 words of memory out of 1500000
- 7178 multiletter control sequences out of 10000+50000
+ 4350 strings out of 94073
+ 62816 string characters out of 1162984
+ 118915 words of memory out of 1500000
+ 7181 multiletter control sequences out of 10000+50000
  51712 words of font info for 95 fonts, out of 1200000 for 2000
  645 hyphenation exceptions out of 8191
  27i,7n,30p,1040b,622s stack positions out of 5000i,500n,6000p,200000b,5000s
@@ -1395,9 +1396,9 @@ ic/uhvro8a.pfb></usr/local/texlive/2007/texmf-dist/fonts/type1/urw/times/utmb8a
 .pfb></usr/local/texlive/2007/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr
 /local/texlive/2007/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/tex
 live/2007/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on monoid.pdf (72 pages, 426497 bytes).
+Output written on monoid.pdf (73 pages, 426790 bytes).
 PDF statistics:
- 1235 PDF objects out of 1440 (max. 8388607)
- 373 named destinations out of 1000 (max. 131072)
+ 1237 PDF objects out of 1440 (max. 8388607)
+ 372 named destinations out of 1000 (max. 131072)
  17 words of extra memory for PDF output out of 10000 (max. 10000000)
 

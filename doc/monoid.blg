@@ -2,59 +2,44 @@ This is BibTeX, Version 0.99c (Web2C 7.5.6)
 The top-level auxiliary file: monoid.aux
 The style file: alpha.bst
 Database file #1: MONOID.bib
-I was expecting a `,' or a `}'---line 57 of file MONOID.bib
- :       
- :       year = {1998},
-(Error may have been on previous line)
-I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 68 of file MONOID.bib
- :       
- :       year = {2002},      MRCLASS = {20M20 (68W30) },
-(Error may have been on previous line)
-I'm skipping whatever remains of this entry
-Warning--empty journal in computing
-Warning--empty journal in mazorchuk
-Warning--empty year in pfeiffer2
-Warning--empty year in pfeiffer1
 You've used 9 entries,
             2543 wiz_defined-function locations,
-            615 strings with 5613 characters,
-and the built_in function-call counts, 3541 in all, are:
-= -- 356
-> -- 190
+            622 strings with 5668 characters,
+and the built_in function-call counts, 3843 in all, are:
+= -- 393
+> -- 196
 < -- 2
-+ -- 66
-- -- 65
-* -- 267
-:= -- 615
-add.period$ -- 31
++ -- 68
+- -- 68
+* -- 316
+:= -- 651
+add.period$ -- 28
 call.type$ -- 9
-change.case$ -- 57
-chr.to.int$ -- 8
-cite$ -- 13
-duplicate$ -- 126
-empty$ -- 231
-format.name$ -- 75
-if$ -- 689
-int.to.chr$ -- 2
+change.case$ -- 58
+chr.to.int$ -- 9
+cite$ -- 9
+duplicate$ -- 129
+empty$ -- 263
+format.name$ -- 78
+if$ -- 755
+int.to.chr$ -- 1
 int.to.str$ -- 0
 missing$ -- 10
-newline$ -- 52
+newline$ -- 49
 num.names$ -- 27
-pop$ -- 50
+pop$ -- 36
 preamble$ -- 1
-purify$ -- 67
+purify$ -- 68
 quote$ -- 0
-skip$ -- 104
+skip$ -- 111
 stack$ -- 0
-substring$ -- 176
-swap$ -- 9
+substring$ -- 251
+swap$ -- 11
 text.length$ -- 2
 text.prefix$ -- 1
 top$ -- 0
 type$ -- 68
-warning$ -- 4
-while$ -- 36
+warning$ -- 0
+while$ -- 42
 width$ -- 11
-write$ -- 121
-(There were 2 error messages)
+write$ -- 122

@@ -44,24 +44,24 @@
 ##	a transformation semigroup, so that the methods defined in the
 ##	<Package>MONOID</Package> are used in preference to those in the library.
 ##	<Example>
-##gap&gt; a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
-##gap&gt; b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
-##gap&gt; M:=Semigroup(a,b);;
-##gap&gt; GreensLClassOfElement(M,a);
-##{Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
-##gap&gt; IsAssociatedSemigpTransSemigp(last);
-##true
-##gap&gt; f:=FreeSemigroup(3);;
-##gap&gt; a:=f.1;; b:=f.2;; c:=f.3;; 
-##gap&gt; s:=f/[[a^2, a], [b^2,b], [c^2,c], [a*b,a], [b*a,b], [a*c,a], 
-##&gt; [c*a,c], [b*c,b],[c*b,c]];
-##&lt;fp semigroup on the generators [ s1, s2, s3 ]&gt;
-##gap&gt; Size(s);
-##3
-##gap&gt; GreensLClassOfElement(s,a);
-##{s1}
-##gap&gt; IsAssociatedSemigpTransSemigp(last);
-##false
+##  gap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
+##  gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
+##  gap> M:=Semigroup(a,b);;
+##  gap> GreensLClassOfElement(M,a);
+##  {Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
+##  gap> IsAssociatedSemigpTransSemigp(last);
+##  true
+##  gap> f:=FreeSemigroup(3);;
+##  gap> a:=f.1;; b:=f.2;; c:=f.3;; 
+##  gap> s:=f/[[a^2, a], [b^2,b], [c^2,c], [a*b,a], [b*a,b], [a*c,a], 
+##  > [c*a,c], [b*c,b],[c*b,c]];
+##  &lt;fp semigroup on the generators [ s1, s2, s3 ]>
+##  gap> Size(s);
+##  3
+##  gap> GreensLClassOfElement(s,a);
+##  {s1}
+##  gap> IsAssociatedSemigpTransSemigp(last);
+##  false
 ##	</Example> <!-- greens.tst -->
 ##	</Description>
 ##  </ManSection>
@@ -159,9 +159,9 @@ DeclareOperation("GreensData", [IsGreensClass and IsAssociatedSemigpTransSemigp]
 ##	under the transformation <C>f</C>. The tuple of sets <C>tup</C> can have 
 ##	any number of elements.
 ##	<Example>
-##gap&gt; f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
-##gap&gt; OnTuplesOfSetsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ] ], f);
-##[ [ 5 ], [ 4, 6 ], [ 3 ] ]
+##  gap> f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
+##  gap> OnTuplesOfSetsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ] ], f);
+##  [ [ 5 ], [ 4, 6 ], [ 3 ] ]
 ##	</Example> <!-- greens.tst -->
 ##	</Description>
 ##  </ManSection>
@@ -178,9 +178,9 @@ DeclareGlobalFunction("OnTuplesOfSetsAntiAction");
 ##	returns the kernel of the product <C>f*g</C> of the transformation <C>f</C> 
 ##	with a transformation <C>g</C> having kernel <C>ker</C>. 
 ##	<Example>
-##gap&gt; f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
-##gap&gt; OnKernelsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6, 7, 8 ] ], f);
-##[ [ 1, 2, 7, 8 ], [ 3 ], [ 4, 6 ], [ 5 ] ]
+##  gap> f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
+##  gap> OnKernelsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6, 7, 8 ] ], f);
+##  [ [ 1, 2, 7, 8 ], [ 3 ], [ 4, 6 ], [ 5 ] ]
 ##	</Example> <!-- greens.tst -->
 ##	</Description>
 ##  </ManSection>
@@ -204,23 +204,23 @@ DeclareGlobalFunction("OnKernelsAntiAction");
 ##	in the images of a given size, then the second version of the function will 
 ##	likely be faster.
 ##	<Example>
-##gap&gt;  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
-##&gt; Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;
-##gap&gt; ImagesOfTransSemigroup(S, 6);
-##[  ]
-##gap&gt; ImagesOfTransSemigroup(S, 5);
-##[  ]
-##gap&gt; ImagesOfTransSemigroup(S, 4);
-##[ [ 1, 2, 5, 6 ] ]
-##gap&gt; ImagesOfTransSemigroup(S, 3);
-##[ [ 1, 4, 6 ], [ 2, 5, 6 ] ]
-##gap&gt; ImagesOfTransSemigroup(S, 2);
-##[ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ]
-##gap&gt; ImagesOfTransSemigroup(S, 1);
-##[ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ]
-##gap&gt; ImagesOfTransSemigroup(S);
-##[ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], 
-##  [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
+##  gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
+##  > Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;
+##  gap> ImagesOfTransSemigroup(S, 6);
+##  [  ]
+##  gap> ImagesOfTransSemigroup(S, 5);
+##  [  ]
+##  gap> ImagesOfTransSemigroup(S, 4);
+##  [ [ 1, 2, 5, 6 ] ]
+##  gap> ImagesOfTransSemigroup(S, 3);
+##  [ [ 1, 4, 6 ], [ 2, 5, 6 ] ]
+##  gap> ImagesOfTransSemigroup(S, 2);
+##  [ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ]
+##  gap> ImagesOfTransSemigroup(S, 1);
+##  [ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ]
+##  gap> ImagesOfTransSemigroup(S);
+##  [ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], 
+##    [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
 ##  </Example> 
 ##	</Description>
 ##	</ManSection>
@@ -247,22 +247,22 @@ DeclareAttribute("ImagesOfTransSemigroup", IsTransformationSemigroup, "mutable")
 ##	interested in the images of a given size, then the second version of the 
 ##	function will likely be faster.
 ##	<Example>
-##gap&gt;  S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
-##&gt; Transformation( [ 3, 3, 4, 1 ] ) ]);
-##gap&gt;  KernelsOfTransSemigroup(S);   
-##[ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], 
-##[ 4 ] ], 
-##  [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], 
-##  [ [ 1, 4 ], [ 2 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
-##gap&gt;  KernelsOfTransSemigroup(S,1);
-##[ [ [ 1, 2, 3, 4 ] ] ]
-##gap&gt;  KernelsOfTransSemigroup(S,2);
-##[ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], 
-##  [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
-##gap&gt;  KernelsOfTransSemigroup(S,3);
-##[ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ]
-##gap&gt;  KernelsOfTransSemigroup(S,4);
-##[  ]
+##  gap>  S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
+##  > Transformation( [ 3, 3, 4, 1 ] ) ]);
+##  gap>  KernelsOfTransSemigroup(S);   
+##  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], 
+##  [ 4 ] ], 
+##    [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], 
+##    [ [ 1, 4 ], [ 2 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
+##  gap>  KernelsOfTransSemigroup(S,1);
+##  [ [ [ 1, 2, 3, 4 ] ] ]
+##  gap>  KernelsOfTransSemigroup(S,2);
+##  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], 
+##    [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
+##  gap>  KernelsOfTransSemigroup(S,3);
+##  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ]
+##  gap>  KernelsOfTransSemigroup(S,4);
+##  [  ]
 ##	</Example> <!-- greens.tst -->
 ##	</Description>
 ##	</ManSection>
@@ -304,15 +304,15 @@ DeclareAttribute("InternalKernels", IsTransformationSemigroup, "mutable");
 ##	</Item>
 ##	</List>
 ##	<Example>
-##gap&gt; gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
-##&gt; Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
-##gap&gt; S:=Semigroup(gens);;
-##gap&gt; f:=Transformation( [ 2, 1, 1, 1, 5 ] );;
-##gap&gt; StrongOrbitOfImage(S, f);        
-##[ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
-##      [ 2, 4, 5 ], [ 3, 4, 5 ] ], 
-##  [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
-##      (1,3,2,4) ], Group([ (), (2,5), (1,5) ]) ]
+##  gap> gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
+##  > Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
+##  gap> S:=Semigroup(gens);;
+##  gap> f:=Transformation( [ 2, 1, 1, 1, 5 ] );;
+##  gap> StrongOrbitOfImage(S, f);        
+##  [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
+##        [ 2, 4, 5 ], [ 3, 4, 5 ] ], 
+##    [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
+##        (1,3,2,4) ], Group([ (), (2,5), (1,5) ]) ]
 ##	</Example> <!-- greens.tst -->
 ##	</Description>
 ##	</ManSection>
@@ -332,28 +332,28 @@ DeclareOperation("StrongOrbitOfImage", [IsTransformationSemigroup, IsTransformat
 ##	then an 
 ##	error is returned.
 ##	<Example>
-##gap&gt; gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
-##&gt; Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
-##gap&gt; S:=Semigroup(gens);;
-##gap&gt; f:=Transformation( [ 2, 1, 1, 1, 5 ] );;
-##gap&gt; StrongOrbitOfImage(S, f);;
-##gap&gt; StrongOrbitsOfImages(S);
-##[ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
-##          [ 2, 4, 5 ], [ 3, 4, 5 ] ] ], 
-##  [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
-##          (1,3,2,4) ] ], [ Group([ (), (2,5), (1,5) ]) ] ]
-##gap&gt; f:=Transformation( [ 5, 5, 5, 5, 2 ] );
-##gap&gt; StrongOrbitOfImage(S, f);;
-##gap&gt; StrongOrbitsOfImages(S); 
-##[ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
-##          [ 2, 4, 5 ], [ 3, 4, 5 ] ], 
-##      [ [ 2, 5 ], [ 1, 5 ], [ 1, 3 ], [ 2, 3 ], [ 2, 4 ], [ 4, 5 ], [ 3, 5 ], 
-##          [ 1, 2 ], [ 3, 4 ] ] ], 
-##  [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
-##          (1,3,2,4) ], 
-##      [ (), (1,5,2), (1,2)(3,5,4), (2,5,4,3), (2,5,4), (2,3,4,5), (2,3), 
-##          (1,5,4,3), (2,3)(4,5) ] ], 
-##  [ Group([ (), (2,5), (1,5) ]), Group([ (), (2,5) ]) ] ]
+##  gap> gens:=[ Transformation( [ 3, 5, 2, 5, 1 ] ), 
+##  > Transformation( [ 4, 3, 2, 1, 5 ] ) ];;
+##  gap> S:=Semigroup(gens);;
+##  gap> f:=Transformation( [ 2, 1, 1, 1, 5 ] );;
+##  gap> StrongOrbitOfImage(S, f);;
+##  gap> StrongOrbitsOfImages(S);
+##  [ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
+##            [ 2, 4, 5 ], [ 3, 4, 5 ] ] ], 
+##    [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
+##            (1,3,2,4) ] ], [ Group([ (), (2,5), (1,5) ]) ] ]
+##  gap> f:=Transformation( [ 5, 5, 5, 5, 2 ] );
+##  gap> StrongOrbitOfImage(S, f);;
+##  gap> StrongOrbitsOfImages(S); 
+##  [ [ [ [ 1, 2, 5 ], [ 1, 3, 5 ], [ 1, 2, 3 ], [ 2, 3, 5 ], [ 2, 3, 4 ], 
+##            [ 2, 4, 5 ], [ 3, 4, 5 ] ], 
+##        [ [ 2, 5 ], [ 1, 5 ], [ 1, 3 ], [ 2, 3 ], [ 2, 4 ], [ 4, 5 ], [ 3, 5 ], 
+##            [ 1, 2 ], [ 3, 4 ] ] ], 
+##    [ [ (), (1,5,2,3), (1,2)(3,5,4), (1,3,2,5), (1,3)(2,5,4), (1,3,4,5,2), 
+##            (1,3,2,4) ], 
+##        [ (), (1,5,2), (1,2)(3,5,4), (2,5,4,3), (2,5,4), (2,3,4,5), (2,3), 
+##            (1,5,4,3), (2,3)(4,5) ] ], 
+##    [ Group([ (), (2,5), (1,5) ]), Group([ (), (2,5) ]) ] ]
 ##	</Example><!-- greens.tst -->
 ##	</Description>
 ##	</ManSection>
@@ -424,16 +424,16 @@ DeclareRepresentation("IsGreensDClassDataRep",
 ##	details can be found in Algorithm C, D, E, F, and U of 
 ##	<Cite  Key="pfeiffer2"/>.
 ##	<Example>
-##gap&gt; a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
-##gap&gt; b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
-##gap&gt; M:=Semigroup(a,b);;
-##gap&gt; rc:=GreensRClassOfElement(M, a*b*a);
-##{Transformation( [ 4, 1, 6, 5, 2, 2 ] )}
-##gap&gt; GreensRClassData(rc);
-##GreensRClassData( Transformation( [ 4, 1, 6, 5, 2, 2 ] ), [ [ 1, 2, 4, 5, 6 ], 
-##[ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ], [ 1, 2, 3, 4, 5 ] ], [ (), (1,2)
-##(3,6,5,4), (3,5)(4,6), (1,6,3,2)(4,5) ], Group( [ (), (2,4,6), (2,6,4), 
-##(1,2,6)(4,5) ] ) )
+##  gap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
+##  gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
+##  gap> M:=Semigroup(a,b);;
+##  gap> rc:=GreensRClassOfElement(M, a*b*a);
+##  {Transformation( [ 4, 1, 6, 5, 2, 2 ] )}
+##  gap> GreensRClassData(rc);
+##  GreensRClassData( Transformation( [ 4, 1, 6, 5, 2, 2 ] ), [ [ 1, 2, 4, 5, 6 ], 
+##  [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ], [ 1, 2, 3, 4, 5 ] ], [ (), (1,2)
+##  (3,6,5,4), (3,5)(4,6), (1,6,3,2)(4,5) ], Group( [ (), (2,4,6), (2,6,4), 
+##  (1,2,6)(4,5) ] ) )
 ##	</Example><!-- greens.tst -->
 ##	</Description>
 ##	</ManSection>
@@ -454,13 +454,13 @@ DeclareAttribute("GreensRClassData", IsGreensRClass and IsAssociatedSemigpTransS
 ##	<C>GreensRClassReps[i][j]</C> is the representative of 
 ##	<Ref Attr="GradedRClasses"/><C>[i][j]</C>.
 ##	<Example>
-##gap&gt; gens:=[ Transformation( [ 1, 2, 1, 2, 1 ] ), 
-##&gt; Transformation( [ 3, 4, 2, 1, 4 ] ) ];;
-##gap&gt; S:=Semigroup(gens);; 
-##gap&gt; GreensRClassReps(S);
-##[ [ Transformation( [ 1, 2, 1, 2, 1 ] ), Transformation( [ 1, 2, 2, 1, 2 ] ), 
-##      Transformation( [ 2, 1, 2, 1, 1 ] ) ], 
-##  [ Transformation( [ 3, 4, 2, 1, 4 ] ) ] ]
+##  gap> gens:=[ Transformation( [ 1, 2, 1, 2, 1 ] ), 
+##  > Transformation( [ 3, 4, 2, 1, 4 ] ) ];;
+##  gap> S:=Semigroup(gens);; 
+##  gap> GreensRClassReps(S);
+##  [ [ Transformation( [ 1, 2, 1, 2, 1 ] ), Transformation( [ 1, 2, 2, 1, 2 ] ), 
+##        Transformation( [ 2, 1, 2, 1, 1 ] ) ], 
+##    [ Transformation( [ 3, 4, 2, 1, 4 ] ) ] ]
 ##	</Example><!-- greens.tst -->
 ##	</Description>
 ##	</ManSection>
@@ -480,31 +480,31 @@ DeclareAttribute("GreensRClassReps", IsTransformationSemigroup);
 ##	<Ref Attr="GreensRClasses" BookName="ref"/>. Also <C>GreensRClassReps[i][j]
 ##	</C> is the representative of <Ref Attr="GradedRClasses"/><C>[i][j]</C>.
 ##	<Example>
-##gap&gt; gens:=[ Transformation( [ 5, 1, 1, 5, 1 ] ), 
-##Transformation( [ 5, 2, 4, 3, 2 ] ) ];;
-##gap&gt; S:=Semigroup(gens);;
-##gap&gt; GradedRClasses(S);
-##[ [ GreensRClassData( Transformation( [ 5, 1, 1, 5, 1 ] ), [ [ 1, 5 ] ], 
-##        [ () ], Group( [ (), (1,5) ] ) ), GreensRClassData( Transformation( 
-##        [ 1, 1, 5, 1, 1 ] ), [ [ 1, 5 ] ], [ () ], Group( [ (), (1,5) ] ) ), 
-##      GreensRClassData( Transformation( [ 1, 1, 1, 5, 1 ] ), [ [ 1, 5 ] ], 
-##        [ () ], Group( [ (), (1,5) ] ) ) ], 
-##  [ GreensRClassData( Transformation( [ 5, 2, 4, 3, 2 ] ), [ [ 2, 3, 4, 5 ] 
-##         ], [ () ], Group( [ () ] ) ) ], 
-##  [ GreensRClassData( Transformation( [ 2, 5, 5, 2, 5 ] ), [ [ 2, 5 ] ], 
-##        [ () ], Group( [ () ] ) ), GreensRClassData( Transformation( 
-##        [ 5, 2, 2, 5, 2 ] ), [ [ 2, 5 ] ], [ () ], Group( [ () ] ) ), 
-##      GreensRClassData( Transformation( [ 5, 5, 2, 5, 5 ] ), [ [ 2, 5 ] ], 
-##        [ () ], Group( [ () ] ) ), GreensRClassData( Transformation( 
-##        [ 2, 2, 5, 2, 2 ] ), [ [ 2, 5 ] ], [ () ], Group( [ () ] ) ), 
-##      GreensRClassData( Transformation( [ 5, 5, 5, 2, 5 ] ), [ [ 2, 5 ] ], 
-##        [ () ], Group( [ () ] ) ), GreensRClassData( Transformation( 
-##        [ 2, 2, 2, 5, 2 ] ), [ [ 2, 5 ] ], [ () ], Group( [ () ] ) ) ], 
-##  [ GreensRClassData( Transformation( [ 2, 2, 3, 4, 2 ] ), [ [ 2, 3, 4 ] ], 
-##        [ () ], Group( [ (), (3,4) ] ) ) ], 
-##  [ GreensRClassData( Transformation( [ 1, 1, 1, 1, 1 ] ), 
-##        [ [ 1 ], [ 5 ], [ 2 ] ], [ (), (1,2,3,4,5), (1,2) ], Group( 
-##        [ () ] ) ) ] ]
+##  gap> gens:=[ Transformation( [ 5, 1, 1, 5, 1 ] ), 
+##  Transformation( [ 5, 2, 4, 3, 2 ] ) ];;
+##  gap> S:=Semigroup(gens);;
+##  gap> GradedRClasses(S);
+##  [ [ GreensRClassData( Transformation( [ 5, 1, 1, 5, 1 ] ), [ [ 1, 5 ] ], 
+##          [ () ], Group( [ (), (1,5) ] ) ), GreensRClassData( Transformation( 
+##          [ 1, 1, 5, 1, 1 ] ), [ [ 1, 5 ] ], [ () ], Group( [ (), (1,5) ] ) ), 
+##        GreensRClassData( Transformation( [ 1, 1, 1, 5, 1 ] ), [ [ 1, 5 ] ], 
+##          [ () ], Group( [ (), (1,5) ] ) ) ], 
+##    [ GreensRClassData( Transformation( [ 5, 2, 4, 3, 2 ] ), [ [ 2, 3, 4, 5 ] 
+##           ], [ () ], Group( [ () ] ) ) ], 
+##    [ GreensRClassData( Transformation( [ 2, 5, 5, 2, 5 ] ), [ [ 2, 5 ] ], 
+##          [ () ], Group( [ () ] ) ), GreensRClassData( Transformation( 
+##          [ 5, 2, 2, 5, 2 ] ), [ [ 2, 5 ] ], [ () ], Group( [ () ] ) ), 
+##        GreensRClassData( Transformation( [ 5, 5, 2, 5, 5 ] ), [ [ 2, 5 ] ], 
+##          [ () ], Group( [ () ] ) ), GreensRClassData( Transformation( 
+##          [ 2, 2, 5, 2, 2 ] ), [ [ 2, 5 ] ], [ () ], Group( [ () ] ) ), 
+##        GreensRClassData( Transformation( [ 5, 5, 5, 2, 5 ] ), [ [ 2, 5 ] ], 
+##          [ () ], Group( [ () ] ) ), GreensRClassData( Transformation( 
+##          [ 2, 2, 2, 5, 2 ] ), [ [ 2, 5 ] ], [ () ], Group( [ () ] ) ) ], 
+##    [ GreensRClassData( Transformation( [ 2, 2, 3, 4, 2 ] ), [ [ 2, 3, 4 ] ], 
+##          [ () ], Group( [ (), (3,4) ] ) ) ], 
+##    [ GreensRClassData( Transformation( [ 1, 1, 1, 1, 1 ] ), 
+##          [ [ 1 ], [ 5 ], [ 2 ] ], [ (), (1,2,3,4,5), (1,2) ], Group( 
+##          [ () ] ) ) ] ]
 ##	</Example> <!-- greens.tst -->
 ##	</Description>
 ##	</ManSection>
@@ -545,15 +545,15 @@ DeclareAttribute("PositionsRClasses", IsTransformationSemigroup);
 ##	Further 
 ##	details can be found in Algorithm G, H, I, and J of <Cite Key="pfeiffer2"/>.
 ##	<Example>
-##gap&gt; gens:=[ Transformation( [ 4, 1, 4, 5, 3 ] ),
-##&gt; Transformation( [ 5, 3, 5, 4, 3 ] ) ];;
-##gap&gt; S:=Semigroup(gens);;
-##gap&gt; C:=GreensLClassOfElement(S, gens[1]*gens[2]*gens[1]);
-##{Transformation( [ 5, 3, 5, 4, 3 ] )}
-##gap&gt; GreensLClassData(C);
-##GreensLClassData( Transformation( [ 5, 3, 5, 4, 3 ] ), 
-##[ [ [ 1, 3 ], [ 2, 5 ], [ 4 ] ] ], [ Binary Relation on 5 points ], 
-##[ Binary Relation on 5 points ], Group( [ (), (3,5,4), (3,5) ] ) )
+##  gap> gens:=[ Transformation( [ 4, 1, 4, 5, 3 ] ),
+##  > Transformation( [ 5, 3, 5, 4, 3 ] ) ];;
+##  gap> S:=Semigroup(gens);;
+##  gap> C:=GreensLClassOfElement(S, gens[1]*gens[2]*gens[1]);
+##  {Transformation( [ 5, 3, 5, 4, 3 ] )}
+##  gap> GreensLClassData(C);
+##  GreensLClassData( Transformation( [ 5, 3, 5, 4, 3 ] ), 
+##  [ [ [ 1, 3 ], [ 2, 5 ], [ 4 ] ] ], [ Binary Relation on 5 points ], 
+##  [ Binary Relation on 5 points ], Group( [ (), (3,5,4), (3,5) ] ) )
 ##	</Example> <!-- greens.tst --> 
 ##	</Description>
 ##	</ManSection>
@@ -582,12 +582,12 @@ DeclareAttribute("GreensLClassData", IsGreensLClass and IsAssociatedSemigpTransS
 ##	Further details can be found in Algorithm K, L, M, and N of 
 ##	<Cite Key="pfeiffer2"/>.
 ##	<Example>
-##gap&gt; gens:=[ Transformation( [ 2, 2, 5, 2, 3 ] ), 
-##&gt; Transformation( [ 2, 5, 3, 5, 3 ] ) ];;
-##gap&gt; S:=Semigroup(gens);;
-##gap&gt; f:=Transformation( [ 5, 5, 3, 5, 3 ] );;
-##gap&gt; GreensHClassData(GreensHClassOfElement(S, f));
-##GreensHClassData( Transformation( [ 5, 5, 3, 5, 3 ] ), Group( () ) )
+##  gap> gens:=[ Transformation( [ 2, 2, 5, 2, 3 ] ), 
+##  > Transformation( [ 2, 5, 3, 5, 3 ] ) ];;
+##  gap> S:=Semigroup(gens);;
+##  gap> f:=Transformation( [ 5, 5, 3, 5, 3 ] );;
+##  gap> GreensHClassData(GreensHClassOfElement(S, f));
+##  GreensHClassData( Transformation( [ 5, 5, 3, 5, 3 ] ), Group( () ) )
 ##	</Example> <!-- greens.tst --> 
 ##	</Description>
 ##	</ManSection>
@@ -621,14 +621,14 @@ DeclareAttribute("GreensHClassData", IsGreensHClass and IsAssociatedSemigpTransS
 ##	Further details can be found in Algorithm O, P, Q, R, S, and T of 
 ##	<Cite Key="pfeiffer2"/>.
 ##	<Example>
-##gap&gt; gens:=[ Transformation( [ 4, 1, 5, 2, 4 ] ), 
-##&gt; Transformation( [ 4, 4, 1, 5, 3 ] ) ];;
-##gap&gt; S:=Semigroup(gens);;
-##gap&gt; f:=Transformation( [ 5, 5, 3, 3, 3 ] );;
-##gap&gt; GreensDClassData(GreensDClassOfElement(S, f));
-##GreensDClassData( Transformation( [ 5, 5, 3, 3, 3 
-##] ), GreensRClassData( Transformation( [ 5, 5, 3, 3, 3 
-##] ) ), GreensLClassData( Transformation( [ 5, 5, 3, 3, 3 ] ) ) )
+##  gap> gens:=[ Transformation( [ 4, 1, 5, 2, 4 ] ), 
+##  > Transformation( [ 4, 4, 1, 5, 3 ] ) ];;
+##  gap> S:=Semigroup(gens);;
+##  gap> f:=Transformation( [ 5, 5, 3, 3, 3 ] );;
+##  gap> GreensDClassData(GreensDClassOfElement(S, f));
+##  GreensDClassData( Transformation( [ 5, 5, 3, 3, 3 
+##  ] ), GreensRClassData( Transformation( [ 5, 5, 3, 3, 3 
+##  ] ) ), GreensLClassData( Transformation( [ 5, 5, 3, 3, 3 ] ) ) )
 ##	</Example> <!-- greens.tst --> 
 ##	</Description>
 ##	</ManSection>
@@ -654,18 +654,18 @@ DeclareAttribute("GreensDClassData", IsGreensDClass and IsAssociatedSemigpTransS
 ##	returns the <C>schutz</C> component of <C>GreensData</C> with argument
 ##	<C>D</C>.
 ##	<Example>
-##gap&gt; gens:=[ Transformation( [ 4, 4, 3, 5, 3 ] ), 
-##&gt; Transformation( [ 5, 1, 1, 4, 1 ] ), 
-##&gt; Transformation( [ 5, 5, 4, 4, 5 ] ) ];;
-##gap&gt; f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
-##gap&gt; SchutzenbergerGroup(GreensDClassOfElement(S, f));
-##Group([ (), (4,5) ])
-##gap&gt; SchutzenbergerGroup(GreensRClassOfElement(S, f));
-##Group([ (), (4,5) ])
-##gap&gt; SchutzenbergerGroup(GreensLClassOfElement(S, f));
-##Group([ (), (4,5) ])
-##gap&gt; SchutzenbergerGroup(GreensHClassOfElement(S, f));
-##Group([ (), (4,5) ])
+##  gap> gens:=[ Transformation( [ 4, 4, 3, 5, 3 ] ), 
+##  > Transformation( [ 5, 1, 1, 4, 1 ] ), 
+##  > Transformation( [ 5, 5, 4, 4, 5 ] ) ];;
+##  gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
+##  gap> SchutzenbergerGroup(GreensDClassOfElement(S, f));
+##  Group([ (), (4,5) ])
+##  gap> SchutzenbergerGroup(GreensRClassOfElement(S, f));
+##  Group([ (), (4,5) ])
+##  gap> SchutzenbergerGroup(GreensLClassOfElement(S, f));
+##  Group([ (), (4,5) ])
+##  gap> SchutzenbergerGroup(GreensHClassOfElement(S, f));
+##  Group([ (), (4,5) ])
 ##	</Example> <!-- greens.tst -->
 ##	</Description>
 ##	</ManSection>
@@ -711,21 +711,21 @@ DeclareAttribute("PartialOrderOfDClasses", IsSemigroup, "mutable");
 ##	idempotents of a given rank, then the second version of the function will 
 ##	likely be faster.
 ##	<Example>
-##gap&gt; S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
-##&gt; Transformation( [ 3, 3, 1, 1 ] ) ]);;
-##gap&gt; Idempotents(S, 1);
-##[  ]
-##gap&gt; Idempotents(S, 2);                        
-##[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
-##  Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
-##gap&gt; Idempotents(S, 3);                        
-##[  ]
-##gap&gt; Idempotents(S, 4);                        
-##[ Transformation( [ 1, 2, 3, 4 ] ) ]
-##gap&gt; Idempotents(S);
-##[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 2, 3, 4 ] ), 
-##  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
-##  Transformation( [ 4, 2, 2, 4 ] ) ]
+##  gap> S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
+##  > Transformation( [ 3, 3, 1, 1 ] ) ]);;
+##  gap> Idempotents(S, 1);
+##  [  ]
+##  gap> Idempotents(S, 2);                        
+##  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+##    Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
+##  gap> Idempotents(S, 3);                        
+##  [  ]
+##  gap> Idempotents(S, 4);                        
+##  [ Transformation( [ 1, 2, 3, 4 ] ) ]
+##  gap> Idempotents(S);
+##  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 2, 3, 4 ] ), 
+##    Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
+##    Transformation( [ 4, 2, 2, 4 ] ) ]
 ##	</Example> 
 ##	</Description>
 ##	</ManSection>

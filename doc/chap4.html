@@ -145,16 +145,16 @@ gap&gt; GreensRClasses(S);
 
 <table class="example">
 <tr><td><pre>
-gap&gt; a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
-gap&gt; b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
-gap&gt; M:=Semigroup(a,b);;
-gap&gt; rc:=GreensRClassOfElement(M, a*b*a);
-{Transformation( [ 4, 1, 6, 5, 2, 2 ] )}
-gap&gt; GreensRClassData(rc);
-GreensRClassData( Transformation( [ 4, 1, 6, 5, 2, 2 ] ), [ [ 1, 2, 4, 5, 6 ], 
-[ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ], [ 1, 2, 3, 4, 5 ] ], [ (), (1,2)
-(3,6,5,4), (3,5)(4,6), (1,6,3,2)(4,5) ], Group( [ (), (2,4,6), (2,6,4), 
-(1,2,6)(4,5) ] ) )
+  gap&gt; a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
+  gap&gt; b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
+  gap&gt; M:=Semigroup(a,b);;
+  gap&gt; rc:=GreensRClassOfElement(M, a*b*a);
+  {Transformation( [ 4, 1, 6, 5, 2, 2 ] )}
+  gap&gt; GreensRClassData(rc);
+  GreensRClassData( Transformation( [ 4, 1, 6, 5, 2, 2 ] ), [ [ 1, 2, 4, 5, 6 ], 
+  [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ], [ 1, 2, 3, 4, 5 ] ], [ (), (1,2)
+  (3,6,5,4), (3,5)(4,6), (1,6,3,2)(4,5) ], Group( [ (), (2,4,6), (2,6,4), 
+  (1,2,6)(4,5) ] ) )
 </pre></td></tr></table>
 
 <p><a id="X80A97BBB8273D151" name="X80A97BBB8273D151"></a></p>
@@ -204,15 +204,15 @@ KernelOfTransformation(invrelts[i]*rep)=strongorb[i].
 
 <table class="example">
 <tr><td><pre>
-gap&gt; gens:=[ Transformation( [ 4, 1, 4, 5, 3 ] ),
-&gt; Transformation( [ 5, 3, 5, 4, 3 ] ) ];;
-gap&gt; S:=Semigroup(gens);;
-gap&gt; C:=GreensLClassOfElement(S, gens[1]*gens[2]*gens[1]);
-{Transformation( [ 5, 3, 5, 4, 3 ] )}
-gap&gt; GreensLClassData(C);
-GreensLClassData( Transformation( [ 5, 3, 5, 4, 3 ] ), 
-[ [ [ 1, 3 ], [ 2, 5 ], [ 4 ] ] ], [ Binary Relation on 5 points ], 
-[ Binary Relation on 5 points ], Group( [ (), (3,5,4), (3,5) ] ) )
+  gap&gt; gens:=[ Transformation( [ 4, 1, 4, 5, 3 ] ),
+  &gt; Transformation( [ 5, 3, 5, 4, 3 ] ) ];;
+  gap&gt; S:=Semigroup(gens);;
+  gap&gt; C:=GreensLClassOfElement(S, gens[1]*gens[2]*gens[1]);
+  {Transformation( [ 5, 3, 5, 4, 3 ] )}
+  gap&gt; GreensLClassData(C);
+  GreensLClassData( Transformation( [ 5, 3, 5, 4, 3 ] ), 
+  [ [ [ 1, 3 ], [ 2, 5 ], [ 4 ] ] ], [ Binary Relation on 5 points ], 
+  [ Binary Relation on 5 points ], Group( [ (), (3,5,4), (3,5) ] ) )
 </pre></td></tr></table>
 
 <p><a id="X8037C1BC7D372310" name="X8037C1BC7D372310"></a></p>
@@ -236,12 +236,12 @@ GreensLClassData( Transformation( [ 5, 3, 5, 4, 3 ] ),
 
 <table class="example">
 <tr><td><pre>
-gap&gt; gens:=[ Transformation( [ 2, 2, 5, 2, 3 ] ), 
-&gt; Transformation( [ 2, 5, 3, 5, 3 ] ) ];;
-gap&gt; S:=Semigroup(gens);;
-gap&gt; f:=Transformation( [ 5, 5, 3, 5, 3 ] );;
-gap&gt; GreensHClassData(GreensHClassOfElement(S, f));
-GreensHClassData( Transformation( [ 5, 5, 3, 5, 3 ] ), Group( () ) )
+  gap&gt; gens:=[ Transformation( [ 2, 2, 5, 2, 3 ] ), 
+  &gt; Transformation( [ 2, 5, 3, 5, 3 ] ) ];;
+  gap&gt; S:=Semigroup(gens);;
+  gap&gt; f:=Transformation( [ 5, 5, 3, 5, 3 ] );;
+  gap&gt; GreensHClassData(GreensHClassOfElement(S, f));
+  GreensHClassData( Transformation( [ 5, 5, 3, 5, 3 ] ), Group( () ) )
 </pre></td></tr></table>
 
 <p><a id="X81940FB4814D25B7" name="X81940FB4814D25B7"></a></p>
@@ -274,14 +274,14 @@ GreensHClassData( Transformation( [ 5, 5, 3, 5, 3 ] ), Group( () ) )
 
 <table class="example">
 <tr><td><pre>
-gap&gt; gens:=[ Transformation( [ 4, 1, 5, 2, 4 ] ), 
-&gt; Transformation( [ 4, 4, 1, 5, 3 ] ) ];;
-gap&gt; S:=Semigroup(gens);;
-gap&gt; f:=Transformation( [ 5, 5, 3, 3, 3 ] );;
-gap&gt; GreensDClassData(GreensDClassOfElement(S, f));
-GreensDClassData( Transformation( [ 5, 5, 3, 3, 3 
-] ), GreensRClassData( Transformation( [ 5, 5, 3, 3, 3 
-] ) ), GreensLClassData( Transformation( [ 5, 5, 3, 3, 3 ] ) ) )
+  gap&gt; gens:=[ Transformation( [ 4, 1, 5, 2, 4 ] ), 
+  &gt; Transformation( [ 4, 4, 1, 5, 3 ] ) ];;
+  gap&gt; S:=Semigroup(gens);;
+  gap&gt; f:=Transformation( [ 5, 5, 3, 3, 3 ] );;
+  gap&gt; GreensDClassData(GreensDClassOfElement(S, f));
+  GreensDClassData( Transformation( [ 5, 5, 3, 3, 3 
+  ] ), GreensRClassData( Transformation( [ 5, 5, 3, 3, 3 
+  ] ) ), GreensLClassData( Transformation( [ 5, 5, 3, 3, 3 ] ) ) )
 </pre></td></tr></table>
 
 <p><a id="X82F882B37DFAA974" name="X82F882B37DFAA974"></a></p>
@@ -329,24 +329,24 @@ GreensDClassData( Transformation( [ 5, 5, 3, 3, 3
 
 <table class="example">
 <tr><td><pre>
-gap&gt; a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
-gap&gt; b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
-gap&gt; M:=Semigroup(a,b);;
-gap&gt; GreensLClassOfElement(M,a);
-{Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
-gap&gt; IsAssociatedSemigpTransSemigp(last);
-true
-gap&gt; f:=FreeSemigroup(3);;
-gap&gt; a:=f.1;; b:=f.2;; c:=f.3;; 
-gap&gt; s:=f/[[a^2, a], [b^2,b], [c^2,c], [a*b,a], [b*a,b], [a*c,a], 
-&gt; [c*a,c], [b*c,b],[c*b,c]];
-&lt;fp semigroup on the generators [ s1, s2, s3 ]&gt;
-gap&gt; Size(s);
-3
-gap&gt; GreensLClassOfElement(s,a);
-{s1}
-gap&gt; IsAssociatedSemigpTransSemigp(last);
-false
+  gap&gt; a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
+  gap&gt; b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
+  gap&gt; M:=Semigroup(a,b);;
+  gap&gt; GreensLClassOfElement(M,a);
+  {Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
+  gap&gt; IsAssociatedSemigpTransSemigp(last);
+  true
+  gap&gt; f:=FreeSemigroup(3);;
+  gap&gt; a:=f.1;; b:=f.2;; c:=f.3;; 
+  gap&gt; s:=f/[[a^2, a], [b^2,b], [c^2,c], [a*b,a], [b*a,b], [a*c,a], 
+  &gt; [c*a,c], [b*c,b],[c*b,c]];
+  &lt;fp semigroup on the generators [ s1, s2, s3 ]&gt;
+  gap&gt; Size(s);
+  3
+  gap&gt; GreensLClassOfElement(s,a);
+  {s1}
+  gap&gt; IsAssociatedSemigpTransSemigp(last);
+  false
 </pre></td></tr></table>
 
 <p><a id="X84F1321E8217D2A8" name="X84F1321E8217D2A8"></a></p>
@@ -361,18 +361,18 @@ false
 
 <table class="example">
 <tr><td><pre>
-gap&gt; gens:=[ Transformation( [ 4, 4, 3, 5, 3 ] ), 
-&gt; Transformation( [ 5, 1, 1, 4, 1 ] ), 
-&gt; Transformation( [ 5, 5, 4, 4, 5 ] ) ];;
-gap&gt; f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
-gap&gt; SchutzenbergerGroup(GreensDClassOfElement(S, f));
-Group([ (), (4,5) ])
-gap&gt; SchutzenbergerGroup(GreensRClassOfElement(S, f));
-Group([ (), (4,5) ])
-gap&gt; SchutzenbergerGroup(GreensLClassOfElement(S, f));
-Group([ (), (4,5) ])
-gap&gt; SchutzenbergerGroup(GreensHClassOfElement(S, f));
-Group([ (), (4,5) ])
+  gap&gt; gens:=[ Transformation( [ 4, 4, 3, 5, 3 ] ), 
+  &gt; Transformation( [ 5, 1, 1, 4, 1 ] ), 
+  &gt; Transformation( [ 5, 5, 4, 4, 5 ] ) ];;
+  gap&gt; f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
+  gap&gt; SchutzenbergerGroup(GreensDClassOfElement(S, f));
+  Group([ (), (4,5) ])
+  gap&gt; SchutzenbergerGroup(GreensRClassOfElement(S, f));
+  Group([ (), (4,5) ])
+  gap&gt; SchutzenbergerGroup(GreensLClassOfElement(S, f));
+  Group([ (), (4,5) ])
+  gap&gt; SchutzenbergerGroup(GreensHClassOfElement(S, f));
+  Group([ (), (4,5) ])
 </pre></td></tr></table>
 
 <p><a id="X7C651C9C78398FFF" name="X7C651C9C78398FFF"></a></p>
@@ -387,21 +387,21 @@ Group([ (), (4,5) ])
 
 <table class="example">
 <tr><td><pre>
-gap&gt; S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
-&gt; Transformation( [ 3, 3, 1, 1 ] ) ]);;
-gap&gt; Idempotents(S, 1);
-[  ]
-gap&gt; Idempotents(S, 2);                        
-[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
-  Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
-gap&gt; Idempotents(S, 3);                        
-[  ]
-gap&gt; Idempotents(S, 4);                        
-[ Transformation( [ 1, 2, 3, 4 ] ) ]
-gap&gt; Idempotents(S);
-[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 2, 3, 4 ] ), 
-  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
-  Transformation( [ 4, 2, 2, 4 ] ) ]
+  gap&gt; S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
+  &gt; Transformation( [ 3, 3, 1, 1 ] ) ]);;
+  gap&gt; Idempotents(S, 1);
+  [  ]
+  gap&gt; Idempotents(S, 2);                        
+  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+    Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
+  gap&gt; Idempotents(S, 3);                        
+  [  ]
+  gap&gt; Idempotents(S, 4);                        
+  [ Transformation( [ 1, 2, 3, 4 ] ) ]
+  gap&gt; Idempotents(S);
+  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 2, 3, 4 ] ), 
+    Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
+    Transformation( [ 4, 2, 2, 4 ] ) ]
 </pre></td></tr></table>
 
 <p><a id="X83F1C306846DF26B" name="X83F1C306846DF26B"></a></p>

@@ -33,7 +33,7 @@
   In  the  final  section  ([14X7.7[0m),  functions  for finding isomorphisms between
   various kinds of semigroups are given.
   
-  The methods behind the commands in this chapter are taken from [ABM07].
+  The methods behind the commands in this chapter are taken from [ABMN10].
   
   [12XPlease  note[0m:  the  following  functions  can only be used fully if [5XGRAPE[0m is
   fully installed (and loaded):
@@ -407,7 +407,7 @@
   IsReesZeroMatrixSemigroup[0m).
   
   If  [10XS[0m  is  a  transformation  semigroup, then [10XAutomorphismGroup[0m computes the
-  automorphism group of [10XS[0m using the algorithm described in [ABM07].
+  automorphism group of [10XS[0m using the algorithm described in [ABMN10].
   
   If   [10XS[0m   is   a  (completely)  simple  transformation  semigroup,  then  the
   automorphism  group  is  computed  by  passing  to an isomorphic Rees matrix
@@ -430,7 +430,7 @@
   
   If  [10XS[0m  is  a  Rees  matrix  semigroup or a Rees 0-matrix semigroup, then the
   automorphism  group  of  [10XS[0m  is  calculated  using the algorithm described in
-  [ABM07,  Section 2]. In this case, the returned group has as many generators
+  [ABMN10, Section 2]. In this case, the returned group has as many generators
   as elements. This may be changed in the future.
   
   If  [2XInfoMonoidAutos[0m  ([14X7.1-1[0m)  is  set  to  level [10X4[0m, then prompts will appear
@@ -676,7 +676,7 @@
   associated  to the matrix of [10Xrms1[0m to the graph associated with the matrix of
   [10Xrms2[0m, and the third component should be a function (given as a list of image
   elements)  from  the index sets of [10Xrms1[0m to the underlying group of [10Xrms2[0m; see
-  [ABM07, Section 2] for further details.
+  [ABMN10, Section 2] for further details.
   
   Note   that  this  function  only  creates  an  object  with  representation
   [2XIsRMSIsoByTripleRep[0m  ([14X7.5-3[0m) and does not check that [10Xtriple[0m actually defines
@@ -716,7 +716,7 @@
   isomorphism  from  the  graph associated to the matrix of [10Xrzms1[0m to the graph
   associated  with  the  matrix  of [10Xrzms2[0m, and the third component should be a
   function (given as a list of image elements) from the index sets of [10Xrzms1[0m to
-  the  underlying  zero  group  of  [10Xrzms2[0m;  see [ABM07, Section 2] for further
+  the  underlying  zero  group  of  [10Xrzms2[0m; see [ABMN10, Section 2] for further
   details.
   
   Note   that  this  function  only  creates  an  object  with  representation
@@ -756,7 +756,7 @@
   [2X> IsRMSIsoByTripleRep( [0X[3Xf[0X[2X ) ___________________________________[0XRepresentation
   
   returns [10Xtrue[0m if the object [10Xf[0m is represented as an isomorphism of Rees matrix
-  semigroups   by   a   triple;  as  explained  in  [ABM07,  Section  2];  see
+  semigroups   by   a  triple;  as  explained  in  [ABMN10,  Section  2];  see
   [2XRMSIsoByTriple[0m ([14X7.5-1[0m) for an example of the usage of this command.
   
   [1X7.5-4 IsRZMSIsoByTripleRep[0m
@@ -764,7 +764,7 @@
   [2X> IsRZMSIsoByTripleRep( [0X[3Xf[0X[2X ) __________________________________[0XRepresentation
   
   returns [10Xtrue[0m if the object [10Xf[0m is represented as an isomorphism of Rees matrix
-  semigroups   by   a   triple;  as  explained  in  [ABM07,  Section  2];  see
+  semigroups   by   a  triple;  as  explained  in  [ABMN10,  Section  2];  see
   [2XRZMSIsoByTriple[0m ([14X7.5-2[0m) for an example of the usage of this command.
   
   [1X7.5-5 RMSInducedFunction[0m
@@ -778,7 +778,7 @@
   of  the  index  sets [10XI[0m and [10XJ[0m to the group [10XG[0m of the Rees matrix semigroup [10XRMS[0m
   over  [10XG[0m,  [10XI[0m, and [10XJ[0m with respect to [10XP[0m where the first element is given by the
   element  [10Xg[0m. If a conflict is found, then [10Xfalse[0m is returned together with the
-  induced map; see [ABM07, Section 2] for further details.
+  induced map; see [ABMN10, Section 2] for further details.
   
   [4X---------------------------  Example  ----------------------------[0X
     [4Xgap> G:=Group([ (1,2) ]);;[0X
@@ -808,7 +808,7 @@
   [10Xlambda[0m  and  [10Xgamma[0m from [10Xcomp[0m to the zero group [10XG^0[0m of [10XG[0m of the Rees 0-matrix
   semigroup  [10XRZMS[0m  over [10XG^0[0m, [10XI[0m, and [10XJ[0m with respect to [10XP[0m where the image of the
   first  element  in  [10Xcomp[0m  is given by the element [10Xg[0m. If a conflict is found,
-  then [10Xfail[0m is returned; see [ABM07, Section 2] for further details.
+  then [10Xfail[0m is returned; see [ABMN10, Section 2] for further details.
   
   [12XPlease note:[0m if [5Xgrape[0m is not loaded, then this function will not work.
   
@@ -854,7 +854,7 @@
   group [10XG^0[0m of the Rees 0-matrix semigroup [10XRZMS2[0m over the zero group [10XG^0[0m, sets
   [10XI[0m  and  [10XJ[0m,  and  matrix  [10XP[0m  where  the image of the first element in the [10Xi[0mth
   connected component of the associated graph of [10XRZMS1[0m is given by [10Xelts[i][0m. If
-  a  conflict  is  found,  then  [10Xfalse[0m is returned; see [ABM07, Section 2] for
+  a  conflict  is  found,  then [10Xfalse[0m is returned; see [ABMN10, Section 2] for
   further details.
   
   [12XPlease note:[0m if [5Xgrape[0m is not loaded, then this function will not work.

@@ -27,8 +27,8 @@
   group  of  a  transformation  semigroup see Section [14X7.4[0m; methods for finding
   homomorphisms  and  isomorphism between some types of semigroups see Chapter
   [14X7[0m;  and  functions  to  create some well-known semigroups see Chapter [14X6[0m. The
-  property  testing  methods  are  described  in  [GM05]  and  the  method for
-  computing the automorphism group of a semigroup is described in [ABM07].
+  property  testing  methods  are  described  in  [GM08]  and  the  method for
+  computing the automorphism group of a semigroup is described in [ABMN10].
   
   The  [5XMONOID[0m  package  is written in [5XGAP[0m code only but uses the [5XGRAPE[0m and [5Xorb[0m
   packages.
@@ -61,7 +61,7 @@
   transformation  semigroups that underpin most of the features of [5XMONOID[0m. The
   [5XMONOID[0m package can be used without [5Xorb[0m but is much less efficient. We highly
   recommended         that         you         install         [5Xorb[0m.        See
-  [7Xhref="http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html"[0m
+  [7Xhttp://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html[0m
   or the main [5XGAP[0m webpages for more information.
   
   If  you want to take advantage of the online help facilities in [5XMONOID[0m, then
@@ -76,7 +76,7 @@
   you  have any problems getting [5XMONOID[0m working, then please email me directly
   at [7Xmailto:jdm3@st-and.ac.uk[0m.
   
-  It is assumed that you have a working copy of [5XGAP[0m with version number 4.4.10
+  It is assumed that you have a working copy of [5XGAP[0m with version number 4.4.12
   or  higher.  The  most  up-to-date version of [5XGAP[0m and instructions on how to
   install    it    can    be    obtained    from    the   main   [5XGAP[0m   webpage
   [7Xhttp://www.gap-system.org[0m  Those  functions in [5XMONOID[0m described in Chapter [14X7[0m
@@ -116,9 +116,10 @@
     [4X[ ... ][0X
     [4X[0X
     [4Xgap> LoadPackage("monoid");[0X
-    [4XLoading MONOID 3.1.4[0X
-    [4Xby James Mitchell (www-groups.mcs.st-and.ac.uk/~jamesm)[0X
-    [4XFor help, type: ?the monoid package [0X
+    [4X-----------------------------------------------------------------------------[0X
+    [4XLoading  MONOID 3.1.4 (MONOID: computing with transformation semigroups)[0X
+    [4Xby James Mitchell (http://www-groups.mcs.st-and.ac.uk/~jamesm).[0X
+    [4X-----------------------------------------------------------------------------[0X
     [4Xtrue[0X
     [4Xgap> [0X
   [4X------------------------------------------------------------------[0X
@@ -258,25 +259,4 @@
   
   --          functions  for  defining  homomorphisms and isomorphisms between
               some types of semigroups; see Chapter [14X7[0m.
-  
-  
-  [1X1.5 Forthcoming Features[0X
-  
-  The  features  are  currently  under  development and will be available in a
-  future version of [5XMONOID[0m:
-  
-  --    the  number of special types of semigroups available in [5XMONOID[0m will be
-        expanded  to  include  all  of the standard examples of transformation
-        semigroups and some matrix semigroups.
-  
-  --    methods  analogous  to  those used to find Green's relations and other
-        structural  properties  of  transformation  semigroups  in the current
-        version   of   [5XMONOID[0m   but   for   semigroups  generated  by  partial
-        transformations, binary relations, and matrix semigroups.
-  
-  --    a  suite  of functions for computing with inverse semigroups generated
-        by  partial  bijections, including finding faithful representations of
-        smaller degree and small generating sets.
-  
-  --    an algorithm for finding a small generating set of a semigroup.
   
