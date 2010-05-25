@@ -23,22 +23,6 @@
 #################
 
 #############################################################################
-##
-##	<#GAPDoc Label="PartialOrderOfDClasses">
-##	<ManSection>
-##	<Attr Name="PartialOrderOfDClasses" Arg="S"/>
-##	<Description>
-##	returns the partial order of the <C>D</C>-classes of <C>S</C> as a directed 
-##	graph in <Package>GRAPE</Package> using the command 
-##	<Display>
-##	Graph(Group(()), [1..Length(GreensDClasses(S))], OnPoints, function(x,y)
-##	return y in poset[x]; end, true); ;
-##	</Display>
-##	where <C>y</C> in <C>poset[x]</C> if and only if 
-##	<M>S^1yS^1\subseteq S^1 xS^1</M>.
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
 InstallMethod(PartialOrderOfDClasses, "for a generic semigroup", true, [IsSemigroup], 
 function(M)
@@ -80,114 +64,6 @@ end);
 ################
 
 ###########################################################################
-##
-##  <#GAPDoc Label="AutomorphismGroup">
-##  <ManSection>
-##  <Attr Name="AutomorphismGroup" Arg="S"/>
-##	<Description>
-##	<C>AutomorphismGroup</C> returns the group of 
-##	automorphisms of the transformation semigroup, zero group, zero semigroup, 
-##	Rees matrix semigroup, or Rees 0-matrix semigroup <C>S</C>; that is, 
-##	semigroups satisfying the properties <Ref Prop="IsTransformationSemigroup" 
-##	BookName="ref"/>, <Ref Prop="IsZeroGroup"/>, <Ref Prop="IsZeroSemigroup"/>,  
-##	<Ref Prop="IsReesMatrixSemigroup" BookName="ref"/>, or 
-##	<Ref Prop="IsReesZeroMatrixSemigroup" BookName="ref"/>. <P/>
-##
-##	If <C>S</C> is a transformation semigroup, then <C>AutomorphismGroup</C> 
-##	computes the automorphism group of <C>S</C> using the algorithm 
-##	described in <Cite Key="computing"/>.  If <C>S</C> is a (completely) simple 
-##	transformation semigroup, then the automorphism group is computed by passing 
-##	to an isomorphic Rees matrix semigroup. If <C>S</C> is a
-##	transformation group, then the automorphism group is computed by passing to 
-##	an isomorphic permutation group. If <C>S</C> has order 
-##	<M>&lt;10</M>  and knows its Cayley table 
-##	(<Ref Prop="MultiplicationTable" BookName="ref"/>), then the automorphism 
-##	group is calculated by finding the setwise stabilizer of the Cayley table in
-##	the symmetric group of degree <C>|S|</C> under the action ??? <P/>
-##
-##	If <C>S</C> is a zero group, then <C>AutomorphismGroup</C> computes the 
-##	automorphism group of the underlying group. Obviously, every automorphism of 
-##	a zero group is the extension of an automorphism of the underlying group 
-##	that fixes the zero element. <P/>
-##	
-##	If <C>S</C> is a zero semigroup, then every permutation of the elements of 
-##	<C>S</C> that fixes the zero element is an 
-##	automorphism. Thus the automorphism group of a zero semigroup of order 
-##	<M>n</M> is isomorphic to the symmetric group on <M>n-1</M> elements. <P/>
-##
-##	If <C>S</C> is a Rees matrix semigroup or a Rees 0-matrix semigroup, then 
-##	the automorphism group of <C>S</C> is calculated using the algorithm 
-##	described in <Cite Key="computing" Where="Section 2"/>. In this case, the 
-##	returned group has as many generators as elements. This may be changed in 
-##	the future.<P/>
-##
-##	If <Ref InfoClass="InfoMonoidAutos"/> is set to level <C>4</C>, then prompts may 
-##	appear during the procedure to let you choose how the computation proceeds. 
-##	<P/>
-##	<Example>
-##  gap&gt; g1:=Transformation([5,4,4,2,1]);;
-##  gap&gt; g2:=Transformation([2,5,5,4,1]);;
-##  gap&gt; m2:=Monoid(g1,g2);;
-##  gap&gt; IsTransformationSemigroup(m2);
-##  true
-##  gap&gt; AutomorphismGroup(m2);
-##  &lt;group of size 24 with 5 generators&gt;
-##  gap&gt; IsAutomorphismGroupOfSemigroup(last);
-##  true
-##  gap&gt; zg:=ZeroGroup(CyclicGroup(70));
-##  &lt;zero group with 4 generators&gt;
-##  gap&gt; IsZeroGroup(zg);
-##  true
-##  gap&gt; AutomorphismGroup(zg);
-##  &lt;group with 3 generators&gt;
-##  gap&gt; IsAutomorphismGroupOfZeroGroup(last);
-##  true
-##  gap&gt; InnerAutomorphismsOfSemigroup(zg);
-##  &lt;group of size 1 with 1 generators&gt;
-##  gap&gt; InnerAutomorphismsAutomorphismGroup(AutomorphismGroup(zg));
-##  &lt;group of size 1 with 1 generators&gt;
-##  gap&gt; last2=InnerAutomorphismsAutomorphismGroup(AutomorphismGroup(zg));
-##  true
-##  gap&gt; S:=ZeroSemigroup(10);
-##  &lt;zero semigroup with 10 elements&gt;
-##  gap&gt; Size(S);
-##  10
-##  gap&gt; Elements(S);
-##  [ 0, z1, z2, z3, z4, z5, z6, z7, z8, z9 ]
-##  gap&gt; A:=AutomorphismGroup(S);
-##  &lt;group with 2 generators&gt;
-##  gap&gt; IsAutomorphismGroupOfZeroSemigroup(A);
-##  true
-##  gap&gt; Factorial(9)=Size(A);
-##  true
-##  gap&gt; G:=Group([ (2,5)(3,4) ]);;
-##  gap&gt; mat:=[ [ (), (), (), (), () ], 
-##  &gt;   [ (), (), (2,5)(3,4), (2,5)(3,4), () ], 
-##  &gt;   [ (), (), (), (2,5)(3,4), (2,5)(3,4) ], 
-##  &gt;   [ (), (2,5)(3,4), (), (2,5)(3,4), () ], 
-##  &gt;   [ (), (2,5)(3,4), (), (2,5)(3,4), () ] ];;
-##  gap&gt; rms:=ReesMatrixSemigroup(G, mat);
-##  Rees Matrix Semigroup over Group([ (2,5)(3,4) ])
-##  gap&gt; A:=AutomorphismGroup(rms);
-##  &lt;group of size 12 with 12 generators&gt;
-##  gap&gt; IsAutomorphismGroupOfRMS(A);
-##  true
-##  gap&gt; G:=ZeroGroup(Group([ (1,3)(2,5), (1,3,2,5) ]));;
-##  gap&gt; elts:=Elements(G);;
-##  gap&gt; mat:=[ [ elts[7], elts[1], elts[9], elts[1], elts[1] ], 
-##  &gt;   [ elts[1], elts[1], elts[1], elts[9], elts[1] ], 
-##  &gt;   [ elts[9], elts[1], elts[1], elts[4], elts[9] ], 
-##  &gt;   [ elts[1], elts[1], elts[1], elts[1], elts[1] ], 
-##  &gt;   [ elts[1], elts[5], elts[1], elts[1], elts[1] ] ];;
-##  gap&gt; rzms:=ReesZeroMatrixSemigroup(G, mat);;
-##  gap&gt; AutomorphismGroup(rzms);
-##  gap&gt; IsAutomorphismGroupOfRZMS(A);
-##  true
-##  &lt;group of size 512 with 512 generators&gt;
-##	</Example> <!-- autos3.tst -->
-##	</Description>
-##  </ManSection>
-##	<#/GAPDoc>
 
 InstallMethod(AutomorphismGroup, "for a RZMS", true, [IsReesZeroMatrixSemigroup], 0,
 function(rms)
@@ -261,88 +137,10 @@ return A;
 
 end);
 
-
 ###########################################################################
-##
-##  <#GAPDoc Label="AutomorphismsSemigroupInGroup">
-##  <ManSection>
-##  <Oper Name="AutomorphismsSemigroupInGroup" Arg="S, G[, bvals]"/>
-##	<Description>
-##	<C>AutomorphismsSemigroupInGroup</C> returns the group of 
-##	automorphisms of the transformation semigroup <C>S</C> that also 
-##	belong to the group <C>G</C>. If <C>G=fail</C>, then 
-##	<C>AutomorphismsSemigroupInGroup</C> returns the same value as
-##	<Ref Attr="AutomorphismGroup"/>. The default setting is that the  
-##	automorphisms of <C>S</C> are calculated first, then filtered to see which 
-##	elements also belong to <C>G</C>.<P/>
-##
-##	The optional argument  <C>bvals</C> is a list of 
-##	<M>5</M> Boolean variables that correspond to the following options:
-##	<List>
-##		<Item>if <C>bvals[1]</C> is <C>true</C>, then &GAP; will run a cheap check 
-##		to see if all the automorphisms are inner. Note that this can return 
-##		<C>false</C> when all the automorphisms are inner, that is the condition 
-##		is sufficient but not necessary. The default setting is <C>false</C>.
-##		</Item>
-##		<Item>if <C>bvals[2]</C> is <C>true</C>, then &GAP; will try to compute 
-##		the inner automorphisms of <C>S</C> before computing the entire
-##		automorphism group. For semigroups of large degree this may not be 
-##		sensible. The default setting is <C>false</C>.</Item>
-##		<Item>if <C>bvals[3]</C> is <C>true</C>, then &GAP; will test elements in
-##		the inner automorphism search space to see if they are in <C>G</C> online.  
-##		The default setting is <C>false</C>.</Item>
-##		<Item>if <C>bvals[4]</C> is <C>true</C>, then &GAP; will test elements in
-##		the outer (i.e. not inner) automorphism search space to see if they are in 
-##		<C>G</C> online.  The default setting is <C>false</C>.</Item>
-##		<Item>if <C>bvals[5]</C> is <C>true</C>, then &GAP; will keep track of 
-##		non-automorphisms in the search for outer automorphisms.  The default 
-##		setting is <C>false</C>.</Item>
-##	</List>
-##
-##	<Example>
-##  gap&gt; g1:=Transformation([5,4,4,2,1]);;
-##  gap&gt; g2:=Transformation([2,5,5,4,1]);;
-##  gap&gt; m2:=Monoid(g1,g2);;
-##  gap&gt; A:=AutomorphismsSemigroupInGroup(m2, fail, [false, true, true, false, true]);
-##  &lt;group of size 24 with 3 generators&gt;
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; m7:=Monoid(g1,g2);;
-##  gap&gt; A:=AutomorphismsSemigroupInGroup(m7, fail, [false, true, false, false, true]);
-##  &lt;group of size 2 with 2 generators&gt;
-##  gap&gt; imgs:=[ [ Transformation( [ 1, 1, 5, 4, 3, 6, 7, 8, 9, 10, 11, 12 ] ), 
-##  &gt;       Transformation( [ 1, 1, 5, 7, 4, 3, 6, 8, 9, 10, 11, 12 ] ), 
-##  &gt;       Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 8 ] ) ], 
-##  &gt;   [ Transformation( [ 1, 1, 5, 4, 3, 6, 7, 8, 9, 10, 11, 12 ] ), 
-##  &gt;       Transformation( [ 1, 1, 5, 3, 7, 4, 6, 8, 9, 10, 11, 12 ] ), 
-##  &gt;       Transformation( [ 1, 2, 3, 4, 5, 6, 7, 11, 12, 8, 9, 10 ] ) ] ];;
-##  gap&gt; gens:=List(imgs, x-&gt; SemigroupHomomorphismByImagesOfGensNC(S, S, x));;
-##  gap&gt; G:=Group(gens);
-##  &lt;group with 2 generators&gt;
-##  gap&gt; A:=AutomorphismsSemigroupInGroup(S, G, [false, false, false, true, false]);
-##  &lt;group of size 48 with 4 generators&gt;
-##  gap&gt; Size(G);
-##  48
-##  gap&gt; A:=AutomorphismsSemigroupInGroup(S, G);
-##  &lt;group of size 48 with 4 generators&gt;
-##  gap&gt; gens:=[ Transformation( [ 1, 1, 4, 3, 5, 6, 7, 8, 9, 10, 11, 12 ] ), 
-##  &gt;   Transformation( [ 1, 1, 4, 5, 6, 7, 3, 8, 9, 10, 11, 12 ] ), 
-##  &gt;   Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 8 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; A:=AutomorphismsSemigroupInGroup(S, G);
-##  &lt;group of size 48 with 4 generators&gt;
-##  gap&gt; HasAutomorphismGroup(S);
-##  true
-##  gap&gt; AutomorphismGroup(S);
-##  &lt;group of size 480 with 7 generators&gt;
-##	</Example> <!-- autos2.tst -->
-##	</Description>
-##  </ManSection>
-##	<#/GAPDoc>
 
 InstallMethod(AutomorphismsSemigroupInGroup, "for a semigroup", true, [IsTransformationSemigroup, IsObject, IsList], 0,
 function(S, superlist, bvals)
-
 local iso, autos1, autos2, gens, dclasses, pos, info, size, regu, left, righ, idem, colours, i, j, k, l, poset, c, RMS, isom, orbits, orb, part, new, rms, good, bad, mappings, cart, map, hom, image, autos, OnSets3, n, m, stop, inner, action, constants, allinner, x, id, pos_list, subgens, A, r, grp, R, g, y, G, H, homs, userint, useryn, doit, perms, stab, counter;
 
 if not ForAll(bvals, IsBool) then
@@ -827,7 +625,7 @@ else
 				if not IsEmpty(GradedKernelsOfTransSemigroup(S)[m]) then 
 					inner:=Stabilizer(inner, Set(GradedKernelsOfTransSemigroup(S)[m]), OnSets3);
 					if IsTrivial(inner) then 
-						stop:=true;		
+						stop:=true;
 					fi;
 				fi;
 			until m=n-1 or stop;
@@ -1066,62 +864,8 @@ fi;
 SetIsFinite(autos, true);
 SetIsGroupOfAutomorphisms(autos, true);
 return autos;
-
 end);
 
-#############################################################################
-##
-##  <#GAPDoc Label="RightTransStabAutoGroup">
-##  <ManSection>
-##	<Oper Name="RightTransStabAutoGroup" Arg="S, elts, func"/> 
-##	<Description>
-##
-##	returns a right transversal of the stabilizer w.r.t the action <C>func</C> 
-##	of the elements 
-##	<C>elts</C> in the automorphism group of the zero semigroup, Rees matrix
-##	semigroup, or Rees 0-matrix semigroup <C>S</C>. That is, <C>S</C> 
-##	satisfying <Ref Prop="IsZeroSemigroup"/>,  
-##	<Ref Prop="IsReesMatrixSemigroup" BookName="ref"/>, or 
-##	<Ref Prop="IsReesZeroMatrixSemigroup" BookName="ref"/>.
-##	<Example>
-##  gap&gt; S:=ZeroSemigroup(6);
-##  &lt;zero semigroup with 6 elements&gt;
-##  gap&gt; elts:=Elements(S);
-##  [ 0, z1, z2, z3, z4, z5 ]
-##  gap&gt; Length(RightTransStabAutoGroup(S, [elts[1]], OnSets));
-##  1
-##  gap&gt; Length(RightTransStabAutoGroup(S, [elts[1], elts[2]], OnSets));
-##  5
-##  gap&gt; Length(RightTransStabAutoGroup(S, [elts[1], elts[2]], OnTuples));
-##  5
-##  gap&gt; G:=Group([ (1,2) ]);;
-##  gap&gt; mat:=[ [ (), (), () ], [ (), (1,2), () ], [ (), (1,2), (1,2) ], 
-##  &gt;    [ (), (), () ], [ (), (1,2), () ] ];;
-##  gap&gt; rms:=ReesMatrixSemigroup(G, mat);;
-##  gap&gt; Size(rms);
-##  30
-##  gap&gt; GeneratorsOfSemigroup(rms);
-##  [ (1,(),2), (1,(),3), (1,(),4), (1,(),5), (2,(),1), (3,(),1), (1,(1,2),1) ]
-##  gap&gt; Length(RightTransStabAutoGroup(rms, last, OnSets));
-##  4
-##  gap&gt; Length(RightTransStabAutoGroup(rms, GeneratorsOfSemigroup(rms), OnTuples));
-##  8
-##  gap&gt; G:=ZeroGroup(Group([ (1,3) ]));;
-##  gap&gt; z:=MultiplicativeZero(G);; x:=Elements(G)[2];;
-##  gap&gt; mat:=[ [ z, z, z ], [ z, z, z ], [ z, z, z ], [ z, z, z ], [ z, x, z ] ];;
-##  gap&gt; rzms:=ReesZeroMatrixSemigroup(G, mat);
-##  gap&gt; Size(rzms);
-##  31
-##  gap&gt; Size(GeneratorsOfSemigroup(rzms));
-##  6
-##  gap&gt; Length(RightTransStabAutoGroup(rzms, GeneratorsOfSemigroup(rzms), OnSets));
-##  512
-##  gap&gt; A:=AutomorphismGroup(rzms);
-##  &lt;group of size 3072 with 3072 generators&gt;
-##  </Example> <!-- autos3.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 #############################################################################
 ##	JDM for the example given in the manual example this appears to run more 
 ##	slowly than just running automorphism group (although the overall 
@@ -1297,49 +1041,6 @@ end);
 
 
 #############################################################################
-##
-##  <#GAPDoc Label="RZMSInducedFunction">
-##  <ManSection>
-##	<Oper Name="RZMSInducedFunction" Arg="RZMS, lambda, gamma, g, comp"/> 
-##	<Description>
-##	<C>lambda</C> is an automorphism of the graph associated to the Rees 0-
-##	matrix semigroup <C>RZMS</C>, <C>gamma</C> an automorphism of the underlying 
-##	zero group of <C>RZMS</C>, <C>comp</C> is a connected component of the graph 
-##	associated to <C>RZMS</C>, and <C>g</C> is an element of the underlying zero 
-##	group of <C>RZMS</C>.  The function <C>RZMSInducedFunction</C> attempts to 
-##	find the partial function determined by <C>lambda</C> and <C>gamma</C> from <C>comp</C> to the zero group <M>G^0</M> 
-##	of <C>RZMS</C><M>=M^0[G^0; I, J; P]</M> where the image of the first element 
-##	in <C>comp</C> is given by the element <C>g</C>.  If a conflict is found, 
-##	then fail is returned. See <Cite Key="computing" Where="Section 2"/> for 
-##	further details.
-##	<Example>
-##  gap&gt; zg:=ZeroGroup(Group(()));;
-##  gap&gt; z:=Elements(zg)[1];
-##  0
-##  gap&gt; x:=Elements(zg)[2];
-##  ()
-##  gap&gt; mat:=[ [ z, z, z ], [ x, z, z ], [ x, x, z ] ];;
-##  gap&gt; rzms:=ReesZeroMatrixSemigroup(zg, mat);;
-##  gap&gt; RZMSInducedFunction(rzms, (), One(AutomorphismGroup(zg)), x, [1,2,5,6])
-##  [ (), (),,, (), () ]
-##  gap&gt; RZMSInducedFunction(rzms, (), One(AutomorphismGroup(zg)), x, [3]);     
-##  [ ,, () ]
-##  gap&gt; RZMSInducedFunction(rzms, (), One(AutomorphismGroup(zg)), x, [4]);
-##  [ ,,, () ]
-##  gap&gt; zg:=ZeroGroup(Group([ (1,5,2,3), (1,4)(2,3) ]));;
-##  gap&gt; elts:=Elements(zg);;
-##  gap&gt; mat:=[ [ elts[1], elts[1], elts[11], elts[1], elts[1] ], 
-##  &gt;    [ elts[1], elts[13], elts[21], elts[1], elts[1] ], 
-##  &gt;    [ elts[1], elts[16], elts[1], elts[16], elts[3] ], 
-##  &gt;    [ elts[10], elts[17], elts[1], elts[1], elts[1] ], 
-##  &gt;    [ elts[1], elts[1], elts[1], elts[4], elts[1] ] ];
-##  gap&gt; rzms:=ReesZeroMatrixSemigroup(zg, mat);                                   
-##  gap&gt; RZMSInducedFunction(rzms, (), Random(AutomorphismGroup(zg)), Random(elts), [1..10])=fail;
-##  false
-##	</Example> <!-- autos3.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
 InstallMethod(RZMSInducedFunction, "for a RZMS", true, [IsReesZeroMatrixSemigroup, IS_PERM, IsGeneralMapping, IsMultiplicativeElement, IsList], 0,
 
@@ -1406,47 +1107,8 @@ return imagelist;
 end);
 
 #############################################################################
-##
-##  <#GAPDoc Label="RZMStoRZMSInducedFunction">
-##  <ManSection>
-##	<Oper Name="RZMStoRZMSInducedFunction" Arg="RZMS1, RZMS2, lambda, gamma, elts"/>
-##	<Description>
-##	<C>lambda</C> is an automorphism of the graph associated to the Rees 0-
-##	matrix semigroup <C>RZMS1</C> composed with isomorphism from that graph to the graph of <C>RZMS2</C>, <C>gamma</C> an automorphism of the 
-##	underlying zero group of <C>RZMS1</C>,  and <C>elts</C> is a list of 
-##	elements of the underlying zero group of <C>RZMS2</C>.  The function 
-##	<C>RZMStoRZMSInducedFunction</C> attempts to find the function determined by
-##	<C>lambda</C> and <C>gamma</C> from the union of the index sets <M>I</M> and
-##	<M>J</M> of <C>RZMS1</C> to the zero group <M>G^0</M> of 
-##	<C>RZMS2</C><M>=M^0[G^0; I, J; P]
-##	</M> where the image of the first element in the <M>i</M>th connected
-##	component of the associated graph of <C>RZMS1</C> is given by 
-##	<C>elts[i]</C>.  If a conflict is found, then false is returned. See 
-##	<Cite Key="computing" Where="Section 2"/> for further details.
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 4, 4, 8, 8, 8, 8, 4, 8 ] ), 
-##    Transformation( [ 8, 2, 8, 2, 5, 5, 8, 8 ] ), 
-##    Transformation( [ 8, 8, 3, 7, 8, 3, 7, 8 ] ), 
-##    Transformation( [ 8, 6, 6, 8, 6, 8, 8, 8 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; D:=GreensDClasses(S);;
-##  gap&gt; rms1:=Range(IsomorphismReesMatrixSemigroupOfDClass(D[1]));
-##  Rees Zero Matrix Semigroup over &lt;zero group with 2 generators&gt;
-##  gap&gt; rms2:=Range(IsomorphismReesMatrixSemigroupOfDClass(D[4]));
-##  Rees Zero Matrix Semigroup over &lt;zero group with 2 generators&gt;
-##  gap&gt; gam:=One(AutomorphismGroup(UnderlyingSemigroupOfReesZeroMatrixSemigroup(Group(rms1))));
-##  IdentityMapping( &lt;zero group with 2 generators&gt; )
-##  gap&gt; g:=One(UnderlyingSemigroupOfReesZeroMatrixSemigroup(rms2));
-##  ()
-##  gap&gt; RZMStoRZMSInducedFunction(rms1, rms2, (2,3)(5,6), gam, [g]);
-##  [ (), (), (), (), (), () ]
-##	</Example> <!-- autos3.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
 InstallMethod(RZMStoRZMSInducedFunction, "for a RZMS", true, [IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup, IS_PERM, IsGeneralMapping, IsList], 0,
-
 function(rms1, rms2, l, g, groupelts)
 local mat1, mat2, m, n, rmsgraph, components, reps, imagelist, i, j, k, sub, bicomps, edges, defined, orb, v, new, involved, verts, Last, perm;
 
@@ -1520,41 +1182,6 @@ return imagelist;
 end);
 
 #############################################################################
-##
-##  <#GAPDoc Label="RZMSGraph">
-##  <ManSection>
-##  <Func Name="RZMSGraph" Arg="rzms"/>
-##	<Description>
-##  if <C>rzms</C> is the Rees 0-matrix semigroup M[G;I,J;P], then 
-##	<C>RZMSGraph</C> returns the 
-##  undirected bipartite graph with |I|+|J| vertices and edge (i,j) if and only 
-##  if <M>i&lt;|I|+1</M>, <M>j&gt;|I|</M> and <M>p_{j-|I|, i}</M> is not zero.  
-##	The returned object is a simple undirected graph created in 
-##	<Package>GRAPE</Package> using the command
-##	<Display>
-##	Graph(Group(()), [1..n+m], OnPoints, adj, true);
-##	</Display>
-##	where <C>adj</C> is <C>true</C> if and only 
-##  if <M>i&lt;|I|+1</M>, <M>j&gt;|I|</M> and <M>p_{j-|I|, i}</M> is not zero.
-##	<Example>
-##  gap&gt; zg:=ZeroGroup(Group(()));;
-##  gap&gt; z:=Elements(zg)[1];
-##  0
-##  gap&gt; x:=Elements(zg)[2];
-##  ()
-##  gap&gt; mat:=[ [ 0, 0, 0 ], [ (), 0, 0 ], [ (), (), 0 ] ];;
-##  gap&gt; rzms:=ReesZeroMatrixSemigroup(zg, mat);;
-##  gap&gt; RZMSGraph(rzms);
-##  rec( isGraph := true, order := 6, group := Group(()), 
-##    schreierVector := [ -1, -2, -3, -4, -5, -6 ], 
-##    adjacencies := [ [ 5, 6 ], [ 6 ], [  ], [  ], [ 1 ], [ 1, 2 ] ], 
-##    representatives := [ 1, 2, 3, 4, 5, 6 ], names := [ 1, 2, 3, 4, 5, 6 ] )
-##  gap&gt; UndirectedEdges(last);
-##  [ [ 1, 5 ], [ 1, 6 ], [ 2, 6 ] ]
-##  </Example> <!-- autos3.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
 InstallMethod(RZMSGraph, "for a RZMS", true, [IsReesZeroMatrixSemigroup], 0,
 function(rms)
@@ -1579,81 +1206,28 @@ return Graph(Group(()), [1..n+m], OnPoints, adj, true);
 end);
 
 #############################################################################
-##
-##  <#GAPDoc Label="IsomorphismSemigroups">
-##  <ManSection>
-##	<Oper Name="IsomorphismSemigroups" Arg="S, T"/>
-##	<Description>
-##	this operation returns an isomorphism from the semigroup <C>S</C> to 
-##	the semigroup <C>T</C> if one exists and returns fail otherwise. <P/>
-##
-## So far, there are only methods available for zero groups, zero semigroups, 
-##	Rees matrix semigroups, and Rees 0-matrix semigroups.  
-##	<Example>
-##  gap&gt; ZG1:=ZeroGroup(Group((1,2,3,5,4)));
-##  &lt;zero group with 2 generators&gt;
-##  gap&gt; ZG2:=ZeroGroup(Group((1,2,3,4,5)));
-##  &lt;zero group with 2 generators&gt;
-##  gap&gt; IsomorphismSemigroups(ZG1, ZG2);
-##  SemigroupHomomorphismByImagesOfGens ( &lt;zero group with 
-##  2 generators&gt;-&gt;&lt;zero group with 2 generators&gt;)
-##  gap&gt; ZG2:=ZeroGroup(Group((1,2,3,4)));
-##  &lt;zero group with 2 generators&gt;
-##  gap&gt; IsomorphismSemigroups(ZG1, ZG2);
-##  fail
-##  gap&gt; IsomorphismSemigroups(ZeroSemigroup(5),ZeroSemigroup(5));
-##  IdentityMapping( &lt;zero semigroup with 5 elements&gt; )
-##  gap&gt; IsomorphismSemigroups(ZeroSemigroup(5),ZeroSemigroup(6));
-##  fail
-##  gap&gt; gens:=[ Transformation( [ 4, 4, 8, 8, 8, 8, 4, 8 ] ), 
-##  &gt;   Transformation( [ 8, 2, 8, 2, 5, 5, 8, 8 ] ), 
-##  &gt;   Transformation( [ 8, 8, 3, 7, 8, 3, 7, 8 ] ), 
-##  &gt;   Transformation( [ 8, 6, 6, 8, 6, 8, 8, 8 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; D:=GreensDClasses(S);;
-##  gap&gt; rms1:=Range(IsomorphismReesMatrixSemigroupOfDClass(D[1]));;
-##  gap&gt; rms2:=Range(IsomorphismReesMatrixSemigroupOfDClass(D[4]));;
-##  gap&gt; IsomorphismSemigroups(rms1, rms2);
-##  [ (2,3)(5,6), IdentityMapping( &lt;zero group with 2 generators&gt; ), 
-##    [ ZeroGroup(()), ZeroGroup(()), ZeroGroup(()), ZeroGroup(()), ZeroGroup(()), 
-##        ZeroGroup(()) ] ]
-##  gap&gt; IsomorphismSemigroups(rms2, rms1);
-##  [ (2,3)(5,6), IdentityMapping( &lt;zero group with 2 generators&gt; ), 
-##    [ ZeroGroup(()), ZeroGroup(()), ZeroGroup(()), ZeroGroup(()), ZeroGroup(()), 
-##        ZeroGroup(()) ] ]
-##  gap&gt; rms2:=Range(IsomorphismReesMatrixSemigroupOfDClass(D[2]));
-##  Group(())
-##  gap&gt; IsomorphismSemigroups(rms2, rms1);
-##  fail
-##  gap&gt; rms2:=RandomReesZeroMatrixSemigroup(5,5,5);
-##  Rees Zero Matrix Semigroup over &lt;zero group with 2 generators&gt;
-##  gap&gt; IsomorphismSemigroups(rms2, rms1);
-##  fail
-##  gap&gt; rms2:=RandomReesMatrixSemigroup(5,5,5);
-##  Rees Matrix Semigroup over Group([ (1,2)(3,4,5), (2,4,3), (1,4,5,3), 
-##    (1,4,5,2) ])
-##  gap&gt; IsomorphismSemigroups(rms2, rms1);
-##  fail
-##  gap&gt; IsomorphismSemigroups(rms1, rms2);
-##  fail
-##	</Example> <!-- autos3.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
+#JDM this requires some changes see bug 100525bA
 
-InstallOtherMethod(IsomorphismSemigroups, "for a RZMS and RZMS", true, [IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup], 0,
+InstallOtherMethod(IsomorphismSemigroups, "for a RZMS and RZMS", 
+[IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup],
 function(R1, R2)
-local g1, g2, iso, G1, G2, isograph, isogroup, f, l, g, tup, candidate, mat, m, n;
+local g1, g2, iso, G1, G2, isograph, isogroup, f, l, g, tup, candidate, mat, 
+m, n;
 
-if not (Size(R1)=Size(R2) and ColumnsOfReesZeroMatrixSemigroup(R1)=ColumnsOfReesZeroMatrixSemigroup(R2) and RowsOfReesZeroMatrixSemigroup(R1)=RowsOfReesZeroMatrixSemigroup(R2)) then 
-  return fail;
+if not (Size(R1)=Size(R2) and 
+ ColumnsOfReesZeroMatrixSemigroup(R1)=ColumnsOfReesZeroMatrixSemigroup(R2) and 
+  RowsOfReesZeroMatrixSemigroup(R1)=RowsOfReesZeroMatrixSemigroup(R2)) then 
+   return fail;
 else
 
 	mat:=SandwichMatrixOfReesZeroMatrixSemigroup(R1);
 	m:=Length(mat[1]); n:=Length(mat);
 
 	if R1=R2 then 
-		return IdentityMapping(R1);
+		#return IdentityMapping(R1);
+		g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(R2); 
+		return RZMSIsoByTriple(R1, R2, [(), IdentityMapping(g), List([1..m+n], 
+     x-> One(g))]);
 	else
 
 		g1:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(R1);
@@ -1682,6 +1256,7 @@ else
 				for g in isogroup do
 					for tup in Elements(g2) do 
 						if not IsMultiplicativeZero(tup) then 
+						  #JDM bug 100525bA
 							candidate:=RZMStoRZMSInducedFunction(R1, R2, l, g, [tup]);
 							if not candidate=false then 
 								return RZMSIsoByTriple(R1, R2, [l, g, candidate]);

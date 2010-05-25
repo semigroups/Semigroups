@@ -104,7 +104,8 @@ else
 	
 	#iso:= GroupHomomorphismByImagesNC(G, sym, [g1, g2], GeneratorsOfGroup(sym));
 	#SetInverseGeneralMapping(iso, GroupHomomorphismByImagesNC(sym, G,  
-	GeneratorsOfGroup(sym), [g1, g2]));
+	#GeneratorsOfGroup(sym), [g1, g2]));
+	
 	iso:=MappingByFunction(G, sym, function(x)
 	#local str;
 	#str:=List(x!.imgslist{[2..Length(x!.imgslist)]}, y-> String(y));
@@ -205,7 +206,7 @@ Info(InfoMonoidAutos, 2, "search space has ", Size(autograph), "x",
 #JDM with the commented out lines rather than the current version the algorithm
 #JDM runs about half the speed. 
 #id:=RMSIsoByTriple(rms, rms, [One(autograph), One(autogroup), List([1..m+n], x-
-> One(G))]);
+#> One(G))]);
 #A:=Group(id);
 #SetAsSSortedList(A, [id]);
 #elts:=[];
@@ -988,7 +989,7 @@ stab:=OrbitStabilizer(Range(iso), imgs, func);
 
 #return [OnTuples(AsList(RightTransversal(Range(iso), stab.stabilizer)), 
 #InverseGeneralMapping(iso)), List(stab.orbit, x-> List(x, y-> 
-ZeroSemigroupElt(y-1)))]; 
+#ZeroSemigroupElt(y-1)))]; 
 
 #JDM could use enumerator here instead of AsList?
 return OnTuples(AsList(RightTransversal(Range(iso), stab.stabilizer)), 
@@ -1254,9 +1255,8 @@ x->  Print(x!.triple ));
 
 InstallMethod( ViewObj, "for inner auto. of trans. semigroup",
 [IsInnerAutomorphismOfSemigroup],
-x-> 
-Print( "^", ConjugatorOfInnerAutomorphismOfSemigroup(hom) );
-end );
+x-> Print( "^", ConjugatorOfInnerAutomorphismOfSemigroup(x) ));
+
 
 ###########################################################################
 
@@ -1289,7 +1289,9 @@ InstallMethod(\=, "for objects in `IsRMSIsoByTriple'", IsIdenticalObj,
  IsRMSIsoByTripleRep],
 function(triple1, triple2)
 
-if triple1!.triple[1]=triple2!.triple[1] and triple1!.triple[2]=triple2!.triple[2] and triple1!.triple[3]=triple2!.triple[3] then 
+if triple1!.triple[1]=triple2!.triple[1] and 
+triple1!.triple[2]=triple2!.triple[2] and triple1!.triple[3]=triple2!.triple[3] 
+then 
 
 	return true;
 
@@ -1448,4 +1450,4 @@ return OnTuples(GeneratorsOfSemigroup(Source(inn1)), inn1) <
 OnTuples(GeneratorsOfSemigroup(Source(inn2)), inn2);
 end);
 
-JDMJDM
+

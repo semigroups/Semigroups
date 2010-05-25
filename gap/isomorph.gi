@@ -107,6 +107,22 @@ fi;
 end);
 
 #############################################################################
+#JDM new for 3.2! Install similar for RMS and change IsomorphismSemigroups
+# accordingly!
+
+InstallMethod(IdentityMapping, "for a RZMS", [IsReesZeroMatrixSemigroup], 
+function(rms)
+local g,m,n;
+
+g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(rms); 
+m:=ColumnsOfReesZeroMatrixSemigroup(rms);
+n:=RowsOfReesZeroMatrixSemigroup(rms);
+
+return RZMSIsoByTriple(rms, rms, [(), IdentityMapping(g), List([1..m+n], 
+ x-> One(g))]);
+end);
+
+#############################################################################
 
 InstallMethod(IsomorphismSemigroups, "for a RMS and RMS", true, [IsReesMatrixSemigroup, IsReesMatrixSemigroup], 0,
 function(R1, R2)
