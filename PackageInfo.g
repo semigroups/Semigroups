@@ -40,8 +40,10 @@ README_URL :=
 PackageInfoURL := 
   "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/monoid/PackageInfo.g",
 
-AbstractHTML := 
-  "The <span class=\"pkgname\">MONOID</span> package, is a <span class=\"pkgname\">GAP</span>  package  for transformation monoids and related objects.",
+AbstractHTML := Concatenation( 
+  "The <span class=\"pkgname\">MONOID</span> package, is a ",
+  "<span class=\"pkgname\">GAP</span>  package  for transformation", 
+  "monoids and related objects."),
 
 PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/monoid",
                
@@ -60,7 +62,8 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.4.12",
   NeededOtherPackages := [],
-  SuggestedOtherPackages := [["orb", "3.4"], ["grape", ">=4.3"], ["gapdoc", ">=1.1"]],
+  SuggestedOtherPackages := [["genss", "1.3"], ["orb", "3.4"], 
+  ["grape", ">=4.3"], ["gapdoc", ">=1.1"]],
   ExternalConditions := []),
 AvailabilityTest := ReturnTrue,
 Autoload := false,
