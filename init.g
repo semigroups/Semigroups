@@ -10,14 +10,15 @@
 ## $Id$
 ##
 
-ReadPkg("MONOID/gap/general.gd");
-ReadPkg("MONOID/gap/semigroups.gd");
-ReadPkg("MONOID/gap/semihomo.gd");
-ReadPkg("MONOID/gap/orbits.gd");
-ReadPkg("MONOID/gap/greens.gd");
-ReadPkg("MONOID/gap/properties.gd");
-ReadPkg("MONOID/gap/transform.gd");
-ReadPkg("MONOID/gap/autos.gd");
+ReadPkg("monoid/gap/general.gd");
+ReadPkg("monoid/gap/semigroups.gd");
+ReadPkg("monoid/gap/semihomo.gd");
+ReadPkg("monoid/gap/orbits.gd");
+ReadPkg("monoid/gap/greens.gd");
+ReadPkg("monoid/gap/properties.gd");
+ReadPkg("monoid/gap/transform.gd");
+ReadPkg("monoid/gap/autos.gd");
+ReadPkg("monoid/gap/isomorph.gd");
 
 ###########################################################################
 ##

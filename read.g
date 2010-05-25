@@ -18,6 +18,7 @@ ReadPkg("monoid/gap/greens.gi");
 ReadPkg("monoid/gap/transform.gi");
 ReadPkg("monoid/gap/properties.gi");
 ReadPkg("monoid/gap/autos.gi");
+ReadPkg("monoid/gap/isomorph.gd");
 
 #check that grape is loaded and fully installed
 
