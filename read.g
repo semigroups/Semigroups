@@ -52,14 +52,14 @@ ReadPkg("monoid/gap/compat.g");
 
 #JDM remove
 
-#dir:=Concatenation(PackageInfo("MONOID")[1]!.InstallationPath,"/dev/gap");
-#files:=DirectoryContents(dir);
-#dir:=Directory(dir);
-#for x in files do 
-#	if not (x="." or x=".." or x=".DS_Store") and SplitString(x, ".")[2]="gi" then 
-#		x:=Filename(dir, x);
-#		Read(x);
-#	fi;
-#od;
+dir:=Concatenation(PackageInfo("MONOID")[1]!.InstallationPath,"/dev/gap");
+files:=DirectoryContents(dir);
+dir:=Directory(dir);
+for x in files do 
+	if not (x="." or x=".." or x=".DS_Store") and SplitString(x, ".")[2]="gi" then 
+		x:=Filename(dir, x);
+		Read(x);
+	fi;
+od;
 
 #JDM remove
