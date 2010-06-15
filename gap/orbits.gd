@@ -61,6 +61,9 @@
 DeclareOperation("GradedOrbit", [IsTransformationCollection, IsObject, 
 IsFunction, IsFunction]);
 
+DeclareGlobalFunction("GradedForwardOrbitNC");
+DeclareGlobalFunction("GradedForwardOrbit");
+
 #############################################################################
 ##
 ##	<#GAPDoc Label="GradedImagesOfTransSemigroup">
@@ -90,6 +93,8 @@ IsFunction, IsFunction]);
 ## JDM why are these mutable?
 
 DeclareAttribute("GradedImagesOfTransSemigroup", IsTransformationSemigroup, "mutable");
+
+DeclareGlobalFunction("GradedImagesOfTransformationSemigroupNC");
 
 #############################################################################
 ##
@@ -126,8 +131,15 @@ DeclareAttribute("GradedImagesOfTransSemigroup", IsTransformationSemigroup, "mut
 
 DeclareAttribute("GradedKernelsOfTransSemigroup", IsTransformationSemigroup, "mutable");
 
+DeclareGlobalFunction("GradedKernelsOfTransformationSemigroupNC");
+
+#JDM new for 3.2!
+DeclareInfoClass("InfoMonoidOrbits");
+
+#JDM temporary or new for 3.2! 
+DeclareProperty("IsGradedOrbit", IsOrbit);
+
 ###########################################################################
-##
 ##	<#GAPDoc Label="MonoidOrbit">
 ##	<ManSection>
 ##	<Oper Name="MonoidOrbit" Arg="S, obj[, act]"/>
@@ -168,6 +180,9 @@ DeclareAttribute("GradedKernelsOfTransSemigroup", IsTransformationSemigroup, "mu
 
 DeclareOperation("MonoidOrbit", [IsTransformationCollection, IsObject,
  IsFunction]);
+
+DeclareGlobalFunction("ForwardOrbitNC");
+DeclareGlobalFunction("ForwardOrbit");
 
 ###########################################################################
 ##
@@ -249,6 +264,10 @@ DeclareOperation("MonoidOrbits", [IsTransformationCollection, IsList,
 
 DeclareOperation("ShortOrbit", [IsTransformationCollection, IsObject, 
  IsFunction, IsFunction]);
+ 
+DeclareGlobalFunction("ShortForwardOrbitNC");
+DeclareGlobalFunction("ShortForwardOrbit");
+
 
 ###########################################################################
 ##
@@ -395,6 +414,6 @@ IsList, IsFunction]);
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-#JDM new!
+#JDM new for 3.1.4!
 DeclareGlobalFunction("StrongOrbitsInForwardOrbit");
 

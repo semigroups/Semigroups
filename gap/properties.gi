@@ -327,22 +327,24 @@ fi;
 end);
 
 ###########################################################################
+#JDM new method for 3.2! Check it's better and correct!
 
-InstallMethod(IsBand, "for a transformation semigroup",
-true, [IsTransformationSemigroup], 0,
+InstallMethod(IsBand, "for a transformation semigroup", 
+[IsTransformationSemigroup],
+function(s)
 
-function(M)
+if not IsCompletelyRegularSemigroup(s) then 
+  return false;
+fi;
 
-if not IsCompletelyRegularSemigroup(M) then 
-   return false;
-else
-   return #JDM Size(M)=Size(Idempotents(M)); 
-    ForAll(AsList(M), IsIdempotent);
-fi; 
+return ForAll(GreensRClasses(s), x-> IsTrivial(GreensRClassData(x)!.schutz));
+#  return ForAll(AsList(M), IsIdempotent);
+#fi; 
+
+#JDM could also check if s is a set of partial identities in disguise!
 end);
 
 ###########################################################################
-
 ##  JDM is there a better way?
 
 InstallMethod(IsRectangularBand, "for a transformation semigroup", 

@@ -1156,23 +1156,23 @@ end);
 #the dev version. If doing a new release before moving things over from dev, 
 #then uncomment this function.
 
-InstallGlobalFunction(RMSIsoByTriple, 
-function(rms1, rms2, triple)
-  local fam1, fam2, mapfam, map;
+#InstallGlobalFunction(RMSIsoByTriple, 
+#function(rms1, rms2, triple)
+#  local fam1, fam2, mapfam, map;
 
-  fam1 :=  ElementsFamily(FamilyObj(rms1));
-  fam2 :=  ElementsFamily(FamilyObj(rms2));
-  mapfam := GeneralMappingsFamily(fam1,fam2);	
-  map := rec( triple := triple);
-  Objectify(NewType(mapfam, IsGeneralMapping and IsSPGeneralMapping and 
-   IsTotal and IsSingleValued and IsInjective and IsSurjective and 
-    RespectsMultiplication and IsRMSIsoByTripleRep), map);
-  SetSource(map, rms1);
-  SetRange(map, rms2);
-  IsOne(map);
-  
-  return map;
-end);
+#  fam1 :=  ElementsFamily(FamilyObj(rms1));
+#  fam2 :=  ElementsFamily(FamilyObj(rms2));
+#  mapfam := GeneralMappingsFamily(fam1,fam2);	
+#  map := rec( triple := triple);
+#  Objectify(NewType(mapfam, IsGeneralMapping and IsSPGeneralMapping and 
+#   IsTotal and IsSingleValued and IsInjective and IsSurjective and 
+#    RespectsMultiplication and IsRMSIsoByTripleRep), map);
+#  SetSource(map, rms1);
+#  SetRange(map, rms2);
+#  IsOne(map);
+#  
+#  return map;
+#end);
 
 #############################################################################
 
@@ -1214,22 +1214,22 @@ end);
 #the dev version. If doing a new release before moving things over from dev, 
 #then uncomment this function.
 
-InstallGlobalFunction(RZMSIsoByTriple, 
-function(rms1, rms2, triple)
-local fam1, fam2, mapfam, map;
+#InstallGlobalFunction(RZMSIsoByTriple, 
+#function(rms1, rms2, triple)
+#local fam1, fam2, mapfam, map;
 
-fam1 :=  ElementsFamily(FamilyObj(rms1));
-fam2 :=  ElementsFamily(FamilyObj(rms2));
-mapfam := GeneralMappingsFamily(fam1,fam2);	
-map := rec( triple := triple);
-Objectify(NewType(mapfam, IsGeneralMapping and 
-IsSPGeneralMapping and IsTotal and IsSingleValued and IsInjective and 
-IsSurjective and RespectsMultiplication and IsRZMSIsoByTripleRep), map);
-SetSource(map, rms1);
-SetRange(map, rms2);
+#fam1 :=  ElementsFamily(FamilyObj(rms1));
+#fam2 :=  ElementsFamily(FamilyObj(rms2));
+#mapfam := GeneralMappingsFamily(fam1,fam2);	
+#map := rec( triple := triple);
+#Objectify(NewType(mapfam, IsGeneralMapping and 
+#IsSPGeneralMapping and IsTotal and IsSingleValued and IsInjective and 
+#IsSurjective and RespectsMultiplication and IsRZMSIsoByTripleRep), map);
+#SetSource(map, rms1);
+#SetRange(map, rms2);
 
-return map;
-end);
+#return map;
+#end);
 
 ###########################################################################
 

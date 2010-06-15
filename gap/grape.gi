@@ -24,7 +24,8 @@
 
 #############################################################################
 
-InstallMethod(PartialOrderOfDClasses, "for a generic semigroup", true, [IsSemigroup], 
+InstallMethod(PartialOrderOfDClasses, "for a  semigroup", 
+[IsSemigroup], 
 function(M)
 local class, poset, a, i, j, c;
 
@@ -1043,7 +1044,6 @@ end);
 #############################################################################
 
 InstallMethod(RZMSInducedFunction, "for a RZMS", true, [IsReesZeroMatrixSemigroup, IS_PERM, IsGeneralMapping, IsMultiplicativeElement, IsList], 0,
-
 function(rms, l, g, groupelt, component)
 local mat, m, n, graph, rep, imagelist, i, j, k, sub, bicomps, edges, defined, orb, v, new, involved, verts, Last, perm;
 

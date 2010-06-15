@@ -13,6 +13,11 @@
 ## this file contains a list of functions that have been renamed or removed
 ## from previous versions of MONOID
 
+Renamed in 3.2:
+
+	GradedOrbit -> GradedForwardOrbit (also changed from an operation to a 
+	 global function).
+
 Renamed in 3.1.4:
 
 	InfoAutos -> InfoMonoidAutos
