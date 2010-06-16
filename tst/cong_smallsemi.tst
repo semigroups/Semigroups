@@ -7,7 +7,7 @@
 ##
 #############################################################################
 ##
-## $Id: install_with_grape.tst 33 2010-05-08 14:54:13Z jamesm $
+## $Id$
 ##
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "congruence_smallsemi.tst" ) );
