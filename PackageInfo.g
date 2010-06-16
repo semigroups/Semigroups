@@ -13,7 +13,7 @@
 SetPackageInfo( rec(
 PackageName := "MONOID",
 Subtitle := "Computing with transformation semigroups and monoids",
-Version := "3.1.4",
+Version := "3.1.dev",
 Date := "08/05/2010",
 ArchiveURL := 
           "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/monoid/monoid3r1p4",

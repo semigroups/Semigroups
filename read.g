@@ -19,6 +19,7 @@ ReadPkg("monoid/gap/transform.gi");
 ReadPkg("monoid/gap/properties.gi");
 ReadPkg("monoid/gap/autos.gi");
 ReadPkg("monoid/gap/isomorph.gi");
+ReadPkg("monoid/gap/congruences.gi");
 
 #check that grape is loaded and fully installed
 

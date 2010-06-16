@@ -19,6 +19,7 @@ ReadPkg("monoid/gap/properties.gd");
 ReadPkg("monoid/gap/transform.gd");
 ReadPkg("monoid/gap/autos.gd");
 ReadPkg("monoid/gap/isomorph.gd");
+ReadPkg("monoid/gap/congruences.gd");
 
 ###########################################################################
 ##
