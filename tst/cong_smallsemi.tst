@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  congruence_smallsemi.tst
+#W  cong_smallsemi.tst
 #Y  Copyright (C) 2006-2010                             James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -10,10 +10,9 @@
 ## $Id$
 ##
 
-#ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "congruence_smallsemi.tst" ) );
+#ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "cong_smallsemi.tst" ) );
 
-gap> START_TEST("install_with_grape.tst 3.1.4");
-
+gap> START_TEST("cong_smallsemi.tst 3.1.4");
 gap> a:=SmallSemigroup(6, 15040);
 <small semigroup of size 6>
 gap> CongruencesSemilatticeByCayleyGraph(a)=CongruencesOfSmallSemigroup(a);
@@ -28,3 +27,4 @@ gap> enum:=EnumeratorOfSmallSemigroups(6, IsSemilatticeAsSemigroup, true);
 gap> ForAll(enum, x-> CongruencesSemilatticeByCayleyGraph(x)=
 > CongruencesOfSmallSemigroup(x));
 true
+gap> STOP_TEST( "cong_smallsemi.tst 3.1.4", 10000);
