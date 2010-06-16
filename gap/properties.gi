@@ -11,8 +11,129 @@
 ##
 
 ###########################################################################
+#JDM new method for 3.2! Check it's better and correct!
 
-InstallMethod( IsCompletelyRegularSemigroup, "for a transformation semigroup", 
+InstallMethod(IsBand, "for a transformation semigroup", 
+[IsTransformationSemigroup],
+function(s)
+
+if not IsCompletelyRegularSemigroup(s) then 
+  return false;
+fi;
+
+return ForAll(GreensRClasses(s), x-> IsTrivial(GreensRClassData(x)!.schutz));
+#  return ForAll(AsList(M), IsIdempotent);
+#fi; 
+
+#JDM could also check if s is a set of partial identities in disguise!
+end);
+
+#############################################################################
+# JDM new for 3.2!
+
+InstallMethod(IsBlockGroup, "for a transformation semigroup",
+[IsTransformationSemigroup], 
+function(S)
+local R, r, ker, img_orb, numb, img, bool;
+
+if IsInverseSemigroup(S) then 
+   return true;
+elif IsRegularSemigroup(S) then 
+   return false;
+fi;
+
+R:=GreensRClasses(S);
+
+for r in R do
+	r:=GreensRClassData(r);
+  ker:=KernelOfTransformation(r!.rep);
+  img_orb:=r!.strongorb;
+  numb:=0;
+  
+  for img in img_orb do
+		bool:=IsTransversal(ker,img);
+    if bool and numb<1 then
+    	numb:=numb+1;
+   	elif bool then 
+    	return false;
+    fi;
+	od;
+od;
+
+return true;
+end);
+
+###########################################################################
+
+InstallMethod(IsCliffordSemigroup, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
+function(M)
+local gens, identities, gen, identity;
+
+if HasIsInverseSemigroup(M) and not IsInverseSemigroup(M) then 
+	return false;
+elif HasIsRegularSemigroup(M) and not IsRegularSemigroup(M) then 
+	return false;
+elif HasIsCompletelyRegularSemigroup(M) and 
+ not IsCompletelyRegularSemigroup(M) then 
+	return false;
+elif not IsCompletelyRegularSemigroup(M) then 
+  return false;
+elif IsGroupAsSemigroup(M) then
+  return true;
+else
+
+  gens:=GeneratorsOfSemigroup(M);
+
+  #JDM this should be done online...
+  identities:=List(gens, x->Idempotent(KernelOfTransformation(x), 
+   ImageSetOfTransformation(x)));
+
+  for gen in gens do
+
+    if not ImageSetOfTransformation(gen^2)
+           =ImageSetOfTransformation(gen) then 
+      return false; 
+    fi;
+
+    for identity in identities do
+      if not identity*gen=gen*identity then 
+        return false;
+      fi;
+    od;
+
+  od;
+
+  return true;
+
+fi;
+end);
+
+###########################################################################
+
+InstallMethod(IsCommutativeSemigroup, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(M)
+local gens, n, i, j; 
+
+gens:=GeneratorsOfSemigroup(M);
+n:=Length(gens);
+
+for i in [1..n] do
+  for j in [i+1..n] do
+    if not gens[i]*gens[j]=gens[j]*gens[i] then 
+      return false;
+    fi;
+  od;
+od;
+
+return true;
+
+end);
+
+###########################################################################
+
+InstallMethod(IsCompletelyRegularSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup],
 function(M)
 local pnt, orbit, gens, s, new, g;
@@ -47,69 +168,36 @@ return true;
 end) ;
 
 ###########################################################################
-##  JDM could include if IsCompletelyRegular and HasGreensDClasses etc
-##  JDM but this is so fast it might not be worthwhile...
-
-InstallMethod( IsSimpleSemigroup, "for a transformation semigroup", true, 
-[IsTransformationSemigroup], 0,  
-function(M)
-local pnt, orbit, gens, s, new, g, image;
-   	
-gens:= GeneratorsOfSemigroup(M);
-
-for g in gens do
-  image:=ImageSetOfTransformation(g);
-  orbit:=[image];
-  for pnt in orbit do
-    for s in gens do
-      new:= OnSets(pnt,s);
-      if not new in orbit then
-        Add(orbit, new);
-        if not Size(OnSets(new, g))=Size(image) then
-          return false;
-        fi;
-      fi;
-    od;
-  od;
-od;
-
-SetIsCompletelyRegularSemigroup(M,true);
-SetIsRegularSemigroup(M, true);
-
-return true;
-
-end) ;
-
-###########################################################################
 # this test required to avoid conflict with Smallsemi
 
-InstallMethod( IsCompletelySimpleSemigroup, "for a trans. semigroup",
+InstallMethod( IsCompletelySimpleSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(s)
 return IsSimpleSemigroup(s) and IsFinite(s);
 end);
 
+#############################################################################
+#JDM new for 3.2!
+
+InstallMethod(IsGreensLTrivial, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(S)
+return ForAll(GreensLClasses(S), x-> Size(x)=1);
+end);
 
 #############################################################################
-## for simple transformation semigroups... 
+#JDM new for 3.2!
 
-InstallOtherMethod(Size, "for a simple transformation semigroup", true, [IsSimpleSemigroup and IsTransformationSemigroup], 0,
-function(M)
-local gens, ims, kers, H;
-
-gens:=GeneratorsOfSemigroup(M);
-
-ims:=Size(Set(List(gens, ImageSetOfTransformation)));
-kers:=Size(Set(List(gens, KernelOfTransformation)));
-H:=GreensHClassOfElement(M, gens[1]);
-
-return Size(H)*ims*kers;
-
+InstallMethod(IsGreensRTrivial, "for a transformation semigroup", true,
+[IsTransformationSemigroup], 0,
+function(S)
+return ForAll(GreensRClasses(S), x-> Size(x)=1);
 end);
 
 ###########################################################################
  
-InstallMethod(IsGroupAsSemigroup, "for a transformation semigroup", true, [IsTransformationSemigroup], 0, 
+InstallMethod(IsGroupAsSemigroup, "for a transformation semigroup", 
+[IsTransformationSemigroup],
 function(M)
 local gens;
 
@@ -127,56 +215,151 @@ end);
 
 ###########################################################################
 
-InstallMethod(IsCliffordSemigroup, "for a transformation semigroup", true, 
-[IsTransformationSemigroup], 0, 
-
+InstallOtherMethod(IsInverseSemigroup, "for a transformation semigroup", 
+[IsTransformationSemigroup],
 function(M)
-local gens, identities, gen, identity;
+local imgs, kers, rclasses, class, ker, strongorb, numb, img, istransv;
 
-if HasIsInverseSemigroup(M) and not IsInverseSemigroup(M) then 
-	return false;
-elif HasIsRegularSemigroup(M) and not IsRegularSemigroup(M) then 
-	return false;
-elif HasIsCompletelyRegularSemigroup(M) and 
- not IsCompletelyRegularSemigroup(M) then 
-	return false;
-elif not IsCompletelyRegularSemigroup(M) then 
-  return false;
-elif IsGroupAsSemigroup(M) then
-  return true;
-else
+if not IsRegularSemigroup(M) then 
+   return false;
+elif IsCompletelyRegularSemigroup(M) and not HasGreensRClasses(M) then
+   return IsCliffordSemigroup(M);
+else 
+  imgs:=ImagesOfTransSemigroup(M);
+  kers:=KernelsOfTransSemigroup(M);
+  
+  if not Length(imgs)=Length(kers) then 
+     return false;
+  else
+     rclasses:=GreensRClasses(M);
 
-  gens:=GeneratorsOfSemigroup(M);
+     for class in rclasses do
+        class:=GreensRClassData(class);
+        ker:=KernelOfTransformation(class!.rep);
+        strongorb:=class!.strongorb;
+        numb:=0;
+        for img in strongorb do
+           istransv:=IsTransversal(ker,img);
+           if istransv and numb<1 then
+              numb:=numb+1;
+           elif istransv then 
+              return false;
+           fi;
+        od;
+        if numb=0 then 
+           return false;
+        fi;
+     od;
 
-  #JDM this should be done online...
-  identities:=List(gens, x->Idempotent(KernelOfTransformation(x), ImageSetOfTransformation(x)));
-
-  for gen in gens do
-
-    if not ImageSetOfTransformation(gen^2)
-           =ImageSetOfTransformation(gen) then 
-      return false; 
-    fi;
-
-    for identity in identities do
-      if not identity*gen=gen*identity then 
-        return false;
-      fi;
-    od;
-
-  od;
-
+  fi;
   return true;
 
 fi;
+end);
 
+#############################################################################
+#JDM new for 3.2!
+
+InstallMethod(IsIrredundantGeneratingSet, 
+"for a collection of transformations",
+[IsTransformationCollection],
+function(gens)
+return not ForAny(gens, x-> x in Semigroup(Difference(gens, [x])));
+end);
+
+#############################################################################
+#JDM new for 3.2!
+
+InstallOtherMethod(IsIrredundantGeneratingSet, 
+"for a transformation semigroup and collection of transformations",
+[IsTransformationSemigroup, IsTransformationCollection],
+function(S, gens)
+
+if S=Semigroup(gens) then 
+	return IsIrredundantGeneratingSet(gens);
+fi;
 end);
 
 ###########################################################################
 
-InstallOtherMethod(IsRegularSemigroup, "for a transformation semigroup", true, 
-[IsTransformationSemigroup], 0,
+InstallMethod(IsLeftZeroSemigroup, "for a transformation semigroup", 
+[IsTransformationSemigroup],
+function(M)
+local gens, imgs;
 
+gens:=GeneratorsOfSemigroup(M);
+imgs:=Set(List(gens, ImageSetOfTransformation));
+
+if Size(imgs)=1 and ForAll(gens, IsIdempotent) then
+   return true;
+fi;
+return false;
+end);
+
+#############################################################################
+
+InstallOtherMethod(IsMonoidAsSemigroup, "for a transformation semigroup",
+[IsTransformationSemigroup], x-> One(x) in x);
+
+###########################################################################
+##  JDM is there a better way? JDM should be regular also! 
+
+InstallMethod(IsOrthodoxSemigroup, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
+function(M)
+local idems, e, f;
+
+idems:=Idempotents(M);
+
+for e in idems do
+   for f in idems do
+      if not (e*f)^2=e*f then 
+         return false;
+      fi;
+   od;
+od;
+
+return true;
+  
+end);
+
+###########################################################################
+##  JDM is there a better way?
+
+InstallMethod(IsRectangularBand, "for a transformation semigroup", 
+[IsTransformationSemigroup],
+function(M)
+local x, y, z, gens;
+
+if not IsSimpleSemigroup(M) then 
+   return false;
+elif HasIsBand(M) then
+   return IsBand(M) and IsSimpleSemigroup(M);
+else
+   #check the generators
+
+   gens:=GeneratorsOfSemigroup(M);
+
+   for x in gens do
+      for y in gens do
+         for z in gens do
+            if not x*y*z=x*z then 
+               return false;
+            fi;
+         od;
+      od;
+   od;
+   #SetIsBand(M, true)
+   return true;
+fi; 
+  
+end);
+
+###########################################################################
+# JDM this should be updated when greens.gi etc is updated
+
+InstallOtherMethod(IsRegularSemigroup, "for a transformation semigroup", 
+[IsTransformationSemigroup],
 function ( M )
 local n, one, gens, images, positions, classes, classespart, reps, 
       kernels, orb, x, img, k, j, i, r, pos, ker, new, s, class;
@@ -281,151 +464,9 @@ fi;
 end);
 
 ###########################################################################
-#JDM is the `other' required here? 
-
-InstallOtherMethod(IsInverseSemigroup, "for a transformation semigroup", 
-true, [IsTransformationSemigroup], 0,
-
-function(M)
-local imgs, kers, rclasses, class, ker, strongorb, numb, img, istransv;
-
-if not IsRegularSemigroup(M) then 
-   return false;
-elif IsCompletelyRegularSemigroup(M) and not HasGreensRClasses(M) then
-   return IsCliffordSemigroup(M);
-else 
-  imgs:=ImagesOfTransSemigroup(M);
-  kers:=KernelsOfTransSemigroup(M);
-  
-  if not Length(imgs)=Length(kers) then 
-     return false;
-  else
-     rclasses:=GreensRClasses(M);
-
-     for class in rclasses do
-        class:=GreensRClassData(class);
-        ker:=KernelOfTransformation(class!.rep);
-        strongorb:=class!.strongorb;
-        numb:=0;
-        for img in strongorb do
-           istransv:=IsTransversal(ker,img);
-           if istransv and numb<1 then
-              numb:=numb+1;
-           elif istransv then 
-              return false;
-           fi;
-        od;
-        if numb=0 then 
-           return false;
-        fi;
-     od;
-
-  fi;
-  return true;
-
-fi;
-end);
-
-###########################################################################
-#JDM new method for 3.2! Check it's better and correct!
-
-InstallMethod(IsBand, "for a transformation semigroup", 
-[IsTransformationSemigroup],
-function(s)
-
-if not IsCompletelyRegularSemigroup(s) then 
-  return false;
-fi;
-
-return ForAll(GreensRClasses(s), x-> IsTrivial(GreensRClassData(x)!.schutz));
-#  return ForAll(AsList(M), IsIdempotent);
-#fi; 
-
-#JDM could also check if s is a set of partial identities in disguise!
-end);
-
-###########################################################################
-##  JDM is there a better way?
-
-InstallMethod(IsRectangularBand, "for a transformation semigroup", 
-true, [IsTransformationSemigroup], 0,
-
-function(M)
-local x,y,z, gens;
-
-if not IsSimpleSemigroup(M) then 
-   return false;
-elif HasIsBand(M) then
-   return IsBand(M) and IsSimpleSemigroup(M);
-else
-   #check the generators
-
-   gens:=GeneratorsOfSemigroup(M);
-
-   for x in gens do
-      for y in gens do
-         for z in gens do
-            if not x*y*z=x*z then 
-               return false;
-            fi;
-         od;
-      od;
-   od;
-   #SetIsBand(M, true)
-   return true;
-fi; 
-  
-end);
-
-###########################################################################
-##  JDM is there a better way?
-
-InstallMethod(IsSemiBand, "for a transformation semigroup", 
-true, [IsTransformationSemigroup], 0,
-
-function(M)
-
-if Idempotents(M)=[] then #JDM this can't happen!
-   return false;
-elif IsOrthodoxSemigroup(M) then #JDM advantage?
-    if IsCompletelyRegularSemigroup(M) and IsBand(M) then 
-       return true;
-    else
-       return false;
-    fi;
-else
-   return Size(M)=Size(Semigroup(Idempotents(M)));
-fi;  
-end);
-
-###########################################################################
-##  JDM is there a better way?
-
-InstallMethod(IsOrthodoxSemigroup, "for a transformation semigroup", 
-true, [IsTransformationSemigroup], 0,
-
-function(M)
-local idems, e, f;
-
-idems:=Idempotents(M);
-
-for e in idems do
-   for f in idems do
-      if not (e*f)^2=e*f then #JDM IsIdempotent(e*f)? 
-         return false;
-      fi;
-   od;
-od;
-
-return true;
-  
-end);
-
-###########################################################################
 
 InstallMethod(IsRightZeroSemigroup, "for a transformation semigroup", 
-true, [IsTransformationSemigroup], 0,
-
+[IsTransformationSemigroup],
 function(M)
 local gens, kers;
 
@@ -441,50 +482,67 @@ fi;
 end);
 
 ###########################################################################
+##  JDM is there a better way?
 
-InstallMethod(IsLeftZeroSemigroup, "for a transformation semigroup", 
-true, [IsTransformationSemigroup], 0,
-
+InstallMethod(IsSemiBand, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
 function(M)
-local gens, imgs;
 
-gens:=GeneratorsOfSemigroup(M);
-imgs:=Set(List(gens, ImageSetOfTransformation));
-
-if Size(imgs)=1 and ForAll(gens, IsIdempotent) then
-   return true;
+if IsOrthodoxSemigroup(M) then #JDM advantage?
+  if IsCompletelyRegularSemigroup(M) and IsBand(M) then 
+    return true;
+  else
+    return false;
+  fi;
 else
-   return false;
-fi;
+   return Size(M)=Size(Semigroup(Idempotents(M)));
+fi;  
+end);
 
+###############################################################################
+
+InstallMethod(IsSemilatticeAsSemigroup, [IsSemigroup],
+function(s)
+return IsBand(s) and IsCommutative(s);
 end);
 
 ###########################################################################
+##  JDM could include if IsCompletelyRegular and HasGreensDClasses etc
+##  JDM but this is so fast it might not be worthwhile...
 
-InstallMethod(IsCommutativeSemigroup, "for a transformation semigroup", true, 
-[IsTransformationSemigroup], 0,
+InstallMethod( IsSimpleSemigroup, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
 function(M)
-local gens, n, i, j; 
+local pnt, orbit, gens, s, new, g, image;
+   	
+gens:= GeneratorsOfSemigroup(M);
 
-gens:=GeneratorsOfSemigroup(M);
-n:=Length(gens);
-
-for i in [1..n] do
-  for j in [i+1..n] do
-    if not gens[i]*gens[j]=gens[j]*gens[i] then 
-      return false;
-    fi;
+for g in gens do
+  image:=ImageSetOfTransformation(g);
+  orbit:=[image];
+  for pnt in orbit do
+    for s in gens do
+      new:= OnSets(pnt,s);
+      if not new in orbit then
+        Add(orbit, new);
+        if not Size(OnSets(new, g))=Size(image) then
+          return false;
+        fi;
+      fi;
+    od;
   od;
 od;
 
-return true;
+SetIsCompletelyRegularSemigroup(M,true);
+SetIsRegularSemigroup(M, true);
 
+return true;
 end);
 
 ###########################################################################
 
-InstallOtherMethod(IsZeroSemigroup, "for a transformation semigroup", true, 
-[IsTransformationSemigroup], 0,
+InstallOtherMethod(IsZeroSemigroup, "for a transformation semigroup", 
+[IsTransformationSemigroup],
 function(S)
 local zero, x, y;
 
@@ -506,10 +564,11 @@ return true;
 end);
 
 ###########################################################################
-#JDM new for 3.1.4 used to accept IsSemigroup as filter, changed for semex
+#JDM new for 3.1.4!
+#used to accept IsSemigroup as filter, changed for semex
 
-InstallOtherMethod(IsZeroGroup, "for a transformation semigroup", true, 
-[IsTransformationSemigroup], 0, 
+InstallOtherMethod(IsZeroGroup, "for a transformation semigroup",
+[IsTransformationSemigroup],
 function(S)
 local zero, one;
 
@@ -523,11 +582,10 @@ fi;
 return false;
 end);
 
-
 ###########################################################################
 
-InstallOtherMethod(MultiplicativeZero, "for a transformation semigroup", true, 
-[IsTransformationSemigroup], 0,
+InstallOtherMethod(MultiplicativeZero, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
 function(S)
 local n, imgs, m, kers, idem;
 
@@ -546,6 +604,88 @@ if Length(imgs[m])=1 then
 fi;
 
 return fail;
+end);
+
+#############################################################################
+#JDM there must be better methods than the following for special types of S.
+#JDM new for 3.2!
+
+InstallOtherMethod(SmallGeneratingSet, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(S)
+local n, iso, gens, degs, j, elts, diff, x;
+
+n:=DegreeOfTransformationSemigroup(S);
+
+if Transformation([1..n]) in S then 
+	Info(InfoMonoidProperties, 4, 
+	 "finding minimal generators of group of units...");
+	if HasGeneratorsOfSemigroup(S) then 
+		iso:=Filtered(GeneratorsOfSemigroup(S), x-> RankOfTransformation(x)=n);
+		iso:=MinimalGeneratingSet(Group(List(iso, AsPermutation)));
+		gens:=List(iso, x-> AsTransformation(x, n));
+	else
+		iso:=IsomorphismPermGroup(GreensHClassOfElement(S, Transformation([1..n])));
+		gens:=OnTuples(MinimalGeneratingSet(Range(iso)), 
+			InverseGeneralMapping(iso));
+	fi;
+	Info(InfoMonoidProperties, 4, Length(gens), " such generators");
+else
+	gens:=[];
+fi;
+
+Info(InfoMonoidProperties, 4, "finding images of elements...");
+degs:=Reversed(AsSet(List(ImagesOfTransSemigroup(S), Length)));
+j:=0;
+
+repeat
+	Info(InfoMonoidProperties, 4, "finding generators of elements of rank ",
+	 degs[j+1]);
+	
+	j:=j+1;
+	elts:=Filtered(Elements(S), x-> RankOfTransformation(x)=degs[j]);;
+	diff:=elts;
+	
+	repeat
+		x:=Random(diff); 
+		Add(gens, x);
+		diff:=Difference(diff, Filtered(Elements(Semigroup(gens)), x-> 
+		 RankOfTransformation(x)=degs[j]));
+		if InfoLevel(InfoMonoidProperties)=4 then 
+	  	Print("#I  ", Float((Length(elts)-Length(diff))/Length(elts))*100, 
+	   	 "% of the elements of rank ", degs[j], 
+	  	 " generated...                 \r");
+	  fi;
+	until diff=[] or Length(gens)=Length(GeneratorsOfSemigroup(S));
+	if InfoLevel(InfoMonoidProperties)=4 then 
+		Print("\n");
+	fi;
+until Size(Semigroup(gens))=Size(S) or
+ Length(gens)=Length(GeneratorsOfSemigroup(S));;
+
+if Length(gens)=Length(GeneratorsOfSemigroup(S)) then 
+	return GeneratorsOfSemigroup(S);
+fi;
+
+return gens;
+end);
+
+#############################################################################
+
+InstallOtherMethod(Size, "for a simple transformation semigroup",
+[IsSimpleSemigroup and IsTransformationSemigroup],
+function(M)
+local gens, ims, kers, H;
+
+gens:=GeneratorsOfSemigroup(M);
+
+ims:=Size(Set(List(gens, ImageSetOfTransformation)));
+kers:=Size(Set(List(gens, KernelOfTransformation)));
+H:=GreensHClassOfElement(M, gens[1]);
+#JDM this could be better if it used the schutz group of the R-class of 
+#    any elt.
+
+return Size(H)*ims*kers;
 end);
 
 #####################
