@@ -10,9 +10,6 @@
 ## $Id$
 ##
 
-
-
-
 ###########################################################################
 ##  <#GAPDoc Label="CongruencesSemilattice">
 ##  <ManSection> 
@@ -21,9 +18,7 @@
 ##  </ManSection>
 ##	<#/GAPDoc>
 
-DeclareAttribute("CongruencesSemilattice", IsSemigroup);
-# the filter here should be IsSemilatticeAsSemigroup but this is undefined
-# when this file is read, hence IsSemigroup. 
+DeclareAttribute("CongruencesSemilattice", IsSemilatticeAsSemigroup);
 
 ###########################################################################
 ##  <#GAPDoc Label="CongruencesSemilatticeByCayleyGraph">
@@ -93,9 +88,8 @@ DeclareGlobalFunction("ConvexSubsemigroupByCayleyGraph");
 ##  </ManSection>
 ##	<#/GAPDoc>
 
-DeclareAttribute("ConvexSubsemigroups", IsSemigroup);
-# the filter here should be IsSemilatticeAsSemigroup but this is undefined
-# when this file is read, hence IsSemigroup. 
+DeclareAttribute("ConvexSubsemigroups", IsSemilatticeAsSemigroup);
+
 
 ###########################################################################
 ##  <#GAPDoc Label="ConvexSubsemigroupsByCayleyGraph">

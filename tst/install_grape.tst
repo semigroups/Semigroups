@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  install_with_graph.tst
+#W  install_graph.tst
 #Y  Copyright (C) 2006-2010                             James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-## $Id$
+## $Id: install_with_grape.tst 33 2010-05-08 14:54:13Z jamesm $
 ##
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "install_with_grape.tst" ) );

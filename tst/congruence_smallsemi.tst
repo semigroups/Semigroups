@@ -1,5 +1,18 @@
+#############################################################################
+##
+#W  congruence_smallsemi.tst
+#Y  Copyright (C) 2006-2010                             James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+## $Id: install_with_grape.tst 33 2010-05-08 14:54:13Z jamesm $
+##
 
+#ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "congruence_smallsemi.tst" ) );
 
+gap> START_TEST("install_with_grape.tst 3.1.4");
 
 gap> a:=SmallSemigroup(6, 15040);
 <small semigroup of size 6>
