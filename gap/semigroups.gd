@@ -265,39 +265,39 @@ DeclareAttribute("UnderlyingGroupEltOfZGElt", IsZeroGroupElt);
 
 ###########################################################################
 ##
-##	<#GAPDoc Label="RandomSemigroup">
+##	<#GAPDoc Label="RandomTransformationSemigroup">
 ##	<ManSection>
-##	<Func Name="RandomSemigroup" Arg="m, n"/>
+##	<Func Name="RandomTransformationSemigroup" Arg="m, n"/>
 ##	<Description>
 ##	returns a random transformation semigroup of degree <C>n</C> with <C>m</C> 
 ##	generators.
 ##	<Example>
-##  gap&gt; S:=RandomSemigroup(5,5);
+##  gap&gt; S:=RandomTransformationSemigroup(5,5);
 ##  &lt;semigroup with 5 generators&gt;
 ##	</Example>
 ##	</Description>
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-DeclareGlobalFunction("RandomSemigroup");
+DeclareGlobalFunction("RandomTransformationSemigroup");
 
 ###########################################################################
 ##
-##	<#GAPDoc Label="RandomMonoid">
+##	<#GAPDoc Label="RandomTransformationMonoid">
 ##	<ManSection>
-##	<Func Name="RandomMonoid" Arg="m, n"/>
+##	<Func Name="RandomTransformationMonoid" Arg="m, n"/>
 ##	<Description>
 ##	returns a random transformation monoid of degree <C>n</C> with <C>m</C> 
 ##	generators.
 ##	<Example>
-##  gap&gt; S:=RandomMonoid(5,5);
+##  gap&gt; S:=RandomTransformationMonoid(5,5);
 ##  &lt;semigroup with 5 generators&gt;
 ##	</Example>
 ##	</Description>
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-DeclareGlobalFunction("RandomMonoid");
+DeclareGlobalFunction("RandomTransformationMonoid");
 
 ###########################################################################
 ##
@@ -341,6 +341,30 @@ DeclareGlobalFunction("RandomReesMatrixSemigroup");
 ##	<#/GAPDoc>
 
 DeclareGlobalFunction("RandomReesZeroMatrixSemigroup");
+
+###########################################################################
+##
+##	<#GAPDoc Label="RandomSemilatticeAsSemigroup">
+##	<ManSection>
+##	<Func Name="RandomSemilatticeAsSemigroup" Arg="m, n"/>
+##	<Description>
+##	returns a random transformation semigroup that is a semilattice 
+##  with <C>m</C> generators on <C>n</C> points. 
+##
+##	<Example>
+##  gap> RandomSemilatticeAsSemigroup(5,5);
+##  &lt;semigroup with 5 generators>
+##  gap> IsSemilatticeAsSemigroup(last);
+##  true
+##	</Example>
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
+
+#JDM new for 3.2!
+
+DeclareGlobalFunction("RandomSemilatticeAsSemigroup");
+
 
 ###########################################################################
 ##

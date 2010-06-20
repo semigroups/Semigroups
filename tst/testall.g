@@ -31,6 +31,11 @@ if IsBound(AutGroupGraph) and IsIsomorphicGraph( JohnsonGraph(7,3), JohnsonGraph
 	ReadTest( Filename( dirs, "autos2.tst" ) );
 fi;
 
+if IsBound(GAPInfo.PackagesInfo.smallsemi) and CompareVersionNumbers("0.6", 
+ "smallsemi") then 
+  ReadTest( Filename( dirs, "cong_no_smallsemi.tst" ) );
+fi;
+
 ReadTest( Filename( dirs, "autos3.tst" ) );
 ReadTest( Filename( dirs, "greens.tst" ) );
 ReadTest( Filename( dirs, "properties.tst" ) );

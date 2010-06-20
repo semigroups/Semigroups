@@ -90,10 +90,11 @@
 \contentsline {subsection}{\numberline {6.2.5}\leavevmode {\color {Chapter }UnderlyingGroupOfZG}}{46}{subsection.6.2.5}
 \contentsline {subsection}{\numberline {6.2.6}\leavevmode {\color {Chapter }UnderlyingGroupEltOfZGElt}}{46}{subsection.6.2.6}
 \contentsline {section}{\numberline {6.3}\leavevmode {\color {Chapter }Random Semigroups}}{46}{section.6.3}
-\contentsline {subsection}{\numberline {6.3.1}\leavevmode {\color {Chapter }RandomMonoid}}{46}{subsection.6.3.1}
-\contentsline {subsection}{\numberline {6.3.2}\leavevmode {\color {Chapter }RandomSemigroup}}{47}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {6.3.1}\leavevmode {\color {Chapter }RandomTransformationMonoid}}{46}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}\leavevmode {\color {Chapter }RandomTransformationSemigroup}}{47}{subsection.6.3.2}
 \contentsline {subsection}{\numberline {6.3.3}\leavevmode {\color {Chapter }RandomReesMatrixSemigroup}}{47}{subsection.6.3.3}
 \contentsline {subsection}{\numberline {6.3.4}\leavevmode {\color {Chapter }RandomReesZeroMatrixSemigroup}}{47}{subsection.6.3.4}
+\contentsline {subsection}{\numberline {6.3.5}\leavevmode {\color {Chapter }RandomSemilatticeAsSemigroup}}{47}{subsection.6.3.5}
 \contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }Semigroup Homomorphisms}}{48}{chapter.7}
 \contentsline {section}{\numberline {7.1}\leavevmode {\color {Chapter }Introduction}}{48}{section.7.1}
 \contentsline {subsection}{\numberline {7.1.1}\leavevmode {\color {Chapter }InfoMonoidAutos}}{49}{subsection.7.1.1}
@@ -141,3 +142,17 @@
 \contentsline {subsection}{\numberline {7.7.5}\leavevmode {\color {Chapter }IsomorphismSemigroups}}{67}{subsection.7.7.5}
 \contentsline {subsection}{\numberline {7.7.6}\leavevmode {\color {Chapter }IsomorphismReesMatrixSemigroupOfDClass}}{69}{subsection.7.7.6}
 \contentsline {subsection}{\numberline {7.7.7}\leavevmode {\color {Chapter }IsomorphismReesMatrixSemigroup}}{69}{subsection.7.7.7}
+\contentsline {chapter}{\numberline {8}\leavevmode {\color {Chapter }Congruences}}{71}{chapter.8}
+\contentsline {section}{\numberline {8.1}\leavevmode {\color {Chapter }Arbitrary Semigroups}}{71}{section.8.1}
+\contentsline {subsection}{\numberline {8.1.1}\leavevmode {\color {Chapter }InfoMonoidCongruences}}{71}{subsection.8.1.1}
+\contentsline {subsection}{\numberline {8.1.2}\leavevmode {\color {Chapter }IsCongruenceOfSemigroup}}{71}{subsection.8.1.2}
+\contentsline {section}{\numberline {8.2}\leavevmode {\color {Chapter }Semilattices}}{72}{section.8.2}
+\contentsline {subsection}{\numberline {8.2.1}\leavevmode {\color {Chapter }CongruencesSemilattice}}{72}{subsection.8.2.1}
+\contentsline {subsection}{\numberline {8.2.2}\leavevmode {\color {Chapter }CongruencesSemilatticeAsPositions}}{72}{subsection.8.2.2}
+\contentsline {subsection}{\numberline {8.2.3}\leavevmode {\color {Chapter }ConvexSubsemigroup}}{72}{subsection.8.2.3}
+\contentsline {subsection}{\numberline {8.2.4}\leavevmode {\color {Chapter }ConvexSubsemigroupAsPositionsNC}}{73}{subsection.8.2.4}
+\contentsline {subsection}{\numberline {8.2.5}\leavevmode {\color {Chapter }ConvexSubsemigroups}}{74}{subsection.8.2.5}
+\contentsline {subsection}{\numberline {8.2.6}\leavevmode {\color {Chapter }ConvexSubsemigroupsAsPositions}}{74}{subsection.8.2.6}
+\contentsline {subsection}{\numberline {8.2.7}\leavevmode {\color {Chapter }IsConvexSubsetOfSemilattice}}{74}{subsection.8.2.7}
+\contentsline {subsection}{\numberline {8.2.8}\leavevmode {\color {Chapter }OneMinEltSemilatticeAsPosition}}{75}{subsection.8.2.8}
+\contentsline {subsection}{\numberline {8.2.9}\leavevmode {\color {Chapter }OneMinEltSemilattice}}{75}{subsection.8.2.9}

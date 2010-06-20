@@ -8,7 +8,15 @@
   [2XAsPermOfRange[0X  2.3-2
   [2XAutomorphismGroup[0X  7.4-1
   [2XAutomorphismsSemigroupInGroup[0X  7.4-2
+  [2XCongruencesSemilattice[0X  8.2-1
+  [2XCongruencesSemilatticeAsPositions[0X  8.2-2
   [2XConjugatorOfInnerAutomorphismOfSemigroup[0X  7.3-2
+  [2XConvexSubsemigroup[0X  8.2-3
+  [2XConvexSubsemigroupAsPositionsNC[0X  8.2-4
+  [2XConvexSubsemigroupNC[0X  8.2-3
+  [2XConvexSubsemigroups[0X  8.2-5
+  [2XConvexSubsemigroupsAsPositions[0X  8.2-6
+  [2XConvexSubsemigroupsAsPositionsNC[0X  8.2-6
   [2XDClassData[0X  4.2-7
   [2XGradedImagesOfTransSemigroup[0X  3.4-2
   [2XGradedKernelsOfTransSemigroup[0X  3.4-4
@@ -25,6 +33,7 @@
   [2XImagesOfTransSemigroup[0X  3.4-1
   [2XIndexPeriodOfTransformation[0X  2.2-5
   [2XInfoMonoidAutos[0X  7.1-1
+  [2XInfoMonoidCongruences[0X  8.1-1
   [2XInnerAutomorphismOfSemigroup[0X  7.3-1
   [2XInnerAutomorphismOfSemigroupNC[0X  7.3-1
   [2XInnerAutomorphismsAutomorphismGroup[0X  7.3-6
@@ -44,6 +53,10 @@
   [2XIsCommutativeSemigroup[0X  5.2-4
   [2XIsCompletelyRegularSemigroup[0X  5.2-1
   [2XIsCompletelySimpleSemigroup[0X  5.2-2
+  [2XIsCongruenceOfSemigroup[0X  8.1-2
+  [2XIsCongruenceOfSemigroupNC[0X  8.1-2
+  [2XIsConvexSubsetOfSemilattice[0X  8.2-7
+  [2XIsConvexSubsetOfSemilatticeNC[0X  8.2-7
   [2XIsGreensData[0X  4.2-6
   [2XIsGreensDClassData[0X  4.2-6
   [2XIsGreensDClassDataRep[0X  4.2-8
@@ -87,18 +100,22 @@
   [2XMonoidOrbit[0X  3.3-1
   [2XMonoidOrbits[0X  3.3-2
   [2XMultiplicativeZero[0X  5.2-16
+  [2XOneMinEltSemilattice[0X  8.2-9
+  [2XOneMinEltSemilatticeAsPosition[0X  8.2-8
+  [2XOneMinEltSemilatticeAsPositionNC[0X  8.2-8
   [2XOnKernelsAntiAction[0X  3.2-2
   [2XOnTuplesOfSetsAntiAction[0X  3.2-1
   [2XOrderPreservingSemigroup[0X  6.1-2
   [2XPartialOrderOfDClasses[0X  4.2-12
   [2XRandomIdempotent[0X  2.1-4
   [2XRandomIdempotentNC[0X  2.1-4
-  [2XRandomMonoid[0X  6.3-1
   [2XRandomReesMatrixSemigroup[0X  6.3-3
   [2XRandomReesZeroMatrixSemigroup[0X  6.3-4
-  [2XRandomSemigroup[0X  6.3-2
+  [2XRandomSemilatticeAsSemigroup[0X  6.3-5
   [2XRandomTransformation[0X  2.1-5
+  [2XRandomTransformationMonoid[0X  6.3-1
   [2XRandomTransformationNC[0X  2.1-5
+  [2XRandomTransformationSemigroup[0X  6.3-2
   [2XRClassData[0X  4.2-7
   [2XRightTransStabAutoGroup[0X  7.5-9
   [2XRMSInducedFunction[0X  7.5-5

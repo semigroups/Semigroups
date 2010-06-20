@@ -2365,34 +2365,34 @@ of a zero group using \texttt{ZeroGroup} (\ref{ZeroGroup}).
 {
  
 
-\subsection{\textcolor{Chapter }{RandomMonoid}}
+\subsection{\textcolor{Chapter }{RandomTransformationMonoid}}
 \logpage{[ 6, 3, 1 ]}\nobreak
-\hyperdef{L}{X7ECD900879DA1FD7}{}
-{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{RandomMonoid({\slshape m, n})\index{RandomMonoid@\texttt{RandomMonoid}}
-\label{RandomMonoid}
+\hyperdef{L}{X79834BC080B011B4}{}
+{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{RandomTransformationMonoid({\slshape m, n})\index{RandomTransformationMonoid@\texttt{RandomTransformationMonoid}}
+\label{RandomTransformationMonoid}
 }\hfill{\scriptsize (function)}}\\
 
 
  returns a random transformation monoid of degree \texttt{n} with \texttt{m} generators. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> S:=RandomMonoid(5,5);
+    gap> S:=RandomTransformationMonoid(5,5);
     <semigroup with 5 generators>
 \end{Verbatim}
  }
 
  
 
-\subsection{\textcolor{Chapter }{RandomSemigroup}}
+\subsection{\textcolor{Chapter }{RandomTransformationSemigroup}}
 \logpage{[ 6, 3, 2 ]}\nobreak
-\hyperdef{L}{X789DE9AB79FCFEB5}{}
-{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{RandomSemigroup({\slshape m, n})\index{RandomSemigroup@\texttt{RandomSemigroup}}
-\label{RandomSemigroup}
+\hyperdef{L}{X7F27511D7801349C}{}
+{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{RandomTransformationSemigroup({\slshape m, n})\index{RandomTransformationSemigroup@\texttt{RandomTransformationSemigroup}}
+\label{RandomTransformationSemigroup}
 }\hfill{\scriptsize (function)}}\\
 
 
  returns a random transformation semigroup of degree \texttt{n} with \texttt{m} generators. 
 \begin{Verbatim}[fontsize=\small,frame=single,label=Example]
-    gap> S:=RandomSemigroup(5,5);
+    gap> S:=RandomTransformationSemigroup(5,5);
     <semigroup with 5 generators>
 \end{Verbatim}
  }
@@ -2434,6 +2434,25 @@ of a zero group using \texttt{ZeroGroup} (\ref{ZeroGroup}).
     Rees Zero Matrix Semigroup over <zero group with 2 generators>
     gap> SandwichMatrixOfReesZeroMatrixSemigroup(S);
     [ [ 0, (), 0 ], [ 0, 0, 0 ] ]
+\end{Verbatim}
+ }
+
+ 
+
+\subsection{\textcolor{Chapter }{RandomSemilatticeAsSemigroup}}
+\logpage{[ 6, 3, 5 ]}\nobreak
+\hyperdef{L}{X785FC6137C52F365}{}
+{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{RandomSemilatticeAsSemigroup({\slshape m, n})\index{RandomSemilatticeAsSemigroup@\texttt{RandomSemilatticeAsSemigroup}}
+\label{RandomSemilatticeAsSemigroup}
+}\hfill{\scriptsize (function)}}\\
+
+
+ returns a random transformation semigroup that is a semilattice with \texttt{m} generators on \texttt{n} points. 
+\begin{Verbatim}[fontsize=\small,frame=single,label=Example]
+    gap> RandomSemilatticeAsSemigroup(5,5);
+    <semigroup with 5 generators>
+    gap> IsSemilatticeAsSemigroup(last);
+    true
 \end{Verbatim}
  }
 
@@ -3775,6 +3794,371 @@ Rees-Suschewitsch Theorem; see \cite[Theorem 3.2.3]{howie}.
   [ (2,5)(3,8)(4,6), (1,6,3)(5,8) ]))
 \end{Verbatim}
   }
+
+ }
+
+ }
+
+  
+\chapter{\textcolor{Chapter }{Congruences}}\label{homo}
+\logpage{[ 8, 0, 0 ]}
+\hyperdef{L}{X82BD951079E3C349}{}
+{
+  
+\section{\textcolor{Chapter }{Arbitrary Semigroups}}\logpage{[ 8, 1, 0 ]}
+\hyperdef{L}{X7D297AEC827F3D4E}{}
+{
+ 
+
+\subsection{\textcolor{Chapter }{InfoMonoidCongruences}}
+\logpage{[ 8, 1, 1 ]}\nobreak
+\hyperdef{L}{X834557A884A40159}{}
+{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{InfoMonoidCongruences\index{InfoMonoidCongruences@\texttt{InfoMonoidCongruences}}
+\label{InfoMonoidCongruences}
+}\hfill{\scriptsize (info class)}}\\
+
+
+ This is the InfoClass for the functions in monoid relating to the computation
+of congruences of a semigroup. Setting the value of \texttt{InfoMonoidAutos} to \texttt{1, 2, 3,} or \texttt{4} using the command \texttt{SetInfoLevel} (\textbf{Reference: SetInfoLevel}) will give different levels of information about what \texttt{GAP} is doing during a computation. }
+
+ 
+
+\subsection{\textcolor{Chapter }{IsCongruenceOfSemigroup}}
+\logpage{[ 8, 1, 2 ]}\nobreak
+\hyperdef{L}{X80F7AF8483C36948}{}
+{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{IsCongruenceOfSemigroup({\slshape s, p})\index{IsCongruenceOfSemigroup@\texttt{IsCongruenceOfSemigroup}}
+\label{IsCongruenceOfSemigroup}
+}\hfill{\scriptsize (function)}}\\
+\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{IsCongruenceOfSemigroupNC({\slshape s, p})\index{IsCongruenceOfSemigroupNC@\texttt{IsCongruenceOfSemigroupNC}}
+\label{IsCongruenceOfSemigroupNC}
+}\hfill{\scriptsize (function)}}\\
+
+
+ returns \texttt{true} if the partition \texttt{p} of the elements of the semigroup \texttt{s} is a congruence of \texttt{s}.
+
+ The no check version does not check that \texttt{s} is a semigroup or that \texttt{p} is a partition of its elements. 
+\begin{Verbatim}[fontsize=\small,frame=single,label=Example]
+  gap> gens:=[ Transformation( [ 5, 2, 3, 4, 5 ] ), 
+  > Transformation( [ 1, 5, 3, 4, 5 ] ), 
+  > Transformation( [ 1, 5, 5, 4, 5 ] ), 
+  > Transformation( [ 5, 2, 5, 4, 5 ] ) ];;
+  gap> s:=Semigroup(gens);;
+  gap> p:=[ [ Transformation( [ 1, 5, 3, 4, 5 ] ) ],
+  > [ Transformation( [ 1, 5, 5, 4, 5 ] ), 
+  > Transformation( [ 5, 5, 3, 4, 5 ] ), 
+  > Transformation( [ 5, 5, 5, 4, 5 ] ) ], 
+  > [ Transformation( [ 5, 2, 3, 4, 5 ] ) ], 
+  > [ Transformation( [ 5, 2, 5, 4, 5 ] ) ] ];;
+  gap> IsCongruenceOfSemigroup(s, p);
+  true
+  gap> p:=[ [ Transformation( [ 1, 5, 3, 4, 5 ] ), 
+  > Transformation( [ 1, 5, 5, 4, 5 ] ), 
+  > Transformation( [ 5, 5, 3, 4, 5 ] ), 
+  > Transformation( [ 5, 5, 5, 4, 5 ] ) ], 
+  > [ Transformation( [ 5, 2, 3, 4, 5 ] ) ], 
+  > [ Transformation( [ 5, 2, 3, 4, 5 ] ) ] ];;
+  gap> IsCongruenceOfSemigroupNC(s, p);
+  false
+\end{Verbatim}
+ }
+
+ }
+
+ 
+\section{\textcolor{Chapter }{Semilattices}}\logpage{[ 8, 2, 0 ]}
+\hyperdef{L}{X81CB0F07791D43B5}{}
+{
+ 
+
+\subsection{\textcolor{Chapter }{CongruencesSemilattice}}
+\logpage{[ 8, 2, 1 ]}\nobreak
+\hyperdef{L}{X7EAD94BC85B1A777}{}
+{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{CongruencesSemilattice({\slshape s})\index{CongruencesSemilattice@\texttt{CongruencesSemilattice}}
+\label{CongruencesSemilattice}
+}\hfill{\scriptsize (attribute)}}\\
+
+
+ returns the congruences of the semilattice \texttt{s} as a partition of the elements of \texttt{s}.
+
+ See also \texttt{CongruencesSemilatticeAsPositions} (\ref{CongruencesSemilatticeAsPositions}). 
+\begin{Verbatim}[fontsize=\small,frame=single,label=Example]
+  gap> gens:=[ Transformation( [ 4, 2, 3, 4 ] ),
+  > Transformation( [ 1, 4, 4, 4 ] ),                                           
+  > Transformation( [ 4, 2, 3, 4 ] ) ];;
+  gap> s:=Semigroup(gens);;
+  gap> IsSemilatticeAsSemigroup(s);
+  true
+  gap> CongruencesSemilattice(Semigroup(gens));
+  [ [ [ Transformation( [ 1, 4, 4, 4 ] ) ], [ Transformation( [ 4, 2, 3, 4 ] ) ], 
+        [ Transformation( [ 4, 4, 4, 4 ] ) ] ], 
+    [ [ Transformation( [ 1, 4, 4, 4 ] ) ], 
+        [ Transformation( [ 4, 2, 3, 4 ] ), Transformation( [ 4, 4, 4, 4 ] ) ] ], 
+    [ [ Transformation( [ 1, 4, 4, 4 ] ), Transformation( [ 4, 2, 3, 4 ] ), 
+            Transformation( [ 4, 4, 4, 4 ] ) ] ], 
+    [ [ Transformation( [ 1, 4, 4, 4 ] ), Transformation( [ 4, 4, 4, 4 ] ) ], 
+        [ Transformation( [ 4, 2, 3, 4 ] ) ] ] ]
+\end{Verbatim}
+  }
+
+ 
+
+\subsection{\textcolor{Chapter }{CongruencesSemilatticeAsPositions}}
+\logpage{[ 8, 2, 2 ]}\nobreak
+\hyperdef{L}{X7F8CE8DD8336D302}{}
+{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{CongruencesSemilatticeAsPositions({\slshape s})\index{CongruencesSemilatticeAsPositions@\texttt{CongruencesSemilatticeAsPositions}}
+\label{CongruencesSemilatticeAsPositions}
+}\hfill{\scriptsize (attribute)}}\\
+
+
+ returns the congruences of the semilattice \texttt{s} as a partition \texttt{p} of \texttt{[1..Size(s)]} so that \texttt{List(p, x-{\textgreater}
+Elements(s)\texttt{\symbol{123}}x\texttt{\symbol{125}})} is a congruence of \texttt{s}.
+
+ See also \texttt{CongruencesSemilattice} (\ref{CongruencesSemilattice}). 
+\begin{Verbatim}[fontsize=\small,frame=single,label=Example]
+  gap> gens:=[ Transformation( [ 4, 2, 3, 4 ] ),
+  > Transformation( [ 1, 4, 4, 4 ] ),                                           
+  > Transformation( [ 4, 2, 3, 4 ] ) ];;
+  gap> s:=Semigroup(gens);;
+  gap> CongruencesSemilatticeAsPositions(s);
+  [ [ [ 1 ], [ 2 ], [ 3 ] ], [ [ 1 ], [ 2, 3 ] ], [ [ 1, 2, 3 ] ], 
+    [ [ 1, 3 ], [ 2 ] ] ]
+\end{Verbatim}
+ }
+
+ 
+
+\subsection{\textcolor{Chapter }{ConvexSubsemigroup}}
+\logpage{[ 8, 2, 3 ]}\nobreak
+\hyperdef{L}{X7A1FFF4179767280}{}
+{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{ConvexSubsemigroup({\slshape s, t})\index{ConvexSubsemigroup@\texttt{ConvexSubsemigroup}}
+\label{ConvexSubsemigroup}
+}\hfill{\scriptsize (function)}}\\
+\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{ConvexSubsemigroupNC({\slshape s, t})\index{ConvexSubsemigroupNC@\texttt{ConvexSubsemigroupNC}}
+\label{ConvexSubsemigroupNC}
+}\hfill{\scriptsize (function)}}\\
+
+
+ returns the least convex subsemigroup of the semilattice \texttt{s} containing the subset \texttt{t} of \texttt{s}. 
+
+ The no check version requires that \texttt{s} is generated by all of its elements and does not check that \texttt{s} is a semilattice or that \texttt{t} is a subset of \texttt{s}.
+
+ See also \texttt{ConvexSubsemigroupAsPositionsNC} (\ref{ConvexSubsemigroupAsPositionsNC}) and see \texttt{IsConvexSubsetOfSemilattice} (\ref{IsConvexSubsetOfSemilattice}) for the definition of a convex subsemigroup of a semilattice. 
+\begin{Verbatim}[fontsize=\small,frame=single,label=Example]
+  gap> gens:=[ Transformation( [ 1, 2, 6, 4, 6, 6 ] ), 
+  > Transformation( [ 6, 2, 3, 4, 6, 6 ] ), 
+  > Transformation( [ 1, 6, 3, 4, 6, 6 ] ), 
+  > Transformation( [ 6, 6, 6, 6, 6, 6 ] ) ];;
+  gap> a:=Semigroup(gens);;
+  gap> Size(a);
+  8
+  gap> f:=Elements(a)[1];
+  Transformation( [ 1, 2, 6, 4, 6, 6 ] )
+  gap> g:=Elements(a)[8];
+  Transformation( [ 6, 6, 6, 6, 6, 6 ] )
+  gap> ConvexSubsemigroup(a, [f,g]);  
+  [ Transformation( [ 1, 2, 6, 4, 6, 6 ] ), Transformation( [ 1, 6, 6, 4, 6,  6 ] ), 
+    Transformation( [ 6, 2, 6, 4, 6, 6 ] ), Transformation( [ 6, 6, 6, 4, 6, 6 ] ), 
+    Transformation( [ 6, 6, 6, 6, 6, 6 ] ) ]
+  gap> ConvexSubsemigroupNC(a, [f,g]);
+  [ Transformation( [ 1, 2, 6, 4, 6, 6 ] ), Transformation( [ 1, 6, 6, 4, 6, 6 ] ), 
+    Transformation( [ 6, 2, 6, 4, 6, 6 ] ), Transformation( [ 6, 6, 6, 4, 6, 6 ] ), 
+    Transformation( [ 6, 6, 6, 6, 6, 6 ] ) ]
+\end{Verbatim}
+ }
+
+ 
+
+\subsection{\textcolor{Chapter }{ConvexSubsemigroupAsPositionsNC}}
+\logpage{[ 8, 2, 4 ]}\nobreak
+\hyperdef{L}{X7A47B2BE84F3D697}{}
+{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{ConvexSubsemigroupAsPositionsNC({\slshape cayley, subset})\index{ConvexSubsemigroupAsPositionsNC@\texttt{ConvexSubsemigroupAsPositionsNC}}
+\label{ConvexSubsemigroupAsPositionsNC}
+}\hfill{\scriptsize (function)}}\\
+
+
+ if \texttt{cayley} is the Cayley graph of a semilattice \texttt{s} generated by all of its elements and \texttt{subset} is a list of positive integers corresponding to the positions of a subset of \texttt{s} in \texttt{Elements(s)}, then \texttt{ConvexSubsemigroupAsPositionsNC} returns a list of the positions in \texttt{Elements(s)} of the elements of the least convex subsemigroup of \texttt{s} containing \texttt{Elements(s)\texttt{\symbol{123}}subset\texttt{\symbol{125}}}.
+
+ See also \texttt{ConvexSubsemigroup} (\ref{ConvexSubsemigroup}) and see \texttt{IsConvexSubsetOfSemilattice} (\ref{IsConvexSubsetOfSemilattice}) for the definition of a convex subsemigroup of a semilattice. 
+\begin{Verbatim}[fontsize=\small,frame=single,label=Example]
+  gap> gens:=[ Transformation( [ 1, 2, 6, 4, 6, 6 ] ), 
+  > Transformation( [ 6, 2, 3, 4, 6, 6 ] ), 
+  > Transformation( [ 1, 6, 3, 4, 6, 6 ] ), 
+  > Transformation( [ 6, 6, 6, 6, 6, 6 ] ) ];;
+  gap> a:=Semigroup(gens);;
+  gap> a:=Semigroup(Elements(a));; cayley:=CayleyGraphSemigroup(a);; 
+  gap> subset:=[1,8];
+  gap> ConvexSubsemigroupAsPositionsNC(cayley, subset);
+  [ 1, 3, 5, 7, 8 ]
+\end{Verbatim}
+ }
+
+ 
+
+\subsection{\textcolor{Chapter }{ConvexSubsemigroups}}
+\logpage{[ 8, 2, 5 ]}\nobreak
+\hyperdef{L}{X7A31DFF887668E21}{}
+{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{ConvexSubsemigroups({\slshape s})\index{ConvexSubsemigroups@\texttt{ConvexSubsemigroups}}
+\label{ConvexSubsemigroups}
+}\hfill{\scriptsize (attribute)}}\\
+
+
+ returns a list of the elements of all the convex subsemigroups of the
+semilattice \texttt{s}.
+
+ See also \texttt{ConvexSubsemigroupsAsPositions} (\ref{ConvexSubsemigroupsAsPositions}) and see \texttt{IsConvexSubsetOfSemilattice} (\ref{IsConvexSubsetOfSemilattice}) for the definition of a convex subsemigroup of a semilattice. 
+\begin{Verbatim}[fontsize=\small,frame=single,label=Example]
+  gap> gens:=[ Transformation( [ 1, 2 ] ), Transformation( [ 2, 2 ] ) ];;
+  gap> s:=Semigroup(gens);;
+  gap> Size(s);
+  2
+  gap> ConvexSubsemigroups(s);
+  [ [ Transformation( [ 1, 2 ] ) ], 
+    [ Transformation( [ 1, 2 ] ), Transformation( [ 2, 2 ] ) ], 
+    [ Transformation( [ 2, 2 ] ) ] ]
+\end{Verbatim}
+ }
+
+ 
+
+\subsection{\textcolor{Chapter }{ConvexSubsemigroupsAsPositions}}
+\logpage{[ 8, 2, 6 ]}\nobreak
+\hyperdef{L}{X85359217849FEFA8}{}
+{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{ConvexSubsemigroupsAsPositions({\slshape s})\index{ConvexSubsemigroupsAsPositions@\texttt{ConvexSubsemigroupsAsPositions}}
+\label{ConvexSubsemigroupsAsPositions}
+}\hfill{\scriptsize (attribute)}}\\
+\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{ConvexSubsemigroupsAsPositionsNC({\slshape arg})\index{ConvexSubsemigroupsAsPositionsNC@\texttt{ConvexSubsemigroupsAsPositionsNC}}
+\label{ConvexSubsemigroupsAsPositionsNC}
+}\hfill{\scriptsize (function)}}\\
+
+
+ returns a list of the positions in \texttt{Elements(s)} of the elements of all the convex subsemigroups of the semilattice \texttt{s}.
+
+ The no check version accepts either one or two arguments. If one argument is
+present, then it is assumed (but not checked) that the argument is a
+semilattice generated by all of its elements. If two arguments are present,
+then it is assumed (but not checked) that the first is the set of elements of
+a semilattice and the second is the cayley graph of the semilattice generated
+by all of its elements. 
+
+ See also \texttt{ConvexSubsemigroups} (\ref{ConvexSubsemigroups}) and see \texttt{IsConvexSubsetOfSemilattice} (\ref{IsConvexSubsetOfSemilattice}) for the definition of a convex subsemigroup of a semilattice. 
+\begin{Verbatim}[fontsize=\small,frame=single,label=Example]
+  gap> gens:=[ Transformation( [ 3, 2, 3 ] ), Transformation( [ 1, 2, 3 ] ), 
+  >  Transformation( [ 1, 3, 3 ] ) ];;
+  gap> s:=Semigroup(gens);;
+  gap> Size(s);
+  4
+  gap> ConvexSubsemigroupsAsPositions(s);
+  [ [ 1 ], [ 1, 2 ], [ 1, 2, 3, 4 ], [ 1, 3 ], [ 2 ], [ 2, 3, 4 ], [ 2, 4 ], 
+    [ 3 ], [ 3, 4 ], [ 4 ] ]
+  	
+\end{Verbatim}
+ }
+
+ 
+
+\subsection{\textcolor{Chapter }{IsConvexSubsetOfSemilattice}}
+\logpage{[ 8, 2, 7 ]}\nobreak
+\hyperdef{L}{X7A7CBC8E8606E89A}{}
+{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{IsConvexSubsetOfSemilattice({\slshape s, t})\index{IsConvexSubsetOfSemilattice@\texttt{IsConvexSubsetOfSemilattice}}
+\label{IsConvexSubsetOfSemilattice}
+}\hfill{\scriptsize (function)}}\\
+\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{IsConvexSubsetOfSemilatticeNC({\slshape s, t})\index{IsConvexSubsetOfSemilatticeNC@\texttt{IsConvexSubsetOfSemilatticeNC}}
+\label{IsConvexSubsetOfSemilatticeNC}
+}\hfill{\scriptsize (function)}}\\
+
+
+ returns \texttt{true} if the subset \texttt{t} of the semilattice \texttt{s} is convex. A subset \texttt{t} of a semilattice is \emph{convex} if for all \texttt{x,y} in \texttt{t} and for all \texttt{z} in \texttt{s} if \texttt{x{\textless}z{\textless}y}, then \texttt{z} in \texttt{t}.
+
+ The no check version requires that \texttt{s} is a semilattice that is generated by all of its elements, and no check is
+performed to ensure that \texttt{s} is a semilattice or that \texttt{t} is contained in \texttt{s}. 
+\begin{Verbatim}[fontsize=\small,frame=single,label=Example]
+  gap> gens:=[ Transformation( [ 1, 2, 6, 4, 6, 6 ] ), 
+  > Transformation( [ 6, 2, 3, 4, 6, 6 ] ), 
+  > Transformation( [ 1, 6, 3, 4, 6, 6 ] ), 
+  > Transformation( [ 6, 6, 6, 6, 6, 6 ] ) ];;
+  gap> a:=Semigroup(gens);;
+  gap> f:=Elements(a)[1];;
+  gap> g:=Elements(a)[8];;
+  gap> IsConvexSubsetOfSemilattice(a,[f,g]);
+  false
+  gap> IsConvexSubsetOfSemilatticeNC(a,[f,g]);
+  false
+  gap> IsConvexSubsetOfSemilatticeNC(a, ConvexSubsemigroup(a, [f,g]));
+  true
+\end{Verbatim}
+ }
+
+ 
+
+\subsection{\textcolor{Chapter }{OneMinEltSemilatticeAsPosition}}
+\logpage{[ 8, 2, 8 ]}\nobreak
+\hyperdef{L}{X8106327685308F55}{}
+{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{OneMinEltSemilatticeAsPosition({\slshape s[, subset]})\index{OneMinEltSemilatticeAsPosition@\texttt{OneMinEltSemilatticeAsPosition}}
+\label{OneMinEltSemilatticeAsPosition}
+}\hfill{\scriptsize (function)}}\\
+\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{OneMinEltSemilatticeAsPositionNC({\slshape cayley, subset})\index{OneMinEltSemilatticeAsPositionNC@\texttt{OneMinEltSemilatticeAsPositionNC}}
+\label{OneMinEltSemilatticeAsPositionNC}
+}\hfill{\scriptsize (function)}}\\
+
+
+ returns the position in the elements of the semilattice \texttt{s} of a minimal element. If the optional second argument is present, then the
+position in \texttt{Elements(s)\texttt{\symbol{123}}subset\texttt{\symbol{125}}} of a minimal element of \texttt{Elements(s)\texttt{\symbol{123}}subset\texttt{\symbol{125}}} is returned. 
+
+ The no check version requires the cayley graph of a semilattice generated by
+all of its elements as a first argument, and a list of positive integers as a
+second argument. No check is performed to ensure these requirements are met.
+
+ See also \texttt{OneMinEltSemilattice} (\ref{OneMinEltSemilattice}). 
+\begin{Verbatim}[fontsize=\small,frame=single,label=Example]
+  gap> gens:=[ Transformation( [ 1, 2, 4, 4 ] ), 
+  > Transformation( [ 1, 4, 4, 4 ] ), 
+  > Transformation( [ 4, 2, 3, 4 ] ), 
+  > Transformation( [ 4, 2, 4, 4 ] ), 
+  > Transformation( [ 4, 4, 3, 4 ] ) ];;
+  gap> s:=Semigroup(gens);;
+  gap> OneMinEltSemilattice(s);
+  gap> OneMinEltSemilattice(s);
+  Transformation( [ 4, 4, 4, 4 ] )
+  gap> OneMinEltSemilatticeAsPosition(s);
+  6
+  gap> OneMinEltSemilatticeAsPosition(s, [1,2,3]);
+  2
+  gap> OneMinEltSemilatticeAsPosition(s, [2,5,6]);
+  6
+\end{Verbatim}
+ }
+
+ 
+
+\subsection{\textcolor{Chapter }{OneMinEltSemilattice}}
+\logpage{[ 8, 2, 9 ]}\nobreak
+\hyperdef{L}{X8759A2CA84F298B1}{}
+{\noindent\textcolor{FuncColor}{$\Diamond$\ \texttt{OneMinEltSemilattice({\slshape s[, subset]})\index{OneMinEltSemilattice@\texttt{OneMinEltSemilattice}}
+\label{OneMinEltSemilattice}
+}\hfill{\scriptsize (function)}}\\
+
+
+ returns a minimal element of the semilattice \texttt{s}. If the optional second argument \texttt{subset} is present, then a minimal element in \texttt{subset} is returned. 
+
+ See also \texttt{OneMinEltSemilatticeAsPosition} (\ref{OneMinEltSemilatticeAsPosition}). 
+\begin{Verbatim}[fontsize=\small,frame=single,label=Example]
+  gap> gens:=[ Transformation( [ 1, 2, 4, 4 ] ), 
+  > Transformation( [ 1, 4, 4, 4 ] ), 
+  > Transformation( [ 4, 2, 3, 4 ] ), 
+  > Transformation( [ 4, 2, 4, 4 ] ), 
+  > Transformation( [ 4, 4, 3, 4 ] ) ];;
+  gap> s:=Semigroup(gens);;
+  gap> OneMinEltSemilattice(s);
+  gap> OneMinEltSemilattice(s);
+  Transformation( [ 4, 4, 4, 4 ] )
+  gap> OneMinEltSemilatticeAsPosition(s);
+  6
+  gap> OneMinEltSemilatticeAsPosition(s, [1,2,3]);
+  2
+  gap> OneMinEltSemilatticeAsPosition(s, [2,5,6]);
+  6  
+\end{Verbatim}
+ }
 
  }
 

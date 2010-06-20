@@ -9,8 +9,16 @@
 
   \indexspace
 
+  \item \texttt  {CongruencesSemilattice}, \hyperpage{72}
+  \item \texttt  {CongruencesSemilatticeAsPositions}, \hyperpage{72}
   \item \texttt  {ConjugatorOfInnerAutomorphismOfSemigroup}, 
 		\hyperpage{51}
+  \item \texttt  {ConvexSubsemigroup}, \hyperpage{72}
+  \item \texttt  {ConvexSubsemigroupAsPositionsNC}, \hyperpage{73}
+  \item \texttt  {ConvexSubsemigroupNC}, \hyperpage{72}
+  \item \texttt  {ConvexSubsemigroups}, \hyperpage{74}
+  \item \texttt  {ConvexSubsemigroupsAsPositions}, \hyperpage{74}
+  \item \texttt  {ConvexSubsemigroupsAsPositionsNC}, \hyperpage{74}
 
   \indexspace
 
@@ -39,6 +47,7 @@
   \item \texttt  {ImagesOfTransSemigroup}, \hyperpage{24}
   \item \texttt  {IndexPeriodOfTransformation}, \hyperpage{16}
   \item \texttt  {InfoMonoidAutos}, \hyperpage{49}
+  \item \texttt  {InfoMonoidCongruences}, \hyperpage{71}
   \item \texttt  {InnerAutomorphismOfSemigroup}, \hyperpage{51}
   \item \texttt  {InnerAutomorphismOfSemigroupNC}, \hyperpage{51}
   \item \texttt  {InnerAutomorphismsAutomorphismGroup}, \hyperpage{53}
@@ -58,6 +67,10 @@
   \item \texttt  {IsCommutativeSemigroup}, \hyperpage{37}
   \item \texttt  {IsCompletelyRegularSemigroup}, \hyperpage{36}
   \item \texttt  {IsCompletelySimpleSemigroup}, \hyperpage{37}
+  \item \texttt  {IsCongruenceOfSemigroup}, \hyperpage{71}
+  \item \texttt  {IsCongruenceOfSemigroupNC}, \hyperpage{71}
+  \item \texttt  {IsConvexSubsetOfSemilattice}, \hyperpage{74}
+  \item \texttt  {IsConvexSubsetOfSemilatticeNC}, \hyperpage{74}
   \item \texttt  {IsGreensData}, \hyperpage{32}
   \item \texttt  {IsGreensDClassData}, \hyperpage{32}
   \item \texttt  {IsGreensDClassDataRep}, \hyperpage{32}
@@ -114,6 +127,9 @@
 
   \indexspace
 
+  \item \texttt  {OneMinEltSemilattice}, \hyperpage{75}
+  \item \texttt  {OneMinEltSemilatticeAsPosition}, \hyperpage{75}
+  \item \texttt  {OneMinEltSemilatticeAsPositionNC}, \hyperpage{75}
   \item \texttt  {OnKernelsAntiAction}, \hyperpage{19}
   \item \texttt  {OnTuplesOfSetsAntiAction}, \hyperpage{19}
   \item \texttt  {OrderPreservingSemigroup}, \hyperpage{43}
@@ -126,12 +142,13 @@
 
   \item \texttt  {RandomIdempotent}, \hyperpage{13}
   \item \texttt  {RandomIdempotentNC}, \hyperpage{13}
-  \item \texttt  {RandomMonoid}, \hyperpage{46}
   \item \texttt  {RandomReesMatrixSemigroup}, \hyperpage{47}
   \item \texttt  {RandomReesZeroMatrixSemigroup}, \hyperpage{47}
-  \item \texttt  {RandomSemigroup}, \hyperpage{47}
+  \item \texttt  {RandomSemilatticeAsSemigroup}, \hyperpage{47}
   \item \texttt  {RandomTransformation}, \hyperpage{13}
+  \item \texttt  {RandomTransformationMonoid}, \hyperpage{46}
   \item \texttt  {RandomTransformationNC}, \hyperpage{13}
+  \item \texttt  {RandomTransformationSemigroup}, \hyperpage{47}
   \item \texttt  {RClassData}, \hyperpage{32}
   \item \texttt  {RightTransStabAutoGroup}, \hyperpage{63}
   \item \texttt  {RMSInducedFunction}, \hyperpage{61}

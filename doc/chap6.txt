@@ -218,25 +218,25 @@
   
   [1X6.3 Random Semigroups[0X
   
-  [1X6.3-1 RandomMonoid[0m
+  [1X6.3-1 RandomTransformationMonoid[0m
   
-  [2X> RandomMonoid( [0X[3Xm, n[0X[2X ) _____________________________________________[0Xfunction
+  [2X> RandomTransformationMonoid( [0X[3Xm, n[0X[2X ) _______________________________[0Xfunction
   
   returns a random transformation monoid of degree [10Xn[0m with [10Xm[0m generators.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4X  gap> S:=RandomMonoid(5,5);[0X
+    [4X  gap> S:=RandomTransformationMonoid(5,5);[0X
     [4X  <semigroup with 5 generators>[0X
   [4X------------------------------------------------------------------[0X
   
-  [1X6.3-2 RandomSemigroup[0m
+  [1X6.3-2 RandomTransformationSemigroup[0m
   
-  [2X> RandomSemigroup( [0X[3Xm, n[0X[2X ) __________________________________________[0Xfunction
+  [2X> RandomTransformationSemigroup( [0X[3Xm, n[0X[2X ) ____________________________[0Xfunction
   
   returns a random transformation semigroup of degree [10Xn[0m with [10Xm[0m generators.
   
   [4X---------------------------  Example  ----------------------------[0X
-    [4X  gap> S:=RandomSemigroup(5,5);[0X
+    [4X  gap> S:=RandomTransformationSemigroup(5,5);[0X
     [4X  <semigroup with 5 generators>[0X
   [4X------------------------------------------------------------------[0X
   
@@ -268,5 +268,19 @@
     [4X  Rees Zero Matrix Semigroup over <zero group with 2 generators>[0X
     [4X  gap> SandwichMatrixOfReesZeroMatrixSemigroup(S);[0X
     [4X  [ [ 0, (), 0 ], [ 0, 0, 0 ] ][0X
+  [4X------------------------------------------------------------------[0X
+  
+  [1X6.3-5 RandomSemilatticeAsSemigroup[0m
+  
+  [2X> RandomSemilatticeAsSemigroup( [0X[3Xm, n[0X[2X ) _____________________________[0Xfunction
+  
+  returns  a  random  transformation  semigroup  that  is a semilattice with [10Xm[0m
+  generators on [10Xn[0m points.
+  
+  [4X---------------------------  Example  ----------------------------[0X
+    [4X  gap> RandomSemilatticeAsSemigroup(5,5);[0X
+    [4X  <semigroup with 5 generators>[0X
+    [4X  gap> IsSemilatticeAsSemigroup(last);[0X
+    [4X  true[0X
   [4X------------------------------------------------------------------[0X
   

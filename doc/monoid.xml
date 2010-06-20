@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd">
-<!--  MakeGAPDocDoc("~/Desktop/gap4r4/pkg/monoid/doc/", "monoid.xml", [ "../gap/general.gd", "../gap/autos.gd", "../gap/transform.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd",  "../gap/semigroups.gd", "../gap/semihomo.gd"], "manual");; -->
+<!--  MakeGAPDocDoc("~/Desktop/gap4r4/pkg/monoid/doc/", "monoid.xml", [ "../gap/general.gd", "../gap/autos.gd", "../gap/transform.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd",  "../gap/semigroups.gd", "../gap/semihomo.gd", "../gap/isomorph.gd", "../gap/congruences.gd"], "manual");; -->
 
-<!-- SizeScreen([80]); SetInfoLevel(InfoWarning, 0); TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1], "monoid.xml", ["../gap/autos.gd", "../gap/general.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd", "../gap/semigroups.gd", "../gap/semihomo.gd", "../gap/transform.gd"] );-->
+<!-- SizeScreen([80]); SetInfoLevel(InfoWarning, 0); TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1], "monoid.xml", ["../gap/autos.gd", "../gap/general.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd", "../gap/semigroups.gd", "../gap/semihomo.gd", "../gap/transform.gd", "../gap/isomorph.gd"] );-->
 
 <Book Name="MONOID">
 
@@ -647,10 +647,11 @@ In Section <Ref Sect="random"/> we give functions for randomly creating semigrou
 <!-- ############### -->
 
 <Section Label="random"><Heading>Random Semigroups</Heading>
-	<#Include Label="RandomMonoid">
-	<#Include Label="RandomSemigroup">
+	<#Include Label="RandomTransformationMonoid">
+	<#Include Label="RandomTransformationSemigroup">
 	<#Include Label="RandomReesMatrixSemigroup">
 	<#Include Label="RandomReesZeroMatrixSemigroup">
+	<#Include Label="RandomSemilatticeAsSemigroup">
 </Section>
 
 </Chapter>
@@ -777,6 +778,25 @@ following three.
 	</Section>
 </Chapter>
 
+<!-- ############### -->
+
+<Chapter Label="homo"> <Heading>Congruences</Heading>
+	<Section><Heading>Arbitrary Semigroups</Heading>
+		<#Include Label="InfoMonoidCongruences">
+		<#Include Label="IsCongruenceOfSemigroup">
+  </Section>
+	<Section><Heading>Semilattices</Heading>
+		<#Include Label="CongruencesSemilattice">
+		<#Include Label="CongruencesSemilatticeAsPositions">
+		<#Include Label="ConvexSubsemigroup">
+		<#Include Label="ConvexSubsemigroupAsPositionsNC">
+		<#Include Label="ConvexSubsemigroups">
+		<#Include Label="ConvexSubsemigroupsAsPositions">
+		<#Include Label="IsConvexSubsetOfSemilattice">		
+		<#Include Label="OneMinEltSemilatticeAsPosition">
+		<#Include Label="OneMinEltSemilattice">
+	</Section>
+</Chapter>
 </Body>
 
 <Bibliography Databases="MONOID" />

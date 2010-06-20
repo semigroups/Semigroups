@@ -42,8 +42,8 @@ for more information about the original MONOID by Goetz
 Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc.
 
 MONOID 3.1.4 retains all the functionality of the original MONOID package. 
-In particular, MONOID 3.1.4 contains more efficient methods than those  available
-in the GAP library for computing orbits, calculating Green's 
+In particular, MONOID 3.1.4 contains more efficient methods than those
+available in the GAP library for computing orbits, calculating Green's 
 classes, finding the size, the elements, and testing membership in 
 transformation semigroups. After MONOID has been loaded many of these methods 
 are automatically used in preference to those in the library and do not need to 
@@ -58,25 +58,26 @@ create some well-known transformation semigroups.
 The MONOID package is written in GAP code only but uses 
 the `grape' and `orb' packages. 
 
-`grape' package in the methods for computing the automorphism group of a semigroup. The 
-following functions can only be used fully if `grape' is fully installed.  That
-is, `AutomorphismGroup' with argument a transformation semigroup or a Rees zero 
-matrix semigroup, `RightTransStabAutoGroup' for a Rees zero matrix 
-semigroup, `RZMSGraph', `RZMSInducedFunction', `RZMStoRZMSInducedFunction', and 
-`IsomorphismSemigroups' with both arguments Rees zero matrix semigroups.  Please 
-see the manual entries for these functions for further information.
-Installation of `grape' is described in the README file of the `grape' distribution 
-and in the section entitled `Installing the `grape' Package' of the `grape' manual. 
+`grape' package in the methods for computing the automorphism group of a 
+semigroup. The following functions can only be used fully if `grape' is fully 
+installed.  That is, `AutomorphismGroup' with argument a transformation 
+semigroup or a Rees zero matrix semigroup, `RightTransStabAutoGroup' for a Rees 
+zero matrix semigroup, `RZMSGraph', `RZMSInducedFunction', 
+`RZMStoRZMSInducedFunction', and `IsomorphismSemigroups' with both arguments 
+Rees zero matrix semigroups.  Please see the manual entries for these functions 
+for further information. Installation of `grape' is described in the README file 
+of the `grape' distribution and in the section entitled `Installing the `grape'
+Package' of the `grape' manual. 
 See:
 
 http://www.maths.qmul.ac.uk/~leonard/grape/
 
 or the main GAP webpages for more information. 
 
-`orb' is used to provide efficient methods for computing orbits in transformation 
-semigroups that underpin most of the features of MONOID. The MONOID package can be 
-used without `orb' but is much less efficient. We highly recommended that you install 
-`orb'. See:
+`orb' is used to provide efficient methods for computing orbits in 
+transformation semigroups that underpin most of the features of MONOID. The 
+MONOID package can be used without `orb' but is much less efficient. We highly 
+recommended that you install `orb'. See:
 
 http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
 
@@ -127,10 +128,10 @@ unix> gap
 [ ... ]
 
 gap> LoadPackage("MONOID");
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 Loading  MONOID 3.1.4 (MONOID: computing with transformation semigroups)
 by James Mitchell (http://www-groups.mcs.st-and.ac.uk/~jamesm).
------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 true
 gap> 
 

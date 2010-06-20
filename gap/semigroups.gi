@@ -552,7 +552,7 @@ end);
 ###########################################################################
 #JDM this should be renamed RandomTransformationSemigroup
 
-InstallGlobalFunction(RandomSemigroup,
+InstallGlobalFunction(RandomTransformationSemigroup,
 function(m,n)
 
 return Semigroup(Set(List([1..m], x-> RandomTransformation(n))));
@@ -562,7 +562,7 @@ end);
 ###########################################################################
 #JDM this should be renamed RandomTransformationMonoid
 
-InstallGlobalFunction(RandomMonoid,
+InstallGlobalFunction(RandomTransformationMonoid,
 function(m,n)
 
 return Monoid(Set(List([1..m], x-> RandomTransformation(n))));
@@ -760,5 +760,26 @@ SetIdempotents(S, List(Combinations([1..n]), x-> Product(List(Reversed(x), y-> a
 return S;
 end);
 
+###############################################################################
+# an m-generated semilattice on n points
+#JDM new for 3.2!
 
-##############
+InstallGlobalFunction(RandomSemilatticeAsSemigroup,  
+function(m,n)
+local out, img, i;
+
+if not IsPosInt(m) or not IsPosInt(n) then 
+  Info(InfoWarning, "Usage: pos. int. and pos. int.");
+	return fail;
+fi;
+
+out:=List([1..m], x-> ListWithIdenticalEntries(n,n));
+
+for i in [1..m] do 
+  img:=AsSet(List([1..Random([1..n])], x-> Random([1..n])));
+  out[i]{img}:=img;
+  out[i]:=TransformationNC(out[i]);
+od;
+
+return Semigroup(out);
+end);

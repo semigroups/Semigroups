@@ -13,7 +13,7 @@
 <body>
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap5.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap7.html">Next Chapter</a>&nbsp;  </div>
 
@@ -33,10 +33,11 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7AEC4E5E7EAE3CA5">6.2-6 UnderlyingGroupEltOfZGElt</a></span>
 </div>
 <div class="ContSect"><span class="nocss">&nbsp;</span><a href="chap6.html#X7C3F130B8362D55A">6.3 <span class="Heading">Random Semigroups</span></a>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7ECD900879DA1FD7">6.3-1 RandomMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X789DE9AB79FCFEB5">6.3-2 RandomSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X79834BC080B011B4">6.3-1 RandomTransformationMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F27511D7801349C">6.3-2 RandomTransformationSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X858CBA2B7BD64141">6.3-3 RandomReesMatrixSemigroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F637CA981EFC6BE">6.3-4 RandomReesZeroMatrixSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X785FC6137C52F365">6.3-5 RandomSemilatticeAsSemigroup</a></span>
 </div>
 </div>
 
@@ -271,31 +272,31 @@ v_n-2:=Transformation([1,2,2,...,n]), v_n-3:=Transformation
 
 <h4>6.3 <span class="Heading">Random Semigroups</span></h4>
 
-<p><a id="X7ECD900879DA1FD7" name="X7ECD900879DA1FD7"></a></p>
+<p><a id="X79834BC080B011B4" name="X79834BC080B011B4"></a></p>
 
-<h5>6.3-1 RandomMonoid</h5>
+<h5>6.3-1 RandomTransformationMonoid</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RandomMonoid</code>( <var class="Arg">m, n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RandomTransformationMonoid</code>( <var class="Arg">m, n</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>returns a random transformation monoid of degree <code class="code">n</code> with <code class="code">m</code> generators.</p>
 
 
 <table class="example">
 <tr><td><pre>
-  gap&gt; S:=RandomMonoid(5,5);
+  gap&gt; S:=RandomTransformationMonoid(5,5);
   &lt;semigroup with 5 generators&gt;
 </pre></td></tr></table>
 
-<p><a id="X789DE9AB79FCFEB5" name="X789DE9AB79FCFEB5"></a></p>
+<p><a id="X7F27511D7801349C" name="X7F27511D7801349C"></a></p>
 
-<h5>6.3-2 RandomSemigroup</h5>
+<h5>6.3-2 RandomTransformationSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RandomSemigroup</code>( <var class="Arg">m, n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RandomTransformationSemigroup</code>( <var class="Arg">m, n</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>returns a random transformation semigroup of degree <code class="code">n</code> with <code class="code">m</code> generators.</p>
 
 
 <table class="example">
 <tr><td><pre>
-  gap&gt; S:=RandomSemigroup(5,5);
+  gap&gt; S:=RandomTransformationSemigroup(5,5);
   &lt;semigroup with 5 generators&gt;
 </pre></td></tr></table>
 
@@ -333,11 +334,27 @@ v_n-2:=Transformation([1,2,2,...,n]), v_n-3:=Transformation
   [ [ 0, (), 0 ], [ 0, 0, 0 ] ]
 </pre></td></tr></table>
 
+<p><a id="X785FC6137C52F365" name="X785FC6137C52F365"></a></p>
+
+<h5>6.3-5 RandomSemilatticeAsSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&gt; RandomSemilatticeAsSemigroup</code>( <var class="Arg">m, n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>returns a random transformation semigroup that is a semilattice with <code class="code">m</code> generators on <code class="code">n</code> points.</p>
+
+
+<table class="example">
+<tr><td><pre>
+  gap&gt; RandomSemilatticeAsSemigroup(5,5);
+  &lt;semigroup with 5 generators&gt;
+  gap&gt; IsSemilatticeAsSemigroup(last);
+  true
+</pre></td></tr></table>
+
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">Top of Book</a>&nbsp;  &nbsp;<a href="chap5.html">Previous Chapter</a>&nbsp;  &nbsp;<a href="chap7.html">Next Chapter</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

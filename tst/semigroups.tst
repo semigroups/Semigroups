@@ -322,6 +322,10 @@ gap> Elements(S);
   m2*m3*m1*m2 ]
 gap> Idempotents(S);
 [ 1, m1, m2*m1, m3*m2*m1, m3*m1, m2, m3*m2, m3 ]
+gap> RandomSemilatticeAsSemigroup(5,5);
+<semigroup with 5 generators>
+gap> IsSemilatticeAsSemigroup(last);
+true
 gap> SetInfoLevel(InfoMonoidAutos, 0);
 #gap> FullMatrixSemigroup(3,4);
 #<3x3 full matrix semigroup over GF(2^2)>

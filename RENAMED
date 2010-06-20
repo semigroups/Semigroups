@@ -13,7 +13,11 @@
 ## this file contains a list of functions that have been renamed or removed
 ## from previous versions of MONOID
 
-Renamed in 3.2:
+Renamed in 3.1.5:
+
+  RandomSemigroup -> RandomTransformationSemigroup
+  
+  RandomMonoid -> RandomTransformationMonoid
 
 	GradedOrbit -> GradedForwardOrbit (also changed from an operation to a 
 	 global function).

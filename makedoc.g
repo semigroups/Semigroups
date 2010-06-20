@@ -14,8 +14,10 @@
 
 LoadPackage("GAPDoc");
 
-files:=[ "../gap/general.gd", "../gap/autos.gd", "../gap/transform.gd", "../gap/greens.gd",
- "../gap/orbits.gd", "../gap/properties.gd",  "../gap/semigroups.gd", "../gap/semihomo.gd"];;
+files:=[ "../gap/general.gd", "../gap/autos.gd", "../gap/transform.gd", 
+ "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd",  
+ "../gap/semigroups.gd", "../gap/semihomo.gd", "../gap/isomorph.gd", 
+ "../gap/congruences.gd"];;
 
 MakeGAPDocDoc(Concatenation(PackageInfo("MONOID")[1]!.InstallationPath, "/doc"), 
 "monoid.xml", files, "manual");;

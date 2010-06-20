@@ -1,6 +1,6 @@
 This is makeindex, version 2.14 [02-Oct-2002] (kpathsea + Thai support).
-Scanning input file monoid.idx....done (132 entries accepted, 0 rejected).
-Sorting entries....done (954 comparisons).
-Generating output file monoid.ind....done (184 lines written, 0 warnings).
+Scanning input file monoid.idx....done (149 entries accepted, 0 rejected).
+Sorting entries....done (1172 comparisons).
+Generating output file monoid.ind....done (201 lines written, 0 warnings).
 Output written in monoid.ind.
 Transcript written in monoid.ilg.

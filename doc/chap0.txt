@@ -134,10 +134,11 @@
       6.2-5 UnderlyingGroupOfZG
       6.2-6 UnderlyingGroupEltOfZGElt
     6.3 Random Semigroups
-      6.3-1 RandomMonoid
-      6.3-2 RandomSemigroup
+      6.3-1 RandomTransformationMonoid
+      6.3-2 RandomTransformationSemigroup
       6.3-3 RandomReesMatrixSemigroup
       6.3-4 RandomReesZeroMatrixSemigroup
+      6.3-5 RandomSemilatticeAsSemigroup
   7 Semigroup Homomorphisms
     7.1 Introduction
       7.1-1 InfoMonoidAutos
@@ -185,6 +186,20 @@
       7.7-5 IsomorphismSemigroups
       7.7-6 IsomorphismReesMatrixSemigroupOfDClass
       7.7-7 IsomorphismReesMatrixSemigroup
+  8 Congruences
+    8.1 Arbitrary Semigroups
+      8.1-1 InfoMonoidCongruences
+      8.1-2 IsCongruenceOfSemigroup
+    8.2 Semilattices
+      8.2-1 CongruencesSemilattice
+      8.2-2 CongruencesSemilatticeAsPositions
+      8.2-3 ConvexSubsemigroup
+      8.2-4 ConvexSubsemigroupAsPositionsNC
+      8.2-5 ConvexSubsemigroups
+      8.2-6 ConvexSubsemigroupsAsPositions
+      8.2-7 IsConvexSubsetOfSemilattice
+      8.2-8 OneMinEltSemilatticeAsPosition
+      8.2-9 OneMinEltSemilattice
   
   
   -------------------------------------------------------
