@@ -10,28 +10,36 @@
 ## $Id$
 ##
 
+
+remove_warning:=function()
+Info(InfoWarning, 1, "JDM this function should be removed before release");
+Info(InfoWarning, 1, " of 3.2. It is only included for testing purposes");
+end;
+
 _HashFunctionForTransformation := function(v,data) 
    return ORB_HashFunctionForIntList(v![1], data); 
 end;
 
-#JDM temporary or new for 3.2!
+#JDM new for 3.2!
 #############################################################################
+# assumes <o> is an orbit object from `orb', that <o> satisfies IsGradedOrbit
+# and that the grading function is a pos. int. that decreases as the orbit 
+# gets longer.
 
-InstallMethod( AsList, "for graded orbit", [IsGradedOrbit], 
+InstallGlobalFunction( AsPartitionedListNC,
 function(o)
 local i, out;
 
-out:=[];
+Info(InfoMonoidOrbits, 4, "AsPartitionedListNC");
+
+out:=List([1..Grades(o)[1]], x-> []);
 Enumerate(o);
+
 for i in [1..Length(o)] do 
-  if not IsBound(out[Grades(o)[i]]) then 
-    out[Grades(o)[i]]:=[o[i]];
-  else 
-    Add(out[Grades(o)[i]], o[i]);
-  fi;
+  Add(out[Grades(o)[i]], o[i]);
 od;
 
-return Compacted(out);
+return Filtered(Compacted(out), x-> not x=[]);
 end);
 
 #############################################################################
@@ -51,6 +59,8 @@ InstallMethod(GradedOrbit,
 [IsTransformationCollection, IsObject, IsFunction, IsFunction],
 function(s, seed, action, grading)
 local gens, ht, orbit, schreier, i, graded, val, x, j, new;
+
+remove_warning();
 
 if IsMonoid(s) then  
 	gens:= GeneratorsOfMonoid(s);
@@ -102,14 +112,12 @@ InstallGlobalFunction(GradedForwardOrbitNC,
 function(s, seed, action, grading)
 local o;
 
-Info(InfoMonoidOrbits, 4, "++GradedForwardOrbitNC");
+Info(InfoMonoidOrbits, 4, "GradedForwardOrbitNC");
 
 o:=Orb(s, seed, action, rec(hashlen:=100003, schreier:=true,
         gradingfunc := function(o,x) return grading(x); end));
-SetIsGradedOrbit(o, true);
-Info(InfoMonoidOrbits, 4, "--GradedForwardOrbitNC");
 
-return o;
+return AsPartitionedListNC(o);
 end);
 
 #############################################################################
@@ -118,18 +126,16 @@ InstallGlobalFunction(GradedForwardOrbit,
 function(s, seed, action, grading)
 local o;
 
-Info(InfoMonoidOrbits, 4, "++GradedForwardOrbit");
+Info(InfoMonoidOrbits, 4, "GradedForwardOrbit");
 
 if IsTransformationCollection(s) and IsObject(seed) and IsFunction(action)
  and IsFunction(grading) then 
   o:=GradedForwardOrbitNC(s, seed, action, grading);
-  Info(InfoMonoidOrbits, 4, "--GradedForwardOrbit");
   return o;
 fi;
 
 Info(InfoWarning, 1, "arguments should be a trans. coll., point, action,",
  " and grading");
-Info(InfoMonoidOrbits, 4, "--GradedForwardOrbit");
 return fail;
 end);
 
@@ -184,24 +190,27 @@ end);
 # convenience the output should be a list of lists where the <i>th position
 # is the list of images of <s> of size <i> including the empty list. 
 
-InstallGlobalFunction(GradedImagesOfTransformationSemigroupNC, 
+InstallGlobalFunction(GradedImagesOfTransSemigroupNC, 
 function(s)
 local d, o, out, i;
 
-Info(InfoMonoidOrbits, 4, "++GradedImagesOfTransformationSemigroupNC");
+Info(InfoMonoidOrbits, 4, "GradedImagesOfTransSemigroupNC");
 
 d:=DegreeOfTransformationCollNC(s);
-o:=AsList(GradedForwardOrbitNC(s, [1..d], OnSets, Size));
-out:=List([1..d], x-> []);
 
-for i in o do 
-  out[Length(i[1])]:=i;
-od;
-
-Info(InfoMonoidOrbits, 4, "--GradedImagesOfTransformationSemigroupNC");
-return out; #JDM better to just return the orbit... hopefully this can be
-            #    improved!
+o:=Orb(s, [1..d], OnSets, rec(hashlen:=100003, schreier:=true,
+        gradingfunc := function(o,x) return Length(x); end, 
+        orbitgraph := true));
+return o;
 end);
+
+#o:=GradedForwardOrbitNC(s, [1..d], OnSets, Size);
+#out:=List([1..d], x-> []);
+#for i in o do 
+#  out[Length(i[1])]:=i;
+#od;
+#return out; 
+
 
 #############################################################################
 # JDM remove GradedKernelsOfTransSemigroup from 3.2!
@@ -311,7 +320,8 @@ for x in orbit do
 		fi;
 	od;
 od;
- 
+Error("");
+
 return orbit;
 end);
 
@@ -322,7 +332,7 @@ InstallGlobalFunction(ForwardOrbitNC,
 function(s, seed, action)
 local o;
 Info(InfoMonoidOrbits, 4, "++ForwardOrbitNC");
-o:=Orb(s, seed, action, rec(hashlen:=100003, schreier:=true));
+o:=Orb(s, seed, action, rec(treehashsize:=100003));#JDM use this as standard!
 Info(InfoMonoidOrbits, 4, "--ForwardOrbitNC");
 
 return o;

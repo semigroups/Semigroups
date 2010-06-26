@@ -58,6 +58,8 @@
 ##	</ManSection>
 ##	<#/GAPDoc>
 
+#JDM legacy...
+
 DeclareOperation("GradedOrbit", [IsTransformationCollection, IsObject, 
 IsFunction, IsFunction]);
 
@@ -94,7 +96,7 @@ DeclareGlobalFunction("GradedForwardOrbit");
 
 DeclareAttribute("GradedImagesOfTransSemigroup", IsTransformationSemigroup, "mutable");
 
-DeclareGlobalFunction("GradedImagesOfTransformationSemigroupNC");
+DeclareGlobalFunction("GradedImagesOfTransSemigroupNC");
 
 #############################################################################
 ##
@@ -136,8 +138,9 @@ DeclareGlobalFunction("GradedKernelsOfTransformationSemigroupNC");
 #JDM new for 3.2!
 DeclareInfoClass("InfoMonoidOrbits");
 
-#JDM temporary or new for 3.2! 
-DeclareProperty("IsGradedOrbit", IsOrbit);
+
+#JDM new for 3.2!
+DeclareGlobalFunction("AsPartitionedListNC");
 
 ###########################################################################
 ##	<#GAPDoc Label="MonoidOrbit">

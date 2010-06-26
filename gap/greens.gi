@@ -35,96 +35,86 @@
 
 ###########################################################################
 
-InstallMethod(IsAssociatedSemigpTransSemigp, "for a Green's class", true, 
-[IsGreensClass], 0, function(class)
-
-return IsTransformationSemigroup(ParentAttr(class));
-
-end);
+InstallMethod(IsAssociatedSemigpTransSemigp, "for a Green's class",
+[IsGreensClass], x-> IsTransformationSemigroup(ParentAttr(x)));
 
 #############################################################################
 
-InstallOtherMethod(GreensRClassOfElement, "for a semigroup", true, 
-[IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject], 0,
+InstallOtherMethod(GreensRClassOfElement, "for a trans. semigroup and elt", 
+[IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject],
 function(s,e)
 local ec;
 
-	ec := EquivalenceClassOfElementNC( GreensRRelation(s), e );
-	SetIsGreensClass(ec,true);
-	SetIsGreensRClass(ec,true);
-	SetIsAssociatedSemigpTransSemigp(ec, true);
-	
-	return ec;
-
-end);
-
-#############################################################################
-
-InstallOtherMethod(GreensLClassOfElement, "for a semigroup", true, 
-[IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject], 0,
-function(s,e)
-local ec;
-
-	ec := EquivalenceClassOfElementNC( GreensLRelation(s), e );
-	SetIsGreensClass(ec,true);
-	SetIsGreensLClass(ec,true);
-	SetIsAssociatedSemigpTransSemigp(ec, true);
-	
-	return ec;
-
-end);
-
-#############################################################################
-
-InstallOtherMethod(GreensHClassOfElement, "for a semigroup", true, 
-[IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject], 0,
-function(s,e)
-local ec;
-
-	ec := EquivalenceClassOfElementNC( GreensHRelation(s), e );
-	SetIsGreensClass(ec,true);
-	SetIsGreensHClass(ec,true);
-	SetIsAssociatedSemigpTransSemigp(ec, true);
-
-	return ec;
-
-end);
-
-#############################################################################
-
-InstallOtherMethod(GreensDClassOfElement, "for a semigroup", true, 
-[IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject], 0,
-function(s,e)
-local ec;
-
-	ec := EquivalenceClassOfElementNC( GreensDRelation(s), e );
-	SetIsGreensClass(ec,true);
-	SetIsGreensDClass(ec,true);
-	SetIsAssociatedSemigpTransSemigp(ec, true);
-
+ec := EquivalenceClassOfElementNC( GreensRRelation(s), e );
+SetIsGreensClass(ec,true);
+SetIsGreensRClass(ec,true);
+SetIsAssociatedSemigpTransSemigp(ec, true);
 return ec;
-
 end);
 
 #############################################################################
 
-InstallOtherMethod(GreensJClassOfElement, "for a semigroup", true, [IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject], 0,
+InstallOtherMethod(GreensLClassOfElement, "for a trans. semigroup and elt", 
+[IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject],
 function(s,e)
 local ec;
 
-	ec := EquivalenceClassOfElementNC( GreensJRelation(s), e );
-	SetIsGreensClass(ec,true);
-	SetIsGreensJClass(ec,true);
-	SetIsAssociatedSemigpTransSemigp(ec, true);
+ec := EquivalenceClassOfElementNC( GreensLRelation(s), e );
+SetIsGreensClass(ec,true);
+SetIsGreensLClass(ec,true);
+SetIsAssociatedSemigpTransSemigp(ec, true);
+return ec;
+end);
 
-	return ec;
+#############################################################################
 
+InstallOtherMethod(GreensHClassOfElement, "for a trans. semigroup and elt",
+[IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject],
+function(s,e)
+local ec;
+
+ec := EquivalenceClassOfElementNC( GreensHRelation(s), e );
+SetIsGreensClass(ec,true);
+SetIsGreensHClass(ec,true);
+SetIsAssociatedSemigpTransSemigp(ec, true);
+return ec;
+end);
+
+#############################################################################
+
+InstallOtherMethod(GreensDClassOfElement, "for a trans. semigroup and elt",
+[IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject], 
+function(s,e)
+local ec;
+
+ec := EquivalenceClassOfElementNC( GreensDRelation(s), e );
+SetIsGreensClass(ec,true);
+SetIsGreensDClass(ec,true);
+SetIsAssociatedSemigpTransSemigp(ec, true);
+return ec;
+end);
+
+#############################################################################
+
+InstallOtherMethod(GreensJClassOfElement, "for a trans. semigroup and elt",
+[IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject], 
+function(s,e)
+local ec;
+
+ec := EquivalenceClassOfElementNC( GreensJRelation(s), e );
+SetIsGreensClass(ec,true);
+SetIsGreensJClass(ec,true);
+SetIsAssociatedSemigpTransSemigp(ec, true);
+return ec;
 end);
 
 ###########################################################################
+#JDM do not recreate the family and type every time here...
+
 
 InstallGlobalFunction(RClassData, function(list)
-return Objectify(NewType(NewFamily("Green's R Class Data", IsGreensRClassData), IsGreensRClassData and IsGreensRClassDataRep), list);
+return Objectify(NewType(NewFamily("Green's R Class Data", IsGreensRClassData), 
+IsGreensRClassData and IsGreensRClassDataRep), list);
 end);
 
 ###########################################################################
@@ -147,7 +137,7 @@ end);
 
 #############################################################################
 
-InstallMethod( ViewObj, "for object in `IsGreensRClassData'",
+InstallMethod( ViewObj, "for Green's R-class data",
 [IsGreensRClassData and IsGreensRClassDataRep],
 function( obj )
 Print( "GreensRClassData( ", obj!.rep, ", ", obj!.strongorb,", ", obj!.perms,", ", obj!.schutz, " )" );
@@ -300,7 +290,6 @@ function(data)
 end);
 
 ###########################################################################
-#JDM here
 
 InstallGlobalFunction(OnTuplesOfSetsAntiAction, [IsObject, IsTransformation], 
 function(tup, s)
@@ -329,28 +318,14 @@ return res;
 end);
 
 ###########################################################################
-##
-##	<#GAPDoc Label="OnKernelsAntiAction">
-##	<ManSection>
-##	<Func Name="OnKernelsAntiAction" Arg="ker, f"/>
-##	<Description>
-##	returns the kernel of the product of the transformation <C>f</C> with a 
-##	transformation having kernel <C>ker</C>. 
-##	<Example>
-##  gap&gt; f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
-##  gap&gt; OnKernelsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6, 7, 8 ] ], f);
-##  [ [ 1, 2, 7, 8 ], [ 3 ], [ 4, 6 ], [ 5 ] ]
-##	</Example> <!-- greens.tst -->
-##	</Description>
-##  </ManSection>
-##	<#/GAPDoc>
 
 InstallGlobalFunction(OnKernelsAntiAction, [IsList, IsTransformation],
 function(ker, s)
-local n, pos, new, loc, i;
+local n, pos, new, loc, i, img;
 
 n:= DegreeOfTransformation(s);  
 pos:= []; new:= []; loc:= [];
+img:=s![1];
 
 # construct transformation 'pos' with kernel 'ker'.
 for i in [1..Length(ker)] do
@@ -358,7 +333,7 @@ for i in [1..Length(ker)] do
 od;
 
 # apply 's' from the left.
-pos:= pos{ImageListOfTransformation(s)};
+pos:= pos{img};
 
 # determine kernel.
 for i in [1..n] do 
@@ -418,7 +393,7 @@ local gens, orb, imgs, x, y, new, limit, n;
  
 if HasGradedImagesOfTransSemigroup(M) then 
 	return Union(GradedImagesOfTransSemigroup(M));
-elif HasAsSSortedList(M) then #JDM new for 3.4.1
+elif HasAsSSortedList(M) then #JDM new for 3.1.4
 	return Set(List(Elements(M), x-> AsSet(x![1])));
 else
 
@@ -517,39 +492,6 @@ end );
 
 
 ###########################################################################
-##
-##	<#GAPDoc Label="KernelsOfTransSemigroup">
-##	<ManSection>
-##	<Attr Name="KernelsOfTransSemigroup" Arg="S[,n]"/>
-##	<Description>
-##	returns the set of all the kernels that elements of <C>S</C> admit. 
-##	If the 
-##	optional second argument <C>n</C> (a positive integer) is present, then the 
-##	list of kernels of size <C>n</C> is returned.  If you are only interested 
-##	in the images of a given size, then the second version of the function will 
-##	likely be faster.
-##	<Example>
-##  gap&gt; 
-##  gap&gt;  S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
-##  &gt; Transformation( [ 3, 3, 4, 1 ] ) ]);
-##  gap&gt;  KernelsOfTransSemigroup(S);   
-##  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], 
-##  [ 4 ] ], 
-##    [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], 
-##    [ [ 1, 4 ], [ 2 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
-##  gap&gt;  KernelsOfTransSemigroup(S,1);
-##  [ [ [ 1, 2, 3, 4 ] ] ]
-##  gap&gt;  KernelsOfTransSemigroup(S,2);
-##  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], 
-##    [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
-##  gap&gt;  KernelsOfTransSemigroup(S,3);
-##  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ]
-##  gap&gt;  KernelsOfTransSemigroup(S,4);
-##  [  ]
-##	</Example> <!-- greens.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
 InstallOtherMethod(KernelsOfTransSemigroup, "for a trans. semigroup", true, 
 [IsTransformationSemigroup, IsPosInt], 0, 
@@ -661,12 +603,136 @@ fi;
 end); 
 
 #############################################################################
+##
 
+DeclareGlobalFunction("PermLeftQuoTransformationNC");
+
+#############################################################################
+##
+
+PermLeftQuoTransformationNC:= 
+function ( t1, t2 )
+local  pl, i, deg;
+
+deg := Length( t1![1] );
+pl := [ 1 .. deg ];
+for i  in [ 1 .. deg ]  do
+    pl[t1![1][i]] := t2![1][i];
+od;
+return PermList( pl );
+end;
+
+#############################################################################
+##
+
+InstallMethod(\*, "NEW", [IsTransformation and IsTransformationRep, 
+IsTransformation and IsTransformationRep],
+function(x, y)
+local  a, b, c;
+a := x![1];
+b := y![1];
+c := b{a};
+MakeImmutable(c);
+return Objectify( TypeObj(x), [ c ] );
+end);
+
+#############################################################################
+##
+
+InstallMethod(\*, [IsTransformation and IsTransformationRep, IsPerm],
+function(x, y)
+local c;
+
+c:=OnTuples(x![1], y);
+MakeImmutable(c);
+return Objectify( TypeObj(x), [ c ] );
+end);
+
+#############################################################################
+##
+# assumes <src> and <dst> are sets of pos. ints. of equal length.
+
+MappingPermSetSetNC:=function(src, dst)
+local l, d, out, i, j, next, k;
+
+l:=Length(src);
+d:=Maximum(src[l], dst[l]);
+out:=EmptyPlist(d);
+
+i:=1;
+j:=1;
+next:=1;   # the next candidate, possibly prevented from being in dst
+
+for k in [1..d] do
+ if i<=l and k=src[i] then
+   out[k]:=dst[i];
+   i:=i+1;
+ else
+   # Skip things in dst:
+   while j<=l and next>=dst[j] do
+     if next = dst[j] then next:=next+1; fi;
+     j:=j+1;
+   od;
+   out[k]:=next;
+   next:=next+1;
+ fi;
+od;
+
+return PermList(out);
+end;
+
+#############################################################################
 ##  JDM reduce number of local variable names!
 
-InstallMethod(StrongOrbitOfImage,  "strongly connected components of images and multipliers", true, [IsTransformationSemigroup, IsTransformation], 0, 
+InstallMethod(StrongOrbitOfImage, "for a trans. semigroup and transformation", 
+[IsTransformationSemigroup, IsTransformation],
 function(M, x)
-local sorbit, img, pos, gens, n, i, orb, sets, graph, reps, y, z, new, set, j, scc, schutzgens, perms, sccimgs, orbimgs, comp, sorb, rep, schutzgps, k, s;
+local sorbit, img, pos, gens, n, i, orb, sets, graph, reps, y, z, new, set, j,
+ scc, schutzgens, perms, sccimgs, orbimgs, comp, sorb, rep, schutzgps, k, s;
+
+d:=DegreeOfTransformationSemigroup(s);
+img:=Set(f![1]);
+o:=Orb(s, img, OnSets, rec(treehashsize:=NextPrimeInt(Minimum(100000, 3*Binomial(d, Length(img)))), 
+        schreier:=true,
+        gradingfunc := function(o,x) return Length(x); end, 
+        orbitgraph := true, onlygrades:=[Length(img)], storenumbers:=true));
+Enumerate(o);
+
+comp:=First(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraph(o)), x-> 1 in x);;
+t:=BlistList([1..Length(o)], comp);;
+#p:=List(AsList(o), x-> MappingPermListList(x, img));
+p:=EmptyPlist(Length(o));
+for i in comp do 
+  p[i]:=MappingPermSetSetNC(o[i], img);
+od;
+
+gens:=GeneratorsOfMonoid(s); 
+g:=Group(());
+
+if Length(img)<1000 then 
+	bound:=Factorial(Length(img));
+else
+  bound:=infinity;
+fi;
+
+#use local variable for o!.orbitgraph
+
+for i in comp do 
+ for j in [1..Length(gens)] do #Length(gens)
+   if IsBound(o!.orbitgraph[i][j]) and t[o!.orbitgraph[i][j]] then 
+     g:=ClosureGroup(g, PermLeftQuoTransformationNC_C(f, f/p[i] *
+      (gens[j]*p[o!.orbitgraph[i][j]])));
+   fi;
+   if Size(g)>=bound then #or use while; this only need if numb of gens large!!
+     break;
+   fi;
+ od;
+ if Size(g)>=bound then 
+   break;
+ fi;
+od;
+
+#####
 
 if HasStrongOrbitsOfImages(M) then 
 	sorbit:=StrongOrbitsOfImages(M);
@@ -711,9 +777,6 @@ if pos=fail then
 			pos:=i+Length(sorbit[1]);
 		fi;
 
-# permutations, such that OnSets(sets[i], perms[i])=sets[1] 
-# there is no way to do this online!!
-
 		Add(perms, List(sorb, y->MappingPermListList(y,sorb[1])));
 
 # Schutzenberger groups
@@ -745,46 +808,7 @@ return [sorbit[1][pos], sorbit[2][pos], sorbit[3][pos]];
 end);
 
 #############################################################################
-##
-##	<#GAPDoc Label="GreensRClassData">
-##	<ManSection>
-##	<Attr Name="GreensRClassData" Arg="C"/>
-##	<Description>
-##	if <C>C</C> satisfies <Ref Attr="IsGreensRClass" BookName="ref"/>, then 
-##	<C>GreensRClassData</C> returns an object in the category 
-##	<Ref Filt="IsGreensRClassData"/> with representation 
-##	<Ref Filt="IsGreensRClassDataRep"/> and the following four components:
-##	<List>
-##		<Item> <C>rep</C> the representative of the <M>R</M>-class</Item>
-##		<Item> <C>strongorb</C> the strong orbit of the image of <C>rep</C> under 
-##		the action of the semigroup on sets</Item>
-##		<Item><C>perms</C> a list of permutations that map the image of <C>rep</C> 
-##		to the corresponding image in <C>strongorb</C>, that is, <C>OnSets(imgs[i], 
-##		perms[i]=imgs[1]</C>)
-##		</Item>
-##		<Item> <C>schutz</C> the group of permutations arising from elements 
-##		of the semigroup that stabilise the image of <C>rep</C> (called the <E>
-##		(generalized) right Schutzenberger group</E>).</Item>
-##	</List>
-##	The components <C>strongorb</C>, <C>perms</C>, and <C>schutz</C> are 
-##	obtained using the function <Ref Func="StrongOrbitOfImage"/>. Further 
-##	details can be found in Algorithm C, D, E, F, and U of 
-##	<Cite  Key="computing"/>.
-##	<Example>
-##  gap&gt; a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
-##  gap&gt; b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
-##  gap&gt; M:=Semigroup(a,b);;
-##  gap&gt; rc:=GreensRClassOfElement(M, a*b*a);
-##  {Transformation( [ 4, 1, 6, 5, 2, 2 ] )}
-##  gap&gt; GreensRClassData(rc);
-##  GreensRClassData( Transformation( [ 4, 1, 6, 5, 2, 2 ] ), [ [ 1, 2, 4, 5, 6 ], 
-##  [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ], [ 1, 2, 3, 4, 5 ] ], [ (), (1,2)
-##  (3,6,5,4), (3,5)(4,6), (1,6,3,2)(4,5) ], Group( [ (), (2,4,6), (2,6,4), 
-##  (1,2,6)(4,5) ] ) )
-##	</Example><!-- greens.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
+
 
 InstallMethod(GreensRClassData, "data structure of R-class of an element", true, [IsGreensRClass and IsAssociatedSemigpTransSemigp], 0,
 function(class)
