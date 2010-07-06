@@ -32,10 +32,61 @@
 #############################################################################
 #############################################################################
 
+DeclareGlobalFunction("PermLeftQuoTransformationNC");
+
+#############################################################################
+##
+
+InstallGlobalFunction(PermLeftQuoTransformationNC,
+function ( t1, t2 )
+local  pl, i, deg;
+
+deg := Length( t1![1] );
+pl := [ 1 .. deg ];
+for i  in [ 1 .. deg ]  do
+    pl[t1![1][i]] := t2![1][i];
+od;
+return PermList( pl );
+end);
+
+#############################################################################
+# assumes <src> and <dst> are sets of pos. ints. of equal length.
+
+DeclareGlobalFunction("MappingPermSetSetNC");
+
+InstallGlobalFunction(MappingPermSetSetNC,
+function(src, dst)
+local l, d, out, i, j, next, k;
+
+l:=Length(src);
+d:=Maximum(src[l], dst[l]);
+out:=EmptyPlist(d);
+
+i:=1;
+j:=1;
+next:=1;   # the next candidate, possibly prevented from being in dst
+
+for k in [1..d] do
+ if i<=l and k=src[i] then
+   out[k]:=dst[i];
+   i:=i+1;
+ else
+   # Skip things in dst:
+   while j<=l and next>=dst[j] do
+     if next = dst[j] then next:=next+1; fi;
+     j:=j+1;
+   od;
+   out[k]:=next;
+   next:=next+1;
+ fi;
+od;
+
+return PermList(out);
+end);
 
 ###########################################################################
 
-InstallMethod(IsAssociatedSemigpTransSemigp, "for a Green's class",
+InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
 [IsGreensClass], x-> IsTransformationSemigroup(ParentAttr(x)));
 
 #############################################################################
@@ -48,7 +99,7 @@ local ec;
 ec := EquivalenceClassOfElementNC( GreensRRelation(s), e );
 SetIsGreensClass(ec,true);
 SetIsGreensRClass(ec,true);
-SetIsAssociatedSemigpTransSemigp(ec, true);
+SetIsGreensClassOfTransSemigp(ec, true);
 return ec;
 end);
 
@@ -62,7 +113,7 @@ local ec;
 ec := EquivalenceClassOfElementNC( GreensLRelation(s), e );
 SetIsGreensClass(ec,true);
 SetIsGreensLClass(ec,true);
-SetIsAssociatedSemigpTransSemigp(ec, true);
+SetIsGreensClassOfTransSemigp(ec, true);
 return ec;
 end);
 
@@ -76,7 +127,7 @@ local ec;
 ec := EquivalenceClassOfElementNC( GreensHRelation(s), e );
 SetIsGreensClass(ec,true);
 SetIsGreensHClass(ec,true);
-SetIsAssociatedSemigpTransSemigp(ec, true);
+SetIsGreensClassOfTransSemigp(ec, true);
 return ec;
 end);
 
@@ -90,7 +141,7 @@ local ec;
 ec := EquivalenceClassOfElementNC( GreensDRelation(s), e );
 SetIsGreensClass(ec,true);
 SetIsGreensDClass(ec,true);
-SetIsAssociatedSemigpTransSemigp(ec, true);
+SetIsGreensClassOfTransSemigp(ec, true);
 return ec;
 end);
 
@@ -104,13 +155,12 @@ local ec;
 ec := EquivalenceClassOfElementNC( GreensJRelation(s), e );
 SetIsGreensClass(ec,true);
 SetIsGreensJClass(ec,true);
-SetIsAssociatedSemigpTransSemigp(ec, true);
+SetIsGreensClassOfTransSemigp(ec, true);
 return ec;
 end);
 
 ###########################################################################
 #JDM do not recreate the family and type every time here...
-
 
 InstallGlobalFunction(RClassData, function(list)
 return Objectify(NewType(NewFamily("Green's R Class Data", IsGreensRClassData), 
@@ -194,7 +244,7 @@ end );
 ## Commands to integrate MONOID functions with those in semirel.g* ##
 #####################################################################
 
-InstallMethod(GreensData, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsAssociatedSemigpTransSemigp], 0, 
+InstallMethod(GreensData, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsGreensClassOfTransSemigp], 0, 
 function(class)
 
 if HasIsGreensRClass(class) and IsGreensRClass(class) then 
@@ -213,24 +263,24 @@ end);
 
 #############################################################################
 
-InstallMethod( \in, "for a Green's Class of a transformation semigroup", true, [IsTransformation, IsGreensClass and IsAssociatedSemigpTransSemigp], 0, 
+InstallMethod( \in, "for a Green's Class of a transformation semigroup", true, [IsTransformation, IsGreensClass and IsGreensClassOfTransSemigp], 0, 
 function (elm, class)
 	return elm in GreensData(class);
 end); 
 
 #############################################################################
 
-InstallMethod( Size, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsAssociatedSemigpTransSemigp], 0,
+InstallMethod( Size, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsGreensClassOfTransSemigp], 0,
 x-> Size(GreensData(x)));
 
 #############################################################################
 
-InstallMethod( AsSSortedList, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsAssociatedSemigpTransSemigp], 0, 
+InstallMethod( AsSSortedList, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsGreensClassOfTransSemigp], 0, 
 x-> AsSSortedList(GreensData(x)));
 
 #############################################################################
 
-InstallOtherMethod( Idempotents, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsAssociatedSemigpTransSemigp], 0, 
+InstallOtherMethod( Idempotents, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsGreensClassOfTransSemigp], 0, 
 x-> Idempotents(GreensData(x)));
 
 #############################################################################
@@ -350,42 +400,6 @@ return new;
 end) ;
 
 ###########################################################################
-##
-##	<#GAPDoc Label="ImagesOfTransSemigroup">
-##	<ManSection>
-##	<Attr Name="ImagesOfTransSemigroup" Arg="S[,n]"/>
-##	<Description>
-##	returns the set of all the image sets that elements of <C>S</C> admit. That 
-##	is, the union of the orbits of the image sets of the generators of 
-##	<C>S</C> under the action <Ref Func="OnSets" BookName="ref"/>. <P/>
-##
-##	If the 
-##	optional second argument <C>n</C> (a positive integer) is present, then the 
-##	list of image sets of size <C>n</C> is returned.  If you are only interested 
-##	in the images of a given size, then the second version of the function will 
-##	likely be faster.
-##	<Example>
-##  gap&gt;  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
-##  &gt; Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;
-##  gap&gt; ImagesOfTransSemigroup(S, 6);
-##  [  ]
-##  gap&gt; ImagesOfTransSemigroup(S, 5);
-##  [  ]
-##  gap&gt; ImagesOfTransSemigroup(S, 4);
-##  [ [ 1, 2, 5, 6 ] ]
-##  gap&gt; ImagesOfTransSemigroup(S, 3);
-##  [ [ 1, 4, 6 ], [ 2, 5, 6 ] ]
-##  gap&gt; ImagesOfTransSemigroup(S, 2);
-##  [ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ]
-##  gap&gt; ImagesOfTransSemigroup(S, 1);
-##  [ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ]
-##  gap&gt; ImagesOfTransSemigroup(S);
-##  [ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], 
-##    [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
-##  </Example> 
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
 InstallMethod(ImagesOfTransSemigroup, "for a transformation semigroup", true, [IsTransformationSemigroup], 0, 
 function(M)
@@ -603,136 +617,11 @@ fi;
 end); 
 
 #############################################################################
-##
-
-DeclareGlobalFunction("PermLeftQuoTransformationNC");
-
-#############################################################################
-##
-
-PermLeftQuoTransformationNC:= 
-function ( t1, t2 )
-local  pl, i, deg;
-
-deg := Length( t1![1] );
-pl := [ 1 .. deg ];
-for i  in [ 1 .. deg ]  do
-    pl[t1![1][i]] := t2![1][i];
-od;
-return PermList( pl );
-end;
-
-#############################################################################
-##
-
-InstallMethod(\*, "NEW", [IsTransformation and IsTransformationRep, 
-IsTransformation and IsTransformationRep],
-function(x, y)
-local  a, b, c;
-a := x![1];
-b := y![1];
-c := b{a};
-MakeImmutable(c);
-return Objectify( TypeObj(x), [ c ] );
-end);
-
-#############################################################################
-##
-
-InstallMethod(\*, [IsTransformation and IsTransformationRep, IsPerm],
-function(x, y)
-local c;
-
-c:=OnTuples(x![1], y);
-MakeImmutable(c);
-return Objectify( TypeObj(x), [ c ] );
-end);
-
-#############################################################################
-##
-# assumes <src> and <dst> are sets of pos. ints. of equal length.
-
-MappingPermSetSetNC:=function(src, dst)
-local l, d, out, i, j, next, k;
-
-l:=Length(src);
-d:=Maximum(src[l], dst[l]);
-out:=EmptyPlist(d);
-
-i:=1;
-j:=1;
-next:=1;   # the next candidate, possibly prevented from being in dst
-
-for k in [1..d] do
- if i<=l and k=src[i] then
-   out[k]:=dst[i];
-   i:=i+1;
- else
-   # Skip things in dst:
-   while j<=l and next>=dst[j] do
-     if next = dst[j] then next:=next+1; fi;
-     j:=j+1;
-   od;
-   out[k]:=next;
-   next:=next+1;
- fi;
-od;
-
-return PermList(out);
-end;
-
-#############################################################################
 ##  JDM reduce number of local variable names!
 
-InstallMethod(StrongOrbitOfImage, "for a trans. semigroup and transformation", 
-[IsTransformationSemigroup, IsTransformation],
+InstallMethod(StrongOrbitOfImage,  "strongly connected components of images and multipliers", true, [IsTransformationSemigroup, IsTransformation], 0, 
 function(M, x)
-local sorbit, img, pos, gens, n, i, orb, sets, graph, reps, y, z, new, set, j,
- scc, schutzgens, perms, sccimgs, orbimgs, comp, sorb, rep, schutzgps, k, s;
-
-d:=DegreeOfTransformationSemigroup(s);
-img:=Set(f![1]);
-o:=Orb(s, img, OnSets, rec(treehashsize:=NextPrimeInt(Minimum(100000, 3*Binomial(d, Length(img)))), 
-        schreier:=true,
-        gradingfunc := function(o,x) return Length(x); end, 
-        orbitgraph := true, onlygrades:=[Length(img)], storenumbers:=true));
-Enumerate(o);
-
-comp:=First(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraph(o)), x-> 1 in x);;
-t:=BlistList([1..Length(o)], comp);;
-#p:=List(AsList(o), x-> MappingPermListList(x, img));
-p:=EmptyPlist(Length(o));
-for i in comp do 
-  p[i]:=MappingPermSetSetNC(o[i], img);
-od;
-
-gens:=GeneratorsOfMonoid(s); 
-g:=Group(());
-
-if Length(img)<1000 then 
-	bound:=Factorial(Length(img));
-else
-  bound:=infinity;
-fi;
-
-#use local variable for o!.orbitgraph
-
-for i in comp do 
- for j in [1..Length(gens)] do #Length(gens)
-   if IsBound(o!.orbitgraph[i][j]) and t[o!.orbitgraph[i][j]] then 
-     g:=ClosureGroup(g, PermLeftQuoTransformationNC_C(f, f/p[i] *
-      (gens[j]*p[o!.orbitgraph[i][j]])));
-   fi;
-   if Size(g)>=bound then #or use while; this only need if numb of gens large!!
-     break;
-   fi;
- od;
- if Size(g)>=bound then 
-   break;
- fi;
-od;
-
-#####
+local sorbit, img, pos, gens, n, i, orb, sets, graph, reps, y, z, new, set, j, scc, schutzgens, perms, sccimgs, orbimgs, comp, sorb, rep, schutzgps, k, s;
 
 if HasStrongOrbitsOfImages(M) then 
 	sorbit:=StrongOrbitsOfImages(M);
@@ -777,6 +666,8 @@ if pos=fail then
 			pos:=i+Length(sorbit[1]);
 		fi;
 
+# permutations, such that OnSets(sets[i], perms[i])=sets[1] 
+
 		Add(perms, List(sorb, y->MappingPermListList(y,sorb[1])));
 
 # Schutzenberger groups
@@ -790,7 +681,8 @@ if pos=fail then
 				z:=z+1; s:=gens[z];
 				j:= Position(set, OnSets(y, s));
 				if j <> fail then
-					AddSet(schutzgens, PermLeftQuoTransformation(rep, rep/perms[i][k] * (s*perms[i][j])));
+					AddSet(schutzgens, PermLeftQuoTransformation(rep, rep/perms[i][k] *
+					 (s*perms[i][j])));
 				fi;
 			until z=Length(gens) or Length(schutzgens)>=Factorial(n);
 		od;
@@ -809,14 +701,14 @@ end);
 
 #############################################################################
 
-
-InstallMethod(GreensRClassData, "data structure of R-class of an element", true, [IsGreensRClass and IsAssociatedSemigpTransSemigp], 0,
+InstallMethod(GreensRClassData, "data structure of R-class of an element",
+[IsGreensRClass and IsGreensClassOfTransSemigp],
 function(class)
 local rep, sorbit, pos, strongorb, perms, data, schutz;
 
 rep:=Representative(class);
 sorbit:=StrongOrbitOfImage(ParentAttr(class), rep);
-pos:=Position(sorbit[1],ImageSetOfTransformation(rep));
+pos:=Position(sorbit[1], ImageSetOfTransformation(rep));
 
 if not pos=1 then 
 	strongorb:=Concatenation(sorbit[1]{[pos..Length(sorbit[1])]}, sorbit[1]{[1..pos-1]});
@@ -833,7 +725,6 @@ data:=RClassData(rec( rep:=rep, strongorb:=strongorb,
 perms:=perms, schutz:=schutz));
 
 return data;
-
 end);
 
 #############################################################################
@@ -842,16 +733,18 @@ end);
 ##  
 ##  NOT Algorithm U.
 ##
+# should become IteratorOfRClasses...
 
-InstallOtherMethod(GreensRClasses, "for a transformation semigroup", true,
- [IsTransformationSemigroup], 0,
+InstallOtherMethod(GreensRClasses, "for a transformation semigroup",
+[IsTransformationSemigroup],
 function ( M )
-local n, one, gens, images, positions, classes, classespart, reps, kernels, orb, x, img, k, j, i, r, pos, ker, new, s, class;
+local n, one, gens, images, positions, classes, classespart, reps, kernels, orb,
+ x, img, k, j, i, r, pos, ker, new, s, class;
 
 n := DegreeOfTransformationSemigroup( M );
 one := TransformationNC( [ 1 .. n ] );
 
-if IsTransformationMonoid( M )then
+if IsTransformationMonoid( M ) then
 	gens := GeneratorsOfMonoid( M );
 else
 	gens := GeneratorsOfSemigroup( M );
@@ -924,6 +817,7 @@ SetGreensRClassReps(M, reps);
 return classes;
 
 end);
+
 
 #############################################################################
 ##
@@ -1062,7 +956,8 @@ end);
 ##  tests membership in an R-class
 ##
 
-InstallOtherMethod( \in, "membership test for an R-class data", true, [IsTransformation, IsGreensRClassData], 0, 
+InstallOtherMethod( \in, "for a transformation and Greens R-class data", 
+[IsTransformation, IsGreensRClassData], 
 function(x, R)
 local i, rep, grp;
 
@@ -1147,7 +1042,7 @@ end );
 ## Green's D-class of Green's R-class
 ##
 
-InstallOtherMethod(DClassOfRClass, "for a transformation semigroup", true, [IsGreensRClass and IsAssociatedSemigpTransSemigp], 0, 
+InstallOtherMethod(DClassOfRClass, "for a transformation semigroup", true, [IsGreensRClass and IsGreensClassOfTransSemigp], 0, 
 function(hc)
 
 if HasGreensDClasses(ParentAttr(hc)) then 
@@ -1201,7 +1096,7 @@ end);
 ##	<#/GAPDoc>
 
 InstallMethod(GreensLClassData,"data structure of L-class of an element", 
-true, [IsGreensLClass and IsAssociatedSemigpTransSemigp], 0,
+true, [IsGreensLClass and IsGreensClassOfTransSemigp], 0,
 function(L)
 local ker, orbit, i, j, back, s, pnt, new, a, n, set, sets, z, relts, gens, img, rep, scc, invrelts, newinv, schutz, data;
 
@@ -1464,7 +1359,7 @@ end);
 ## Green's D-class of Green's L-class
 ##
 
-InstallOtherMethod(DClassOfLClass, "for a transformation semigroup", true, [IsGreensHClass and IsAssociatedSemigpTransSemigp], 0, 
+InstallOtherMethod(DClassOfLClass, "for a transformation semigroup", true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0, 
 function(hc)
 
 if HasGreensDClasses(ParentAttr(hc)) then 
@@ -1508,7 +1403,7 @@ end);
 ##	<#/GAPDoc>
 
 InstallMethod(GreensHClassData, "data structure of H-class of an element", 
-true, [IsGreensHClass and IsAssociatedSemigpTransSemigp], 0,
+true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0,
 function(class)
 local R, L, data;
 
@@ -1617,7 +1512,7 @@ end);
 #M  IsGroupHClass( <H> ) 
 ##
  
-InstallOtherMethod(IsGroupHClass, "for a transformation semigroup", true,[IsGreensHClass and IsAssociatedSemigpTransSemigp], 0, 
+InstallOtherMethod(IsGroupHClass, "for a transformation semigroup", true,[IsGreensHClass and IsGreensClassOfTransSemigp], 0, 
 x-> ImageSetOfTransformation(Representative(x)^2)=ImageSetOfTransformation(Representative(x)));
 
 #############################################################################
@@ -1627,7 +1522,7 @@ x-> ImageSetOfTransformation(Representative(x)^2)=ImageSetOfTransformation(Repre
 ##  Green's R-class of Green's H-class
 ##
 
-InstallOtherMethod(RClassOfHClass, "for a transformation semigroup", true, [IsGreensHClass and IsAssociatedSemigpTransSemigp], 0, 
+InstallOtherMethod(RClassOfHClass, "for a transformation semigroup", true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0, 
 function(hc)
 
 if HasGreensRClasses(ParentAttr(hc)) then 
@@ -1644,7 +1539,7 @@ end);
 ## Green's L-class of Green's H-class
 ##
 
-InstallOtherMethod(LClassOfHClass, "for a transformation semigroup", true, [IsGreensHClass and IsAssociatedSemigpTransSemigp], 0, 
+InstallOtherMethod(LClassOfHClass, "for a transformation semigroup", true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0, 
 function(hc)
 
 if HasGreensLClasses(ParentAttr(hc)) then 
@@ -1661,7 +1556,7 @@ end);
 ## Green's D-class of Green's H-class
 ##
 
-InstallOtherMethod(DClassOfHClass, "for a transformation semigroup", true, [IsGreensHClass and IsAssociatedSemigpTransSemigp], 0, 
+InstallOtherMethod(DClassOfHClass, "for a transformation semigroup", true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0, 
 function(hc)
 
 if HasGreensDClasses(ParentAttr(hc)) then 
@@ -1720,7 +1615,7 @@ x-> Concatenation(List(GreensDClasses(x), GreensHClasses)));
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-InstallMethod(GreensDClassData,  "data structure of D-class of an element", true, [IsGreensDClass and IsAssociatedSemigpTransSemigp], 0,
+InstallMethod(GreensDClassData,  "data structure of D-class of an element", true, [IsGreensDClass and IsGreensClassOfTransSemigp], 0,
 function(class)
 local L, R, H, cosets, data, schutz, rep;
 
@@ -1744,7 +1639,7 @@ end);
 ######################
 
 InstallOtherMethod(GreensDClassData,  "data structure of D-class of an element", 
-true, [IsGreensDClass and IsAssociatedSemigpTransSemigp, IsGreensLClassData], 0,
+true, [IsGreensDClass and IsGreensClassOfTransSemigp, IsGreensLClassData], 0,
 function(class, L)
 local R, H, cosets, data, schutz, rep;
 
@@ -1879,7 +1774,7 @@ end);
 ##  checks if <Dclassdata> is a regular D-class
 ##
 
-InstallOtherMethod(IsRegularDClass, "for a Green's D-class of a transformation semigroup", true, [IsGreensDClass and IsAssociatedSemigpTransSemigp], 0, 
+InstallOtherMethod(IsRegularDClass, "for a Green's D-class of a transformation semigroup", true, [IsGreensDClass and IsGreensClassOfTransSemigp], 0, 
 x-> IsRegularTransformation(ParentAttr(x), Representative(x)));
 
 #############################################################################
@@ -2077,39 +1972,6 @@ end);
 #############################################################################
 
 ###########################################################################
-##
-##	<#GAPDoc Label="Idempotents">
-##	<ManSection>
-##	<Func Name="Idempotents" Arg="S"/>
-##	<Func Name="Idempotents" Arg="S, n"/>
-##	<Description>
-##	the first version of the function returns a list of the idempotents in 
-##	<C>S</C>. The second version of the function returns a list of the 
-##	idempotents in <C>S</C> of rank <C>n</C>. If you are only interested in the 
-##	idempotents of a given rank, then the second version of the function will 
-##	likely be faster.
-##	<Example>
-##  gap&gt; S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
-##  &gt; Transformation( [ 3, 3, 1, 1 ] ) ]);;
-##  gap&gt; Idempotents(S, 1);
-##  [  ]
-##  gap&gt; Idempotents(S, 2);                        
-##  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
-##    Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
-##  gap&gt; Idempotents(S, 3);                        
-##  [  ]
-##  gap&gt; Idempotents(S, 4);                        
-##  [ Transformation( [ 1, 2, 3, 4 ] ) ]
-##  gap&gt; Idempotents(S);
-##  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 2, 3, 4 ] ), 
-##    Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
-##    Transformation( [ 4, 2, 2, 4 ] ) ]
-##  gap&gt; Idempotents(S, 5);
-##  fail
-##	</Example> 
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
 InstallOtherMethod( Idempotents, "for a transformation semigroup", true, 
 [IsTransformationSemigroup], 0,
@@ -2152,8 +2014,8 @@ end);
 
 #####################
 
-InstallOtherMethod(Idempotents, "for a transformation semigroup and positive integer", true, 
-[IsTransformationSemigroup, IsPosInt], 0,
+InstallOtherMethod(Idempotents, "for a trans. semigroup and pos. int.", 
+[IsTransformationSemigroup, IsPosInt],
 function(M, i)
 local idempotent, pt, ker, img, kers, imgs, n, idm, one, x;
 
@@ -2201,7 +2063,8 @@ end);
 #F	Algorithm V.
 ## 
 
-InstallOtherMethod(Size, "for a transformation semigroup", true, [IsTransformationSemigroup], 0,
+InstallOtherMethod(Size, "for a transformation semigroup", 
+[IsTransformationSemigroup],
 function(M)
 return List(GradedRClasses(M),x->Size(x[1]))*List(GreensRClassReps(M), Length);
 end) ;
@@ -2294,39 +2157,6 @@ return false;
 end);
 
 #############################################################################
-##
-##	<#GAPDoc Label="SchutzenbergerGroup">
-##	<ManSection>
-##	<Attr Name="SchutzenbergerGroup" Arg="D"/>
-##	<Description>
-##	if <C>D</C> satisfies <Ref Attr="IsGreensRClassData"/>, 
-##	<Ref Attr="IsGreensLClassData"/>, <Ref Attr="IsGreensHClassData"/>, or 
-##	<Ref Attr="IsGreensDClassData"/>, then <C>SchutzenbergerGroup</C> returns 
-##	the <C>schutz</C> component of <C>D</C>. <P/>
-##	
-##	If <C>D</C> satisfies <Ref Attr="IsGreensRClass" BookName="ref"/>, 
-##	<Ref Attr="IsGreensLClass" BookName="ref"/>, 
-##	<Ref Attr="IsGreensHClass" BookName="ref"/>, 
-##	<Ref Attr="IsGreensDClass" BookName="ref"/>, then <C>SchutzenbergerGroup</C> 
-##	returns the <C>schutz</C> component of <C>GreensData</C> with argument
-##	<C>D</C>.
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 4, 4, 3, 5, 3 ] ), 
-##  &gt; Transformation( [ 5, 1, 1, 4, 1 ] ), 
-##  &gt; Transformation( [ 5, 5, 4, 4, 5 ] ) ];;
-##  gap&gt; f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
-##  gap&gt; SchutzenbergerGroup(GreensDClassOfElement(S, f));
-##  Group([ (), (4,5) ])
-##  gap&gt; SchutzenbergerGroup(GreensRClassOfElement(S, f));
-##  Group([ (), (4,5) ])
-##  gap&gt; SchutzenbergerGroup(GreensLClassOfElement(S, f));
-##  Group([ (), (4,5) ])
-##  gap&gt; SchutzenbergerGroup(GreensHClassOfElement(S, f));
-##  Group([ (), (4,5) ])
-##	</Example> <!-- greens.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
 InstallMethod(SchutzenbergerGroup, "for GreensData", true, 
 [IsGreensData], 0, x-> x!.schutz );

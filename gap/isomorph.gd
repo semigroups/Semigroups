@@ -218,7 +218,7 @@ DeclareAttribute("IsomorphismAutomorphismGroupOfRMS", IsAutomorphismGroupOfSimpl
 ##	<#/GAPDoc>
 ##
 
-DeclareAttribute("IsomorphismReesMatrixSemigroupOfDClass", IsGreensDClass and IsAssociatedSemigpTransSemigp);
+DeclareAttribute("IsomorphismReesMatrixSemigroupOfDClass", IsGreensDClass and IsGreensClassOfTransSemigp);
 
 #############################################################################
 ##

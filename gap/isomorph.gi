@@ -205,7 +205,7 @@ InstallOtherMethod(IsomorphismSemigroups,  "for a zero semigroup and group", tru
 ###########################################################################
 
 InstallMethod(IsomorphismReesMatrixSemigroupOfDClass, 
-"for a Green's D-class", [IsGreensDClass and IsAssociatedSemigpTransSemigp],
+"for a Green's D-class", [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(D)
 local g, zg, rep, r, l, rreps, lreps, mat, func, rms, invlreps, invrreps, Q, R, 
 hom, invfunc, RMS;
@@ -528,7 +528,7 @@ end);
 ###########################################################################
 
 InstallOtherMethod(IsomorphismPermGroup, "for an H-class of a transformation semigroup", true, 
-[IsGreensHClass and IsAssociatedSemigpTransSemigp], 0,
+[IsGreensHClass and IsGreensClassOfTransSemigp], 0,
 function(hc)
 local elms, gp, mapfun;
 

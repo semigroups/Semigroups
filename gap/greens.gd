@@ -33,9 +33,9 @@
 
 ###########################################################################
 ##
-##	<#GAPDoc Label="IsAssociatedSemigpTransSemigp">
+##	<#GAPDoc Label="IsGreensClassOfTransSemigp">
 ##	<ManSection>
-##	<Prop Name="IsAssociatedSemigpTransSemigp" Arg="C"/>
+##	<Prop Name="IsGreensClassOfTransSemigp" Arg="C"/>
 ##	<Description>
 ##	returns <C>true</C> if <C>C</C> is a Green's class of a transformation 
 ##	semigroup and returns <C>false</C> otherwise.<P/>
@@ -49,7 +49,7 @@
 ##  gap> M:=Semigroup(a,b);;
 ##  gap> GreensLClassOfElement(M,a);
 ##  {Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
-##  gap> IsAssociatedSemigpTransSemigp(last);
+##  gap> IsGreensClassOfTransSemigp(last);
 ##  true
 ##  gap> f:=FreeSemigroup(3);;
 ##  gap> a:=f.1;; b:=f.2;; c:=f.3;; 
@@ -60,14 +60,14 @@
 ##  3
 ##  gap> GreensLClassOfElement(s,a);
 ##  {s1}
-##  gap> IsAssociatedSemigpTransSemigp(last);
+##  gap> IsGreensClassOfTransSemigp(last);
 ##  false
 ##	</Example> <!-- greens.tst -->
 ##	</Description>
 ##  </ManSection>
 ##	<#/GAPDoc>
 
-DeclareProperty("IsAssociatedSemigpTransSemigp", IsGreensClass);
+DeclareProperty("IsGreensClassOfTransSemigp", IsGreensClass);
 
 ###########################################################################
 ##
@@ -147,7 +147,7 @@ DeclareCategory("IsGreensDClassData", IsGreensData);
 ##  </ManSection>
 ##	<#/GAPDoc>
 
-DeclareOperation("GreensData", [IsGreensClass and IsAssociatedSemigpTransSemigp]);
+DeclareOperation("GreensData", [IsGreensClass and IsGreensClassOfTransSemigp]);
 
 ###########################################################################
 ##
@@ -361,6 +361,12 @@ DeclareOperation("StrongOrbitOfImage", [IsTransformationSemigroup, IsTransformat
 
 DeclareAttribute("StrongOrbitsOfImages", IsTransformationSemigroup, "mutable");
 
+DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
+#DeclareGlobalFunction("ForwardOrbitOfImage");
+#DeclareGlobalFunction("ForwardOrbitOfImageNC");
+DeclareProperty("IsOrbitOfImage", IsOrbit);
+
+
 #############################################################################
 ##
 ##	<#GAPDoc Label="IsGreensRClassDataRep">
@@ -439,7 +445,7 @@ DeclareRepresentation("IsGreensDClassDataRep",
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-DeclareAttribute("GreensRClassData", IsGreensRClass and IsAssociatedSemigpTransSemigp);
+DeclareAttribute("GreensRClassData", IsGreensRClass and IsGreensClassOfTransSemigp);
 
 #############################################################################
 ##
@@ -559,7 +565,7 @@ DeclareAttribute("PositionsRClasses", IsTransformationSemigroup);
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-DeclareAttribute("GreensLClassData", IsGreensLClass and IsAssociatedSemigpTransSemigp);
+DeclareAttribute("GreensLClassData", IsGreensLClass and IsGreensClassOfTransSemigp);
 
 #############################################################################
 ##
@@ -593,7 +599,7 @@ DeclareAttribute("GreensLClassData", IsGreensLClass and IsAssociatedSemigpTransS
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-DeclareAttribute("GreensHClassData", IsGreensHClass and IsAssociatedSemigpTransSemigp);
+DeclareAttribute("GreensHClassData", IsGreensHClass and IsGreensClassOfTransSemigp);
 
 #############################################################################
 ##
@@ -634,7 +640,7 @@ DeclareAttribute("GreensHClassData", IsGreensHClass and IsAssociatedSemigpTransS
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-DeclareAttribute("GreensDClassData", IsGreensDClass and IsAssociatedSemigpTransSemigp);
+DeclareAttribute("GreensDClassData", IsGreensDClass and IsGreensClassOfTransSemigp);
 
 #############################################################################
 ##
