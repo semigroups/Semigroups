@@ -10,49 +10,62 @@
 ## $Id$
 ##
 
-##  <#GAPDoc Label="transformtop">
-##  The functions in this chapter extend the functionality of &GAP; relating 
-##  to transformations. 
-##	<#/GAPDoc>
-
 
 ##  JDM install methods for partial transformations, partial bijections
 
-###########################################################################
-##
-##  <#GAPDoc Label="IsRegularTransformation">
-##  <ManSection>
-##  <Oper Name="IsRegularTransformation" Arg="S, f"/>
-##	<Description>
-##	if <C>f</C> is a regular element of the transformation semigroup <C>S</C>, 
-##	then <C>true</C> is returned. Otherwise <C>false</C> is returned.<P/> 
-##
-##	A transformation <C>f</C> is regular inside a transformation semigroup 
-##	<C>S</C> if it lies inside a regular D-class. This is equivalent to the 
-##	orbit of the image of <C>f</C> containing a transversal of the kernel of 
-##	<C>f</C>.
-## <Example>
-##  gap&gt; g1:=Transformation([2,2,4,4,5,6]);;
-##  gap&gt; g2:=Transformation([5,3,4,4,6,6]);;
-##  gap&gt; m1:=Monoid(g1,g2);;
-##  gap&gt; IsRegularTransformation(m1, g1);
-##  true
-##  gap&gt; img:=ImageSetOfTransformation(g1);
-##  [ 2, 4, 5, 6 ]
-##  gap&gt; ker:=KernelOfTransformation(g1);
-##  [ [ 1, 2 ], [ 3, 4 ], [ 5 ], [ 6 ] ]
-##  gap&gt; ForAny(MonoidOrbit(m1, img), x-> IsTransversal(ker, x));
-##  true
-##  gap&gt; IsRegularTransformation(m1, g2);
-##  false
-##  gap&gt; IsRegularTransformation(FullTransformationSemigroup(6), g2);
-##  true
-##	</Example> <!-- transform.tst -->
-##	</Description>
-##  </ManSection>
-##	<#/GAPDoc>
 
-InstallMethod(IsRegularTransformation, "for a transformation", true, [IsTransformationSemigroup, IsTransformation], 0,
+#############################################################################
+# new for 3.2!
+
+InstallGlobalFunction(KernelOfTransformationNC, 
+function(f)
+local  ker, imgs, i, dom;
+
+imgs := f![1];
+ker:=[];
+
+for i in [1..Length(imgs)] do
+  if IsBound(ker[imgs[i]]) then 
+    Add( ker[imgs[i]], i ); 
+  else
+    ker[imgs[i]]:=[i];
+  fi;
+od;
+
+return Set(ker);
+end);
+
+#############################################################################
+# new for 3.2!
+
+InstallMethod(\*, "JDM", [IsTransformation and IsTransformationRep, IsPerm],
+10,
+function(x, y)
+local c;
+c:=OnTuples(x![1], y);
+MakeImmutable(c);
+return Objectify( TypeObj(x), [ c ] );
+end);
+
+#############################################################################
+# new for 3.2!
+
+InstallMethod(\*, "JDM", [IsTransformation and IsTransformationRep, 
+IsTransformation and IsTransformationRep], 10,
+function(x, y)
+local  a, b, c;
+a := x![1];
+b := y![1];
+c := b{a};
+MakeImmutable(c);
+return Objectify( TypeObj(x), [ c ] );
+end);
+
+
+###########################################################################
+
+InstallMethod(IsRegularTransformation, "for a transformation", true, 
+[IsTransformationSemigroup, IsTransformation], 0,
 function(M, x)
 
 local r, orb, gens, s, p, n;
@@ -199,42 +212,6 @@ return TransformationNC( Flat( Successors( rel ) ) );
 end);
 
 #############################################################################
-##
-##	<#GAPDoc Label="RandomTransformation">
-##	<ManSection><Heading>RandomTransformation</Heading>
-##	<Oper Name="RandomTransformation" Arg="ker, img"/>
-##	<Oper Name="RandomTransformationNC" Arg="ker, img"/>
-##	<Oper Name="RandomTransformation" Arg="ker"/>
-##	<Oper Name="RandomTransformationNC" Arg="ker"/>
-##	<Oper Name="RandomTransformation" Arg="img, n"/>
-##	<Oper Name="RandomTransformationNC" Arg="img, n"/>
-##	<Description>
-##	These are new methods for the existing library function 
-##	<Ref Func="RandomTransformation" BookName="ref"/>.  A random transformation 
-##	is returned that has the given image <C>img</C> and/or kernel <C>ker</C>. If no kernel 
-##	<C>ker</C> is given, then a number <C>n</C> of elements in the domain of the 
-##	transformation must be specified. Note that <C>ker</C> must be a set of sets with the same 
-##	number of classes as <C>img</C> has elements.<P/>
-##
-##	The no check version does not check that <C>ker</C> and <C>img</C> can be 
-##	the kernel and image of a transformation, respectively.
-##	<Example>
-##  gap&gt; x:=RandomTransformation([[1,2,3], [4,5], [6,7,8]], [1,2,3]);;
-##  Transformation( [ 2, 2, 2, 1, 1, 3, 3, 3 ] )
-##  gap&gt; RandomTransformation([[1,2,3],[5,7],[4,6]]); 
-##  Transformation( [ 3, 3, 3, 6, 1, 6, 1 ] )
-##  gap&gt; RandomTransformation([[1,2,3],[5,7],[4,6]]);
-##  Transformation( [ 4, 4, 4, 7, 3, 7, 3 ] )
-##  gap&gt; RandomTransformationNC([[1,2,3],[5,7],[4,6]]);
-##  Transformation( [ 1, 1, 1, 7, 5, 7, 5 ] )
-##  gap&gt; RandomTransformation([1,2,3], 6);             
-##  Transformation( [ 2, 1, 2, 1, 1, 2 ] )
-##  gap&gt; RandomTransformationNC([1,2,3], 6);
-##  Transformation( [ 3, 1, 2, 2, 1, 2 ] )
-##	</Example> 
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
 InstallOtherMethod(RandomTransformation,  "for a kernel and image", true, [IsCyclotomicCollColl, IsCyclotomicCollection], 0,     
 function(ker, img)

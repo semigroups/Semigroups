@@ -48,7 +48,7 @@ InstallMethod( ChooseHashFunction, "for transformations and pos. int.",
 [IsTransformation, IsInt],
 function(p, hashlen)
 return rec(func := _HashFunctionForTransformation, data := [101, 
-NextPrimeInt(hashlen)]);
+hashlen]);
 end);
 
 #############################################################################

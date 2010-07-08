@@ -10,49 +10,12 @@
 ## $Id$
 ##
 
-##  This file contains the `fast' algorithms for computing Green's relations
-##  and related notions for transformation semigroups and monoid. 
-##  The theory behind these algorithms is developed in 
-##  
-##  [LPRR1] S. A.   Linton, G.  Pfeiffer, E.  F.  Robertson, and N.   Ruskuc,
-##  Groups  and actions in  transformation semigroups, to appear in Math Z.
-##  (1998).
-##
-##  The algorithms themselves are described in
-##
-##  [LPRR2] S. A.   Linton, G.  Pfeiffer, E.  F.  Robertson, and N.   Ruskuc,
-##  Computing transformation semigroups, (1998), in preparation.
-##  
-##  Another reference is
-##
-##  [LM]  G.  Lallement and R. McFadden, On the   determination of Green's
-##  relations in finite transformation semigroups, J. Symbolic Computation 10
-##  (1990), 481--489.
-##
-#############################################################################
-#############################################################################
 
-DeclareGlobalFunction("PermLeftQuoTransformationNC");
 
 #############################################################################
-##
+# new for 3.2!
 
-InstallGlobalFunction(PermLeftQuoTransformationNC,
-function ( t1, t2 )
-local  pl, i, deg;
-
-deg := Length( t1![1] );
-pl := [ 1 .. deg ];
-for i  in [ 1 .. deg ]  do
-    pl[t1![1][i]] := t2![1][i];
-od;
-return PermList( pl );
-end);
-
-#############################################################################
 # assumes <src> and <dst> are sets of pos. ints. of equal length.
-
-DeclareGlobalFunction("MappingPermSetSetNC");
 
 InstallGlobalFunction(MappingPermSetSetNC,
 function(src, dst)
@@ -84,7 +47,23 @@ od;
 return PermList(out);
 end);
 
-###########################################################################
+
+#############################################################################
+# new for 3.2!
+
+InstallGlobalFunction(PermLeftQuoTransformationNC,
+function ( t1, t2 )
+local  pl, i, deg;
+
+deg := Length( t1![1] );
+pl := [ 1 .. deg ];
+for i  in [ 1 .. deg ]  do
+    pl[t1![1][i]] := t2![1][i];
+od;
+return PermList( pl );
+end);
+
+#############################################################################
 
 InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
 [IsGreensClass], x-> IsTransformationSemigroup(ParentAttr(x)));
@@ -163,26 +142,29 @@ end);
 #JDM do not recreate the family and type every time here...
 
 InstallGlobalFunction(RClassData, function(list)
-return Objectify(NewType(NewFamily("Green's R Class Data", IsGreensRClassData), 
+return Objectify(NewType(NewFamily("Green's R-class data", IsGreensRClassData), 
 IsGreensRClassData and IsGreensRClassDataRep), list);
 end);
 
 ###########################################################################
 
 InstallGlobalFunction(LClassData, function(list)
-return Objectify(NewType(NewFamily("Green's L Class Data", IsGreensLClassData), IsGreensLClassData and IsGreensLClassDataRep), list);
+return Objectify(NewType(NewFamily("Green's L Class Data", IsGreensLClassData), 
+IsGreensLClassData and IsGreensLClassDataRep), list);
 end);
 
 ###########################################################################
 
 InstallGlobalFunction(DClassData, function(list)
-return Objectify(NewType(NewFamily("Green's D Class Data", IsGreensDClassData), IsGreensDClassData and IsGreensDClassDataRep), list);
+return Objectify(NewType(NewFamily("Green's D Class Data", IsGreensDClassData), 
+IsGreensDClassData and IsGreensDClassDataRep), list);
 end);
 
 ###########################################################################
 
 InstallGlobalFunction(HClassData, function(list)
-return Objectify(NewType(NewFamily("Green's H Class Data", IsGreensHClassData), IsGreensHClassData and IsGreensHClassDataRep), list);
+return Objectify(NewType(NewFamily("Green's H Class Data", IsGreensHClassData), 
+IsGreensHClassData and IsGreensHClassDataRep), list);
 end);
 
 #############################################################################
@@ -190,7 +172,8 @@ end);
 InstallMethod( ViewObj, "for Green's R-class data",
 [IsGreensRClassData and IsGreensRClassDataRep],
 function( obj )
-Print( "GreensRClassData( ", obj!.rep, ", ", obj!.strongorb,", ", obj!.perms,", ", obj!.schutz, " )" );
+Print( "GreensRClassData( ", obj!.rep, ", ", obj!.strongorb,", ", obj!.perms,
+", ", obj!.schutz, " )" );
 end );
 
 #############################################################################
@@ -244,7 +227,8 @@ end );
 ## Commands to integrate MONOID functions with those in semirel.g* ##
 #####################################################################
 
-InstallMethod(GreensData, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsGreensClassOfTransSemigp], 0, 
+InstallMethod(GreensData, "for a Green's class of a trans. semigroup", 
+[IsGreensClass and IsGreensClassOfTransSemigp],
 function(class)
 
 if HasIsGreensRClass(class) and IsGreensRClass(class) then 
@@ -263,29 +247,31 @@ end);
 
 #############################################################################
 
-InstallMethod( \in, "for a Green's Class of a transformation semigroup", true, [IsTransformation, IsGreensClass and IsGreensClassOfTransSemigp], 0, 
+InstallMethod( \in, "for a Green's Class of a transformation semigroup", 
+[IsTransformation, IsGreensClass and IsGreensClassOfTransSemigp],
 function (elm, class)
 	return elm in GreensData(class);
 end); 
 
 #############################################################################
 
-InstallMethod( Size, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsGreensClassOfTransSemigp], 0,
-x-> Size(GreensData(x)));
+InstallMethod( Size, "for a Green's class of a transformation semigroup", 
+[IsGreensClass and IsGreensClassOfTransSemigp], x-> Size(GreensData(x)));
 
 #############################################################################
 
-InstallMethod( AsSSortedList, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsGreensClassOfTransSemigp], 0, 
-x-> AsSSortedList(GreensData(x)));
+InstallMethod( AsSSortedList, "for a Green's class of a transformation semigroup", 
+[IsGreensClass and IsGreensClassOfTransSemigp], x-> AsSSortedList(GreensData(x)));
 
 #############################################################################
 
-InstallOtherMethod( Idempotents, "for a Green's class of a transformation semigroup", true, [IsGreensClass and IsGreensClassOfTransSemigp], 0, 
-x-> Idempotents(GreensData(x)));
+InstallOtherMethod( Idempotents, "for a Green's class of a transformation semigroup", 
+[IsGreensClass and IsGreensClassOfTransSemigp], x-> Idempotents(GreensData(x)));
 
 #############################################################################
 
-InstallMethod(\<, "for Green's data", true, [IsGreensData, IsGreensData], 0, 
+InstallMethod(\<, "for GreenData and GreenData", 
+[IsGreensData, IsGreensData],
 function(data1, data2)
 
 if not ParentAttr(data1)=ParentAttr(data2) then 
@@ -308,9 +294,10 @@ end);
 
 ##  returns if the representative of <data1> is in <data2>.
 #############################################################################
+#JDM shouldn't this test if data1!.rep in data2 and data2!.rep in data1???
 
-InstallMethod(\=, "= for GreensData", true, 
-[IsGreensData, IsGreensData], 0, 
+InstallMethod(\=, "for GreenData and GreenData", 
+[IsGreensData, IsGreensData],
 function(data1, data2)
 
 if not ParentAttr(data1)=ParentAttr(data2) then 
@@ -333,13 +320,11 @@ end);
 ##  user friendly return of data!.rep 
 #############################################################################
 
-InstallOtherMethod(Representative, "for GreensData", true, 
-[IsGreensData],0,
-function(data)
-	return data!.rep;
-end);
+InstallOtherMethod(Representative, "for GreensData", 
+[IsGreensData], x-> x!.rep);
 
 ###########################################################################
+# JDM require C version! and should be moved to orbits.*
 
 InstallGlobalFunction(OnTuplesOfSetsAntiAction, [IsObject, IsTransformation], 
 function(tup, s)
@@ -368,6 +353,7 @@ return res;
 end);
 
 ###########################################################################
+# JDM require C version!  and should be moved to orbits.*
 
 InstallGlobalFunction(OnKernelsAntiAction, [IsList, IsTransformation],
 function(ker, s)
@@ -400,8 +386,10 @@ return new;
 end) ;
 
 ###########################################################################
+# JDM should be moved to orbits_*...
 
-InstallMethod(ImagesOfTransSemigroup, "for a transformation semigroup", true, [IsTransformationSemigroup], 0, 
+InstallMethod(ImagesOfTransSemigroup, "for a transformation semigroup",
+[IsTransformationSemigroup],
 function(M)
 local gens, orb, imgs, x, y, new, limit, n;
  
@@ -450,8 +438,10 @@ fi;
 end );
 
 ################
+# JDM should be moved to orbits_*...
 
-InstallOtherMethod(ImagesOfTransSemigroup, "for  a trans. semigroup and a pos. int.", true, [IsTransformationSemigroup, IsPosInt], 0, 
+InstallOtherMethod(ImagesOfTransSemigroup, "for  a trans. semigroup and a pos. int.", 
+[IsTransformationSemigroup, IsPosInt],
 function(S, m)
 local n, gens, imgs, limit, orb, i, x, j, y, new, setorb;
 
@@ -503,12 +493,11 @@ fi;
 return imgs;
 end );
 
+################
+# JDM should be moved to orbits_*...
 
-
-###########################################################################
-
-InstallOtherMethod(KernelsOfTransSemigroup, "for a trans. semigroup", true, 
-[IsTransformationSemigroup, IsPosInt], 0, 
+InstallOtherMethod(KernelsOfTransSemigroup, "for a trans. semigroup", 
+[IsTransformationSemigroup, IsPosInt],  
 function(S, m)
 local n, gens, imgs, limit, orb, i, x, j, y, new, setorb;
 
@@ -562,10 +551,11 @@ fi;
 return imgs;
 end );
 
-###############
+################
+# JDM should be moved to orbits_*...
 
-InstallMethod(KernelsOfTransSemigroup, "for a transformation monoid", true, 
-[IsTransformationSemigroup], 0, 
+InstallMethod(KernelsOfTransSemigroup, "for a transformation monoid", 
+[IsTransformationSemigroup], 
 function(M)
 local gens, imgs, orb, x, y, new, ker, n, limit;
 
@@ -617,9 +607,10 @@ fi;
 end); 
 
 #############################################################################
-##  JDM reduce number of local variable names!
+## JDM the following should be deleted!
 
-InstallMethod(StrongOrbitOfImage,  "strongly connected components of images and multipliers", true, [IsTransformationSemigroup, IsTransformation], 0, 
+InstallMethod(StrongOrbitOfImage,  "strongly connected components of images and multipliers", 
+[IsTransformationSemigroup, IsTransformation], 
 function(M, x)
 local sorbit, img, pos, gens, n, i, orb, sets, graph, reps, y, z, new, set, j, scc, schutzgens, perms, sccimgs, orbimgs, comp, sorb, rep, schutzgps, k, s;
 
@@ -700,6 +691,7 @@ return [sorbit[1][pos], sorbit[2][pos], sorbit[3][pos]];
 end);
 
 #############################################################################
+#JDM the following should be modified
 
 InstallMethod(GreensRClassData, "data structure of R-class of an element",
 [IsGreensRClass and IsGreensClassOfTransSemigp],
@@ -733,7 +725,7 @@ end);
 ##  
 ##  NOT Algorithm U.
 ##
-# should become IteratorOfRClasses...
+## JDM the following should be modified...
 
 InstallOtherMethod(GreensRClasses, "for a transformation semigroup",
 [IsTransformationSemigroup],
@@ -796,7 +788,8 @@ for x in orb do
 				Add( kernels[pos], ker );
 				class:=GreensRClassOfElement(M, x);
 
-				r:=RClassData( rec( rep:=x, strongorb:=r!.strongorb, perms:=r!.perms, schutz:=r!.schutz ));
+				r:=RClassData( rec( rep:=x, strongorb:=r!.strongorb, perms:=r!.perms,
+				 schutz:=r!.schutz ));
 				SetGreensRClassData(class, r);
 				Add( classespart[pos], r); 
 				Add(classes, class);
@@ -820,82 +813,19 @@ end);
 
 
 #############################################################################
-##
-##	<#GAPDoc Label="GreensRClassReps">
-##	<ManSection>
-##	<Attr Name="GreensRClassReps" Arg="S"/>
-##	<Description>
-##	returns the representative of all the R-classes of the transformation 
-##	semigroup <C>S</C> as a list of lists ordered by the rank of the 
-##	representatives and the order that the representatives are produced by the 
-##	function <Ref Attr="GreensRClasses" BookName="ref"/>.  Also 
-##	<C>GreensRClassReps[i][j]</C> is the representative of <Ref 
-##	Attr="GradedRClasses"/><C>[i][j]</C>.
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 1, 2, 1, 2, 1 ] ), 
-##  &gt; Transformation( [ 3, 4, 2, 1, 4 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);; 
-##  gap&gt; GreensRClassReps(S);
-##  [ [ Transformation( [ 1, 2, 1, 2, 1 ] ), Transformation( [ 1, 2, 2, 1, 2 ] ), 
-##        Transformation( [ 2, 1, 2, 1, 1 ] ) ], 
-##    [ Transformation( [ 3, 4, 2, 1, 4 ] ) ] ]
-##	</Example><!-- greens.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
+# JDM the following should be modified...
 
 InstallOtherMethod(GreensRClassReps,  "for a transformation semigroup", 
-true, [IsTransformationSemigroup], 0,
+[IsTransformationSemigroup],
 function(X)
 GreensRClasses(X);
 return GreensRClassReps(X);
 end);
 
 #############################################################################
-##
-##	<#GAPDoc Label="GradedRClasses">
-##	<ManSection>
-##	<Attr Name="GradedRClasses" Arg="S"/>
-##	<Description>
-##	returns the <C>GreensRClassData</C> for all the <M>R</M>-classes of <C>S</C> 
-##	in a list of lists ordered by the rank of the representatives and the order 
-##	that the classes are produced by the function 
-##	<Ref Attr="GreensRClasses" BookName="ref"/>. Also <C>GreensRClassReps[i][j]
-##	</C> is the representative of <Ref Attr="GradedRClasses"/><C>[i][j]</C>.
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 5, 1, 1, 5, 1 ] ), 
-##   Transformation( [ 5, 2, 4, 3, 2 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; GradedRClasses(S);
-##  [ [ GreensRClassData( Transformation( [ 5, 1, 1, 5, 1 ] ), [ [ 1, 5 ] ], 
-##          [ () ], Group( [ (), (1,5) ] ) ), GreensRClassData( Transformation( 
-##          [ 1, 1, 5, 1, 1 ] ), [ [ 1, 5 ] ], [ () ], Group( [ (), (1,5) ] ) ), 
-##        GreensRClassData( Transformation( [ 1, 1, 1, 5, 1 ] ), [ [ 1, 5 ] ], 
-##          [ () ], Group( [ (), (1,5) ] ) ) ], 
-##    [ GreensRClassData( Transformation( [ 5, 2, 4, 3, 2 ] ), [ [ 2, 3, 4, 5 ] 
-##           ], [ () ], Group( [ () ] ) ) ], 
-##    [ GreensRClassData( Transformation( [ 2, 5, 5, 2, 5 ] ), [ [ 2, 5 ] ], 
-##          [ () ], Group( [ () ] ) ), GreensRClassData( Transformation( 
-##          [ 5, 2, 2, 5, 2 ] ), [ [ 2, 5 ] ], [ () ], Group( [ () ] ) ), 
-##        GreensRClassData( Transformation( [ 5, 5, 2, 5, 5 ] ), [ [ 2, 5 ] ], 
-##          [ () ], Group( [ () ] ) ), GreensRClassData( Transformation( 
-##          [ 2, 2, 5, 2, 2 ] ), [ [ 2, 5 ] ], [ () ], Group( [ () ] ) ), 
-##        GreensRClassData( Transformation( [ 5, 5, 5, 2, 5 ] ), [ [ 2, 5 ] ], 
-##          [ () ], Group( [ () ] ) ), GreensRClassData( Transformation( 
-##          [ 2, 2, 2, 5, 2 ] ), [ [ 2, 5 ] ], [ () ], Group( [ () ] ) ) ], 
-##    [ GreensRClassData( Transformation( [ 2, 2, 3, 4, 2 ] ), [ [ 2, 3, 4 ] ], 
-##          [ () ], Group( [ (), (3,4) ] ) ) ], 
-##    [ GreensRClassData( Transformation( [ 1, 1, 1, 1, 1 ] ), 
-##          [ [ 1 ], [ 5 ], [ 2 ] ], [ (), (1,2,3,4,5), (1,2) ], Group( 
-##          [ () ] ) ) ] ]
-##	</Example> <!-- greens.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
+# the following should probably be deleted...
 
-
-InstallOtherMethod(GradedRClasses,  "for a transformation semigroup", 
-true, [IsTransformationSemigroup], 0,
+InstallOtherMethod(GradedRClasses,  "for a transformation semigroup", [IsTransformationSemigroup], 
 function(X)
 GreensRClasses(X);
 return GradedRClasses(X);
@@ -910,8 +840,10 @@ end);
 ##  returns the size of <RClassData>
 ##
 
-InstallOtherMethod(Size,  "size of R-class from data structure", 
-true, [IsGreensRClassData], 0,
+#JDM this should be modified
+
+InstallOtherMethod(Size,  "for GreensRClassData", 
+[IsGreensRClassData],
 function(data)
 return Size(data!.schutz)*Size(data!.strongorb);
 end);
@@ -925,8 +857,10 @@ end);
 ##  returns the elements of <RClassData>
 ##
 
-InstallOtherMethod(AsSSortedList,"elements of R-class from data structure", 
-true, [IsGreensRClassData], 0,
+# JDM the following should be reviewed
+
+InstallOtherMethod(AsSSortedList, "for GreensRClassData", 
+[IsGreensRClassData], 
 function(R)
 local m, x, elts, grp, prod, g;
 
@@ -955,6 +889,8 @@ end);
 ##   
 ##  tests membership in an R-class
 ##
+
+#JDM the following should be modified
 
 InstallOtherMethod( \in, "for a transformation and Greens R-class data", 
 [IsTransformation, IsGreensRClassData], 
@@ -985,7 +921,10 @@ end);
 ##
 ##  returns the idempotents in an R-class
 
-InstallOtherMethod( Idempotents, "for R class data", true, [IsGreensRClassData], 0, 
+# JDM the following should be reviewed
+
+InstallOtherMethod( Idempotents, "for GreensRClassData",
+[IsGreensRClassData], 
 function(R)
 local idempotent, ker, img, idm, data;
 
@@ -1011,8 +950,8 @@ end);
 ##  returns all the Green's H-classes of a Green's R-class
 ## 
 
-InstallOtherMethod(GreensHClasses, "for Green's R-class", true, 
-[IsGreensRClass], 0, 
+InstallOtherMethod(GreensHClasses, "for a Green's R-class", true, 
+[IsGreensRClass], 
 function(rc)
 local D, x, c, m, classes, class, R;
 
@@ -1042,7 +981,8 @@ end );
 ## Green's D-class of Green's R-class
 ##
 
-InstallOtherMethod(DClassOfRClass, "for a transformation semigroup", true, [IsGreensRClass and IsGreensClassOfTransSemigp], 0, 
+InstallOtherMethod(DClassOfRClass, "for a transformation semigroup",
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
 function(hc)
 
 if HasGreensDClasses(ParentAttr(hc)) then 
@@ -1054,49 +994,10 @@ fi;
 end);
 
 #############################################################################
-##
-##	<#GAPDoc Label="GreensLClassData">
-##	<ManSection>
-##	<Attr Name="GreensLClassData" Arg="S, f"/>
-##	<Description>
-##	if <C>C</C> satisfies <Ref Attr="IsGreensLClass" BookName="ref"/>, then 
-##	<C>GreensLClassData</C> returns an object in the category 
-##	<Ref Filt="IsGreensLClassData"/> with representation 
-##	<Ref Filt="IsGreensLClassDataRep"/> and the following five components:
-##	<List>
-##		<Item><C>rep</C> the representative of the <M>L</M>-class</Item>
-##		<Item><C>strongorb</C> the strong orbit of the kernel of <C>rep</C> under 
-##		the action of the semigroup by <Ref Func="OnTuplesOfSetsAntiAction"/>
-##		</Item>
-##		<Item><C>relts</C> a list of relations such that 
-##		<C>KernelOfTransformation(relts[i]*x)=strongorb[1]</C> whenever <C>x</C> 
-##		has <C>KernelOfTransformation(x)=strongorb[i]</C></Item>
-##		<Item><C>invrelts</C> the inverses of the relations <C>relts</C> 
-##		(<C>KernelOfTransformation(invrelts[i]*rep)=strongorb[i]</C>)</Item>
-##		<Item><C>schutz</C> the (generalised) left Schutzenberger group.</Item>
-##	</List>
-##	<!-- The components <C>strongorb</C>, <C>relts</C>, <C>invrelts</C>, and 
-##	<C>schutz</C> are obtained using the function 
-##	<Ref Func="StrongOrbitOfKernel"/>.-->
-##	Further 
-##	details can be found in Algorithm G, H, I, and J of <Cite Key="computing"/>.
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 4, 1, 4, 5, 3 ] ),
-##  &gt; Transformation( [ 5, 3, 5, 4, 3 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; C:=GreensLClassOfElement(S, gens[1]*gens[2]*gens[1]);
-##  {Transformation( [ 5, 3, 5, 4, 3 ] )}
-##  gap&gt; GreensLClassData(C);
-##  GreensLClassData( Transformation( [ 5, 3, 5, 4, 3 ] ), 
-##  [ [ [ 1, 3 ], [ 2, 5 ], [ 4 ] ] ], [ Binary Relation on 5 points ], 
-##  [ Binary Relation on 5 points ], Group( [ (), (3,5,4), (3,5) ] ) )
-##	</Example> <!-- greens.tst --> 
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
+# JDM this should be modified...
 
-InstallMethod(GreensLClassData,"data structure of L-class of an element", 
-true, [IsGreensLClass and IsGreensClassOfTransSemigp], 0,
+InstallMethod(GreensLClassData, "for a Green's L-class of trans. semigp", 
+true, [IsGreensLClass and IsGreensClassOfTransSemigp], 
 function(L)
 local ker, orbit, i, j, back, s, pnt, new, a, n, set, sets, z, relts, gens, img, rep, scc, invrelts, newinv, schutz, data;
 
@@ -1177,9 +1078,7 @@ end);
 
 
 #############################################################################
-##
-#M  GreensLClasses( <transsemigroup> ) 
-##  
+# JDM this should be modified
 
 InstallMethod(GreensLClasses, "for a trans. semigroup", true, 
 [IsTransformationSemigroup], 0, 
@@ -1215,7 +1114,9 @@ end);
 ##  returns the elements of <LClassData>
 ##
 
-InstallOtherMethod(AsSSortedList,  "elements of L-class from data structure", true, [IsGreensLClassData], 0,
+#JDM this should be reviewed
+
+InstallOtherMethod(AsSSortedList,  "elements of L-class from data structure", [IsGreensLClassData],
 function(L)
 local m, x, elts, grp, g, prod;
 
@@ -1244,6 +1145,8 @@ end) ;
 ##   
 ##  tests membership of L-Class data
 ##
+
+#JDM this should be reviewed
 
 InstallOtherMethod( \in, "membership test for L-Class data", true, [IsTransformation, IsGreensLClassData], 0,
 function(x,L)
@@ -1282,6 +1185,8 @@ end);
 ##  gives the idempotents of an L-class <L>
 ##
 
+#JDM this should be reviewed
+
 InstallOtherMethod( Idempotents, "for Green's L-class data", true, [IsGreensLClassData], 0,
 function(L)
 local idempotent, ker, img, idm;
@@ -1316,6 +1221,8 @@ end );
 #JDM I think this is what makes GreensHClasses etc so slow...
 #JDM however this can be speeded up by feeding GreensDClassData the
 #JDM L-class we start with.
+
+#JDM this should be reviewed
 
 InstallOtherMethod(GreensHClasses, "for Green's L-class", true,
 [IsGreensLClass], 0,
@@ -1359,6 +1266,8 @@ end);
 ## Green's D-class of Green's L-class
 ##
 
+#JDM this should be reviewed
+
 InstallOtherMethod(DClassOfLClass, "for a transformation semigroup", true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0, 
 function(hc)
 
@@ -1371,36 +1280,7 @@ fi;
 end);
 
 #############################################################################
-##
-##	<#GAPDoc Label="GreensHClassData">
-##	<ManSection>
-##	<Attr Name="GreensHClassData" Arg="S, f"/>
-##	<Description>
-##	if <C>C</C> satisfies <Ref Attr="IsGreensHClass" BookName="ref"/>, then 
-##	<C>GreensLClassData</C> returns an object in the category 
-##	<Ref Filt="IsGreensHClassData"/> with representation 
-##	<Ref Filt="IsGreensHClassDataRep"/> and the following five components:
-##	<List>
-##		<Item><C>rep</C> the representative of the <M>H</M>-class</Item>
-##		<Item><C>schutz</C> the intersection of the left Schutzenberger group and 
-##		right Schutzenberger group of the <M>L</M>-class and <M>R</M>-class 
-##		containing the representative <C>rep</C> (that is, the intersection of the 
-##		<C>schutz</C> component of <Ref Func="GreensRClassData"/> and the 
-##		<C>schutz</C> component of <Ref Func="GreensLClassData"/>).</Item>
-##	</List>
-##	Further details can be found in Algorithm K, L, M, and N of 
-##	<Cite Key="computing"/>.
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 2, 2, 5, 2, 3 ] ), 
-##  &gt; Transformation( [ 2, 5, 3, 5, 3 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; f:=Transformation( [ 5, 5, 3, 5, 3 ] );;
-##  gap&gt; GreensHClassData(GreensHClassOfElement(S, f));
-##  GreensHClassData( Transformation( [ 5, 5, 3, 5, 3 ] ), Group( () ) )
-##	</Example> <!-- greens.tst --> 
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
+#JDM this should be reviewed
 
 InstallMethod(GreensHClassData, "data structure of H-class of an element", 
 true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0,
@@ -1425,8 +1305,7 @@ end) ;
 ##
 
 InstallOtherMethod(Size,  "size of H-class from data structure", 
-true, [IsGreensHClassData], 0, 
-x-> Size(x!.schutz));
+[IsGreensHClassData], x-> Size(x!.schutz));
 
 #############################################################################
 ##
@@ -1437,8 +1316,10 @@ x-> Size(x!.schutz));
 ##  returns the elements of <HClassData>
 ##
 
+#JDM this should be reviewed
+
 InstallOtherMethod(AsSSortedList,  "elements of H-class from data structure", 
-true, [IsGreensHClassData], 0,
+[IsGreensHClassData],
 function(H)
 local  elts, g, prod;
 
@@ -1465,6 +1346,8 @@ end);
 ## tests membership in an H-class
 ##
 
+#JDM this should be reviewed
+
 InstallOtherMethod( \in, "membership test for an H-class", true, 
 [IsTransformation, IsGreensHClassData], 0,
 function(x,H)
@@ -1488,9 +1371,12 @@ end) ;
 ##
 ##  returns the idempotent in <H>, if there is one.
 ## 
+
+#JDM this should be modified
 ## JDM this could be shortened.
  
-InstallOtherMethod( Idempotents, "for H class data", true, [IsGreensHClassData], 0,
+InstallOtherMethod( Idempotents, "for H class data", 
+[IsGreensHClassData],
 function(H)
 local idempotent, ker, img, idm;
 
@@ -1512,6 +1398,8 @@ end);
 #M  IsGroupHClass( <H> ) 
 ##
  
+#JDM this should be modified
+
 InstallOtherMethod(IsGroupHClass, "for a transformation semigroup", true,[IsGreensHClass and IsGreensClassOfTransSemigp], 0, 
 x-> ImageSetOfTransformation(Representative(x)^2)=ImageSetOfTransformation(Representative(x)));
 
@@ -1521,6 +1409,8 @@ x-> ImageSetOfTransformation(Representative(x)^2)=ImageSetOfTransformation(Repre
 ##
 ##  Green's R-class of Green's H-class
 ##
+
+#JDM this should be modified
 
 InstallOtherMethod(RClassOfHClass, "for a transformation semigroup", true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0, 
 function(hc)
@@ -1539,6 +1429,8 @@ end);
 ## Green's L-class of Green's H-class
 ##
 
+#JDM this should be modified
+
 InstallOtherMethod(LClassOfHClass, "for a transformation semigroup", true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0, 
 function(hc)
 
@@ -1555,6 +1447,8 @@ end);
 ##
 ## Green's D-class of Green's H-class
 ##
+
+#JDM this should be modified
 
 InstallOtherMethod(DClassOfHClass, "for a transformation semigroup", true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0, 
 function(hc)
@@ -1573,49 +1467,17 @@ end);
 ## Green's H-classes of a transformation semigroup
 ##
 
-InstallMethod(GreensHClasses, "for a transformation semigroup", true,[IsTransformationSemigroup], 0, 
+#JDM this should be modified
+
+InstallMethod(GreensHClasses, "for a transformation semigroup",
+[IsTransformationSemigroup],
 x-> Concatenation(List(GreensDClasses(x), GreensHClasses)));
 
 #############################################################################
-##
-##	<#GAPDoc Label="GreensDClassData">
-##	<ManSection>
-##	<Attr Name="GreensDClassData" Arg="S, f"/>
-##	<Description>
-##	if <C>C</C> satisfies <Ref Attr="IsGreensDClass" BookName="ref"/>, then 
-##	<C>GreensDClassData</C> returns an object in the category 
-##	<Ref Filt="IsGreensDClassData"/> with representation 
-##	<Ref Filt="IsGreensDClassDataRep"/> and the following five components:
-##	<List>
-##		<Item><C>rep</C> the representative of the <M>D</M>-class</Item>
-##		<Item><C>R</C> the result of <Ref Func="GreensRClassData"/> with argument 
-##		<C>rep</C></Item>
-##		<Item><C>L</C> the result of <Ref Func="GreensLClassData"/> with argument 
-##		<C>rep</C></Item>
-##		<Item><C>H</C> the result of <Ref Func="GreensHClassData"/> with argument 
-##		<C>rep</C></Item>
-##		<Item> <C>cosets</C> a transversal of right cosets of the 
-##		Schutzenberger group of <C>H</C> in the Schutzenberger group of 
-##		<C>R</C>.</Item>
-##	</List>
-##	Note that only the first three components are displayed. 
-##	Further details can be found in Algorithm O, P, Q, R, S, and T of 
-##	<Cite Key="computing"/>.
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 4, 1, 5, 2, 4 ] ), 
-##  &gt; Transformation( [ 4, 4, 1, 5, 3 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; f:=Transformation( [ 5, 5, 3, 3, 3 ] );;
-##  gap&gt; GreensDClassData(GreensDClassOfElement(S, f));
-##  GreensDClassData( Transformation( [ 5, 5, 3, 3, 3 
-##  ] ), GreensRClassData( Transformation( [ 5, 5, 3, 3, 3 
-##  ] ) ), GreensLClassData( Transformation( [ 5, 5, 3, 3, 3 ] ) ) )
-##	</Example> <!-- greens.tst --> 
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
+#JDM this should be modified
 
-InstallMethod(GreensDClassData,  "data structure of D-class of an element", true, [IsGreensDClass and IsGreensClassOfTransSemigp], 0,
+InstallMethod(GreensDClassData,  "data structure of D-class of an element",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
 function(class)
 local L, R, H, cosets, data, schutz, rep;
 
@@ -1637,9 +1499,10 @@ return data;
 end);
 
 ######################
+#JDM this should be modified
 
 InstallOtherMethod(GreensDClassData,  "data structure of D-class of an element", 
-true, [IsGreensDClass and IsGreensClassOfTransSemigp, IsGreensLClassData], 0,
+[IsGreensDClass and IsGreensClassOfTransSemigp, IsGreensLClassData],
 function(class, L)
 local R, H, cosets, data, schutz, rep;
 
@@ -1665,7 +1528,10 @@ end);
 ##  returns the size of <DClassData>, by dividing |G_L|*|G_R| by |G_H|.
 ##  
 
-InstallOtherMethod(Size,  "size of D-class from data structure", true, [IsGreensDClassData], 0,
+#JDM this should be modified
+
+InstallOtherMethod(Size,  "size of D-class from data structure", 
+[IsGreensDClassData],
 function(data)
 return Size(data!.H!.schutz)^-1*Size(data!.R)*Size(data!.L);
 end);
@@ -1680,7 +1546,7 @@ end);
 ## 
 
 InstallOtherMethod(AsSSortedList, "elements of D-class from data structure", 
-true, [IsGreensDClassData], 0,
+[IsGreensDClassData],
 function(D)
 local c, e, m, elts, cosets, mults, L, new;
 
@@ -1714,8 +1580,10 @@ end) ;
 ##	tests membership in a D-class
 ##
 
-InstallOtherMethod( \in, "membership test for an D-class", true, 
-[IsTransformation, IsGreensDClassData], 0,
+#JDM this should be reviewed
+
+InstallOtherMethod( \in, "membership test for an D-class",
+[IsTransformation, IsGreensDClassData],
 function(x,D)
 local i, c, rep, ker, img, quo, Rimages, Rmults, Lkers, Lmults, Lschutz, cosets;
 
@@ -1774,7 +1642,8 @@ end);
 ##  checks if <Dclassdata> is a regular D-class
 ##
 
-InstallOtherMethod(IsRegularDClass, "for a Green's D-class of a transformation semigroup", true, [IsGreensDClass and IsGreensClassOfTransSemigp], 0, 
+InstallOtherMethod(IsRegularDClass, "for a Green's D-class of a transformation semigroup", 
+[IsGreensDClass and IsGreensClassOfTransSemigp], 
 x-> IsRegularTransformation(ParentAttr(x), Representative(x)));
 
 #############################################################################
@@ -1789,9 +1658,10 @@ x-> IsRegularTransformation(ParentAttr(x), Representative(x)));
 ##	JDM check which attempt given below is quicker :)
 ##	JDM include IsRegularDClass in this calculation, to stop 
 ##	JDM wasting lots of time calculating that there are no idempotents
-##
 
-InstallOtherMethod( Idempotents, "for GreensDClassData", true, [IsGreensDClassData], 0,
+#JDM this should be reviewed
+
+InstallOtherMethod( Idempotents, "for GreensDClassData", [IsGreensDClassData],
 function(D)
  # first attempt
 local idempotent, ker, img, idempots, Rimages, Lkers, idem;
@@ -1831,11 +1701,14 @@ end) ;
 ##
 ##  expands all the R-classes of a D-class
 ##
+
+
 ##  JDM if all the R-classes are known then couldn't we just test which 
 ##  JDM representatives of those were in our D-class?
-##
+##  JDM the following should be reviewed!
 
-InstallOtherMethod(GreensRClasses, "for a GreensDClass of a transformation semigroup", true, [IsGreensDClass], 0, 
+InstallOtherMethod(GreensRClasses, "for a GreensDClass of a transformation semigroup", 
+[IsGreensDClass],
 function(D)
 local M, x, l, c, d, classes, data, class, grp, sch, strongorb, perms, cos;
 
@@ -1860,7 +1733,8 @@ for l in data!.L!.invrelts do
 	# loop over cosets.
 	for c in cos do
 		class:=GreensRClassOfElement(M, d*c); 
-		SetGreensRClassData(class, RClassData(rec( rep:=d*c, strongorb:=strongorb, perms:=perms, schutz:=grp )));
+		SetGreensRClassData(class, RClassData(rec( rep:=d*c, strongorb:=strongorb, 
+		 perms:=perms, schutz:=grp )));
 		SetDClassOfRClass(class, D);
 		Add(classes, class);
 	od;
@@ -1877,8 +1751,10 @@ end);
 ##  
 ##  finds all Green's D-classes of a transformation semigroup.
 ##
+##  JDM the following should be reviewed!
 
-InstallMethod(GreensDClasses, "for a transformation semigroup", true, [IsTransformationSemigroup], 0,
+InstallMethod(GreensDClasses, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
 function(X)
 local classes, reps, class, repset;
 
@@ -1904,7 +1780,8 @@ end) ;
 ##  all L-classes of Green's D-class <dclass>.
 ##
 
-InstallOtherMethod(GreensLClasses, "for transformation semigroups", true,[IsGreensDClass], 0,
+InstallOtherMethod(GreensLClasses, "for transformation semigroups",
+[IsGreensDClass],
 function(dclass)
 local M, x, c, m, classes, gens, rep, data, D, class;
 
@@ -1934,7 +1811,6 @@ od;
 
 # return the list of L classes.
 return classes;
-
 end);
 
 #############################################################################
@@ -1943,13 +1819,16 @@ end);
 ##	
 ##	all H-classes of Green's D-class <dclass>.
 ##
+
+##  JDM the following should be reviewed!
+
 # JDM this will only work if the representatives of D-classes are all
 # JDM representatives of R-classes also.
 # JDM why L? check which is faster
 # JDM this ought also to account for what has already been calculated. I.e. 
 # JDM if the GreensHClasses of GreensRClasses are already known then use them!
 
-InstallOtherMethod(GreensHClasses, "for D-class", true, [IsGreensDClass], 0, 
+InstallOtherMethod(GreensHClasses, "for a GreensDClass", [IsGreensDClass],
 function(x)
 if HasIsCommutative(ParentAttr(x)) and IsCommutative(ParentAttr(x)) then 
 	SetIsGreensHClass(x, true);
@@ -1962,19 +1841,13 @@ end);
 #x-> Concatenation(List(GreensRClasses(x), GreensHClasses)));
 
 #############################################################################
-
-			########################
-			##										##
-			## Global functions		##
-			##										##
-			########################
-
+## Global functions
 #############################################################################
 
-###########################################################################
+##  JDM the following should be reviewed!
 
-InstallOtherMethod( Idempotents, "for a transformation semigroup", true, 
-[IsTransformationSemigroup], 0,
+InstallOtherMethod( Idempotents, "for a transformation semigroup", 
+[IsTransformationSemigroup],
 function(M)
 local idempotent, pt, ker, img, kers, imgs, i, n, idm, one, x;
 
@@ -2013,6 +1886,8 @@ return Set(idm);
 end);
 
 #####################
+
+##  JDM the following should be reviewed!
 
 InstallOtherMethod(Idempotents, "for a trans. semigroup and pos. int.", 
 [IsTransformationSemigroup, IsPosInt],
@@ -2063,6 +1938,8 @@ end);
 #F	Algorithm V.
 ## 
 
+##  JDM the following should be reviewed!
+
 InstallOtherMethod(Size, "for a transformation semigroup", 
 [IsTransformationSemigroup],
 function(M)
@@ -2079,10 +1956,13 @@ end) ;
 ##  of the element sets of its R classes. 
 ##
 
+##  JDM the following should be reviewed!
+
 #JDM elts:=Set(Concatentation(List(GreensRClasses(M), Enumerator))); 
 #JDM how does GreensRClass known Enumerator before anything is invoked??
 
-InstallOtherMethod(AsSSortedList, "for a transformation semigroup", true, [IsTransformationSemigroup], 0,
+InstallOtherMethod(AsSSortedList, "for a transformation semigroup",
+[IsTransformationSemigroup],
 function(M)
 local elts, rrel;
 
@@ -2104,8 +1984,10 @@ end);
 ##  Algorithm X.
 ##
 
-InstallMethod(\in, "for a transformation semigroup", true,
-[IsObject, IsTransformationSemigroup], 0,
+##  JDM the following should be reviewed!
+
+InstallMethod(\in, "for a transformation semigroup", 
+[IsObject, IsTransformationSemigroup],
 function(x, M)
 local i, j, k, pos, R, ker, kers, rrel;
 
@@ -2158,30 +2040,15 @@ end);
 
 #############################################################################
 
-InstallMethod(SchutzenbergerGroup, "for GreensData", true, 
-[IsGreensData], 0, x-> x!.schutz );
+InstallMethod(SchutzenbergerGroup, "for GreensData",
+[IsGreensData], x-> x!.schutz );
 
-InstallOtherMethod(SchutzenbergerGroup, "for GreensData", true, 
-[IsGreensClass], 0, x-> GreensData(x)!.schutz );
+InstallOtherMethod(SchutzenbergerGroup, "for GreensClass",
+[IsGreensClass], x-> GreensData(x)!.schutz );
 
 
 #############################################################################
-##
-##	<#GAPDoc Label="PartialOrderOfDClasses">
-##	<ManSection>
-##	<Attr Name="PartialOrderOfDClasses" Arg="S"/>
-##	<Description>
-##	returns the partial order of the <C>D</C>-classes of <C>S</C> as a directed 
-##	graph in <Package>GRAPE</Package> using the command 
-##	<Display>
-##	Graph(Group(()), [1..Length(GreensDClasses(S))], OnPoints, function(x,y)
-##	return y in poset[x]; end, true); ;
-##	</Display>
-##	where <C>y</C> in <C>poset[x]</C> if and only if 
-##	<M>S^1yS^1\subseteq S^1 xS^1</M>.
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
+##  JDM the following should be reviewed!
 
 InstallMethod(PartialOrderOfDClasses, "for a generic semigroup", true, [IsSemigroup], 
 function(M)

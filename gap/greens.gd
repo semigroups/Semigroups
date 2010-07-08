@@ -361,10 +361,7 @@ DeclareOperation("StrongOrbitOfImage", [IsTransformationSemigroup, IsTransformat
 
 DeclareAttribute("StrongOrbitsOfImages", IsTransformationSemigroup, "mutable");
 
-DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
-#DeclareGlobalFunction("ForwardOrbitOfImage");
-#DeclareGlobalFunction("ForwardOrbitOfImageNC");
-DeclareProperty("IsOrbitOfImage", IsOrbit);
+
 
 
 #############################################################################
@@ -739,3 +736,21 @@ DeclareAttribute("PartialOrderOfDClasses", IsSemigroup, "mutable");
 
 #############################################################################
 #############################################################################
+# new for 3.2!
+
+DeclareGlobalFunction("PermLeftQuoTransformationNC");
+DeclareGlobalFunction("MappingPermSetSetNC");
+
+DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
+DeclareGlobalFunction("ForwardOrbitOfImage");
+DeclareGlobalFunction("ForwardOrbitOfImageNC");
+
+DeclareGlobalFunction("CreateSchreierTreeOfSCC");
+DeclareGlobalFunction("TraceSchreierTreeOfSCCForward");
+DeclareGlobalFunction("MultipliersOfSCCOfOrbit");
+DeclareGlobalFunction("SchutzenbergerGroupOfSCCOfOrbit");
+DeclareGlobalFunction("IsInSCCOfOrbitNC");
+DeclareGlobalFunction("IsInSCCOfOrbit");
+DeclareGlobalFunction("IsInOrbit");
+
+DeclareGlobalFunction("IteratorOfRClassReps");

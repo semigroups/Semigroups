@@ -17,6 +17,12 @@
 
 ##  JDM install methods for partial transformations, partial bijections
 
+
+# new for 3.2!
+#this is not really an NC, just a more efficient version of the library method 
+#and its a function, not a method for an operation.
+DeclareGlobalFunction("KernelOfTransformationNC"); 
+
 ###########################################################################
 ##
 ##  <#GAPDoc Label="IsRegularTransformation">
