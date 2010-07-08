@@ -20,6 +20,32 @@
 # functions but isn't great.
 
 ###########################################################################
+# JDM the following should be added to the library
+# JDM new for 3.2!
+
+InstallMethod(\=, [IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup], 
+function(r1, r2)
+return UnderlyingSemigroupOfReesZeroMatrixSemigroup(r1) = 
+ UnderlyingSemigroupOfReesZeroMatrixSemigroup(r2) and 
+  SandwichMatrixOfReesZeroMatrixSemigroup(r1) = 
+   SandwichMatrixOfReesZeroMatrixSemigroup(r2);
+end);
+
+###########################################################################
+# JDM new for 3.2!
+
+InstallMethod(IsSubset, [IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup], 
+function(r1, r2)
+
+if r1=r2 then 
+	return true;
+else
+  Info(InfoWarning, 1, "not yet implemented!"); #JDM
+  return fail;
+fi;
+end);
+
+###########################################################################
 
 InstallGlobalFunction( SingularSemigroup, 
 function(n)

@@ -11,45 +11,6 @@
 ##
 
 ###########################################################################
-##
-##	<#GAPDoc Label="SemigroupHomomorphismByFunction">
-##	<ManSection><Heading>SemigroupHomomorphismByFunction</Heading>
-##	<Oper Name="SemigroupHomomorphismByFunction" Arg="S, T, func"/>
-##	<Oper Name="SemigroupHomomorphismByFunctionNC" Arg="S, T, func"/>
-##	<Description>
-##	returns a semigroup homomorphism with representation
-##	<C>IsSemigroupHomomorphismByFunctionRep</C> from the semigroup <C>S</C> to 
-##	the semigroup <C>T</C> defined by the function <C>func</C>. <P/>
-##
-##	<C>SemigroupHomomorphismByFunction</C> will find an isomorphism from 
-##	<C>S</C> to a finitely presented semigroup or monoid (using 
-##	<Ref Oper="IsomorphismFpSemigroup"/> or <Ref Oper="IsomorphismFpMonoid"/>) 
-##	and then check that the list of values under <C>func</C> of the generators 
-##	of <C>S</C> satisfy the relations of this presentation. <P/>
-##
-##	<C>SemigroupHomomorphismByFunctionNC</C> does not check that <C>func</C> 
-##	defines a homomorphism and, in this case <C>S</C> and <C>T</C> 
-##	can be semigroups, <M>D</M>-classes, <M>H</M>-classes or any combination of 
-##	these.<P/> 
-##
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 1, 4, 3, 5, 2 ] ), 
-##  &gt; Transformation( [ 2, 3, 1, 1, 2 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; gens:=[ Transformation( [ 1, 5, 1, 2, 1 ] ), 
-##  &gt; Transformation( [ 5, 1, 4, 3, 2 ] ) ];;
-##  gap&gt; T:=Semigroup(gens);;
-##  gap&gt; idem:=Random(Idempotents(T));;
-##  gap&gt; hom:=SemigroupHomomorphismByFunction(S, T, x-&gt; idem);
-##  SemigroupHomomorphism ( &lt;semigroup with 2 generators&gt;-&gt;&lt;semigroup with 
-##  2 generators&gt;)
-##  gap&gt; hom:=SemigroupHomomorphismByFunctionNC(S, T, x-&gt; idem);
-##  SemigroupHomomorphism ( &lt;semigroup with 2 generators&gt;-&gt;&lt;semigroup with 
-##  2 generators&gt;)
-##	</Example> <!-- semihomo.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
 InstallMethod(SemigroupHomomorphismByFunction, "for a semigroup, semigroup, function", true, 
 [IsSemigroup, IsSemigroup, IsFunction], 0, 
@@ -257,6 +218,17 @@ end;
 return SemigroupHomomorphismByFunctionNC(Source(hom1), Range(hom2), func);
 
 end);
+
+
+#JDM new for 3.2!
+
+InstallMethod(\*, "for semi. homo. by func., semi. homo. by func.", 
+[IsSemigroupHomomorphism and IsSemigroupHomomorphismByFunctionRep, 
+IsSemigroupHomomorphism and IsSemigroupHomomorphismByFunctionRep],
+function(hom1, hom2)
+return CompositionMapping2(hom2, hom1);
+end);
+
 
 ################
 # this corresponds to hom1*hom2
