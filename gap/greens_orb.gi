@@ -19,6 +19,24 @@
 
 # JDM what should be done about the above comment?
 
+HashTableForKernels:=function(ker)
+local hf, ht;
+hf:=function ( l, hashlen )
+    local  v, i;
+    v := 0;
+    for i  in [ 1 .. Length( l ) ]  do
+        v := (v * 101 + ORB_HashFunctionForPlainFlatList( l[i], hashlen )) mod hashlen;
+    od;
+    return v + 1;
+end;
+
+ht := HTCreate(ker, rec( hf := hf, hfd := 1001, treehashsize := 1001 ));
+HTAdd(ht, ker, 1);
+
+return ht;
+end;
+
+
 #############################################################################
 
 InstallMethod(OrbitsOfImages, "for a trans. semigroup",
@@ -111,7 +129,7 @@ end);
 
 InstallGlobalFunction(SchutzenbergerGroupOfSCCOfOrbit,
 function(gens, o, f, k) 
-local p, t, g,  bound, graph, i, j, scc;
+local p, t, g, bound, graph, i, j, scc;
 
 scc:=o!.scc[k];
 
@@ -122,6 +140,8 @@ else
 fi;
 
 g:=Group(());
+#g:=Orb([()], (), OnRight, rec(log:=true));
+#Enumerate(g);
 p:=o!.perms;
 t:=o!.truth;
 graph:=OrbitGraph(o);
@@ -131,6 +151,11 @@ for i in scc do
 		if IsBound(graph[i][j]) and t[k][graph[i][j]] then
 			g:=ClosureGroup(g, PermList(PermLeftQuoTransformationNC_C(f, f/p[i] *
 			 (gens[j]*p[graph[i][j]]))));
+			#new:=PermList(PermLeftQuoTransformationNC_C(f, f/p[i] *
+			# (gens[j]*p[graph[i][j]])));
+			#if not new in g then 
+			#  AddGeneratorsToOrbit(g, [new]);
+			#fi;
 		fi;
 		if Size(g)>=bound then 
 			break;
@@ -141,6 +166,12 @@ for i in scc do
 	fi;
 od;
 
+#ht:=HTCreate(());
+#for i in g do 
+#  HTAdd(ht, i, true);
+#od;
+
+#return ht;
 return g;
 end);
 
@@ -191,8 +222,11 @@ o!.reps:=List([1..Length(scc)], x-> []);
 Add(o!.reps[1], f);
 
 #kernels of representatives of R-classes with image belonging in scc[i]
-o!.kernels:=List([1..Length(scc)], x-> []);
-Add(o!.kernels[1], KernelOfTransformationNC(f));
+#o!.kernels:=List([1..Length(scc)], x-> []); #probably this is not necessary!
+#Add(o!.kernels[1], KernelOfTransformationNC(f)); 
+
+o!.kernels_ht:=[];
+Add(o!.kernels_ht, HashTableForKernels(KernelOfTransformationNC(f)));
 
 #calculate the multipliers and schutzenberger groups for the scc containing
 #img. 
@@ -245,26 +279,19 @@ end);
 
 InstallGlobalFunction(IsInSCCOfOrbitNC,
 function(f, o, i)
-local stop, k, ker, n, schutz, reps, kernels, m;
+local val, schutz, reps;
 
-stop:=false;
-k:=0;
-ker:=KernelOfTransformationNC(f);
-m:=Length(ker);
+val:=HTValue(o!.kernels_ht[i], KernelOfTransformationNC(f));
+
+if val=fail then 
+  return false;
+fi;
+
 schutz:=o!.schutz[i];
-reps:=o!.reps[i]; 
-n:=Length(reps);
-kernels:=o!.kernels[i];
+reps:=o!.reps[i];
 
-repeat
-  k:=k+1;
-  if ker=kernels[k] then #probably don't do this!
-    stop:=PermList(PermLeftQuoTransformationNC_C(reps[k], f))
+return PermList(PermLeftQuoTransformationNC_C(reps[val], f))
      in schutz;
-  fi;
-until stop or k=n;
-
-return stop;
 end);
 
 #############################################################################
@@ -368,13 +395,17 @@ while i<Length(o) do
 			  O[j][k]!.perms:=MultipliersOfSCCOfOrbit(gens, O[j][k], m);
 			  O[j][k]!.schutz[m]:=SchutzenbergerGroupOfSCCOfOrbit(gens, O[j][k], 
 			   o[i] * O[j][k]!.perms[l], m);;
+			  
 			fi;
 		
 			x := o[i] * O[j][k]!.perms[l];
 			if O[j][k]!.reps[m]=[] or not IsInSCCOfOrbitNC(x, O[j][k], m) then
-				#HTAdd( O[j][k]!.reps[m], x, true );
 				Add(O[j][k]!.reps[m], x);
-				Add( O[j][k]!.kernels[m], KernelOfTransformationNC( x ) );
+				if IsBound(O[j][k]!.kernels_ht[m]) then 
+			    HTAdd(O[j][k]!.kernels_ht[m], KernelOfTransformationNC( x ), Length(O[j][k]!.reps[m]));
+			  else
+			    O[j][k]!.kernels_ht[m]:=HashTableForKernels(KernelOfTransformationNC( x ));
+			  fi;
 			  for y in gens do
 		      y:=y*x; #keep track of what generators are applied here!
 		      if HTValue(ht, y)=fail then  
@@ -417,10 +448,12 @@ out:=[[],[],[],[]];
 for i in c do 
   for j in i do 
     for k in [1..Length(j!.scc)] do 
-      Add(out[1], j{j!.scc[k]});
-      Add(out[2], j!.perms{j!.scc[k]});
-      Add(out[3], j!.schutz[k]);
-      Add(out[4], j!.scc[k]);
+      if IsBound(j!.reps[k][1]) then
+				Add(out[1], j{j!.scc[k]});
+				Add(out[2], j!.perms{j!.scc[k]});
+				Add(out[3], j!.schutz[k]);
+				Add(out[4], j!.scc[k]);
+			fi;
     od;
   od;
 od;
@@ -436,6 +469,7 @@ for o in Concatenation(c) do
   for j in [1..Length(o!.scc)] do
     if IsBound(o!.schutz[j]) and IsBound(o!.reps[j]) and IsBound(o!.scc[j]) then 
       i:=i+Size(o!.schutz[j])*Length(o!.reps[j])*Length(o!.scc[j]);
+      #i:=i+o!.schutz[j]!.nr*Length(o!.reps[j])*Length(o!.scc[j]);
     fi;
   od;
 od;

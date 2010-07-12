@@ -189,7 +189,8 @@ end );
 InstallMethod( ViewObj, "for object in `IsGreensLClassData'",
 [ IsGreensLClassData and IsGreensLClassDataRep],
 function( obj )
-Print( "GreensLClassData( ", obj!.rep, ", ", obj!.strongorb,", ", obj!.relts,", ", obj!.invrelts,", ", obj!.schutz, " )" );
+Print( "GreensLClassData( ", obj!.rep, ", ", obj!.strongorb,", ", obj!.relts,
+", ", obj!.invrelts,", ", obj!.schutz, " )" );
 end );
 
 #############################################################################

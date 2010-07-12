@@ -10,10 +10,6 @@
 ## $Id$
 ##
 
-
-##  JDM install methods for partial transformations, partial bijections
-
-
 #############################################################################
 # new for 3.2!
 
@@ -38,8 +34,8 @@ end);
 #############################################################################
 # new for 3.2!
 
-InstallMethod(\*, "JDM", [IsTransformation and IsTransformationRep, IsPerm],
-10,
+InstallMethod(\*, "for a transformation and a permutation", 
+[IsTransformation and IsTransformationRep, IsPerm], 10,
 function(x, y)
 local c;
 c:=OnTuples(x![1], y);
@@ -50,7 +46,8 @@ end);
 #############################################################################
 # new for 3.2!
 
-InstallMethod(\*, "JDM", [IsTransformation and IsTransformationRep, 
+InstallMethod(\*, "for a transformation and transformation", 
+[IsTransformation and IsTransformationRep, 
 IsTransformation and IsTransformationRep], 10,
 function(x, y)
 local  a, b, c;
@@ -64,10 +61,9 @@ end);
 
 ###########################################################################
 
-InstallMethod(IsRegularTransformation, "for a transformation", true, 
-[IsTransformationSemigroup, IsTransformation], 0,
+InstallMethod(IsRegularTransformation, "for a transformation", 
+[IsTransformationSemigroup, IsTransformation], 
 function(M, x)
-
 local r, orb, gens, s, p, n;
 
 if HasIsRegularSemigroup(M) and IsRegularSemigroup(M) then 
