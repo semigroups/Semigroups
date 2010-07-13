@@ -739,6 +739,7 @@ DeclareAttribute("PartialOrderOfDClasses", IsSemigroup, "mutable");
 # new for 3.2!
 
 DeclareGlobalFunction("PermLeftQuoTransformationNC");
+DeclareGlobalFunction("MappingPermListListNC");
 DeclareGlobalFunction("MappingPermSetSetNC");
 
 DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");

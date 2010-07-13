@@ -13,12 +13,18 @@
 #############################################################################
 # new for 3.2!
 
+#gap> MakeReadWriteGVar("Transformation");
+#gap> Transformation := function(t) Print("Blubb\n"); end;
+#function( t ) ... end
+#gap> MakeReadOnlyGVar("Transformation");
+
 InstallGlobalFunction(KernelOfTransformationNC, 
 function(f)
-local  ker, imgs, i, dom;
+local  ker, imgs, i;
 
 imgs := f![1];
-ker:=[];
+ker:=EmptyPlist(Length(imgs));
+#ker:=[];
 
 for i in [1..Length(imgs)] do
   if IsBound(ker[imgs[i]]) then 
@@ -34,7 +40,7 @@ end);
 #############################################################################
 # new for 3.2!
 
-InstallMethod(\*, "for a transformation and a permutation", 
+InstallMethod(\*, "for a transformation and a permutation (monoid pkg version)", 
 [IsTransformation and IsTransformationRep, IsPerm], 10,
 function(x, y)
 local c;
@@ -46,7 +52,7 @@ end);
 #############################################################################
 # new for 3.2!
 
-InstallMethod(\*, "for a transformation and transformation", 
+InstallMethod(\*, "for a transformation and transformation (monoid pkg version)", 
 [IsTransformation and IsTransformationRep, 
 IsTransformation and IsTransformationRep], 10,
 function(x, y)

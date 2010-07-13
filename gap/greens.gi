@@ -51,6 +51,21 @@ end);
 #############################################################################
 # new for 3.2!
 
+if not IsBound(PermLeftQuoTransformationNC_C) then 
+  PermLeftQuoTransformationNC_C:=PermLeftQuoTransformationNC;
+fi;
+
+#############################################################################
+# new for 3.2!
+
+if not IsBound(MappingPermListListNC_C) then 
+  MappingPermListListNC_C:=MappingPermListListNC;
+  Info(InfoWarning, 1, "Warning: orb is not compiled");
+fi;
+
+#############################################################################
+# new for 3.2!
+
 InstallGlobalFunction(PermLeftQuoTransformationNC,
 function ( t1, t2 )
 local  pl, i, deg;
@@ -60,8 +75,20 @@ pl := [ 1 .. deg ];
 for i  in [ 1 .. deg ]  do
     pl[t1![1][i]] := t2![1][i];
 od;
-return PermList( pl );
+return pl;
 end);
+
+#############################################################################
+# new for 3.2!
+
+InstallGlobalFunction(MappingPermListListNC, 
+function ( src, dst )
+
+src := Concatenation( src, Difference( [ 1 .. Maximum( src ) ], src ) );
+dst := Concatenation( dst, Difference( [ 1 .. Maximum( dst ) ], dst ) );
+return ListPerm(LeftQuotient( PermList( src ), PermList( dst ) ));
+end);
+
 
 #############################################################################
 
