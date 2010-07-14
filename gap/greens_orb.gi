@@ -20,6 +20,42 @@
 # JDM what should be done about the above comment?
 
 #############################################################################
+
+NewSize:=function(c)
+local i, o, j;
+i:=0;
+
+for o in Concatenation(Compacted(c)) do 
+  for j in [1..Length(o!.scc)] do
+    if IsBound(o!.schutz[j]) and IsBound(o!.reps[j]) and IsBound(o!.scc[j]) then 
+      i:=i+Size(o!.schutz[j][2])*Sum(List(o!.reps[j]), Length)*Length(o!.scc[j]);
+    fi;
+  od;
+od;
+
+return i;
+end;
+
+#############################################################################
+
+NrNewRClasses:=function(c)
+local i, j, k, l, m;
+m:=[];
+
+for i in c do
+  for j in i do 
+    for k in j!.reps do 
+      for l in k do 
+        Add(m, Length(l));
+      od;
+    od;
+  od;
+od;
+
+return Sum(m);
+end;
+
+#############################################################################
 # the following should move to orbits_orb.gi..
 
 HashTableForKernels:=function(ker)
@@ -173,31 +209,33 @@ end;
 # <j> is the index of the scc we are computing the multipliers for!
 
 InstallGlobalFunction(MultipliersOfSCCOfOrbit,
-function(arg)
-local i, p, f, scc, schreier, o, j, gens;
+#function(arg)
+function(gens, o, j)
+local i, p, f, scc, schreier;
 
-o:=arg[1]; j:=arg[2]; gens:=o!.gens;
+#o:=arg[1]; j:=arg[2]; 
+#gens:=o!.gens;
 
-if Length(arg)=3 then 
-  schreier:=arg[3].schreier;
-else
-  schreier:=false;
-fi;
+#if Length(arg)=3 then 
+#  schreier:=arg[3].schreier;
+#else
+#  schreier:=false;
+#fi;
 
 p:=o!.perms;
 scc:=o!.scc[j];
 
-if schreier then 
-	for i in scc do
-		f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
-		p[i]:=PermList(MappingPermListListNC_C(o[i], OnTuples(o[i], f)));
-	od;
-else
+#if schreier then 
+#	for i in scc do
+#		f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
+#		p[i]:=PermList(MappingPermListList(o[i], OnTuples(o[i], f)));
+#	od;
+#else
 	for i in scc do
 		f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i)); 
-		p[i]:=PermList(MappingPermListListNC_C(OnTuples(o[scc[1]], f), o[scc[1]]));
+		p[i]:=MappingPermListList(OnTuples(o[scc[1]], f), o[scc[1]]);
 	od;
-fi;
+#fi;
 
 return p;
 end);
@@ -211,10 +249,10 @@ end);
 #k is the index of scc containing index of image of f
 
 InstallGlobalFunction(SchutzenbergerGroupOfSCCOfOrbit,
-function(o, f, k) 
-local p, t, g, bound, graph, i, j, scc, is_sym, gens;
+function(gens, o, f, k) 
+local p, t, g, bound, graph, i, j, scc, is_sym;
 
-gens:=o!.gens;
+#gens:=o!.gens;
 scc:=o!.scc[k];
 
 if Length(o[scc[1]])<1000 then 
@@ -234,8 +272,8 @@ is_sym:=false;
 for i in scc do 
 	for j in [1..Length(gens)] do 
 		if IsBound(graph[i][j]) and t[k][graph[i][j]] then
-  		g:=ClosureGroup(g, PermList(PermLeftQuoTransformationNC_C(f, f/p[i] *
-  		 (gens[j]*p[graph[i][j]]))));
+  		g:=ClosureGroup(g, PermLeftQuoTransformationNC(f, f/p[i] *
+  		 (gens[j]*p[graph[i][j]])));
 		fi; #keep track of schreier gens here!
 		if Size(g)>=bound then 
 		  is_sym:=true;
@@ -257,20 +295,20 @@ end);
 #############################################################################
 
 InstallGlobalFunction(ForwardOrbitOfImageNC, 
-function(arg)
-local img, o, scc, t, i, gens, g, bound, graph, j, schutz, schreier, s, f;
-
+#function(arg)
+function(s, f)
+local img, o, scc, t, i, gens, g, bound, graph, j, schutz, schreier;
 Info(InfoWarning, 2, "Warning: calling this function more than once with the ",
 " same arguments will repeatedly add the returned value to OrbitsOfImages. ",
 "Use ForwardOrbitOfImage instead.");
 
-s:=arg[1]; f:=arg[2];
+#s:=arg[1]; f:=arg[2];
 
-if Length(arg)=3 then 
-  schreier:=arg[3].schreier;
-else 
-  schreier:=false;
-fi;
+#if Length(arg)=3 then 
+#  schreier:=arg[3].schreier;
+#else 
+#  schreier:=false;
+#fi;
 
 if IsMonoid(s) then 
 	gens:=GeneratorsOfMonoid(s);
@@ -278,7 +316,8 @@ else
 	gens:=GeneratorsOfSemigroup(s);
 fi;
 
-img:=Set(f![1]);
+#img:=Set(f![1]);
+img:=ImageSetOfTransformation(f);
 o:=Orb(s, img, OnSets, rec(
         treehashsize:=NextPrimeInt(Minimum(100000, 
          3*Binomial(DegreeOfTransformationSemigroup(s), Length(img)))), 
@@ -307,15 +346,15 @@ o!.trees[1]:=CreateSchreierTreeOfSCC(o,1);
 o!.reps:=List([1..Length(scc)], x-> []);
 Add(o!.reps[1], [f]);
 
-if schreier then 
-	o!.words:=List([1..Length(scc)], x-> []);
-	o!.reverse:=EmptyPlist(Length(scc));
-	o!.reverse[1]:=CreateReverseSchreierTreeOfSCC(o,1);
-fi;
+#if schreier then 
+#	o!.words:=List([1..Length(scc)], x-> []);
+#	o!.reverse:=EmptyPlist(Length(scc));
+#	o!.reverse[1]:=CreateReverseSchreierTreeOfSCC(o,1);
+#fi;
 
 #kernels of representatives of R-classes with image belonging in scc[i]
 o!.kernels_ht:=[];
-Add(o!.kernels_ht, HashTableForKernels(KernelOfTransformationNC(f)));
+Add(o!.kernels_ht, HashTableForKernels(KernelOfTransformation(f)));
 
 #calculate the multipliers and schutzenberger groups for the scc containing
 #img. 
@@ -323,11 +362,12 @@ scc:=scc[1];
 
 #multipliers of scc containing the image of f
 o!.perms:=EmptyPlist(Length(o));
-o!.perms:=MultipliersOfSCCOfOrbit(o, 1, rec(schreier:=schreier));
+#o!.perms:=MultipliersOfSCCOfOrbit(o, 1, rec(schreier:=schreier));
+o!.perms:=MultipliersOfSCCOfOrbit(gens, o, 1);
 
 #schutzenberger group corresponding to scc[1]
 o!.schutz:=EmptyPlist(Length(scc));
-o!.schutz[1]:=SchutzenbergerGroupOfSCCOfOrbit(o, f, 1);
+o!.schutz[1]:=SchutzenbergerGroupOfSCCOfOrbit(gens, o, f, 1);
 
 #OrbitsOfImages is partitioned according to image size of the first element!
 if IsBound(OrbitsOfImages(s)[Length(img)]) then 
@@ -347,7 +387,8 @@ InstallGlobalFunction(ForwardOrbitOfImage,
 function(s, f)
 local img, i;
 
-img:=Set(f![1]);
+#img:=Set(f![1]);
+img:=ImageSetOfTransformation(f);
 
 if IsBound(OrbitsOfImages(s)[Length(img)]) then 
   i:=Position(OrbitsOfImages(s)[Length(img)], x-> img in x);
@@ -373,15 +414,20 @@ end);
 
 InstallGlobalFunction(IteratorOfRClassReps,
 function(arg)
+#function(s)
 local n, one, gens, O, o, i, j, img, k, l, m, x, ht, y, val, reps, 
- schutz, new, kernels_ht, z, schreier, o_words, x_word, words, s;
+ schutz, new, kernels_ht, z, schreier, o_words, x_word, words, s, report, last_report;
 
 s:=arg[1];
 
-if Length(arg)=2 then 
-	schreier:=arg[2].schreier;
+if Length(arg)=2 then
+  if "schreier" in RecNames(arg[2]) then 
+	  schreier:=arg[2].schreier;
+	elif "report" in RecNames(arg[2]) then 
+	  report:=arg[2].report; last_report:=0;
+	fi;
 else 
-	schreier:=false;
+	schreier:=false; report:=false;
 fi;
 
 n := DegreeOfTransformationSemigroup( s );
@@ -405,8 +451,14 @@ i:=0;
 
 while i<Length(o) do 
   i:=i+1;
+  if not report=false and i>last_report+report then 
+    Info(InfoWarning, 1, Length(o), " candidates, ", NewSize(O), " elements, ",
+    NrNewRClasses(O), " R-classes");
+    last_report:=i;
+  fi;
   
-  img := Set(o[i]![1]);
+  #img := Set(o[i]![1]);
+  img:=ImageSetOfTransformation(o[i]);
   j:=Length(img);
   new:=false;
 
@@ -427,11 +479,12 @@ while i<Length(o) do
 		new:=true; x:=o[i]; 
 		
 		if IsTransformationMonoid( s ) or not o[i] = one then
-			ForwardOrbitOfImageNC(s, o[i], rec(schreier:=schreier));
-			if schreier then 
-			  x_word:=o_words[i];
-			  Add(O[j][Length(O[j])]!.words[1], [x_word]);
-			fi;
+			ForwardOrbitOfImageNC(s, o[i]);
+			#ForwardOrbitOfImageNC(s, o[i], rec(schreier:=schreier));
+			#if schreier then 
+			#  x_word:=o_words[i];
+			#  Add(O[j][Length(O[j])]!.words[1], [x_word]);
+			#fi;
 		fi;
 		
 	else #img has been seen before
@@ -440,22 +493,23 @@ while i<Length(o) do
 			m:=PositionProperty(O[j][k]!.truth, x-> x[l]); #the scc containing img
 			reps:=O[j][k]!.reps[m];
 			
-			if schreier then 
-			  words:=O[j][k]!.words[m];
-			fi;
+			#if schreier then 
+			#  words:=O[j][k]!.words[m];
+			#fi;
 			
 			#calculate multipliers and schutz!
 			if not IsBound(O[j][k]!.perms[l]) then #we never considered this scc before!
 			  O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
-			  if schreier then 
-				  O[j][k]!.reverse[m]:=CreateReverseSchreierTreeOfSCC(O[j][k], m);
-				  x_word:=Concatenation(o_words[i], TraceSchreierTreeOfSCCBack(O[j][k], m, l));
-				  words[Length(reps)+1]:=[x_word];
-				fi;
-			  O[j][k]!.perms:=MultipliersOfSCCOfOrbit(O[j][k], m, rec(schreier:=schreier));
+			  #if schreier then 
+				#  O[j][k]!.reverse[m]:=CreateReverseSchreierTreeOfSCC(O[j][k], m);
+				#  x_word:=Concatenation(o_words[i], TraceSchreierTreeOfSCCBack(O[j][k], m, l));
+				#  words[Length(reps)+1]:=[x_word];
+				#fi;
+			  #O[j][k]!.perms:=MultipliersOfSCCOfOrbit(O[j][k], m, rec(schreier:=schreier));
+			  O[j][k]!.perms:=MultipliersOfSCCOfOrbit(gens, O[j][k], m);
 			  x:= o[i] * O[j][k]!.perms[l];
-			  O[j][k]!.schutz[m]:=SchutzenbergerGroupOfSCCOfOrbit(O[j][k], x, m);;
-			  O[j][k]!.kernels_ht[m]:=HashTableForKernels(KernelOfTransformationNC( x ));
+			  O[j][k]!.schutz[m]:=SchutzenbergerGroupOfSCCOfOrbit(gens, O[j][k], x, m);;
+			  O[j][k]!.kernels_ht[m]:=HashTableForKernels(KernelOfTransformation( x ));
 				reps[Length(reps)+1]:=[x]; 
 				new:=true; 
 
@@ -463,29 +517,29 @@ while i<Length(o) do
 				kernels_ht:=O[j][k]!.kernels_ht[m];
 
 				x := o[i] * O[j][k]!.perms[l];
-				val:=HTValue_TreeHash_C(kernels_ht, KernelOfTransformationNC(x));
+				val:=HTValue(kernels_ht, KernelOfTransformation(x));
 				
 				if not val=fail then #kernel seen before
 					schutz:=O[j][k]!.schutz[m][1];
 					if not ForAny(reps[val], y-> schutz=true or 
-					 SiftedPermutation(schutz, PermList(PermLeftQuoTransformationNC_C(y, x)))=()) then 
+					 SiftedPermutation(schutz, PermLeftQuoTransformationNC(y, x))=()) then 
 						reps[val][Length(reps[val])+1]:=x; 
 						new:=true;
-						if schreier then 
-						  x_word:=Concatenation(o_words[i], 
-				  		 TraceSchreierTreeOfSCCBack(O[j][k], m, l));
-				  		words[val][Length(reps[val])]:=x_word;
-						fi;
+						#if schreier then 
+						#  x_word:=Concatenation(o_words[i], 
+				  	#	 TraceSchreierTreeOfSCCBack(O[j][k], m, l));
+				  	#	words[val][Length(reps[val])]:=x_word;
+						#fi;
 						
 					fi;
 				else #new kernel
-					reps[Length(reps)+1]:=[x]; #add Schreier gens here!
-					if schreier then 
-					  x_word:=Concatenation(o_words[i], 
-					   TraceSchreierTreeOfSCCBack(O[j][k], m, l));
-					  words[Length(reps)]:=[x_word];
-					fi;
-					HTAdd(kernels_ht, KernelOfTransformationNC( x ), 
+					reps[Length(reps)+1]:=[x]; 
+					#if schreier then 
+					#  x_word:=Concatenation(o_words[i], 
+					#   TraceSchreierTreeOfSCCBack(O[j][k], m, l));
+					#  words[Length(reps)]:=[x_word];
+					#fi;
+					HTAdd(kernels_ht, KernelOfTransformation( x ), 
 					 Length(reps));
 					new:=true; 
 				fi;
@@ -496,16 +550,16 @@ while i<Length(o) do
 	if new then #install new pts in the orbit
 		for y in [1..Length(gens)] do
 		  z:=gens[y]*x; 
-		  if HTValue_TreeHash_C(ht, z)=fail then  
+		  if HTValue(ht, z)=fail then  
 		    HTAdd(ht, z, true);
 		    o[Length(o)+1]:=z;
-		    if schreier then
-		      if not x_word=fail then  
-		        o_words[Length(o)]:=Concatenation([y], x_word);
-		      else 
-		        o_words[Length(o)]:=[y];
-		      fi;
-		    fi;
+		    #if schreier then
+		    #  if not x_word=fail then  
+		    #   o_words[Length(o)]:=Concatenation([y], x_word);
+		    #  else 
+		    #    o_words[Length(o)]:=[y];
+		    #  fi;
+		    #fi;
 		  fi;
 		od;
 	fi;
@@ -541,24 +595,7 @@ od;
 return true;
 end;
 
-#############################################################################
 
-NrNewRClasses:=function(c)
-local i, j, k, l, m;
-m:=[];
-
-for i in c do
-  for j in i do 
-    for k in j!.reps do 
-      for l in k do 
-        Add(m, Length(l));
-      od;
-    od;
-  od;
-od;
-
-return Sum(m);
-end;
 
 #############################################################################
 
@@ -617,7 +654,7 @@ fi;
 schutz:=o!.schutz[i][1];
 reps:=o!.reps[i][val];
 
-return ForAny(reps, x-> schutz=true or PermList(PermLeftQuoTransformationNC_C(x, f))
+return ForAny(reps, x-> schutz=true or PermLeftQuoTransformationNC(x, f)
      in schutz);
 end);
 
