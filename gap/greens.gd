@@ -754,4 +754,5 @@ DeclareGlobalFunction("IsInOrbit");
 
 DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareInfoClass("InfoMonoidGreens");
-
+DeclareGlobalFunction("GreensRClassRepsNC");
+DeclareProperty("IsIteratorOfRClassReps", IsIterator);

@@ -410,9 +410,173 @@ end);
 # if full info is known...    EnumeratorOfGreensRClasses
 # if full info is known...    GreensRClasses
 
-# actually turn this into an iterator!! add some info statements
+# actually turn this into an iterator!! add some more info statements?
+InstallGlobalFunction(IteratorOfRClassReps, 
+function(arg)
+local s, gens, iter, n, one;
+s:=arg[1];
 
-InstallGlobalFunction(IteratorOfRClassReps,
+if IsTransformationMonoid( s ) then
+	gens := GeneratorsOfMonoid( s );
+else
+	gens := GeneratorsOfSemigroup( s );
+fi;
+
+n := DegreeOfTransformationSemigroup( s );
+one := TransformationNC( [ 1 .. n ] );
+
+iter:=IteratorByFunctions( rec(
+			
+			IsDoneIterator := iter-> iter!.next(iter, false)=fail,
+			
+			NextIterator := iter-> iter!.next(iter, true),
+			
+			ShallowCopy := ReturnFail,
+			
+			gens:=gens,
+			
+			i := 0,
+			
+			s:=s,
+			
+			n := n,
+			
+			one := one,
+			
+			ht:=HTCreate(one),
+			
+			o:=[one],
+
+############################################################################
+
+			next:=function(iter, advance) 
+			local O, o, i, j, img, k, l, m, x, ht, y, val, reps, schutz, new, kernels_ht, 
+			z, schreier, s, report, last_report, one;
+			
+			if iter!.i=Length(iter!.o) then 
+				return fail;
+			fi;
+			
+			if advance then
+			  one:=iter!.one;
+				o:=iter!.o;
+				gens:=iter!.gens;
+				ht:=iter!.ht;
+				s:=iter!.s;
+				
+				if iter!.i=0 then 
+			    HTAdd(ht, one, true);
+				fi;
+				
+				iter!.i:=iter!.i+1;
+				i:=iter!.i;
+				O:=OrbitsOfImages(s);
+				
+				img:=ImageSetOfTransformation(o[i]);
+				j:=Length(img);
+				new:=false;
+				
+				#check if img has been seen before
+				if IsBound(O[j]) then
+					k:=0;
+					repeat
+						k:=k+1;
+						l:=Position(O[j][k], img);
+					until not l=fail or k=Length(O[j]);
+					
+					if l=fail then k:=fail; fi;
+				else 
+					k:=fail;
+				fi;
+			
+				if k = fail then #img has not been seen before
+					new:=true; x:=o[i]; 
+					
+					if IsTransformationMonoid( s ) or not o[i] = one then
+						ForwardOrbitOfImageNC(s, o[i]);
+						#scheier words here!
+					fi;
+					
+				else #img has been seen before
+					if IsTransformationMonoid( s ) or not o[i] = one then
+						
+						m:=PositionProperty(O[j][k]!.truth, x-> x[l]); #the scc containing img
+						reps:=O[j][k]!.reps[m];
+						
+						#scheier words here!
+						
+						#calculate multipliers and schutz!
+						if not IsBound(O[j][k]!.perms[l]) then #we never considered this scc before!
+							O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
+							
+							#schreier words here
+							
+							O[j][k]!.perms:=MultipliersOfSCCOfOrbit(gens, O[j][k], m);
+							x:= o[i] * O[j][k]!.perms[l];
+							O[j][k]!.schutz[m]:=SchutzenbergerGroupOfSCCOfOrbit(gens, O[j][k], x, m);;
+							O[j][k]!.kernels_ht[m]:=HashTableForKernels(KernelOfTransformation( x ));
+							reps[Length(reps)+1]:=[x]; 
+							new:=true; 
+			
+						else
+							kernels_ht:=O[j][k]!.kernels_ht[m];
+			
+							x := o[i] * O[j][k]!.perms[l];
+							val:=HTValue(kernels_ht, KernelOfTransformation(x));
+							
+							if not val=fail then #kernel seen before
+								schutz:=O[j][k]!.schutz[m][1];
+								if not ForAny(reps[val], y-> schutz=true or 
+								 SiftedPermutation(schutz, PermLeftQuoTransformationNC(y, x))=()) then 
+									reps[val][Length(reps[val])+1]:=x; 
+									new:=true;
+									#schreier words here
+								fi;
+							else #new kernel
+								reps[Length(reps)+1]:=[x]; 
+								#schreier words here
+								HTAdd(kernels_ht, KernelOfTransformation( x ), 
+								 Length(reps));
+								new:=true; 
+							fi;
+						fi;
+					fi;
+				fi;
+			
+				if new then #install new pts in the orbit
+					for y in [1..Length(gens)] do
+						z:=gens[y]*x; 
+						if HTValue(ht, z)=fail then  
+							HTAdd(ht, z, true);
+							o[Length(o)+1]:=z;
+							#schreier words here
+						fi;
+					od;
+				fi;
+			
+				return x;
+			fi;
+			return true;
+			end));
+
+SetIsIteratorOfRClassReps(iter, true);
+
+return iter;
+end);
+
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfRClassReps], 
+function(iter)
+
+Print( "<iterator of R-class representatives, ", Length(iter!.o), " candidates, ", 
+ NewSize(OrbitsOfImages(iter!.s)), " elements, ", NrNewRClasses(OrbitsOfImages(iter!.s)), " R-classes>");
+return;
+end);
+
+############################################################################
+
+InstallGlobalFunction(GreensRClassRepsNC,
 function(arg)
 #function(s)
 local n, one, gens, O, o, i, j, img, k, l, m, x, ht, y, val, reps, 
@@ -444,8 +608,8 @@ O:=OrbitsOfImages(s);
 ht:=HTCreate(one);
 HTAdd(ht, one, true);
 o:=[one];
-o_words:=[fail];
-x_word:=[];
+#o_words:=[fail];
+#x_word:=[];
 
 i:=0;
 
