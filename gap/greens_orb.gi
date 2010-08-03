@@ -10,84 +10,23 @@
 ## $Id: greens.gd 54 2010-07-06 11:09:37Z jamesm $
 
 #############################################################################
-##
+## Notes
 
+# - this file is alphabetized, keep it that way!
 
-# it can be that when you are doing iterator of orbits of images that 
+# - it can be that when you are doing iterator of orbits of images that 
 # you create an orbit that is later contained in another orbit
 # this will lead to the later orbit not have all of its reps, etc defined. 
+# What should be done about the above comment?
 
-# JDM what should be done about the above comment?
-
+##
 #############################################################################
 
-NewSize:=function(c)
-local i, o, j;
-i:=0;
-
-for o in Concatenation(Compacted(c)) do 
-  for j in [1..Length(o!.scc)] do
-    if IsBound(o!.schutz[j]) and IsBound(o!.reps[j]) and IsBound(o!.scc[j]) then 
-      i:=i+Size(o!.schutz[j][2])*Sum(List(o!.reps[j]), Length)*Length(o!.scc[j]);
-    fi;
-  od;
-od;
-
-return i;
-end;
-
-#############################################################################
-
-NrNewRClasses:=function(c)
-local i, j, k, l, m;
-m:=[];
-
-for i in c do
-  for j in i do 
-    for k in j!.reps do 
-      for l in k do 
-        Add(m, Length(l));
-      od;
-    od;
-  od;
-od;
-
-return Sum(m);
-end;
-
-#############################################################################
-# the following should move to orbits_orb.gi..
-
-HashTableForKernels:=function(ker)
-local hf, ht;
-hf:=function ( l, hashlen )
-local  v, i;
-v := 0;
-for i  in [ 1 .. Length( l ) ]  do
-	v := (v * 101 + ORB_HashFunctionForPlainFlatList( l[i], hashlen )) 
-	 mod hashlen;
-od;
-return v + 1;
-end;
-
-ht := HTCreate(ker, rec( hf := hf, hfd := 100003, treehashsize := 100003 ));
-HTAdd(ht, ker, 1);
-
-return ht;
-end;
-
-#############################################################################
-# first component of OrbitsOfImages should be false when it is not complete
-# and true when it is!
-
-InstallMethod(OrbitsOfImages, "for a trans. semigroup",
-[IsTransformationSemigroup], x-> 
-# Concatenation([false], EmptyPlist(DegreeOfTransformationSemigroup(x))));
-EmptyPlist(DegreeOfTransformationSemigroup(x)));
-
+# new for 3.2!
 #############################################################################
 # o is the orbit
 # i is the index of the scc of o we are trying to create the Schreier tree for!
+
 
 InstallGlobalFunction(CreateSchreierTreeOfSCC,
 function(o, i)
@@ -127,10 +66,12 @@ od;
 return [gen, pos];
 end);
 
+# new for 3.2!
 #############################################################################
 #
 
-CreateReverseSchreierTreeOfSCC:=function(o, i)
+InstallGlobalFunction(CreateReverseSchreierTreeOfSCC,
+function(o, i)
 local rev, j, k, l, m, graph, scc, gen, pos, seen, t, oo; 
 
 graph:=OrbitGraph(o);
@@ -173,131 +114,39 @@ od;
 
 
 return [gen, pos];
-end;
-
-
-#############################################################################
-# returns a word in generators that takes o!.scc[i][1] to o[j] assuming that
-# j in scc[i]
-
-InstallGlobalFunction(TraceSchreierTreeOfSCCForward, 
-function( o, i, j)
-local word;
-word := [];
-while j > o!.scc[i][1] do
-	Add(word, o!.trees[i][1][j]);
-	j := o!.trees[i][2][j];
-od;
-return Reversed(word);
-end );
-
-#############################################################################
-
-TraceSchreierTreeOfSCCBack:=
-function( o, i, j)
-local word;
-word := [];
-while j > o!.scc[i][1] do
-	Add(word, o!.reverse[i][1][j]);
-	j := o!.reverse[i][2][j];
-od;
-return word;
-end;
-
-
-#############################################################################
-# <j> is the index of the scc we are computing the multipliers for!
-
-InstallGlobalFunction(MultipliersOfSCCOfOrbit,
-#function(arg)
-function(gens, o, j)
-local i, p, f, scc, schreier;
-
-#o:=arg[1]; j:=arg[2]; 
-#gens:=o!.gens;
-
-#if Length(arg)=3 then 
-#  schreier:=arg[3].schreier;
-#else
-#  schreier:=false;
-#fi;
-
-p:=o!.perms;
-scc:=o!.scc[j];
-
-#if schreier then 
-#	for i in scc do
-#		f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
-#		p[i]:=PermList(MappingPermListList(o[i], OnTuples(o[i], f)));
-#	od;
-#else
-	for i in scc do
-		f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i)); 
-		p[i]:=MappingPermListList(OnTuples(o[scc[1]], f), o[scc[1]]);
-	od;
-#fi;
-
-return p;
 end);
 
+#new for 3.2!
 #############################################################################
-#
 
-#gens are the generators of the semigroup
-#o is orbit
-#f is a representative of scc with index k
-#k is the index of scc containing index of image of f
+InstallGlobalFunction(ForwardOrbitOfImage, 
+function(s, f)
+local img, i, o;
 
-InstallGlobalFunction(SchutzenbergerGroupOfSCCOfOrbit,
-function(gens, o, f, k) 
-local p, t, g, bound, graph, i, j, scc, is_sym;
+#img:=Set(f![1]);
+img:=ImageSetOfTransformation(f);
+o:=OrbitsOfImages(s)!.orbits;
 
-#gens:=o!.gens;
-scc:=o!.scc[k];
-
-if Length(o[scc[1]])<1000 then 
-	bound:=Factorial(Length(o[scc[1]]));
+if IsBound(o[Length(img)]) then 
+  i:=Position(o[Length(img)], x-> img in x);
 else
-	bound:=infinity;
+  i:=fail;
 fi;
 
-g:=Group(());
-p:=o!.perms;
-t:=o!.truth;
-graph:=OrbitGraph(o);
-is_sym:=false;
-
-
-
-for i in scc do 
-	for j in [1..Length(gens)] do 
-		if IsBound(graph[i][j]) and t[k][graph[i][j]] then
-  		g:=ClosureGroup(g, PermLeftQuoTransformationNC(f, f/p[i] *
-  		 (gens[j]*p[graph[i][j]])));
-		fi; #keep track of schreier gens here!
-		if Size(g)>=bound then 
-		  is_sym:=true;
-			break;
-		fi;
-	od;
-	if Size(g)>=bound then 
-		break;
-	fi;
-od;
-
-if not is_sym then 
-	return [StabChainImmutable(g), g];
-else
-	return [is_sym, g];
+if not i=fail then 
+  return o[i];
 fi;
+
+return ForwardOrbitOfImageNC(s, f);
 end);
 
+#new for 3.2!
 #############################################################################
 
 InstallGlobalFunction(ForwardOrbitOfImageNC, 
 #function(arg)
 function(s, f)
-local img, o, scc, t, i, gens, g, bound, graph, j, schutz, schreier;
+local img, o, scc, t, i, gens, g, bound, graph, j, schutz, schreier, O;
 Info(InfoWarning, 2, "Warning: calling this function more than once with the ",
 " same arguments will repeatedly add the returned value to OrbitsOfImages. ",
 "Use ForwardOrbitOfImage instead.");
@@ -346,6 +195,7 @@ o!.trees[1]:=CreateSchreierTreeOfSCC(o,1);
 o!.reps:=List([1..Length(scc)], x-> []);
 Add(o!.reps[1], [f]);
 
+
 #if schreier then 
 #	o!.words:=List([1..Length(scc)], x-> []);
 #	o!.reverse:=EmptyPlist(Length(scc));
@@ -369,218 +219,59 @@ o!.perms:=MultipliersOfSCCOfOrbit(gens, o, 1);
 o!.schutz:=EmptyPlist(Length(scc));
 o!.schutz[1]:=SchutzenbergerGroupOfSCCOfOrbit(gens, o, f, 1);
 
-#OrbitsOfImages is partitioned according to image size of the first element!
-if IsBound(OrbitsOfImages(s)[Length(img)]) then 
-  Add(OrbitsOfImages(s)[Length(img)], o);
+#OrbitsOfImages is partitioned according to image size of the first element in 
+# each component!
+
+O:=OrbitsOfImages(s);
+
+if IsBound(O!.orbits[Length(img)]) then 
+  Add(O!.orbits[Length(img)], o);
 else
-  OrbitsOfImages(s)[Length(img)]:=[o];
+  O!.orbits[Length(img)]:=[o];
 fi;
 
-#SetIsOrbitOfImage(o, true); #JDM used for anything?
+O!.data[Length(O!.data)+1]:=[Length(img), Length(O!.orbits[Length(img)]), 
+ 1, 1, 1, 1];
 
 return o;
 end);
 
+# new for 3.2!
 #############################################################################
 
-InstallGlobalFunction(ForwardOrbitOfImage, 
-function(s, f)
-local img, i;
+InstallMethod(GreensData, )
 
-#img:=Set(f![1]);
-img:=ImageSetOfTransformation(f);
-
-if IsBound(OrbitsOfImages(s)[Length(img)]) then 
-  i:=Position(OrbitsOfImages(s)[Length(img)], x-> img in x);
-else
-  i:=fail;
-fi;
-
-if not i=fail then 
-  return OrbitsOfImages(s)[i];
-fi;
-
-return ForwardOrbitOfImageNC(s, f);
-end);
-
+# new for 3.2!
 #############################################################################
-#IteratorOfGreensRClasses:=
 
-# if partial info is known... IteratorOfGreensRClasses
-# if full info is known...    EnumeratorOfGreensRClasses
-# if full info is known...    GreensRClasses
+InstallMethod(GreensRClassReps, "for a trans. semigroup", 
+[IsTransformationSemigroup], 
+function(s)
+local iter, i, o;
 
-# actually turn this into an iterator!! add some more info statements?
-InstallGlobalFunction(IteratorOfRClassReps, 
-function(arg)
-local s, gens, iter, n, one;
-s:=arg[1];
+o:=OrbitsOfImages(s);
 
-if IsTransformationMonoid( s ) then
-	gens := GeneratorsOfMonoid( s );
-else
-	gens := GeneratorsOfSemigroup( s );
+if not o!.finished then 
+	iter:=IteratorOfRClassReps(s);
+	iter!.i:=Length(o!.data); 
+	# avoids running through those already found.
+	for i in iter do od;
 fi;
 
-n := DegreeOfTransformationSemigroup( s );
-one := TransformationNC( [ 1 .. n ] );
-
-iter:=IteratorByFunctions( rec(
-			
-			IsDoneIterator := iter-> iter!.next(iter, false)=fail,
-			
-			NextIterator := iter-> iter!.next(iter, true),
-			
-			ShallowCopy := ReturnFail,
-			
-			gens:=gens,
-			
-			i := 0,
-			
-			s:=s,
-			
-			n := n,
-			
-			one := one,
-			
-			ht:=HTCreate(one),
-			
-			o:=[one],
-
-############################################################################
-
-			next:=function(iter, advance) 
-			local O, o, i, j, img, k, l, m, x, ht, y, val, reps, schutz, new, kernels_ht, 
-			z, schreier, s, report, last_report, one;
-			
-			if iter!.i=Length(iter!.o) then 
-				return fail;
-			fi;
-			
-			if advance then
-			  one:=iter!.one;
-				o:=iter!.o;
-				gens:=iter!.gens;
-				ht:=iter!.ht;
-				s:=iter!.s;
-				
-				if iter!.i=0 then 
-			    HTAdd(ht, one, true);
-				fi;
-				
-				iter!.i:=iter!.i+1;
-				i:=iter!.i;
-				O:=OrbitsOfImages(s);
-				
-				img:=ImageSetOfTransformation(o[i]);
-				j:=Length(img);
-				new:=false;
-				
-				#check if img has been seen before
-				if IsBound(O[j]) then
-					k:=0;
-					repeat
-						k:=k+1;
-						l:=Position(O[j][k], img);
-					until not l=fail or k=Length(O[j]);
-					
-					if l=fail then k:=fail; fi;
-				else 
-					k:=fail;
-				fi;
-			
-				if k = fail then #img has not been seen before
-					new:=true; x:=o[i]; 
-					
-					if IsTransformationMonoid( s ) or not o[i] = one then
-						ForwardOrbitOfImageNC(s, o[i]);
-						#scheier words here!
-					fi;
-					
-				else #img has been seen before
-					if IsTransformationMonoid( s ) or not o[i] = one then
-						
-						m:=PositionProperty(O[j][k]!.truth, x-> x[l]); #the scc containing img
-						reps:=O[j][k]!.reps[m];
-						
-						#scheier words here!
-						
-						#calculate multipliers and schutz!
-						if not IsBound(O[j][k]!.perms[l]) then #we never considered this scc before!
-							O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
-							
-							#schreier words here
-							
-							O[j][k]!.perms:=MultipliersOfSCCOfOrbit(gens, O[j][k], m);
-							x:= o[i] * O[j][k]!.perms[l];
-							O[j][k]!.schutz[m]:=SchutzenbergerGroupOfSCCOfOrbit(gens, O[j][k], x, m);;
-							O[j][k]!.kernels_ht[m]:=HashTableForKernels(KernelOfTransformation( x ));
-							reps[Length(reps)+1]:=[x]; 
-							new:=true; 
-			
-						else
-							kernels_ht:=O[j][k]!.kernels_ht[m];
-			
-							x := o[i] * O[j][k]!.perms[l];
-							val:=HTValue(kernels_ht, KernelOfTransformation(x));
-							
-							if not val=fail then #kernel seen before
-								schutz:=O[j][k]!.schutz[m][1];
-								if not ForAny(reps[val], y-> schutz=true or 
-								 SiftedPermutation(schutz, PermLeftQuoTransformationNC(y, x))=()) then 
-									reps[val][Length(reps[val])+1]:=x; 
-									new:=true;
-									#schreier words here
-								fi;
-							else #new kernel
-								reps[Length(reps)+1]:=[x]; 
-								#schreier words here
-								HTAdd(kernels_ht, KernelOfTransformation( x ), 
-								 Length(reps));
-								new:=true; 
-							fi;
-						fi;
-					fi;
-				fi;
-			
-				if new then #install new pts in the orbit
-					for y in [1..Length(gens)] do
-						z:=gens[y]*x; 
-						if HTValue(ht, z)=fail then  
-							HTAdd(ht, z, true);
-							o[Length(o)+1]:=z;
-							#schreier words here
-						fi;
-					od;
-				fi;
-			
-				return x;
-			fi;
-			return true;
-			end));
-
-SetIsIteratorOfRClassReps(iter, true);
-
-return iter;
+return List(o!.data, x-> RClassRepFromData(s, x));
 end);
 
+# new for 3.2!
 ############################################################################
-
-InstallMethod(PrintObj, [IsIteratorOfRClassReps], 
-function(iter)
-
-Print( "<iterator of R-class representatives, ", Length(iter!.o), " candidates, ", 
- NewSize(OrbitsOfImages(iter!.s)), " elements, ", NrNewRClasses(OrbitsOfImages(iter!.s)), " R-classes>");
-return;
-end);
-
-############################################################################
+# this should be removed as the IteratorOfRClassReps runs in approximately 
+# the same length of time...
 
 InstallGlobalFunction(GreensRClassRepsNC,
 function(arg)
 #function(s)
 local n, one, gens, O, o, i, j, img, k, l, m, x, ht, y, val, reps, 
- schutz, new, kernels_ht, z, schreier, o_words, x_word, words, s, report, last_report;
+ schutz, new, kernels_ht, z, schreier, o_words, x_word, words, s, report, 
+ last_report, oo;
 
 s:=arg[1];
 
@@ -594,30 +285,23 @@ else
 	schreier:=false; report:=false;
 fi;
 
-n := DegreeOfTransformationSemigroup( s );
-one := TransformationNC( [ 1 .. n ] );
+oo:=OrbitsOfImages(s);
+i:=oo.at;
+gens := oo.gens;
+n := oo.deg;
+one := oo.one;
+ht:= oo.ht;
+o := ht!.o;
+O := oo.orbits;
 
-if IsTransformationMonoid( s ) then
-	gens := GeneratorsOfMonoid( s );
-else
-	gens := GeneratorsOfSemigroup( s );
-fi;
-
-O:=OrbitsOfImages(s);
-
-ht:=HTCreate(one);
-HTAdd(ht, one, true);
-o:=[one];
-#o_words:=[fail];
-#x_word:=[];
-
-i:=0;
+##o_words:=[fail];
+##x_word:=[];
 
 while i<Length(o) do 
   i:=i+1;
   if not report=false and i>last_report+report then 
-    Info(InfoWarning, 1, Length(o), " candidates, ", NewSize(O), " elements, ",
-    NrNewRClasses(O), " R-classes");
+    Info(InfoWarning, 1, Length(o), " candidates, ", Size(O), " elements, ",
+    NrRClassesOrbitsOfImages(O), " R-classes");
     last_report:=i;
   fi;
   
@@ -729,9 +413,494 @@ while i<Length(o) do
 	fi;
 od;
 
+oo!.finished:=true; # all info is known!
+oo!.at:=i;
 return [i, O];
+#return Flat(List(O, x-> List(x, y-> y!.reps)));
 end);
 
+
+# new for 3.2!
+#############################################################################
+
+InstallGlobalFunction(IteratorOfGreensRClasses, 
+function(s)
+local iter;
+
+iter:=IteratorByFunctions( rec(
+	
+	i:=0,
+	
+	type:=NewType( FamilyObj( s ) , IsEquivalenceClass and 
+	 IsEquivalenceClassDefaultRep and IsGreensRClass and 
+	 IsGreensClassOfTransSemigp),
+	
+	s:=s, 
+	
+	reps:=IteratorOfRClassReps(s),
+	
+	IsDoneIterator := iter -> IsDoneIterator(iter!.reps), 
+	
+	NextIterator:= function(iter)
+	local c, rep;
+	
+	rep:=NextIterator(iter!.reps);
+	
+	if rep=fail then 
+		return fail;
+	fi;
+	
+	iter!.i:=iter!.i+1;
+	
+	#c:=GreensRClassOfElement(iter!.s, rep, type);
+	c:=Objectify( iter!.type, rec(parent:=s, 
+	 data:=OrbitsOfImages(s)!.data[iter!.i] ));
+	SetRepresentative(c, rep);
+	SetEquivalenceClassRelation(c, GreensRRelation(s));
+	return c; end,
+	
+	ShallowCopy:=iter-> rec(i:=0, s:=iter!.s, reps:=IteratorOfRClassReps(s))
+));
+
+SetIsIteratorOfGreensRClasses(iter, true);
+
+return iter;
+end);
+
+# new for 3.2!
+#############################################################################
+# add some more info statements?
+
+InstallGlobalFunction(IteratorOfRClassReps, 
+function(s)
+local iter;
+
+iter:=IteratorByFunctions( rec(
+			
+			IsDoneIterator := iter-> iter!.chooser(iter, IsDoneIterator)=fail,
+			
+			NextIterator := iter-> iter!.chooser(iter, NextIterator),
+			
+			ShallowCopy := iter -> rec( i:=0, s:=iter!.s, 
+			last_called := NextIterator, last_value := 0, 
+			chooser:=iter!.chooser, next:=iter!.next),
+			
+			i:=0, # in case one iterator is started but not finished, then 
+			      # another iterator is started. 
+			
+			s:= s,
+			
+			last_called := NextIterator,
+				
+			last_value := 0,
+			
+			######################################################################
+			
+			chooser := function( iter, called_by )
+			local o;
+			
+			if iter!.last_called = IsDoneIterator then 
+				iter!.last_called := called_by;
+				return iter!.last_value; 
+			fi;
+
+			if iter!.last_called = NextIterator then
+				iter!.last_called := called_by;
+				if iter!.last_value=fail then 
+					return fail;
+				fi;
+				
+				o:=OrbitsOfImages(iter!.s);
+				
+				if iter!.i < Length(o!.data) then 
+					# we already know this rep
+					iter!.i:=iter!.i+1;
+					iter!.last_value:=RClassRepFromData(iter!.s, 
+					 o!.data[iter!.i]);
+				elif o!.finished then  
+					iter!.last_value:=fail;
+				else
+					# must find a new rep if it exists
+					iter!.i:=o!.at;
+					iter!.last_value:=iter!.next(iter);
+				fi;
+				return iter!.last_value;
+			fi;
+			
+			end,
+			
+			######################################################################
+
+			next:=function(iter) 
+			local O, o, j, img, k, l, m, x, ht, y, val, reps, schutz, new, kernels_ht, 
+			z, schreier, report, last_report, n, gens, s, one, i, data, oo;
+			
+			s := iter!.s;
+			oo:=OrbitsOfImages(s);
+			gens := oo!.gens;
+			n := oo!.deg;
+			one := oo!.one;
+			ht:= oo!.ht;
+			o := ht!.o;
+			O := oo!.orbits;
+			data := oo!.data;
+			
+			if iter!.i=Length(o) then 
+				oo!.finished:=true;
+				return fail;
+			fi;
+			
+			iter!.i:=iter!.i+1;
+			oo!.at:=iter!.i;
+			i := iter!.i;
+
+			if iter!.i=1 then 
+				HTAdd(ht, one, true);
+			fi;
+
+			img:=ImageSetOfTransformation(o[i]);
+			j:=Length(img);
+			new:=false;
+			
+			#check if img has been seen before
+			if IsBound(O[j]) then
+				k:=0;
+				repeat
+					k:=k+1;
+					l:=Position(O[j][k], img);
+				until not l=fail or k=Length(O[j]);
+				
+				if l=fail then k:=fail; fi;
+			else 
+				k:=fail;
+			fi;
+		
+			if k = fail then #img has not been seen before
+				new:=true; x:=o[i]; 
+				
+				if IsTransformationMonoid( s ) or not o[i] = one then
+					ForwardOrbitOfImageNC(s, o[i]);
+					#scheier words here!
+				fi;
+				
+			else #img has been seen before
+				if IsTransformationMonoid( s ) or not o[i] = one then
+					
+					m:=PositionProperty(O[j][k]!.truth, x-> x[l]); #the scc containing img
+					reps:=O[j][k]!.reps[m];
+					
+					#scheier words here!
+					
+					if not IsBound(O[j][k]!.perms[l]) then 
+						#we never considered this scc before!
+						O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
+						
+						#schreier words here
+						
+						O[j][k]!.perms:=MultipliersOfSCCOfOrbit(gens, O[j][k], m);
+						x:= o[i] * O[j][k]!.perms[l];
+						O[j][k]!.schutz[m]:=SchutzenbergerGroupOfSCCOfOrbit(gens, 
+						 O[j][k], x, m);;
+						O[j][k]!.kernels_ht[m]:=
+						 HashTableForKernels(KernelOfTransformation( x ));
+						reps[Length(reps)+1]:=[x];
+						data[Length(data)+1]:=[j, k, l, m, 1, 1];
+						new:=true; 
+		
+					else #we have considered scc before
+						kernels_ht:=O[j][k]!.kernels_ht[m];
+						x := o[i] * O[j][k]!.perms[l];
+						val:=HTValue(kernels_ht, KernelOfTransformation(x));
+						
+						if not val=fail then #kernel seen before
+							schutz:=O[j][k]!.schutz[m][1];
+							if not ForAny(reps[val], y-> schutz=true or 
+							 SiftedPermutation(schutz, 
+							 PermLeftQuoTransformationNC(y, x))=()) then 
+								reps[val][Length(reps[val])+1]:=x;
+								data[Length(data)+1]:=[j, k, l, m, val, Length(reps[val])];
+								new:=true;
+								#schreier words here
+							fi;
+						else #new kernel
+							reps[Length(reps)+1]:=[x];
+							data[Length(data)+1]:=[j, k, l, m, Length(reps), 1];
+							#schreier words here
+							HTAdd(kernels_ht, KernelOfTransformation( x ), 
+							 Length(reps));
+							new:=true; 
+						fi;
+					fi;
+				fi;
+			fi;
+			
+			if new then #install new pts in the orbit
+				
+				for y in [1..Length(gens)] do
+					z:=gens[y]*x; 
+					if HTValue(ht, z)=fail then  
+						HTAdd(ht, z, true);
+						o[Length(o)+1]:=z;
+						#schreier words here
+					fi;
+				od;
+				
+				if (IsTransformationMonoid( s ) or not o[i] = one) then 
+					return x;
+				fi;
+			fi;
+			
+			return iter!.next(iter);
+			end
+			######################################################################
+));
+
+SetIsIteratorOfRClassReps(iter, true);
+SetSemigroupOfIteratorOfRClassReps(iter, s);
+
+return iter;
+end);
+
+# new for 3.2!
+#############################################################################
+# <j> is the index of the scc we are computing the multipliers for!
+
+InstallGlobalFunction(MultipliersOfSCCOfOrbit,
+#function(arg)
+function(gens, o, j)
+local i, p, f, scc, schreier;
+
+#o:=arg[1]; j:=arg[2]; 
+#gens:=o!.gens;
+
+#if Length(arg)=3 then 
+#  schreier:=arg[3].schreier;
+#else
+#  schreier:=false;
+#fi;
+
+p:=o!.perms;
+scc:=o!.scc[j];
+
+#if schreier then 
+#	for i in scc do
+#		f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
+#		p[i]:=PermList(MappingPermListList(o[i], OnTuples(o[i], f)));
+#	od;
+#else
+	for i in scc do
+		f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i)); 
+		p[i]:=MappingPermListList(OnTuples(o[scc[1]], f), o[scc[1]]);
+	od;
+#fi;
+
+return p;
+end);
+
+# new for 3.2!
+#############################################################################
+
+InstallGlobalFunction(NrRClassesOrbitsOfImages,
+function(c)
+local i, j, k, l, m;
+m:=[];
+
+c:=c!.orbits;
+
+for i in c do
+  for j in i do 
+    for k in j!.reps do 
+      for l in k do 
+        Add(m, Length(l));
+      od;
+    od;
+  od;
+od;
+
+return Sum(m);
+end);
+
+# new for 3.2!
+#############################################################################
+
+InstallMethod(OrbitsOfImages, "for a trans. semigroup",
+[IsTransformationSemigroup], 
+function(s)
+local gens, n, one, ht;
+
+if IsTransformationMonoid( s ) then
+	gens := GeneratorsOfMonoid( s );
+else
+	gens := GeneratorsOfSemigroup( s );
+fi;
+
+n := DegreeOfTransformationSemigroup( s );
+one := TransformationNC( [ 1 .. n ] );
+ht := HTCreate(one);
+ht!.o := [one];
+
+return rec(
+  finished:=false,
+  orbits:=EmptyPlist(DegreeOfTransformationSemigroup(s)), 
+  at:=0, 
+  gens:=gens,
+  s:=s,
+	deg := n,
+	one := one,
+	ht:=ht,
+	data:=[]
+);
+end);
+
+# new for 3.2!
+############################################################################
+
+InstallMethod(ParentAttr, "for a R-class of a trans. semigroup", 
+[IsGreensRClass and IsGreensClassOfTransSemigp], x-> x!.parent);
+
+# new for 3.2!
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfRClassReps], 
+function(iter)
+local O;
+
+O:=OrbitsOfImages(SemigroupOfIteratorOfRClassReps(iter));
+
+Print( "<iterator of R-class reps, ", Length(O!.ht!.o), " candidates, ", 
+ SizeOrbitsOfImages(O), " elements, ", NrRClassesOrbitsOfImages(O), 
+ " R-classes>");
+return;
+end);
+
+# new for 3.2!
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfGreensRClasses], 
+function(iter)
+local O;
+
+O:=OrbitsOfImages(iter!.s);
+
+Print( "<iterator of Green's R-classes>");
+return;
+end);
+
+#
+############################################################################
+
+InstallGlobalFunction(RClassRepFromData,
+function(s, d)
+return OrbitsOfImages(s)!.orbits[d[1]][d[2]]!.reps[d[4]][d[5]][d[6]];
+end);
+
+
+
+# new for 3.2!
+#############################################################################
+#
+
+#gens are the generators of the semigroup
+#o is orbit
+#f is a representative of scc with index k
+#k is the index of scc containing index of image of f
+
+InstallGlobalFunction(SchutzenbergerGroupOfSCCOfOrbit,
+function(gens, o, f, k) 
+local p, t, g, bound, graph, i, j, scc, is_sym;
+
+#gens:=o!.gens;
+scc:=o!.scc[k];
+
+if Length(o[scc[1]])<1000 then 
+	bound:=Factorial(Length(o[scc[1]]));
+else
+	bound:=infinity;
+fi;
+
+g:=Group(());
+p:=o!.perms;
+t:=o!.truth;
+graph:=OrbitGraph(o);
+is_sym:=false;
+
+
+
+for i in scc do 
+	for j in [1..Length(gens)] do 
+		if IsBound(graph[i][j]) and t[k][graph[i][j]] then
+  		g:=ClosureGroup(g, PermLeftQuoTransformationNC(f, f/p[i] *
+  		 (gens[j]*p[graph[i][j]])));
+		fi; #keep track of schreier gens here!
+		if Size(g)>=bound then 
+		  is_sym:=true;
+			break;
+		fi;
+	od;
+	if Size(g)>=bound then 
+		break;
+	fi;
+od;
+
+if not is_sym then 
+	return [StabChainImmutable(g), g];
+else
+	return [is_sym, g];
+fi;
+end);
+
+
+# new for 3.2!
+#############################################################################
+# returns the size of the semigroup <s> with OrbitsOfImages(s)=c so far
+
+InstallGlobalFunction(SizeOrbitsOfImages, 
+function(c)
+local i, o, j;
+i:=0;
+
+c:=c!.orbits;
+
+for o in Concatenation(Compacted(c)) do 
+  for j in [1..Length(o!.scc)] do
+    if IsBound(o!.schutz[j]) and IsBound(o!.reps[j]) and IsBound(o!.scc[j]) then 
+      i:=i+Size(o!.schutz[j][2])*Sum(List(o!.reps[j]), Length)*Length(o!.scc[j]);
+    fi;
+  od;
+od;
+
+return i;
+end);
+
+# new for 3.2!
+#############################################################################
+# returns a word in generators that takes o!.scc[i][1] to o[j] assuming that
+# j in scc[i]
+
+InstallGlobalFunction(TraceSchreierTreeOfSCCForward, 
+function( o, i, j)
+local word;
+word := [];
+while j > o!.scc[i][1] do
+	Add(word, o!.trees[i][1][j]);
+	j := o!.trees[i][2][j];
+od;
+return Reversed(word);
+end );
+
+# new for 3.2!
+#############################################################################
+
+InstallGlobalFunction(TraceSchreierTreeOfSCCBack,
+function( o, i, j)
+local word;
+word := [];
+while j > o!.scc[i][1] do
+	Add(word, o!.reverse[i][1][j]);
+	j := o!.reverse[i][2][j];
+od;
+return word;
+end);
 
 #############################################################################
 # DELETE!
@@ -758,8 +927,6 @@ od;
 
 return true;
 end;
-
-
 
 #############################################################################
 

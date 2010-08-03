@@ -142,6 +142,12 @@ DeclareInfoClass("InfoMonoidOrbits");
 #JDM new for 3.2!
 DeclareGlobalFunction("AsPartitionedListNC");
 
+
+#############################################################################
+# new for 3.2!
+
+DeclareGlobalFunction("HashTableForKernels");
+
 ###########################################################################
 ##	<#GAPDoc Label="MonoidOrbit">
 ##	<ManSection>

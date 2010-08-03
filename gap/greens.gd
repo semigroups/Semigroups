@@ -33,6 +33,7 @@
 
 
 
+
 ###########################################################################
 ##
 ##	<#GAPDoc Label="IsGreensClassOfTransSemigp">
@@ -463,7 +464,8 @@ DeclareAttribute("GreensRClassData", IsGreensRClass and IsGreensClassOfTransSemi
 ##  > Transformation( [ 3, 4, 2, 1, 4 ] ) ];;
 ##  gap> S:=Semigroup(gens);; 
 ##  gap> GreensRClassReps(S);
-##  [ [ Transformation( [ 1, 2, 1, 2, 1 ] ), Transformation( [ 1, 2, 2, 1, 2 ] ), 
+##  [ [ Transformation( [ 1, 2, 1, 2, 1 ] ), 
+##    Transformation( [ 1, 2, 2, 1, 2 ] ), 
 ##        Transformation( [ 2, 1, 2, 1, 1 ] ) ], 
 ##    [ Transformation( [ 3, 4, 2, 1, 4 ] ) ] ]
 ##	</Example><!-- greens.tst -->
@@ -472,6 +474,8 @@ DeclareAttribute("GreensRClassData", IsGreensRClass and IsGreensClassOfTransSemi
 ##	<#/GAPDoc>
 
 DeclareAttribute("GreensRClassReps", IsTransformationSemigroup);
+
+
 
 #############################################################################
 ##
@@ -740,19 +744,41 @@ DeclareAttribute("PartialOrderOfDClasses", IsSemigroup, "mutable");
 #############################################################################
 # new for 3.2!
 
+# returns true if OrbitsOfImages is complete, that is, if all RClassReps have 
+# been found...
+
+DeclareProperty("RClassRepsData", IsTransformationSemigroup);
+
 DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
 DeclareGlobalFunction("ForwardOrbitOfImage");
 DeclareGlobalFunction("ForwardOrbitOfImageNC");
 
+DeclareGlobalFunction("SizeOrbitsOfImages");
+DeclareGlobalFunction("NrRClassesOrbitsOfImages");
+
 DeclareGlobalFunction("CreateSchreierTreeOfSCC");
+DeclareGlobalFunction("CreateReverseSchreierTreeOfSCC");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCForward");
+DeclareGlobalFunction("TraceSchreierTreeOfSCCBack");
 DeclareGlobalFunction("MultipliersOfSCCOfOrbit");
 DeclareGlobalFunction("SchutzenbergerGroupOfSCCOfOrbit");
+
+DeclareGlobalFunction("RClassRepFromData");
+
 DeclareGlobalFunction("IsInSCCOfOrbitNC");
 DeclareGlobalFunction("IsInSCCOfOrbit");
 DeclareGlobalFunction("IsInOrbit");
+
 
 DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareInfoClass("InfoMonoidGreens");
 DeclareGlobalFunction("GreensRClassRepsNC");
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
+DeclareGlobalFunction("IteratorOfGreensRClasses");
+DeclareProperty("IsIteratorOfGreensRClasses", IsIterator);
+DeclareAttribute("SemigroupOfIteratorOfRClassReps", IsIteratorOfRClassReps);
+DeclareAttribute("SemigroupOfIteratorOfGreensRClasses", 
+IsIteratorOfGreensRClasses);
+
+# probably get rid of the following...
+DeclareAttribute("GreensRClassesSoFar", IsTransformationSemigroup, "mutable");

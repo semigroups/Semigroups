@@ -12,8 +12,16 @@
 
 #############################################################################
 
+# new for 3.2!
+
 InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
 [IsGreensClass], x-> IsTransformationSemigroup(ParentAttr(x)));
+
+InstallOtherMethod(IsGreensClass, "for an object", [IsObject], ReturnFalse);
+InstallOtherMethod(IsGreensRClass, "for an object", [IsObject], ReturnFalse);
+InstallOtherMethod(IsGreensLClass, "for an object", [IsObject], ReturnFalse);
+InstallOtherMethod(IsGreensHClass, "for an object", [IsObject], ReturnFalse);
+InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 
 #############################################################################
 
@@ -195,7 +203,7 @@ end);
 
 #############################################################################
 
-InstallMethod( \in, "for a Green's Class of a transformation semigroup", 
+InstallMethod( \in, "for a Green's class of a transformation semigroup", 
 [IsTransformation, IsGreensClass and IsGreensClassOfTransSemigp],
 function (elm, class)
 	return elm in GreensData(class);

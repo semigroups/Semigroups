@@ -284,6 +284,27 @@ return out; #JDM better to just return the orbit... hopefully this can be
             #    improved!
 end);
 
+#############################################################################
+# new for 3.2!
+
+InstallGlobalFunction(HashTableForKernels, 
+function(ker)
+local hf, ht;
+hf:=function ( l, hashlen )
+local  v, i;
+v := 0;
+for i  in [ 1 .. Length( l ) ]  do
+	v := (v * 101 + ORB_HashFunctionForPlainFlatList( l[i], hashlen )) 
+	 mod hashlen;
+od;
+return v + 1;
+end;
+
+ht := HTCreate(ker, rec( hf := hf, hfd := 100003, treehashsize := 100003 ));
+HTAdd(ht, ker, 1);
+
+return ht;
+end);
 
 #############################################################################
 # JDM remove from 3.2!
