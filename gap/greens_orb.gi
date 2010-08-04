@@ -19,14 +19,101 @@
 # this will lead to the later orbit not have all of its reps, etc defined. 
 # What should be done about the above comment?
 
-##
+# - make test files, write documentation
+
+## new for 3.2!
 #############################################################################
+##  Algorithm E. 
+
+InstallMethod( \in, "for trans. and R-class of trans. semigp.", 
+[IsTransformation, IsGreensRClass and IsGreensClassOfTransSemigp],
+function(f, r)
+local rep, d, o, i, schutz, s;
+
+rep:= r!.rep; 
+
+if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) or
+ RankOfTransformation(f) <> RankOfTransformation(rep) or
+ KernelOfTransformation(f) <> KernelOfTransformation(rep) then
+	return false;
+fi;
+
+if f=rep then 
+	return true;
+fi;
+
+d:=r!.data;
+s:=r!.parent;
+
+# check image is in the same weak orbit
+o:=RClassImageOrbitFromData(s, d);
+i:= Position(o, ImageSetOfTransformation(f));
+
+if i = fail or not o!.truth[d[4]][i] then #check they are in the same scc
+	return false;
+fi;
+
+schutz:= RClassSchutzGpFromData(s, d)[1];
+
+return schutz=true or SiftedPermutation(schutz, 
+ PermLeftQuoTransformationNC(rep, f*o!.perms[i]))=();
+end);
+
+# new for 3.2!
+#############################################################################
+# Algorithm D.
+
+# IteratorOfRClassElements...
+
+InstallOtherMethod(AsList, "for R-class of trans. semigp.", 
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+local f, s, d, h, elts, p;
+
+f:=r!.rep; #rep should have its image at the first place in the scc
+s:=r!.parent;
+d:=r!.data;
+
+h:=List(RClassSchutzGpFromData(s, d)[2], x-> f*x);
+#JDM is schutz not the H-class containing f?
+
+elts:=[];
+
+for p in RClassPermsFromData(s, d){RClassSCCFromData(s, d)} do 
+	elts:=Concatenation(elts, h*p^-1);
+od;
+return elts;
+end);
+
+# new for 3.2!
+#############################################################################
+#
+
+InstallOtherMethod(AsSSortedList, "for R-class of trans. semigp.",
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+r-> EnumeratorSorted(r));
+
+# new for 3.2!
+#############################################################################
+# Algorithm W.
+
+#InstallOtherMethod(AsSSortedList, "for a transformation semigroup",
+#[IsTransformationSemigroup],
+#function(s)
+#local elts, rrel;
+
+#elts:=Union(List(GreensRClasses(M), Elements));
+#if not HasSize(M) then
+#	SetSize(M, Size(elts));
+#fi;
+
+#return elts;
+#end);
 
 # new for 3.2!
 #############################################################################
 # o is the orbit
 # i is the index of the scc of o we are trying to create the Schreier tree for!
-
 
 InstallGlobalFunction(CreateSchreierTreeOfSCC,
 function(o, i)
@@ -114,6 +201,115 @@ od;
 
 
 return [gen, pos];
+end);
+
+# new for 3.2!
+#############################################################################
+#
+
+InstallOtherMethod(Enumerator, "for R-class of trans. semigp.", 
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+local enum;
+
+enum:=EnumeratorByFunctions(r, rec(
+	
+	rep:=r!.rep,
+	
+	h:=List(Elements(RClassSchutzGpFromData(r!.parent, r!.data)[2]), x-> 
+	r!.rep*x), 
+	#maybe use enum here too? JDM
+	
+	p:=RClassPermsFromData(r!.parent, r!.data),
+	
+	scc:=RClassSCCFromData(r!.parent, r!.data),
+	
+	###########################################################################
+	
+	ElementNumber:=function(enum, pos)
+	
+		if pos>Length(enum) then 
+			return fail;
+		fi;
+		
+		if pos<=Length(enum!.h) then 
+			return enum!.h[pos];
+		fi;
+		
+		pos:=QuotientRemainder(pos-1, Length(enum!.h))+1;
+		
+		return enum!.h[pos[2]]*enum!.p[enum!.scc[pos[1]]]^-1;
+	end, 
+	
+	###########################################################################
+	
+	NumberElement:=function(enum, f)
+		local rep, d, s, o, i, j;
+		rep:=enum!.rep;
+	
+		if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) or
+		 RankOfTransformation(f) <> RankOfTransformation(rep) or
+		 KernelOfTransformation(f) <> KernelOfTransformation(rep) then
+			return fail;
+		fi;
+		
+		if f=rep then 
+			return 1;
+		fi;
+		
+		d:=r!.data;
+		s:=r!.parent;
+		
+		# check image is in the same weak orbit
+		o:=RClassImageOrbitFromData(s, d);
+		i:= Position(o, ImageSetOfTransformation(f));
+		
+		if i = fail or not o!.truth[d[4]][i] then #check they are in the same scc
+			return fail;
+		fi;
+		
+		j:= Position(Elements(RClassSchutzGpFromData(s, d)[2]),
+		 PermLeftQuoTransformationNC(rep, f*o!.perms[i]));
+		
+		if j = fail then 
+			return fail;
+		fi;
+		
+		return Length(enum!.h)*(Position(enum!.scc, i)-1)+j;
+
+	end, 
+
+	###########################################################################
+
+	Length:=enum -> Size(r),
+
+	PrintObj:=function(enum)
+	Print( "<enumerator of R-class of ", r!.rep ,">");
+	return;
+	end));
+
+return enum;
+end);
+
+#new for 3.2!
+#############################################################################
+# consider what to do here really! In particular, if 
+# OrbitsOfImages(s)!.finished=true, but we don't have GreensRClasses, 
+# then is the following really the best?
+
+InstallOtherMethod(Enumerator, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
+function(s)
+local out, iter, i;
+
+out:=[];
+iter:=Iterator(s);
+
+for i in iter do 
+	out[Length(out)+1]:=i;
+od;
+
+return Enumerator(out);
 end);
 
 #new for 3.2!
@@ -238,8 +434,24 @@ end);
 
 # new for 3.2!
 #############################################################################
+# JDM JDM 
+# test the efficiency of this function!
 
-InstallMethod(GreensData, )
+InstallMethod(GreensRClasses, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
+function(s)
+local iter, out, i;
+
+iter:=IteratorOfGreensRClasses(s);
+out:=EmptyPlist(Length(OrbitsOfImages(s)!.data));
+#JDM is the previous a good idea?
+
+for i in iter do 
+	out[Length(out)+1]:=i;
+od;
+
+return out;
+end);
 
 # new for 3.2!
 #############################################################################
@@ -265,6 +477,9 @@ end);
 ############################################################################
 # this should be removed as the IteratorOfRClassReps runs in approximately 
 # the same length of time...
+
+# this should be moved to the graveyard... the schreier parts are still useful!
+
 
 InstallGlobalFunction(GreensRClassRepsNC,
 function(arg)
@@ -300,8 +515,8 @@ O := oo.orbits;
 while i<Length(o) do 
   i:=i+1;
   if not report=false and i>last_report+report then 
-    Info(InfoWarning, 1, Length(o), " candidates, ", Size(O), " elements, ",
-    NrRClassesOrbitsOfImages(O), " R-classes");
+    #Info(InfoWarning, 1, Length(o), " candidates, ", Size(O), " elements, ",
+    #NrRClassesOrbitsOfImages(O), " R-classes");
     last_report:=i;
   fi;
   
@@ -419,9 +634,142 @@ return [i, O];
 #return Flat(List(O, x-> List(x, y-> y!.reps)));
 end);
 
+# new for 3.2!
+#############################################################################
+# iterator and enumerator of idempotents JDM
+
+# check the following for efficiency!
+
+InstallOtherMethod( Idempotents, "for a R-class of a trans. semigp.",
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+local out, ker, img, o, i;
+
+out:= EmptyPlist(Size(r));
+ker:= KernelOfTransformation(r!.rep);
+img:=r!.rep![1];
+o:=RClassImageOrbitFromData(r!.parent, r!.data){RClassSCCFromData(r!.parent,
+ r!.data)};
+
+for i in o do
+	if IsDuplicateFreeList(img{i}) then
+		out[Length(out)+1]:=IdempotentNC(ker, i);
+	fi;
+od;
+
+return out;
+end);
 
 # new for 3.2!
 #############################################################################
+
+InstallGlobalFunction(InOrbitsOfImages, 
+function(s, f)
+local O, img, j, k, l, m, val, schutz;
+
+O:=OrbitsOfImages(s);
+
+#is the following worth it?
+
+if not HTValue(O!.ht, f)=fail then 
+	return true;
+fi;
+
+O:=O!.orbits;
+
+img:=ImageSetOfTransformation(f);
+j:=Length(img);
+
+if not IsBound(O[j]) then
+	return false;
+fi;
+
+k:=0;
+
+repeat
+	k:=k+1;
+	l:=Position(O[j][k], img);
+until not l=fail or k=Length(O[j]);
+
+if l = fail then 
+	return false;
+fi;
+
+m:=PositionProperty(O[j][k]!.truth, x-> x[l]);
+
+if not IsBound(O[j][k]!.kernels_ht[m]) then 
+	return false;
+fi;
+
+val:=HTValue(O[j][k]!.kernels_ht[m], KernelOfTransformation(f));
+
+if val=fail then 
+  return false;
+fi;
+
+schutz:=O[j][k]!.schutz[m][1];
+
+return schutz or ForAny(O[j][k]!.reps[m][val], x-> SiftedPermutation(schutz, 
+ PermLeftQuoTransformationNC(x, f*O[j][k]!.perms[l]))=());
+end);
+
+# new for 3.2!
+#############################################################################
+# this could be moved to greens.gi... 
+# it could probably be more efficient (and complicated) if 
+# lower level things were used that R-classes.
+# should AsSSortedList be set after this is complete?
+
+# need Enumerator method but that's 
+
+InstallMethod(Iterator, "for a transformation semigroup",
+[IsTransformationSemigroup], 
+function(s)
+local iter;
+
+iter:= IteratorByFunctions( rec( 
+	
+	R:=IteratorOfGreensRClasses(s), 
+	
+	r:=fail,
+	
+	NextIterator:=function(iter)
+	
+	if IsDoneIterator(iter) then 
+		return fail;
+	fi;
+	
+	if iter!.r=fail or IsDoneIterator(iter!.r) then 
+		iter!.r:=Iterator(NextIterator(iter!.R));
+	fi;
+	
+	return NextIterator(iter!.r);
+	end,
+	
+	IsDoneIterator:= iter -> IsDoneIterator(iter!.R) and IsDoneIterator(iter!.r),
+	
+	ShallowCopy:= iter -> rec(R:=IteratorOfGreensRClasses(s), r:=fail)
+));
+
+SetIsIteratorOfSemigroup(iter, true);
+
+return iter;
+end);
+
+
+# new for 3.2!
+#############################################################################
+# if we do this until IsDoneIterator then shouldn't we store all the RClasses?
+# I guess not. This will make the iterator more complicated and involve
+# storing the already produced R-classes somewhere. Better just set 
+# GreensRClasses by making one instance of this iterator and running through it.
+
+# if not, then should we provide an EnumeratorOfGreensRClasses command for the
+# situation when OrbitsOfImages(s)!.finished=true but GreensRClasses has not
+# been defined? Probably not in the first instance. Storing the RClasses only 
+# really requires storing their representatives and 6 small ints per class. 
+# Hence if we can't store this, then we probably can't reach the end of the 
+# iterator in the first place.
 
 InstallGlobalFunction(IteratorOfGreensRClasses, 
 function(s)
@@ -431,7 +779,7 @@ iter:=IteratorByFunctions( rec(
 	
 	i:=0,
 	
-	type:=NewType( FamilyObj( s ) , IsEquivalenceClass and 
+	type:=NewType( FamilyObj( s ), IsEquivalenceClass and 
 	 IsEquivalenceClassDefaultRep and IsGreensRClass and 
 	 IsGreensClassOfTransSemigp),
 	
@@ -454,7 +802,7 @@ iter:=IteratorByFunctions( rec(
 	
 	#c:=GreensRClassOfElement(iter!.s, rep, type);
 	c:=Objectify( iter!.type, rec(parent:=s, 
-	 data:=OrbitsOfImages(s)!.data[iter!.i] ));
+	 data:=OrbitsOfImages(s)!.data[iter!.i], rep:=rep));
 	SetRepresentative(c, rep);
 	SetEquivalenceClassRelation(c, GreensRRelation(s));
 	return c; end,
@@ -701,8 +1049,10 @@ end);
 #############################################################################
 
 InstallGlobalFunction(NrRClassesOrbitsOfImages,
-function(c)
-local i, j, k, l, m;
+function(s)
+local i, j, k, l, m, c;
+
+c:=OrbitsOfImages(s);
 m:=[];
 
 c:=c!.orbits;
@@ -763,12 +1113,13 @@ InstallMethod(ParentAttr, "for a R-class of a trans. semigroup",
 
 InstallMethod(PrintObj, [IsIteratorOfRClassReps], 
 function(iter)
-local O;
+local O, s;
 
-O:=OrbitsOfImages(SemigroupOfIteratorOfRClassReps(iter));
+s:=SemigroupOfIteratorOfRClassReps(iter);
+O:=OrbitsOfImages(s);
 
 Print( "<iterator of R-class reps, ", Length(O!.ht!.o), " candidates, ", 
- SizeOrbitsOfImages(O), " elements, ", NrRClassesOrbitsOfImages(O), 
+ SizeOrbitsOfImages(s), " elements, ", NrRClassesOrbitsOfImages(s), 
  " R-classes>");
 return;
 end);
@@ -778,15 +1129,38 @@ end);
 
 InstallMethod(PrintObj, [IsIteratorOfGreensRClasses], 
 function(iter)
-local O;
-
-O:=OrbitsOfImages(iter!.s);
-
 Print( "<iterator of Green's R-classes>");
 return;
 end);
 
-#
+# new for 3.2!
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfSemigroup], 
+function(iter)
+Print("<iterator of transformation semigroup>");
+return;
+end);
+
+# new for 3.2!
+############################################################################
+
+InstallGlobalFunction(RClassImageOrbitFromData,
+function(s, d)
+return OrbitsOfImages(s)!.orbits[d[1]][d[2]];
+end);
+
+# new for 3.2!
+############################################################################
+# take care using the following, it returns all of the perms for the weak orbit
+
+InstallGlobalFunction(RClassPermsFromData, 
+function(s, d)
+
+return OrbitsOfImages(s)!.orbits[d[1]][d[2]]!.perms;
+end);
+
+# new for 3.2!
 ############################################################################
 
 InstallGlobalFunction(RClassRepFromData,
@@ -794,6 +1168,37 @@ function(s, d)
 return OrbitsOfImages(s)!.orbits[d[1]][d[2]]!.reps[d[4]][d[5]][d[6]];
 end);
 
+# new for 3.2!
+############################################################################
+
+InstallGlobalFunction(RClassSCCFromData,
+function(s,d)
+return OrbitsOfImages(s)!.orbits[d[1]][d[2]]!.scc[d[4]];
+end);
+
+# new for 3.2!
+############################################################################
+
+InstallGlobalFunction(RClassSchutzGpFromData, 
+function(s, d)
+return OrbitsOfImages(s)!.orbits[d[1]][d[2]]!.schutz[d[4]];
+end);
+
+# new for 3.2!
+############################################################################
+
+InstallOtherMethod(SchutzenbergerGroup, "for a R-class of a trans. semigp.",
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+local s, d, o;
+
+s:=r!.parent;
+d:=r!.data;
+o:=RClassImageOrbitFromData(s, d);
+
+return RClassSchutzGpFromData(s, d)[2]^(o!.perms[d[3]]^-1);
+# replace the above with function calls? JDM
+end);
 
 
 # new for 3.2!
@@ -824,8 +1229,6 @@ t:=o!.truth;
 graph:=OrbitGraph(o);
 is_sym:=false;
 
-
-
 for i in scc do 
 	for j in [1..Length(gens)] do 
 		if IsBound(graph[i][j]) and t[k][graph[i][j]] then
@@ -849,22 +1252,57 @@ else
 fi;
 end);
 
+# new for 3.2!
+#############################################################################
+##  Algorithm C. 
+
+InstallOtherMethod(Size, "for an R-class of a trans. semigp.", 
+[IsGreensRClass and IsGreensClassOfTransSemigp],
+function(r)
+local d, o;
+
+d:=r!.data;
+o:=RClassImageOrbitFromData(r!.parent, d);
+
+return Size(o!.schutz[d[4]][2])*Length(o!.scc[d[4]]);
+# replace the above with function calls? JDM
+end);
+
+#############################################################################
+##  Algorithm V.
+
+InstallMethod(Size, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
+function(s)
+local iter, o, i;
+
+o:=OrbitsOfImages(s);
+
+if not o!.finished then 
+	iter:=IteratorOfRClassReps(s);
+	iter!.i:=Length(o!.data); 
+	for i in iter do od;
+fi;
+
+return SizeOrbitsOfImages(s);
+end);
 
 # new for 3.2!
 #############################################################################
 # returns the size of the semigroup <s> with OrbitsOfImages(s)=c so far
 
 InstallGlobalFunction(SizeOrbitsOfImages, 
-function(c)
-local i, o, j;
+function(s)
+local i, o, j, c;
 i:=0;
 
-c:=c!.orbits;
+c:=OrbitsOfImages(s)!.orbits;
 
 for o in Concatenation(Compacted(c)) do 
   for j in [1..Length(o!.scc)] do
     if IsBound(o!.schutz[j]) and IsBound(o!.reps[j]) and IsBound(o!.scc[j]) then 
-      i:=i+Size(o!.schutz[j][2])*Sum(List(o!.reps[j]), Length)*Length(o!.scc[j]);
+      i:=i+Size(o!.schutz[j][2])*
+      Sum(List(o!.reps[j]), Length)*Length(o!.scc[j]);
     fi;
   od;
 od;
@@ -950,71 +1388,3 @@ od;
 
 return out;
 end;
-
-#############################################################################
-
-NewSize:=function(c)
-local i, o, j;
-i:=0;
-
-for o in Concatenation(Compacted(c)) do 
-  for j in [1..Length(o!.scc)] do
-    if IsBound(o!.schutz[j]) and IsBound(o!.reps[j]) and IsBound(o!.scc[j]) then 
-      i:=i+Size(o!.schutz[j][2])*Sum(List(o!.reps[j]), Length)*Length(o!.scc[j]);
-    fi;
-  od;
-od;
-
-return i;
-end;
-
-#############################################################################
-# assumes that the image of f is the first element in the strong orbit 
-# containing it, and it assumes that the image of f belongs to o!.scc[i]. 
-
-InstallGlobalFunction(IsInSCCOfOrbitNC,
-function(f, o, i)
-local val, schutz, reps;
-
-val:=HTValue(o!.kernels_ht[i], KernelOfTransformationNC(f));
-
-if val=fail then 
-  return false;
-fi;
-
-schutz:=o!.schutz[i][1];
-reps:=o!.reps[i][val];
-
-return ForAny(reps, x-> schutz=true or PermLeftQuoTransformationNC(x, f)
-     in schutz);
-end);
-
-#############################################################################
-
-InstallGlobalFunction(IsInSCCOfOrbit,
-function(f, o, i)
-local j;
-
-j:=Position(o, Set(f![1]));
-
-if not j=fail and j in o!.scc[i] then 
-  return IsInSCCOfOrbitNC(f*o!.perms[j], o, i);
-fi;
-
-return false;
-end);
-
-#############################################################################
-
-InstallGlobalFunction(IsInOrbit,
-function(f, o)
-local i, j;
-i:=Position(o, Set(f![1]));
-
-if not i=fail then 
-  j:=PositionProperty(o!.truth, x-> x[i]);
-  return IsInSCCOfOrbitNC(f*o!.perms[i], o, j);
-fi;
-
-return false;
-end);

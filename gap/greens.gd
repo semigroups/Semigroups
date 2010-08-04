@@ -680,6 +680,10 @@ DeclareAttribute("GreensDClassData", IsGreensDClass and IsGreensClassOfTransSemi
 ##	</ManSection>
 ##	<#/GAPDoc>
 
+# JDM change this to 
+# DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
+# when the time is right!
+
 DeclareAttribute("SchutzenbergerGroup", IsGreensData);
 
 #############################################################################
@@ -755,6 +759,7 @@ DeclareGlobalFunction("ForwardOrbitOfImageNC");
 
 DeclareGlobalFunction("SizeOrbitsOfImages");
 DeclareGlobalFunction("NrRClassesOrbitsOfImages");
+DeclareGlobalFunction("InOrbitsOfImages");
 
 DeclareGlobalFunction("CreateSchreierTreeOfSCC");
 DeclareGlobalFunction("CreateReverseSchreierTreeOfSCC");
@@ -764,11 +769,17 @@ DeclareGlobalFunction("MultipliersOfSCCOfOrbit");
 DeclareGlobalFunction("SchutzenbergerGroupOfSCCOfOrbit");
 
 DeclareGlobalFunction("RClassRepFromData");
+DeclareGlobalFunction("RClassImageOrbitFromData");
+DeclareGlobalFunction("RClassSchutzGpFromData");
+DeclareGlobalFunction("RClassPermsFromData");
+DeclareGlobalFunction("RClassSCCFromData");
+
 
 DeclareGlobalFunction("IsInSCCOfOrbitNC");
 DeclareGlobalFunction("IsInSCCOfOrbit");
 DeclareGlobalFunction("IsInOrbit");
 
+DeclareProperty("IsEnumeratorOfRClassElements", IsEnumeratorByFunctions);
 
 DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareInfoClass("InfoMonoidGreens");
@@ -776,6 +787,8 @@ DeclareGlobalFunction("GreensRClassRepsNC");
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
 DeclareGlobalFunction("IteratorOfGreensRClasses");
 DeclareProperty("IsIteratorOfGreensRClasses", IsIterator);
+DeclareProperty("IsIteratorOfSemigroup", IsIterator);
+
 DeclareAttribute("SemigroupOfIteratorOfRClassReps", IsIteratorOfRClassReps);
 DeclareAttribute("SemigroupOfIteratorOfGreensRClasses", 
 IsIteratorOfGreensRClasses);

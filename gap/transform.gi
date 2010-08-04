@@ -214,6 +214,13 @@ return TransformationNC( Flat( Successors( rel ) ) );
 end);
 
 #############################################################################
+# new for 3.2! the lib. method is obtained by replacing TransformationNC 
+# by Transformation.
+
+InstallMethod(RandomTransformation, "for a pos. int.", [IsPosInt],
+n-> TransformationNC( List( [ 1 .. n ], i-> Random( [ 1 .. n ] ))));
+
+#############################################################################
 
 InstallOtherMethod(RandomTransformation,  "for a kernel and image", true, [IsCyclotomicCollColl, IsCyclotomicCollection], 0,     
 function(ker, img)
