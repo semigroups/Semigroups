@@ -447,6 +447,8 @@ DeclareRepresentation("IsGreensDClassDataRep",
 
 DeclareAttribute("GreensRClassData", IsGreensRClass and IsGreensClassOfTransSemigp);
 
+
+
 #############################################################################
 ##
 ##	<#GAPDoc Label="GreensRClassReps">
@@ -756,6 +758,7 @@ DeclareProperty("RClassRepsData", IsTransformationSemigroup);
 DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
 DeclareGlobalFunction("ForwardOrbitOfImage");
 DeclareGlobalFunction("ForwardOrbitOfImageNC");
+DeclareGlobalFunction("FindOrbitsOfImages");
 
 DeclareGlobalFunction("SizeOrbitsOfImages");
 DeclareGlobalFunction("NrRClassesOrbitsOfImages");
@@ -773,7 +776,7 @@ DeclareGlobalFunction("RClassImageOrbitFromData");
 DeclareGlobalFunction("RClassSchutzGpFromData");
 DeclareGlobalFunction("RClassPermsFromData");
 DeclareGlobalFunction("RClassSCCFromData");
-
+DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
 
 DeclareGlobalFunction("IsInSCCOfOrbitNC");
 DeclareGlobalFunction("IsInSCCOfOrbit");
@@ -792,6 +795,7 @@ DeclareProperty("IsIteratorOfSemigroup", IsIterator);
 DeclareAttribute("SemigroupOfIteratorOfRClassReps", IsIteratorOfRClassReps);
 DeclareAttribute("SemigroupOfIteratorOfGreensRClasses", 
 IsIteratorOfGreensRClasses);
+DeclareAttribute("NrGreensRClasses", IsTransformationSemigroup);
 
 # probably get rid of the following...
 DeclareAttribute("GreensRClassesSoFar", IsTransformationSemigroup, "mutable");

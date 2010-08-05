@@ -21,6 +21,9 @@
 
 # - make test files, write documentation
 
+# - make this file only contain things relating to images/r-classes, and have
+# a separate file for those relating to l-classes/kernels, and d-classes etc.
+
 ## new for 3.2!
 #############################################################################
 ##  Algorithm E. 

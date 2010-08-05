@@ -400,7 +400,7 @@ return [sorbit[1][pos], sorbit[2][pos], sorbit[3][pos]];
 end);
 
 #############################################################################
-#JDM the following should be modified
+#JDM the following should be modified 
 
 InstallMethod(GreensRClassData, "data structure of R-class of an element",
 [IsGreensRClass and IsGreensClassOfTransSemigp],
@@ -521,59 +521,10 @@ return classes;
 end);
 
 
-#############################################################################
-# JDM the following should be deleted...
-
-InstallOtherMethod(GreensRClassReps,  "for a transformation semigroup", 
-[IsTransformationSemigroup],
-function(X)
-GreensRClasses(X);
-return GreensRClassReps(X);
-end);
-
-#############################################################################
-# the following should be deleted...
-
-InstallOtherMethod(GradedRClasses,  "for a transformation semigroup", [IsTransformationSemigroup], 
-function(X)
-GreensRClasses(X);
-return GradedRClasses(X);
-end);
 
 
 
-#############################################################################
-##
-#M  AsSSortedList( <RClassData> )  
-##  
-##  Algorithm D.
-##   
-##  returns the elements of <RClassData>
-##
 
-# JDM the following should be reviewed
-
-InstallOtherMethod(AsSSortedList, "for GreensRClassData", 
-[IsGreensRClassData], 
-function(R)
-local m, x, elts, grp, prod, g;
-
-grp:= R!.schutz;
-x:= R!.rep;
-
-elts:= [];
-for m in R!.perms do
-	for g in grp do 
-		prod:=x*(g*m^-1);
-		#if not prod in elts then  JDM recent change here!!
-			AddSet(elts, prod); 
-		#fi;
-	od;
-od;
-
-SetSize(R, Size(elts));
-return elts;
-end);
 
 #############################################################################
 ##
@@ -1087,7 +1038,8 @@ end);
 
 #JDM this should be modified
 
-InstallOtherMethod(DClassOfHClass, "for a transformation semigroup", true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0, 
+InstallOtherMethod(DClassOfHClass, "for a transformation semigroup", true, 
+[IsGreensHClass and IsGreensClassOfTransSemigp], 0, 
 function(hc)
 
 if HasGreensDClasses(ParentAttr(hc)) then 
@@ -1481,7 +1433,7 @@ end);
 ## Global functions
 #############################################################################
 
-##  JDM the following should be reviewed!
+##  JDM the following should be reviewed! depends on R-classes
 
 InstallOtherMethod( Idempotents, "for a transformation semigroup", 
 [IsTransformationSemigroup],
@@ -1524,7 +1476,7 @@ end);
 
 #####################
 
-##  JDM the following should be reviewed!
+##  JDM the following should be reviewed! depends on R-classes
 
 InstallOtherMethod(Idempotents, "for a trans. semigroup and pos. int.", 
 [IsTransformationSemigroup, IsPosInt],
@@ -1572,69 +1524,7 @@ end);
 
 
 
-#############################################################################
-##
-#M  <x> in <M> . . . . . . . . . . . . . . . . . . . . . . . membership test.
-##
-##  A transformation <x>  lies in a transformation monoid  <M> if it  has the
-##  same degree as <M> and if it is contained in one of the R classes of <M>.
-##
-##  Algorithm X.
-##
 
-##  JDM the following should be reviewed!
-
-InstallMethod(\in, "for a transformation semigroup", 
-[IsObject, IsTransformationSemigroup],
-function(x, M)
-local i, j, k, pos, R, ker, kers, rrel;
-
-# check degree.
-if not IsTransformation(x) or DegreeOfTransformation(x) <> DegreeOfTransformationSemigroup(M) then
-	return false;
-fi;
-
-#JDM new for 3.1.4
-
-if HasAsSSortedList(M) then 
-	return x in AsSSortedList(M);
-fi;
-
-#JDM end
-
-k:= RankOfTransformation(x);
-
-if k>Maximum(List(GeneratorsOfSemigroup(M), RankOfTransformation)) then 
-	return false;
-fi;
-
-GreensRClasses(M);
-pos:= Position(GradedImagesOfTransSemigroup(M)[k], ImageSetOfTransformation(x));
-
-if pos = fail then
-	return false;
-fi;
-
-GreensRClasses(M);
-
-# locate representing R class.
-j:= PositionsRClasses(M)[k][pos];
-R:= GradedRClasses(M)[j];
-
-# check kernels.
-ker:= KernelOfTransformation(x);
-kers:=InternalKernels(M)[j];
-
-for i in [1..Length(kers)] do
-	if kers[i] = ker and x in R[i] then 
-		return true;
-	fi;
-od;
-
-# if that fails.
-return false;
-
-end);
 
 #############################################################################
 
