@@ -62,6 +62,52 @@ return schutz=true or SiftedPermutation(schutz,
  PermLeftQuoTransformationNC(rep, f*o!.perms[i]))=();
 end);
 
+
+# new for 3.2!
+#############################################################################
+# not algorithm X.
+
+InstallMethod(\in, "for a transformation semigroup", 
+[IsTransformation, IsTransformationSemigroup],
+function(f, s)
+local gens, g, o, iter;
+
+if HasAsSSortedList(s) then 
+	return f in AsSSortedList(s);
+fi;
+
+gens:=GeneratorsOfSemigroup(s);
+
+if not DegreeOfTransformation(f) = DegreeOfTransformation(gens[1]) then 
+	return false;
+fi;
+
+o:=OrbitsOfImages(s);
+g:=InOrbitsOfImages(o, f);
+
+if g[1] then 
+	return true;
+elif o!.finished then 
+	return false;
+fi;
+
+# check what's already known...
+iter:=IteratorOfRClassReps(s);
+iter!.i:=Length(o!.data);
+
+repeat
+	NextIterator(iter);
+	g:=InOrbitsOfImages(o, f, g[2]);
+
+	if g[1] then 
+		return true;
+	fi;
+until IsDoneIterator(iter);
+
+return false;
+end);
+
+
 # new for 3.2!
 #############################################################################
 # Algorithm D.
@@ -78,7 +124,7 @@ s:=r!.parent;
 d:=r!.data;
 
 h:=List(RClassSchutzGpFromData(s, d)[2], x-> f*x);
-#JDM is schutz not the H-class containing f?
+#JDM is schutz not the H-class containing f? no 
 
 elts:=[];
 
@@ -95,23 +141,6 @@ end);
 InstallOtherMethod(AsSSortedList, "for R-class of trans. semigp.",
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 r-> EnumeratorSorted(r));
-
-# new for 3.2!
-#############################################################################
-# Algorithm W.
-
-#InstallOtherMethod(AsSSortedList, "for a transformation semigroup",
-#[IsTransformationSemigroup],
-#function(s)
-#local elts, rrel;
-
-#elts:=Union(List(GreensRClasses(M), Elements));
-#if not HasSize(M) then
-#	SetSize(M, Size(elts));
-#fi;
-
-#return elts;
-#end);
 
 # new for 3.2!
 #############################################################################
@@ -213,15 +242,19 @@ end);
 InstallOtherMethod(Enumerator, "for R-class of trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 function(r)
-local enum;
+local enum, h;
+
+h:=List(Elements(RClassSchutzGpFromData(r!.parent, r!.data)[2]), x-> 
+	r!.rep*x);
+#maybe use enum here too? JDM
 
 enum:=EnumeratorByFunctions(r, rec(
 	
 	rep:=r!.rep,
 	
-	h:=List(Elements(RClassSchutzGpFromData(r!.parent, r!.data)[2]), x-> 
-	r!.rep*x), 
-	#maybe use enum here too? JDM
+	h:=h, 
+	
+	len:=Length(h),
 	
 	p:=RClassPermsFromData(r!.parent, r!.data),
 	
@@ -230,17 +263,21 @@ enum:=EnumeratorByFunctions(r, rec(
 	###########################################################################
 	
 	ElementNumber:=function(enum, pos)
-	
+	local q, n, m;
 		if pos>Length(enum) then 
 			return fail;
 		fi;
 		
-		if pos<=Length(enum!.h) then 
+		if pos<=enum!.len then 
 			return enum!.h[pos];
 		fi;
 		
-		pos:=QuotientRemainder(pos-1, Length(enum!.h))+1;
+		n:=pos-1;
+		m:=enum!.len;
 		
+    q := QuoInt(n, m);
+    pos:= [ q, n - q * m ]+1;
+
 		return enum!.h[pos[2]]*enum!.p[enum!.scc[pos[1]]]^-1;
 	end, 
 	
@@ -312,8 +349,36 @@ for i in iter do
 	out[Length(out)+1]:=i;
 od;
 
-return Enumerator(out);
+return Immutable(out);
 end);
+
+
+#new for 3.2!
+#############################################################################
+# finds all orbits of images!!
+
+
+InstallGlobalFunction(FindOrbitsOfImages, 
+function(s)
+local o, iter, i;
+o:=OrbitsOfImages(s);
+
+if not o!.finished then 
+	iter:=IteratorOfRClassReps(s);
+	iter!.i:=Length(o!.data); 
+	# avoids running through those already found.
+	for i in iter do od;
+fi;
+
+Print("finished: ", o!.finished, "\n");
+Print("orbits: "); View(o!.orbits); Print("\n");
+Print("at: ", o!.at, "\n");
+Print("ht: "); View(o!.ht); Print("\n");
+Print("size: ", SizeOrbitsOfImages(s), "\n");
+Print("R-classes: ", NrRClassesOrbitsOfImages(s), "\n");
+return true;
+end);
+
 
 #new for 3.2!
 #############################################################################
@@ -454,6 +519,64 @@ for i in iter do
 od;
 
 return out;
+end);
+
+# new for 3.2!
+#############################################################################
+
+InstallOtherMethod(GreensRClassOfElement, "for a trans. semigp and trans.", 
+[IsTransformationSemigroup, IsTransformation],
+function(s, f)
+local d, rep, type, c;
+
+if not f in s then 
+	Info(InfoWarning, 1, "transformation is not an element of the semigroup");
+	return fail;
+fi;
+
+d:=InOrbitsOfImages(OrbitsOfImages(s), f)[2]{[1..6]};
+rep:=RClassRepFromData(s, d);
+type:=NewType( FamilyObj( s ), IsEquivalenceClass and 
+	 IsEquivalenceClassDefaultRep and IsGreensRClass and 
+	 IsGreensClassOfTransSemigp);
+
+c:=Objectify( type, rec(parent:=s, data:=d, rep:=rep));
+SetRepresentative(c, rep);
+SetEquivalenceClassRelation(c, GreensRRelation(s));
+return c;
+end);
+
+# new for 3.2!
+#############################################################################
+
+InstallOtherMethod(GreensRClassOfElementNC, "for a trans. semigp and trans.", 
+[IsTransformationSemigroup, IsTransformation],
+function(s, f)
+local d, rep, type, c;
+
+d:=InOrbitsOfImages(OrbitsOfImages(s), f);
+
+if d[1] then # f in s!
+	d:=InOrbitsOfImages(OrbitsOfImages(s), f)[2]{[1..6]};
+	rep:=RClassRepFromData(s, d);
+elif not OrbitsOfImages(s)!.finished and ForAny(d[2], x-> x=fail) then 
+#don't know if f in s!
+	ForwardOrbitOfImageNC(s, f);
+	d:=[Length(ImageSetOfTransformation(f)), 1, 1, 1, 1, 1];
+	rep:=f;
+else #f not in s!
+	Info(InfoWarning, 1, "transformation is not an element of the semigroup");
+	return fail;
+fi;
+
+type:=NewType( FamilyObj( s ), IsEquivalenceClass and 
+	 IsEquivalenceClassDefaultRep and IsGreensRClass and 
+	 IsGreensClassOfTransSemigp);
+
+c:=Objectify( type, rec(parent:=s, data:=d, rep:=rep));
+SetRepresentative(c, rep);
+SetEquivalenceClassRelation(c, GreensRRelation(s));
+return c;
 end);
 
 # new for 3.2!
@@ -667,60 +790,71 @@ end);
 #############################################################################
 
 InstallGlobalFunction(InOrbitsOfImages, 
-function(s, f)
-local O, img, j, k, l, m, val, schutz;
+function(arg)
+local O, img, j, k, l, m, val, schutz, s, f, n, g;
 
-O:=OrbitsOfImages(s);
-
-#is the following worth it?
-
-if not HTValue(O!.ht, f)=fail then 
-	return true;
-fi;
-
-O:=O!.orbits;
-
+O:=arg[1]!.orbits; f:=arg[2]; 
 img:=ImageSetOfTransformation(f);
-j:=Length(img);
+
+if Length(arg)=3 then 
+	j:=arg[3][1]; k:=arg[3][2]; l:=arg[3][3];
+	m:=arg[3][4]; val:=arg[3][5]; n:=arg[3][6];
+	g:=arg[3][7];
+else
+	j:=Length(img);
+	k:=fail; l:=fail; m:=fail; val:=fail; n:=0; g:=fail;
+fi;
 
 if not IsBound(O[j]) then
-	return false;
+	return [false, [j, fail, fail, fail, fail, fail, fail]];
 fi;
 
-k:=0;
+if k=fail then
+	k:=0;
 
-repeat
-	k:=k+1;
-	l:=Position(O[j][k], img);
-until not l=fail or k=Length(O[j]);
+	repeat
+		k:=k+1;
+		l:=Position(O[j][k], img);
+	until not l=fail or k=Length(O[j]);
 
-if l = fail then 
-	return false;
+	if l = fail then 
+		return [false, [j, fail, fail, fail, fail, fail, fail]];
+	fi;
+	m:=PositionProperty(O[j][k]!.truth, x-> x[l]);
+	g:=f*O[j][k]!.perms[l];
 fi;
-
-m:=PositionProperty(O[j][k]!.truth, x-> x[l]);
-
-if not IsBound(O[j][k]!.kernels_ht[m]) then 
-	return false;
-fi;
-
-val:=HTValue(O[j][k]!.kernels_ht[m], KernelOfTransformation(f));
 
 if val=fail then 
-  return false;
+	if not IsBound(O[j][k]!.kernels_ht[m]) then 
+		return [false, [j, k, l, m, fail, fail, g]];
+	fi;
+	val:=HTValue(O[j][k]!.kernels_ht[m], KernelOfTransformation(f));
+	if val=fail then 
+  	return [false, [j, k, l, m, fail, fail, g]];
+	fi;
 fi;
 
 schutz:=O[j][k]!.schutz[m][1];
 
-return schutz or ForAny(O[j][k]!.reps[m][val], x-> SiftedPermutation(schutz, 
- PermLeftQuoTransformationNC(x, f*O[j][k]!.perms[l]))=());
+if schutz=true then 
+	return [true, [j,k,l,m,val,1,g]];
+fi;
+
+while n<Length(O[j][k]!.reps[m][val]) do 
+	n:=n+1;
+	x:=O[j][k]!.reps[m][val][n];
+	return [SiftedPermutation(schutz, 
+		PermLeftQuoTransformationNC(x, g))=(),[j,k,l,m,val,n,g]];
+od;
+
+return [false, [j,k,l,m,val,n,g]];
 end);
 
 # new for 3.2!
 #############################################################################
 # this could be moved to greens.gi... 
 # it could probably be more efficient (and complicated) if 
-# lower level things were used that R-classes.
+# lower level things were used than R-classes.
 # should AsSSortedList be set after this is complete?
 
 # need Enumerator method but that's 
@@ -1070,7 +1204,12 @@ for i in c do
   od;
 od;
 
-return Sum(m);
+m:=Sum(m);
+
+if OrbitsOfImages(s)!.finished then 
+	SetNrGreensRClasses(s, m);
+fi;
+return m;
 end);
 
 # new for 3.2!
@@ -1217,7 +1356,6 @@ InstallGlobalFunction(SchutzenbergerGroupOfSCCOfOrbit,
 function(gens, o, f, k) 
 local p, t, g, bound, graph, i, j, scc, is_sym;
 
-#gens:=o!.gens;
 scc:=o!.scc[k];
 
 if Length(o[scc[1]])<1000 then 
@@ -1285,7 +1423,7 @@ if not o!.finished then
 	iter:=IteratorOfRClassReps(s);
 	iter!.i:=Length(o!.data); 
 	for i in iter do od;
-fi;
+fi; #JDM replace with FindOrbitsOfImages?
 
 return SizeOrbitsOfImages(s);
 end);
@@ -1309,6 +1447,10 @@ for o in Concatenation(Compacted(c)) do
     fi;
   od;
 od;
+
+if OrbitsOfImages(s)!.finished then 
+	SetSize(s, i);
+fi;
 
 return i;
 end);
