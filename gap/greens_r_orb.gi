@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  greens_orb.gi
+#W  greens_r_orb.gi
 #Y  Copyright (C) 2006-2010                             James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-## $Id: greens.gd 54 2010-07-06 11:09:37Z jamesm $
+## $Id$
 
 #############################################################################
 ## Notes
@@ -21,7 +21,9 @@
 # this will lead to the later orbit not have all of its reps, etc defined. 
 # What should be done about the above comment?
 
-# - make test files, write documentation
+# - make test files NEXT! 
+
+# - write documentation
 
 # - consider storing the relevant data for an R-class in that R-class 
 #   rather than repeatedly obtaining it from OrbitsOfImages. About 
@@ -44,7 +46,7 @@ return List(o!.reps, Length);
 end;
 
 # - implement GreensRClassData for legacy, and remove all functions supporting
-#   the old methods etc for GreensRClasses/images... NEXT!
+#   the old methods etc for GreensRClasses/images... 
 
 ## new for 3.2!
 #############################################################################
