@@ -148,45 +148,15 @@ return false;
 end);
 
 #############################################################################
-##
-##	<#GAPDoc Label="Idempotent">
-##	<ManSection><Heading>Idempotent</Heading>
-##	<Func Name="IdempotentNC" Arg="ker, img"/>
-##	<Func Name="Idempotent" Arg="ker, img"/>
-##	<Description>
-##	<C>IdempotentNC</C> returns an idempotent with kernel <C>ker</C> and image 
-##	<C>img</C> without checking <Ref Func="IsTransversal"/><C>(ker, im)</C>.<P/>
-##
-##	<C>Idempotent</C> returns an idempotent with kernel <C>ker</C> and image 
-##	<C>img</C> after checking that <Ref Func="IsTransversal"/><C>(ker, im)</C> 
-##	returns true. <P/>
-##	<Example>
-##  gap&gt; g1:=Transformation([2,2,4,4,5,6]);;
-##  gap&gt; g2:=Transformation([5,3,4,4,6,6]);;
-##  gap&gt; ker:=KernelOfTransformation(g2*g1);;
-##  gap&gt; im:=ImageListOfTransformation(g2);;
-##  gap&gt; Idempotent(ker, im);
-##  Error,  the image must be a transversal of the kernel
-##  [ ... ]
-##  gap&gt; Idempotent([[1,2,3],[4,5],[6,7]], [1,5,6]);
-##  Transformation( [ 1, 1, 1, 5, 5, 6, 6 ] )
-##  gap&gt; IdempotentNC([[1,2,3],[4,5],[6,7]], [1,5,6]);
-##  Transformation( [ 1, 1, 1, 5, 5, 6, 6 ] )
-##	</Example> <!-- transform.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-##	</Description>
 
 InstallGlobalFunction(IdempotentNC, 
 function(ker, img)
-      local e, l;
-      e:= [];
-      for l in ker do  
-         e{l}:= 0*l + Intersection(l, img)[1];  
-      od;
-      return TransformationNC(e);
-      #return Transformation(e);
+local e, l;
+e:= [];
+for l in ker do  
+	 e{l}:= 0*l + Intersection(l, img)[1];  
+od;
+return TransformationNC(e);
 end);
 
 InstallGlobalFunction(Idempotent, 

@@ -19,7 +19,6 @@
 #############################################################################
 # keep here
 
-
 InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
 [IsGreensClass], x-> IsTransformationSemigroup(ParentAttr(x)));
 
@@ -30,27 +29,7 @@ InstallOtherMethod(IsGreensHClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 
 #############################################################################
-# keep here but modify so that when the object is created it fits in with 
-# what's going on globally! JDM
-
-# want two versions the following should look up the R-class (and hence maybe slow)
-# the NC version should just assume that <e> is an element of s and act 
-# accordingly even if the consequence will be disasterous...
-
-InstallOtherMethod(GreensRClassOfElement, "for a trans. semigroup and elt", 
-[IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject],
-function(s,e)
-local ec;
-
-ec := EquivalenceClassOfElementNC( GreensRRelation(s), e );
-SetIsGreensClass(ec,true);
-SetIsGreensRClass(ec,true);
-SetIsGreensClassOfTransSemigp(ec, true);
-return ec;
-end);
-
-#############################################################################
-# keep here
+# this should move to greens_l_orb when it exists JDM
 
 InstallOtherMethod(GreensLClassOfElement, "for a trans. semigroup and elt", 
 [IsTransformationSemigroup and HasIsFinite and IsFinite, IsObject],

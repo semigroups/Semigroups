@@ -750,15 +750,21 @@ DeclareAttribute("PartialOrderOfDClasses", IsSemigroup, "mutable");
 #############################################################################
 # new for 3.2!
 
-# returns true if OrbitsOfImages is complete, that is, if all RClassReps have 
-# been found...
+DeclareInfoClass("InfoMonoidGreens");
 
-DeclareProperty("RClassRepsData", IsTransformationSemigroup);
+# in OrbitsOfImages:
+# would it be better to have this stored in the (empty) record used to 
+# create <s> in SemigroupByGenerators, to avoid method selection? Since
+# this is called so so many times it might be worth it... JDM for MN
+
+DeclareOperation("IsSubsemigroup", [IsTransformationSemigroup, 
+ IsTransformationSemigroup]);
 
 DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
 DeclareGlobalFunction("ForwardOrbitOfImage");
 DeclareGlobalFunction("ForwardOrbitOfImageNC");
-DeclareGlobalFunction("FindOrbitsOfImages");
+DeclareGlobalFunction("DisplayOrbitsOfImages");
+DeclareGlobalFunction("ExpandOrbitsOfImages");
 
 DeclareGlobalFunction("SizeOrbitsOfImages");
 DeclareGlobalFunction("NrRClassesOrbitsOfImages");
@@ -778,19 +784,16 @@ DeclareGlobalFunction("RClassPermsFromData");
 DeclareGlobalFunction("RClassSCCFromData");
 DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
 
-DeclareGlobalFunction("IsInSCCOfOrbitNC");
-DeclareGlobalFunction("IsInSCCOfOrbit");
-DeclareGlobalFunction("IsInOrbit");
-
 DeclareProperty("IsEnumeratorOfRClassElements", IsEnumeratorByFunctions);
-
 DeclareGlobalFunction("IteratorOfRClassReps");
-DeclareInfoClass("InfoMonoidGreens");
+
 DeclareGlobalFunction("GreensRClassRepsNC");
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
 DeclareGlobalFunction("IteratorOfGreensRClasses");
 DeclareProperty("IsIteratorOfGreensRClasses", IsIterator);
 DeclareProperty("IsIteratorOfSemigroup", IsIterator);
+DeclareProperty("IsIteratorOfRClassElements", IsIterator);
+
 
 DeclareAttribute("SemigroupOfIteratorOfRClassReps", IsIteratorOfRClassReps);
 DeclareAttribute("SemigroupOfIteratorOfGreensRClasses", 
@@ -798,4 +801,8 @@ IsIteratorOfGreensRClasses);
 DeclareAttribute("NrGreensRClasses", IsTransformationSemigroup);
 
 # probably get rid of the following...
-DeclareAttribute("GreensRClassesSoFar", IsTransformationSemigroup, "mutable");
+
+DeclareGlobalFunction("IsInSCCOfOrbitNC");
+DeclareGlobalFunction("IsInSCCOfOrbit");
+DeclareGlobalFunction("IsInOrbit");
+DeclareProperty("RClassRepsData", IsTransformationSemigroup);
