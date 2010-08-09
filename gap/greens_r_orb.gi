@@ -21,10 +21,6 @@
 # this will lead to the later orbit not have all of its reps, etc defined. 
 # What should be done about the above comment?
 
-# - make test files NEXT! 
-
-# - write documentation
-
 # - consider storing the relevant data for an R-class in that R-class 
 #   rather than repeatedly obtaining it from OrbitsOfImages. About 
 #   1/3 of the time in finding all the idempotents of all the R-classes
@@ -45,8 +41,35 @@ NrKernels:=function(o)
 return List(o!.reps, Length);
 end;
 
-# - implement GreensRClassData for legacy, and remove all functions supporting
-#   the old methods etc for GreensRClasses/images... 
+# - does it make sense to actually have \in etc defined using D-classes rather 
+#   than R-classes? Check efficiency etc and see if it does...
+
+#############################################################################
+## To do 
+
+# - make test files
+
+# - remove all functions supporting the old methods etc for GreensRClasses/
+#  images... 
+
+# - check other functions in other files to see if they still work (or not!)
+
+# - write documentation
+
+# - remove KernelOfTransformationNC everywhere...
+
+# - test against latest orb release...
+
+##
+#############################################################################
+
+InstallMethod( \=, "for R-class of trans. semigp. and R-class of trans. semigp.",
+[IsGreensRClass and IsGreensClassOfTransSemigp, IsGreensRClass and 
+IsGreensClassOfTransSemigp],
+function(r1, r2)
+
+return r1!.rep in r2 and r2!.rep in r1;
+end);
 
 ## new for 3.2!
 #############################################################################
@@ -121,7 +144,7 @@ fi;
 
 # check what's already known...
 iter:=IteratorOfRClassReps(s);
-iter!.i:=Length(o!.data);
+iter!.i:=Length(o!.data); #avoids checking what's already known!
 
 repeat
 	NextIterator(iter);
@@ -180,6 +203,8 @@ end);
 # o is the orbit
 # i is the index of the scc of o we are trying to create the Schreier tree for!
 
+# this should be moved to greens.gi
+
 InstallGlobalFunction(CreateSchreierTreeOfSCC,
 function(o, i)
 local gen, pos, seen, oo, graph, j, k, l, scc, t;
@@ -224,6 +249,8 @@ end);
 #############################################################################
 #
 
+# this should be moved to greens.gi
+
 InstallGlobalFunction(CreateReverseSchreierTreeOfSCC,
 function(o, i)
 local rev, j, k, l, m, graph, scc, gen, pos, seen, t, oo; 
@@ -237,6 +264,7 @@ for j in [1..Length(graph)] do
   for k in [1..Length(graph[j])] do 
     if IsBound(graph[j][k]) then 
       Add(rev[graph[j][k]][k], j);
+      #starting at position j and applying gens[k] we obtain graph[j][k];
     fi;
   od;
 od;
@@ -520,7 +548,6 @@ o!.trees[1]:=CreateSchreierTreeOfSCC(o,1);
 o!.reps:=List([1..Length(scc)], x-> []);
 Add(o!.reps[1], [f]);
 
-
 #if schreier then 
 #	o!.words:=List([1..Length(scc)], x-> []);
 #	o!.reverse:=EmptyPlist(Length(scc));
@@ -537,12 +564,12 @@ scc:=scc[1];
 
 #multipliers of scc containing the image of f
 o!.perms:=EmptyPlist(Length(o));
-#o!.perms:=MultipliersOfSCCOfOrbit(o, 1, rec(schreier:=schreier));
-o!.perms:=MultipliersOfSCCOfOrbit(gens, o, 1);
+#o!.perms:=MultipliersOfSCCOfImageOrbit(o, 1, rec(schreier:=schreier));
+MultipliersOfSCCOfImageOrbit(gens, o, 1);
 
 #schutzenberger group corresponding to scc[1]
 o!.schutz:=EmptyPlist(Length(scc));
-o!.schutz[1]:=SchutzenbergerGroupOfSCCOfOrbit(gens, o, f, 1);
+o!.schutz[1]:=SchutzenbergerGroupOfSCCOfImageOrbit(gens, o, f, 1);
 
 #OrbitsOfImages is partitioned according to image size of the first element in 
 # each component!
@@ -559,6 +586,38 @@ O!.data[Length(O!.data)+1]:=[Length(img), Length(O!.orbits[Length(img)]),
  1, 1, 1, 1];
 
 return o;
+end);
+
+
+# new method in 3.2!
+#############################################################################
+#
+
+InstallMethod(GreensRClassData, "for a R-class of a trans. semigroup",
+[IsGreensRClass and IsGreensClassOfTransSemigp],
+function(r)
+local rep, d, s, scc, l, o, p, g;
+
+rep:=r!.rep;
+d:=r!.data;
+s:=r!.parent;
+
+scc:=RClassSCCFromData(s, d);
+l:=Position(scc, d[3]);
+o:=RClassImageOrbitFromData(s, d){scc};
+p:=RClassPermsFromData(s, d){scc};
+g:=RClassSchutzGpFromData(s, d)[2];
+
+#d[3] is the index of the scc containing rep!
+if not l=1 then 
+	o:=Concatenation(o{[l..Length(o)]}, o{[1..l-1]});
+	p:=List(Concatenation(p{[l..Length(p)]}, 
+	p{[1..l-1]}), x-> x*p[l]^-1);
+	g:=g^(p[1]^-1);
+fi;
+
+return RClassData(rec( rep:=rep, strongorb:=o, 
+perms:=p, schutz:=g));;
 end);
 
 # new for 3.2!
@@ -598,13 +657,15 @@ if not f in s then
 	return fail;
 fi;
 
-d:=InOrbitsOfImages(OrbitsOfImages(s), f)[2]{[1..6]};
-rep:=RClassRepFromData(s, d);
+d:=InOrbitsOfImages(OrbitsOfImages(s), f)[2];
+d[3]:=1;
+rep:=d[7];
+
 type:=NewType( FamilyObj( s ), IsEquivalenceClass and 
 	 IsEquivalenceClassDefaultRep and IsGreensRClass and 
 	 IsGreensClassOfTransSemigp);
 
-c:=Objectify( type, rec(parent:=s, data:=d, rep:=rep));
+c:=Objectify( type, rec(parent:=s, data:=d{[1..6]}, rep:=rep));
 SetRepresentative(c, rep);
 SetEquivalenceClassRelation(c, GreensRRelation(s));
 return c;
@@ -660,11 +721,10 @@ InstallMethod(GreensRClassReps, "for a trans. semigroup",
 [IsTransformationSemigroup], 
 function(s)
 local iter, i, o;
-
 Info(InfoMonoidGreens, 4, "GreensRClassReps");
 
 ExpandOrbitsOfImages(s);
-return List(o!.data, x-> RClassRepFromData(s, x));
+return List(OrbitsOfImages(s)!.data, x-> RClassRepFromData(s, x));
 end);
 
 
@@ -709,11 +769,11 @@ end);
 
 InstallGlobalFunction(InOrbitsOfImages, 
 function(arg)
-local O, img, j, k, l, m, val, schutz, s, f, n, g;
+local O, img, j, k, l, m, val, schutz, s, f, n, g, gens;
 
 Info(InfoMonoidGreens, 4, "InOrbitsOfImages");
 
-O:=arg[1]!.orbits; f:=arg[2]; 
+O:=arg[1]!.orbits; f:=arg[2]; gens:=arg[1]!.gens;
 img:=ImageSetOfTransformation(f);
 
 if Length(arg)=3 then 
@@ -726,7 +786,7 @@ else
 fi;
 
 if not IsBound(O[j]) then
-	return [false, [j, fail, fail, fail, fail, fail, fail]];
+	return [false, [j, fail, fail, fail, fail, 0, fail]];
 fi;
 
 if k=fail then
@@ -738,19 +798,25 @@ if k=fail then
 	until not l=fail or k=Length(O[j]);
 
 	if l = fail then 
-		return [false, [j, fail, fail, fail, fail, fail, fail]];
+		return [false, [j, fail, fail, fail, fail, 0, fail]];
 	fi;
 	m:=PositionProperty(O[j][k]!.truth, x-> x[l]);
-	g:=f*O[j][k]!.perms[l];
+	if not IsBound(O[j][k]!.perms[l]) then #we never considered this scc before! 
+		return [false, [j,k,l,m,fail, 0, fail]];
+	fi;
 fi;
+
+if g=fail and not l=fail and IsBound(O[j][k]!.perms[l]) then 
+	g:=f*O[j][k]!.perms[l];
+fi; 
 
 if val=fail then 
 	if not IsBound(O[j][k]!.kernels_ht[m]) then 
-		return [false, [j, k, l, m, fail, fail, g]];
+		return [false, [j, k, l, m, fail, 0, g]];
 	fi;
 	val:=HTValue(O[j][k]!.kernels_ht[m], KernelOfTransformation(f));
 	if val=fail then 
-  	return [false, [j, k, l, m, fail, fail, g]];
+  	return [false, [j, k, l, m, fail, 0, g]];
 	fi;
 fi;
 
@@ -763,8 +829,9 @@ fi;
 while n<Length(O[j][k]!.reps[m][val]) do 
 	n:=n+1;
 	x:=O[j][k]!.reps[m][val][n];
-	return [SiftedPermutation(schutz, 
-		PermLeftQuoTransformationNC(x, g))=(),[j,k,l,m,val,n,g]];
+	if SiftedPermutation(schutz, PermLeftQuoTransformationNC(x, g))=() then 
+		return [true ,[j,k,l,m,val,n,g]];
+	fi;
 od;
 
 return [false, [j,k,l,m,val,n,g]];
@@ -772,6 +839,7 @@ end);
 
 # new for 3.2!
 #############################################################################
+# this should move somewhere else JDM
 
 InstallMethod(IsSubsemigroup, "for a trans. semigp and trans. semigp",
 [IsTransformationSemigroup, IsTransformationSemigroup], 
@@ -849,7 +917,7 @@ else
 	
 	at:=[1,0],
 	
-	IsDoneIterator:=iter-> iter!.at[1]=Length(iter!.perms) and 
+	IsDoneIterator:=iter-> iter!.at[1]=Length(iter!.scc) and 
 		iter!.at[2]=Length(iter!.schutz),
 	
 	NextIterator:=function(iter)
@@ -1005,7 +1073,7 @@ iter:=IteratorByFunctions( rec(
 			
 			######################################################################
 
-			next:=function(iter) 
+			next:=function(iter) #reduce number of local variables as some not used JDM
 			local O, o, j, img, k, l, m, x, ht, y, val, reps, schutz, new, kernels_ht, 
 			z, schreier, report, last_report, n, gens, s, one, i, data, oo;
 			
@@ -1071,9 +1139,10 @@ iter:=IteratorByFunctions( rec(
 						
 						#schreier words here
 						
-						O[j][k]!.perms:=MultipliersOfSCCOfOrbit(gens, O[j][k], m);
-						x:= o[i] * O[j][k]!.perms[l];
-						O[j][k]!.schutz[m]:=SchutzenbergerGroupOfSCCOfOrbit(gens, 
+						#O[j][k]!.perms:=
+						MultipliersOfSCCOfImageOrbit(gens, O[j][k], m);
+						x:= o[i] * O[j][k]!.perms[l]; #img(x)=O[j][k][scc[m][1]]
+						O[j][k]!.schutz[m]:=SchutzenbergerGroupOfSCCOfImageOrbit(gens, 
 						 O[j][k], x, m);;
 						O[j][k]!.kernels_ht[m]:=
 						 HashTableForKernels(KernelOfTransformation( x ));
@@ -1088,12 +1157,12 @@ iter:=IteratorByFunctions( rec(
 						
 						if not val=fail then #kernel seen before
 							schutz:=O[j][k]!.schutz[m][1];
-							if not ForAny(reps[val], y-> schutz=true or 
+							if not schutz=true and not ForAny(reps[val], y-> 
 							 SiftedPermutation(schutz, 
-							 PermLeftQuoTransformationNC(y, x))=()) then 
-								reps[val][Length(reps[val])+1]:=x;
-								data[Length(data)+1]:=[j, k, l, m, val, Length(reps[val])];
-								new:=true;
+							  PermLeftQuoTransformationNC(y, x))=()) then 
+									reps[val][Length(reps[val])+1]:=x;
+									data[Length(data)+1]:=[j, k, l, m, val, Length(reps[val])];
+									new:=true;
 								#schreier words here
 							fi;
 						else #new kernel
@@ -1139,12 +1208,12 @@ end);
 #############################################################################
 # <j> is the index of the scc we are computing the multipliers for!
 
-InstallGlobalFunction(MultipliersOfSCCOfOrbit,
+InstallGlobalFunction(MultipliersOfSCCOfImageOrbit,
 #function(arg)
 function(gens, o, j)
 local i, p, f, scc, schreier;
 
-Info(InfoMonoidGreens, 4, "MultipliersOfSCCOfOrbit");
+Info(InfoMonoidGreens, 4, "MultipliersOfSCCOfImageOrbit");
 
 #o:=arg[1]; j:=arg[2]; 
 #gens:=o!.gens;
@@ -1182,7 +1251,6 @@ function(s)
 Info(InfoMonoidGreens, 4, "NrGreensRClasses");
 
 ExpandOrbitsOfImages(s);
-
 return NrRClassesOrbitsOfImages(s);
 end);
 
@@ -1382,11 +1450,11 @@ end);
 #f is a representative of scc with index k
 #k is the index of scc containing index of image of f
 
-InstallGlobalFunction(SchutzenbergerGroupOfSCCOfOrbit,
+InstallGlobalFunction(SchutzenbergerGroupOfSCCOfImageOrbit,
 function(gens, o, f, k) 
 local p, t, g, bound, graph, i, j, scc, is_sym;
 
-Info(InfoMonoidGreens, 4, "SchutzenbergerGroupOfSCCOfOrbit");
+Info(InfoMonoidGreens, 4, "SchutzenbergerGroupOfSCCOfImageOrbit");
 
 scc:=o!.scc[k];
 
@@ -1458,7 +1526,7 @@ end);
 
 # new for 3.2!
 #############################################################################
-# returns the size of the semigroup <s> with OrbitsOfImages(s)=c so far
+# returns the size of the semigroup so far
 
 InstallGlobalFunction(SizeOrbitsOfImages, 
 function(s)

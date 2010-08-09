@@ -17,6 +17,7 @@ ReadPkg("monoid/gap/orbits.gi");
 ReadPkg("monoid/gap/greens.gi");
 ReadPkg("monoid/gap/transform.gi");
 ReadPkg("monoid/gap/greens_r_orb.gi");
+ReadPkg("monoid/gap/greens_l_orb.gi");
 ReadPkg("monoid/gap/properties.gi");
 ReadPkg("monoid/gap/autos.gi");
 ReadPkg("monoid/gap/isomorph.gi");

@@ -378,34 +378,7 @@ return [sorbit[1][pos], sorbit[2][pos], sorbit[3][pos]];
 
 end);
 
-#############################################################################
-#JDM the following should be modified 
 
-InstallMethod(GreensRClassData, "data structure of R-class of an element",
-[IsGreensRClass and IsGreensClassOfTransSemigp],
-function(class)
-local rep, sorbit, pos, strongorb, perms, data, schutz;
-
-rep:=Representative(class);
-sorbit:=StrongOrbitOfImage(ParentAttr(class), rep);
-pos:=Position(sorbit[1], ImageSetOfTransformation(rep));
-
-if not pos=1 then 
-	strongorb:=Concatenation(sorbit[1]{[pos..Length(sorbit[1])]}, sorbit[1]{[1..pos-1]});
-	perms:=List(Concatenation(sorbit[2]{[pos..Length(sorbit[2])]}, 
-	sorbit[2]{[1..pos-1]}), x-> x*sorbit[2][pos]^-1);
-	schutz:=sorbit[3]^(sorbit[2][pos]^-1);
-else
-	strongorb:=sorbit[1];
-	perms:=sorbit[2];
-	schutz:=sorbit[3];
-fi;
-
-data:=RClassData(rec( rep:=rep, strongorb:=strongorb, 
-perms:=perms, schutz:=schutz));
-
-return data;
-end);
 
 #############################################################################
 ##
