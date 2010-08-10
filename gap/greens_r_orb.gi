@@ -44,6 +44,8 @@ end;
 # - does it make sense to actually have \in etc defined using D-classes rather 
 #   than R-classes? Check efficiency etc and see if it does...
 
+# - maybe combine OrbitsOfImages and OrbitsOfKernels...
+
 #############################################################################
 ## To do 
 

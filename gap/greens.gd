@@ -783,6 +783,7 @@ DeclareGlobalFunction("NrLClassesOrbitsOfKernels");
 
 DeclareGlobalFunction("InOrbitsOfImages");
 DeclareGlobalFunction("InOrbitsOfKernels");
+DeclareAttribute("DClassRepsData", IsTransformationSemigroup, "mutable");
 
 DeclareGlobalFunction("CreateSchreierTreeOfSCC");
 DeclareGlobalFunction("CreateReverseSchreierTreeOfSCC");
@@ -810,9 +811,11 @@ DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]);
 DeclareProperty("IsEnumeratorOfRClassElements", IsEnumeratorByFunctions);
 DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareGlobalFunction("IteratorOfLClassReps");
+DeclareGlobalFunction("IteratorOfDClassReps");
 
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
 DeclareProperty("IsIteratorOfLClassReps", IsIterator);
+DeclareProperty("IsIteratorOfDClassReps", IsIterator);
 
 DeclareGlobalFunction("IteratorOfGreensRClasses");
 DeclareProperty("IsIteratorOfGreensRClasses", IsIterator);
@@ -826,6 +829,8 @@ DeclareAttribute("SemigroupOfIteratorOfGreensRClasses",
 IsIteratorOfGreensRClasses);
 DeclareAttribute("NrGreensRClasses", IsTransformationSemigroup);
 DeclareAttribute("NrGreensLClasses", IsTransformationSemigroup);
+
+DeclareGlobalFunction("HashTableForImage");
 
 DeclareAttribute("GreensLClassReps", IsTransformationSemigroup);
 
