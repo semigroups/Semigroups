@@ -12,6 +12,8 @@
 #############################################################################
 ## Notes
 
+# - must work on OrbitsOfKernels/LClasses!!!
+
 # - this file is alphabetized, keep it that way!
 
 # - this file should only contain functions relating to images/r-classes!
@@ -160,6 +162,62 @@ until IsDoneIterator(iter);
 return false;
 end);
 
+#############################################################################
+#
+
+# this should accept data:=[true, data]..
+
+AddToOrbitsOfImages:=function(s, f, data)
+local j, k, l, m, val, o, O, one, gens, reps, schutz; 
+
+j:=data[1]; 	#img length
+k:=data[2]; 	#index of orbit containing img
+l:=data[3]; 	#position of img in O[j][k]
+m:=data[4]; 	#scc of O[j][k] containing img
+val:=data[5]; #position of ker in O[j][k]!kernels_ht[m]
+
+o:=OrbitsOfImages(s);
+O := o!.orbits;
+one:=o!.one;
+gens:=o!.gens;
+
+if k = fail then #img has not been seen before
+	if IsTransformationMonoid( s ) or not f = one then
+		ForwardOrbitOfImageNC(s, f); #maybe ForwardOrbitOfImageNC should be removed JDM?
+	fi;
+else #img has been seen before
+	if IsTransformationMonoid( s ) or not f = one then
+		reps:=O[j][k]!.reps[m];
+		#if not IsBound(O[j][k]!.perms[l]) then JDMcritical
+		if Length(reps)=0 then 
+			#we never considered this scc before!
+			#O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
+			#MultipliersOfSCCOfImageOrbit(gens, O[j][k], m);
+			f:= f * O[j][k]!.perms[l]; #img(x)=O[j][k][scc[m][1]]
+			O[j][k]!.schutz[m]:=SchutzenbergerGroupOfSCCOfImageOrbit(gens, 
+			 O[j][k], f, m);;
+			O[j][k]!.kernels_ht[m]:=
+			 HashTableForKernels(KernelOfTransformation( f ));
+			reps[Length(reps)+1]:=[f];
+			o!.data[Length(o!.data)+1]:=[j, k, l, m, 1, 1];
+		else #we have considered scc before
+			f := f * O[j][k]!.perms[l];
+			
+			if not val=fail then #kernel seen before
+				reps[val][Length(reps[val])+1]:=f;
+				o!.data[Length(o!.data)+1]:=[j, k, l, m, val, Length(reps[val])];
+			else #new kernel
+				reps[Length(reps)+1]:=[f];
+				o!.data[Length(o!.data)+1]:=[j, k, l, m, Length(reps), 1];
+				HTAdd(O[j][k]!.kernels_ht[m], KernelOfTransformation( f ), 
+				 Length(reps));
+			fi;
+		fi;
+	fi;
+fi;
+
+return o!.data[Length(o!.data)];
+end;
 
 # new for 3.2!
 #############################################################################
@@ -542,8 +600,10 @@ t:=List([1..Length(scc)], i-> BlistList([1..Length(o)], scc[i]));
 o!.truth:=t;
 
 #Schreier trees for strongly connected components
-o!.trees:=EmptyPlist(Length(scc));
-o!.trees[1]:=CreateSchreierTreeOfSCC(o,1);
+#o!.trees:=EmptyPlist(Length(scc));
+#o!.trees[1]:=CreateSchreierTreeOfSCC(o,1); JDM critcal change here:
+
+o!.trees:=List([1..Length(scc)], x-> CreateSchreierTreeOfSCC(o,x));
 
 #representatives of R-classes with image belonging in scc[i] partitioned 
 #according to their kernels
@@ -562,12 +622,17 @@ Add(o!.kernels_ht, HashTableForKernels(KernelOfTransformation(f)));
 
 #calculate the multipliers and schutzenberger groups for the scc containing
 #img. 
-scc:=scc[1];
+#scc:=scc[1];
 
 #multipliers of scc containing the image of f
+#o!.perms:=EmptyPlist(Length(o));
+##o!.perms:=MultipliersOfSCCOfImageOrbit(o, 1, rec(schreier:=schreier));
+#MultipliersOfSCCOfImageOrbit(gens, o, 1);
+
 o!.perms:=EmptyPlist(Length(o));
-#o!.perms:=MultipliersOfSCCOfImageOrbit(o, 1, rec(schreier:=schreier));
-MultipliersOfSCCOfImageOrbit(gens, o, 1);
+for i in [1..Length(scc)] do 
+	MultipliersOfSCCOfImageOrbit(gens, o, i);
+od;
 
 #schutzenberger group corresponding to scc[1]
 o!.schutz:=EmptyPlist(Length(scc));
@@ -803,12 +868,14 @@ if k=fail then
 		return [false, [j, fail, fail, fail, fail, 0, fail]];
 	fi;
 	m:=PositionProperty(O[j][k]!.truth, x-> x[l]);
-	if not IsBound(O[j][k]!.perms[l]) then #we never considered this scc before! 
+	#if not IsBound(O[j][k]!.perms[l]) then #we never considered this scc before! JDMcritical
+	if Length(O[j][k]!.reps[m])=0 then 
 		return [false, [j,k,l,m,fail, 0, fail]];
 	fi;
 fi;
 
-if g=fail and not l=fail and IsBound(O[j][k]!.perms[l]) then 
+#if g=fail and not l=fail and IsBound(O[j][k]!.perms[l]) then JDMcritical
+if g=fail and not l=fail then
 	g:=f*O[j][k]!.perms[l];
 fi; 
 
@@ -1100,7 +1167,7 @@ iter:=IteratorByFunctions( rec(
 
 			if iter!.i=1 then 
 				HTAdd(ht, one, true);
-			fi;
+			fi; #move this to OrbitsOfImages JDM
 
 			img:=ImageSetOfTransformation(o[i]);
 			j:=Length(img);
@@ -1135,14 +1202,15 @@ iter:=IteratorByFunctions( rec(
 					
 					#scheier words here!
 					
-					if not IsBound(O[j][k]!.perms[l]) then 
+					#if not IsBound(O[j][k]!.perms[l]) then JDMcritical
+					if Length(reps)=0 then 
 						#we never considered this scc before!
-						O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
+						#O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);JDMcritical
 						
 						#schreier words here
 						
 						#O[j][k]!.perms:=
-						MultipliersOfSCCOfImageOrbit(gens, O[j][k], m);
+						#MultipliersOfSCCOfImageOrbit(gens, O[j][k], m);JDMcritical
 						x:= o[i] * O[j][k]!.perms[l]; #img(x)=O[j][k][scc[m][1]]
 						O[j][k]!.schutz[m]:=SchutzenbergerGroupOfSCCOfImageOrbit(gens, 
 						 O[j][k], x, m);;

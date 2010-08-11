@@ -762,10 +762,10 @@ DeclareOperation("IsSubsemigroup", [IsTransformationSemigroup,
 
 DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
 DeclareAttribute("OrbitsOfKernels", IsTransformationSemigroup, "mutable");
+DeclareAttribute("DClassRepsData", IsTransformationSemigroup, "mutable");
 
 DeclareGlobalFunction("ForwardOrbitOfImage");
 DeclareGlobalFunction("ForwardOrbitOfKernel");
-
 DeclareGlobalFunction("ForwardOrbitOfImageNC");
 DeclareGlobalFunction("ForwardOrbitOfKernelNC");
 
@@ -777,38 +777,46 @@ DeclareGlobalFunction("ExpandOrbitsOfKernels");
 
 DeclareGlobalFunction("SizeOrbitsOfImages");
 DeclareGlobalFunction("SizeOrbitsOfKernels");
+DeclareGlobalFunction("SizeDClassRepsData");
 
 DeclareGlobalFunction("NrRClassesOrbitsOfImages");
 DeclareGlobalFunction("NrLClassesOrbitsOfKernels");
 
 DeclareGlobalFunction("InOrbitsOfImages");
 DeclareGlobalFunction("InOrbitsOfKernels");
-DeclareAttribute("DClassRepsData", IsTransformationSemigroup, "mutable");
+
 
 DeclareGlobalFunction("CreateSchreierTreeOfSCC");
 DeclareGlobalFunction("CreateReverseSchreierTreeOfSCC");
+
 DeclareGlobalFunction("TraceSchreierTreeOfSCCForward");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCBack");
+
 DeclareGlobalFunction("MultipliersOfSCCOfImageOrbit");
 DeclareGlobalFunction("MultipliersOfSCCOfKernelOrbit");
+
 DeclareGlobalFunction("SchutzenbergerGroupOfSCCOfImageOrbit");
 DeclareGlobalFunction("SchutzenbergerGroupOfSCCOfKernelOrbit");
 
 DeclareGlobalFunction("RClassRepFromData");
-DeclareGlobalFunction("LClassRepFromData");
 DeclareGlobalFunction("RClassImageOrbitFromData");
 DeclareGlobalFunction("RClassSchutzGpFromData");
 DeclareGlobalFunction("RClassPermsFromData");
 DeclareGlobalFunction("RClassSCCFromData");
 DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
 
+DeclareGlobalFunction("LClassRepFromData");
 DeclareGlobalFunction("LClassKernelOrbitFromData");
 DeclareGlobalFunction("LClassSchutzGpFromData");
 DeclareGlobalFunction("LClassRelsFromData");
 DeclareGlobalFunction("LClassSCCFromData");
 DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]);
 
+DeclareAttribute("GreensLClassReps", IsTransformationSemigroup);
+DeclareAttribute("GreensDClassReps", IsTransformationSemigroup);
+
 DeclareProperty("IsEnumeratorOfRClassElements", IsEnumeratorByFunctions);
+
 DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareGlobalFunction("IteratorOfLClassReps");
 DeclareGlobalFunction("IteratorOfDClassReps");
@@ -822,17 +830,20 @@ DeclareProperty("IsIteratorOfGreensRClasses", IsIterator);
 DeclareProperty("IsIteratorOfSemigroup", IsIterator);
 DeclareProperty("IsIteratorOfRClassElements", IsIterator);
 
-
 DeclareAttribute("SemigroupOfIteratorOfRClassReps", IsIteratorOfRClassReps);
 DeclareAttribute("SemigroupOfIteratorOfLClassReps", IsIteratorOfLClassReps);
+DeclareAttribute("SemigroupOfIteratorOfDClassReps", IsIteratorOfDClassReps);
+
 DeclareAttribute("SemigroupOfIteratorOfGreensRClasses", 
 IsIteratorOfGreensRClasses);
+
 DeclareAttribute("NrGreensRClasses", IsTransformationSemigroup);
 DeclareAttribute("NrGreensLClasses", IsTransformationSemigroup);
+DeclareAttribute("NrGreensDClasses", IsTransformationSemigroup);
 
 DeclareGlobalFunction("HashTableForImage");
 
-DeclareAttribute("GreensLClassReps", IsTransformationSemigroup);
+
 
 # probably get rid of the following...
 

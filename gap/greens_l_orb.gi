@@ -25,8 +25,12 @@
 #   iterate thru RClassReps and find the L-classes intersecting it, using
 #   Green's lemma to say what the schutz group should be?
 
+# - must work on OrbitsOfKernels/LClasses!!!
+
 ##
 #############################################################################
+
+# maybe the following should be used in IteratorOfRClassReps JDM
 
 AddToOrbitsOfKernels:=function(s, f, data)
 local j, k, l, m, val, o, O, one, gens, reps, schutz; 
@@ -44,7 +48,7 @@ gens:=o!.gens;
 
 if k = fail then #ker has not been seen before
 	if IsTransformationMonoid( s ) or not f = one then
-		ForwardOrbitOfKernelNC(s, f);
+		ForwardOrbitOfKernelNC(s, f); #maybe ForwardOrbitOfKernelNC should be removed JDM?
 	fi;
 else #ker has been seen before (and so k,l,m not= fail)
 	if IsTransformationMonoid( s ) or not f = one then
@@ -67,7 +71,7 @@ else #ker has been seen before (and so k,l,m not= fail)
 
 			if not val=fail then #image seen before
 				reps[val][Length(reps[val])+1]:=f;
-				data[Length(data)+1]:=[j, k, l, m, val, Length(reps[val])];
+				o!.data[Length(o!.data)+1]:=[j, k, l, m, val, Length(reps[val])];
 				schutz[val][Length(schutz[val])+1]:=
 				 SchutzenbergerGroupOfSCCOfKernelOrbit(gens, O[j][k], f, m);
 			else #new image
@@ -84,8 +88,6 @@ fi;
 
 return o!.data[Length(o!.data)];
 end;
-
-
 
 #new for 3.2!
 #############################################################################
@@ -408,7 +410,7 @@ iter:=IteratorByFunctions( rec(
 			oo!.at:=iter!.i;
 			i := iter!.i;
 
-			if iter!.i=1 then 
+			if iter!.i=1 then #move this to OrbitsOfKernels! JDM
 				HTAdd(ht, one, true);
 			fi;
 

@@ -12,24 +12,69 @@
 #############################################################################
 ## Notes
 
+
+# - must work on OrbitsOfKernels/LClasses!!!
+
 ##
 #############################################################################
 
 InstallMethod(DClassRepsData, "for a trans. semigroup",
 [IsTransformationSemigroup], 
 function(s)
-
+local gens, one, ht;
 Info(InfoMonoidGreens, 4, "DClassRepsData");
+
+if IsTransformationMonoid( s ) then
+	gens := GeneratorsOfMonoid( s );
+else
+	gens := GeneratorsOfSemigroup( s );
+fi;
+
+one:=TransformationNC( [ 1 ..  DegreeOfTransformationSemigroup( s ) ] );
+
+ht := HTCreate(one);
+HTAdd(ht, one, fail);
+ht!.o := [one];
 
 return rec(
   finished:=false,
-	data:=[]);
+	data:=[],
+	one:=one);
 end);
-
-
 
 #############################################################################
 #
+
+DisplayDClassRepsData:=function(s)
+local o;
+o:=DClassRepsData(s);
+
+Print("finished: ", o!.finished, "\n");
+Print("at: ", o!.at, "\n");
+Print("orbit length: ", Length(o!.ht!.o), "\n");
+Print("number of reps: ", Length(o!.data), "\n");
+
+return true;
+end;
+
+# new for 3.2!
+#############################################################################
+
+InstallMethod(GreensDClassReps, "for a trans. semigroup", 
+[IsTransformationSemigroup], 
+function(s)
+local iter, i, o;
+Info(InfoMonoidGreens, 4, "GreensDClassReps");
+
+iter:=IteratorOfDClassReps(s); 
+for i in iter do 
+od;
+
+return List(DClassRepsData(s)!.data, x-> RClassRepFromData(s, x[1]));
+end);
+
+#############################################################################
+# JDM test the below for efficiency
 
 InstallGlobalFunction(IteratorOfDClassReps, 
 function(s)
@@ -79,7 +124,7 @@ iter:=IteratorByFunctions( rec(
 				if iter!.i < Length(o!.data) then 
 					# we already know this rep
 					iter!.i:=iter!.i+1;
-					iter!.last_value:=RClassRepFromData(iter!.s, #JDM correct?
+					iter!.last_value:=RClassRepFromData(iter!.s, 
 					 o!.data[iter!.i]);
 				elif o!.finished then  
 					iter!.last_value:=fail;
@@ -121,7 +166,7 @@ iter:=IteratorByFunctions( rec(
 ));
 
 SetIsIteratorOfDClassReps(iter, true);
-#SetSemigroupOfIteratorOfLClassReps(iter, s);
+#SetSemigroupOfIteratorOfDClassReps(iter, s);
 
 return iter;
 end);
@@ -137,16 +182,19 @@ s:=iter!.s;
 ker:=OrbitsOfKernels(s);
 img:=OrbitsOfImages(s);
 
-Print( "<iterator of D-class reps, ", 
+Print( "<iterator of D-class reps, ", Length(OrbitsOfImages(s)!.data), 
+" candidates, ",
  SizeDClassRepsData(s), " elements, ", Length(DClassRepsData(s)!.data), 
  " D-classes>");
 return;
 end);
 
 #############################################################################
-#
+# JDM the following is very slow as it has to find the intersection of the 
+# the schutz gps every time. Improve this!
 
-SizeDClassRepsData:=function(s)
+InstallGlobalFunction(SizeDClassRepsData, 
+function(s)
 local data, i, d, l, r;
 
 data:=DClassRepsData(s)!.data;
@@ -160,4 +208,4 @@ for d in data do
 od;
 
 return i;
-end;
+end);
