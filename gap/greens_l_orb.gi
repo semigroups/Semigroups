@@ -16,10 +16,6 @@
 
 # - this file should only contain functions relating to kernels/l-classes!
 
-# - must write an InOrbitsOfKernels function as for the second example in 
-#   timings_3.2_a.txt the number of L-classes is incorrect. MONOID is not
-#   registering that some transformation already belong to an existing L-class
-
 # - what makes IteratorOfLClassReps slow is the repeated calls to 
 #   SchutzenbergerGroupOfSCCOfKernelOrbit. Should rethink this. Maybe
 #   iterate thru RClassReps and find the L-classes intersecting it, using
@@ -32,7 +28,8 @@
 
 # maybe the following should be used in IteratorOfRClassReps JDM
 
-AddToOrbitsOfKernels:=function(s, f, data)
+InstallGlobalFunction(AddToOrbitsOfKernels,
+function(s, f, data)
 local j, k, l, m, val, o, O, one, gens, reps, schutz; 
 
 j:=data[1]; 	#ker length
@@ -87,7 +84,7 @@ else #ker has been seen before (and so k,l,m not= fail)
 fi;
 
 return o!.data[Length(o!.data)];
-end;
+end);
 
 #new for 3.2!
 #############################################################################

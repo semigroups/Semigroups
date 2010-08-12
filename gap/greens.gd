@@ -31,9 +31,6 @@
 #############################################################################
 #############################################################################
 
-
-
-
 ###########################################################################
 ##
 ##	<#GAPDoc Label="IsGreensClassOfTransSemigp">
@@ -764,6 +761,10 @@ DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
 DeclareAttribute("OrbitsOfKernels", IsTransformationSemigroup, "mutable");
 DeclareAttribute("DClassRepsData", IsTransformationSemigroup, "mutable");
 
+DeclareGlobalFunction("AddToOrbitsOfImages");
+DeclareGlobalFunction("AddToOrbitsOfKernels");
+
+# maybe remove the following and add them to AddToOrbitsOfImages...
 DeclareGlobalFunction("ForwardOrbitOfImage");
 DeclareGlobalFunction("ForwardOrbitOfKernel");
 DeclareGlobalFunction("ForwardOrbitOfImageNC");
@@ -774,6 +775,7 @@ DeclareGlobalFunction("DisplayOrbitsOfKernels");
 
 DeclareGlobalFunction("ExpandOrbitsOfImages");
 DeclareGlobalFunction("ExpandOrbitsOfKernels");
+DeclareGlobalFunction("ExpandDClassRepsData");
 
 DeclareGlobalFunction("SizeOrbitsOfImages");
 DeclareGlobalFunction("SizeOrbitsOfKernels");
@@ -784,7 +786,7 @@ DeclareGlobalFunction("NrLClassesOrbitsOfKernels");
 
 DeclareGlobalFunction("InOrbitsOfImages");
 DeclareGlobalFunction("InOrbitsOfKernels");
-
+DeclareGlobalFunction("InDClassRepsData");
 
 DeclareGlobalFunction("CreateSchreierTreeOfSCC");
 DeclareGlobalFunction("CreateReverseSchreierTreeOfSCC");
@@ -805,6 +807,8 @@ DeclareGlobalFunction("RClassPermsFromData");
 DeclareGlobalFunction("RClassSCCFromData");
 DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
 
+DeclareAttribute("RClassDataFromRep", IsTransformation);
+
 DeclareGlobalFunction("LClassRepFromData");
 DeclareGlobalFunction("LClassKernelOrbitFromData");
 DeclareGlobalFunction("LClassSchutzGpFromData");
@@ -812,10 +816,23 @@ DeclareGlobalFunction("LClassRelsFromData");
 DeclareGlobalFunction("LClassSCCFromData");
 DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]);
 
+DeclareGlobalFunction("DClassRepFromData");
+DeclareGlobalFunction("DClassKernelOrbitFromData");
+DeclareGlobalFunction("DClassImageOrbitFromData");
+DeclareGlobalFunction("DClassKerSchutzGpFromData");
+DeclareGlobalFunction("DClassImgSchutzGpFromData");
+DeclareGlobalFunction("DClassRelsFromData");
+DeclareGlobalFunction("DClassPermsFromData");
+DeclareGlobalFunction("DClassKerSCCFromData");
+DeclareGlobalFunction("DClassImgSCCFromData");
+DeclareOperation("GreensDClassOfElementNC", [IsTransformationSemigroup]);
+
 DeclareAttribute("GreensLClassReps", IsTransformationSemigroup);
 DeclareAttribute("GreensDClassReps", IsTransformationSemigroup);
 
 DeclareProperty("IsEnumeratorOfRClassElements", IsEnumeratorByFunctions);
+DeclareProperty("IsEnumeratorOfLClassElements", IsEnumeratorByFunctions);
+DeclareProperty("IsEnumeratorOfDClassElements", IsEnumeratorByFunctions);
 
 DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareGlobalFunction("IteratorOfLClassReps");
@@ -826,16 +843,25 @@ DeclareProperty("IsIteratorOfLClassReps", IsIterator);
 DeclareProperty("IsIteratorOfDClassReps", IsIterator);
 
 DeclareGlobalFunction("IteratorOfGreensRClasses");
+DeclareGlobalFunction("IteratorOfGreensLClasses");
+DeclareGlobalFunction("IteratorOfGreensDClasses");
+
 DeclareProperty("IsIteratorOfGreensRClasses", IsIterator);
+DeclareProperty("IsIteratorOfGreensLClasses", IsIterator);
+DeclareProperty("IsIteratorOfGreensDClasses", IsIterator);
+
 DeclareProperty("IsIteratorOfSemigroup", IsIterator);
 DeclareProperty("IsIteratorOfRClassElements", IsIterator);
+DeclareProperty("IsIteratorOfLClassElements", IsIterator);
+DeclareProperty("IsIteratorOfDClassElements", IsIterator);
 
 DeclareAttribute("SemigroupOfIteratorOfRClassReps", IsIteratorOfRClassReps);
 DeclareAttribute("SemigroupOfIteratorOfLClassReps", IsIteratorOfLClassReps);
 DeclareAttribute("SemigroupOfIteratorOfDClassReps", IsIteratorOfDClassReps);
 
-DeclareAttribute("SemigroupOfIteratorOfGreensRClasses", 
-IsIteratorOfGreensRClasses);
+DeclareAttribute("UnderlyingSemigroupOfIterator", 
+IsIterator);
+
 
 DeclareAttribute("NrGreensRClasses", IsTransformationSemigroup);
 DeclareAttribute("NrGreensLClasses", IsTransformationSemigroup);

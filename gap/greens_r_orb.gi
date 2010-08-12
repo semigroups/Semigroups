@@ -12,8 +12,6 @@
 #############################################################################
 ## Notes
 
-# - must work on OrbitsOfKernels/LClasses!!!
-
 # - this file is alphabetized, keep it that way!
 
 # - this file should only contain functions relating to images/r-classes!
@@ -44,9 +42,10 @@ return List(o!.reps, Length);
 end;
 
 # - does it make sense to actually have \in etc defined using D-classes rather 
-#   than R-classes? Check efficiency etc and see if it does...
+#   than R-classes? Check efficiency etc and see if it does... It seems not. 
 
-# - maybe combine OrbitsOfImages and OrbitsOfKernels...
+# - maybe combine OrbitsOfImages and OrbitsOfKernels... for the sake of 
+# simplicity let's not...
 
 #############################################################################
 ## To do 
@@ -167,7 +166,8 @@ end);
 
 # this should accept data:=[true, data]..
 
-AddToOrbitsOfImages:=function(s, f, data)
+InstallGlobalFunction(AddToOrbitsOfImages,
+function(s, f, data)
 local j, k, l, m, val, o, O, one, gens, reps, schutz; 
 
 j:=data[1]; 	#img length
@@ -217,7 +217,7 @@ else #img has been seen before
 fi;
 
 return o!.data[Length(o!.data)];
-end;
+end);
 
 # new for 3.2!
 #############################################################################
@@ -1070,7 +1070,7 @@ iter:=IteratorByFunctions( rec(
 ));
 
 SetIsIteratorOfGreensRClasses(iter, true);
-
+SetUnderlyingSemigroupOfIterator(iter, s);
 return iter;
 end);
 
@@ -1142,7 +1142,8 @@ iter:=IteratorByFunctions( rec(
 			
 			######################################################################
 
-			next:=function(iter) #reduce number of local variables as some not used JDM
+			next:=function(iter) #reduce number of local variables as some not used 
+			#JDM
 			local O, o, j, img, k, l, m, x, ht, y, val, reps, schutz, new, kernels_ht, 
 			z, schreier, report, last_report, n, gens, s, one, i, data, oo;
 			
@@ -1259,6 +1260,8 @@ iter:=IteratorByFunctions( rec(
 				od;
 				
 				if IsTransformationMonoid( s ) or not o[i] = one then 
+					x![4]:=[data[Length(data)]]; 	#need to store something identifying
+																				#s in here too!
 					return x;
 				fi;
 			fi;
@@ -1314,6 +1317,7 @@ end);
 
 # new for 3.2!
 #############################################################################
+
 InstallMethod(NrGreensRClasses, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
 function(s)
@@ -1441,6 +1445,21 @@ InstallMethod(PrintObj, [IsIteratorOfRClassElements],
 function(iter)
 Print("<iterator of R-class>");
 return;
+end);
+
+# new for 3.2!
+############################################################################
+# this should probably take s as an argument also...
+
+InstallMethod(RClassDataFromRep, "for a transformation",
+[IsTransformation],
+function(f)
+
+if IsBound(f![4]) then 
+	return f![4];
+fi;
+
+return fail;
 end);
 
 

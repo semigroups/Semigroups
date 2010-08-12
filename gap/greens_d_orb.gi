@@ -21,41 +21,35 @@
 InstallMethod(DClassRepsData, "for a trans. semigroup",
 [IsTransformationSemigroup], 
 function(s)
-local gens, one, ht;
+
 Info(InfoMonoidGreens, 4, "DClassRepsData");
-
-if IsTransformationMonoid( s ) then
-	gens := GeneratorsOfMonoid( s );
-else
-	gens := GeneratorsOfSemigroup( s );
-fi;
-
-one:=TransformationNC( [ 1 ..  DegreeOfTransformationSemigroup( s ) ] );
-
-ht := HTCreate(one);
-HTAdd(ht, one, fail);
-ht!.o := [one];
 
 return rec(
   finished:=false,
-	data:=[],
-	one:=one);
+	data:=[]);
 end);
 
+#new for 3.2!
 #############################################################################
-#
+# finds all orbits of images!!
 
-DisplayDClassRepsData:=function(s)
-local o;
+InstallGlobalFunction(ExpandDClassRepsData, 
+function(s)
+local o, iter, i;
+
+Info(InfoMonoidGreens, 4, "ExpandDClassRepsData");
+
 o:=DClassRepsData(s);
 
-Print("finished: ", o!.finished, "\n");
-Print("at: ", o!.at, "\n");
-Print("orbit length: ", Length(o!.ht!.o), "\n");
-Print("number of reps: ", Length(o!.data), "\n");
+if not o!.finished then 
+	iter:=IteratorOfDClassReps(s);
+	iter!.i:=Length(o!.data); 
+	# avoids running through those already found.
+	for i in iter do od;
+fi;
 
 return true;
-end;
+end);
 
 # new for 3.2!
 #############################################################################
@@ -63,13 +57,9 @@ end;
 InstallMethod(GreensDClassReps, "for a trans. semigroup", 
 [IsTransformationSemigroup], 
 function(s)
-local iter, i, o;
 Info(InfoMonoidGreens, 4, "GreensDClassReps");
 
-iter:=IteratorOfDClassReps(s); 
-for i in iter do 
-od;
-
+ExpandDClassRepsData(s);
 return List(DClassRepsData(s)!.data, x-> RClassRepFromData(s, x[1]));
 end);
 
@@ -125,7 +115,7 @@ iter:=IteratorByFunctions( rec(
 					# we already know this rep
 					iter!.i:=iter!.i+1;
 					iter!.last_value:=RClassRepFromData(iter!.s, 
-					 o!.data[iter!.i]);
+					 o!.data[iter!.i][1]);
 				elif o!.finished then  
 					iter!.last_value:=fail;
 				else
@@ -151,13 +141,16 @@ iter:=IteratorByFunctions( rec(
 			fi;
 			
 			o:=OrbitsOfImages(iter!.s);
-			d_img:=o!.data[Length(o!.data)];
+			d_img:=f![4]; #the data for f!
 			
 			d_ker:=InOrbitsOfKernels(OrbitsOfKernels(s), f);
-
+			# R-class reps always have image in the first position of the 
+			# scc containing their image hence we do not need to multiply f
+			# by one of the perms to rectify its image.
 			if not d_ker[1] then #this is a new element!
 				d_ker:=AddToOrbitsOfKernels(s, f, d_ker[2]);
-				DClassRepsData(s)!.data[Length(DClassRepsData(s)!.data)+1]:=[d_img, d_ker];
+				DClassRepsData(s)!.data[Length(DClassRepsData(s)!.data)+1]:=
+				 [d_img, d_ker];
 				return f;
 			fi;
 			return false;
@@ -169,6 +162,18 @@ SetIsIteratorOfDClassReps(iter, true);
 #SetSemigroupOfIteratorOfDClassReps(iter, s);
 
 return iter;
+end);
+
+# new for 3.2!
+#############################################################################
+
+InstallMethod(NrGreensDClasses, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
+function(s)
+
+Info(InfoMonoidGreens, 4, "NrGreensDClasses");
+ExpandDClassRepsData(s);
+return Length(DClassRepsData(s)!.data);
 end);
 
 #############################################################################
