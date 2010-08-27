@@ -12,9 +12,6 @@
 #############################################################################
 ## Notes
 
-
-# - must work on OrbitsOfKernels/LClasses!!!
-
 ##
 #############################################################################
 
@@ -26,12 +23,30 @@ Info(InfoMonoidGreens, 4, "DClassRepsData");
 
 return rec(
   finished:=false,
-	data:=[]);
+	data:=[], 
+	schutz:=[]);
 end);
 
 #new for 3.2!
 #############################################################################
-# finds all orbits of images!!
+# test for efficiency! JDM
+
+InstallGlobalFunction(DClassSchutzGpFromData, 
+function(s, d)
+local g;
+Info(InfoMonoidGreens, 4, "DClassSchutzGpFromData");
+
+if not IsBound(d[3]) then 
+	g:=Intersection(RClassSchutzGpFromData(s, d[1])[2], LClassSchutzGpFromData(s, 	d[2])[2]);
+	d[3]:=[StabChainImmutable(g), g]; 
+	#JDM good idea to compute the stab. chain here?
+fi;
+
+return d[3];
+end);
+
+#new for 3.2!
+#############################################################################
 
 InstallGlobalFunction(ExpandDClassRepsData, 
 function(s)
@@ -82,8 +97,7 @@ iter:=IteratorByFunctions( rec(
 			last_called := NextIterator, last_value := 0, 
 			chooser:=iter!.chooser, next:=iter!.next),
 			
-			i:=0, # in case one iterator is started, then 
-			      # another iterator is started. 
+			i:=0, # representative index i.e. which representative we are at
 			
 			s:= s,
 			
@@ -133,24 +147,28 @@ iter:=IteratorByFunctions( rec(
 			######################################################################
 
 			next:=function(iter) 
-			local f, o, d_img, d_ker, perms, g;
+			local f, o, d_img, d_ker, d;
 		
 			f:=NextIterator(iter!.r);
+			
 			if f=fail then 
+				DClassRepsData(s)!.finished:=true;
 				return fail;
 			fi;
 			
 			o:=OrbitsOfImages(iter!.s);
-			d_img:=f![4]; #the data for f!
+			d_img:=f![4][1]; #the data for f!
 			
 			d_ker:=InOrbitsOfKernels(OrbitsOfKernels(s), f);
+			
 			# R-class reps always have image in the first position of the 
 			# scc containing their image hence we do not need to multiply f
 			# by one of the perms to rectify its image.
+			
 			if not d_ker[1] then #this is a new element!
 				d_ker:=AddToOrbitsOfKernels(s, f, d_ker[2]);
-				DClassRepsData(s)!.data[Length(DClassRepsData(s)!.data)+1]:=
-				 [d_img, d_ker];
+				d:=DClassRepsData(s)!.data;
+				d[Length(d)+1]:=[d_img, d_ker];
 				return f;
 			fi;
 			return false;

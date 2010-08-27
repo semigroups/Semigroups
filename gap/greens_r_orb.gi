@@ -164,7 +164,7 @@ end);
 #############################################################################
 #
 
-# this should accept data:=[true, data]..
+# this should accept data:=[true, data].. JDM
 
 InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, f, data)
@@ -1077,6 +1077,9 @@ end);
 # new for 3.2!
 #############################################################################
 # add some more info statements?
+# - this should become IteratorOfRClassRepsData...
+# - it should also just loop through checking InOrbitsOfImages and then use
+#   AddOrbitsOfImages...
 
 InstallGlobalFunction(IteratorOfRClassReps, 
 function(s)
@@ -1094,8 +1097,7 @@ iter:=IteratorByFunctions( rec(
 			last_called := NextIterator, last_value := 0, 
 			chooser:=iter!.chooser, next:=iter!.next),
 			
-			i:=0, # in case one iterator is started but not finished, then 
-			      # another iterator is started. 
+			i:=0, # representative index i.e. which representative we are at
 			
 			s:= s,
 			
@@ -1130,7 +1132,7 @@ iter:=IteratorByFunctions( rec(
 					iter!.last_value:=fail;
 				else
 					# must find a new rep if it exists
-					iter!.i:=o!.at;
+					#iter!.i:=o!.at;
 					repeat 
 						iter!.last_value:=iter!.next(iter);
 					until not iter!.last_value=false or iter!.last_value=fail;
@@ -1157,16 +1159,18 @@ iter:=IteratorByFunctions( rec(
 			O := oo!.orbits;
 			data := oo!.data;
 			
-			if iter!.i=Length(o) then 
+			#if iter!.i=Length(o) then 
+			if oo!.at=Length(o) then
 				oo!.finished:=true;
 				return fail;
 			fi;
 			
-			iter!.i:=iter!.i+1;
-			oo!.at:=iter!.i;
-			i := iter!.i;
+			#iter!.i:=iter!.i+1;
+			#oo!.at:=iter!.i;
+			oo!.at:=oo!.at+1;
+			i := oo!.at;
 
-			if iter!.i=1 then 
+			if i=1 then 
 				HTAdd(ht, one, true);
 			fi; #move this to OrbitsOfImages JDM
 
@@ -1259,11 +1263,13 @@ iter:=IteratorByFunctions( rec(
 					fi;
 				od;
 				
-				if IsTransformationMonoid( s ) or not o[i] = one then 
+				if IsTransformationMonoid( s ) or not o[i] = one then #JDM remove this!
 					x![4]:=[data[Length(data)]]; 	#need to store something identifying
 																				#s in here too!
+					iter!.i:=iter!.i+1;
 					return x;
 				fi;
+				
 			fi;
 			
 			return false;
@@ -1450,7 +1456,7 @@ end);
 # new for 3.2!
 ############################################################################
 # this should probably take s as an argument also...
-
+# JDM this should be removed...
 InstallMethod(RClassDataFromRep, "for a transformation",
 [IsTransformation],
 function(f)
@@ -1598,6 +1604,8 @@ s:=r!.parent;
 
 return Size(RClassSchutzGpFromData(s, d)[2])*Length(RClassSCCFromData(s,d));
 end);
+
+#JDM really require a RClassSizeFromData command that is used here...
 
 #############################################################################
 ##  Algorithm V.

@@ -821,6 +821,7 @@ DeclareGlobalFunction("DClassKernelOrbitFromData");
 DeclareGlobalFunction("DClassImageOrbitFromData");
 DeclareGlobalFunction("DClassKerSchutzGpFromData");
 DeclareGlobalFunction("DClassImgSchutzGpFromData");
+DeclareGlobalFunction("DClassSchutzGpFromData");
 DeclareGlobalFunction("DClassRelsFromData");
 DeclareGlobalFunction("DClassPermsFromData");
 DeclareGlobalFunction("DClassKerSCCFromData");

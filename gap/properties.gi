@@ -188,11 +188,42 @@ end);
 #############################################################################
 #JDM new for 3.2!
 
-InstallMethod(IsGreensRTrivial, "for a transformation semigroup", true,
-[IsTransformationSemigroup], 0,
-function(S)
-return ForAll(GreensRClasses(S), x-> Size(x)=1);
+InstallMethod(IsGreensRTrivial, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(s)
+local iter, r;
+iter:=IteratorOfGreensRClasses(s); #JDM should be IteratorOfRClassRepsData!
+
+repeat
+	r:=NextIterator(iter);
+	if Size(r)>1 then 
+		return false;
+	fi;
+until IsDoneIterator(iter);
+
+return true;
 end);
+
+InstallMethod(IsGreensHTrivial, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
+function(s)
+local 
+
+
+#JDM only have to check regular D-classes!
+
+iter:=IteratorOfGreensDClasses(s);
+repeat 
+	g:=SchutzenbergerGroup(NextIterator(iter));
+	if Size(g)>1 then 
+		return false;
+	fi;
+until IsDoneIterator(iter);
+
+return true;
+end);
+
+
 
 ###########################################################################
  
