@@ -1183,9 +1183,13 @@ end);
 ##  checks if <Dclassdata> is a regular D-class
 ##
 
+#JDM remove!!
+
 InstallOtherMethod(IsRegularDClass, "for a Green's D-class of a transformation semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
 x-> IsRegularTransformation(ParentAttr(x), Representative(x)));
+
+
 
 #############################################################################
 ##

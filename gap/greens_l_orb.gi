@@ -26,7 +26,7 @@
 ##
 #############################################################################
 
-# maybe the following should be used in IteratorOfRClassReps JDM
+# maybe the following should be used in IteratorOfLClassReps JDM
 
 InstallGlobalFunction(AddToOrbitsOfKernels,
 function(s, f, data)
@@ -86,6 +86,32 @@ fi;
 return o!.data[Length(o!.data)];
 end);
 
+# new for 3.2!
+#############################################################################
+# Algorithm D.
+
+InstallOtherMethod(AsList, "for an L-class of trans. semigp.", 
+[IsGreensLClass and IsGreensClassOfTransSemigp], 
+function(l)
+local f, s, d, h, elts, p;
+
+Info(InfoMonoidGreens, 4, "AsList: for an L-class");
+
+f:=l!.rep; #rep should have its image at the first place in the scc
+s:=l!.parent;
+d:=l!.data;
+
+h:=List(RClassSchutzGpFromData(s, d)[2], x-> f*x);
+# <h> contains the H-class of the representative of <r> as a subgroup. 
+
+elts:=[];
+
+for p in RClassPermsFromData(s, d){RClassSCCFromData(s, d)} do 
+	elts:=Concatenation(elts, h*p^-1);
+od;
+return elts;
+end);
+
 #new for 3.2!
 #############################################################################
 
@@ -111,7 +137,7 @@ InstallGlobalFunction(ForwardOrbitOfKernel,
 function(s, f)
 local ker, i, o;
 
-Info(InfoMonoidGreens, 4, "ForwardOrbitOfKernel");
+#Info(InfoMonoidGreens, 4, "ForwardOrbitOfKernel");
 
 ker:=KernelOfTransformation(f);
 o:=OrbitsOfKernels(s)!.orbits;
@@ -136,11 +162,11 @@ InstallGlobalFunction(ForwardOrbitOfKernelNC,
 function(s, f)
 local gens, ker, o, scc, t, img, ht, O;
 
-Info(InfoWarning, 2, "Warning: calling this function more than once with the ",
-" same arguments will repeatedly add the returned value to OrbitsOfKernels. ",
-"Use ForwardOrbitOfImage instead.");
+#Info(InfoWarning, 2, "Warning: calling this function more than once with the ",
+#" same arguments will repeatedly add the returned value to OrbitsOfKernels. ",
+#"Use ForwardOrbitOfImage instead.");
 
-Info(InfoMonoidGreens, 4, "ForwardOrbitOfKernelNC");
+#Info(InfoMonoidGreens, 4, "ForwardOrbitOfKernelNC");
 
 if IsMonoid(s) then 
 	gens:=GeneratorsOfMonoid(s);
@@ -247,11 +273,13 @@ end);
 
 InstallGlobalFunction(InOrbitsOfKernels, 
 function(arg)
-local O, f, gens, j, k, l, m, val, n, g, schutz, x, ker;
+local O, f, gens, j, k, l, m, val, n, g, schutz, x, ker, o;
 
-Info(InfoMonoidGreens, 4, "InOrbitsOfKernels");
+#Info(InfoMonoidGreens, 4, "InOrbitsOfKernels");
 
-O:=arg[1]!.orbits; f:=arg[2]; gens:=arg[1]!.gens;
+o:=OrbitsOfKernels(arg[1]);
+O:=o!.orbits; f:=arg[2]; 
+gens:=o!.gens;
 ker:=KernelOfTransformation(f);
 
 if Length(arg)=3 then 
@@ -285,7 +313,7 @@ if k=fail then
 fi;
 
 if g=fail and not l=fail and IsBound(O[j][k]!.rels[l]) then 
-	g:=O[j][k]!.rels[l][2]*f;
+	g:=O[j][k]!.rels[l][2]*f; #make the kernel of f the first elt in the scc
 fi; 
 
 if val=fail then 
@@ -301,15 +329,20 @@ fi;
 schutz:=O[j][k]!.schutz[m][val][n][1];
 
 if schutz=true then 
-	return [true, [j,k,l,m,val,1,g]];
+	return [true, [j,k,l,m,val,1,g]]; #JDM should the 1 be an n?
 fi;
 
+#JDM note that we always look at the first Schutz. gp! when n=1
+# even when n is greater than 1 below!!!
+
 while n<=Length(O[j][k]!.reps[m][val]) do 
+	schutz:=O[j][k]!.schutz[m][val][n][1];
 	x:=O[j][k]!.reps[m][val][n];
 	if SiftedPermutation(schutz, PermLeftQuoTransformationNC(x, g))=() then 
 		return [true ,[j,k,l,m,val,n,g]];
 	fi;
 	n:=n+1;
+
 od;
 
 return [false, [j,k,l,m,val,n,g]];
@@ -511,18 +544,26 @@ iter:=IteratorByFunctions( rec(
 ));
 
 SetIsIteratorOfLClassReps(iter, true);
-SetSemigroupOfIteratorOfLClassReps(iter, s);
+SetUnderlyingSemigroupOfIterator(iter, s);
 
 return iter;
 end);
 
+# new for 3.2!
+############################################################################
+
+InstallGlobalFunction(LClassKernelOrbitFromData,
+function(s, d)
+#Info(InfoMonoidGreens, 4, "LClassKernelOrbitFromData");
+return OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
+end);
 
 # new for 3.2!
 ############################################################################
 
 InstallGlobalFunction(LClassRepFromData,
 function(s, d)
-Info(InfoMonoidGreens, 4, "LClassRepFromData");
+#Info(InfoMonoidGreens, 4, "LClassRepFromData");
 return OrbitsOfKernels(s)!.orbits[d[1]][d[2]]!.reps[d[4]][d[5]][d[6]];
 end);
 
@@ -531,8 +572,9 @@ end);
 
 InstallGlobalFunction(LClassSchutzGpFromData, 
 function(s, d)
-Info(InfoMonoidGreens, 4, "LClassSchutzGpFromData");
+#Info(InfoMonoidGreens, 4, "LClassSchutzGpFromData");
 return OrbitsOfKernels(s)!.orbits[d[1]][d[2]]!.schutz[d[4]][d[5]][d[6]];
+#return OrbitsOfKernels(s)!.orbits[d[1]][d[2]]!.schutz[d[4]][1][1];
 end);
 
 # new for 3.2!
@@ -540,7 +582,7 @@ end);
 
 InstallGlobalFunction(LClassSCCFromData,
 function(s,d)
-Info(InfoMonoidGreens, 4, "LClassSCCFromData");
+#Info(InfoMonoidGreens, 4, "LClassSCCFromData");
 return OrbitsOfKernels(s)!.orbits[d[1]][d[2]]!.scc[d[4]];
 end);
 
@@ -555,7 +597,7 @@ InstallGlobalFunction(MultipliersOfSCCOfKernelOrbit,
 function(gens, o, j)
 local rels, scc, i, f, g, k, tup, h;
 
-Info(InfoMonoidGreens, 4, "MultipliersOfSCCOfKernelOrbit");
+#Info(InfoMonoidGreens, 4, "MultipliersOfSCCOfKernelOrbit");
 
 rels:=o!.rels;
 scc:=o!.scc[j];
@@ -597,7 +639,7 @@ InstallGlobalFunction(NrLClassesOrbitsOfKernels,
 function(s)
 local i, j, k, l, m, c;
 
-Info(InfoMonoidGreens, 4, "NrLClassesOrbitsOfKernel");
+#Info(InfoMonoidGreens, 4, "NrLClassesOrbitsOfKernel");
 
 c:=OrbitsOfKernels(s);
 m:=[];
@@ -632,7 +674,7 @@ InstallMethod(OrbitsOfKernels, "for a trans. semigroup",
 function(s)
 local gens, n, one, ht;
 
-Info(InfoMonoidGreens, 4, "OrbitsOfKernels");
+#Info(InfoMonoidGreens, 4, "OrbitsOfKernels");
 
 if IsTransformationMonoid( s ) then
 	gens := GeneratorsOfMonoid( s );
@@ -665,7 +707,7 @@ InstallMethod(PrintObj, [IsIteratorOfLClassReps],
 function(iter)
 local O, s;
 
-s:=SemigroupOfIteratorOfLClassReps(iter);
+s:=UnderlyingSemigroupOfIterator(iter);
 O:=OrbitsOfKernels(s);
 
 Print( "<iterator of L-class reps, ", Length(O!.ht!.o), " candidates, ", 
@@ -691,7 +733,7 @@ InstallGlobalFunction(SchutzenbergerGroupOfSCCOfKernelOrbit,
 function(gens, o, f, k) 
 local scc, bound, g, rels, t, graph, is_sym, i, j;
 
-Info(InfoMonoidGreens, 4, "SchutzenbergerGroupOfSCCOfKernelOrbit");
+#Info(InfoMonoidGreens, 4, "SchutzenbergerGroupOfSCCOfKernelOrbit");
 
 scc:=o!.scc[k];
 
@@ -739,7 +781,7 @@ function(s)
 local i, o, j, c, k, l;
 i:=0;
 
-Info(InfoMonoidGreens, 4, "SizeOrbitsOfKernels");
+#Info(InfoMonoidGreens, 4, "SizeOrbitsOfKernels");
 
 c:=OrbitsOfKernels(s)!.orbits;
 

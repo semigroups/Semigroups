@@ -18,6 +18,20 @@
 #function( t ) ... end
 #gap> MakeReadOnlyGVar("Transformation");
 
+InstallMethod(RankOfTransformation, "for a transformation (monoid version)", 
+[IsTransformation], 
+function(f)
+
+if not IsBound(f![2]) then 
+	f![2]:=Set(f![1]);
+fi;
+
+return Length(f![2]);
+end);
+
+#############################################################################
+# new for 3.2!
+
 InstallGlobalFunction(KernelOfTransformationNC, 
 function(f)
 local  ker, imgs, i;
@@ -66,6 +80,7 @@ end);
 
 
 ###########################################################################
+# this should be modified!! JDM see IsRegularRClass
 
 InstallMethod(IsRegularTransformation, "for a transformation", 
 [IsTransformationSemigroup, IsTransformation], 
@@ -90,10 +105,6 @@ for p in orb do
   for s in gens do
     n:=Set(ImageListOfTransformation(s){p});
     if Size(n) = r and not n in orb then
-
-            # did we find a cross section? JDM1
-	    # JDM try IsDuplicateFreeList or IsTransversal here
-
             if Size(Set(ImageListOfTransformation(x){n})) = r then
                return true;
             fi;
@@ -234,7 +245,7 @@ end);
 InstallOtherMethod(RandomTransformation,  "for an image and a pos. int.", true, [IsCyclotomicCollection, IsPosInt], 0,
 function(img, n)
 
-if ForAll(img, IsPosInt) and Maximum(img)<n then 
+if ForAll(img, IsPosInt) and Maximum(img)<n+1 then 
 	return RandomTransformationNC(img, n);
 fi;
 return fail;

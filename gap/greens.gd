@@ -856,10 +856,6 @@ DeclareProperty("IsIteratorOfRClassElements", IsIterator);
 DeclareProperty("IsIteratorOfLClassElements", IsIterator);
 DeclareProperty("IsIteratorOfDClassElements", IsIterator);
 
-DeclareAttribute("SemigroupOfIteratorOfRClassReps", IsIteratorOfRClassReps);
-DeclareAttribute("SemigroupOfIteratorOfLClassReps", IsIteratorOfLClassReps);
-DeclareAttribute("SemigroupOfIteratorOfDClassReps", IsIteratorOfDClassReps);
-
 DeclareAttribute("UnderlyingSemigroupOfIterator", 
 IsIterator);
 
@@ -870,12 +866,13 @@ DeclareAttribute("NrGreensDClasses", IsTransformationSemigroup);
 
 DeclareGlobalFunction("HashTableForImage");
 
-
+DeclareAttribute("IsRegularRClass", IsGreensRClass);
+DeclareGlobalFunction("IsRegularRClassData");
 
 # probably get rid of the following...
 
-DeclareGlobalFunction("GreensRClassRepsNC");
-DeclareGlobalFunction("IsInSCCOfOrbitNC");
-DeclareGlobalFunction("IsInSCCOfOrbit");
-DeclareGlobalFunction("IsInOrbit");
-DeclareProperty("RClassRepsData", IsTransformationSemigroup);
+#DeclareGlobalFunction("GreensRClassRepsNC");
+#DeclareGlobalFunction("IsInSCCOfOrbitNC");
+#DeclareGlobalFunction("IsInSCCOfOrbit");
+#DeclareGlobalFunction("IsInOrbit");
+#DeclareProperty("RClassRepsData", IsTransformationSemigroup);

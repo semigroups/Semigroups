@@ -144,9 +144,10 @@ DeclareGlobalFunction("Idempotent");
 ##	If the argument is a kernel, then a random transformation is returned that 
 ##	has that kernel. <P/>
 ##
-##	If the first argument is an image <C>img</C> and the second a positive
+##	If the first argument is a set of positive integers <C>img</C> and 
+##	the second a positive
 ## integer <C>n</C>, then a random transformation of degree <C>n</C> is returned 
-##	with image <C>img</C>.<P/>
+##	with image contained in the set <C>img</C>.<P/>
 ##
 ##	The no check version does not check that the arguments can be 
 ##	the kernel and image of a transformation.  

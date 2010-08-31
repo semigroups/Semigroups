@@ -19,6 +19,21 @@
 # additional argument and returns an element in that zero group. As it is it 
 # functions but isn't great.
 
+InstallMethod(PrintObj,  "for a full transformation semigroup (monoid pkg)",
+[IsTransformationSemigroup and IsFullTransformationSemigroup], 
+function(s)
+Print("<full transformation semigroup on ", 
+DegreeOfTransformationSemigroup(s), " pts>");
+end);
+
+InstallMethod(ViewObj,  "for a full transformation semigroup (monoid pkg)",
+[IsTransformationSemigroup and IsFullTransformationSemigroup], 
+function(s)
+Print("<full transformation semigroup on ", 
+DegreeOfTransformationSemigroup(s), " pts>");
+end);
+
+
 ###########################################################################
 # JDM the following should be added to the library
 # JDM new for 3.2!

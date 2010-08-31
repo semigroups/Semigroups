@@ -204,26 +204,24 @@ until IsDoneIterator(iter);
 return true;
 end);
 
-InstallMethod(IsGreensHTrivial, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
-function(s)
-local 
+###########################################################################
 
+#InstallMethod(IsGreensHTrivial, "for a transformation semigroup", 
+#[IsTransformationSemigroup], 
+#function(s)
+#local iter, g;
 
 #JDM only have to check regular D-classes!
 
-iter:=IteratorOfGreensDClasses(s);
-repeat 
-	g:=SchutzenbergerGroup(NextIterator(iter));
-	if Size(g)>1 then 
-		return false;
-	fi;
-until IsDoneIterator(iter);
-
-return true;
-end);
-
-
+#iter:=IteratorOfGreensDClasses(s);
+#repeat 
+#	g:=SchutzenbergerGroup(NextIterator(iter));
+#	if Size(g)>1 then 
+#		return false;
+#	fi;
+#until IsDoneIterator(iter);
+#return true;
+#end);
 
 ###########################################################################
  
