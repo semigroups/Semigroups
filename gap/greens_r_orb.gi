@@ -164,7 +164,7 @@ end);
 #############################################################################
 #
 
-# this should accept data:=[true, data].. JDM
+# this should accept data:=[true, data].. JDM?
 
 InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, f, data)
@@ -922,9 +922,13 @@ end);
 # test further for efficiency in comparison to IsRegularTransformation! JDM
 
 InstallMethod(IsRegularRClass, "for an R-class of trans. semigroup",
-[IsGreensRClass and IsGreensClassOfTransSemigp], 
+[IsGreensClassOfTransSemigp], 
 function(r)
 local f, img, o, i, m;
+
+if not IsGreensRClass(r) then 
+	return false;
+fi;
 
 if HasIdempotents(r) then 
 	return Length(Idempotents(r))>0; 
@@ -933,27 +937,9 @@ fi;
 return IsRegularRClassData(r!.parent, r!.data);
 end);
 
-#if HasIsRegularSemigroup(r!.parent) and IsRegularSemigroup(r!.parent) then 
-#  return true;
-#fi;
-
-#f:=r!.rep;
-#img:= ImageListOfTransformation(f);
-#m:=Length(ImageSetOfTransformation(f));
-#o:=RClassImageOrbitFromData(r!.parent, r!.data)
-# {RClassSCCFromData(r!.parent, r!.data)};
-
-#for i in o do
-#	if Length(Set(img{i})) = m then
-#		return true;
-#	fi;
-#od;
-
-#return false;
-#end);
-
 #############################################################################
-# 
+# the following exists to avoid creating an R-class before check that it is 
+# regular!
 
 InstallGlobalFunction(IsRegularRClassData, 
 function(s, d)
@@ -977,7 +963,6 @@ od;
 
 return false;
 end);
-
 
 # new for 3.2!
 #############################################################################

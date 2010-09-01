@@ -14,13 +14,7 @@
 
 # - remove info statements from functions that are called many many times!
 
-# - gap> s:=Semigroup(gens);
-#<semigroup with 4 generators>
-#gap> Sum(List(GreensDClasses(s), Size));
-#87035
-# should be 95540!
-
-# - consolidate and clean up what's here already and do some testing!
+# - consolidate and clean up what's here already and do some more testing!
 
 ##
 #############################################################################
@@ -130,8 +124,8 @@ O:=OrbitsOfImages(s)!.orbits;
 if not IsBound(O[dd[1]][dd[2]]!.d_schutz[dd[4]][dd[5]][dd[6]]) then 
 	g:=RClassSchutzGpFromData(s, d[1])[2];
 	h:=Intersection(g, LClassSchutzGpFromData(s, d[2])[2]);
-	O[dd[1]][dd[2]]!.d_schutz[dd[4]][dd[5]][dd[6]]:=[StabChainImmutable(g), 
-	 g, List(RightCosets(g,h), Representative)]; 
+	O[dd[1]][dd[2]]!.d_schutz[dd[4]][dd[5]][dd[6]]:=[StabChainImmutable(h), 
+	 h, List(RightCosets(g,h), Representative)]; 
 	#JDM good idea to compute the stab. chain and cosets here?
 fi;
 
@@ -493,9 +487,9 @@ end);
 
 InstallOtherMethod(SchutzenbergerGroup, "for a D-class of a trans. semigp.",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
-d-> DClassSchutzGpFromData(d!.parent, d!.data));
+d-> DClassSchutzGpFromData(d!.parent, d!.data)[2]);
 
-#JDM is this correct? Compare it to SchutzenbergerGroup of R-class
+#JDM is this correct? Compare it to SchutzenbergerGroup of R-class...
 
 # new for 3.2!
 #############################################################################
@@ -503,12 +497,15 @@ d-> DClassSchutzGpFromData(d!.parent, d!.data));
 InstallOtherMethod(Size, "for an D-class of a trans. semigp.", 
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
-local r, l;
+local r, l, s;
+
+s:=d!.parent;
 d:=d!.data;
+
 r:=RClassSchutzGpFromData(s, d[1])[2];
 l:=LClassSchutzGpFromData(s, d[2])[2];
-return Size(r)*Length(RClassSCCFromData(s, d[1]))
-*Length(LClassSCCFromData(s, d[2]))*Size(l)/Size(DClassSchutzGpFromData(s, d)[2]);
+return (Size(r)*Length(RClassSCCFromData(s, d[1]))
+*Length(LClassSCCFromData(s, d[2])))*Size(l)/Size(DClassSchutzGpFromData(s, d)[2]);
 end);
 
 

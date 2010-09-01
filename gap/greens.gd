@@ -863,10 +863,12 @@ IsIterator);
 DeclareAttribute("NrGreensRClasses", IsTransformationSemigroup);
 DeclareAttribute("NrGreensLClasses", IsTransformationSemigroup);
 DeclareAttribute("NrGreensDClasses", IsTransformationSemigroup);
+DeclareAttribute("NrIdempotents", IsTransformationSemigroup);
+
 
 DeclareGlobalFunction("HashTableForImage");
 
-DeclareAttribute("IsRegularRClass", IsGreensRClass);
+DeclareAttribute("IsRegularRClass", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IsRegularRClassData");
 
 # probably get rid of the following...
