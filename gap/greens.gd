@@ -836,9 +836,11 @@ DeclareProperty("IsEnumeratorOfLClassElements", IsEnumeratorByFunctions);
 DeclareProperty("IsEnumeratorOfDClassElements", IsEnumeratorByFunctions);
 
 DeclareGlobalFunction("IteratorOfRClassReps");
+DeclareGlobalFunction("IteratorOfRClassRepsData");
 DeclareGlobalFunction("IteratorOfLClassReps");
 DeclareGlobalFunction("IteratorOfDClassReps");
 
+DeclareProperty("IsIteratorOfRClassRepsData", IsIterator);
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
 DeclareProperty("IsIteratorOfLClassReps", IsIterator);
 DeclareProperty("IsIteratorOfDClassReps", IsIterator);

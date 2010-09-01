@@ -168,7 +168,8 @@ end);
 
 InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, f, data)
-local j, k, l, m, val, o, O, one, gens, reps, schutz; 
+local j, k, l, m, val, o, O, one, gens, reps, schutz, img, scc, t, i, g, 
+graph, oo;
 
 j:=data[1]; 	#img length
 k:=data[2]; 	#index of orbit containing img
@@ -182,17 +183,75 @@ one:=o!.one;
 gens:=o!.gens;
 
 if k = fail then #img has not been seen before
+
+	#################################################################################
+
 	if IsTransformationMonoid( s ) or not f = one then
-		ForwardOrbitOfImageNC(s, f); #maybe ForwardOrbitOfImageNC should be removed JDM?
+		img:=ImageSetOfTransformation(f);
+		
+		oo:=Orb(s, img, OnSets, rec(
+						treehashsize:=NextPrimeInt(Minimum(100000, 
+						 3*Binomial(DegreeOfTransformationSemigroup(s), Length(img)))), 
+						schreier:=true,
+						gradingfunc := function(o,x) return Length(x); end, 
+						orbitgraph := true, 
+						onlygrades:=[Length(img)], 
+						storenumbers:=true));
+		
+		Enumerate(oo);
+		
+		#strongly connected components
+		scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(List(OrbitGraph(oo), Set)), 
+		 Set));;
+		oo!.scc:=scc;
+		
+		#boolean list corresponding to membership in scc[i]
+		t:=List([1..Length(scc)], i-> BlistList([1..Length(oo)], scc[i]));
+		oo!.truth:=t;
+
+		oo!.trees:=List([1..Length(scc)], x-> CreateSchreierTreeOfSCC(oo,x));
+		
+		#representatives of R-classes with image belonging in scc[i] partitioned 
+		#according to their kernels
+		oo!.reps:=List([1..Length(scc)], x-> []);
+		Add(oo!.reps[1], [f]);
+		
+		#Schutzenberger groups of D-classes and H-classes (only here for convenience
+		#when retrieving from the D-classes R-class data!
+		oo!.d_schutz:=List([1..Length(scc)], x-> []);
+		Add(oo!.d_schutz[1], []);
+
+		#kernels of representatives of R-classes with image belonging in scc[i]
+		oo!.kernels_ht:=[];
+		Add(oo!.kernels_ht, HashTableForKernels(KernelOfTransformation(f)));
+		
+		#calculate the multipliers for all scc's 
+		oo!.perms:=EmptyPlist(Length(oo));
+		for i in [1..Length(scc)] do 
+			MultipliersOfSCCOfImageOrbit(gens, oo, i);
+		od;
+		
+		#schutzenberger group corresponding to scc[1]
+		oo!.schutz:=EmptyPlist(Length(scc));
+		oo!.schutz[1]:=SchutzenbergerGroupOfSCCOfImageOrbit(gens, oo, f, 1);
+		
+		if IsBound(O[Length(img)]) then 
+			Add(O[Length(img)], oo);
+		else
+			O[Length(img)]:=[oo];
+		fi;
+		
+		o!.data[Length(o!.data)+1]:=[Length(img), Length(o!.orbits[Length(img)]), 
+		 1, 1, 1, 1];
+		
+		#################################################################################
+	
+		#ForwardOrbitOfImageNC(s, f); #maybe ForwardOrbitOfImageNC should be removed JDM?
 	fi;
 else #img has been seen before
 	if IsTransformationMonoid( s ) or not f = one then
 		reps:=O[j][k]!.reps[m];
-		#if not IsBound(O[j][k]!.perms[l]) then JDMcritical
-		if Length(reps)=0 then 
-			#we never considered this scc before!
-			#O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
-			#MultipliersOfSCCOfImageOrbit(gens, O[j][k], m);
+		if Length(reps)=0 then #we never considered this scc before!
 			f:= f * O[j][k]!.perms[l]; #img(x)=O[j][k][scc[m][1]]
 			O[j][k]!.schutz[m]:=SchutzenbergerGroupOfSCCOfImageOrbit(gens, 
 			 O[j][k], f, m);;
@@ -202,7 +261,6 @@ else #img has been seen before
 			o!.data[Length(o!.data)+1]:=[j, k, l, m, 1, 1];
 		else #we have considered scc before
 			f := f * O[j][k]!.perms[l];
-			
 			if not val=fail then #kernel seen before
 				reps[val][Length(reps[val])+1]:=f;
 				o!.data[Length(o!.data)+1]:=[j, k, l, m, val, Length(reps[val])];
@@ -215,6 +273,7 @@ else #img has been seen before
 		fi;
 	fi;
 fi;
+
 
 return o!.data[Length(o!.data)];
 end);
@@ -465,7 +524,7 @@ end);
 #############################################################################
 # consider what to do here really! In particular, if 
 # OrbitsOfImages(s)!.finished=true, but we don't have GreensRClasses, 
-# then is the following really the best?
+# then is the following really the best? JDM
 
 InstallOtherMethod(Enumerator, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
@@ -842,7 +901,8 @@ end);
 
 # new for 3.2!
 #############################################################################
-# this should accept either s or OrbitsOfImages(s) as first arg... JDM
+# should accept a things like OrbitsOfImages etc as an argument!
+
 
 InstallGlobalFunction(InOrbitsOfImages, 
 function(arg)
@@ -1134,10 +1194,110 @@ end);
 
 # new for 3.2!
 #############################################################################
-# add some more info statements?
-# - this should become IteratorOfRClassRepsData...
-# - it should also just loop through checking InOrbitsOfImages and then use
-#   AddOrbitsOfImages...
+# not a user function!
+
+InstallGlobalFunction(IteratorOfRClassRepsData, 
+function(s)
+local iter;
+
+Info(InfoMonoidGreens, 4, "IteratorOfRClassRepsData");
+
+iter:=IteratorByFunctions( rec(
+	
+	ShallowCopy := iter -> rec( i:=0, s:=iter!.s, 
+	last_called := NextIterator, last_value := 0, 
+	chooser:=iter!.chooser, next:=iter!.next),
+	
+	i:=0, # representative index i.e. which representative we are at
+	
+	s:= s,
+	
+	next_value := fail,
+	
+	last_called_by_is_done:=false,
+	
+	######################################################################
+	
+	IsDoneIterator:=function(iter)
+	local o, ht, gens, i, x, d, y, z, one, O;
+	 
+	if iter!.last_called_by_is_done then 
+		return iter!.next_value=fail;
+	fi;
+	
+	iter!.last_called_by_is_done:=true;
+	
+	O:=OrbitsOfImages(s);
+	iter!.next_value:=fail;
+	
+	if iter!.i < Length(O!.data) then 
+	# we already know this rep
+		iter!.i:=iter!.i+1;
+		iter!.next_value:=O!.data[iter!.i];
+		return false;
+	elif O!.finished then  
+		return true;
+	fi;
+	
+	ht:=O!.ht;
+	
+	if O!.at=Length(ht!.o) then
+	#at the end of the orbit!
+		O!.finished:=true;
+		return true;
+	fi;
+	
+	gens:=O!.gens;
+	one:=O!.one;
+	o:=ht!.o;
+	
+	while O!.at<Length(o) do 
+		O!.at:=O!.at+1;
+		i := O!.at;
+		x:=o[i];
+		
+		d:=InOrbitsOfImages(s, x);
+
+		if not d[1] then #new rep!
+			
+			for y in [1..Length(gens)] do
+				z:=gens[y]*x; 
+				if HTValue(ht, z)=fail then  
+					HTAdd(ht, z, true);
+					o[Length(o)+1]:=z;
+					#schreier words here
+				fi;
+			od;
+			
+			if IsTransformationMonoid( s ) or not o[i] = one then 
+				d:=AddToOrbitsOfImages(s, x, d[2]);
+				iter!.i:=iter!.i+1;
+				iter!.next_value:=d;
+				return false;
+			fi;
+		fi;
+	od;
+
+	return true;
+	end,
+
+	######################################################################
+
+	NextIterator:=function(iter) 
+	IsDoneIterator(iter); 
+	iter!.last_called_by_is_done:=false;
+	
+	return iter!.next_value;
+	end
+	
+	######################################################################
+));
+
+return iter;
+end);
+
+#############################################################################
+#
 
 InstallGlobalFunction(IteratorOfRClassReps, 
 function(s)
@@ -1190,7 +1350,6 @@ iter:=IteratorByFunctions( rec(
 					iter!.last_value:=fail;
 				else
 					# must find a new rep if it exists
-					#iter!.i:=o!.at;
 					repeat 
 						iter!.last_value:=iter!.next(iter);
 					until not iter!.last_value=false or iter!.last_value=fail;
@@ -1439,7 +1598,7 @@ end);
 # create <s> in SemigroupByGenerators, to avoid method selection? Since
 # this is called so so many times it might be worth it... JDM for MN
 
-InstallMethod(OrbitsOfImages, "for a trans. semigroup",
+InstallMethod(OrbitsOfImages, "for a transformation semigroup",
 [IsTransformationSemigroup], 
 function(s)
 local gens, n, one, ht;
@@ -1455,6 +1614,7 @@ fi;
 n := DegreeOfTransformationSemigroup( s );
 one := TransformationNC( [ 1 .. n ] );
 ht := HTCreate(one);
+HTAdd(ht, one, true);
 ht!.o := [one];
 
 return rec(
