@@ -754,8 +754,7 @@ DeclareInfoClass("InfoMonoidGreens");
 # create <s> in SemigroupByGenerators, to avoid method selection? Since
 # this is called so so many times it might be worth it... JDM for MN
 
-DeclareOperation("IsSubsemigroup", [IsTransformationSemigroup, 
- IsTransformationSemigroup]);
+
 
 DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
 DeclareAttribute("OrbitsOfKernels", IsTransformationSemigroup, "mutable");
@@ -764,14 +763,11 @@ DeclareAttribute("DClassRepsData", IsTransformationSemigroup, "mutable");
 DeclareGlobalFunction("AddToOrbitsOfImages");
 DeclareGlobalFunction("AddToOrbitsOfKernels");
 
-# maybe remove the following and add them to AddToOrbitsOfImages...
-DeclareGlobalFunction("ForwardOrbitOfImage");
-DeclareGlobalFunction("ForwardOrbitOfKernel");
-DeclareGlobalFunction("ForwardOrbitOfImageNC");
-DeclareGlobalFunction("ForwardOrbitOfKernelNC");
+DeclareAttribute("IsSemigroupImageOrbit", IsObject);
 
 DeclareGlobalFunction("DisplayOrbitsOfImages");
 DeclareGlobalFunction("DisplayOrbitsOfKernels");
+DeclareGlobalFunction("DisplayOrbitOfImage");
 
 DeclareGlobalFunction("ExpandOrbitsOfImages");
 DeclareGlobalFunction("ExpandOrbitsOfKernels");
@@ -803,6 +799,7 @@ DeclareGlobalFunction("SchutzenbergerGroupOfSCCOfKernelOrbit");
 DeclareGlobalFunction("RClassRepFromData");
 DeclareGlobalFunction("RClassImageOrbitFromData");
 DeclareGlobalFunction("RClassSchutzGpFromData");
+DeclareGlobalFunction("RClassStabChainFromData");
 DeclareGlobalFunction("RClassPermsFromData");
 DeclareGlobalFunction("RClassSCCFromData");
 DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
@@ -812,6 +809,7 @@ DeclareAttribute("RClassDataFromRep", IsTransformation);
 DeclareGlobalFunction("LClassRepFromData");
 DeclareGlobalFunction("LClassKernelOrbitFromData");
 DeclareGlobalFunction("LClassSchutzGpFromData");
+DeclareGlobalFunction("LClassStabChainFromData");
 DeclareGlobalFunction("LClassRelsFromData");
 DeclareGlobalFunction("LClassSCCFromData");
 DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]);
@@ -819,6 +817,7 @@ DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]);
 DeclareGlobalFunction("DClassRepFromData");
 DeclareGlobalFunction("DClassKernelOrbitFromData");
 DeclareGlobalFunction("DClassImageOrbitFromData");
+DeclareGlobalFunction("DClassOrbitsFromData");
 DeclareGlobalFunction("DClassKerSchutzGpFromData");
 DeclareGlobalFunction("DClassImgSchutzGpFromData");
 DeclareGlobalFunction("DClassSchutzGpFromData");
@@ -867,7 +866,6 @@ DeclareAttribute("NrGreensLClasses", IsTransformationSemigroup);
 DeclareAttribute("NrGreensDClasses", IsTransformationSemigroup);
 DeclareAttribute("NrIdempotents", IsTransformationSemigroup);
 
-
 DeclareGlobalFunction("HashTableForImage");
 
 DeclareAttribute("IsRegularRClass", IsGreensClassOfTransSemigp);
@@ -880,3 +878,9 @@ DeclareGlobalFunction("IsRegularRClassData");
 #DeclareGlobalFunction("IsInSCCOfOrbit");
 #DeclareGlobalFunction("IsInOrbit");
 #DeclareProperty("RClassRepsData", IsTransformationSemigroup);
+# maybe remove the following and add them to AddToOrbitsOfImages...
+#DeclareGlobalFunction("ForwardOrbitOfImage");
+DeclareGlobalFunction("ForwardOrbitOfKernel");
+#DeclareGlobalFunction("ForwardOrbitOfImageNC");
+DeclareGlobalFunction("ForwardOrbitOfKernelNC");
+

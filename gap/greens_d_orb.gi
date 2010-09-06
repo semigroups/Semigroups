@@ -69,7 +69,7 @@ if l_schutz=true then
 fi;
 
 f:= PermLeftQuoTransformationNC(rep, f);
-r_schutz:= RClassSchutzGpFromData(s, d!.data[1])[2];
+r_schutz:= RClassSchutzGpFromData(s, d!.data[1]);
 cosets:= DClassSchutzGpFromData(s, d!.data)[3]; 
 # consider writing a DClassCosetsFromData and DClassSchutzGpStabChainFromData commands!
 #cosets of intersection of r_schutz and l_schutz in r_schutz
@@ -91,8 +91,15 @@ end);
 
 InstallGlobalFunction(DClassRepFromData, 
 function(s, d)
-
 return LClassRepFromData(s, d[2]);
+end);
+
+#############################################################################
+#
+
+InstallGlobalFunction(DClassOrbitsFromData, 
+function(s, d)
+return [RClassImageOrbitFromData(s, d[1]), LClassKernelOrbitFromData(s, d[2])];
 end);
 
 #############################################################################
@@ -181,7 +188,7 @@ end);
 InstallOtherMethod(GreensDClassOfElement, "for a trans. semigp and trans.", 
 [IsTransformationSemigroup, IsTransformation],
 function(s, f)
-local d_img, d_ker, rep, type, c, d;
+local d_img, d_ker, rep, type, c, d, o;
 
 #Info(InfoMonoidGreens, 4, "GreensDClassOfElement");
 
@@ -190,23 +197,27 @@ if not f in s then
 	return fail;
 fi;
 
-d_img:=InOrbitsOfImages(s, f)[2];
-d_img[3]:=1;
-rep:=d_img[7]; #the image of the rep lies in the first position of the scc 
-# containing it!
+o:=OrbitsOfImages(s)!.orbits;
+d_img:=InOrbitsOfImages(s, o, f, [])[2];
+d_img[3]:=RClassSCCFromData(s, o[d_img[1]][d_img[2]], d_img)[1];
+rep:=RClassRepFromData(s, d_img);
 d_ker:=InOrbitsOfKernels(s, rep);
 
 if not d_ker[1] then #orbit of kernel not previously calculated!
 	d_ker:=AddToOrbitsOfKernels(s, rep, d_ker[2]);
 	d:=DClassRepsData(s)!.data;
-	d[Length(d)+1]:=[d_img, d_ker];
+	d[Length(d)+1]:=[d_img{[1..6]}, d_ker];
 fi;
+
+rep:=DClassRepFromData(s, [d_img, d_ker]);
 
 type:=NewType( FamilyObj( s ), IsEquivalenceClass and 
 	 IsEquivalenceClassDefaultRep and IsGreensDClass and 
 	 IsGreensClassOfTransSemigp);
 
-c:=Objectify( type, rec(parent:=s, data:=[d_img, d_ker], rep:=rep));
+c:=Objectify( type, rec(parent:=s, data:=[d_img, d_ker], 
+o:=DClassOrbitsFromData(s, [d_img, d_ker]), rep:=rep));
+
 SetRepresentative(c, rep);
 SetEquivalenceClassRelation(c, GreensDRelation(s));
 return c;
@@ -219,15 +230,6 @@ InstallOtherMethod(GreensDClassOfElementNC, "for a trans. semigp and trans.",
 [IsTransformationSemigroup, IsTransformation],
 function(s, f)
 local d, rep, type, c;
-
-Info(InfoWarning, 2, "Warning: this function does not check that the transformation");
-Info(InfoWarning, 2, "is an element of the semigroup. Do not use this function unless");
-Info(InfoWarning, 2, "you are certain that the transformation is an element of the");
-Info(InfoWarning, 2, "semigroup. If you are unsure, use GreensDClassOfElement instead.");
-Info(InfoWarning, 2, "Using this function with a transformation that is not an element of"); 
-Info(InfoWarning, 2, "the semigroup will have unpredictable effects on this and all");
-Info(InfoWarning, 2, "subsequent computings involving the semigroup.");
-
 
 Info(InfoMonoidGreens, 4, "GreensDClassOfElementNC");
 
@@ -242,13 +244,12 @@ if d[1][1] or d[2][1] then # f in s!
 		rep:=DClassRepFromData(s, [d[1], d[2]]);
 	fi;
 elif OrbitsOfImages(s)!.finished then #f not in s!
-	Info(InfoMonoidGreens, 2, "trans. is not an element of ", s);
-	Info(InfoWarning, 1, "transformation is not an element of the semigroup");
-	return fail;#
+	Info(InfoMonoidGreens, 2, "transformation is not an element of the semigroup");
+	return fail;
 else 
-	Info(InfoMonoidGreens, 2, "trans. may not be an element of ", s);
-	#do whatever we do in the IteratorOfDClassReps algorithm...
-	d[1]:=AddToOrbitsOfImages(s, f, d[1][2]);
+	Info(InfoMonoidGreens, 2, "transformation may not be an element of the semigroup");
+	Error("Not yet implemented!"); #JDM
+	d[1]:=AddToOrbitsOfImages(s, f, d[1][2]); 
 	d[2]:=AddToOrbitsOfKernels(s, f, d[2][2]);
 	rep:=DClassRepFromData(s, [d[1], d[2]]);
 fi;
@@ -306,14 +307,14 @@ iter:=IteratorByFunctions( rec(
 			
 			s:= s,
 			
-			r:=IteratorOfRClassReps(s), 
+			r:=IteratorOfRClassRepsData(s), 
 			
 			last_called := NextIterator,
 				
 			last_value := 0,
 			
 			######################################################################
-			
+			# get rid of the chooser!! JDM 
 			chooser := function( iter, called_by )
 			local o;
 			
@@ -354,29 +355,29 @@ iter:=IteratorByFunctions( rec(
 			next:=function(iter) 
 			local f, o, d_img, d_ker, d;
 		
-			f:=NextIterator(iter!.r);
+			d_img:=NextIterator(iter!.r);
 			
-			if f=fail then 
+			if d_img=fail then 
 				DClassRepsData(s)!.finished:=true;
 				return fail;
 			fi;
 			
-			o:=OrbitsOfImages(iter!.s);
-			d_img:=f![4][1]; #the data for f!
-			#JDM bad idea replace the iterator with an iterator of DClassRepsData!
-			
-			d_ker:=InOrbitsOfKernels(s, f);
+			f:=RClassRepFromData(iter!.s, d_img);
+			d_ker:=InOrbitsOfKernels(s, f); 
 			
 			# R-class reps always have image in the first position of the 
-			# scc containing their image hence we do not need to multiply f
-			# by one of the perms to rectify its image.
+			# scc containing their image. 
 			
-			if not d_ker[1] then #this is a new element!
+			if not d_ker[1] then #this is a new D-class rep!
 				d_ker:=AddToOrbitsOfKernels(s, f, d_ker[2]);
 				d:=DClassRepsData(s)!.data;
 				d[Length(d)+1]:=[d_img, d_ker];
 				return f;
 			fi;
+			#if d_ker[1] then the R-class of f intersects the L-class with 
+			# data d_ker[2], and so we should store it, so that we know the 
+			# R-classes of the D-classes
+			
 			return false;
 			end
 			######################################################################
@@ -412,7 +413,7 @@ iter:=IteratorByFunctions( rec(
 	IsDoneIterator := iter -> IsDoneIterator(iter!.reps), 
 	
 	NextIterator:= function(iter)
-	local c, rep;
+	local c, rep, d;
 	
 	rep:=NextIterator(iter!.reps);
 	
@@ -421,10 +422,14 @@ iter:=IteratorByFunctions( rec(
 	fi;
 	
 	iter!.i:=iter!.i+1;
+	d:=DClassRepsData(iter!.s)!.data[iter!.i];
 	
 	#c:=GreensDClassOfElement(iter!.s, rep, type);
 	c:=Objectify( iter!.type, rec(parent:=s, 
-	 data:=DClassRepsData(iter!.s)!.data[iter!.i], rep:=rep));
+	 data:=d,
+	 o:=[RClassImageOrbitFromData(s, d[1]), 
+	  LClassKernelOrbitFromData(s, d[2])],
+	 rep:=rep));
 	SetRepresentative(c, rep);
 	SetEquivalenceClassRelation(c, GreensDRelation(s));
 	return c; end,
@@ -494,16 +499,17 @@ d-> DClassSchutzGpFromData(d!.parent, d!.data)[2]);
 # new for 3.2!
 #############################################################################
 
-InstallOtherMethod(Size, "for an D-class of a trans. semigp.", 
+InstallOtherMethod(Size, "for a D-class of a trans. semigp.", 
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
-local r, l, s;
+local r, l, s, o;
 
 s:=d!.parent;
 d:=d!.data;
+o:=d!.o;
 
-r:=RClassSchutzGpFromData(s, d[1])[2];
-l:=LClassSchutzGpFromData(s, d[2])[2];
+r:=RClassSchutzGpFromData(s, o[1], d[1]);
+l:=LClassSchutzGpFromData(s, o[2], d[2])[2];
 return (Size(r)*Length(RClassSCCFromData(s, d[1]))
 *Length(LClassSCCFromData(s, d[2])))*Size(l)/Size(DClassSchutzGpFromData(s, d)[2]);
 end);

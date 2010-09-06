@@ -13,11 +13,25 @@
 # the functions in this file define different types of semigroups and 
 # transformation semigroups
 
-#JDM all the things in this file should be moved to semex...
+#JDM some of the things in this file should be moved to semex...
 
 # JDM ZeroGroupElt should be modified so that it takes a zero group as an 
 # additional argument and returns an element in that zero group. As it is it 
 # functions but isn't great.
+
+
+# new for 3.2!
+#############################################################################
+# this should move somewhere else JDM
+
+InstallMethod(IsSubsemigroup, "for a trans. semigp and trans. semigp",
+[IsTransformationSemigroup, IsTransformationSemigroup], 
+function(s, t) #is t a subsemigroup of s?
+
+Info(InfoMonoidGreens, 4, "IsSubsemigroup");
+return ForAll(GeneratorsOfSemigroup(t), x-> x in s);
+end);
+
 
 InstallMethod(PrintObj,  "for a full transformation semigroup (monoid pkg)",
 [IsTransformationSemigroup and IsFullTransformationSemigroup], 

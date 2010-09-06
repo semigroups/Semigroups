@@ -406,3 +406,9 @@ DeclareGlobalFunction("ReesZeroMatrixSemigroupElementNC");
 ##	<#/GAPDoc>
 
 DeclareOperation("KiselmanSemigroup", [IsPosInt]);
+
+
+#JDM new for 4.0!
+
+DeclareOperation("IsSubsemigroup", [IsTransformationSemigroup, 
+ IsTransformationSemigroup]);

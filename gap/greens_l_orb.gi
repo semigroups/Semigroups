@@ -572,9 +572,15 @@ end);
 
 InstallGlobalFunction(LClassSchutzGpFromData, 
 function(s, d)
-#Info(InfoMonoidGreens, 4, "LClassSchutzGpFromData");
-return OrbitsOfKernels(s)!.orbits[d[1]][d[2]]!.schutz[d[4]][d[5]][d[6]];
-#return OrbitsOfKernels(s)!.orbits[d[1]][d[2]]!.schutz[d[4]][1][1];
+return OrbitsOfKernels(s)!.orbits[d[1]][d[2]]!.schutz[d[4]][d[5]][d[6]][2];
+end);
+
+# new for 3.2!
+############################################################################
+
+InstallGlobalFunction(LClassStabChainFromData, 
+function(s, d)
+return OrbitsOfKernels(s)!.orbits[d[1]][d[2]]!.schutz[d[4]][d[5]][d[6]][1];
 end);
 
 # new for 3.2!

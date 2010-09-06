@@ -13,6 +13,31 @@
 #############################################################################
 # new for 3.2!
 
+InstallMethod(Random, "for a transformation semigroup (monoid pkg)", 
+[IsTransformationSemigroup],
+function(s)
+local gens, n, i, w, d, g, h, o;
+
+o:=OrbitsOfImages(s);
+
+if not o!.finished then 
+	gens:=GeneratorsOfSemigroup(s);
+	n:=DegreeOfTransformationSemigroup(s);
+	i:=Random([1..Int((n-1)^2/4)]);
+	w:=List([1..i], x-> Random([1..Length(gens)]));
+	return EvaluateWord(gens, w);
+else
+	d:=Random(o!.data);
+	o:=RClassImageOrbitFromData(s, d);
+	g:=Random(RClassSchutzGpFromData(s, o, d));
+	h:=Random(RClassPermsFromData(s, o, d){RClassSCCFromData(s, o, d)});
+	return RClassRepFromData(s, d)*g*h^-1; 
+fi;
+end);
+
+#############################################################################
+# new for 3.2!
+
 #gap> MakeReadWriteGVar("Transformation");
 #gap> Transformation := function(t) Print("Blubb\n"); end;
 #function( t ) ... end
