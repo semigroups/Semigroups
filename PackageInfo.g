@@ -61,9 +61,10 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.4.12",
-  NeededOtherPackages := [],
-  SuggestedOtherPackages := [["genss", "1.3"], ["orb", "3.4"], 
-  ["grape", ">=4.3"], ["gapdoc", ">=1.1"]],
+  NeededOtherPackages := [["orb", "3.4"]],
+  SuggestedOtherPackages := [["genss", "1.3"],
+  ["grape", ">=4.3"], ["gapdoc", ">=1.1"]], # JDM genss and grape will be removed 
+  # when autos are hived off
   ExternalConditions := []),
 AvailabilityTest := ReturnTrue,
 Autoload := false,
