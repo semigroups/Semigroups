@@ -384,111 +384,30 @@ fi;
   
 end);
 
+
+# new method for 4.0! 
 ###########################################################################
-# JDM this should be updated when greens.gi etc is updated
+# JDM check efficiency!
 
 InstallOtherMethod(IsRegularSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup],
-function ( M )
-local n, one, gens, images, positions, classes, classespart, reps, 
-      kernels, orb, x, img, k, j, i, r, pos, ker, new, s, class;
-
-if IsCompletelyRegularSemigroup(M) then 
-   return true;
-elif HasGreensDClasses(M) then 
-   return ForAll(GreensDClasses(M), IsRegularDClass);
-elif HasGreensRClasses(M) then 
-  return ForAll(GreensRClasses(M), x-> ForAny(GreensData(x)!.strongorb, 
-    y->IsTransversal(KernelOfTransformation(Representative(x)), y)));
-
+function(s)
+local iter, r;
+if IsCompletelyRegularSemigroup(s) then 
+	return true;
+elif HasGreensDClasses(s) then 
+	return ForAll(GreensDClasses(s), IsRegularDClass);
+elif HasGreensRClasses(s) then 
+	return ForAll(GreensRClasses(s), IsRegularRClass);
 else
-   
-   n := DegreeOfTransformationSemigroup( M );
-   one := TransformationNC( [ 1 .. n ] );
-
-   if IsTransformationMonoid( M )  then
-      gens := GeneratorsOfMonoid( M );
-   else
-      gens := GeneratorsOfSemigroup( M );
-   fi;
-
-   images := List( [ 1 .. n ], x-> [] );
-   positions := List( [ 1 .. n ], x->[]) ;
-   classes := [  ]; reps := [  ];
-   kernels := [  ]; classespart:=[];
-   orb := [ one ];
-    
-   for x in orb  do
-      img := ImageSetOfTransformation( x );
-      ker:=KernelOfTransformation( x );
-      k := Length( img );
-      j := Position( images[k], img );
-
-      if j = fail  then
-        if IsTransformationMonoid( M ) or not x = one  then
-           class:=GreensRClassOfElement(M, x); 
-           r := GreensRClassData(class);
-           
-           if not ForAny(r!.strongorb, x-> IsTransversal(ker, x)) then 
-              return false;
-           fi;            
-
-	   Add(classes, class);  Add(classespart, [r]);
-           Add( reps, [ x ] ); 
-           Add( kernels, [ KernelOfTransformation( x ) ] );
-           Append( images[k], r!.strongorb ); j := Length( classespart );
-           Append( positions[k], List( r!.strongorb,  x ->j ));       
-         fi;
-         for s  in gens  do
-            Add( orb, s * x );
-         od;
-      else
-            if IsTransformationMonoid( M ) or not x = one  then
-                pos := positions[k][j];
-                r := classespart[pos][1];
-                
-		if not ForAny(r!.strongorb, x-> IsTransversal(ker, x)) then 
-               	   return false;
-           	fi;
-                
-		x := x * r!.perms[Position( r!.strongorb, img )];
-                new := true;
-                i:=0;
-
-		repeat       
-                  	i:=i+1;                    
-  			if ker = kernels[pos][i] and 
-                         x in classespart[pos][i] then
-                        	new := false;
-                    	fi;
-                until i=Length( kernels[pos] ) or new=false;
-
-                if new then
-                    Add( reps[pos], x );
-                    Add( kernels[pos], ker );
-                    class:=GreensRClassOfElement(M, x);
-                    r:=RClassData( rec( rep:=x, strongorb:=r!.strongorb, 
-			  perms:=r!.perms, schutz:=r!.schutz ));
-                    
-                    Add( classespart[pos], r);                   
-		   
-                    Add(classes, class);
-
-		    for s  in gens  do
-                        Add( orb, s * x );
-                    od;
-                fi;
-            fi;
-        fi;
-      od;
-
-      SetPositionsRClasses( M, positions);
-      SetGradedRClasses(M, classespart);
-      SetGradedImagesOfTransSemigroup( M, images);
-      SetInternalKernels(M, kernels);
-      SetGreensRClassReps(M, reps); #JDM can this be a flat list???
-
-      return true;
+	iter:=IteratorOfGreensRClasses(s);
+	
+	for r in iter do 
+		if not IsRegularRClass(r) then 
+			return false;
+		fi;
+	od; 
+	return true;
 fi;
 end);
 
@@ -637,7 +556,7 @@ end);
 
 #############################################################################
 #JDM there must be better methods than the following for special types of S.
-#JDM new for 3.2!
+#JDM new for 3.2! JDM this should be revisited!
 
 InstallOtherMethod(SmallGeneratingSet, "for a transformation semigroup",
 [IsTransformationSemigroup],

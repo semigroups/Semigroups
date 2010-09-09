@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  greens_d_orb.gi
+#W  d.gi
 #Y  Copyright (C) 2006-2010                             James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -15,6 +15,15 @@
 # - remove info statements from functions that are called many many times!
 
 # - consolidate and clean up what's here already and do some more testing!
+
+# -  called from
+#LClassRepFromData( s, d[2] ) called from
+#DClassRepFromData( s, [ d_img, d_ker ] ) called from
+#GreensDClassOfElement( semi, elm ) called from
+#ImagesElm( rel, rep ) called from
+#Enumerator( coll ) called from
+
+# when run on a D-class ImagesElm should work!
 
 ##
 #############################################################################
@@ -62,16 +71,15 @@ fi;
 
 f:=o!.rels[i][2]*f; #adjust kernel of f so that it is equal o[scc[1]]
 
-l_schutz:=LClassSchutzGpFromData(s, d!.data[2])[1];
+l_schutz:=LClassStabChainFromData(s, d!.data[2]);
 
 if l_schutz=true then
 	return true;
 fi;
 
 f:= PermLeftQuoTransformationNC(rep, f);
-r_schutz:= RClassSchutzGpFromData(s, d!.data[1]);
-cosets:= DClassSchutzGpFromData(s, d!.data)[3]; 
-# consider writing a DClassCosetsFromData and DClassSchutzGpStabChainFromData commands!
+#r_schutz:= RClassSchutzGpFromData(s, d!.data[1], d!.o[1]);
+cosets:= DClassCosetsFromData(s, d!.o[1], d!.data); 
 #cosets of intersection of r_schutz and l_schutz in r_schutz
 
 for i in cosets do
@@ -85,13 +93,38 @@ end);
 
 #AsList
 
+#new for 3.2!
 #############################################################################
-# should return a trans. with kernel and img in the first positions of their
-# scc's. 
+#
 
-InstallGlobalFunction(DClassRepFromData, 
-function(s, d)
-return LClassRepFromData(s, d[2]);
+InstallGlobalFunction(DClassCosetsFromData, 
+function(s, o, d)
+local g, h, right;
+
+if not IsBound(o!.d_schutz[d[1][4]][d[1][5]][d[1][6]]) then 
+	o!.d_schutz[d[1][4]][d[1][5]][d[1][6]]:=[];
+fi;
+
+if not IsBound(o!.d_schutz[d[1][4]][d[1][5]][d[1][6]][3]) then 
+	h:=DClassSchutzGpFromData(s, o, d);
+	g:=RClassSchutzGpFromData(s, d[1], o);
+	if not Size(g)=1 then 
+		right:=RightTransversal(g, h);
+	else
+		right:=[()];
+	fi;
+	o!.d_schutz[d[1][4]][d[1][5]][d[1][6]][3]:=right;
+fi;
+
+return o!.d_schutz[d[1][4]][d[1][5]][d[1][6]][3];
+end);
+
+###########################################################################
+# 
+
+InstallGlobalFunction(DClassData, function(list)
+return Objectify(NewType(NewFamily("Green's D Class Data", IsGreensDClassData), 
+IsGreensDClassData and IsGreensDClassDataRep), list);
 end);
 
 #############################################################################
@@ -103,17 +136,24 @@ return [RClassImageOrbitFromData(s, d[1]), LClassKernelOrbitFromData(s, d[2])];
 end);
 
 #############################################################################
+# should return a trans. with kernel and img in the first positions of their
+# scc's. 
 
+InstallGlobalFunction(DClassRepFromData, 
+function(s, d)
+return LClassRepFromData(s, d[2]);
+end);
+
+#############################################################################
 
 InstallMethod(DClassRepsData, "for a trans. semigroup",
 [IsTransformationSemigroup], 
 function(s)
 
-#Info(InfoMonoidGreens, 4, "DClassRepsData");
-
 return rec(
   finished:=false,
-	data:=[]);
+	data:=[], 
+);
 end);
 
 #new for 3.2!
@@ -121,23 +161,47 @@ end);
 # test for efficiency! JDM
 
 InstallGlobalFunction(DClassSchutzGpFromData, 
-function(s, d)
-local O, g, h, dd;
-#Info(InfoMonoidGreens, 4, "DClassSchutzGpFromData");
+function(s, o, d)
+local g, h;
 
-dd:=d[1]; 
-O:=OrbitsOfImages(s)!.orbits;
+#o should be RClassImageOrbitFromData
 
-if not IsBound(O[dd[1]][dd[2]]!.d_schutz[dd[4]][dd[5]][dd[6]]) then 
-	g:=RClassSchutzGpFromData(s, d[1])[2];
-	h:=Intersection(g, LClassSchutzGpFromData(s, d[2])[2]);
-	O[dd[1]][dd[2]]!.d_schutz[dd[4]][dd[5]][dd[6]]:=[StabChainImmutable(h), 
-	 h, List(RightCosets(g,h), Representative)]; 
-	#JDM good idea to compute the stab. chain and cosets here?
+if not IsBound(o!.d_schutz[d[1][4]][d[1][5]][d[1][6]]) then
+	o!.d_schutz[d[1][4]][d[1][5]][d[1][6]]:=[];
 fi;
 
-return O[dd[1]][dd[2]]!.d_schutz[dd[4]][dd[5]][dd[6]];
+if not IsBound(o!.d_schutz[d[1][4]][d[1][5]][d[1][6]][2]) then
+	g:=RClassSchutzGpFromData(s, d[1], o);
+	if not Size(g)=1 then 
+		h:=Intersection(g, LClassSchutzGpFromData(s, d[2]));
+	else
+		h:=g;
+	fi;
+	o!.d_schutz[d[1][4]][d[1][5]][d[1][6]][2]:=h; 
+fi;
+
+return o!.d_schutz[d[1][4]][d[1][5]][d[1][6]][2];
 end);
+
+#new for 3.2!
+#############################################################################
+#
+
+InstallGlobalFunction(DClassStabChainFromData, 
+function(s, o, d)
+
+if not IsBound(o!.d_schutz[d[1][4]][d[1][5]][d[1][6]]) then 
+	o!.d_schutz[d[1][4]][d[1][5]][d[1][6]]:=[];
+fi;
+
+if not IsBound(o!.d_schutz[d[1][4]][d[1][5]][d[1][6]][1]) then
+	o!.d_schutz[d[1][4]][d[1][5]][d[1][6]][1]:=
+	 StabChainImmutable(DClassSchutzGpFromData(s, o, d)); 
+fi;
+
+return o!.d_schutz[d[1][4]][d[1][5]][d[1][6]][1];
+end);
+
 
 #new for 3.2!
 #############################################################################
@@ -158,6 +222,29 @@ if not o!.finished then
 fi;
 
 return true;
+end);
+
+#############################################################################
+# 
+
+InstallMethod(GreensDClassData,  "for a D-class of a trans. semigroup",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+local rep, s, l, r, h, o;
+
+Info(InfoWarning, 1, "this is a legacy from Monoid 3.*");
+
+rep:=d!.rep;
+s:=d!.parent;
+o:=d!.o[1];
+d:=d!.data;
+
+l:=GreensLClassData(GreensLClassOfElement(s, rep));
+r:=GreensRClassData(GreensRClassOfElement(s, rep));
+h:=GreensHClassData(GreensHClassOfElement(s, rep));
+
+return DClassData(rec( rep:=rep, R:=r, L:=l, H:=h, 
+ cosets:=DClassCosetsFromData(s, o, d), schutz:=SchutzenbergerGroup(h)));;
 end);
 
 # new for 3.2!
@@ -197,16 +284,18 @@ if not f in s then
 	return fail;
 fi;
 
-o:=OrbitsOfImages(s)!.orbits;
-d_img:=InOrbitsOfImages(s, o, f, [])[2];
-d_img[3]:=RClassSCCFromData(s, o[d_img[1]][d_img[2]], d_img)[1];
+d_img:=InOrbitsOfImages(s, f)[2];
+d_img[3]:=RClassSCCFromData(s, d_img)[1];
 rep:=RClassRepFromData(s, d_img);
-d_ker:=InOrbitsOfKernels(s, rep);
+d_ker:=InOrbitsOfKernels(s, rep, OrbitsOfKernels(s)!.orbits, 
+[d_img[1], fail, fail, fail, fail, 0, fail], d_img);
 
 if not d_ker[1] then #orbit of kernel not previously calculated!
 	d_ker:=AddToOrbitsOfKernels(s, rep, d_ker[2]);
 	d:=DClassRepsData(s)!.data;
 	d[Length(d)+1]:=[d_img{[1..6]}, d_ker];
+else
+	d_ker:=d_ker[2]{[1..6]};
 fi;
 
 rep:=DClassRepFromData(s, [d_img, d_ker]);
@@ -281,11 +370,11 @@ end);
 
 InstallOtherMethod(IsRegularDClass, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
-d-> IsRegularRClassData(d!.parent, d!.data[1]));
-
+d-> IsRegularRClassData(d!.parent, d!.o[1], d!.data[1]));
 
 #############################################################################
 # JDM test the below for efficiency
+# JDM modify the below as per r.gi! IteratorOfRClassRepsData!
 
 InstallGlobalFunction(IteratorOfDClassReps, 
 function(s)
@@ -294,93 +383,93 @@ local iter;
 Info(InfoMonoidGreens, 4, "IteratorOfDClassReps");
 
 iter:=IteratorByFunctions( rec(
-			
-			IsDoneIterator := iter-> iter!.chooser(iter, IsDoneIterator)=fail,
-			
-			NextIterator := iter-> iter!.chooser(iter, NextIterator),
-			
-			ShallowCopy := iter -> rec( i:=0, s:=iter!.s, 
-			last_called := NextIterator, last_value := 0, 
-			chooser:=iter!.chooser, next:=iter!.next),
-			
-			i:=0, # representative index i.e. which representative we are at
-			
-			s:= s,
-			
-			r:=IteratorOfRClassRepsData(s), 
-			
-			last_called := NextIterator,
-				
-			last_value := 0,
-			
-			######################################################################
-			# get rid of the chooser!! JDM 
-			chooser := function( iter, called_by )
-			local o;
-			
-			if iter!.last_called = IsDoneIterator then 
-				iter!.last_called := called_by;
-				return iter!.last_value; 
-			fi;
-
-			if iter!.last_called = NextIterator then
-				iter!.last_called := called_by;
-				if iter!.last_value=fail then 
-					return fail;
-				fi;
-				
-				o:=DClassRepsData(iter!.s);
-				
-				if iter!.i < Length(o!.data) then 
-					# we already know this rep
-					iter!.i:=iter!.i+1;
-					iter!.last_value:=DClassRepFromData(iter!.s, 
-					 o!.data[iter!.i]);
-				elif o!.finished then  
-					iter!.last_value:=fail;
-				else
-					# must find a new rep if it exists
-					iter!.i:=iter!.i+1;
-					repeat 
-						iter!.last_value:=iter!.next(iter);
-					until not iter!.last_value=false or iter!.last_value=fail;
-				fi;
-				return iter!.last_value;
-			fi;
-			
-			end,
-			
-			######################################################################
-
-			next:=function(iter) 
-			local f, o, d_img, d_ker, d;
+	
+	IsDoneIterator := iter-> iter!.chooser(iter, IsDoneIterator)=fail,
+	
+	NextIterator := iter-> iter!.chooser(iter, NextIterator),
+	
+	ShallowCopy := iter -> rec( i:=0, s:=iter!.s, 
+	last_called := NextIterator, last_value := 0, 
+	chooser:=iter!.chooser, next:=iter!.next),
+	
+	i:=0, # representative index i.e. which representative we are at
+	
+	s:= s,
+	
+	r:=IteratorOfRClassRepsData(s), 
+	
+	last_called := NextIterator,
 		
-			d_img:=NextIterator(iter!.r);
-			
-			if d_img=fail then 
-				DClassRepsData(s)!.finished:=true;
-				return fail;
-			fi;
-			
-			f:=RClassRepFromData(iter!.s, d_img);
-			d_ker:=InOrbitsOfKernels(s, f); 
-			
-			# R-class reps always have image in the first position of the 
-			# scc containing their image. 
-			
-			if not d_ker[1] then #this is a new D-class rep!
-				d_ker:=AddToOrbitsOfKernels(s, f, d_ker[2]);
-				d:=DClassRepsData(s)!.data;
-				d[Length(d)+1]:=[d_img, d_ker];
-				return f;
-			fi;
-			#if d_ker[1] then the R-class of f intersects the L-class with 
-			# data d_ker[2], and so we should store it, so that we know the 
-			# R-classes of the D-classes
-			
-			return false;
-			end
-			######################################################################
+	last_value := 0,
+	
+	######################################################################
+	# get rid of the chooser!! JDM 
+	chooser := function( iter, called_by )
+	local o;
+	
+	if iter!.last_called = IsDoneIterator then 
+		iter!.last_called := called_by;
+		return iter!.last_value; 
+	fi;
+
+	if iter!.last_called = NextIterator then
+		iter!.last_called := called_by;
+		if iter!.last_value=fail then 
+			return fail;
+		fi;
+		
+		o:=DClassRepsData(iter!.s);
+		
+		if iter!.i < Length(o!.data) then 
+			# we already know this rep
+			iter!.i:=iter!.i+1;
+			iter!.last_value:=DClassRepFromData(iter!.s, 
+			 o!.data[iter!.i]);
+		elif o!.finished then  
+			iter!.last_value:=fail;
+		else
+			# must find a new rep if it exists
+			iter!.i:=iter!.i+1;
+			repeat 
+				iter!.last_value:=iter!.next(iter);
+			until not iter!.last_value=false or iter!.last_value=fail;
+		fi;
+		return iter!.last_value;
+	fi;
+	
+	end,
+	
+	######################################################################
+
+	next:=function(iter) 
+	local f, o, d_img, d_ker, d, s, rels, cosets, i, j, g;
+
+	d_img:=NextIterator(iter!.r);
+	s:=iter!.s;
+	
+	if d_img=fail then 
+		DClassRepsData(s)!.finished:=true;
+		return fail;
+	fi;
+	
+	f:=RClassRepFromData(s, d_img);
+	d_ker:=InOrbitsOfKernels(s, f, OrbitsOfKernels(s)!.orbits, [d_img[1], 
+	fail, fail, fail, fail, 0, fail], d_img); 
+	
+	# R-class reps always have image in the first position of the 
+	# scc containing their image. 
+	
+	if not d_ker[1] then #this is a new D-class rep!
+		d_ker:=AddToOrbitsOfKernels(s, f, d_ker[2]);
+		d:=DClassRepsData(s)!.data;
+		d[Length(d)+1]:=[d_img, d_ker];
+
+		return DClassRepFromData(s, [d_img, d_ker]);
+	fi;
+	
+	return false;
+	end
+	######################################################################
 ));
 
 SetIsIteratorOfDClassReps(iter, true);
@@ -487,12 +576,22 @@ Print( "<iterator of D-classes>");
 return;
 end);
 
+#############################################################################
+# JDM maybe insert some more info here?
+
+InstallMethod( Display, "for D-class data'",
+[ IsGreensDClassData and IsGreensDClassDataRep],
+function( obj )
+Print( "GreensDClassData: ", obj!.rep,  " )" );
+end );
+
+
 # new for 3.2!
 ############################################################################
 
 InstallOtherMethod(SchutzenbergerGroup, "for a D-class of a trans. semigp.",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
-d-> DClassSchutzGpFromData(d!.parent, d!.data)[2]);
+d-> DClassSchutzGpFromData(d!.parent, d!.o[1], d!.data));
 
 #JDM is this correct? Compare it to SchutzenbergerGroup of R-class...
 
@@ -505,33 +604,46 @@ function(d)
 local r, l, s, o;
 
 s:=d!.parent;
-d:=d!.data;
 o:=d!.o;
+d:=d!.data;
 
-r:=RClassSchutzGpFromData(s, o[1], d[1]);
-l:=LClassSchutzGpFromData(s, o[2], d[2])[2];
-return (Size(r)*Length(RClassSCCFromData(s, d[1]))
-*Length(LClassSCCFromData(s, d[2])))*Size(l)/Size(DClassSchutzGpFromData(s, d)[2]);
+r:=RClassSchutzGpFromData(s, d[1], o[1]);
+l:=LClassSchutzGpFromData(s, d[2]);
+
+return (Size(r)*Length(RClassSCCFromData(s, d[1], o[1]))
+*Length(LClassSCCFromData(s, d[2])))*Size(l)/
+Size(DClassSchutzGpFromData(s, o[1], d));
 end);
 
 
 #############################################################################
-# JDM the following is very slow as it has to find the intersection of the 
-# the schutz gps every time. Improve this!
+# 
 
 InstallGlobalFunction(SizeDClassRepsData, 
 function(s)
-local data, i, d, l, r;
+local data, i, d, l, r, o_r, o_l;
 
 data:=DClassRepsData(s)!.data;
 i:=0;
 
 for d in data do
-	r:=RClassSchutzGpFromData(s, d[1])[2];
-	l:=LClassSchutzGpFromData(s, d[2])[2];
-	i:=i+(Size(r)*Length(RClassSCCFromData(s,d[1]))
-	 *Length(LClassSCCFromData(s, d[2]))*Size(l)/Size(DClassSchutzGpFromData(s, d))[2]);
+	o_r:=RClassImageOrbitFromData(s, d[1]);
+	r:=RClassSchutzGpFromData(s, d[1]);
+	o_l:=LClassKernelOrbitFromData(s, d[2]);
+	l:=LClassSchutzGpFromData(s, d[2]);
+	i:=i+(Size(r)*Length(RClassSCCFromData(s, d[1]))
+	 *Length(LClassSCCFromData(s, d[2]))*Size(l)/
+	 Size(DClassSchutzGpFromData(s, o_r, d)));
 od;
 
 return i;
 end);
+
+#############################################################################
+# 
+
+InstallMethod( ViewObj, "for D-class data",
+[ IsGreensDClassData and IsGreensDClassDataRep],
+function( obj )
+Print( "GreensDClassData( ", obj!.rep, " )" );
+end );

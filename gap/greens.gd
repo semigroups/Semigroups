@@ -763,7 +763,6 @@ DeclareAttribute("DClassRepsData", IsTransformationSemigroup, "mutable");
 DeclareGlobalFunction("AddToOrbitsOfImages");
 DeclareGlobalFunction("AddToOrbitsOfKernels");
 
-DeclareAttribute("IsSemigroupImageOrbit", IsObject);
 
 DeclareGlobalFunction("DisplayOrbitsOfImages");
 DeclareGlobalFunction("DisplayOrbitsOfKernels");
@@ -825,6 +824,14 @@ DeclareGlobalFunction("DClassRelsFromData");
 DeclareGlobalFunction("DClassPermsFromData");
 DeclareGlobalFunction("DClassKerSCCFromData");
 DeclareGlobalFunction("DClassImgSCCFromData");
+
+DeclareAttribute("GreensDClass", IsGreensRClass);
+DeclareAttribute("GreensDClassNC", IsGreensRClass);
+
+
+DeclareGlobalFunction("DClassCosetsFromData");
+DeclareGlobalFunction("DClassStabChainFromData");
+
 DeclareOperation("GreensDClassOfElementNC", [IsTransformationSemigroup]);
 
 DeclareAttribute("GreensLClassReps", IsTransformationSemigroup);
@@ -834,19 +841,26 @@ DeclareProperty("IsEnumeratorOfRClassElements", IsEnumeratorByFunctions);
 DeclareProperty("IsEnumeratorOfLClassElements", IsEnumeratorByFunctions);
 DeclareProperty("IsEnumeratorOfDClassElements", IsEnumeratorByFunctions);
 
-DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareGlobalFunction("IteratorOfRClassRepsData");
+DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareGlobalFunction("IteratorOfLClassReps");
 DeclareGlobalFunction("IteratorOfDClassReps");
+
+#DeclareGlobalFunction("EnumeratorOfRClassReps");
 
 DeclareProperty("IsIteratorOfRClassRepsData", IsIterator);
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
 DeclareProperty("IsIteratorOfLClassReps", IsIterator);
 DeclareProperty("IsIteratorOfDClassReps", IsIterator);
 
+# IteratorOfGreensRClasses and IteratorOfGreensLClasses
+# should be operations so that they can be applied to 
+# D-classes as well as transformation semigroups!
+
 DeclareGlobalFunction("IteratorOfGreensRClasses");
 DeclareGlobalFunction("IteratorOfGreensLClasses");
 DeclareGlobalFunction("IteratorOfGreensDClasses");
+DeclareOperation("IteratorOfGreensHClasses", [IsTransformationSemigroup]);
 
 DeclareProperty("IsIteratorOfGreensRClasses", IsIterator);
 DeclareProperty("IsIteratorOfGreensLClasses", IsIterator);

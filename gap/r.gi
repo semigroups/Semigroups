@@ -16,36 +16,11 @@
 
 # - this file should only contain functions relating to images/r-classes!
 
-# - it can be that when you are doing iterator of orbits of images that 
-# you create an orbit that is later contained in another orbit
-# this will lead to the later orbit not have all of its reps, etc defined. 
-# What should be done about the above comment?
-
 # - consider storing the relevant data for an R-class in that R-class 
 #   rather than repeatedly obtaining it from OrbitsOfImages. About 
 #   1/3 of the time in finding all the idempotents of all the R-classes
 #   is spent in line JDM1. In particular, the scc corresponding to the R-class
 #   (the actual images that is).
-
-# - is it true that there are an equal number of reps with any given kernel
-#   in a given scc of an orbit? 
-
-NrReps:=function(o)
-return List([1..Length(o!.scc)], m->List(o!.reps[m], Length));
-end;
-
-# - is it true that there are an equal number of distinct kernels of 
-#   representatives of any two scc in the same orbit? Not always. 
-
-NrKernels:=function(o)
-return List(o!.reps, Length);
-end;
-
-# - does it make sense to actually have \in etc defined using D-classes rather 
-#   than R-classes? Check efficiency etc and see if it does... It seems not. 
-
-# - maybe combine OrbitsOfImages and OrbitsOfKernels... for the sake of 
-# simplicity let's not...
 
 # - check that wherever we have called d:=InOrbitsOfImages we do not perform
 # f*perms[l] afterwards but instead use d[7]!
@@ -138,7 +113,7 @@ fi;
 
 o:=OrbitsOfImages(s);
 orbits:=o!.orbits;
-g:=InOrbitsOfImages(s, orbits, f, []);
+g:=InOrbitsOfImages(s, f, orbits, []);
 
 if g[1] then 
 	return true;
@@ -153,7 +128,7 @@ iter!.i:=Length(o!.data);
 
 repeat
 	NextIterator(iter);
-	g:=InOrbitsOfImages(s, orbits, f, g[2]);
+	g:=InOrbitsOfImages(s, f, orbits, g[2]);
 
 	if g[1] then 
 		return true;
@@ -169,7 +144,7 @@ end);
 InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, o, f, data)
 local j, k, l, m, val, n, g, O, one, gens, d, reps, schutz, img, scc, i, 
- oo, r, ht, y, z, out;
+ oo, r, ht, y, z, out, d_schutz;
 
 j:=data[1]; 	# img size
 k:=data[2]; 	# index of orbit containing img
@@ -184,7 +159,7 @@ d:=o!.data; ht:=o!.ht; o:=ht!.o;
 
 if k = fail then #new img and l, m, val, n, g=fail
 
-	#################################################################################
+#################################################################################
 	img:=ImageSetOfTransformation(f);
 
 	oo:=Orb(s, img, OnSets, rec(
@@ -199,10 +174,11 @@ if k = fail then #new img and l, m, val, n, g=fail
 	Enumerate(oo, Binomial(DegreeOfTransformationSemigroup(s), j));
 	
 	#strongly connected components
-	scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(List(OrbitGraph(oo), Set)), 
-	 Set));;
+	scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(List(OrbitGraph(oo), 
+	Set)), Set));;
 	
-	if IsBound(O[j]) then #JDM put in the grading function of the orbit if possible
+	if IsBound(O[j]) then 
+	#JDM put in the grading function of the orbit if possible
 		scc:=scc{Filtered([1..Length(scc)], m-> not ForAny(O[j], x-> 
 		 oo[scc[m][1]] in x))};
 	fi;
@@ -236,8 +212,7 @@ if k = fail then #new img and l, m, val, n, g=fail
 
 	#Schutzenberger groups of D-classes and H-classes (only here for convenience
 	#when retrieving from the D-classes R-class data!
-	oo!.d_schutz:=List([1..r], x-> []);
-	Add(oo!.d_schutz[1], []);
+	oo!.d_schutz:=List([1..r], x-> [[]]);
 	
 	if IsBound(O[j]) then 
 		Add(O[j], oo);
@@ -252,10 +227,11 @@ if k = fail then #new img and l, m, val, n, g=fail
 	od;
 	
 	#################################################################################
-	
 
 else #old img
 	reps:=O[j][k]!.reps[m];
+	d_schutz:=O[j][k]!.d_schutz[m];
+	
 	if not val=fail then #old kernel
 		reps[val][n+1]:=g;
 		out:=[j, k, l, m, val, n+1];
@@ -263,6 +239,7 @@ else #old img
 	else #new kernel
 		n:=Length(reps)+1;
 		reps[n]:=[g];
+		d_schutz[n]:=[];
 		out:=[j, k, l, m, n, 1];
 		d[Length(d)+1]:=out;
 		HTAdd(O[j][k]!.kernels_ht[m], KernelOfTransformation( g ), n);
@@ -303,11 +280,11 @@ s:=r!.parent;
 d:=r!.data;
 o:=r!.o;
 
-h:=List(RClassSchutzGpFromData(s, o, d), x-> f*x);
+h:=List(RClassSchutzGpFromData(s, d, o), x-> f*x);
 
 elts:=[];
 
-for p in RClassPermsFromData(s, o, d){RClassSCCFromData(s, o, d)} do 
+for p in RClassPermsFromData(s, d, o){RClassSCCFromData(s, d, o)} do 
 	elts:=Concatenation(elts, h*p^-1);
 od;
 return elts;
@@ -435,7 +412,7 @@ local enum, h;
 
 Info(InfoMonoidGreens, 4, "Enumerator: for an R-class");
 
-h:=List(Elements(RClassSchutzGpFromData(r!.parent, r!.o, r!.data)), x-> 
+h:=List(Elements(RClassSchutzGpFromData(r!.parent, r!.data, r!.o)), x-> 
 	r!.rep*x);
 
 enum:=EnumeratorByFunctions(r, rec(
@@ -446,9 +423,9 @@ enum:=EnumeratorByFunctions(r, rec(
 	
 	len:=Length(h),
 	
-	p:=RClassPermsFromData(r!.parent, r!.o, r!.data),
+	p:=RClassPermsFromData(r!.parent, r!.data, r!.o),
 	
-	scc:=RClassSCCFromData(r!.parent, r!.o, r!.data),
+	scc:=RClassSCCFromData(r!.parent, r!.data, r!.o),
 	
 	###########################################################################
 	
@@ -498,7 +475,7 @@ enum:=EnumeratorByFunctions(r, rec(
 			return fail;
 		fi;
 		
-		j:= Position(Elements(RClassSchutzGpFromData(s, o, d)),
+		j:= Position(Elements(RClassSchutzGpFromData(s, d, o)),
 		 PermLeftQuoTransformationNC(rep, f*o!.perms[i]));
 		
 		if j = fail then 
@@ -599,6 +576,30 @@ Print(o!.reps, "\n");
 return true;
 end);
 
+#new for 4.0!
+#############################################################################
+# Test efficiency!
+# require NC version that stores nothing!
+
+
+InstallOtherMethod(GreensDClass, "for an R-class of a trans. semigroup", 
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+return GreensDClassOfElement(r!.parent, r!.rep);
+end);
+
+#############################################################################
+#
+
+InstallOtherMethod(GreensDClassNC, "for an R-class of a trans. semigroup", 
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+# not the following here, as we already know the orbit of the image for r
+# just need to compute the orbit of the kernel! JDM
+
+return GreensDClassOfElementNC(r!.parent, r!.rep);
+end);
+
 # new method in 3.2!
 #############################################################################
 #
@@ -608,15 +609,17 @@ InstallMethod(GreensRClassData, "for a R-class of a trans. semigroup",
 function(r)
 local rep, d, s, scc, l, o, p, g;
 
+Info(InfoWarning, 1, "this is a legacy from Monoid 3.*");
+
 rep:=r!.rep;
 d:=r!.data;
 s:=r!.parent;
 
-scc:=RClassSCCFromData(s, r!.o, d);
+scc:=RClassSCCFromData(s, d, r!.o);
 l:=Position(scc, d[3]);
 o:=r!.o{scc}; #RClassImageOrbitFromData(s, d){scc};
-p:=RClassPermsFromData(s, r!.o, d){scc};
-g:=RClassSchutzGpFromData(s, r!.o, d);
+p:=RClassPermsFromData(s, d, r!.o){scc};
+g:=RClassSchutzGpFromData(s, d, r!.o);
 
 #d[3] is the index of the scc containing rep!
 if not l=1 then 
@@ -667,7 +670,7 @@ if not f in s then
 	return fail;
 fi;
 
-d:=InOrbitsOfImages(s, OrbitsOfImages(s)!.orbits, f, [])[2];
+d:=InOrbitsOfImages(s, f)[2];
 d[3]:=1;
 #rep:=d[7]; not nec. the rep!
 rep:=RClassRepFromData(s, d);
@@ -694,7 +697,7 @@ local type, c, o, img, j, scc, reps, d, gens;
 Info(InfoMonoidGreens, 4, "GreensRClassOfElementNC");
 
 o:=OrbitsOfImages(s);
-d:=InOrbitsOfImages(s, o!.orbits, f, []);
+d:=InOrbitsOfImages(s, f, o!.orbits, []);
 
 if d[1] then # f in s!
 	Info(InfoMonoidGreens, 2, "transformation is an element of semigroup");
@@ -741,7 +744,7 @@ Enumerate(o, Binomial(DegreeOfTransformationSemigroup(s), j));
 scc:=First(Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(List(OrbitGraph(o), Set)), 
  Set)), x-> 1 in x);;
 o!.scc:=[scc];
-o!.truth:=[ListWithIdenticalEntries(Length(scc), true)];
+o!.truth:=[BlistList([1..Length(o)], scc)];
 o!.trees:=[CreateSchreierTreeOfSCC(o,1)];
 reps:=[f];
 o!.reps:=List(reps, x->[[x]]); 
@@ -778,6 +781,34 @@ return List(OrbitsOfImages(s)!.data, x->
  RClassRepFromData(s, x));
 end);
 
+#############################################################################
+# JDM this needs some more thought. In particular, we should store the 
+# R-class reps that aren't already known and we should store the coset 
+# reps. Also check for efficiency! 
+
+InstallOtherMethod(GreensRClassReps, "for a D-class of a trans. semigroup", 
+[IsGreensDClass and IsGreensClassOfTransSemigp], 
+function(d)
+local s, f, o, rels, cosets, out, i, j;
+
+s:=d!.parent;
+f:=d!.rep;
+o:=d!.o;
+d:=d!.data;
+
+rels:=LClassRelsFromData(s, d[2]){LClassSCCFromData(s, d[2])};
+cosets:=RightTransversal(LClassSchutzGpFromData(s, d[2]), 
+ DClassSchutzGpFromData(s, o[1], d));
+out:=[];
+
+for i in rels do 
+	for j in cosets do 
+		out[Length(out)+1]:=i[1]*f*j;
+	od;
+od;
+
+return out;
+end);
 
 # new for 3.2!
 #############################################################################
@@ -798,7 +829,7 @@ out:= [];
 ker:= KernelOfTransformation(r!.rep);
 rep:=r!.rep![1];
 n:=Length(Set(rep));
-o:=r!.o{RClassSCCFromData(r!.parent, r!.o, r!.data)}; #JDM1
+o:=r!.o{RClassSCCFromData(r!.parent, r!.data, r!.o)}; #JDM1
 
 for i in o do
 	img:=EmptyPlist(n);
@@ -817,20 +848,28 @@ return out;
 end);
 
 #############################################################################
-#
+
+# Usage: s, f, OrbitsOfImages(s)!.orbits, d_img or s, f
 
 InstallGlobalFunction(InOrbitsOfImages, 
-function(s, O, f, known)
-local img, j, k, l, m, val,  n, g, schutz, t, reps;
+function(arg)
+local img, j, k, l, m, val,  n, g, schutz, t, reps, s, O, f;
 
-if not known=[] then 
-	j:=known[1]; 
-	k:=known[2]; 
-	l:=known[3];
-	m:=known[4]; 
-	val:=known[5]; 
-	n:=known[6];
-	g:=known[7];
+s:=arg[1]; f:=arg[2]; j:=fail;
+k:=fail; l:=fail; m:=fail; val:=fail; n:=0; g:=fail;
+
+if Length(arg)=4 then 
+	O:=arg[3];
+	if not arg[4]=[] then 
+		j:=arg[4][1]; 
+		k:=arg[4][2]; 
+		l:=arg[4][3];
+		m:=arg[4][4]; 
+		val:=arg[4][5]; 
+		n:=arg[4][6];
+		g:=arg[4][7];
+	fi;
+
 	if k=fail then 
 		img:=ImageSetOfTransformation(f);
 	fi;
@@ -838,9 +877,9 @@ if not known=[] then
 		j:=Length(img);
 	fi;
 else
+	O:=OrbitsOfImages(s)!.orbits;
 	img:=ImageSetOfTransformation(f);
 	j:=Length(img);
-	k:=fail; l:=fail; m:=fail; val:=fail; n:=0; g:=fail;
 fi;
 
 if not IsBound(O[j]) then
@@ -860,12 +899,15 @@ if k=fail then #l=fail, m=fail, g=fail
 	fi;
 	m:=PositionProperty(O[j][k]!.truth, x-> x[l]);
 	g:=f*O[j][k]!.perms[l];
-	if Length(O[j][k]!.reps[m])=0 then 
-		return [false, [j,k,l,m,fail, 0, g]];
-	fi;
+	#if Length(O[j][k]!.reps[m])=0 then #this cannot occur, can it? JDM
+	#	return [false, [j,k,l,m,fail, 0, g]];
+	#fi;
 fi;
 
-val:=HTValue(O[j][k]!.kernels_ht[m], KernelOfTransformation(f));
+if val=fail then 
+	val:=HTValue(O[j][k]!.kernels_ht[m], KernelOfTransformation(f));
+fi;
+
 if val=fail then 
 	return [false, [j, k, l, m, fail, 0, g]];
 fi;
@@ -925,7 +967,7 @@ fi;
 f:=RClassRepFromData(s, d);
 img:= ImageListOfTransformation(f);
 m:=Length(ImageSetOfTransformation(f));
-o:=o{RClassSCCFromData(s, o, d)};
+o:=o{RClassSCCFromData(s, d, o)};
 
 for i in o do
 	if Length(Set(img{i})) = m then
@@ -992,12 +1034,12 @@ if HasAsSSortedList(r) then
 else
 	iter:=IteratorByFunctions(rec( 
 	
-	schutz:=List(RClassSchutzGpFromData(r!.parent, r!.o, r!.data), x-> 
+	schutz:=List(RClassSchutzGpFromData(r!.parent,  r!.data, r!.o), x-> 
 	r!.rep*x),
 	
-	perms:=RClassPermsFromData(r!.parent, r!.o, r!.data),
+	perms:=RClassPermsFromData(r!.parent, r!.data, r!.o),
 	
-	scc:=RClassSCCFromData(r!.parent, r!.o, r!.data),
+	scc:=RClassSCCFromData(r!.parent, r!.data, r!.o),
 	
 	at:=[1,0],
 	
@@ -1028,6 +1070,15 @@ SetIsIteratorOfRClassElements(iter, true);
 
 return iter;
 end);
+
+#############################################################################
+
+InstallOtherMethod(IteratorOfGreensHClasses, "for an R-class", 
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+Error("not yet implemented!");
+end);
+
 
 # new for 3.2!
 #############################################################################
@@ -1146,11 +1197,12 @@ iter:=IteratorByFunctions( rec(
 		i :=i+1;
 		x:=o[i];
 		
-		d:=InOrbitsOfImages(s, orbits, x, []);
+		d:=InOrbitsOfImages(s, x, orbits, []);
 
 		if not d[1] then #new rep!
 			if IsTransformationMonoid(s) or not i = 1 then 
 				d:=AddToOrbitsOfImages(s, O, x, d[2]);
+				d[3]:=1;
 				iter!.i:=iter!.i+1;
 				iter!.next_value:=d;
 				return false;
@@ -1185,7 +1237,10 @@ end);
 #############################################################################
 #
 
-InstallGlobalFunction(IteratorOfRClassReps, 
+#InstallMethod(IteratorOfRClassReps, "for a transformation semigroup", 
+#[IsTransformationSemigroup], 
+
+InstallGlobalFunction(IteratorOfRClassReps,
 function(s)
 local iter;
 
@@ -1361,6 +1416,15 @@ Print( "<iterator of R-class reps, ", Length(O!.ht!.o), " candidates, ",
 return;
 end);
 
+#############################################################################
+# keep here
+
+InstallMethod( PrintObj, "for R-class data",
+[ IsGreensRClassData and IsGreensRClassDataRep],
+function( obj )
+Print( "GreensRClassData( ", obj!.rep,  " )" );
+end );
+
 # new for 3.2!
 ############################################################################
 
@@ -1388,6 +1452,14 @@ Print("<iterator of R-class>");
 return;
 end);
 
+###########################################################################
+#JDM do not recreate the family and type every time here?
+
+InstallGlobalFunction(RClassData, function(list)
+return Objectify(NewType(NewFamily("Green's R-class data", IsGreensRClassData), 
+IsGreensRClassData and IsGreensRClassDataRep), list);
+end);
+
 # new for 3.2!
 ############################################################################
 
@@ -1412,9 +1484,18 @@ end);
 # take care using the following, it returns all of the perms for the weak orbit
 
 InstallGlobalFunction(RClassPermsFromData, 
-function(s, o, d)
-#Info(InfoMonoidGreens, 4, "RClassPermsFromData");
-#return OrbitsOfImages(s)!.orbits[d[1]][d[2]]!.perms;
+function(arg)
+local s, o, d;
+#Info(InfoMonoidGreens, 4, "RClassSCCFromData");
+
+s:=arg[1]; d:=arg[2];
+
+if Length(arg)=3 then 
+	o:=arg[3];
+else
+	o:=OrbitsOfImages(s)!.orbits[d[1]][d[2]];
+fi;
+
 return o!.perms;
 end);
 
@@ -1422,9 +1503,18 @@ end);
 ############################################################################
 
 InstallGlobalFunction(RClassSCCFromData,
-function(s, o, d)
+function(arg)
+local s, o, d;
 #Info(InfoMonoidGreens, 4, "RClassSCCFromData");
-#return OrbitsOfImages(s)!.orbits[d[1]][d[2]]!.scc[d[4]];
+
+s:=arg[1]; d:=arg[2];
+
+if Length(arg)=3 then 
+	o:=arg[3];
+else
+	o:=OrbitsOfImages(s)!.orbits[d[1]][d[2]];
+fi;
+
 return o!.scc[d[4]];
 end);
 
@@ -1432,9 +1522,18 @@ end);
 ############################################################################
 
 InstallGlobalFunction(RClassSchutzGpFromData, 
-function(s, o, d)
-#Info(InfoMonoidGreens, 4, "RClassSchutzGpFromData");
-#return OrbitsOfImages(s)!.orbits[d[1]][d[2]]!.schutz[d[4]];
+function(arg)
+local s, o, d;
+#Info(InfoMonoidGreens, 4, "RClassSCCFromData");
+
+s:=arg[1]; d:=arg[2];
+
+if Length(arg)=3 then 
+	o:=arg[3];
+else
+	o:=OrbitsOfImages(s)!.orbits[d[1]][d[2]];
+fi;
+
 return o!.schutz[d[4]][2];
 end);
 
@@ -1445,7 +1544,6 @@ InstallGlobalFunction(RClassStabChainFromData,
 function(s, o, d)
 return o!.schutz[d[4]][1];
 end);
-
 
 # new for 3.2!
 ############################################################################
@@ -1461,7 +1559,7 @@ s:=r!.parent;
 d:=r!.data;
 o:=r!.o; 
 
-return RClassSchutzGpFromData(s, o, d)^(o!.perms[d[3]]^-1);
+return RClassSchutzGpFromData(s, d, o)^(o!.perms[d[3]]^-1);
 # replace the above with function calls? No!
 end);
 
@@ -1533,7 +1631,7 @@ d:=r!.data;
 s:=r!.parent;
 o:=r!.o;
 
-return Size(RClassSchutzGpFromData(s, o, d))*Length(RClassSCCFromData(s, o, d));
+return Size(RClassSchutzGpFromData(s, d, o))*Length(RClassSCCFromData(s, d, o));
 end);
 
 #JDM really require a RClassSizeFromData command that is used here?
@@ -1616,6 +1714,16 @@ while j > o!.scc[i][1] do
 od;
 return word;
 end);
+
+#############################################################################
+# keep here
+
+InstallMethod( ViewObj, "for Green's R-class data",
+[IsGreensRClassData and IsGreensRClassDataRep],
+function( obj )
+Print( "GreensRClassData( ", obj!.rep, ", ", obj!.strongorb,", ", obj!.perms,
+", ", obj!.schutz, " )" );
+end );
 
 #############################################################################
 # DELETE!
