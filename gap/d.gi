@@ -16,6 +16,9 @@
 
 # - consolidate and clean up what's here already and do some more testing!
 
+# - check efficiency of IteratorOfDClassReps and standardise the input to 
+#   functions here!
+
 # -  called from
 #LClassRepFromData( s, d[2] ) called from
 #DClassRepFromData( s, [ d_img, d_ker ] ) called from
@@ -24,6 +27,7 @@
 #Enumerator( coll ) called from
 
 # when run on a D-class ImagesElm should work!
+
 
 ##
 #############################################################################

@@ -16,7 +16,7 @@
 
 # - this file should only contain functions relating to kernels/l-classes!
 
-# - should be cleaned up like r.gi!
+# - should be cleaned up like r.gi!!! In particular, standardise the inputs!
 
 foo:=function(f)
 local ker;
