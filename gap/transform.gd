@@ -492,3 +492,8 @@ DeclareOperation("RandomIdempotentNC", [IsCyclotomicCollColl]);
 
 DeclareOperation("InversesOfTransformationNC", [IsTransformationSemigroup, IsTransformation]);
 DeclareOperation("InversesOfTransformation", [IsTransformationSemigroup, IsTransformation]);
+
+# JDM new for 4.0!
+
+DeclareGlobalFunction("PermRightQuoTransformationNC");
+

@@ -10,8 +10,43 @@
 ## $Id$
 ##
 
+
+# new for 4.0!
+############################################################################
+# require a C version of PermRightQuoTransformation MNMN
+
+InstallGlobalFunction(PermRightQuoTransformationNC,
+function(f,g)
+local ker_f, ker_g, i, img, ker, out, j;
+
+#ker_f:=List([1..Length(f![1])], x-> []);
+#img:=[];
+
+#for i in [1..Length(f![1])] do 
+#	j:=f![1][i];
+#	Add(ker_f[j], i);
+#	AddSet(img, j);
+#od;
+
+ker_g:=List([1..Length(f![1])], x-> []);
+
+for i in [1..Length(f![1])] do 
+	Add(ker_g[g![1][i]], i);
+od;
+
+ker:=KernelOfTransformation(f);
+out:=EmptyPlist(Length(ker));
+
+for i in ker do 
+	Add(out, ker_g[f![1][i[1]]]);
+od;
+
+#return PermListList(ker_f{img}, ker_g{img});
+return PermListList(ker, out);
+end);
+
 #############################################################################
-# new for 3.2!
+# new for 4.0!
 
 InstallMethod(Random, "for a transformation semigroup (monoid pkg)", 
 [IsTransformationSemigroup],
@@ -28,15 +63,14 @@ if not o!.finished then
 	return EvaluateWord(gens, w);
 else
 	d:=Random(o!.data);
-	o:=RClassImageOrbitFromData(s, d);
-	g:=Random(RClassSchutzGpFromData(s, o, d));
-	h:=Random(RClassPermsFromData(s, o, d){RClassSCCFromData(s, o, d)});
+	g:=Random(RClassSchutzGpFromData(s, d));
+	h:=Random(RClassPermsFromData(s, d){RClassSCCFromData(s, d)});
 	return RClassRepFromData(s, d)*g*h^-1; 
 fi;
 end);
 
 #############################################################################
-# new for 3.2!
+# new for 4.0!
 
 #gap> MakeReadWriteGVar("Transformation");
 #gap> Transformation := function(t) Print("Blubb\n"); end;
@@ -55,7 +89,7 @@ return Length(f![2]);
 end);
 
 #############################################################################
-# new for 3.2!
+# new for 4.0!
 
 InstallGlobalFunction(KernelOfTransformationNC, 
 function(f)
@@ -77,7 +111,7 @@ return Set(ker);
 end);
 
 #############################################################################
-# new for 3.2!
+# new for 4.0!
 
 InstallMethod(\*, "for a transformation and a permutation (monoid pkg version)", 
 [IsTransformation and IsTransformationRep, IsPerm], 10,
@@ -89,7 +123,7 @@ return Objectify( TypeObj(x), [ c ] );
 end);
 
 #############################################################################
-# new for 3.2!
+# new for 4.0!
 
 InstallMethod(\*, "for a transformation and transformation (monoid pkg version)", 
 [IsTransformation and IsTransformationRep, 
@@ -220,7 +254,7 @@ return TransformationNC( Flat( Successors( rel ) ) );
 end);
 
 #############################################################################
-# new for 3.2! the lib. method is obtained by replacing TransformationNC 
+# new for 4.0! the lib. method is obtained by replacing TransformationNC 
 # by Transformation.
 
 InstallMethod(RandomTransformation, "for a pos. int.", [IsPosInt],

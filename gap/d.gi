@@ -28,6 +28,7 @@
 
 # when run on a D-class ImagesElm should work!
 
+# - d_schutz etc should be moved from OrbitsOfImages to OrbitsOfKernels
 
 ##
 #############################################################################
@@ -47,7 +48,7 @@ end);
 InstallOtherMethod( \in, "for trans. and D-class of trans. semigp.",
 [IsTransformation, IsGreensDClass and IsGreensClassOfTransSemigp],
 function(f, d)
-local s, rep, o, i, r_schutz, l_schutz, cosets; 
+local s, rep, o, i, r_schutz, l_schutz, cosets, p; 
 
 s:=d!.parent;
 rep:=DClassRepFromData(s, d!.data); 
@@ -81,13 +82,17 @@ if l_schutz=true then
 	return true;
 fi;
 
+p:=KerRightToImgLeft(s, d!.data[2])^-1;
 f:= PermLeftQuoTransformationNC(rep, f);
-#r_schutz:= RClassSchutzGpFromData(s, d!.data[1], d!.o[1]);
-cosets:= DClassCosetsFromData(s, d!.o[1], d!.data); 
-#cosets of intersection of r_schutz and l_schutz in r_schutz
+
+if SiftedPermutation(l_schutz, f^p)=() then 
+	return true;
+fi;
+
+cosets:= List(RcapLSchutzGpCosetsInRFromData(s, d!.o[1], d!.data), x-> x^p); 
 
 for i in cosets do
-	if SiftedPermutation(l_schutz, f/i)=() then
+	if SiftedPermutation(l_schutz, (f/i)^p)=() then
 		return true;
 	fi;
 od;
@@ -99,9 +104,10 @@ end);
 
 #new for 3.2!
 #############################################################################
-#
+# JDM put in correct position in this file
+# MNMN how to make RcapLSchutzGpCosetsInRFromData faster?!
 
-InstallGlobalFunction(DClassCosetsFromData, 
+InstallGlobalFunction(RcapLSchutzGpCosetsInRFromData, 
 function(s, o, d)
 local g, h, right;
 
@@ -110,12 +116,13 @@ if not IsBound(o!.d_schutz[d[1][4]][d[1][5]][d[1][6]]) then
 fi;
 
 if not IsBound(o!.d_schutz[d[1][4]][d[1][5]][d[1][6]][3]) then 
-	h:=DClassSchutzGpFromData(s, o, d);
+	h:=RcapLSchutzGpFromData(s, o, d);
 	g:=RClassSchutzGpFromData(s, d[1], o);
 	if not Size(g)=1 then 
 		right:=RightTransversal(g, h);
+		right:=right{[2..Length(right)]};
 	else
-		right:=[()];
+		right:=[];
 	fi;
 	o!.d_schutz[d[1][4]][d[1][5]][d[1][6]][3]:=right;
 fi;
@@ -162,11 +169,13 @@ end);
 
 #new for 3.2!
 #############################################################################
-# test for efficiency! JDM
+# test for efficiency! JDM 
+# MNMN how to make RcapLSchutzGpFromData faster?!
+# JDM put in correct position in this file
 
-InstallGlobalFunction(DClassSchutzGpFromData, 
+InstallGlobalFunction(RcapLSchutzGpFromData, 
 function(s, o, d)
-local g, h;
+local g, h, stab, p;
 
 #o should be RClassImageOrbitFromData
 
@@ -177,7 +186,17 @@ fi;
 if not IsBound(o!.d_schutz[d[1][4]][d[1][5]][d[1][6]][2]) then
 	g:=RClassSchutzGpFromData(s, d[1], o);
 	if not Size(g)=1 then 
-		h:=Intersection(g, LClassSchutzGpFromData(s, d[2]));
+		h:=LClassSchutzGpFromData(s, d[2]);
+		if not Size(h)=1 then 
+			stab:=LClassStabChainFromData(s, d[2]);
+			if not stab=true then 
+				p:=KerRightToImgLeft(s, d[2])^-1;
+				h:=SubgroupProperty(g, x -> SiftedPermutation(stab, x^p)=());
+			else
+				p:=KerRightToImgLeft(s, d[2])^-1;
+				h:=SubgroupProperty(g, x -> x^p in h);
+			fi;
+		fi;
 	else
 		h:=g;
 	fi;
@@ -190,8 +209,9 @@ end);
 #new for 3.2!
 #############################################################################
 #
+# JDM put in correct position in this file
 
-InstallGlobalFunction(DClassStabChainFromData, 
+InstallGlobalFunction(RcapLStabChainFromData, 
 function(s, o, d)
 
 if not IsBound(o!.d_schutz[d[1][4]][d[1][5]][d[1][6]]) then 
@@ -200,7 +220,7 @@ fi;
 
 if not IsBound(o!.d_schutz[d[1][4]][d[1][5]][d[1][6]][1]) then
 	o!.d_schutz[d[1][4]][d[1][5]][d[1][6]][1]:=
-	 StabChainImmutable(DClassSchutzGpFromData(s, o, d)); 
+	 StabChainImmutable(RcapLSchutzGpFromData(s, o, d)); 
 fi;
 
 return o!.d_schutz[d[1][4]][d[1][5]][d[1][6]][1];
@@ -248,7 +268,7 @@ r:=GreensRClassData(GreensRClassOfElement(s, rep));
 h:=GreensHClassData(GreensHClassOfElement(s, rep));
 
 return DClassData(rec( rep:=rep, R:=r, L:=l, H:=h, 
- cosets:=DClassCosetsFromData(s, o, d), schutz:=SchutzenbergerGroup(h)));;
+ cosets:=RcapLSchutzGpCosetsInRFromData(s, o, d), schutz:=SchutzenbergerGroup(h)));;
 end);
 
 # new for 3.2!
@@ -558,11 +578,9 @@ InstallMethod(ParentAttr, "for a D-class of a trans. semigroup",
 
 InstallMethod(PrintObj, [IsIteratorOfDClassReps], 
 function(iter)
-local s, ker, img;
+local s;
 
 s:=iter!.s;
-ker:=OrbitsOfKernels(s);
-img:=OrbitsOfImages(s);
 
 Print( "<iterator of D-class reps, ", Length(OrbitsOfImages(s)!.data), 
 " candidates, ",
@@ -595,7 +613,7 @@ end );
 
 InstallOtherMethod(SchutzenbergerGroup, "for a D-class of a trans. semigp.",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
-d-> DClassSchutzGpFromData(d!.parent, d!.o[1], d!.data));
+d-> RcapLSchutzGpFromData(d!.parent, d!.o[1], d!.data));
 
 #JDM is this correct? Compare it to SchutzenbergerGroup of R-class...
 
@@ -616,12 +634,12 @@ l:=LClassSchutzGpFromData(s, d[2]);
 
 return (Size(r)*Length(RClassSCCFromData(s, d[1], o[1]))
 *Length(LClassSCCFromData(s, d[2])))*Size(l)/
-Size(DClassSchutzGpFromData(s, o[1], d));
+Size(RcapLSchutzGpFromData(s, o[1], d));
 end);
 
 
 #############################################################################
-# 
+# JDM some problem here...
 
 InstallGlobalFunction(SizeDClassRepsData, 
 function(s)
@@ -637,7 +655,7 @@ for d in data do
 	l:=LClassSchutzGpFromData(s, d[2]);
 	i:=i+(Size(r)*Length(RClassSCCFromData(s, d[1]))
 	 *Length(LClassSCCFromData(s, d[2]))*Size(l)/
-	 Size(DClassSchutzGpFromData(s, o_r, d)));
+	 Size(RcapLSchutzGpFromData(s, o_r, d)));
 od;
 
 return i;

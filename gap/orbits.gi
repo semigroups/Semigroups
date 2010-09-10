@@ -102,6 +102,15 @@ end) ;
 ###########################################################################
 # JDM require C version! and should subsequently be moved to orbits_no_orb.gi
  
+#OnTuplesOfSetsAntiAction2:=function(tup, s)
+ 
+#ker_g:=List([1..Length(f![1])], x-> []);
+
+#for i in [1..Length(f![1])] do 
+#	Add(ker_g[g![1][i]], i);
+#od;
+
+
 InstallGlobalFunction(OnTuplesOfSetsAntiAction, [IsObject, IsTransformation], 
 function(tup, s)
 local res, ker, set, perm, k;

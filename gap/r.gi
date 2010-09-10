@@ -25,6 +25,8 @@
 # - check that wherever we have called d:=InOrbitsOfImages we do not perform
 # f*perms[l] afterwards but instead use d[7]!
 
+# - d_schutz should be moved from OrbitsOfImages to OrbitsOfKernels.
+
 #############################################################################
 ## To do 
 
@@ -159,7 +161,8 @@ d:=o!.data; ht:=o!.ht; o:=ht!.o;
 
 if k = fail then #new img and l, m, val, n, g=fail
 
-#################################################################################
+################################################################################
+
 	img:=ImageSetOfTransformation(f);
 
 	oo:=Orb(s, img, OnSets, rec(
@@ -208,10 +211,11 @@ if k = fail then #new img and l, m, val, n, g=fail
 	
 	#schutzenberger groups
 	oo!.schutz:=List([1..r], m-> 
-	 SchutzenbergerGroupOfSCCOfImageOrbit(gens, oo, reps[m], m));
+	 SchutzGpOfImageOrbit(gens, oo, reps[m], m));
 
 	#Schutzenberger groups of D-classes and H-classes (only here for convenience
-	#when retrieving from the D-classes R-class data!
+	#when retrieving from the D-classes R-class data! JDM move to 
+	# AddToOrbitsOfKernels!
 	oo!.d_schutz:=List([1..r], x-> [[]]);
 	
 	if IsBound(O[j]) then 
@@ -226,7 +230,8 @@ if k = fail then #new img and l, m, val, n, g=fail
 		d[Length(d)+1]:=[j, Length(O[j]), 1, m, 1, 1];
 	od;
 	
-	#################################################################################
+	
+##############################################################################
 
 else #old img
 	reps:=O[j][k]!.reps[m];
@@ -237,12 +242,12 @@ else #old img
 		out:=[j, k, l, m, val, n+1];
 		d[Length(d)+1]:=out;
 	else #new kernel
-		n:=Length(reps)+1;
-		reps[n]:=[g];
-		d_schutz[n]:=[];
-		out:=[j, k, l, m, n, 1];
+		val:=Length(reps)+1;
+		reps[val]:=[g];
+		d_schutz[val]:=[];
+		out:=[j, k, l, m, val, 1];
 		d[Length(d)+1]:=out;
-		HTAdd(O[j][k]!.kernels_ht[m], KernelOfTransformation( g ), n);
+		HTAdd(O[j][k]!.kernels_ht[m], KernelOfTransformation( g ), val);
 	fi;
 	reps:=[g]; #JDM should it be g or f?
 
@@ -750,7 +755,7 @@ reps:=[f];
 o!.reps:=List(reps, x->[[x]]); 
 o!.kernels_ht:=HashTableForKernels(KernelOfTransformation(f));
 o!.perms:=MultipliersOfSCCOfImageOrbit(gens, o, 1);
-o!.schutz:=[SchutzenbergerGroupOfSCCOfImageOrbit(gens, o, f, 1)];
+o!.schutz:=[SchutzGpOfImageOrbit(gens, o, f, 1)];
 #JDM schutz_d?
 
 type:=NewType( FamilyObj( s ), IsEquivalenceClass and 
@@ -1573,11 +1578,11 @@ end);
 # f is a representative of scc with index k
 # k is the index of scc containing index of image of f
 
-InstallGlobalFunction(SchutzenbergerGroupOfSCCOfImageOrbit,
+InstallGlobalFunction(SchutzGpOfImageOrbit,
 function(gens, o, f, k) 
 local p, t, g, bound, graph, i, j, scc, is_sym;
 
-#Info(InfoMonoidGreens, 4, "SchutzenbergerGroupOfSCCOfImageOrbit");
+#Info(InfoMonoidGreens, 4, "SchutzGpOfImageOrbit");
 
 scc:=o!.scc[k];
 

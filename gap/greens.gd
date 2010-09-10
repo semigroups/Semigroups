@@ -792,8 +792,9 @@ DeclareGlobalFunction("TraceSchreierTreeOfSCCBack");
 DeclareGlobalFunction("MultipliersOfSCCOfImageOrbit");
 DeclareGlobalFunction("MultipliersOfSCCOfKernelOrbit");
 
-DeclareGlobalFunction("SchutzenbergerGroupOfSCCOfImageOrbit");
-DeclareGlobalFunction("SchutzenbergerGroupOfSCCOfKernelOrbit");
+DeclareGlobalFunction("SchutzGpOfImageOrbit");
+DeclareGlobalFunction("RightSchutzGpOfKerOrbit");
+DeclareGlobalFunction("LeftSchutzGpOfKerOrbit");
 
 DeclareGlobalFunction("RClassRepFromData");
 DeclareGlobalFunction("RClassImageOrbitFromData");
@@ -828,9 +829,8 @@ DeclareGlobalFunction("DClassImgSCCFromData");
 DeclareAttribute("GreensDClass", IsGreensRClass);
 DeclareAttribute("GreensDClassNC", IsGreensRClass);
 
+DeclareGlobalFunction("KerRightToImgLeft");
 
-DeclareGlobalFunction("DClassCosetsFromData");
-DeclareGlobalFunction("DClassStabChainFromData");
 
 DeclareOperation("GreensDClassOfElementNC", [IsTransformationSemigroup]);
 
@@ -885,7 +885,20 @@ DeclareGlobalFunction("HashTableForImage");
 DeclareAttribute("IsRegularRClass", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IsRegularRClassData");
 
+DeclareGlobalFunction("AsPermOfKerImg");
+
+DeclareGlobalFunction("RcapLSchutzGpCosetsInRFromData");
+DeclareGlobalFunction("RcapLSchutzGpFromData");
+DeclareGlobalFunction("RcapLStabChainFromData");
+
+
+
+
 # probably get rid of the following...
+
+
+DeclareGlobalFunction("DClassCosetsFromData");
+DeclareGlobalFunction("DClassStabChainFromData");
 
 #DeclareGlobalFunction("GreensRClassRepsNC");
 #DeclareGlobalFunction("IsInSCCOfOrbitNC");
