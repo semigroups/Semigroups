@@ -13,6 +13,19 @@
 ## this file contains the functions for forward orbits that do not depend
 ## on whether orb is loaded or not.
 
+
+# new for 4.0!
+#############################################################################
+
+InstallGlobalFunction(HashTableForImage, 
+function(img)
+local ht;
+ht := HTCreate(img, rec( hfd := 100003, treehashsize := 100003 ));
+HTAdd(ht, img, 1);
+
+return ht;
+end);
+
 ###########################################################################
 
 InstallOtherMethod(GradedOrbit, 

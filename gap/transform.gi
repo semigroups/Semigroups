@@ -11,6 +11,22 @@
 ##
 
 
+#new for 4.0!
+#############################################################################
+# returns a perm such that i -> ker[i]^f
+
+InstallGlobalFunction(AsPermOfKerImg,
+function(f)
+local ker;
+
+if not IsBound(f![4]) then 
+	ker:=KernelOfTransformation(f);
+	f![4]:=MappingPermListList([1..Length(ker)], List(ker, x-> f![1][x[1]]));
+fi;
+
+return f![4];
+end);
+
 # new for 4.0!
 ############################################################################
 # require a C version of PermRightQuoTransformation MNMN

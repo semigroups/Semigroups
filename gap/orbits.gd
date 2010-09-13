@@ -138,15 +138,14 @@ DeclareGlobalFunction("GradedKernelsOfTransformationSemigroupNC");
 #JDM new for 3.2!
 DeclareInfoClass("InfoMonoidOrbits");
 
-
 #JDM new for 3.2!
 DeclareGlobalFunction("AsPartitionedListNC");
-
 
 #############################################################################
 # new for 3.2!
 
 DeclareGlobalFunction("HashTableForKernels");
+DeclareGlobalFunction("HashTableForImage");
 
 ###########################################################################
 ##	<#GAPDoc Label="MonoidOrbit">

@@ -137,6 +137,10 @@ repeat
 	fi;
 until IsDoneIterator(iter);
 
+#JDM could also put something in here that returns false if everything,
+#from OrbitsOfImages(s)!.at to the end of OrbitsOfImages(s)!.ht!.o 
+#has rank less than f. Might be a good idea when degree is very high!
+
 return false;
 end);
 
@@ -146,7 +150,7 @@ end);
 InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, o, f, data)
 local j, k, l, m, val, n, g, O, one, gens, d, reps, schutz, img, scc, i, 
- oo, r, ht, y, z, out, d_schutz;
+ oo, r, ht, y, z, out, deg, bound;
 
 j:=data[1]; 	# img size
 k:=data[2]; 	# index of orbit containing img
@@ -165,16 +169,24 @@ if k = fail then #new img and l, m, val, n, g=fail
 
 	img:=ImageSetOfTransformation(f);
 
+	deg:=DegreeOfTransformationSemigroup(s);
+
+	if deg<=1000 then 
+		bound:=Binomial(DegreeOfTransformationSemigroup(s), j);
+	else
+		bound:=infinity;
+	fi;
+	
 	oo:=Orb(s, img, OnSets, rec(
 					treehashsize:=NextPrimeInt(Minimum(100000, 
-					 3*Binomial(DegreeOfTransformationSemigroup(s), j))), 
+					 bound)), 
 					schreier:=true,
 					gradingfunc := function(o,x) return Length(x); end, 
 					orbitgraph := true, 
 					onlygrades:=[j], 
 					storenumbers:=true));
 	
-	Enumerate(oo, Binomial(DegreeOfTransformationSemigroup(s), j));
+	Enumerate(oo, bound);
 	
 	#strongly connected components
 	scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(List(OrbitGraph(oo), 
@@ -216,7 +228,7 @@ if k = fail then #new img and l, m, val, n, g=fail
 	#Schutzenberger groups of D-classes and H-classes (only here for convenience
 	#when retrieving from the D-classes R-class data! JDM move to 
 	# AddToOrbitsOfKernels!
-	oo!.d_schutz:=List([1..r], x-> [[]]);
+	#oo!.d_schutz:=List([1..r], x-> [[]]);
 	
 	if IsBound(O[j]) then 
 		Add(O[j], oo);
@@ -235,7 +247,7 @@ if k = fail then #new img and l, m, val, n, g=fail
 
 else #old img
 	reps:=O[j][k]!.reps[m];
-	d_schutz:=O[j][k]!.d_schutz[m];
+	#d_schutz:=O[j][k]!.d_schutz[m];
 	
 	if not val=fail then #old kernel
 		reps[val][n+1]:=g;
@@ -244,7 +256,7 @@ else #old img
 	else #new kernel
 		val:=Length(reps)+1;
 		reps[val]:=[g];
-		d_schutz[val]:=[];
+		#d_schutz[val]:=[];
 		out:=[j, k, l, m, val, 1];
 		d[Length(d)+1]:=out;
 		HTAdd(O[j][k]!.kernels_ht[m], KernelOfTransformation( g ), val);
@@ -784,35 +796,6 @@ Info(InfoMonoidGreens, 4, "GreensRClassReps");
 ExpandOrbitsOfImages(s);
 return List(OrbitsOfImages(s)!.data, x-> 
  RClassRepFromData(s, x));
-end);
-
-#############################################################################
-# JDM this needs some more thought. In particular, we should store the 
-# R-class reps that aren't already known and we should store the coset 
-# reps. Also check for efficiency! 
-
-InstallOtherMethod(GreensRClassReps, "for a D-class of a trans. semigroup", 
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(d)
-local s, f, o, rels, cosets, out, i, j;
-
-s:=d!.parent;
-f:=d!.rep;
-o:=d!.o;
-d:=d!.data;
-
-rels:=LClassRelsFromData(s, d[2]){LClassSCCFromData(s, d[2])};
-cosets:=RightTransversal(LClassSchutzGpFromData(s, d[2]), 
- DClassSchutzGpFromData(s, o[1], d));
-out:=[];
-
-for i in rels do 
-	for j in cosets do 
-		out[Length(out)+1]:=i[1]*f*j;
-	od;
-od;
-
-return out;
 end);
 
 # new for 3.2!

@@ -496,4 +496,4 @@ DeclareOperation("InversesOfTransformation", [IsTransformationSemigroup, IsTrans
 # JDM new for 4.0!
 
 DeclareGlobalFunction("PermRightQuoTransformationNC");
-
+DeclareGlobalFunction("AsPermOfKerImg");

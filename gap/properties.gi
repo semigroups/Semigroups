@@ -565,20 +565,20 @@ local n, iso, gens, degs, j, elts, diff, x;
 
 n:=DegreeOfTransformationSemigroup(S);
 
-if Transformation([1..n]) in S then 
+if TransformationNC([1..n]) in S then 
 	Info(InfoMonoidProperties, 4, 
 	 "finding minimal generators of group of units...");
-	if HasGeneratorsOfSemigroup(S) then 
+#	if HasGeneratorsOfSemigroup(S) then 
 		iso:=Filtered(GeneratorsOfSemigroup(S), x-> RankOfTransformation(x)=n);
 		#iso:=MinimalGeneratingSet(Group(List(iso, AsPermutation)));
 		#JDM change to the previous line at some point...
 		iso:=SmallGeneratingSet(Group(List(iso, AsPermOfRange)));
 		gens:=List(iso, x-> AsTransformation(x, n));
-	else
-		iso:=IsomorphismPermGroup(GreensHClassOfElement(S, Transformation([1..n])));
-		gens:=OnTuples(SmallGeneratingSet(Range(iso)), 
-			InverseGeneralMapping(iso));
-	fi;
+#	else
+#		iso:=IsomorphismPermGroup(GreensHClassOfElement(S, Transformation([1..n])));
+#		gens:=OnTuples(SmallGeneratingSet(Range(iso)), 
+#			InverseGeneralMapping(iso));
+#	fi;
 	Info(InfoMonoidProperties, 4, Length(gens), " such generators");
 else
 	gens:=[];

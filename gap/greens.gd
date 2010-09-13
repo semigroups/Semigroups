@@ -880,19 +880,17 @@ DeclareAttribute("NrGreensLClasses", IsTransformationSemigroup);
 DeclareAttribute("NrGreensDClasses", IsTransformationSemigroup);
 DeclareAttribute("NrIdempotents", IsTransformationSemigroup);
 
-DeclareGlobalFunction("HashTableForImage");
+
 
 DeclareAttribute("IsRegularRClass", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IsRegularRClassData");
 
-DeclareGlobalFunction("AsPermOfKerImg");
+
 
 DeclareGlobalFunction("RcapLSchutzGpCosetsInRFromData");
 DeclareGlobalFunction("RcapLSchutzGpFromData");
 DeclareGlobalFunction("RcapLStabChainFromData");
-
-
-
+DeclareGlobalFunction("RcapLStabChainSchutzGpAndCosetsInR");
 
 # probably get rid of the following...
 
