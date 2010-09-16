@@ -758,7 +758,7 @@ DeclareInfoClass("InfoMonoidGreens");
 
 DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
 DeclareAttribute("OrbitsOfKernels", IsTransformationSemigroup, "mutable");
-DeclareAttribute("DClassRepsData", IsTransformationSemigroup, "mutable");
+
 
 DeclareGlobalFunction("AddToOrbitsOfImages");
 DeclareGlobalFunction("AddToOrbitsOfKernels");
@@ -770,7 +770,7 @@ DeclareGlobalFunction("DisplayOrbitOfImage");
 
 DeclareGlobalFunction("ExpandOrbitsOfImages");
 DeclareGlobalFunction("ExpandOrbitsOfKernels");
-DeclareGlobalFunction("ExpandDClassRepsData");
+
 
 DeclareGlobalFunction("SizeOrbitsOfImages");
 DeclareGlobalFunction("SizeOrbitsOfKernels");
@@ -795,6 +795,7 @@ DeclareGlobalFunction("MultipliersOfSCCOfKernelOrbit");
 DeclareGlobalFunction("SchutzGpOfImageOrbit");
 DeclareGlobalFunction("RightSchutzGpOfKerOrbit");
 DeclareGlobalFunction("LeftSchutzGpOfKerOrbit");
+DeclareGlobalFunction("SchutzGpOfDClass");
 
 DeclareGlobalFunction("RClassRepFromData");
 DeclareGlobalFunction("RClassImageOrbitFromData");
@@ -804,7 +805,7 @@ DeclareGlobalFunction("RClassPermsFromData");
 DeclareGlobalFunction("RClassSCCFromData");
 DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
 
-DeclareAttribute("RClassDataFromRep", IsTransformation);
+
 
 DeclareGlobalFunction("LClassRepFromData");
 DeclareGlobalFunction("LClassKernelOrbitFromData");
@@ -827,7 +828,10 @@ DeclareGlobalFunction("DClassKerSCCFromData");
 DeclareGlobalFunction("DClassImgSCCFromData");
 
 DeclareAttribute("GreensDClass", IsGreensRClass);
-DeclareAttribute("GreensDClassNC", IsGreensRClass);
+DeclareGlobalFunction("CreateRClass");
+DeclareGlobalFunction("CreateDClass");
+DeclareAttribute("RClassType", IsTransformationSemigroup);
+DeclareAttribute("DClassType", IsTransformationSemigroup);
 
 DeclareGlobalFunction("KerRightToImgLeft");
 
@@ -845,6 +849,7 @@ DeclareGlobalFunction("IteratorOfRClassRepsData");
 DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareGlobalFunction("IteratorOfLClassReps");
 DeclareGlobalFunction("IteratorOfDClassReps");
+DeclareGlobalFunction("IteratorOfNewDClassReps");
 
 #DeclareGlobalFunction("EnumeratorOfRClassReps");
 
@@ -874,38 +879,40 @@ DeclareProperty("IsIteratorOfDClassElements", IsIterator);
 DeclareAttribute("UnderlyingSemigroupOfIterator", 
 IsIterator);
 
-
 DeclareAttribute("NrGreensRClasses", IsTransformationSemigroup);
 DeclareAttribute("NrGreensLClasses", IsTransformationSemigroup);
 DeclareAttribute("NrGreensDClasses", IsTransformationSemigroup);
 DeclareAttribute("NrIdempotents", IsTransformationSemigroup);
 
-
-
 DeclareAttribute("IsRegularRClass", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IsRegularRClassData");
 
+DeclareGlobalFunction("DClassRCosetsFromData");
+DeclareGlobalFunction("DClassLCosetsFromData");
+DeclareGlobalFunction("DClassStabChainFromData");
+
+DeclareAttribute("IsLocalDClass", IsGreensDClass);
+DeclareAttribute("IsGlobalDClass", IsGreensDClass);
 
 
-DeclareGlobalFunction("RcapLSchutzGpCosetsInRFromData");
-DeclareGlobalFunction("RcapLSchutzGpFromData");
-DeclareGlobalFunction("RcapLStabChainFromData");
-DeclareGlobalFunction("RcapLStabChainSchutzGpAndCosetsInR");
+DeclareGlobalFunction("ForwardOrbitOfImage");
+DeclareGlobalFunction("ForwardOrbitOfKernel");
 
 # probably get rid of the following...
 
 
-DeclareGlobalFunction("DClassCosetsFromData");
-DeclareGlobalFunction("DClassStabChainFromData");
-
+#DeclareGlobalFunction("ExpandDClassRepsData");
+#DeclareAttribute("DClassRepsData", IsTransformationSemigroup, "mutable");
+#DeclareGlobalFunction("DClassCosetsFromData");
+#DeclareGlobalFunction("DClassStabChainFromData");
+#DeclareAttribute("RClassDataFromRep", IsTransformation);
 #DeclareGlobalFunction("GreensRClassRepsNC");
 #DeclareGlobalFunction("IsInSCCOfOrbitNC");
 #DeclareGlobalFunction("IsInSCCOfOrbit");
 #DeclareGlobalFunction("IsInOrbit");
 #DeclareProperty("RClassRepsData", IsTransformationSemigroup);
 # maybe remove the following and add them to AddToOrbitsOfImages...
-#DeclareGlobalFunction("ForwardOrbitOfImage");
-DeclareGlobalFunction("ForwardOrbitOfKernel");
+
 #DeclareGlobalFunction("ForwardOrbitOfImageNC");
-DeclareGlobalFunction("ForwardOrbitOfKernelNC");
+#DeclareGlobalFunction("ForwardOrbitOfKernelNC");
 

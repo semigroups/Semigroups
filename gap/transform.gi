@@ -10,6 +10,25 @@
 ## $Id$
 ##
 
+#new for 4.0!
+#############################################################################
+#
+
+InstallGlobalFunction(ConstantTransformation, 
+function(m,n)
+local f;
+f:=TransformationNC(ListWithIdenticalEntries(m, n));;
+#SetIsConstantTransformation(f, true);
+return f;
+end);
+
+#InstallMethod(PrintObj, "for a constant transformation", 
+#[IsConstantTransformation],
+#function(f)
+#Print("<constant with value ", f![1][1], " on ", Length(f![1]), " pts");
+#end);
+
+
 
 #new for 4.0!
 #############################################################################
@@ -102,28 +121,6 @@ if not IsBound(f![2]) then
 fi;
 
 return Length(f![2]);
-end);
-
-#############################################################################
-# new for 4.0!
-
-InstallGlobalFunction(KernelOfTransformationNC, 
-function(f)
-local  ker, imgs, i;
-
-imgs := f![1];
-ker:=EmptyPlist(Length(imgs));
-#ker:=[];
-
-for i in [1..Length(imgs)] do
-  if IsBound(ker[imgs[i]]) then 
-    Add( ker[imgs[i]], i ); 
-  else
-    ker[imgs[i]]:=[i];
-  fi;
-od;
-
-return Set(ker);
 end);
 
 #############################################################################
@@ -244,6 +241,8 @@ for l in ker do
 od;
 return TransformationNC(e);
 end);
+
+#############################################################################
 
 InstallGlobalFunction(Idempotent, 
 function(ker, img)

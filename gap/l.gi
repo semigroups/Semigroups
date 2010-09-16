@@ -44,8 +44,18 @@ end);
 ############################################################################
 
 InstallGlobalFunction(LClassRelsFromData, 
-function(s, d)
-return OrbitsOfKernels(s)!.orbits[d[1]][d[2]]!.rels;
+function(arg)
+local s, d, o;
+
+s:=arg[1]; d:=arg[2];
+
+if Length(arg)=3 then 
+	o:=arg[3];
+else 
+	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
+fi;
+
+return o!.rels;
 end);
 
 # new for 4.0!
@@ -60,24 +70,54 @@ end);
 ############################################################################
 
 InstallGlobalFunction(LClassSCCFromData,
-function(s,d)
-return OrbitsOfKernels(s)!.orbits[d[1]][d[2]]!.scc[d[4]];
+function(arg)
+local s, d, o;
+
+s:=arg[1]; d:=arg[2];
+
+if Length(arg)=3 then 
+	o:=arg[3];
+else 
+	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
+fi;
+
+return o!.scc[d[4]];
 end);
 
 # new for 4.0!
 ############################################################################
 
 InstallGlobalFunction(LClassSchutzGpFromData, 
-function(s, d)
-return OrbitsOfKernels(s)!.orbits[d[1]][d[2]]!.schutz[d[4]][2];
+function(arg)
+local s, d, o;
+
+s:=arg[1]; d:=arg[2];
+
+if Length(arg)=3 then 
+	o:=arg[3];
+else 
+	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
+fi;
+
+return o!.schutz[d[4]][2];
 end);
 
 # new for 4.0!
 ############################################################################
 
 InstallGlobalFunction(LClassStabChainFromData, 
-function(s, d)
-return OrbitsOfKernels(s)!.orbits[d[1]][d[2]]!.schutz[d[4]][1];
+function(arg)
+local s, d, o;
+
+s:=arg[1]; d:=arg[2];
+
+if Length(arg)=3 then 
+	o:=arg[3];
+else 
+	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
+fi;
+
+return o!.schutz[d[4]][1];
 end);
 
 
@@ -107,44 +147,6 @@ Print( "GreensLClassData( ", obj!.rep,  " )" );
 end );
 
 
-
-# new for 4.0!
-#############################################################################
-# returns the size of the semigroup so far
-# JDM this method should be in d.gi!
-
-InstallGlobalFunction(SizeOrbitsOfKernels, 
-function(s)
-local i, c, o, m, val;
-
-i:=0;
-
-#Info(InfoMonoidGreens, 4, "SizeOrbitsOfKernels");
-
-c:=OrbitsOfKernels(s)!.orbits;
-
-for o in Concatenation(Compacted(c)) do 
-  for m in [1..Length(o!.scc)] do
-    if IsBound(o!.schutz[m]) then 
-      #for val in [1..Length(o!.schutz[m])] do 
-      	#for l in o!.schutz[j][k] do 
-      		#Error("");
-      		#i:=i+Size(o!.schutz[m][val][2])*Length(o!.scc[m])*
-      		# Length(o!.reps[m][val]);
-      		i:=i+Size(o!.schutz[m][2])*
-      		 Length(o!.scc[m])*Length(Concatenation(o!.reps[m]));
-      	#od;
-      #od;
-    fi;
-  od;
-od;
-
-#if OrbitsOfKernels(s)!.finished and not HasSize(s) then 
-#	SetSize(s, i);
-#fi; JDM
-
-return i;
-end);
 
 #############################################################################
 # 
