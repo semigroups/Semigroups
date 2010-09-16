@@ -798,14 +798,19 @@ DeclareGlobalFunction("LeftSchutzGpOfKerOrbit");
 DeclareGlobalFunction("SchutzGpOfDClass");
 
 DeclareGlobalFunction("RClassRepFromData");
+# RClassRep = Representative
 DeclareGlobalFunction("RClassImageOrbitFromData");
+DeclareGlobalFunction("RClassImageOrbit");
 DeclareGlobalFunction("RClassSchutzGpFromData");
+# RclassSchutzGp = SchutzenbergerGroup!
 DeclareGlobalFunction("RClassStabChainFromData");
+DeclareGlobalFunction("RClassStabChain");
 DeclareGlobalFunction("RClassPermsFromData");
+DeclareGlobalFunction("RClassPerms");
 DeclareGlobalFunction("RClassSCCFromData");
+DeclareGlobalFunction("RClassSCC");
+
 DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
-
-
 
 DeclareGlobalFunction("LClassRepFromData");
 DeclareGlobalFunction("LClassKernelOrbitFromData");
@@ -817,7 +822,9 @@ DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]);
 
 DeclareGlobalFunction("DClassRepFromData");
 DeclareGlobalFunction("DClassKernelOrbitFromData");
+DeclareGlobalFunction("DClassKernelOrbit");
 DeclareGlobalFunction("DClassImageOrbitFromData");
+DeclareGlobalFunction("DClassImageOrbit");
 DeclareGlobalFunction("DClassOrbitsFromData");
 DeclareGlobalFunction("DClassKerSchutzGpFromData");
 DeclareGlobalFunction("DClassImgSchutzGpFromData");
@@ -825,6 +832,7 @@ DeclareGlobalFunction("DClassSchutzGpFromData");
 DeclareGlobalFunction("DClassRelsFromData");
 DeclareGlobalFunction("DClassPermsFromData");
 DeclareGlobalFunction("DClassKerSCCFromData");
+DeclareGlobalFunction("DClassKernelSCC");
 DeclareGlobalFunction("DClassImgSCCFromData");
 
 DeclareAttribute("GreensDClass", IsGreensRClass);
@@ -846,6 +854,7 @@ DeclareProperty("IsEnumeratorOfLClassElements", IsEnumeratorByFunctions);
 DeclareProperty("IsEnumeratorOfDClassElements", IsEnumeratorByFunctions);
 
 DeclareGlobalFunction("IteratorOfRClassRepsData");
+DeclareGlobalFunction("IteratorOfNewRClassRepsData");
 DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareGlobalFunction("IteratorOfLClassReps");
 DeclareGlobalFunction("IteratorOfDClassReps");
@@ -887,20 +896,20 @@ DeclareAttribute("NrIdempotents", IsTransformationSemigroup);
 DeclareAttribute("IsRegularRClass", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IsRegularRClassData");
 
+DeclareGlobalFunction("DClassRCosets");
 DeclareGlobalFunction("DClassRCosetsFromData");
 DeclareGlobalFunction("DClassLCosetsFromData");
 DeclareGlobalFunction("DClassStabChainFromData");
 
-DeclareAttribute("IsLocalDClass", IsGreensDClass);
-DeclareAttribute("IsGlobalDClass", IsGreensDClass);
-
-
 DeclareGlobalFunction("ForwardOrbitOfImage");
 DeclareGlobalFunction("ForwardOrbitOfKernel");
 
+DeclareAttribute("GreensRClassRepsData", IsTransformationSemigroup);
+
 # probably get rid of the following...
 
-
+#DeclareAttribute("IsGlobalDClass", IsGreensDClass);
+#DeclareAttribute("IsGlobalRClass", IsGreensRClass);
 #DeclareGlobalFunction("ExpandDClassRepsData");
 #DeclareAttribute("DClassRepsData", IsTransformationSemigroup, "mutable");
 #DeclareGlobalFunction("DClassCosetsFromData");
@@ -912,7 +921,6 @@ DeclareGlobalFunction("ForwardOrbitOfKernel");
 #DeclareGlobalFunction("IsInOrbit");
 #DeclareProperty("RClassRepsData", IsTransformationSemigroup);
 # maybe remove the following and add them to AddToOrbitsOfImages...
-
 #DeclareGlobalFunction("ForwardOrbitOfImageNC");
 #DeclareGlobalFunction("ForwardOrbitOfKernelNC");
 

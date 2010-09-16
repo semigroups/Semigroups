@@ -33,12 +33,20 @@ return Objectify(NewType(NewFamily("Green's L Class Data", IsGreensLClassData),
 IsGreensLClassData and IsGreensLClassDataRep), list);
 end);
 
-# new for 4.0!
 ############################################################################
 
 InstallGlobalFunction(LClassKernelOrbitFromData,
-function(s, d)
-return OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
+function(arg)
+local s, d;
+
+s:=arg[1]; d:=arg[2];
+
+if Length(arg)=3 then 
+	return arg[3]!.orbits[d[1]][d[2]];
+else
+	return OrbitsOfImages(s)!.orbits[d[1]][d[2]];
+fi;
+
 end);
 
 ############################################################################
@@ -50,7 +58,7 @@ local s, d, o;
 s:=arg[1]; d:=arg[2];
 
 if Length(arg)=3 then 
-	o:=arg[3];
+	o:=arg[3]!.orbits[d[1]][d[2]];
 else 
 	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
 fi;
@@ -76,7 +84,7 @@ local s, d, o;
 s:=arg[1]; d:=arg[2];
 
 if Length(arg)=3 then 
-	o:=arg[3];
+	o:=arg[3]!.orbits[d[1]][d[2]];
 else 
 	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
 fi;
@@ -94,7 +102,7 @@ local s, d, o;
 s:=arg[1]; d:=arg[2];
 
 if Length(arg)=3 then 
-	o:=arg[3];
+	o:=arg[3]!.orbits[d[1]][d[2]];
 else 
 	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
 fi;
@@ -112,7 +120,7 @@ local s, d, o;
 s:=arg[1]; d:=arg[2];
 
 if Length(arg)=3 then 
-	o:=arg[3];
+	o:=arg[3]!.orbits[d[1]][d[2]];
 else 
 	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
 fi;

@@ -17,7 +17,7 @@
 
 # new for 3.2!
 #############################################################################
-# keep here
+# keep here 
 
 InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
 [IsGreensClass], x-> IsTransformationSemigroup(ParentAttr(x)));
@@ -44,18 +44,15 @@ return ec;
 end);
 
 ###########################################################################
-# keep here
+# move to legacy.gi JDM
 
 InstallGlobalFunction(HClassData, function(list)
 return Objectify(NewType(NewFamily("Green's H Class Data", IsGreensHClassData), 
 IsGreensHClassData and IsGreensHClassDataRep), list);
 end);
 
-
-
-
 #############################################################################
-# keep here
+# move to legacy.gi JDM
 
 InstallMethod( ViewObj, "for object in `IsGreensHClassData'",
 [ IsGreensHClassData and IsGreensHClassDataRep],
@@ -65,7 +62,7 @@ end );
 
 ## Commands to integrate MONOID functions with those in semirel.g* ##
 #####################################################################
-# JDM remove?
+# move to legacy.gi JDM
 
 InstallMethod(GreensData, "for a Green's class of a trans. semigroup", 
 [IsGreensClass and IsGreensClassOfTransSemigp],
@@ -86,7 +83,7 @@ fi;
 end);
 
 #############################################################################
-# JDM remove?
+# move to legacy.gi JDM
 
 InstallMethod(\<, "for GreensData and GreensData", 
 [IsGreensData, IsGreensData],
@@ -108,7 +105,7 @@ fi;
 end);
 
 #############################################################################
-# JDM remove?
+# move to legacy.gi JDM
 
 InstallMethod(\=, "for GreenData and GreenData", 
 [IsGreensData, IsGreensData],
@@ -130,7 +127,7 @@ fi;
 end);
 
 #############################################################################
-# remove? JDM
+# move to legacy.gi JDM
 
 InstallOtherMethod(Representative, "for GreensData", 
 [IsGreensData], x-> x!.rep);
@@ -433,7 +430,7 @@ end);
 ## Green's D-class of Green's L-class
 ##
 
-#JDM this should be reviewed
+#JDM this should be removed and replaced with GreensLClass
 
 InstallOtherMethod(DClassOfLClass, "for a transformation semigroup", true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0, 
 function(hc)
@@ -447,7 +444,7 @@ fi;
 end);
 
 #############################################################################
-#JDM this should be reviewed
+#JDM this should be removed
 
 InstallMethod(GreensHClassData, "data structure of H-class of an element", 
 true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0,
@@ -867,10 +864,6 @@ end);
 
 InstallMethod(SchutzenbergerGroup, "for GreensData",
 [IsGreensData], x-> x!.schutz );
-
-InstallOtherMethod(SchutzenbergerGroup, "for GreensClass",
-[IsGreensClass], x-> GreensData(x)!.schutz );
-
 
 #############################################################################
 ##  JDM the following should be reviewed!

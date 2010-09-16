@@ -40,7 +40,7 @@ end);
 
 #############################################################################
 
-InstallOtherMethod( \in, "for trans. and D-class of trans. semigp.",
+InstallOtherMethod(\in, "for trans. and D-class of trans. semigp.",
 [IsTransformation, IsGreensDClass and IsGreensClassOfTransSemigp],
 function(f, d)
 local s, rep, o, i, schutz, p, cosets;
@@ -53,7 +53,7 @@ if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) or
 	return false;
 fi;
 
-o:=d!.o[1];
+o:=RClassImageOrbitFromData(s, d!.data[1], d!.o[1]);
 i:= Position(o, ImageSetOfTransformation(f));
 
 if i = fail or not o!.truth[d!.data[1][4]][i] then 
@@ -61,7 +61,7 @@ if i = fail or not o!.truth[d!.data[1][4]][i] then
 fi;
 
 f:=f*o!.perms[i]; #adjust image of f so that it is equal o[scc[1]]
-o:=d!.o[2];
+o:=LClassKernelOrbitFromData(s, d!.data[2], d!.o[2]);
 i:=Position(o, KernelOfTransformation(f));
 
 if i = fail or not o!.truth[d!.data[2][4]][i] then 
@@ -136,7 +136,7 @@ else #old ker
 	reps:=O[j][k]!.reps[m]; 
 	convert:=O[j][k]!.convert[m];
 	d_schutz:=O[j][k]!.d_schutz[m];
-	o:=[o[1]!.orbits[data[1][1]][data[1][2]], O[j][k]];
+	#o:=[o[1]!.orbits[data[1][1]][data[1][2]], O[j][k]];
 	
 	if not Length(reps)=0 then 
 		if not val=fail then #old image
@@ -204,6 +204,8 @@ InstallGlobalFunction(DClassLCosetsFromData,
 function(arg)
 local s, d, o;
 
+Error("not yet implemented");
+
 s:=arg[1]; d:=arg[2][2];
 
 if Length(arg)=3 then 
@@ -216,11 +218,33 @@ return o!.d_schutz[d[4]][d[5]][d[6]][4]; #JDM currently nothing stored here!
 end);
 
 #############################################################################
-#
+# JDM the below can't be correct!
 
 InstallGlobalFunction(DClassOrbitsFromData, 
 function(s, d)
 return [RClassImageOrbitFromData(s, d[1]), LClassKernelOrbitFromData(s, d[2])];
+end);
+
+#############################################################################
+#
+
+InstallGlobalFunction(DClassImageOrbit, 
+d ->  RClassImageOrbitFromData(d!.parent, d!.data[1], d!.o[1]));
+
+#############################################################################
+#
+
+InstallGlobalFunction(DClassKernelOrbit, 
+d -> LClassKernelOrbitFromData(d!.parent, d!.data[2], d!.o[2]));
+
+#new for 4.0!
+###########################################################################
+
+InstallGlobalFunction(DClassRCosets, 
+function(d)
+local D;
+D:=d!.data[2];
+return d!.o[2]!.orbits[D[1]][D[2]]!.d_schutz[D[4]][D[5]][D[6]][3];
 end);
 
 #new for 4.0!
@@ -249,6 +273,12 @@ InstallGlobalFunction(DClassRepFromData,
 function(s, d)
 return LClassRepFromData(s, d[2]);
 end);
+
+#############################################################################
+#
+
+InstallGlobalFunction(DClassKernelSCC,
+d-> LClassSCCFromData(d!.parent, d!.data[2], d!.o[2]));
 
 #new for 4.0!
 #############################################################################
@@ -321,7 +351,7 @@ o:=OrbitsOfKernels(s);
 Print("finished: ", o!.finished, "\n");
 Print("orbits: "); View(o!.orbits); Print("\n");
 Print("size: ", SizeOrbitsOfKernels(s), "\n");
-Print("nr of D-classes: ", Length(o!.data), "\n");
+Print("D-classes: ", Length(o!.data), "\n");
 return true;
 end);
 
@@ -500,9 +530,8 @@ else
 	d_ker:=d_ker[2]{[1..6]};
 fi;
 
-d:=CreateDClass(s, [d_img, d_ker], DClassOrbitsFromData(s, [d_img, d_ker]),
- DClassRepFromData(s, [d_img, d_ker]));
-SetIsGlobalDClass(d, true);
+d:=CreateDClass(s, [d_img, d_ker], [OrbitsOfImages(s), 
+OrbitsOfKernels(s)], DClassRepFromData(s, [d_img, d_ker]));
 
 return d;
  end);
@@ -513,7 +542,7 @@ return d;
 InstallOtherMethod(GreensDClassOfElementNC, "for a trans. semigp and trans.", 
 [IsTransformationSemigroup, IsTransformation],
 function(s, f)
-local d, o1, o2;
+local d, o1, o2, j, gens;
 
 Info(InfoMonoidGreens, 4, "GreensDClassOfElementNC");
 
@@ -529,10 +558,9 @@ if d[1][1] or d[2][1] then # f in s!
 		d[2]:=AddToOrbitsOfKernels(s, f, [OrbitsOfImages(s), OrbitsOfKernels(s)],
 		 d);
 	fi;
-	d:=CreateDClass(s, d, DClassOrbitsFromData(s, d), 
-	 DClassRepFromData(s, d));
-	SetIsGlobalDClass(d, true);
-	return d;
+	
+	return CreateDClass(s, d, [OrbitsOfImages(s), 
+	OrbitsOfKernels(s)], DClassRepFromData(s, d));
 elif OrbitsOfImages(s)!.finished then #f not in s!
 	Info(InfoMonoidGreens, 2, "transformation is not an element of the ",
 	"semigroup");
@@ -542,17 +570,31 @@ fi;
 Info(InfoMonoidGreens, 2, "transformation may not be an element of the ",
 "semigroup");
 
+j:=Length(ImageSetOfTransformation(f));
+
 Info(InfoMonoidGreens, 2, "finding orbit of image...");
-o1:=ForwardOrbitOfImage(s, f, function(o, scc) return scc[1]=1; end)[1];
+o1:=[];
+o1[j]:=[ForwardOrbitOfImage(s, f, function(o, scc) return scc[1]=1; end)[1]];
 Info(InfoMonoidGreens, 2, "finding orbit of kernel...");
-o2:=ForwardOrbitOfKernel(s, f, function(o, scc) return scc[1]=1; end);
+o2:=[];
+o2[j]:=[ForwardOrbitOfKernel(s, f, function(o, scc) return scc[1]=1; end)];
+
+d:=[j,1,1,1,1,1];
+
+if IsTransformationMonoid(s) then 
+	gens:=GeneratorsOfMonoid(s);
+else
+	gens:=GeneratorsOfSemigroup(s);
+fi;
+
+o1:=rec( finished:=false, orbits:=o1, gens:=gens, s:=s, 
+ deg := Length(gens[1]![1]), data:=[d]);
+o2:=rec( orbits:=o2);
 
 Info(InfoMonoidGreens, 2, "finding the Schutzenberger group");
-d:=[1,1,1,1,1,1];
-Add(o2!.d_schutz[1], [SchutzGpOfDClass(s, [d,d], [o1,o2])]);
-d:=CreateDClass(s, [d, d], [o1, o2], f);
-SetIsGlobalDClass(d, false);
-return d;
+Add(o2!.orbits[j][1]!.d_schutz[1], [SchutzGpOfDClass(s, [d,d], [o1, o2])]);
+
+return CreateDClass(s, [d, d], [o1, o2], f);
 end);
 
 
@@ -583,78 +625,98 @@ end);
 # are just not that many in general. Or if there are, then we cannot compute the 
 # D-class even.... 
 
-InstallOtherMethod(GreensRClassReps, "for a D-class of a trans. semigroup", 
+InstallOtherMethod(GreensRClassRepsData, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
 function(d)
-local s, f, o, rels, cosets, out, i, j, O, dd, reps, val, g;
+local s, f, o, rels, cosets, out, i, j, O, dd, reps, val, g, D, orbits;
 
 s:=d!.parent;
 f:=d!.rep;
 o:=d!.o;
-d:=d!.data;
+D:=d!.data;
 
-rels:=LClassRelsFromData(s, d[2], o[2]){LClassSCCFromData(s, d[2], o[2])};
-cosets:=RightTransversal(LClassSchutzGpFromData(s, d[2], o[2])
- ^KerRightToImgLeft(s, d[2], o[2]), DClassSchutzGpFromData(s, d, o));
+rels:=LClassRelsFromData(s, D[2], o[2]){LClassSCCFromData(s, D[2], o[2])};;
+cosets:=RightTransversal(LClassSchutzGpFromData(s, D[2], o[2])
+ ^KerRightToImgLeft(s, D[2], o[2]), SchutzenbergerGroup(d));;
 #JDM if needed store the above in d_schutz[4]!
 
-d:=d[1]; o:=o[1];
-out:=[];
+o:=RClassImageOrbitFromData(s, D[1], o[1]);
+D:=D[1]{[1..6]}; D[5]:=fail; D[6]:=fail;
 
-if IsGlobalDClass(d) then 
-	O:=OrbitsOfImages(s)!.orbits;
-	for i in rels do 
-		for j in cosets do 
-			if not j=() or not IsOne(i[1]) then 
-				g:=i[1]*f*j^-1;
-				out[Length(out)+1]:=g;
-				dd:=InOrbitsOfImages(s, g, O, d);
-				if not dd[1] then 
-					AddToOrbitsOfImages(s, g, O, dd[2]);
-				fi;
+#JDM could replace with DClassImageOrbit(d);
+out:=[d!.data[1]];
+
+O:=d!.o[1];
+orbits:=O!.orbits;
+
+for i in rels do 
+	for j in cosets do 
+		#if not j=() or not IsOne(i[1]) then 
+			g:=i[1]*f*j^-1;
+			#Error("");
+			d:=InOrbitsOfImages(d, g, orbits, D);
+			if not d[1] then 
+				d:=AddToOrbitsOfImages(d, g, O, d[2]);
+				out[Length(out)+1]:=d;
 			fi;
-		od;
+		#fi;
 	od;
-else #JDM there is currently no way that any  R-class is already computed!
-	reps:=o[1]!.reps[1];
-	for i in rels do 
-		for j in cosets do 
-			if not j=() or not IsOne(i[1]) then 
-				g:=i[1]*f*j^-1;
-				out[Length(out)+1]:=g;
-				val:=Length(reps)+1;
-				reps[val]:=[g]; #all reps have distinct kernels!
-				HTAdd(o[1]!.kernels_ht[1], KernelOfTransformation( g ), val);
-			fi;
-		od;
-	od;
-fi;
-
-return out;
-end);
-
-#############################################################################
-# JDM this seems slow in comparison to GreensRClassReps!
-
-InstallOtherMethod(GreensRClasses, "for a D-class of a trans. semigroup",
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(d)
-local out, i;
-
-out:=List(GreensRClassReps(d), x-> GreensRClassOfElementNC(d!.parent, x));
-
-for i in out do 
-	SetGreensDClass(i, d);
 od;
 
 return out;
 end);
 
 #############################################################################
+
+InstallOtherMethod(GreensRClassReps, "for a D-class of a trans. semigroup", 
+[IsGreensDClass and IsGreensClassOfTransSemigp], 
+function(d)
+return List(GreensRClassRepsData(d), x-> RClassRepFromData(d!.parent, 
+ x, d!.o[1]));
+end);
+
+#############################################################################
+
+InstallOtherMethod(GreensRClasses, "for a D-class of a trans. semigroup",
+[IsGreensDClass and IsGreensClassOfTransSemigp], 
+function(d)
+local s, o, out, f, reps, r;
+
+s:=d!.parent; o:=d!.o[1]; out:=[]; reps:=[];
+
+for d in GreensRClassRepsData(d) do 
+	f:=RClassRepFromData(s, d, o);
+	reps[Length(reps)+1]:=f;
+	r:=CreateRClass(s, d, o, f);
+	SetGreensDClass(r, d);
+	out[Length(out)+1]:=r;
+od;
+
+return out;
+end);
+
+#############################################################################
+#
+
+InstallOtherMethod(GreensRClassOfElement, "for a D-class of a trans. semigroup", 
+[IsGreensDClass and IsGreensClassOfTransSemigp, IsTransformation], 
+function(d, f)
+
+if not f in d then 
+	Info(InfoWarning, 1, "transformation is not an element of the D-class");
+	return fail;
+fi;
+
+Error("not yet implemented");
+
+end);
+
+
+
+#############################################################################
 # JDM is this correct? 
 # could also try finding the idempotents of one R-class and then multiplying
 # them as in GreensRClassReps
-
 
 InstallOtherMethod( Idempotents, "for a D-class of a trans. semigp.",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
@@ -665,7 +727,7 @@ if HasIsRegularDClass(d) and not IsRegularDClass(d) then
 	return [];
 fi;
 
-ker:=d!.o[2]{LClassSCCFromData(d!.parent, d!.data[2], d!.o[2])};
+ker:=DClassKernelOrbit(d){DClassKernelSCC(d)};
 n:=Length(d!.rep![1]);
 reps:=[];
 
@@ -678,7 +740,10 @@ for i in [1..Length(ker)] do
 od;
 
 out:= [];
-img:=d!.o[1]{RClassSCCFromData(d!.parent, d!.data[1], d!.o[1])};
+img:=RClassImageOrbitFromData(d!.parent, d!.data[1], d!.o[1])
+ {RClassSCCFromData(d!.parent, d!.data[1], d!.o[1])};
+#replace these as above!
+
 m:=Length(img[1]);
 
 for i in img do 
@@ -697,6 +762,9 @@ end);
 # [d_ker, d_img] or s, f
 
 #should this return [d_img, d_ker]? JDM
+
+#############################################################################
+# 
 
 InstallGlobalFunction(InOrbitsOfKernels, 
 function(arg)
@@ -790,7 +858,14 @@ end);
 
 InstallOtherMethod(IsRegularDClass, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
-d-> IsRegularRClassData(d!.parent, d!.data[1], d!.rep, d!.o[1]));
+function(d)
+
+if HasIdempotents(d) then 
+	return not Idempotents(d)=[];
+fi;
+
+return IsRegularRClassData(d!.parent, d!.data[1], d!.rep, d!.o[1]);
+end);
 
 #############################################################################
 
@@ -913,10 +988,9 @@ iter:=IteratorByFunctions( rec(
 	
 	iter!.i:=iter!.i+1;
 	d:=OrbitsOfKernels(iter!.s)!.data[iter!.i];
-	d:=CreateDClass(s, d, DClassOrbitsFromData(s, d), rep);
-	SetIsGlobalDClass(d, true);
-	
-	return d;
+
+	return CreateDClass(s, d, [OrbitsOfImages(s), 
+	 OrbitsOfKernels(s)], rep);
 	end,
 	
 	ShallowCopy:=iter-> rec(i:=0, s:=iter!.s, reps:=IteratorOfRClassReps(s))
@@ -952,7 +1026,7 @@ local s, d, o;
 s:=arg[1]; d:=arg[2];
 
 if Length(arg)=3 then 
-	o:=arg[3];
+	o:=arg[3]!.orbits[d[1]][d[2]];
 else
 	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
 fi;
@@ -1049,6 +1123,33 @@ ExpandOrbitsOfKernels(s);
 return Length(OrbitsOfKernels(s)!.data);
 end);
 
+# new for 4.0!
+#############################################################################
+
+InstallMethod(NrGreensLClasses, "for a transformation semigroup", 
+[IsTransformationSemigroup],
+function(s)
+local i, d;
+
+ExpandOrbitsOfKernels(s);
+i:=0;
+for d in OrbitsOfKernels(s)!.data do 
+	i:=i+Length(DClassRCosetsFromData(s, d))*Length(RClassSCCFromData(s, d[1]));
+od;
+return i;
+end);
+
+# new for 4.0!
+#############################################################################
+
+InstallOtherMethod(NrGreensLClasses, "for a D-class of a trans. semigroup",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+
+return Length(DClassRCosets(d))*Length(RClassSCCFromData(d!.parent, d!.data[1],
+d!.o[1]));
+end);
+
 #############################################################################
 
 InstallOtherMethod(NrGreensRClasses, "for a D-class of a trans. semigroup", 
@@ -1076,6 +1177,7 @@ end);
 InstallOtherMethod(NrIdempotents, "for an D-class", 
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
+local ker, n, i, j, k, out, img, m, reps;
 
 if HasIdempotents(d) then 
 	return Length(Idempotents(d));
@@ -1085,8 +1187,34 @@ if HasIsRegularRClass(d) and not IsRegularRClass(d) then
 	return 0;
 fi;
 
-Error("not yet implemented");
+ker:=DClassKernelOrbit(d){DClassKernelSCC(d)};
+n:=Length(d!.rep![1]);
+reps:=[];
 
+for i in [1..Length(ker)] do 
+	j:=[1..n];
+	for k in [1..Length(ker[i])] do
+		j{ker[i][k]}:=List([1..Length(ker[i][k])], x-> k);
+	od;
+	reps[i]:=j;
+od;
+
+out:= 0;
+img:=RClassImageOrbitFromData(d!.parent, d!.data[1], d!.o[1])
+ {RClassSCCFromData(d!.parent, d!.data[1], d!.o[1])};
+#replace these as above! DClassImageOrbit, DClassImageSCC!
+
+m:=Length(img[1]);
+
+for i in img do 
+	for j in [1..Length(ker)] do 
+		if Length(Set(reps[j]{i}))=m then 
+			out:=out+1;
+		fi;
+	od;
+od;
+
+return out;
 end);
 
 
@@ -1202,7 +1330,12 @@ end);
 
 InstallOtherMethod(SchutzenbergerGroup, "for a D-class of a trans. semigp.",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
-d-> DClassSchutzGpFromData(d!.parent, d!.data, d!.o));
+function(d)
+local dd;
+dd:=d!.data[2];
+return LClassKernelOrbitFromData(d!.parent, dd, d!.o[2])!.
+ d_schutz[dd[4]][dd[5]][dd[6]][2];
+end);
 
 #new for 4.0!
 #############################################################################
@@ -1216,7 +1349,7 @@ s:=arg[1]; d:=arg[2];
 if Length(arg)=3 then 
 	o:=arg[3];
 else
-	o:=[RClassImageOrbitFromData(s, d[1]), LClassKernelOrbitFromData(s, d[2])];
+	o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
 fi;
 
 g:=RClassSchutzGpFromData(s, d[1], o[1]);
@@ -1243,18 +1376,18 @@ end);
 InstallOtherMethod(Size, "for a D-class of a trans. semigp.", 
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
-local r, l, s, o;
+local r, l, s, o, D;
 
 s:=d!.parent;
 o:=d!.o;
-d:=d!.data;
+D:=d!.data;
 
-r:=RClassSchutzGpFromData(s, d[1], o[1]);
-l:=LClassSchutzGpFromData(s, d[2], o[2]);
+r:=RClassSchutzGpFromData(s, D[1], o[1]);
+l:=LClassSchutzGpFromData(s, D[2], o[2]);
 
-return (Size(r)*Length(RClassSCCFromData(s, d[1], o[1]))
-*Length(LClassSCCFromData(s, d[2], o[2])))*Size(l)/
-Size(DClassSchutzGpFromData(s, d, o));
+return (Size(r)*Length(RClassSCCFromData(s, D[1], o[1]))
+*Length(LClassSCCFromData(s, D[2], o[2])))*Size(l)/
+Size(SchutzenbergerGroup(d));
 end);
 
 
