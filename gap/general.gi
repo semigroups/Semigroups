@@ -18,16 +18,7 @@
 
 
 ###########################################################################
-##
-##  <#GAPDoc Label="EnumeratorOfCartesian">
-##  <ManSection> 
-##  <Func Name="EnumeratorOfCartesian" Arg="enums"/>
-##  <Description>
-##  returns a simple enumerator of the cartesian product of the list of 
-##	enumerators <C>enums</C>.
-##	</Description>  
-##	</ManSection>
-##	<#/GAPDoc>
+
 
 InstallGlobalFunction(EnumeratorOfCartesian, 
 function ( enums )
@@ -102,3 +93,18 @@ int2:=List(gens2, x-> Int(String(x){[2..Length(String(x))]}));
 return PermListList(int1, int2);
 
 end);
+
+InstallMethod(Generators, "for a semigroup or monoid", 
+[IsSemigroup],
+function(s)
+
+if IsMonoid(s) then 
+	return GeneratorsOfMonoid(s);
+fi;
+
+return GeneratorsOfSemigroup(s);
+end);
+
+
+
+

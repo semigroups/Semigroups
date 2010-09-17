@@ -200,8 +200,9 @@ else #old img
 		HTAdd(O[j][k]!.kernels_ht[m], KernelOfTransformation( g ), val);
 	fi;
 	reps:=[g]; #JDM should it be g or f?
-
 fi;
+
+##############################################################################
 
 #install new pts in the orbit
 if IsBound(ht) then 
@@ -639,18 +640,6 @@ return [o, reps, scc];
 end);
 
 
-#new for 4.0!
-#############################################################################
-# Test efficiency!
-
-# not the following here, as we already know the orbit of the image for r
-# just need to compute the orbit of the kernel! JDM
-
-InstallOtherMethod(GreensDClass, "for an R-class of a trans. semigroup", 
-[IsGreensRClass and IsGreensClassOfTransSemigp], 
-function(r)
-return GreensDClassOfElementNC(r!.parent, r!.rep);
-end);
 
 # new method in 4.0!
 #############################################################################
@@ -759,7 +748,8 @@ j:=Length(ImageSetOfTransformation(f));
 o:=EmptyPlist(n);
 o[j]:=[ForwardOrbitOfImage(s, f, function(o, scc) return scc[1]=1; end)[1]];
 
-o:=rec( finished:=false, orbits:=o, gens:=gens, s:=s, deg := n, data:=[]);
+o:=rec( finished:=false, orbits:=o, gens:=Generators(s), s:=s, 
+ deg := n, data:=[]);
 #local orbits of images!
 
 r:=CreateRClass(s, [j,1,1,1,1,1], o, f);
@@ -830,12 +820,9 @@ k:=fail; l:=fail; m:=fail; val:=fail; n:=0; g:=fail;
 if Length(arg)=4 then 
 	O:=arg[3];
 	if not arg[4]=[] then 
-		j:=arg[4][1]; 
-		k:=arg[4][2]; 
-		l:=arg[4][3];
-		m:=arg[4][4]; 
-		val:=arg[4][5]; 
-		n:=arg[4][6];
+		j:=arg[4][1]; k:=arg[4][2]; l:=arg[4][3];
+		m:=arg[4][4]; val:=arg[4][5]; n:=arg[4][6];
+		
 		if Length(arg[4])=7 then 
 			g:=arg[4][7];
 		fi;
@@ -1366,14 +1353,9 @@ end);
 InstallMethod(OrbitsOfImages, "for a transformation semigroup",
 [IsTransformationSemigroup], 
 function(s)
-local gens, n, one, ht, i;
+local gens, n, one, ht, i, type;
 
-if IsTransformationMonoid( s ) then
-	gens := GeneratorsOfMonoid( s );
-else
-	gens := GeneratorsOfSemigroup( s );
-fi;
-
+gens:=Generators(s);
 n := DegreeOfTransformationSemigroup( s );
 one := TransformationNC( [ 1 .. n ] );
 ht := HTCreate(one);
@@ -1381,10 +1363,11 @@ HTAdd(ht, one, true);
 for i in gens do 
 	HTAdd(ht, i, true);
 od;
-
 ht!.o := Concatenation([one], gens); 
 
-return rec(
+type:=NewType(FamilyObj(s), IsOrbitsOfImages);
+
+return Objectify(type, rec(
   finished:=false,
   orbits:=EmptyPlist(DegreeOfTransformationSemigroup(s)), 
   at:=0, 
@@ -1394,7 +1377,7 @@ return rec(
 	one := one,
 	ht:=ht,
 	data:=[], 
-);
+));
 end);
 
 # new for 4.0!
@@ -1402,6 +1385,12 @@ end);
 
 InstallMethod(ParentAttr, "for a R-class of a trans. semigroup", 
 [IsGreensRClass and IsGreensClassOfTransSemigp], x-> x!.parent);
+
+InstallMethod(PrintObj, [IsOrbitsOfImages], 
+function(o)
+Print("<orbits of images>");
+end);
+
 
 # new for 4.0!
 ############################################################################

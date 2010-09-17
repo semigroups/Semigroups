@@ -92,30 +92,38 @@ end);
 ## new for 4.0!
 #############################################################################
 # s    - the semigroup
-# o    - [OrbitsOfImages(s), OrbitsOfKernels(s)]
 # f    - transformation
 # data - [image data, kernel data]
-
-# should this return [d_img, d_ker]? JDM
+# o    - [OrbitsOfImages(s), OrbitsOfKernels(s)]
 
 InstallGlobalFunction(AddToOrbitsOfKernels,
-function(s, f, o, data)
+function(arg)
 local j, k, l, m, val, n, g, O, gens, reps, schutz, convert, oo, scc, 
-ker, ht, r, deg, bound, d_schutz, treehashsize; 
+ ker, ht, r, deg, bound, d_schutz, treehashsize, s, f, data, o, d; 
 
-j:=data[2][1]; 	#ker length
-k:=data[2][2]; 	#index of orbit containing ker
-l:=data[2][3]; 	#position of ker in O[j][k]
-m:=data[2][4]; 	#scc of O[j][k] containing ker
-val:=data[2][5]; #position of img in O[j][k]!images_ht[m]
-n:=data[2][6];
-g:=data[2][7];
+s:=arg[1]; f:=arg[2]; data:=arg[3]; 
 
-O := o[2]!.orbits; gens:=o[2]!.gens;
+if Length(arg)=4 then 
+	o:=arg[4];
+else
+	o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
+fi;
+
+j:=data[2][1]; 		# ker length
+k:=data[2][2]; 		# index of orbit containing ker
+l:=data[2][3]; 		# position of ker in O[j][k]
+m:=data[2][4]; 		# scc of O[j][k] containing ker
+val:=data[2][5]; 	# position of img in O[j][k]!images_ht[m]
+n:=data[2][6]; 		# the length of O[j][k]!.reps[m][val]
+g:=data[2][7];		# O[j][k]!.rels[l][2]*f
+#i:=data[2][8]		# the index of the coset rep. 
+
+O := o[2]!.orbits; gens:=o[1]!.gens; d:=o[2]!.data;
 
 if k = fail then #new ker and l,m,val,n,g=fail
 
 ################################################################################
+	# don't enter here when s is a d-class!
 	
 	oo:=ForwardOrbitOfKernel(s, f, fail, gens);
 	
@@ -126,9 +134,12 @@ if k = fail then #new ker and l,m,val,n,g=fail
 	fi;
 	
 	data:=[data[1], [j, Length(O[j]), 1, 1, 1, 1]];
+	
 	Add(oo!.d_schutz[1], [SchutzGpOfDClass(s, data)]);
 	
-	return data[2];
+	d[Length(d)+1]:=data;
+	
+	return data;
 
 ################################################################################
 	
@@ -136,23 +147,24 @@ else #old ker
 	reps:=O[j][k]!.reps[m]; 
 	convert:=O[j][k]!.convert[m];
 	d_schutz:=O[j][k]!.d_schutz[m];
-	#o:=[o[1]!.orbits[data[1][1]][data[1][2]], O[j][k]];
-	
-	if not Length(reps)=0 then 
+
+	if not Length(reps)=0 then #considered this scc before
 		if not val=fail then #old image
 			reps[val][n+1]:=g;
 			convert[val][n+1]:=AsPermOfKerImg(f);
 			data[2]:=[j, k, l, m, val, n+1];
 			d_schutz[val][n+1]:=SchutzGpOfDClass(s, data, o);
-		  return data[2];
+			d[Length(d)+1]:=data;
+		  return data;
 		else #new image
 			val:=Length(reps)+1;
 			reps[val]:=[g];
 			data[2]:=[j,k,l,m,val,1];
 			convert[val]:=[AsPermOfKerImg(g)];
 			d_schutz[val]:=[SchutzGpOfDClass(s, data, o)];
+			d[Length(d)+1]:=data;
 			HTAdd(O[j][k]!.images_ht[m], ImageSetOfTransformation( f ), val);
-			return data[2];
+			return data;
 		fi;
 	else
 		#we never considered this scc before!
@@ -166,8 +178,9 @@ else #old ker
 		reps[1]:=[g];
 		convert[1]:=[AsPermOfKerImg(g)];
 		data[2]:=[j, k, l, m, 1, 1];
+		d[Length(d)+1]:=data;
 		d_schutz[1]:=[SchutzGpOfDClass(s, data, o)];
-		return data[2];
+		return data;
 	fi;
 fi;
 
@@ -178,9 +191,14 @@ end);
 #############################################################################
 #
 
+#JDM should be s, rep, data, orbit where orbit is optional and the default
+# is OrbitsOfImages(s), OrbitsOfKernels(s)
+
 InstallGlobalFunction(CreateDClass, 
 function(s, data, orbit, rep)
 local d;
+
+data:=List(data, x-> x{[1..6]});
 
 d:=Objectify(DClassType(s), rec(parent:=s, data:=data, 
 o:=orbit, rep:=rep));
@@ -257,7 +275,7 @@ local s, d, o;
 s:=arg[1]; d:=arg[2][2];
 
 if Length(arg)=3 then 
-	o:=arg[3][2];
+	o:=arg[3][2]!.orbits[d[1]][d[2]];
 else
 	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
 fi;
@@ -290,7 +308,7 @@ local s, d, o;
 s:=arg[1]; d:=arg[2][2];
 
 if Length(arg)=3 then 
-	o:=arg[3][2];
+	o:=arg[3][2]!.orbits[d[1]][d[2]];
 else
 	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
 fi;
@@ -309,7 +327,7 @@ local s, d, o;
 s:=arg[1]; d:=arg[2][2];
 
 if Length(arg)=3 then 
-	o:=arg[3][2];
+	o:=arg[3][2]!.orbits[d[1]][d[2]];
 else
 	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
 fi;
@@ -386,11 +404,7 @@ fi;
 if Length(arg)=4 then 
 	gens:=arg[4];
 else
-	if IsTransformationMonoid(s) then 
-		gens:=GeneratorsOfMonoid(s);
-	else
-		gens:=GeneratorsOfSemigroup(s);
-	fi;
+	gens:=Generators(s);
 fi;
 
 ker:=KernelOfTransformation(f);
@@ -457,6 +471,56 @@ o!.d_schutz:=List([1..r], x-> []);
 return o;
 end);
 
+#new for 4.0!
+#############################################################################
+
+InstallOtherMethod(GreensDClass, "for an R-class of a trans. semigroup", 
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+local s, f, d, data, j, o1, o2;
+
+s:=r!.parent; f:=r!.rep;
+d:=InOrbitsOfKernels(s, f);
+
+if d[1] or d[2] then # f in s!
+	data:=[d[3][1]]; #what if we are InOrbitsOfKernels but not InOrbitsOfImages?
+	#JDM is this possible?
+	Info(InfoMonoidGreens, 2, "transformation is an element of the semigroup");
+	if d[2] then # f in existing D-class
+		data[2]:=d[3][2];
+	else #f not in existing D-class
+		data[2]:=AddToOrbitsOfKernels(s, f, d[3]);
+	fi;
+	
+	return CreateDClass(s, data, [OrbitsOfImages(s), 
+	OrbitsOfKernels(s)], DClassRepFromData(s, data));
+elif OrbitsOfImages(s)!.finished then #f not in s!
+	Info(InfoMonoidGreens, 2, "transformation is not an element of the ",
+	 "semigroup");
+	return fail;
+fi;
+
+Info(InfoMonoidGreens, 2, "transformation may not be an element of the ",
+ "semigroup");
+
+j:=Length(ImageSetOfTransformation(f));
+
+o1:=r!.o;
+
+Info(InfoMonoidGreens, 2, "finding orbit of kernel...");
+o2:=[];
+o2[j]:=[ForwardOrbitOfKernel(s, f, function(o, scc) return scc[1]=1; end)];
+
+d:=[j,1,1,1,1,1];
+o2:=rec(gens:=Generators(s), orbits:=o2, data:=[]);
+
+Info(InfoMonoidGreens, 2, "finding the Schutzenberger group...");
+Add(o2!.orbits[j][1]!.d_schutz[1], 
+ [SchutzGpOfDClass(s, [r!.data, d], [o1, o2])]);
+
+return CreateDClass(s, [r!.data, d], [o1, o2], f);
+end);
+
 #############################################################################
 # 
 
@@ -500,38 +564,34 @@ od;
 return out;
 end);
 
+
+
 # new for 4.0!
 #############################################################################
 
 InstallOtherMethod(GreensDClassOfElement, "for a trans. semigp and trans.", 
 [IsTransformationSemigroup, IsTransformation],
 function(s, f)
-local d_img, d_ker, d, o, rep;
+local d, D;
 
 if not f in s then 
 	Info(InfoWarning, 1, "transformation is not an element of the semigroup");
 	return fail;
 fi;
 
-d_img:=InOrbitsOfImages(s, f)[2];
-d_img[3]:=RClassSCCFromData(s, d_img)[1];
-rep:=RClassRepFromData(s, d_img);
-o:=OrbitsOfKernels(s);
+d:=InOrbitsOfKernels(s, f);
 
-d_ker:=InOrbitsOfKernels(s, rep, o!.orbits, 
-[[d_img[1], fail, fail, fail, fail, 0, fail], d_img]);
-
-if not d_ker[1] then #orbit of kernel not previously calculated!
-	d_ker:=AddToOrbitsOfKernels(s, rep, [OrbitsOfImages(s), o], 
-	[d_img, d_ker[2]]);
-	d:=OrbitsOfKernels(s)!.data;
-	d[Length(d)+1]:=[d_img{[1..6]}, d_ker];
+if not d[2] then #orbit of kernel not previously calculated!
+	d:=AddToOrbitsOfKernels(s, d[3][1][7], d[3]); 
+	 #d[3][1][7] is f with rectified image!
+	D:=OrbitsOfKernels(s)!.data;
+	D[Length(D)+1]:=List(d, x-> x{[1..6]});
 else
-	d_ker:=d_ker[2]{[1..6]};
+	d:=d[3];
 fi;
 
-d:=CreateDClass(s, [d_img, d_ker], [OrbitsOfImages(s), 
-OrbitsOfKernels(s)], DClassRepFromData(s, [d_img, d_ker]));
+d:=CreateDClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)], 
+ DClassRepFromData(s, d));
 
 return d;
  end);
@@ -542,33 +602,31 @@ return d;
 InstallOtherMethod(GreensDClassOfElementNC, "for a trans. semigp and trans.", 
 [IsTransformationSemigroup, IsTransformation],
 function(s, f)
-local d, o1, o2, j, gens;
+local d, o1, o2, j, data;
 
 Info(InfoMonoidGreens, 4, "GreensDClassOfElementNC");
 
-d:=[InOrbitsOfImages(s, f), InOrbitsOfKernels(s, f)];
+d:=InOrbitsOfKernels(s, f);
 
-if d[1][1] or d[2][1] then # f in s!
+if d[1] or d[2] then 
+	data:=[d[3][1]];
 	Info(InfoMonoidGreens, 2, "transformation is an element of the semigroup");
-	d[1]:=d[1][2]{[1..6]};
-	if d[2][1] then 
-		d[2]:=d[2][2]{[1..6]};
+	if d[2] then 
+		data[2]:=d[3][2];
 	else
-		d[2]:=d[2][2];
-		d[2]:=AddToOrbitsOfKernels(s, f, [OrbitsOfImages(s), OrbitsOfKernels(s)],
-		 d);
+		data[2]:=AddToOrbitsOfKernels(s, f, d[3]);
 	fi;
 	
-	return CreateDClass(s, d, [OrbitsOfImages(s), 
-	OrbitsOfKernels(s)], DClassRepFromData(s, d));
+	return CreateDClass(s, data, [OrbitsOfImages(s), 
+	OrbitsOfKernels(s)], DClassRepFromData(s, data));
 elif OrbitsOfImages(s)!.finished then #f not in s!
 	Info(InfoMonoidGreens, 2, "transformation is not an element of the ",
-	"semigroup");
+	 "semigroup");
 	return fail;
 fi;
 
 Info(InfoMonoidGreens, 2, "transformation may not be an element of the ",
-"semigroup");
+ "semigroup");
 
 j:=Length(ImageSetOfTransformation(f));
 
@@ -581,15 +639,9 @@ o2[j]:=[ForwardOrbitOfKernel(s, f, function(o, scc) return scc[1]=1; end)];
 
 d:=[j,1,1,1,1,1];
 
-if IsTransformationMonoid(s) then 
-	gens:=GeneratorsOfMonoid(s);
-else
-	gens:=GeneratorsOfSemigroup(s);
-fi;
-
-o1:=rec( finished:=false, orbits:=o1, gens:=gens, s:=s, 
- deg := Length(gens[1]![1]), data:=[d]);
-o2:=rec( orbits:=o2);
+o1:=rec( finished:=false, orbits:=o1, gens:=Generators(s), s:=s, 
+ deg := DegreeOfTransformationSemigroup(s), data:=[d]);
+o2:=rec( orbits:=o2, gens:=Generators(s), data:=[d]);
 
 Info(InfoMonoidGreens, 2, "finding the Schutzenberger group");
 Add(o2!.orbits[j][1]!.d_schutz[1], [SchutzGpOfDClass(s, [d,d], [o1, o2])]);
@@ -609,21 +661,37 @@ ExpandOrbitsOfKernels(s);
 return List(OrbitsOfKernels(s)!.data, x-> DClassRepFromData(s, x));
 end);
 
-# new for 4.0!
-#############################################################################
 
-InstallOtherMethod(GreensLClassReps, "for a D-class", 
+#############################################################################
+# maybe write iterator/enumerator later! JDM
+
+InstallOtherMethod(GreensLClassReps, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(s)
-local iter, i, o;
-Info(InfoMonoidGreens, 4, "GreensLClassReps");
-Error("not yet implemented");
+function(d)
+local s, f, o, D, perms, cosets, out, i, j, g;
+
+s:=d!.parent;
+f:=d!.rep;
+o:=d!.o;
+D:=d!.data;
+
+perms:=RClassPermsFromData(s, D[1], o[1]){RClassSCCFromData(s, D[1], o[1])};
+cosets:=DClassRCosets(d);
+
+out:=EmptyPlist(Length(perms)*Length(cosets));
+
+for i in perms do 
+	for j in cosets do 
+		g:=f*(j/i);
+		out[Length(out)+1]:=g;
+	od;
+od;
+
+return out;
 end);
 
 #############################################################################
-# I don't see the need for iterator and enumerator of R-class reps, as there
-# are just not that many in general. Or if there are, then we cannot compute the 
-# D-class even.... 
+# maybe write iterator/enumerator later! JDM
 
 InstallOtherMethod(GreensRClassRepsData, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
@@ -651,15 +719,12 @@ orbits:=O!.orbits;
 
 for i in rels do 
 	for j in cosets do 
-		#if not j=() or not IsOne(i[1]) then 
-			g:=i[1]*f*j^-1;
-			#Error("");
-			d:=InOrbitsOfImages(d, g, orbits, D);
-			if not d[1] then 
-				d:=AddToOrbitsOfImages(d, g, O, d[2]);
-				out[Length(out)+1]:=d;
-			fi;
-		#fi;
+		g:=i[1]*f*j^-1;
+		d:=InOrbitsOfImages(d, g, orbits, D);
+		if not d[1] then 
+			d:=AddToOrbitsOfImages(d, g, O, d[2]);
+			out[Length(out)+1]:=d;
+		fi;
 	od;
 od;
 
@@ -758,27 +823,33 @@ return out;
 end);
 
 #############################################################################
-# Usage: s, f, OrbitsOfKernels(s)!.orbits, 
-# [d_ker, d_img] or s, f
-
-#should this return [d_img, d_ker]? JDM
-
-#############################################################################
-# 
+# Usage: s, f, [d_img, d_ker] or s, f, or  s, f, [d_img, d_ker], 
+# [OrbitsOfImages(s)!.orbits, OrbitsOfKernels(s)!.orbits]
 
 InstallGlobalFunction(InOrbitsOfKernels, 
 function(arg)
 local s, f, O, j, k, l, m, val, n, g, d, ker, reps, t, schutz, x, h, cosets, 
-i, p;
+ i, p;
 
-s:=arg[1]; f:=arg[2];
+s:=arg[1]; f:=arg[2]; j:=fail;
+k:=fail; l:=fail; m:=fail; val:=fail; n:=0; g:=fail;
 
 if Length(arg)=4 then 
-	O:=arg[3];
-	j:=arg[4][1][1]; k:=arg[4][1][2]; l:=arg[4][1][3];
-	m:=arg[4][1][4]; val:=arg[4][1][5]; n:=arg[4][1][6];
-	g:=arg[4][1][7]; 
-	d:=arg[4][2];
+	O:=arg[4]; 
+else 
+	O:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
+fi;
+
+if Length(arg)>=3 and not arg[3]=[] then 
+	j:=arg[3][2][1]; k:=arg[3][2][2]; l:=arg[3][2][3];
+	m:=arg[3][2][4]; val:=arg[3][2][5]; n:=arg[3][2][6];
+	
+	if Length(arg[3])>=7 then 
+		g:=arg[4][2][7]; 
+	fi;
+	
+	d:=[true, arg[3][1]];
+	
 	if k=fail then 
 		ker:=KernelOfTransformation(f);
 	fi;
@@ -786,19 +857,21 @@ if Length(arg)=4 then
 		j:=Length(ker);
 	fi;
 else
+	d:=InOrbitsOfImages(s, f, O[1]!.orbits, []); 
+	#JDM change the syntax of InOrbitsOfImgs
+	if not d[1] then 
+		return [d[1], false, [d[2], [j, fail, fail, fail, fail, 0, fail, fail]]];
+	fi;
+	f:=f*RClassPermsFromData(s, d[2], O[1])[d[2][4]];
+	d[2][3]:=RClassSCCFromData(s, d[2], O[1])[1]; #rectify the image!
 	ker:=KernelOfTransformation(f);
 	j:=Length(ker);
-	k:=fail; l:=fail; m:=fail; val:=fail; n:=0; g:=fail;
-	O:=OrbitsOfKernels(s)!.orbits;
-	d:=InOrbitsOfImages(s, f); 
-	if not d[1] then 
-		return [false, [j, fail, fail, fail, fail, 0, fail, fail]];
-	fi; #JDM correct?
-	d:=d[2];
 fi;
 
+O:=O[2]!.orbits;
+
 if not IsBound(O[j]) then
-	return [false, [j, fail, fail, fail, fail, 0, fail, fail]];
+	return [d[1], false, [d[2], [j, fail, fail, fail, fail, 0, fail, fail]]];
 fi;
 
 if k=fail then #l=fail, m=fail, g=fail
@@ -810,13 +883,17 @@ if k=fail then #l=fail, m=fail, g=fail
 	until not l=fail or k=Length(O[j]);
 
 	if l = fail then 
-		return [false, [j, fail, fail, fail, fail, 0, fail, fail]];
+		return [d[1], false, [d[2], [j, fail, fail, fail, fail, 0, fail, fail]]];
 	fi;
 	m:=PositionProperty(O[j][k]!.truth, x-> x[l]);
 	
 	if not IsBound(O[j][k]!.rels[l]) then
-		return [false, [j,k,l,m,fail, 0, fail, fail]];
+		return [d[1], false, [d[2], [j,k,l,m,fail, 0, fail, fail]]];
 	fi;
+	g:=O[j][k]!.rels[l][2]*f;
+fi;
+
+if g=fail then 
 	g:=O[j][k]!.rels[l][2]*f;
 fi;
 
@@ -825,7 +902,7 @@ if val=fail then
 fi;
 
 if val=fail then 
-	return [false, [j, k, l, m, fail, 0, g, fail]];
+	return [d[1], false, [d[2], [j, k, l, m, fail, 0, g, fail]]];
 fi;
 
 reps:=O[j][k]!.reps[m][val];
@@ -835,7 +912,7 @@ schutz:=O[j][k]!.schutz[m][1];
 #schutz gp of the L-class
 
 if schutz=true then 
-	return [true, [j,k,l,m,val,1,g,1]]; 
+	return [d[1], true, [d[2], [j,k,l,m,val,1,g,1]]]; 
 fi;
 
 while n<t do
@@ -843,14 +920,14 @@ while n<t do
 	p:=O[j][k]!.convert[m][val][n]^-1;
 	cosets:=O[j][k]!.d_schutz[m][val][n][3];
 	for i in [1..Length(cosets)] do 
-		h:=PermLeftQuoTransformationNC(reps[n], g);	
+		h:=PermLeftQuoTransformationNC(reps[n], g);
 		if SiftedPermutation(schutz, (h/cosets[i])^p)=() then 
-			return [true ,[j,k,l,m,val,n,g,i]];
+			return [d[1], true , [d[2], [j,k,l,m,val,n,g,i]]];
 		fi;
 	od;
 od;
 
-return [false, [j,k,l,m,val,n,g,i]];
+return [d[1], false, [d[2], [j,k,l,m,val,n,g,i]]];
 end);
 
 #############################################################################
@@ -917,15 +994,11 @@ iter:=IteratorByFunctions( rec(
 	
 	for d_img in iter!.r do  
 		f:=RClassRepFromData(s, d_img);
-		d_ker:=InOrbitsOfKernels(s, f, O!.orbits, [[d_img[1], 
-		 fail, fail, fail, fail, 0, fail], d_img]);
-		if not d_ker[1] then 
-			d_ker:=AddToOrbitsOfKernels(s, f, [OrbitsOfImages(s), O],
-			 [d_img, d_ker[2]]);
-			d:=O!.data;
-			d[Length(d)+1]:=[d_img, d_ker];
+		d_ker:=InOrbitsOfKernels(s, f);
+		if not d_ker[2] then #f not in existing D-class
+			d_ker:=AddToOrbitsOfKernels(s, f, d_ker[3], [OrbitsOfImages(s), O]);
 			iter!.i:=iter!.i+1;
-			iter!.next_value:=DClassRepFromData(s, [d_img, d_ker]);
+			iter!.next_value:=DClassRepFromData(s, d_ker);
 			return false;
 		fi;
 	od;
@@ -1026,6 +1099,7 @@ local s, d, o;
 s:=arg[1]; d:=arg[2];
 
 if Length(arg)=3 then 
+# if IsOrbit(arg[3]) then o:=arg[3]!!! JDM for the sake of convenience!
 	o:=arg[3]!.orbits[d[1]][d[2]];
 else
 	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
@@ -1122,6 +1196,13 @@ Info(InfoMonoidGreens, 4, "NrGreensDClasses");
 ExpandOrbitsOfKernels(s);
 return Length(OrbitsOfKernels(s)!.data);
 end);
+
+# new for 4.0!
+#############################################################################
+
+InstallOtherMethod(NrGreensHClasses, "for an R-class of a trans. semigroup", 
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+r-> NrGreensLClasses(GreensDClass(r)));
 
 # new for 4.0!
 #############################################################################
@@ -1224,20 +1305,13 @@ end);
 InstallMethod(OrbitsOfKernels, "for a transformation semigroup",
 [IsTransformationSemigroup], 
 function(s)
-local gens;
 
-if IsTransformationMonoid( s ) then
-	gens := GeneratorsOfMonoid( s );
-else
-	gens := GeneratorsOfSemigroup( s );
-fi;
-
-return rec(
-  finished:=false,
-  data:=[],
-  orbits:=EmptyPlist(DegreeOfTransformationSemigroup(s)), 
-  gens:=gens
-);
+return Objectify(NewType(FamilyObj(s), IsOrbitsOfKernels), 
+	rec(
+	  finished:=false,
+	  data:=[],
+	  orbits:=EmptyPlist(DegreeOfTransformationSemigroup(s)), 
+	  gens:=Generators(s)));
 end);
 
 #############################################################################
@@ -1245,6 +1319,14 @@ end);
 
 InstallMethod(ParentAttr, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], x-> x!.parent);
+
+#############################################################################
+#
+
+InstallMethod(PrintObj, [IsOrbitsOfKernels], 
+function(o)
+Print("<orbits of kernels>");
+end);
 
 #############################################################################
 #

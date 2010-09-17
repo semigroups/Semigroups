@@ -70,8 +70,18 @@ end);
 ############################################################################
 
 InstallGlobalFunction(LClassRepFromData,
-function(s, d)
-return OrbitsOfKernels(s)!.orbits[d[1]][d[2]]!.reps[d[4]][d[5]][d[6]];
+function(arg)
+local s, d, o;
+
+s:=arg[1]; d:=arg[2];
+
+if Length(arg)=3 then 
+	o:=arg[3]!.orbits[d[1]][d[2]];
+else
+	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
+fi;
+
+return o!.reps[d[4]][d[5]][d[6]];
 end);
 
 # new for 4.0!
@@ -153,8 +163,6 @@ InstallMethod( PrintObj, "for object in `IsGreensLClassData'",
 function( obj )
 Print( "GreensLClassData( ", obj!.rep,  " )" );
 end );
-
-
 
 #############################################################################
 # 

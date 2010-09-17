@@ -14,6 +14,17 @@
 #############################################################################
 #
 
+InstallOtherMethod(Rank, "for a transformation", 
+[IsTransformation],
+function(f)
+return Length(ImageSetOfTransformation(f));
+end);
+
+
+#new for 4.0!
+#############################################################################
+#
+
 InstallGlobalFunction(ConstantTransformation, 
 function(m,n)
 local f;

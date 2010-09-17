@@ -891,6 +891,7 @@ IsIterator);
 DeclareAttribute("NrGreensRClasses", IsTransformationSemigroup);
 DeclareAttribute("NrGreensLClasses", IsTransformationSemigroup);
 DeclareAttribute("NrGreensDClasses", IsTransformationSemigroup);
+DeclareAttribute("NrGreensHClasses", IsTransformationSemigroup);
 DeclareAttribute("NrIdempotents", IsTransformationSemigroup);
 
 DeclareAttribute("IsRegularRClass", IsGreensClassOfTransSemigp);
@@ -905,6 +906,10 @@ DeclareGlobalFunction("ForwardOrbitOfImage");
 DeclareGlobalFunction("ForwardOrbitOfKernel");
 
 DeclareAttribute("GreensRClassRepsData", IsTransformationSemigroup);
+DeclareAttribute("GreensLClassRepsData", IsTransformationSemigroup);
+
+DeclareProperty("IsOrbitsOfImages", IsObject);
+DeclareProperty("IsOrbitsOfKernels", IsObject);
 
 # probably get rid of the following...
 

@@ -42,3 +42,5 @@ DeclareGlobalFunction("EnumeratorOfCartesian");
 ##	<#/GAPDoc>
 
 DeclareOperation("MONOIDPermListList", [IsList, IsList]);
+
+DeclareAttribute("Generators", IsSemigroup);
