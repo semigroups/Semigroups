@@ -1,4 +1,18 @@
 
+InstallMethod(IsomorphismTransformationSemigroup, "for a perm. group", 
+[IsPermGroup],
+function(g)
+local dom;
+dom:=MovedPoints(g);
+return Semigroup(List(GeneratorsOfGroup(g), x-> 
+ TransformationNC(OnTuples(dom, x))));
+# JDM could add more of the info known about g here!
+
+end);
+
+
+
+
 InstallMethod(IsomorphismAutomorphismGroupOfRMS, "for the automorphism group of a simple semigroup", true, [IsAutomorphismGroupOfSimpleSemigp], 0, 
 function(G)
 local S, iso, H, hom;

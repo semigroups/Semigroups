@@ -994,7 +994,7 @@ iter:=IteratorByFunctions( rec(
 	
 	for d_img in iter!.r do  
 		f:=RClassRepFromData(s, d_img);
-		d_ker:=InOrbitsOfKernels(s, f);
+		d_ker:=InOrbitsOfKernels(s, f); #use d_img here!! JDMJDM
 		if not d_ker[2] then #f not in existing D-class
 			d_ker:=AddToOrbitsOfKernels(s, f, d_ker[3], [OrbitsOfImages(s), O]);
 			iter!.i:=iter!.i+1;

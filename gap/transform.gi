@@ -115,6 +115,16 @@ else
 fi;
 end);
 
+#InstallMethod(Random, "for a trans. semigroup and a pos. int.",
+#[IsTransformationSemigroup, IsPosInt],
+#function(s, r)
+# JDM require IteratorOfGreensRClasses(s, r);
+#
+#
+
+
+
+
 #############################################################################
 # new for 4.0!
 
