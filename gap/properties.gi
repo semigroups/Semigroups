@@ -10,6 +10,7 @@
 ## $Id$
 ##
 
+
 ###########################################################################
 #JDM new method for 3.2! Check it's better and correct!
 
@@ -552,6 +553,59 @@ if Length(imgs[m])=1 then
 fi;
 
 return fail;
+end);
+
+# new for 4.0!
+#############################################################################
+
+InstallOtherMethod(SmallGeneratingSet, "for a trans. coll. and pos. int", 
+[IsTransformationCollection, IsPosInt], 
+function(coll, bound)
+local n, a, g, s, i;
+
+n:=DegreeOfTransformation(coll[1]);
+
+Info(InfoMonoidProperties, 3, "checking degrees of transformations in", 
+ " collection...");
+if not ForAll(coll, f-> Degree(f)=n) then 
+	Error("Usage: collection of transformations of equal degree");
+fi;
+
+Info(InfoMonoidProperties, 3, "sorting transformations by rank...");
+a:=ShallowCopy(coll);
+Sort(a, function(f,g) return Rank(f)>Rank(g) and f![1]>g![1]; end);
+
+if Rank(a[1])=n then 
+	Info(InfoMonoidProperties, 3, "finding small generating set for unit", 
+	" group...");
+	g:=Group(List(Filtered(a, f-> Rank(f)=n), AsPermutation));
+	s:=Semigroup(List(SmallGeneratingSet(g), f-> AsTransformation(f, n)));
+else
+	s:=Semigroup(a[1]);
+fi;
+
+i:=0;
+
+Info(InfoMonoidProperties, 3, "looping over elements...");
+
+while Size(s)<bound and i<Length(coll) do 
+	i:=i+1;
+	if not a[i] in s then 
+		s:=Semigroup(Concatenation(Generators(s), [a[i]]));
+	fi;
+od;
+
+return s;
+end);
+
+# new for 4.0!
+#############################################################################
+#
+
+InstallOtherMethod(SmallGeneratingSet, "for a trans. coll.", 
+[IsTransformationCollection], 
+function(coll)
+return SmallGeneratingSet(coll, Degree(coll[1])^Degree(coll[1]));
 end);
 
 #############################################################################

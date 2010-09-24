@@ -47,6 +47,16 @@ function(r1, r2)
 return r1!.parent=r2!.parent and r1!.rep in r2;
 end);
 
+##
+#############################################################################
+
+InstallMethod( \=, "for trans. semigp. and trans. semigp.",
+[IsTransformationSemigroup, IsTransformationSemigroup],
+function(s1, s2)
+return ForAll(Generators(s1), x-> x in s2) and 
+ ForAll(Generators(s2), x-> x in s1);
+end);
+
 ## new for 4.0!
 #############################################################################
 ##  Algorithm E. 
@@ -1004,7 +1014,7 @@ else
 	
 	perms:=RClassPermsFromData(r!.parent, r!.data, r!.o),
 	
-	scc:=RClassSCC(r),
+	scc:=RClassSCC(r), #JDM better if this was just Length(scc)!
 	
 	at:=[1,0],
 	
@@ -1017,7 +1027,7 @@ else
 		return fail;
 	fi;
 
-	if iter!.at[2]<Length(iter!.schutz) then 
+	if iter!.at[2]<Length(iter!.schutz) then #JDM better if Length(schutz) stored!
 		iter!.at[2]:=iter!.at[2]+1;
 	else
 		iter!.at[1]:=iter!.at[1]+1; 

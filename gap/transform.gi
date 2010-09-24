@@ -13,11 +13,19 @@
 #new for 4.0!
 #############################################################################
 #
+InstallOtherMethod(Degree, "for a transformation", 
+[IsTransformation],
+function(f)
+return DegreeOfTransformation(f);
+end);
+
+#############################################################################
+#
 
 InstallOtherMethod(Rank, "for a transformation", 
 [IsTransformation],
 function(f)
-return Length(ImageSetOfTransformation(f));
+return RankOfTransformation(f);
 end);
 
 
@@ -493,9 +501,9 @@ end);
 ##	<#/GAPDoc>
 ##	</Description>
 
-##	JDM replaces PermRepTrans
+##	JDM replaces PermRepTrans, should be removed!
 
-InstallMethod(AsPermOfRange, "for a transformation", true, [IsTransformation], 0,
+InstallMethod(AsPermOfRange, "for a transformation",  [IsTransformation],
 function(f)
 local p, img, t;
 
@@ -515,6 +523,24 @@ fi;
 return p;
 
 end);
+
+###########################################################################
+#
+
+InstallMethod(AsPermutation, "for a transformation", 
+[IsTransformation], 
+function(f)
+local a;
+
+a:=f![1]{ImageSetOfTransformation(f)};
+
+if Length(a)=Length(f![1]) then 
+	return MappingPermListList(ImageSetOfTransformation(f), a);
+fi;
+
+return fail;
+end);
+
 
 ###########################################################################
 ##
