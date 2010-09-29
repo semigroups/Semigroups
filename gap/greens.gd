@@ -911,6 +911,13 @@ DeclareAttribute("GreensLClassRepsData", IsTransformationSemigroup);
 DeclareProperty("IsOrbitsOfImages", IsObject);
 DeclareProperty("IsOrbitsOfKernels", IsObject);
 
+DeclareProperty("IsMonoidPkgImgKerOrbit", IsOrbit);
+
+DeclareGlobalFunction("ClosureSemigroupNC");
+DeclareGlobalFunction("ClosureSemigroup");
+DeclareGlobalFunction("AddGeneratorsToOrbitsOfImages");
+
+
 # probably get rid of the following...
 
 #DeclareAttribute("IsGlobalDClass", IsGreensDClass);

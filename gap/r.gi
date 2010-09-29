@@ -80,7 +80,7 @@ fi;
 
 d:=r!.data;
 s:=r!.parent;
-o:=r!.o[d[1]][d[2]];
+o:=r!.o!.orbits[d[1]][d[2]];
 
 i:= Position(o, ImageSetOfTransformation(f));
 
@@ -144,6 +144,80 @@ until IsDoneIterator(iter);
 
 return false;
 end);
+
+#############################################################################
+# O <- old orbits, gens <- new generators
+
+InstallGlobalFunction(AddGeneratorsToOrbitsOfImages, 
+function(O, gens)
+local o, scc, oldnew, r, m, pos, old_reps, ht, reps, a, b, c, d, data,
+tmp;
+
+o:=StructuralCopy(O);
+AddGeneratorsToOrbit(o, gens);
+gens:=o!.gens;
+
+Unbind(o!.truth); Unbind(o!.trees);
+Unbind(o!.reps); 
+o!.schutz:=List([1..Length(O!.scc)], x-> []);
+o!.reps:=List([1..Length(O!.scc)], x-> []);
+o!.kernels_ht:=EmptyPlist(Length(O!.scc));
+o!.perms:=EmptyPlist(Length(o));
+
+if Length(O!.scc)>1 or Length(o)>Length(O) then 
+	scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(
+	 OrbitGraphAsSets(o)), Set));;
+	oldnew:=List(O!.scc, x-> PositionProperty(scc, y-> x[1] in y));
+	scc:=scc{Set(oldnew)};
+else
+	oldnew:=[1];
+	scc:=StructuralCopy(O!.scc);
+fi;
+
+r:=Length(scc);
+o!.scc:=scc;
+
+o!.truth:=List([1..r], i-> BlistList([1..Length(o)], scc[i]));
+o!.trees:=List([1..r], x-> CreateSchreierTreeOfSCC(o,x));
+
+
+for m in [1..r] do 
+  pos:=Positions(oldnew, m);
+  if not pos=[] then #scc is a union of old scc's
+		old_reps:=StructuralCopy(O!.reps{pos});
+		ht:=StructuralCopy(O!.kernels_ht[pos[1]]);
+		o!.kernels_ht[m]:=ht;
+		o!.reps[m]:=List(old_reps[1], x->[x[1]]);
+		data:=[List([1..Length(old_reps[1])], val-> 
+		 [Length(o[1]), , 1, m, val, 1])];
+		o!.perms:=o!.perms+MultipliersOfSCCOfImageOrbit(gens, o, m);
+		#JDM use old perms as far as possible!
+		o!.schutz[m]:=SchutzGpOfImageOrbit(gens, o, o!.reps[m][1][1], m);
+		#reuse old schutz gp! JDM
+		
+		tmp:=rec(orbits:=[[o]], gens:=gens, data:=data);
+		
+		for a in [1..Length(pos)] do
+			for b in [1..Length(old_reps[a])] do
+				for c in [1..Length(old_reps[a][b])] do  
+					d:=InOrbitsOfImages(fail, old_reps[a][b][c], [[o]], 
+					 [1, 1, O!.scc[pos[a]][1], m, fail, 0]);
+					if not d[1] then
+						AddToOrbitsOfImages(fail, old_reps[a][b][c], tmp, d[2]); 
+					fi;
+				od;
+			od;
+		od;
+	else #new points in the orbit!
+		#do as in ForwardOrbitOfImages
+	fi;
+	
+od;
+
+return [o, tmp!.data];
+
+end);
+
 
 #############################################################################
 # s <- semigroup or d-class; f <- transformation; o <- OrbitsOfImages(s); 
@@ -269,6 +343,99 @@ InstallOtherMethod(AsSSortedList, "for R-class of trans. semigp.",
 function(r)
 Info(InfoMonoidGreens, 4, "AsSSortedList: for an R-class");
 return ConstantTimeAccessList(EnumeratorSorted(r));
+end);
+
+# new for 4.0!
+#############################################################################
+# this should be properly installed and tested!! JDM
+
+InstallGlobalFunction(ClosureSemigroupNC,
+function(s, new)
+local t, o_s, o_t, j, n, orbits, gens, i, k, type, data, ht, val, g, h, f, l, d;
+
+if IsTransformationMonoid(s) then 
+	t:=Monoid(Concatenation(Generators(s), new));
+else
+	t:=Semigroup(Concatenation(Generators(s), new));
+fi;
+
+# initialize the R-class reps orbit!
+###############################################################################
+
+ht:= HTCreate(new[1]);;
+
+for f in new do 
+	HTAdd(ht, f, true);
+od;
+
+o_s:=OrbitsOfImages(s);
+ht!.o:= Concatenation([o_s!.one], new); 
+
+for i in [1..Length(o_s!.ht!.o)] do
+	g:=o_s!.ht!.o[i];
+	if i>o_s!.at then 
+		val:=HTValue(ht, g);
+		if val=fail then 
+			HTAdd(ht, g, true);
+			ht!.o[Length(ht!.o)+1]:=g;
+		fi;
+	fi;
+
+	for f in new do  
+		h:=f*g;
+		val:=HTValue(ht, h);
+		if val=fail then 
+			HTAdd(ht, h, true);
+			ht!.o[Length(ht!.o)+1]:=h;
+		fi;
+	od;
+od;
+
+###############################################################################
+
+n:=o_s!.deg;
+
+o_t:= Objectify(NewType(FamilyObj(s), IsOrbitsOfImages), 
+rec( finished:=false,
+     orbits:=EmptyPlist(n), 
+     at:=0, 
+     gens:=Generators(t),
+     s:=t,
+     deg := n, 
+     one := o_s!.one,
+     ht:=ht,
+     data:=EmptyPlist(Length(o_s!.data)), 
+));
+
+SetOrbitsOfImages(t, o_t);
+
+###############################################################################
+
+j:=Maximum(List(new, Rank));
+orbits:=o_t!.orbits;
+data:=o_t!.data;
+
+for i in [n,n-1..1] do 
+	if IsBound(o_s!.orbits[i]) then 
+		if i>j then 
+			orbits[i]:=StructuralCopy(o_s!.orbits[i]);
+			#something with data!
+		else
+			orbits[i]:=[];
+			for k in [1..Length(o_s!.orbits[i])] do 
+				l:=AddGeneratorsToOrbitsOfImages(o_s!.orbits[i][k], new);
+				orbits[i][k]:=l[1];
+				for d in l[2] do 
+					d[2]:=k;
+				od;
+				Append(data, l[2]);
+			od;
+		fi;
+	fi;
+od;
+
+return t;
+
 end);
 
 # new for 4.0!
@@ -604,8 +771,8 @@ o:=Orb(s, img, OnSets, rec(
 				gradingfunc := function(o,x) return Length(x); end, 
 				orbitgraph := true, 
 				onlygrades:=[j], 
-				storenumbers:=true));
-
+				storenumbers:=true, log:=true)); 
+SetIsMonoidPkgImgKerOrbit(o, true);
 Enumerate(o, bound);
 	
 #strongly connected components
@@ -639,7 +806,7 @@ o!.kernels_ht:=List([1..r], m->
 
 #calculate the multipliers for all scc's 
 o!.perms:=EmptyPlist(Length(o));
-for i in [1..Length(scc)] do 
+for i in [1..r] do 
 	o!.perms:=o!.perms+MultipliersOfSCCOfImageOrbit(gens, o, i);
 od;
 
@@ -1179,6 +1346,7 @@ iter:=IteratorByFunctions( rec(
 		d:=InOrbitsOfImages(s, x, orbits, []);
 
 		if not d[1] then #new rep!
+			#Error("");
 			if IsTransformationMonoid(s) or not i = 1 then 
 				d:=AddToOrbitsOfImages(s, x, O, d[2]);
 				d[3]:=1;
@@ -1396,9 +1564,15 @@ end);
 InstallMethod(ParentAttr, "for a R-class of a trans. semigroup", 
 [IsGreensRClass and IsGreensClassOfTransSemigp], x-> x!.parent);
 
+# new for 4.0!
+############################################################################
+
+
 InstallMethod(PrintObj, [IsOrbitsOfImages], 
 function(o)
-Print("<orbits of images>");
+Print("<orbits of images; at ", o!.at, " of ", Length(o!.ht!.o), "; ", 
+SizeOrbitsOfImages(o!.s), " elements; ", NrRClassesOrbitsOfImages(o!.s), 
+" R-classes>");
 end);
 
 
@@ -1804,6 +1978,39 @@ function( obj )
 Print( "GreensRClassData( ", obj!.rep, ", ", obj!.strongorb,", ", obj!.perms,
 ", ", obj!.schutz, " )" );
 end );
+
+#############################################################################
+# 
+
+InstallMethod( ViewObj, "for a monoid pkg img ker orbit",
+[IsMonoidPkgImgKerOrbit],
+function( o )
+
+Print("<");
+if IsClosed(o) then 
+	Print("closed "); 
+else 
+	Print("open "); 
+fi;
+
+if IsPosInt(o[1][1]) then 
+	Print("image "); 
+else 
+	Print("kernel ");
+fi;
+
+Print("orbit, ", Length(o!.orbit), " points"); 
+if IsBound(o!.reps) then 
+	Print("; ");
+	Print(Length(o!.scc), " scc; ");
+	Print(Sum(List(o!.reps, Length)), " kernels; ");
+	Print(Sum(Concatenation(List(o!.reps, x-> List(x, Length)))), " reps>");
+else
+	Print(">");
+fi;
+
+end );
+
 
 #############################################################################
 # DELETE!

@@ -1,13 +1,15 @@
 
-InstallMethod(IsomorphismTransformationSemigroup, "for a perm. group", 
-[IsPermGroup],
-function(g)
-local dom;
-dom:=[1..LargestMovedPoint(g)];
-return Semigroup(List(GeneratorsOfGroup(g), x-> 
- TransformationNC(OnTuples(dom, x))));
-# JDM could add more of the info known about g here!
+InstallOtherMethod(IsomorphismTransformationSemigroup, "for a perm. gp and pos. int", 
+[IsPermGroup, IsPosInt],
+function(g, n)
 
+if not IsTrivial(g) then 
+	return Semigroup(List(GeneratorsOfGroup(g), x-> 
+ 	AsTransformation(x,n)));
+# JDM could add more of the info known about g here!
+fi;
+
+return Semigroup(AsTransformation((), n));
 end);
 
 ###########################################################################

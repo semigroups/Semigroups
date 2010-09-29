@@ -216,3 +216,17 @@ gap> GeneratorsOfSemigroup(s);
   Transformation( [ 7, 5, 2, 4, 3, 7, 3 ] ), Transformation( [ 7, 5, 5, 4, 6, 6, 5 ] ), 
   Transformation( [ 7, 5, 7, 6, 7, 2, 5 ] ), Transformation( [ 7, 6, 6, 3, 5, 1, 1 ] ), 
   Transformation( [ 7, 6, 7, 3, 6, 6, 4 ] ), Transformation( [ 7, 7, 2, 2, 2, 3, 6 ] ) ]
+
+
+s:=Semigroup( [Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
+  Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ), 
+  Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ), 
+  Transformation( [ 4, 3, 4, 5, 6, 4, 1, 2 ] )]);;
+ExpandOrbitsOfImages(s);
+f:=Transformation([3,3,4,5,5,5,8,8]);;
+t:=ClosureSemigroupNC(s, [f]);
+
+
+
+
+
