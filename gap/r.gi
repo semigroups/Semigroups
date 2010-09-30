@@ -149,10 +149,10 @@ end);
 # O <- old orbits, gens <- new generators
 
 InstallGlobalFunction(AddGeneratorsToOrbitsOfImages, 
-function(O, gens)
-local o, scc, oldnew, r, m, pos, old_reps, ht, reps, a, b, c, d, data,
-tmp;
+function(s, t, gens, j, k)
+local O, o, filt, scc, r, m, old_scc, old_reps, ht, data, n, d, i;
 
+O:=RClassImageOrbitFromData(s, [j,k]);
 o:=StructuralCopy(O);
 AddGeneratorsToOrbit(o, gens);
 gens:=o!.gens;
@@ -164,13 +164,14 @@ o!.reps:=List([1..Length(O!.scc)], x-> []);
 o!.kernels_ht:=EmptyPlist(Length(O!.scc));
 o!.perms:=EmptyPlist(Length(o));
 
+filt:=function(o, scc) return not ForAny(OrbitsOfImages(t)!.orbits[j],
+ x-> o[scc[1]] in x); end;
+
 if Length(O!.scc)>1 or Length(o)>Length(O) then 
 	scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(
 	 OrbitGraphAsSets(o)), Set));;
-	oldnew:=List(O!.scc, x-> PositionProperty(scc, y-> x[1] in y));
-	scc:=scc{Set(oldnew)};
+	scc:=Filtered(scc, x-> filt(o,x));
 else
-	oldnew:=[1];
 	scc:=StructuralCopy(O!.scc);
 fi;
 
@@ -180,42 +181,47 @@ o!.scc:=scc;
 o!.truth:=List([1..r], i-> BlistList([1..Length(o)], scc[i]));
 o!.trees:=List([1..r], x-> CreateSchreierTreeOfSCC(o,x));
 
+OrbitsOfImages(t)!.orbits[j][k]:=o;
 
 for m in [1..r] do 
-  pos:=Positions(oldnew, m);
-  if not pos=[] then #scc is a union of old scc's
-		old_reps:=StructuralCopy(O!.reps{pos});
-		ht:=StructuralCopy(O!.kernels_ht[pos[1]]);
+  old_scc:=Filtered([1..Length(O!.scc)], i-> O!.scc[i][1] in scc[m]);
+  if not old_scc=[] then #scc is a union of old scc's
+		old_reps:=StructuralCopy(O!.reps{old_scc});
+		ht:=StructuralCopy(O!.kernels_ht[old_scc[1]]);
 		o!.kernels_ht[m]:=ht;
 		o!.reps[m]:=List(old_reps[1], x->[x[1]]);
-		data:=[List([1..Length(old_reps[1])], val-> 
-		 [Length(o[1]), , 1, m, val, 1])];
+		data:=List([1..Length(old_reps[1])], val-> [j, k, 1, m, val, 1]);
 		o!.perms:=o!.perms+MultipliersOfSCCOfImageOrbit(gens, o, m);
 		#JDM use old perms as far as possible!
 		o!.schutz[m]:=SchutzGpOfImageOrbit(gens, o, o!.reps[m][1][1], m);
 		#reuse old schutz gp! JDM
 		
-		tmp:=rec(orbits:=[[o]], gens:=gens, data:=data);
+		OrbitsOfImages(t)!.data:=Concatenation(OrbitsOfImages(t)!.data, data);
 		
-		for a in [1..Length(pos)] do
-			for b in [1..Length(old_reps[a])] do
-				for c in [1..Length(old_reps[a][b])] do  
-					d:=InOrbitsOfImages(fail, old_reps[a][b][c], [[o]], 
-					 [1, 1, O!.scc[pos[a]][1], m, fail, 0]);
-					if not d[1] then
-						AddToOrbitsOfImages(fail, old_reps[a][b][c], tmp, d[2]); 
-					fi;
-				od;
+		old_reps:=List(old_reps, Concatenation);
+		
+		for i in [1..Length(old_scc)] do
+			for n in [1..Length(old_reps[i])] do 
+				d:=InOrbitsOfImages(t, old_reps[i][n], OrbitsOfImages(t)!.orbits, 
+				  [j, k, O!.scc[old_scc[i]][1], m, fail, 0]); 
+				if not d[1] then
+					AddToOrbitsOfImages(t, old_reps[i][n], OrbitsOfImages(t), d[2]); 
+				fi;
 			od;
 		od;
 	else #new points in the orbit!
-		#do as in ForwardOrbitOfImages
+		o!.reps[m]:=[[o!.reps[1][1][1]*EvaluateWord(gens, 
+		 TraceSchreierTreeForward(o, scc[m][1]))]];
+		o!.kernels_ht[m]:=HashTableForKernels(
+		 KernelOfTransformation(o!.reps[m][1][1]));
+		o!.perms:=o!.perms+MultipliersOfSCCOfImageOrbit(gens, o, m);
+		o!.schutz[m]:=SchutzGpOfImageOrbit(gens, o, o!.reps[m][1][1], m);
+		
+		OrbitsOfImages(t)!.data[Length(OrbitsOfImages(t)!.data)+1]:=[j,k,1,m,1,1];
 	fi;
-	
 od;
 
-return [o, tmp!.data];
-
+return true;
 end);
 
 
@@ -351,7 +357,8 @@ end);
 
 InstallGlobalFunction(ClosureSemigroupNC,
 function(s, new)
-local t, o_s, o_t, j, n, orbits, gens, i, k, type, data, ht, val, g, h, f, l, d;
+local t, o_s, o_t, j, n, orbits, gens, i, k, type, data, ht, val, g, h, f, l, 
+ o, d;
 
 if IsTransformationMonoid(s) then 
 	t:=Monoid(Concatenation(Generators(s), new));
@@ -362,40 +369,31 @@ fi;
 # initialize the R-class reps orbit!
 ###############################################################################
 
+o_s:=OrbitsOfImages(s);
 ht:= HTCreate(new[1]);;
+HTAdd(ht, o_s!.one, true);
 
 for f in new do 
 	HTAdd(ht, f, true);
 od;
 
-o_s:=OrbitsOfImages(s);
+
 ht!.o:= Concatenation([o_s!.one], new); 
 
-for i in [1..Length(o_s!.ht!.o)] do
+for i in [o_s!.at+1..Length(o_s!.ht!.o)] do 
 	g:=o_s!.ht!.o[i];
-	if i>o_s!.at then 
-		val:=HTValue(ht, g);
-		if val=fail then 
-			HTAdd(ht, g, true);
-			ht!.o[Length(ht!.o)+1]:=g;
-		fi;
+	val:=HTValue(ht, g);
+	if val=fail then 
+		HTAdd(ht, g, true);
+		ht!.o[Length(ht!.o)+1]:=g;
 	fi;
-
-	for f in new do  
-		h:=f*g;
-		val:=HTValue(ht, h);
-		if val=fail then 
-			HTAdd(ht, h, true);
-			ht!.o[Length(ht!.o)+1]:=h;
-		fi;
-	od;
 od;
 
 ###############################################################################
 
 n:=o_s!.deg;
 
-o_t:= Objectify(NewType(FamilyObj(s), IsOrbitsOfImages), 
+o_t:= Objectify(NewType(FamilyObj(t), IsOrbitsOfImages), 
 rec( finished:=false,
      orbits:=EmptyPlist(n), 
      at:=0, 
@@ -419,19 +417,28 @@ for i in [n,n-1..1] do
 	if IsBound(o_s!.orbits[i]) then 
 		if i>j then 
 			orbits[i]:=StructuralCopy(o_s!.orbits[i]);
-			#something with data!
+			Append(data, RClassRepsDataFromOrbits(orbits[i], i));
+			#JDM could avoid using RClassRepsDataFromOrbits
+			# if the data was stored in the orbits when created. 
 		else
 			orbits[i]:=[];
 			for k in [1..Length(o_s!.orbits[i])] do 
-				l:=AddGeneratorsToOrbitsOfImages(o_s!.orbits[i][k], new);
-				orbits[i][k]:=l[1];
-				for d in l[2] do 
-					d[2]:=k;
-				od;
-				Append(data, l[2]);
+				AddGeneratorsToOrbitsOfImages(s, t, new, i, k);
 			od;
 		fi;
 	fi;
+od;
+
+for g in o_t!.data do
+	g:=RClassRepFromData(t, g);
+	for f in new do  
+		h:=f*g;
+		val:=HTValue(ht, h);
+		if val=fail then 
+			HTAdd(ht, h, true);
+			ht!.o[Length(ht!.o)+1]:=h;
+		fi;
+	od;
 od;
 
 return t;
@@ -720,7 +727,7 @@ o:=OrbitsOfImages(s);
 
 if not o!.finished then 
 	iter:=IteratorOfRClassRepsData(s);
-	iter!.i:=Length(o!.data); 
+	iter!.i:=Length(o!.data); #JDM substitute new function here!
 	# avoids running through those already found.
 	for i in iter do od;
 fi;
@@ -990,6 +997,7 @@ end);
 InstallGlobalFunction(InOrbitsOfImages, 
 function(arg)
 local img, j, k, l, m, val, n, g, schutz, t, reps, s, O, f;
+
 
 s:=arg[1]; f:=arg[2]; j:=fail;
 k:=fail; l:=fail; m:=fail; val:=fail; n:=0; g:=fail;
@@ -1697,6 +1705,28 @@ return o!.reps[d[4]][d[5]][d[6]];
 end);
 
 # RClassRep = Representative!
+
+############################################################################
+
+RClassRepsDataFromOrbits:=function(O, j)
+local data, k, m, val, n;
+
+data:=[];
+
+for k in [1..Length(O)] do 
+	for m in [1..Length(O[k]!.scc)] do 
+		for val in [1..Length(O[k]!.reps[m])] do 
+			for n in [1..Length(O[k]!.reps[m][val])] do 
+				data[Length(data)+1]:=[j,k,1,m, val,n];
+			od;
+		od;
+	od;
+od;
+
+return data;
+
+end;
+
 
 # new for 4.0!
 ############################################################################
