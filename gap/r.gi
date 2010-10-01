@@ -146,21 +146,23 @@ return false;
 end);
 
 #############################################################################
-# O <- old orbits, gens <- new generators
+# s <- old semigroup, t <- new semigroup, new <- new generators,
+# j, k from O[j][k]
+
+
 
 InstallGlobalFunction(AddGeneratorsToOrbitsOfImages, 
-function(s, t, gens, j, k)
-local O, o, filt, scc, r, m, old_scc, old_reps, ht, data, n, d, i;
+function(s, t, new, j, k)
+local O, o, filt, scc, r, m, old_scc, old_reps, ht, data, n, d, i, f, y, z, oo,
+ o_t, val, l, reps, gens, g, h, kernels_ht;
 
 O:=RClassImageOrbitFromData(s, [j,k]);
 o:=StructuralCopy(O);
-AddGeneratorsToOrbit(o, gens);
+AddGeneratorsToOrbit(o, new);
 gens:=o!.gens;
 
 Unbind(o!.truth); Unbind(o!.trees);
 Unbind(o!.reps); 
-o!.schutz:=List([1..Length(O!.scc)], x-> []);
-o!.reps:=List([1..Length(O!.scc)], x-> []);
 o!.kernels_ht:=EmptyPlist(Length(O!.scc));
 o!.perms:=EmptyPlist(Length(o));
 
@@ -176,48 +178,110 @@ else
 fi;
 
 r:=Length(scc);
+o!.schutz:=List([1..r], x-> []);
+o!.reps:=List([1..r], x-> []);
 o!.scc:=scc;
 
 o!.truth:=List([1..r], i-> BlistList([1..Length(o)], scc[i]));
 o!.trees:=List([1..r], x-> CreateSchreierTreeOfSCC(o,x));
 
 OrbitsOfImages(t)!.orbits[j][k]:=o;
+ht:=OrbitsOfImages(t)!.ht;
+data:=OrbitsOfImages(t)!.data;
 
 for m in [1..r] do 
   old_scc:=Filtered([1..Length(O!.scc)], i-> O!.scc[i][1] in scc[m]);
+
   if not old_scc=[] then #scc is a union of old scc's
 		old_reps:=StructuralCopy(O!.reps{old_scc});
-		ht:=StructuralCopy(O!.kernels_ht[old_scc[1]]);
-		o!.kernels_ht[m]:=ht;
-		o!.reps[m]:=List(old_reps[1], x->[x[1]]);
-		data:=List([1..Length(old_reps[1])], val-> [j, k, 1, m, val, 1]);
+		#Sort(old_reps, function(x,y) return Sum(List(x), Length)>Sum(List(y), 
+		# Length); end);
+		kernels_ht:=StructuralCopy(O!.kernels_ht[old_scc[1]]);
+		o!.kernels_ht[m]:=kernels_ht;
+		data:=Concatenation(data, List([1..Length(old_reps[1])], val-> 
+		 [j, k, 1, m, val, 1]));
+		
 		o!.perms:=o!.perms+MultipliersOfSCCOfImageOrbit(gens, o, m);
 		#JDM use old perms as far as possible!
-		o!.schutz[m]:=SchutzGpOfImageOrbit(gens, o, o!.reps[m][1][1], m);
-		#reuse old schutz gp! JDM
+		o!.schutz[m]:=SchutzGpOfImageOrbit(gens, o, old_reps[1][1][1], m);
+		#reuse old schutz gp! JDM prev.line was o!.reps[m][1][1]
 		
-		OrbitsOfImages(t)!.data:=Concatenation(OrbitsOfImages(t)!.data, data);
+		if Size(o!.schutz[m][2])=Size(O!.schutz[old_scc[1]][2]) then 
+			o!.reps[m]:=old_reps[1];
+			old_reps:=old_reps{[2..Length(old_reps)]};
+		else
+			#o!.reps[m]:=List(old_reps[1], x->[x[1]]);
+			for f in old_reps[1] do 
+				o!.reps[m][Length(o!.reps[m])+1]:=[f[1]];
+				Unbind(f[1]);
+			od;
+		fi;
 		
-		old_reps:=List(old_reps, Concatenation);
-		
-		for i in [1..Length(old_scc)] do
-			for n in [1..Length(old_reps[i])] do 
-				d:=InOrbitsOfImages(t, old_reps[i][n], OrbitsOfImages(t)!.orbits, 
-				  [j, k, O!.scc[old_scc[i]][1], m, fail, 0]); 
-				if not d[1] then
-					AddToOrbitsOfImages(t, old_reps[i][n], OrbitsOfImages(t), d[2]); 
+		for f in Concatenation(o!.reps[m]) do 
+			for g in new do  
+				h:=g*f;
+				val:=HTValue(ht, h);
+				if val=fail then 
+					HTAdd(ht, h, true);
+					ht!.o[Length(ht!.o)+1]:=h;
 				fi;
 			od;
 		od;
-	else #new points in the orbit!
-		o!.reps[m]:=[[o!.reps[1][1][1]*EvaluateWord(gens, 
-		 TraceSchreierTreeForward(o, scc[m][1]))]];
-		o!.kernels_ht[m]:=HashTableForKernels(
-		 KernelOfTransformation(o!.reps[m][1][1]));
-		o!.perms:=o!.perms+MultipliersOfSCCOfImageOrbit(gens, o, m);
-		o!.schutz[m]:=SchutzGpOfImageOrbit(gens, o, o!.reps[m][1][1], m);
 		
-		OrbitsOfImages(t)!.data[Length(OrbitsOfImages(t)!.data)+1]:=[j,k,1,m,1,1];
+		if not old_reps=[] then 
+			old_reps:=List(old_reps, Concatenation); 
+			o_t:=OrbitsOfImages(t)!.orbits;
+			
+			for i in [1..Length(old_reps)] do
+				for n in [1..Length(old_reps[i])] do 
+					l:=O!.scc[old_scc[i]][1];
+					f:=old_reps[i][n];
+					d:=InOrbitsOfImages(t, f, o_t, [j, k, l, m, fail, 0]); 
+					if not d[1] then #AddToOrbitsOfImages
+						val:=d[2][5]; n:=d[2][6]; reps:=o!.reps[m];
+						if not val=fail then #old kernel
+							reps[val][n+1]:=f;
+							data[Length(data)+1]:=[j, k, l, m, val, n+1];
+						else #new kernel
+							val:=Length(reps)+1;
+							reps[val]:=[f];
+							data[Length(data)+1]:=[j, k, l, m, val, 1];
+							HTAdd(kernels_ht, KernelOfTransformation( f ), val);
+						fi;
+						
+						for g in new do  
+							h:=g*f;
+							val:=HTValue(ht, h);
+							if val=fail then 
+								HTAdd(ht, h, true);
+								ht!.o[Length(ht!.o)+1]:=h;
+							fi;
+						od;
+					fi;
+				od;
+			od;
+		fi;
+	else #new points in the orbit!
+		f:=o!.reps[1][1][1]*EvaluateWord(gens, 
+		 TraceSchreierTreeForward(o, scc[m][1]));
+		o!.reps[m]:=[[f]];
+		o!.kernels_ht[m]:=HashTableForKernels(
+		 KernelOfTransformation(f));
+		o!.perms:=o!.perms+MultipliersOfSCCOfImageOrbit(gens, o, m);
+		o!.schutz[m]:=SchutzGpOfImageOrbit(gens, o, f, m);
+
+		#install descendants of f in OrbitsOfImages(t)!.ht
+		ht:=OrbitsOfImages(t)!.ht; oo:=ht!.o;
+		for y in [1..Length(gens)] do
+			z:=gens[y]*f;
+			if HTValue(ht, z)=fail then 
+				HTAdd(ht, z, true);
+				oo[Length(oo)+1]:=z;
+				#schreier words here JDM
+			fi;
+		od;
+
+		data[Length(data)+1]:=[j,k,1,m,1,1];
 	fi;
 od;
 
@@ -427,18 +491,6 @@ for i in [n,n-1..1] do
 			od;
 		fi;
 	fi;
-od;
-
-for g in o_t!.data do
-	g:=RClassRepFromData(t, g);
-	for f in new do  
-		h:=f*g;
-		val:=HTValue(ht, h);
-		if val=fail then 
-			HTAdd(ht, h, true);
-			ht!.o[Length(ht!.o)+1]:=h;
-		fi;
-	od;
 od;
 
 return t;
