@@ -373,3 +373,6 @@ gap> t:=Range(IsomorphismTransformationSemigroup(s));
 gap> IsCompletelySimpleSemigroup(t);
 true
 gap> STOP_TEST( "properties.tst 3.1.4", 10000);
+
+
+

@@ -110,7 +110,7 @@ if HasAsSSortedList(s) then
 	return f in AsSSortedList(s);
 fi;
 
-gens:=GeneratorsOfSemigroup(s);
+gens:=Generators(s);
 
 if not DegreeOfTransformation(f) = DegreeOfTransformation(gens[1]) then 
 	return false;
@@ -149,16 +149,23 @@ end);
 # s <- old semigroup, t <- new semigroup, new <- new generators,
 # j, k from O[j][k]
 
-
+# JDM clean the following up! It's an extra mess due to the fact you can't make
+# structural copies of hash tables!
 
 InstallGlobalFunction(AddGeneratorsToOrbitsOfImages, 
 function(s, t, new, j, k)
 local O, o, filt, scc, r, m, old_scc, old_reps, ht, data, n, d, i, f, y, z, oo,
- o_t, val, l, reps, gens, g, h, kernels_ht;
+ o_t, val, l, reps, gens, g, h, kernels_ht, max;
 
 O:=RClassImageOrbitFromData(s, [j,k]);
 o:=StructuralCopy(O);
+o!.ht:=HashTableForImage(o[1]);
+for i in [1..Length(O)] do 
+	HTAdd(o!.ht, O[i], i);
+od;
+
 AddGeneratorsToOrbit(o, new);
+
 gens:=o!.gens;
 
 Unbind(o!.truth); Unbind(o!.trees);
@@ -183,7 +190,7 @@ o!.reps:=List([1..r], x-> []);
 o!.scc:=scc;
 
 o!.truth:=List([1..r], i-> BlistList([1..Length(o)], scc[i]));
-o!.trees:=List([1..r], x-> CreateSchreierTreeOfSCC(o,x));
+o!.trees:=List([1..r], x-> CreateSchreierTreeOfSCC(o, x));
 
 OrbitsOfImages(t)!.orbits[j][k]:=o;
 ht:=OrbitsOfImages(t)!.ht;
@@ -192,28 +199,40 @@ data:=OrbitsOfImages(t)!.data;
 for m in [1..r] do 
   old_scc:=Filtered([1..Length(O!.scc)], i-> O!.scc[i][1] in scc[m]);
 
-  if not old_scc=[] then #scc is a union of old scc's
+  if not old_scc=[] then #scc contains an old scc
 		old_reps:=StructuralCopy(O!.reps{old_scc});
-		#Sort(old_reps, function(x,y) return Sum(List(x), Length)>Sum(List(y), 
-		# Length); end);
-		kernels_ht:=StructuralCopy(O!.kernels_ht[old_scc[1]]);
+		max:=List(old_scc, m-> Length(O!.reps[m]));
+		max:=PositionProperty(old_scc, m-> Length(O!.reps[m])=Maximum(max));
+		
+		#kernels_ht:=O!.kernels_ht[old_scc[max]];
+		kernels_ht:=HashTableForKernels(KernelOfTransformation(
+		 old_reps[max][1][1]));
+		
+		for i in [1..Length(old_reps[max])] do 
+			HTAdd(kernels_ht, KernelOfTransformation(old_reps[max][i][1]), i);
+		od;
+
 		o!.kernels_ht[m]:=kernels_ht;
-		data:=Concatenation(data, List([1..Length(old_reps[1])], val-> 
-		 [j, k, 1, m, val, 1]));
+		data:=Concatenation(data, List([1..Length(old_reps[max])], val-> 
+		 [j, k, scc[m][1], m, val, 1]));
 		
 		o!.perms:=o!.perms+MultipliersOfSCCOfImageOrbit(gens, o, m);
 		#JDM use old perms as far as possible!
-		o!.schutz[m]:=SchutzGpOfImageOrbit(gens, o, old_reps[1][1][1], m);
+		for i in [1..Length(old_scc)] do 
+			old_reps[i]:=List(old_reps[i], x-> x*o!.perms[O!.scc[old_scc[i]][1]]);
+		od;
+		
+		#old_reps[max]:=List(old_reps[max], x-> x*o!.perms[O!.scc[old_scc[max]][1]]);
+		o!.schutz[m]:=SchutzGpOfImageOrbit(gens, o, old_reps[max][1][1], m);
 		#reuse old schutz gp! JDM prev.line was o!.reps[m][1][1]
 		
-		if Size(o!.schutz[m][2])=Size(O!.schutz[old_scc[1]][2]) then 
-			o!.reps[m]:=old_reps[1];
-			old_reps:=old_reps{[2..Length(old_reps)]};
+		if Size(o!.schutz[m][2])=Size(O!.schutz[old_scc[max]][2]) then 
+			o!.reps[m]:=old_reps[max];
+			old_reps:=old_reps{Concatenation([1..max-1], [max+1..Length(old_reps)])};
 		else
-			#o!.reps[m]:=List(old_reps[1], x->[x[1]]);
-			for f in old_reps[1] do 
-				o!.reps[m][Length(o!.reps[m])+1]:=[f[1]];
-				Unbind(f[1]);
+			for i in [1..Length(old_reps[max])] do 
+				o!.reps[m][Length(o!.reps[m])+1]:=[old_reps[max][i][1]];
+				old_reps[1][i]:=old_reps[max][i]{[2..Length(old_reps[max][i])]};
 			od;
 		fi;
 		
@@ -228,24 +247,24 @@ for m in [1..r] do
 			od;
 		od;
 		
-		if not old_reps=[] then 
-			old_reps:=List(old_reps, Concatenation); 
+		if not old_reps=[] and not o!.schutz[m]=true then 
+		
 			o_t:=OrbitsOfImages(t)!.orbits;
+			old_reps:=List(old_reps, Concatenation); 
 			
 			for i in [1..Length(old_reps)] do
 				for n in [1..Length(old_reps[i])] do 
-					l:=O!.scc[old_scc[i]][1];
 					f:=old_reps[i][n];
-					d:=InOrbitsOfImages(t, f, o_t, [j, k, l, m, fail, 0]); 
+					d:=InOrbitsOfImages(t, f, o_t, [j, k, scc[m][1], m, fail, 0]); 
 					if not d[1] then #AddToOrbitsOfImages
 						val:=d[2][5]; n:=d[2][6]; reps:=o!.reps[m];
 						if not val=fail then #old kernel
 							reps[val][n+1]:=f;
-							data[Length(data)+1]:=[j, k, l, m, val, n+1];
+							data[Length(data)+1]:=[j, k, scc[m][1], m, val, n+1];
 						else #new kernel
 							val:=Length(reps)+1;
 							reps[val]:=[f];
-							data[Length(data)+1]:=[j, k, l, m, val, 1];
+							data[Length(data)+1]:=[j, k, scc[m][1], m, val, 1];
 							HTAdd(kernels_ht, KernelOfTransformation( f ), val);
 						fi;
 						
@@ -281,7 +300,7 @@ for m in [1..r] do
 			fi;
 		od;
 
-		data[Length(data)+1]:=[j,k,1,m,1,1];
+		data[Length(data)+1]:=[j,k,scc[m][1],m,1,1];
 	fi;
 od;
 
@@ -298,7 +317,7 @@ end);
 InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, f, o, data)
 local j, k, l, m, val, n, g, O, one, gens, d, reps, schutz, img, scc, i, 
- oo, r, ht, y, z, out, deg, bound, treehashsize, filt;
+ oo, r, ht, y, z, out, deg, bound, treehashsize, images;
 
 j:=data[1]; 	# img size
 k:=data[2]; 	# index of orbit containing img
@@ -312,6 +331,7 @@ O := o!.orbits;  gens:=o!.gens; d:=o!.data;
 
 if IsBound(o!.ht) then #o = OrbitsOfImages(s)
 	one:=o!.one;
+	images:=o!.images; #JDM new!
 	ht:=o!.ht; o:=ht!.o;
 fi;
 
@@ -321,15 +341,20 @@ if k = fail then #new img and l, m, val, n, g=fail
 ################################################################################
 
 	if IsBound(O[j]) then 
-		filt:=function(o, scc) return not ForAny(O[j], x-> 
-			o[scc[1]] in x); end;
-		oo:=ForwardOrbitOfImage(s, f, filt, gens);
+		oo:=ForwardOrbitOfImage(s, f, images[j], gens);
 		Add(O[j], oo[1]);
 	else
-		oo:=ForwardOrbitOfImage(s, f, fail, gens);
+		images[j]:=HTCreate(ImageSetOfTransformation(f));
+		oo:=ForwardOrbitOfImage(s, f, images[j], gens);
 		O[j]:=[oo[1]];
 	fi;
 	
+	#JDM new!
+	for i in oo[1] do 
+		HTAdd(images[j], i, true);
+	od;
+	#JDM new ends
+
 	reps:=oo[2];
 	out:=[j, Length(O[j]), 1, 1, 1, 1];
 	
@@ -417,12 +442,25 @@ end);
 
 # new for 4.0!
 #############################################################################
+
+InstallGlobalFunction(ClosureSemigroup,
+function(s, new)
+return ClosureSemigroupNC(s, Filtered(new, x-> not x in s));
+end);
+
+# new for 4.0!
+#############################################################################
 # this should be properly installed and tested!! JDM
+# JDM clean this up!
 
 InstallGlobalFunction(ClosureSemigroupNC,
 function(s, new)
 local t, o_s, o_t, j, n, orbits, gens, i, k, type, data, ht, val, g, h, f, l, 
  o, d;
+
+if new=[] then 
+	return s;
+fi;
 
 if IsTransformationMonoid(s) then 
 	t:=Monoid(Concatenation(Generators(s), new));
@@ -440,7 +478,6 @@ HTAdd(ht, o_s!.one, true);
 for f in new do 
 	HTAdd(ht, f, true);
 od;
-
 
 ht!.o:= Concatenation([o_s!.one], new); 
 
@@ -460,6 +497,7 @@ n:=o_s!.deg;
 o_t:= Objectify(NewType(FamilyObj(t), IsOrbitsOfImages), 
 rec( finished:=false,
      orbits:=EmptyPlist(n), 
+     images:=EmptyPlist(n),
      at:=0, 
      gens:=Generators(t),
      s:=t,
@@ -778,9 +816,7 @@ Info(InfoMonoidGreens, 4, "ExpandOrbitsOfImages");
 o:=OrbitsOfImages(s);
 
 if not o!.finished then 
-	iter:=IteratorOfRClassRepsData(s);
-	iter!.i:=Length(o!.data); #JDM substitute new function here!
-	# avoids running through those already found.
+	iter:=IteratorOfNewRClassRepsData(s);
 	for i in iter do od;
 fi;
 
@@ -792,14 +828,14 @@ end);
 
 InstallGlobalFunction(ForwardOrbitOfImage, 
 function(arg)
-local s, f, filt, img, deg, j, bound, treehashsize, o, scc, r, reps, gens, i;
+local s, f, images, img, deg, j, bound, treehashsize, o, scc, r, reps, gens, i;
 
 s:=arg[1]; f:=arg[2];
 
 if Length(arg)>=3 then 
-	filt:=arg[3];
+	images:=arg[3];
 else
-	filt:=fail;
+	images:=fail;
 fi;
 
 if Length(arg)=4 then 
@@ -827,24 +863,26 @@ fi;
 o:=Orb(s, img, OnSets, rec(
 				treehashsize:=NextPrimeInt(Minimum(100000, treehashsize)), 
 				schreier:=true,
-				gradingfunc := function(o,x) return Length(x); end, 
+				gradingfunc := function(o,x) return [Length(x), x]; end, 
 				orbitgraph := true, 
-				onlygrades:=[j], 
-				storenumbers:=true, log:=true)); 
+				onlygrades:=function(x, y) 
+				return x[1]=j and (y=fail or HTValue(y, x[2])=fail); end,
+				onlygradesdata:=images,
+				storenumbers:=true, 
+				log:=true));
+
 SetIsMonoidPkgImgKerOrbit(o, true);
 Enumerate(o, bound);
 	
 #strongly connected components
-scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(List(OrbitGraph(o), 
-Set)), Set));;
-#JDM use OrbitGraphAsSets to simplify the previous line!
+scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)), Set));;
 
-if not filt=fail then 
+#if not filt=fail then 
 	#JDM put in the grading function of the orbit possible! 
 	# when running IteratorOfRClassRepsData we could benefit
 	# from adding the filt to the grading in the orbit.
-	scc:=Filtered(scc, x-> filt(o,x));
-fi;
+	#scc:=Filtered(scc, x-> filt(o,x));
+#fi;
 
 r:=Length(scc);
 o!.scc:=scc;
@@ -982,7 +1020,8 @@ Info(InfoMonoidGreens, 2, "transformation may not be an element of semigroup");
 n := DegreeOfTransformationSemigroup( s );
 j:=Length(ImageSetOfTransformation(f));
 o:=EmptyPlist(n);
-o[j]:=[ForwardOrbitOfImage(s, f, function(o, scc) return scc[1]=1; end)[1]];
+o[j]:=[ForwardOrbitOfImage(s, f, fail)[1]];
+# function(o, scc) return scc[1]=1; end
 
 o:=rec( finished:=false, orbits:=o, gens:=Generators(s), s:=s, 
  deg := n, data:=[]);
@@ -1048,8 +1087,7 @@ end);
 
 InstallGlobalFunction(InOrbitsOfImages, 
 function(arg)
-local img, j, k, l, m, val, n, g, schutz, t, reps, s, O, f;
-
+local img, j, k, l, m, val, n, g, schutz, t, reps, s, O, f, x;
 
 s:=arg[1]; f:=arg[2]; j:=fail;
 k:=fail; l:=fail; m:=fail; val:=fail; n:=0; g:=fail;
@@ -1596,25 +1634,29 @@ local gens, n, one, ht, i, type;
 gens:=Generators(s);
 n := DegreeOfTransformationSemigroup( s );
 one := TransformationNC( [ 1 .. n ] );
+
+# JDM ht and ht!.o should really be an Orb object.
 ht := HTCreate(one);
 HTAdd(ht, one, true);
 for i in gens do 
 	HTAdd(ht, i, true);
 od;
 ht!.o := Concatenation([one], gens); 
+# JDM 
 
 type:=NewType(FamilyObj(s), IsOrbitsOfImages);
 
 return Objectify(type, rec(
-  finished:=false,
-  orbits:=EmptyPlist(DegreeOfTransformationSemigroup(s)), 
+  finished:=false, 
+  orbits:=EmptyPlist(n), 
+  images:=EmptyPlist(n), 
   at:=0, 
   gens:=gens,
   s:=s,
 	deg := n,
 	one := one,
 	ht:=ht,
-	data:=[], 
+	data:=[]
 ));
 end);
 
@@ -1759,8 +1801,10 @@ end);
 # RClassRep = Representative!
 
 ############################################################################
+#JDM remove the following later!
 
-RClassRepsDataFromOrbits:=function(O, j)
+InstallGlobalFunction(RClassRepsDataFromOrbits,
+function(O, j)
 local data, k, m, val, n;
 
 data:=[];
@@ -1777,7 +1821,7 @@ od;
 
 return data;
 
-end;
+end);
 
 
 # new for 4.0!
@@ -2081,11 +2125,16 @@ else
 	Print("kernel ");
 fi;
 
-Print("orbit, ", Length(o!.orbit), " points"); 
-if IsBound(o!.reps) then 
-	Print("; ");
-	Print(Length(o!.scc), " scc; ");
-	Print(Sum(List(o!.reps, Length)), " kernels; ");
+Print("orbit ", Length(o!.orbit), " points"); 
+if IsBound(o!.reps) and IsPosInt(o[1][1]) then 
+	Print(", ");
+	Print(Length(o!.scc), " scc, ");
+	Print(Sum(List(o!.reps, Length)), " kernels, ");
+	Print(Sum(Concatenation(List(o!.reps, x-> List(x, Length)))), " reps>");
+elif IsBound(o!.reps) then 
+	Print(", ");
+	Print(Length(o!.scc), " scc, ");
+	Print(Sum(List(o!.reps, Length)), " images, ");
 	Print(Sum(Concatenation(List(o!.reps, x-> List(x, Length)))), " reps>");
 else
 	Print(">");

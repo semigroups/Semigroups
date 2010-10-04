@@ -44,7 +44,7 @@ s:=arg[1]; d:=arg[2];
 if Length(arg)=3 then 
 	return arg[3]!.orbits[d[1]][d[2]];
 else
-	return OrbitsOfImages(s)!.orbits[d[1]][d[2]];
+	return OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
 fi;
 
 end);

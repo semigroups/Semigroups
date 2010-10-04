@@ -90,3 +90,10 @@ d:=GreensDClassOfElement(s, f);;
 
 GreensRClassReps(d);;
 NrGreensRClasses(d);
+
+
+s:=EndomorphismSemigpOfCubeGraph(4);
+f:=Transformation( [ 8, 14, 13, 14, 13, 16, 16, 8, 16, 6, 16, 13, 13, 13, 13, 10 ] );
+
+d:=GreensDClassOfElementNC(s, f);
+

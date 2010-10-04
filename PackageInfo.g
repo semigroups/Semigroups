@@ -13,10 +13,10 @@
 SetPackageInfo( rec(
 PackageName := "MONOID",
 Subtitle := "Computing with transformation semigroups and monoids",
-Version := "3.1.dev",
+Version := "4.0",
 Date := "08/05/2010",
 ArchiveURL := 
-          "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/monoid/monoid3r1p4",
+          "http://tinyurl.com/monoid4/monoid3r1p4",
 ArchiveFormats := ".tar.gz .tar.bz2",
 Persons := [
   rec( 
@@ -25,7 +25,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "jdm3@st-and.ac.uk",
-    WWWHome       := "http://www-groups.mcs.st-and.ac.uk/~jamesm",
+    WWWHome       := "http://tinyurl.com/monoid4",
     PostalAddress := Concatenation( [
                        "Mathematical Institute,",
                        " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,", 
@@ -36,21 +36,21 @@ Persons := [
 Status := "deposited",
 
 README_URL := 
-  "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/monoid/README.txt",
+  "http://tinyurl.com/monoid4/README.txt",
 PackageInfoURL := 
-  "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/monoid/PackageInfo.g",
+  "http://tinyurl.com/monoid4/PackageInfo.g",
 
 AbstractHTML := Concatenation( 
   "The <span class=\"pkgname\">MONOID</span> package, is a ",
   "<span class=\"pkgname\">GAP</span>  package  for transformation", 
   "monoids and related objects."),
 
-PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/monoid",
+PackageWWWHome := "http://tinyurl.com/monoid4",
                
 PackageDoc := rec(
   BookName  := "MONOID",
   Archive := 
-      "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/monoid/",
+      "http://tinyurl.com/monoid4",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",  
@@ -61,10 +61,8 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.4.12",
-  NeededOtherPackages := [["orb", "3.4"]],
-  SuggestedOtherPackages := [["genss", "1.3"],
-  ["grape", ">=4.3"], ["gapdoc", ">=1.1"]], # JDM genss and grape will be removed 
-  # when autos are hived off
+  NeededOtherPackages := [["orb", "3.6"]],
+  SuggestedOtherPackages := [["gapdoc", ">=1.1"]], 
   ExternalConditions := []),
 AvailabilityTest := ReturnTrue,
 Autoload := false,

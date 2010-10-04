@@ -812,6 +812,10 @@ DeclareGlobalFunction("RClassSCC");
 
 DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
 
+#JDM remove the following later!
+DeclareGlobalFunction("RClassRepsDataFromOrbits");
+
+
 DeclareGlobalFunction("LClassRepFromData");
 DeclareGlobalFunction("LClassKernelOrbitFromData");
 DeclareGlobalFunction("LClassSchutzGpFromData");

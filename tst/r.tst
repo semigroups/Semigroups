@@ -217,16 +217,43 @@ gap> GeneratorsOfSemigroup(s);
   Transformation( [ 7, 5, 7, 6, 7, 2, 5 ] ), Transformation( [ 7, 6, 6, 3, 5, 1, 1 ] ), 
   Transformation( [ 7, 6, 7, 3, 6, 6, 4 ] ), Transformation( [ 7, 7, 2, 2, 2, 3, 6 ] ) ]
 
-
-s:=Semigroup( [Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
+gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ), 
   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ), 
-  Transformation( [ 4, 3, 4, 5, 6, 4, 1, 2 ] )]);;
+  Transformation( [ 4, 3, 4, 5, 6, 4, 1, 2 ] ), 
+  Transformation( [ 5, 4, 8, 8, 5, 6, 1, 5 ] ), 
+  Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ), 
+  Transformation( [ 7, 1, 2, 2, 2, 7, 4, 5 ] ), 
+  Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
+s:=Semigroup(gens{[1..4]});
 ExpandOrbitsOfImages(s);
-f:=Transformation([3,3,4,5,5,5,8,8]);;
-t:=ClosureSemigroupNC(s, [f]);
+t:=ClosureSemigroupNC(s, gens{[5..8]});
 
+gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
+>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ), 
+>   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ), 
+>   Transformation( [ 4, 3, 4, 5, 6, 4, 1, 2 ] ), 
+>   Transformation( [ 5, 4, 8, 8, 5, 6, 1, 5 ] ), 
+>   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ), 
+>   Transformation( [ 7, 1, 2, 2, 2, 7, 4, 5 ] ), 
+>   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
+gap> s:=Semigroup(gens{[1..4]});
+gap> ExpandOrbitsOfImages(s);
+gap> t:=ClosureSemigroupNC(s, gens{[5..8]});
+gap> gens[5] in s;
 
+gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ), 
+  Transformation( [ 4, 2, 1, 5, 5 ] ), 
+  Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
+s:=Semigroup(gens{[1,2]});
+t:=ClosureSemigroup(s, [gens[3]]);
+ExpandOrbitsOfImages(t);          
+gens[3] in s;
 
+file1:=Concatenation(String(Filename(DirectoriesPackageLibrary("semex", "g6"), "")), "graph8c.g6");
+graphs:=ReadGraph6(file1);;
 
-
+g:=graphs[110];
+g:=GraphWithReorderedVertices(g);
+s:=List(GraphEndomorphisms(g), TransformationNC);;
+s:=SmallGeneratingSet(s);

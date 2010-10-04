@@ -426,7 +426,7 @@ o:=Orb(s, ker, OnKernelsAntiAction, rec(
 				orbitgraph := true, 
 				onlygrades:=[j], 
 				storenumbers:=true));
-
+SetIsMonoidPkgImgKerOrbit(o, true);
 Enumerate(o, bound);
 
 scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(List(OrbitGraph(o), 
@@ -632,10 +632,10 @@ j:=Length(ImageSetOfTransformation(f));
 
 Info(InfoMonoidGreens, 2, "finding orbit of image...");
 o1:=[];
-o1[j]:=[ForwardOrbitOfImage(s, f, function(o, scc) return scc[1]=1; end)[1]];
+o1[j]:=[ForwardOrbitOfImage(s, f)[1]];
 Info(InfoMonoidGreens, 2, "finding orbit of kernel...");
 o2:=[];
-o2[j]:=[ForwardOrbitOfKernel(s, f, function(o, scc) return scc[1]=1; end)];
+o2[j]:=[ForwardOrbitOfKernel(s, f)];
 
 d:=[j,1,1,1,1,1];
 
@@ -696,7 +696,7 @@ end);
 InstallOtherMethod(GreensRClassRepsData, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
 function(d)
-local s, f, o, rels, cosets, out, i, j, O, dd, reps, val, g, D, orbits;
+local s, f, o, rels, cosets, out, i, j, O, dd, reps, val, g, D, orbits, data;
 
 s:=d!.parent;
 f:=d!.rep;
@@ -709,9 +709,9 @@ cosets:=RightTransversal(LClassSchutzGpFromData(s, D[2], o[2])
 #JDM if needed store the above in d_schutz[4]!
 
 o:=RClassImageOrbitFromData(s, D[1], o[1]);
-D:=D[1]{[1..6]}; D[5]:=fail; D[6]:=fail;
+D:=D[1]{[1..6]}; D[5]:=fail; D[6]:=0;
 
-#JDM could replace with DClassImageOrbit(d);
+#JDM could replace o with DClassImageOrbit(d);
 out:=[d!.data[1]];
 
 O:=d!.o[1];
@@ -720,10 +720,10 @@ orbits:=O!.orbits;
 for i in rels do 
 	for j in cosets do 
 		g:=i[1]*f*j^-1;
-		d:=InOrbitsOfImages(d, g, orbits, D);
-		if not d[1] then 
-			d:=AddToOrbitsOfImages(d, g, O, d[2]);
-			out[Length(out)+1]:=d;
+		data:=InOrbitsOfImages(d, g, orbits, D);
+		if not data[1] then 
+			data:=AddToOrbitsOfImages(d, g, O, data[2]);
+			out[Length(out)+1]:=data;
 		fi;
 	od;
 od;
@@ -832,7 +832,7 @@ local s, f, O, j, k, l, m, val, n, g, d, ker, reps, t, schutz, x, h, cosets,
  i, p;
 
 s:=arg[1]; f:=arg[2]; j:=fail;
-k:=fail; l:=fail; m:=fail; val:=fail; n:=0; g:=fail;
+k:=fail; l:=fail; m:=fail; val:=fail; n:=0; g:=fail; i:=fail;
 
 if Length(arg)=4 then 
 	O:=arg[4]; 
@@ -862,7 +862,7 @@ else
 	if not d[1] then 
 		return [d[1], false, [d[2], [j, fail, fail, fail, fail, 0, fail, fail]]];
 	fi;
-	f:=f*RClassPermsFromData(s, d[2], O[1])[d[2][4]];
+	f:=d[2][7];
 	d[2][3]:=RClassSCCFromData(s, d[2], O[1])[1]; #rectify the image!
 	ker:=KernelOfTransformation(f);
 	j:=Length(ker);
@@ -994,9 +994,10 @@ iter:=IteratorByFunctions( rec(
 	
 	for d_img in iter!.r do  
 		f:=RClassRepFromData(s, d_img);
-		d_ker:=InOrbitsOfKernels(s, f); #use d_img here!! JDMJDM
+		d_ker:=InOrbitsOfKernels(s, f, [d_img, 
+		 [d_img[1], fail, fail, fail, fail, 0]]);
 		if not d_ker[2] then #f not in existing D-class
-			d_ker:=AddToOrbitsOfKernels(s, f, d_ker[3], [OrbitsOfImages(s), O]);
+			d_ker:=AddToOrbitsOfKernels(s, f, d_ker[3]);
 			iter!.i:=iter!.i+1;
 			iter!.next_value:=DClassRepFromData(s, d_ker);
 			return false;
@@ -1247,10 +1248,10 @@ f:=d!.rep;
 o:=d!.o;
 d:=d!.data;
 
-rels:=LClassRelsFromData(s, d[2], o[2]){LClassSCCFromData(s, d[2], o[2])};
+rels:=Length(LClassSCCFromData(s, d[2], o[2]));
 cosets:=RightTransversal(LClassSchutzGpFromData(s, d[2], o[2]), 
  DClassSchutzGpFromData(s, d, o)^(KerRightToImgLeft(s, d[2], o[2])^-1));
-return Length(rels)*Length(cosets);
+return rels*Length(cosets);
 end);
 
 #############################################################################
@@ -1308,6 +1309,7 @@ function(s)
 
 return Objectify(NewType(FamilyObj(s), IsOrbitsOfKernels), 
 	rec(
+		s:=s,
 	  finished:=false,
 	  data:=[],
 	  orbits:=EmptyPlist(DegreeOfTransformationSemigroup(s)), 
@@ -1325,7 +1327,9 @@ InstallMethod(ParentAttr, "for a D-class of a trans. semigroup",
 
 InstallMethod(PrintObj, [IsOrbitsOfKernels], 
 function(o)
-Print("<orbits of kernels>");
+Print("<orbits of kernels; ", 
+SizeOrbitsOfKernels(o!.s), " elements; ", Length(o!.data), 
+" D-classes>");
 end);
 
 #############################################################################
@@ -1490,7 +1494,7 @@ for d in data do
 	l:=LClassSchutzGpFromData(s, d[2]);
 	i:=i+(Size(r)*Length(RClassSCCFromData(s, d[1]))
 	 *Length(LClassSCCFromData(s, d[2]))*Size(l)/
-	 Size(DClassSchutzGpFromData(s,  d, [o_r, o_l])));
+	 Size(DClassSchutzGpFromData(s,  d)));
 od;
 
 return i;

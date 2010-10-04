@@ -17,6 +17,21 @@
 
 ##  JDM install methods for partial transformations, partial bijections
 
+#JDM new for 3.2!
+DeclareOperation("DegreeOfTransformationCollNC", [IsTransformationCollection]);
+
+DeclareAttribute("Generators", IsSemigroup);
+#JDM new for 4.0!
+
+DeclareOperation("IsSubsemigroup", [IsTransformationSemigroup, 
+ IsTransformationSemigroup]);
+
+if not IsBound(AsPermutation) then 
+	#JDM should remove AsPermutation from the library
+	DeclareOperation("AsPermutation",[IsObject]);
+fi;
+
+
 ###########################################################################
 ##
 ##  <#GAPDoc Label="IsRegularTransformation">

@@ -10,6 +10,56 @@
 ## $Id$
 ##
 
+
+#new for 4.0!
+
+InstallMethod(Generators, "for a semigroup or monoid", 
+[IsSemigroup],
+function(s)
+
+if IsMonoid(s) then 
+	return GeneratorsOfMonoid(s);
+fi;
+
+return GeneratorsOfSemigroup(s);
+end);
+
+
+############################################################################
+###
+#M  AsPermutation(<trans>)
+#M  AsPermutation(<perm>)
+##   
+##  If trans is a permutation, then allow it to be converted into one.
+##  return fail if the transformation is not a permutation.
+##
+
+InstallMethod(AsPermutation, "for a transformation", [IsTransformation],
+       t->PermList(t![1])); 
+
+InstallMethod(AsPermutation, "for a permutation", [IsPerm],
+       p->p);
+
+InstallMethod(AsPermutation, "for binary relations on points", true,
+        [IsBinaryRelation and IsBinaryRelationOnPointsRep], 0,
+function(rel)
+    if not IsMapping(rel) then
+             Error("error, <rel> must be a mapping");
+    fi;
+    return AsPermutation(TransformationNC(Flat(Successors(rel))));
+end);
+
+
+InstallMethod(DegreeOfTransformationCollNC, "for a trans. coll.", 
+[IsTransformationCollection], 
+function(coll)
+
+if IsTransformationSemigroup(coll) then 
+	return DataType(TypeObj(GeneratorsOfSemigroup(coll)[1]));
+fi;
+return  DataType(TypeObj(coll[1]));
+end);
+
 #new for 4.0!
 #############################################################################
 #
@@ -17,6 +67,12 @@ InstallOtherMethod(Degree, "for a transformation",
 [IsTransformation],
 function(f)
 return DegreeOfTransformation(f);
+end);
+
+InstallOtherMethod(Degree, "for a transformation semigroups", 
+[IsTransformationSemigroup],
+function(s)
+return DegreeOfTransformationSemigroup(s);
 end);
 
 #############################################################################
@@ -133,6 +189,7 @@ end);
 
 
 
+
 #############################################################################
 # new for 4.0!
 
@@ -221,32 +278,6 @@ for p in orb do
 end );
 
 #############################################################################
-##
-##	<#GAPDoc Label="IsTransversal">
-##	<ManSection>
-##	<Func Name="IsTransversal" Arg="list1, list2"/>
-##	<Description>
-##	returns <C>true</C> if the list <C>list2</C> is a transversal of the list of 
-##	lists <C>list1</C>. That is, if every list in <C>list1</C> contains exactly 
-##	one element in <C>list2</C>.
-##	<Example>
-##  gap&gt; g1:=Transformation([2,2,4,4,5,6]);;
-##  gap&gt; g2:=Transformation([5,3,4,4,6,6]);;
-##  gap&gt; ker:=KernelOfTransformation(g2*g1);
-##  [ [ 1 ], [ 2, 3, 4 ], [ 5, 6 ] ] 
-##  gap&gt; im:=ImageListOfTransformation(g2);
-##  [ 5, 3, 4, 4, 6, 6 ]
-##  gap&gt; IsTransversal(ker, im);
-##  false
-##  gap&gt; IsTransversal([[1,2,3],[4,5],[6,7]], [1,5,6]);
-##  true
-##  </Example> <!-- transform.tst -->
-##	</Description>
-##  </ManSection>
-##	<#/GAPDoc>
-
-##	JDM This is inefficient and should be avoided if we have a transformation. 
-##	JDM Use Length(OnSets(f![1], f))=Length(f![1]) instead for a trans. f.
 
 InstallGlobalFunction(IsTransversal, 
 function(ker, img)
@@ -900,7 +931,28 @@ function(ker)
 return TransformationByKernelAndImageNC(ker, List(ker, Random));
 end);
 
+############################################################################
+##
+#M  <trans>^perm
+##
+##  Makes sense in that permutations have inverses and are transformations
+##
 
+InstallOtherMethod(\^, "for a transformation and a permutation",[IsTransformation, IsPerm],
+function(t,p)
+	return p^-1*t*p;
+end); 
+
+InstallMethod(\*, "trans * trans", IsIdenticalObj,
+        [IsTransformation and IsTransformationRep, 
+         IsTransformation and IsTransformationRep], 0, 
+    function(x, y) 
+        local a,b;
+
+        a:= x![1]; b := y![1];
+        #return TransformationNC(List([1 .. Length(a)], i -> b[a[i]]));
+        return TransformationNC(b{a});
+    end);
 #############################################################################
 ##
 ##	<#GAPDoc Label="InversesOfTransformation">

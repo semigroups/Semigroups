@@ -11,26 +11,33 @@
 ##
 
 
+# new method for 4.0! 
 ###########################################################################
-#JDM new method for 3.2! Check it's better and correct!
+# - must find some reasonable examples to test this on.
 
 InstallMethod(IsBand, "for a transformation semigroup", 
 [IsTransformationSemigroup],
 function(s)
+local d;
 
 if not IsCompletelyRegularSemigroup(s) then 
   return false;
 fi;
 
-return ForAll(GreensRClasses(s), x-> IsTrivial(GreensRClassData(x)!.schutz));
-#  return ForAll(AsList(M), IsIdempotent);
-#fi; 
+#return ForAll(GreensRClasses(s), x-> IsTrivial(GreensRClassData(x)!.schutz));
+for d in IteratorOfRClassRepsData(s) do 
+	if not IsTrivial(RClassSchutzGpFromData(s, d)) then	
+		return false;
+	fi;
+od;
 
-#JDM could also check if s is a set of partial identities in disguise!
+return true;
 end);
 
+
+# JDM new for 4.0!
 #############################################################################
-# JDM new for 3.2!
+# - new method required
 
 InstallMethod(IsBlockGroup, "for a transformation semigroup",
 [IsTransformationSemigroup], 
@@ -68,56 +75,44 @@ end);
 
 InstallMethod(IsCliffordSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
-function(M)
-local gens, identities, gen, identity;
+function(s)
+local gens, idem, f, g;
 
-if HasIsInverseSemigroup(M) and not IsInverseSemigroup(M) then 
+if HasIsInverseSemigroup(s) and not IsInverseSemigroup(s) then 
 	return false;
-elif HasIsRegularSemigroup(M) and not IsRegularSemigroup(M) then 
+elif HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
 	return false;
-elif HasIsCompletelyRegularSemigroup(M) and 
- not IsCompletelyRegularSemigroup(M) then 
-	return false;
-elif not IsCompletelyRegularSemigroup(M) then 
+elif not IsCompletelyRegularSemigroup(s) then 
   return false;
-elif IsGroupAsSemigroup(M) then
+elif IsGroupAsSemigroup(s) then
   return true;
-else
-
-  gens:=GeneratorsOfSemigroup(M);
-
-  #JDM this should be done online...
-  identities:=List(gens, x->Idempotent(KernelOfTransformation(x), 
-   ImageSetOfTransformation(x)));
-
-  for gen in gens do
-
-    if not ImageSetOfTransformation(gen^2)
-           =ImageSetOfTransformation(gen) then 
-      return false; 
-    fi;
-
-    for identity in identities do
-      if not identity*gen=gen*identity then 
-        return false;
-      fi;
-    od;
-
-  od;
-
-  return true;
-
 fi;
+
+gens:=GeneratorsOfSemigroup(s);
+
+#JDM this should be done online...
+idem:=List(gens, x->IdempotentNC(KernelOfTransformation(x), 
+ ImageSetOfTransformation(x)));
+
+for f in gens do
+	for g in idem do
+		if not f*g=g*f then 
+			return false;
+		fi;
+	od;
+od;
+
+return true;
 end);
 
 ###########################################################################
 
 InstallMethod(IsCommutativeSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup],
-function(M)
+function(s)
 local gens, n, i, j; 
 
-gens:=GeneratorsOfSemigroup(M);
+gens:=Generators(s);
 n:=Length(gens);
 
 for i in [1..n] do
@@ -129,34 +124,38 @@ for i in [1..n] do
 od;
 
 return true;
-
 end);
 
 ###########################################################################
+#JDM here here here
+# use Orb and looking for here!
 
 InstallMethod(IsCompletelyRegularSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup],
-function(M)
-local pnt, orbit, gens, s, new, g;
+function(s)
+local gens, f, ht, o, i, g, new, val;
 
-if HasIsRegularSemigroup(M) and not IsRegularSemigroup(M) then 
+if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
 	return false;
 fi;
 
-gens:= GeneratorsOfSemigroup(M);
+gens:=Generators(s);
 
-for g in gens do
-  orbit:=[ImageSetOfTransformation(g)];
-  if not Size(OnSets(orbit[1], g))=Size(orbit[1]) then                          
-    return false;                                                               
+for f in gens do
+  ht:=HashTableForImage(f);
+  o:=[ImageSetOfTransformation(f)];
+  if not OnSets(o[1], f)=o[1] then
+    return false;
   fi; 
 
-  for pnt in orbit do
-    for s in gens do
-      new:= OnSets(pnt,s);
-      if not new in orbit then
-        Add(orbit, new); 
-        if not Size(OnSets(new, g))=Size(new) then
+  for i in o do
+    for g in gens do
+      new:= OnSets(i,g);
+      val:=HTValue(ht, new);
+      if val=fail then
+        HTAdd(ht, new, true);
+        o[Length(o)+1]:=new;
+        if not Length(OnSets(new, f))=Length(new) then
           return false;
         fi;
       fi;
@@ -165,8 +164,7 @@ for g in gens do
 od;
 
 return true;
-
-end) ;
+end);
 
 ###########################################################################
 # this test required to avoid conflict with Smallsemi
@@ -178,7 +176,7 @@ return IsSimpleSemigroup(s) and IsFinite(s);
 end);
 
 #############################################################################
-#JDM new for 3.2!
+#JDM new for 4.0!
 
 InstallMethod(IsGreensLTrivial, "for a transformation semigroup",
 [IsTransformationSemigroup],
@@ -187,7 +185,7 @@ return ForAll(GreensLClasses(S), x-> Size(x)=1);
 end);
 
 #############################################################################
-#JDM new for 3.2!
+#JDM new for 4.0!
 
 InstallMethod(IsGreensRTrivial, "for a transformation semigroup",
 [IsTransformationSemigroup],
@@ -288,7 +286,7 @@ fi;
 end);
 
 #############################################################################
-#JDM new for 3.2!
+#JDM new for 4.0!
 
 InstallMethod(IsIrredundantGeneratingSet, 
 "for a collection of transformations",
@@ -298,7 +296,7 @@ return not ForAny(gens, x-> x in Semigroup(Difference(gens, [x])));
 end);
 
 #############################################################################
-#JDM new for 3.2!
+#JDM new for 4.0!
 
 InstallOtherMethod(IsIrredundantGeneratingSet, 
 "for a transformation semigroup and collection of transformations",
@@ -607,7 +605,7 @@ end);
 InstallOtherMethod(SmallGeneratingSet, "for a trans. coll.", 
 [IsTransformationCollection], 
 function(coll)
-local n, a, g, s, i, m, j, max;
+local n, a, g, s, i, m, j, max, info;
 
 n:=DegreeOfTransformation(coll[1]);
 
@@ -636,90 +634,84 @@ j:=0;
 max:=0;
 Info(InfoMonoidProperties, 3, "looping over elements...");
 
+info:=false;
+
+if InfoLevel(InfoMonoidProperties)>=3 then 
+	info:=true;
+fi;
+
 while  i<Length(coll) do 
 	i:=i+1;
-	n:=SizeOrbitsOfImages(s);
 	
-	if n>max then 
-		max:=n;
-	fi;
+	if info then Print("at ", i, " of ", m, "; ", j, " generators\r"); fi;
 	
-	Print("at ", i, " of ", m, "; ", j, " generators; at least ", 
-	 max, " elements\r");
 	if not a[i] in s then 
 		j:=j+1;
-		s:=Semigroup(Concatenation(Generators(s), [a[i]]));
+		s:=ClosureSemigroup(s, [a[i]]);
 	fi;
 od;
-Print("\n");
+
+if info then 
+	Print("\n");
+fi;
 
 return s;
 end);
 
 #############################################################################
 #JDM there must be better methods than the following for special types of S.
-#JDM new for 3.2! JDM this should be revisited!
+#JDM new for 4.0! JDM is there a better way?
 
 InstallOtherMethod(SmallGeneratingSet, "for a transformation semigroup",
 [IsTransformationSemigroup],
-function(S)
-local n, iso, gens, degs, j, elts, diff, x;
+function(s)
+local n, gens, min, g, t, iter, r, iter_r, f, info;
 
-n:=DegreeOfTransformationSemigroup(S);
+n:=Degree(s);
+gens:=Generators(s);
 
-if TransformationNC([1..n]) in S then 
-	Info(InfoMonoidProperties, 4, 
-	 "finding minimal generators of group of units...");
-#	if HasGeneratorsOfSemigroup(S) then 
-		iso:=Filtered(GeneratorsOfSemigroup(S), x-> RankOfTransformation(x)=n);
-		#iso:=MinimalGeneratingSet(Group(List(iso, AsPermutation)));
-		#JDM change to the previous line at some point...
-		iso:=SmallGeneratingSet(Group(List(iso, AsPermOfRange)));
-		gens:=List(iso, x-> AsTransformation(x, n));
-#	else
-#		iso:=IsomorphismPermGroup(GreensHClassOfElement(S, Transformation([1..n])));
-#		gens:=OnTuples(SmallGeneratingSet(Range(iso)), 
-#			InverseGeneralMapping(iso));
-#	fi;
-	Info(InfoMonoidProperties, 4, Length(gens), " such generators");
+Info(InfoMonoidProperties, 3, "sorting generators by rank...");
+gens:=ShallowCopy(gens);
+Sort(gens, function(f,g) return Rank(f)>Rank(g) and f![1]>g![1]; end);
+min:=Rank(gens[Length(gens)]);
+
+if Rank(gens[1])=n then 
+	Info(InfoMonoidProperties, 3, "finding small generating set for unit", 
+	" group...");
+	g:=Group(List(Filtered(gens, f-> Rank(f)=n), AsPermutation));
+	t:=Semigroup(List(SmallGeneratingSet(g), f-> AsTransformation(f, n)));
 else
-	gens:=[];
+	t:=Semigroup(gens[1]); #JDM good idea?
 fi;
 
-Info(InfoMonoidProperties, 4, "finding images of elements...");
-degs:=Reversed(AsSet(List(ImagesOfTransSemigroup(S), Length)));
-j:=0;
+iter:=IteratorOfRClassRepsData(s);
 
-repeat
-	Info(InfoMonoidProperties, 4, "finding generators of elements of rank ",
-	 degs[j+1]);
-	
-	j:=j+1;
-	elts:=Filtered(Elements(S), x-> RankOfTransformation(x)=degs[j]);;
-	diff:=elts;
-	
-	repeat
-		x:=Random(diff); 
-		Add(gens, x);
-		diff:=Difference(diff, Filtered(Elements(Semigroup(gens)), x-> 
-		 RankOfTransformation(x)=degs[j]));
-		if InfoLevel(InfoMonoidProperties)=4 then 
-	  	Print("#I  ", Float((Length(elts)-Length(diff))/Length(elts))*100, 
-	   	 "% of the elements of rank ", degs[j], 
-	  	 " generated...                 \r");
-	  fi;
-	until diff=[] or Length(gens)=Length(GeneratorsOfSemigroup(S));
-	if InfoLevel(InfoMonoidProperties)=4 then 
-		Print("\n");
+info:=false;
+
+if InfoLevel(InfoMonoidProperties)>=3 then 
+	info:=true;
+fi;
+
+iter:=IteratorOfGreensRClasses(s);
+
+while not t=s and not Length(Generators(t))>=Length(gens) do 
+	r:=NextIterator(iter); f:=r!.rep;
+	if min<=Rank(f) and Rank(f)<n then 
+		iter_r:=Iterator(r);
+		while not IsDoneIterator(iter_r) and not t=s and not 
+		 Length(Generators(t))>=Length(gens) do 
+			f:=NextIterator(iter_r);
+			t:=ClosureSemigroup(t, [f]);
+			if info then Print(Length(Generators(t)), " generators\r"); fi;
+		od;
 	fi;
-until Size(Semigroup(gens))=Size(S) or
- Length(gens)=Length(GeneratorsOfSemigroup(S));;
+od;
 
-if Length(gens)=Length(GeneratorsOfSemigroup(S)) then 
-	return GeneratorsOfSemigroup(S);
+if t=s then 
+	return Generators(t);
 fi;
 
-return gens;
+return Generators(s);
 end);
 
 #############################################################################
