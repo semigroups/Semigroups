@@ -69,7 +69,8 @@ d:=GreensDClassOfElementNC(s, f);
 
 s:=FullTransformationSemigroup(10);
 f:=Transformation( [ 8, 10, 8, 5, 6, 10, 7, 2, 9, 9 ] );
-d:=GreensDClassOfElementNC(s, f);; #1s check efficiency here!
+d:=GreensDClassOfElementNC(s, f);; #1s with NC check efficiency here! 
+																#1.6s without NC
 Idempotents(d);; #1.3s
 
 
@@ -96,4 +97,20 @@ s:=EndomorphismSemigpOfCubeGraph(4);
 f:=Transformation( [ 8, 14, 13, 14, 13, 16, 16, 8, 16, 6, 16, 13, 13, 13, 13, 10 ] );
 
 d:=GreensDClassOfElementNC(s, f);
+# 8s for this!
 
+
+s:=FullTransformationSemigroup(5);
+f:=Transformation( [ 5, 5, 1, 1, 3 ] );
+d:=GreensDClassOfElement(s, f);
+GreensRClassReps(d);
+
+
+gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
+  Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ), 
+  Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ), 
+  Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
+s:=Semigroup(gens); 
+f:=Transformation( [ 1, 1, 7, 6, 6, 7, 2, 1 ] );
+d:=GreensDClassOfElement(s, f);
+GreensRClassReps(d);

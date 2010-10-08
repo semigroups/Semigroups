@@ -359,7 +359,7 @@ if k = fail then #new img and l, m, val, n, g=fail
 	out:=[j, Length(O[j]), 1, 1, 1, 1];
 	
 	for m in [1..Length(oo[3])] do 
-		d[Length(d)+1]:=[j, Length(O[j]), 1, m, 1, 1];
+		d[Length(d)+1]:=[j, Length(O[j]), oo[3][m][1], m, 1, 1];
 	od;
 
 ##############################################################################
@@ -378,7 +378,7 @@ else #old img
 		d[Length(d)+1]:=out;
 		HTAdd(O[j][k]!.kernels_ht[m], KernelOfTransformation( g ), val);
 	fi;
-	reps:=[g]; #JDM should it be g or f?
+	reps:=[g]; #JDM g or f?
 fi;
 
 ##############################################################################
@@ -704,7 +704,7 @@ enum:=EnumeratorByFunctions(r, rec(
 	
 	len:=Length(h),
 	
-	p:=RClassPermsFromData(r!.parent, r!.data, RClassImageOrbit(r)),
+	p:=RClassPermsFromData(r!.parent, r!.data, r!.o),
 	
 	scc:=RClassSCC(r),
 	
@@ -749,7 +749,7 @@ enum:=EnumeratorByFunctions(r, rec(
 		s:=r!.parent;
 		
 		# check image is in the same weak orbit
-		o:=r!.o[d[1]][d[2]] ;#RClassImageOrbit(r);
+		o:= RClassImageOrbit(r);
 		i:= Position(o, ImageSetOfTransformation(f));
 		
 		if i = fail or not o!.truth[d[4]][i] then #check they are in the same scc
@@ -912,8 +912,6 @@ o!.schutz:=List([1..r], m-> SchutzGpOfImageOrbit(gens, o, reps[m], m));
 
 return [o, reps, scc];
 end);
-
-
 
 # new method in 4.0!
 #############################################################################
@@ -1126,7 +1124,7 @@ if k=fail then #l=fail, m=fail, g=fail
 		k:=k+1;
 		l:=Position(O[j][k], img);
 	until not l=fail or k=Length(O[j]);
-
+	
 	if l = fail then 
 		return [false, [j, fail, fail, fail, fail, 0, fail]];
 	fi;
@@ -1444,10 +1442,9 @@ iter:=IteratorByFunctions( rec(
 		d:=InOrbitsOfImages(s, x, orbits, []);
 
 		if not d[1] then #new rep!
-			#Error("");
 			if IsTransformationMonoid(s) or not i = 1 then 
 				d:=AddToOrbitsOfImages(s, x, O, d[2]);
-				d[3]:=1;
+				d[3]:=RClassSCCFromData(s, d, O)[1];
 				iter!.i:=iter!.i+1;
 				iter!.next_value:=d;
 				return false;
@@ -1635,7 +1632,7 @@ gens:=Generators(s);
 n := DegreeOfTransformationSemigroup( s );
 one := TransformationNC( [ 1 .. n ] );
 
-# JDM ht and ht!.o should really be an Orb object.
+# JDM should ht and ht!.o really be an Orb objects?
 ht := HTCreate(one);
 HTAdd(ht, one, true);
 for i in gens do 
@@ -1758,9 +1755,19 @@ end);
 ############################################################################
 #JDM could be an attribute?
 
-InstallGlobalFunction(RClassImageOrbit,
+InstallMethod(RClassImageOrbit, "for an R-class of a trans. semigp.", 
+[IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
 return r!.o!.orbits[r!.data[1]][r!.data[2]];
+end);
+
+############################################################################
+#
+
+InstallOtherMethod(RClassImageOrbit, "for a D-class of a trans. semigp.", 
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+return d!.o[1]!.orbits[d!.data[1]][d!.data[2]];
 end);
 
 ############################################################################
@@ -1843,16 +1850,57 @@ fi;
 return o!.perms;
 end);
 
+############################################################################
+
+InstallMethod(RClassPerms, "for an R-class of a trans. semigp.", 
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+local d;
+d:=r!.data;
+
+return r!.o!.orbits[d[1]][d[2]]!.perms;
+end);
+
+############################################################################
+
+InstallOtherMethod(RClassPerms, "for a D-class of a trans. semigp.", 
+[IsGreensDClass and IsGreensClassOfTransSemigp], 
+function(r)
+local d;
+d:=r!.data[1];
+
+return r!.o[1]!.orbits[d[1]][d[2]]!.perms;
+end);
+
+############################################################################
+
+InstallGlobalFunction(RClassRepsData, 
+s-> OrbitsOfImages(s)!.data);
+
 # new for 4.0!
 ############################################################################
 
-InstallGlobalFunction(RClassSCC,
+InstallMethod(RClassSCC, "for an R-class of a trans. semigp.",
+[IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
 local d;
 
 d:=r!.data;
 return r!.o!.orbits[d[1]][d[2]]!.scc[d[4]];
 end);
+
+# new for 4.0!
+############################################################################
+
+InstallOtherMethod(RClassSCC, "for a D-class of a trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(r)
+local d;
+
+d:=r!.data[1];
+return r!.o[1]!.orbits[d[1]][d[2]]!.scc[d[4]];
+end);
+
 
 # new for 4.0!
 ############################################################################
@@ -1904,12 +1952,25 @@ end);
 # new for 4.0!
 ############################################################################
 
-InstallGlobalFunction(RClassStabChain, 
+InstallMethod(RClassStabChain, "for an R-class of a trans. semigp.", 
+[IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
 local d;
 
 d:=r!.data;
 return r!.o!.orbits[d[1]][d[2]]!.schutz[d[4]][1];
+end);
+
+# new for 4.0!
+############################################################################
+
+InstallOtherMethod(RClassStabChain, "for a D-class of a trans. semigp.", 
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(r)
+local d;
+
+d:=r!.data[1];
+return r!.o[1]!.orbits[d[1]][d[2]]!.schutz[d[4]][1];
 end);
 
 # new for 4.0!

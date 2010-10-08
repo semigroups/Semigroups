@@ -642,7 +642,8 @@ DeclareAttribute("GreensHClassData", IsGreensHClass and IsGreensClassOfTransSemi
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-DeclareAttribute("GreensDClassData", IsGreensDClass and IsGreensClassOfTransSemigp);
+DeclareAttribute("GreensDClassData", IsGreensDClass and 
+IsGreensClassOfTransSemigp);
 
 #############################################################################
 ##
@@ -800,21 +801,31 @@ DeclareGlobalFunction("SchutzGpOfDClass");
 DeclareGlobalFunction("RClassRepFromData");
 # RClassRep = Representative
 DeclareGlobalFunction("RClassImageOrbitFromData");
-DeclareGlobalFunction("RClassImageOrbit");
+DeclareAttribute("RClassImageOrbit", IsGreensRClass and 
+ IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("RClassSchutzGpFromData");
 # RclassSchutzGp = SchutzenbergerGroup!
 DeclareGlobalFunction("RClassStabChainFromData");
-DeclareGlobalFunction("RClassStabChain");
+DeclareAttribute("RClassStabChain", IsGreensRClass and 
+ IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("RClassPermsFromData");
-DeclareGlobalFunction("RClassPerms");
+DeclareAttribute("RClassPerms", IsGreensRClass and 
+ IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("RClassSCCFromData");
-DeclareGlobalFunction("RClassSCC");
+DeclareAttribute("RClassSCC", IsGreensRClass and 
+ IsGreensClassOfTransSemigp);
 
 DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
 
 #JDM remove the following later!
 DeclareGlobalFunction("RClassRepsDataFromOrbits");
 
+DeclareAttribute("LClassSchutzGp", IsGreensLClass and 
+ IsGreensClassOfTransSemigp);
+DeclareAttribute("LClassSCC", IsGreensLClass and 
+ IsGreensClassOfTransSemigp);
+DeclareAttribute("LClassRels", IsGreensLClass and 
+ IsGreensClassOfTransSemigp);
 
 DeclareGlobalFunction("LClassRepFromData");
 DeclareGlobalFunction("LClassKernelOrbitFromData");
@@ -839,14 +850,20 @@ DeclareGlobalFunction("DClassKerSCCFromData");
 DeclareGlobalFunction("DClassKernelSCC");
 DeclareGlobalFunction("DClassImgSCCFromData");
 
+DeclareGlobalFunction("DClassRClassRepsDataFromData");
+
+
 DeclareAttribute("GreensDClass", IsGreensRClass);
 DeclareGlobalFunction("CreateRClass");
 DeclareGlobalFunction("CreateDClass");
+DeclareGlobalFunction("CreateLClass");
 DeclareAttribute("RClassType", IsTransformationSemigroup);
 DeclareAttribute("DClassType", IsTransformationSemigroup);
+DeclareAttribute("LClassType", IsTransformationSemigroup);
 
-DeclareGlobalFunction("KerRightToImgLeft");
-
+DeclareGlobalFunction("KerRightToImgLeftFromData");
+DeclareAttribute("KerRightToImgLeft", IsGreensDClass and 
+IsGreensClassOfTransSemigp);
 
 DeclareOperation("GreensDClassOfElementNC", [IsTransformationSemigroup]);
 
@@ -901,7 +918,13 @@ DeclareAttribute("NrIdempotents", IsTransformationSemigroup);
 DeclareAttribute("IsRegularRClass", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IsRegularRClassData");
 
-DeclareGlobalFunction("DClassRCosets");
+
+
+DeclareAttribute("DClassLCosets", IsGreensDClass and 
+ IsGreensClassOfTransSemigp);
+DeclareAttribute("DClassRCosets", IsGreensDClass and 
+ IsGreensClassOfTransSemigp);
+
 DeclareGlobalFunction("DClassRCosetsFromData");
 DeclareGlobalFunction("DClassLCosetsFromData");
 DeclareGlobalFunction("DClassStabChainFromData");
@@ -910,6 +933,7 @@ DeclareGlobalFunction("ForwardOrbitOfImage");
 DeclareGlobalFunction("ForwardOrbitOfKernel");
 
 DeclareAttribute("GreensRClassRepsData", IsTransformationSemigroup);
+DeclareGlobalFunction("RClassRepsData");
 DeclareAttribute("GreensLClassRepsData", IsTransformationSemigroup);
 
 DeclareProperty("IsOrbitsOfImages", IsObject);
