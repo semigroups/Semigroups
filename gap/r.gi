@@ -22,10 +22,11 @@
 # - check that wherever we have called d:=InOrbitsOfImages we do not perform
 # f*perms[l] afterwards but instead use d[7]!
 
-# - introduce IsGlobalRClass... or maybe not
 
 #############################################################################
 ## To do 
+
+# - install IteratorOfRClassRepsData etc for s and IsPosInt!
 
 # - make test files
 
@@ -671,6 +672,7 @@ end);
 
 #new for 4.0!
 #############################################################################
+#JDM remove this...
 
 InstallGlobalFunction(DisplayOrbitOfImage, 
 function(o)
@@ -953,16 +955,17 @@ end);
 InstallMethod(GreensRClasses, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
 function(s)
-local iter, out, i;
+local iter, out, i, f;
 
 Info(InfoMonoidGreens, 4, "GreensRClasses");
 
 iter:=IteratorOfGreensRClasses(s);
-out:=EmptyPlist(Length(OrbitsOfImages(s)!.data));
-#JDM is the previous a good idea?
+out:=EmptyPlist(NrGreensRClasses(s));
+i:=0;
 
-for i in iter do 
-	out[Length(out)+1]:=i;
+for f in iter do 
+	i:=i+1;
+	out[i]:=f;
 od;
 
 return out;
@@ -984,7 +987,8 @@ if not f in s then
 fi;
 
 d:=InOrbitsOfImages(s, f)[2];
-d[3]:=1;
+d[3]:=RClassSCCFromData(s, d)[1];
+#d[3]:=1;
 #rep:=d[7]; not nec. the rep!
 
 return CreateRClass(s, d, OrbitsOfImages(s), 
@@ -1068,12 +1072,12 @@ for i in o do
 	img:=EmptyPlist(n);
 	j:=1;
 	while j<=n and POS_LIST_DEFAULT(img, rep[i[j]], 0)=fail do
-		img[Length(img)+1]:=rep[i[j]];
+		img[j]:=rep[i[j]];
 		j:=j+1; 
 	od;
 	
 	if j=n+1 then 
-		out[Length(out)+1]:=IdempotentNC(ker, i);
+		out[Length(out)+1]:=IdempotentNC(ker, i); #JDM can't we use transformationNC
 	fi;
 od;
 
@@ -1259,7 +1263,7 @@ end);
 
 # new for 4.0!
 #############################################################################
-#
+# JDM it is not really clear that this is needed...
 
 InstallMethod(Iterator, "for a R-class of a trans. semigroup",
 [IsGreensRClass and IsGreensClassOfTransSemigp],
@@ -1350,7 +1354,7 @@ iter:=IteratorByFunctions( rec(
 	d:=OrbitsOfImages(s)!.data[iter!.i];
 	return CreateRClass(s, d, OrbitsOfImages(s), rep);
 	end,
-	
+
 	ShallowCopy:=iter-> rec(i:=0, s:=iter!.s, reps:=IteratorOfRClassReps(s))
 ));
 
@@ -1540,6 +1544,13 @@ end);
 # new for 4.0!
 #############################################################################
 
+InstallOtherMethod(NrGreensHClasses, "for an R-class of a trans. semigroup", 
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+r-> NrGreensLClasses(GreensDClass(r)));
+
+# new for 4.0!
+#############################################################################
+
 InstallMethod(NrGreensRClasses, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
 function(s)
@@ -1553,7 +1564,7 @@ end);
 # new for 4.0!
 #############################################################################
 
-InstallOtherMethod(NrIdempotents, "for an R-class", 
+InstallOtherMethod(NrIdempotents, "for an R-class of a trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
 local out, ker, rep, n, o, i, img, j;

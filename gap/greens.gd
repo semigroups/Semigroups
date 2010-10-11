@@ -829,6 +829,8 @@ DeclareAttribute("LClassRels", IsGreensLClass and
 
 DeclareGlobalFunction("LClassRepFromData");
 DeclareGlobalFunction("LClassKernelOrbitFromData");
+DeclareAttribute("LClassKernelOrbit", IsGreensLClass and 
+IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("LClassSchutzGpFromData");
 DeclareGlobalFunction("LClassStabChainFromData");
 DeclareGlobalFunction("LClassRelsFromData");
@@ -875,6 +877,7 @@ DeclareProperty("IsEnumeratorOfLClassElements", IsEnumeratorByFunctions);
 DeclareProperty("IsEnumeratorOfDClassElements", IsEnumeratorByFunctions);
 
 DeclareGlobalFunction("IteratorOfRClassRepsData");
+DeclareGlobalFunction("IteratorOfLClassRepsData");
 DeclareGlobalFunction("IteratorOfNewRClassRepsData");
 DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareGlobalFunction("IteratorOfLClassReps");
@@ -916,6 +919,7 @@ DeclareAttribute("NrGreensHClasses", IsTransformationSemigroup);
 DeclareAttribute("NrIdempotents", IsTransformationSemigroup);
 
 DeclareAttribute("IsRegularRClass", IsGreensClassOfTransSemigp);
+DeclareAttribute("IsRegularLClass", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IsRegularRClassData");
 
 

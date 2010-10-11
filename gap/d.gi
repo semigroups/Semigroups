@@ -25,7 +25,7 @@
 
 # - MNMN is IsTransversal a candidate for a C function? Maybe even IdempotentNC
 
-# - Must install AsList and Iterator methods?
+# - is an iterator/aslist method required for D-classes!? maybe not.
 
 ##
 #############################################################################
@@ -82,7 +82,7 @@ if schutz=true then
 	return true;
 fi;
 
-p:=KerRightToImgLeftFromData(s, d!.data[2], d!.o[2])^-1;
+p:=KerRightToImgLeftFromData(s, d!.data, d!.o)^-1;
 cosets:=DClassRCosetsFromData(s, d!.data, d!.o);
 f:= PermLeftQuoTransformationNC(rep, f);
 
@@ -665,27 +665,21 @@ Add(o2!.orbits[j][1]!.d_schutz[1],
 return CreateDClass(s, [r!.data, d], [o1, o2], f);
 end);
 
+#new for 4.0!
 #############################################################################
-# 
+# JDM test!
 
-InstallMethod(GreensDClassData,  "for a D-class of a trans. semigroup",
-[IsGreensDClass and IsGreensClassOfTransSemigp],
-function(d)
-local rep, s, l, r, h, o;
+InstallOtherMethod(GreensDClass, "for an L-class of a trans. semigroup", 
+[IsGreensLClass and IsGreensClassOfTransSemigp], 
+function(l)
+local s, d, o, rep;
 
-Info(InfoWarning, 1, "this is a legacy from Monoid 3");
+s:=l!.parent;
+d:=l!.data{[1,2]};
+o:=l!.o;
+rep:=LClassRepFromData(s, Concatenation(d, [[1,1]]), o);
 
-rep:=d!.rep;
-s:=d!.parent;
-o:=d!.o[1];
-d:=d!.data;
-
-l:=GreensLClassData(GreensLClassOfElement(s, rep));
-r:=GreensRClassData(GreensRClassOfElement(s, rep));
-h:=GreensHClassData(GreensHClassOfElement(s, rep));
-
-return DClassData(rec( rep:=rep, R:=r, L:=l, H:=h, 
- cosets:=DClassRCosetsFromData(s, d, o), schutz:=SchutzenbergerGroup(h)));;
+return CreateDClass(s, d, o, rep);
 end);
 
 # new for 4.0!
@@ -726,6 +720,7 @@ fi;
 d:=InOrbitsOfKernels(s, f);
 
 if not d[2] then #orbit of kernel not previously calculated!
+	#d[3][1][3]:=RClassSCCFromData(s, d[3][1])[1]; JDM this line required no?
 	d:=AddToOrbitsOfKernels(s, d[3][1][7], d[3]); 
 	 #d[3][1][7] is f with rectified image!
 	D:=OrbitsOfKernels(s)!.data;
@@ -738,10 +733,12 @@ d:=CreateDClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)],
  DClassRepFromData(s, d));
 
 return d;
- end);
+end);
 
 # new for 4.0!
 #############################################################################
+# the first part below should look very much like GreensDClassOfElement JDM
+# for some reason it does not...
 
 InstallOtherMethod(GreensDClassOfElementNC, "for a trans. semigp and trans.", 
 [IsTransformationSemigroup, IsTransformation],
@@ -752,7 +749,7 @@ Info(InfoMonoidGreens, 4, "GreensDClassOfElementNC");
 
 d:=InOrbitsOfKernels(s, f);
 
-if d[1] or d[2] then 
+if d[1] then 
 	data:=[d[3][1]];
 	Info(InfoMonoidGreens, 2, "transformation is an element of the semigroup");
 	if d[2] then 
@@ -809,21 +806,24 @@ end);
 InstallOtherMethod(GreensLClassRepsData, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
 function(d)
-local f, perms, cosets, reps, data, i, j, r;
+local f, perms, cosets, reps, data, i, j, r, scc;
 
 f:=Representative(d);
-perms:=RClassPerms(d){RClassSCC(d)};
+perms:=RClassPerms(d);
+scc:=RClassSCC(d);
 cosets:=DClassRCosets(d);
 
 data:=EmptyPlist(Length(perms)*Length(cosets));
 SetNrGreensLClasses(d, Length(perms)*Length(cosets));
 
 for i in [1..Length(perms)] do 
-	for j in [1..Length(cosets)] do 
-		r:=Length(data);
-		data[r+1]:=ShallowCopy(d!.data);
-		data[r+1][3]:=[i,j];
-	od;
+	if i in scc then 
+		for j in [1..Length(cosets)] do 
+			r:=Length(data);
+			data[r+1]:=ShallowCopy(d!.data);
+			data[r+1][3]:=[i,j];
+		od;
+	fi;
 od;
 
 return data;
@@ -1039,7 +1039,7 @@ m:=Length(img[1]);
 for i in img do 
 	for j in [1..Length(ker)] do 
 		if Length(Set(reps[j]{i}))=m then 
-			out[Length(out)+1]:=IdempotentNC(ker[j], i);
+			out[Length(out)+1]:=IdempotentNC(ker[j], i); #JDM TransformationNC?
 		fi;
 	od;
 od;
@@ -1146,7 +1146,7 @@ fi;
 while n<t do
 	n:=n+1;
 	p:=O[j][k]!.convert[m][val][n]^-1;
-	cosets:=O[j][k]!.d_schutz[m][val][n][3];
+	cosets:=O[j][k]!.d_schutz[m][val][n][3]; #DClassRCosets
 	for i in [1..Length(cosets)] do 
 		h:=PermLeftQuoTransformationNC(reps[n], g);
 		if SiftedPermutation(schutz, (h/cosets[i])^p)=() then 
@@ -1273,10 +1273,6 @@ iter:=IteratorByFunctions( rec(
 	
 	i:=0,
 	
-	type:=NewType( FamilyObj( s ), IsEquivalenceClass and 
-	 IsEquivalenceClassDefaultRep and IsGreensDClass and 
-	 IsGreensClassOfTransSemigp),
-	
 	s:=s, 
 	
 	reps:=IteratorOfDClassReps(s),
@@ -1329,11 +1325,11 @@ InstallGlobalFunction(KerRightToImgLeftFromData,
 function(arg)
 local s, d, o;
 
-s:=arg[1]; d:=arg[2];
+s:=arg[1]; d:=arg[2][2];
 
 if Length(arg)=3 then 
 # if IsOrbit(arg[3]) then o:=arg[3]!!! JDM for the sake of convenience!
-	o:=arg[3]!.orbits[d[1]][d[2]];
+	o:=arg[3][2]!.orbits[d[1]][d[2]];
 else
 	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
 fi;
@@ -1346,7 +1342,7 @@ end);
 
 InstallMethod(KerRightToImgLeft, "for a D-class of a trans. semigp",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
-d-> KerRightToImgLeftFromData(d!.parent, d!.data[2], d!.o[2]));
+d-> KerRightToImgLeftFromData(d!.parent, d!.data, d!.o));
 
 #############################################################################
 #
@@ -1437,28 +1433,6 @@ ExpandOrbitsOfKernels(s);
 return Length(OrbitsOfKernels(s)!.data);
 end);
 
-# new for 4.0!
-#############################################################################
-
-InstallOtherMethod(NrGreensHClasses, "for an R-class of a trans. semigroup", 
-[IsGreensRClass and IsGreensClassOfTransSemigp], 
-r-> NrGreensLClasses(GreensDClass(r)));
-
-# new for 4.0!
-#############################################################################
-
-InstallMethod(NrGreensLClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup],
-function(s)
-local i, d;
-
-ExpandOrbitsOfKernels(s);
-i:=0;
-for d in OrbitsOfKernels(s)!.data do 
-	i:=i+Length(DClassRCosetsFromData(s, d))*Length(RClassSCCFromData(s, d[1]));
-od;
-return i;
-end);
 
 # new for 4.0!
 #############################################################################
@@ -1489,7 +1463,7 @@ d:=d!.data;
 
 rels:=Length(LClassSCCFromData(s, d[2], o[2]));
 cosets:=RightTransversal(LClassSchutzGpFromData(s, d[2], o[2]), 
- DClassSchutzGpFromData(s, d, o)^(KerRightToImgLeftFromData(s, d[2], o[2])^-1));
+ DClassSchutzGpFromData(s, d, o)^(KerRightToImgLeftFromData(s, d, o)^-1));
 return rels*Length(cosets);
 end);
 
@@ -1662,6 +1636,7 @@ return LClassKernelOrbitFromData(d!.parent, dd, d!.o[2])!.
  d_schutz[dd[4]][dd[5]][dd[6]][2];
 end);
 
+
 #new for 4.0!
 #############################################################################
 # JDM MNMN what's the best way of doing this?
@@ -1682,7 +1657,7 @@ g:=RClassSchutzGpFromData(s, d[1], o[1]);
 
 if not Size(g)=1 then 
 	h:=LClassStabChainFromData(s, d[2], o[2]);
-	p:=KerRightToImgLeftFromData(s, d[2], o[2])^-1;
+	p:=KerRightToImgLeftFromData(s, d, o)^-1;
 	if not h=true then 
 		h:=SubgroupProperty(g, x -> SiftedPermutation(h, x^p)=());
 	else

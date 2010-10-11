@@ -15,7 +15,7 @@
 
 #############################################################################
 
-# new for 3.2!
+# new for 4.0!
 #############################################################################
 # keep here 
 
@@ -43,94 +43,6 @@ SetIsGreensClassOfTransSemigp(ec, true);
 return ec;
 end);
 
-###########################################################################
-# move to legacy.gi JDM
-
-InstallGlobalFunction(HClassData, function(list)
-return Objectify(NewType(NewFamily("Green's H Class Data", IsGreensHClassData), 
-IsGreensHClassData and IsGreensHClassDataRep), list);
-end);
-
-#############################################################################
-# move to legacy.gi JDM
-
-InstallMethod( ViewObj, "for object in `IsGreensHClassData'",
-[ IsGreensHClassData and IsGreensHClassDataRep],
-function( obj )
-Print( "GreensHClassData( ", obj!.rep, ", ", obj!.schutz, " )" );
-end );
-
-## Commands to integrate MONOID functions with those in semirel.g* ##
-#####################################################################
-# move to legacy.gi JDM
-
-InstallMethod(GreensData, "for a Green's class of a trans. semigroup", 
-[IsGreensClass and IsGreensClassOfTransSemigp],
-function(class)
-
-if HasIsGreensRClass(class) and IsGreensRClass(class) then 
-	return GreensRClassData(class);
-elif HasIsGreensLClass(class) and IsGreensLClass(class) then 
-	return GreensLClassData(class);
-elif HasIsGreensHClass(class) and IsGreensHClass(class) then 
-	return GreensHClassData(class);
-elif HasIsGreensDClass(class) and IsGreensDClass(class) then 
-	return GreensDClassData(class);
-#elif HasIsGreensJClass(class) and IsGreensJClass(class) then 
-#return GreensJClassData(class);
-fi;
-
-end);
-
-#############################################################################
-# move to legacy.gi JDM
-
-InstallMethod(\<, "for GreensData and GreensData", 
-[IsGreensData, IsGreensData],
-function(data1, data2)
-
-if not ParentAttr(data1)=ParentAttr(data2) then 
-	Error("Green's data do not belong to the same semigroup");
-elif IsGreensRClassData(data1) and not IsGreensRClassData(data2) then 
-	Error("Green's data are not of the same type"); 
-elif IsGreensLClassData(data1) and not IsGreensLClassData(data2) then 
-	Error("Green's data are not of the same type"); 
-elif IsGreensHClassData(data1) and not IsGreensHClassData(data2) then 
-	Error("Green's data are not of the same type"); 
-elif IsGreensDClassData(data1) and not IsGreensDClassData(data2) then 
-	Error("Green's data are not of the same type"); 
-else 
-	return data1!.rep<data2!.rep;
-fi;
-end);
-
-#############################################################################
-# move to legacy.gi JDM
-
-InstallMethod(\=, "for GreenData and GreenData", 
-[IsGreensData, IsGreensData],
-function(data1, data2)
-
-if not ParentAttr(data1)=ParentAttr(data2) then 
-	Error("Green's data do not belong to the same semigroup");
-elif IsGreensRClassData(data1) and not IsGreensRClassData(data2) then 
-	Error("Green's data are not of the same type"); 
-elif IsGreensLClassData(data1) and not IsGreensLClassData(data2) then 
-	Error("Green's data are not of the same type"); 
-elif IsGreensHClassData(data1) and not IsGreensHClassData(data2) then 
-	Error("Green's data are not of the same type"); 
-elif IsGreensDClassData(data1) and not IsGreensDClassData(data2) then 
-	Error("Green's data are not of the same type"); 
-else 
-	return data1!.rep in data2;
-fi;
-end);
-
-#############################################################################
-# move to legacy.gi JDM
-
-InstallOtherMethod(Representative, "for GreensData", 
-[IsGreensData], x-> x!.rep);
 
 #############################################################################
 
@@ -158,218 +70,9 @@ od;
 return classes;
 end );
 
-#############################################################################
-# JDM this should be modified...
 
-InstallMethod(GreensLClassData, "for a Green's L-class of trans. semigp", 
-true, [IsGreensLClass and IsGreensClassOfTransSemigp], 
-function(L)
-local ker, orbit, i, j, back, s, pnt, new, a, n, set, sets, z, relts, gens, img, rep, scc, invrelts, newinv, schutz, data;
 
-# determine starting point.
-rep:= Representative(L); ker:= KernelOfTransformation(rep);
-orbit:=[ker]; sets:=[ker]; n:=Length(ker); i:=0; back:= [[]];
 
-if IsMonoid(ParentAttr(L)) then 
-	gens:=GeneratorsOfSemigroup(ParentAttr(L));
-else
-	gens:= Union(GeneratorsOfSemigroup(ParentAttr(L)),
-	[Transformation([1..DegreeOfTransformation(rep)])]); 
-fi;	
-
-# form the (weak, but graded) orbit.
-for pnt in orbit do
-
-	# keep track of position of 'pnt'.
-	i:= i+1;
-
-	# loop over the generators.
-	for s in gens do
-		new:= OnTuplesOfSetsAntiAction(pnt, s);
-		set:= Set(new);
-
-		# discard points of lower grading.
-		if not [] in set then
-			j:= Position(sets, set);
-			# install new point, if necessary.
-			if j = fail then
-				Add(orbit, new); Add(sets, set); Add(back, []); j:= Length(orbit); 
-			fi;
-			
-			# remember predecessor.
-			AddSet(back[i], j);
-		fi;
-	od;
-od;
-
-# form the transitive closure.
-scc:=First(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(back), x-> 1 in x);
-
-orbit:= orbit{scc};sets:= sets{scc};
-
-# find multipliers.
-
-relts:=[]; invrelts:=[];
-for pnt in orbit do
-	new:= []; newinv:=[];
-	for j in [1..n] do
-		new{ker[j]}:= List(ker[j], x-> pnt[j]);
-		newinv{pnt[j]}:=List(pnt[j], x-> ker[j]);
-	od;
-	Add(relts, BinaryRelationByListOfImages(new)); 
-	Add(invrelts, BinaryRelationByListOfImages(newinv));
-od;
-
-# determine Schutz grp.
-
-new:= [()];
-for i in [1..Length(sets)] do
-	pnt:= sets[i]; z:=0;
-
-	repeat #JDM can this loop can be omitted by keeping track earlier?
-		z:=z+1; s:=gens[z];
-		j:= Position(sets, OnKernelsAntiAction(pnt, s));
-		if j <> fail then
-			AddSet(new, PermLeftQuoTransformation(rep, AsTransformationNC(relts[j] * (s * AsTransformationNC( invrelts[i] * rep)))));
-		fi;
-	until z=Length(gens) or Size(new)>=Factorial(n);
-od;
-
-data:=LClassData(rec( rep:=rep, strongorb:=sets, relts:=relts, invrelts:=invrelts, schutz:=Group(new)));
-
-return data;
-
-end);
-
-#############################################################################
-# JDM this should be modified
-
-InstallMethod(GreensLClasses, "for a trans. semigroup", true, 
-[IsTransformationSemigroup], 0, 
-function(M)
-local n, one, gens, kernels, positions, classespart, reps, orb, x, ker, k, j, i, r, pos, new, s, images, im, classes, class;
-
-classes:=Flat(List(GreensDClasses(M), GreensLClasses));
-return classes;
-
-end);
-
-#############################################################################
-##
-#M  Size( <LClassData> )  
-##  
-##  Algorithm H.
-##   
-##  returns the size of <LClassData>
-##
-
-InstallOtherMethod(Size,  "size of L-class from data structure", 
-true, [IsGreensLClassData], 0,
-function(data)
-return Size(data!.schutz)*Size(data!.strongorb);
-end);
-
-#############################################################################
-##
-#M  AsSSortedList( <LClassData> ) 
-##  
-##  Algorithm I.
-##   
-##  returns the elements of <LClassData>
-##
-
-#JDM this should be reviewed
-
-InstallOtherMethod(AsSSortedList,  "elements of L-class from data structure", [IsGreensLClassData],
-function(L)
-local m, x, elts, grp, g, prod;
-
-grp:= L!.schutz;	#the left schutz. group
-x:= L!.rep;				#representative of L-class
-elts:= [];
-
-for m in L!.invrelts do
-	for g in grp do 
-		prod:=AsTransformation(m * x) * g; 
-		if not prod in elts then 
-			AddSet(elts, prod);
-		fi;
-	od;
-od;
-
-SetSize(L, Size(elts));
-return elts;
-end) ;
-
-#############################################################################
-##
-#M  \in
-##  
-##  Algorithm J.
-##   
-##  tests membership of L-Class data
-##
-
-#JDM this should be reviewed
-
-InstallOtherMethod( \in, "membership test for L-Class data", true, [IsTransformation, IsGreensLClassData], 0,
-function(x,L)
-local i, rep, grp, ker, n;
-
-rep:= L!.rep; 
-
-if x=rep then 
-	return true; 
-fi;
-
-# check degree, rank, and kernel.
-
-if DegreeOfTransformation(x) <> DegreeOfTransformation(rep) or RankOfTransformation(x) <> RankOfTransformation(rep) or ImageSetOfTransformation(x) <> ImageSetOfTransformation(rep) then
-	return false;
-fi;
-
-# check kernel
-ker:=KernelOfTransformation(x);
-
-i:= Position(L!.strongorb, ker);
-
-if i = fail then 
-	return false;
-fi;
-
-# check the group.
-return PermLeftQuoTransformation(rep, AsTransformation(L!.relts[i]*x)) in L!.schutz;
-#JDM some problem here???
-end);
-
-#############################################################################
-##
-#M  Idempotents( <L> ) 
-##
-##  gives the idempotents of an L-class <L>
-##
-
-#JDM this should be reviewed
-
-InstallOtherMethod( Idempotents, "for Green's L-class data", true, [IsGreensLClassData], 0,
-function(L)
-local idempotent, ker, img, idm;
-
-idm:= [];
-img:= ImageSetOfTransformation(L!.rep);
-
-# loop over the kernels.
-for ker in L!.strongorb do
-# check for cross section.
-	if IsTransversal(ker, img) then
-		Add(idm, Idempotent(ker, img));
-	fi;
-od;
-
-# return the list of idempotents.
-return idm;
-
-end );
 
 #############################################################################
 ##
@@ -423,41 +126,7 @@ od;
 return classes;
 end);
 
-#############################################################################
-##
-#M DClassOfLClass( <class> ) ;
-##
-## Green's D-class of Green's L-class
-##
 
-#JDM this should be removed and replaced with GreensLClass
-
-InstallOtherMethod(DClassOfLClass, "for a transformation semigroup", true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0, 
-function(hc)
-
-if HasGreensDClasses(ParentAttr(hc)) then 
-	return First(GreensDClasses(ParentAttr(hc)), x-> Representative(hc) in x);
-else
-	return GreensDClassOfElement(ParentAttr(hc), Representative(hc));
-fi;
-
-end);
-
-#############################################################################
-#JDM this should be removed
-
-InstallMethod(GreensHClassData, "data structure of H-class of an element", 
-true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0,
-function(class)
-local R, L, data;
-
-R:= GreensRClassData(GreensRClassOfElement(ParentAttr(class), Representative(class))); 
-L:= GreensLClassData(GreensLClassOfElement(ParentAttr(class), Representative(class)));
-
-data:=HClassData(rec( rep:=Representative(class),  schutz:=Intersection(R!.schutz, L!.schutz)));
-
-return data;
-end) ;
 
 #############################################################################
 ##
@@ -569,7 +238,7 @@ x-> ImageSetOfTransformation(Representative(x)^2)=ImageSetOfTransformation(Repre
 
 #############################################################################
 ##
-#M  RClassOfHClass( <class> ) ;
+#M  RClassOfHClass( <class> ) ; -> GreensRClass
 ##
 ##  Green's R-class of Green's H-class
 ##
@@ -588,7 +257,7 @@ end);
 
 #############################################################################
 ##
-#M LClassOfHClass( <class> ) ;
+#M LClassOfHClass( <class> ) ; -> GreensLClass
 ##
 ## Green's L-class of Green's H-class
 ##
@@ -607,7 +276,7 @@ end);
 
 #############################################################################
 ##
-#M DClassOfHClass( <class> ) ;
+#M DClassOfHClass( <class> ) ; -> GreensDClass
 ##
 ## Green's D-class of Green's H-class
 ##
@@ -637,104 +306,6 @@ end);
 InstallMethod(GreensHClasses, "for a transformation semigroup",
 [IsTransformationSemigroup],
 x-> Concatenation(List(GreensDClasses(x), GreensHClasses)));
-
-######################
-#JDM this should be modified
-
-InstallOtherMethod(GreensDClassData,  "data structure of D-class of an element", 
-[IsGreensDClass and IsGreensClassOfTransSemigp, IsGreensLClassData],
-function(class, L)
-local R, H, cosets, data, schutz, rep;
-
-rep:=Representative(L); # rep has correct kernel
-R:=GreensRClassData(GreensRClassOfElement(ParentAttr(class), rep));
-H:=GreensHClassData(GreensHClassOfElement(ParentAttr(class), rep));
-
-schutz:=H!.schutz;
-cosets:= RightCosets(R!.schutz, AsSubgroup(R!.schutz, H!.schutz));
-Apply(cosets, Representative);
-
-data:=DClassData(rec( rep:=rep, R:=R, L:=L, H:=H, cosets:=cosets, schutz:=schutz));
-
-return data;
-end);
-
-
-
-#############################################################################
-##
-#M  AsSSortedList( <DClassData> )
-##
-##  NOT Algorithm Q.
-##
-##  returns the elements of <DClassData>.
-## 
-
-InstallOtherMethod(AsSSortedList, "elements of D-class from data structure", 
-[IsGreensDClassData],
-function(D)
-local c, e, m, elts, cosets, mults, L, new;
-
-elts:= []; # list elements.
-cosets:=D!.cosets; # coset representatives
-mults:=D!.R!.perms; # multipliers of R-class
-L:=D!.L; # L-class
-
-for c in cosets do 
-	for m in mults do
-		for e in Elements(L) do
-			new:=e*c/m;
-			if not new in elts then 
-				Add(elts, new);
-			fi;
-		od;
-	od;
-od;
-
-SetSize(D, elts);
-return elts;
-
-end) ;
-
-#############################################################################
-##
-#M  GreensLClasses( <dclass> ) 
-##  
-##  all L-classes of Green's D-class <dclass>.
-##
-
-InstallOtherMethod(GreensLClasses, "for transformation semigroups",
-[IsGreensDClass],
-function(dclass)
-local M, x, c, m, classes, gens, rep, data, D, class;
-
-classes:= [];  
-M:=ParentAttr(dclass);
-D:=GreensDClassData(dclass);
-x:= D!.rep;  
-gens:= GeneratorsOfGroup(D!.L!.schutz);
-
-# loop over the cosets.
-for c in D!.cosets do
-
-	# loop over the L class representatives.
-	for m in D!.R!.perms do
-		rep:= x * (c/m);
-		data:=LClassData(rec(  rep:=rep, 
-		strongorb:=D!.L!.strongorb, 
-		relts:=D!.L!.relts, 
-		invrelts:=D!.L!.invrelts, 
-		schutz:=Group(List(gens, x-> x^(c/m)), ())));
-		class:=GreensLClassOfElement(M, rep);
-		SetGreensLClassData(class, data);
-		SetDClassOfLClass(class, dclass);
-		Add(classes, class);  
-	od;
-od;
-
-# return the list of L classes.
-return classes;
-end);
 
 #############################################################################
 ##
@@ -860,10 +431,7 @@ end);
 
 
 
-#############################################################################
 
-InstallMethod(SchutzenbergerGroup, "for GreensData",
-[IsGreensData], x-> x!.schutz );
 
 #############################################################################
 ##  JDM the following should be reviewed!
