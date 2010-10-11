@@ -46,26 +46,12 @@ iter1:=IteratorOfRClassReps(s);
 iter2:=IteratorOfRClassReps(s);
 NextIterator(iter1); NextIterator(iter2);
 
-RandomOrderEndo:=function(n)
-local out, i, m;
-
-out:=[Random([1..n])];
-
-for i in [1..n-1] do 
-	m:=Length(out);
-	if out[m]<n then 
-		out[m+1]:=Random([out[m]+1..n]);
-	else
-		out[m+1]:=n;
-	fi;
-od;
-
-return TransformationNC(out);
-end;
-
 s:=OrderPreservingSemigroup(20);
-f:=RandomOrderEndo(20);
+f:=Random(s);
 d:=GreensDClassOfElementNC(s, f);
+enum:=Enumerator(d);
+Length(enum);
+#it seems to take a long time to run through the enumerator!
 
 s:=FullTransformationSemigroup(10);
 f:=Transformation( [ 8, 10, 8, 5, 6, 10, 7, 2, 9, 9 ] );
