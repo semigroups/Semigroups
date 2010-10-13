@@ -11,25 +11,13 @@
 ##
 
 ReadPkg("monoid/gap/general.gd");
-#ReadPkg("monoid/gap/semigroups.gd");
-#ReadPkg("monoid/gap/semihomo.gd");
 ReadPkg("monoid/gap/orbits.gd");
 ReadPkg("monoid/gap/greens.gd");
 ReadPkg("monoid/gap/properties.gd");
 ReadPkg("monoid/gap/transform.gd");
-#ReadPkg("monoid/gap/autos.gd");
-#ReadPkg("monoid/gap/isomorph.gd");
-#ReadPkg("monoid/gap/congruences.gd");
 
 ###########################################################################
-##
-#M	InfoMonoid
-##
-##	the info class for the MONOID package, which can be used to obtain 
-##	information about computations as they are being performed. 
-##
-
-InfoMonoid:=NewInfoClass("InfoMonoid");;
+DeclareInfoClass("InfoMonoid");;
 
 #JDM remove
 
