@@ -1314,13 +1314,96 @@ return iter;
 end);
 
 #############################################################################
+# 
 
-InstallOtherMethod(IteratorOfGreensHClasses, "for an R-class", 
-[IsGreensRClass and IsGreensClassOfTransSemigp], 
+InstallOtherMethod(GreensHClasses, "for an R-class of a trans. semigp.", 
+[IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
-Error("not yet implemented!");
+local s, o, m, out, i, data, f, h;
+
+s:=r!.parent; o:=GreensDClass(r)!.o; m:=NrGreensHClasses(r);
+out:=EmptyPlist(m); 
+
+for i in [1..m] do 
+	data:=GreensHClassRepsData(r)[i]; 
+	if HasGreensHClassReps(r) then 
+		f:=GreensHClassReps(r)[i];
+	else
+		f:=HClassRepFromData(s, data, o);
+	fi;
+	h:=CreateHClass(s, data, o, f);
+	SetGreensRClass(h, r);
+	SetGreensDClass(h, GreensDClass(r));
+	out[i]:=h;
+od;
+
+return out;
 end);
 
+
+#############################################################################
+# JDM if d has GreensLClassReps, then could obtain the below more efficiently?
+# (probably not). Should we SetGreensLClassReps of d? 
+
+InstallOtherMethod(GreensHClassReps, "for an R-class of a trans. semigp.", 
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+local f, cosets, perms, out, k, i, j;
+
+# is the following worth it? JDM 
+#if HasGreensHClassRepsData(r) then 
+#	return List(GreensHClassRepsData(r), x-> 
+#	 HClassRepFromData(r!.parent, x, r!.o));
+#fi;
+
+f:= r!.rep;
+cosets:=DClassRCosets(GreensDClass(r));
+perms:=RClassPerms(r);
+
+out:=EmptyPlist(Length(perms)*Length(cosets));
+SetNrGreensHClasses(r, Length(perms)*Length(cosets));
+k:=0;
+
+for i in perms do 
+	for j in cosets do 
+		k:=k+1;
+		out[k]:=f*(j/i);
+	od;
+od;
+
+return out;
+end);
+
+#############################################################################
+# JDM if d has GreensLClassReps, then could obtain the below more efficiently?
+# (probably not). Should we SetGreensLClassReps of d? 
+
+InstallOtherMethod(GreensHClassRepsData, "for an R-class of a trans. semigp.", 
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+local f, scc, d, m, out, k, data, i, j;
+
+f:= r!.rep;
+scc:=RClassSCC(r);
+d:=GreensDClass(r);
+m:=Length(DClassRCosets(d));
+
+out:=EmptyPlist(Length(scc)*m);
+SetNrGreensHClasses(r, Length(scc)*m);
+
+k:=0;
+data:=[r!.data, d!.data[2]];
+
+for i in scc do 
+	for j in [1..m] do 
+		k:=k+1;
+		out[k]:=ShallowCopy(data);
+		out[k][3]:=[i,j];
+	od;
+od;
+
+return out;
+end);
 
 # new for 4.0!
 #############################################################################
@@ -1890,6 +1973,8 @@ s-> OrbitsOfImages(s)!.data);
 
 # new for 4.0!
 ############################################################################
+
+
 
 InstallMethod(RClassSCC, "for an R-class of a trans. semigp.",
 [IsGreensRClass and IsGreensClassOfTransSemigp],

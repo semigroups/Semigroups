@@ -31,15 +31,15 @@
 InstallMethod( \=, "for L-class and L-class of trans. semigp.",
 [IsGreensLClass and IsGreensClassOfTransSemigp, IsGreensLClass and 
 IsGreensClassOfTransSemigp],
-function(d1, d2)
-return d1!.rep in d2 and d2!.rep in d1;
+function(l1, l2)
+return l1!.parent=l2!.parent and l1!.rep in l2;
 end);
 
 #############################################################################
 # JDM not sure the following works! Test lots more! Clean up!
 
 InstallOtherMethod( \in, "for trans. and L-class of trans. semigp.",
-[IsTransformation, IsGreensLClass], 
+[IsTransformation, IsGreensLClass and IsGreensClassOfTransSemigp], 
 function(f, l)
 local rep, d, s, o, i, schutz, ol, perms, cosets;
 
@@ -108,7 +108,7 @@ d:=[];
 d[1]:=data[1]{[1..6]}; d[2]:=data[2]{[1..6]}; d[3]:=data[3];
 
 
-l:=Objectify(LClassType(s), rec(parent:=s, data:=data, 
+l:=Objectify(LClassType(s), rec(parent:=s, data:=d, 
 o:=orbit, rep:=rep));
 SetRepresentative(l, rep);
 SetEquivalenceClassRelation(l, GreensLRelation(s));
@@ -725,7 +725,7 @@ end);
 
 # new for 4.0!
 ############################################################################
-# JDM this should just be SchutzenbergerGroup!
+# JDM should this just be SchutzenbergerGroup?
 
 InstallMethod(LClassSchutzGp, "for an L-class of a trans. semigp.",
 [IsGreensLClass and IsGreensClassOfTransSemigp], 

@@ -14,10 +14,10 @@ ReadPkg("monoid/gap/general.gi");
 ReadPkg("monoid/gap/orbits.gi");
 ReadPkg("monoid/gap/greens.gi");
 ReadPkg("monoid/gap/transform.gi");
+ReadPkg("monoid/gap/h.gi");
 ReadPkg("monoid/gap/r.gi");
 ReadPkg("monoid/gap/l.gi");
 ReadPkg("monoid/gap/d.gi");
-ReadPkg("monoid/gap/h.gi");
 ReadPkg("monoid/gap/properties.gi");
 
 #JDM remove

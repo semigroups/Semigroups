@@ -16,54 +16,54 @@
 # - must find some reasonable examples to test this on.
 
 InstallMethod(IsBand, "for a transformation semigroup", 
-[IsTransformationSemigroup],
-function(s)
-local d;
+[IsTransformationSemigroup], s-> IsCompletelyRegularSemigroup(s) and IsGreensHTrivial(s));
+#function(s)
 
-if not IsCompletelyRegularSemigroup(s) then 
-  return false;
-fi;
+#local d;
 
-#return ForAll(GreensRClasses(s), x-> IsTrivial(GreensRClassData(x)!.schutz));
-for d in IteratorOfRClassRepsData(s) do 
-	if not IsTrivial(RClassSchutzGpFromData(s, d)) then	
-		return false;
-	fi;
-od;
+#if not IsCompletelyRegularSemigroup(s) then 
+#  return false;
+#fi;
 
-return true;
-end);
+#for d in IteratorOfRClassRepsData(s) do 
+#	if not IsTrivial(RClassSchutzGpFromData(s, d)) then
+#		return false;
+#	fi;
+#od;
+
+#return true;
+#end);
 
 
 # JDM new for 4.0!
 #############################################################################
-# - new method required
 
 InstallMethod(IsBlockGroup, "for a transformation semigroup",
 [IsTransformationSemigroup], 
-function(S)
-local R, r, ker, img_orb, numb, img, bool;
+function(s)
+local iter, r, f, o, scc, reg, n, i, j, d;
 
-if IsInverseSemigroup(S) then 
+if IsInverseSemigroup(s) then 
    return true;
-elif IsRegularSemigroup(S) then 
+elif IsRegularSemigroup(s) then 
    return false;
 fi;
 
-R:=GreensRClasses(S);
+iter:=IteratorOfRClassRepsData(s);
 
-for r in R do
-	r:=GreensRClassData(r);
-  ker:=KernelOfTransformation(r!.rep);
-  img_orb:=r!.strongorb;
-  numb:=0;
+for d in iter do
+	f:=RClassRepFromData(s, d)![1];
+  o:=RClassImageOrbitFromData(s, d);
+  scc:=RClassSCCFromData(s, d);
+  reg:=false;
+  n:=Length(o[1]);
   
-  for img in img_orb do
-		bool:=IsTransversal(ker,img);
-    if bool and numb<1 then
-    	numb:=numb+1;
-   	elif bool then 
+	for i in scc do 
+		j:=Length(Set(f{o[i]}));
+    if j=n and reg then
     	return false;
+   	elif j=n then 
+    	reg:=true;
     fi;
 	od;
 od;
@@ -127,7 +127,7 @@ return true;
 end);
 
 ###########################################################################
-#JDM here here here
+#JDM redo the following!
 # use Orb and looking for here!
 
 InstallMethod(IsCompletelyRegularSemigroup, "for a transformation semigroup", 
@@ -180,8 +180,22 @@ end);
 
 InstallMethod(IsGreensLTrivial, "for a transformation semigroup",
 [IsTransformationSemigroup],
-function(S)
-return ForAll(GreensLClasses(S), x-> Size(x)=1);
+function(s)
+local iter, d;
+
+iter:=IteratorOfGreensDClasses(s);
+
+#JDM here it would be useful to pass OrbitsOfKernels(s)!.orbits to 
+# RClassSchutzGpFromData...
+
+for d in iter do 
+	if not (Size(LClassSchutzGpFromData(s, d!.data[2]))=1 and 
+	 Length(LClassSCCFromData(s, d!.data[2]))=1) then
+		return false;
+	fi;
+od;
+
+return true;
 end);
 
 #############################################################################
@@ -190,15 +204,31 @@ end);
 InstallMethod(IsGreensRTrivial, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(s)
-local iter, r;
-iter:=IteratorOfGreensRClasses(s); #JDM should be IteratorOfRClassRepsData!
+local iter, r, d;
 
-repeat
-	r:=NextIterator(iter);
-	if Size(r)>1 then 
+if OrbitsOfKernels(s)!.finished then 
+	iter:=IteratorOfGreensDClasses(s);
+	for d in iter do 
+		if not (Size(RClassSchutzGpFromData(s, d!.data[1]))=1 and 
+		 Length(RClassSCCFromData(s, d!.data[1]))=1) then
+			return false;
+		fi;
+	od;
+	
+	return true;
+fi;
+
+iter:=IteratorOfRClassRepsData(s); 
+
+#JDM here it would be useful to pass OrbitsOfImages(s)!.orbits to 
+# RClassSchutzGpFromData...
+
+for d in iter do 
+	if not (Size(RClassSchutzGpFromData(s, d))=1 and 
+	 Length(RClassSCCFromData(s, d))=1) then 
 		return false;
 	fi;
-until IsDoneIterator(iter);
+od;
 
 return true;
 end);
@@ -209,8 +239,19 @@ end);
 #[IsTransformationSemigroup], 
 #function(s)
 #local iter, g;
-
 #JDM only have to check regular D-classes!
+
+#if OrbitsOfKernels(s)!.finished then 
+#iter:=IteratorOfGreensDClasses(s);
+#	for d in iter do 
+#		if not (Size(RClassSchutzGpFromData(s, d!.data[1]))=1 and 
+#		 Length(RClassSCCFromData(s, d!.data[1]))=1) then
+#			return false;
+#		fi;
+#	od;
+#	
+#	return true;
+#fi;
 
 #iter:=IteratorOfGreensDClasses(s);
 #repeat 

@@ -803,6 +803,8 @@ DeclareGlobalFunction("RClassRepFromData");
 DeclareGlobalFunction("RClassImageOrbitFromData");
 DeclareAttribute("RClassImageOrbit", IsGreensRClass and 
  IsGreensClassOfTransSemigp);
+DeclareAttribute("RClassImageOrbitSCC", IsGreensRClass and 
+ IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("RClassSchutzGpFromData");
 # RclassSchutzGp = SchutzenbergerGroup!
 DeclareGlobalFunction("RClassStabChainFromData");
@@ -827,6 +829,7 @@ DeclareAttribute("LClassSCC", IsGreensLClass and
 DeclareAttribute("LClassRels", IsGreensLClass and 
  IsGreensClassOfTransSemigp);
 
+DeclareGlobalFunction("HClassRepFromData");
 DeclareGlobalFunction("LClassRepFromData");
 DeclareGlobalFunction("LClassKernelOrbitFromData");
 DeclareAttribute("LClassKernelOrbit", IsGreensLClass and 
@@ -854,14 +857,19 @@ DeclareGlobalFunction("DClassImgSCCFromData");
 
 DeclareGlobalFunction("DClassRClassRepsDataFromData");
 
-
 DeclareAttribute("GreensDClass", IsGreensRClass);
+DeclareAttribute("GreensRClass", IsGreensHClass);
+DeclareAttribute("GreensLClass", IsGreensHClass);
+
 DeclareGlobalFunction("CreateRClass");
 DeclareGlobalFunction("CreateDClass");
 DeclareGlobalFunction("CreateLClass");
+DeclareGlobalFunction("CreateHClass");
+
 DeclareAttribute("RClassType", IsTransformationSemigroup);
 DeclareAttribute("DClassType", IsTransformationSemigroup);
 DeclareAttribute("LClassType", IsTransformationSemigroup);
+DeclareAttribute("HClassType", IsTransformationSemigroup);
 
 DeclareGlobalFunction("KerRightToImgLeftFromData");
 DeclareAttribute("KerRightToImgLeft", IsGreensDClass and 
@@ -939,6 +947,9 @@ DeclareGlobalFunction("ForwardOrbitOfKernel");
 DeclareAttribute("GreensRClassRepsData", IsTransformationSemigroup);
 DeclareGlobalFunction("RClassRepsData");
 DeclareAttribute("GreensLClassRepsData", IsTransformationSemigroup);
+
+DeclareAttribute("GreensHClassReps", IsTransformationSemigroup);
+DeclareAttribute("GreensHClassRepsData", IsTransformationSemigroup);
 
 DeclareProperty("IsOrbitsOfImages", IsObject);
 DeclareProperty("IsOrbitsOfKernels", IsObject);

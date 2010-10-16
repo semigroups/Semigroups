@@ -100,3 +100,27 @@ s:=Semigroup(gens);
 f:=Transformation( [ 1, 1, 7, 6, 6, 7, 2, 1 ] );
 d:=GreensDClassOfElement(s, f);
 GreensRClassReps(d);
+
+
+gens:=[ Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ), 
+  Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] ) ];
+s:=Semigroup(gens);
+f:=Transformation( [ 4, 8, 8, 7, 6, 2, 5, 8 ] );
+r:=GreensRClassOfElement(s, f);
+d:=GreensDClass(r);
+
+gens:=[ Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ), 
+  Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] ) ];
+s:=Semigroup(gens);
+f:=Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] );
+r:=GreensRClassOfElement(s, f);
+d:=GreensDClass(r);
+R:=GreensRClasses(d);
+r:=R[10];
+GreensHClassRepsData(r);
+
+
+
+
+
+

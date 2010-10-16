@@ -32,12 +32,12 @@
 
 #############################################################################
 
-InstallMethod( \=, "for D-class of trans. semigp. and D-class of trans. semigp.",
+InstallMethod( \=, "for D-class and D-class of trans. semigp.",
 [IsGreensDClass and IsGreensClassOfTransSemigp, IsGreensDClass and 
 IsGreensClassOfTransSemigp],
 function(d1, d2)
 
-return d1!.rep in d2 and d2!.rep in d1;
+return d1!.parent=d2!.parent and d1!.rep in d2;
 end);
 
 #############################################################################
@@ -633,7 +633,7 @@ if d[1] or d[2] then # f in s!
 	if d[2] then # f in existing D-class
 		data[2]:=d[3][2];
 	else #f not in existing D-class
-		data[2]:=AddToOrbitsOfKernels(s, f, d[3]);
+		data:=AddToOrbitsOfKernels(s, f, d[3]);
 	fi;
 	
 	return CreateDClass(s, data, [OrbitsOfImages(s), 
@@ -806,27 +806,27 @@ end);
 InstallOtherMethod(GreensLClassRepsData, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
 function(d)
-local f, perms, cosets, reps, data, i, j, r, scc;
+local f, scc, m, out, k, data, i, j;
 
 f:=Representative(d);
-perms:=RClassPerms(d);
 scc:=RClassSCC(d);
-cosets:=DClassRCosets(d);
+m:=Length(DClassRCosets(d));
 
-data:=EmptyPlist(Length(perms)*Length(cosets));
-SetNrGreensLClasses(d, Length(perms)*Length(cosets));
+out:=EmptyPlist(Length(scc)*m);
+SetNrGreensLClasses(d, Length(scc)*m);
 
-for i in [1..Length(perms)] do 
-	if i in scc then 
-		for j in [1..Length(cosets)] do 
-			r:=Length(data);
-			data[r+1]:=ShallowCopy(d!.data);
-			data[r+1][3]:=[i,j];
-		od;
-	fi;
+k:=0;
+data:=d!.data;
+
+for i in scc do 
+	for j in [1..m] do 
+		k:=k+1;
+		out[k]:=ShallowCopy(data);
+		out[k][3]:=[i,j];
+	od;
 od;
 
-return data;
+return out;
 end);
 
 #############################################################################
@@ -835,8 +835,9 @@ end);
 InstallOtherMethod(GreensLClassReps, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
 function(d)
-local perms, cosets, f, out, i, j;
+local perms, cosets, f, out, i, j, k;
 
+# is the following worth it? JDM 
 if HasGreensLClassRepsData(d) then 
 	return List(GreensLClassRepsData(d), x-> 
 	 LClassRepFromData(d!.parent, x, d!.o));
@@ -848,10 +849,12 @@ f:=Representative(d);
 
 out:=EmptyPlist(Length(perms)*Length(cosets));
 SetNrGreensLClasses(d, Length(perms)*Length(cosets));
+k:=0;
 
 for i in perms do 
 	for j in cosets do 
-		out[Length(out)+1]:=f*(j/i);
+		k:=k+1;
+		out[k]:=f*(j/i);
 	od;
 od;
 
@@ -868,7 +871,7 @@ local f, rels, cosets, j, k, m, out, val, l, a, b, g, data, orbits;
 
 out:=DClassRClassRepsDataFromData(d!.parent, d!.data, d!.o);
 
-if not out=[] then 
+if Length(out)=NrGreensRClasses(d) then 
 	return out;
 fi;
 
@@ -946,11 +949,12 @@ end);
 InstallOtherMethod(GreensLClasses, "for a D-class of a trans. semigroup",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
 function(d)
-local s, o, out, i, f, l, data;
+local s, o, m, out, i, f, l, data;
 
-s:=d!.parent; o:=d!.o; out:=EmptyPlist(NrGreensLClasses(d)); 
+s:=d!.parent; o:=d!.o; m:=NrGreensLClasses(d);
+out:=EmptyPlist(m); 
 
-for i in [1..Length(GreensLClassRepsData(d))] do 
+for i in [1..m] do 
 	data:=GreensLClassRepsData(d)[i]; 
 	if HasGreensLClassReps(d) then 
 		f:=GreensLClassReps(d)[i];
@@ -959,7 +963,7 @@ for i in [1..Length(GreensLClassRepsData(d))] do
 	fi;
 	l:=CreateLClass(s, data, o, f);
 	SetGreensDClass(l, d);
-	out[Length(out)+1]:=l;
+	out[i]:=l;
 od;
 
 return out;
@@ -971,15 +975,16 @@ end);
 InstallOtherMethod(GreensRClasses, "for a D-class of a trans. semigroup",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
 function(d)
-local s, o, out, f, r;
+local s, o, out, f, r, data;
 
-s:=d!.parent; o:=d!.o[1]; out:=EmptyPlist(NrGreensRClasses(d)); 
+s:=d!.parent; o:=d!.o[1]; 
+out:=EmptyPlist(NrGreensRClasses(d)); 
 
-for d in GreensRClassRepsData(d) do 
-	f:=RClassRepFromData(s, d, o);
-	r:=CreateRClass(s, d, o, f);
+for data in GreensRClassRepsData(d) do 
+	f:=RClassRepFromData(s, data, o);
+	r:=CreateRClass(s, data, o, f);
 	SetGreensDClass(r, d);
-	out[Length(out)+1]:=r;
+	out[Length(out)+1]:=r;#JDM change this line!
 od;
 
 return out;

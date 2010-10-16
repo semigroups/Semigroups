@@ -44,32 +44,6 @@ return ec;
 end);
 
 
-#############################################################################
-
-InstallOtherMethod(GreensHClasses, "for an R-class", 
-[IsGreensRClass], 
-function(rc)
-local D, x, c, m, classes, class, R;
-
-classes:= []; 
-R:=GreensRClassData(rc); 
-x:= R!.rep;
-D:=GreensDClassData(DClassOfRClass(rc));
-#JDM see GreensHClasses of an L-class below
-
-# loop over the cosets.
-for c in D!.cosets do 
-	# loop over the class representatives.
-	for m in R!.perms do
-		class:=GreensHClassOfElement(ParentAttr(rc), x * (c/m));
-		SetRClassOfHClass(class, rc);
-		Add(classes, class);
-	od;
-od;
-
-return classes;
-end );
-
 
 
 
