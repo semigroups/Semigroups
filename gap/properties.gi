@@ -619,7 +619,7 @@ end);
 InstallOtherMethod(IsZeroSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup],
 function(s)
-local z, x, y;
+local z, x, y, gens;
 
 z:=MultiplicativeZero(s);
 gens:=GeneratorsOfSemigroup(s);
@@ -652,7 +652,7 @@ zero:=MultiplicativeZero(s);
 one:=MultiplicativeNeutralElement(s);
 
 if not (zero=fail or one=fail) and NrGreensHClasses(s)=2 then 
-	return IsGroupHClass(GreensHClassOfElement(S, one));
+	return IsGroupHClass(GreensHClassOfElement(s, one));
 fi;
 
 return false;
@@ -662,8 +662,8 @@ end);
 
 InstallOtherMethod(MultiplicativeZero, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
-function(S)
-
+function(s)
+local n, gens, max, bound, o;
 n:=Degree(s); gens:=Generators(s);
 
 max:=Maximum(List(gens, Degree));
@@ -673,11 +673,25 @@ else
 	bound:=Sum([1..max], x-> Binomial(n, x));
 fi;
 
-o:=Orb(gens, [1..n], OnSets, rec(storenumbers:=true, 
-lookingfor:=function(o, x) Length(x)=1; end));
+o:=Orb(gens, [1..n], OnSets, rec(
+gradingfunc:=function(o, x) return Length(x); end,
+onlygrades:=[1..max],
+lookingfor:=function(o, x) return Length(x)=1; end));
+Enumerate(o, bound);
 
 if IsPosInt(PositionOfFound(o)) then 
-
+	f:=TransformationNC(ListWithIdenticalEntries(n, 
+	 o[PositionOfFound(o)][1]));
+	if Size(GreensDClassOfElement(s, f))=1 then #JDM NC?
+		return f;
+	fi;
+else
+	i:=Positions(Grades(o), Minimum(Grades(o)));
+	#JDM HERE HERE HERE HERE now find kernels of minimum size, 
+	# form idempotents, check if they're in s, and if their 
+	# DClasses have size 1...
+	
+fi;
 
 return fail;
 end);
