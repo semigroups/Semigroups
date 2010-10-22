@@ -465,10 +465,10 @@ DeclareProperty("IsRightZeroSemigroup", IsTransformationSemigroup);
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-DeclareProperty("IsSemiBand", IsTransformationSemigroup);
+DeclareProperty("IsIdempotentGenerated", IsTransformationSemigroup);
 
 #JDM new for 3.2!
-DeclareSynonymAttr("IsIdempotentGeneratedSemigroup", IsSemiBand);
+DeclareSynonymAttr("IsSemiBand", IsIdempotentGenerated);
 
 ###########################################################################
 ##	<#GAPDoc Label="IsSemilatticeAsSemigroup">

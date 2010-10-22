@@ -818,6 +818,9 @@ DeclareAttribute("RClassSCC", IsGreensRClass and
  IsGreensClassOfTransSemigp);
 
 DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
+DeclareOperation("GreensHClassOfElementNC", [IsTransformationSemigroup]);
+
+DeclareGlobalFunction("HClass");
 
 #JDM remove the following later!
 DeclareGlobalFunction("RClassRepsDataFromOrbits");

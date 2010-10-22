@@ -42,6 +42,47 @@ end);
 
 #############################################################################
 
+InstallMethod( \=, "for R-class and D-class of trans. semigp.",
+[IsGreensRClass and IsGreensClassOfTransSemigp, IsGreensDClass and 
+IsGreensClassOfTransSemigp],
+function(r, d)
+
+return r!.parent=d!.parent and d!.rep in r and Size(d)=Size(r);
+end);
+
+#############################################################################
+
+InstallMethod( \=, "for D-class and R-class of trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp, IsGreensRClass and 
+IsGreensClassOfTransSemigp],
+function(d, r)
+
+return r!.parent=d!.parent and d!.rep in r and Size(d)=Size(r);
+end);
+
+#############################################################################
+
+InstallMethod( \=, "for L-class and D-class of trans. semigp.",
+[IsGreensLClass and IsGreensClassOfTransSemigp, IsGreensDClass and 
+IsGreensClassOfTransSemigp],
+function(l, d)
+
+return l!.parent=d!.parent and d!.rep in l and Size(d)=Size(l);
+end);
+
+#############################################################################
+
+InstallMethod( \=, "for D-class and R-class of trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp, IsGreensLClass and 
+IsGreensClassOfTransSemigp],
+function(d, l)
+
+return l!.parent=d!.parent and d!.rep in l and Size(d)=Size(l);
+end);
+
+
+#############################################################################
+
 InstallOtherMethod(\in, "for trans. and D-class of trans. semigp.",
 [IsTransformation, IsGreensDClass and IsGreensClassOfTransSemigp],
 function(f, d)
@@ -134,12 +175,14 @@ if k = fail then #new ker and l,m,val,n,g=fail
 	oo:=ForwardOrbitOfKernel(s, f, fail, gens);
 	
 	if IsBound(O[j]) then 
-		Add(O[j], oo);
-	else 
+		k:=Length(O[j])+1;
+		O[j][k]:=oo;
+	else
+		k:=1; 
 		O[j]:=[oo];
 	fi;
-	k:=Length(O[j]);
-	data:=[data[1], [j, k, 1, 1, 1, 1]];
+	
+	data:=[data[1]{[1..6]}, [j, k, 1, 1, 1, 1]];
 	
 	Add(oo!.r_reps[1][1][1], data[1]);
 	Add(oo!.d_schutz[1], [SchutzGpOfDClass(s, data)]);
@@ -677,10 +720,31 @@ local s, d, o, rep;
 s:=l!.parent;
 d:=l!.data{[1,2]};
 o:=l!.o;
+#JDM couldn't the below be DClassRepFromData(s, l!.data, o)?
 rep:=LClassRepFromData(s, Concatenation(d, [[1,1]]), o);
 
 return CreateDClass(s, d, o, rep);
 end);
+
+#new for 4.0!
+#############################################################################
+# JDM test!
+
+InstallOtherMethod(GreensDClass, "for an H-class of a trans. semigroup", 
+[IsGreensHClass and IsGreensClassOfTransSemigp], 
+function(h)
+local s, d, o, rep;
+
+s:=h!.parent;
+d:=h!.data;
+o:=h!.o;
+rep:=DClassRepFromData(s, d, o);
+
+d:=d{[1,2]}; #JDM this line can be omitted when things are cleanup!
+
+return CreateDClass(s, d, o, rep);
+end);
+
 
 # new for 4.0!
 #############################################################################
@@ -701,7 +765,6 @@ od;
 
 return out;
 end);
-
 
 
 # new for 4.0!
@@ -970,6 +1033,17 @@ return out;
 end);
 
 #############################################################################
+# JDM could this be better/more efficient!
+
+InstallOtherMethod(GreensHClasses, "for a D-class of a trans. semigroup",
+[IsGreensDClass and IsGreensClassOfTransSemigp], 
+function(d)
+
+return Concatenation(List(GreensRClasses(d), GreensHClasses));
+end);
+
+
+#############################################################################
 #
 
 InstallOtherMethod(GreensRClasses, "for a D-class of a trans. semigroup",
@@ -1056,6 +1130,9 @@ end);
 # Usage: s, f, [d_img, d_ker] or s, f, or  s, f, [d_img, d_ker], 
 # [OrbitsOfImages(s), OrbitsOfKernels(s)]
 
+# returns the data of the D-class containing f in s if it has already been 
+# computed, except that the <l> value corresponds to f and not the D-class!
+
 #JDM change the syntax here to that we use OrbitsOfImages!.orbits and 
 #OrbitsOfKernels!.orbits as arguments
 
@@ -1092,13 +1169,14 @@ if Length(arg)>=3 and not arg[3]=[] then
 else
 	d:=InOrbitsOfImages(s, f, O[1]!.orbits, []); 
 	#JDM change the syntax of InOrbitsOfImgs
+	ker:=KernelOfTransformation(f);
+	j:=Length(ker);
+
 	if not d[1] then 
 		return [d[1], false, [d[2], [j, fail, fail, fail, fail, 0, fail, fail]]];
 	fi;
 	f:=d[2][7];
-	d[2][3]:=RClassSCCFromData(s, d[2], O[1])[1]; #rectify the image!
-	ker:=KernelOfTransformation(f);
-	j:=Length(ker);
+	#d[2][3]:=RClassSCCFromData(s, d[2], O[1])[1]; #rectify the image! JDM why?
 fi;
 
 O:=O[2]!.orbits;
@@ -1174,7 +1252,7 @@ if HasIdempotents(d) then
 	return not Idempotents(d)=[];
 fi;
 
-return IsRegularRClassData(d!.parent, d!.data[1], d!.rep, d!.o[1]);
+return IsRegularRClassData(d!.parent, d!.data[1], d!.o[1], d!.rep);
 end);
 
 #############################################################################
@@ -1474,6 +1552,15 @@ end);
 
 #############################################################################
 
+InstallOtherMethod(NrGreensHClasses, "for a D-class of a trans. semigroup",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+return NrGreensRClasses(d)*NrGreensLClasses(d);
+end);
+
+
+#############################################################################
+
 InstallOtherMethod(NrIdempotents, "for an D-class", 
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
@@ -1668,6 +1755,9 @@ if not Size(g)=1 then
 	else
 		h:=LClassSchutzGpFromData(s, d[2], o[2]);
 		h:=SubgroupProperty(g, x -> x^p in h);
+		#JDM if both LClassSchutzGp and RClassSchutzGp are the symmetric group
+		# then take the symmetric group on the intersection of MovedPoints. 
+		# this is much faster than using Intersection...
 	fi;
 else
 	h:=g;

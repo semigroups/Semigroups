@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  greens_r_orb.gi
+#W  r.gi
 #Y  Copyright (C) 2006-2010                             James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -342,17 +342,17 @@ if k = fail then #new img and l, m, val, n, g=fail
 ################################################################################
 
 	if IsBound(O[j]) then 
-		oo:=ForwardOrbitOfImage(s, f, images[j], gens);
+		oo:=ForwardOrbitOfImage(s, f, images, gens);
 		Add(O[j], oo[1]);
 	else
-		images[j]:=HTCreate(ImageSetOfTransformation(f));
-		oo:=ForwardOrbitOfImage(s, f, images[j], gens);
+		#images[j]:=HTCreate(ImageSetOfTransformation(f));
+		oo:=ForwardOrbitOfImage(s, f, images, gens);
 		O[j]:=[oo[1]];
 	fi;
 	
 	#JDM new!
 	for i in oo[1] do 
-		HTAdd(images[j], i, true);
+		HTAdd(images, i, true);
 	od;
 	#JDM new ends
 
@@ -497,8 +497,8 @@ n:=o_s!.deg;
 
 o_t:= Objectify(NewType(FamilyObj(t), IsOrbitsOfImages), 
 rec( finished:=false,
-     orbits:=EmptyPlist(n), 
-     images:=EmptyPlist(n),
+     orbits:=EmptyPlist(n),
+     images:=HTCreate(ImageSetOfTransformation(new[1])),
      at:=0, 
      gens:=Generators(t),
      s:=t,
@@ -1185,28 +1185,38 @@ if HasIdempotents(r) then
 	return Length(Idempotents(r))>0; 
 fi;
 
-return IsRegularRClassData(r!.parent, r!.data, r!.rep, r!.o);
+return IsRegularRClassData(r!.parent, r!.data, r!.o, r!.rep);
 end);
 
 #############################################################################
 # the following exists to avoid creating an R-class before check that it is 
 # regular!
 
+#s, d, o, f
+
 InstallGlobalFunction(IsRegularRClassData, 
 function(arg)
 local f, img, m, i, s, d, o;
 
-s:=arg[1]; d:=arg[2]; f:=arg[3];
+s:=arg[1]; d:=arg[2]; 
 
 if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
   return true;
 fi;
 
-if Length(arg)=4 then 
-	o:=arg[4];
+if Length(arg)>=3 then 
+	o:=arg[3];
 else
 	o:=OrbitsOfImages(s);
 fi;
+
+if Length(arg)=4 then 
+	f:=arg[4];
+else
+	f:=RClassRepFromData(s, d, o);
+fi;
+
+
 
 img:= ImageListOfTransformation(f);
 m:=Length(ImageSetOfTransformation(f));
@@ -1650,7 +1660,7 @@ end);
 InstallOtherMethod(NrIdempotents, "for an R-class of a trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
-local out, ker, rep, n, o, i, img, j;
+local out, ker, rep, n, o, i, img, j, scc;
 
 if HasIdempotents(r) then 
 	return Length(Idempotents(r));
@@ -1660,13 +1670,19 @@ if HasIsRegularRClass(r) and not IsRegularRClass(r) then
 	return 0;
 fi;
 
+if Rank(r!.rep)=Degree(r!.parent) then 
+	return 1;
+fi;
+
 out:= 0;
 ker:= KernelOfTransformation(r!.rep);
 rep:=r!.rep![1];
 n:=Length(Set(rep));
-o:=r!.o{RClassSCC(r)}; #JDM1
+scc:=RClassSCC(r); #JDM1
+o:=RClassImageOrbit(r);
 
-for i in o do
+for i in scc do #JDM loop over RClassSCC not o!
+	i:=o[i];
 	img:=EmptyPlist(n);
 	j:=1;
 	while j<=n and POS_LIST_DEFAULT(img, rep[i[j]], 0)=fail do
@@ -1739,8 +1755,8 @@ type:=NewType(FamilyObj(s), IsOrbitsOfImages);
 
 return Objectify(type, rec(
   finished:=false, 
-  orbits:=EmptyPlist(n), 
-  images:=EmptyPlist(n), 
+  orbits:=EmptyPlist(n),
+  images:=HTCreate(ImageSetOfTransformation(gens[1])),
   at:=0, 
   gens:=gens,
   s:=s,

@@ -578,6 +578,25 @@ end);
 
 
 ###########################################################################
+#
+
+#JDM add error handling below... and review it!
+
+InstallOtherMethod(AsPermutation, "for a transformation and a set", 
+[IsTransformation, IsList], 
+function(f, set)
+local a;
+
+a:=f![1]{set};
+
+if IsDuplicateFree(a) then 
+	return MappingPermListList(set, a);
+fi;
+
+return fail;
+end);
+
+###########################################################################
 ##
 ##	<#GAPDoc Label="SmallestIdempotentPower">
 ##	<ManSection> 

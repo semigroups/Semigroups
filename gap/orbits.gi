@@ -681,35 +681,53 @@ end);
 ###########################################################################
 # JDM require C version! and should subsequently be moved to orbits_no_orb.gi
 
-InstallGlobalFunction(OnKernelsAntiAction, [IsList, IsTransformation],
-function(ker, s)
-local n, pos, new, loc, i, img;
+#InstallGlobalFunction(OnKernelsAntiAction, [IsList, IsTransformation],
+#function(ker, s)
+#local n, pos, new, loc, i, img;
 
-n:= DegreeOfTransformation(s);  
-pos:= []; new:= []; loc:= [];
-img:=s![1];
+#n:= DegreeOfTransformation(s);  
+#pos:= []; new:= []; loc:= [];
+#img:=s![1];
 
 # construct transformation 'pos' with kernel 'ker'.
-for i in [1..Length(ker)] do
-	pos{ker[i]}:= List(ker[i], x-> i);
-od;
+#for i in [1..Length(ker)] do
+#	pos{ker[i]}:= List(ker[i], x-> i);
+#od;
 
 # apply 's' from the left.
-pos:= pos{img};
+#pos:= pos{img};
 
 # determine kernel.
-for i in [1..n] do 
-	if IsBound(loc[pos[i]]) then
-		Add(new[loc[pos[i]]], i);
-	else
-		Add(new, [i]);
-		loc[pos[i]]:= Length(new);
-	fi;
-od;
+#for i in [1..n] do 
+#	if IsBound(loc[pos[i]]) then
+#		Add(new[loc[pos[i]]], i);
+#	else
+#		Add(new, [i]);
+#		loc[pos[i]]:= Length(new);
+#	fi;
+#od;
 
 # return the kernel.
-return new;
-end) ;
+#return new;
+#end) ;
+
+###########################################################################
+
+InstallGlobalFunction(OnKernelsAntiAction, [IsList, IsTransformation],
+function(ker, f)
+local n, g, i, h;
+
+n:= DegreeOfTransformation(f);  
+g:= EmptyPlist(n); 
+
+for i in [1..Length(ker)] do
+	g{ker[i]}:= ListWithIdenticalEntries(Length(ker[i]), i);
+od;
+
+g:= TransformationNC(g{f![1]});
+return KernelOfTransformation(g);
+end);
+
 
 ###########################################################################
 # JDM require C version! and should subsequently be moved to orbits_no_orb.gi
@@ -750,226 +768,107 @@ return res;
 end);
 
 ###########################################################################
-# JDM should be rewritten! and moved into orbits_no_orb and orbits_orb
+#
 
 InstallMethod(ImagesOfTransSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup],
-function(M)
-local gens, orb, imgs, x, y, new, limit, n;
+function(s)
+local n, gens, max, bound, o;
  
-if HasGradedImagesOfTransSemigroup(M) then 
-	return Union(GradedImagesOfTransSemigroup(M));
-elif HasAsSSortedList(M) then #JDM new for 3.1.4
-	return Set(List(Elements(M), x-> AsSet(x![1])));
-else
+#if OrbitsOfImages(s)!.finished then 
+#	return OrbitsOfImages(s)!.images;
+#elif HasAsSSortedList(M) then #JDM new for 3.1.4
+#	return Set(List(Elements(M), x-> AsSet(x![1])));
+#fi;
 
-	n:=DegreeOfTransformationSemigroup(M);
-	if IsTransformationMonoid(M) then 
-		gens:=GeneratorsOfMonoid(M);
-	else
-		gens:=GeneratorsOfSemigroup(M); 
-	fi;
+n:=Degree(s); gens:=Generators(s);
 
-	imgs:=SetX(GeneratorsOfSemigroup(M), ImageSetOfTransformation);
-
-	if HasParentAttr(M) and Length(GeneratorsOfSemigroup(ParentAttr(M)))<Length(gens) then 
-		limit:=Length(ImagesOfTransSemigroup(ParentAttr(M)));
-	else 
-		limit:=Sum([1..Maximum(List(gens, DegreeOfTransformation))], x-> 
-		Binomial(n, x));
-	fi;
-
-	if Length(imgs)=limit then 
-		return imgs;
-	fi;
-
-	orb:=List(GeneratorsOfSemigroup(M), ImageSetOfTransformation);
-
-	for x in orb do
-		for y in gens do 
-			new:=OnSets(x,y);
-			if not new in imgs then 
-				AddSet(imgs, new);
-				if Length(imgs)=limit then 
-					return imgs;
-				fi;
-				Add(orb, new);
-			fi;
-		od;
-	od;
-	return imgs;
-fi;
-end );
-
-###########################################################################
-# JDM should be rewritten! and moved into orbits_no_orb and orbits_orb
-
-InstallOtherMethod(ImagesOfTransSemigroup, "for  a trans. semigroup and a pos. int.", 
-[IsTransformationSemigroup, IsPosInt],
-function(S, m)
-local n, gens, imgs, limit, orb, i, x, j, y, new, setorb;
-
-#if HasGradedImagesOfTransSemigroup(M) then 
-#	return Set(Concatenation(GradedImagesOfTransSemigroup(M)));
+#max:=Maximum(List(gens, Degree));
+#if max=n then 
+#	bound:=2^n;
 #else
+#	bound:=Sum([1..max], x-> Binomial(n, x));
+#fi;
 
-n:=DegreeOfTransformationSemigroup(S);
+o:=Orb(gens, [1..n], OnSets, rec(storenumbers:=true));
+#Enumerate(o, bound);
 
-if m>n then 
-	return fail;
-fi;
-
-if IsTransformationMonoid(S) then 
-	gens:=GeneratorsOfMonoid(S);
-else
-	gens:=GeneratorsOfSemigroup(S); 
-fi;
-
-imgs:=List(GeneratorsOfSemigroup(S), x-> AsSet(x![1]));
-imgs:=Set(Filtered(imgs, x->Length(x)=m));
-
-limit:=Binomial(n, m);
-
-if not Length(imgs)=limit and ForAny(gens, x-> Length(AsSet(x![1]))>= m) then 
-	orb:=List(GeneratorsOfSemigroup(S), x-> AsSet(x![1]));
-	setorb:=Set(orb);
-	i:=0;
-	
-	repeat
-		i:=i+1;
-		x:=orb[i];
-		j:=0;
-		repeat
-			j:=j+1;
-			y:=gens[j];
-			new:=OnSets(x,y);
-			if Length(new)>=m and not new in setorb then 
-				AddSet(setorb, new);
-				Add(orb, new);
-				if Length(new)=m then 
-					AddSet(imgs, new);
-				fi;
-			fi;
-		until Length(imgs)=limit or j=Length(gens);
-	until Length(imgs)=limit or i=Length(orb);
-fi;
-
-return imgs;
-end );
+return o;
+end);
 
 ###########################################################################
-# JDM should be rewritten! and moved into orbits_no_orb and orbits_orb
+# 
+
+InstallOtherMethod(ImagesOfTransSemigroup, "for trans. semigp. and pos. int.", 
+[IsTransformationSemigroup, IsPosInt],
+function(s, m)
+local n, gens, max, bound, o;
+n:=Degree(s); gens:=Generators(s);
+max:=Maximum(List(gens, Degree));
+bound:=Sum([m..max], x-> Binomial(n, x));
+
+o:=Orb(gens, [1..n], OnSets, rec(storenumbers:=true, 
+gradingfunc:=function(o,x) return Length(x); end, 
+onlygrades:=[m..n]));
+#Enumerate(o, bound);
+
+return o;
+end );
+
+########################################################################### 
+# JDM it would be very useful here to make use of any kernels already known
+# from the D-class computation!
 
 InstallOtherMethod(KernelsOfTransSemigroup, "for a trans. semigroup", 
-[IsTransformationSemigroup, IsPosInt],  
-function(S, m)
-local n, gens, imgs, limit, orb, i, x, j, y, new, setorb;
+[IsTransformationSemigroup],  
+function(s)
+local n, gens, max, bound, o, hf, treehashsize;
 
-#if HasGradedKernelsOfTransSemigroup(M) then 
-#	return Set(Concatenation(GradedKernelsOfTransSemigroup(M)));
-#elif HasInternalKernels(M) then 
-#	return Set(Concatenation(InternalKernels(M))); 
-#else
+n:=Degree(s); gens:=Generators(s);
 
-n:=DegreeOfTransformationSemigroup(S);
+max:=Maximum(List(gens, Degree));
 
-if m>n then 
-	return fail;
-fi;
-
-if IsTransformationMonoid(S) then 
-	gens:=GeneratorsOfMonoid(S);
+if max=n and n<1000 then 
+	bound:=Bell(n);
+	treehashsize:=bound;
+elif n<1000 then 
+	bound:=Sum([1..max], x-> Stirling2(n, x));
+	treehashsize:=bound;
 else
-	gens:=GeneratorsOfSemigroup(S); 
+	bound:=infinity;
+	treehashsize:=100000;
 fi;
 
-imgs:=List(GeneratorsOfSemigroup(S), KernelOfTransformation);
-imgs:=Set(Filtered(imgs, x->Length(x)=m));
+o:=Orb(s, List([1..n], x-> [x]), OnKernelsAntiAction, rec(storenumbers:=true, 
+ treehashsize:=NextPrimeInt(Minimum(100000, 3*treehashsize))));
+ 
+#Enumerate(o, bound);
 
-limit:=Stirling2(n, m);
+return o;
+end);
 
-if not Length(imgs)=limit and ForAny(gens, x-> Length(KernelOfTransformation(x))>= m) then 
-	orb:=List(GeneratorsOfSemigroup(S), KernelOfTransformation);
-	setorb:=Set(orb);
-	i:=0;
-	
-	repeat
-		i:=i+1;
-		x:=orb[i];
-		j:=0;
-		repeat
-			j:=j+1;
-			y:=gens[j];
-			new:=OnKernelsAntiAction(x,y);
-			if Length(new)>=m and not new in setorb then 
-				AddSet(setorb, new);
-				Add(orb, new);
-				if Length(new)=m then 
-					AddSet(imgs, new);
-				fi;
-			fi;
-		until Length(imgs)=limit or j=Length(gens);
-	until Length(imgs)=limit or i=Length(orb);
-fi;
+########################################################################### 
+# JDM it would be very useful here to make use of any kernels already known
+# from the D-class computation!
 
-return imgs;
-end );
+InstallOtherMethod(KernelsOfTransSemigroup, "for a trans. semigroup", 
+[IsTransformationSemigroup, IsPosInt], 
+function(s, m)
+local n, gens, bound, treehashsize, o;
 
-###########################################################################
-# JDM should be rewritten! and moved into orbits_no_orb and orbits_orb
+n:=Degree(s); gens:=Generators(s);
 
-InstallMethod(KernelsOfTransSemigroup, "for a transformation monoid", 
-[IsTransformationSemigroup], 
-function(M)
-local gens, imgs, orb, x, y, new, ker, n, limit;
+bound:=Sum(List([m..n], i-> Stirling2(n, i)));
+treehashsize:=bound;
 
-if HasGradedKernelsOfTransSemigroup(M) then 
-	return Union(GradedKernelsOfTransSemigroup(M));
-elif HasInternalKernels(M) then 
-	return Union(InternalKernels(M)); 
-else
+o:=Orb(s, List([1..n], x-> [x]), OnKernelsAntiAction, rec(storenumbers:=true, 
+ treehashsize:=NextPrimeInt(Minimum(100000, 3*treehashsize)),
+ gradingfunc:=function(o,x) return Length(x); end,
+ onlygrades:=[m..n]));
+#Enumerate(o, bound);
 
-	n:=DegreeOfTransformationSemigroup(M);
-	ker:=List([1..n], x->[x]);
-#KernelOfTransformation(Transformation([1..n]));
-
-	if IsTransformationMonoid(M) then 
-		gens:=GeneratorsOfMonoid(M);
-	else
-		gens:=GeneratorsOfSemigroup(M); 
-	fi;
-
-	imgs:=SetX(GeneratorsOfSemigroup(M), KernelOfTransformation);
-
-	if HasParentAttr(M) and Length(GeneratorsOfSemigroup(ParentAttr(M)))<Length(gens) then 
-		limit:=Length(KernelsOfTransSemigroup(ParentAttr(M)));
-	else 
-		limit:=Sum([1..Maximum(List(gens, RankOfTransformation))], x-> 
-		Stirling2(n, x));
-	fi;
-
-	if Length(imgs)=limit then 
-		return imgs;
-	fi;
-
-	orb:=SetX(GeneratorsOfSemigroup(M), KernelOfTransformation);
-
-	for x in orb do
-		for y in gens do 
-			new:=OnKernelsAntiAction(x,y);
-			if not new in imgs then 
-				AddSet(imgs, new);
-				if Length(imgs)=limit then 
-					return imgs;
-				fi;
-				Add(orb, new);
-			fi;
-		od;
-	od;
-	return imgs;
-fi;
-end); 
-
+return o;
+end);
 
 ###########################################################################
 #

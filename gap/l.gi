@@ -100,13 +100,16 @@ end);
 #JDM should be s, rep, data, orbit where orbit is optional and the default
 # is OrbitsOfImages(s), OrbitsOfKernels(s)
 
+# data is the D-class data [d_img, d_ker] then [l, c] where l is the position
+# of the image of the rep in the R-class image orbit of the D-class
+# and c is the coset used to prove that the rep is in the D-class
+
 InstallGlobalFunction(CreateLClass, 
 function(s, data, orbit, rep)
 local l, d;
 
 d:=[];
 d[1]:=data[1]{[1..6]}; d[2]:=data[2]{[1..6]}; d[3]:=data[3];
-
 
 l:=Objectify(LClassType(s), rec(parent:=s, data:=d, 
 o:=orbit, rep:=rep));
@@ -215,6 +218,97 @@ enum:=EnumeratorByFunctions(l, rec(
 return enum;
 end);
 
+#############################################################################
+# JDM can't quite figure out how to get the right data here. 
+# probably want to have the last component of h!.data being a pair
+# where the first is the Lcoset used to find the rep and the 
+# second is the Rcoset used to find the rep. In HClassRepFromData, 
+# we use the Rcoset if h!.data[3][2] is bound and the Lcoset if h!.data[3][1]
+# is bound!
+
+InstallOtherMethod(GreensHClasses, "for an L-class of a trans. semigp.", 
+[IsGreensLClass and IsGreensClassOfTransSemigp],
+function(l)
+local s, o, m, out, i, data, f, h;
+
+s:=l!.parent; o:=l!.o; m:=NrGreensHClasses(l);
+data:=l!.data; out:=EmptyPlist(m); data[3]:=[];
+
+
+for i in [1..m] do 
+	#data:=GreensHClassRepsData(l)[i]; 
+	f:=GreensHClassReps(l)[i]; 
+	#if HasGreensHClassReps(l) then 
+	#	f:=GreensHClassReps(l)[i];
+	#else
+	#	f:=HClassRepFromData(s, data, o);
+	#fi;
+	h:=CreateHClass(s, data, o, f);
+	SetGreensLClass(h, l);
+	SetGreensDClass(h, GreensDClass(l));
+	out[i]:=h;
+od;
+
+return out;
+end);
+
+#############################################################################
+
+InstallOtherMethod(GreensHClassReps, "for an L-class of a trans. semigp.", 
+[IsGreensLClass and IsGreensClassOfTransSemigp], 
+function(l)
+local f, cosets, rels, out, k, i, j;
+
+f:=l!.rep;
+cosets:=DClassLCosets(GreensDClass(l));
+rels:=LClassRels(l);
+
+out:=EmptyPlist(Length(rels)*Length(cosets));
+SetNrGreensHClasses(l, Length(rels)*Length(cosets));
+k:=0;
+
+for i in rels do 
+	i:=i[1]*f;
+	for j in cosets do 
+		k:=k+1;
+		out[k]:=i*j;
+	od;
+od;
+
+return out;
+end);
+
+#############################################################################
+
+InstallOtherMethod(GreensHClassRepsData, "for an L-class of a trans. semigp.", 
+[IsGreensLClass and IsGreensClassOfTransSemigp], 
+function(l)
+local f, scc, d, m, out, k, data, i, j;
+
+Info(InfoWarning, 1, "this does not return the correct answer!");
+
+f:= l!.rep;
+scc:=LClassSCC(l);
+d:=GreensDClass(l);
+m:=Length(DClassLCosets(d));
+
+out:=EmptyPlist(Length(scc)*m);
+SetNrGreensHClasses(l, Length(scc)*m);
+
+k:=0;
+data:=l!.data;
+
+for i in scc do 
+	for j in [1..m] do 
+		k:=k+1;
+		out[k]:=StructuralCopy(data);
+		out[k][2][3]:=i;
+		out[k][3]:=[data[3][1], j]; #JDM the j can't be correct here!
+	od;
+od;
+
+return out;
+end);
 
 # new for 4.0!
 #############################################################################
@@ -241,12 +335,12 @@ end);
 
 # new for 4.0!
 #############################################################################
-# JDM test this!
+# JDM test this! this for sure needs to be cleaned up!
 
 InstallOtherMethod(GreensLClassOfElement, "for a trans. semigp and trans.", 
 [IsTransformationSemigroup, IsTransformation],
 function(s, f)
-local d, data;
+local d, data, l;
 
 Info(InfoMonoidGreens, 4, "GreensLClassOfElement");
 
@@ -256,22 +350,27 @@ if not f in s then
 fi;
 
 d:=InOrbitsOfKernels(s, f);
+l:=d[3][1][3]; #l not fail since we've done f in s!
 
-if not d[2] then #orbit of kernel not previously calculated!
+if not d[2] then #D-class containing f not previously calculated
+	# store the D-class containing f
 	d[3][1][3]:=RClassSCCFromData(s, d[3][1])[1];
-	d:=AddToOrbitsOfKernels(s, d[3][1][7], d[3]); 
-	d[2][8]:=1;
+	# not sure the prev. step is necessary! JDM2 
+	d:=StructuralCopy(AddToOrbitsOfKernels(s, d[3][1][7], d[3])); 
 	#d[3][1][7] = f with rectified image!
-	data:=OrbitsOfKernels(s)!.data;
-	data[Length(data)+1]:=List(d, x-> x{[1..6]});
+	d[2][8]:=1; #JDM this should probably go into AddToOrbitsOfKernels.. 
+							# i.e. InOrbitsOfImages and AddToOrbitsOfImages should return 
+							# the full 8 bits of data.
 else
 	d:=d[3];
 fi;
- 
-# d[2][8]
+
+# d[2][8] = coset used to prove f in d-class
 # d[1][3] = position of image of f in orbit of image.
 
-Add(d, [d[1][3], d[2][8]]);
+#if JDM2 above is correct (the step is not necessary, then we don't need the 
+# following), we only need [d_img, d_ker]!
+Add(d, [l, d[2][8]]);
 
 d:=CreateLClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)], 
  LClassRepFromData(s, d));
@@ -293,22 +392,11 @@ Info(InfoMonoidGreens, 4, "GreensLClassOfElementNC");
 d:=InOrbitsOfKernels(s, f);
 
 if d[1] then 
-	data:=[d[3][1]];
 	Info(InfoMonoidGreens, 2, "transformation is an element of the semigroup");
-	if d[2] then 
-		data[2]:=d[3][2];
-	else
-		d[3][1][3]:=RClassSCCFromData(s, d[3][1])[1];
-		data[2]:=AddToOrbitsOfKernels(s, d[3][1][7], d[3]); 
-		data[2][8]:=1; # = DClassRCosets index!
-		OrbitsOfKernels(s)!.data[Length(OrbitsOfKernels(s)!.data)+1]:=
-		 List(data, x-> x{[1..6]});
-	fi;
-	
-	Add(data, [data[1][3], data[2][8]]);
-	
-	return CreateLClass(s, data, [OrbitsOfImages(s), 
-	OrbitsOfKernels(s)], LClassRepFromData(s, data));
+  #the following is somewhat inefficient as we run f in s and InOrbitsOfKernels
+  #again. JDM perhaps improve if necessary.
+  
+	return GreensLClassOfElement(s, f);
 	
 elif OrbitsOfImages(s)!.finished then #f not in s!
 	Info(InfoMonoidGreens, 2, "transformation is not an element of the ",
@@ -375,7 +463,7 @@ if HasIsRegularLClass(l) and not IsRegularLClass(l) then
 	return [];
 fi;
 
-out:= EmptyPlist(Size(l));#/NrGreensHClasses(l); JDM when implemented!
+out:= EmptyPlist(Size(l)/NrGreensHClasses(l)); 
 
 img:=Set(l!.rep![1]);
 n:=Length(img);
@@ -819,6 +907,13 @@ return i;
 end);
 
 # new for 4.0!
+#############################################################################
+
+InstallOtherMethod(NrGreensHClasses, "for an L-class of a trans. semigroup", 
+[IsGreensLClass and IsGreensClassOfTransSemigp], 
+l-> NrGreensRClasses(GreensDClass(l)));
+
+# new for 4.0!
 ############################################################################
 # JDM check for efficiency, and also test!
 
@@ -859,6 +954,11 @@ od;
 return m;
 end);
 
+# new for 4.0!
+############################################################################
+
+InstallMethod(ParentAttr, "for L-class of a trans. semigroup", 
+[IsGreensLClass and IsGreensClassOfTransSemigp], x-> x!.parent);
 
 # new for 4.0!
 ############################################################################
