@@ -94,16 +94,19 @@ return i;
 end);
 
 #############################################################################
+#
 
-InstallMethod(GreensHClasses, "for a transformation semigroup",
-[IsTransformationSemigroup],
-s-> Concatenation(List(GreensDClasses(s), GreensHClasses)));
+InstallMethod(IteratorsOfIdempotents, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
+function(s);
+#JDM here!
+
+end);
+
+
 
 #############################################################################
-## Global functions
-#############################################################################
-
-##  JDM the following should be reviewed! depends on R-classes
+#  JDM the following should be reviewed! depends on R-classes
 
 InstallOtherMethod( Idempotents, "for a transformation semigroup", 
 [IsTransformationSemigroup],
@@ -114,7 +117,12 @@ if not IsCompletelyRegularSemigroup(M) then
 	GreensRClasses(M);
 fi;
 
-idm:= [];
+if One(M) in M then 
+	idm:= [One(M)];
+else
+	idm:=[];
+fi;
+
 kers:=GradedKernelsOfTransSemigroup(M);
 imgs:=GradedImagesOfTransSemigroup(M);
 n:=Size(kers);
@@ -126,15 +134,17 @@ for i in [1..n] do
 		# loop over the images.
 		for img in imgs[i] do
 			# check for cross section.
-			if IsTransversal(ker, img) then
-			
-				x:=IdempotentNC(ker, img);
-				if IsRegularSemigroup(M) or x in M then 
-					Add(idm, x);
+			if not img=[1..n] or not ker=List([1..n], x-> [x]) then 
+				if IsTransversal(ker, img) then
+				
+					x:=IdempotentNC(ker, img);
+					if IsRegularSemigroup(M) or x in M then 
+						Add(idm, x);
+					fi;
+					## IsRegularSemigroup will calculate the R-classes if it is regular or 
+					## return false otherwise requiring the calculation of the R-classes for 
+					## the \in test.
 				fi;
-				## IsRegularSemigroup will calculate the R-classes if it is regular or 
-				## return false otherwise requiring the calculation of the R-classes for 
-				## the \in test.
 			fi;
 		od;
 	od;

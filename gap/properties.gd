@@ -600,4 +600,12 @@ DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
 ##	</ManSection>
 ##	<#/GAPDoc>
 
+DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
+DeclareOperation("PropertiesOfSemigroup", [IsTransformationSemigroup]);
+DeclareOperation("EasyPropertiesOfSemigroup", [IsTransformationSemigroup]);
+DeclareAttribute("MinimalIdeal", IsTransformationSemigroup);
+DeclareAttribute("UnderlyingDClassOfMinIdeal", IsSemigroupIdeal and IsTransformationSemigroup);
+DeclareProperty("IsMinimalIdeal", IsSemigroupIdeal and IsTransformationSemigroup);
+
+
 #JDM new for 3.2!

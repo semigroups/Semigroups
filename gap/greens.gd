@@ -889,18 +889,22 @@ DeclareProperty("IsEnumeratorOfDClassElements", IsEnumeratorByFunctions);
 
 DeclareGlobalFunction("IteratorOfRClassRepsData");
 DeclareGlobalFunction("IteratorOfLClassRepsData");
+DeclareGlobalFunction("IteratorOfHClassRepsData");
 DeclareGlobalFunction("IteratorOfNewRClassRepsData");
 DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareGlobalFunction("IteratorOfLClassReps");
 DeclareGlobalFunction("IteratorOfDClassReps");
+DeclareGlobalFunction("IteratorOfHClassReps");
 DeclareGlobalFunction("IteratorOfNewDClassReps");
 
 #DeclareGlobalFunction("EnumeratorOfRClassReps");
 
 DeclareProperty("IsIteratorOfRClassRepsData", IsIterator);
+DeclareProperty("IsIteratorOfHClassRepsData", IsIterator);
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
 DeclareProperty("IsIteratorOfLClassReps", IsIterator);
 DeclareProperty("IsIteratorOfDClassReps", IsIterator);
+DeclareProperty("IsIteratorOfHClassReps", IsIterator);
 
 # IteratorOfGreensRClasses and IteratorOfGreensLClasses
 # should be operations so that they can be applied to 
@@ -914,6 +918,10 @@ DeclareOperation("IteratorOfGreensHClasses", [IsTransformationSemigroup]);
 DeclareProperty("IsIteratorOfGreensRClasses", IsIterator);
 DeclareProperty("IsIteratorOfGreensLClasses", IsIterator);
 DeclareProperty("IsIteratorOfGreensDClasses", IsIterator);
+DeclareProperty("IsIteratorOfGreensHClasses", IsIterator);
+
+DeclareOperation("IteratorOfIdempotents", [IsTransformationSemigroup]);
+
 
 DeclareProperty("IsIteratorOfSemigroup", IsIterator);
 DeclareProperty("IsIteratorOfRClassElements", IsIterator);

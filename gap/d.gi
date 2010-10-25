@@ -27,6 +27,9 @@
 
 # - is an iterator/aslist method required for D-classes!? maybe not.
 
+# - IteratorOfGreensDClasses(s, func, vals);
+
+
 ##
 #############################################################################
 

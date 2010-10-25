@@ -171,6 +171,28 @@ enum:=EnumeratorByFunctions(h, rec(
 return enum;
 end);
 
+############################################################################
+# 
+
+InstallMethod(GreensHClasses, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
+function(s)
+local iter, out, i, f;
+
+Info(InfoMonoidGreens, 4, "GreensHClasses");
+
+iter:=IteratorOfGreensHClasses(s);
+out:=EmptyPlist(NrGreensHClasses(s));
+i:=0;
+
+for f in iter do 
+	i:=i+1;
+	out[i]:=f;
+od;
+
+return out;
+end);
+
 # new for 4.0!
 ############################################################################
 # JDM clean the following up as per the comments in GreensLClassOfElement!
@@ -379,11 +401,159 @@ j:=ImageSetOfTransformation(f);
 return IsDuplicateFreeList(i{j});
 end);
 
+############################################################################
+#
+
+InstallMethod(IteratorOfGreensHClasses, "for a transformation semigroup", 
+[IsTransformationSemigroup],
+function(s)
+local iter;
+
+Info(InfoMonoidGreens, 4, "IteratorOfGreensHClasses");
+
+iter:=IteratorByFunctions( rec(
+	
+	i:=0,
+	
+	reps:=IteratorOfHClassRepsData(s),
+	
+	IsDoneIterator := iter -> IsDoneIterator(iter!.reps), 
+	
+	NextIterator:= function(iter)
+	local d;
+	
+	d:=NextIterator(iter!.reps);
+	
+	if d=fail then 
+		return fail;
+	fi;
+	
+	iter!.i:=iter!.i+1;
+	return CreateHClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)], 
+ HClassRepFromData(s, d));; #JDM use of s ok here!
+	end,
+
+	ShallowCopy:=iter-> rec(i:=0, s:=iter!.s, reps:=IteratorOfRClassReps(s))
+));
+
+SetIsIteratorOfGreensHClasses(iter, true);
+SetUnderlyingSemigroupOfIterator(iter, s);
+return iter;
+end);
+
+############################################################################
+#
+
+InstallGlobalFunction(IteratorOfHClassReps,
+function(s)
+local iter;
+
+Info(InfoMonoidGreens, 4, "IteratorOfHClassReps");
+
+iter:=IteratorByFunctions( rec(
+
+	s:=s,
+	
+	data:=IteratorOfHClassRepsData(s),
+	
+	IsDoneIterator := iter-> IsDoneIterator(iter!.data),
+	
+	NextIterator := function(iter)
+	if not IsDoneIterator(iter!.data) then 
+		return HClassRepFromData(iter!.s, NextIterator(iter!.data));
+	fi;
+	return fail; end,
+	
+	ShallowCopy := iter -> rec( data:=IteratorOfHClassRepsData(
+	iter!.s))
+));
+
+SetIsIteratorOfHClassReps(iter, true);
+SetUnderlyingSemigroupOfIterator(iter, s);
+
+return iter;
+end);
+
+############################################################################
+#
+
+InstallGlobalFunction(IteratorOfHClassRepsData, 
+function(s)
+local iter;
+
+Info(InfoMonoidGreens, 4, "IteratorOfHClassRepsData");
+
+iter:=IteratorByFunctions( rec(
+	
+	i:=0,
+	
+	r:=IteratorOfGreensRClasses(s),
+	
+	data:=[],
+	
+	IsDoneIterator := iter -> IsDoneIterator(iter!.r) and iter!.i=Length(iter!.data), 
+	
+	NextIterator:= function(iter)
+	local i;
+	
+	if IsDoneIterator(iter) then 
+		return fail;
+	fi;
+	
+	iter!.i:=iter!.i+1;
+	i:=iter!.i;
+	
+	if i<=Length(iter!.data) then 
+		return iter!.data[i];
+	fi;
+	
+	iter!.data:=GreensHClassRepsData(NextIterator(iter!.r));
+	iter!.i:=1;
+	
+	return iter!.data[1];
+	end,
+
+	ShallowCopy:=iter-> rec(i:=0, r:=IteratorOfGreensRClasses(s), data:=[])
+));
+
+
+SetIsIteratorOfHClassRepsData(iter, true);
+SetUnderlyingSemigroupOfIterator(iter, s);
+return iter;
+end);
+
 # new for 4.0!
 ############################################################################
 
 InstallMethod(ParentAttr, "for H-class of a trans. semigroup", 
 [IsGreensHClass and IsGreensClassOfTransSemigp], x-> x!.parent);
+
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfHClassRepsData], 
+function(iter)
+
+Print( "<iterator of H-class reps data>");
+return;
+end);
+
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfHClassReps], 
+function(iter)
+
+Print( "<iterator of H-class reps>");
+return;
+end);
+
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfGreensHClasses], 
+function(iter)
+
+Print( "<iterator of H-classes>");
+return;
+end);
 
 # new for 4.0!
 ############################################################################

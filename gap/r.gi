@@ -1388,6 +1388,9 @@ end);
 # JDM if d has GreensLClassReps, then could obtain the below more efficiently?
 # (probably not). Should we SetGreensLClassReps of d? 
 
+# JDM this and other like it should be iterators as illustrated by the 
+# Coxeter semigroup example...
+
 InstallOtherMethod(GreensHClassRepsData, "for an R-class of a trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 function(r)
@@ -1853,6 +1856,21 @@ Print("<iterator of R-class>");
 return;
 end);
 
+############################################################################
+
+InstallOtherMethod(Random, "for an R-class of a trans. semigp.",
+[IsGreensRClass and IsGreensClassOfTransSemigp],
+function(r)
+local f, g, i;
+
+f:=r!.rep;
+
+g:=Random(SchutzenbergerGroup(r));
+i:=Random(RClassSCC(r));
+return f*g*RClassPerms(r)[i]^-1; 
+end);
+
+
 ###########################################################################
 #JDM do not recreate the family and type every time here?
 
@@ -2208,6 +2226,26 @@ Info(InfoMonoidGreens, 4, "Size: for a trans. semigroup");
 ExpandOrbitsOfImages(s);
 return SizeOrbitsOfImages(s);
 end);
+
+#############################################################################
+# JDM check this is actually superior to the above method for Size
+
+InstallOtherMethod(Size, "for a simple transformation semigroup",
+[IsSimpleSemigroup and IsTransformationSemigroup],
+function(M)
+local gens, ims, kers, H;
+
+gens:=GeneratorsOfSemigroup(M);
+
+ims:=Size(Set(List(gens, ImageSetOfTransformation)));
+kers:=Size(Set(List(gens, KernelOfTransformation)));
+H:=GreensHClassOfElement(M, gens[1]);
+#JDM this could be better if it used the schutz group of the R-class of 
+#    any elt.
+
+return Size(H)*ims*kers;
+end);
+
 
 # new for 4.0!
 #############################################################################

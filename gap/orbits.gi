@@ -715,37 +715,33 @@ end);
 
 InstallGlobalFunction(OnKernelsAntiAction, [IsList, IsTransformation],
 function(ker, f)
-local n, g, i, h;
+local n, g, i;
 
-n:= DegreeOfTransformation(f);  
-g:= EmptyPlist(n); 
+#n:= DegreeOfTransformation(f);  
+n:=f![1];
 
-for i in [1..Length(ker)] do
-	g{ker[i]}:= ListWithIdenticalEntries(Length(ker[i]), i);
-od;
+if IsBound(TABLE_OF_TRANS_KERNEL) then 
+	g:=TABLE_OF_TRANS_KERNEL(ker,Length(n));
+else
+	g:= EmptyPlist(Length(n)); 
+	for i in [1..Length(ker)] do
+		g{ker[i]}:= ListWithIdenticalEntries(Length(ker[i]), i);
+	od;
+fi;
 
-g:= TransformationNC(g{f![1]});
-return KernelOfTransformation(g);
+g:= TransformationNC(g{n});
+return ImageAndKernelOfTransformation(g)[2];
 end);
 
 
+
 ###########################################################################
-# JDM require C version! and should subsequently be moved to orbits_no_orb.gi
- 
-#OnTuplesOfSetsAntiAction2:=function(tup, s)
- 
-#ker_g:=List([1..Length(f![1])], x-> []);
-
-#for i in [1..Length(f![1])] do 
-#	Add(ker_g[g![1][i]], i);
-#od;
-
 
 InstallGlobalFunction(OnTuplesOfSetsAntiAction, [IsObject, IsTransformation], 
 function(tup, s)
 local res, ker, set, perm, k;
 
-ker:=KernelOfTransformation(s);
+ker:=ImageAndKernelOfTransformation(s)[2];
 res:=[];
 
 for set in tup do
@@ -763,9 +759,44 @@ for set in tup do
 		Add(res, perm);
 	fi;
 od;
-
 return res;
 end);
+
+#OnTuplesOfSetsAntiAction2:=#, [IsList, IsTransformation],
+#function(ker, f)
+#local n, g, i;
+
+#n:=f![1];
+
+#g:=TABLE_OF_TRANS_KERNEL(ker, Length(n));
+
+#g:= TransformationNC(g{n});
+#img_ker:=ImageAndKernelOfTransformation(g);
+#p:=PermListList(img_ker[1], List([1..Length(img_ker[2])], x-> g![1][img_ker[2][x][1]]));
+
+#return Permuted(img_ker[2], p);
+#end;
+
+OnTuplesOfSetsAntiAction3:=function(ker, f)
+local g, out, n, l, i, j, k;
+
+g:=ImageAndKernelOfTransformation(f)[2];
+out:=EmptyPlist(Length(ker));
+n:=f![1];
+l:=0;
+
+for i in ker do
+	j:=[]; l:=l+1;
+	for k in g do
+		if n[k[1]] in i then
+			j:=Union(j, k);
+			break;
+		fi;
+	od;
+	out[l]:=j;
+od;
+return out;
+end;
 
 ###########################################################################
 #

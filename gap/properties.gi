@@ -10,15 +10,29 @@
 ## $Id$
 ##
 
-AllPropertiesOfSemigroups:=[IsBand, IsBlockGroup, IsCliffordSemigroup, 
-IsCommutativeSemigroup, IsCompletelyRegularSemigroup, 
-IsCompletelySimpleSemigroup, IsGreensLTrivial, IsGreensRTrivial,
-IsGreensHTrivial, IsGroupAsSemigroup, IsInverseSemigroup, 
-IsLeftZeroSemigroup, IsMonoidAsSemigroup, IsOrthodoxSemigroup,
-IsRectangularBand, IsRegularSemigroup, IsRightZeroSemigroup,
-IsSemiBand, IsSemilatticeAsSemigroup, IsSimpleSemigroup,
-IsZeroSemigroup, IsZeroGroup];
+# Ecom (commuting idempotents), LI (locally trivial), 
+# LG (locally group), B1 (dot-depth one), DA (regular D-classes are idempotent)
+# R v L (???), IsNilpotentSemigroup, inverses, local submonoid, right ideal, 
+# left ideal, kernel!?
 
+
+AllPropsOfSemigps:=["IsBand", "IsBlockGroup", "IsCliffordSemigroup", 
+"IsCommutativeSemigroup", "IsCompletelyRegularSemigroup", "IsGreensLTrivial", 
+"IsGreensRTrivial",
+"IsGreensHTrivial", "IsGroupAsSemigroup", "IsInverseSemigroup", 
+"IsLeftZeroSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup",
+"IsRectangularBand", "IsRegularSemigroup", "IsRightZeroSemigroup",
+"IsIdempotentGenerated", "IsSemilatticeAsSemigroup", "IsSimpleSemigroup",
+"IsZeroSemigroup", "IsZeroGroup"];
+
+###########################################################################
+
+EasyPropsSemigps:=[IsBand, IsCliffordSemigroup, 
+IsCommutativeSemigroup, IsCompletelyRegularSemigroup, 
+IsCompletelySimpleSemigroup, IsGroupAsSemigroup,  
+IsLeftZeroSemigroup, IsMonoidAsSemigroup, IsRightZeroSemigroup,
+IsIdempotentGenerated, IsSemilatticeAsSemigroup, IsSimpleSemigroup,
+IsZeroSemigroup, IsZeroGroup];
 
 # new method for 4.0! 
 ###########################################################################
@@ -82,12 +96,14 @@ local gens, idem, f, g;
 
 if HasIsInverseSemigroup(s) and not IsInverseSemigroup(s) then 
 	return false;
-elif HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
-	return false;
 elif not IsCompletelyRegularSemigroup(s) then 
   return false;
 elif IsGroupAsSemigroup(s) then
   return true;
+fi;
+
+if not IsRegularSemigroup(s) then 
+	return false;
 fi;
 
 gens:=Generators(s);
@@ -102,6 +118,9 @@ for f in gens do
 		fi;
 	od;
 od;
+
+SetIsInverseSemigroup(s, true);
+SetIsBlockGroup(s, true);
 
 return true;
 end);
@@ -298,6 +317,24 @@ return true;
 end);
 
 ###########################################################################
+
+InstallMethod(IsSemigroupWithCommutingIdempotents, "for a trans. semigp.", 
+[IsTransformationSemigroup],
+function(s)
+
+iter:=IteratorOfIdempotents(s);
+idem:=[];
+
+for f in iter do 
+	if not ForAll(idem, g-> f*g=g*f) then 
+		return false;
+	fi;
+od;
+
+return true;
+end);
+
+###########################################################################
 # JDM the following should be tested! 
 
 InstallOtherMethod(IsInverseSemigroup, "for a transformation semigroup", 
@@ -425,7 +462,7 @@ end);
 #############################################################################
 
 InstallOtherMethod(IsMonoidAsSemigroup, "for a transformation semigroup",
-[IsTransformationSemigroup], x-> One(x) in x);
+[IsTransformationSemigroup], x-> not MultiplicativeNeutralElement(x)=fail);
 
 #############################################################################
 #JDM
@@ -540,6 +577,7 @@ end);
 
 ###########################################################################
 ##  JDM is there a better way?
+# should store t as IdempotentsGeneratedSubsemigroup...
 
 InstallMethod(IsIdempotentGenerated, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
@@ -563,8 +601,6 @@ return IsBand(s) and IsCommutative(s);
 end);
 
 ###########################################################################
-##  JDM could include if IsCompletelyRegular and HasGreensDClasses etc
-##  JDM but this is so fast it might not be worthwhile...
 
 InstallMethod( IsSimpleSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
@@ -649,10 +685,15 @@ function(s)
 local zero, one;
 
 zero:=MultiplicativeZero(s);
-one:=MultiplicativeNeutralElement(s);
 
-if not (zero=fail or one=fail) and NrGreensHClasses(s)=2 then 
-	return IsGroupHClass(GreensHClassOfElement(s, one));
+if zero=fail then 
+	return false;
+fi;
+
+#one:=MultiplicativeNeutralElement(s);
+
+if NrGreensHClasses(s)=2 then 
+	return ForAll(GreensHClasses(s), IsGroupHClass);
 fi;
 
 return false;
@@ -660,10 +701,81 @@ end);
 
 ###########################################################################
 
+InstallMethod(MinimalIdeal, "for a transformation semigroup", 
+[IsTransformationSemigroup],
+function(s)
+local n, gens, max, o, i, bound, f;
+
+n:=Degree(s);
+gens:=Generators(s);
+max:=Maximum(List(gens, Degree));
+
+if max=n then 
+	bound:=2^n;
+else
+	bound:=Sum([1..max], x-> Binomial(n, x));
+fi;
+
+o:=Orb(gens, [1..n], OnSets, rec( schreier:=true,
+gradingfunc:=function(o, x) return Length(x); end,
+onlygrades:=[1..max],
+lookingfor:=function(o, x) return Length(x)=1; end));
+Enumerate(o, bound);
+
+if IsPosInt(PositionOfFound(o)) then 
+	i:=PositionOfFound(o);
+else
+	i:=Position(Grades(o), Minimum(Grades(o))); 
+fi;
+
+f:=EvaluateWord(gens, TraceSchreierTreeForward(o, i));
+i:=SemigroupIdealByGenerators(s, [f]);
+SetIsSimpleSemigroup(i, true);
+SetIsMinimalIdeal(i, true);
+SetUnderlyingDClassOfMinIdeal(i, GreensDClassOfElement(s, f));
+
+return i;
+end);
+
+###########################################################################
+# JDM what method for the below? 
+
+InstallOtherMethod(MultiplicativeNeutralElement, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
+function(s)
+local gens, n, f, r;
+
+gens:=Generators(s);
+n:=Maximum(List(gens, Rank));
+
+if n=Degree(s) then
+	return One(s);
+fi;
+
+f:=First(gens, f-> Rank(f)=n);
+
+r:=GreensRClassOfElementNC(s, f); #NC? JDM
+
+if NrIdempotents(r)>1 or NrIdempotents(r)=0 then 
+	return fail;
+fi;
+
+f:=Idempotents(r)[1];
+
+if ForAll(gens, x-> x*f=x and f*x=x) then 
+	return f;
+fi;
+
+return fail;
+end);
+
+###########################################################################
+# JDM test it more!
+
 InstallOtherMethod(MultiplicativeZero, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
 function(s)
-local n, gens, max, bound, o;
+local n, gens, max, bound, o, i, f;
 n:=Degree(s); gens:=Generators(s);
 
 max:=Maximum(List(gens, Degree));
@@ -673,24 +785,22 @@ else
 	bound:=Sum([1..max], x-> Binomial(n, x));
 fi;
 
-o:=Orb(gens, [1..n], OnSets, rec(
+o:=Orb(gens, [1..n], OnSets, rec( schreier:=true, 
 gradingfunc:=function(o, x) return Length(x); end,
 onlygrades:=[1..max],
 lookingfor:=function(o, x) return Length(x)=1; end));
 Enumerate(o, bound);
 
 if IsPosInt(PositionOfFound(o)) then 
-	f:=TransformationNC(ListWithIdenticalEntries(n, 
-	 o[PositionOfFound(o)][1]));
-	if Size(GreensDClassOfElement(s, f))=1 then #JDM NC?
-		return f;
-	fi;
+	i:=PositionOfFound(o);
 else
-	i:=Positions(Grades(o), Minimum(Grades(o)));
-	#JDM HERE HERE HERE HERE now find kernels of minimum size, 
-	# form idempotents, check if they're in s, and if their 
-	# DClasses have size 1...
-	
+	i:=Position(Grades(o), Minimum(Grades(o))); 
+fi;
+
+f:=EvaluateWord(gens, TraceSchreierTreeForward(o, i));
+
+if f^2=f and Size(GreensDClassOfElement(s, f))=1 then #JDM NC?
+	return f;
 fi;
 
 return fail;
@@ -698,59 +808,21 @@ end);
 
 # new for 4.0!
 #############################################################################
-
-InstallOtherMethod(SmallGeneratingSet, "for a trans. coll. and pos. int", 
-[IsTransformationCollection, IsPosInt], 
-function(coll, bound)
-local n, a, g, s, i;
-
-n:=DegreeOfTransformation(coll[1]);
-
-Info(InfoMonoidProperties, 3, "checking degrees of transformations in", 
- " collection...");
-if not ForAll(coll, f-> Degree(f)=n) then 
-	Error("Usage: collection of transformations of equal degree");
-fi;
-
-Info(InfoMonoidProperties, 3, "sorting transformations by rank...");
-a:=ShallowCopy(coll);
-Sort(a, function(f,g) return Rank(f)>Rank(g) and f![1]>g![1]; end);
-
-if Rank(a[1])=n then 
-	Info(InfoMonoidProperties, 3, "finding small generating set for unit", 
-	" group...");
-	g:=Group(List(Filtered(a, f-> Rank(f)=n), AsPermutation));
-	s:=Semigroup(List(SmallGeneratingSet(g), f-> AsTransformation(f, n)));
-else
-	s:=Semigroup(a[1]);
-fi;
-
-i:=0;
-
-Info(InfoMonoidProperties, 3, "looping over elements...");
-
-while  i<Length(coll) and Size(s)<bound do 
-	i:=i+1;
-	if not a[i] in s then 
-		s:=Semigroup(Concatenation(Generators(s), [a[i]]));
-	fi;
-od;
-
-return s;
-end);
-
-# new for 4.0!
-#############################################################################
 #
-# JDM this is broken on # Sierpinski graph S_2 when trying to run with 
-# <gens> as an argument...
 
-# should probably be renamed or return a small generating set!? JDM
-
-InstallOtherMethod(SmallGeneratingSet, "for a trans. coll.", 
+InstallMethod(IrredundantGeneratingSubset, "for a trans. coll.", 
 [IsTransformationCollection], 
 function(coll)
-local n, a, g, s, i, m, j, max, info;
+return IrredundantGeneratingSubset(coll, false);
+end);
+
+#############################################################################
+#
+
+InstallOtherMethod(IrredundantGeneratingSubset, "for a trans. coll. and bool", 
+[IsTransformationCollection, IsBool], 
+function(coll, bool)
+local n, a, g, s, i, m, j, max, info, k;
 
 n:=DegreeOfTransformation(coll[1]);
 
@@ -775,8 +847,8 @@ fi;
 
 i:=0;
 m:=Length(a);
-j:=0;
-max:=0;
+j:=Length(Generators(s));
+
 Info(InfoMonoidProperties, 3, "looping over elements...");
 
 info:=false;
@@ -785,7 +857,8 @@ if InfoLevel(InfoMonoidProperties)>=3 then
 	info:=true;
 fi;
 
-while  i<Length(coll) do 
+k:=Length(coll);
+while  i<k do 
 	i:=i+1;
 	
 	if info then Print("at ", i, " of ", m, "; ", j, " generators\r"); fi;
@@ -793,6 +866,13 @@ while  i<Length(coll) do
 	if not a[i] in s then 
 		j:=j+1;
 		s:=ClosureSemigroup(s, [a[i]]);
+		
+		if j=k-1 then
+			if bool then  
+				return Semigroup(a);
+			fi;
+			return a;
+		fi;
 	fi;
 od;
 
@@ -800,89 +880,152 @@ if info then
 	Print("\n");
 fi;
 
-return s;
-end);
-
-#############################################################################
-#JDM there must be better methods than the following for special types of S.
-#JDM new for 4.0! JDM is there a better way?
-
-InstallOtherMethod(SmallGeneratingSet, "for a transformation semigroup",
-[IsTransformationSemigroup],
-function(s)
-local n, gens, min, g, t, iter, r, iter_r, f, info;
-
-n:=Degree(s);
-gens:=Generators(s);
-
-Info(InfoMonoidProperties, 3, "sorting generators by rank...");
-gens:=ShallowCopy(gens);
-Sort(gens, function(f,g) return Rank(f)>Rank(g) and f![1]>g![1]; end);
-min:=Rank(gens[Length(gens)]);
-
-if Rank(gens[1])=n then 
-	Info(InfoMonoidProperties, 3, "finding small generating set for unit", 
-	" group...");
-	g:=Group(List(Filtered(gens, f-> Rank(f)=n), AsPermutation));
-	t:=Semigroup(List(SmallGeneratingSet(g), f-> AsTransformation(f, n)));
-else
-	t:=Semigroup(gens[1]); #JDM good idea?
-fi;
-
-iter:=IteratorOfRClassRepsData(s);
-
-info:=false;
-
-if InfoLevel(InfoMonoidProperties)>=3 then 
-	info:=true;
-fi;
-
-iter:=IteratorOfGreensRClasses(s);
-
-while not t=s and not Length(Generators(t))>=Length(gens) do 
-	r:=NextIterator(iter); f:=r!.rep;
-	if min<=Rank(f) and Rank(f)<n then 
-		iter_r:=Iterator(r);
-		while not IsDoneIterator(iter_r) and not t=s and not 
-		 Length(Generators(t))>=Length(gens) do 
-			f:=NextIterator(iter_r);
-			t:=ClosureSemigroup(t, [f]);
-			if info then Print(Length(Generators(t)), " generators\r"); fi;
-		od;
-	fi;
-od;
-
-if t=s then 
-	return Generators(t);
+if bool then 
+	return s;
 fi;
 
 return Generators(s);
 end);
 
 #############################################################################
-# JDM this should be moved...
+#
 
-InstallOtherMethod(Size, "for a simple transformation semigroup",
-[IsSimpleSemigroup and IsTransformationSemigroup],
-function(M)
-local gens, ims, kers, H;
+InstallMethod(PropertiesOfSemigroup, "for a transformation semigroup", 
+[IsTransformationSemigroup],
+function(s)
+local T, F, str, f;
 
-gens:=GeneratorsOfSemigroup(M);
+T:=[]; F:=[];
 
-ims:=Size(Set(List(gens, ImageSetOfTransformation)));
-kers:=Size(Set(List(gens, KernelOfTransformation)));
-H:=GreensHClassOfElement(M, gens[1]);
-#JDM this could be better if it used the schutz group of the R-class of 
-#    any elt.
+for str in AllPropsOfSemigps do 
+	Info(InfoMonoidProperties, 3, "testing... ", str);
+	f:=EvalString(str);
+	if f(s) then 
+		Add(T, str);
+	else
+		Add(F, str);
+	fi;
+od;
 
-return Size(H)*ims*kers;
+Print("satisfies: ", T, "\n");
+Print("does not satisfy: ", F, "\n");
+
+if not MultiplicativeZero(s)=fail then 
+	Print("with zero\n");
+else
+	Print("no zero\n");
+fi;
+
+return true;
+end);
+
+#############################################################################
+
+InstallMethod(EasyPropertiesOfSemigroup, "for a transformation semigroup", 
+[IsTransformationSemigroup],
+function(s)
+local T, F, str, f;
+
+T:=[]; F:=[];
+
+for str in AllPropsOfSemigps do 
+	if not str="IsIdempotentGenerated" then 
+		Info(InfoMonoidProperties, 3, "testing... ", str);
+		f:=EvalString(str);
+		if f(s) then 
+			Add(T, str);
+		else
+			Add(F, str);
+		fi;
+	fi;
+od;
+
+Print("satisfies: ", T, "\n");
+Print("does not satisfy: ", F, "\n");
+
+if not MultiplicativeZero(s)=fail then 
+	Print("with zero\n");
+else
+	Print("no zero\n");
+fi;
+
+return true;
+end);
+
+#############################################################################
+
+InstallMethod(PrintObj, "for an ideal of a trans. semigp.",
+[IsSemigroupIdeal and IsTransformationSemigroup], 
+function(i)
+Print("<semigroup ideal with ", Length( GeneratorsOfMagmaIdeal( i ) ), 
+ " generators>");
+return;
+end);
+
+#############################################################################
+
+InstallMethod(ViewObj, "for an ideal of a trans. semigp.",
+[IsSemigroupIdeal and IsTransformationSemigroup], 
+function(i)
+Print("<semigroup ideal with ", Length( GeneratorsOfMagmaIdeal( i ) ), 
+ " generators>");
+return;
+end);
+
+#############################################################################
+#JDM there must be better methods than the following for special types of S.
+#JDM new for 4.0! JDM is there a better way? This doesn't work all that well.
+
+InstallOtherMethod(SmallGeneratingSet, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(s)
+local n, gens, j, min, g, t, ss, iter, i, r, f;
+
+n:=Degree(s);
+
+if Length(Generators(s))=2 and not IsCommutativeSemigroup(s) then 
+	return Generators(s);
+fi;
+
+Info(InfoMonoidProperties, 3, "finding irredundant generating subset...");
+
+ss:=IrredundantGeneratingSubset(Generators(s), true);
+
+gens:=Generators(ss);
+j:=Length(gens);
+
+min:=Rank(gens[j]);
+
+if Rank(gens[1])=n then 
+	t:=Semigroup(Filtered(gens, x-> Rank(x)=n));
+else
+	t:=Semigroup(gens[1]);
+fi;
+
+iter:=IteratorOfGreensRClasses(ss);
+i:=0;
+
+for r in iter do 
+	f:=r!.rep;
+	if min<=Rank(f) and Rank(f)<n then 
+		for f in Iterator(r) do 
+			if not f in t then 
+				i:=i+1;
+				t:=ClosureSemigroupNC(t, [f]);
+				if ForAll(gens, x-> x in t) then 
+					return Generators(t);
+				fi;
+				
+				if i=j-1 then 
+					return Generators(ss);
+				fi;
+				
+			fi;
+		od;
+	fi;
+od;
+
+return Generators(ss);
 end);
 
 #####################
-#JDM why's this commented out? 
-#InstallOtherMethod(IsMultiplicativeZero, "for a transformation semigroup", 
-#true, [IsTransformationSemigroup, IsTransformation], 0,
-#function(S, f)
-#
-#return f=MultiplicativeZero(S);
-#end);

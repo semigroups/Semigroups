@@ -19,6 +19,7 @@ ReadPkg("monoid/gap/r.gi");
 ReadPkg("monoid/gap/l.gi");
 ReadPkg("monoid/gap/d.gi");
 ReadPkg("monoid/gap/properties.gi");
+ReadPkg("monoid/gap/ideals.gi");
 
 #JDM remove
 

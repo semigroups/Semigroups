@@ -10,10 +10,6 @@
 ## $Id$
 ##
 
-
-
-
-
 #new for 4.0!
 ############################################################################
 
@@ -73,11 +69,13 @@ function(f)
 return DegreeOfTransformation(f);
 end);
 
-InstallOtherMethod(Degree, "for a transformation semigroups", 
+InstallOtherMethod(Degree, "for a transformation semigroup", 
 [IsTransformationSemigroup],
 function(s)
 return DegreeOfTransformationSemigroup(s);
 end);
+
+
 
 #############################################################################
 #
@@ -178,8 +176,8 @@ if not o!.finished then
 else
 	d:=Random(o!.data);
 	g:=Random(RClassSchutzGpFromData(s, d));
-	h:=Random(RClassPermsFromData(s, d){RClassSCCFromData(s, d)});
-	return RClassRepFromData(s, d)*g*h^-1; 
+	i:=Random(RClassSCCFromData(s, d));
+	return RClassRepFromData(s, d)*g*RClassPermsFromData(s, d)[i]^-1; 
 fi;
 end);
 
@@ -806,6 +804,8 @@ end);
 ##	</Description>  
 ##	</ManSection>
 ##	<#/GAPDoc>
+
+#JDM remove this!
 
 InstallMethod(KerImgOfTransformation, "for a transformation", true, [IsTransformation], 0, x-> [KernelOfTransformation(x), AsSet(x![1])]);
 
