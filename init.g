@@ -15,6 +15,7 @@ ReadPkg("monoid/gap/orbits.gd");
 ReadPkg("monoid/gap/greens.gd");
 ReadPkg("monoid/gap/properties.gd");
 ReadPkg("monoid/gap/transform.gd");
+ReadPkg("monoid/gap/legacy.gd");
 
 ###########################################################################
 DeclareInfoClass("InfoMonoid");;

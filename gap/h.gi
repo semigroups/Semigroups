@@ -20,6 +20,16 @@ return h1!.parent=h2!.parent and h1!.rep in h2;
 end);
 
 ############################################################################
+
+InstallMethod( \<, "for H-class and H-class of trans. semigp.",
+[IsGreensHClass and IsGreensClassOfTransSemigp, IsGreensHClass and 
+IsGreensClassOfTransSemigp],
+function(h1, h2)
+return h1!.parent=h2!.parent and h1!.rep < h2!.rep;
+end);
+
+
+############################################################################
 #test if it's quicker to test h!.rep in r or vice versa 
 
 InstallMethod( \=, "for R-class and H-class of trans. semigp.",
@@ -358,13 +368,11 @@ else
 	o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
 fi;
 
-f:=DClassRepFromData(s, d, o);
+f:=RClassRepFromData(s, d[1], o[1]);
 perms:=RClassPermsFromData(s, d[1], o[1]);
-rels:=LClassRelsFromData(s, d[2], o[2]); 
-#JDM is the above the syntax correct? Surely not!!
 cosets:=DClassRCosetsFromData(s, d, o);
 
-return rels[d[2][3]][1]*f*(cosets[d[3][2]]/perms[d[3][1]]);
+return f*(cosets[d[3][2]]/perms[d[3][1]]);
 end);
 
 # new for 4.0!

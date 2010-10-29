@@ -29,6 +29,8 @@
 
 # - IteratorOfGreensDClasses(s, func, vals);
 
+# - NrRegularDClasses(s)
+
 
 ##
 #############################################################################
@@ -42,6 +44,16 @@ function(d1, d2)
 
 return d1!.parent=d2!.parent and d1!.rep in d2;
 end);
+
+############################################################################
+
+InstallMethod( \<, "for D-class and D-class of trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp, IsGreensDClass and 
+IsGreensClassOfTransSemigp],
+function(h1, h2)
+return h1!.parent=h2!.parent and h1!.rep < h2!.rep;
+end);
+
 
 #############################################################################
 
@@ -111,7 +123,7 @@ if i = fail or not o!.truth[d!.data[1][4]][i] then
 fi;
 
 f:=f*o!.perms[i]; #adjust image of f so that it is equal o[scc[1]]
-o:=LClassKernelOrbitFromData(s, d!.data[2], d!.o[2]);
+o:=LClassKernelOrbitFromData(s, d!.data, d!.o);
 i:=Position(o, KernelOfTransformation(f));
 
 if i = fail or not o!.truth[d!.data[2][4]][i] then 
@@ -309,7 +321,7 @@ end);
 
 InstallGlobalFunction(DClassOrbitsFromData, 
 function(s, d)
-return [RClassImageOrbitFromData(s, d[1]), LClassKernelOrbitFromData(s, d[2])];
+return [RClassImageOrbitFromData(s, d[1]), LClassKernelOrbitFromData(s, d)];
 end);
 
 #############################################################################
@@ -322,7 +334,7 @@ d ->  RClassImageOrbitFromData(d!.parent, d!.data[1], d!.o[1]));
 #
 
 InstallGlobalFunction(DClassKernelOrbit, 
-d -> LClassKernelOrbitFromData(d!.parent, d!.data[2], d!.o[2]));
+d -> LClassKernelOrbitFromData(d!.parent, d!.data, d!.o));
 
 #############################################################################
 # s <- semigroup; d <- d!.data ; o <- d!.o
@@ -457,6 +469,12 @@ fi;
 return o!.d_schutz[d[4]][d[5]][d[6]][1];
 end);
 
+#new for 4.0!
+#############################################################################
+
+InstallOtherMethod(DClassOfRClass, "for an R-class of a trans. semigroup",
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+r-> GreensDClass(r));
 
 #############################################################################
 # 
@@ -1089,6 +1107,8 @@ end);
 # JDM is this correct? 
 # could also try finding the idempotents of one R-class and then multiplying
 # them as in GreensRClassReps
+# JDM improve as per l.gi and r.gi
+
 
 InstallOtherMethod( Idempotents, "for a D-class of a trans. semigp.",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
@@ -1317,7 +1337,7 @@ iter:=IteratorByFunctions( rec(
 			return false;
 		else #store R-class in kernel orbit/ JDM clean up the following clause
 			d:=d_ker[3][2];
-			r_reps:=LClassKernelOrbitFromData(s, d, O)!.r_reps[d[4]][d[5]][d[6]];
+			r_reps:=LClassKernelOrbitFromData(s, d_ker[3])!.r_reps[d[4]][d[5]][d[6]];
 			r_reps[Length(r_reps)+1]:=d_img;
 		fi;
 	od;
@@ -1727,7 +1747,7 @@ InstallOtherMethod(SchutzenbergerGroup, "for a D-class of a trans. semigp.",
 function(d)
 local dd;
 dd:=d!.data[2];
-return LClassKernelOrbitFromData(d!.parent, dd, d!.o[2])!.
+return LClassKernelOrbitFromData(d!.parent, d!.data, d!.o)!.
  d_schutz[dd[4]][dd[5]][dd[6]][2];
 end);
 
@@ -1803,7 +1823,7 @@ i:=0;
 for d in data do
 	o_r:=RClassImageOrbitFromData(s, d[1]);
 	r:=RClassSchutzGpFromData(s, d[1]);
-	o_l:=LClassKernelOrbitFromData(s, d[2]);
+	o_l:=LClassKernelOrbitFromData(s, d);
 	l:=LClassSchutzGpFromData(s, d[2]);
 	i:=i+(Size(r)*Length(RClassSCCFromData(s, d[1]))
 	 *Length(LClassSCCFromData(s, d[2]))*Size(l)/

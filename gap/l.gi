@@ -21,6 +21,8 @@
 # - 
 # greenslclassdata for legacy.gi 
 
+# - require methods for \= between l-classes and other types of classes
+
 # Conventions
 
 # -low-level function make as few functions calls as possible, higher level ones
@@ -33,6 +35,15 @@ InstallMethod( \=, "for L-class and L-class of trans. semigp.",
 IsGreensClassOfTransSemigp],
 function(l1, l2)
 return l1!.parent=l2!.parent and l1!.rep in l2;
+end);
+
+############################################################################
+
+InstallMethod( \<, "for L-class and L-class of trans. semigp.",
+[IsGreensLClass and IsGreensClassOfTransSemigp, IsGreensLClass and 
+IsGreensClassOfTransSemigp],
+function(h1, h2)
+return h1!.parent=h2!.parent and h1!.rep < h2!.rep;
 end);
 
 #############################################################################
@@ -59,7 +70,7 @@ d:=l!.data;
 s:=l!.parent;
 o:=l!.o;
 
-ol:=LClassKernelOrbitFromData(s, d[2], o[2]);
+ol:=LClassKernelOrbitFromData(s, d, o);
 i:=Position(ol, KernelOfTransformation(f));
 
 if i = fail or not ol!.truth[d[2][4]][i] then 
@@ -117,6 +128,13 @@ SetRepresentative(l, rep);
 SetEquivalenceClassRelation(l, GreensLRelation(s));
 return l;
 end);
+
+#############################################################################
+#
+
+InstallOtherMethod(DClassOfLClass, "for an L-class of a trans. semigroup",
+[IsGreensLClass and IsGreensClassOfTransSemigp], 
+l-> GreensDClass(l));
 
 #############################################################################
 #
@@ -457,34 +475,37 @@ end);
 InstallOtherMethod( Idempotents, "for an L-class of a trans. semigp.",
 [IsGreensLClass and IsGreensClassOfTransSemigp], 
 function(l)
-local out, img, n, o, i, id, j, k, m;
+local foo, out, f, n, img, o, scc, j, i;
 
 if HasIsRegularLClass(l) and not IsRegularLClass(l) then 
 	return [];
 fi;
 
+foo:=function(f, set) #is set a transversal of ker?
+local i, j;
+j:=[]; 
+for i in set do 
+	if not f[i] in j then 
+		AddSet(j, f[i]);
+	else
+		return false;
+	fi;
+od;
+
+return true;
+end;
+
 out:= EmptyPlist(Size(l)/NrGreensHClasses(l)); 
+f:=l!.rep; n:=Degree(f);
+img:=ImageAndKernelOfTransformation(f)[1];
+o:=LClassKernelOrbitFromData(l!.parent, l!.data, l!.o);
+scc:=LClassSCC(l);  j:=0;
 
-img:=Set(l!.rep![1]);
-n:=Length(img);
-o:=LClassKernelOrbit(l){LClassSCC(l)}; #JDM1
-m:=0;
-
-for i in o do
-	id:=EmptyPlist(n);
-	j:=1;
-	k:=Intersection(i[j], img);
-	
-	while Length(k)=1 and j<=n-1 do 
-		id{i[j]}:=List(i[j], x-> k[1]);
+for i in scc do
+	f:=TABLE_OF_TRANS_KERNEL(o[i], n);
+	if foo(f, img) then 
 		j:=j+1;
-		k:=Intersection(i[j], img);
-	od;
-	
-	if j=n and Length(k)=1 then 
-		id{i[j]}:=List(i[j], x-> k[1]);
-		m:=m+1;
-		out[m]:=TransformationNC(id);
+		out[j]:=IdempotentNC(o[i], img);
 	fi;
 od;
 
@@ -673,7 +694,7 @@ end);
 
 InstallMethod(LClassKernelOrbit, "for an L-class of a trans. semigp.",
 [IsGreensLClass and IsGreensClassOfTransSemigp],
-l-> LClassKernelOrbitFromData(l!.parent, l!.data[2], l!.o[2]));
+l-> LClassKernelOrbitFromData(l!.parent, l!.data, l!.o));
 
 ############################################################################
 # JDM change the syntax of the below so that d is really l!.d and o is l!.o?
@@ -683,10 +704,10 @@ InstallGlobalFunction(LClassKernelOrbitFromData,
 function(arg)
 local s, d;
 
-s:=arg[1]; d:=arg[2];
+s:=arg[1]; d:=arg[2][2];
 
 if Length(arg)=3 then 
-	return arg[3]!.orbits[d[1]][d[2]];
+	return arg[3][2]!.orbits[d[1]][d[2]];
 else
 	return OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
 fi;

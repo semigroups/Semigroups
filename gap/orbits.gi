@@ -143,7 +143,6 @@ return fail;
 end);
 
 ###########################################################################
-# JDM remove GradedImagesOfTransSemigroup from 3.2!
 
 InstallMethod(GradedImagesOfTransSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup],
@@ -849,6 +848,9 @@ end );
 ########################################################################### 
 # JDM it would be very useful here to make use of any kernels already known
 # from the D-class computation!
+
+# MN it would be useful to have a version of Orb which allowed us to change 
+# onlygrades and then update the orbit!
 
 InstallOtherMethod(KernelsOfTransSemigroup, "for a trans. semigroup", 
 [IsTransformationSemigroup],  

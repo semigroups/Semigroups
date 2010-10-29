@@ -132,23 +132,7 @@ gap> g4:=Transformation([4,3,3,4,4]);;
 gap> cs5:=Semigroup(g1,g2,g3,g4);;
 gap> IsCompletelySimpleSemigroup(cs5);
 true
-gap> dc:=GreensDClassOfElement(m14, Transformation( [ 12, 2, 1, 3, 6, 6, 12, 2, 3, 3, 11, 3 ] ));;
-gap> iso:=IsomorphismReesMatrixSemigroupOfDClass(dc);;
-gap> rms:=Range(iso);;
-gap> cs:=Range(IsomorphismTransformationSemigroup(rms));;
-gap> Size(cs);
-6
-gap> IsCompletelySimpleSemigroup(cs);
-true
 gap> dc:=GreensDClassOfElement(m9, Transformation( [ 3, 3, 2, 6, 2, 4, 4, 6, 3, 4, 6 ] ));;
-gap> iso:=IsomorphismReesMatrixSemigroupOfDClass(dc);;
-gap> rms:=Range(iso);;
-gap> cs:=Range(IsomorphismTransformationSemigroup(rms));
-<semigroup with 9 generators>
-gap> Size(cs);
-56
-gap> IsCompletelySimpleSemigroup(cs);
-true
 gap> d:=GreensDClassOfElement(m14, Transformation( [ 12, 2, 1, 3, 6, 6, 12, 2, 3, 3, 11, 3 ] ));;
 gap> g:=GroupHClassOfGreensDClass(d);;
 gap> s:=Semigroup(AsList(g));;
@@ -214,12 +198,10 @@ true
 gap> List(SmallMonoids, IsRegularSemigroup);
 [ false, true, false, false, true, true, true, true, true, false, false,
   true, true, true, false ]
-gap> List([1..100], x-> IsRegularSemigroup(RandomSemigroup(2,7)));;
 gap> List(BigMonoids, IsRegularSemigroup);
 [ true, false, false, false, false, true, true, false ]
 gap> List([c3,c4], IsInverseSemigroup);
 [ true, true ]
-gap> List([1..100], x-> IsInverseSemigroup(RandomSemigroup(2,7)));;
 gap> IsBand(c3);
 true
 gap> IsBand(c4);

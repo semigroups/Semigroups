@@ -606,6 +606,6 @@ DeclareOperation("EasyPropertiesOfSemigroup", [IsTransformationSemigroup]);
 DeclareAttribute("MinimalIdeal", IsTransformationSemigroup);
 DeclareAttribute("UnderlyingDClassOfMinIdeal", IsSemigroupIdeal and IsTransformationSemigroup);
 DeclareProperty("IsMinimalIdeal", IsSemigroupIdeal and IsTransformationSemigroup);
-
+DeclareProperty("IsSemigroupWithCommutingIdempotents", IsSemigroup);
 
 #JDM new for 3.2!

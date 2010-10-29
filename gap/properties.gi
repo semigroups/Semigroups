@@ -321,7 +321,7 @@ end);
 InstallMethod(IsSemigroupWithCommutingIdempotents, "for a trans. semigp.", 
 [IsTransformationSemigroup],
 function(s)
-
+local iter, idem , f;
 iter:=IteratorOfIdempotents(s);
 idem:=[];
 
@@ -799,7 +799,7 @@ fi;
 
 f:=EvaluateWord(gens, TraceSchreierTreeForward(o, i));
 
-if f^2=f and Size(GreensDClassOfElement(s, f))=1 then #JDM NC?
+if f^2=f and Size(GreensDClassOfElement(s, f))=1 then #JDM NC? D-class?
 	return f;
 fi;
 

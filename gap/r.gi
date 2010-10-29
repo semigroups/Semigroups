@@ -48,6 +48,15 @@ function(r1, r2)
 return r1!.parent=r2!.parent and r1!.rep in r2;
 end);
 
+############################################################################
+
+InstallMethod( \<, "for R-class and R-class of trans. semigp.",
+[IsGreensRClass and IsGreensClassOfTransSemigp, IsGreensRClass and 
+IsGreensClassOfTransSemigp],
+function(h1, h2)
+return h1!.parent=h2!.parent and h1!.rep < h2!.rep;
+end);
+
 ##
 #############################################################################
 
@@ -915,39 +924,6 @@ o!.schutz:=List([1..r], m-> SchutzGpOfImageOrbit(gens, o, reps[m], m));
 return [o, reps, scc];
 end);
 
-# new method in 4.0!
-#############################################################################
-#
-
-InstallMethod(GreensRClassData, "for a R-class of a trans. semigroup",
-[IsGreensRClass and IsGreensClassOfTransSemigp],
-function(r)
-local rep, d, s, scc, l, o, p, g;
-
-Info(InfoWarning, 1, "this is a legacy from Monoid 3.*");
-
-rep:=r!.rep;
-d:=r!.data;
-s:=r!.parent;
-
-scc:=RClassSCC(r);
-l:=Position(scc, d[3]);
-o:=RClassImageOrbit(r){scc};
-p:=RClassPerms(r){scc};
-g:=SchutzenbergerGroup(r);
-
-#d[3] is the index of the scc containing rep!
-if not l=1 then 
-	o:=Concatenation(o{[l..Length(o)]}, o{[1..l-1]});
-	p:=List(Concatenation(p{[l..Length(p)]}, 
-	p{[1..l-1]}), x-> x*p[l]^-1);
-	g:=g^(p[1]^-1);
-fi;
-
-return RClassData(rec( rep:=rep, strongorb:=o, 
-perms:=p, schutz:=g));;
-end);
-
 # new for 4.0!
 #############################################################################
 # JDM test the efficiency of this function!
@@ -1056,28 +1032,39 @@ end);
 InstallOtherMethod( Idempotents, "for a R-class of a trans. semigp.",
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 function(r)
-local out, ker, rep, n, o, i, img, j;
+local foo, out, f, ker, o, scc, j, i;
 
 if HasIsRegularRClass(r) and not IsRegularRClass(r) then 
 	return [];
 fi;
 
-out:= [];
-ker:= KernelOfTransformation(r!.rep);
-rep:=r!.rep![1];
-n:=Length(Set(rep));
-o:=RClassImageOrbit(r){RClassSCC(r)}; #JDM1
+foo:=function(f, set) #is set a transversal of ker?
+local i, j;
+j:=[]; 
+for i in set do 
+	if not f[i] in j then 
+		AddSet(j, f[i]);
+	else
+		return false;
+	fi;
+od;
 
-for i in o do
-	img:=EmptyPlist(n);
-	j:=1;
-	while j<=n and POS_LIST_DEFAULT(img, rep[i[j]], 0)=fail do
-		img[j]:=rep[i[j]];
-		j:=j+1; 
-	od;
-	
-	if j=n+1 then 
-		out[Length(out)+1]:=IdempotentNC(ker, i); #JDM can't we use transformationNC
+return true;
+end;
+
+out:= EmptyPlist(Size(r)/NrGreensHClasses(r)); #JDM efficient?
+f:=r!.rep;
+ker:=ImageAndKernelOfTransformation(f)[2];
+f:=f![1];
+o:=RClassImageOrbitFromData(r!.parent, r!.data, r!.o);
+scc:=RClassSCC(r); 
+j:=0;
+
+for i in scc do
+	i:=o[i];
+	if foo(f, i) then 
+		j:=j+1;
+		out[j]:=IdempotentNC(ker, i);
 	fi;
 od;
 
@@ -1663,7 +1650,21 @@ end);
 InstallOtherMethod(NrIdempotents, "for an R-class of a trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
-local out, ker, rep, n, o, i, img, j, scc;
+local out, ker, rep, n, o, i, img, j, scc, foo;
+
+foo:=function(f, set) #is set a transversal of ker?
+local i, j;
+j:=[]; 
+for i in set do 
+	if not f[i] in j then 
+		AddSet(j, f[i]);
+	else
+		return false;
+	fi;
+od;
+
+return true;
+end;
 
 if HasIdempotents(r) then 
 	return Length(Idempotents(r));
@@ -1678,22 +1679,15 @@ if Rank(r!.rep)=Degree(r!.parent) then
 fi;
 
 out:= 0;
-ker:= KernelOfTransformation(r!.rep);
 rep:=r!.rep![1];
-n:=Length(Set(rep));
-scc:=RClassSCC(r); #JDM1
-o:=RClassImageOrbit(r);
+scc:=RClassSCC(r); 
+o:=RClassImageOrbitFromData(r!.parent, r!.data, r!.o);
+#JDM if the above line is set to RClassImageOrbit,  
+# then this function runs about 7 or 8 times more slowly!
 
-for i in scc do #JDM loop over RClassSCC not o!
+for i in scc do 
 	i:=o[i];
-	img:=EmptyPlist(n);
-	j:=1;
-	while j<=n and POS_LIST_DEFAULT(img, rep[i[j]], 0)=fail do
-		img[Length(img)+1]:=rep[i[j]];
-		j:=j+1; 
-	od;
-	
-	if j=n+1 then 
+	if foo(rep, i) then 
 		out:=out+1;
 	fi;
 od;
@@ -1886,7 +1880,10 @@ end);
 InstallMethod(RClassImageOrbit, "for an R-class of a trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
-return r!.o!.orbits[r!.data[1]][r!.data[2]];
+local d;
+
+d:=r!.data;
+return r!.o!.orbits[d[1]][d[2]];
 end);
 
 ############################################################################

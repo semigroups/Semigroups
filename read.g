@@ -20,6 +20,7 @@ ReadPkg("monoid/gap/l.gi");
 ReadPkg("monoid/gap/d.gi");
 ReadPkg("monoid/gap/properties.gi");
 ReadPkg("monoid/gap/ideals.gi");
+ReadPkg("monoid/gap/legacy.gi");
 
 #JDM remove
 

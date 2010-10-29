@@ -7,6 +7,8 @@ InstallMethod(SchutzenbergerGroup, "for GreensData",
 ######################
 #JDM this should be modified
 
+#JDM currently broken!
+
 InstallOtherMethod(GreensDClassData,  "data structure of D-class of an element", 
 [IsGreensDClass and IsGreensClassOfTransSemigp, IsGreensLClassData],
 function(class, L)
@@ -27,10 +29,10 @@ end);
 
 
 #############################################################################
-#JDM this should be removed to legacy.gi
 
-InstallMethod(GreensHClassData, "data structure of H-class of an element", 
-true, [IsGreensHClass and IsGreensClassOfTransSemigp], 0,
+
+InstallMethod(GreensHClassData, "for an H-class of trans. semigp.", 
+[IsGreensHClass and IsGreensClassOfTransSemigp],
 function(class)
 local R, L, data;
 
@@ -164,6 +166,8 @@ true, [IsGreensLClass and IsGreensClassOfTransSemigp],
 function(L)
 local ker, orbit, i, j, back, s, pnt, new, a, n, set, sets, z, relts, gens, img, rep, scc, invrelts, newinv, schutz, data;
 
+Info(InfoWarning, 1, "this is a legacy from Monoid 3");
+
 # determine starting point.
 rep:= Representative(L); ker:= KernelOfTransformation(rep);
 orbit:=[ker]; sets:=[ker]; n:=Length(ker); i:=0; back:= [[]];
@@ -237,4 +241,37 @@ data:=LClassData(rec( rep:=rep, strongorb:=sets, relts:=relts, invrelts:=invrelt
 
 return data;
 
+end);
+
+# new method in 4.0!
+#############################################################################
+#
+
+InstallMethod(GreensRClassData, "for a R-class of a trans. semigroup",
+[IsGreensRClass and IsGreensClassOfTransSemigp],
+function(r)
+local rep, d, s, scc, l, o, p, g;
+
+Info(InfoWarning, 1, "this is a legacy from Monoid 3");
+
+rep:=r!.rep;
+d:=r!.data;
+s:=r!.parent;
+
+scc:=RClassSCC(r);
+l:=Position(scc, d[3]);
+o:=RClassImageOrbit(r){scc};
+p:=RClassPerms(r){scc};
+g:=SchutzenbergerGroup(r);
+
+#d[3] is the index of the scc containing rep!
+if not l=1 then 
+	o:=Concatenation(o{[l..Length(o)]}, o{[1..l-1]});
+	p:=List(Concatenation(p{[l..Length(p)]}, 
+	p{[1..l-1]}), x-> x*p[l]^-1);
+	g:=g^(p[1]^-1);
+fi;
+
+return RClassData(rec( rep:=rep, strongorb:=o, 
+perms:=p, schutz:=g));;
 end);

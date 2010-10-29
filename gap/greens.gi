@@ -45,13 +45,17 @@ end);
 
 # new for 4.0!
 #############################################################################
-# 
+# JDM this is horribly slow in comparison with Idempotents!
 
 InstallMethod(NrIdempotents, "for a transformation semigroup", 
 [IsTransformationSemigroup],
 function(s)
 local i, iter, d, r;
 i:=0;
+
+if HasIdempotents(s) then 
+	return Length(Idempotents(s));
+fi;
 
 if OrbitsOfKernels(s)!.finished then 
 	iter:=IteratorOfGreensDClasses(s);
@@ -96,131 +100,165 @@ end);
 #############################################################################
 #
 
-InstallMethod(IteratorsOfIdempotents, "for a transformation semigroup", 
+InstallMethod(IteratorOfIdempotents, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
 function(s);
 #JDM here!
+Error("not yet implemented");
+
 
 end);
-
-
 
 #############################################################################
 #  JDM the following should be reviewed! depends on R-classes
 
 InstallOtherMethod( Idempotents, "for a transformation semigroup", 
 [IsTransformationSemigroup],
-function(M)
-local idempotent, pt, ker, img, kers, imgs, i, n, idm, one, x;
+function(s)
+local foo, n, bound, out, kers, imgs, min, max, regular, i, ker, f, img, e; 
 
-if not IsCompletelyRegularSemigroup(M) then
-	GreensRClasses(M);
-fi;
+foo:=function(f, set) #is set a transversal of ker?
+local i, j;
+j:=[]; 
+for i in set do 
+	if not f[i] in j then 
+		AddSet(j, f[i]);
+	else
+		return false;
+	fi;
+od;
 
-if One(M) in M then 
-	idm:= [One(M)];
+return true;
+end;
+
+n:=Degree(s);
+
+if HasNrIdempotents(s) then 
+	bound:=NrIdempotents(s);
+elif HasSize(s) or OrbitsOfImages(s)!.finished then 
+	bound:=Size(s);
 else
-	idm:=[];
+	bound:=n^n; #JDM good idea MN?
 fi;
 
-kers:=GradedKernelsOfTransSemigroup(M);
-imgs:=GradedImagesOfTransSemigroup(M);
-n:=Size(kers);
+out:=EmptyPlist(bound);
+
+kers:=GradedKernelsOfTransSemigroup(s); 
+imgs:=GradedImagesOfTransSemigroup(s);
+
+min:=PositionProperty(imgs, x-> not Length(x)=0); 
+max:=First([Length(imgs), Length(imgs)-1..1] , x-> not Length(imgs[x])=0);
+regular:=false; 
+
+if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
+	regular:=true;
+fi;
 
 # loop over all ranks.
-for i in [1..n] do
-	# loop over the kernels.
+for i in [min..max] do
 	for ker in kers[i] do
-		# loop over the images.
-		for img in imgs[i] do
-			# check for cross section.
-			if not img=[1..n] or not ker=List([1..n], x-> [x]) then 
-				if IsTransversal(ker, img) then
-				
-					x:=IdempotentNC(ker, img);
-					if IsRegularSemigroup(M) or x in M then 
-						Add(idm, x);
-					fi;
-					## IsRegularSemigroup will calculate the R-classes if it is regular or 
-					## return false otherwise requiring the calculation of the R-classes for 
-					## the \in test.
+		f:=TABLE_OF_TRANS_KERNEL(ker, n);
+		for img in imgs[i] do 
+			if foo(f, img) then 
+				e:=IdempotentNC(ker, img);
+				if regular or e in s then 
+					Add(out, e);
 				fi;
 			fi;
 		od;
 	od;
 od;
 
-# return the set of idempotents.
-return Set(idm);
+return out;
 end);
 
-#####################
-
-##  JDM the following should be reviewed! depends on R-classes
+####################################################################################
 
 InstallOtherMethod(Idempotents, "for a trans. semigroup and pos. int.", 
 [IsTransformationSemigroup, IsPosInt],
-function(M, i)
-local idempotent, pt, ker, img, kers, imgs, n, idm, one, x;
+function(s, i)
+local foo, n, bound, out, kers, imgs, regular,  ker, f, img, e;
 
-if i>DegreeOfTransformationSemigroup(M) then 
+if i>Degree(s) then 
 	return fail;
 fi;
 
-if HasIdempotents(M) then 
-	return Filtered(Idempotents(M), x-> RankOfTransformation(x)=i);
+if HasIdempotents(s) then 
+	return Filtered(Idempotents(s), x-> RankOfTransformation(x)=i);
+fi; #JDM is this quicker? seems to be.
+
+foo:=function(f, set) #is set a transversal of ker?
+local i, j;
+j:=[]; 
+for i in set do 
+	if not f[i] in j then 
+		AddSet(j, f[i]);
+	else
+		return false;
+	fi;
+od;
+
+return true;
+end;
+
+n:=Degree(s);
+
+if HasNrIdempotents(s) then 
+	bound:=NrIdempotents(s);
+elif HasSize(s) or OrbitsOfImages(s)!.finished then 
+	bound:=Size(s);
+else
+	bound:=n^n; #JDM good idea MN?
 fi;
 
-if not IsCompletelyRegularSemigroup(M) then
-	GreensRClasses(M);
+out:=EmptyPlist(bound);
+
+kers:=GradedKernelsOfTransSemigroup(s)[i]; 
+imgs:=GradedImagesOfTransSemigroup(s)[i];
+
+regular:=false; 
+
+if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
+	regular:=true;
 fi;
 
-idm:= [];
-kers:=GradedKernelsOfTransSemigroup(M);
-imgs:=GradedImagesOfTransSemigroup(M);
-n:=Size(kers); #=Size(imgs)
-
-# loop over the kernels.
-for ker in kers[i] do
-
-	# loop over the images.
-	for img in imgs[i] do
-		# check for cross section.
-		if IsTransversal(ker, img) then
-			x:=IdempotentNC(ker, img);     
-			if IsRegularSemigroup(M) or x in M then 
-				Add(idm, x);
+for ker in kers do
+	f:=TABLE_OF_TRANS_KERNEL(ker, n);
+	for img in imgs do 
+		if foo(f, img) then 
+			e:=IdempotentNC(ker, img);
+			if regular or e in s then 
+				Add(out, e);
 			fi;
-				## IsRegularSemigroup will calculate the R-classes if it is 
-				## regular or return false otherwise requiring the calculation
-				## of the R-classes for the \in test.
 		fi;
 	od;
 od;
 
-# return the set of idempotents.
-return Set(idm);
+
+return out;
 end);
 
+
 #############################################################################
-##  JDM the following should be reviewed!
 
 InstallMethod(PartialOrderOfDClasses, "for a semigroup", 
 [IsSemigroup], 
-function(M)
-local class, poset, a, i, j, c;
+function(s)
+local d, out, gens, i, a, c, n;
 
-class:= GreensDClasses(M);  
-poset:= List([1..Length(class)], x->[]);
+d:= GreensDClasses(s);
+n:=Length(d);
+out:= List([1..n], x->EmptyPlist(n));
+gens:=Generators(s);
 
-for i in [1..Length(class)] do
-	AddSet(poset[i], i);
-	for a in GeneratorsOfSemigroup(M) do
-		for c in GreensRClasses(class[i]) do
-			AddSet(poset[i], PositionProperty(class, x-> a * Representative(c) in x));
+for i in [1..Length(d)] do
+	AddSet(out[i], i);
+	for a in gens do
+		for c in GreensRClassReps(d[i]) do
+			AddSet(out[i], PositionProperty(d, x-> a * c in x));
 		od;
-		for c in GreensLClasses(class[i]) do
-			AddSet(poset[i], PositionProperty(class, x-> Representative(c) * a in x));
+		for c in GreensLClassReps(d[i]) do
+			AddSet(out[i], PositionProperty(d, x-> c * a in x));
 		od;
 	od;
 od;
@@ -235,7 +273,6 @@ od;
 #	od;
 #od;
 
-return poset;
+return out;
 #return Graph(Group(()), [1..Length(class)], OnPoints, function(x,y) return y in poset[x]; end, true); ;
-
 end);
