@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd">
-<!--  MakeGAPDocDoc("~/Desktop/gap4r4/pkg/monoid/doc/", "monoid.xml", [ "../gap/general.gd", "../gap/autos.gd", "../gap/transform.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd",  "../gap/semigroups.gd", "../gap/semihomo.gd", "../gap/isomorph.gd", "../gap/congruences.gd"], "manual");; -->
+<!--  MakeGAPDocDoc("~/Desktop/gap4r4/pkg/monoid/doc/", "monoid.xml", [ "../gap/transform.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd"], "manual");; -->
 
 <!-- SizeScreen([80]); SetInfoLevel(InfoWarning, 0); TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1], "monoid.xml", ["../gap/autos.gd", "../gap/general.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd", "../gap/semigroups.gd", "../gap/semihomo.gd", "../gap/transform.gd", "../gap/isomorph.gd"] );-->
 
@@ -9,7 +9,7 @@
 
 <TitlePage>
 	<Title>The <Package>MONOID</Package> Package</Title>
-	<Version>Version 3.1.4</Version>
+	<Version>Version 4.0</Version>
 	<Author>J. D. Mitchell
 		<Email>jdm3@st-and.ac.uk</Email>
 	</Author>
@@ -392,13 +392,6 @@ The following functions allow the calculation of arbitrary orbits in
 transformation semigroups. Several more specific orbits that are often useful 
 are given in Section <Ref Sect="specorbits"/>.
 
-<#Include Label="MonoidOrbit">
-<#Include Label="MonoidOrbits">
-<#Include Label="StrongOrbit">
-<#Include Label="StrongOrbits">
-<#Include Label="GradedOrbit">
-<#Include Label="ShortOrbit">
-<#Include Label="ShortStrongOrbit">
 <#Include Label="StrongOrbitsInForwardOrbit">
 </Section>
 
@@ -411,10 +404,6 @@ see Chapter <Ref Chap="greens"/> and Chapter <Ref Chap="properties"/>.
 
 <#Include Label="ImagesOfTransSemigroup">
 <#Include Label="GradedImagesOfTransSemigroup">
-<#Include Label="KernelsOfTransSemigroup">
-<#Include Label="GradedKernelsOfTransSemigroup">
-<#Include Label="StrongOrbitOfImage">
-<#Include Label="StrongOrbitsOfImages">
 </Section>	
 
 <!-- ############### -->
@@ -511,7 +500,7 @@ Without the <Package>MONOID</Package> package loaded:
 		<#Include Label="IsGreensData">
 		<#Include Label="RClassData">
 		<#Include Label="IsGreensRClassDataRep">
-		<#Include Label="IsAssociatedSemigpTransSemigp">
+		<#Include Label="IsGreensClassOfTransSemigp">
 		<#Include Label="SchutzenbergerGroup">
 		<#Include Label="Idempotents">
 		<#Include Label="PartialOrderOfDClasses">
@@ -603,200 +592,6 @@ considering the generators <C>U</C> and their action on the underlying set only.
 </Section>
 </Chapter>
 
-<!-- ############### -->
-
-<Chapter Label="special"> <Heading>Special Classes of Semigroup</Heading>
-
-In this chapter functions for creating certain semigroups are given. 
-<!--In Section <Ref Sect="trans"/> we give functions for creating the following standard transformation semigroups:
-<List>
-<Item> the semigroup of all <E>singular transformations</E> of the <C>n</C>-element set <C>{1,2,...,n}</C>.  That is, the non-invertible mappings on this set.  This semigroup is known to be regular, idempotent generated (satisfies <Ref Prop="IsSemiBand"/>), and has size <C>n^n-n!</C>.</Item>
-<Item> the semigroup of all <E>order preserving transformations</E> of the <C>n</C>-element set <C>{1,2,...,n}</C>. That is, the mappings <C>f</C> such that <C>i</C> is at most  <C>j</C> implies <C>f(i)</C> is at most <C>f(j)</C> for all <C>i,j</C> in <C>{1,2,...,n}</C>.  This semigroup is known to be regular, idempotent generated (satisfies <Ref Prop="IsSemiBand"/>), and has size <C>Binomial(2*n-1, n-1)</C>.</Item>
-</List>
-
-In Section <Ref Sect="zeros"/> we give functions for creating the following semigroups:
-
-<List>
-<Item> the <E>zero semigroup</E> <C>S</C> of order <C>n</C>. That is, the unique semigroup up to isomorphism of order <C>n</C> such that there exists an element <C>0</C> in <C>S</C> such that <C>xy=0</C> for all <C>x,y</C> in <C>S</C>.</Item>
-<Item> <E>zero groups</E> with underlying group <C>G</C>. That is, the monoid <C>S</C> obtained by adjoining a zero element <C>0</C> to a group <C>G</C> with <C>g0=0g=0</C> for all <C>g</C> in <C>S</C>.</Item>
-</List>
-
-In Section <Ref Sect="random"/> we give functions for randomly creating semigroups of different types. These functions are included so that the user has a ready supply of examples should they be required.
-
-</Section>-->
-
-<!-- ############### -->
-
-<Section Label="trans"><Heading>Some Classes of Semigroup</Heading>
-	<#Include Label="SingularSemigroup">
-	<#Include Label="OrderPreservingSemigroup">
-	<#Include Label="KiselmanSemigroup">
-</Section>
-
-<!-- ############### -->
-
-<Section Label="zeros"><Heading>Zero Groups and Zero Semigroups</Heading>
-	<#Include Label="ZeroSemigroup">
-	<#Include Label="ZeroSemigroupElt">
-	<#Include Label="ZeroGroup">
-	<#Include Label="ZeroGroupElt">
-	<#Include Label="UnderlyingGroupOfZG">
-	<#Include Label="UnderlyingGroupEltOfZGElt">
-</Section>
-
-<!-- ############### -->
-
-<Section Label="random"><Heading>Random Semigroups</Heading>
-	<#Include Label="RandomTransformationMonoid">
-	<#Include Label="RandomTransformationSemigroup">
-	<#Include Label="RandomReesMatrixSemigroup">
-	<#Include Label="RandomReesZeroMatrixSemigroup">
-	<#Include Label="RandomSemilatticeAsSemigroup">
-</Section>
-
-</Chapter>
-
-<!-- ############### -->
-
-<Chapter Label="homo"> <Heading>Semigroup Homomorphisms</Heading>
-<Section><Heading>Introduction</Heading>
-In this chapter we give instructions on how to create semigroup homomorphisms 
-using <Package>MONOID</Package> in several different ways.  <P/>
-
-In Section <Ref Sect="create"/>, we give functions for creating arbitrary 
-semigroup homomorphism specified by a function on the elements, the images of 
-the generators, or the images of all the semigroup elements.
-These functions were written to support the functions for  
-computing the automorphism group of an arbitrary transformation semigroup 
-and to specify isomorphisms between different classes of semigroup, such as 
-finitely presented semigroups and transformation semigroups.<P/>
- 
-In Section <Ref Sect="inner"/>, we show how to specify and compute the inner 
-automorphisms of a transformation semigroup.  The functions that can be used to 
-find the entire automorphism group of an arbitrary transformation semigroup are 
-given in Section <Ref Sect="autos"/>.  The <Ref Attr="AutomorphismGroup"/> has an interactive mode that allows the user to decide how the computation should proceed. This can be invoked by using the command <C>SetInfoLevel(InfoMonoidAutos, 4);</C> see <Ref InfoClass="InfoMonoidAutos"/>.<P/>
-
-In Section <Ref Sect="rees"/>, commands for 
-creating automorphisms and finding all automorphisms of Rees matrix semigroups 
-and Rees <C>0</C>-matrix semigroups are given.  <P/>
-
-In Section <Ref Sect="zerogp"/>, 
-functions for specifying the automorphisms of a zero group are given. <P/>
-
-In the
-final section (<Ref Sect="iso"/>), functions for finding isomorphisms between various kinds of semigroups are given. <P/>
-
-The methods behind the commands in this chapter are taken
-from <Cite Key="computing"/>.<P/>
-
-<B>Please note</B>: the 
-following functions can only be used fully if <Package>GRAPE</Package> is fully installed (and loaded):
-<List>
-<Item> <Ref Attr="AutomorphismGroup"/> with argument satisfying <Ref Prop="IsTransformationSemigroup" BookName="ref"/> or <Ref Prop="IsReesZeroMatrixSemigroup" BookName="ref"/></Item>
-<Item> <Ref Oper="RightTransStabAutoGroup"/> with argument satisfying <Ref Prop="IsReesZeroMatrixSemigroup" BookName="ref"/></Item> 
-<Item><Ref Func="RZMSGraph"/></Item>
-<Item><Ref Oper="RZMSInducedFunction"/></Item> 
-<Item><Ref Oper="RZMStoRZMSInducedFunction"/></Item>  
-<Item><Ref Oper="IsomorphismSemigroups"/> with both arguments satisfying <Ref Prop="IsReesZeroMatrixSemigroup" BookName="ref"/></Item>
-</List>
-Please see Chapter <Ref Sect="Monoid"/> for further details on how to obtain <Package>GRAPE</Package>.
-
-		<#Include Label="InfoMonoidAutos">
-</Section>
-
-	<!-- ############### -->
-
-<Section Label="create"><Heading>Creating Homomorphisms</Heading>
-The principal functions for creating arbitrary  semigroup homomorphisms are the 
-following three. 
-
-	<!-- ############### -->
-
-	<#Include Label="SemigroupHomomorphismByFunction">
-	<#Include Label="SemigroupHomomorphismByImagesOfGens">
-	<#Include Label="SemigroupHomomorphismByImages">
-	</Section>
-
-<!-- ############### -->
-	
-	<Section Label="inner"><Heading>Inner Automorphisms</Heading>
-		<#Include Label="InnerAutomorphismOfSemigroup">
-		<#Include Label="ConjugatorOfInnerAutomorphismOfSemigroup">
-		<#Include Label="IsInnerAutomorphismOfSemigroup">
-		<#Include Label="InnerAutomorphismsOfSemigroup">
-		<#Include Label="InnerAutomorphismsOfSemigroupInGroup">
-		<#Include Label="InnerAutomorphismsAutomorphismGroup">
-		<#Include Label="IsInnerAutomorphismsOfSemigroup">
-		<#Include Label="IsInnerAutomorphismsOfZeroGroup">
-	</Section>
-	
-<!-- ############### -->
-	
-		<Section Label="autos"><Heading>Automorphism Groups</Heading>
-		<#Include Label="AutomorphismGroup">
-		<#Include Label="AutomorphismsSemigroupInGroup">
-		<#Include Label="IsAutomorphismGroupOfSemigroup">
-		<#Include Label="IsAutomorphismGroupOfSimpleSemigp">
-		<#Include Label="IsAutomorphismGroupOfZeroGroup">
-		<#Include Label="IsAutomorphismGroupOfZeroSemigroup">
-		<#Include Label="IsAutomorphismGroupOfRMS">
-		<#Include Label="IsAutomorphismGroupOfRZMS">
-	</Section>
-	
-<!-- ############### -->
-	
-	<Section Label="rees"><Heading>Rees Matrix Semigroups</Heading>
-		<#Include Label="RMSIsoByTriple">
-		<#Include Label="RZMSIsoByTriple">
-		<#Include Label="IsRMSIsoByTripleRep">
-		<#Include Label="IsRZMSIsoByTripleRep">
-		<#Include Label="RMSInducedFunction">
-		<#Include Label="RZMSInducedFunction">
-		<#Include Label="RZMStoRZMSInducedFunction">
-		<#Include Label="RZMSGraph">
-		<#Include Label="RightTransStabAutoGroup">
-	</Section>
-	
-<!-- ############### -->
-	
-	<Section Label="zerogp"><Heading>Zero Groups</Heading>
-		<#Include Label="ZeroGroupAutomorphism">
-		<#Include Label="IsZeroGroupAutomorphismRep">
-		<#Include Label="UnderlyingGroupAutoOfZeroGroupAuto">
-	</Section>
-	
-<!-- ############### -->
-
-	<Section Label="iso"><Heading>Isomorphisms</Heading>
-		<#Include Label="IsomorphismAutomorphismGroupOfRMS">
-		<#Include Label="IsomorphismPermGroup">
-		<#Include Label="IsomorphismFpSemigroup">
-		<#Include Label="IsomorphismFpMonoid">
-		<#Include Label="IsomorphismSemigroups">
-		<#Include Label="IsomorphismReesMatrixSemigroupOfDClass">
-		<#Include Label="IsomorphismReesMatrixSemigroup">
-	</Section>
-</Chapter>
-
-<!-- ############### -->
-
-<Chapter Label="homo"> <Heading>Congruences</Heading>
-	<Section><Heading>Arbitrary Semigroups</Heading>
-		<#Include Label="InfoMonoidCongruences">
-		<#Include Label="IsCongruenceOfSemigroup">
-  </Section>
-	<Section><Heading>Semilattices</Heading>
-		<#Include Label="CongruencesSemilattice">
-		<#Include Label="CongruencesSemilatticeAsPositions">
-		<#Include Label="ConvexSubsemigroup">
-		<#Include Label="ConvexSubsemigroupAsPositionsNC">
-		<#Include Label="ConvexSubsemigroups">
-		<#Include Label="ConvexSubsemigroupsAsPositions">
-		<#Include Label="IsConvexSubsetOfSemilattice">		
-		<#Include Label="OneMinEltSemilatticeAsPosition">
-		<#Include Label="OneMinEltSemilattice">
-	</Section>
-</Chapter>
 </Body>
 
 <Bibliography Databases="MONOID" />
