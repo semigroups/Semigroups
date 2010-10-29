@@ -11,8 +11,10 @@
 ##
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "properties.tst" ) );
+# 800ms to run!
 
-gap> START_TEST("properties.tst 3.1.4");
+
+gap> START_TEST("properties.tst 4.0");
 gap> LoadPackage("monoid");;
 gap> g1:=Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] );;
 gap> g2:=Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] );;
@@ -101,12 +103,12 @@ gap> List(BigMonoids, IsCompletelyRegularSemigroup);
 gap> g1:=Transformation([3,3,2,6,2,4,4,6]);;
 gap> g2:=Transformation([5,1,7,8,7,5,8,1]);;
 gap> cs1:=Semigroup(g1,g2);;
-gap> IsCompletelySimpleSemigroup(cs1);
+gap> IsSimpleSemigroup(cs1);
 true
 gap> g1:=Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] );;
 gap> g2:=Transformation( [ 2, 3, 4, 5, 6, 8, 7, 1, 2, 2 ] );;
 gap> cs2:=Semigroup(g1,g2);;
-gap> IsCompletelySimpleSemigroup(cs2);
+gap> IsSimpleSemigroup(cs2);
 true
 gap> g1:=Transformation([2,1,1,2,1]);;
 gap> g2:=Transformation([3,4,3,4,4]);;
@@ -225,10 +227,10 @@ gap> Size(Semigroup(Idempotents(FullTransformationSemigroup(4))));
 233
 gap> 4^4-Factorial(4)+1;
 233
-gap> ForAll(SmallMonoids, x-> not IsSemiBand(x));
+gap> ForAll(SmallMonoids, x-> not IsIdempotentGenerated(x));
 true
 gap> List(SmallMonoids, IsOrthodoxSemigroup);
-[ true, true, false, false, false, false, true, true, true, false, false,
+[ false, true, false, false, false, false, true, true, true, false, false, 
   false, false, true, false ]
 gap> s:=SmallMonoids[7];;
 gap> Size(s);;
@@ -339,22 +341,7 @@ gap> gens:=[ Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ),
 gap> S:=Semigroup(gens);;
 gap> MultiplicativeZero(S);
 Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
-gap> S:=ZeroGroup(DihedralGroup(10));           
-<zero group with 3 generators>
-gap> iso:=IsomorphismTransformationSemigroup(S);
-MappingByFunction( <zero group with 3 generators>, <semigroup with 
-4 generators>, function( a ) ... end )
-gap> T:=Range(iso);
-<semigroup with 4 generators>
-gap> IsZeroGroup(T);
-true
-gap> s:=RandomReesMatrixSemigroup(2,2,2);
-Rees Matrix Semigroup over Group([ (1,2) ])
-gap> t:=Range(IsomorphismTransformationSemigroup(s));
-<semigroup with 3 generators>
-gap> IsCompletelySimpleSemigroup(t);
-true
-gap> STOP_TEST( "properties.tst 3.1.4", 10000);
+gap> STOP_TEST( "properties.tst 4.0", 10000);
 
 
 

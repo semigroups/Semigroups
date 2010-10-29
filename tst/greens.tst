@@ -268,7 +268,7 @@ gap> for i in gens do
 > Add(out3, NrIdempotents(s));
 > if not Number(GreensHClasses(s), IsGroupHClass)
 > =Length(Idempotents(s)) then 
-> Print("Something is wrong!");
+> Print("Something is wrong!\n");
 > fi;
 > od;
 gap> out; out2; out3;

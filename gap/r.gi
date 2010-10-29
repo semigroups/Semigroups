@@ -169,7 +169,7 @@ local O, o, filt, scc, r, m, old_scc, old_reps, ht, data, n, d, i, f, y, z, oo,
 
 O:=RClassImageOrbitFromData(s, [j,k]);
 o:=StructuralCopy(O);
-o!.ht:=HashTableForImage(o[1]);
+o!.ht:=HashTableForImages(o[1]);
 for i in [1..Length(O)] do 
 	HTAdd(o!.ht, O[i], i);
 od;

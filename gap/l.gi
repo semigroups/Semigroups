@@ -496,6 +496,7 @@ return true;
 end;
 
 out:= EmptyPlist(Size(l)/NrGreensHClasses(l)); 
+#JDM Sum_{k=0..n} C(n,k)*(n-k)^k= # idempotents in T(n)
 f:=l!.rep; n:=Degree(f);
 img:=ImageAndKernelOfTransformation(f)[1];
 o:=LClassKernelOrbitFromData(l!.parent, l!.data, l!.o);

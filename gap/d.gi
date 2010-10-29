@@ -31,6 +31,8 @@
 
 # - NrRegularDClasses(s)
 
+# - what is GroupHClassOfGreensDClass??
+
 
 ##
 #############################################################################
@@ -242,7 +244,7 @@ else #old ker
 		 +MultipliersOfSCCOfKernelOrbit(gens, O[j][k], m);
 		g:=O[j][k]!.rels[l][2]*f;
 		O[j][k]!.schutz[m]:=RightSchutzGpOfKerOrbit(gens, O[j][k], g, m);
-		O[j][k]!.images_ht[m]:=HashTableForImage(ImageSetOfTransformation(f));
+		O[j][k]!.images_ht[m]:=HashTableForImages(ImageSetOfTransformation(f));
 		
 		reps[1]:=[g];
 		r_reps[1]:=[[data[1]]];
@@ -665,7 +667,7 @@ o!.convert:=List([1..r], x-> []);
 Add(o!.convert[1], [AsPermOfKerImg(f)]);
 
 #images of representatives of L-classes with kernel belonging in scc[i]
-o!.images_ht:=[HashTableForImage(ImageSetOfTransformation(f))];
+o!.images_ht:=[HashTableForImages(ImageSetOfTransformation(f))];
 
 #multipliers of scc containing the kernel of f
 o!.rels:=EmptyPlist(Length(o));

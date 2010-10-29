@@ -223,7 +223,7 @@ fi;
 
 DeclareProperty("IsGreensRTrivial", IsTransformationSemigroup);
 DeclareProperty("IsGreensLTrivial", IsTransformationSemigroup);
-DeclareSynonymAttr("IsGreensHTrivial", IsGreensRTrivial and IsGreensLTrivial);
+DeclareProperty("IsGreensHTrivial", IsTransformationSemigroup);
 DeclareSynonymAttr("IsAperiodicSemigroup", IsGreensHTrivial);
 DeclareSynonymAttr("IsCombinatorialSemigroup", IsGreensHTrivial);
 

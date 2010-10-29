@@ -10,395 +10,189 @@
 ## $Id$
 ##
 
-###########################################################################
-##
-##	<#GAPDoc Label="GradedOrbit">
-##	<ManSection>
-##	<Oper Name="GradedOrbit" Arg="S, obj[, act], grad"/>
-##	<Description>
-##	returns the orbit of the object <C>obj</C> under the action 
-##	<C>act</C> of the transformation collection <C>S</C> partitioned by the 
-##	grading <C>grad</C>. That is, two elements lie in the same class if they 
-##	have the same value under <C>grad</C>.<P/>
-##	
-##	(Recall that a <E>grading</E> is a function <C>f</C> from a transformation 
-##	semigroup <C>S</C> of degree <C>n</C> to the natural 
-##	numbers such that if <C>s</C> in <C>S</C> and <C>X</C> is a subset of 
-##	<C>{1,...,n}</C>, then <C>(Xs)f</C> is at most <C>(X)f</C>. )<P/>
-##	
-##	Note that this function will not check if <C>grad</C> actually defines a 
-##	grading or not.<P/>
-##	
-##	If the optional third argument 
-##	<C>act</C> is not given, then <Ref Func="OnPoints" BookName="ref"/>, 
-##	<Ref Func="OnSets" BookName="ref"/>, or 
-##	<Ref Func="OnSetsSets" BookName="ref"/> is used as the default action 
-##	depending on what <C>obj</C> is.<P/>
-##
-##	Further details can be found in Algorithm A and B of 
-##	<Cite Key="pfeiffer2"/>.
-##	<Example>
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
-##  gap&gt; S:=Monoid(g1,g2,g3);;
-##  gap&gt; GradedOrbit(S, [1,2], OnSets, Size);
-##  [ [ [ 3 ], [ 4 ], [ 2 ], [ 6 ], [ 1 ] ], [ [ 1, 2 ] ] ]
-##  gap&gt; GradedOrbit(S, [1,2], Size);
-##  [ [ [ 3 ], [ 4 ], [ 2 ], [ 6 ], [ 1 ] ], [ [ 1, 2 ] ] ]
-##  gap&gt; GradedOrbit(S, [1,3,4], OnTuples, function(x)
-##  &gt; if 1 in x then return 2;
-##  &gt; else return 1;
-##  &gt; fi;
-##  &gt; end); 
-##  [ [ [ 3, 2, 6 ], [ 2, 3, 4 ], [ 6, 4, 3 ], [ 4, 6, 2 ] ], 
-##    [ [ 1, 3, 4 ], [ 4, 6, 1 ], [ 3, 1, 6 ] ] ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
+# new for 4.0!
+#############################################################################
+# undocumented...
 
-#JDM legacy...
-
-DeclareOperation("GradedOrbit", [IsTransformationCollection, IsObject, 
-IsFunction, IsFunction]);
-
-DeclareGlobalFunction("GradedForwardOrbitNC");
-DeclareGlobalFunction("GradedForwardOrbit");
+DeclareGlobalFunction("HashFunctionForTransformation");
 
 #############################################################################
 ##
 ##	<#GAPDoc Label="GradedImagesOfTransSemigroup">
 ##	<ManSection>
 ##	<Attr Name="GradedImagesOfTransSemigroup" Arg="S"/>
-##	<Description>
-##	returns the set of all the image sets that elements of <C>S</C> admit in a 
-##	list where the <C>i</C>th entry contains all the images with size <C>i</C>
-##	(including the empty list when there are no image sets with size <C>i</C>). 
-##	<P/>
-##	
-##	This is just the union of the orbits of the images of the generators of 
-##	<C>S</C> under the action <Ref Func="OnSets" BookName="ref"/> graded 
-##	according to size.
-##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 1, 5, 1, 1, 1 ] ), 
-##  &gt; Transformation( [ 4, 4, 5, 2, 2 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; GradedImagesOfTransSemigroup(S);
-##  [ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], 
-##  [  ], [ [ 1 .. 5 ] ] ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-## JDM why are these mutable?
-
-DeclareAttribute("GradedImagesOfTransSemigroup", IsTransformationSemigroup, "mutable");
-
-DeclareGlobalFunction("GradedImagesOfTransSemigroupNC");
-
-#############################################################################
-##
-##	<#GAPDoc Label="GradedKernelsOfTransSemigroup">
-##	<ManSection>
 ##	<Attr Name="GradedKernelsOfTransSemigroup" Arg="S"/>
 ##	<Description>
-##	returns the set of all the kernels that elements of <C>S</C> admit in a 
-##	list where the <C>i</C>th entry contains all the kernels with <C>i</C> 
-##	classes (including the empty list when there are no kernels with <C>i</C> 
-##	classes).<P/>
-##
-##	This is just the union of the orbits of the kernels of the generators of 
-##	<C>S</C> under the action <Ref Func="OnKernelsAntiAction"/> graded 
-##	according to size.
+##	<C>GradedImagesOfTransSemigroup</C> returns a list where the <C>i</C>th 
+##	entry is a list of all the images of transformations in <C>S</C> with rank 
+##	<C>i</C>.  
+##	<P/>
+##	
+##	<C>GradedKernelsOfTransSemigroup</C> returns a list where the <C>i</C>th 
+##	entry is a list of all the kernels of transformations in <C>S</C> with rank 
+##	<C>i</C>.
+##	<P/>
+##	See also <Ref Func="ImagesOfTransSemigroup"/> and 
+##	<Ref Func="KernelsOfTransSemigroup"/>.
 ##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 1, 1, 2, 1, 4 ] ), 
-##  &gt; Transformation( [ 2, 5, 3, 2, 3 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; GradedKernelsOfTransSemigroup(S);
+##  gap> s:=Semigroup(Transformation( [ 1, 5, 1, 1, 1 ] ), 
+##  > Transformation( [ 4, 4, 5, 2, 2 ] ));;
+##  gap> GradedImagesOfTransSemigroup(s);
+##  [ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], 
+##    [  ], [  ] ]
+##  gap> GradedKernelsOfTransSemigroup(s);
 ##  [ [ [ [ 1, 2, 3, 4, 5 ] ] ], 
-##    [ [ [ 1, 2, 4, 5 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3, 5 ] ], 
-##        [ [ 1, 2, 4 ], [ 3, 5 ] ] ], 
-##    [ [ [ 1, 2, 4 ], [ 3 ], [ 5 ] ], [ [ 1, 4 ], [ 2 ], [ 3, 5 ] ] ], [  ], 
-##    [ [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ] ] ] ]
-##	</Example> <!-- orbits.tst -->
+##    [ [ [ 1, 3, 4, 5 ], [ 2 ] ], [ [ 1, 2, 3 ], [ 4, 5 ] ] ], 
+##    [ [ [ 1, 2 ], [ 3 ], [ 4, 5 ] ] ], [  ], [  ] ]
+##	</Example> 
 ##	</Description>
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-## JDM this could certainly be improved
-## JDM probably only need one of these and InternalKernels... check properties.gi too :)
-## JDM why are these mutable?
+DeclareAttribute("GradedImagesOfTransSemigroup", IsTransformationSemigroup);
+DeclareAttribute("GradedKernelsOfTransSemigroup", IsTransformationSemigroup);
 
-DeclareAttribute("GradedKernelsOfTransSemigroup", IsTransformationSemigroup, "mutable");
+# new for 4.0!
+#############################################################################
+# undocumented... creates a hash table from an image or kernel with that 
+# image or kernel installed.
 
-DeclareGlobalFunction("GradedKernelsOfTransformationSemigroupNC");
+DeclareGlobalFunction("HashTableForImages");
+DeclareGlobalFunction("HashTableForKernels");
+
+###########################################################################
+##	<#GAPDoc Label="ImagesOfTransSemigroup">
+##	<ManSection>
+##	<Attr Name="ImagesOfTransSemigroup" Arg="S[,n]"/>
+##	<Attr Name="KernelsOfTransSemigroup" Arg="S[, n]"/>
+##	<Description>
+##	<C>ImagesOfTransSemigroup</C> returns the <Package>orb</Package> package 
+##	<C>Orb</O> object:
+##	<Log>
+##	Orb(S, [1..Degree(S)], OnSets);
+##	</Log>
+##	<P/>
+##	
+##	<C>KernelsOfTransSemigroup</C> returns the <Package>orb</Package> package 
+##	<C>Orb</O> object:
+##	<Log>
+##	Orb(S, [[1],..,[Degree(S)]], OnKernelsAntiAction);
+##	</Log>
+##	<P/>
+##
+##	If the optional second argument <C>n</C> (a positive integer) is present, 
+##	then the 
+##	<Example>
+##  gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
+##  > Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;
+##  gap> ImagesOfTransSemigroup(S, 6);
+##  [  ]
+##  gap> ImagesOfTransSemigroup(S, 5);
+##  [  ]
+##  gap> ImagesOfTransSemigroup(S, 4);
+##  [ [ 1, 2, 5, 6 ] ]
+##  gap> ImagesOfTransSemigroup(S, 3);
+##  [ [ 1, 4, 6 ], [ 2, 5, 6 ] ]
+##  gap> ImagesOfTransSemigroup(S, 2);
+##  [ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ]
+##  gap> ImagesOfTransSemigroup(S, 1);
+##  [ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ]
+##  gap> ImagesOfTransSemigroup(S);
+##  [ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6 ], 
+##    [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
+##  </Example> 
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
+
+DeclareAttribute("ImagesOfTransSemigroup", IsTransformationSemigroup);
+DeclareAttribute("KernelsOfTransSemigroup", IsTransformationSemigroup);
+
+###########################################################################
+##
+##	<#GAPDoc Label="OnTuplesOfSetsAntiAction">
+##	<ManSection>
+##	<Func Name="OnTuplesOfSetsAntiAction" Arg="tup, f"/>
+##	<Description>
+##	returns the preimages of each of the sets in the tuple of sets <C>tup</C> 
+##	under the transformation <C>f</C>. The tuple of sets <C>tup</C> can have 
+##	any number of elements.
+##	<Example>
+##  gap> f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
+##  gap> OnTuplesOfSetsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ] ], f);
+##  [ [ 5 ], [ 4, 6 ], [ 3 ] ]
+##	</Example>
+##	</Description>
+##  </ManSection>
+##	<#/GAPDoc>
+
+DeclareGlobalFunction("OnTuplesOfSetsAntiAction");
+
+###########################################################################
+##
+##	<#GAPDoc Label="OnKernelsAntiAction">
+##	<ManSection>
+##	<Func Name="OnKernelsAntiAction" Arg="ker, f"/>
+##	<Description>
+##	returns the kernel of the product <C>f*g</C> of the transformation <C>f</C> 
+##	with a transformation <C>g</C> having kernel <C>ker</C>. 
+##	<Example>
+##  gap> f:=Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] );;
+##  gap> OnKernelsAntiAction([ [ 1, 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6, 7, 8 ] ], f);
+##  [ [ 1, 2, 7, 8 ], [ 3 ], [ 4, 6 ], [ 5 ] ]
+##	</Example> <!-- greens.tst -->
+##	</Description>
+##  </ManSection>
+##	<#/GAPDoc>
+
+DeclareGlobalFunction("OnKernelsAntiAction");
+
+
+
+###########################################################################
+##
+##	<#GAPDoc Label="KernelsOfTransSemigroup">
+##	<ManSection>
+
+##	<Description>
+##	returns the set of all the kernels that elements of <C>S</C> admit.
+##	This is just the union of the orbits of the kernels of the generators of 
+##	<C>S</C> under the action <Ref Func="OnKernelsAntiAction"/>.<P/>
+##
+##	If the optional second argument <C>n</C> (a positive integer) is present, 
+##	then the list of image sets of size <C>n</C> is returned.  If you are only 
+##	interested in the images of a given size, then the second version of the 
+##	function will likely be faster.
+##	<Example>
+##  gap>  S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
+##  > Transformation( [ 3, 3, 4, 1 ] ) ]);
+##  gap>  KernelsOfTransSemigroup(S);   
+##  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], 
+##  [ 4 ] ], 
+##    [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], 
+##    [ [ 1, 4 ], [ 2 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
+##  gap>  KernelsOfTransSemigroup(S,1);
+##  [ [ [ 1, 2, 3, 4 ] ] ]
+##  gap>  KernelsOfTransSemigroup(S,2);
+##  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], 
+##    [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
+##  gap>  KernelsOfTransSemigroup(S,3);
+##  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ]
+##  gap>  KernelsOfTransSemigroup(S,4);
+##  [  ]
+##	</Example> <!-- greens.tst -->
+##	</Description>
+##	</ManSection>
+##	<#/GAPDoc>
+
+
+
+
+
+
 
 #JDM new for 3.2!
 DeclareInfoClass("InfoMonoidOrbits");
-
-#JDM new for 3.2!
-DeclareGlobalFunction("AsPartitionedListNC");
-
-#############################################################################
-# new for 3.2!
-
-DeclareGlobalFunction("HashTableForKernels");
-DeclareGlobalFunction("HashTableForImage");
-
-###########################################################################
-##	<#GAPDoc Label="MonoidOrbit">
-##	<ManSection>
-##	<Oper Name="MonoidOrbit" Arg="S, obj[, act]"/>
-##	<Description>
-##	returns the orbit of the object <C>obj</C> under the action <C>act</C> of the 
-##	transformation collection <C>S</C>. Usually, <C>obj</C> would be a point, 
-##	list of points, or list of lists, and <C>act</C> would be 
-##	<Ref Func="OnPoints" BookName="ref"/>, <Ref Func="OnSets" BookName="ref"/>, 
-##	<Ref Func="OnTuples" BookName="ref"/>, or another action defined in 
-##	<Ref Sect="Basic Actions" BookName="ref"/>. The argument <C>act</C> can be 
-##	any function.<P/>
-##
-##	If the optional third argument 
-##	<C>act</C> is not given, then <Ref Func="OnPoints" BookName="ref"/>, 
-##	<Ref Func="OnSets" BookName="ref"/>, or 
-##	<Ref Func="OnSetsSets" BookName="ref"/> is used as the default action 
-##	depending on what <C>obj</C> is.<P/>
-##
-##	Further details can be found in Algorithm A and B of 
-##	<Cite Key="pfeiffer2"/>.
-##	<Example>
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
-##  gap&gt; S:=Monoid(g1,g2,g3);;
-##  gap&gt; MonoidOrbit(S, 1);
-##  [ 1, 3, 4, 2, 6 ]
-##  gap&gt; MonoidOrbit(S, [1,2], OnSets);
-##  [ [ 1, 2 ], [ 3 ], [ 4 ], [ 2 ], [ 6 ], [ 1 ] ]
-##  gap&gt; MonoidOrbit(S, [1,2], OnTuples);
-##  [ [ 1, 2 ], [ 3, 3 ], [ 4, 4 ], [ 2, 2 ], [ 6, 6 ], [ 1, 1 ] ]
-##  gap&gt; MonoidOrbit(S, 2, OnPoints);
-##  [ 2, 3, 4, 6, 1 ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-DeclareOperation("MonoidOrbit", [IsTransformationCollection, IsObject,
- IsFunction]);
-
-DeclareGlobalFunction("ForwardOrbitNC");
-DeclareGlobalFunction("ForwardOrbit");
-
-###########################################################################
-##
-##	<#GAPDoc Label="MonoidOrbits">
-##	<ManSection>
-##	<Oper Name="MonoidOrbits" Arg="S, list[, act]"/>
-##	<Description>
-##	returns a list of the orbits of the elements of <C>list</C> under the action 
-##	<C>act</C> of the transformation collection <C>S</C> using the 
-##	<Ref Oper="MonoidOrbit"/> function.<P/>
-##
-##	If the optional third argument 
-##	<C>act</C> is not given, then <Ref Func="OnPoints" BookName="ref"/>, 
-##	<Ref Func="OnSets" BookName="ref"/>, or 
-##	<Ref Func="OnSetsSets" BookName="ref"/> is used as the default action 
-##	depending on what <C>obj</C> is.<P/>
-##
-##	Further details can be found in Algorithm A and B of 
-##	<Cite Key="pfeiffer2"/>.
-##	<Example>
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
-##  gap&gt; S:=Monoid(g1,g2,g3);;
-##  gap&gt; MonoidOrbits(S, [1,2]);
-##  [ [ 1, 3, 4, 2, 6 ], [ 2, 3, 4, 6, 1 ] ]
-##  gap&gt; MonoidOrbits(S, [[1,2], [2,3]], OnSets);
-##  [ [ [ 1, 2 ], [ 3 ], [ 4 ], [ 2 ], [ 6 ], [ 1 ] ], 
-##    [ [ 2, 3 ], [ 4, 6 ], [ 1, 3 ] ] ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-DeclareOperation("MonoidOrbits", [IsTransformationCollection, IsList,
- IsFunction]);
-
-###########################################################################
-##
-##	<#GAPDoc Label="ShortOrbit">
-##	<ManSection>
-##	<Oper Name="ShortOrbit" Arg="S, obj[, act], grad"/>
-##	<Description>
-##	returns the elements of the orbit of <C>obj</C> under the action 
-##	<C>act</C> of the transformation collection <C>S</C> with the same value as 
-##	<C>obj</C> under the grading <C>grad</C>.<P/>
-##	
-##	(Recall that a <E>grading</E> is a function <C>f</C> from a transformation 
-##	semigroup <C>S</C> of degree <C>n</C> to the natural 
-##	numbers such that if <C>s</C> in <C>S</C> and <C>X</C> is a subset of 
-##	<C>{1,...,n}</C>, then <C>(Xs)f</C> is at most <C>(X)f</C>. )<P/>
-##	
-##	Note that this function will not check if <C>grad</C> actually defines a 
-##	grading or not.<P/>
-##	
-##	If the optional third argument 
-##	<C>act</C> is not given, then <Ref Func="OnPoints" BookName="ref"/>, 
-##	<Ref Func="OnSets" BookName="ref"/>, or 
-##	<Ref Func="OnSetsSets" BookName="ref"/> is used as the default action 
-##	depending on what <C>obj</C> is.<P/>
-##
-##	Further details can be found in Algorithm A and B of 
-##	<Cite Key="pfeiffer2"/>.
-##	<Example>
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
-##  gap&gt; S:=Monoid(g1,g2,g3);;
-##  gap&gt; ShortOrbit(S, [1,2], Size);
-##  [ [ 1, 2 ] ]
-##  gap&gt; ShortOrbit(S, [2,4], Size);
-##  [ [ 2, 4 ], [ 3, 6 ], [ 1, 4 ] ]
-##  gap&gt; ShortOrbit(S, [1,2], OnTuples, Size);
-##  [ [ 1, 2 ], [ 3, 3 ], [ 4, 4 ], [ 2, 2 ], [ 6, 6 ], [ 1, 1 ] ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-DeclareOperation("ShortOrbit", [IsTransformationCollection, IsObject, 
- IsFunction, IsFunction]);
- 
-DeclareGlobalFunction("ShortForwardOrbitNC");
-DeclareGlobalFunction("ShortForwardOrbit");
-
-
-###########################################################################
-##
-##	<#GAPDoc Label="ShortStrongOrbit">
-##	<ManSection>
-##	<Oper Name="ShortStrongOrbit" Arg="S, obj[, act], grad"/>
-##	<Description>
-##	returns the strong orbit of <C>obj</C> under the action 
-##	<C>act</C> of the transformation collection <C>S</C>. During the 
-##  computation of this orbit the grading <C>grad</C> is used to quickly
-##  disregard elements that cannot be in the strong orbit as their value 
-##  under <C>grad</C> is strictly less than the value of <C>obj</C> under
-##  <C>grad</C>.
-##	
-##	(Recall that a <E>grading</E> is a function <C>f</C> from a transformation 
-##	semigroup <C>S</C> of degree <C>n</C> to the natural 
-##	numbers such that if <C>s</C> in <C>S</C> and <C>X</C> is a subset of 
-##	<C>{1,...,n}</C>, then <C>(Xs)f</C> is at most <C>(X)f</C>. )<P/>
-##	
-##	Note that this function will not check if <C>grad</C> actually defines a 
-##	grading or not.<P/>
-##	
-##	If the optional third argument 
-##	<C>act</C> is not given, then <Ref Func="OnPoints" BookName="ref"/>, 
-##	<Ref Func="OnSets" BookName="ref"/>, or 
-##	<Ref Func="OnSetsSets" BookName="ref"/> is used as the default action 
-##	depending on what <C>obj</C> is.<P/>
-##
-##	Further details can be found in Algorithm A and B of 
-##	<Cite Key="pfeiffer2"/>.
-##	<Example>
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
-##  gap&gt; S:=Monoid(g1,g2,g3);;
-##  gap> ShortStrongOrbit(m8, [1,3,4], OnTuples, Size);
-##  [ [ 1, 3, 4 ], [ 3, 2, 6 ], [ 2, 3, 4 ], [ 4, 6, 1 ], [ 6, 4, 3 ],
-##    [ 4, 6, 2 ], [ 3, 1, 6 ] ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-DeclareOperation("ShortStrongOrbit", [IsTransformationCollection, IsObject, 
- IsFunction, IsFunction]);
-
-###########################################################################
-##
-##	<#GAPDoc Label="StrongOrbit">
-##	<ManSection>
-##	<Oper Name="StrongOrbit" Arg="S, obj[, act]"/>
-##	<Description>
-##	returns the strong orbit of <C>obj</C> under the action <C>act</C> of the 
-##	transformation collection <C>S</C>. Usually, <C>obj</C> would be a point, 
-##	list of points, or list of lists, and <C>act</C> would be 
-##	<Ref Func="OnPoints" BookName="ref"/>, <Ref Func="OnSets" BookName="ref"/>, 
-##	<Ref Func="OnTuples" BookName="ref"/>, or another action defined in 
-##	<Ref Sect="Basic Actions" BookName="ref"/>. The argument <C>act</C> can be 
-##	any function.<P/>
-##
-##	If the optional third argument <C>act</C> is not given and <C>obj</C> is a 
-##	point, then <Ref Func="OnPoints" BookName="ref"/> is the default action.<P/>
-##
-##	Further details can be found in Algorithm A and B of 
-##	<Cite Key="pfeiffer2"/>.
-##	<Example>
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
-##  gap&gt; S:=Monoid(g1,g2,g3);;
-##  gap&gt; StrongOrbit(S, 4, OnPoints);
-##  [ 1, 3, 2, 4, 6 ]
-##  gap&gt; StrongOrbit(S, 4); 
-##  [ 1, 3, 2, 4, 6 ]
-##  gap&gt; StrongOrbit(S, [2,3], OnSets);
-##  [ [ 2, 3 ], [ 4, 6 ], [ 1, 3 ] ] 
-##  gap&gt; StrongOrbit(S, [2,3], OnTuples);
-##  [ [ 2, 3 ], [ 3, 2 ], [ 4, 6 ], [ 6, 4 ], [ 1, 3 ], [ 3, 1 ] ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-DeclareOperation("StrongOrbit", [IsTransformationCollection, IsObject,
- IsFunction]);
-
-###########################################################################
-##
-##	<#GAPDoc Label="StrongOrbits">
-##	<ManSection>
-##	<Oper Name="StrongOrbits" Arg="S, list[, act]"/>
-##	<Description>
-##	returns a list of the strong orbits of the elements of <C>list</C> under the 
-##	action <C>act</C> of the transformation collection <C>S</C> using the 
-##	<Ref Oper="StrongOrbit"/> function.<P/>
-##
-##	If the optional third argument 
-##	<C>act</C> is not given, then <Ref Func="OnPoints" BookName="ref"/>, 
-##	<Ref Func="OnSets" BookName="ref"/>, or 
-##	<Ref Func="OnSetsSets" BookName="ref"/> is used as the default action 
-##	depending on what <C>obj</C> is.<P/>
-##
-##	Further details can be found in Algorithm A and B of 
-##	<Cite Key="pfeiffer2"/>.
-##	<Example>
-##  gap&gt; g1:=Transformation([3,3,2,6,2,4,4,6,3,4,6]);;
-##  gap&gt; g2:=Transformation([4,4,6,1,3,3,3,3,11,11,11]);;
-##  gap&gt; g3:=Transformation([2,2,3,4,4,6,6,6,6,6,11]);;
-##  gap&gt; S:=Monoid(g1,g2,g3);;
-##  gap&gt; StrongOrbits(S, [1..6]);
-##  [ [ 1, 3, 2, 4, 6 ], [ 5 ] ]
-##  gap&gt; StrongOrbits(S, [[1,2],[2,3]], OnSets);
-##  [ [ [ 1, 2 ] ], [ [ 2, 3 ], [ 4, 6 ], [ 1, 3 ] ] ]
-##  gap&gt; StrongOrbits(S, [[1,2],[2,3]], OnTuples);
-##  [ [ [ 1, 2 ] ], [ [ 2, 3 ], [ 3, 2 ], [ 4, 6 ], [ 6, 4 ], 
-##    [ 1, 3 ], [ 3, 1 ] ] ]
-##	</Example> <!-- orbits.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-DeclareOperation("StrongOrbits", [IsTransformationCollection, 
-IsList, IsFunction]);
 
 ###########################################################################
 ##

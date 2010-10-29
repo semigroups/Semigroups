@@ -509,8 +509,10 @@ local x, y, z, gens;
 if not IsSimpleSemigroup(s) then 
    return false;
 elif HasIsBand(s) then
-   return IsBand(s) and IsSimpleSemigroup(s);
+   return IsBand(s);
 fi;
+
+SetIsBand(s, true);
 
 return IsGreensHTrivial(s);
 end);

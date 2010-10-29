@@ -135,10 +135,12 @@ n:=Degree(s);
 
 if HasNrIdempotents(s) then 
 	bound:=NrIdempotents(s);
+elif (HasSize(s) or OrbitsOfImages(s)!.finished) and HasNrGreensHClasses(s) then 
+	bound:=Size(s)/NrGreensHClasses(s);;
 elif HasSize(s) or OrbitsOfImages(s)!.finished then 
 	bound:=Size(s);
 else
-	bound:=n^n; #JDM good idea MN?
+	bound:=Sum(List([0..n], k-> Binomial(n,k)*(n-k)^k)); 
 fi;
 
 out:=EmptyPlist(bound);
@@ -205,10 +207,12 @@ n:=Degree(s);
 
 if HasNrIdempotents(s) then 
 	bound:=NrIdempotents(s);
+elif (HasSize(s) or OrbitsOfImages(s)!.finished) and HasNrGreensHClasses(s) then 
+	bound:=Size(s)/NrGreensHClasses(s);;
 elif HasSize(s) or OrbitsOfImages(s)!.finished then 
 	bound:=Size(s);
 else
-	bound:=n^n; #JDM good idea MN?
+	bound:=1; #JDM good idea MN?
 fi;
 
 out:=EmptyPlist(bound);
