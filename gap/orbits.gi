@@ -331,13 +331,8 @@ InstallGlobalFunction(StrongOrbitsInForwardOrbit,
 function(o)
 local graph;
 
-if not IsGradedOrbit(o) then 
-	Error("Usage: the argument should be a graded orbit with orbit graph ", 
-	 "created by the orb package");
-fi;
-
-if not IsBound(o!.orbitgraph) then 
-	Error("Usage: the argument should be a graded orbit with orbit graph ", 
+if not (IsOrbit(o) and IsBound(o!.orbitgraph)) then 
+	Error("Usage: the argument should be an orbit with orbit graph ", 
 	 "created by the orb package");
 fi;
 

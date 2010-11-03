@@ -17,9 +17,8 @@
 DeclareGlobalFunction("HashFunctionForTransformation");
 
 #############################################################################
-##
 ##	<#GAPDoc Label="GradedImagesOfTransSemigroup">
-##	<ManSection>
+##	<ManSection><Heading>Graded images and kernels</Heading>
 ##	<Attr Name="GradedImagesOfTransSemigroup" Arg="S"/>
 ##	<Attr Name="GradedKernelsOfTransSemigroup" Arg="S"/>
 ##	<Description>
@@ -32,14 +31,14 @@ DeclareGlobalFunction("HashFunctionForTransformation");
 ##	entry is a list of all the kernels of transformations in <C>S</C> with rank 
 ##	<C>i</C>.
 ##	<P/>
-##	See also <Ref Func="ImagesOfTransSemigroup"/> and 
-##	<Ref Func="KernelsOfTransSemigroup"/>.
+##	See also <Ref Attr="ImagesOfTransSemigroup"/> and 
+##	<Ref Attr="KernelsOfTransSemigroup"/>.
 ##	<Example>
 ##  gap> s:=Semigroup(Transformation( [ 1, 5, 1, 1, 1 ] ), 
 ##  > Transformation( [ 4, 4, 5, 2, 2 ] ));;
 ##  gap> GradedImagesOfTransSemigroup(s);
-##  [ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], 
-##    [  ], [  ] ]
+##  [ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], 
+##    [ [ 2, 4, 5 ] ], [  ], [  ] ]
 ##  gap> GradedKernelsOfTransSemigroup(s);
 ##  [ [ [ [ 1, 2, 3, 4, 5 ] ] ], 
 ##    [ [ [ 1, 3, 4, 5 ], [ 2 ] ], [ [ 1, 2, 3 ], [ 4, 5 ] ] ], 
@@ -62,26 +61,29 @@ DeclareGlobalFunction("HashTableForKernels");
 
 ###########################################################################
 ##	<#GAPDoc Label="ImagesOfTransSemigroup">
-##	<ManSection>
-##	<Attr Name="ImagesOfTransSemigroup" Arg="S[,n]"/>
+##	<ManSection><Heading>Images and kernels</Heading>
+##	<Attr Name="ImagesOfTransSemigroup" Arg="S[, n]"/>
 ##	<Attr Name="KernelsOfTransSemigroup" Arg="S[, n]"/>
 ##	<Description>
 ##	<C>ImagesOfTransSemigroup</C> returns the <Package>orb</Package> package 
-##	<C>Orb</O> object:
-##	<Log>
+##	<C>Orb</C> object:
+##  <Display>
 ##	Orb(S, [1..Degree(S)], OnSets);
-##	</Log>
+##	</Display>
 ##	<P/>
 ##	
 ##	<C>KernelsOfTransSemigroup</C> returns the <Package>orb</Package> package 
-##	<C>Orb</O> object:
-##	<Log>
+##	<C>Orb</C> object:
+##  <Display>
 ##	Orb(S, [[1],..,[Degree(S)]], OnKernelsAntiAction);
-##	</Log>
+##	</Display>
 ##	<P/>
 ##
 ##	If the optional second argument <C>n</C> (a positive integer) is present, 
-##	then the 
+##	then only the images or kernels of size at least <C>n</C> are found.<P/>
+##	
+##	See also <Ref Func="GradedImagesOfTransSemigroup"/> and 
+##	<Ref Func="GradedKernelsOfTransSemigroup"/>.
 ##	<Example>
 ##  gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
 ##  > Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;
@@ -109,7 +111,6 @@ DeclareAttribute("ImagesOfTransSemigroup", IsTransformationSemigroup);
 DeclareAttribute("KernelsOfTransSemigroup", IsTransformationSemigroup);
 
 ###########################################################################
-##
 ##	<#GAPDoc Label="OnTuplesOfSetsAntiAction">
 ##	<ManSection>
 ##	<Func Name="OnTuplesOfSetsAntiAction" Arg="tup, f"/>
@@ -129,7 +130,6 @@ DeclareAttribute("KernelsOfTransSemigroup", IsTransformationSemigroup);
 DeclareGlobalFunction("OnTuplesOfSetsAntiAction");
 
 ###########################################################################
-##
 ##	<#GAPDoc Label="OnKernelsAntiAction">
 ##	<ManSection>
 ##	<Func Name="OnKernelsAntiAction" Arg="ker, f"/>
@@ -147,75 +147,22 @@ DeclareGlobalFunction("OnTuplesOfSetsAntiAction");
 
 DeclareGlobalFunction("OnKernelsAntiAction");
 
-
-
 ###########################################################################
-##
-##	<#GAPDoc Label="KernelsOfTransSemigroup">
-##	<ManSection>
-
-##	<Description>
-##	returns the set of all the kernels that elements of <C>S</C> admit.
-##	This is just the union of the orbits of the kernels of the generators of 
-##	<C>S</C> under the action <Ref Func="OnKernelsAntiAction"/>.<P/>
-##
-##	If the optional second argument <C>n</C> (a positive integer) is present, 
-##	then the list of image sets of size <C>n</C> is returned.  If you are only 
-##	interested in the images of a given size, then the second version of the 
-##	function will likely be faster.
-##	<Example>
-##  gap>  S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
-##  > Transformation( [ 3, 3, 4, 1 ] ) ]);
-##  gap>  KernelsOfTransSemigroup(S);   
-##  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], 
-##  [ 4 ] ], 
-##    [ [ 1, 2, 3, 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], [ [ 1, 3, 4 ], [ 2 ] ], 
-##    [ [ 1, 4 ], [ 2 ], [ 3 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
-##  gap>  KernelsOfTransSemigroup(S,1);
-##  [ [ [ 1, 2, 3, 4 ] ] ]
-##  gap>  KernelsOfTransSemigroup(S,2);
-##  [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 4 ], [ 3 ] ], 
-##    [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 4 ], [ 2, 3 ] ] ]
-##  gap>  KernelsOfTransSemigroup(S,3);
-##  [ [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ] ]
-##  gap>  KernelsOfTransSemigroup(S,4);
-##  [  ]
-##	</Example> <!-- greens.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
-
-
-
-
-
-
-
-#JDM new for 3.2!
-DeclareInfoClass("InfoMonoidOrbits");
-
-###########################################################################
-##
 ##	<#GAPDoc Label="StrongOrbitsInForwardOrbit">
 ##	<ManSection>
-##	<Oper Name="StrongOrbitsInForwardOrbit" Arg="s, x, act"/>
+##	<Oper Name="StrongOrbitsInForwardOrbit" Arg="o"/>
 ##	<Description>
-##	returns a list of the strong orbits contained in the orbit of <C>x</C> under  
-##	the action <C>act</C> of the transformation collection <C>s</C>.<P/>
+##	returns a list of the strong orbits contained in the <Package>orb</Package>
+##	package orbit <C>o</C> provided that <C>o</C> was created with the 
+##	option <C>orbitgraph</C> set to <C>true</C>. <P/>
 ##
 ##	<Example>
-##  gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ), 
-##  > Transformation( [ 2, 4, 1, 2 ] ), Transformation( [ 3, 1, 1, 3 ] ),
-##  > Transformation( [ 3, 3, 4, 1 ] ) ];;
-##  gap> s:=Semigroup(gens);;
-##  gap> StrongOrbitsInForwardOrbit(s, [1,3,4], OnSets);
-##  [ [ [ 3 ], [ 1 ], [ 2 ], [ 4 ] ], [ [ 1, 4 ], [ 1, 3 ], [ 1, 2 ], 
-##  [ 2, 4 ], [ 3, 4 ] ], [ [ 1, 3, 4 ] ] ]
+##  gap> new example required
 ##	</Example>
 ##	</Description>
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-#JDM new for 3.1.4!
+# new for 3.1.4!
 DeclareGlobalFunction("StrongOrbitsInForwardOrbit");
 

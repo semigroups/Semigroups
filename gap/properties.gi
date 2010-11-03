@@ -15,6 +15,17 @@
 # R v L (???), IsNilpotentSemigroup, inverses, local submonoid, right ideal, 
 # left ideal, kernel!?
 
+# IsMonogenicSemigroup, IsRightSimple, IsLeftSimple, IsLeftCancellative, 
+# IsRightCancellative, IsRightGroup, IsLeftGroup, IsUnitarySemigroup, 
+# IsRightUnitarySemigp, IsLeftUnitarySemigp, IsCongruenceFree,
+# PrimitiveIdempotents, IdempotentOrder, IsZeroRectangularBand
+# IsLeftNormalBand, IsRightNormalBand, IsNormalBand, IsEUnitarySemigroup
+# IsRectangularGroup, IsBandOfGroups, IsFreeBand, IsFreeSemilattice,
+# IsFreeNormalBand, IsBrandtSemigroup, IsFundamentalInverseSemigp, 
+# IsFullSubsemigroup (of an inverse semigroup), IsFactorizableInverseMonoid,
+# IsFInverseSemigroup, 
+
+
 
 AllPropsOfSemigps:=["IsBand", "IsBlockGroup", "IsCliffordSemigroup", 
 "IsCommutativeSemigroup", "IsCompletelyRegularSemigroup", "IsGreensLTrivial", 
@@ -599,7 +610,7 @@ end);
 
 InstallMethod(IsSemilatticeAsSemigroup, [IsSemigroup],
 function(s)
-return IsBand(s) and IsCommutative(s);
+return IsBand(s) and IsCommutativeSemigroup(s);
 end);
 
 ###########################################################################
@@ -867,7 +878,7 @@ while  i<k do
 	
 	if not a[i] in s then 
 		j:=j+1;
-		s:=ClosureSemigroup(s, [a[i]]);
+		s:=ClosureSemigroupNC(s, [a[i]]);
 		
 		if j=k-1 then
 			if bool then  

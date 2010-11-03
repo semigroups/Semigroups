@@ -10,11 +10,6 @@
 ## $Id$
 ##
 
-##  <#GAPDoc Label="transformtop">
-##  The functions in this chapter extend the functionality of &GAP; relating 
-##  to transformations. 
-##	<#/GAPDoc>
-
 ##  JDM install methods for partial transformations, partial bijections
 
 #JDM new for 3.2!

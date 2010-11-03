@@ -13,6 +13,11 @@
 #new for 4.0!
 ############################################################################
 
+OnLeftRClassAction:=function(r, f)
+return GreensRClassOfElement(r!.parent, f*r!.rep);
+end;
+
+
 InstallMethod(Generators, "for a semigroup or monoid", 
 [IsSemigroup],
 function(s)

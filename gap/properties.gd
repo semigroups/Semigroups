@@ -34,8 +34,8 @@ DeclareInfoClass("InfoMonoidProperties");
 ##	returns <C>true</C> if the transformation semigroup <C>S</C> is a band and 
 ##	<C>false</C> otherwise.<P/>
 ##
-##	A semigroup <C>S</C> is a <E>band</E> if every element is an idempotent, 
-##	that is, <C>x^2=x</C> for all <C>x</C> in <C>S</C>.
+##	A semigroup \(S\) is a <E>band</E> if every element is an idempotent, 
+##	that is, \(x^2=x\) for all \(x\in S\).
 ##
 ##	<Example>
 ##  gap&gt; gens:=[ Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 1 ] ), 
@@ -80,9 +80,8 @@ DeclareProperty("IsBlockGroup", IsTransformationSemigroup);
 ##	semigroup and <C>false</C> otherwise.<P/>
 ##
 ##  A semigroup <C>S</C> is a <E>Clifford 
-##	semigroup</E> if it is a regular semigroup whose idempotents are central,
-##	 that is, for all <C>e</C> in <C>S</C> with <C>e^2=e</C> and <C>x</C> in 
-##	<C>S</C> we have that <C>ex=xe</C>.
+##	semigroup</E> if it is a regular semigroup and its idempotents are central:
+##	$$(\forall s\in S)(\exists t\in S)(sts=s)\wedge(\forall s, t\in S)(s^2=s\rightarrow st=ts).$$
 ##
 ##	<Example>
 ##  gap&gt; gens:=[Transformation([1,2,4,5,6,3,7,8]),
@@ -561,7 +560,6 @@ DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
 #JDM why's this commented out? 
 
 ###########################################################################
-##
 ##	<#GAPDoc Label="MultiplicativeZero">
 ##	<ManSection>
 ##	<Prop Name="MultiplicativeZero" Arg="S"/>
@@ -570,11 +568,16 @@ DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
 ##	it has one and returns <C>fail</C> otherwise. 
 ##
 ##	<Example>
-##  gap&gt; gens:=[ Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ), 
-##  &gt; Transformation( [ 1, 6, 3, 6, 2, 1, 6 ] ) ];;
-##  gap&gt; S:=Semigroup(gens);;
-##  gap&gt; MultiplicativeZero(S);
+##  gap> s:=Semigroup( Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ), 
+##  > Transformation( [ 1, 6, 3, 6, 2, 1, 6 ] ));;
+##  gap> MultiplicativeZero(s);
 ##  Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
+##  s:=Semigroup(Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
+##  > Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ), 
+##  > Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ), 
+##  > Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ));;
+##  gap> MultiplicativeZero(s);
+##  fail
 ##	</Example> <!-- properties.tst -->
 ##	</Description>
 ##	</ManSection>
