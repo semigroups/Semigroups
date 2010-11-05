@@ -470,7 +470,7 @@ end);
 InstallOtherMethod(IsomorphismPermGroup, "for an H-class of a trans. semigp.", 
 [IsGroupHClass and IsGreensClassOfTransSemigp],
 function(h)
-local g;
+local g, f;
 
 g:=Group(());
 
