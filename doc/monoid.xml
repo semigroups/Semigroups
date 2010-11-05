@@ -5,10 +5,10 @@
 
 <!-- SizeScreen([80]); SetInfoLevel(InfoWarning, 0); TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1], "monoid.xml", ["../gap/autos.gd", "../gap/general.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd", "../gap/semigroups.gd", "../gap/semihomo.gd", "../gap/transform.gd", "../gap/isomorph.gd"] );-->
 
-<Book Name="MONOID">
+<Book Name="monoid">
 
 <TitlePage>
-	<Title>The <Package>MONOID</Package> Package</Title>
+	<Title>The <Package>monoid</Package> Package</Title>
 	<Version>Version 4.0</Version>
 	<Author>J. D. Mitchell
 		<Email>jdm3@st-and.ac.uk</Email>
@@ -18,14 +18,18 @@
 	</Copyright>
 
 	<Colophon>
-		If you use the <Package>MONOID</Package> package, I would really appreciate it if you would let me know by sending me an email to <Email>jdm3@st-and.ac.uk</Email>.  If you notice that there are any features missing that you think are important or if you find a bug, please let me know.
+		If you use the <Package>monoid</Package> package, I would appreciate it if you would 
+		let me know by sending me an email to <Email>jdm3@st-and.ac.uk</Email>.  If you notice 
+		that there are any features missing that you think are important or if you find a bug, 
+		please let me know.
 	</Colophon>
 
 	<Acknowledgements>
-		The author would like to thank P. v. Bunau, A. Distler, S. Linton, J. 
-		Neubueser, V. Maltcev, M. Neuhoeffer, M. R. Quick, E. F. Robertson, and N.
+		The author would like to thank P. von Bunau, A. Distler, S. Linton, J. 
+		Neubueser, V. Maltcev, M. R. Quick, E. F. Robertson, and N.
 		Ruskuc for their help and suggestions.  Special thanks go to J. Araujo for 
-		his mathematical suggestions. <P/>
+		his mathematical suggestions and to M. Neuhoeffer for his invaluable help in
+		preparing version 4. <P/>
 
 		I would also like to acknowledge the support of the Centre of Algebra at the 
 		University of Lisbon, and of EPSRC grant number 
@@ -37,69 +41,46 @@
 <TableOfContents/>
 
 <Body>
-	<Chapter Label="Monoid"> <Heading>The <Package>MONOID</Package> package</Heading>
+	<Chapter Label="Monoid"> <Heading>The <Package>monoid</Package> package</Heading>
 	<!-- ############### -->
 	
 	<Section><Heading>Introduction</Heading>
-This  manual  describes the <Package>MONOID</Package> package version 3.1.4 for 
+This  manual  describes the <Package>monoid</Package> package version 4.0 for 
 computing with transformation semigroups.
-  <Package>MONOID</Package> 3.1.4 is an updated version of the package with the same name for &GAP; 3; see <URL>http://schmidt.nuigalway.ie/monoid/index.html</URL>
+  <Package>monoid</Package> 4.0 is an updated version of the package with the same name for &GAP; 3; see <URL>http://schmidt.nuigalway.ie/monoid/index.html</URL>
 
-for more information about the original <Package>MONOID</Package> by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc. <P/>
+for more information about the original <Package>monoid</Package> by Goetz Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc. <P/>
 
-<Package>MONOID</Package> 3.1.4 retains all the functionality of the original <Package>MONOID</Package> package. 
-In particular,  <Package>MONOID</Package>  3.1.4 contains more efficient 
-methods than those  available in the &GAP; library for computing orbits, calculating Green's 
-classes, finding the size, the elements, and testing membership in transformation semigroups; see Chapters <Ref Chap="orbits"/> and <Ref Chap="greens"/>. After <Package>MONOID</Package> 
+<Package>monoid</Package> 4.0 retains all the functionality of the original 
+<Package>monoid</Package> package. 
+In particular,  <Package>monoid</Package> 4.0 contains more vastly more efficient 
+methods than those available in the &GAP; library for computing orbits, calculating Green's 
+classes, finding the size, the elements, testing membership in transformation 
+semigroups, and testing if a semigroup satisfies a particular property; see Chapters 
+<Ref Chap="orbits"/>, <Ref Chap="greens"/>, and <Ref Chap="properties"/>. 
+After 
+<Package>monoid</Package> 
 has been loaded many of these methods are automatically used in preference to 
 those in the library and do not need to be called explicitly by the user.  
-These methods
-are described in  <Cite Key="pfeiffer1"/> and the algorithms themselves are
-described in <Cite Key="pfeiffer2"/>.<P/>  
+The methods for Green's relations and related functions are based on those in 
+<Cite Key="pfeiffer1"/> and <Cite Key="pfeiffer2"/>.
+Some of the methods for testing if a semigroup satisfies a certain property are described 
+in <Cite Key="largest"/>. <P/>
 
-In addition, there are new methods for testing if a semigroup satisfies a particular property, such as if it is regular, 
-simple, inverse, or completely regular, see Chapter <Ref Chap="properties"/>;
-methods for computing the automorphism group of a transformation semigroup see 
-Section  <Ref Sect="autos"/>; methods for finding
-homomorphisms and isomorphism between some types of semigroups 
-see Chapter <Ref Chap="homo"/>; and functions to 
-create some well-known semigroups see Chapter 
-<Ref Chap="special"/>.  The property testing methods are described in <Cite Key="largest"/> and the method for computing the automorphism group of a semigroup is described in <Cite Key="computing"/>. <P/>
+The <Package>monoid</Package> package is written in &GAP; code only. However, 
+<Package>monoid</Package>  requires the  <Package>orb</Package> package version 3.7 or 
+higher to be installed.<P/>
 
-The <Package>MONOID</Package> package is written in &GAP; code only but uses the
-<Package>GRAPE</Package> and <Package>orb</Package> packages.<P/>
-
-The following functions can only be used fully if <Package>GRAPE</Package> is fully installed 
-(and loaded):
-<List>
-<Item> <Ref Attr="AutomorphismGroup"/> with argument satisfying 
-<Ref Prop="IsTransformationSemigroup" BookName="ref"/> or 
-<Ref Prop="IsReesZeroMatrixSemigroup" BookName="ref"/></Item>
-<Item> <Ref Oper="RightTransStabAutoGroup"/> with argument satisfying 
-<Ref Prop="IsReesZeroMatrixSemigroup" BookName="ref"/></Item> 
-<Item><Ref Func="RZMSGraph"/></Item>
-<Item><Ref Oper="RZMSInducedFunction"/></Item> 
-<Item><Ref Oper="RZMStoRZMSInducedFunction"/></Item>  
-<Item><Ref Oper="IsomorphismSemigroups"/> with both arguments satisfying <Ref Prop="IsReesZeroMatrixSemigroup" BookName="ref"/></Item>
-</List>
- Installation of <Package>GRAPE</Package> is
-described in the <C>README</C> file of the <Package>GRAPE</Package> distribution and in the section entitled `Installing the 
-GRAPE Package' of the <Package>GRAPE</Package> manual; see
-<URL>
-http://www.maths.qmul.ac.uk/~leonard/grape/
-</URL>
-or the main &GAP; webpages for more information. <P/>
-
-<Package>orb</Package> is used to provide efficient methods for computing orbits in 
-transformation semigroups that underpin most of the features of <Package>MONOID</Package>. 
-The <Package>MONOID</Package> package can be used without <Package>orb</Package> but is much 
-less efficient. We highly recommended that you install <Package>orb</Package>. 
-See
-<URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html</URL>
+The <Package>orb</Package> package is used to provide efficient methods for computing orbits in 
+transformation semigroups that underpin most of the features of <Package>monoid</Package>. 
+The <Package>monoid</Package> package can no longer be used without <Package>orb</Package> 
+version 3.7 or higher. 
+See<P/>
+<URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html</URL><P/>
 or the main &GAP; webpages for more information. <P/>
 
  If you want to take advantage 
-of the online help facilities in <Package>MONOID</Package>, then the 
+of the online help facilities in <Package>monoid</Package>, then the 
 <Package>gapdoc</Package> package Version 1.1 or higher is also required; see 
 <URL>
 http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/
@@ -109,11 +90,11 @@ for further details of how to obtain and install <Package>gapdoc</Package>.
 
 <!-- ############### -->
 
-<Section Label="install"><Heading>Installing <Package>MONOID</Package></Heading>
+<Section Label="install"><Heading>Installing <Package>monoid</Package></Heading>
 
 In this section we give a brief description of 
-how to start using  <Package>MONOID</Package>. If you have any 
-problems getting <Package>MONOID</Package> working, then please email me 
+how to start using  <Package>monoid</Package>. If you have any 
+problems getting <Package>monoid</Package> working, then please email me 
 directly at <Email>jdm3@st-and.ac.uk</Email>. <P/>
 
 It is assumed that you have a working copy of &GAP; with version number 4.4.12 
@@ -121,73 +102,72 @@ or higher. The most up-to-date version of &GAP; and instructions on how to
 install it can be obtained from the main &GAP; webpage
 <URL>
 http://www.gap-system.org
-</URL>
-
-Those functions in <Package>MONOID</Package> described in Chapter
-<Ref Chap="homo"/> relating to automorphism 
-groups of semigroups require the <Package>GRAPE</Package> (for computing with 
-graphs and groups) to be loaded.  In particular, <Package>GRAPE</Package> must 
-be installed in a UNIX operating system so that the 
-automorphism group and isomorphism testing functions (for graphs) can be used.<P/>
-
-Please go to 
-<URL>
-http://www.maths.qmul.ac.uk/~leonard/grape/
-</URL>
-or the main &GAP; webpage for further details on how to obtain and install 
-<Package>GRAPE</Package>. <P/>
+</URL>.<P/>
 
 The following is a summary of the steps that 
-should lead to a successful installation of <Package>MONOID</Package>. 
+should lead to a successful installation of <Package>monoid</Package>:
 
 <List>
-<Item> download the package archive <C>monoid3r1p4.tar.gz</C> or <C>monoid3r1p4.tar.bz2</C> from 
-<URL>http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html
-</URL>
+<Item> download and install the <Package>orb</Package> package version 3.7 or higher. For 
+more details go to: 
+<URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html</URL>
 </Item>
-<Item> unzip &amp; untar the file, this should create a directory called <C>MONOID</C>.</Item>
-<Item>  move the directory <C>MONOID</C> into the <C>pkg</C> directory of your &GAP; directory (the one containing the directories <C>lib</C>, <C>doc</C>, <C>pkg</C>, and so on)</Item>
+<Item> download the package archive <C>monoid4r0.tar.gz</C> or <C>monoid4r0.tar.bz2</C> 
+from <URL>http://tinyurl.com/monoid4</URL>
+</Item>
+<Item> unzip and untar the file, this should create a directory called <C>monoid</C>.
+</Item>
+<Item>  move the directory <C>monoid</C> into the <C>pkg</C> directory of your &GAP; 
+directory (the one containing the directories <C>lib</C>, <C>doc</C>, <C>pkg</C>, and so 
+on)
+</Item>
 <Item> start &GAP; in the usual way</Item>
 <Item> type <C>LoadPackage("monoid");</C></Item>
 </List>
 
-Below is an example of an installation of <Package>MONOID</Package> in UNIX 
+Below is an example of an installation of <Package>monoid</Package> in UNIX 
 where <C>GAPROOT</C>  should be substituted with the main &GAP; directory (the 
 one containing the folders `bin', `lib', and so on) in your installation of 
 &GAP;.<P/>
 
 <Log>
-&gt; gunzip monoid3r1p4.tar.gz 
-&gt; tar -xf monoid3r1p4.tar 
-&gt; mv MONOID GAPROOT/pkg
+&gt; gunzip monoid4r0.tar.gz 
+&gt; tar -xf monoid4r0.tar 
+&gt; mv monoid GAPROOT/pkg
 &gt; gap 
 
 [ ... ]
 
 gap&gt; LoadPackage("monoid");
 -----------------------------------------------------------------------------
-Loading  MONOID 3.1.4 (MONOID: computing with transformation semigroups)
-by James Mitchell (http://www-groups.mcs.st-and.ac.uk/~jamesm).
+Loading  orb 3.7 (orb - Methods to enumerate orbits)
+by Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),
+   Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef), and
+   Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+Loading  monoid 4.0 (monoid: computing with transformation semigroups)
+by James Mitchell (http://tinyurl.com/monoid4).
 -----------------------------------------------------------------------------
 true
 gap&gt; 
 </Log>
 
 Presuming that the above steps can be completed successfully you will be running 
-the <Package>MONOID</Package> package!<P/>
+the <Package>monoid</Package> package!<P/>
 
 If you want to check that the package is working correctly, please see Section <Ref Sect="testing"/>.
 <P/>
 
-<B>Please note:</B> before you can used <Package>MONOID</Package> fully you must install <Package>GRAPE</Package> as described above.
+<B>Please note:</B> before you can used <Package>monoid</Package> you must install <Package>orb</Package> version 3.7 or higher as described above.
 
 </Section>
 
 <!-- ############### -->
-<Section Label="testing"><Heading>Testing <Package>MONOID</Package></Heading>
+<Section Label="testing"><Heading>Testing <Package>monoid</Package></Heading>
 
-In this section we describe how to test that <Package>MONOID</Package> is
- working as intended.  To test that <Package>MONOID</Package> is installed correctly copy the following lines into &GAP;. 
+In this section we describe how to test that <Package>monoid</Package> is
+ working as intended.  To test that <Package>monoid</Package> is installed correctly copy the following lines into &GAP;. 
 <Log>
 LoadPackage( "monoid" );;
 dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
@@ -196,15 +176,15 @@ Read(Filename( dirs, "installtest.g" ) );
 and press <C>return</C>. Please note that it will take a few moments before 
 the tests are complete.<P/>
 
-If the output looks like the following, then it is probable that you have a fully working copy of <Package>MONOID</Package> 3.1.4.<P/>
+If the output looks like the following, then it is probable that you have a fully working copy of <Package>monoid</Package> 4.0.<P/>
 
 <Log>
 gap> LoadPackage( "monoid" );;
 gap> dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
 gap> Read( Filename( dirs, "installtest.g" ) );;
-+ install_no_grape.tst 3.1.4
++ install_no_grape.tst 4.0
 + GAP4stones: 1
-+ install_with_grape.tst 3.1.4
++ install_with_grape.tst 4.0
 + GAP4stones: 2
 </Log>
 
@@ -216,7 +196,7 @@ Read(Filename( dirs, "testall.g" ) );
 </Log>
 Please note that these tests could take a long time to finish.<P/>
 
- If something goes wrong, then please review the instructions in Section <Ref Sect="install"/> and ensure that <Package>MONOID</Package> has been properly installed.  If you continue having problems,  please email me at 
+ If something goes wrong, then please review the instructions in Section <Ref Sect="install"/> and ensure that <Package>monoid</Package> has been properly installed.  If you continue having problems,  please email me at 
  <Email>jdm3@st-and.ac.uk</Email>.
 
 </Section>
@@ -243,9 +223,9 @@ Please note that these tests could take a long time to finish.<P/>
 		
 	<Item>several other minor bugs have been fixed. </Item>
 	
-	<Item>the following functions were renamed in 3.1.4: InfoAutos -> InfoMonoidAutos.</Item>
+	<Item>the following functions were renamed in 4.0: InfoAutos -> InfoMonoidAutos.</Item>
 	
-	<Item>the following functions were removed from 3.1.4: GradedStrongOrbits.</Item>
+	<Item>the following functions were removed from 4.0: GradedStrongOrbits.</Item>
 </List></Item>
 
 <Item>from 3.1.2 to 3.1.3: the method for <A>PreImagesRepresentative</A> for a semigroup homomorphism by function now tests whether the homomorphism is bijective and total before trying to find preimages. Some other minor corrections were made to the documentation and webpages.</Item>
@@ -279,7 +259,7 @@ Please note that these tests could take a long time to finish.<P/>
 </List></Item>
 </List></Item>
 
-<Item>from 3.1 to 3.1.1: fixed a bug that produced an error when loading MONOID with the GRAPE package present but not fully installed.</Item>
+<Item>from 3.1 to 3.1.1: fixed a bug that produced an error when loading monoid with the GRAPE package present but not fully installed.</Item>
 <Item>from 2 to 3:
 
 <List>
@@ -298,12 +278,12 @@ simple, inverse, or completely regular, see Chapter <Ref Chap="properties"/>;</I
 
 <Section><Heading>Forthcoming Features</Heading>
 
-The features are currently under development and will be available in a future version of <Package>MONOID</Package>:
+The features are currently under development and will be available in a future version of <Package>monoid</Package>:
 
 <List>
-<Item> the number of special types of semigroups available in <Package>MONOID</Package> will be expanded to include all of the standard examples of transformation semigroups and some matrix semigroups.
+<Item> the number of special types of semigroups available in <Package>monoid</Package> will be expanded to include all of the standard examples of transformation semigroups and some matrix semigroups.
 </Item>
-<Item> methods analogous to those used to find Green's relations and other structural properties of transformation semigroups in the current version of <Package>MONOID</Package> but for semigroups generated by partial transformations, binary relations, and matrix semigroups.
+<Item> methods analogous to those used to find Green's relations and other structural properties of transformation semigroups in the current version of <Package>monoid</Package> but for semigroups generated by partial transformations, binary relations, and matrix semigroups.
 </Item>
 <Item> a suite of functions for computing with inverse semigroups generated by partial bijections, including finding faithful representations of smaller degree and small generating sets.
 </Item>
@@ -379,7 +359,7 @@ numbers such that if <C>s</C> in <C>S</C> and <C>X</C> is a subset of
 <Section><Heading>Actions</Heading>
 In addition to the actions define in the reference manual
 <Ref Sect="Basic Actions" BookName="ref"/> the following two actions are 
-available in <Package>MONOID</Package>.
+available in <Package>monoid</Package>.
 
 <#Include Label="OnTuplesOfSetsAntiAction">
 <#Include Label="OnKernelsAntiAction">
@@ -418,17 +398,17 @@ see Chapter <Ref Chap="greens"/> and Chapter <Ref Chap="properties"/>.
 		This chapter contains instructions on how to use the functions for 
 		computing Green's relations and related notions for transformation 
 		semigroups and monoids that are implemented in 
-		<Package>MONOID</Package>. <P/>
+		<Package>monoid</Package>. <P/>
 		
 		The theory behind these algorithms is developed in <Cite Key="pfeiffer1"/> 
 		and the algorithms themselves are described in <Cite Key="pfeiffer2"/>.
 		Another reference is <Cite Key="lallement"/>.<P/>
 		
-		Green's relations can be calculated when  <Package>MONOID</Package> 
+		Green's relations can be calculated when  <Package>monoid</Package> 
 		is loaded using the same commands that you would used when 
-		<Package>MONOID</Package> is not loaded; see 
+		<Package>monoid</Package> is not loaded; see 
 		<Ref Chap="Semigroups" BookName="ref"/>. For example, in &GAP; with 
-		the <Package>MONOID</Package> package loaded:
+		the <Package>monoid</Package> package loaded:
 
 <Example>
   gap&gt; a:=Transformation([2,1,1,2,1]);;
@@ -442,7 +422,7 @@ see Chapter <Ref Chap="greens"/> and Chapter <Ref Chap="properties"/>.
     , {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
   {Transformation( [ 2, 1, 1, 2, 2 ] )} ]
 </Example>
-Without the <Package>MONOID</Package> package loaded:
+Without the <Package>monoid</Package> package loaded:
 <Example>
   gap&gt; a:=Transformation([2,1,1,2,1]);;
   gap&gt; b:=Transformation([3,4,3,4,4]);;
@@ -457,11 +437,11 @@ Without the <Package>MONOID</Package> package loaded:
 </Example>
 		The only noticable differences are the representatives of the classes and 
 		the order the classes appear in the list. These differences are caused by 
-		the differences in the methods for <C>GreensRClasses</C> in <Package>MONOID
+		the differences in the methods for <C>GreensRClasses</C> in <Package>monoid
 		</Package> and the &GAP; library. <P/>
 		
 		Most of the commands in this section relate 
-		to how Green's relations are calculated in <Package>MONOID</Package>. 
+		to how Green's relations are calculated in <Package>monoid</Package>. 
 		Although some of the commands might be used for other purposes, if all that 
 		is required is to calculate Green's classes, relations and so on, then this 
 		is done in the exactly the same way as described in the &GAP; manual; see 
@@ -469,18 +449,18 @@ Without the <Package>MONOID</Package> package loaded:
 		
 		Due to inherent difficulties with computing Green's L- and D-classes, the 
 		methods used to compute with Green's R-classes are the most efficient 
-		in <Package>MONOID</Package>.  Thus wherever possible it is 
+		in <Package>monoid</Package>.  Thus wherever possible it is 
 		advisable to use the commands relating to Green's R-classes rather than 
 		those relating to Green's L-classes, D-classes, or H-classes.<P/>
 		
 		For small examples of semigroups, say with fewer than 40 elements, it may be 
 		more efficient to use the methods from the library than those in 
-		<Package>MONOID</Package>. This stems from the fact that there are higher 
-		overheads in the methods used in <Package>MONOID</Package>.
+		<Package>monoid</Package>. This stems from the fact that there are higher 
+		overheads in the methods used in <Package>monoid</Package>.
 		In either case, with such small examples computing Green's relations does 
 		not take much time. <P/>
 		
-		The methods in <Package>MONOID</Package> allow the computation of individual 
+		The methods in <Package>monoid</Package> allow the computation of individual 
 		Green's classes without the need to compute all the elements of the 
 		underlying semigroup.  It is also possible to compute all the R-classes, the 
 		number of elements and test membership in a transformation semigroup without 
@@ -628,7 +608,7 @@ It is straightforward to verify that  $S$ is a group if and only if for all $f, 
 
 </Body>
 
-<Bibliography Databases="MONOID" />
+<Bibliography Databases="monoid" />
 <TheIndex/>
 
 </Book>

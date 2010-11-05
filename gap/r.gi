@@ -1074,6 +1074,8 @@ end);
 #############################################################################
 # Usage: s, f, OrbitsOfImages(s)!.orbits, d_img or s, f
 
+# l and val correspond to f and not the rep of the R-class containing f.
+
 InstallGlobalFunction(InOrbitsOfImages, 
 function(arg)
 local img, j, k, l, m, val, n, g, schutz, t, reps, s, O, f, x;
@@ -1143,6 +1145,8 @@ fi;
 
 reps:=O[j][k]!.reps[m][val];
 t:=Length(reps);
+
+#if schutz is trivial then just test reps[n]=g!
 
 while n<t do 
 	n:=n+1;

@@ -11,6 +11,8 @@
 
 # Make sure all the description strings make sense and that they are uniform...
 
+# GroupHClassOfGreensDClass...
+
 
 InstallMethod( \=, "for H-class and H-class of trans. semigp.",
 [IsGreensHClass and IsGreensClassOfTransSemigp, IsGreensHClass and 

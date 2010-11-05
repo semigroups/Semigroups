@@ -45,6 +45,20 @@ IsLeftZeroSemigroup, IsMonoidAsSemigroup, IsRightZeroSemigroup,
 IsIdempotentGenerated, IsSemilatticeAsSemigroup, IsSimpleSemigroup,
 IsZeroSemigroup, IsZeroGroup];
 
+foo:=function(s)
+local d, dd;
+
+d:=List(GreensDClasses(s), Size);
+dd:=Filtered(d, x-> not x= Maximum(d));
+
+if not ForAll(dd, x-> x=1) then 
+	return false;
+fi;
+
+return NrGreensRClasses(GreensDClasses(s)[Position(d, Maximum(d))])=
+NrGreensLClasses(GreensDClasses(s)[Position(d, Maximum(d))]);
+end;
+
 # new method for 4.0! 
 ###########################################################################
 # - must find some reasonable examples to test this on.
@@ -301,11 +315,12 @@ if ForAll(gens, f-> Rank(f)=n) then
 fi;
 
 foo:=function(f, set) #is f injective on set?
-local i, j;
-j:=[]; 
+local i, lookup;
+lookup:=EmptyPlist(Length(f));
+
 for i in set do 
-	if not f[i] in j then 
-		AddSet(j, f[i]);
+	if not IsBound(lookup[f[i]]) then 
+		lookup[f[i]]:=0;
 	else
 		return false;
 	fi;

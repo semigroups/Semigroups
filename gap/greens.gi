@@ -212,7 +212,7 @@ elif (HasSize(s) or OrbitsOfImages(s)!.finished) and HasNrGreensHClasses(s) then
 elif HasSize(s) or OrbitsOfImages(s)!.finished then 
 	bound:=Size(s);
 else
-	bound:=1; #JDM good idea MN?
+	bound:=1000; #JDM good idea MN?
 fi;
 
 out:=EmptyPlist(bound);
@@ -243,40 +243,3 @@ return out;
 end);
 
 
-#############################################################################
-
-InstallMethod(PartialOrderOfDClasses, "for a semigroup", 
-[IsSemigroup], 
-function(s)
-local d, out, gens, i, a, c, n;
-
-d:= GreensDClasses(s);
-n:=Length(d);
-out:= List([1..n], x->EmptyPlist(n));
-gens:=Generators(s);
-
-for i in [1..Length(d)] do
-	AddSet(out[i], i);
-	for a in gens do
-		for c in GreensRClassReps(d[i]) do
-			AddSet(out[i], PositionProperty(d, x-> a * c in x));
-		od;
-		for c in GreensLClassReps(d[i]) do
-			AddSet(out[i], PositionProperty(d, x-> c * a in x));
-		od;
-	od;
-od;
-
-#transitive closure JDM maybe not required??
-
-#for i in [1..Length(class)] do
-#	for j in [1..Length(class)] do
-#		if j in poset[i] then 
-#			poset[i]:=Union(poset[j], poset[i]);
-#		fi;
-#	od;
-#od;
-
-return out;
-#return Graph(Group(()), [1..Length(class)], OnPoints, function(x,y) return y in poset[x]; end, true); ;
-end);

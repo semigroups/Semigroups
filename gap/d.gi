@@ -1653,6 +1653,54 @@ InstallMethod(ParentAttr, "for a D-class of a trans. semigroup",
 [IsGreensDClass and IsGreensClassOfTransSemigp], x-> x!.parent);
 
 #############################################################################
+
+InstallMethod(PartialOrderOfDClasses, "for a semigroup", 
+[IsTransformationSemigroup], 
+function(s)
+local d, n, out, gens, data, o, i, a, b, c;
+
+d:= GreensDClasses(s);
+n:=Length(d);
+out:= List([1..n], x->EmptyPlist(n));
+gens:=Generators(s);
+data:=OrbitsOfKernels(s)!.data;
+o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
+
+for i in [1..Length(d)] do
+	#AddSet(out[i], i);
+	for a in gens do
+		for c in GreensRClassReps(d[i]) do
+			b:=InOrbitsOfKernels(s, a * c, [], o)[3][2]{[1..6]};
+			b[3]:=LClassSCCFromData(s, b, o[2])[1];
+			#Error("");
+			
+			AddSet(out[i], PositionProperty(data, x-> x[2]=b));
+			#JDM replace OrbitsOfKernels(s)!.data and OrbitsOfImages(s)!.data
+			# with hash tables.
+		od;
+		for c in GreensLClassReps(d[i]) do
+			b:=InOrbitsOfKernels(s, c * a, [], o)[3][2]{[1..6]};
+			b[3]:=LClassSCCFromData(s, b, o[2])[1];
+			AddSet(out[i], PositionProperty(data, x-> x[2]=b));
+		od;
+	od;
+od;
+
+#transitive closure JDM maybe not required??
+
+#for i in [1..Length(class)] do
+#	for j in [1..Length(class)] do
+#		if j in poset[i] then 
+#			poset[i]:=Union(poset[j], poset[i]);
+#		fi;
+#	od;
+#od;
+
+return out;
+#return Graph(Group(()), [1..Length(class)], OnPoints, function(x,y) return y in poset[x]; end, true); ;
+end);
+
+#############################################################################
 #
 
 InstallMethod(PrintObj, [IsOrbitsOfKernels], 
