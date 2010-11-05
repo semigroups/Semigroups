@@ -107,8 +107,8 @@ DeclareGlobalFunction("HashTableForKernels");
 ##	</ManSection>
 ##	<#/GAPDoc>
 
-DeclareAttribute("ImagesOfTransSemigroup", IsTransformationSemigroup);
-DeclareAttribute("KernelsOfTransSemigroup", IsTransformationSemigroup);
+DeclareAttribute("ImagesOfTransSemigroup", IsTransformationSemigroup, "mutable");
+DeclareAttribute("KernelsOfTransSemigroup", IsTransformationSemigroup, "mutable");
 
 ###########################################################################
 ##	<#GAPDoc Label="OnTuplesOfSetsAntiAction">

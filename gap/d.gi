@@ -1125,7 +1125,7 @@ ker:=DClassKernelOrbit(d){DClassKernelSCC(d)};
 n:=Length(d!.rep![1]);
 reps:=[];
 
-for i in [1..Length(ker)] do 
+for i in [1..Length(ker)] do #JDM replace this with TABLE_OF_TRANS_KERNEL?
 	j:=[1..n];
 	for k in [1..Length(ker[i])] do
 		j{ker[i][k]}:=List([1..Length(ker[i][k])], x-> k);

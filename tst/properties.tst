@@ -342,6 +342,3 @@ gap> S:=Semigroup(gens);;
 gap> MultiplicativeZero(S);
 Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
 gap> STOP_TEST( "properties.tst 4.0", 10000);
-
-
-

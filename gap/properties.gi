@@ -918,6 +918,22 @@ end);
 #############################################################################
 #
 
+InstallOtherMethod(IsomorphismPermGroup, "for a transformation semigroup", 
+[IsTransformationSemigroup],
+function(s)
+
+if not IsGroupAsSemigroup(s)  then
+   Error( "Usage: trans. semigroup satisfying IsGroupAsSemigroup" );
+fi;
+
+return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
+ AsPermutation);
+end);
+
+
+#############################################################################
+#
+
 InstallMethod(PropertiesOfSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup],
 function(s)

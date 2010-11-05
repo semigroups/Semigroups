@@ -568,12 +568,13 @@ end);
 InstallMethod(AsPermutation, "for a transformation", 
 [IsTransformation], 
 function(f)
-local a;
+local i;
 
-a:=f![1]{ImageSetOfTransformation(f)};
+i:=ImageSetOfTransformation(f);
+f:=f![1]{i};
 
-if Length(a)=Length(f![1]) then 
-	return MappingPermListList(ImageSetOfTransformation(f), a);
+if Length(f)=Length(i) then 
+	return MappingPermListList(i, f);
 fi;
 
 return fail;

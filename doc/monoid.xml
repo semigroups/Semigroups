@@ -139,16 +139,16 @@ one containing the folders `bin', `lib', and so on) in your installation of
 [ ... ]
 
 gap&gt; LoadPackage("monoid");
------------------------------------------------------------------------------
+----------------------------------------------------------------------
 Loading  orb 3.7 (orb - Methods to enumerate orbits)
 by Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),
    Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef), and
    Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
------------------------------------------------------------------------------
------------------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
 Loading  monoid 4.0 (monoid: computing with transformation semigroups)
 by James Mitchell (http://tinyurl.com/monoid4).
------------------------------------------------------------------------------
+----------------------------------------------------------------------
 true
 gap&gt; 
 </Log>
@@ -167,11 +167,12 @@ If you want to check that the package is working correctly, please see Section <
 <Section Label="testing"><Heading>Testing <Package>monoid</Package></Heading>
 
 In this section we describe how to test that <Package>monoid</Package> is
- working as intended.  To test that <Package>monoid</Package> is installed correctly copy the following lines into &GAP;. 
+ working as intended.  To test that <Package>monoid</Package> is installed correctly copy 
+ the following lines into &GAP;. 
 <Log>
 LoadPackage( "monoid" );;
-dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
-Read(Filename( dirs, "installtest.g" ) );
+ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), 
+ "install.tst" ) );
 </Log>
 and press <C>return</C>. Please note that it will take a few moments before 
 the tests are complete.<P/>
@@ -180,31 +181,38 @@ If the output looks like the following, then it is probable that you have a full
 
 <Log>
 gap> LoadPackage( "monoid" );;
-gap> dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
-gap> Read( Filename( dirs, "installtest.g" ) );;
-+ install_no_grape.tst 4.0
-+ GAP4stones: 1
-+ install_with_grape.tst 4.0
-+ GAP4stones: 2
+LoadPackage( "monoid" );;
+ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), 
+ "install.tst" ) );
++ install.tst 4.0
++ GAP4stones: 0
+gap>
 </Log>
 
 If you want to perform more extensive tests, then copy the following lines into &GAP;.
 <Log>
 LoadPackage( "monoid" );;
-dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
-Read(Filename( dirs, "testall.g" ) );
+ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), 
+ "testall.g" ) );
 </Log>
 Please note that these tests could take a long time to finish.<P/>
 
- If something goes wrong, then please review the instructions in Section <Ref Sect="install"/> and ensure that <Package>monoid</Package> has been properly installed.  If you continue having problems,  please email me at 
+ If something goes wrong, then please review the instructions in Section 
+ <Ref Sect="install"/> and ensure that <Package>monoid</Package> has been properly 
+ installed.  If you continue having problems,  please email me at 
  <Email>jdm3@st-and.ac.uk</Email>.
 
 </Section>
 
 <!-- ############### -->
 
-<Section><Heading>Changes</Heading>
+<Section><Heading>Changes from 3.1.4 to 4.0</Heading>
+JDM
+</Section>
 
+<!-- ############### -->
+
+<Section><Heading>Older versions</Heading>
 <List>
 <Item>from 3.1.3 to 3.1.4:
 <List>
@@ -228,7 +236,10 @@ Please note that these tests could take a long time to finish.<P/>
 	<Item>the following functions were removed from 4.0: GradedStrongOrbits.</Item>
 </List></Item>
 
-<Item>from 3.1.2 to 3.1.3: the method for <A>PreImagesRepresentative</A> for a semigroup homomorphism by function now tests whether the homomorphism is bijective and total before trying to find preimages. Some other minor corrections were made to the documentation and webpages.</Item>
+<Item>from 3.1.2 to 3.1.3: the method for <A>PreImagesRepresentative</A> for a semigroup 
+homomorphism by function now tests whether the homomorphism is bijective and total before 
+trying to find preimages. Some other minor corrections were made to the documentation and 
+webpages.</Item>
 
 <Item>from 3.1.1 to 3.1.2: 
 <List><Item>the following new functions have been introduced:
@@ -240,70 +251,160 @@ Please note that these tests could take a long time to finish.<P/>
  <Ref Oper="AsBooleanMatrix"/>,
  <Ref Func="KerImgOfTransformation"/>,
  <Ref Oper="RandomIdempotent"/>,
- <Ref Attr="InversesOfTransformation"/>,
- <Ref Oper="KiselmanSemigroup"/>,
+ <Ref Attr="InversesOfTransformation"/>, and 
+ <C>KiselmanSemigroup</C>.
 </Item>
 
 <Item>the following functions were renamed:
 <List>
 <Item> <C>PermRepTrans</C> was renamed <C>AsPermOfRange</C></Item>
 <Item> <C>ImagesTransformationMonoid</C> was renamed <C>ImagesOfTransSemigroup</C></Item>
-<Item> <C>GradedImagesTransformationMonoid</C> was renamed <C>GradedImagesOfTransSemigroup</C></Item>
+<Item> <C>GradedImagesTransformationMonoid</C> was renamed 
+<C>GradedImagesOfTransSemigroup</C></Item>
 <Item> <C>KernelsTransformationMonoid</C> was renamed <C>KernelsOfTransSemigroup</C></Item>
-<Item> <C>GradedKernelsTransformationMonoid</C> was renamed <C>GradedKernelsOfTransSemigroup</C></Item>
+<Item> <C>GradedKernelsTransformationMonoid</C> was renamed 
+<C>GradedKernelsOfTransSemigroup</C></Item>
 </List></Item>
 
 <Item>the following bugs were fixed:
 <List>
-<Item> a bug relating to the definition of the semigroup of order preserving functions was resolved</Item>
+<Item> a bug relating to the definition of the semigroup of order preserving functions was 
+resolved</Item>
 </List></Item>
 </List></Item>
 
-<Item>from 3.1 to 3.1.1: fixed a bug that produced an error when loading monoid with the GRAPE package present but not fully installed.</Item>
+<Item>from 3.1 to 3.1.1: fixed a bug that produced an error when loading monoid with the 
+GRAPE package present but not fully installed.</Item>
 <Item>from 2 to 3:
 
 <List>
-<Item> new methods for testing if a semigroup satisfies a particular property, such as if it is regular, 
+<Item> new methods for testing if a semigroup satisfies a particular property, such as if 
+it is regular, 
 simple, inverse, or completely regular, see Chapter <Ref Chap="properties"/>;</Item>
-<Item> implementations of new algorithms for computing the automorphism group of an arbitrary semigroup generated by transformations including an interactive function that allows the user to decide how the computation should proceed, see Chapter <Ref Chap="homo"/>; 
+<Item> implementations of new algorithms for computing the automorphism group of an 
+arbitrary semigroup generated by transformations including an interactive function that 
+allows the user to decide how the computation should proceed; 
 </Item>
-<Item> functions for finding automorphisms of Rees matrix semigroups and Rees <C>0</C>-matrix semigroups; see Section <Ref Sect="rees"/>.</Item>
-<Item> functions for defining homomorphisms and isomorphisms between some types of semigroups; see Chapter <Ref Chap="homo"/>.</Item>
+<Item> functions for finding automorphisms of Rees matrix semigroups and Rees <C>0</C>-
+matrix semigroups.</Item>
+<Item> functions for defining homomorphisms and isomorphisms between some types of 
+semigroups.</Item>
 </List>
 </Item>
 </List>
 </Section>
-
-<!-- ############### 
-
-<Section><Heading>Forthcoming Features</Heading>
-
-The features are currently under development and will be available in a future version of <Package>monoid</Package>:
-
-<List>
-<Item> the number of special types of semigroups available in <Package>monoid</Package> will be expanded to include all of the standard examples of transformation semigroups and some matrix semigroups.
-</Item>
-<Item> methods analogous to those used to find Green's relations and other structural properties of transformation semigroups in the current version of <Package>monoid</Package> but for semigroups generated by partial transformations, binary relations, and matrix semigroups.
-</Item>
-<Item> a suite of functions for computing with inverse semigroups generated by partial bijections, including finding faithful representations of smaller degree and small generating sets.
-</Item>
-<Item> an algorithm for finding a small generating set of a semigroup.
-</Item> 
-<!--<Item> an algorithm for determining the congruences of a completely simple or regular semigroup.
-</Item>
-<Item> methods to construct completely regular semigroups as a semilattice of simple semigroups and Clifford semigroups as strong semilattices of groups.
-</Item>
-</List>
-</Section>-->
-
 </Chapter>
 
 <!-- ############### -->
 
-<Chapter Label="general"><Heading>Transformations</Heading>
-The functions described in this section extend the functionality of &GAP; relating to transformations. 
+<Chapter Label="glossary"><Heading>Glossary</Heading>
+</Chapter>
+
+This chapter contains a glossary of mathematical terms used throughout this manual.<P/>
+
+Let <Math>S</Math> be a semigroup and let <Math>\Omega</Math> be a set. Then an <E>left action</E> 
+of <Math>S</Math> on <Math>\Omega</Math> is just a function <Math>\Psi:S\times \Omega\to \Omega</Math> satisfying 
+<Alt Only="HTML">
+	$$\Psi(s, \Psi(t, \alpha))=\Psi(st, \alpha).$$
+</Alt>
+<Alt Not="HTML">
+   <Display>\Psi(s, \Psi(t, \alpha))=\Psi(st, \alpha).</Display> 
+</Alt>
+
+
+<E>Right actions</E> are defined analogously. 
+The <E>(weak) orbit</E> of <Math>\alpha \in \Omega</Math> under the action <Math>\Psi
+</Math> of <Math>S</Math> is the set
+<Alt Not="HTML">
+<Display>\text{Orb}_S(\alpha)=\{\:\beta\in\Omega\::\:(\exists s\in S)(\Psi(s, \alpha)=\beta)\:\}.
+</Display>
+</Alt>
+<Alt Only="HTML">
+$$\text{Orb}_S(\alpha)=\{\:\beta\in\Omega\::\:(\exists s\in S)(\Psi(s, \alpha)=\beta)\:\}.
+$$
+</Alt>
+
+If <Math>S</Math> is a group, then <Math>\alpha\in \text{Orb}_S(\beta)</Math> if and only 
+if <Math>\beta\in \text{Orb}_S(\alpha)</Math>. However, if <Math>S</Math> is not a group, 
+then it is possible that 
+<Math>\alpha\in \text{Orb}_S(\beta)</Math> but
+<Math>\beta\not \in \text{Orb}_S(\alpha)</Math>.
+<P/>
+
+The <E>strong orbit</E> of <Math>\alpha\in \Omega</Math> is the set 
+<Alt Not="HTML">
+<Display>\{\:\beta\in\Omega\::\:(\exists s,t\in S)(\Psi(s, \alpha)=\beta \wedge 
+\Psi(t, \beta)=\alpha)\:\}.
+</Display>
+</Alt>
+<Alt Only="HTML">
+$$\{\:\beta\in\Omega\::\:(\exists s,t\in S)(\Psi(s, \alpha)=\beta \wedge 
+\Psi(t, \beta)=\alpha)\:\}.
+$$
+</Alt>
+<P/>
+Let <Math>S</Math> be a semigroup generated by a set of transformations <Math>\Omega</Math> on a finite set. 
+If <Math>f\in S</Math>, then denote the image  of <Math>f</Math> by <Math>\text{im}(f)</Math>. The <E>kernel</E> of <Math>f\in S</Math> is 
+<Alt Not="HTML">
+<Display>\text{ker}(f)=\{\:(\alpha, \beta)\::\: f(\alpha)=f(\beta)\:\}</Display>
+</Alt>
+<Alt Only="HTML">
+$$\text{ker}(f)=\{\:(\alpha, \beta)\::\: f(\alpha)=f(\beta)\:\}$$
+</Alt>
+and the <E>rank</E> of <Math>f</Math> is simply 
+<Alt Not="HTML">
+<Display>\text{rank}(f)=|\text{im}(f)|.</Display>
+</Alt>
+<Alt Only="HTML">
+$$\text{rank}(f)=|\text{im}(f)|.$$
+</Alt>
+Let 
+<Alt Not="HTML">
+<Display>\text{Ims}(S)=\{\:\text{im}(f)\::\: f\in S\:\}</Display>
+</Alt>
+<Alt Only="HTML">
+$$\text{Ims}(S)=\{\:\text{im}(f)\::\: f\in S\:\}$$
+</Alt>
+and let
+<Alt Not="HTML">
+<Display>\text{Kers}(S)=\{\:\text{ker}(f)\::\: f\in S\:\}.</Display>
+</Alt>
+<Alt Only="HTML">
+$$\text{Kers}(S)=\{\:\text{ker}(f)\::\: f\in S\:\}.$$
+</Alt>
+
+
+
+<!-- ############### -->
+
+<Chapter Label="orbits"><Heading>Computing transformation semigroups</Heading>
+<Section><Heading>Actions and Orbits</Heading>
+
+In <Package>monoid</Package>, there are essentially two important types of orbits used to 
+compute with transformation semigroups. Let <Math>S</Math> be a semigroup of transformations on the 
+set <Math>\Omega=\{1,2,\ldots, n\}</Math>. 
+The first is the action of the <P/> JDM...
+
+The following speciic orbits are used in the computation of Green's relations 
+and to test if an arbitrary transformation semigroup has a particular property;  
+see Chapter <Ref Chap="greens"/> and Chapter <Ref Chap="properties"/>.<P/>
+
+In addition to the actions define in the reference manual
+<Ref Sect="Basic Actions" BookName="ref"/> the following two actions are 
+available in <Package>monoid</Package>.
+
+<#Include Label="OnTuplesOfSetsAntiAction">
+<#Include Label="OnKernelsAntiAction">
+<#Include Label="StrongOrbitsInForwardOrbit">
+<#Include Label="ImagesOfTransSemigroup">
+<#Include Label="GradedImagesOfTransSemigroup">
+</Section>	
+
+
 
 	<Section><Heading>Creating Transformations</Heading>
+	The functions described in this section extend the functionality of &GAP; relating to transformations. 
+	
 		<#Include Label="TransformationByKernelAndImage">
 		<#Include Label="AllTransformationsWithKerAndImg">
 		<#Include Label="Idempotent">
@@ -311,7 +412,7 @@ The functions described in this section extend the functionality of &GAP; relati
 		<#Include Label="RandomTransformation">
 		<#Include Label="TransformationActionNC">
 	</Section>
-	<Section><Heading>Properties &amp; Attributes</Heading>
+	<Section><Heading>Structures associated to transformations</Heading>
 		<#Include Label="IsTransversal">
 		<#Include Label="IsKerImgOfTransformation">
 		<#Include Label="KerImgOfTransformation">
@@ -325,75 +426,11 @@ The functions described in this section extend the functionality of &GAP; relati
 		<#Include Label="AsBooleanMatrix">
 		<#Include Label="AsPermOfRange">
 	</Section>
-	
-</Chapter>
+
 
 <!-- ############### -->
 
-<Chapter Label="orbits"><Heading>Monoid Actions and Orbits </Heading>
-<Section><Heading>Introduction</Heading>
-The functions described in this section relate to how a transformation semigroup 
-acts on its underlying set. <P/>
-
-Let <C>S</C> be a transformation semigroup of degree 
-<C>n</C>. Then the <E>orbit</E> of <C>i</C> in <C>{1,...,n}</C> is the set 
-of elements <C>j</C> in <C>{1,...,n}</C> such that there exists <C>f</C> 
-in <C>S</C> where <C>(i)f=j</C>. Note that the essential difference between 
-monoid orbits and group orbits is that monoid orbits do not describe an 
-equivalence relation on <C>S</C>. 
-In particular, the relation described by monoid orbits is 
-not symmetric. <P/>
-
-The <E>strong orbit</E> of <C>i</C> in <C>{1,...,n}</C> is the set 
-of elements <C>j</C> in <C>{1,...,n}</C> such that there exists 
-<C>f, g</C> in <C>S</C> where <C>(i)f=j</C> and <C>(j)g=i</C>.<P/>
-
-Recall that a <E>grading</E> is a function <C>f</C> from a transformation 
-semigroup <C>S</C> of degree <C>n</C> to the natural 
-numbers such that if <C>s</C> in <C>S</C> and <C>X</C> is a subset of 
-<C>{1,...,n}</C>, then <C>(Xs)f</C> is at most <C>(X)f</C>. 
-</Section>
-
-<!-- ############### -->
-
-<Section><Heading>Actions</Heading>
-In addition to the actions define in the reference manual
-<Ref Sect="Basic Actions" BookName="ref"/> the following two actions are 
-available in <Package>monoid</Package>.
-
-<#Include Label="OnTuplesOfSetsAntiAction">
-<#Include Label="OnKernelsAntiAction">
-</Section>
-
-<!-- ############### -->
-
-<Section><Heading>General Orbits</Heading>
-The following functions allow the calculation of arbitrary orbits in 
-transformation semigroups. Several more specific orbits that are often useful 
-are given in Section <Ref Sect="specorbits"/>.
-
-<#Include Label="StrongOrbitsInForwardOrbit">
-</Section>
-
-<!-- ############### -->
-
-<Section Label="specorbits"><Heading>Some Specific Orbits</Heading>
-The following specific orbits are used in the computation of Green's relations 
-and to test if an arbitrary transformation semigroup has a particular property;  
-see Chapter <Ref Chap="greens"/> and Chapter <Ref Chap="properties"/>.
-
-<#Include Label="ImagesOfTransSemigroup">
-<#Include Label="GradedImagesOfTransSemigroup">
-</Section>	
-
-<!-- ############### -->
-
-</Chapter>
-
-<!-- ############### -->
-
-<Chapter Label="greens"><Heading>Green's Relations</Heading>
-	<Section><Heading>Introduction</Heading>
+	<Section><Heading>Green's Relations</Heading>
 	
 		This chapter contains instructions on how to use the functions for 
 		computing Green's relations and related notions for transformation 
@@ -467,19 +504,7 @@ Without the <Package>monoid</Package> package loaded:
 		computing all the elements. This may be useful if you want to study 
 		a very large semigroup 
 		where computing all the elements of the semigroup is infeasible. 
-	</Section>
-	
-	<!-- ############### -->
-	
-	<Section><Heading>Data Structures</Heading>
-		<#Include Label="GreensData">
-		<#Include Label="GreensRClassData">
-		<#Include Label="GreensLClassData">
-		<#Include Label="GreensHClassData">
-		<#Include Label="GreensDClassData">
-		<#Include Label="IsGreensData">
-		<#Include Label="RClassData">
-		<#Include Label="IsGreensRClassDataRep">
+
 		<#Include Label="IsGreensClassOfTransSemigp">
 		<#Include Label="SchutzenbergerGroup">
 		<#Include Label="Idempotents">
@@ -494,92 +519,83 @@ Without the <Package>monoid</Package> package loaded:
 		
 		In this section we give the theoretical results and the corresponding 
 		&GAP; functions that can be used to determine whether a set of
-		transformations generates a semigroup of a given type. Let $S$ be a semigroup. Then:
+		transformations generates a semigroup of a given type. Let <Math>S</Math> be a semigroup. Then:
 		<List>
-			<Item> $S$ is a <E>left zero semigroup</E> if $(\forall s,t\in S)(st=s).$
+			<Item> <Math>S</Math> is a <E>left zero semigroup</E> if <Math>(\forall s,t\in S)(st=s).</Math>
 			</Item>
-			<Item> $S$ is a <E>right zero semigroup</E> if $(\forall s,t\in S)(st=t).$
+			<Item> <Math>S</Math> is a <E>right zero semigroup</E> if <Math>(\forall s,t\in S)(st=t).</Math>
 			</Item>
-			<Item>$S$ is <E>commutative</E> if $(\forall s,t\in S)(st=ts)$.
+			<Item><Math>S</Math> is <E>commutative</E> if <Math>(\forall s,t\in S)(st=ts)</Math>.
 			</Item>
-			<Item> $S$ is <E>simple</E> if it has no proper two-sided ideals.
+			<Item> <Math>S</Math> is <E>simple</E> if it has no proper two-sided ideals.
 			</Item>
-			<Item> $S$ is <E>regular</E> if $(\forall s\in S)(\exists t\in S)(sts=s).$
+			<Item> <Math>S</Math> is <E>regular</E> if <Math>(\forall s\in S)(\exists t\in S)(sts=s).</Math>
 			</Item>
-			<Item> $S$ is <E>completely regular</E> if every element of $S$  lies in a subgroup. 
+			<Item> <Math>S</Math> is <E>completely regular</E> if every element of <Math>S</Math>  lies in a subgroup. 
 			</Item>
-			<Item> $S$ is an <E>inverse semigroup</E> if 
-			$(\forall s\in S)(\exists! t\in S)(sts=s \wedge tst=t).$
+			<Item> <Math>S</Math> is an <E>inverse semigroup</E> if 
+			<Math>(\forall s\in S)(\exists! t\in S)(sts=s \wedge tst=t).</Math>
 			</Item>
-			<Item> $S$ is a <E>Clifford semigroup</E> if 
-			$(\forall s\in S)(\exists t\in S)(sts=s)\wedge(\forall s, t\in S)(s^2=s\rightarrow st=ts).$
+			<Item> <Math>S</Math> is a <E>Clifford semigroup</E> if 
+			<Math>(\forall s\in S)(\exists t\in S)(sts=s)\wedge(\forall s, t\in S)(s^2=s\rightarrow st=ts).</Math>
 			</Item>
-			<Item> $S$ is a <E>band</E> if $(\forall s\in S)(s^2=s)$.
+			<Item> <Math>S</Math> is a <E>band</E> if <Math>(\forall s\in S)(s^2=s)</Math>.
 			</Item>
-			<Item> $S$ is a <E>rectangular band</E> if 
-			$(\forall x,y,z\in S)(x^2=x\wedge xyz=xz).$
+			<Item> <Math>S</Math> is a <E>rectangular band</E> if 
+			<Math>(\forall x,y,z\in S)(x^2=x\wedge xyz=xz).</Math>
 			</Item>
-			<Item> $S$ is a <E>idempotent generated</E> if it is generated by its idempotent elements.
+			<Item> <Math>S</Math> is a <E>idempotent generated</E> if it is generated by its idempotent elements.
 			</Item>
-			<Item> $S$ is an <E>orthodox semigroup</E> if it is regular and idempotents form a 
+			<Item> <Math>S</Math> is an <E>orthodox semigroup</E> if it is regular and idempotents form a 
 			subsemigroup.
 			</Item>
-			<Item>$S$ is a <E>zero semigroup</E> if 
-			$(\exists s\in S)(\forall t,u\in S)(tu=s).$
+			<Item><Math>S</Math> is a <E>zero semigroup</E> if 
+			<Math>(\exists s\in S)(\forall t,u\in S)(tu=s).</Math>
 			</Item>
-			<Item>$S$ is a <E>zero group</E> if 
-			$(\exists s\in S)(\forall t\in S)(st=ts=s\wedge S\setminus\{s\}\text{ is a group }).$
+			<Item><Math>S</Math> is a <E>zero group</E> if 
+			<Math>(\exists s\in S)(\forall t\in S)(st=ts=s\wedge S\setminus\{s\}\text{ is a group }).</Math>
 			</Item>
 			</List>
 		
 		The following results provide methods to determine if an 
-		arbitrary transformation semigroup $S$ satisfies a particular property by considering 
-		the action of the generators of $S$ on the underlying set, rather than $S$ itself. 
+		arbitrary transformation semigroup <Math>S</Math> satisfies a particular property by considering 
+		the action of the generators of <Math>S</Math> on the underlying set, rather than <Math>S</Math> itself. 
 		For more details see  <Cite Key="largest"/>.<P/>
 
-Let $S$ be a semigroup generated by a set of transformations $\Omega$ on a finite set. 
-If $f\in S$, then denote the image  of $f$ by $\text{im}(f)$. The <E>kernel</E> of $f\in S$ is 
-$$\text{ker}(f)=\{\:(\alpha, \beta)\::\: f(\alpha)=f(\beta)\:\}$$
-and the <E>rank</E> of $f$ is simply 
-$$\text{rank}(f)=|\text{im}(f)|.$$ 
-Let 
-$$\text{Ims}(S)=\{\:\text{im}(f)\::\: f\in S\:\}$$
-and let
-$$\text{Kers}(S)=\{\:\text{ker}(f)\::\: f\in S\:\}.$$
 Then the following hold:
 <List>
-<Item> $S$ is a left zero semigroup if and only if  
-$\text{im}(f)=\text{im}(g)$ and $f^2=f$ for all $f, g\in\Omega$.
+<Item> <Math>S</Math> is a left zero semigroup if and only if  
+<Math>\text{im}(f)=\text{im}(g)</Math> and <Math>f^2=f</Math> for all <Math>f, g\in\Omega</Math>.
 </Item> 
-<Item> $S$ is a right zero semigroup if and only if  
-$\text{ker}(f)=\text{ker}(g)$ and $f^2=f$ for all $f, g\in\Omega$.
+<Item> <Math>S</Math> is a right zero semigroup if and only if  
+<Math>\text{ker}(f)=\text{ker}(g)</Math> and <Math>f^2=f</Math> for all <Math>f, g\in\Omega</Math>.
 </Item>
-<Item> $S$ is simple if and only if $\text{rank}(gf)=\text{rank}(f)=\text{rank}(g)$ 
-for all $f, g\in\Omega$.
+<Item> <Math>S</Math> is simple if and only if <Math>\text{rank}(gf)=\text{rank}(f)=\text{rank}(g)</Math> 
+for all <Math>f, g\in\Omega</Math>.
 </Item>
-<Item> $S$ is completely regular if and only if $\text{rank}(fgf)=\text{rank}(gf)$ 
-for all $f, g\in\Omega$.
+<Item> <Math>S</Math> is completely regular if and only if <Math>\text{rank}(fgf)=\text{rank}(gf)</Math> 
+for all <Math>f, g\in\Omega</Math>.
 </Item> 
-<Item> $S$ is inverse if and only if it is regular and there is a bijection 
-$\phi:\text{Kers}(S)\to\text{Ims}(S)$ such that if $f\in S$ with 
-$\text{im}(f)=\phi(\text{ker}(f))$, then $\text{rank}(f^2)=\text{rank}(f)$. 
+<Item> <Math>S</Math> is inverse if and only if it is regular and there is a bijection 
+<Math>\phi:\text{Kers}(S)\to\text{Ims}(S)</Math> such that if <Math>f\in S</Math> with 
+<Math>\text{im}(f)=\phi(\text{ker}(f))</Math>, then <Math>\text{rank}(f^2)=\text{rank}(f)</Math>. 
 </Item> 
-<Item> $S$ is a Clifford semigroup if and only if for all  $f, g\in\Omega$ 
+<Item> <Math>S</Math> is a Clifford semigroup if and only if for all  <Math>f, g\in\Omega</Math> 
 <List>
-<Item> $\text{rank}(f^2)=\text{rank}(f)$;
+<Item> <Math>\text{rank}(f^2)=\text{rank}(f)</Math>;
 </Item>
-<Item> if $g^n$ is an idempotent, then $fg^n=g^nf$.
+<Item> if <Math>g^n</Math> is an idempotent, then <Math>fg^n=g^nf</Math>.
 </Item> 
 </List></Item>
 </List>
 
-It is straightforward to verify that  $S$ is a group if and only if for all $f, g\in\Omega$ 
+It is straightforward to verify that  <Math>S</Math> is a group if and only if for all <Math>f, g\in\Omega</Math> 
 <List>
-<Item> $\text{ker}(f)=\text{ker}(g)$;
+<Item> <Math>\text{ker}(f)=\text{ker}(g)</Math>;
 </Item>
-<Item> $\text{im}(f)=\text{im}(g)$;
+<Item> <Math>\text{im}(f)=\text{im}(g)</Math>;
 </Item> 
-<Item> $\text{rank}(f)=\text{rank}(g)$.</Item> 
+<Item> <Math>\text{rank}(f)=\text{rank}(g)</Math>.</Item> 
 </List><P/>
 </Section>
 
@@ -603,6 +619,22 @@ It is straightforward to verify that  $S$ is a group if and only if for all $f, 
 	<#Include Label="IsZeroGroup">
 	<#Include Label="IsZeroSemigroup">
 	<#Include Label="MultiplicativeZero">
+</Section>
+</Chapter>
+
+<!-- ############### -->
+
+
+<Chapter Label="general"><Heading>Deprecated and Legacy Functions</Heading>
+<Section><Heading>Green's data</Heading>
+<#Include Label="GreensData">
+		<#Include Label="GreensRClassData">
+		<#Include Label="GreensLClassData">
+		<#Include Label="GreensHClassData">
+		<#Include Label="GreensDClassData">
+		<#Include Label="IsGreensData">
+		<#Include Label="RClassData">
+		<#Include Label="IsGreensRClassDataRep">
 </Section>
 </Chapter>
 

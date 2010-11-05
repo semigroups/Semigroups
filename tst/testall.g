@@ -18,11 +18,15 @@ LoadPackage( "monoid" );;
 
 dirs := DirectoriesPackageLibrary( "monoid", "tst" );;
 
-ReadTest( Filename( dirs, "d.tst" ) );
 ReadTest( Filename( dirs, "greens.tst" ) );
+ReadTest( Filename( dirs, "orbits.tst" ) ); 
+ReadTest( Filename( dirs, "properties.tst" ) );  #working to here! JDM
+ReadTest( Filename( dirs, "transform.tst" ) ); 
+
+
+ReadTest( Filename( dirs, "d.tst" ) );
 ReadTest( Filename( dirs, "h.tst" ) );
 ReadTest( Filename( dirs, "l.tst" ) );
-ReadTest( Filename( dirs, "orbits.tst" ) );
-ReadTest( Filename( dirs, "properties.tst" ) ); 
+
 ReadTest( Filename( dirs, "r.tst" ) );
-ReadTest( Filename( dirs, "transform.tst" ) );
+

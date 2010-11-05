@@ -12,29 +12,8 @@
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "transform.tst" ) );
 
-gap> START_TEST("transform.tst 3.1.4");
+gap> START_TEST("transform.tst 4.0");
 gap> LoadPackage("monoid");;
-gap> if not IsBound(BruteForceIsoCheck) then 
-> BruteForceIsoCheck:=function(iso)
-> local x, y;
-> 
-> if not IsInjective(iso) or not IsSurjective(iso) then 
->   return fail;
-> fi;
-> 
-> #homomorphism
-> for x in Source(iso) do 
->   for y in Source(iso) do
->     if not ImageElm(iso, x)*ImageElm(iso, y)=ImageElm(iso, x*y) then 
->       return [x,y];
->     fi;
->   od;
-> od;
-> 
-> return true;
-> 
-> end;;
-> fi;
 gap> gens:=[ Transformation( [ 2, 3, 2, 4, 3 ] ), Transformation( [ 4, 5, 2, 2, 4 ] ), Transformation( [ 4, 3, 2, 1, 4 ] ), Transformation( [ 5, 5, 1, 3, 1 ] ) ];;
 gap> S:=Semigroup(gens);;
 gap> List(Elements(S), x-> IsRegularTransformation(S, x));
@@ -85,18 +64,6 @@ gap> Collected(List(Elements(S), x-> IsRegularTransformation(S, x)));
 [ [ true, 179 ] ]
 #gap> time;
 #16
-gap> for i in [1..1000] do 
->  semi:=RandomSemigroup(5,9);
->  IsRegularTransformation(semi, GeneratorsOfSemigroup(semi)[1]);
-> od;
-#gap> time;
-#546
-gap> for i in [1..1000] do 
->  semi:=RandomMonoid(5,9);
->  IsRegularTransformation(semi, GeneratorsOfSemigroup(semi)[1]);
-> od;
-#gap> time;
-#637
 ########
 ########
 gap> IsTransversal([[1,2], [3,4], [5,6], [7,8]], [1,3,7,9]);
@@ -131,14 +98,6 @@ gap> KernelOfTransformation(idem)=ker;
 true
 gap> ImageSetOfTransformation(idem)=im; 
 true 
-gap> for i in [1..50] do 
->  rand:=RandomSemigroup(2,6);
->  idem:=Idempotents(rand)[1];
->  IdempotentNC(KernelOfTransformation(idem), 
->   ImageSetOfTransformation(idem));
-> od;
-#gap> time;
-#2259
 ########
 ######## 
 gap> Idempotent([[1,2], [3,4], [5,6], [7,8]], [1,3,6,8]);  
@@ -148,13 +107,6 @@ Transformation( [ 1, 7, 1, 7, 1, 1, 7 ] )
 gap> Idempotent(ker,im);
 Transformation( [ 1, 2, 20, 4, 5, 4, 20, 8, 9, 10, 11, 12, 13, 14, 14, 16, 
   17, 14, 4, 20, 21, 22, 23, 10, 13 ] )
-gap> for i in [1..50] do 
->  rand:=RandomSemigroup(2,6);
->  idem:=Idempotents(rand)[1];
->  Idempotent(KernelOfTransformation(idem), ImageSetOfTransformation(idem));
-> od;
-#gap> time;
-#3104
 ########
 ######## 
 gap> filt:=Filtered(Elements(FullTransformationSemigroup(5)), x-> 
@@ -181,11 +133,6 @@ gap> Length(filt);
 gap> perms:=List(filt, AsPermOfRange);
 [ (), (), (), (), (), (2,3), (), (1,2), (1,2), (1,2), (), (), (1,2,3), (2,3), 
   (1,3), (1,3,2), (1,3), (), (1,3), (2,3), () ]
-gap> rand:=RandomSemigroup(2,6);;
-gap> idem:=Idempotents(rand);;
-gap> List(idem, AsPermOfRange);;
-gap> ForAll(last, x-> x=());
-true
 ########
 ########
 gap> ker:=List(filt, KernelOfTransformation);
@@ -225,11 +172,6 @@ gap> m4:=Monoid(g1,g2);
 gap> elts:=List(Elements(m4), AsBinaryRelationOnPoints);;
 gap> List(elts, AsTransformationNC)=Elements(m4);
 true
-gap> rand:=RandomSemigroup(4,10);
-<semigroup with 4 generators>
-gap> elts:=List(Elements(rand), AsBinaryRelationOnPoints);;
-gap> List(elts, AsTransformationNC)=Elements(rand);
-true
 ########
 ########
 gap> a:=Transformation([2,5,1,7,3,7,7]);;
@@ -246,16 +188,12 @@ true
 ########
 gap> g1:=Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] );;
 gap> g2:=Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] );;
-gap> m10:=Monoid(g1,g2);;
-gap> dc:=GreensDClasses(m10);;
-#gap> time;
-#293
-#gap> Size(m10);
-#20168
-gap> hc:=GroupHClassOfGreensDClass(dc[3]);
-{Transformation( [ 4, 2, 2, 4, 5, 6, 7, 7, 7, 10, 11 ] )}
+gap> s:=Monoid(g1,g2);;
+gap> d:=GreensDClasses(s);;
+gap> h:=GroupHClassOfGreensDClass(d[3]);
+{Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )}
 gap> perm:=IsomorphismPermGroup(hc);;
-gap> Size(Range(perm))=Size(hc);
+gap> Size(Range(perm))=Size(h);
 true
 gap> g1:=Transformation([2,1,4,5,6,7,3,2,1]);;
 gap> g2:=Transformation([2,1,4,2,1,4,2,1,4]);; 
@@ -264,12 +202,10 @@ gap> dc:=GreensDClasses(m18)[2];;
 gap> RankOfTransformation(Representative(dc));
 7
 gap> hc:=GroupHClassOfGreensDClass(dc);
-{Transformation( [ 1, 2, 3, 4, 5, 6, 7, 1, 2 ] )}
+{Transformation( [ 2, 1, 4, 5, 6, 7, 3, 2, 1 ] )}
 gap> iso:=IsomorphismPermGroup(hc);;
 #this uses small generating set so won't return the same group 
 #generators every time...
-gap> BruteForceIsoCheck(iso);
-true
 ########
 ########
 gap> s:=Semigroup(Elements(hc));
@@ -281,8 +217,6 @@ true
 #gap> time;
 #3
 gap> iso:=IsomorphismPermGroup(s);;
-gap> BruteForceIsoCheck(last);
-true
 gap> g1:=Transformation([3,3,2,6,2,4,4,6]);;
 gap> g2:=Transformation([5,1,7,8,7,5,8,1]);;
 gap> m6:=Semigroup(g1,g2);;
@@ -291,8 +225,6 @@ gap> hc:=GroupHClassOfGreensDClass(dc[1]);
 {Transformation( [ 1, 1, 5, 8, 5, 7, 7, 8 ] )}
 gap> s:=Semigroup(Elements(hc));;
 gap> iso:=IsomorphismPermGroup(s);;
-gap> BruteForceIsoCheck(iso);
-true
 gap> g1:=Transformation([2,2,4,4,5,6]);;
 gap> g2:=Transformation([5,3,4,4,6,6]);;
 gap> m1:=Monoid(g1,g2);;
@@ -407,4 +339,4 @@ gap> inv:=InversesOfTransformation(S, f);
   Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ) ]
 gap> IsRegularTransformation(S, f);
 true
-gap> STOP_TEST( "transform.tst 3.1.4", 10000);
+gap> STOP_TEST( "transform.tst 4.0", 10000);

@@ -842,6 +842,7 @@ DeclareGlobalFunction("ClosureSemigroupNC");
 DeclareGlobalFunction("ClosureSemigroup");
 DeclareGlobalFunction("AddGeneratorsToOrbitsOfImages");
 
+DeclareAttribute("GroupHClass", IsGreensDClass and IsGreensClassOfTransSemigp);
 
 # probably get rid of the following...
 

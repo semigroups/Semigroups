@@ -326,7 +326,60 @@ rep:=RClassRepFromData(s, d[1], o[1]);
 return CreateRClass(s, d[1], o[1], rep);
 end);
 
+############################################################################
+# JDM GroupHClassOfGreensDClass should be removed. Stupid name!
 
+InstallMethod(GroupHClassOfGreensDClass, "for a D-class of a trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp], d-> GroupHClass(d));
+
+############################################################################
+# 
+
+InstallMethod(GroupHClass, "for a D-class of a trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp], 
+function(d)
+local foo, f, ker, o, scc, i, j, h;
+
+if HasIsRegularDClass(d) and not IsRegularDClass(d) then 
+	return fail;
+fi;
+
+########
+#JDM replace foo here with the more efficient version!
+
+foo:=function(f, set) #is set a transversal of ker?
+local i, j;
+j:=[]; 
+for i in set do 
+	if not f[i] in j then 
+		AddSet(j, f[i]);
+	else
+		return false;
+	fi;
+od;
+
+return true;
+end;
+
+########
+
+f:=RClassRepFromData(d!.parent, d!.data[1], d!.o[1]);
+ker:=ImageAndKernelOfTransformation(f)[2];
+f:=f![1];
+o:=RClassImageOrbitFromData(d!.parent, d!.data[1], d!.o[1]);
+scc:=RClassSCCFromData(d!.parent, d!.data[1], d!.o[1]);
+
+for i in scc do
+	i:=o[i];
+	if foo(f, i) then 
+		h:=GreensHClassOfElementNC(d!.parent, IdempotentNC(ker, i));
+		SetIsGroupHClass(h, true);
+		return h;
+	fi;
+od;
+
+return fail;
+end);
 
 ############################################################################
 
@@ -410,6 +463,24 @@ j:=ImageSetOfTransformation(f);
 #JDM loop rather than form i{j} and then testing..
 return IsDuplicateFreeList(i{j});
 end);
+
+
+###########################################################################
+
+InstallOtherMethod(IsomorphismPermGroup, "for an H-class of a trans. semigp.", 
+[IsGroupHClass and IsGreensClassOfTransSemigp],
+function(h)
+local g;
+
+g:=Group(());
+
+for f in AsSSortedList( h ) do 
+	g:=ClosureGroup(g, AsPermutation(f));
+od;
+
+return MappingByFunction(h, g, AsPermutation);
+end);
+
 
 ############################################################################
 #
