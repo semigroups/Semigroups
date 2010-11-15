@@ -7,7 +7,7 @@
 ##
 #############################################################################
 ##
-## $Id: greens.tst 117 2010-11-05 13:38:54Z jamesm $
+## $Id$
 ##
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "r.tst"));
