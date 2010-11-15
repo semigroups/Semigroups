@@ -33,6 +33,9 @@
 
 # - what is GroupHClassOfGreensDClass??
 
+# - if I do Number(GreensDClasses(s), x-> Size(x)>1) then it takes ages to 
+# return an answer and seems to be doing something with CollectionsFamily. 
+# check this out. 
 
 ##
 #############################################################################

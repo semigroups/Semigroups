@@ -192,7 +192,7 @@ gap> s:=Monoid(g1,g2);;
 gap> d:=GreensDClasses(s);;
 gap> h:=GroupHClassOfGreensDClass(d[3]);
 {Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )}
-gap> perm:=IsomorphismPermGroup(hc);;
+gap> perm:=IsomorphismPermGroup(h);;
 gap> Size(Range(perm))=Size(h);
 true
 gap> g1:=Transformation([2,1,4,5,6,7,3,2,1]);;
@@ -222,7 +222,7 @@ gap> g2:=Transformation([5,1,7,8,7,5,8,1]);;
 gap> m6:=Semigroup(g1,g2);;
 gap> dc:=GreensDClasses(m6);;
 gap> hc:=GroupHClassOfGreensDClass(dc[1]);
-{Transformation( [ 1, 1, 5, 8, 5, 7, 7, 8 ] )}
+{Transformation( [ 3, 3, 2, 6, 2, 4, 4, 6 ] )}
 gap> s:=Semigroup(Elements(hc));;
 gap> iso:=IsomorphismPermGroup(s);;
 gap> g1:=Transformation([2,2,4,4,5,6]);;
@@ -324,16 +324,16 @@ gap> RandomTransformationNC([1,2,3], 6);;
 gap> RandomTransformation([[1,2,3], [4,5], [6,7,8]], [1,2,3]);;
 gap> RandomIdempotent([1,2,3],5);;
 gap> RandomIdempotent([[1,6], [2,4], [3,5]]);;
-gap> S:=Semigroup([ Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] ), 
+gap> s:=Semigroup([ Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] ), 
 > Transformation( [ 5, 7, 8, 8, 7, 5, 9, 1, 9 ] ), 
 > Transformation( [ 7, 6, 2, 8, 4, 7, 5, 8, 3 ] ) ]);;
 gap> f:=Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] );;
-gap> InversesOfTransformationNC(S, f);
+gap> InversesOfTransformationNC(s, f);
 [  ]
-gap> IsRegularTransformation(S, f);
+gap> IsRegularTransformation(s, f);
 false
 gap> f:=Transformation( [ 1, 9, 7, 5, 5, 1, 9, 5, 1 ] );;
-gap> inv:=InversesOfTransformation(S, f);
+gap> inv:=InversesOfTransformation(s, f);
 [ Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ), 
   Transformation( [ 1, 5, 1, 2, 5, 1, 3, 2, 2 ] ), 
   Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ) ]

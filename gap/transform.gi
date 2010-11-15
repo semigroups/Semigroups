@@ -972,79 +972,103 @@ function(t,p)
 	return p^-1*t*p;
 end); 
 
-InstallMethod(\*, "trans * trans", IsIdenticalObj,
-        [IsTransformation and IsTransformationRep, 
-         IsTransformation and IsTransformationRep], 0, 
-    function(x, y) 
-        local a,b;
-
-        a:= x![1]; b := y![1];
-        #return TransformationNC(List([1 .. Length(a)], i -> b[a[i]]));
-        return TransformationNC(b{a});
-    end);
 #############################################################################
-##
-##	<#GAPDoc Label="InversesOfTransformation">
-##	<ManSection><Heading>InversesOfTransformation</Heading>
-##	<Oper Name="InversesOfTransformation" Arg="S, f"/>
-##	<Oper Name="InversesOfTransformationNC" Arg="S, f"/>
-##	<Description>
-##	returns a list of the inverses of the transformation <C>f</C> in the 
-##	transformation semigroup <C>S</C>. The function 
-##	<C>InversesOfTransformationNC</C> will not check that <C>f</C> is an element 
-##	of <C>S</C>.
-##	<Example>
-##  gap&gt; S:=Semigroup([ Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] ), 
-##    Transformation( [ 5, 7, 8, 8, 7, 5, 9, 1, 9 ] ), 
-##    Transformation( [ 7, 6, 2, 8, 4, 7, 5, 8, 3 ] ) ]);;
-##  gap&gt; f:=Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] );;
-##  gap&gt; InversesOfTransformationNC(S, f);
-##  [  ]
-##  gap&gt; IsRegularTransformation(S, f);
-##  false
-##  gap&gt; f:=Transformation( [ 1, 9, 7, 5, 5, 1, 9, 5, 1 ] );;
-##  gap&gt; inv:=InversesOfTransformation(S, f);
-##  [ Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ), 
-##    Transformation( [ 1, 5, 1, 2, 5, 1, 3, 2, 2 ] ), 
-##    Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ) ]
-##  gap&gt; IsRegularTransformation(S, f);
-##  true
-##	</Example>
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
-InstallMethod(InversesOfTransformationNC, "for a trans. semigroup and a transformation", true, [IsTransformationSemigroup, IsTransformation], 0,
-function(S, f)
-local img, ker, imgs, kers, p, out, i;
+InstallMethod(\*, "trans * trans", IsIdenticalObj,
+[IsTransformation and IsTransformationRep, 
+ IsTransformation and IsTransformationRep], 
+function(x, y) 
+local a,b;
+
+a:= x![1]; b := y![1];
+#return TransformationNC(List([1 .. Length(a)], i -> b[a[i]]));
+return TransformationNC(b{a});
+end);
+
+#############################################################################
+# JDM InversesOfTransformationNC should be revised when we get new C functions
+# JDM this currently does not work! see last example in transform.tst!!
+
+InstallMethod(InversesOfTransformationNC, "for a trans. semigroup and a trans.", 
+[IsTransformationSemigroup, IsTransformation], 
+function(s, f)
+local regular, foo, out, img, ker, j, g, imgs, o, kers, i, k, h, l, n;
+
+regular:=IsRegularSemigroup(s);
+
+if not (regular or IsRegularTransformation(s, f)) then 
+	return [];
+fi;
+
+#############
+
+foo:=function(f, set) #is f injective on set?
+local i, lookup;
+lookup:=EmptyPlist(Length(f));
+
+for i in set do 
+	if not IsBound(lookup[f[i]]) then 
+		lookup[f[i]]:=0;
+	else
+		return false;
+	fi;
+od;
+return true;
+end;
+
+#############
 
 out:=[];
+img:=ImageAndKernelOfTransformation(f);
+ker:=img[2]; img:=img[1];
+j:=Length(img); g:=f![1]; n:=Length(g);
 
-if IsRegularTransformation(S, f) then 
-	img:=AsSet(f![1]);
-	ker:=KernelOfTransformation(f);
-	imgs:=ImagesOfTransSemigroup(S, Length(img));
-	#JDM better to have iterator commands here?
-	kers:=Filtered(KernelsOfTransSemigroup(S, Length(img)), x-> IsTransversal(x,img));
+kers:=[];
+k:=0;
 
-	for i in imgs do
-		if Length(OnSets(i, f))=Length(img) then
-			p:=MappingPermListList(f![1]{i}, i);
-			out:=Concatenation(out, List(kers, k-> IdempotentNC(k, img)*p));
+if not HasGradedKernelsOfTransSemigroup(s) then 
+	o:=KernelsOfTransSemigroup(s, j);
+	Enumerate(o);
+
+	for i in [1..Length(o)] do 
+		if Grades(o)[i]=j and foo(TABLE_OF_TRANS_KERNEL(o[i], n), img) then 
+			k:=k+1;
+			kers[k]:=o[i];
 		fi;
-	od;	
+	od;
+else
+	o:=GradedKernelsOfTransSemigroup(s)[j];
+	for i in [1..Length(o)] do 
+		if foo(TABLE_OF_TRANS_KERNEL(o[i], n), img) then 
+			k:=k+1;
+			kers[k]:=o[i];
+		fi;
+	od;
 fi;
 
-if IsRegularSemigroup(S) then 
-	return out;
-fi;
+l:=0;
+imgs:=ImagesOfTransSemigroup(s, j);
+Enumerate(imgs);
 
-return Filtered(out, x-> x in S);
+for i in [1..Length(imgs)] do
+	if Grades(imgs)[i]=j and foo(g, imgs[i]) then
+		for k in kers do 
+			h:=IdempotentNC(k, img)*MappingPermListList(g{imgs[i]}, imgs[i]);
+			if regular or h in s then 
+				l:=l+1;
+				out[l]:=h;
+			fi;
+		od;
+	fi;
+od;
+
+return out;
 end);
 
 ############
 
-InstallMethod(InversesOfTransformation, "for a trans. semigroup and a transformation", true, [IsTransformationSemigroup, IsTransformation], 0,
+InstallMethod(InversesOfTransformation, "for a trans. semigroup and a trans.", 
+[IsTransformationSemigroup, IsTransformation],
 function(S, f)
 
 if f in S then 
