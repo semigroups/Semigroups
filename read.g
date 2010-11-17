@@ -10,6 +10,7 @@
 ## $Id$
 ##
 
+ReadPkg("monoid/gap/convenience.gi");
 ReadPkg("monoid/gap/general.gi");
 ReadPkg("monoid/gap/orbits.gi");
 ReadPkg("monoid/gap/greens.gi");
@@ -20,6 +21,8 @@ ReadPkg("monoid/gap/l.gi");
 ReadPkg("monoid/gap/d.gi");
 ReadPkg("monoid/gap/properties.gi");
 ReadPkg("monoid/gap/ideals.gi");
+ReadPkg("monoid/gap/closure.gi");
+
 ReadPkg("monoid/gap/legacy.gi");
 
 #JDM remove

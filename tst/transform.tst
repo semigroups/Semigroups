@@ -11,6 +11,7 @@
 ##
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "transform.tst" ) );
+# under 2s.
 
 gap> START_TEST("transform.tst 4.0");
 gap> LoadPackage("monoid");;
@@ -334,9 +335,11 @@ gap> IsRegularTransformation(s, f);
 false
 gap> f:=Transformation( [ 1, 9, 7, 5, 5, 1, 9, 5, 1 ] );;
 gap> inv:=InversesOfTransformation(s, f);
-[ Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ), 
-  Transformation( [ 1, 5, 1, 2, 5, 1, 3, 2, 2 ] ), 
-  Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ) ]
-gap> IsRegularTransformation(S, f);
+[ Transformation( [ 1, 5, 1, 2, 5, 1, 3, 2, 2 ] ),
+  Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ),
+  Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ) ]
+gap> IsRegularTransformation(s, f);
+true
+gap> ForAll(inv, g-> f*g*f=f and g*f*g=g);
 true
 gap> STOP_TEST( "transform.tst 4.0", 10000);

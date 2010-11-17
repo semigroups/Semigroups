@@ -541,7 +541,7 @@ enum:=EnumeratorByFunctions(d, rec(
 	if pos>Length(enum) then 
 		return fail;
 	fi;
-	R:=GreensRClasses(UnderlyingCollection(enum));
+	R:=GreensRClasses(d);
 	n:=pos-1;
 	m:=enum!.m;
 	
@@ -556,7 +556,7 @@ enum:=EnumeratorByFunctions(d, rec(
 	NumberElement:=function(enum, f)
 	local R, i, j;
 	
-	R:=GreensRClasses(UnderlyingCollection(enum));
+	R:=GreensRClasses(d);
 	for i in [1..Length(R)] do 
 		j:=Position(Enumerator(R[i]), f);
 		if not j=fail then 
@@ -570,11 +570,11 @@ enum:=EnumeratorByFunctions(d, rec(
 	###########################################################################
 	
 	Membership:=function(elm, enum) 
-	return elm in UnderlyingCollection(enum); #the D-class itself!
+	return elm in d; #the D-class itself!
 	end,
 	
-	Length:=enum -> Length(GreensRClasses(UnderlyingCollection(enum)))
-	 *Size(GreensRClasses(UnderlyingCollection(enum))[1]),
+	Length:=enum -> Length(GreensRClasses(d)) #NrGreensRClasses? JDM
+	 *Size(GreensRClasses(d)[1]),
 
 	PrintObj:=function(enum)
 	Print( "<enumerator of D-class>");
@@ -687,6 +687,7 @@ end);
 
 #new for 4.0!
 #############################################################################
+# think about removing this and replacing it with GreensDClassOfRClass? JDM
 
 InstallOtherMethod(GreensDClass, "for an R-class of a trans. semigroup", 
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
@@ -956,7 +957,7 @@ end);
 InstallOtherMethod(GreensRClassRepsData, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
 function(d)
-local f, rels, cosets, j, k, m, out, val, l, a, b, g, data, orbits;
+local f, rels, cosets, j, k, m, out, val, l, a, b, g, data, orbits, images;
 
 out:=DClassRClassRepsDataFromData(d!.parent, d!.data, d!.o);
 
@@ -976,13 +977,13 @@ val:=List(rels, x-> HTValue(DClassImageOrbit(d)!.kernels_ht[m],
 
 out:=EmptyPlist(Length(rels)*Length(cosets));
 SetNrGreensRClasses(d, Length(rels)*Length(cosets));
-orbits:=d!.o[1]!.orbits;
+orbits:=d!.o[1]!.orbits; images:=d!.o[1]!.images;
 
 for a in [1..Length(rels)] do
 	g:=rels[a][1]*f; 
 	for b in [1..Length(cosets)] do 
 		g:=g*cosets[b]^-1;
-		data:=InOrbitsOfImages(d, g, orbits, [j, k, l, m, val[a], 0]);
+		data:=InOrbitsOfImages(d, g, orbits, [j, k, l, m, val[a], 0, fail], images);
 		#could do SiftedPermutation directly here, maybe speed things up?
 		if not data[1] then 
 			data:=AddToOrbitsOfImages(d, g, d!.o[1], data[2]);
@@ -1195,8 +1196,7 @@ if Length(arg)>=3 and not arg[3]=[] then
 		j:=Length(ker);
 	fi;
 else
-	d:=InOrbitsOfImages(s, f, O[1]!.orbits, []); 
-	#JDM change the syntax of InOrbitsOfImgs
+	d:=InOrbitsOfImages(s, f, O[1]!.orbits); 
 	ker:=KernelOfTransformation(f);
 	j:=Length(ker);
 

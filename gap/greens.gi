@@ -15,6 +15,17 @@
 
 #############################################################################
 
+
+##
+#############################################################################
+
+InstallMethod( \=, "for trans. semigp. and trans. semigp.",
+[IsTransformationSemigroup, IsTransformationSemigroup],
+function(s1, s2)
+return ForAll(Generators(s1), x-> x in s2) and 
+ ForAll(Generators(s2), x-> x in s1);
+end);
+
 # new for 4.0!
 #############################################################################
 # keep here 

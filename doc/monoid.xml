@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd">
-<!--  MakeGAPDocDoc("~/Desktop/gap4r4/pkg/monoid/doc/", "monoid.xml", [ "../gap/transform.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd"], "manual");; -->
+<!--  MakeGAPDocDoc("~/Desktop/gap4r4/pkg/monoid/doc/", "monoid.xml", [ "../gap/transform.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd", "../gap/legacy.gd"], "manual");; -->
 
 <!-- SizeScreen([80]); SetInfoLevel(InfoWarning, 0); TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1], "monoid.xml", ["../gap/autos.gd", "../gap/general.gd", "../gap/greens.gd", "../gap/orbits.gd", "../gap/properties.gd", "../gap/semigroups.gd", "../gap/semihomo.gd", "../gap/transform.gd", "../gap/isomorph.gd"] );-->
 
@@ -373,7 +373,13 @@ and let
 $$\text{Kers}(S)=\{\:\text{ker}(f)\::\: f\in S\:\}.$$
 </Alt>
 
+<!-- ############### -->
 
+<Chapter Label="examples"><Heading>Worked Examples</Heading>
+In this chapter we give some examples of what the <Package>monoid</Package>
+can be used for.
+
+</Chapter>
 
 <!-- ############### -->
 
@@ -505,10 +511,27 @@ Without the <Package>monoid</Package> package loaded:
 		a very large semigroup 
 		where computing all the elements of the semigroup is infeasible. 
 
+<!-- ############### -->
+
+		<Subsection><Heading>&GAP; functions having special methods in <Package>
+		monoid</Package></Heading>
+		
+		<Package>monoid</Package> contains special methods for R-classes of the 
+		and the following &GAP; functions: <C>AsList</C>, <C>AsSSortedList</C>, 
+		<C>Enumerator</C>, 
+		
+		
+		</Subsection>
+
+<!-- ############### -->
+
 		<#Include Label="IsGreensClassOfTransSemigp">
 		<#Include Label="SchutzenbergerGroup">
 		<#Include Label="Idempotents">
 		<#Include Label="PartialOrderOfDClasses">
+		
+
+
 	</Section>
 </Chapter>
 
@@ -623,6 +646,16 @@ It is straightforward to verify that  <Math>S</Math> is a group if and only if f
 </Chapter>
 
 <!-- ############### -->
+
+<Chapter Label="nonuser"><Heading>Internal functions</Heading>
+
+	The functions described in this chapter are not...
+	
+	<Section><Heading>Green's R-relation</Heading>
+	<#Include Label="AddToOrbitsOfImages">
+	</Section>
+</Chapter>
+
 
 
 <Chapter Label="general"><Heading>Deprecated and Legacy Functions</Heading>

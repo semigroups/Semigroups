@@ -17,6 +17,9 @@ OnLeftRClassAction:=function(r, f)
 return GreensRClassOfElement(r!.parent, f*r!.rep);
 end;
 
+#new for 4.0!
+############################################################################
+
 
 InstallMethod(Generators, "for a semigroup or monoid", 
 [IsSemigroup],
@@ -987,7 +990,6 @@ end);
 
 #############################################################################
 # JDM InversesOfTransformationNC should be revised when we get new C functions
-# JDM this currently does not work! see last example in transform.tst!!
 
 InstallMethod(InversesOfTransformationNC, "for a trans. semigroup and a trans.", 
 [IsTransformationSemigroup, IsTransformation], 

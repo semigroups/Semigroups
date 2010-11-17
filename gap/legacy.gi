@@ -1,7 +1,7 @@
 
 #############################################################################
 
-InstallMethod(SchutzenbergerGroup, "for GreensData",
+InstallOtherMethod(SchutzenbergerGroup, "for GreensData",
 [IsGreensData], x-> x!.schutz );
 
 ######################

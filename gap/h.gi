@@ -381,20 +381,6 @@ od;
 return fail;
 end);
 
-############################################################################
-
-InstallGlobalFunction(HClass, 
-function(arg)
-
-if IsTransformationSemigroup(arg[1]) and IsTransformation(arg[2]) then 
-	return GreensHClassOfElement(arg[1], arg[2]);
-fi;
-Error("Usage: trans. semigp. and trans.");
-
-return fail;
-end);
-
-
 # new for 4.0!
 ############################################################################
 

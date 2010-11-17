@@ -61,6 +61,34 @@ end;
 
 # new method for 4.0! 
 ###########################################################################
+# JDM would be better if this could return a group of transformations...
+# test efficiency...
+
+InstallMethod(GroupOfUnits, "for a tranformation semigroup", 
+[IsTransformationSemigroup], 
+function(s)
+local h, m, g;
+
+if not IsMonoidAsSemigroup(s) then 
+	return fail;
+fi;
+
+h:=GreensHClassOfElement(s, One(s));
+m:=Size(h);
+g:=Group(());
+
+repeat 
+	g:=ClosureGroup(g, AsPermutation(Random(h)));
+until Size(g)=m;
+
+return g;
+end);
+
+###########################################################################
+#
+
+# new method for 4.0! 
+###########################################################################
 # - must find some reasonable examples to test this on.
 
 InstallMethod(IsBand, "for a transformation semigroup", 

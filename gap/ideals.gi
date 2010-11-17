@@ -10,6 +10,10 @@
 ## $Id$
 ##
 
+# JDM this must be worked on and made fully functional before a release... 
+
+
+
 #InstallOtherMethod(Degree, "for an ideal of a transformation semigroup", 
 #[IsSemigroupIdeal and IsTransformationSemigroup],
 #function(i)
