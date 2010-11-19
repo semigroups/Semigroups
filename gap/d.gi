@@ -1196,7 +1196,7 @@ if Length(arg)>=3 and not arg[3]=[] then
 		j:=Length(ker);
 	fi;
 else
-	d:=InOrbitsOfImages(s, f, O[1]!.orbits); 
+	d:=PreInOrbitsOfImages(s, f); 
 	ker:=KernelOfTransformation(f);
 	j:=Length(ker);
 
