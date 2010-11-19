@@ -24,7 +24,7 @@ InstallMethod( \=, "for trans. semigp. and trans. semigp.",
 function(s1, s2)
 return ForAll(Generators(s1), x-> x in s2) and 
  ForAll(Generators(s2), x-> x in s1);
-end);
+end); 
 
 # new for 4.0!
 #############################################################################

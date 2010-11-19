@@ -397,8 +397,6 @@ gap> AsSet(enum)=AsSSortedList(r);
 true
 gap> Set(List(AsSSortedList(r), x-> Position(enum, x)))=[1..2640];
 true
-gap> ForAll(AsSSortedList(r), x-> x in r);;
-
-
-
+gap> ForAll(AsSSortedList(r), x-> x in enum);;
+true
 gap> STOP_TEST( "r.tst 4.0", 10000);
