@@ -17,11 +17,12 @@ ReadPkg("monoid/gap/greens.gi");
 ReadPkg("monoid/gap/transform.gi");
 ReadPkg("monoid/gap/h.gi");
 ReadPkg("monoid/gap/r.gi");
+ReadPkg("monoid/gap/closure.gi");
 ReadPkg("monoid/gap/l.gi");
 ReadPkg("monoid/gap/d.gi");
 ReadPkg("monoid/gap/properties.gi");
 ReadPkg("monoid/gap/ideals.gi");
-ReadPkg("monoid/gap/closure.gi");
+
 
 ReadPkg("monoid/gap/legacy.gi");
 

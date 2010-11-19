@@ -15,13 +15,11 @@ ReadPkg("monoid/gap/convenience.gd");
 ReadPkg("monoid/gap/general.gd");
 ReadPkg("monoid/gap/orbits.gd");
 ReadPkg("monoid/gap/greens.gd");
+ReadPkg("monoid/gap/closure.gd");
 ReadPkg("monoid/gap/properties.gd");
 ReadPkg("monoid/gap/transform.gd");
-ReadPkg("monoid/gap/closure.gd");
 
 ReadPkg("monoid/gap/legacy.gd");
-
-
 
 ###########################################################################
 DeclareInfoClass("InfoMonoid");;
