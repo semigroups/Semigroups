@@ -31,66 +31,20 @@
 #############################################################################
 #############################################################################
 
-###########################################################################
-##	<#GAPDoc Label="AddToOrbitsOfImages">
-##	<ManSection>
-##	<Func Name="AddToOrbitsOfImages" Arg="s, f, o, d"/>
-##	<Description>
-##	The arguments should be: <A>s</A> a semigroup or D-class, <A>f</A> a 
-##	transformation, <A>o</A> the attribute <Ref Attr="OrbitsOfImages"/>
-##	of <A>s</A>, and <A>d=[j, k, l, m, val, n, g]</A> where:
-##	<List>
-##	<Item> 
-##	<A>j</A> - is the size of the image set of <A>f</A>;
-##	</Item>
-##	<Item> 
-##		<A>k</A> - is the index of the orbit containing the image of <A>f</A>, 
-##		that is,
-##		<C>ImageSetOfTransformation(f)</C> is in 
-##		<C>OrbitsOfImages(s)!.orbits[j][k]
-##		</C>;
-##	</Item>
-##	<Item>
-##		<A>l</A> - is the position of the image of <A>f</A> in 
-##		<C>OrbitsOfImages(s)!.orbits[j][k]</C>;
-##	</Item>
-##	<Item> 
-##		<A>m</A> - is the index of the strongly connected component of 
-##		<C>OrbitsOfImages(s)!.orbits[j][k]</C> containing the image of <A>f</A>;
-##	</Item>
-##	<Item>
-##		<A>val</A> - is the return value of <C>HTValue(
-##		OrbitsOfImages(s)!.orbits[j][k]!.kernels_ht[m],
-##		KernelOfTransformation(f))</C>, 
-##		that is, the index of the list of 
-##		representatives of R-classes of <A>s</A> with the same 
-##		Schutzenberger group, 
-##		strong orbit of images, and kernel as <A>f</A>; 
-##	</Item>
-##	<Item>
-##		<A>n</A> - the length of the list
-##		<C>OrbitsOfImages(s)!.orbits[j][k]!.reps[m][val]</C> 
-##		of representatives of R-classes of <A>s</A> with the same Schutzenberger 
-##		group, strong orbit of images, and kernel as <A>f</A>;
-##	</Item>
-##	<Item>
-##		<A>g</A> - the transformation 
-##		<C>f*OrbitsOfImages(s)!.orbits[j][k]!.perms[l]</C>, which is R-related to
-##		<A>f</A> and has the property that the image <C>X</C> of <A>g</A>
-##		satisfies <Display>Position(OrbitsOfImages(s)!.orbits[j][k], X)=
-##		OrbitsOfImages(s)!.orbits[j][k]!.scc[m][1].</Display>
-##	</Item>
-##</List>
-##	The result of this function is to add all the information relating to 
-##  the R-class of <A>f</A> in <A>s</A> to the attribute 
-##  <Ref Attr="OrbitsOfImages"/> of <A>s</A>. 
-##	</Description>
-##  </ManSection>
-##	<#/GAPDoc><!-- non-user -->
+# the documentation for the functions in this file can be found in 
+# /monoid/doc/r.xml
 
 DeclareGlobalFunction("AddToOrbitsOfImages");
+DeclareGlobalFunction("CreateRClass");
+DeclareGlobalFunction("CreateSchreierTreeOfSCC");
+DeclareGlobalFunction("CreateReverseSchreierTreeOfSCC");
+DeclareGlobalFunction("DisplayOrbitsOfImages");
+DeclareGlobalFunction("ExpandOrbitsOfImages");
+DeclareGlobalFunction("ForwardOrbitOfImage");
+DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
+DeclareAttribute("GreensRClassReps", IsTransformationSemigroup);
 
-
+###########################################################################
 
 ###########################################################################
 ##
@@ -130,33 +84,8 @@ DeclareGlobalFunction("AddToOrbitsOfImages");
 
 DeclareProperty("IsGreensClassOfTransSemigp", IsGreensClass);
 
-#############################################################################
-##
-##	<#GAPDoc Label="GreensRClassReps">
-##	<ManSection>
-##	<Attr Name="GreensRClassReps" Arg="S"/>
-##	<Description>
-##	returns the representative of all the R-classes of the transformation 
-##	semigroup <C>S</C> as a list of lists ordered by the rank of the 
-##	representatives and the order that the representatives are produced by the 
-##	function <Ref Attr="GreensRClasses" BookName="ref"/>.  Also 
-##	<C>GreensRClassReps[i][j]</C> is the representative of 
-##	<Ref Attr="GradedRClasses"/><C>[i][j]</C>.
-##	<Example>
-##  gap> gens:=[ Transformation( [ 1, 2, 1, 2, 1 ] ), 
-##  > Transformation( [ 3, 4, 2, 1, 4 ] ) ];;
-##  gap> S:=Semigroup(gens);; 
-##  gap> GreensRClassReps(S);
-##  [ [ Transformation( [ 1, 2, 1, 2, 1 ] ), 
-##    Transformation( [ 1, 2, 2, 1, 2 ] ), 
-##        Transformation( [ 2, 1, 2, 1, 1 ] ) ], 
-##    [ Transformation( [ 3, 4, 2, 1, 4 ] ) ] ]
-##	</Example><!-- greens.tst -->
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
 
-DeclareAttribute("GreensRClassReps", IsTransformationSemigroup);
+
 
 #############################################################################
 ##
@@ -218,40 +147,7 @@ DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
 
 DeclareAttribute("PartialOrderOfDClasses", IsSemigroup, "mutable");
 
-###########################################################################
-##
-##	<#GAPDoc Label="Idempotents">
-##	<ManSection>
-##	<Func Name="Idempotents" Arg="X[,n]"/>
-##	<Description>
-##	returns a list of the idempotents in the transformation semigroup or Green's 
-##	class <C>X</C>. <P/>
-##
-##	If the optional second argument <C>n</C> is present, then a list of the 
-##	idempotents in <C>S</C> of rank <C>n</C> is returned. If you are only 
-##	interested in the 
-##	idempotents of a given rank, then the second version of the function will 
-##	likely be faster.
-##	<Example>
-##  gap> S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
-##  > Transformation( [ 3, 3, 1, 1 ] ) ]);;
-##  gap> Idempotents(S, 1);
-##  [  ]
-##  gap> Idempotents(S, 2);                        
-##  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
-##    Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
-##  gap> Idempotents(S, 3);                        
-##  [  ]
-##  gap> Idempotents(S, 4);                        
-##  [ Transformation( [ 1, 2, 3, 4 ] ) ]
-##  gap> Idempotents(S);
-##  [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 2, 3, 4 ] ), 
-##    Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
-##    Transformation( [ 4, 2, 2, 4 ] ) ]
-##	</Example> 
-##	</Description>
-##	</ManSection>
-##	<#/GAPDoc>
+
 
 #############################################################################
 #############################################################################
@@ -267,10 +163,10 @@ DeclareAttribute("OrbitsOfKernels", IsTransformationSemigroup, "mutable");
 DeclareGlobalFunction("AddToOrbitsOfKernels");
 
 
-DeclareGlobalFunction("DisplayOrbitsOfImages");
+
 DeclareGlobalFunction("DisplayOrbitsOfKernels");
 
-DeclareGlobalFunction("ExpandOrbitsOfImages");
+
 DeclareGlobalFunction("ExpandOrbitsOfKernels");
 
 
@@ -286,8 +182,7 @@ DeclareGlobalFunction("InOrbitsOfImages");
 DeclareGlobalFunction("InOrbitsOfKernels");
 DeclareGlobalFunction("InDClassRepsData");
 
-DeclareGlobalFunction("CreateSchreierTreeOfSCC");
-DeclareGlobalFunction("CreateReverseSchreierTreeOfSCC");
+
 
 DeclareGlobalFunction("TraceSchreierTreeOfSCCForward");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCBack");
@@ -319,7 +214,7 @@ DeclareGlobalFunction("RClassSCCFromData");
 DeclareAttribute("RClassSCC", IsGreensRClass and 
  IsGreensClassOfTransSemigp);
 
-DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
+
 DeclareOperation("GreensHClassOfElementNC", [IsTransformationSemigroup]);
 
 #JDM remove the following later!
@@ -364,7 +259,7 @@ DeclareAttribute("GreensDClass", IsGreensRClass);
 DeclareAttribute("GreensRClass", IsGreensHClass);
 DeclareAttribute("GreensLClass", IsGreensHClass);
 
-DeclareGlobalFunction("CreateRClass");
+
 DeclareGlobalFunction("CreateDClass");
 DeclareGlobalFunction("CreateLClass");
 DeclareGlobalFunction("CreateHClass");
@@ -452,7 +347,7 @@ DeclareGlobalFunction("DClassRCosetsFromData");
 DeclareGlobalFunction("DClassLCosetsFromData");
 DeclareGlobalFunction("DClassStabChainFromData");
 
-DeclareGlobalFunction("ForwardOrbitOfImage");
+
 DeclareGlobalFunction("ForwardOrbitOfKernel");
 
 DeclareAttribute("GreensRClassRepsData", IsTransformationSemigroup);

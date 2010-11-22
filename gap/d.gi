@@ -983,10 +983,10 @@ for a in [1..Length(rels)] do
 	g:=rels[a][1]*f; 
 	for b in [1..Length(cosets)] do 
 		g:=g*cosets[b]^-1;
-		data:=InOrbitsOfImages(d, g, orbits, [j, k, l, m, val[a], 0, fail], images);
+		data:=InOrbitsOfImages(d, g, [j, k, l, m, val[a], 0, fail], orbits, images);
 		#could do SiftedPermutation directly here, maybe speed things up?
 		if not data[1] then 
-			data:=AddToOrbitsOfImages(d, g, d!.o[1], data[2]);
+			data:=AddToOrbitsOfImages(d, g, data[2], d!.o[1]);
 		else 
 			data:=data[2];
 		fi;
