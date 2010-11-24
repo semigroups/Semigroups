@@ -392,6 +392,9 @@
   Note that it is not necessary to actually create the R-class to perform this
   check, and that if the R-class is not actually required, then using
   <C>IsRegularRClassData</C> will be more efficient. <P/>
+  
+  See also <Ref Prop="IsRegularRClass"/>. 
+  
   </Description>
   </ManSection>
 <#/GAPDoc>

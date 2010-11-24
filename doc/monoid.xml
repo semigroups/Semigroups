@@ -484,7 +484,7 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
 		
     <Package>monoid</Package> contains special methods for transformation 
     semigroups of the following &GAP; functions: <C>in</C>, <C>AsList</C>, 
-    <C>Enumerator</C>, <C>GreensRClasses</C>, <C></C>
+    <C>Enumerator</C>, <C>GreensRClasses</C>, <C>Iterator</C>
 		
   </Section>
 

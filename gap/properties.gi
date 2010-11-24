@@ -101,7 +101,7 @@ InstallMethod(IsBand, "for a transformation semigroup",
 InstallMethod(IsBlockGroup, "for a transformation semigroup",
 [IsTransformationSemigroup], 
 function(s)
-local iter, r, f, o, scc, reg, n, i, j, k, l,d;
+  local iter, f, o, scc, reg, n, k, l, d, i, j;
 
 if IsInverseSemigroup(s) then 
    return true;
