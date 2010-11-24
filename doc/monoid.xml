@@ -480,7 +480,8 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
 		
     <Package>monoid</Package> contains special methods for R-classes of the 
     following &GAP; functions: <C>&lt;</C><C>=</C>, <C>in</C>, <C>AsList</C>, 
-    <C>AsSSortedList</C>, <C>Enumerator</C>, <C>Idempotents</C>, <P/>
+    <C>AsSSortedList</C>, <C>Enumerator</C>, <C>Idempotents</C>,  
+    <C>Iterator</C>, <C>GreensHClasses</C>, <P/>
 		
     <Package>monoid</Package> contains special methods for transformation 
     semigroups of the following &GAP; functions: <C>in</C>, <C>AsList</C>, 
@@ -488,23 +489,41 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
 		
   </Section>
 
-  <Section><Heading>Green's R-relation - the basics</Heading>
+  <Section><Heading>Green's R-relation</Heading>
     The functions described in this section extend the &GAP; library functions
     for Greens R-relation and related objects. More advanced features are
-    described in Section <Ref Sect="GreensAdvanced1"/>.
+    described in Section <Ref Sect="GreensAdvancedR"/>.
     
+    <#Include Label="GreensRClasses">
     <#Include Label="GreensRClassOfElementNC">
     <#Include Label="GreensRClassReps">
     <#Include Label="Idempotents">
     <#Include Label="IsRegularRClass">
-    
     <#Include Label="IsGreensClassOfTransSemigp">
+    <#Include Label="IteratorOfGreensRClasses"> 
+    
     <#Include Label="PartialOrderOfDClasses">
     <#Include Label="SchutzenbergerGroup">
   
   </Section>
 
-  <Section Label="GreensAdvanced1">
+  <Section><Heading>Green's H-relation</Heading>
+      
+    The functions described in this section extend the &GAP; library functions
+    for Greens H-relation and related objects. More advanced features are
+    described in Section <Ref Sect="GreensAdvancedH"/>.
+    
+    <#Include Label="GreensHClasses">
+    <#Include Label="GreensHClassReps">
+
+  </Section>
+
+
+</Chapter>
+
+<Chapter Label="Advanced"> <Heading>Advanced Features</Heading>
+  
+  <Section Label="GreensAdvancedR">
     <Heading>Green's R-relation - advanced</Heading>
   
     The functions described in this section are used by <Package>monoid
@@ -526,7 +545,15 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     <#Include Label="InOrbitsOfImages">
     <#Include Label="IsRegularRClassData"> 
   </Section>
+
+  <Section Label="GreensAdvancedH">
+    <Heading>Green's H-relation - advanced</Heading>
+    
+    <#Include Label="GreensHClassRepsData">
+  </Section>
+
 </Chapter>
+
 
 <Chapter Label="properties"> <Heading>Properties of semigroups</Heading>
   <Section><Heading>Definitions</Heading>

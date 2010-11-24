@@ -33,7 +33,6 @@
 # - check that wherever we have called d:=InOrbitsOfImages we do not perform
 # f*perms[l] afterwards but instead use d[7]!
 
-
 #############################################################################
 ## To do 
 
@@ -116,7 +115,7 @@ end);
 
 ## new for 4.0!
 #############################################################################
-##  Algorithm E. 
+## Algorithm E. 
 
 InstallMethod( \in, "for trans. and R-class of trans. semigp.", 
 [IsTransformation, IsGreensRClass and IsGreensClassOfTransSemigp],
@@ -211,6 +210,8 @@ return false;
 end);
 
 #############################################################################
+# not a user function!
+
 # s <- semigroup or d-class; f <- transformation; o <- OrbitsOfImages(s); 
 # data <- img data
 
@@ -225,9 +226,9 @@ j:=data[1]; 	# img size
 k:=data[2]; 	# index of orbit containing img
 l:=data[3]; 	# position of img in O[j][k]
 m:=data[4]; 	# scc of O[j][k] containing img
-val:=data[5]; # position of ker in O[j][k]!.kernels_ht[m]
+val:=data[5];   # position of ker in O[j][k]!.kernels_ht[m]
 n:=data[6]; 	# the length of O[j][k]!.reps[m][val]
-g:=data[7];		# f*O[j][k]!.perms[l];
+g:=data[7];	# f*O[j][k]!.perms[l];
 
 O := o!.orbits;  gens:=o!.gens; d:=o!.data; lens:=o!.lens;
 data_ht:=o!.data_ht;
@@ -352,7 +353,7 @@ end);
 
 # new for 4.0!
 #############################################################################
-#
+# not a user function!
 
 InstallGlobalFunction(CreateRClass, 
 function(s, data, orbit, rep)
@@ -370,10 +371,10 @@ end);
 
 # new for 4.0!
 #############################################################################
+# not a user function!
+
 # o is the orbit
 # i is the index of the scc of o we are trying to create the Schreier tree for!
-
-# this should be moved to greens.gi
 
 InstallGlobalFunction(CreateSchreierTreeOfSCC,
 function(o, i)
@@ -413,7 +414,7 @@ end);
 
 # new for 4.0!
 #############################################################################
-# this should be moved to greens.gi
+# not a user function!
 
 InstallGlobalFunction(CreateReverseSchreierTreeOfSCC,
 function(o, i)
@@ -465,7 +466,7 @@ end);
 
 #new for 4.0!
 #############################################################################
-#JDM should install methods for Size and NrGreensRClasses for OrbitsOfImages.
+# not a user function!
 
 InstallGlobalFunction(DisplayOrbitsOfImages, 
 function(s)
@@ -477,23 +478,23 @@ Print("finished: \t", o!.finished, "\n");
 Print("orbits: \t"); 
 
 if ForAny([1..Degree(s)], j-> IsBound(o!.orbits[j])) then 
-	#View(o!.orbits[1][1]); Print("\n");
-	k:=0;
-	for i in o!.orbits do 
-		for j in i do 
-			if k=1 then 
-				Print("\t\t"); 
-			else
-				k:=1;
-			fi;
-			View(j); Print("\n");
-		od;
-	od;
+  #View(o!.orbits[1][1]); Print("\n");
+  k:=0;
+  for i in o!.orbits do 
+    for j in i do 
+      if k=1 then 
+        Print("\t\t"); 
+      else
+        k:=1;
+      fi;
+      
+      View(j); Print("\n");
+    od;
+  od;
 else 
-	Print("\n");
+  Print("\n");
 fi;
 
-#View(o!.orbits); Print("\n");
 Print("at: \t\t", o!.at, "\n");
 Print("ht: \t\t"); View(o!.ht); Print("\n");
 Print("size: \t\t", SizeOrbitsOfImages(s), "\n");
@@ -731,6 +732,103 @@ od;
 o!.schutz:=List([1..r], m-> SchutzGpOfImageOrbit(gens, o, reps[m], m));
 
 return [o, reps, List([1..r], m-> scc[m][1])];
+end);
+
+###########################################################################
+# 
+
+InstallOtherMethod(GreensHClasses, "for an R-class of a trans. semigp.", 
+[IsGreensRClass and IsGreensClassOfTransSemigp],
+function(r)
+  local s, d, o, m, D, out, f, h, i;
+
+  s:=r!.parent; 
+  d:=GreensDClass(r);
+  o:=d!.o; 
+  m:=NrGreensHClasses(r);
+  D:=GreensHClassRepsData(r); 
+  out:=EmptyPlist(m); 
+
+  for i in [1..m] do 
+
+    if HasGreensHClassReps(r) then 
+      f:=GreensHClassReps(r)[i];
+    else
+      f:=HClassRepFromData(s, D[i], o);
+    fi;
+
+    h:=CreateHClass(s, D[i], o, f);
+    SetGreensRClass(h, r);
+    SetGreensDClass(h, d);
+    out[i]:=h;
+  od;
+
+  return out;
+end);
+
+#############################################################################
+# JDM0 should we SetGreensLClassReps of d? 
+
+InstallOtherMethod(GreensHClassReps, "for an R-class of a trans. semigp.", 
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+  local f, cosets, perms, scc, out, k, i, j;
+
+  if HasGreensHClasses(r) then 
+    return List(GreensHClasses(r), Representative);
+  fi;
+
+  f:= r!.rep;
+  cosets:=DClassRCosets(GreensDClass(r));
+  perms:=RClassPerms(r);
+  scc:=RClassSCC(r);
+
+  out:=EmptyPlist(Length(scc)*Length(cosets));
+  SetNrGreensHClasses(r, Length(scc)*Length(cosets));
+  k:=0;
+
+  for i in scc do 
+    i:=perms[i];
+    for j in cosets do 
+      k:=k+1;
+      out[k]:=f*(j/i);
+    od;
+  od;
+
+  return out;
+end);
+
+#############################################################################
+# JDM1 should we SetGreensLClassReps of d? 
+
+# JDM0 this and other like it should be iterators as illustrated by the 
+# Coxeter semigroup example...
+
+InstallOtherMethod(GreensHClassRepsData, "for an R-class of a trans. semigp.", 
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+  local f, scc, d, m, out, k, data, i, j;
+
+  f:= r!.rep;
+  scc:=RClassSCC(r);
+  d:=GreensDClass(r);
+  m:=Length(DClassRCosets(d));
+
+  out:=EmptyPlist(Length(scc)*m);
+  SetNrGreensHClasses(r, Length(scc)*m);
+
+  k:=0;
+  data:=[r!.data, d!.data[2]];
+
+  for i in scc do 
+    for j in [1..m] do 
+      k:=k+1;
+      out[k]:=ShallowCopy(data);
+      out[k][3]:=[i,j];
+    od;
+  od;
+
+  return out;
 end);
 
 # new for 4.0!
@@ -1121,141 +1219,42 @@ SetIsIteratorOfRClassElements(iter, true);
 return iter;
 end);
 
-# JDM here! here here here!!
-#############################################################################
-# 
-
-InstallOtherMethod(GreensHClasses, "for an R-class of a trans. semigp.", 
-[IsGreensRClass and IsGreensClassOfTransSemigp],
-function(r)
-local s, o, m, out, i, data, f, h;
-
-s:=r!.parent; o:=GreensDClass(r)!.o; m:=NrGreensHClasses(r);
-out:=EmptyPlist(m); 
-
-for i in [1..m] do 
-	data:=GreensHClassRepsData(r)[i]; 
-	if HasGreensHClassReps(r) then 
-		f:=GreensHClassReps(r)[i];
-	else
-		f:=HClassRepFromData(s, data, o);
-	fi;
-	h:=CreateHClass(s, data, o, f);
-	SetGreensRClass(h, r);
-	SetGreensDClass(h, GreensDClass(r));
-	out[i]:=h;
-od;
-
-return out;
-end);
-
-
-#############################################################################
-# JDM if d has GreensLClassReps, then could obtain the below more efficiently?
-# (probably not). Should we SetGreensLClassReps of d? 
-
-InstallOtherMethod(GreensHClassReps, "for an R-class of a trans. semigp.", 
-[IsGreensRClass and IsGreensClassOfTransSemigp], 
-function(r)
-local f, cosets, perms, out, k, i, j;
-
-# is the following worth it? JDM 
-#if HasGreensHClassRepsData(r) then 
-#	return List(GreensHClassRepsData(r), x-> 
-#	 HClassRepFromData(r!.parent, x, r!.o));
-#fi;
-
-f:= r!.rep;
-cosets:=DClassRCosets(GreensDClass(r));
-perms:=RClassPerms(r);
-
-out:=EmptyPlist(Length(perms)*Length(cosets));
-SetNrGreensHClasses(r, Length(perms)*Length(cosets));
-k:=0;
-
-for i in perms do 
-	for j in cosets do 
-		k:=k+1;
-		out[k]:=f*(j/i);
-	od;
-od;
-
-return out;
-end);
-
-#############################################################################
-# JDM if d has GreensLClassReps, then could obtain the below more efficiently?
-# (probably not). Should we SetGreensLClassReps of d? 
-
-# JDM this and other like it should be iterators as illustrated by the 
-# Coxeter semigroup example...
-
-InstallOtherMethod(GreensHClassRepsData, "for an R-class of a trans. semigp.", 
-[IsGreensRClass and IsGreensClassOfTransSemigp], 
-function(r)
-local f, scc, d, m, out, k, data, i, j;
-
-f:= r!.rep;
-scc:=RClassSCC(r);
-d:=GreensDClass(r);
-m:=Length(DClassRCosets(d));
-
-out:=EmptyPlist(Length(scc)*m);
-SetNrGreensHClasses(r, Length(scc)*m);
-
-k:=0;
-data:=[r!.data, d!.data[2]];
-
-for i in scc do 
-	for j in [1..m] do 
-		k:=k+1;
-		out[k]:=ShallowCopy(data);
-		out[k][3]:=[i,j];
-	od;
-od;
-
-return out;
-end);
-
 # new for 4.0!
 #############################################################################
 
 InstallGlobalFunction(IteratorOfGreensRClasses, 
 function(s)
-local iter;
+  local iter;
 
-Info(InfoMonoidGreens, 4, "IteratorOfGreensRClasses");
+  Info(InfoMonoidGreens, 4, "IteratorOfGreensRClasses");
 
-iter:=IteratorByFunctions( rec(
-	
-	i:=0,
-	
-	s:=s, 
-	
-	reps:=IteratorOfRClassReps(s),
-	
-	IsDoneIterator := iter -> IsDoneIterator(iter!.reps), 
-	
-	NextIterator:= function(iter)
-	local c, rep, d;
-	
-	rep:=NextIterator(iter!.reps);
-	
-	if rep=fail then 
-		return fail;
-	fi;
-	
-	iter!.i:=iter!.i+1;
-	d:=OrbitsOfImages(s)!.data[iter!.i];
-	return CreateRClass(s, d, OrbitsOfImages(s), rep);
-	end,
+  iter:=IteratorByFunctions( rec(
+          
+    i:=0,
+    s:=s, 
+    reps:=IteratorOfRClassReps(s),
+    
+    IsDoneIterator := iter -> IsDoneIterator(iter!.reps), 
+          
+    NextIterator:= function(iter)
+      local rep, d;
+          
+      rep:=NextIterator(iter!.reps);
+          
+      if rep=fail then 
+        return fail;
+      fi;
+          
+      iter!.i:=iter!.i+1;
+      d:=OrbitsOfImages(s)!.data[iter!.i];
+      return CreateRClass(s, d, OrbitsOfImages(s), rep);
+    end,
 
-	ShallowCopy:=iter-> rec(i:=0, s:=iter!.s, reps:=IteratorOfRClassReps(s))
-));
+    ShallowCopy:=iter-> rec(i:=0, s:=iter!.s, reps:=IteratorOfRClassReps(s))));
 
-SetIsIteratorOfGreensRClasses(iter, true);
-SetUnderlyingSemigroupOfIterator(iter, s);
-return iter;
+  SetIsIteratorOfGreensRClasses(iter, true);
+  SetUnderlyingSemigroupOfIterator(iter, s);
+  return iter;
 end);
 
 # new for 4.0!
@@ -1264,123 +1263,119 @@ end);
 
 InstallGlobalFunction(IteratorOfNewRClassRepsData, 
 function(s)
-local iter, o;
+  local iter, o;
 
-o:=OrbitsOfImages(s);
-iter:=IteratorOfRClassRepsData(s);
-iter!.i:=Length(o!.data); 
-return iter;
+  o:=OrbitsOfImages(s);
+  iter:=IteratorOfRClassRepsData(s);
+  iter!.i:=Length(o!.data); 
+  return iter;
 end);
 
 # new for 4.0!
 #############################################################################
-# not a user function!
+# not a user function! herehere jdmjdm
 
 InstallGlobalFunction(IteratorOfRClassRepsData, 
-function(s)
-local iter;
+  function(s)
+  local iter;
+  Info(InfoMonoidGreens, 4, "IteratorOfRClassRepsData");
 
-Info(InfoMonoidGreens, 4, "IteratorOfRClassRepsData");
+  iter:=IteratorByFunctions( rec(
+          
+  ShallowCopy := iter -> rec( i:=0, s:=iter!.s, 
+  last_called := NextIterator, last_value := 0, 
+  chooser:=iter!.chooser, next:=iter!.next),
 
-iter:=IteratorByFunctions( rec(
-	
-	ShallowCopy := iter -> rec( i:=0, s:=iter!.s, 
-	last_called := NextIterator, last_value := 0, 
-	chooser:=iter!.chooser, next:=iter!.next),
-	
-	i:=0, # representative index i.e. which representative we are at
-	
-	s:= s,
-	
-	next_value := fail,
-	
-	last_called_by_is_done:=false,
-	
-	######################################################################
-	
-	IsDoneIterator:=function(iter)
-	local o, ht, gens, i, x, d, y, z, one, O, orbits, images;
-	 
-	if iter!.last_called_by_is_done then 
-		return iter!.next_value=fail;
-	fi;
-	
-	iter!.last_called_by_is_done:=true;
-	
-	O:=OrbitsOfImages(s);
-	
-	iter!.next_value:=fail;
-	
-	if iter!.i < Length(O!.data) then 
-	# we already know this rep
-		iter!.i:=iter!.i+1;
-		iter!.next_value:=O!.data[iter!.i];
-		return false;
-	elif O!.finished then  
-		return true;
-	fi;
-	
-	ht:=O!.ht;
-	o:=ht!.o;
-	i:=O!.at;
-	
-	if i=Length(o) then
-	#at the end of the orbit!
-		O!.finished:=true;
-		return true;
-	fi;
-	
-	gens:=O!.gens;
-	orbits:=O!.orbits;
-	images:=O!.images;
-	
-	while i<Length(o) do 
-		O!.at:=O!.at+1;
-		i :=i+1;
-		x:=o[i];
-		d:=InOrbitsOfImages(s, x, [fail, fail, fail, fail, fail, 0, fail], 
-		 orbits, images);
+  i:=0, # representative index i.e. which representative we are at
 
-		if not d[1] then #new rep!
-			if IsTransformationMonoid(s) or not i = 1 then 
-				d:=AddToOrbitsOfImages(s, x, d[2], O);
-				d[3]:=RClassSCCFromData(s, d, O)[1];
-				iter!.i:=iter!.i+1;
-				iter!.next_value:=d;
-				return false;
-			fi;
-		fi;
-	od;
-	
-	O!.finished:=true;
-	return true;
-	end,
+  s:= s,
 
-	######################################################################
+  next_value := fail,
 
-	NextIterator:=function(iter) 
-	
-	if not iter!.last_called_by_is_done then 
-		IsDoneIterator(iter);
-	fi;
+  last_called_by_is_done:=false,
 
-	iter!.last_called_by_is_done:=false;
-	return iter!.next_value;
-	end
-	
-	######################################################################
-));
+  ######################################################################
 
-SetIsIteratorOfRClassRepsData(iter, true);
+  IsDoneIterator:=function(iter)
+  local o, ht, gens, i, x, d, y, z, one, O, orbits, images;
+   
+  if iter!.last_called_by_is_done then 
+    return iter!.next_value=fail;
+  fi;
 
-return iter;
-end);
+  iter!.last_called_by_is_done:=true;
+
+  O:=OrbitsOfImages(s);
+
+  iter!.next_value:=fail;
+
+  if iter!.i < Length(O!.data) then 
+  # we already know this rep
+    iter!.i:=iter!.i+1;
+    iter!.next_value:=O!.data[iter!.i];
+    return false;
+  elif O!.finished then  
+    return true;
+  fi;
+
+  ht:=O!.ht;
+  o:=ht!.o;
+  i:=O!.at;
+
+  if i=Length(o) then
+  #at the end of the orbit!
+    O!.finished:=true;
+    return true;
+  fi;
+
+  gens:=O!.gens;
+  orbits:=O!.orbits;
+  images:=O!.images;
+
+  while i<Length(o) do 
+          O!.at:=O!.at+1;
+          i :=i+1;
+          x:=o[i];
+          d:=InOrbitsOfImages(s, x, [fail, fail, fail, fail, fail, 0, fail], 
+           orbits, images);
+
+          if not d[1] then #new rep!
+                  if IsTransformationMonoid(s) or not i = 1 then 
+                          d:=AddToOrbitsOfImages(s, x, d[2], O);
+                          d[3]:=RClassSCCFromData(s, d, O)[1];
+                          iter!.i:=iter!.i+1;
+                          iter!.next_value:=d;
+                          return false;
+                  fi;
+          fi;
+  od;
+
+  O!.finished:=true;
+  return true;
+  end,
+
+  ######################################################################
+
+  NextIterator:=function(iter) 
+
+  if not iter!.last_called_by_is_done then 
+          IsDoneIterator(iter);
+  fi;
+
+  iter!.last_called_by_is_done:=false;
+  return iter!.next_value;
+  end
+
+  ######################################################################
+  ));
+
+  SetIsIteratorOfRClassRepsData(iter, true);
+
+  return iter;
+  end);
 
 #############################################################################
 #
-
-#InstallMethod(IteratorOfRClassReps, "for a transformation semigroup", 
-#[IsTransformationSemigroup], 
 
 InstallGlobalFunction(IteratorOfRClassReps,
 function(s)
@@ -1414,7 +1409,9 @@ end);
 
 # new for 4.0!
 #############################################################################
-# <j> is the index of the scc we are computing the multipliers for!
+# not a user function!
+
+# j is the index of the scc we are computing the multipliers for!
 
 InstallGlobalFunction(MultipliersOfSCCOfImageOrbit,
 function(gens, o, j)
@@ -1542,6 +1539,7 @@ end);
 
 # new for 4.0!
 #############################################################################
+# not a user function!
 
 InstallMethod(OrbitsOfImages, "for a transformation semigroup",
 [IsTransformationSemigroup], 

@@ -600,4 +600,253 @@ gap> j:=0; for i in iter do j:=j+1; od;
 0
 gap> j;
 52300
+:=[ 
+>   Transformation( [ 5, 23, 27, 8, 21, 49, 36, 33, 4, 44, 3, 49, 48, 18, 10, 
+>       30, 47, 3, 41, 35, 33, 15, 39, 19, 37, 24, 26, 2, 16, 47, 9, 7, 28, 47, 
+>       25, 21, 50, 23, 18, 42, 26, 40, 40, 4, 43, 27, 45, 35, 40, 14 ] ), 
+>   Transformation( [ 42, 50, 5, 37, 17, 35, 39, 35, 21, 9, 32, 15, 21, 17, 38, 
+>       28, 40, 32, 45, 45, 32, 49, 25, 18, 50, 45, 36, 2, 35, 10, 1, 13, 6, 
+>       20, 5, 4, 45, 45, 24, 45, 43, 4, 28, 21, 5, 31, 13, 49, 28, 20 ] ) ];;
+gap> s:=Semigroup(gens);
+<semigroup with 2 generators>
+gap> $2, 25,                                                                      
+> $, 6,                                                                           
+> 25, 39, 17, 17, 17, 28, 17, 6, 6, 6, 17, 39 ] );;
+gap> r:=RClass(s, f);
+{Transformation( [ 39, 6, 6, 17, 25, 17, 39, 28, 28, 5, 6, 17, 4, 25, 32, 
+  25, 32, 6, 4, 6, 28, 28, 32, 17, 17, 5, 17, 39, 17, 32, 5, 25, 6, 32, 39, 
+  25, 28, 6, 25, 39, 17, 17, 17, 28, 17, 6, 6, 6, 17, 39 ] )}
+gap> Size(r);
+30683520
+gap> iter:=Iterator(r);
+<iterator of R-class>
+gap> for i in [1..100000] do NextIterator(iter); od;
+#gap> time;
+#286
+gap> gens:=[  Transformation( [ 3, 12, 14, 4, 11, 18, 17, 2, 2, 9, 5, 15, 2, 18, 
+> 17, 8, 20, 10, 19, 12 ] ),
+> Transformation( [ 13, 1, 8, 5, 4, 14, 13, 11, 12, 9, 13, 20, 20, 2, 14, 18,
+> 20, 7, 3, 19 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> f:=Transformation( [ 12, 14, 3, 11, 4, 18, 12, 14, 12, 14, 12, 18, 18, 3,
+> 18, 3, 18, 14, 18, 2 ] );;
+gap> r:=RClass(s, f);
+{Transformation( [ 12, 14, 3, 11, 4, 18, 12, 14, 12, 14, 12, 18, 18, 3, 18, 
+  3, 18, 14, 18, 2 ] )}
+gap> NrGreensHClasses(r);
+177
+gap> GreensHClasses(r);;
+gap> 
+#gap> time;
+#3
+gap> gens:=[  Transformation( [ 3, 12, 14, 4, 11, 18, 17, 2, 2, 9, 5, 15, 2, 18, 
+> 17, 8, 20, 10, 19, 12 ] ),
+> Transformation( [ 13, 1, 8, 5, 4, 14, 13, 11, 12, 9, 13, 20, 20, 2, 14, 18,
+> 20, 7, 3, 19 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> f:=Transformation( [ 12, 14, 3, 11, 4, 18, 12, 14, 12, 14, 12, 18, 18, 3,
+> 18, 3, 18, 14, 18, 2 ] );;
+gap> r:=RClass(s, f);
+{Transformation( [ 12, 14, 3, 11, 4, 18, 12, 14, 12, 14, 12, 18, 18, 3, 18, 
+  3, 18, 14, 18, 2 ] )}
+gap> NrGreensHClasses(r);
+177
+gap> GreensHClasses(r);;
+gap> Length(GreensHClassReps(r))=NrGreensHClasses(r);
+true
+gap> ForAll([1..177], i-> GreensHClassReps(r)[i] in GreensHClasses(r)[i]);
+true
+gap> gens:=[ Transformation( [ 2, 6, 1, 7, 5, 3, 4 ] ),
+>   Transformation( [ 5, 3, 7, 2, 1, 6, 4 ] ),
+>   Transformation( [ 2, 5, 5, 3, 4, 2, 3 ] ),
+>   Transformation( [ 1, 5, 1, 6, 1, 5, 6 ] ),
+>   Transformation( [ 6, 2, 2, 2, 5, 1, 2 ] ),
+>   Transformation( [ 7, 5, 4, 4, 4, 5, 5 ] ),
+>   Transformation( [ 5, 1, 6, 1, 1, 5, 1 ] ),
+>   Transformation( [ 3, 5, 2, 3, 2, 2, 3 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> ExpandOrbitsOfImages(s);;
+gap> f:=Transformation( [ 7, 3, 7, 7, 7, 7, 3 ] );;
+gap> r:=RClass(s, f);
+{Transformation( [ 2, 4, 2, 2, 2, 2, 4 ] )}
+gap> NrGreensHClasses(r);
+21
+gap> GreensHClassRepsData(r);
+[ [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 1, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 2, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 3, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 4, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 5, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 6, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 7, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 8, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 9, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 10, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 11, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 12, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 13, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 14, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 15, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 16, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 17, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 18, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 19, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 20, 1 ] ], 
+  [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], [ 21, 1 ] ] ]
+gap> gens:=[ Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] ),
+>   Transformation( [ 3, 6, 9, 7, 1, 4, 5, 8, 2 ] ),
+>   Transformation( [ 8, 2, 5, 5, 4, 5, 5, 2, 8 ] ),
+>   Transformation( [ 1, 1, 9, 1, 1, 6, 1, 1, 3 ] ),
+>   Transformation( [ 9, 2, 2, 8, 5, 8, 8, 8, 5 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> iter:=IteratorOfGreensRClasses(s);
+<iterator of R-classes>
+gap> NextIterator(iter);
+{Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] )}
+gap> NextIterator(iter);
+{Transformation( [ 8, 2, 5, 5, 4, 5, 5, 2, 8 ] )}
+gap> NextIterator(iter);
+{Transformation( [ 4, 4, 8, 4, 4, 2, 4, 4, 5 ] )}
+gap> NextIterator(iter);
+{Transformation( [ 4, 5, 5, 2, 8, 2, 2, 2, 8 ] )}
+gap> NextIterator(iter);
+{Transformation( [ 5, 5, 8, 8, 5, 5, 2, 4, 2 ] )}
+gap> NextIterator(iter);
+{Transformation( [ 5, 5, 8, 5, 8, 5, 4, 2, 2 ] )}
+gap> NextIterator(iter);
+{Transformation( [ 2, 2, 4, 4, 5, 4, 4, 2, 2 ] )}
+gap> iter:=IteratorOfGreensRClasses(s);
+<iterator of R-classes>
+gap> NextIterator(iter);
+{Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] )}
+gap> last!.rep in s;
+true
+gap> Size(s);
+82953
+gap> NextIterator(iter);
+{Transformation( [ 8, 2, 5, 5, 4, 5, 5, 2, 8 ] )}
+gap> NextIterator(iter);
+{Transformation( [ 4, 4, 8, 4, 4, 2, 4, 4, 5 ] )}
+gap> NextIterator(iter);
+{Transformation( [ 4, 5, 5, 2, 8, 2, 2, 2, 8 ] )}
+gap> NextIterator(iter);
+{Transformation( [ 5, 5, 8, 8, 5, 5, 2, 4, 2 ] )}
+gap> GreensRClasses(s);;
+gap> iter:=IteratorOfGreensRClasses(s);
+<iterator of R-classes>
+gap> for i in [1..10] do NextIterator(iter); od;
+gap> iter2:=IteratorOfGreensRClasses(s);
+<iterator of R-classes>
+gap> NextIterator(iter);
+{Transformation( [ 8, 2, 5, 4, 4, 4, 4, 4, 4 ] )}
+gap> NextIterator(iter2);
+{Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] )}
+gap> NextIterator(iter); 
+{Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )}
+gap> iter1:=IteratorOfGreensRClasses(s);      
+<iterator of R-classes>
+gap> iter3:=IteratorOfGreensRClasses(s);
+<iterator of R-classes>
+gap> iter2:=IteratorOfGreensRClasses(s);                
+<iterator of R-classes>
+gap> for i in [1..100] do 
+> r1:=NextIterator(iter1); r2:=NextIterator(iter2); r3:=NextIterator(iter3);
+> if not (r1=r2 and r2=r3) then 
+> Error("Problem in IteratorOfGreensRClasses 1");
+> fi;
+> od;
+gap> for i in iter1 do od;
+gap> IsDoneIterator(iter1);
+true
+gap> IsDoneIterator(iter2);
+false
+gap> IsDoneIterator(iter3);
+false
+gap> ExpandOrbitsOfKernels(s);
+true
+gap> for i in [1..100] do
+> r2:=NextIterator(iter2); r3:=NextIterator(iter3);
+> if not r2=r3 then
+> Error("Problem in IteratorOfGreensRClasses 2");
+> fi;
+> od;
+gap> iter2;
+<iterator of R-classes>
+gap> IsIteratorOfGreensRClasses(iter2);
+true
+gap> UnderlyingSemigroupOfIterator(iter2)=s;
+true
+gap> ShallowCopy(iter2);
+<iterator>
+gap> iter:=last;                                
+<iterator>
+gap> NextIterator(iter);
+{Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] )}
+gap> NextIterator(iter);
+{Transformation( [ 8, 2, 5, 5, 4, 5, 5, 2, 8 ] )}
+gap> NextIterator(iter);
+{Transformation( [ 4, 4, 8, 4, 4, 2, 4, 4, 5 ] )}
+gap> NextIterator(iter);
+{Transformation( [ 4, 5, 5, 2, 8, 2, 2, 2, 8 ] )}
+gap> NextIterator(iter);
+{Transformation( [ 5, 5, 8, 8, 5, 5, 2, 4, 2 ] )}
+gap> iter3:=IteratorOfGreensRClasses(s);
+<iterator of R-classes>
+gap> out:=[];
+[  ]
+gap> for i in iter3 do Add(out, i); od;
+gap> Length(out);
+503
+gap> NrGreensRClasses(s);
+503
+gap> s:=Semigroup(gens);
+<semigroup with 5 generators>
+gap> iter1:=IteratorOfGreensRClasses(s);
+<iterator of R-classes>
+gap> for i in iter1 do  
+> od;
+gap> iter1:=IteratorOfGreensRClasses(s);
+<iterator of R-classes>
+gap> j:=0;
+0
+gap> for i in iter1 do
+> j:=j+1; if not i=out[j] then                                                 
+> Error("Problems with IteratorOfGreensRClasses 3");
+> fi;
+> od;
+gap> s:=Semigroup(gens);
+<semigroup with 5 generators>
+gap> GreensRClasses(s)=out;
+true
+gap> s:=Semigroup(gens);
+<semigroup with 5 generators>
+gap> f:=Random(s);
+Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8 ] )
+gap> r:=RClass(s, f);
+{Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )}
+gap> GreensRClasses(s)=out;
+true
+gap> s:=Semigroup(gens);
+<semigroup with 5 generators>
+gap> f:=Random(s);
+Transformation( [ 6, 6, 6, 4, 6, 4, 4, 4, 6 ] )
+gap> f in s;
+true
+gap> GreensRClasses(s)=out;
+true
+gap> iter:=IteratorOfGreensRClasses(s);
+<iterator of R-classes>
+gap> for i in [1..1000] do NextIterator(iter); od;
+gap> s:=Semigroup(gens);
+<semigroup with 5 generators>
+gap> iter:=IteratorOfGreensRClasses(s);
+<iterator of R-classes>
+gap> for i in [1..1000] do NextIterator(iter); od;
+gap> iter:=ShallowCopy(iter);
+<iterator>
+gap> out:=[];
+[  ]
+gap> for i in iter do Add(out, i); od;            
+gap> out=GreensRClasses(s);
+true
 gap> STOP_TEST( "r.tst 4.0", 10000);
