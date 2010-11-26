@@ -1,3 +1,35 @@
+<Chapter Label="Advanced"> <Heading>Advanced Features</Heading>
+  
+  <Section Label="GreensAdvancedR">
+    <Heading>Green's R-relation - advanced</Heading>
+  
+    The functions described in this section are used by <Package>monoid
+    </Package> in computation related to Green's R-relation. It is not 
+    envisioned that these functions be used when performing a single 
+    calculation but rather could be used to extend the 
+    <Package>monoid</Package> package. <P/> 
+
+    Please note that calling certain functions in this section in the incorrect
+    context could have unpredictable and unusual consequences. 
+
+    <#Include Label="AddToOrbitsOfImages">
+    <#Include Label="CreateRClass">
+    <#Include Label="CreateSchreierTreeOfSCC">
+    <#Include Label="CreateReverseSchreierTreeOfSCC">
+    <#Include Label="DisplayOrbitsOfImages">
+    <#Include Label="ExpandOrbitsOfImages">
+    <#Include Label="ForwardOrbitOfImage">
+    <#Include Label="InOrbitsOfImages">
+    <#Include Label="IsRegularRClassData"> 
+  </Section>
+
+  <Section Label="GreensAdvancedH">
+    <Heading>Green's H-relation - advanced</Heading>
+    
+    <#Include Label="GreensHClassRepsData">
+  </Section>
+
+</Chapter> 
 
 <#GAPDoc Label="AddToOrbitsOfImages">
 <ManSection><Func Name="AddToOrbitsOfImages" Arg="s, f, d, o"/>
@@ -490,7 +522,7 @@
   all of the R-classes.<P/>
 
   See also <Ref Oper="GreensRClasses" BookName="ref"/> and 
-  <Ref Oper="GreensRClasses"/>.<P/>
+  <Ref Oper="IteratorOfRClassReps"/>.<P/>
 
   The semigroup in the example below has 25147892 elements but it only takes 
   a fraction of a second to find a non-trivial R-class. <P/>
@@ -520,5 +552,130 @@
   </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="IteratorOfRClassReps">
+  <ManSection><Func Name="IteratorOfRClassReps" Arg="s"/>
+  <Description>
+  returns an iterator of the representatives of R-classes of the transformation
+  semigroup <A>s</A>. See <Ref Sect="Iterators" BookName="ref"/> for more
+  information on iterators.<P/>
+
+  See also <Ref Oper="GreensRClasses" BookName="ref"/>, <Ref Oper="GreensRClasses"/>, 
+  and <Ref Oper="IteratorOfGreensRClasses"/>.<P/>
+  
+  In the display of an <C>IteratorOfRClassReps</C> the total number of elements
+  in the orbit of the semigroup acting on itself on the left is given (every
+  R-class representative occurs in this orbit), the
+  number of elements of the semigroup that have so far been computed is given,
+  and the number of R-classes that have been found is given. Note that these
+  numbers depend on the state of the semigroup <A>s</A> and not of the iterator.
+  <P/>
+  
+  <Example>
+    gap> gens:=[ Transformation( [ 3, 2, 1, 5, 4 ] ), 
+    > Transformation( [ 5, 4, 3, 2, 1 ] ), 
+    > Transformation( [ 5, 4, 3, 2, 1 ] ), Transformation( [ 5, 5, 4, 5, 1 ] ), 
+    > Transformation( [ 4, 5, 4, 3, 3 ] ) ];;
+    gap> s:=Semigroup(gens);;
+    gap> iter:=IteratorOfRClassReps(s);
+    &lt;iterator of R-class reps, 6 candidates, 0 elements, 0 R-classes>
+    gap> NextIterator(iter);
+    Transformation( [ 1, 2, 3, 4, 5 ] )
+    gap> NextIterator(iter);
+    Transformation( [ 5, 5, 4, 5, 1 ] )
+    gap> iter;
+    &lt;iterator of R-class reps, 10 candidates, 20 elements, 2 R-classes>
+  </Example>
+  </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NrGreensHClasses">
+  <ManSection><Func Name="NrGreensHClasses" Arg="x"/>
+  <Description>
+  returns the number of H-classes in the transformation semigroup, R-class,
+  L-class, or D-class <A>x</A>. If the actual H-classes are not required, then it is  
+  more efficient to use <C>NrGreensHClasses</C> than <C>Length(GreensHClasses)</C> 
+  since the classes themselves are not created when <C>NrGreensHClasses</C> is
+  called. 
+  
+  <Example>
+    gap> gens:=[ Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
+    >   Transformation( [ 1, 6, 3, 4, 7, 2, 5, 8 ] ),
+    >   Transformation( [ 2, 1, 6, 7, 8, 3, 4, 5 ] ),
+    >   Transformation( [ 3, 2, 3, 6, 1, 6, 1, 2 ] ),
+    >   Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] ) ];;
+    gap> s:=Semigroup(gens);;
+    gap> f:=Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] );;
+    gap> r:=RClass(s, f);
+    {Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
+    gap> NrGreensHClasses(r);
+    12
+    gap> d:=DClass(r);
+    {Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
+    gap> NrGreensHClasses(d);
+    72
+    gap> l:=LClass(s, f);
+    {Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
+    gap> NrGreensHClasses(l);
+    6 
+    gap> NrGreensHClasses(s);
+    1555
+  </Example>
+  </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NrGreensRClasses">
+  <ManSection><Func Name="NrGreensRClasses" Arg="x"/>
+  <Description>
+  returns the number of R-classes in the transformation semigroup  or D-class 
+  <A>x</A>. If the actual R-classes are not required, then it is  
+  more efficient to use <C>NrGreensRClasses</C> than <C>Length(GreensRClasses)</C> 
+  since the classes themselves are not created when <C>NrGreensRClasses</C> is
+  called. 
+  
+  <Example>
+    gap> gens:=[ Transformation( [ 4, 6, 5, 2, 1, 3 ] ),
+    >   Transformation( [ 6, 3, 2, 5, 4, 1 ] ),
+    >   Transformation( [ 1, 2, 4, 3, 5, 6 ] ),
+    >   Transformation( [ 3, 5, 6, 1, 2, 3 ] ),
+    >   Transformation( [ 5, 3, 6, 6, 6, 2 ] ),
+    >   Transformation( [ 2, 3, 2, 6, 4, 6 ] ),
+    >   Transformation( [ 2, 1, 2, 2, 2, 4 ] ),
+    >   Transformation( [ 4, 4, 1, 2, 1, 2 ] ) ];;
+    gap> s:=Semigroup(gens);;
+    gap> NrGreensRClasses(s);
+    150
+    gap> Size(s);
+    6342
+    gap> f:=Transformation( [ 1, 3, 3, 1, 3, 5 ] );;
+    gap> d:=DClass(s, f);
+    {Transformation( [ 4, 1, 1, 4, 1, 2 ] )}
+    gap> NrGreensRClasses(d);
+    87
+  </Example>
+  </Description>
+  </ManSection>
+<#/GAPDoc>
+
+
+<#GAPDoc Label="NrIdempotents">
+  <ManSection><Func Name="NrIdempotents" Arg="x"/>
+  <Description>
+  returns the number of idempotents in the transformation semigroup, R-class,
+  L-class or D-class <A>x</A>. If the actual idempotents are not required, then it
+  is more efficient to use <C>NrIdempotents(x)</C> than <C>Length(Idempotents(x))</C>
+  since the idempotents themselves are not created when <C>NrIdempotents</C>
+  is called.
+
+  <Example>
+  </Example>
+  </Description>
+  </ManSection>
+<#/GAPDoc>
+
+
+
 
 

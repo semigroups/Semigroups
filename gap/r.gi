@@ -1273,11 +1273,12 @@ end);
 
 # new for 4.0!
 #############################################################################
-# not a user function! herehere jdmjdm
+# not a user function!
 
 InstallGlobalFunction(IteratorOfRClassRepsData, 
   function(s)
   local iter;
+  
   Info(InfoMonoidGreens, 4, "IteratorOfRClassRepsData");
 
   iter:=IteratorByFunctions( rec(
@@ -1297,114 +1298,115 @@ InstallGlobalFunction(IteratorOfRClassRepsData,
   ######################################################################
 
   IsDoneIterator:=function(iter)
-  local o, ht, gens, i, x, d, y, z, one, O, orbits, images;
+    local O, ht, o, i, gens, orbits, images, x, d;
    
-  if iter!.last_called_by_is_done then 
-    return iter!.next_value=fail;
-  fi;
+    if iter!.last_called_by_is_done then 
+      return iter!.next_value=fail;
+    fi;
 
-  iter!.last_called_by_is_done:=true;
+    iter!.last_called_by_is_done:=true;
 
-  O:=OrbitsOfImages(s);
+    O:=OrbitsOfImages(s);
 
-  iter!.next_value:=fail;
+    iter!.next_value:=fail;
 
-  if iter!.i < Length(O!.data) then 
-  # we already know this rep
-    iter!.i:=iter!.i+1;
-    iter!.next_value:=O!.data[iter!.i];
-    return false;
-  elif O!.finished then  
-    return true;
-  fi;
+    if iter!.i < Length(O!.data) then 
+    # we already know this rep
+      iter!.i:=iter!.i+1;
+      iter!.next_value:=O!.data[iter!.i];
+      return false;
+    elif O!.finished then  
+      return true;
+    fi;
 
-  ht:=O!.ht;
-  o:=ht!.o;
-  i:=O!.at;
+    ht:=O!.ht;
+    o:=ht!.o;
+    i:=O!.at;
 
-  if i=Length(o) then
-  #at the end of the orbit!
+    if i=Length(o) then
+    #at the end of the orbit!
+      O!.finished:=true;
+      return true;
+    fi;
+
+    gens:=O!.gens;
+    orbits:=O!.orbits;
+    images:=O!.images;
+
+    while i<Length(o) do 
+      O!.at:=O!.at+1;
+      i :=i+1;
+      x:=o[i];
+      d:=InOrbitsOfImages(s, x, [fail, fail, fail, fail, fail, 0, fail], 
+       orbits, images);
+
+      if not d[1] then #new rep!
+        if IsTransformationMonoid(s) or not i = 1 then 
+          d:=AddToOrbitsOfImages(s, x, d[2], O);
+          d[3]:=RClassSCCFromData(s, d, O)[1];
+          iter!.i:=iter!.i+1;
+          iter!.next_value:=d;
+          return false;
+        fi;
+      fi;
+    od;
+
     O!.finished:=true;
     return true;
-  fi;
-
-  gens:=O!.gens;
-  orbits:=O!.orbits;
-  images:=O!.images;
-
-  while i<Length(o) do 
-          O!.at:=O!.at+1;
-          i :=i+1;
-          x:=o[i];
-          d:=InOrbitsOfImages(s, x, [fail, fail, fail, fail, fail, 0, fail], 
-           orbits, images);
-
-          if not d[1] then #new rep!
-                  if IsTransformationMonoid(s) or not i = 1 then 
-                          d:=AddToOrbitsOfImages(s, x, d[2], O);
-                          d[3]:=RClassSCCFromData(s, d, O)[1];
-                          iter!.i:=iter!.i+1;
-                          iter!.next_value:=d;
-                          return false;
-                  fi;
-          fi;
-  od;
-
-  O!.finished:=true;
-  return true;
   end,
 
   ######################################################################
 
   NextIterator:=function(iter) 
 
-  if not iter!.last_called_by_is_done then 
-          IsDoneIterator(iter);
-  fi;
+    if not iter!.last_called_by_is_done then 
+      IsDoneIterator(iter);
+    fi;
 
-  iter!.last_called_by_is_done:=false;
-  return iter!.next_value;
-  end
+    iter!.last_called_by_is_done:=false;
+    return iter!.next_value;
+  end));
 
   ######################################################################
-  ));
 
   SetIsIteratorOfRClassRepsData(iter, true);
 
   return iter;
-  end);
 
+end);
+
+# new for 4.0!
 #############################################################################
-#
+# 
 
 InstallGlobalFunction(IteratorOfRClassReps,
 function(s)
-local iter;
+  local iter;
 
-Info(InfoMonoidGreens, 4, "IteratorOfRClassReps");
+  Info(InfoMonoidGreens, 4, "IteratorOfRClassReps");
 
-iter:=IteratorByFunctions( rec(
+  iter:=IteratorByFunctions( rec(
 
-	s:=s,
+          s:=s,
 	
-	data:=IteratorOfRClassRepsData(s),
-	
-	IsDoneIterator := iter-> IsDoneIterator(iter!.data),
-	
-	NextIterator := function(iter)
-	if not IsDoneIterator(iter!.data) then 
-		return RClassRepFromData(iter!.s, NextIterator(iter!.data));
-	fi;
-	return fail; end,
-	
-	ShallowCopy := iter -> rec( data:=IteratorOfRClassRepsData(
-	iter!.s))
-));
+          data:=IteratorOfRClassRepsData(s),
+              
+          IsDoneIterator := iter-> IsDoneIterator(iter!.data),
+          
+          NextIterator := function(iter)
+            if not IsDoneIterator(iter!.data) then 
+              return RClassRepFromData(iter!.s, NextIterator(iter!.data));
+            fi;
+            return fail; 
+          end,
+          
+          ShallowCopy := iter -> rec( data:=IteratorOfRClassRepsData(
+          iter!.s))));
 
-SetIsIteratorOfRClassReps(iter, true);
-SetUnderlyingSemigroupOfIterator(iter, s);
+  SetIsIteratorOfRClassReps(iter, true);
+  SetUnderlyingSemigroupOfIterator(iter, s);
 
-return iter;
+  return iter;
 end);
 
 # new for 4.0!
@@ -1415,23 +1417,22 @@ end);
 
 InstallGlobalFunction(MultipliersOfSCCOfImageOrbit,
 function(gens, o, j)
-local i, p, f, scc, schreier;
+  local p, scc, f, i;
 
-#p:=o!.perms;
-p:=EmptyPlist(Length(o));
-scc:=o!.scc[j];
+  p:=EmptyPlist(Length(o));
+  scc:=o!.scc[j];
 
-#for i in scc do
-#	f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
-#	p[i]:=PermList(MappingPermListList(o[i], OnTuples(o[i], f)));
-#od; JDM this works also!
+  #for i in scc do
+  #	f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
+  #	p[i]:=PermList(MappingPermListList(o[i], OnTuples(o[i], f)));
+  #od; JDM this works also!
 
-for i in scc do
-	f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i)); 
-	p[i]:=MappingPermListList(OnTuples(o[scc[1]], f), o[scc[1]]);
-od;
+  for i in scc do
+    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i)); 
+    p[i]:=MappingPermListList(OnTuples(o[scc[1]], f), o[scc[1]]);
+  od;
 
-return p;
+  return p;
 end);
 
 # new for 4.0!
@@ -1448,10 +1449,10 @@ InstallMethod(NrGreensRClasses, "for a transformation semigroup",
 [IsTransformationSemigroup], 
 function(s)
 
-Info(InfoMonoidGreens, 4, "NrGreensRClasses");
+  Info(InfoMonoidGreens, 4, "NrGreensRClasses");
 
-ExpandOrbitsOfImages(s);
-return NrRClassesOrbitsOfImages(s);
+  ExpandOrbitsOfImages(s);
+  return NrRClassesOrbitsOfImages(s);
 end);
 
 # new for 4.0!
@@ -1460,49 +1461,49 @@ end);
 InstallOtherMethod(NrIdempotents, "for an R-class of a trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
-local out, ker, rep, n, o, i, img, j, scc, foo;
+  local out, ker, rep, n, o, i, img, j, scc, foo;
 
-foo:=function(f, set) #is f injective on set?
-local i, lookup;
-lookup:=EmptyPlist(Length(f));
+  foo:=function(f, set) #is f injective on set?
+    local i, lookup;
+    lookup:=EmptyPlist(Length(f));
 
-for i in set do 
-	if not IsBound(lookup[f[i]]) then 
-		lookup[f[i]]:=0;
-	else
-		return false;
-	fi;
-od;
-return true;
-end;
+    for i in set do 
+      if not IsBound(lookup[f[i]]) then 
+        lookup[f[i]]:=0;
+      else
+        return false;
+      fi;
+    od;
+    return true;
+  end;
 
-if HasIdempotents(r) then 
-	return Length(Idempotents(r));
-fi;
+  if HasIdempotents(r) then 
+    return Length(Idempotents(r));
+  fi;
 
-if HasIsRegularRClass(r) and not IsRegularRClass(r) then 
-	return 0;
-fi;
+  if HasIsRegularRClass(r) and not IsRegularRClass(r) then 
+    return 0;
+  fi;
 
-if Rank(r!.rep)=Degree(r!.parent) then 
-	return 1;
-fi;
+  if Rank(r!.rep)=Degree(r!.parent) then 
+    return 1;
+  fi;
 
-out:= 0;
-rep:=r!.rep![1];
-scc:=RClassSCC(r); 
-o:=RClassImageOrbitFromData(r!.parent, r!.data, r!.o);
-#JDM if the above line is set to RClassImageOrbit,  
-# then this function runs about 7 or 8 times more slowly!
+  out:= 0;
+  rep:=r!.rep![1];
+  scc:=RClassSCC(r); 
+  o:=RClassImageOrbitFromData(r!.parent, r!.data, r!.o);
+  #JDM if the above line is set to RClassImageOrbit,  
+  # then this function runs about 7 or 8 times more slowly!
 
-for i in scc do 
-	i:=o[i];
-	if foo(rep, i) then 
-		out:=out+1;
-	fi;
-od;
+  for i in scc do 
+    i:=o[i];
+    if foo(rep, i) then 
+      out:=out+1;
+    fi;
+  od;
 
-return out;
+  return out;
 end);
 
 # new for 4.0!
@@ -1532,7 +1533,7 @@ od;
 m:=Sum(m);
 
 if OrbitsOfImages(s)!.finished then 
-	SetNrGreensRClasses(s, m);
+  SetNrGreensRClasses(s, m);
 fi;
 return m;
 end);
@@ -1569,11 +1570,11 @@ return Objectify(type, rec(
   at:=0, 
   gens:=gens,
   s:=s,
-	deg := n,
-	one := one,
-	ht:=ht,
-	data_ht:=HTCreate([1,1,1,1,1,1]),
-	data:=[]
+  deg := n,
+  one := one,
+  ht:=ht,
+  data_ht:=HTCreate([1,1,1,1,1,1]),
+  data:=[]
 ));
 end);
 

@@ -592,15 +592,15 @@ gap> Iterator(s);
 gap> iter:=last;
 <iterator of transformation semigroup>
 gap> for i in [1..10000] do NextIterator(iter); od;
-gap> time;
-76
+#gap> time;
+#76
 gap> iter:=Iterator(s);
 <iterator of transformation semigroup>
 gap> j:=0; for i in iter do j:=j+1; od;
 0
 gap> j;
 52300
-:=[ 
+gap> gens:=[ 
 >   Transformation( [ 5, 23, 27, 8, 21, 49, 36, 33, 4, 44, 3, 49, 48, 18, 10, 
 >       30, 47, 3, 41, 35, 33, 15, 39, 19, 37, 24, 26, 2, 16, 47, 9, 7, 28, 47, 
 >       25, 21, 50, 23, 18, 42, 26, 40, 40, 4, 43, 27, 45, 35, 40, 14 ] ), 
@@ -609,13 +609,13 @@ gap> j;
 >       20, 5, 4, 45, 45, 24, 45, 43, 4, 28, 21, 5, 31, 13, 49, 28, 20 ] ) ];;
 gap> s:=Semigroup(gens);
 <semigroup with 2 generators>
-gap> $2, 25,                                                                      
-> $, 6,                                                                           
-> 25, 39, 17, 17, 17, 28, 17, 6, 6, 6, 17, 39 ] );;
+gap> f:=Transformation( [ 39, 6, 6, 17, 25, 17, 39, 28, 28, 5, 6, 17, 4, 25, 32,
+> 25, 32, 6, 4, 6, 28, 28, 32, 17, 17, 5, 17, 39, 17, 32, 5, 25, 6, 32, 39,
+> 25, 28, 6, 25, 39, 17, 17, 17, 28, 17, 6, 6, 6, 17, 39 ] );;
 gap> r:=RClass(s, f);
-{Transformation( [ 39, 6, 6, 17, 25, 17, 39, 28, 28, 5, 6, 17, 4, 25, 32, 
-  25, 32, 6, 4, 6, 28, 28, 32, 17, 17, 5, 17, 39, 17, 32, 5, 25, 6, 32, 39, 
-  25, 28, 6, 25, 39, 17, 17, 17, 28, 17, 6, 6, 6, 17, 39 ] )}
+{Transformation( [ 39, 6, 6, 17, 25, 17, 39, 28, 28, 5, 6, 17, 4, 25, 32, 25,
+  32, 6, 4, 6, 28, 28, 32, 17, 17, 5, 17, 39, 17, 32, 5, 25, 6, 32, 39, 25, 
+  28, 6, 25, 39, 17, 17, 17, 28, 17, 6, 6, 6, 17, 39 ] )}
 gap> Size(r);
 30683520
 gap> iter:=Iterator(r);
@@ -639,19 +639,6 @@ gap> GreensHClasses(r);;
 gap> 
 #gap> time;
 #3
-gap> gens:=[  Transformation( [ 3, 12, 14, 4, 11, 18, 17, 2, 2, 9, 5, 15, 2, 18, 
-> 17, 8, 20, 10, 19, 12 ] ),
-> Transformation( [ 13, 1, 8, 5, 4, 14, 13, 11, 12, 9, 13, 20, 20, 2, 14, 18,
-> 20, 7, 3, 19 ] ) ];;
-gap> s:=Semigroup(gens);;
-gap> f:=Transformation( [ 12, 14, 3, 11, 4, 18, 12, 14, 12, 14, 12, 18, 18, 3,
-> 18, 3, 18, 14, 18, 2 ] );;
-gap> r:=RClass(s, f);
-{Transformation( [ 12, 14, 3, 11, 4, 18, 12, 14, 12, 14, 12, 18, 18, 3, 18, 
-  3, 18, 14, 18, 2 ] )}
-gap> NrGreensHClasses(r);
-177
-gap> GreensHClasses(r);;
 gap> Length(GreensHClassReps(r))=NrGreensHClasses(r);
 true
 gap> ForAll([1..177], i-> GreensHClassReps(r)[i] in GreensHClasses(r)[i]);
@@ -820,16 +807,14 @@ gap> GreensRClasses(s)=out;
 true
 gap> s:=Semigroup(gens);
 <semigroup with 5 generators>
-gap> f:=Random(s);
-Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8 ] )
+gap> f:=Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8 ] );;
 gap> r:=RClass(s, f);
 {Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )}
 gap> GreensRClasses(s)=out;
 true
 gap> s:=Semigroup(gens);
 <semigroup with 5 generators>
-gap> f:=Random(s);
-Transformation( [ 6, 6, 6, 4, 6, 4, 4, 4, 6 ] )
+gap> f:=Transformation( [ 6, 6, 6, 4, 6, 4, 4, 4, 6 ] );;
 gap> f in s;
 true
 gap> GreensRClasses(s)=out;
@@ -849,4 +834,46 @@ gap> out:=[];
 gap> for i in iter do Add(out, i); od;            
 gap> out=GreensRClasses(s);
 true
+gap> gens:=[ Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
+>   Transformation( [ 1, 6, 3, 4, 7, 2, 5, 8 ] ),
+>   Transformation( [ 2, 1, 6, 7, 8, 3, 4, 5 ] ),
+>   Transformation( [ 3, 2, 3, 6, 1, 6, 1, 2 ] ),
+>   Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] ) ];;
+gap> s:=Semigroup(gens);
+<semigroup with 5 generators>
+gap> f:=Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] );;
+gap> r:=RClass(s, f);
+{Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
+gap> NrGreensHClasses(r);
+12
+gap> d:=DClass(r);
+{Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
+gap> NrGreensHClasses(d);
+72
+gap> l:=LClass(s, f);
+{Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
+gap> NrGreensHClasses(l);
+6
+gap> NrGreensHClasses(s);
+1555
+gap> gens:=[ Transformation( [ 4, 6, 5, 2, 1, 3 ] ),
+>   Transformation( [ 6, 3, 2, 5, 4, 1 ] ),
+>   Transformation( [ 1, 2, 4, 3, 5, 6 ] ),
+>   Transformation( [ 3, 5, 6, 1, 2, 3 ] ),
+>   Transformation( [ 5, 3, 6, 6, 6, 2 ] ),
+>   Transformation( [ 2, 3, 2, 6, 4, 6 ] ),
+>   Transformation( [ 2, 1, 2, 2, 2, 4 ] ),
+>   Transformation( [ 4, 4, 1, 2, 1, 2 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> NrGreensRClasses(s);
+150
+gap> Size(s);
+6342
+gap> f:=Transformation( [ 1, 3, 3, 1, 3, 5 ] );;
+gap> d:=DClass(s, f);
+{Transformation( [ 4, 1, 1, 4, 1, 2 ] )}
+gap> NrGreensRClasses(d);
+87
+
+
 gap> STOP_TEST( "r.tst 4.0", 10000);

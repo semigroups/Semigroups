@@ -491,8 +491,7 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
 
   <Section><Heading>Green's R-relation</Heading>
     The functions described in this section extend the &GAP; library functions
-    for Greens R-relation and related objects. More advanced features are
-    described in Section <Ref Sect="GreensAdvancedR"/>.
+    for Greens R-relation and related objects. 
     
     <#Include Label="GreensRClasses">
     <#Include Label="GreensRClassOfElementNC">
@@ -501,7 +500,8 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     <#Include Label="IsRegularRClass">
     <#Include Label="IsGreensClassOfTransSemigp">
     <#Include Label="IteratorOfGreensRClasses"> 
-    
+    <#Include Label="IteratorOfRClassReps"> 
+    <#Include Label="NrIdempotents"> 
     <#Include Label="PartialOrderOfDClasses">
     <#Include Label="SchutzenbergerGroup">
   
@@ -510,50 +510,16 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
   <Section><Heading>Green's H-relation</Heading>
       
     The functions described in this section extend the &GAP; library functions
-    for Greens H-relation and related objects. More advanced features are
-    described in Section <Ref Sect="GreensAdvancedH"/>.
+    for Greens H-relation and related objects. 
     
     <#Include Label="GreensHClasses">
     <#Include Label="GreensHClassReps">
+    <#Include Label="NrGreensHClasses">
 
   </Section>
 
 
 </Chapter>
-
-<Chapter Label="Advanced"> <Heading>Advanced Features</Heading>
-  
-  <Section Label="GreensAdvancedR">
-    <Heading>Green's R-relation - advanced</Heading>
-  
-    The functions described in this section are used by <Package>monoid
-    </Package> in computation related to Green's R-relation. It is not 
-    envisioned that these functions be used when performing a single 
-    calculation but rather could be used to extend the 
-    <Package>monoid</Package> package. <P/> 
-
-    Please note that calling certain functions in this section in the incorrect
-    context could have unpredictable and unusual consequences. 
-
-    <#Include Label="AddToOrbitsOfImages">
-    <#Include Label="CreateRClass">
-    <#Include Label="CreateSchreierTreeOfSCC">
-    <#Include Label="CreateReverseSchreierTreeOfSCC">
-    <#Include Label="DisplayOrbitsOfImages">
-    <#Include Label="ExpandOrbitsOfImages">
-    <#Include Label="ForwardOrbitOfImage">
-    <#Include Label="InOrbitsOfImages">
-    <#Include Label="IsRegularRClassData"> 
-  </Section>
-
-  <Section Label="GreensAdvancedH">
-    <Heading>Green's H-relation - advanced</Heading>
-    
-    <#Include Label="GreensHClassRepsData">
-  </Section>
-
-</Chapter>
-
 
 <Chapter Label="properties"> <Heading>Properties of semigroups</Heading>
   <Section><Heading>Definitions</Heading>
