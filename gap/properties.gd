@@ -510,8 +510,7 @@ fi;
 ##	<Prop Name="IsZeroSemigroup" Arg="S"/>
 ##	<Description> 
 ##	returns <C>true</C> if the transformation semigroup <C>S</C> is 
-##	a zero semigroup or if <C>S</C> was created using the 
-##	<Ref Oper="ZeroSemigroup"/> command. Otherwise <C>false</C> is returned.<P/>
+##	a zero semigroup. Otherwise <C>false</C> is returned.<P/>
 ##
 ##	A semigroup <C>S</C> is a <E>zero semigroup</E> if there exists an element 
 ##	<C>0</C> in <C>S</C> such that <C>xy=0</C> for all <C>x,y</C> in <C>S</C>.
@@ -539,19 +538,11 @@ DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
 ##	<Prop Name="IsZeroGroup" Arg="S"/>
 ##	<Description> 
 ##	returns <C>true</C> if the transformation semigroup <C>S</C> is 
-##	a zero group or if <C>S</C> was created using the <Ref Oper="ZeroGroup"/> 
-##	command. Otherwise <C>false</C> is returned.<P/>
+##	a zero group and <C>false</C> otherwise.<P/>
 ##
 ##	A semigroup <C>S</C> <C>S</C> is a <E>zero group</E> if there exists an 
 ##	element <C>0</C> in <C>S</C> such that <C>S</C> without <C>0</C> is a group 
 ##	and for all <C>x</C> in <C>S</C> we have that <C>x0=0x=0</C>.
-##	<Example>
-##  gap&gt; S:=ZeroGroup(DihedralGroup(10));;
-##  gap&gt; iso:=IsomorphismTransformationSemigroup(S);;
-##  gap&gt; T:=Range(iso);;
-##  gap&gt; IsZeroGroup(T);
-##  true
-##	</Example> <!-- properties.tst -->
 ##	</Description>
 ##	</ManSection>
 ##	<#/GAPDoc>

@@ -11,7 +11,7 @@
 ##
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "r.tst"));
-# takes approx. 7s
+# takes approx. 14s
 
 gap> START_TEST("r.tst 4.0");
 #gap> SetGasmanMessageStatus("none");
@@ -874,6 +874,23 @@ gap> d:=DClass(s, f);
 {Transformation( [ 4, 1, 1, 4, 1, 2 ] )}
 gap> NrGreensRClasses(d);
 87
-
-
+gap> s:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ), 
+> Transformation( [ 2, 3, 1, 5, 4, 1 ] ));;
+gap> f:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
+gap> GreensLClassOfElement(s, f);
+{Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
+gap> IsGreensClassOfTransSemigp(last);
+true
+gap> s:=Semigroup([Transformation( [ 4, 4, 3, 5, 3 ] ),
+> Transformation( [ 5, 1, 1, 4, 1 ] ),
+> Transformation( [ 5, 5, 4, 4, 5 ] ));;
+gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
+gap> SchutzenbergerGroup(DClass(s, f));
+Group([ (4,5) ])
+gap> SchutzenbergerGroup(RClass(s, f));
+Group([ (4,5) ])
+gap> SchutzenbergerGroup(LClass(s, f));
+Group([ (4,5) ])
+gap> SchutzenbergerGroup(HClass(s, f));
+Group([ (4,5) ])
 gap> STOP_TEST( "r.tst 4.0", 10000);

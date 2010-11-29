@@ -138,7 +138,7 @@ DeclareRepresentation("IsGreensDClassDataRep",
 ##		(generalized) right Schutzenberger group</E>).</Item>
 ##	</List>
 ##	The components <C>strongorb</C>, <C>perms</C>, and <C>schutz</C> are 
-##	obtained using the function <Ref Func="StrongOrbitOfImage"/>. Further 
+##	obtained using the function StrongOrbitOfImage. Further 
 ##	details can be found in Algorithm C, D, E, F, and U of 
 ##	<Cite  Key="pfeiffer2"/>.
 ##	<Example>

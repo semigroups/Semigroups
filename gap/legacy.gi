@@ -1,4 +1,13 @@
 
+
+###########################################################################
+# JDM do not recreate the family and type every time here?
+
+InstallGlobalFunction(RClassData, function(list)
+  return Objectify(NewType(NewFamily("Green's R-class data", IsGreensRClassData),
+  IsGreensRClassData and IsGreensRClassDataRep), list);
+end);
+
 #############################################################################
 
 InstallOtherMethod(SchutzenbergerGroup, "for GreensData",
@@ -27,9 +36,7 @@ data:=DClassData(rec( rep:=rep, R:=R, L:=L, H:=H, cosets:=cosets, schutz:=schutz
 return data;
 end);
 
-
 #############################################################################
-
 
 InstallMethod(GreensHClassData, "for an H-class of trans. semigp.", 
 [IsGreensHClass and IsGreensClassOfTransSemigp],
@@ -245,7 +252,6 @@ end);
 
 # new method in 4.0!
 #############################################################################
-#
 
 InstallMethod(GreensRClassData, "for a R-class of a trans. semigroup",
 [IsGreensRClass and IsGreensClassOfTransSemigp],

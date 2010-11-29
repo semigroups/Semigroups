@@ -1,3 +1,15 @@
+#############################################################################
+##
+#W  r.xml
+#Y  Copyright (C) 2006-2010                             James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+## $Id: r.tst 127 2010-11-22 20:09:29Z jamesm $
+##
+
 <Chapter Label="Advanced"> <Heading>Advanced Features</Heading>
   
   <Section Label="GreensAdvancedR">
@@ -10,7 +22,7 @@
     <Package>monoid</Package> package. <P/> 
 
     Please note that calling certain functions in this section in the incorrect
-    context could have unpredictable and unusual consequences. 
+    contextrm could have unpredictable and unusual consequences. 
 
     <#Include Label="AddToOrbitsOfImages">
     <#Include Label="CreateRClass">
@@ -240,8 +252,7 @@
   <A>x</A> where <A>x</A> is a transformation semigroup, an R-class, an L-class,
   or a D-class. <P/>
 
-  See also <Ref Attr="GreensHClassReps"/> and 
-  <Ref Attr="GreensHClassRepsData"/>.
+  See also <Ref Attr="GreensHClassReps"/>.
   </Description>
   </ManSection>
 <#/GAPDoc>
@@ -315,17 +326,19 @@
 <#GAPDoc Label="GreensRClassOfElementNC">
   <ManSection><Oper Name="GreensRClassOfElementNC" Arg="s, f"/>
   <Description>
-  creates the R-class of the transformation <A>f</A> in the transformation
-  semigroup <A>s</A> without first checking that <A>f</A> is an element of 
-  <A>s</A>. More precisely, <C>GreensRClassOfElementNC</C> checks if <A>f</A>
-  is in <Ref Attr="OrbitsOfImages"/> of <A>s</A> and if it is or if it is not
-  and <C>OrbitsOfImages(s)</C> is not finished, then the R-class of <A>f</A> in 
-  <A>s</A> is returned. Calling this function does not modify 
-  <Ref Attr="OrbitsOfImages"/> of <A>s</A>. <P/>
+  creates the <Math>R</Math>-class of the transformation <A>f</A> in the transformation
+  semigroup <A>s</A> after checking if <A>f</A> has already been shown to be an
+  element of <A>s</A> or not. Note that if it is not known to &GAP; if 
+  <A>f</A> is an element of <A>s</A> or not, then no further attempt to verify if
+  <A>f</A> is in <A>s</A> is made. 
+   <!--Calling this function does not modify 
+  <Ref Attr="OrbitsOfImages"/> of <A>s</A>.--> <P/>
 
   It can be quicker to compute to compute the R-class of an element using 
   <C>GreensRClassOfElementNC</C> than using <C>GreensRClassOfElement</C> if it
-  is known <E>a priori</E> that <A>f</A> is an element of <A>s</A>. <P/> 
+  is known <E>a priori</E> that <A>f</A> is an element of <A>s</A>. On the other
+  hand, if <A>f</A> is not an element of <A>s</A>, then the results of this
+  computation are unpredictable.<P/> 
 
   For example, if 
   <Log>
@@ -454,6 +467,9 @@
   </ManSection>
 <#/GAPDoc>
 
+
+
+
 <#GAPDoc Label="IsRegularRClass">
   <ManSection><Func Name="IsRegularRClass" Arg="r"/>
   <Description>
@@ -462,24 +478,45 @@
   <C>false</C> otherwise.
 
   <Example>
-  gap> s:=Monoid(Transformation( [ 10, 8, 7, 4, 1, 4, 10, 10, 7, 2 ] ),
-  > Transformation( [ 5, 2, 5, 5, 9, 10, 8, 3, 8, 10 ] ));;
-  gap> f:=Transformation( [ 1, 1, 10, 8, 8, 8, 1, 1, 10, 8 ] );;
-  gap> r:=RClass(s, f);;
-  gap> IsRegularRClass(r);
-  true
-  gap> h:=HClass(s, f);;
-  gap> IsRegularRClass(h);
-  gap> f:=Transformation( [ 3, 8, 7, 4, 1, 4, 3, 3, 7, 2 ] );;
-  gap> gens:=;;
-  gap> s:=Monoid(Transformation([2,3,4,5,1,8,7,6,2,7]), 
-  > Transformation( [ 3, 8, 7, 4, 1, 4, 3, 3, 7, 2 ] ));;
-  gap> r:=RClass(s, f);;
-  gap> IsRegularRClass(r);
-  false
-  gap> NrIdempotents(r);
-  0
+    gap> s:=Monoid(Transformation( [ 10, 8, 7, 4, 1, 4, 10, 10, 7, 2 ] ),
+    > Transformation( [ 5, 2, 5, 5, 9, 10, 8, 3, 8, 10 ] ));;
+    gap> f:=Transformation( [ 1, 1, 10, 8, 8, 8, 1, 1, 10, 8 ] );;
+    gap> r:=RClass(s, f);;
+    gap> IsRegularRClass(r);
+    true
+    gap> h:=HClass(s, f);;
+    gap> IsRegularRClass(h);
+    gap> f:=Transformation( [ 3, 8, 7, 4, 1, 4, 3, 3, 7, 2 ] );;
+    gap> s:=Monoid(Transformation([2,3,4,5,1,8,7,6,2,7]), 
+    > Transformation( [ 3, 8, 7, 4, 1, 4, 3, 3, 7, 2 ] ));;
+    gap> r:=RClass(s, f);;
+    gap> IsRegularRClass(r);
+    false
+    gap> NrIdempotents(r);
+    0
   </Example>
+  </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsGreensClassOfTransSemigp">
+  <ManSection>
+  <Prop Name="IsGreensClassOfTransSemigp" Arg="x"/>
+  <Description>
+  returns <C>true</C> if <C>x</C> is a Green's class of a transformation 
+  semigroup and returns <C>false</C> otherwise.<P/>
+  
+  This attribute is required so that a Green's class knowns that it belongs to 
+  a transformation semigroup, so that the methods defined in the
+  <Package>MONOID</Package> are used in preference to those in the library.
+  <Example>
+    gap> s:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ), 
+    > Transformation( [ 2, 3, 1, 5, 4, 1 ] ));;
+    gap> GreensLClassOfElement(s, a);
+    {Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
+    gap> IsGreensClassOfTransSemigp(last);
+    true
+  </Example> <!-- greens.tst -->
   </Description>
   </ManSection>
 <#/GAPDoc>
@@ -659,7 +696,6 @@
   </ManSection>
 <#/GAPDoc>
 
-
 <#GAPDoc Label="NrIdempotents">
   <ManSection><Func Name="NrIdempotents" Arg="x"/>
   <Description>
@@ -675,7 +711,54 @@
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="SchutzenbergerGroup">
+  <ManSection>
+  <Attr Name="SchutzenbergerGroup" Arg="x"/>
+  <Description>
+  returns the (generalized) Schutzenberger group of the R-class, D-class, L-class or 
+  H-class <A>x</A> of a transformation semigroup.<P/>
+  
+  If <A>x</A> is an R-class of a transformation semigroup <C>s</C> with
+  representative <C>f</C>, then
+  <C>SchutzenbergerGroup(x)</C> is the permutation group 
+  <Display>
+    \{\:g|_{\textrm{im}(f)}\::\:\textrm{im}(f)^g=\textrm{im}(f)\:\}.
+  </Display><P/>
 
+  If <A>x</A> is an L-class of a transformation semigroup <C>s</C> with
+  representative <C>f</C>, then
+  <C>SchutzenbergerGroup(x)</C> is the permutation group
+  <Display>
+    \{\:g|_{\textrm{ker}(f)}\::\:\ker(f)^g=\ker(f)\:\}.
+  </Display><P/>
 
+  If <A>x</A> is an H-class of a transformation semigroup <C>s</C> with
+  representative <C>f</C>, then <C>SchutzenbergerGroup(x)</C> is the 
+  intersection of <C>SchutzenbergerGroup(RClass(s, f))</C> and
+  <C>SchutzenbergerGroup(LClass(s, f))</C>. <P/>
+  
+  If <A>x</A> is a D-class of a transformation semigroup <C>s</C> with
+  representative <C>f</C>, then <C>SchutzenbergerGroup(x)</C> is just 
+  <C>SchutzenbergerGroup(HClass(s, f))</C>. <P/>
+       
+  For more details see Chapter <Ref Chap="glossary"/>, <Cite Key="pfeiffer1"/> or
+  <Cite Key="pfeiffer2"/>.<P/> 
 
+  <Example>
+    gap> s:=Semigroup([Transformation( [ 4, 4, 3, 5, 3 ] ), 
+    > Transformation( [ 5, 1, 1, 4, 1 ] ), 
+    > Transformation( [ 5, 5, 4, 4, 5 ] ));;
+    gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
+    gap> SchutzenbergerGroup(DClass(s, f));
+    Group([ (4,5) ])
+    gap> SchutzenbergerGroup(RClass(s, f));
+    Group([ (4,5) ])
+    gap> SchutzenbergerGroup(LClass(s, f));
+    Group([ (4,5) ])
+    gap> SchutzenbergerGroup(HClass(s, f));
+    Group([ (4,5) ])
+  </Example> <!-- greens.tst -->
+  </Description>
+  </ManSection>
+<#/GAPDoc>
 
