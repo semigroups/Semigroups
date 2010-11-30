@@ -63,41 +63,10 @@ end);
 # new for 4.0!
 #############################################################################
 
-InstallMethod( \=, "for R-class and D-class of trans. semigp.",
-[IsGreensRClass and IsGreensClassOfTransSemigp, IsGreensDClass and 
-IsGreensClassOfTransSemigp],
-function(r, d)
-  return r!.parent=d!.parent and d!.rep in r and Size(r)=Size(d);
-end);
-
-# new for 4.0!
-#############################################################################
-
-InstallMethod( \=, "for D-class and R-class of trans. semigp.",
-[IsGreensDClass and IsGreensClassOfTransSemigp, IsGreensRClass and 
-IsGreensClassOfTransSemigp],
-function(d, r)
-  return r!.parent=d!.parent and d!.rep in r and Size(r)=Size(d);
-end);
-
-# new for 4.0!
-#############################################################################
-
-InstallMethod( \=, "for L-class and R-class of trans. semigp.",
-[IsGreensLClass and IsGreensClassOfTransSemigp, IsGreensRClass and 
-IsGreensClassOfTransSemigp],
-function(l, r)
-  return r!.parent=l!.parent and l!.rep in r and Size(r)=Size(l);
-end);
-
-# new for 4.0!
-#############################################################################
-
-InstallMethod( \=, "for R-class and L-class of trans. semigp.",
-[IsGreensRClass and IsGreensClassOfTransSemigp, IsGreensLClass and 
-IsGreensClassOfTransSemigp],
-function(r, l)
-  return r!.parent=l!.parent and l!.rep in r and Size(r)=Size(l);
+InstallMethod( \=, "for Green's class and Green's class of trans. semigp.",
+[IsGreensClassOfTransSemigp, IsGreensClassOfTransSemigp],
+function(x, y)
+  return x!.parent=y!.parent and x!.rep in y and Size(x)=Size(y);
 end);
 
 # new for 4.0!
@@ -109,7 +78,6 @@ IsGreensClassOfTransSemigp],
 function(r1, r2)
   return r1!.parent=r2!.parent and r1!.rep < r2!.rep;
 end);
-
 
 ## new for 4.0!
 #############################################################################

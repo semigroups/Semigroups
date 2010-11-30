@@ -10,6 +10,9 @@
 ## $Id: r.tst 127 2010-11-22 20:09:29Z jamesm $
 ##
 
+## - cross references and double check. 
+
+
 <Chapter Label="Advanced"> <Heading>Advanced Features</Heading>
   
   <Section Label="GreensAdvancedR">
@@ -311,7 +314,7 @@
 <#/GAPDoc>
 
 <#GAPDoc Label="GreensRClasses">
-  <ManSection><Oper Name="GreensRClasses" Arg="x"/>
+  <ManSection><Attr Name="GreensRClasses" Arg="x"/>
   <Description>
   returns a list of <Math>R</Math>-classes contained in the object 
   <A>x</A> where <A>x</A> is a transformation semigroup,
@@ -370,7 +373,7 @@
 <#/GAPDoc>
 
 <#GAPDoc Label="Idempotents">
-  <ManSection><Func Name="Idempotents" Arg="x[,n]"/>
+  <ManSection><Attr Name="Idempotents" Arg="x[,n]"/>
   <Description>
   returns a list of the idempotents in the transformation semigroup or Green's 
   class <A>x</A>. <P/>
@@ -467,11 +470,8 @@
   </ManSection>
 <#/GAPDoc>
 
-
-
-
 <#GAPDoc Label="IsRegularRClass">
-  <ManSection><Func Name="IsRegularRClass" Arg="r"/>
+  <ManSection><Attr Name="IsRegularRClass" Arg="r"/>
   <Description>
   return <C>true</C> if the R-class <A>r</A> of a transformation
   semigroup is regular (i.e. it contains an idempotent) and returns 
@@ -500,15 +500,14 @@
 <#/GAPDoc>
 
 <#GAPDoc Label="IsGreensClassOfTransSemigp">
-  <ManSection>
-  <Prop Name="IsGreensClassOfTransSemigp" Arg="x"/>
+  <ManSection><Prop Name="IsGreensClassOfTransSemigp" Arg="x"/>
   <Description>
   returns <C>true</C> if <C>x</C> is a Green's class of a transformation 
   semigroup and returns <C>false</C> otherwise.<P/>
   
   This attribute is required so that a Green's class knowns that it belongs to 
   a transformation semigroup, so that the methods defined in the
-  <Package>MONOID</Package> are used in preference to those in the library.
+  <Package>monoid</Package> are used in preference to those in the library.
   <Example>
     gap> s:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ), 
     > Transformation( [ 2, 3, 1, 5, 4, 1 ] ));;
@@ -628,7 +627,7 @@
 <#/GAPDoc>
 
 <#GAPDoc Label="NrGreensHClasses">
-  <ManSection><Func Name="NrGreensHClasses" Arg="x"/>
+  <ManSection><Attr Name="NrGreensHClasses" Arg="x"/>
   <Description>
   returns the number of H-classes in the transformation semigroup, R-class,
   L-class, or D-class <A>x</A>. If the actual H-classes are not required, then it is  
@@ -664,7 +663,7 @@
 <#/GAPDoc>
 
 <#GAPDoc Label="NrGreensRClasses">
-  <ManSection><Func Name="NrGreensRClasses" Arg="x"/>
+  <ManSection><Attr Name="NrGreensRClasses" Arg="x"/>
   <Description>
   returns the number of R-classes in the transformation semigroup  or D-class 
   <A>x</A>. If the actual R-classes are not required, then it is  
@@ -697,7 +696,7 @@
 <#/GAPDoc>
 
 <#GAPDoc Label="NrIdempotents">
-  <ManSection><Func Name="NrIdempotents" Arg="x"/>
+  <ManSection><Attr Name="NrIdempotents" Arg="x"/>
   <Description>
   returns the number of idempotents in the transformation semigroup, R-class,
   L-class or D-class <A>x</A>. If the actual idempotents are not required, then it
@@ -712,8 +711,7 @@
 <#/GAPDoc>
 
 <#GAPDoc Label="SchutzenbergerGroup">
-  <ManSection>
-  <Attr Name="SchutzenbergerGroup" Arg="x"/>
+  <ManSection><Attr Name="SchutzenbergerGroup" Arg="x"/>
   <Description>
   returns the (generalized) Schutzenberger group of the R-class, D-class, L-class or 
   H-class <A>x</A> of a transformation semigroup.<P/>
