@@ -132,14 +132,42 @@ end);
 # new for 4.0!
 #############################################################################
 
+InstallGlobalFunction(HashTableForImagesFixedSize, 
+function(img)
+  local s, n, p, ht;
+
+  s:=Set(img);
+  n:=Length(img);
+  
+  if n<500 then 
+    p:=Minimum(NextPrimeInt(Binomial(n, Length(s))), 100003);
+  else
+    p:=100003;
+  fi;
+
+  ht := HTCreate(s, rec( hfd := p, treehashsize := p ));
+  HTAdd(ht, s, 1);
+
+  return ht;
+end);
+
+# new for 4.0!
+#############################################################################
+
 InstallGlobalFunction(HashTableForImages, 
 function(img)
-local ht;
-ht := HTCreate(img, rec( hfd := 100003, treehashsize := 100003 ));
-HTAdd(ht, img, 1);
+  local s, p, ht;
+  s:=Set(img);
+  p:=Minimum(NextPrimeInt(2^Length(img)), 100003);
 
-return ht;
+  ht := HTCreate(s, rec( hfd := p, treehashsize := p ));
+  HTAdd(ht, s, 1);
+
+  return ht;
 end);
+
+
+
 
 # new for 4.0!
 #############################################################################
@@ -260,12 +288,12 @@ local n, g, i;
 n:=f![1];
 
 if IsBound(TABLE_OF_TRANS_KERNEL) then 
-	g:=TABLE_OF_TRANS_KERNEL(ker,Length(n));
+  g:=TABLE_OF_TRANS_KERNEL(ker,Length(n));
 else
-	g:= EmptyPlist(Length(n)); 
-	for i in [1..Length(ker)] do
-		g{ker[i]}:= ListWithIdenticalEntries(Length(ker[i]), i);
-	od;
+  g:= EmptyPlist(Length(n)); 
+  for i in [1..Length(ker)] do
+    g{ker[i]}:= ListWithIdenticalEntries(Length(ker[i]), i);
+  od;
 fi;
 
 g:= TransformationNC(g{n});
@@ -298,30 +326,6 @@ for set in tup do
 od;
 return res;
 end);
-
-#############################################################################
-#
-
-OnTuplesOfSetsAntiAction2:=function(ker, f)
-local g, out, n, l, i, j, k;
-
-g:=ImageAndKernelOfTransformation(f)[2];
-out:=EmptyPlist(Length(ker));
-n:=f![1];
-l:=0;
-
-for i in ker do
-	j:=[]; l:=l+1;
-	for k in g do
-		if n[k[1]] in i then
-			j:=Union(j, k);
-			break;
-		fi;
-	od;
-	out[l]:=j;
-od;
-return out;
-end;
 
 # new method and output for 4.0!
 #############################################################################

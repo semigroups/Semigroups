@@ -88,6 +88,19 @@ DeclareGlobalFunction("TraceSchreierTreeOfSCCBack");
 
 DeclareAttribute("PartialOrderOfDClasses", IsSemigroup, "mutable");
 
+# the following functions in d.gi are currently undocumented
+
+DeclareAttribute("DClassImageOrbit", IsGreensDClass and 
+ IsGreensClassOfTransSemigp);
+DeclareGlobalFunction("DClassKernelOrbitFromData");
+DeclareAttribute("DClassKernelOrbit", IsGreensDClass and
+ IsGreensClassOfTransSemigp);
+DeclareGlobalFunction("DClassLStabChainFromData");
+DeclareAttribute("DClassLStabChain", IsGreensDClass and
+ IsGreensClassOfTransSemigp);
+DeclareGlobalFunction("InOrbitsOfKernels");
+DeclareGlobalFunction("PreInOrbitsOfKernels");
+
 
 # the following functions should be removed!
 
@@ -115,7 +128,6 @@ DeclareGlobalFunction("SizeDClassRepsData");
 
 DeclareGlobalFunction("NrLClassesOrbitsOfKernels");
 
-DeclareGlobalFunction("InOrbitsOfKernels");
 DeclareGlobalFunction("InDClassRepsData");
 
 
@@ -145,20 +157,15 @@ DeclareAttribute("LClassRels", IsGreensLClass and
 
 DeclareGlobalFunction("HClassRepFromData");
 DeclareGlobalFunction("LClassRepFromData");
-DeclareGlobalFunction("LClassKernelOrbitFromData");
 DeclareAttribute("LClassKernelOrbit", IsGreensLClass and 
 IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("LClassSchutzGpFromData");
-DeclareGlobalFunction("LClassStabChainFromData");
 DeclareGlobalFunction("LClassRelsFromData");
 DeclareGlobalFunction("LClassSCCFromData");
 DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]);
 
 DeclareGlobalFunction("DClassRepFromData");
-DeclareGlobalFunction("DClassKernelOrbitFromData");
-DeclareGlobalFunction("DClassKernelOrbit");
 DeclareGlobalFunction("DClassImageOrbitFromData");
-DeclareGlobalFunction("DClassImageOrbit");
 DeclareGlobalFunction("DClassOrbitsFromData");
 DeclareGlobalFunction("DClassKerSchutzGpFromData");
 DeclareGlobalFunction("DClassImgSchutzGpFromData");
@@ -267,6 +274,9 @@ DeclareProperty("IsOrbitsOfKernels", IsObject);
 DeclareProperty("IsMonoidPkgImgKerOrbit", IsOrbit);
 
 DeclareAttribute("GroupHClass", IsGreensDClass and IsGreensClassOfTransSemigp);
+
+DeclareAttribute("GeneratorsAsListOfImages", IsTransformationSemigroup);
+
 
 # probably get rid of the following...
 

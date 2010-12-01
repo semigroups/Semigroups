@@ -10,6 +10,33 @@
 ## $Id$
 ##
 
+
+# if f is a transformation, then f![1] is the image list, f![2] is the image
+# set, f![3] is the kernel as a partition, f![4] is ..., f![5] is the rank of f
+# f![6] is the canonical trans. with same kernel
+
+#JDM remove the below when MN includes it in orb.
+
+InstallGlobalFunction( CanonicalTransSameKernel,
+function( t )
+  local n, tab, res, next, i;
+  
+  n := Length(t);
+  tab := 0*[1..n];
+  res := EmptyPlist(n);
+  next := 1;
+  for i in [1..n] do
+     if tab[t[i]] <> 0 then
+         res[i] := tab[t[i]];
+     else
+         tab[t[i]] := next;
+         res[i] := next;
+         next := next + 1;
+     fi;
+  od;
+  return res;
+end);
+
 #new for 4.0!
 ############################################################################
 
@@ -19,7 +46,7 @@ end;
 
 #new for 4.0!
 ############################################################################
-
+# go to convenience.gi
 
 InstallMethod(Generators, "for a semigroup or monoid", 
 [IsSemigroup],
@@ -178,7 +205,7 @@ o:=OrbitsOfImages(s);
 if not o!.finished then 
 	gens:=GeneratorsOfSemigroup(s);
 	n:=DegreeOfTransformationSemigroup(s);
-	i:=Random([1..Int((n-1)^2/4)]);
+        i:=Random([20..50]);
 	w:=List([1..i], x-> Random([1..Length(gens)]));
 	return EvaluateWord(gens, w);
 else
@@ -189,34 +216,24 @@ else
 fi;
 end);
 
-#InstallMethod(Random, "for a trans. semigroup and a pos. int.",
-#[IsTransformationSemigroup, IsPosInt],
-#function(s, r)
-# JDM require IteratorOfGreensRClasses(s, r);
-#
-#
-
-
-
-
-
-#############################################################################
 # new for 4.0!
-
-#gap> MakeReadWriteGVar("Transformation");
-#gap> Transformation := function(t) Print("Blubb\n"); end;
-#function( t ) ... end
-#gap> MakeReadOnlyGVar("Transformation");
+#############################################################################
 
 InstallMethod(RankOfTransformation, "for a transformation (monoid version)", 
 [IsTransformation], 
 function(f)
 
-if not IsBound(f![2]) then 
-	f![2]:=Set(f![1]);
-fi;
+  if IsBound(f![5]) then 
+    return f![5];
+  fi;
 
-return Length(f![2]);
+  if not IsBound(f![2]) then 
+    f![2]:=ImageAndKernelOfTransformation(f)[1];
+    # f![2]:=Set(f![1]) is slower in small degree and much slower in high degree.
+  fi;
+  
+  f![5]:=Length(f![2]);
+  return f![5];
 end);
 
 #############################################################################

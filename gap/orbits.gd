@@ -10,6 +10,8 @@
 ## $Id$
 ##
 
+DeclareGlobalFunction("OnKernelsAntiAction2");
+
 # new for 4.0!
 #############################################################################
 # undocumented...
@@ -57,6 +59,7 @@ DeclareAttribute("GradedKernelsOfTransSemigroup", IsTransformationSemigroup);
 # image or kernel installed.
 
 DeclareGlobalFunction("HashTableForImages");
+DeclareGlobalFunction("HashTableForImagesFixedSize");
 DeclareGlobalFunction("HashTableForKernels");
 
 ###########################################################################

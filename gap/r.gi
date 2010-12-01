@@ -35,6 +35,10 @@
 #############################################################################
 ## To do 
 
+# - RClassSCCLookUpFromData and RClassSCCLookUp...
+
+# - RClassSCCTruthTableFromData and RClassSCCTruthTable...
+
 # - remove foo and replace with whatever C function Max comes up with!
 
 # - make sure that when doing Intersection of two symmetric groups we take 
@@ -83,7 +87,7 @@ end);
 #############################################################################
 ## Algorithm E. 
 
-InstallMethod( \in, "for trans. and R-class of trans. semigp.", 
+InstallMethod(\in, "for trans. and R-class of trans. semigp.", 
 [IsTransformation, IsGreensRClass and IsGreensClassOfTransSemigp],
 function(f, r)
   local rep, a, b, s, d, o, i, g, schutz;
@@ -191,10 +195,12 @@ function(s, f, data, o)
   k:=data[2]; 	# index of orbit containing img
   l:=data[3]; 	# position of img in O[j][k]
   m:=data[4]; 	# scc of O[j][k] containing img
-  val:=data[5];   # position of ker in O[j][k]!.kernels_ht[m]
+  val:=data[5]; # position of ker in O[j][k]!.kernels_ht[m]
   n:=data[6]; 	# the length of O[j][k]!.reps[m][val]
   g:=data[7];	# f*O[j][k]!.perms[l];
 
+  #JDM not sure it will improve things but maybe everything with a ! here
+  #should be an argument to AddToOrbitsOfImages. 
   O := o!.orbits;  gens:=o!.gens; d:=o!.data; lens:=o!.lens;
   data_ht:=o!.data_ht;
 
@@ -204,8 +210,8 @@ function(s, f, data, o)
     ht:=o!.ht; o:=ht!.o;
   fi;
 
-  if k = fail then #new img and l, m, val, n, g=fail
-                  #don't call this function with a d-class and k=fail!
+  if k = fail then  #new img and l, m, val, n, g=fail
+                    #don't call this function with a d-class and k=fail!
 
   ################################################################################
           
@@ -222,13 +228,14 @@ function(s, f, data, o)
       HTAdd(images, i, lens[j]);
     od;
           
-    reps:=oo[2];
+    reps:=oo[2]; #reps. corresponding to all scc of oo[1]
     out:=[j, lens[j], 1, 1, 1, 1];
     i:=Length(d);
           
-    for m in [1..Length(oo[3])] do 
+    for m in [1..Length(oo[3])] do  # oo[3] is a list of the first index in
+                                    # every scc of oo[1]
       i:=i+1;
-      d[i]:=[j, Length(O[j]), oo[3][m], m, 1, 1]; 
+      d[i]:=[j, lens[j], oo[3][m], m, 1, 1]; 
       HTAdd(data_ht, d[i], i);
     od;
 
@@ -252,7 +259,7 @@ function(s, f, data, o)
       HTAdd(data_ht, out, i);
       HTAdd(O[j][k]!.kernels_ht[m], KernelOfTransformation( g ), val);
     fi;
-    reps:=[g]; #JDM g or f?
+    reps:=[g]; 
   fi;
 
   ##############################################################################
@@ -607,6 +614,9 @@ end);
 #############################################################################
 # not a user function!
 
+# Usage: s = semigroup; f = transformation; images = OrbitsOfImages(s)!.images;
+# gens = Generators(s).
+
 InstallGlobalFunction(ForwardOrbitOfImage, 
 function(arg)
   local s, f, images, img, deg, j, bound, treehashsize, o, scc, r, reps, gens, i;
@@ -649,6 +659,7 @@ function(arg)
           log:=true));
 
   SetIsMonoidPkgImgKerOrbit(o, true);
+  o!.img:=true; #for ViewObj method
   Enumerate(o, bound);
           
   #strongly connected components
@@ -925,7 +936,7 @@ function(r)
 
   for i in scc do
     i:=o[i];
-    if foo(f, i) then 
+    if foo(f, i) then  
       j:=j+1;
       out[j]:=IdempotentNC(ker, i);
     fi;
@@ -934,8 +945,13 @@ function(r)
   return out;
 end);
 
+# new for 4.0! InOrbitsOfImages - not a user function!
 #############################################################################
 # Usage: s, f, data, OrbitsOfImages(s)!.orbits, OrbitsOfImages(s)!.images
+
+# JDM should [img, ker] be included as data[8]? 
+# JDM perhaps things could be speed up by taking everything with a ! in it
+# and making it an argument?!
 
 InstallGlobalFunction(InOrbitsOfImages, 
 function(s, f, data, o, images)
@@ -943,10 +959,10 @@ function(s, f, data, o, images)
 
   j:=data[1]; k:=data[2]; l:=data[3];
   m:=data[4]; val:=data[5]; n:=data[6]; 
-  g:=data[7];
+  g:=data[7]; 
 
   if k=fail then 
-    img:=ImageAndKernelOfTransformation(f)[1];
+    img:=ImageSetOfTransformation(f);
     if j=fail then 
       j:=Length(img);
     fi;
@@ -966,15 +982,11 @@ function(s, f, data, o, images)
           
     l:=Position(o[j][k], img);
           
-    if l = fail then 
-      return [false, [j, fail, fail, fail, fail, 0, fail]];
-    fi;
-          
     m:=o[j][k]!.scc_lookup[l];
     g:=f*o[j][k]!.perms[l];
   fi;
 
-  if g=fail then #this can happen if coming from GreensRClassReps for example.
+  if g=fail then #this can happen if coming from GreensRClassReps.
     g:=f*o[j][k]!.perms[l];
   fi;
 
@@ -1527,7 +1539,7 @@ function(s)
   return Objectify(type, rec(
     finished:=false, 
     orbits:=EmptyPlist(n),
-    lens:=List([1..n], x-> 0), #lens[j]=Length(orbits[j])
+    lens:=[1..n]*0, #lens[j]=Length(orbits[j])
     images:=HTCreate(ImageSetOfTransformation(gens[1])),
     at:=0, 
     gens:=gens,
@@ -1550,7 +1562,7 @@ InstallMethod(ParentAttr, "for a R-class of a trans. semigroup",
 #############################################################################
 # not a user function!
 
-# Usage: s = semigroup, f = element, d = data, o = OrbitsOfImages(s)!.orbits 
+# Usage: s = semigroup, f = element, o = OrbitsOfImages(s)!.orbits, d = data 
 
 InstallGlobalFunction(PreInOrbitsOfImages, 
 function(arg)
@@ -1559,16 +1571,16 @@ function(arg)
   s:=arg[1]; f:=arg[2];
   images:=OrbitsOfImages(s)!.images;
 
-  if Length(arg)>=4 then 
-    data:=arg[4];
-  else
-    data:=[fail, fail, fail, fail, fail, 0, fail];
-  fi;
-
   if Length(arg)>=3 then 
     o:=arg[3];
   else
     o:=OrbitsOfImages(s)!.orbits;
+  fi;
+  
+  if Length(arg)>=4 then 
+    data:=arg[4];
+  else
+    data:=[fail, fail, fail, fail, fail, 0, fail];
   fi;
 
   return InOrbitsOfImages(s, f, data, o, images);
@@ -1839,8 +1851,10 @@ function(arg)
   return o!.scc[d[4]];
 end);
 
-# new for 4.0!
+# new for 4.0! RClassSchutzGpFromData - not a user function!
 ############################################################################
+# Usage: s = semigroup; d = image data (any format); o = OrbitsOfImages(s)
+# (optional).
 
 InstallGlobalFunction(RClassSchutzGpFromData, 
 function(arg)
@@ -2108,21 +2122,22 @@ function( o )
     Print("open "); 
   fi;
 
-  if IsPosInt(o[1][1]) then 
-    Print("img "); 
+  Print("orbit ", Length(o!.orbit));
+
+  if o!.img then 
+    Print(" images with ", Length(o[1]), " elts"); 
   else 
-    Print("kernel ");
+    Print(" kernels with ", Maximum(o[1]), " classes");
   fi;
 
-  Print("orbit ", Length(o!.orbit), " sets with ", Length(o[1]), " elts"); 
-  if IsBound(o!.reps) and IsPosInt(o[1][1]) then 
+  if IsBound(o!.reps) and o!.img then 
     Print(", ");
-    Print(Length(o!.scc), " scc, ");
+    Print(Length(o!.scc), " components, ");
     Print(Sum(List(o!.reps, Length)), " kernels, ");
       Print(Sum(Concatenation(List(o!.reps, x-> List(x, Length)))), " reps>");
   elif IsBound(o!.reps) then 
     Print(", ");
-    Print(Length(o!.scc), " scc, ");
+    Print(Length(o!.scc), " components, ");
     Print(Sum(List(o!.reps, Length)), " images, ");
     Print(Sum(Concatenation(List(o!.reps, x-> List(x, Length)))), " reps>");
   else

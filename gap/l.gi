@@ -70,14 +70,14 @@ d:=l!.data;
 s:=l!.parent;
 o:=l!.o;
 
-ol:=LClassKernelOrbitFromData(s, d, o);
+ol:=DClassKernelOrbitFromData(s, d, o);
 i:=Position(ol, KernelOfTransformation(f));
 
 if i = fail or not ol!.truth[d[2][4]][i] then 
 	return false;
 fi;
 
-schutz:=LClassStabChainFromData(s, d[2], l!.o[2]);
+schutz:=DClassLStabChainFromData(s, d, l!.o);
 
 if schutz=true then 
 	return true;
@@ -499,7 +499,7 @@ out:= EmptyPlist(Size(l)/NrGreensHClasses(l));
 #JDM Sum_{k=0..n} C(n,k)*(n-k)^k= # idempotents in T(n)
 f:=l!.rep; n:=Degree(f);
 img:=ImageAndKernelOfTransformation(f)[1];
-o:=LClassKernelOrbitFromData(l!.parent, l!.data, l!.o);
+o:=DClassKernelOrbitFromData(l!.parent, l!.data, l!.o);
 scc:=LClassSCC(l);  j:=0;
 
 for i in scc do
@@ -691,29 +691,11 @@ IsGreensLClassData and IsGreensLClassDataRep), list);
 end);
 
 ############################################################################
-
+# remove the following JDM replace it with a method for DClassKernelOrbit
 
 InstallMethod(LClassKernelOrbit, "for an L-class of a trans. semigp.",
 [IsGreensLClass and IsGreensClassOfTransSemigp],
-l-> LClassKernelOrbitFromData(l!.parent, l!.data, l!.o));
-
-############################################################################
-# JDM change the syntax of the below so that d is really l!.d and o is l!.o?
-
-
-InstallGlobalFunction(LClassKernelOrbitFromData,
-function(arg)
-local s, d;
-
-s:=arg[1]; d:=arg[2][2];
-
-if Length(arg)=3 then 
-	return arg[3][2]!.orbits[d[1]][d[2]];
-else
-	return OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
-fi;
-
-end);
+l-> DClassKernelOrbitFromData(l!.parent, l!.data, l!.o));
 
 ############################################################################
 
@@ -880,24 +862,6 @@ else
 fi;
 
 return o!.schutz[d[4]][2];
-end);
-
-# new for 4.0!
-############################################################################
-
-InstallGlobalFunction(LClassStabChainFromData, 
-function(arg)
-local s, d, o;
-
-s:=arg[1]; d:=arg[2];
-
-if Length(arg)=3 then 
-	o:=arg[3]!.orbits[d[1]][d[2]];
-else 
-	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
-fi;
-
-return o!.schutz[d[4]][1];
 end);
 
 # new for 4.0!
