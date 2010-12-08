@@ -12,9 +12,6 @@
 
 ##  JDM install methods for partial transformations, partial bijections
 
-#JDM remove the below when MN includes it in orb.
-DeclareGlobalFunction("CanonicalTransSameKernel");
-
 #JDM new for 3.2!
 DeclareOperation("DegreeOfTransformationCollNC", [IsTransformationCollection]);
 

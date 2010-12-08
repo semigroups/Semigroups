@@ -476,12 +476,15 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     <C>AsSSortedList</C>, <C>Enumerator</C>, <C>Idempotents</C>,  
     <C>Iterator</C>, <C>GreensHClasses</C>,  
     <C>Random</C>, <C>Size</C><P/>
-		
+
+    <Package>monoid</Package> contains special methods for D-classes of the
+    following &GAP; functions: <C>&lt;</C>, <C>=</C>, <C>in</C>, ...<P/>
+
     <Package>monoid</Package> contains special methods for transformation 
     semigroups of the following &GAP; functions: <C>in</C>, <C>AsList</C>, 
     <C>Enumerator</C>, <C>GreensRClasses</C>, <C>GreensRClassOfElement</C>,  
     <C>Iterator</C>, <C>Size</C>, 
-		
+
   </Section>
 
   <Section><Heading>Green's R-relation</Heading>

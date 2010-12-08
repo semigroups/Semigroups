@@ -15,28 +15,6 @@
 # set, f![3] is the kernel as a partition, f![4] is ..., f![5] is the rank of f
 # f![6] is the canonical trans. with same kernel
 
-#JDM remove the below when MN includes it in orb.
-
-InstallGlobalFunction( CanonicalTransSameKernel,
-function( t )
-  local n, tab, res, next, i;
-  
-  n := Length(t);
-  tab := 0*[1..n];
-  res := EmptyPlist(n);
-  next := 1;
-  for i in [1..n] do
-     if tab[t[i]] <> 0 then
-         res[i] := tab[t[i]];
-     else
-         tab[t[i]] := next;
-         res[i] := next;
-         next := next + 1;
-     fi;
-  od;
-  return res;
-end);
-
 #new for 4.0!
 ############################################################################
 
@@ -223,16 +201,9 @@ InstallMethod(RankOfTransformation, "for a transformation (monoid version)",
 [IsTransformation], 
 function(f)
 
-  if IsBound(f![5]) then 
-    return f![5];
+  if not IsBound(f![5]) then 
+    f![5]:=Length(ImageSetOfTransformation(f));
   fi;
-
-  if not IsBound(f![2]) then 
-    f![2]:=ImageAndKernelOfTransformation(f)[1];
-    # f![2]:=Set(f![1]) is slower in small degree and much slower in high degree.
-  fi;
-  
-  f![5]:=Length(f![2]);
   return f![5];
 end);
 

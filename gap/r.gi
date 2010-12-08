@@ -10,20 +10,19 @@
 ## $Id$
 
 
+#############################################################################
 # Conventions:
 
-# - use RClassImageOrbitFromData instead of RClassImageOrbit
+# - use RClassImageOrbitFromData instead of RClassImageOrbit!
 
-# - use ImageAndKernelOfTransformation
-
-# - implement RClassSchutzGp=false when it is trivial!
+# - do not use ImageAndKernelOfTransformation!
 
 # - don't use underlyingcollection in enumerators!
 
 # - check that wherever we have called d:=InOrbitsOfImages we do not perform
 # f*perms[l] afterwards but instead use d[7]!
 
-# - ensure EmptyPlist is properly used...
+# - ensure EmptyPlist is properly used!
 
 #############################################################################
 ## Notes
@@ -35,11 +34,14 @@
 #############################################################################
 ## To do 
 
-# - RClassSCCLookUpFromData and RClassSCCLookUp...
+# - change the initial line of every function to say new for 4.0! function name,
+# and non-user function (where appropriate).
 
-# - RClassSCCTruthTableFromData and RClassSCCTruthTable...
+# - make sure that RClassSchutzGp=false is properly implemented. 
 
-# - remove foo and replace with whatever C function Max comes up with!
+# - RClassSCCLookUpFromData and RClassSCCLookUp?
+
+# - RClassSCCTruthTableFromData and RClassSCCTruthTable?
 
 # - make sure that when doing Intersection of two symmetric groups we take 
 # SymmetricGroup(Intersection(MovedPoints(a), MovedPoints(b))) and not 
@@ -51,10 +53,13 @@
 #   In particular, so that IsGreensLessThanOrEqual works.
 
 # - install method for Position(GreensRClasses(s), blah) using InOrbitsOfImages...
+# requires the list GreensRClasses to have some property to allow method
+# selection. Wait for future version. 
 
-# - install IteratorOfRClassRepsData etc for s and IsPosInt!
+# - install IteratorOfRClassRepsData etc for s and IsPosInt! or more generally
+# create and iterator of R-classes satisfying whatever properties we want. 
 
-# new for 4.0!
+# new for 4.0! \=, "for R-class and R-class of trans. semigp."
 #############################################################################
 
 InstallMethod( \=, "for R-class and R-class of trans. semigp.",
@@ -64,7 +69,7 @@ function(r1, r2)
   return r1!.parent=r2!.parent and r1!.rep in r2;
 end);
 
-# new for 4.0!
+# new for 4.0! \=, "for Green's class and Green's class of trans. semigp."
 #############################################################################
 
 InstallMethod( \=, "for Green's class and Green's class of trans. semigp.",
@@ -73,7 +78,7 @@ function(x, y)
   return x!.parent=y!.parent and x!.rep in y and Size(x)=Size(y);
 end);
 
-# new for 4.0!
+# new for 4.0! \<, "for R-class and R-class of trans. semigp."
 #############################################################################
 
 InstallMethod( \<, "for R-class and R-class of trans. semigp.",
@@ -83,21 +88,20 @@ function(r1, r2)
   return r1!.parent=r2!.parent and r1!.rep < r2!.rep;
 end);
 
-## new for 4.0!
+## new for 4.0! \in, "for trans. and R-class of trans. semigp."
 #############################################################################
 ## Algorithm E. 
 
 InstallMethod(\in, "for trans. and R-class of trans. semigp.", 
 [IsTransformation, IsGreensRClass and IsGreensClassOfTransSemigp],
 function(f, r)
-  local rep, a, b, s, d, o, i, g, schutz;
+  local rep, s, d, o, i, g, schutz;
 
   rep:= r!.rep; 
-  a:=[ImageSetOfTransformation(rep), KernelOfTransformation(rep)];
-  b:=ImageAndKernelOfTransformation(f);
 
   if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) or
-   Length(a[1]) <> Length(b[1]) or a[2] <> b[2] then #rank, kernel
+   RankOfTransformation(f) <> RankOfTransformation(rep) or
+   KernelOfTransformation(f) <> KernelOfTransformation(rep) then 
     return false;
   fi;
 
@@ -105,7 +109,7 @@ function(f, r)
   d:=r!.data;
   o:=r!.o!.orbits[d[1]][d[2]];
 
-  i:= Position(o, b[1]);
+  i:= Position(o, ImageSetOfTransformation(f));
 
   if i = fail or not o!.truth[d[4]][i] then #check they are in the same scc
     return false;
@@ -906,29 +910,15 @@ end);
 InstallOtherMethod(Idempotents, "for a R-class of a trans. semigp.",
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 function(r)
-  local foo, out, f, ker, o, scc, j, i;
+  local out, f, ker, o, scc, j, i;
 
   if HasIsRegularRClass(r) and not IsRegularRClass(r) then 
     return [];
   fi;
 
-  foo:=function(f, set) #is f injective on set?
-    local i, lookup;
-    lookup:=EmptyPlist(Length(f));
-
-    for i in set do 
-      if not IsBound(lookup[f[i]]) then 
-        lookup[f[i]]:=0;
-      else
-        return false;
-      fi;
-    od;
-    return true;
-  end;
-
   out:=[]; 
   f:=r!.rep;
-  ker:=ImageAndKernelOfTransformation(f)[2];
+  ker:=KernelOfTransformation(f);
   f:=f![1];
   o:=RClassImageOrbitFromData(r!.parent, r!.data, r!.o);
   scc:=RClassSCC(r); 
@@ -936,7 +926,7 @@ function(r)
 
   for i in scc do
     i:=o[i];
-    if foo(f, i) then  
+    if IsInjectiveTransOnList(f, i) then  
       j:=j+1;
       out[j]:=IdempotentNC(ker, i);
     fi;
@@ -1051,7 +1041,7 @@ end);
 
 InstallGlobalFunction(IsRegularRClassData, 
 function(arg)
-  local s, d, o, f, foo, scc, i;
+  local s, d, o, f, scc, i;
 
   s:=arg[1]; d:=arg[2]; 
 
@@ -1071,26 +1061,12 @@ function(arg)
     f:=RClassRepFromData(s, d, o);
   fi;
 
-  foo:=function(f, set) #is f injective on set?
-    local i, lookup;
-    lookup:=EmptyPlist(Length(f));
-
-    for i in set do 
-      if not IsBound(lookup[f[i]]) then 
-        lookup[f[i]]:=0;
-      else
-        return false;
-      fi;
-    od;
-    return true;
-  end;
-
   f:=f![1];
   scc:=RClassSCCFromData(s, d, o);
   o:=RClassImageOrbitFromData(s, d, o);
 
   for i in scc do
-    if foo(f, o[i]) then
+    if IsInjectiveTransOnList(f, o[i]) then
       return true;
     fi;
   od;
@@ -1434,21 +1410,7 @@ end);
 InstallOtherMethod(NrIdempotents, "for an R-class of a trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
-  local out, ker, rep, n, o, i, img, j, scc, foo;
-
-  foo:=function(f, set) #is f injective on set?
-    local i, lookup;
-    lookup:=EmptyPlist(Length(f));
-
-    for i in set do 
-      if not IsBound(lookup[f[i]]) then 
-        lookup[f[i]]:=0;
-      else
-        return false;
-      fi;
-    od;
-    return true;
-  end;
+  local out, ker, rep, n, o, i, img, j, scc;
 
   if HasIdempotents(r) then 
     return Length(Idempotents(r));
@@ -1471,7 +1433,7 @@ function(r)
 
   for i in scc do 
     i:=o[i];
-    if foo(rep, i) then 
+    if IsInjectiveTransOnList(rep, i) then 
       out:=out+1;
     fi;
   od;
@@ -2125,7 +2087,7 @@ function( o )
   Print("orbit ", Length(o!.orbit));
 
   if o!.img then 
-    Print(" images with ", Length(o[1]), " elts"); 
+    Print(" images with size ", Length(o[1])); 
   else 
     Print(" kernels with ", Maximum(o[1]), " classes");
   fi;
