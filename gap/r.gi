@@ -13,6 +13,8 @@
 #############################################################################
 # Conventions:
 
+# - do not use the functions from convenience.gi! (double-check!)
+
 # - use RClassImageOrbitFromData instead of RClassImageOrbit!
 
 # - do not use ImageAndKernelOfTransformation!
@@ -1234,8 +1236,7 @@ InstallGlobalFunction(IteratorOfRClassRepsData,
   iter:=IteratorByFunctions( rec(
           
   ShallowCopy := iter -> rec( i:=0, s:=iter!.s, 
-  last_called := NextIterator, last_value := 0, 
-  chooser:=iter!.chooser, next:=iter!.next),
+  next_value:=fail, last_called_by_is_done:=false),
 
   i:=0, # representative index i.e. which representative we are at
 

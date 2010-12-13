@@ -123,7 +123,7 @@ end);
 #############################################################################
 #  JDM the following should be reviewed! depends on R-classes
 
-InstallOtherMethod( Idempotents, "for a transformation semigroup", 
+InstallOtherMethod(Idempotents, "for a transformation semigroup", 
 [IsTransformationSemigroup],
 function(s)
 local foo, n, bound, out, kers, imgs, min, max, regular, i, ker, f, img, e; 
