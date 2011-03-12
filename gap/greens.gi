@@ -54,36 +54,34 @@ SetIsGreensClassOfTransSemigp(ec, true);
 return ec;
 end);
 
-# new for 4.0!
+# new for 4.0! NrIdempotents - "for a transformation semigroup"
 #############################################################################
-# JDM this is horribly slow in comparison with Idempotents!
 
 InstallMethod(NrIdempotents, "for a transformation semigroup", 
 [IsTransformationSemigroup],
 function(s)
-local i, iter, d, r;
-i:=0;
+  local i, iter, d;
+  i:=0;
 
-if HasIdempotents(s) then 
-	return Length(Idempotents(s));
-fi;
+  if HasIdempotents(s) then 
+    return Length(Idempotents(s));
+  fi;
 
-if OrbitsOfKernels(s)!.finished then 
-	iter:=IteratorOfGreensDClasses(s);
-	#JDM would be better to use IteratorOfDClassRepsData
-	for d in iter do 
-		i:=i+NrIdempotents(d);
-	od;
-else
-	iter:=IteratorOfGreensRClasses(s);
-	#JDM would be better to use IteratorOfRClassRepsData but we require
-	# NrIdempotentsFromData first!
-	for r in iter do 
-		i:=i+NrIdempotents(r);
-	od;
-fi;
+  if OrbitsOfKernels(s)!.finished then 
+    iter:=IteratorOfGreensDClasses(s);
+    #JDM would be better to use IteratorOfDClassRepsData
+    for d in iter do 
+      i:=i+NrIdempotents(d);
+    od;
+  else
+    iter:=IteratorOfRClassRepsData(s);
+    
+    for d in iter do 
+      i:=i+NrIdempotentsRClassFromData(s, d);
+    od;
+  fi;
 
-return i;
+  return i;
 end);
 
 #############################################################################

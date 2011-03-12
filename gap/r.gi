@@ -15,7 +15,7 @@
 
 # - do not use the functions from convenience.gi! (double-check!)
 
-# - use RClassImageOrbitFromData instead of RClassImageOrbit!
+# - use ImageOrbitFromData instead of ImageOrbit!
 
 # - do not use ImageAndKernelOfTransformation!
 
@@ -103,7 +103,7 @@ function(f, r)
 
   if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) or
    RankOfTransformation(f) <> RankOfTransformation(rep) or
-   KernelOfTransformation(f) <> KernelOfTransformation(rep) then 
+   CanonicalTransSameKernel(f) <> CanonicalTransSameKernel(rep) then 
     return false;
   fi;
 
@@ -123,7 +123,7 @@ function(f, r)
     return true;
   fi;
 
-  schutz:= RClassStabChain(r);
+  schutz:= ImageOrbitStabChain(r);
 
   if schutz=false then 
     return false;
@@ -132,7 +132,6 @@ function(f, r)
   return schutz=true or SiftedPermutation(schutz, 
    PermLeftQuoTransformationNC(rep, g))=();
 end);
-
 
 # new for 4.0!
 #############################################################################
@@ -183,7 +182,7 @@ function(f, s)
   return false;
 end);
 
-# new for 4.0!
+# new for 4.0! 
 #############################################################################
 # not a user function!
 
@@ -263,7 +262,7 @@ function(s, f, data, o)
       i:=Length(d)+1;
       d[i]:=out;
       HTAdd(data_ht, out, i);
-      HTAdd(O[j][k]!.kernels_ht[m], KernelOfTransformation( g ), val);
+      HTAdd(O[j][k]!.kernels_ht[m], CanonicalTransSameKernel( g ), val);
     fi;
     reps:=[g]; 
   fi;
@@ -304,11 +303,11 @@ function(r)
   g:=List(SchutzenbergerGroup(r), x-> f*x);
   elts:=EmptyPlist(Size(r));
 
-  perms:=RClassPerms(r);
-  scc:=RClassSCC(r);
-  o:=RClassImageOrbit(r); #this doesn't slow things down here!
+  perms:=ImageOrbitPerms(r);
+  scc:=ImageOrbitSCC(r);
+  o:=ImageOrbit(r); #this doesn't slow things down here!
 
-  for i in RClassSCC(r) do 
+  for i in ImageOrbitSCC(r) do 
     p:=perms[i];
     elts:=Concatenation(elts, g*p^-1);
   od;
@@ -327,6 +326,64 @@ function(r)
   Info(InfoMonoidGreens, 4, "AsSSortedList: for an R-class");
   return ConstantTimeAccessList(EnumeratorSorted(r));
 end);
+
+# new for 4.0!
+#############################################################################
+# not a user function!
+
+# Usage: gens = generators of the semigroup
+# o = image orbit
+# f = representative of scc with index k
+# k = index of scc containing position of image of f in o
+
+InstallGlobalFunction(CreateImageOrbitSchutzGp,
+function(gens, o, f, k) 
+  local scc, bound, g, p, t, graph, is_sym, i, j;
+
+  scc:=o!.scc[k];
+
+  if Length(o[scc[1]])<1000 then 
+    bound:=Factorial(Length(o[scc[1]]));
+  else
+    bound:=infinity;
+  fi;
+
+  g:=Group(());
+  p:=o!.perms;
+  t:=o!.truth;
+  graph:=OrbitGraph(o);
+  is_sym:=false;
+
+  for i in scc do 
+    for j in [1..Length(gens)] do 
+    
+      if IsBound(graph[i][j]) and t[k][graph[i][j]] then
+        g:=ClosureGroup(g, PermLeftQuoTransformationNC(f, f/p[i] *
+         (gens[j]*p[graph[i][j]])));
+      fi; #keep track of schreier gens here!
+    
+      if Size(g)>=bound then 
+        is_sym:=true;
+        break;
+      fi;
+
+    od;
+
+    if Size(g)>=bound then 
+      break;
+    fi;
+
+  od;
+
+  if is_sym then
+    return [true, g];
+  elif Size(g)=1 then 
+    return [false, g];
+  fi;
+    
+  return [StabChainImmutable(g), g];
+end);
+
 
 # new for 4.0!
 #############################################################################
@@ -485,7 +542,8 @@ function(r)
   Info(InfoMonoidGreens, 4, "Enumerator: for an R-class");
 
   h:=List(Elements(SchutzenbergerGroup(r)), x-> r!.rep*x);
-
+  # maybe store the above line? JDM
+  
   enum:=EnumeratorByFunctions(r, rec(
           
           rep:=r!.rep,
@@ -494,9 +552,9 @@ function(r)
           
           len:=Length(h),
           
-          p:=RClassPerms(r), 
+          p:=ImageOrbitPerms(r), 
           
-          scc:=RClassSCC(r),
+          scc:=ImageOrbitSCC(r),
           
 ###########################################################################
         
@@ -527,7 +585,7 @@ function(r)
           
             if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) or
                RankOfTransformation(f) <> RankOfTransformation(rep) or
-               KernelOfTransformation(f) <> KernelOfTransformation(rep) then
+               CanonicalTransSameKernel(f) <> CanonicalTransSameKernel(rep) then
               return fail;
             fi;
                   
@@ -539,7 +597,7 @@ function(r)
             s:=r!.parent;
               
             # check image is in the same weak orbit
-            o:= RClassImageOrbitFromData(s, d, r!.o);
+            o:= ImageOrbitFromData(s, d, r!.o);
             i:= Position(o, ImageSetOfTransformation(f));
                   
             if i = fail or not o!.truth[d[4]][i] then #check they are in the same scc
@@ -693,7 +751,7 @@ function(arg)
 
   #kernels of representatives of R-classes with image belonging in scc[i]
   o!.kernels_ht:=List([1..r], m-> 
-   HashTableForKernels(KernelOfTransformation(reps[m])));
+   HashTableForKernels(CanonicalTransSameKernel(reps[m]), deg));
 
   #calculate the multipliers for all scc's 
   o!.perms:=EmptyPlist(Length(o));
@@ -703,7 +761,11 @@ function(arg)
   od;
 
   #schutzenberger groups
-  o!.schutz:=List([1..r], m-> SchutzGpOfImageOrbit(gens, o, reps[m], m));
+  o!.schutz:=List([1..r], m-> CreateImageOrbitSchutzGp(gens, o, reps[m], m));
+
+  #nr idempotents
+  
+  o!.nr_idempotents:=List([1..r], m-> []);
 
   return [o, reps, List([1..r], m-> scc[m][1])];
 end);
@@ -755,8 +817,8 @@ function(r)
 
   f:= r!.rep;
   cosets:=DClassRCosets(GreensDClass(r));
-  perms:=RClassPerms(r);
-  scc:=RClassSCC(r);
+  perms:=ImageOrbitPerms(r);
+  scc:=ImageOrbitSCC(r);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   SetNrGreensHClasses(r, Length(scc)*Length(cosets));
@@ -786,7 +848,7 @@ function(r)
   local f, scc, d, m, out, k, data, i, j;
 
   f:= r!.rep;
-  scc:=RClassSCC(r);
+  scc:=ImageOrbitSCC(r);
   d:=GreensDClass(r);
   m:=Length(DClassRCosets(d));
 
@@ -848,7 +910,7 @@ function(s, f)
   fi;
 
   d:=PreInOrbitsOfImages(s, f)[2];
-  d[3]:=RClassSCCFromData(s, d)[1];
+  d[3]:=ImageOrbitSCCFromData(s, d)[1];
 
   return CreateRClass(s, d, OrbitsOfImages(s), RClassRepFromData(s, d));
 end);
@@ -867,7 +929,7 @@ function(s, f)
 
   if d[1] then # f in s!
     Info(InfoMonoidGreens, 2, "transformation is an element of semigroup");
-    d:=d[2]; d[3]:=RClassSCCFromData(s, d)[1];
+    d:=d[2]; d[3]:=ImageOrbitSCCFromData(s, d)[1];
     r:=CreateRClass(s, d, OrbitsOfImages(s), RClassRepFromData(s, d));
     return r;
   elif OrbitsOfImages(s)!.finished then #f not in s!
@@ -922,8 +984,8 @@ function(r)
   f:=r!.rep;
   ker:=KernelOfTransformation(f);
   f:=f![1];
-  o:=RClassImageOrbitFromData(r!.parent, r!.data, r!.o);
-  scc:=RClassSCC(r); 
+  o:=ImageOrbitFromData(r!.parent, r!.data, r!.o);
+  scc:=ImageOrbitSCC(r); 
   j:=0;
 
   for i in scc do
@@ -983,7 +1045,7 @@ function(s, f, data, o, images)
   fi;
 
   if val=fail then 
-    val:=HTValue(o[j][k]!.kernels_ht[m], KernelOfTransformation(f));
+    val:=HTValue(o[j][k]!.kernels_ht[m], CanonicalTransSameKernel(f));
     if val=fail then 
       return [false, [j, k, l, m, fail, 0, g]];
     fi;
@@ -1064,8 +1126,8 @@ function(arg)
   fi;
 
   f:=f![1];
-  scc:=RClassSCCFromData(s, d, o);
-  o:=RClassImageOrbitFromData(s, d, o);
+  scc:=ImageOrbitSCCFromData(s, d, o);
+  o:=ImageOrbitFromData(s, d, o);
 
   for i in scc do
     if IsInjectiveTransOnList(f, o[i]) then
@@ -1134,11 +1196,11 @@ function(r)
           
       m:=Size(SchutzenbergerGroup(r)),
           
-      perms:=RClassPermsFromData(r!.parent, r!.data, r!.o),
+      perms:=ImageOrbitPermsFromData(r!.parent, r!.data, r!.o),
           
-      scc:=RClassSCC(r), 
+      scc:=ImageOrbitSCC(r), 
           
-      n:=Length(RClassSCC(r)),
+      n:=Length(ImageOrbitSCC(r)),
           
       at:=[1,0],
           
@@ -1162,8 +1224,8 @@ function(r)
       end,
           
       ShallowCopy:=iter-> rec( schutz:=List(SchutzenbergerGroup(r), x-> r!.rep*x),
-       m:=Size(SchutzenbergerGroup(r)), perms:=RClassPermsFromData(r!.parent,
-       r!.data, r!.o), scc:=RClassSCC(r), n:=Length(RClassSCC(r)), at:=[1,0])));
+       m:=Size(SchutzenbergerGroup(r)), perms:=ImageOrbitPermsFromData(r!.parent,
+       r!.data, r!.o), scc:=ImageOrbitSCC(r), n:=Length(ImageOrbitSCC(r)), at:=[1,0])));
   fi;
 
   SetIsIteratorOfRClassElements(iter, true);
@@ -1294,7 +1356,7 @@ InstallGlobalFunction(IteratorOfRClassRepsData,
       if not d[1] then #new rep!
         if IsTransformationMonoid(s) or not i = 1 then 
           d:=AddToOrbitsOfImages(s, x, d[2], O);
-          d[3]:=RClassSCCFromData(s, d, O)[1];
+          d[3]:=ImageOrbitSCCFromData(s, d, O)[1];
           iter!.i:=iter!.i+1;
           iter!.next_value:=d;
           return false;
@@ -1411,7 +1473,6 @@ end);
 InstallOtherMethod(NrIdempotents, "for an R-class of a trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
-  local out, ker, rep, n, o, i, img, j, scc;
 
   if HasIdempotents(r) then 
     return Length(Idempotents(r));
@@ -1424,21 +1485,50 @@ function(r)
   if Rank(r!.rep)=Degree(r!.parent) then 
     return 1;
   fi;
+  
+  return NrIdempotentsRClassFromData(r!.parent, r!.data, r!.o);
+end);
 
-  out:= 0;
-  rep:=r!.rep![1];
-  scc:=RClassSCC(r); 
-  o:=RClassImageOrbitFromData(r!.parent, r!.data, r!.o);
-  # JDM if the above line is set to RClassImageOrbit,  
-  # then this function runs about 7 or 8 times more slowly!
+# new for 4.0! NrIdempotentsRClassFromData - not a user function!
+#############################################################################
+# Usage: s = semigroup; d = image data; o = OrbitsOfImages(s/r) (optional)
 
-  for i in scc do 
+InstallGlobalFunction(NrIdempotentsRClassFromData, 
+function(arg)
+  local s, d, O, o, out, rep, scc, i;
+
+  s:=arg[1]; d:=arg[2];
+
+  if Length(arg)=3 then 
+    O:=arg[3];
+  else
+    O:=OrbitsOfImages(s);
+  fi;
+  
+  o:=O!.orbits[d[1]][d[2]];
+  
+  if IsBound(o!.nr_idempotents[d[4]][d[5]]) then 
+    return o!.nr_idempotents[d[4]][d[5]];
+  fi;
+
+  if d[1]=DegreeOfTransformationSemigroup(s) then
+    o!.nr_idempotents[d[4]][d[5]]:=1;
+    return 1;
+  fi;
+
+  out:=0; 
+  #JDM must add third argument for local R-classes!
+  rep:=RClassRepFromData(s, d, O)![1];
+  scc:=ImageOrbitSCCFromData(s, d, O);
+
+  for i in scc do
     i:=o[i];
-    if IsInjectiveTransOnList(rep, i) then 
+    if IsInjectiveTransOnList(rep, i) then
       out:=out+1;
     fi;
   od;
 
+  o!.nr_idempotents[d[4]][d[5]]:=out;
   return out;
 end);
 
@@ -1637,15 +1727,15 @@ function(r)
 
   f:=r!.rep;
   g:=Random(SchutzenbergerGroup(r));
-  i:=Random(RClassSCC(r));
+  i:=Random(ImageOrbitSCC(r));
   
-  return f*g*RClassPerms(r)[i]^-1; 
+  return f*g*ImageOrbitPerms(r)[i]^-1; 
 end);
 
 # new for 4.0!
 ############################################################################
 
-InstallMethod(RClassImageOrbit, "for an R-class of a trans. semigp.", 
+InstallMethod(ImageOrbit, "for an R-class of a trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
   local data;
@@ -1657,19 +1747,19 @@ end);
 # new for 4.0!
 ############################################################################
 
-InstallOtherMethod(RClassImageOrbit, "for a D-class of a trans. semigp.", 
-[IsGreensDClass and IsGreensClassOfTransSemigp],
-function(d)
-  local data;
-
-  data:=d!.data;
-  return d!.o[1]!.orbits[data[1]][data[2]];
-end);
+#InstallOtherMethod(ImageOrbit, "for a D-class of a trans. semigp.", 
+#[IsGreensDClass and IsGreensClassOfTransSemigp],
+#function(d)
+#  local data;
+#
+#  data:=d!.data;
+#  return d!.o[1]!.orbits[data[1]][data[2]];
+#end);
 
 # new for 4.0!
 ############################################################################
 
-InstallGlobalFunction(RClassImageOrbitFromData,
+InstallGlobalFunction(ImageOrbitFromData,
 function(arg)
   local s, d;
 
@@ -1726,7 +1816,7 @@ end);
 # new for 4.0!
 ############################################################################
 
-InstallGlobalFunction(RClassPermsFromData, 
+InstallGlobalFunction(ImageOrbitPermsFromData, 
 function(arg)
   local s, o, d;
 
@@ -1744,7 +1834,7 @@ end);
 # new for 4.0!
 ############################################################################
 
-InstallMethod(RClassPerms, "for an R-class of a trans. semigp.", 
+InstallMethod(ImageOrbitPerms, "for an R-class of a trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 function(r)
   local d;
@@ -1753,11 +1843,10 @@ function(r)
   return r!.o!.orbits[d[1]][d[2]]!.perms;
 end);
 
-
 # new for 4.0!
 ############################################################################
 
-InstallOtherMethod(RClassPerms, "for a D-class of a trans. semigp.", 
+InstallOtherMethod(ImageOrbitPerms, "for a D-class of a trans. semigp.", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
 function(r)
   local d;
@@ -1776,7 +1865,7 @@ end);
 # new for 4.0!
 ############################################################################
 
-InstallMethod(RClassSCC, "for an R-class of a trans. semigp.",
+InstallMethod(ImageOrbitSCC, "for an R-class of a trans. semigp.",
 [IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
   local d;
@@ -1788,7 +1877,7 @@ end);
 # new for 4.0!
 ############################################################################
 
-InstallOtherMethod(RClassSCC, "for a D-class of a trans. semigp.",
+InstallOtherMethod(ImageOrbitSCC, "for a D-class of a trans. semigp.",
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(r)
   local d;
@@ -1800,7 +1889,7 @@ end);
 # new for 4.0!
 ############################################################################
 
-InstallGlobalFunction(RClassSCCFromData,
+InstallGlobalFunction(ImageOrbitSCCFromData,
 function(arg)
   local s, o, d;
   s:=arg[1]; d:=arg[2];
@@ -1814,12 +1903,24 @@ function(arg)
   return o!.scc[d[4]];
 end);
 
-# new for 4.0! RClassSchutzGpFromData - not a user function!
+# new for 4.0! ImageOrbitSchutzGp - "for an R-class of a trans. semigp."
+############################################################################
+
+InstallMethod(ImageOrbitSchutzGp, "for an R-class of a trans. semigp.",
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+
+Info(InfoWarning, 1, "please use SchutzenbergerGroup instead");
+return SchutzenbergerGroup(r);
+end);
+
+
+# new for 4.0! ImageOrbitSchutzGpFromData - not a user function!
 ############################################################################
 # Usage: s = semigroup; d = image data (any format); o = OrbitsOfImages(s)
 # (optional).
 
-InstallGlobalFunction(RClassSchutzGpFromData, 
+InstallGlobalFunction(ImageOrbitSchutzGpFromData, 
 function(arg)
   local s, o, d;
 
@@ -1837,7 +1938,7 @@ end);
 # new for 4.0!
 ############################################################################
 
-InstallMethod(RClassStabChain, "for an R-class of a trans. semigp.", 
+InstallMethod(ImageOrbitStabChain, "for an R-class of a trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
   local d;
@@ -1849,7 +1950,7 @@ end);
 # new for 4.0!
 ############################################################################
 
-InstallOtherMethod(RClassStabChain, "for a D-class of a trans. semigp.", 
+InstallOtherMethod(ImageOrbitStabChain, "for a D-class of a trans. semigp.", 
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(r)
   local d;
@@ -1861,7 +1962,7 @@ end);
 # new for 4.0!
 ############################################################################
 
-InstallGlobalFunction(RClassStabChainFromData, 
+InstallGlobalFunction(ImageOrbitStabChainFromData, 
 function(arg)
   local s, d, o;
 
@@ -1901,63 +2002,6 @@ end);
 
 # new for 4.0!
 #############################################################################
-# not a user function!
-
-# Usage: gens = generators of the semigroup
-# o = image orbit
-# f = representative of scc with index k
-# k = index of scc containing position of image of f in o
-
-InstallGlobalFunction(SchutzGpOfImageOrbit,
-function(gens, o, f, k) 
-  local scc, bound, g, p, t, graph, is_sym, i, j;
-
-  scc:=o!.scc[k];
-
-  if Length(o[scc[1]])<1000 then 
-    bound:=Factorial(Length(o[scc[1]]));
-  else
-    bound:=infinity;
-  fi;
-
-  g:=Group(());
-  p:=o!.perms;
-  t:=o!.truth;
-  graph:=OrbitGraph(o);
-  is_sym:=false;
-
-  for i in scc do 
-    for j in [1..Length(gens)] do 
-    
-      if IsBound(graph[i][j]) and t[k][graph[i][j]] then
-        g:=ClosureGroup(g, PermLeftQuoTransformationNC(f, f/p[i] *
-         (gens[j]*p[graph[i][j]])));
-      fi; #keep track of schreier gens here!
-    
-      if Size(g)>=bound then 
-        is_sym:=true;
-        break;
-      fi;
-
-    od;
-
-    if Size(g)>=bound then 
-      break;
-    fi;
-
-  od;
-
-  if is_sym then
-    return [true, g];
-  elif Size(g)=1 then 
-    return [false, g];
-  fi;
-    
-  return [StabChainImmutable(g), g];
-end);
-
-# new for 4.0!
-#############################################################################
 ##  Algorithm C. 
 
 InstallOtherMethod(Size, "for an R-class of a trans. semigp.", 
@@ -1966,7 +2010,7 @@ function(r)
 
   Info(InfoMonoidGreens, 4, "Size: for an R-class");
 
-  return Size(SchutzenbergerGroup(r))*Length(RClassSCC(r));
+  return Size(SchutzenbergerGroup(r))*Length(ImageOrbitSCC(r));
 end);
 
 # new for 4.0!
@@ -2085,7 +2129,7 @@ function( o )
     Print("open "); 
   fi;
 
-  Print("orbit ", Length(o!.orbit));
+  Print("orbit, ", Length(o!.orbit));
 
   if o!.img then 
     Print(" images with size ", Length(o[1])); 

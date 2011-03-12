@@ -85,7 +85,7 @@ fi;
 
 rep:=DClassRepFromData(s, d, l!.o);
 
-perms:=RClassPermsFromData(s, d[1], o[1]);
+perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
 cosets:=DClassRCosetsFromData(s, d, o);
 
 return schutz=true or SiftedPermutation(schutz, 
@@ -372,7 +372,7 @@ l:=d[3][1][3]; #l not fail since we've done f in s!
 
 if not d[2] then #D-class containing f not previously calculated
 	# store the D-class containing f
-	d[3][1][3]:=RClassSCCFromData(s, d[3][1])[1];
+	d[3][1][3]:=ImageOrbitSCCFromData(s, d[3][1])[1];
 	# not sure the prev. step is necessary! JDM2 
 	d:=StructuralCopy(AddToOrbitsOfKernels(s, d[3][1][7], d[3])); 
 	#d[3][1][7] = f with rectified image!
@@ -760,7 +760,7 @@ else
 	o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
 fi;
 
-perms:=RClassPermsFromData(s, d[1], o[1]);
+perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
 cosets:=DClassRCosetsFromData(s, d, o);
 
 return f*(cosets[d[3][2]]/perms[d[3][1]]);
@@ -887,7 +887,7 @@ local i, d;
 ExpandOrbitsOfKernels(s);
 i:=0;
 for d in OrbitsOfKernels(s)!.data do 
-	i:=i+Length(DClassRCosetsFromData(s, d))*Length(RClassSCCFromData(s, d[1]));
+	i:=i+Length(DClassRCosetsFromData(s, d))*Length(ImageOrbitSCCFromData(s, d[1]));
 od;
 return i;
 end);
@@ -993,7 +993,7 @@ d:=l!.data;
 o:=l!.o;
 s:=l!.parent;
 
-perms:=RClassPermsFromData(s, d[1], o[1]);
+perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
 cosets:=DClassRCosetsFromData(s, d, o);
 
 return (g^KerRightToImgLeftFromData(s, d, o))^(cosets[d[3][2]]/perms[d[3][1]]);

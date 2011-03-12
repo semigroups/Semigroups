@@ -166,26 +166,25 @@ function(img)
   return ht;
 end);
 
-
-
-
 # new for 4.0!
 #############################################################################
 
 InstallGlobalFunction(HashTableForKernels, 
-function(ker)
-local hf, ht;
-hf:=function ( l, hashlen )
-local  v, i;
-v := 0;
-for i  in [ 1 .. Length( l ) ]  do
-	v := (v * 101 + ORB_HashFunctionForPlainFlatList( l[i], hashlen )) 
-	 mod hashlen;
-od;
-return v + 1;
-end;
+function(ker, n)
+local p, ht;
+#local hf, ht;
+#hf:=function ( l, hashlen )
+#local  v, i;
+#v := 0;
+#for i  in [ 1 .. Length( l ) ]  do
+#	v := (v * 101 + ORB_HashFunctionForPlainFlatList( l[i], hashlen )) 
+#	 mod hashlen;
+#od;
+#return v + 1;
+#end;
 
-ht := HTCreate(ker, rec( hf := hf, hfd := 100003, treehashsize := 100003 ));
+p:=Minimum(NextPrimeInt(Stirling2(n, Maximum(ker))), 100003);
+ht := HTCreate(ker, rec( hfd := p, treehashsize := p ));
 HTAdd(ht, ker, 1);
 
 return ht;

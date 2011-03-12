@@ -225,7 +225,7 @@ d:=InOrbitsOfKernels(s, f);
 l:=d[3][1][3];
 
 if not d[2] then #D-class containing f not previously calculated
-	d[3][1][3]:=RClassSCCFromData(s, d[3][1])[1];
+	d[3][1][3]:=ImageOrbitSCCFromData(s, d[3][1])[1];
 	d:=StructuralCopy(AddToOrbitsOfKernels(s, d[3][1][7], d[3])); 
 	d[2][8]:=1; #JDM this should probably go into AddToOrbitsOfKernels..
 else
@@ -366,8 +366,8 @@ end;
 f:=RClassRepFromData(d!.parent, d!.data[1], d!.o[1]);
 ker:=ImageAndKernelOfTransformation(f)[2];
 f:=f![1];
-o:=RClassImageOrbitFromData(d!.parent, d!.data[1], d!.o[1]);
-scc:=RClassSCCFromData(d!.parent, d!.data[1], d!.o[1]);
+o:=ImageOrbitFromData(d!.parent, d!.data[1], d!.o[1]);
+scc:=ImageOrbitSCCFromData(d!.parent, d!.data[1], d!.o[1]);
 
 for i in scc do
 	i:=o[i];
@@ -410,7 +410,7 @@ else
 fi;
 
 f:=RClassRepFromData(s, d[1], o[1]);
-perms:=RClassPermsFromData(s, d[1], o[1]);
+perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
 cosets:=DClassRCosetsFromData(s, d, o);
 
 return f*(cosets[d[3][2]]/perms[d[3][1]]);
@@ -633,7 +633,7 @@ local d, o, perms, cosets, s;
 d:=h!.data;
 o:=h!.o;
 s:=h!.parent;
-perms:=RClassPermsFromData(s, d[1], o[1]);
+perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
 cosets:=DClassRCosetsFromData(s, d, o);
 
 return DClassSchutzGpFromData(h!.parent, h!.data, h!.o)^

@@ -1,3 +1,16 @@
+gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
+>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
+>   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
+>   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
+gap> s:=Semigroup(gens);
+gap> f:=Transformation( [ 7, 1, 2, 2, 2, 4, 7, 7 ] );
+gap> g:=Transformation( [ 4, 4, 2, 1, 1, 7, 4, 1 ] );
+gap> d:=GreensDClassOfElement(s, f);
+gap> g in d;
+
+
+
+
 s:=FullTransformationSemigroup(8);;
 f:=Transformation([1,1,2,3,4,5,6,7]);;
 ExpandOrbitsOfImages(s);

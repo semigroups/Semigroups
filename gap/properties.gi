@@ -113,8 +113,8 @@ iter:=IteratorOfRClassRepsData(s);
 
 for d in iter do
 	f:=RClassRepFromData(s, d)![1];
-  o:=RClassImageOrbitFromData(s, d);
-  scc:=RClassSCCFromData(s, d);
+  o:=ImageOrbitFromData(s, d);
+  scc:=ImageOrbitFromData(s, d);
   reg:=false;
   n:=Length(o[1]);
   
@@ -285,8 +285,8 @@ local iter, r, d;
 if OrbitsOfKernels(s)!.finished then 
 	iter:=IteratorOfGreensDClasses(s);
 	for d in iter do 
-		if not (Size(RClassSchutzGpFromData(s, d!.data[1]))=1 and 
-		 Length(RClassSCCFromData(s, d!.data[1]))=1) then
+		if not (Size(ImageOrbitSchutzGpFromData(s, d!.data[1]))=1 and 
+		 Length(ImageOrbitFromData(s, d!.data[1]))=1) then
 			return false;
 		fi;
 	od;
@@ -300,8 +300,8 @@ iter:=IteratorOfRClassRepsData(s);
 # RClassSchutzGpFromData...
 
 for d in iter do 
-	if not (Size(RClassSchutzGpFromData(s, d))=1 and 
-	 Length(RClassSCCFromData(s, d))=1) then 
+	if not (Size(ImageOrbitSchutzGpFromData(s, d))=1 and 
+	 Length(ImageOrbitFromData(s, d))=1) then 
 		return false;
 	fi;
 od;
@@ -430,8 +430,8 @@ if OrbitsOfKernels(s)!.finished then
 	iter:=IteratorOfGreensDClasses(s);
 	for d in iter do 
 		f:=RClassRepFromData(s, d!.data[1]);
-		o:=DClassImageOrbit(s, d);
-		scc:=RClassSCCFromData(s, d!.data[1]);
+		o:=ImageOrbit(d);
+		scc:=ImageOrbitFromData(s, d!.data[1]);
 		reg:=false;
 		for i in scc do 
 			if foo(f, o[i]) then 
@@ -453,8 +453,8 @@ iter:=IteratorOfRClassRepsData(s);
 for d in iter do 
 	f:=RClassRepFromData(s, d)![1];
 	#JDM again it would be good to pass OrbitsOfImages!.orbits to RClasRepFromData
-	o:=RClassImageOrbitFromData(s, d);
-	scc:=RClassSCCFromData(s, d);
+	o:=ImageOrbitFromData(s, d);
+	scc:=ImageOrbitFromData(s, d);
 	reg:=false;
 	
 	for i in scc do 

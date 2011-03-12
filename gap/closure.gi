@@ -13,7 +13,7 @@ function(s, t, new, j, k)
 local O, o, filt, scc, r, m, old_scc, old_reps, ht, data, n, d, i, f, y, z, oo,
  o_t, val, l, reps, gens, g, h, kernels_ht, max, images;
 
-O:=RClassImageOrbitFromData(s, [j,k]);
+O:=ImageOrbitFromData(s, [j,k]);
 o:=StructuralCopy(O);
 o!.ht:=HashTableForImages(o[1]);
 for i in [1..Length(O)] do 
@@ -79,7 +79,7 @@ for m in [1..r] do
 		od;
 		
 		#old_reps[max]:=List(old_reps[max], x-> x*o!.perms[O!.scc[old_scc[max]][1]]);
-		o!.schutz[m]:=SchutzGpOfImageOrbit(gens, o, old_reps[max][1][1], m);
+		o!.schutz[m]:=CreateImageOrbitSchutzGp(gens, o, old_reps[max][1][1], m);
 		#reuse old schutz gp! JDM prev.line was o!.reps[m][1][1]
 		
 		if Size(o!.schutz[m][2])=Size(O!.schutz[old_scc[max]][2]) then 
@@ -143,7 +143,7 @@ for m in [1..r] do
 		o!.kernels_ht[m]:=HashTableForKernels(
 		 KernelOfTransformation(f));
 		o!.perms:=o!.perms+MultipliersOfSCCOfImageOrbit(gens, o, m);
-		o!.schutz[m]:=SchutzGpOfImageOrbit(gens, o, f, m);
+		o!.schutz[m]:=CreateImageOrbitSchutzGp(gens, o, f, m);
 
 		#install descendants of f in OrbitsOfImages(t)!.ht
 		ht:=OrbitsOfImages(t)!.ht; oo:=ht!.o;

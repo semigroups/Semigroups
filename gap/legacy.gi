@@ -1,3 +1,10 @@
+###########################################################################
+# 
+
+InstallGlobalFunction(DClassData, function(list)
+  return Objectify(NewType(NewFamily("Green's D Class Data", IsGreensDClassData),
+  IsGreensDClassData and IsGreensDClassDataRep), list);
+end);
 
 
 ###########################################################################
@@ -264,10 +271,10 @@ rep:=r!.rep;
 d:=r!.data;
 s:=r!.parent;
 
-scc:=RClassSCC(r);
+scc:=ImageOrbitSCC(r);
 l:=Position(scc, d[3]);
-o:=RClassImageOrbit(r){scc};
-p:=RClassPerms(r){scc};
+o:=ImageOrbit(r){scc};
+p:=ImageOrbitPerms(r){scc};
 g:=SchutzenbergerGroup(r);
 
 #d[3] is the index of the scc containing rep!

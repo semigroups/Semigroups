@@ -118,19 +118,18 @@ end);
 #Print("<constant with value ", f![1][1], " on ", Length(f![1]), " pts");
 #end);
 
-
-
 #new for 4.0!
 #############################################################################
 # returns a perm such that i -> ker[i]^f
 
 InstallGlobalFunction(AsPermOfKerImg,
 function(f)
-local ker;
+#local ker;
 
 if not IsBound(f![4]) then 
-	ker:=KernelOfTransformation(f);
-	f![4]:=MappingPermListList([1..Length(ker)], List(ker, x-> f![1][x[1]]));
+  #ker:=KernelOfTransformation(f);
+  #f![4]:=MappingPermListList([1..Length(ker)], List(ker, x-> f![1][x[1]]));
+  f![4]:=MappingPermListList(CanonicalTransSameKernel(f), f![1]);
 fi;
 
 return f![4];
@@ -139,6 +138,7 @@ end);
 # new for 4.0!
 ############################################################################
 # require a C version of PermRightQuoTransformation MNMN
+# remove! JDM 
 
 InstallGlobalFunction(PermRightQuoTransformationNC,
 function(f,g)
@@ -188,9 +188,9 @@ if not o!.finished then
 	return EvaluateWord(gens, w);
 else
 	d:=Random(o!.data);
-	g:=Random(RClassSchutzGpFromData(s, d));
-	i:=Random(RClassSCCFromData(s, d));
-	return RClassRepFromData(s, d)*g*RClassPermsFromData(s, d)[i]^-1; 
+	g:=Random(ImageOrbitSchutzGpFromData(s, d));
+	i:=Random(ImageOrbitSCCFromData(s, d));
+	return RClassRepFromData(s, d)*g*ImageOrbitPermsFromData(s, d)[i]^-1; 
 fi;
 end);
 
