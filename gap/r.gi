@@ -875,7 +875,7 @@ end);
 InstallMethod(GreensRClasses, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
 function(s)
-  local iter, out, i, f;
+  local iter, out, i, r;
 
   Info(InfoMonoidGreens, 4, "GreensRClasses");
 
@@ -883,9 +883,9 @@ function(s)
   out:=EmptyPlist(NrGreensRClasses(s));
   i:=0;
 
-  for f in iter do 
+  for r in iter do 
     i:=i+1;
-    out[i]:=f;
+    out[i]:=r;
   od;
 
   # JDM need to objectify GreensRClasses here if we want to have a method for 
@@ -917,11 +917,12 @@ end);
 
 # new for 4.0!
 #############################################################################
+# JDM double check everything is ok here!
 
 InstallOtherMethod(GreensRClassOfElementNC, "for a trans. semigp and trans.", 
 [IsTransformationSemigroup, IsTransformation],
 function(s, f)
-  local d, r, n, j, o;
+  local d, j, r, o, n;
 
   Info(InfoMonoidGreens, 4, "GreensRClassOfElementNC");
 
@@ -939,13 +940,17 @@ function(s, f)
 
   Info(InfoMonoidGreens, 2, "transformation may not be an element of semigroup");
 
-  n := DegreeOfTransformationSemigroup( s );
   j:=Length(ImageSetOfTransformation(f));
-  o:=[]; o[j]:=[ForwardOrbitOfImage(s, f, fail)[1]];
+  n:=DegreeOfTransformationSemigroup(s);
+  o:=[]; o[j]:=[ForwardOrbitOfImage(s, f)[1]]; 
+  #JDM ForwardOrbit here calculates the schutz gps., perms and so on 
+  #   of all the scc's of the orbit. We only need those for the first one...
+  #   add optional fifth arg that filters the scc's.
 
   o:=rec( finished:=false, orbits:=o, gens:=Generators(s), s:=s, 
-   deg := n, data:=[]);
-  #local orbits of images!
+   deg := n, data:=[], images:=fail, lens:=List([1..n], function(x) if x=j then
+   return 1; else return 0; fi; end), data_ht:=HTCreate([1,1,1,1,1,1]));
+  #local orbits of images! JDMJDM
 
   r:=CreateRClass(s, [j,1,1,1,1,1], o, f);
 
@@ -1576,7 +1581,6 @@ function(s)
   n := DegreeOfTransformationSemigroup( s );
   one := TransformationNC( [ 1 .. n ] );
 
-  # JDM should ht and ht!.o really be an Orb objects?
   ht := HTCreate(one);
   HTAdd(ht, one, true);
   
@@ -1585,7 +1589,6 @@ function(s)
   od;
   
   ht!.o := Concatenation([one], gens); 
-  # JDM 
 
   type:=NewType(FamilyObj(s), IsOrbitsOfImages);
 
@@ -1743,18 +1746,6 @@ function(r)
   data:=r!.data;
   return r!.o!.orbits[data[1]][data[2]];
 end);
-
-# new for 4.0!
-############################################################################
-
-#InstallOtherMethod(ImageOrbit, "for a D-class of a trans. semigp.", 
-#[IsGreensDClass and IsGreensClassOfTransSemigp],
-#function(d)
-#  local data;
-#
-#  data:=d!.data;
-#  return d!.o[1]!.orbits[data[1]][data[2]];
-#end);
 
 # new for 4.0!
 ############################################################################

@@ -70,7 +70,7 @@ d:=l!.data;
 s:=l!.parent;
 o:=l!.o;
 
-ol:=DClassKernelOrbitFromData(s, d, o);
+ol:=KernelOrbitFromData(s, d, o);
 i:=Position(ol, KernelOfTransformation(f));
 
 if i = fail or not ol!.truth[d[2][4]][i] then 
@@ -499,7 +499,7 @@ out:= EmptyPlist(Size(l)/NrGreensHClasses(l));
 #JDM Sum_{k=0..n} C(n,k)*(n-k)^k= # idempotents in T(n)
 f:=l!.rep; n:=Degree(f);
 img:=ImageAndKernelOfTransformation(f)[1];
-o:=DClassKernelOrbitFromData(l!.parent, l!.data, l!.o);
+o:=KernelOrbitFromData(l!.parent, l!.data, l!.o);
 scc:=LClassSCC(l);  j:=0;
 
 for i in scc do
@@ -691,11 +691,11 @@ IsGreensLClassData and IsGreensLClassDataRep), list);
 end);
 
 ############################################################################
-# remove the following JDM replace it with a method for DClassKernelOrbit
+# remove the following JDM replace it with a method for KernelOrbit
 
 InstallMethod(LClassKernelOrbit, "for an L-class of a trans. semigp.",
 [IsGreensLClass and IsGreensClassOfTransSemigp],
-l-> DClassKernelOrbitFromData(l!.parent, l!.data, l!.o));
+l-> KernelOrbitFromData(l!.parent, l!.data, l!.o));
 
 ############################################################################
 

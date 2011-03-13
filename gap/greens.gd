@@ -57,7 +57,6 @@ DeclareGlobalFunction("DisplayOrbitsOfImages");
 DeclareGlobalFunction("ExpandOrbitsOfImages");
 DeclareGlobalFunction("ForwardOrbitOfImage");
 DeclareAttribute("GreensHClassRepsData", IsTransformationSemigroup);
-
 DeclareAttribute("ImageOrbit", IsGreensRClass and 
  IsGreensClassOfTransSemigp, "mutable"); # mutable essential!
 DeclareGlobalFunction("ImageOrbitFromData");
@@ -73,8 +72,6 @@ DeclareGlobalFunction("ImageOrbitSchutzGpFromData");
 DeclareGlobalFunction("ImageOrbitStabChainFromData");
 DeclareAttribute("ImageOrbitStabChain", IsGreensRClass and 
  IsGreensClassOfTransSemigp);
-
-
 DeclareGlobalFunction("InOrbitsOfImages");
 DeclareGlobalFunction("IsRegularRClassData");
 DeclareGlobalFunction("IteratorOfNewRClassRepsData");
@@ -97,42 +94,42 @@ DeclareAttribute("PartialOrderOfDClasses", IsSemigroup, "mutable");
 # the following functions in d.gi are currently undocumented
 
 DeclareGlobalFunction("AddToOrbitsOfKernels");
-
 DeclareGlobalFunction("CreateDClass");
 DeclareGlobalFunction("CreateKernelOrbitSchutzGp");
-
-# introduce FromData versions of all of the below? 
-DeclareAttribute("DClassImageOrbitCosets", IsGreensDClass and
- IsGreensClassOfTransSemigp);
-DeclareAttribute("DClassKernelOrbit", IsGreensDClass and
- IsGreensClassOfTransSemigp, "mutable");
-DeclareAttribute("DClassKernelOrbitCosets", IsGreensDClass and
- IsGreensClassOfTransSemigp);
-DeclareGlobalFunction("DClassKernelOrbitFromData"); 
-DeclareAttribute("DClassKernelOrbitSCC", IsGreensDClass and
- IsGreensClassOfTransSemigp);
-DeclareAttribute("DClassKernelOrbitSchutzGp", IsGreensDClass and
- IsGreensClassOfTransSemigp);
-DeclareAttribute("DClassKernelOrbitStabChain", IsGreensDClass and
- IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("DClassRClassRepsDataFromData");
-DeclareAttribute("DClassRels", IsGreensDClass and
- IsGreensClassOfTransSemigp);
  DeclareGlobalFunction("DClassRepFromData");
 DeclareGlobalFunction("DClassSchutzGpFromData");
 DeclareAttribute("DClassType", IsTransformationSemigroup);
 DeclareGlobalFunction("DisplayOrbitsOfKernels");
 DeclareGlobalFunction("ExpandOrbitsOfKernels");
+DeclareGlobalFunction("ForwardOrbitOfKernel");
+DeclareAttribute("GeneratorsAsListOfImages", IsTransformationSemigroup);
 
+
+DeclareAttribute("ImageOrbitCosets", IsGreensDClass and
+ IsGreensClassOfTransSemigp);
+DeclareAttribute("KernelOrbit", IsGreensDClass and
+ IsGreensClassOfTransSemigp, "mutable");
+DeclareGlobalFunction("KernelOrbitFromData"); 
+DeclareAttribute("KernelOrbitCosets", IsGreensDClass and
+ IsGreensClassOfTransSemigp);
+DeclareAttribute("KernelOrbitRels", IsGreensDClass and
+ IsGreensClassOfTransSemigp);
+DeclareGlobalFunction("KernelOrbitRelsFromData");
+DeclareAttribute("KernelOrbitSCC", IsGreensDClass and
+ IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("KernelOrbitSCCFromData");
+DeclareAttribute("KernelOrbitSchutzGp", IsGreensDClass and
+ IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("KernelOrbitSchutzGpFromData");
+DeclareAttribute("KernelOrbitStabChain", IsGreensDClass and
+ IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("KernelOrbitStabChainFromData");
 
 ##
 # the following functions have not yet been processed for release!
 
 
-DeclareGlobalFunction("KernelOrbitRelsFromData");
 
 
 DeclareGlobalFunction("SizeOrbitsOfKernels");
@@ -148,6 +145,7 @@ DeclareGlobalFunction("PreInOrbitsOfKernels");
 # the following functions should be removed!
 
 DeclareGlobalFunction("RClassRepsDataFromOrbits");
+DeclareAttribute("GreensDClass", IsGreensRClass);
 
 # newly introduced 2011
 
@@ -203,7 +201,6 @@ DeclareGlobalFunction("DClassRelsFromData");
 DeclareGlobalFunction("DClassImgSCCFromData");
 
 
-DeclareAttribute("GreensDClass", IsGreensRClass);
 DeclareAttribute("GreensRClass", IsGreensHClass);
 DeclareAttribute("GreensLClass", IsGreensHClass);
 
@@ -284,7 +281,6 @@ DeclareGlobalFunction("DClassLCosetsFromData");
 #DeclareGlobalFunction("DClassStabChainFromData");
 
 
-DeclareGlobalFunction("ForwardOrbitOfKernel");
 
 DeclareAttribute("GreensRClassRepsData", IsTransformationSemigroup);
 #DeclareGlobalFunction("RClassRepsData");
@@ -298,7 +294,6 @@ DeclareProperty("IsMonoidPkgImgKerOrbit", IsOrbit);
 
 DeclareAttribute("GroupHClass", IsGreensDClass and IsGreensClassOfTransSemigp);
 
-DeclareAttribute("GeneratorsAsListOfImages", IsTransformationSemigroup);
 
 
 # probably get rid of the following...

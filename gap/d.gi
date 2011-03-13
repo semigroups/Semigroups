@@ -112,7 +112,7 @@ function(f, d)
 
   g:=f*o!.perms[i]; #adjust image of f so that it is equal o[scc[1]]
   
-  o:=DClassKernelOrbit(d);
+  o:=KernelOrbit(d);
   ker:=CanonicalTransSameKernel(g);
 
   i:=Position(o, ker);
@@ -127,14 +127,14 @@ function(f, d)
     return true;
   fi;
 
-  schutz:=DClassKernelOrbitStabChain(d); #JDM
+  schutz:=KernelOrbitStabChain(d); #JDM
 
   if schutz=true or schutz=false then
     return schutz;
   fi;
   
   p:=KerRightToImgLeftFromData(d!.parent, d!.data, d!.o)^-1;
-  cosets:=DClassImageOrbitCosets(d);
+  cosets:=ImageOrbitCosets(d);
   g:= PermLeftQuoTransformationNC(rep, g);
 
   for i in cosets do 
@@ -299,7 +299,7 @@ end);
 # f = transformation; k = index of the scc of o containing the image of f
 
 # Notes: creates the Schutzenberger group of the kernel orbit 
-# (which is KerRight?)
+# (which is KerRight)
 
 InstallGlobalFunction(CreateKernelOrbitSchutzGp,
 function(gens, o, f, k) 
@@ -349,150 +349,14 @@ end);
 
 #DDD
 
-# new for 4.0! - ImageOrbit - "for a D-class of a trans. semigp"
-#############################################################################
-# equivalently RClassImageOrbitFromData(d!.parent, d!.data[1], d!.o[1]);
-
-InstallOtherMethod(ImageOrbit, "for a D-class of a trans. semigp", 
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(d)
-  local e;
-  e:=d!.data[1];
-  return d!.o[1]!.orbits[e[1]][e[2]];
-end);
-
-#new for 4.0! - DClassImageOrbitCosets - not a user function!
-###########################################################################
-# Notes: returns a transversal of right cosets of SchutzenbergerGroup(d)
-# (which is ImgLeft) in ImageOrbitSchutzGp (which is ImgLeft). 
-
-InstallMethod(DClassImageOrbitCosets, "for a D-class of trans. semigroup", 
-[IsGreensDClass and IsGreensClassOfTransSemigp],
-function(d)
-  local D;
-  D:=d!.data[2];
-  return d!.o[2]!.orbits[D[1]][D[2]]!.d_schutz[D[4]][D[5]][D[6]][3];
-end);
-
-# new for 4.0! - ImageOrbitFromData - not a user function!
-#############################################################################
-# equivalently RClassImageOrbitFromData(arg[1], arg[2][1], arg[3][1]);
-
-# Usage: s - semigroup; d - D-class data; o - orbits of images and kernels
-
-#InstallGlobalFunction(ImageOrbitFromData, 
-#function(arg)
-#  local s, d;
-#
-#  s:=arg[1]; d:=arg[2][1];
-#
-#  if Length(arg)=3 then
-#    return arg[3][1]!.orbits[d[1]][d[2]];
-#  fi;
-
-#  return OrbitsOfImages(s)!.orbits[d[1]][d[2]];
-#end);
-
-# new for 4.0! - ImageOrbitSchutzGp - not a user function!
-############################################################################
-# Notes: returns the schutz. gp. of the image orbit of the D-class, which is
-# ImgLeft. Equivalent, to ImageOrbitSchutzGpFromData(d!.parent, d!.data[1],
-# d!.o[1]).
-
-InstallOtherMethod(ImageOrbitSchutzGp, "for a D-class of a trans. semigp.",
-[IsGreensDClass and IsGreensClassOfTransSemigp],
-function(d)
-  local e;
-  e:=d!.data[1];
-  return d!.o[1]!.orbits[e[1]][e[2]]!.schutz[e[4]][2];
-end);
-
-# new for 4.0! - DClassKernelOrbit - not a user function!
-############################################################################
-
-InstallMethod(DClassKernelOrbit, "for a D-class of a trans. semigp.", 
-[IsGreensDClass and IsGreensClassOfTransSemigp],
-function(d)
-  local e;
-  e:=d!.data[2];
-  return d!.o[2]!.orbits[e[1]][e[2]];
-end);
-
-#new for 4.0! - DClassKernelOrbitCosets - not a user function!
-###########################################################################
-# Notes: returns a transversal of right cosets of SchutzenbergerGroup(d)
-# (which is ImgLeft) in KernelOrbitSchutzGp^KerRightToImgLeft(d) (which is
-# ImgLeft after conjugating). 
-
-InstallMethod(DClassKernelOrbitCosets, "for a D-class of trans. semigroup", 
-[IsGreensDClass and IsGreensClassOfTransSemigp],
-function(d)
-  local schutz;
-
-  schutz:=KernelOrbitSchutzGpFromData(d!.parent, d!.data[2], d!.o[2]); 
-
-  if Size(schutz)=1 then 
-   return [()];
-  fi;
-
-  return RightTransversal(schutz^KerRightToImgLeft(d), 
-   SchutzenbergerGroup(d));
-end);
-
-# new for 4.0! - DClassKernelOrbitFromData - not a user function!
-############################################################################
-# Usage: s - semigroup; d - D-class data; o - orbits of images and kernels
-
-InstallGlobalFunction(DClassKernelOrbitFromData,
-function(arg)
-  local s, d;
-
-  s:=arg[1]; d:=arg[2][2];
-
-  if Length(arg)=3 then
-    return arg[3][2]!.orbits[d[1]][d[2]];
-  fi;
-
-  return OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
-end);
-
-# new for 4.0! - DClassKernelOrbitSchutzGp - not a user function!
-############################################################################
-# Notes: returns the schutz. gp. of the kernel orbit of the D-class, which is
-# KerRight.
-
-InstallMethod(DClassKernelOrbitSchutzGp, "for a D-class of a trans. semigp.",
-[IsGreensDClass and IsGreensClassOfTransSemigp],
-function(d)
-  local e;
-  e:=d!.data[2];
-  return d!.o[2]!.orbits[e[1]][e[2]]!.schutz[e[4]][2];
-end);
-
-# new for 4.0! - DClassKernelOrbitStabChain - not a user function!
-############################################################################
-# Notes: returns true, false, or the stabilizer chain of the right Schutzenberger 
-# group of the specified kernel orbit. True indicates the Schutz. gp.
-# is the symmetric group, false indicates it is trivial. Note that the right 
-# Schutzenberger group is obtained by considering the right action on kernels
-# classes. Use KerRightToImgLeft to switch from the right Schutz. gp. to the
-# left one corresponding a specific D-class. 
-
-InstallMethod(DClassKernelOrbitStabChain, "for a D-class of a trans. semigp.",
-[IsGreensDClass and IsGreensClassOfTransSemigp],
-function(d)
-  local e;
-  e:=d!.data[2];
-  return d!.o[2]!.orbits[e[1]][e[2]]!.schutz[e[4]][1];
-end);
-
 # new for 4.0! - DClassRClassRepsDataFromData - not a user function!
 ############################################################################
 # Usage: s = semigroup; d = [image data, kernel data]; o = [OrbitsOfImages(s),
 # OrbitsOfKernels(s)] (optional)
 
 # Notes: returns the R-class reps data of the D-class with the given data if it
-# is bound.
+# is bound, this is the R-class reps data found during the iteration of all 
+# D-classes.
 
 InstallGlobalFunction(DClassRClassRepsDataFromData,
 function(arg)
@@ -510,17 +374,6 @@ function(arg)
     return o!.r_reps[d[4]][d[5]][d[6]];
   fi;
   return fail;
-end);
-
-# new for 4.0! - DClassRels - "for a D-class of a trans. semigp"
-############################################################################
-
-InstallMethod(DClassRels,"for a D-class of a trans. semigp",
-[IsGreensDClass and IsGreensClassOfTransSemigp],
-function(d)
-  local e;
-  e:=d!.data[2]; 
-  return d!.o[2]!.orbits[e[1]][e[2]]!.rels;
 end);
 
 # new for 4.0! - DClassRepFromData - not a user function!
@@ -543,25 +396,15 @@ function(arg)
   return o!.reps[d[4]][d[5]][d[6]];
 end);
 
-# new for 4.0! - DClassKernelOrbitSCC - not a user function!
-#############################################################################
-
-InstallMethod(DClassKernelOrbitSCC, "for a D-class of a trans. semigp", 
-[IsGreensDClass and IsGreensClassOfTransSemigp],
-function(d)
-  local e;
-  
-  e:=d!.data[2];
-  return d!.o[2]!.orbits[e[1]][e[2]]!.scc[e[4]];
-end);
-
 # new for 4.0! - DClassSchutzGpFromData - not a user function!
 #############################################################################
 # Usage: s - semigroup; d - [image data, kernel data]; o - [orbits of image,
 # orbits of kernels] (optional).
 
-# Notes: returns the schutz. gp. of the D-class (which is ImgLeft) and a 
+# Notes: returns the schutz. gp. of the D-class (which is ImgLeft) and is a 
 # subgroup of ImageOrbitSchutzGpFromData(s, d[1], o[1]) (which is ImgLeft). 
+# This is the intersection of ImageOrbitSchutzGp and
+# KernelOrbitSchutzGp^KerRightToImgLeft.
 
 InstallGlobalFunction(DClassSchutzGpFromData, 
 function(arg)
@@ -580,12 +423,54 @@ end);
 
 #new for 4.0! - DClassOfRClass - "for an R-class of a trans. semigroup"
 #############################################################################
-# Notes: returns the D-class containing the R-class r. Only for compatibility
-# with the library functions.
+# Notes: this does not check if the representative of r is an element of s.
 
-InstallOtherMethod(DClassOfRClass, "for an R-class of a trans. semigroup",
+# JDM double check that ker_o doesn't require more components...
+
+InstallOtherMethod(DClassOfRClass, "for an R-class of a trans. semigroup", 
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
-r-> GreensDClass(r));
+function(r)
+  local s, f, d, data, j, img_o, ker_o;
+
+  s:=r!.parent; f:=r!.rep;
+  d:=PreInOrbitsOfKernels(s, f);
+
+  if d[1][1] or d[2][1] then # f in s!
+    data:=[d[1][2]]; 
+    Info(InfoMonoidGreens, 2, "transformation is an element of the semigroup");
+    if d[2][1] then # f in existing D-class
+      data[2]:=d[2][2];
+    else #f not in existing D-class
+      data:=AddToOrbitsOfKernels(s, f, [d[1][2], d[2][2]]);
+    fi;
+
+    return CreateDClass(s, data, [OrbitsOfImages(s), 
+    OrbitsOfKernels(s)], DClassRepFromData(s, data));
+  
+  elif OrbitsOfImages(s)!.finished then #f not in s!
+    Info(InfoMonoidGreens, 2, "transformation is not an element of the ",
+    "semigroup");
+    return fail;
+  fi;
+
+  Info(InfoMonoidGreens, 2, "transformation may not be an element of the ",
+   "semigroup");
+
+  j:=Length(ImageSetOfTransformation(f));
+
+  img_o:=r!.o;
+
+  Info(InfoMonoidGreens, 2, "finding orbit of kernel...");
+  ker_o:=[]; ker_o[j]:=[ForwardOrbitOfKernel(s, f)];
+  d:=[j,1,1,1,1,1];
+  ker_o:=rec(gens:=Generators(s), orbits:=ker_o, data:=[]);
+
+  Info(InfoMonoidGreens, 2, "finding the Schutzenberger group...");
+  Add(ker_o!.orbits[j][1]!.d_schutz[1], 
+   [CreateSchutzGpOfDClass(s, [r!.data, d], [img_o, ker_o])]);
+  
+  return CreateDClass(s, [r!.data, d], [img_o, ker_o], f);
+end);
 
 #new for 4.0! - DClassType - "for a transformation semigroup"
 ############################################################################# 
@@ -632,6 +517,8 @@ function(s)
   Print("kernels: \t"); View(o!.kernels); Print("\n");
   return true;
 end);
+
+#EEE
 
 # new for 4.0! - Enumerator - "for a D-class of trans. semigp."
 #############################################################################
@@ -699,8 +586,6 @@ function(d)
   return enum;
 end);
 
-#JDMJDM
-
 #new for 4.0! - ExpandOrbitsOfKernels - not a user function!
 #############################################################################
 
@@ -719,14 +604,15 @@ function(s)
   return true;
 end);
 
-# new for 4.0! ForwardOrbitOfKernel - not a user function!
-#############################################################################
+#FFF
 
+# new for 4.0! - ForwardOrbitOfKernel - not a user function!
+#############################################################################
 # Usage: s = semigroup; f = transformation; 
 # kernels = OrbitsOfKernels(s)!.kernels (optional); 
 # gens = GeneratorsAsListOfImages(s) (optional).
 
-# maybe this should take the image data as input also! and then d_schutz should 
+# JDM maybe this should take the image data as input also! and then d_schutz should 
 # in this function
 
 InstallGlobalFunction(ForwardOrbitOfKernel, 
@@ -750,7 +636,7 @@ function(arg)
 
   gens:=Generators(s);
 
-  ker:=CanonicalTransSameKernel(f![1]); # JDM check if f![6] is bound first.
+  ker:=CanonicalTransSameKernel(f![1]);
   deg:=DegreeOfTransformationSemigroup(s);
   j:=MaximumList(ker); # rank!
           
@@ -796,7 +682,7 @@ function(arg)
   o!.trees[1]:=CreateSchreierTreeOfSCC(o,1); 
   o!.reverse[1]:=CreateReverseSchreierTreeOfSCC(o,1);
 
-  #representatives of L-classes with kernel belonging in scc[i] partitioned 
+  #representatives of D-classes with kernel belonging in scc[i] partitioned 
   #according to their kernels
   o!.reps:=List([1..r], x-> []);
   Add(o!.reps[1], [f]);
@@ -805,143 +691,273 @@ function(arg)
   o!.r_reps:=List([1..r], x-> []);
   Add(o!.r_reps[1], [[]]); 
 
-  #JDM modify the following!
+  #JDM modify the following if you decide to get rid of KerRight!
   o!.convert:=List([1..r], x-> []);
   Add(o!.convert[1], [AsPermOfKerImg(f)]);
 
-  #images of representatives of L-classes with kernel belonging in scc[i]
+  #images of representatives of D-classes with kernel belonging in scc[i]
   o!.images_ht:=[HashTableForImagesFixedSize(f![1])];
 
   #multipliers of scc containing the kernel of f
   o!.rels:=EmptyPlist(Length(o));
   o!.rels:=o!.rels+MultipliersOfSCCOfKernelOrbit(gens, o, 1);
           
-  #schutzenberger group
+  #schutzenberger group of kernel orbit KerRight
   o!.schutz:=EmptyPlist(r);
   o!.schutz[1]:=CreateKernelOrbitSchutzGp(gens, o, f, 1);
 
+  #intersection of image orbit and kernel orbit schutz. gps ImgLeft
   o!.d_schutz:=List([1..r], x-> []);
   return o;
 end);
 
 #GGG
 
-#new for 4.0!
+#new for 4.0! - GeneratorsAsListOfImages - "for a trans. semigp."
 #############################################################################
 
 InstallMethod(GeneratorsAsListOfImages, "for a trans. semigp.", 
 [IsTransformationSemigroup],
 s-> List(Generators(s), f-> f![1]));
 
-#new for 4.0!
+# new for 4.0! - GreensDClasses - "for a transformation semigroup"
 #############################################################################
-# think about removing this and replacing it with GreensDClassOfRClass? JDM
-
-InstallOtherMethod(GreensDClass, "for an R-class of a trans. semigroup", 
-[IsGreensRClass and IsGreensClassOfTransSemigp], 
-function(r)
-  local s, f, d, data, j, o1, o2;
-
-  s:=r!.parent; f:=r!.rep;
-  d:=PreInOrbitsOfKernels(s, f);
-
-  if d[1][1] or d[2][1] then # f in s!
-    data:=[d[1][2]]; 
-    Info(InfoMonoidGreens, 2, "transformation is an element of the semigroup");
-    if d[2][1] then # f in existing D-class
-      data[2]:=d[2][2];
-    else #f not in existing D-class
-      data:=AddToOrbitsOfKernels(s, f, [d[1][2], d[2][2]]);
-    fi;
-
-    return CreateDClass(s, data, [OrbitsOfImages(s), 
-    OrbitsOfKernels(s)], DClassRepFromData(s, data));
-  
-  elif OrbitsOfImages(s)!.finished then #f not in s!
-    Info(InfoMonoidGreens, 2, "transformation is not an element of the ",
-    "semigroup");
-    return fail;
-  fi;
-
-  Info(InfoMonoidGreens, 2, "transformation may not be an element of the ",
-   "semigroup");
-
-  j:=Length(ImageSetOfTransformation(f));
-
-  o1:=r!.o;
-
-  Info(InfoMonoidGreens, 2, "finding orbit of kernel...");
-  o2:=[];
-  o2[j]:=[ForwardOrbitOfKernel(s, f, function(o, scc) return scc[1]=1; end)];
-
-  d:=[j,1,1,1,1,1];
-  o2:=rec(gens:=Generators(s), orbits:=o2, data:=[]);
-
-  Info(InfoMonoidGreens, 2, "finding the Schutzenberger group...");
-  Add(o2!.orbits[j][1]!.d_schutz[1], 
-   [DClassSchutzGpFromData(s, [r!.data, d])]);
-
-  return CreateDClass(s, [r!.data, d], [o1, o2], f);
-end);
-
-#new for 4.0!
-#############################################################################
-# JDM test!
-
-InstallOtherMethod(GreensDClass, "for an L-class of a trans. semigroup", 
-[IsGreensLClass and IsGreensClassOfTransSemigp], 
-function(l)
-local s, d, o, rep;
-
-s:=l!.parent;
-d:=l!.data{[1,2]};
-o:=l!.o;
-#JDM couldn't the below be DClassRepFromData(s, l!.data, o)?
-rep:=LClassRepFromData(s, Concatenation(d, [[1,1]]), o);
-
-return CreateDClass(s, d, o, rep);
-end);
-
-#new for 4.0!
-#############################################################################
-# JDM test!
-
-InstallOtherMethod(GreensDClass, "for an H-class of a trans. semigroup", 
-[IsGreensHClass and IsGreensClassOfTransSemigp], 
-function(h)
-local s, d, o, rep;
-
-s:=h!.parent;
-d:=h!.data;
-o:=h!.o;
-rep:=DClassRepFromData(s, d, o);
-
-d:=d{[1,2]}; #JDM this line can be omitted when things are cleanup!
-
-return CreateDClass(s, d, o, rep);
-end);
-
-
-# new for 4.0!
-#############################################################################
-# JDM test the efficiency of this function!
 
 InstallMethod(GreensDClasses, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
 function(s)
-local iter, out, i;
+  local iter, out, i, d;
 
-iter:=IteratorOfGreensDClasses(s);
-out:=EmptyPlist(Length(OrbitsOfKernels(s)!.data));
-#JDM is the previous a good idea?
+  iter:=IteratorOfGreensDClasses(s);
+  out:=EmptyPlist(NrGreensDClasses(s));
+  i:=0;
 
-for i in iter do 
-	out[Length(out)+1]:=i;
-od;
+  for d in iter do
+    i:=i+1;
+    out[i]:=d;
+  od;
 
-return out;
+  return out;
 end);
 
+#III
+
+# new for 4.0! - ImageOrbit - "for a D-class of a trans. semigp"
+#############################################################################
+# equivalently ImageOrbitFromData(d!.parent, d!.data[1], d!.o[1]);
+
+InstallOtherMethod(ImageOrbit, "for a D-class of a trans. semigp", 
+[IsGreensDClass and IsGreensClassOfTransSemigp], 
+function(d)
+  local e;
+  e:=d!.data[1];
+  return d!.o[1]!.orbits[e[1]][e[2]];
+end);
+
+#new for 4.0! - ImageOrbitCosets - not a user function!
+###########################################################################
+# Notes: returns a transversal of right cosets of SchutzenbergerGroup(d)
+# (which is ImgLeft) in ImageOrbitSchutzGp (which is ImgLeft). 
+
+InstallMethod(ImageOrbitCosets, "for a D-class of trans. semigroup", 
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+  local D;
+  D:=d!.data[2];
+  return d!.o[2]!.orbits[D[1]][D[2]]!.d_schutz[D[4]][D[5]][D[6]][3];
+end);
+
+# new for 4.0! - ImageOrbitSchutzGp - not a user function!
+############################################################################
+# Notes: returns the schutz. gp. of the image orbit of the D-class, which is
+# ImgLeft. Equivalent, to ImageOrbitSchutzGpFromData(d!.parent, d!.data[1],
+# d!.o[1]).
+
+InstallOtherMethod(ImageOrbitSchutzGp, "for a D-class of a trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+  local e;
+  e:=d!.data[1];
+  return d!.o[1]!.orbits[e[1]][e[2]]!.schutz[e[4]][2];
+end);
+
+#KKK
+
+# new for 4.0! - KernelOrbit - not a user function!
+############################################################################
+
+InstallMethod(KernelOrbit, "for a D-class of a trans. semigp.", 
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+  local e;
+  e:=d!.data[2];
+  return d!.o[2]!.orbits[e[1]][e[2]];
+end);
+
+# new for 4.0! - KernelOrbitFromData - not a user function!
+############################################################################
+# Usage: s - semigroup; d - D-class data; o - orbits of images and kernels
+
+InstallGlobalFunction(KernelOrbitFromData,
+function(arg)
+  local s, d;
+
+  s:=arg[1]; d:=arg[2][2];
+
+  if Length(arg)=3 then
+    return arg[3][2]!.orbits[d[1]][d[2]];
+  fi;
+
+  return OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
+end);
+
+#new for 4.0! - KernelOrbitCosets - not a user function!
+###########################################################################
+# Notes: returns a transversal of right cosets of SchutzenbergerGroup(d)
+# (which is ImgLeft) in KernelOrbitSchutzGp^KerRightToImgLeft(d) (which is
+# ImgLeft after conjugating). 
+
+InstallMethod(KernelOrbitCosets, "for a D-class of trans. semigroup", 
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+  local schutz;
+
+  schutz:=KernelOrbitSchutzGpFromData(d!.parent, d!.data[2], d!.o[2]); 
+
+  if Size(schutz)=1 then 
+   return [()];
+  fi;
+
+  return RightTransversal(schutz^KerRightToImgLeft(d), 
+   SchutzenbergerGroup(d));
+end);
+
+# new for 4.0! - KernelOrbitRels - "for a D-class of a trans. semigp"
+############################################################################
+
+InstallMethod(KernelOrbitRels,"for a D-class of a trans. semigp",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+  local e;
+  e:=d!.data[2]; 
+  return d!.o[2]!.orbits[e[1]][e[2]]!.rels;
+end);
+
+# JDM install method for KernelOrbitRelsFromData here...
+
+# new for 4.0! - KernelOrbitSCC - not a user function!
+#############################################################################
+
+InstallMethod(KernelOrbitSCC, "for a D-class of a trans. semigp", 
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+  local e;
+  
+  e:=d!.data[2];
+  return d!.o[2]!.orbits[e[1]][e[2]]!.scc[e[4]];
+end);
+
+# new for 4.0! - KernelOrbitSCCFromData - not a user function!
+############################################################################
+# Usage: s = semigroup; d = kernel data; o = OrbitsOfKernels(s) (optional)
+
+InstallGlobalFunction(KernelOrbitSCCFromData, 
+function(arg)
+  local s, d, o;
+
+  s:=arg[1]; d:=arg[2];
+
+  if Length(arg)=3 then
+    o:=arg[3]!.orbits[d[1]][d[2]];
+  else
+    o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
+  fi;
+
+  return o!.scc[d[4]];
+end);
+
+# new for 4.0! - KernelOrbitSchutzGp - not a user function!
+############################################################################
+# Notes: returns the schutz. gp. of the kernel orbit of the D-class, which is
+# KerRight.
+
+InstallMethod(KernelOrbitSchutzGp, "for a D-class of a trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+  local e;
+  e:=d!.data[2];
+  return d!.o[2]!.orbits[e[1]][e[2]]!.schutz[e[4]][2];
+end);
+
+# new for 4.0! KernelOrbitSchutzGpFromData - not a user function!
+############################################################################
+# Usage: s = semigroup; d = kernel data; o = OrbitsOfKernels(s) (optional)
+
+# Notes: returns the right Schutzenberger group (acting on kernels on the right) 
+# of the kernel orbit with the given data. Use KerRightToImgLeft to switch from 
+# the right Schutz. gp. to the left one corresponding to a specific D-class. 
+
+InstallGlobalFunction(KernelOrbitSchutzGpFromData,
+function(arg)
+  local s, d, o;
+
+  s:=arg[1]; d:=arg[2];
+
+  if Length(arg)=3 then
+    o:=arg[3]!.orbits[d[1]][d[2]];
+  else
+    o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
+  fi;
+
+  return o!.schutz[d[4]][2];
+end);
+
+# new for 4.0! - KernelOrbitStabChain - not a user function!
+############################################################################
+# Notes: returns true, false, or the stabilizer chain of the right Schutzenberger 
+# group of the specified kernel orbit. True indicates the Schutz. gp.
+# is the symmetric group, false indicates it is trivial. Note that the right 
+# Schutzenberger group is obtained by considering the right action on kernels
+# classes. Use KerRightToImgLeft to switch from the right Schutz. gp. to the
+# left one corresponding a specific D-class. 
+
+InstallMethod(KernelOrbitStabChain, "for a D-class of a trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+  local e;
+  e:=d!.data[2];
+  return d!.o[2]!.orbits[e[1]][e[2]]!.schutz[e[4]][1];
+end);
+
+# new for 4.0! - KernelOrbitStabChainFromData - not a user function!
+############################################################################
+
+# Usage: s - semigroup; d - kernel orbit data (i.e. second comp. of D-class
+# data); o - orbits of kernels (optional).
+
+# Notes: returns true, false, or the stabilizer chain of the right Schutzenberger 
+# group of the specified kernel orbit. True indicates the Schutz. gp.
+# is the symmetric group, false indicates it is trivial. Note that the right 
+# Schutzenberger group is obtained by considering the right action on kernels
+# classes. Use KerRightToImgLeft to switch from the right Schutz. gp. to the
+# left one corresponding a specific D-class. 
+
+InstallGlobalFunction(KernelOrbitStabChainFromData,
+function(arg)
+  local s, d, o;
+
+  s:=arg[1]; d:=arg[2];
+
+  if Length(arg)=3 then
+    o:=arg[3]!.orbits[d[1]][d[2]];
+  else
+    o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
+  fi;
+
+  return o!.schutz[d[4]][1];
+end);
+
+#JDMJDM
 
 # new for 4.0!
 #############################################################################
@@ -1050,7 +1066,7 @@ local f, scc, m, out, k, data, i, j;
 
 f:=Representative(d);
 scc:=ImageOrbitSCC(d);
-m:=Length(DClassImageOrbitCosets(d));
+m:=Length(ImageOrbitCosets(d));
 
 out:=EmptyPlist(Length(scc)*m);
 SetNrGreensLClasses(d, Length(scc)*m);
@@ -1084,7 +1100,7 @@ if HasGreensLClassRepsData(d) then
 fi;
 
 perms:=ImageOrbitPerms(d){ImageOrbitSCC(d)};
-cosets:=DClassImageOrbitCosets(d);
+cosets:=ImageOrbitCosets(d);
 f:=Representative(d);
 
 out:=EmptyPlist(Length(perms)*Length(cosets));
@@ -1120,8 +1136,8 @@ function(d)
     return out;
   fi;
 
-  f:=Representative(d); rels:=DClassRels(d);
-  scc:=DClassKernelOrbitSCC(d); cosets:=DClassKernelOrbitCosets(d);
+  f:=Representative(d); rels:=KernelOrbitRels(d);
+  scc:=KernelOrbitSCC(d); cosets:=KernelOrbitCosets(d);
 
   j:=d!.data[1][1]; k:=d!.data[1][2]; l:=d!.data[1][3]; m:=d!.data[1][4];
 
@@ -1171,7 +1187,7 @@ else
 fi;
 
 rels:=LClassRels(d){LClassSCC(d)};;
-cosets:=DClassKernelOrbitCosets(d);
+cosets:=KernelOrbitCosets(d);
 f:=Representative(d);
 
 out:=EmptyPlist(Length(rels)*Length(cosets));
@@ -1239,7 +1255,7 @@ out:=EmptyPlist(NrGreensRClasses(d));
 for data in GreensRClassRepsData(d) do 
 	f:=RClassRepFromData(s, data, o);
 	r:=CreateRClass(s, data, o, f);
-	SetGreensDClass(r, d);
+	SetDClassOfRClass(r, d);
 	out[Length(out)+1]:=r;#JDM change this line!
 od;
 
@@ -1280,7 +1296,7 @@ if HasIsRegularDClass(d) and not IsRegularDClass(d) then
 	return [];
 fi;
 
-# ker:=DClassKerOrb(d){DClassKernelOrbitSCC(d)}; JDM don't know what these commands
+# ker:=DClassKerOrb(d){KernelOrbitSCC(d)}; JDM don't know what these commands
 # are called!
 n:=Length(d!.rep![1]);
 reps:=[];
@@ -1311,77 +1327,6 @@ od;
 return out;
 end);
 
-#K
-
-# new for 4.0! KernelOrbitSCCFromData - not a user function!
-############################################################################
-# Usage: s = semigroup; d = kernel data; o = OrbitsOfKernels(s) (optional)
-
-InstallGlobalFunction(KernelOrbitSCCFromData, 
-function(arg)
-  local s, d, o;
-
-  s:=arg[1]; d:=arg[2];
-
-  if Length(arg)=3 then
-    o:=arg[3]!.orbits[d[1]][d[2]];
-  else
-    o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
-  fi;
-
-  return o!.scc[d[4]];
-end);
-
-# new for 4.0! KernelOrbitSchutzGpFromData - not a user function!
-############################################################################
-# Usage: s = semigroup; d = kernel data; o = OrbitsOfKernels(s) (optional)
-
-# Notes: returns the right Schutzenberger group (acting on kernels on the right) 
-# of the kernel orbit with the given data. Use KerRightToImgLeft to switch from 
-# the right Schutz. gp. to the left one corresponding to a specific D-class. 
-
-InstallGlobalFunction(KernelOrbitSchutzGpFromData,
-function(arg)
-  local s, d, o;
-
-  s:=arg[1]; d:=arg[2];
-
-  if Length(arg)=3 then
-    o:=arg[3]!.orbits[d[1]][d[2]];
-  else
-    o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
-  fi;
-
-  return o!.schutz[d[4]][2];
-end);
-
-# new for 4.0! - KernelOrbitStabChainFromData - not a user function!
-############################################################################
-
-# Usage: s - semigroup; d - kernel orbit data (i.e. second comp. of D-class
-# data); o - orbits of kernels (optional).
-
-# Notes: returns true, false, or the stabilizer chain of the right Schutzenberger 
-# group of the specified kernel orbit. True indicates the Schutz. gp.
-# is the symmetric group, false indicates it is trivial. Note that the right 
-# Schutzenberger group is obtained by considering the right action on kernels
-# classes. Use KerRightToImgLeft to switch from the right Schutz. gp. to the
-# left one corresponding a specific D-class. 
-
-InstallGlobalFunction(KernelOrbitStabChainFromData,
-function(arg)
-  local s, d, o;
-
-  s:=arg[1]; d:=arg[2];
-
-  if Length(arg)=3 then
-    o:=arg[3]!.orbits[d[1]][d[2]];
-  else
-    o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
-  fi;
-
-  return o!.schutz[d[4]][1];
-end);
 
 # new for 4.0!
 #############################################################################
@@ -1410,7 +1355,7 @@ function(arg)
   if Length(arg)>=4 then 
     data:=arg[4];
   else
-    data:=[PreInOrbitsOfImages(s, f, o[1]), [, [fail, fail, fail, fail, fail , 0,
+    data:=[PreInOrbitsOfImages(s, f, o[1]), [false, [fail, fail, fail, fail, fail , 0,
     fail, fail]]]; 
   fi;
   
@@ -1509,7 +1454,7 @@ function(s, f, data, o, kernels)
       fi;
     else 
       p:=o[j][k]!.convert[m][val][n]^-1;
-      cosets:=o[j][k]!.d_schutz[m][val][n][3]; #DClassImageOrbitCosets
+      cosets:=o[j][k]!.d_schutz[m][val][n][3]; #ImageOrbitCosets
       t:=Length(cosets);
       h:=PermLeftQuoTransformationNC(reps[n], g);
       
@@ -1772,7 +1717,7 @@ InstallOtherMethod(NrGreensLClasses, "for a D-class of a trans. semigroup",
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
 
-return Length(DClassImageOrbitCosets(d))*Length(ImageOrbitSCCFromData(d!.parent, d!.
+return Length(ImageOrbitCosets(d))*Length(ImageOrbitSCCFromData(d!.parent, d!.
 data[1], d!.o[1]));
 end);
 
@@ -1789,7 +1734,7 @@ fi;
 #rels:=Length(LClassSCCFromData(s, d[2], o[2]));
 #cosets:=RightTransversal(KernelOrbitSchutzGpFromData(s, d[2], o[2]), 
 # DClassSchutzGpFromData(s, d, o)^(KerRightToImgLeftFromData(s, d, o)^-1));
-return Length(DClassKernelOrbitSCC(d))*Length(DClassKernelOrbitCosets(d));
+return Length(KernelOrbitSCC(d))*Length(KernelOrbitCosets(d));
 end);
 
 #############################################################################
@@ -1954,7 +1899,7 @@ InstallOtherMethod(SchutzenbergerGroup, "for a D-class of a trans. semigp.",
 function(d)
 local dd;
 dd:=d!.data[2];
-return DClassKernelOrbitFromData(d!.parent, d!.data, d!.o)!.
+return KernelOrbitFromData(d!.parent, d!.data, d!.o)!.
  d_schutz[dd[4]][dd[5]][dd[6]][2];
 end);
 
@@ -1963,7 +1908,9 @@ end);
 # Usage: s = semigroup; d = [image data, kernel data]; 
 # o = [OrbitsOfImages(s), OrbitsOfKernels(s)] (optional).  
 
-# JDM recheck for efficiency/correctness. 
+# Notes: this is ImgLeft!  
+
+# JDM recheck!.
 
 InstallGlobalFunction(CreateSchutzGpOfDClass, 
 function(arg)
@@ -1979,8 +1926,6 @@ function(arg)
 
   g:=ImageOrbitSchutzGpFromData(s, d[1], o[1]);
   
-  #Error("not yet implemented"); #JDM reimplement!
-  
   if Size(g)=1 then 
     h:=g;
   else 
@@ -1989,9 +1934,9 @@ function(arg)
      ImageOrbitStabChainFromData(s, d[1], o[1])=true then 
       pts:=OnSets(MovedPoints(KernelOrbitSchutzGpFromData(s, d[2], o[2])), p);
       h:=SymmetricGroup(Intersection(pts, MovedPoints(g)));
-     # cosets1:=Orbit(h, 
-    #JDM find both transversals here! Store KernelOrbitSchutzGpFromData(s, d[2],
-    # o[2])^p???
+      # cosets1:=Orbit(h, 
+      #JDM find both transversals here! 
+      # Store KernelOrbitSchutzGpFromData(s, d[2],o[2])^p???
     else
       h:=Intersection(g, KernelOrbitSchutzGpFromData(s, d[2], o[2])^p);
     fi;
@@ -2055,13 +2000,53 @@ function( obj )
 Print( "GreensDClassData( ", obj!.rep, " )" );
 end );
 
-# new for 4.0! - DClassKernelOrbitCosetsFromData - not a user function! #JDM not sure
+
+#new for 4.0! - DClassOfLClass - "for an L-class of a trans. semigroup"
+#############################################################################
+# JDM test/revise!
+
+InstallOtherMethod(DClassOfLClass, "for an L-class of a trans. semigroup", 
+[IsGreensLClass and IsGreensClassOfTransSemigp], 
+function(l)
+  local s, d, o, rep;
+
+  s:=l!.parent;
+  d:=l!.data{[1,2]};
+  o:=l!.o;
+  #JDM couldn't the below be DClassRepFromData(s, l!.data, o)?
+  rep:=LClassRepFromData(s, Concatenation(d, [[1,1]]), o);
+
+  return CreateDClass(s, d, o, rep);
+end);
+
+#new for 4.0!
+#############################################################################
+# JDM test!
+
+InstallOtherMethod(GreensDClass, "for an H-class of a trans. semigroup", 
+[IsGreensHClass and IsGreensClassOfTransSemigp], 
+function(h)
+local s, d, o, rep;
+
+s:=h!.parent;
+d:=h!.data;
+o:=h!.o;
+rep:=DClassRepFromData(s, d, o);
+
+d:=d{[1,2]}; #JDM this line can be omitted when things are cleanup!
+
+return CreateDClass(s, d, o, rep);
+end);
+
+
+
+# new for 4.0! - KernelOrbitCosetsFromData - not a user function! #JDM not sure
 # this is needed!
 ###########################################################################
 # Notes: returns a transversal of right cosets of SchutzGpOfDClass^KerRightToImgLeft^-1
 # (SchutzGpOfDClass is ImgLeft) in KerOrbSchutzGp (which is KerRight). 
 
-#InstallGlobalFunction(DClassKernelOrbitCosetsFromData, 
+#InstallGlobalFunction(KernelOrbitCosetsFromData, 
 #function(arg)
 #  local s, d, o;
 #
@@ -2081,7 +2066,7 @@ end );
 #new for 4.0! - JDM don't think this is needed...
 ###########################################################################
 
-#InstallGlobalFunction(DClassImageOrbitCosetsFromData, 
+#InstallGlobalFunction(ImageOrbitCosetsFromData, 
 #function(arg)
 #local s, d, o;
 
