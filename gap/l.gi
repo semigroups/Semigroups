@@ -749,21 +749,21 @@ end);
 
 InstallGlobalFunction(LClassRepFromData,
 function(arg)
-local s, d, f, o, perms, cosets;
+  local s, d, f, o, perms, cosets;
 
-s:=arg[1]; d:=arg[2];
-f:=CallFuncList(DClassRepFromData,arg);
+  s:=arg[1]; d:=arg[2];
+  f:=CallFuncList(DClassRepFromData,arg);
 
-if Length(arg)=3 then 
-	o:=arg[3];
-else
-	o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
-fi;
+  if Length(arg)=3 then 
+    o:=arg[3];
+  else
+    o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
+  fi;
 
-perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
-cosets:=DClassRCosetsFromData(s, d, o);
-
-return f*(cosets[d[3][2]]/perms[d[3][1]]);
+  perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
+  cosets:=o[2]!.orbits[d[2][1]][d[2][2]]!.d_schutz[d[2][4]][d[2][5]][d[2][6]][3];
+  # ImageOrbitCosets
+  return f*(cosets[d[3][2]]/perms[d[3][1]]);
 end);
 
 # new for 4.0!

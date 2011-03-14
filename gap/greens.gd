@@ -57,6 +57,7 @@ DeclareGlobalFunction("DisplayOrbitsOfImages");
 DeclareGlobalFunction("ExpandOrbitsOfImages");
 DeclareGlobalFunction("ForwardOrbitOfImage");
 DeclareAttribute("GreensHClassRepsData", IsTransformationSemigroup);
+DeclareAttribute("GreensRClassRepsData", IsTransformationSemigroup);
 DeclareAttribute("ImageOrbit", IsGreensRClass and 
  IsGreensClassOfTransSemigp, "mutable"); # mutable essential!
 DeclareGlobalFunction("ImageOrbitFromData");
@@ -104,7 +105,9 @@ DeclareGlobalFunction("DisplayOrbitsOfKernels");
 DeclareGlobalFunction("ExpandOrbitsOfKernels");
 DeclareGlobalFunction("ForwardOrbitOfKernel");
 DeclareAttribute("GeneratorsAsListOfImages", IsTransformationSemigroup);
-
+DeclareOperation("GreensDClassOfElementNC", [IsTransformationSemigroup]);
+DeclareAttribute("GreensDClassReps", IsTransformationSemigroup);
+DeclareAttribute("GreensLClassRepsData", IsTransformationSemigroup);
 
 DeclareAttribute("ImageOrbitCosets", IsGreensDClass and
  IsGreensClassOfTransSemigp);
@@ -159,10 +162,6 @@ DeclareInfoClass("InfoMonoidGreens");
 
 DeclareAttribute("OrbitsOfKernels", IsTransformationSemigroup, "mutable");
 
-
-
-
-
 DeclareGlobalFunction("MultipliersOfSCCOfKernelOrbit");
 
 DeclareGlobalFunction("RightSchutzGpOfKerOrbit");
@@ -173,11 +172,7 @@ DeclareGlobalFunction("RClassRepFromData");
 # RClassRep = Representative
 DeclareAttribute("RClassImageOrbitSCC", IsGreensRClass and 
  IsGreensClassOfTransSemigp);
-
-
 DeclareOperation("GreensHClassOfElementNC", [IsTransformationSemigroup]);
-
-
 DeclareAttribute("LClassSchutzGp", IsGreensLClass and 
  IsGreensClassOfTransSemigp);
 DeclareAttribute("LClassSCC", IsGreensLClass and 
@@ -199,12 +194,8 @@ DeclareGlobalFunction("DClassKerSchutzGpFromData");
 DeclareGlobalFunction("DClassImgSchutzGpFromData");
 DeclareGlobalFunction("DClassRelsFromData");
 DeclareGlobalFunction("DClassImgSCCFromData");
-
-
 DeclareAttribute("GreensRClass", IsGreensHClass);
 DeclareAttribute("GreensLClass", IsGreensHClass);
-
-
 DeclareGlobalFunction("CreateLClass");
 DeclareGlobalFunction("CreateHClass");
 
@@ -214,11 +205,7 @@ DeclareAttribute("HClassType", IsTransformationSemigroup);
 DeclareGlobalFunction("KerRightToImgLeftFromData");
 DeclareAttribute("KerRightToImgLeft", IsGreensDClass and 
 IsGreensClassOfTransSemigp);
-
-DeclareOperation("GreensDClassOfElementNC", [IsTransformationSemigroup]);
-
 DeclareAttribute("GreensLClassReps", IsTransformationSemigroup);
-DeclareAttribute("GreensDClassReps", IsTransformationSemigroup);
 
 DeclareProperty("IsEnumeratorOfRClassElements", IsEnumeratorByFunctions);
 DeclareProperty("IsEnumeratorOfLClassElements", IsEnumeratorByFunctions);
@@ -255,7 +242,6 @@ DeclareProperty("IsIteratorOfGreensHClasses", IsIterator);
 
 DeclareOperation("IteratorOfIdempotents", [IsTransformationSemigroup]);
 
-
 DeclareProperty("IsIteratorOfSemigroup", IsIterator);
 DeclareProperty("IsIteratorOfRClassElements", IsIterator);
 DeclareProperty("IsIteratorOfLClassElements", IsIterator);
@@ -269,8 +255,6 @@ DeclareAttribute("NrGreensDClasses", IsTransformationSemigroup);
 
 DeclareAttribute("IsRegularLClass", IsGreensClassOfTransSemigp);
 
-
-
 DeclareAttribute("DClassLCosets", IsGreensDClass and 
  IsGreensClassOfTransSemigp);
 DeclareAttribute("DClassRCosets", IsGreensDClass and 
@@ -278,41 +262,11 @@ DeclareAttribute("DClassRCosets", IsGreensDClass and
 
 DeclareGlobalFunction("DClassRCosetsFromData");
 DeclareGlobalFunction("DClassLCosetsFromData");
-#DeclareGlobalFunction("DClassStabChainFromData");
-
-
-
-DeclareAttribute("GreensRClassRepsData", IsTransformationSemigroup);
-#DeclareGlobalFunction("RClassRepsData");
-DeclareAttribute("GreensLClassRepsData", IsTransformationSemigroup);
-
-
 DeclareProperty("IsOrbitsOfImages", IsObject);
 DeclareProperty("IsOrbitsOfKernels", IsObject);
-
 DeclareProperty("IsMonoidPkgImgKerOrbit", IsOrbit);
-
 DeclareAttribute("GroupHClass", IsGreensDClass and IsGreensClassOfTransSemigp);
 
 
 
-# probably get rid of the following...
-
-
-#DeclareGlobalFunction("DisplayOrbitOfImage");
-#DeclareAttribute("IsGlobalDClass", IsGreensDClass);
-#DeclareAttribute("IsGlobalRClass", IsGreensRClass);
-#DeclareGlobalFunction("ExpandDClassRepsData");
-#DeclareAttribute("DClassRepsData", IsTransformationSemigroup, "mutable");
-#DeclareGlobalFunction("DClassCosetsFromData");
-#DeclareGlobalFunction("DClassStabChainFromData");
-#DeclareAttribute("RClassDataFromRep", IsTransformation);
-#DeclareGlobalFunction("GreensRClassRepsNC");
-#DeclareGlobalFunction("IsInSCCOfOrbitNC");
-#DeclareGlobalFunction("IsInSCCOfOrbit");
-#DeclareGlobalFunction("IsInOrbit");
-#DeclareProperty("RClassRepsData", IsTransformationSemigroup);
-# maybe remove the following and add them to AddToOrbitsOfImages...
-#DeclareGlobalFunction("ForwardOrbitOfImageNC");
-#DeclareGlobalFunction("ForwardOrbitOfKernelNC");
 

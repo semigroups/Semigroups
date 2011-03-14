@@ -309,6 +309,16 @@ od;
 return true;
 end);
 
+# new for 4.0! IsGreensRTrivial -  "for D-class of a trans. semigp."
+#############################################################################
+
+InstallOtherMethod(IsGreensRTrivial, "for D-class of a trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+  #JDM maybe better if we had an enumerator of R-classes of d...
+  return NrGreensRClasses(d)=Size(d);
+end);
+
 ###########################################################################
 
 InstallOtherMethod(IsGreensHTrivial, "for a transformation semigroup", 

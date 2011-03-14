@@ -163,8 +163,7 @@ function(f, s)
 
   # check what's already known...
   iter:=IteratorOfNewRClassRepsData(s);
-  orbits:=o!.orbits;
-  images:=o!.images;
+  orbits:=o!.orbits; images:=o!.images;
 
   repeat
     NextIterator(iter);
@@ -950,7 +949,8 @@ function(s, f)
   o:=rec( finished:=false, orbits:=o, gens:=Generators(s), s:=s, 
    deg := n, data:=[], images:=fail, lens:=List([1..n], function(x) if x=j then
    return 1; else return 0; fi; end), data_ht:=HTCreate([1,1,1,1,1,1]));
-  #local orbits of images! JDMJDM
+  #local orbits of images! 
+  #JDM shouldn't data contain [j,1,1,1,1,1]??
 
   r:=CreateRClass(s, [j,1,1,1,1,1], o, f);
 
@@ -968,6 +968,17 @@ function(s)
   ExpandOrbitsOfImages(s);
 
   return List(OrbitsOfImages(s)!.data, x-> RClassRepFromData(s, x));
+end);
+
+# new for 4.0! - GreensRClassRepsData - "for a transformation semigroup"
+#############################################################################
+
+InstallMethod(GreensRClassRepsData, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(s)
+  Info(InfoMonoidGreens, 4, "GreensRClassRepsData");
+  ExpandOrbitsOfImages(s);
+  return OrbitsOfImages(s)!.data;
 end);
 
 # new for 4.0!
@@ -1068,7 +1079,7 @@ function(s, f, data, o, images)
   while n<i do 
     n:=n+1;
     if schutz=false then
-      if reps[n]=g then
+      if reps[n]=g then # not sure this doesn't slow things down...
         return [true, [j,k,l,m,val,n,g]];
       fi;
     elif SiftedPermutation(schutz, PermLeftQuoTransformationNC(reps[n], g))=() then 
