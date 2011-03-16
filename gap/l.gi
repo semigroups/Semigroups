@@ -86,7 +86,9 @@ fi;
 rep:=DClassRepFromData(s, d, l!.o);
 
 perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
-cosets:=DClassRCosetsFromData(s, d, o);
+#cosets:=DClassRCosetsFromData(s, d, o);
+#cosets:=ImageOrbitCosets(DClassOfLClass(l));
+cosets:=ImageOrbitCosetsFromData(s, d[2], o[2]);
 
 return schutz=true or SiftedPermutation(schutz, 
  PermRightQuoTransformationNC(rep, 
@@ -887,7 +889,8 @@ local i, d;
 ExpandOrbitsOfKernels(s);
 i:=0;
 for d in OrbitsOfKernels(s)!.data do 
-	i:=i+Length(DClassRCosetsFromData(s, d))*Length(ImageOrbitSCCFromData(s, d[1]));
+	i:=i+Length(ImageOrbitCosetsFromData(s, d[2]))*
+         Length(ImageOrbitSCCFromData(s, d[1]));
 od;
 return i;
 end);
@@ -994,7 +997,7 @@ o:=l!.o;
 s:=l!.parent;
 
 perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
-cosets:=DClassRCosetsFromData(s, d, o);
+cosets:=ImageOrbitCosetsFromData(s, d, o);
 
 return (g^KerRightToImgLeftFromData(s, d, o))^(cosets[d[3][2]]/perms[d[3][1]]);
 end);

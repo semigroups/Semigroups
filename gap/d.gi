@@ -819,6 +819,36 @@ InstallMethod(GreensDClassReps, "for a trans. semigroup",
   return List(OrbitsOfKernels(s)!.data, x-> DClassRepFromData(s, x));
 end);
 
+# new for 4.0! - GreensHClasses - "for a D-class of a trans. semigroup"
+#############################################################################
+# JDM could this be better/more efficient?! Could avoid using GreensRClasses. 
+
+InstallOtherMethod(GreensHClasses, "for a D-class of a trans. semigroup",
+[IsGreensDClass and IsGreensClassOfTransSemigp], 
+function(d)
+  return Concatenation(List(GreensRClasses(d), GreensHClasses));
+end);
+
+# new for 4.0! - GreensHClasses - "for a D-class of a trans. semigroup"
+#############################################################################
+# JDM could this be better/more efficient?! Could avoid using GreensRClasses. 
+
+InstallOtherMethod(GreensHClassReps, "for a D-class of a trans. semigroup", 
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d) 
+  return Concatenation(List(GreensRClasses(d), GreensHClassReps));
+end);
+
+# new for 4.0! - GreensHClasses - "for a D-class of a trans. semigroup"
+#############################################################################
+# JDM could this be better/more efficient?! Could avoid using GreensRClasses. 
+
+InstallOtherMethod(GreensHClassRepsData, "for a D-class of a trans. semigroup", 
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d) 
+  return Concatenation(List(GreensRClasses(d), GreensHClassRepsData));
+end);
+
 # new for 4.0! - GreensLClassRepsData - "for a D-class of a trans. semigroup"
 #############################################################################
 
@@ -1009,25 +1039,28 @@ function(d)
   return d!.o[2]!.orbits[D[1]][D[2]]!.d_schutz[D[4]][D[5]][D[6]][3];
 end);
 
-#new for 4.0! - ImageOrbitCosetsFromData - not a user function 
+#new for 4.0! - ImageOrbitCosetsFromData - not a user function!
 ###########################################################################
-# Notes: returns a transversal of right cosets of SchutzenbergerGroup(d)
-# (which is ImgLeft) in ImageOrbitSchutzGp (which is ImgLeft). 
+# Usage: s - semigroup; d - kernel orbit data; o - orbits of kernels 
+# (optional!)
 
-InstallGlobalFunction(ImageOrbitCosetsFromData, 
+# Notes: returns a transversal of right cosets of SchutzenbergerGroup(d)
+# (which is ImgLeft) in ImageOrbitSchutzGp (which is ImgLeft). Unlike other
+# ImageOrbit... functions this requires kernel data!
+
+InstallGlobalFunction(ImageOrbitCosetsFromData,
 function(arg)
   local s, d, o;
-
   s:=arg[1]; d:=arg[2];
-
+  
   if Length(arg)=3 then 
-    o:=arg[3]!.orbits[d[1]][d[2]];
+    o:=arg[3];
   else
-    o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
+    o:=OrbitsOfKernels(s);
   fi;
-  return o!.d_schutz[d[4]][d[5]][d[6]][3];
-end);
 
+  return o!.orbits[d[1]][d[2]]!.d_schutz[d[4]][d[5]][d[6]][3];
+end);
 
 
 # new for 4.0! - ImageOrbitSchutzGp - not a user function!
@@ -1223,17 +1256,8 @@ end);
 #JDMJDM
 
 #############################################################################
-# JDM could this be better/more efficient!
-
-InstallOtherMethod(GreensHClasses, "for a D-class of a trans. semigroup",
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(d)
-return Concatenation(List(GreensRClasses(d), GreensHClasses));
-end);
-
-#############################################################################
-#JDM it would be helpful to have a EnumeratorOfGreensRClasses for use in the 
-# Enumerator of a D-class.
+#JDM it would be helpful to have a IteratorOfGreensRClasses for use in the 
+# enumerator of a D-class.
 
 InstallOtherMethod(GreensRClasses, "for a D-class of a trans. semigroup",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 

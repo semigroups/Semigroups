@@ -777,11 +777,9 @@ InstallOtherMethod(GreensHClasses, "for an R-class of a trans. semigp.",
 function(r)
   local s, d, o, m, D, out, f, h, i;
 
-  s:=r!.parent; 
-  d:=GreensDClass(r);
-  o:=d!.o; 
-  m:=NrGreensHClasses(r);
-  D:=GreensHClassRepsData(r); 
+  s:=r!.parent; d:=DClassOfRClass(r); o:=d!.o; 
+  m:=NrGreensHClasses(r); D:=GreensHClassRepsData(r); 
+  
   out:=EmptyPlist(m); 
 
   for i in [1..m] do 
@@ -793,8 +791,7 @@ function(r)
     fi;
 
     h:=CreateHClass(s, D[i], o, f);
-    SetGreensRClass(h, r);
-    SetGreensDClass(h, d);
+    SetRClassOfHClass(h, r); SetDClassOfHClass(h, d);
     out[i]:=h;
   od;
 
@@ -815,7 +812,7 @@ function(r)
   fi;
 
   f:= r!.rep;
-  cosets:=DClassRCosets(GreensDClass(r));
+  cosets:=ImageOrbitCosets(DClassOfRClass(r));
   perms:=ImageOrbitPerms(r);
   scc:=ImageOrbitSCC(r);
 
@@ -848,8 +845,8 @@ function(r)
 
   f:= r!.rep;
   scc:=ImageOrbitSCC(r);
-  d:=GreensDClass(r);
-  m:=Length(DClassRCosets(d));
+  d:=DClassOfRClass(r);
+  m:=Length(ImageOrbitCosets(d));
 
   out:=EmptyPlist(Length(scc)*m);
   SetNrGreensHClasses(r, Length(scc)*m);
@@ -1256,6 +1253,11 @@ InstallGlobalFunction(IteratorOfGreensRClasses,
 function(s)
   local iter;
 
+  if not IsTransformationSemigroup(s) then 
+    Info(InfoWarning, 1, "Usage: arg. should be a transformation semigroup.");
+    return fail;
+  fi;
+
   Info(InfoMonoidGreens, 4, "IteratorOfGreensRClasses");
 
   iter:=IteratorByFunctions( rec(
@@ -1468,7 +1470,7 @@ end);
 
 InstallOtherMethod(NrGreensHClasses, "for an R-class of a trans. semigroup", 
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
-r-> NrGreensLClasses(GreensDClass(r)));
+r-> NrGreensLClasses(DClassOfRClass(r)));
 
 # new for 4.0!
 #############################################################################

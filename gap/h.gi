@@ -411,7 +411,10 @@ fi;
 
 f:=RClassRepFromData(s, d[1], o[1]);
 perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
-cosets:=DClassRCosetsFromData(s, d, o);
+#cosets:=DClassRCosetsFromData(s, d, o);
+
+cosets:=o[2]!.orbits[d[2][1]][d[2][2]]!.d_schutz[d[2][4]][d[2][5]][d[2][6]][3];
+#ImageOrbitCosets of D-class with data d.
 
 return f*(cosets[d[3][2]]/perms[d[3][1]]);
 end);
@@ -634,7 +637,8 @@ d:=h!.data;
 o:=h!.o;
 s:=h!.parent;
 perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
-cosets:=DClassRCosetsFromData(s, d, o);
+#cosets:=DClassRCosetsFromData(s, d, o);
+cosets:=ImageOrbitCosets(DClassOfHClass(h));
 
 return DClassSchutzGpFromData(h!.parent, h!.data, h!.o)^
  (cosets[d[3][2]]/perms[d[3][1]]);

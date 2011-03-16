@@ -274,6 +274,10 @@ od;
 return true;
 end);
 
+InstallOtherMethod(IsGreensLTrivial, "for a D-class of a trans. semigp", 
+[IsGreensDClass and IsGreensClassOfTransSemigp], 
+d-> NrGreensLClasses(d)=Size(d));
+
 #############################################################################
 #JDM new for 4.0!
 
@@ -337,6 +341,10 @@ repeat
 until IsDoneIterator(iter);
 return true;
 end);
+
+InstallOtherMethod(IsGreensHTrivial, "for a D-class of a trans. semigp", 
+[IsGreensDClass and IsGreensClassOfTransSemigp], 
+d-> NrGreensHClasses(d)=Size(d));
 
 ###########################################################################
  

@@ -109,6 +109,7 @@ DeclareOperation("GreensDClassOfElementNC", [IsTransformationSemigroup]);
 DeclareAttribute("GreensDClassReps", IsTransformationSemigroup);
 DeclareAttribute("GreensLClassRepsData", IsTransformationSemigroup);
 
+DeclareGlobalFunction("ImageOrbitCosetsFromData"); #input kernel orbit data!
 DeclareAttribute("ImageOrbitCosets", IsGreensDClass and
  IsGreensClassOfTransSemigp);
 DeclareAttribute("KernelOrbit", IsGreensDClass and
