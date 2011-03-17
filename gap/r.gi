@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  r.gi
-#Y  Copyright (C) 2006-2010                             James D. Mitchell
+#Y  Copyright (C) 2006-2011                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -1020,6 +1020,8 @@ end);
 # JDM perhaps things could be speed up by taking everything with a ! in it
 # and making it an argument?!
 
+#JDM s is not needed as an argument here...
+
 InstallGlobalFunction(InOrbitsOfImages, 
 function(s, f, data, o, images)
   local j, k, l, m, val, n, g, img, schutz, reps, i;
@@ -1535,7 +1537,7 @@ function(arg)
   fi;
 
   out:=0; 
-  #JDM must add third argument for local R-classes!
+  # must add third argument for local R-classes!
   rep:=RClassRepFromData(s, d, O)![1];
   scc:=ImageOrbitSCCFromData(s, d, O);
 

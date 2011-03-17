@@ -439,6 +439,7 @@ end);
 # new for 4.0!
 ############################################################################
 # JDM compare the following to IsRegularRClass..
+# JDM install methods for D-classes, R-classes, and L-classes
 
 InstallOtherMethod(IsGroupHClass, "for an H-class of a trans. semigp.", 
 [IsGreensHClass and IsGreensClassOfTransSemigp], 

@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  greens.gd
-#Y  Copyright (C) 2006-2010                             James D. Mitchell
+#Y  Copyright (C) 2006-2011                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -134,6 +134,7 @@ DeclareGlobalFunction("KernelOrbitStabChainFromData");
 # the following functions have not yet been processed for release!
 
 
+GT:=function(x,y) return x>y; end;
 
 
 DeclareGlobalFunction("SizeOrbitsOfKernels");
@@ -234,6 +235,8 @@ DeclareProperty("IsIteratorOfHClassReps", IsIterator);
 
 DeclareGlobalFunction("IteratorOfGreensLClasses");
 DeclareGlobalFunction("IteratorOfGreensDClasses");
+# and IteratorOfGreensDClass should be an operation so that I can make an
+# iterator that of D-classes satisfying some properties a la smallsemi..
 DeclareOperation("IteratorOfGreensHClasses", [IsTransformationSemigroup]);
 
 DeclareProperty("IsIteratorOfGreensRClasses", IsIterator);

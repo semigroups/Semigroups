@@ -276,6 +276,7 @@ for p in orb do
 end );
 
 #############################################################################
+# JDM this should be removed!
 
 InstallGlobalFunction(IsTransversal, 
 function(ker, img)

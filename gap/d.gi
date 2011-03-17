@@ -1,7 +1,7 @@
 ###########################################################################
 ##
 #W  d.gi
-#Y  Copyright (C) 2006-2010                             James D. Mitchell
+#Y  Copyright (C) 2006-2011                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -794,7 +794,8 @@ function(s, f)
    deg := n, data:=[[j,1,1,1,1,1]], images:=fail, lens:=List([1..n], 
    function(x) if x=j then return 1; else return 0; fi; end), 
    data_ht:=HTCreate([1,1,1,1,1,1]));
-
+  #JDM images should not be fail in this...
+  
   Info(InfoMonoidGreens, 2, "finding kernel orbit...");
   ker_o:=[]; ker_o[j]:=[ForwardOrbitOfKernel(s, f)];
   ker_o:=rec( orbits:=ker_o, gens:=Generators(s), data:=[[j,1,1,1,1,1],
@@ -911,8 +912,8 @@ end);
 InstallOtherMethod(GreensRClassRepsData, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
 function(d)
-  local out, t, f, rels, scc, cosets, j, k, l, m, val, orbits, images, g, 
-   data, i, x;
+  local out, f, rels, scc, cosets, j, k, l, m, val, orbits, images, t, r, c, 
+   g, data, i, x;
 
   out:=DClassRClassRepsDataFromData(d!.parent, d!.data, d!.o);
   # read the R-classes of d found during the enumeration of D-classes.
@@ -935,12 +936,13 @@ function(d)
 
   out:=EmptyPlist(NrGreensRClasses(d));
   orbits:=d!.o[1]!.orbits; images:=d!.o[1]!.images;
-  t:=0;
+  t:=0; r:=Length(scc); c:=Length(cosets);
 
-  for i in [1..Length(scc)] do 
-    for x in [1..Length(cosets)] do 
+  for i in [1..r] do 
+    for x in [1..c] do 
       g:=scc[i]*cosets[x]^-1;
-      data:=InOrbitsOfImages(d, g, [j, k, l[x], m, val[i], 0, fail], orbits, images);
+      data:=InOrbitsOfImages(d, g, [j, k, l[x], m, val[i], 0, fail], 
+       orbits, images);
       #could do SiftedPermutation directly here, maybe speed things up?
       if not data[1] then 
 	data:=AddToOrbitsOfImages(d, g, data[2], d!.o[1]);
@@ -1012,7 +1014,116 @@ function(d)
   return out;
 end);
 
+# new for 4.0! - GreensRClasses - "for a D-class of a trans. semigroup"
+#############################################################################
+# Notes: it would be helpful to have a IteratorOfGreensRClasses for use in 
+# the  enumerator of a D-class.
+
+InstallOtherMethod(GreensRClasses, "for a D-class of a trans. semigroup",
+[IsGreensDClass and IsGreensClassOfTransSemigp], 
+function(d)
+  local s, o, out, i, reps, f, r, data;
+
+  s:=d!.parent; o:=d!.o[1]; 
+  out:=EmptyPlist(NrGreensRClasses(d)); 
+  i:=0; reps:=GreensRClassRepsData(d);
+
+  for data in reps do 
+    f:=RClassRepFromData(s, data, o);
+    r:=CreateRClass(s, data, o, f);
+    SetDClassOfRClass(r, d);
+    i:=i+1;
+    out[i]:=r;
+  od;
+
+  return out;
+end);
+
+# new for 4.0! - GreensRClassOfElement - "for D-class of trans. semigroup"
+#############################################################################
+# Notes: maybe think this through a bit more...
+
+InstallOtherMethod(GreensRClassOfElement, "for D-class of trans. semigroup", 
+[IsGreensDClass and IsGreensClassOfTransSemigp, IsTransformation], 
+function(d, f)
+  local o, e, data, g, r;
+   
+  if not f in d then 
+    Info(InfoWarning, 1, "transformation is not an element of the D-class");
+    return fail;
+  fi;
+  
+  o:=d!.o[1]; e:=d!.data[1];
+  data:=InOrbitsOfImages(d, f, [e[1], e[2], Position(o!.orbits[e[1]][e[2]],
+   ImageSetOfTransformation(f)), e[4], fail, 0, fail], o!.orbits, o!.images);
+  
+  # the position call in the previous line is a waste as this is already found
+  # when `f in d' is called. 
+
+  if not data[1] then 
+    data:=AddToOrbitsOfImages(d, f, data[2], o);
+  else 
+    data:=data[2];
+  fi;
+
+  g:=RClassRepFromData(d!.parent, data, o);
+  r:=CreateRClass(d!.parent, data, o, g);
+  SetDClassOfRClass(r, d);
+  return r;
+end);
+
 #III
+
+# new for 4.0! - Idempotents - "for a D-class of a trans. semigp."
+#############################################################################
+
+InstallOtherMethod(Idempotents, "for a D-class of a trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp], 
+function(d)
+  local ker_o, ker_scc, n, out, k, img_o, img_scc, m, i, j, l, lookup;
+
+  if HasIsRegularDClass(d) and not IsRegularDClass(d) then 
+    return [];
+  fi;
+
+  if NrIdempotentsRClassFromData(d!.parent, d!.data[1], d!.o[1])=0 then 
+    return [];
+  fi;
+
+  ker_o:=KernelOrbit(d); ker_scc:=KernelOrbitSCC(d); 
+  img_o:=ImageOrbit(d); img_scc:=ImageOrbitSCC(d);
+  
+  n:=Length(d!.rep![1]); #degree
+  m:=Length(img_o[1]); #rank
+  
+  if HasNrIdempotents(d) then 
+    out:=EmptyPlist(NrIdempotents(d));
+  else
+    out:=[]; 
+  fi;
+  k:=0;
+
+  for i in img_scc do 
+    for j in ker_scc do 
+      if IsInjectiveTransOnList(ker_o[j], img_o[i]) then 
+        k:=k+1;
+        #do any better? 
+        lookup:=[];
+        for l in [1..m] do 
+          lookup[ker_o[j][img_o[i][l]]]:=img_o[i][l];
+        od;
+        
+        out[k]:=TransformationNC(List(ker_o[j], x-> lookup[x])); 
+      fi;
+    od;
+  od;
+
+  if not HasNrIdempotents(d) then 
+    SetNrIdempotents(d, k);
+  fi;
+
+  return out;
+end);
 
 # new for 4.0! - ImageOrbit - "for a D-class of a trans. semigp"
 #############################################################################
@@ -1255,94 +1366,6 @@ end);
 
 #JDMJDM
 
-#############################################################################
-#JDM it would be helpful to have a IteratorOfGreensRClasses for use in the 
-# enumerator of a D-class.
-
-InstallOtherMethod(GreensRClasses, "for a D-class of a trans. semigroup",
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(d)
-local s, o, out, f, r, data;
-
-s:=d!.parent; o:=d!.o[1]; 
-out:=EmptyPlist(NrGreensRClasses(d)); 
-
-for data in GreensRClassRepsData(d) do 
-	f:=RClassRepFromData(s, data, o);
-	r:=CreateRClass(s, data, o, f);
-	SetDClassOfRClass(r, d);
-	out[Length(out)+1]:=r;#JDM change this line!
-od;
-
-return out;
-end);
-
-#############################################################################
-#
-
-InstallOtherMethod(GreensRClassOfElement, "for a D-class of a trans. semigroup", 
-[IsGreensDClass and IsGreensClassOfTransSemigp, IsTransformation], 
-function(d, f)
-
-if not f in d then 
-	Info(InfoWarning, 1, "transformation is not an element of the D-class");
-	return fail;
-fi;
-
-Error("not yet implemented");
-
-end);
-
-
-
-#############################################################################
-# JDM is this correct? 
-# could also try finding the idempotents of one R-class and then multiplying
-# them as in GreensRClassReps
-# JDM improve as per l.gi and r.gi
-
-
-InstallOtherMethod( Idempotents, "for a D-class of a trans. semigp.",
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(d)
-local ker, n, i, j, k, out, img, m, reps;
-
-if HasIsRegularDClass(d) and not IsRegularDClass(d) then 
-	return [];
-fi;
-
-# ker:=DClassKerOrb(d){KernelOrbitSCC(d)}; JDM don't know what these commands
-# are called!
-n:=Length(d!.rep![1]);
-reps:=[];
-
-for i in [1..Length(ker)] do #JDM replace this with TABLE_OF_TRANS_KERNEL?
-	j:=[1..n];
-	for k in [1..Length(ker[i])] do
-		j{ker[i][k]}:=List([1..Length(ker[i][k])], x-> k);
-	od;
-	reps[i]:=j;
-od;
-
-out:= [];
-img:=ImageOrbitFromData(d!.parent, d!.data[1], d!.o[1])
- {ImageOrbitSCCFromData(d!.parent, d!.data[1], d!.o[1])};
-#replace these as above!
-
-m:=Length(img[1]);
-
-for i in img do 
-	for j in [1..Length(ker)] do 
-		if Length(Set(reps[j]{i}))=m then 
-			out[Length(out)+1]:=IdempotentNC(ker[j], i); #JDM TransformationNC?
-		fi;
-	od;
-od;
-
-return out;
-end);
-
-
 # new for 4.0!
 #############################################################################
 # not a user function
@@ -1351,7 +1374,7 @@ end);
 # OrbitsOfImages(s)!.orbits], d = [image data, kernel data] (including
 # true/false). 
 
-# return the data of the D-class containing f but where both l values are for f
+# Notes: returns the data of the D-class containing f but where both l values are for f
 # rather than the D-class. 
 
 InstallGlobalFunction(PreInOrbitsOfKernels, 
@@ -1592,10 +1615,61 @@ end);
 #############################################################################
 
 InstallGlobalFunction(IteratorOfGreensDClasses, 
-function(s)
-local iter;
+function(arg)
+local iter, s;
 
 Info(InfoMonoidGreens, 4, "IteratorOfGreensDClasses");
+
+if not (Length(arg) mod 3)=1 or not IsTransformationSemigroup(arg[1]) then 
+  Info(InfoWarning, 1, "Usage: argument should be a trans. semigp. and", 
+   " optionally function, operator, value, function, operator, value, ...");
+fi;
+
+#JDM do the same as the below for IteratorOfRClasses etc..
+
+if Length(arg)>1 then 
+  return IteratorByFunctions( rec(
+          
+          arg:=arg,
+          
+          iter:=IteratorOfGreensDClasses(arg[1]),
+         
+          next:=fail,
+          
+          last_called:=false,
+
+          IsDoneIterator :=function(iter)
+          local d;        
+            
+            if iter!.last_called then 
+              return iter!.next=fail;
+            fi;
+
+            iter!.last_called:=true;
+
+            repeat 
+              d:=NextIterator(iter!.iter);
+            until d=fail or ForAll([1..(Length(arg)-1)/3], i-> 
+             arg[3*i](arg[3*i-1](d), arg[3*i+1]));
+            
+            iter!.next:=d;
+
+            return d=fail;
+          end,
+
+          NextIterator:=function(iter)
+          
+            if not iter!.last_called then 
+              IsDoneIterator(iter);
+            fi;
+            iter!.last_called:=false;
+            return iter!.next;
+          end,
+  
+          ShallowCopy:=iter -> rec(iter:=iter!.iter, arg:=iter!.arg)));
+fi;
+
+s:=arg[1];
 
 iter:=IteratorByFunctions( rec(
 	
@@ -1763,25 +1837,42 @@ end);
 
 #############################################################################
 
-InstallOtherMethod(NrIdempotents, "for an D-class", 
+InstallOtherMethod(NrIdempotents, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
-
-  if HasIdempotents(d) then 
-    return Length(Idempotents(d));
-  fi;
-
+  local ker_o, ker_scc, img_o, img_scc, k, i, j;
+  
   if HasIsRegularDClass(d) and not IsRegularDClass(d) then 
     return 0;
   fi;
   
+  if NrIdempotentsRClassFromData(d!.parent, d!.data[1], d!.o[1])=0 then
+    return [];
+  fi;
+
   if RankOfTransformation(d!.rep)=DegreeOfTransformation(d!.rep) then 
     return 1;
   fi;
-  
- Error("not yet re-implemented"); 
 
-  return NrIdempotentsRClassFromData(d!.parent, d!.data[1], d!.o[1])*NrGreensRClasses(d);
+  ker_o:=KernelOrbit(d); ker_scc:=KernelOrbitSCC(d);
+  img_o:=ImageOrbit(d); img_scc:=ImageOrbitSCC(d);
+  k:=0;
+
+  for i in img_scc do
+    for j in ker_scc do
+      if IsInjectiveTransOnList(ker_o[j], img_o[i]) then
+        k:=k+1;
+      fi;
+    od;
+  od;
+  #return k;
+  # or JDM which is quicker???
+
+  #k:=0;
+  #for i in GreensRClassRepsData(d) do 
+  #  k:=k+NrIdempotentsRClassFromData(d!.parent, d!.data[1], d!.o[1]);
+  #od;
+  #return k;
 end);
 
 # new for 4.0!
