@@ -330,6 +330,32 @@ end);
 #############################################################################
 # not a user function!
 
+# j is the index of the scc we are computing the multipliers for!
+
+InstallGlobalFunction(CreateImageOrbitSCCPerms,
+function(gens, o, j)
+  local p, scc, f, i;
+
+  p:=EmptyPlist(Length(o));
+  scc:=o!.scc[j];
+
+  #for i in scc do
+  #	f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
+  #	p[i]:=PermList(MappingPermListList(o[i], OnTuples(o[i], f)));
+  #od; JDM this works also!
+
+  for i in scc do
+    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i)); 
+    p[i]:=MappingPermListList(OnTuples(o[scc[1]], f), o[scc[1]]);
+  od;
+
+  return p;
+end);
+
+# new for 4.0!
+#############################################################################
+# not a user function!
+
 # Usage: gens = generators of the semigroup
 # o = image orbit
 # f = representative of scc with index k
@@ -756,7 +782,7 @@ function(arg)
   o!.perms:=EmptyPlist(Length(o));
   
   for i in [1..r] do 
-    o!.perms:=o!.perms+MultipliersOfSCCOfImageOrbit(gens, o, i);
+    o!.perms:=o!.perms+CreateImageOrbitSCCPerms(gens, o, i);
   od;
 
   #schutzenberger groups
@@ -1441,31 +1467,6 @@ function(s)
   return iter;
 end);
 
-# new for 4.0!
-#############################################################################
-# not a user function!
-
-# j is the index of the scc we are computing the multipliers for!
-
-InstallGlobalFunction(MultipliersOfSCCOfImageOrbit,
-function(gens, o, j)
-  local p, scc, f, i;
-
-  p:=EmptyPlist(Length(o));
-  scc:=o!.scc[j];
-
-  #for i in scc do
-  #	f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
-  #	p[i]:=PermList(MappingPermListList(o[i], OnTuples(o[i], f)));
-  #od; JDM this works also!
-
-  for i in scc do
-    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i)); 
-    p[i]:=MappingPermListList(OnTuples(o[scc[1]], f), o[scc[1]]);
-  od;
-
-  return p;
-end);
 
 # new for 4.0!
 #############################################################################
@@ -1640,7 +1641,7 @@ function(arg)
   local s, f, images, data, o;
 
   s:=arg[1]; f:=arg[2];
-  images:=OrbitsOfImages(s)!.images;
+  images:=OrbitsOfImages(s)!.images; 
 
   if Length(arg)>=3 then 
     o:=arg[3];

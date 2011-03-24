@@ -72,7 +72,7 @@ for m in [1..r] do
 		data:=Concatenation(data, List([1..Length(old_reps[max])], val-> 
 		 [j, k, scc[m][1], m, val, 1]));
 		
-		o!.perms:=o!.perms+MultipliersOfSCCOfImageOrbit(gens, o, m);
+		o!.perms:=o!.perms+CreateImageOrbitSCCPerms(gens, o, m);
 		#JDM use old perms as far as possible!
 		for i in [1..Length(old_scc)] do 
 			old_reps[i]:=List(old_reps[i], x-> x*o!.perms[O!.scc[old_scc[i]][1]]);
@@ -142,7 +142,7 @@ for m in [1..r] do
 		o!.reps[m]:=[[f]];
 		o!.kernels_ht[m]:=HashTableForKernels(
 		 KernelOfTransformation(f));
-		o!.perms:=o!.perms+MultipliersOfSCCOfImageOrbit(gens, o, m);
+		o!.perms:=o!.perms+CreateImageOrbitSCCPerms(gens, o, m);
 		o!.schutz[m]:=CreateImageOrbitSchutzGp(gens, o, f, m);
 
 		#install descendants of f in OrbitsOfImages(t)!.ht

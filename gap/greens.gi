@@ -54,7 +54,7 @@ SetIsGreensClassOfTransSemigp(ec, true);
 return ec;
 end);
 
-# new for 4.0! NrIdempotents - "for a transformation semigroup"
+# new for 4.0! - NrIdempotents - "for a transformation semigroup"
 #############################################################################
 
 InstallMethod(NrIdempotents, "for a transformation semigroup", 

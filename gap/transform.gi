@@ -183,7 +183,7 @@ o:=OrbitsOfImages(s);
 if not o!.finished then 
 	gens:=GeneratorsOfSemigroup(s);
 	n:=DegreeOfTransformationSemigroup(s);
-        i:=Random([20..50]);
+        i:=Random([1..2*Length(gens)]);
 	w:=List([1..i], x-> Random([1..Length(gens)]));
 	return EvaluateWord(gens, w);
 else

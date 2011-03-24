@@ -183,7 +183,12 @@ local p, ht;
 #return v + 1;
 #end;
 
-p:=Minimum(NextPrimeInt(Stirling2(n, Maximum(ker))), 100003);
+if n<50 then 
+  p:=Minimum(NextPrimeInt(Stirling2(n, Maximum(ker))), 100003);
+else
+  p:=100003;
+fi;
+
 ht := HTCreate(ker, rec( hfd := p, treehashsize := p ));
 HTAdd(ht, ker, 1);
 
