@@ -20,7 +20,7 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
   
   <Author>J. D. Mitchell <Email>jdm3@st-and.ac.uk</Email></Author>
   
-  <Copyright>&copyright; 2010 J. D. Mitchell.<P/></Copyright>
+  <Copyright>&copyright; 2011 J. D. Mitchell.<P/></Copyright>
 
   <Colophon>
   This manual describes the &GAP; 4 package <Package>moniod</Package> version
@@ -468,7 +468,7 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
 
   <Section>
     <Heading>
-      &GAP; functions with methods in <Package>monoid</Package>
+      &GAP; library functions
     </Heading>
 		
     <Package>monoid</Package> contains special methods for R-classes of the 
@@ -487,9 +487,9 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
 
   </Section>
 
-  <Section><Heading>Green's R-relation</Heading>
+  <Section><Heading>Green's relations</Heading>
     The functions described in this section extend the &GAP; library functions
-    for Greens R-relation and related objects. 
+    for Greens <Math>R</Math>-relation and related objects. 
     
     <#Include Label="GreensRClasses">
     <#Include Label="GreensRClassOfElementNC">
@@ -500,24 +500,13 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     <#Include Label="IteratorOfGreensRClasses"> 
     <#Include Label="IteratorOfRClassReps"> 
     <#Include Label="NrGreensRClasses">
+    
     <#Include Label="NrIdempotents">
+    <#Include Label="NrRegularDClasses">
+    <#Include Label="PartialOrderOfDClasses">
     <#Include Label="SchutzenbergerGroup">
   
-  </Section>
-  
-  <Section><Heading>Green's H-relation</Heading>
-      
-    The functions described in this section extend the &GAP; library functions
-    for Green's <Math>D</Math>-relation and related objects.
 
-    <#Include Label="PartialOrderOfDClasses">
-
-  </Section>
-
-  <Section><Heading>Green's H-relation</Heading>
-      
-    The functions described in this section extend the &GAP; library functions
-    for Greens H-relation and related objects. 
     
     <#Include Label="GreensHClasses">
     <#Include Label="GreensHClassReps">

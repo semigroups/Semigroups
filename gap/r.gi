@@ -133,9 +133,9 @@ function(f, r)
    PermLeftQuoTransformationNC(rep, g))=();
 end);
 
-# new for 4.0!
+# new for 4.0! - \in - "for a transformation semigroup"
 #############################################################################
-# not algorithm X.
+# Notes: not algorithm X.
 
 InstallMethod(\in, "for a transformation semigroup", 
 [IsTransformation, IsTransformationSemigroup],
@@ -153,7 +153,7 @@ function(f, s)
   fi;
 
   o:=OrbitsOfImages(s);
-  g:=PreInOrbitsOfImages(s, f);
+  g:=PreInOrbitsOfImages(s, f, false);
 
   if g[1] then 
     return true;
@@ -167,7 +167,7 @@ function(f, s)
 
   repeat
     NextIterator(iter);
-    g:=InOrbitsOfImages(s, f, g[2], orbits, images);
+    g:=InOrbitsOfImages(f, false, g[2], orbits, images);
 
     if g[1] then 
       return true;
@@ -181,14 +181,12 @@ function(f, s)
   return false;
 end);
 
-# new for 4.0! 
+# new for 4.0! - AddToOrbitsOfImages - not a user function! 
 #############################################################################
-# not a user function!
-
 # Usage: s = semigroup or d-class; f = transformation; data = image data; 
 # o = OrbitsOfImages(s).
 
-# if s is a d-class, then data should have j, k, l, m and g not = fail!
+# Notes: if s is a d-class, then data should have j, k, l, m and g not = fail!
 
 InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, f, data, o)
@@ -728,16 +726,16 @@ function(arg)
   deg:=DegreeOfTransformationSemigroup(s);
   j:=Length(img);
 
-  if deg<1000 then 
+  if deg<15 then 
     bound:=Binomial(DegreeOfTransformationSemigroup(s), j);
     treehashsize:=3*bound;
   else
     bound:=infinity;
-    treehashsize:=100000;
+    treehashsize:=10000;
   fi;
           
   o:=Orb(s, img, OnSets, rec(
-          treehashsize:=NextPrimeInt(Minimum(100000, treehashsize)), 
+          treehashsize:=NextPrimeInt(Minimum(10000, treehashsize)), 
           schreier:=true,
           gradingfunc := function(o,x) return [Length(x), x]; end, 
           orbitgraph := true, 
@@ -931,13 +929,12 @@ function(s, f)
     return fail;
   fi;
 
-  d:=PreInOrbitsOfImages(s, f)[2];
-  d[3]:=ImageOrbitSCCFromData(s, d)[1];
+  d:=PreInOrbitsOfImages(s, f, true)[2];
 
   return CreateRClass(s, d, OrbitsOfImages(s), RClassRepFromData(s, d));
 end);
 
-# new for 4.0!
+# new for 4.0! - GreensRClassOfElementNC - "for a trans. semigp and trans."
 #############################################################################
 # JDM double check everything is ok here!
 
@@ -948,13 +945,11 @@ function(s, f)
 
   Info(InfoMonoidGreens, 4, "GreensRClassOfElementNC");
 
-  d:=PreInOrbitsOfImages(s, f);
+  d:=PreInOrbitsOfImages(s, f, true);
 
   if d[1] then # f in s!
     Info(InfoMonoidGreens, 2, "transformation is an element of semigroup");
-    d:=d[2]; d[3]:=ImageOrbitSCCFromData(s, d)[1];
-    r:=CreateRClass(s, d, OrbitsOfImages(s), RClassRepFromData(s, d));
-    return r;
+    return CreateRClass(s, d[2], OrbitsOfImages(s), RClassRepFromData(s, d[2]));
   elif OrbitsOfImages(s)!.finished then #f not in s!
     Info(InfoMonoidGreens, 2, "transformation is not an element of semigroup");
     return fail;
@@ -968,6 +963,10 @@ function(s, f)
   #JDM ForwardOrbit here calculates the schutz gps., perms and so on 
   #   of all the scc's of the orbit. We only need those for the first one...
   #   add optional fifth arg that filters the scc's.
+
+  #JDM also PreInOrbitsOfImages might have some non-fail values, in which case
+  # we should use them. If everything is known except val or n, then we don't
+  # really want to do what we are doing here...
 
   o:=rec( finished:=false, orbits:=o, gens:=Generators(s), s:=s, 
    deg := n, data:=[], images:=fail, lens:=List([1..n], function(x) if x=j then
@@ -1040,16 +1039,19 @@ end);
 
 # new for 4.0! InOrbitsOfImages - not a user function!
 #############################################################################
-# Usage: s, f, data, OrbitsOfImages(s)!.orbits, OrbitsOfImages(s)!.images
+# Usage: f = transformation; 
+# rectify = should l correspond to f (false) or be o[scc[1]] (true);
+# data = image data; o = OrbitsOfImages(s)!.orbits;
+# images = OrbitsOfImages(s)!.images (ht of images of elements found so far).
+
+# Notes: previous default was that rectify = false
 
 # JDM should [img, ker] be included as data[8]? 
 # JDM perhaps things could be speed up by taking everything with a ! in it
 # and making it an argument?!
 
-#JDM s is not needed as an argument here...
-
 InstallGlobalFunction(InOrbitsOfImages, 
-function(s, f, data, o, images)
+function(f, rectify, data, o, images)
   local j, k, l, m, val, n, g, img, schutz, reps, i;
 
   j:=data[1]; k:=data[2]; l:=data[3];
@@ -1083,6 +1085,10 @@ function(s, f, data, o, images)
 
   if g=fail then #this can happen if coming from GreensRClassReps.
     g:=f*o[j][k]!.perms[l];
+  fi;
+
+  if rectify then 
+    l:=o[j][k]!.scc[m][1];
   fi;
 
   if val=fail then 
@@ -1331,12 +1337,11 @@ function(s)
   return iter;
 end);
 
-# new for 4.0!
+# new for 4.0! - IteratorOfRClassRepsData - not a user function!
 #############################################################################
-# not a user function!
 
 InstallGlobalFunction(IteratorOfRClassRepsData, 
-  function(s)
+function(s)
   local iter;
   
   Info(InfoMonoidGreens, 4, "IteratorOfRClassRepsData");
@@ -1396,13 +1401,12 @@ InstallGlobalFunction(IteratorOfRClassRepsData,
       O!.at:=O!.at+1;
       i :=i+1;
       x:=o[i];
-      d:=InOrbitsOfImages(s, x, [fail, fail, fail, fail, fail, 0, fail], 
+      d:=InOrbitsOfImages(x, true, [fail, fail, fail, fail, fail, 0, fail], 
        orbits, images);
 
       if not d[1] then #new rep!
         if IsTransformationMonoid(s) or not i = 1 then 
           d:=AddToOrbitsOfImages(s, x, d[2], O);
-          d[3]:=ImageOrbitSCCFromData(s, d, O)[1];
           iter!.i:=iter!.i+1;
           iter!.next_value:=d;
           return false;
@@ -1630,32 +1634,32 @@ end);
 InstallMethod(ParentAttr, "for a R-class of a trans. semigroup", 
 [IsGreensClass and IsGreensClassOfTransSemigp], x-> x!.parent);
 
-# new for 4.0!
+# new for 4.0! - PreInOrbitsOfImages - not a user function!
 #############################################################################
-# not a user function!
-
-# Usage: s = semigroup, f = element, o = OrbitsOfImages(s)!.orbits, d = data 
+# Usage: s = semigroup; f = element; 
+# rectify = l for f (false) or for R-class rep (true);
+# o = OrbitsOfImages(s)!.orbits (optional);  d = image data (optional).
 
 InstallGlobalFunction(PreInOrbitsOfImages, 
 function(arg)
   local s, f, images, data, o;
 
-  s:=arg[1]; f:=arg[2];
+  s:=arg[1]; f:=arg[2]; 
   images:=OrbitsOfImages(s)!.images; 
 
-  if Length(arg)>=3 then 
-    o:=arg[3];
+  if Length(arg)>=4 then 
+    o:=arg[4];
   else
     o:=OrbitsOfImages(s)!.orbits;
   fi;
   
-  if Length(arg)>=4 then 
+  if Length(arg)>=5 then 
     data:=arg[4];
   else
     data:=[fail, fail, fail, fail, fail, 0, fail];
   fi;
 
-  return InOrbitsOfImages(s, f, data, o, images);
+  return InOrbitsOfImages(f, arg[3], data, o, images);
 end);
 
 # new for 4.0!
@@ -1924,8 +1928,8 @@ end);
 
 # new for 4.0! ImageOrbitSchutzGpFromData - not a user function!
 ############################################################################
-# Usage: s = semigroup; d = image data (any format); o = OrbitsOfImages(s)
-# (optional).
+# Usage: s = semigroup; d = image data (any format); 
+# o = OrbitsOfImages(s)  (optional).
 
 InstallGlobalFunction(ImageOrbitSchutzGpFromData, 
 function(arg)

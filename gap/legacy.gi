@@ -1,3 +1,25 @@
+
+# legacy from 3! - ViewObj - "for D-class data"
+#############################################################################
+
+InstallMethod( ViewObj, "for D-class data",
+[ IsGreensDClassData and IsGreensDClassDataRep],
+function( obj )
+Print( "GreensDClassData( ", obj!.rep, " )" );
+end );
+
+
+# legacy from 3! - PrintObj - "for D-class data"
+#############################################################################
+
+InstallMethod( PrintObj, "for D-class data'",
+[ IsGreensDClassData and IsGreensDClassDataRep],
+function( obj )
+  Print( "GreensDClassData: ", obj!.rep,  " )" );
+end );
+
+
+
 ###########################################################################
 # 
 

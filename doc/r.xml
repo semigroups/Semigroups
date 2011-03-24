@@ -12,7 +12,6 @@
 
 ## - cross references and double check. 
 
-
 <Chapter Label="Advanced"> <Heading>Advanced Features</Heading>
   
   <Section Label="GreensAdvancedR">
@@ -25,7 +24,7 @@
     <Package>monoid</Package> package. <P/> 
 
     Please note that calling certain functions in this section in the incorrect
-    contextrm could have unpredictable and unusual consequences. 
+    context could have unpredictable and unusual consequences. 
 
     <#Include Label="AddToOrbitsOfImages">
     <#Include Label="CreateRClass">
@@ -267,8 +266,8 @@
   object <A>x</A> where <A>x</A> is a transformation semigroup, an R-class, an L-
   class, or a D-class. <P/>
 
-  Note that if the H-classes are not required, then GreensHClassReps is more 
-  efficient than the above, since the H-class objects are not created.<P/>
+  Note that if the H-classes are not required, then <C>GreensHClassReps</C> is more 
+  efficient than <C>GreensHClasses</C>, since the H-class objects are not created.<P/>
 
   See also <Ref Attr="GreensHClasses"/>.
   </Description>
@@ -327,9 +326,13 @@
 <#/GAPDoc>
 
 <#GAPDoc Label="GreensRClassOfElementNC">
-  <ManSection><Oper Name="GreensRClassOfElementNC" Arg="s, f"/>
+  <ManSection>
+  <Oper Name="GreensRClassOfElementNC" Arg="s, f"/>
+  <Oper Name="GreensDClassOfElementNC" Arg="s, f"/>
   <Description>
-  creates the <Math>R</Math>-class of the transformation <A>f</A> in the transformation
+  creates the <Math>R</Math>-class, <Math>D</Math>-class, <Math>L</Math>-class,
+  or <Math>H</Math>-class of the transformation <A>f</A> 
+  in the transformation
   semigroup <A>s</A> after checking if <A>f</A> has already been shown to be an
   element of <A>s</A> or not. Note that if it is not known to &GAP; if 
   <A>f</A> is an element of <A>s</A> or not, then no further attempt to verify if
@@ -337,8 +340,8 @@
    <!--Calling this function does not modify 
   <Ref Attr="OrbitsOfImages"/> of <A>s</A>.--> <P/>
 
-  It can be quicker to compute to compute the R-class of an element using 
-  <C>GreensRClassOfElementNC</C> than using <C>GreensRClassOfElement</C> if it
+  It can be quicker to compute to compute the class of an element using 
+  <C>GreensRClassOfElementNC</C>, say, than using <C>GreensRClassOfElement</C> if it
   is known <E>a priori</E> that <A>f</A> is an element of <A>s</A>. On the other
   hand, if <A>f</A> is not an element of <A>s</A>, then the results of this
   computation are unpredictable.<P/> 
@@ -359,10 +362,12 @@
 <#/GAPDoc>
 
 <#GAPDoc Label="GreensRClassReps">
-  <ManSection><Attr Name="GreensRClassReps" Arg="s"/>
+  <ManSection>
+  <Attr Name="GreensRClassReps" Arg="s"/>
+  <Attr Name="GreensDClassReps" Arg="s"/>
   <Description>
-  returns a list of R-class representatives of the transformation semigroup 
-  <A>s</A>. The same output can be obtained by calling: 
+  returns a list of <Math>R</Math>-class representatives of the transformation 
+  semigroup <A>s</A>. The same output can be obtained by calling: 
   <Log>
     List(GreensRClasses(s), Representative);
   </Log>
@@ -547,7 +552,9 @@
 <#/GAPDoc>
 
 <#GAPDoc Label="IteratorOfGreensRClasses">
-  <ManSection><Func Name="IteratorOfGreensRClasses" Arg="s"/>
+  <ManSection>
+  <Func Name="IteratorOfGreensRClasses" Arg="s"/>
+  <Func Name="IteratorOfGreensDClasses" Arg="s"/>
   <Description>
   returns an iterator of the R-classes of the transformation semigroup <A>s</A>. 
   See <Ref Sect="Iterators" BookName="ref"/> for more information on
@@ -590,7 +597,9 @@
 <#/GAPDoc>
 
 <#GAPDoc Label="IteratorOfRClassReps">
-  <ManSection><Func Name="IteratorOfRClassReps" Arg="s"/>
+  <ManSection>
+  <Func Name="IteratorOfRClassReps" Arg="s"/>
+  <Func Name="IteratorOfDClassReps" Arg="s"/>
   <Description>
   returns an iterator of the representatives of R-classes of the transformation
   semigroup <A>s</A>. See <Ref Sect="Iterators" BookName="ref"/> for more
@@ -603,7 +612,7 @@
   in the orbit of the semigroup acting on itself on the left is given (every
   R-class representative occurs in this orbit), the
   number of elements of the semigroup that have so far been computed is given,
-  and the number of R-classes that have been found is given. Note that these
+  and the number of distinct R-classes that have been found is given. Note that these
   numbers depend on the state of the semigroup <A>s</A> and not of the iterator.
   <P/>
   
@@ -663,7 +672,9 @@
 <#/GAPDoc>
 
 <#GAPDoc Label="NrGreensRClasses">
-  <ManSection><Attr Name="NrGreensRClasses" Arg="x"/>
+  <ManSection>
+  <Attr Name="NrGreensRClasses" Arg="x"/>
+  <Attr Name="NrGreensDClasses" Arg="x"/>
   <Description>
   returns the number of R-classes in the transformation semigroup  or D-class 
   <A>x</A>. If the actual R-classes are not required, then it is  

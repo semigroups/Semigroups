@@ -138,6 +138,26 @@ InstallOtherMethod(DClassOfLClass, "for an L-class of a trans. semigroup",
 [IsGreensLClass and IsGreensClassOfTransSemigp], 
 l-> GreensDClass(l));
 
+#new for 4.0! - DClassOfLClass - "for an L-class of a trans. semigroup"
+#############################################################################
+# JDM test/revise!
+
+InstallOtherMethod(DClassOfLClass, "for an L-class of a trans. semigroup",
+[IsGreensLClass and IsGreensClassOfTransSemigp],
+function(l)
+  local s, d, o, rep;
+
+  s:=l!.parent;
+  d:=l!.data{[1,2]};
+  o:=l!.o;
+  #JDM couldn't the below be DClassRepFromData(s, l!.data, o)?
+  rep:=LClassRepFromData(s, Concatenation(d, [[1,1]]), o);
+
+  return CreateDClass(s, d, o, rep);
+end);
+
+
+
 #############################################################################
 #
 

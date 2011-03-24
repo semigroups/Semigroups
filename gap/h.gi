@@ -126,6 +126,26 @@ SetEquivalenceClassRelation(h, GreensHRelation(s));
 return h;
 end);
 
+#new for 4.0! - DClassOfHClass - for an H-class of a trans. semigroup
+#############################################################################
+# JDM test!
+
+InstallOtherMethod(DClassOfHClass, "for an H-class of a trans. semigroup",
+[IsGreensHClass and IsGreensClassOfTransSemigp], 
+function(h)
+local s, d, o, rep;
+
+s:=h!.parent;
+d:=h!.data;
+o:=h!.o;
+rep:=DClassRepFromData(s, d, o);
+
+d:=d{[1,2]}; #JDM this line can be omitted when things are cleanup!
+
+return CreateDClass(s, d, o, rep);
+end);
+
+
 #############################################################################
 #
 
