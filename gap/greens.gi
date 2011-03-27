@@ -16,7 +16,22 @@
 #############################################################################
 
 
-##
+
+# new for 4.0! \=, "for Green's class and Green's class of trans. semigp."
+#############################################################################
+
+InstallMethod( \=, "for Green's class and Green's class of trans. semigp.",
+[IsGreensClassOfTransSemigp, IsGreensClassOfTransSemigp],
+function(x, y)
+  return x!.parent=y!.parent and x!.rep in y and Size(x)=Size(y);
+end);
+
+# new for 4.0! - \< - "for Green's class and Green's class of trans. semigp."
+#############################################################################
+
+InstallMethod(\<, "for Green's class and Green's class of trans. semigp.", 
+[IsGreensClassOfTransSemigp, IsGreensClassOfTransSemigp], ReturnFalse);
+
 #############################################################################
 
 InstallMethod( \=, "for trans. semigp. and trans. semigp.",

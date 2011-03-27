@@ -79,6 +79,7 @@ DeclareGlobalFunction("ImageOrbitStabChainFromData");
 DeclareAttribute("ImageOrbitStabChain", IsGreensRClass and 
  IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("InOrbitsOfImages");
+DeclareProperty("IsIteratorOfRClassRepsData", IsIterator);
 DeclareGlobalFunction("IsRegularRClassData");
 DeclareGlobalFunction("IteratorOfNewRClassRepsData");
 DeclareGlobalFunction("IteratorOfRClassRepsData");
@@ -117,6 +118,8 @@ DeclareGlobalFunction("ImageOrbitCosetsFromData"); #input kernel orbit data!
 DeclareAttribute("ImageOrbitCosets", IsGreensDClass and
  IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("InOrbitsOfKernels");
+DeclareProperty("IsIteratorOfDClassRepsData", IsIterator);
+DeclareGlobalFunction("IteratorOfDClassRepsData");
 DeclareGlobalFunction("IteratorOfNewDClassReps");
 DeclareAttribute("KernelOrbit", IsGreensDClass and
  IsGreensClassOfTransSemigp, "mutable");
@@ -224,7 +227,6 @@ DeclareGlobalFunction("IteratorOfHClassReps");
 
 #DeclareGlobalFunction("EnumeratorOfRClassReps");
 
-DeclareProperty("IsIteratorOfRClassRepsData", IsIterator);
 DeclareProperty("IsIteratorOfHClassRepsData", IsIterator);
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
 DeclareProperty("IsIteratorOfLClassReps", IsIterator);
