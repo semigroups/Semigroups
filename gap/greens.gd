@@ -113,6 +113,7 @@ DeclareGlobalFunction("DisplayOrbitsOfKernels");
 DeclareGlobalFunction("ExpandOrbitsOfKernels");
 DeclareGlobalFunction("ForwardOrbitOfKernel");
 DeclareAttribute("GeneratorsAsListOfImages", IsTransformationSemigroup);
+DeclareAttribute("GreensDClassRepsData", IsTransformationSemigroup);
 DeclareAttribute("GreensLClassRepsData", IsTransformationSemigroup);
 DeclareGlobalFunction("ImageOrbitCosetsFromData"); #input kernel orbit data!
 DeclareAttribute("ImageOrbitCosets", IsGreensDClass and
@@ -145,9 +146,16 @@ DeclareAttribute("OrbitsOfKernels", IsTransformationSemigroup, "mutable");
 DeclareGlobalFunction("PreInOrbitsOfKernels");
 DeclareGlobalFunction("SizeOrbitsOfKernels");
 
+# the following functions in l.gi are currently undocumented
+
+DeclareGlobalFunction("CreateLClass");
+DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]); #M
+DeclareAttribute("GreensLClassReps", IsTransformationSemigroup); #M
+DeclareAttribute("IsRegularLClass", IsGreensClassOfTransSemigp); #M
+DeclareGlobalFunction("IteratorOfGreensLClasses"); #M
+
 # JDMJDM
 # the following functions have not yet been processed for release!
-
 
 GT:=function(x,y) return x>y; end;
 
@@ -174,8 +182,6 @@ DeclareGlobalFunction("DClassImageOrbitCosetsFromData");
 
 DeclareInfoClass("InfoMonoidGreens");
 
-
-
 DeclareGlobalFunction("RightSchutzGpOfKerOrbit");
 DeclareGlobalFunction("LeftSchutzGpOfKerOrbit");
 DeclareGlobalFunction("SchutzGpOfDClass");
@@ -199,7 +205,6 @@ IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("LClassSchutzGpFromData");
 DeclareGlobalFunction("LClassRelsFromData");
 DeclareGlobalFunction("LClassSCCFromData");
-DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]);
 
 DeclareGlobalFunction("DClassOrbitsFromData");
 DeclareGlobalFunction("DClassKerSchutzGpFromData");
@@ -208,13 +213,11 @@ DeclareGlobalFunction("DClassRelsFromData");
 DeclareGlobalFunction("DClassImgSCCFromData");
 DeclareAttribute("GreensRClass", IsGreensHClass);
 DeclareAttribute("GreensLClass", IsGreensHClass);
-DeclareGlobalFunction("CreateLClass");
 DeclareGlobalFunction("CreateHClass");
 
 DeclareAttribute("LClassType", IsTransformationSemigroup);
 DeclareAttribute("HClassType", IsTransformationSemigroup);
 
-DeclareAttribute("GreensLClassReps", IsTransformationSemigroup);
 
 DeclareProperty("IsEnumeratorOfRClassElements", IsEnumeratorByFunctions);
 DeclareProperty("IsEnumeratorOfLClassElements", IsEnumeratorByFunctions);
@@ -237,7 +240,6 @@ DeclareProperty("IsIteratorOfHClassReps", IsIterator);
 # should be operations so that they can be applied to 
 # D-classes as well as transformation semigroups!
 
-DeclareGlobalFunction("IteratorOfGreensLClasses");
 # and IteratorOfGreensDClass should be an operation so that I can make an
 # iterator that of D-classes satisfying some properties a la smallsemi..
 DeclareOperation("IteratorOfGreensHClasses", [IsTransformationSemigroup]);
@@ -258,7 +260,6 @@ DeclareAttribute("UnderlyingSemigroupOfIterator",
 IsIterator);
 
 
-DeclareAttribute("IsRegularLClass", IsGreensClassOfTransSemigp);
 
 DeclareAttribute("DClassLCosets", IsGreensDClass and 
  IsGreensClassOfTransSemigp);

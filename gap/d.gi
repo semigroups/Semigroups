@@ -12,6 +12,8 @@
 #############################################################################
 ## Notes
 
+# - install a method for GreensHClassReps of a D-class!
+
 # - install iterator method for D-classes? maybe not.
 
 # - use ImageOrbitFromData instead of ImageOrbit (does this make any
@@ -796,6 +798,8 @@ InstallOtherMethod(GreensDClassOfElement, "for a trans. semigp and trans.",
 function(s, f)
   local d;
 
+  Info(InfoMonoidGreens, 4, "GreensDClassOfElement");
+
   if not f in s then 
     Info(InfoWarning, 1, "transformation is not an element of the semigroup");
     return fail;
@@ -804,8 +808,6 @@ function(s, f)
   d:=PreInOrbitsOfKernels(s, f, true);
 
   if not d[2][1] then #orbit of kernel not previously calculated!
-    #d[1][2][3]:=ImageOrbitSCCFromData(s, d[1][2])[1]; 
-    #data for trans. with rectified image
     d:=AddToOrbitsOfKernels(s, d[1][2][7], [d[1][2],d[2][2]]); 
     #d[1][2][7] is f with rectified image!
   else
@@ -829,7 +831,9 @@ function(s, f)
 
   Info(InfoMonoidGreens, 4, "GreensDClassOfElementNC");
 
-  if not DegreeOfTransformation(f)=DegreeOfTransformationSemigroup(s) then 
+  n:=DegreeOfTransformationSemigroup(s);
+
+  if not DegreeOfTransformation(f)=n then 
     Info(InfoWarning, 1, "Usage: trans. semigroup and trans. of equal degree");
     return fail;
   fi;
@@ -837,6 +841,7 @@ function(s, f)
   d:=PreInOrbitsOfKernels(s, f, true);
 
   if d[1][1] then #f in s!
+    #JDM inefficient as we run PreInOrbitsOfKernels twice!
     return GreensDClassOfElement(s, f);
   elif OrbitsOfImages(s)!.finished then #f not in s!
     Info(InfoMonoidGreens, 2, "transformation is not an element of the ",
@@ -848,7 +853,6 @@ function(s, f)
   "semigroup");
 
   j:=Length(ImageSetOfTransformation(f));
-  n:=DegreeOfTransformationSemigroup(s);
 
   Info(InfoMonoidGreens, 2, "finding image orbit...");
   img_o:=[]; img_o[j]:=[ForwardOrbitOfImage(s, f)[1]];
@@ -874,13 +878,24 @@ end);
 
 # new for 4.0! - GreensDClassReps - "for a trans. semigroup"
 #############################################################################
-
+# move to greens.gi JDM
 InstallMethod(GreensDClassReps, "for a trans. semigroup", 
 [IsTransformationSemigroup], 
   function(s)
 
   ExpandOrbitsOfKernels(s);
   return List(OrbitsOfKernels(s)!.data, x-> DClassRepFromData(s, x));
+end);
+
+# new for 4.0! - GreensDClassRepsData - "for a trans. semigroup"
+#############################################################################
+# move to greens.gi JDM 
+ 
+InstallMethod(GreensDClassRepsData, "for a trans. semigroup", 
+[IsTransformationSemigroup], 
+  function(s)
+  ExpandOrbitsOfKernels(s);
+  return OrbitsOfKernels(s)!.data;
 end);
 
 # new for 4.0! - GreensHClasses - "for a D-class of a trans. semigroup"
@@ -898,36 +913,26 @@ end);
 
 InstallOtherMethod(GreensLClassRepsData, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(d)
-  local f, scc, m, out, k, data, i, j;
-
-  if not HasNrGreensLClasses(d) then 
-    SetNrGreensLClasses(d, Length(scc)*m);
-  fi;
-
-  return GreensLClassRepsData(d!.parent, d!.data, d!.o);
-end);
+  d-> GreensLClassRepsData(d!.parent, d!.data, d!.o));
 
 # new for 4.0! - GreensLClassRepsData - "for D-class data"
 #############################################################################
 # Usage: s = semigroup; data = [image data, kernel data];
 # o = [OrbitsOfKernels, OrbitsOfImages].
 
+#JDM should be GreensLClassRepsDataFromData!
+
 InstallOtherMethod(GreensLClassRepsData, "for D-class data", 
 [IsTransformationSemigroup, IsCyclotomicCollColl, IsList], 
 function(s, data, o)
-  local f, scc, m, out, k, i, j;
+  local scc, img_co, out, k, i, j;
   
-  f:=DClassRepFromData(s, data, o);
   scc:=ImageOrbitSCCFromData(s, data[1], o[1]);
-  m:=Length(ImageOrbitCosetsFromData(s, data[2], o[2]));
-  
-  out:=EmptyPlist(Length(scc)*m);
-
-  k:=0; 
+  img_co:=ImageOrbitCosetsFromData(s, data[2], o[2]);
+  out:=EmptyPlist(Length(scc)*Length(img_co)); k:=0; 
   
   for i in scc do
-    for j in [1..m] do
+    for j in img_co do
       k:=k+1;
       out[k]:=StructuralCopy(data);
       out[k][1][3]:=i; out[k][3]:=j;
@@ -1140,6 +1145,7 @@ end);
 
 # new for 4.0! - Idempotents - "for a D-class of a trans. semigp."
 #############################################################################
+# JDM compare what is here with the method for Idempotents of an R-class!
 
 InstallOtherMethod(Idempotents, "for a D-class of a trans. semigp.",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
@@ -1294,7 +1300,7 @@ function(f, rectify, data, o, kernels)
   j:=data[2][2][1]; k:=data[2][2][2]; l:=data[2][2][3]; m:=data[2][2][4]; 
   val:=data[2][2][5]; n:=data[2][2][6]; g:=data[2][2][7]; r:=data[2][2][8];
   o:=o[2]; 
-  # r is not used here, if it is known a priori...
+  # r is not used here, even if it is known a priori...
 
   f:=data[1][2][7];
 
@@ -1518,6 +1524,8 @@ end);
 
 # new for 4.0! - IteratorOfGreensDClasses - user function!
 #############################################################################
+# JDM why not use IteratorOfDClassRepsData below, it should be more
+# straightforward, see IteratorOfGreensLClasses.
 
 InstallGlobalFunction(IteratorOfGreensDClasses, 
 function(arg)
@@ -1624,7 +1632,7 @@ end);
 
 #KKK
 
-# new for 4.0! - KernelOrbit - not a user function!
+# new for 4.0! - KernelOrbit - "for a D-class of a trans. semigp." 
 ############################################################################
 
 InstallMethod(KernelOrbit, "for a D-class of a trans. semigp.", 
@@ -1699,7 +1707,7 @@ function(arg)
     o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
   fi;
 
-  return o[2]!.orbits[d[1]][d[2]]!.rels;
+  return o!.rels;
 end);
 
 # new for 4.0! - KernelOrbitSCC - "for D-class of trans. semigp"
@@ -1817,7 +1825,7 @@ end);
 # new for 4.0! - KerRightToImgLeftFromData - not a user function.
 ###########################################################################
 # Usage: s = semigroup; d = [image data, kernel data]; 
-# o = kernel orbit of D-class with data d.
+# o = [orbit of image, orbits of kernels] 
 
 # Notes: permutation converting a perm. of ker. classes to one of img elts
 

@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  h.gi
-#Y  Copyright (C) 2006-2010                             James D. Mitchell
+#Y  Copyright (C) 2006-2011                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -9,7 +9,16 @@
 ##
 ## $Id$
 
-# Make sure all the description strings make sense and that they are uniform...
+# Notes
+# 
+# - h-class data is [unrectified image data, unrectified kernel data, image
+# orbit coset rep, kernel orbit coset rep]
+
+# TODO
+# - Make sure all the description strings make sense and that they are uniform...
+
+
+
 
 # GroupHClassOfGreensDClass...
 
@@ -116,10 +125,9 @@ InstallGlobalFunction(CreateHClass,
 function(s, data, orbit, rep)
 local d, h;
 
-d:=[];
-d[1]:=data[1]{[1..6]}; d[2]:=data[2]{[1..6]}; d[3]:=data[3];
+data:=[data[1]{[1..6]}, data[2]{[1..6]}, data[3], data[4]];
 
-h:=Objectify(HClassType(s), rec(parent:=s, data:=d, 
+h:=Objectify(HClassType(s), rec(parent:=s, data:=data, 
 o:=orbit, rep:=rep));
 SetRepresentative(h, rep);
 SetEquivalenceClassRelation(h, GreensHRelation(s));
@@ -241,18 +249,20 @@ if not f in s then
 	return fail;
 fi;
 
-d:=InOrbitsOfKernels(s, f);
-l:=d[3][1][3];
+d:=PreInOrbitsOfKernels(s, f, false);
+l:=d[1][2][3];
 
-if not d[2] then #D-class containing f not previously calculated
-	d[3][1][3]:=ImageOrbitSCCFromData(s, d[3][1])[1];
-	d:=StructuralCopy(AddToOrbitsOfKernels(s, d[3][1][7], d[3])); 
-	d[2][8]:=1; #JDM this should probably go into AddToOrbitsOfKernels..
+if not d[2][1] then #D-class containing f not previously calculated
+	d:=[d[1][2], d[2][2]];
+        d[1][3]:=ImageOrbitSCCFromData(s, d[1])[1];
+	d:=StructuralCopy(AddToOrbitsOfKernels(s, d[1][7],d)); 
+	d[1][3]:=l; #reset d[2][3] here too?
+        d[3]:=ImageOrbitCosetsFromData(s, d[2])[d[2][8]];
+        d[4]:=(); #???JDM
 else
-	d:=d[3];
+	d:=[d[1][2], d[2][2], ImageOrbitCosetsFromData(s, d[2][2])[d[2][2][8]],
+        ()];
 fi;
-
-Add(d, [l, d[2][8]]);
 
 return CreateHClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)], 
  HClassRepFromData(s, d));
@@ -414,29 +424,28 @@ return NewType( FamilyObj( s ), IsEquivalenceClass and
 end);
 
 
-# new for 4.0!
+# new for 4.0! - HClassRepFromData - not a user function!
 ############################################################################
+# Usage: s = semigroup; d = [image data, kernel data, perm/coset rep];
+# o = [OrbitsOfImages, OrbitsOfKernels] (optional).
 
 InstallGlobalFunction(HClassRepFromData,
 function(arg)
-local s, d, f, o, perms, cosets, rels;
+  local s, d, o, f, perms, rels;
 
-s:=arg[1]; d:=arg[2];
+  s:=arg[1]; d:=arg[2];
 
-if Length(arg)=3 then 
-	o:=arg[3];
-else
-	o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
-fi;
+  if Length(arg)=3 then 
+    o:=arg[3];
+  else
+    o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
+  fi;
 
-f:=RClassRepFromData(s, d[1], o[1]);
-perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
-#cosets:=DClassRCosetsFromData(s, d, o);
+  f:=DClassRepFromData(s, d, o);
+  perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
+  rels:=KernelOrbitRelsFromData(s, d[2], o[2]);
 
-cosets:=o[2]!.orbits[d[2][1]][d[2][2]]!.d_schutz[d[2][4]][d[2][5]][d[2][6]][3];
-#ImageOrbitCosets of D-class with data d.
-
-return f*(cosets[d[3][2]]/perms[d[3][1]]);
+  return rels[d[2][3]][1]*f*(d[3]/perms[d[1][3]])*d[4];
 end);
 
 # new for 4.0!
@@ -658,11 +667,9 @@ d:=h!.data;
 o:=h!.o;
 s:=h!.parent;
 perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
-#cosets:=DClassRCosetsFromData(s, d, o);
-cosets:=ImageOrbitCosets(DClassOfHClass(h));
 
 return DClassSchutzGpFromData(h!.parent, h!.data, h!.o)^
- (cosets[d[3][2]]/perms[d[3][1]]);
+ (d[3]/perms[d[1][3]]);
 end); #JDM correct?
 
 # new for 4.0!

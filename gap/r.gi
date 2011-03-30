@@ -647,6 +647,9 @@ end);
 
 # new for 4.0! - ExpandOrbitsOfImages - not a user function!
 #############################################################################
+# JDM could put a more highly optimized version of this function in, not using
+# an iterator, and passing all record components !. to InOrbitsOfImages and
+# AddToOrbitsOfImages. 
 
 InstallGlobalFunction(ExpandOrbitsOfImages, 
 function(s)
@@ -804,13 +807,15 @@ function(r)
     return List(GreensHClasses(r), Representative);
   fi;
 
-  f:= r!.rep;
-  cosets:=ImageOrbitCosets(DClassOfRClass(r));
-  perms:=ImageOrbitPerms(r);
-  scc:=ImageOrbitSCC(r);
+  f:= r!.rep; cosets:=ImageOrbitCosets(DClassOfRClass(r));
+  perms:=ImageOrbitPerms(r); scc:=ImageOrbitSCC(r);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
-  SetNrGreensHClasses(r, Length(scc)*Length(cosets));
+
+  if not HasNrGreensHClasses(r) then 
+    SetNrGreensHClasses(r, Length(scc)*Length(cosets));
+  fi;
+
   k:=0;
 
   for i in scc do 
@@ -834,22 +839,25 @@ end);
 InstallOtherMethod(GreensHClassRepsData, "for an R-class of a trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 function(r)
-  local f, scc, d, m, out, k, data, i, j;
+  local f, scc, d, cosets, out, k, data, i, j;
 
   f:= r!.rep; scc:=ImageOrbitSCC(r);
-  d:=DClassOfRClass(r); m:=Length(ImageOrbitCosets(d));
+  d:=DClassOfRClass(r); cosets:=ImageOrbitCosets(d);
 
-  out:=EmptyPlist(Length(scc)*m);
-  SetNrGreensHClasses(r, Length(scc)*m);
+  out:=EmptyPlist(Length(scc)*Length(cosets));
+  
+  if not HasNrGreensHClasses(r) then 
+    SetNrGreensHClasses(r, Length(scc)*Length(cosets));
+  fi;
 
-  k:=0;
-  data:=[r!.data, d!.data[2]];
+  k:=0; data:=[r!.data, ShallowCopy(d!.data[2])];
+  data[2][3]:=Position(KernelOrbit(d), CanonicalTransSameKernel(f));
 
   for i in scc do 
-    for j in [1..m] do 
+    for j in cosets do 
       k:=k+1;
-      out[k]:=ShallowCopy(data);
-      out[k][3]:=[i,j];
+      out[k]:=StructuralCopy(data);
+      out[k][1][3]:=i; out[k][3]:=j; out[k][4]:=();
     od;
   od;
 
@@ -987,6 +995,14 @@ function(r)
     return [];
   fi;
 
+  if NrIdempotentsRClassFromData(r!.parent, r!.data, r!.o[1])=0 then
+    return [];
+  fi;
+
+  if RankOfTransformation(r!.rep)=DegreeOfTransformation(r!.rep) then
+    return [TransformationNC([1..DegreeOfTransformation(r!.rep)])];
+  fi;
+
   out:=[]; f:=r!.rep; ker:=KernelOfTransformation(f);
   f:=f![1]; o:=ImageOrbitFromData(r!.parent, r!.data, r!.o);
   scc:=ImageOrbitSCC(r); j:=0;
@@ -998,6 +1014,10 @@ function(r)
       out[j]:=IdempotentNC(ker, i);
     fi;
   od;
+
+  if not HasNrIdempotents(r) then 
+    SetNrIdempotents(r, j);
+  fi;
 
   return out;
 end);
@@ -1916,7 +1936,7 @@ end);
 
 InstallGlobalFunction(RClassRepsDataFromOrbits,
 function(O, j)
-  local data, k, m, val, n;
+  local i, data, k, m, val, n;
 
   data:=[]; i:=0;
 
