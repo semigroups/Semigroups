@@ -1446,6 +1446,8 @@ end);
 
 # new for 4.0! - IteratorOfGreensRClasses - not a user function!
 #############################################################################
+# JDM why not use IteratorOfRClassRepsData below, it should be more
+# straightforward, see IteratorOfGreensLClasses.
 
 InstallGlobalFunction(IteratorOfGreensRClasses, 
 function(s)

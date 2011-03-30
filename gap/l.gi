@@ -583,9 +583,6 @@ function(l)
   return false;
 end);
 
-#JDMJDM
-
-
 # new for 4.0! - IteratorOfGreensLClasses - user function!
 ###########################################################################
 
@@ -625,6 +622,8 @@ function(s)
   SetUnderlyingSemigroupOfIterator(iter, s);
   return iter;
 end);
+
+#JDMJDM
 
 ###########################################################################
 #
@@ -762,7 +761,6 @@ function(l)
    l!.o), d_schutz);
 end);
 
-
 # new for 4.0! - KernelOrbitRels - "for L-class of trans. semigp"
 ############################################################################
 
@@ -820,7 +818,7 @@ end);
 #LLL
 
 ###########################################################################
-# 
+# JDM move to legacy.gi 
 
 InstallGlobalFunction(LClassData, function(list)
 return Objectify(NewType(NewFamily("Green's L Class Data", IsGreensLClassData), 
@@ -957,6 +955,7 @@ end);
 # new for 4.0!
 ############################################################################
 # JDM should this just be SchutzenbergerGroup? YES!!
+# remove this! JDM
 
 InstallMethod(LClassSchutzGp, "for an L-class of a trans. semigp.",
 [IsGreensLClass and IsGreensClassOfTransSemigp], 
