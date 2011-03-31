@@ -101,7 +101,7 @@ function(f, l)
   return SiftedPermutation(schutz, PermLeftQuoTransformationNC(rep, g)^p)=();
 end);
 
-# new for 4.0!
+# new for 4.0! - AsSSortedList - "for L-class of trans. semigp."
 #############################################################################
 # this should be removed after the library method for AsSSortedList 
 # for a Green's class is removed. The default AsSSortedList for a collection
@@ -143,7 +143,7 @@ end);
 
 #DDD
 
-#new for 4.0! - DClassOfLClass - "for an L-class of a trans. semigroup"
+# new for 4.0! - DClassOfLClass - "for an L-class of a trans. semigroup"
 #############################################################################
 
 InstallOtherMethod(DClassOfLClass, "for an L-class of a trans. semigroup",
@@ -623,39 +623,41 @@ function(s)
   return iter;
 end);
 
-#JDMJDM
-
+# new for 4.0! - IteratorOfLClassReps - user function!
 ###########################################################################
-#
 
 InstallGlobalFunction(IteratorOfLClassReps,
 function(s)
-local iter;
+  local iter;
 
-Info(InfoMonoidGreens, 4, "IteratorOfLClassReps");
+  Info(InfoMonoidGreens, 4, "IteratorOfLClassReps");
 
-iter:=IteratorByFunctions( rec(
+  if not IsTransformationSemigroup(s) then
+    Info(InfoWarning, 1, "Usage: argument should be a transformation",
+    " semigroup");
+    return fail;
+  fi;
 
-	s:=s,
-	
-	data:=IteratorOfLClassRepsData(s),
-	
-	IsDoneIterator := iter-> IsDoneIterator(iter!.data),
-	
-	NextIterator := function(iter)
-	if not IsDoneIterator(iter!.data) then 
-		return LClassRepFromData(iter!.s, NextIterator(iter!.data));
-	fi;
-	return fail; end,
-	
-	ShallowCopy := iter -> rec( data:=IteratorOfLClassRepsData(
-	iter!.s))
-));
+  iter:=IteratorByFunctions( rec(
 
-SetIsIteratorOfLClassReps(iter, true);
-SetUnderlyingSemigroupOfIterator(iter, s);
+    s:=s, data:=IteratorOfLClassRepsData(s),
+  
+    IsDoneIterator := iter-> IsDoneIterator(iter!.data),
+  
+    NextIterator := function(iter)
+      if not IsDoneIterator(iter!.data) then 
+        return LClassRepFromData(iter!.s, NextIterator(iter!.data));
+      fi;
+      return fail; 
+    end,
+  
+    ShallowCopy := iter -> rec( data:=IteratorOfLClassRepsData(
+    iter!.s))));
 
-return iter;
+  SetIsIteratorOfLClassReps(iter, true);
+  SetUnderlyingSemigroupOfIterator(iter, s);
+
+  return iter;
 end);
 
 # new for 4.0! - IteratorOfLClassRepsData - not a user function
@@ -671,9 +673,8 @@ function(s)
 
   iter:=IteratorByFunctions( rec(
     
-    ShallowCopy := iter -> rec( i:=0, s:=iter!.s, 
-    last_called := NextIterator, last_value := 0, 
-    chooser:=iter!.chooser, next:=iter!.next), #JDM correct?
+    ShallowCopy := iter -> rec( i:=0, next_value:=[], 
+    last_called_by_is_done := false, data:=IteratorOfDClassRepsData),
     
     i:=0, next_value:=[], last_called_by_is_done:=false,
     
@@ -773,7 +774,7 @@ function(d)
   return d!.o[2]!.orbits[e[1]][e[2]]!.rels;
 end);
 
-# new for 4.0! - KernelOrbitSCC - for L-class of trans. semigp"
+# new for 4.0! - KernelOrbitSCC - "for L-class of trans. semigp"
 #############################################################################
 
 InstallOtherMethod(KernelOrbitSCC, "for L-class of trans. semigp",
@@ -798,7 +799,7 @@ function(d)
   return d!.o[2]!.orbits[e[1]][e[2]]!.schutz[e[4]][2];
 end);
 
-# new for 4.0! - KernelOrbitStabChain - not a user function!
+# new for 4.0! - KernelOrbitStabChain - "for L-class of a trans. semigp."
 ############################################################################
 # Notes: returns true, false, or the stabilizer chain of the right
 # Schutzenberger group of the specified kernel orbit. True indicates the 
@@ -815,70 +816,14 @@ function(l)
   return l!.o[2]!.orbits[e[1]][e[2]]!.schutz[e[4]][1];
 end);
 
-#LLL
+# new for 4.0! - KerRightToImgLeft - "for a L-class of a trans. semigp"
+#############################################################################
 
-###########################################################################
-# JDM move to legacy.gi 
-
-InstallGlobalFunction(LClassData, function(list)
-return Objectify(NewType(NewFamily("Green's L Class Data", IsGreensLClassData), 
-IsGreensLClassData and IsGreensLClassDataRep), list);
-end);
-
-############################################################################
-# remove the following JDM replace it with a method for KernelOrbit
-
-InstallMethod(LClassKernelOrbit, "for an L-class of a trans. semigp.",
+InstallOtherMethod(KerRightToImgLeft, "for a L-class of a trans. semigp",
 [IsGreensLClass and IsGreensClassOfTransSemigp],
-l-> KernelOrbitFromData(l!.parent, l!.data, l!.o));
+l-> KerRightToImgLeftFromData(l!.parent, l!.data, l!.o));
 
-############################################################################
-# remove this JDM - KernelOrbitRels
-
-InstallMethod(LClassRels, "for an L-class of a trans. semigp.", 
-[IsGreensLClass and IsGreensClassOfTransSemigp], 
-function(l)
-local s, d, o;
-
-s:=l!.parent;
-d:=l!.data[2];
-o:=l!.o[2];
-
-return LClassRelsFromData(s, d, o);
-end);
-
-############################################################################
-# remove this JDM - KernelOrbitsRels
-
-InstallOtherMethod(LClassRels, "for an D-class of a trans. semigp.", 
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(d)
-local s, o;
-
-s:=d!.parent;
-o:=d!.o[2];
-d:=d!.data[2];
-
-return LClassRelsFromData(s, d, o);
-end);
-
-############################################################################
-# remove this JDM - KernelOrbitRelsFromData
-
-InstallGlobalFunction(LClassRelsFromData, 
-function(arg)
-local s, d, o;
-
-s:=arg[1]; d:=arg[2];
-
-if Length(arg)=3 then 
-	o:=arg[3]!.orbits[d[1]][d[2]];
-else 
-	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
-fi;
-
-return o!.rels;
-end);
+#LLL
 
 # new for 4.0! - LClassRepFromData - not a user function
 ############################################################################
@@ -902,109 +847,7 @@ function(arg)
   return f*(d[3]/perms[d[1][3]]);
 end);
 
-# new for 4.0!
-############################################################################
-# remove this JDM - KernelOrbitSCC 
-
-InstallMethod(LClassSCC, "for an L-class of a trans. semigp.", 
-[IsGreensLClass and IsGreensClassOfTransSemigp],
-function(l)
-local s, d, o;
-
-s:=l!.parent;
-d:=l!.data[2];
-o:=l!.o[2];
-
-return LClassSCCFromData(s, d, o);
-end);
-
-# new for 4.0!
-############################################################################
-# remove this JDM - KernelOrbitSCC
-
-InstallOtherMethod(LClassSCC, "for a D-class of a trans. semigp.", 
-[IsGreensDClass and IsGreensClassOfTransSemigp],
-function(d)
-local s, o;
-
-s:=d!.parent;
-o:=d!.o[2];
-d:=d!.data[2];
-
-return LClassSCCFromData(s, d, o);
-end);
-
-############################################################################
-# remove this JDM KernelOrbitSCCFromData
-
-InstallGlobalFunction(LClassSCCFromData,
-function(arg)
-local s, d, o;
-
-s:=arg[1]; d:=arg[2];
-
-if Length(arg)=3 then 
-	o:=arg[3]!.orbits[d[1]][d[2]];
-else 
-	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
-fi;
-
-return o!.scc[d[4]];
-end);
-
-# new for 4.0!
-############################################################################
-# JDM should this just be SchutzenbergerGroup? YES!!
-# remove this! JDM
-
-InstallMethod(LClassSchutzGp, "for an L-class of a trans. semigp.",
-[IsGreensLClass and IsGreensClassOfTransSemigp], 
-function(l)
-local s, d, o;
-
-s:=l!.parent;
-d:=l!.data[2];
-o:=l!.o[2];
-
-return LClassSchutzGpFromData(s, d, o);
-end);
-
-# new for 4.0!
-############################################################################
-# remove this JDM
-
-InstallOtherMethod(LClassSchutzGp, "for an D-class of a trans. semigp.",
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(d)
-local s, o;
-
-s:=d!.parent;
-o:=d!.o[2];
-d:=d!.data[2];
-
-return LClassSchutzGpFromData(s, d, o);
-end);
-
-# new for 4.0!
-############################################################################
-# JDM remove this - KernelOrbitSchutzGpFromData
-
-InstallGlobalFunction(LClassSchutzGpFromData, 
-function(arg)
-local s, d, o;
-
-s:=arg[1]; d:=arg[2];
-
-if Length(arg)=3 then 
-	o:=arg[3]!.orbits[d[1]][d[2]];
-else 
-	o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
-fi;
-
-return o!.schutz[d[4]][2];
-end);
-
-# new for 4.0!
+# new for 4.0! - LClassType - "for a transformation semigroup"
 ############################################################################
 
 InstallMethod(LClassType, "for a transformation semigroup", 
@@ -1018,22 +861,22 @@ end);
 
 #NNN
 
-# new for 4.0!
+# new for 4.0! - NrGreensLClasses - "for a transformation semigroup"
 #############################################################################
 # JDM move this to greens.gi
 
 InstallMethod(NrGreensLClasses, "for a transformation semigroup", 
 [IsTransformationSemigroup],
 function(s)
-local i, d;
+  local i, d;
 
-ExpandOrbitsOfKernels(s);
-i:=0;
-for d in OrbitsOfKernels(s)!.data do 
-	i:=i+Length(ImageOrbitCosetsFromData(s, d[2]))*
-         Length(ImageOrbitSCCFromData(s, d[1]));
-od;
-return i;
+  ExpandOrbitsOfKernels(s); i:=0;
+  
+  for d in OrbitsOfKernels(s)!.data do 
+    i:=i+Length(ImageOrbitCosetsFromData(s, d[2]))* 
+     Length(ImageOrbitSCCFromData(s, d[1]));
+  od;
+  return i;
 end);
 
 # new for 4.0! - NrGreensHClasses - "for an L-class of a trans. semigroup"
@@ -1041,81 +884,70 @@ end);
 
 InstallOtherMethod(NrGreensHClasses, "for an L-class of a trans. semigroup", 
 [IsGreensLClass and IsGreensClassOfTransSemigp], 
-l-> NrGreensRClasses(DClassOfLClass(l)));
+  l-> NrGreensRClasses(DClassOfLClass(l)));
 
-# new for 4.0!
+# new for 4.0! - NrIdempotents - "for an L-class of a trans. semigp."
 ############################################################################
-# JDM check for efficiency, and also test!
 
 InstallOtherMethod(NrIdempotents, "for an L-class of a trans. semigp.", 
 [IsGreensLClass and IsGreensClassOfTransSemigp],
 function(l)
-local img, n, o, m, i, id, j, k;
+  local f, j, img, scc, o, i;
+  
+  if HasIdempotents(l) then 
+    return Length(Idempotents(l));
+  fi;
+  
+  if HasIsRegularLClass(l) and not IsRegularLClass(l) then 
+    return 0;
+  fi;
 
-if HasIdempotents(l) then 
-	return Length(Idempotents(l));
-fi;
+  if NrIdempotentsRClassFromData(l!.parent, l!.data[1], l!.o[1])=0 then
+    return 0;
+  fi;
+  
+  f:=l!.rep;
+  
+  if RankOfTransformation(f)=DegreeOfTransformation(f) then
+    return 1;
+  fi;
+  
+  j:=0; img:=ImageSetOfTransformation(f);
+  scc:=KernelOrbitSCC(l); o:=KernelOrbit(l);
+  
+  for i in scc do 
+    if IsInjectiveTransOnList(o[i], img) then 
+      j:=j+1;
+    fi;
+  od;
 
-if HasIsRegularLClass(l) and not IsRegularLClass(l) then 
-	return 0;
-fi;
-
-img:=Set(l!.rep![1]);
-n:=Length(img);
-o:=LClassKernelOrbit(l){LClassSCC(l)}; #JDM1
-m:=0;
-
-for i in o do
-	id:=EmptyPlist(n);
-	j:=1;
-	k:=Intersection(i[j], img);
-	
-	while Length(k)=1 and j<=n-1 do 
-		id{i[j]}:=List(i[j], x-> k[1]);
-		j:=j+1;
-		k:=Intersection(i[j], img);
-	od;
-	
-	if j=n and Length(k)=1 then 
-		m:=m+1;
-	fi;
-od;
-
-return m;
+  return j;
 end);
 
-# new for 4.0!
+#PPP
+
+# new for 4.0! - ParentAttr - "for L-class of a trans. semigroup"
 ############################################################################
 
 InstallMethod(ParentAttr, "for L-class of a trans. semigroup", 
 [IsGreensLClass and IsGreensClassOfTransSemigp], x-> x!.parent);
 
-# new for 4.0!
+# new for 4.0! - PrintObj - for IsIteratorOfLClassReps
 ############################################################################
 
 InstallMethod(PrintObj, [IsIteratorOfLClassReps], 
 function(iter)
-Print( "<iterator of L-class reps>");
-return;
+  Print( "<iterator of L-class reps>");
+  return;
 end);
 
-#############################################################################
-#
-
-InstallMethod( PrintObj, "for object in `IsGreensLClassData'",
-[ IsGreensLClassData and IsGreensLClassDataRep],
-function( obj )
-Print( "GreensLClassData( ", obj!.rep,  " )" );
-end );
-
-
-# new for 4.0!
+# new for 4.0! - PrintObj - for IsIteratorOfGreensLClasses
 ############################################################################
 
 InstallMethod(PrintObj, [IsIteratorOfGreensLClasses], 
 function(iter)
-Print( "<iterator of L-classes>");
-return;
+  Print( "<iterator of L-classes>");
+  return;
 end);
 
 #SSS
@@ -1126,7 +958,7 @@ end);
 InstallOtherMethod(SchutzenbergerGroup, "for an L-class of a trans. semigp.",
 [IsGreensLClass and IsGreensClassOfTransSemigp], 
 function(l)
-  local g, s, d, o, perms;
+  local g, d, x;
 
   g:=KernelOrbitSchutzGp(l); 
 
@@ -1134,13 +966,12 @@ function(l)
     return g;
   fi;
 
-  s:=l!.parent; d:=l!.data; o:=l!.o;
-  perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
+  d:=l!.data; x:=ImageOrbitPerms(l)[d[1][3]]; 
 
-  return g^(KerRightToImgLeftFromData(s, d, o)*d[3]/perms[d[1][3]]);
+  return g^(KerRightToImgLeft(l)*d[3]/x);
 end);
 
-# new for 4.0!
+# new for 4.0! - Size - "for an L-class of a trans. semigp."
 #############################################################################
 ##  Algorithm C. 
 
@@ -1148,18 +979,11 @@ InstallOtherMethod(Size, "for an L-class of a trans. semigp.",
 [IsGreensLClass and IsGreensClassOfTransSemigp],
 function(l)
 
-Info(InfoMonoidGreens, 4, "Size: for an L-class");
+  Info(InfoMonoidGreens, 4, "Size: for an L-class");
 
-return Size(LClassSchutzGpFromData(l!.parent, l!.data[2], l!.o[2]))
- *Length(LClassSCC(l));
+  return Size(KernelOrbitSchutzGp(l))
+   *Length(KernelOrbitSCC(l));
 end);
 
-#############################################################################
-# move to legacy.gi! JDM 
+#EOF
 
-InstallMethod( ViewObj, "for L-class data",
-[ IsGreensLClassData and IsGreensLClassDataRep],
-function( obj )
-Print( "GreensLClassData( ", obj!.rep, ", ", obj!.strongorb,", ", obj!.relts,
-", ", obj!.invrelts,", ", obj!.schutz, " )" );
-end );

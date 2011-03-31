@@ -9,15 +9,15 @@
 ##
 ## $Id$
 ##
-##  This file contains fast algorithms for computing Green's relations
-##  and related notions for transformation semigroups and monoid. 
+##  This file contains algorithms for computing Green's relations
+##  and related notions for transformation semigroups and monoids. 
 ##  The theory behind these algorithms is developed in 
 ##  
 ##  [LPRR1] S. A.   Linton, G.  Pfeiffer, E.  F.  Robertson, and N.   Ruskuc,
 ##  Groups  and actions in  transformation semigroups, to appear in Math Z.
 ##  (1998).
 ##
-##  The algorithms themselves are described in
+##  Early versions of the algorithms themselves are described in
 ##
 ##  [LPRR2] S. A.   Linton, G.  Pfeiffer, E.  F.  Robertson, and N.   Ruskuc,
 ##  Computing transformation semigroups, (1998), in preparation.
@@ -83,10 +83,11 @@ DeclareProperty("IsIteratorOfRClassRepsData", IsIterator);
 DeclareGlobalFunction("IsRegularRClassData");
 DeclareGlobalFunction("IteratorOfNewRClassRepsData");
 DeclareGlobalFunction("IteratorOfRClassRepsData");
-DeclareGlobalFunction("NrIdempotentsRClassFromData"); #?
+DeclareGlobalFunction("NrIdempotentsRClassFromData");
 DeclareGlobalFunction("NrRClassesOrbitsOfImages");
 DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
 DeclareGlobalFunction("PreInOrbitsOfImages");
+DeclareGlobalFunction("RClassRepFromData");
 DeclareAttribute("RClassType", IsTransformationSemigroup);
 DeclareGlobalFunction("SizeOrbitsOfImages");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCForward");
@@ -153,82 +154,35 @@ DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]); #M
 DeclareAttribute("GreensLClassReps", IsTransformationSemigroup); #M
 DeclareAttribute("IsRegularLClass", IsGreensClassOfTransSemigp); #M
 DeclareGlobalFunction("IteratorOfGreensLClasses"); #M
-
-# JDMJDM
-# the following functions have not yet been processed for release!
-
-GT:=function(x,y) return x>y; end;
-
+DeclareGlobalFunction("IteratorOfLClassRepsData");
+DeclareGlobalFunction("IteratorOfLClassReps"); #M
+DeclareGlobalFunction("LClassRepFromData");
+DeclareAttribute("LClassType", IsTransformationSemigroup);
 DeclareAttribute("NrGreensLClasses", IsTransformationSemigroup);
-
-DeclareGlobalFunction("SizeDClassRepsData");
-DeclareGlobalFunction("NrLClassesOrbitsOfKernels");
-DeclareGlobalFunction("InDClassRepsData");
-
-DeclareGlobalFunction("DClassLSchutzGpFromData");
-DeclareGlobalFunction("DClassLStabChainFromData");
 
 # the following functions should be removed!
 
 DeclareGlobalFunction("RClassRepsDataFromOrbits");
 DeclareAttribute("GreensDClass", IsGreensRClass);
-
-# newly introduced 2011
-
-DeclareGlobalFunction("DClassImageOrbitCosetsFromData");
-
-
-##
-
-DeclareInfoClass("InfoMonoidGreens");
-
-DeclareGlobalFunction("RightSchutzGpOfKerOrbit");
-DeclareGlobalFunction("LeftSchutzGpOfKerOrbit");
 DeclareGlobalFunction("SchutzGpOfDClass");
-
-DeclareGlobalFunction("RClassRepFromData");
-# RClassRep = Representative
-DeclareAttribute("RClassImageOrbitSCC", IsGreensRClass and 
- IsGreensClassOfTransSemigp);
-DeclareOperation("GreensHClassOfElementNC", [IsTransformationSemigroup]);
-DeclareAttribute("LClassSchutzGp", IsGreensLClass and 
- IsGreensClassOfTransSemigp);
-DeclareAttribute("LClassSCC", IsGreensLClass and 
- IsGreensClassOfTransSemigp);
-DeclareAttribute("LClassRels", IsGreensLClass and 
- IsGreensClassOfTransSemigp);
-
-DeclareGlobalFunction("HClassRepFromData");
-DeclareGlobalFunction("LClassRepFromData");
-DeclareAttribute("LClassKernelOrbit", IsGreensLClass and 
-IsGreensClassOfTransSemigp);
-DeclareGlobalFunction("LClassSchutzGpFromData");
-DeclareGlobalFunction("LClassRelsFromData");
-DeclareGlobalFunction("LClassSCCFromData");
-
-DeclareGlobalFunction("DClassOrbitsFromData");
-DeclareGlobalFunction("DClassKerSchutzGpFromData");
-DeclareGlobalFunction("DClassImgSchutzGpFromData");
-DeclareGlobalFunction("DClassRelsFromData");
-DeclareGlobalFunction("DClassImgSCCFromData");
 DeclareAttribute("GreensRClass", IsGreensHClass);
 DeclareAttribute("GreensLClass", IsGreensHClass);
+
+## JDMJDM
+# the following functions have not yet been processed for release!
+
+GT:=function(x,y) return x>y; end;
+
+DeclareInfoClass("InfoMonoidGreens");
+DeclareOperation("GreensHClassOfElementNC", [IsTransformationSemigroup]);
+DeclareGlobalFunction("HClassRepFromData");
+
 DeclareGlobalFunction("CreateHClass");
 
-DeclareAttribute("LClassType", IsTransformationSemigroup);
 DeclareAttribute("HClassType", IsTransformationSemigroup);
 
-
-DeclareProperty("IsEnumeratorOfRClassElements", IsEnumeratorByFunctions);
-DeclareProperty("IsEnumeratorOfLClassElements", IsEnumeratorByFunctions);
-DeclareProperty("IsEnumeratorOfDClassElements", IsEnumeratorByFunctions);
-
-DeclareGlobalFunction("IteratorOfLClassRepsData");
 DeclareGlobalFunction("IteratorOfHClassRepsData");
-DeclareGlobalFunction("IteratorOfLClassReps");
 DeclareGlobalFunction("IteratorOfHClassReps");
-
-#DeclareGlobalFunction("EnumeratorOfRClassReps");
 
 DeclareProperty("IsIteratorOfHClassRepsData", IsIterator);
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
@@ -239,7 +193,6 @@ DeclareProperty("IsIteratorOfHClassReps", IsIterator);
 # IteratorOfGreensRClasses and IteratorOfGreensLClasses
 # should be operations so that they can be applied to 
 # D-classes as well as transformation semigroups!
-
 # and IteratorOfGreensDClass should be an operation so that I can make an
 # iterator that of D-classes satisfying some properties a la smallsemi..
 DeclareOperation("IteratorOfGreensHClasses", [IsTransformationSemigroup]);

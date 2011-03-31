@@ -1,4 +1,44 @@
 
+
+
+
+
+
+
+
+#############################################################################
+# move to legacy.gi! JDM 
+
+InstallMethod( ViewObj, "for L-class data",
+[ IsGreensLClassData and IsGreensLClassDataRep],
+function( obj )
+Print( "GreensLClassData( ", obj!.rep, ", ", obj!.strongorb,", ", obj!.relts,
+", ", obj!.invrelts,", ", obj!.schutz, " )" );
+end );
+
+
+
+
+
+#############################################################################
+#
+
+InstallMethod( PrintObj, "for object in `IsGreensLClassData'",
+[ IsGreensLClassData and IsGreensLClassDataRep],
+function( obj )
+Print( "GreensLClassData( ", obj!.rep,  " )" );
+end );
+
+
+###########################################################################
+
+InstallGlobalFunction(LClassData, function(list)
+return Objectify(NewType(NewFamily("Green's L Class Data", IsGreensLClassData),
+IsGreensLClassData and IsGreensLClassDataRep), list);
+end);
+
+
+
 # legacy from 3! - ViewObj - "for D-class data"
 #############################################################################
 

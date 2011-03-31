@@ -1604,6 +1604,12 @@ function(s)
 
   Info(InfoMonoidGreens, 4, "IteratorOfRClassReps");
 
+  if not IsTransformationSemigroup(s) then
+    Info(InfoWarning, 1, "Usage: argument should be a transformation",
+    " semigroup");
+    return fail;
+  fi;
+
   iter:=IteratorByFunctions( rec(
 
     s:=s, data:=IteratorOfRClassRepsData(s),
@@ -1698,13 +1704,12 @@ function(arg)
   fi;
 
   out:=0; 
-  # must add third argument for local R-classes!
+  # must have third argument for local R-classes!
   rep:=RClassRepFromData(s, d, O)![1];
   scc:=ImageOrbitSCCFromData(s, d, O);
 
   for i in scc do
-    i:=o[i];
-    if IsInjectiveTransOnList(rep, i) then
+    if IsInjectiveTransOnList(rep, o[i]) then
       out:=out+1;
     fi;
   od;

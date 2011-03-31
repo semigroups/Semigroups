@@ -1414,7 +1414,7 @@ function(s)
     return fail;
   fi;
 
-  iter:=IteratorByFunctions(rec (
+  iter:=IteratorByFunctions(rec(
     
     s:=s, data:=IteratorOfDClassRepsData(s), 
 
@@ -1904,7 +1904,11 @@ InstallOtherMethod(NrIdempotents, "for a D-class of a trans. semigroup",
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
   local ker_o, ker_scc, img_o, img_scc, k, i, j;
-  
+ 
+  if HasIdempotents(d) then 
+    return Length(Idempotents(d));
+  fi;
+
   if HasIsRegularDClass(d) and not IsRegularDClass(d) then 
     return 0;
   fi;

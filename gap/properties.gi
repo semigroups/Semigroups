@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  properties.gi
-#Y  Copyright (C) 2006-2010                             James D. Mitchell
+#Y  Copyright (C) 2006-2011                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -265,8 +265,8 @@ iter:=IteratorOfGreensDClasses(s); #JDM would be quicker to have
 # LClassSchutzGpFromData...
 
 for d in iter do 
-	if not (Size(LClassSchutzGpFromData(s, d!.data[2]))=1 and 
-	 Length(LClassSCCFromData(s, d!.data[2]))=1) then
+    if not (Size(KernelOrbitSchutzGpFromData(s, d!.data[2]))=1 and 
+	 Length(KernelOrbitSCCFromData(s, d!.data[2]))=1) then
 		return false;
 	fi;
 od;
