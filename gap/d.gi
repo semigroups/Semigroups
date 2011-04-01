@@ -92,7 +92,7 @@ function(f, d)
     return true;
   fi;
 
-  p:=KerRightToImgLeftFromData(d!.parent, d!.data, d!.o)^-1;
+  p:=KerRightToImgLeftFromData(d!.parent, d!.data[2], d!.o[2])^-1;
   cosets:=ImageOrbitCosets(d);
   g:= PermLeftQuoTransformationNC(rep, g);
   sift:= not schutz=false;
@@ -388,7 +388,7 @@ function(arg)
   if Size(g)=1 then 
     h:=g;
   else 
-    p:=KerRightToImgLeftFromData(s, d, o);
+    p:=KerRightToImgLeftFromData(s, d[2], o[2]);
     if KernelOrbitStabChainFromData(s, d[2], o[2])=true and
      ImageOrbitStabChainFromData(s, d[1], o[1])=true then 
       pts:=OnSets(MovedPoints(KernelOrbitSchutzGpFromData(s, d[2], o[2])), p);
@@ -456,8 +456,7 @@ end);
 
 # new for 4.0! - DClassSchutzGpFromData - not a user function!
 #############################################################################
-# Usage: s - semigroup; d - [image data, kernel data]; o - [orbits of image,
-# orbits of kernels] (optional).
+# Usage: s - semigroup; d = kernel data; o = orbits of kernels (optional).
 
 # Notes: returns the schutz. gp. of the D-class (which is ImgLeft) and is a 
 # subgroup of ImageOrbitSchutzGpFromData(s, d[1], o[1]) (which is ImgLeft). 
@@ -468,10 +467,10 @@ InstallGlobalFunction(DClassSchutzGpFromData,
 function(arg)
 local s, d, o;
 
-  s:=arg[1]; d:=arg[2][2];
+  s:=arg[1]; d:=arg[2];
 
   if Length(arg)=3 then 
-    o:=arg[3][2]!.orbits[d[1]][d[2]];
+    o:=arg[3]!.orbits[d[1]][d[2]];
   else
     o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
   fi;
@@ -1678,6 +1677,41 @@ function(d)
    SchutzenbergerGroup(d));
 end);
 
+# new for 4.0! - KernelOrbitCosetsFromData - not a user function!
+###########################################################################
+# Notes: returns a transversal of right cosets of SchutzenbergerGroup(d)
+# (which is ImgLeft) in KernelOrbitSchutzGp^KerRightToImgLeft(d) (which is
+# ImgLeft after conjugating). 
+
+InstallGlobalFunction(KernelOrbitCosetsFromData, 
+function(arg)
+  local s, d, o, schutz, cosets;
+ 
+  s:=arg[1]; d:=arg[2];
+  
+  if Length(arg)=3 then 
+    o:=arg[3];
+  else
+    o:=OrbitsOfKernels(s);
+  fi;
+
+  if IsBound(o!.orbits[d[1]][d[2]]!.d_schutz[d[4]][d[5]][d[6]][4]) then 
+    return o!.orbits[d[1]][d[2]]!.d_schutz[d[4]][d[5]][d[6]][4];
+  fi;
+  
+  schutz:=KernelOrbitSchutzGpFromData(s, d, o);
+  
+  if Size(schutz)=1 then
+    cosets:=[()];
+  else
+    cosets:=RightTransversal(schutz^KerRightToImgLeftFromData(s, d, o),
+       DClassSchutzGpFromData(s, d, o));
+  fi;
+
+  o!.orbits[d[1]][d[2]]!.d_schutz[d[4]][d[5]][d[6]][4]:=cosets;
+  return cosets;
+end);
+
 # new for 4.0! - KernelOrbitRels - "for a D-class of a trans. semigp"
 ############################################################################
 
@@ -1821,8 +1855,7 @@ end);
 
 # new for 4.0! - KerRightToImgLeftFromData - not a user function.
 ###########################################################################
-# Usage: s = semigroup; d = [image data, kernel data]; 
-# o = [orbit of image, orbits of kernels] 
+# Usage: s = semigroup; d = kernel data; o = orbits of kernels (optional) 
 
 # Notes: permutation converting a perm. of ker. classes to one of img elts
 
@@ -1830,10 +1863,10 @@ InstallGlobalFunction(KerRightToImgLeftFromData,
 function(arg)
   local s, d, o;
 
-  s:=arg[1]; d:=arg[2][2];
+  s:=arg[1]; d:=arg[2];
 
   if Length(arg)=3 then 
-    o:=arg[3][2]!.orbits[d[1]][d[2]];
+    o:=arg[3]!.orbits[d[1]][d[2]];
   else
     o:=OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
   fi;
@@ -1846,7 +1879,7 @@ end);
 
 InstallMethod(KerRightToImgLeft, "for a D-class of a trans. semigp",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
-d-> KerRightToImgLeftFromData(d!.parent, d!.data, d!.o));
+d-> KerRightToImgLeftFromData(d!.parent, d!.data[2], d!.o[2]));
 
 #NNN
 
@@ -2148,7 +2181,7 @@ function(s)
     l:=KernelOrbitSchutzGpFromData(s, d[2]);
     i:=i+(Size(r)*Length(ImageOrbitSCCFromData(s, d[1]))
      *Length(KernelOrbitSCCFromData(s, d[2]))*Size(l)/
-     Size(DClassSchutzGpFromData(s,  d)));
+     Size(DClassSchutzGpFromData(s,  d[2])));
   od;
 
   return i;

@@ -61,10 +61,10 @@ gap> Set(Concatenation(List(GreensRClasses(m), GreensHClasses)))=
 true
 gap> m:=Semigroup(gens[74]);;
 gap> r:=GreensRClassOfElement(m, Transformation( [ 2, 1, 2, 2, 1, 2, 1 ] ));;
-gap> d:=GreensDClass(r);;
+gap> d:=DClassOfRClass(r);;
 gap> dr:=GreensRClasses(d);;
 gap> r2:=First(dr, x-> x=r);;
-gap> GreensDClass(r2)=d;
+gap> DClassOfRClass(r2)=d;
 true
 gap> m:=Semigroup(GeneratorsOfSemigroup(m));;
 gap> r:=GreensRClassOfElement(m, Transformation( [ 2, 1, 2, 2, 1, 2, 1 ] ));;
@@ -268,7 +268,7 @@ gap> for i in gens do
 > Add(out3, NrIdempotents(s));
 > if not Number(GreensHClasses(s), IsGroupHClass)
 > =Length(Idempotents(s)) then 
-> Print("Something is wrong!\n");
+> Print("Something is wrong!", Position(gens, i), "\n");
 > fi;
 > od;
 gap> out; out2; out3;

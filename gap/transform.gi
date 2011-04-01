@@ -289,6 +289,21 @@ return false;
 
 end);
 
+InstallGlobalFunction(IdempotentFromCanonTransImg, 
+function(f, img)
+  local lookup, m, i;
+
+  lookup:=EmptyPlist(Length(f)); m:=Length(img);
+  
+  for i in [1..m] do
+    lookup[f[img[i]]]:=img[i];
+  od;
+
+  return TransformationNC(List(f, x-> lookup[x]));
+end);
+
+
+
 #############################################################################
 
 InstallGlobalFunction(IdempotentNC, 

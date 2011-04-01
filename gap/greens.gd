@@ -132,6 +132,7 @@ DeclareAttribute("KernelOrbit", IsGreensDClass and
 DeclareGlobalFunction("KernelOrbitFromData"); 
 DeclareAttribute("KernelOrbitCosets", IsGreensDClass and
  IsGreensClassOfTransSemigp);
+DeclareGlobalFunction("KernelOrbitCosetsFromData");
 DeclareAttribute("KernelOrbitRels", IsGreensDClass and
  IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("KernelOrbitRelsFromData");

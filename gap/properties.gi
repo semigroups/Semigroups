@@ -390,21 +390,21 @@ end);
 
 ###########################################################################
 
-InstallMethod(IsSemigroupWithCommutingIdempotents, "for a trans. semigp.", 
-[IsTransformationSemigroup],
-function(s)
-local iter, idem , f;
-iter:=IteratorOfIdempotents(s);
-idem:=[];
+#InstallMethod(IsSemigroupWithCommutingIdempotents, "for a trans. semigp.", 
+#[IsTransformationSemigroup],
+#function(s)
+#local iter, idem , f;
+#iter:=IteratorOfIdempotents(s);
+#idem:=[];
 
-for f in iter do 
-	if not ForAll(idem, g-> f*g=g*f) then 
-		return false;
-	fi;
-od;
+#for f in iter do 
+#	if not ForAll(idem, g-> f*g=g*f) then 
+#		return false;
+#	fi;
+#od;
 
-return true;
-end);
+#return true;
+#end);
 
 ###########################################################################
 # JDM the following should be tested! 
@@ -897,7 +897,7 @@ InstallOtherMethod(IrredundantGeneratingSubset, "for a trans. coll. and bool",
 [IsTransformationCollection, IsBool], 
 function(coll, bool)
 local n, a, g, s, i, m, j, max, info, k;
-
+Error("not yet reimplemented");
 n:=DegreeOfTransformation(coll[1]);
 
 Info(InfoMonoidProperties, 3, "checking degrees of transformations in", 
@@ -939,7 +939,7 @@ while  i<k do
 	
 	if not a[i] in s then 
 		j:=j+1;
-		s:=ClosureSemigroupNC(s, [a[i]]);
+		#s:=ClosureSemigroupNC(s, [a[i]]);
 		
 		if j=k-1 then
 			if bool then  
@@ -1070,6 +1070,7 @@ InstallOtherMethod(SmallGeneratingSet, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(s)
 local n, gens, j, min, g, t, ss, iter, i, r, f;
+Error("not yet reimplemented");
 
 n:=Degree(s);
 
@@ -1101,7 +1102,7 @@ for r in iter do
 		for f in Iterator(r) do 
 			if not f in t then 
 				i:=i+1;
-				t:=ClosureSemigroupNC(t, [f]);
+				#t:=ClosureSemigroupNC(t, [f]);
 				if ForAll(gens, x-> x in t) then 
 					return Generators(t);
 				fi;

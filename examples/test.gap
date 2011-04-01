@@ -1,4 +1,4 @@
-#ReadPackage("monoid/dev/examples/small.gap");
+#ReadPackage("monoid/examples/test.gap");
 
 
 gens:=[ [ Transformation( [ 3, 4, 4, 3, 1, 1, 5 ] ) ], 

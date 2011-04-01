@@ -12,6 +12,9 @@
 
 ##  JDM install methods for partial transformations, partial bijections
 
+
+DeclareGlobalFunction("IdempotentFromCanonTransImg");
+
 #JDM new for 3.2!
 DeclareOperation("DegreeOfTransformationCollNC", [IsTransformationCollection]);
 

@@ -539,6 +539,43 @@ iter:=IteratorByFunctions( rec(
   return iter;
 end);
 
+#HHH
+
+# new for 4.0! - HClassRepFromData - not a user function!
+############################################################################
+# Usage: s = semigroup; 
+# d = [image data, kernel data, image cosets rep, kernel cosets rep];
+# o = [OrbitsOfImages, OrbitsOfKernels] (optional).
+  
+InstallGlobalFunction(HClassRepFromData,
+function(arg)
+  local s, d, o, f, perms, rels;
+  
+  s:=arg[1]; d:=arg[2];
+  if Length(arg)=3 then 
+    o:=arg[3];
+   else
+     o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
+  fi;
+
+  f:=DClassRepFromData(s, d, o);
+  perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
+  rels:=KernelOrbitRelsFromData(s, d[2], o[2]);
+  
+  return rels[d[2][3]][1]*f*(d[3]/perms[d[1][3]])*d[4];
+end);
+
+# new for 4.0! - HClassClassType - not a user function!
+############################################################################
+InstallMethod(HClassType, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
+function(s);
+ 
+ return NewType( FamilyObj( s ), IsEquivalenceClass and 
+  IsEquivalenceClassDefaultRep and IsGreensHClass and 
+  IsGreensClassOfTransSemigp);
+end);
+
 #LLL
 
 # new for 4.0! - LClassOfHClass - "for an H-class of a trans. semigroup"
@@ -615,7 +652,7 @@ function(h)
   s:=h!.parent; d:=h!.data; o:=h!.o;
   perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
 
-  return DClassSchutzGpFromData(s, d, o)^(d[3]/perms[d[1][3]]);
+  return DClassSchutzGpFromData(s, d[2], o[2])^(d[3]/perms[d[1][3]]);
 end);
 
 # new for 4.0! - Size - "for an H-class of a trans. semigp."
@@ -623,7 +660,7 @@ end);
 
 InstallMethod(Size, "for an H-class of a trans. semigp.",
 [IsGreensHClass and IsGreensClassOfTransSemigp],
-  h-> Size(DClassSchutzGpFromData(h!.parent, h!.data, h!.o)));
+  h-> Size(DClassSchutzGpFromData(h!.parent, h!.data[2], h!.o[2])));
 
 # new for 4.0! - StructureDescription - "for group H-class of trans. semigp."
 ############################################################################

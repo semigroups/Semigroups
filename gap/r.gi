@@ -703,7 +703,7 @@ function(arg)
     bound:=infinity;
     treehashsize:=10000;
   fi;
-          
+  
   o:=Orb(s, img, OnSets, rec(
           treehashsize:=NextPrimeInt(Minimum(10000, treehashsize)), 
           schreier:=true,
@@ -1021,7 +1021,7 @@ function(r)
     return [];
   fi;
 
-  if NrIdempotentsRClassFromData(r!.parent, r!.data, r!.o[1])=0 then
+  if NrIdempotentsRClassFromData(r!.parent, r!.data, r!.o)=0 then
     return [];
   fi;
 
@@ -1037,7 +1037,8 @@ function(r)
     i:=o[i];
     if IsInjectiveTransOnList(f, i) then  
       j:=j+1;
-      out[j]:=IdempotentNC(ker, i);
+      #out[j]:=IdempotentNC(ker, i);
+      out[j]:=IdempotentFromCanonTransImg(f, i);
     fi;
   od;
 
@@ -1798,7 +1799,7 @@ function(s)
     finished:=false, 
     orbits:=EmptyPlist(n),
     lens:=[1..n]*0, #lens[j]=Length(orbits[j])
-    images:=HTCreate(ImageSetOfTransformation(gens[1])),
+    images:=HTCreate(ImageSetOfTransformation(gens[1]), rec(hashlen:=1009)),
     at:=0, 
     gens:=gens,
     s:=s,

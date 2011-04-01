@@ -17,10 +17,6 @@
 #############################################################################
 # Notes
 
-# - must have better version of OnTuplesOfSetsAntiAction before release! JDM
-
-
-
 # new method for 4.0!
 #############################################################################
 
@@ -31,102 +27,101 @@ return rec(func := HashFunctionForTransformation, data := [101,
 hashlen]);
 end);
 
-# new method for 4.0!
+# new for 4.0! - GradedImagesOfTransSemigroup - "for a trans. semigroup"
 ###########################################################################
 
-InstallMethod(GradedImagesOfTransSemigroup, "for a transformation semigroup",
+InstallMethod(GradedImagesOfTransSemigroup, "for a trans. semigroup",
 [IsTransformationSemigroup],
 function(s)
-local gens, n, ht, o, out, len, i, j, new, m, k;
+  local gens, n, ht, o, m, out, len, new, k, i, j;
 
-if IsSemigroup(s) then  
-	gens:= Generators(s);
-	n:=Degree(s);
-else
-	gens:=s;
-	n:=Degree(s[1]);
-fi;
+  if IsSemigroup(s) then  
+    gens:=Generators(s);
+    n:=Degree(s);
+  else
+    gens:=s;
+    n:=Degree(s[1]);
+  fi;
 
-ht:=HTCreate([1..n]);
-HTAdd(ht, [1..n], true);
-o:=[[1..n]]; m:=1; 
+  ht:=HTCreate([1..n], rec(hashlen:=1009));
+  HTAdd(ht, [1..n], true);
+  o:=[[1..n]]; m:=1; 
 
-if n<1000 then 
-	out:=List([1..n], x->EmptyPlist(Binomial(n, x)));
-else
-	out:=List([1..n], x->[]);
-fi;
+  if n<15 then 
+    out:=List([1..n], x->EmptyPlist(Binomial(n, x)));
+  else
+    out:=List([1..n], x->[]);
+  fi;
 
-len:=List([1..n], x-> 0);
+  len:=List([1..n], x-> 0);
 
-if IsMonoid(s) or IsMonoidAsSemigroup(s) then 
-	out[n][1]:=[1..n]; 
-	len[n]:=1;
-fi;
+  if IsMonoid(s) or IsMonoidAsSemigroup(s) then 
+    out[n][1]:=[1..n]; 
+    len[n]:=1;
+  fi;
 
-for i in o do
-	for j in gens do
-		new:=OnSets(i, j);
-		if HTValue(ht, new)=fail then 
-			m:=m+1; o[m]:=new;
-			HTAdd(ht, new, true);
-			k:=Length(new);
-			len[k]:=len[k]+1;
-			out[k][len[k]]:=new;
-		fi;
-	od;
-od;
+  for i in o do
+    for j in gens do
+      new:=OnSets(i, j);
+      if HTValue(ht, new)=fail then 
+	m:=m+1; o[m]:=new;
+	HTAdd(ht, new, true);
+	k:=Length(new);
+	len[k]:=len[k]+1;
+	out[k][len[k]]:=new;
+      fi;
+    od;
+  od;
 
-return out;
+  return out;
 end);
 
-# new method for 4.0!
+# new for 4.0! - GradedKernelsOfTransSemigroup - "for a trans. semigroup"
 #############################################################################
 
-InstallMethod(GradedKernelsOfTransSemigroup, "for a transformation semigroup",
+InstallMethod(GradedKernelsOfTransSemigroup, "for a trans. semigroup",
 [IsTransformationSemigroup],
 function(s)
-local gens, n, x, ht, o, m, out, len, i, j, new, k;
+  local gens, n, ht, o, m, out, len, new, k, i, j;
 
-if IsSemigroup(s) then  
-	gens:= Generators(s);
-	n:=Degree(s);
-else
-	gens:=s;
-	n:=Degree(s[1]);
-fi;
+  if IsSemigroup(s) then  
+    gens:=GeneratorsAsListOfImages(s);
+    n:=Degree(s);
+  else
+    gens:=s;
+    n:=Degree(s[1]);
+  fi;
+ 
+  ht:=HTCreate([1..n], rec(hashlen:=10007)); HTAdd(ht, [1..n], true);
+  o:=[[1..n]]; m:=1;
 
-x:=List([1..n], x-> [x]); 
-ht:=HTCreate(x); HTAdd(ht, x, true);
-o:=[x]; m:=1;
+  if n<11 then 
+    out:=List([1..n], x->EmptyPlist(Stirling2(n, x)));
+  else
+    out:=List([1..n], x->[]);
+  fi;
 
-if n<1000 then 
-	out:=List([1..n], x->EmptyPlist(Stirling2(n, x)));
-else
-	out:=List([1..n], x->[]);
-fi;
+  len:=List([1..n], x-> 0);
 
-len:=List([1..n], x-> 0);
+  if IsMonoid(s) or IsMonoidAsSemigroup(s) then 
+    out[n][1]:=[1..n]; 
+    len[n]:=1;
+  fi;
 
-if IsMonoid(s) or IsMonoidAsSemigroup(s) then 
-	out[n][1]:=x; 
-	len[n]:=1;
-fi;
+  for i in o do
+    for j in gens do
+      new:=CanonicalTransSameKernel(i{j});
+      if HTValue(ht, new)=fail then 
+	m:=m+1; o[m]:=new;
+	HTAdd(ht, new, true);
+        k:=MaximumList(new);
+        len[k]:=len[k]+1;
+        out[k][len[k]]:=new;
+      fi;
+    od;
+  od;
 
-for i in o do
-	for j in gens do
-		new:=OnKernelsAntiAction(i, j);
-		if HTValue(ht, new)=fail then 
-			m:=m+1; o[m]:=new;
-			HTAdd(ht, new, true);
-			k:=Length(new);
-			len[k]:=len[k]+1;
-			out[k][len[k]]:=new;
-		fi;
-	od;
-od;
-
-return out;
+  return out;
 end);
 
 # new for 4.0!
@@ -172,18 +167,8 @@ end);
 InstallGlobalFunction(HashTableForKernels, 
 function(ker, n)
 local p, ht;
-#local hf, ht;
-#hf:=function ( l, hashlen )
-#local  v, i;
-#v := 0;
-#for i  in [ 1 .. Length( l ) ]  do
-#	v := (v * 101 + ORB_HashFunctionForPlainFlatList( l[i], hashlen )) 
-#	 mod hashlen;
-#od;
-#return v + 1;
-#end;
 
-if n<50 then 
+if n<11 then 
   p:=Minimum(NextPrimeInt(Stirling2(n, Maximum(ker))), 100003);
 else
   p:=100003;

@@ -84,7 +84,7 @@ function(f, l)
   fi;
 
   rep:=DClassRepFromData(s, d, o);
-  p:=KerRightToImgLeftFromData(s, d, o)^-1;
+  p:=KerRightToImgLeftFromData(s, d[2], o[2])^-1;
 
   return SiftedPermutation(schutz, PermLeftQuoTransformationNC(rep, g)^p)=();
 end);
@@ -746,8 +746,8 @@ function(l)
   d_schutz:=KernelOrbitFromData(l!.parent, l!.data, l!.o)!.
      d_schutz[l!.data[2][4]][l!.data[2][5]][l!.data[2][6]][2];
 
-  return RightTransversal(schutz^KerRightToImgLeftFromData(l!.parent, l!.data,
-   l!.o), d_schutz);
+  return RightTransversal(schutz^KerRightToImgLeftFromData(l!.parent, 
+   l!.data[2], l!.o[2]), d_schutz);
 end);
 
 # new for 4.0! - KernelOrbitRels - "for L-class of trans. semigp"
@@ -809,7 +809,7 @@ end);
 
 InstallOtherMethod(KerRightToImgLeft, "for a L-class of a trans. semigp",
 [IsGreensLClass and IsGreensClassOfTransSemigp],
-l-> KerRightToImgLeftFromData(l!.parent, l!.data, l!.o));
+l-> KerRightToImgLeftFromData(l!.parent, l!.data[2], l!.o[2]));
 
 #LLL
 
