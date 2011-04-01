@@ -259,7 +259,7 @@ InstallGlobalFunction(CreateDClass,
 function(s, data, orbit, rep)
   local d;
 
-  data:=List(data, x-> x{[1..6]});
+  data:=[data[1]{[1..6]}, data[2]{[1..6]}];
 
   d:=Objectify(DClassType(s), rec(parent:=s, data:=data, 
    o:=orbit, rep:=rep));
@@ -915,15 +915,12 @@ InstallOtherMethod(GreensLClassRepsData, "for a D-class of a trans. semigroup",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
   d-> GreensLClassRepsData(d!.parent, d!.data, d!.o));
 
-# new for 4.0! - GreensLClassRepsData - "for D-class data"
+# new for 4.0! - GreensLClassRepsDataFromData - not a user function!
 #############################################################################
 # Usage: s = semigroup; data = [image data, kernel data];
 # o = [OrbitsOfKernels, OrbitsOfImages].
 
-#JDM should be GreensLClassRepsDataFromData!
-
-InstallOtherMethod(GreensLClassRepsData, "for D-class data", 
-[IsTransformationSemigroup, IsCyclotomicCollColl, IsList], 
+InstallGlobalFunction(GreensLClassRepsDataFromData,
 function(s, data, o)
   local scc, img_co, out, k, i, j;
   

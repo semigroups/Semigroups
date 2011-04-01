@@ -83,6 +83,7 @@ DeclareProperty("IsIteratorOfRClassRepsData", IsIterator);
 DeclareGlobalFunction("IsRegularRClassData");
 DeclareGlobalFunction("IteratorOfNewRClassRepsData");
 DeclareGlobalFunction("IteratorOfRClassRepsData");
+DeclareGlobalFunction("GreensHClassRepsDataFromData");
 DeclareGlobalFunction("NrIdempotentsRClassFromData");
 DeclareGlobalFunction("NrRClassesOrbitsOfImages");
 DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
@@ -116,7 +117,10 @@ DeclareGlobalFunction("ForwardOrbitOfKernel");
 DeclareAttribute("GeneratorsAsListOfImages", IsTransformationSemigroup);
 DeclareAttribute("GreensDClassRepsData", IsTransformationSemigroup);
 DeclareAttribute("GreensLClassRepsData", IsTransformationSemigroup);
+DeclareGlobalFunction("GreensLClassRepsDataFromData");
 DeclareGlobalFunction("ImageOrbitCosetsFromData"); #input kernel orbit data!
+DeclareAttribute("GroupHClass", IsGreensDClass and
+ IsGreensClassOfTransSemigp);#M
 DeclareAttribute("ImageOrbitCosets", IsGreensDClass and
  IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("InOrbitsOfKernels");
@@ -160,13 +164,19 @@ DeclareGlobalFunction("LClassRepFromData");
 DeclareAttribute("LClassType", IsTransformationSemigroup);
 DeclareAttribute("NrGreensLClasses", IsTransformationSemigroup);
 
+# the following functions in h.gi are currently undocumented
+
+DeclareGlobalFunction("CreateHClass");
+DeclareOperation("GreensHClassOfElementNC", [IsTransformationSemigroup]); #M
+DeclareGlobalFunction("HClassRepFromData");
+DeclareAttribute("HClassType", IsTransformationSemigroup);
+DeclareOperation("IteratorOfGreensHClasses", [IsTransformationSemigroup]);#M
+DeclareGlobalFunction("IteratorOfHClassReps"); #M
+DeclareGlobalFunction("IteratorOfHClassRepsData");
+
 # the following functions should be removed!
 
 DeclareGlobalFunction("RClassRepsDataFromOrbits");
-DeclareAttribute("GreensDClass", IsGreensRClass);
-DeclareGlobalFunction("SchutzGpOfDClass");
-DeclareAttribute("GreensRClass", IsGreensHClass);
-DeclareAttribute("GreensLClass", IsGreensHClass);
 
 ## JDMJDM
 # the following functions have not yet been processed for release!
@@ -174,17 +184,7 @@ DeclareAttribute("GreensLClass", IsGreensHClass);
 GT:=function(x,y) return x>y; end;
 
 DeclareInfoClass("InfoMonoidGreens");
-DeclareOperation("GreensHClassOfElementNC", [IsTransformationSemigroup]);
-DeclareGlobalFunction("HClassRepFromData");
 
-DeclareGlobalFunction("CreateHClass");
-
-DeclareAttribute("HClassType", IsTransformationSemigroup);
-
-DeclareGlobalFunction("IteratorOfHClassRepsData");
-DeclareGlobalFunction("IteratorOfHClassReps");
-
-DeclareProperty("IsIteratorOfHClassRepsData", IsIterator);
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
 DeclareProperty("IsIteratorOfLClassReps", IsIterator);
 DeclareProperty("IsIteratorOfDClassReps", IsIterator);
@@ -195,7 +195,6 @@ DeclareProperty("IsIteratorOfHClassReps", IsIterator);
 # D-classes as well as transformation semigroups!
 # and IteratorOfGreensDClass should be an operation so that I can make an
 # iterator that of D-classes satisfying some properties a la smallsemi..
-DeclareOperation("IteratorOfGreensHClasses", [IsTransformationSemigroup]);
 
 DeclareProperty("IsIteratorOfGreensRClasses", IsIterator);
 DeclareProperty("IsIteratorOfGreensLClasses", IsIterator);
@@ -210,21 +209,13 @@ DeclareProperty("IsIteratorOfLClassElements", IsIterator);
 DeclareProperty("IsIteratorOfDClassElements", IsIterator);
 
 DeclareAttribute("UnderlyingSemigroupOfIterator", 
-IsIterator);
+ IsIterator);
 
 
 
-DeclareAttribute("DClassLCosets", IsGreensDClass and 
- IsGreensClassOfTransSemigp);
-DeclareAttribute("DClassRCosets", IsGreensDClass and 
- IsGreensClassOfTransSemigp);
-
-DeclareGlobalFunction("DClassRCosetsFromData");
-DeclareGlobalFunction("DClassLCosetsFromData");
 DeclareProperty("IsOrbitsOfImages", IsObject);
 DeclareProperty("IsOrbitsOfKernels", IsObject);
 DeclareProperty("IsMonoidPkgImgKerOrbit", IsOrbit);
-DeclareAttribute("GroupHClass", IsGreensDClass and IsGreensClassOfTransSemigp);
 
 
 

@@ -10,26 +10,14 @@
 ## $Id$
 
 #############################################################################
-## Notes
+# Notes
 
 # - L-class data should be [unrectified image data, rectified kernel data,
-# image orbti coset rep].
+# image orbit coset rep].
 
 # - this file is alphabetized, keep it that way!
 
-# - this file should only contain functions relating to L-classes!
-
-# - should be cleaned up like r.gi!!! In particular, standardise the inputs!
-
-# - greenslclassdata for legacy.gi 
-
-# - require methods for \= between l-classes and other types of classes
-
-# Conventions
-
-# -low-level function make as few functions calls as possible, higher level ones
-# must use LClassSchutzGp... etc.
-
+# - install method for ImageOrbit of L-class!
 
 #############################################################################
 # other equalities of Green's classes handled by generic method in greens.gi!
@@ -332,7 +320,7 @@ function(l)
     for j in cosets do 
       k:=k+1;
       out[k]:=StructuralCopy(data);
-      out[k][2][3]:=i; out[k][3]:=j; out[k][4]:=data[3]; 
+      out[k][2][3]:=i; out[k][3]:=data[3]; out[k][4]:=j; 
     od;
   od;
 
@@ -364,7 +352,6 @@ end);
 
 # new for 4.0! - GreensLClassOfElement - "for a trans. semigp and trans."
 #############################################################################
-# JDM test this! this for sure needs to be cleaned up!
 
 InstallOtherMethod(GreensLClassOfElement, "for a trans. semigp and trans.", 
 [IsTransformationSemigroup, IsTransformation],
@@ -417,12 +404,12 @@ function(s, f)
   d:=PreInOrbitsOfKernels(s, f, false);
 
   if d[1][1] then #f in s!
-    #JDM inefficient as we run PreInOrbitsOfKernels twice!
     Info(InfoMonoidGreens, 2, "transformation is an element of the semigroup");
+    #JDM inefficient as we run PreInOrbitsOfKernels twice!
     return GreensLClassOfElement(s, f);	
   elif OrbitsOfImages(s)!.finished then #f not in s!
     Info(InfoMonoidGreens, 2, "transformation is not an element of the ",
-	 "semigroup");
+     "semigroup");
     return fail;
   fi;
 
@@ -449,7 +436,8 @@ function(s, f)
    [[j,1,1,1,1,1],[j,1,1,1,1,1]], [img_o, ker_o])]);
   HTAdd(ker_o!.data_ht, [j,1,1,1,1,1], 1);
 
-  return CreateLClass(s, [[j,1,1,1,1,1], [j,1,1,1,1,1], ()], [img_o, ker_o], f);
+  return CreateLClass(s, [[j,1,1,1,1,1], [j,1,1,1,1,1], ()], 
+   [img_o, ker_o], f);
 end);
 
 # new for 4.0! - GreensLClassReps - "for a trans. semigroup"
@@ -478,7 +466,6 @@ end);
 # new for 4.0! - Idempotents - "for an L-class of a trans. semigp."
 #############################################################################
 # maybe make iterator at some point in the future JDM!
-# JDM check for efficiency and test!
 
 InstallOtherMethod(Idempotents, "for an L-class of a trans. semigp.",
 [IsGreensLClass and IsGreensClassOfTransSemigp], 
@@ -695,7 +682,8 @@ function(s)
       if IsDoneIterator(iter!.data) and iter!.i>Length(iter!.next_value) then 
        return true;
       elif iter!.i>Length(iter!.next_value) then 
-        iter!.next_value:=GreensLClassRepsData(s, NextIterator(iter!.data), o);
+        iter!.next_value:=GreensLClassRepsDataFromData(s, 
+         NextIterator(iter!.data), o);
         iter!.i:=1;
       fi;
       

@@ -864,6 +864,32 @@ function(r)
   return out;
 end);
 
+# new for 4.0! - GreensHClassRepsDataFromData - not a user function
+#############################################################################
+# Usage: s = semigroup; data = image data; o = OrbitsOfImages.
+
+InstallGlobalFunction(GreensHClassRepsDataFromData, 
+function(s, data, o)
+  local f, scc, d, cosets, out, k, i, j;
+
+  f:=RClassRepFromData(s, data, o); scc:=ImageOrbitSCCFromData(s, data, o);
+  d:=GreensDClassOfElementNC(s, f); cosets:=ImageOrbitCosets(d);
+  out:=EmptyPlist(Length(scc)*Length(cosets));
+  
+  k:=0; data:=[data, ShallowCopy(d!.data[2])];
+  data[2][3]:=Position(KernelOrbit(d), CanonicalTransSameKernel(f));
+
+  for i in scc do 
+    for j in cosets do 
+      k:=k+1;
+      out[k]:=StructuralCopy(data);
+      out[k][1][3]:=i; out[k][3]:=j; out[k][4]:=();
+    od;
+  od;
+
+  return out;
+end);
+
 # new for 4.0! - GreensRClasses - "for a transformation semigroup"
 #############################################################################
 

@@ -10,12 +10,7 @@
 ## $Id$
 ##
 
-# this file (should) contain all the technical and uninteresting functions
-# governing Green's relations in MONOID.
-
 #############################################################################
-
-
 
 # new for 4.0! \=, "for Green's class and Green's class of trans. semigp."
 #############################################################################
@@ -30,7 +25,7 @@ end);
 #############################################################################
 
 InstallMethod(\<, "for Green's class and Green's class of trans. semigp.", 
-[IsGreensClassOfTransSemigp, IsGreensClassOfTransSemigp], ReturnFalse);
+[IsGreensClassOfTransSemigp, IsGreensClassOfTransSemigp], ReturnFail);
 
 #############################################################################
 

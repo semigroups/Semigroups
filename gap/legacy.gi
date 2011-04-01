@@ -231,7 +231,7 @@ r:=GreensRClassData(GreensRClassOfElement(s, rep));
 h:=GreensHClassData(GreensHClassOfElement(s, rep));
 
 return DClassData(rec( rep:=rep, R:=r, L:=l, H:=h, 
- cosets:=DClassRCosetsFromData(s, d, o), schutz:=SchutzenbergerGroup(h)));;
+ cosets:=ImageOrbitCosetsFromData(s, d, o), schutz:=SchutzenbergerGroup(h)));;
 end);
 
 #############################################################################
