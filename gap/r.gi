@@ -136,7 +136,8 @@ function(f, s)
     return false;
   fi;
 
-  if RankOfTransformation(f) > MaximumList(gens, RankOfTransformation) then 
+  if RankOfTransformation(f) > MaximumList(List(gens, RankOfTransformation)) 
+   then 
     return false;
   fi;
 
