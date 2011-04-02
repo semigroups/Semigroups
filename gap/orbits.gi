@@ -55,7 +55,7 @@ function(s)
 
   len:=List([1..n], x-> 0);
 
-  if IsMonoid(s) or IsMonoidAsSemigroup(s) then 
+  if IsMonoid(s) or TransformationNC([1..n]) in s then 
     out[n][1]:=[1..n]; 
     len[n]:=1;
   fi;
@@ -103,7 +103,7 @@ function(s)
 
   len:=List([1..n], x-> 0);
 
-  if IsMonoid(s) or IsMonoidAsSemigroup(s) then 
+  if IsMonoid(s) or TransformationNC([1..n]) in s then 
     out[n][1]:=[1..n]; 
     len[n]:=1;
   fi;

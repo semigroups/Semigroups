@@ -557,16 +557,22 @@ function(arg)
    else
      o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
   fi;
-
-  f:=DClassRepFromData(s, d, o);
+ 
   perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
-  rels:=KernelOrbitRelsFromData(s, d[2], o[2]);
   
-  return rels[d[2][3]][1]*f*(d[3]/perms[d[1][3]])*d[4];
+  if not d[4]=fail then #created from an L-class
+    f:=LClassRepFromData(s, d, o);
+    rels:=KernelOrbitRelsFromData(s, d[2], o[2]);
+    return rels[d[2][3]][1]*f*d[4];
+  fi;
+  
+  f:=RClassRepFromData(s, d[1], o[1]);
+  return f*(d[3]/perms[d[1][3]]);
 end);
 
 # new for 4.0! - HClassClassType - not a user function!
 ############################################################################
+
 InstallMethod(HClassType, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
 function(s);
@@ -597,6 +603,9 @@ end);
 
 # new for 4.0! - RClassOfHClass - "for an H-class of a trans. semigroup"
 #############################################################################
+# JDM this is not correct! the R-class of the H-class corresponds to d[1] and a
+# kernel orbit coset. The kernel orbit coset is not represented here. This
+# should require a change in d[1][6]! 
 
 InstallOtherMethod(RClassOfHClass, "for an H-class of a trans. semigroup", 
 [IsGreensHClass and IsGreensClassOfTransSemigp], 

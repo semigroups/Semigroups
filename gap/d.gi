@@ -912,7 +912,7 @@ end);
 
 InstallOtherMethod(GreensLClassRepsData, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
-  d-> GreensLClassRepsData(d!.parent, d!.data, d!.o));
+  d-> GreensLClassRepsDataFromData(d!.parent, d!.data, d!.o));
 
 # new for 4.0! - GreensLClassRepsDataFromData - not a user function!
 #############################################################################
@@ -1291,12 +1291,13 @@ end);
 
 InstallGlobalFunction(InOrbitsOfKernels, 
 function(f, rectify, data, o, kernels)
-  local j, k, l, m, val, n, g, r, ker, schutz, reps, i, p, cosets, t, h;
+  local j, k, l, m, val, n, g, r, ker, schutz, reps, i, p, cosets, t, h, sift;
 
   j:=data[2][2][1]; k:=data[2][2][2]; l:=data[2][2][3]; m:=data[2][2][4]; 
   val:=data[2][2][5]; n:=data[2][2][6]; g:=data[2][2][7]; r:=data[2][2][8];
   o:=o[2]; 
   # r is not used here, even if it is known a priori...
+
 
   f:=data[1][2][7];
 
@@ -1354,25 +1355,22 @@ function(f, rectify, data, o, kernels)
 
   reps:=o[j][k]!.reps[m][val];
   i:=Length(reps);
+  sift:=not schutz=false;
 
   while n<i do
     n:=n+1;
-    if schutz=false then 
-      if reps[n]=g then 
+    p:=o[j][k]!.convert[m][val][n]^-1;
+    cosets:=o[j][k]!.d_schutz[m][val][n][3]; #ImageOrbitCosets
+    t:=Length(cosets);
+    h:=PermLeftQuoTransformationNC(reps[n], g);
+      
+    for r in [1..t] do 
+      if sift and SiftedPermutation(schutz, (h/cosets[r])^p)=() then 
+        return [data, [true, [j, k, l, m, val, n, g, r]]];
+      elif h/cosets[r]=() then
         return [data, [true, [j, k, l, m, val, n, g, r]]];
       fi;
-    else 
-      p:=o[j][k]!.convert[m][val][n]^-1;
-      cosets:=o[j][k]!.d_schutz[m][val][n][3]; #ImageOrbitCosets
-      t:=Length(cosets);
-      h:=PermLeftQuoTransformationNC(reps[n], g);
-      
-      for r in [1..t] do 
-        if SiftedPermutation(schutz, (h/cosets[r])^p)=() then 
-          return [data, [true, [j, k, l, m, val, n, g, r]]];
-        fi;
-      od;
-    fi;
+    od;
   od;
 
   return [data, [false, [j, k, l, m, val, n, g, r]]];

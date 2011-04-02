@@ -136,6 +136,10 @@ function(f, s)
     return false;
   fi;
 
+  if RankOfTransformation(f) > MaximumList(gens, RankOfTransformation) then 
+    return false;
+  fi;
+
   o:=OrbitsOfImages(s);
   g:=PreInOrbitsOfImages(s, f, false);
 
@@ -857,7 +861,7 @@ function(r)
     for j in cosets do 
       k:=k+1;
       out[k]:=StructuralCopy(data);
-      out[k][1][3]:=i; out[k][3]:=j; out[k][4]:=();
+      out[k][1][3]:=i; out[k][3]:=j; out[k][4]:=fail;
     od;
   od;
 
@@ -883,7 +887,7 @@ function(s, data, o)
     for j in cosets do 
       k:=k+1;
       out[k]:=StructuralCopy(data);
-      out[k][1][3]:=i; out[k][3]:=j; out[k][4]:=();
+      out[k][1][3]:=i; out[k][3]:=j; out[k][4]:=fail;
     od;
   od;
 

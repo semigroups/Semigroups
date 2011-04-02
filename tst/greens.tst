@@ -11,7 +11,7 @@
 ##
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "greens.tst"));
-# takes approx. 12 seconds to run currently!
+# takes approx. 9 seconds to run currently!
 
 gap> START_TEST("greens.tst 4.0");
 gap> SetGasmanMessageStatus("none");
@@ -218,6 +218,7 @@ gap> idem:=Set(Concatenation(List(GreensLClasses(m), Idempotents)));
   Transformation( [ 7, 7, 7, 7, 6, 6, 7 ] ),
   Transformation( [ 7, 7, 7, 7, 7, 6, 7 ] ),
   Transformation( [ 7, 7, 7, 7, 7, 7, 7 ] ) ]
+gap> Print("JDM 221\n");
 gap> idem=Set(Idempotents(m));
 true
 gap> m:=Semigroup(gens[30]);;
@@ -268,7 +269,7 @@ gap> for i in gens do
 > Add(out3, NrIdempotents(s));
 > if not Number(GreensHClasses(s), IsGroupHClass)
 > =Length(Idempotents(s)) then 
-> Print("Something is wrong!", Position(gens, i), "\n");
+> Print("Something is wrong! ", Position(gens, i), "\n");
 > fi;
 > od;
 gap> out; out2; out3;
@@ -350,6 +351,7 @@ gap> out; out2; out3;
   16, 102, 4, 1, 2, 7, 34, 176, 15, 16, 22, 1, 1, 381, 130, 1595, 25, 574, 
   316, 33, 430, 28, 9, 1, 63, 1, 5, 197, 872, 173, 106, 1, 96, 1, 1, 191, 
   248, 57, 14, 86, 38 ]
+gap> Print("JDM 354\n");
 gap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
 gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
 gap> M:=Semigroup(a,b);;
@@ -398,6 +400,7 @@ gap> rc:=GreensRClassOfElement(M, a*b*a);
 {Transformation( [ 3, 2, 5, 4, 1, 1 ] )}
 gap> Transformation( [ 4, 1, 6, 5, 2, 2 ] ) in rc;
 true
+gap> Print("JDM 403\n");
 gap> GreensRClassData(rc);
 GreensRClassData( Transformation( [ 3, 2, 5, 4, 1, 1 ] ),
 [ [ 1, 2, 3, 4, 5 ], [ 1, 2, 4, 5, 6 ], [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ]
@@ -415,7 +418,7 @@ gap> gens:=[ Transformation( [ 4, 4, 3, 5, 3 ] ),
 gap> S:=Semigroup(gens);;
 gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
 gap> SchutzenbergerGroup(GreensDClassOfElement(S, f));
-Group([ (4,5) ])
+Sym( [ 4 .. 5 ] )
 gap> SchutzenbergerGroup(GreensRClassOfElement(S, f));
 Group([ (4,5) ])
 gap> SchutzenbergerGroup(GreensLClassOfElement(S, f));
@@ -496,6 +499,7 @@ gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ),
 gap> S:=Semigroup(gens);;
 gap> Length(GreensRClasses(S));
 17
+gap> Print("JDM 502\n");
 gap> GreensData(GreensRClasses(S)[10]);
 GreensRClassData( Transformation( [ 3, 3, 3, 3, 3, 2, 3 ] ), 
 [ [ 2, 3 ], [ 4, 6 ], [ 2, 6 ], [ 1, 4 ], [ 1, 6 ], [ 2, 4 ], [ 3, 6 ] ], 
