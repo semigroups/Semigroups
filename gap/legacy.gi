@@ -263,7 +263,7 @@ for pnt in orbit do
 
 	# loop over the generators.
 	for s in gens do
-		new:= OnTuplesOfSetsAntiAction(pnt, s);
+		#new:= #OnTuplesOfSetsAntiAction(pnt, s);
 		set:= Set(new);
 
 		# discard points of lower grading.

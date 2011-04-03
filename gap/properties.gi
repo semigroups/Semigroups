@@ -25,67 +25,30 @@
 # IsFullSubsemigroup (of an inverse semigroup), IsFactorizableInverseMonoid,
 # IsFInverseSemigroup, 
 
-
-
-AllPropsOfSemigps:=["IsBand", "IsBlockGroup", "IsCliffordSemigroup", 
-"IsCommutativeSemigroup", "IsCompletelyRegularSemigroup", "IsGreensLTrivial", 
-"IsGreensRTrivial",
-"IsGreensHTrivial", "IsGroupAsSemigroup", "IsInverseSemigroup", 
-"IsLeftZeroSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup",
-"IsRectangularBand", "IsRegularSemigroup", "IsRightZeroSemigroup",
-"IsIdempotentGenerated", "IsSemilatticeAsSemigroup", "IsSimpleSemigroup",
-"IsZeroSemigroup", "IsZeroGroup"];
-
+# new for 4.0! - GroupOfUnits - "for a tranformation semigroup"
 ###########################################################################
-
-EasyPropsSemigps:=[IsBand, IsCliffordSemigroup, 
-IsCommutativeSemigroup, IsCompletelyRegularSemigroup, 
-IsCompletelySimpleSemigroup, IsGroupAsSemigroup,  
-IsLeftZeroSemigroup, IsMonoidAsSemigroup, IsRightZeroSemigroup,
-IsIdempotentGenerated, IsSemilatticeAsSemigroup, IsSimpleSemigroup,
-IsZeroSemigroup, IsZeroGroup];
-
-foo:=function(s)
-local d, dd;
-
-d:=List(GreensDClasses(s), Size);
-dd:=Filtered(d, x-> not x= Maximum(d));
-
-if not ForAll(dd, x-> x=1) then 
-	return false;
-fi;
-
-return NrGreensRClasses(GreensDClasses(s)[Position(d, Maximum(d))])=
-NrGreensLClasses(GreensDClasses(s)[Position(d, Maximum(d))]);
-end;
-
-# new method for 4.0! 
-###########################################################################
-# JDM would be better if this could return a group of transformations...
-# test efficiency...
 
 InstallMethod(GroupOfUnits, "for a tranformation semigroup", 
 [IsTransformationSemigroup], 
 function(s)
-local h, m, g;
+  local h, m, g;
 
-if not IsMonoidAsSemigroup(s) then 
-	return fail;
-fi;
+  if not IsMonoidAsSemigroup(s) then 
+    return fail;
+  fi;
 
-h:=GreensHClassOfElement(s, One(s));
-m:=Size(h);
-g:=Group(());
+  h:=GreensHClassOfElement(s, One(s));
+  m:=Size(h);
+  g:=Group(());
 
-repeat 
-	g:=ClosureGroup(g, AsPermutation(Random(h)));
-until Size(g)=m;
+  repeat 
+    g:=ClosureGroup(g, AsPermutation(Random(h)));
+  until Size(g)=m;
 
-return g;
+  return g;
 end);
 
-###########################################################################
-#
+#JDMJDM
 
 # new method for 4.0! 
 ###########################################################################
@@ -979,70 +942,6 @@ end);
 
 #############################################################################
 #
-
-InstallMethod(PropertiesOfSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup],
-function(s)
-local T, F, str, f;
-
-T:=[]; F:=[];
-
-for str in AllPropsOfSemigps do 
-	Info(InfoMonoidProperties, 3, "testing... ", str);
-	f:=EvalString(str);
-	if f(s) then 
-		Add(T, str);
-	else
-		Add(F, str);
-	fi;
-od;
-
-Print("satisfies: ", T, "\n");
-Print("does not satisfy: ", F, "\n");
-
-if not MultiplicativeZero(s)=fail then 
-	Print("with zero\n");
-else
-	Print("no zero\n");
-fi;
-
-return true;
-end);
-
-#############################################################################
-
-InstallMethod(EasyPropertiesOfSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup],
-function(s)
-local T, F, str, f;
-
-T:=[]; F:=[];
-
-for str in AllPropsOfSemigps do 
-	if not str="IsIdempotentGenerated" then 
-		Info(InfoMonoidProperties, 3, "testing... ", str);
-		f:=EvalString(str);
-		if f(s) then 
-			Add(T, str);
-		else
-			Add(F, str);
-		fi;
-	fi;
-od;
-
-Print("satisfies: ", T, "\n");
-Print("does not satisfy: ", F, "\n");
-
-if not MultiplicativeZero(s)=fail then 
-	Print("with zero\n");
-else
-	Print("no zero\n");
-fi;
-
-return true;
-end);
-
-#############################################################################
 
 InstallMethod(PrintObj, "for an ideal of a trans. semigp.",
 [IsSemigroupIdeal and IsTransformationSemigroup], 

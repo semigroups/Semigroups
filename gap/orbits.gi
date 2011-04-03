@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  orbits.gi
-#Y  Copyright (C) 2006-2010                             James D. Mitchell
+#Y  Copyright (C) 2006-2011                              James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -12,19 +12,14 @@
 
 # - this file is alphabetized, keep it that way!
 
-# - this file should contains functions relating to orbit calculations!
-
-#############################################################################
-# Notes
-
-# new method for 4.0!
+# new for 4.0! - ChooseHashFunction - "for transformations and pos. int."
 #############################################################################
 
 InstallMethod(ChooseHashFunction, "for transformations and pos. int.",
 [IsTransformation, IsInt],
 function(p, hashlen)
-return rec(func := HashFunctionForTransformation, data := [101, 
-hashlen]);
+  return rec(func := HashFunctionForTransformation, data := [101, 
+   hashlen]);
 end);
 
 # new for 4.0! - GradedImagesOfTransSemigroup - "for a trans. semigroup"
@@ -124,63 +119,47 @@ function(s)
   return out;
 end);
 
-# new for 4.0!
-#############################################################################
-
-InstallGlobalFunction(HashTableForImagesFixedSize, 
-function(img)
-  local s, n, p, ht;
-
-  s:=Set(img);
-  n:=Length(img);
-  
-  if n<500 then 
-    p:=Minimum(NextPrimeInt(Binomial(n, Length(s))), 100003);
-  else
-    p:=100003;
-  fi;
-
-  ht := HTCreate(s, rec( hfd := p, treehashsize := p ));
-  HTAdd(ht, s, 1);
-
-  return ht;
-end);
-
-# new for 4.0!
+# new for 4.0! - HashTableForImages - not a user function!
 #############################################################################
 
 InstallGlobalFunction(HashTableForImages, 
 function(img)
-  local s, p, ht;
-  s:=Set(img);
-  p:=Minimum(NextPrimeInt(2^Length(img)), 100003);
+  local x, n, p, ht;
 
-  ht := HTCreate(s, rec( hfd := p, treehashsize := p ));
-  HTAdd(ht, s, 1);
+  x:=Set(img); n:=Length(img);
+  
+  if n<15 then 
+    p:=Minimum(NextPrimeInt(Binomial(n, Length(x))), 1009);
+  else
+    p:=1009;
+  fi;
+
+  ht := HTCreate(x, rec( hfd := 1009, treehashsize := 1009 ));
+  HTAdd(ht, x, 1);
 
   return ht;
 end);
 
-# new for 4.0!
+# new for 4.0! - HashTableForKernels - not a user function!
 #############################################################################
 
 InstallGlobalFunction(HashTableForKernels, 
 function(ker, n)
-local p, ht;
+  local p, ht;
 
-if n<11 then 
-  p:=Minimum(NextPrimeInt(Stirling2(n, Maximum(ker))), 100003);
-else
-  p:=100003;
-fi;
+  if n<11 then 
+    p:=Minimum(NextPrimeInt(Stirling2(n, Maximum(ker))), 10007);
+  else
+    p:=10007;
+  fi;
 
-ht := HTCreate(ker, rec( hfd := p, treehashsize := p ));
-HTAdd(ht, ker, 1);
+  ht := HTCreate(ker, rec( hfd := p, treehashsize := p ));
+  HTAdd(ht, ker, 1);
 
-return ht;
+  return ht;
 end);
 
-# new for 4.0!
+# new for 4.0! - HashFunctionForTransformation - not a user function!
 #############################################################################
 
 InstallGlobalFunction(HashFunctionForTransformation,
@@ -188,149 +167,94 @@ function(v,data)
    return ORB_HashFunctionForIntList(v![1], data); 
 end);
 
-# new method and output for 4.0!
+# new for 4.0! - ImagesOfTransSemigroup - "for a transformation semigroup"
 ###########################################################################
-#
 
 InstallMethod(ImagesOfTransSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup],
-s-> Orb(Generators(s), [1..Degree(s)], OnSets, rec(storenumbers:=true, 
-schreier:=true)));
+  s-> Orb(Generators(s), [1..Degree(s)], OnSets, rec(storenumbers:=true, 
+   schreier:=true)));
 
-# new method and output for 4.0!
+# new for 4.0! - ImagesOfTransSemigroup - "for trans semigp and pos int"
 ###########################################################################
-# 
 
-InstallOtherMethod(ImagesOfTransSemigroup, "for trans. semigp. and pos. int.", 
+InstallOtherMethod(ImagesOfTransSemigroup, "for trans semigp and pos int", 
 [IsTransformationSemigroup, IsPosInt],
 function(s, m)
 local n;
-n:=Degree(s);
+  n:=DegreeOfTransformationSemigroup(s);
 
-return Orb(Generators(s), [1..n], OnSets, rec(storenumbers:=true, 
-gradingfunc:=function(o,x) return Length(x); end, schreier:=true,
-onlygrades:=[m..n]));
+  return Orb(Generators(s), [1..n], OnSets, rec(storenumbers:=true, 
+   gradingfunc:=function(o,x) return Length(x); end, schreier:=true,
+  onlygrades:=[m..n]));
 end);
 
-# new method and output for 4.0!
+# new for 4.0! - KernelsOfTransSemigroup - "for a trans. semigroup"
 ########################################################################### 
-# JDM would it be useful here to make use of any kernels already known
-# from the D-class computation?
-
-# MN it would be useful to have a version of Orb which allowed us to change 
-# onlygrades and then update the orbit!
 
 InstallOtherMethod(KernelsOfTransSemigroup, "for a trans. semigroup", 
 [IsTransformationSemigroup],  
 function(s)
-local gens, n, max, bound;
+  local n, bound;
 
-gens:=Generators(s);
-n:=Degree(s); max:=Maximum(List(gens, Degree));
+  n:=DegreeOfTransformationSemigroup(s); 
+  
+  if n<8 then
+    bound:=Minimum(NextPrimeInt(Bell(n)), 10007);
+  else
+    bound:=10007;
+  fi;
 
-if max=n and n<1000 then 
-	bound:=Bell(n);
-elif n<1000 then 
-	bound:=Sum([1..max], x-> Stirling2(n, x));
-else
-	bound:=100000;
-fi;
-
-return Orb(gens, List([1..n], x-> [x]), OnKernelsAntiAction, 
- rec(storenumbers:=true, 
- treehashsize:=NextPrimeInt(Minimum(100000, 3*bound)), schreier:=true));
+  return Orb(GeneratorsAsListOfImages(s), [1..n], function(f,g) return
+   CanonicalTransSameKernel(f{g}); end, rec(storenumbers:=true, 
+   treehashsize:=bound, schreier:=true));
 end);
 
-# new method and output for 4.0!
+# new for 4.0! - KernelsOfTransSemigroup - "for trans semigp pos int"
 ########################################################################### 
 
-InstallOtherMethod(KernelsOfTransSemigroup, "for a trans. semigroup", 
+InstallOtherMethod(KernelsOfTransSemigroup, "for trans semigp pos int", 
 [IsTransformationSemigroup, IsPosInt], 
 function(s, m)
-local n, max, bound, gens;
+  local n, max, bound, gens;
 
-gens:=Generators(s);
-n:=Degree(s); max:=Maximum(List(gens, Degree));
+  n:=DegreeOfTransformationSemigroup(s); 
+  max:=MaximumList(Generators(s), RankOfTransformation);
+  
+  if n<11 then
+    bound:=Minimum(NextPrimeInt(Stirling2(n,m)), 10007);
+  else
+    bound:=10007;
+  fi;
 
-if max=n and n<1000 then 
-	bound:=Bell(n);
-elif n<1000 then 
-	bound:=Sum([1..max], x-> Stirling2(n, x));
-else
-	bound:=100000;
-fi;
-
-return Orb(gens, List([1..n], x-> [x]), OnKernelsAntiAction, 
- rec(storenumbers:=true, 
- treehashsize:=NextPrimeInt(Minimum(100000, 3*bound)),
- gradingfunc:=function(o,x) return Length(x); end,
- onlygrades:=[m..max], schreier:=true));
+  return Orb(GeneratorsAsListOfImages(s), [1..n], function(f,g) return
+   CanonicalTransSameKernel(f{g}); end, rec(storenumbers:=true, 
+   treehashsize:=bound, gradingfunc:=function(o,x) return Length(x); end,
+   onlygrades:=[m..max], schreier:=true));
 end);
 
-# new method for 4.0!
+# new for 4.0! - OnKernelsAntiAction - for a trans img list and same 
 ###########################################################################
 
-InstallGlobalFunction(OnKernelsAntiAction, [IsList, IsTransformation],
-function(ker, f)
-local n, g, i;
-
-n:=f![1];
-
-if IsBound(TABLE_OF_TRANS_KERNEL) then 
-  g:=TABLE_OF_TRANS_KERNEL(ker,Length(n));
-else
-  g:= EmptyPlist(Length(n)); 
-  for i in [1..Length(ker)] do
-    g{ker[i]}:= ListWithIdenticalEntries(Length(ker[i]), i);
-  od;
-fi;
-
-g:= TransformationNC(g{n});
-return ImageAndKernelOfTransformation(g)[2];
+InstallGlobalFunction(OnKernelsAntiAction, 
+[IsTransformation, IsTransformation],
+function(f,g)
+  return CanonicalTransSameKernel(f{g});  
 end);
 
-###########################################################################
-
-InstallGlobalFunction(OnTuplesOfSetsAntiAction, [IsObject, IsTransformation], 
-function(tup, s)
-local res, ker, set, perm, k;
-
-ker:=ImageAndKernelOfTransformation(s)[2];
-res:=[];
-
-for set in tup do
-	Unbind(perm);
-	for k in ker do
-		if k[1]^s in set then
-			if IsBound(perm) then
-				perm:=Union(perm, k);
-			else 
-				perm:=ShallowCopy(k);
-			fi;
-		fi;
-	od;
-	if IsBound(perm) then  
-		Add(res, perm);
-	fi;
-od;
-return res;
-end);
-
-# new method and output for 4.0!
+# new for 4.0! - StrongOrbitsInForwardOrbit - for IsOrbit
 #############################################################################
-#
 
-InstallGlobalFunction(StrongOrbitsInForwardOrbit, 
+InstallGlobalFunction(StrongOrbitsInForwardOrbit, [IsOrbit], 
 function(o)
-local graph;
+  local graph;
 
-if not (IsOrbit(o) and IsBound(o!.orbitgraph)) then 
-	Error("Usage: the argument should be an orbit with orbit graph ", 
-	 "created by the orb package");
-fi;
+  if not IsBound(o!.orbitgraph) then 
+    Error("Usage: the argument should be an orbit with orbit graph ", 
+     "created by the orb package");
+  fi;
 
-graph:=OrbitGraphAsSets(o);
-graph:=STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(graph);
+  graph:=STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o));
 
-return List(graph, x-> o{x});
+  return List(graph, x-> o{x});
 end);

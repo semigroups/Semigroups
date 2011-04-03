@@ -14,8 +14,10 @@
 # takes approx. 10s
 
 gap> START_TEST("r.tst 4.0");
-#gap> SetGasmanMessageStatus("none");
+gap> SetGasmanMessageStatus("none");
 #gap> LoadPackage("semex");;
+gap> LoadPackage("monoid");
+true
 gap> SetInfoLevel(InfoMonoidGreens, 0);
 gap> gens:=[ 
 >  Transformation( [ 1, 54, 25, 4, 49, 30, 7, 56, 51, 44, 31, 62, 13, 20, 35, 

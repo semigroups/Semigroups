@@ -213,7 +213,7 @@ function(arg)
       O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
       O[j][k]!.reverse[m]:=CreateReverseSchreierTreeOfSCC(O[j][k], m);
       r_reps[1]:=[[data[1]]];
-      O[j][k]!.images_ht[m]:=HashTableForImagesFixedSize(f![1]);
+      O[j][k]!.images_ht[m]:=HashTableForImages(f![1]);
       O[j][k]!.rels:=O[j][k]!.rels+CreateKernelOrbitSCCRels(gens, O[j][k], m);
       g:=O[j][k]!.rels[l][2]*f;
       reps[1]:=[g];
@@ -745,7 +745,7 @@ function(arg)
   Add(o!.convert[1], [AsPermOfKerImg(f)]);
 
   #images of representatives of D-classes with kernel belonging in scc[i]
-  o!.images_ht:=[HashTableForImagesFixedSize(f![1])];
+  o!.images_ht:=[HashTableForImages(f![1])];
 
   #multipliers of scc containing the kernel of f
   o!.rels:=EmptyPlist(Length(o));

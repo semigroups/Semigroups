@@ -136,8 +136,8 @@ function(f, s)
     return false;
   fi;
 
-  if RankOfTransformation(f) > MaximumList(List(gens, RankOfTransformation)) 
-   then 
+  if not (IsMonoid(s) and IsOne(f)) and RankOfTransformation(f) > 
+   MaximumList(List(gens, RankOfTransformation)) then 
     return false;
   fi;
 
