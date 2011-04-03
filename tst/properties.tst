@@ -341,11 +341,4 @@ gap> gens:=[ Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ),
 gap> S:=Semigroup(gens);;
 gap> MultiplicativeZero(S);
 Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
-#gap> file1:=Concatenation(String(Filename(DirectoriesPackageLibrary("semex", 
-#> "g6"), "")), "graph8c.g6");;
-#gap> graphs:=ReadGraph6(file1);;
-#gap> g:=graphs[110];
-#gap> g:=GraphWithReorderedVertices(g);
-#gap> s:=List(GraphEndomorphisms(g), TransformationNC);;
-#gap> s:=SmallGeneratingSet(s);
 gap> STOP_TEST( "properties.tst 4.0", 10000);

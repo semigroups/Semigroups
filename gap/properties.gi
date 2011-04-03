@@ -48,15 +48,15 @@ function(s)
   return g;
 end);
 
-#JDMJDM
-
-# new method for 4.0! 
+# mod for 4.0! - IsBand - "for a transformation semigroup"
 ###########################################################################
-# - must find some reasonable examples to test this on.
+#JDM must find some reasonable examples to test this on!
 
 InstallMethod(IsBand, "for a transformation semigroup", 
 [IsTransformationSemigroup], s-> IsCompletelyRegularSemigroup(s) and 
  IsGreensHTrivial(s));
+
+#JDMJDM
 
 # JDM new for 4.0!
 #############################################################################
@@ -64,43 +64,32 @@ InstallMethod(IsBand, "for a transformation semigroup",
 InstallMethod(IsBlockGroup, "for a transformation semigroup",
 [IsTransformationSemigroup], 
 function(s)
-  local iter, f, o, scc, reg, n, k, l, d, i, j;
+  local iter, D, d, i;
 
-if IsInverseSemigroup(s) then 
-   return true;
-elif IsRegularSemigroup(s) then 
-   return false;
-fi;
+  if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
+    return true;
+  elif (HasIsRegularSemigroup(s) and IsRegularSemigroup(s)) and
+   (HasIsInverseSemigroup(s) and not IsInverseSemigroup(s)) then 
+    return false;
+  fi;
 
-iter:=IteratorOfRClassRepsData(s);
-
-for d in iter do
-	f:=RClassRepFromData(s, d)![1];
-  o:=ImageOrbitFromData(s, d);
-  scc:=ImageOrbitFromData(s, d);
-  reg:=false;
-  n:=Length(o[1]);
-  
-	for i in scc do 
-		k:=[]; l:=0;
-		for j in o[i] do 
-			if not f[j] in k then 
-				AddSet(k, f[j]);
-				l:=l+1;
-			else
-				break;
-			fi;
-		od;
-		
-    if l=n and reg then
-    	return false;
-   	elif l=n then 
-    	reg:=true;
+  if OrbitsOfKernels(s)!.finished then 
+    iter:=IteratorOfDClassRepsData(s); D:=true;
+  else 
+    iter:=IteratorOfRClassRepsData(s); D:=false;
+  fi;
+    
+  for d in iter do
+    if D then 
+      d:=d[1];
     fi;
-	od;
-od;
+    i:=NrIdempotentsRClassFromData(s, d);
+    if not (i=0 or i=1) then 
+      return false;
+    fi;
+  od;
 
-return true;
+  return true;
 end);
 
 ###########################################################################
@@ -375,84 +364,37 @@ end);
 InstallOtherMethod(IsInverseSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup],
 function(s)
-local n, imgs, kers, foo, iter, d, f, o, scc, reg, i;
+  local n, imgs, kers, iter, D, d;
 
-if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
-   return false;
-elif IsCompletelyRegularSemigroup(s) then
-   return IsCliffordSemigroup(s);
-fi;
+  if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
+    return false;
+  elif IsCompletelyRegularSemigroup(s) then
+    return IsCliffordSemigroup(s);
+  fi;
 
-n:=Degree(s);
-imgs:=ImagesOfTransSemigroup(s);
-Enumerate(imgs, 2^n);
-kers:=KernelsOfTransSemigroup(s);
-Enumerate(kers, Length(imgs));
+  n:=Degree(s); imgs:=ImagesOfTransSemigroup(s); Enumerate(imgs, 2^n);
+  kers:=KernelsOfTransSemigroup(s); Enumerate(kers, Length(imgs));
 
-if not (IsClosed(kers) and Length(kers)=Length(imgs)) then 
-	return false;
-fi;
+  if not (IsClosed(kers) and Length(kers)=Length(imgs)) then 
+    return false;
+  fi;
 
-foo:=function(f, set) #is f injective on set?
-local i, j;
-j:=[]; 
-for i in set do 
-	if not f[i] in j then 
-		AddSet(j, f[i]);
-	else
-		return false;
-	fi;
-od;
-return true;
-end;
+  if OrbitsOfKernels(s)!.finished then 
+    iter:=IteratorOfDClassRepsData(s); D:=true;
+  else 
+    iter:=IteratorOfRClassRepsData(s); D:=false;
+  fi;
+    
+  for d in iter do
+    if D then 
+      d:=d[1];
+    fi;
+    if not NrIdempotentsRClassFromData(s, d)=1 then 
+      return false;
+    fi;
+  od;
 
-if OrbitsOfKernels(s)!.finished then 
-	#JDM use IteratorOfDClassReps here when implemented
-	iter:=IteratorOfGreensDClasses(s);
-	for d in iter do 
-		f:=RClassRepFromData(s, d!.data[1]);
-		o:=ImageOrbit(d);
-		scc:=ImageOrbitFromData(s, d!.data[1]);
-		reg:=false;
-		for i in scc do 
-			if foo(f, o[i]) then 
-				if reg then 
-					return false;
-				fi;
-				reg:=true;
-			fi;
-		od;
-		
-		if not reg then 
-			return false;
-		fi;
-	od;
-fi;
-
-iter:=IteratorOfRClassRepsData(s);
-
-for d in iter do 
-	f:=RClassRepFromData(s, d)![1];
-	#JDM again it would be good to pass OrbitsOfImages!.orbits to RClasRepFromData
-	o:=ImageOrbitFromData(s, d);
-	scc:=ImageOrbitFromData(s, d);
-	reg:=false;
-	
-	for i in scc do 
-		if foo(f, o[i]) then 
-			if reg then 
-				return false;
-			fi;
-			reg:=true;
-		fi;
-	od;
-	
-	if not reg then 
-		return false;
-	fi;
-od;
-
-return true;
+  return true;
 end);
 
 #############################################################################
