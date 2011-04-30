@@ -52,6 +52,20 @@ function(arg)
   return fail;
 end);
 
+#new for 4.0! - Generators - "for a semigroup or monoid"
+############################################################################
+
+InstallMethod(Generators, "for a semigroup or monoid",
+[IsSemigroup],
+function(s)
+
+  if IsMonoid(s) then
+    return GeneratorsOfMonoid(s);
+  fi;
+
+  return GeneratorsOfSemigroup(s);
+end);
+
 # new for 4.0! - HClass - user function
 #############################################################################
 # Usage: trans. semigp. and trans.

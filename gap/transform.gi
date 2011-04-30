@@ -10,39 +10,13 @@
 ## $Id$
 ##
 
-
 # if f is a transformation, then f![1] is the image list, f![2] is the image
 # set, f![3] is the kernel as a partition, f![4] is ..., f![5] is the rank of f
 # f![6] is the canonical trans. with same kernel
 
-#new for 4.0!
-############################################################################
-
-OnLeftRClassAction:=function(r, f)
-return GreensRClassOfElement(r!.parent, f*r!.rep);
-end;
-
-#new for 4.0!
-############################################################################
-# go to convenience.gi
-
-InstallMethod(Generators, "for a semigroup or monoid", 
-[IsSemigroup],
-function(s)
-
-if IsMonoid(s) then 
-	return GeneratorsOfMonoid(s);
-fi;
-
-return GeneratorsOfSemigroup(s);
-end);
 
 
 ############################################################################
-###
-#M  AsPermutation(<trans>)
-#M  AsPermutation(<perm>)
-##   
 ##  If trans is a permutation, then allow it to be converted into one.
 ##  return fail if the transformation is not a permutation.
 ##

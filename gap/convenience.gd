@@ -12,6 +12,7 @@
 
 DeclareGlobalFunction("DClass");
 DeclareGlobalFunction("DClassNC");
+DeclareAttribute("Generators", IsSemigroup);
 DeclareGlobalFunction("HClass");
 DeclareGlobalFunction("HClassNC");
 DeclareGlobalFunction("LClass");

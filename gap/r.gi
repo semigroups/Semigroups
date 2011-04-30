@@ -1345,6 +1345,8 @@ end);
 # Usage: s = semigroup; d = image data; o = OrbitsOfImages (optional)
 # f = R-class rep (optional)
 
+# JDM this could be improved to use NrIdempotents if known!
+
 InstallGlobalFunction(IsRegularRClassData, 
 function(arg)
   local s, d, o, f, scc, i;

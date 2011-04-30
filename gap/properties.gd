@@ -12,7 +12,6 @@
 
 DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareInfoClass("InfoMonoidProperties");
-DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
 DeclareProperty("IsBand", IsTransformationSemigroup);
 DeclareProperty("IsBlockGroup", IsTransformationSemigroup);
 DeclareProperty("IsCliffordSemigroup", IsTransformationSemigroup);
@@ -41,7 +40,7 @@ DeclareProperty("IsOrthodoxSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsRectangularBand", IsTransformationSemigroup);
 DeclareProperty("IsRightZeroSemigroup", IsTransformationSemigroup);
 DeclareSynonymAttr("IsSemiBand", IsIdempotentGenerated);
-DeclareProperty("IsSemigroupWithCommutingIdempotents", IsSemigroup);
+DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
 
 if not IsBound(IsSemilatticeAsSemigroup) then 
   DeclareProperty("IsSemilatticeAsSemigroup", IsSemigroup);
@@ -52,4 +51,12 @@ DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
 DeclareAttribute("MinimalIdeal", IsTransformationSemigroup);
 DeclareAttribute("UnderlyingDClassOfMinIdeal", IsSemigroupIdeal and 
  IsTransformationSemigroup);
+
+# the following have been temporarily move to dev/properties.gi until
+# ClosureSemigroup is released.
+
+#DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
+
+
+
 
