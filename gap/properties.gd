@@ -7,7 +7,7 @@
 ##
 #############################################################################
 ##
-## $Id$
+## $Id: properties.gd 156 2011-04-03 13:02:19Z jamesm $
 ##
 
 DeclareAttribute("GroupOfUnits", IsSemigroup);
@@ -56,7 +56,7 @@ DeclareAttribute("UnderlyingDClassOfMinIdeal", IsSemigroupIdeal and
 # ClosureSemigroup is released.
 
 #DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
-
+#SmallGeneratingSet
 
 
 
