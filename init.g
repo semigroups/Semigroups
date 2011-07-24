@@ -1,28 +1,20 @@
 #############################################################################
 ##
 #W  init.g
-#Y  Copyright (C) 2006-2010                             James D. Mitchell
+#Y  Copyright (C) 2011                                     James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-## $Id$
-##
 
+ReadPkg("citrus/gap/convenience.gd");
+ReadPkg("citrus/gap/orbits.gd");
+ReadPkg("citrus/gap/greens.gd");
+ReadPkg("citrus/gap/properties.gd");
+ReadPkg("citrus/gap/transform.gd");
 
-ReadPkg("monoid/gap/convenience.gd");
-ReadPkg("monoid/gap/general.gd");
-ReadPkg("monoid/gap/orbits.gd");
-ReadPkg("monoid/gap/greens.gd");
-ReadPkg("monoid/gap/closure.gd");
-ReadPkg("monoid/gap/properties.gd");
-ReadPkg("monoid/gap/transform.gd");
-
-ReadPkg("monoid/gap/legacy.gd");
-
-###########################################################################
-DeclareInfoClass("InfoMonoid");;
+DeclareInfoClass("InfoCitrus");;
 
 #JDM remove
 
