@@ -5,18 +5,17 @@
 +   'Citrus' is free software: you can redistribute it and/or modify        +
 +   it under the terms of the GNU General Public License as published by    +
 +   the Free Software Foundation, either version 2 of the license, or       +
-+   (at your option) any later version.                                     +
++   (at your option) any later version. For details see the FSF's own site  +
++   http://www.gnu.org/licenses/gpl.html                                    +
 +                                                                           +
 +   'Citrus' is distributed in the hope that it will be useful,             +
 +   but WITHOUT ANY WARRANTY; without even the implied warranty of          +
 +   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           +
 +   GNU General Public License for more details.                            +
 +                                                                           +
-+   A copy of the GNU General Public License is available in the file       +
-+   'GPLv3'; or for later versions see <http://www.gnu.org/licenses/>.      +
-+                                                                           +
-+   You can find information on how to contact us at the end of the         +
-+   README file and on the front page of the documentation.                 +
++   You can find information about how to contact the authors of this       +
++   package at the end of the README file and on the front page of the      +
++   documentation.                                                          +
 +                                                                           +
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
