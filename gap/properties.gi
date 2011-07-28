@@ -267,6 +267,8 @@ function(d)
   return NrGreensRClasses(d)=Size(d);
 end);
 
+#JDM here?
+
 ###########################################################################
 
 InstallOtherMethod(IsGreensHTrivial, "for a transformation semigroup", 
@@ -300,7 +302,7 @@ function(s)
   gens:=Generators(s);
 
   if ForAll(gens, f-> RankOfTransformation(f)=
-   DegreeOfTransfromationSemigroup(s)) then
+   DegreeOfTransformationSemigroup(s)) then
     return true;
   fi;
 
@@ -310,7 +312,7 @@ function(s)
   for f in gens do 
     if not (IsInjectiveTransOnList(f, f![1]) and
      ImageSetOfTransformation(f)=img and 
-      CanonicalTransSameKernel(f)=ker then 
+      CanonicalTransSameKernel(f)=ker) then 
       return false;
     fi;
   od;
@@ -507,6 +509,32 @@ function(s)
   kers:=Set(List(gens, KernelOfTransformation));
 
   if Length(kers)=1 and ForAll(gens, IsIdempotent) then
+    return true;
+  fi;
+
+  return false;
+end);
+
+# new for 0.1 - IsSynchronizingSemigroup - "for a trans. semi. or coll."
+###########################################################################
+
+InstallMethod(IsSynchronizingSemigroup, "for a trans. semi. or coll.", 
+[IsTransformationCollection],
+function(s)
+  local n, o;
+
+  if IsTransformationCollection(s) then 
+    n:=DegreeOfTransformation(s[1]);
+  else
+    n:=DegreeOfTransformationSemigroup(s[1]);
+  fi;
+
+  o:=Orb(s, [1..n], OnSets, 
+        rec(lookingfor:=function(o, x) return Length(x)=1; end));
+
+  Enumerate(o);
+
+  if IsPosInt(PositionOfFound(o)) then
     return true;
   fi;
 

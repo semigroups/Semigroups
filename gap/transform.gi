@@ -7,13 +7,10 @@
 ##
 #############################################################################
 ##
-## $Id$
-##
 
 # if f is a transformation, then f![1] is the image list, f![2] is the image
 # set, f![3] is the kernel as a partition, f![4] is ..., f![5] is the rank of f
 # f![6] is the canonical trans. with same kernel
-
 
 
 ############################################################################
@@ -982,22 +979,6 @@ fi;
 
 #############
 
-foo:=function(f, set) #is f injective on set?
-local i, lookup;
-lookup:=EmptyPlist(Length(f));
-
-for i in set do 
-	if not IsBound(lookup[f[i]]) then 
-		lookup[f[i]]:=0;
-	else
-		return false;
-	fi;
-od;
-return true;
-end;
-
-#############
-
 out:=[];
 img:=ImageAndKernelOfTransformation(f);
 ker:=img[2]; img:=img[1];
@@ -1011,7 +992,7 @@ if not HasGradedKernelsOfTransSemigroup(s) then
 	Enumerate(o);
 
 	for i in [1..Length(o)] do 
-		if Grades(o)[i]=j and foo(TABLE_OF_TRANS_KERNEL(o[i], n), img) then 
+		if Grades(o)[i]=j and IsInjectiveTransOnList(o[i], img) then 
 			k:=k+1;
 			kers[k]:=o[i];
 		fi;
@@ -1019,7 +1000,7 @@ if not HasGradedKernelsOfTransSemigroup(s) then
 else
 	o:=GradedKernelsOfTransSemigroup(s)[j];
 	for i in [1..Length(o)] do 
-		if foo(TABLE_OF_TRANS_KERNEL(o[i], n), img) then 
+		if IsInjectiveTransOnList(o[i], img) then 
 			k:=k+1;
 			kers[k]:=o[i];
 		fi;

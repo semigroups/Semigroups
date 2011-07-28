@@ -47,6 +47,7 @@ if not IsBound(IsSemilatticeAsSemigroup) then
   InstallTrueMethod(IsSemilatticeAsSemigroup, IsCommutative and IsBand);
 fi;
 
+DeclareProperty("IsSynchronizingSemigroup", IsTransformationCollection);
 DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
 DeclareAttribute("MinimalIdeal", IsTransformationSemigroup);
 DeclareAttribute("UnderlyingDClassOfMinIdeal", IsSemigroupIdeal and 

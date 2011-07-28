@@ -1900,11 +1900,11 @@ end);
 #############################################################################
 # JDM move to legacy...
 
-InstallMethod( PrintObj, "for R-class data",
-[ IsGreensRClassData and IsGreensRClassDataRep],
-function( obj )
-  Print( "GreensRClassData( ", obj!.rep,  " )" );
-end );
+#InstallMethod( PrintObj, "for R-class data",
+#[ IsGreensRClassData and IsGreensRClassDataRep],
+#function( obj )
+#  Print( "GreensRClassData( ", obj!.rep,  " )" );
+#end );
 
 # new for 4.0! - PrintObj - for IsIteratorOfGreensRClasses
 ############################################################################
@@ -2137,12 +2137,12 @@ end);
 #############################################################################
 # JDM move to legacy.gi
 
-InstallMethod(ViewObj, "for Green's R-class data",
-[IsGreensRClassData and IsGreensRClassDataRep],
-function( obj )
-  Print( "GreensRClassData( ", obj!.rep, ", ", obj!.strongorb,", ", obj!.perms,
-  ", ", obj!.schutz, " )" );
-end );
+#InstallMethod(ViewObj, "for Green's R-class data",
+#[IsGreensRClassData and IsGreensRClassDataRep],
+#function( obj )
+#  Print( "GreensRClassData( ", obj!.rep, ", ", obj!.strongorb,", ", obj!.perms,
+#  ", ", obj!.schutz, " )" );
+#end );
 
 # new for 4.0! - ViewObj - "for a monoid pkg img ker orbit"
 #############################################################################
