@@ -292,12 +292,14 @@ function(s)
   return true;
 end);
 
+# new for 0.1! - IsGreensHTrivial - "for a D-class of a trans. semigp"
 ###########################################################################
 
 InstallOtherMethod(IsGreensHTrivial, "for a D-class of a trans. semigp", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
   d-> NrGreensHClasses(d)=Size(d));
 
+# new for 0.1! - IsGroupAsSemigroup - "for a transformation semigroup"
 ###########################################################################
  
 InstallMethod(IsGroupAsSemigroup, "for a transformation semigroup", 

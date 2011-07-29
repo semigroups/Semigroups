@@ -469,4 +469,36 @@ gap> gens:=[Transformation([1,2,1,3,3]), Transformation([2,2,3,5,5])];;
 gap> s:=Monoid(gens);;
 gap> IsAperiodicSemigroup(s);
 true
+gap> gens:=[ Transformation( [ 1, 3, 2, 6, 5, 4, 8, 7, 9, 10 ] ), 
+>  Transformation( [ 1, 2, 6, 4, 8, 3, 9, 5, 7, 10 ] ), 
+>  Transformation( [ 1, 10, 10, 10, 10, 10, 7, 8, 10, 10 ] ), 
+>  Transformation( [ 1, 10, 3, 10, 10, 6, 10, 10, 10, 10 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsInverseSemigroup(s);
+true
+gap> gens:=[ Transformation( [ 1, 4, 5, 16, 2, 11, 13, 7, 12, 8, 15, 6, 14, 10, 9, 3, 17
+> ] ), 
+> Transformation( [ 1, 17, 17, 17, 17, 6, 7, 8, 9, 10, 11, 17, 17, 17, 17, 16, 17 ] ), 
+> Transformation( [ 1, 2, 3, 17, 17, 6, 17, 17, 17, 17, 11, 17, 17, 14, 15, 16, 17 ] ), 
+> Transformation( [ 1, 2, 17, 4, 17, 17, 7, 17, 17, 10, 17, 17, 13, 17, 15, 16,
+> 17 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsInverseSemigroup(s);
+true
+gap> gens:=[ Transformation( [ 1, 2, 10, 4, 5, 13, 7, 8, 15, 3, 11, 16, 
+> 6, 14, 9, 12, 17 ] ), 
+> Transformation( [ 1, 8, 10, 4, 5, 6, 14, 2, 15, 3, 11, 12, 13, 7, 9, 16, 17 ] ), 
+> Transformation( [ 1, 8, 17, 4, 5, 17, 14, 2, 17, 17, 11, 17, 17, 7, 17, 17, 17 ] ), 
+>  Transformation( [ 1, 2, 17, 4, 8, 17, 7, 5, 17, 17, 14, 17, 17, 11, 17, 17, 17 ] ), 
+>  Transformation( [ 1, 17, 4, 10, 9, 17, 17, 17, 15, 3, 11, 17, 17, 17, 5, 17, 17 ] ), 
+>  Transformation( [ 1, 17, 4, 3, 15, 17, 17, 17, 9, 10, 11, 17, 17, 17, 5, 17, 17 ] ), 
+>  Transformation( [ 1, 17, 17, 17, 5, 6, 7, 17, 9, 17, 17, 17, 13, 14, 15, 17, 17 ] ), 
+>  Transformation( [ 1, 2, 17, 17, 5, 17, 17, 8, 9, 17, 17, 12, 17, 17, 15, 16, 17 ] ), 
+>  Transformation( [ 1, 17, 3, 17, 5, 17, 7, 17, 17, 10, 17, 12, 17, 14, 17, 16, 17 ] ), 
+>  Transformation( [ 1, 17, 17, 4, 5, 6, 17, 17, 17, 17, 11, 12, 13, 17, 17, 16, 17 ] ), 
+>  Transformation( [ 1, 2, 3, 17, 5, 6, 17, 8, 17, 10, 17, 17, 13, 17, 17, 17,
+>  17 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsInverseSemigroup(s);
+true
 gap> STOP_TEST( "properties.tst 0.1", 10000);
