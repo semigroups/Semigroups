@@ -310,7 +310,7 @@ function(s)
   img:=ImageSetOfTransformation(gens[1]);
 
   for f in gens do 
-    if not (IsInjectiveTransOnList(f, f![1]) and
+    if not (IsInjectiveTransOnList(f, ImageSetOfTransformation(f)) and
      ImageSetOfTransformation(f)=img and 
       CanonicalTransSameKernel(f)=ker) then 
       return false;
