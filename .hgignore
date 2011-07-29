@@ -1,0 +1,11 @@
+syntax: glob
+*.DS_Store
+*.aux
+*.log
+*.out
+*.blg
+*.bbl
+*.top
+*.pdf
+*.tui
+*.swp
