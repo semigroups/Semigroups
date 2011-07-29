@@ -79,23 +79,23 @@ function(s)
     # we only need to find 2 transversals to return false.
       return false;
     fi;
+    
+    #now check that D-classes are square...
+    f:=AsSet(DClassRepFromData(s, d)![1]);
+    o:=KernelOrbitFromData(s, d);
+    scc:=KernelOrbitSCCFromData(s, d[2]);
+    reg:=false;
+    for i in scc do 
+      if IsInjectiveTransOnList(o[i], f) then 
+        if reg then 
+          return false;
+        fi;
+        reg:=true;
+      fi;
+    od;
   od;
-  return true;
-#    f:=AsSet(DClassRepFromData(s, d)![1]);
-#    o:=KernelOrbitFromData(s, d);
-#    scc:=KernelOrbitSCCFromData(s, d[2]);
-#    reg:=false;
-#    for i in scc do 
-#      if IsInjectiveTransOnList(o[i], f) then 
-#        if reg then 
-#          return false;
-#        fi;
-#        reg:=true;
-#      fi;
-#    od;
-#  od;
 
-#  return true;
+  return true;
 end);
 
 ###########################################################################
