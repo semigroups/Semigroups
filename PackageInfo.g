@@ -19,7 +19,7 @@ ArchiveFormats := ".tar.gz .tar.bz2",
 Persons := [
   rec( 
     LastName      := "Mitchell",
-    FirstNames    := "James",
+    FirstNames    := "J. D.",
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "jdm3@st-and.ac.uk",
@@ -53,7 +53,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",  
   SixFile   := "doc/manual.six",
-  LongTitle := "Citrus: ComputIng with TransfoRmation semigrUopS",
+  LongTitle := "Citrus - ComputIng with TransfoRmation semigrUopS",
   Autoload  := true
 ),
 

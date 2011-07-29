@@ -1,19 +1,17 @@
 #############################################################################
 ##
 #W  convenience.gi
-#Y  Copyright (C) 2006-2011                              James D. Mitchell
+#Y  Copyright (C) 2011                                      James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-## $Id: convenience.gi 110 2010-10-25 18:19:53Z jamesm $
-##
 
 # this file contains functions with shorter names than some library functions
 # commonly used in the monoid package. 
 
-# new for 4.0! - DClass - user function
+# new for 0.1! - DClass - user function
 #############################################################################
 # Usage: (trans. semigp. and trans.) or H-class or L-class or R-class.
 
@@ -36,7 +34,7 @@ function(arg)
   return fail;
 end);
 
-# new for 4.0! - DClassNC - user function
+# new for 0.1! - DClassNC - user function
 #############################################################################
 # Usage: trans. semigp. and trans.
 
@@ -52,10 +50,13 @@ function(arg)
   return fail;
 end);
 
-#new for 4.0! - Generators - "for a semigroup or monoid"
+#new for 0.1! - Generators - "for a semigroup or monoid"
 ############################################################################
+# Notes: returns the monoid generators of a monoid, and the semigroup generators
+# of a semigroup. 
 
-InstallMethod(Generators, "for a semigroup or monoid",
+
+InstallOtherMethod(Generators, "for a semigroup or monoid",
 [IsSemigroup],
 function(s)
 
@@ -66,7 +67,7 @@ function(s)
   return GeneratorsOfSemigroup(s);
 end);
 
-# new for 4.0! - HClass - user function
+# new for 0.1! - HClass - user function
 #############################################################################
 # Usage: trans. semigp. and trans.
 
@@ -82,7 +83,7 @@ function(arg)
   return fail;
 end);
 
-# new for 4.0! - HClassNC - user function
+# new for 0.1! - HClassNC - user function
 #############################################################################
 # Usage: trans. semigp. and trans.
 
@@ -98,7 +99,7 @@ function(arg)
   return fail;
 end);
 
-# new for 4.0! - LClass - user function
+# new for 0.1! - LClass - user function
 #############################################################################
 # Usage: (trans. semigp. and trans.) or H-class.
 
@@ -116,7 +117,7 @@ function(arg)
   return fail;
 end);
 
-# new for 4.0! - LClassNC - user function
+# new for 0.1! - LClassNC - user function
 #############################################################################
 # Usage: trans. semigp. and trans.
 
@@ -132,7 +133,7 @@ function(arg)
   return fail;
 end);
 
-# new for 4.0! - RClass - user function
+# new for 0.1! - RClass - user function
 #############################################################################
 # Usage: (trans. semigp. and trans.) or H-class.
 
@@ -150,7 +151,7 @@ function(arg)
   return fail;
 end);
 
-# new for 4.0! - RClassNC - user function
+# new for 0.1! - RClassNC - user function
 #############################################################################
 # Usage: trans. semigp. and trans.
 
