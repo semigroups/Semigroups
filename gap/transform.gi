@@ -101,7 +101,7 @@ function(f)
     #ker:=KernelOfTransformation(f);
     #f![4]:=MappingPermListList([1..Length(ker)], List(ker, x-> f![1][x[1]]));
     ker:=CanonicalTransSameKernel(f); img:=f![1]; n:=Length(img);
-    p:=EmptyPlist(n); set:=Set(img);
+    p:=EmptyPlist(n); 
     for i in [1..n] do 
       p[ker[i]]:=img[i];
     od;

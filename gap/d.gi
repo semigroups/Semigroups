@@ -704,7 +704,7 @@ function(arg)
           orbitgraph := true,
           onlygrades:=function(x, y)
            return x[1]=j and (y=fail or HTValue(y, x[2])=fail); end,
-          onlygrades:=kernels, 
+          onlygradesdata:=kernels, 
           storenumbers:=true,
           log:=true));
 
