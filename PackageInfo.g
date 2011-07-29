@@ -58,8 +58,8 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.5",
-  NeededOtherPackages := [["orb", "3.6"]],
+  GAP := ">=4.4.12",
+  NeededOtherPackages := [["orb", "3.7"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.1"]], 
   ExternalConditions := []),
   AvailabilityTest := ReturnTrue,
