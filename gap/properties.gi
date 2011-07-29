@@ -25,7 +25,7 @@
 # IsFullSubsemigroup (of an inverse semigroup), IsFactorizableInverseMonoid,
 # IsFInverseSemigroup, 
 
-# new for 4.0! - GroupOfUnits - "for a tranformation semigroup"
+# new for 0.1! - GroupOfUnits - "for a tranformation semigroup"
 ###########################################################################
 
 InstallMethod(GroupOfUnits, "for a tranformation semigroup", 
@@ -47,7 +47,7 @@ function(s)
   return g;
 end);
 
-# mod for 4.0! - IsBand - "for a transformation semigroup"
+# mod for 0.1! - IsBand - "for a transformation semigroup"
 ###########################################################################
 #JDM must find some reasonable examples to test this on!
 
@@ -55,9 +55,7 @@ InstallMethod(IsBand, "for a transformation semigroup",
 [IsTransformationSemigroup], s-> IsCompletelyRegularSemigroup(s) and 
  IsGreensHTrivial(s));
 
-#JDMJDM
-
-# new for 4.0! - IsBlockGroup - "for a transformation semigroup"
+# new for 0.1! - IsBlockGroup - "for a transformation semigroup"
 #############################################################################
 # JDM check we didn't have a better version of this previously!
 
@@ -81,21 +79,23 @@ function(s)
     # we only need to find 2 transversals to return false.
       return false;
     fi;
-    f:=AsSet(DClassRepFromData(s, d)![1]);
-    o:=KernelOrbitFromData(s, d);
-    scc:=KernelOrbitSCCFromData(s, d[2]);
-    reg:=false;
-    for i in scc do 
-      if IsInjectiveTransOnList(o[i], f) then 
-        if reg then 
-          return false;
-        fi;
-        reg:=true;
-      fi;
-    od;
   od;
-
   return true;
+#    f:=AsSet(DClassRepFromData(s, d)![1]);
+#    o:=KernelOrbitFromData(s, d);
+#    scc:=KernelOrbitSCCFromData(s, d[2]);
+#    reg:=false;
+#    for i in scc do 
+#      if IsInjectiveTransOnList(o[i], f) then 
+#        if reg then 
+#          return false;
+#        fi;
+#        reg:=true;
+#      fi;
+#    od;
+#  od;
+
+#  return true;
 end);
 
 ###########################################################################
@@ -195,7 +195,7 @@ function(s)
 end);
 
 #############################################################################
-#JDM new for 4.0!
+#JDM new for 0.1!
 
 InstallMethod(IsGreensLTrivial, "for a transformation semigroup",
 [IsTransformationSemigroup],
@@ -223,7 +223,7 @@ InstallOtherMethod(IsGreensLTrivial, "for a D-class of a trans. semigp",
   d-> NrGreensLClasses(d)=Size(d));
 
 #############################################################################
-#JDM new for 4.0!
+#JDM new for 0.1!
 
 InstallMethod(IsGreensRTrivial, "for a transformation semigroup",
 [IsTransformationSemigroup],
@@ -257,7 +257,7 @@ function(s)
   return true;
 end);
 
-# new for 4.0! IsGreensRTrivial -  "for D-class of a trans. semigp."
+# new for 0.1! IsGreensRTrivial -  "for D-class of a trans. semigp."
 #############################################################################
 
 InstallOtherMethod(IsGreensRTrivial, "for D-class of a trans. semigp.",
@@ -361,7 +361,7 @@ function(s)
 end);
 
 #############################################################################
-#JDM new for 4.0!
+#JDM new for 0.1!
 
 InstallMethod(IsIrredundantGeneratingSet, "for transformations coll.",
 [IsTransformationCollection],
@@ -370,7 +370,7 @@ function(gens)
 end);
 
 #############################################################################
-#JDM new for 4.0!
+#JDM new for 0.1!
 
 InstallOtherMethod(IsIrredundantGeneratingSet, 
 "for a transformation semigroup and collection of transformations",
@@ -470,7 +470,7 @@ end);
 #return true;
 #fi; 
 
-# new method for 4.0! 
+# new method for 0.1! 
 ###########################################################################
 # JDM check efficiency!
 
