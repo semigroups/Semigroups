@@ -23,10 +23,12 @@
 # IsRectangularGroup, IsBandOfGroups, IsFreeBand, IsFreeSemilattice,
 # IsFreeNormalBand, IsBrandtSemigroup, IsFundamentalInverseSemigp, 
 # IsFullSubsemigroup (of an inverse semigroup), IsFactorizableInverseMonoid,
-# IsFInverseSemigroup, 
+# IsFInverseSemigroup, IsSemigroupWithCentralIdempotents 
 
 # new for 0.1! - GroupOfUnits - "for a tranformation semigroup"
 ###########################################################################
+# Notes: returns a permutation group isomorphic to the group of units of the
+# input semigroup. 
 
 InstallMethod(GroupOfUnits, "for a tranformation semigroup", 
 [IsTransformationSemigroup], 
@@ -98,6 +100,7 @@ function(s)
   return true;
 end);
 
+# new for 0.1! - IsCliffordSemigroup - "for a transformation semigroup"
 ###########################################################################
 
 InstallMethod(IsCliffordSemigroup, "for a transformation semigroup", 
@@ -136,6 +139,7 @@ function(s)
   return true;
 end);
 
+# new for 0.1! - IsCommutativeSemigroup - "for a transformation semigroup"
 ###########################################################################
 
 InstallMethod(IsCommutativeSemigroup, "for a transformation semigroup",
@@ -157,9 +161,8 @@ function(s)
   return true;
 end);
 
+# new for 0.1! - IsCompletelyRegularSemigroup - "for a trans. semigp."
 ###########################################################################
-#JDM redo the following!
-# use Orb and looking for here!
 
 InstallMethod(IsCompletelyRegularSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup],
@@ -185,8 +188,9 @@ function(s)
   return true;
 end);
 
+# new for 0.1! - IsCompletelySimpleSemigroup - "for a trans. semigroup"
 ###########################################################################
-# this test required to avoid conflict with Smallsemi
+# Notes: this test required to avoid conflict with Smallsemi.
 
 InstallMethod( IsCompletelySimpleSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup],
@@ -194,19 +198,20 @@ function(s)
   return IsSimpleSemigroup(s) and IsFinite(s);
 end);
 
+#JDM here!! 29/07/11
+
+# new for 0.1! - IsGreensLTrivial - "for a transformation semigroup"
 #############################################################################
-#JDM new for 0.1!
 
 InstallMethod(IsGreensLTrivial, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(s)
   local iter, d;
 
-  iter:=IteratorOfGreensDClasses(s); #JDM would be quicker to have 
-  #IteratorOfGreensDClassesData(s)
-
+  iter:=IteratorOfDClassRepsData(s); 
+  
   #JDM here it would be useful to pass OrbitsOfKernels(s)!.orbits to 
-  # LClassSchutzGpFromData...
+  # KernelOrbitSchutzGpFromData...
 
   for d in iter do 
     if not (Size(KernelOrbitSchutzGpFromData(s, d!.data[2]))=1 and 
@@ -217,6 +222,9 @@ function(s)
 
   return true;
 end);
+
+# new for 0.1! - IsGreensLTrivial - "for a D-class of a trans. semigp"
+#############################################################################
 
 InstallOtherMethod(IsGreensLTrivial, "for a D-class of a trans. semigp", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 

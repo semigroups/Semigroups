@@ -7,14 +7,10 @@
 ##
 #############################################################################
 ##
-## $Id$
-##
 
 #ReadTest( Filename( DirectoriesPackageLibrary( "citrus", "tst" ), "properties.tst" ) );
-# 800ms to run! 1.4s in 4.5 :(
 
-
-gap> START_TEST("properties.tst 4.0");
+gap> START_TEST("properties.tst 0.1");
 gap> LoadPackage("citrus");;
 gap> g1:=Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] );;
 gap> g2:=Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] );;
@@ -166,6 +162,8 @@ gap> g5:=Transformation([1..21]);;
 gap> c3:=Semigroup(g1,g2,g3,g4,g5);;
 gap> IsCliffordSemigroup(c3);
 true
+gap> IsCommutativeSemigroup(c3);
+true;
 gap> Size(c3);
 5
 gap> ForAll(GreensDClasses(c3), x-> Length(GreensHClasses(x))=1 and 
@@ -361,4 +359,4 @@ gap> gens:=[ Transformation( [ 4, 6, 5, 2, 1, 3 ] ),
 gap> s:=Semigroup(gens);;
 gap> IsBlockGroup(s);
 false
-gap> STOP_TEST( "properties.tst 4.0", 10000);
+gap> STOP_TEST( "properties.tst 0.1", 10000);
