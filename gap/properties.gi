@@ -198,8 +198,6 @@ function(s)
   return IsSimpleSemigroup(s) and IsFinite(s);
 end);
 
-#JDM here!! 29/07/11
-
 # new for 0.1! - IsGreensLTrivial - "for a transformation semigroup"
 #############################################################################
 
@@ -230,8 +228,8 @@ InstallOtherMethod(IsGreensLTrivial, "for a D-class of a trans. semigp",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
   d-> NrGreensLClasses(d)=Size(d));
 
+# new for 0.1! - IsGreensRTrivial - "for a transformation semigroup"
 #############################################################################
-#JDM new for 0.1!
 
 InstallMethod(IsGreensRTrivial, "for a transformation semigroup",
 [IsTransformationSemigroup],
@@ -265,7 +263,7 @@ function(s)
   return true;
 end);
 
-# new for 0.1! IsGreensRTrivial -  "for D-class of a trans. semigp."
+# new for 0.1! - IsGreensRTrivial -  "for D-class of a trans. semigp."
 #############################################################################
 
 InstallOtherMethod(IsGreensRTrivial, "for D-class of a trans. semigp.",
@@ -275,8 +273,7 @@ function(d)
   return NrGreensRClasses(d)=Size(d);
 end);
 
-#JDM here?
-
+# new for 0.1! - IsGreensHTrivial - "for a transformation semigroup"
 ###########################################################################
 
 InstallOtherMethod(IsGreensHTrivial, "for a transformation semigroup", 
@@ -284,17 +281,18 @@ InstallOtherMethod(IsGreensHTrivial, "for a transformation semigroup",
 function(s)
   local iter, g;
 
-  iter:=IteratorOfGreensDClasses(s);
-  #JDM again it would be good to do this for iter of data rather than
-  # D-classes
+  iter:=IteratorOfDClassRepsData(s);
+  
   repeat 
-    g:=SchutzenbergerGroup(NextIterator(iter));
+    g:=DClassSchutzGpFromData(s, NextIterator(iter)[2]);
     if Size(g)>1 then 
       return false;
     fi;
   until IsDoneIterator(iter);
   return true;
 end);
+
+###########################################################################
 
 InstallOtherMethod(IsGreensHTrivial, "for a D-class of a trans. semigp", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 

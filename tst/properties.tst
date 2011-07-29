@@ -395,4 +395,81 @@ gap> d;
 {Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] )}
 gap> IsGreensLTrivial(d);
 true
+gap> IsGreensRTrivial(d);
+true
+gap> Size(d);
+1
+gap> IsGreensRTrivial(d);   
+true
+gap> repeat d:=NextIterator(iter); until IsDoneIterator(iter) or not                     
+> IsGreensLTrivial(d) and IsGreensRTrivial(d);
+gap> d;
+{Transformation( [ 3, 7, 8, 8, 3, 4, 1, 3 ] )}
+gap> IsGreensLTrivial(d);
+false
+gap> IsGreensRTrivial(d);
+true
+gap> NrGreensLClasses(d);
+1
+gap> NrGreensRClasses(d);
+4560
+gap> IsGreensRTrivial(s);
+false
+gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
+>   Transformation( [ 4, 2, 1, 5, 5 ] ),
+>   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
+gap> s:=Semigroup(gens);
+<semigroup with 3 generators>
+gap> IsGreensRTrivial(s);
+false
+gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
+> Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
+gap> s:=Monoid(gens);;
+gap> IsGreensRTrivial(s);
+false
+gap> IsGreensHTrivial(s);
+false
+gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
+>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
+>   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
+>   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsAperiodicSemigroup(s);
+false
+gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
+>   Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ),
+>   Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ),
+>   Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] ) ];;
+gap> s:=Monoid(gens);;
+gap> IsCombinatorialSemigroup(s);
+false
+gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
+>   Transformation( [ 4, 2, 1, 5, 5 ] ),
+>   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsAperiodicSemigroup(s);
+false
+gap> gens:=[Transformation( [ 13, 10, 9, 5, 1, 5, 13, 13, 8, 2, 7, 2, 6 ] ),
+> Transformation( [ 6, 11, 12, 10, 4, 10, 13, 5, 8, 5, 11, 6, 9 ] )];;
+gap> s:=Semigroup(gens);;
+gap> IsAperiodicSemigroup(s);
+false
+gap> gens:=[Transformation( [ 12, 10, 8, 5, 1, 5, 12, 12, 8, 2, 6, 2 ] ),
+> Transformation( [ 5, 6, 10, 11, 10, 4, 10, 12, 5, 7, 4, 10 ] ),
+> Transformation( [ 6, 8, 12, 5, 4, 8, 10, 7, 4, 1, 10, 11 ] )];;
+gap> s:=Monoid(gens);;
+gap> IsAperiodicSemigroup(s);
+false
+gap> gens:=[Transformation([2,3,4,5,1,8,7,6,2,7]),
+> Transformation([5,4,1,2,3,7,6,5,4,1]),
+> Transformation([2,1,4,3,2,1,4,4,3,3])];;
+gap> s:=Monoid(gens);;
+gap> IsAperiodicSemigroup(s);
+false
+gap> gens:=[Transformation([1,2,1,3,3]), Transformation([2,2,3,5,5])];;
+gap> s:=Monoid(gens);
+<monoid with 2 generators>
+gap> 
+gap> IsAperiodicSemigroup(s);
+true
 gap> STOP_TEST( "properties.tst 0.1", 10000);
