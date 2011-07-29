@@ -163,7 +163,7 @@ gap> c3:=Semigroup(g1,g2,g3,g4,g5);;
 gap> IsCliffordSemigroup(c3);
 true
 gap> IsCommutativeSemigroup(c3);
-true;
+true
 gap> Size(c3);
 5
 gap> ForAll(GreensDClasses(c3), x-> Length(GreensHClasses(x))=1 and 
@@ -372,7 +372,6 @@ gap> IsGreensLTrivial(s);
 false
 gap> gens:=[Transformation([1,2,1,3,3]), Transformation([2,2,3,5,5])];;
 gap> s:=Monoid(gens);;
-<monoid with 2 generators>
 gap> IsGreensLTrivial(s);
 true
 gap> f:=Transformation( [ 2, 2, 1, 1, 1 ] );;
@@ -392,7 +391,7 @@ gap> iter:=IteratorOfGreensDClasses(s);
 <iterator of D-classes>
 gap> repeat d:=NextIterator(iter); until IsDoneIterator(iter) or IsGreensLTrivial(d);
 gap> d;
-{Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] )}
+{Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] )}
 gap> IsGreensLTrivial(d);
 true
 gap> IsGreensRTrivial(d);
@@ -467,9 +466,7 @@ gap> s:=Monoid(gens);;
 gap> IsAperiodicSemigroup(s);
 false
 gap> gens:=[Transformation([1,2,1,3,3]), Transformation([2,2,3,5,5])];;
-gap> s:=Monoid(gens);
-<monoid with 2 generators>
-gap> 
+gap> s:=Monoid(gens);;
 gap> IsAperiodicSemigroup(s);
 true
 gap> STOP_TEST( "properties.tst 0.1", 10000);
