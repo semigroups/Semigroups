@@ -214,8 +214,8 @@ function(s)
   # KernelOrbitSchutzGpFromData...
 
   for d in iter do 
-    if not (Size(KernelOrbitSchutzGpFromData(s, d!.data[2]))=1 and 
-     Length(KernelOrbitSCCFromData(s, d!.data[2]))=1) then
+    if not (Size(KernelOrbitSchutzGpFromData(s, d[2]))=1 and 
+     Length(KernelOrbitSCCFromData(s, d[2]))=1) then
       return false;
     fi;
   od;
