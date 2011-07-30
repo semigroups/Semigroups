@@ -592,4 +592,22 @@ gap> MultiplicativeZero(i);
 fail
 gap> One(i);
 fail
+gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 2, 4, 1, 2 ] ),
+>   Transformation( [ 3, 1, 1, 3 ] ), Transformation( [ 3, 3, 4, 1 ] ) ];;
+gap> s:=Monoid(gens);;
+gap> s:=Semigroup(GeneratorsOfSemigroup(s));;
+gap> IsMonoidAsSemigroup(s);
+true
+gap> IsomorphismTransformationMonoid(s);
+MappingByFunction( <semigroup with 5 generators>, <monoid with 
+4 generators>, function( x ) ... end )
+gap> i:=MinimalIdeal(s);;
+gap> Size(i);
+4
+gap> IsLeftZeroSemigroup(i);
+false
+gap> IsRightZeroSemigroup(i);
+true
+gap> IsSynchronizingSemigroup(i);
+true
 gap> STOP_TEST( "properties.tst 0.1", 10000);

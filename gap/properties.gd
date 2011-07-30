@@ -33,6 +33,8 @@ DeclareProperty("IsLeftZeroSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsMonoidAsSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsMinimalIdeal", IsSemigroupIdeal and 
  IsTransformationSemigroup);
+DeclareOperation("IsomorphismTransformationMonoid",
+ [IsTransformationSemigroup]);
 DeclareProperty("IsOrthodoxSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsRectangularBand", IsTransformationSemigroup);
 DeclareProperty("IsRightZeroSemigroup", IsTransformationSemigroup);

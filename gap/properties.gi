@@ -428,19 +428,40 @@ end);
 
 #IIIMMM
 
+# new for 0.1! - IsMonoidAsSemigroup - "for a transformation semigroup"
 #############################################################################
 
 InstallOtherMethod(IsMonoidAsSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup], x-> not MultiplicativeNeutralElement(x)=fail);
 
 #############################################################################
-#JDM
 
-#InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
-#[IsTransformationSemigroup and IsMonoidAsSemigroup],
-#function(s)
-#Error("not yet implemented");
-#end);
+InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(s)
+
+  if not IsMonoidAsSemigroup(s) then 
+    Error( "Usage: trans. semigroup satisfying IsMonoidAsSemigroup" );
+  fi;
+
+  return MappingByFunction(s, Monoid(Difference(Generators(s),
+  [TransformationNC([1..DegreeOfTransformationSemigroup(s)])])), 
+  x-> x);
+end);
+
+#############################################################################
+
+InstallOtherMethod(IsomorphismPermGroup, "for a transformation semigroup", 
+[IsTransformationSemigroup],
+function(s)
+
+  if not IsGroupAsSemigroup(s)  then
+    Error( "Usage: trans. semigroup satisfying IsGroupAsSemigroup" );
+  fi;
+
+  return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
+   AsPermutation);
+end);
 
 #IIIOOO
 
@@ -469,21 +490,6 @@ function(s)
   return true;
 end);
 
-#IIIPPP
-
-#############################################################################
-
-InstallOtherMethod(IsomorphismPermGroup, "for a transformation semigroup", 
-[IsTransformationSemigroup],
-function(s)
-
-  if not IsGroupAsSemigroup(s)  then
-    Error( "Usage: trans. semigroup satisfying IsGroupAsSemigroup" );
-  fi;
-
-  return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
-   AsPermutation);
-end);
 
 #IIIRRR
 
