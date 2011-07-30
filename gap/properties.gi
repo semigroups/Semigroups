@@ -497,7 +497,7 @@ end);
 
 
 #IIIRRR
-#JDMJDM
+
 # new for 0.1! - IsRectangularBand - "for a transformation semigroup"
 ###########################################################################
 
@@ -515,9 +515,8 @@ function(s)
   return IsGreensHTrivial(s);
 end);
 
-# new method for 0.1! 
+# new for 0.1! - IsRegularSemigroup - "for a transformation semigroup"
 ###########################################################################
-# JDM check efficiency!
 
 InstallOtherMethod(IsRegularSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup],
