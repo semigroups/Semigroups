@@ -623,4 +623,57 @@ gap> t:=Range(IsomorphismTransformationMonoid(t));;
 gap> IsomorphismPermGroup(t);
 MappingByFunction( <monoid with 3 generators>, <permutation group with 
 3 generators>, <Operation "AsPermutation"> )
+gap> gens:=[Transformation([4,4,4,1,1,6,7,8,9,10,11,1]),
+> Transformation([6,6,6,7,7,1,4,8,9,10,11,7]),
+> Transformation([8,8,8,9,9,10,11,1,4,6,7,9]),
+> Transformation([2,2,2,4,4,6,7,8,9,10,11,4]),
+> Transformation([1,1,1,5,5,6,7,8,9,10,11,5]),
+> Transformation([1,1,4,4,4,6,7,8,9,10,11,1]),
+> Transformation([1,1,7,4,4,6,7,8,9,10,11,6])];;
+gap> s:=Semigroup(gens);;
+gap> IsOrthodoxSemigroup(s);
+true
+gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
+>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
+>   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
+>   Transformation( [ 4, 3, 4, 5, 6, 4, 1, 2 ] ),
+>   Transformation( [ 5, 4, 8, 8, 5, 6, 1, 5 ] ),
+>   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
+>   Transformation( [ 7, 1, 2, 2, 2, 7, 4, 5 ] ),
+>   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsOrthodoxSemigroup(s);
+false
+gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
+>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
+>   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
+>   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsOrthodoxSemigroup(s);
+false
+gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
+>   Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ),
+>   Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ),
+>   Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] ) ];;
+gap> s:=Monoid(gens);;
+gap> IsOrthodoxSemigroup(s);
+false
+gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
+>   Transformation( [ 4, 2, 1, 5, 5 ] ),
+>   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsOrthodoxSemigroup(s);
+false
+gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
+>  Transformation( [ 1, 4, 1, 2 ] ),
+>  Transformation( [ 3, 4, 2, 2 ] ),
+>  Transformation( [ 4, 1, 2, 1 ] ) ];;
+gap> s:=Monoid(gens);;
+gap> IsOrthodoxSemigroup(s);
+false
+gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
+> Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
+gap> s:=Monoid(gens);;
+gap> IsOrthodoxSemigroup(s);
+true
 gap> STOP_TEST( "properties.tst 0.1", 10000);
