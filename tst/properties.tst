@@ -676,4 +676,44 @@ gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
 gap> s:=Monoid(gens);;
 gap> IsOrthodoxSemigroup(s);
 true
+gap> gens:=[Transformation([2,3,4,5,1,8,7,6,2,7]),
+> Transformation( [ 3, 8, 7, 4, 1, 4, 3, 3, 7, 2 ] )];;
+gap> s:=Monoid(gens);;
+gap> i:=MinimalIdeal(s);;
+gap> IsRectangularBand(i);
+true
+gap> gens:=[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8 ] ),
+>   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8 ] ) ];
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8 ] ), 
+  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8 ] ) ]
+gap> s:=Semigroup(gens);;
+gap> i:=MinimalIdeal(s);;
+gap> IsRectangularBand(i);
+true
+gap> MultiplicativeZero(i);
+Transformation( [ 8, 8, 8, 8, 5, 8, 8, 8 ] )
+gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
+>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
+>   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
+>   Transformation( [ 4, 3, 4, 5, 6, 4, 1, 2 ] ),
+>   Transformation( [ 5, 4, 8, 8, 5, 6, 1, 5 ] ),
+>   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
+>   Transformation( [ 7, 1, 2, 2, 2, 7, 4, 5 ] ),
+>   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> i:=MinimalIdeal(s);;
+gap> IsRectangularBand(s);
+false
+gap> IsSimpleSemigroup(s);
+false
+gap> IsRectangularBand(i);
+true
+gap> IsRightZeroSemigroup(i);
+true
+gap> rms:=ReesMatrixSemigroup(Group(()), List([1..4], x-> List([1..3], y->
+> ())));;
+gap> s:=IsomorphismTransformationSemigroup(rms);;
+gap> s:=Range(s);;
+gap> IsRectangularBand(s);
+true
 gap> STOP_TEST( "properties.tst 0.1", 10000);
