@@ -407,10 +407,9 @@ function(s)
   return true;
 end);
 
-#JDMJDM
-
 #IIILLL
 
+# new for 0.1! - IsLeftZeroSemigroup - "for a transformation semigroup"
 ###########################################################################
 
 InstallMethod(IsLeftZeroSemigroup, "for a transformation semigroup", 
@@ -702,6 +701,7 @@ end);
 
 #MMM
 
+# new for 0.1! - MinimalIdeal - "for a transformation semigroup"
 ###########################################################################
 
 InstallMethod(MinimalIdeal, "for a transformation semigroup", 
@@ -720,9 +720,10 @@ function(s)
   fi;
 
   o:=Orb(gens, [1..n], OnSets, rec( schreier:=true,
-  gradingfunc:=function(o, x) return Length(x); end,
-  onlygrades:=[1..max],
-  lookingfor:=function(o, x) return Length(x)=1; end));
+   gradingfunc:=function(o, x) return Length(x); end,
+    onlygrades:=[1..max],
+     lookingfor:=function(o, x) return Length(x)=1; end));
+   
   Enumerate(o, bound);
 
   if IsPosInt(PositionOfFound(o)) then 
@@ -732,12 +733,12 @@ function(s)
   fi;
 
   f:=EvaluateWord(gens, TraceSchreierTreeForward(o, i));
-  i:=SemigroupIdealByGenerators(s, [f]);
-  SetIsSimpleSemigroup(i, true);
-  SetIsMinimalIdeal(i, true);
-  SetUnderlyingDClassOfMinIdeal(i, GreensDClassOfElement(s, f));
-
-  return i;
+  #i:=SemigroupIdealByGenerators(s, [f]);
+  #SetIsSimpleSemigroup(i, true);
+  #SetIsMinimalIdeal(i, true);
+  #SetUnderlyingDClassOfMinIdeal(i, GreensDClassOfElement(s, f));
+  #return i;
+  return Semigroup(Elements(GreensDClassOfElementNC(s, f)));#JDM temp. 
 end);
 
 ###########################################################################

@@ -563,4 +563,33 @@ fail
 gap> Size(Semigroup(gens)); 3^3-6;
 21
 21
+gap> gens:=[Transformation( [ 2, 6, 1, 8, 5, 3, 8, 8 ] ),
+> Transformation( [ 3, 7, 6, 4, 5, 2, 1, 8 ] )];;
+gap> s:=Semigroup(gens);;
+gap> i:=MinimalIdeal(s);;
+gap> MultiplicativeZero(s);
+Transformation( [ 8, 8, 8, 8, 5, 8, 8, 8 ] )
+gap> IsLeftZeroSemigroup(i);
+true
+gap> gens:=[Transformation([2,3,4,5,6,7,8,9,1]),
+> Transformation([4,2,3,4,5,6,7,8,9])];;
+gap> s:=Semigroup(gens);;
+gap> i:=MinimalIdeal(s);;
+gap> gens:=Generators(i);;
+gap> repeat
+> f:=RedundantGenerator(gens); if not f=fail then 
+> gens:=Difference(gens, [f]);
+> fi;
+> until f=fail;
+gap> i:=Semigroup(gens);;
+gap> IsLeftZeroSemigroup(i);
+false
+gap> IsSimpleSemigroup(i);
+true
+gap> IsRightZeroSemigroup(i);
+false
+gap> MultiplicativeZero(i);
+fail
+gap> One(i);
+fail
 gap> STOP_TEST( "properties.tst 0.1", 10000);
