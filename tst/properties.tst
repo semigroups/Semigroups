@@ -501,4 +501,22 @@ gap> gens:=[ Transformation( [ 1, 2, 10, 4, 5, 13, 7, 8, 15, 3, 11, 16,
 gap> s:=Semigroup(gens);;
 gap> IsInverseSemigroup(s);
 true
+gap> gens:=[ Transformation( [ 1, 2, 4, 3, 6, 5 ] ), 
+> Transformation( [ 1, 2, 3, 4, 5, 6 ] ), Transformation( [ 6, 4, 3, 2, 5, 3 ] ), 
+> Transformation( [ 5, 3, 4, 2, 2, 1 ] ),
+>   Transformation( [ 2, 4, 6, 4, 5, 3 ] ), Transformation( [ 4, 2, 4, 3, 6, 5 ] ),
+>   Transformation( [ 2, 4, 4, 3, 6, 5 ] ), Transformation( [ 5, 6, 4, 4, 3, 2 ] ),
+>   Transformation( [ 2, 2, 3, 4, 5, 6 ] ), Transformation( [ 3, 4, 2, 2, 2, 1 ] ),
+>   Transformation( [ 1, 2, 4, 2, 3, 3 ] ), Transformation( [ 1, 2, 3, 4, 3, 2 ] ),
+>   Transformation( [ 6, 4, 2, 3, 2, 3 ] ), Transformation( [ 6, 4, 2, 2, 1, 1 ] ),
+>   Transformation( [ 6, 4, 2, 3, 4, 4 ] ), Transformation( [ 5, 3, 3, 2, 4, 2 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> RedundantGenerator(s, gens);
+Transformation( [ 1, 2, 3, 4, 5, 6 ] )
+gap> gens:=Difference(gens, [last]);;
+gap> RedundantGenerator(s, gens);
+Transformation( [ 3, 4, 2, 2, 2, 1 ] )
+gap> gens:=Difference(gens, [last]);;
+gap> RedundantGenerator(s, gens);
+fail
 gap> STOP_TEST( "properties.tst 0.1", 10000);

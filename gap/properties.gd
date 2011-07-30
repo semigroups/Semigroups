@@ -1,13 +1,11 @@
 #############################################################################
 ##
 #W  properties.gd
-#Y  Copyright (C) 2006-2011                              James D. Mitchell
+#Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
-##
-## $Id: properties.gd 156 2011-04-03 13:02:19Z jamesm $
 ##
 
 DeclareAttribute("GroupOfUnits", IsSemigroup);
@@ -31,7 +29,6 @@ DeclareSynonymAttr("IsAperiodicSemigroup", IsGreensHTrivial);
 DeclareSynonymAttr("IsCombinatorialSemigroup", IsGreensHTrivial);
 DeclareProperty("IsGroupAsSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsIdempotentGenerated", IsTransformationSemigroup);
-DeclareOperation("IsIrredundantGeneratingSet", [IsTransformationCollection]);
 DeclareProperty("IsLeftZeroSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsMonoidAsSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsMinimalIdeal", IsSemigroupIdeal and 
@@ -50,6 +47,7 @@ fi;
 DeclareProperty("IsSynchronizingSemigroup", IsTransformationCollection);
 DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
 DeclareAttribute("MinimalIdeal", IsTransformationSemigroup);
+DeclareOperation("RedundantGenerator", [IsTransformationCollection]);
 DeclareAttribute("UnderlyingDClassOfMinIdeal", IsSemigroupIdeal and 
  IsTransformationSemigroup);
 
@@ -58,6 +56,3 @@ DeclareAttribute("UnderlyingDClassOfMinIdeal", IsSemigroupIdeal and
 
 #DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
 #SmallGeneratingSet
-
-
-

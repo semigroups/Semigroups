@@ -23,7 +23,8 @@
 # IsRectangularGroup, IsBandOfGroups, IsFreeBand, IsFreeSemilattice,
 # IsFreeNormalBand, IsBrandtSemigroup, IsFundamentalInverseSemigp, 
 # IsFullSubsemigroup (of an inverse semigroup), IsFactorizableInverseMonoid,
-# IsFInverseSemigroup, IsSemigroupWithCentralIdempotents 
+# IsFInverseSemigroup, IsSemigroupWithCentralIdempotents, IsLeftUnipotent,
+# IsRightUnipotent,
 
 # new for 0.1! - GroupOfUnits - "for a tranformation semigroup"
 ###########################################################################
@@ -328,9 +329,8 @@ function(s)
   return true;
 end);
 
-
+# new for 0.1! - IsInverseSemigroup - "for a transformation semigroup"
 ###########################################################################
-# JDM the following should be tested! 
 
 InstallOtherMethod(IsInverseSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup],
@@ -368,27 +368,6 @@ function(s)
   return true;
 end);
 
-#############################################################################
-#JDM new for 0.1!
-
-InstallMethod(IsIrredundantGeneratingSet, "for transformations coll.",
-[IsTransformationCollection],
-function(gens)
-  return not ForAny(gens, x-> x in Semigroup(Difference(gens, [x])));
-end);
-
-#############################################################################
-#JDM new for 0.1!
-
-InstallOtherMethod(IsIrredundantGeneratingSet, 
-"for a transformation semigroup and collection of transformations",
-[IsTransformationSemigroup, IsTransformationCollection],
-  function(S, gens)
-
-  if S=Semigroup(gens) then 
-    return IsIrredundantGeneratingSet(gens);
-  fi;
-end);
 
 ###########################################################################
 
@@ -531,10 +510,10 @@ InstallMethod(IsSynchronizingSemigroup, "for a trans. semi. or coll.",
 function(s)
   local n, o;
 
-  if IsTransformationCollection(s) then 
-    n:=DegreeOfTransformation(s[1]);
+  if IsTransformationSemigroup(s) then 
+    n:=DegreeOfTransformationSemigroup(s);
   else
-    n:=DegreeOfTransformationSemigroup(s[1]);
+    n:=DegreeOfTransformation(s[1]);
   fi;
 
   o:=Orb(s, [1..n], OnSets, 
@@ -795,6 +774,32 @@ function(s)
    AsPermutation);
 end);
 
+#RRR
+
+# new for 0.1! - RedundantGenerator - "for transformations coll."
+#############################################################################
+# Notes: returns a redundant generator if one is found and otherwise returns
+# fail..
+
+InstallMethod(RedundantGenerator, "for transformations coll.",
+[IsTransformationCollection],
+gens-> First(gens, x-> x in Semigroup(Difference(gens, [x]))));
+
+# new for 0.1! - RedundantGenerator - "for trans semi and trans coll"
+#############################################################################
+# Notes: returns a redundant generator if one is found and otherwise returns
+# fail.
+
+InstallOtherMethod(RedundantGenerator, "for trans semi and trans coll", 
+[IsTransformationSemigroup, IsTransformationCollection],
+  function(s, gens)
+
+  if s=Semigroup(gens) then 
+    return RedundantGenerator(gens);
+  fi;
+  Info(InfoWarning, 1, "Usage: trans. semi. and generating set.");
+  return fail;
+end);
 
 #############################################################################
 #
