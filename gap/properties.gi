@@ -52,7 +52,7 @@ function(s)
   return g;
 end);
 
-#IBB
+#IIIBBB
 
 # mod for 0.1! - IsBand - "for a transformation semigroup"
 ###########################################################################
@@ -105,7 +105,7 @@ function(s)
   return true;
 end);
 
-#ICC
+#IIICCC
 
 # new for 0.1! - IsCliffordSemigroup - "for a transformation semigroup"
 ###########################################################################
@@ -205,7 +205,7 @@ function(s)
   return IsSimpleSemigroup(s) and IsFinite(s);
 end);
 
-#IGG
+#IIIGGG
 
 # new for 0.1! - IsGreensHTrivial - "for a transformation semigroup"
 ###########################################################################
@@ -232,7 +232,6 @@ end);
 InstallOtherMethod(IsGreensHTrivial, "for a D-class of a trans. semigp", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
   d-> NrGreensHClasses(d)=Size(d));
-
 
 # new for 0.1! - IsGreensLTrivial - "for a transformation semigroup"
 #############################################################################
@@ -338,7 +337,7 @@ function(s)
   return true;
 end);
 
-#III
+#IIIIII
 
 # new for 0.1! - IsIdempotentGenerated - "for a trans semi"
 ###########################################################################
@@ -349,13 +348,17 @@ InstallMethod(IsIdempotentGenerated, "for a transformation semigroup",
 [IsTransformationSemigroup], 
 function(s) 
 local gens, r, i, t;
- 
+
   gens:=Generators(s);
   
   if ForAll(gens, IsIdempotent) then 
     return true;
   fi;
-  
+
+  if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
+    return IsSemilatticeAsSemigroup(s);
+  fi;
+
   r:=List(gens, Rank); 
 
   i:=Concatenation(List([Maximum(r),Maximum(r)-1..Minimum(r)], i-> 
@@ -404,6 +407,9 @@ function(s)
   return true;
 end);
 
+#JDMJDM
+
+#IIILLL
 
 ###########################################################################
 
@@ -421,6 +427,8 @@ function(s)
   return false;
 end);
 
+#IIIMMM
+
 #############################################################################
 
 InstallOtherMethod(IsMonoidAsSemigroup, "for a transformation semigroup",
@@ -434,6 +442,8 @@ InstallOtherMethod(IsMonoidAsSemigroup, "for a transformation semigroup",
 #function(s)
 #Error("not yet implemented");
 #end);
+
+#IIIOOO
 
 ###########################################################################
 ##  JDM is there a better way? 
@@ -459,6 +469,24 @@ function(s)
 
   return true;
 end);
+
+#IIIPPP
+
+#############################################################################
+
+InstallOtherMethod(IsomorphismPermGroup, "for a transformation semigroup", 
+[IsTransformationSemigroup],
+function(s)
+
+  if not IsGroupAsSemigroup(s)  then
+    Error( "Usage: trans. semigroup satisfying IsGroupAsSemigroup" );
+  fi;
+
+  return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
+   AsPermutation);
+end);
+
+#IIIRRR
 
 ###########################################################################
 # check efficiency JDM
@@ -538,32 +566,7 @@ function(s)
   return false;
 end);
 
-# new for 0.1 - IsSynchronizingSemigroup - "for a trans. semi. or coll."
-###########################################################################
-
-InstallMethod(IsSynchronizingSemigroup, "for a trans. semi. or coll.", 
-[IsTransformationCollection],
-function(s)
-  local n, o;
-
-  if IsTransformationSemigroup(s) then 
-    n:=DegreeOfTransformationSemigroup(s);
-  else
-    n:=DegreeOfTransformation(s[1]);
-  fi;
-
-  o:=Orb(s, [1..n], OnSets, 
-        rec(lookingfor:=function(o, x) return Length(x)=1; end));
-
-  Enumerate(o);
-
-  if IsPosInt(PositionOfFound(o)) then
-    return true;
-  fi;
-
-  return false;
-end);
-
+#IIISSS
 
 ###############################################################################
 
@@ -622,6 +625,56 @@ SetNrGreensDClasses(s, 1);
 return true;
 end);
 
+# new for 0.1 - IsSynchronizingSemigroup - "for a trans. semi. or coll."
+###########################################################################
+
+InstallMethod(IsSynchronizingSemigroup, "for a trans. semi. or coll.", 
+[IsTransformationCollection],
+function(s)
+  local n, o;
+
+  if IsTransformationSemigroup(s) then 
+    n:=DegreeOfTransformationSemigroup(s);
+  else
+    n:=DegreeOfTransformation(s[1]);
+  fi;
+
+  o:=Orb(s, [1..n], OnSets, 
+        rec(lookingfor:=function(o, x) return Length(x)=1; end));
+
+  Enumerate(o);
+
+  if IsPosInt(PositionOfFound(o)) then
+    return true;
+  fi;
+
+  return false;
+end);
+
+#IIIZZZ
+
+###########################################################################
+#JDM new for 3.1.4! test efficiency
+#used to accept IsSemigroup as filter, changed for semex
+
+InstallOtherMethod(IsZeroGroup, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(s)
+  local zero;
+
+  zero:=MultiplicativeZero(s);
+
+  if zero=fail then 
+    return false;
+  fi;
+
+  if NrGreensHClasses(s)=2 then 
+    return ForAll(GreensHClasses(s), IsGroupHClass);
+  fi;
+
+  return false;
+end);
+
 ###########################################################################
 
 InstallOtherMethod(IsZeroSemigroup, "for a transformation semigroup", 
@@ -647,27 +700,7 @@ function(s)
   return true;
 end);
 
-###########################################################################
-#JDM new for 3.1.4! test efficiency
-#used to accept IsSemigroup as filter, changed for semex
-
-InstallOtherMethod(IsZeroGroup, "for a transformation semigroup",
-[IsTransformationSemigroup],
-function(s)
-  local zero;
-
-  zero:=MultiplicativeZero(s);
-
-  if zero=fail then 
-    return false;
-  fi;
-
-  if NrGreensHClasses(s)=2 then 
-    return ForAll(GreensHClasses(s), IsGroupHClass);
-  fi;
-
-  return false;
-end);
+#MMM
 
 ###########################################################################
 
@@ -777,20 +810,14 @@ function(s)
   return fail;
 end);
 
-
 #############################################################################
-#
 
-InstallOtherMethod(IsomorphismPermGroup, "for a transformation semigroup", 
-[IsTransformationSemigroup],
-function(s)
-
-  if not IsGroupAsSemigroup(s)  then
-    Error( "Usage: trans. semigroup satisfying IsGroupAsSemigroup" );
-  fi;
-
-  return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
-   AsPermutation);
+InstallMethod(PrintObj, "for an ideal of a trans. semigp.",
+[IsSemigroupIdeal and IsTransformationSemigroup], 
+function(i)
+  Print("<semigroup ideal with ", Length( GeneratorsOfMagmaIdeal( i ) ), 
+   " generators>");
+  return;
 end);
 
 #RRR
@@ -820,17 +847,7 @@ InstallOtherMethod(RedundantGenerator, "for trans semi and trans coll",
   return fail;
 end);
 
-#############################################################################
-#
-
-InstallMethod(PrintObj, "for an ideal of a trans. semigp.",
-[IsSemigroupIdeal and IsTransformationSemigroup], 
-function(i)
-  Print("<semigroup ideal with ", Length( GeneratorsOfMagmaIdeal( i ) ), 
-   " generators>");
-  return;
-end);
-
+# new for 0.1! - ViewObj - "for an ideal of a trans. semigp."
 #############################################################################
 
 InstallMethod(ViewObj, "for an ideal of a trans. semigp.",
