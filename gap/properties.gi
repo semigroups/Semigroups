@@ -434,6 +434,10 @@ end);
 InstallOtherMethod(IsMonoidAsSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup], x-> not MultiplicativeNeutralElement(x)=fail);
 
+#JDM should have methods for IsomorphismTransformationSemigroup/Monoid for 
+# perm. groups. 
+
+# new for 0.1! - IsomorphismTransformationMonoid - "for trans semi"
 #############################################################################
 
 InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
@@ -445,10 +449,10 @@ function(s)
   fi;
 
   return MappingByFunction(s, Monoid(Difference(Generators(s),
-  [TransformationNC([1..DegreeOfTransformationSemigroup(s)])])), 
-  x-> x);
+  [TransformationNC([1..DegreeOfTransformationSemigroup(s)])])), x-> x);
 end);
 
+# new for 0.1! - IsomorphismPermGroup - "for a transformation semigroup"
 #############################################################################
 
 InstallOtherMethod(IsomorphismPermGroup, "for a transformation semigroup", 

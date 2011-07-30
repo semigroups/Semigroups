@@ -610,4 +610,17 @@ gap> IsRightZeroSemigroup(i);
 true
 gap> IsSynchronizingSemigroup(i);
 true
+gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
+> Transformation([1,2,4,3,5,6,7,8,9,10]),
+> Transformation([1,2,3,4,5,6,10,9,8,7]),
+> Transformation([9,1,4,3,6,9,3,4,3,9])];;
+gap> s:=Monoid(gens);;
+gap> g:=GroupOfUnits(s);;
+gap> t:=Range(IsomorphismTransformationSemigroup(g));;
+gap> IsMonoidAsSemigroup(t);
+true
+gap> t:=Range(IsomorphismTransformationMonoid(t));;
+gap> IsomorphismPermGroup(t);
+MappingByFunction( <monoid with 3 generators>, <permutation group with 
+3 generators>, <Operation "AsPermutation"> )
 gap> STOP_TEST( "properties.tst 0.1", 10000);
