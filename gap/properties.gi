@@ -57,6 +57,7 @@ end);
 # mod for 0.1! - IsBand - "for a transformation semigroup"
 ###########################################################################
 #JDM must find some reasonable examples to test this on!
+# this could maybe be better!
 
 InstallMethod(IsBand, "for a transformation semigroup", 
 [IsTransformationSemigroup], s-> IsCompletelyRegularSemigroup(s) and 
@@ -542,6 +543,7 @@ function(s)
   return true;
 end);
 
+# new for 0.1! - IsRightZeroSemigroup - "for a transformation semigroup"
 ###########################################################################
 
 InstallMethod(IsRightZeroSemigroup, "for a transformation semigroup", 

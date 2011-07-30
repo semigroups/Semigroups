@@ -738,4 +738,35 @@ gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
 gap> s:=Monoid(gens);;
 gap> IsRegularSemigroup(s);
 false
+gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
+> Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
+gap> s:=Monoid(gens);;
+gap> IsInverseSemigroup(s);
+false
+gap> t:=Semigroup(Idempotents(s));;
+gap> IsSemilatticeAsSemigroup(t);
+false
+gap> IsBand(t);
+true
+gap> Size(t);
+10
+gap> IsOrthodoxSemigroup(t);
+true
+gap> gens:=[Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ),
+> Transformation([2,3,4,5,6,8,7,1,2,2])];;
+gap> s:=Monoid(gens);;
+gap> s:=Semigroup(Idempotents(Monoid(gens)));;
+gap> IsSemilatticeAsSemigroup(s);
+false
+gap> IsBand(s);
+true
+gap> gens:=[ Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ),
+>   Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] ) ];
+[ Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ), 
+  Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] ) ]
+gap> s:=Semigroup(Idempotents(Monoid(gens)));;
+gap> Size(s);
+94
+gap> IsSemilatticeAsSemigroup(s);
+true
 gap> STOP_TEST( "properties.tst 0.1", 10000);
