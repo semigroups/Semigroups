@@ -26,6 +26,8 @@
 # IsFInverseSemigroup, IsSemigroupWithCentralIdempotents, IsLeftUnipotent,
 # IsRightUnipotent,
 
+#GGG
+
 # new for 0.1! - GroupOfUnits - "for a tranformation semigroup"
 ###########################################################################
 # Notes: returns a permutation group isomorphic to the group of units of the
@@ -49,6 +51,8 @@ function(s)
 
   return g;
 end);
+
+#IBB
 
 # mod for 0.1! - IsBand - "for a transformation semigroup"
 ###########################################################################
@@ -100,6 +104,8 @@ function(s)
 
   return true;
 end);
+
+#ICC
 
 # new for 0.1! - IsCliffordSemigroup - "for a transformation semigroup"
 ###########################################################################
@@ -193,11 +199,40 @@ end);
 ###########################################################################
 # Notes: this test required to avoid conflict with Smallsemi.
 
-InstallMethod( IsCompletelySimpleSemigroup, "for a transformation semigroup",
+InstallMethod(IsCompletelySimpleSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(s)
   return IsSimpleSemigroup(s) and IsFinite(s);
 end);
+
+#IGG
+
+# new for 0.1! - IsGreensHTrivial - "for a transformation semigroup"
+###########################################################################
+
+InstallOtherMethod(IsGreensHTrivial, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
+function(s)
+  local iter, g;
+
+  iter:=IteratorOfDClassRepsData(s);
+  
+  repeat 
+    g:=DClassSchutzGpFromData(s, NextIterator(iter)[2]);
+    if Size(g)>1 then 
+      return false;
+    fi;
+  until IsDoneIterator(iter);
+  return true;
+end);
+
+# new for 0.1! - IsGreensHTrivial - "for a D-class of a trans. semigp"
+###########################################################################
+
+InstallOtherMethod(IsGreensHTrivial, "for a D-class of a trans. semigp", 
+[IsGreensDClass and IsGreensClassOfTransSemigp], 
+  d-> NrGreensHClasses(d)=Size(d));
+
 
 # new for 0.1! - IsGreensLTrivial - "for a transformation semigroup"
 #############################################################################
@@ -274,32 +309,6 @@ function(d)
   return NrGreensRClasses(d)=Size(d);
 end);
 
-# new for 0.1! - IsGreensHTrivial - "for a transformation semigroup"
-###########################################################################
-
-InstallOtherMethod(IsGreensHTrivial, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
-function(s)
-  local iter, g;
-
-  iter:=IteratorOfDClassRepsData(s);
-  
-  repeat 
-    g:=DClassSchutzGpFromData(s, NextIterator(iter)[2]);
-    if Size(g)>1 then 
-      return false;
-    fi;
-  until IsDoneIterator(iter);
-  return true;
-end);
-
-# new for 0.1! - IsGreensHTrivial - "for a D-class of a trans. semigp"
-###########################################################################
-
-InstallOtherMethod(IsGreensHTrivial, "for a D-class of a trans. semigp", 
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-  d-> NrGreensHClasses(d)=Size(d));
-
 # new for 0.1! - IsGroupAsSemigroup - "for a transformation semigroup"
 ###########################################################################
  
@@ -327,6 +336,33 @@ function(s)
   od;
 
   return true;
+end);
+
+#III
+
+# new for 0.1! - IsIdempotentGenerated - "for a trans semi"
+###########################################################################
+# Notes: should store t as IdempotentsGeneratedSubsemigroup, and should use
+# ClosureSemigroup.
+
+InstallMethod(IsIdempotentGenerated, "for a transformation semigroup", 
+[IsTransformationSemigroup], 
+function(s) 
+local gens, r, i, t;
+ 
+  gens:=Generators(s);
+  
+  if ForAll(gens, IsIdempotent) then 
+    return true;
+  fi;
+  
+  r:=List(gens, Rank); 
+
+  i:=Concatenation(List([Maximum(r),Maximum(r)-1..Minimum(r)], i-> 
+   Idempotents(s, i)));
+  t:=Semigroup(i);
+
+  return ForAll(gens, f-> f in t);
 end);
 
 # new for 0.1! - IsInverseSemigroup - "for a transformation semigroup"
@@ -528,23 +564,6 @@ function(s)
   return false;
 end);
 
-###########################################################################
-##  JDM is there a better way?
-# should store t as IdempotentsGeneratedSubsemigroup...
-
-InstallMethod(IsIdempotentGenerated, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
-function(s) 
-local gens, r, i, t;
-  gens:=Generators(s);
-  r:=List(gens, Rank); 
-
-  i:=Concatenation(List([Maximum(r),Maximum(r)-1..Minimum(r)], i-> 
-   Idempotents(s, i)));
-  t:=Semigroup(i);
-
-  return ForAll(gens, f-> f in t);
-end);
 
 ###############################################################################
 

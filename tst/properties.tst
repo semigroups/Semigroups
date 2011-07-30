@@ -519,4 +519,48 @@ Transformation( [ 3, 4, 2, 2, 2, 1 ] )
 gap> gens:=Difference(gens, [last]);;
 gap> RedundantGenerator(s, gens);
 fail
+gap> gens:=[ Transformation( [ 5, 1, 4, 6, 2, 3 ] ),
+> Transformation( [ 1, 2, 3, 4, 5, 6 ] ),
+> Transformation( [ 4, 6, 3, 4, 2, 5 ] ),
+> Transformation( [ 5, 4, 6, 3, 1, 3 ] ),
+> Transformation( [ 2, 2, 6, 5, 4, 3 ] ),
+> Transformation( [ 3, 5, 5, 1, 2, 4 ] ),
+> Transformation( [ 6, 5, 1, 3, 3, 4 ] ),
+> Transformation( [ 1, 3, 4, 3, 2, 1 ] ) ];;
+gap> RedundantGenerator(gens);
+Transformation( [ 1, 2, 3, 4, 5, 6 ] )
+gap> gens:=Difference(gens, [last]);;
+gap> RedundantGenerator(gens);
+Transformation( [ 4, 6, 3, 4, 2, 5 ] )
+gap> gens:=Difference(gens, [last]);;
+gap> RedundantGenerator(gens);
+fail
+gap> gens:=[ Transformation( [ 1, 2, 2 ] ), Transformation( [ 1, 2, 1 ] ), 
+>   Transformation( [ 2, 2, 3 ] ), Transformation( [ 3, 2, 3 ] ), 
+>   Transformation( [ 1, 3, 3 ] ), Transformation( [ 1, 1, 3 ] ) ]
+> ;;
+gap> s:=Semigroup(gens);;
+gap> IsIdempotentGenerated(s);
+true
+gap> RedundantGenerator(s, gens);
+Transformation( [ 1, 2, 2 ] )
+gap> gens:=Difference(gens, [last]);                                       
+[ Transformation( [ 1, 1, 3 ] ), Transformation( [ 1, 2, 1 ] ), 
+  Transformation( [ 1, 3, 3 ] ), Transformation( [ 2, 2, 3 ] ), 
+  Transformation( [ 3, 2, 3 ] ) ]
+gap> RedundantGenerator(s, gens);
+Transformation( [ 1, 1, 3 ] )
+gap> gens:=Difference(gens, [last]);
+[ Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 3, 3 ] ), 
+  Transformation( [ 2, 2, 3 ] ), Transformation( [ 3, 2, 3 ] ) ]
+gap> RedundantGenerator(s, gens);
+Transformation( [ 3, 2, 3 ] )
+gap> gens:=Difference(gens, [last]);
+[ Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 3, 3 ] ), 
+  Transformation( [ 2, 2, 3 ] ) ]
+gap> RedundantGenerator(s, gens);
+fail
+gap> Size(Semigroup(gens)); 3^3-6;
+21
+21
 gap> STOP_TEST( "properties.tst 0.1", 10000);
