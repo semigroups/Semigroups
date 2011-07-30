@@ -469,8 +469,9 @@ end);
 
 #IIIOOO
 
+# new for 0.1! - IsOrthodoxSemigroup - "for a transformation semigroup"
 ###########################################################################
-##  JDM is there a better way? 
+# Notes: is there a better method? JDM
 
 InstallMethod(IsOrthodoxSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
@@ -496,9 +497,9 @@ end);
 
 
 #IIIRRR
-
+#JDMJDM
+# new for 0.1! - IsRectangularBand - "for a transformation semigroup"
 ###########################################################################
-# check efficiency JDM
 
 InstallMethod(IsRectangularBand, "for a transformation semigroup", 
 [IsTransformationSemigroup],
@@ -511,24 +512,8 @@ function(s)
     return IsBand(s);
   fi;
 
-  SetIsBand(s, true);
-
   return IsGreensHTrivial(s);
 end);
-#gens:=GeneratorsOfSemigroup(M);
-
-#for x in gens do
-#	for y in gens do
-#		 for z in gens do
-#				if not x*y*z=x*z then 
-#					 return false;
-#				fi;
-#		 od;
-#	od;
-#od;
-#SetIsBand(M, true)
-#return true;
-#fi; 
 
 # new method for 0.1! 
 ###########################################################################
