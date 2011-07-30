@@ -563,12 +563,16 @@ end);
 
 #IIISSS
 
+# new for 0.1! - IsSemilatticeAsSemigroup - "for a semigroup"
 ###############################################################################
 
-InstallMethod(IsSemilatticeAsSemigroup, [IsSemigroup],
+InstallMethod(IsSemilatticeAsSemigroup, "for a semigroup", 
+[IsSemigroup],
 function(s)
   return IsBand(s) and IsCommutativeSemigroup(s);
 end);
+
+# JDM here!
 
 ###########################################################################
 

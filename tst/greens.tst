@@ -10,13 +10,13 @@
 ## $Id$
 ##
 
-#ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "greens.tst"));
+#ReadTest( Filename( DirectoriesPackageLibrary( "citrus", "tst" ), "greens.tst"));
 # takes approx. 9 seconds to run currently!
 
-gap> START_TEST("greens.tst 4.0");
+gap> START_TEST("greens.tst 0.1");
 gap> SetGasmanMessageStatus("none");
-gap> LoadPackage("monoid");;
-gap> ReadPackage("monoid/examples/test.gap");;
+gap> LoadPackage("citrus");;
+gap> ReadPackage("citrus/examples/test.gap");;
 gap> tmptmptmp:=InfoLevel(InfoWarning);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> out:=[];;
@@ -510,4 +510,4 @@ Group([ (2,3) ])
 gap> Number(GreensDClasses(S), IsRegularDClass);
 3
 gap> SetInfoLevel(InfoWarning, tmptmptmp);;
-gap> STOP_TEST( "greens.tst 4.0", 10000);
+gap> STOP_TEST( "greens.tst 0.1", 10000);
