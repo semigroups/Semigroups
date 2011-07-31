@@ -769,4 +769,13 @@ gap> Size(s);
 94
 gap> IsSemilatticeAsSemigroup(s);
 true
+gap> s:=FullTransformationSemigroup(3);;
+gap> j:=0;;
+gap> for f in s do
+> for g in s do
+> if IsSynchronizingSemigroup([f,g]) then j:=j+1; fi;
+> od;
+> od;
+gap> j;
+549
 gap> STOP_TEST( "properties.tst 0.1", 10000);
