@@ -569,8 +569,6 @@ function(s)
   return IsBand(s) and IsCommutativeSemigroup(s);
 end);
 
-# JDM about to test IsSimpleSemi!
-
 # new for 0.1! - IsSimpleSemigroup - "for a tran. semi."
 ###########################################################################
 
@@ -632,9 +630,9 @@ end);
 
 #IIIZZZ
 
+# new for 0.1! - IsZeroGroup - "for a transformation semigroup"
 ###########################################################################
 #JDM new for 3.1.4! test efficiency
-#used to accept IsSemigroup as filter, changed for semex
 
 InstallOtherMethod(IsZeroGroup, "for a transformation semigroup",
 [IsTransformationSemigroup],

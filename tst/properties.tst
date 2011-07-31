@@ -778,4 +778,20 @@ gap> for f in s do
 > od;
 gap> j;
 549
+gap> gens:=[ Transformation( [ 4, 6, 5, 2, 1, 3 ] ),
+>   Transformation( [ 6, 3, 2, 5, 4, 1 ] ),
+>   Transformation( [ 1, 2, 4, 3, 5, 6 ] ),
+>   Transformation( [ 3, 5, 6, 1, 2, 3 ] ),
+>   Transformation( [ 5, 3, 6, 6, 6, 2 ] ),
+>   Transformation( [ 2, 3, 2, 6, 4, 6 ] ),
+>   Transformation( [ 2, 1, 2, 2, 2, 4 ] ),
+>   Transformation( [ 4, 4, 1, 2, 1, 2 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> g:=GroupOfUnits(s);;
+gap> Range(InjectionZeroMagma(g));
+<monoid with 3 generators>
+gap> IsZeroGroup(last);
+true
+gap> IsZeroGroup(s);
+false
 gap> STOP_TEST( "properties.tst 0.1", 10000);
