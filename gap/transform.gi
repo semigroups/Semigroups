@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  transform.gi
-#Y  Copyright (C) 2006-2010                             James D. Mitchell
+#Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -12,7 +12,6 @@
 # set, f![3] is the kernel as a partition, f![4] is ..., f![5] is the rank of f
 # f![6] is the canonical trans. with same kernel
 
-
 ############################################################################
 ##  If trans is a permutation, then allow it to be converted into one.
 ##  return fail if the transformation is not a permutation.
@@ -21,8 +20,7 @@
 InstallMethod(AsPermutation, "for a transformation", [IsTransformation],
        t->PermList(t![1])); 
 
-InstallMethod(AsPermutation, "for a permutation", [IsPerm],
-       p->p);
+InstallMethod(AsPermutation, "for a permutation", [IsPerm], p -> p);
 
 InstallMethod(AsPermutation, "for binary relations on points", true,
         [IsBinaryRelation and IsBinaryRelationOnPointsRep], 0,

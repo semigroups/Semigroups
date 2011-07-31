@@ -1,13 +1,11 @@
 #############################################################################
 ##
 #W  properties.gi
-#Y  Copyright (C) 2006-2011                              James D. Mitchell
+#Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
-##
-## $Id$
 ##
 
 # Ecom (commuting idempotents), LI (locally trivial), 
@@ -505,7 +503,6 @@ end);
 InstallMethod(IsRectangularBand, "for a transformation semigroup", 
 [IsTransformationSemigroup],
 function(s)
-  local x, y, z, gens;
 
   if not IsSimpleSemigroup(s) then 
     return false;
@@ -552,7 +549,7 @@ function(s)
   local gens, kers;
 
   gens:=Generators(s);
-  kers:=Set(List(gens, KernelOfTransformation));
+  kers:=Set(List(gens, CanonicalTransSameKernel));
 
   if Length(kers)=1 and ForAll(gens, IsIdempotent) then
     return true;
@@ -572,59 +569,46 @@ function(s)
   return IsBand(s) and IsCommutativeSemigroup(s);
 end);
 
-# JDM here!
+# JDM about to test IsSimpleSemi!
 
+# new for 0.1! - IsSimpleSemigroup - "for a tran. semi."
 ###########################################################################
 
 InstallMethod(IsSimpleSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
 function(s)
-local foo, gens, f, g, r, o;
+  local gens, r, o, f;
 
-if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
-	return false;
-elif HasIsCompletelyRegularSemigroup(s) and not IsCompletelyRegularSemigroup(s) 
- then 
-	return false;
-elif HasNrGreensDClasses(s) and NrGreensDClasses(s)=1 then 
-	return true;
-fi;
+  if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
+    return false;
+  elif HasIsCompletelyRegularSemigroup(s) and not 
+   IsCompletelyRegularSemigroup(s) then 
+    return false;
+  elif HasNrGreensDClasses(s) and NrGreensDClasses(s)=1 then 
+    return true;
+  fi;
 
-foo:=function(f, set) #is f injective on set?
-local i, j;
-j:=[]; 
-for i in set do 
-	if not f[i] in j then 
-		AddSet(j, f[i]);
-	else
-		return false;
-	fi;
-od;
+  gens:=Generators(s);
 
-return true;
-end;
+  for f in gens do
+    r:=RankOfTransformation(f);
+    o:=Orb(gens, ImageSetOfTransformation(f), OnSets, 
+        rec(lookingfor:=function(o, x) return Length(x)<r or not
+         IsInjectiveTransOnList(f, x); end));
+    Enumerate(o);
+    if IsPosInt(PositionOfFound(o)) then 
+      return false;
+    fi;
+  od;
 
-gens:=GeneratorsOfSemigroup(s);
+  SetIsCompletelyRegularSemigroup(s, true);
+  SetIsRegularSemigroup(s, true);
+  SetNrGreensDClasses(s, 1);
 
-for f in gens do
-	g:=f![1];
-	r:=Rank(f);
-	o:=Orb(gens, ImageSetOfTransformation(f), OnSets, 
-	 rec(lookingfor:=function(o, x) return Length(x)<r or not foo(g, x); end));
-	Enumerate(o);
-	if IsPosInt(PositionOfFound(o)) then 
-		return false;
-	fi;
-od;
-
-SetIsCompletelyRegularSemigroup(s, true);
-SetIsRegularSemigroup(s, true);
-SetNrGreensDClasses(s, 1);
-
-return true;
+  return true;
 end);
 
-# new for 0.1 - IsSynchronizingSemigroup - "for a trans. semi. or coll."
+# new for 0.1! - IsSynchronizingSemigroup - "for a trans. semi. or coll."
 ###########################################################################
 
 InstallMethod(IsSynchronizingSemigroup, "for a trans. semi. or coll.", 
@@ -643,11 +627,7 @@ function(s)
 
   Enumerate(o);
 
-  if IsPosInt(PositionOfFound(o)) then
-    return true;
-  fi;
-
-  return false;
+  return IsPosInt(PositionOfFound(o));
 end);
 
 #IIIZZZ
