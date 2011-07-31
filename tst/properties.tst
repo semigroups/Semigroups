@@ -794,4 +794,10 @@ gap> IsZeroGroup(last);
 true
 gap> IsZeroGroup(s);
 false
+gap> gens:=List(Tuples([1,2], 4), x-> TransformationNC(Concatenation([1,1], x)));;
+gap> s:=Semigroup(gens);;
+gap> RedundantGenerator(s, gens);
+Transformation( [ 1, 1, 1, 1, 1, 1 ] )
+gap> IsZeroSemigroup(s);
+true
 gap> STOP_TEST( "properties.tst 0.1", 10000);

@@ -632,7 +632,6 @@ end);
 
 # new for 0.1! - IsZeroGroup - "for a transformation semigroup"
 ###########################################################################
-#JDM new for 3.1.4! test efficiency
 
 InstallOtherMethod(IsZeroGroup, "for a transformation semigroup",
 [IsTransformationSemigroup],
@@ -652,6 +651,7 @@ function(s)
   return false;
 end);
 
+# new for 0.1! - IsZeroSemigroup - "for a transformation semigroup"
 ###########################################################################
 
 InstallOtherMethod(IsZeroSemigroup, "for a transformation semigroup", 
@@ -789,16 +789,6 @@ function(s)
   return fail;
 end);
 
-#############################################################################
-
-InstallMethod(PrintObj, "for an ideal of a trans. semigp.",
-[IsSemigroupIdeal and IsTransformationSemigroup], 
-function(i)
-  Print("<semigroup ideal with ", Length( GeneratorsOfMagmaIdeal( i ) ), 
-   " generators>");
-  return;
-end);
-
 #RRR
 
 # new for 0.1! - RedundantGenerator - "for transformations coll."
@@ -824,17 +814,6 @@ InstallOtherMethod(RedundantGenerator, "for trans semi and trans coll",
   fi;
   Info(InfoWarning, 1, "Usage: trans. semi. and generating set.");
   return fail;
-end);
-
-# new for 0.1! - ViewObj - "for an ideal of a trans. semigp."
-#############################################################################
-
-InstallMethod(ViewObj, "for an ideal of a trans. semigp.",
-[IsSemigroupIdeal and IsTransformationSemigroup], 
-function(i)
-  Print("<semigroup ideal with ", Length( GeneratorsOfMagmaIdeal( i ) ), 
-   " generators>");
-  return;
 end);
 
 #EOF
