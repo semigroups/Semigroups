@@ -719,8 +719,8 @@ function(s)
   return Semigroup(Elements(GreensDClassOfElementNC(s, f)));#JDM temp. 
 end);
 
+# new for 0.1! - MultiplicativeNeutralElement - "for a trans. semi."
 ###########################################################################
-# JDM what method for the below? 
 
 InstallOtherMethod(MultiplicativeNeutralElement, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
@@ -751,8 +751,8 @@ function(s)
   return fail;
 end);
 
+# new for 0.1! - MultiplicativeZero - "for a transformation semigroup"
 ###########################################################################
-# JDM test it more!
 
 InstallOtherMethod(MultiplicativeZero, "for a transformation semigroup", 
 [IsTransformationSemigroup], 

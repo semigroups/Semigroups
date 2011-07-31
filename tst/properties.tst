@@ -800,4 +800,31 @@ gap> RedundantGenerator(s, gens);
 Transformation( [ 1, 1, 1, 1, 1, 1 ] )
 gap> IsZeroSemigroup(s);
 true
+gap> gens:=[ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10 ] ), 
+>  Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8, 10, 10 ] ), 
+>  Transformation( [ 3, 6, 9, 7, 1, 4, 5, 8, 2, 10, 10 ] ), 
+>  Transformation( [ 8, 2, 5, 5, 4, 5, 5, 2, 8, 10, 10 ] ), 
+>  Transformation( [ 4, 4, 8, 4, 4, 2, 4, 4, 5, 10, 10 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> MultiplicativeNeutralElement(s);
+Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10 ] )
+gap> [ Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] ),
+>   Transformation( [ 3, 6, 9, 7, 1, 4, 5, 8, 2 ] ),
+>   Transformation( [ 8, 2, 5, 5, 4, 5, 5, 2, 8 ] ),
+>   Transformation( [ 4, 4, 8, 4, 4, 2, 4, 4, 5 ] ),
+>   Transformation( [ 7, 5, 5, 7, 3, 7, 5, 5, 3 ] ),
+>   Transformation( [ 7, 3, 3, 3, 3, 7, 5, 3, 3 ] ),
+>   Transformation( [ 3, 5, 3, 3, 3, 3, 7, 7, 5 ] ),
+>   Transformation( [ 3, 7, 3, 3, 5, 5, 7, 7, 7 ] ),
+>   Transformation( [ 3, 3, 3, 7, 5, 5, 7, 5, 7 ] ),
+>   Transformation( [ 3, 5, 5, 3, 7, 3, 7, 5, 7 ] ),
+>   Transformation( [ 3, 3, 3, 5, 5, 3, 7, 5, 5 ] ),
+>   Transformation( [ 5, 5, 7, 5, 7, 3, 5, 3, 7 ] ),
+>   Transformation( [ 3, 5, 5, 3, 7, 3, 3, 5, 3 ] ),
+>   Transformation( [ 7, 3, 7, 7, 7, 3, 3, 5, 7 ] ),
+>   Transformation( [ 5, 3, 7, 3, 7, 5, 3, 5, 3 ] ),
+>   Transformation( [ 5, 5, 7, 5, 7, 3, 7, 7, 5 ] ) ];;
+gap> s:=Semigroup(last);;
+gap> MultiplicativeNeutralElement(s);
+Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] )
 gap> STOP_TEST( "properties.tst 0.1", 10000);
