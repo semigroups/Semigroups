@@ -50,6 +50,27 @@ function(arg)
   return fail;
 end);
 
+# new for 0.1! - Degree - "for a transformation"
+#############################################################################
+# Notes: returns DegreeOfTransformation.
+
+InstallOtherMethod(Degree, "for a transformation",
+[IsTransformation], f-> DegreeOfTransformation(f));
+
+# new for 0.1! - Degree - "for a transformation semigroup"
+#############################################################################
+# Notes: returns DegreeOfTransformationSemigroup.
+
+InstallOtherMethod(Degree, "for a transformation semigroup",
+[IsTransformationSemigroup], s-> DegreeOfTransformationSemigroup(s));
+
+# new for 0.1! - Rank - "for a transformation"
+#############################################################################
+# Notes: returns RankOfTransformation. 
+
+InstallOtherMethod(Rank, "for a transformation",
+[IsTransformation], f-> RankOfTransformation(f));
+
 #new for 0.1! - Generators - "for a semigroup or monoid"
 ############################################################################
 # Notes: returns the monoid generators of a monoid, and the semigroup generators

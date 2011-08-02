@@ -13,7 +13,7 @@ if not IsBound(AsPermutation) then
   DeclareOperation("AsPermutation",[IsObject]);
 fi;
 
-DeclareGlobalFunction("ConstantTransformation");
+DeclareGlobalFunction("ConstantTrans");
 DeclareOperation("DegreeOfTransformationCollNC", [IsTransformationCollection]);
 DeclareGlobalFunction("Idempotent");
 DeclareGlobalFunction("IdempotentFromCanonTransImg");
