@@ -1,7 +1,7 @@
 ###########################################################################
 ##
 #W  d.gi
-#Y  Copyright (C) 2006-2011                              James D. Mitchell
+#Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -25,7 +25,7 @@
 #############################################################################
 # other equalities of Green's classes handled by generic method in r.gi!
 
-# new for 3.0! - \= - "for D-class and D-class of trans. semigp." 
+# new for 0.1! - \= - "for D-class and D-class of trans. semigp." 
 ############################################################################
 
 InstallMethod( \=, "for D-class and D-class of trans. semigp.",
@@ -35,7 +35,7 @@ function(d1, d2)
   return d1!.parent=d2!.parent and d1!.rep in d2;
 end);
 
-# new for 3.0! - \< - "for D-class and D-class of trans. semigp." 
+# new for 0.1! - \< - "for D-class and D-class of trans. semigp." 
 ############################################################################
 
 InstallMethod( \<, "for D-class and D-class of trans. semigp.",
@@ -45,7 +45,7 @@ function(d1, d2)
   return d1!.parent=d2!.parent and d1!.rep < d2!.rep;
 end);
 
-# new for 4.0! - \in - "for trans. and D-class of trans. semigp."
+# new for 0.1! - \in - "for trans. and D-class of trans. semigp."
 #############################################################################
 
 InstallOtherMethod(\in, "for trans. and D-class of trans. semigp.",
@@ -110,7 +110,7 @@ end);
 
 #AAA
 
-# new for 4.0! - AddToOrbitsOfKernels - not a user function!
+# new for 0.1! - AddToOrbitsOfKernels - not a user function!
 #############################################################################
 # Usage: s = the semigroup; f = transformation (R-class rep with rectified
 # image); data = [image data, kernel data] (without true/false, where kernel data
@@ -231,7 +231,7 @@ function(arg)
   return data;
 end);
 
-# new for 4.0! - AsSSortedList - "for a D-class of trans. semigp."
+# new for 0.1! - AsSSortedList - "for a D-class of trans. semigp."
 #############################################################################
 # this should be removed after the library method for AsSSortedList 
 # for a Green's class is removed. The default AsSSortedList for a collection
@@ -246,7 +246,7 @@ end);
 
 #CCC
 
-# new for 4.0! - CreateDClass - not a user function!
+# new for 0.1! - CreateDClass - not a user function!
 #############################################################################
 # Usage: s = semigroup; data = [image data, kernel data] (any lengths);
 # orbit = [OrbitsOfImages, OrbitsOfKernels] or local variants;
@@ -269,7 +269,7 @@ function(s, data, orbit, rep)
   return d;
 end);
 
-# new for 4.0! - CreateKernelOrbitSCCRels - not a user function
+# new for 0.1! - CreateKernelOrbitSCCRels - not a user function
 #############################################################################
 # Usage: gens = generators of a semigroup or monoid;
 # o = a kernel orbit; j = the index of a strongly connect component of o.
@@ -307,7 +307,7 @@ function(gens, o, j)
   return rels;
 end);
 
-# new for 4.0! - CreateKernelOrbitSchutzGp - not a user function!
+# new for 0.1! - CreateKernelOrbitSchutzGp - not a user function!
 #############################################################################
 # Usage: gens = generators of semigroup; o = kernel orbit; 
 # f = transformation; k = index of the scc of o containing the image of f
@@ -361,7 +361,7 @@ function(gens, o, f, k)
   return [StabChainImmutable(g), g];
 end);
 
-# new for 4.0! - CreateSchutzGpOfDClass - not a user function!
+# new for 0.1! - CreateSchutzGpOfDClass - not a user function!
 #############################################################################
 # Usage: s = semigroup; d = [image data, kernel data]; 
 # o = [OrbitsOfImages(s), OrbitsOfKernels(s)] (optional).  
@@ -404,7 +404,7 @@ end);
 
 #DDD
 
-# new for 4.0! - DClassRClassRepsDataFromData - not a user function!
+# new for 0.1! - DClassRClassRepsDataFromData - not a user function!
 ############################################################################
 # Usage: s = semigroup; d = [image data, kernel data]; o = [OrbitsOfImages(s),
 # OrbitsOfKernels(s)] (optional)
@@ -431,7 +431,7 @@ function(arg)
   return fail;
 end);
 
-# new for 4.0! - DClassRepFromData - not a user function!
+# new for 0.1! - DClassRepFromData - not a user function!
 #############################################################################
 # Usage: s = semigroup; d = [image data, kernel data];
 # o = [OrbitsOfImages, OrbitsOfKernels].
@@ -454,7 +454,7 @@ function(arg)
   return o!.reps[d[4]][d[5]][d[6]];
 end);
 
-# new for 4.0! - DClassSchutzGpFromData - not a user function!
+# new for 0.1! - DClassSchutzGpFromData - not a user function!
 #############################################################################
 # Usage: s - semigroup; d = kernel data; o = orbits of kernels (optional).
 
@@ -478,7 +478,7 @@ local s, d, o;
   return o!.d_schutz[d[4]][d[5]][d[6]][2];
 end);
 
-# new for 4.0! - DClassOfRClass - "for an R-class of a trans. semigroup"
+# new for 0.1! - DClassOfRClass - "for an R-class of a trans. semigroup"
 #############################################################################
 # Notes: this does not check if the representative of r is an element of s.
 
@@ -521,7 +521,7 @@ function(r)
   return CreateDClass(s, [r!.data, [j,1,1,1,1,1]], [img_o, ker_o], f);
 end);
 
-# new for 4.0! - DClassType - "for a transformation semigroup"
+# new for 0.1! - DClassType - "for a transformation semigroup"
 ############################################################################# 
 
 InstallMethod(DClassType, "for a transformation semigroup", 
@@ -532,7 +532,7 @@ function(s);
 	  IsGreensClassOfTransSemigp);
 end);
 
-# new for 4.0! - DisplayOrbitsOfKernels - not a user function!
+# new for 0.1! - DisplayOrbitsOfKernels - not a user function!
 #############################################################################
 
 InstallGlobalFunction(DisplayOrbitsOfKernels,
@@ -569,7 +569,7 @@ end);
 
 #EEE
 
-# new for 4.0! - Enumerator - "for a D-class of trans. semigp."
+# new for 0.1! - Enumerator - "for a D-class of trans. semigp."
 #############################################################################
 
 InstallOtherMethod(Enumerator, "for a D-class of trans. semigp.", 
@@ -635,7 +635,7 @@ function(d)
   return enum;
 end);
 
-# new for 4.0! - ExpandOrbitsOfKernels - not a user function!
+# new for 0.1! - ExpandOrbitsOfKernels - not a user function!
 #############################################################################
 
 InstallGlobalFunction(ExpandOrbitsOfKernels, 
@@ -655,7 +655,7 @@ end);
 
 #FFF
 
-# new for 4.0! - ForwardOrbitOfKernel - not a user function!
+# new for 0.1! - ForwardOrbitOfKernel - not a user function!
 #############################################################################
 # Usage: s = semigroup; f = transformation; 
 # kernels = OrbitsOfKernels(s)!.kernels (optional); 
@@ -762,14 +762,14 @@ end);
 
 #GGG
 
-# new for 4.0! - GeneratorsAsListOfImages - "for a trans. semigp."
+# new for 0.1! - GeneratorsAsListOfImages - "for a trans. semigp."
 #############################################################################
 
 InstallMethod(GeneratorsAsListOfImages, "for a trans. semigp.", 
 [IsTransformationSemigroup],
 s-> List(Generators(s), f-> f![1]));
 
-# new for 4.0! - GreensDClasses - "for a transformation semigroup"
+# new for 0.1! - GreensDClasses - "for a transformation semigroup"
 #############################################################################
 
 InstallMethod(GreensDClasses, "for a transformation semigroup", 
@@ -789,7 +789,7 @@ function(s)
   return out;
 end);
 
-# new for 4.0! - GreensDClassOfElement - "for a trans. semigp and trans."
+# new for 0.1! - GreensDClassOfElement - "for a trans. semigp and trans."
 #############################################################################
 
 InstallOtherMethod(GreensDClassOfElement, "for a trans. semigp and trans.", 
@@ -819,7 +819,7 @@ function(s, f)
   return d;
 end);
 
-# new for 4.0! - GreensDClassOfElementNC - "for a trans. semigp and trans."
+# new for 0.1! - GreensDClassOfElementNC - "for a trans. semigp and trans."
 ############################################################################
 # Notes: this should be similar to DClassOfRClass. 
 
@@ -875,7 +875,7 @@ function(s, f)
   return CreateDClass(s, [[j,1,1,1,1,1], [j,1,1,1,1,1]], [img_o, ker_o], f);
 end);
 
-# new for 4.0! - GreensDClassReps - "for a trans. semigroup"
+# new for 0.1! - GreensDClassReps - "for a trans. semigroup"
 #############################################################################
 # move to greens.gi JDM
 InstallMethod(GreensDClassReps, "for a trans. semigroup", 
@@ -886,7 +886,7 @@ InstallMethod(GreensDClassReps, "for a trans. semigroup",
   return List(OrbitsOfKernels(s)!.data, x-> DClassRepFromData(s, x));
 end);
 
-# new for 4.0! - GreensDClassRepsData - "for a trans. semigroup"
+# new for 0.1! - GreensDClassRepsData - "for a trans. semigroup"
 #############################################################################
 # move to greens.gi JDM 
  
@@ -897,7 +897,7 @@ InstallMethod(GreensDClassRepsData, "for a trans. semigroup",
   return OrbitsOfKernels(s)!.data;
 end);
 
-# new for 4.0! - GreensHClasses - "for a D-class of a trans. semigroup"
+# new for 0.1! - GreensHClasses - "for a D-class of a trans. semigroup"
 #############################################################################
 # JDM could this be better/more efficient?! Could avoid using GreensRClasses. 
 
@@ -907,14 +907,14 @@ function(d)
   return Concatenation(List(GreensRClasses(d), GreensHClasses));
 end);
 
-# new for 4.0! - GreensLClassRepsData - "for a D-class of a trans. semigroup"
+# new for 0.1! - GreensLClassRepsData - "for a D-class of a trans. semigroup"
 #############################################################################
 
 InstallOtherMethod(GreensLClassRepsData, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
   d-> GreensLClassRepsDataFromData(d!.parent, d!.data, d!.o));
 
-# new for 4.0! - GreensLClassRepsDataFromData - not a user function!
+# new for 0.1! - GreensLClassRepsDataFromData - not a user function!
 #############################################################################
 # Usage: s = semigroup; data = [image data, kernel data];
 # o = [OrbitsOfKernels, OrbitsOfImages].
@@ -937,7 +937,7 @@ function(s, data, o)
   return out;
 end);
 
-# new for 4.0! - GreensLClassReps - "for a D-class of a trans. semigroup"
+# new for 0.1! - GreensLClassReps - "for a D-class of a trans. semigroup"
 #############################################################################
 # maybe write iterator/enumerator later! JDM
 
@@ -964,7 +964,7 @@ function(d)
   return out;
 end);
 
-# new for 4.0! - GreensRClassRepsData - "for a D-class of a trans. semigroup"
+# new for 0.1! - GreensRClassRepsData - "for a D-class of a trans. semigroup"
 #############################################################################
 # Notes: maybe write iterator/enumerator later! This is relatively slow in 
 # comparison to GreensRClassReps, as here we have to search for the data.
@@ -1016,7 +1016,7 @@ function(d)
   return out;
 end);
 
-# new for 4.0! - GreensRClassReps - "for a D-class of a trans. semigroup"
+# new for 0.1! - GreensRClassReps - "for a D-class of a trans. semigroup"
 #############################################################################
 
 InstallOtherMethod(GreensRClassReps, "for a D-class of a trans. semigroup", 
@@ -1048,7 +1048,7 @@ function(d)
   return out;
 end);
 
-# new for 4.0! - GreensLClasses - "for a D-class of a trans. semigroup"
+# new for 0.1! - GreensLClasses - "for a D-class of a trans. semigroup"
 #############################################################################
 
 InstallOtherMethod(GreensLClasses, "for a D-class of a trans. semigroup",
@@ -1074,7 +1074,7 @@ function(d)
   return out;
 end);
 
-# new for 4.0! - GreensRClasses - "for a D-class of a trans. semigroup"
+# new for 0.1! - GreensRClasses - "for a D-class of a trans. semigroup"
 #############################################################################
 # Notes: it would be helpful to have a IteratorOfGreensRClasses for use in 
 # the  enumerator of a D-class. This is relatively slow in comparison to 
@@ -1104,7 +1104,7 @@ function(d)
   return out;
 end);
 
-# new for 4.0! - GreensRClassOfElement - "for D-class of trans. semigroup"
+# new for 0.1! - GreensRClassOfElement - "for D-class of trans. semigroup"
 #############################################################################
 # Notes: maybe think this through a bit more...
 
@@ -1139,7 +1139,7 @@ end);
 
 #III
 
-# new for 4.0! - Idempotents - "for a D-class of a trans. semigp."
+# new for 0.1! - Idempotents - "for a D-class of a trans. semigp."
 #############################################################################
 # JDM compare what is here with the method for Idempotents of an R-class!
 
@@ -1195,7 +1195,7 @@ function(d)
   return out;
 end);
 
-# new for 4.0! - ImageOrbit - "for a D-class of a trans. semigp"
+# new for 0.1! - ImageOrbit - "for a D-class of a trans. semigp"
 #############################################################################
 # equivalently ImageOrbitFromData(d!.parent, d!.data[1], d!.o[1]);
 
@@ -1207,7 +1207,7 @@ function(d)
   return d!.o[1]!.orbits[e[1]][e[2]];
 end);
 
-# new for 4.0! - ImageOrbitCosets - "for a D-class of trans. semigroup"
+# new for 0.1! - ImageOrbitCosets - "for a D-class of trans. semigroup"
 ###########################################################################
 # Notes: returns a transversal of right cosets of SchutzenbergerGroup(d)
 # (which is ImgLeft) in ImageOrbitSchutzGp (which is ImgLeft). 
@@ -1220,7 +1220,7 @@ function(d)
   return d!.o[2]!.orbits[D[1]][D[2]]!.d_schutz[D[4]][D[5]][D[6]][3];
 end);
 
-# new for 4.0! - ImageOrbitCosetsFromData - not a user function!
+# new for 0.1! - ImageOrbitCosetsFromData - not a user function!
 ###########################################################################
 # Usage: s - semigroup; d - kernel orbit data; o - orbits of kernels 
 # (optional!)
@@ -1243,7 +1243,7 @@ function(arg)
   return o!.orbits[d[1]][d[2]]!.d_schutz[d[4]][d[5]][d[6]][3];
 end);
 
-# new for 4.0! - ImageOrbitPerms - for a D-class of a trans. semigp.
+# new for 0.1! - ImageOrbitPerms - for a D-class of a trans. semigp.
 ############################################################################
 
 InstallOtherMethod(ImageOrbitPerms, "for a D-class of a trans. semigp.",
@@ -1254,7 +1254,7 @@ function(r)
   return r!.o[1]!.orbits[d[1]][d[2]]!.perms;
 end);
 
-# new for 4.0! - ImageOrbitSchutzGp - not a user function!
+# new for 0.1! - ImageOrbitSchutzGp - not a user function!
 ############################################################################
 # Notes: returns the schutz. gp. of the image orbit of the D-class, which is
 # ImgLeft. Equivalent, to ImageOrbitSchutzGpFromData(d!.parent, d!.data[1],
@@ -1268,7 +1268,7 @@ function(d)
   return d!.o[1]!.orbits[e[1]][e[2]]!.schutz[e[4]][2];
 end);
 
-# new for 4.0! - InOrbitsOfKernels - not a user function
+# new for 0.1! - InOrbitsOfKernels - not a user function
 #############################################################################
 # Usage: f = transformation; 
 # rectify = should l correspond to f (false) or be o[scc[1]] (true);
@@ -1376,7 +1376,7 @@ function(f, rectify, data, o, kernels)
   return [data, [false, [j, k, l, m, val, n, g, r]]];
 end);
 
-# new for 4.0! - IsRegularDClass - "for a D-class of a trans. semigroup"
+# new for 0.1! - IsRegularDClass - "for a D-class of a trans. semigroup"
 #############################################################################
 
 InstallOtherMethod(IsRegularDClass, "for a D-class of a trans. semigroup", 
@@ -1392,7 +1392,7 @@ function(d)
   return IsRegularRClassData(d!.parent, d!.data[1], d!.o[1], d!.rep);
 end);
 
-# new for 4.0! - IteratorOfDClassReps - user function!
+# new for 0.1! - IteratorOfDClassReps - user function!
 #############################################################################
 # Usage: s = transformation semigroup.
 
@@ -1429,7 +1429,7 @@ function(s)
   return iter;
 end);
 
-# new for 4.0! - IteratorOfDClassRepsData - not a user function!
+# new for 0.1! - IteratorOfDClassRepsData - not a user function!
 #############################################################################
 # Usage: s = transformation semigroup.
 
@@ -1516,7 +1516,7 @@ function(s)
   return iter;
 end);
 
-# new for 4.0! - IteratorOfGreensDClasses - user function!
+# new for 0.1! - IteratorOfGreensDClasses - user function!
 #############################################################################
 # JDM why not use IteratorOfDClassRepsData below, it should be more
 # straightforward, see IteratorOfGreensLClasses.
@@ -1611,7 +1611,7 @@ function(arg)
   return iter;
 end);
 
-# new for 4.0! - IteratorOfNewDClassReps - not a user function!
+# new for 0.1! - IteratorOfNewDClassReps - not a user function!
 ###########################################################################
 
 InstallGlobalFunction(IteratorOfNewDClassReps, 
@@ -1626,7 +1626,7 @@ end);
 
 #KKK
 
-# new for 4.0! - KernelOrbit - "for a D-class of a trans. semigp." 
+# new for 0.1! - KernelOrbit - "for a D-class of a trans. semigp." 
 ############################################################################
 
 InstallMethod(KernelOrbit, "for a D-class of a trans. semigp.", 
@@ -1637,7 +1637,7 @@ function(d)
   return d!.o[2]!.orbits[e[1]][e[2]];
 end);
 
-# new for 4.0! - KernelOrbitFromData - not a user function!
+# new for 0.1! - KernelOrbitFromData - not a user function!
 ############################################################################
 # Usage: s - semigroup; d - D-class data; o - orbits of images and kernels
 
@@ -1654,7 +1654,7 @@ function(arg)
   return OrbitsOfKernels(s)!.orbits[d[1]][d[2]];
 end);
 
-# new for 4.0! - KernelOrbitCosets - not a user function!
+# new for 0.1! - KernelOrbitCosets - not a user function!
 ###########################################################################
 # Notes: returns a transversal of right cosets of SchutzenbergerGroup(d)
 # (which is ImgLeft) in KernelOrbitSchutzGp^KerRightToImgLeft(d) (which is
@@ -1675,7 +1675,7 @@ function(d)
    SchutzenbergerGroup(d));
 end);
 
-# new for 4.0! - KernelOrbitCosetsFromData - not a user function!
+# new for 0.1! - KernelOrbitCosetsFromData - not a user function!
 ###########################################################################
 # Notes: returns a transversal of right cosets of SchutzenbergerGroup(d)
 # (which is ImgLeft) in KernelOrbitSchutzGp^KerRightToImgLeft(d) (which is
@@ -1710,7 +1710,7 @@ function(arg)
   return cosets;
 end);
 
-# new for 4.0! - KernelOrbitRels - "for a D-class of a trans. semigp"
+# new for 0.1! - KernelOrbitRels - "for a D-class of a trans. semigp"
 ############################################################################
 
 InstallMethod(KernelOrbitRels,"for a D-class of a trans. semigp",
@@ -1721,7 +1721,7 @@ function(d)
   return d!.o[2]!.orbits[e[1]][e[2]]!.rels;
 end);
 
-# new for 4.0! - KernelOrbitRelsFromData - not a user function!
+# new for 0.1! - KernelOrbitRelsFromData - not a user function!
 ############################################################################
 # Usage: s = semigroup; d = kernel data; o = OrbitsOfKernels (optional)
 
@@ -1739,7 +1739,7 @@ function(arg)
   return o!.rels;
 end);
 
-# new for 4.0! - KernelOrbitSCC - "for D-class of trans. semigp"
+# new for 0.1! - KernelOrbitSCC - "for D-class of trans. semigp"
 #############################################################################
 
 InstallMethod(KernelOrbitSCC, "for D-class of trans. semigp", 
@@ -1751,7 +1751,7 @@ function(d)
   return d!.o[2]!.orbits[e[1]][e[2]]!.scc[e[4]];
 end);
 
-# new for 4.0! - KernelOrbitSCCFromData - not a user function!
+# new for 0.1! - KernelOrbitSCCFromData - not a user function!
 ############################################################################
 # Usage: s = semigroup; d = kernel data; o = OrbitsOfKernels(s) (optional)
 
@@ -1770,7 +1770,7 @@ function(arg)
   return o!.scc[d[4]];
 end);
 
-# new for 4.0! - KernelOrbitSchutzGp - "for a D-class of a trans. semigp."
+# new for 0.1! - KernelOrbitSchutzGp - "for a D-class of a trans. semigp."
 ############################################################################
 # Notes: returns the schutz. gp. of the kernel orbit of the D-class, which is
 # KerRight.
@@ -1783,7 +1783,7 @@ function(d)
   return d!.o[2]!.orbits[e[1]][e[2]]!.schutz[e[4]][2];
 end);
 
-# new for 4.0! - KernelOrbitSchutzGpFromData - not a user function!
+# new for 0.1! - KernelOrbitSchutzGpFromData - not a user function!
 ############################################################################
 # Usage: s = semigroup; d = kernel data; o = OrbitsOfKernels(s) (optional)
 
@@ -1806,7 +1806,7 @@ function(arg)
   return o!.schutz[d[4]][2];
 end);
 
-# new for 4.0! - KernelOrbitStabChain - not a user function!
+# new for 0.1! - KernelOrbitStabChain - not a user function!
 ############################################################################
 # Notes: returns true, false, or the stabilizer chain of the right Schutzenberger 
 # group of the specified kernel orbit. True indicates the Schutz. gp.
@@ -1823,7 +1823,7 @@ function(d)
   return d!.o[2]!.orbits[e[1]][e[2]]!.schutz[e[4]][1];
 end);
 
-# new for 4.0! - KernelOrbitStabChainFromData - not a user function!
+# new for 0.1! - KernelOrbitStabChainFromData - not a user function!
 ############################################################################
 
 # Usage: s - semigroup; d - kernel orbit data (i.e. second comp. of D-class
@@ -1851,7 +1851,7 @@ function(arg)
   return o!.schutz[d[4]][1];
 end);
 
-# new for 4.0! - KerRightToImgLeftFromData - not a user function.
+# new for 0.1! - KerRightToImgLeftFromData - not a user function.
 ###########################################################################
 # Usage: s = semigroup; d = kernel data; o = orbits of kernels (optional) 
 
@@ -1872,7 +1872,7 @@ function(arg)
   return o!.convert[d[4]][d[5]][d[6]];
 end);
 
-# new for 4.0! - KerRightToImgLeft - "for a D-class of a trans. semigp"
+# new for 0.1! - KerRightToImgLeft - "for a D-class of a trans. semigp"
 #############################################################################
 
 InstallMethod(KerRightToImgLeft, "for a D-class of a trans. semigp",
@@ -1881,7 +1881,7 @@ d-> KerRightToImgLeftFromData(d!.parent, d!.data[2], d!.o[2]));
 
 #NNN
 
-# new for 4.0! - NrGreensDClasses - "for a transformation semigroup"
+# new for 0.1! - NrGreensDClasses - "for a transformation semigroup"
 #############################################################################
 
 InstallMethod(NrGreensDClasses, "for a transformation semigroup", 
@@ -1892,7 +1892,7 @@ function(s)
   return Length(OrbitsOfKernels(s)!.data);
 end);
 
-# new for 4.0! - NrGreensHClasses - "for a D-class of a trans. semigroup"
+# new for 0.1! - NrGreensHClasses - "for a D-class of a trans. semigroup"
 #############################################################################
 
 InstallOtherMethod(NrGreensHClasses, "for a D-class of a trans. semigroup",
@@ -1901,7 +1901,7 @@ function(d)
   return NrGreensRClasses(d)*NrGreensLClasses(d);
 end);
 
-# new for 4.0! - NrGreensLClasses - "for a D-class of a trans. semigroup"
+# new for 0.1! - NrGreensLClasses - "for a D-class of a trans. semigroup"
 #############################################################################
 
 InstallOtherMethod(NrGreensLClasses, "for a D-class of a trans. semigroup",
@@ -1911,7 +1911,7 @@ function(d)
   data[1], d!.o[1]));
 end);
 
-# new for 4.0! - NrGreensRClasses - "for a D-class of a trans. semigroup"
+# new for 0.1! - NrGreensRClasses - "for a D-class of a trans. semigroup"
 #############################################################################
 
 InstallOtherMethod(NrGreensRClasses, "for a D-class of a trans. semigroup", 
@@ -1925,7 +1925,7 @@ function(d)
   return Length(KernelOrbitSCC(d))*Length(KernelOrbitCosets(d));
 end);
 
-# new for 4.0! - NrIdempotents - "for a D-class of a trans. semigroup"
+# new for 0.1! - NrIdempotents - "for a D-class of a trans. semigroup"
 #############################################################################
 
 InstallOtherMethod(NrIdempotents, "for a D-class of a trans. semigroup", 
@@ -1973,7 +1973,7 @@ function(d)
   return k;
 end);
 
-# new for 4.0! - NrRegularDClasses - "for a transformation semigroup"
+# new for 0.1! - NrRegularDClasses - "for a transformation semigroup"
 #############################################################################
 
 InstallMethod(NrRegularDClasses, "for a transformation semigroup",
@@ -1988,7 +1988,7 @@ end);
 
 #OOO
 
-# new for 4.0! - OrbitsOfKernels - "for a transformation semigroup"
+# new for 0.1! - OrbitsOfKernels - "for a transformation semigroup"
 #############################################################################
 
 InstallMethod(OrbitsOfKernels, "for a transformation semigroup",
@@ -2013,13 +2013,13 @@ end);
 
 #PPP
 
-# new for 4.0! - ParentAttr - "for a D-class of a trans. semigroup"
+# new for 0.1! - ParentAttr - "for a D-class of a trans. semigroup"
 #############################################################################
 
 InstallMethod(ParentAttr, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], x-> x!.parent);
 
-# new for 4.0! - PartialOrderOfDClasses - "for a transformation semigroup"
+# new for 0.1! - PartialOrderOfDClasses - "for a transformation semigroup"
 #############################################################################
 
 InstallMethod(PartialOrderOfDClasses, "for a transformation semigroup", 
@@ -2053,7 +2053,7 @@ function(s)
   return out;
 end);
 
-# new for 4.0! - PreInOrbitsOfKernels - not a user function!
+# new for 0.1! - PreInOrbitsOfKernels - not a user function!
 #############################################################################
 # Usage: s = semigroup (not a D-class), f = transformation,
 # rectify = should l in kernel data correspond to f (false) or be o[scc[1]] (true),
@@ -2101,7 +2101,7 @@ function(arg)
   return InOrbitsOfKernels(f, arg[3], data, o, kernels);
 end);
 
-# new for 4.0! - PrintObj - "for orbits of kernels"
+# new for 0.1! - PrintObj - "for orbits of kernels"
 #############################################################################
 
 InstallMethod(PrintObj, [IsOrbitsOfKernels], 
@@ -2110,7 +2110,7 @@ function(o)
    Length(o!.data), " D-classes>");
 end);
 
-# new for 4.0! - PrintObj - "for iterator of D-class reps"
+# new for 0.1! - PrintObj - "for iterator of D-class reps"
 #############################################################################
 
 InstallMethod(PrintObj, [IsIteratorOfDClassReps], 
@@ -2125,7 +2125,7 @@ function(iter)
   return;
 end);
 
-# new for 4.0! - PrintObj - "for iterator of D-classes"
+# new for 0.1! - PrintObj - "for iterator of D-classes"
 ############################################################################
 
 InstallMethod(PrintObj, [IsIteratorOfGreensDClasses], 
@@ -2136,7 +2136,7 @@ end);
 
 #SSS
 
-# new for 4.0! - SchutzenbergerGroup - "for a D-class of a trans. semigp."
+# new for 0.1! - SchutzenbergerGroup - "for a D-class of a trans. semigp."
 ############################################################################
 
 InstallOtherMethod(SchutzenbergerGroup, "for a D-class of a trans. semigp.",
@@ -2148,7 +2148,7 @@ function(d)
    d_schutz[e[4]][e[5]][e[6]][2];
 end);
 
-# new for 4.0! - Size - "for a D-class of a trans. semigp."
+# new for 0.1! - Size - "for a D-class of a trans. semigp."
 #############################################################################
 
 InstallOtherMethod(Size, "for a D-class of a trans. semigp.", 
@@ -2162,7 +2162,7 @@ function(d)
    Size(SchutzenbergerGroup(d));
 end);
 
-# new for 4.0! - SizeOrbitsOfKernels - not a user function.
+# new for 0.1! - SizeOrbitsOfKernels - not a user function.
 #############################################################################
 # Usage: s = transformation semigroup.
 

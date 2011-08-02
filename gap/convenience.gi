@@ -9,7 +9,7 @@
 ##
 
 # this file contains functions with shorter names than some library functions
-# commonly used in the monoid package. 
+# commonly used in the citrus package. 
 
 # new for 0.1! - DClass - "for a trans. semi and trans. or Green's class"
 #############################################################################
@@ -120,7 +120,7 @@ function(arg)
   return fail;
 end);
 
-# new for 0.1! - LClass - user function
+# new for 0.1! - LClass - "for a trans. semi. and trans. or H-class"
 #############################################################################
 # Usage: (trans. semigp. and trans.) or H-class.
 
@@ -138,7 +138,7 @@ function(arg)
   return fail;
 end);
 
-# new for 0.1! - LClassNC - user function
+# new for 0.1! - LClassNC - "for a trans. semi. and trans."
 #############################################################################
 # Usage: trans. semigp. and trans.
 
@@ -154,7 +154,7 @@ function(arg)
   return fail;
 end);
 
-# new for 0.1! - RClass - user function
+# new for 0.1! - RClass - "for a trans. semi. and trans. or H-class"
 #############################################################################
 # Usage: (trans. semigp. and trans.) or H-class.
 
@@ -172,7 +172,7 @@ function(arg)
   return fail;
 end);
 
-# new for 0.1! - RClassNC - user function
+# new for 0.1! - RClassNC - "for a trans. semi. and trans."
 #############################################################################
 # Usage: trans. semigp. and trans.
 

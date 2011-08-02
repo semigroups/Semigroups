@@ -1,18 +1,16 @@
 #############################################################################
 ##
 #W  orbits.gi
-#Y  Copyright (C) 2006-2011                              James D. Mitchell
+#Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-## $Id$
-##
 
 # - this file is alphabetized, keep it that way!
 
-# new for 4.0! - ChooseHashFunction - "for transformations and pos. int."
+# new for 0.1! - ChooseHashFunction - "for transformations and pos. int."
 #############################################################################
 
 InstallMethod(ChooseHashFunction, "for transformations and pos. int.",
@@ -22,7 +20,7 @@ function(p, hashlen)
    hashlen]);
 end);
 
-# new for 4.0! - GradedImagesOfTransSemigroup - "for a trans. semigroup"
+# new for 0.1! - GradedImagesOfTransSemigroup - "for a trans. semigroup"
 ###########################################################################
 
 InstallMethod(GradedImagesOfTransSemigroup, "for a trans. semigroup",
@@ -71,7 +69,7 @@ function(s)
   return out;
 end);
 
-# new for 4.0! - GradedKernelsOfTransSemigroup - "for a trans. semigroup"
+# new for 0.1! - GradedKernelsOfTransSemigroup - "for a trans. semigroup"
 #############################################################################
 
 InstallMethod(GradedKernelsOfTransSemigroup, "for a trans. semigroup",
@@ -119,7 +117,7 @@ function(s)
   return out;
 end);
 
-# new for 4.0! - HashTableForImages - not a user function!
+# new for 0.1! - HashTableForImages - not a user function!
 #############################################################################
 
 InstallGlobalFunction(HashTableForImages, 
@@ -140,7 +138,7 @@ function(img)
   return ht;
 end);
 
-# new for 4.0! - HashTableForKernels - not a user function!
+# new for 0.1! - HashTableForKernels - not a user function!
 #############################################################################
 
 InstallGlobalFunction(HashTableForKernels, 
@@ -159,7 +157,7 @@ function(ker, n)
   return ht;
 end);
 
-# new for 4.0! - HashFunctionForTransformation - not a user function!
+# new for 0.1! - HashFunctionForTransformation - not a user function!
 #############################################################################
 
 InstallGlobalFunction(HashFunctionForTransformation,
@@ -167,7 +165,7 @@ function(v,data)
    return ORB_HashFunctionForIntList(v![1], data); 
 end);
 
-# new for 4.0! - ImagesOfTransSemigroup - "for a transformation semigroup"
+# new for 0.1! - ImagesOfTransSemigroup - "for a transformation semigroup"
 ###########################################################################
 
 InstallMethod(ImagesOfTransSemigroup, "for a transformation semigroup",
@@ -175,7 +173,7 @@ InstallMethod(ImagesOfTransSemigroup, "for a transformation semigroup",
   s-> Orb(Generators(s), [1..Degree(s)], OnSets, rec(storenumbers:=true, 
    schreier:=true)));
 
-# new for 4.0! - ImagesOfTransSemigroup - "for trans semigp and pos int"
+# new for 0.1! - ImagesOfTransSemigroup - "for trans semigp and pos int"
 ###########################################################################
 
 InstallOtherMethod(ImagesOfTransSemigroup, "for trans semigp and pos int", 
@@ -189,7 +187,7 @@ local n;
   onlygrades:=[m..n]));
 end);
 
-# new for 4.0! - KernelsOfTransSemigroup - "for a trans. semigroup"
+# new for 0.1! - KernelsOfTransSemigroup - "for a trans. semigroup"
 ########################################################################### 
 
 InstallOtherMethod(KernelsOfTransSemigroup, "for a trans. semigroup", 
@@ -210,7 +208,7 @@ function(s)
    treehashsize:=bound, schreier:=true));
 end);
 
-# new for 4.0! - KernelsOfTransSemigroup - "for trans semigp pos int"
+# new for 0.1! - KernelsOfTransSemigroup - "for trans semigp pos int"
 ########################################################################### 
 
 InstallOtherMethod(KernelsOfTransSemigroup, "for trans semigp pos int", 
@@ -233,7 +231,7 @@ function(s, m)
    onlygrades:=[m..max], schreier:=true));
 end);
 
-# new for 4.0! - OnKernelsAntiAction - for a trans img list and same 
+# new for 0.1! - OnKernelsAntiAction - for a trans img list and same 
 ###########################################################################
 
 InstallGlobalFunction(OnKernelsAntiAction, 
@@ -242,7 +240,7 @@ function(f,g)
   return CanonicalTransSameKernel(f{g});  
 end);
 
-# new for 4.0! - StrongOrbitsInForwardOrbit - for IsOrbit
+# new for 0.1! - StrongOrbitsInForwardOrbit - for IsOrbit
 #############################################################################
 
 InstallGlobalFunction(StrongOrbitsInForwardOrbit, [IsOrbit], 

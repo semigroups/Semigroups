@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  h.gi
-#Y  Copyright (C) 2006-2011                              James D. Mitchell
+#Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -24,7 +24,7 @@
 # other equalities of Green's classes handled by generic method in greens.gi!
 
 
-# new for 4.0! - \= - "for H-class and H-class of trans. semigp."
+# new for 0.1! - \= - "for H-class and H-class of trans. semigp."
 ############################################################################
 
 InstallMethod(\=, "for H-class and H-class of trans. semigp.",
@@ -34,7 +34,7 @@ function(h1, h2)
 return h1!.parent=h2!.parent and h1!.rep in h2;
 end);
 
-# new for 4.0! - \< - "for H-class and H-class of trans. semigp."
+# new for 0.1! - \< - "for H-class and H-class of trans. semigp."
 ############################################################################
 
 InstallMethod(\<, "for H-class and H-class of trans. semigp.",
@@ -44,7 +44,7 @@ function(h1, h2)
 return h1!.parent=h2!.parent and h1!.rep < h2!.rep;
 end);
 
-# new for 4.0! - \in - "for trans. and H-class of trans. semigp."
+# new for 0.1! - \in - "for trans. and H-class of trans. semigp."
 ############################################################################
 
 InstallOtherMethod(\in, "for trans. and H-class of trans. semigp.",
@@ -66,7 +66,7 @@ end);
 
 #AAA
 
-# new for 4.0! - AsSSortedList - "for H-class of trans. semigp."
+# new for 0.1! - AsSSortedList - "for H-class of trans. semigp."
 #############################################################################
 # this should be removed after the library method for AsSSortedList 
 # for a Green's class is removed. The default AsSSortedList for a collection
@@ -81,7 +81,7 @@ end);
 
 #CCC
 
-# new for 4.0! - CreateHClass - not a user function
+# new for 0.1! - CreateHClass - not a user function
 #############################################################################
 # Usage: s = semigroup; data = [unrectified img data, unrectified ker data, 
 # img coset rep, ker coset rep]; orbit = [OrbitsOfImages, OrbitsOfKernels];
@@ -106,7 +106,7 @@ end);
 
 #DDD
 
-# new for 4.0! - DClassOfHClass - for an H-class of a trans. semigroup
+# new for 0.1! - DClassOfHClass - for an H-class of a trans. semigroup
 #############################################################################
 
 InstallOtherMethod(DClassOfHClass, "for an H-class of a trans. semigroup",
@@ -124,7 +124,7 @@ end);
 
 #EEE
 
-# new for 4.0! - Enumerator - "for H-class of trans. semigp."
+# new for 0.1! - Enumerator - "for H-class of trans. semigp."
 #############################################################################
 
 InstallOtherMethod(Enumerator, "for H-class of trans. semigp.", 
@@ -182,7 +182,7 @@ end);
 
 #GGG
 
-# new for 4.0! - GreensHClasses - "for a transformation semigroup"
+# new for 0.1! - GreensHClasses - "for a transformation semigroup"
 ##############################################################################
 # JDM move to greens.gi
 
@@ -205,7 +205,7 @@ function(s)
   return out;
 end);
 
-# new for 4.0! - GreensHClassOfElement - "for a trans. semigp. and trans."
+# new for 0.1! - GreensHClassOfElement - "for a trans. semigp. and trans."
 ############################################################################
 
 InstallMethod(GreensHClassOfElement, "for a trans. semigp. and trans.", 
@@ -243,7 +243,7 @@ function(s, f)
    HClassRepFromData(s, d));
 end);
 
-# new for 4.0! - GreensHClassOfElementNC - "for a trans. semigp and trans."
+# new for 0.1! - GreensHClassOfElementNC - "for a trans. semigp and trans."
 #############################################################################
 
 InstallOtherMethod(GreensHClassOfElementNC, "for a trans. semigp and trans.", 
@@ -301,7 +301,7 @@ function(s, f)
    [img_o, ker_o], f);
 end);
 
-# new for 4.0! - GroupHClass - "for a D-class of a trans. semigp."
+# new for 0.1! - GroupHClass - "for a D-class of a trans. semigp."
 ############################################################################
 # JDM move to d.gi!
 
@@ -347,7 +347,7 @@ function(d)
   return fail;
 end);
 
-# new for 4.0! - GroupHClassOfGreensDClass - "for D-class of trans. semigp."
+# new for 0.1! - GroupHClassOfGreensDClass - "for D-class of trans. semigp."
 ############################################################################
 # move to d.gi! JDM
 
@@ -356,7 +356,7 @@ InstallMethod(GroupHClassOfGreensDClass, "for D-class of trans. semigp.",
 
 #III 
 
-# new for 4.0! - Idempotents - "for an H-class of a trans. semigp."
+# new for 0.1! - Idempotents - "for an H-class of a trans. semigp."
 ############################################################################
 
 InstallOtherMethod(Idempotents, "for an H-class of a trans. semigp.", 
@@ -379,7 +379,7 @@ function(h)
   return [];
 end);
 
-# new for 4.0! - IsGroupHClass - "for an H-class of a trans. semigp."
+# new for 0.1! - IsGroupHClass - "for an H-class of a trans. semigp."
 ############################################################################
 # install methods for other types of Green's classes...
 
@@ -391,7 +391,7 @@ function(h)
   return IsInjectiveTransOnList(f, ImageSetOfTransformation(f));
 end);
 
-# new for 4.0! - IsomorphismPermGroup - "for H-class of trans. semigp."
+# new for 0.1! - IsomorphismPermGroup - "for H-class of trans. semigp."
 ###########################################################################
 
 InstallOtherMethod(IsomorphismPermGroup, "for H-class of trans. semigp.", 
@@ -413,7 +413,7 @@ function(h)
   return MappingByFunction(h, g, AsPermutation);
 end);
 
-# new for 4.0! - IteratorOfGreensHClasses - "for a transformation semigroup"
+# new for 0.1! - IteratorOfGreensHClasses - "for a transformation semigroup"
 ############################################################################
 # move to greens.gi
 
@@ -455,7 +455,7 @@ local iter;
   return iter;
 end);
 
-# new for 4.0! - IteratorOfHClassReps - user function!
+# new for 0.1! - IteratorOfHClassReps - user function!
 ############################################################################
 
 InstallGlobalFunction(IteratorOfHClassReps,
@@ -490,7 +490,7 @@ function(s)
   return iter;
 end);
 
-# new for 4.0! - IteratorOfHClassRepsData - not a user function
+# new for 0.1! - IteratorOfHClassRepsData - not a user function
 ############################################################################
 
 InstallGlobalFunction(IteratorOfHClassRepsData, 
@@ -540,7 +540,7 @@ end);
 
 #HHH
 
-# new for 4.0! - HClassRepFromData - not a user function!
+# new for 0.1! - HClassRepFromData - not a user function!
 ############################################################################
 # Usage: s = semigroup; 
 # d = [image data, kernel data, image cosets rep, kernel cosets rep];
@@ -569,7 +569,7 @@ function(arg)
   return f*(d[3]/perms[d[1][3]]);
 end);
 
-# new for 4.0! - HClassClassType - not a user function!
+# new for 0.1! - HClassClassType - not a user function!
 ############################################################################
 
 InstallMethod(HClassType, "for a transformation semigroup", 
@@ -583,7 +583,7 @@ end);
 
 #LLL
 
-# new for 4.0! - LClassOfHClass - "for an H-class of a trans. semigroup"
+# new for 0.1! - LClassOfHClass - "for an H-class of a trans. semigroup"
 #############################################################################
 
 InstallOtherMethod(LClassOfHClass, "for an H-class of a trans. semigroup", 
@@ -600,7 +600,7 @@ end);
 
 #RRR
 
-# new for 4.0! - RClassOfHClass - "for an H-class of a trans. semigroup"
+# new for 0.1! - RClassOfHClass - "for an H-class of a trans. semigroup"
 #############################################################################
 # JDM this is not correct! the R-class of the H-class corresponds to d[1] and a
 # kernel orbit coset. The kernel orbit coset is not represented here. This
@@ -620,14 +620,14 @@ end);
 
 #PPP
 
-# new for 4.0! - ParentAttr - "for H-class of a trans. semigroup"
+# new for 0.1! - ParentAttr - "for H-class of a trans. semigroup"
 ############################################################################
 
 InstallMethod(ParentAttr, "for H-class of a trans. semigroup", 
 [IsGreensHClass and IsGreensClassOfTransSemigp], x-> x!.parent);
 
 
-# new for 4.0! - PrintObj - IsIteratorOfHClassReps
+# new for 0.1! - PrintObj - IsIteratorOfHClassReps
 ############################################################################
 # JDM move to greens.gi?
 InstallMethod(PrintObj, [IsIteratorOfHClassReps], 
@@ -637,7 +637,7 @@ Print( "<iterator of H-class reps>");
 return;
 end);
 
-# new for 4.0! - PrintObj - IsIteratorOfGreensHClasses
+# new for 0.1! - PrintObj - IsIteratorOfGreensHClasses
 ############################################################################
 # JDM move to greens.gi.
 
@@ -649,7 +649,7 @@ end);
 
 #SSS
 
-# new for 4.0! - SchutzenbergerGroup - "for an H-class of a trans. semigp."
+# new for 0.1! - SchutzenbergerGroup - "for an H-class of a trans. semigp."
 ############################################################################
 
 InstallOtherMethod(SchutzenbergerGroup, "for an H-class of a trans. semigp.",
@@ -663,14 +663,14 @@ function(h)
   return DClassSchutzGpFromData(s, d[2], o[2])^(d[3]/perms[d[1][3]]);
 end);
 
-# new for 4.0! - Size - "for an H-class of a trans. semigp."
+# new for 0.1! - Size - "for an H-class of a trans. semigp."
 ############################################################################
 
 InstallMethod(Size, "for an H-class of a trans. semigp.",
 [IsGreensHClass and IsGreensClassOfTransSemigp],
   h-> Size(DClassSchutzGpFromData(h!.parent, h!.data[2], h!.o[2])));
 
-# new for 4.0! - StructureDescription - "for group H-class of trans. semigp."
+# new for 0.1! - StructureDescription - "for group H-class of trans. semigp."
 ############################################################################
 
 InstallOtherMethod(StructureDescription, "for group H-class of trans. semigp.",

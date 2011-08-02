@@ -313,7 +313,9 @@ function(r)
   return ConstantTimeAccessList(EnumeratorSorted(r));
 end);
 
-# new for 0.1! - CreateImageOrbitSCCPerms -not a user function!
+#CCC
+
+# new for 0.1! - CreateImageOrbitSCCPerms - not a user function!
 #############################################################################
 # Usage: gens = Generators(s); o = image orbit; j = index of scc.
 
@@ -336,8 +338,6 @@ function(gens, o, j)
 
   return p;
 end);
-
-#CCC
 
 # new for 0.1! - CreateImageOrbitSchutzGp - not a user function!
 #############################################################################
@@ -1894,16 +1894,6 @@ function(iter)
   return;
 end);
 
-# new for 0.1! - PrintObj - "for R-class data"
-#############################################################################
-# JDM move to legacy...
-
-#InstallMethod( PrintObj, "for R-class data",
-#[ IsGreensRClassData and IsGreensRClassDataRep],
-#function( obj )
-#  Print( "GreensRClassData( ", obj!.rep,  " )" );
-#end );
-
 # new for 0.1! - PrintObj - for IsIteratorOfGreensRClasses
 ############################################################################
 
@@ -2131,21 +2121,10 @@ end);
 
 #VVV
 
-# new for 3.0! - ViewObj - "for Green's R-class data"
-#############################################################################
-# JDM move to legacy.gi
-
-#InstallMethod(ViewObj, "for Green's R-class data",
-#[IsGreensRClassData and IsGreensRClassDataRep],
-#function( obj )
-#  Print( "GreensRClassData( ", obj!.rep, ", ", obj!.strongorb,", ", obj!.perms,
-#  ", ", obj!.schutz, " )" );
-#end );
-
-# new for 0.1! - ViewObj - "for a monoid pkg img ker orbit"
+# new for 0.1! - ViewObj - "for a citrus pkg img ker orbit"
 #############################################################################
 
-InstallMethod(ViewObj, "for a monoid pkg img ker orbit",
+InstallMethod(ViewObj, "for a citrus pkg img ker orbit",
 [IsMonoidPkgImgKerOrbit],
 function( o )
 
@@ -2180,28 +2159,4 @@ function( o )
   return;
 end );
 
-#############################################################################
-# DELETE!
-
-CheckSchreierWords:=function(o)
-local scc, words, reps, i, j, k, f, gens;
-gens:=o!.gens;
-scc:=o!.scc;
-words:=o!.words;
-reps:=o!.reps;
-
-for i in [1..Length(scc)] do 
-  for j in [1..Length(words[i])] do #words related to scc[i]
-    for k in [1..Length(words[i][j])] do 
-      if not EvaluateWord(gens, words[i][j][k])=reps[i][j][k] 
-       then 			
-        return [i,j,k];
-      fi;
-    od;
-  od;
-od;
-
-return true;
-end;
-
-#############################################################################
+#EOF

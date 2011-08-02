@@ -1,18 +1,16 @@
 #############################################################################
 ##
 #W  greens.gi
-#Y  Copyright (C) 2006-2011                              James D. Mitchell
+#Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-## $Id$
-##
 
 #############################################################################
 
-# new for 4.0! \=, "for Green's class and Green's class of trans. semigp."
+# new for 0.1! - \= - "for Green's class and Green's class of trans. semigp."
 #############################################################################
 
 InstallMethod(\=, "for Green's class and Green's class of trans. semigp.",
@@ -21,13 +19,13 @@ function(x, y)
   return x!.parent=y!.parent and x!.rep in y and Size(x)=Size(y);
 end);
 
-# new for 4.0! - \< - "for Green's class and Green's class of trans. semigp."
+# new for 0.1! - \< - "for Green's class and Green's class of trans. semigp."
 #############################################################################
 
 InstallMethod(\<, "for Green's class and Green's class of trans. semigp.", 
 [IsGreensClassOfTransSemigp, IsGreensClassOfTransSemigp], ReturnFail);
 
-# new for 4.0! - \= - "for trans. semigp. and trans. semigp."
+# new for 0.1! - \= - "for trans. semigp. and trans. semigp."
 #############################################################################
 
 InstallMethod(\=, "for trans. semigp. and trans. semigp.",
@@ -39,7 +37,7 @@ end);
 
 #GGG
 
-# new for 4.0! - GreensJClassOfElement - for a trans. semigroup and trans."
+# new for 0.1! - GreensJClassOfElement - for a trans. semigroup and trans."
 #############################################################################
 
 InstallOtherMethod(GreensJClassOfElement, "for a trans. semigroup and trans.",
@@ -51,7 +49,7 @@ end);
 
 #III
 
-# new for 4.0! - Idempotents - "for a transformation semigroup"
+# new for 0.1! - Idempotents - "for a transformation semigroup"
 #############################################################################
 
 InstallOtherMethod(Idempotents, "for a transformation semigroup", 
@@ -99,7 +97,7 @@ function(s)
   return Concatenation(List(GreensRClasses(s), Idempotents));
 end);
 
-# new for 4.0! - Idempotents - "for a trans. semigroup and pos. int."
+# new for 0.1! - Idempotents - "for a trans. semigroup and pos. int."
 ####################################################################################
 
 InstallOtherMethod(Idempotents, "for a trans. semigroup and pos. int.", 
@@ -149,13 +147,13 @@ function(s, i)
   return out;
 end);
 
-# new for 4.0! - IsGreensClassOfTransSemigp - "for a Green's class"
+# new for 0.1! - IsGreensClassOfTransSemigp - "for a Green's class"
 #############################################################################
 
 InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
 [IsGreensClass], x-> IsTransformationSemigroup(ParentAttr(x)));
 
-# new for 4.0! - IsGreensClass - "for a Green's class"
+# new for 0.1! - IsGreensClass - "for a Green's class"
 #############################################################################
 
 InstallOtherMethod(IsGreensClass, "for an object", [IsObject], ReturnFalse);
@@ -166,7 +164,7 @@ InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 
 #NNN
 
-# new for 4.0! - NrIdempotents - "for a transformation semigroup"
+# new for 0.1! - NrIdempotents - "for a transformation semigroup"
 #############################################################################
 
 InstallMethod(NrIdempotents, "for a transformation semigroup", 
@@ -194,7 +192,7 @@ function(s)
   return i;
 end);
 
-# new for 4.0! - NrGreensHClasses - "for a transformation semigroup"
+# new for 0.1! - NrGreensHClasses - "for a transformation semigroup"
 #############################################################################
  
 InstallMethod(NrGreensHClasses, "for a transformation semigroup", 

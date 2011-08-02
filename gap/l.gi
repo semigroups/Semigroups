@@ -1,13 +1,12 @@
 #############################################################################
 ##
 #W  l.gi
-#Y  Copyright (C) 2006-2011                              James D. Mitchell
+#Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-## $Id$
 
 #############################################################################
 # Notes
@@ -22,7 +21,7 @@
 #############################################################################
 # other equalities of Green's classes handled by generic method in greens.gi!
 
-# new for 4.0! - \= - "for L-class and L-class of trans. semigp."
+# new for 0.1! - \= - "for L-class and L-class of trans. semigp."
 #############################################################################
 
 InstallMethod(\=, "for L-class and L-class of trans. semigp.",
@@ -32,7 +31,7 @@ function(l1, l2)
   return l1!.parent=l2!.parent and l1!.rep in l2;
 end);
 
-# new for 4.0! - \< - "for L-class and L-class of trans. semigp."
+# new for 0.1! - \< - "for L-class and L-class of trans. semigp."
 ############################################################################
 
 InstallMethod(\<, "for L-class and L-class of trans. semigp.",
@@ -42,7 +41,7 @@ function(h1, h2)
   return h1!.parent=h2!.parent and h1!.rep < h2!.rep;
 end);
 
-# new for 4.0! - \in - "for trans. and L-class of trans. semigp."
+# new for 0.1! - \in - "for trans. and L-class of trans. semigp."
 #############################################################################
 
 InstallOtherMethod(\in, "for trans. and L-class of trans. semigp.",
@@ -89,7 +88,7 @@ function(f, l)
   return SiftedPermutation(schutz, PermLeftQuoTransformationNC(rep, g)^p)=();
 end);
 
-# new for 4.0! - AsSSortedList - "for L-class of trans. semigp."
+# new for 0.1! - AsSSortedList - "for L-class of trans. semigp."
 #############################################################################
 # this should be removed after the library method for AsSSortedList 
 # for a Green's class is removed. The default AsSSortedList for a collection
@@ -104,7 +103,7 @@ end);
 
 #CCC
 
-# new for 4.0! - CreateLClass - not a user function!
+# new for 0.1! - CreateLClass - not a user function!
 #############################################################################
 # Usage: s = semigroup; data = [image data, kernel data, coset index] (image
 # data, kernel data any lengths); orbit = [OrbitsOfImages, OrbitsOfKernels];
@@ -131,7 +130,7 @@ end);
 
 #DDD
 
-# new for 4.0! - DClassOfLClass - "for an L-class of a trans. semigroup"
+# new for 0.1! - DClassOfLClass - "for an L-class of a trans. semigroup"
 #############################################################################
 
 InstallOtherMethod(DClassOfLClass, "for an L-class of a trans. semigroup",
@@ -147,7 +146,7 @@ end);
 
 #EEE
 
-# new for 4.0! - Enumerator - "for L-class of trans. semigp."
+# new for 0.1! - Enumerator - "for L-class of trans. semigp."
 ##############################################################################
 
 InstallOtherMethod(Enumerator, "for L-class of trans. semigp.", 
@@ -234,7 +233,7 @@ end);
 
 #GGG
 
-# new for 4.0! - GreensHClasses - "for an L-class of a trans. semigp."
+# new for 0.1! - GreensHClasses - "for an L-class of a trans. semigp."
 #############################################################################
 
 InstallOtherMethod(GreensHClasses, "for an L-class of a trans. semigp.", 
@@ -263,7 +262,7 @@ function(l)
   return out;
 end);
 
-# new for 4.0! - GreensHClassReps - "for an L-class of a trans. semigp."
+# new for 0.1! - GreensHClassReps - "for an L-class of a trans. semigp."
 #############################################################################
 
 InstallOtherMethod(GreensHClassReps, "for an L-class of a trans. semigp.", 
@@ -297,7 +296,7 @@ function(l)
   return out;
 end);
 
-# new for 4.0! - GreensHClassRepsData - "for L-class of trans. semigp."
+# new for 0.1! - GreensHClassRepsData - "for L-class of trans. semigp."
 #############################################################################
 
 InstallOtherMethod(GreensHClassRepsData, "for L-class of trans. semigp.", 
@@ -327,7 +326,7 @@ function(l)
   return out;
 end);
 
-# new for 4.0! - GreensLClasses - "for a transformation semigroup"
+# new for 0.1! - GreensLClasses - "for a transformation semigroup"
 #############################################################################
 # JDM move to greens.gi
 
@@ -350,7 +349,7 @@ function(s)
   return out;
 end);
 
-# new for 4.0! - GreensLClassOfElement - "for a trans. semigp and trans."
+# new for 0.1! - GreensLClassOfElement - "for a trans. semigp and trans."
 #############################################################################
 
 InstallOtherMethod(GreensLClassOfElement, "for a trans. semigp and trans.", 
@@ -383,7 +382,7 @@ function(s, f)
   return l;
 end);
 
-# new for 4.0! - GreensLClassOfElementNC - "for a trans. semigp and trans."
+# new for 0.1! - GreensLClassOfElementNC - "for a trans. semigp and trans."
 #############################################################################
 # JDM test this more!
 
@@ -440,7 +439,7 @@ function(s, f)
    [img_o, ker_o], f);
 end);
 
-# new for 4.0! - GreensLClassReps - "for a trans. semigroup"
+# new for 0.1! - GreensLClassReps - "for a trans. semigroup"
 #############################################################################
 
 InstallMethod(GreensLClassReps, "for a trans. semigroup", 
@@ -463,7 +462,7 @@ end);
 
 #III
 
-# new for 4.0! - Idempotents - "for an L-class of a trans. semigp."
+# new for 0.1! - Idempotents - "for an L-class of a trans. semigp."
 #############################################################################
 # maybe make iterator at some point in the future JDM!
 
@@ -508,7 +507,7 @@ function(l)
   return out;
 end);
 
-# new for 4.0! - ImageOrbitCosets - "for a L-class of trans. semigroup"
+# new for 0.1! - ImageOrbitCosets - "for a L-class of trans. semigroup"
 ###########################################################################
 # Notes: returns a transversal of right cosets of SchutzenbergerGroup(d)
 # (which is ImgLeft) in ImageOrbitSchutzGp (which is ImgLeft), where d is the
@@ -522,7 +521,7 @@ function(d)
   return d!.o[2]!.orbits[e[1]][e[2]]!.d_schutz[e[4]][e[5]][e[6]][3];
 end);
 
-# new for 4.0! - ImageOrbitPerms - for a L-class of a trans. semigp.
+# new for 0.1! - ImageOrbitPerms - for a L-class of a trans. semigp.
 ############################################################################
   
 InstallOtherMethod(ImageOrbitPerms, "for a L-class of a trans. semigp.",
@@ -533,7 +532,7 @@ function(r)
   return r!.o[1]!.orbits[d[1]][d[2]]!.perms;
 end);
 
-# new for 4.0! - IsRegularLClass - "for an L-class of trans. semigroup"
+# new for 0.1! - IsRegularLClass - "for an L-class of trans. semigroup"
 ###########################################################################
 # JDM: don't see a current need for IsRegularLClassData...
 
@@ -570,7 +569,7 @@ function(l)
   return false;
 end);
 
-# new for 4.0! - IteratorOfGreensLClasses - user function!
+# new for 0.1! - IteratorOfGreensLClasses - user function!
 ###########################################################################
 
 InstallGlobalFunction(IteratorOfGreensLClasses, 
@@ -610,7 +609,7 @@ function(s)
   return iter;
 end);
 
-# new for 4.0! - IteratorOfLClassReps - user function!
+# new for 0.1! - IteratorOfLClassReps - user function!
 ###########################################################################
 
 InstallGlobalFunction(IteratorOfLClassReps,
@@ -647,7 +646,7 @@ function(s)
   return iter;
 end);
 
-# new for 4.0! - IteratorOfLClassRepsData - not a user function
+# new for 0.1! - IteratorOfLClassRepsData - not a user function
 ###########################################################################
 
 InstallGlobalFunction(IteratorOfLClassRepsData, 
@@ -714,7 +713,7 @@ end);
 
 #KKK
 
-# new for 4.0! - KernelOrbit - "for a L-class of a trans. semigp."
+# new for 0.1! - KernelOrbit - "for a L-class of a trans. semigp."
 ############################################################################
 
 InstallOtherMethod(KernelOrbit, "for a L-class of a trans. semigp.",
@@ -725,7 +724,7 @@ function(d)
   return d!.o[2]!.orbits[e[1]][e[2]];
 end);
 
-# new for 4.0! - KernelOrbitCosets - not a user function!
+# new for 0.1! - KernelOrbitCosets - not a user function!
 ###########################################################################
 # Notes: if d=DClassOfLClass(l) then this returns a transversal of right 
 # cosets of SchutzenbergerGroup(d) (which is ImgLeft) in 
@@ -750,7 +749,7 @@ function(l)
    l!.data[2], l!.o[2]), d_schutz);
 end);
 
-# new for 4.0! - KernelOrbitRels - "for L-class of trans. semigp"
+# new for 0.1! - KernelOrbitRels - "for L-class of trans. semigp"
 ############################################################################
 
 InstallOtherMethod(KernelOrbitRels,"for  L-class of a trans. semigp",
@@ -762,7 +761,7 @@ function(d)
   return d!.o[2]!.orbits[e[1]][e[2]]!.rels;
 end);
 
-# new for 4.0! - KernelOrbitSCC - "for L-class of trans. semigp"
+# new for 0.1! - KernelOrbitSCC - "for L-class of trans. semigp"
 #############################################################################
 
 InstallOtherMethod(KernelOrbitSCC, "for L-class of trans. semigp",
@@ -774,7 +773,7 @@ function(d)
   return d!.o[2]!.orbits[e[1]][e[2]]!.scc[e[4]];
 end);
 
-# new for 4.0! - KernelOrbitSchutzGp - "for a L-class of a trans. semigp."
+# new for 0.1! - KernelOrbitSchutzGp - "for a L-class of a trans. semigp."
 ############################################################################
 # Notes: returns the schutz. gp. of the kernel orbit of the L-class, which is
 # KerRight.
@@ -787,7 +786,7 @@ function(d)
   return d!.o[2]!.orbits[e[1]][e[2]]!.schutz[e[4]][2];
 end);
 
-# new for 4.0! - KernelOrbitStabChain - "for L-class of a trans. semigp."
+# new for 0.1! - KernelOrbitStabChain - "for L-class of a trans. semigp."
 ############################################################################
 # Notes: returns true, false, or the stabilizer chain of the right
 # Schutzenberger group of the specified kernel orbit. True indicates the 
@@ -804,7 +803,7 @@ function(l)
   return l!.o[2]!.orbits[e[1]][e[2]]!.schutz[e[4]][1];
 end);
 
-# new for 4.0! - KerRightToImgLeft - "for a L-class of a trans. semigp"
+# new for 0.1! - KerRightToImgLeft - "for a L-class of a trans. semigp"
 #############################################################################
 
 InstallOtherMethod(KerRightToImgLeft, "for a L-class of a trans. semigp",
@@ -813,7 +812,7 @@ l-> KerRightToImgLeftFromData(l!.parent, l!.data[2], l!.o[2]));
 
 #LLL
 
-# new for 4.0! - LClassRepFromData - not a user function
+# new for 0.1! - LClassRepFromData - not a user function
 ############################################################################
 # Usage: s = semigroup; d = [image data, kernel data, coset index];
 # o = [OrbitsOfImages, OrbitsOfKernels] (optional).
@@ -835,7 +834,7 @@ function(arg)
   return f*(d[3]/perms[d[1][3]]);
 end);
 
-# new for 4.0! - LClassType - "for a transformation semigroup"
+# new for 0.1! - LClassType - "for a transformation semigroup"
 ############################################################################
 
 InstallMethod(LClassType, "for a transformation semigroup", 
@@ -849,7 +848,7 @@ end);
 
 #NNN
 
-# new for 4.0! - NrGreensLClasses - "for a transformation semigroup"
+# new for 0.1! - NrGreensLClasses - "for a transformation semigroup"
 #############################################################################
 # JDM move this to greens.gi
 
@@ -867,14 +866,14 @@ function(s)
   return i;
 end);
 
-# new for 4.0! - NrGreensHClasses - "for an L-class of a trans. semigroup"
+# new for 0.1! - NrGreensHClasses - "for an L-class of a trans. semigroup"
 #############################################################################
 
 InstallOtherMethod(NrGreensHClasses, "for an L-class of a trans. semigroup", 
 [IsGreensLClass and IsGreensClassOfTransSemigp], 
   l-> NrGreensRClasses(DClassOfLClass(l)));
 
-# new for 4.0! - NrIdempotents - "for an L-class of a trans. semigp."
+# new for 0.1! - NrIdempotents - "for an L-class of a trans. semigp."
 ############################################################################
 
 InstallOtherMethod(NrIdempotents, "for an L-class of a trans. semigp.", 
@@ -914,13 +913,13 @@ end);
 
 #PPP
 
-# new for 4.0! - ParentAttr - "for L-class of a trans. semigroup"
+# new for 0.1! - ParentAttr - "for L-class of a trans. semigroup"
 ############################################################################
 
 InstallMethod(ParentAttr, "for L-class of a trans. semigroup", 
 [IsGreensLClass and IsGreensClassOfTransSemigp], x-> x!.parent);
 
-# new for 4.0! - PrintObj - for IsIteratorOfLClassReps
+# new for 0.1! - PrintObj - for IsIteratorOfLClassReps
 ############################################################################
 
 InstallMethod(PrintObj, [IsIteratorOfLClassReps], 
@@ -929,7 +928,7 @@ function(iter)
   return;
 end);
 
-# new for 4.0! - PrintObj - for IsIteratorOfGreensLClasses
+# new for 0.1! - PrintObj - for IsIteratorOfGreensLClasses
 ############################################################################
 
 InstallMethod(PrintObj, [IsIteratorOfGreensLClasses], 
@@ -940,7 +939,7 @@ end);
 
 #SSS
 
-# new for 4.0! - SchutzenbergerGroup - "for an L-class of a trans. semigp."
+# new for 0.1! - SchutzenbergerGroup - "for an L-class of a trans. semigp."
 #############################################################################
 
 InstallOtherMethod(SchutzenbergerGroup, "for an L-class of a trans. semigp.",
@@ -959,7 +958,7 @@ function(l)
   return g^(KerRightToImgLeft(l)*d[3]/x);
 end);
 
-# new for 4.0! - Size - "for an L-class of a trans. semigp."
+# new for 0.1! - Size - "for an L-class of a trans. semigp."
 #############################################################################
 ##  Algorithm C. 
 
