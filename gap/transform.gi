@@ -9,7 +9,7 @@
 ##
 
 # if f is a transformation, then f![1] is the image list, f![2] is the image
-# set, f![3] is the kernel as a partition, f![4] is ..., f![5] is the rank of f
+# set, f![3] is the kernel, f![4] is AsPermOfKerImg, f![5] is the rank of f
 # f![6] is the canonical trans. with same kernel
 
 # new for 0.1! - \^ - "for a transformation and a permutation (citrus pkg)"
@@ -22,35 +22,36 @@ function(t,p)
   return p^-1*t*p;
 end); 
 
+# new for 0.1! - \* - "for a transformation and a permutation (citrus pkg)"
 #############################################################################
 
 InstallMethod(\*, "for a transformation and a permutation (citrus pkg)", 
 [IsTransformation and IsTransformationRep, IsPerm], 10,
 function(x, y)
-local c;
-c:=OnTuples(x![1], y);
-MakeImmutable(c);
-return Objectify( TypeObj(x), [ c ] );
+  local c;
+  c:=OnTuples(x![1], y);
+  MakeImmutable(c);
+  return Objectify( TypeObj(x), [ c ] );
 end);
 
+# new for 0.1! - \* - "for a transformation and a transformation (citrus pkg)"
 #############################################################################
 
 InstallMethod(\*, "for a transformation and transformation (citrus pkg)", 
 [IsTransformation and IsTransformationRep, 
-IsTransformation and IsTransformationRep], 10,
+ IsTransformation and IsTransformationRep], 10,
 function(x, y)
-local  a, b, c;
-a := x![1];
-b := y![1];
-c := b{a};
-MakeImmutable(c);
-return Objectify( TypeObj(x), [ c ] );
+  local  a, b, c;
+  a := x![1]; b := y![1]; c := b{a};
+  MakeImmutable(c);
+  return Objectify( TypeObj(x), [ c ] );
 end);
 
 #AAA
 
+# new for 0.1! - AsPermOfKerImg - "for a transformation"
 #############################################################################
-# returns a perm such that i -> ker[i]^f
+# Notes: returns a perm such that i -> ker[i]^f, performs no checks. 
 
 InstallGlobalFunction(AsPermOfKerImg,
 function(f)
@@ -68,6 +69,8 @@ function(f)
 
   return f![4];
 end);
+
+#JDM here!
 
 ############################################################################
 

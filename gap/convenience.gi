@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  convenience.gi
-#Y  Copyright (C) 2011                                      James D. Mitchell
+#Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -11,7 +11,7 @@
 # this file contains functions with shorter names than some library functions
 # commonly used in the monoid package. 
 
-# new for 0.1! - DClass - user function
+# new for 0.1! - DClass - "for a trans. semi and trans. or Green's class"
 #############################################################################
 # Usage: (trans. semigp. and trans.) or H-class or L-class or R-class.
 
@@ -34,7 +34,7 @@ function(arg)
   return fail;
 end);
 
-# new for 0.1! - DClassNC - user function
+# new for 0.1! - DClassNC - "for a trans. semi. and trans."
 #############################################################################
 # Usage: trans. semigp. and trans.
 
@@ -71,7 +71,7 @@ InstallOtherMethod(Degree, "for a transformation semigroup",
 InstallOtherMethod(Rank, "for a transformation",
 [IsTransformation], f-> RankOfTransformation(f));
 
-#new for 0.1! - Generators - "for a semigroup or monoid"
+# new for 0.1! - Generators - "for a semigroup or monoid"
 ############################################################################
 # Notes: returns the monoid generators of a monoid, and the semigroup generators
 # of a semigroup. 
@@ -88,7 +88,7 @@ function(s)
   return GeneratorsOfSemigroup(s);
 end);
 
-# new for 0.1! - HClass - user function
+# new for 0.1! - HClass - "for a trans. semi. and trans."
 #############################################################################
 # Usage: trans. semigp. and trans.
 
@@ -104,7 +104,7 @@ function(arg)
   return fail;
 end);
 
-# new for 0.1! - HClassNC - user function
+# new for 0.1! - HClassNC - "for a trans. semi. and trans."
 #############################################################################
 # Usage: trans. semigp. and trans.
 

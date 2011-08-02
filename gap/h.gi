@@ -427,7 +427,6 @@ local iter;
     return fail;
   fi;
 
-
   Info(InfoMonoidGreens, 4, "IteratorOfGreensHClasses");
 
   iter:=IteratorByFunctions( rec(
