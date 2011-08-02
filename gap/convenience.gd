@@ -7,8 +7,6 @@
 ##
 #############################################################################
 ##
-## $Id: convenience.gi 110 2010-10-25 18:19:53Z jamesm $
-##
 
 DeclareGlobalFunction("DClass");
 DeclareGlobalFunction("DClassNC");
