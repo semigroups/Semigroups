@@ -70,65 +70,59 @@ function(f)
   return f![4];
 end);
 
-#JDM here!
-
+# new for 0.1! - AsPermutation - "for a permutation"
 ############################################################################
-
-InstallMethod(AsPermutation, "for a transformation", [IsTransformation],
-       t->PermList(t![1])); 
-
-############################################################################
+# Notes: just in case!
 
 InstallMethod(AsPermutation, "for a permutation", [IsPerm], p -> p);
 
+# new for 0.1! - AsPermutation - "for a transformation"
 ###########################################################################
 
 InstallMethod(AsPermutation, "for a transformation", 
 [IsTransformation], 
 function(f)
-local i;
+  local a, b;
 
-i:=ImageSetOfTransformation(f);
-f:=f![1]{i};
-
-if Length(f)=Length(i) then 
-	return MappingPermListList(i, f);
-fi;
-
-return fail;
+  a:=ImageSetOfTransformation(f); b:=f![1]{a};
+  return MappingPermListList(a, b);
 end);
 
+# new for 0.1! - AsPermutation - "for a transformation and set"
 ###########################################################################
-#JDM review
 
 InstallOtherMethod(AsPermutation, "for a transformation and a set", 
-[IsTransformation, IsList], 
+[IsTransformation, IsSet], 
 function(f, set)
-local a;
+  local a;
 
-a:=f![1]{set};
+  a:=f![1]{set};
 
-if IsDuplicateFree(a) then 
-	return MappingPermListList(set, a);
-fi;
-
-return fail;
+  return MappingPermListList(set, a);
 end);
 
 #CCC
 
+# new for 0.1! - ConstantTrans - "for degree and value"
 #############################################################################
+# Usage: degree and value. 
 
 InstallGlobalFunction(ConstantTrans, 
 function(m,n)
+  if not m>=n then 
+    Info(InfoWarning, 1, "Usage: degree and value, degree must be at least",  
+    " value");
+    return fail;
+  fi;
   return TransformationNC(ListWithIdenticalEntries(m, n));;
 end);
 
 #DDD
 
+# new for 0.1! - DegreeOfTransformationCollection - "for a trans. coll."
 ############################################################################
 
-InstallMethod(DegreeOfTransformationCollNC, "for a trans. coll.", 
+InstallMethod(DegreeOfTransformationCollection, "for a trans. coll.", 
 [IsTransformationCollection], 
 function(coll)
 
@@ -140,44 +134,43 @@ end);
 
 #III
 
+# new for 0.1! - Idempotent - "for a CanonicalTransSameKernel and image"
 #############################################################################
+# Usage: a CanonicalTransSameKernel and a set of the same length on which ker in
+# injective. 
 
 InstallGlobalFunction(Idempotent, 
 function(ker, img)
-local dom;
 
-if IsKerImgOfTransformation(ker, img) and IsTransversal(ker, img) then 
-		return IdempotentNC(ker, img);
-fi;
+  if Maximum(ker)=Length(img) and IsInjectiveTransOnList(ker, img) and
+   IsSet(img) then 
+    return IdempotentNC(ker, img);
+  fi;
 
-return fail;
+  return fail;
 end);
 
 #############################################################################
 
-InstallGlobalFunction(IdempotentFromCanonTransImg, 
-function(f, img)
-  local lookup, m, i;
-
-  lookup:=EmptyPlist(Length(f)); m:=Length(img);
-  
-  for i in [1..m] do
-    lookup[f[img[i]]]:=img[i];
-  od;
-
-  return TransformationNC(List(f, x-> lookup[x]));
-end);
+#InstallGlobalFunction(IdempotentFromCanonTransImg, 
+#function(f, img)
+#  local lookup, m, i;
+#
+#  lookup:=EmptyPlist(Length(f)); m:=Length(img);
+#  
+#  for i in [1..m] do
+#    lookup[f[img[i]]]:=img[i];
+#  od;
+#
+#  return TransformationNC(List(f, x-> lookup[x]));
+#end);
 
 #############################################################################
+# Usage: for C
 
 InstallGlobalFunction(IdempotentNC, 
 function(ker, img)
-local e, l;
-e:= [];
-for l in ker do  
-	 e{l}:= 0*l + Intersection(l, img)[1];  
-od;
-return TransformationNC(e);
+  return TransformationNC(List(ker, i-> img[i]));
 end);
 
 #############################################################################
@@ -195,7 +188,7 @@ while not RankOfTransformation(y^2)=RankOfTransformation(y) do
 	y:=y*x;
 od;
 
-return [i, Order(AsPermOfRange(y))];
+return [i, Order(AsPermutation(y))];
 end);
 
 #############################################################################
@@ -407,10 +400,10 @@ fi; end) );
 end);
 
 ############
-
+#JDM redo the following!
 InstallMethod(RandomIdempotentNC, "for a kernel", true, [IsCyclotomicCollColl], 0,
 function(ker)
-return TransformationByKernelAndImageNC(ker, List(ker, Random));
+#return TransformationByKernelAndImageNC(ker, List(ker, Random));
 end);
 
 #############################################################################
@@ -426,8 +419,8 @@ InstallOtherMethod(RandomTransformation,  "for a kernel and image", true, [IsCyc
 function(ker, img)
 local new, x;
 
-if IsKerImgOfTransformation(ker, img) then 
-	return RandomTransformationNC(ker, img);
+if Length(ker)=Length(img) then 
+  return RandomTransformationNC(ker, img);
 fi;
 
 return fail;
@@ -447,8 +440,8 @@ repeat
 	Add(new, x);
 	SubtractSet(copy, [x]);
 until copy=[];
-
-return TransformationByKernelAndImageNC(ker, new);
+#JDM
+#return TransformationByKernelAndImageNC(ker, new);
 end);
 
 ############
@@ -485,7 +478,7 @@ for k in ker do
 	SubtractSet(dom, [i]);
 od;
 
-return TransformationByKernelAndImageNC(ker, img);
+#return TransformationByKernelAndImageNC(ker, img);
 end);
 
 ############
@@ -519,20 +512,20 @@ end);
 
 ###########################################################################
 
-InstallMethod(SmallestIdempotentPower, "for a transformation", true, [IsTransformation], 0, 
+InstallMethod(SmallestIdempotentPower, "for a transformation",
+[IsTransformation],
 function(f)
-local g, i;
+  local g, i, p;
 
-g:=();
-i:=1;
+  g:=(); i:=1;
+  
+  repeat
+    i:=i+1; 
+    g:=g*f; 
+    p:=AsPermutation(g);
+  until not p=fail;
 
-repeat
-	i:=i+1; 
-	g:=g*f;
-until not AsPermOfRange(g)=fail;
-
-return i+Order(AsPermOfRange(g));
-
+  return i+Order(p);
 end);
 
 #EOF

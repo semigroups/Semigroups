@@ -14,9 +14,8 @@ if not IsBound(AsPermutation) then
 fi;
 
 DeclareGlobalFunction("ConstantTrans");
-DeclareOperation("DegreeOfTransformationCollNC", [IsTransformationCollection]);
+DeclareOperation("DegreeOfTransformationCollection", [IsTransformationCollection]);
 DeclareGlobalFunction("Idempotent");
-DeclareGlobalFunction("IdempotentFromCanonTransImg");
 DeclareGlobalFunction("IdempotentNC");
 DeclareAttribute("IndexPeriodOfTransformation", IsTransformation);
 DeclareOperation("InversesOfTransformationNC", [IsTransformationSemigroup,  
