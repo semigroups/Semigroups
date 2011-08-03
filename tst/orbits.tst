@@ -1,21 +1,19 @@
 #############################################################################
 ##
 #W  orbits.tst
-#Y  Copyright (C) 2006-2011                              James D. Mitchell
+#Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-## $Id: orbits.tst 33 2010-05-08 14:54:13Z jamesm $
-##
 
-#ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "orbits.tst" ) );
+#ReadTest( Filename( DirectoriesPackageLibrary( "citrus", "tst" ), "orbits.tst" ) );
 # about 0.1s
 
-gap> START_TEST("orbits.tst 4.0");
+gap> START_TEST("orbits.tst 0.1");
 gap> SetGasmanMessageStatus("none");
-gap> LoadPackage("monoid");;
+gap> LoadPackage("citrus");;
 gap> tmptmptmp:=InfoLevel(InfoWarning);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> gens:=[ Transformation( [ 1, 5, 2, 2, 3, 5, 2 ] ), 
@@ -260,4 +258,4 @@ gap> Set(ImagesOfTransSemigroup(m));
   [ 5, 7, 8 ], [ 5, 8 ], [ 6 ], [ 6, 7 ], [ 6, 7, 8 ], [ 6, 8 ], [ 7 ],
   [ 7, 8 ], [ 8 ] ]
 gap> SetInfoLevel(InfoWarning, tmptmptmp);;
-gap> STOP_TEST( "orbits.tst 4.0", 10000);
+gap> STOP_TEST( "orbits.tst 0.1", 10000);
