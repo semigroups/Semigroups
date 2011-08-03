@@ -53,7 +53,11 @@ gap> List(Elements(S), x-> IsRegularTransformation(S, x));
   true, true, true, true ]
 gap> Collected(last);
 [ [ true, 357 ], [ false, 31 ] ]
-gap> gens:=[ Transformation( [ 3, 4, 4, 2, 5, 4 ] ), Transformation( [ 2, 4, 5, 3, 2, 3 ] ), Transformation( [ 5, 4, 3, 4, 1, 5 ] ), Transformation( [ 1, 6, 2, 1, 4, 5 ] ), Transformation( [ 4, 6, 5, 5, 2, 3 ] ), Transformation( [ 1, 3, 6, 2, 1, 5 ] ), Transformation( [ 3, 6, 2, 6, 5, 4 ] ), Transformation( [ 3, 2, 6, 6, 1, 1 ] ) ];;
+gap> gens:=[ Transformation( [ 3, 4, 4, 2, 5, 4 ] ), 
+> Transformation( [ 2, 4, 5, 3, 2, 3 ] ), Transformation( [ 5, 4, 3, 4, 1, 5 ] ),
+> Transformation( [ 1, 6, 2, 1, 4, 5 ] ), Transformation( [ 4, 6, 5, 5, 2, 3 ] ), 
+> Transformation( [ 1, 3, 6, 2, 1, 5 ] ), Transformation( [ 3, 6, 2, 6, 5, 4 ] ), 
+> Transformation( [ 3, 2, 6, 6, 1, 1 ] ) ];;
 gap> S:=Semigroup(gens);;
 gap> Collected(List(Elements(S), x-> IsRegularTransformation(S, x)));  
 [ [ true, 21786 ] ]
@@ -66,28 +70,6 @@ gap> Collected(List(Elements(S), x-> IsRegularTransformation(S, x)));
 #gap> time;
 #16
 ########
-########
-gap> IsTransversal([[1,2], [3,4], [5,6], [7,8]], [1,3,7,9]);
-false
-gap> IsTransversal([[1,2], [3,4], [5,6], [7,8]], [1,3,6,8]); 
-true
-gap> IsTransversal([[3,4], [5,6], [7,8]], [1,3,6,8]);       
-false
-gap> IsTransversal([[3,4], [5,6], [7,8]], [3,1,6,8]);
-false
-gap> IsTransversal([[1,2], [3,4], [5,6], [7,8]], [3,1,6,8]);
-true
-gap> IsTransversal([ [3,4], [1,2], [5,6], [7,8]], [3,1,6,8]);
-true
-gap> IsTransversal([ [3,4], [1,2], [5,6], [7,8]], [1,3,6,8]);
-true
-gap> for i in [1..1000] do 
->  rand:=RandomTransformation(10);
->  IsTransversal(KernelOfTransformation(rand), 
->  ImageSetOfTransformation(rand));
-> od;
-########
-######## 
 gap> IdempotentNC([[1,2], [3,4], [5,6], [7,8]], [1,3,6,8]);  
 Transformation( [ 1, 1, 3, 3, 6, 6, 8, 8 ] )
 gap> IdempotentNC([[1,3,5,6], [2,4,7]], [1,7]);
