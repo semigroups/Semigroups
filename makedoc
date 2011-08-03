@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd ~/Desktop/gap4r4/
-bin/gap.sh -q -b < pkg/monoid/bin/makedoc.g
+cd ../..
+bin/gap.sh -q -b < pkg/citrus/bin/makedoc.g

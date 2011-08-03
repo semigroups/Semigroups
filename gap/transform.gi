@@ -295,12 +295,12 @@ InstallMethod(PrintObj, "for a transformation semigroup (citrus pkg)",
 [IsTransformationSemigroup], 
 function(s)
 
-  Print( "<semigroup" );
+  Print( "<semigroup with " );
   if HasSize(s)  then
-    Print( " with ", Size(s), " elts" );
+    Print(Size(s), " elts, " );
   fi;
 
-  Print( " and ", Length(Generators(s)), " gens>" );
+  Print(Length(Generators(s)), " gens>" );
 
   return;
 end);
@@ -333,143 +333,72 @@ end);
 
 # HEREHERE JDMJDM
 
-###########################################################################
-
-InstallMethod(RandomIdempotent, "for a kernel", true, [IsCyclotomicCollColl], 0,
-function(ker)
-local dom;
-
-dom:=Union(ker);
-
-if ForAll(dom, IsPosInt) and IsRange(dom) then
-	return RandomIdempotentNC(ker);
-fi;
-
-return fail;
-end);
-
-############
-
-InstallOtherMethod(RandomIdempotent, "for an image and pos. int.", true, [IsCyclotomicCollection, IsPosInt], 0,
-function(img, n)
-
-if ForAll(img, IsPosInt) and Maximum(img)<n then
-	return RandomIdempotentNC(img, n);
-fi;
-
-return fail;
-end);
-
-############
-
-InstallOtherMethod(RandomIdempotentNC, "for an image and pos. int.", true, [IsCyclotomicCollection, IsPosInt], 0,
-function(img, n)
-
-return TransformationNC(List([1..n], function(x) 
-if x in img then 
-return x;
-else
-return Random(img);
-fi; end) );
-end);
-
-############
-#JDM redo the following!
-InstallMethod(RandomIdempotentNC, "for a kernel", true, [IsCyclotomicCollColl], 0,
-function(ker)
-#return TransformationByKernelAndImageNC(ker, List(ker, Random));
-end);
-
+# new for 0.1! - RandomIdempotent - "for an image and pos. int."
 #############################################################################
-# new for 4.0! the lib. method is obtained by replacing TransformationNC 
+# Usage: returns a RandomIdempotent with specified image and degree <n>. 
+
+InstallOtherMethod(RandomIdempotent, "for an image and pos. int.",  
+[IsCyclotomicCollection, IsPosInt],
+function(img, n)
+
+  if ForAll(img, IsPosInt) and Maximum(img)<n then
+    return RandomIdempotentNC(img, n);
+  fi;
+
+  return fail;
+end);
+
+# new for 0.1! - RandomIdempotentNC - "for an image and pos. int."
+#############################################################################
+# Usage: returns a RandomIdempotent with specified image and degree <n>. 
+
+InstallOtherMethod(RandomIdempotentNC, "for an image and pos. int.", [IsCyclotomicCollection, IsPosInt],
+function(img, n)
+
+  return TransformationNC(List([1..n], 
+    function(x) 
+      if x in img then 
+        return x;
+      else
+        return Random(img);
+      fi; end));
+end);
+
+# new for 0.1! - RandomTransformation - "for a pos. int."
+#############################################################################
+# Notes: the library method is obtained by replacing TransformationNC 
 # by Transformation.
 
 InstallMethod(RandomTransformation, "for a pos. int.", [IsPosInt],
 n-> TransformationNC( List( [ 1 .. n ], i-> Random( [ 1 .. n ] ))));
 
+# new for 0.1! - RandomTransformationNC - "for an image and pos. int"
 #############################################################################
+# Usage: returns a RandomTransformation with image contained in <img> and 
+# degree <n>. 
 
-InstallOtherMethod(RandomTransformation,  "for a kernel and image", true, [IsCyclotomicCollColl, IsCyclotomicCollection], 0,     
-function(ker, img)
-local new, x;
-
-if Length(ker)=Length(img) then 
-  return RandomTransformationNC(ker, img);
-fi;
-
-return fail;
+InstallOtherMethod(RandomTransformationNC, "for an image and a pos. int.",
+[IsCyclotomicCollection, IsPosInt],
+function(img, n)
+  return TransformationNC(List([1..n], x-> Random(img)));
 end);
 
-############
+# new for 0.1! - RandomTransformation - "for an image and a pos. int."
+#############################################################################
+# Usage: returns a Random Transformation with image contained in <img> and
+# degree <n>. 
 
-InstallOtherMethod(RandomTransformationNC,  "for a kernel and image", true, [IsCyclotomicCollColl, IsCyclotomicCollection], 0,
-function(ker, img)
-local new, x, copy;
-
-new:=[];
-copy:=ShallowCopy(img);
-
-repeat 
-	x:=Random(copy);
-	Add(new, x);
-	SubtractSet(copy, [x]);
-until copy=[];
-#JDM
-#return TransformationByKernelAndImageNC(ker, new);
-end);
-
-############
-
-InstallOtherMethod(RandomTransformationNC,  "for an image and a pos. int.", true, [IsCyclotomicCollection, IsPosInt], 0,
+InstallOtherMethod(RandomTransformation,  "for an image and a pos. int.",
+[IsCyclotomicCollection, IsPosInt],
 function(img, n)
 
-return TransformationNC(List([1..n], x-> Random(img)));
+  if ForAll(img, IsPosInt) and Maximum(img)<n+1 then 
+    return RandomTransformationNC(img, n);
+  fi;
+  return fail;
 end);
 
-############
-
-InstallOtherMethod(RandomTransformation,  "for an image and a pos. int.", true, [IsCyclotomicCollection, IsPosInt], 0,
-function(img, n)
-
-if ForAll(img, IsPosInt) and Maximum(img)<n+1 then 
-	return RandomTransformationNC(img, n);
-fi;
-return fail;
-end);
-
-############
-
-InstallOtherMethod(RandomTransformationNC, "for a kernel", true, [IsCyclotomicCollColl], 0,
-function(ker)
-local dom, img, k, i;
-
-dom:=[1..Maximum(Maximum(ker))];
-img:=[];
-
-for k in ker do 
-	i:=Random(dom);
-	Add(img, i);
-	SubtractSet(dom, [i]);
-od;
-
-#return TransformationByKernelAndImageNC(ker, img);
-end);
-
-############
-
-InstallOtherMethod(RandomTransformation, "for a kernel", true, [IsCyclotomicCollColl], 0,
-function(ker)
-local dom;
-
-dom:=Union(ker);
-
-if ForAll(dom, IsPosInt) and IsRange(dom) then
-	return RandomTransformationNC(ker);
-fi;
-
-return fail;
-end);
-
+# new for 0.1! - RankOfTransformation - "for a transformation (citrus pkg)"
 #############################################################################
 
 InstallMethod(RankOfTransformation, "for a transformation (citrus pkg)", 
@@ -484,22 +413,22 @@ end);
 
 #SSS
 
+# new for 0.1! - SmallestIdempotentPower - "for a transformation"
 ###########################################################################
+# Notes: returns the smallest pos. int. such that f^r is an idempotent. 
 
 InstallMethod(SmallestIdempotentPower, "for a transformation",
 [IsTransformation],
 function(f)
   local g, i, p;
 
-  g:=(); i:=1;
+  g:=(); i:=0;
   
   repeat
-    i:=i+1; 
-    g:=g*f; 
-    p:=AsPermutation(g);
-  until not p=fail;
-
-  return i+Order(p);
+    i:=i+1; g:=g*f;
+  until AsPermutation(g)=();
+  
+  return i;
 end);
 
 #EOF
