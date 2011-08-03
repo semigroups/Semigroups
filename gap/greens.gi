@@ -82,7 +82,7 @@ function(s)
         for img in imgs[i] do 
           if IsInjectiveTransOnList(ker, img) then 
             j:=j+1;
-            out[j]:=IdempotentFromCanonTransImg(ker, img);
+            out[j]:=IdempotentNC(ker, img);
           fi;
         od;
       od;
@@ -131,7 +131,7 @@ function(s, i)
       for img in imgs do 
         if IsInjectiveTransOnList(ker, img) then 
           j:=j+1;
-          out[j]:=IdempotentFromCanonTransImg(ker, img);
+          out[j]:=IdempotentNC(ker, img);
         fi;
       od;
     od;

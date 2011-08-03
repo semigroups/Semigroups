@@ -134,9 +134,9 @@ end);
 
 #III
 
-# new for 0.1! - Idempotent - "for a CanonicalTransSameKernel and image"
+# new for 0.1! - Idempotent - "for a CanonicalTransSameKernel and image set"
 #############################################################################
-# Usage: a CanonicalTransSameKernel and a set of the same length on which ker in
+# Usage: a CanonicalTransSameKernel and a set of the same length on which it is
 # injective. 
 
 InstallGlobalFunction(Idempotent, 
@@ -150,214 +150,188 @@ function(ker, img)
   return fail;
 end);
 
+# new for 0.1! - IdempotentNC - "for a CanonicalTransSameKernel and image set"
 #############################################################################
-
-#InstallGlobalFunction(IdempotentFromCanonTransImg, 
-#function(f, img)
-#  local lookup, m, i;
-#
-#  lookup:=EmptyPlist(Length(f)); m:=Length(img);
-#  
-#  for i in [1..m] do
-#    lookup[f[img[i]]]:=img[i];
-#  od;
-#
-#  return TransformationNC(List(f, x-> lookup[x]));
-#end);
-
-#############################################################################
-# Usage: for C
+# Usage: a CanonicalTransSameKernel and a set of the same length on which it is
+# injective. 
 
 InstallGlobalFunction(IdempotentNC, 
 function(ker, img)
   return TransformationNC(List(ker, i-> img[i]));
 end);
 
+# new for 0.1! - IndexPeriodOfTransformation - "for a transformation"
 #############################################################################
 
 InstallMethod(IndexPeriodOfTransformation, "for a transformation", 
 [IsTransformation], 
-function(x)
-local i, y;
+function(f)
+  local i, g;
 
-i:=1;
-y:=x;
+  i:=1; g:=f;
 
-while not RankOfTransformation(y^2)=RankOfTransformation(y) do 
-	i:=i+1; 
-	y:=y*x;
-od;
+  while not IsInjectiveTransOnList(g, ImageSetOfTransformation(g)) do 
+    i:=i+1; g:=g*f;
+  od;
 
-return [i, Order(AsPermutation(y))];
+  return [i, Order(AsPermutation(g))];
 end);
 
+# new for 0.1! - InversesOfTransformationNC - "for trans. semi. and trans."
 #############################################################################
-# JDM InversesOfTransformationNC should be revised when we get new C functions
 
 InstallMethod(InversesOfTransformationNC, "for a trans. semigroup and a trans.", 
 [IsTransformationSemigroup, IsTransformation], 
 function(s, f)
-local regular, foo, out, img, ker, j, g, imgs, o, kers, i, k, h, l, n;
+  local regular, out, img, j, g, kers, k, o, l, imgs, h, i;
 
-regular:=IsRegularSemigroup(s);
+  regular:=IsRegularSemigroup(s);
 
-if not (regular or IsRegularTransformation(s, f)) then 
-	return [];
-fi;
+  if not (regular or IsRegularTransformation(s, f)) then 
+    return [];
+  fi;
 
-#############
+  out:=[]; img:=ImageSetOfTransformation(f);
+  j:=Length(img); g:=f![1];
+  kers:=[]; k:=0;
 
-out:=[];
-img:=ImageAndKernelOfTransformation(f);
-ker:=img[2]; img:=img[1];
-j:=Length(img); g:=f![1]; n:=Length(g);
+  if not HasGradedKernelsOfTransSemigroup(s) then 
+    o:=KernelsOfTransSemigroup(s, j);
+    Enumerate(o);
 
-kers:=[];
-k:=0;
+    for i in [1..Length(o)] do 
+      if Grades(o)[i]=j and IsInjectiveTransOnList(o[i], img) then 
+        k:=k+1; kers[k]:=o[i];
+      fi;
+    od;
+  
+  else
+    o:=GradedKernelsOfTransSemigroup(s)[j];
+    for i in [1..Length(o)] do 
+      if IsInjectiveTransOnList(o[i], img) then 
+        k:=k+1;
+        kers[k]:=o[i];
+      fi;
+    od;
+  fi;
 
-if not HasGradedKernelsOfTransSemigroup(s) then 
-	o:=KernelsOfTransSemigroup(s, j);
-	Enumerate(o);
+  l:=0; imgs:=ImagesOfTransSemigroup(s, j); Enumerate(imgs);
 
-	for i in [1..Length(o)] do 
-		if Grades(o)[i]=j and IsInjectiveTransOnList(o[i], img) then 
-			k:=k+1;
-			kers[k]:=o[i];
-		fi;
-	od;
-else
-	o:=GradedKernelsOfTransSemigroup(s)[j];
-	for i in [1..Length(o)] do 
-		if IsInjectiveTransOnList(o[i], img) then 
-			k:=k+1;
-			kers[k]:=o[i];
-		fi;
-	od;
-fi;
+  for i in [1..Length(imgs)] do
+    if Grades(imgs)[i]=j and IsInjectiveTransOnList(g, imgs[i]) then
+      for k in kers do 
+        h:=IdempotentNC(k, img)*MappingPermListList(g{imgs[i]}, imgs[i]);
+        if regular or h in s then 
+          l:=l+1; out[l]:=h;
+        fi;
+      od;
+    fi;
+  od;
 
-l:=0;
-imgs:=ImagesOfTransSemigroup(s, j);
-Enumerate(imgs);
-
-for i in [1..Length(imgs)] do
-	if Grades(imgs)[i]=j and foo(g, imgs[i]) then
-		for k in kers do 
-			h:=IdempotentNC(k, img)*MappingPermListList(g{imgs[i]}, imgs[i]);
-			if regular or h in s then 
-				l:=l+1;
-				out[l]:=h;
-			fi;
-		od;
-	fi;
-od;
-
-return out;
+  return out;
 end);
 
-############
+# new for 0.1! - InversesOfTransformation - "for trans. semi. and trans."
+#############################################################################
 
 InstallMethod(InversesOfTransformation, "for a trans. semigroup and a trans.", 
 [IsTransformationSemigroup, IsTransformation],
-function(S, f)
+function(s, f)
 
-if f in S then 
-	return InversesOfTransformationNC(S, f);
-fi;
+  if f in s then 
+    return InversesOfTransformationNC(s, f);
+  fi;
 
-return fail;
+  return fail;
 end);
+
+# new for 0.1! - IsRegularTransformation - "for a transformation"
 ###########################################################################
-# this should be modified!! JDM see IsRegularRClass
 
 InstallMethod(IsRegularTransformation, "for a transformation", 
 [IsTransformationSemigroup, IsTransformation], 
-function(M, x)
-local r, orb, gens, s, p, n;
+function(s, f)
+  local ker, m, o;
 
-if HasIsRegularSemigroup(M) and IsRegularSemigroup(M) then 
-  return true;
-fi;
+  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
+    return true;
+  fi;
 
-n:= ImageSetOfTransformation(x);   
-r:= Size(n);
+  if not AsPermutation(f)=fail then      
+    return true;
+  fi;
 
-if RankOfTransformation(x^2)=r then      
-  return true;
-fi;
+  ker:=f![1]; m:=RankOfTransformation(f);
+  
+  o:=Orb(s, ImageSetOfTransformation(f), OnSets, 
+          rec(lookingfor:=function(o, x) 
+                return IsInjectiveTransOnList(ker, x); end,
+              gradingfunc := function(o,x) return Length(x); end,
+              onlygrades:=function(x,y) return x=y; end, 
+              onlygradesdata:=m));
+  Enumerate(o);
 
-# otherwise form the weak orbit of img x.
-orb:= [n];   
-gens:= GeneratorsOfSemigroup(M);
-for p in orb do
-  for s in gens do
-    n:=Set(ImageListOfTransformation(s){p});
-    if Size(n) = r and not n in orb then
-            if Size(Set(ImageListOfTransformation(x){n})) = r then
-               return true;
-            fi;
-
-            Add(orb, n);
-         fi;
-      od;
-   od;
-
-   # if we arrive here, no cross section has been found.
-   return false;
-
-end );
+  return not PositionOfFound(o)=false;
+end);
 
 #OOO
 
-######################################
-#JDM this should not be necessary. Better if '\in' for a 
-#IsFullTransformationSemigroup took priority 
-#over '\in' for a TransformationSemigroup
+# new for 0.1! - One - "for a full transformation semigroup"
+###########################################################################
+# Notes: this should not be necessary. Better if '\in' for a full
+# transformation semigroup took priority over '\in' for a transformation
+# semigroup
 
-InstallOtherMethod(One, "for a transformation semigroup", true, [IsFullTransformationSemigroup], 0, 
-x-> TransformationNC([1..DegreeOfTransformationSemigroup(x)]));
+InstallOtherMethod(One, "for a full transformation semigroup", 
+[IsFullTransformationSemigroup],  x -> 
+ TransformationNC([1.. DegreeOfTransformationSemigroup(x)]));
 
 #PPP
 
-######################################
+# new for 0.1! - PrintObj - "for a transformation semigroup"
+###########################################################################
 
-InstallMethod(PrintObj, "for a transformation semigroup", 
+InstallMethod(PrintObj, "for a transformation semigroup (citrus pkg)", 
 [IsTransformationSemigroup], 
-function(S)
+function(s)
 
-Print( "<trans. semigroup" );
-if HasSize( S )  then
-	Print( " of size ", Size( S ) );
-fi;
+  Print( "<semigroup" );
+  if HasSize(s)  then
+    Print( " with ", Size(s), " elts" );
+  fi;
 
-Print( " with ", Length( GeneratorsOfSemigroup( S ) ), " generators>" );
+  Print( " and ", Length(Generators(s)), " gens>" );
 
-return;
+  return;
 end);
 
 #RRR
 
+# new for 0.1! - Random - "for a transformation semigroup (citrus pkg)"
 #############################################################################
 
 InstallMethod(Random, "for a transformation semigroup (citrus pkg)", 
 [IsTransformationSemigroup],
 function(s)
-local gens, n, i, w, d, g, h, o;
+  local o, gens, n, i, w, d, g;
 
-o:=OrbitsOfImages(s);
+  o:=OrbitsOfImages(s);
 
-if not o!.finished then 
-	gens:=GeneratorsOfSemigroup(s);
-	n:=DegreeOfTransformationSemigroup(s);
-        i:=Random([1..2*Length(gens)]);
-	w:=List([1..i], x-> Random([1..Length(gens)]));
-	return EvaluateWord(gens, w);
-else
-	d:=Random(o!.data);
-	g:=Random(ImageOrbitSchutzGpFromData(s, d));
-	i:=Random(ImageOrbitSCCFromData(s, d));
-	return RClassRepFromData(s, d)*g*ImageOrbitPermsFromData(s, d)[i]^-1; 
-fi;
+  if not o!.finished then 
+    gens:=GeneratorsOfSemigroup(s);
+    n:=DegreeOfTransformationSemigroup(s);
+    i:=Random([1..2*Length(gens)]);
+    w:=List([1..i], x-> Random([1..Length(gens)]));
+    return EvaluateWord(gens, w);
+  else
+    d:=Random(o!.data);
+    g:=Random(ImageOrbitSchutzGpFromData(s, d));
+    i:=Random(ImageOrbitSCCFromData(s, d));
+    return RClassRepFromData(s, d)*g*ImageOrbitPermsFromData(s, d)[i]^-1; 
+  fi;
 end);
+
+# HEREHERE JDMJDM
 
 ###########################################################################
 

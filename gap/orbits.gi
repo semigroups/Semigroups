@@ -183,8 +183,10 @@ local n;
   n:=DegreeOfTransformationSemigroup(s);
 
   return Orb(Generators(s), [1..n], OnSets, rec(storenumbers:=true, 
-   gradingfunc:=function(o,x) return Length(x); end, schreier:=true,
-  onlygrades:=[m..n]));
+              schreier:=true, 
+              gradingfunc:=function(o,x) return Length(x); end, 
+              onlygrades:=function(x,y) return x in y; end, 
+              onlygradesdata:=[m..n]));
 end);
 
 # new for 0.1! - KernelsOfTransSemigroup - "for a trans. semigroup"
@@ -197,38 +199,27 @@ function(s)
 
   n:=DegreeOfTransformationSemigroup(s); 
   
-  if n<8 then
-    bound:=Minimum(NextPrimeInt(Bell(n)), 10007);
-  else
-    bound:=10007;
-  fi;
-
   return Orb(GeneratorsAsListOfImages(s), [1..n], function(f,g) return
    CanonicalTransSameKernel(f{g}); end, rec(storenumbers:=true, 
-   treehashsize:=bound, schreier:=true));
+   treehashsize:=10007, schreier:=true));
 end);
 
-# new for 0.1! - KernelsOfTransSemigroup - "for trans semigp pos int"
+# new for 0.1! - KernelsOfTransSemigroup - "for trans. semi. and  pos. int."
 ########################################################################### 
 
-InstallOtherMethod(KernelsOfTransSemigroup, "for trans semigp pos int", 
+InstallOtherMethod(KernelsOfTransSemigroup, "for trans. semi. and pos. int.", 
 [IsTransformationSemigroup, IsPosInt], 
 function(s, m)
-  local n, max, bound, gens;
+  local n;
 
   n:=DegreeOfTransformationSemigroup(s); 
-  max:=MaximumList(Generators(s), RankOfTransformation);
-  
-  if n<11 then
-    bound:=Minimum(NextPrimeInt(Stirling2(n,m)), 10007);
-  else
-    bound:=10007;
-  fi;
 
-  return Orb(GeneratorsAsListOfImages(s), [1..n], function(f,g) return
-   CanonicalTransSameKernel(f{g}); end, rec(storenumbers:=true, 
-   treehashsize:=bound, gradingfunc:=function(o,x) return Length(x); end,
-   onlygrades:=[m..max], schreier:=true));
+  return Orb(GeneratorsAsListOfImages(s), [1..n], 
+              function(f,g) return CanonicalTransSameKernel(f{g}); end, 
+              rec(storenumbers:=true, treehashsize:=10007, 
+              gradingfunc:=function(o,x) return Length(x); end,
+              onlygrades:=function(x, y) return x in y; end, 
+              onlygradesdata:=[m..n], schreier:=true));
 end);
 
 # new for 0.1! - OnKernelsAntiAction - for a trans img list and same 

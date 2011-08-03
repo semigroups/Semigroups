@@ -1032,16 +1032,14 @@ function(r)
     return [TransformationNC([1..DegreeOfTransformation(r!.rep)])];
   fi;
 
-  out:=[]; f:=r!.rep; ker:=KernelOfTransformation(f);
-  f:=f![1]; o:=ImageOrbitFromData(r!.parent, r!.data, r!.o);
-  scc:=ImageOrbitSCC(r); j:=0;
+  out:=[]; ker:=CanonicalTransSameKernel(r!.rep);
+  o:=ImageOrbit(r); scc:=ImageOrbitSCC(r); j:=0;
 
   for i in scc do
     i:=o[i];
-    if IsInjectiveTransOnList(f, i) then  
+    if IsInjectiveTransOnList(ker, i) then  
       j:=j+1;
-      #out[j]:=IdempotentNC(ker, i);
-      out[j]:=IdempotentFromCanonTransImg(f, i);
+      out[j]:=IdempotentNC(ker, i);
     fi;
   od;
 
@@ -1515,7 +1513,7 @@ function(s)
     ShallowCopy:=iter-> rec(i:=0, s:=iter!.s, reps:=IteratorOfRClassReps(s))));
 
   SetIsIteratorOfGreensRClasses(iter, true);
-  SetUnderlyingSemigroupOfIterator(iter, s);
+  
   return iter;
 end);
 
@@ -1659,7 +1657,6 @@ function(s)
     iter!.s))));
 
   SetIsIteratorOfRClassReps(iter, true);
-  SetUnderlyingSemigroupOfIterator(iter, s);
 
   return iter;
 end);
@@ -1885,8 +1882,7 @@ InstallMethod(PrintObj, [IsIteratorOfRClassReps],
 function(iter)
   local O, s;
 
-  s:=UnderlyingSemigroupOfIterator(iter);
-  O:=OrbitsOfImages(s);
+  s:=iter!.s; O:=OrbitsOfImages(s);
 
   Print( "<iterator of R-class reps, ", Length(O!.ht!.o), " candidates, ", 
    SizeOrbitsOfImages(s), " elements, ", NrRClassesOrbitsOfImages(s), 
