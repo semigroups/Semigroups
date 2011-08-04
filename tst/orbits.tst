@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-#ReadTest( Filename( DirectoriesPackageLibrary( "citrus", "tst" ), "orbits.tst" ) );
+#ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"orbits.tst"));
 # about 0.1s
 
 gap> START_TEST("orbits.tst 0.1");

@@ -56,7 +56,7 @@ function(f, h)
 
   if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) or 
    RankOfTransformation(f) <> RankOfTransformation(rep) or 
-   KernelOfTransformation(f) <> KernelOfTransformation(rep) or 
+   CanonicalTransSameKernel(f) <> CanonicalTransSameKernel(rep) or 
    ImageSetOfTransformation(f) <> ImageSetOfTransformation(rep) then
     return false;
   fi;
@@ -157,7 +157,7 @@ function(h)
       if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) or
        RankOfTransformation(f) <> RankOfTransformation(rep) or
        ImageSetOfTransformation(f) <> ImageSetOfTransformation(rep) or
-       KernelOfTransformation(f) <> KernelOfTransformation(rep) then
+       CanonicalTransSameKernel(f) <> CanonicalTransSameKernel(rep) then
         return fail;
       fi;
       

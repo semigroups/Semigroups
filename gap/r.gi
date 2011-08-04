@@ -15,8 +15,6 @@
 
 # - use ImageOrbitFromData instead of ImageOrbit!
 
-# - do not use ImageAndKernelOfTransformation!
-
 # - don't use underlyingcollection in enumerators!
 
 # - check that wherever we have called d:=InOrbitsOfImages we do not perform
@@ -2042,7 +2040,7 @@ function(s)
   gens:=Generators(s);
 
   ims:=Size(Set(List(gens, ImageSetOfTransformation)));
-  kers:=Size(Set(List(gens, KernelOfTransformation)));
+  kers:=Size(Set(List(gens, CanonicalTransSameKernel)));
   H:=GreensHClassOfElement(s, gens[1]);
 
   return Size(H)*ims*kers;
