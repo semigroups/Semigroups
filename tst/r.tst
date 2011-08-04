@@ -1,22 +1,19 @@
 #############################################################################
 ##
 #W  r.tst
-#Y  Copyright (C) 2006-2011                              James D. Mitchell
+#Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-## $Id$
-##
 
-#ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "r.tst"));
+# ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"r.tst"));
 # takes approx. 10s
 
-gap> START_TEST("r.tst 4.0");
+gap> START_TEST("r.tst 0.1");
 gap> SetGasmanMessageStatus("none");
-#gap> LoadPackage("semex");;
-gap> LoadPackage("monoid");
+gap> LoadPackage("citrus");
 true
 gap> SetInfoLevel(InfoMonoidGreens, 0);
 gap> gens:=[ 
@@ -783,7 +780,7 @@ gap> iter2;
 <iterator of R-classes>
 gap> IsIteratorOfGreensRClasses(iter2);
 true
-gap> UnderlyingSemigroupOfIterator(iter2)=s;
+gap> iter2!.s=s;
 true
 gap> ShallowCopy(iter2);
 <iterator>
@@ -915,4 +912,4 @@ gap> SchutzenbergerGroup(LClass(s, f));
 Group([ (4,5) ])
 gap> SchutzenbergerGroup(HClass(s, f));
 Group([ (4,5) ])
-gap> STOP_TEST( "r.tst 4.0", 10000);
+gap> STOP_TEST( "r.tst 0.1", 10000);

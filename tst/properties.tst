@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-#ReadTest( Filename( DirectoriesPackageLibrary( "citrus", "tst" ), "properties.tst" ) );
+#ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"properties.tst"));
 
 gap> START_TEST("properties.tst 0.1");
 gap> LoadPackage("citrus");;
