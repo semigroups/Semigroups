@@ -9,7 +9,7 @@
 ##
 
 # ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"transform.tst"));
-# under 2s.
+# around 2.3s.
 
 gap> START_TEST("transform.tst 0.1");
 gap> LoadPackage("citrus");;
@@ -230,5 +230,71 @@ gap> inv:=InversesOfTransformation(s, f);
 gap> IsRegularTransformation(s, f);
 true
 gap> ForAll(inv, g-> f*g*f=f and g*f*g=g);
+true
+gap> gens:=[ Transformation( [ 3, 6, 4, 2, 4, 5 ] ), 
+> Transformation( [ 5, 1, 5, 4, 1, 5 ] ), 
+> Transformation( [ 5, 6, 5, 3, 4, 2 ] ), Transformation( [ 6, 6, 6, 4, 6, 2 ] ), 
+> Transformation( [ 4, 4, 4, 2, 4, 3 ] ), Transformation( [ 1, 1, 2, 2, 6, 2 ] ), 
+> Transformation( [ 5, 2, 4, 4, 6, 5 ] ), Transformation( [ 4, 6, 3, 5, 6, 6 ] ), 
+> Transformation( [ 4, 6, 3, 3, 1, 2 ] ), Transformation( [ 1, 6, 4, 4, 5, 4 ]) ];;
+gap> s:=Semigroup(gens);;
+gap> Number(GreensRClasses(s), IsRegularRClass);
+98
+gap> Number(GreensRClassReps(s), x-> IsRegularTransformation(s, x));
+98
+gap> Size(s);
+8175
+gap> Transformation( [ 9, 45, 53, 15, 42, 97, 71, 66, 7, 88, 6, 98, 95, 36, 20, 59, 
+>  94, 6, 81, 70, 65, 29, 78, 37, 74, 48, 52, 4, 32, 93, 18, 13, 55, 94, 49, 42, 
+>  99, 46, 35, 84, 52, 79, 80, 7, 85, 53, 89, 70, 79, 27, 84, 99, 9, 73, 33, 70, 
+>  77, 69, 41, 18, 63, 29, 42, 33, 75, 56, 79, 63, 89, 90, 64, 98, 49, 35, 100, 
+>  89, 71, 3, 70, 20, 2, 26, 11, 39, 9, 7, 89, 90, 48, 89, 85, 8, 56, 42, 10, 61, 
+>  25, 98, 55, 39 ] );;
+gap> f:=last;;
+gap> SmallestIdempotentPower(f);
+12
+gap> f^24=f^12;
+true
+gap> ForAny([1..11], i-> f^(2*i)=f^i);
+false
+gap> s:=FullTransformationSemigroup(6);;
+gap> f:=Transformation( [ 2, 1, 3, 4, 5, 1 ] );;
+gap> InversesOfTransformation(s, f);
+[ Transformation( [ 2, 1, 3, 4, 5, 2 ] ), 
+  Transformation( [ 2, 1, 3, 4, 5, 5 ] ), 
+  Transformation( [ 2, 1, 3, 4, 5, 1 ] ), 
+  Transformation( [ 2, 1, 3, 4, 5, 4 ] ), 
+  Transformation( [ 2, 1, 3, 4, 5, 3 ] ), 
+  Transformation( [ 6, 1, 3, 4, 5, 6 ] ), 
+  Transformation( [ 6, 1, 3, 4, 5, 5 ] ), 
+  Transformation( [ 6, 1, 3, 4, 5, 1 ] ), 
+  Transformation( [ 6, 1, 3, 4, 5, 4 ] ), 
+  Transformation( [ 6, 1, 3, 4, 5, 3 ] ) ]
+gap> ForAll(last, g-> f*g*f=f and g*f*g=g);
+true
+gap> gens:=[ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 2, 4, 2, 4 ] ),   
+>  Transformation( [ 2, 3, 2, 3 ] ), Transformation( [ 4, 1, 4, 3 ] ),
+>  Transformation( [ 1, 4, 4, 1 ] ), Transformation( [ 2, 2, 3, 1 ] ),
+>  Transformation( [ 2, 4, 3, 4 ] ), Transformation( [ 2, 2, 1, 2 ] ),
+>  Transformation( [ 2, 2, 1, 3 ] ), Transformation( [ 1, 2, 2, 3 ] ),
+>  Transformation( [ 2, 4, 3, 2 ] ), Transformation( [ 2, 3, 3, 3 ] ) ];;
+gap> s:=Monoid(gens);;
+gap> f:=Transformation( [ 3, 1, 1, 3 ] );;
+gap> d:=DClass(s, f);
+{Transformation( [ 4, 2, 2, 4 ] )}
+gap> Size(s);;
+gap> Size(d);
+84
+gap> f in d;
+true
+gap> List(GreensDClasses(s), Size);
+[ 84, 1, 4, 90 ]
+gap> MultiplicativeZero(s);
+fail
+gap> MinimalIdeal(s);
+<semigroup with 4 generators>
+gap> Size(last);
+4
+gap> IsRightZeroSemigroup(last2);
 true
 gap> STOP_TEST( "transform.tst 0.1", 10000);

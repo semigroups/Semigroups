@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  greens.tst
-#Y  Copyright (C) 2006-2010                             James D. Mitchell
+#Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -10,8 +10,9 @@
 ## $Id$
 ##
 
-#ReadTest( Filename( DirectoriesPackageLibrary( "citrus", "tst" ), "greens.tst"));
-# takes approx. 9 seconds to run currently!
+#ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"greens.tst"));
+# takes approx. 20 seconds to run currently! (it said 9s here earlier, maybe
+# something is causing a slowdown!?)
 
 gap> START_TEST("greens.tst 0.1");
 gap> SetGasmanMessageStatus("none");
@@ -218,7 +219,6 @@ gap> idem:=Set(Concatenation(List(GreensLClasses(m), Idempotents)));
   Transformation( [ 7, 7, 7, 7, 6, 6, 7 ] ),
   Transformation( [ 7, 7, 7, 7, 7, 6, 7 ] ),
   Transformation( [ 7, 7, 7, 7, 7, 7, 7 ] ) ]
-gap> Print("JDM 221\n");
 gap> idem=Set(Idempotents(m));
 true
 gap> m:=Semigroup(gens[30]);;
@@ -351,7 +351,6 @@ gap> out; out2; out3;
   16, 102, 4, 1, 2, 7, 34, 176, 15, 16, 22, 1, 1, 381, 130, 1595, 25, 574, 
   316, 33, 430, 28, 9, 1, 63, 1, 5, 197, 872, 173, 106, 1, 96, 1, 1, 191, 
   248, 57, 14, 86, 38 ]
-gap> Print("JDM 354\n");
 gap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
 gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
 gap> M:=Semigroup(a,b);;
@@ -373,7 +372,7 @@ gap> gens:=[ Transformation( [ 2, 2, 5, 2, 3 ] ),
 > Transformation( [ 2, 5, 3, 5, 3 ] ) ];;
 gap> S:=Semigroup(gens);;
 gap> f:=Transformation( [ 5, 5, 3, 5, 3 ] );;
-gap> GreensHClassData(GreensHClassOfElement(S, f));;
+gap> GreensHClassOfElement(S, f);;
 gap> Representative(last);
 Transformation( [ 5, 5, 3, 5, 3 ] )
 gap> IsTrivial(SchutzenbergerGroup(last2));
@@ -383,10 +382,14 @@ gap> gens:=[ Transformation( [ 4, 1, 4, 5, 3 ] ),
 gap> S:=Semigroup(gens);;
 gap> C:=GreensLClassOfElement(S, gens[1]*gens[2]*gens[1]);
 {Transformation( [ 5, 3, 5, 4, 3 ] )}
-gap> GreensLClassData(C);
-GreensLClassData( Transformation( [ 5, 3, 5, 4, 3 ] ), 
-[ [ [ 1, 3 ], [ 2, 5 ], [ 4 ] ] ], [ Binary Relation on 5 points ], 
-[ Binary Relation on 5 points ], Group( [ (), (3,5,4), (3,5) ] ) )
+gap> Representative(C);
+Transformation( [ 5, 3, 5, 4, 3 ] )
+gap> AsList(KernelOrbit(C));
+[ [ 1, 2, 1, 3, 2 ] ]
+gap> KernelOrbitRels(C){KernelOrbitSCC(C)};
+[ [ Transformation( [ 1 .. 5 ] ), Transformation( [ 1, 2, 1, 4, 2 ] ) ] ]
+gap> SchutzenbergerGroup(C);
+Group([ (3,5,4), (3,5) ])
 gap> gens:=[ Transformation( [ 1, 2, 1, 2, 1 ] ), 
 > Transformation( [ 3, 4, 2, 1, 4 ] ) ];;
 gap> S:=Semigroup(gens);; 
@@ -400,12 +403,14 @@ gap> rc:=GreensRClassOfElement(M, a*b*a);
 {Transformation( [ 3, 2, 5, 4, 1, 1 ] )}
 gap> Transformation( [ 4, 1, 6, 5, 2, 2 ] ) in rc;
 true
-gap> Print("JDM 403\n");
-gap> GreensRClassData(rc);
-GreensRClassData( Transformation( [ 3, 2, 5, 4, 1, 1 ] ),
-[ [ 1, 2, 3, 4, 5 ], [ 1, 2, 4, 5, 6 ], [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ]
- ], [ (), (1,2)(3,6,5,4), (3,5)(4,6), (1,2)(3,4,5,6) ], Group(
-[ (1,2,3)(4,5), (1,3,5) ] ) )
+gap> Representative(rc);
+Transformation( [ 3, 2, 5, 4, 1, 1 ] )
+gap> AsList(ImageOrbit(rc));
+[ [ 1, 2, 3, 4, 5 ], [ 1, 2, 4, 5, 6 ], [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ] ]
+gap> ImageOrbitPerms(rc){ImageOrbitSCC(rc)};
+[ (), (1,2)(3,6,5,4), (3,5)(4,6), (1,2)(3,4,5,6) ]
+gap> SchutzenbergerGroup(rc);
+Group([ (1,2,3)(4,5), (1,3,5) ])
 gap> gens:=[ Transformation( [ 4, 1, 5, 2, 4 ] ), 
 > Transformation( [ 4, 4, 1, 5, 3 ] ) ];;
 gap> S:=Semigroup(gens);;
@@ -490,22 +495,21 @@ gap> KernelsOfTransSemigroup(S);
 gap> Enumerate(last);
 <closed orbit, 9 points with Schreier tree>
 gap> AsList(last);
-[ [ [ 1 ], [ 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2 ], [ 3 ] ], 
-  [ [ 1, 2 ], [ 3 ], [ 4 ] ], [ [ 1, 4 ], [ 2, 3 ] ], [ [ 1, 2 ], [ 3, 4 ] ], 
-  [ [ 1, 3, 4 ], [ 2 ] ], [ [ 1, 2, 3 ], [ 4 ] ], [ [ 1, 2, 3, 4 ] ], 
-  [ [ 1, 2, 4 ], [ 3 ] ] ]
+[ [ 1 .. 4 ], [ 1, 2, 3, 1 ], [ 1, 1, 2, 3 ], [ 1, 2, 2, 1 ], [ 1, 1, 2, 2 ],
+  [ 1, 2, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 1, 1 ], [ 1, 1, 2, 1 ] ]
 gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ), 
 >   Transformation( [ 6, 6, 4, 4, 2, 1, 4 ] ) ];;
 gap> S:=Semigroup(gens);;
 gap> Length(GreensRClasses(S));
 17
-gap> Print("JDM 502\n");
-gap> GreensData(GreensRClasses(S)[10]);
-GreensRClassData( Transformation( [ 3, 3, 3, 3, 3, 2, 3 ] ), 
-[ [ 2, 3 ], [ 4, 6 ], [ 2, 6 ], [ 1, 4 ], [ 1, 6 ], [ 2, 4 ], [ 3, 6 ] ], 
-[ (), (2,4,3,5,6), (3,4,5,6), (1,2)(3,4), (1,3,4,5,6,2), (3,4), (2,4,5,6,3) 
- ], Group( [ (2,3) ] ) )
-gap> SchutzenbergerGroup(last);
+gap> r:=GreensRClasses(S)[10];;
+gap> Representative(r);
+Transformation( [ 3, 3, 3, 3, 3, 2, 3 ] )
+gap> AsList(ImageOrbit(r));
+[ [ 2, 3 ], [ 4, 6 ], [ 2, 6 ], [ 1, 4 ], [ 1, 6 ], [ 2, 4 ], [ 3, 6 ] ]
+gap> ImageOrbitPerms(r){ImageOrbitSCC(r)};
+[ (), (2,4,3,5,6), (3,4,5,6), (1,2)(3,4), (1,3,4,5,6,2), (3,4), (2,4,5,6,3) ]
+gap> SchutzenbergerGroup(r);
 Group([ (2,3) ])
 gap> Number(GreensDClasses(S), IsRegularDClass);
 3
