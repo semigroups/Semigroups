@@ -217,7 +217,7 @@ function(s, m)
   return Orb(GeneratorsAsListOfImages(s), [1..n], 
               function(f,g) return CanonicalTransSameKernel(f{g}); end, 
               rec(storenumbers:=true, treehashsize:=10007, 
-              gradingfunc:=function(o,x) return Length(x); end,
+              gradingfunc:=function(o,x) return Maximum(x); end,
               onlygrades:=function(x, y) return x in y; end, 
               onlygradesdata:=[m..n], schreier:=true));
 end);

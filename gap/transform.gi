@@ -157,7 +157,14 @@ end);
 
 InstallGlobalFunction(IdempotentNC, 
 function(ker, img)
-  return TransformationNC(List(ker, i-> img[i]));
+  local lookup, m, i;
+  
+  lookup:=EmptyPlist(Length(ker)); m:=Length(img);
+
+  for i in [1..m] do
+    lookup[ker[img[i]]]:=img[i];
+  od;
+  return TransformationNC(List(ker, x-> lookup[x]));
 end);
 
 # new for 0.1! - IndexPeriodOfTransformation - "for a transformation"
@@ -219,7 +226,8 @@ function(s, f)
 
   for i in [1..Length(imgs)] do
     if Grades(imgs)[i]=j and IsInjectiveTransOnList(g, imgs[i]) then
-      for k in kers do 
+      for k in kers do
+        if not IsIdempotent(IdempotentNC(k, img)) then Error(""); fi;
         h:=IdempotentNC(k, img)*MappingPermListList(g{imgs[i]}, imgs[i]);
         if regular or h in s then 
           l:=l+1; out[l]:=h;
@@ -331,11 +339,9 @@ function(s)
   fi;
 end);
 
-# HEREHERE JDMJDM
-
 # new for 0.1! - RandomIdempotent - "for an image and pos. int."
 #############################################################################
-# Usage: returns a RandomIdempotent with specified image and degree <n>. 
+# Usage: returns a random idempotent with specified image and degree <n>. 
 
 InstallOtherMethod(RandomIdempotent, "for an image and pos. int.",  
 [IsCyclotomicCollection, IsPosInt],
@@ -350,7 +356,7 @@ end);
 
 # new for 0.1! - RandomIdempotentNC - "for an image and pos. int."
 #############################################################################
-# Usage: returns a RandomIdempotent with specified image and degree <n>. 
+# Usage: returns a random idempotent with specified image and degree <n>. 
 
 InstallOtherMethod(RandomIdempotentNC, "for an image and pos. int.", [IsCyclotomicCollection, IsPosInt],
 function(img, n)
