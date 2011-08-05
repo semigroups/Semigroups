@@ -281,7 +281,7 @@ InstallOtherMethod(AsList, "for an R-class of trans. semigp.",
 function(r)
   local f, g, elts, perms, scc, o, p, i;
   
-  Info(InfoMonoidGreens, 4, "AsList: for an R-class");
+  Info(InfoCitrusGreens, 4, "AsList: for an R-class");
 
   f:=r!.rep; #rep should have its image at the first place in the scc
   g:=List(SchutzenbergerGroup(r), x-> f*x);
@@ -307,7 +307,7 @@ end);
 InstallOtherMethod(AsSSortedList, "for R-class of trans. semigp.",
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 function(r)
-  Info(InfoMonoidGreens, 4, "AsSSortedList: for an R-class");
+  Info(InfoCitrusGreens, 4, "AsSSortedList: for an R-class");
   return ConstantTimeAccessList(EnumeratorSorted(r));
 end);
 
@@ -544,7 +544,7 @@ InstallOtherMethod(Enumerator, "for R-class of trans. semigp.",
 function(r)
   local enum;
 
-  Info(InfoMonoidGreens, 4, "Enumerator: for an R-class");
+  Info(InfoCitrusGreens, 4, "Enumerator: for an R-class");
 
   enum:=EnumeratorByFunctions(r, rec(
           
@@ -631,7 +631,7 @@ InstallOtherMethod(Enumerator, "for a transformation semigroup",
 function(s)
   local out, iter, j, i;
 
-  Info(InfoMonoidGreens, 4, "Enumerator: for a trans. semigroup");
+  Info(InfoCitrusGreens, 4, "Enumerator: for a trans. semigroup");
 
   out:=EmptyPlist(Size(s)); #it is very slightly faster than taking []
 
@@ -656,7 +656,7 @@ InstallGlobalFunction(ExpandOrbitsOfImages,
 function(s)
   local o, iter, i;
 
-  Info(InfoMonoidGreens, 4, "ExpandOrbitsOfImages");
+  Info(InfoCitrusGreens, 4, "ExpandOrbitsOfImages");
 
   o:=OrbitsOfImages(s);
 
@@ -899,7 +899,7 @@ InstallMethod(GreensRClasses, "for a transformation semigroup",
 function(s)
   local iter, out, i, r;
 
-  Info(InfoMonoidGreens, 4, "GreensRClasses");
+  Info(InfoCitrusGreens, 4, "GreensRClasses");
 
   iter:=IteratorOfGreensRClasses(s);
   out:=EmptyPlist(NrGreensRClasses(s));
@@ -924,7 +924,7 @@ InstallOtherMethod(GreensRClassOfElement, "for a trans. semigp and trans.",
 function(s, f)
   local d;
 
-  Info(InfoMonoidGreens, 4, "GreensRClassOfElement");
+  Info(InfoCitrusGreens, 4, "GreensRClassOfElement");
 
   if not f in s then 
     Info(InfoWarning, 1, "transformation is not an element of the semigroup");
@@ -945,19 +945,19 @@ InstallOtherMethod(GreensRClassOfElementNC, "for a trans. semigp and trans.",
 function(s, f)
   local d, j, r, o, n;
 
-  Info(InfoMonoidGreens, 4, "GreensRClassOfElementNC");
+  Info(InfoCitrusGreens, 4, "GreensRClassOfElementNC");
 
   d:=PreInOrbitsOfImages(s, f, true);
 
   if d[1] then # f in s!
-    Info(InfoMonoidGreens, 2, "transformation is an element of semigroup");
+    Info(InfoCitrusGreens, 2, "transformation is an element of semigroup");
     return CreateRClass(s, d[2], OrbitsOfImages(s), RClassRepFromData(s, d[2]));
   elif OrbitsOfImages(s)!.finished then #f not in s!
-    Info(InfoMonoidGreens, 2, "transformation is not an element of semigroup");
+    Info(InfoCitrusGreens, 2, "transformation is not an element of semigroup");
     return fail;
   fi;
 
-  Info(InfoMonoidGreens, 2, "transformation may not be an element of semigroup");
+  Info(InfoCitrusGreens, 2, "transformation may not be an element of semigroup");
 
   j:=Length(ImageSetOfTransformation(f));
   n:=DegreeOfTransformationSemigroup(s);
@@ -987,7 +987,7 @@ end);
 InstallMethod(GreensRClassReps, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
 function(s)
-  Info(InfoMonoidGreens, 4, "GreensRClassReps");
+  Info(InfoCitrusGreens, 4, "GreensRClassReps");
 
   ExpandOrbitsOfImages(s);
 
@@ -1000,7 +1000,7 @@ end);
 InstallMethod(GreensRClassRepsData, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(s)
-  Info(InfoMonoidGreens, 4, "GreensRClassRepsData");
+  Info(InfoCitrusGreens, 4, "GreensRClassRepsData");
   ExpandOrbitsOfImages(s);
   return OrbitsOfImages(s)!.data;
 end);
@@ -1385,7 +1385,7 @@ InstallMethod(Iterator, "for a transformation semigroup",
 function(s)
   local iter;
 
-  Info(InfoMonoidGreens, 4, "Iterator: for a trans. semigroup");
+  Info(InfoCitrusGreens, 4, "Iterator: for a trans. semigroup");
 
   iter:= IteratorByFunctions( rec( 
     
@@ -1424,7 +1424,7 @@ InstallMethod(Iterator, "for a R-class of a trans. semigroup",
 function(r)
   local iter;
 
-  Info(InfoMonoidGreens, 4, "Iterator: for an R-class");
+  Info(InfoCitrusGreens, 4, "Iterator: for an R-class");
 
   if HasAsSSortedList(r) then 
     iter:=IteratorList(AsSSortedList(r));
@@ -1486,7 +1486,7 @@ function(s)
     return fail;
   fi;
 
-  Info(InfoMonoidGreens, 4, "IteratorOfGreensRClasses");
+  Info(InfoCitrusGreens, 4, "IteratorOfGreensRClasses");
 
   iter:=IteratorByFunctions( rec(
           
@@ -1535,7 +1535,7 @@ InstallGlobalFunction(IteratorOfRClassRepsData,
 function(s)
   local iter;
   
-  Info(InfoMonoidGreens, 4, "IteratorOfRClassRepsData");
+  Info(InfoCitrusGreens, 4, "IteratorOfRClassRepsData");
 
   iter:=IteratorByFunctions( rec(
           
@@ -1630,7 +1630,7 @@ InstallGlobalFunction(IteratorOfRClassReps,
 function(s)
   local iter;
 
-  Info(InfoMonoidGreens, 4, "IteratorOfRClassReps");
+  Info(InfoCitrusGreens, 4, "IteratorOfRClassReps");
 
   if not IsTransformationSemigroup(s) then
     Info(InfoWarning, 1, "Usage: argument should be a transformation",
@@ -1675,7 +1675,7 @@ InstallMethod(NrGreensRClasses, "for a transformation semigroup",
 [IsTransformationSemigroup], 
 function(s)
 
-  Info(InfoMonoidGreens, 4, "NrGreensRClasses");
+  Info(InfoCitrusGreens, 4, "NrGreensRClasses");
 
   ExpandOrbitsOfImages(s);
   return NrRClassesOrbitsOfImages(s);
@@ -2009,7 +2009,7 @@ InstallOtherMethod(Size, "for an R-class of a trans. semigp.",
 [IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
 
-  Info(InfoMonoidGreens, 4, "Size: for an R-class");
+  Info(InfoCitrusGreens, 4, "Size: for an R-class");
 
   return Size(SchutzenbergerGroup(r))*Length(ImageOrbitSCC(r));
 end);
@@ -2022,7 +2022,7 @@ InstallMethod(Size, "for a transformation semigroup",
 [IsTransformationSemigroup], 
 function(s)
 
-  Info(InfoMonoidGreens, 4, "Size: for a trans. semigroup");
+  Info(InfoCitrusGreens, 4, "Size: for a trans. semigroup");
 
   ExpandOrbitsOfImages(s);
   return SizeOrbitsOfImages(s);

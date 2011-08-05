@@ -50,6 +50,51 @@ function(s)
   return g;
 end);
 
+#III
+
+# new for 0.1! - IrredundantGeneratingSubset - "for a tranformation coll."
+###########################################################################
+# Notes: this does not work all that well, use SmallGeneratingSet first. 
+
+InstallMethod(IrredundantGeneratingSubset, "for a transformation collection", 
+[IsTransformationCollection],
+function(coll)
+  local gens, out, i, redund, f;
+  
+  if IsTransformationSemigroup(coll) then 
+    coll:=ShallowCopy(Generators(coll));
+  fi;
+  
+  gens:=Set(ShallowCopy(coll));
+  coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));
+  Sort(coll, function(x, y) return Rank(x)>Rank(y); end);
+  
+  out:=EmptyPlist(Length(coll));
+  redund:=EmptyPlist(Length(coll));
+  i:=0;
+
+  repeat 
+    i:=i+1; f:=coll[i];
+    if InfoLevel(InfoCitrusProperties)>1 then 
+      Print("at \t", i, " of \t", Length(coll), " with \t", Length(redund), 
+      " redundant, \t", Length(out), " non-redundant\r");
+    fi;
+
+    if not f in redund and not f in out then 
+      if f in Semigroup(Difference(gens, [f])) then 
+        AddSet(redund, f); gens:=Difference(gens, [f]);
+      else
+        AddSet(out, f);
+      fi;
+    fi;
+  until Length(redund)+Length(out)=Length(coll);
+
+  if InfoLevel(InfoCitrusProperties)>1 then 
+    Print("\n");
+  fi;
+  return out;
+end);
+
 #IIIBBB
 
 # mod for 0.1! - IsBand - "for a transformation semigroup"
@@ -814,6 +859,38 @@ InstallOtherMethod(RedundantGenerator, "for trans semi and trans coll",
   fi;
   Info(InfoWarning, 1, "Usage: trans. semi. and generating set.");
   return fail;
+end);
+
+# new for 0.1! - SmallGeneratingSet - "for a trans. coll."
+#############################################################################
+
+InstallOtherMethod(SmallGeneratingSet, "for a trans. semi.", 
+[IsTransformationSemigroup],
+function(s)
+  local gens, i, out, f;
+ 
+  gens:=ShallowCopy(Generators(s));
+  gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));
+  Sort(gens, function(x, y) return Rank(x)>Rank(y); end);
+
+  i:=0; out:=[gens[1]]; s:=Semigroup(out);
+
+  repeat
+    i:=i+1; f:=gens[i];
+    if InfoLevel(InfoCitrusProperties)>1 then
+      Print("at \t", i, " of \t", Length(gens), "; \t", Length(out),
+      " generators so far\r");
+    fi;
+          
+    if not f in s then 
+      Add(out, f); s:=Semigroup(out);
+    fi;
+  until i=Length(gens);
+
+  if InfoLevel(InfoCitrusProperties)>1 then
+    Print("\n");
+  fi;
+  return out;
 end);
 
 #EOF

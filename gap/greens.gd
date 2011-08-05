@@ -184,7 +184,7 @@ DeclareGlobalFunction("RClassRepsDataFromOrbits");
 
 GT:=function(x,y) return x>y; end;
 
-DeclareInfoClass("InfoMonoidGreens");
+DeclareInfoClass("InfoCitrusGreens");
 
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
 DeclareProperty("IsIteratorOfLClassReps", IsIterator);

@@ -9,7 +9,8 @@
 ##
 
 DeclareAttribute("GroupOfUnits", IsSemigroup);
-DeclareInfoClass("InfoMonoidProperties");
+DeclareInfoClass("InfoCitrusProperties");
+DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
 DeclareProperty("IsBand", IsTransformationSemigroup);
 DeclareProperty("IsBlockGroup", IsTransformationSemigroup);
 DeclareProperty("IsCliffordSemigroup", IsTransformationSemigroup);
@@ -50,6 +51,7 @@ DeclareProperty("IsSynchronizingSemigroup", IsTransformationCollection);
 DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
 DeclareAttribute("MinimalIdeal", IsTransformationSemigroup);
 DeclareOperation("RedundantGenerator", [IsTransformationCollection]);
+DeclareAttribute("SmallGeneratingSet", IsTransformationSemigroup);
 DeclareAttribute("UnderlyingDClassOfMinIdeal", IsSemigroupIdeal and 
  IsTransformationSemigroup);
 
