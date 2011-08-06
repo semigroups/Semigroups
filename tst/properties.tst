@@ -219,7 +219,7 @@ gap> IsRectangularBand(s);
 true
 gap> IsBand(s); 
 true
-gap> IsSemiBand(FullTransformationSemigroup(4));
+gap> IsSemiband(FullTransformationSemigroup(4));
 false
 gap> Size(Semigroup(Idempotents(FullTransformationSemigroup(4))));
 233
@@ -298,7 +298,7 @@ gap> S:=FullTransformationSemigroup(4);;
 gap> x:=Transformation( [ 1, 2, 3, 1 ] );;
 gap> D:=GreensDClassOfElement(S, x);;
 gap> T:=Semigroup(Elements(D));;
-gap> IsSemiBand(T);
+gap> IsSemiband(T);
 true
 gap> gens:=[ Transformation( [ 1, 1, 1, 4, 5, 4 ] ), 
 >  Transformation( [ 1, 2, 3, 1, 1, 2 ] ), 
