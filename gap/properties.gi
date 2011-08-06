@@ -388,7 +388,7 @@ end);
 # Notes: should store t as IdempotentsGeneratedSubsemigroup, and should use
 # ClosureSemigroup.
 
-InstallMethod(IsIdempotentGenerated, "for a transformation semigroup", 
+InstallOtherMethod(IsIdempotentGenerated, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
 function(s) 
 local gens, r, i, t;
@@ -517,7 +517,7 @@ end);
 ###########################################################################
 # Notes: is there a better method? JDM
 
-InstallMethod(IsOrthodoxSemigroup, "for a transformation semigroup", 
+InstallOtherMethod(IsOrthodoxSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup], 
 function(s)
   local idems, e, f;

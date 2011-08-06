@@ -29,17 +29,17 @@ DeclareProperty("IsGreensHTrivial", IsTransformationSemigroup);
 DeclareSynonymAttr("IsAperiodicSemigroup", IsGreensHTrivial);
 DeclareSynonymAttr("IsCombinatorialSemigroup", IsGreensHTrivial);
 DeclareProperty("IsGroupAsSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsIdempotentGenerated", IsTransformationSemigroup);
+DeclareProperty("IsIdempotentGenerated", IsSemigroup);
 DeclareProperty("IsLeftZeroSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsMonoidAsSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsMinimalIdeal", IsSemigroupIdeal and 
  IsTransformationSemigroup);
 DeclareOperation("IsomorphismTransformationMonoid",
  [IsTransformationSemigroup]);
-DeclareProperty("IsOrthodoxSemigroup", IsTransformationSemigroup);
+DeclareProperty("IsOrthodoxSemigroup", IsSemigroup);
 DeclareProperty("IsRectangularBand", IsTransformationSemigroup);
 DeclareProperty("IsRightZeroSemigroup", IsTransformationSemigroup);
-DeclareSynonymAttr("IsSemiBand", IsIdempotentGenerated);
+DeclareSynonymAttr("IsSemiband", IsIdempotentGenerated);
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
 
 if not IsBound(IsSemilatticeAsSemigroup) then 
