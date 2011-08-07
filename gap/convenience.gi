@@ -84,9 +84,8 @@ InstallOtherMethod(Rank, "for a transformation",
 
 # new for 0.1! - Generators - "for a semigroup or monoid"
 ############################################################################
-# Notes: returns the monoid generators of a monoid, and the semigroup generators
-# of a semigroup. 
-
+# Notes: returns the monoid generators of a monoid, and the semigroup 
+# generators of a semigroup. 
 
 InstallOtherMethod(Generators, "for a semigroup or monoid",
 [IsSemigroup],

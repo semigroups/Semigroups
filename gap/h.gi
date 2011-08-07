@@ -187,7 +187,7 @@ end);
 # JDM move to greens.gi
 
 InstallMethod(GreensHClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local iter, out, i, h;
 
@@ -209,7 +209,7 @@ end);
 ############################################################################
 
 InstallMethod(GreensHClassOfElement, "for a trans. semigp. and trans.", 
-[IsTransformationSemigroup, IsTransformation],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation],
 function(s, f)
   local d, l_img, l_ker;
 
@@ -247,7 +247,7 @@ end);
 #############################################################################
 
 InstallOtherMethod(GreensHClassOfElementNC, "for a trans. semigp and trans.", 
-[IsTransformationSemigroup, IsTransformation],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation],
 function(s, f)
   local n, d, j, img_o, ker_o, kernels;
 
@@ -418,7 +418,7 @@ end);
 # move to greens.gi
 
 InstallMethod(IteratorOfGreensHClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
 local iter;
 
@@ -572,7 +572,7 @@ end);
 ############################################################################
 
 InstallMethod(HClassType, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s);
  
  return NewType( FamilyObj( s ), IsEquivalenceClass and 

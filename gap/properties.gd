@@ -36,7 +36,7 @@ DeclareProperty("IsRightZeroSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsSemiband", IsTransformationSemigroup);
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
 DeclareProperty("IsSemilatticeAsSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsSynchronizingSemigroup", IsTransformationCollection);
+DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
 DeclareAttribute("MinimalIdeal", IsTransformationSemigroup);
 DeclareOperation("RedundantGenerator", [IsTransformationCollection]);

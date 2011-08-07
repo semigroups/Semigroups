@@ -29,7 +29,8 @@ InstallMethod(\<, "for Green's class and Green's class of trans. semigp.",
 #############################################################################
 
 InstallMethod(\=, "for trans. semigp. and trans. semigp.",
-[IsTransformationSemigroup, IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, 
+IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s, t)
   return ForAll(Generators(s), x-> x in t) and 
    ForAll(Generators(t), x-> x in s);
@@ -41,7 +42,8 @@ end);
 #############################################################################
 
 InstallOtherMethod(GreensJClassOfElement, "for a trans. semigroup and trans.",
-[IsTransformationSemigroup and HasIsFinite and IsFinite, IsTransformation], 
+[IsTransformationSemigroup and HasIsFinite and IsFinite and
+HasGeneratorsOfSemigroup, IsTransformation], 
 function(s, f)
   Info(InfoWarning, 1, "Use GreensDClassOfElement instead!");
   return GreensDClassOfElement(s, f);
@@ -53,7 +55,7 @@ end);
 #############################################################################
 
 InstallOtherMethod(Idempotents, "for a transformation semigroup", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local n, out, kers, imgs, regular, j, i, ker, img;
 
@@ -101,7 +103,7 @@ end);
 ####################################################################################
 
 InstallOtherMethod(Idempotents, "for a trans. semigroup and pos. int.", 
-[IsTransformationSemigroup, IsPosInt],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
 function(s, i)
   local out, n, kers, imgs, j, ker, img, r;
   
@@ -168,7 +170,7 @@ InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 #############################################################################
 
 InstallMethod(NrIdempotents, "for a transformation semigroup", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local i, iter, d;
   
@@ -196,7 +198,7 @@ end);
 #############################################################################
  
 InstallMethod(NrGreensHClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local i, iter, o, d;
   i:=0;

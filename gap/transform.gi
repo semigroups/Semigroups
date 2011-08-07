@@ -187,8 +187,8 @@ end);
 # new for 0.1! - InversesOfTransformationNC - "for trans. semi. and trans."
 #############################################################################
 
-InstallMethod(InversesOfTransformationNC, "for a trans. semigroup and a trans.", 
-[IsTransformationSemigroup, IsTransformation], 
+InstallMethod(InversesOfTransformationNC, "for trans. semigroup and trans.", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation], 
 function(s, f)
   local regular, out, img, j, g, kers, k, o, l, imgs, h, i;
 
@@ -243,7 +243,7 @@ end);
 #############################################################################
 
 InstallMethod(InversesOfTransformation, "for a trans. semigroup and a trans.", 
-[IsTransformationSemigroup, IsTransformation],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation],
 function(s, f)
 
   if f in s then 
@@ -257,7 +257,7 @@ end);
 ###########################################################################
 
 InstallMethod(IsRegularTransformation, "for a transformation", 
-[IsTransformationSemigroup, IsTransformation], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation], 
 function(s, f)
   local ker, m, o;
 
@@ -319,7 +319,7 @@ end);
 #############################################################################
 
 InstallMethod(Random, "for a transformation semigroup (citrus pkg)", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local o, gens, n, i, w, d, g;
 

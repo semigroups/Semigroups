@@ -337,8 +337,8 @@ function(gens, o, f, k)
   for i in scc do 
     for j in [1..Length(gens)] do 
       if IsBound(graph[i][j]) and t[k][graph[i][j]] then
-        g:=ClosureGroup(g,  PermLeftQuoTransformationNC(f, rels[graph[i][j]][2] * 
-         (gens[j] * (rels[i][1] * f))));
+        g:=ClosureGroup(g,  PermLeftQuoTransformationNC(f,   
+         rels[graph[i][j]][2] * (gens[j] * (rels[i][1] * f))));
       fi; 
       if Size(g)>=bound then 
         is_sym:=true;
@@ -525,7 +525,7 @@ end);
 ############################################################################# 
 
 InstallMethod(DClassType, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s);
   return NewType( FamilyObj( s ), IsEquivalenceClass and 
 	  IsEquivalenceClassDefaultRep and IsGreensDClass and 
@@ -697,7 +697,8 @@ function(arg)
     treehashsize:=10000;
   fi;
           
-  o:=Orb(gens_imgs, ker, function(f,g) return CanonicalTransSameKernel(f{g}); end,
+  o:=Orb(gens_imgs, ker, function(f,g) 
+         return CanonicalTransSameKernel(f{g}); end,
          rec( treehashsize:=NextPrimeInt(Minimum(10000, treehashsize)),  
           schreier:=true,
           gradingfunc := function(o,x) return [MaximumList(x), x]; end, 
@@ -712,7 +713,8 @@ function(arg)
   o!.img:=false; #for ViewObj method
   Enumerate(o, bound);
 
-  scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)), Set));;
+  scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)),
+   Set));;
 
   r:=Length(scc);
   o!.scc:=scc;
@@ -766,14 +768,14 @@ end);
 #############################################################################
 
 InstallMethod(GeneratorsAsListOfImages, "for a trans. semigp.", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 s-> List(Generators(s), f-> f![1]));
 
 # new for 0.1! - GreensDClasses - "for a transformation semigroup"
 #############################################################################
 
 InstallMethod(GreensDClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local iter, out, i, d;
 
@@ -793,7 +795,7 @@ end);
 #############################################################################
 
 InstallOtherMethod(GreensDClassOfElement, "for a trans. semigp and trans.", 
-[IsTransformationSemigroup, IsTransformation],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation],
 function(s, f)
   local d;
 
@@ -824,7 +826,7 @@ end);
 # Notes: this should be similar to DClassOfRClass. 
 
 InstallOtherMethod(GreensDClassOfElementNC, "for a trans. semigp and trans.", 
-[IsTransformationSemigroup, IsTransformation],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation],
 function(s, f)
   local d, j, n, img_o, ker_o;
 
@@ -878,8 +880,8 @@ end);
 # new for 0.1! - GreensDClassReps - "for a trans. semigroup"
 #############################################################################
 # move to greens.gi JDM
-InstallMethod(GreensDClassReps, "for a trans. semigroup", 
-[IsTransformationSemigroup], 
+InstallMethod(GreensDClassReps, "for a trans. semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
   function(s)
 
   ExpandOrbitsOfKernels(s);
@@ -891,7 +893,7 @@ end);
 # move to greens.gi JDM 
  
 InstallMethod(GreensDClassRepsData, "for a trans. semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
   function(s)
   ExpandOrbitsOfKernels(s);
   return OrbitsOfKernels(s)!.data;
@@ -1889,7 +1891,7 @@ d-> KerRightToImgLeftFromData(d!.parent, d!.data[2], d!.o[2]));
 #############################################################################
 
 InstallMethod(NrGreensDClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   Info(InfoCitrusGreens, 4, "NrGreensDClasses");
   ExpandOrbitsOfKernels(s);
@@ -1981,7 +1983,7 @@ end);
 #############################################################################
 
 InstallMethod(NrRegularDClasses, "for a transformation semigroup",
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local o;
   ExpandOrbitsOfKernels(s);
@@ -1996,7 +1998,7 @@ end);
 #############################################################################
 
 InstallMethod(OrbitsOfKernels, "for a transformation semigroup",
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local n, gens;
 
@@ -2027,7 +2029,7 @@ InstallMethod(ParentAttr, "for a D-class of a trans. semigroup",
 #############################################################################
 
 InstallMethod(PartialOrderOfDClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local d, n, out, gens, data_ht, o, j, data, i, x, f, orbits;
 

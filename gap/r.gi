@@ -627,7 +627,7 @@ end);
 # JDM this could be an actual enumerator!?
 
 InstallOtherMethod(Enumerator, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local out, iter, j, i;
 
@@ -895,7 +895,7 @@ end);
 #############################################################################
 
 InstallMethod(GreensRClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local iter, out, i, r;
 
@@ -920,7 +920,7 @@ end);
 #############################################################################
 
 InstallOtherMethod(GreensRClassOfElement, "for a trans. semigp and trans.", 
-[IsTransformationSemigroup, IsTransformation],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation],
 function(s, f)
   local d;
 
@@ -941,7 +941,7 @@ end);
 # JDM double check everything is ok here!
 
 InstallOtherMethod(GreensRClassOfElementNC, "for a trans. semigp and trans.", 
-[IsTransformationSemigroup, IsTransformation],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation],
 function(s, f)
   local d, j, r, o, n;
 
@@ -985,7 +985,7 @@ end);
 #############################################################################
 
 InstallMethod(GreensRClassReps, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   Info(InfoCitrusGreens, 4, "GreensRClassReps");
 
@@ -998,7 +998,7 @@ end);
 #############################################################################
 
 InstallMethod(GreensRClassRepsData, "for a transformation semigroup",
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   Info(InfoCitrusGreens, 4, "GreensRClassRepsData");
   ExpandOrbitsOfImages(s);
@@ -1381,7 +1381,7 @@ end);
 # JDM move to greens.gi
 
 InstallMethod(Iterator, "for a transformation semigroup",
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local iter;
 
@@ -1679,7 +1679,7 @@ r-> NrGreensLClasses(DClassOfRClass(r)));
 #############################################################################
 
 InstallMethod(NrGreensRClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
 
   Info(InfoCitrusGreens, 4, "NrGreensRClasses");
@@ -1784,7 +1784,7 @@ end);
 #############################################################################
 
 InstallMethod(OrbitsOfImages, "for a transformation semigroup",
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local gens, n, one, ht, i, type;
 
@@ -1987,7 +1987,7 @@ end);
 ############################################################################
 
 InstallMethod(RClassType, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s);
 
   return NewType( FamilyObj( s ), IsEquivalenceClass and 
@@ -2026,7 +2026,7 @@ end);
 # Algorithm V.
 
 InstallMethod(Size, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
 
   Info(InfoCitrusGreens, 4, "Size: for a trans. semigroup");

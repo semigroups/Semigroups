@@ -24,7 +24,7 @@ end);
 ###########################################################################
 
 InstallMethod(GradedImagesOfTransSemigroup, "for a trans. semigroup",
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, n, ht, o, m, out, len, new, k, i, j;
 
@@ -73,7 +73,7 @@ end);
 #############################################################################
 
 InstallMethod(GradedKernelsOfTransSemigroup, "for a trans. semigroup",
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, n, ht, o, m, out, len, new, k, i, j;
 
@@ -169,7 +169,7 @@ end);
 ###########################################################################
 
 InstallMethod(ImagesOfTransSemigroup, "for a transformation semigroup",
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
   s-> Orb(Generators(s), [1..Degree(s)], OnSets, rec(storenumbers:=true, 
    schreier:=true)));
 
@@ -177,7 +177,7 @@ InstallMethod(ImagesOfTransSemigroup, "for a transformation semigroup",
 ###########################################################################
 
 InstallOtherMethod(ImagesOfTransSemigroup, "for trans semigp and pos int", 
-[IsTransformationSemigroup, IsPosInt],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
 function(s, m)
 local n;
   n:=DegreeOfTransformationSemigroup(s);
@@ -193,7 +193,7 @@ end);
 ########################################################################### 
 
 InstallOtherMethod(KernelsOfTransSemigroup, "for a trans. semigroup", 
-[IsTransformationSemigroup],  
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],  
 function(s)
   local n, bound;
 
@@ -208,7 +208,7 @@ end);
 ########################################################################### 
 
 InstallOtherMethod(KernelsOfTransSemigroup, "for trans. semi. and pos. int.", 
-[IsTransformationSemigroup, IsPosInt], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt], 
 function(s, m)
   local n;
 

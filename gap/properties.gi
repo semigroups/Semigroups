@@ -32,7 +32,7 @@
 # input semigroup. 
 
 InstallMethod(GroupOfUnits, "for a tranformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local h, m, g;
 
@@ -103,15 +103,15 @@ end);
 # this could maybe be better!
 
 InstallMethod(IsBand, "for a transformation semigroup", 
-[IsTransformationSemigroup], s-> IsCompletelyRegularSemigroup(s) and 
- IsGreensHTrivial(s));
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], s-> 
+ IsCompletelyRegularSemigroup(s) and IsGreensHTrivial(s));
 
 # new for 0.1! - IsBlockGroup - "for a transformation semigroup"
 #############################################################################
 # JDM check we didn't have a better version of this previously!
 
 InstallMethod(IsBlockGroup, "for a transformation semigroup",
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local iter, i, f, o, scc, reg, d;
 
@@ -155,7 +155,7 @@ end);
 ###########################################################################
 
 InstallMethod(IsCliffordSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local gens, idem, f, g;
 
@@ -194,7 +194,7 @@ end);
 ###########################################################################
 
 InstallMethod(IsCommutativeSemigroup, "for a transformation semigroup",
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, n, i, j; 
 
@@ -216,7 +216,7 @@ end);
 ###########################################################################
 
 InstallMethod(IsCompletelyRegularSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, o, f;
 
@@ -245,7 +245,8 @@ end);
 # causes problems. 
 
 InstallMethod(IsCompletelySimpleSemigroup, "for a trans. semi.",
-[IsTransformationSemigroup], x-> IsSimpleSemigroup(x) and IsFinite(x));
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+ x-> IsSimpleSemigroup(x) and IsFinite(x));
 
 InstallTrueMethod(IsCompletelySimpleSemigroup, IsSimpleSemigroup and IsFinite);
 
@@ -255,7 +256,7 @@ InstallTrueMethod(IsCompletelySimpleSemigroup, IsSimpleSemigroup and IsFinite);
 ###########################################################################
 
 InstallOtherMethod(IsGreensHTrivial, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local iter, g;
 
@@ -281,7 +282,7 @@ InstallOtherMethod(IsGreensHTrivial, "for a D-class of a trans. semigp",
 #############################################################################
 
 InstallMethod(IsGreensLTrivial, "for a transformation semigroup",
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local iter, d;
 
@@ -311,7 +312,7 @@ InstallOtherMethod(IsGreensLTrivial, "for a D-class of a trans. semigp",
 #############################################################################
 
 InstallMethod(IsGreensRTrivial, "for a transformation semigroup",
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local iter, r, d;
 
@@ -356,7 +357,7 @@ end);
 ###########################################################################
  
 InstallMethod(IsGroupAsSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, ker, img, f;
 
@@ -389,7 +390,7 @@ end);
 # ClosureSemigroup.
 
 InstallOtherMethod(IsIdempotentGenerated, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s) 
 local gens, r, i, t;
 
@@ -416,7 +417,7 @@ end);
 ###########################################################################
 
 InstallOtherMethod(IsInverseSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local n, imgs, kers, iter, D, d;
 
@@ -457,7 +458,7 @@ end);
 ###########################################################################
 
 InstallMethod(IsLeftZeroSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, imgs;
 
@@ -476,7 +477,8 @@ end);
 #############################################################################
 
 InstallOtherMethod(IsMonoidAsSemigroup, "for a transformation semigroup",
-[IsTransformationSemigroup], x-> not MultiplicativeNeutralElement(x)=fail);
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+ x-> not MultiplicativeNeutralElement(x)=fail);
 
 #JDM should have methods for IsomorphismTransformationSemigroup/Monoid for 
 # perm. groups. 
@@ -485,7 +487,7 @@ InstallOtherMethod(IsMonoidAsSemigroup, "for a transformation semigroup",
 #############################################################################
 
 InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
 
   if not IsMonoidAsSemigroup(s) then 
@@ -500,7 +502,7 @@ end);
 #############################################################################
 
 InstallOtherMethod(IsomorphismPermGroup, "for a transformation semigroup", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
 
   if not IsGroupAsSemigroup(s)  then
@@ -518,7 +520,7 @@ end);
 # Notes: is there a better method? JDM
 
 InstallOtherMethod(IsOrthodoxSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local idems, e, f;
 
@@ -546,7 +548,7 @@ end);
 ###########################################################################
 
 InstallMethod(IsRectangularBand, "for a transformation semigroup", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
 
   if not IsSimpleSemigroup(s) then 
@@ -562,7 +564,7 @@ end);
 ###########################################################################
 
 InstallOtherMethod(IsRegularSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local iter, d;
 
@@ -589,7 +591,7 @@ end);
 ###########################################################################
 
 InstallMethod(IsRightZeroSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, kers;
 
@@ -610,7 +612,8 @@ end);
 ###############################################################################
 
 InstallMethod(IsSemiband, "for a transformation semigroup",
-[IsTransformationSemigroup], IsIdempotentGenerated);
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+IsIdempotentGenerated);
 
 InstallTrueMethod(IsSemiband, IsIdempotentGenerated);
 
@@ -618,7 +621,8 @@ InstallTrueMethod(IsSemiband, IsIdempotentGenerated);
 ###############################################################################
 
 InstallMethod(IsSemilatticeAsSemigroup, "for a transformation semigroup",
-[IsTransformationSemigroup], s-> IsCommutative(s) and IsBand(s));
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+ s-> IsCommutative(s) and IsBand(s));
 
 InstallTrueMethod(IsSemilatticeAsSemigroup, IsCommutative and IsBand);
 
@@ -626,7 +630,7 @@ InstallTrueMethod(IsSemilatticeAsSemigroup, IsCommutative and IsBand);
 ###########################################################################
 
 InstallMethod(IsSimpleSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local gens, r, o, f;
 
@@ -663,15 +667,11 @@ end);
 ###########################################################################
 
 InstallMethod(IsSynchronizingSemigroup, "for a trans. semi. or coll.", 
-[IsTransformationCollection],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local n, o;
 
-  if IsTransformationSemigroup(s) then 
-    n:=DegreeOfTransformationSemigroup(s);
-  else
-    n:=DegreeOfTransformation(s[1]);
-  fi;
+  n:=DegreeOfTransformationSemigroup(s);
 
   o:=Orb(s, [1..n], OnSets, 
         rec(lookingfor:=function(o, x) return Length(x)=1; end));
@@ -687,7 +687,7 @@ end);
 ###########################################################################
 
 InstallOtherMethod(IsZeroGroup, "for a transformation semigroup",
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local zero;
 
@@ -708,7 +708,7 @@ end);
 ###########################################################################
 
 InstallOtherMethod(IsZeroSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local z, x, y, gens;
 
@@ -736,7 +736,7 @@ end);
 ###########################################################################
 
 InstallMethod(MinimalIdeal, "for a transformation semigroup", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local n, gens, max, o, i, bound, f;
 
@@ -775,8 +775,8 @@ end);
 # new for 0.1! - MultiplicativeNeutralElement - "for a trans. semi."
 ###########################################################################
 
-InstallOtherMethod(MultiplicativeNeutralElement, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+InstallOtherMethod(MultiplicativeNeutralElement, "for a trans. semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local gens, n, f, r;
 
@@ -808,7 +808,7 @@ end);
 ###########################################################################
 
 InstallOtherMethod(MultiplicativeZero, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local n, gens, max, bound, o, i, f;
   n:=Degree(s); gens:=Generators(s);
@@ -859,7 +859,8 @@ gens-> First(gens, x-> x in Semigroup(Difference(gens, [x]))));
 # fail.
 
 InstallOtherMethod(RedundantGenerator, "for trans semi and trans coll", 
-[IsTransformationSemigroup, IsTransformationCollection],
+[IsTransformationSemigroup  and HasGeneratorsOfSemigroup, 
+IsTransformationCollection],
   function(s, gens)
 
   if s=Semigroup(gens) then 
@@ -873,7 +874,7 @@ end);
 #############################################################################
 
 InstallOtherMethod(SmallGeneratingSet, "for a trans. semi.", 
-[IsTransformationSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, i, out, f;
  
