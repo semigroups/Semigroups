@@ -202,21 +202,17 @@ DeclareProperty("IsIteratorOfGreensLClasses", IsIterator);
 DeclareProperty("IsIteratorOfGreensDClasses", IsIterator);
 DeclareProperty("IsIteratorOfGreensHClasses", IsIterator);
 
-DeclareOperation("IteratorOfIdempotents", [IsTransformationSemigroup]);
-
 DeclareProperty("IsIteratorOfSemigroup", IsIterator);
 DeclareProperty("IsIteratorOfRClassElements", IsIterator);
 DeclareProperty("IsIteratorOfLClassElements", IsIterator);
 DeclareProperty("IsIteratorOfDClassElements", IsIterator);
 
-DeclareAttribute("UnderlyingSemigroupOfIterator", 
- IsIterator);
-
-
+DeclareGlobalFunction("UnderlyingSemigroupOfIterator");
+DeclareProperty("IsCitrusPkgIterator", IsIterator);
 
 DeclareProperty("IsOrbitsOfImages", IsObject);
 DeclareProperty("IsOrbitsOfKernels", IsObject);
-DeclareProperty("IsMonoidPkgImgKerOrbit", IsOrbit);
+DeclareProperty("IsCitrusPkgImgKerOrbit", IsOrbit);
 
 
 

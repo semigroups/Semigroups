@@ -214,4 +214,10 @@ function(s)
   return i;
 end);
 
+# new for 0.1! - UnderlyingSemigroupOfIterator - "for a citrus pkg iterator"
+#############################################################################
+
+InstallGlobalFunction(UnderlyingSemigroupOfIterator, 
+[IsCitrusPkgIterator], iter-> iter!.s);
+
 #EOF

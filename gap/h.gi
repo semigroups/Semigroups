@@ -430,8 +430,8 @@ local iter;
   Info(InfoCitrusGreens, 4, "IteratorOfGreensHClasses");
 
   iter:=IteratorByFunctions( rec(
-    
-    data:=IteratorOfHClassRepsData(s),
+
+    data:=IteratorOfHClassRepsData(s), s:=s, 
     
     IsDoneIterator := iter -> IsDoneIterator(iter!.data), 
     
@@ -451,7 +451,7 @@ local iter;
     ShallowCopy:=iter-> rec(data:=IteratorOfHClassRepsData(s))));
 
   SetIsIteratorOfGreensHClasses(iter, true);
-  SetUnderlyingSemigroupOfIterator(iter, s);
+  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 
@@ -485,8 +485,7 @@ function(s)
     ShallowCopy := iter -> rec( data:=IteratorOfHClassRepsData(iter!.s))));
 
   SetIsIteratorOfHClassReps(iter, true);
-  SetUnderlyingSemigroupOfIterator(iter, s);
-
+  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 
@@ -501,40 +500,40 @@ Info(InfoCitrusGreens, 4, "IteratorOfHClassRepsData");
 
 iter:=IteratorByFunctions( rec(
 	
-    i:=0,
+    i:=0, s:=s, 
 	
     r:=IteratorOfRClassRepsData(s),
 	
-      data:=[],
+    data:=[],
     
-     IsDoneIterator := iter -> IsDoneIterator(iter!.r) and 
-       iter!.i>=Length(iter!.data), 
+    IsDoneIterator := iter -> IsDoneIterator(iter!.r) and 
+     iter!.i>=Length(iter!.data), 
       
-      NextIterator:= function(iter)
-        local i;
-        
-        if IsDoneIterator(iter) then 
-                return fail;
-        fi;
-        
-        iter!.i:=iter!.i+1;
-        i:=iter!.i;
-        
-        if i<=Length(iter!.data) then 
-                return iter!.data[i];
-        fi;
-        
-        iter!.data:=GreensHClassRepsDataFromData(s, NextIterator(iter!.r),
-         OrbitsOfImages(s));
-        iter!.i:=1;
-        
-        return iter!.data[1];
-      end,
+    NextIterator:= function(iter)
+    local i;
+    
+      if IsDoneIterator(iter) then 
+              return fail;
+      fi;
+      
+      iter!.i:=iter!.i+1;
+      i:=iter!.i;
+      
+      if i<=Length(iter!.data) then 
+              return iter!.data[i];
+      fi;
+      
+      iter!.data:=GreensHClassRepsDataFromData(s, NextIterator(iter!.r),
+       OrbitsOfImages(s));
+      iter!.i:=1;
+      
+      return iter!.data[1];
+    end,
 
-      ShallowCopy:=iter-> rec(i:=0, r:=IteratorOfGreensRClasses(s), 
-       data:=[])));
+    ShallowCopy:=iter-> rec(i:=0, r:=IteratorOfGreensRClasses(s), 
+     data:=[])));
 
-  SetUnderlyingSemigroupOfIterator(iter, s);
+  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 

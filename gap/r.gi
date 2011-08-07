@@ -716,7 +716,7 @@ function(arg)
           storenumbers:=true, 
           log:=true));
 
-  SetIsMonoidPkgImgKerOrbit(o, true);
+  SetIsCitrusPkgImgKerOrbit(o, true);
   o!.img:=true; #for ViewObj method
   Enumerate(o, bound);
           
@@ -1391,7 +1391,7 @@ function(s)
     
     R:=IteratorOfGreensRClasses(s), 
     
-    r:=fail,
+    r:=fail, s:=s, 
     
     NextIterator:=function(iter)
       
@@ -1406,11 +1406,13 @@ function(s)
       return NextIterator(iter!.r);
     end,
     
-    IsDoneIterator:= iter -> IsDoneIterator(iter!.R) and IsDoneIterator(iter!.r),
+    IsDoneIterator:= iter -> IsDoneIterator(iter!.R) and 
+     IsDoneIterator(iter!.r),
     
     ShallowCopy:= iter -> rec(R:=IteratorOfGreensRClasses(s), r:=fail)));
 
   SetIsIteratorOfSemigroup(iter, true);
+  SetIsCitrusPkgIterator(iter, true);
 
   return iter;
 end);
@@ -1434,7 +1436,7 @@ function(r)
       schutz:=List(SchutzenbergerGroup(r), x-> r!.rep*x),
       #JDM this is bad idea replace as in enumerator...
 
-      m:=Size(SchutzenbergerGroup(r)),
+      m:=Size(SchutzenbergerGroup(r)), s:=r!.parent, 
           
       perms:=ImageOrbitPermsFromData(r!.parent, r!.data, r!.o),
           
@@ -1463,12 +1465,15 @@ function(r)
       
       end,
           
-      ShallowCopy:=iter-> rec( schutz:=List(SchutzenbergerGroup(r), x-> r!.rep*x),
-       m:=Size(SchutzenbergerGroup(r)), perms:=ImageOrbitPermsFromData(r!.parent,
-       r!.data, r!.o), scc:=ImageOrbitSCC(r), n:=Length(ImageOrbitSCC(r)), at:=[1,0])));
+      ShallowCopy:=iter-> rec( schutz:=List(SchutzenbergerGroup(r), x-> 
+       r!.rep*x),
+      m:=Size(SchutzenbergerGroup(r)), 
+      perms:=ImageOrbitPermsFromData(r!.parent, r!.data, r!.o), 
+      scc:=ImageOrbitSCC(r), n:=Length(ImageOrbitSCC(r)), at:=[1,0])));
   fi;
 
   SetIsIteratorOfRClassElements(iter, true);
+  SetIsCitrusPkgIterator(iter, true); 
   return iter;
 end);
 
@@ -1511,7 +1516,7 @@ function(s)
     ShallowCopy:=iter-> rec(i:=0, s:=iter!.s, reps:=IteratorOfRClassReps(s))));
 
   SetIsIteratorOfGreensRClasses(iter, true);
-  
+  SetIsCitrusPkgIterator(iter, true); 
   return iter;
 end);
 
@@ -1544,7 +1549,7 @@ function(s)
 
   i:=0, # representative index i.e. which representative we are at
 
-  s:= s,
+  s:=s,
 
   next_value := fail,
 
@@ -1620,6 +1625,7 @@ function(s)
   ######################################################################
 
   SetIsIteratorOfRClassRepsData(iter, true);
+  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 
@@ -1655,6 +1661,7 @@ function(s)
     iter!.s))));
 
   SetIsIteratorOfRClassReps(iter, true);
+  SetIsCitrusPkgIterator(iter, true);
 
   return iter;
 end);
@@ -2119,7 +2126,7 @@ end);
 #############################################################################
 
 InstallMethod(ViewObj, "for a citrus pkg img ker orbit",
-[IsMonoidPkgImgKerOrbit],
+[IsCitrusPkgImgKerOrbit],
 function( o )
 
   Print("<");

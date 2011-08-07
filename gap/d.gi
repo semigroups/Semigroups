@@ -708,7 +708,7 @@ function(arg)
           storenumbers:=true,
           log:=true));
 
-  SetIsMonoidPkgImgKerOrbit(o, true);
+  SetIsCitrusPkgImgKerOrbit(o, true);
   o!.img:=false; #for ViewObj method
   Enumerate(o, bound);
 
@@ -1424,8 +1424,8 @@ function(s)
     ShallowCopy:= iter -> rec( s:=s, data:=IteratorOfDClassRepsData(s))));
 
   SetIsIteratorOfDClassReps(iter, true);
-  SetUnderlyingSemigroupOfIterator(iter, s);
-  
+  SetIsCitrusPkgIterator(iter, true);
+
   return iter;
 end);
 
@@ -1512,6 +1512,7 @@ function(s)
     end));
 
   SetIsIteratorOfDClassRepsData(iter, true);
+  SetIsCitrusPkgIterator(iter, true);
 
   return iter;
 end);
@@ -1528,12 +1529,15 @@ function(arg)
   Info(InfoCitrusGreens, 4, "IteratorOfGreensDClasses");
 
   if not (Length(arg) mod 3)=1 or not IsTransformationSemigroup(arg[1]) then 
-    Info(InfoWarning, 1, "Usage: argument should be a transformation semigroup");
-    #" and optionally function, operator, value, function, operator, value, ...");
+    Info(InfoWarning, 1, "Usage: argument should be a transformation", 
+     "semigroup");
+    # optionally function, operator, value, function, operator, value, ...
     return fail;
   fi;
 
-  #JDM do the same as the below for IteratorOfRClasses etc..
+  #JDM do the same as the below for IteratorOfRClasses etc.. i.e. allow the
+  #optional arguments listed above. Currently the Length(arg)>1 case below is 
+  # undocumented and not used anywhere.
 
   if Length(arg)>1 then 
     return IteratorByFunctions( rec(
@@ -1607,7 +1611,7 @@ function(arg)
      reps:=IteratorOfRClassReps(s))));
 
   SetIsIteratorOfGreensDClasses(iter, true);
-  SetUnderlyingSemigroupOfIterator(iter, s);
+  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 

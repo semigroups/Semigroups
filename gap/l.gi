@@ -585,7 +585,7 @@ function(s)
 
   iter:=IteratorByFunctions( rec(
 
-  	  data:=IteratorOfLClassRepsData(s),
+  	  data:=IteratorOfLClassRepsData(s), s:=s,
 	
           IsDoneIterator := iter -> IsDoneIterator(iter!.data), 
 	
@@ -605,7 +605,7 @@ function(s)
 	  ShallowCopy:=iter-> rec(data:=IteratorOfLClassRepsData(s))));
 
   SetIsIteratorOfGreensLClasses(iter, true);
-  SetUnderlyingSemigroupOfIterator(iter, s);
+  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 
@@ -641,7 +641,7 @@ function(s)
     iter!.s))));
 
   SetIsIteratorOfLClassReps(iter, true);
-  SetUnderlyingSemigroupOfIterator(iter, s);
+  SetIsCitrusPkgIterator(iter, true);
 
   return iter;
 end);
@@ -664,7 +664,7 @@ function(s)
     
     i:=0, next_value:=[], last_called_by_is_done:=false,
     
-    data:=IteratorOfDClassRepsData(s),
+    data:=IteratorOfDClassRepsData(s), s:=s,
     
     ######################################################################
 
@@ -707,7 +707,7 @@ function(s)
 
   ######################################################################
   
-  SetUnderlyingSemigroupOfIterator(iter, s);
+  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 
