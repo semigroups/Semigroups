@@ -8,6 +8,7 @@
 #############################################################################
 ##
 
+DeclareGlobalFunction("CitrusTestAll");
 DeclareGlobalFunction("DClass");
 DeclareGlobalFunction("DClassNC");
 

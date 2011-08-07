@@ -11,6 +11,17 @@
 # this file contains functions with shorter names than some library functions
 # commonly used in the citrus package. 
 
+# new for 0.1! - CitrusTestAll - "for no argument"
+#############################################################################
+
+InstallGlobalFunction(CitrusTestAll, 
+function()
+  Print(
+  "reading citrus/tst/testall.g, which automatically reads all .tst files", 
+  "\nin the tst directory.\n\n");
+  Read(Filename(DirectoriesPackageLibrary("citrus","tst"),"testall.g"));;
+end);
+
 # new for 0.1! - DClass - "for a trans. semi and trans. or Green's class"
 #############################################################################
 # Usage: (trans. semigp. and trans.) or H-class or L-class or R-class.

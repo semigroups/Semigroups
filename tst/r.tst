@@ -15,7 +15,7 @@ gap> START_TEST("r.tst 0.1");
 gap> SetGasmanMessageStatus("none");
 gap> LoadPackage("citrus");
 true
-gap> SetInfoLevel(InfoMonoidGreens, 0);
+gap> SetInfoLevel(InfoCitrusGreens, 0);
 gap> gens:=[ 
 >  Transformation( [ 1, 54, 25, 4, 49, 30, 7, 56, 51, 44, 31, 62, 13, 20, 35, 
 >      38, 61, 18, 37, 14, 63, 42, 23, 24, 3, 58, 27, 34, 55, 6, 11, 32, 45, 28, 

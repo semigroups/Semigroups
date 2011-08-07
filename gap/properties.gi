@@ -241,13 +241,13 @@ end);
 
 # new for 0.1! - IsCompletelySimpleSemigroup - "for a trans. semigroup"
 ###########################################################################
-# Notes: this test required to avoid conflict with Smallsemi.
+# Notes: this test required to avoid conflict with Smallsemi, DeclareSynonymAttr
+# causes problems. 
 
-InstallMethod(IsCompletelySimpleSemigroup, "for a transformation semigroup",
-[IsTransformationSemigroup],
-function(s)
-  return IsSimpleSemigroup(s) and IsFinite(s);
-end);
+InstallMethod(IsCompletelySimpleSemigroup, "for a trans. semi.",
+[IsTransformationSemigroup], x-> IsSimpleSemigroup(x) and IsFinite(x));
+
+InstallTrueMethod(IsCompletelySimpleSemigroup, IsSimpleSemigroup and IsFinite);
 
 #IIIGGG
 
@@ -605,14 +605,22 @@ end);
 
 #IIISSS
 
-# new for 0.1! - IsSemilatticeAsSemigroup - "for a semigroup"
+
+# new for 0.1! - IsSemiband - "for a transformation semigroup"
 ###############################################################################
 
-InstallMethod(IsSemilatticeAsSemigroup, "for a semigroup", 
-[IsSemigroup],
-function(s)
-  return IsBand(s) and IsCommutativeSemigroup(s);
-end);
+InstallMethod(IsSemiband, "for a transformation semigroup",
+[IsTransformationSemigroup], IsIdempotentGenerated);
+
+InstallTrueMethod(IsSemiband, IsIdempotentGenerated);
+
+# new for 0.1! - IsSemilatticeAsSemigroup - "for a trans. semigroup"
+###############################################################################
+
+InstallMethod(IsSemilatticeAsSemigroup, "for a transformation semigroup",
+[IsTransformationSemigroup], s-> IsCommutative(s) and IsBand(s));
+
+InstallTrueMethod(IsSemilatticeAsSemigroup, IsCommutative and IsBand);
 
 # new for 0.1! - IsSimpleSemigroup - "for a tran. semi."
 ###########################################################################
