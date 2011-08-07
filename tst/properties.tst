@@ -773,7 +773,7 @@ gap> s:=FullTransformationSemigroup(3);;
 gap> j:=0;;
 gap> for f in s do
 > for g in s do
-> if IsSynchronizingSemigroup([f,g]) then j:=j+1; fi;
+> if IsSynchronizingSemigroup(Semigroup(f,g)) then j:=j+1; fi;
 > od;
 > od;
 gap> j;
