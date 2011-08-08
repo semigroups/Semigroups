@@ -324,7 +324,10 @@ function(d)
   m:=RankOfTransformation(d!.rep);       
 
   if m=n then
-    return GreensHClassOfElementNC(s, [TransformationNC([1..n])]);
+    f:=TransformationNC([1..n]);
+    h:=GreensHClassOfElementNC(s, f);
+    SetIsGroupHClass(h, true); SetIdempotents(h, [f]);
+    return h;
   fi;
 
   ker:=KernelOrbit(d)[1]; o:=ImageOrbit(d); scc:=ImageOrbitSCC(d);

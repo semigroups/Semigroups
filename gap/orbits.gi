@@ -122,18 +122,11 @@ end);
 
 InstallGlobalFunction(HashTableForImages, 
 function(img)
-  local x, n, p, ht;
+  local img_set, ht;
 
-  x:=Set(img); n:=Length(img);
-  
-  if n<15 then 
-    p:=Minimum(NextPrimeInt(Binomial(n, Length(x))), 1009);
-  else
-    p:=1009;
-  fi;
-
-  ht := HTCreate(x, rec( hfd := 1009, treehashsize := 1009 ));
-  HTAdd(ht, x, 1);
+  img_set:=Set(img); 
+  ht := HTCreate(img_set, rec( hfd := 1009, treehashsize := 1009 ));
+  HTAdd(ht, img_set, 1);
 
   return ht;
 end);
@@ -143,15 +136,9 @@ end);
 
 InstallGlobalFunction(HashTableForKernels, 
 function(ker, n)
-  local p, ht;
+  local ht;
 
-  if n<11 then 
-    p:=Minimum(NextPrimeInt(Stirling2(n, Maximum(ker))), 10007);
-  else
-    p:=10007;
-  fi;
-
-  ht := HTCreate(ker, rec( hfd := p, treehashsize := p ));
+  ht := HTCreate(ker, rec( hfd := 1009, treehashsize := 1009 ));
   HTAdd(ht, ker, 1);
 
   return ht;
@@ -167,6 +154,8 @@ end);
 
 # new for 0.1! - ImagesOfTransSemigroup - "for a transformation semigroup"
 ###########################################################################
+# Notes: this orbit always contains [1..Degree(s)] even if this is not the
+# image of any element in s. 
 
 InstallMethod(ImagesOfTransSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
@@ -247,3 +236,6 @@ function(o)
 
   return List(graph, x-> o{x});
 end);
+
+#EOF
+
