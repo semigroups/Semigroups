@@ -1,7 +1,23 @@
+#############################################################################
+##
+#W  monoid_pkg.tst
+#Y  Copyright (C) 2006-2010                             James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+#
+#############################################################################
+##
+
+#ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"monoid_pkg.tst"));
+# approx. 9s
+
+# a concatenation of relevant tests from the monoid/tst. 
 
 
-# Group ring
+# Miscellaneous
 
+gap> START_TEST("monoid_pkg.tst 0.1");
+gap> LoadPackage("citrus", false);;
 gap> g:=CyclicGroup(3);;
 gap> r:=GF(2);;
 gap> gr:=GroupRing(r, g);;
@@ -16,24 +32,22 @@ gap> NrGreensDClasses(s);
 gap> List(GreensDClasses(s), Size);
 [ 3, 1, 3, 1 ]
 gap> PartialOrderOfDClasses(s);
-[ [ 1, 2, 3, 4 ], [ 2 ], [ 2, 3 ], [ 2, 4 ] ]
+[ [ 1, 2, 3 ], [ 2, 4 ], [ 3, 4 ], [ 4 ] ]
 gap> IsRegularSemigroup(s);
 true
 gap> ForAll(s, x-> x in s);
 true
 gap> MultiplicativeNeutralElement(s);
-Transformation( [ 1 .. 8 ] )
+Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8 ] )
 gap> List(s, x-> InversesOfTransformation(s, x)); 
-[ [ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8 ] ) ], 
-  [ Transformation( [ 1, 6, 7, 4, 3, 8, 5, 2 ] ) ], 
-  [ Transformation( [ 1, 8, 5, 4, 7, 2, 3, 6 ] ) ], 
-  [ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] ) ], 
-  [ Transformation( [ 1, 5, 7, 1, 3, 3, 5, 7 ] ) ], 
-  [ Transformation( [ 1, 7, 3, 1, 5, 5, 7, 3 ] ) ], 
-  [ Transformation( [ 1, 3, 5, 1, 7, 7, 3, 5 ] ) ], 
-  [ Transformation( [ 1, 4, 1, 4, 1, 4, 1, 4 ] ) ] ]
-gap> IsInverseSemigroup(s);
-true
+[ [ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8 ] ) ],
+  [ Transformation( [ 1, 8, 5, 4, 7, 2, 3, 6 ] ) ],
+  [ Transformation( [ 1, 6, 7, 4, 3, 8, 5, 2 ] ) ],
+  [ Transformation( [ 1, 4, 1, 4, 1, 4, 1, 4 ] ) ],
+  [ Transformation( [ 1, 7, 3, 1, 5, 5, 7, 3 ] ) ],
+  [ Transformation( [ 1, 3, 5, 1, 7, 7, 3, 5 ] ) ],
+  [ Transformation( [ 1, 5, 7, 1, 3, 3, 5, 7 ] ) ],
+  [ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] ) ] ]
 gap> IsMonoidAsSemigroup(s);
 true
 gap> IsGroupAsSemigroup(s);
@@ -140,24 +154,8 @@ false
 gap> IsBand(S);
 false
 
+# from greens.tst
 
-
-#############################################################################
-##
-#W  greens.tst
-#Y  Copyright (C) 2006-2010                             James D. Mitchell
-##
-##  Licensing information can be found in the README file of this package.
-#
-#############################################################################
-##
-## $Id: greens.tst 33 2010-05-08 14:54:13Z jamesm $
-##
-
-#ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), "greens.tst"));
-
-gap> START_TEST("greens.tst 0.1");
-gap> LoadPackage("citrus", false);;
 gap> gens:=[ Transformation( [ 4, 5, 7, 1, 8, 6, 1, 7 ] ), 
 >  Transformation( [ 5, 5, 3, 8, 3, 7, 4, 6 ] ), 
 >  Transformation( [ 5, 7, 4, 4, 1, 4, 4, 4 ] ), 
@@ -964,4 +962,4 @@ gap> AsSet(Enumerate(KernelsOfTransSemigroup(S,3)));
 [ [ 1, 1, 2, 3 ], [ 1, 2, 3, 1 ], [ 1 .. 4 ] ]
 gap> AsSet(Enumerate(KernelsOfTransSemigroup(S,4)));  
 [ [ 1 .. 4 ] ]
-gap> STOP_TEST( "greens.tst 0.1", 1000);
+gap> STOP_TEST( "monoid_pkg.tst 0.1", 1000);
