@@ -85,7 +85,7 @@ function(s)
     n:=Degree(s[1]);
   fi;
  
-  ht:=HTCreate([1..n], rec(hashlen:=10007)); HTAdd(ht, [1..n], true);
+  ht:=HTCreate([1..n], rec(hashlen:=1009)); HTAdd(ht, [1..n], true);
   o:=[[1..n]]; m:=1;
 
   if n<11 then 
@@ -190,7 +190,7 @@ function(s)
   
   return Orb(GeneratorsAsListOfImages(s), [1..n], function(f,g) return
    CanonicalTransSameKernel(f{g}); end, rec(storenumbers:=true, 
-   treehashsize:=10007, schreier:=true));
+   treehashsize:=1009, schreier:=true));
 end);
 
 # new for 0.1! - KernelsOfTransSemigroup - "for trans. semi. and  pos. int."
@@ -205,7 +205,7 @@ function(s, m)
 
   return Orb(GeneratorsAsListOfImages(s), [1..n], 
               function(f,g) return CanonicalTransSameKernel(f{g}); end, 
-              rec(storenumbers:=true, treehashsize:=10007, 
+              rec(storenumbers:=true, treehashsize:=1009, 
               gradingfunc:=function(o,x) return Maximum(x); end,
               onlygrades:=function(x, y) return x in y; end, 
               onlygradesdata:=[m..n], schreier:=true));

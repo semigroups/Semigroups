@@ -18,7 +18,8 @@ InstallGlobalFunction(CitrusTestAll,
 function()
   Print(
   "reading citrus/tst/testall.g, which automatically reads all .tst files", 
-  "\nin the tst directory. As of 07/08/11 the tests take approx. 52s.\n\n");
+  "\nin the tst directory. As of 10/08/11 the tests take approx. 55s with", 
+  "\n1g of memory.\n\n");
   Read(Filename(DirectoriesPackageLibrary("citrus","tst"),"testall.g"));;
 end);
 
