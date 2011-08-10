@@ -22,7 +22,7 @@
 # IsFreeNormalBand, IsBrandtSemigroup, IsFundamentalInverseSemigp, 
 # IsFullSubsemigroup (of an inverse semigroup), IsFactorizableInverseMonoid,
 # IsFInverseSemigroup, IsSemigroupWithCentralIdempotents, IsLeftUnipotent,
-# IsRightUnipotent,
+# IsRightUnipotent, IsSemigroupWithClosedIdempotents.
 
 #GGG
 
