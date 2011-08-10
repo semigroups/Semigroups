@@ -361,7 +361,7 @@ InstallMethod(IsGroupAsSemigroup, "for a transformation semigroup",
 function(s)
   local gens, ker, img, f;
 
-  gens:=Generators(s);
+  gens:=GeneratorsOfSemigroup(s); #not GeneratorsOfMonoid!
 
   if ForAll(gens, f-> RankOfTransformation(f)=
    DegreeOfTransformationSemigroup(s)) then
@@ -639,11 +639,11 @@ function(s)
   elif HasIsCompletelyRegularSemigroup(s) and not 
    IsCompletelyRegularSemigroup(s) then 
     return false;
-  elif HasNrGreensDClasses(s) and NrGreensDClasses(s)=1 then 
-    return true;
+  elif HasNrGreensDClasses(s) then
+    return NrGreensDClasses(s)=1;
   fi;
 
-  gens:=Generators(s);
+  gens:=GeneratorsOfSemigroup(s); #not GeneratorsOfMonoid!
 
   for f in gens do
     r:=RankOfTransformation(f);
