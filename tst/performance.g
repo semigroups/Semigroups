@@ -41,21 +41,46 @@ CitrusTestSuite:=function(s, j)
   od;
 end;
 
-CitrusTestWriter:=function(gens, j)
-  local tests;
+CreateCitrusPerformanceTest:=function(file, gens, j)
+  local str, tabs, s, t, out, i;
   
+  str:=StringFile(file);
+  str:=SplitString(str, "\n");  
+  str:=str{[1..Length(str)-1]}; 
+  str:=JoinStringsWithSeparator(str, "\n");
+  str:=Concatenation(str, "\n\n");
+
   tabs:=Concatenation([4,2,2,2,2,3,2,2,2,2,2,3,2,2,1,1],
   ListWithIdenticalEntries(11, 2), [3,1,2,1,3,2]);
-  Print("gap> gens:=", gens, ";;\n");
-  Print("gap> s:=Semigroup(gens);;\n");
-  for i in [1..Length(CitrusTests)] do 
-   Print("gap> t:=Runtime\(\);; out:=CitrusTests\[", i, "\]\(s\);;", 
-   " t:=Runtime\(\)-t;;\n");
-   Print("gap> Print\(\"Example \", ",j,", \"\\t",
-   NAME_FUNC(CitrusTests[i]), ":\" , ", "\"", 
-   Concatenation(ListWithIdenticalEntries(tabs[i], "\\t")),"\",\n");
-   Print("> out, \"\\t\\t time: \", t, \"\\n\"\);\n\n");
+ 
+  str:=Concatenation(str, "gap> gens:=[", StringPrint(gens[1]), ",\n");
+  
+  for i in [2..Length(gens)] do 
+    str:=Concatenation(str, "> ", StringPrint(gens[i]));
+    if i<Length(gens) then 
+      str:=Concatenation(str, ",\n");
+    else
+      str:=Concatenation(str, "];;\n");
+    fi;
   od;
+  str:=Concatenation(str, "gap> s:=Semigroup(gens);;\n");
+  s:=Semigroup(gens); 
+  for i in [1..Length(CitrusTests)] do 
+    str:=Concatenation(str, "gap> t:=Runtime\(\);; out:=CitrusTests\[", 
+    String(i), "\]\(s\);;", " t:=Runtime\(\)-t;;\n");
+    str:=Concatenation(str, "gap> Print\(\"Example \", ",String(j),", \"\\t",
+    NAME_FUNC(CitrusTests[i]), ":\" , ", "\"", 
+    Concatenation(ListWithIdenticalEntries(tabs[i], "\\t")),"\",\n", 
+    "> out, \"\\t\\t time: \", t, \"\\n\"\);\n");
+    t:=Runtime(); out:=CitrusTests[i](s); t:=Runtime()-t;
+    str:=Concatenation(str, "Example ", String(j), "\t",
+    NAME_FUNC(CitrusTests[i]), ":",
+    Concatenation(ListWithIdenticalEntries(tabs[i], "\t")), String(out), 
+    "\t\t time: ", String(t), "\n");
+  od;
+  str:=Concatenation(str, "\n\ngap> STOP_TEST\( \"performance.tst 0.1\", 0\);");
+  FileString(file, str);
+  return true;
 end;
 
 #Print("\nGap should be started with at least 1g of memory (gap -m 1000m)\n\n");
