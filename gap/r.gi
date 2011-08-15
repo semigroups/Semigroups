@@ -1806,7 +1806,7 @@ function(s)
     finished:=false, 
     orbits:=EmptyPlist(n),
     lens:=[1..n]*0, #lens[j]=Length(orbits[j])
-    images:=HTCreate(ImageSetOfTransformation(gens[1]), rec(hashlen:=1009)),
+    images:=HTCreate(ImageSetOfTransformation(gens[1])),#1009 normally!
     at:=0, 
     gens:=gens,
     s:=s,
