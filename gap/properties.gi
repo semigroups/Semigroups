@@ -24,6 +24,8 @@
 # IsFInverseSemigroup, IsSemigroupWithCentralIdempotents, IsLeftUnipotent,
 # IsRightUnipotent, IsSemigroupWithClosedIdempotents, IsZeroSimpleSemigroup.
 
+# a better method for MinimalIdeal of a simple semigroup.
+
 #GGG
 
 # new for 0.1! - GroupOfUnits - "for a tranformation semigroup"
