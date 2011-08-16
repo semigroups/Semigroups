@@ -330,7 +330,8 @@ function(d)
     return h;
   fi;
 
-  ker:=KernelOrbit(d)[1]; o:=ImageOrbit(d); scc:=ImageOrbitSCC(d);
+  ker:=KernelOrbit(d)[KernelOrbitSCC(d)[1]]; 
+  o:=ImageOrbit(d); scc:=ImageOrbitSCC(d);
 
   for i in scc do
     if IsInjectiveTransOnList(ker, o[i]) then 
