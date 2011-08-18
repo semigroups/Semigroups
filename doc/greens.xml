@@ -1,5 +1,44 @@
 #############################################################################
 ##
+#W  d.xml
+#Y  Copyright (C) 2006-2011                             James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+## $Id: r.tst 127 2010-11-22 20:09:29Z jamesm $
+##
+
+<#GAPDoc Label="PartialOrderOfDClasses">
+  <ManSection>
+  <Attr Name="PartialOrderOfDClasses" Arg="s"/>
+  <Description>
+  returns a list <C>l</C> where <C>j</C> is in <C>l[i]</C> if and only if 
+  <C>GreensDClasses(s)[j]</C> is immediately less than 
+  <C>GreensDClasses(s)[i]</C> in the partial order of <Math>D</Math>-classes of <A>s</A>.
+  The transitive closure of the relation <Math>\{\:(j,i):\:\: j\in
+  l[i]\:\}</Math> is the partial order of <Math>D</Math>-classes. <P/>
+
+  The partial order on the <Math>D</Math>-classes is defined by 
+  <Math>x\leq y</Math> in if and only if <C>s^1xs^1</C> is a subset of  
+  <C>s^1ys^1</C>.
+  </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NrRegularDClasses"> 
+  <ManSection><Attr Name="NrRegularDClasses" Arg="s"/> 
+    <Description>
+    returns the number of regular <Math>D</Math>-classes of the transformation
+    semigroup <A>s</A>.
+    </Description>
+    </ManSection>
+<#/GAPDoc>
+
+
+#############################################################################
+##
 #W  r.xml
 #Y  Copyright (C) 2006-2010                             James D. Mitchell
 ##

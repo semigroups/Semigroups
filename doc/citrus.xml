@@ -1,30 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd">
-<!--  MakeGAPDocDoc("~/Desktop/gap4r4/pkg/monoid/doc/", "monoid.xml", [
- "r.xml", "d.xml", "../gap/transform.gd", "../gap/orbits.gd",
- "../gap/properties.gd", "../gap/legacy.gd"], "manual");; -->
-
 <!-- SizeScreen([80]); SetInfoLevel(InfoWarning, 0);
 TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1], 
 "monoid.xml", ["../gap/autos.gd", "../gap/general.gd", "../gap/greens.gd", 
 "../gap/orbits.gd", "../gap/properties.gd", "../gap/semigroups.gd", 
 "../gap/semihomo.gd", "../gap/transform.gd", "../gap/isomorph.gd"] );-->
 
-<Book Name="monoid">
+<Book Name="citrus">
 
 <TitlePage>
-  <Title>The <Package>monoid</Package> Package</Title>
+  <Title>The <Package>Citrus</Package> Package</Title>
 
-  <Version>Version 4.0</Version>
+  <Version>Version 0.1</Version>
   
   <Author>J. D. Mitchell <Email>jdm3@st-and.ac.uk</Email></Author>
   
   <Copyright>&copyright; 2011 J. D. Mitchell.<P/></Copyright>
 
   <Colophon>
-  This manual describes the &GAP; 4 package <Package>moniod</Package> version
-  4.0 for computing with transformation semigroups. 
+  This manual describes the &GAP; 4.5 package <Package>Citrus</Package> version
+  0.1 for computing with transformation semigroups. 
   </Colophon>
 
   <Acknowledgements>
@@ -32,7 +28,7 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     Neubueser, V. Maltcev, M. R. Quick, E. F. Robertson, and N. Ruskuc for
     their help and suggestions. Special thanks go to J. Araujo for his 
     mathematical suggestions and to M. Neuhoeffer for his invaluable help in
-    preparing version 4. <P/>
+    improving the efficiency of the package. <P/>
 
     I would also like to acknowledge the support of the Centre of Algebra at 
     the University of Lisbon, and of EPSRC grant number GR/S/56085/01. 
@@ -43,71 +39,80 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
 <TableOfContents/>
 
 <Body>
-  <Chapter Label="Monoid">
-  <Heading>The <Package>monoid</Package> package</Heading>
+  <Chapter Label="citrus">
+  <Heading>The <Package>citrus</Package> package</Heading>
 	
-  <Section><Heading>Introduction</Heading>
-    This  manual  describes the <Package>monoid</Package> package version 4.0 
-    for computing with transformation semigroups. <Package>monoid</Package> 4.0 
-    is an updated version of the package with the same name for &GAP; 3; see
-    <URL>http://schmidt.nuigalway.ie/monoid/index.html</URL>
-    for more information about the original <Package>monoid</Package> by Goetz
-    Pfeiffer, Steve A. Linton, Edmund F. Robertson and Nik Ruskuc. <P/>
+  <Section><Heading>Overview and Introduction</Heading>
+    This is the manual for the <Package>Citrus</Package> package version 0.1 
+    for computing with
+    transformation semigroups. <Package>Citrus</Package> 0.1 is an updated 
+    version of the <Package>Monoid</Package>
+    package for &GAP; 3 and 4; see
 
-    <Package>monoid</Package> 4.0 retains all the functionality of the original
-    <Package>monoid</Package> package. In particular, <Package>monoid</Package> 
-    4.0 contains more vastly more efficient methods than those available in the 
-    &GAP; library for calculating Green's classes, finding 
-    the size, the elements, testing membership in transformation 
-    semigroups, and testing if a semigroup satisfies a particular property; see 
-    Chapters <Ref Chap="orbits"/>, <Ref Chap="greens"/>, and 
-    <Ref Chap="properties"/>. After <Package>monoid</Package> has been loaded 
-    many of these methods are automatically used in preference to those in the 
-    library and do not need to be called explicitly by the user.  
-    The methods for Green's relations and related functions are based on those
-    in <Cite Key="pfeiffer1"/> and <Cite Key="pfeiffer2"/>. Some of the methods 
-    for testing if a semigroup satisfies a certain property are described 
-    in <Cite Key="largest"/>. <P/>
+    <URL>http://schmidt.nuigalway.ie/monoid/index.html</URL><P/>
 
-    The <Package>monoid</Package> package is written in &GAP; code only. 
-    However, <Package>monoid</Package>  requires the  <Package>orb</Package> 
-    package version 3.7 or higher to be installed.<P/>
+    for more information about the original <Package>Monoid</Package> package 
+    for &GAP;
+    3 by Goetz
+    Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc, or
 
-    The <Package>orb</Package> package is used to provide efficient methods for 
-    computing orbits in transformation semigroups that underpin most of the 
-    features of <Package>monoid</Package>. As of Version 4.0, the 
-    <Package>monoid</Package> package can no longer be used without 
-    <Package>orb</Package> version 3.7 or higher. 
+    http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html
 
-    See<P/>
+    for more information about <Package>Monoid</Package> 3.1.4 for &GAP; 4.
+
+    The functionality of <Package>Monoid</Package> 3.1.4 has been split across 
+    two &GAP; 4.5 packages
+    <Package>Citrus</Package> and <Package>Comatose</Package>.
+
+    <Package>Citrus</Package> 0.1 retains all the functionality of the original
+    <Package>Monoid</Package> package for
+    &GAP; 3; and those functions from <Package>Monoid</Package> 3.1.4 not 
+    involved in the 
+    computation of
+    automorphism groups of semigroups. The Comatose Package retains those
+    functions from <Package>Monoid</Package> 3.1.4 used to compute
+    automorphism groups of transformation semigroups. See
+
+    <URL>
+      http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html
+     </URL><P/>
+
+    <Package>Citrus</Package> 0.1 contains more efficient methods than those 
+    available in the &GAP; library for calculating Green's classes, finding the
+    size, the elements, and testing membership in transformation semigroups. 
+    After <Package>Citrus</Package> has been loaded many of these methods are
+    automatically used in preference to those in the library and do not need to 
+    be called explicitly by the user.
+
+    In addition, there are methods for testing if a semigroup satisfies a
+    particular property, such as if it is regular, simple, inverse, or 
+    completely regular.
+
+    The <Package>Citrus</Package> package is written in &GAP; code only but
+    requires the <Package>Orb</Package> 
+    package.
+    <Package>orb</Package> is used to provide efficient methods for computing 
+    orbits in transformation semigroups that underpin most of the features of 
+    <Package>Citrus</Package>. See:
+
     <URL>
     http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
-    </URL>
-    <P/>
-    or the main &GAP; webpages for more information. <P/>
+    </URL><P/>
 
-    If you want to take advantage of the online help facilities in
-    <Package>monoid</Package>, then the <Package>gapdoc</Package> package
-    Version 1.1 or higher is also required; see 
-    
-    <URL>
-      http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/
-    </URL> 
-    
-    for further details of how to obtain and install 
-    <Package>gapdoc</Package>.
+    or the main &GAP; webpages for more information.
+  
   </Section>
 
   <Section Label="install">
-    <Heading>Installing <Package>monoid</Package></Heading>
+    <Heading>Installing <Package>Citrus</Package></Heading>
 
     In this section we give a brief description of how to start using  
-    <Package>monoid</Package>. If you have any problems getting
-    <Package>monoid</Package> working, then please email me directly at
+    <Package>Citrus</Package>. If you have any problems getting
+    <Package>Citrus</Package> working, then you could try emailling me at
     <Email>jdm3@st-and.ac.uk</Email>. <P/>
 
     It is assumed that you have a working copy of &GAP; with version number 
-    4.4.12 or higher. The most up-to-date version of &GAP; and instructions on
+    4.5 or higher. The most up-to-date version of &GAP; and instructions on
     how to install it can be obtained from the main &GAP; webpage
     
     <URL>
@@ -115,46 +120,53 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     </URL>.<P/>
 
     The following is a summary of the steps that should lead to a successful
-    installation of <Package>monoid</Package>:
+    installation of <Package>Citrus</Package>:
 
     <List>
     
-      <Item> download and install the <Package>orb</Package> package version 
+      <Item> download and install the <Package>Orb</Package> package version 
       3.7 or higher. For more details go to:
       <URL>
     http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
-      </URL></Item>
+      </URL>
+      Note that both <Package>Orb</Package> and
+      <Package>Citrus</Package> are faster if <Package>Orb</Package>
+      is compiled. 
+      </Item>
     
-      <Item> download the package archive <C>monoid4r0.tar.gz</C> or 
-      <C>monoid4r0.tar.bz2</C> from <URL>http://tinyurl.com/monoid4</URL></Item>
+      <Item> download the package archive <C>citrus0r1.tar.gz</C> or 
+      <C>citrus0r1.tar.bz2</C> from <URL>JDM</URL></Item>
     
       <Item> unzip and untar the file, this should create a directory called
-      <C>monoid</C>.</Item>
+      <C>citrus</C>.</Item>
     
-      <Item> move the directory <C>monoid</C> into the <C>pkg</C> directory of 
-      your &GAP; directory (the one containing the directories <C>lib</C>, 
-      <C>doc</C>, <C>pkg</C>, and so on)</Item>
+      <Item> 
+      locate the <C>pkg</C> directory of your &GAP; directory, which contains
+      several other directories such as <C>lib</C>, <C>doc</C> and so on. Move 
+      the directory <C>citrus</C> into the <C>pkg</C> directory
+      </Item>
     
       <Item> start &GAP; in the usual way</Item>
     
-      <Item> type <C>LoadPackage("monoid");</C></Item>
+      <Item> type <C>LoadPackage("citrus");</C></Item>
     
     </List>
 
-    Below is an example of an installation of <Package>monoid</Package> in UNIX 
-    where <C>GAPROOT</C>  should be substituted with the main &GAP; directory 
-    (the one containing the folders `bin', `lib', and so on) in your   
-    installation of &GAP;.<P/>
+    Below is an example of an installation of <Package>Citrus</Package> in a
+    UNIX environment where <C>GAPROOT</C>  should be substituted with the main 
+    &GAP; directory 
+    (the one containing the folders <C>bin</C>, <C>lib</C>, and so on) in
+    your installation of &GAP;.<P/>
 
     <Log>
-      > gunzip monoid4r0.tar.gz 
-      > tar -xf monoid4r0.tar 
-      > mv monoid GAPROOT/pkg
+      > gunzip citrus0r1.tar.gz 
+      > tar -xf citrus0r1.tar 
+      > mv citrus GAPROOT/pkg
       > gap 
 
       [ ... ]
 
-      gap> LoadPackage("monoid");
+      gap> LoadPackage("citrus");
       ----------------------------------------------------------------------
       Loading  orb 3.7 (orb - Methods to enumerate orbits)
       by Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),
@@ -162,73 +174,40 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
          Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
       ----------------------------------------------------------------------
       ----------------------------------------------------------------------
-      Loading  monoid 4.0 (monoid: computing with transformation semigroups)
-      by James Mitchell (http://tinyurl.com/monoid4).
+      Loading  Citrus 0.1 (Citrus - ComputIng with TransfoRmation semigrUopS)
+      by J. D. Mitchell (http://tinyurl.com/jdmitchell).
       ----------------------------------------------------------------------
       true
       gap> 
     </Log>
 
     Presuming that the above steps can be completed successfully you will be 
-    running the <Package>monoid</Package> package!<P/>
+    running the <Package>citrus</Package> package!<P/>
 
     If you want to check that the package is working correctly, please see
     Section <Ref Sect="testing"/>.<P/>
 
-    <B>Please note:</B> before you can used <Package>monoid</Package> you must
+    <B>Please note:</B> before you can used <Package>citrus</Package> you must
     install <Package>orb</Package> version 3.7 or higher as described above.
 
   </Section>
 
-  <Section Label="testing"><Heading>Testing <Package>monoid</Package></Heading>
+  <Section Label="testing"><Heading>Testing the installation</Heading>
 
-    In this section we describe how to test that <Package>monoid</Package> is
-    working as intended.  To test that <Package>monoid</Package> is installed 
-    correctly copy the following lines into &GAP;. 
-  
-    <Log>
-      LoadPackage( "monoid" );;
-      ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), 
-      "install.tst" ) );
-    </Log>
-  
-    and press <C>return</C>. Please note that it will take a few moments before 
-    the tests are complete.<P/>
-
-    If the output looks like the following, then it is probable that you have a 
-    fully working copy of <Package>monoid</Package> 4.0.<P/>
-
-    <Log>
-      gap> LoadPackage( "monoid" );;
-      LoadPackage( "monoid" );;
-      ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), 
-      "install.tst" ) );
-      + install.tst 4.0
-      + GAP4stones: 0
-      gap>
-    </Log>
-
-    If you want to perform more extensive tests, then copy the following lines 
-    into &GAP;.
-  
-    <Log>
-      LoadPackage( "monoid" );;
-      ReadTest( Filename( DirectoriesPackageLibrary( "monoid", "tst" ), 
-      "testall.g" ) );
-    </Log>
-  
-    Please note that these tests could take a long time to finish.<P/>
+    In this section we describe how to test that <Package>Citrus</Package> is
+    working as intended.  To test that <Package>Citrus</Package> is installed 
+    correctly use <Ref Func="CitrusTestInstall"/> or for more extensive tests
+    use <Ref Func="CitrusTestAll"/>. Please note that it will take a few moments
+    for <Ref Func="CitrusTestInstall"/> to finish and it will take a few minutes
+    for <Ref Func="CitrusTestAll"/> to finish.<P/>
 
     If something goes wrong, then please review the instructions in Section 
-    <Ref Sect="install"/> and ensure that <Package>monoid</Package> has been 
+    <Ref Sect="install"/> and ensure that <Package>Citrus</Package> has been 
     properly installed.  If you continue having problems, please email me at 
     <Email>jdm3@st-and.ac.uk</Email>.
 
   </Section>
 
-  <Section><Heading>Changes from 3.1.4 to 4.0</Heading>
-    JDM
-  </Section>
 </Chapter>
 
 <Chapter Label="glossary"><Heading>Glossary</Heading>
@@ -329,19 +308,31 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
 
 </Chapter>
 
-<Chapter Label="examples"><Heading>Worked Examples</Heading>
+<!--<Chapter Label="examples"><Heading>Worked Examples</Heading>
 
-  In this chapter we give some examples of what the <Package>monoid</Package>
+  In this chapter we give some examples of what the <Package>citrus</Package>
   can be used for, and how it compares to other software for computing with 
   transformation semigroups.
+  JDM: maybe next time include syntactic semigroups, graph endomorphisms,
+  synchronizing semigroups, etc...
+</Chapter>-->
 
-</Chapter>
+<Chapter Label="convenience"><Heading>Shortcuts and expedients</Heading>
+
+  <Section><Heading>Overview</Heading>
+    There are several commands in <Package>Citrus</Package> that are
+    shorter versions of commands in &GAP;. These functions are described below. 
+  </Section>
+
+  <Section><Heading>Utilities</Heading>
+
+
 
 <Chapter Label="orbits"><Heading>Transformations and actions</Heading>
 
   <Section><Heading>Actions and Orbits</Heading>
 
-    In <Package>monoid</Package>, there are essentially two important types of 
+    In <Package>citrus</Package>, there are essentially two important types of 
     orbits used to compute with transformation semigroups. Let <Math>S</Math> 
     be a semigroup of transformations on the set <Math>\Omega=\{1,2,\ldots, n\}
     </Math>. The first is the action of the <P/> JDM...
@@ -353,32 +344,24 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
 
     In addition to the actions define in the reference manual
     <Ref Sect="Basic Actions" BookName="ref"/> the following two actions are 
-    available in <Package>monoid</Package>.
+    available in <Package>citrus</Package>.
 
-    <#Include Label="OnTuplesOfSetsAntiAction">
-    <#Include Label="OnKernelsAntiAction">
     <#Include Label="StrongOrbitsInForwardOrbit">
     <#Include Label="ImagesOfTransSemigroup">
     <#Include Label="GradedImagesOfTransSemigroup">
   </Section>	
 
-  <Section><Heading>Creating Transformations</Heading>
+  <Section><Heading>Creating transformations</Heading>
     The functions described in this section extend the functionality of &GAP; 
     relating to transformations. 
 	
-    <#Include Label="TransformationByKernelAndImage">
-    <#Include Label="AllTransformationsWithKerAndImg">
     <#Include Label="Idempotent">
-    <#Include Label="RandomIdempotent">
     <#Include Label="RandomTransformation">
     <#Include Label="TransformationActionNC">
   </Section>
 	
-  <Section><Heading>Structures associated to transformations</Heading>
+  <Section><Heading>Properties of transformations</Heading>
   
-    <#Include Label="IsTransversal">
-    <#Include Label="IsKerImgOfTransformation">
-    <#Include Label="KerImgOfTransformation">
     <#Include Label="IsRegularTransformation">
     <#Include Label="IndexPeriodOfTransformation">
     <#Include Label="SmallestIdempotentPower">
@@ -386,12 +369,6 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
   
   </Section>
 	
-  <Section><Heading>Changing Representation</Heading>
-  
-    <#Include Label="AsBooleanMatrix">
-    <#Include Label="AsPermOfRange">
-  
-  </Section>
 </Chapter>
 
 <Chapter Label="greens"><Heading>Green's Relations</Heading>
@@ -400,17 +377,17 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     
     This chapter contains instructions on how to use the functions for
     computing Green's relations and related notions for transformation         
-    semigroups and monoids that are implemented in <Package>monoid</Package>. 
+    semigroups and monoids that are implemented in <Package>citrus</Package>. 
     <P/>
 		
     The theory behind these algorithms is developed in <Cite Key="pfeiffer1"/>
     and the algorithms themselves are described in <Cite Key="pfeiffer2"/>.
     Another reference is <Cite Key="lallement"/>.<P/>
 
-    Green's relations can be calculated when  <Package>monoid</Package>
+    Green's relations can be calculated when  <Package>citrus</Package>
     is loaded using the same commands that you would used when 
-    <Package>monoid</Package> is not loaded; see <Ref Chap="Semigroups" 
-    BookName="ref"/>. For example, in &GAP; with the <Package>monoid</Package>  
+    <Package>citrus</Package> is not loaded; see <Ref Chap="Semigroups" 
+    BookName="ref"/>. For example, in &GAP; with the <Package>citrus</Package>  
     package loaded:
     
     <Example>
@@ -425,7 +402,7 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
         {Transformation( [ 2, 1, 1, 2, 2 ] )} ]
     </Example>
     
-    Without the <Package>monoid</Package> package loaded:
+    Without the <Package>citrus</Package> package loaded:
     
     <Example>
       gap> s:=Semigroup(Transformation([2,1,1,2,1])), 
@@ -441,11 +418,11 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
 		
     The only noticable differences are the representatives of the classes and 
     the order the classes appear in the list. These differences are caused by 
-    the differences in the methods for <C>GreensRClasses</C> in <Package>monoid
-    </Package> and the &GAP; library. <P/>
+    the differences in the methods for <C>GreensRClasses</C> in 
+    <Package>citrus</Package> and the &GAP; library. <P/>
 		
     Most of the commands in this section relate to how Green's relations are 
-    calculated in <Package>monoid</Package>. Although some of the commands     
+    calculated in <Package>citrus</Package>. Although some of the commands     
     might be used for other purposes, if all that is required is to calculate 
     Green's classes, relations and so on, then this is done in the exactly the 
     same way as described in the &GAP; manual; see 
@@ -453,11 +430,11 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
 		
     Due to inherent difficulties with computing Green's L- and D-classes, the 
     methods used to compute with Green's R-classes are the most efficient 
-    in <Package>monoid</Package>.  Thus wherever possible it is advisable to
+    in <Package>citrus</Package>.  Thus wherever possible it is advisable to
     use the commands relating to Green's R-classes rather than those relating
     to Green's L-classes, D-classes, or H-classes.<P/>
 		
-    The methods in <Package>monoid</Package> allow the computation of     
+    The methods in <Package>citrus</Package> allow the computation of     
     individual Green's classes without the need to compute all the elements of 
     the underlying semigroup.  It is also possible to compute all the 
     R-classes, the number of elements and test membership in a transformation 
@@ -471,16 +448,16 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
       &GAP; library functions
     </Heading>
 		
-    <Package>monoid</Package> contains special methods for R-classes of the 
+    <Package>citrus</Package> contains special methods for R-classes of the 
     following &GAP; functions: <C>&lt;</C>, <C>=</C>, <C>in</C>, <C>AsList</C>, 
     <C>AsSSortedList</C>, <C>Enumerator</C>, <C>Idempotents</C>,  
     <C>Iterator</C>, <C>GreensHClasses</C>,  
     <C>Random</C>, <C>Size</C><P/>
 
-    <Package>monoid</Package> contains special methods for D-classes of the
+    <Package>citrus</Package> contains special methods for D-classes of the
     following &GAP; functions: <C>&lt;</C>, <C>=</C>, <C>in</C>, ...<P/>
 
-    <Package>monoid</Package> contains special methods for transformation 
+    <Package>citrus</Package> contains special methods for transformation 
     semigroups of the following &GAP; functions: <C>in</C>, <C>AsList</C>, 
     <C>Enumerator</C>, <C>GreensRClasses</C>, <C>GreensRClassOfElement</C>,  
     <C>Iterator</C>, <C>Size</C>, 
@@ -677,29 +654,9 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
 
 </Chapter>
 
-<Chapter Label="general"><Heading>Deprecated and Legacy Functions</Heading> 
-  
-  In this chapter we describe functions from <Package>monoid</Package> version 
-  3 that are deprecated and only included to ensure backwards compatibility. 
-
-  <Section><Heading>Green's data</Heading>
-  
-    <#Include Label="GreensData">
-    <#Include Label="GreensRClassData">
-    <#Include Label="GreensLClassData">
-    <#Include Label="GreensHClassData">
-    <#Include Label="GreensDClassData">
-    <#Include Label="IsGreensData">
-    <#Include Label="RClassData">
-    <#Include Label="IsGreensRClassDataRep">
-  
-  </Section>
-
-</Chapter>
-
 </Body>
 
-<Bibliography Databases="monoid" />
+<Bibliography Databases="citrus" />
 <TheIndex/>
 
 </Book>

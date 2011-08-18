@@ -92,7 +92,7 @@ end);
 ###########################################################################
 
 InstallOtherMethod(AsPermutation, "for a transformation and a set", 
-[IsTransformation, IsSet], 
+[IsTransformation, IsList], 
 function(f, set)
   local a;
 

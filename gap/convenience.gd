@@ -8,7 +8,9 @@
 #############################################################################
 ##
 
+DeclareGlobalFunction("CitrusMakeDoc");
 DeclareGlobalFunction("CitrusTestAll");
+DeclareGlobalFunction("CitrusTestInstall");
 DeclareGlobalFunction("DClass");
 DeclareGlobalFunction("DClassNC");
 

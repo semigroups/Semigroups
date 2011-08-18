@@ -11,6 +11,17 @@
 # this file contains functions with shorter names than some library functions
 # commonly used in the citrus package. 
 
+# new for 0.1! - CitrusMakeDoc - "for no argument"
+#############################################################################
+
+InstallGlobalFunction(CitrusMakeDoc, 
+function()
+  MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
+   InstallationPath, "/doc"), "citrus.xml", [
+    "greens.xml", "orbits.xml", "properties.xml",
+     "transform.xml"], "citrus", "MathJax");;
+end);
+
 # new for 0.1! - CitrusTestAll - "for no argument"
 #############################################################################
 

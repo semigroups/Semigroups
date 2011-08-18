@@ -308,4 +308,7 @@
 ##  gap> IsRegularTransformation(S, f);
 ##  true
 ##      </Example>
+##      </Description>
+##      </ManSection>
+##      <#/GAPDoc>
 

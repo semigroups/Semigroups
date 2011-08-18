@@ -85,12 +85,12 @@ Contents
 
 The Citrus folder containing this README.txt file should contain the 
 directories and files: `doc', `examples', `gap', `init.g', `PackageInfo.g',
-`read.g', `README.txt', `tmp', and `tst'. JDM correct?
+`read.g', `README', `tmp', and `tst'. JDM correct?
 
 Installation
 ------------
 
-1) unpack the file (for example, by using `gunzip Citrus3r1p4.tar.gz' and 
+1) unpack the file (for example, by using `gunzip Citrus0r1.tar.gz' and 
 then `tar -xf Citrus0r1.tar' in UNIX).
 
 2) move the resultant directory `Citrus' into the `pkg' directory of your 
