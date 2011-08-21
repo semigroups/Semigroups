@@ -317,16 +317,33 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
   synchronizing semigroups, etc...
 </Chapter>-->
 
-<Chapter Label="convenience"><Heading>Shortcuts and expedients</Heading>
+<Chapter Label="convenience"><Heading>Utilities and shortcuts</Heading>
 
   <Section><Heading>Overview</Heading>
-    There are several commands in <Package>Citrus</Package> that are
-    shorter versions of commands in &GAP;. These functions are described below. 
+    There are several commands in <Package>Citrus</Package> that can be called
+    using shorter names than the original 
+    commands in &GAP;. These functions are described below. 
   </Section>
 
   <Section><Heading>Utilities</Heading>
+    <#Include Label="CitrusMakeDoc">
+    <#Include Label="CitrusTestAll">
+  </Section>
 
-
+  <Section><Heading>Shortcuts</Heading>
+    <#Include Label="DClass">
+    <#Include Label="DClassNC">
+    <#Include Label="Degree">
+    <#Include Label="Generators">
+    <#Include Label="HClass">
+    <#Include Label="HClassNC">
+    <#Include Label="LClass">
+    <#Include Label="LClassNC">
+    <#Include Label="Rank">
+    <#Include Label="RClass">
+    <#Include Label="RClassNC">
+  </Section>
+</Chapter>
 
 <Chapter Label="orbits"><Heading>Transformations and actions</Heading>
 

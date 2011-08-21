@@ -18,7 +18,7 @@ InstallGlobalFunction(CitrusMakeDoc,
 function()
   MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
    InstallationPath, "/doc"), "citrus.xml", [
-    "greens.xml", "orbits.xml", "properties.xml",
+    "convenience.xml", "greens.xml", "orbits.xml", "properties.xml",
      "transform.xml"], "citrus", "MathJax");;
 end);
 
@@ -86,13 +86,6 @@ InstallOtherMethod(Degree, "for a transformation",
 
 InstallOtherMethod(Degree, "for a transformation semigroup",
 [IsTransformationSemigroup], s-> DegreeOfTransformationSemigroup(s));
-
-# new for 0.1! - Rank - "for a transformation"
-#############################################################################
-# Notes: returns RankOfTransformation. 
-
-InstallOtherMethod(Rank, "for a transformation",
-[IsTransformation], f-> RankOfTransformation(f));
 
 # new for 0.1! - Generators - "for a semigroup or monoid"
 ############################################################################
@@ -175,6 +168,13 @@ function(arg)
   Info(InfoWarning, 1, "Usage: trans. semigp. and trans.");
   return fail;
 end);
+
+# new for 0.1! - Rank - "for a transformation"
+#############################################################################
+# Notes: returns RankOfTransformation. 
+
+InstallOtherMethod(Rank, "for a transformation",
+[IsTransformation], f-> RankOfTransformation(f));
 
 # new for 0.1! - RClass - "for a trans. semi. and trans. or H-class"
 #############################################################################

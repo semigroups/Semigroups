@@ -1,0 +1,188 @@
+
+<#GAPDoc Label="CitrusMakeDoc">
+  <ManSection>
+    <Func Name="CitrusMakeDoc" Arg=""/>
+    <Description>
+      this function should be called with no argument to compile the 
+      <Package>Citrus</Package> documentation. The same effect can be
+      achieved by entering:
+
+      <Log>
+          MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
+           InstallationPath, "/doc"), "citrus.xml", [
+           "convenience.xml", "greens.xml", "orbits.xml", "properties.xml",
+           "transform.xml"], "citrus", "MathJax");;
+      </Log>
+
+      at the &GAP; prompt. 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="CitrusTestAll">
+  <ManSection>
+    <Func Name="CitrusTestAll" Arg=""/>
+    <Description>
+      this function should be called with no argument to comprehensively
+      test that <Package>Citrus</Package> is working correctly. These tests
+      should take no more than 1 minute to complete. The same effect can be
+      achieved by entering:
+
+      <Log>
+        Read(Filename(DirectoriesPackageLibrary("citrus","tst"),"testall.g"));;
+      </Log>
+
+      at the &GAP; prompt. 
+      To quickly test that <Package>Citrus</Package> is installed correctly
+      use <Ref Func="CitrusTestInstall"/>. 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DClass">
+  <ManSection>
+    <Func Name="DClass" Arg="arg"/>
+    <Description>
+      returns the result of  <Ref Oper="GreensDClassOfElement"/>, 
+      <Ref Oper="DClassOfRClass"/>, <Ref Oper="DClassOfLClass"/>, or 
+      <Ref Oper="DClassOfHClass"/> if <C>arg</C> is a transformation semigroup
+      and a transformation, a <Math>\mathcal{R}</Math>-class, a
+      <Math>\mathcal{L}</Math>-class, or an <Math>\mathcal{H}</Math>-class,
+      respectively. <P/>
+
+      See also <Ref Func="DClassNC"/>. 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DClassNC">
+  <ManSection>
+    <Func Name="DClassNC" Arg="s, f"/>
+    <Description>
+      returns the result of  <Ref Oper="GreensDClassOfElementNC"/>, 
+      if <C>s</C> is a transformation semigroup
+      and <C>f</C> a transformation.
+
+      See also <Ref Func="DClass"/>. 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="Degree">
+  <ManSection>
+    <Func Name="Degree" Arg="x"/>
+    <Description>
+      returns the result of 
+      <Ref Oper="DegreeOfTransformation" BookName="ref"/>, 
+      if <C>s</C> is a transformation semigroup
+      and 
+      <Ref Oper="DegreeOfTransformationSemigroup" BookName="ref"/> 
+      if <C>f</C> a transformation.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="Rank">
+  <ManSection>
+    <Func Name="Rank" Arg="f"/>
+    <Description>
+      returns the result of 
+      <Ref Oper="RankOfTransformation" BookName="ref"/>, 
+      if <C>f</C> is a transformation.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="Generators">
+  <ManSection>
+    <Func Name="Generators" Arg="s"/>
+    <Description>
+      returns the result of 
+      <Ref Attr="GeneratorsOfMonoid" BookName="ref"/>, 
+      if <C>s</C> is a transformation monoid and returns the result of 
+      <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/> 
+      if <C>s</C> is a transformation semigroup but not a transformation 
+      monoid. 
+      <Example>  
+        insert example.
+      </Example>
+   </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="HClass">
+  <ManSection>
+    <Func Name="HClass" Arg="s, f"/>
+    <Description>
+      returns the result of 
+      <Ref Oper="GreensHClassOfElement" BookName="ref"/>, 
+      if <C>s</C> is a transformation semigroup and <C>f</C> is a
+      transformation. See also <Ref Func="HClassNC"/>. 
+   </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="HClassNC">
+  <ManSection>
+    <Func Name="HClassNC" Arg="s, f"/>
+    <Description>
+      returns the result of 
+      <Ref Oper="GreensHClassOfElementNC"/>, 
+      if <C>s</C> is a transformation semigroup and <C>f</C> is a
+      transformation. See also <Ref Func="HClass"/>. 
+   </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="LClass">
+  <ManSection>
+    <Func Name="LClass" Arg="arg"/>
+    <Description>
+      returns the result of <Ref Oper="GreensLClassOfElement"/>, 
+      or <Ref Oper="LClassOfHClass"/> if <C>arg</C> is a transformation
+      semigroup and a transformation, or an <Math>\mathcal{H}</Math>-class, 
+      respectively. <P/>
+
+      See also <Ref Func="LClassNC"/>. 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="LClassNC">
+  <ManSection>
+    <Func Name="LClassNC" Arg="s, f"/>
+    <Description>
+      returns the result of 
+      <Ref Oper="GreensLClassOfElementNC"/>, 
+      if <C>s</C> is a transformation semigroup and <C>f</C> is a
+      transformation. See also <Ref Func="LClass"/>. 
+   </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RClass">
+  <ManSection>
+    <Func Name="RClass" Arg="arg"/>
+    <Description>
+      returns the result of <Ref Oper="GreensRClassOfElement"/>, 
+      or <Ref Oper="RClassOfHClass"/> if <C>arg</C> is a transformation
+      semigroup and a transformation, or an <Math>\mathcal{H}</Math>-class, 
+      respectively. <P/>
+
+      See also <Ref Func="RClassNC"/>. 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RClassNC">
+  <ManSection>
+    <Func Name="RClassNC" Arg="s, f"/>
+    <Description>
+      returns the result of 
+      <Ref Oper="GreensRClassOfElementNC"/>, 
+      if <C>s</C> is a transformation semigroup and <C>f</C> is a
+      transformation. See also <Ref Func="RClass"/>. 
+   </Description>
+  </ManSection>
+<#/GAPDoc>
+

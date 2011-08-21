@@ -4,6 +4,7 @@
 
 /* basic settings */
 body { 
+  margin: 0 auto;
   position: relative;
   background: #ffffff; 
   color: #000000; 
