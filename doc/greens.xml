@@ -65,27 +65,54 @@ GreensRClassOfElementNC(s, f);;
 
 <#GAPDoc Label="GreensDClassReps">
   <ManSection>
-    <Attr Name="GreensDClassReps" Arg="x"/>
-    <Attr Name="GreensHClassReps" Arg="x"/>
-    <Attr Name="GreensLClassReps" Arg="x"/>
-    <Attr Name="GreensRClassReps" Arg="x"/>
-  <Description>
-  returns a list of representatives of <Math>\mathcal{D}</Math>-,
-   <Math>\mathcal{H}</Math>-, <Math>\mathcal{L}</Math>-, or 
-   <Math>\mathcal{R}</Math>-classes of <A>x</A> which can be a transformation
-   semigroup,...<P/>
+    <Attr Name="GreensDClassReps" Arg="s"/>
+    <Description>
+      returns a list of representatives of <Math>\mathcal{D}</Math>-classes of
+      the transformation semigroup <A>s</A>.<P/>
 
-  The same output can be obtained by calling, for example:
-  <Log>
-    List(GreensRClasses(s), Representative);
-  </Log>
-  Note that if <Math>\mathcal{R}</Math>-classes are not required, then 
-  <C>GreensRClassReps</C> is more
-  efficient than the above, since the <Math>\mathcal{R}</Math>-class 
-  objects are not created.
-  </Description>
+      The same output can be obtained by calling, for example:
+      <Log>
+List(GreensDClasses(s), Representative);
+      </Log>
+
+      Note that if the <Math>\mathcal{D}</Math>-classes themselves are not 
+      required, then 
+      <C>GreensDClassReps</C> will return an answer more quickly 
+      than the above, since the <Math>\mathcal{D}</Math>-class 
+      objects are not created.
+    </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="GreensLClassReps">
+  <ManSection><Heading>GreensClassReps</Heading>
+    <Attr Name="GreensLClassReps" Arg="x"/>
+    <Attr Name="GreensRClassReps" Arg="x"/>
+    <Description>
+      returns a list of representatives of <Math>\mathcal{L}</Math>- or
+      <Math>\mathcal{R}</Math>-classes of
+      the transformation semigroup <A>s</A> or <Math>\mathcal{D}</Math>-class
+      <A>x</A>. 
+      <P/>
+
+      The same output can be obtained by calling, for example:
+      <Log>
+List(GreensLClasses(x), Representative);
+List(GreensRClasses(x), Representative);
+      </Log>
+
+      Note that if the <Math>\mathcal{L}</Math>- or
+      <Math>\mathcal{R}</Math>-classes themselves are not 
+      required, then 
+      <C>GreensLClassReps</C> or <C>GreensRClassReps</C> will return an answer 
+      more quickly 
+      than the above, since the <Math>\mathcal{D}</Math>-class 
+      objects are not created.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+
 
 <#GAPDoc Label="PartialOrderOfDClasses">
   <ManSection>
@@ -113,240 +140,9 @@ GreensRClassOfElementNC(s, f);;
     </ManSection>
 <#/GAPDoc>
 
-<Chapter Label="Advanced"> <Heading>Advanced Features</Heading>
-  
-  <Section Label="GreensAdvancedR">
-    <Heading>Green's R-relation - advanced</Heading>
-  
-    The functions described in this section are used by <Package>monoid
-    </Package> in computation related to Green's R-relation. It is not 
-    envisioned that these functions be used when performing a single 
-    calculation but rather could be used to extend the 
-    <Package>monoid</Package> package. <P/> 
 
-    Please note that calling certain functions in this section in the incorrect
-    context could have unpredictable and unusual consequences. 
 
-    <#Include Label="AddToOrbitsOfImages">
-    <#Include Label="CreateRClass">
-    <#Include Label="CreateSchreierTreeOfSCC">
-    <#Include Label="CreateReverseSchreierTreeOfSCC">
-    <#Include Label="DisplayOrbitsOfImages">
-    <#Include Label="ExpandOrbitsOfImages">
-    <#Include Label="ForwardOrbitOfImage">
-    <#Include Label="InOrbitsOfImages">
-    <#Include Label="IsRegularRClassData"> 
-  </Section>
 
-  <Section Label="GreensAdvancedH">
-    <Heading>Green's H-relation - advanced</Heading>
-    
-    <#Include Label="GreensHClassRepsData">
-  </Section>
-
-</Chapter> 
-
-<#GAPDoc Label="AddToOrbitsOfImages">
-<ManSection><Func Name="AddToOrbitsOfImages" Arg="s, f, d, o"/>
-  <Description>
-  The arguments should be: <A>s</A> a semigroup or D-class, <A>f</A> a 
-  transformation, <A>o</A> the attribute <Ref Attr="OrbitsOfImages"/>
-  of <A>s</A>, and <A>d=[j, k, l, m, val, n, g]</A> where:
-  <List>
-    <Item> <A>j</A> - is the size of the image set of <A>f</A>;
-    </Item>
-        
-    <Item> <A>k</A> - is the index of the orbit containing the image of 
-    <A>f</A>, that is, <C>ImageSetOfTransformation(f)</C> is in
-     <C>OrbitsOfImages(s)!.orbits[j][k]</C>;
-    </Item>
-        
-    <Item><A>l</A> - is the position of the image of <A>f</A> in 
-    <C>OrbitsOfImages(s)!.orbits[j][k]</C>;</Item>
-
-    <Item> <A>m</A> - is the index of the strongly connected component of 
-    <C>OrbitsOfImages(s)!.orbits[j][k]</C> containing the image of 
-    <A>f</A>;
-    </Item>
-        
-    <Item> <A>val</A> - is the return value of 
-    <Log>
-      HTValue(OrbitsOfImages(s)!.orbits[j][k]!.kernels_ht[m],
-       KernelOfTransformation(f)),
-    </Log> 
-    that is, the index of the list of representatives of R-classes of 
-    <A>s</A> with the same Schutzenberger group, strong orbit of images, 
-    and kernel as <A>f</A>; 
-    </Item>
-    
-    <Item> <A>n</A> - the length of the list 
-    <C>OrbitsOfImages(s)!.orbits[j][k]!.reps[m][val]</C> of 
-    representatives of R-classes of <A>s</A> with the same Schutzenberger
-    group, strong orbit of images, and kernel as <A>f</A>;
-    </Item>
-
-    <Item> <A>g</A> - the transformation 
-    <C>f*OrbitsOfImages(s)!.orbits[j][k]!.perms[l]</C>, which is
-    R-related to <A>f</A> and has the property that the image <C>X</C> of 
-    <A>g</A> satisfies 
-    <Log>
-      Position(OrbitsOfImages(s)!.orbits[j][k], X)=
-      OrbitsOfImages(s)!.orbits[j][k]!.scc[m][1].
-    </Log>
-    </Item>
-  </List>
-  
-  The result of this function is to add all the information relating to 
-  the R-class of <A>f</A> in <A>s</A> to the attribute 
-  <Ref Attr="OrbitsOfImages"/> of <A>s</A>. <P/>
-
-  See also <Ref Func="PreInOrbitsOfImages"/> and 
-  <Ref Func="InOrbitsOfImages"/>. 
-  
-  </Description>
-</ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="CreateRClass">
-  <ManSection><Func Name="CreateRClass" Arg="s, d, o, f"/>
-  <Description>
-  creates an R-class <C>r</C> object using <Ref Func="RClassType"/> of 
-  <A>s</A> where the components used by <Package>monoid</Package> are: 
-  <List>
-    <Item> <C>r!.parent=s</C> the semigroup</Item> 
-    
-    <Item> <C>r!.data=d</C> the tuple [j, k, l, m, val, n] described in 
-    <Ref Func="AddToOrbitsOfImage"/></Item>
-    
-    <Item><C>r!.orbit=o</C> which is either 
-    <Ref Attr="OrbitsOfImages"/> of <A>s</A> if <C>r</C> was created by 
-    <Ref Oper= "GreensRClassOfElement"/> or a local version of 
-    <Ref Attr="OrbitsOfImages"/> stored in <C>r</C> if it was created with 
-    <Ref Oper= "GreensRClassOfElementNC"/></Item>
-    
-    <Item><C>r!.rep=f</C> is the representative of the R-class.</Item>
-  </List>
-
-  Note that <C>ParentAttr</C> of the <C>r</C> is not set as this 
-  seems to take some time.
-
-  </Description>
-  </ManSection>
-<#/GAPDoc><!-- non-user -->
-
-<#GAPDoc Label="CreateSchreierTreeOfSCC">
-  <ManSection><Func Name="CreateSchreierTreeOfSCC" Arg="o,i"/>
-  <Description>
-  if <A>o</A> is an <Package>orb</Package> orbit object created 
-  by <Ref Func="ForwardOrbitOfImage"/> or 
-  <Ref Func="ForwardOrbitOfKernel"/> and <A>i</A> is the index
-  of one of the strongly connected components of <A>o</A>, then 
-  <C>CreateSchreierTreeOfSCC</C> returns a list <C>[gen, pos]</C> 
-  such that:
-  
-  <Log>
-    OnSets(o[pos[j]], o!.gens[gen[j]])=o[j];
-    OnKernelsAntiAction(o[pos[j]], o!.gens[gen[j]])=o[j];
-  </Log>
-
-  So, the generator whose index appears in <C>gen[j]</C> maps
-  the <C>pos[j]</C>th element of <A>o</A> to <A>o[j]</A>.<P/>
-
-  See also <Ref Func="TraceSchreierTreeOfSCCForward"/>, 
-  <Ref Func="CreateReverseSchreierTreeOfSCC"/>, and
-  <Ref Func="TraceSchreierTreeOfSCCBack"/>.
-  </Description>
-  </ManSection>
-<#/GAPDoc><!-- non-user -->
-
-<#GAPDoc Label="CreateReverseSchreierTreeOfSCC">
-  <ManSection><Func Name="CreateReverseSchreierTreeOfSCC" Arg="o,i"/>
-  <Description>
-  if <A>o</A> is an <Package>orb</Package> orbit object created by 
-  <Ref Func="ForwardOrbitOfImage"/> or <Ref Func="ForwardOrbitOfKernel"/> 
-  and <A>i</A> is the index of one of the strongly connected components of
-  <A>o</A>, then <C>CreateReverseSchreierTreeOfSCC</C> returns a list 
-  <C>[gen, pos]</C> such that:
-
-  <Log>
-    OnSets(o[j], o!.gens[gen[j]])=o[pos[j]];
-    OnKernelsAntiAction(o[j], o!.gens[gen[j]])=o[pos[j]];
-  </Log>
-  
-  So, the generator whose index appears in <C>gen[j]</C> maps
-  the <C>j</C>th element of <A>o</A> to <A>o[pos[j]]</A>.<P/>
-
-  See also <Ref Func="TraceSchreierTreeOfSCCForward"/>, 
-  <Ref Func="CreateSchreierTreeOfSCC"/>, and
-  <Ref Func="TraceSchreierTreeOfSCCBack"/>.
-  </Description>
-  </ManSection>
-<#/GAPDoc><!-- non-user --> 
-
-<#GAPDoc Label="DisplayOrbitsOfImages">
-  <ManSection><Func Name="DisplayOrbitsOfImages" Arg="s"/>
-  <Description>
-  returns the information stored in <Ref Func="OrbitsOfImages"/> of 
-  the transformation semigroup <A>s</A> in a (more or less) nicely formatted 
-  way. See <Ref Func="OrbitsOfImages"/> for more details.
-  </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="ExpandOrbitsOfImages">
-  <ManSection><Func Name="ExpandOrbitsOfImages" Arg="s"/>
-  <Description>
-  completes the information in <Ref Attr="OrbitsOfImages"/> that is 
-  used to calculate the size, membership, and R-classes of <A>s</A>.
-  This is equivalent to the following:
-  
-  <Log>
-  gap> iter:=IteratorOfNewRClassRepsData(s);;
-  gap> for i in iter do od;
-  </Log>
-  </Description>
-  </ManSection>
-<#/GAPDoc><!-- non-user -->
-
-<#GAPDoc Label="ForwardOrbitOfImage">
-  <ManSection><Func Name="ForwardOrbitOfImage" Arg="s, f, [imgs[, gens]]"/>
-  <Description>
-  returns a triple consisting of:
-  
-  <List>
-  <Item>the <Package>orb</Package> orbit object <C>o</C> of the image of 
-  <A>f</A> in transformation semigroup <A>s</A>;</Item>
-  
-  <Item> a flat list of R-class representatives associated with <C>o</C>;
-  </Item>
-  
-  <Item> a set containing the index of the first image set in every 
-  strongly connected component of <C>o</C>.</Item>
-  </List>
-  
-  If the optional argument <A>imgs</A> is present, then the option 
-  <C>onlygradesdata</C> of <C>o</C> is set to equal the hash table <A>imgs</A>
-  and only the sets <C>x</C> where <C>HTValue(imgs, x)=fail</C> are added to
-  <C>o</C>. In other words, <A>imgs</A> is a hash table containing some image
-  sets, and only those images not in <A>imgs</A> are added to the orbit.<P/> 
-
-  If the optional argument <A>gens</A> (a list of generators of <A>s</A>) is 
-  present, then for the sake of efficiency this is used instead of calling 
-  <C>Generators(s)</C>. 
-
-  <Example>
-  gap> s:=Semigroup([ 
-  >  Transformation( [ 12, 10, 8, 5, 1, 5, 12, 12, 8, 2, 6, 2 ] ), 
-  >  Transformation( [ 5, 6, 10, 11, 10, 4, 10, 12, 5, 7, 4, 10 ] ), 
-  >  Transformation( [ 6, 8, 12, 5, 4, 8, 10, 7, 4, 1, 10, 11 ] ) ]);;
-  gap> f:=Transformation( [ 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8 ] );;
-  gap> ForwardOrbitOfImage(s, f);
-  [ &lt;closed img orbit 40 sets with 2 elts, 1 scc, 1 kernels, 1 reps>, 
-  [ Transformation( [ 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8 ] ) ], [ 1 ] ]
-  </Example>
-  </Description>
-  </ManSection>
-<#/GAPDoc>
 
 <#GAPDoc Label="GreensHClasses">
   <ManSection><Attr Name="GreensHClasses" Arg="x"/>
@@ -375,44 +171,6 @@ GreensRClassOfElementNC(s, f);;
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="GreensHClassRepsData">
-  <ManSection><Attr Name="GreensHClassRepsData" Arg="r"/>
-  <Description>
-  returns a triple corresponding to the representatives of <Math>H</Math>-
-  classes contained in the R-class <A>r</A> where:
-  
-  <List>
-
-    <Item> the first component is the tuple <C>[j, k, l, m, n, val, g]</C>
-    equal to <A>r!.data</A> as described in <Ref Func="AddToOrbitsOfImages"/>;
-    </Item>
- 
-    <Item> the second component is the tuple <C>[j, k, l, m, n, val, g, i]</C>
-    equal to <A>GreensDClass(r)!.data[2]</A> as described in JDM3.
-    </Item>
-
-    <Item> the third component is the pair <C>[i, j]</C> where <C>i</C> is a
-    position in <C>RClassSCC(r)</C> and <C>j</C> is the index of an element in 
-    <C>DClassRCosets(GreensDClass(r))</C> so that the corresponding H-class 
-    representative is 
-    
-    <Log>
-  Representative(r)*(RClassPerms(r)[i]/DClassRCosets(GreensDClass(r))[j]);
-    </Log>
-    
-    </Item>
-  </List> 
-
-  Note that if the H-classes are not required, then GreensHClassReps is more 
-  efficient than the above, since the H-class objects are not created.<P/>
-
-  See also <Ref Attr="GreensHClasses" BookName="ref"/> and
-  <Ref Attr="GreensHClassReps"/>.
-
-  </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="GreensRClasses">
   <ManSection><Attr Name="GreensRClasses" Arg="x"/>
   <Description>
@@ -425,7 +183,6 @@ GreensRClassOfElementNC(s, f);;
   </Description>
   </ManSection>
 <#/GAPDoc>
-
 
 <#GAPDoc Label="Idempotents">
   <ManSection><Attr Name="Idempotents" Arg="x[,n]"/>
@@ -459,68 +216,6 @@ GreensRClassOfElementNC(s, f);;
   gap> Idempotents(r);
   [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 2, 2, 4, 4 ] ) ]
   </Example> 
-  </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="InOrbitsOfImages">
-  <ManSection><Func Name="InOrbitsOfImages" Arg="s, f, d, o, imgs"/>
-  <Description>
-  The arguments of <C>InOrbitsOfImages</C> should be:
-  
-  <List>
-  
-  <Item> <A>s</A> - a transformation semigroup;
-  </Item>
-  
-  <Item> <A>f</A> - a transformation;
-  </Item>
-
-  <Item> <A>d</A> - a tuple <C>[j, k, l, m, val, g]</C> as described in 
-  <Ref Func="AddToOrbitsOfImages"/>. Of course, if every element in <A>d</A> is 
-  not <C>fail</C>, then you already know that <A>f</A> is in <A>s</A>;
-  </Item>
-
-  <Item> <A>o</A><C>=OrbitsOfImages(s)!.orbits</C> the orbits of images of
-  <A>s</A>;
-  </Item>
-
-  <Item> <A>imgs</A><C>=OrbitsOfImages(s)!.images</C> the hash table containing 
-  the list of images of elements of <A>s</A> so far computed. 
-  </Item>
-
-  </List>
-  
-  <C>InOrbitsOfImages</C> returns the tuple 
-  <C>[true/false, [j, k, l, m, val, n, g]</C> where 
-  the first component indicates if the transformation <A>f</A> is in <Ref
-  Attr="OrbitsOfImages"/> of <A>s</A>, and the second component is as described
-  in <Ref Func="AddToOrbitsOfImages"/>. The output entries in the tuple 
-  <C>[j, k, l, m, val, n, g]</C> are an updated version of the argument
-  <A>d</A>. <P/>
-
-  To check that <A>f</A> is in <Ref Attr="OrbitsOfImages"/> of 
-  <A>s</A> use <Ref Func="PreInOrbitsOfImages"/> to avoid the complicated input
-  required by <C>InOrbitsOfImages</C>. Note that the input to
-  <C>InOrbitsOfImages</C> is complicated to avoid repeatedly having to find
-  access the components of <C>OrbitsOfImages</C>, which could slow things down
-  when using <Ref Func="IteratorOfRClassRepsData"/> and functions based on it.
-
-  <Example>
-  gap> s:=Monoid(Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] ),
-  > Transformation( [ 5, 1, 4, 1, 4, 4, 7, 8 ] ));;
-  gap> f:=Transformation( [ 8, 8, 1, 5, 8, 5, 8, 8 ] );;
-  gap> PreInOrbitsOfImages(s, f);
-  [ false, [ 3, fail, fail, fail, fail, 0, fail ] ]
-  gap> iter:=IteratorOfGreensRClasses(s);
-  &lt;iterator of R-classes>
-  gap> NextIterator(iter);; NextIterator(iter);;
-  gap> PreInOrbitsOfImages(s, f);
-  [ false, [ 3, fail, fail, fail, fail, 0, fail ] ]
-  gap> NextIterator(iter);; NextIterator(iter);;
-  gap> PreInOrbitsOfImages(s, f);
-  [ true, [ 3, 1, 1, 1, 1, 1, Transformation( [ 8, 8, 1, 5, 8, 5, 8, 8 ] ) ] ]
-  </Example>
   </Description>
   </ManSection>
 <#/GAPDoc>
@@ -571,32 +266,6 @@ GreensRClassOfElementNC(s, f);;
     gap> IsGreensClassOfTransSemigp(last);
     true
   </Example> <!-- greens.tst -->
-  </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="IsRegularRClassData">
-  <ManSection><Func Name="IsRegularRClassData" Arg="s, d[, o[, f]]"/>
-  <Description>
-  if <A>s</A> is a transformation semigroup, <A>d</A> is a tuple  
-  <A>[j, k, l, m, val, n, g]</A> as described in 
-  <Ref Func="AddToOrbitsOfImages"/>, then <C>IsRegularRClassData</C> returns
-  <C>true</C> if the R-class created using <Ref Func="CreateRClass"/> with
-  arguments <A>s, d, OrbitsOfImages(s), RClassRepFromData(s, d)</A>
-  is regular and it returns <C>false</C> otherwise. <P/>
-
-  If the optional third argument <A>o</A> is present, then this is used instead
-  of <C>OrbitsOfImages(s)</C> above. <P/>
-
-  If the optional fourth argument <A>f</A> is present, then this is used
-  instead of <C>RClassRepFromData(s, d, o)</C> above. <P/>
-
-  Note that it is not necessary to actually create the R-class to perform this
-  check, and that if the R-class is not actually required, then using
-  <C>IsRegularRClassData</C> will be more efficient. <P/>
-  
-  See also <Ref Prop="IsRegularRClass"/>. 
-  
   </Description>
   </ManSection>
 <#/GAPDoc>

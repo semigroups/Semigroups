@@ -464,20 +464,29 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     <Heading>
       &GAP; library functions
     </Heading>
-		
-    <Package>citrus</Package> contains special methods for R-classes of the 
+	JDM replace the things listed below by references. 
+
+    <Package>Citrus</Package> contains special methods for
+    <Math>\mathcal{R}</Math>-classes of the 
     following &GAP; functions: <C>&lt;</C>, <C>=</C>, <C>in</C>, <C>AsList</C>, 
     <C>AsSSortedList</C>, <C>Enumerator</C>, <C>Idempotents</C>,  
     <C>Iterator</C>, <C>GreensHClasses</C>,  
     <C>Random</C>, <C>Size</C><P/>
 
-    <Package>citrus</Package> contains special methods for D-classes of the
-    following &GAP; functions: <C>&lt;</C>, <C>=</C>, <C>in</C>, ...<P/>
+    <Package>Citrus</Package> contains special methods for
+    <Math>\mathcal{D}</Math>-classes of the
+    following &GAP; functions: <C>&lt;</C>, <C>=</C>, <C>in</C>,
+    <C>AsSSortedList</C>, <C>Enumerator</C>, <C>GreensHClasses</C>,
+    <C>GreensLClasses</C>, <C>GreensRClasses</C>, <C>GreensRClassOfElement</C>
+    (for a <Math>\mathcal{D}</Math>-class and transformation),
+    <C>Idempotents</C>, <C>IsRegularDClass</C>, and <C>Size</C>. 
+    <P/>
 
-    <Package>citrus</Package> contains special methods for transformation 
+    <Package>Citrus</Package> contains special methods for transformation 
     semigroups of the following &GAP; functions: <C>in</C>, <C>AsList</C>, 
-    <C>Enumerator</C>, <C>GreensRClasses</C>, <C>GreensRClassOfElement</C>,  
-    <C>Iterator</C>, <C>Size</C>, 
+    <C>Enumerator</C>, <C>GreensRClasses</C>, <C>GreensDClasses</C>,
+    <C>GreensRClassOfElement</C>, <C>GreensDClassOfElement</C>, 
+    <C>Iterator</C>, <C>Size</C>,  
 
   </Section>
 
@@ -489,7 +498,8 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     <#Include Label="DClassOfRClass">
     <#Include Label="GreensDClassOfElementNC">
     <#Include Label="GreensDClassReps">
-    
+    <#Include Label="GreensLClassReps">
+      
     <#Include Label="GreensRClasses">
     <#Include Label="Idempotents">
     <#Include Label="IsGreensClassOfTransSemigp">
