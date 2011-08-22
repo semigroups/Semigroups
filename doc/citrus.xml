@@ -483,11 +483,14 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
 
   <Section><Heading>Green's relations</Heading>
     The functions described in this section extend the &GAP; library functions
-    for Greens <Math>R</Math>-relation and related objects. 
+    for Greens relations and related objects. 
+
+    
+    <#Include Label="DClassOfRClass">
+    <#Include Label="GreensDClassOfElementNC">
+    <#Include Label="GreensDClassReps">
     
     <#Include Label="GreensRClasses">
-    <#Include Label="GreensRClassOfElementNC">
-    <#Include Label="GreensRClassReps">
     <#Include Label="Idempotents">
     <#Include Label="IsGreensClassOfTransSemigp">
     <#Include Label="IsRegularRClass">

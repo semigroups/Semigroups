@@ -115,10 +115,10 @@ end);
 # new for 0.1! - AddToOrbitsOfKernels - not a user function!
 #############################################################################
 # Usage: s = the semigroup; f = transformation (R-class rep with rectified
-# image); data = [image data, kernel data] (without true/false, where kernel data
-# is the the data corresponding to f with rectified image and kernel and not the 
-# original f, so that data[1][3]=o[j][k]!.scc[m][1]!, only 6 components); 
-# o = [OrbitsOfImages(s), OrbitsOfKernels(s)] (optional)
+# image); data = [image data, kernel data] (without true/false, where kernel 
+# data is the the data corresponding to f with rectified image and kernel and 
+# not the original f, so that data[1][3]=o[j][k]!.scc[m][1]!, only 6
+# components); o = [OrbitsOfImages(s), OrbitsOfKernels(s)] (optional)
 
 # JDM perhaps things could be speed up by taking everything with a ! in it
 # and making it an argument?!
@@ -768,6 +768,7 @@ end);
 
 # new for 0.1! - GeneratorsAsListOfImages - "for a trans. semigp."
 #############################################################################
+# move to convenience!
 
 InstallMethod(GeneratorsAsListOfImages, "for a trans. semigp.", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
