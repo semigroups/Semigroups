@@ -495,29 +495,24 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     for Greens relations and related objects. 
 
     
-    <#Include Label="DClassOfRClass">
-    <#Include Label="GreensDClassOfElementNC">
-    <#Include Label="GreensDClassReps">
-    <#Include Label="GreensLClassReps">
-      
-    <#Include Label="GreensRClasses">
+    <#Include Label="\&lt;">
+    <#Include Label="XClassOfYClass">
+    <#Include Label="GreensXClasses">
+    <#Include Label="GreensXClassOfElementNC">
+    <#Include Label="GreensXClassReps">
     <#Include Label="Idempotents">
     <#Include Label="IsGreensClassOfTransSemigp">
-    <#Include Label="IsRegularRClass">
-    <#Include Label="IteratorOfGreensRClasses"> 
-    <#Include Label="IteratorOfRClassReps"> 
-    <#Include Label="NrGreensRClasses">
-    
+    <#Include Label="IsRegularXClass">
+    <#Include Label="IteratorOfXClassReps"> 
+    <#Include Label="IteratorOfGreensXClasses"> 
+    <#Include Label="NrGreensXClasses">
     <#Include Label="NrIdempotents">
     <#Include Label="NrRegularDClasses">
+    
     <#Include Label="PartialOrderOfDClasses">
     <#Include Label="SchutzenbergerGroup">
   
 
-    
-    <#Include Label="GreensHClasses">
-    <#Include Label="GreensHClassReps">
-    <#Include Label="NrGreensHClasses">
 
   </Section>
 

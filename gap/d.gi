@@ -30,7 +30,7 @@
 # new for 0.1! - \= - "for D-class and D-class of trans. semigp." 
 ############################################################################
 
-InstallMethod( \=, "for D-class and D-class of trans. semigp.",
+InstallMethod(\=, "for D-class and D-class of trans. semigp.",
 [IsGreensDClass and IsGreensClassOfTransSemigp, IsGreensDClass and 
 IsGreensClassOfTransSemigp],
 function(d1, d2)
@@ -40,7 +40,7 @@ end);
 # new for 0.1! - \< - "for D-class and D-class of trans. semigp." 
 ############################################################################
 
-InstallMethod( \<, "for D-class and D-class of trans. semigp.",
+InstallMethod(\<, "for D-class and D-class of trans. semigp.",
 [IsGreensDClass and IsGreensClassOfTransSemigp, IsGreensDClass and 
 IsGreensClassOfTransSemigp],
 function(d1, d2)
@@ -149,7 +149,8 @@ function(arg)
   g:=data[2][7];    # O[j][k]!.rels[l][2]*f
   #r:=data[2][8]    # the index of the coset rep. 
 
-  O := o[2]!.orbits; gens:=o[1]!.gens; imgs_gens:=o[2]!.imgs_gens; d:=o[2]!.data; 
+  O := o[2]!.orbits; gens:=o[1]!.gens; imgs_gens:=o[2]!.imgs_gens; 
+  d:=o[2]!.data; 
   lens:=o[2]!.lens; kernels:=o[2]!.kernels; data_ht:=o[2]!.data_ht;
 
   if k = fail then #new ker and l, m, val, n, g, i=fail
@@ -177,7 +178,6 @@ function(arg)
     i:=Length(d)+1;
     d[i]:=data;
     HTAdd(data_ht, data[2], i);
-
   ################################################################################
           
   else #old ker
