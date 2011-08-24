@@ -89,13 +89,15 @@ true</Example>
 <#/GAPDoc>
 
 <#GAPDoc Label="GreensXClasses">
-  <ManSection><Heading>GreensXClasses</Heading>
-    <Oper Name="GreensDClasses" Arg="x"/>
-    <Oper Name="GreensHClasses" Arg="x"/>
-    <Oper Name="GreensLClasses" Arg="x"/>
-    <Oper Name="GreensRClasses" Arg="x"/>
+  <ManSection Label="GreensXClasses"><Heading>GreensXClasses</Heading>
+    <Attr Name="GreensDClasses" Label="CitrusDClasses" Arg="x"/>
+    <Attr Name="GreensHClasses" Label="CitrusHClasses" Arg="x"/>
+    <Attr Name="GreensLClasses" Label="CitrusLClasses" Arg="x"/>
+    <Attr Name="GreensRClasses" Label="CitrusRClasses" Arg="x"/>
     <Description>
-      returns a list of <Math>\mathcal{X}</Math>-classes contained in the 
+
+
+      returns a list of Green's classes contained in the 
       object <A>x</A> where <A>x</A> is a transformation semigroup,
       <Math>\mathcal{D}</Math>-, <Math>\mathcal{L}</Math>-, or
       <Math>\mathcal{R}</Math>-class and where
@@ -103,8 +105,14 @@ true</Example>
       replaced with one of <Math>\mathcal{D}, \mathcal{R}, \mathcal{L}</Math>
       or <Math>\mathcal{H}</Math>.<P/>
 
-      See also <Ref Oper="GreensDClasses" BookName="ref"/>,
-      <Ref Attr="GreensDClassReps"/>, and 
+      These functions produce essentially the same output as the &GAP; library
+      functions with the same names; see 
+      <Ref Oper="GreensDClasses" BookName="ref"/>. The main difference in usage
+      is that these functions can be applied to a wider class of objects as
+      described above. <P/>
+      
+      See also 
+      <Ref Attr="GreensDClassReps"/> and 
       <Ref Func="IteratorOfGreensDClasses"/>.
       <Example></Example>    
     </Description>
@@ -275,7 +283,7 @@ gap> NrIdempotents(r);
   information on iterators.<P/>
 
   See also <Ref Oper="GreensRClasses" BookName="ref"/>, 
-  <Ref Oper="GreensRClasses"/>, 
+  <Ref Attr="GreensRClasses" Label="CitrusRClasses"/>, 
   and <Ref Oper="IteratorOfGreensRClasses"/>.<P/>
   
   In the display of an <C>IteratorOfXClassReps</C> the total number of elements
@@ -327,7 +335,8 @@ gap> iter;
   semigroup with a particular property but do not necessarily want to compute
   all of the <Math>\mathcal{R}</Math>-classes.<P/>
 
-  See also <Ref Oper="GreensRClasses" BookName="ref"/> and 
+  See also <Ref Attr="GreensRClasses" Label="CitrusRClasses"/>, 
+  <Ref Oper="GreensRClasses" BookName="ref"/>, and 
   <Ref Oper="IteratorOfRClassReps"/>.<P/>
 
   The semigroup in the example below has 25147892 elements but it only takes 
@@ -367,10 +376,9 @@ gap> Size(r);
   <Description>
   returns the number of Green's classes in <A>x</A> where
     <A>x</A> can be a transformation
-        semigroup, <Math>\mathcal{D}</Math>-, <Math>\mathcal{L}</Math>-, or
-              <Math>\mathcal{R}</Math>-class of a transformation semigroup
-              (where
-                      appropriate).
+    semigroup, <Math>\mathcal{D}</Math>-, <Math>\mathcal{L}</Math>-, or
+    <Math>\mathcal{R}</Math>-class of a transformation semigroup
+              (where appropriate).
 
   If the actual Green's classes are not required, then it is  
   more efficient to use <Log>NrGreensHClasses(x)</Log> than 
@@ -470,8 +478,9 @@ gap> NrGreensRClasses(d);
   <Math>x\leq y</Math> if and only if <C>s^1xs^1</C> is a subset of  
   <C>s^1ys^1</C>. <P/>
 
-  See also <Ref Attr="GreensDClasses"/>, <Ref Attr="GreensDClasses"
-  BookName="ref"/>, <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>,
+  See also <Ref Attr="GreensDClasses" Label="CitrusDClasses"/>, 
+  <Ref Attr="GreensDClasses" BookName="ref"/>, 
+  <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>,
   and <Ref Oper="\&lt;"/>.
   </Description>
   </ManSection>

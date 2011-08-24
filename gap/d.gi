@@ -1834,7 +1834,6 @@ end);
 
 # new for 0.1! - KernelOrbitStabChainFromData - not a user function!
 ############################################################################
-
 # Usage: s - semigroup; d - kernel orbit data (i.e. second comp. of D-class
 # data); o - orbits of kernels (optional).
 
