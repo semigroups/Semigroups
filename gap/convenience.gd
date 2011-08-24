@@ -22,6 +22,8 @@ DeclareGlobalFunction("HClass");
 DeclareGlobalFunction("HClassNC");
 DeclareGlobalFunction("LClass");
 DeclareGlobalFunction("LClassNC");
+DeclareGlobalFunction("RandomTransformationSemigroup");
+DeclareGlobalFunction("RandomTransformationMonoid");
 DeclareGlobalFunction("RClass");
 DeclareGlobalFunction("RClassNC");
 

@@ -169,6 +169,21 @@ function(arg)
   return fail;
 end);
 
+# new for 0.1! - RandomTransformationSemigroup 
+#############################################################################
+
+InstallGlobalFunction(RandomTransformationSemigroup,
+function(m,n)
+  return Semigroup(Set(List([1..m], x-> RandomTransformation(n))));
+end);
+
+# new for 0.1! - RandomTransformationSemigroup 
+###########################################################################
+InstallGlobalFunction(RandomTransformationMonoid,
+function(m,n)
+  return Monoid(Set(List([1..m], x-> RandomTransformation(n))));
+end);
+
 # new for 0.1! - Rank - "for a transformation"
 #############################################################################
 # Notes: returns RankOfTransformation. 

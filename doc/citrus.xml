@@ -40,7 +40,7 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
 
 <Body>
   <Chapter Label="citrus">
-  <Heading>The <Package>citrus</Package> package</Heading>
+  <Heading>The <Package>Citrus</Package> package</Heading>
 	
   <Section><Heading>Overview and Introduction</Heading>
     This is the manual for the <Package>Citrus</Package> package version 0.1 
@@ -48,12 +48,15 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     transformation semigroups. <Package>Citrus</Package> 0.1 is an updated 
     version of the <Package>Monoid</Package>
     package for &GAP; 3 and 4; see
-    <URL>http://schmidt.nuigalway.ie/monoid/index.html</URL>
+    <P/><URL>schmidt.nuigalway.ie/monoid/index.html</URL><P/>
+    <Alt Only="LaTeX">\noindent</Alt>
     for more information about the original <Package>Monoid</Package> package 
     for &GAP; 3 by Goetz
     Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc, or
-    <URL>http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html</URL>
-    for more information about <Package>Monoid</Package> 3.1.4 for &GAP; 4.
+    <P/><URL>www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html
+    </URL><P/>
+    <Alt Only="LaTeX">\noindent</Alt> for more information about 
+    <Package>Monoid</Package> 3.1.4 for &GAP; 4.
 
     The functionality of <Package>Monoid</Package> 3.1.4 has been split across 
     two &GAP; 4.5 packages
@@ -67,32 +70,34 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     automorphism groups of semigroups. The <Package>Comatose</Package> package 
     retains those
     functions from <Package>Monoid</Package> 3.1.4 used to compute
-    automorphism groups of transformation semigroups. See
+    automorphism groups of transformation semigroups. See<P/>
     <URL>
-      http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html
+      www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html
      </URL><P/>
 
-    <Package>Citrus</Package> 0.1 contains more efficient methods than those 
+    <Alt Only="LaTeX">\noindent</Alt> <Package>Citrus</Package> 0.1 contains 
+    more efficient methods than those 
     available in the &GAP; library for calculating Green's classes, finding the
     size, the elements, and testing membership in transformation semigroups;
-    see <Ref Chap="Greens's Relations"/>. 
+    see Chapter <Ref Chap="green"/>. 
     After <Package>Citrus</Package> has been loaded many of these methods are
     automatically used in preference to those in the library and do not need to 
     be called explicitly by the user.
     In addition, there are methods for testing if a semigroup satisfies a
     particular property, such as if it is regular, simple, inverse, or 
-    completely regular; see <Ref Chap=""/>.<P/>
+    completely regular; see Chapter <Ref Chap="properties"/>.<P/>
 
-    The <Package>Citrus</Package> package is written in &GAP; code only but
-    requires the <Package>Orb</Package> 
+    <Alt Only="LaTeX">\noindent</Alt> The <Package>Citrus</Package> package is 
+    written in &GAP; code only but requires the <Package>Orb</Package> 
     package.
     <Package>Orb</Package> is used to provide efficient methods for computing 
     orbits in transformation semigroups that underpin most of the features of 
-    <Package>Citrus</Package>. See:
+    <Package>Citrus</Package>. See:<P/>
     <URL>
-    http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
-    </URL>
-    or the main &GAP; webpages for more information.
+    www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
+    </URL><P/>
+    <Alt Only="LaTeX">\noindent</Alt> or the main &GAP; webpages for more 
+    information.
   
   </Section>
 
@@ -107,23 +112,24 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     It is assumed that you have a working copy of &GAP; with version number 
     4.5 or higher. The most up-to-date version of &GAP; and instructions on
     how to install it can be obtained from the main &GAP; webpage
-    
+   <P/> 
     <URL>
-      http://www.gap-system.org
+      www.gap-system.org
     </URL>.<P/>
 
-    The following is a summary of the steps that should lead to a successful
+    <Alt Only="LaTeX">\noindent</Alt> The following is a summary of the steps 
+    that should lead to a successful
     installation of <Package>Citrus</Package>:
 
     <List>
     
       <Item> download and install the <Package>Orb</Package> package version 
       3.7 or higher. For more details go to:
-      <URL>
-    http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
-      </URL>
-      Note that both <Package>Orb</Package> and
-      <Package>Citrus</Package> are faster if <Package>Orb</Package>
+      <P/><URL>
+   www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
+      </URL><P/>
+      <Alt Only="LaTeX">\noindent</Alt> Note that both <Package>Orb</Package>
+      and <Package>Citrus</Package> are faster if <Package>Orb</Package>
       is compiled. 
       </Item>
     
@@ -152,27 +158,26 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     your installation of &GAP;.<P/>
 
     <Log>
-      > gunzip citrus0r1.tar.gz 
-      > tar -xf citrus0r1.tar 
-      > mv citrus GAPROOT/pkg
-      > gap 
+> gunzip citrus0r1.tar.gz 
+> tar -xf citrus0r1.tar 
+> mv citrus GAPROOT/pkg
+> gap 
 
-      [ ... ]
+[ ... ]
 
-      gap> LoadPackage("citrus");
-      ----------------------------------------------------------------------
-      Loading  orb 3.7 (orb - Methods to enumerate orbits)
-      by Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),
-         Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef), and
-         Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
-      ----------------------------------------------------------------------
-      ----------------------------------------------------------------------
-      Loading  Citrus 0.1 (Citrus - ComputIng with TransfoRmation semigrUopS)
-      by J. D. Mitchell (http://tinyurl.com/jdmitchell).
-      ----------------------------------------------------------------------
-      true
-      gap> 
-    </Log>
+gap> LoadPackage("citrus");
+----------------------------------------------------------------------
+Loading  orb 3.7 (orb - Methods to enumerate orbits)
+by Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),
+   Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef), and
+   Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+Loading  Citrus 0.1 (Citrus - ComputIng with TransfoRmation semigrUopS)
+by J. D. Mitchell (http://tinyurl.com/jdmitchell).
+----------------------------------------------------------------------
+true
+gap> </Log>
 
     Presuming that the above steps can be completed successfully you will be 
     running the <Package>citrus</Package> package!<P/>
@@ -202,16 +207,6 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
   </Section>
 
 </Chapter>
-
-
-<!--<Chapter Label="examples"><Heading>Worked Examples</Heading>
-
-  In this chapter we give some examples of what the <Package>citrus</Package>
-  can be used for, and how it compares to other software for computing with 
-  transformation semigroups.
-  JDM: maybe next time include syntactic semigroups, graph endomorphisms,
-  synchronizing semigroups, etc...
-</Chapter>-->
 
 <Chapter Label="Transformations and Actions">
   <Heading>Transformations and Actions</Heading>
@@ -257,7 +252,7 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
 	
 </Chapter>
 
-<Chapter Label="Green's Relations"><Heading>Green's Relations</Heading>
+<Chapter Label="green"><Heading>Green's Relations</Heading>
   
   <Section><Heading>Introduction</Heading>
     
@@ -287,8 +282,7 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
       [ {Transformation( [ 2, 1, 1, 2, 1 ] )}, 
         {Transformation( [ 1, 2, 1, 2, 2 ] )}, 
         {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
-        {Transformation( [ 2, 1, 1, 2, 2 ] )} ]
-    </Log>
+        {Transformation( [ 2, 1, 1, 2, 2 ] )} ]</Log>
     
     Without the <Package>Citrus</Package> package loaded:
     
@@ -301,8 +295,7 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
       [ {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
         {Transformation( [ 1, 2, 1, 2, 2 ] )},
         {Transformation( [ 1, 2, 2, 1, 1 ] )}, 
-        {Transformation( [ 1, 2, 2, 1, 2 ] )} ]
-    </Log>
+        {Transformation( [ 1, 2, 2, 1, 2 ] )} ]</Log>
 		
     The only noticable differences are the representatives of the classes and 
     the order the classes appear in the list. These differences are caused by 
@@ -312,7 +305,7 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     <Package>Citrus</Package>.<P/>
 		
     For more details about Green's relations see 
-    <Ref Chap="Green's Relations" BookName="ref"/>.<P/>
+    <Ref Sect="Green's Relations" BookName="ref"/>.<P/>
 		
     Due to inherent difficulties with computing Green's
     <Math>\mathcal{L}</Math>-, <Math>\mathcal{D}</Math>-, and
@@ -395,8 +388,6 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
   </Section>
 
   <Section><Heading>Green's classes</Heading>
-    The functions described in this section extend the &GAP; library functions
-    for Greens relations and related objects. 
     
     <#Include Label="\&lt;">
     <#Include Label="XClassOfYClass">
@@ -599,6 +590,7 @@ TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1],
     <#Include Label="LClass">
     <#Include Label="LClassNC">
     <#Include Label="Rank">
+    <#Include Label="RandomTransformationMonoid">
     <#Include Label="RClass">
     <#Include Label="RClassNC">
   </Section>

@@ -50,37 +50,37 @@ false</Example>
 
 <#GAPDoc Label="XClassOfYClass">
   <ManSection><Heading>XClassOfYClass</Heading>
-    <Oper Name="DClassOfRClass" Arg="x"/>
-    <Oper Name="DClassOfLClass" Arg="x"/>
-    <Oper Name="RClassOfHClass" Arg="x"/>
-    <Oper Name="LClassOfHClass" Arg="x"/>
-    <Oper Name="DClassOfHClass" Arg="x"/>
+    <Oper Name="DClassOfRClass" Arg="class"/>
+    <Oper Name="DClassOfLClass" Arg="class"/>
+    <Oper Name="RClassOfHClass" Arg="class"/>
+    <Oper Name="LClassOfHClass" Arg="class"/>
+    <Oper Name="DClassOfHClass" Arg="class"/>
     <Description>
-      returns the Green's <Math>\mathcal{X}</Math>-class containing the
-      Green's <Math>\mathcal{Y}</Math>-class <A>x</A> where
-      <Math>\mathcal{X}</Math> and <Math>\mathcal{Y}</Math> should be
-      replaced with one of <Math>\mathcal{D}, \mathcal{R},
-      \mathcal{L}</Math> and <Math>\mathcal{R}, \mathcal{L},
-      \mathcal{H}</Math>, respectively.<P/>
+    returns the Green's <Math>X</Math>-class containing the Green's 
+    <Math>Y</Math>-class <A>class</A> for appropriate
+    substitutions of <Math>X</Math> and <Math>Y</Math>.<P/>
 
       Note that if it is not known to &GAP; whether or not the representative 
-      of <A>x</A> is an element of the semigroup containing <A>x</A>, then no
-      attempt is made to check this.<P/>
+      of <A>class</A> is an element of the semigroup <C>S</C> containing 
+      <A>class</A>, then no attempt is made to check this.<P/>
 
       The same result can be produced using:
-      <Log> First(GreensXClasses(s), x-> Representative(r) in x);</Log>
-      but this will be substantially slower in many examples.<P/>
+      <Log>First(GreensXClasses(S), x-> Representative(x) in class);</Log>
+      but this might be substantially slower. Note that <C>XClassOfYClass</C>
+      is also likely to
+      be faster than <Log>GreensXClassOfElement(S, Representative(class));</Log>
+      <P/>
 
-      See also <Ref Oper="GreensDClassOfElement"
-      BookName="ref"/>,
+      See also <Ref Oper="GreensDClassOfElement" BookName="ref"/>,
       <Ref Oper="GreensDClassOfElement"/>, and
       <Ref Oper="GreensDClassOfElementNC"/>.
       <Example>
-gap> s:=Semigroup(Transformation( [ 1, 3, 2 ] ), Transformation( [ 2, 1, 3 ] ),
-> Transformation( [ 3, 2, 1 ] ), Transformation( [ 1, 3, 1 ] ) );
-gap> r:=GreensRClassOfElement(s, Transformation( [ 3, 2, 1 ] ));;
+gap> S:=Semigroup(Transformation( [ 1, 3, 2 ] ), 
+> Transformation( [ 2, 1, 3 ] ), Transformation( [ 3, 2, 1 ] ), 
+> Transformation( [ 1, 3, 1 ] ) );;
+gap> R:=GreensRClassOfElement(S, Transformation( [ 3, 2, 1 ] ));
 {Transformation( [ 1, 2, 3 ] )}
-gap> DClassOfRClass(r);
+gap> DClassOfRClass(R);
 {Transformation( [ 1, 2, 3 ] )}
 gap> IsGreensDClass(last);
 true</Example>
@@ -90,20 +90,19 @@ true</Example>
 
 <#GAPDoc Label="GreensXClasses">
   <ManSection Label="GreensXClasses"><Heading>GreensXClasses</Heading>
-    <Attr Name="GreensDClasses" Label="CitrusDClasses" Arg="x"/>
-    <Attr Name="GreensHClasses" Label="CitrusHClasses" Arg="x"/>
-    <Attr Name="GreensLClasses" Label="CitrusLClasses" Arg="x"/>
-    <Attr Name="GreensRClasses" Label="CitrusRClasses" Arg="x"/>
+    <Attr Name="GreensDClasses" Label="CitrusDClasses" Arg="obj"/>
+    <Attr Name="GreensHClasses" Label="CitrusHClasses" Arg="obj"/>
+    <Attr Name="GreensLClasses" Label="CitrusLClasses" Arg="obj"/>
+    <Attr Name="GreensRClasses" Label="CitrusRClasses" Arg="obj"/>
     <Description>
 
-
       returns a list of Green's classes contained in the 
-      object <A>x</A> where <A>x</A> is a transformation semigroup,
+      object <A>obj</A> which can be a transformation semigroup,
       <Math>\mathcal{D}</Math>-, <Math>\mathcal{L}</Math>-, or
       <Math>\mathcal{R}</Math>-class and where
       <Math>\mathcal{X}</Math> should be
       replaced with one of <Math>\mathcal{D}, \mathcal{R}, \mathcal{L}</Math>
-      or <Math>\mathcal{H}</Math>.<P/>
+      or <Math>\mathcal{H}</Math> (where appropriate).<P/>
 
       These functions produce essentially the same output as the &GAP; library
       functions with the same names; see 
@@ -112,9 +111,13 @@ true</Example>
       described above. <P/>
       
       See also 
-      <Ref Attr="GreensDClassReps"/> and 
-      <Ref Func="IteratorOfGreensDClasses"/>.
-      <Example></Example>    
+      <Ref Attr="GreensDClassReps"/>,  
+      <Ref Func="IteratorOfDClassReps"/>, 
+      <Ref Func="IteratorOfGreensDClasses"/>,  and 
+      <Ref Func="NrGreensDClasses"/>.
+      <Example>
+         
+      </Example>    
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -178,7 +181,7 @@ true</Example>
 <#/GAPDoc>
 
 <#GAPDoc Label="Idempotents">
-  <ManSection><Attr Name="Idempotents" Arg="x[,n]"/>
+  <ManSection><Attr Name="Idempotents" Label="CitrusIdempotents" Arg="x[,n]"/>
   <Description>
   returns a list of the idempotents in the transformation semigroup or Green's 
   class <A>x</A>. <P/>
@@ -190,7 +193,13 @@ true</Example>
   function will likely be faster. However, if the optional second argument is
   present, then nothing is stored in <A>x</A> and so every time the function
   is called the computation must be repeated. 
-  
+
+      This functions produce essentially the same output as the &GAP; library
+      functions with the same names; see 
+      <Ref Oper="Idempotents" BookName="ref"/>. The main difference in usage
+      is that these functions can be applied to a wider class of objects as
+      described above. <P/>
+
   <Example>
   gap> s:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
    > Transformation( [ 3, 3, 1, 1 ] ) ]);;
@@ -244,7 +253,14 @@ true</Example>
       semigroup is regular (i.e. it contains an idempotent) and returns 
       <K>false</K> otherwise.<P/>
 
-      See also <Ref Prop="IsRegularDClass" BookName="ref"/>.
+      See also <Ref Prop="IsRegularDClass" BookName="ref"/>, <Ref
+      Prop="IsGroupHClass"/>, <Ref Oper="GroupHClassOfGreensDClass"/>, and
+      <Ref Oper="GroupHClass"/>.
+
+      The function <C>IsRegularDClass</C> produces the same output as the 
+      &GAP; library
+      functions with the same name; see 
+      <Ref Oper="IsRegularDClass" BookName="ref"/>.
 
       <Example>
 gap> s:=Monoid(Transformation( [ 10, 8, 7, 4, 1, 4, 10, 10, 7, 2 ] ),
