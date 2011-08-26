@@ -404,6 +404,7 @@ gap> </Log>
     <#Include Label="NrRegularDClasses">
     <#Include Label="PartialOrderOfDClasses">
     <#Include Label="SchutzenbergerGroup">
+    <#Include Label="UnderlyingSemigroupOfIterator">
   </Section>
 </Chapter>
 

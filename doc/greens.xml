@@ -745,21 +745,34 @@ GreensDClasses(S)[1]);</Example>
   or <Cite Key="pfeiffer2"/>.<P/> 
 
   <Example>
-    gap> S:=Semigroup([Transformation( [ 4, 4, 3, 5, 3 ] ), 
-    > Transformation( [ 5, 1, 1, 4, 1 ] ), 
-    > Transformation( [ 5, 5, 4, 4, 5 ] ));;
-    gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
-    gap> SchutzenbergerGroup(DClass(S, f));
-    Group([ (4,5) ])
-    gap> SchutzenbergerGroup(RClass(S, f));
-    Group([ (4,5) ])
-    gap> SchutzenbergerGroup(LClass(S, f));
-    Group([ (4,5) ])
-    gap> SchutzenbergerGroup(HClass(S, f));
-    Group([ (4,5) ])
-  </Example>
+gap> S:=Semigroup([Transformation( [ 4, 4, 3, 5, 3 ] ), 
+> Transformation( [ 5, 1, 1, 4, 1 ] ), 
+> Transformation( [ 5, 5, 4, 4, 5 ] ));;
+gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
+gap> SchutzenbergerGroup(DClass(S, f));
+Group([ (4,5) ])
+gap> SchutzenbergerGroup(RClass(S, f));
+Group([ (4,5) ])
+gap> SchutzenbergerGroup(LClass(S, f));
+Group([ (4,5) ])
+gap> SchutzenbergerGroup(HClass(S, f));
+Group([ (4,5) ])</Example>
   </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="UnderlyingSemigroupOfIterator">
+  <ManSection>
+    <Func Name="UnderlyingSemigroupOfIterator" Arg="iter"/>
+    <Description>
+      returns the underlying semigroup of the <Package>Citrus</Package>
+      package iterator <A>iter</A>. More specifically, if <A>iter</A> satisfies
+      <Ref Prop="IsIterator" BookName="ref"/> and <C>IsCitrusPkgIterator</C>, 
+      then <C>UnderlyingSemigroupOfIterator</C> returns <A>iter!.s</A>, which is
+      set during the creation of the iterator.  
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 
 #EOF

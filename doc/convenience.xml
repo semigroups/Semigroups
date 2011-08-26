@@ -28,9 +28,7 @@
       should take no more than 1 minute to complete. The same effect can be
       achieved by entering:
 
-      <Log>
-        Read(Filename(DirectoriesPackageLibrary("citrus","tst"),"testall.g"));;
-      </Log>
+      <Log>Read(Filename(DirectoriesPackageLibrary("citrus","tst"),"testall.g"));;</Log>
 
       at the &GAP; prompt. 
       To quickly test that <Package>Citrus</Package> is installed correctly
@@ -39,19 +37,40 @@
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="CitrusTestManualExamples">
+  <ManSection>
+    <Func Name="CitrusTestManualExamples" Arg=""/>
+    <Description>
+      this function should be called with no argument to test the examples in
+      the <Package>Citrus</Package> manual. These tests
+      should take no more than a few seconds to complete. The same 
+      effect can be achieved by entering:
+
+      <Log>SizeScreen([80]); SetInfoLevel(InfoWarning, 0);
+TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
+InstallationPath, "/doc"), "citrus.xml", 
+["convenience.xml", "greens.xml",
+"orbits.xml", "properties.xml", "transform.xml"]);</Log>
+
+      at the &GAP; prompt. 
+      To more comprehensively test that <Package>Citrus</Package> is installed
+      correctly use <Ref Func="CitrusTestAll"/>. See also <Ref
+      Func="CitrusTestInstall"/>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="CitrusTestInstall">
   <ManSection>
-    <Func Name="CitrusTestAll" Arg=""/>
+    <Func Name="CitrusTestInstall" Arg=""/>
     <Description>
       this function should be called with no argument to test your installation
       of <Package>Citrus</Package> is working correctly. These tests
       should take no more than a fraction of a second to complete. The same 
       effect can be achieved by entering:
 
-      <Log>
-        Read(Filename(DirectoriesPackageLibrary("citrus","tst"),
-         "testinstall.g"));;
-      </Log>
+      <Log>ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),
+         "testinstall.tst"));;</Log>
 
       at the &GAP; prompt. 
       To more comprehensively test that <Package>Citrus</Package> is installed

@@ -45,7 +45,7 @@ InstallOtherMethod(GreensJClassOfElement, "for a trans. semigroup and trans.",
 [IsTransformationSemigroup and HasIsFinite and IsFinite and
 HasGeneratorsOfSemigroup, IsTransformation], 
 function(s, f)
-  Info(InfoWarning, 2, "Use GreensDClassOfElement instead!");
+#  Info(InfoWarning, 2, "Use GreensDClassOfElement instead!");
   return GreensDClassOfElement(s, f);
 end);
 
