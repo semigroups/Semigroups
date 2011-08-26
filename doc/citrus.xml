@@ -351,7 +351,8 @@ gap> </Log>
     &GAP; functions where the argument is an arbitrary Green's class
     of a transformation semigroup 
     (specifically a  Green's class satisfying <Ref
-    Prop="IsGreensClassOfTransSemigp"/>): 
+    Prop="IsGreensClassOfTransSemigp"/>) or a transformation semigroup itself
+    (where appropriate): 
     <Ref Oper="\&lt;"/>, <C>=</C> and <C>in</C> (see  
     <Ref Sect="Comparisons" BookName="ref"/>),
     <Ref Oper="AsSSortedList" BookName="ref"/>, 
@@ -386,16 +387,6 @@ gap> </Log>
     (for a group <Math>\mathcal{H}</Math>-class),
     <Ref Oper="StructureDescription" BookName="ref"/> 
     <P/>
-
-    <P/>
-   
-
-    
-    <Package>Citrus</Package> contains special methods for transformation 
-    semigroups of the following &GAP; functions: <C>in</C>, <C>AsList</C>, 
-    <C>Enumerator</C>, <C>GreensRClasses</C>, <C>GreensDClasses</C>,
-    <C>GreensRClassOfElement</C>, <C>GreensDClassOfElement</C>, 
-    <C>Iterator</C>, <C>Size</C>,  
 
   </Section>
 
