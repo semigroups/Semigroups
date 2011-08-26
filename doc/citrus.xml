@@ -578,6 +578,8 @@ gap> </Log>
   <Section><Heading>Utilities</Heading>
     <#Include Label="CitrusMakeDoc">
     <#Include Label="CitrusTestAll">
+    <#Include Label="CitrusTestInstall">
+    <#Include Label="CitrusTestManualExamples">
   </Section>
 
   <Section><Heading>Shortcuts</Heading>

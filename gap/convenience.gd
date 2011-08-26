@@ -11,6 +11,7 @@
 DeclareGlobalFunction("CitrusMakeDoc");
 DeclareGlobalFunction("CitrusTestAll");
 DeclareGlobalFunction("CitrusTestInstall");
+DeclareGlobalFunction("CitrusTestManualExamples");
 DeclareGlobalFunction("DClass");
 DeclareGlobalFunction("DClassNC");
 

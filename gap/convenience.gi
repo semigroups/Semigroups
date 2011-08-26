@@ -17,8 +17,8 @@
 InstallGlobalFunction(CitrusMakeDoc, 
 function()
   MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
-   InstallationPath, "/doc"), "citrus.xml", [
-    "convenience.xml", "greens.xml", "orbits.xml", "properties.xml",
+   InstallationPath, "/doc"), "citrus.xml", 
+   ["convenience.xml", "greens.xml", "orbits.xml", "properties.xml",
      "transform.xml"], "citrus", "MathJax");;
 end);
 
@@ -32,6 +32,16 @@ function()
   "\nin the tst directory. As of 10/08/11 the tests take approx. 55s with", 
   "\n1g of memory.\n\n");
   Read(Filename(DirectoriesPackageLibrary("citrus","tst"),"testall.g"));;
+end);
+
+# new for 0.1! - CitrusTestManualExamples - "for no argument"
+#############################################################################
+
+InstallGlobalFunction(CitrusTestManualExamples,
+function()
+  SizeScreen([80]); SetInfoLevel(InfoWarning, 0);
+  TestManualExamples(dir, "citrus.xml", ["convenience.xml", "greens.xml",
+  "orbits.xml", "properties.xml", "transform.xml"]);
 end);
 
 # new for 0.1! - DClass - "for a trans. semi and trans. or Green's class"

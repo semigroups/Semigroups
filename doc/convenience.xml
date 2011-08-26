@@ -39,6 +39,27 @@
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="CitrusTestInstall">
+  <ManSection>
+    <Func Name="CitrusTestAll" Arg=""/>
+    <Description>
+      this function should be called with no argument to test your installation
+      of <Package>Citrus</Package> is working correctly. These tests
+      should take no more than a fraction of a second to complete. The same 
+      effect can be achieved by entering:
+
+      <Log>
+        Read(Filename(DirectoriesPackageLibrary("citrus","tst"),
+         "testinstall.g"));;
+      </Log>
+
+      at the &GAP; prompt. 
+      To more comprehensively test that <Package>Citrus</Package> is installed
+      correctly use <Ref Func="CitrusTestAll"/>. 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="DClass">
   <ManSection>
     <Func Name="DClass" Arg="arg"/>
