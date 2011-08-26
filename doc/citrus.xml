@@ -220,7 +220,7 @@ gap> </Log>
 
     The following speciic orbits are used in the computation of Green's 
     relations and to test if an arbitrary transformation semigroup has a 
-    particular property;  see Chapter <Ref Chap="greens"/> and Chapter 
+    particular property;  see Chapter <Ref Chap="green"/> and Chapter 
     <Ref Chap="properties"/>.<P/>
 
     In addition to the actions define in the reference manual
@@ -316,8 +316,8 @@ gap> </Log>
     in <Package>Citrus</Package>.  Thus wherever possible it is advisable to
     use the commands relating to Green's <Math>\mathcal{R}</Math>-classes 
     rather than those relating
-    to Green's <Math>\mathcal{L}</Math>-classes,
-    <Math>\mathcal{D}</Math>-classes, or <Math>\mathcal{H}</Math>-classes.<P/>
+    to Green's <Math>\mathcal{L}</Math>-,
+    <Math>\mathcal{D}</Math>-, or <Math>\mathcal{H}</Math>-classes.<P/>
 		
     The methods in <Package>Citrus</Package> allow the computation of     
     individual Green's classes without the need to compute all the elements of 
@@ -362,13 +362,13 @@ gap> </Log>
     <Ref Attr="GreensLClasses" Label="CitrusLClasses"/>,
     <Ref Attr="GreensRClasses" BookName="ref"/> and 
     <Ref Attr="GreensRClasses" Label="CitrusRClasses"/>,
-    <Ref Oper="GreensRClassOfElement" BookName="ref"/> 
+   <!-- <Ref Oper="GreensRClassOfElement" BookName="ref"/> 
     and <Ref Oper="GreensRClassOfElement" Label="CitrusRClass"/>
-    (for a <Math>\mathcal{D}</Math>-class and transformation),
+    (for a <Math>\mathcal{D}</Math>-class and transformation),-->
     <Ref Attr="Idempotents" BookName="ref"/> and 
     <Ref Attr="Idempotents" Label="CitrusIdempotents"/>, 
     <Ref Prop="IsRegularDClass" BookName="ref"/> and 
-    <Ref Prop="IsRegularDClass" Label="CitrusIsRegDClass"/>, 
+    <Ref Prop="IsRegularDClass" Label="CitrusIsRegularDClass"/>, 
     and <Ref Oper="Size" BookName="ref"/>. 
     <P/>
 

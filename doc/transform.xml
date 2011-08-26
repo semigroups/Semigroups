@@ -41,12 +41,12 @@
 ##      <Func Name="Idempotent" Arg="ker, img"/>
 ##      <Description>
 ##      <C>IdempotentNC</C> returns an idempotent with kernel <C>ker</C> and image 
-##      <C>img</C> without checking <Ref Func="IsTransversal"/> with arguments 
+##      <C>img</C> without checking IsTransversal with arguments 
 ##      <C>ker</C> and <C>im</C>. 
 ##      <P/>
 ##
 ##      <C>Idempotent</C> returns an idempotent with kernel <C>ker</C> and image 
-##      <C>img</C> after checking that <Ref Func="IsTransversal"/> with arguments
+##      <C>img</C> after checking that with arguments
 ##      <C>ker</C> and <C>im</C> returns <C>true</C>. <P/>
 ##      <Example>
 ##  gap> g1:=Transformation([2,2,4,4,5,6]);;

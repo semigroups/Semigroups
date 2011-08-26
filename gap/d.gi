@@ -22,7 +22,7 @@
 # - check that wherever we have called d:=InOrbitsOfImages we do not perform
 # f*perms[l] afterwards but instead use d[7]!
 
-# - RegularDClasses...
+# - RegularDClasses, GreensLClassOfElement (for a D-class and trans.)
 
 #############################################################################
 # other equalities of Green's classes handled by generic method in r.gi!

@@ -71,8 +71,8 @@ false</Example>
       be faster than <Log>GreensXClassOfElement(S, Representative(class));</Log>
       <P/>
 
-      See also <Ref Oper="GreensDClassOfElement" BookName="ref"/>,
-      <Ref Oper="GreensDClassOfElement"/>, and
+      See also <Ref Oper="GreensDClassOfElement" BookName="ref"/>
+      and
       <Ref Oper="GreensDClassOfElementNC"/>.
       <Example>
 gap> S:=Semigroup(Transformation( [ 1, 3, 2 ] ), 
@@ -95,14 +95,10 @@ true</Example>
     <Attr Name="GreensLClasses" Label="CitrusLClasses" Arg="obj"/>
     <Attr Name="GreensRClasses" Label="CitrusRClasses" Arg="obj"/>
     <Description>
-
       returns a list of Green's classes contained in the 
       object <A>obj</A> which can be a transformation semigroup,
       <Math>\mathcal{D}</Math>-, <Math>\mathcal{L}</Math>-, or
-      <Math>\mathcal{R}</Math>-class and where
-      <Math>\mathcal{X}</Math> should be
-      replaced with one of <Math>\mathcal{D}, \mathcal{R}, \mathcal{L}</Math>
-      or <Math>\mathcal{H}</Math> (where appropriate).<P/>
+      <Math>\mathcal{R}</Math>-class (where appropriate).<P/>
 
       These functions produce essentially the same output as the &GAP; library
       functions with the same names; see 
@@ -116,57 +112,125 @@ true</Example>
       <Ref Func="IteratorOfGreensDClasses"/>,  and 
       <Ref Func="NrGreensDClasses"/>.
       <Example>
-         
-      </Example>    
+gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ), 
+> Transformation( [ 4, 3, 1, 2 ] ));;
+gap> GreensDClasses(S);
+[ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )}, 
+  {Transformation( [ 4, 4, 4, 4 ] )} ]
+gap> GreensHClasses(S);
+[ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )}, 
+  {Transformation( [ 1, 2, 2, 2 ] )}, {Transformation( [ 4, 4, 4, 4 ] )}, 
+  {Transformation( [ 2, 2, 2, 2 ] )}, {Transformation( [ 3, 3, 3, 3 ] )}, 
+  {Transformation( [ 1, 1, 1, 1 ] )}, {Transformation( [ 4, 4, 3, 4 ] )}, 
+  {Transformation( [ 2, 2, 1, 2 ] )}, {Transformation( [ 4, 3, 4, 4 ] )}, 
+  {Transformation( [ 2, 1, 2, 2 ] )}, {Transformation( [ 4, 4, 4, 3 ] )}, 
+  {Transformation( [ 2, 2, 2, 1 ] )} ]
+gap> GreensLClasses(S);
+[ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )}, 
+  {Transformation( [ 1, 2, 2, 2 ] )}, {Transformation( [ 4, 4, 4, 4 ] )}, 
+  {Transformation( [ 2, 2, 2, 2 ] )}, {Transformation( [ 3, 3, 3, 3 ] )}, 
+  {Transformation( [ 1, 1, 1, 1 ] )} ]
+gap> GreensRClasses(S);
+[ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )}, 
+  {Transformation( [ 4, 4, 4, 4 ] )}, {Transformation( [ 4, 4, 3, 4 ] )}, 
+  {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 4, 4, 4, 3 ] )} ]
+gap> D:=GreensDClasses(S)[2];
+{Transformation( [ 3, 4, 4, 4 ] )}
+gap> GreensLClasses(D);
+[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 1, 2, 2, 2 ] )} ]
+gap> GreensRClasses(D);
+[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 4, 4, 3, 4 ] )}, 
+  {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 4, 4, 4, 3 ] )} ]
+gap> GreensHClasses(D);
+[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 1, 2, 2, 2 ] )}, 
+  {Transformation( [ 4, 4, 3, 4 ] )}, {Transformation( [ 2, 2, 1, 2 ] )}, 
+  {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 2, 1, 2, 2 ] )}, 
+  {Transformation( [ 4, 4, 4, 3 ] )}, {Transformation( [ 2, 2, 2, 1 ] )} ]
+gap> R:=GreensRClasses(D)[1];
+{Transformation( [ 3, 4, 4, 4 ] )}
+gap> GreensHClasses(R);
+[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 1, 2, 2, 2 ] )} ]
+gap> L:=GreensLClasses(D)[1];
+{Transformation( [ 3, 4, 4, 4 ] )}
+gap> GreensHClasses(L);
+[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 4, 4, 3, 4 ] )}, 
+  {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 4, 4, 4, 3 ] )} ]</Example>    
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="GreensRClassOfElement">
+  <ManSection><Heading>GreensXClassOfElementNC</Heading>
+    <Oper Name="GreensDClassOfElement" Arg="X, f"/>
+    <Oper Name="GreensHClassOfElement" Arg="X, f"/>
+    <Oper Name="GreensLClassOfElement" Arg="X, f"/>
+    <Oper Name="GreensRClassOfElement" Arg="X, f"/>
+    <Description>
+    Not currently documented as only the method for GreensRClassOfElement is
+    implemented when X is a D-class. 
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="GreensXClassOfElementNC">
   <ManSection><Heading>GreensXClassOfElementNC</Heading>
-    <Oper Name="GreensDClassOfElementNC" Arg="s, f"/>
-    <Oper Name="GreensHClassOfElementNC" Arg="s, f"/>
-    <Oper Name="GreensLClassOfElementNC" Arg="s, f"/>
-    <Oper Name="GreensRClassOfElementNC" Arg="s, f"/>
+    <Oper Name="GreensDClassOfElementNC" Arg="S, f"/>
+    <Oper Name="GreensHClassOfElementNC" Arg="S, f"/>
+    <Oper Name="GreensLClassOfElementNC" Arg="S, f"/>
+    <Oper Name="GreensRClassOfElementNC" Arg="S, f"/>
     <Description>
-      creates the <Math>\mathcal{R}</Math>-class, 
-      <Math>\mathcal{D}</Math>-class, <Math>\mathcal{L}</Math>-
-      class, or <Math>\mathcal{H}</Math>-class of the transformation <A>f</A> 
-      in the transformation semigroup <A>s</A> after checking if <A>f</A> has 
-      already been shown to be an element of <A>s</A> or not. Note that if it 
-      is not known to &GAP; if <A>f</A> is an element of <A>s</A> or not, then 
-      no further attempt to verify if <A>f</A> is in <A>s</A> is made. 
+      creates the Green's class of the transformation <A>f</A> 
+      in the transformation semigroup <A>S</A> after checking if <A>f</A> has 
+      already been shown to be an element of <A>S</A>.
+    Note that if it 
+      is not known to &GAP; if <A>f</A> is an element of <A>S</A>, then 
+      no further attempt to verify if <A>f</A> is in <A>S</A> is made. <P/>
 
       It can be quicker to compute to compute the class of an element using 
       <C>GreensRClassOfElementNC</C>, say, than using 
-      <Ref Oper="GreensRClassOfElement" BookName="ref"/> 
+      <C>GreensRClassOfElement</C>
       if it is known <E>a priori</E> that <A>f</A> 
-      is an element of <A>s</A>. On the other
-      hand, if <A>f</A> is not an element of <A>s</A>, then the results of this
+      is an element of <A>S</A>. On the other
+      hand, if <A>f</A> is not an element of <A>S</A>, then the results of this
       computation are unpredictable.<P/> 
 
       For example, if <Log>f:=Transformation( [ 15, 18, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 
       20, 20, 20, 20, 20, 20 ] );</Log>
-      in the semigroup <A>s</A> of order-preserving mappings on 20 points, then
-      <Log>GreensRClassOfElementNC(s, f);;</Log>
+      in the semigroup <A>S</A> of order-preserving mappings on 20 points, then
+      <Log>GreensRClassOfElementNC(S, f);;</Log>
       returns an answer relatively quickly, whereas 
-      <Ref Oper="GreensRClassOfElement" BookName="ref"/>
-      can take a signficant amount of time and memory to return a value. 
+      <C>GreensRClassOfElement</C>
+      can take a signficant amount of time to return a value.<P/>
+  
+      See also <Ref Oper="GreensRClassOfElement" BookName="ref"/> and <Ref
+      Oper="RClassOfHClass"/>.
+
+      <Log>
+gap> S:=RandomTransformationSemigroup(2,1000);;
+gap> f:=[ 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 2, 2, 1 ];;
+gap> f:=EvaluateWord(Generators(S), f);;                            
+gap> R:=GreensRClassOfElementNC(S, f);;
+gap> Size(R);
+1
+gap> L:=GreensLClassOfElementNC(S, f);
+gap> Size(L);
+1
+      </Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="GreensXClassReps">
   <ManSection><Heading>GreensXClassReps</Heading>
-    <Attr Name="GreensDClassReps" Arg="x"/>
-    <Attr Name="GreensHClassReps" Arg="x"/>
-    <Attr Name="GreensLClassReps" Arg="x"/>
-    <Attr Name="GreensRClassReps" Arg="x"/>
+    <Attr Name="GreensDClassReps" Arg="obj"/>
+    <Attr Name="GreensHClassReps" Arg="obj"/>
+    <Attr Name="GreensLClassReps" Arg="obj"/>
+    <Attr Name="GreensRClassReps" Arg="obj"/>
     <Description>
-      returns a list of representatives of <Math>\mathcal{X}</Math>-classes of
-      the object <A>x</A> where <A>x</A> can be a transformation semigroup,
+      returns a list of representatives of Green's classes of
+      the object <A>obj</A> where <A>obj</A> can be a transformation semigroup,
       <Math>\mathcal{D}</Math>-, <Math>\mathcal{L}</Math>-, or
-      <Math>\mathcal{R}</Math>-class.<P/>
+      <Math>\mathcal{R}</Math>-class (where appropriate).<P/>
 
       The same output can be obtained by calling, for example:
       <Log>List(GreensXClasses(x), Representative);</Log>
@@ -176,6 +240,14 @@ true</Example>
       <C>GreensXClassReps</C> will return an answer more quickly 
       than the above, since the <Math>\mathcal{X}</Math>-class 
       objects are not created.
+
+      See also
+      <Ref Attr="GreensDClasses"/>,
+      <Ref Func="IteratorOfDClassReps"/>,
+      <Ref Func="IteratorOfGreensDClasses"/>,  and
+      <Ref Func="NrGreensDClasses"/>.
+ 
+
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -245,17 +317,18 @@ true</Example>
 
 <#GAPDoc Label="IsRegularXClass">
   <ManSection><Heading>IsRegularXClass</Heading>
-    <Prop Name="IsRegularDClass" Arg="x"/>
-    <Prop Name="IsRegularLClass" Arg="x"/>
-    <Prop Name="IsRegularRClass" Arg="x"/>
+    <Prop Name="IsRegularDClass" Label="CitrusIsRegularDClass" Arg="class"/>
+    <Prop Name="IsRegularLClass" Arg="class"/>
+    <Prop Name="IsRegularRClass" Arg="class"/>
     <Description>
-      return <K>true</K> if the Green's class <A>x</A> of a transformation
+      return <K>true</K> if the Green's class <A>class</A> of a transformation
       semigroup is regular (i.e. it contains an idempotent) and returns 
       <K>false</K> otherwise.<P/>
 
-      See also <Ref Prop="IsRegularDClass" BookName="ref"/>, <Ref
-      Prop="IsGroupHClass"/>, <Ref Oper="GroupHClassOfGreensDClass"/>, and
-      <Ref Oper="GroupHClass"/>.
+      See also <Ref Prop="IsRegularDClass" BookName="ref"/>, 
+      <Ref Prop="IsGroupHClass" BookName="ref"/>, 
+      <Ref Attr="GroupHClassOfGreensDClass" BookName="ref"/>, and
+      <Ref Oper="GroupHClass"/>.<P/>
 
       The function <C>IsRegularDClass</C> produces the same output as the 
       &GAP; library
@@ -472,8 +545,8 @@ gap> NrGreensRClasses(d);
     returns the number of regular <Math>\mathcal{D}</Math>-classes of the 
     transformation semigroup <A>s</A>. <P/>
     
-    See also <Ref Func="IsRegularDClass"/> and <Ref Func="IsRegularDClass"
-    BookName="ref"/>.
+    See also <Ref Func="IsRegularDClass" Label="CitrusIsRegularDClass"/> 
+    and <Ref Func="IsRegularDClass" BookName="ref"/>.
     <Example></Example>
     </Description>
     </ManSection>

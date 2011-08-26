@@ -877,7 +877,7 @@ function(s, data, o)
   d:=GreensDClassOfElementNC(s, f); cosets:=ImageOrbitCosets(d);
   out:=EmptyPlist(Length(scc)*Length(cosets));
   
-  k:=0; data:=[data, ShallowCopy(d!.data[2])];
+  k:=0; data:=[ShallowCopy(data), ShallowCopy(d!.data[2])];
   data[2][3]:=Position(KernelOrbit(d), CanonicalTransSameKernel(f));
 
   for i in scc do 

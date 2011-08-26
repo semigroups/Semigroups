@@ -43,7 +43,8 @@
   <ManSection>
     <Func Name="DClass" Arg="arg"/>
     <Description>
-      returns the result of  <Ref Oper="GreensDClassOfElement"/>, 
+      returns the result of  
+      <Ref Oper="GreensDClassOfElement" BookName="ref"/>, 
       <Ref Oper="DClassOfRClass"/>, <Ref Oper="DClassOfLClass"/>, or 
       <Ref Oper="DClassOfHClass"/> if <C>arg</C> is a transformation semigroup
       and a transformation, a <Math>\mathcal{R}</Math>-class, a
@@ -138,7 +139,7 @@
   <ManSection>
     <Func Name="LClass" Arg="arg"/>
     <Description>
-      returns the result of <Ref Oper="GreensLClassOfElement"/>, 
+      returns the result of <Ref Oper="GreensLClassOfElement" BookName="ref"/>, 
       or <Ref Oper="LClassOfHClass"/> if <C>arg</C> is a transformation
       semigroup and a transformation, or an <Math>\mathcal{H}</Math>-class, 
       respectively. <P/>
@@ -180,7 +181,7 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
   <ManSection>
     <Func Name="RClass" Arg="arg"/>
     <Description>
-      returns the result of <Ref Oper="GreensRClassOfElement"/>, 
+      returns the result of <Ref Oper="GreensRClassOfElement" BookName="ref"/>, 
       or <Ref Oper="RClassOfHClass"/> if <C>arg</C> is a transformation
       semigroup and a transformation, or an <Math>\mathcal{H}</Math>-class, 
       respectively. <P/>
