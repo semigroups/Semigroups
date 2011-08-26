@@ -213,23 +213,25 @@ gap> </Log>
 
   <Section><Heading>Actions and Orbits</Heading>
 
-    In <Package>citrus</Package>, there are essentially two important types of 
-    orbits used to compute with transformation semigroups. Let <Math>S</Math> 
-    be a semigroup of transformations on the set <Math>\Omega=\{1,2,\ldots, n\}
-    </Math>. The first is the action of the <P/> JDM...
+    <!--In <Package>Citrus</Package>, there are essentially two important types 
+    of orbits used to compute with transformation semigroups. Let 
+    <Math>S</Math> be a semigroup of transformations on the set 
+    <Math>\Omega=\{1,2,\ldots, n\} </Math>. The first is the action of the 
+    <P/> JDM...-->
 
-    The following speciic orbits are used in the computation of Green's 
+    The following are used by <Package>Citrus</Package> in 
+    the computation of Green's 
     relations and to test if an arbitrary transformation semigroup has a 
     particular property;  see Chapter <Ref Chap="green"/> and Chapter 
     <Ref Chap="properties"/>.<P/>
 
     In addition to the actions define in the reference manual
     <Ref Sect="Basic Actions" BookName="ref"/> the following two actions are 
-    available in <Package>citrus</Package>.
-
+    available in <Package>Citrus</Package>.
+    
+    <#Include Label="GradedImagesOfTransSemigroup">
     <#Include Label="StrongOrbitsInForwardOrbit">
     <#Include Label="ImagesOfTransSemigroup">
-    <#Include Label="GradedImagesOfTransSemigroup">
   </Section>	
 
   <Section><Heading>Creating transformations</Heading>
@@ -240,13 +242,24 @@ gap> </Log>
     <#Include Label="RandomTransformation">
     <#Include Label="TransformationActionNC">
   </Section>
-	
+
   <Section><Heading>Properties of transformations</Heading>
-  
-    <#Include Label="IsRegularTransformation">
+    In this section we describe the functions available in
+    <Package>Citrus</Package> for finding various properties of 
+    transformations. 
+
+    <Package>Citrus</Package> contains special methods for the following
+    &GAP; relating to transformations: 
+    <Ref Oper="\^" BookName="ref"/> and <Ref Oper="\^" Label="Citrus^"/>,
+    <Ref Oper="\&lt;" BookName="ref"/>, <Ref Oper="\*" BookName="ref"/> (for
+    two transformations or a transformation and a permutation),
+    and <Ref Attr="RankOfTransformation" BookName="ref"/>. 
+
+
     <#Include Label="IndexPeriodOfTransformation">
-    <#Include Label="SmallestIdempotentPower">
     <#Include Label="InversesOfTransformation">
+    <#Include Label="IsRegularTransformation">
+    <#Include Label="SmallestIdempotentPower">
   
   </Section>
 	
@@ -384,8 +397,9 @@ gap> </Log>
     <Ref Attr="GroupHClass"/>, 
     <Ref Prop="IsGroupHClass" BookName="ref"/>,
     <Ref Oper="IsomorphismPermGroup" BookName="ref"/> 
-    (for a group <Math>\mathcal{H}</Math>-class),
+    (for a group <Math>\mathcal{H}</Math>-class), and
     <Ref Oper="StructureDescription" BookName="ref"/> 
+    (for a group <Math>\mathcal{H}</Math>-class).
     <P/>
 
   </Section>

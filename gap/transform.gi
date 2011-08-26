@@ -317,7 +317,7 @@ end);
 
 # new for 0.1! - Random - "for a transformation semigroup (citrus pkg)"
 #############################################################################
-
+# move to greens.gi
 InstallMethod(Random, "for a transformation semigroup (citrus pkg)", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)

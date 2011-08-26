@@ -8,18 +8,18 @@
 #############################################################################
 ##
 
-DeclareAttribute("GradedImagesOfTransSemigroup", IsTransformationSemigroup); #M
-DeclareAttribute("GradedKernelsOfTransSemigroup", IsTransformationSemigroup);#M
+DeclareAttribute("GradedImagesOfTransSemigroup", IsTransformationSemigroup); 
+DeclareAttribute("GradedKernelsOfTransSemigroup", IsTransformationSemigroup);
 
 DeclareGlobalFunction("HashFunctionForTransformation");
 DeclareGlobalFunction("HashTableForImages");
 DeclareGlobalFunction("HashTableForKernels");
 
 DeclareAttribute("ImagesOfTransSemigroup", IsTransformationSemigroup, 
- "mutable"); #M
+ "mutable");
 DeclareAttribute("KernelsOfTransSemigroup", IsTransformationSemigroup, 
- "mutable"); #M
+ "mutable");
 
-DeclareGlobalFunction("OnKernelsAntiAction"); #M
-DeclareGlobalFunction("StrongOrbitsInForwardOrbit"); #M
+DeclareGlobalFunction("OnKernelsAntiAction");
+DeclareGlobalFunction("StrongOrbitsInForwardOrbit");
 

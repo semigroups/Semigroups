@@ -1,37 +1,113 @@
-###########################################################################
+#############################################################################
 ##
-##  <#GAPDoc Label="IsRegularTransformation">
-##  <ManSection>
-##  <Oper Name="IsRegularTransformation" Arg="S, f"/>
-##      <Description>
-##      if <C>f</C> is a regular element of the transformation semigroup <C>S</C>, 
-##      then <C>true</C> is returned. Otherwise <C>false</C> is returned.<P/> 
+#W  transform.xml
+#Y  Copyright (C) 2011                             James D. Mitchell
 ##
-##      A transformation <C>f</C> is regular inside a transformation semigroup 
-##      <C>S</C> if it lies inside a regular D-class. This is equivalent to the 
-##      orbit of the image of <C>f</C> containing a transversal of the kernel of 
-##      <C>f</C>.
-##  <Example>
-##  gap> g1:=Transformation([2,2,4,4,5,6]);;
-##  gap> g2:=Transformation([5,3,4,4,6,6]);;
-##  gap> m1:=Monoid(g1,g2);;
-##  gap> IsRegularTransformation(m1, g1);
-##  true
-##  gap> img:=ImageSetOfTransformation(g1);
-##  [ 2, 4, 5, 6 ]
-##  gap> ker:=KernelOfTransformation(g1);
-##  [ [ 1, 2 ], [ 3, 4 ], [ 5 ], [ 6 ] ]
-##  gap> ForAny(MonoidOrbit(m1, img), x-> IsTransversal(ker, x));
-##  true
-##  gap> IsRegularTransformation(m1, g2);
-##  false
-##  gap> IsRegularTransformation(FullTransformationSemigroup(6), g2);
-##  true
-##      </Example> <!-- transform.tst -->
-##      </Description>
-##  </ManSection>
-##      <#/GAPDoc>
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
 
+<#GAPDoc Label="IndexPeriodOfTransformation">
+  <ManSection>
+    <Attr Name="IndexPeriodOfTransformation" Arg="f"/>
+    <Description>
+      returns the minimum numbers <C>m, r</C> such that <C>f^(m+r)=f^m</C>; 
+      known as the <E>index</E> and <E>period</E> of the transformation. 
+      <Example>
+gap> f:=Transformation( [ 3, 4, 4, 6, 1, 3, 3, 7, 1 ] );;
+gap> IndexPeriodOfTransformation(f);
+[ 2, 3 ]
+gap> f^2=f^5;
+true
+      </Example> 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="InversesOfTransformation">
+  <ManSection><Heading>InversesOfTransformation</Heading>
+    <Oper Name="InversesOfTransformation" Arg="S, f"/>
+    <Oper Name="InversesOfTransformationNC" Arg="S, f"/>
+    <Description>
+      returns a list of the inverses of the transformation <C>f</C> in the 
+      transformation semigroup <C>S</C>. <P/>
+      
+      The function 
+      <C>InversesOfTransformationNC</C> does not check that <C>f</C> is an 
+      element of <C>S</C>.
+      <Example>
+gap> S:=Semigroup([ Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] ), 
+  Transformation( [ 5, 7, 8, 8, 7, 5, 9, 1, 9 ] ), 
+  Transformation( [ 7, 6, 2, 8, 4, 7, 5, 8, 3 ] ) ]);;
+gap> f:=Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] );;
+gap> InversesOfTransformationNC(S, f);
+[  ]
+gap> IsRegularTransformation(S, f);
+false
+gap> f:=Transformation( [ 1, 9, 7, 5, 5, 1, 9, 5, 1 ] );;
+gap> inv:=InversesOfTransformation(S, f);
+[ Transformation( [ 1, 5, 1, 2, 5, 1, 3, 2, 2 ] ), 
+  Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ), 
+  Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ) ]
+gap> IsRegularTransformation(S, f);
+true
+      </Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsRegularTransformation">
+  <ManSection>
+  <Oper Name="IsRegularTransformation" Arg="S, f"/>
+    <Description>
+      if <A>f</A> is a regular element of the transformation semigroup 
+      <A>S</A>, then <K>true</K> is returned. Otherwise <K>false</K> is
+      returned.<P/> 
+
+      A transformation <A>f</A> is regular in a transformation semigroup 
+      <A>S</A> if it lies inside a regular D-class; see
+      <Ref Attr="IsRegularDClass" BookName="ref"/> or 
+      <Ref Attr="IsRegularDClass" Label="CitrusIsRegularDClass"/>. 
+      Or equivalently if the 
+      orbit of the image of <A>f</A> containing a transversal of the kernel of 
+      <A>f</A>.
+      <Example>
+gap> S:=Monoid(Transformation([2,2,4,4,5,6]),Transformation([5,3,4,4,6,6]));;
+gap> f:=Generators(S)[1];;
+gap> IsRegularTransformation(S, f);
+true
+gap> img:=ImageSetOfTransformation(f);
+[ 2, 4, 5, 6 ]
+gap> o:=Orb(S, img, OnSets);; Enumerate(o);
+&gt;closed orbit, 3 points>
+gap> ForAny(o, x-> IsInjectiveTransOnList(f, x));
+true
+gap> IsRegularTransformation(S, Generators(S)[2]);
+false
+gap> IsRegularTransformation(FullTransformationSemigroup(6), Generators(S)[2]);
+true</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SmallestIdempotentPower">
+  <ManSection> 
+    <Attr Name="SmallestIdempotentPower" Arg="f"/>
+    <Description>
+      returns the least natural number <C>n</C> such that the transformation 
+     <C>f^n</C> is an idempotent.
+      <Example>
+gap> f:=Transformation( [ 6, 7, 4, 1, 7, 4, 6, 1, 3, 4 ] );;
+gap> SmallestIdempotentPower(f);
+3
+gap> f:=Transformation( [ 6, 6, 6, 2, 7, 1, 5, 3, 10, 6 ] );;
+gap> SmallestIdempotentPower(f);
+2
+      </Example>
+    </Description>  
+  </ManSection>
+<#/GAPDoc>
 
 #############################################################################
 ##
@@ -110,26 +186,6 @@
 ##      </ManSection>
 ##      <#/GAPDoc>
 
-#############################################################################
-##
-##      <#GAPDoc Label="IndexPeriodOfTransformation">
-##      <ManSection>
-##      <Attr Name="IndexPeriodOfTransformation" Arg="f"/>
-##      <Description>
-##      returns the minimum numbers <C>m, r</C> such that <C>f^(m+r)=f^m</C>; known 
-##      as the <E>index</E> and <E>period</E> of the transformation. 
-##      <Example>
-##  gap> f:=Transformation( [ 3, 4, 4, 6, 1, 3, 3, 7, 1 ] );;
-##  gap> IndexPeriodOfTransformation(f);
-##  [ 2, 3 ]
-##  gap> f^2=f^5;
-##  true
-##      </Example> <!-- transform.tst -->
-##      </Description>
-##      </ManSection>
-##      <#/GAPDoc>
-##      </Description>
-
 
 #############################################################################
 ##
@@ -159,26 +215,7 @@
 
 
 
-###########################################################################
-##
-##      <#GAPDoc Label="SmallestIdempotentPower">
-##      <ManSection> 
-##      <Attr Name="SmallestIdempotentPower" Arg="f"/>
-##      <Description>
-##      returns the least natural number <C>n</C> such that the transformation 
-##      <C>f^n</C> is an idempotent.
-##      <Example>
-##  gap> t:=Transformation( [ 6, 7, 4, 1, 7, 4, 6, 1, 3, 4 ] );;
-##  gap> SmallestIdempotentPower(t);
-##  6
-##  gap> t:=Transformation( [ 6, 6, 6, 2, 7, 1, 5, 3, 10, 6 ] );;
-##  gap> SmallestIdempotentPower(t);
-##  4
-##      </Example>
-##      </Description>  
-##      </ManSection>
-##      <#/GAPDoc>
-
+########################
 
 
 
@@ -280,35 +317,4 @@
 ##      <#/GAPDoc>
 
 
-#############################################################################
-##
-##      <#GAPDoc Label="InversesOfTransformation">
-##      <ManSection><Heading>InversesOfTransformation</Heading>
-##      <Oper Name="InversesOfTransformation" Arg="S, f"/>
-##      <Oper Name="InversesOfTransformationNC" Arg="S, f"/>
-##      <Description>
-##      returns a list of the inverses of the transformation <C>f</C> in the 
-##      transformation semigroup <C>S</C>. The function 
-##      <C>InversesOfTransformationNC</C> does not check that <C>f</C> is an element 
-##      of <C>S</C>.
-##      <Example>
-##  gap> S:=Semigroup([ Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] ), 
-##    Transformation( [ 5, 7, 8, 8, 7, 5, 9, 1, 9 ] ), 
-##    Transformation( [ 7, 6, 2, 8, 4, 7, 5, 8, 3 ] ) ]);;
-##  gap> f:=Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] );;
-##  gap> InversesOfTransformationNC(S, f);
-##  [  ]
-##  gap> IsRegularTransformation(S, f);
-##  false
-##  gap> f:=Transformation( [ 1, 9, 7, 5, 5, 1, 9, 5, 1 ] );;
-##  gap> inv:=InversesOfTransformation(S, f);
-##  [ Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ), 
-##    Transformation( [ 1, 5, 1, 2, 5, 1, 3, 2, 2 ] ), 
-##    Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ) ]
-##  gap> IsRegularTransformation(S, f);
-##  true
-##      </Example>
-##      </Description>
-##      </ManSection>
-##      <#/GAPDoc>
 
