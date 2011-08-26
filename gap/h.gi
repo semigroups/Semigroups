@@ -460,8 +460,7 @@ end);
 ############################################################################
 # move to greens.gi
 
-InstallMethod(IteratorOfGreensHClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallGlobalFunction(IteratorOfGreensHClasses,
 function(s)
 local iter;
 
@@ -638,6 +637,23 @@ function(h)
   rep:=LClassRepFromData(s, d, o);
 
   return CreateLClass(s, d, o, rep);
+end);
+
+#NNN 
+
+# new for 0.1! - NrIdempotents - "for an H-class of a trans. semigroup"
+#############################################################################
+
+InstallOtherMethod(NrIdempotents, "for an H-class of a trans. semigroup",
+[IsGreensHClass and IsGreensClassOfTransSemigp], 
+function(h)
+  local f;
+
+  f:=h!.rep;
+  if IsInjectiveTransOnList(f, ImageSetOfTransformation(f)) then 
+    return 1;
+  fi;
+  return 0;
 end);
 
 #RRR

@@ -171,7 +171,7 @@ DeclareGlobalFunction("CreateHClass");
 DeclareOperation("GreensHClassOfElementNC", [IsTransformationSemigroup]); #M
 DeclareGlobalFunction("HClassRepFromData");
 DeclareAttribute("HClassType", IsTransformationSemigroup);
-DeclareOperation("IteratorOfGreensHClasses", [IsTransformationSemigroup]);#M
+DeclareGlobalFunction("IteratorOfGreensHClasses");#M
 DeclareGlobalFunction("IteratorOfHClassReps"); #M
 DeclareGlobalFunction("IteratorOfHClassRepsData");
 
