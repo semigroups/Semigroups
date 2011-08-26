@@ -346,11 +346,11 @@ gap> </Log>
       is the case, we give references to both the <Package>Citrus</Package> 
       documentation and the &GAP;  manual; otherwise we may only give
       references to the &GAP; manual.<P/>
-    
+ 
     <Package>Citrus</Package> contains special methods for the following
-    &GAP; functions where the argument is a
-    <Math>\mathcal{D}</Math>-class of a transformation semigroup 
-    (specifically a <Math>\mathcal{D}</Math>-class satisfying <Ref
+    &GAP; functions where the argument is an arbitrary Green's class
+    of a transformation semigroup 
+    (specifically a  Green's class satisfying <Ref
     Prop="IsGreensClassOfTransSemigp"/>): 
     <Ref Oper="\&lt;"/>, <C>=</C> and <C>in</C> (see  
     <Ref Sect="Comparisons" BookName="ref"/>),
@@ -358,27 +358,39 @@ gap> </Log>
     <Ref Oper="Enumerator" BookName="ref"/>, 
     <Ref Attr="GreensHClasses" BookName="ref"/> and 
     <Ref Attr="GreensHClasses" Label="CitrusHClasses"/>,
+    <Ref Attr="GreensHClassOfElement" BookName="ref"/>,
     <Ref Attr="GreensLClasses" BookName="ref"/> and 
     <Ref Attr="GreensLClasses" Label="CitrusLClasses"/>,
+    <Ref Attr="GreensLClassOfElement" BookName="ref"/>,
     <Ref Attr="GreensRClasses" BookName="ref"/> and 
     <Ref Attr="GreensRClasses" Label="CitrusRClasses"/>,
-   <!-- <Ref Oper="GreensRClassOfElement" BookName="ref"/> 
-    and <Ref Oper="GreensRClassOfElement" Label="CitrusRClass"/>
-    (for a <Math>\mathcal{D}</Math>-class and transformation),-->
+    <Ref Attr="GreensRClassOfElement" BookName="ref"/>,
+    <Ref Attr="GreensDClasses" BookName="ref"/> and
+    <Ref Attr="GreensDClasses" Label="CitrusDClasses"/>,
+    <Ref Attr="GreensDClassOfElement" BookName="ref"/>,
     <Ref Attr="Idempotents" BookName="ref"/> and 
     <Ref Attr="Idempotents" Label="CitrusIdempotents"/>, 
-    <Ref Prop="IsRegularDClass" BookName="ref"/> and 
-    <Ref Prop="IsRegularDClass" Label="CitrusIsRegularDClass"/>, 
     and <Ref Oper="Size" BookName="ref"/>. 
     <P/>
 
-    <Package>Citrus</Package> contains special methods for
-    <Math>\mathcal{R}</Math>-classes of the 
-    following &GAP; functions: <C>&lt;</C>, <C>=</C>, <C>in</C>, <C>AsList</C>, 
-    <C>AsSSortedList</C>, <C>Enumerator</C>, <C>Idempotents</C>,  
-    <C>Iterator</C>, <C>GreensHClasses</C>,  
-    <C>Random</C>, <C>Size</C><P/>  
+    In addition to those functions mentioned above that can be
+    applied to all Green's classes, <Package>Citrus</Package> contains 
+    special methods for the following
+    &GAP; functions:
+    <Ref Prop="IsRegularDClass" BookName="ref"/> and 
+    <Ref Prop="IsRegularDClass" Label="CitrusIsRegularDClass"/>,
+    <Ref Attr="GroupHClassOfGreensDClass" BookName="ref"/> and 
+    <Ref Attr="GroupHClass"/>, 
+    <Ref Prop="IsGroupHClass" BookName="ref"/>,
+    <Ref Oper="IsomorphismPermGroup" BookName="ref"/> 
+    (for a group <Math>\mathcal{H}</Math>-class),
+    <Ref Oper="StructureDescription" BookName="ref"/> 
+    <P/>
 
+    <P/>
+   
+
+    
     <Package>Citrus</Package> contains special methods for transformation 
     semigroups of the following &GAP; functions: <C>in</C>, <C>AsList</C>, 
     <C>Enumerator</C>, <C>GreensRClasses</C>, <C>GreensDClasses</C>,
@@ -394,8 +406,10 @@ gap> </Log>
     <#Include Label="GreensXClasses">
     <#Include Label="GreensXClassOfElementNC">
     <#Include Label="GreensXClassReps">
+    <#Include Label="GroupHClass">
     <#Include Label="Idempotents">
     <#Include Label="IsGreensClassOfTransSemigp">
+    
     <#Include Label="IsRegularXClass">
     <#Include Label="IteratorOfXClassReps"> 
     <#Include Label="IteratorOfGreensXClasses"> 

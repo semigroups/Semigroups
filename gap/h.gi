@@ -19,10 +19,8 @@
 
 # - GroupHClassOfGreensDClass...
 
-
 #############################################################################
 # other equalities of Green's classes handled by generic method in greens.gi!
-
 
 # new for 0.1! - \= - "for H-class and H-class of trans. semigp."
 ############################################################################
