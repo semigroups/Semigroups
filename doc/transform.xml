@@ -8,6 +8,43 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="AsPermOfKerImg">
+  <ManSection>
+    <Func Name="AsPermOfKerImg" Arg="f"/>
+    <Description>
+      returns a permutation <C>p</C> such that 
+<Log>OnTuples(CanonicalTransSameKernel(f), p)=ImageListOfTransformation(f)</Log>
+      See also <Ref Func="CanonicalTransSameKernel"/> and 
+      <Ref Attr="ImageListOfTransformation" BookName="ref"/>. 
+        
+    <Example>
+gap> f:=Transformation( [ 2, 1, 6, 1, 7, 6, 2, 8, 4, 7 ] );;
+gap> CanonicalTransSameKernel(f); ImageListOfTransformation(f);
+[ 1, 2, 3, 2, 4, 3, 1, 5, 6, 4 ]
+[ 2, 1, 6, 1, 7, 6, 2, 8, 4, 7 ]
+gap> AsPermOfKerImg(f);
+(1,2)(3,6,4,7)(5,8) </Example>
+    </Description>
+  </ManSection>
+ <#/GAPDoc>
+
+<#GAPDoc Label="AsPermutation">
+  <ManSection>
+    <Func Name="AsPermutation" Arg="f[, A]"/>
+    <Description>
+      returns <Math>f|_{\text{im}(f)}</Math> if <A>f</A> is a permutation of
+      its image; see <Ref Attr="ImageSetOfTransformation" BookName="ref"/>. <P/>
+      
+      If the optional second argument <A>A</A> is a subset of <C>[1 ..
+      DegreeOfTransformation(<A>f</A>)]</C>, then
+      <C>AsPermutation</C> returns <Math>f|_{A}</Math>.
+
+    <Example>
+</Example>
+    </Description>
+  </ManSection>
+ <#/GAPDoc>
+
 <#GAPDoc Label="IndexPeriodOfTransformation">
   <ManSection>
     <Attr Name="IndexPeriodOfTransformation" Arg="f"/>
@@ -19,8 +56,7 @@ gap> f:=Transformation( [ 3, 4, 4, 6, 1, 3, 3, 7, 1 ] );;
 gap> IndexPeriodOfTransformation(f);
 [ 2, 3 ]
 gap> f^2=f^5;
-true
-      </Example> 
+true </Example> 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -51,8 +87,7 @@ gap> inv:=InversesOfTransformation(S, f);
   Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ), 
   Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ) ]
 gap> IsRegularTransformation(S, f);
-true
-      </Example>
+true </Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -103,8 +138,7 @@ gap> SmallestIdempotentPower(f);
 3
 gap> f:=Transformation( [ 6, 6, 6, 2, 7, 1, 5, 3, 10, 6 ] );;
 gap> SmallestIdempotentPower(f);
-2
-      </Example>
+2 </Example>
     </Description>  
   </ManSection>
 <#/GAPDoc>

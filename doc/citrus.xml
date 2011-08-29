@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd">
-<!-- SizeScreen([80]); SetInfoLevel(InfoWarning, 0);
-TestManualExamples(DirectoriesPackageLibrary("monoid","doc")[1]![1], 
-"monoid.xml", ["../gap/autos.gd", "../gap/general.gd", "../gap/greens.gd", 
-"../gap/orbits.gd", "../gap/properties.gd", "../gap/semigroups.gd", 
-"../gap/semihomo.gd", "../gap/transform.gd", "../gap/isomorph.gd"] );-->
 
 <Book Name="citrus">
 
@@ -210,8 +205,62 @@ gap> </Log>
 
 <Chapter Label="Transformations and Actions">
   <Heading>Transformations and Actions</Heading>
+ 
+  <Section><Heading>Creating Transformations</Heading>
+    The functions described in this section extend the functionality of &GAP; 
+    relating to transformations; see 
+    <Ref Chap="Transformations" BookName="ref"/>, in particular, 
+    <Ref Func="Transformation" BookName="ref"/>, 
+    <Ref Func="IdentityTransformation" BookName="ref"/>, and 
+    <Ref Func="RandomTransformation" BookName="ref"/>. 
+    
+	
+    <#Include Label="Idempotent">
+    <#Include Label="RandomTransformation">
+    <#Include Label="TransformationActionNC">
+  </Section>
 
-  <Section><Heading>Actions and Orbits</Heading>
+  <Section><Heading>Operators</Heading>
+    <Index Key="^"><C>^</C></Index>
+   <C><A>f</A> ^ <A>g</A></C>
+    <P/>
+     returns <C><A>g</A>^-1*<A>f</A>*<A>g</A></C> when <A>f</A> is a
+     transformation and <A>g</A> is a permutation.
+
+  </Section>
+
+  <Section><Heading>Comparisons</Heading>
+    
+  </Section>
+  
+  <Section><Heading>Changing representation</Heading>
+  
+    <#Include Label="AsPermOfKerImg">
+    <#Include Label="AsPermutation">
+  </Section>
+
+  <Section><Heading>Properties of Transformations</Heading>
+    In this section we describe the functions available in
+    <Package>Citrus</Package> for finding various properties of 
+    transformations. 
+
+    <Package>Citrus</Package> contains special methods for the following
+    &GAP; relating to transformations: 
+    <Ref Oper="\^" BookName="ref"/> and <Ref Oper="\^" Label="Citrus^"/>,
+    <Ref Oper="\&lt;" BookName="ref"/>, <Ref Oper="\*" BookName="ref"/> (for
+    two transformations or a transformation and a permutation),
+    <Ref Oper="Random" BookName="ref"/> and 
+    <Ref Oper="Random" Label="CitrusRandom"/>
+    and <Ref Attr="RankOfTransformation" BookName="ref"/>. 
+
+    <#Include Label="IndexPeriodOfTransformation">
+    <#Include Label="InversesOfTransformation">
+    <#Include Label="IsRegularTransformation">
+    <#Include Label="SmallestIdempotentPower">
+  
+  </Section>
+
+  <Section><Heading>Actions</Heading>
 
     <!--In <Package>Citrus</Package>, there are essentially two important types 
     of orbits used to compute with transformation semigroups. Let 
@@ -234,34 +283,6 @@ gap> </Log>
     <#Include Label="ImagesOfTransSemigroup">
   </Section>	
 
-  <Section><Heading>Creating transformations</Heading>
-    The functions described in this section extend the functionality of &GAP; 
-    relating to transformations. 
-	
-    <#Include Label="Idempotent">
-    <#Include Label="RandomTransformation">
-    <#Include Label="TransformationActionNC">
-  </Section>
-
-  <Section><Heading>Properties of transformations</Heading>
-    In this section we describe the functions available in
-    <Package>Citrus</Package> for finding various properties of 
-    transformations. 
-
-    <Package>Citrus</Package> contains special methods for the following
-    &GAP; relating to transformations: 
-    <Ref Oper="\^" BookName="ref"/> and <Ref Oper="\^" Label="Citrus^"/>,
-    <Ref Oper="\&lt;" BookName="ref"/>, <Ref Oper="\*" BookName="ref"/> (for
-    two transformations or a transformation and a permutation),
-    and <Ref Attr="RankOfTransformation" BookName="ref"/>. 
-
-    <#Include Label="IndexPeriodOfTransformation">
-    <#Include Label="InversesOfTransformation">
-    <#Include Label="IsRegularTransformation">
-    <#Include Label="SmallestIdempotentPower">
-  
-  </Section>
-	
 </Chapter>
 
 <Chapter Label="green"><Heading>Green's Relations</Heading>

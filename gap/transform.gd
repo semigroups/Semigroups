@@ -9,7 +9,6 @@
 ##
 
 if not IsBound(AsPermutation) then 
-  #JDM should remove AsPermutation from the library
   DeclareOperation("AsPermutation",[IsObject]);
 fi;
 
@@ -32,6 +31,4 @@ DeclareOperation("RandomIdempotentNC", [IsCyclotomicCollColl]);
 DeclareOperation("RandomTransformationNC", [IsCyclotomicCollection, 
  IsCyclotomicCollection]);
 DeclareAttribute("SmallestIdempotentPower", IsTransformation);
-
-
 
