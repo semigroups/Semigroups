@@ -255,7 +255,6 @@ gap> </Log>
     two transformations or a transformation and a permutation),
     and <Ref Attr="RankOfTransformation" BookName="ref"/>. 
 
-
     <#Include Label="IndexPeriodOfTransformation">
     <#Include Label="InversesOfTransformation">
     <#Include Label="IsRegularTransformation">
