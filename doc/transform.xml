@@ -64,7 +64,23 @@ gap> AsPermutation(f, [3,8,7,10]);
   <ManSection>
     <Func Name="CanonicalTransSameKernel" Arg="obj"/>
     <Description>
-      returns 
+      returns the image list of the transformation <C>g</C> 
+      such that the kernel of <C>f</C> equals the kernel of <C>g</C> and 
+      <C>j^g=i</C> for all <C>j</C> in <C>KernelOfTransformation(g)[i]</C>
+      where <C>f=<A>obj</A></C> if <A>obj</A> is a transformation or
+      <C>f=Transformation(<A>obj</A>)</C> if <A>obj</A> is the image list of a
+      transformation.<P/>
+
+      See also <Ref Attr="ImageListOfTransformation" BookName="ref"/> and
+      <Ref Attr="KernelOfTransformation" BookName="ref"/>. 
+
+      <Example>
+gap> f:=Transformation( [ 10, 3, 7, 10, 1, 5, 9, 2, 6, 10 ] );;
+gap> CanonicalTransSameKernel(f);
+[ 1, 2, 3, 1, 4, 5, 6, 7, 8, 1 ]
+gap> f:=[ 10, 6, 7, 9, 9, 9, 4, 1, 4, 1 ];;
+gap> CanonicalTransSameKernel(f);
+[ 1, 2, 3, 4, 4, 4, 5, 6, 5, 6 ]</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

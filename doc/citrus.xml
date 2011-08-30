@@ -234,7 +234,8 @@ gap> </Log>
     <Package>Citrus</Package> also contains a special method for
    <Ref Attr="RankOfTransformation" BookName="ref"/>. 
 
-    <!--IsInjectiveTransOfList, and CanonicalTransSameKernel-->
+    <!--IsInjectiveTransOfList-->
+    <#Include Label="CanonicalTransSameKernel">
     <#Include Label="IndexPeriodOfTransformation">
     <#Include Label="InversesOfTransformation">
     <#Include Label="IsRegularTransformation">
