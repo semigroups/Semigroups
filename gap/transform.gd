@@ -12,7 +12,7 @@ if not IsBound(AsPermutation) then
   DeclareOperation("AsPermutation",[IsObject]);
 fi;
 
-DeclareGlobalFunction("ConstantTrans");
+DeclareGlobalFunction("ConstantTransformation");
 DeclareOperation("DegreeOfTransformationCollection", [IsTransformationCollection]);
 DeclareGlobalFunction("Idempotent");
 DeclareGlobalFunction("IdempotentNC");

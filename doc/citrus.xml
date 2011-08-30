@@ -205,62 +205,69 @@ gap> </Log>
 
 <Chapter Label="Transformations and Actions">
   <Heading>Transformations and Actions</Heading>
- 
+
+    The functions described in this section extend the functionality of &GAP;
+    relating to transformations; see also 
+    <Ref Chap="Transformations" BookName="ref"/>.
+
   <Section><Heading>Creating Transformations</Heading>
-    The functions described in this section extend the functionality of &GAP; 
-    relating to transformations; see 
-    <Ref Chap="Transformations" BookName="ref"/>, in particular, 
+    In this section we describe the functions available in
+    <Package>Citrus</Package> for creating transformations. 
+    The following functions from the &GAP; reference manual are particularly
+    relevant to this section:
     <Ref Func="Transformation" BookName="ref"/>, 
     <Ref Func="IdentityTransformation" BookName="ref"/>, and 
     <Ref Func="RandomTransformation" BookName="ref"/>. 
     
-	
+    <#Include Label="ConstantTransformation"/> 	
     <#Include Label="Idempotent">
+    <#Include Label="RandomIdempotent">
     <#Include Label="RandomTransformation">
-    <#Include Label="TransformationActionNC">
+    <!--<#Include Label="TransformationActionNC">-->
+  </Section>
+
+  <Section><Heading>Properties of Transformations</Heading>
+    In this section we describe the functions available in
+    <Package>Citrus</Package> for finding various properties of 
+    transformations. <P/>
+
+    <Package>Citrus</Package> also contains a special method for
+   <Ref Attr="RankOfTransformation" BookName="ref"/>. 
+
+    <!--IsInjectiveTransOfList, and CanonicalTransSameKernel-->
+    <#Include Label="IndexPeriodOfTransformation">
+    <#Include Label="InversesOfTransformation">
+    <#Include Label="IsRegularTransformation">
+    <#Include Label="Random"/><!--JDM move this?-->
+    <#Include Label="SmallestIdempotentPower">
   </Section>
 
   <Section><Heading>Operators</Heading>
     <Index Key="^"><C>^</C></Index>
    <C><A>f</A> ^ <A>g</A></C>
     <P/>
-     returns <C><A>g</A>^-1*<A>f</A>*<A>g</A></C> when <A>f</A> is a
-     transformation and <A>g</A> is a permutation.
-
-  </Section>
-
-  <Section><Heading>Comparisons</Heading>
+    <Index Key="*"><C>*</C></Index>
+    <C><A>f</A> * <A>g</A></C>
+    <P/>
     
+    <Package>Citrus</Package> contains more efficient methods than the &GAP;
+    library for <Ref Oper="\*" BookName="ref"/> when <A>f</A> and <A>g</A> are
+    transformations or permutations (and at least one of <A>f</A> and <A>g</A>
+    is a transformation).<P/>
+
+     <C>f^g</C> returns <C><A>g</A>^-1*<A>f</A>*<A>g</A></C> when <A>f</A> is a
+     transformation and <A>g</A> is a permutation 
+     <Ref Oper="\^" BookName="ref"/>.
+
   </Section>
-  
+
   <Section><Heading>Changing representation</Heading>
   
     <#Include Label="AsPermOfKerImg">
     <#Include Label="AsPermutation">
   </Section>
 
-  <Section><Heading>Properties of Transformations</Heading>
-    In this section we describe the functions available in
-    <Package>Citrus</Package> for finding various properties of 
-    transformations. 
-
-    <Package>Citrus</Package> contains special methods for the following
-    &GAP; relating to transformations: 
-    <Ref Oper="\^" BookName="ref"/> and <Ref Oper="\^" Label="Citrus^"/>,
-    <Ref Oper="\&lt;" BookName="ref"/>, <Ref Oper="\*" BookName="ref"/> (for
-    two transformations or a transformation and a permutation),
-    <Ref Oper="Random" BookName="ref"/> and 
-    <Ref Oper="Random" Label="CitrusRandom"/>
-    and <Ref Attr="RankOfTransformation" BookName="ref"/>. 
-
-    <#Include Label="IndexPeriodOfTransformation">
-    <#Include Label="InversesOfTransformation">
-    <#Include Label="IsRegularTransformation">
-    <#Include Label="SmallestIdempotentPower">
-  
-  </Section>
-
-  <Section><Heading>Actions</Heading>
+  <Section><Heading>Actions and Orbits</Heading>
 
     <!--In <Package>Citrus</Package>, there are essentially two important types 
     of orbits used to compute with transformation semigroups. Let 

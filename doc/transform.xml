@@ -30,26 +30,93 @@ gap> AsPermOfKerImg(f);
 
 <#GAPDoc Label="AsPermutation">
   <ManSection>
-    <Func Name="AsPermutation" Arg="f[, A]"/>
+    <Func Name="AsPermutation" Arg="f [, A]"/>
     <Description>
       returns <Math>f|_{\text{im}(f)}</Math> if <A>f</A> is a permutation of
       its image; see <Ref Attr="ImageSetOfTransformation" BookName="ref"/>. <P/>
       
       If the optional second argument <A>A</A> is a subset of <C>[1 ..
       DegreeOfTransformation(<A>f</A>)]</C>, then
-      <C>AsPermutation</C> returns <Math>f|_{A}</Math>.
+      <C>AsPermutation</C> returns <Math>f|_{A}</Math> if this is a permutation.
 
     <Example>
-</Example>
+gap> f:=Transformation( [ 5, 8, 3, 5, 8, 6, 2, 2, 7, 8 ] );;
+gap> AsPermutation(f);
+fail
+gap> f:=Transformation( [ 8, 2, 10, 2, 4, 4, 7, 6, 9, 10 ] );;
+gap> AsPermutation(f);
+fail
+gap> f:=Transformation( [ 1, 3, 6, 6, 2, 10, 2, 3, 10, 5 ] );;
+gap> AsPermutation(f);
+(2,3,6,10,5)
+gap> f:=Transformation( [ 5, 2, 8, 4, 1, 8, 10, 3, 5, 7 ] );;
+gap> AsPermutation(f);       
+(1,5)(3,8)(7,10)
+gap> AsPermutation(f, [1,5]);
+(1,5)
+gap> AsPermutation(f, [3,8,7,10]);
+(3,8)(7,10)</Example>
     </Description>
   </ManSection>
- <#/GAPDoc>
+<#/GAPDoc>
+
+<#GAPDoc Label="CanonicalTransSameKernel">
+  <ManSection>
+    <Func Name="CanonicalTransSameKernel" Arg="obj"/>
+    <Description>
+      returns 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ConstantTransformation">
+  <ManSection>
+    <Func Name="ConstantTransformation" Arg="m, n"/>
+    <Description>
+      returns the a constant transformation of degree <A>m</A> with value
+      <A>n</A>. 
+
+    <Example>
+gap> ConstantTransformation(5, 1);
+Transformation( [ 1, 1, 1, 1, 1 ] )
+gap> ConstantTransformation(6, 4);
+Transformation( [ 4, 4, 4, 4, 4, 4 ] )</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="Idempotent">
+  <ManSection><Heading>Idempotent</Heading>
+    <Func Name="Idempotent" Arg="ker, img"/>
+    <Func Name="IdempotentNC" Arg="ker, img"/>
+    <Description>
+      returns an idempotent with <Ref Func="CanonicalTransSameKernel"/> equal 
+      to <A>ker</A> and image set equal to <A>img</A> after first checking that 
+      <Ref Func="IsInjectiveTransOnList"/> holds with argument <A>ker, img</A>.
+      <P/>
+
+     <C>IdempotentNC</C> returns an idempotent with 
+     <Ref Func="CanonicalTransSameKernel"/>
+     equal to <A>ker</A> and image set equal to <A>img</A> without
+     checking that <Ref Func="IsInjectiveTransOnList"/> holds.
+      <Example>
+gap> f:=Transformation( [ 10, 2, 3, 10, 5, 10, 7, 2, 5, 6 ] );;
+gap> ker:=CanonicalTransSameKernel(f);
+[ 1, 2, 3, 1, 4, 1, 5, 2, 4, 6 ]
+gap> img:=ImageSetOfTransformation(f);
+[ 2, 3, 5, 6, 7, 10 ]
+gap> Idempotent(ker, img);
+Transformation( [ 6, 2, 3, 6, 5, 6, 7, 2, 5, 10 ] )</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
 <#GAPDoc Label="IndexPeriodOfTransformation">
   <ManSection>
     <Attr Name="IndexPeriodOfTransformation" Arg="f"/>
     <Description>
-      returns the minimum numbers <C>m, r</C> such that <C>f^(m+r)=f^m</C>; 
+      returns the minimum numbers <C>m, r</C> such that
+      <C><A>f</A>^(m+r)=<A>f</A>^m</C>
       known as the <E>index</E> and <E>period</E> of the transformation. 
       <Example>
 gap> f:=Transformation( [ 3, 4, 4, 6, 1, 3, 3, 7, 1 ] );;
@@ -66,12 +133,17 @@ true </Example>
     <Oper Name="InversesOfTransformation" Arg="S, f"/>
     <Oper Name="InversesOfTransformationNC" Arg="S, f"/>
     <Description>
-      returns a list of the inverses of the transformation <C>f</C> in the 
-      transformation semigroup <C>S</C>. <P/>
+      returns a list of the inverses of the transformation <A>f</A> in the 
+      transformation semigroup <A>S</A> after first checking that <A>f</A> is
+      an element of <A>S</A>. <P/>
+     
+     A transformation
+      <C>g</C><Math>\in</Math><A>S</A> is an <E>inverse</E> of <A>f</A> if 
+      <C><A>f</A>*g*<A>f</A>=<A>f</A></C> and <C>g*<A>f</A>*g=g</C>.<P/>
       
       The function 
-      <C>InversesOfTransformationNC</C> does not check that <C>f</C> is an 
-      element of <C>S</C>.
+      <C>InversesOfTransformationNC</C> does not check that <A>f</A> is an 
+      element of <A>S</A>.
       <Example>
 gap> S:=Semigroup([ Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] ), 
   Transformation( [ 5, 7, 8, 8, 7, 5, 9, 1, 9 ] ), 
@@ -82,7 +154,7 @@ gap> InversesOfTransformationNC(S, f);
 gap> IsRegularTransformation(S, f);
 false
 gap> f:=Transformation( [ 1, 9, 7, 5, 5, 1, 9, 5, 1 ] );;
-gap> inv:=InversesOfTransformation(S, f);
+gap> InversesOfTransformation(S, f);
 [ Transformation( [ 1, 5, 1, 2, 5, 1, 3, 2, 2 ] ), 
   Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ), 
   Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ) ]
@@ -96,12 +168,12 @@ true </Example>
   <ManSection>
   <Oper Name="IsRegularTransformation" Arg="S, f"/>
     <Description>
-      if <A>f</A> is a regular element of the transformation semigroup 
-      <A>S</A>, then <K>true</K> is returned. Otherwise <K>false</K> is
-      returned.<P/> 
+      returns <K>true</K> if <A>f</A> is a regular element of the 
+      transformation semigroup <A>S</A>, then <K>true</K> is returned. 
+      Otherwise <K>false</K> is returned.<P/> 
 
       A transformation <A>f</A> is regular in a transformation semigroup 
-      <A>S</A> if it lies inside a regular D-class; see
+      <A>S</A> if it lies inside a regular <Math>\mathcal{D}</Math>-class; see
       <Ref Attr="IsRegularDClass" BookName="ref"/> or 
       <Ref Attr="IsRegularDClass" Label="CitrusIsRegularDClass"/>. 
       Or equivalently if the 
@@ -126,10 +198,80 @@ true</Example>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="SmallestIdempotentPower">
-  <ManSection> 
-    <Attr Name="SmallestIdempotentPower" Arg="f"/>
+<#GAPDoc Label="Random">
+  <ManSection>
+    <Oper Name="Random" Label="CitrusRandom" Arg="S"/>
     <Description>
+      returns a random element of the transformation semigroup <A>S</A>. <P/>
+      
+      If the <Math>\mathcal{R}</Math>-class structure of <A>S</A> is not known, 
+      then a short product (at most 
+      <C>2*Length(GeneratorsOfSemigroup(<A>S</A>))</C>) 
+      of generators is returned. <P/>
+      
+      If the <Math>\mathcal{R}</Math>-class structure
+      of <A>S</A> is known, then a random element of a randomly chosen
+      <Math>\mathcal{R}</Math>-class is returned. 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RandomIdempotent">
+  <ManSection><Heading>RandomIdempotent</Heading>
+    <Oper Name="RandomIdempotent" Arg="img, m"/>
+    <Oper Name="RandomIdempotentNC" Arg="img, m"/>
+    <Description>
+      returns a random idempotent with image set <A>img</A> of degree <A>m</A>
+      after checking that the maximum value in <A>img</A> is at most <A>m</A>. 
+      <P/>
+
+      <C>RandomIdempotentNC</C> returns a random idempotent with image set
+      <A>img</A> of degree <A>m</A> 
+      without checking that the maximum value in <A>img</A> is at most
+      <A>m</A>.
+
+      <Example>
+gap> RandomIdempotent([ 1, 2, 3 ],5);
+Transformation( [ 1, 2, 3, 1, 3 ] )
+gap> RandomIdempotent([ 1, 2, 3 ], 4);
+Transformation( [ 1, 2, 3, 3 ] )
+gap> RandomIdempotent([ 1, 2, 3 ], 3);            
+Transformation( [ 1, 2, 3 ] )
+gap> RandomIdempotent([ 1, 2, 4, 5, 6 ], 10);
+Transformation( [ 1, 2, 6, 4, 5, 6, 2, 5, 1, 6 ] )</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RandomTransformation">
+<ManSection><Heading>RandomTransformation</Heading>
+<Oper Name="RandomTransformation" Label="CitrusRandomTransformation" Arg="arg"/>
+<Oper Name="RandomTransformationNC" Arg="arg"/>
+<Description>
+if <A>arg</A> is a positive integer, then a random transformation of degree
+<A>arg</A> is returned; see <Ref Func="RandomTransformation"
+BookName="ref"/>.<P/>
+
+If <C><A>arg</A>[1]</C> is a list of positive integers and <C><A>arg</A>[2]</C>
+is a positive integer, then
+<C>RandomTransformation</C> returns a random transformation with degree
+<C><A>arg</A>[2]</C> and image contained in <C><A>arg</A>[1]</C>. <P/>
+
+The no check version <C>RandomTransformationNC</C> does not check that the
+arguments can define a transformation.  
+<Example>
+gap> RandomTransformation([1,2,3], 6);             
+Transformation( [ 2, 1, 2, 1, 1, 2 ] )
+gap> RandomTransformationNC([1,2,3], 6);
+Transformation( [ 3, 1, 2, 2, 1, 2 ] )</Example> 
+</Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SmallestIdempotentPower">
+<ManSection> 
+  <Attr Name="SmallestIdempotentPower" Arg="f"/>
+  <Description>
       returns the least natural number <C>n</C> such that the transformation 
      <C>f^n</C> is an idempotent.
       <Example>
@@ -143,82 +285,7 @@ gap> SmallestIdempotentPower(f);
   </ManSection>
 <#/GAPDoc>
 
-#############################################################################
-##
-##      <#GAPDoc Label="Idempotent">
-##      <ManSection><Heading>Idempotent</Heading>
-##      <Func Name="IdempotentNC" Arg="ker, img"/>
-##      <Func Name="Idempotent" Arg="ker, img"/>
-##      <Description>
-##      <C>IdempotentNC</C> returns an idempotent with kernel <C>ker</C> and image 
-##      <C>img</C> without checking IsTransversal with arguments 
-##      <C>ker</C> and <C>im</C>. 
-##      <P/>
-##
-##      <C>Idempotent</C> returns an idempotent with kernel <C>ker</C> and image 
-##      <C>img</C> after checking that with arguments
-##      <C>ker</C> and <C>im</C> returns <C>true</C>. <P/>
-##      <Example>
-##  gap> g1:=Transformation([2,2,4,4,5,6]);;
-##  gap> g2:=Transformation([5,3,4,4,6,6]);;
-##  gap> ker:=KernelOfTransformation(g2*g1);;
-##  gap> im:=ImageListOfTransformation(g2);;
-##  gap> Idempotent(ker, im);
-##  Error,  the image must be a transversal of the kernel
-##  [ ... ]
-##  gap> Idempotent([[1,2,3],[4,5],[6,7]], [1,5,6]);
-##  Transformation( [ 1, 1, 1, 5, 5, 6, 6 ] )
-##  gap> IdempotentNC([[1,2,3],[4,5],[6,7]], [1,5,6]);
-##  Transformation( [ 1, 1, 1, 5, 5, 6, 6 ] )
-##      </Example> <!-- transform.tst -->
-##      </Description>
-##      </ManSection>
-##      <#/GAPDoc>
-##      </Description>
 
-#############################################################################
-##
-##      <#GAPDoc Label="RandomTransformation">
-##      <ManSection><Heading>RandomTransformation</Heading>
-##      <Oper Name="RandomTransformation" Arg="arg"/>
-##      <Oper Name="RandomTransformationNC" Arg="arg"/>
-##      <Description>
-##      These are new methods for the existing library function 
-##      <Ref Func="RandomTransformation" BookName="ref"/>. <P/>
-##      
-##      If the first argument is a kernel and the second an image, then a random 
-##      transformation is returned with this kernel and image.A <E>kernel</E> is a 
-##      set of sets that partition the set 
-##      <C>1,...n</C> for some <C>n</C> and an <E>image</E> is a sublist of 
-##      <C>1,...n</C>.<P/>
-##      
-##      If the argument is a kernel, then a random transformation is returned that 
-##      has that kernel. <P/>
-##
-##      If the first argument is a set of positive integers <C>img</C> and 
-##      the second a positive
-## integer <C>n</C>, then a random transformation of degree <C>n</C> is returned 
-##      with image contained in the set <C>img</C>.<P/>
-##
-##      The no check version does not check that the arguments can be 
-##      the kernel and image of a transformation.  
-##      <Example>
-##  gap> RandomTransformation([[1,2,3], [4,5], [6,7,8]], [1,2,3]);;
-##  Transformation( [ 2, 2, 2, 1, 1, 3, 3, 3 ] )
-##  gap> RandomTransformation([[1,2,3],[5,7],[4,6]]); 
-##  Transformation( [ 3, 3, 3, 6, 1, 6, 1 ] )
-##  gap> RandomTransformation([[1,2,3],[5,7],[4,6]]);
-##  Transformation( [ 4, 4, 4, 7, 3, 7, 3 ] )
-##  gap> RandomTransformationNC([[1,2,3],[5,7],[4,6]]);
-##  Transformation( [ 1, 1, 1, 7, 5, 7, 5 ] )
-##  gap> RandomTransformation([1,2,3], 6);             
-##  Transformation( [ 2, 1, 2, 1, 1, 2 ] )
-##  gap> RandomTransformationNC([1,2,3], 6);
-##  Transformation( [ 3, 1, 2, 2, 1, 2 ] )
-##      </Example> 
-##      </Description>
-##      </ManSection>
-##      <#/GAPDoc>
 
 
 #############################################################################
@@ -249,106 +316,6 @@ gap> SmallestIdempotentPower(f);
 
 
 
-########################
-
-
-
-###########################################################################
-##
-##      <#GAPDoc Label="IsKerImgOfTransformation">
-##      <ManSection> 
-##      <Func Name="IsKerImgOfTransformation" Arg="ker, img"/>
-##      <Description>
-##      returns <C>true</C> if the arguments <C>ker</C> and <C>img</C> can be the 
-##      kernel and image of 
-##      a single transformation, respectively.  The argument <C>ker</C> should be a 
-##      set of sets that partition the set <C>1,...n</C> for some <C>n</C> and 
-##      <C>img</C> should be a sublist of <C>1,...n</C>.
-##      <Example>
-##  gap> ker:=[[1,2,3],[5,6],[8]];
-##  [ [ 1, 2, 3 ], [ 5, 6 ], [ 8 ] ]
-##  gap> img:=[1,2,9];
-##  [ 1, 2, 9 ]
-##  gap> IsKerImgOfTransformation(ker,img);
-##  false
-##  gap> ker:=[[1,2,3,4],[5,6,7],[8]];
-##  [ [ 1, 2, 3, 4 ], [ 5, 6, 7 ], [ 8 ] ]
-##  gap> IsKerImgOfTransformation(ker,img);
-##  false
-##  gap> img:=[1,2,8];
-##  [ 1, 2, 8 ]
-##  gap> IsKerImgOfTransformation(ker,img);
-##  true
-##      </Example>
-##      </Description>  
-##      </ManSection>
-##      <#/GAPDoc>
-
-###########################################################################
-##
-##      <#GAPDoc Label="AsBooleanMatrix">
-##      <ManSection> 
-##      <Oper Name="AsBooleanMatrix" Arg="f[,n]"/>
-##      <Description>
-##      returns the transformation or permutation <C>f</C> represented as an 
-##      <C>n</C> by <C>n</C> Boolean matrix where <C>i,f(i)</C>th entries equal 
-##      <C>1</C> and all other entries are <C>0</C>.<P/>
-##
-##      If <C>f</C> is a transformation, then 
-##      <C>n</C> is the size of the domain of <C>f</C>. <P/>
-##      
-##      If <C>f</C> is a permutation, then <C>n</C> is the number of points moved by 
-##      <C>f</C>. 
-##      
-##      <Example>
-##  gap> t:=Transformation( [ 4, 2, 2, 1 ] );;
-##  gap> AsBooleanMatrix(t);
-##  [ [ 0, 0, 0, 1 ], [ 0, 1, 0, 0 ], [ 0, 1, 0, 0 ], [ 1, 0, 0, 0 ] ]
-##  gap> t:=(1,4,5);;
-##  gap> AsBooleanMatrix(t);
-##  [ [ 0, 0, 0, 1, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1 ],
-##    [ 1, 0, 0, 0, 0 ] ]
-##  gap> AsBooleanMatrix(t,3);
-##  fail
-##  gap> AsBooleanMatrix(t,5);
-##  [ [ 0, 0, 0, 1, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1 ],
-##    [ 1, 0, 0, 0, 0 ] ]
-##  gap> AsBooleanMatrix(t,6);
-##  [ [ 0, 0, 0, 1, 0, 0 ], [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], 
-##    [ 0, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1 ] ]
-##      </Example>
-##      </Description>
-##      </ManSection>
-
-#############################################################################
-##
-##      <#GAPDoc Label="RandomIdempotent">
-##      <ManSection><Heading>RandomIdempotent</Heading>
-##      <Oper Name="RandomIdempotent" Arg="arg"/>
-##      <Oper Name="RandomIdempotentNC" Arg="arg"/>
-##      <Description>
-##      If the argument is a kernel, then a random idempotent is return that has 
-##      that kernel. A <E>kernel</E> is a set of sets that partition the set 
-##      <C>1,...n</C> for some <C>n</C> and an <E>image</E> is a sublist of 
-##      <C>1,...n</C>.<P/>
-##
-##      If the first argument is an image <C>img</C> and the second a positive
-## integer <C>n</C>, then a random idempotent of degree <C>n</C> is returned 
-##      with image <C>img</C>.<P/>
-##
-##      The no check version does not check that the arguments can be 
-##      the kernel and image of an idempotent.  
-##      <Example>
-##  gap> RandomIdempotent([[1,2,3], [4,5], [6,7,8]], [1,2,3]);;
-##  fail
-##  gap> RandomIdempotent([1,2,3],5);
-##  Transformation( [ 1, 2, 3, 1, 3 ] )
-##  gap> RandomIdempotent([[1,6], [2,4], [3,5]]);
-##  Transformation( [ 1, 2, 5, 2, 5, 1 ] )
-##      </Example> <!-- transform.tst -->
-##      </Description>
-##      </ManSection>
-##      <#/GAPDoc>
 
 
 

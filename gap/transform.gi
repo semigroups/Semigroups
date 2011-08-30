@@ -12,6 +12,9 @@
 # set, f![3] is the kernel, f![4] is AsPermOfKerImg, f![5] is the rank of f
 # f![6] is the canonical trans. with same kernel
 
+# - a method for RandomTransformation(m,n) i.e. a random transformation with
+# a given rank. 
+
 # new for 0.1! - \^ - "for a transformation and a permutation (citrus pkg)"
 #############################################################################
 # Notes: conjugates transformation by permutation.
@@ -65,7 +68,7 @@ function(f)
     od;
       
     f![4]:=PermList(Concatenation(p, Difference([1..n], p)));
-  fi;
+  fi; #JDM check if MappingPermListList isn't faster here!
 
   return f![4];
 end);
@@ -78,6 +81,7 @@ InstallMethod(AsPermutation, "for a permutation", [IsPerm], p -> p);
 
 # new for 0.1! - AsPermutation - "for a transformation"
 ###########################################################################
+#JDM this could use the method below, and that should have some more checks!
 
 InstallMethod(AsPermutation, "for a transformation", 
 [IsTransformation], 
@@ -103,11 +107,11 @@ end);
 
 #CCC
 
-# new for 0.1! - ConstantTrans - "for degree and value"
+# new for 0.1! - ConstantTransformation - "for degree and value"
 #############################################################################
 # Usage: degree and value. 
 
-InstallGlobalFunction(ConstantTrans, 
+InstallGlobalFunction(ConstantTransformation, 
 function(m,n)
   if not m>=n then 
     Info(InfoWarning, 1, "Usage: degree and value, degree must be at least",  
@@ -121,6 +125,7 @@ end);
 
 # new for 0.1! - DegreeOfTransformationCollection - "for a trans. coll."
 ############################################################################
+# undocumented.
 
 InstallMethod(DegreeOfTransformationCollection, "for a trans. coll.", 
 [IsTransformationCollection], 
@@ -290,6 +295,8 @@ end);
 # transformation semigroup took priority over '\in' for a transformation
 # semigroup
 
+# JDM undocumented!
+
 InstallOtherMethod(One, "for a full transformation semigroup", 
 [IsFullTransformationSemigroup],  x -> 
  TransformationNC([1.. DegreeOfTransformationSemigroup(x)]));
@@ -348,7 +355,7 @@ InstallOtherMethod(RandomIdempotent, "for an image and pos. int.",
 [IsCyclotomicCollection, IsPosInt],
 function(img, n)
 
-  if ForAll(img, IsPosInt) and Maximum(img)<n then
+  if ForAll(img, IsPosInt) and Maximum(img)<=n then
     return RandomIdempotentNC(img, n);
   fi;
 
