@@ -234,10 +234,10 @@ gap> </Log>
     <Package>Citrus</Package> also contains a special method for
    <Ref Attr="RankOfTransformation" BookName="ref"/>. 
 
-    <!--IsInjectiveTransOfList-->
     <#Include Label="CanonicalTransSameKernel">
     <#Include Label="IndexPeriodOfTransformation">
     <#Include Label="InversesOfTransformation">
+    <#Include Lable="IsInjectiveTransOnList">
     <#Include Label="IsRegularTransformation">
     <#Include Label="Random"/><!--JDM move this?-->
     <#Include Label="SmallestIdempotentPower">
@@ -263,7 +263,8 @@ gap> </Log>
   </Section>
 
   <Section><Heading>Changing representation</Heading>
-  
+    It is possible to change the representation of certain transformations
+    using the functions described in this section.  
     <#Include Label="AsPermOfKerImg">
     <#Include Label="AsPermutation">
   </Section>
@@ -287,6 +288,7 @@ gap> </Log>
     available in <Package>Citrus</Package>.
     
     <#Include Label="GradedImagesOfTransSemigroup">
+    <#Include Label="OnKernelsAntiAction">
     <#Include Label="StrongOrbitsInForwardOrbit">
     <#Include Label="ImagesOfTransSemigroup">
   </Section>	
@@ -591,25 +593,43 @@ gap> </Log>
     </List>
 
   </Section>
-
-  <Section><Heading>IsSuchAndSuchSemigroup</Heading>
-
+  
+  <Section><Heading>Changing Representation</Headin>
+    <#Include Label="IsomorphismTransformationMonoid">
+    <#Include Label="IsomorphismPermGroup">
+  </Section>
+  
+  <Section><Heading>Attributes</Heading>
+  
+    <#Include Label="GroupOfUnits">
+    <#Include Label="IrredundantGeneratingSubset">
+    <#Include Label="MinimalIdeal">
+    <#Include Label="MultiplicativeZero">
+    <#Include Label="SmallGeneratingSet"> 
+  </Section>
+  
+  <Section><Heading>Properties</Heading>
+    
     <#Include Label="IsBand">
+    <#Include Label="IsBlockGroup">
     <#Include Label="IsCliffordSemigroup">
     <#Include Label="IsCommutativeSemigroup">
     <#Include Label="IsCompletelyRegularSemigroup">
-    <#Include Label="IsCompletelySimpleSemigroup">
+    <#Include Label="IsGreensRTrivial">
     <#Include Label="IsGroupAsSemigroup">
+    <#Include Label="IsIdempotentGenerated">
     <#Include Label="IsInverseSemigroup">
     <#Include Label="IsLeftZeroSemigroup">
+    <#Include Label="IsMonoidAsSemigroup">
     <#Include Label="IsOrthodoxSemigroup">
     <#Include Label="IsRectangularBand">
     <#Include Label="IsRegularSemigroup">
     <#Include Label="IsRightZeroSemigroup">
-    <#Include Label="IsSemiBand">
+    <#Include Label="IsSemilatticeAsSemigroup">
+    <#Include Label="IsSimpleSemigroup">
+    <#Include Label="IsSynchronizingSemigroup">
     <#Include Label="IsZeroGroup">
     <#Include Label="IsZeroSemigroup">
-    <#Include Label="MultiplicativeZero">
 
   </Section>
 

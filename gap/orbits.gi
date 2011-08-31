@@ -213,11 +213,11 @@ end);
 
 # new for 0.1! - OnKernelsAntiAction - for a trans img list and same 
 ###########################################################################
-
+# this won't work! JDM
 InstallGlobalFunction(OnKernelsAntiAction, 
-[IsTransformation, IsTransformation],
-function(f,g)
-  return CanonicalTransSameKernel(f{g});  
+[IsList, IsTransformation],
+function(ker, f)
+  return CanonicalTransSameKernel(f{ker});  
 end);
 
 # new for 0.1! - StrongOrbitsInForwardOrbit - for IsOrbit

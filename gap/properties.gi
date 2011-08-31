@@ -389,7 +389,7 @@ end);
 # new for 0.1! - IsIdempotentGenerated - "for a trans semi"
 ###########################################################################
 # Notes: should store t as IdempotentsGeneratedSubsemigroup, and should use
-# ClosureSemigroup.
+# ClosureSemigroup. JDM
 
 InstallOtherMethod(IsIdempotentGenerated, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
@@ -608,7 +608,6 @@ function(s)
 end);
 
 #IIISSS
-
 
 # new for 0.1! - IsSemiband - "for a transformation semigroup"
 ###############################################################################

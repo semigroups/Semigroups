@@ -5,24 +5,24 @@
   <Attr Name="GradedKernelsOfTransSemigroup" Arg="S"/>
   <Description>
   <C>GradedImagesOfTransSemigroup</C> returns a list where the <C>i</C>th 
-  entry is a list of all the images of transformations in <C>S</C> with rank 
+  entry is a list of all the images of transformations in <A>S</A> with rank 
   <C>i</C>.  
   <P/>
   
   <C>GradedKernelsOfTransSemigroup</C> returns a list where the <C>i</C>th 
-  entry is a list of all the kernels of transformations in <C>S</C> with
-  rank <C>i</C>.
+  entry is a list of the values of <Ref Func="CanonicalTransSameKernel"/> for
+  all transformations in <A>S</A> with rank <C>i</C>.
   <P/>
 
   See also <Ref Attr="ImagesOfTransSemigroup"/> and 
   <Ref Attr="KernelsOfTransSemigroup"/>.
   <Example>
-gap> s:=Semigroup(Transformation( [ 1, 5, 1, 1, 1 ] ), 
+gap> S:=Semigroup(Transformation( [ 1, 5, 1, 1, 1 ] ), 
 > Transformation( [ 4, 4, 5, 2, 2 ] ));;
-gap> GradedImagesOfTransSemigroup(s);
+gap> GradedImagesOfTransSemigroup(S);
 [ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], 
 [ [ 2, 4, 5 ] ], [  ], [  ] ]
-gap> GradedKernelsOfTransSemigroup(s);
+gap> GradedKernelsOfTransSemigroup(S);
 [ [ [ [ 1, 2, 3, 4, 5 ] ] ], 
 [ [ [ 1, 3, 4, 5 ], [ 2 ] ], [ [ 1, 2, 3 ], [ 4, 5 ] ] ], 
 [ [ [ 1, 2 ], [ 3 ], [ 4, 5 ] ] ], [  ], [  ] ]</Example> 
@@ -36,7 +36,7 @@ gap> GradedKernelsOfTransSemigroup(s);
   <Attr Name="KernelsOfTransSemigroup" Arg="S[, n]"/>
   <Description>
   <C>ImagesOfTransSemigroup</C> returns the <Package>orb</Package> package 
-  <C>Orb</C> object:
+  <Ref Func="Orb" BookName="orb"/> object:
   <Display>
     Orb(S, [1..Degree(S)], OnSets);
   </Display>
@@ -57,23 +57,35 @@ gap> GradedKernelsOfTransSemigroup(s);
     gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
     > Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;
     gap> ImagesOfTransSemigroup(S, 6);
-    [  ]
+    
     gap> ImagesOfTransSemigroup(S, 5);
-    [  ]
+      
     gap> ImagesOfTransSemigroup(S, 4);
-    [ [ 1, 2, 5, 6 ] ]
+    
     gap> ImagesOfTransSemigroup(S, 3);
-    [ [ 1, 4, 6 ], [ 2, 5, 6 ] ]
+   
     gap> ImagesOfTransSemigroup(S, 2);
-    [ [ 1, 4 ], [ 2, 5 ], [ 2, 6 ], [ 4, 6 ] ]
+    
     gap> ImagesOfTransSemigroup(S, 1);
-    [ [ 1 ], [ 2 ], [ 4 ], [ 5 ], [ 6 ] ]
+   
     gap> ImagesOfTransSemigroup(S);
-    [ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], [ 2, 5, 6
-    ], 
-    [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
+    
   </Example> 
   </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="OnKernelsAntiAction">
+  <ManSection> 
+    <Oper Name="OnKernelsAntiAction" Arg="ker, f"/>
+    <Description>
+    returns <C>CanonicalTransSameKernel(f*g)</C> when <A>f</A> is a
+    transformation and <A>g</A> is a transformation with
+    <C>CanonicalTransSameKernel(<A>g</A>)=ker</C>.
+    See <Ref Func="CanonicalTransSameKernel"/>.
+    <Example>
+    </Example>
+    </Description>
   </ManSection>
 <#/GAPDoc>
 
