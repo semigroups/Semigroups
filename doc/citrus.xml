@@ -239,7 +239,6 @@ gap> </Log>
     <#Include Label="InversesOfTransformation">
     <#Include Lable="IsInjectiveTransOnList">
     <#Include Label="IsRegularTransformation">
-    <#Include Label="Random"/><!--JDM move this?-->
     <#Include Label="SmallestIdempotentPower">
   </Section>
 
@@ -431,11 +430,14 @@ gap> </Log>
     <Ref Oper="StructureDescription" BookName="ref"/> 
     (for a group <Math>\mathcal{H}</Math>-class).
     <P/>
+    See Section <Ref Sect="convenience"/> for shorter versions of some of the
+    command mentioned in this section. 
 
   </Section>
 
   <Section><Heading>Green's classes</Heading>
-    
+    See Section <Ref Sect="convenience"/> for shorter versions of some of the
+    command mentioned in this section.  
     <#Include Label="\&lt;">
     <#Include Label="XClassOfYClass">
     <#Include Label="GreensXClasses">
@@ -444,7 +446,6 @@ gap> </Log>
     <#Include Label="GroupHClass">
     <#Include Label="Idempotents">
     <#Include Label="IsGreensClassOfTransSemigp">
-    
     <#Include Label="IsRegularXClass">
     <#Include Label="IteratorOfXClassReps"> 
     <#Include Label="IteratorOfGreensXClasses"> 
@@ -460,7 +461,7 @@ gap> </Log>
 <Chapter Label="properties"> <Heading>Properties of semigroups</Heading>
   <Section><Heading>Definitions</Heading>
 		
-    In this section we give the theoretical results and the corresponding 
+    In this section we state some theoretical results and the corresponding 
     &GAP; functions that can be used to determine whether a set of
     transformations generates a semigroup of a given type. Let <Math>S</Math> 
     be a semigroup. Then:
@@ -538,8 +539,8 @@ gap> </Log>
       <List>
       
         <Item> <Math>S</Math> is a left zero semigroup if and only if  
-        <Math>\textrm{im}(f)=\textrm{im}(g)</Math> and <Math>f^2=f</Math> for all 
-        <Math>f, g\in\Omega</Math>.
+        <Math>\textrm{im}(f)=\textrm{im}(g)</Math> and <Math>f^2=f</Math> for 
+        all <Math>f, g\in\Omega</Math>.
         </Item>
         
         <Item> <Math>S</Math> is a right zero semigroup if and only if  
@@ -589,27 +590,19 @@ gap> </Log>
         
         <Item> <Math>\textrm{rank}(f)=\textrm{rank}(g)</Math>.
         </Item> 
-    
     </List>
-
-  </Section>
-  
-  <Section><Heading>Changing Representation</Headin>
-    <#Include Label="IsomorphismTransformationMonoid">
-    <#Include Label="IsomorphismPermGroup">
   </Section>
   
   <Section><Heading>Attributes</Heading>
-  
     <#Include Label="GroupOfUnits">
     <#Include Label="IrredundantGeneratingSubset">
     <#Include Label="MinimalIdeal">
     <#Include Label="MultiplicativeZero">
+    <#Include Label="Random"/>
     <#Include Label="SmallGeneratingSet"> 
   </Section>
   
   <Section><Heading>Properties</Heading>
-    
     <#Include Label="IsBand">
     <#Include Label="IsBlockGroup">
     <#Include Label="IsCliffordSemigroup">
@@ -630,9 +623,12 @@ gap> </Log>
     <#Include Label="IsSynchronizingSemigroup">
     <#Include Label="IsZeroGroup">
     <#Include Label="IsZeroSemigroup">
-
   </Section>
 
+  <Section><Heading>Changing Representation</Headin>
+    <#Include Label="IsomorphismTransformationMonoid">
+    <#Include Label="IsomorphismPermGroup">
+  </Section>
 </Chapter>
 
 <Chapter Label="convenience"><Heading>Utilities and shortcuts</Heading>
