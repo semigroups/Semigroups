@@ -15,7 +15,7 @@
       returns a permutation group isomorphic to the group of units of the 
       semigroup <A>S</A> if it exists and returns <K>fail</K> otherwise. <P/>
       
-      If <A>S</A> has identity <C>e</C>, then the <E>group of units<</E> of
+      If <A>S</A> has identity <C>e</C>, then the <E>group of units </E> of
       <A>S</A>
       is the set of <C>s</C> in <A>S</A> such that there exists <C>t</C> in
       <A>S</A> where <C>s*t=t*s=e</C>. Equivanlently, the group of units is 
@@ -23,7 +23,6 @@
       of the identity of <A>S</A>.<P/> 
       
       See also 
-      <Ref Oper="GreensHClassOfElement" Label="CitrusHClass"/>,
       <Ref Oper="GreensHClassOfElement" BookName="ref"/>,
       <Ref Prop="IsMonoidAsSemigroup"/>, and
       <Ref Attr="MultiplicativeNeutralElement" BookName="ref"/>.
@@ -33,9 +32,9 @@
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IrredundantGeneratingSet">
+<#GAPDoc Label="IrredundantGeneratingSubset">
   <ManSection>
-    <Oper Name="IrredundantGeneratingSet" Arg="coll"/>
+    <Oper Name="IrredundantGeneratingSubset" Arg="coll"/>
     <Description>
       returns a subset <Math>U</Math> of <A>coll</A> if <A>coll</A> is a 
       collection of
@@ -309,7 +308,7 @@ true</Example>
 
 <#GAPDoc Label="IsomorphismTransformationMonoid">
   <ManSection>
-    <Ope Name="IsomorphismTransformationMonoid" Arg="S"/>
+    <Oper Name="IsomorphismTransformationMonoid" Arg="S"/>
     <Description>
       returns an isomorphism from the transformation semigroup <A>S</A>
       satisfying <Ref Prop="IsMonoidAsSemigroup"/> to a transformation monoid. 
@@ -324,11 +323,10 @@ true</Example>
 
 <#GAPDoc Label="IsomorphismPermGroup">
   <ManSection>
-    <Ope Name="IsomorphismPermGroup" Arg="S"/>
+    <Oper Name="IsomorphismPermGroup" Arg="S"/>
     <Description>
       returns an isomorphism from the transformation semigroup <A>S</A>
       satisfying <Ref Prop="IsGroupAsSemigroup"/> to a permutation group. 
-      <P/>
 
       <Example></Example>
     </Description>
@@ -395,9 +393,7 @@ true</Example>
 
       See also <Ref Prop="IsRegularDClass" BookName="ref"/>,
       <Ref Func="IsRegularDClass" Label="CitrusIsRegularDClass"/>,   
-      <Ref Func="IsRegularTransformation" BookName="ref"/>, and
-      <Ref Func="IsRegularTransformation" 
-       Label="CitrusIsRegularTransformation"/>.
+      and <Ref Func="IsRegularTransformation"/>.
       
       <Example>
 gap> IsRegularSemigroup(FullTransformationSemigroup(5));
@@ -537,6 +533,7 @@ false</Example>
 <#GAPDoc Label="MinimalIdeal">
   <ManSection>
     <Prop Name="MinimalIdeal" Arg="S"/>
+    <Description>
     returns the minimal ideal of the transformation semigroup <A>S</A>. <P/>
 
     The minimal ideal of semigroup is the least ideal with respect to

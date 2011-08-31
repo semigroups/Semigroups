@@ -237,7 +237,7 @@ gap> </Log>
     <#Include Label="CanonicalTransSameKernel">
     <#Include Label="IndexPeriodOfTransformation">
     <#Include Label="InversesOfTransformation">
-    <#Include Lable="IsInjectiveTransOnList">
+    <#Include Label="IsInjectiveTransOnList">
     <#Include Label="IsRegularTransformation">
     <#Include Label="SmallestIdempotentPower">
   </Section>
@@ -625,7 +625,7 @@ gap> </Log>
     <#Include Label="IsZeroSemigroup">
   </Section>
 
-  <Section><Heading>Changing Representation</Headin>
+  <Section><Heading>Changing Representation</Heading>
     <#Include Label="IsomorphismTransformationMonoid">
     <#Include Label="IsomorphismPermGroup">
   </Section>
