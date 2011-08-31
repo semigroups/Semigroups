@@ -180,6 +180,23 @@ true </Example>
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IsInjectiveTransOnList">
+  <ManSection>
+  <Oper Name="IsInjectiveTransOnList" Arg="obj, list"/>
+    <Description>
+      returns <K>true</K> if <A>obj</A> is injective on the list of positive
+      integers <A>list</A> and <K>false</K> if it is not, where <A>obj</A> is
+      either a transformation or the
+      image list of a transformation. If <A>list</A> is not duplicate free,
+      then <K>false</K> is returned. <P/>
+
+      See also <Ref Attr="ImageListOfTransformation" BookName="ref"/>. 
+      <Example></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+      
+
 <#GAPDoc Label="IsRegularTransformation">
   <ManSection>
   <Oper Name="IsRegularTransformation" Arg="S, f"/>
