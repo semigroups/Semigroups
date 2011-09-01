@@ -43,12 +43,12 @@
     transformation semigroups. <Package>Citrus</Package> 0.1 is an updated 
     version of the <Package>Monoid</Package>
     package for &GAP; 3 and 4; see
-    <P/><URL>schmidt.nuigalway.ie/monoid/index.html</URL><P/>
+    <P/><URL>http://schmidt.nuigalway.ie/monoid/index.html</URL><P/>
     <Alt Only="LaTeX">\noindent</Alt>
     for more information about the original <Package>Monoid</Package> package 
     for &GAP; 3 by Goetz
     Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc, or
-    <P/><URL>www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html
+    <P/><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html
     </URL><P/>
     <Alt Only="LaTeX">\noindent</Alt> for more information about 
     <Package>Monoid</Package> 3.1.4 for &GAP; 4.
@@ -67,7 +67,7 @@
     functions from <Package>Monoid</Package> 3.1.4 used to compute
     automorphism groups of transformation semigroups. See<P/>
     <URL>
-      www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html
+      http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html
      </URL><P/>
 
     <Alt Only="LaTeX">\noindent</Alt> <Package>Citrus</Package> 0.1 contains 
@@ -85,11 +85,11 @@
     <Alt Only="LaTeX">\noindent</Alt> The <Package>Citrus</Package> package is 
     written in &GAP; code only but requires the <Package>Orb</Package> 
     package.
-    <Package>Orb</Package> is used to provide efficient methods for computing 
-    orbits in transformation semigroups that underpin most of the features of 
-    <Package>Citrus</Package>. See:<P/>
+    The <Package>Orb</Package> package is used to efficiently compute
+    orbits in transformation semigroups and such methods underpin most of the
+    features of <Package>Citrus</Package>. See:<P/>
     <URL>
-    www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
+    http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
     </URL><P/>
     <Alt Only="LaTeX">\noindent</Alt> or the main &GAP; webpages for more 
     information.
@@ -109,8 +109,8 @@
     how to install it can be obtained from the main &GAP; webpage
    <P/> 
     <URL>
-      www.gap-system.org
-    </URL>.<P/>
+      http://www.gap-system.org
+    </URL><P/>
 
     <Alt Only="LaTeX">\noindent</Alt> The following is a summary of the steps 
     that should lead to a successful
@@ -121,15 +121,16 @@
       <Item> download and install the <Package>Orb</Package> package version 
       3.7 or higher. For more details go to:
       <P/><URL>
-   www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
+   http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
       </URL><P/>
       <Alt Only="LaTeX">\noindent</Alt> Note that both <Package>Orb</Package>
       and <Package>Citrus</Package> are faster if <Package>Orb</Package>
       is compiled. 
       </Item>
     
-      <Item> download the package archive <C>citrus0r1.tar.gz</C> or 
-      <C>citrus0r1.tar.bz2</C> from <URL>JDM</URL></Item>
+      <Item> download the package archive <C>citrus0r1.tar.gz</C> from
+      <P/><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html
+      </URL></Item>
     
       <Item> unzip and untar the file, this should create a directory called
       <C>citrus</C>.</Item>
@@ -137,10 +138,10 @@
       <Item> 
       locate the <C>pkg</C> directory of your &GAP; directory, which contains
       several other directories such as <C>lib</C>, <C>doc</C> and so on. Move 
-      the directory <C>citrus</C> into the <C>pkg</C> directory
+      the directory <C>citrus</C> into the <C>pkg</C> directory.
       </Item>
     
-      <Item> start &GAP; in the usual way</Item>
+      <Item> start &GAP; in the usual way.</Item>
     
       <Item> type <C>LoadPackage("citrus");</C></Item>
     
@@ -175,12 +176,12 @@ true
 gap> </Log>
 
     Presuming that the above steps can be completed successfully you will be 
-    running the <Package>citrus</Package> package!<P/>
+    running the <Package>Citrus</Package> package!<P/>
 
     If you want to check that the package is working correctly, please see
     Section <Ref Sect="testing"/>.<P/>
 
-    <B>Please note:</B> before you can used <Package>citrus</Package> you must
+    <B>Please note:</B> before you can used <Package>Citrus</Package> you must
     install <Package>orb</Package> version 3.7 or higher as described above.
 
   </Section>
@@ -231,7 +232,8 @@ gap> </Log>
     <Package>Citrus</Package> for finding various properties of 
     transformations. <P/>
 
-    <Package>Citrus</Package> also contains a special method for
+    In addition to those functions described below, <Package>Citrus</Package> 
+    also contains a special method for
    <Ref Attr="RankOfTransformation" BookName="ref"/>. 
 
     <#Include Label="CanonicalTransSameKernel">
@@ -255,13 +257,13 @@ gap> </Log>
     transformations or permutations (and at least one of <A>f</A> and <A>g</A>
     is a transformation).<P/>
 
-     <C>f^g</C> returns <C><A>g</A>^-1*<A>f</A>*<A>g</A></C> when <A>f</A> is a
-     transformation and <A>g</A> is a permutation 
+     <C><A>f</A>^<A>g</A></C> returns <C><A>g</A>^-1*<A>f</A>*<A>g</A></C> when 
+     <A>f</A> is a transformation and <A>g</A> is a permutation 
      <Ref Oper="\^" BookName="ref"/>.
 
   </Section>
 
-  <Section><Heading>Changing representation</Heading>
+  <Section><Heading>Changing Representation</Heading>
     It is possible to change the representation of certain transformations
     using the functions described in this section.  
     <#Include Label="AsPermOfKerImg">
@@ -276,20 +278,19 @@ gap> </Log>
     <Math>\Omega=\{1,2,\ldots, n\} </Math>. The first is the action of the 
     <P/> JDM...-->
 
-    The following are used by <Package>Citrus</Package> in 
-    the computation of Green's 
+    The following actions and orbits of transformation semigroups are used by 
+    <Package>Citrus</Package> in the computation of Green's 
     relations and to test if an arbitrary transformation semigroup has a 
     particular property;  see Chapter <Ref Chap="green"/> and Chapter 
-    <Ref Chap="properties"/>.<P/>
-
-    In addition to the actions define in the reference manual
-    <Ref Sect="Basic Actions" BookName="ref"/> the following two actions are 
-    available in <Package>Citrus</Package>.
+    <Ref Chap="properties"/>; see 
+    <Ref Sect="Basic Actions" BookName="ref"/> and
+    <Ref Func="Orb" BookName="orb"/>. 
+    <P/>
     
     <#Include Label="GradedImagesOfTransSemigroup">
+    <#Include Label="ImagesOfTransSemigroup">
     <#Include Label="OnKernelsAntiAction">
     <#Include Label="StrongOrbitsInForwardOrbit">
-    <#Include Label="ImagesOfTransSemigroup">
   </Section>	
 
 </Chapter>
@@ -310,34 +311,30 @@ gap> </Log>
     Another reference is <Cite Key="lallement"/>.<P/>
 
     Green's relations can be calculated when  <Package>Citrus</Package>
-    is loaded using the same commands that you would used when 
+    is loaded using the same commands that you would use when 
     <Package>Citrus</Package> is not loaded; see <Ref Chap="Semigroups" 
     BookName="ref"/>. For example, in &GAP; with the <Package>Citrus</Package>  
     package loaded:
     
     <Log>
-      gap> s:=Semigroup(Transformation([2,1,1,2,1]), 
-      > Transformation([3,4,3,4,4]),
-      > Transformation([3,4,3,4,3]),
-      > Transformation([4,3,3,4,4]));;
-      gap> GreensRClasses(s);
-      [ {Transformation( [ 2, 1, 1, 2, 1 ] )}, 
-        {Transformation( [ 1, 2, 1, 2, 2 ] )}, 
-        {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
-        {Transformation( [ 2, 1, 1, 2, 2 ] )} ]</Log>
-    
+gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ), 
+> Transformation( [ 3, 4, 3, 4, 4 ] ),
+> Transformation( [ 3, 4, 3, 4, 3 ] ),
+> Transformation( [ 4, 3, 3, 4, 4 ] ));;
+gap> GreensRClasses(S);
+[ {Transformation( [ 2, 1, 1, 2, 1 ] )}, 
+  {Transformation( [ 1, 2, 1, 2, 2 ] )}, 
+  {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
+  {Transformation( [ 2, 1, 1, 2, 2 ] )} ]</Log>
+
     Without the <Package>Citrus</Package> package loaded:
     
     <Log>
-      gap> s:=Semigroup(Transformation([2,1,1,2,1]), 
-      > Transformation([3,4,3,4,4]),
-      > Transformation([3,4,3,4,3]),
-      > Transformation([4,3,3,4,4]));;
-      gap> GreensRClasses(s);
-      [ {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
-        {Transformation( [ 1, 2, 1, 2, 2 ] )},
-        {Transformation( [ 1, 2, 2, 1, 1 ] )}, 
-        {Transformation( [ 1, 2, 2, 1, 2 ] )} ]</Log>
+gap> GreensRClasses(S);
+[ {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
+  {Transformation( [ 1, 2, 1, 2, 2 ] )},
+  {Transformation( [ 1, 2, 2, 1, 1 ] )}, 
+  {Transformation( [ 1, 2, 2, 1, 2 ] )} ]</Log>
 		
     The only noticable differences are the representatives of the classes and 
     the order the classes appear in the list. These differences are caused by 
@@ -394,41 +391,45 @@ gap> </Log>
     of a transformation semigroup 
     (specifically a  Green's class satisfying <Ref
     Prop="IsGreensClassOfTransSemigp"/>) or a transformation semigroup itself
-    (where appropriate): 
-    <Ref Oper="\&lt;"/>, <C>=</C> and <C>in</C> (see  
-    <Ref Sect="Comparisons" BookName="ref"/>),
-    <Ref Oper="AsSSortedList" BookName="ref"/>, 
-    <Ref Oper="Enumerator" BookName="ref"/>, 
-    <Ref Attr="GreensHClasses" BookName="ref"/> and 
-    <Ref Attr="GreensHClasses" Label="CitrusHClasses"/>,
-    <Ref Attr="GreensHClassOfElement" BookName="ref"/>,
-    <Ref Attr="GreensLClasses" BookName="ref"/> and 
-    <Ref Attr="GreensLClasses" Label="CitrusLClasses"/>,
-    <Ref Attr="GreensLClassOfElement" BookName="ref"/>,
-    <Ref Attr="GreensRClasses" BookName="ref"/> and 
-    <Ref Attr="GreensRClasses" Label="CitrusRClasses"/>,
-    <Ref Attr="GreensRClassOfElement" BookName="ref"/>,
-    <Ref Attr="GreensDClasses" BookName="ref"/> and
-    <Ref Attr="GreensDClasses" Label="CitrusDClasses"/>,
-    <Ref Attr="GreensDClassOfElement" BookName="ref"/>,
-    <Ref Attr="Idempotents" BookName="ref"/> and 
-    <Ref Attr="Idempotents" Label="CitrusIdempotents"/>, 
-    and <Ref Oper="Size" BookName="ref"/>. 
-    <P/>
+    (where appropriate):
+    <List>
+    <Item><Ref Oper="\&lt;"/>, <C>=</C> and <C>in</C> (see  
+    <Ref Sect="Comparisons" BookName="ref"/>),</Item>
+    <Item><Ref Oper="AsSSortedList" BookName="ref"/>, </Item>
+    <Item><Ref Oper="Enumerator" BookName="ref"/>, </Item>
+    <Item><Ref Attr="GreensHClasses" BookName="ref"/> and 
+      <Ref Attr="GreensHClasses" Label="CitrusHClasses"/>,</Item>
+    <Item><Ref Attr="GreensHClassOfElement" BookName="ref"/>,</Item>
+    <Item><Ref Attr="GreensLClasses" BookName="ref"/> and 
+      <Ref Attr="GreensLClasses" Label="CitrusLClasses"/>,</Item>
+    <Item><Ref Attr="GreensLClassOfElement" BookName="ref"/>,</Item>
+    <Item><Ref Attr="GreensRClasses" BookName="ref"/> and 
+      <Ref Attr="GreensRClasses" Label="CitrusRClasses"/>,</Item>
+    <Item><Ref Attr="GreensRClassOfElement" BookName="ref"/>,</Item>
+    <Item><Ref Attr="GreensDClasses" BookName="ref"/> and
+      <Ref Attr="GreensDClasses" Label="CitrusDClasses"/>,</Item>
+    <Item><Ref Attr="GreensDClassOfElement" BookName="ref"/>,</Item>
+    <Item><Ref Attr="Idempotents" BookName="ref"/> and 
+      <Ref Attr="Idempotents" Label="CitrusIdempotents"/>,</Item>
+    <Item><Ref Oper="Size" BookName="ref"/>. </Item>
+    </List>
+<P/>
 
     In addition to those functions mentioned above that can be
-    applied to all Green's classes, <Package>Citrus</Package> contains 
+    applied to arbitrary Green's classes, <Package>Citrus</Package> contains 
     special methods for the following
     &GAP; functions:
-    <Ref Prop="IsRegularDClass" BookName="ref"/> and 
-    <Ref Prop="IsRegularDClass" Label="CitrusIsRegularDClass"/>,
-    <Ref Attr="GroupHClassOfGreensDClass" BookName="ref"/> and 
-    <Ref Attr="GroupHClass"/>, 
-    <Ref Prop="IsGroupHClass" BookName="ref"/>,
-    <Ref Oper="IsomorphismPermGroup" BookName="ref"/> 
-    (for a group <Math>\mathcal{H}</Math>-class), and
-    <Ref Oper="StructureDescription" BookName="ref"/> 
-    (for a group <Math>\mathcal{H}</Math>-class).
+    <List>
+    <Item><Ref Prop="IsRegularDClass" BookName="ref"/> and 
+    <Ref Prop="IsRegularDClass" Label="CitrusIsRegularDClass"/>,</Item>
+    <Item><Ref Attr="GroupHClassOfGreensDClass" BookName="ref"/> and 
+    <Ref Attr="GroupHClass"/>,</Item> 
+    <Item><Ref Prop="IsGroupHClass" BookName="ref"/>,</Item>
+    <Item><Ref Oper="IsomorphismPermGroup" BookName="ref"/> 
+    (for a group <Math>\mathcal{H}</Math>-class),</Item>
+    <Item><Ref Oper="StructureDescription" BookName="ref"/> 
+    (for a group <Math>\mathcal{H}</Math>-class).</Item>
+    </List>
     <P/>
     See Section <Ref Sect="convenience"/> for shorter versions of some of the
     command mentioned in this section. 
@@ -662,7 +663,7 @@ gap> </Log>
   </Section>
 </Chapter>
 
-<Chapter Label="glossary"><Heading>Glossary</Heading>
+<!--<Chapter Label="glossary"><Heading>Glossary</Heading>
 
   This chapter contains a glossary of mathematical terms used throughout this
   manual.<P/>
@@ -758,7 +759,7 @@ gap> </Log>
     $$\textrm{Kers}(S)=\{\:\textrm{ker}(f)\::\: f\in S\:\}.$$
   </Alt>
 
-</Chapter>
+</Chapter>-->
 
 </Body>
 

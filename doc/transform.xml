@@ -32,13 +32,12 @@ gap> AsPermOfKerImg(f);
   <ManSection>
     <Func Name="AsPermutation" Arg="f [, A]"/>
     <Description>
-      returns <Math>f|_{\text{im}(f)}</Math> if <A>f</A> is a permutation of
-      its image; see <Ref Attr="ImageSetOfTransformation" BookName="ref"/>. <P/>
+      returns the restriction of the transformation <A>f</A> to the set
+      <A>A</A> (if <A>A</A> is not specified then the image set of <A>f</A> is
+      used by default) as a <Ref Func="Permutation" BookName="ref"/> if
+      <A>f</A> acts as a permutation on <A>A</A>; see 
+      <Ref Attr="ImageSetOfTransformation" BookName="ref"/>. <P/>
       
-      If the optional second argument <A>A</A> is a subset of <C>[1 ..
-      DegreeOfTransformation(<A>f</A>)]</C>, then
-      <C>AsPermutation</C> returns <Math>f|_{A}</Math> if this is a permutation.
-
     <Example>
 gap> f:=Transformation( [ 5, 8, 3, 5, 8, 6, 2, 2, 7, 8 ] );;
 gap> AsPermutation(f);
@@ -131,7 +130,7 @@ Transformation( [ 6, 2, 3, 6, 5, 6, 7, 2, 5, 10 ] )</Example>
   <ManSection>
     <Attr Name="IndexPeriodOfTransformation" Arg="f"/>
     <Description>
-      returns the minimum numbers <C>m, r</C> such that
+      returns the least positive integers <C>m, r</C> such that
       <C><A>f</A>^(m+r)=<A>f</A>^m</C>
       known as the <E>index</E> and <E>period</E> of the transformation. 
       <Example>
@@ -149,12 +148,13 @@ true </Example>
     <Oper Name="InversesOfTransformation" Arg="S, f"/>
     <Oper Name="InversesOfTransformationNC" Arg="S, f"/>
     <Description>
-      returns a list of the inverses of the transformation <A>f</A> in the 
+      <C>InversesOfTransformation</C> returns a list of the inverses of the 
+      transformation <A>f</A> in the 
       transformation semigroup <A>S</A> after first checking that <A>f</A> is
       an element of <A>S</A>. <P/>
      
      A transformation
-      <C>g</C><Math>\in</Math><A>S</A> is an <E>inverse</E> of <A>f</A> if 
+      <C>g</C> in <A>S</A> is an <E>inverse</E> of <A>f</A> if 
       <C><A>f</A>*g*<A>f</A>=<A>f</A></C> and <C>g*<A>f</A>*g=g</C>.<P/>
       
       The function 
@@ -190,8 +190,18 @@ true </Example>
       image list of a transformation. If <A>list</A> is not duplicate free,
       then <K>false</K> is returned. <P/>
 
-      See also <Ref Attr="ImageListOfTransformation" BookName="ref"/>. 
-      <Example></Example>
+      See also <Ref Attr="ImageListOfTransformation" BookName="ref"/> and 
+      <Ref Oper="Transformation" BookName="ref"/>.
+      <Example>
+gap> f:=Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] );;
+gap> IsInjectiveTransOnList(f, [1,5]);
+true
+gap> IsInjectiveTransOnList(f, [5,1]);
+true
+gap> IsInjectiveTransOnList(f, [5,1,5,1,1,]);
+false
+gap> IsInjectiveTransOnList([1,2,3,4,5], [5,1,2,3]);   
+true</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -202,8 +212,8 @@ true </Example>
   <Oper Name="IsRegularTransformation" Arg="S, f"/>
     <Description>
       returns <K>true</K> if <A>f</A> is a regular element of the 
-      transformation semigroup <A>S</A>, then <K>true</K> is returned. 
-      Otherwise <K>false</K> is returned.<P/> 
+      transformation semigroup <A>S</A>
+      otherwise <K>false</K> is returned.<P/> 
 
       A transformation <A>f</A> is regular in a transformation semigroup 
       <A>S</A> if it lies inside a regular <Math>\mathcal{D}</Math>-class; see
@@ -211,7 +221,8 @@ true </Example>
       <Ref Attr="IsRegularDClass" Label="CitrusIsRegularDClass"/>. 
       Or equivalently if the 
       orbit of the image of <A>f</A> containing a transversal of the kernel of 
-      <A>f</A>.
+      <A>f</A>; see <Ref Oper="Transformation" BookName="ref"/> and <Ref
+      Attr="ImageSetOfTransformation" BookName="ref"/>.
       <Example>
 gap> S:=Monoid(Transformation([2,2,4,4,5,6]),Transformation([5,3,4,4,6,6]));;
 gap> f:=Generators(S)[1];;
@@ -220,7 +231,7 @@ true
 gap> img:=ImageSetOfTransformation(f);
 [ 2, 4, 5, 6 ]
 gap> o:=Orb(S, img, OnSets);; Enumerate(o);
-&gt;closed orbit, 3 points>
+&lt;closed orbit, 3 points>
 gap> ForAny(o, x-> IsInjectiveTransOnList(f, x));
 true
 gap> IsRegularTransformation(S, Generators(S)[2]);
@@ -285,10 +296,10 @@ if <A>arg</A> is a positive integer, then a random transformation of degree
 <A>arg</A> is returned; see <Ref Func="RandomTransformation"
 BookName="ref"/>.<P/>
 
-If <C><A>arg</A>[1]</C> is a list of positive integers and <C><A>arg</A>[2]</C>
+If <A>arg</A><C>[1]</C> is a list of positive integers and <A>arg</A><C>[2]</C>
 is a positive integer, then
 <C>RandomTransformation</C> returns a random transformation with degree
-<C><A>arg</A>[2]</C> and image contained in <C><A>arg</A>[1]</C>. <P/>
+<A>arg</A><C>[2]</C> and image contained in <A>arg</A><C>[1]</C>. <P/>
 
 The no check version <C>RandomTransformationNC</C> does not check that the
 arguments can define a transformation.  
@@ -305,8 +316,8 @@ Transformation( [ 3, 1, 2, 2, 1, 2 ] )</Example>
 <ManSection> 
   <Attr Name="SmallestIdempotentPower" Arg="f"/>
   <Description>
-      returns the least natural number <C>n</C> such that the transformation 
-     <C>f^n</C> is an idempotent.
+      returns the least positive integer <C>n</C> such that the transformation 
+     <C><A>f</A>^n</C> is an idempotent.
       <Example>
 gap> f:=Transformation( [ 6, 7, 4, 1, 7, 4, 6, 1, 3, 4 ] );;
 gap> SmallestIdempotentPower(f);

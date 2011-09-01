@@ -31,18 +31,18 @@
        <Ref Sect="Green's Relations" BookName="ref"/>. See also 
        <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>.
       <Example>
-gap> s:=FullTransformationSemigroup(4);;
-gap> x:=GreensRClassOfElement(s, Transformation( [ 2, 1, 3, 1 ] ));
+gap> S:=FullTransformationSemigroup(4);;
+gap> A:=GreensRClassOfElement(S, Transformation( [ 2, 1, 3, 1 ] ));
 {Transformation( [ 2, 1, 3, 1 ] )}
-gap> y:=GreensRClassOfElement(s, Transformation( [ 1, 2, 3, 4 ] ));
+gap> B:=GreensRClassOfElement(S, Transformation( [ 1, 2, 3, 4 ] ));
 {Transformation( [ 1, 2, 3, 4 ] )}
-gap> x&lt;y;
+gap> A&lt;B;
 false
-gap> y&lt;x;
+gap> B&lt;A;
 true
-gap> IsGreensLessThanOrEqual(x,y);
+gap> IsGreensLessThanOrEqual(A,B);
 true
-gap> IsGreensLessThanOrEqual(y,x);
+gap> IsGreensLessThanOrEqual(A,B);
 false</Example>
     </Description>
   </ManSection>
@@ -186,7 +186,7 @@ gap> GreensHClasses(L);
       is not known to &GAP; if <A>f</A> is an element of <A>S</A>, then 
       no further attempt to verify if <A>f</A> is in <A>S</A> is made. <P/>
 
-      It can be quicker to compute to compute the class of an element using 
+      It can be quicker to compute the class of an element using 
       <C>GreensRClassOfElementNC</C>, say, than using 
       <C>GreensRClassOfElement</C>
       if it is known <E>a priori</E> that <A>f</A> 
@@ -237,7 +237,7 @@ gap> Size(L);
       Note that if the Green's classes themselves are not 
       required, then 
       <C>GreensXClassReps</C> will return an answer more quickly 
-      than the above, since the <Math>\mathcal{X}</Math>-class 
+      than the above, since the Green's class 
       objects are not created.<P/>
 
       See also
@@ -300,7 +300,9 @@ gap> GreensHClassReps(L);
       regular, otherwise <K>fail</K> is returned. <P/>
 
       <C>GroupHClass</C> is a synonym for 
-      <Ref Attr="GroupHClassOfGreensDClass" BookName="ref"/>. See also 
+      <Ref Attr="GroupHClassOfGreensDClass" BookName="ref"/>. <P/>
+      
+      See also 
       <Ref Prop="IsGroupHClass" BookName="ref"/>, 
       <Ref Prop="IsRegularDClass" BookName="ref"/>, 
       <Ref Prop="IsRegularDClass" Label="CitrusIsRegularDClass"/>, 
@@ -353,9 +355,9 @@ fail </Example>
   is called the computation must be repeated.<P/> 
 
       This functions produce essentially the same output as the &GAP; library
-      functions with the same names; see 
+      function with the same name; see 
       <Ref Oper="Idempotents" BookName="ref"/>. The main difference in usage
-      is that these functions can be applied to a wider class of objects as
+      is that this function can be applied to a wider class of objects as
       described above. <P/>
   
   See also <Ref Prop="IsRegularDClass" BookName="ref"/>, 
@@ -495,7 +497,8 @@ true
   <Func Name="IteratorOfRClassReps" Arg="S"/>
   <Description>
   returns an iterator of the representatives of the Green's classes contained
-  in the transformation semigroup <A>S</A>. 
+  in the transformation semigroup <A>S</A>. <P/>
+
   See <Ref Sect="Iterators" BookName="ref"/> for more
   information on iterators.<P/>
 
@@ -503,7 +506,7 @@ true
   <Ref Attr="GreensRClasses" Label="CitrusRClasses"/>, 
   and <Ref Oper="IteratorOfGreensRClasses"/>.<P/>
   
-  In the display of an <C>IteratorOfXClassReps</C> the total number of elements
+  In the display of an <C>IteratorOfRClassReps</C> the total number of elements
   in the orbit of the semigroup acting on itself on the left is given (every
   <Math>\mathcal{R}</Math>-class representative occurs in this orbit), the
   number of elements of the semigroup that have so far been computed is given,
@@ -539,19 +542,21 @@ gap> iter;
   <Func Name="IteratorOfGreensRClasses" Arg="S"/>
   <Description>
   returns an iterator of the Green's classes in the transformation
-  semigroup <A>S</A>. 
+  semigroup <A>S</A>.<P/>
+
   See <Ref Sect="Iterators" BookName="ref"/> for more information on
   iterators.<P/>
 
   This function is useful if you are, for example, looking for an
   <Math>\mathcal{R}</Math>-class of
   semigroup with a particular property but do not necessarily want to compute
-  all of the <Math>\mathcal{R}</Math>-classes.<P/>
+  all of the <Math>\mathcal{R}</Math>-classes in a given semigroup.<P/>
 
   See also <Ref Attr="GreensRClasses" Label="CitrusRClasses"/>, 
   <Ref Oper="GreensRClasses" BookName="ref"/>, <Ref Attr="NrGreensRClasses"/>,
   and 
   <Ref Oper="IteratorOfRClassReps"/>.<P/>
+
 
   The semigroup in the example below has 25147892 elements but it only takes 
   a fraction of a second to find a non-trivial <Math>\mathcal{R}</Math>-class.
@@ -763,7 +768,7 @@ GreensDClasses(S)[1]);</Example>
   
   If <A>class</A> is an <Math>\mathcal{R}</Math>-class of a transformation 
   semigroup <C>S</C> with representative <C>f</C>, then
-  <C>SchutzenbergerGroup(class)</C> is the permutation group 
+  <C>SchutzenbergerGroup(<A>class</A>)</C> is the permutation group 
   <Display>
     \{\:g|_{\textrm{im}(f)}\::\:\textrm{im}(f)^g=\textrm{im}(f)\:\}.
   </Display><P/>
@@ -771,23 +776,23 @@ GreensDClasses(S)[1]);</Example>
   If <A>class</A> is an <Math>\mathcal{L}</Math>-class of a transformation
   semigroup <C>S</C> with
   representative <C>f</C>, then
-  <C>SchutzenbergerGroup(class)</C> is the permutation group
+  <C>SchutzenbergerGroup(<A>class</A>)</C> is the permutation group
   <Display>
     \{\:g|_{\textrm{ker}(f)}\::\:\ker(f)^g=\ker(f)\:\}.
   </Display><P/>
 
   If <A>class</A> is an <Math>\mathcal{H}</Math>-class of a transformation
   semigroup <C>S</C> with
-  representative <C>f</C>, then <C>SchutzenbergerGroup(class)</C> is the 
+  representative <C>f</C>, then <C>SchutzenbergerGroup(<A>class</A>)</C> is the 
   intersection of <C>SchutzenbergerGroup(RClass(S, f))</C> and
   <C>SchutzenbergerGroup(LClass(S, f))</C>. <P/>
   
   If <A>class</A> is a <Math>\mathcal{D}</Math>-class of a transformation 
   semigroup <C>S</C> with
-  representative <C>f</C>, then <C>SchutzenbergerGroup(class)</C> is just 
-  <C>SchutzenbergerGroup(HClass(S, f))</C>. <P/>
+  representative <C>f</C>, then <C>SchutzenbergerGroup(<A>class</A>)</C> is 
+  just <C>SchutzenbergerGroup(HClass(S, f))</C>. <P/>
        
-  For more details see Chapter <Ref Chap="glossary"/>, <Cite Key="pfeiffer1"/> 
+  For more details see <Cite Key="pfeiffer1"/> 
   or <Cite Key="pfeiffer2"/>.<P/> 
 
   <Example>
