@@ -36,19 +36,21 @@
 <Body>
   <Chapter Label="citrus">
   <Heading>The <Package>Citrus</Package> package</Heading>
-  <Index><Package>Citrus</Package></Index>	
+  <Index><Package>Citrus</Package> - Overview</Index>	
   <Section><Heading>Overview and Introduction</Heading>
     This is the manual for the <Package>Citrus</Package> package version 0.1 
     for computing with
     transformation semigroups. <Package>Citrus</Package> 0.1 is an updated 
     version of the <Package>Monoid</Package>
-    package for &GAP; 3 and 4; see
-    <P/><URL>http://schmidt.nuigalway.ie/monoid/index.html</URL><P/>
+    package for &GAP; 3 and 4; see<Alt Only="LaTeX">\vspace{\baselineskip}</Alt>
+    <P/><Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt>
+    <URL>http://schmidt.nuigalway.ie/monoid/index.html</URL><P/>
     <Alt Only="LaTeX">\noindent</Alt>
     for more information about the original <Package>Monoid</Package> package 
     for &GAP; 3 by Goetz
-    Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc, or
-    <P/><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html
+    Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc, or<Alt
+    Only="LaTeX">\vspace{\baselineskip}</Alt>
+    <P/><Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html
     </URL><P/>
     <Alt Only="LaTeX">\noindent</Alt> for more information about 
     <Package>Monoid</Package> 3.1.4 for &GAP; 4.
@@ -65,10 +67,9 @@
     automorphism groups of semigroups. The <Package>Comatose</Package> package 
     retains those
     functions from <Package>Monoid</Package> 3.1.4 used to compute
-    automorphism groups of transformation semigroups. See<P/>
-    <URL>
-      http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html
-     </URL><P/>
+    automorphism groups of transformation semigroups. See<Alt
+    Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
+    <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html</URL><P/>
 
     <Alt Only="LaTeX">\noindent</Alt> <Package>Citrus</Package> 0.1 contains 
     more efficient methods than those 
@@ -87,10 +88,9 @@
     package.
     The <Package>Orb</Package> package is used to efficiently compute
     orbits in transformation semigroups and such methods underpin most of the
-    features of <Package>Citrus</Package>. See:<P/>
-    <URL>
-    http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
-    </URL><P/>
+    features of <Package>Citrus</Package>. See<Alt
+    Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
+    <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html</URL><P/>
     <Alt Only="LaTeX">\noindent</Alt> or the main &GAP; webpages for more 
     information.
   
@@ -107,10 +107,9 @@
     It is assumed that you have a working copy of &GAP; with version number 
     4.5 or higher. The most up-to-date version of &GAP; and instructions on
     how to install it can be obtained from the main &GAP; webpage
-   <P/> 
-    <URL>
-      http://www.gap-system.org
-    </URL><P/>
+   <Alt    Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
+       <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt>
+    <URL>http://www.gap-system.org</URL><P/>
 
     <Alt Only="LaTeX">\noindent</Alt> The following is a summary of the steps 
     that should lead to a successful
@@ -120,8 +119,8 @@
     
       <Item> download and install the <Package>Orb</Package> package version 
       3.7 or higher. For more details go to:
-      <P/><URL>
-   http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
+      <Alt    Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
+          <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
       </URL><P/>
       <Alt Only="LaTeX">\noindent</Alt> Note that both <Package>Orb</Package>
       and <Package>Citrus</Package> are faster if <Package>Orb</Package>
@@ -129,7 +128,8 @@
       </Item>
     
       <Item> download the package archive <C>citrus0r1.tar.gz</C> from
-      <P/><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html
+      <Alt    Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
+          <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html
       </URL></Item>
     
       <Item> unzip and untar the file, this should create a directory called
@@ -182,7 +182,7 @@ gap></Log>
     Section <Ref Sect="testing"/>.<P/>
 
     <B>Please note:</B> before you can used <Package>Citrus</Package> you must
-    install <Package>orb</Package> version 3.7 or higher as described above.
+    install <Package>Orb</Package> version 3.7 or higher as described above.
 
   </Section>
 
@@ -248,7 +248,7 @@ gap></Log>
    <C><A>f</A> ^ <A>g</A></C>
     <P/>
     <Index Key="*"><C>*</C></Index>
-    <C><A>f</A> * <A>g</A></C>
+    <Alt Only="LaTex">\noindent</Alt><C><A>f</A> * <A>g</A></C>
     <P/>
     
     <Package>Citrus</Package> contains more efficient methods than the &GAP;
@@ -333,7 +333,7 @@ gap> GreensRClasses(S);
     the order the classes appear in the list. These differences are caused by 
     the differences in the methods for 
     <Ref Attr="GreensRClasses" BookName="ref"/> in the &GAP; library and 
-    <Ref Attr="GreensRClasses" Label="CitrusRClasses"/> in 
+    <Ref Attr="GreensRClasses"/> in 
     <Package>Citrus</Package>.<P/>
 		
     For more details about Green's relations see 
@@ -358,7 +358,7 @@ gap> GreensRClasses(S);
     <Math>\mathcal{R}</Math>-classes, the number of elements and test 
     membership in a transformation 
     semigroup without computing all the elements; see, for example, 
-    <Ref Oper="GreensRClasses" Label="CitrusRClasses"/>, <Ref
+    <Ref Oper="GreensRClasses"/>, <Ref
     Attr="GreensRClassReps"/>, <Ref Func="IteratorOfRClassReps"/>, 
     <Ref Func="IteratorOfGreensRClasses"/>, or <Ref Func="NrGreensRClasses"/>.
     This may be useful if you 
@@ -391,19 +391,19 @@ gap> GreensRClasses(S);
     <Item><Ref Oper="AsSSortedList" BookName="ref"/>, </Item>
     <Item><Ref Oper="Enumerator" BookName="ref"/>, </Item>
     <Item><Ref Attr="GreensHClasses" BookName="ref"/> and 
-      <Ref Attr="GreensHClasses" Label="CitrusHClasses"/>,</Item>
+      <Ref Attr="GreensHClasses"/>,</Item>
     <Item><Ref Attr="GreensHClassOfElement" BookName="ref"/>,</Item>
     <Item><Ref Attr="GreensLClasses" BookName="ref"/> and 
-      <Ref Attr="GreensLClasses" Label="CitrusLClasses"/>,</Item>
+      <Ref Attr="GreensLClasses"/>,</Item>
     <Item><Ref Attr="GreensLClassOfElement" BookName="ref"/>,</Item>
     <Item><Ref Attr="GreensRClasses" BookName="ref"/> and 
-      <Ref Attr="GreensRClasses" Label="CitrusRClasses"/>,</Item>
+      <Ref Attr="GreensRClasses"/>,</Item>
     <Item><Ref Attr="GreensRClassOfElement" BookName="ref"/>,</Item>
     <Item><Ref Attr="GreensDClasses" BookName="ref"/> and
-      <Ref Attr="GreensDClasses" Label="CitrusDClasses"/>,</Item>
+      <Ref Attr="GreensDClasses"/>,</Item>
     <Item><Ref Attr="GreensDClassOfElement" BookName="ref"/>,</Item>
     <Item><Ref Attr="Idempotents" BookName="ref"/> and 
-      <Ref Attr="Idempotents" Label="Citrus pkg"/>,</Item>
+      <Ref Attr="Idempotents"/>,</Item>
     <Item><Ref Oper="Size" BookName="ref"/>. </Item>
     </List>
 <P/>
@@ -414,7 +414,7 @@ gap> GreensRClasses(S);
     &GAP; functions:
     <List>
     <Item><Ref Prop="IsRegularDClass" BookName="ref"/> and 
-    <Ref Prop="IsRegularDClass" Label="CitrusIsRegularDClass"/>,</Item>
+    <Ref Prop="IsRegularDClass"/>,</Item>
     <Item><Ref Attr="GroupHClassOfGreensDClass" BookName="ref"/> and 
     <Ref Attr="GroupHClass"/>,</Item> 
     <Item><Ref Prop="IsGroupHClass" BookName="ref"/>,</Item>

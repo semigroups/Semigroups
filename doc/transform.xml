@@ -218,7 +218,7 @@ true</Example>
       A transformation <A>f</A> is regular in a transformation semigroup 
       <A>S</A> if it lies inside a regular <Math>\mathcal{D}</Math>-class; see
       <Ref Attr="IsRegularDClass" BookName="ref"/> or 
-      <Ref Attr="IsRegularDClass" Label="CitrusIsRegularDClass"/>. 
+      <Ref Attr="IsRegularDClass"/>. 
       Or equivalently if the 
       orbit of the image of <A>f</A> containing a transversal of the kernel of 
       <A>f</A>; see <Ref Oper="Transformation" BookName="ref"/> and <Ref
@@ -244,7 +244,7 @@ true</Example>
 
 <#GAPDoc Label="Random">
   <ManSection>
-    <Oper Name="Random" Label="CitrusRandom" Arg="S"/>
+    <Oper Name="Random" Arg="S"/>
     <Description>
       returns a random element of the transformation semigroup <A>S</A>. <P/>
       
@@ -289,7 +289,7 @@ Transformation( [ 1, 2, 6, 4, 5, 6, 2, 5, 1, 6 ] )</Log>
 
 <#GAPDoc Label="RandomTransformation">
 <ManSection><Heading>RandomTransformation</Heading>
-<Oper Name="RandomTransformation" Label="CitrusRandomTransformation" Arg="arg"/>
+<Oper Name="RandomTransformation" Arg="arg"/>
 <Oper Name="RandomTransformationNC" Arg="arg"/>
 <Description>
 if <A>arg</A> is a positive integer, then a random transformation of degree
