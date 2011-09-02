@@ -113,9 +113,10 @@ end);
 
 InstallGlobalFunction(ConstantTransformation, 
 function(m,n)
-  if not m>=n then 
-    Info(InfoWarning, 1, "Usage: degree and value, degree must be at least",  
-    " value");
+  if not (m>=n and IsPosInt(m) and IsPosInt(n)) then 
+    Info(InfoWarning, 1, "Usage: <degree> and <value>, <degree> must be at",
+    " least <value>"); 
+    Info(InfoWarning, 1, "and both must be pos. ints.");
     return fail;
   fi;
   return TransformationNC(ListWithIdenticalEntries(m, n));;
