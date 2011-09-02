@@ -797,9 +797,9 @@ GreensDClasses(S)[1]);</Example>
   or <Cite Key="pfeiffer2"/>.<P/> 
 
   <Example>
-gap> S:=Semigroup([Transformation( [ 4, 4, 3, 5, 3 ] ), 
+gap> S:=Semigroup( Transformation( [ 4, 4, 3, 5, 3 ] ), 
 > Transformation( [ 5, 1, 1, 4, 1 ] ), 
-> Transformation( [ 5, 5, 4, 4, 5 ] ));;
+> Transformation( [ 5, 5, 4, 4, 5 ] ) );;
 gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
 gap> SchutzenbergerGroup(DClass(S, f));
 Group([ (4,5) ])
