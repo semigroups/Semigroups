@@ -227,7 +227,7 @@ gap> GeneratorsOfSemigroup(S);
       with <A>m</A> generators.
       <Example>
 gap&gt; S:=RandomTransformationMonoid(5,5);
-&lt;semigroup with 5 generators&gt;
+&lt;monoid with 5 generators&gt;
 gap&gt; S:=RandomTransformationSemigroup(5,5);
 &lt;semigroup with 5 generators&gt;</Example>
     </Description>

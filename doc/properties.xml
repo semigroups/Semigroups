@@ -35,9 +35,6 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
 >   Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] ) );;
 gap> Size(S);
 5304
-gap> GroupOfUnits(S);
-Group([ (1,8)(2,7)(3,4)(5,6), (1,4)(2,5)(3,8)(6,7), (1,8,5,2)(3,6,7,4), 
-  (1,6)(2,3)(4,5)(7,8) ])
 gap> StructureDescription(GroupOfUnits(S));
 "C2 x S4"</Example>
     </Description>
@@ -55,8 +52,9 @@ gap> StructureDescription(GroupOfUnits(S));
       Note that <A>coll</A> should be either a list of transformations or a
       transformation semigroup. <P/>
   
-      See also <Ref Func="Generators"/> and <Ref
-      Prop="IsTransformationCollection" BookName="ref"/>. 
+      See also <Ref Func="Generators"/>, 
+      <Ref Prop="IsTransformationCollection" BookName="ref"/>, and 
+      <Ref Oper="SmallGeneratingSet"/>.
 
       <Example>
 gap> l:=[ Transformation( [ 6, 1, 1, 6, 1, 6, 1 ] ), 
@@ -729,7 +727,7 @@ fail</Example>
       <C>SmallGeneratingSet</C> may return different result in different &GAP; 
       sessions.
 
-      <Example>
+      <Log>
 gap> S:=Semigroup( Transformation( [ 1, 2, 3, 2, 4 ] ), 
 > Transformation( [ 1, 5, 4, 3, 2 ] ),
 > Transformation( [ 2, 1, 4, 2, 2 ] ), Transformation( [ 2, 4, 4, 2, 1 ] ),
@@ -739,7 +737,7 @@ gap> S:=Semigroup( Transformation( [ 1, 2, 3, 2, 4 ] ),
 gap> SmallGeneratingSet(S);                  
 [ Transformation( [ 1, 5, 4, 3, 2 ] ), Transformation( [ 3, 2, 3, 4, 1 ] ), 
   Transformation( [ 5, 4, 3, 5, 2 ] ), Transformation( [ 1, 2, 3, 2, 4 ] ), 
-  Transformation( [ 4, 4, 3, 3, 5 ] ) ]</Example>
+  Transformation( [ 4, 4, 3, 3, 5 ] ) ]</Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
