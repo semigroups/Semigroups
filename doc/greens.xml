@@ -753,8 +753,9 @@ gap> IsGreensLessThanOrEqual(GreensDClasses(S)[1], GreensDClasses(S)[2]);
 false
 gap> IsGreensLessThanOrEqual(GreensDClasses(S)[2], GreensDClasses(S)[1]);
 true
-gap> IsGreensLessThanOrEqual(GreensDClasses(S)[3],
-GreensDClasses(S)[1]);</Example>
+gap> IsGreensLessThanOrEqual(GreensDClasses(S)[3], GreensDClasses(S)[1]);
+false
+</Example>
   </Description>
   </ManSection>
 <#/GAPDoc>
