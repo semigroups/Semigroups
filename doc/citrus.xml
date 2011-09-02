@@ -144,7 +144,9 @@
       <Item> start &GAP; in the usual way.</Item>
     
       <Item> type <C>LoadPackage("citrus");</C></Item>
-    
+      
+      <Item> compile the documentation by typing <C>CitrusMakeDoc()</C></Item>
+
     </List>
 
     Below is an example of an installation of <Package>Citrus</Package> in a
@@ -186,6 +188,12 @@ gap></Log>
 
   </Section>
 
+  <Section Label="doc"><Heading>Compiling the documentation</Heading>
+
+    To compile the documentation see <Ref Func="CitrusMakeDoc"/>. If you want
+    to use the help system it is essential that you compile the documentation. 
+  </Section>
+    
   <Section Label="testing"><Heading>Testing the installation</Heading>
 
     In this section we describe how to test that <Package>Citrus</Package> is
