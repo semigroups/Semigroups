@@ -542,9 +542,9 @@ gap> Size(S);
 631
 gap> IsInverseSemigroup(S);
 true
-gap> E:=Semigroup(Idempotents(S)); 
+gap> A:=Semigroup(Idempotents(S)); 
 &lt;semigroup with 32 generators>
-gap> IsSemilatticeAsSemigroup(E);
+gap> IsSemilatticeAsSemigroup(A);
 true</Example>
     </Description>
   </ManSection>
