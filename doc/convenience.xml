@@ -8,11 +8,10 @@
       achieved by entering:
 
       <Log>
-          MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
-           InstallationPath, "/doc"), "citrus.xml", [
-           "convenience.xml", "greens.xml", "orbits.xml", "properties.xml",
-           "transform.xml"], "citrus", "MathJax");;
-      </Log>
+MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
+ InstallationPath, "/doc"), "citrus.xml", [
+ "convenience.xml", "greens.xml", "orbits.xml", "properties.xml",
+ "transform.xml"], "citrus", "MathJax");;</Log>
 
       at the &GAP; prompt. 
     </Description>
@@ -69,8 +68,7 @@ InstallationPath, "/doc"), "citrus.xml",
       should take no more than a fraction of a second to complete. The same 
       effect can be achieved by entering:
 
-      <Log>ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),
-         "testinstall.tst"));;</Log>
+<Log>ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"), "testinstall.tst"));;</Log>
 
       at the &GAP; prompt. 
       To more comprehensively test that <Package>Citrus</Package> is installed
@@ -98,11 +96,12 @@ InstallationPath, "/doc"), "citrus.xml",
 
 <#GAPDoc Label="DClassNC">
   <ManSection>
-    <Func Name="DClassNC" Arg="s, f"/>
+    <Func Name="DClassNC" Arg="S, f"/>
     <Description>
       returns the result of  <Ref Oper="GreensDClassOfElementNC"/>, 
-      if <C>s</C> is a transformation semigroup
-      and <C>f</C> a transformation.
+      if <A>S</A> is a transformation semigroup
+      and <A>f</A> a transformation.<P/>
+
 
       See also <Ref Func="DClass"/>. 
     </Description>
@@ -111,14 +110,14 @@ InstallationPath, "/doc"), "citrus.xml",
 
 <#GAPDoc Label="Degree">
   <ManSection>
-    <Func Name="Degree" Arg="x"/>
+    <Func Name="Degree" Arg="obj"/>
     <Description>
       returns the result of 
       <Ref Oper="DegreeOfTransformation" BookName="ref"/>, 
-      if <C>s</C> is a transformation semigroup
+      if <A>obj</A> is a transformation semigroup
       and 
       <Ref Oper="DegreeOfTransformationSemigroup" BookName="ref"/> 
-      if <C>f</C> a transformation.
+      if <A>obj</A> a transformation.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -129,7 +128,7 @@ InstallationPath, "/doc"), "citrus.xml",
     <Description>
       returns the result of 
       <Ref Oper="RankOfTransformation" BookName="ref"/>, 
-      if <C>f</C> is a transformation.
+      if <A>f</A> is a transformation.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -144,33 +143,51 @@ InstallationPath, "/doc"), "citrus.xml",
       <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/> 
       if <C>s</C> is a transformation semigroup but not a transformation 
       monoid. 
-      <Example>  
-        insert example.
-      </Example>
+      <Example> 
+gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
+> Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
+gap> GeneratorsOfSemigroup(M);
+[ Transformation( [ 1 .. 10 ] ), 
+  Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
+gap> GeneratorsOfMonoid(M);   
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
+gap> Generators(M);
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
+gap> S:=Semigroup(Generators(M));;
+gap> Generators(S);
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
+gap> GeneratorsOfSemigroup(S);
+[ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
+  Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]</Example>
    </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="HClass">
   <ManSection>
-    <Func Name="HClass" Arg="s, f"/>
+    <Func Name="HClass" Arg="S, f"/>
     <Description>
       returns the result of 
       <Ref Oper="GreensHClassOfElement" BookName="ref"/>, 
-      if <C>s</C> is a transformation semigroup and <C>f</C> is a
-      transformation. See also <Ref Func="HClassNC"/>. 
+      if <A>S</A> is a transformation semigroup and <A>f</A> is a
+      transformation.<P/> See also <Ref Func="HClassNC"/>. 
    </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="HClassNC">
   <ManSection>
-    <Func Name="HClassNC" Arg="s, f"/>
+    <Func Name="HClassNC" Arg="S, f"/>
     <Description>
       returns the result of 
       <Ref Oper="GreensHClassOfElementNC"/>, 
-      if <C>s</C> is a transformation semigroup and <C>f</C> is a
-      transformation. See also <Ref Func="HClass"/>. 
+      if <A>S</A> is a transformation semigroup and <A>f</A> is a
+      transformation. <P/>
+      See also <Ref Func="HClass"/>. 
    </Description>
   </ManSection>
 <#/GAPDoc>
@@ -180,7 +197,7 @@ InstallationPath, "/doc"), "citrus.xml",
     <Func Name="LClass" Arg="arg"/>
     <Description>
       returns the result of <Ref Oper="GreensLClassOfElement" BookName="ref"/>, 
-      or <Ref Oper="LClassOfHClass"/> if <C>arg</C> is a transformation
+      or <Ref Oper="LClassOfHClass"/> if <A>arg</A> is a transformation
       semigroup and a transformation, or an <Math>\mathcal{H}</Math>-class, 
       respectively. <P/>
 
@@ -191,11 +208,11 @@ InstallationPath, "/doc"), "citrus.xml",
 
 <#GAPDoc Label="LClassNC">
   <ManSection>
-    <Func Name="LClassNC" Arg="s, f"/>
+    <Func Name="LClassNC" Arg="S, f"/>
     <Description>
       returns the result of 
       <Ref Oper="GreensLClassOfElementNC"/>, 
-      if <C>s</C> is a transformation semigroup and <C>f</C> is a
+      if <A>S</A> is a transformation semigroup and <A>f</A> is a
       transformation. See also <Ref Func="LClass"/>. 
    </Description>
   </ManSection>
@@ -206,8 +223,8 @@ InstallationPath, "/doc"), "citrus.xml",
     <Func Name="RandomTransformationMonoid" Arg="m, n"/>
     <Func Name="RandomTransformationSemigroup" Arg="m, n"/>
     <Description>
-      returns a random transformation monoid or semigroup of degree <C>n</C> 
-      with <C>m</C> generators.
+      returns a random transformation monoid or semigroup of degree <A>n</A> 
+      with <A>m</A> generators.
       <Example>
 gap&gt; S:=RandomTransformationMonoid(5,5);
 &lt;semigroup with 5 generators&gt;
@@ -222,7 +239,7 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
     <Func Name="RClass" Arg="arg"/>
     <Description>
       returns the result of <Ref Oper="GreensRClassOfElement" BookName="ref"/>, 
-      or <Ref Oper="RClassOfHClass"/> if <C>arg</C> is a transformation
+      or <Ref Oper="RClassOfHClass"/> if <A>arg</A> is a transformation
       semigroup and a transformation, or an <Math>\mathcal{H}</Math>-class, 
       respectively. <P/>
 
@@ -233,13 +250,14 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
 
 <#GAPDoc Label="RClassNC">
   <ManSection>
-    <Func Name="RClassNC" Arg="s, f"/>
+    <Func Name="RClassNC" Arg="S, f"/>
     <Description>
       returns the result of 
       <Ref Oper="GreensRClassOfElementNC"/>, 
-      if <C>s</C> is a transformation semigroup and <C>f</C> is a
-      transformation. See also <Ref Func="RClass"/>. 
+      if <A>S</A> is a transformation semigroup and <A>f</A> is a
+      transformation. <P/>See also <Ref Func="RClass"/>. 
    </Description>
   </ManSection>
 <#/GAPDoc>
 
+#EOF
