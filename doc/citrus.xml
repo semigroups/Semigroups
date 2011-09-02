@@ -609,6 +609,10 @@ gap> GreensRClasses(S);
   </Section>
   
   <Section><Heading>Properties</Heading>
+    In this section we describe several properties 
+    <Ref Sect="Properties" BookName="ref"/> of an
+    arbitrary transformation semigroup that can be determined using
+    <Package>Citrus</Package>.
     <#Include Label="IsBand">
     <#Include Label="IsBlockGroup">
     <#Include Label="IsCliffordSemigroup">
