@@ -702,11 +702,11 @@ function(arg)
     treehashsize:=3*bound;
   else
     bound:=infinity;
-    treehashsize:=10000;
+    treehashsize:=1000;
   fi;
   
   o:=Orb(s, img, OnSets, rec(
-          treehashsize:=NextPrimeInt(Minimum(10000, treehashsize)), 
+          treehashsize:=NextPrimeInt(Minimum(1000, treehashsize)), 
           schreier:=true,
           gradingfunc := function(o,x) return [Length(x), x]; end, 
           orbitgraph := true, 

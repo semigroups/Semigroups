@@ -696,12 +696,12 @@ function(arg)
     treehashsize:=3*bound;
   else
     bound:=infinity;
-    treehashsize:=10000;
+    treehashsize:=1000;
   fi;
           
   o:=Orb(gens_imgs, ker, function(f,g) 
          return CanonicalTransSameKernel(f{g}); end,
-         rec( treehashsize:=NextPrimeInt(Minimum(10000, treehashsize)),  
+         rec( treehashsize:=NextPrimeInt(Minimum(1000, treehashsize)),  
           schreier:=true,
           gradingfunc := function(o,x) return [MaximumList(x), x]; end, 
           orbitgraph := true,

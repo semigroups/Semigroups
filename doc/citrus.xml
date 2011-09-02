@@ -129,7 +129,7 @@
     
       <Item> download the package archive <C>citrus0r1.tar.gz</C> from
       <Alt    Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
-          <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html
+          <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html
       </URL></Item>
     
       <Item> unzip and untar the file, this should create a directory called

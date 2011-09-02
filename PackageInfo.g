@@ -12,10 +12,10 @@ SetPackageInfo( rec(
 PackageName := "Citrus",
 Subtitle := "ComputIng with Transformation semigRoUps and monoidS",
 Version := "0.1",
-Date := "2011",
+Date := "02/09/2011",
 ArchiveURL := 
-          "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus",
-ArchiveFormats := ".tar.gz .tar.bz2",
+          "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus0r1.tar.gz",
+ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
     LastName      := "Mitchell",
@@ -31,24 +31,24 @@ Persons := [
     Place         := "St Andrews",
     Institution   := "University of St Andrews"
   )],
-Status := "undeposited",
+Status := "deposited",
 
 README_URL := 
-  "http://tinyurl.com/citrus/README.txt",
+  "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/README.txt",
 PackageInfoURL := 
-  "http://tinyurl.com/citrus/PackageInfo.g",
+  "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/PackageInfo.g",
 
 AbstractHTML := Concatenation( 
   "The <span class=\"pkgname\">Citrus</span> package, is a ",
   "<span class=\"pkgname\">GAP</span>  package  for transformation", 
   "monoids and related objects."),
 
-PackageWWWHome := "http://tinyurl.com/citrus",
+PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus",
                
 PackageDoc := rec(
   BookName  := "Citrus",
   Archive := 
-      "http://tinyurl.com/citrus",
+      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus0r1.tar.gz",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",  
@@ -58,9 +58,9 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.4.12",
+  GAP := ">=4.4",
   NeededOtherPackages := [["orb", "3.7"]],
-  SuggestedOtherPackages := [["gapdoc", ">=1.1"]], 
+  SuggestedOtherPackages := [["gapdoc", ">=1.3"]], 
   ExternalConditions := []),
   AvailabilityTest := ReturnTrue,
   Autoload := false,
