@@ -82,7 +82,7 @@ gap> R:=GreensRClassOfElement(S, Transformation( [ 3, 2, 1 ] ));
 {Transformation( [ 1, 2, 3 ] )}
 gap> DClassOfRClass(R);
 {Transformation( [ 1, 2, 3 ] )}
-gap> IsGreensDClass(last);
+gap> IsGreensDClass(DClassOfRClass(R));
 true</Example>
     </Description>
   </ManSection>
@@ -327,7 +327,7 @@ gap> GroupHClass(D);
 {Transformation( [ 6, 1, 1, 6, 1, 2, 2, 6 ] )}
 gap> GroupHClassOfGreensDClass(D);
 {Transformation( [ 6, 1, 1, 6, 1, 2, 2, 6 ] )}
-gap> StructureDescription(last);
+gap> StructureDescription(GroupHClass(D));
 "S3"
 gap> repeat D:=NextIterator(iter); until not IsRegularDClass(D);
 gap> D;
@@ -335,7 +335,7 @@ gap> D;
 gap> IsRegularDClass(D);
 false
 gap> GroupHClass(D);
-fail </Example>
+fail</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -418,9 +418,9 @@ gap> Idempotents(H);
   <Example>
 gap> S:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ), 
 > Transformation( [ 2, 3, 1, 5, 4, 1 ] ));;
-gap> GreensLClassOfElement(S, GeneratorsOfSemigroup(S)[1]);
+gap> L:=GreensLClassOfElement(S, GeneratorsOfSemigroup(S)[1]);
 {Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
-gap> IsGreensClassOfTransSemigp(last);
+gap> IsGreensClassOfTransSemigp(L);
 true</Example>
   </Description>
   </ManSection>
