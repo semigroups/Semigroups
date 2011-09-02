@@ -341,8 +341,9 @@ fail </Example>
 <#/GAPDoc>
 
 <#GAPDoc Label="Idempotents">
-  <ManSection><Attr Name="Idempotents" Label="CitrusIdempotents" Arg="obj[,n]"/>
-  <Description>
+  <ManSection Label="CitrusIdempotents">
+  <Attr Name="Idempotents" Label="Citrus pkg" Arg="obj[,n]"/>
+  <Description><Index Key="Idempotents"></Index>
   returns a list of the idempotents in the transformation semigroup or Green's 
   class <A>obj</A>. <P/>
 
@@ -356,7 +357,9 @@ fail </Example>
 
       This functions produce essentially the same output as the &GAP; library
       function with the same name; see 
-      <Ref Oper="Idempotents" BookName="ref"/>. The main difference in usage
+      <Ref Oper="Idempotents" BookName="ref"/>. 
+      
+      The main difference in usage
       is that this function can be applied to a wider class of objects as
       described above. <P/>
   
@@ -409,7 +412,7 @@ gap> Idempotents(H);
   returns <K>true</K> if <A>obj</A> is a Green's class of a transformation 
   semigroup and returns <K>false</K> otherwise.<P/>
   
-  This attribute is required so that a Green's class knowns that it belongs to 
+  This attribute is required so that a Green's class knows that it belongs to 
   a transformation semigroup, so that the methods defined in the
   <Package>Citrus</Package> are used in preference to those in the library.
   <Example>
@@ -437,7 +440,7 @@ true</Example>
       <Ref Prop="IsGroupHClass" BookName="ref"/>, 
       <Ref Attr="GroupHClassOfGreensDClass" BookName="ref"/>,
       <Ref Oper="GroupHClass"/>, <Ref Oper="NrIdempotents"/>, 
-      <Ref Oper="Idempotents" Label="CitrusIdempotents"/>, and 
+      <Ref Oper="Idempotents" Label="Citrus pkg"/>, and 
       <Ref Oper="IsRegularTransformation"/>.
       <P/>
 
@@ -670,7 +673,7 @@ If the actual idempotents are not required, then it
   is called.<P/>
 
   See also <Ref Attr="Idempotents" BookName="ref"/> and <Ref
-  Attr="Idempotents" Label="CitrusIdempotents"/>, 
+  Attr="Idempotents" Label="Citrus pkg"/>, 
   <Ref Prop="IsRegularDClass" BookName="ref"/>,
   <Ref Prop="IsRegularDClass" Label="CitrusIsRegularDClass"/>
   <Ref Prop="IsGroupHClass" BookName="ref"/>, and

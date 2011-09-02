@@ -162,8 +162,8 @@ true </Example>
       element of <A>S</A>.
       <Example>
 gap> S:=Semigroup([ Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] ), 
-  Transformation( [ 5, 7, 8, 8, 7, 5, 9, 1, 9 ] ), 
-  Transformation( [ 7, 6, 2, 8, 4, 7, 5, 8, 3 ] ) ]);;
+>  Transformation( [ 5, 7, 8, 8, 7, 5, 9, 1, 9 ] ), 
+>  Transformation( [ 7, 6, 2, 8, 4, 7, 5, 8, 3 ] ) ]);;
 gap> f:=Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] );;
 gap> InversesOfTransformationNC(S, f);
 [  ]

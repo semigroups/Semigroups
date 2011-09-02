@@ -288,7 +288,7 @@ gap></Log>
 
 </Chapter>
 
-<!--<Chapter Label="green"><Heading>Green's Relations</Heading>
+<Chapter Label="green"><Heading>Green's Relations</Heading>
   
   <Section><Heading>Introduction</Heading>
     
@@ -403,7 +403,7 @@ gap> GreensRClasses(S);
       <Ref Attr="GreensDClasses" Label="CitrusDClasses"/>,</Item>
     <Item><Ref Attr="GreensDClassOfElement" BookName="ref"/>,</Item>
     <Item><Ref Attr="Idempotents" BookName="ref"/> and 
-      <Ref Attr="Idempotents" Label="CitrusIdempotents"/>,</Item>
+      <Ref Attr="Idempotents" Label="Citrus pkg"/>,</Item>
     <Item><Ref Oper="Size" BookName="ref"/>. </Item>
     </List>
 <P/>
@@ -450,7 +450,7 @@ gap> GreensRClasses(S);
     <#Include Label="SchutzenbergerGroup">
     <#Include Label="UnderlyingSemigroupOfIterator">
   </Section>
-</Chapter>-->
+</Chapter>
 
 <Chapter Label="properties"> <Heading>Properties of semigroups</Heading>
   <Section><Heading>Definitions</Heading>
@@ -597,7 +597,7 @@ gap> GreensRClasses(S);
     <#Include Label="IrredundantGeneratingSubset">
     <#Include Label="MinimalIdeal">
     <#Include Label="MultiplicativeZero">
-    <#Include Label="Random"/>
+    <#Include Label="Random">
     <#Include Label="SmallGeneratingSet"> 
   </Section>
   
@@ -666,6 +666,7 @@ gap> GreensRClasses(S);
     <#Include Label="RClassNC">
   </Section>
 </Chapter>
+
 </Body>
 
 <Bibliography Databases="citrus" />

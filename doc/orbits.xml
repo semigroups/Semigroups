@@ -55,33 +55,33 @@ gap> GradedKernelsOfTransSemigroup(S);
   <Ref Func="OnKernelsAntiAction"/>, and 
   <Ref Func="CanonicalTransSameKernel"/>
   <Example>
-gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
-> Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ];;
-gap> ImagesOfTransSemigroup(S, 6); Enumerate(last); AsList(last);
+gap>  S:=Semigroup( Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
+> Transformation( [ 6, 5, 1, 6, 2, 2 ] ) );;
+gap> o:=ImagesOfTransSemigroup(S, 6); Enumerate(o); AsList(o);
 &lt;open orbit, 1 points with Schreier tree with grading>
 &lt;closed orbit, 1 points with Schreier tree with grading>
 [ [ 1 .. 5 ] ]
-gap> ImagesOfTransSemigroup(S, 5); Enumerate(last); AsList(last);
+gap> o:=ImagesOfTransSemigroup(S, 5); Enumerate(o); AsList(o);
 &lt;open orbit, 1 points with Schreier tree with grading>
 &lt;closed orbit, 1 points with Schreier tree with grading>
 [ [ 1 .. 5 ] ]
-gap> ImagesOfTransSemigroup(S, 4); Enumerate(last); AsList(last);
+gap> o:=ImagesOfTransSemigroup(S, 4); Enumerate(o); AsList(o);
 &lt;open orbit, 1 points with Schreier tree with grading>
 &lt;closed orbit, 1 points with Schreier tree with grading>
 [ [ 1 .. 5 ] ]
-gap> ImagesOfTransSemigroup(S, 3); Enumerate(last); AsList(last);
+gap> o:=ImagesOfTransSemigroup(S, 3); Enumerate(o); AsList(o);
 &lt;open orbit, 1 points with Schreier tree with grading>
 &lt;closed orbit, 2 points with Schreier tree with grading>
 [ [ 1 .. 5 ], [ 2, 4, 5 ] ]
-gap> ImagesOfTransSemigroup(S, 2); Enumerate(last); AsList(last);
+gap> o:=ImagesOfTransSemigroup(S, 2); Enumerate(o); AsList(o);
 &lt;open orbit, 1 points with Schreier tree with grading>
 &lt;closed orbit, 4 points with Schreier tree with grading>
 [ [ 1 .. 5 ], [ 1, 5 ], [ 2, 4, 5 ], [ 2, 4 ] ]
-gap> ImagesOfTransSemigroup(S, 1); Enumerate(last); AsList(last);
+gap> o:=ImagesOfTransSemigroup(S, 1); Enumerate(o); AsList(o);
 &lt;open orbit, 1 points with Schreier tree with grading>
 &lt;closed orbit, 8 points with Schreier tree with grading>
 [ [ 1 .. 5 ], [ 1, 5 ], [ 2, 4, 5 ], [ 1 ], [ 2, 4 ], [ 4 ], [ 2 ], [ 5 ] ]
-gap> ImagesOfTransSemigroup(S); Enumerate(last); AsList(last);
+gap> o:=ImagesOfTransSemigroup(S); Enumerate(o); AsList(o);
 &lt;open orbit, 1 points with Schreier tree>
 &lt;closed orbit, 8 points with Schreier tree>
 [ [ 1 .. 5 ], [ 1, 5 ], [ 2, 4, 5 ], [ 1 ], [ 2, 4 ], [ 4 ], [ 2 ], [ 5 ] ]</Example> 
