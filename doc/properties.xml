@@ -702,7 +702,7 @@ gap> S:=Semigroup( Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ),
 > Transformation( [ 1, 6, 3, 6, 2, 1, 6 ] ));;
 gap> MultiplicativeZero(S);
 Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
-S:=Semigroup(Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
+gap> S:=Semigroup(Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
 > Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ), 
 > Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ), 
 > Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ));;
