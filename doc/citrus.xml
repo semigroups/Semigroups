@@ -36,7 +36,7 @@
 <Body>
   <Chapter Label="citrus">
   <Heading>The <Package>Citrus</Package> package</Heading>
-	
+  <Index><Package>Citrus</Package></Index>	
   <Section><Heading>Overview and Introduction</Heading>
     This is the manual for the <Package>Citrus</Package> package version 0.1 
     for computing with
@@ -462,67 +462,68 @@ gap> GreensRClasses(S);
 <Chapter Label="properties"> <Heading>Properties of semigroups</Heading>
   <Section><Heading>Definitions</Heading>
 		
-    In this section we state some theoretical results and the corresponding 
-    &GAP; functions that can be used to determine whether a set of
-    transformations generates a semigroup of a given type. Let <Math>S</Math> 
-    be a semigroup. Then:
+    In this section we describe the functions available in
+    <Package>Citrus</Package> that can be used to determine whether a set of
+    transformations generates a semigroup with a given property. <P/>
+    
+    We begin by defining various properties of semigroups. 
+    Let <Math>S</Math> be a semigroup. Then <Math>S</Math> is a:
     
     <List>
       
-      <Item> <Math>S</Math> is a <E>left zero semigroup</E> if 
+      <Item><E>left zero</E> semigroup if 
       <Math>(\forall s,t\in S)(st=s).</Math>
       </Item>
       
-      <Item> <Math>S</Math> is a <E>right zero semigroup</E> if 
+      <Item> <E>right zero</E> semigroup if 
       <Math>(\forall s,t\in S)(st=t).</Math>
       </Item>
       
-      <Item><Math>S</Math> is <E>commutative</E> if <Math>(\forall 
+      <Item> <E>commutative</E> semigroup if <Math>(\forall 
        s,t\in S)(st=ts)</Math>.
       </Item>
       
-      <Item> <Math>S</Math> is <E>simple</E> if it has no proper two-sided 
+      <Item> <E>simple</E> semigroup if it has no proper two-sided 
       ideals.
       </Item>
 			
-      <Item> <Math>S</Math> is <E>regular</E> if <Math>(\forall s\in S)
+      <Item> <E>regular</E> semigroup if <Math>(\forall s\in S)
       (\exists t\in S)(sts=s).</Math>
       </Item>
 			
-      <Item> <Math>S</Math> is <E>completely regular</E> if every element of   
+      <Item> <E>completely regular</E> semigroup if every element of   
       <Math>S</Math> lies in a subgroup. 
       </Item>
 			
-      <Item> <Math>S</Math> is an <E>inverse semigroup</E> if 
+      <Item> <E>inverse</E> semigroup if 
       <Math>(\forall s\in S)(\exists! t\in S)(sts=s \wedge tst=t).</Math>
       </Item>
 			
-      <Item> <Math>S</Math> is a <E>Clifford semigroup</E> if 
+      <Item> <E>Clifford</E> semigroup if 
       <Math>(\forall s\in S)(\exists t\in S)(sts=s)\wedge(\forall 
       s, t\in S)(s^2=s\rightarrow st=ts).</Math>
       </Item>
 			
-      <Item> <Math>S</Math> is a <E>band</E> if <Math>(\forall s\in S)
-      (s^2=s)</Math>.
+      <Item> <E>band</E> if <Math>(\forall s\in S) (s^2=s)</Math>.
       </Item>
       
-      <Item> <Math>S</Math> is a <E>rectangular band</E> if 
+      <Item> <E>rectangular band</E> if 
       <Math>(\forall x,y,z\in S)(x^2=x\wedge xyz=xz).</Math>
       </Item>
 			
-      <Item> <Math>S</Math> is a <E>idempotent generated</E> if it is generated 
+      <Item> <E>idempotent generated</E> semigroup if it is generated 
       by its idempotent elements.
       </Item>
       
-      <Item> <Math>S</Math> is an <E>orthodox semigroup</E> if it is regular 
+      <Item> <E>orthodox</E> semigroup if it is regular 
       and idempotents form a subsemigroup.
       </Item>
 			
-      <Item><Math>S</Math> is a <E>zero semigroup</E> if 
+      <Item> <E>zero</E> semigroup if 
       <Math>(\exists s\in S)(\forall t,u\in S)(tu=s).</Math>
       </Item>
 			
-      <Item><Math>S</Math> is a <E>zero group</E> if 
+      <Item> <E>zero group</E> if 
       <Math>(\exists s\in S)(\forall t\in S)(st=ts=s\wedge 
       S\setminus\{s\}\textrm{ is a group }).</Math>
       </Item>
@@ -532,10 +533,11 @@ gap> GreensRClasses(S);
       The following results provide methods to determine if an 
       arbitrary transformation semigroup <Math>S</Math> satisfies a particular 
       property by considering the action of the generators of <Math>S</Math> on 
-      the underlying set, rather than <Math>S</Math> itself. 
-      For more details see  <Cite Key="largest"/>.<P/>
+      the underlying set; 
+      for more details see  <Cite Key="largest"/>.<P/>
 
-      Then the following hold:
+      The following results are used by <Package>Citrus</Package> to test if
+      a particular property holds. 
       
       <List>
       
@@ -595,6 +597,9 @@ gap> GreensRClasses(S);
   </Section>
   
   <Section><Heading>Attributes</Heading>
+    In this section we describe several attributes <Ref Sect="Attributes"
+    BookName="ref"/> of an arbitrary transformation semigroup that can be found
+    using <Package>Citrus</Package>.
     <#Include Label="GroupOfUnits">
     <#Include Label="IrredundantGeneratingSubset">
     <#Include Label="MinimalIdeal">

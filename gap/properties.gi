@@ -61,13 +61,13 @@ end);
 InstallMethod(IrredundantGeneratingSubset, "for a transformation collection", 
 [IsTransformationCollection],
 function(coll)
-  local gens, out, i, redund, f;
+  local gens, j, out, i, redund, f;
   
   if IsTransformationSemigroup(coll) then 
     coll:=ShallowCopy(Generators(coll));
   fi;
   
-  gens:=Set(ShallowCopy(coll));
+  gens:=Set(ShallowCopy(coll)); j:=Length(gens);
   coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));
   Sort(coll, function(x, y) return Rank(x)>Rank(y); end);
   
@@ -89,7 +89,7 @@ function(coll)
         AddSet(out, f);
       fi;
     fi;
-  until Length(redund)+Length(out)=Length(coll);
+  until Length(redund)+Length(out)=j;
 
   if InfoLevel(InfoCitrusProperties)>1 then 
     Print("\n");

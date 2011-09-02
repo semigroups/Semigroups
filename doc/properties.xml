@@ -27,7 +27,19 @@
       <Ref Prop="IsMonoidAsSemigroup"/>, and
       <Ref Attr="MultiplicativeNeutralElement" BookName="ref"/>.
 
-      <Example></Example>
+      <Example>
+gap> S:=Semigroup(Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
+>   Transformation( [ 1, 6, 3, 4, 7, 2, 5, 8 ] ),
+>   Transformation( [ 2, 1, 6, 7, 8, 3, 4, 5 ] ),
+>   Transformation( [ 3, 2, 3, 6, 1, 6, 1, 2 ] ),
+>   Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] ) );;
+gap> Size(S);
+5304
+gap> GroupOfUnits(S);
+Group([ (1,8)(2,7)(3,4)(5,6), (1,4)(2,5)(3,8)(6,7), (1,8,5,2)(3,6,7,4), 
+  (1,6)(2,3)(4,5)(7,8) ])
+gap> StructureDescription(last);
+"C2 x S4"</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -47,7 +59,40 @@
       See also <Ref Func="Generators"/> and <Ref
       Prop="IsTransformationCollection" BookName="ref"/>. 
 
-      <Example></Example>
+      <Example>
+gap> l:=[ Transformation( [ 6, 1, 1, 6, 1, 6, 1 ] ), 
+>  Transformation( [ 3, 3, 3, 3, 3, 3, 3 ] ), 
+>  Transformation( [ 6, 6, 6, 6, 6, 6, 6 ] ), 
+>  Transformation( [ 5, 2, 4, 5, 1, 4, 5 ] ), 
+>  Transformation( [ 2, 2, 2, 2, 2, 2, 2 ] ) ];;
+gap> IrredundantGeneratingSubset(l);
+[ Transformation( [ 2, 2, 2, 2, 2, 2, 2 ] ), 
+  Transformation( [ 3, 3, 3, 3, 3, 3, 3 ] ), 
+  Transformation( [ 5, 2, 4, 5, 1, 4, 5 ] ), 
+  Transformation( [ 6, 1, 1, 6, 1, 6, 1 ] ) ]
+gap> gens:=[ Transformation( [ 5, 1, 4, 6, 2, 3 ] ),
+> Transformation( [ 1, 2, 3, 4, 5, 6 ] ),
+> Transformation( [ 4, 6, 3, 4, 2, 5 ] ),
+> Transformation( [ 5, 4, 6, 3, 1, 3 ] ),
+> Transformation( [ 2, 2, 6, 5, 4, 3 ] ),
+> Transformation( [ 3, 5, 5, 1, 2, 4 ] ),
+> Transformation( [ 6, 5, 1, 3, 3, 4 ] ),
+> Transformation( [ 1, 3, 4, 3, 2, 1 ] ) ];;
+gap> S:=Semigroup( Transformation( [ 5, 1, 4, 6, 2, 3 ] ),
+> Transformation( [ 1, 2, 3, 4, 5, 6 ] ),
+> Transformation( [ 4, 6, 3, 4, 2, 5 ] ),
+> Transformation( [ 5, 4, 6, 3, 1, 3 ] ),
+> Transformation( [ 2, 2, 6, 5, 4, 3 ] ),
+> Transformation( [ 3, 5, 5, 1, 2, 4 ] ),
+> Transformation( [ 6, 5, 1, 3, 3, 4 ] ),
+> Transformation( [ 1, 3, 4, 3, 2, 1 ] ) );;
+gap> IrredundantGeneratingSubset(s);
+[ Transformation( [ 1, 3, 4, 3, 2, 1 ] ), 
+  Transformation( [ 2, 2, 6, 5, 4, 3 ] ), 
+  Transformation( [ 3, 5, 5, 1, 2, 4 ] ), 
+  Transformation( [ 5, 1, 4, 6, 2, 3 ] ), 
+  Transformation( [ 5, 4, 6, 3, 1, 3 ] ), 
+  Transformation( [ 6, 5, 1, 3, 3, 4 ] ) ]</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -532,7 +577,7 @@ false</Example>
 
 <#GAPDoc Label="MinimalIdeal">
   <ManSection>
-    <Prop Name="MinimalIdeal" Arg="S"/>
+    <Attr Name="MinimalIdeal" Arg="S"/>
     <Description>
     returns the minimal ideal of the transformation semigroup <A>S</A>. <P/>
 
@@ -550,7 +595,22 @@ false</Example>
     See also <Ref Attr="PartialOrderOfDClasses"/> and 
     <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>. 
     
-    <Example></Example>
+    <Example>
+gap> S:=Semigroup( Transformation( [ 3, 4, 1, 3, 6, 3, 4, 6, 10, 1 ] ), 
+  Transformation( [ 8, 2, 3, 8, 4, 1, 3, 4, 9, 7 ] ));;
+gap> MinimalIdeal(S);
+&lt;semigroup with 5 generators>
+gap> Elements(last);
+[ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ), 
+  Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] ), 
+  Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] ), 
+  Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ] ), 
+  Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] ) ]
+gap> f:=Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] );;
+gap> D:=DClass(S, f);
+{Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] )}
+gap> ForAll(GreensDClasses(S), x-> IsGreensLessThanOrEqual(D, x));
+true</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -563,15 +623,15 @@ false</Example>
       if it exists and returns <K>fail</K> otherwise. 
 
       <Example>
-gap> s:=Semigroup( Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ), 
+gap> S:=Semigroup( Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ), 
 > Transformation( [ 1, 6, 3, 6, 2, 1, 6 ] ));;
-gap> MultiplicativeZero(s);
+gap> MultiplicativeZero(S);
 Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
-s:=Semigroup(Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
+S:=Semigroup(Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
 > Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ), 
 > Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ), 
 > Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ));;
-gap> MultiplicativeZero(s);
+gap> MultiplicativeZero(S);
 fail</Example> 
     </Description>
   </ManSection>
@@ -585,7 +645,7 @@ fail</Example>
       a  relatively small number of elements. <P/>
       
       As neither irredundancy, nor 
-      minimal length are proven <C>SmallGeneratingSet</C> usually returns an
+      minimal length are proven, <C>SmallGeneratingSet</C> usually returns an
       answer  much faster than 
       <Ref Oper="IrredundantGeneratingSubset"/>. It can be used whenever a
       small 
