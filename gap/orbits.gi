@@ -265,7 +265,6 @@ function(ker, f)
   return CanonicalTransSameKernel(ker{f![1]});  
 end);
 
-
 # new for 0.1! - StrongOrbitsInForwardOrbit - for IsOrbit
 #############################################################################
 
