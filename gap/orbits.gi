@@ -16,8 +16,16 @@
 InstallMethod(ChooseHashFunction, "for transformations and pos. int.",
 [IsTransformation, IsInt],
 function(p, hashlen)
-  return rec(func := HashFunctionForTransformation, data := [101, 
-   hashlen]);
+  return rec(func := HashFunctionForTransformation, data := [101, hashlen]);
+end);
+
+# new for 0.2! - ChooseHashFunction - "for blist and pos. int."
+#############################################################################
+
+InstallMethod(ChooseHashFunction, "for blist and pos. int.",
+[IsBlistRep, IsPosInt],
+function(p, hashlen)
+  return rec(func := HashFunctionForBlist, data := [101, hashlen]);
 end);
 
 # new for 0.1! - GradedImagesOfTransSemigroup - "for a trans. semigroup"
@@ -144,6 +152,14 @@ function(ker, n)
   return ht;
 end);
 
+# new for 0.2! - HashFunctionForBlist - "for a blist"
+#############################################################################
+
+InstallGlobalFunction(HashFunctionForBlist, 
+function(v, data)
+  return ORB_HashFunctionForIntList(ListBlist([1..Length(v)], v), data);
+end);
+
 # new for 0.1! - HashFunctionForTransformation - not a user function!
 #############################################################################
 
@@ -159,8 +175,24 @@ end);
 
 InstallMethod(ImagesOfTransSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-  s-> Orb(Generators(s), [1..Degree(s)], OnSets, rec(storenumbers:=true, 
+  s-> Orb(Generators(s), [1..Degree(s)], function(set, f) return
+  Set(f![1]{set}); end, rec(storenumbers:=true, 
    schreier:=true)));
+
+# new for 0.2! - ImagesOfTransSemigroupAsBlists - "for a trans. semigroup"
+###########################################################################
+# Notes: this orbit always contains [1..Degree(s)] even if this is not the
+# image of any element in s. 
+
+InstallMethod(ImagesOfTransSemigroupAsBlists, "for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local n, seed;
+
+  n:=Degree(s); seed:=BlistList([1..n], [1..n]); 
+  return Orb(Generators(s), seed, OnBlist, 
+   rec(storenumbers:=true, schreier:=true));
+end);
 
 # new for 0.1! - ImagesOfTransSemigroup - "for trans semigp and pos int"
 ###########################################################################
@@ -211,6 +243,19 @@ function(s, m)
               onlygradesdata:=[m..n], schreier:=true));
 end);
 
+# new for 0.2! - OnBlist - for blist and transformation 
+###########################################################################
+# Notes: this is BlistList([1..Length(blist)], 
+# OnSets(ListBlist([1..Length(blist)], blist), f));
+
+InstallGlobalFunction(OnBlist, 
+[IsBlist, IsTransformation], 
+function(blist, f)
+  local n, img;
+  n:=Length(blist); img:=f![1]; 
+  return BlistList([1..n], img{ListBlist([1..n], blist)}); 
+end);
+
 # new for 0.1! - OnKernelsAntiAction - for a trans img list and same 
 ###########################################################################
 
@@ -219,6 +264,7 @@ InstallGlobalFunction(OnKernelsAntiAction,
 function(ker, f)
   return CanonicalTransSameKernel(ker{f![1]});  
 end);
+
 
 # new for 0.1! - StrongOrbitsInForwardOrbit - for IsOrbit
 #############################################################################

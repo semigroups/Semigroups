@@ -7,5 +7,7 @@
 ##
 #############################################################################
 
-none so far!
+0.1 -> 0.2  removed method for \^ for a transformation and perm since it is
+            already in the library. 
+
 

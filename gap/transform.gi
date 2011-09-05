@@ -15,16 +15,6 @@
 # - a method for RandomTransformation(m,n) i.e. a random transformation with
 # a given rank. 
 
-# new for 0.1! - \^ - "for a transformation and a permutation (citrus pkg)"
-#############################################################################
-# Notes: conjugates transformation by permutation.
-
-InstallOtherMethod(\^, "for a transformation and a permutation (citrus pkg)",
-[IsTransformation, IsPerm],
-function(t,p) 
-  return p^-1*t*p;
-end); 
-
 # new for 0.1! - \* - "for a transformation and a permutation (citrus pkg)"
 #############################################################################
 
