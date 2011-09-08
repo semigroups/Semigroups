@@ -194,7 +194,6 @@ function(s, f, data, o)
   data_ht:=o!.data_ht;
 
   if IsBound(o!.ht) then # o = OrbitsOfImages(s)
-    pos:=o!.schreier_pos; gen:=o!.schreier_gen;
     one:=o!.one; images:=o!.images; 
     ht:=o!.ht; o:=ht!.o;
   fi;
@@ -1815,8 +1814,6 @@ function(s)
     ht:=ht,
     data_ht:=HTCreate([1,1,1,1,1,1]),
     data:=[],
-    schreier_pos:=[],
-    schreier_gen:=[]
   ));
 end);
 

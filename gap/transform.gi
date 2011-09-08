@@ -15,6 +15,21 @@
 # - a method for RandomTransformation(m,n) i.e. a random transformation with
 # a given rank. 
 
+
+# new for 0.2! - \^ - "for a transformation and a permutation (citrus pkg)"
+#############################################################################
+# Notes: returns y^-1*x*y.
+
+InstallMethod(\^, "for a transformation and a permutation (citrus pkg)", 
+[IsTransformation and IsTransformationRep, IsPerm], 10,
+function(x, y) 
+  local xx, xy, y_inv, z;
+  xx:=x![1]; xy:=OnTuples(xx, y); 
+  y_inv:=OnTuples([1..Length(xx)], y^-1);
+  z:=xy{y_inv}; MakeImmutable(z);
+  return Objectify(TypeObj(x), [z]);
+end);
+
 # new for 0.1! - \* - "for a transformation and a permutation (citrus pkg)"
 #############################################################################
 
@@ -25,6 +40,18 @@ function(x, y)
   c:=OnTuples(x![1], y);
   MakeImmutable(c);
   return Objectify( TypeObj(x), [ c ] );
+end);
+
+# new for 0.2! - \* - "for permutation and transformation (citrus pkg)"
+#############################################################################
+
+InstallMethod(\*, "for a permutation and transformation (citrus pkg)",
+[IsPerm, IsTransformation and IsTransformationRep], 10,
+function(x, y)
+  local yy, xx, z;
+  yy:=y![1]; xx:=OnTuples([1..Length(yy)], x);
+  z:=yy{xx}; MakeImmutable(z);
+  return Objectify( TypeObj(y), [ z ] );
 end);
 
 # new for 0.1! - \* - "for a transformation and a transformation (citrus pkg)"
@@ -276,6 +303,16 @@ function(s, f)
   Enumerate(o);
 
   return not PositionOfFound(o)=false;
+end);
+
+# new for 0.2! - IsSubset - "for trans. semi. and trans. coll"
+###########################################################################
+
+InstallOtherMethod(IsSubset, "for trans. semi. and trans. coll",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup,
+ IsTransformationCollection], 9999, 
+function(s, coll)
+  return ForAll(coll, x-> x in s);
 end);
 
 #OOO

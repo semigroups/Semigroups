@@ -14,7 +14,7 @@ Subtitle := "ComputIng with Transformation semigRoUps and monoidS",
 Version := "0.1",
 Date := "02/09/2011",
 ArchiveURL := 
-          "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus0r1.tar.gz",
+          "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus0r1",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -34,7 +34,7 @@ Persons := [
 Status := "deposited",
 
 README_URL := 
-  "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/README.txt",
+  "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/README",
 PackageInfoURL := 
   "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/PackageInfo.g",
 
