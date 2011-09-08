@@ -1791,7 +1791,7 @@ function(s)
   n := DegreeOfTransformationSemigroup( s );
   one := TransformationNC( [ 1 .. n ] );
 
-  ht := HTCreate(one); HTAdd(ht, one, true);
+  ht := HTCreate(one); HTAdd(ht, one, true); #JDM memory! this uses 100003
   
   for i in gens do 
     HTAdd(ht, i, true);
@@ -1805,17 +1805,21 @@ function(s)
     finished:=false, 
     orbits:=EmptyPlist(n),
     lens:=[1..n]*0, #lens[j]=Length(orbits[j])
-    images:=HTCreate(ImageSetOfTransformation(gens[1])),#1009 normally!
+    images:=HTCreate(ImageSetOfTransformation(gens[1])), 
+    #JDM memory! prev. line uses 100003
     at:=0, 
     gens:=gens,
     s:=s,
     deg := n,
     one := one,
     ht:=ht,
-    data_ht:=HTCreate([1,1,1,1,1,1]),
+    data_ht:=HTCreate([1,1,1,1,1,1]), #JDM this uses 100003 also. 
     data:=[],
   ));
 end);
+
+# JDM MN talk to MN re: hashing doesn't work very well when we use smaller hash
+# lengths but memory is out of hand when we use longer ones. What to do?
 
 #PPP
 
