@@ -43,7 +43,6 @@ function()
    "testinstall.tst"));;
 end);
 
-
 # new for 0.1! - CitrusTestManualExamples - "for no argument"
 #############################################################################
 

@@ -13,6 +13,7 @@ DeclareInfoClass("InfoCitrusProperties");
 DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
 DeclareProperty("IsBand", IsTransformationSemigroup);
 DeclareProperty("IsBlockGroup", IsTransformationSemigroup);
+DeclareProperty("IsBrandtSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsCliffordSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsCommutativeSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsCompletelyRegularSemigroup", IsTransformationSemigroup);

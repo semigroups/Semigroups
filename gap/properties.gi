@@ -19,10 +19,10 @@
 # PrimitiveIdempotents, IdempotentOrder, IsZeroRectangularBand
 # IsLeftNormalBand, IsRightNormalBand, IsNormalBand, IsEUnitarySemigroup
 # IsRectangularGroup, IsBandOfGroups, IsFreeBand, IsFreeSemilattice,
-# IsFreeNormalBand, IsBrandtSemigroup, IsFundamentalInverseSemigp, 
+# IsFreeNormalBand, , IsFundamentalInverseSemigp, 
 # IsFullSubsemigroup (of an inverse semigroup), IsFactorizableInverseMonoid,
 # IsFInverseSemigroup, IsSemigroupWithCentralIdempotents, IsLeftUnipotent,
-# IsRightUnipotent, IsSemigroupWithClosedIdempotents, IsZeroSimpleSemigroup.
+# IsRightUnipotent, IsSemigroupWithClosedIdempotents, .
 
 # a better method for MinimalIdeal of a simple semigroup.
 
@@ -150,6 +150,13 @@ function(s)
 
   return true;
 end);
+
+# new for 0.2! - IsBrandtSemigroup - "for a transformation semigroup"
+#############################################################################
+
+InstallMethod(IsBrandtSemigroup, "for a transformation semigroup", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+s-> IsZeroSimpleSemigroup(s) and IsInverseSemigroup(s));
 
 #IIICCC
 
@@ -731,6 +738,86 @@ function(s)
   return true;
 end);
 
+# new for 0.2! - IsZeroSimpleSemigroup - "for a transformation semigroup"
+###########################################################################
+# Notes: this should be tested more!
+
+InstallOtherMethod(IsZeroSimpleSemigroup, "for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local n, gens, o, lookingfor, r, i, z, ker, iter;
+    
+  n:=Degree(s); gens:=GeneratorsOfSemigroup(s);
+
+  #orbit of images, looking for more than two ranks.
+  o:=Orb(gens, [1..n], OnSets, rec(schreier:=true,
+    gradingfunc:=function(o, x) return Length(x); end,
+    onlygrades:=[1..n], ranks:=EmptyPlist(2), first:=true,
+     lookingfor:=function(o, x) 
+        local ranks, r;
+        if o!.first then 
+          o!.first:=false;
+          return false;
+        fi;
+        ranks:=o!.ranks; r:=Length(x);
+        if not r in ranks then 
+          if Length(ranks)=2 then 
+            return true;
+          else
+            AddSet(ranks, r);
+          fi;
+        fi;
+        return false;
+      end)); 
+
+  Enumerate(o);
+
+  if IsPosInt(PositionOfFound(o)) or Length(o!.ranks)=1 then # 3 or 1 ranks
+    Info(InfoWarning, 2, "one or more than two ranks.");
+    return false;
+  fi;
+
+  # find zero
+  if not HasMultiplicativeZero(s) then 
+    r:=Minimum(Grades(o)); i:=Position(Grades(o), r);
+    z:=EvaluateWord(gens, TraceSchreierTreeForward(o, i));
+
+    if not z^2=z then 
+      return false;
+    fi;
+
+    ker:=CanonicalTransSameKernel(z);
+    o:=Orb(gens, ker, OnKernelsAntiAction, 
+     rec(lookingfor:=function(o, x) return not x=ker; end));
+    Enumerate(o);
+
+    if IsPosInt(PositionOfFound(o)) or 
+     not Size(GreensDClassOfElementNC(s, z))=1 then 
+     # this could be faster in the case that the D-class > 1
+      return false;
+    fi;
+
+    SetMultiplicativeZero(s, z);
+  elif MultiplicativeZero(s)=fail then 
+    Info(InfoWarning, 2, "no multiplicative zero.");
+    return false;
+  else
+    z:=MultiplicativeZero(s);
+  fi;
+
+  iter:=IteratorOfDClassRepsData(s); i:=0;
+  repeat 
+    i:=i+1; NextIterator(iter);
+  until i>2 or IsDoneIterator(iter);
+  
+  if i=2 then 
+    return true;
+  fi;
+
+  Info(InfoWarning, 2, "more than two D-classes.");  
+  return false;
+end);
+
 #MMM
 
 # new for 0.1! - MinimalIdeal - "for a transformation semigroup"
@@ -836,7 +923,7 @@ function(s)
 
   f:=EvaluateWord(gens, TraceSchreierTreeForward(o, i));
 
-  if f^2=f and Size(GreensDClassOfElement(s, f))=1 then #JDM NC? D-class?
+  if f^2=f and Size(GreensDClassOfElementNC(s, f))=1 then
     return f;
   fi;
 
