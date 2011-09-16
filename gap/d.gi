@@ -2170,6 +2170,21 @@ function(d)
    Size(SchutzenbergerGroup(d));
 end);
 
+# new for 0.2! - SizeDClassFromData
+#############################################################################
+# Usage: s = transformation semigroup; d = D-class data. 
+
+InstallGlobalFunction(SizeDClassFromData, 
+function(s, d)
+  local r, l;
+
+  r:=ImageOrbitSchutzGpFromData(s, d[1]);
+  l:=KernelOrbitSchutzGpFromData(s, d[2]);
+  return Size(r)*Length(ImageOrbitSCCFromData(s, d[1]))
+    *Length(KernelOrbitSCCFromData(s, d[2]))*Size(l)/
+    Size(DClassSchutzGpFromData(s,  d[2]));
+end);
+
 # new for 0.1! - SizeOrbitsOfKernels - not a user function.
 #############################################################################
 # Usage: s = transformation semigroup.

@@ -150,6 +150,7 @@ IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("KerRightToImgLeftFromData");
 DeclareAttribute("OrbitsOfKernels", IsTransformationSemigroup, "mutable");
 DeclareGlobalFunction("PreInOrbitsOfKernels");
+DeclareGlobalFunction("SizeDClassFromData");
 DeclareGlobalFunction("SizeOrbitsOfKernels");
 
 # the following functions in l.gi are currently undocumented

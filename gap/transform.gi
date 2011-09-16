@@ -190,21 +190,21 @@ function(ker, img)
   return TransformationNC(List(ker, x-> lookup[x]));
 end);
 
-# new for 0.1! - IndexPeriodOfTransformation - "for a transformation"
+# fixed for 0.2! - IndexPeriodOfTransformation - "for a transformation"
 #############################################################################
 
 InstallMethod(IndexPeriodOfTransformation, "for a transformation", 
 [IsTransformation], 
 function(f)
-  local i, g;
+  local i, g, h, j;
 
   i:=1; g:=f;
 
   while not IsInjectiveTransOnList(g, ImageSetOfTransformation(g)) do 
     i:=i+1; g:=g*f;
   od;
-
-  return [i, Order(AsPermutation(g))];
+  
+  return [i, Size(RClass(Semigroup(f), g))];
 end);
 
 # new for 0.1! - InversesOfTransformationNC - "for trans. semi. and trans."
