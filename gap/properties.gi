@@ -958,6 +958,8 @@ IsTransformationCollection],
   return fail;
 end);
 
+#SSS
+
 # new for 0.1! - SmallGeneratingSet - "for a trans. coll."
 #############################################################################
 
@@ -990,4 +992,23 @@ function(s)
   return out;
 end);
 
+# new for 0.2! - StructureDescription - "for a Brandt trans. semigroup"
+############################################################################
+
+InstallOtherMethod(StructureDescription, "for a Brandt trans. semigroup",
+[IsTransformationSemigroup and IsBrandtSemigroup],
+function(s)
+  local iter, d;
+  
+  iter:=IteratorOfGreensDClasses(s);
+  repeat 
+    d:=NextIterator(iter);
+  until Size(d)>1;
+  
+  return Concatenation("B(", StructureDescription(GroupHClass(d)), ", ",
+  String(NrGreensRClasses(d)), ")");
+end);
+
 #EOF
+
+
