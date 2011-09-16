@@ -9,6 +9,7 @@
 ##
 
 DeclareAttribute("GroupOfUnits", IsTransformationSemigroup);
+DeclareAttribute("IdempotentGeneratedSubsemigp", IsTransformationSemigroup);
 DeclareInfoClass("InfoCitrusProperties");
 DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
 DeclareProperty("IsBand", IsTransformationSemigroup);
@@ -41,6 +42,7 @@ DeclareProperty("IsSemiband", IsTransformationSemigroup);
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
 DeclareProperty("IsSemilatticeAsSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
+DeclareProperty("IsZeroRectangularBand", IsTransformationSemigroup);
 DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
 DeclareAttribute("MinimalIdeal", IsTransformationSemigroup);
 DeclareOperation("RedundantGenerator", [IsTransformationCollection]);
