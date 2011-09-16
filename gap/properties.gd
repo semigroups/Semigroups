@@ -25,6 +25,7 @@ DeclareSynonymAttr("IsAperiodicSemigroup", IsGreensHTrivial);
 DeclareSynonymAttr("IsCombinatorialSemigroup", IsGreensHTrivial);
 DeclareProperty("IsGroupAsSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsIdempotentGenerated", IsTransformationSemigroup);
+DeclareProperty("IsLeftSimple", IsTransformationSemigroup);
 DeclareProperty("IsLeftZeroSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsMonoidAsSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsMinimalIdeal", IsSemigroupIdeal and 
@@ -33,6 +34,7 @@ DeclareOperation("IsomorphismTransformationMonoid",
  [IsTransformationSemigroup]);
 DeclareProperty("IsOrthodoxSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsRectangularBand", IsTransformationSemigroup);
+DeclareProperty("IsRightSimple", IsTransformationSemigroup);
 DeclareProperty("IsRightZeroSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsSemiband", IsTransformationSemigroup);
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);

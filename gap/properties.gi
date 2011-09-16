@@ -463,6 +463,24 @@ end);
 
 #IIILLL
 
+# new for 0.2! - IsLeftSimple - "for a transformation semigroup"
+###########################################################################
+
+InstallMethod(IsLeftSimple, "for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local iter;
+  
+  if IsLeftZeroSemigroup(s) then 
+    return true;
+  elif HasNrGreensLClasses(s) then 
+    return NrGreensLClasses(s)=1;
+  fi;
+  
+  iter:=IteratorOfLClassRepsData(s); NextIterator(iter);
+  return IsDoneIterator(iter);
+end);
+
 # new for 0.1! - IsLeftZeroSemigroup - "for a transformation semigroup"
 ###########################################################################
 
@@ -594,6 +612,24 @@ function(s)
   od; 
 
   return true;
+end);
+
+# new for 0.2! - IsRightSimple - "for a transformation semigroup"
+###########################################################################
+
+InstallMethod(IsRightSimple, "for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local iter;
+
+  if IsRightZeroSemigroup(s) then 
+    return true;
+  elif HasNrGreensRClasses(s) then 
+    return NrGreensRClasses(s)=1;
+  fi;
+
+  iter:=IteratorOfRClassRepsData(s); NextIterator(iter);
+  return IsDoneIterator(iter);
 end);
 
 # new for 0.1! - IsRightZeroSemigroup - "for a transformation semigroup"
