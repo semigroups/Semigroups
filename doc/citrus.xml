@@ -616,6 +616,7 @@ gap> GreensRClasses(S);
     <Package>Citrus</Package>.
     <#Include Label="IsBand">
     <#Include Label="IsBlockGroup">
+    <#Include Label="IsBrandtSemigroup">
     <#Include Label="IsCliffordSemigroup">
     <#Include Label="IsCommutativeSemigroup">
     <#Include Label="IsCompletelyRegularSemigroup">
@@ -623,7 +624,9 @@ gap> GreensRClasses(S);
     <#Include Label="IsGroupAsSemigroup">
     <#Include Label="IsIdempotentGenerated">
     <#Include Label="IsInverseSemigroup">
+    <#Include Lable="IsLeftSimple">
     <#Include Label="IsLeftZeroSemigroup">
+    <#Include Label="IsMonogenicSemigroup">
     <#Include Label="IsMonoidAsSemigroup">
     <#Include Label="IsOrthodoxSemigroup">
     <#Include Label="IsRectangularBand">
@@ -633,7 +636,9 @@ gap> GreensRClasses(S);
     <#Include Label="IsSimpleSemigroup">
     <#Include Label="IsSynchronizingSemigroup">
     <#Include Label="IsZeroGroup">
+    <#Include Label="IsZeroRectangularBand">
     <#Include Label="IsZeroSemigroup">
+    <#Include Label="IsZeroSimpleSemigroup">
   </Section>
 
   <Section><Heading>Changing Representation</Heading>
