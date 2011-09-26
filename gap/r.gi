@@ -176,10 +176,9 @@ end);
 # Notes: if s is a d-class, then data should have j, k, l, m and g not = fail!
 
 InstallGlobalFunction(AddToOrbitsOfImages,
-function(s, f, data, o)
-  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, one, images, ht, oo, 
-  reps, out, i, z, y;
-  #JDM require position of f in o!.ht!.o also! to do schreier.
+function(s, f, data, o, r)
+  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, one, images, ht, pos, gen, o_to_rep, oo, reps, out, i, reps_data_pos, z, y;
+  
   j:=data[1]; 	# img size
   k:=data[2]; 	# index of orbit containing img
   l:=data[3]; 	# position of img in O[j][k]
@@ -190,12 +189,13 @@ function(s, f, data, o)
 
   #JDM not sure it will improve things but maybe everything with a ! here
   #should be an argument to AddToOrbitsOfImages. 
+
   O := o!.orbits;  gens:=o!.gens; d:=o!.data; lens:=o!.lens;
   data_ht:=o!.data_ht;
 
   if IsBound(o!.ht) then # o = OrbitsOfImages(s)
     one:=o!.one; images:=o!.images; 
-    ht:=o!.ht; o:=ht!.o;
+    ht:=o!.ht; pos:=o!.pos; gen:=o!.gen; o_to_rep:=o!.o_to_rep; o:=ht!.o; 
   fi;
 
   if k = fail then  #new img and l, m, val, n, g=fail
@@ -217,13 +217,15 @@ function(s, f, data, o)
           
     reps:=oo[2]; #reps. corresponding to all scc of oo[1]
     out:=[j, lens[j], 1, 1, 1, 1];
-    i:=Length(d);
-          
+    i:=Length(d); reps_data_pos:=EmptyPlist(Length(oo[3]));
+    
     for m in [1..Length(oo[3])] do  # oo[3] is a list of the first index in
                                     # every scc of oo[1]
       i:=i+1;
       d[i]:=[j, lens[j], oo[3][m], m, 1, 1]; 
       HTAdd(data_ht, d[i], i);
+
+      reps_data_pos[m]:=i;
     od;
 
   ##############################################################################
@@ -235,7 +237,8 @@ function(s, f, data, o)
       reps[val][n+1]:=g;
       out:=[j, k, l, m, val, n+1];
       i:=Length(d)+1;
-      d[i]:=out;
+      d[i]:=out; 
+      reps_data_pos:=[i];
       HTAdd(data_ht, out, i);
     else #new kernel
       val:=Length(reps)+1;
@@ -243,6 +246,7 @@ function(s, f, data, o)
       out:=[j, k, l, m, val, 1];
       i:=Length(d)+1;
       d[i]:=out;
+      reps_data_pos:=[i];
       HTAdd(data_ht, out, i);
       HTAdd(O[j][k]!.kernels_ht[m], CanonicalTransSameKernel( g ), val);
     fi;
@@ -253,15 +257,17 @@ function(s, f, data, o)
   #install new pts in the orbit
 
   if IsBound(ht) then 
-    i:=Length(o);
-    for f in reps do 
+    i:=Length(o); o_to_rep[r]:=reps_data_pos;
+    for j in [1..Length(reps)] do
+      f:=reps[j];
       for y in [1..Length(gens)] do
         z:=gens[y]*f;
         if HTValue(ht, z)=fail then  
-          HTAdd(ht, z, true);
           i:=i+1;
+          HTAdd(ht, z, i);
           o[i]:=z;
-          #pos[i]:=??; gen[i]:=y;
+          pos[reps_data_pos[j]]:=i; gen[reps_data_pos[j]]:=y;
+        
          #schreier words here
         fi;
       od;
@@ -331,6 +337,7 @@ function(gens, o, j)
   for i in scc do
     f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i)); 
     p[i]:=MappingPermListList(OnTuples(o[scc[1]], f), o[scc[1]]);
+    #Error(""); 
   od;
 
   return p;
@@ -344,7 +351,7 @@ end);
 
 InstallGlobalFunction(CreateImageOrbitSchutzGp,
 function(gens, o, f, k) 
-  local scc, bound, g, p, t, graph, is_sym, i, j;
+  local scc, bound, g, p, t, graph, is_sym, i, j, size;
 
   scc:=o!.scc[k];
 
@@ -361,8 +368,12 @@ function(gens, o, f, k)
     for j in [1..Length(gens)] do 
     
       if IsBound(graph[i][j]) and t[k][graph[i][j]] then
+        #size:=Size(g);
         g:=ClosureGroup(g, PermLeftQuoTransformationNC(f, f/p[i] *
          (gens[j]*p[graph[i][j]])));
+        #if Size(g)>size then 
+        #fi;
+
       fi; #keep track of schreier gens here!
     
       if Size(g)>=bound then 
@@ -676,7 +687,8 @@ end);
 
 InstallGlobalFunction(ForwardOrbitOfImage, 
 function(arg)
-  local s, f, images, img, deg, j, bound, treehashsize, o, scc, r, reps, gens, i;
+  local s, f, images, img, deg, j, bound, treehashsize, o, scc, r, reps, gens, 
+   i;
 
   s:=arg[1]; f:=arg[2];
 
@@ -720,7 +732,8 @@ function(arg)
   Enumerate(o, bound);
           
   #strongly connected components
-  scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)), Set));;
+  scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)),
+   Set));;
 
   r:=Length(scc);
   o!.scc:=scc;
@@ -1582,7 +1595,7 @@ function(s)
 
     if i=Length(o) then
     #at the end of the orbit!
-      O!.finished:=true;
+      O!.finished:=true; #JDM unbind things here!
       return true;
     fi;
 
@@ -1597,7 +1610,10 @@ function(s)
 
       if not d[1] then #new rep!
         if IsTransformationMonoid(s) or not i = 1 then 
-          d:=AddToOrbitsOfImages(s, x, d[2], O);
+          
+          Add(O!.rep_to_o, i); #this should go into AddToOrbitsOfImages
+
+          d:=AddToOrbitsOfImages(s, x, d[2], O, i);
           iter!.i:=iter!.i+1;
           iter!.next_value:=d;
           return false;
@@ -1791,10 +1807,10 @@ function(s)
   n := DegreeOfTransformationSemigroup( s );
   one := TransformationNC( [ 1 .. n ] );
 
-  ht := HTCreate(one); HTAdd(ht, one, true); #JDM memory! this uses 100003
+  ht := HTCreate(one); HTAdd(ht, one, 1); #JDM memory! this uses 100003
   
-  for i in gens do 
-    HTAdd(ht, i, true);
+  for i in [1..Length(gens)] do 
+    HTAdd(ht, gens[i], i);
   od;
   
   ht!.o := Concatenation([one], gens); 
@@ -1815,6 +1831,10 @@ function(s)
     ht:=ht,
     data_ht:=HTCreate([1,1,1,1,1,1]), #JDM this uses 100003 also. 
     data:=[],
+    gen:=[],
+    pos:=[], 
+    rep_to_o:=[],
+    o_to_rep:=[]
   ));
 end);
 
@@ -2084,6 +2104,17 @@ function(s)
 end);
 
 #TTT
+
+TraceRRepsSchreierTree:=function(o, i)
+  local word, j;
+
+  word:=[]; j:=1; 
+  while not j=i do 
+    Add(word, o!.gen[j]);
+    j:=o!.o_to_rep[o!.pos[j]];
+  od;
+  return word;
+end;
 
 # new for 0.1! - TraceSchreierTreeOfSCCForward - not a user function!
 #############################################################################
