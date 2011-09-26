@@ -266,7 +266,11 @@ function(s, f, data, o, r)
           i:=i+1;
           HTAdd(ht, z, i);
           o[i]:=z;
-          pos[reps_data_pos[j]]:=i; gen[reps_data_pos[j]]:=y;
+          if not IsBound(pos[reps_data_pos[j]]) then 
+            pos[reps_data_pos[j]]:=[];
+            gen[reps_data_pos[j]]:=[];
+          fi;
+          Add(pos[reps_data_pos[j]], i); Add(gen[reps_data_pos[j]], y);
         
          #schreier words here
         fi;
