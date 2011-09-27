@@ -8,6 +8,37 @@
 #############################################################################
 ##
 
+# Factorization(s, f);
+
+# 1) calculate the tree that says how to get from one R-class rep to another by
+# applying which generator (using rep_to_o and an as yet unwritten inverse of
+# OrbitsOfImages(s)!.graph).
+
+# 2) do something like d1:=PreInOrbitsOfImages(s, f, false) (unrectified image)
+
+# 3) find the word from the tree in 1) that takes me to the element g of the
+# potential R-class reps orbit that yields the R-class rep of the R-class of f
+# call this w_1
+
+# 4) do PreInOrbitsOfImages(s, g, false) and TraceSchreierTreeOfSCCBack to find
+# which generators to apply to rectify the image of g call these w_2
+
+# 5) Find p:=PermLeftQuoTransformationNC(R-class rep, g with rect image) 
+
+# 6) Give p as a word in the generators of SchutzGp(R-class)
+
+# 7) Find p as a word in generators of s using words from
+# CreateSchutzGpOfImgOrb (or whatever) [i, j, k]->
+# Concatenation(TraceSchrBack(o, ?, i), Generators(s)[j], TraceSchrForward(k))
+# call this w_3
+
+# 8) Find the word using TraceSchreierTreeForward(o, d[1][4], d[1][3]) that
+# unrectifies the image of f and call this w_4;
+
+# 9) The word you are looking for is w_1, w_2, w_3, w_4 (this should anyway
+# yield something with the same kernel and image as f if it is not f, then
+# maybe separate the computation for r-class reps and other elements.)
+
 #############################################################################
 # Conventions:
 
@@ -146,7 +177,6 @@ function(f, s)
     return false;
   fi;
 
-  # check what's already known...
   iter:=IteratorOfNewRClassRepsData(s);
   orbits:=o!.orbits; images:=o!.images;
 
@@ -177,7 +207,8 @@ end);
 
 InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, f, data, o, r)
-  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, one, images, ht, pos, gen, o_to_rep, oo, reps, out, i, reps_data_pos, z, y;
+  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, one, images, ht,
+  graph, o_to_rep, oo, reps, out, i, reps_pos, z, y, t;
   
   j:=data[1]; 	# img size
   k:=data[2]; 	# index of orbit containing img
@@ -191,12 +222,14 @@ function(s, f, data, o, r)
   #should be an argument to AddToOrbitsOfImages. 
 
   O := o!.orbits;  gens:=o!.gens; d:=o!.data; lens:=o!.lens;
-  data_ht:=o!.data_ht;
+  data_ht:=o!.data_ht; t:=Length(gens);
 
   if IsBound(o!.ht) then # o = OrbitsOfImages(s)
     one:=o!.one; images:=o!.images; 
-    ht:=o!.ht; pos:=o!.pos; gen:=o!.gen; o_to_rep:=o!.o_to_rep; o:=ht!.o; 
+    ht:=o!.ht; graph:=o!.graph; o_to_rep:=o!.o_to_rep; o:=ht!.o; 
   fi;
+
+ # if r=6 then Error(""); fi;
 
   if k = fail then  #new img and l, m, val, n, g=fail
                     #don't call this function with a d-class and k=fail!
@@ -217,7 +250,7 @@ function(s, f, data, o, r)
           
     reps:=oo[2]; #reps. corresponding to all scc of oo[1]
     out:=[j, lens[j], 1, 1, 1, 1];
-    i:=Length(d); reps_data_pos:=EmptyPlist(Length(oo[3]));
+    i:=Length(d); reps_pos:=EmptyPlist(Length(oo[3]));
     
     for m in [1..Length(oo[3])] do  # oo[3] is a list of the first index in
                                     # every scc of oo[1]
@@ -225,7 +258,7 @@ function(s, f, data, o, r)
       d[i]:=[j, lens[j], oo[3][m], m, 1, 1]; 
       HTAdd(data_ht, d[i], i);
 
-      reps_data_pos[m]:=i;
+      reps_pos[m]:=i;
     od;
 
   ##############################################################################
@@ -238,7 +271,7 @@ function(s, f, data, o, r)
       out:=[j, k, l, m, val, n+1];
       i:=Length(d)+1;
       d[i]:=out; 
-      reps_data_pos:=[i];
+      reps_pos:=[i];
       HTAdd(data_ht, out, i);
     else #new kernel
       val:=Length(reps)+1;
@@ -246,7 +279,7 @@ function(s, f, data, o, r)
       out:=[j, k, l, m, val, 1];
       i:=Length(d)+1;
       d[i]:=out;
-      reps_data_pos:=[i];
+      reps_pos:=[i];
       HTAdd(data_ht, out, i);
       HTAdd(O[j][k]!.kernels_ht[m], CanonicalTransSameKernel( g ), val);
     fi;
@@ -257,7 +290,7 @@ function(s, f, data, o, r)
   #install new pts in the orbit
 
   if IsBound(ht) then 
-    i:=Length(o); o_to_rep[r]:=reps_data_pos;
+    i:=Length(o); o_to_rep[r]:=reps_pos;
     for j in [1..Length(reps)] do
       f:=reps[j];
       for y in [1..Length(gens)] do
@@ -266,11 +299,10 @@ function(s, f, data, o, r)
           i:=i+1;
           HTAdd(ht, z, i);
           o[i]:=z;
-          if not IsBound(pos[reps_data_pos[j]]) then 
-            pos[reps_data_pos[j]]:=[];
-            gen[reps_data_pos[j]]:=[];
+          if not IsBound(graph[reps_pos[j]]) then 
+            graph[reps_pos[j]]:=[];
           fi;
-          Add(pos[reps_data_pos[j]], i); Add(gen[reps_data_pos[j]], y);
+          graph[reps_pos[j]][y]:=i; 
         
          #schreier words here
         fi;
@@ -355,7 +387,7 @@ end);
 
 InstallGlobalFunction(CreateImageOrbitSchutzGp,
 function(gens, o, f, k) 
-  local scc, bound, g, p, t, graph, is_sym, i, j, size;
+  local scc, bound, g, p, t, graph, is_sym, l, words, h, i, j;
 
   scc:=o!.scc[k];
 
@@ -366,17 +398,18 @@ function(gens, o, f, k)
   fi;
 
   g:=Group(()); p:=o!.perms; t:=o!.truth;
-  graph:=OrbitGraph(o); is_sym:=false;
+  graph:=OrbitGraph(o); is_sym:=false; l:=0; words:=[];
 
   for i in scc do 
     for j in [1..Length(gens)] do 
     
       if IsBound(graph[i][j]) and t[k][graph[i][j]] then
-        #size:=Size(g);
-        g:=ClosureGroup(g, PermLeftQuoTransformationNC(f, f/p[i] *
-         (gens[j]*p[graph[i][j]])));
-        #if Size(g)>size then 
-        #fi;
+        h:=PermLeftQuoTransformationNC(f, f/p[i] * (gens[j]*p[graph[i][j]]));
+        if not h=() then 
+          g:=ClosureGroup(g, h);
+          l:=l+1;
+          words[l]:=[i, j, graph[i][j]];
+        fi;
 
       fi; #keep track of schreier gens here!
     
@@ -394,12 +427,12 @@ function(gens, o, f, k)
   od;
 
   if is_sym then
-    return [true, g];
+    return [true, g, words];
   elif Size(g)=1 then 
-    return [false, g];
+    return [false, g, words];
   fi;
     
-  return [StabChainImmutable(g), g];
+  return [StabChainImmutable(g), g, words];
 end);
 
 # new for 0.1! - CreateRClass - not a user function!
@@ -1200,7 +1233,7 @@ function(arg)
 end);
 
 # new for 0.1! - ImageOrbitStabChain - "for an R-class of a trans. semigp."
-############################################################################
+###########################
 
 InstallMethod(ImageOrbitStabChain, "for an R-class of a trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp],
@@ -1835,8 +1868,7 @@ function(s)
     ht:=ht,
     data_ht:=HTCreate([1,1,1,1,1,1]), #JDM this uses 100003 also. 
     data:=[],
-    gen:=[],
-    pos:=[], 
+    graph:=[], 
     rep_to_o:=[],
     o_to_rep:=[]
   ));
