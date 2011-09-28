@@ -12,9 +12,10 @@
 
 # 1) calculate the tree that says how to get from one R-class rep to another by
 # applying which generator (using rep_to_o and an as yet unwritten inverse of
-# OrbitsOfImages(s)!.graph).
+# OrbitsOfImages(s)!.graph). DONE!
 
 # 2) do something like d1:=PreInOrbitsOfImages(s, f, false) (unrectified image)
+# where f is the element giving rise to the R-class rep. 
 
 # 3) find the word from the tree in 1) that takes me to the element g of the
 # potential R-class reps orbit that yields the R-class rep of the R-class of f
@@ -206,10 +207,10 @@ end);
 # Notes: if s is a d-class, then data should have j, k, l, m and g not = fail!
 
 InstallGlobalFunction(AddToOrbitsOfImages,
-function(s, f, data, o, r)
-  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, one, images, ht,
-  graph, o_to_rep, oo, reps, out, i, reps_pos, z, y, t;
+function(s, f, data, o)
+  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, t, one, images, ht, graph, gen, pos, oo, reps, out, i, reps_pos, z, y;
   
+
   j:=data[1]; 	# img size
   k:=data[2]; 	# index of orbit containing img
   l:=data[3]; 	# position of img in O[j][k]
@@ -226,7 +227,7 @@ function(s, f, data, o, r)
 
   if IsBound(o!.ht) then # o = OrbitsOfImages(s)
     one:=o!.one; images:=o!.images; 
-    ht:=o!.ht; graph:=o!.graph; o_to_rep:=o!.o_to_rep; o:=ht!.o; 
+    ht:=o!.ht; graph:=o!.graph; gen:=o!.gen; pos:=o!.pos; o:=ht!.o; 
   fi;
 
  # if r=6 then Error(""); fi;
@@ -290,7 +291,7 @@ function(s, f, data, o, r)
   #install new pts in the orbit
 
   if IsBound(ht) then 
-    i:=Length(o); o_to_rep[r]:=reps_pos;
+    i:=Length(o); 
     for j in [1..Length(reps)] do
       f:=reps[j];
       for y in [1..Length(gens)] do
@@ -299,10 +300,7 @@ function(s, f, data, o, r)
           i:=i+1;
           HTAdd(ht, z, i);
           o[i]:=z;
-          if not IsBound(graph[reps_pos[j]]) then 
-            graph[reps_pos[j]]:=[];
-          fi;
-          graph[reps_pos[j]][y]:=i; 
+          pos[i]:=reps_pos[j]; gen[i]:=y;
         
          #schreier words here
         fi;
@@ -1642,15 +1640,20 @@ function(s)
       O!.at:=O!.at+1;
       i:=i+1;
       x:=o[i];
-      d:=InOrbitsOfImages(x, true, [fail, fail, fail, fail, fail, 0, fail], 
-       orbits, images);
+      d:=InOrbitsOfImages(x, false, [fail, fail, fail, fail, fail, 0, fail], 
+       orbits, images); #JDM should return both scc[1] and l
 
       if not d[1] then #new rep!
         if IsTransformationMonoid(s) or not i = 1 then 
-          
-          Add(O!.rep_to_o, i); #this should go into AddToOrbitsOfImages
+          Add(O!.rep_to_o, i); 
+          Add(O!.mult_ind, d[2]{[1..4]}); 
+          if not d[2][3]=fail then #old img
+            d[2][3]:=O!.orbits![d[2][1]][d[2][2]]!.scc[d[2][4]][1]; #rectify
+          #JDM much much better if InOrbitsOfImages return both the rectified
+          #and unrectified positions. 
+          fi;
 
-          d:=AddToOrbitsOfImages(s, x, d[2], O, i);
+          d:=AddToOrbitsOfImages(s, x, d[2], O);
           iter!.i:=iter!.i+1;
           iter!.next_value:=d;
           return false;
@@ -1869,8 +1872,9 @@ function(s)
     data_ht:=HTCreate([1,1,1,1,1,1]), #JDM this uses 100003 also. 
     data:=[],
     graph:=[], 
-    rep_to_o:=[],
-    o_to_rep:=[]
+    rep_to_o:=[], mult_ind:=[],
+    gen:=ListWithIdenticalEntries(Length(gens)+1, fail), 
+    pos:=ListWithIdenticalEntries(Length(gens)+1, fail)
   ));
 end);
 
@@ -2141,14 +2145,21 @@ end);
 
 #TTT
 
-TraceRRepsSchreierTree:=function(o, i)
-  local word, j;
+# Usage: s = trans. semigroup; i = index of R-class rep. 
 
-  word:=[]; j:=1; 
-  while not j=i do 
-    Add(word, o!.gen[j]);
-    j:=o!.o_to_rep[o!.pos[j]];
+TraceRRepsTree:=function(s, i)
+  local gen, pos, t, word, j;
+
+  gen:=OrbitsOfImages(s)!.gen; pos:=OrbitsOfImages(s)!.pos;
+  t:=OrbitsOfImages(s)!.rep_to_o;
+  
+  word:=[]; j:=i;
+  while not gen[t[j]]=fail do 
+    Add(word, gen[t[j]]);
+    j:=pos[t[j]];
   od;
+  
+  Add(word, t[j]-1);
   return word;
 end;
 
