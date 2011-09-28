@@ -8,6 +8,11 @@
 #############################################################################
 ##
 
+#gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 2, 4, 1, 2 ]$
+#>   Transformation( [ 3, 1, 1, 3 ] ), Transformation( [ 3, 3, 4, 1 ] ) ]
+#> ;;
+
+
 # Factorization(s, f);
 
 # 1) calculate the tree that says how to get from one R-class rep to another by
@@ -363,16 +368,15 @@ function(gens, o, j)
   p:=EmptyPlist(Length(o));
   scc:=o!.scc[j];
 
-  #for i in scc do
-  #	f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
-  #	p[i]:=PermList(MappingPermListList(o[i], OnTuples(o[i], f)));
-  #od; JDM this works also!
-
   for i in scc do
-    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i)); 
-    p[i]:=MappingPermListList(OnTuples(o[scc[1]], f), o[scc[1]]);
-    #Error(""); 
-  od;
+  	f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
+  	p[i]:=MappingPermListList(o[i], OnTuples(o[i], f));
+  od; #JDM this works also!
+
+  #for i in scc do
+  #  f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i)); 
+  #  p[i]:=MappingPermListList(OnTuples(o[scc[1]], f), o[scc[1]]);
+  #od;
 
   return p;
 end);
@@ -402,7 +406,11 @@ function(gens, o, f, k)
     for j in [1..Length(gens)] do 
     
       if IsBound(graph[i][j]) and t[k][graph[i][j]] then
-        h:=PermLeftQuoTransformationNC(f, f/p[i] * (gens[j]*p[graph[i][j]]));
+        #JDM potentially dangerous change here!
+        #h:=PermLeftQuoTransformationNC(f, f/p[i] * (gens[j]*p[graph[i][j]]));
+        h:=PermLeftQuoTransformationNC(f,
+        f*EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, k,
+        i)) * (gens[j]*p[graph[i][j]]));
         if not h=() then 
           g:=ClosureGroup(g, h);
           l:=l+1;
@@ -713,6 +721,25 @@ function(s)
 end);
 
 #FFF
+
+FactorSemiElt:=function(s, f)
+  local d, l, o;
+  
+  if not f in s then 
+    return fail;
+  fi;#hack
+
+  d:=PreInOrbitsOfImages(s, f, false);
+  l:=d[2][3]; o:=OrbitsOfImages(s)!.orbits[d[2][1]][d[2][2]];
+  d[2][3]:=o!.scc[d[2][4]][1]; #hack!
+
+#  r:=RClass(s, f); 
+#  g:=SchutzenbergerGroup(r);
+
+
+return Concatenation(TraceRRepsTree(s, HTValue(OrbitsOfImages(s)!.data_ht,
+  d[2]{[1..6]})), TraceSchreierTreeOfSCCForward(o, d[2][4], l));
+end;
 
 # new for 0.1! - ForwardOrbitOfImage - not a user function!
 #############################################################################
@@ -2071,6 +2098,13 @@ function(r)
   return r!.o!.orbits[d[1]][d[2]]!.schutz[d[4]][2];
 end);
 
+SchutzGpGensAsWords:=function(r)
+local d;
+d:=r!.data;
+  return r!.o!.orbits[d[1]][d[2]]!.schutz[d[4]][3];
+end;
+
+
 # new for 0.1! - Size - "for an R-class of a trans. semigp."
 #############################################################################
 # Algorithm C. 
@@ -2148,19 +2182,22 @@ end);
 # Usage: s = trans. semigroup; i = index of R-class rep. 
 
 TraceRRepsTree:=function(s, i)
-  local gen, pos, t, word, j;
-
-  gen:=OrbitsOfImages(s)!.gen; pos:=OrbitsOfImages(s)!.pos;
-  t:=OrbitsOfImages(s)!.rep_to_o;
+  local gen, pos, t, u, o, word_1, word_2, j;
   
-  word:=[]; j:=i;
-  while not gen[t[j]]=fail do 
-    Add(word, gen[t[j]]);
+  gen:=OrbitsOfImages(s)!.gen; pos:=OrbitsOfImages(s)!.pos;
+  t:=OrbitsOfImages(s)!.rep_to_o; u:=OrbitsOfImages(s)!.mult_ind;
+  o:=OrbitsOfImages(s)!.orbits;
+
+  word_1:=[]; word_2:=[]; j:=i;
+  while not gen[t[j]]=fail do
+    Add(word_1, gen[t[j]]);
+    word_2:= Concatenation(word_2, TraceSchreierTreeOfSCCBack(
+    o[u[j][1]][u[j][2]], u[j][4], u[j][3]));
     j:=pos[t[j]];
   od;
   
-  Add(word, t[j]-1);
-  return word;
+  Add(word_1, t[j]-1);
+  return Concatenation(word_1, Reversed(word_2));
 end;
 
 # new for 0.1! - TraceSchreierTreeOfSCCForward - not a user function!
@@ -2192,6 +2229,14 @@ end);
 InstallGlobalFunction(TraceSchreierTreeOfSCCBack,
 function(o, i, j)
   local word;
+
+  if not IsBound(o!.reverse) then 
+    o!.reverse:=EmptyPlist(Length(o!.scc));
+  fi; 
+
+  if not IsBound(o!.reverse[i]) then 
+    o!.reverse[i]:=CreateReverseSchreierTreeOfSCC(o, i);
+  fi; 
 
   word := [];
   while j > o!.scc[i][1] do
