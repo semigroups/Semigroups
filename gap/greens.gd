@@ -74,6 +74,8 @@ DeclareAttribute("ImageOrbitSCC", IsGreensRClass and
  IsGreensClassOfTransSemigp);
 DeclareAttribute("ImageOrbitSchutzGp", IsGreensRClass and 
  IsGreensClassOfTransSemigp);
+DeclareAttribute("ImageOrbitSchutzGpGensAsWords", IsGreensRClass and
+ IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("ImageOrbitSchutzGpFromData");
 DeclareGlobalFunction("ImageOrbitStabChainFromData");
 DeclareAttribute("ImageOrbitStabChain", IsGreensRClass and 
@@ -91,6 +93,7 @@ DeclareGlobalFunction("PreInOrbitsOfImages");
 DeclareGlobalFunction("RClassRepFromData");
 DeclareAttribute("RClassType", IsTransformationSemigroup);
 DeclareGlobalFunction("SizeOrbitsOfImages");
+DeclareGlobalFunction("TraceRClassRepsTree");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCForward");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCBack");
 

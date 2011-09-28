@@ -722,7 +722,12 @@ end);
 
 #FFF
 
-FactorSemiElt:=function(s, f)
+# new for 0.2! - Factorization - "for a transformation semigroup"
+#############################################################################
+
+InstallOtherMethod(Factorization, "for a transformation semigroup", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation], 
+function(s, f)
   local d, l, o;
   
   if not f in s then 
@@ -736,10 +741,9 @@ FactorSemiElt:=function(s, f)
 #  r:=RClass(s, f); 
 #  g:=SchutzenbergerGroup(r);
 
-
-return Concatenation(TraceRRepsTree(s, HTValue(OrbitsOfImages(s)!.data_ht,
-  d[2]{[1..6]})), TraceSchreierTreeOfSCCForward(o, d[2][4], l));
-end;
+  return Concatenation(TraceRClassRepsTree(s, HTValue(OrbitsOfImages(s)!.
+   data_ht, d[2]{[1..6]})), TraceSchreierTreeOfSCCForward(o, d[2][4], l));
+end);
 
 # new for 0.1! - ForwardOrbitOfImage - not a user function!
 #############################################################################
@@ -1236,6 +1240,16 @@ Info(InfoWarning, 1, "please use SchutzenbergerGroup instead");
 return SchutzenbergerGroup(r);
 end);
 
+# new for 0.2! - ImageOrbitSchutzGpGensAsWords - "for R-class of trans. semi
+############################################################################
+
+InstallMethod(ImageOrbitSchutzGpGensAsWords, "for R-class of trans. semi",
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+  local d;
+  d:=r!.data;
+  return r!.o!.orbits[d[1]][d[2]]!.schutz[d[4]][3];
+end);
 
 # new for 0.1! - ImageOrbitSchutzGpFromData - not a user function!
 ############################################################################
@@ -2098,13 +2112,6 @@ function(r)
   return r!.o!.orbits[d[1]][d[2]]!.schutz[d[4]][2];
 end);
 
-SchutzGpGensAsWords:=function(r)
-local d;
-d:=r!.data;
-  return r!.o!.orbits[d[1]][d[2]]!.schutz[d[4]][3];
-end;
-
-
 # new for 0.1! - Size - "for an R-class of a trans. semigp."
 #############################################################################
 # Algorithm C. 
@@ -2179,26 +2186,31 @@ end);
 
 #TTT
 
-# Usage: s = trans. semigroup; i = index of R-class rep. 
+# new for 0.2! - TraceRClassRepsTree - not a user function!
+#############################################################################
+# Usage: s = trans. semigroup; i = index of R-class rep 
 
-TraceRRepsTree:=function(s, i)
+# Returns: a word in the generators of s equal to GreensRClassReps(s)[i]. 
+
+InstallGlobalFunction(TraceRClassRepsTree, 
+function(s, i)
   local gen, pos, t, u, o, word_1, word_2, j;
-  
-  gen:=OrbitsOfImages(s)!.gen; pos:=OrbitsOfImages(s)!.pos;
-  t:=OrbitsOfImages(s)!.rep_to_o; u:=OrbitsOfImages(s)!.mult_ind;
-  o:=OrbitsOfImages(s)!.orbits;
+
+  o:=OrbitsOfImages(s);
+  gen:=o!.gen; pos:=o!.pos; t:=o!.rep_to_o; u:=o!.mult_ind; o:=o!.orbits;
 
   word_1:=[]; word_2:=[]; j:=i;
+
   while not gen[t[j]]=fail do
     Add(word_1, gen[t[j]]);
-    word_2:= Concatenation(word_2, TraceSchreierTreeOfSCCBack(
-    o[u[j][1]][u[j][2]], u[j][4], u[j][3]));
+    word_2:= Concatenation(word_2, 
+     TraceSchreierTreeOfSCCBack(o[u[j][1]][u[j][2]], u[j][4], u[j][3]));
     j:=pos[t[j]];
   od;
   
   Add(word_1, t[j]-1);
   return Concatenation(word_1, Reversed(word_2));
-end;
+end);
 
 # new for 0.1! - TraceSchreierTreeOfSCCForward - not a user function!
 #############################################################################
