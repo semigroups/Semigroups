@@ -283,12 +283,13 @@ function(s, f)
   img_o:=rec( finished:=false, orbits:=img_o, gens:=Generators(s), s:=s,
    deg := n, data:=[[j,1,1,1,1,1]], images:=fail, lens:=List([1..n],
    function(x) if x=j then return 1; else return 0; fi; end),
-   data_ht:=HTCreate([1,1,1,1,1,1]));
+   data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=1009)));
 
   Info(InfoCitrusGreens, 2, "finding orbit of kernel...");
   ker_o:=[]; ker_o[j]:=[ForwardOrbitOfKernel(s, f)];
   ker_o:=rec( orbits:=ker_o, gens:=Generators(s), data:=[[[j,1,1,1,1,1],
-   [j,1,1,1,1,1]]], kernels:=fail, data_ht:=HTCreate([1,1,1,1,1,1]));
+   [j,1,1,1,1,1]]], kernels:=fail, data_ht:=HTCreate([1,1,1,1,1,1],
+   rec(hashlen:=1009)));
  
   Info(InfoCitrusGreens, 2, "finding the kernel orbit schutz. group");
   Add(ker_o!.orbits[j][1]!.d_schutz[1], [CreateSchutzGpOfDClass(s,

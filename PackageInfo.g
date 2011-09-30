@@ -64,6 +64,6 @@ Dependencies := rec(
   ExternalConditions := []),
   AvailabilityTest := ReturnTrue,
   Autoload := false,
-  TestFile := "tst/testall.g",
+  TestFile := "tst/testinstall.g",
   Keywords := ["transformation semigroups", "green's relations"]
 ));

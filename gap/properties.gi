@@ -39,7 +39,7 @@ function(s)
   local h, m, g;
 
   if not IsMonoidAsSemigroup(s) then 
-    Info(InfoWarning, 2, "not a monoid");
+    Info(InfoWarning, 2, "the semigroup is not a monoid");
     return fail;
   fi;
 
@@ -671,10 +671,10 @@ function(s)
   local iter, d;
 
   if IsSimpleSemigroup(s) then 
-    Info(InfoWarning, "the semigroup is simple");
+    Info(InfoWarning, 2, "the semigroup is simple");
     return true;
   elif IsCompletelyRegularSemigroup(s) then 
-    Info(InfoWarning, "the semigroup is completely regular");
+    Info(InfoWarning, 2, "the semigroup is completely regular");
     return true;
   elif HasGreensDClasses(s) then 
     return ForAll(GreensDClasses(s), IsRegularDClass);
