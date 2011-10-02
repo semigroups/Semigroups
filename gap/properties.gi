@@ -1041,8 +1041,8 @@ function(s)
     return f;
   fi;
 
-  Info(InfoWarning, 2, "the unique idempotent in the R-class of the first
-  maximum rank");
+  Info(InfoWarning, 2, "the unique idempotent in the R-class of the first",
+  " maximum rank");
   Info(InfoWarning, 2, " generator is not the identity");
   return fail;
 end);

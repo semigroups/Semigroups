@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+DeclareGlobalFunction("CitrusHiMem");
+DeclareGlobalFunction("CitrusLoMem");
 DeclareGlobalFunction("CitrusMakeDoc");
 DeclareGlobalFunction("CitrusTestAll");
 DeclareGlobalFunction("CitrusTestInstall");

@@ -11,6 +11,15 @@
 # this file contains functions with shorter names than some library functions
 # commonly used in the citrus package. 
 
+# new for 0.2! - CitrusHiMem - "for no argument"
+#############################################################################
+
+InstallGlobalFunction(CitrusHiMem,
+function()
+Print("hello");
+return true;
+end);
+
 # new for 0.1! - CitrusMakeDoc - "for no argument"
 #############################################################################
 
