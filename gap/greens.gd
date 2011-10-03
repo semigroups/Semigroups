@@ -34,6 +34,8 @@
 # the documentation for the functions below can be found in 
 # /monoid/doc/r.xml
 
+DeclareGlobalVariable("CitrusHashLen");
+
 DeclareAttribute("GreensHClassReps", IsTransformationSemigroup);
 DeclareOperation("GreensDClassOfElementNC", [IsTransformationSemigroup]); 
 DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
