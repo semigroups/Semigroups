@@ -11,13 +11,77 @@
 # this file contains functions with shorter names than some library functions
 # commonly used in the citrus package. 
 
-# new for 0.2! - CitrusHiMem - "for no argument"
+# new for 0.2! - CitrusDefaultMem - "for no argument"
 #############################################################################
+# Notes: for semigroups with 10000s to 100000s of elements (this is the 
+# default).
 
 InstallGlobalFunction(CitrusHiMem,
 function()
-Print("hello");
-return true;
+  local len;
+  len:=CitrusHashLen;
+  len!.dclass_data:=1009;
+  len!.kers:=1009;
+  len!.rclass_data:=20287;
+  len!.imgs:=503;
+  len!.rclassreps_orb:=72379;
+  Info(InfoWarning, 2, "for semigroups with tens to hundreds of thousands of",
+   " elements");
+  return true;
+end);
+
+# new for 0.2! - CitrusHiMem - "for no argument"
+#############################################################################
+# Notes: for semigroups with 100000s to millions of elements.
+
+InstallGlobalFunction(CitrusLoMem,
+function()
+  local len;
+  len:=CitrusHashLen;
+  len!.dclass_data:=211;
+  len!.kers:=211;
+  len!.rclass_data:=211;
+  len!.imgs:=67;
+  len!.rclassreps_orb:=383;
+  Info(InfoWarning, 2, "for semigroups with hundreds of thousands to millions",
+   " of elements");
+  return true;
+end);
+
+
+# new for 0.2! - CitrusLoMem - "for no argument"
+#############################################################################
+# Notes: for semigroups with 1000s to 10000s of elements.
+
+InstallGlobalFunction(CitrusLoMem,
+function()
+  local len;
+  len:=CitrusHashLen;
+  len!.dclass_data:=211;
+  len!.kers:=211;
+  len!.rclass_data:=211;
+  len!.imgs:=67;
+  len!.rclassreps_orb:=383;
+  Info(InfoWarning, 2, "for semigroups with thousands to tens of thousands of ",
+  "elements");
+  return true;
+end);
+
+# new for 0.2! - CitrusVeryLoMem - "for no argument"
+#############################################################################
+# Notes: for semigroups with 1s to 1000s of elements.
+
+InstallGlobalFunction(CitrusVeryLoMem,
+function()
+  local len;
+  len:=CitrusHashLen;
+  len!.dclass_data:=11;
+  len!.kers:=53;
+  len!.rclass_data:=29;
+  len!.imgs:=37;
+  len!.rclassreps_orb:=53;
+  Info(InfoWarning, 2, "for semigroups with less than a thousand elements");
+  return true;
 end);
 
 # new for 0.1! - CitrusMakeDoc - "for no argument"

@@ -974,7 +974,7 @@ function(s, f)
   o:=rec( finished:=false, orbits:=o, gens:=Generators(s), s:=s, 
    deg := n, data:=[], images:=fail, lens:=List([1..n], function(x) if x=j then
    return 1; else return 0; fi; end), data_ht:=HTCreate([1,1,1,1,1,1],
-   rec(hashlen:=1009)));
+   rec(hashlen:=CitrusHashLen!.imgs)));
   #local orbits of images! 
   #JDM shouldn't data contain [j,1,1,1,1,1]??
 
@@ -1795,7 +1795,8 @@ function(s)
   n := DegreeOfTransformationSemigroup( s );
   one := TransformationNC( [ 1 .. n ] );
 
-  ht := HTCreate(one, rec(hashlen:=1009)); HTAdd(ht, one, true); 
+  ht := HTCreate(one, rec(hashlen:=CitrusHashLen!.rclassreps_orb)); 
+  HTAdd(ht, one, true); 
   
   for i in gens do 
     HTAdd(ht, i, true);
@@ -1809,14 +1810,15 @@ function(s)
     finished:=false, 
     orbits:=EmptyPlist(n),
     lens:=[1..n]*0, #lens[j]=Length(orbits[j])
-    images:=HTCreate(ImageSetOfTransformation(gens[1]), rec(hashlen:=1009)), 
+    images:=HTCreate(ImageSetOfTransformation(gens[1]),
+     rec(hashlen:=CitrusHashLen!.imgs)), 
     at:=0, 
     gens:=gens,
     s:=s,
     deg := n,
     one := one,
     ht:=ht,
-    data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=1009)), #JDM this uses 100003 also. 
+    data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=CitrusHashLen!.rclass_data)), 
     data:=[],
   ));
 end);
