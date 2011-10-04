@@ -16,7 +16,7 @@
 # Notes: for semigroups with 10000s to 100000s of elements (this is the 
 # default).
 
-InstallGlobalFunction(CitrusHiMem,
+InstallGlobalFunction(CitrusDefaultMem,
 function()
   local len;
   len:=CitrusHashLen;
@@ -34,15 +34,15 @@ end);
 #############################################################################
 # Notes: for semigroups with 100000s to millions of elements.
 
-InstallGlobalFunction(CitrusLoMem,
+InstallGlobalFunction(CitrusHiMem,
 function()
   local len;
   len:=CitrusHashLen;
-  len!.dclass_data:=211;
-  len!.kers:=211;
-  len!.rclass_data:=211;
-  len!.imgs:=67;
-  len!.rclassreps_orb:=383;
+  len!.dclass_data:=100003;
+  len!.kers:=115979;
+  len!.rclass_data:=649403;
+  len!.imgs:=1009;
+  len!.rclassreps_orb:=2316451;
   Info(InfoWarning, 2, "for semigroups with hundreds of thousands to millions",
    " of elements");
   return true;
