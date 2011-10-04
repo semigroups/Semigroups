@@ -25,6 +25,8 @@
 #############################################################################
 ## Notes
 
+# - should make more use of OrbitsOfImages(s)!.images.
+
 # - this file is alphabetized, keep it that way!
 
 # - this file should only contain functions relating to images/r-classes!
@@ -177,9 +179,9 @@ end);
 
 InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, f, data, o)
-  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, one, images, ht, oo, reps, 
-   out, i, z, y;
-
+  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, one, images, ht, oo, 
+  reps, out, i, z, y;
+  #JDM require position of f in o!.ht!.o also! to do schreier.
   j:=data[1]; 	# img size
   k:=data[2]; 	# index of orbit containing img
   l:=data[3]; 	# position of img in O[j][k]
@@ -194,14 +196,12 @@ function(s, f, data, o)
   data_ht:=o!.data_ht;
 
   if IsBound(o!.ht) then # o = OrbitsOfImages(s)
-    one:=o!.one;
-    images:=o!.images; 
+    one:=o!.one; images:=o!.images; 
     ht:=o!.ht; o:=ht!.o;
   fi;
 
   if k = fail then  #new img and l, m, val, n, g=fail
                     #don't call this function with a d-class and k=fail!
-
   ################################################################################
           
     lens[j]:=lens[j]+1;
@@ -263,7 +263,8 @@ function(s, f, data, o)
           HTAdd(ht, z, true);
           i:=i+1;
           o[i]:=z;
-          #schreier words here
+          #pos[i]:=??; gen[i]:=y;
+         #schreier words here
         fi;
       od;
     od;
@@ -972,7 +973,8 @@ function(s, f)
 
   o:=rec( finished:=false, orbits:=o, gens:=Generators(s), s:=s, 
    deg := n, data:=[], images:=fail, lens:=List([1..n], function(x) if x=j then
-   return 1; else return 0; fi; end), data_ht:=HTCreate([1,1,1,1,1,1]));
+   return 1; else return 0; fi; end), data_ht:=HTCreate([1,1,1,1,1,1],
+   rec(hashlen:=CitrusHashLen!.imgs)));
   #local orbits of images! 
   #JDM shouldn't data contain [j,1,1,1,1,1]??
 
@@ -1584,6 +1586,7 @@ function(s)
     if i=Length(o) then
     #at the end of the orbit!
       O!.finished:=true;
+      Unbind(O!.ht); Unbind(O!.lens); 
       return true;
     fi;
 
@@ -1591,7 +1594,7 @@ function(s)
 
     while i<Length(o) do 
       O!.at:=O!.at+1;
-      i :=i+1;
+      i:=i+1;
       x:=o[i];
       d:=InOrbitsOfImages(x, true, [fail, fail, fail, fail, fail, 0, fail], 
        orbits, images);
@@ -1792,7 +1795,8 @@ function(s)
   n := DegreeOfTransformationSemigroup( s );
   one := TransformationNC( [ 1 .. n ] );
 
-  ht := HTCreate(one); HTAdd(ht, one, true);
+  ht := HTCreate(one, rec(hashlen:=CitrusHashLen!.rclassreps_orb)); 
+  HTAdd(ht, one, true); 
   
   for i in gens do 
     HTAdd(ht, i, true);
@@ -1806,17 +1810,21 @@ function(s)
     finished:=false, 
     orbits:=EmptyPlist(n),
     lens:=[1..n]*0, #lens[j]=Length(orbits[j])
-    images:=HTCreate(ImageSetOfTransformation(gens[1])),#1009 normally!
+    images:=HTCreate(ImageSetOfTransformation(gens[1]),
+     rec(hashlen:=CitrusHashLen!.imgs)), 
     at:=0, 
     gens:=gens,
     s:=s,
     deg := n,
     one := one,
     ht:=ht,
-    data_ht:=HTCreate([1,1,1,1,1,1]),
-    data:=[]
+    data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=CitrusHashLen!.rclass_data)), 
+    data:=[],
   ));
 end);
+
+# JDM MN talk to MN re: hashing doesn't work very well when we use smaller hash
+# lengths but memory is out of hand when we use longer ones. What to do?
 
 #PPP
 

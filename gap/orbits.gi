@@ -16,8 +16,16 @@
 InstallMethod(ChooseHashFunction, "for transformations and pos. int.",
 [IsTransformation, IsInt],
 function(p, hashlen)
-  return rec(func := HashFunctionForTransformation, data := [101, 
-   hashlen]);
+  return rec(func := HashFunctionForTransformation, data := [101, hashlen]);
+end);
+
+# new for 0.2! - ChooseHashFunction - "for blist and pos. int."
+#############################################################################
+
+InstallMethod(ChooseHashFunction, "for blist and pos. int.",
+[IsBlistRep, IsPosInt],
+function(p, hashlen)
+  return rec(func := HashFunctionForBlist, data := [101, hashlen]);
 end);
 
 # new for 0.1! - GradedImagesOfTransSemigroup - "for a trans. semigroup"
@@ -36,7 +44,7 @@ function(s)
     n:=Degree(s[1]);
   fi;
 
-  ht:=HTCreate([1..n], rec(hashlen:=1009));
+  ht:=HTCreate([1..n], rec(hashlen:=CitrusHashLen!.imgs));
   HTAdd(ht, [1..n], true);
   o:=[[1..n]]; m:=1; 
 
@@ -85,7 +93,8 @@ function(s)
     n:=Degree(s[1]);
   fi;
  
-  ht:=HTCreate([1..n], rec(hashlen:=1009)); HTAdd(ht, [1..n], true);
+  ht:=HTCreate([1..n], rec(hashlen:=CitrusHashLen!.kers)); 
+  HTAdd(ht, [1..n], true);
   o:=[[1..n]]; m:=1;
 
   if n<11 then 
@@ -122,10 +131,10 @@ end);
 
 InstallGlobalFunction(HashTableForImages, 
 function(img)
-  local img_set, ht;
+  local img_set, len,ht;
 
-  img_set:=Set(img); 
-  ht := HTCreate(img_set, rec( hfd := 1009, treehashsize := 1009 ));
+  img_set:=Set(img); len:=CitrusHashLen!.imgs;
+  ht := HTCreate(img_set, rec( hfd := len, treehashsize := len));
   HTAdd(ht, img_set, 1);
 
   return ht;
@@ -136,12 +145,20 @@ end);
 
 InstallGlobalFunction(HashTableForKernels, 
 function(ker, n)
-  local ht;
-
-  ht := HTCreate(ker, rec( hfd := 1009, treehashsize := 1009 ));
+  local len, ht;
+  len:=CitrusHashLen!.kers;
+  ht := HTCreate(ker, rec( hfd := len, treehashsize := len ));
   HTAdd(ht, ker, 1);
 
   return ht;
+end);
+
+# new for 0.2! - HashFunctionForBlist - "for a blist"
+#############################################################################
+
+InstallGlobalFunction(HashFunctionForBlist, 
+function(v, data)
+  return ORB_HashFunctionForIntList(ListBlist([1..Length(v)], v), data);
 end);
 
 # new for 0.1! - HashFunctionForTransformation - not a user function!
@@ -159,8 +176,24 @@ end);
 
 InstallMethod(ImagesOfTransSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-  s-> Orb(Generators(s), [1..Degree(s)], OnSets, rec(storenumbers:=true, 
+  s-> Orb(Generators(s), [1..Degree(s)], function(set, f) return
+  Set(f![1]{set}); end, rec(storenumbers:=true, 
    schreier:=true)));
+
+# new for 0.2! - ImagesOfTransSemigroupAsBlists - "for a trans. semigroup"
+###########################################################################
+# Notes: this orbit always contains [1..Degree(s)] even if this is not the
+# image of any element in s. 
+
+InstallMethod(ImagesOfTransSemigroupAsBlists, "for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local n, seed;
+
+  n:=Degree(s); seed:=BlistList([1..n], [1..n]); 
+  return Orb(Generators(s), seed, OnBlist, 
+   rec(storenumbers:=true, schreier:=true));
+end);
 
 # new for 0.1! - ImagesOfTransSemigroup - "for trans semigp and pos int"
 ###########################################################################
@@ -209,6 +242,19 @@ function(s, m)
               gradingfunc:=function(o,x) return Maximum(x); end,
               onlygrades:=function(x, y) return x in y; end, 
               onlygradesdata:=[m..n], schreier:=true));
+end);
+
+# new for 0.2! - OnBlist - for blist and transformation 
+###########################################################################
+# Notes: this is BlistList([1..Length(blist)], 
+# OnSets(ListBlist([1..Length(blist)], blist), f));
+
+InstallGlobalFunction(OnBlist, 
+[IsBlist, IsTransformation], 
+function(blist, f)
+  local n, img;
+  n:=Length(blist); img:=f![1]; 
+  return BlistList([1..n], img{ListBlist([1..n], blist)}); 
 end);
 
 # new for 0.1! - OnKernelsAntiAction - for a trans img list and same 

@@ -164,6 +164,17 @@ InstallOtherMethod(IsGreensLClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensHClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 
+# new for 0.2! - Iterator - "for a trivial trans. semigp."
+#############################################################################
+# Notes: required until Enumerator for a trans. semigp does not call iterator. 
+# This works but is maybe not the best!
+
+InstallOtherMethod(Iterator, "for a trivial trans. semigp", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
+function(s)
+  return TrivialIterator(GreensRClassReps(s)[1]);
+end);
+
 #NNN
 
 # new for 0.1! - NrIdempotents - "for a transformation semigroup"

@@ -11,10 +11,10 @@
 SetPackageInfo( rec(
 PackageName := "Citrus",
 Subtitle := "ComputIng with Transformation semigRoUps and monoidS",
-Version := "0.1",
-Date := "02/09/2011",
+Version := "0.2",
+Date := "??/10/11",
 ArchiveURL := 
-          "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus0r1",
+          "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus0r2",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -48,7 +48,7 @@ PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus",
 PackageDoc := rec(
   BookName  := "Citrus",
   Archive := 
-      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus0r1.tar.gz",
+      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus0r2.tar.gz",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",  
@@ -58,12 +58,12 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.4",
+  GAP := ">=4.5",
   NeededOtherPackages := [["orb", "3.7"]],
-  SuggestedOtherPackages := [["gapdoc", ">=1.3"]], 
+  SuggestedOtherPackages := [["gapdoc", ">=1.4"]], 
   ExternalConditions := []),
   AvailabilityTest := ReturnTrue,
   Autoload := false,
-  TestFile := "tst/testall.g",
+  TestFile := "tst/testinstall.g",
   Keywords := ["transformation semigroups", "green's relations"]
 ));
