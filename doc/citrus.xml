@@ -7,7 +7,7 @@
 <TitlePage>
   <Title>The <Package>Citrus</Package> Package</Title>
 
-  <Version>Version 0.1</Version>
+  <Version>Version 0.2</Version>
   
   <Author>J. D. Mitchell <Email>jdm3@st-and.ac.uk</Email></Author>
   
@@ -15,7 +15,7 @@
 
   <Colophon>
   This manual describes the &GAP; 4.5 package <Package>Citrus</Package> version
-  0.1 for computing with transformation semigroups. 
+  0.2 for computing with transformation semigroups. 
   </Colophon>
 
   <Acknowledgements>
@@ -38,9 +38,9 @@
   <Heading>The <Package>Citrus</Package> package</Heading>
   <Index><Package>Citrus</Package> - Overview</Index>	
   <Section><Heading>Overview and Introduction</Heading>
-    This is the manual for the <Package>Citrus</Package> package version 0.1 
+    This is the manual for the <Package>Citrus</Package> package version 0.2 
     for computing with
-    transformation semigroups. <Package>Citrus</Package> 0.1 is an updated 
+    transformation semigroups. <Package>Citrus</Package> 0.2 is an updated 
     version of the <Package>Monoid</Package>
     package for &GAP; 3 and 4; see<Alt Only="LaTeX">\vspace{\baselineskip}</Alt>
     <P/><Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt>
@@ -59,7 +59,7 @@
     two &GAP; 4.5 packages
     <Package>Citrus</Package> and <Package>Comatose</Package>.
 
-    <Package>Citrus</Package> 0.1 retains all the functionality of the original
+    <Package>Citrus</Package> 0.2 retains all the functionality of the original
     <Package>Monoid</Package> package for
     &GAP; 3; and those functions from <Package>Monoid</Package> 3.1.4 not 
     involved in the 
@@ -71,7 +71,7 @@
     Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
     <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html</URL><P/>
 
-    <Alt Only="LaTeX">\noindent</Alt> <Package>Citrus</Package> 0.1 contains 
+    <Alt Only="LaTeX">\noindent</Alt> <Package>Citrus</Package> 0.2 contains 
     more efficient methods than those 
     available in the &GAP; library for calculating Green's classes, finding the
     size, the elements, and testing membership in transformation semigroups;
@@ -127,7 +127,7 @@
       is compiled. 
       </Item>
     
-      <Item> download the package archive <C>citrus0r1.tar.gz</C> from
+      <Item> download the package archive <C>citrus0r2.tar.gz</C> from
       <Alt    Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
           <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html
       </URL></Item>
@@ -156,8 +156,8 @@
     your installation of &GAP;.<P/>
 
     <Log>
-> gunzip citrus0r1.tar.gz 
-> tar -xf citrus0r1.tar 
+> gunzip citrus0r2.tar.gz 
+> tar -xf citrus0r2.tar 
 > mv citrus GAPROOT/pkg
 > gap 
 
@@ -171,7 +171,7 @@ by Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),
    Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
-Loading  Citrus 0.1 (Citrus - ComputIng with TransfoRmation semigrUopS)
+Loading  Citrus 0.2 (Citrus - ComputIng with TransfoRmation semigrUopS)
 by J. D. Mitchell (http://tinyurl.com/jdmitchell).
 ----------------------------------------------------------------------
 true

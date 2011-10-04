@@ -11,7 +11,7 @@
 # ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"transform.tst"));
 # around 2.3s.
 
-gap> START_TEST("transform.tst 0.1");
+gap> START_TEST("transform.tst 0.2");
 gap> LoadPackage("citrus");;
 gap> gens:=[ Transformation( [ 2, 3, 2, 4, 3 ] ), 
 > Transformation( [ 4, 5, 2, 2, 4 ] ), 
@@ -297,4 +297,4 @@ gap> Size(last);
 4
 gap> IsRightZeroSemigroup(last2);
 true
-gap> STOP_TEST( "transform.tst 0.1", 10000);
+gap> STOP_TEST( "transform.tst 0.2", 10000);

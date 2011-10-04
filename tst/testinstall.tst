@@ -10,7 +10,7 @@
 
 # ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"testinstall.tst"));
 
-gap> START_TEST("testinstall.tst 0.1");
+gap> START_TEST("testinstall.tst 0.2");
 gap> LoadPackage( "citrus" );;
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 1, 4, 1, 2 ] ),
@@ -42,5 +42,5 @@ gap> ForAll(t, x-> x in s);
 true
 gap> Size(t);
 60
-gap> STOP_TEST( "testinstall.tst 0.1", 0);
+gap> STOP_TEST( "testinstall.tst 0.2", 0);
 
