@@ -15,7 +15,6 @@
 # - a method for RandomTransformation(m,n) i.e. a random transformation with
 # a given rank. 
 
-
 # new for 0.2! - \^ - "for a transformation and a permutation (citrus pkg)"
 #############################################################################
 # Notes: returns y^-1*x*y.
@@ -96,20 +95,15 @@ end);
 
 InstallMethod(AsPermutation, "for a permutation", [IsPerm], p -> p);
 
-# new for 0.1! - AsPermutation - "for a transformation"
+# fix for 0.2! - AsPermutation - "for a transformation"
 ###########################################################################
 #JDM this could use the method below, and that should have some more checks!
 
 InstallMethod(AsPermutation, "for a transformation", 
 [IsTransformation], 
-function(f)
-  local a, b;
+f-> AsPermutation(f, ImageSetOfTransformation(f)));
 
-  a:=ImageSetOfTransformation(f); b:=f![1]{a};
-  return MappingPermListList(a, b);
-end);
-
-# new for 0.1! - AsPermutation - "for a transformation and set"
+# fix for 0.2! - AsPermutation - "for a transformation and set"
 ###########################################################################
 
 InstallOtherMethod(AsPermutation, "for a transformation and a set", 
@@ -118,6 +112,10 @@ function(f, set)
   local a;
 
   a:=f![1]{set};
+  
+  if not Set(a)=set then 
+    return fail;
+  fi;
 
   return MappingPermListList(set, a);
 end);
