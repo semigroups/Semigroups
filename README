@@ -83,7 +83,7 @@ in .tar.gz format.
 Contents
 --------
 
-The Citrus folder containing this README.txt file should contain the 
+The `citrus' folder containing this README.txt file should contain the 
 directories and files: `CHANGELOG', `config', `doc', `examples', `gap', 
 'init.g', `PackageInfo.g', `read.g', `README', `tst', and `VERSIONS'. 
 
