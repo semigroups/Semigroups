@@ -108,16 +108,16 @@ f-> AsPermutation(f, ImageSetOfTransformation(f)));
 
 InstallOtherMethod(AsPermutation, "for a transformation and a set", 
 [IsTransformation, IsList], 
-function(f, set)
+function(f, list)
   local a;
 
-  a:=f![1]{set};
+  a:=f![1]{list};
   
-  if not Set(a)=set then 
+  if not Set(a)=Set(list) then 
     return fail;
   fi;
 
-  return MappingPermListList(set, a);
+  return MappingPermListList(list, a);
 end);
 
 #CCC
@@ -274,13 +274,18 @@ function(s, f)
   return fail;
 end);
 
-# new for 0.1! - IsRegularTransformation - "for a transformation"
+# upd for 0.2! - IsRegularTransformation - "for a transformation"
 ###########################################################################
 
 InstallMethod(IsRegularTransformation, "for a transformation", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation], 
 function(s, f)
   local ker, m, o;
+
+  if not DegreeOfTransformationSemigroup(s)=DegreeOfTransformation(f) then 
+    Info(InfoCitrus, 2, "the degree of the semigroup and trans. differ");
+    return false;
+  fi;
 
   if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
     return true;
