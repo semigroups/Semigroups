@@ -188,7 +188,7 @@ function(ker, img)
   return TransformationNC(List(ker, x-> lookup[x]));
 end);
 
-# fixed for 0.2! - IndexPeriodOfTransformation - "for a transformation"
+# fix for 0.2! - IndexPeriodOfTransformation - "for a transformation"
 #############################################################################
 
 InstallMethod(IndexPeriodOfTransformation, "for a transformation", 

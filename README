@@ -78,14 +78,14 @@ You can download the package from:
 
 http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html 
 
-in .tar.gz, and .tar.bz2 formats.
+in .tar.gz format.
 
 Contents
 --------
 
 The Citrus folder containing this README.txt file should contain the 
-directories and files: `CHANGELOG', `config', `doc', `examples', `gap', 'init.g', 
-`PackageInfo.g', `read.g', `README', `tst', and VERSIONS. 
+directories and files: `CHANGELOG', `config', `doc', `examples', `gap', 
+'init.g', `PackageInfo.g', `read.g', `README', `tst', and `VERSIONS'. 
 
 Installation
 ------------

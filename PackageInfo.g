@@ -12,7 +12,7 @@ SetPackageInfo( rec(
 PackageName := "Citrus",
 Subtitle := "ComputIng with Transformation semigRoUps and monoidS",
 Version := "0.2",
-Date := "??/10/11",
+Date := "06/10/11",
 ArchiveURL := 
           "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus0r2",
 ArchiveFormats := ".tar.gz",
@@ -60,7 +60,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.5",
   NeededOtherPackages := [["orb", "3.7"]],
-  SuggestedOtherPackages := [["gapdoc", ">=1.4"]], 
+  SuggestedOtherPackages := [["gapdoc", ">=1.3"]], 
   ExternalConditions := []),
   AvailabilityTest := ReturnTrue,
   Autoload := false,

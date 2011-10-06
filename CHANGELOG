@@ -9,14 +9,15 @@
 
 0.1 -> 0.2  
             updated the method for \^ for a transformation and perm so that it
-            is more efficient than the library method, same for \* for a perm and
-            transformation. New method for StructureDescription of a
+            is more efficient than the library method, same for \* for a perm 
+            and transformation. New method for StructureDescription of a
             Brandt semigroup, and IsSubset for a trans. semigroup and trans.
             coll. 
     
             fixed bugs in IndexPeriodOfTransformation (it returned incorrect
-            results). Also reduce hash table lengths so that Citrus uses less
-            memory. 
+            results) and AsPermutation. Also reduce hash table lengths so that 
+            Citrus uses less memory. Fixed bug that triggered an infinite
+            loop when trying to find elements of a trivial trans. semigroup.  
 
             added the functions CitrusDefaultMem, CitrusHiMem, CitrusLoMem,
             CitrusVeryLoMem, IsBrandtSemigroup, IsLeftSimple,

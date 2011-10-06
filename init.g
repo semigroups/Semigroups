@@ -16,4 +16,3 @@ ReadPkg("citrus/gap/transform.gd");
 ReadPkg("citrus/config");
 
 DeclareInfoClass("InfoCitrus");;
-
