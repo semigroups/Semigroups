@@ -28,12 +28,10 @@ gap> NrIdempotents(s); NrRegularDClasses(s); IsRegularSemigroup(s);
 22
 6
 false
-gap> f:=RandomTransformation(4);
-Transformation( [ 1, 3, 4, 1 ] )
+gap> f:=Transformation( [ 1, 3, 4, 1 ] );;
 gap> f in s;
 false
-gap> f:=Random(s);
-Transformation( [ 1, 1, 3, 1 ] )
+gap> f:=Transformation( [ 1, 1, 3, 1 ] );;
 gap> f in s;
 true
 gap> t:=Semigroup(gens{[1..3]});
@@ -42,6 +40,9 @@ gap> ForAll(t, x-> x in s);
 true
 gap> Size(t);
 60
+
+# Issue 1
+
 gap> f:=
 > Transformation( [ 74, 33, 77, 60, 65, 37, 24, 22, 16, 49, 58, 16, 62, 7, 69, 
 >  38, 97, 44, 56, 5, 3, 74, 89, 28, 95, 94, 56, 6, 38, 58, 45, 63, 32, 32, 
@@ -69,10 +70,16 @@ gap> f:=
 >  81, 16, 3, 14, 90, 22, 71, 41, 98 ] );;
 gap> IndexPeriodOfTransformation(f);
 [ 16, 7 ]
+
+# Issue 2
+
 gap> s:=Semigroup(Transformation([4,4,4,4]));
 <semigroup with 1 generator>
 gap> AsList(s);
 [ Transformation( [ 4, 4, 4, 4 ] ) ]
+
+# Issue 3
+
 gap> f:=Transformation( [ 7, 5, 3, 2, 6, 7, 10, 8, 8, 3 ] );;
 gap> AsPermutation(f, [1,2]);
 fail
@@ -92,4 +99,52 @@ false
 gap> f:=Transformation( [ 5, 5, 2, 1, 5 ] );;
 gap> IsRegularTransformation(s, f);
 false
+
+# Issue 9
+
+gap> gens:=[ Transformation( [ 1, 2, 3, 9, 5, 11, 7, 8, 9, 10, 11, 12 ] ),
+> Transformation( [ 1, 2, 3, 9, 5, 11, 9, 8, 9, 8, 11, 12 ] ), 
+> Transformation( [ 1, 2, 5, 7, 8, 11, 9, 12, 9, 12, 11, 10 ] ),
+> Transformation( [ 1, 2, 8, 9, 5, 11, 9, 8, 9, 10, 11, 12 ] ), 
+> Transformation( [ 1, 2, 8, 11, 12, 7, 11, 8, 11, 10, 9, 12 ] ),
+> Transformation( [ 1, 2, 10, 9, 12, 11, 9, 10, 9, 8, 11, 12 ] ),
+> Transformation( [ 1, 2, 12, 4, 10, 6, 7, 12, 9, 12, 11, 10 ] ),
+> Transformation( [ 1, 5, 3, 11, 5, 9, 11, 8, 11, 10, 9, 12 ] ), 
+> Transformation( [ 1, 5, 8, 6, 12, 7, 11, 10, 11, 10, 9, 12 ] ),
+> Transformation( [ 1, 5, 8, 11, 12, 7, 11, 8, 11, 10, 9, 12 ] ), 
+> Transformation( [ 1, 5, 12, 7, 8, 11, 9, 12, 9, 12, 11, 10 ] ),
+> Transformation( [ 1, 8, 3, 9, 5, 11, 9, 8, 9, 10, 11, 12 ] ),
+> Transformation( [ 1, 8, 5, 7, 8, 11, 9, 12, 9, 12, 11, 10 ] ), 
+> Transformation( [ 1, 12, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ] ), 
+> Transformation( [ 1, 12, 10, 9, 12, 11, 7, 10, 4, 10, 6, 12 ] ),
+> Transformation( [ 2, 1, 4, 3, 6, 5, 8, 7, 10, 9, 12, 11 ] ), 
+> Transformation( [ 3, 1, 4, 3, 6, 5, 8, 7, 10, 9, 12, 11 ] ),
+> Transformation( [ 5, 6, 7, 8, 11, 12, 10, 9, 10, 9, 12, 11 ] ),
+> Transformation( [ 5, 6, 11, 8, 7, 12, 10, 11, 10, 11, 12, 9 ] ),
+> Transformation( [ 5, 7, 10, 11, 9, 5, 11, 8, 11, 8, 12, 9 ] ),
+> Transformation( [ 5, 10, 7, 5, 10, 11, 12, 9, 12, 9, 11, 8 ] ),
+> Transformation( [ 7, 3, 11, 9, 8, 5, 9, 11, 9, 11, 5, 3 ] ), 
+> Transformation( [ 7, 5, 8, 6, 12, 7, 11, 10, 11, 10, 9, 12 ] ),
+> Transformation( [ 7, 12, 11, 10, 5, 9, 10, 11, 8, 11, 9, 12 ] ),
+> Transformation( [ 9, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ] ), 
+> Transformation( [ 9, 11, 8, 5, 11, 9, 12, 3, 5, 8, 9, 11 ] ), 
+> Transformation( [ 11, 7, 9, 5, 10, 11, 12, 9, 12, 9, 11, 8 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> NrGreensDClasses(s);
+232
+gap> Size(s);
+11858
+gap> NrGreensRClasses(s);
+1455
+gap> NrGreensLClasses(s);
+690
+gap> NrGreensHClasses(s);
+5356
+gap> NrIdempotents(s);
+300
+gap> Sum(List(GreensDClasses(s), NrGreensRClasses))=NrGreensRClasses(s);
+true
+gap> ForAll(Concatenation(List(GreensDClasses(s), GreensRClassReps)), 
+> x-> x in s);
+true
 gap> STOP_TEST( "testinstall.tst 0.2", 0);
