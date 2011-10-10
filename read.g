@@ -17,17 +17,3 @@ ReadPkg("citrus/gap/r.gi");
 ReadPkg("citrus/gap/l.gi");
 ReadPkg("citrus/gap/d.gi");
 ReadPkg("citrus/gap/properties.gi");
-
-#JDM remove
-
-#dir:=Concatenation(PackageInfo("MONOID")[1]!.InstallationPath,"/dev/gap");
-#files:=DirectoryContents(dir);
-#dir:=Directory(dir);
-#for x in files do 
-#	if not (x="." or x=".." or x=".DS_Store") and SplitString(x, ".")[2]="gi" then 
-#		x:=Filename(dir, x);
-#		Read(x);
-#	fi;
-#od;
-
-#JDM remove

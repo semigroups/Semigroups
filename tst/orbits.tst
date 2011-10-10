@@ -11,7 +11,7 @@
 #ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"orbits.tst"));
 # about 0.1s
 
-gap> START_TEST("orbits.tst 0.1");
+gap> START_TEST("orbits.tst 0.3");
 gap> SetGasmanMessageStatus("none");
 gap> LoadPackage("citrus");;
 gap> tmptmptmp:=InfoLevel(InfoWarning);;
@@ -258,4 +258,4 @@ gap> Set(ImagesOfTransSemigroup(m));
   [ 5, 7, 8 ], [ 5, 8 ], [ 6 ], [ 6, 7 ], [ 6, 7, 8 ], [ 6, 8 ], [ 7 ],
   [ 7, 8 ], [ 8 ] ]
 gap> SetInfoLevel(InfoWarning, tmptmptmp);;
-gap> STOP_TEST( "orbits.tst 0.1", 10000);
+gap> STOP_TEST( "orbits.tst 0.3", 10000);

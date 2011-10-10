@@ -112,7 +112,7 @@ end);
 
 #AAA
 
-# new for 0.1! - AddToOrbitsOfKernels - not a user function!
+# fix for 0.3! - AddToOrbitsOfKernels - not a user function!
 #############################################################################
 # Usage: s = the semigroup; f = transformation (R-class rep with rectified
 # image); data = [image data, kernel data] (without true/false, where kernel 
@@ -190,7 +190,7 @@ function(arg)
       if not val=fail then #old image
         reps[val][n+1]:=g;
         data[2]:=[j, k, l, m, val, n+1]; #JDM return i here?
-        convert[val][n+1]:=AsPermOfKerImg(f); 
+        convert[val][n+1]:=AsPermOfKerImg(g); 
         d_schutz[val][n+1]:=CreateSchutzGpOfDClass(s, data, o);
         r_reps[val][n+1]:=[data[1]];
         i:=Length(d)+1;

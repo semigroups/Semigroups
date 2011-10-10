@@ -39,7 +39,7 @@ function(s)
   local h, m, g;
 
   if not IsMonoidAsSemigroup(s) then 
-    Info(InfoWarning, 2, "the semigroup is not a monoid");
+    Info(InfoCitrus, 2, "the semigroup is not a monoid");
     return fail;
   fi;
 
@@ -119,11 +119,11 @@ function(s)
   local iter, i, f, o, scc, reg, d;
 
   if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
-    Info(InfoWarning, 2, "inverse semigroup");
+    Info(InfoCitrus, 2, "inverse semigroup");
     return true;
   elif (HasIsRegularSemigroup(s) and IsRegularSemigroup(s)) and
    (HasIsInverseSemigroup(s) and not IsInverseSemigroup(s)) then 
-    Info(InfoWarning, 2, "regular but non-inverse semigroup");
+    Info(InfoCitrus, 2, "regular but non-inverse semigroup");
     return false;
   fi;
 
@@ -133,7 +133,7 @@ function(s)
     i:=NrIdempotentsRClassFromData(s, d[1]);
     if i>1 then #this could be better
     # we only need to find 2 transversals to return false.
-      Info(InfoWarning, 2, "at least one R-class contains more than 1", 
+      Info(InfoCitrus, 2, "at least one R-class contains more than 1", 
       " idempotent");
       return false;
     fi;
@@ -146,7 +146,7 @@ function(s)
     for i in scc do 
       if IsInjectiveTransOnList(o[i], f) then 
         if reg then 
-          Info(InfoWarning, 2, "at least one L-class contains more than 1",
+          Info(InfoCitrus, 2, "at least one L-class contains more than 1",
           " idempotent");
           return false;
         fi;
@@ -176,18 +176,18 @@ function(s)
   local gens, idem, f, g;
 
   if HasIsInverseSemigroup(s) and not IsInverseSemigroup(s) then 
-    Info(InfoWarning, 2, "not an inverse semigroup");
+    Info(InfoCitrus, 2, "not an inverse semigroup");
     return false;
   elif not IsCompletelyRegularSemigroup(s) then 
-    Info(InfoWarning, 2, "not completely regular semigroup");
+    Info(InfoCitrus, 2, "not completely regular semigroup");
     return false;
   elif IsGroupAsSemigroup(s) then
-    Info(InfoWarning, 2, "a group");
+    Info(InfoCitrus, 2, "a group");
     return true;
   fi;
 
   if not IsRegularSemigroup(s) then 
-    Info(InfoWarning, 2, "not a regular semigroup");
+    Info(InfoCitrus, 2, "not a regular semigroup");
     return false;
   fi;
 
@@ -199,7 +199,7 @@ function(s)
   for f in gens do
     for g in idem do
       if not f*g=g*f then 
-        Info(InfoWarning, 2, "idempotents are not central");
+        Info(InfoCitrus, 2, "idempotents are not central");
         #JDM could have more info here
         return false;
       fi;
@@ -226,7 +226,7 @@ function(s)
   for i in [1..n] do
     for j in [i+1..n] do
       if not gens[i]*gens[j]=gens[j]*gens[i] then 
-        Info(InfoWarning, 2, "generators ", i, " and ",  j, " do not commute");
+        Info(InfoCitrus, 2, "generators ", i, " and ",  j, " do not commute");
         return false;
       fi;
     od;
@@ -244,7 +244,7 @@ function(s)
   local gens, o, f;
 
   if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
-    Info(InfoWarning, 2, "semigroup is not regular");
+    Info(InfoCitrus, 2, "semigroup is not regular");
     return false;
   fi;
 
@@ -256,7 +256,7 @@ function(s)
      return not IsInjectiveTransOnList(f, x); end));
     Enumerate(o);
     if not PositionOfFound(o)=false then 
-      Info(InfoWarning, 2, "at least one H-class is not a subgroup");
+      Info(InfoCitrus, 2, "at least one H-class is not a subgroup");
       return false;
     fi;
   od;
@@ -390,7 +390,7 @@ function(s)
 
   if ForAll(gens, f-> RankOfTransformation(f)=
    DegreeOfTransformationSemigroup(s)) then
-    Info(InfoWarning, 2, "all generators have rank equal to the degree of the",
+    Info(InfoCitrus, 2, "all generators have rank equal to the degree of the",
      " semigroup");
     return true;
   fi;
@@ -423,12 +423,12 @@ local gens, r, i, t;
   gens:=Generators(s);
   
   if ForAll(gens, IsIdempotent) then 
-    Info(InfoWarning, 2, "all the generators are idempotents");
+    Info(InfoCitrus, 2, "all the generators are idempotents");
     return true;
   fi;
 
   if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
-    Info(InfoWarning, 2, "the semigroup is inverse");
+    Info(InfoCitrus, 2, "the semigroup is inverse");
     return IsSemilatticeAsSemigroup(s);
   fi;
 
@@ -451,10 +451,10 @@ function(s)
   local n, imgs, kers, iter, D, d;
 
   if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
-    Info(InfoWarning, 2, "the semigroup is not regular");
+    Info(InfoCitrus, 2, "the semigroup is not regular");
     return false;
   elif IsCompletelyRegularSemigroup(s) then
-    Info(InfoWarning, 2, "the semigroup is completely regular");
+    Info(InfoCitrus, 2, "the semigroup is completely regular");
     return IsCliffordSemigroup(s);
   fi;
 
@@ -462,7 +462,7 @@ function(s)
   kers:=KernelsOfTransSemigroup(s); Enumerate(kers, Length(imgs));
 
   if not (IsClosed(kers) and Length(kers)=Length(imgs)) then 
-    Info(InfoWarning, 2, "the numbers of kernels and images is not the same");
+    Info(InfoCitrus, 2, "the numbers of kernels and images is not the same");
     return false;
   fi;
 
@@ -477,7 +477,7 @@ function(s)
       d:=d[1];
     fi;
     if not NrIdempotentsRClassFromData(s, d)=1 then 
-      Info(InfoWarning, 2, "at least one R-class contains more than 1", 
+      Info(InfoCitrus, 2, "at least one R-class contains more than 1", 
       " idempotent");
       return false;
     fi;
@@ -497,7 +497,7 @@ function(s)
   local iter;
   
   if IsLeftZeroSemigroup(s) then 
-    Info(InfoWarning, 2, "the semigroup is a left zero semigroup");
+    Info(InfoCitrus, 2, "the semigroup is a left zero semigroup");
     return true;
   elif HasNrGreensLClasses(s) then 
     return NrGreensLClasses(s)=1;
@@ -532,43 +532,44 @@ end);
 InstallMethod(IsMonogenicSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local gens, m, I, max, index, j, x, pos, f, i;
+  local gens, m, I, max, index, j, x, pos, f, i, p;
 
-  gens:=GeneratorsOfSemigroup(s); m:=Length(gens);
+  gens:=ShallowCopy(GeneratorsOfSemigroup(s)); m:=Length(gens);
 
   if m=1 then
-    Info(InfoWarning, 2, "the semigroup only has one generator");
+    Info(InfoCitrus, 2, "the semigroup only has one generator");
     return true;
   fi;
   
-  gens:=Set(gens); m:=Length(gens);
+  p:=Sortex(gens);
+  gens:=Permuted(gens, p); m:=Length(gens);
 
   if m=1 then 
-    Info(InfoWarning, 2, "the semigroup only has one generator and there are",
+    Info(InfoCitrus, 2, "the semigroup only has one generator and there are",
     " repeated generators");
     return true;
   fi;
   
   I:=MinimalIdeal(s);
   if not IsGroupAsSemigroup(I) then
-    Info(InfoWarning, 2, "the minimal ideal is not a group.");
+    Info(InfoCitrus, 2, "the minimal ideal is not a group.");
     return false;
   elif not IsCyclic(Range(IsomorphismPermGroup(I))) then 
-    Info(InfoWarning, 2, "the minimal ideal is a non-cyclic group.");
+    Info(InfoCitrus, 2, "the minimal ideal is a non-cyclic group.");
     return false;
   fi;
 
   for i in [1..m] do 
     f:=gens[i];
     if ForAll(gens, x-> x in Semigroup(f)) then
-      Info(InfoWarning, 2, "the semigroup is generated by generator", i);
+      Info(InfoCitrus, 2, "the semigroup is generated by generator ", i^(p^-1));
       SetMinimalGeneratingSet(s, [f]);
       return true;
     fi;
   od;
-  Info(InfoWarning, 2, "at least one generator does not belong to the", 
+  Info(InfoCitrus, 2, "at least one generator does not belong to the", 
    " semigroup generated by any");
-  Info(InfoWarning, 2, "other generator.");
+  Info(InfoCitrus, 2, "other generator.");
   return false;
 end);
 
@@ -624,7 +625,7 @@ function(s)
   local e, m, i, j;
 
   if not IsRegularSemigroup(s) then 
-    Info(InfoWarning, 2, "the semigroup is not regular");
+    Info(InfoCitrus, 2, "the semigroup is not regular");
     return false;
   fi;
 
@@ -633,7 +634,7 @@ function(s)
   for i in [1..m] do
     for j in [1..m] do
       if not (e[i]*e[j])^2=e[i]*e[j] then 
-        Info(InfoWarning, 2, "the product of idempotents ", i," and ", j, 
+        Info(InfoCitrus, 2, "the product of idempotents ", i," and ", j, 
         " is not an idempotent");
         return false;
       fi;
@@ -653,7 +654,7 @@ InstallMethod(IsRectangularBand, "for a transformation semigroup",
 function(s)
 
   if not IsSimpleSemigroup(s) then 
-    Info(InfoWarning, 2, "the semigroup is not simple");
+    Info(InfoCitrus, 2, "the semigroup is not simple");
     return false;
   elif HasIsBand(s) then
     return IsBand(s);
@@ -671,10 +672,10 @@ function(s)
   local iter, d;
 
   if IsSimpleSemigroup(s) then 
-    Info(InfoWarning, 2, "the semigroup is simple");
+    Info(InfoCitrus, 2, "the semigroup is simple");
     return true;
   elif IsCompletelyRegularSemigroup(s) then 
-    Info(InfoWarning, 2, "the semigroup is completely regular");
+    Info(InfoCitrus, 2, "the semigroup is completely regular");
     return true;
   elif HasGreensDClasses(s) then 
     return ForAll(GreensDClasses(s), IsRegularDClass);
@@ -700,7 +701,7 @@ function(s)
   local iter;
 
   if IsRightZeroSemigroup(s) then 
-    Info(InfoWarning, 2, "the semigroup is a right zero semigroup");
+    Info(InfoCitrus, 2, "the semigroup is a right zero semigroup");
     return true;
   elif HasNrGreensRClasses(s) then 
     return NrGreensRClasses(s)=1;
@@ -757,11 +758,11 @@ function(s)
   local gens, r, o, f;
 
   if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
-    Info(InfoWarning, 2, "the semigroup is not regular");
+    Info(InfoCitrus, 2, "the semigroup is not regular");
     return false;
   elif HasIsCompletelyRegularSemigroup(s) and not 
    IsCompletelyRegularSemigroup(s) then 
-    Info(InfoWarning, 2, "the semigroup is not completely regular");
+    Info(InfoCitrus, 2, "the semigroup is not completely regular");
     return false;
   elif HasNrGreensDClasses(s) then
     return NrGreensDClasses(s)=1;
@@ -803,10 +804,10 @@ function(s)
 
   Enumerate(o);
   if IsPosInt(PositionOfFound(o)) then 
-    Info(InfoWarning, 2, "the product of the generators: ",
+    Info(InfoCitrus, 2, "the product of the generators: ",
     TraceSchreierTreeForward(o, PositionOfFound(o)));
 
-    Info(InfoWarning, 2, "is a constant function with value ", 
+    Info(InfoCitrus, 2, "is a constant function with value ", 
      o[PositionOfFound(o)][1]);
     return true;
   fi;
@@ -827,7 +828,7 @@ function(s)
   zero:=MultiplicativeZero(s);
 
   if zero=fail then 
-    Info(InfoWarning, 2, "the semigroup does not have a zero");
+    Info(InfoCitrus, 2, "the semigroup does not have a zero");
     return false;
   fi;
 
@@ -835,7 +836,7 @@ function(s)
     return ForAll(GreensHClasses(s), IsGroupHClass);
   fi;
 
-  Info(InfoWarning, 2, "the semigroup has more than two H-classes");
+  Info(InfoCitrus, 2, "the semigroup has more than two H-classes");
   return false;
 end);
 
@@ -847,7 +848,7 @@ InstallMethod(IsZeroRectangularBand, "for a transformation semigroup",
 function(s)
 
   if not IsZeroSimpleSemigroup(s) then 
-    Info(InfoWarning, 2, "the semigroup is not 0-simple");
+    Info(InfoCitrus, 2, "the semigroup is not 0-simple");
     return false;
   elif HasIsBand(s) then
     return IsBand(s);
@@ -868,7 +869,7 @@ function(s)
   gens:=GeneratorsOfSemigroup(s);
 
   if z=fail then
-    Info(InfoWarning, 2, "the semigroup does not have a zero");
+    Info(InfoCitrus, 2, "the semigroup does not have a zero");
     return false;
   fi;
 
@@ -876,7 +877,7 @@ function(s)
   for i in [1..m] do
     for j in [1..m] do 
       if not gens[i]*gens[j]=z then 
-        Info(InfoWarning, 2, "the product of generators ", i, " and ", j,
+        Info(InfoCitrus, 2, "the product of generators ", i, " and ", j,
         " is not the multiplicative zero \n", z);
         return false;
       fi;
@@ -921,7 +922,7 @@ function(s)
   Enumerate(o);
 
   if IsPosInt(PositionOfFound(o)) or Length(o!.ranks)=1 then # 3 or 1 ranks
-    Info(InfoWarning, 2, "elements of the semigroup have either 1 or >2", 
+    Info(InfoCitrus, 2, "elements of the semigroup have either 1 or >2", 
     " different ranks.");
     return false;
   fi;
@@ -948,7 +949,7 @@ function(s)
 
     SetMultiplicativeZero(s, z);
   elif MultiplicativeZero(s)=fail then 
-    Info(InfoWarning, 2, "no multiplicative zero.");
+    Info(InfoCitrus, 2, "no multiplicative zero.");
     return false;
   else
     z:=MultiplicativeZero(s);
@@ -963,7 +964,7 @@ function(s)
     return true;
   fi;
 
-  Info(InfoWarning, 2, "more than two D-classes.");  
+  Info(InfoCitrus, 2, "more than two D-classes.");  
   return false;
 end);
 
@@ -1029,9 +1030,9 @@ function(s)
   r:=GreensRClassOfElementNC(s, f); #NC? JDM 
 
   if not NrIdempotents(r)=1 then
-    Info(InfoWarning, 2, "the number of idempotents in the R-class of the", 
+    Info(InfoCitrus, 2, "the number of idempotents in the R-class of the", 
     " first maximum rank");
-    Info(InfoWarning, 2, "generator is not 1");    
+    Info(InfoCitrus, 2, "generator is not 1");    
     return fail;
   fi;
 
@@ -1041,9 +1042,9 @@ function(s)
     return f;
   fi;
 
-  Info(InfoWarning, 2, "the unique idempotent in the R-class of the first",
+  Info(InfoCitrus, 2, "the unique idempotent in the R-class of the first",
   " maximum rank");
-  Info(InfoWarning, 2, " generator is not the identity");
+  Info(InfoCitrus, 2, " generator is not the identity");
   return fail;
 end);
 
@@ -1109,7 +1110,7 @@ IsTransformationCollection],
   if s=Semigroup(gens) then 
     return RedundantGenerator(gens);
   fi;
-  Info(InfoWarning, 1, "Usage: trans. semi. and generating set.");
+  Info(InfoCitrus, 1, "Usage: trans. semi. and generating set.");
   return fail;
 end);
 
