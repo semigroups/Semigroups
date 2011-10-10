@@ -10,7 +10,7 @@
 
 #ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"properties.tst"));
 
-gap> START_TEST("properties.tst 0.2");
+gap> START_TEST("properties.tst 0.3");
 gap> LoadPackage("citrus");;
 gap> g1:=Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] );;
 gap> g2:=Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] );;
@@ -827,4 +827,4 @@ gap> [ Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] ),
 gap> s:=Semigroup(last);;
 gap> MultiplicativeNeutralElement(s);
 Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] )
-gap> STOP_TEST( "properties.tst 0.2", 10000);
+gap> STOP_TEST( "properties.tst 0.3", 10000);

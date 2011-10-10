@@ -7,6 +7,13 @@
 ##
 #############################################################################
 
+
+0.2 -> 0.3 
+            
+            fixed a critical (but rare) bug in AddToOrbitsOfKernels that caused
+            computations relating to D-classes, H-classes, or L-classes to
+            return incorrect answers in some cases. 
+
 0.1 -> 0.2  
             updated the method for \^ for a transformation and perm so that it
             is more efficient than the library method, same for \* for a perm 

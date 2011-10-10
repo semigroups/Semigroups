@@ -12,7 +12,7 @@ SetPackageInfo( rec(
 PackageName := "Citrus",
 Subtitle := "ComputIng with Transformation semigRoUps and monoidS",
 Version := "0.3",
-Date := "09/10/2011",
+Date := "10/10/2011",
 ArchiveURL := 
           "https://bitbucket.org/zen154115/citrus/downloads/citrus0r3",
 ArchiveFormats := ".tar.gz",
@@ -48,7 +48,7 @@ PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus",
 PackageDoc := rec(
   BookName  := "Citrus",
   Archive := 
-      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus0r2.tar.gz",
+      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus0r3.tar.gz",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",  

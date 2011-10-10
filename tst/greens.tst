@@ -12,7 +12,7 @@
 # takes approx. 1 minute to run currently!
 
 
-gap> START_TEST("greens.tst 0.2");
+gap> START_TEST("greens.tst 0.3");
 gap> SetGasmanMessageStatus("none");
 gap> LoadPackage("citrus");;
 gap> ReadPackage("citrus/examples/test.gap");;
@@ -1571,4 +1571,4 @@ gap> Unbind(tmptmptmp); Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
 > Unbind(ll); Unbind(hh); Unbind(dd); Unbind(g); Unbind(enum); Unbind(j);
 > Unbind(iter2); Unbind(iter1); Unbind(iter3); Unbind(r3); Unbind(elts);
 > Unbind(R); Unbind(x); Unbind(i);;
-gap> STOP_TEST( "greens.tst 0.2", 0);
+gap> STOP_TEST( "greens.tst 0.3", 0);
