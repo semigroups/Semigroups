@@ -15,10 +15,10 @@
       returns a permutation group isomorphic to the group of units of the 
       semigroup <A>S</A> if it exists and returns <K>fail</K> otherwise. <P/>
       
-      If <A>S</A> has identity <C>e</C>, then the <E>group of units </E> of
+      If <A>S</A> has an identity <C>e</C>, then the <E>group of units </E> of
       <A>S</A>
       is the set of <C>s</C> in <A>S</A> such that there exists <C>t</C> in
-      <A>S</A> where <C>s*t=t*s=e</C>. Equivanlently, the group of units is 
+      <A>S</A> where <C>s*t=t*s=e</C>. Equivalently, the group of units is 
       the <Math>\mathcal{H}</Math>-class
       of the identity of <A>S</A>.<P/> 
       
@@ -111,8 +111,7 @@ gap> gens:=[ Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 1 ] ),
 > Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 7 ] ) ];;
 gap> S:=Semigroup(gens);;
 gap> IsBand(S);
-true
-      </Example> 
+true</Example> 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -176,8 +175,8 @@ true</Example>
 
       A semigroup <M>S</M> is a <E>Clifford 
       semigroup</E> if it is regular and its idempotents are central, i.e.
-      $$(\forall s\in S)(\exists t\in S)(sts=s)\wedge(\forall s, t\in S)
-        (s^2=s\rightarrow st=ts).$$
+      <M>(\forall s\in S)(\exists t\in S)(sts=s)\wedge(\forall s, t\in S)
+        (s^2=s\rightarrow st=ts).</M>
 
       <Example>
 gap> gens:=[Transformation([1,2,4,5,6,3,7,8]),
@@ -252,7 +251,7 @@ false</Example>
       transformation semigroup <A>S</A> is trivial and <K>false</K>
       otherwise.<P/>
 
-      These properties can be applied to a Green's class instead of
+      These properties can be applied to a Green's class instead of a
       transformation semigroup where applicable. 
       <P/> 
 
@@ -705,7 +704,7 @@ true</Example>
   <ManSection>
     <Prop Name="IsZeroRectangularBand" Arg="S"/>
     <Description>
-      return <K>true</K> if the transformation semigroup <A>S</A> is a zero
+      returns <K>true</K> if the transformation semigroup <A>S</A> is a zero
       rectangular band and <K>false</K> otherwise. <P/>
 
       A semigroup a <E>zero rectangular band</E> if it is zero simple and
@@ -869,7 +868,7 @@ fail</Example>
       small 
       generating set is desired which does not necessarily needs to be optimal.
       Note that 
-      <C>SmallGeneratingSet</C> may return different result in different &GAP; 
+      <C>SmallGeneratingSet</C> may return different results in different &GAP; 
       sessions.
 
       <Log>
