@@ -139,6 +139,11 @@ function(f, s)
     return false;
   fi;
 
+  if HasMinimalIdeal(s) and RankOfTransformation(f)<
+   RankOfTransformation(Representative(MinimalIdeal(s))) then 
+    return false;
+  fi;
+
   o:=OrbitsOfImages(s);
   g:=PreInOrbitsOfImages(s, f, false);
 
@@ -148,7 +153,6 @@ function(f, s)
     return false;
   fi;
 
-  # check what's already known...
   iter:=IteratorOfNewRClassRepsData(s);
   orbits:=o!.orbits; images:=o!.images;
 
