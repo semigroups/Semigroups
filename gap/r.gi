@@ -113,7 +113,7 @@ function(f, r)
   return SiftedPermutation(schutz, PermLeftQuoTransformationNC(rep, g))=();
 end);
 
-# new for 0.1! - \in - "for a transformation semigroup"
+# mod for 0.4! - \in - "for a transformation semigroup"
 #############################################################################
 # Notes: not algorithm X. 
 
@@ -122,7 +122,7 @@ end);
 InstallMethod(\in, "for a transformation semigroup", 
 [IsTransformation, IsTransformationSemigroup],
 function(f, s)
-  local gens, g, o, iter, orbits, images;
+  local gens, o, data, iter, orbits, images, next;
 
   if HasAsSSortedList(s) then 
     return f in AsSSortedList(s);
@@ -154,25 +154,30 @@ function(f, s)
     return false;
   fi;
 
-  o:=OrbitsOfImages(s); g:=PreInOrbitsOfImages(s, f, false);
+  o:=OrbitsOfImages(s); data:=PreInOrbitsOfImages(s, f, false);
 
-  if g[1] then 
+  if data[1] then 
     return true;
   elif o!.finished then 
     return false;
-  fi;
+  elif not HTValue(o!.ht, f)=fail then 
+    return true;
+  fi; 
 
   iter:=IteratorOfNewRClassRepsData(s);
   orbits:=o!.orbits; images:=o!.images;
 
   repeat
-    NextIterator(iter);
-    g:=InOrbitsOfImages(f, false, g[2], orbits, images);
-
-    if g[1] then 
-      return true;
+    next:=NextIterator(iter);
+    if not data[2]=fail then 
+      if next[2]=data[2] and next[4]=data[4] then 
+        data:=InOrbitsOfImages(f, false, data[2], orbits, images);
+        if data[1] then 
+          return true;
+        fi;  
+      fi;
     fi;
-  until IsDoneIterator(iter);
+  until IsDoneIterator(iter); 
 
   #JDM could also put something in here that returns false if everything,
   #from OrbitsOfImages(s)!.at to the end of OrbitsOfImages(s)!.ht!.o 
