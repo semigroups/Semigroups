@@ -144,8 +144,17 @@ function(f, s)
     return false;
   fi;
 
-  o:=OrbitsOfImages(s);
-  g:=PreInOrbitsOfImages(s, f, false);
+  if HasImagesOfTransSemigroup(s) and not ImageSetOfTransformation(f) in
+   ImagesOfTransSemigroup(s) then 
+    return false;
+  fi;
+
+  if HasKernelsOfTransSemigroup(s) and not CanonicalTransSameKernel(f) in
+   KernelsOfTransSemigroup(s) then 
+    return false;
+  fi;
+
+  o:=OrbitsOfImages(s); g:=PreInOrbitsOfImages(s, f, false);
 
   if g[1] then 
     return true;
