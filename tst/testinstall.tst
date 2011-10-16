@@ -22,8 +22,6 @@ gap> Size(s); NrGreensRClasses(s); NrGreensLClasses(s); NrGreensDClasses(s);
 17
 21
 9
-gap> NrIdempotents(s);
-22
 gap> NrIdempotents(s); NrRegularDClasses(s); IsRegularSemigroup(s);
 22
 6
@@ -73,8 +71,7 @@ gap> IndexPeriodOfTransformation(f);
 
 # Issue 2
 
-gap> s:=Semigroup(Transformation([4,4,4,4]));
-<semigroup with 1 generator>
+gap> s:=Semigroup(Transformation([4,4,4,4]));;
 gap> AsList(s);
 [ Transformation( [ 4, 4, 4, 4 ] ) ]
 
