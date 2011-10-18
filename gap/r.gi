@@ -126,7 +126,7 @@ InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, f, data, o)
   local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, one, images, ht, oo, 
   reps, out, i, z, y;
-  #JDM require position of f in o!.ht!.o also! to do schreier.
+  
   j:=data[1]; 	# img size
   k:=data[2]; 	# index of orbit containing img
   l:=data[3]; 	# position of img in O[j][k]
@@ -135,8 +135,6 @@ function(s, f, data, o)
   n:=data[6]; 	# the length of O[j][k]!.reps[m][val]
   g:=data[7];	# f*O[j][k]!.perms[l];
 
-  #JDM not sure it will improve things but maybe everything with a ! here
-  #should be an argument to AddToOrbitsOfImages. 
   O := o!.orbits;  gens:=o!.gens; d:=o!.data; lens:=o!.lens;
   data_ht:=o!.data_ht;
 
@@ -206,10 +204,7 @@ function(s, f, data, o)
         z:=gens[y]*f;
         if HTValue(ht, z)=fail then  
           HTAdd(ht, z, true);
-          i:=i+1;
-          o[i]:=z;
-          #pos[i]:=??; gen[i]:=y;
-         #schreier words here
+          i:=i+1; o[i]:=z;
         fi;
       od;
     od;
@@ -623,7 +618,8 @@ end);
 
 InstallGlobalFunction(ForwardOrbitOfImage, 
 function(arg)
-  local s, f, images, img, deg, j, bound, treehashsize, o, scc, r, reps, gens, i;
+  local s, f, images, img, deg, j, bound, treehashsize, o, scc, r, reps, 
+   gens, i;
 
   s:=arg[1]; f:=arg[2];
 
@@ -667,7 +663,8 @@ function(arg)
   Enumerate(o, bound);
           
   #strongly connected components
-  scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)), Set));;
+  scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)),
+   Set));;
 
   r:=Length(scc);
   o!.scc:=scc;
