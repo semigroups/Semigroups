@@ -29,8 +29,8 @@
                                                        'Citrus'.
                                                        ===========
 
-This is the README file of the Citrus package version 0.1 for computing with 
-transformation semigroups. Citrus 0.1 is an updated version of the Monoid 
+This is the README file of the Citrus package version 0.3 for computing with 
+transformation semigroups. Citrus 0.3 is an updated version of the Monoid 
 package for GAP 3 and 4; see
 
 http://schmidt.nuigalway.ie/monoid/index.html
@@ -45,7 +45,7 @@ for more information about Monoid 3.1.4 for GAP 4.
 The functionality of Monoid 3.1.4 has been split across two GAP 4.5 packages
 Citrus and Comatose (for ease of maintanence and development). 
 
-Citrus 0.1 retains all the functionality of the original Monoid package for
+Citrus 0.3 retains all the functionality of the original Monoid package for
 GAP 3; and those functions from Monoid 3.1.4 not involved in the computation of
 automorphism groups of semigroups. The Comatose Package retains those
 functions from Monoid 3.1.4 used to compute automorphism groups of
@@ -53,7 +53,7 @@ transformation semigroups. See
 
 http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html
 
-Citrus 0.1 contains more efficient methods than those available in the GAP 
+Citrus 0.3 contains more efficient methods than those available in the GAP 
 library for calculating Green's classes, finding the size, the elements, and 
 testing membership in transformation semigroups. After Citrus has been loaded 
 many of these methods are automatically used in preference to those in the 
@@ -78,42 +78,42 @@ You can download the package from:
 
 http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html 
 
-in .tar.gz, and .tar.bz2 formats.
+in .tar.gz format.
 
 Contents
 --------
 
-The Citrus folder containing this README.txt file should contain the 
-directories and files: `doc', `examples', `gap', `init.g', `PackageInfo.g',
-`read.g', `README', `tmp', and `tst'. JDM correct?
+The `citrus' folder containing this README.txt file should contain the 
+directories and files: `CHANGELOG', `config', `doc', `examples', `gap', 
+'init.g', `PackageInfo.g', `read.g', `README', `tst', and `VERSIONS'. 
 
 Installation
 ------------
 
-1) unpack the file (for example, by using `gunzip Citrus0r1.tar.gz' and 
-then `tar -xf Citrus0r1.tar' in UNIX).
+1) unpack the file (for example, by using `gunzip citrus0r3.tar.gz' and 
+then `tar -xf citrus0r3.tar' in UNIX).
 
-2) move the resultant directory `Citrus' into the `pkg' directory of your 
+2) move the resultant directory `citrus' into the `pkg' directory of your 
 GAP directory (the directory containing the directories `lib', `doc', 
 `pkg', and so on).
 
 3) start GAP in the usual way.
 
-4) type `LoadPackage("Citrus");'. 
+4) type `LoadPackage("citrus");'. 
 
 Example Installation
 --------------------
 
-unix> gunzip Citrus0r1.tar.gz 
-unix> tar -xf Citrus0r1.tar 
-unix> mv Citrus GAPROOT/pkg
+unix> gunzip citrus0r3.tar.gz 
+unix> tar -xf citrus0r3.tar 
+unix> mv citrus GAPROOT/pkg
 unix> gap
 
 [ ... ]
 
-gap> LoadPackage("Citrus");
+gap> LoadPackage("citrus");
 ----------------------------------------------------------------------------
-Loading  Citrus 0.1 (Citrus: computing with transformation semigroups)
+Loading  Citrus 0.3 (Citrus: computing with transformation semigroups)
 by James Mitchell (http://www-groups.mcs.st-and.ac.uk/~jamesm).
 ----------------------------------------------------------------------------
 true

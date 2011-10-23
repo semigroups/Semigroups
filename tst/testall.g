@@ -10,9 +10,6 @@
 
 # Read(Filename(DirectoriesPackageLibrary("citrus","tst"),"testall.g"));;
 
-#SizeScreen([80]); SetInfoLevel(InfoWarning, 0);
-#TestManualExamples(DirectoriesPackageLibrary("citrus","doc")[1]![1], "citrus.xml");
-
 LoadPackage( "citrus" );;
 dir_str:=Concatenation(PackageInfo("citrus")[1]!.InstallationPath,"/tst");
 tst:=DirectoryContents(dir_str);

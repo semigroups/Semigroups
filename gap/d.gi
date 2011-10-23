@@ -112,7 +112,7 @@ end);
 
 #AAA
 
-# new for 0.1! - AddToOrbitsOfKernels - not a user function!
+# fix for 0.3! - AddToOrbitsOfKernels - not a user function!
 #############################################################################
 # Usage: s = the semigroup; f = transformation (R-class rep with rectified
 # image); data = [image data, kernel data] (without true/false, where kernel 
@@ -190,7 +190,7 @@ function(arg)
       if not val=fail then #old image
         reps[val][n+1]:=g;
         data[2]:=[j, k, l, m, val, n+1]; #JDM return i here?
-        convert[val][n+1]:=AsPermOfKerImg(f); 
+        convert[val][n+1]:=AsPermOfKerImg(g); 
         d_schutz[val][n+1]:=CreateSchutzGpOfDClass(s, data, o);
         r_reps[val][n+1]:=[data[1]];
         i:=Length(d)+1;
@@ -864,7 +864,7 @@ function(s, f)
   img_o:=rec( finished:=false, orbits:=img_o, gens:=Generators(s), s:=s, 
    deg := n, data:=[[j,1,1,1,1,1]], images:=fail, lens:=List([1..n], 
    function(x) if x=j then return 1; else return 0; fi; end), 
-   data_ht:=HTCreate([1,1,1,1,1,1]));
+   data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=CitrusHashLen!.dclass_data)));
   #JDM images should not be fail in this...
   
   Info(InfoCitrusGreens, 2, "finding kernel orbit...");
@@ -2011,11 +2011,12 @@ function(s)
     finished:=false,
     orbits:=EmptyPlist(n), 
     lens:=[1..n]*0, #lens[j]=Length(orbits[j])
-    kernels:=HTCreate([1..n]),
+    kernels:=HTCreate([1..n], rec(hashlen:=CitrusHashLen!.kers)),
     imgs_gens:=List(gens, x-> x![1]),
     gens:=gens,
     s:=s,
-    data_ht:=HTCreate([1,1,1,1,1,1,1]),
+    data_ht:=HTCreate([1,1,1,1,1,1,1], rec(hashlen:=CitrusHashLen!.
+     dclass_data)),
     data:=[]));
 end);
 

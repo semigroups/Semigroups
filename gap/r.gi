@@ -62,6 +62,8 @@
 #############################################################################
 ## Notes
 
+# - should make more use of OrbitsOfImages(s)!.images.
+
 # - this file is alphabetized, keep it that way!
 
 # - this file should only contain functions relating to images/r-classes!
@@ -148,60 +150,6 @@ function(f, r)
   return SiftedPermutation(schutz, PermLeftQuoTransformationNC(rep, g))=();
 end);
 
-# new for 0.1! - \in - "for a transformation semigroup"
-#############################################################################
-# Notes: not algorithm X. 
-
-# JDM move to greens.gi
-
-InstallMethod(\in, "for a transformation semigroup", 
-[IsTransformation, IsTransformationSemigroup],
-function(f, s)
-  local gens, g, o, iter, orbits, images;
-
-  if HasAsSSortedList(s) then 
-    return f in AsSSortedList(s);
-  fi;
-
-  gens:=Generators(s);
-
-  if not DegreeOfTransformation(f) = DegreeOfTransformation(gens[1]) then 
-    return false;
-  fi;
-
-  if not (IsMonoid(s) and IsOne(f)) and RankOfTransformation(f) > 
-   MaximumList(List(gens, RankOfTransformation)) then 
-    return false;
-  fi;
-
-  o:=OrbitsOfImages(s);
-  g:=PreInOrbitsOfImages(s, f, false);
-
-  if g[1] then 
-    return true;
-  elif o!.finished then 
-    return false;
-  fi;
-
-  iter:=IteratorOfNewRClassRepsData(s);
-  orbits:=o!.orbits; images:=o!.images;
-
-  repeat
-    NextIterator(iter);
-    g:=InOrbitsOfImages(f, false, g[2], orbits, images);
-
-    if g[1] then 
-      return true;
-    fi;
-  until IsDoneIterator(iter);
-
-  #JDM could also put something in here that returns false if everything,
-  #from OrbitsOfImages(s)!.at to the end of OrbitsOfImages(s)!.ht!.o 
-  #has rank less than f. Might be a good idea when degree is very high!
-
-  return false;
-end);
-
 #AAA
 
 # new for 0.1! - AddToOrbitsOfImages - not a user function! 
@@ -215,7 +163,6 @@ InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, f, data, o)
   local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, t, one, images, ht, graph, gen, pos, oo, reps, out, i, reps_pos, z, y;
   
-
   j:=data[1]; 	# img size
   k:=data[2]; 	# index of orbit containing img
   l:=data[3]; 	# position of img in O[j][k]
@@ -223,9 +170,6 @@ function(s, f, data, o)
   val:=data[5]; # position of ker in O[j][k]!.kernels_ht[m]
   n:=data[6]; 	# the length of O[j][k]!.reps[m][val]
   g:=data[7];	# f*O[j][k]!.perms[l];
-
-  #JDM not sure it will improve things but maybe everything with a ! here
-  #should be an argument to AddToOrbitsOfImages. 
 
   O := o!.orbits;  gens:=o!.gens; d:=o!.data; lens:=o!.lens;
   data_ht:=o!.data_ht; t:=Length(gens);
@@ -308,6 +252,8 @@ function(s, f, data, o)
           pos[i]:=reps_pos[j]; gen[i]:=y;
         
          #schreier words here
+          HTAdd(ht, z, true);
+          i:=i+1; o[i]:=z;
         fi;
       od;
     od;
@@ -753,8 +699,8 @@ end);
 
 InstallGlobalFunction(ForwardOrbitOfImage, 
 function(arg)
-  local s, f, images, img, deg, j, bound, treehashsize, o, scc, r, reps, gens, 
-   i;
+  local s, f, images, img, deg, j, bound, treehashsize, o, scc, r, reps, 
+   gens, i;
 
   s:=arg[1]; f:=arg[2];
 
@@ -1050,7 +996,8 @@ function(s, f)
 
   o:=rec( finished:=false, orbits:=o, gens:=Generators(s), s:=s, 
    deg := n, data:=[], images:=fail, lens:=List([1..n], function(x) if x=j then
-   return 1; else return 0; fi; end), data_ht:=HTCreate([1,1,1,1,1,1]));
+   return 1; else return 0; fi; end), data_ht:=HTCreate([1,1,1,1,1,1],
+   rec(hashlen:=CitrusHashLen!.imgs)));
   #local orbits of images! 
   #JDM shouldn't data contain [j,1,1,1,1,1]??
 
@@ -1671,7 +1618,8 @@ function(s)
 
     if i=Length(o) then
     #at the end of the orbit!
-      O!.finished:=true; #JDM unbind things here!
+      O!.finished:=true;
+      Unbind(O!.ht); Unbind(O!.lens); 
       return true;
     fi;
 
@@ -1888,7 +1836,8 @@ function(s)
   n := DegreeOfTransformationSemigroup( s );
   one := TransformationNC( [ 1 .. n ] );
 
-  ht := HTCreate(one); HTAdd(ht, one, 1); #JDM memory! this uses 100003
+  ht := HTCreate(one, rec(hashlen:=CitrusHashLen!.rclassreps_orb)); 
+  HTAdd(ht, one, true); 
   
   for i in [1..Length(gens)] do 
     HTAdd(ht, gens[i], i);
@@ -1902,15 +1851,15 @@ function(s)
     finished:=false, 
     orbits:=EmptyPlist(n),
     lens:=[1..n]*0, #lens[j]=Length(orbits[j])
-    images:=HTCreate(ImageSetOfTransformation(gens[1])), 
-    #JDM memory! prev. line uses 100003
+    images:=HTCreate(ImageSetOfTransformation(gens[1]),
+     rec(hashlen:=CitrusHashLen!.imgs)), 
     at:=0, 
     gens:=gens,
     s:=s,
     deg := n,
     one := one,
     ht:=ht,
-    data_ht:=HTCreate([1,1,1,1,1,1]), #JDM this uses 100003 also. 
+    data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=CitrusHashLen!.rclass_data)), 
     data:=[],
     graph:=[], 
     rep_to_o:=[], mult_ind:=[],

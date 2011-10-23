@@ -36,6 +36,91 @@ function(s, t)
    ForAll(Generators(t), x-> x in s);
 end); 
 
+# mod for 0.4! - \in - "for a transformation semigroup"
+#############################################################################
+# Notes: not algorithm X. 
+
+InstallMethod(\in, "for a transformation semigroup",
+[IsTransformation, IsTransformationSemigroup],
+function(f, s)
+  local gens, o, data, iter, orbits, images, next;
+
+  if HasAsSSortedList(s) then
+    return f in AsSSortedList(s);
+  fi;
+
+  gens:=Generators(s);
+
+  if not DegreeOfTransformation(f) = DegreeOfTransformation(gens[1]) then
+    Info(InfoCitrus, 2, "trans. has different degree from semigroup.");
+    return false;
+  fi;
+
+  if not (IsMonoid(s) and IsOne(f)) and RankOfTransformation(f) >
+   MaximumList(List(gens, RankOfTransformation)) then
+    Info(InfoCitrus, 2, "trans. has larger rank than any element of ",
+     "semigroup.");   
+    return false;
+  fi;
+  
+  if HasMinimalIdeal(s) and RankOfTransformation(f) <   
+   RankOfTransformation(Representative(MinimalIdeal(s))) then
+    Info(InfoCitrus, 2, "trans. has smaller rank than any element of ",
+     "semigroup."); 
+    return false;
+  fi;
+  
+  if HasImagesOfTransSemigroup(s) and not ImageSetOfTransformation(f) in
+   ImagesOfTransSemigroup(s) then
+    Info(InfoCitrus, 2, "trans. has image that does not occur in ",
+     "semigroup");
+    return false;
+  fi;
+  
+  if HasKernelsOfTransSemigroup(s) and not CanonicalTransSameKernel(f) in
+   KernelsOfTransSemigroup(s) then
+    Info(InfoCitrus, 2, "trans. has kernel that does not occur in ", 
+     "semigroup");
+    return false;
+  fi;
+
+  o:=OrbitsOfImages(s); data:=PreInOrbitsOfImages(s, f, false);
+
+  if data[1] then
+    return true;
+  elif o!.finished then
+    return false;
+#  elif not HTValue(o!.ht, f)=fail then
+#    return true; JDM in lots of places it is assumed after in is called that 
+# data of the element is known. With this included the data is not known..
+  fi;
+
+  iter:=IteratorOfNewRClassRepsData(s);
+  orbits:=o!.orbits; images:=o!.images;
+
+  repeat
+    next:=NextIterator(iter);
+    if not data[2][2]=fail then
+      if next[2]=data[2][2] and next[4]=data[2][4] and (next[5]=data[2][5] or
+       data[2][5]=fail) then
+        data:=InOrbitsOfImages(f, false, data[2], orbits, images);
+      fi;
+    else 
+      data:=InOrbitsOfImages(f, false, data[2], orbits, images);
+    fi;
+
+    if data[1] then
+      return true;
+    fi; 
+  until IsDoneIterator(iter);
+
+  #JDM could also put something in here that returns false if everything,
+  #from OrbitsOfImages(s)!.at to the end of OrbitsOfImages(s)!.ht!.o 
+  #has rank less than f. Might be a good idea when degree is very high!
+
+  return false;
+end);
+
 #GGG
 
 # new for 0.1! - GreensJClassOfElement - for a trans. semigroup and trans."

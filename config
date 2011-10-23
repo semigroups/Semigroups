@@ -1,0 +1,18 @@
+#############################################################################
+##
+#W  config
+#Y  Copyright (C) 2011                                   James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+# new for 0.2! - CitrusHashLen - global variable
+#############################################################################
+# Notes: contains default lengths of various hash tables, the default is
+# CitrusDefaultMem(). 
+
+BindGlobal("CitrusHashLen", rec(dclass_data:=1009, kers:=1009, 
+ rclass_data:=20287, imgs:=503, rclassreps_orb:=72379));
+MakeReadWriteGlobal("CitrusHashLen");

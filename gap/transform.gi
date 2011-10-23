@@ -15,7 +15,6 @@
 # - a method for RandomTransformation(m,n) i.e. a random transformation with
 # a given rank. 
 
-
 # new for 0.2! - \^ - "for a transformation and a permutation (citrus pkg)"
 #############################################################################
 # Notes: returns y^-1*x*y.
@@ -96,30 +95,29 @@ end);
 
 InstallMethod(AsPermutation, "for a permutation", [IsPerm], p -> p);
 
-# new for 0.1! - AsPermutation - "for a transformation"
+# fix for 0.2! - AsPermutation - "for a transformation"
 ###########################################################################
 #JDM this could use the method below, and that should have some more checks!
 
 InstallMethod(AsPermutation, "for a transformation", 
 [IsTransformation], 
-function(f)
-  local a, b;
+f-> AsPermutation(f, ImageSetOfTransformation(f)));
 
-  a:=ImageSetOfTransformation(f); b:=f![1]{a};
-  return MappingPermListList(a, b);
-end);
-
-# new for 0.1! - AsPermutation - "for a transformation and set"
+# fix for 0.2! - AsPermutation - "for a transformation and set"
 ###########################################################################
 
 InstallOtherMethod(AsPermutation, "for a transformation and a set", 
 [IsTransformation, IsList], 
-function(f, set)
+function(f, list)
   local a;
 
-  a:=f![1]{set};
+  a:=f![1]{list};
+  
+  if not Set(a)=Set(list) then 
+    return fail;
+  fi;
 
-  return MappingPermListList(set, a);
+  return MappingPermListList(list, a);
 end);
 
 #CCC
@@ -190,7 +188,7 @@ function(ker, img)
   return TransformationNC(List(ker, x-> lookup[x]));
 end);
 
-# fixed for 0.2! - IndexPeriodOfTransformation - "for a transformation"
+# fix for 0.2! - IndexPeriodOfTransformation - "for a transformation"
 #############################################################################
 
 InstallMethod(IndexPeriodOfTransformation, "for a transformation", 
@@ -276,13 +274,18 @@ function(s, f)
   return fail;
 end);
 
-# new for 0.1! - IsRegularTransformation - "for a transformation"
+# upd for 0.2! - IsRegularTransformation - "for a transformation"
 ###########################################################################
 
 InstallMethod(IsRegularTransformation, "for a transformation", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation], 
 function(s, f)
   local ker, m, o;
+
+  if not DegreeOfTransformationSemigroup(s)=DegreeOfTransformation(f) then 
+    Info(InfoCitrus, 2, "the degree of the semigroup and trans. differ");
+    return false;
+  fi;
 
   if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
     return true;

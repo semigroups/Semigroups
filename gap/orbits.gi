@@ -44,7 +44,7 @@ function(s)
     n:=Degree(s[1]);
   fi;
 
-  ht:=HTCreate([1..n], rec(hashlen:=1009));
+  ht:=HTCreate([1..n], rec(hashlen:=CitrusHashLen!.imgs));
   HTAdd(ht, [1..n], true);
   o:=[[1..n]]; m:=1; 
 
@@ -93,7 +93,8 @@ function(s)
     n:=Degree(s[1]);
   fi;
  
-  ht:=HTCreate([1..n], rec(hashlen:=1009)); HTAdd(ht, [1..n], true);
+  ht:=HTCreate([1..n], rec(hashlen:=CitrusHashLen!.kers)); 
+  HTAdd(ht, [1..n], true);
   o:=[[1..n]]; m:=1;
 
   if n<11 then 
@@ -130,10 +131,10 @@ end);
 
 InstallGlobalFunction(HashTableForImages, 
 function(img)
-  local img_set, ht;
+  local img_set, len,ht;
 
-  img_set:=Set(img); 
-  ht := HTCreate(img_set, rec( hfd := 1009, treehashsize := 1009 ));
+  img_set:=Set(img); len:=CitrusHashLen!.imgs;
+  ht := HTCreate(img_set, rec( hfd := len, treehashsize := len));
   HTAdd(ht, img_set, 1);
 
   return ht;
@@ -144,9 +145,9 @@ end);
 
 InstallGlobalFunction(HashTableForKernels, 
 function(ker, n)
-  local ht;
-
-  ht := HTCreate(ker, rec( hfd := 1009, treehashsize := 1009 ));
+  local len, ht;
+  len:=CitrusHashLen!.kers;
+  ht := HTCreate(ker, rec( hfd := len, treehashsize := len ));
   HTAdd(ht, ker, 1);
 
   return ht;
