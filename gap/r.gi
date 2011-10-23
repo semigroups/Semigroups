@@ -87,7 +87,7 @@
 # new for 0.1! - \= - "for R-class and R-class of trans. semigp."
 #############################################################################
 
-InstallMethod( \=, "for R-class and R-class of trans. semigp.",
+InstallMethod(\=, "for R-class and R-class of trans. semigp.",
 [IsGreensRClass and IsGreensClassOfTransSemigp, IsGreensRClass and 
 IsGreensClassOfTransSemigp],
 function(r1, r2)
@@ -97,7 +97,7 @@ end);
 # new for 0.1! - \< - "for R-class and R-class of trans. semigp."
 #############################################################################
 
-InstallMethod( \<, "for R-class and R-class of trans. semigp.",
+InstallMethod(\<, "for R-class and R-class of trans. semigp.",
 [IsGreensRClass and IsGreensClassOfTransSemigp, IsGreensRClass and 
 IsGreensClassOfTransSemigp],
 function(r1, r2)
