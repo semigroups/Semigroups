@@ -152,16 +152,15 @@ end);
 
 #AAA
 
-# new for 0.1! - AddToOrbitsOfImages - not a user function! 
+# mod for 0.4! - AddToOrbitsOfImages - not a user function! 
 #############################################################################
 # Usage: s = semigroup or d-class; f = transformation; data = image data; 
 # o = OrbitsOfImages(s).
-
 # Notes: if s is a d-class, then data should have j, k, l, m and g not = fail!
 
 InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, f, data, o)
-  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, t, one, images, ht, graph, gen, pos, oo, reps, out, i, reps_pos, z, y;
+  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, images, ht, gen, pos, f_o, out, reps, i, z, y;
   
   j:=data[1]; 	# img size
   k:=data[2]; 	# index of orbit containing img
@@ -171,91 +170,67 @@ function(s, f, data, o)
   n:=data[6]; 	# the length of O[j][k]!.reps[m][val]
   g:=data[7];	# f*O[j][k]!.perms[l];
 
-  O := o!.orbits;  gens:=o!.gens; d:=o!.data; lens:=o!.lens;
-  data_ht:=o!.data_ht; t:=Length(gens);
+  O:=o!.orbits; gens:=o!.gens; d:=o!.data; lens:=o!.lens;
+  data_ht:=o!.data_ht; 
 
   if IsBound(o!.ht) then # o = OrbitsOfImages(s)
-    one:=o!.one; images:=o!.images; 
-    ht:=o!.ht; graph:=o!.graph; gen:=o!.gen; pos:=o!.pos; o:=ht!.o; 
+    images:=o!.images; ht:=o!.ht; gen:=o!.gen; pos:=o!.pos; o:=ht!.o; 
   fi;
-
- # if r=6 then Error(""); fi;
 
   if k = fail then  #new img and l, m, val, n, g=fail
                     #don't call this function with a d-class and k=fail!
   ################################################################################
           
     lens[j]:=lens[j]+1;
-    oo:=ForwardOrbitOfImage(s, f, images, gens);
+    f_o:=ForwardOrbitOfImage(s, f, images, gens);
           
     if IsBound(O[j]) then 
-      O[j][lens[j]]:=oo[1];
+      O[j][lens[j]]:=f_o;
     else
-      O[j]:=[oo[1]];
+      O[j]:=[f_o];
     fi;
           
-    for i in oo[1] do 
+    for i in f_o do 
       HTAdd(images, i, lens[j]);
     od;
           
-    reps:=oo[2]; #reps. corresponding to all scc of oo[1]
     out:=[j, lens[j], 1, 1, 1, 1];
-    i:=Length(d); reps_pos:=EmptyPlist(Length(oo[3]));
-    
-    for m in [1..Length(oo[3])] do  # oo[3] is a list of the first index in
-                                    # every scc of oo[1]
-      i:=i+1;
-      d[i]:=[j, lens[j], oo[3][m], m, 1, 1]; 
-      HTAdd(data_ht, d[i], i);
-
-      reps_pos[m]:=i;
-    od;
-
-  ##############################################################################
+    g:=f;
+    ##############################################################################
 
   else #old img
     reps:=O[j][k]!.reps[m];
-      
+
     if not val=fail then #old kernel
       reps[val][n+1]:=g;
       out:=[j, k, l, m, val, n+1];
-      i:=Length(d)+1;
-      d[i]:=out; 
-      reps_pos:=[i];
-      HTAdd(data_ht, out, i);
     else #new kernel
       val:=Length(reps)+1;
+      if reps=[] then #scc not previously considered 
+        O[j][k]!.kernels_ht[m]:=HashTableForKernels(
+         CanonicalTransSameKernel(g), DegreeOfTransformationSemigroup(s));
+        O[j][k]!.schutz[m]:=CreateImageOrbitSchutzGp(gens, O[j][k], g, m);
+      fi;
+      
       reps[val]:=[g];
       out:=[j, k, l, m, val, 1];
-      i:=Length(d)+1;
-      d[i]:=out;
-      reps_pos:=[i];
-      HTAdd(data_ht, out, i);
       HTAdd(O[j][k]!.kernels_ht[m], CanonicalTransSameKernel( g ), val);
     fi;
-    reps:=[g]; 
   fi;
 
-  ##############################################################################
+  i:=Length(d)+1; d[i]:=out; HTAdd(data_ht, out, i);
+
+##############################################################################
   #install new pts in the orbit
 
-  if IsBound(ht) then 
-    i:=Length(o); 
-    for j in [1..Length(reps)] do
-      f:=reps[j];
-      for y in [1..Length(gens)] do
-        z:=gens[y]*f;
-        if HTValue(ht, z)=fail then  
-          i:=i+1;
-          HTAdd(ht, z, i);
-          o[i]:=z;
-          pos[i]:=reps_pos[j]; gen[i]:=y;
-        
-         #schreier words here
-          HTAdd(ht, z, true);
-          i:=i+1; o[i]:=z;
-        fi;
-      od;
+  if IsBound(ht) then
+    m:=Length(gens); j:=Length(o);
+    for y in [1..m] do
+      z:=gens[y]*g;
+      if HTValue(ht, z)=fail then  
+        j:=j+1; HTAdd(ht, z, j); o[j]:=z;
+        pos[j]:=i; gen[j]:=y;
+      fi;
     od;
   fi;
 
@@ -691,7 +666,7 @@ function(s, f)
    data_ht, d[2]{[1..6]})), TraceSchreierTreeOfSCCForward(o, d[2][4], l));
 end);
 
-# new for 0.1! - ForwardOrbitOfImage - not a user function!
+# mod for 0.4! - ForwardOrbitOfImage - not a user function!
 #############################################################################
 # Usage: s = semigroup; f = transformation; 
 # images = OrbitsOfImages(s)!.images (optional);
@@ -747,8 +722,8 @@ function(arg)
   scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)),
    Set));;
 
-  r:=Length(scc);
-  o!.scc:=scc;
+  r:=Length(scc); o!.scc:=scc;
+  
   o!.scc_lookup:=ListWithIdenticalEntries(Length(o), 1);
 
   if Length(scc)>1 then 
@@ -763,13 +738,17 @@ function(arg)
 
   #representatives of R-classes with image belonging in scc[i] partitioned 
   #according to their kernels
-  reps:=List([1..r], m-> 
-   f*EvaluateWord(gens, TraceSchreierTreeForward(o, scc[m][1])));
-  o!.reps:=List(reps, x->[[x]]); 
+  reps:=List([1..r], x-> []); reps[1][1]:=[f]; o!.reps:=reps;
+
+  #reps:=List([1..r], m-> 
+  # f*EvaluateWord(gens, TraceSchreierTreeForward(o, scc[m][1])));
+  #o!.reps:=List(reps, x->[[x]]); 
 
   #kernels of representatives of R-classes with image belonging in scc[i]
-  o!.kernels_ht:=List([1..r], m-> 
-   HashTableForKernels(CanonicalTransSameKernel(reps[m]), deg));
+  #o!.kernels_ht:=List([1..r], m-> 
+  # HashTableForKernels(CanonicalTransSameKernel(reps[m]), deg));
+
+  o!.kernels_ht:=[HashTableForKernels(CanonicalTransSameKernel(f), deg)];
 
   #calculate the multipliers for all scc's 
   o!.perms:=EmptyPlist(Length(o));
@@ -779,13 +758,15 @@ function(arg)
   od;
 
   #schutzenberger groups
-  o!.schutz:=List([1..r], m-> CreateImageOrbitSchutzGp(gens, o, reps[m], m));
+  #o!.schutz:=List([1..r], m-> CreateImageOrbitSchutzGp(gens, o, reps[m], m));
+  o!.schutz:=[CreateImageOrbitSchutzGp(gens, o, f, 1)];
 
   #nr idempotents
   
   o!.nr_idempotents:=List([1..r], m-> []);
 
-  return [o, reps, List([1..r], m-> scc[m][1])];
+#  return [o, reps, List([1..r], m-> scc[m][1])];
+  return o;
 end);
 
 #GGG
@@ -1317,7 +1298,11 @@ function(f, rectify, data, o, images)
     l:=o[j][k]!.scc[m][1];
   fi;
 
-  if val=fail then 
+  if val=fail then
+    if not IsBound(o[j][k]!.kernels_ht[m]) then 
+      return [false, [j, k, l, m, fail, 0, g]];
+    fi;
+
     val:=HTValue(o[j][k]!.kernels_ht[m], CanonicalTransSameKernel(f));
     if val=fail then 
       return [false, [j, k, l, m, fail, 0, g]];
@@ -1593,7 +1578,7 @@ function(s)
   ######################################################################
 
   IsDoneIterator:=function(iter)
-    local O, ht, o, i, gens, orbits, images, x, d;
+    local O, ht, o, i, gens, orbits, images, x, d, new_orbit;
    
     if iter!.last_called_by_is_done then 
       return iter!.next_value=fail;
@@ -1619,7 +1604,7 @@ function(s)
     if i=Length(o) then
     #at the end of the orbit!
       O!.finished:=true;
-      Unbind(O!.ht); Unbind(O!.lens); 
+      #JDM Unbind(O!.ht); Unbind(O!.lens); 
       return true;
     fi;
 
@@ -1634,17 +1619,28 @@ function(s)
 
       if not d[1] then #new rep!
         if IsTransformationMonoid(s) or not i = 1 then 
-          Add(O!.rep_to_o, i); 
-          Add(O!.mult_ind, d[2]{[1..4]}); 
+          new_orbit:=true;
           if not d[2][3]=fail then #old img
             d[2][3]:=O!.orbits![d[2][1]][d[2][2]]!.scc[d[2][4]][1]; #rectify
           #JDM much much better if InOrbitsOfImages return both the rectified
           #and unrectified positions. 
+            new_orbit:=false;
+          fi;
+         
+          d:=AddToOrbitsOfImages(s, x, d[2], O);
+          if new_orbit then           
+            O!.rep_to_o:=Concatenation(O!.rep_to_o, 
+            ListWithIdenticalEntries(Length(
+             O!.orbits![d[1]][d[2]]!.scc), i)); 
+            O!.mult_ind:=Concatenation(O!.mult_ind, 
+            List([1..Length(O!.orbits![d[1]][d[2]]!.scc)], 
+            m-> [d[1],d[2],O!.orbits![d[1]][d[2]]!.scc[m][1],m] )); 
+          else
+            Add(O!.rep_to_o, i);
+            Add(O!.mult_ind, d);
           fi;
 
-          d:=AddToOrbitsOfImages(s, x, d[2], O);
-          iter!.i:=iter!.i+1;
-          iter!.next_value:=d;
+          iter!.i:=iter!.i+1; iter!.next_value:=d;
           return false;
         fi;
       fi;
