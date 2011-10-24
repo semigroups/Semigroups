@@ -2136,12 +2136,8 @@ function(s, i)
     j:=pos1[pos2[j]];
   od;
   
-  if IsMonoid(s) then 
-    Add(word_1, pos2[j]-1);
-  else
-    Add(word_1, pos2[j]);
-  fi;
-
+  Add(word_1, pos2[j]-1);
+  
   if not ForAny(gen2[j], x-> x=fail) then 
     orb:=o[gen2[j][1]][gen2[j][2]]; m:=gen2[j][4]; l:=gen2[j][3];
     word_2:=Concatenation(word_2, 
