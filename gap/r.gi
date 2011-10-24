@@ -160,7 +160,8 @@ end);
 
 InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, f, data, o)
-  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, images, ht, gen, pos, f_o, out, reps, i, z, y;
+  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, images, ht, gen1,
+  pos1, f_o, out, reps, i, z, y;
   
   j:=data[1]; 	# img size
   k:=data[2]; 	# index of orbit containing img
@@ -174,7 +175,7 @@ function(s, f, data, o)
   data_ht:=o!.data_ht; 
 
   if IsBound(o!.ht) then # o = OrbitsOfImages(s)
-    images:=o!.images; ht:=o!.ht; gen:=o!.gen; pos:=o!.pos; o:=ht!.o; 
+    images:=o!.images; ht:=o!.ht; gen1:=o!.gen1; pos1:=o!.pos1; o:=ht!.o; 
   fi;
 
   if k = fail then  #new img and l, m, val, n, g=fail
@@ -229,7 +230,7 @@ function(s, f, data, o)
       z:=gens[y]*g;
       if HTValue(ht, z)=fail then  
         j:=j+1; HTAdd(ht, z, j); o[j]:=z;
-        pos[j]:=i; gen[j]:=y;
+        pos1[j]:=i; gen1[j]:=y;
       fi;
     od;
   fi;
@@ -292,8 +293,9 @@ function(gens, o, j)
   for i in scc do
   	f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
   	p[i]:=MappingPermListList(o[i], OnTuples(o[i], f));
-  od; #JDM this works also!
-
+  od; 
+  
+  #JDM this works also!
   #for i in scc do
   #  f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i)); 
   #  p[i]:=MappingPermListList(OnTuples(o[scc[1]], f), o[scc[1]]);
@@ -740,13 +742,7 @@ function(arg)
   #according to their kernels
   reps:=List([1..r], x-> []); reps[1][1]:=[f]; o!.reps:=reps;
 
-  #reps:=List([1..r], m-> 
-  # f*EvaluateWord(gens, TraceSchreierTreeForward(o, scc[m][1])));
-  #o!.reps:=List(reps, x->[[x]]); 
-
   #kernels of representatives of R-classes with image belonging in scc[i]
-  #o!.kernels_ht:=List([1..r], m-> 
-  # HashTableForKernels(CanonicalTransSameKernel(reps[m]), deg));
 
   o!.kernels_ht:=[HashTableForKernels(CanonicalTransSameKernel(f), deg)];
 
@@ -765,7 +761,6 @@ function(arg)
   
   o!.nr_idempotents:=List([1..r], m-> []);
 
-#  return [o, reps, List([1..r], m-> scc[m][1])];
   return o;
 end);
 
@@ -1619,26 +1614,15 @@ function(s)
 
       if not d[1] then #new rep!
         if IsTransformationMonoid(s) or not i = 1 then 
-          new_orbit:=true;
+            Add(O!.pos2, i);
+            Add(O!.gen2, d[2]{[1..4]});
           if not d[2][3]=fail then #old img
             d[2][3]:=O!.orbits![d[2][1]][d[2][2]]!.scc[d[2][4]][1]; #rectify
           #JDM much much better if InOrbitsOfImages return both the rectified
           #and unrectified positions. 
-            new_orbit:=false;
           fi;
          
           d:=AddToOrbitsOfImages(s, x, d[2], O);
-          if new_orbit then           
-            O!.rep_to_o:=Concatenation(O!.rep_to_o, 
-            ListWithIdenticalEntries(Length(
-             O!.orbits![d[1]][d[2]]!.scc), i)); 
-            O!.mult_ind:=Concatenation(O!.mult_ind, 
-            List([1..Length(O!.orbits![d[1]][d[2]]!.scc)], 
-            m-> [d[1],d[2],O!.orbits![d[1]][d[2]]!.scc[m][1],m] )); 
-          else
-            Add(O!.rep_to_o, i);
-            Add(O!.mult_ind, d);
-          fi;
 
           iter!.i:=iter!.i+1; iter!.next_value:=d;
           return false;
@@ -1856,16 +1840,12 @@ function(s)
     one := one,
     ht:=ht,
     data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=CitrusHashLen!.rclass_data)), 
-    data:=[],
-    graph:=[], 
-    rep_to_o:=[], mult_ind:=[],
-    gen:=ListWithIdenticalEntries(Length(gens)+1, fail), 
-    pos:=ListWithIdenticalEntries(Length(gens)+1, fail)
+    data:=[], 
+    gen1:=ListWithIdenticalEntries(Length(gens)+1, fail), 
+    pos1:=ListWithIdenticalEntries(Length(gens)+1, fail),
+    gen2:=[], pos2:=[]
   ));
 end);
-
-# JDM MN talk to MN re: hashing doesn't work very well when we use smaller hash
-# lengths but memory is out of hand when we use longer ones. What to do?
 
 #PPP
 
@@ -2131,7 +2111,7 @@ end);
 
 #TTT
 
-# new for 0.2! - TraceRClassRepsTree - not a user function!
+# new for 0.4! - TraceRClassRepsTree - not a user function!
 #############################################################################
 # Usage: s = trans. semigroup; i = index of R-class rep 
 
@@ -2139,21 +2119,35 @@ end);
 
 InstallGlobalFunction(TraceRClassRepsTree, 
 function(s, i)
-  local gen, pos, t, u, o, word_1, word_2, j;
+  local o, gen1, pos1, gen2, pos2, word_1, word_2, j, orb, m, l;
 
   o:=OrbitsOfImages(s);
-  gen:=o!.gen; pos:=o!.pos; t:=o!.rep_to_o; u:=o!.mult_ind; o:=o!.orbits;
+  gen1:=o!.gen1; pos1:=o!.pos1; gen2:=o!.gen2; pos2:=o!.pos2; o:=o!.orbits;
 
   word_1:=[]; word_2:=[]; j:=i;
 
-  while not gen[t[j]]=fail do
-    Add(word_1, gen[t[j]]);
-    word_2:= Concatenation(word_2, 
-     TraceSchreierTreeOfSCCBack(o[u[j][1]][u[j][2]], u[j][4], u[j][3]));
-    j:=pos[t[j]];
+  while not gen1[pos2[j]]=fail do
+    Add(word_1, gen1[pos2[j]]);
+    if not ForAny(gen2[j], x-> x=fail) then 
+      orb:=o[gen2[j][1]][gen2[j][2]]; m:=gen2[j][4]; l:=gen2[j][3]; 
+      word_2:= Concatenation(word_2, Reversed(TraceSchreierTreeOfSCCBack(orb,
+      m, l)));
+    fi;
+    j:=pos1[pos2[j]];
   od;
   
-  Add(word_1, t[j]-1);
+  if IsMonoid(s) then 
+    Add(word_1, pos2[j]-1);
+  else
+    Add(word_1, pos2[j]);
+  fi;
+
+  if not ForAny(gen2[j], x-> x=fail) then 
+    orb:=o[gen2[j][1]][gen2[j][2]]; m:=gen2[j][4]; l:=gen2[j][3];
+    word_2:=Concatenation(word_2, 
+     Reversed(TraceSchreierTreeOfSCCBack(orb, m, l)));
+  fi;
+  
   return Concatenation(word_1, Reversed(word_2));
 end);
 
