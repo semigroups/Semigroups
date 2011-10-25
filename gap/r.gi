@@ -291,8 +291,9 @@ function(gens, o, j)
   scc:=o!.scc[j];
 
   for i in scc do
-  	f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
-  	p[i]:=MappingPermListList(o[i], OnTuples(o[i], f));
+    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
+    # JDM this seems to cause a slowdown...
+    p[i]:=MappingPermListList(o[i], OnTuples(o[i], f));
   od; 
   
   #JDM this works also!
@@ -645,28 +646,64 @@ end);
 
 #FFF
 
-# new for 0.4! - Factorization - "for a transformation semigroup"
+# new for 0.4! - Factorization - "for a trans. semigp. and trans."
 #############################################################################
 
-InstallOtherMethod(Factorization, "for a transformation semigroup", 
+InstallOtherMethod(Factorization, "for a trans. semigroup and trans.", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation], 
 function(s, f)
   local d, l, o;
-  
-  if not f in s then 
-    return fail;
-  fi;#hack
 
   d:=PreInOrbitsOfImages(s, f, false);
-  l:=d[2][3]; o:=OrbitsOfImages(s)!.orbits[d[2][1]][d[2][2]];
-  d[2][3]:=o!.scc[d[2][4]][1]; #hack!
-
-#  r:=RClass(s, f); 
-#  g:=SchutzenbergerGroup(r);
-
+  
+  if not d[1] then 
+    Info(InfoCitrus, "transformation is not an element of semigroup.");
+    return fail;
+  fi;
+  
+  l:=d[2][3]; o:=ImageOrbitFromData(s, d);
+  d[2][3]:=ImageOrbitSCCFromData(s, d)[1]; #JDM hack!
+  Print("this currently returns the wrong answer!\n");
+  
   return Concatenation(TraceRClassRepsTree(s, HTValue(OrbitsOfImages(s)!.
    data_ht, d[2]{[1..6]})), TraceSchreierTreeOfSCCForward(o, d[2][4], l));
 end);
+
+# new for 0.4! - Factorization - "for an R-class and a trans."
+#############################################################################
+
+InstallOtherMethod(Factorization, "for an R-class and a trans.",
+[IsGreensRClass, IsTransformation],
+function(r, f)
+  local w, out, u, i;
+
+  #add error checking here!
+
+  f:=PermLeftQuoTransformationNC(Representative(r), f);
+  w:=String(Factorization(SchutzenbergerGroup(r), f));
+  w:=List(SplitString(w, "*"), x-> SplitString(x, "^"));
+  out:=[];
+  
+  for u in w do 
+    if IsBound(u[2]) then 
+      power:=Int(u[2]); gen:=Int(u[1]{[2..Length(u[1])]});
+      if IsPosInt(power) then 
+        for i in [1..AbsInt(power)] do 
+          Add(out, gen);
+        od;
+      else
+        for i in [1..AbsInt(power)] do
+          Add(out, -gen);
+        od;
+      fi;
+    else
+      Add(out, Int(u[1]{[2..Length(u[1])]}));
+    fi;
+  od;
+  return out;
+end);
+
+
 
 # mod for 0.4! - ForwardOrbitOfImage - not a user function!
 #############################################################################
