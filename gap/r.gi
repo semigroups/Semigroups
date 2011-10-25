@@ -961,7 +961,7 @@ function(s, f)
 
   j:=Length(ImageSetOfTransformation(f));
   n:=DegreeOfTransformationSemigroup(s);
-  o:=[]; o[j]:=[ForwardOrbitOfImage(s, f)[1]]; 
+  o:=[]; o[j]:=[ForwardOrbitOfImage(s, f)]; 
   #JDM ForwardOrbit here calculates the schutz gps., perms and so on 
   #   of all the scc's of the orbit. We only need those for the first one...
   #   add optional fifth arg that filters the scc's.
@@ -2136,7 +2136,9 @@ function(s, i)
     j:=pos1[pos2[j]];
   od;
   
-  Add(word_1, pos2[j]-1);
+  if not pos2[j]=1 then  
+    Add(word_1, pos2[j]-1);
+  fi;
   
   if not ForAny(gen2[j], x-> x=fail) then 
     orb:=o[gen2[j][1]][gen2[j][2]]; m:=gen2[j][4]; l:=gen2[j][3];

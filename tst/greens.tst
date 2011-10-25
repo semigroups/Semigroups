@@ -903,7 +903,7 @@ gap> enum:=Enumerator(r);
 gap> enum[1];
 Transformation( [ 2, 2, 6, 4, 1, 6, 3, 2 ] )
 gap> enum[1000];
-Transformation( [ 1, 1, 7, 8, 4, 7, 5, 1 ] )
+Transformation( [ 5, 5, 4, 7, 8, 4, 1, 5 ] )
 gap> Position(enum, last);
 1000
 gap> ForAll([1..2640], x-> Position(enum, enum[x])=x);
@@ -984,8 +984,7 @@ gap> s:=Semigroup([
 >  Transformation( [ 6, 8, 12, 5, 4, 8, 10, 7, 4, 1, 10, 11 ] ) ]);;
 gap> f:=Transformation( [ 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8 ] );;
 gap> ForwardOrbitOfImage(s, f);
-[ <closed orbit, 40 images with size 2, 1 components, 1 kernels, 1 reps>,
-  [ Transformation( [ 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8 ] ) ], [ 1 ] ]
+<closed orbit, 40 images with size 2, 1 components, 1 kernels, 1 reps>
 gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ), 
 >   Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1, 7 ] ), 
 >   Transformation( [ 3, 8, 1, 9, 9, 4, 10, 5, 10, 6 ] ), 
@@ -1044,7 +1043,7 @@ gap> PreInOrbitsOfImages(s, f, false);
 gap> iter:=IteratorOfGreensRClasses(s);
 <iterator of R-classes>
 gap> NextIterator(iter);
-{Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8 ] )}
+{Transformation( [ 1 .. 8 ] )}
 gap> NextIterator(iter);
 {Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] )}
 gap> PreInOrbitsOfImages(s, f, true);

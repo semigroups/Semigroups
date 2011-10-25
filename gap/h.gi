@@ -278,7 +278,7 @@ function(s, f)
   j:=Length(ImageSetOfTransformation(f));
 
   Info(InfoCitrusGreens, 2, "finding orbit of image...");
-  img_o:=[]; img_o[j]:=[ForwardOrbitOfImage(s, f)[1]];
+  img_o:=[]; img_o[j]:=[ForwardOrbitOfImage(s, f)];
   #JDM see comments in GreensDClassOfElementNC
   img_o:=rec( finished:=false, orbits:=img_o, gens:=Generators(s), s:=s,
    deg := n, data:=[[j,1,1,1,1,1]], images:=fail, lens:=List([1..n],

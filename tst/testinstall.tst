@@ -144,4 +144,8 @@ true
 gap> ForAll(Concatenation(List(GreensDClasses(s), GreensRClassReps)), 
 > x-> x in s);
 true
+gap> ForAll([1..NrGreensRClasses(s)], i->
+> EvaluateWord(Generators(s), TraceRClassRepsTree(s, i))=
+> GreensRClassReps(s)[i]);
+true
 gap> STOP_TEST( "testinstall.tst 0.3", 0);
