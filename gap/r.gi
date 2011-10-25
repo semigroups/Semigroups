@@ -645,7 +645,7 @@ end);
 
 #FFF
 
-# new for 0.2! - Factorization - "for a transformation semigroup"
+# new for 0.4! - Factorization - "for a transformation semigroup"
 #############################################################################
 
 InstallOtherMethod(Factorization, "for a transformation semigroup", 
