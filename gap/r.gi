@@ -338,7 +338,7 @@ function(gens, o, f, k)
         if not h=() then 
           g:=ClosureGroup(g, h);
           l:=l+1;
-          words[l]:=[i, j, graph[i][j]];
+          words[l]:=j;
         fi;
 
       fi; #keep track of schreier gens here!
@@ -652,38 +652,46 @@ end);
 InstallOtherMethod(Factorization, "for a trans. semigroup and trans.", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation], 
 function(s, f)
-  local d, l, o;
-
-  d:=PreInOrbitsOfImages(s, f, false);
-  
-  if not d[1] then 
+  local data, l, o, rep, p, w, g, q;
+ 
+  if not f in s then 
     Info(InfoCitrus, "transformation is not an element of semigroup.");
     return fail;
   fi;
   
-  l:=d[2][3]; o:=ImageOrbitFromData(s, d[2]);
-  d[2][3]:=ImageOrbitSCCFromData(s, d[2])[1]; #JDM hack!
-  Print("this currently returns the wrong answer!\n");
-  
-  p:=PermLeftQuoTransformationNC(Representative(RClass(s, f)), d[2][7]);
+  data:=PreInOrbitsOfImages(s, f, false)[2];
+
+  l:=data[3]; o:=ImageOrbitFromData(s, data);
+  data[3]:=ImageOrbitSCCFromData(s, data)[1]; #JDM hack rectify!
+
+  rep:=RClassRepFromData(s, data); p:=data[8];
+
+  if p=fail then 
+    p:=PermLeftQuoTransformationNC(rep, data[7]);
+  fi;
+
+  w:=TraceSchreierTreeOfSCCForward(o, data[4], l);
+  g:=EvaluateWord(Generators(s), w);
+  q:=PermLeftQuoTransformationNC(rep*g*ImageOrbitPermsFromData(s, data)[l],
+   rep); 
+  # f= rep*p*q*g. 
   return Concatenation(TraceRClassRepsTree(s, HTValue(OrbitsOfImages(s)!.
-   data_ht, d[2]{[1..6]})), TraceSchreierTreeOfSCCForward(o, d[2][4], l));
+   data_ht, data{[1..6]})), Factorization(s, data, p*q), w);
   #return [TraceRClassRepsTree(s, HTValue(OrbitsOfImages(s)!.data_ht, 
-  #d[2]{[1..6]})), TraceSchreierTreeOfSCCForward(o, d[2][4], l)];
+  # data{[1..6]})), Factorization(s, data, p*q), w];
 end);
 
-# new for 0.4! - Factorization - "for an R-class and a trans."
+# new for 0.4! - Factorization - "for a trans. semi., img data, and perm" 
 #############################################################################
-# JDM this is a temporary inefficient method!
+# Returns: a word in the generators of s such that ...
 
-InstallOtherMethod(Factorization, "for an R-class and a trans.",
-[IsGreensRClass, IsPerm],
-function(r, f)
-  local w, out, power, gen, u, i;
+InstallOtherMethod(Factorization, "for a trans. semi., img data, and perm",
+[IsTransformationSemigroup, IsList, IsPerm],
+function(s, data, f)
+  local w, out, power, gen, u, i, word;
 
-  #add error checking here!
+  w:=String(Factorization(ImageOrbitSchutzGpFromData(s, data), f));
 
-  w:=String(Factorization(SchutzenbergerGroup(r), f));
   w:=List(SplitString(w, "*"), x-> SplitString(x, "^"));
   out:=[];
   
@@ -703,7 +711,8 @@ function(r, f)
       Add(out, Int(u[1]{[2..Length(u[1])]}));
     fi;
   od;
-  return out;
+  word:=ImageOrbitFromData(s, data)!.schutz[data[4]][3];
+  return List(out, x-> word[x]);
 end);
 
 # mod for 0.4! - ForwardOrbitOfImage - not a user function!
@@ -1292,7 +1301,7 @@ end);
 
 InstallGlobalFunction(InOrbitsOfImages, 
 function(f, rectify, data, o, images)
-  local j, k, l, m, val, n, g, img, schutz, reps, i;
+  local j, k, l, m, val, n, g, img, schutz, reps, i, p;
 
   j:=data[1]; k:=data[2]; l:=data[3];
   m:=data[4]; val:=data[5]; n:=data[6]; 
@@ -1345,7 +1354,7 @@ function(f, rectify, data, o, images)
   schutz:=o[j][k]!.schutz[m][1];
 
   if schutz=true then 
-    return [true, [j,k,l,m,val,1,g]];
+    return [true, [j,k,l,m,val,1,g, fail]];
   fi;
 
   reps:=o[j][k]!.reps[m][val];
@@ -1355,10 +1364,13 @@ function(f, rectify, data, o, images)
     n:=n+1;
     if schutz=false then
       if reps[n]=g then # JDM not sure this doesn't slow things down...
-        return [true, [j,k,l,m,val,n,g]];
+        return [true, [j,k,l,m,val,n,g, ()]];
       fi;
-    elif SiftedPermutation(schutz, PermLeftQuoTransformationNC(reps[n], g))=() then 
-      return [true, [j,k,l,m,val,n,g]];
+    else 
+      p:=PermLeftQuoTransformationNC(reps[n], g);
+      if SiftedPermutation(schutz, p)=() then 
+        return [true, [j,k,l,m,val,n,g,p]];
+      fi;
     fi;
   od;
 
