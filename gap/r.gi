@@ -661,25 +661,28 @@ function(s, f)
     return fail;
   fi;
   
-  l:=d[2][3]; o:=ImageOrbitFromData(s, d);
-  d[2][3]:=ImageOrbitSCCFromData(s, d)[1]; #JDM hack!
+  l:=d[2][3]; o:=ImageOrbitFromData(s, d[2]);
+  d[2][3]:=ImageOrbitSCCFromData(s, d[2])[1]; #JDM hack!
   Print("this currently returns the wrong answer!\n");
   
+  p:=PermLeftQuoTransformationNC(Representative(RClass(s, f)), d[2][7]);
   return Concatenation(TraceRClassRepsTree(s, HTValue(OrbitsOfImages(s)!.
    data_ht, d[2]{[1..6]})), TraceSchreierTreeOfSCCForward(o, d[2][4], l));
+  #return [TraceRClassRepsTree(s, HTValue(OrbitsOfImages(s)!.data_ht, 
+  #d[2]{[1..6]})), TraceSchreierTreeOfSCCForward(o, d[2][4], l)];
 end);
 
 # new for 0.4! - Factorization - "for an R-class and a trans."
 #############################################################################
+# JDM this is a temporary inefficient method!
 
 InstallOtherMethod(Factorization, "for an R-class and a trans.",
-[IsGreensRClass, IsTransformation],
+[IsGreensRClass, IsPerm],
 function(r, f)
-  local w, out, u, i;
+  local w, out, power, gen, u, i;
 
   #add error checking here!
 
-  f:=PermLeftQuoTransformationNC(Representative(r), f);
   w:=String(Factorization(SchutzenbergerGroup(r), f));
   w:=List(SplitString(w, "*"), x-> SplitString(x, "^"));
   out:=[];
@@ -702,8 +705,6 @@ function(r, f)
   od;
   return out;
 end);
-
-
 
 # mod for 0.4! - ForwardOrbitOfImage - not a user function!
 #############################################################################
