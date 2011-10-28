@@ -90,6 +90,7 @@ DeclareGlobalFunction("NrIdempotentsRClassFromData");
 DeclareGlobalFunction("NrRClassesOrbitsOfImages");
 DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
 DeclareGlobalFunction("PreInOrbitsOfImages");
+DeclareGlobalFunction("RClassIndexFromData");
 DeclareGlobalFunction("RClassRepFromData");
 DeclareAttribute("RClassType", IsTransformationSemigroup);
 DeclareGlobalFunction("SizeOrbitsOfImages");

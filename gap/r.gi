@@ -305,7 +305,7 @@ function(gens, o, j)
   return p;
 end);
 
-# new for 0.1! - CreateImageOrbitSchutzGp - not a user function!
+# mod for 0.4! - CreateImageOrbitSchutzGp - not a user function!
 #############################################################################
 # Usage: gens = generators of the semigroup; o = image orbit;
 # f = representative of scc with index k;
@@ -313,7 +313,7 @@ end);
 
 InstallGlobalFunction(CreateImageOrbitSchutzGp,
 function(gens, o, f, k) 
-  local scc, bound, g, p, t, graph, is_sym, l, words, h, i, j;
+  local scc, bound, g, p, t, graph, is_sym, l, words, h, K, i, j;
 
   scc:=o!.scc[k];
 
@@ -330,18 +330,21 @@ function(gens, o, f, k)
     for j in [1..Length(gens)] do 
     
       if IsBound(graph[i][j]) and t[k][graph[i][j]] then
-        #JDM potentially dangerous change here!
         #h:=PermLeftQuoTransformationNC(f, f/p[i] * (gens[j]*p[graph[i][j]]));
         h:=PermLeftQuoTransformationNC(f,
-        f*EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, k,
-        i)) * (gens[j]*p[graph[i][j]]));
+         f*EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, k, i)) * 
+          (gens[j]*p[graph[i][j]]));
         if not h=() then 
-          g:=ClosureGroup(g, h);
-          l:=l+1;
-          words[l]:=j;
+          K:=ClosureGroup(g, h);
+          if Size(K)>Size(g) then 
+            g:=K;
+            l:=l+1;
+            words[l]:=Concatenation(TraceSchreierTreeOfSCCForward(o, k, i), [j],
+             TraceSchreierTreeOfSCCBack(o, k, graph[i][j]));
+          fi;
         fi;
 
-      fi; #keep track of schreier gens here!
+      fi; 
     
       if Size(g)>=bound then 
         is_sym:=true;
@@ -655,7 +658,7 @@ function(s, f)
   local data, l, o, rep, p, w, g, q;
  
   if not f in s then 
-    Info(InfoCitrus, "transformation is not an element of semigroup.");
+    Info(InfoCitrus, 1, "transformation is not an element of the semigroup.");
     return fail;
   fi;
   
@@ -663,56 +666,76 @@ function(s, f)
 
   l:=data[3]; o:=ImageOrbitFromData(s, data);
   data[3]:=ImageOrbitSCCFromData(s, data)[1]; #JDM hack rectify!
-
   rep:=RClassRepFromData(s, data); p:=data[8];
 
   if p=fail then 
     p:=PermLeftQuoTransformationNC(rep, data[7]);
   fi;
 
-  w:=TraceSchreierTreeOfSCCForward(o, data[4], l);
-  g:=EvaluateWord(Generators(s), w);
-  q:=PermLeftQuoTransformationNC(rep*g*ImageOrbitPermsFromData(s, data)[l],
-   rep); 
+  if l=data[3] and p=() then # f is an R-class rep!
+    return TraceRClassRepsTree(s, RClassIndexFromData(s, data));
+  fi;
+  
+  if not l=data[3] then 
+    w:=TraceSchreierTreeOfSCCForward(o, data[4], l);
+    g:=EvaluateWord(Generators(s), w);
+    q:=PermLeftQuoTransformationNC(rep*g*ImageOrbitPermsFromData(s, data)[l],
+     rep); #JDM would be good to remove this step!
+  else
+    w:=[]; q:=();
+  fi;
+
+  if p*q=() then 
+    return Concatenation(TraceRClassRepsTree(s, RClassIndexFromData(s,
+     data)), w);
+  fi;
+  
   # f= rep*p*q*g. 
-  return Concatenation(TraceRClassRepsTree(s, HTValue(OrbitsOfImages(s)!.
-   data_ht, data{[1..6]})), Factorization(s, data, p*q), w);
-  #return [TraceRClassRepsTree(s, HTValue(OrbitsOfImages(s)!.data_ht, 
-  # data{[1..6]})), Factorization(s, data, p*q), w];
+  
+  return Concatenation(TraceRClassRepsTree(s, RClassIndexFromData(s, data)),
+   Factorization(s, data, p*q), w);
 end);
 
 # new for 0.4! - Factorization - "for a trans. semi., img data, and perm" 
 #############################################################################
-# Returns: a word in the generators of s such that ...
+# Usage: s = trans. semigroup, data = image data, f = permutation
+
+# Returns: a word in the generators of s that acts on the image of
+# the representative of the R-class with data <data> in the same way that f
+# acts on this image.
+
+# Notes: this is rather slow! Require some MN assistance with this one. 
 
 InstallOtherMethod(Factorization, "for a trans. semi., img data, and perm",
 [IsTransformationSemigroup, IsList, IsPerm],
 function(s, data, f)
-  local w, out, power, gen, u, i, word;
-
-  w:=String(Factorization(ImageOrbitSchutzGpFromData(s, data), f));
-
+  local g, w, out, power, gen, u, i, word, orders;
+  
+  g:=ImageOrbitSchutzGpFromData(s, data);
+  w:=String(Factorization(g, f));
+  
+  if w="<identity ...>" then
+    return [];
+  fi;
+ 
   w:=List(SplitString(w, "*"), x-> SplitString(x, "^"));
-  out:=[];
+  out:=[]; orders:=List(GeneratorsOfGroup(g), Order);
   
   for u in w do 
     if IsBound(u[2]) then 
       power:=Int(u[2]); gen:=Int(u[1]{[2..Length(u[1])]});
-      if IsPosInt(power) then 
-        for i in [1..AbsInt(power)] do 
-          Add(out, gen);
-        od;
-      else
-        for i in [1..AbsInt(power)] do
-          Add(out, -gen);
-        od;
+      if IsNegInt(power) then 
+        power:=power+orders[gen];
       fi;
+      for i in [1..power] do 
+        Add(out, gen);
+      od;
     else
       Add(out, Int(u[1]{[2..Length(u[1])]}));
     fi;
   od;
   word:=ImageOrbitFromData(s, data)!.schutz[data[4]][3];
-  return List(out, x-> word[x]);
+  return Concatenation(List(out, x-> word[x]));
 end);
 
 # mod for 0.4! - ForwardOrbitOfImage - not a user function!
@@ -2016,6 +2039,18 @@ function(r)
   i:=Random(ImageOrbitSCC(r));
   
   return f*g*ImageOrbitPerms(r)[i]^-1; 
+end);
+
+# new for 0.4! - RClassIndexFromData - not a user function!
+############################################################################
+# Usage: s = semigroup; d = image data.
+
+# Returns: the index <i> of the R-class corresponding to the image data <d>, 
+# that is, GreensRClasses(s)[i]!.data=d.
+
+InstallGlobalFunction(RClassIndexFromData, 
+function(s, d)
+  return HTValue(OrbitsOfImages(s)!.data_ht, d{[1..6]});
 end);
 
 # new for 0.1! - RClassRepFromData - not a user function!
