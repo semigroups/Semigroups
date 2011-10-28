@@ -8,43 +8,6 @@
 #############################################################################
 ##
 
-#gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 2, 4, 1, 2 ]$
-#>   Transformation( [ 3, 1, 1, 3 ] ), Transformation( [ 3, 3, 4, 1 ] ) ]
-#> ;;
-
-
-# Factorization(s, f);
-
-# 1) calculate the tree that says how to get from one R-class rep to another by
-# applying which generator (using rep_to_o and an as yet unwritten inverse of
-# OrbitsOfImages(s)!.graph). DONE!
-
-# 2) do something like d1:=PreInOrbitsOfImages(s, f, false) (unrectified image)
-# where f is the element giving rise to the R-class rep. 
-
-# 3) find the word from the tree in 1) that takes me to the element g of the
-# potential R-class reps orbit that yields the R-class rep of the R-class of f
-# call this w_1
-
-# 4) do PreInOrbitsOfImages(s, g, false) and TraceSchreierTreeOfSCCBack to find
-# which generators to apply to rectify the image of g call these w_2
-
-# 5) Find p:=PermLeftQuoTransformationNC(R-class rep, g with rect image) 
-
-# 6) Give p as a word in the generators of SchutzGp(R-class)
-
-# 7) Find p as a word in generators of s using words from
-# CreateSchutzGpOfImgOrb (or whatever) [i, j, k]->
-# Concatenation(TraceSchrBack(o, ?, i), Generators(s)[j], TraceSchrForward(k))
-# call this w_3
-
-# 8) Find the word using TraceSchreierTreeForward(o, d[1][4], d[1][3]) that
-# unrectifies the image of f and call this w_4;
-
-# 9) The word you are looking for is w_1, w_2, w_3, w_4 (this should anyway
-# yield something with the same kernel and image as f if it is not f, then
-# maybe separate the computation for r-class reps and other elements.)
-
 #############################################################################
 # Conventions:
 
@@ -208,8 +171,15 @@ function(s, f, data, o)
     else #new kernel
       val:=Length(reps)+1;
       if reps=[] then #scc not previously considered 
+        O[j][k]!.perms:=O[j][k]!.perms+CreateImageOrbitSCCPerms(gens, 
+         O[j][k], m);
+        if g=fail then 
+          g:=f*O[j][k]!.perms[l];
+        fi;
+         
         O[j][k]!.kernels_ht[m]:=HashTableForKernels(
          CanonicalTransSameKernel(g), DegreeOfTransformationSemigroup(s));
+        O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
         O[j][k]!.schutz[m]:=CreateImageOrbitSchutzGp(gens, O[j][k], g, m);
       fi;
       
@@ -806,7 +776,8 @@ function(arg)
 
   #boolean list corresponding to membership in scc[i]
   o!.truth:=List([1..r], i-> BlistList([1..Length(o)], scc[i]));
-  o!.trees:=List([1..r], x-> CreateSchreierTreeOfSCC(o,x));
+  #o!.trees:=List([1..r], x-> CreateSchreierTreeOfSCC(o,x));
+  o!.trees:=[CreateSchreierTreeOfSCC(o, 1)];
 
   #representatives of R-classes with image belonging in scc[i] partitioned 
   #according to their kernels
@@ -818,10 +789,11 @@ function(arg)
 
   #calculate the multipliers for all scc's 
   o!.perms:=EmptyPlist(Length(o));
-  
-  for i in [1..r] do 
-    o!.perms:=o!.perms+CreateImageOrbitSCCPerms(gens, o, i);
-  od;
+  o!.perms:=o!.perms+CreateImageOrbitSCCPerms(gens, o, 1);
+
+  #for i in [1..r] do 
+  #  o!.perms:=o!.perms+CreateImageOrbitSCCPerms(gens, o, i);
+  #od;
 
   #schutzenberger groups
   #o!.schutz:=List([1..r], m-> CreateImageOrbitSchutzGp(gens, o, reps[m], m));
@@ -1324,7 +1296,7 @@ end);
 
 InstallGlobalFunction(InOrbitsOfImages, 
 function(f, rectify, data, o, images)
-  local j, k, l, m, val, n, g, img, schutz, reps, i, p;
+  local j, k, l, m, val, n, g, img, schutz, reps, i, p, perms;
 
   j:=data[1]; k:=data[2]; l:=data[3];
   m:=data[4]; val:=data[5]; n:=data[6]; 
@@ -1349,10 +1321,15 @@ function(f, rectify, data, o, images)
       return [false, [j, fail, fail, fail, fail, 0, fail]];
     fi;
           
-    l:=Position(o[j][k], img);
-          
+    l:=Position(o[j][k], img); 
     m:=o[j][k]!.scc_lookup[l];
-    g:=f*o[j][k]!.perms[l];
+    perms:=o[j][k]!.perms;
+    
+    if not IsBound(perms[l]) then 
+      return [false, [ j, k, l, m, fail, 0, fail ] ];
+    fi;
+
+    g:=f*perms[l];
   fi;
 
   if g=fail then #this can happen if coming from GreensRClassReps.
@@ -1689,11 +1666,11 @@ function(s)
         if IsTransformationMonoid(s) or not i = 1 then 
             Add(O!.pos2, i);
             Add(O!.gen2, d[2]{[1..4]});
-          if not d[2][3]=fail then #old img
-            d[2][3]:=O!.orbits![d[2][1]][d[2][2]]!.scc[d[2][4]][1]; #rectify
+          #if not d[2][3]=fail then #old img
+          #  d[2][3]:=O!.orbits![d[2][1]][d[2][2]]!.scc[d[2][4]][1]; #rectify
           #JDM much much better if InOrbitsOfImages return both the rectified
           #and unrectified positions. 
-          fi;
+          #fi;
          
           d:=AddToOrbitsOfImages(s, x, d[2], O);
 
