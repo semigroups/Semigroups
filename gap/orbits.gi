@@ -169,6 +169,8 @@ function(v,data)
    return ORB_HashFunctionForIntList(v![1], data); 
 end);
 
+#III
+
 # new for 0.1! - ImagesOfTransSemigroup - "for a transformation semigroup"
 ###########################################################################
 # Notes: this orbit always contains [1..Degree(s)] even if this is not the
@@ -210,6 +212,8 @@ local n;
               onlygrades:=function(x,y) return x in y; end, 
               onlygradesdata:=[m..n]));
 end);
+
+#KKK
 
 # new for 0.1! - KernelsOfTransSemigroup - "for a trans. semigroup"
 ########################################################################### 
@@ -266,6 +270,167 @@ function(ker, f)
   return CanonicalTransSameKernel(ker{f![1]});  
 end);
 
+# new for 0.4! - OrbSCC - "for an orbit"
+#############################################################################
+
+InstallGlobalFunction(OrbSCC,
+function(o)
+  local scc, r, i;
+
+  if IsBound(o!.scc) then 
+    return o!.scc;
+  fi;
+
+  if not IsClosed(o) then #JDM good idea?
+    Enumerate(o);
+  fi;
+
+  scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)),
+     Set));;
+  r:=Length(scc);
+
+  o!.scc:=scc;
+  o!.scc_lookup:=ListWithIdenticalEntries(Length(o), 1);
+
+  if Length(scc)>1 then
+    for i in [2..r] do
+      o!.scc_lookup{scc[i]}:=ListWithIdenticalEntries(Length(scc[i]), i);
+    od;
+  fi;
+
+  o!.truth:=List([1..r], i-> BlistList([1..Length(o)], scc[i]));
+  
+  return scc;
+end); 
+
+#RRR
+
+# new for 0.4! - ReverseSchreierTreeOfSCC - "for an orbit and pos. int."
+###########################################################################
+
+# JDM add check that i<=Length(OrbSCC(o))
+
+InstallGlobalFunction(ReverseSchreierTreeOfSCC,
+function(o, i)
+  local graph, rev, scc, gen, pos, seen, t, oo, j, k, l, m;
+
+  if not IsBound(o!.reverse) then
+    o!.reverse:=EmptyPlist(Length(OrbSCC(o)));
+  fi;
+ 
+  if IsBound(o!.reverse[i]) then
+    return o!.reverse[i];
+  fi;
+
+  if not IsBound(o!.rev) then
+    if o!.orbitgraph=false then 
+  #JDM hack due to bug in orb!
+      graph:=OrbitGraph(o);
+      o!.orbitgraph:=graph;
+    else
+      graph:=o!.orbitgraph;
+    fi;
+
+    rev:=List([1..Length(graph)], x-> List([1..Length(o!.gens)], x-> []));
+ 
+    for j in [1..Length(graph)] do
+      for k in [1..Length(graph[j])] do
+        if IsBound(graph[j][k]) then
+          Add(rev[graph[j][k]][k], j);
+          #starting at position j and applying gens[k] we obtain graph[j][k];
+        fi;
+      od;
+    od;
+
+    o!.rev:=rev;
+  fi;
+
+  scc:=o!.scc[i]; rev:=o!.rev;
+
+  gen:=ListWithIdenticalEntries(Length(o), fail);
+  pos:=ListWithIdenticalEntries(Length(o), fail);
+  seen:=BlistList([1..Length(o)], [scc[1]]);
+  t:=o!.truth[i]; oo:=EmptyPlist(Length(scc));
+  oo[1]:=scc[1]; j:=0;
+
+  while Length(oo)<Length(scc) do
+    j:=j+1;
+    k:=oo[j];
+    l:=0;
+    while l< Length(rev[k]) and Length(oo)<Length(scc) do
+      l:=l+1;
+      m:=0;
+      while m< Length(rev[k][l]) and Length(oo)<Length(scc) do
+        m:=m+1;
+        if not seen[rev[k][l][m]] and t[rev[k][l][m]] then
+          Add(oo, rev[k][l][m]); seen[rev[k][l][m]]:=true;
+          gen[rev[k][l][m]]:=l; pos[rev[k][l][m]]:=k;
+        fi;
+      od;
+    od;
+  od;
+
+  return [gen, pos];
+end);
+
+#SSS
+
+# new for 0.4! - SchreierTreeOfSCC - "for an orbit and pos. int."
+###########################################################################
+
+# JDM add check that i<=Length(OrbSCC(o))
+
+InstallGlobalFunction(SchreierTreeOfSCC,
+function(o, i)
+  local scc, len, gen, pos, seen, t, oo, m, graph, j, k, l, len_k;
+
+  if not IsBound(o!.trees) then
+    o!.trees:=EmptyPlist(Length(OrbSCC(o)));
+  fi;
+
+  if IsBound(o!.trees[i]) then 
+    return o!.trees[i];
+  fi;
+
+  if i=1 then
+    o!.trees[i]:=[o!.schreiergen, o!.schreierpos];
+    return o!.trees[i];
+  fi;
+
+  scc:=o!.scc[i]; len:=Length(o);
+  gen:=ListWithIdenticalEntries(len, fail);
+  pos:=ListWithIdenticalEntries(len, fail);
+  seen:=BlistList([1..len], [scc[1]]);
+  t:=o!.truth[i];
+  oo:=[scc[1]]; m:=1;
+  
+  if o!.orbitgraph=false then 
+  #JDM hack due to bug in orb!
+    graph:=OrbitGraph(o);
+    o!.orbitgraph:=graph;
+  else
+    graph:=o!.orbitgraph;
+  fi;
+
+  j:=0;
+  len:=Length(scc);
+
+  while m<len do
+    j:=j+1; k:=oo[j]; l:=0; len_k:=Length(graph[k]);
+    while l<len_k and m<len do
+      l:=l+1;
+      if IsBound(graph[k][l]) and not seen[graph[k][l]] and t[graph[k][l]] then
+        m:=m+1;
+        oo[m]:=graph[k][l]; seen[graph[k][l]]:=true;
+        gen[graph[k][l]]:=l; pos[graph[k][l]]:=k;
+      fi;
+    od;
+  od;
+  o!.trees[i]:=[gen, pos];
+
+  return o!.trees[i];
+end);
+
 # new for 0.1! - StrongOrbitsInForwardOrbit - for IsOrbit
 #############################################################################
 
@@ -283,5 +448,48 @@ function(o)
   return List(graph, x-> o{x});
 end);
 
-#EOF
+# mod for 0.4! - TraceSchreierTreeOfSCCBack - not a user function!
+#############################################################################
+# Usage: o = orbit of images; i = index of scc; j = element of scc[i].
 
+# Notes: returns a word in the generators that takes o[j] to o!.scc[i][1]  
+# assuming that j in scc[i]
+
+InstallGlobalFunction(TraceSchreierTreeOfSCCBack,
+function(o, i, j)
+  local word;
+
+  tree:=ReverseSchreierTreeOfSCC(o, i);
+  scc:=OrbSCC(o)[i];
+
+  word := [];
+  while j > scc[1] do
+    Add(word, tree[1][j]);
+    j := tree[2][j];
+  od;
+  return word;
+end);
+
+# mod for 0.4! - TraceSchreierTreeOfSCCForward - not a user function!
+#############################################################################
+# Usage: o = orbit of images; i = index of scc; j = element of scc[i].
+
+# Notes: returns a word in the generators that takes o!.scc[i][1] to o[j] 
+# assuming that j in scc[i]
+
+InstallGlobalFunction(TraceSchreierTreeOfSCCForward,
+function(o, i, j)
+  local word;
+
+  tree:=SchreierTreeOfSCC(o, i);
+  scc:=OrbSCC(o)[i];
+
+  word := [];
+  while j > scc[1] do
+    Add(word, tree[1][j]);
+    j :=tree[2][j];
+  od;
+  return Reversed(word);
+end);
+
+#EOF

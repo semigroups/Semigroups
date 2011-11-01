@@ -25,5 +25,7 @@ DeclareAttribute("KernelsOfTransSemigroup", IsTransformationSemigroup,
 
 DeclareGlobalFunction("OnBlist");
 DeclareGlobalFunction("OnKernelsAntiAction");
+DeclareGlobalFunction("OrbSCC");
+DeclareGlobalFunction("ReverseSchreierTreeOfSCC");
+DeclareGlobalFunction("SchreierTreeOfSCC");
 DeclareGlobalFunction("StrongOrbitsInForwardOrbit");
-

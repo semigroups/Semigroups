@@ -179,7 +179,7 @@ function(s, f, data, o)
          
         O[j][k]!.kernels_ht[m]:=HashTableForKernels(
          CanonicalTransSameKernel(g), DegreeOfTransformationSemigroup(s));
-        O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
+        #O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
         O[j][k]!.schutz[m]:=CreateImageOrbitSchutzGp(gens, O[j][k], g, m);
       fi;
       
@@ -376,7 +376,14 @@ function(o, i)
   seen:=BlistList([1..len], [scc[1]]);
   t:=o!.truth[i];
   oo:=[scc[1]]; m:=1;
-  graph:=OrbitGraph(o);
+  
+  if not IsBound(o!.orbitgraph) then # JDM hack due to Orb bug...
+    graph:=OrbitGraph(o);
+    o!.orbitgraph:=graph;
+  else
+    graph:=o!.orbitgraph;
+  fi;
+  
   j:=0; 
   len:=Length(scc);
 
@@ -395,32 +402,37 @@ function(o, i)
   return [gen, pos];
 end);
 
-# new for 0.1! - CreateReverseSchreierTreeOfSCC - not a user function!
+# mod for 0.4! - CreateReverseSchreierTreeOfSCC - not a user function!
 #############################################################################
 # Usage: o is the image/kernel orbit, i is the index of the scc!
 
 InstallGlobalFunction(CreateReverseSchreierTreeOfSCC,
 function(o, i)
   local graph, rev, scc, gen, pos, seen, t, oo, j, k, l, m;
-
-  graph:=OrbitGraph(o);
-  rev:=List([1..Length(graph)], x-> List([1..Length(o!.gens)], x-> []));
-
-  for j in [1..Length(graph)] do
-    for k in [1..Length(graph[j])] do 
-      if IsBound(graph[j][k]) then 
-        Add(rev[graph[j][k]][k], j);
-        #starting at position j and applying gens[k] we obtain graph[j][k];
-      fi;
+  
+  if not IsBound(o!.rev) then 
+    graph:=OrbitGraph(o);
+    rev:=List([1..Length(graph)], x-> List([1..Length(o!.gens)], x-> []));
+  
+    for j in [1..Length(graph)] do
+      for k in [1..Length(graph[j])] do 
+        if IsBound(graph[j][k]) then 
+          Add(rev[graph[j][k]][k], j);
+          #starting at position j and applying gens[k] we obtain graph[j][k];
+        fi;
+      od;
     od;
-  od;
+    
+    o!.rev:=rev;
+  fi;
 
-  scc:=o!.scc[i];
+  scc:=o!.scc[i]; rev:=o!.rev;
 
   gen:=List([1..Length(o)], x-> fail);
   pos:=List([1..Length(o)], x-> fail);
   seen:=BlistList([1..Length(o)], [scc[1]]);
-  t:=o!.truth[i]; oo:=[scc[1]]; j:=0;
+  t:=o!.truth[i]; oo:=EmptyPlist(Length(scc)); 
+  oo[1]:=scc[1]; j:=0;
 
   while Length(oo)<Length(scc) do 
     j:=j+1;
@@ -764,25 +776,23 @@ function(arg)
   SetIsCitrusPkgImgKerOrbit(o, true);
   o!.img:=true; #for ViewObj method
   Enumerate(o, bound);
-          
-  #strongly connected components
-  scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)),
-   Set));;
+  r:=Length(OrbSCC(o));
 
-  r:=Length(scc); o!.scc:=scc;
-  
-  o!.scc_lookup:=ListWithIdenticalEntries(Length(o), 1);
+  #scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)),
+  # Set));;
+  #r:=Length(scc); o!.scc:=scc;
+  #o!.scc_lookup:=ListWithIdenticalEntries(Length(o), 1);
 
-  if Length(scc)>1 then 
-    for i in [2..r] do 
-      o!.scc_lookup{scc[i]}:=ListWithIdenticalEntries(Length(scc[i]), i);
-    od;
-  fi;
+#  if Length(scc)>1 then 
+#    for i in [2..r] do 
+#      o!.scc_lookup{scc[i]}:=ListWithIdenticalEntries(Length(scc[i]), i);
+#    od;
+#  fi;
 
   #boolean list corresponding to membership in scc[i]
-  o!.truth:=List([1..r], i-> BlistList([1..Length(o)], scc[i]));
-  #o!.trees:=List([1..r], x-> CreateSchreierTreeOfSCC(o,x));
-  o!.trees:=[CreateSchreierTreeOfSCC(o, 1)];
+  #o!.truth:=List([1..r], i-> BlistList([1..Length(o)], scc[i]));
+  
+  #o!.trees:=[CreateSchreierTreeOfSCC(o, 1)];
 
   #representatives of R-classes with image belonging in scc[i] partitioned 
   #according to their kernels
@@ -2203,52 +2213,6 @@ function(s, i)
   fi;
   
   return Concatenation(word_1, Reversed(word_2));
-end);
-
-# new for 0.1! - TraceSchreierTreeOfSCCForward - not a user function!
-#############################################################################
-# Usage: o = orbit of images; i = index of scc; j = element of scc[i].
-
-# Notes: returns a word in the generators that takes o!.scc[i][1] to o[j] 
-# assuming that j in scc[i]
-
-InstallGlobalFunction(TraceSchreierTreeOfSCCForward, 
-function(o, i, j)
-  local word;
-
-  word := [];
-  while j > o!.scc[i][1] do
-    Add(word, o!.trees[i][1][j]);
-    j := o!.trees[i][2][j];
-  od;
-  return Reversed(word);
-end);
-
-# new for 0.1! - TraceSchreierTreeOfSCCBack - not a user function!
-#############################################################################
-# Usage: o = orbit of images; i = index of scc; j = element of scc[i].
-
-# Notes: returns a word in the generators that takes o[j] to o!.scc[i][1]  
-# assuming that j in scc[i]
-
-InstallGlobalFunction(TraceSchreierTreeOfSCCBack,
-function(o, i, j)
-  local word;
-
-  if not IsBound(o!.reverse) then 
-    o!.reverse:=EmptyPlist(Length(o!.scc));
-  fi; 
-
-  if not IsBound(o!.reverse[i]) then 
-    o!.reverse[i]:=CreateReverseSchreierTreeOfSCC(o, i);
-  fi; 
-
-  word := [];
-  while j > o!.scc[i][1] do
-    Add(word, o!.reverse[i][1][j]);
-    j := o!.reverse[i][2][j];
-  od;
-  return word;
 end);
 
 #VVV
