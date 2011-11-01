@@ -213,11 +213,6 @@ local n;
               onlygradesdata:=[m..n]));
 end);
 
-# new for 0.4! - IsSkeleton - "for an orbit"
-###########################################################################
-
-InstallMethod(IsSkeleton, "for an orbit", [IsOrbit], ReturnFalse);
-
 #KKK
 
 # new for 0.1! - KernelsOfTransSemigroup - "for a trans. semigroup"
@@ -437,20 +432,12 @@ function(o, i)
   return [gen, pos];
 end);
 
-# new for 0.4! - Size - "for a skeleton"
+# new for 0.4! - SchutzGps - "for a trans. semigroup"
 #############################################################################
 
-InstallMethod(Size, "for a skeleton",
-[IsOrbit and IsSkeleton],
-function(o)
-  local scc, schutz, out, i;
-
-  scc:=o!.scc; schutz:=o!.schutz; out:=0;
-  for i in [1..Length(scc)] do 
-    out:=out+Size(schutz[i])*Length(scc[i]);
-  od;
-  return out;
-end);
+InstallMethod(SchutzGps, "for a trans. semigroup", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+s-> List(Skeleton(s)!.schutz, x-> x[2]));
 
 # new for 0.4! - Skeleton - "for a trans. semigroup"
 #############################################################################
@@ -473,10 +460,9 @@ function(s)
   od;
   
   o!.schutz:=schutz;
-  SetIsSkeleton(o, true);
+  
   return o;
 end);
-
 
 # new for 0.1! - StrongOrbitsInForwardOrbit - for IsOrbit
 #############################################################################

@@ -56,8 +56,6 @@ DeclareGlobalFunction("AddToOrbitsOfImages");
 DeclareGlobalFunction("CreateImageOrbitSCCPerms");
 DeclareGlobalFunction("CreateImageOrbitSchutzGp");
 DeclareGlobalFunction("CreateRClass");
-DeclareGlobalFunction("CreateSchreierTreeOfSCC");
-DeclareGlobalFunction("CreateReverseSchreierTreeOfSCC");
 DeclareGlobalFunction("DisplayOrbitsOfImages");
 DeclareGlobalFunction("ExpandOrbitsOfImages");
 DeclareGlobalFunction("ForwardOrbitOfImage");
@@ -95,8 +93,6 @@ DeclareGlobalFunction("RClassRepFromData");
 DeclareAttribute("RClassType", IsTransformationSemigroup);
 DeclareGlobalFunction("SizeOrbitsOfImages");
 DeclareGlobalFunction("TraceRClassRepsTree");
-DeclareGlobalFunction("TraceSchreierTreeOfSCCForward");
-DeclareGlobalFunction("TraceSchreierTreeOfSCCBack");
 
 # the documentation for the functions below can be found in 
 # /monoid/doc/d.xml

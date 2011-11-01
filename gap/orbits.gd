@@ -20,7 +20,6 @@ DeclareAttribute("ImagesOfTransSemigroup", IsTransformationSemigroup,
  "mutable");
 DeclareAttribute("ImagesOfTransSemigroupAsBlists", IsTransformationSemigroup,
 "mutable");
-DeclareProperty("IsSkeleton", IsOrbit);
 DeclareAttribute("KernelsOfTransSemigroup", IsTransformationSemigroup, 
  "mutable");
 
@@ -29,5 +28,8 @@ DeclareGlobalFunction("OnKernelsAntiAction");
 DeclareGlobalFunction("OrbSCC");
 DeclareGlobalFunction("ReverseSchreierTreeOfSCC");
 DeclareGlobalFunction("SchreierTreeOfSCC");
+DeclareAttribute("SchutzGps", IsTransformationSemigroup);
 DeclareAttribute("Skeleton", IsTransformationSemigroup);
 DeclareGlobalFunction("StrongOrbitsInForwardOrbit");
+DeclareGlobalFunction("TraceSchreierTreeOfSCCForward");
+DeclareGlobalFunction("TraceSchreierTreeOfSCCBack");

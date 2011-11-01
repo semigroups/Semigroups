@@ -356,103 +356,6 @@ function(s, data, orbit, rep)
   return r;
 end);
 
-# mod for 0.4! - CreateSchreierTreeOfSCC - not a user function!
-#############################################################################
-# Usage: o is the image/kernel orbit, i is the index of the scc!
-
-InstallGlobalFunction(CreateSchreierTreeOfSCC,
-function(o, i)
-  local scc, len, gen, pos, seen, t, oo, m, graph, j, k, l, len_k;
-
-  if i=1 then 
-    return [o!.schreiergen, o!.schreierpos];
-  fi;
-
-  scc:=o!.scc[i];
-  len:=Length(o);
-  gen:=ListWithIdenticalEntries(len, fail);
-  pos:=ListWithIdenticalEntries(len, fail);
-  seen:=BlistList([1..len], [scc[1]]);
-  t:=o!.truth[i];
-  oo:=[scc[1]]; m:=1;
-  
-  if not IsBound(o!.orbitgraph) then # JDM hack due to Orb bug...
-    graph:=OrbitGraph(o);
-    o!.orbitgraph:=graph;
-  else
-    graph:=o!.orbitgraph;
-  fi;
-  
-  j:=0; 
-  len:=Length(scc);
-
-  while m<len do 
-    j:=j+1; k:=oo[j]; l:=0; len_k:=Length(graph[k]); 
-    while l<len_k and m<len do  
-      l:=l+1;
-      if IsBound(graph[k][l]) and not seen[graph[k][l]] and t[graph[k][l]] then 
-        m:=m+1;
-        oo[m]:=graph[k][l]; seen[graph[k][l]]:=true; 
-        gen[graph[k][l]]:=l; pos[graph[k][l]]:=k;
-      fi;
-    od;
-  od;
-
-  return [gen, pos];
-end);
-
-# mod for 0.4! - CreateReverseSchreierTreeOfSCC - not a user function!
-#############################################################################
-# Usage: o is the image/kernel orbit, i is the index of the scc!
-
-InstallGlobalFunction(CreateReverseSchreierTreeOfSCC,
-function(o, i)
-  local graph, rev, scc, gen, pos, seen, t, oo, j, k, l, m;
-  
-  if not IsBound(o!.rev) then 
-    graph:=OrbitGraph(o);
-    rev:=List([1..Length(graph)], x-> List([1..Length(o!.gens)], x-> []));
-  
-    for j in [1..Length(graph)] do
-      for k in [1..Length(graph[j])] do 
-        if IsBound(graph[j][k]) then 
-          Add(rev[graph[j][k]][k], j);
-          #starting at position j and applying gens[k] we obtain graph[j][k];
-        fi;
-      od;
-    od;
-    
-    o!.rev:=rev;
-  fi;
-
-  scc:=o!.scc[i]; rev:=o!.rev;
-
-  gen:=List([1..Length(o)], x-> fail);
-  pos:=List([1..Length(o)], x-> fail);
-  seen:=BlistList([1..Length(o)], [scc[1]]);
-  t:=o!.truth[i]; oo:=EmptyPlist(Length(scc)); 
-  oo[1]:=scc[1]; j:=0;
-
-  while Length(oo)<Length(scc) do 
-    j:=j+1;
-    k:=oo[j];
-    l:=0;
-    while l< Length(rev[k]) and Length(oo)<Length(scc) do 
-      l:=l+1;
-      m:=0;
-      while m< Length(rev[k][l]) and Length(oo)<Length(scc) do 
-        m:=m+1;
-        if not seen[rev[k][l][m]] and t[rev[k][l][m]] then 
-          Add(oo, rev[k][l][m]); seen[rev[k][l][m]]:=true;
-          gen[rev[k][l][m]]:=l; pos[rev[k][l][m]]:=k;
-        fi;
-      od;
-    od;
-  od;
-
-  return [gen, pos];
-end);
-
 #DDD
 
 # new for 0.1! - DisplayOrbitsOfImages - not a user function!
@@ -1352,7 +1255,7 @@ function(f, rectify, data, o, images)
   while n<i do 
     n:=n+1;
     if schutz=false then
-      if reps[n]=g then # JDM not sure this doesn't slow things down...
+      if reps[n]=g then 
         return [true, [j,k,l,m,val,n,g, ()]];
       fi;
     else 
