@@ -611,8 +611,7 @@ gap> NrGreensRClasses(s);
 200
 gap> iter:=IteratorOfGreensRClasses(s);
 <iterator of R-classes>
-gap> r:=NextIterator(iter);
-{Transformation( [ 1 .. 6 ] )}
+gap> r:=NextIterator(iter);;
 gap> r:=NextIterator(iter);
 {Transformation( [ 4, 6, 3, 4, 2, 5 ] )}
 gap> r:=NextIterator(iter);
@@ -731,8 +730,7 @@ gap> s:=Semigroup(gens);;
 gap> f:=Transformation( [ 7, 6, 5, 4, 3, 2, 1 ] );;
 gap> f in s;
 true
-gap> r:=RClass(s, f);
-{Transformation( [ 1 .. 7 ] )}
+gap> r:=RClass(s, f);;
 gap> l:=LClass(s, f);
 {Transformation( [ 7, 6, 5, 4, 3, 2, 1 ] )}
 gap> h:=HClass(s,f);
@@ -1043,8 +1041,7 @@ gap> PreInOrbitsOfImages(s, f, false);
 [ false, [ 3, fail, fail, fail, fail, 0, fail ] ]
 gap> iter:=IteratorOfGreensRClasses(s);
 <iterator of R-classes>
-gap> NextIterator(iter);
-{Transformation( [ 1 .. 8 ] )}
+gap> NextIterator(iter);;
 gap> NextIterator(iter);
 {Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] )}
 gap> PreInOrbitsOfImages(s, f, true);
@@ -1203,8 +1200,8 @@ gap> gens:=[ Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] ),
 gap> s:=Semigroup(gens);;
 gap> iter:=IteratorOfGreensRClasses(s);
 <iterator of R-classes>
-gap> NextIterator(iter);
-{Transformation( [ 1 .. 9 ] )}
+gap> NextIterator(iter);;
+#{Transformation( [ 1 .. 9 ] )}
 gap> NextIterator(iter);
 {Transformation( [ 8, 2, 5, 5, 4, 5, 5, 2, 8 ] )}
 gap> NextIterator(iter);
@@ -1221,8 +1218,8 @@ gap> NextIterator(iter);
 {Transformation( [ 8, 8, 8, 8, 8, 5, 8, 8, 5 ] )}
 gap> iter:=IteratorOfGreensRClasses(s);
 <iterator of R-classes>
-gap> NextIterator(iter);
-{Transformation( [ 1 .. 9 ] )}
+gap> NextIterator(iter);;
+#{Transformation( [ 1 .. 9 ] )}
 gap> last!.rep in s;
 true
 gap> Size(s);
@@ -1417,8 +1414,8 @@ gap> ExpandOrbitsOfImages(s);
 true
 gap> iter:=IteratorOfGreensDClasses(s);
 <iterator of D-classes>
-gap> d:=NextIterator(iter);
-{Transformation( [ 1 .. 8 ] )}
+gap> d:=NextIterator(iter);;
+#{Transformation( [ 1 .. 8 ] )}
 gap> d:=NextIterator(iter);
 {Transformation( [ 1, 2, 3, 4, 5, 6, 7, 1 ] )}
 gap> r:=GreensRClassOfElement(s, f);

@@ -184,7 +184,7 @@ function(s, f, data, o)
       fi;
       
       reps[val]:=[g];
-      out:=[j, k, l, m, val, 1];
+      out:=[j, k, O[j][k]!.scc[m][1], m, val, 1];
       HTAdd(O[j][k]!.kernels_ht[m], CanonicalTransSameKernel( g ), val);
     fi;
   fi;

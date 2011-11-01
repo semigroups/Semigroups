@@ -402,8 +402,7 @@ gap> IsGreensRTrivial(d);
 true
 gap> repeat d:=NextIterator(iter); until IsDoneIterator(iter) or not                     
 > IsGreensLTrivial(d) and IsGreensRTrivial(d);
-gap> d;
-{Transformation( [ 3, 7, 8, 8, 3, 4, 1, 3 ] )}
+gap> d;;
 gap> IsGreensLTrivial(d);
 false
 gap> IsGreensRTrivial(d);
