@@ -360,36 +360,36 @@ function(s, data, orbit, rep)
   return r;
 end);
 
-# new for 0.1! - CreateSchreierTreeOfSCC - not a user function!
+# mod for 0.4! - CreateSchreierTreeOfSCC - not a user function!
 #############################################################################
 # Usage: o is the image/kernel orbit, i is the index of the scc!
 
 InstallGlobalFunction(CreateSchreierTreeOfSCC,
 function(o, i)
-  local scc, gen, pos, seen, t, oo, graph, j, k, l;
+  local scc, len, gen, pos, seen, t, oo, m, graph, j, k, l, len_k;
 
   if i=1 then 
     return [o!.schreiergen, o!.schreierpos];
   fi;
 
   scc:=o!.scc[i];
-
-  gen:=List([1..Length(o)], x-> fail);
-  pos:=List([1..Length(o)], x-> fail);
-  seen:=BlistList([1..Length(o)], [scc[1]]);
+  len:=Length(o);
+  gen:=ListWithIdenticalEntries(len, fail);
+  pos:=ListWithIdenticalEntries(len, fail);
+  seen:=BlistList([1..len], [scc[1]]);
   t:=o!.truth[i];
-  oo:=[scc[1]];
+  oo:=[scc[1]]; m:=1;
   graph:=OrbitGraph(o);
-  j:=0;
+  j:=0; 
+  len:=Length(scc);
 
-  while Length(oo)<Length(scc) do 
-    j:=j+1;
-    k:=oo[j];
-    l:=0;
-    while l<Length(graph[k]) and Length(oo)<Length(scc) do  
+  while m<len do 
+    j:=j+1; k:=oo[j]; l:=0; len_k:=Length(graph[k]); 
+    while l<len_k and m<len do  
       l:=l+1;
       if IsBound(graph[k][l]) and not seen[graph[k][l]] and t[graph[k][l]] then 
-        Add(oo, graph[k][l]); seen[graph[k][l]]:=true; 
+        m:=m+1;
+        oo[m]:=graph[k][l]; seen[graph[k][l]]:=true; 
         gen[graph[k][l]]:=l; pos[graph[k][l]]:=k;
       fi;
     od;
