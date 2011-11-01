@@ -303,6 +303,34 @@ function(o)
   return scc;
 end); 
 
+# new for 0.4! - OrbSCCLookup - "for an orbit"
+#############################################################################
+
+InstallGlobalFunction(OrbSCCLookup, 
+function(o)
+
+  if IsBound(o!.scc_lookup) then 
+    return o!.scc_lookup;
+  fi;
+
+  OrbSCC(o);
+  return o!.scc_lookup;
+end);
+
+# new for 0.4! - OrbSCCTruthTable - "for an orbit"
+#############################################################################
+
+InstallGlobalFunction(OrbSCCTruthTable, 
+function(o)
+
+  if IsBound(o!.truth) then
+    return o!.truth;
+  fi;
+
+  OrbSCC(o);
+  return o!.truth;
+end);
+
 #RRR
 
 # new for 0.4! - ReverseSchreierTreeOfSCC - "for an orbit and pos. int."

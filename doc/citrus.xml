@@ -293,6 +293,10 @@ gap></Log>
     <#Include Label="GradedImagesOfTransSemigroup">
     <#Include Label="ImagesOfTransSemigroup">
     <#Include Label="OnKernelsAntiAction">
+    <#Include Label="OrbSCC">
+    <#Include Label="OrbSCCLookup">
+    <#Include Label="OrbSCCTruthTable">
+    <#Include Label="ReverseSchreierTreeOfSCC">
     <#Include Label="StrongOrbitsInForwardOrbit">
   </Section>	
 

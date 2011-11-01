@@ -26,6 +26,8 @@ DeclareAttribute("KernelsOfTransSemigroup", IsTransformationSemigroup,
 DeclareGlobalFunction("OnBlist");
 DeclareGlobalFunction("OnKernelsAntiAction");
 DeclareGlobalFunction("OrbSCC");
+DeclareGlobalFunction("OrbSCCLookup");
+DeclareGlobalFunction("OrbSCCTruthTable");
 DeclareGlobalFunction("ReverseSchreierTreeOfSCC");
 DeclareGlobalFunction("SchreierTreeOfSCC");
 DeclareAttribute("SchutzGps", IsTransformationSemigroup);

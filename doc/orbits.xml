@@ -113,6 +113,120 @@ gap> CanonicalTransSameKernel(g*f);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="OrbSCC">
+  <ManSection>
+    <Func Name="OrbSCC" Arg="o"/>
+    <Returns>the strongly connected components of an orbit.</Returns>
+    <Description>
+      If <A>o</A> is an orbit created by the <Package>Orb</Package> 
+      package with the
+      option <C>orbitgraph=true</C>, then <C>OrbSCC</C> returns a set of sets
+      of positions in <A>o</A> corresponding to its strongly connected
+      components. <P/>
+      
+      See also <Ref Func="OrbSCCLookup"/> and <Ref Func="OrbSCCTruthTable"/>.
+      
+<Example>
+gap> s:=FullTransformationSemigroup(4);;
+gap> o:=ImagesOfTransSemigroup(s);;
+gap> OrbSCC(o);
+[ [ 1 ], [ 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10, 11 ], [ 12, 13, 14, 15 ] ]</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="OrbSCCLookup">
+  <ManSection>
+    <Func Name="OrbSCCLookup" Arg="o"/>
+    <Returns>a lookup table for the strongly connected components of an orbit.
+    </Returns>
+    <Description>
+      If <A>o</A> is an orbit created by the <Package>Orb</Package> 
+      package with the
+      option <C>orbitgraph=true</C>, then <C>OrbSCCLookup</C> returns a lookup
+      table for its strongly connected
+      components. More precisely, <C>OrbSCCLookup(o)[i]</C> equals the index of
+      the strongly connected component containing <C>o[i]</C>.
+      <P/>
+
+      See also <Ref Func="OrbSCC"/> and <Ref Func="OrbSCCTruthTable"/>.
+      
+<Example>
+gap> s:=FullTransformationSemigroup(4);;
+gap> o:=ImagesOfTransSemigroup(s);;
+gap> OrbSCC(o);
+[ [ 1 ], [ 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10, 11 ], [ 12, 13, 14, 15 ] ]
+gap> OrbSCCLookup(o);
+[ 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4 ]
+gap> OrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7]; 
+> OrbSCCLookup(o)[15];
+1
+2
+3
+4</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="OrbSCCTruthTable">
+  <ManSection>
+    <Func Name="OrbSCCTruthTable" Arg="o"/>
+    <Returns>truth tables for strongly connected components of an orbit.
+    </Returns>
+    <Description>
+      If <A>o</A> is an orbit created by the <Package>Orb</Package> 
+      package with the
+      option <C>orbitgraph=true</C>, then <C>OrbSCCTruthTable</C> returns 
+      a list of boolean lists such that <C>OrbSCCTruthTable(o)[i][j]</C> is
+      <K>true</K> if <C>j</C> belongs to <C>OrbSCC(o)[i]</C>.<P/>
+      
+      See also <Ref Func="OrbSCC"/> and <Ref Func="OrbSCCLookup"/>.
+      
+<Example>
+gap> s:=FullTransformationSemigroup(4);;
+gap> o:=ImagesOfTransSemigroup(s);;
+gap> OrbSCC(o);
+[ [ 1 ], [ 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10, 11 ], [ 12, 13, 14, 15 ] ]
+gap> OrbSCCTruthTable(o);
+[ [ true, false, false, false, false, false, false, false, false, false, 
+      false, false, false, false, false ], 
+  [ false, true, true, true, true, false, false, false, false, false, false, 
+      false, false, false, false ], 
+  [ false, false, false, false, false, true, true, true, true, true, true, 
+      false, false, false, false ], 
+  [ false, false, false, false, false, false, false, false, false, false, 
+      false, true, true, true, true ] ]</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ReverseSchreierTreeOfSCC">
+  <ManSection>
+    <Func Name="ReverseSchreierTreeOfSCC" Arg="o, i"/>
+    <Returns>the reverse Schreier tree corresponding to the <A>i</A>th strongly
+    connected component of an orbit. </Returns>
+
+    <Description> 
+    If <A>o</A> is an orbit created by the <Package>Orb</Package> 
+    package with the option <C>orbitgraph=true</C> and action <C>act</C>, and 
+    <A>i</A> is a positive
+    integer, then <C>ReverseSchreierTreeOfSCC</C> returns a pair <C>[ gen, pos
+    ]</C> of lists with <C>Length(o)</C> entries such that 
+    <C>act(o[j], o!.gens[gen[j]])=o[pos[j]].</C> 
+    The pair <C>[ gen, pos ]</C> corresponds to a tree with root
+    <C>OrbSCC(o)[i][1]</C> and a path from every element
+    of <C>OrbSCC(o)[i]</C> to the root. <P/>
+
+    See also <Ref Func="TraceSchreierTreeOfSCCBack"/>, <Ref
+    Func="SchreierTreeOfSCC"/>, and <Ref Func="TraceSchreierTreeOfSCCForward"/>.
+<Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+
+
 <#GAPDoc Label="StrongOrbitsInForwardOrbit">
   <ManSection> <Oper Name="StrongOrbitsInForwardOrbit" Arg="o"/>
   <Description>
