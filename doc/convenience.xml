@@ -68,7 +68,7 @@ InstallationPath, "/doc"), "citrus.xml",
       should take no more than a fraction of a second to complete. The same 
       effect can be achieved by entering:
 
-<Log>ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"), "testinstall.tst"));;</Log>
+<Log>ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"testinstall.tst"));;</Log>
 
       at the &GAP; prompt. 
       To more comprehensively test that <Package>Citrus</Package> is installed

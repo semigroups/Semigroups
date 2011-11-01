@@ -119,8 +119,8 @@
     
       <Item> download and install the <Package>Orb</Package> package version 
       3.7 or higher. For more details go to:
-      <Alt    Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
-          <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
+      <Alt Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
+          <Alt Only="LaTeX">\noindent</Alt><URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
       </URL><P/>
       <Alt Only="LaTeX">\noindent</Alt> Note that both <Package>Orb</Package>
       and <Package>Citrus</Package> are faster if <Package>Orb</Package>
@@ -244,6 +244,8 @@ gap></Log>
    <Ref Attr="RankOfTransformation" BookName="ref"/>. 
 
     <#Include Label="CanonicalTransSameKernel">
+    <#Include Label="EvaluateWord">
+    <#Include Label="Factorization">
     <#Include Label="IndexPeriodOfTransformation">
     <#Include Label="InversesOfTransformation">
     <#Include Label="IsInjectiveTransOnList">

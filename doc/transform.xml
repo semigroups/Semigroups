@@ -88,7 +88,7 @@ gap> CanonicalTransSameKernel(f);
   <ManSection>
     <Func Name="ConstantTransformation" Arg="m, n"/>
     <Description>
-      returns the a constant transformation of degree <A>m</A> with value
+      returns a constant transformation of degree <A>m</A> with value
       <A>n</A>. 
 
     <Example>
@@ -96,6 +96,68 @@ gap> ConstantTransformation(5, 1);
 Transformation( [ 1, 1, 1, 1, 1 ] )
 gap> ConstantTransformation(6, 4);
 Transformation( [ 4, 4, 4, 4, 4, 4 ] )</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="EvaluateWord">
+  <ManSection> 
+    <Oper Name="EvaluateWord" Arg="gens, w"/>
+    <Returns>A transformation.</Returns>
+    <Description> 
+      <A>gens</A> must be a list of transformations, <A>w</A> a list of 
+      positive integers less than or equal to the length of <A>gens</A>.
+      This operation evaluates the word <A>w</A> in the generators 
+      <A>gens</A> and returns the result. More precisely,
+      <C>EvaluateWord</C> returns
+      <Log>Product(List(w, i-> gens[i]));</Log>
+      See also <Ref Meth="Factorization"/>.
+<Example>
+gap> gens:=[ Transformation( [ 2, 4, 4, 6, 8, 8, 6, 6 ] ), 
+> Transformation( [ 2, 7, 4, 1, 4, 6, 5, 2 ] ), 
+> Transformation( [ 3, 6, 2, 4, 2, 2, 2, 8 ] ), 
+> Transformation( [ 4, 3, 6, 4, 2, 1, 2, 6 ] ), 
+> Transformation( [ 4, 5, 1, 3, 8, 5, 8, 2 ] ) ];;
+gap> S:=Semigroup(gens);;
+gap> f:=Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] );;
+gap> Factorization(s, f);
+[ 4, 2 ]
+gap> EvaluateWord(gens, last);
+Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] )</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="Factorization">
+<ManSection> 
+  <Meth Name="Factorization" Arg="S, f"/>
+    <Returns>A word in the generators.</Returns>
+      <Description> 
+          if <A>S</A> is a transformation semigroup and <A>f</A> is a
+          transformation belonging to <A>S</A>, then <C>Factorization</C> 
+          returns a
+          word in the generators of <A>S</A> that is equal to <A>f</A>. Here, a
+          word is a list of positive integers where <C>i</C> corresponds to
+          <C>GeneratorsOfSemigroups(S)[i]</C>. More specifically,
+      <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, f))=f;</Log>
+          <P/>
+
+          Note that <C>Factorization</C> does not return a word of minimum
+          length. An empty list is evaluated to the identity transformation with
+          degree equal to the degree of <A>S</A> regardless of whether this
+          transformation is an element of <A>S</A> or not.<P/> 
+
+          See also <Ref Func="EvaluateWord"/> and 
+          <Ref Func="GeneratorsOfSemigroup" BookName="ref"/>.
+  <Example>
+gap> gens:=[ Transformation( [ 2, 2, 9, 7, 4, 9, 5, 5, 4, 8 ] ), 
+> Transformation( [ 4, 10, 5, 6, 4, 1, 2, 7, 1, 2 ] ) ];;
+gap> S:=Semigroup(gens);;
+gap> f:=Transformation( [ 1, 10, 2, 10, 1, 2, 7, 10, 2, 7 ] );;
+gap> Factorization(S, f);
+[ 2, 2, 1, 2 ]
+gap> EvaluateWord(gens, last);
+Transformation( [ 1, 10, 2, 10, 1, 2, 7, 10, 2, 7 ] )</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

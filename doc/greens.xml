@@ -331,7 +331,7 @@ gap> StructureDescription(GroupHClass(D));
 "S3"
 gap> repeat D:=NextIterator(iter); until not IsRegularDClass(D);
 gap> D;
-{Transformation( [ 7, 1, 1, 7, 1, 6, 6, 7 ] )}
+{Transformation( [ 7, 5, 2, 2, 6, 1, 1, 2 ] )}
 gap> IsRegularDClass(D);
 false
 gap> GroupHClass(D);
@@ -391,7 +391,7 @@ gap> L:=GreensLClassOfElement(S, f);;
 gap> Idempotents(L);
 [ Transformation( [ 4, 2, 2, 4 ] ), Transformation( [ 2, 2, 4, 4 ] ) ]
 gap> D:=DClassOfLClass(L);
-{Transformation( [ 3, 1, 1, 3 ] )}
+{Transformation( [ 1, 3, 3, 1 ] )}
 gap> Idempotents(D);
 [ Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 1, 1, 3, 3 ] ), 
   Transformation( [ 4, 2, 2, 4 ] ), Transformation( [ 2, 2, 4, 4 ] ) ]
@@ -399,7 +399,7 @@ gap> L:=GreensLClassOfElement(S, Transformation( [ 3, 1, 1, 3 ] ));;
 gap> Idempotents(L);
 [ Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 1, 1, 3, 3 ] ) ]
 gap> H:=GroupHClass(D);
-{Transformation( [ 3, 1, 1, 3 ] )}
+{Transformation( [ 1, 3, 3, 1 ] )}
 gap> Idempotents(H);
 [ Transformation( [ 1, 3, 3, 1 ] ) ]</Example> 
   </Description>
@@ -649,7 +649,7 @@ gap> Size(S);
 6342
 gap> f:=Transformation( [ 1, 3, 3, 1, 3, 5 ] );;
 gap> D:=DClass(S, f);
-{Transformation( [ 4, 1, 1, 4, 1, 2 ] )}
+{Transformation( [ 2, 1, 1, 2, 1, 4 ] )}
 gap> NrGreensRClasses(D);
 87</Example>
   </Description>
@@ -748,7 +748,7 @@ gap> NrGreensDClasses(S);
 gap> S:=Semigroup( Transformation( [ 2, 4, 6, 1, 6, 5 ] ), 
 >  Transformation( [ 5, 2, 5, 3, 5, 3 ] ));;
 gap> PartialOrderOfDClasses(S);
-[ [ 1, 2, 3 ], [ 2, 3, 4, 5, 6 ], [ 3, 4, 5, 6 ], [ 4, 5 ], [ 5 ], [ 5, 6 ] ]
+[ [ 1, 2, 3 ], [ 2, 3, 4, 5, 6 ], [ 3, 4, 5, 6 ], [ 4 ], [ 4, 5 ], [ 4, 6 ] ]
 gap> IsGreensLessThanOrEqual(GreensDClasses(S)[1], GreensDClasses(S)[2]);
 false
 gap> IsGreensLessThanOrEqual(GreensDClasses(S)[2], GreensDClasses(S)[1]);

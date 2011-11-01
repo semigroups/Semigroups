@@ -298,7 +298,7 @@ function(gens, o, f, k)
 
   for i in scc do 
     for j in [1..Length(gens)] do 
-    
+     
       if IsBound(graph[i][j]) and t[k][graph[i][j]] then
         #h:=PermLeftQuoTransformationNC(f, f/p[i] * (gens[j]*p[graph[i][j]]));
         h:=PermLeftQuoTransformationNC(f,
@@ -307,10 +307,7 @@ function(gens, o, f, k)
         if not h=() then 
           K:=ClosureGroup(g, h);
           if Size(K)>Size(g) then 
-            g:=K;
-            l:=l+1;
-            words[l]:=Concatenation(TraceSchreierTreeOfSCCForward(o, k, i), [j],
-             TraceSchreierTreeOfSCCBack(o, k, graph[i][j]));
+            g:=K; l:=l+1; words[l]:=[i,j];
           fi;
         fi;
 
@@ -679,7 +676,7 @@ end);
 InstallOtherMethod(Factorization, "for a trans. semi., img data, and perm",
 [IsTransformationSemigroup, IsList, IsPerm],
 function(s, data, f)
-  local g, w, out, power, gen, u, i, word, orders;
+  local g, w, out, orders, power, gen, o, word, graph, m, u, i;
   
   g:=ImageOrbitSchutzGpFromData(s, data);
   w:=String(Factorization(g, f));
@@ -704,8 +701,16 @@ function(s, data, f)
       Add(out, Int(u[1]{[2..Length(u[1])]}));
     fi;
   od;
-  word:=ImageOrbitFromData(s, data)!.schutz[data[4]][3];
-  return Concatenation(List(out, x-> word[x]));
+  o:=ImageOrbitFromData(s, data);
+  word:=o!.schutz[data[4]][3];
+  graph:=OrbitGraph(o); m:=data[4];
+
+  return Concatenation(List(out, x->
+  Concatenation([TraceSchreierTreeOfSCCForward(o, m,
+  word[x][1]), [word[x][2]], TraceSchreierTreeOfSCCBack(o, m,
+  graph[word[x][1]][word[x][2]])])));
+  #return Concatenation(List(out, x-> word[x]));
+
 end);
 
 # mod for 0.4! - ForwardOrbitOfImage - not a user function!
@@ -1004,9 +1009,6 @@ function(s, f)
   j:=Length(ImageSetOfTransformation(f));
   n:=DegreeOfTransformationSemigroup(s);
   o:=[]; o[j]:=[ForwardOrbitOfImage(s, f)]; 
-  #JDM ForwardOrbit here calculates the schutz gps., perms and so on 
-  #   of all the scc's of the orbit. We only need those for the first one...
-  #   add optional fifth arg that filters the scc's.
 
   #JDM also PreInOrbitsOfImages might have some non-fail values, in which case
   # we should use them. If everything is known except val or n, then we don't
@@ -1649,7 +1651,7 @@ function(s)
     if i=Length(o) then
     #at the end of the orbit!
       O!.finished:=true;
-      #JDM Unbind(O!.ht); Unbind(O!.lens); 
+      Unbind(O!.ht); Unbind(O!.lens); 
       return true;
     fi;
 
@@ -1660,20 +1662,12 @@ function(s)
       i:=i+1;
       x:=o[i];
       d:=InOrbitsOfImages(x, false, [fail, fail, fail, fail, fail, 0, fail], 
-       orbits, images); #JDM should return both scc[1] and l
+       orbits, images); 
 
       if not d[1] then #new rep!
         if IsTransformationMonoid(s) or not i = 1 then 
-            Add(O!.pos2, i);
-            Add(O!.gen2, d[2]{[1..4]});
-          #if not d[2][3]=fail then #old img
-          #  d[2][3]:=O!.orbits![d[2][1]][d[2][2]]!.scc[d[2][4]][1]; #rectify
-          #JDM much much better if InOrbitsOfImages return both the rectified
-          #and unrectified positions. 
-          #fi;
-         
+          Add(O!.pos2, i); Add(O!.gen2, d[2]{[1..4]}); 
           d:=AddToOrbitsOfImages(s, x, d[2], O);
-
           iter!.i:=iter!.i+1; iter!.next_value:=d;
           return false;
         fi;
