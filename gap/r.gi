@@ -179,7 +179,6 @@ function(s, f, data, o)
          
         O[j][k]!.kernels_ht[m]:=HashTableForKernels(
          CanonicalTransSameKernel(g), DegreeOfTransformationSemigroup(s));
-        #O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
         O[j][k]!.schutz[m]:=CreateImageOrbitSchutzGp(gens, O[j][k], g, m);
       fi;
       
@@ -249,7 +248,7 @@ end);
 
 #CCC
 
-# new for 0.1! - CreateImageOrbitSCCPerms - not a user function!
+# mod for 0.4! - CreateImageOrbitSCCPerms - not a user function!
 #############################################################################
 # Usage: gens = Generators(s); o = image orbit; j = index of scc.
 
@@ -733,8 +732,7 @@ end);
 
 InstallGlobalFunction(ForwardOrbitOfImage, 
 function(arg)
-  local s, f, images, img, deg, j, bound, treehashsize, o, scc, r, reps, 
-   gens, i;
+  local s, f, images, gens, img, deg, j, bound, treehashsize, o, r, reps;
 
   s:=arg[1]; f:=arg[2];
 
@@ -778,44 +776,22 @@ function(arg)
   Enumerate(o, bound);
   r:=Length(OrbSCC(o));
 
-  #scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)),
-  # Set));;
-  #r:=Length(scc); o!.scc:=scc;
-  #o!.scc_lookup:=ListWithIdenticalEntries(Length(o), 1);
-
-#  if Length(scc)>1 then 
-#    for i in [2..r] do 
-#      o!.scc_lookup{scc[i]}:=ListWithIdenticalEntries(Length(scc[i]), i);
-#    od;
-#  fi;
-
-  #boolean list corresponding to membership in scc[i]
-  #o!.truth:=List([1..r], i-> BlistList([1..Length(o)], scc[i]));
-  
-  #o!.trees:=[CreateSchreierTreeOfSCC(o, 1)];
-
   #representatives of R-classes with image belonging in scc[i] partitioned 
   #according to their kernels
   reps:=List([1..r], x-> []); reps[1][1]:=[f]; o!.reps:=reps;
 
   #kernels of representatives of R-classes with image belonging in scc[i]
-
   o!.kernels_ht:=[HashTableForKernels(CanonicalTransSameKernel(f), deg)];
 
   #calculate the multipliers for all scc's 
   o!.perms:=EmptyPlist(Length(o));
   o!.perms:=o!.perms+CreateImageOrbitSCCPerms(gens, o, 1);
 
-  #for i in [1..r] do 
-  #  o!.perms:=o!.perms+CreateImageOrbitSCCPerms(gens, o, i);
-  #od;
-
   #schutzenberger groups
-  #o!.schutz:=List([1..r], m-> CreateImageOrbitSchutzGp(gens, o, reps[m], m));
-  o!.schutz:=[CreateImageOrbitSchutzGp(gens, o, f, 1)];
+  o!.schutz:=EmptyPlist(r);
+  o!.schutz[1]:=CreateImageOrbitSchutzGp(gens, o, f, 1);
 
   #nr idempotents
-  
   o!.nr_idempotents:=List([1..r], m-> []);
 
   return o;
@@ -1219,6 +1195,7 @@ end);
 
 # new for 0.2! - ImageOrbitSchutzGpGensAsWords - "for R-class of trans. semi
 ############################################################################
+#JDM consider removing this!
 
 InstallMethod(ImageOrbitSchutzGpGensAsWords, "for R-class of trans. semi",
 [IsGreensRClass and IsGreensClassOfTransSemigp], 

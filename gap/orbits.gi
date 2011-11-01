@@ -213,6 +213,11 @@ local n;
               onlygradesdata:=[m..n]));
 end);
 
+# new for 0.4! - IsSkeleton - "for an orbit"
+###########################################################################
+
+InstallMethod(IsSkeleton, "for an orbit", [IsOrbit], ReturnFalse);
+
 #KKK
 
 # new for 0.1! - KernelsOfTransSemigroup - "for a trans. semigroup"
@@ -324,7 +329,7 @@ function(o, i)
 
   if not IsBound(o!.rev) then
     if o!.orbitgraph=false then 
-  #JDM hack due to bug in orb!
+      #JDM hack due to bug in orb!
       graph:=OrbitGraph(o);
       o!.orbitgraph:=graph;
     else
@@ -369,7 +374,8 @@ function(o, i)
       od;
     od;
   od;
-
+  
+  o!.reverse[i]:=[gen, pos];
   return [gen, pos];
 end);
 
@@ -428,8 +434,49 @@ function(o, i)
   od;
   o!.trees[i]:=[gen, pos];
 
-  return o!.trees[i];
+  return [gen, pos];
 end);
+
+# new for 0.4! - Size - "for a skeleton"
+#############################################################################
+
+InstallMethod(Size, "for a skeleton",
+[IsOrbit and IsSkeleton],
+function(o)
+  local scc, schutz, out, i;
+
+  scc:=o!.scc; schutz:=o!.schutz; out:=0;
+  for i in [1..Length(scc)] do 
+    out:=out+Size(schutz[i])*Length(scc[i]);
+  od;
+  return out;
+end);
+
+# new for 0.4! - Skeleton - "for a trans. semigroup"
+#############################################################################
+
+InstallMethod(Skeleton, "for a trans. semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+function(s)
+  local o, scc, r, gens, perms, schutz, i;
+
+  o:=ImagesOfTransSemigroup(s); Enumerate(o); 
+  scc:=OrbSCC(o); r:=Length(scc); gens:=Generators(s);
+  o!.perms:=EmptyPlist(Length(o)); schutz:=EmptyPlist(r);
+
+  for i in [1..r] do 
+    ReverseSchreierTreeOfSCC(o, i);
+    o!.perms:=o!.perms+CreateImageOrbitSCCPerms(gens, o, i);
+    SchreierTreeOfSCC(o, i);
+    schutz[i]:=CreateImageOrbitSchutzGp(gens, o,
+     EvaluateWord(gens, TraceSchreierTreeForward(o, scc[i][1])), i);
+  od;
+  
+  o!.schutz:=schutz;
+  SetIsSkeleton(o, true);
+  return o;
+end);
+
 
 # new for 0.1! - StrongOrbitsInForwardOrbit - for IsOrbit
 #############################################################################
@@ -448,7 +495,7 @@ function(o)
   return List(graph, x-> o{x});
 end);
 
-# mod for 0.4! - TraceSchreierTreeOfSCCBack - not a user function!
+# mod for 0.4! - TraceSchreierTreeOfSCCBack - "for an orb, pos int, pos int"
 #############################################################################
 # Usage: o = orbit of images; i = index of scc; j = element of scc[i].
 
@@ -457,7 +504,7 @@ end);
 
 InstallGlobalFunction(TraceSchreierTreeOfSCCBack,
 function(o, i, j)
-  local word;
+  local tree, scc, word;
 
   tree:=ReverseSchreierTreeOfSCC(o, i);
   scc:=OrbSCC(o)[i];
@@ -470,7 +517,7 @@ function(o, i, j)
   return word;
 end);
 
-# mod for 0.4! - TraceSchreierTreeOfSCCForward - not a user function!
+# mod for 0.4! - TraceSchreierTreeOfSCCForward - "for an orb, pos int, pos int"
 #############################################################################
 # Usage: o = orbit of images; i = index of scc; j = element of scc[i].
 
@@ -479,7 +526,7 @@ end);
 
 InstallGlobalFunction(TraceSchreierTreeOfSCCForward,
 function(o, i, j)
-  local word;
+  local tree, scc, word;
 
   tree:=SchreierTreeOfSCC(o, i);
   scc:=OrbSCC(o)[i];

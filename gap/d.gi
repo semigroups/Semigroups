@@ -212,8 +212,8 @@ function(arg)
       
     ##############################################################################
       
-      O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
-      O[j][k]!.reverse[m]:=CreateReverseSchreierTreeOfSCC(O[j][k], m);
+      #O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
+      #O[j][k]!.reverse[m]:=CreateReverseSchreierTreeOfSCC(O[j][k], m);
       r_reps[1]:=[[data[1]]];
       O[j][k]!.images_ht[m]:=HashTableForImages(f![1]);
       O[j][k]!.rels:=O[j][k]!.rels+CreateKernelOrbitSCCRels(gens, O[j][k], m);
@@ -657,7 +657,7 @@ end);
 
 #FFF
 
-# new for 0.1! - ForwardOrbitOfKernel - not a user function!
+# mod for 0.4! - ForwardOrbitOfKernel - not a user function!
 #############################################################################
 # Usage: s = semigroup; f = transformation; 
 # kernels = OrbitsOfKernels(s)!.kernels (optional); 
@@ -668,8 +668,8 @@ end);
 
 InstallGlobalFunction(ForwardOrbitOfKernel, 
 function(arg)
-  local s, f, kernels, gens, ker, deg, j, bound, treehashsize, o, scc, r, i,
-  gens_imgs;
+  local s, f, kernels, gens_imgs, gens, ker, deg, j, bound, o, r, reps,
+  treehashsize;
   
   s:=arg[1]; f:=arg[2];
 
@@ -714,31 +714,11 @@ function(arg)
   SetIsCitrusPkgImgKerOrbit(o, true);
   o!.img:=false; #for ViewObj method
   Enumerate(o, bound);
-
-  scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)),
-   Set));;
-
-  r:=Length(scc);
-  o!.scc:=scc;
-  o!.scc_lookup:=ListWithIdenticalEntries(Length(o), 1);
-
-  if Length(scc)>1 then
-    for i in [2..r] do
-      o!.scc_lookup{scc[i]}:=ListWithIdenticalEntries(Length(scc[i]), i);
-    od;  
-  fi;
-
-  #boolean list corresponding to membership in scc[i]
-  o!.truth:=List([1..r], i-> BlistList([1..Length(o)], scc[i]));
-  o!.trees:=EmptyPlist(r);
-  o!.reverse:=EmptyPlist(r);
-  o!.trees[1]:=CreateSchreierTreeOfSCC(o,1); 
-  o!.reverse[1]:=CreateReverseSchreierTreeOfSCC(o,1);
+  r:=Length(OrbSCC(o));
 
   #representatives of D-classes with kernel belonging in scc[i] partitioned 
-  #according to their kernels
-  o!.reps:=List([1..r], x-> []);
-  Add(o!.reps[1], [f]);
+  #according to their images
+  reps:=List([1..r], x-> []); reps[1][1]:=[f]; o!.reps:=reps;
 
   #R-class reps corresponding to D-class with rep in o!.reps
   o!.r_reps:=List([1..r], x-> []);
