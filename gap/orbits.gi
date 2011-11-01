@@ -465,12 +465,12 @@ end);
 
 InstallMethod(SchutzGps, "for a trans. semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-s-> List(Skeleton(s)!.schutz, x-> x[2]));
+s-> List(CitrusSkeleton(s)!.schutz, x-> x[2]));
 
 # new for 0.4! - Skeleton - "for a trans. semigroup"
 #############################################################################
 
-InstallMethod(Skeleton, "for a trans. semigroup",
+InstallMethod(CitrusSkeleton, "for a trans. semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local o, scc, r, gens, perms, schutz, i;

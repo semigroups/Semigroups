@@ -298,6 +298,7 @@ gap></Log>
     <#Include Label="OrbSCCTruthTable">
     <#Include Label="ReverseSchreierTreeOfSCC">
     <#Include Label="StrongOrbitsInForwardOrbit">
+    <#Include Label="TraceSchreierTreeOfSCCBack">
   </Section>	
 
 </Chapter>

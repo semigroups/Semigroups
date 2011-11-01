@@ -31,7 +31,7 @@ DeclareGlobalFunction("OrbSCCTruthTable");
 DeclareGlobalFunction("ReverseSchreierTreeOfSCC");
 DeclareGlobalFunction("SchreierTreeOfSCC");
 DeclareAttribute("SchutzGps", IsTransformationSemigroup);
-DeclareAttribute("Skeleton", IsTransformationSemigroup);
+DeclareAttribute("CitrusSkeleton", IsTransformationSemigroup);
 DeclareGlobalFunction("StrongOrbitsInForwardOrbit");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCForward");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCBack");

@@ -127,8 +127,8 @@ gap> CanonicalTransSameKernel(g*f);
       See also <Ref Func="OrbSCCLookup"/> and <Ref Func="OrbSCCTruthTable"/>.
       
 <Example>
-gap> s:=FullTransformationSemigroup(4);;
-gap> o:=ImagesOfTransSemigroup(s);;
+gap> S:=FullTransformationSemigroup(4);;
+gap> o:=ImagesOfTransSemigroup(S);;
 gap> OrbSCC(o);
 [ [ 1 ], [ 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10, 11 ], [ 12, 13, 14, 15 ] ]</Example>
     </Description>
@@ -152,8 +152,8 @@ gap> OrbSCC(o);
       See also <Ref Func="OrbSCC"/> and <Ref Func="OrbSCCTruthTable"/>.
       
 <Example>
-gap> s:=FullTransformationSemigroup(4);;
-gap> o:=ImagesOfTransSemigroup(s);;
+gap> S:=FullTransformationSemigroup(4);;
+gap> o:=ImagesOfTransSemigroup(S);;
 gap> OrbSCC(o);
 [ [ 1 ], [ 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10, 11 ], [ 12, 13, 14, 15 ] ]
 gap> OrbSCCLookup(o);
@@ -183,8 +183,8 @@ gap> OrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7];
       See also <Ref Func="OrbSCC"/> and <Ref Func="OrbSCCLookup"/>.
       
 <Example>
-gap> s:=FullTransformationSemigroup(4);;
-gap> o:=ImagesOfTransSemigroup(s);;
+gap> S:=FullTransformationSemigroup(4);;
+gap> o:=ImagesOfTransSemigroup(S);;
 gap> OrbSCC(o);
 [ [ 1 ], [ 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10, 11 ], [ 12, 13, 14, 15 ] ]
 gap> OrbSCCTruthTable(o);
@@ -210,7 +210,7 @@ gap> OrbSCCTruthTable(o);
     If <A>o</A> is an orbit created by the <Package>Orb</Package> 
     package with the option <C>orbitgraph=true</C> and action <C>act</C>, and 
     <A>i</A> is a positive
-    integer, then <C>ReverseSchreierTreeOfSCC</C> returns a pair <C>[ gen, pos
+    integer, then <C>ReverseSchreierTreeOfSCC(<A>o</A>, <A>i</A>)</C> returns a pair <C>[ gen, pos
     ]</C> of lists with <C>Length(o)</C> entries such that 
     <C>act(o[j], o!.gens[gen[j]])=o[pos[j]].</C> 
     The pair <C>[ gen, pos ]</C> corresponds to a tree with root
@@ -224,8 +224,6 @@ gap> OrbSCCTruthTable(o);
     </Description>
   </ManSection>
 <#/GAPDoc>
-
-
 
 <#GAPDoc Label="StrongOrbitsInForwardOrbit">
   <ManSection> <Oper Name="StrongOrbitsInForwardOrbit" Arg="o"/>
@@ -255,3 +253,35 @@ gap> StrongOrbitsInForwardOrbit(o);
   </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="TraceSchreierTreeOfSCCBack"/>
+  <ManSection> 
+    <Oper Name="TraceSchreierTreeOfSCCBack" Arg="orb, m, nr"/>
+    <Returns>A word in the generators.</Returns>
+
+    <Description>
+    <A>orb</A>  must  be  an  orbit  object  with  a Schreier tree and orbit
+    graph, that is, 
+    the options <C>schreier</C> and <C>orbitgraph</C> must have been set to
+    <K>true</K> during the 
+    creation of the orbit, <A>m</A> must be the number of a strongly connected
+    component of <A>orb</A>, and <C>nr</C> must be the number of a point in  
+    the  <A>m</A>th strongly connect component of <A>orb</A>. This
+    operation traces the result of <Ref Func="ReverseSchreierTreeOfSCC"/> and
+     with arguments <A>orb</A> and <A>m</A> and returns a
+    word in the generators that maps the point with number
+    <A>nr</A> to the first point in the <A>m</A>th strongly connected 
+    component of <A>orb</A>.  
+    Here, a word is a list of integers, where positive integers
+    are numbers of  generators.
+
+    See also <Ref Func="EvaluateWord"/>, 
+    <Ref Func="ReverseSchreierTreeOfSCC"/>, 
+    <Ref Func="SchreierTreeOfSCC"/>, and 
+    <Ref Func="TraceSchreierTreeOfSCCForward"/>.
+    <Example>
+    </Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
