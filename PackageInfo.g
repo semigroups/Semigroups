@@ -8,6 +8,12 @@
 #############################################################################
 ##
 
+##  <#GAPDoc Label="PKGVERSIONDATA">
+##  <!ENTITY VERSION "0.3">
+##  <!ENTITY RELEASEDATE "10 September 2011">
+##  <!ENTITY ARCHIVENAME "citrus0r3">
+##  <#/GAPDoc>
+
 SetPackageInfo( rec(
 PackageName := "Citrus",
 Subtitle := "ComputIng with Transformation semigRoUps and monoidS",

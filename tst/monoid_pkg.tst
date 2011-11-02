@@ -15,7 +15,7 @@
 
 # Miscellaneous
 
-gap> START_TEST("monoid_pkg.tst 0.3");
+gap> START_TEST("Citrus package: monoid_pkg.tst");
 gap> LoadPackage("citrus", false);;
 gap> g:=CyclicGroup(3);;
 gap> r:=GF(2);;
@@ -1503,4 +1503,4 @@ gap> S:=Semigroup(gens);;
 gap> MultiplicativeZero(S);
 Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
 gap> Unbind(semis); Unbind(S); Unbind(m);
-gap> STOP_TEST( "monoid_pkg.tst 0.3", 10000);
+gap> STOP_TEST( "Citrus package: monoid_pkg.tst", 10000);

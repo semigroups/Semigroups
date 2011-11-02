@@ -10,7 +10,7 @@
 
 #ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"properties.tst"));
 
-gap> START_TEST("properties.tst 0.3");
+gap> START_TEST("Citrus package: properties.tst");
 gap> LoadPackage("citrus");;
 gap> g1:=Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] );;
 gap> g2:=Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] );;

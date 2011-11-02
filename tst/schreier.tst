@@ -10,7 +10,7 @@
 
 #ReadTest("pkg/citrus/tst/schreier.tst");
 
-gap> START_TEST("schreier.tst 0.4");
+gap> START_TEST("Citrus package: schreier.tst");
 
 gap> TestTraceRClassRepsTree:=s-> ForAll([1..NrGreensRClasses(s)], i->
 > EvaluateWord(Generators(s), TraceRClassRepsTree(s, i))=
@@ -90,4 +90,4 @@ gap> s:=Monoid(gens);;
 gap> ForAll(s, f-> EvaluateWord(gens, Factorization(s,f))=f);
 true
 
-gap> STOP_TEST("schreier.tst 0.4", 0);
+gap> STOP_TEST("Citrus package: schreier.tst", 0);
