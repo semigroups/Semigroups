@@ -655,7 +655,7 @@ function(arg)
   fi;
 
   #img:=ImageSetOfTransformation(f);
-  img:=Set(f);
+  img:=SSortedList(f);
   deg:=DegreeOfTransformationSemigroup(s);
   j:=Length(img);
 
@@ -1200,7 +1200,7 @@ function(f, rectify, data, o, images)
 
   if k=fail then 
     #img:=ImageSetOfTransformation(f);
-    img:=Set(f);
+    img:=SSortedList(f);
     if j=fail then 
       j:=Length(img);
     fi;
