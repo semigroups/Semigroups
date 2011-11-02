@@ -84,7 +84,7 @@ function()
   return true;
 end);
 
-# new for 0.1! - CitrusMakeDoc - "for no argument"
+# mod for 0.4! - CitrusMakeDoc - "for no argument"
 #############################################################################
 
 InstallGlobalFunction(CitrusMakeDoc, 
@@ -95,15 +95,14 @@ function()
      "transform.xml", "../PackageInfo.g"], "citrus", "MathJax");;
 end);
 
-# new for 0.1! - CitrusTestAll - "for no argument"
+# mod for 0.4! - CitrusTestAll - "for no argument"
 #############################################################################
 
 InstallGlobalFunction(CitrusTestAll, 
 function()
   Print(
   "reading citrus/tst/testall.g, which automatically reads all .tst files", 
-  "\nin the tst directory. As of 10/08/11 the tests take approx. 55s with", 
-  "\n1g of memory.\n\n");
+  "\nin the tst directory. ...\n\n");
   Read(Filename(DirectoriesPackageLibrary("citrus","tst"),"testall.g"));;
 end);
 

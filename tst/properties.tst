@@ -826,4 +826,4 @@ gap> [ Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] ),
 gap> s:=Semigroup(last);;
 gap> MultiplicativeNeutralElement(s);
 Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] )
-gap> STOP_TEST( "properties.tst 0.3", 10000);
+gap> STOP_TEST( "Citrus package: properties.tst", 10000);

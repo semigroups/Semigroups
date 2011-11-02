@@ -174,7 +174,7 @@ function(s, f, data, o)
         O[j][k]!.perms:=O[j][k]!.perms+CreateImageOrbitSCCPerms(gens, 
          O[j][k], m);
         if g=fail then 
-          g:=f*O[j][k]!.perms[l];
+          g:=OnTuples(f, O[j][k]!.perms[l]);
         fi;
          
         O[j][k]!.kernels_ht[m]:=HashTableForKernels(
@@ -196,7 +196,8 @@ function(s, f, data, o)
   if IsBound(ht) then
     m:=Length(gens); j:=Length(o);
     for y in [1..m] do
-      z:=gens[y]*g;
+      #z:=gens[y]*g;
+      z:=g{gens[y]![1]};
       if HTValue(ht, z)=fail then  
         j:=j+1; HTAdd(ht, z, j); o[j]:=z;
         pos1[j]:=i; gen1[j]:=y;
@@ -283,6 +284,8 @@ end);
 InstallGlobalFunction(CreateImageOrbitSchutzGp,
 function(gens, o, f, k) 
   local scc, bound, g, p, t, graph, is_sym, l, words, h, K, i, j;
+
+  f:=TransformationNC(f); #new!
 
   scc:=o!.scc[k];
 
@@ -651,7 +654,8 @@ function(arg)
     gens:=Generators(s);
   fi;
 
-  img:=ImageSetOfTransformation(f);
+  #img:=ImageSetOfTransformation(f);
+  img:=Set(f);
   deg:=DegreeOfTransformationSemigroup(s);
   j:=Length(img);
 
@@ -1195,7 +1199,8 @@ function(f, rectify, data, o, images)
   g:=data[7]; 
 
   if k=fail then 
-    img:=ImageSetOfTransformation(f);
+    #img:=ImageSetOfTransformation(f);
+    img:=Set(f);
     if j=fail then 
       j:=Length(img);
     fi;
@@ -1221,11 +1226,13 @@ function(f, rectify, data, o, images)
       return [false, [ j, k, l, m, fail, 0, fail ] ];
     fi;
 
-    g:=f*perms[l];
+    #g:=f*perms[l];
+    g:=OnTuples(f, perms[l]);
   fi;
 
   if g=fail then #this can happen if coming from GreensRClassReps.
-    g:=f*o[j][k]!.perms[l];
+    #g:=f*o[j][k]!.perms[l];
+    g:=OnTuples(f, o[j][k]!.perms[l]);
   fi;
 
   if rectify then 
@@ -1259,7 +1266,9 @@ function(f, rectify, data, o, images)
         return [true, [j,k,l,m,val,n,g, ()]];
       fi;
     else 
-      p:=PermLeftQuoTransformationNC(reps[n], g);
+      p:=PermLeftQuoTransformationNC(TransformationNC(reps[n]),
+       TransformationNC(g)); 
+      # remove Transformation from prev. line JDM
       if SiftedPermutation(schutz, p)=() then 
         return [true, [j,k,l,m,val,n,g,p]];
       fi;
@@ -1744,20 +1753,21 @@ end);
 InstallMethod(OrbitsOfImages, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local gens, n, one, ht, i, type;
+  local gens, n, one, ht, i, type, o;
 
   gens:=Generators(s);
   n := DegreeOfTransformationSemigroup( s );
   one := TransformationNC( [ 1 .. n ] );
+  o:=Concatenation([[1..n]*1], List(gens, x-> x![1]));
 
-  ht := HTCreate(one, rec(hashlen:=CitrusHashLen!.rclassreps_orb)); 
-  HTAdd(ht, one, true); 
-  
-  for i in [1..Length(gens)] do 
-    HTAdd(ht, gens[i], i);
+  ht := HTCreate(o[1], rec(hashlen:=CitrusHashLen!.rclassreps_orb));  
+  ht!.o:=o;
+
+  for i in [1..Length(gens)+1] do 
+    HTAdd(ht, o[i], i);
   od;
   
-  ht!.o := Concatenation([one], gens); 
+  #ht!.o := Concatenation([one], gens); 
 
   type:=NewType(FamilyObj(s), IsOrbitsOfImages);
 
