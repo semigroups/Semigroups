@@ -123,8 +123,8 @@ function()
   SizeScreen([80]); SetInfoLevel(InfoWarning, 0);
   TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
      InstallationPath, "/doc"), "citrus.xml", 
-     ["convenience.xml", "greens.xml",
-    "orbits.xml", "properties.xml", "transform.xml"]);
+     ["convenience.xml", "greens.xml", "orbits.xml", "properties.xml",
+      "transform.xml", "../PackageInfo.g"]);
 end);
 
 # new for 0.1! - DClass - "for a trans. semi and trans. or Green's class"

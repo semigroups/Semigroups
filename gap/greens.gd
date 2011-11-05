@@ -72,8 +72,6 @@ DeclareAttribute("ImageOrbitSCC", IsGreensRClass and
  IsGreensClassOfTransSemigp);
 DeclareAttribute("ImageOrbitSchutzGp", IsGreensRClass and 
  IsGreensClassOfTransSemigp);
-DeclareAttribute("ImageOrbitSchutzGpGensAsWords", IsGreensRClass and
- IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("ImageOrbitSchutzGpFromData");
 DeclareGlobalFunction("ImageOrbitStabChainFromData");
 DeclareAttribute("ImageOrbitStabChain", IsGreensRClass and 

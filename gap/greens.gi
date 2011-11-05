@@ -103,10 +103,10 @@ function(f, s)
     if not data[2][2]=fail then
       if next[2]=data[2][2] and next[4]=data[2][4] and (next[5]=data[2][5] or
        data[2][5]=fail) then
-        data:=InOrbitsOfImages(f, false, data[2], orbits, images);
+        data:=InOrbitsOfImages(f![1], false, data[2], orbits, images);
       fi;
     else 
-      data:=InOrbitsOfImages(f, false, data[2], orbits, images);
+      data:=InOrbitsOfImages(f![1], false, data[2], orbits, images);
     fi;
 
     if data[1] then

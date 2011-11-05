@@ -9,42 +9,11 @@
 ##
 
 #############################################################################
-# Conventions:
-
-# - do not use the functions from convenience.gi! (double-check!)
-
-# - use ImageOrbitFromData instead of ImageOrbit!
-
-# - don't use underlyingcollection in enumerators!
-
-# - check that wherever we have called d:=InOrbitsOfImages we do not perform
-# f*perms[l] afterwards but instead use d[7]!
-
-# - ensure EmptyPlist is properly used!
-
-#############################################################################
-## Notes
-
-# - should make more use of OrbitsOfImages(s)!.images.
+# Notes
 
 # - this file is alphabetized, keep it that way!
 
-# - this file should only contain functions relating to images/r-classes!
-
-#############################################################################
-## To do 
-
-# - what about IsGreensLessThanOrEqual?
-
-# - install methods for Generators etc of IsRightSemigroupIdeal, IsLeftSemigroupIdeal
-#   In particular, so that IsGreensLessThanOrEqual works.
-
-# - install method for Position(GreensRClasses(s), blah) using InOrbitsOfImages...
-# requires the list GreensRClasses to have some property to allow method
-# selection. Wait for future version. 
-
-# - install IteratorOfRClassRepsData etc for s and IsPosInt! or more generally
-# create an iterator of R-classes satisfying whatever properties we want. 
+# - this file should only contain functions relating to images/R-classes!
 
 #############################################################################
 # other equalities of Green's classes handled by generic method in greens.gi!
@@ -78,7 +47,7 @@ InstallMethod(\in, "for trans. and R-class of trans. semigp.",
 function(f, r)
   local rep, s, d, o, i, g, schutz;
 
-  rep:= r!.rep; 
+  rep:=Representative(r);
 
   if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) or
    RankOfTransformation(f) <> RankOfTransformation(rep) or
@@ -86,9 +55,7 @@ function(f, r)
     return false;
   fi;
 
-  s:=r!.parent;
-  d:=r!.data;
-  o:=r!.o!.orbits[d[1]][d[2]];
+  s:=r!.parent; d:=r!.data; o:=r!.o!.orbits[d[1]][d[2]];
 
   i:= Position(o, ImageSetOfTransformation(f));
 
@@ -117,7 +84,7 @@ end);
 
 # mod for 0.4! - AddToOrbitsOfImages - not a user function! 
 #############################################################################
-# Usage: s = semigroup or d-class; f = transformation; data = image data; 
+# Usage: s = semigroup or d-class; f = trans. img. list; data = image data; 
 # o = OrbitsOfImages(s).
 # Notes: if s is a d-class, then data should have j, k, l, m and g not = fail!
 
@@ -143,7 +110,8 @@ function(s, f, data, o)
 
   if k = fail then  #new img and l, m, val, n, g=fail
                     #don't call this function with a d-class and k=fail!
-  ################################################################################
+
+###########################################################################
           
     lens[j]:=lens[j]+1;
     f_o:=ForwardOrbitOfImage(s, f, images, gens);
@@ -199,8 +167,7 @@ function(s, f, data, o)
       #z:=gens[y]*g;
       z:=g{gens[y]![1]};
       if HTValue(ht, z)=fail then  
-        j:=j+1; HTAdd(ht, z, j); o[j]:=z;
-        pos1[j]:=i; gen1[j]:=y;
+        j:=j+1; HTAdd(ht, z, j); o[j]:=z; pos1[j]:=i; gen1[j]:=y;
       fi;
     od;
   fi;
@@ -215,19 +182,16 @@ end);
 InstallOtherMethod(AsList, "for an R-class of trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 function(r)
-  local f, g, elts, perms, scc, o, p, i;
+  local f, g, elts, perms, scc, p, i;
   
   Info(InfoCitrusGreens, 4, "AsList: for an R-class");
 
-  f:=r!.rep; #rep should have its image at the first place in the scc
-  g:=List(SchutzenbergerGroup(r), x-> f*x);
+  f:=r!.rep; g:=List(SchutzenbergerGroup(r), x-> f*x);
   elts:=EmptyPlist(Size(r));
 
-  perms:=ImageOrbitPerms(r);
-  scc:=ImageOrbitSCC(r);
-  o:=ImageOrbit(r); #this doesn't slow things down here!
+  perms:=ImageOrbitPerms(r); scc:=ImageOrbitSCC(r);
 
-  for i in ImageOrbitSCC(r) do 
+  for i in scc do 
     p:=perms[i];
     elts:=Concatenation(elts, g*p^-1);
   od;
@@ -257,12 +221,10 @@ InstallGlobalFunction(CreateImageOrbitSCCPerms,
 function(gens, o, j)
   local p, scc, f, i;
 
-  p:=EmptyPlist(Length(o));
-  scc:=o!.scc[j];
+  p:=EmptyPlist(Length(o)); scc:=o!.scc[j];
 
   for i in scc do
     f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
-    # JDM this seems to cause a slowdown...
     p[i]:=MappingPermListList(o[i], OnTuples(o[i], f));
   od; 
   
@@ -305,7 +267,7 @@ function(gens, o, f, k)
         #h:=PermLeftQuoTransformationNC(f, f/p[i] * (gens[j]*p[graph[i][j]]));
         h:=PermLeftQuoTransformationNC(f,
          f*EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, k, i)) * 
-          (gens[j]*p[graph[i][j]]));
+          (gens[j]*p[graph[i][j]]));# JDM convert to img list
         if not h=() then 
           K:=ClosureGroup(g, h);
           if Size(K)>Size(g) then 
@@ -319,7 +281,6 @@ function(gens, o, f, k)
         is_sym:=true;
         break;
       fi;
-
     od;
 
     if Size(g)>=bound then 
@@ -626,8 +587,6 @@ function(s, data, f)
   Concatenation([TraceSchreierTreeOfSCCForward(o, m,
   word[x][1]), [word[x][2]], TraceSchreierTreeOfSCCBack(o, m,
   graph[word[x][1]][word[x][2]])])));
-  #return Concatenation(List(out, x-> word[x]));
-
 end);
 
 # mod for 0.4! - ForwardOrbitOfImage - not a user function!
@@ -849,9 +808,6 @@ function(s)
     i:=i+1;
     out[i]:=r;
   od;
-
-  # JDM need to objectify GreensRClasses here if we want to have a method for 
-  # Position. How to do this without losing info about out!?
 
   return out;
 end);
@@ -1098,18 +1054,6 @@ function(r)
 
 Info(InfoWarning, 1, "please use SchutzenbergerGroup instead");
 return SchutzenbergerGroup(r);
-end);
-
-# new for 0.2! - ImageOrbitSchutzGpGensAsWords - "for R-class of trans. semi
-############################################################################
-#JDM consider removing this!
-
-InstallMethod(ImageOrbitSchutzGpGensAsWords, "for R-class of trans. semi",
-[IsGreensRClass and IsGreensClassOfTransSemigp], 
-function(r)
-  local d;
-  d:=r!.data;
-  return r!.o!.orbits[d[1]][d[2]]!.schutz[d[4]][3];
 end);
 
 # new for 0.1! - ImageOrbitSchutzGpFromData - not a user function!
@@ -1810,6 +1754,11 @@ function(arg)
   local s, f, images, data, o;
 
   s:=arg[1]; f:=arg[2]; 
+  
+  if IsTransformation(f) then 
+    f:=f![1];
+  fi;
+
   images:=OrbitsOfImages(s)!.images; 
 
   if Length(arg)>=4 then 
@@ -1940,7 +1889,7 @@ function(arg)
     o:=OrbitsOfImages(s)!.orbits[d[1]][d[2]];
   fi;
 
-  return o!.reps[d[4]][d[5]][d[6]];
+  return TransformationNC(o!.reps[d[4]][d[5]][d[6]]);
 end);
 
 # new for 0.1! - RClassRepsDataFromOrbits - not a user function!

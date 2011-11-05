@@ -1104,14 +1104,15 @@ function(d, f)
   fi;
   
   o:=d!.o[1]; e:=d!.data[1];
-  data:=InOrbitsOfImages(f, true, [e[1], e[2], Position(o!.orbits[e[1]][e[2]],
+  data:=InOrbitsOfImages(f![1], true, [e[1], e[2], 
+   Position(o!.orbits[e[1]][e[2]],
    ImageSetOfTransformation(f)), e[4], fail, 0, fail], o!.orbits, o!.images);
   
   # the position call in the previous line is a waste as this is already found
-  # when `f in d' is called. 
+  # when `f in d' is called. JDM remove rectify
 
   if not data[1] then 
-    data:=AddToOrbitsOfImages(d, f, data[2], o);
+    data:=AddToOrbitsOfImages(d, f![1], data[2], o);
   else 
     data:=data[2];
   fi;
@@ -1283,8 +1284,7 @@ function(f, rectify, data, o, kernels)
   o:=o[2]; 
   # r is not used here, even if it is known a priori...
 
-
-  f:=data[1][2][7];
+  f:=TransformationNC(data[1][2][7]); #JDM switch
 
   if k=fail then 
     ker:=CanonicalTransSameKernel(f);
