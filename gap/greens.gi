@@ -254,13 +254,13 @@ end);
 
 #III
 
-# new for 0.1! - Idempotents - "for a transformation semigroup"
+# mod for 0.4! - Idempotents - "for a transformation semigroup"
 #############################################################################
 
 InstallOtherMethod(Idempotents, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local n, out, kers, imgs, regular, j, i, ker, img;
+  local n, out, kers, imgs, j, i, ker, img;
 
   if IsRegularSemigroup(s) then 
     n:=DegreeOfTransformationSemigroup(s);
@@ -273,12 +273,6 @@ function(s)
 
     kers:=GradedKernelsOfTransSemigroup(s); 
     imgs:=GradedImagesOfTransSemigroup(s);
-
-    regular:=false; 
-
-    if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
-     regular:=true;
-    fi;
 
     j:=0;
     

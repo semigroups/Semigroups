@@ -488,6 +488,31 @@ end);
 
 #IIILLL
 
+# new for 0.4! - IsLeftAmpleSemigroup - "for a trans. semigroup"
+###########################################################################
+
+InstallMethod(IsRightAbundantSemigroup, "for a trans. semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local kers, imgs, n, i, ker;
+  
+  kers:=GradedKernelsOfTransSemigroup(s);
+  imgs:=GradedImagesOfTransSemigroup(s);
+  
+  n:=Degree(s);
+  
+  for i in [1..n] do
+    for ker in kers[i] do
+      if not ForAny(imgs[i], x-> IsInjectiveTransOnList(ker, x) and
+       IdempotentNC(ker, x) in s) then 
+        return false;
+      fi;
+    od;
+  od;  
+ 
+  return true;
+end);
+
 # new for 0.2! - IsLeftSimple - "for a transformation semigroup"
 ###########################################################################
 
