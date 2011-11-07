@@ -1274,8 +1274,6 @@ gap> iter2;
 <iterator of R-classes>
 gap> IsIteratorOfGreensRClasses(iter2);
 true
-gap> iter2!.s=s;
-true
 gap> ShallowCopy(iter2);
 <iterator>
 gap> iter:=last;                                

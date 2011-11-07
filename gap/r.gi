@@ -228,6 +228,7 @@ function(gens, o, j)
   od; 
   
   #JDM this worked, but not with Factorization!!
+  
   #for i in scc do
   #  f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i)); 
   #  p[i]:=MappingPermListList(OnTuples(o[scc[1]], f), o[scc[1]]);
