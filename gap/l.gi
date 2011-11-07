@@ -587,7 +587,7 @@ function(s)
 
   iter:=IteratorByFunctions( rec(
 
-  	  data:=IteratorOfLClassRepsData(s), s:=s,
+  	  data:=IteratorOfLClassRepsData(s), 
 	
           IsDoneIterator := iter -> IsDoneIterator(iter!.data), 
 	

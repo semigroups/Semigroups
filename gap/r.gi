@@ -227,7 +227,7 @@ function(gens, o, j)
     p[i]:=MappingPermListList(o[i], f{o[i]});
   od; 
   
-  #JDM this worked, but will not work with Factorization!!
+  #JDM this worked, but not with Factorization!!
   #for i in scc do
   #  f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i)); 
   #  p[i]:=MappingPermListList(OnTuples(o[scc[1]], f), o[scc[1]]);
@@ -451,35 +451,8 @@ function(r)
   return enum;
 end);
 
-# new for 0.1! - Enumerator - "for a transformation semigroup"
-#############################################################################
-# JDM this could be an actual enumerator!?
-
-InstallOtherMethod(Enumerator, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  local out, iter, j, i;
-
-  Info(InfoCitrusGreens, 4, "Enumerator: for a trans. semigroup");
-
-  out:=EmptyPlist(Size(s)); 
-
-  iter:=Iterator(s);
-  j:=0;
-
-  for i in iter do 
-    j:=j+1;
-    out[j]:=i;
-  od;
-
-  return Immutable(out);
-end);
-
 # new for 0.1! - ExpandOrbitsOfImages - not a user function!
 #############################################################################
-# JDM could put a more highly optimized version of this function in, not using
-# an iterator, and passing all record components !. to InOrbitsOfImages and
-# AddToOrbitsOfImages. 
 
 InstallGlobalFunction(ExpandOrbitsOfImages, 
 function(s)
@@ -735,9 +708,9 @@ end);
 
 # new for 0.1! - GreensHClassRepsData - "for an R-class of a trans. semigp."
 #############################################################################
-# JDM1 should we SetGreensLClassReps of d? 
+# JDM should we SetGreensLClassReps of d? 
 
-# JDM0 this and other like it should be iterators as illustrated by the 
+# JDM this and other like it should be iterators as illustrated by the 
 # Coxeter semigroup example...
 
 InstallOtherMethod(GreensHClassRepsData, "for an R-class of a trans. semigp.", 
@@ -876,7 +849,7 @@ function(s, f)
   #JDM shouldn't data contain [j,1,1,1,1,1]??
 
   r:=CreateRClass(s, [j,1,1,1,1,1], o, f);
-
+  SetIsRClassNC(r, true);
   return r;
 end);
 
@@ -1019,19 +992,6 @@ function(r)
   return r!.o!.orbits[d[1]][d[2]]!.scc[d[4]];
 end);
 
-# new for 0.1! - ImageOrbitSCC - "for a D-class of a trans. semigp." 
-############################################################################
-# JDM move to d.gi
-
-InstallOtherMethod(ImageOrbitSCC, "for a D-class of a trans. semigp.",
-[IsGreensDClass and IsGreensClassOfTransSemigp],
-function(r)
-  local d;
-
-  d:=r!.data[1];
-  return r!.o[1]!.orbits[d[1]][d[2]]!.scc[d[4]];
-end);
-
 # new for 0.1! - ImageOrbitSCCFromData - not a user function!
 ############################################################################
 # Usage: s = semigroup; d = image data; o = orbits of images (optional)
@@ -1048,18 +1008,6 @@ function(arg)
   fi;
 
   return o!.scc[d[4]];
-end);
-
-# new for 0.1! - ImageOrbitSchutzGp - "for an R-class of a trans. semigp."
-############################################################################
-# JDM remove!
-
-InstallMethod(ImageOrbitSchutzGp, "for an R-class of a trans. semigp.",
-[IsGreensRClass and IsGreensClassOfTransSemigp], 
-function(r)
-
-Info(InfoWarning, 1, "please use SchutzenbergerGroup instead");
-return SchutzenbergerGroup(r);
 end);
 
 # new for 0.1! - ImageOrbitSchutzGpFromData - not a user function!
@@ -1092,19 +1040,6 @@ function(r)
 
   d:=r!.data;
   return r!.o!.orbits[d[1]][d[2]]!.schutz[d[4]][1];
-end);
-
-# new for 0.1! - ImageOrbitStabChain - "for a D-class of a trans. semigp."
-############################################################################
-# JDM move to d.gi
-
-InstallOtherMethod(ImageOrbitStabChain, "for a D-class of a trans. semigp.", 
-[IsGreensDClass and IsGreensClassOfTransSemigp],
-function(r)
-  local d;
-
-  d:=r!.data[1];
-  return r!.o[1]!.orbits[d[1]][d[2]]!.schutz[d[4]][1];
 end);
 
 # new for 0.1! - ImageOrbitStabChainFromData - not a user function!
@@ -1214,7 +1149,7 @@ function(f, rectify, data, o, images)
     else 
       p:=PermLeftQuoTransformationNC(TransformationNC(reps[n]),
        TransformationNC(g)); 
-      # remove Transformation from prev. line JDM
+      # remove Transformation from prev. line JDM_orb
       if SiftedPermutation(schutz, p)=() then 
         return [true, [j,k,l,m,val,n,g,p]];
       fi;
@@ -1223,6 +1158,12 @@ function(f, rectify, data, o, images)
 
   return [false, [j,k,l,m,val,n,g]];
 end);
+
+# new for 0.4! - IsRClassNC - "for a Green's class of trans. semigroup"
+#############################################################################
+
+InstallMethod(IsRClassNC, "for a Green's class of trans. semigroup", 
+[IsGreensClassOfTransSemigp], ReturnFalse);
 
 # new for 0.1! - IsRegularRClass - "for a Green's class of trans. semigroup"
 #############################################################################
@@ -1246,12 +1187,10 @@ function(r)
   return IsRegularRClassData(r!.parent, r!.data, r!.o, r!.rep);
 end);
 
-# new for 0.1! - IsRegularRClassData - not a user function
+# mod for 0.4! - IsRegularRClassData - not a user function
 #############################################################################
 # Usage: s = semigroup; d = image data; o = OrbitsOfImages (optional)
 # f = R-class rep (optional)
-
-# JDM this could be improved to use NrIdempotents if known!
 
 InstallGlobalFunction(IsRegularRClassData, 
 function(arg)
@@ -1279,6 +1218,10 @@ function(arg)
   scc:=ImageOrbitSCCFromData(s, d, o);
   o:=ImageOrbitFromData(s, d, o);
 
+  if IsBound(o!.nr_idempotents[d[4]][d[5]]) then
+    return o!.nr_idempotents[d[4]][d[5]]>0;
+  fi;
+
   for i in scc do
     if IsInjectiveTransOnList(f, o[i]) then
       return true;
@@ -1288,111 +1231,8 @@ function(arg)
   return false;
 end);
 
-# new for 0.1! - Iterator - "for a transformation semigroup"
+# mod for 0.4! - IteratorOfGreensRClasses - not a user function!
 #############################################################################
-# JDM move to greens.gi
-
-InstallMethod(Iterator, "for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  local iter;
-
-  Info(InfoCitrusGreens, 4, "Iterator: for a trans. semigroup");
-
-  iter:= IteratorByFunctions( rec( 
-    
-    R:=IteratorOfGreensRClasses(s), 
-    
-    r:=fail, s:=s, 
-    
-    NextIterator:=function(iter)
-      
-      if IsDoneIterator(iter) then 
-        return fail;
-      fi;
-      
-      if iter!.r=fail or IsDoneIterator(iter!.r) then 
-        iter!.r:=Iterator(NextIterator(iter!.R));
-      fi;
-      
-      return NextIterator(iter!.r);
-    end,
-    
-    IsDoneIterator:= iter -> IsDoneIterator(iter!.R) and 
-     IsDoneIterator(iter!.r),
-    
-    ShallowCopy:= iter -> rec(R:=IteratorOfGreensRClasses(s), r:=fail)));
-
-  SetIsIteratorOfSemigroup(iter, true);
-  SetIsCitrusPkgIterator(iter, true);
-
-  return iter;
-end);
-
-# new for 0.1! - Iterator - "for a R-class of a trans. semigroup"
-#############################################################################
-# JDM it is not really clear that this is needed...
-
-InstallMethod(Iterator, "for a R-class of a trans. semigroup",
-[IsGreensRClass and IsGreensClassOfTransSemigp],
-function(r)
-  local iter;
-
-  Info(InfoCitrusGreens, 4, "Iterator: for an R-class");
-
-  if HasAsSSortedList(r) then 
-    iter:=IteratorList(AsSSortedList(r));
-  else
-    iter:=IteratorByFunctions(rec( 
-          
-      schutz:=List(SchutzenbergerGroup(r), x-> r!.rep*x),
-      #JDM this is bad idea replace as in enumerator...
-
-      m:=Size(SchutzenbergerGroup(r)), s:=r!.parent, 
-          
-      perms:=ImageOrbitPermsFromData(r!.parent, r!.data, r!.o),
-          
-      scc:=ImageOrbitSCC(r), 
-          
-      n:=Length(ImageOrbitSCC(r)),
-          
-      at:=[1,0],
-          
-      IsDoneIterator:=iter-> iter!.at[1]=iter!.n and iter!.at[2]=iter!.m,
-          
-      NextIterator:=function(iter)
-          
-        if IsDoneIterator(iter) then 
-          return fail;
-        fi;
-
-        if iter!.at[2]<iter!.m then 
-          iter!.at[2]:=iter!.at[2]+1;
-        else
-          iter!.at[1]:=iter!.at[1]+1; 
-          iter!.at[2]:=1;
-        fi;
-        
-        return iter!.schutz[iter!.at[2]]*iter!.perms[iter!.scc[iter!.at[1]]]^-1;
-      
-      end,
-          
-      ShallowCopy:=iter-> rec( schutz:=List(SchutzenbergerGroup(r), x-> 
-       r!.rep*x),
-      m:=Size(SchutzenbergerGroup(r)), 
-      perms:=ImageOrbitPermsFromData(r!.parent, r!.data, r!.o), 
-      scc:=ImageOrbitSCC(r), n:=Length(ImageOrbitSCC(r)), at:=[1,0])));
-  fi;
-
-  SetIsIteratorOfRClassElements(iter, true);
-  SetIsCitrusPkgIterator(iter, true); 
-  return iter;
-end);
-
-# new for 0.1! - IteratorOfGreensRClasses - not a user function!
-#############################################################################
-# JDM why not use IteratorOfRClassRepsData below, it should be more
-# straightforward, see IteratorOfGreensLClasses.
 
 InstallGlobalFunction(IteratorOfGreensRClasses, 
 function(s)
@@ -1407,25 +1247,23 @@ function(s)
 
   iter:=IteratorByFunctions( rec(
           
-    i:=0, s:=s, reps:=IteratorOfRClassReps(s),
+    data:=IteratorOfRClassRepsData(s),
     
-    IsDoneIterator := iter -> IsDoneIterator(iter!.reps), 
+    IsDoneIterator := iter -> IsDoneIterator(iter!.data), 
           
     NextIterator:= function(iter)
-      local rep, d;
+      local d;
           
-      rep:=NextIterator(iter!.reps);
+      d:=NextIterator(iter!.data);
           
-      if rep=fail then 
+      if d=fail then 
         return fail;
       fi;
           
-      iter!.i:=iter!.i+1;
-      d:=OrbitsOfImages(s)!.data[iter!.i];
-      return CreateRClass(s, d, OrbitsOfImages(s), rep);
+      return CreateRClass(s, d, OrbitsOfImages(s), RClassRepFromData(s, d));
     end,
 
-    ShallowCopy:=iter-> rec(i:=0, s:=iter!.s, reps:=IteratorOfRClassReps(s))));
+    ShallowCopy:=iter-> rec(data:=IteratorOfRClassRepsData(s))));
 
   SetIsIteratorOfGreensRClasses(iter, true);
   SetIsCitrusPkgIterator(iter, true); 
@@ -1889,31 +1727,6 @@ function(arg)
   return TransformationNC(o!.reps[d[4]][d[5]][d[6]]);
 end);
 
-# new for 0.1! - RClassRepsDataFromOrbits - not a user function!
-############################################################################
-# Usage: O = orbits of image; j = image size.
-
-#JDM remove the following later!
-
-InstallGlobalFunction(RClassRepsDataFromOrbits,
-function(O, j)
-  local i, data, k, m, val, n;
-
-  data:=[]; i:=0;
-
-  for k in [1..Length(O)] do 
-    for m in [1..Length(O[k]!.scc)] do 
-      for val in [1..Length(O[k]!.reps[m])] do 
-        for n in [1..Length(O[k]!.reps[m][val])] do 
-          i:=i+1; data[i]:=[j,k,1,m, val,n];
-        od;
-      od;
-    od;
-  od;
-
-  return data;
-end);
-
 # new for 0.1! - RClassType - "for a transformation semigroup"
 ############################################################################
 
@@ -1952,41 +1765,6 @@ function(r)
   return Size(SchutzenbergerGroup(r))*Length(ImageOrbitSCC(r));
 end);
 
-# new for 0.1! - Size - "for a transformation semigroup"
-#############################################################################
-# Algorithm V.
-
-# JDM move to greens.gi
-
-
-InstallMethod(Size, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-
-  Info(InfoCitrusGreens, 4, "Size: for a trans. semigroup");
-
-  ExpandOrbitsOfImages(s);
-  return SizeOrbitsOfImages(s);
-end);
-
-# new for 0.1! - Size - "for a simple transformation semigroup"
-#############################################################################
-# JDM check this is actually superior to the above method for Size
-
-InstallOtherMethod(Size, "for a simple transformation semigroup",
-[IsSimpleSemigroup and IsTransformationSemigroup],
-function(s)
-  local gens, ims, kers, H;
-
-  gens:=Generators(s);
-
-  ims:=Size(Set(List(gens, ImageSetOfTransformation)));
-  kers:=Size(Set(List(gens, CanonicalTransSameKernel)));
-  H:=GreensHClassOfElement(s, gens[1]);
-
-  return Size(H)*ims*kers;
-end);
-
 # new for 0.1! - SizeOrbitsOfImages - not a user function!
 #############################################################################
 # Usage: s = semigroup.
@@ -2000,7 +1778,8 @@ function(s)
 
   for o in Concatenation(Compacted(c)) do 
     for j in [1..Length(o!.scc)] do
-      if IsBound(o!.schutz[j]) and IsBound(o!.reps[j]) and IsBound(o!.scc[j]) then 
+      if IsBound(o!.schutz[j]) and IsBound(o!.reps[j]) and 
+       IsBound(o!.scc[j]) then 
         i:=i+Size(o!.schutz[j][2])*
         Sum(List(o!.reps[j]), Length)*Length(o!.scc[j]);
       fi;

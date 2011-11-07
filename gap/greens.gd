@@ -31,6 +31,11 @@
 #############################################################################
 #############################################################################
 
+
+# in greens.gi
+
+DeclareOperation("EnumeratorOfRClasses", [IsTransformationSemigroup]);
+
 # the documentation for the functions below can be found in 
 # /monoid/doc/r.xml
 
@@ -70,8 +75,8 @@ DeclareGlobalFunction("ImageOrbitPermsFromData");
 DeclareGlobalFunction("ImageOrbitSCCFromData");
 DeclareAttribute("ImageOrbitSCC", IsGreensRClass and 
  IsGreensClassOfTransSemigp);
-DeclareAttribute("ImageOrbitSchutzGp", IsGreensRClass and 
- IsGreensClassOfTransSemigp);
+DeclareAttribute("ImageOrbitSchutzGp", IsGreensRClass and
+IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("ImageOrbitSchutzGpFromData");
 DeclareGlobalFunction("ImageOrbitStabChainFromData");
 DeclareAttribute("ImageOrbitStabChain", IsGreensRClass and 
@@ -79,6 +84,7 @@ DeclareAttribute("ImageOrbitStabChain", IsGreensRClass and
 DeclareGlobalFunction("InOrbitsOfImages");
 DeclareProperty("IsIteratorOfRClassRepsData", IsIterator);
 DeclareGlobalFunction("IsRegularRClassData");
+DeclareProperty("IsRClassNC", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IteratorOfNewRClassRepsData");
 DeclareGlobalFunction("IteratorOfRClassRepsData");
 DeclareGlobalFunction("GreensHClassRepsDataFromData");
@@ -174,15 +180,6 @@ DeclareGlobalFunction("IteratorOfGreensHClasses");#M
 DeclareGlobalFunction("IteratorOfHClassReps"); #M
 DeclareGlobalFunction("IteratorOfHClassRepsData");
 
-# the following functions should be removed!
-
-DeclareGlobalFunction("RClassRepsDataFromOrbits");
-
-## JDMJDM
-# the following functions have not yet been processed for release!
-
-GT:=function(x,y) return x>y; end;
-
 DeclareInfoClass("InfoCitrusGreens");
 
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
@@ -212,7 +209,3 @@ DeclareProperty("IsCitrusPkgIterator", IsIterator);
 DeclareProperty("IsOrbitsOfImages", IsObject);
 DeclareProperty("IsOrbitsOfKernels", IsObject);
 DeclareProperty("IsCitrusPkgImgKerOrbit", IsOrbit);
-
-
-
-

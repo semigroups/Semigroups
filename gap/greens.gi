@@ -121,6 +121,124 @@ function(f, s)
   return false;
 end);
 
+# new for 0.1! - Enumerator - "for a transformation semigroup"
+#############################################################################
+# Notes: this is not an enumerator as I could not get an enumerator to perform 
+# well here. 
+
+InstallOtherMethod(Enumerator, "for a transformation semigroup", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+function(s)
+  local out, iter, j, i;
+
+  Info(InfoCitrusGreens, 4, "Enumerator: for a trans. semigroup");
+
+  out:=EmptyPlist(Size(s)); 
+
+  iter:=Iterator(s);
+  j:=0;
+
+  for i in iter do 
+    j:=j+1;
+    out[j]:=i;
+  od;
+
+  return Immutable(out);
+end);
+
+
+# new for 0.4! - EnumeratorOfRClasses - "for a trans. semigroup"
+#############################################################################
+# Notes: NumberElement does not work for RClassNCs
+
+InstallMethod(EnumeratorOfRClasses, "for a trans. semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+function(s)
+  local enum;
+
+  if HasGreensRClasses(s) then 
+    enum:=EnumeratorByFunctions(s, rec(
+      
+      ElementNumber:=function(enum, pos)
+        return GreensRClasses(s)[pos];
+      end,
+
+      NumberElement:=function(enum, r)
+        
+        if not ParentAttr(r)=s then 
+          return fail;
+        fi;
+
+        if IsRClassNC(r) then 
+          return fail;
+        fi;
+
+        return RClassIndexFromData(s, r!.data);
+      end,
+
+      Membership:=function(r, enum)
+        return not Position(enum, r)=fail;
+      end,
+      
+      Length:=enum -> NrGreensRClasses(s),
+
+      PrintObj:=function(enum)
+        Print( "<enumerator of R-classes>");
+        return;
+      end));
+
+    return enum;
+  fi;
+
+  enum:=EnumeratorByFunctions(s, rec(
+   
+    ElementNumber:=function(enum, pos)
+      local data, m, iter, i;
+
+      data:=OrbitsOfImages(s)!.data; m:=Length(data);
+
+      if m>=pos then 
+        data:=data[pos];
+      elif OrbitsOfImages(s)!.finished then 
+        return fail;
+      else
+        iter:=IteratorOfNewRClassRepsData(s);
+        for i in [1..pos-m-1] do 
+          NextIterator(iter);
+        od;
+        data:=NextIterator(iter);
+      fi;
+
+      if not data=fail then 
+        return CreateRClass(s, data, OrbitsOfImages(s),
+          RClassRepFromData(s, data));        
+      fi;
+      return fail;
+    end,
+
+    NumberElement:=function(enum, r)
+
+      if not ParentAttr(r)=s then
+        return fail;
+      fi;
+
+      if IsRClassNC(r) then
+        return fail;
+      fi;  
+
+      return RClassIndexFromData(s, r!.data);
+    end,
+
+    Length:=enum -> NrGreensRClasses(s),
+
+    PrintObj:=function(enum)
+      Print( "<enumerator of R-classes>");
+      return;
+  end));
+      
+  return enum;
+end);
+
 #GGG
 
 # new for 0.1! - GreensJClassOfElement - for a trans. semigroup and trans."
@@ -260,6 +378,47 @@ function(s)
   return TrivialIterator(GreensRClassReps(s)[1]);
 end);
 
+# new for 0.1! - Iterator - "for a transformation semigroup"
+#############################################################################
+# JDM move to greens.gi
+
+InstallMethod(Iterator, "for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local iter;
+
+  Info(InfoCitrusGreens, 4, "Iterator: for a trans. semigroup");
+
+  iter:= IteratorByFunctions( rec(
+
+    R:=IteratorOfGreensRClasses(s),
+
+    r:=fail, s:=s,
+
+    NextIterator:=function(iter)
+
+      if IsDoneIterator(iter) then
+        return fail;
+      fi;
+
+      if iter!.r=fail or IsDoneIterator(iter!.r) then
+        iter!.r:=Iterator(NextIterator(iter!.R));
+      fi;
+
+      return NextIterator(iter!.r);
+    end,
+
+    IsDoneIterator:= iter -> IsDoneIterator(iter!.R) and
+     IsDoneIterator(iter!.r),
+
+    ShallowCopy:= iter -> rec(R:=IteratorOfGreensRClasses(s), r:=fail)));
+
+  SetIsIteratorOfSemigroup(iter, true);
+  SetIsCitrusPkgIterator(iter, true);
+
+  return iter;
+end);
+
 #NNN
 
 # new for 0.1! - NrIdempotents - "for a transformation semigroup"
@@ -311,6 +470,42 @@ function(s)
 
   return i;
 end);
+
+#SSS
+
+# new for 0.1! - Size - "for a transformation semigroup"
+#############################################################################
+# Algorithm V.
+
+InstallMethod(Size, "for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+
+  Info(InfoCitrusGreens, 4, "Size: for a trans. semigroup");
+
+  ExpandOrbitsOfImages(s);
+  return SizeOrbitsOfImages(s);
+end);
+
+# new for 0.1! - Size - "for a simple transformation semigroup"
+#############################################################################
+# JDM check this is actually superior to the above method for Size
+
+InstallOtherMethod(Size, "for a simple transformation semigroup",
+[IsSimpleSemigroup and IsTransformationSemigroup],
+function(s)
+  local gens, ims, kers, H;
+
+  gens:=Generators(s);
+
+  ims:=Size(Set(List(gens, ImageSetOfTransformation)));
+  kers:=Size(Set(List(gens, CanonicalTransSameKernel)));
+  H:=GreensHClassOfElement(s, gens[1]);
+
+  return Size(H)*ims*kers;
+end);
+
+#UUU
 
 # new for 0.1! - UnderlyingSemigroupOfIterator - "for a citrus pkg iterator"
 #############################################################################

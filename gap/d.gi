@@ -1239,6 +1239,18 @@ function(r)
   return r!.o[1]!.orbits[d[1]][d[2]]!.perms;
 end);
 
+# new for 0.1! - ImageOrbitSCC - "for a D-class of a trans. semigp." 
+############################################################################
+
+InstallOtherMethod(ImageOrbitSCC, "for a D-class of a trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(r)
+  local d;
+
+  d:=r!.data[1];
+  return r!.o[1]!.orbits[d[1]][d[2]]!.scc[d[4]];
+end);
+
 # new for 0.1! - ImageOrbitSchutzGp - not a user function!
 ############################################################################
 # Notes: returns the schutz. gp. of the image orbit of the D-class, which is
@@ -1251,6 +1263,18 @@ function(d)
   local e;
   e:=d!.data[1];
   return d!.o[1]!.orbits[e[1]][e[2]]!.schutz[e[4]][2];
+end);
+
+# new for 0.1! - ImageOrbitStabChain - "for a D-class of a trans. semigp."
+############################################################################
+
+InstallOtherMethod(ImageOrbitStabChain, "for a D-class of a trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(r)
+  local d;
+
+  d:=r!.data[1];
+  return r!.o[1]!.orbits[d[1]][d[2]]!.schutz[d[4]][1];
 end);
 
 # new for 0.1! - InOrbitsOfKernels - not a user function
