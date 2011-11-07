@@ -101,8 +101,7 @@ end);
 InstallGlobalFunction(CitrusTestAll, 
 function()
   Print(
-  "reading citrus/tst/testall.g, which automatically reads all .tst files", 
-  "\nin the tst directory. ...\n\n");
+  "Reading all .tst files in the directory citrus/tst/...\n\n"); 
   Read(Filename(DirectoriesPackageLibrary("citrus","tst"),"testall.g"));;
 end);
 

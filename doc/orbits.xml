@@ -159,11 +159,9 @@ gap> OrbSCC(o);
 gap> OrbSCCLookup(o);
 [ 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4 ]
 gap> OrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7]; 
-> OrbSCCLookup(o)[15];
 1
 2
-3
-4</Example>
+3</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

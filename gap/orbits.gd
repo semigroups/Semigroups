@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+
+DeclareGlobalFunction("CitrusEvalWord");
 DeclareAttribute("GradedImagesOfTransSemigroup", IsTransformationSemigroup); 
 DeclareAttribute("GradedKernelsOfTransSemigroup", IsTransformationSemigroup);
 

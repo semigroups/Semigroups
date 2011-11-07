@@ -28,6 +28,24 @@ function(p, hashlen)
   return rec(func := HashFunctionForBlist, data := [101, hashlen]);
 end);
 
+# new for 0.4! - CitrusEvalWord - "for list of trans. imgs. and list of pos.
+# ints".
+#############################################################################
+
+InstallGlobalFunction(CitrusEvalWord,
+function(gens, w)
+  local  i, res;
+        
+  if Length( w ) = 0  then
+    return [1..Length(gens[1])];
+  fi;
+  res := gens[w[1]];
+  for i  in [ 2 .. Length( w ) ]  do
+    res := gens[w[i]]{res};
+  od;
+  return res;
+end);
+
 # new for 0.1! - GradedImagesOfTransSemigroup - "for a trans. semigroup"
 ###########################################################################
 

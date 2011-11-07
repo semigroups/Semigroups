@@ -981,7 +981,7 @@ gap> s:=Semigroup([
 >  Transformation( [ 5, 6, 10, 11, 10, 4, 10, 12, 5, 7, 4, 10 ] ), 
 >  Transformation( [ 6, 8, 12, 5, 4, 8, 10, 7, 4, 1, 10, 11 ] ) ]);;
 gap> f:=Transformation( [ 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8 ] );;
-gap> ForwardOrbitOfImage(s, f);
+gap> ForwardOrbitOfImage(s, f![1]);
 <closed orbit, 40 images with size 2, 1 components, 1 kernels, 1 reps>
 gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ), 
 >   Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1, 7 ] ), 
@@ -1052,8 +1052,7 @@ gap> PreInOrbitsOfImages(s, f, false);
 gap> NextIterator(iter);
 {Transformation( [ 8, 8, 1, 5, 8, 5, 8, 8 ] )}
 gap> PreInOrbitsOfImages(s, f, true);
-[ true, [ 3, 1, 1, 1, 1, 1, Transformation( [ 8, 8, 1, 5, 8, 5, 8, 8 ] ), () 
-     ] ]
+[ true, [ 3, 1, 1, 1, 1, 1, [ 8, 8, 1, 5, 8, 5, 8, 8 ], () ] ]
 gap> gens:=[Transformation( [ 10, 8, 7, 4, 1, 4, 10, 10, 7, 2 ] ),
 > Transformation( [ 5, 2, 5, 5, 9, 10, 8, 3, 8, 10 ] )];;
 gap> s:=Monoid(gens);;

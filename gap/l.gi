@@ -371,7 +371,8 @@ function(s, f)
     if not d[2][2][3]=fail then 
       d[2][2][3]:=KernelOrbitSCCFromData(s, d[2][2])[1];
     fi;
-    d:=StructuralCopy(AddToOrbitsOfKernels(s, d[1][2][7], [d[1][2], d[2][2]])); 
+    d:=StructuralCopy(AddToOrbitsOfKernels(s, TransformationNC(d[1][2][7]), 
+     [d[1][2], d[2][2]])); 
     d[1][3]:=l; d[2][3]:=KernelOrbitSCCFromData(s, d[2])[1]; d[3]:=();
   else
     d:=[d[1][2], d[2][2], ImageOrbitCosetsFromData(s, d[2][2])[d[2][2][8]]];
@@ -418,7 +419,7 @@ function(s, f)
   j:=Length(ImageSetOfTransformation(f));
    
   Info(InfoCitrusGreens, 2, "finding orbit of image...");
-  img_o:=[]; img_o[j]:=[ForwardOrbitOfImage(s, f)];
+  img_o:=[]; img_o[j]:=[ForwardOrbitOfImage(s, f![1])];
   #JDM see comments in GreensDClassOfElementNC
   img_o:=rec( finished:=false, orbits:=img_o, gens:=Generators(s), s:=s,
    deg := n, data:=[[j,1,1,1,1,1]], images:=fail, lens:=List([1..n],

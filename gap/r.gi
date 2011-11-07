@@ -164,8 +164,7 @@ function(s, f, data, o)
   if IsBound(ht) then
     m:=Length(gens); j:=Length(o);
     for y in [1..m] do
-      #z:=gens[y]*g;
-      z:=g{gens[y]![1]};
+      z:=g{gens[y]};
       if HTValue(ht, z)=fail then  
         j:=j+1; HTAdd(ht, z, j); o[j]:=z; pos1[j]:=i; gen1[j]:=y;
       fi;
@@ -215,7 +214,7 @@ end);
 
 # mod for 0.4! - CreateImageOrbitSCCPerms - not a user function!
 #############################################################################
-# Usage: gens = Generators(s); o = image orbit; j = index of scc.
+# Usage: gens = imgs of generators; o = image orbit; j = index of scc.
 
 InstallGlobalFunction(CreateImageOrbitSCCPerms,
 function(gens, o, j)
@@ -224,11 +223,11 @@ function(gens, o, j)
   p:=EmptyPlist(Length(o)); scc:=o!.scc[j];
 
   for i in scc do
-    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
-    p[i]:=MappingPermListList(o[i], OnTuples(o[i], f));
+    f:=CitrusEvalWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
+    p[i]:=MappingPermListList(o[i], f{o[i]});
   od; 
   
-  #JDM this works also!
+  #JDM this worked, but will not work with Factorization!!
   #for i in scc do
   #  f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i)); 
   #  p[i]:=MappingPermListList(OnTuples(o[scc[1]], f), o[scc[1]]);
@@ -239,15 +238,13 @@ end);
 
 # mod for 0.4! - CreateImageOrbitSchutzGp - not a user function!
 #############################################################################
-# Usage: gens = generators of the semigroup; o = image orbit;
-# f = representative of scc with index k;
+# Usage: gens = generators as list of imgs; o = image orbit;
+# f = img. list of rep of scc with index k;
 # k = index of scc containing position of image of f in o.
 
 InstallGlobalFunction(CreateImageOrbitSchutzGp,
 function(gens, o, f, k) 
   local scc, bound, g, p, t, graph, is_sym, l, words, h, K, i, j;
-
-  f:=TransformationNC(f); #new!
 
   scc:=o!.scc[k];
 
@@ -265,9 +262,16 @@ function(gens, o, f, k)
      
       if IsBound(graph[i][j]) and t[k][graph[i][j]] then
         #h:=PermLeftQuoTransformationNC(f, f/p[i] * (gens[j]*p[graph[i][j]]));
-        h:=PermLeftQuoTransformationNC(f,
-         f*EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, k, i)) * 
-          (gens[j]*p[graph[i][j]]));# JDM convert to img list
+        
+        #h:=PermLeftQuoTransformationNC(f,
+        # f*EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, k, i)) * 
+        #  (gens[j]*p[graph[i][j]]));
+        
+        h:=OnTuples(gens[j], p[graph[i][j]]){CitrusEvalWord(gens,
+        TraceSchreierTreeOfSCCForward(o, k, i))};
+        h:=PermLeftQuoTransformation(TransformationNC(f),
+         TransformationNC(h{f}));
+        #JDM_orb remove TransformationNC above!
         if not h=() then 
           K:=ClosureGroup(g, h);
           if Size(K)>Size(g) then 
@@ -458,7 +462,7 @@ function(s)
 
   Info(InfoCitrusGreens, 4, "Enumerator: for a trans. semigroup");
 
-  out:=EmptyPlist(Size(s)); #it is very slightly faster than taking []
+  out:=EmptyPlist(Size(s)); 
 
   iter:=Iterator(s);
   j:=0;
@@ -514,7 +518,8 @@ function(s, f)
   rep:=RClassRepFromData(s, data); p:=data[8];
 
   if p=fail then 
-    p:=PermLeftQuoTransformationNC(rep, data[7]);
+    p:=PermLeftQuoTransformationNC(rep, TransformationNC(data[7]));
+    #JDM_orb remove TransformationNC from prev. line
   fi;
 
   if l=data[3] and p=() then # f is an R-class rep!
@@ -591,7 +596,7 @@ end);
 
 # mod for 0.4! - ForwardOrbitOfImage - not a user function!
 #############################################################################
-# Usage: s = semigroup; f = transformation; 
+# Usage: s = semigroup; f = img list of trans; 
 # images = OrbitsOfImages(s)!.images (optional);
 # gens = Generators(s) (optional).
 
@@ -610,10 +615,9 @@ function(arg)
   if Length(arg)=4 then 
     gens:=arg[4];
   else
-    gens:=Generators(s);
+    gens:=List(Generators(s), x-> x![1]);
   fi;
 
-  #img:=ImageSetOfTransformation(f);
   img:=SSortedList(f);
   deg:=DegreeOfTransformationSemigroup(s);
   j:=Length(img);
@@ -857,13 +861,14 @@ function(s, f)
 
   j:=Length(ImageSetOfTransformation(f));
   n:=DegreeOfTransformationSemigroup(s);
-  o:=[]; o[j]:=[ForwardOrbitOfImage(s, f)]; 
+  o:=[]; o[j]:=[ForwardOrbitOfImage(s, f![1])]; 
 
   #JDM also PreInOrbitsOfImages might have some non-fail values, in which case
   # we should use them. If everything is known except val or n, then we don't
   # really want to do what we are doing here...
 
-  o:=rec( finished:=false, orbits:=o, gens:=Generators(s), s:=s, 
+  o:=rec( finished:=false, orbits:=o, gens:=List(Generators(s), x-> x![1]), 
+   s:=s, 
    deg := n, data:=[], images:=fail, lens:=List([1..n], function(x) if x=j then
    return 1; else return 0; fi; end), data_ht:=HTCreate([1,1,1,1,1,1],
    rec(hashlen:=CitrusHashLen!.imgs)));
@@ -1047,6 +1052,7 @@ end);
 
 # new for 0.1! - ImageOrbitSchutzGp - "for an R-class of a trans. semigp."
 ############################################################################
+# JDM remove!
 
 InstallMethod(ImageOrbitSchutzGp, "for an R-class of a trans. semigp.",
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
@@ -1129,10 +1135,6 @@ end);
 # images = OrbitsOfImages(s)!.images (ht of images of elements found so far).
 
 # Notes: previous default was that rectify = false
-
-# JDM should [img, ker] be included as data[8]? 
-# JDM perhaps things could be speed up by taking everything with a ! in it
-# and making it an argument?!
 
 InstallGlobalFunction(InOrbitsOfImages, 
 function(f, rectify, data, o, images)
@@ -1468,7 +1470,7 @@ function(s)
   ######################################################################
 
   IsDoneIterator:=function(iter)
-    local O, ht, o, i, gens, orbits, images, x, d, new_orbit;
+    local O, ht, o, i, orbits, images, x, d;
    
     if iter!.last_called_by_is_done then 
       return iter!.next_value=fail;
@@ -1498,12 +1500,10 @@ function(s)
       return true;
     fi;
 
-    gens:=O!.gens; orbits:=O!.orbits; images:=O!.images;
+    orbits:=O!.orbits; images:=O!.images;
 
     while i<Length(o) do 
-      O!.at:=O!.at+1;
-      i:=i+1;
-      x:=o[i];
+      O!.at:=O!.at+1; i:=i+1; x:=o[i];
       d:=InOrbitsOfImages(x, false, [fail, fail, fail, fail, fail, 0, fail], 
        orbits, images); 
 
@@ -1699,10 +1699,10 @@ InstallMethod(OrbitsOfImages, "for a transformation semigroup",
 function(s)
   local gens, n, one, ht, i, type, o;
 
-  gens:=Generators(s);
+  gens:=List(Generators(s), x-> x![1]);
   n := DegreeOfTransformationSemigroup( s );
   one := TransformationNC( [ 1 .. n ] );
-  o:=Concatenation([[1..n]*1], List(gens, x-> x![1]));
+  o:=Concatenation([[1..n]*1], gens);
 
   ht := HTCreate(o[1], rec(hashlen:=CitrusHashLen!.rclassreps_orb));  
   ht!.o:=o;
@@ -1711,21 +1711,18 @@ function(s)
     HTAdd(ht, o[i], i);
   od;
   
-  #ht!.o := Concatenation([one], gens); 
-
   type:=NewType(FamilyObj(s), IsOrbitsOfImages);
 
   return Objectify(type, rec(
     finished:=false, 
     orbits:=EmptyPlist(n),
     lens:=[1..n]*0, #lens[j]=Length(orbits[j])
-    images:=HTCreate(ImageSetOfTransformation(gens[1]),
-     rec(hashlen:=CitrusHashLen!.imgs)), 
+    images:=HTCreate(SSortedList(gens[1]), rec(hashlen:=CitrusHashLen!.imgs)), 
     at:=0, 
-    gens:=gens,
-    s:=s,
-    deg := n,
-    one := one,
+    gens:=gens, 
+    s:=s,       # required?
+    deg := n,   # required?  
+    one := one, #required?
     ht:=ht,
     data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=CitrusHashLen!.rclass_data)), 
     data:=[], 
@@ -1873,7 +1870,7 @@ function(s, d)
   return HTValue(OrbitsOfImages(s)!.data_ht, d{[1..6]});
 end);
 
-# new for 0.1! - RClassRepFromData - not a user function!
+# mod for 0.4! - RClassRepFromData - not a user function!
 ############################################################################
 # Usage: s = semigroup; d = image data; o = OrbitOfImages(s) (optional)
 
@@ -1958,6 +1955,9 @@ end);
 # new for 0.1! - Size - "for a transformation semigroup"
 #############################################################################
 # Algorithm V.
+
+# JDM move to greens.gi
+
 
 InstallMethod(Size, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 

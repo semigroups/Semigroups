@@ -149,7 +149,7 @@ function(arg)
   g:=data[2][7];    # O[j][k]!.rels[l][2]*f
   #r:=data[2][8]    # the index of the coset rep. 
 
-  O := o[2]!.orbits; gens:=o[1]!.gens; imgs_gens:=o[2]!.imgs_gens; 
+  O := o[2]!.orbits; gens:=o[2]!.gens; imgs_gens:=o[2]!.imgs_gens; 
   d:=o[2]!.data; 
   lens:=o[2]!.lens; kernels:=o[2]!.kernels; data_ht:=o[2]!.data_ht;
 
@@ -290,8 +290,6 @@ function(gens, o, j)
     # g:=EvaluateWord(gens, Reversed(TraceSchreierTreeOfSCCBack(o, j, i)));
     # OnKernelsAntiAction(o[i], g)=o[scc[1]] 
  
-    # JDM we could remove the create of the reverse schreier trees above
-    
     h:=o[scc[1]]{f![1]}; lookup:=EmptyPlist(n); k:=0;
     for l in [1..n] do 
       if not IsBound(lookup[h[l]]) then 
@@ -792,7 +790,8 @@ function(s, f)
   d:=PreInOrbitsOfKernels(s, f, true);
 
   if not d[2][1] then #orbit of kernel not previously calculated!
-    d:=AddToOrbitsOfKernels(s, d[1][2][7], [d[1][2],d[2][2]]); 
+    d:=AddToOrbitsOfKernels(s, TransformationNC(d[1][2][7]), 
+     [d[1][2],d[2][2]]); 
     #d[1][2][7] is f with rectified image!
   else
     d:=[d[1][2],d[2][2]];
@@ -839,7 +838,7 @@ function(s, f)
   j:=Length(ImageSetOfTransformation(f));
 
   Info(InfoCitrusGreens, 2, "finding image orbit...");
-  img_o:=[]; img_o[j]:=[ForwardOrbitOfImage(s, f)];
+  img_o:=[]; img_o[j]:=[ForwardOrbitOfImage(s, f![1])];
   #JDM see comments in GreensRClassOfElementNC...
   img_o:=rec( finished:=false, orbits:=img_o, gens:=Generators(s), s:=s, 
    deg := n, data:=[[j,1,1,1,1,1]], images:=fail, lens:=List([1..n], 
@@ -986,11 +985,11 @@ function(d)
   for i in [1..r] do 
     for x in [1..c] do 
       g:=scc[i]*cosets[x]^-1;
-      data:=InOrbitsOfImages(g, true, [j, k, l[x], m, val[i], 0, fail], 
+      data:=InOrbitsOfImages(g![1], true, [j, k, l[x], m, val[i], 0, fail], 
        orbits, images);
-      #could do SiftedPermutation directly here, maybe speed things up?
+      #JDM could do SiftedPermutation directly here, maybe speed things up?
       if not data[1] then 
-	data:=AddToOrbitsOfImages(d, g, data[2], d!.o[1]);
+	data:=AddToOrbitsOfImages(d, g![1], data[2], d!.o[1]);
       else 
         data:=data[2];
       fi;
@@ -1089,7 +1088,7 @@ function(d)
   return out;
 end);
 
-# new for 0.1! - GreensRClassOfElement - "for D-class of trans. semigroup"
+# mod for 0.4! - GreensRClassOfElement - "for D-class of trans. semigroup"
 #############################################################################
 # Notes: maybe think this through a bit more...
 
@@ -1466,7 +1465,7 @@ function(s)
 
       for d in r do  
         f:=RClassRepFromData(s, d);
-        d:=InOrbitsOfKernels(f, true, [[true, Concatenation(d, [f])], 
+        d:=InOrbitsOfKernels(f, true, [[true, Concatenation(d, [f![1]])], 
          [false, [d[1], fail, fail, fail, fail, 0, fail, fail]]], o,  ker);
         if not d[2][1] then #f not in existing D-class
           d:=AddToOrbitsOfKernels(s, f, [d[1][2], d[2][2]]);
