@@ -269,9 +269,8 @@ function(gens, o, f, k)
         
         h:=OnTuples(gens[j], p[graph[i][j]]){CitrusEvalWord(gens,
         TraceSchreierTreeOfSCCForward(o, k, i))};
-        h:=PermLeftQuoTransformation(TransformationNC(f),
-         TransformationNC(h{f}));
-        #JDM_orb remove TransformationNC above!
+        h:=PermLeftQuoTransformationNC(f, h{f});
+        
         if not h=() then 
           K:=ClosureGroup(g, h);
           if Size(K)>Size(g) then 
@@ -491,8 +490,7 @@ function(s, f)
   rep:=RClassRepFromData(s, data); p:=data[8];
 
   if p=fail then 
-    p:=PermLeftQuoTransformationNC(rep, TransformationNC(data[7]));
-    #JDM_orb remove TransformationNC from prev. line
+    p:=PermLeftQuoTransformationNC(rep, data[7]);
   fi;
 
   if l=data[3] and p=() then # f is an R-class rep!
@@ -503,7 +501,7 @@ function(s, f)
     w:=TraceSchreierTreeOfSCCForward(o, data[4], l);
     g:=EvaluateWord(Generators(s), w);
     q:=PermLeftQuoTransformationNC(rep*g*ImageOrbitPermsFromData(s, data)[l],
-     rep); #JDM would be good to remove this step!
+     rep); # would be good to remove this step!
   else
     w:=[]; q:=();
   fi;
@@ -1147,9 +1145,7 @@ function(f, rectify, data, o, images)
         return [true, [j,k,l,m,val,n,g, ()]];
       fi;
     else 
-      p:=PermLeftQuoTransformationNC(TransformationNC(reps[n]),
-       TransformationNC(g)); 
-      # remove Transformation from prev. line JDM_orb
+      p:=PermLeftQuoTransformationNC(reps[n], g); 
       if SiftedPermutation(schutz, p)=() then 
         return [true, [j,k,l,m,val,n,g,p]];
       fi;
@@ -1229,6 +1225,66 @@ function(arg)
   od;
 
   return false;
+end);
+
+# new for 0.1! - Iterator - "for a R-class of a trans. semigroup"
+#############################################################################
+# this is more efficient!
+
+InstallMethod(Iterator, "for a R-class of a trans. semigroup",
+[IsGreensRClass and IsGreensClassOfTransSemigp],
+function(r)
+  local iter;
+
+  Info(InfoCitrusGreens, 4, "Iterator: for an R-class");
+
+  if HasAsSSortedList(r) then 
+    iter:=IteratorList(AsSSortedList(r));
+  else
+    iter:=IteratorByFunctions(rec( 
+          
+      schutz:=List(SchutzenbergerGroup(r), x-> r!.rep*x),
+      #turns out this is a good idea!
+
+      m:=Size(SchutzenbergerGroup(r)), s:=r!.parent, 
+          
+      perms:=ImageOrbitPermsFromData(r!.parent, r!.data, r!.o),
+          
+      scc:=ImageOrbitSCC(r), 
+          
+      n:=Length(ImageOrbitSCC(r)),
+          
+      at:=[1,0],
+          
+      IsDoneIterator:=iter-> iter!.at[1]=iter!.n and iter!.at[2]=iter!.m,
+          
+      NextIterator:=function(iter)
+          
+        if IsDoneIterator(iter) then 
+          return fail;
+        fi;
+
+        if iter!.at[2]<iter!.m then 
+          iter!.at[2]:=iter!.at[2]+1;
+        else
+          iter!.at[1]:=iter!.at[1]+1; 
+          iter!.at[2]:=1;
+        fi;
+        
+        return iter!.schutz[iter!.at[2]]*iter!.perms[iter!.scc[iter!.at[1]]]^-1;
+      
+      end,
+          
+      ShallowCopy:=iter-> rec( schutz:=List(SchutzenbergerGroup(r), x-> 
+       r!.rep*x),
+      m:=Size(SchutzenbergerGroup(r)), 
+      perms:=ImageOrbitPermsFromData(r!.parent, r!.data, r!.o), 
+      scc:=ImageOrbitSCC(r), n:=Length(ImageOrbitSCC(r)), at:=[1,0])));
+  fi;
+
+  SetIsIteratorOfRClassElements(iter, true);
+  SetIsCitrusPkgIterator(iter, true); 
+  return iter;
 end);
 
 # mod for 0.4! - IteratorOfGreensRClasses - not a user function!

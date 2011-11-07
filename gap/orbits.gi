@@ -369,13 +369,7 @@ function(o, i)
   fi;
 
   if not IsBound(o!.rev) then
-    if o!.orbitgraph=false then 
-      #JDM hack due to bug in orb!
-      graph:=OrbitGraph(o);
-      o!.orbitgraph:=graph;
-    else
-      graph:=o!.orbitgraph;
-    fi;
+    graph:=OrbitGraph(o);
 
     rev:=List([1..Length(graph)], x-> List([1..Length(o!.gens)], x-> []));
  
@@ -450,15 +444,7 @@ function(o, i)
   seen:=BlistList([1..len], [scc[1]]);
   t:=o!.truth[i];
   oo:=[scc[1]]; m:=1;
-  
-  if o!.orbitgraph=false then 
-  #JDM hack due to bug in orb!
-    graph:=OrbitGraph(o);
-    o!.orbitgraph:=graph;
-  else
-    graph:=o!.orbitgraph;
-  fi;
-
+  graph:=OrbitGraph(o);
   j:=0;
   len:=Length(scc);
 
