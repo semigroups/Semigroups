@@ -98,6 +98,51 @@ function(coll)
   return out;
 end);
 
+#IIIAAA
+
+# new for 0.4! - IsAbundantSemigroup - "for a trans. semigroup"
+###########################################################################
+
+InstallMethod(IsAbundantSemigroup, "for a trans. semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local n, gens, imgs, kers;
+
+  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
+    return true;
+  fi;
+
+  n:=Degree(s); gens:=GeneratorsAsListOfImages(s);
+
+  kers:=Orb(gens, [1..n], 
+   function(f,g) return CanonicalTransSameKernel(f{g}); end,
+   rec(treehashsize:=1009, lookingfor:=function(o, x) return
+   IsInjectiveTransOnList(x, o!.img); end));
+  
+  imgs:=Orb(gens, [1..n], 
+   function(f,g) return SSortedList(g{f}); end, 
+   rec( treehashsize:=1009, 
+   lookingfor:=function(o, x) 
+    
+    if ForAny(kers, y-> IsInjectiveTransOnList(y, x)) then 
+      return false;
+    fi;
+    
+    if IsClosed(kers) then 
+      return true;
+    fi;
+
+    kers!.found:=false;
+    kers!.img:=x; 
+    
+    Enumerate(kers);
+    return PositionOfFound(kers)=false;
+    end));
+  
+  Enumerate(imgs); Error("");
+  return PositionOfFound(imgs)=false;
+end);
+
 #IIIBBB
 
 # mod for 0.1! - IsBand - "for a transformation semigroup"
@@ -487,31 +532,6 @@ function(s)
 end);
 
 #IIILLL
-
-# new for 0.4! - IsLeftAmpleSemigroup - "for a trans. semigroup"
-###########################################################################
-
-InstallMethod(IsRightAbundantSemigroup, "for a trans. semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local kers, imgs, n, i, ker;
-  
-  kers:=GradedKernelsOfTransSemigroup(s);
-  imgs:=GradedImagesOfTransSemigroup(s);
-  
-  n:=Degree(s);
-  
-  for i in [1..n] do
-    for ker in kers[i] do
-      if not ForAny(imgs[i], x-> IsInjectiveTransOnList(ker, x) and
-       IdempotentNC(ker, x) in s) then 
-        return false;
-      fi;
-    od;
-  od;  
- 
-  return true;
-end);
 
 # new for 0.2! - IsLeftSimple - "for a transformation semigroup"
 ###########################################################################

@@ -948,6 +948,25 @@ function(arg)
   return OrbitsOfImages(s)!.orbits[d[1]][d[2]];
 end);
 
+# new for 0.4! - ImageOrbitKersHTFromData - not a user function!
+############################################################################
+
+InstallGlobalFunction(ImageOrbitKersHTFromData, 
+function(arg)
+  local s, d, o;
+  
+  s:=arg[1]; d:=arg[2];
+
+  if Length(arg)=3 then 
+    o:=arg[3]!.orbits[d[1]][d[2]];
+  else
+    o:=OrbitsOfImages(s)!.orbits[d[1]][d[2]];
+  fi;
+
+  return o!.kernels_ht[d[4]];
+end);
+
+
 # new for 0.1! - ImageOrbitPermsFromData - not a user function!
 ############################################################################
 # Usage: s = semigroup; d = image data; o = OrbitsOfImages (optional)
@@ -1110,9 +1129,14 @@ function(f, rectify, data, o, images)
     g:=OnTuples(f, perms[l]);
   fi;
 
-  if g=fail then #this can happen if coming from GreensRClassReps.
-    #g:=f*o[j][k]!.perms[l];
-    g:=OnTuples(f, o[j][k]!.perms[l]);
+  if g=fail then 
+  #this can happen if coming from GreensRClassReps.
+    if IsBound(o[j][k]!.perms[l]) then 
+      #g:=f*o[j][k]!.perms[l];
+      g:=OnTuples(f, o[j][k]!.perms[l]);
+    else
+      return [false, [j,k,l,m,val,n,g]];
+    fi;
   fi;
 
   if rectify then 
