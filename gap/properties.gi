@@ -106,41 +106,40 @@ end);
 InstallMethod(IsAbundantSemigroup, "for a trans. semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local n, gens, imgs, kers;
+  local iter, n, ht, ht_o, reg, i, data, f, ker, val, o, scc;
 
   if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
     return true;
   fi;
 
-  n:=Degree(s); gens:=GeneratorsAsListOfImages(s);
+  iter:=IteratorOfRClassRepsData(s); n:=Degree(s);
+  ht:=HTCreate([1..n], rec(hashlen:=CitrusHashLen!.kers));
+  ht_o:=HTCreate([1,1,1,1], rec(hashlen:=CitrusHashLen!.kers));
+  reg:=[]; i:=0; 
 
-  kers:=Orb(gens, [1..n], 
-   function(f,g) return CanonicalTransSameKernel(f{g}); end,
-   rec(treehashsize:=1009, lookingfor:=function(o, x) return
-   IsInjectiveTransOnList(x, o!.img); end));
-  
-  imgs:=Orb(gens, [1..n], 
-   function(f,g) return SSortedList(g{f}); end, 
-   rec( treehashsize:=1009, 
-   lookingfor:=function(o, x) 
-    
-    if ForAny(kers, y-> IsInjectiveTransOnList(y, x)) then 
-      return false;
-    fi;
-    
-    if IsClosed(kers) then 
-      return true;
-    fi;
+  repeat
+    repeat 
+      data:=NextIterator(iter);
+    until HTValue(ht_o, data{[1,2,4,5]})=fail or IsDoneIterator(iter); 
+    if not IsDoneIterator(iter) then 
+      HTAdd(ht_o, data{[1,2,4,5]}, true);
 
-    kers!.found:=false;
-    kers!.img:=x; 
-    
-    Enumerate(kers);
-    return PositionOfFound(kers)=false;
-    end));
-  
-  Enumerate(imgs); Error("");
-  return PositionOfFound(imgs)=false;
+      f:=RClassRepFromData(s, data); ker:=CanonicalTransSameKernel(f);
+      val:=HTValue(ht, ker);
+
+      if val=fail then #new kernel
+        i:=i+1; HTAdd(ht, ker, i);
+        val:=i; reg[val]:=false;
+      fi;
+        
+      if reg[val]=false then #old kernel
+        o:=ImageOrbitFromData(s, data); scc:=ImageOrbitSCCFromData(s, data);
+        reg[val]:=ForAny(scc, j-> IsInjectiveTransOnList(ker, o[j]));
+      fi;
+    fi;
+  until IsDoneIterator(iter);
+
+  return ForAll(reg, x-> x);
 end);
 
 #IIIBBB
