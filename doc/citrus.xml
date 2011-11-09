@@ -6,6 +6,10 @@
      Only='Text'><E>H</E></Alt>">
      <!ENTITY R "<Alt Only='Latex,HTML'>\(\mathcal{R}\)</Alt><Alt
      Only='Text'><E>R</E></Alt>">
+     <!ENTITY L "<Alt Only='Latex,HTML'>\(\mathcal{L}\)</Alt><Alt
+     Only='Text'><E>L</E></Alt>">
+     <!ENTITY D "<Alt Only='Latex,HTML'>\(\mathcal{D}\)</Alt><Alt
+     Only='Text'><E>D</E></Alt>">
      <#Include Label="PKGVERSIONDATA">
    ]>
 

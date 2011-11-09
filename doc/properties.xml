@@ -144,8 +144,8 @@ true</Example>
     </Returns>
     <Description>
       A semigroup <M>S</M> is a
-      <E>block group</E> if every <M>\mathcal{L}</M>-class and every
-      <M>\mathcal{R}</M>-class of 
+      <E>block group</E> if every &L;-class and every
+      &R;-class of 
       <M>S</M> contains at most one idempotent.  
       <Example>
 gap> S:=Semigroup(Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ),
@@ -267,9 +267,9 @@ false</Example>
     <Prop Name="IsAperiodicSemigroup" Arg="S"/>
     <Prop Name="IsCombinatorialSemigroup" Arg="S"/>
     <Returns>
-      <K>true</K> if Green's <M>\mathcal{R}</M>-relation,
-      <M>\mathcal{L}</M>-relation, or
-      <M>\mathcal{H}</M>-relation, respectively, on the
+      <K>true</K> if Green's &R;-relation,
+      &L;-relation, or
+      &H;-relation, respectively, on the
       transformation semigroup <A>S</A> is trivial and <K>false</K>
       if it is not.
     </Returns>
@@ -279,9 +279,9 @@ false</Example>
       <P/> 
 
       A semigroup is <E>aperiodic</E> if its contains no non-trivial
-      subgroups (equivalently, all of its group <M>\mathcal{H}</M>-classes 
+      subgroups (equivalently, all of its group &H;-classes 
       are trivial). A finite semigroup is aperiodic if and only if it is 
-      <M>\mathcal{H}</M>-trivial. <P/>
+      &H;-trivial. <P/>
 
       <E>Combinatorial</E> is a synonym for aperiodic in this context. 
       <Example>
@@ -386,7 +386,7 @@ true</Example>
     <Prop Name="IsLeftSimple" Arg="S"/>
     <Prop Name="IsRightSimple" Arg="S"/>
     <Returns> <K>true</K> if the transformation semigroup <A>S</A> has only one
-    <Math>\mathcal{L}</Math>-class or one <Math>\mathcal{R}</Math>,
+    &L;-class or one &R;-class,
     respectively, and returns <K>false</K> if it has more than one. 
     </Returns>
 <Description>
@@ -743,7 +743,7 @@ true</Example>
     </Returns>
     <Description>
       A semigroup a <E>zero rectangular band</E> if it is zero simple and
-      <M>\mathcal{H}</M>-trivial; see also <Ref Prop="IsZeroSimpleSemigroup"/>
+      &H;-trivial; see also <Ref Prop="IsZeroSimpleSemigroup"/>
       and <Ref Prop="IsGreensHTrivial"/>.
 <Example>
 gap> S:=Semigroup( 
@@ -843,7 +843,7 @@ false</Example>
     versions of <Package>Citrus</Package>. <P/>
 
     Note that <C>MinimalIdeal</C> is significantly faster than finding the
-    <M>\mathcal{D}</M>-class with minimum rank representative (which is also
+    &D;-class with minimum rank representative (which is also
     the minimal ideal). 
 
     See also <Ref Attr="PartialOrderOfDClasses"/> and 
