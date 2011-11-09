@@ -118,7 +118,8 @@ function(s)
   reg:=[]; i:=0; 
 
   repeat
-    repeat 
+    repeat #JDM this should become an method for IteratorOfRStarClasses
+           # and IsAbundantRClass...
       data:=NextIterator(iter);
     until HTValue(ht_o, data{[1,2,4,5]})=fail or IsDoneIterator(iter); 
     if not IsDoneIterator(iter) then 
@@ -506,7 +507,7 @@ function(s)
   kers:=KernelsOfTransSemigroup(s); Enumerate(kers, Length(imgs));
 
   if not (IsClosed(kers) and Length(kers)=Length(imgs)) then 
-    Info(InfoCitrus, 2, "the numbers of kernels and images is not the same");
+    Info(InfoCitrus, 2, "the numbers of kernels and images are not equal");
     return false;
   fi;
 

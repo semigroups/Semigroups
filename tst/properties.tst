@@ -826,4 +826,71 @@ gap> [ Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] ),
 gap> s:=Semigroup(last);;
 gap> MultiplicativeNeutralElement(s);
 Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] )
+gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
+>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
+>   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
+>   Transformation( [ 4, 3, 4, 5, 6, 4, 1, 2 ] ),
+>   Transformation( [ 5, 4, 8, 8, 5, 6, 1, 5 ] ),
+>   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
+>   Transformation( [ 7, 1, 2, 2, 2, 7, 4, 5 ] ),
+>   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsAbundantSemigroup(s);
+false
+gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
+>   Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ),
+>   Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ),
+>   Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] ) ];;
+gap> s:=Monoid(gens);;
+gap> IsAbundantSemigroup(s);
+false
+gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
+>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
+>   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
+>   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsAbundantSemigroup(s);
+false
+#gap> time;
+#164
+gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
+>   Transformation( [ 4, 2, 1, 5, 5 ] ),
+>   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsAbundantSemigroup(s);
+true
+gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
+> Transformation( [ 2, 4, 1, 2 ] ),
+> Transformation( [ 3, 1, 1, 3 ] ),
+> Transformation( [ 3, 3, 4, 1 ] ) ];;
+gap> s:=Monoid(gens);;
+gap> IsAbundantSemigroup(s);
+false
+gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
+>  Transformation( [ 1, 4, 1, 2 ] ),
+>  Transformation( [ 2, 4, 1, 1 ] ),
+>  Transformation( [ 3, 4, 2, 2 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsAbundantSemigroup(s);
+true
+gap> IsRegularSemigroup(s);
+false
+gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
+>  Transformation( [ 1, 4, 1, 2 ] ),
+>  Transformation( [ 3, 4, 2, 2 ] ),
+>  Transformation( [ 4, 1, 2, 1 ] ) ];;
+gap> s:=Monoid(gens);;
+gap> IsAbundantSemigroup(s);
+true
+gap> IsRegularSemigroup(s);
+false
+gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
+> Transformation([1,2,4,3,5,6,7,8,9,10]),
+> Transformation([1,2,3,4,5,6,10,9,8,7]),
+> Transformation([9,1,4,3,6,9,3,4,3,9])];;
+gap> s:=Monoid(gens);;
+gap> IsAbundantSemigroup(s);
+true
+gap> IsRegularSemigroup(s);
+false
 gap> STOP_TEST( "Citrus package: properties.tst", 10000);
