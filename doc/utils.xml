@@ -10,7 +10,7 @@
       <Log>
 MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
  InstallationPath, "/doc"), "citrus.xml", [
- "convenience.xml", "greens.xml", "orbits.xml", "properties.xml",
+ "utils.xml", "greens.xml", "orbits.xml", "properties.xml",
  "transform.xml"], "citrus", "MathJax");;</Log>
 
       at the &GAP; prompt. 
@@ -48,7 +48,7 @@ MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
       <Log>SizeScreen([80]); SetInfoLevel(InfoWarning, 0);
 TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
 InstallationPath, "/doc"), "citrus.xml", 
-["convenience.xml", "greens.xml",
+["utils.xml", "greens.xml",
 "orbits.xml", "properties.xml", "transform.xml"]);</Log>
 
       at the &GAP; prompt. 

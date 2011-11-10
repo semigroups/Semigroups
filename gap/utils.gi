@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  convenience.gi
+#W  utils.gi
 #Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -90,7 +90,7 @@ InstallGlobalFunction(CitrusMakeDoc,
 function()
   MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
    InstallationPath, "/doc"), "citrus.xml", 
-   ["convenience.xml", "greens.xml", "orbits.xml", "properties.xml",
+   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
      "transform.xml", "../PackageInfo.g"], "citrus", "MathJax");;
 end);
 
@@ -162,7 +162,7 @@ function()
   SizeScreen([80]); SetInfoLevel(InfoWarning, 0);
   TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
      InstallationPath, "/doc"), "citrus.xml", 
-     ["convenience.xml", "greens.xml", "orbits.xml", "properties.xml",
+     ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
       "transform.xml", "../PackageInfo.g"]);
 end);
 

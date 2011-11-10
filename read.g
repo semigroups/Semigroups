@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-ReadPkg("citrus/gap/convenience.gi");
+ReadPkg("citrus/gap/utils.gi");
 ReadPkg("citrus/gap/orbits.gi");
 ReadPkg("citrus/gap/greens.gi");
 ReadPkg("citrus/gap/transform.gi");
