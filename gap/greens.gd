@@ -181,8 +181,6 @@ DeclareGlobalFunction("IteratorOfGreensHClasses");#M
 DeclareGlobalFunction("IteratorOfHClassReps"); #M
 DeclareGlobalFunction("IteratorOfHClassRepsData");
 
-DeclareInfoClass("InfoCitrusGreens");
-
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
 DeclareProperty("IsIteratorOfLClassReps", IsIterator);
 DeclareProperty("IsIteratorOfDClassReps", IsIterator);

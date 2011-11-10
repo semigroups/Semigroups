@@ -48,7 +48,6 @@ function()
   return true;
 end);
 
-
 # new for 0.2! - CitrusLoMem - "for no argument"
 #############################################################################
 # Notes: for semigroups with 1000s to 10000s of elements.
@@ -93,6 +92,47 @@ function()
    InstallationPath, "/doc"), "citrus.xml", 
    ["convenience.xml", "greens.xml", "orbits.xml", "properties.xml",
      "transform.xml", "../PackageInfo.g"], "citrus", "MathJax");;
+end);
+
+# new for 0.4! - CitrusMathJaxDefault - "for no argument"
+#############################################################################
+
+InstallGlobalFunction(CitrusMathJaxDefault, 
+function()
+GAPDoc2HTMLProcs.Head1MathJax:=Concatenation(
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<!DOCTYPE html PUBLIC",
+"\"-//W3C//DTD \ XHTML 1.0 Strict//EN\"\n",
+"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dt\"",
+"d\">\n\n<html xmlns=\"http://www.w3.org/1999/xhtml\"",
+"xml:lang=\"en\">\n<head>\n<script",
+" type=\"text/javascript\"\n",
+"src=\"http://cdn.mathjax.org/mathjax/latest/MathJax",
+".js?config=TeX-AMS-MML_HTMLorMML\">\n</script>\n<title>GAP (");
+Info(InfoWarning, 1, "don't forget to run CitrusMakeDoc()");
+end);
+
+# new for 0.4! - CitrusMathJaxLocal - "for a path to the MathJax folder"
+#############################################################################
+
+InstallGlobalFunction(CitrusMathJaxLocal, 
+function(arg)
+  local path;
+
+  if Length(arg)>0 then 
+    path:= arg[1];
+  else
+    path:= "";
+  fi;
+
+  GAPDoc2HTMLProcs.Head1MathJax:=Concatenation(
+  "<?xml version=\"1.0\"",
+  "encoding=\"UTF-8\"?>\n\n<!DOCTYPE html PUBLIC \"-//W3C/\"",
+  "/DTD XHTML 1.0 Strict//EN\"\n\"http://www.w3.org/TR/xhtml1/DTD/xhtml1\"",
+  "-strict.dtd\">\n\n<html xmlns=\"http://www.w3.org/1999/xhtml\"",
+  "xml:lang=\"en\"\ >\n<head>\n<script type=\"text/javascript\"",
+  "\n src=\"", path, "/MathJax/MathJax.js?config=default",
+  "\">\n</script>\n<title>GAP\ (");
+  Info(InfoWarning, 1, "don't forget to run CitrusMakeDoc()");
 end);
 
 # mod for 0.4! - CitrusTestAll - "for no argument"

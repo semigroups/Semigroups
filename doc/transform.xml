@@ -278,7 +278,7 @@ true</Example>
       otherwise <K>false</K> is returned.<P/> 
 
       A transformation <A>f</A> is regular in a transformation semigroup 
-      <A>S</A> if it lies inside a regular <Math>\mathcal{D}</Math>-class; see
+      <A>S</A> if it lies inside a regular &D;-class; see
       <Ref Attr="IsRegularDClass" BookName="ref"/> or 
       <Ref Attr="IsRegularDClass"/>. 
       Or equivalently if the 
@@ -310,14 +310,14 @@ true</Example>
     <Description>
       returns a random element of the transformation semigroup <A>S</A>. <P/>
       
-      If the <Math>\mathcal{R}</Math>-class structure of <A>S</A> is not known, 
+      If the &R;-class structure of <A>S</A> is not known, 
       then a short product (at most 
       <C>2*Length(GeneratorsOfSemigroup(<A>S</A>))</C>) 
       of generators is returned. <P/>
       
-      If the <Math>\mathcal{R}</Math>-class structure
+      If the &R;-class structure
       of <A>S</A> is known, then a random element of a randomly chosen
-      <Math>\mathcal{R}</Math>-class is returned. 
+      &R;-class is returned. 
     </Description>
   </ManSection>
 <#/GAPDoc>

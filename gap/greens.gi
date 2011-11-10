@@ -131,7 +131,7 @@ InstallOtherMethod(Enumerator, "for a transformation semigroup",
 function(s)
   local out, iter, j, i;
 
-  Info(InfoCitrusGreens, 4, "Enumerator: for a trans. semigroup");
+  Info(InfoCitrus, 4, "Enumerator: for a trans. semigroup");
 
   out:=EmptyPlist(Size(s)); 
 
@@ -381,7 +381,7 @@ InstallMethod(Iterator, "for a transformation semigroup",
 function(s)
   local iter;
 
-  Info(InfoCitrusGreens, 4, "Iterator: for a trans. semigroup");
+  Info(InfoCitrus, 4, "Iterator: for a trans. semigroup");
 
   iter:= IteratorByFunctions( rec(
 
@@ -475,7 +475,7 @@ InstallMethod(Size, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
 
-  Info(InfoCitrusGreens, 4, "Size: for a trans. semigroup");
+  Info(InfoCitrus, 4, "Size: for a trans. semigroup");
 
   ExpandOrbitsOfImages(s);
   return SizeOrbitsOfImages(s);

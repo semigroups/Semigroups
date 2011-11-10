@@ -4,7 +4,7 @@
     <Func Name="CitrusMakeDoc" Arg=""/>
     <Description>
       this function should be called with no argument to compile the 
-      <Package>Citrus</Package> documentation. The same effect can be
+      &Citrus; documentation. The same effect can be
       achieved by entering:
 
       <Log>
@@ -23,14 +23,14 @@ MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
     <Func Name="CitrusTestAll" Arg=""/>
     <Description>
       this function should be called with no argument to comprehensively
-      test that <Package>Citrus</Package> is working correctly. These tests
+      test that &Citrus; is working correctly. These tests
       should take no more than 1 minute to complete. The same effect can be
       achieved by entering:
 
       <Log>Read(Filename(DirectoriesPackageLibrary("citrus","tst"),"testall.g"));;</Log>
 
       at the &GAP; prompt. 
-      To quickly test that <Package>Citrus</Package> is installed correctly
+      To quickly test that &Citrus; is installed correctly
       use <Ref Func="CitrusTestInstall"/>. 
     </Description>
   </ManSection>
@@ -41,7 +41,7 @@ MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
     <Func Name="CitrusTestManualExamples" Arg=""/>
     <Description>
       this function should be called with no argument to test the examples in
-      the <Package>Citrus</Package> manual. These tests
+      the &Citrus; manual. These tests
       should take no more than a few seconds to complete. The same 
       effect can be achieved by entering:
 
@@ -52,7 +52,7 @@ InstallationPath, "/doc"), "citrus.xml",
 "orbits.xml", "properties.xml", "transform.xml"]);</Log>
 
       at the &GAP; prompt. 
-      To more comprehensively test that <Package>Citrus</Package> is installed
+      To more comprehensively test that &Citrus; is installed
       correctly use <Ref Func="CitrusTestAll"/>. See also <Ref
       Func="CitrusTestInstall"/>.
     </Description>
@@ -64,14 +64,14 @@ InstallationPath, "/doc"), "citrus.xml",
     <Func Name="CitrusTestInstall" Arg=""/>
     <Description>
       this function should be called with no argument to test your installation
-      of <Package>Citrus</Package> is working correctly. These tests
+      of &Citrus; is working correctly. These tests
       should take no more than a fraction of a second to complete. The same 
       effect can be achieved by entering:
 
 <Log>ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"testinstall.tst"));;</Log>
 
       at the &GAP; prompt. 
-      To more comprehensively test that <Package>Citrus</Package> is installed
+      To more comprehensively test that &Citrus; is installed
       correctly use <Ref Func="CitrusTestAll"/>. 
     </Description>
   </ManSection>
@@ -85,8 +85,8 @@ InstallationPath, "/doc"), "citrus.xml",
       <Ref Oper="GreensDClassOfElement" BookName="ref"/>, 
       <Ref Oper="DClassOfRClass"/>, <Ref Oper="DClassOfLClass"/>, or 
       <Ref Oper="DClassOfHClass"/> if <C>arg</C> is a transformation semigroup
-      and a transformation, a <Math>\mathcal{R}</Math>-class, a
-      <Math>\mathcal{L}</Math>-class, or an <Math>\mathcal{H}</Math>-class,
+      and a transformation, a &R;-class, a
+      &L;-class, or an &H;-class,
       respectively. <P/>
 
       See also <Ref Func="DClassNC"/>. 
@@ -192,13 +192,24 @@ gap> GeneratorsOfSemigroup(S);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="InfoCitrus">
+  <ManSection>
+    <InfoClass Name="InfoCitrus"/>
+    <Description>
+    is the info class (see <Ref Subsect="Info Functions" BookName="ref"/>) of 
+    &Citrus;. The info level is initially set to 0 and no info messages are
+    displayed.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="LClass">
   <ManSection>
     <Func Name="LClass" Arg="arg"/>
     <Description>
       returns the result of <Ref Oper="GreensLClassOfElement" BookName="ref"/>, 
       or <Ref Oper="LClassOfHClass"/> if <A>arg</A> is a transformation
-      semigroup and a transformation, or an <Math>\mathcal{H}</Math>-class, 
+      semigroup and a transformation, or an &H;-class, 
       respectively. <P/>
 
       See also <Ref Func="LClassNC"/>. 
@@ -240,7 +251,7 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
     <Description>
       returns the result of <Ref Oper="GreensRClassOfElement" BookName="ref"/>, 
       or <Ref Oper="RClassOfHClass"/> if <A>arg</A> is a transformation
-      semigroup and a transformation, or an <Math>\mathcal{H}</Math>-class, 
+      semigroup and a transformation, or an &H;-class, 
       respectively. <P/>
 
       See also <Ref Func="RClassNC"/>. 

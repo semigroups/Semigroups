@@ -97,8 +97,8 @@ true</Example>
     <Description>
       returns a list of Green's classes contained in the 
       object <A>obj</A> which can be a transformation semigroup,
-      <Math>\mathcal{D}</Math>-, <Math>\mathcal{L}</Math>-, or
-      <Math>\mathcal{R}</Math>-class (where appropriate).<P/>
+      &D;-, &L;-, or
+      &R;-class (where appropriate).<P/>
 
       These functions produce essentially the same output as the &GAP; library
       functions with the same names; see 
@@ -228,8 +228,8 @@ gap> Size(L);
     <Description>
       returns a list of representatives of Green's classes of
       the object <A>obj</A> where <A>obj</A> can be a transformation semigroup,
-      <Math>\mathcal{D}</Math>-, <Math>\mathcal{L}</Math>-, or
-      <Math>\mathcal{R}</Math>-class (where appropriate).<P/>
+      &D;-, &L;-, or
+      &R;-class (where appropriate).<P/>
 
       The same output can be obtained by calling, for example:
       <Log>List(GreensXClasses(obj), Representative);</Log>
@@ -295,8 +295,8 @@ gap> GreensHClassReps(L);
   <ManSection>
     <Attr Name="GroupHClass" Arg="class"/>
     <Description>
-      returns one group <Math>\mathcal{H}</Math>-class of 
-      the <Math>\mathcal{D}</Math>-class <A>class</A> if <A>class</A> is
+      returns one group &H;-class of 
+      the &D;-class <A>class</A> if <A>class</A> is
       regular, otherwise <K>fail</K> is returned. <P/>
 
       <C>GroupHClass</C> is a synonym for 
@@ -509,9 +509,9 @@ true</Example>
   
   In the display of an <C>IteratorOfRClassReps</C> the total number of elements
   in the orbit of the semigroup acting on itself on the left is given (every
-  <Math>\mathcal{R}</Math>-class representative occurs in this orbit), the
+  &R;-class representative occurs in this orbit), the
   number of elements of the semigroup that have so far been computed is given,
-  and the number of distinct <Math>\mathcal{R}</Math>-classes that have been
+  and the number of distinct &R;-classes that have been
   found is given. Note that 
   these numbers depend on the state of the semigroup and not of the 
   iterator.
@@ -549,9 +549,9 @@ gap> iter;
   iterators.<P/>
 
   This function is useful if you are, for example, looking for an
-  <Math>\mathcal{R}</Math>-class of
+  &R;-class of
   semigroup with a particular property but do not necessarily want to compute
-  all of the <Math>\mathcal{R}</Math>-classes in a given semigroup.<P/>
+  all of the &R;-classes in a given semigroup.<P/>
 
   See also <Ref Attr="GreensRClasses"/>, 
   <Ref Oper="GreensRClasses" BookName="ref"/>, <Ref Attr="NrGreensRClasses"/>,
@@ -560,7 +560,7 @@ gap> iter;
 
 
   The semigroup in the example below has 25147892 elements but it only takes 
-  a fraction of a second to find a non-trivial <Math>\mathcal{R}</Math>-class.
+  a fraction of a second to find a non-trivial &R;-class.
   <P/>
 
   <Example>
@@ -597,8 +597,8 @@ gap> Size(R);
   <Description>
   returns the number of Green's classes in <A>obj</A> where
     <A>obj</A> can be a transformation
-    semigroup, <Math>\mathcal{D}</Math>-, <Math>\mathcal{L}</Math>-, or
-    <Math>\mathcal{R}</Math>-class of a transformation semigroup
+    semigroup, &D;-, &L;-, or
+    &R;-class of a transformation semigroup
               (where appropriate).<P/>
 
   If the actual Green's classes are not required, then it is  
@@ -661,9 +661,9 @@ gap> NrGreensRClasses(D);
   <Description>
   returns the number of idempotents in <A>obj</A> where
     <A>obj</A> can be a transformation
-    semigroup, <Math>\mathcal{D}</Math>-, <Math>\mathcal{L}</Math>-, 
-    <Math>\mathcal{H}</Math>-, or
-    <Math>\mathcal{R}</Math>-class of a transformation semigroup
+    semigroup, &D;-, &L;-, 
+    &H;-, or
+    &R;-class of a transformation semigroup
     (where appropriate).<P/>
 
 If the actual idempotents are not required, then it
@@ -709,7 +709,7 @@ gap> NrIdempotents(H);
 <#GAPDoc Label="NrRegularDClasses">
   <ManSection><Attr Name="NrRegularDClasses" Arg="S"/>
     <Description>
-    returns the number of regular <Math>\mathcal{D}</Math>-classes of the 
+    returns the number of regular &D;-classes of the 
     transformation semigroup <A>S</A>. <P/>
     
     See also <Ref Func="IsRegularDClass"/> 
@@ -731,12 +731,12 @@ gap> NrGreensDClasses(S);
   <Description>
   returns a list <C>l</C> where <C>j</C> is in <C>l[i]</C> if and only if 
   <C>GreensDClasses(S)[j]</C> is immediately less than 
-  <C>GreensDClasses(S)[i]</C> in the partial order of <Math>\mathcal{D}</Math>-
+  <C>GreensDClasses(S)[i]</C> in the partial order of &D;-
   classes of <A>S</A>.
   The transitive closure of the relation <Math>\{\:(j,i):\:\: j\in
-  l[i]\:\}</Math> is the partial order of <Math>\mathcal{D}</Math>-classes. <P/>
+  l[i]\:\}</Math> is the partial order of &D;-classes. <P/>
 
-  The partial order on the <Math>\mathcal{D}</Math>-classes is defined by 
+  The partial order on the &D;-classes is defined by 
   <Math>x\leq y</Math> if and only if <Math>S^1xS^1</Math> is a subset of  
   <Math>S^1yS^1</Math>. <P/>
 
@@ -763,18 +763,18 @@ true</Example>
   <ManSection><Attr Name="SchutzenbergerGroup" Arg="class"/>
   <Description>
   returns the generalized Schutzenberger group (defined below) of the 
-  <Math>\mathcal{R}</Math>-, <Math>\mathcal{D}</Math>-, 
-  <Math>\mathcal{L}</Math>-, or 
-  <Math>\mathcal{H}</Math>-class <A>class</A> of a transformation semigroup.<P/>
+  &R;-, &D;-, 
+  &L;-, or 
+  &H;-class <A>class</A> of a transformation semigroup.<P/>
   
-  If <A>class</A> is an <Math>\mathcal{R}</Math>-class of a transformation 
+  If <A>class</A> is an &R;-class of a transformation 
   semigroup <C>S</C> with representative <C>f</C>, then
   <C>SchutzenbergerGroup(<A>class</A>)</C> is the permutation group 
   <Display>
     \{\:g|_{\textrm{im}(f)}\::\:\textrm{im}(f)^g=\textrm{im}(f)\:\}.
   </Display><P/>
 
-  If <A>class</A> is an <Math>\mathcal{L}</Math>-class of a transformation
+  If <A>class</A> is an &L;-class of a transformation
   semigroup <C>S</C> with
   representative <C>f</C>, then
   <C>SchutzenbergerGroup(<A>class</A>)</C> is the permutation group
@@ -782,13 +782,13 @@ true</Example>
     \{\:g|_{\textrm{ker}(f)}\::\:\ker(f)^g=\ker(f)\:\}.
   </Display><P/>
 
-  If <A>class</A> is an <Math>\mathcal{H}</Math>-class of a transformation
+  If <A>class</A> is an &H;-class of a transformation
   semigroup <C>S</C> with
   representative <C>f</C>, then <C>SchutzenbergerGroup(<A>class</A>)</C> is the 
   intersection of <C>SchutzenbergerGroup(RClass(S, f))</C> and
   <C>SchutzenbergerGroup(LClass(S, f))</C>. <P/>
   
-  If <A>class</A> is a <Math>\mathcal{D}</Math>-class of a transformation 
+  If <A>class</A> is a &D;-class of a transformation 
   semigroup <C>S</C> with
   representative <C>f</C>, then <C>SchutzenbergerGroup(<A>class</A>)</C> is 
   just <C>SchutzenbergerGroup(HClass(S, f))</C>. <P/>

@@ -78,7 +78,7 @@ function(coll)
 
   repeat 
     i:=i+1; f:=coll[i];
-    if InfoLevel(InfoCitrusProperties)>1 then 
+    if InfoLevel(InfoCitrus)>=3 then 
       Print("at \t", i, " of \t", Length(coll), " with \t", Length(redund), 
       " redundant, \t", Length(out), " non-redundant\r");
     fi;
@@ -92,7 +92,7 @@ function(coll)
     fi;
   until Length(redund)+Length(out)=j;
 
-  if InfoLevel(InfoCitrusProperties)>1 then 
+  if InfoLevel(InfoCitrus)>1 then 
     Print("\n");
   fi;
   return out;
@@ -1177,7 +1177,7 @@ function(s)
 
   repeat
     i:=i+1; f:=gens[i];
-    if InfoLevel(InfoCitrusProperties)>1 then
+    if InfoLevel(InfoCitrus)>1 then
       Print("at \t", i, " of \t", Length(gens), "; \t", Length(out),
       " generators so far\r");
     fi;
@@ -1187,7 +1187,7 @@ function(s)
     fi;
   until i=Length(gens);
 
-  if InfoLevel(InfoCitrusProperties)>1 then
+  if InfoLevel(InfoCitrus)>1 then
     Print("\n");
   fi;
   return out;

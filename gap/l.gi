@@ -97,7 +97,7 @@ end);
 InstallOtherMethod(AsSSortedList, "for L-class of trans. semigp.",
 [IsGreensLClass and IsGreensClassOfTransSemigp], 
 function(l)
-  Info(InfoCitrusGreens, 4, "AsSSortedList: for an L-class");
+  Info(InfoCitrus, 4, "AsSSortedList: for an L-class");
   return ConstantTimeAccessList(EnumeratorSorted(l));
 end);
 
@@ -154,7 +154,7 @@ InstallOtherMethod(Enumerator, "for L-class of trans. semigp.",
 function(l)
   local enum;
 
-  Info(InfoCitrusGreens, 4, "Enumerator: for an L-class");
+  Info(InfoCitrus, 4, "Enumerator: for an L-class");
 
   enum:=EnumeratorByFunctions(l, rec(
     
@@ -335,7 +335,7 @@ InstallMethod(GreensLClasses, "for a transformation semigroup",
 function(s)
   local iter, out, i, l;
 
-  Info(InfoCitrusGreens, 4, "GreensLClasses");
+  Info(InfoCitrus, 4, "GreensLClasses");
 
   iter:=IteratorOfGreensLClasses(s);
   out:=EmptyPlist(NrGreensLClasses(s));
@@ -357,7 +357,7 @@ InstallOtherMethod(GreensLClassOfElement, "for a trans. semigp and trans.",
 function(s, f)
   local d, l;
 
-  Info(InfoCitrusGreens, 4, "GreensLClassOfElement");
+  Info(InfoCitrus, 4, "GreensLClassOfElement");
 
   if not f in s then 
     Info(InfoWarning, 1, "transformation is not an element of the semigroup");
@@ -392,7 +392,7 @@ InstallOtherMethod(GreensLClassOfElementNC, "for a trans. semigp and trans.",
 function(s, f)
   local n, d, j, img_o, ker_o;
 
-  Info(InfoCitrusGreens, 4, "GreensLClassOfElementNC");
+  Info(InfoCitrus, 4, "GreensLClassOfElementNC");
 
   n:=DegreeOfTransformationSemigroup(s);
 
@@ -404,21 +404,21 @@ function(s, f)
   d:=PreInOrbitsOfKernels(s, f, false);
 
   if d[1][1] then #f in s!
-    Info(InfoCitrusGreens, 2, "transformation is an element of the semigroup");
+    Info(InfoCitrus, 2, "transformation is an element of the semigroup");
     #JDM inefficient as we run PreInOrbitsOfKernels twice!
     return GreensLClassOfElement(s, f);	
   elif OrbitsOfImages(s)!.finished then #f not in s!
-    Info(InfoCitrusGreens, 2, "transformation is not an element of the ",
+    Info(InfoCitrus, 2, "transformation is not an element of the ",
      "semigroup");
     return fail;
   fi;
 
-  Info(InfoCitrusGreens, 2, "transformation may not be an element of the ",
+  Info(InfoCitrus, 2, "transformation may not be an element of the ",
    "semigroup");
 
   j:=Length(ImageSetOfTransformation(f));
    
-  Info(InfoCitrusGreens, 2, "finding orbit of image...");
+  Info(InfoCitrus, 2, "finding orbit of image...");
   img_o:=[]; img_o[j]:=[ForwardOrbitOfImage(s, f![1])];
   #JDM see comments in GreensDClassOfElementNC
   img_o:=rec( finished:=false, orbits:=img_o, gens:=Generators(s), s:=s,
@@ -426,13 +426,13 @@ function(s, f)
    function(x) if x=j then return 1; else return 0; fi; end),
    data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=CitrusHashLen!.rclass_data)));
 
-  Info(InfoCitrusGreens, 2, "finding orbit of kernel...");
+  Info(InfoCitrus, 2, "finding orbit of kernel...");
   ker_o:=[]; ker_o[j]:=[ForwardOrbitOfKernel(s, f)];
   ker_o:=rec( orbits:=ker_o, gens:=Generators(s), data:=[[[j,1,1,1,1,1],
      [j,1,1,1,1,1]]], kernels:=fail, data_ht:=HTCreate([1,1,1,1,1,1],
      rec(hashlen:=CitrusHashLen!.dclass_data)));
 
-  Info(InfoCitrusGreens, 2, "finding the kernel orbit schutz. group");
+  Info(InfoCitrus, 2, "finding the kernel orbit schutz. group");
   Add(ker_o!.orbits[j][1]!.d_schutz[1], [CreateSchutzGpOfDClass(s,
    [[j,1,1,1,1,1],[j,1,1,1,1,1]], [img_o, ker_o])]);
   HTAdd(ker_o!.data_ht, [j,1,1,1,1,1], 1);
@@ -448,7 +448,7 @@ InstallMethod(GreensLClassReps, "for a trans. semigroup",
 [IsTransformationSemigroup], 
 function(s)
   local out, iter, i, f;
-  Info(InfoCitrusGreens, 4, "GreensLClassReps");
+  Info(InfoCitrus, 4, "GreensLClassReps");
 
   out:=EmptyPlist(NrGreensLClasses(s));
   iter:=IteratorOfLClassReps(s);
@@ -583,7 +583,7 @@ function(s)
      return fail;
   fi;
 
-  Info(InfoCitrusGreens, 4, "IteratorOfGreensLClasses");
+  Info(InfoCitrus, 4, "IteratorOfGreensLClasses");
 
   iter:=IteratorByFunctions( rec(
 
@@ -618,7 +618,7 @@ InstallGlobalFunction(IteratorOfLClassReps,
 function(s)
   local iter;
 
-  Info(InfoCitrusGreens, 4, "IteratorOfLClassReps");
+  Info(InfoCitrus, 4, "IteratorOfLClassReps");
 
   if not IsTransformationSemigroup(s) then
     Info(InfoWarning, 1, "Usage: argument should be a transformation",
@@ -655,7 +655,7 @@ InstallGlobalFunction(IteratorOfLClassRepsData,
 function(s)
   local o, iter; 
 
-  Info(InfoCitrusGreens, 4, "IteratorOfLClassRepsData");
+  Info(InfoCitrus, 4, "IteratorOfLClassRepsData");
 
   o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
 
@@ -968,7 +968,7 @@ InstallOtherMethod(Size, "for an L-class of a trans. semigp.",
 [IsGreensLClass and IsGreensClassOfTransSemigp],
 function(l)
 
-  Info(InfoCitrusGreens, 4, "Size: for an L-class");
+  Info(InfoCitrus, 4, "Size: for an L-class");
 
   return Size(KernelOrbitSchutzGp(l))
    *Length(KernelOrbitSCC(l));

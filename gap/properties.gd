@@ -10,7 +10,6 @@
 
 DeclareAttribute("GroupOfUnits", IsTransformationSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigp", IsTransformationSemigroup);
-DeclareInfoClass("InfoCitrusProperties");
 DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
 DeclareProperty("IsAbundantSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsBand", IsTransformationSemigroup);

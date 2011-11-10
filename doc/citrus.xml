@@ -50,12 +50,13 @@
 
 <Body>
   <Chapter Label="citrus">
-  <Heading>The <Package>Citrus</Package> package</Heading>
-  <Index><Package>Citrus</Package> - Overview</Index>	
+  <Heading>
+  The &Citrus; package</Heading>
+  <Index>&Citrus; - Overview</Index>	
   <Section><Heading>Overview and Introduction</Heading>
-    This is the manual for the <Package>Citrus</Package> package version
+    This is the manual for the &Citrus; package version
     &VERSION; for computing with
-    transformation semigroups. <Package>Citrus</Package> &VERSION; is an 
+    transformation semigroups. &Citrus; &VERSION; is an 
     updated 
     version of the <Package>Monoid</Package>
     package for &GAP; 3 and 4; see<Alt Only="LaTeX">\vspace{\baselineskip}</Alt>
@@ -73,9 +74,9 @@
 
     The functionality of <Package>Monoid</Package> 3.1.4 has been split across 
     two &GAP; 4.5 packages
-    <Package>Citrus</Package> and <Package>Comatose</Package>.
+    &Citrus; and <Package>Comatose</Package>.
 
-    <Package>Citrus</Package> &VERSION; retains all the functionality of the 
+    &Citrus; &VERSION; retains all the functionality of the 
     original <Package>Monoid</Package> package for
     &GAP; 3; and those functions from <Package>Monoid</Package> 3.1.4 not 
     involved in the 
@@ -87,24 +88,24 @@
     Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
     <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html</URL><P/>
 
-    <Alt Only="LaTeX">\noindent</Alt> <Package>Citrus</Package> &VERSION;
+    <Alt Only="LaTeX">\noindent</Alt> &Citrus; &VERSION;
     contains more efficient methods than those 
     available in the &GAP; library for calculating Green's classes, finding the
     size, the elements, and testing membership in transformation semigroups;
     see Chapter <Ref Chap="green"/>. 
-    After <Package>Citrus</Package> has been loaded many of these methods are
+    After &Citrus; has been loaded many of these methods are
     automatically used in preference to those in the library and do not need to 
     be called explicitly by the user.
     In addition, there are methods for testing if a semigroup satisfies a
     particular property, such as if it is regular, simple, inverse, or 
     completely regular; see Chapter <Ref Chap="properties"/>.<P/>
 
-    <Alt Only="LaTeX">\noindent</Alt> The <Package>Citrus</Package> package is 
+    <Alt Only="LaTeX">\noindent</Alt> The &Citrus; package is 
     written in &GAP; code only but requires the <Package>Orb</Package> 
     package.
     The <Package>Orb</Package> package is used to efficiently compute
     orbits in transformation semigroups and such methods underpin most of the
-    features of <Package>Citrus</Package>. See<Alt
+    features of &Citrus;. See<Alt
     Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
     <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html</URL><P/>
     <Alt Only="LaTeX">\noindent</Alt> or the main &GAP; webpages for more 
@@ -113,11 +114,11 @@
   </Section>
 
   <Section Label="install">
-    <Heading>Installing <Package>Citrus</Package></Heading>
+    <Heading>Installing &Citrus;</Heading>
 
     In this section we give a brief description of how to start using  
-    <Package>Citrus</Package>. If you have any problems getting
-    <Package>Citrus</Package> working, then you could try emailling me at
+    &Citrus;. If you have any problems getting
+    &Citrus; working, then you could try emailling me at
     <Email>jdm3@st-and.ac.uk</Email>. <P/>
 
     It is assumed that you have a working copy of &GAP; with version number 
@@ -129,7 +130,7 @@
 
     <Alt Only="LaTeX">\noindent</Alt> The following is a summary of the steps 
     that should lead to a successful
-    installation of <Package>Citrus</Package>:
+    installation of &Citrus;:
 
     <List>
     
@@ -139,7 +140,7 @@
           <Alt Only="LaTeX">\noindent</Alt><URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
       </URL><P/>
       <Alt Only="LaTeX">\noindent</Alt> Note that both <Package>Orb</Package>
-      and <Package>Citrus</Package> are faster if <Package>Orb</Package>
+      and &Citrus; are faster if <Package>Orb</Package>
       is compiled. 
       </Item>
     
@@ -165,7 +166,7 @@
 
     </List>
 
-    Below is an example of an installation of <Package>Citrus</Package> in a
+    Below is an example of an installation of &Citrus; in a
     UNIX environment where <C>GAPROOT</C>  should be substituted with the main 
     &GAP; directory 
     (the one containing the folders <C>bin</C>, <C>lib</C>, and so on) in
@@ -194,12 +195,12 @@ true
 gap></Log>
 
     Presuming that the above steps can be completed successfully you will be 
-    running the <Package>Citrus</Package> package!<P/>
+    running the &Citrus; package!<P/>
 
     If you want to check that the package is working correctly, please see
     Section <Ref Sect="testing"/>.<P/>
 
-    <B>Please note:</B> before you can used <Package>Citrus</Package> you must
+    <B>Please note:</B> before you can used &Citrus; you must
     install <Package>Orb</Package> version 3.7 or higher as described above.
 
   </Section>
@@ -212,15 +213,15 @@ gap></Log>
     
   <Section Label="testing"><Heading>Testing the installation</Heading>
 
-    In this section we describe how to test that <Package>Citrus</Package> is
-    working as intended.  To test that <Package>Citrus</Package> is installed 
+    In this section we describe how to test that &Citrus; is
+    working as intended.  To test that &Citrus; is installed 
     correctly use <Ref Func="CitrusTestInstall"/> or for more extensive tests
     use <Ref Func="CitrusTestAll"/>. Please note that it will take a few moments
     for <Ref Func="CitrusTestInstall"/> to finish and it will take a few minutes
     for <Ref Func="CitrusTestAll"/> to finish.<P/>
 
     If something goes wrong, then please review the instructions in Section 
-    <Ref Sect="install"/> and ensure that <Package>Citrus</Package> has been 
+    <Ref Sect="install"/> and ensure that &Citrus; has been 
     properly installed.  If you continue having problems, please email me at 
     <Email>jdm3@st-and.ac.uk</Email>.
 
@@ -237,7 +238,7 @@ gap></Log>
 
   <Section><Heading>Creating Transformations</Heading>
     In this section we describe the functions available in
-    <Package>Citrus</Package> for creating transformations. 
+    &Citrus; for creating transformations. 
     The following functions from the &GAP; reference manual are particularly
     relevant to this section:
     <Ref Func="Transformation" BookName="ref"/>, 
@@ -252,10 +253,10 @@ gap></Log>
 
   <Section><Heading>Properties of Transformations</Heading>
     In this section we describe the functions available in
-    <Package>Citrus</Package> for finding various properties of 
+    &Citrus; for finding various properties of 
     transformations. <P/>
 
-    In addition to those functions described below, <Package>Citrus</Package> 
+    In addition to those functions described below, &Citrus; 
     also contains a special method for
    <Ref Attr="RankOfTransformation" BookName="ref"/>. 
 
@@ -277,7 +278,7 @@ gap></Log>
     <Alt Only="LaTex">\noindent</Alt><C><A>f</A> * <A>g</A></C>
     <P/>
     
-    <Package>Citrus</Package> contains more efficient methods than the &GAP;
+    &Citrus; contains more efficient methods than the &GAP;
     library for <Ref Oper="\*" BookName="ref"/> when <A>f</A> and <A>g</A> are
     transformations or permutations (and at least one of <A>f</A> and <A>g</A>
     is a transformation).<P/>
@@ -298,7 +299,7 @@ gap></Log>
   <Section><Heading>Actions and Orbits</Heading>
 
     The following actions and orbits of transformation semigroups are used by 
-    <Package>Citrus</Package> in the computation of Green's 
+    &Citrus; in the computation of Green's 
     relations and to test if an arbitrary transformation semigroup has a 
     particular property;  see Chapter <Ref Chap="green"/> and Chapter 
     <Ref Chap="properties"/>; see 
@@ -324,7 +325,7 @@ gap></Log>
   <Section><Heading>Introduction</Heading>
     
     This chapter contains instructions on how to use the functions implemented 
-    in <Package>Citrus</Package> for
+    in &Citrus; for
     computing Green's relations and related notions for transformation         
     semigroups and monoids.  
     <P/>
@@ -334,10 +335,10 @@ gap></Log>
     <Cite Key="pfeiffer2"/>.
     Another reference is <Cite Key="lallement"/>.<P/>
 
-    Green's relations can be calculated when  <Package>Citrus</Package>
+    Green's relations can be calculated when  &Citrus;
     is loaded using the same commands that you would use when 
-    <Package>Citrus</Package> is not loaded; see <Ref Chap="Semigroups" 
-    BookName="ref"/>. For example, in &GAP; with the <Package>Citrus</Package>  
+    &Citrus; is not loaded; see <Ref Chap="Semigroups" 
+    BookName="ref"/>. For example, in &GAP; with the &Citrus;  
     package loaded:
     
     <Log>
@@ -351,7 +352,7 @@ gap> GreensRClasses(S);
   {Transformation( [ 1, 2, 1, 2, 1 ] )}, 
   {Transformation( [ 2, 1, 1, 2, 2 ] )} ]</Log>
 
-    Without the <Package>Citrus</Package> package loaded:
+    Without the &Citrus; package loaded:
     
     <Log>
 gap> GreensRClasses(S);
@@ -365,28 +366,25 @@ gap> GreensRClasses(S);
     the differences in the methods for 
     <Ref Attr="GreensRClasses" BookName="ref"/> in the &GAP; library and 
     <Ref Attr="GreensRClasses"/> in 
-    <Package>Citrus</Package>.<P/>
+    &Citrus;.<P/>
 		
     For more details about Green's relations see 
     <Ref Sect="Green's Relations" BookName="ref"/>.<P/>
 		
     Due to inherent difficulties with computing Green's
-    <M>\mathcal{L}</M>-, <M>\mathcal{D}</M>-, and
-    <M>\mathcal{H}</M>-classes in
-    transformation semigroups, the 
-    methods used to compute with Green's <M>\mathcal{R}</M>-classes are 
+    &L;-, &D;-, and &H;-classes in transformation semigroups, the 
+    methods used to compute with Green's &R;-classes are 
     the most efficient 
-    in <Package>Citrus</Package>.  Thus wherever possible it is advisable to
-    use the commands relating to Green's <M>\mathcal{R}</M>-classes 
+    in &Citrus;.  Thus wherever possible it is advisable to
+    use the commands relating to Green's &R;-classes 
     rather than those relating
-    to Green's <M>\mathcal{L}</M>-,
-    <M>\mathcal{D}</M>-, or <M>\mathcal{H}</M>-classes.<P/>
+    to Green's &L;-, &D;-, or &H;-classes.<P/>
 		
-    The methods in <Package>Citrus</Package> allow the computation of     
+    The methods in &Citrus; allow the computation of     
     individual Green's classes without the need to compute all the elements of 
     the underlying semigroup; see <Ref Oper="GreensRClassOfElementNC"/>.  
     It is also possible to compute all the 
-    <M>\mathcal{R}</M>-classes, the number of elements and test 
+    &R;-classes, the number of elements and test 
     membership in a transformation 
     semigroup without computing all the elements; see, for example, 
     <Ref Oper="GreensRClasses"/>, <Ref
@@ -403,14 +401,14 @@ gap> GreensRClasses(S);
     </Heading>
 
       In this section we list the functions from the &GAP; library (those
-      available when <Package>Citrus</Package> is not loaded) which have
-      new methods in <Package>Citrus</Package>.  Some of these new methods 
+      available when &Citrus; is not loaded) which have
+      new methods in &Citrus;.  Some of these new methods 
       apply to a wider class of objects than the existing methods. Where this
-      is the case, we give references to both the <Package>Citrus</Package> 
+      is the case, we give references to both the &Citrus; 
       documentation and the &GAP;  manual; otherwise we may only give
       references to the &GAP; manual.<P/>
  
-    <Package>Citrus</Package> contains special methods for the following
+    &Citrus; contains special methods for the following
     &GAP; functions where the argument is an arbitrary Green's class
     of a transformation semigroup 
     (specifically a  Green's class satisfying <Ref
@@ -440,7 +438,7 @@ gap> GreensRClasses(S);
 <P/>
 
     In addition to those functions mentioned above that can be
-    applied to arbitrary Green's classes, <Package>Citrus</Package> contains 
+    applied to arbitrary Green's classes, &Citrus; contains 
     special methods for the following
     &GAP; functions:
     <List>
@@ -450,9 +448,9 @@ gap> GreensRClasses(S);
     <Ref Attr="GroupHClass"/>,</Item> 
     <Item><Ref Prop="IsGroupHClass" BookName="ref"/>,</Item>
     <Item><Ref Oper="IsomorphismPermGroup" BookName="ref"/> 
-    (for a group <M>\mathcal{H}</M>-class),</Item>
+    (for a group &H;-class),</Item>
     <Item><Ref Oper="StructureDescription" BookName="ref"/> 
-    (for a group <M>\mathcal{H}</M>-class).</Item>
+    (for a group &H;-class).</Item>
     </List>
     <P/>
     See Section <Ref Sect="convenience"/> for shorter versions of some of the
@@ -487,7 +485,7 @@ gap> GreensRClasses(S);
   <Section><Heading>Definitions</Heading>
 		
     In this section we describe the functions available in
-    <Package>Citrus</Package> that can be used to determine whether a set of
+    &Citrus; that can be used to determine whether a set of
     transformations generates a semigroup with a given property. <P/>
     
     We begin by defining various properties of semigroups. 
@@ -560,7 +558,7 @@ gap> GreensRClasses(S);
       the underlying set; 
       for more details see  <Cite Key="largest"/>.<P/>
 
-      The following results are used by <Package>Citrus</Package> to test if
+      The following results are used by &Citrus; to test if
       a particular property holds. 
       
       <List>
@@ -622,7 +620,7 @@ gap> GreensRClasses(S);
   <Section><Heading>Attributes</Heading>
     In this section we describe several attributes <Ref Sect="Attributes"
     BookName="ref"/> of an arbitrary transformation semigroup that can be found
-    using <Package>Citrus</Package>.
+    using &Citrus;.
     <#Include Label="GroupOfUnits">
     <#Include Label="IrredundantGeneratingSubset">
     <#Include Label="MinimalIdeal">
@@ -635,7 +633,7 @@ gap> GreensRClasses(S);
     In this section we describe several properties 
     <Ref Sect="Properties" BookName="ref"/> of an
     arbitrary transformation semigroup that can be determined using
-    <Package>Citrus</Package>.
+    &Citrus;.
     <#Include Label="IsAbundantSemigroup">
     <#Include Label="IsBand">
     <#Include Label="IsBlockGroup">
@@ -674,18 +672,18 @@ gap> GreensRClasses(S);
 
   <Section><Heading>Utilities</Heading>
   In this section, we describe some utility functions available in
-  <Package>Citrus</Package>.  
+  &Citrus;.  
   
-  <#Include Label="CitrusMakeDoc">
+    <#Include Label="CitrusMakeDoc">
     <#Include Label="CitrusTestAll">
     <#Include Label="CitrusTestInstall">
     <#Include Label="CitrusTestManualExamples">
+    <#Include Label="InfoCitrus">
   </Section>
 
   <Section><Heading>Shortcuts</Heading>
-    There are several commands in <Package>Citrus</Package> that can be
-    called
-    using shorter names than the original
+    There are several commands in &Citrus; that can be
+    called using shorter names than the original
     commands in &GAP;. These functions are described in this section.
 
     <#Include Label="DClass">

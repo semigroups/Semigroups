@@ -13,6 +13,8 @@ DeclareGlobalFunction("CitrusLoMem");
 DeclareGlobalFunction("CitrusHiMem");
 DeclareGlobalFunction("CitrusVeryLoMem");
 DeclareGlobalFunction("CitrusMakeDoc");
+DeclareGlobalFunction("CitrusMathJaxLocal");
+DeclareGlobalFunction("CitrusMathJaxDefault");
 DeclareGlobalFunction("CitrusTestAll");
 DeclareGlobalFunction("CitrusTestInstall");
 DeclareGlobalFunction("CitrusTestManualExamples");
