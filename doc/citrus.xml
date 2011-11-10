@@ -673,7 +673,8 @@ gap> GreensRClasses(S);
   <Section><Heading>Utilities</Heading>
   In this section, we describe some utility functions available in
   &Citrus;.  
-  
+ 
+    <#Include Label="CitrusDefaultMem">
     <#Include Label="CitrusMakeDoc">
     <#Include Label="CitrusTestAll">
     <#Include Label="CitrusTestInstall">

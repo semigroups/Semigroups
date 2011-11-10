@@ -1,3 +1,41 @@
+#############################################################################
+##
+#W  utils.xml
+#Y  Copyright (C) 2011                             James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="CitrusDefaultMem">
+  <Index>&Citrus; memory management</Index>
+  <ManSection>
+    <Func Name="CitrusDefaultMem" Arg=""/>
+    <Func Name="CitrusHiMem" Arg=""/>
+    <Func Name="CitrusLoMem" Arg=""/>
+    <Func Name="CitrusVeryLoMem" Arg=""/>
+    <Returns>Nothing.</Returns>
+    <Description>
+      &Citrus; uses hash tables in the methods for several fundamental 
+      functions for computing with transformation semigroups. The lengths of
+      these tables is a compromise of performance and memory usage; large
+      tables provide better performance for large computations but use more
+      memory. The lengths of these hash tables can be coarsely controlled by 
+      using the functions above. If you plan to do a small number of
+      computations with large semigroups (hundreds of thousands to
+      hundreds of millions of elements), then you will probably be best using
+      <C>CitrusHiMem</C> or <C>CitrusDefaultMem</C>. On the other hand, if you
+      plan to do lots of computations with small semigroups (up to a hundred
+      thousand elements, say), then using <C>CitrusLoMem</C> will use less
+      memory.<P/>
+
+      The values used can also be set directly by editing the values in global
+      variable <C>CitrusHashLen</C> in the <C>config</C> file in the &Citrus;
+      package directory.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
 <#GAPDoc Label="CitrusMakeDoc">
   <ManSection>
