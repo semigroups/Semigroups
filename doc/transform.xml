@@ -133,23 +133,23 @@ Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] )</Example>
   <Meth Name="Factorization" Arg="S, f"/>
     <Returns>A word in the generators.</Returns>
       <Description> 
-          if <A>S</A> is a transformation semigroup and <A>f</A> is a
-          transformation belonging to <A>S</A>, then <C>Factorization</C> 
-          returns a
-          word in the generators of <A>S</A> that is equal to <A>f</A>. Here, a
-          word is a list of positive integers where <C>i</C> corresponds to
-          <C>GeneratorsOfSemigroups(S)[i]</C>. More specifically,
-      <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, f))=f;</Log>
-          <P/>
+        if <A>S</A> is a transformation semigroup and <A>f</A> is a
+        transformation belonging to <A>S</A>, then <C>Factorization</C> 
+        returns a
+        word in the generators of <A>S</A> that is equal to <A>f</A>. Here, a
+        word is a list of positive integers where <C>i</C> corresponds to
+        <C>GeneratorsOfSemigroups(S)[i]</C>. More specifically,
+    <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, f))=f;</Log>
+        <P/>
 
-          Note that <C>Factorization</C> does not return a word of minimum
-          length. An empty list is evaluated to the identity transformation with
-          degree equal to the degree of <A>S</A> regardless of whether this
-          transformation is an element of <A>S</A> or not.<P/> 
+        Note that <C>Factorization</C> does not return a word of minimum
+        length. An empty list is evaluated to the identity transformation with
+        degree equal to the degree of <A>S</A> regardless of whether this
+        transformation is an element of <A>S</A> or not.<P/> 
 
-          See also <Ref Func="EvaluateWord"/> and 
-          <Ref Func="GeneratorsOfSemigroup" BookName="ref"/>.
-  <Example>
+        See also <Ref Func="EvaluateWord"/> and 
+        <Ref Func="GeneratorsOfSemigroup" BookName="ref"/>.
+<Example>
 gap> gens:=[ Transformation( [ 2, 2, 9, 7, 4, 9, 5, 5, 4, 8 ] ), 
 > Transformation( [ 4, 10, 5, 6, 4, 1, 2, 7, 1, 2 ] ) ];;
 gap> S:=Semigroup(gens);;
@@ -200,7 +200,7 @@ gap> f:=Transformation( [ 3, 4, 4, 6, 1, 3, 3, 7, 1 ] );;
 gap> IndexPeriodOfTransformation(f);
 [ 2, 3 ]
 gap> f^2=f^5;
-true </Example> 
+true</Example> 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -237,7 +237,7 @@ gap> InversesOfTransformation(S, f);
   Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ), 
   Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ) ]
 gap> IsRegularTransformation(S, f);
-true </Example>
+true</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -271,7 +271,7 @@ true</Example>
 
 <#GAPDoc Label="IsRegularTransformation">
   <ManSection>
-  <Oper Name="IsRegularTransformation" Arg="S, f"/>
+    <Oper Name="IsRegularTransformation" Arg="S, f"/>
     <Description>
       returns <K>true</K> if <A>f</A> is a regular element of the 
       transformation semigroup <A>S</A>
@@ -391,37 +391,25 @@ gap> SmallestIdempotentPower(f);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="TransformationActionNC">
+  <ManSection>
+    <Oper Name="TransformationActionNC" Arg="list, act, elm"/>
+    <Description>
+      returns the list <C>list</C> acted on by <C>elm</C> via the action 
+      <C>act</C>.
+      <Example>
+gap> mat:=OneMutable(GeneratorsOfGroup(GL(3,3))[1]);
+[ [ Z(3)^0, 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3) ], 
+  [ 0*Z(3), 0*Z(3), Z(3)^0 ] ]
+gap> mat[3][3]:=Z(3)*0; 
+0*Z(3)
+gap> F:=BaseDomain(mat);
+GF(3)
+gap> TransformationActionNC(Elements(F^3), OnRight, mat);
+Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 10, 10, 10, 13, 13, 13, 16, 16, 
+16, 19, 19, 19, 22, 22, 22, 25, 25, 25 ] )</Example> 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
-
-
-#############################################################################
-##
-##      <#GAPDoc Label="TransformationActionNC">
-##      <ManSection>
-##      <Oper Name="TransformationActionNC" Arg="list, act, elm"/>
-##      <Description>
-##      returns the list <C>list</C> acted on by <C>elm</C> via the action 
-##      <C>act</C>.
-##      <Example>
-##  gap> mat:=OneMutable(GeneratorsOfGroup(GL(3,3))[1]);
-##  [ [ Z(3)^0, 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3) ], 
-##    [ 0*Z(3), 0*Z(3), Z(3)^0 ] ]
-##  gap> mat[3][3]:=Z(3)*0; 
-##  0*Z(3)
-##  gap> F:=BaseDomain(mat);
-##  GF(3)
-##  gap> TransformationActionNC(Elements(F^3), OnRight, mat);
-##  Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 10, 10, 10, 13, 13, 13, 16, 16, 
-##    16, 19, 19, 19, 22, 22, 22, 25, 25, 25 ] )
-##      </Example> 
-##      </Description>
-##      </ManSection>
-##      <#/GAPDoc>
-##      </Description>
-
-
-
-
-
-
-
+#EOF
