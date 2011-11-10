@@ -56,9 +56,9 @@ false</Example>
     <Oper Name="LClassOfHClass" Arg="class"/>
     <Oper Name="DClassOfHClass" Arg="class"/>
     <Description>
-    returns the Green's <Math>X</Math>-class containing the Green's 
-    <Math>Y</Math>-class <A>class</A> for appropriate
-    substitutions of <Math>X</Math> and <Math>Y</Math>.<P/>
+    returns the Green's <M>X</M>-class containing the Green's 
+    <M>Y</M>-class <A>class</A> for appropriate
+    substitutions of <M>X</M> and <M>Y</M>.<P/>
 
       Note that if it is not known to &GAP; whether or not the representative 
       of <A>class</A> is an element of the semigroup <C>S</C> containing 

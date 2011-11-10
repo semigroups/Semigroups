@@ -109,8 +109,7 @@
     Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
     <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html</URL><P/>
     <Alt Only="LaTeX">\noindent</Alt> or the main &GAP; webpages for more 
-    information.
-  
+    information. 
   </Section>
 
   <Section Label="install">
@@ -314,8 +313,9 @@ gap></Log>
     <#Include Label="OrbSCCLookup">
     <#Include Label="OrbSCCTruthTable">
     <#Include Label="ReverseSchreierTreeOfSCC">
-    <#Include Label="StrongOrbitsInForwardOrbit">
+    <#Include Label="SchreierTreeOfSCC">
     <#Include Label="TraceSchreierTreeOfSCCBack">
+    <#Include Label="TraceSchreierTreeOfSCCForward">
   </Section>	
 
 </Chapter>
