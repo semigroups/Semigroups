@@ -16,7 +16,7 @@ gap> LoadPackage("citrus", false);;
 gap> ReadPackage("citrus/examples/test.gap");;
 gap> tmptmptmp:=InfoLevel(InfoWarning);;
 gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrusGreens, 0);
+gap> SetInfoLevel(InfoCitrus, 0);
 gap> out:=[];;
 gap> for x in gens do                            
 > s:=Semigroup(x);

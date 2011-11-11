@@ -110,7 +110,7 @@ gap> o:=ImagesOfTransSemigroup(S); Enumerate(o); AsList(o);
 
 <#GAPDoc Label="OnKernelsAntiAction">
   <ManSection> 
-    <Oper Name="OnKernelsAntiAction" Arg="ker, f"/>
+    <Func Name="OnKernelsAntiAction" Arg="ker, f"/>
     <Returns>
       <C>CanonicalTransSameKernel(f*g)</C> when <A>f</A> is a
       transformation and <A>g</A> is a transformation with
@@ -299,9 +299,8 @@ gap> Position(o, last);
 
 <#GAPDoc Label="TraceSchreierTreeOfSCCBack"/>
   <ManSection> 
-    <Oper Name="TraceSchreierTreeOfSCCBack" Arg="orb, m, nr"/>
+    <Func Name="TraceSchreierTreeOfSCCBack" Arg="orb, m, nr"/>
     <Returns>A word in the generators.</Returns>
-
     <Description>
     <A>orb</A>  must  be  an  orbit  object  with  a Schreier tree and orbit
     graph, that is, 
@@ -343,7 +342,7 @@ gap> TraceSchreierTreeOfSCCBack(o, 4, 8);
 
 <#GAPDoc Label="TraceSchreierTreeOfSCCForward"/>
   <ManSection> 
-    <Oper Name="TraceSchreierTreeOfSCCForward" Arg="orb, m, nr"/>
+    <Func Name="TraceSchreierTreeOfSCCForward" Arg="orb, m, nr"/>
     <Returns>A word in the generators.</Returns>
 
     <Description>

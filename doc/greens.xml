@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="\&lt;">
   <ManSection><Heading>Less than for Green's classes</Heading>
-    <Oper Name="\&lt;" Arg='left-expr, right-expr'/>
+    <Meth Name="\&lt;" Arg='left-expr, right-expr'/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       the Green's class <A>left-expr</A> is less than or equal to 
@@ -50,11 +50,11 @@ false</Example>
 
 <#GAPDoc Label="XClassOfYClass">
   <ManSection><Heading>XClassOfYClass</Heading>
-    <Oper Name="DClassOfRClass" Arg="class"/>
-    <Oper Name="DClassOfLClass" Arg="class"/>
-    <Oper Name="RClassOfHClass" Arg="class"/>
-    <Oper Name="LClassOfHClass" Arg="class"/>
-    <Oper Name="DClassOfHClass" Arg="class"/>
+    <Meth Name="DClassOfRClass" Arg="class"/>
+    <Meth Name="DClassOfLClass" Arg="class"/>
+    <Meth Name="RClassOfHClass" Arg="class"/>
+    <Meth Name="LClassOfHClass" Arg="class"/>
+    <Meth Name="DClassOfHClass" Arg="class"/>
     <Returns>the Green's <M>X</M>-class containing the Green's 
         <M>Y</M>-class <A>class</A>.
     </Returns>
@@ -210,7 +210,7 @@ gap> f:=EvaluateWord(Generators(S), f);;
 gap> R:=GreensRClassOfElementNC(S, f);;
 gap> Size(R);
 1
-gap> L:=GreensLClassOfElementNC(S, f);
+gap> L:=GreensLClassOfElementNC(S, f);;
 gap> Size(L);
 1 </Example>
     </Description>

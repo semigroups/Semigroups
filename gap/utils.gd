@@ -8,10 +8,10 @@
 #############################################################################
 ##
 
-DeclareGlobalFunction("CitrusDefaultMem");
-DeclareGlobalFunction("CitrusLoMem");
-DeclareGlobalFunction("CitrusHiMem");
-DeclareGlobalFunction("CitrusVeryLoMem");
+DeclareGlobalFunction("CitrusDefaultHTLen");
+DeclareGlobalFunction("CitrusLoHTLen");
+DeclareGlobalFunction("CitrusHiHTLen");
+DeclareGlobalFunction("CitrusVeryLoHTLen");
 DeclareGlobalFunction("CitrusMakeDoc");
 DeclareGlobalFunction("CitrusMathJaxLocal");
 DeclareGlobalFunction("CitrusMathJaxDefault");

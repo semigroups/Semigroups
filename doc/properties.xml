@@ -139,6 +139,7 @@ true</Example>
 <#GAPDoc Label="IsBlockGroup">
   <ManSection>
     <Prop Name="IsBlockGroup" Arg="S"/>
+    <Prop Name="IsSemigroupWithCommutingIdempotents" Arg="S"/>
     <Returns><K>true</K> if the transformation semigroup <A>S</A> is a block
           group and <K>false</K> if it is not.
     </Returns>
@@ -871,7 +872,7 @@ true</Example>
     
 <#GAPDoc Label="MultiplicativeZero">
   <ManSection>
-    <Prop Name="MultiplicativeZero" Arg="S"/>
+    <Attr Name="MultiplicativeZero" Arg="S"/>
     <Returns>
      the multiplicative zero of the transformation semigroup <A>S</A> 
       if it exists and returns <K>fail</K> if it does not.<P/> 
@@ -895,7 +896,7 @@ fail</Example>
 
 <#GAPDoc Label="SmallGeneratingSet">
   <ManSection>
-    <Oper Name="SmallGeneratingSet" Arg="S"/>
+    <Attr Name="SmallGeneratingSet" Arg="S"/>
       <Returns>
       a generating set for the transformation semigroup <A>S</A> with
       a  relatively small number of elements. <P/>

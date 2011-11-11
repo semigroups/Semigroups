@@ -30,8 +30,6 @@ DeclareProperty("IsLeftSimple", IsTransformationSemigroup);
 DeclareProperty("IsLeftZeroSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsMonogenicSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsMonoidAsSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsMinimalIdeal", IsSemigroupIdeal and 
- IsTransformationSemigroup);
 DeclareOperation("IsomorphismTransformationMonoid",
  [IsTransformationSemigroup]);
 DeclareProperty("IsOrthodoxSemigroup", IsTransformationSemigroup);

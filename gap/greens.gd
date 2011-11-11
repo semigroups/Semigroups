@@ -45,7 +45,7 @@ DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
 DeclareAttribute("GreensDClassReps", IsTransformationSemigroup);
 DeclareAttribute("GreensRClassReps", IsTransformationSemigroup);
 DeclareProperty("IsGreensClassOfTransSemigp", IsGreensClass);
-DeclareAttribute("IsRegularRClass", IsGreensClassOfTransSemigp);
+DeclareProperty("IsRegularRClass", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IteratorOfGreensDClasses");
 DeclareGlobalFunction("IteratorOfGreensRClasses");
 DeclareGlobalFunction("IteratorOfDClassReps"); 
@@ -163,7 +163,7 @@ DeclareGlobalFunction("SizeOrbitsOfKernels");
 DeclareGlobalFunction("CreateLClass");
 DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]); #M
 DeclareAttribute("GreensLClassReps", IsTransformationSemigroup); #M
-DeclareAttribute("IsRegularLClass", IsGreensClassOfTransSemigp); #M
+DeclareProperty("IsRegularLClass", IsGreensClassOfTransSemigp); #M
 DeclareGlobalFunction("IteratorOfGreensLClasses"); #M
 DeclareGlobalFunction("IteratorOfLClassRepsData");
 DeclareGlobalFunction("IteratorOfLClassReps"); #M

@@ -11,12 +11,12 @@
 # this file contains functions with shorter names than some library functions
 # commonly used in the citrus package. 
 
-# new for 0.2! - CitrusDefaultMem - "for no argument"
+# new for 0.2! - CitrusDefaultHTLen - "for no argument"
 #############################################################################
 # Notes: for semigroups with 10000s to 100000s of elements (this is the 
 # default).
 
-InstallGlobalFunction(CitrusDefaultMem,
+InstallGlobalFunction(CitrusDefaultHTLen,
 function()
   local len;
   len:=CitrusHashLen;
@@ -30,11 +30,11 @@ function()
   return true;
 end);
 
-# new for 0.2! - CitrusHiMem - "for no argument"
+# new for 0.2! - CitrusHiHTLen - "for no argument"
 #############################################################################
 # Notes: for semigroups with 100000s to millions of elements.
 
-InstallGlobalFunction(CitrusHiMem,
+InstallGlobalFunction(CitrusHiHTLen,
 function()
   local len;
   len:=CitrusHashLen;
@@ -48,11 +48,11 @@ function()
   return true;
 end);
 
-# new for 0.2! - CitrusLoMem - "for no argument"
+# new for 0.2! - CitrusLoHTLen - "for no argument"
 #############################################################################
 # Notes: for semigroups with 1000s to 10000s of elements.
 
-InstallGlobalFunction(CitrusLoMem,
+InstallGlobalFunction(CitrusLoHTLen,
 function()
   local len;
   len:=CitrusHashLen;
@@ -66,11 +66,11 @@ function()
   return true;
 end);
 
-# new for 0.2! - CitrusVeryLoMem - "for no argument"
+# new for 0.2! - CitrusVeryLoHTLen - "for no argument"
 #############################################################################
 # Notes: for semigroups with 1s to 1000s of elements.
 
-InstallGlobalFunction(CitrusVeryLoMem,
+InstallGlobalFunction(CitrusVeryLoHTLen,
 function()
   local len;
   len:=CitrusHashLen;

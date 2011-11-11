@@ -134,7 +134,7 @@
     <List>
     
       <Item> download and install the <Package>Orb</Package> package version 
-      3.7 or higher. For more details go to:
+      &ORBVERS; or higher. For more details go to:
       <Alt Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
           <Alt Only="LaTeX">\noindent</Alt><URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
       </URL><P/>
@@ -181,7 +181,7 @@
 
 gap> LoadPackage("citrus");
 ----------------------------------------------------------------------
-Loading  orb 3.7 (orb - Methods to enumerate orbits)
+Loading  orb &ORBVERS; (orb - Methods to enumerate orbits)
 by Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),
    Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef), and
    Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
@@ -200,7 +200,8 @@ gap></Log>
     Section <Ref Sect="testing"/>.<P/>
 
     <B>Please note:</B> before you can used &Citrus; you must
-    install <Package>Orb</Package> version 3.7 or higher as described above.
+    install <Package>Orb</Package> version &ORBVERS; or higher as described
+    above.
 
   </Section>
 
@@ -674,7 +675,7 @@ gap> GreensRClasses(S);
   In this section, we describe some utility functions available in
   &Citrus;.  
  
-    <#Include Label="CitrusDefaultMem">
+    <#Include Label="CitrusDefaultHTLen">
     <#Include Label="CitrusMakeDoc">
     <#Include Label="CitrusTestAll">
     <#Include Label="CitrusTestInstall">

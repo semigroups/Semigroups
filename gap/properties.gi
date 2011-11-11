@@ -628,6 +628,9 @@ InstallOtherMethod(IsMonoidAsSemigroup, "for a transformation semigroup",
 #JDM should have methods for IsomorphismTransformationSemigroup/Monoid for 
 # perm. groups. 
 
+# new for 0.4! - IsomorphismTransformationSemigroup - "for a perm group"
+#############################################################################
+
 # new for 0.1! - IsomorphismTransformationMonoid - "for trans semi"
 #############################################################################
 
