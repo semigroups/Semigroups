@@ -52,6 +52,8 @@ function(f, r)
   if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) or
    RankOfTransformation(f) <> RankOfTransformation(rep) or
    CanonicalTransSameKernel(f) <> CanonicalTransSameKernel(rep) then 
+    Info(InfoCitrus, 2, "degree, rank, or kernel not equal to those of", 
+    " any R-class element."); 
     return false;
   fi;
 
@@ -60,20 +62,25 @@ function(f, r)
   i:= Position(o, ImageSetOfTransformation(f));
 
   if i = fail or not o!.truth[d[4]][i] then #check they are in the same scc
+    Info(InfoCitrus, 2, "image not equal to that of any R-class element.");
     return false;
   fi;
 
   schutz:=ImageOrbitStabChain(r);
   
-  if schutz=true then 
+  if schutz=true then
+    Info(InfoCitrus, 3, "Schutz. group of R-class is symmetric group");
     return true;
   fi;
 
   g:=f*o!.perms[i];
 
   if g=rep then
+    Info(InfoCitrus, 3, "transformation with rectified image equals ", 
+    "R-class representative");
     return true;
-  elif schutz=false then 
+  elif schutz=false then
+    Info(InfoCitrus, 3, "Schutz. group of R-class is trivial");
     return false;
   fi;
 
@@ -480,7 +487,7 @@ function(s, f)
   local data, l, o, rep, p, w, g, q;
  
   if not f in s then 
-    Info(InfoCitrus, 1, "transformation is not an element of the semigroup.");
+    Info(InfoCitrus, 2, "transformation is not an element of the semigroup.");
     return fail;
   fi;
   
@@ -495,6 +502,7 @@ function(s, f)
   fi;
 
   if l=data[3] and p=() then # f is an R-class rep!
+    Info(InfoCitrus, 2, "transformation is an R-class representative.");
     return TraceRClassRepsTree(s, RClassIndexFromData(s, data));
   fi;
   
@@ -649,6 +657,8 @@ InstallOtherMethod(GreensHClasses, "for an R-class of a trans. semigp.",
 function(r)
   local s, d, o, m, data, out, f, h, i;
 
+  Info(InfoCitrus, 4, "GreensHClasses: for an R-class");
+  
   s:=r!.parent; d:=DClassOfRClass(r); o:=d!.o; 
   m:=NrGreensHClasses(r); data:=GreensHClassRepsData(r); 
   
@@ -678,6 +688,8 @@ InstallOtherMethod(GreensHClassReps, "for an R-class of a trans. semigp.",
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 function(r)
   local f, cosets, perms, scc, out, k, i, j;
+
+  Info(InfoCitrus, 4, "GreensHClassReps: for an R-class");
 
   if HasGreensHClasses(r) then 
     return List(GreensHClasses(r), Representative);
@@ -717,6 +729,8 @@ InstallOtherMethod(GreensHClassRepsData, "for an R-class of a trans. semigp.",
 function(r)
   local f, scc, d, cosets, out, k, data, i, j;
 
+  Info(InfoCitrus, 4, "GreensHClassRepsData: for an R-class");
+
   f:= r!.rep; scc:=ImageOrbitSCC(r);
   d:=DClassOfRClass(r); cosets:=ImageOrbitCosets(d);
 
@@ -748,6 +762,8 @@ InstallGlobalFunction(GreensHClassRepsDataFromData,
 function(s, data, o)
   local f, scc, d, cosets, out, k, i, j;
 
+  Info(InfoCitrus, 4, "GreensHClassRepsDataFromData: for an R-class");
+
   f:=RClassRepFromData(s, data, o); scc:=ImageOrbitSCCFromData(s, data, o);
   d:=GreensDClassOfElementNC(s, f); cosets:=ImageOrbitCosets(d);
   out:=EmptyPlist(Length(scc)*Length(cosets));
@@ -774,7 +790,7 @@ InstallMethod(GreensRClasses, "for a transformation semigroup",
 function(s)
   local iter, out, i, r;
 
-  Info(InfoCitrus, 4, "GreensRClasses");
+  Info(InfoCitrus, 4, "GreensRClasses: for a trans. semi.");
 
   iter:=IteratorOfGreensRClasses(s);
   out:=EmptyPlist(NrGreensRClasses(s));
@@ -796,7 +812,7 @@ InstallOtherMethod(GreensRClassOfElement, "for a trans. semigp and trans.",
 function(s, f)
   local d;
 
-  Info(InfoCitrus, 4, "GreensRClassOfElement");
+  Info(InfoCitrus, 4, "GreensRClassOfElement: for trans. semi. and trans.");
 
   if not f in s then 
     Info(InfoWarning, 1, "transformation is not an element of the semigroup");
@@ -817,7 +833,7 @@ InstallOtherMethod(GreensRClassOfElementNC, "for a trans. semigp and trans.",
 function(s, f)
   local d, j, r, o, n;
 
-  Info(InfoCitrus, 4, "GreensRClassOfElementNC");
+  Info(InfoCitrus, 4, "GreensRClassOfElementNC: for trans. semi. and trans.");
 
   d:=PreInOrbitsOfImages(s, f, true);
 
@@ -858,7 +874,7 @@ end);
 InstallMethod(GreensRClassReps, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  Info(InfoCitrus, 4, "GreensRClassReps");
+  Info(InfoCitrus, 4, "GreensRClassReps: for a trans. semi.");
 
   ExpandOrbitsOfImages(s);
 
@@ -871,7 +887,7 @@ end);
 InstallMethod(GreensRClassRepsData, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  Info(InfoCitrus, 4, "GreensRClassRepsData");
+  Info(InfoCitrus, 4, "GreensRClassRepsData: for a trans. semi.");
   ExpandOrbitsOfImages(s);
   return OrbitsOfImages(s)!.data;
 end);
@@ -888,6 +904,8 @@ InstallOtherMethod(Idempotents, "for a R-class of a trans. semigp.",
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 function(r)
   local out, f, ker, o, scc, j, i;
+
+  Info(InfoCitrus, 4, "Idempotents: for an R-class");
 
   if HasIsRegularRClass(r) and not IsRegularRClass(r) then 
     return [];
@@ -1193,7 +1211,10 @@ InstallMethod(IsRegularRClass, "for a Green's class of trans. semigroup",
 [IsGreensClassOfTransSemigp], 
 function(r)
 
+  Info(InfoCitrus, 4, "IsRegularRClass: for a Green's class");
+
   if not IsGreensRClass(r) then 
+    Info(InfoCitrus, 2, "not an R-class");
     return false;
   fi;
 
@@ -1216,6 +1237,8 @@ end);
 InstallGlobalFunction(IsRegularRClassData, 
 function(arg)
   local s, d, o, f, scc, i;
+
+  Info(InfoCitrus, 4, "IsRegularRClassData");
 
   s:=arg[1]; d:=arg[2]; 
 
@@ -1319,12 +1342,12 @@ InstallGlobalFunction(IteratorOfGreensRClasses,
 function(s)
   local iter;
 
+  Info(InfoCitrus, 4, "IteratorOfGreensRClasses");
+  
   if not IsTransformationSemigroup(s) then 
     Info(InfoWarning, 1, "Usage: arg. should be a transformation semigroup.");
     return fail;
   fi;
-
-  Info(InfoCitrus, 4, "IteratorOfGreensRClasses");
 
   iter:=IteratorByFunctions( rec(
           
@@ -1358,6 +1381,8 @@ InstallGlobalFunction(IteratorOfNewRClassRepsData,
 function(s)
   local iter, o;
 
+  Info(InfoCitrus, 4, "IteratorOfNewRClassRepsData");
+  
   o:=OrbitsOfImages(s);
   iter:=IteratorOfRClassRepsData(s);
   iter!.i:=Length(o!.data); 
@@ -1525,6 +1550,8 @@ InstallOtherMethod(NrIdempotents, "for an R-class of a trans. semigp.",
 [IsGreensRClass and IsGreensClassOfTransSemigp],
 function(r)
 
+  Info(InfoCitrus, 4, "NrIdempotents: for an R-class");
+
   if HasIdempotents(r) then 
     return Length(Idempotents(r));
   fi;
@@ -1547,6 +1574,8 @@ end);
 InstallGlobalFunction(NrIdempotentsRClassFromData, 
 function(arg)
   local s, d, O, o, out, rep, scc, i;
+
+  Info(InfoCitrus, 4, "NrIdempotentsRClassFromData");
 
   s:=arg[1]; d:=arg[2];
 
@@ -1617,6 +1646,8 @@ InstallMethod(OrbitsOfImages, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local gens, n, one, ht, i, type, o;
+
+  Info(InfoCitrus, 4, "OrbitsOfImages");
 
   gens:=List(Generators(s), x-> x![1]);
   n := DegreeOfTransformationSemigroup( s );
@@ -1770,6 +1801,8 @@ InstallOtherMethod(Random, "for an R-class of a trans. semigp.",
 function(r)
   local f, g, i;
 
+  Info(InfoCitrus, 4, "Random: for an R-class");
+
   f:=r!.rep;
   g:=Random(SchutzenbergerGroup(r));
   i:=Random(ImageOrbitSCC(r));
@@ -1885,6 +1918,8 @@ end);
 InstallGlobalFunction(TraceRClassRepsTree, 
 function(s, i)
   local o, gen1, pos1, gen2, pos2, word_1, word_2, j, orb, m, l;
+
+  Info(InfoCitrus, 4, "TraceRClassRepsTree");
 
   o:=OrbitsOfImages(s);
   gen1:=o!.gen1; pos1:=o!.pos1; gen2:=o!.gen2; pos2:=o!.pos2; o:=o!.orbits;

@@ -159,11 +159,22 @@ end);
 
 InstallGlobalFunction(CitrusTestManualExamples,
 function()
-  SizeScreen([80]); SetInfoLevel(InfoWarning, 0);
+  local InfoLevelInfoWarning, InfoLevelInfoCitrus;
+  SizeScreen([80]); 
+  InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
+  InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+  SetInfoLevel(InfoWarning, 0);;
+  SetInfoLevel(InfoCitrus, 0);
+
   TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
      InstallationPath, "/doc"), "citrus.xml", 
      ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
       "transform.xml", "../PackageInfo.g"]);
+  
+  SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
+  SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
+  Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+
 end);
 
 # new for 0.1! - DClass - "for a trans. semi and trans. or Green's class"

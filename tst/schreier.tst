@@ -11,6 +11,12 @@
 #ReadTest("pkg/citrus/tst/schreier.tst");
 
 gap> START_TEST("Citrus package: schreier.tst");
+gap> LoadPackage("citrus", false);;
+
+gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
+gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> SetInfoLevel(InfoWarning, 0);;
+gap> SetInfoLevel(InfoCitrus, 0);
 
 gap> TestTraceRClassRepsTree:=s-> ForAll([1..NrGreensRClasses(s)], i->
 > EvaluateWord(Generators(s), TraceRClassRepsTree(s, i))=
@@ -90,4 +96,8 @@ gap> s:=Monoid(gens);;
 gap> ForAll(s, f-> EvaluateWord(gens, Factorization(s,f))=f);
 true
 
-gap> STOP_TEST("Citrus package: schreier.tst", 0);
+gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
+gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+
+gap> STOP_TEST("Citrus package: schreier.tst", 10000);

@@ -11,7 +11,13 @@
 #ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"properties.tst"));
 
 gap> START_TEST("Citrus package: properties.tst");
-gap> LoadPackage("citrus");;
+gap> LoadPackage("citrus", false);;
+
+gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
+gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> SetInfoLevel(InfoWarning, 0);;
+gap> SetInfoLevel(InfoCitrus, 0);
+
 gap> g1:=Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] );;
 gap> g2:=Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] );;
 gap> m10:=Monoid(g1,g2);;
@@ -893,4 +899,9 @@ gap> IsAbundantSemigroup(s);
 true
 gap> IsRegularSemigroup(s);
 false
+
+gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
+gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+
 gap> STOP_TEST( "Citrus package: properties.tst", 10000);

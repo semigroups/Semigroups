@@ -17,6 +17,12 @@
 
 gap> START_TEST("Citrus package: monoid_pkg.tst");
 gap> LoadPackage("citrus", false);;
+
+gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
+gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> SetInfoLevel(InfoWarning, 0);;
+gap> SetInfoLevel(InfoCitrus, 0);
+
 gap> g:=CyclicGroup(3);;
 gap> r:=GF(2);;
 gap> gr:=GroupRing(r, g);;
@@ -1503,4 +1509,9 @@ gap> S:=Semigroup(gens);;
 gap> MultiplicativeZero(S);
 Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
 gap> Unbind(semis); Unbind(S); Unbind(m);
+
+gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
+gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+
 gap> STOP_TEST( "Citrus package: monoid_pkg.tst", 10000);

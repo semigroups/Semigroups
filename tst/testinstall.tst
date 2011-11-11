@@ -12,6 +12,12 @@
 
 gap> START_TEST("Citrus package: testinstall.tst");
 gap> LoadPackage( "citrus", false );;
+
+gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
+gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> SetInfoLevel(InfoWarning, 0);;
+gap> SetInfoLevel(InfoCitrus, 0);
+
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 1, 4, 1, 2 ] ),
 >  Transformation( [ 3, 4, 2, 2 ] ),
@@ -148,4 +154,9 @@ gap> ForAll([1..NrGreensRClasses(s)], i->
 > EvaluateWord(Generators(s), TraceRClassRepsTree(s, i))=
 > GreensRClassReps(s)[i]);
 true
-gap> STOP_TEST( "Citrus package: testinstall.tst", 0);
+
+gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
+gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+
+gap> STOP_TEST( "Citrus package: testinstall.tst", 10000);

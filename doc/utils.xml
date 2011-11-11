@@ -27,7 +27,7 @@
       hundreds of millions of elements), then you will probably be best using
       <C>CitrusHiHTLen</C> or <C>CitrusDefaultHTLen</C>. On the other hand, if 
       you plan to do lots of computations with small semigroups (up to a hundred
-      thousand elements, say), then using <C>CitrusLoHTMem</C> will use less
+      thousand elements, say), then using <C>CitrusLoHTLen</C> will use less
       memory.<P/>
 
       The values used can also be set directly by editing the values in global

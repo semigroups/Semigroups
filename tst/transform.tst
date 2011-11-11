@@ -12,7 +12,13 @@
 # around 2.3s.
 
 gap> START_TEST("CitrusPackage: transform.tst");
-gap> LoadPackage("citrus");;
+gap> LoadPackage("citrus", false);;
+
+gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
+gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> SetInfoLevel(InfoWarning, 0);;
+gap> SetInfoLevel(InfoCitrus, 0);
+
 gap> gens:=[ Transformation( [ 2, 3, 2, 4, 3 ] ), 
 > Transformation( [ 4, 5, 2, 2, 4 ] ), 
 > Transformation( [ 4, 3, 2, 1, 4 ] ), Transformation( [ 5, 5, 1, 3, 1 ] ) ];;
@@ -297,4 +303,9 @@ gap> Size(last);
 4
 gap> IsRightZeroSemigroup(last2);
 true
+
+gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
+gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+
 gap> STOP_TEST( "Citrus package: transform.tst", 10000);

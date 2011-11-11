@@ -13,10 +13,13 @@
 
 gap> START_TEST("Citrus package: greens.tst");
 gap> LoadPackage("citrus", false);;
-gap> ReadPackage("citrus/examples/test.gap");;
-gap> tmptmptmp:=InfoLevel(InfoWarning);;
+
+gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
+gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> SetInfoLevel(InfoCitrus, 0);
+
+gap> ReadPackage("citrus/examples/test.gap");;
 gap> out:=[];;
 gap> for x in gens do                            
 > s:=Semigroup(x);
@@ -1559,7 +1562,11 @@ gap> GreensHClassRepsData(r);
   [ [ 7, 1, 2, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (2,6,4,3,7), fail ], 
   [ [ 7, 1, 2, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (2,7,3,4,6), fail ], 
   [ [ 7, 1, 2, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (2,4,7,6,3), fail ] ]
-gap> SetInfoLevel(InfoWarning, tmptmptmp);;
+
+gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
+gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+
 gap> Unbind(tmptmptmp); Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
 > Unbind(H); Unbind(I); Unbind(r); Unbind(d); Unbind(dr); Unbind(r2);
 > Unbind(out2); Unbind(out3); Unbind(a); Unbind(b); Unbind(M);
@@ -1568,4 +1575,4 @@ gap> Unbind(tmptmptmp); Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
 > Unbind(ll); Unbind(hh); Unbind(dd); Unbind(g); Unbind(enum); Unbind(j);
 > Unbind(iter2); Unbind(iter1); Unbind(iter3); Unbind(r3); Unbind(elts);
 > Unbind(R); Unbind(x); Unbind(i);;
-gap> STOP_TEST( "Citrus package: greens.tst", 0);
+gap> STOP_TEST( "Citrus package: greens.tst", 10000);
