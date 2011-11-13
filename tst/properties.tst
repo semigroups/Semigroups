@@ -900,6 +900,23 @@ true
 gap> IsRegularSemigroup(s);
 false
 
+gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
+> Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
+gap> s:=Monoid(gens);;
+gap> IsAdequateSemigroup(s);
+false
+gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
+> Transformation([1,2,4,3,5,6,7,8,9,10]),
+> Transformation([1,2,3,4,5,6,10,9,8,7]),
+> Transformation([9,1,4,3,6,9,3,4,3,9])];;
+gap> s:=Monoid(gens);;
+gap> IsAdequateSemigroup(s);
+false
+gap> Read("/Users/jdm/Desktop/gap4r5/pkg/citrus/dev/examples/schmidt.gap");
+gap> slow:=List(SLOWAUT, x-> Semigroup(List(x, TransformationNC)));;
+gap> List(slow, IsAdequateSemigroup);
+[ true, true, true, true, true, true, true, true ]
+
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;

@@ -59,6 +59,8 @@ function(f, d)
 
   if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) 
    or RankOfTransformation(f) <> RankOfTransformation(rep) then
+    Info(InfoCitrus, 2, "degree or rank not equal to those of",
+        " any of the D-class elements."); 
     return false;
   fi;
   

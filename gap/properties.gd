@@ -12,6 +12,7 @@ DeclareAttribute("GroupOfUnits", IsTransformationSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigp", IsTransformationSemigroup);
 DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
 DeclareProperty("IsAbundantSemigroup", IsTransformationSemigroup);
+DeclareProperty("IsAdequateSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsBand", IsTransformationSemigroup);
 DeclareProperty("IsBlockGroup", IsTransformationSemigroup);
 DeclareProperty("IsBrandtSemigroup", IsTransformationSemigroup);

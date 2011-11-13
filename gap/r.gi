@@ -53,7 +53,7 @@ function(f, r)
    RankOfTransformation(f) <> RankOfTransformation(rep) or
    CanonicalTransSameKernel(f) <> CanonicalTransSameKernel(rep) then 
     Info(InfoCitrus, 2, "degree, rank, or kernel not equal to those of", 
-    " any R-class element."); 
+    " any of the R-class elements."); 
     return false;
   fi;
 

@@ -109,6 +109,7 @@ function(s)
   local iter, n, ht, ht_o, reg, i, data, f, ker, val, o, scc;
 
   if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
+    Info(InfoCitrus, 2, "semigroup is regular");
     return true;
   fi;
 
@@ -142,6 +143,14 @@ function(s)
 
   return ForAll(reg, x-> x);
 end);
+
+
+# new for 0.4! - IsAdequateSemigroup - "for a trans. semigroup"
+###########################################################################
+
+InstallMethod(IsAdequateSemigroup, "for a trans. semigroup", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
 
 #IIIBBB
 

@@ -90,7 +90,7 @@ gap> CanonicalTransSameKernel(f);
 <#GAPDoc Label="ConstantTransformation">
   <ManSection>
     <Func Name="ConstantTransformation" Arg="m, n"/>
-    <Returns>a constant Transformation of degree <A>m</A> with value <A>n</A>. 
+    <Returns>a constant transformation of degree <A>m</A> with value <A>n</A>. 
     </Returns>
     <Description>
     <Example>
