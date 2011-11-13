@@ -19,7 +19,7 @@
     <Description>
       &Citrus; uses hash tables in several fundamental methods.
       The lengths of
-      these tables is a compromise between performance and memory usage; larger
+      these tables are a compromise between performance and memory usage; larger
       tables provide better performance for large computations but use more
       memory. The lengths of these hash tables can be coarsely controlled by 
       using the functions above. If you plan to do a small number of
@@ -30,9 +30,9 @@
       thousand elements, say), then using <C>CitrusLoHTLen</C> will use less
       memory.<P/>
 
-      The values used can also be set directly by editing the values in global
-      variable <C>CitrusHashLen</C> in the <C>config</C> file in the &Citrus;
-      package directory.
+      The values used can also be set directly by editing the values in the 
+      global variable <C>CitrusHashLen</C> in the <C>config</C> file in the
+      &Citrus; package directory.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -50,7 +50,7 @@
 MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
  InstallationPath, "/doc"), "citrus.xml", [
  "utils.xml", "greens.xml", "orbits.xml", "properties.xml",
- "transform.xml"], "citrus", "MathJax");;</Log>
+ "transform.xml", "../PackageInfo.g"], "citrus", "MathJax");;</Log>
 
       at the &GAP; prompt. 
     </Description>
