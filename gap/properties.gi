@@ -108,6 +108,8 @@ InstallMethod(IsAbundantSemigroup, "for a trans. semigroup",
 function(s)
   local iter, n, ht, ht_o, reg, i, data, f, ker, val, o, scc;
 
+  Info(InfoWarning, 1, "this will sometimes return a false positive.");
+
   if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
     Info(InfoCitrus, 2, "semigroup is regular");
     return true;

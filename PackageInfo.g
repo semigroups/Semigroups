@@ -9,19 +9,19 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "0.3">
-##  <!ENTITY ORBVERS "3.7">
-##  <!ENTITY RELEASEDATE "10 September 2011">
-##  <!ENTITY ARCHIVENAME "citrus0r3">
+##  <!ENTITY VERSION "0.4">
+##  <!ENTITY ORBVERS "3.8">
+##  <!ENTITY RELEASEDATE "19 November 2011">
+##  <!ENTITY ARCHIVENAME "citrus0r4">
 ##  <#/GAPDoc>
 
 SetPackageInfo( rec(
 PackageName := "Citrus",
 Subtitle := "ComputIng with Transformation semigRoUps and monoidS",
-Version := "0.3",
-Date := "10/10/2011",
+Version := "0.4",
+Date := "19/11/2011",
 ArchiveURL := 
-          "https://bitbucket.org/zen154115/citrus/downloads/citrus0r3",
+          "https://bitbucket.org/zen154115/citrus/downloads/citrus0r4",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -55,7 +55,7 @@ PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus",
 PackageDoc := rec(
   BookName  := "Citrus",
   Archive := 
-      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus0r3.tar.gz",
+      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus0r4.tar.gz",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",  
@@ -66,8 +66,8 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.5",
-  NeededOtherPackages := [["orb", "3.7"]],
-  SuggestedOtherPackages := [["gapdoc", ">=1.3"]], 
+  NeededOtherPackages := [["orb", ">=3.8"]],
+  SuggestedOtherPackages := [["gapdoc", ">=1.4"]], 
   ExternalConditions := []),
   AvailabilityTest := ReturnTrue,
   Autoload := false,
