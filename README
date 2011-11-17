@@ -113,6 +113,13 @@ unix> gap
 
 gap> LoadPackage("citrus");
 ----------------------------------------------------------------------------
+Loading  orb 3.8 (orb - Methods to enumerate orbits)
+by Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),
+   Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef), and
+   Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
+Homepage: http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
 Loading  Citrus 0.4 (Citrus: computing with transformation semigroups)
 by James Mitchell (http://www-groups.mcs.st-and.ac.uk/~jamesm).
 ----------------------------------------------------------------------------
