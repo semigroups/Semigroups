@@ -498,7 +498,7 @@ function(s, f)
   rep:=RClassRepFromData(s, data); p:=data[8];
 
   if p=fail then 
-    p:=PermLeftQuoTransformationNC(rep, data[7]);
+    p:=PermLeftQuoTransformationNC(rep![1], data[7]);
   fi;
 
   if l=data[3] and p=() then # f is an R-class rep!
