@@ -480,7 +480,7 @@ function(s)
   local o, scc, r, gens, perms, schutz, i;
 
   o:=ImagesOfTransSemigroup(s); Enumerate(o); 
-  scc:=OrbSCC(o); r:=Length(scc); gens:=Generators(s);
+  scc:=OrbSCC(o); r:=Length(scc); gens:=GeneratorsAsListOfImages(s);
   o!.perms:=EmptyPlist(Length(o)); schutz:=EmptyPlist(r);
 
   for i in [1..r] do 
@@ -488,7 +488,7 @@ function(s)
     o!.perms:=o!.perms+CreateImageOrbitSCCPerms(gens, o, i);
     SchreierTreeOfSCC(o, i);
     schutz[i]:=CreateImageOrbitSchutzGp(gens, o,
-     EvaluateWord(gens, TraceSchreierTreeForward(o, scc[i][1])), i);
+     CitrusEvalWord(gens, TraceSchreierTreeForward(o, scc[i][1])), i);
   od;
   
   o!.schutz:=schutz;
