@@ -19,3 +19,4 @@ syntax: glob
 *.tex
 *.toc
 *.six
+*.orig

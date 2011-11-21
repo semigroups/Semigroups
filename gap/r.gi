@@ -1440,7 +1440,7 @@ function(s)
     if i=Length(o) then
     #at the end of the orbit!
       O!.finished:=true;
-      Unbind(O!.ht); Unbind(O!.lens); 
+      #Unbind(O!.ht); Unbind(O!.lens); JDM unedit this line
       return true;
     fi;
 
@@ -1652,10 +1652,11 @@ function(s)
   gens:=List(Generators(s), x-> x![1]);
   n := DegreeOfTransformationSemigroup( s );
   one := TransformationNC( [ 1 .. n ] );
-  o:=Concatenation([[1..n]*1], gens);
+  o:=Concatenation([[1..n]*1], gens); #JDM should use emptyplist of ht len
 
   ht := HTCreate(o[1], rec(hashlen:=CitrusHashLen!.rclassreps_orb));  
-  ht!.o:=o;
+  ht!.o:=o; #JDM this should be a queue, after at is greated than i, o[i] is not 
+            # needed for anything, wasting memory...
 
   for i in [1..Length(gens)+1] do 
     HTAdd(ht, o[i], i);
@@ -1742,7 +1743,7 @@ function(iter)
 
   s:=iter!.s;
   O:=OrbitsOfImages(s);
-
+# JDM O!.ht!.o is unbound if the calc is completed. 
   Print( "<iterator of R-class reps data, ", Length(O!.ht!.o), " candidates, ", 
    SizeOrbitsOfImages(s), " elements, ", NrRClassesOrbitsOfImages(s), 
    " R-classes>");
