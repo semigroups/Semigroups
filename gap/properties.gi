@@ -389,7 +389,7 @@ InstallOtherMethod(IsGreensLTrivial, "for a D-class of a trans. semigp",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
   d-> NrGreensLClasses(d)=Size(d));
 
-# new for 0.1! - IsGreensRTrivial - "for a transformation semigroup"
+# fix for 0.4! - IsGreensRTrivial - "for a transformation semigroup"
 #############################################################################
 
 InstallMethod(IsGreensRTrivial, "for a transformation semigroup",
@@ -401,7 +401,7 @@ function(s)
     iter:=IteratorOfGreensDClasses(s);
     for d in iter do 
       if not (Size(ImageOrbitSchutzGpFromData(s, d!.data[1]))=1 and 
-       Length(ImageOrbitFromData(s, d!.data[1]))=1) then
+       Length(ImageOrbitSCCFromData(s, d!.data[1]))=1) then
         return false;
       fi;
     od;
@@ -416,7 +416,7 @@ function(s)
 
   for d in iter do 
     if not (Size(ImageOrbitSchutzGpFromData(s, d))=1 and 
-     Length(ImageOrbitFromData(s, d))=1) then 
+     Length(ImageOrbitSCCFromData(s, d))=1) then 
       return false;
     fi;
   od;
