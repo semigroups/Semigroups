@@ -10,7 +10,7 @@
 
 # Read(Filename(DirectoriesPackageLibrary("citrus","tst"),"testall.g"));;
 
-LoadPackage( "citrus" );;
+LoadPackage( "citrus", false );;
 dir_str:=Concatenation(PackageInfo("citrus")[1]!.InstallationPath,"/tst");
 tst:=DirectoryContents(dir_str);
 dir:=Directory(dir_str);

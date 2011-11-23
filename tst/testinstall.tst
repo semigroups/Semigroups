@@ -10,8 +10,14 @@
 
 # ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"testinstall.tst"));
 
-gap> START_TEST("testinstall.tst 0.3");
-gap> LoadPackage( "citrus" );;
+gap> START_TEST("Citrus package: testinstall.tst");
+gap> LoadPackage( "citrus", false );;
+
+gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
+gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> SetInfoLevel(InfoWarning, 0);;
+gap> SetInfoLevel(InfoCitrus, 0);
+
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 1, 4, 1, 2 ] ),
 >  Transformation( [ 3, 4, 2, 2 ] ),
@@ -22,8 +28,6 @@ gap> Size(s); NrGreensRClasses(s); NrGreensLClasses(s); NrGreensDClasses(s);
 17
 21
 9
-gap> NrIdempotents(s);
-22
 gap> NrIdempotents(s); NrRegularDClasses(s); IsRegularSemigroup(s);
 22
 6
@@ -73,8 +77,7 @@ gap> IndexPeriodOfTransformation(f);
 
 # Issue 2
 
-gap> s:=Semigroup(Transformation([4,4,4,4]));
-<semigroup with 1 generator>
+gap> s:=Semigroup(Transformation([4,4,4,4]));;
 gap> AsList(s);
 [ Transformation( [ 4, 4, 4, 4 ] ) ]
 
@@ -147,4 +150,13 @@ true
 gap> ForAll(Concatenation(List(GreensDClasses(s), GreensRClassReps)), 
 > x-> x in s);
 true
-gap> STOP_TEST( "testinstall.tst 0.3", 0);
+gap> ForAll([1..NrGreensRClasses(s)], i->
+> EvaluateWord(Generators(s), TraceRClassRepsTree(s, i))=
+> GreensRClassReps(s)[i]);
+true
+
+gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
+gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+
+gap> STOP_TEST( "Citrus package: testinstall.tst", 10000);

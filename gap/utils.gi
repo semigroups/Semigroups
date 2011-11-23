@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  convenience.gi
+#W  utils.gi
 #Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -11,12 +11,12 @@
 # this file contains functions with shorter names than some library functions
 # commonly used in the citrus package. 
 
-# new for 0.2! - CitrusDefaultMem - "for no argument"
+# new for 0.2! - CitrusDefaultHTLen - "for no argument"
 #############################################################################
 # Notes: for semigroups with 10000s to 100000s of elements (this is the 
 # default).
 
-InstallGlobalFunction(CitrusDefaultMem,
+InstallGlobalFunction(CitrusDefaultHTLen,
 function()
   local len;
   len:=CitrusHashLen;
@@ -30,11 +30,11 @@ function()
   return true;
 end);
 
-# new for 0.2! - CitrusHiMem - "for no argument"
+# new for 0.2! - CitrusHiHTLen - "for no argument"
 #############################################################################
 # Notes: for semigroups with 100000s to millions of elements.
 
-InstallGlobalFunction(CitrusHiMem,
+InstallGlobalFunction(CitrusHiHTLen,
 function()
   local len;
   len:=CitrusHashLen;
@@ -48,12 +48,11 @@ function()
   return true;
 end);
 
-
-# new for 0.2! - CitrusLoMem - "for no argument"
+# new for 0.2! - CitrusLoHTLen - "for no argument"
 #############################################################################
 # Notes: for semigroups with 1000s to 10000s of elements.
 
-InstallGlobalFunction(CitrusLoMem,
+InstallGlobalFunction(CitrusLoHTLen,
 function()
   local len;
   len:=CitrusHashLen;
@@ -67,11 +66,11 @@ function()
   return true;
 end);
 
-# new for 0.2! - CitrusVeryLoMem - "for no argument"
+# new for 0.2! - CitrusVeryLoHTLen - "for no argument"
 #############################################################################
 # Notes: for semigroups with 1s to 1000s of elements.
 
-InstallGlobalFunction(CitrusVeryLoMem,
+InstallGlobalFunction(CitrusVeryLoHTLen,
 function()
   local len;
   len:=CitrusHashLen;
@@ -84,26 +83,65 @@ function()
   return true;
 end);
 
-# new for 0.1! - CitrusMakeDoc - "for no argument"
+# mod for 0.4! - CitrusMakeDoc - "for no argument"
 #############################################################################
 
 InstallGlobalFunction(CitrusMakeDoc, 
 function()
   MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
    InstallationPath, "/doc"), "citrus.xml", 
-   ["convenience.xml", "greens.xml", "orbits.xml", "properties.xml",
-     "transform.xml"], "citrus", "MathJax");;
+   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
+     "transform.xml", "../PackageInfo.g"], "citrus", "MathJax");;
 end);
 
-# new for 0.1! - CitrusTestAll - "for no argument"
+# new for 0.4! - CitrusMathJaxDefault - "for no argument"
+#############################################################################
+
+InstallGlobalFunction(CitrusMathJaxDefault, 
+function()
+GAPDoc2HTMLProcs.Head1MathJax:=Concatenation(
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<!DOCTYPE html PUBLIC",
+"\"-//W3C//DTD \ XHTML 1.0 Strict//EN\"\n",
+"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dt\"",
+"d\">\n\n<html xmlns=\"http://www.w3.org/1999/xhtml\"",
+"xml:lang=\"en\">\n<head>\n<script",
+" type=\"text/javascript\"\n",
+"src=\"http://cdn.mathjax.org/mathjax/latest/MathJax",
+".js?config=TeX-AMS-MML_HTMLorMML\">\n</script>\n<title>GAP (");
+Info(InfoWarning, 1, "don't forget to run CitrusMakeDoc()");
+end);
+
+# new for 0.4! - CitrusMathJaxLocal - "for a path to the MathJax folder"
+#############################################################################
+
+InstallGlobalFunction(CitrusMathJaxLocal, 
+function(arg)
+  local path;
+
+  if Length(arg)>0 then 
+    path:= arg[1];
+  else
+    path:= "";
+  fi;
+
+  GAPDoc2HTMLProcs.Head1MathJax:=Concatenation(
+  "<?xml version=\"1.0\"",
+  "encoding=\"UTF-8\"?>\n\n<!DOCTYPE html PUBLIC \"-//W3C/\"",
+  "/DTD XHTML 1.0 Strict//EN\"\n\"http://www.w3.org/TR/xhtml1/DTD/xhtml1\"",
+  "-strict.dtd\">\n\n<html xmlns=\"http://www.w3.org/1999/xhtml\"",
+  "xml:lang=\"en\"\ >\n<head>\n<script type=\"text/javascript\"",
+  "\n src=\"", path, "/MathJax/MathJax.js?config=default",
+  "\">\n</script>\n<title>GAP\ (");
+  Info(InfoWarning, 1, "don't forget to run CitrusMakeDoc()");
+end);
+
+# mod for 0.4! - CitrusTestAll - "for no argument"
 #############################################################################
 
 InstallGlobalFunction(CitrusTestAll, 
 function()
   Print(
-  "reading citrus/tst/testall.g, which automatically reads all .tst files", 
-  "\nin the tst directory. As of 10/08/11 the tests take approx. 55s with", 
-  "\n1g of memory.\n\n");
+  "Reading all .tst files in the directory citrus/tst/...\n\n"); 
   Read(Filename(DirectoriesPackageLibrary("citrus","tst"),"testall.g"));;
 end);
 
@@ -121,11 +159,22 @@ end);
 
 InstallGlobalFunction(CitrusTestManualExamples,
 function()
-  SizeScreen([80]); SetInfoLevel(InfoWarning, 0);
+  local InfoLevelInfoWarning, InfoLevelInfoCitrus;
+  SizeScreen([80]); 
+  InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
+  InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+  SetInfoLevel(InfoWarning, 0);;
+  SetInfoLevel(InfoCitrus, 0);
+
   TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
      InstallationPath, "/doc"), "citrus.xml", 
-     ["convenience.xml", "greens.xml",
-    "orbits.xml", "properties.xml", "transform.xml"]);
+     ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
+      "transform.xml", "../PackageInfo.g"]);
+  
+  SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
+  SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
+  Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+
 end);
 
 # new for 0.1! - DClass - "for a trans. semi and trans. or Green's class"

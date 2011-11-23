@@ -31,6 +31,11 @@
 #############################################################################
 #############################################################################
 
+
+# in greens.gi
+
+DeclareOperation("EnumeratorOfRClasses", [IsTransformationSemigroup]);
+
 # the documentation for the functions below can be found in 
 # /monoid/doc/r.xml
 
@@ -40,7 +45,7 @@ DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
 DeclareAttribute("GreensDClassReps", IsTransformationSemigroup);
 DeclareAttribute("GreensRClassReps", IsTransformationSemigroup);
 DeclareProperty("IsGreensClassOfTransSemigp", IsGreensClass);
-DeclareAttribute("IsRegularRClass", IsGreensClassOfTransSemigp);
+DeclareProperty("IsRegularRClass", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IteratorOfGreensDClasses");
 DeclareGlobalFunction("IteratorOfGreensRClasses");
 DeclareGlobalFunction("IteratorOfDClassReps"); 
@@ -56,8 +61,6 @@ DeclareGlobalFunction("AddToOrbitsOfImages");
 DeclareGlobalFunction("CreateImageOrbitSCCPerms");
 DeclareGlobalFunction("CreateImageOrbitSchutzGp");
 DeclareGlobalFunction("CreateRClass");
-DeclareGlobalFunction("CreateSchreierTreeOfSCC");
-DeclareGlobalFunction("CreateReverseSchreierTreeOfSCC");
 DeclareGlobalFunction("DisplayOrbitsOfImages");
 DeclareGlobalFunction("ExpandOrbitsOfImages");
 DeclareGlobalFunction("ForwardOrbitOfImage");
@@ -66,14 +69,15 @@ DeclareAttribute("GreensRClassRepsData", IsTransformationSemigroup);
 DeclareAttribute("ImageOrbit", IsGreensRClass and 
  IsGreensClassOfTransSemigp, "mutable"); # mutable essential!
 DeclareGlobalFunction("ImageOrbitFromData");
+DeclareGlobalFunction("ImageOrbitKersHTFromData");
 DeclareAttribute("ImageOrbitPerms", IsGreensRClass and 
  IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("ImageOrbitPermsFromData"); 
 DeclareGlobalFunction("ImageOrbitSCCFromData");
 DeclareAttribute("ImageOrbitSCC", IsGreensRClass and 
  IsGreensClassOfTransSemigp);
-DeclareAttribute("ImageOrbitSchutzGp", IsGreensRClass and 
- IsGreensClassOfTransSemigp);
+DeclareAttribute("ImageOrbitSchutzGp", IsGreensRClass and
+IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("ImageOrbitSchutzGpFromData");
 DeclareGlobalFunction("ImageOrbitStabChainFromData");
 DeclareAttribute("ImageOrbitStabChain", IsGreensRClass and 
@@ -81,6 +85,7 @@ DeclareAttribute("ImageOrbitStabChain", IsGreensRClass and
 DeclareGlobalFunction("InOrbitsOfImages");
 DeclareProperty("IsIteratorOfRClassRepsData", IsIterator);
 DeclareGlobalFunction("IsRegularRClassData");
+DeclareProperty("IsRClassNC", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IteratorOfNewRClassRepsData");
 DeclareGlobalFunction("IteratorOfRClassRepsData");
 DeclareGlobalFunction("GreensHClassRepsDataFromData");
@@ -88,11 +93,11 @@ DeclareGlobalFunction("NrIdempotentsRClassFromData");
 DeclareGlobalFunction("NrRClassesOrbitsOfImages");
 DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
 DeclareGlobalFunction("PreInOrbitsOfImages");
+DeclareGlobalFunction("RClassIndexFromData");
 DeclareGlobalFunction("RClassRepFromData");
 DeclareAttribute("RClassType", IsTransformationSemigroup);
 DeclareGlobalFunction("SizeOrbitsOfImages");
-DeclareGlobalFunction("TraceSchreierTreeOfSCCForward");
-DeclareGlobalFunction("TraceSchreierTreeOfSCCBack");
+DeclareGlobalFunction("TraceRClassRepsTree");
 
 # the documentation for the functions below can be found in 
 # /monoid/doc/d.xml
@@ -158,7 +163,7 @@ DeclareGlobalFunction("SizeOrbitsOfKernels");
 DeclareGlobalFunction("CreateLClass");
 DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]); #M
 DeclareAttribute("GreensLClassReps", IsTransformationSemigroup); #M
-DeclareAttribute("IsRegularLClass", IsGreensClassOfTransSemigp); #M
+DeclareProperty("IsRegularLClass", IsGreensClassOfTransSemigp); #M
 DeclareGlobalFunction("IteratorOfGreensLClasses"); #M
 DeclareGlobalFunction("IteratorOfLClassRepsData");
 DeclareGlobalFunction("IteratorOfLClassReps"); #M
@@ -175,17 +180,6 @@ DeclareAttribute("HClassType", IsTransformationSemigroup);
 DeclareGlobalFunction("IteratorOfGreensHClasses");#M
 DeclareGlobalFunction("IteratorOfHClassReps"); #M
 DeclareGlobalFunction("IteratorOfHClassRepsData");
-
-# the following functions should be removed!
-
-DeclareGlobalFunction("RClassRepsDataFromOrbits");
-
-## JDMJDM
-# the following functions have not yet been processed for release!
-
-GT:=function(x,y) return x>y; end;
-
-DeclareInfoClass("InfoCitrusGreens");
 
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
 DeclareProperty("IsIteratorOfLClassReps", IsIterator);
@@ -214,7 +208,3 @@ DeclareProperty("IsCitrusPkgIterator", IsIterator);
 DeclareProperty("IsOrbitsOfImages", IsObject);
 DeclareProperty("IsOrbitsOfKernels", IsObject);
 DeclareProperty("IsCitrusPkgImgKerOrbit", IsOrbit);
-
-
-
-

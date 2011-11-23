@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  convenience.gd
+#W  utils.gd
 #Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -8,11 +8,13 @@
 #############################################################################
 ##
 
-DeclareGlobalFunction("CitrusDefaultMem");
-DeclareGlobalFunction("CitrusLoMem");
-DeclareGlobalFunction("CitrusHiMem");
-DeclareGlobalFunction("CitrusVeryLoMem");
+DeclareGlobalFunction("CitrusDefaultHTLen");
+DeclareGlobalFunction("CitrusLoHTLen");
+DeclareGlobalFunction("CitrusHiHTLen");
+DeclareGlobalFunction("CitrusVeryLoHTLen");
 DeclareGlobalFunction("CitrusMakeDoc");
+DeclareGlobalFunction("CitrusMathJaxLocal");
+DeclareGlobalFunction("CitrusMathJaxDefault");
 DeclareGlobalFunction("CitrusTestAll");
 DeclareGlobalFunction("CitrusTestInstall");
 DeclareGlobalFunction("CitrusTestManualExamples");

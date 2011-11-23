@@ -59,6 +59,8 @@ function(f, d)
 
   if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) 
    or RankOfTransformation(f) <> RankOfTransformation(rep) then
+    Info(InfoCitrus, 2, "degree or rank not equal to those of",
+        " any of the D-class elements."); 
     return false;
   fi;
   
@@ -149,7 +151,7 @@ function(arg)
   g:=data[2][7];    # O[j][k]!.rels[l][2]*f
   #r:=data[2][8]    # the index of the coset rep. 
 
-  O := o[2]!.orbits; gens:=o[1]!.gens; imgs_gens:=o[2]!.imgs_gens; 
+  O := o[2]!.orbits; gens:=o[2]!.gens; imgs_gens:=o[2]!.imgs_gens; 
   d:=o[2]!.data; 
   lens:=o[2]!.lens; kernels:=o[2]!.kernels; data_ht:=o[2]!.data_ht;
 
@@ -212,8 +214,8 @@ function(arg)
       
     ##############################################################################
       
-      O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
-      O[j][k]!.reverse[m]:=CreateReverseSchreierTreeOfSCC(O[j][k], m);
+      #O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
+      #O[j][k]!.reverse[m]:=CreateReverseSchreierTreeOfSCC(O[j][k], m);
       r_reps[1]:=[[data[1]]];
       O[j][k]!.images_ht[m]:=HashTableForImages(f![1]);
       O[j][k]!.rels:=O[j][k]!.rels+CreateKernelOrbitSCCRels(gens, O[j][k], m);
@@ -242,7 +244,7 @@ end);
 InstallOtherMethod(AsSSortedList, "for a D-class of trans. semigp.",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
 function(d)
-  Info(InfoCitrusGreens, 4, "AsSSortedList: for a D-class");
+  Info(InfoCitrus, 4, "AsSSortedList: for a D-class");
   return ConstantTimeAccessList(EnumeratorSorted(d));
 end);
 
@@ -290,8 +292,6 @@ function(gens, o, j)
     # g:=EvaluateWord(gens, Reversed(TraceSchreierTreeOfSCCBack(o, j, i)));
     # OnKernelsAntiAction(o[i], g)=o[scc[1]] 
  
-    # JDM we could remove the create of the reverse schreier trees above
-    
     h:=o[scc[1]]{f![1]}; lookup:=EmptyPlist(n); k:=0;
     for l in [1..n] do 
       if not IsBound(lookup[h[l]]) then 
@@ -495,28 +495,28 @@ function(r)
   d:=PreInOrbitsOfKernels(s, f, true);
 
   if d[1][1] then # f in s! not d[2][1] if not d[1][1]?  
-    Info(InfoCitrusGreens, 2, "transformation is an element of the semigroup");
+    Info(InfoCitrus, 2, "transformation is an element of the semigroup");
     return GreensDClassOfElement(s, f);
   elif OrbitsOfImages(s)!.finished then #f not in s!
-    Info(InfoCitrusGreens, 2, "transformation is not an element of the ",
+    Info(InfoCitrus, 2, "transformation is not an element of the ",
     "semigroup");
     return fail;
   fi;
 
   #JDM see the comments in GreensRClassOfElementNC
 
-  Info(InfoCitrusGreens, 2, "transformation may not be an element of the ",
+  Info(InfoCitrus, 2, "transformation may not be an element of the ",
    "semigroup");
 
   j:=Length(ImageSetOfTransformation(f));
   img_o:=r!.o;
 
-  Info(InfoCitrusGreens, 2, "finding orbit of kernel...");
+  Info(InfoCitrus, 2, "finding orbit of kernel...");
   ker_o:=[]; ker_o[j]:=[ForwardOrbitOfKernel(s, f)];
   ker_o:=rec(gens:=Generators(s), orbits:=ker_o, data:=[]);
   #JDM should ker_o!.data:=[[j,1,1,1,1,1],[j,1,1,1,1,1]]?
 
-  Info(InfoCitrusGreens, 2, "finding the kernel orbit Schutz. gp. ...");
+  Info(InfoCitrus, 2, "finding the kernel orbit Schutz. gp. ...");
   Add(ker_o!.orbits[j][1]!.d_schutz[1], 
    [CreateSchutzGpOfDClass(s, [r!.data, [j,1,1,1,1,1]], [img_o, ker_o])]);
   
@@ -579,7 +579,7 @@ InstallOtherMethod(Enumerator, "for a D-class of trans. semigp.",
 function(d)
   local enum;
 
-  Info(InfoCitrusGreens, 4, "Enumerator: for a D-class");
+  Info(InfoCitrus, 4, "Enumerator: for a D-class");
 
   enum:=EnumeratorByFunctions(d, rec(
           
@@ -644,7 +644,7 @@ InstallGlobalFunction(ExpandOrbitsOfKernels,
 function(s)
   local o, iter, i;
 
-  Info(InfoCitrusGreens, 4, "ExpandOrbitsOfKernels");
+  Info(InfoCitrus, 4, "ExpandOrbitsOfKernels");
   
   o:=OrbitsOfKernels(s);
   
@@ -657,7 +657,7 @@ end);
 
 #FFF
 
-# new for 0.1! - ForwardOrbitOfKernel - not a user function!
+# mod for 0.4! - ForwardOrbitOfKernel - not a user function!
 #############################################################################
 # Usage: s = semigroup; f = transformation; 
 # kernels = OrbitsOfKernels(s)!.kernels (optional); 
@@ -668,8 +668,8 @@ end);
 
 InstallGlobalFunction(ForwardOrbitOfKernel, 
 function(arg)
-  local s, f, kernels, gens, ker, deg, j, bound, treehashsize, o, scc, r, i,
-  gens_imgs;
+  local s, f, kernels, gens_imgs, gens, ker, deg, j, bound, o, r, reps,
+  treehashsize;
   
   s:=arg[1]; f:=arg[2];
 
@@ -714,31 +714,11 @@ function(arg)
   SetIsCitrusPkgImgKerOrbit(o, true);
   o!.img:=false; #for ViewObj method
   Enumerate(o, bound);
-
-  scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)),
-   Set));;
-
-  r:=Length(scc);
-  o!.scc:=scc;
-  o!.scc_lookup:=ListWithIdenticalEntries(Length(o), 1);
-
-  if Length(scc)>1 then
-    for i in [2..r] do
-      o!.scc_lookup{scc[i]}:=ListWithIdenticalEntries(Length(scc[i]), i);
-    od;  
-  fi;
-
-  #boolean list corresponding to membership in scc[i]
-  o!.truth:=List([1..r], i-> BlistList([1..Length(o)], scc[i]));
-  o!.trees:=EmptyPlist(r);
-  o!.reverse:=EmptyPlist(r);
-  o!.trees[1]:=CreateSchreierTreeOfSCC(o,1); 
-  o!.reverse[1]:=CreateReverseSchreierTreeOfSCC(o,1);
+  r:=Length(OrbSCC(o));
 
   #representatives of D-classes with kernel belonging in scc[i] partitioned 
-  #according to their kernels
-  o!.reps:=List([1..r], x-> []);
-  Add(o!.reps[1], [f]);
+  #according to their images
+  reps:=List([1..r], x-> []); reps[1][1]:=[f]; o!.reps:=reps;
 
   #R-class reps corresponding to D-class with rep in o!.reps
   o!.r_reps:=List([1..r], x-> []);
@@ -802,7 +782,7 @@ InstallOtherMethod(GreensDClassOfElement, "for a trans. semigp and trans.",
 function(s, f)
   local d;
 
-  Info(InfoCitrusGreens, 4, "GreensDClassOfElement");
+  Info(InfoCitrus, 4, "GreensDClassOfElement");
 
   if not f in s then 
     Info(InfoWarning, 1, "transformation is not an element of the semigroup");
@@ -812,7 +792,8 @@ function(s, f)
   d:=PreInOrbitsOfKernels(s, f, true);
 
   if not d[2][1] then #orbit of kernel not previously calculated!
-    d:=AddToOrbitsOfKernels(s, d[1][2][7], [d[1][2],d[2][2]]); 
+    d:=AddToOrbitsOfKernels(s, TransformationNC(d[1][2][7]), 
+     [d[1][2],d[2][2]]); 
     #d[1][2][7] is f with rectified image!
   else
     d:=[d[1][2],d[2][2]];
@@ -833,7 +814,7 @@ InstallOtherMethod(GreensDClassOfElementNC, "for a trans. semigp and trans.",
 function(s, f)
   local d, j, n, img_o, ker_o;
 
-  Info(InfoCitrusGreens, 4, "GreensDClassOfElementNC");
+  Info(InfoCitrus, 4, "GreensDClassOfElementNC");
 
   n:=DegreeOfTransformationSemigroup(s);
 
@@ -848,18 +829,18 @@ function(s, f)
     #JDM inefficient as we run PreInOrbitsOfKernels twice!
     return GreensDClassOfElement(s, f);
   elif OrbitsOfImages(s)!.finished then #f not in s!
-    Info(InfoCitrusGreens, 2, "transformation is not an element of the ",
+    Info(InfoCitrus, 2, "transformation is not an element of the ",
     "semigroup");
     return fail;
   fi;
 
-  Info(InfoCitrusGreens, 2, "transformation may not be an element of the ",
+  Info(InfoCitrus, 2, "transformation may not be an element of the ",
   "semigroup");
 
   j:=Length(ImageSetOfTransformation(f));
 
-  Info(InfoCitrusGreens, 2, "finding image orbit...");
-  img_o:=[]; img_o[j]:=[ForwardOrbitOfImage(s, f)[1]];
+  Info(InfoCitrus, 2, "finding image orbit...");
+  img_o:=[]; img_o[j]:=[ForwardOrbitOfImage(s, f![1])];
   #JDM see comments in GreensRClassOfElementNC...
   img_o:=rec( finished:=false, orbits:=img_o, gens:=Generators(s), s:=s, 
    deg := n, data:=[[j,1,1,1,1,1]], images:=fail, lens:=List([1..n], 
@@ -867,13 +848,13 @@ function(s, f)
    data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=CitrusHashLen!.dclass_data)));
   #JDM images should not be fail in this...
   
-  Info(InfoCitrusGreens, 2, "finding kernel orbit...");
+  Info(InfoCitrus, 2, "finding kernel orbit...");
   ker_o:=[]; ker_o[j]:=[ForwardOrbitOfKernel(s, f)];
   ker_o:=rec( orbits:=ker_o, gens:=Generators(s), data:=[[j,1,1,1,1,1],
    [j,1,1,1,1,1]], kernels:=fail);
   #JDM is it nec. to specify ker_o!.data? 
 
-  Info(InfoCitrusGreens, 2, "finding the kernel orbit schutz. gp. ...");
+  Info(InfoCitrus, 2, "finding the kernel orbit schutz. gp. ...");
   Add(ker_o!.orbits[j][1]!.d_schutz[1], [CreateSchutzGpOfDClass(s,
    [[j,1,1,1,1,1], [j,1,1,1,1,1]], [img_o, ker_o])]);
 
@@ -1006,11 +987,11 @@ function(d)
   for i in [1..r] do 
     for x in [1..c] do 
       g:=scc[i]*cosets[x]^-1;
-      data:=InOrbitsOfImages(g, true, [j, k, l[x], m, val[i], 0, fail], 
+      data:=InOrbitsOfImages(g![1], true, [j, k, l[x], m, val[i], 0, fail], 
        orbits, images);
-      #could do SiftedPermutation directly here, maybe speed things up?
+      #JDM could do SiftedPermutation directly here, maybe speed things up?
       if not data[1] then 
-	data:=AddToOrbitsOfImages(d, g, data[2], d!.o[1]);
+	data:=AddToOrbitsOfImages(d, g![1], data[2], d!.o[1]);
       else 
         data:=data[2];
       fi;
@@ -1109,7 +1090,7 @@ function(d)
   return out;
 end);
 
-# new for 0.1! - GreensRClassOfElement - "for D-class of trans. semigroup"
+# mod for 0.4! - GreensRClassOfElement - "for D-class of trans. semigroup"
 #############################################################################
 # Notes: maybe think this through a bit more...
 
@@ -1124,14 +1105,15 @@ function(d, f)
   fi;
   
   o:=d!.o[1]; e:=d!.data[1];
-  data:=InOrbitsOfImages(f, true, [e[1], e[2], Position(o!.orbits[e[1]][e[2]],
+  data:=InOrbitsOfImages(f![1], true, [e[1], e[2], 
+   Position(o!.orbits[e[1]][e[2]],
    ImageSetOfTransformation(f)), e[4], fail, 0, fail], o!.orbits, o!.images);
   
   # the position call in the previous line is a waste as this is already found
-  # when `f in d' is called. 
+  # when `f in d' is called. JDM remove rectify
 
   if not data[1] then 
-    data:=AddToOrbitsOfImages(d, f, data[2], o);
+    data:=AddToOrbitsOfImages(d, f![1], data[2], o);
   else 
     data:=data[2];
   fi;
@@ -1259,6 +1241,18 @@ function(r)
   return r!.o[1]!.orbits[d[1]][d[2]]!.perms;
 end);
 
+# new for 0.1! - ImageOrbitSCC - "for a D-class of a trans. semigp." 
+############################################################################
+
+InstallOtherMethod(ImageOrbitSCC, "for a D-class of a trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(r)
+  local d;
+
+  d:=r!.data[1];
+  return r!.o[1]!.orbits[d[1]][d[2]]!.scc[d[4]];
+end);
+
 # new for 0.1! - ImageOrbitSchutzGp - not a user function!
 ############################################################################
 # Notes: returns the schutz. gp. of the image orbit of the D-class, which is
@@ -1271,6 +1265,18 @@ function(d)
   local e;
   e:=d!.data[1];
   return d!.o[1]!.orbits[e[1]][e[2]]!.schutz[e[4]][2];
+end);
+
+# new for 0.1! - ImageOrbitStabChain - "for a D-class of a trans. semigp."
+############################################################################
+
+InstallOtherMethod(ImageOrbitStabChain, "for a D-class of a trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(r)
+  local d;
+
+  d:=r!.data[1];
+  return r!.o[1]!.orbits[d[1]][d[2]]!.schutz[d[4]][1];
 end);
 
 # new for 0.1! - InOrbitsOfKernels - not a user function
@@ -1303,8 +1309,7 @@ function(f, rectify, data, o, kernels)
   o:=o[2]; 
   # r is not used here, even if it is known a priori...
 
-
-  f:=data[1][2][7];
+  f:=TransformationNC(data[1][2][7]); #JDM switch
 
   if k=fail then 
     ker:=CanonicalTransSameKernel(f);
@@ -1405,7 +1410,7 @@ InstallGlobalFunction(IteratorOfDClassReps,
 function(s)
   local iter;
 
-  Info(InfoCitrusGreens, 4, "IteratorOfDClassReps");
+  Info(InfoCitrus, 4, "IteratorOfDClassReps");
   
   if not IsTransformationSemigroup(s) then 
     Info(InfoWarning, 1, "Usage: argument should be a transformation", 
@@ -1442,7 +1447,7 @@ InstallGlobalFunction(IteratorOfDClassRepsData,
 function(s)
   local iter;
   
-  Info(InfoCitrusGreens, 4, "IteratorOfDClassRepsData");
+  Info(InfoCitrus, 4, "IteratorOfDClassRepsData");
   
   iter:=IteratorByFunctions( rec(
 
@@ -1486,7 +1491,7 @@ function(s)
 
       for d in r do  
         f:=RClassRepFromData(s, d);
-        d:=InOrbitsOfKernels(f, true, [[true, Concatenation(d, [f])], 
+        d:=InOrbitsOfKernels(f, true, [[true, Concatenation(d, [f![1]])], 
          [false, [d[1], fail, fail, fail, fail, 0, fail, fail]]], o,  ker);
         if not d[2][1] then #f not in existing D-class
           d:=AddToOrbitsOfKernels(s, f, [d[1][2], d[2][2]]);
@@ -1531,7 +1536,7 @@ InstallGlobalFunction(IteratorOfGreensDClasses,
 function(arg)
   local iter, s;
 
-  Info(InfoCitrusGreens, 4, "IteratorOfGreensDClasses");
+  Info(InfoCitrus, 4, "IteratorOfGreensDClasses");
 
   if not (Length(arg) mod 3)=1 or not IsTransformationSemigroup(arg[1]) then 
     Info(InfoWarning, 1, "Usage: argument should be a transformation", 
@@ -1895,7 +1900,7 @@ d-> KerRightToImgLeftFromData(d!.parent, d!.data[2], d!.o[2]));
 InstallMethod(NrGreensDClasses, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  Info(InfoCitrusGreens, 4, "NrGreensDClasses");
+  Info(InfoCitrus, 4, "NrGreensDClasses");
   ExpandOrbitsOfKernels(s);
   return Length(OrbitsOfKernels(s)!.data);
 end);

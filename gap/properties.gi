@@ -78,7 +78,7 @@ function(coll)
 
   repeat 
     i:=i+1; f:=coll[i];
-    if InfoLevel(InfoCitrusProperties)>1 then 
+    if InfoLevel(InfoCitrus)>=3 then 
       Print("at \t", i, " of \t", Length(coll), " with \t", Length(redund), 
       " redundant, \t", Length(out), " non-redundant\r");
     fi;
@@ -92,11 +92,67 @@ function(coll)
     fi;
   until Length(redund)+Length(out)=j;
 
-  if InfoLevel(InfoCitrusProperties)>1 then 
+  if InfoLevel(InfoCitrus)>1 then 
     Print("\n");
   fi;
   return out;
 end);
+
+#IIIAAA
+
+# new for 0.4! - IsAbundantSemigroup - "for a trans. semigroup"
+###########################################################################
+
+InstallMethod(IsAbundantSemigroup, "for a trans. semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local iter, n, ht, ht_o, reg, i, data, f, ker, val, o, scc;
+
+  Info(InfoWarning, 1, "this will sometimes return a false positive.");
+
+  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
+    Info(InfoCitrus, 2, "semigroup is regular");
+    return true;
+  fi;
+
+  iter:=IteratorOfRClassRepsData(s); n:=Degree(s);
+  ht:=HTCreate([1..n], rec(hashlen:=CitrusHashLen!.kers));
+  ht_o:=HTCreate([1,1,1,1], rec(hashlen:=CitrusHashLen!.kers));
+  reg:=[]; i:=0; 
+
+  repeat
+    repeat #JDM this should become an method for IteratorOfRStarClasses
+           # and IsAbundantRClass...
+      data:=NextIterator(iter);
+    until HTValue(ht_o, data{[1,2,4,5]})=fail or IsDoneIterator(iter); 
+    if not IsDoneIterator(iter) then 
+      HTAdd(ht_o, data{[1,2,4,5]}, true);
+
+      f:=RClassRepFromData(s, data); ker:=CanonicalTransSameKernel(f);
+      val:=HTValue(ht, ker);
+
+      if val=fail then #new kernel
+        i:=i+1; HTAdd(ht, ker, i);
+        val:=i; reg[val]:=false;
+      fi;
+        
+      if reg[val]=false then #old kernel
+        o:=ImageOrbitFromData(s, data); scc:=ImageOrbitSCCFromData(s, data);
+        reg[val]:=ForAny(scc, j-> IsInjectiveTransOnList(ker, o[j]));
+      fi;
+    fi;
+  until IsDoneIterator(iter);
+
+  return ForAll(reg, x-> x);
+end);
+
+
+# new for 0.4! - IsAdequateSemigroup - "for a trans. semigroup"
+###########################################################################
+
+InstallMethod(IsAdequateSemigroup, "for a trans. semigroup", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
 
 #IIIBBB
 
@@ -333,7 +389,7 @@ InstallOtherMethod(IsGreensLTrivial, "for a D-class of a trans. semigp",
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
   d-> NrGreensLClasses(d)=Size(d));
 
-# new for 0.1! - IsGreensRTrivial - "for a transformation semigroup"
+# fix for 0.4! - IsGreensRTrivial - "for a transformation semigroup"
 #############################################################################
 
 InstallMethod(IsGreensRTrivial, "for a transformation semigroup",
@@ -345,7 +401,7 @@ function(s)
     iter:=IteratorOfGreensDClasses(s);
     for d in iter do 
       if not (Size(ImageOrbitSchutzGpFromData(s, d!.data[1]))=1 and 
-       Length(ImageOrbitFromData(s, d!.data[1]))=1) then
+       Length(ImageOrbitSCCFromData(s, d!.data[1]))=1) then
         return false;
       fi;
     od;
@@ -360,7 +416,7 @@ function(s)
 
   for d in iter do 
     if not (Size(ImageOrbitSchutzGpFromData(s, d))=1 and 
-     Length(ImageOrbitFromData(s, d))=1) then 
+     Length(ImageOrbitSCCFromData(s, d))=1) then 
       return false;
     fi;
   od;
@@ -462,7 +518,7 @@ function(s)
   kers:=KernelsOfTransSemigroup(s); Enumerate(kers, Length(imgs));
 
   if not (IsClosed(kers) and Length(kers)=Length(imgs)) then 
-    Info(InfoCitrus, 2, "the numbers of kernels and images is not the same");
+    Info(InfoCitrus, 2, "the numbers of kernels and images are not equal");
     return false;
   fi;
 
@@ -582,6 +638,9 @@ InstallOtherMethod(IsMonoidAsSemigroup, "for a transformation semigroup",
 
 #JDM should have methods for IsomorphismTransformationSemigroup/Monoid for 
 # perm. groups. 
+
+# new for 0.4! - IsomorphismTransformationSemigroup - "for a perm group"
+#############################################################################
 
 # new for 0.1! - IsomorphismTransformationMonoid - "for trans semi"
 #############################################################################
@@ -1132,7 +1191,7 @@ function(s)
 
   repeat
     i:=i+1; f:=gens[i];
-    if InfoLevel(InfoCitrusProperties)>1 then
+    if InfoLevel(InfoCitrus)>1 then
       Print("at \t", i, " of \t", Length(gens), "; \t", Length(out),
       " generators so far\r");
     fi;
@@ -1142,7 +1201,7 @@ function(s)
     fi;
   until i=Length(gens);
 
-  if InfoLevel(InfoCitrusProperties)>1 then
+  if InfoLevel(InfoCitrus)>1 then
     Print("\n");
   fi;
   return out;

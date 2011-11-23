@@ -10,8 +10,14 @@
 
 #ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"properties.tst"));
 
-gap> START_TEST("properties.tst 0.3");
-gap> LoadPackage("citrus");;
+gap> START_TEST("Citrus package: properties.tst");
+gap> LoadPackage("citrus", false);;
+
+gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
+gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> SetInfoLevel(InfoWarning, 0);;
+gap> SetInfoLevel(InfoCitrus, 0);
+
 gap> g1:=Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] );;
 gap> g2:=Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] );;
 gap> m10:=Monoid(g1,g2);;
@@ -402,8 +408,7 @@ gap> IsGreensRTrivial(d);
 true
 gap> repeat d:=NextIterator(iter); until IsDoneIterator(iter) or not                     
 > IsGreensLTrivial(d) and IsGreensRTrivial(d);
-gap> d;
-{Transformation( [ 3, 7, 8, 8, 3, 4, 1, 3 ] )}
+gap> d;;
 gap> IsGreensLTrivial(d);
 false
 gap> IsGreensRTrivial(d);
@@ -827,4 +832,93 @@ gap> [ Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] ),
 gap> s:=Semigroup(last);;
 gap> MultiplicativeNeutralElement(s);
 Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] )
-gap> STOP_TEST( "properties.tst 0.3", 10000);
+gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
+>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
+>   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
+>   Transformation( [ 4, 3, 4, 5, 6, 4, 1, 2 ] ),
+>   Transformation( [ 5, 4, 8, 8, 5, 6, 1, 5 ] ),
+>   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
+>   Transformation( [ 7, 1, 2, 2, 2, 7, 4, 5 ] ),
+>   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsAbundantSemigroup(s);
+false
+gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
+>   Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ),
+>   Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ),
+>   Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] ) ];;
+gap> s:=Monoid(gens);;
+gap> IsAbundantSemigroup(s);
+false
+gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
+>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
+>   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
+>   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsAbundantSemigroup(s);
+false
+#gap> time;
+#164
+gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
+>   Transformation( [ 4, 2, 1, 5, 5 ] ),
+>   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsAbundantSemigroup(s);
+true
+gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
+> Transformation( [ 2, 4, 1, 2 ] ),
+> Transformation( [ 3, 1, 1, 3 ] ),
+> Transformation( [ 3, 3, 4, 1 ] ) ];;
+gap> s:=Monoid(gens);;
+gap> IsAbundantSemigroup(s);
+false
+gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
+>  Transformation( [ 1, 4, 1, 2 ] ),
+>  Transformation( [ 2, 4, 1, 1 ] ),
+>  Transformation( [ 3, 4, 2, 2 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> IsAbundantSemigroup(s);
+true
+gap> IsRegularSemigroup(s);
+false
+gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
+>  Transformation( [ 1, 4, 1, 2 ] ),
+>  Transformation( [ 3, 4, 2, 2 ] ),
+>  Transformation( [ 4, 1, 2, 1 ] ) ];;
+gap> s:=Monoid(gens);;
+gap> IsAbundantSemigroup(s);
+true
+gap> IsRegularSemigroup(s);
+false
+gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
+> Transformation([1,2,4,3,5,6,7,8,9,10]),
+> Transformation([1,2,3,4,5,6,10,9,8,7]),
+> Transformation([9,1,4,3,6,9,3,4,3,9])];;
+gap> s:=Monoid(gens);;
+gap> IsAbundantSemigroup(s);
+true
+gap> IsRegularSemigroup(s);
+false
+
+gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
+> Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
+gap> s:=Monoid(gens);;
+gap> IsAdequateSemigroup(s);
+false
+gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
+> Transformation([1,2,4,3,5,6,7,8,9,10]),
+> Transformation([1,2,3,4,5,6,10,9,8,7]),
+> Transformation([9,1,4,3,6,9,3,4,3,9])];;
+gap> s:=Monoid(gens);;
+gap> IsAdequateSemigroup(s);
+false
+gap> Read("/Users/jdm/Desktop/gap4r5/pkg/citrus/dev/examples/schmidt.gap");
+gap> slow:=List(SLOWAUT, x-> Semigroup(List(x, TransformationNC)));;
+gap> List(slow, IsAdequateSemigroup);
+[ true, true, true, true, true, true, true, true ]
+
+gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
+gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+
+gap> STOP_TEST( "Citrus package: properties.tst", 10000);

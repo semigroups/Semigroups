@@ -1,24 +1,29 @@
-/* gapdoc.css        Frank Lübeck */
-/* $Id: gapdoc.css,v 1.13 2010/10/29 08:10:26 gap Exp $  */
+/* manual.css                                             Frank Lübeck */
+/* This is the default CSS style sheet for GAPDoc HTML manuals.        */
 
-
-/* basic settings */
+/* basic settings, fonts, sizes, colors, ... */
 body { 
-  margin: 0 auto;
   position: relative;
   background: #ffffff; 
   color: #000000; 
-/*  background-image: url(gapdoc.jpg);
-  margin-top: 15px; 
-  margin-bottom: 15px;
-  margin-left: 10px;
-  margin-right: 10px; */
   width: 70%;
   margin: 0pt;
   padding: 15pt;
   font-family: Helvetica,Verdana,Arial,sans-serif;
   text-align: justify;
 }
+
+/* no side toc on title page, bib and index */
+body.chap0 {
+  width: 95%;
+}
+body.chapBib {
+  width: 95%;
+}
+body.chapInd {
+  width: 95%;
+}
+
 
 h1 { font-size: 200%; }
 h2 { font-size: 160%; }
@@ -43,6 +48,23 @@ a:active {
   color: #000000; 
   text-decoration: none; 
 }
+a:hover {
+  background: #eeeeee;
+}
+
+pre { 
+  font-family: "Courier New",Courier,monospace; 
+  font-size: 100%; 
+  color:#111111; 
+}
+
+tt,code { 
+  font-family: "Courier New",Courier,monospace; 
+  font-size: 110%; 
+  color: #000000; }
+
+var {
+}
 
 /* general alignment classes */
 .pcenter {
@@ -57,21 +79,21 @@ a:active {
   text-align: right;
 }
 
-/* layout for the Func-like elements  */
+/* layout for the definitions of functions, variables, ...  */
 div.func {
-  background-color: #e0e0e0; 
+  background: #e0e0e0; 
   margin: 0pt 0pt; 
 }
 
 
 /* general and special table settings */
 table {
+  border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
 }
 
 td, th {
-  border-collapse: collapse;
   border-style: none;
 } 
 
@@ -79,14 +101,18 @@ table.func {
   padding: 0pt 1ex; 
   margin-left: 1ex;
   margin-right: 1ex;
-  background-color: transparent;
+  background: transparent;
   /* line-height: 1.1; */ 
   width: 100%; 
 }
 
-/* Example elements */
+table.func td.tdright {
+  padding-right: 2ex;
+}
+
+/* Example elements (for old converted manuals, now in div+pre */
 table.example {
-  background-color: #efefef; 
+  background: #efefef; 
   border-style: none; 
   border-width: 0pt; 
   padding: 0px;  
@@ -97,24 +123,33 @@ table.example td {
   border-width: 0pt;
   padding: 0ex 1ex;
 }
+/* becomes ... */
+div.example {
+  background: #efefef;
+  padding: 0ex 1ex;
+  /* overflow-x: auto; */
+  overflow: auto;
+}
 
-/* links to chapters in all files */
-/* if there are too many chapters then use 'display: none' here */
+/* Links to chapters in all files at top and bottom. */
+/* If there are too many chapters then use 'display: none' here. */
 div.chlinktop {
-  background-color: #dddddd; 
+  background: #dddddd; 
   border-style: solid; 
   border-width: thin;  
   margin: 2px;
   text-align: center;
-  /* width: 100%;  */
 }
 
 div.chlinktop a {
-  background-color: #e9e9e9;
+ margin: 3px;
+}
+div.chlinktop a:hover {
+ background: #ffffff;
 }
 
 div.chlinkbot {
-  background-color: #dddddd; 
+  background: #dddddd; 
   border-style: solid; 
   border-width: thin;  
   margin: 2px;
@@ -123,7 +158,7 @@ div.chlinkbot {
 }
 
 div.chlinkbot a {
-  background-color: #e9e9e9;
+  margin: 3px;
 }
 
 span.chlink1 {
@@ -131,39 +166,44 @@ span.chlink1 {
 
 /* and this is for  the "Top", "Prev", "Next" links */
 div.chlinkprevnexttop {
-  background-color: #dddddd; 
+  background: #dddddd; 
   border-style: solid; 
   border-width: thin;  
   text-align: center;
   margin: 2px;
-  /* width: 100%;  */
 }
 
-div.chlinkprevnexttop a {
-  background-color: #e9e9e9;
+div.chlinkprevnexttop a:hover {
+  background: #ffffff;
 }
 
 div.chlinkprevnextbot {
-  background-color: #dddddd; 
+  background: #dddddd; 
   border-style: solid; 
   border-width: thin;  
   text-align: center;
   margin: 2px;
-  /* width: 100%;  */
 }
 
-div.chlinkprevnextbot a {
-  background-color: #e9e9e9;
+div.chlinkprevnextbot a:hover {
+  background: #ffffff;
 }
 
 
-/* table of contents */
+/* table of contents, initially don't display subsections */
 div.ContSSBlock {
   display: none;
 }
-
 div.ContSSBlock br {
   display: none;
+}
+/* format in separate lines */
+span.tocline {
+  display: block;
+  width: 100%;
+}
+div.ContSSBlock a {
+  display: block;
 }
 
 /* this is for the main table of contents */
@@ -173,59 +213,69 @@ div.ContChap {
 div.ContChap div.ContSect:hover div.ContSSBlock {
   display: block;
   position: absolute;
-  background: #aaaaaa;
-  color: #5500ff;
-  left: 50%;
-  width: 50%;
+  background: #eeeeee;
+  border-style: solid;
+  border-width: 1px 4px 4px 1px;
+  border-color: #666666;
+  padding-left: 0.5ex;
+  color: #000000;
+  left: 20%;
+  width: 40%;
+  z-index: 10000;
 }
 
-div.ContChap a {
-  display: block;
-  width: 100%;
-}
-
-div.ContChap a:hover {
-  display: block;
-  width: 100%;
-  background: #333333;
-  color: #ffffff;
+div.ContSSBlock a:hover {
+  background: #ffffff;
 }
 
 /* and here for the side menu of contents in the chapter files */
 div.ChapSects {
 }
 
-div.ChapSects a {
-  display: block;
-  width: 100%;
+div.ChapSects a:hover {
+  background: #eeeeee;
 }
 
 div.ChapSects a:hover {
   display: block;
   width: 100%;
-  background: #333333;
-  color: #ffffff;
+  background: #eeeeee;
+  color: #000000;
+}
+
+div.ChapSects div.ContSect:hover div.ContSSBlock {
+  display: block;
+  position: fixed;
+  background: #eeeeee;
+  border-style: solid; 
+  border-width: 1px 2px 2px 1px;  
+  border-color: #666666;
+  padding-left: 0ex;
+  padding-right: 0.5ex;
+  color: #000000;
+  left: 54%;
+  width: 25%;
+  z-index: 10000;
+}
+
+div.ChapSects div.ContSect:hover div.ContSSBlock a {
+  display: block;
+  margin-left: 3px;
+}
+
+div.ChapSects div.ContSect:hover div.ContSSBlock a:hover {
+  display: block;
+  background: #ffffff;
 }
 
 div.ContSect {
   text-align: left;
   margin-left: 1em;
 }
-
-div.ChapSects div.ContSect:hover div.ContSSBlock {
-  display: block;
-  position: fixed;
-  background: #aaaaaa;
-  color: #5500ff;
-  left: 53%;
-  width: 25%;
-  z-index: 10000;
-}
-
 div.ChapSects {
   position: fixed;
   left: 75%;
-  font-size: 80%;
+  font-size: 90%;
   overflow: auto;
   top: 10px;
   bottom: 0px;
@@ -290,23 +340,7 @@ td.tdcenter {
   text-align: center;
 }
 
-/* general settings */
-pre { 
-  font-family: "Courier New",Courier,monospace; 
-  font-size: 100%; 
-  color:#111111; 
-}
-
-tt,code { 
-  font-family: "Courier New",Courier,monospace; 
-  font-size: 110%; 
-  color: #284d49; }
-
-var {
-  color: #cf0000;
-}
-
-/* may be overwritten for some types of elements  */
+/* Colors and fonts can be overwritten for some types of elements.  */
 /* Verb elements */
 pre.normal {
   color: #000000;
@@ -314,12 +348,12 @@ pre.normal {
 
 /* Func-like  elements and Ref to Func-like */
 code.func {
-  color: #006500;
+  color: #000000;
 }
 
 /* K elements */
 code.keyw {
-  color: #ff0000;
+  color: #770000;
 }
 
 /* F elements */
@@ -345,6 +379,7 @@ span.Heading {
 
 /* Arg elements */
 var.Arg {
+  color: #006600;
 }
 
 /* Example elements, is in tables, see above */
@@ -366,6 +401,8 @@ strong.Mark {
 /* Ref elements */
 b.Ref {
 }
+span.Ref {
+}
 
 /* this contains the contents page */
 div.contents {
@@ -379,3 +416,67 @@ div.index {
 span.nocss {
   display: none;
 }
+
+/* colors for ColorPrompt like examples */
+span.GAPprompt {
+  color: #000097;
+  font-weight: normal;
+}
+span.GAPbrkprompt {
+  color: #970000;
+  font-weight: normal;
+}
+span.GAPinput {
+  color: #970000;
+}
+
+/* Bib entries */
+p.BibEntry {
+}
+span.BibKey {
+  color: #005522;
+}
+span.BibKeyLink {
+}
+b.BibAuthor {
+}
+i.BibTitle {
+}
+i.BibBookTitle {
+}
+span.BibEditor {
+}
+span.BibJournal {
+}
+span.BibType {
+}
+span.BibPublisher {
+}
+span.BibSchool {
+}
+span.BibEdition {
+}
+span.BibVolume {
+}
+span.BibSeries {
+}
+span.BibNumber {
+}
+span.BibPages {
+}
+span.BibOrganization {
+}
+span.BibAddress {
+}
+span.BibYear {
+}
+span.BibPublisher {
+}
+span.BibNote {
+}
+span.BibHowpublished {
+}
+
+
+
+

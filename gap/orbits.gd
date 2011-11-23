@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+
+DeclareGlobalFunction("CitrusEvalWord");
 DeclareAttribute("GradedImagesOfTransSemigroup", IsTransformationSemigroup); 
 DeclareAttribute("GradedKernelsOfTransSemigroup", IsTransformationSemigroup);
 
@@ -25,5 +27,13 @@ DeclareAttribute("KernelsOfTransSemigroup", IsTransformationSemigroup,
 
 DeclareGlobalFunction("OnBlist");
 DeclareGlobalFunction("OnKernelsAntiAction");
+DeclareGlobalFunction("OrbSCC");
+DeclareGlobalFunction("OrbSCCLookup");
+DeclareGlobalFunction("OrbSCCTruthTable");
+DeclareGlobalFunction("ReverseSchreierTreeOfSCC");
+DeclareGlobalFunction("SchreierTreeOfSCC");
+DeclareAttribute("SchutzGps", IsTransformationSemigroup);
+DeclareAttribute("CitrusSkeleton", IsTransformationSemigroup);
 DeclareGlobalFunction("StrongOrbitsInForwardOrbit");
-
+DeclareGlobalFunction("TraceSchreierTreeOfSCCForward");
+DeclareGlobalFunction("TraceSchreierTreeOfSCCBack");
