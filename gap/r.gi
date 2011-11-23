@@ -97,9 +97,9 @@ end);
 
 InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, f, data, o)
-  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, images, ht, gen1,
-  pos1, f_o, out, reps, i, z, y;
-  
+  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, images, ht, gen1, pos1, 
+   f_o, out, reps, i, els, z, y;
+
   j:=data[1]; 	# img size
   k:=data[2]; 	# index of orbit containing img
   l:=data[3]; 	# position of img in O[j][k]
@@ -169,11 +169,12 @@ function(s, f, data, o)
   #install new pts in the orbit
 
   if IsBound(ht) then
-    m:=Length(gens); j:=Length(o);
+    m:=Length(gens); j:=Length(o); els:=ht!.els;
     for y in [1..m] do
       z:=g{gens[y]};
       if HTValue(ht, z)=fail then  
-        j:=j+1; HTAdd(ht, z, j); o[j]:=z; pos1[j]:=i; gen1[j]:=y;
+        j:=j+1; 
+        z:=HTAdd(ht, z, j); o[j]:=els[z]; pos1[j]:=i; gen1[j]:=y;
       fi;
     od;
   fi;
@@ -1639,7 +1640,7 @@ end);
 
 #OOO
 
-# new for 0.1! - OrbitsOfImages - "for a transformation semigroup"
+# mod for 0.4! - OrbitsOfImages - "for a transformation semigroup"
 #############################################################################
 
 InstallMethod(OrbitsOfImages, "for a transformation semigroup",
@@ -1652,7 +1653,13 @@ function(s)
   gens:=List(Generators(s), x-> x![1]);
   n := DegreeOfTransformationSemigroup( s );
   one := TransformationNC( [ 1 .. n ] );
-  o:=Concatenation([[1..n]*1], gens); #JDM should use emptyplist of ht len
+  o:=EmptyPlist(CitrusHashLen!.rclassreps_orb);
+  
+  o[1]:=[1..n]*1;
+
+  for i in [1..Length(gens)] do 
+    o[i+1]:=gens[i];
+  od;    
 
   ht := HTCreate(o[1], rec(hashlen:=CitrusHashLen!.rclassreps_orb));  
   ht!.o:=o; #JDM this should be a queue, after at is greated than i, o[i] is not 
@@ -1672,14 +1679,16 @@ function(s)
     at:=0, 
     gens:=gens, 
     s:=s,       # required?
-    deg := n,   # required?  
-    one := one, #required?
+    deg := n,   # required?
+    one := one, # required?
     ht:=ht,
     data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=CitrusHashLen!.rclass_data)), 
     data:=[], 
     gen1:=ListWithIdenticalEntries(Length(gens)+1, fail), 
     pos1:=ListWithIdenticalEntries(Length(gens)+1, fail),
-    gen2:=[], pos2:=[]
+    gen2:=[], # JDM this can be removed as soon as InOrbitsOfImage returns 
+              # both the rectified and unrectified image positions. 
+    pos2:=[]
   ));
 end);
 

@@ -32,7 +32,12 @@
 
       The values used can also be set directly by editing the values in the 
       global variable <C>CitrusHashLen</C> in the <C>config</C> file in the
-      &Citrus; package directory.
+      &Citrus; package directory.<P/>
+
+      You might find it useful to set the info level of 
+      the info class <C>InfoOrb</C> to 2 or higher since this will
+      indicate when hash tables used by &Citrus; are being grown; see 
+      <Ref Oper="SetInfoLevel" BookName="ref"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>

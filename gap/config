@@ -14,5 +14,5 @@
 # CitrusDefaultMem(). 
 
 BindGlobal("CitrusHashLen", rec(dclass_data:=1009, kers:=1009, 
- rclass_data:=10000019, imgs:=10007, rclassreps_orb:=10000019));
+ rclass_data:=20287, imgs:=503, rclassreps_orb:=72379));
 MakeReadWriteGlobal("CitrusHashLen");
