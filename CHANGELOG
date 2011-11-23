@@ -11,7 +11,18 @@
 
 0.3 -> 0.4
 
+            major changes are: the documentation has been updated, some changes
+            to core functions for R-classes/image orbits have resulted in a 
+            performance improvement, there is a method for the operation
+            Factorization allowing an arbitrary element of a transformation
+            semigroup to be expressed as a product of the generators. 
             
+            Some minor bugs have been fixed, and new methods or functions with
+            the following names have also been introduced:
+            
+            OrbSCC, OrbSCCLookup, OrbSCCTruthTable, 
+            ReverseSchreierTreeOfSCC, SchreierTreeOfSCC,
+            IsomorphismTransformationSemigroup (for a perm. gp). 
 
 0.2 -> 0.3 
             
