@@ -533,7 +533,7 @@ iter:=IteratorByFunctions( rec(
       return iter!.data[1];
     end,
 
-    ShallowCopy:=iter-> rec(i:=0, r:=IteratorOfGreensRClasses(s), 
+    ShallowCopy:=iter-> rec(i:=0, r:=IteratorOfRClasses(s), 
      data:=[])));
 
   SetIsCitrusPkgIterator(iter, true);

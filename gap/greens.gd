@@ -46,8 +46,8 @@ DeclareAttribute("HClassReps", IsTransformationSemigroup);
 DeclareProperty("IsGreensClassOfTransSemigp", IsGreensClass);
 DeclareProperty("IsRegularRClass", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IteratorOfDClasses");
-DeclareGlobalFunction("IteratorOfGreensRClasses");
 DeclareGlobalFunction("IteratorOfDClassReps"); 
+DeclareGlobalFunction("IteratorOfRClasses");
 DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareAttribute("NrIdempotents", IsTransformationSemigroup);
 DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
@@ -186,13 +186,13 @@ DeclareProperty("IsIteratorOfLClassReps", IsIterator);
 DeclareProperty("IsIteratorOfDClassReps", IsIterator);
 DeclareProperty("IsIteratorOfHClassReps", IsIterator);
 
-# IteratorOfGreensRClasses and IteratorOfGreensLClasses
+# IteratorOfRClasses and IteratorOfGreensLClasses
 # should be operations so that they can be applied to 
 # D-classes as well as transformation semigroups!
-# and IteratorOfGreensDClass should be an operation so that I can make an
+# and IteratorOfDClass should be an operation so that I can make an
 # iterator that of D-classes satisfying some properties a la smallsemi..
 
-DeclareProperty("IsIteratorOfGreensRClasses", IsIterator);
+DeclareProperty("IsIteratorOfRClasses", IsIterator);
 DeclareProperty("IsIteratorOfGreensLClasses", IsIterator);
 DeclareProperty("IsIteratorOfDClasses", IsIterator);
 DeclareProperty("IsIteratorOfGreensHClasses", IsIterator);

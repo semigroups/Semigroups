@@ -757,7 +757,7 @@ function(s)
 
   Info(InfoCitrus, 4, "GreensRClasses: for a trans. semi.");
 
-  iter:=IteratorOfGreensRClasses(s);
+  iter:=IteratorOfRClasses(s);
   out:=EmptyPlist(NrGreensRClasses(s));
   i:=0;
 
@@ -1326,14 +1326,14 @@ function(r)
   return iter;
 end);
 
-# mod for 0.4! - IteratorOfGreensRClasses - not a user function!
+# mod for 0.4! - IteratorOfRClasses - not a user function!
 #############################################################################
 
-InstallGlobalFunction(IteratorOfGreensRClasses, 
+InstallGlobalFunction(IteratorOfRClasses, 
 function(s)
   local iter;
 
-  Info(InfoCitrus, 4, "IteratorOfGreensRClasses");
+  Info(InfoCitrus, 4, "IteratorOfRClasses");
   
   if not IsTransformationSemigroup(s) then 
     Info(InfoWarning, 1, "Usage: arg. should be a transformation semigroup.");
@@ -1360,7 +1360,7 @@ function(s)
 
     ShallowCopy:=iter-> rec(data:=IteratorOfRClassRepsData(s))));
 
-  SetIsIteratorOfGreensRClasses(iter, true);
+  SetIsIteratorOfRClasses(iter, true);
   SetIsCitrusPkgIterator(iter, true); 
   return iter;
 end);
@@ -1764,10 +1764,10 @@ function(iter)
   return;
 end);
 
-# new for 0.1! - PrintObj - for IsIteratorOfGreensRClasses
+# new for 0.1! - PrintObj - for IsIteratorOfRClasses
 ############################################################################
 
-InstallMethod(PrintObj, [IsIteratorOfGreensRClasses], 
+InstallMethod(PrintObj, [IsIteratorOfRClasses], 
 function(iter)
   Print( "<iterator of R-classes>");
   return;

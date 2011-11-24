@@ -422,7 +422,7 @@ function(s)
 
   iter:= IteratorByFunctions( rec(
 
-    R:=IteratorOfGreensRClasses(s),
+    R:=IteratorOfRClasses(s),
 
     r:=fail, s:=s,
 
@@ -442,7 +442,7 @@ function(s)
     IsDoneIterator:= iter -> IsDoneIterator(iter!.R) and
      IsDoneIterator(iter!.r),
 
-    ShallowCopy:= iter -> rec(R:=IteratorOfGreensRClasses(s), r:=fail)));
+    ShallowCopy:= iter -> rec(R:=IteratorOfRClasses(s), r:=fail)));
 
   SetIsIteratorOfSemigroup(iter, true);
   SetIsCitrusPkgIterator(iter, true);

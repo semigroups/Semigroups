@@ -1051,7 +1051,7 @@ end);
 
 # new for 0.1! - GreensRClasses - "for a D-class of a trans. semigroup"
 #############################################################################
-# Notes: it would be helpful to have a IteratorOfGreensRClasses for use in 
+# Notes: it would be helpful to have a IteratorOfRClasses for use in 
 # the  enumerator of a D-class. This is relatively slow in comparison to 
 # GreensRClassReps, as finding GreensRClassRepsData involves a search. 
 # This could be improved by using GreensRClassReps to give the reps of 
