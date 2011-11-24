@@ -823,8 +823,8 @@ function(s)
    IsCompletelyRegularSemigroup(s) then 
     Info(InfoCitrus, 2, "the semigroup is not completely regular");
     return false;
-  elif HasNrGreensDClasses(s) then
-    return NrGreensDClasses(s)=1;
+  elif HasNrDClasses(s) then
+    return NrDClasses(s)=1;
   fi;
 
   gens:=GeneratorsOfSemigroup(s); #not GeneratorsOfMonoid!
@@ -842,7 +842,7 @@ function(s)
 
   SetIsCompletelyRegularSemigroup(s, true);
   SetIsRegularSemigroup(s, true);
-  SetNrGreensDClasses(s, 1);
+  SetNrDClasses(s, 1);
 
   return true;
 end);

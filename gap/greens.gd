@@ -51,7 +51,8 @@ DeclareGlobalFunction("IteratorOfRClasses");
 DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareAttribute("NrIdempotents", IsTransformationSemigroup);
 DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
-DeclareAttribute("NrGreensDClasses", IsTransformationSemigroup); DeclareAttribute("NrGreensHClasses", IsTransformationSemigroup);
+DeclareAttribute("NrDClasses", IsTransformationSemigroup); 
+DeclareAttribute("NrGreensHClasses", IsTransformationSemigroup);
 DeclareAttribute("NrGreensRClasses", IsTransformationSemigroup);
 DeclareAttribute("RClassReps", IsTransformationSemigroup);
 

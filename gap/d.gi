@@ -763,7 +763,7 @@ function(s)
   local iter, out, i, d;
 
   iter:=IteratorOfDClasses(s);
-  out:=EmptyPlist(NrGreensDClasses(s));
+  out:=EmptyPlist(NrDClasses(s));
   i:=0;
 
   for d in iter do
@@ -1901,13 +1901,13 @@ d-> KerRightToImgLeftFromData(d!.parent, d!.data[2], d!.o[2]));
 
 #NNN
 
-# new for 0.1! - NrGreensDClasses - "for a transformation semigroup"
+# new for 0.1! - NrDClasses - "for a transformation semigroup"
 #############################################################################
 
-InstallMethod(NrGreensDClasses, "for a transformation semigroup", 
+InstallMethod(NrDClasses, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  Info(InfoCitrus, 4, "NrGreensDClasses");
+  Info(InfoCitrus, 4, "NrDClasses");
   ExpandOrbitsOfKernels(s);
   return Length(OrbitsOfKernels(s)!.data);
 end);
@@ -2048,7 +2048,7 @@ InstallMethod(PartialOrderOfDClasses, "for a transformation semigroup",
 function(s)
   local d, n, out, gens, data_ht, o, j, data, i, x, f, orbits;
 
-  d:=GreensDClasses(s); n:=NrGreensDClasses(s); 
+  d:=GreensDClasses(s); n:=NrDClasses(s); 
   out:= List([1..n], x-> EmptyPlist(n));
   gens:=Generators(s);  data_ht:=OrbitsOfKernels(s)!.data_ht;
   o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
