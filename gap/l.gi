@@ -242,7 +242,7 @@ function(l)
   local s, d, o, m, data, out, f, h, i;
 
   s:=l!.parent; d:=DClassOfLClass(l); o:=l!.o; 
-  m:=NrGreensHClasses(l); data:=GreensHClassRepsData(l); 
+  m:=NrHClasses(l); data:=GreensHClassRepsData(l); 
   
   out:=EmptyPlist(m);
 
@@ -279,8 +279,8 @@ function(l)
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   
-  if not HasNrGreensHClasses(l) then 
-    SetNrGreensHClasses(l, Length(scc)*Length(cosets));
+  if not HasNrHClasses(l) then 
+    SetNrHClasses(l, Length(scc)*Length(cosets));
   fi;
 
   k:=0;
@@ -309,8 +309,8 @@ function(l)
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
 
-  if not HasNrGreensHClasses(l) then 
-    SetNrGreensHClasses(l, Length(scc)*Length(cosets));
+  if not HasNrHClasses(l) then 
+    SetNrHClasses(l, Length(scc)*Length(cosets));
   fi;
 
   k:=0; data:=l!.data;
@@ -868,10 +868,10 @@ function(s)
   return i;
 end);
 
-# new for 0.1! - NrGreensHClasses - "for an L-class of a trans. semigroup"
+# new for 0.1! - NrHClasses - "for an L-class of a trans. semigroup"
 #############################################################################
 
-InstallOtherMethod(NrGreensHClasses, "for an L-class of a trans. semigroup", 
+InstallOtherMethod(NrHClasses, "for an L-class of a trans. semigroup", 
 [IsGreensLClass and IsGreensClassOfTransSemigp], 
   l-> NrGreensRClasses(DClassOfLClass(l)));
 

@@ -180,29 +180,6 @@ end);
 
 #GGG
 
-# new for 0.1! - GreensHClasses - "for a transformation semigroup"
-##############################################################################
-# JDM move to greens.gi
-
-InstallMethod(GreensHClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  local iter, out, i, h;
-
-  Info(InfoCitrus, 4, "GreensHClasses");
-
-  iter:=IteratorOfGreensHClasses(s);
-  out:=EmptyPlist(NrGreensHClasses(s));
-  i:=0;
-
-  for h in iter do 
-    i:=i+1;
-    out[i]:=h;
-  od;
-
-  return out;
-end);
-
 # new for 0.1! - GreensHClassOfElement - "for a trans. semigp. and trans."
 ############################################################################
 

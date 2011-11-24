@@ -132,7 +132,7 @@ function(s)
   local out, iter, i, f;
   Info(InfoCitrus, 4, "HClassReps");
 
-  out:=EmptyPlist(NrGreensHClasses(s));
+  out:=EmptyPlist(NrHClasses(s));
   iter:=IteratorOfHClassReps(s);
   i:=0;
 
@@ -278,6 +278,28 @@ function(s)
 end);
 
 #GGG
+
+# new for 0.1! - GreensHClasses - "for a transformation semigroup"
+##############################################################################
+
+InstallMethod(GreensHClasses, "for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+function(s)
+  local iter, out, i, h;
+
+  Info(InfoCitrus, 4, "GreensHClasses");
+
+  iter:=IteratorOfGreensHClasses(s);
+  out:=EmptyPlist(NrHClasses(s));
+  i:=0;
+
+  for h in iter do 
+    i:=i+1;
+    out[i]:=h;
+  od;
+
+  return out;
+end);
 
 # new for 0.1! - GreensJClassOfElement - for a trans. semigroup and trans."
 #############################################################################
@@ -480,10 +502,10 @@ function(s)
   return i;
 end);
 
-# new for 0.1! - NrGreensHClasses - "for a transformation semigroup"
+# new for 0.1! - NrHClasses - "for a transformation semigroup"
 #############################################################################
  
-InstallMethod(NrGreensHClasses, "for a transformation semigroup", 
+InstallMethod(NrHClasses, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local i, iter, o, d;

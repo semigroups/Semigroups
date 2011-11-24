@@ -661,7 +661,7 @@ function(r)
   Info(InfoCitrus, 4, "GreensHClasses: for an R-class");
   
   s:=r!.parent; d:=DClassOfRClass(r); o:=d!.o; 
-  m:=NrGreensHClasses(r); data:=GreensHClassRepsData(r); 
+  m:=NrHClasses(r); data:=GreensHClassRepsData(r); 
   
   out:=EmptyPlist(m); 
 
@@ -701,8 +701,8 @@ function(r)
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   
-  if not HasNrGreensHClasses(r) then 
-    SetNrGreensHClasses(r, Length(scc)*Length(cosets));
+  if not HasNrHClasses(r) then 
+    SetNrHClasses(r, Length(scc)*Length(cosets));
   fi;
 
   k:=0; data:=[r!.data, ShallowCopy(d!.data[2])];
@@ -866,8 +866,8 @@ function(r)
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
 
-  if not HasNrGreensHClasses(r) then 
-    SetNrGreensHClasses(r, Length(scc)*Length(cosets));
+  if not HasNrHClasses(r) then 
+    SetNrHClasses(r, Length(scc)*Length(cosets));
   fi;
 
   k:=0;
@@ -1514,10 +1514,10 @@ end);
 
 #NNN
 
-# new for 0.1! - NrGreensHClasses - "for an R-class of a trans. semigroup"
+# new for 0.1! - NrHClasses - "for an R-class of a trans. semigroup"
 #############################################################################
 
-InstallOtherMethod(NrGreensHClasses, "for an R-class of a trans. semigroup", 
+InstallOtherMethod(NrHClasses, "for an R-class of a trans. semigroup", 
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 r-> NrGreensLClasses(DClassOfRClass(r)));
 

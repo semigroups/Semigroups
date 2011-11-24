@@ -1912,10 +1912,10 @@ function(s)
   return Length(OrbitsOfKernels(s)!.data);
 end);
 
-# new for 0.1! - NrGreensHClasses - "for a D-class of a trans. semigroup"
+# new for 0.1! - NrHClasses - "for a D-class of a trans. semigroup"
 #############################################################################
 
-InstallOtherMethod(NrGreensHClasses, "for a D-class of a trans. semigroup",
+InstallOtherMethod(NrHClasses, "for a D-class of a trans. semigroup",
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
   return NrGreensRClasses(d)*NrGreensLClasses(d);

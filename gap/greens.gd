@@ -50,11 +50,11 @@ DeclareGlobalFunction("IteratorOfDClassReps");
 DeclareGlobalFunction("IteratorOfRClasses");
 DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareAttribute("NrIdempotents", IsTransformationSemigroup);
-DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
 DeclareAttribute("NrDClasses", IsTransformationSemigroup); 
-DeclareAttribute("NrGreensHClasses", IsTransformationSemigroup);
+DeclareAttribute("NrHClasses", IsTransformationSemigroup);
 DeclareAttribute("NrGreensRClasses", IsTransformationSemigroup);
 DeclareAttribute("RClassReps", IsTransformationSemigroup);
+DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
 
 # the following functions in r.gi are currently undocumented
 

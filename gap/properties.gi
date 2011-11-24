@@ -357,7 +357,7 @@ end);
 
 InstallOtherMethod(IsGreensHTrivial, "for a D-class of a trans. semigp", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
-  d-> NrGreensHClasses(d)=Size(d));
+  d-> NrHClasses(d)=Size(d));
 
 # new for 0.1! - IsGreensLTrivial - "for a transformation semigroup"
 #############################################################################
@@ -891,7 +891,7 @@ function(s)
     return false;
   fi;
 
-  if NrGreensHClasses(s)=2 then 
+  if NrHClasses(s)=2 then 
     return ForAll(GreensHClasses(s), IsGroupHClass);
   fi;
 
