@@ -242,7 +242,7 @@ function(l)
   local s, d, o, m, data, out, f, h, i;
 
   s:=l!.parent; d:=DClassOfLClass(l); o:=l!.o; 
-  m:=NrHClasses(l); data:=GreensHClassRepsData(l); 
+  m:=NrHClasses(l); data:=HClassRepsData(l); 
   
   out:=EmptyPlist(m);
 
@@ -296,10 +296,10 @@ function(l)
   return out;
 end);
 
-# new for 0.1! - GreensHClassRepsData - "for L-class of trans. semigp."
+# new for 0.1! - HClassRepsData - "for L-class of trans. semigp."
 #############################################################################
 
-InstallOtherMethod(GreensHClassRepsData, "for L-class of trans. semigp.", 
+InstallOtherMethod(HClassRepsData, "for L-class of trans. semigp.", 
 [IsGreensLClass and IsGreensClassOfTransSemigp], 
 function(l)
   local f, scc, cosets, out, k, data, i, j;

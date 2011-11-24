@@ -1126,7 +1126,7 @@ function(d)
   s:=d!.parent;
   img:=OrbitsOfImages(s); ker:=OrbitsOfKernels(s);
   out:=List(GreensRClassRepsData(d), x->
-   GreensHClassRepsDataFromData(s, x, img));
+   HClassRepsDataFromData(s, x, img));
 
   return List(Concatenation(out), x-> HClassRepFromData(s, x, [img, ker]));
 end);

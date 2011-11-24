@@ -65,7 +65,7 @@ DeclareGlobalFunction("CreateRClass");
 DeclareGlobalFunction("DisplayOrbitsOfImages");
 DeclareGlobalFunction("ExpandOrbitsOfImages");
 DeclareGlobalFunction("ForwardOrbitOfImage");
-DeclareAttribute("GreensHClassRepsData", IsTransformationSemigroup);
+DeclareAttribute("HClassRepsData", IsTransformationSemigroup);
 DeclareAttribute("GreensRClassRepsData", IsTransformationSemigroup);
 DeclareAttribute("ImageOrbit", IsGreensRClass and 
  IsGreensClassOfTransSemigp, "mutable"); # mutable essential!
@@ -89,7 +89,7 @@ DeclareGlobalFunction("IsRegularRClassData");
 DeclareProperty("IsRClassNC", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IteratorOfNewRClassRepsData");
 DeclareGlobalFunction("IteratorOfRClassRepsData");
-DeclareGlobalFunction("GreensHClassRepsDataFromData");
+DeclareGlobalFunction("HClassRepsDataFromData");
 DeclareGlobalFunction("NrIdempotentsRClassFromData");
 DeclareGlobalFunction("NrRClassesOrbitsOfImages");
 DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");

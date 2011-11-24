@@ -661,7 +661,7 @@ function(r)
   Info(InfoCitrus, 4, "GreensHClasses: for an R-class");
   
   s:=r!.parent; d:=DClassOfRClass(r); o:=d!.o; 
-  m:=NrHClasses(r); data:=GreensHClassRepsData(r); 
+  m:=NrHClasses(r); data:=HClassRepsData(r); 
   
   out:=EmptyPlist(m); 
 
@@ -682,19 +682,19 @@ function(r)
 end);
 
 
-# new for 0.1! - GreensHClassRepsData - "for an R-class of a trans. semigp."
+# new for 0.1! - HClassRepsData - "for an R-class of a trans. semigp."
 #############################################################################
 # JDM should we SetGreensLClassReps of d? 
 
 # JDM this and other like it should be iterators as illustrated by the 
 # Coxeter semigroup example...
 
-InstallOtherMethod(GreensHClassRepsData, "for an R-class of a trans. semigp.", 
+InstallOtherMethod(HClassRepsData, "for an R-class of a trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 function(r)
   local f, scc, d, cosets, out, k, data, i, j;
 
-  Info(InfoCitrus, 4, "GreensHClassRepsData: for an R-class");
+  Info(InfoCitrus, 4, "HClassRepsData: for an R-class");
 
   f:= r!.rep; scc:=ImageOrbitSCC(r);
   d:=DClassOfRClass(r); cosets:=ImageOrbitCosets(d);
@@ -719,15 +719,15 @@ function(r)
   return out;
 end);
 
-# new for 0.1! - GreensHClassRepsDataFromData - not a user function
+# new for 0.1! - HClassRepsDataFromData - not a user function
 #############################################################################
 # Usage: s = semigroup; data = image data; o = OrbitsOfImages.
 
-InstallGlobalFunction(GreensHClassRepsDataFromData, 
+InstallGlobalFunction(HClassRepsDataFromData, 
 function(s, data, o)
   local f, scc, d, cosets, out, k, i, j;
 
-  Info(InfoCitrus, 4, "GreensHClassRepsDataFromData: for an R-class");
+  Info(InfoCitrus, 4, "HClassRepsDataFromData: for an R-class");
 
   f:=RClassRepFromData(s, data, o); scc:=ImageOrbitSCCFromData(s, data, o);
   d:=GreensDClassOfElementNC(s, f); cosets:=ImageOrbitCosets(d);

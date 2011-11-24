@@ -503,7 +503,7 @@ iter:=IteratorByFunctions( rec(
               return iter!.data[i];
       fi;
       
-      iter!.data:=GreensHClassRepsDataFromData(s, NextIterator(iter!.r),
+      iter!.data:=HClassRepsDataFromData(s, NextIterator(iter!.r),
        OrbitsOfImages(s));
       iter!.i:=1;
       
