@@ -762,7 +762,7 @@ InstallMethod(GreensDClasses, "for a transformation semigroup",
 function(s)
   local iter, out, i, d;
 
-  iter:=IteratorOfGreensDClasses(s);
+  iter:=IteratorOfDClasses(s);
   out:=EmptyPlist(NrGreensDClasses(s));
   i:=0;
 
@@ -1534,16 +1534,16 @@ function(s)
   return iter;
 end);
 
-# new for 0.1! - IteratorOfGreensDClasses - user function!
+# new for 0.1! - IteratorOfDClasses - user function!
 #############################################################################
 # JDM why not use IteratorOfDClassRepsData below, it should be more
 # straightforward, see IteratorOfGreensLClasses.
 
-InstallGlobalFunction(IteratorOfGreensDClasses, 
+InstallGlobalFunction(IteratorOfDClasses, 
 function(arg)
   local iter, s;
 
-  Info(InfoCitrus, 4, "IteratorOfGreensDClasses");
+  Info(InfoCitrus, 4, "IteratorOfDClasses");
 
   if not (Length(arg) mod 3)=1 or not IsTransformationSemigroup(arg[1]) then 
     Info(InfoWarning, 1, "Usage: argument should be a transformation", 
@@ -1561,7 +1561,7 @@ function(arg)
             
             arg:=arg,
             
-            iter:=IteratorOfGreensDClasses(arg[1]),
+            iter:=IteratorOfDClasses(arg[1]),
            
             next:=fail,
             
@@ -1627,7 +1627,7 @@ function(arg)
     ShallowCopy:=iter-> rec(i:=0, s:=iter!.s, 
      reps:=IteratorOfRClassReps(s))));
 
-  SetIsIteratorOfGreensDClasses(iter, true);
+  SetIsIteratorOfDClasses(iter, true);
   SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
@@ -2149,7 +2149,7 @@ end);
 # new for 0.1! - PrintObj - "for iterator of D-classes"
 ############################################################################
 
-InstallMethod(PrintObj, [IsIteratorOfGreensDClasses], 
+InstallMethod(PrintObj, [IsIteratorOfDClasses], 
 function(iter)
   Print( "<iterator of D-classes>");
 return;

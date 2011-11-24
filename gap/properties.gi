@@ -398,7 +398,7 @@ function(s)
   local iter, r, d;
 
   if OrbitsOfKernels(s)!.finished then 
-    iter:=IteratorOfGreensDClasses(s);
+    iter:=IteratorOfDClasses(s);
     for d in iter do 
       if not (Size(ImageOrbitSchutzGpFromData(s, d!.data[1]))=1 and 
        Length(ImageOrbitSCCFromData(s, d!.data[1]))=1) then
@@ -1215,7 +1215,7 @@ InstallOtherMethod(StructureDescription, "for a Brandt trans. semigroup",
 function(s)
   local iter, d;
   
-  iter:=IteratorOfGreensDClasses(s);
+  iter:=IteratorOfDClasses(s);
   repeat 
     d:=NextIterator(iter);
   until Size(d)>1;

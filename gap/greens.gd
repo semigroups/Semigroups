@@ -45,7 +45,7 @@ DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
 DeclareAttribute("HClassReps", IsTransformationSemigroup);
 DeclareProperty("IsGreensClassOfTransSemigp", IsGreensClass);
 DeclareProperty("IsRegularRClass", IsGreensClassOfTransSemigp);
-DeclareGlobalFunction("IteratorOfGreensDClasses");
+DeclareGlobalFunction("IteratorOfDClasses");
 DeclareGlobalFunction("IteratorOfGreensRClasses");
 DeclareGlobalFunction("IteratorOfDClassReps"); 
 DeclareGlobalFunction("IteratorOfRClassReps");
@@ -194,7 +194,7 @@ DeclareProperty("IsIteratorOfHClassReps", IsIterator);
 
 DeclareProperty("IsIteratorOfGreensRClasses", IsIterator);
 DeclareProperty("IsIteratorOfGreensLClasses", IsIterator);
-DeclareProperty("IsIteratorOfGreensDClasses", IsIterator);
+DeclareProperty("IsIteratorOfDClasses", IsIterator);
 DeclareProperty("IsIteratorOfGreensHClasses", IsIterator);
 
 DeclareProperty("IsIteratorOfSemigroup", IsIterator);
