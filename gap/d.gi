@@ -1124,6 +1124,24 @@ function(d, f)
   return r;
 end);
 
+#HHH
+
+# new for 0.1! - HClassReps - "for a D-class"
+############################################################################
+
+InstallOtherMethod(HClassReps, "for a D-class",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+  local s, img, ker, out;
+
+  s:=d!.parent;
+  img:=OrbitsOfImages(s); ker:=OrbitsOfKernels(s);
+  out:=List(GreensRClassRepsData(d), x->
+   GreensHClassRepsDataFromData(s, x, img));
+
+  return List(Concatenation(out), x-> HClassRepFromData(s, x, [img, ker]));
+end);
+
 #III
 
 # new for 0.1! - Idempotents - "for a D-class of a trans. semigp."

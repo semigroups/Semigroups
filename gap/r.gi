@@ -667,8 +667,8 @@ function(r)
 
   for i in [1..m] do 
 
-    if HasGreensHClassReps(r) then 
-      f:=GreensHClassReps(r)[i];
+    if HasHClassReps(r) then 
+      f:=HClassReps(r)[i];
     else
       f:=HClassRepFromData(s, data[i], o);
     fi;
@@ -681,42 +681,6 @@ function(r)
   return out;
 end);
 
-# new for 0.1! - GreensHClassReps - "for an R-class of a trans. semigp."
-#############################################################################
-# JDM should we SetGreensLClassReps of d? 
-
-InstallOtherMethod(GreensHClassReps, "for an R-class of a trans. semigp.", 
-[IsGreensRClass and IsGreensClassOfTransSemigp], 
-function(r)
-  local f, cosets, perms, scc, out, k, i, j;
-
-  Info(InfoCitrus, 4, "GreensHClassReps: for an R-class");
-
-  if HasGreensHClasses(r) then 
-    return List(GreensHClasses(r), Representative);
-  fi;
-
-  f:= r!.rep; cosets:=ImageOrbitCosets(DClassOfRClass(r));
-  perms:=ImageOrbitPerms(r); scc:=ImageOrbitSCC(r);
-
-  out:=EmptyPlist(Length(scc)*Length(cosets));
-
-  if not HasNrGreensHClasses(r) then 
-    SetNrGreensHClasses(r, Length(scc)*Length(cosets));
-  fi;
-
-  k:=0;
-
-  for i in scc do 
-    i:=perms[i];
-    for j in cosets do 
-      k:=k+1;
-      out[k]:=f*(j/i);
-    od;
-  od;
-
-  return out;
-end);
 
 # new for 0.1! - GreensHClassRepsData - "for an R-class of a trans. semigp."
 #############################################################################
@@ -891,6 +855,45 @@ function(s)
   Info(InfoCitrus, 4, "GreensRClassRepsData: for a trans. semi.");
   ExpandOrbitsOfImages(s);
   return OrbitsOfImages(s)!.data;
+end);
+
+#HHH
+
+# new for 0.1! - HClassReps - "for an R-class of a trans. semigp."
+#############################################################################
+# JDM should we SetGreensLClassReps of d? 
+
+InstallOtherMethod(HClassReps, "for an R-class of a trans. semigp.", 
+[IsGreensRClass and IsGreensClassOfTransSemigp], 
+function(r)
+  local f, cosets, perms, scc, out, k, i, j;
+
+  Info(InfoCitrus, 4, "HClassReps: for an R-class");
+
+  if HasGreensHClasses(r) then 
+    return List(GreensHClasses(r), Representative);
+  fi;
+
+  f:= r!.rep; cosets:=ImageOrbitCosets(DClassOfRClass(r));
+  perms:=ImageOrbitPerms(r); scc:=ImageOrbitSCC(r);
+
+  out:=EmptyPlist(Length(scc)*Length(cosets));
+
+  if not HasNrGreensHClasses(r) then 
+    SetNrGreensHClasses(r, Length(scc)*Length(cosets));
+  fi;
+
+  k:=0;
+
+  for i in scc do 
+    i:=perms[i];
+    for j in cosets do 
+      k:=k+1;
+      out[k]:=f*(j/i);
+    od;
+  od;
+
+  return out;
 end);
 
 #III

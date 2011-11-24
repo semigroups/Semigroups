@@ -300,44 +300,6 @@ function(s, f)
    [img_o, ker_o], f);
 end);
 
-# new for 0.1! - GreensHClassReps - "for a transformation semigp."
-############################################################################
-# JDM move to greens.gi
-
-InstallMethod(GreensHClassReps, "for a transformation semigp.", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  local out, iter, i, f;
-  Info(InfoCitrus, 4, "GreensHClassReps");
-
-  out:=EmptyPlist(NrGreensHClasses(s));
-  iter:=IteratorOfHClassReps(s);
-  i:=0;
-
-  for f in iter do
-    i:=i+1;
-    out[i]:=f;
-  od;
-
-  return out;
-end);
-
-# new for 0.1! - GreensHClassReps - "for a D-class"
-############################################################################
-# JDM move to d.gi 
-
-InstallOtherMethod(GreensHClassReps, "for a D-class", 
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(d)
-  local s, img, ker, out;
-
-  s:=d!.parent;
-  img:=OrbitsOfImages(s); ker:=OrbitsOfKernels(s);
-  out:=List(GreensRClassRepsData(d), x-> 
-   GreensHClassRepsDataFromData(s, x, img));
-
-  return List(Concatenation(out), x-> HClassRepFromData(s, x, [img, ker]));
-end);
 
 # new for 0.1! - GroupHClass - "for a D-class of a trans. semigp."
 ############################################################################
@@ -609,7 +571,7 @@ function(arg)
   return f*(d[3]/perms[d[1][3]]);
 end);
 
-# new for 0.1! - HClassClassType - not a user function!
+# new for 0.1! - HClassType - not a user function!
 ############################################################################
 
 InstallMethod(HClassType, "for a transformation semigroup", 

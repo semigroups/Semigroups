@@ -39,7 +39,7 @@ DeclareOperation("EnumeratorOfRClasses", [IsTransformationSemigroup]);
 # the documentation for the functions below can be found in 
 # /monoid/doc/r.xml
 
-DeclareAttribute("GreensHClassReps", IsTransformationSemigroup);
+DeclareAttribute("HClassReps", IsTransformationSemigroup);
 DeclareOperation("GreensDClassOfElementNC", [IsTransformationSemigroup]); 
 DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
 DeclareAttribute("GreensDClassReps", IsTransformationSemigroup);

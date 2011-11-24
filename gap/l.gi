@@ -248,8 +248,8 @@ function(l)
 
   for i in [1..m] do 
     
-    if HasGreensHClassReps(l) then 
-      f:=GreensHClassReps(l)[i];
+    if HasHClassReps(l) then 
+      f:=HClassReps(l)[i];
     else
       f:=HClassRepFromData(s, data[i], o);
     fi;
@@ -262,10 +262,10 @@ function(l)
   return out;
 end);
 
-# new for 0.1! - GreensHClassReps - "for an L-class of a trans. semigp."
+# new for 0.1! - HClassReps - "for an L-class of a trans. semigp."
 #############################################################################
 
-InstallOtherMethod(GreensHClassReps, "for an L-class of a trans. semigp.", 
+InstallOtherMethod(HClassReps, "for an L-class of a trans. semigp.", 
 [IsGreensLClass and IsGreensClassOfTransSemigp], 
 function(l)
   local f, cosets, rels, scc, out, k, i, j;

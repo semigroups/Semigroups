@@ -121,6 +121,31 @@ function(f, s)
   return false;
 end);
 
+#HHH
+
+# new for 0.1! - HClassReps - "for a transformation semigp."
+############################################################################
+
+InstallMethod(HClassReps, "for a transformation semigp.",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local out, iter, i, f;
+  Info(InfoCitrus, 4, "HClassReps");
+
+  out:=EmptyPlist(NrGreensHClasses(s));
+  iter:=IteratorOfHClassReps(s);
+  i:=0;
+
+  for f in iter do
+    i:=i+1;
+    out[i]:=f;
+  od;
+
+  return out;
+end);
+
+#EEE
+
 # new for 0.1! - Enumerator - "for a transformation semigroup"
 #############################################################################
 # Notes: this is not an enumerator as I could not get an enumerator to perform 
