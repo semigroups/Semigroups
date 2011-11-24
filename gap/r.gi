@@ -758,7 +758,7 @@ function(s)
   Info(InfoCitrus, 4, "GreensRClasses: for a trans. semi.");
 
   iter:=IteratorOfRClasses(s);
-  out:=EmptyPlist(NrGreensRClasses(s));
+  out:=EmptyPlist(NrRClasses(s));
   i:=0;
 
   for r in iter do 
@@ -1521,14 +1521,14 @@ InstallOtherMethod(NrHClasses, "for an R-class of a trans. semigroup",
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 r-> NrGreensLClasses(DClassOfRClass(r)));
 
-# new for 0.1! - NrGreensRClasses - "for a transformation semigroup"
+# new for 0.1! - NrRClasses - "for a transformation semigroup"
 #############################################################################
 
-InstallMethod(NrGreensRClasses, "for a transformation semigroup", 
+InstallMethod(NrRClasses, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
 
-  Info(InfoCitrus, 4, "NrGreensRClasses");
+  Info(InfoCitrus, 4, "NrRClasses");
 
   ExpandOrbitsOfImages(s);
   return NrRClassesOrbitsOfImages(s);
@@ -1623,7 +1623,7 @@ function(s)
   od;
 
   if OrbitsOfImages(s)!.finished then 
-    SetNrGreensRClasses(s, m);
+    SetNrRClasses(s, m);
   fi;
   return m;
 end);

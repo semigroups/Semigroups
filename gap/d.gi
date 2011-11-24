@@ -953,7 +953,7 @@ function(d)
   out:=DClassRClassRepsDataFromData(d!.parent, d!.data, d!.o);
   # read the R-classes of d found during the enumeration of D-classes.
 
-  if Length(out)=NrGreensRClasses(d) then 
+  if Length(out)=NrRClasses(d) then 
     return out;
   fi;
 
@@ -969,7 +969,7 @@ function(d)
   l:=List(cosets, x-> Position(ImageOrbit(d),
    ImageSetOfTransformation(f*x^-1)));
 
-  out:=EmptyPlist(NrGreensRClasses(d));
+  out:=EmptyPlist(NrRClasses(d));
   orbits:=d!.o[1]!.orbits; images:=d!.o[1]!.images;
   t:=0; r:=Length(scc); c:=Length(cosets);
 
@@ -1008,7 +1008,7 @@ function(d)
   cosets:=KernelOrbitCosets(d); f:=d!.rep;
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
-  SetNrGreensRClasses(d, Length(scc)*Length(cosets));
+  SetNrRClasses(d, Length(scc)*Length(cosets));
 
   k:=0;
   
@@ -1065,7 +1065,7 @@ function(d)
   local s, o, out, i, reps, f, r, data;
 
   s:=d!.parent; o:=d!.o[1]; 
-  out:=EmptyPlist(NrGreensRClasses(d)); 
+  out:=EmptyPlist(NrRClasses(d)); 
   i:=0; reps:=GreensRClassRepsData(d);
 
   for data in reps do 
@@ -1918,7 +1918,7 @@ end);
 InstallOtherMethod(NrHClasses, "for a D-class of a trans. semigroup",
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
-  return NrGreensRClasses(d)*NrGreensLClasses(d);
+  return NrRClasses(d)*NrGreensLClasses(d);
 end);
 
 # new for 0.1! - NrGreensLClasses - "for a D-class of a trans. semigroup"
@@ -1931,10 +1931,10 @@ function(d)
   data[1], d!.o[1]));
 end);
 
-# new for 0.1! - NrGreensRClasses - "for a D-class of a trans. semigroup"
+# new for 0.1! - NrRClasses - "for a D-class of a trans. semigroup"
 #############################################################################
 
-InstallOtherMethod(NrGreensRClasses, "for a D-class of a trans. semigroup", 
+InstallOtherMethod(NrRClasses, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
 

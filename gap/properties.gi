@@ -431,7 +431,7 @@ InstallOtherMethod(IsGreensRTrivial, "for D-class of a trans. semigp.",
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
   #JDM maybe better if we had an enumerator of R-classes of d...
-  return NrGreensRClasses(d)=Size(d);
+  return NrRClasses(d)=Size(d);
 end);
 
 # new for 0.1! - IsGroupAsSemigroup - "for a transformation semigroup"
@@ -762,8 +762,8 @@ function(s)
   if IsRightZeroSemigroup(s) then 
     Info(InfoCitrus, 2, "the semigroup is a right zero semigroup");
     return true;
-  elif HasNrGreensRClasses(s) then 
-    return NrGreensRClasses(s)=1;
+  elif HasNrRClasses(s) then 
+    return NrRClasses(s)=1;
   fi;
 
   iter:=IteratorOfRClassRepsData(s); NextIterator(iter);
@@ -1221,7 +1221,7 @@ function(s)
   until Size(d)>1;
   
   return Concatenation("B(", StructureDescription(GroupHClass(d)), ", ",
-  String(NrGreensRClasses(d)), ")");
+  String(NrRClasses(d)), ")");
 end);
 
 #EOF

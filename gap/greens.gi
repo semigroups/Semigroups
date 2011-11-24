@@ -218,7 +218,7 @@ function(s)
         return not Position(enum, r)=fail;
       end,
       
-      Length:=enum -> NrGreensRClasses(s),
+      Length:=enum -> NrRClasses(s),
 
       PrintObj:=function(enum)
         Print( "<enumerator of R-classes>");
@@ -267,7 +267,7 @@ function(s)
       return RClassIndexFromData(s, r!.data);
     end,
 
-    Length:=enum -> NrGreensRClasses(s),
+    Length:=enum -> NrRClasses(s),
 
     PrintObj:=function(enum)
       Print( "<enumerator of R-classes>");

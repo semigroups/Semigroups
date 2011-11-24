@@ -873,7 +873,7 @@ end);
 
 InstallOtherMethod(NrHClasses, "for an L-class of a trans. semigroup", 
 [IsGreensLClass and IsGreensClassOfTransSemigp], 
-  l-> NrGreensRClasses(DClassOfLClass(l)));
+  l-> NrRClasses(DClassOfLClass(l)));
 
 # new for 0.1! - NrIdempotents - "for an L-class of a trans. semigp."
 ############################################################################
