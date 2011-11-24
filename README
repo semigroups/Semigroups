@@ -83,8 +83,8 @@ in .tar.gz format.
 Contents
 --------
 
-The `citrus' folder containing this README.txt file should contain the 
-directories and files: `CHANGELOG', `config', `doc', `examples', `gap', 
+The `citrus-0.4' folder containing this README.txt file should contain the 
+directories and files: `CHANGELOG', `doc', `examples', `gap', 
 'init.g', `PackageInfo.g', `read.g', `README', `tst', and `VERSIONS'. 
 
 Installation
@@ -93,7 +93,7 @@ Installation
 1) unpack the file (for example, by using `gunzip citrus-0.4.tar.gz' and 
 then `tar -xf citrus-0.4.tar' in UNIX).
 
-2) move the resultant directory `citrus' into the `pkg' directory of your 
+2) move the resultant directory `citrus-0.4' into the `pkg' directory of your 
 GAP directory (the directory containing the directories `lib', `doc', 
 `pkg', and so on).
 

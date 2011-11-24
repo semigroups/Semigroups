@@ -28,7 +28,8 @@
   <Copyright>&copyright; 2011 by J. D. Mitchell.<P/>
     &Citrus; is free software; you can redistribute it and/or modify it
     under the terms of the
-    <URL Text="GNU General Public License">http://www.fsf.org/licenses/gpl.     html</URL>
+    <URL Text="GNU General Public License">
+    http://www.fsf.org/licenses/gpl.html</URL>
     as published by the Free Software Foundation; either version 2 of
     the License, or (at your option) any later version.
   </Copyright>
@@ -144,24 +145,24 @@
       </Item>
     
       <Item> download the package archive <C>&ARCHIVENAME;.tar.gz</C> from
-      <Alt    Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
+      <Alt Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
           <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html
       </URL></Item>
     
       <Item> unzip and untar the file, this should create a directory called
-      <C>citrus</C>.</Item>
+      &ARCHIVENAME;.</Item>
     
       <Item> 
       locate the <C>pkg</C> directory of your &GAP; directory, which contains
       several other directories such as <C>lib</C>, <C>doc</C> and so on. Move 
-      the directory <C>citrus</C> into the <C>pkg</C> directory.
+      the directory &ARCHIVENAME; into the <C>pkg</C> directory.
       </Item>
     
       <Item> start &GAP; in the usual way.</Item>
     
       <Item> type <C>LoadPackage("citrus");</C></Item>
       
-      <Item> compile the documentation by typing <C>CitrusMakeDoc()</C></Item>
+      <Item> compile the documentation by typing <C>CitrusMakeDoc();</C></Item>
 
     </List>
 
@@ -174,7 +175,7 @@
     <Log>
 > gunzip &ARCHIVENAME;.tar.gz 
 > tar -xf &ARCHIVENAME;.tar 
-> mv citrus GAPROOT/pkg
+> mv &ARCHIVENAME; GAPROOT/pkg
 > gap 
 
 [ ... ]
