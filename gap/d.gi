@@ -861,17 +861,6 @@ function(s, f)
   return CreateDClass(s, [[j,1,1,1,1,1], [j,1,1,1,1,1]], [img_o, ker_o], f);
 end);
 
-# new for 0.1! - GreensDClassReps - "for a trans. semigroup"
-#############################################################################
-# move to greens.gi JDM
-InstallMethod(GreensDClassReps, "for a trans. semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-  function(s)
-
-  ExpandOrbitsOfKernels(s);
-  return List(OrbitsOfKernels(s)!.data, x-> DClassRepFromData(s, x));
-end);
-
 # new for 0.1! - GreensDClassRepsData - "for a trans. semigroup"
 #############################################################################
 # move to greens.gi JDM 

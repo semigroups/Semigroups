@@ -144,6 +144,20 @@ function(s)
   return out;
 end);
 
+#DDD
+
+# new for 0.1! - DClassReps - "for a trans. semigroup"
+#############################################################################
+# move to greens.gi JDM
+
+InstallMethod(DClassReps, "for a trans. semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+  function(s)
+
+  ExpandOrbitsOfKernels(s);
+  return List(OrbitsOfKernels(s)!.data, x-> DClassRepFromData(s, x));
+end);
+
 #EEE
 
 # new for 0.1! - Enumerator - "for a transformation semigroup"
