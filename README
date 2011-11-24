@@ -90,8 +90,8 @@ directories and files: `CHANGELOG', `config', `doc', `examples', `gap',
 Installation
 ------------
 
-1) unpack the file (for example, by using `gunzip citrus0r4.tar.gz' and 
-then `tar -xf citrus0r4.tar' in UNIX).
+1) unpack the file (for example, by using `gunzip citrus-0.4.tar.gz' and 
+then `tar -xf citrus-0.4.tar' in UNIX).
 
 2) move the resultant directory `citrus' into the `pkg' directory of your 
 GAP directory (the directory containing the directories `lib', `doc', 
@@ -104,9 +104,9 @@ GAP directory (the directory containing the directories `lib', `doc',
 Example Installation
 --------------------
 
-unix> gunzip citrus0r4.tar.gz 
-unix> tar -xf citrus0r4.tar 
-unix> mv citrus GAPROOT/pkg
+unix> gunzip citrus-0.4.tar.gz 
+unix> tar -xf citrus-0.4.tar 
+unix> mv citrus-0.4 GAPROOT/pkg
 unix> gap
 
 [ ... ]
