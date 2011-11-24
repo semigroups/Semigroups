@@ -16,7 +16,8 @@ syntax: glob
 *.ilg
 *.ind
 *.pnr
-*.tex
 *.toc
 *.six
 *.orig
+*.synctex.gz
+citrus.tex
