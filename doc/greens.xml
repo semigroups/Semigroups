@@ -88,10 +88,10 @@ true</Example>
 
 <#GAPDoc Label="GreensXClasses">
   <ManSection Label="GreensXClasses"><Heading>GreensXClasses</Heading>
-    <Attr Name="GreensDClasses" Arg="obj"/>
-    <Attr Name="GreensHClasses" Arg="obj"/>
-    <Attr Name="GreensLClasses" Arg="obj"/>
-    <Attr Name="GreensRClasses" Arg="obj"/>
+    <Meth Name="GreensDClasses" Arg="obj"/>
+    <Meth Name="GreensHClasses" Arg="obj"/>
+    <Meth Name="GreensLClasses" Arg="obj"/>
+    <Meth Name="GreensRClasses" Arg="obj"/>
     <Returns>a list of Green's classes contained in
      <A>obj</A> which can be a transformation semigroup,
      &D;-, &L;-, or &R;-class where appropriate.

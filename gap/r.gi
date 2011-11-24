@@ -98,7 +98,7 @@ end);
 InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, f, data, o)
   local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, images, ht, gen1, pos1, 
-   f_o, out, reps, i, els, z, y;
+   f_o, out, reps, i, z, y;
 
   j:=data[1]; 	# img size
   k:=data[2]; 	# index of orbit containing img
@@ -169,12 +169,12 @@ function(s, f, data, o)
   #install new pts in the orbit
 
   if IsBound(ht) then
-    m:=Length(gens); j:=Length(o); els:=ht!.els;
+    m:=Length(gens); j:=Length(o);
     for y in [1..m] do
       z:=g{gens[y]};
       if HTValue(ht, z)=fail then  
         j:=j+1; 
-        z:=HTAdd(ht, z, j); o[j]:=els[z]; pos1[j]:=i; gen1[j]:=y;
+        z:=HTAdd(ht, z, j); o[j]:=ht!.els[z]; pos1[j]:=i; gen1[j]:=y;
       fi;
     od;
   fi;
