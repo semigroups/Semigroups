@@ -42,7 +42,6 @@ DeclareOperation("EnumeratorOfRClasses", [IsTransformationSemigroup]);
 DeclareAttribute("DClassReps", IsTransformationSemigroup);
 DeclareOperation("GreensDClassOfElementNC", [IsTransformationSemigroup]); 
 DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
-DeclareAttribute("GreensRClassReps", IsTransformationSemigroup);
 DeclareAttribute("HClassReps", IsTransformationSemigroup);
 DeclareProperty("IsGreensClassOfTransSemigp", IsGreensClass);
 DeclareProperty("IsRegularRClass", IsGreensClassOfTransSemigp);
@@ -54,6 +53,7 @@ DeclareAttribute("NrIdempotents", IsTransformationSemigroup);
 DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
 DeclareAttribute("NrGreensDClasses", IsTransformationSemigroup); DeclareAttribute("NrGreensHClasses", IsTransformationSemigroup);
 DeclareAttribute("NrGreensRClasses", IsTransformationSemigroup);
+DeclareAttribute("RClassReps", IsTransformationSemigroup);
 
 # the following functions in r.gi are currently undocumented
 

@@ -942,7 +942,7 @@ end);
 # new for 0.1! - GreensRClassRepsData - "for a D-class of a trans. semigroup"
 #############################################################################
 # Notes: maybe write iterator/enumerator later! This is relatively slow in 
-# comparison to GreensRClassReps, as here we have to search for the data.
+# comparison to RClassReps, as here we have to search for the data.
 
 InstallOtherMethod(GreensRClassRepsData, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
@@ -991,10 +991,10 @@ function(d)
   return out;
 end);
 
-# new for 0.1! - GreensRClassReps - "for a D-class of a trans. semigroup"
+# new for 0.1! - RClassReps - "for a D-class of a trans. semigroup"
 #############################################################################
 
-InstallOtherMethod(GreensRClassReps, "for a D-class of a trans. semigroup", 
+InstallOtherMethod(RClassReps, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
 function(d)
   local rels, scc, cosets, f, out, k, g, i, j;
@@ -1938,8 +1938,8 @@ InstallOtherMethod(NrGreensRClasses, "for a D-class of a trans. semigroup",
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
 
-  if HasGreensRClassReps(d) then 
-    return Length(GreensRClassReps(d));
+  if HasRClassReps(d) then 
+    return Length(RClassReps(d));
   fi;
 
   return Length(KernelOrbitSCC(d))*Length(KernelOrbitCosets(d));
@@ -2057,7 +2057,7 @@ function(s)
   for i in [1..n] do
     for x in gens do
       
-      for f in GreensRClassReps(d[i]) do
+      for f in RClassReps(d[i]) do
         data:=PreInOrbitsOfKernels(s, x * f, true, orbits)[2][2]{[1..6]};
         data[3]:=KernelOrbitSCCFromData(s, data, o[2])[1];
         AddSet(out[i], HTValue(data_ht, data));

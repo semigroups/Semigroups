@@ -148,7 +148,6 @@ end);
 
 # new for 0.1! - DClassReps - "for a trans. semigroup"
 #############################################################################
-# move to greens.gi JDM
 
 InstallMethod(DClassReps, "for a trans. semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
@@ -408,12 +407,11 @@ InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(Iterator, "for a trivial trans. semigp", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
 function(s)
-  return TrivialIterator(GreensRClassReps(s)[1]);
+  return TrivialIterator(RClassReps(s)[1]);
 end);
 
 # new for 0.1! - Iterator - "for a transformation semigroup"
 #############################################################################
-# JDM move to greens.gi
 
 InstallMethod(Iterator, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],

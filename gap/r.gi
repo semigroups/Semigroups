@@ -833,19 +833,6 @@ function(s, f)
   return r;
 end);
 
-# new for 0.1! - GreensRClassReps - "for a transformation semigroup"
-#############################################################################
-
-InstallMethod(GreensRClassReps, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  Info(InfoCitrus, 4, "GreensRClassReps: for a trans. semi.");
-
-  ExpandOrbitsOfImages(s);
-
-  return List(OrbitsOfImages(s)!.data, x-> RClassRepFromData(s, x));
-end);
-
 # new for 0.1! - GreensRClassRepsData - "for a transformation semigroup"
 #############################################################################
 
@@ -1152,7 +1139,7 @@ function(f, rectify, data, o, images)
   fi;
 
   if g=fail then 
-  #this can happen if coming from GreensRClassReps.
+  #this can happen if coming from RClassReps.
     if IsBound(o[j][k]!.perms[l]) then 
       #g:=f*o[j][k]!.perms[l];
       g:=OnTuples(f, o[j][k]!.perms[l]);
@@ -1853,6 +1840,19 @@ function(arg)
 
   return TransformationNC(o!.reps[d[4]][d[5]][d[6]]);
 end);
+
+# new for 0.1! - RClassReps - "for a transformation semigroup"
+#############################################################################
+
+InstallMethod(RClassReps, "for a transformation semigroup", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+function(s)
+  Info(InfoCitrus, 4, "RClassReps: for a trans. semi.");
+
+  ExpandOrbitsOfImages(s);
+  return List(OrbitsOfImages(s)!.data, x-> RClassRepFromData(s, x));
+end);
+
 
 # new for 0.1! - RClassType - "for a transformation semigroup"
 ############################################################################
