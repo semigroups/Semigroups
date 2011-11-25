@@ -66,7 +66,6 @@ DeclareGlobalFunction("DisplayOrbitsOfImages");
 DeclareGlobalFunction("ExpandOrbitsOfImages");
 DeclareGlobalFunction("ForwardOrbitOfImage");
 DeclareAttribute("HClassRepsData", IsTransformationSemigroup);
-DeclareAttribute("GreensRClassRepsData", IsTransformationSemigroup);
 DeclareAttribute("ImageOrbit", IsGreensRClass and 
  IsGreensClassOfTransSemigp, "mutable"); # mutable essential!
 DeclareGlobalFunction("ImageOrbitFromData");
@@ -96,6 +95,7 @@ DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
 DeclareGlobalFunction("PreInOrbitsOfImages");
 DeclareGlobalFunction("RClassIndexFromData");
 DeclareGlobalFunction("RClassRepFromData");
+DeclareAttribute("RClassRepsData", IsTransformationSemigroup);
 DeclareAttribute("RClassType", IsTransformationSemigroup);
 DeclareGlobalFunction("SizeOrbitsOfImages");
 DeclareGlobalFunction("TraceRClassRepsTree");
@@ -121,12 +121,12 @@ DeclareGlobalFunction("DisplayOrbitsOfKernels");
 DeclareGlobalFunction("ExpandOrbitsOfKernels");
 DeclareGlobalFunction("ForwardOrbitOfKernel");
 DeclareAttribute("GeneratorsAsListOfImages", IsTransformationSemigroup);
-DeclareAttribute("GreensDClassRepsData", IsTransformationSemigroup);
-DeclareAttribute("GreensLClassRepsData", IsTransformationSemigroup);
-DeclareGlobalFunction("GreensLClassRepsDataFromData");
+DeclareAttribute("DClassRepsData", IsTransformationSemigroup);
+DeclareAttribute("LClassRepsData", IsTransformationSemigroup);
+DeclareGlobalFunction("LClassRepsDataFromData");
 DeclareGlobalFunction("ImageOrbitCosetsFromData"); #input kernel orbit data!
 DeclareAttribute("GroupHClass", IsGreensDClass and
- IsGreensClassOfTransSemigp);#M
+ IsGreensClassOfTransSemigp);
 DeclareAttribute("ImageOrbitCosets", IsGreensDClass and
  IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("InOrbitsOfKernels");
@@ -163,14 +163,14 @@ DeclareGlobalFunction("SizeOrbitsOfKernels");
 
 DeclareGlobalFunction("CreateLClass");
 DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]); #M
-DeclareAttribute("GreensLClassReps", IsTransformationSemigroup); #M
+DeclareAttribute("LClassReps", IsTransformationSemigroup); #M
 DeclareProperty("IsRegularLClass", IsGreensClassOfTransSemigp); #M
-DeclareGlobalFunction("IteratorOfGreensLClasses"); #M
+DeclareGlobalFunction("IteratorOfLClasses"); #M
 DeclareGlobalFunction("IteratorOfLClassRepsData");
 DeclareGlobalFunction("IteratorOfLClassReps"); #M
 DeclareGlobalFunction("LClassRepFromData");
 DeclareAttribute("LClassType", IsTransformationSemigroup);
-DeclareAttribute("NrGreensLClasses", IsTransformationSemigroup);
+DeclareAttribute("NrLClasses", IsTransformationSemigroup);
 
 # the following functions in h.gi are currently undocumented
 
@@ -178,7 +178,7 @@ DeclareGlobalFunction("CreateHClass");
 DeclareOperation("GreensHClassOfElementNC", [IsTransformationSemigroup]); #M
 DeclareGlobalFunction("HClassRepFromData");
 DeclareAttribute("HClassType", IsTransformationSemigroup);
-DeclareGlobalFunction("IteratorOfGreensHClasses");#M
+DeclareGlobalFunction("IteratorOfHClasses");#M
 DeclareGlobalFunction("IteratorOfHClassReps"); #M
 DeclareGlobalFunction("IteratorOfHClassRepsData");
 
@@ -187,16 +187,16 @@ DeclareProperty("IsIteratorOfLClassReps", IsIterator);
 DeclareProperty("IsIteratorOfDClassReps", IsIterator);
 DeclareProperty("IsIteratorOfHClassReps", IsIterator);
 
-# IteratorOfRClasses and IteratorOfGreensLClasses
+# IteratorOfRClasses and IteratorOfLClasses
 # should be operations so that they can be applied to 
 # D-classes as well as transformation semigroups!
 # and IteratorOfDClass should be an operation so that I can make an
 # iterator that of D-classes satisfying some properties a la smallsemi..
 
 DeclareProperty("IsIteratorOfRClasses", IsIterator);
-DeclareProperty("IsIteratorOfGreensLClasses", IsIterator);
+DeclareProperty("IsIteratorOfLClasses", IsIterator);
 DeclareProperty("IsIteratorOfDClasses", IsIterator);
-DeclareProperty("IsIteratorOfGreensHClasses", IsIterator);
+DeclareProperty("IsIteratorOfHClasses", IsIterator);
 
 DeclareProperty("IsIteratorOfSemigroup", IsIterator);
 DeclareProperty("IsIteratorOfRClassElements", IsIterator);

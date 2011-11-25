@@ -861,11 +861,11 @@ function(s, f)
   return CreateDClass(s, [[j,1,1,1,1,1], [j,1,1,1,1,1]], [img_o, ker_o], f);
 end);
 
-# new for 0.1! - GreensDClassRepsData - "for a trans. semigroup"
+# new for 0.1! - DClassRepsData - "for a trans. semigroup"
 #############################################################################
 # move to greens.gi JDM 
  
-InstallMethod(GreensDClassRepsData, "for a trans. semigroup", 
+InstallMethod(DClassRepsData, "for a trans. semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
   function(s)
   ExpandOrbitsOfKernels(s);
@@ -882,19 +882,19 @@ function(d)
   return Concatenation(List(GreensRClasses(d), GreensHClasses));
 end);
 
-# new for 0.1! - GreensLClassRepsData - "for a D-class of a trans. semigroup"
+# new for 0.1! - LClassRepsData - "for a D-class of a trans. semigroup"
 #############################################################################
 
-InstallOtherMethod(GreensLClassRepsData, "for a D-class of a trans. semigroup", 
+InstallOtherMethod(LClassRepsData, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
-  d-> GreensLClassRepsDataFromData(d!.parent, d!.data, d!.o));
+  d-> LClassRepsDataFromData(d!.parent, d!.data, d!.o));
 
-# new for 0.1! - GreensLClassRepsDataFromData - not a user function!
+# new for 0.1! - LClassRepsDataFromData - not a user function!
 #############################################################################
 # Usage: s = semigroup; data = [image data, kernel data];
 # o = [OrbitsOfKernels, OrbitsOfImages].
 
-InstallGlobalFunction(GreensLClassRepsDataFromData,
+InstallGlobalFunction(LClassRepsDataFromData,
 function(s, data, o)
   local scc, img_co, out, k, i, j;
   
@@ -912,11 +912,11 @@ function(s, data, o)
   return out;
 end);
 
-# new for 0.1! - GreensLClassReps - "for a D-class of a trans. semigroup"
+# new for 0.1! - LClassReps - "for a D-class of a trans. semigroup"
 #############################################################################
 # maybe write iterator/enumerator later! JDM
 
-InstallOtherMethod(GreensLClassReps, "for a D-class of a trans. semigroup", 
+InstallOtherMethod(LClassReps, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
 function(d)
   local perms, scc, cosets, f, out, k, i, j;
@@ -925,7 +925,7 @@ function(d)
   cosets:=ImageOrbitCosets(d); f:=d!.rep;
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
-  SetNrGreensLClasses(d, Length(scc)*Length(cosets));
+  SetNrLClasses(d, Length(scc)*Length(cosets));
   
   k:=0;
 
@@ -939,12 +939,12 @@ function(d)
   return out;
 end);
 
-# new for 0.1! - GreensRClassRepsData - "for a D-class of a trans. semigroup"
+# new for 0.1! - RClassRepsData - "for a D-class of a trans. semigroup"
 #############################################################################
 # Notes: maybe write iterator/enumerator later! This is relatively slow in 
 # comparison to RClassReps, as here we have to search for the data.
 
-InstallOtherMethod(GreensRClassRepsData, "for a D-class of a trans. semigroup", 
+InstallOtherMethod(RClassRepsData, "for a D-class of a trans. semigroup", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
 function(d)
   local out, f, rels, scc, cosets, j, k, l, m, val, orbits, images, t, r, c, 
@@ -999,8 +999,8 @@ InstallOtherMethod(RClassReps, "for a D-class of a trans. semigroup",
 function(d)
   local rels, scc, cosets, f, out, k, g, i, j;
 
-  if HasGreensRClassRepsData(d) then 
-    return List(GreensRClassRepsData(d), x-> 
+  if HasRClassRepsData(d) then 
+    return List(RClassRepsData(d), x-> 
      RClassRepFromData(d!.parent, x, d!.o[1]));
   fi;
 
@@ -1031,12 +1031,12 @@ InstallOtherMethod(GreensLClasses, "for a D-class of a trans. semigroup",
 function(d)
   local s, o, m, out, i, f, l, data;
 
-  s:=d!.parent; o:=d!.o; m:=NrGreensLClasses(d); out:=EmptyPlist(m); 
+  s:=d!.parent; o:=d!.o; m:=NrLClasses(d); out:=EmptyPlist(m); 
 
   for i in [1..m] do 
-    data:=GreensLClassRepsData(d)[i]; 
-    if HasGreensLClassReps(d) then 
-      f:=GreensLClassReps(d)[i];
+    data:=LClassRepsData(d)[i]; 
+    if HasLClassReps(d) then 
+      f:=LClassReps(d)[i];
     else
       f:=LClassRepFromData(s, data, o);
     fi;
@@ -1053,7 +1053,7 @@ end);
 #############################################################################
 # Notes: it would be helpful to have a IteratorOfRClasses for use in 
 # the  enumerator of a D-class. This is relatively slow in comparison to 
-# GreensRClassReps, as finding GreensRClassRepsData involves a search. 
+# GreensRClassReps, as finding RClassRepsData involves a search. 
 # This could be improved by using GreensRClassReps to give the reps of 
 # R-classes and then just setting the attributes of the R-class by finding 
 # the value from the d!.data[1]. Alternatively, R-classes of a D-class could be
@@ -1066,7 +1066,7 @@ function(d)
 
   s:=d!.parent; o:=d!.o[1]; 
   out:=EmptyPlist(NrRClasses(d)); 
-  i:=0; reps:=GreensRClassRepsData(d);
+  i:=0; reps:=RClassRepsData(d);
 
   for data in reps do 
     f:=RClassRepFromData(s, data, o);
@@ -1125,7 +1125,7 @@ function(d)
 
   s:=d!.parent;
   img:=OrbitsOfImages(s); ker:=OrbitsOfKernels(s);
-  out:=List(GreensRClassRepsData(d), x->
+  out:=List(RClassRepsData(d), x->
    HClassRepsDataFromData(s, x, img));
 
   return List(Concatenation(out), x-> HClassRepFromData(s, x, [img, ker]));
@@ -1537,7 +1537,7 @@ end);
 # new for 0.1! - IteratorOfDClasses - user function!
 #############################################################################
 # JDM why not use IteratorOfDClassRepsData below, it should be more
-# straightforward, see IteratorOfGreensLClasses.
+# straightforward, see IteratorOfLClasses.
 
 InstallGlobalFunction(IteratorOfDClasses, 
 function(arg)
@@ -1918,13 +1918,13 @@ end);
 InstallOtherMethod(NrHClasses, "for a D-class of a trans. semigroup",
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
-  return NrRClasses(d)*NrGreensLClasses(d);
+  return NrRClasses(d)*NrLClasses(d);
 end);
 
-# new for 0.1! - NrGreensLClasses - "for a D-class of a trans. semigroup"
+# new for 0.1! - NrLClasses - "for a D-class of a trans. semigroup"
 #############################################################################
 
-InstallOtherMethod(NrGreensLClasses, "for a D-class of a trans. semigroup",
+InstallOtherMethod(NrLClasses, "for a D-class of a trans. semigroup",
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
   return Length(ImageOrbitCosets(d))*Length(ImageOrbitSCCFromData(d!.parent, d!.
@@ -1971,8 +1971,8 @@ function(d)
 
   k:=0;
 
-  if HasGreensRClassRepsData(d) then 
-    for i in GreensRClassRepsData(d) do 
+  if HasRClassRepsData(d) then 
+    for i in RClassRepsData(d) do 
       k:=k+NrIdempotentsRClassFromData(d!.parent, i, d!.o[1]);
     od;
   else
@@ -2063,7 +2063,7 @@ function(s)
         AddSet(out[i], HTValue(data_ht, data));
       od;
       
-      for f in GreensLClassReps(d[i]) do
+      for f in LClassReps(d[i]) do
         data:=PreInOrbitsOfKernels(s, f * x, true, orbits)[2][2]{[1..6]};
         data[3]:=KernelOrbitSCCFromData(s, data, o[2])[1];
         AddSet(out[i], HTValue(data_ht, data));

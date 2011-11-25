@@ -387,7 +387,7 @@ end);
 
 InstallOtherMethod(IsGreensLTrivial, "for a D-class of a trans. semigp", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
-  d-> NrGreensLClasses(d)=Size(d));
+  d-> NrLClasses(d)=Size(d));
 
 # fix for 0.4! - IsGreensRTrivial - "for a transformation semigroup"
 #############################################################################
@@ -555,8 +555,8 @@ function(s)
   if IsLeftZeroSemigroup(s) then 
     Info(InfoCitrus, 2, "the semigroup is a left zero semigroup");
     return true;
-  elif HasNrGreensLClasses(s) then 
-    return NrGreensLClasses(s)=1;
+  elif HasNrLClasses(s) then 
+    return NrLClasses(s)=1;
   fi;
   
   iter:=IteratorOfLClassRepsData(s); NextIterator(iter);

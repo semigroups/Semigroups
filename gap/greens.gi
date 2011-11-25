@@ -289,7 +289,7 @@ function(s)
 
   Info(InfoCitrus, 4, "GreensHClasses");
 
-  iter:=IteratorOfGreensHClasses(s);
+  iter:=IteratorOfHClasses(s);
   out:=EmptyPlist(NrHClasses(s));
   i:=0;
 

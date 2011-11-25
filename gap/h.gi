@@ -394,11 +394,11 @@ function(h)
   return MappingByFunction(h, g, AsPermutation);
 end);
 
-# new for 0.1! - IteratorOfGreensHClasses - "for a transformation semigroup"
+# new for 0.1! - IteratorOfHClasses - "for a transformation semigroup"
 ############################################################################
 # move to greens.gi
 
-InstallGlobalFunction(IteratorOfGreensHClasses,
+InstallGlobalFunction(IteratorOfHClasses,
 function(s)
 local iter;
 
@@ -407,7 +407,7 @@ local iter;
     return fail;
   fi;
 
-  Info(InfoCitrus, 4, "IteratorOfGreensHClasses");
+  Info(InfoCitrus, 4, "IteratorOfHClasses");
 
   iter:=IteratorByFunctions( rec(
 
@@ -430,7 +430,7 @@ local iter;
 
     ShallowCopy:=iter-> rec(data:=IteratorOfHClassRepsData(s))));
 
-  SetIsIteratorOfGreensHClasses(iter, true);
+  SetIsIteratorOfHClasses(iter, true);
   SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
@@ -633,11 +633,11 @@ Print( "<iterator of H-class reps>");
 return;
 end);
 
-# new for 0.1! - PrintObj - IsIteratorOfGreensHClasses
+# new for 0.1! - PrintObj - IsIteratorOfHClasses
 ############################################################################
 # JDM move to greens.gi.
 
-InstallMethod(PrintObj, [IsIteratorOfGreensHClasses], 
+InstallMethod(PrintObj, [IsIteratorOfHClasses], 
 function(iter)
   Print( "<iterator of H-classes>");
   return;

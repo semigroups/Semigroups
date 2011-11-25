@@ -337,8 +337,8 @@ function(s)
 
   Info(InfoCitrus, 4, "GreensLClasses");
 
-  iter:=IteratorOfGreensLClasses(s);
-  out:=EmptyPlist(NrGreensLClasses(s));
+  iter:=IteratorOfLClasses(s);
+  out:=EmptyPlist(NrLClasses(s));
   i:=0;
 
   for l in iter do 
@@ -441,16 +441,16 @@ function(s, f)
    [img_o, ker_o], f);
 end);
 
-# new for 0.1! - GreensLClassReps - "for a trans. semigroup"
+# new for 0.1! - LClassReps - "for a trans. semigroup"
 #############################################################################
 
-InstallMethod(GreensLClassReps, "for a trans. semigroup", 
+InstallMethod(LClassReps, "for a trans. semigroup", 
 [IsTransformationSemigroup], 
 function(s)
   local out, iter, i, f;
-  Info(InfoCitrus, 4, "GreensLClassReps");
+  Info(InfoCitrus, 4, "LClassReps");
 
-  out:=EmptyPlist(NrGreensLClasses(s));
+  out:=EmptyPlist(NrLClasses(s));
   iter:=IteratorOfLClassReps(s);
   i:=0;
 
@@ -571,10 +571,10 @@ function(l)
   return false;
 end);
 
-# new for 0.1! - IteratorOfGreensLClasses - user function!
+# new for 0.1! - IteratorOfLClasses - user function!
 ###########################################################################
 
-InstallGlobalFunction(IteratorOfGreensLClasses, 
+InstallGlobalFunction(IteratorOfLClasses, 
 function(s)
   local iter;
 
@@ -583,7 +583,7 @@ function(s)
      return fail;
   fi;
 
-  Info(InfoCitrus, 4, "IteratorOfGreensLClasses");
+  Info(InfoCitrus, 4, "IteratorOfLClasses");
 
   iter:=IteratorByFunctions( rec(
 
@@ -606,7 +606,7 @@ function(s)
 	
 	  ShallowCopy:=iter-> rec(data:=IteratorOfLClassRepsData(s))));
 
-  SetIsIteratorOfGreensLClasses(iter, true);
+  SetIsIteratorOfLClasses(iter, true);
   SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
@@ -683,7 +683,7 @@ function(s)
       if IsDoneIterator(iter!.data) and iter!.i>Length(iter!.next_value) then 
        return true;
       elif iter!.i>Length(iter!.next_value) then 
-        iter!.next_value:=GreensLClassRepsDataFromData(s, 
+        iter!.next_value:=LClassRepsDataFromData(s, 
          NextIterator(iter!.data), o);
         iter!.i:=1;
       fi;
@@ -850,11 +850,11 @@ end);
 
 #NNN
 
-# new for 0.1! - NrGreensLClasses - "for a transformation semigroup"
+# new for 0.1! - NrLClasses - "for a transformation semigroup"
 #############################################################################
 # JDM move this to greens.gi
 
-InstallMethod(NrGreensLClasses, "for a transformation semigroup", 
+InstallMethod(NrLClasses, "for a transformation semigroup", 
 [IsTransformationSemigroup],
 function(s)
   local i, d;
@@ -930,10 +930,10 @@ function(iter)
   return;
 end);
 
-# new for 0.1! - PrintObj - for IsIteratorOfGreensLClasses
+# new for 0.1! - PrintObj - for IsIteratorOfLClasses
 ############################################################################
 
-InstallMethod(PrintObj, [IsIteratorOfGreensLClasses], 
+InstallMethod(PrintObj, [IsIteratorOfLClasses], 
 function(iter)
   Print( "<iterator of L-classes>");
   return;

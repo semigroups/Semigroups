@@ -684,7 +684,7 @@ end);
 
 # new for 0.1! - HClassRepsData - "for an R-class of a trans. semigp."
 #############################################################################
-# JDM should we SetGreensLClassReps of d? 
+# JDM should we SetLClassReps of d? 
 
 # JDM this and other like it should be iterators as illustrated by the 
 # Coxeter semigroup example...
@@ -833,13 +833,14 @@ function(s, f)
   return r;
 end);
 
-# new for 0.1! - GreensRClassRepsData - "for a transformation semigroup"
+# new for 0.1! - RClassRepsData - "for a transformation semigroup"
 #############################################################################
+# move to greens.gi
 
-InstallMethod(GreensRClassRepsData, "for a transformation semigroup",
+InstallMethod(RClassRepsData, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  Info(InfoCitrus, 4, "GreensRClassRepsData: for a trans. semi.");
+  Info(InfoCitrus, 4, "RClassRepsData: for a trans. semi.");
   ExpandOrbitsOfImages(s);
   return OrbitsOfImages(s)!.data;
 end);
@@ -848,7 +849,7 @@ end);
 
 # new for 0.1! - HClassReps - "for an R-class of a trans. semigp."
 #############################################################################
-# JDM should we SetGreensLClassReps of d? 
+# JDM should we SetLClassReps of d? 
 
 InstallOtherMethod(HClassReps, "for an R-class of a trans. semigp.", 
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
@@ -1519,7 +1520,7 @@ end);
 
 InstallOtherMethod(NrHClasses, "for an R-class of a trans. semigroup", 
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
-r-> NrGreensLClasses(DClassOfRClass(r)));
+r-> NrLClasses(DClassOfRClass(r)));
 
 # new for 0.1! - NrRClasses - "for a transformation semigroup"
 #############################################################################
