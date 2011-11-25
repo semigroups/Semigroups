@@ -7,8 +7,6 @@
 ##
 #############################################################################
 ##
-## $Id$
-##
 ##  This file contains algorithms for computing Green's relations
 ##  and related notions for transformation semigroups and monoids. 
 ##  The theory behind these algorithms is developed in 
@@ -30,7 +28,6 @@
 ##
 #############################################################################
 #############################################################################
-
 
 # in greens.gi
 
@@ -103,7 +100,7 @@ DeclareGlobalFunction("TraceRClassRepsTree");
 # the documentation for the functions below can be found in 
 # /monoid/doc/d.xml
 
-DeclareAttribute("PartialOrderOfDClasses", IsSemigroup, "mutable");
+DeclareAttribute("PartialOrderOfDClasses", IsTransformationSemigroup);
 DeclareAttribute("NrRegularDClasses", IsTransformationSemigroup); 
 
 # the following functions in d.gi are currently undocumented
@@ -114,19 +111,19 @@ DeclareGlobalFunction("CreateKernelOrbitSchutzGp");
 DeclareGlobalFunction("CreateKernelOrbitSCCRels");
 DeclareGlobalFunction("CreateSchutzGpOfDClass");
 DeclareGlobalFunction("DClassRClassRepsDataFromData");
- DeclareGlobalFunction("DClassRepFromData");
+DeclareGlobalFunction("DClassRepFromData");
+DeclareAttribute("DClassRepsData", IsTransformationSemigroup);
 DeclareGlobalFunction("DClassSchutzGpFromData");
 DeclareAttribute("DClassType", IsTransformationSemigroup);
 DeclareGlobalFunction("DisplayOrbitsOfKernels");
 DeclareGlobalFunction("ExpandOrbitsOfKernels");
 DeclareGlobalFunction("ForwardOrbitOfKernel");
 DeclareAttribute("GeneratorsAsListOfImages", IsTransformationSemigroup);
-DeclareAttribute("DClassRepsData", IsTransformationSemigroup);
+DeclareAttribute("GroupHClass", IsGreensDClass and
+ IsGreensClassOfTransSemigp);
 DeclareAttribute("LClassRepsData", IsTransformationSemigroup);
 DeclareGlobalFunction("LClassRepsDataFromData");
 DeclareGlobalFunction("ImageOrbitCosetsFromData"); #input kernel orbit data!
-DeclareAttribute("GroupHClass", IsGreensDClass and
- IsGreensClassOfTransSemigp);
 DeclareAttribute("ImageOrbitCosets", IsGreensDClass and
  IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("InOrbitsOfKernels");
@@ -162,24 +159,24 @@ DeclareGlobalFunction("SizeOrbitsOfKernels");
 # the following functions in l.gi are currently undocumented
 
 DeclareGlobalFunction("CreateLClass");
-DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]); #M
-DeclareAttribute("LClassReps", IsTransformationSemigroup); #M
-DeclareProperty("IsRegularLClass", IsGreensClassOfTransSemigp); #M
-DeclareGlobalFunction("IteratorOfLClasses"); #M
-DeclareGlobalFunction("IteratorOfLClassRepsData");
-DeclareGlobalFunction("IteratorOfLClassReps"); #M
+DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]); 
 DeclareGlobalFunction("LClassRepFromData");
+DeclareAttribute("LClassReps", IsTransformationSemigroup); 
 DeclareAttribute("LClassType", IsTransformationSemigroup);
+DeclareProperty("IsRegularLClass", IsGreensClassOfTransSemigp); 
+DeclareGlobalFunction("IteratorOfLClasses"); 
+DeclareGlobalFunction("IteratorOfLClassRepsData");
+DeclareGlobalFunction("IteratorOfLClassReps"); 
 DeclareAttribute("NrLClasses", IsTransformationSemigroup);
 
 # the following functions in h.gi are currently undocumented
 
 DeclareGlobalFunction("CreateHClass");
-DeclareOperation("GreensHClassOfElementNC", [IsTransformationSemigroup]); #M
+DeclareOperation("GreensHClassOfElementNC", [IsTransformationSemigroup]); 
 DeclareGlobalFunction("HClassRepFromData");
 DeclareAttribute("HClassType", IsTransformationSemigroup);
-DeclareGlobalFunction("IteratorOfHClasses");#M
-DeclareGlobalFunction("IteratorOfHClassReps"); #M
+DeclareGlobalFunction("IteratorOfHClasses");
+DeclareGlobalFunction("IteratorOfHClassReps"); 
 DeclareGlobalFunction("IteratorOfHClassRepsData");
 
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
