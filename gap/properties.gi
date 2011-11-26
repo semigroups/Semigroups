@@ -163,7 +163,7 @@ s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
 
 InstallMethod(IsBand, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], s-> 
- IsCompletelyRegularSemigroup(s) and IsGreensHTrivial(s));
+ IsCompletelyRegularSemigroup(s) and IsHTrivial(s));
 
 # new for 0.1! - IsBlockGroup - "for a transformation semigroup"
 #############################################################################
@@ -333,10 +333,10 @@ InstallTrueMethod(IsCompletelySimpleSemigroup, IsSimpleSemigroup and IsFinite);
 
 #IIIGGG
 
-# new for 0.1! - IsGreensHTrivial - "for a transformation semigroup"
+# new for 0.1! - IsHTrivial - "for a transformation semigroup"
 ###########################################################################
 
-InstallOtherMethod(IsGreensHTrivial, "for a transformation semigroup", 
+InstallOtherMethod(IsHTrivial, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local iter, g;
@@ -352,17 +352,17 @@ function(s)
   return true;
 end);
 
-# new for 0.1! - IsGreensHTrivial - "for a D-class of a trans. semigp"
+# new for 0.1! - IsHTrivial - "for a D-class of a trans. semigp"
 ###########################################################################
 
-InstallOtherMethod(IsGreensHTrivial, "for a D-class of a trans. semigp", 
+InstallOtherMethod(IsHTrivial, "for a D-class of a trans. semigp", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
   d-> NrHClasses(d)=Size(d));
 
-# new for 0.1! - IsGreensLTrivial - "for a transformation semigroup"
+# new for 0.1! - IsLTrivial - "for a transformation semigroup"
 #############################################################################
 
-InstallMethod(IsGreensLTrivial, "for a transformation semigroup",
+InstallMethod(IsLTrivial, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local iter, d;
@@ -382,17 +382,17 @@ function(s)
   return true;
 end);
 
-# new for 0.1! - IsGreensLTrivial - "for a D-class of a trans. semigp"
+# new for 0.1! - IsLTrivial - "for a D-class of a trans. semigp"
 #############################################################################
 
-InstallOtherMethod(IsGreensLTrivial, "for a D-class of a trans. semigp", 
+InstallOtherMethod(IsLTrivial, "for a D-class of a trans. semigp", 
 [IsGreensDClass and IsGreensClassOfTransSemigp], 
   d-> NrLClasses(d)=Size(d));
 
-# fix for 0.4! - IsGreensRTrivial - "for a transformation semigroup"
+# fix for 0.4! - IsRTrivial - "for a transformation semigroup"
 #############################################################################
 
-InstallMethod(IsGreensRTrivial, "for a transformation semigroup",
+InstallMethod(IsRTrivial, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local iter, r, d;
@@ -424,10 +424,10 @@ function(s)
   return true;
 end);
 
-# new for 0.1! - IsGreensRTrivial -  "for D-class of a trans. semigp."
+# new for 0.1! - IsRTrivial -  "for D-class of a trans. semigp."
 #############################################################################
 
-InstallOtherMethod(IsGreensRTrivial, "for D-class of a trans. semigp.",
+InstallOtherMethod(IsRTrivial, "for D-class of a trans. semigp.",
 [IsGreensDClass and IsGreensClassOfTransSemigp],
 function(d)
   #JDM maybe better if we had an enumerator of R-classes of d...
@@ -719,7 +719,7 @@ function(s)
     return IsBand(s);
   fi;
 
-  return IsGreensHTrivial(s);
+  return IsHTrivial(s);
 end);
 
 # new for 0.1! - IsRegularSemigroup - "for a transformation semigroup"
@@ -913,7 +913,7 @@ function(s)
     return IsBand(s);
   fi;
 
-  return IsGreensHTrivial(s);
+  return IsHTrivial(s);
 end);
 
 # new for 0.1! - IsZeroSemigroup - "for a transformation semigroup"

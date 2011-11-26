@@ -29,14 +29,10 @@
 #############################################################################
 #############################################################################
 
-# in greens.gi
-
-DeclareOperation("EnumeratorOfRClasses", [IsTransformationSemigroup]);
-
-# the documentation for the functions below can be found in 
-# /monoid/doc/r.xml
+# in greens.xml
 
 DeclareAttribute("DClassReps", IsTransformationSemigroup);
+DeclareOperation("EnumeratorOfRClasses", [IsTransformationSemigroup]);
 DeclareOperation("GreensDClassOfElementNC", [IsTransformationSemigroup]); 
 DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
 DeclareAttribute("HClassReps", IsTransformationSemigroup);
