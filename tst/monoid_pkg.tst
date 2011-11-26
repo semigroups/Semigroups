@@ -32,7 +32,7 @@ gap> Size(s);
 8
 gap> SmallGeneratingSet(s);;
 gap> s:=Semigroup(IrredundantGeneratingSubset(last));;
-gap> NrGreensDClasses(s);
+gap> NrDClasses(s);
 4
 gap> List(GreensDClasses(s), Size);
 [ 3, 1, 3, 1 ]
@@ -92,15 +92,15 @@ gap> gens:=[ Transformation( [ 4, 4, 8, 8, 8, 8, 4, 8 ] ),
 gap> S:=Semigroup(gens);;
 gap> Size(S);
 30
-gap> NrGreensDClasses(S);
+gap> NrDClasses(S);
 6
 gap> List(GreensDClasses(S), Size);
 [ 9, 1, 1, 9, 1, 9 ]
 gap> IsRegularSemigroup(S);
 false
-gap> NrGreensRClasses(S);
+gap> NrRClasses(S);
 12
-gap> NrGreensLClasses(S);
+gap> NrLClasses(S);
 12
 gap> IsBlockGroup(S);
 false
@@ -130,11 +130,11 @@ gap> h:=Filtered(h, x-> not x=fail);
   {Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8 ] )} ]
 gap> List(h, StructureDescription);
 [ "1", "1", "1", "1", "1" ]
-gap> IsGreensHTrivial(S);
+gap> IsHTrivial(S);
 true
-gap> IsGreensLTrivial(S);
+gap> IsLTrivial(S);
 false
-gap> IsGreensRTrivial(S);
+gap> IsRTrivial(S);
 false
 gap> NrIdempotents(S);
 15
@@ -429,7 +429,7 @@ gap> gens:=[ [ Transformation( [ 3, 4, 4, 3, 1, 1, 5 ] ) ],
 >   Transformation( [ 3, 5, 2, 5, 2 ] ), 
 > Transformation( [ 5, 3, 3, 5, 2 ] ) ] ];;
 gap> semis:=List(gens, x-> Semigroup(x));;
-gap> res:=List(semis, x-> [NrGreensRClasses(x), Size(x)]);
+gap> res:=List(semis, x-> [NrRClasses(x), Size(x)]);
 [ [ 3, 4 ], [ 2, 10 ], [ 3, 14 ], [ 12, 211 ], [ 4, 28 ], [ 378, 4818 ],
   [ 2, 5 ], [ 92, 7142 ], [ 81, 615 ], [ 2, 4 ], [ 158, 2255 ], [ 18, 99 ],
   [ 9, 50 ], [ 16, 76 ], [ 17, 77 ], [ 6, 13 ], [ 19, 330 ], [ 120, 1263 ],
@@ -869,7 +869,7 @@ gap> S:=Semigroup(gens);;
 gap> gens:=[ Transformation( [ 1, 2, 1, 2, 1 ] ), 
 > Transformation( [ 3, 4, 2, 1, 4 ] ) ];;
 gap> S:=Semigroup(gens);; 
-gap> GreensRClassReps(S);
+gap> RClassReps(S);
 [ Transformation( [ 1, 2, 1, 2, 1 ] ), Transformation( [ 3, 4, 2, 1, 4 ] ),
   Transformation( [ 1, 2, 2, 1, 2 ] ), Transformation( [ 2, 1, 2, 1, 1 ] ) ]
 gap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
@@ -964,7 +964,7 @@ gap> s:=Semigroup(gens);;
 gap> Length(GreensRClasses(s));
 17
 gap> s:=Semigroup(gens);;
-gap> NrGreensRClasses(s);
+gap> NrRClasses(s);
 17
 gap> f:=Transformation( [ 3, 3, 3, 3, 3, 2, 3 ] );;
 gap> r:=RClass(s, f);

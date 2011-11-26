@@ -374,15 +374,15 @@ gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 7, 1, 2, 2, 2, 7, 4, 5 ] ),
 >   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
 gap> s:=Semigroup(gens);;
-gap> IsGreensLTrivial(s);
+gap> IsLTrivial(s);
 false
 gap> gens:=[Transformation([1,2,1,3,3]), Transformation([2,2,3,5,5])];;
 gap> s:=Monoid(gens);;
-gap> IsGreensLTrivial(s);
+gap> IsLTrivial(s);
 true
 gap> f:=Transformation( [ 2, 2, 1, 1, 1 ] );;
 gap> d:=DClass(s, f);;
-gap> IsGreensLTrivial(d);
+gap> IsLTrivial(d);
 true
 gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
@@ -393,45 +393,45 @@ gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 7, 1, 2, 2, 2, 7, 4, 5 ] ),
 >   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
 gap> s:=Semigroup(gens);;
-gap> iter:=IteratorOfGreensDClasses(s);
+gap> iter:=IteratorOfDClasses(s);
 <iterator of D-classes>
-gap> repeat d:=NextIterator(iter); until IsDoneIterator(iter) or IsGreensLTrivial(d);
+gap> repeat d:=NextIterator(iter); until IsDoneIterator(iter) or IsLTrivial(d);
 gap> d;
 {Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] )}
-gap> IsGreensLTrivial(d);
+gap> IsLTrivial(d);
 true
-gap> IsGreensRTrivial(d);
+gap> IsRTrivial(d);
 true
 gap> Size(d);
 1
-gap> IsGreensRTrivial(d);   
+gap> IsRTrivial(d);   
 true
 gap> repeat d:=NextIterator(iter); until IsDoneIterator(iter) or not                     
-> IsGreensLTrivial(d) and IsGreensRTrivial(d);
+> IsLTrivial(d) and IsRTrivial(d);
 gap> d;;
-gap> IsGreensLTrivial(d);
+gap> IsLTrivial(d);
 false
-gap> IsGreensRTrivial(d);
+gap> IsRTrivial(d);
 true
-gap> NrGreensLClasses(d);
+gap> NrLClasses(d);
 1
-gap> NrGreensRClasses(d);
+gap> NrRClasses(d);
 4560
-gap> IsGreensRTrivial(s);
+gap> IsRTrivial(s);
 false
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 >   Transformation( [ 4, 2, 1, 5, 5 ] ),
 >   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
 gap> s:=Semigroup(gens);
 <semigroup with 3 generators>
-gap> IsGreensRTrivial(s);
+gap> IsRTrivial(s);
 false
 gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
 > Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
 gap> s:=Monoid(gens);;
-gap> IsGreensRTrivial(s);
+gap> IsRTrivial(s);
 false
-gap> IsGreensHTrivial(s);
+gap> IsHTrivial(s);
 false
 gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),

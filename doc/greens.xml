@@ -104,10 +104,10 @@ true</Example>
       described above. <P/>
       
       See also 
-      <Ref Attr="GreensDClassReps"/>,  
+      <Ref Attr="DClassReps"/>,  
       <Ref Func="IteratorOfDClassReps"/>, 
-      <Ref Func="IteratorOfGreensDClasses"/>,  and 
-      <Ref Func="NrGreensDClasses"/>.
+      <Ref Func="IteratorOfDClasses"/>,  and 
+      <Ref Func="NrDClasses"/>.
       <Example>
 gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ), 
 > Transformation( [ 4, 3, 1, 2 ] ));;
@@ -217,12 +217,12 @@ gap> Size(L);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="GreensXClassReps">
-  <ManSection><Heading>GreensXClassReps</Heading>
-    <Attr Name="GreensDClassReps" Arg="obj"/>
-    <Attr Name="GreensHClassReps" Arg="obj"/>
-    <Attr Name="GreensLClassReps" Arg="obj"/>
-    <Attr Name="GreensRClassReps" Arg="obj"/>
+<#GAPDoc Label="XClassReps">
+  <ManSection><Heading>XClassReps</Heading>
+    <Attr Name="DClassReps" Arg="obj"/>
+    <Attr Name="HClassReps" Arg="obj"/>
+    <Attr Name="LClassReps" Arg="obj"/>
+    <Attr Name="RClassReps" Arg="obj"/>
     <Returns> a list of representatives of the Green's classes of <A>obj</A>,
     which can be a transformation semigroup, &D;-, &L;-, or &R;-class 
     (where appropriate).
@@ -233,22 +233,22 @@ gap> Size(L);
 
       Note that if the Green's classes themselves are not 
       required, then 
-      <C>GreensXClassReps</C> will return an answer more quickly 
+      <C>XClassReps</C> will return an answer more quickly 
       than the above, since the Green's class 
       objects are not created.<P/>
 
       See also
       <Ref Attr="GreensDClasses"/>,
       <Ref Func="IteratorOfDClassReps"/>,
-      <Ref Func="IteratorOfGreensDClasses"/>,  and
-      <Ref Func="NrGreensDClasses"/>.
+      <Ref Func="IteratorOfDClasses"/>,  and
+      <Ref Func="NrDClasses"/>.
       <Example>
 gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ),
 > Transformation( [ 4, 3, 1, 2 ] ));;
-gap> GreensDClassReps(S);
+gap> DClassReps(S);
 [ Transformation( [ 1, 2, 3, 4 ] ), Transformation( [ 3, 4, 4, 4 ] ), 
   Transformation( [ 4, 4, 4, 4 ] ) ]
-gap> GreensHClassReps(S);
+gap> HClassReps(S);
 [ Transformation( [ 1, 2, 3, 4 ] ), Transformation( [ 3, 4, 4, 4 ] ), 
   Transformation( [ 1, 2, 2, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ), 
   Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ), 
@@ -256,32 +256,32 @@ gap> GreensHClassReps(S);
   Transformation( [ 2, 2, 1, 2 ] ), Transformation( [ 4, 3, 4, 4 ] ), 
   Transformation( [ 2, 1, 2, 2 ] ), Transformation( [ 4, 4, 4, 3 ] ), 
   Transformation( [ 2, 2, 2, 1 ] ) ]
-gap> GreensLClassReps(S);
+gap> LClassReps(S);
 [ Transformation( [ 1, 2, 3, 4 ] ), Transformation( [ 3, 4, 4, 4 ] ), 
   Transformation( [ 1, 2, 2, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ), 
   Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ), 
   Transformation( [ 1, 1, 1, 1 ] ) ]
-gap> GreensRClassReps(S);
+gap> RClassReps(S);
 [ Transformation( [ 1, 2, 3, 4 ] ), Transformation( [ 3, 4, 4, 4 ] ), 
   Transformation( [ 4, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ), 
   Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
 gap> D:=GreensDClasses(S)[2];
 {Transformation( [ 3, 4, 4, 4 ] )}
-gap> GreensLClassReps(D);
+gap> LClassReps(D);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ) ]
-gap> GreensHClassReps(D);
+gap> HClassReps(D);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ), 
   Transformation( [ 4, 4, 3, 4 ] ), Transformation( [ 2, 2, 1, 2 ] ), 
   Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 2, 1, 2, 2 ] ), 
   Transformation( [ 4, 4, 4, 3 ] ), Transformation( [ 2, 2, 2, 1 ] ) ]
-gap> GreensRClassReps(D);
+gap> RClassReps(D);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ), 
   Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
 gap> R:=GreensRClasses(D)[1];;
-gap> GreensHClassReps(R);
+gap> HClassReps(R);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ) ]
 gap> L:=GreensLClasses(D)[1];;
-gap> GreensHClassReps(L);
+gap> HClassReps(L);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ), 
   Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]</Example>
     </Description>
@@ -309,15 +309,15 @@ gap> S:=Semigroup( Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
 > Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ) );;
 gap> IsRegularSemigroup(S);
 false
-gap> iter:=IteratorOfGreensDClasses(S);;
+gap> iter:=IteratorOfDClasses(S);;
 gap> repeat D:=NextIterator(iter); until IsRegularDClass(D);   
 gap> D;
 {Transformation( [ 6, 1, 1, 6, 1, 2, 2, 6 ] )}
 gap> NrIdempotents(D);
 12
-gap> NrGreensRClasses(D);
+gap> NrRClasses(D);
 8
-gap> NrGreensLClasses(D);
+gap> NrLClasses(D);
 4
 gap> GroupHClass(D);
 {Transformation( [ 6, 1, 1, 6, 1, 2, 2, 6 ] )}
@@ -499,7 +499,7 @@ true</Example>
 
   See also <Ref Oper="GreensRClasses" BookName="ref"/>, 
   <Ref Attr="GreensRClasses"/>, 
-  and <Ref Oper="IteratorOfGreensRClasses"/>.<P/>
+  and <Ref Oper="IteratorOfRClasses"/>.<P/>
   
   In the display of an <C>IteratorOfRClassReps</C> the total number of elements
   in the orbit of the semigroup acting on its &R;-class representatives on the 
@@ -528,12 +528,12 @@ gap> iter;
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IteratorOfGreensXClasses">
-  <ManSection><Heading>IteratorOfGreensXClasses</Heading>
-  <Func Name="IteratorOfGreensDClasses" Arg="S"/>
-  <Func Name="IteratorOfGreensHClasses" Arg="S"/>
-  <Func Name="IteratorOfGreensLClasses" Arg="S"/>
-  <Func Name="IteratorOfGreensRClasses" Arg="S"/>
+<#GAPDoc Label="IteratorOfXClasses">
+  <ManSection><Heading>IteratorOfXClasses</Heading>
+  <Func Name="IteratorOfDClasses" Arg="S"/>
+  <Func Name="IteratorOfHClasses" Arg="S"/>
+  <Func Name="IteratorOfLClasses" Arg="S"/>
+  <Func Name="IteratorOfRClasses" Arg="S"/>
   <Returns>
   an iterator of the Green's classes in the transformation
   semigroup <A>S</A>.
@@ -550,7 +550,7 @@ gap> iter;
 
   See also <Ref Attr="GreensRClasses"/>, 
   <Ref Oper="GreensRClasses" BookName="ref"/>, 
-  <Ref Attr="NrGreensRClasses"/>, and 
+  <Ref Attr="NrRClasses"/>, and 
   <Ref Oper="IteratorOfRClassReps"/>.<P/>
 
   The semigroup in the example below has 25147892 elements but it only takes 
@@ -569,7 +569,7 @@ gap> gens:=[ Transformation( [ 2, 4, 1, 5, 4, 4, 7, 3, 8, 1 ] ),
 >   Transformation( [ 9, 3, 1, 5, 10, 3, 4, 6, 10, 2 ] ),
 >   Transformation( [ 10, 7, 3, 7, 1, 9, 8, 8, 4, 10 ] ) ];;
 gap> S:=Semigroup(gens);;
-gap> iter:=IteratorOfGreensRClasses(S);
+gap> iter:=IteratorOfRClasses(S);
 &lt;iterator of R-classes>
 gap> for R in iter do
 > if Size(R)>1 then break; fi;
@@ -582,12 +582,12 @@ gap> Size(R);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="NrGreensXClasses">
-  <ManSection><Heading>NrGreensXClasses</Heading>
-  <Attr Name="NrGreensDClasses" Arg="obj"/>
-  <Attr Name="NrGreensHClasses" Arg="obj"/>
-  <Attr Name="NrGreensLClasses" Arg="obj"/>
-  <Attr Name="NrGreensRClasses" Arg="obj"/>
+<#GAPDoc Label="NrXClasses">
+  <ManSection><Heading>NrXClasses</Heading>
+  <Attr Name="NrDClasses" Arg="obj"/>
+  <Attr Name="NrHClasses" Arg="obj"/>
+  <Attr Name="NrLClasses" Arg="obj"/>
+  <Attr Name="NrRClasses" Arg="obj"/>
   <Returns>
   the number of Green's classes in <A>obj</A> where <A>obj</A> can be a
   transformation semigroup, &D;-, &L;-, or &R;-class of a transformation 
@@ -595,14 +595,14 @@ gap> Size(R);
   </Returns>
   <Description>
   If the actual Green's classes are not required, then it is  
-  more efficient to use <Log>NrGreensHClasses(obj)</Log> than 
-  <Log>Length(GreensHClasses(obj))</Log> 
+  more efficient to use <Log>NrHClasses(obj)</Log> than 
+  <Log>Length(HClasses(obj))</Log> 
   since the Green's classes themselves are not created when 
-  <C>NrGreensXClasses</C> is called. <P/>
+  <C>NrXClasses</C> is called. <P/>
 
   See also <Ref Attr="GreensRClasses"/>,
   <Ref Oper="GreensRClasses" BookName="ref"/>, 
-  <Ref Func="IteratorOfGreensRClasses"/>, and
+  <Ref Func="IteratorOfRClasses"/>, and
   <Ref Func="IteratorOfRClassReps"/>.
   
   <Example>
@@ -615,17 +615,17 @@ gap> S:=Semigroup(gens);;
 gap> f:=Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] );;
 gap> R:=RClass(S, f);
 {Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
-gap> NrGreensHClasses(R);
+gap> NrHClasses(R);
 12
 gap> D:=DClass(R);
 {Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
-gap> NrGreensHClasses(D);
+gap> NrHClasses(D);
 72
 gap> L:=LClass(S, f);
 {Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
-gap> NrGreensHClasses(L);
+gap> NrHClasses(L);
 6 
-gap> NrGreensHClasses(S);
+gap> NrHClasses(S);
 1555
 gap> gens:=[ Transformation( [ 4, 6, 5, 2, 1, 3 ] ),
 >   Transformation( [ 6, 3, 2, 5, 4, 1 ] ),
@@ -636,14 +636,14 @@ gap> gens:=[ Transformation( [ 4, 6, 5, 2, 1, 3 ] ),
 >   Transformation( [ 2, 1, 2, 2, 2, 4 ] ),
 >   Transformation( [ 4, 4, 1, 2, 1, 2 ] ) ];;
 gap> S:=Semigroup(gens);;
-gap> NrGreensRClasses(S);
+gap> NrRClasses(S);
 150
 gap> Size(S);
 6342
 gap> f:=Transformation( [ 1, 3, 3, 1, 3, 5 ] );;
 gap> D:=DClass(S, f);
 {Transformation( [ 2, 1, 1, 2, 1, 4 ] )}
-gap> NrGreensRClasses(D);
+gap> NrRClasses(D);
 87</Example>
   </Description>
   </ManSection>
@@ -711,7 +711,7 @@ gap> S:=Semigroup( [ Transformation( [ 1, 3, 4, 1, 3, 5 ] ),
 > Transformation( [ 5, 1, 6, 1, 6, 3 ] ) ]);;
 gap> NrRegularDClasses(S);
 3
-gap> NrGreensDClasses(S);
+gap> NrDClasses(S);
 7</Example>
     </Description>
     </ManSection>

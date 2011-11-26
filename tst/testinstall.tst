@@ -23,7 +23,7 @@ gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 3, 4, 2, 2 ] ),
 >  Transformation( [ 4, 1, 2, 1 ] ) ];;
 gap> s:=Monoid(gens);;
-gap> Size(s); NrGreensRClasses(s); NrGreensLClasses(s); NrGreensDClasses(s);
+gap> Size(s); NrRClasses(s); NrLClasses(s); NrDClasses(s);
 69
 17
 21
@@ -133,26 +133,26 @@ gap> gens:=[ Transformation( [ 1, 2, 3, 9, 5, 11, 7, 8, 9, 10, 11, 12 ] ),
 > Transformation( [ 9, 11, 8, 5, 11, 9, 12, 3, 5, 8, 9, 11 ] ), 
 > Transformation( [ 11, 7, 9, 5, 10, 11, 12, 9, 12, 9, 11, 8 ] ) ];;
 gap> s:=Semigroup(gens);;
-gap> NrGreensDClasses(s);
+gap> NrDClasses(s);
 232
 gap> Size(s);
 11858
-gap> NrGreensRClasses(s);
+gap> NrRClasses(s);
 1455
-gap> NrGreensLClasses(s);
+gap> NrLClasses(s);
 690
-gap> NrGreensHClasses(s);
+gap> NrHClasses(s);
 5356
 gap> NrIdempotents(s);
 300
-gap> Sum(List(GreensDClasses(s), NrGreensRClasses))=NrGreensRClasses(s);
+gap> Sum(List(GreensDClasses(s), NrRClasses))=NrRClasses(s);
 true
-gap> ForAll(Concatenation(List(GreensDClasses(s), GreensRClassReps)), 
+gap> ForAll(Concatenation(List(GreensDClasses(s), RClassReps)), 
 > x-> x in s);
 true
-gap> ForAll([1..NrGreensRClasses(s)], i->
+gap> ForAll([1..NrRClasses(s)], i->
 > EvaluateWord(Generators(s), TraceRClassRepsTree(s, i))=
-> GreensRClassReps(s)[i]);
+> RClassReps(s)[i]);
 true
 
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;

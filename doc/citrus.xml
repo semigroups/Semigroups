@@ -390,8 +390,8 @@ gap> GreensRClasses(S);
     membership in a transformation 
     semigroup without computing all the elements; see, for example, 
     <Ref Oper="GreensRClasses"/>, <Ref
-    Attr="GreensRClassReps"/>, <Ref Func="IteratorOfRClassReps"/>, 
-    <Ref Func="IteratorOfGreensRClasses"/>, or <Ref Func="NrGreensRClasses"/>.
+    Attr="RClassReps"/>, <Ref Func="IteratorOfRClassReps"/>, 
+    <Ref Func="IteratorOfRClasses"/>, or <Ref Func="NrRClasses"/>.
     This may be useful if you 
     want to study a very large semigroup where computing all the elements of 
     the semigroup is infeasible. 
@@ -467,14 +467,14 @@ gap> GreensRClasses(S);
     <#Include Label="XClassOfYClass">
     <#Include Label="GreensXClasses">
     <#Include Label="GreensXClassOfElementNC">
-    <#Include Label="GreensXClassReps">
+    <#Include Label="XClassReps">
     <#Include Label="GroupHClass">
     <#Include Label="Idempotents">
     <#Include Label="IsGreensClassOfTransSemigp">
     <#Include Label="IsRegularXClass">
     <#Include Label="IteratorOfXClassReps"> 
-    <#Include Label="IteratorOfGreensXClasses"> 
-    <#Include Label="NrGreensXClasses">
+    <#Include Label="IteratorOfXClasses"> 
+    <#Include Label="NrXClasses">
     <#Include Label="NrIdempotents">
     <#Include Label="NrRegularDClasses">
     <#Include Label="PartialOrderOfDClasses">
@@ -642,7 +642,7 @@ gap> GreensRClasses(S);
     <#Include Label="IsCliffordSemigroup">
     <#Include Label="IsCommutativeSemigroup">
     <#Include Label="IsCompletelyRegularSemigroup">
-    <#Include Label="IsGreensRTrivial">
+    <#Include Label="IsRTrivial">
     <#Include Label="IsGroupAsSemigroup">
     <#Include Label="IsIdempotentGenerated">
     <#Include Label="IsInverseSemigroup">

@@ -18,9 +18,9 @@ gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> SetInfoLevel(InfoCitrus, 0);
 
-gap> TestTraceRClassRepsTree:=s-> ForAll([1..NrGreensRClasses(s)], i->
+gap> TestTraceRClassRepsTree:=s-> ForAll([1..NrRClasses(s)], i->
 > EvaluateWord(Generators(s), TraceRClassRepsTree(s, i))=
-> GreensRClassReps(s)[i]);;
+> RClassReps(s)[i]);;
 
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 > Transformation( [ 4, 2, 1, 5, 5 ] ),
