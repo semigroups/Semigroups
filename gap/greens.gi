@@ -36,7 +36,7 @@ function(s, t)
    ForAll(Generators(t), x-> x in s);
 end); 
 
-# mod for 0.4! - \in - "for a transformation semigroup"
+# fix for 0.5! - \in - "for a transformation semigroup"
 #############################################################################
 # Notes: not algorithm X. 
 
@@ -98,7 +98,7 @@ function(f, s)
   iter:=IteratorOfNewRClassRepsData(s);
   orbits:=o!.orbits; images:=o!.images;
 
-  repeat
+  while not IsDoneIterator(iter) do 
     next:=NextIterator(iter);
     if not data[2][2]=fail then
       if next[2]=data[2][2] and next[4]=data[2][4] and (next[5]=data[2][5] or
@@ -112,7 +112,7 @@ function(f, s)
     if data[1] then
       return true;
     fi; 
-  until IsDoneIterator(iter);
+  od;
 
   #JDM could also put something in here that returns false if everything,
   #from OrbitsOfImages(s)!.at to the end of OrbitsOfImages(s)!.ht!.o 

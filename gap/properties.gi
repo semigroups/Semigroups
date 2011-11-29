@@ -1175,7 +1175,7 @@ end);
 
 #SSS
 
-# new for 0.1! - SmallGeneratingSet - "for a trans. coll."
+# fix for 0.5! - SmallGeneratingSet - "for a trans. semi."
 #############################################################################
 
 InstallOtherMethod(SmallGeneratingSet, "for a trans. semi.", 
