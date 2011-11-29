@@ -391,7 +391,7 @@ Transformation( [ 5, 3, 5, 4, 3 ] )
 gap> AsList(KernelOrbit(C));
 [ [ 1, 2, 1, 3, 2 ] ]
 gap> KernelOrbitRels(C){KernelOrbitSCC(C)};
-[ [ Transformation( [ 1 .. 5 ] ), Transformation( [ 1, 2, 1, 4, 2 ] ) ] ]
+[ [ Transformation( [ 1, 2, 3, 4, 5 ] ), Transformation( [ 1, 2, 1, 4, 2 ] ) ] ]
 gap> SchutzenbergerGroup(C);
 Group([ (3,5,4), (3,5) ])
 gap> gens:=[ Transformation( [ 1, 2, 1, 2, 1 ] ), 

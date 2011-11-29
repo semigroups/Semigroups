@@ -845,7 +845,8 @@ function(s, f)
   img_o:=rec( finished:=false, orbits:=img_o, gens:=Generators(s), s:=s, 
    deg := n, data:=[[j,1,1,1,1,1]], images:=fail, lens:=List([1..n], 
    function(x) if x=j then return 1; else return 0; fi; end), 
-   data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=CitrusHashLen!.dclass_data)));
+   data_ht:=HTCreate([1,1,1,1,1,1], rec(forflatplainlists:=true,
+    hashlen:=CitrusHashLen!.dclass_data)));
   #JDM images should not be fail in this...
   
   Info(InfoCitrus, 2, "finding kernel orbit...");
@@ -2023,12 +2024,13 @@ function(s)
     finished:=false,
     orbits:=EmptyPlist(n), 
     lens:=[1..n]*0, #lens[j]=Length(orbits[j])
-    kernels:=HTCreate([1..n], rec(hashlen:=CitrusHashLen!.kers)),
+    kernels:=HTCreate([1..n]*1, rec(forflatplainlists:=true,
+     hashlen:=CitrusHashLen!.kers)),
     imgs_gens:=List(gens, x-> x![1]),
     gens:=gens,
     s:=s,
-    data_ht:=HTCreate([1,1,1,1,1,1,1], rec(hashlen:=CitrusHashLen!.
-     dclass_data)),
+    data_ht:=HTCreate([1,1,1,1,1,1,1], rec(forflatplainlists:=true,
+     hashlen:=CitrusHashLen!.dclass_data)),
     data:=[]));
 end);
 

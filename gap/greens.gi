@@ -357,7 +357,7 @@ function(s)
 end);
 
 # new for 0.1! - Idempotents - "for a trans. semigroup and pos. int."
-####################################################################################
+#############################################################################
 
 InstallOtherMethod(Idempotents, "for a trans. semigroup and pos. int.", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
@@ -523,6 +523,14 @@ function(s)
 
   return i;
 end);
+
+#OOO
+
+# new for 0.5! - One - "for a transformation semigroup"
+#############################################################################
+
+InstallMethod(One, "for a transformation",
+[IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
 
 #SSS
 

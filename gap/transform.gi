@@ -320,17 +320,22 @@ end);
 
 #OOO
 
-# new for 0.1! - One - "for a full transformation semigroup"
+# mod for 0.5! - One - "for a full transformation semigroup"
 ###########################################################################
 # Notes: this should not be necessary. Better if '\in' for a full
 # transformation semigroup took priority over '\in' for a transformation
 # semigroup
 
-# JDM undocumented!
-
 InstallOtherMethod(One, "for a full transformation semigroup", 
 [IsFullTransformationSemigroup],  x -> 
- TransformationNC([1.. DegreeOfTransformationSemigroup(x)]));
+ TransformationNC([1.. Degree(x)*1]));
+
+# new for 0.5! - One - "for a transformation semigroup"
+#############################################################################
+# required due to hashing not working for ranges. 
+
+InstallMethod(One, "for a transformation",
+[IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
 
 #PPP
 

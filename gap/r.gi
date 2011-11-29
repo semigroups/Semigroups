@@ -824,7 +824,7 @@ function(s, f)
    s:=s, 
    deg := n, data:=[], images:=fail, lens:=List([1..n], function(x) if x=j then
    return 1; else return 0; fi; end), data_ht:=HTCreate([1,1,1,1,1,1],
-   rec(hashlen:=CitrusHashLen!.imgs)));
+   rec(forflatplainlists:=true, hashlen:=CitrusHashLen!.imgs)));
   #local orbits of images! 
   #JDM shouldn't data contain [j,1,1,1,1,1]??
 
@@ -1637,27 +1637,26 @@ end);
 InstallMethod(OrbitsOfImages, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local gens, n, one, ht, i, type, o;
+  local gens, n, one, ht, j, i, type, o;
 
   Info(InfoCitrus, 4, "OrbitsOfImages");
 
   gens:=List(Generators(s), x-> x![1]);
   n := DegreeOfTransformationSemigroup( s );
-  one := TransformationNC( [ 1 .. n ] );
+  one := [ 1 .. n ]*1 ;
   o:=EmptyPlist(CitrusHashLen!.rclassreps_orb);
   
-  o[1]:=[1..n]*1;
+  ht := HTCreate(one, rec(forflatplainlists:=true, 
+   hashlen:=CitrusHashLen!.rclassreps_orb));  
+  ht!.o:=o; #JDM this should be a queue, after at is greated than i, 
+            # o[i] is not needed for anything, wasting memory...
 
-  for i in [1..Length(gens)] do 
-    o[i+1]:=gens[i];
-  od;    
+  j:=HTAdd(ht, one, 1);
+  o[1]:=ht!.els[j];
 
-  ht := HTCreate(o[1], rec(hashlen:=CitrusHashLen!.rclassreps_orb));  
-  ht!.o:=o; #JDM this should be a queue, after at is greated than i, o[i] is not 
-            # needed for anything, wasting memory...
-
-  for i in [1..Length(gens)+1] do 
-    HTAdd(ht, o[i], i);
+  for i in [2..Length(gens)+1] do 
+    j:=HTAdd(ht, one{gens[i-1]}, i);
+    o[i]:=ht!.els[j];
   od;
   
   type:=NewType(FamilyObj(s), IsOrbitsOfImages);
@@ -1666,14 +1665,16 @@ function(s)
     finished:=false, 
     orbits:=EmptyPlist(n),
     lens:=[1..n]*0, #lens[j]=Length(orbits[j])
-    images:=HTCreate(SSortedList(gens[1]), rec(hashlen:=CitrusHashLen!.imgs)), 
+    images:=HTCreate(SSortedList(gens[1]), rec(forflatplainlists:=true, 
+     hashlen:=CitrusHashLen!.imgs)), 
     at:=0, 
     gens:=gens, 
     s:=s,       # required?
     deg := n,   # required?
     one := one, # required?
     ht:=ht,
-    data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=CitrusHashLen!.rclass_data)), 
+    data_ht:=HTCreate([1,1,1,1,1,1], rec(forflatplainlists:=true, 
+     hashlen:=CitrusHashLen!.rclass_data)), 
     data:=[], 
     gen1:=ListWithIdenticalEntries(Length(gens)+1, fail), 
     pos1:=ListWithIdenticalEntries(Length(gens)+1, fail),
