@@ -26,6 +26,28 @@
 
 # a better method for MinimalIdeal of a simple semigroup.
 
+#AAA
+
+# new for 0.5! - AntiIsomorphismTransformationSemigroup - "for a trans. semi."
+###########################################################################
+
+InstallMethod(AntiIsomorphismTransformationSemigroup, "for a trans. semi.",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function ( s )
+local  en, gens, mapfun;
+
+  en := EnumeratorSorted( s );
+  mapfun := function ( a )
+  return 
+  Transformation( Concatenation( List( [ 1 .. Length( en ) ], function ( i )
+  return Position( en, a* en[i]); end ), [ Position( en, a ) ] ) );
+  end;
+  gens := List( GeneratorsOfSemigroup( s ), function ( x )
+  return mapfun( x );
+  end );
+  return MagmaHomomorphismByFunctionNC( s, Semigroup( gens ), mapfun );
+end);
+
 #GGG
 
 # new for 0.1! - GroupOfUnits - "for a tranformation semigroup"

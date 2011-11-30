@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+DeclareAttribute("AntiIsomorphismTransformationSemigroup",
+ IsTransformationSemigroup);
 DeclareAttribute("GroupOfUnits", IsTransformationSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigp", IsTransformationSemigroup);
 DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
