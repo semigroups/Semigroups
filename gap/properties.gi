@@ -1167,6 +1167,14 @@ function(s)
   return fail;
 end);
 
+#PPP
+
+# new for 0.5! - PosetOfIdempotents - "for a transformation semigroup"
+#############################################################################
+
+InstallMethod(PosetOfIdempotents, "for a transformation semigroup", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], ReturnFail);
+
 #RRR
 
 # new for 0.1! - RedundantGenerator - "for transformations coll."

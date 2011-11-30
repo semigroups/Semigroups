@@ -46,6 +46,8 @@ DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsTransformationSemigroup);
 DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
 DeclareAttribute("MinimalIdeal", IsTransformationSemigroup);
+DeclareAttribute("PosetOfIdempotents", IsTransformationSemigroup);
 DeclareOperation("RedundantGenerator", [IsTransformationCollection]);
 DeclareAttribute("SmallGeneratingSet", IsTransformationSemigroup);
 
+#EOF
