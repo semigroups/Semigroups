@@ -1211,29 +1211,51 @@ end);
 InstallOtherMethod(SmallGeneratingSet, "for a trans. semi.", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local gens, i, out, f;
+  local gens, i, out, j, one, n, f;
  
   gens:=ShallowCopy(Generators(s));
   gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));
   Sort(gens, function(x, y) return Rank(x)>Rank(y); end);
 
   i:=0; out:=[gens[1]]; s:=Semigroup(out);
+  j:=0; one:=false; n:=Degree(s);
 
-  repeat
-    i:=i+1; f:=gens[i];
-    if InfoLevel(InfoCitrus)>1 then
+  if InfoLevel(InfoCitrus)>1 then 
+    repeat
+      i:=i+1; f:=gens[i];
       Print("at \t", i, " of \t", Length(gens), "; \t", Length(out),
       " generators so far\r");
-    fi;
-          
-    if not f in s then 
-      Add(out, f); s:=Semigroup(out);
-    fi;
-  until i=Length(gens);
-
-  if InfoLevel(InfoCitrus)>1 then
+            
+      if not f in s then 
+        if Rank(f)=n then 
+          j:=j+1;
+          if IsOne(f) then 
+            one:=Length(out)+1;
+          fi;
+        fi;
+        Add(out, f); s:=Semigroup(out);
+      fi;
+    until i=Length(gens);
     Print("\n");
+  else       
+    repeat
+      i:=i+1; f:=gens[i]; 
+      if not f in s then
+        if Rank(f)=n then 
+          j:=j+1;
+          if IsOne(f) then 
+            one:=Length(out);
+          fi;
+        fi;
+        Add(out, f); s:=Semigroup(out);
+      fi;
+    until i=Length(gens);
   fi;
+  
+  if j>1 and not one=false then 
+    out:=Concatenation(out{[1..one]}, out{[one+2..Length(out)]});
+  fi;
+
   return out;
 end);
 
