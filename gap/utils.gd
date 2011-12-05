@@ -34,3 +34,5 @@ DeclareGlobalFunction("RandomTransformationMonoid");
 DeclareGlobalFunction("RClass");
 DeclareGlobalFunction("RClassNC");
 
+DeclareGlobalFunction("ReadCitrus");
+DeclareGlobalFunction("WriteCitrus");

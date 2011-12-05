@@ -177,6 +177,9 @@ function()
 
 end);
 
+
+
+
 # new for 0.1! - DClass - "for a trans. semi and trans. or Green's class"
 #############################################################################
 # Usage: (trans. semigp. and trans.) or H-class or L-class or R-class.
@@ -366,6 +369,117 @@ function(arg)
   
   Info(InfoWarning, 1, "Usage: trans. semigp. and trans.");
   return fail;
+end);
+
+# new for 0.5! - ReadCitrus - "for a string and optional pos. int."
+#############################################################################
+
+InstallGlobalFunction(ReadCitrus, 
+function(arg)
+  local read_line, file;
+  
+  if not IsString(arg[1]) then 
+    Error("first argument must be a string");
+  fi;
+  
+#  if not IsReadableFile(arg[1]) then 
+#    Error(arg[1], " is not a readable file");
+#  fi;
+  
+  #JDM add check that file is formatted ok!
+
+  read_line:=function(line)
+    local m, n, r, dom, out, f, i, j;
+    
+    m:=Int([line[1]]);        # block size <10
+    n:=Int(line{[2..m+1]});   # degree
+    r:=(Length(line)-(m+1))/(m*n);# number of generators 
+    dom:=[m+2..m*n+m+1]; out:=EmptyPlist(r);
+
+    for i in [1..r] do
+      out[i]:=EmptyPlist(n); 
+      f:=line{dom+m*(i-1)*n};
+      for j in [1..n] do 
+        Add(out[i], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
+      od;
+      out[i]:=TransformationNC(out[i]);
+    od;
+    return out;
+  end;
+
+  file:=SplitString(StringFile(arg[1]), "\n");
+
+  if Length(arg)>1 then 
+    return read_line(file[arg[2]]);
+  fi;
+
+  return List(file, read_line);
+end);
+
+# new for 0.5! - WriteCitrus - 
+#############################################################################
+
+# Usage: transformation collection and filename as a string.
+
+# Returns: a string. 
+
+InstallGlobalFunction(WriteCitrus, 
+function(arg)
+  local out, n, m, str, convert, output, f, attin;
+
+  if not Length(arg)=2 or not IsTransformationCollection(arg[1]) then 
+    Error("Usage: transformation semigroup and filename as string");
+    return fail;
+  fi;
+
+  if IsExistingFile(arg[2]) and not IsWritableFile(arg[2]) then 
+    Error(arg[2], " exists and is not a writable file");
+  fi;
+
+  if IsTransformationSemigroup(arg[1]) then 
+  
+    if HasMinimalGeneratingSet(arg[1]) then
+      out:=MinimalGeneratingSet(arg[1]);
+    elif HasSmallGeneratingSet(arg[1]) then 
+      out:=SmallGeneratingSet(arg[1]);
+    else
+      out:=Generators(arg[1]);
+    fi;
+  else 
+    out:=arg[1];
+  fi;
+
+  n:=String(DegreeOfTransformationCollection(arg[1]));
+  m:=Length(n);
+  str:=Concatenation(String(m), n);
+ 
+  #####
+
+  convert:=function(f, m)
+    local str, i;
+    
+    str:="";
+    for i in f![1] do 
+      i:=String(i);
+      Append(str, Concatenation([ListWithIdenticalEntries(m-Length(i), ' ')],
+      [i]));
+    od;
+
+    return Concatenation(str);
+  end;
+
+  #####
+
+  for f in out do
+    Append(str, convert(f, m));
+  od;
+
+  output := OutputTextFile( arg[2], true );
+  SetPrintFormattingStatus(output, false);
+  AppendTo( output, str, "\n" );
+  CloseStream(output);
+
+  return true;
 end);
 
 #EOF
