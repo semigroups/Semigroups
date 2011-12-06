@@ -177,9 +177,6 @@ function()
 
 end);
 
-
-
-
 # new for 0.1! - DClass - "for a trans. semi and trans. or Green's class"
 #############################################################################
 # Usage: (trans. semigp. and trans.) or H-class or L-class or R-class.
@@ -376,23 +373,25 @@ end);
 
 InstallGlobalFunction(ReadCitrus, 
 function(arg)
-  local read_line, file;
+  local read_line, file, i, line;
   
   if not IsString(arg[1]) then 
     Error("first argument must be a string");
   fi;
   
-#  if not IsReadableFile(arg[1]) then 
-#    Error(arg[1], " is not a readable file");
-#  fi;
+  #  if not IsReadableFile(arg[1]) then 
+  #    Error(arg[1], " is not a readable file");
+  #  fi; #JDM for some reason this doesn't work...
   
   #JDM add check that file is formatted ok!
+
+  #####
 
   read_line:=function(line)
     local m, n, r, dom, out, f, i, j;
     
-    m:=Int([line[1]]);        # block size <10
-    n:=Int(line{[2..m+1]});   # degree
+    m:=Int([line[1]]);            # block size <10
+    n:=Int(line{[2..m+1]});       # degree
     r:=(Length(line)-(m+1))/(m*n);# number of generators 
     dom:=[m+2..m*n+m+1]; out:=EmptyPlist(r);
 
@@ -407,12 +406,29 @@ function(arg)
     return out;
   end;
 
-  file:=SplitString(StringFile(arg[1]), "\n");
+  #####
 
-  if Length(arg)>1 then 
-    return read_line(file[arg[2]]);
+  if Length(arg)>1 and IsPosInt(arg[2]) then 
+    file:=InputTextFile(arg[1]); 
+    i:=0;
+    while i<arg[2] and not IsEndOfStream(file) do 
+      i:=i+1; line:=ReadLine(file);
+    od;
+    
+    if i=arg[2] and not IsEndOfStream(file) then 
+      CloseStream(file);
+      return read_line(Chomp(line));
+    else
+      CloseStream(file);
+      Error(arg[1], " only has ", i-1, " lines");
+      return fail;
+    fi;
+  else
+    Error("the second argument should be a positive integer");
+    return fail;
   fi;
-
+  
+  file:=SplitString(StringFile(arg[1]), "\n");
   return List(file, read_line);
 end);
 
