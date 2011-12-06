@@ -408,27 +408,22 @@ function(arg)
 
   #####
 
-  if Length(arg)>1 and IsPosInt(arg[2]) then 
-    file:=InputTextFile(arg[1]); 
-    i:=0;
-    while i<arg[2] and not IsEndOfStream(file) do 
-      i:=i+1; line:=ReadLine(file);
-    od;
-    
-    if i=arg[2] and not IsEndOfStream(file) then 
-      CloseStream(file);
-      return read_line(Chomp(line));
+  file:=SplitString(StringFile(arg[1]), "\n"); #quicker than using a stream...
+
+  if Length(arg)>1  then 
+    if IsPosInt(arg[2]) then 
+      if arg[2]<=Length(file) then 
+        return read_line(file[arg[2]]);
+      else
+        Error(arg[1], " only has ", Length(file), " lines");
+        return fail;
+      fi;
     else
-      CloseStream(file);
-      Error(arg[1], " only has ", i-1, " lines");
+      Error("the second argument should be a positive integer");
       return fail;
     fi;
-  else
-    Error("the second argument should be a positive integer");
-    return fail;
   fi;
   
-  file:=SplitString(StringFile(arg[1]), "\n");
   return List(file, read_line);
 end);
 
