@@ -436,33 +436,40 @@ end);
 
 InstallGlobalFunction(WriteCitrus, 
 function(arg)
-  local out, n, m, str, convert, output, f, attin;
+  local trans, gens, i, convert, output, n, m, str, s, f;
 
-  if not Length(arg)=2 or not IsTransformationCollection(arg[1]) then 
-    Error("Usage: transformation semigroup and filename as string");
+  if not Length(arg)=2 then 
+    Error("Usage: trans. semigroup, trans. collection or list of same", 
+    "and filename as string");
     return fail;
   fi;
 
   if IsExistingFile(arg[2]) and not IsWritableFile(arg[2]) then 
     Error(arg[2], " exists and is not a writable file");
+    return fail;
   fi;
 
-  if IsTransformationSemigroup(arg[1]) then 
-  
-    if HasMinimalGeneratingSet(arg[1]) then
-      out:=MinimalGeneratingSet(arg[1]);
-    elif HasSmallGeneratingSet(arg[1]) then 
-      out:=SmallGeneratingSet(arg[1]);
-    else
-      out:=Generators(arg[1]);
+  if IsTransformationCollection(arg[1]) then 
+    trans:=[arg[1]];
+  elif IsTransformationCollection(arg[1][1]) then 
+    trans:=arg[1];
+  else
+    Error("Usage: first arg must be trans. semi., trans. coll. or list of same");
+    return fail;
+  fi;
+
+  gens:=EmptyPlist(Length(trans));
+  for i in [1..Length(trans)] do 
+    if IsTransformationSemigroup(trans[i]) then 
+      if HasMinimalGeneratingSet(trans[i]) then
+        gens[i]:=MinimalGeneratingSet(trans[i]);
+      elif HasSmallGeneratingSet(trans[i]) then 
+        gens[i]:=SmallGeneratingSet(trans[i]);
+      else
+        gens[i]:=Generators(trans[i]);
+      fi;
     fi;
-  else 
-    out:=arg[1];
-  fi;
-
-  n:=String(DegreeOfTransformationCollection(arg[1]));
-  m:=Length(n);
-  str:=Concatenation(String(m), n);
+  od;
  
   #####
 
@@ -481,16 +488,25 @@ function(arg)
 
   #####
 
-  for f in out do
-    Append(str, convert(f, m));
-  od;
-
   output := OutputTextFile( arg[2], true );
   SetPrintFormattingStatus(output, false);
-  AppendTo( output, str, "\n" );
+  
+  for s in gens do 
+
+    n:=String(DegreeOfTransformationCollection(s));
+    m:=Length(n);
+    str:=Concatenation(String(m), n);
+  
+    for f in s do
+      Append(str, convert(f, m));
+    od;
+
+    AppendTo( output, str, "\n" );
+  od;
+  
   CloseStream(output);
 
-  return true;
+  return;
 end);
 
 #EOF
