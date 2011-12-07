@@ -437,7 +437,7 @@ end);
 InstallGlobalFunction(WriteCitrus, 
 function(arg)
   local trans, gens, i, convert, output, n, m, str, s, f;
-
+  
   if not Length(arg)=2 then 
     Error("Usage: trans. semigroup, trans. collection or list of same", 
     "and filename as string");
@@ -468,6 +468,8 @@ function(arg)
       else
         gens[i]:=Generators(trans[i]);
       fi;
+    else
+      gens:=trans;
     fi;
   od;
  

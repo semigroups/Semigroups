@@ -301,7 +301,7 @@ function(d)
   m:=RankOfTransformation(d!.rep);       
 
   if m=n then
-    f:=TransformationNC([1..n]);
+    f:=TransformationNC([1..n]*1);
     h:=GreensHClassOfElementNC(s, f);
     SetIsGroupHClass(h, true); SetIdempotents(h, [f]);
     return h;
