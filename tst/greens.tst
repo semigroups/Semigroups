@@ -1568,6 +1568,32 @@ gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
 
+gap> t:=FullTransformationSemigroup(5);;
+gap> iter:=Iterator(t);
+<iterator of full trans. semigroup>
+gap> for i in iter do od;
+gap> IsDoneIterator(iter);
+true
+gap> iter:=ShallowCopy(iter);
+<iterator>
+gap> NextIterator(iter); 
+Transformation( [ 1, 1, 1, 1, 1 ] )
+gap> NextIterator(iter);
+Transformation( [ 1, 1, 1, 1, 2 ] )
+gap> NextIterator(iter);
+Transformation( [ 1, 1, 1, 1, 3 ] )
+gap> NextIterator(iter);
+Transformation( [ 1, 1, 1, 1, 4 ] )
+gap> NextIterator(iter);
+Transformation( [ 1, 1, 1, 1, 5 ] )
+gap> NextIterator(iter);
+Transformation( [ 1, 1, 1, 2, 1 ] )
+gap> IsDoneIterator(iter);
+false
+gap> for i in iter do od;
+gap> IsDoneIterator(iter);
+true
+
 gap> Unbind(tmptmptmp); Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
 > Unbind(H); Unbind(I); Unbind(r); Unbind(d); Unbind(dr); Unbind(r2);
 > Unbind(out2); Unbind(out3); Unbind(a); Unbind(b); Unbind(M);
