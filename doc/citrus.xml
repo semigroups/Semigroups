@@ -697,6 +697,7 @@ gap> GreensRClasses(S);
     BookName="ref"/> of an arbitrary transformation semigroup that can be found
     using &Citrus;.
     <#Include Label="GroupOfUnits">
+    <#Include Label="IdempotentGeneratedSubsemigp">
     <#Include Label="IrredundantGeneratingSubset">
     <#Include Label="MinimalIdeal">
     <#Include Label="MultiplicativeZero">
