@@ -25,6 +25,7 @@ DeclareProperty("IsCompletelySimpleSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsRTrivial", IsTransformationSemigroup);
 DeclareProperty("IsLTrivial", IsTransformationSemigroup);
 DeclareProperty("IsHTrivial", IsTransformationSemigroup);
+DeclareSynonymAttr("IsDTrivial", IsRTrivial and IsLTrivial);
 DeclareSynonymAttr("IsAperiodicSemigroup", IsHTrivial);
 DeclareSynonymAttr("IsCombinatorialSemigroup", IsHTrivial);
 DeclareProperty("IsGroupAsSemigroup", IsTransformationSemigroup);

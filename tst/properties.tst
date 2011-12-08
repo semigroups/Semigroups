@@ -917,6 +917,14 @@ false
 #gap> List(slow, IsAdequateSemigroup);
 #[ true, true, true, true, true, true, true, true ]
 
+gap> ReadCitrus("pkg/citrus/examples/munn8.citrus", 1078);;
+gap> s:=Semigroup(last);
+<semigroup with 8 generators>
+gap> Size(s);
+8
+gap> IsDTrivial(s);
+true
+
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
