@@ -9,7 +9,7 @@
 ##
 
 DeclareAttribute("AntiIsomorphismTransformationSemigroup",
- IsTransformationSemigroup);
+ IsSemigroup);
 DeclareAttribute("GroupOfUnits", IsTransformationSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigp", IsTransformationSemigroup);
 DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);

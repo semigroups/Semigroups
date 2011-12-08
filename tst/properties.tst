@@ -925,6 +925,12 @@ gap> Size(s);
 gap> IsDTrivial(s);
 true
 
+gap> ReadCitrus("pkg/citrus/examples/graph8c.citrus", 1303);;
+gap> s:=Semigroup(last);;
+gap> t:=IdempotentGeneratedSubsemigp(s);;
+gap> Size(t);
+105
+
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;

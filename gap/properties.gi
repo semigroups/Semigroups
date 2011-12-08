@@ -31,8 +31,8 @@
 # new for 0.5! - AntiIsomorphismTransformationSemigroup - "for a trans. semi."
 ###########################################################################
 
-InstallMethod(AntiIsomorphismTransformationSemigroup, "for a trans. semi.",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(AntiIsomorphismTransformationSemigroup, "for a semigroup",
+[IsSemigroup],
 function ( s )
 local  en, gens, mapfun;
 
@@ -76,6 +76,14 @@ function(s)
 end);
 
 #III
+
+# new for 0.5! - IdempotentGeneratedSubsemigp - "for a trans. semi"
+###########################################################################
+# JDM this could be better if SmallGeneratingSet was made more use of...
+
+InstallMethod(IdempotentGeneratedSubsemigp, "for a tranformation semigroup", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+s-> Semigroup(Idempotents(s)));
 
 # new for 0.1! - IrredundantGeneratingSubset - "for a tranformation coll."
 ###########################################################################

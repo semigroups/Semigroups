@@ -737,6 +737,7 @@ gap> GreensRClasses(S);
   </Section>
 
   <Section><Heading>Changing Representation</Heading>
+    <#Include Label="AntiIsomorphismTransformationSemigroup">
     <#Include Label="IsomorphismTransformationMonoid">
     <#Include Label="IsomorphismPermGroup">
   </Section>
