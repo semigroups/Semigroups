@@ -472,6 +472,35 @@ function(s)
   return iter;
 end);
 
+# new for 0.5! - Iterator - "for a full transformation semigroup"
+#############################################################################
+
+InstallMethod(Iterator, "for a full transformation semigroup",
+[IsTransformationSemigroup and IsFullTransformationSemigroup and HasGeneratorsOfSemigroup], 
+function(s)
+  local iter;
+  
+  Info(InfoCitrus, 4, "Iterator: for a full trans. semigroup");
+
+  iter:= IteratorByFunctions( rec(
+
+    s:=s,
+
+    tups:=IteratorOfTuples([1..Degree(s)], Degree(s)),
+
+    NextIterator:=iter-> TransformationNC(NextIterator(iter!.tups)),
+  
+    IsDoneIterator:=iter -> IsDoneIterator(iter!.tups),
+    
+    ShallowCopy:= iter -> rec(tups:=IteratorOfTuples([1..Degree(s)],
+    Degree(s)))));
+
+  SetIsIteratorOfSemigroup(iter, true);
+  SetIsCitrusPkgIterator(iter, true);
+
+  return iter;
+end);
+
 #NNN
 
 # new for 0.1! - NrIdempotents - "for a transformation semigroup"

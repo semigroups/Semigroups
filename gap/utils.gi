@@ -427,7 +427,7 @@ function(arg)
   return List(file, read_line);
 end);
 
-# new for 0.5! - WriteCitrus - 
+# new for 0.5! - WriteCitrus - "for a trans. coll. and filename as string"
 #############################################################################
 
 # Usage: transformation collection and filename as a string.
