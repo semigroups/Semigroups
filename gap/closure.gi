@@ -218,17 +218,21 @@ function(s, coll)
   
   n:=Degree(t);
   ht_len:=Maximum(CitrusHashLen!.rclassreps_orb, old_data!.ht!.len);
-  
-  ht:= HTCreate(new[1]);;
-  HTAdd(ht, o_s!.one, true);
+  o:=EmptyPlist(ht_len);
 
-  for f in new do 
-    HTAdd(ht, f, true);
+  ht := HTCreate(one, rec(forflatplainlists:=true, hashlen:=ht_len);
+  ht!.o:=o;
+        
+  one := [ 1 .. n ]*1;
+  j:=HTAdd(ht, one, 1);
+  o[1]:=ht!.els[j];
+  
+  for i in [2..Length(coll)+1] do 
+    j:=HTAdd(ht, coll[i-1], i);
+    o[i]:=ht!.els[j];
   od;
 
-  ht!.o:= Concatenation([o_s!.one], new); 
-
-  for i in [o_s!.at+1..Length(o_s!.ht!.o)] do 
+  for i in [old_data!.at+1..Length(o_s!.ht!.o)] do 
     g:=o_s!.ht!.o[i];
     val:=HTValue(ht, g);
     if val=fail then 

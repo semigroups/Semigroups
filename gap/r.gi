@@ -1651,7 +1651,7 @@ function(s)
   o[1]:=ht!.els[j];
 
   for i in [2..Length(gens)+1] do 
-    j:=HTAdd(ht, one{gens[i-1]}, i);
+    j:=HTAdd(ht, gens[i-1], i);
     o[i]:=ht!.els[j];
   od;
   
