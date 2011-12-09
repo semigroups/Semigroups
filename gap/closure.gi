@@ -213,9 +213,12 @@ function(s, coll)
 
   # initialize the R-class reps orbit!
 
-  old_imgs:=OrbitsOfImages(s);
-  gens:=List(gens, x-> x![1]);
-  n:=
+  coll:=List(coll, x-> x![1]);
+  old_data:=OrbitsOfImages(s);
+  
+  n:=Degree(t);
+  ht_len:=Maximum(CitrusHashLen!.rclassreps_orb, old_data!.ht!.len);
+  
   ht:= HTCreate(new[1]);;
   HTAdd(ht, o_s!.one, true);
 

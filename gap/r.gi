@@ -365,7 +365,7 @@ function(s)
   Print("at: \t\t", o!.at, "\n");
   Print("ht: \t\t"); View(o!.ht); Print("\n");
   Print("size: \t\t", Size(OrbitsOfImages(s)), "\n");
-  Print("R-classes: \t", NrRClassesOrbitsOfImages(s), "\n");
+  Print("R-classes: \t", NrRClasses(OrbitsOfImages(s)), "\n");
   Print("data ht: \t"); View(o!.data_ht); Print("\n");
   Print("images: \t"); View(o!.images); Print("\n");
   return true;
@@ -1532,7 +1532,7 @@ function(s)
   Info(InfoCitrus, 4, "NrRClasses");
 
   ExpandOrbitsOfImages(s);
-  return NrRClassesOrbitsOfImages(s);
+  return NrRClasses(OrbitsOfImages(s));
 end);
 
 # new for 0.1! - NrIdempotents - "for an R-class of a trans. semigp."
@@ -1603,15 +1603,15 @@ function(arg)
   return out;
 end);
 
-# new for 0.1! - NrRClassesOrbitsOfImages - not a user function! 
+# new for 0.5! - NrRClasses - "for orbits of images" 
 #############################################################################
 
-InstallGlobalFunction(NrRClassesOrbitsOfImages,
-function(s)
+InstallOtherMethod(NrRClasses, "for orbits of images",
+[IsOrbitsOfImages],
+function(data)
   local c, m, i, j, k, l;
 
-  c:=OrbitsOfImages(s);
-  m:=0; c:=c!.orbits;
+  m:=0; c:=data!.orbits;
 
   for i in c do
     for j in i do 
@@ -1623,9 +1623,6 @@ function(s)
     od;
   od;
 
-  if OrbitsOfImages(s)!.finished then 
-    SetNrRClasses(s, m);
-  fi;
   return m;
 end);
 
@@ -1637,19 +1634,19 @@ end);
 InstallMethod(OrbitsOfImages, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local gens, n, one, ht, j, i, type, o;
+  local gens, n, one, ht, j, i, type, o, ht_len;
 
   Info(InfoCitrus, 4, "OrbitsOfImages");
 
   gens:=List(Generators(s), x-> x![1]);
-  n := DegreeOfTransformationSemigroup( s );
-  one := [ 1 .. n ]*1 ;
-  o:=EmptyPlist(CitrusHashLen!.rclassreps_orb);
+  n := Degree(s); 
+  ht_len:=CitrusHashLen!.rclassreps_orb;
+  o:=EmptyPlist(ht_len);
   
-  ht := HTCreate(one, rec(forflatplainlists:=true, 
-   hashlen:=CitrusHashLen!.rclassreps_orb));  
+  ht := HTCreate(one, rec(forflatplainlists:=true, hashlen:=ht_len);  
   ht!.o:=o; 
 
+  one := [ 1 .. n ]*1;
   j:=HTAdd(ht, one, 1);
   o[1]:=ht!.els[j];
 
@@ -1727,8 +1724,7 @@ end);
 InstallMethod(PrintObj, [IsOrbitsOfImages], 
 function(o)
   Print("<orbits of images; at ", o!.at, " of ", Length(o!.ht!.o), "; ", 
-  Size(o), " elements; ", NrRClassesOrbitsOfImages(o!.s), 
-  " R-classes>");
+  Size(o), " elements; ", NrRClasses(o), " R-classes>");
 end);
 
 # new for 0.1! - PrintObj - for IsIteratorOfRClassRepsData
@@ -1742,7 +1738,7 @@ function(iter)
   O:=OrbitsOfImages(s);
 # JDM O!.ht!.o is unbound if the calc is completed. 
   Print( "<iterator of R-class reps data, ", Length(O!.ht!.o), " candidates, ", 
-   Size(OrbitsOfImages(s)), " elements, ", NrRClassesOrbitsOfImages(s), 
+   Size(OrbitsOfImages(s)), " elements, ", NrRClasses(OrbitsOfImages(s)), 
    " R-classes>");
   return;
 end);
@@ -1757,7 +1753,7 @@ function(iter)
   s:=iter!.s; O:=OrbitsOfImages(s);
 
   Print( "<iterator of R-class reps, ", Length(O!.ht!.o), " candidates, ", 
-   Size(OrbitsOfImages(s)), " elements, ", NrRClassesOrbitsOfImages(s), 
+   Size(OrbitsOfImages(s)), " elements, ", NrRClasses(OrbitsOfImages(s)), 
    " R-classes>");
   return;
 end);
@@ -1914,10 +1910,6 @@ function(data)
       fi;
     od;
   od;
-
-#  if OrbitsOfImages(s)!.finished then 
-#    SetSize(s, i);
-#  fi;
 
   return i;
 end);

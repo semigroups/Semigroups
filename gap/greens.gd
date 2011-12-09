@@ -88,14 +88,12 @@ DeclareGlobalFunction("IteratorOfNewRClassRepsData");
 DeclareGlobalFunction("IteratorOfRClassRepsData");
 DeclareGlobalFunction("HClassRepsDataFromData");
 DeclareGlobalFunction("NrIdempotentsRClassFromData");
-DeclareGlobalFunction("NrRClassesOrbitsOfImages");
 DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
 DeclareGlobalFunction("PreInOrbitsOfImages");
 DeclareGlobalFunction("RClassIndexFromData");
 DeclareGlobalFunction("RClassRepFromData");
 DeclareAttribute("RClassRepsData", IsTransformationSemigroup);
 DeclareAttribute("RClassType", IsTransformationSemigroup);
-DeclareGlobalFunction("SizeOrbitsOfImages");
 DeclareGlobalFunction("TraceRClassRepsTree");
 
 # the documentation for the functions below can be found in 
