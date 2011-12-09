@@ -364,7 +364,7 @@ function(s)
 
   Print("at: \t\t", o!.at, "\n");
   Print("ht: \t\t"); View(o!.ht); Print("\n");
-  Print("size: \t\t", SizeOrbitsOfImages(s), "\n");
+  Print("size: \t\t", Size(OrbitsOfImages(s)), "\n");
   Print("R-classes: \t", NrRClassesOrbitsOfImages(s), "\n");
   Print("data ht: \t"); View(o!.data_ht); Print("\n");
   Print("images: \t"); View(o!.images); Print("\n");
@@ -1648,8 +1648,7 @@ function(s)
   
   ht := HTCreate(one, rec(forflatplainlists:=true, 
    hashlen:=CitrusHashLen!.rclassreps_orb));  
-  ht!.o:=o; #JDM this should be a queue, after at is greated than i, 
-            # o[i] is not needed for anything, wasting memory...
+  ht!.o:=o; 
 
   j:=HTAdd(ht, one, 1);
   o[1]:=ht!.els[j];
@@ -1669,9 +1668,6 @@ function(s)
      hashlen:=CitrusHashLen!.imgs)), 
     at:=0, 
     gens:=gens, 
-    s:=s,       # required?
-    deg := n,   # required?
-    one := one, # required?
     ht:=ht,
     data_ht:=HTCreate([1,1,1,1,1,1], rec(forflatplainlists:=true, 
      hashlen:=CitrusHashLen!.rclass_data)), 
@@ -1731,7 +1727,7 @@ end);
 InstallMethod(PrintObj, [IsOrbitsOfImages], 
 function(o)
   Print("<orbits of images; at ", o!.at, " of ", Length(o!.ht!.o), "; ", 
-  SizeOrbitsOfImages(o!.s), " elements; ", NrRClassesOrbitsOfImages(o!.s), 
+  Size(o), " elements; ", NrRClassesOrbitsOfImages(o!.s), 
   " R-classes>");
 end);
 
@@ -1746,7 +1742,7 @@ function(iter)
   O:=OrbitsOfImages(s);
 # JDM O!.ht!.o is unbound if the calc is completed. 
   Print( "<iterator of R-class reps data, ", Length(O!.ht!.o), " candidates, ", 
-   SizeOrbitsOfImages(s), " elements, ", NrRClassesOrbitsOfImages(s), 
+   Size(OrbitsOfImages(s)), " elements, ", NrRClassesOrbitsOfImages(s), 
    " R-classes>");
   return;
 end);
@@ -1761,7 +1757,7 @@ function(iter)
   s:=iter!.s; O:=OrbitsOfImages(s);
 
   Print( "<iterator of R-class reps, ", Length(O!.ht!.o), " candidates, ", 
-   SizeOrbitsOfImages(s), " elements, ", NrRClassesOrbitsOfImages(s), 
+   Size(OrbitsOfImages(s)), " elements, ", NrRClassesOrbitsOfImages(s), 
    " R-classes>");
   return;
 end);
@@ -1898,18 +1894,18 @@ function(r)
   return Size(SchutzenbergerGroup(r))*Length(ImageOrbitSCC(r));
 end);
 
-# new for 0.1! - SizeOrbitsOfImages - not a user function!
+# new for 0.5! - Size - "for orbits of images"
 #############################################################################
 # Usage: s = semigroup.
 
-InstallGlobalFunction(SizeOrbitsOfImages, 
-function(s)
-  local i, o, j, c;
-  i:=0;
+InstallOtherMethod(Size, "for orbits of images",
+[IsOrbitsOfImages],
+function(data)
+  local i, j, o, orbits;
+  
+  i:=0; orbits:=data!.orbits;
 
-  c:=OrbitsOfImages(s)!.orbits;
-
-  for o in Concatenation(Compacted(c)) do 
+  for o in Concatenation(Compacted(orbits)) do 
     for j in [1..Length(o!.scc)] do
       if IsBound(o!.schutz[j]) and IsBound(o!.reps[j]) and 
        IsBound(o!.scc[j]) then 
@@ -1919,9 +1915,9 @@ function(s)
     od;
   od;
 
-  if OrbitsOfImages(s)!.finished then 
-    SetSize(s, i);
-  fi;
+#  if OrbitsOfImages(s)!.finished then 
+#    SetSize(s, i);
+#  fi;
 
   return i;
 end);

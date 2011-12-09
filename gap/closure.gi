@@ -8,7 +8,7 @@
 ############################################################################# 
 ##
 
-# new for 0.2 - AddGensToOrbsOfImgs - not a user function!
+# new for 0.5 - AddGensToOrbsOfImgs - not a user function!
 #############################################################################
 # Usage: s = old semigroup; t = new semigroup; new = new generators;
 # j, k from O[j][k]
@@ -18,6 +18,7 @@
 
 InstallGlobalFunction(AddGensToOrbsOfImgs, 
 function(s, t, new, j, k)
+  local old_o, new_o, gens, filt, scc, r, ht, data, old_scc, old_reps, max, kernels_ht, h, val, o_t, images, f, d, n, reps, oo, z, m, i, g, y;
 
   old_o:=ImageOrbitFromData(s, [j,k]);
   new_o:=StructuralCopy(old_o);
@@ -165,112 +166,111 @@ function(s, t, new, j, k)
 return true;
 end);
 
-# new for 4.0!
+# new for 0.5! - ClosureSemigroup - "for a trans. semi. and trans. coll."
 #############################################################################
 
 InstallGlobalFunction(ClosureSemigroup,
 function(s, coll)
 
-if not IsTransformationSemigroup(s) or not (IsTransformationCollection(coll)
-or IsTransformation(coll)) then 
-Error("Usage: transformation semigroup and transformation or ", 
-"collection of transformations.");
-fi;
+  if not IsTransformationSemigroup(s) or not (IsTransformationCollection(coll)
+   or IsTransformation(coll)) then 
+    Error("Usage: arg. must be a trans. semigroup and transformation or ", 
+    "collection of transformations.");
+  fi;
 
-if IsTransformationSemigroup(coll) then 
-coll:=Generators(coll);
-elif IsTransformation(coll) then 
-coll:=[coll];
-fi;
+  if IsTransformationSemigroup(coll) then 
+    coll:=Generators(coll);
+  elif IsTransformation(coll) then 
+    coll:=[coll];
+  fi;
 
 return ClosureSemigroupNC(s, Filtered(coll, x-> not x in s));
 end);
 
-# new for 4.0!
+# new for 0.5! - ClosureSemigroupNC - "for a trans. semi. and trans. coll."
 #############################################################################
-# this should be properly installed and tested!! JDM
-# JDM clean this up!
-# JDM addition of data_ht and lens should be investigated here!
 
 InstallGlobalFunction(ClosureSemigroupNC,
-function(s, new)
-local t, o_s, o_t, j, n, orbits, gens, i, k, type, data, ht, val, g, h, f, l, 
-o, d;
+function(s, coll)
+  local t, o_s, o_t, j, n, orbits, gens, i, k, type, data, ht, val, g, h, f, l,
+   o, d;
 
-if new=[] then 
-return s;
-fi;
+  if coll=[] then 
+    return s;
+  fi;
 
-if IsTransformationMonoid(s) then 
-t:=Monoid(Concatenation(Generators(s), new));
-else
-t:=Semigroup(Concatenation(Generators(s), new));
-fi;
+  gens:=Concatenation(Generators(s), coll);
 
-# initialize the R-class reps orbit!
-###############################################################################
+  if IsTransformationMonoid(s) then 
+    t:=Monoid(gens);
+  else
+    t:=Semigroup(gens);
+  fi;
 
-o_s:=OrbitsOfImages(s);
-ht:= HTCreate(new[1]);;
-HTAdd(ht, o_s!.one, true);
+  if not HasOrbitsOfImages(s) then 
+    return t;
+  fi;
 
-for f in new do 
-HTAdd(ht, f, true);
-od;
+  # initialize the R-class reps orbit!
 
-ht!.o:= Concatenation([o_s!.one], new); 
+  old_imgs:=OrbitsOfImages(s);
+  gens:=List(gens, x-> x![1]);
+  n:=
+  ht:= HTCreate(new[1]);;
+  HTAdd(ht, o_s!.one, true);
 
-for i in [o_s!.at+1..Length(o_s!.ht!.o)] do 
-g:=o_s!.ht!.o[i];
-val:=HTValue(ht, g);
-if val=fail then 
-HTAdd(ht, g, true);
-ht!.o[Length(ht!.o)+1]:=g;
-fi;
-od;
+  for f in new do 
+    HTAdd(ht, f, true);
+  od;
 
-###############################################################################
+  ht!.o:= Concatenation([o_s!.one], new); 
 
-n:=o_s!.deg;
+  for i in [o_s!.at+1..Length(o_s!.ht!.o)] do 
+    g:=o_s!.ht!.o[i];
+    val:=HTValue(ht, g);
+    if val=fail then 
+      HTAdd(ht, g, true);
+      ht!.o[Length(ht!.o)+1]:=g;
+    fi;
+  od;
 
-o_t:= Objectify(NewType(FamilyObj(t), IsOrbitsOfImages), 
-rec( finished:=false,
-orbits:=EmptyPlist(n),
-lens:=List([1..n], x-> 0), 
-images:=HTCreate(ImageSetOfTransformation(new[1])),
-at:=0, 
-gens:=Generators(t),
-s:=t,
-deg := n, 
-one := o_s!.one,
-ht:=ht,
-data:=EmptyPlist(Length(o_s!.data)), 
-data_ht:=HTCreate([1,1,1,1,1,1])
-));
+  n:=o_s!.deg;
 
-SetOrbitsOfImages(t, o_t);
+  o_t:= Objectify(NewType(FamilyObj(t), IsOrbitsOfImages), 
+  rec( finished:=false,
+    orbits:=EmptyPlist(n),
+    lens:=List([1..n], x-> 0), 
+    images:=HTCreate(ImageSetOfTransformation(new[1])),
+    at:=0, 
+    gens:=Generators(t),
+    s:=t,
+    deg := n, 
+    one := o_s!.one,
+    ht:=ht,
+    data:=EmptyPlist(Length(o_s!.data)), 
+    data_ht:=HTCreate([1,1,1,1,1,1])));
 
-###############################################################################
+  SetOrbitsOfImages(t, o_t); 
 
-j:=Maximum(List(new, Rank));
-orbits:=o_t!.orbits;
-data:=o_t!.data;
+  j:=Maximum(List(new, Rank));
+  orbits:=o_t!.orbits;
+  data:=o_t!.data;
 
-for i in [n,n-1..1] do 
-if IsBound(o_s!.orbits[i]) then 
-if i>j then 
-orbits[i]:=StructuralCopy(o_s!.orbits[i]);
-Append(data, RClassRepsDataFromOrbits(orbits[i], i));
+  for i in [n,n-1..1] do 
+    if IsBound(o_s!.orbits[i]) then 
+      if i>j then 
+        orbits[i]:=StructuralCopy(o_s!.orbits[i]);
+        Append(data, RClassRepsDataFromOrbits(orbits[i], i));
 #JDM could avoid using RClassRepsDataFromOrbits
 # if the data was stored in the orbits when created. 
-else
-orbits[i]:=[];
-for k in [1..Length(o_s!.orbits[i])] do 
-AddGensToOrbsOfImgs(s, t, new, i, k);
-od;
-fi;
-fi;
-od;
+      else
+        orbits[i]:=[];
+        for k in [1..Length(o_s!.orbits[i])] do 
+          AddGensToOrbsOfImgs(s, t, new, i, k);
+        od;
+      fi;
+    fi;
+  od;
 
 return t;
 end);

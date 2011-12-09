@@ -574,7 +574,7 @@ function(s)
   Info(InfoCitrus, 4, "Size: for a trans. semigroup");
 
   ExpandOrbitsOfImages(s);
-  return SizeOrbitsOfImages(s);
+  return Size(OrbitsOfImages(s));
 end);
 
 # new for 0.1! - Size - "for a simple transformation semigroup"
