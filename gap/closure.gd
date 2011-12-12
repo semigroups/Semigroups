@@ -8,6 +8,5 @@
 ############################################################################# 
 ##
 
-DeclareGlobalFunction("AddGensToOrbsOfImgs");
 DeclareGlobalFunction("ClosureSemigroup");
 DeclareGlobalFunction("ClosureSemigroupNC");

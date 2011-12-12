@@ -97,8 +97,8 @@ end);
 
 InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, f, data, o)
-  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, images, ht, gen1, pos1, 
-   f_o, out, reps, i, z, y;
+  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, images, ht, gen1, 
+  pos1, f_o, out, reps, i, z, y;
 
   j:=data[1]; 	# img size
   k:=data[2]; 	# index of orbit containing img
@@ -1642,11 +1642,11 @@ function(s)
   n := Degree(s); 
   ht_len:=CitrusHashLen!.rclassreps_orb;
   o:=EmptyPlist(ht_len);
-  
-  ht := HTCreate(one, rec(forflatplainlists:=true, hashlen:=ht_len);  
-  ht!.o:=o; 
 
   one := [ 1 .. n ]*1;
+  ht := HTCreate(one, rec(forflatplainlists:=true, hashlen:=ht_len));  
+  ht!.o:=o; 
+
   j:=HTAdd(ht, one, 1);
   o[1]:=ht!.els[j];
 
