@@ -10,3 +10,4 @@
 
 DeclareGlobalFunction("ClosureSemigroup");
 DeclareGlobalFunction("ClosureSemigroupNC");
+DeclareGlobalFunction("CopyOrbitReps");

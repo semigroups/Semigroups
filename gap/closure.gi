@@ -18,6 +18,7 @@ function(s, coll)
    or IsTransformation(coll)) then 
     Error("Usage: arg. must be a trans. semigroup and transformation or ", 
     "collection of transformations.");
+    return fail;
   fi;
 
   if IsTransformationSemigroup(coll) then 
@@ -26,18 +27,23 @@ function(s, coll)
     coll:=[coll];
   fi;
 
-return ClosureSemigroupNC(s, Filtered(coll, x-> not x in s));
+  if not Degree(s)=Degree(coll[1]) then 
+    Error("Usage: degrees of transformations must equal degree of semigroup");
+    return fail;
+  fi;
+
+  return ClosureSemigroupNC(s, Filtered(coll, x-> not x in s));
 end);
 
 # new for 0.5! - ClosureSemigroupNC - "for a trans. semi. and trans. coll."
 #############################################################################
+# Usage: s = a transformation semigroup; coll = a list of transformations not
+# belonging to s but with degree equal to that of s.  
 
 InstallGlobalFunction(ClosureSemigroupNC,
 function(s, coll)
-  local t, old_data, ht, o, r, j, n, max_rank, orbits, lens, images, data_ht, 
-  data, data_len, old_reps, old_o, m, val, out, new_data, gen1, pos1, gen2, 
-  pos2, d, i, k, old_m;
-
+  local t, old_data, ht, o, r, img_lists, j, max_rank, n, orbits, lens, data_ht, data, data_len, images, old_reps, old_o, m, new_data, d, g, z, i, k, old_m, y;
+  
   if coll=[] then 
     return s;
   fi;
@@ -57,7 +63,8 @@ function(s, coll)
   old_data:=OrbitsOfImages(s);
   
   ht:=StructuralCopy(old_data!.ht); o:=ht!.o; r:=Length(o);
-
+  img_lists:=List(Generators(t), x-> x![1]);
+  
   for i in [1..Length(coll)] do 
     j:=HTAdd(ht, coll[i]![1], r+i);
     o[r+i]:=ht!.els[j];
@@ -65,25 +72,40 @@ function(s, coll)
 
   # process existing orbits
 
-  n:=Degree(t);
   max_rank:=Maximum(List(coll, Rank));
-  orbits:=EmptyPlist(n); lens:=[1..n]*0;
-  
-  for j in [max_rank+1..n] do
-    if old_data!.lens[j]>0 then 
-      lens[j]:=old_data!.lens[j];
-      orbits[j]:=old_data!.orbits[j];
-    fi;
-  od;
 
-  images:=StructuralCopy(old_data!.images);
+  n:=Degree(t);
+  orbits:=EmptyPlist(n); lens:=[1..n]*0;
   data_ht:=HTCreate([1,1,1,1,1,1], rec(forflatplainlists:=true,
    hashlen:=old_data!.data_ht!.len));
   data:=EmptyPlist(Length(old_data!.data)); data_len:=0; 
+  images:=HTCreate(SSortedList(img_lists[1]), rec(forflatplainlists:=true,
+   hashlen:=old_data!.images!.len));
+ 
+  # process orbits of large images
+ 
+  for j in [max_rank+1..n] do
+    if old_data!.lens[j]>0 then 
+      lens[j]:=old_data!.lens[j];
+      orbits[j]:=StructuralCopy(old_data!.orbits[j]);
+      for k in [1..lens[j]] do
+        o:=orbits[j][k]; 
+        for m in [1..Length(o!.scc)] do 
+          data_len:=CopyOrbitReps(s, t, o, j, k, m, data_len, data_ht, data);
+        od;
+        for i in o do
+          HTAdd(images, i, k);
+        od;
+      od;
+    fi;
+  od;
+
+  # process orbits of small images
+
   old_reps:=EmptyPlist(Length(old_data!.data));
 
   for j in [1..max_rank] do 
-    if IsBound(old_data!.orbits[j]) then 
+    if old_data!.lens[j]>0 then 
       orbits[j]:=[];
       for k in [1..old_data!.lens[j]] do 
         old_o:=old_data!.orbits[j][k];
@@ -91,47 +113,56 @@ function(s, coll)
         o!.onlygradesdata:=images;
         AddGeneratorsToOrbit(o, coll);
         lens[j]:=lens[j]+1;
+        if not (Length(old_o!.scc)=1 and Length(o)=Length(old_o)) then  
+          Unbind(o!.scc); Unbind(o!.rev);
+          r:=Length(OrbSCC(o));
         
-        Unbind(o!.scc); 
-        r:=Length(OrbSCC(o));
-        
-        o!.trees:=EmptyPlist(r); 
-        o!.reverse:=EmptyPlist(r);
-        o!.reps:=List([1..r], x-> []);
-        o!.kernels_ht:=[];
-        o!.perms:=EmptyPlist(Length(o));
-        o!.schutz:=EmptyPlist(r);
-        o!.nr_idempotents:=List([1..r], m-> []);
-          
-        for old_m in [1..Length(old_o!.scc)] do 
-          m:=Position(o!.scc, old_o!.scc[old_m]);
-          if not old_m=fail then 
-            o!.reps[m]:=old_o!.reps[old_m];
-            for val in [1..Length(o!.reps[m])] do
-              for n in [1..Length(o!.reps[m][val])] do 
-                data_len:=data_len+1; 
-                out:=[j, k, o!.scc[m][1], m, val, n]; 
-                HTAdd(data_ht, out, data_len);
-                data[data_len]:=out;
+          o!.trees:=EmptyPlist(r); 
+          o!.reverse:=EmptyPlist(r);
+          o!.reps:=List([1..r], x-> []);
+          o!.kernels_ht:=[];
+          o!.perms:=EmptyPlist(Length(o));
+          o!.schutz:=EmptyPlist(r);
+          o!.nr_idempotents:=List([1..r], m-> []);
+
+          for old_m in [1..Length(old_o!.scc)] do 
+            m:=Position(o!.scc, old_o!.scc[old_m]);
+            if not m=fail then 
+             o!.kernels_ht[m]:=StructuralCopy(old_o!.kernels_ht[old_m]);
+              for i in o!.scc[m] do 
+                o!.perms[i]:=old_o!.perms[i];
               od;
-            od;
-
-            o!.kernels_ht:=old_o!.kernels_ht[old_m];
-            for i in o!.scc[m] do 
-              o!.perms[i]:=old_o!.perms[i];
-            od;
-            o!.schutz[m]:=old_o!.schutz[old_m];
-            o!.trees[m]:=old_o!.trees[old_m];
-            o!.reverse[m]:=old_o!.reverse[old_m];
+              o!.schutz[m]:=CreateImageOrbitSchutzGp(img_lists, o, 
+               old_o!.reps[old_m][1][1], m);
+              # reuse old schutz gp here! JDM
+              if not Size(o!.schutz[m])=Size(old_o!.schutz[m]) then 
+                 Append(old_reps, Concatenation(old_o!.reps[old_m]));
+              else  
+                o!.reps[m]:=StructuralCopy(old_o!.reps[old_m]);
+                data_len:=CopyOrbitReps(s, t, o, j, k, m, data_len, data_ht,
+                 data);
+             fi;
+              o!.trees[m]:=StructuralCopy(old_o!.trees[old_m]);
+              o!.reverse[m]:=StructuralCopy(old_o!.reverse[old_m]);
+            else
+              Append(old_reps, Concatenation(old_o!.reps[old_m]));
+            fi;
+          od;
+        else 
+          m:=1;
+          o!.schutz[m]:=CreateImageOrbitSchutzGp(img_lists, o, o!.
+           reps[m][1][1], m);
+          if not Size(o!.schutz[m])=Size(old_o!.schutz[m]) then
+            o!.reps:=[[]]; 
+            o!.kernels_ht:=[];
+            o!.nr_idempotents:=[[]];
+            Append(old_reps, Concatenation(old_o!.reps[old_m]));
           else
-            Append(old_reps, Flat(old_o!.reps[old_m]));
+            data_len:=CopyOrbitReps(s, t, o, j, k, m, data_len, data_ht, data);
           fi;
-        od;
-
+        fi;
         for i in o do 
-          if HTValue(images, i)=fail then 
-            HTAdd(images, i, lens[j]);
-          fi;
+          HTAdd(images, i, lens[j]);
         od;
         orbits[j][lens[j]]:=o;
       od;
@@ -141,7 +172,7 @@ function(s, coll)
   # set orbits of images of t
   new_data:= Objectify(NewType(FamilyObj(t), IsOrbitsOfImages), 
    rec(finished:=false, orbits:=orbits, lens:=lens, images:=images,
-    at:=old_data!.at, gens:=List(Generators(t), x-> x![1]),
+    at:=old_data!.at, gens:=img_lists,
     ht:=ht, data_ht:=data_ht, data:=data,
     gen1:=[], pos1:=[], gen2:=[], pos2:=[]));
 
@@ -153,12 +184,45 @@ function(s, coll)
     d:=InOrbitsOfImages(i, false, [fail, fail, fail, fail, fail, 0, fail],
            orbits, images);
     if not d[1] then 
-      #Add(O!.pos2, i); Add(O!.gen2, d[2]{[1..4]});
       AddToOrbitsOfImages(t, i, d[2], new_data);
     fi;
+  od;
+  
+  # install new pts in the orbit
+  
+  coll:=List(coll, x-> x![1]); 
+
+  for i in new_data!.data do 
+    g:=orbits[i[1]][i[2]]!.reps[i[4]][i[5]][i[6]];
+    m:=Length(coll); j:=Length(ht!.o);
+    for y in [1..m] do 
+      z:=g{coll[y]};
+      if HTValue(ht, z)=fail then
+        j:=j+1;
+        z:=HTAdd(ht, z, j); ht!.o[j]:=ht!.els[z];
+      fi;
+    od;
   od;
 
   return t;
 end);
 
-#EOF=
+# Usage: s = old semigroup; t = new semigroup; o = orbit; m = scc of o;
+# data_len = Length(OrbitsOfImages(t)!.data).
+
+InstallGlobalFunction(CopyOrbitReps, 
+function(s, t, o, j, k, m, data_len, data_ht, data)
+  local out, val, n;
+
+  for val in [1..Length(o!.reps[m])] do
+    for n in [1..Length(o!.reps[m][val])] do
+      data_len:=data_len+1;
+      out:=[j, k, o!.scc[m][1], m, val, n];
+      HTAdd(data_ht, out, data_len);
+      data[data_len]:=out;
+    od;
+  od;
+  return data_len;
+end);
+
+#EOF
