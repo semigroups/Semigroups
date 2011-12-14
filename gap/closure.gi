@@ -8,52 +8,6 @@
 ############################################################################# 
 ##
 
-# new for 0.5! - AddGeneratorsToImageOrbit - not a user function
-#############################################################################
-
-InstallGlobalFunction(AddGeneratorsToImageOrbit, 
-function(old_o, j, k, coll, images, recycle, data_ht, data, data_len)
-  local o, scc, reps, out, r, m, val, n, i;
-
-  o:=StructuralCopy(old_o);
-  o!.onlygradesdata:=images;
-  AddGeneratorsToOrbit(o, coll);
-
-  if recycle then 
-    scc:=o!.scc; 
-    reps:=o!.reps;
-
-    for m in [1..Length(scc)] do
-      for val in [1..Length(reps[m])] do 
-        for n in [1..Length(reps[m][val])] do 
-          data_len:=data_len+1;
-          out:=[j, k, scc[m][1], m, val, n];
-          HTAdd(data_ht, out, data_len);
-          data[data_len]:=out;
-        od;
-      od;
-    od;
-  else #trash orbit scc info
-    Unbind(o!.scc); Unbind(o!.rev);
-    
-    r:=Length(OrbSCC(o));
-
-    o!.trees:=EmptyPlist(r);
-    o!.reverse:=EmptyPlist(r);
-    o!.reps:=List([1..r], x-> []);
-    o!.kernels_ht:=[];
-    o!.perms:=EmptyPlist(Length(o));
-    o!.schutz:=EmptyPlist(r);
-    o!.nr_idempotents:=List([1..r], m-> []); 
-  fi;
-
-  for i in o do
-    HTAdd(images, i, k);
-  od;
-
-  return o;
-end);
-
 # new for 0.5! - ClosureSemigroup - "for a trans. semi. and trans. coll."
 #############################################################################
 

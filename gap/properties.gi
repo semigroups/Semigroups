@@ -1213,59 +1213,50 @@ end);
 
 #SSS
 
+# new for 0.5! - SemigroupWithSmallGenSet - "for a trans. semi."
+#############################################################################
+
+InstallGlobalFunction(SemigroupWithSmallGenSet, 
+function(gens)
+  local n, i, s, f;
+
+  gens:=ShallowCopy(gens);
+  gens:=SSortedList(gens); #remove duplicates 
+  gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
+  Sort(gens, function(x, y) return Rank(x)>Rank(y); end);;
+
+  n:=Length(gens[1]![1]);
+  
+  if gens[1]![1]=[1..n] and Rank(gens[2])=n then 
+    Remove(gens, 1);
+  fi;
+
+  i:=0; 
+  s:=Semigroup(gens[1]);
+  
+  if InfoLevel(InfoCitrus)>1 then
+    n:=Length(gens);
+    for i in [1..n] do 
+      Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
+      " generators so far\r");
+      s:=ClosureSemigroup(s, gens[i]);
+    od;
+    Print("\n");
+  else
+    for f in gens do 
+      s:=ClosureSemigroup(s, f);
+    od;
+  fi;
+
+  return s;
+end);
+
 # fix for 0.5! - SmallGeneratingSet - "for a trans. semi."
 #############################################################################
 
 InstallOtherMethod(SmallGeneratingSet, "for a trans. semi.", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local gens, i, out, j, one, n, f;
- 
-  gens:=ShallowCopy(Generators(s));
-  gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));
-  Sort(gens, function(x, y) return Rank(x)>Rank(y); end);
-
-  i:=0; out:=[gens[1]]; s:=Semigroup(out);
-  j:=0; one:=false; n:=Degree(s);
-
-  if InfoLevel(InfoCitrus)>1 then 
-    repeat
-      i:=i+1; f:=gens[i];
-      Print("at \t", i, " of \t", Length(gens), "; \t", Length(out),
-      " generators so far\r");
-            
-      if not f in s then 
-        if Rank(f)=n then 
-          j:=j+1;
-          if IsOne(f) then 
-            one:=Length(out)+1;
-          fi;
-        fi;
-        Add(out, f); s:=Semigroup(out);
-      fi;
-    until i=Length(gens);
-    Print("\n");
-  else       
-    repeat
-      i:=i+1; f:=gens[i]; 
-      if not f in s then
-        if Rank(f)=n then 
-          j:=j+1;
-          if IsOne(f) then 
-            one:=Length(out);
-          fi;
-        fi;
-        Add(out, f); s:=Semigroup(out);
-      fi;
-    until i=Length(gens);
-  fi;
-  
-  if j>1 and not one=false then 
-    out:=Concatenation(out{[1..one]}, out{[one+2..Length(out)]});
-  fi;
-
-  return out;
-end);
+s -> Generators(SemigroupWithSmallGenSet(Generators(s))));
 
 # new for 0.2! - StructureDescription - "for a Brandt trans. semigroup"
 ############################################################################
