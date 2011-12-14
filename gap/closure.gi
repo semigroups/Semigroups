@@ -8,6 +8,52 @@
 ############################################################################# 
 ##
 
+# new for 0.5! - AddGeneratorsToImageOrbit - not a user function
+#############################################################################
+
+InstallGlobalFunction(AddGeneratorsToImageOrbit, 
+function(old_o, j, k, coll, images, recycle, data_ht, data, data_len)
+  local o, scc, reps, out, r, m, val, n, i;
+
+  o:=StructuralCopy(old_o);
+  o!.onlygradesdata:=images;
+  AddGeneratorsToOrbit(o, coll);
+
+  if recycle then 
+    scc:=o!.scc; 
+    reps:=o!.reps;
+
+    for m in [1..Length(scc)] do
+      for val in [1..Length(reps[m])] do 
+        for n in [1..Length(reps[m][val])] do 
+          data_len:=data_len+1;
+          out:=[j, k, scc[m][1], m, val, n];
+          HTAdd(data_ht, out, data_len);
+          data[data_len]:=out;
+        od;
+      od;
+    od;
+  else #trash orbit scc info
+    Unbind(o!.scc); Unbind(o!.rev);
+    
+    r:=Length(OrbSCC(o));
+
+    o!.trees:=EmptyPlist(r);
+    o!.reverse:=EmptyPlist(r);
+    o!.reps:=List([1..r], x-> []);
+    o!.kernels_ht:=[];
+    o!.perms:=EmptyPlist(Length(o));
+    o!.schutz:=EmptyPlist(r);
+    o!.nr_idempotents:=List([1..r], m-> []); 
+  fi;
+
+  for i in o do
+    HTAdd(images, i, k);
+  od;
+
+  return o;
+end);
+
 # new for 0.5! - ClosureSemigroup - "for a trans. semi. and trans. coll."
 #############################################################################
 
@@ -42,7 +88,7 @@ end);
 
 InstallGlobalFunction(ClosureSemigroupNC,
 function(s, coll)
-  local t, old_data, ht, o, r, img_lists, j, max_rank, n, orbits, lens, data_ht, data, data_len, images, old_reps, old_o, m, new_data, d, g, z, i, k, old_m, y;
+  local t, old_data, ht, o, r, img_lists, j, max_rank, n, orbits, lens, data_ht, data, data_len, images, scc, reps, out, old_reps, old_o, new_data, d, g, m, z, i, k, val, y;
   
   if coll=[] then 
     return s;
@@ -70,32 +116,46 @@ function(s, coll)
     o[r+i]:=ht!.els[j];
   od;
 
-  # process existing orbits
+  # set up orbits of images of t
 
   max_rank:=Maximum(List(coll, Rank));
-
+  
   n:=Degree(t);
-  orbits:=EmptyPlist(n); lens:=[1..n]*0;
+  orbits:=EmptyPlist(n); 
+  lens:=[1..n]*0;
   data_ht:=HTCreate([1,1,1,1,1,1], rec(forflatplainlists:=true,
    hashlen:=old_data!.data_ht!.len));
-  data:=EmptyPlist(Length(old_data!.data)); data_len:=0; 
+  data:=EmptyPlist(Length(old_data!.data)); 
+  data_len:=0;
   images:=HTCreate(SSortedList(img_lists[1]), rec(forflatplainlists:=true,
    hashlen:=old_data!.images!.len));
  
   # process orbits of large images
  
-  for j in [max_rank+1..n] do
-    if old_data!.lens[j]>0 then 
+  for j in [n, n-1..max_rank+1] do
+    if old_data!.lens[j]>0 then
       lens[j]:=old_data!.lens[j];
-      orbits[j]:=StructuralCopy(old_data!.orbits[j]);
+      orbits[j]:=EmptyPlist(lens[j]);
       for k in [1..lens[j]] do
-        o:=orbits[j][k]; 
-        for m in [1..Length(o!.scc)] do 
-          data_len:=CopyOrbitReps(s, t, o, j, k, m, data_len, data_ht, data);
-        od;
-        for i in o do
+        o:=StructuralCopy(old_data!.orbits[j][k]);
+        o!.onlygradesdata:=images;
+        AddGeneratorsToOrbit(o, coll);
+        scc:=o!.scc; reps:=o!.reps;
+
+        for m in [1..Length(scc)] do
+          for val in [1..Length(reps[m])] do
+            for n in [1..Length(reps[m][val])] do
+              data_len:=data_len+1;
+              out:=[j, k, scc[m][1], m, val, n];
+              HTAdd(data_ht, out, data_len);
+              data[data_len]:=out;
+            od;
+          od;
+        od;  
+        for i in o do 
           HTAdd(images, i, k);
-        od;
+        od;  
+        orbits[j][k]:=o;
       od;
     fi;
   od;
@@ -104,72 +164,39 @@ function(s, coll)
 
   old_reps:=EmptyPlist(Length(old_data!.data));
 
-  for j in [1..max_rank] do 
+  for j in [max_rank, max_rank-1..1] do 
     if old_data!.lens[j]>0 then 
       orbits[j]:=[];
-      for k in [1..old_data!.lens[j]] do 
+      for k in [1..old_data!.lens[j]] do
         old_o:=old_data!.orbits[j][k];
-        o:=StructuralCopy(old_o); 
-        o!.onlygradesdata:=images;
-        AddGeneratorsToOrbit(o, coll);
-        lens[j]:=lens[j]+1;
-        if not (Length(old_o!.scc)=1 and Length(o)=Length(old_o)) then  
+        if HTValue(images, old_o[1])=fail then 
+          lens[j]:=lens[j]+1;
+          o:=StructuralCopy(old_o);
+          o!.onlygradesdata:=images;
+          AddGeneratorsToOrbit(o, coll);
           Unbind(o!.scc); Unbind(o!.rev);
+
           r:=Length(OrbSCC(o));
-        
-          o!.trees:=EmptyPlist(r); 
+
+          o!.trees:=EmptyPlist(r);
           o!.reverse:=EmptyPlist(r);
           o!.reps:=List([1..r], x-> []);
           o!.kernels_ht:=[];
           o!.perms:=EmptyPlist(Length(o));
           o!.schutz:=EmptyPlist(r);
-          o!.nr_idempotents:=List([1..r], m-> []);
-
-          for old_m in [1..Length(old_o!.scc)] do 
-            m:=Position(o!.scc, old_o!.scc[old_m]);
-            if not m=fail then 
-             o!.kernels_ht[m]:=StructuralCopy(old_o!.kernels_ht[old_m]);
-              for i in o!.scc[m] do 
-                o!.perms[i]:=old_o!.perms[i];
-              od;
-              o!.schutz[m]:=CreateImageOrbitSchutzGp(img_lists, o, 
-               old_o!.reps[old_m][1][1], m);
-              # reuse old schutz gp here! JDM
-              if not Size(o!.schutz[m])=Size(old_o!.schutz[m]) then 
-                 Append(old_reps, Concatenation(old_o!.reps[old_m]));
-              else  
-                o!.reps[m]:=StructuralCopy(old_o!.reps[old_m]);
-                data_len:=CopyOrbitReps(s, t, o, j, k, m, data_len, data_ht,
-                 data);
-             fi;
-              o!.trees[m]:=StructuralCopy(old_o!.trees[old_m]);
-              o!.reverse[m]:=StructuralCopy(old_o!.reverse[old_m]);
-            else
-              Append(old_reps, Concatenation(old_o!.reps[old_m]));
-            fi;
+          o!.nr_idempotents:=List([1..r], m-> []);  
+          for i in o do 
+            HTAdd(images, i, lens[j]);
           od;
-        else 
-          m:=1;
-          o!.schutz[m]:=CreateImageOrbitSchutzGp(img_lists, o, o!.
-           reps[m][1][1], m);
-          if not Size(o!.schutz[m])=Size(old_o!.schutz[m]) then
-            o!.reps:=[[]]; 
-            o!.kernels_ht:=[];
-            o!.nr_idempotents:=[[]];
-            Append(old_reps, Concatenation(old_o!.reps[old_m]));
-          else
-            data_len:=CopyOrbitReps(s, t, o, j, k, m, data_len, data_ht, data);
-          fi;
+          orbits[j][lens[j]]:=o;
         fi;
-        for i in o do 
-          HTAdd(images, i, lens[j]);
-        od;
-        orbits[j][lens[j]]:=o;
+        Append(old_reps, Concatenation(Concatenation(old_o!.reps)));
       od;
     fi;
   od;
 
   # set orbits of images of t
+
   new_data:= Objectify(NewType(FamilyObj(t), IsOrbitsOfImages), 
    rec(finished:=false, orbits:=orbits, lens:=lens, images:=images,
     at:=old_data!.at, gens:=img_lists,
@@ -178,7 +205,7 @@ function(s, coll)
 
   SetOrbitsOfImages(t, new_data); 
  
-  # process existing R-reps 
+  # process old R-reps 
 
   for i in old_reps do 
     d:=InOrbitsOfImages(i, false, [fail, fail, fail, fail, fail, 0, fail],
@@ -198,31 +225,12 @@ function(s, coll)
     for y in [1..m] do 
       z:=g{coll[y]};
       if HTValue(ht, z)=fail then
-        j:=j+1;
-        z:=HTAdd(ht, z, j); ht!.o[j]:=ht!.els[z];
+        j:=j+1; z:=HTAdd(ht, z, j); ht!.o[j]:=ht!.els[z];
       fi;
     od;
   od;
 
   return t;
-end);
-
-# Usage: s = old semigroup; t = new semigroup; o = orbit; m = scc of o;
-# data_len = Length(OrbitsOfImages(t)!.data).
-
-InstallGlobalFunction(CopyOrbitReps, 
-function(s, t, o, j, k, m, data_len, data_ht, data)
-  local out, val, n;
-
-  for val in [1..Length(o!.reps[m])] do
-    for n in [1..Length(o!.reps[m][val])] do
-      data_len:=data_len+1;
-      out:=[j, k, o!.scc[m][1], m, val, n];
-      HTAdd(data_ht, out, data_len);
-      data[data_len]:=out;
-    od;
-  od;
-  return data_len;
 end);
 
 #EOF

@@ -1523,7 +1523,7 @@ InstallOtherMethod(NrHClasses, "for an R-class of a trans. semigroup",
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 r-> NrLClasses(DClassOfRClass(r)));
 
-# new for 0.1! - NrRClasses - "for a transformation semigroup"
+# mod for 0.5! - NrRClasses - "for a transformation semigroup"
 #############################################################################
 
 InstallMethod(NrRClasses, "for a transformation semigroup", 
@@ -1533,7 +1533,8 @@ function(s)
   Info(InfoCitrus, 4, "NrRClasses");
 
   ExpandOrbitsOfImages(s);
-  return NrRClasses(OrbitsOfImages(s));
+  #return NrRClasses(OrbitsOfImages(s));
+  return Length(OrbitsOfImages(s)!.data);
 end);
 
 # new for 0.1! - NrIdempotents - "for an R-class of a trans. semigp."

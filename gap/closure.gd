@@ -10,4 +10,4 @@
 
 DeclareGlobalFunction("ClosureSemigroup");
 DeclareGlobalFunction("ClosureSemigroupNC");
-DeclareGlobalFunction("CopyOrbitReps");
+DeclareGlobalFunction("AddGeneratorsToImageOrbit");
