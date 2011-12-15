@@ -130,7 +130,7 @@ end);
 InstallGlobalFunction(AddToOrbitsOfKernels,
 function(arg)
   local s, f, data, o, j, k, l, m, val, n, g, O, gens, imgs_gens, d, 
-   lens, kernels, oo, reps, convert, d_schutz, r_reps, i, data_ht;
+   lens, kernels, oo, reps, convert, d_schutz, r_reps, i, data_ht, img;
   
   s:=arg[1]; f:=arg[2]; data:=arg[3]; 
 
@@ -220,6 +220,7 @@ function(arg)
       
       img:=SSortedList(f![1]);
       O[j][k]!.images_ht[m]:=HTCreate(img, rec(forflatplainlists:=true,
+        hashlen:=CitrusHashLen!.imgs));
       HTAdd(O[j][k]!.images_ht[m], img, 1);
       O[j][k]!.rels:=O[j][k]!.rels+CreateKernelOrbitSCCRels(gens, O[j][k], m);
       g:=O[j][k]!.rels[l][2]*f;
@@ -1505,7 +1506,6 @@ function(s)
 
       for d in r do  
         f:=RClassRepFromData(s, d);
-        if f=Transformation( [ 3, 2, 3, 4 ] ) then Error(""); fi;
         d:=InOrbitsOfKernels(f, true, [[true, Concatenation(d, [f![1]])], 
          [false, [d[1], fail, fail, fail, fail, 0, fail, fail]]], o,  ker);
         if not d[2][1] then #f not in existing D-class

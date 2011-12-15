@@ -174,7 +174,6 @@ function(s, f, data, o)
     for y in [1..m] do
       z:=g{gens[y]};
       if HTValue(ht, z)=fail then  
-        Error("");
         j:=j+1; 
         z:=HTAdd(ht, z, j); o[j]:=ht!.els[z]; pos1[j]:=i; gen1[j]:=y;
       fi;
