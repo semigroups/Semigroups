@@ -152,9 +152,10 @@ function(s, f, data, o)
         if g=fail then 
           g:=OnTuples(f, O[j][k]!.perms[l]);
         fi;
-         
-        O[j][k]!.kernels_ht[m]:=HashTableForKernels(
-         CanonicalTransSameKernel(g), DegreeOfTransformationSemigroup(s));
+        ker:=CanonicalTransSameKernel(g); 
+        O[j][k]!.kernels_ht[m]:=HTCreate(ker, 
+         rec(forflatplainlists:=true, hashlen:=CitrusHashLen!.kers));
+        HTAdd(O[j][k]!.kernels_ht[m], ker, DegreeOfTransformationSemigroup(s));
         O[j][k]!.schutz[m]:=CreateImageOrbitSchutzGp(gens, O[j][k], g, m);
       fi;
       
@@ -166,7 +167,6 @@ function(s, f, data, o)
 
   i:=Length(d)+1; d[i]:=out; HTAdd(data_ht, out, i);
 
-  ############################################################################
   #install new pts in the orbit
 
   if IsBound(ht) then
@@ -174,6 +174,7 @@ function(s, f, data, o)
     for y in [1..m] do
       z:=g{gens[y]};
       if HTValue(ht, z)=fail then  
+        Error("");
         j:=j+1; 
         z:=HTAdd(ht, z, j); o[j]:=ht!.els[z]; pos1[j]:=i; gen1[j]:=y;
       fi;
@@ -633,7 +634,10 @@ function(arg)
   reps:=List([1..r], x-> []); reps[1][1]:=[f]; o!.reps:=reps;
 
   #kernels of representatives of R-classes with image belonging in scc[i]
-  o!.kernels_ht:=[HashTableForKernels(CanonicalTransSameKernel(f), deg)];
+  ker:=CanonicalTransSameKernel(f);
+  o!.kernels_ht:=[HTCreate(ker, rec(forflatplainlists:=true, 
+   hashlen:=CitrusHashLen!.kers)];
+  HTAdd(o!.kernels_ht[1], ker, 1);
 
   #calculate the multipliers for all scc's 
   o!.perms:=EmptyPlist(Length(o));
