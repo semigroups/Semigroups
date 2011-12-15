@@ -220,7 +220,6 @@ function(arg)
       
       img:=SSortedList(f![1]);
       O[j][k]!.images_ht[m]:=HTCreate(img, rec(forflatplainlists:=true,
-       hashlen:=CitrusHashLen!.imgs));
       HTAdd(O[j][k]!.images_ht[m], img, 1);
       O[j][k]!.rels:=O[j][k]!.rels+CreateKernelOrbitSCCRels(gens, O[j][k], m);
       g:=O[j][k]!.rels[l][2]*f;

@@ -128,6 +128,7 @@ function(s, coll)
           o:=StructuralCopy(old_o);
           o!.onlygradesdata:=images;
           AddGeneratorsToOrbit(o, coll);
+          # JDM could reuse old data here!
           Unbind(o!.scc); Unbind(o!.rev);
 
           r:=Length(OrbSCC(o));
@@ -183,6 +184,8 @@ function(s, coll)
       fi;
     od;
   od;
+
+  # process kernel orbits here too!
 
   return t;
 end);
