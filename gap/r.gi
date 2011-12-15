@@ -1436,7 +1436,8 @@ function(s)
     if i=Length(o) then
     #at the end of the orbit!
       O!.finished:=true;
-      #Unbind(O!.ht); Unbind(O!.lens); JDM unedit this line
+      #Unbind(O!.ht); Unbind(O!.lens); JDM don't unedit these, otherwise
+      # ClosureSemigroup won't work!
       return true;
     fi;
 

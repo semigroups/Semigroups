@@ -395,6 +395,15 @@ gap></Log>
 
 </Chapter>
 
+<Chapter Label="create"><Heading>Creating Semigroups and Monoids</Heading>
+  <Section><Heading>New semigroups from old</Heading>
+    <#Include Label="ClosureSemigroup"/>
+  </Section>
+  <Section><Heading>Semigroups with many generators</Heading>
+    
+  </Section>
+</Chapter>
+
 <Chapter Label="green"><Heading>Green's Relations</Heading>
   
   <Section><Heading>Introduction</Heading>

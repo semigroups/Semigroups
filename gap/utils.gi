@@ -91,7 +91,7 @@ function()
   MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
    InstallationPath, "/doc"), "citrus.xml", 
    ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
-     "transform.xml", "../PackageInfo.g"], "citrus", "MathJax");;
+     "transform.xml", "closure.xml", "../PackageInfo.g"], "citrus", "MathJax");;
 end);
 
 # new for 0.4! - CitrusMathJaxDefault - "for no argument"

@@ -42,7 +42,7 @@ end);
 
 InstallGlobalFunction(ClosureSemigroupNC,
 function(s, coll)
-  local t, old_data, ht, o, r, img_lists, j, max_rank, n, orbits, lens, data_ht, data, data_len, images, scc, reps, out, old_reps, old_o, new_data, d, g, m, z, i, k, val, y;
+  local t, old_data, ht, o, r, img_lists, j, max_rank, n, orbits, lens, data_ht, data, data_len, images, old_lens, old_orbits, scc, reps, out, old_reps, old_o, new_data, d, g, m, z, i, k, val, y;
   
   if coll=[] then 
     return s;
@@ -82,16 +82,20 @@ function(s, coll)
   data:=EmptyPlist(Length(old_data!.data)); 
   data_len:=0;
   images:=HTCreate(SSortedList(img_lists[1]), rec(forflatplainlists:=true,
-   hashlen:=old_data!.images!.len));
- 
+   hashlen:=old_data!.images!.len)))
+
+  old_gen1:=old_data!.gen1; old_gen2:=old_data!.gen2;
+  old_pos1:=old_data!.pos1; old_pos2:=old_data!.pos2;
+  old_lens:=old_data!.lens; old_orbits:=old_data!.orbits;
+
   # process orbits of large images
  
   for j in [n, n-1..max_rank+1] do
-    if old_data!.lens[j]>0 then
-      lens[j]:=old_data!.lens[j];
+    if old_lens[j]>0 then
+      lens[j]:=old_lens[j];
       orbits[j]:=EmptyPlist(lens[j]);
       for k in [1..lens[j]] do
-        o:=StructuralCopy(old_data!.orbits[j][k]);
+        o:=StructuralCopy(old_orbits[j][k]);
         o!.onlygradesdata:=images;
         AddGeneratorsToOrbit(o, coll);
         scc:=o!.scc; reps:=o!.reps;
@@ -103,6 +107,7 @@ function(s, coll)
               out:=[j, k, scc[m][1], m, val, n];
               HTAdd(data_ht, out, data_len);
               data[data_len]:=out;
+              #gen1, etc here
             od;
           od;
         od;  
@@ -117,18 +122,18 @@ function(s, coll)
   # process orbits of small images
 
   old_reps:=EmptyPlist(Length(old_data!.data));
+  old_data:=EmptyPlist(Length(old_data!.data));
 
   for j in [max_rank, max_rank-1..1] do 
-    if old_data!.lens[j]>0 then 
+    if old_lens[j]>0 then 
       orbits[j]:=[];
-      for k in [1..old_data!.lens[j]] do
-        old_o:=old_data!.orbits[j][k];
+      for k in [1..old_lens[j]] do
+        old_o:=old_orbits[j][k];
         if HTValue(images, old_o[1])=fail then 
           lens[j]:=lens[j]+1;
           o:=StructuralCopy(old_o);
           o!.onlygradesdata:=images;
           AddGeneratorsToOrbit(o, coll);
-          # JDM could reuse old data here!
           Unbind(o!.scc); Unbind(o!.rev);
 
           r:=Length(OrbSCC(o));
@@ -145,7 +150,8 @@ function(s, coll)
           od;
           orbits[j][lens[j]]:=o;
         fi;
-        Append(old_reps, Concatenation(Concatenation(old_o!.reps)));
+        Append(old_reps, Concatenation(Concatenation(old_o!.reps)));#keep track
+        #of data here!
       od;
     fi;
   od;
@@ -172,7 +178,7 @@ function(s, coll)
   
   # install new pts in the orbit
   
-  coll:=List(coll, x-> x![1]); 
+  coll:=List(coll, x-> x![1]);  
 
   for i in new_data!.data do 
     g:=orbits[i[1]][i[2]]!.reps[i[4]][i[5]][i[6]];
