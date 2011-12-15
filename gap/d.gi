@@ -217,7 +217,11 @@ function(arg)
       #O[j][k]!.trees[m]:=CreateSchreierTreeOfSCC(O[j][k], m);
       #O[j][k]!.reverse[m]:=CreateReverseSchreierTreeOfSCC(O[j][k], m);
       r_reps[1]:=[[data[1]]];
-      O[j][k]!.images_ht[m]:=HashTableForImages(f![1]);
+      
+      img:=SSortedList(f![1]);
+      O[j][k]!.images_ht[m]:=HTCreate(img, rec(forflatplainlists:=true,
+       hashlen:=CitrusHashLen!.imgs));
+      HTAdd(O[j][k]!.images_ht[m], img, 1);
       O[j][k]!.rels:=O[j][k]!.rels+CreateKernelOrbitSCCRels(gens, O[j][k], m);
       g:=O[j][k]!.rels[l][2]*f;
       reps[1]:=[g];
@@ -669,7 +673,7 @@ end);
 InstallGlobalFunction(ForwardOrbitOfKernel, 
 function(arg)
   local s, f, kernels, gens_imgs, gens, ker, deg, j, bound, o, r, reps,
-  treehashsize;
+  treehashsize, img;
   
   s:=arg[1]; f:=arg[2];
 
@@ -729,7 +733,11 @@ function(arg)
   Add(o!.convert[1], [AsPermOfKerImg(f)]);
 
   #images of representatives of D-classes with kernel belonging in scc[i]
-  o!.images_ht:=[HashTableForImages(f![1])];
+  img:=SSortedList(f![1]);
+  o!.images_ht:=[HTCreate(img, rec(forflatplainlists:=true, 
+   hashlen:=CitrusHashLen!.imgs))];
+  HTAdd(o!.images_ht[1], img, 1);
+  #JDM remove ShallowCopy in future if Orb is fixed.
 
   #multipliers of scc containing the kernel of f
   o!.rels:=EmptyPlist(Length(o));
@@ -1305,8 +1313,7 @@ end);
 
 # JDM: should [img, ker] be included as data[2][2][9]?
 
-# JDM: would this be speed up if all !. were arguments? Also s is not 
-# used anywhere in the function. 
+# JDM: would this be speed up if all !. were arguments? 
 
 InstallGlobalFunction(InOrbitsOfKernels, 
 function(f, rectify, data, o, kernels)
@@ -1499,6 +1506,7 @@ function(s)
 
       for d in r do  
         f:=RClassRepFromData(s, d);
+        if f=Transformation( [ 3, 2, 3, 4 ] ) then Error(""); fi;
         d:=InOrbitsOfKernels(f, true, [[true, Concatenation(d, [f![1]])], 
          [false, [d[1], fail, fail, fail, fail, 0, fail, fail]]], o,  ker);
         if not d[2][1] then #f not in existing D-class

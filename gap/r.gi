@@ -98,7 +98,7 @@ end);
 InstallGlobalFunction(AddToOrbitsOfImages,
 function(s, f, data, o)
   local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, images, ht, gen1, 
-  pos1, f_o, out, reps, i, z, y;
+  pos1, f_o, out, reps, ker, i, z, y;
 
   j:=data[1]; 	# img size
   k:=data[2]; 	# index of orbit containing img
@@ -152,9 +152,10 @@ function(s, f, data, o)
         if g=fail then 
           g:=OnTuples(f, O[j][k]!.perms[l]);
         fi;
-         
-        O[j][k]!.kernels_ht[m]:=HashTableForKernels(
-         CanonicalTransSameKernel(g), DegreeOfTransformationSemigroup(s));
+        ker:=CanonicalTransSameKernel(g); 
+        O[j][k]!.kernels_ht[m]:=HTCreate(ker, 
+         rec(forflatplainlists:=true, hashlen:=CitrusHashLen!.kers));
+        HTAdd(O[j][k]!.kernels_ht[m], ker, 1);
         O[j][k]!.schutz[m]:=CreateImageOrbitSchutzGp(gens, O[j][k], g, m);
       fi;
       
@@ -584,7 +585,7 @@ end);
 
 InstallGlobalFunction(ForwardOrbitOfImage, 
 function(arg)
-  local s, f, images, gens, img, deg, j, bound, treehashsize, o, r, reps;
+  local s, f, images, gens, img, deg, j, bound, treehashsize, o, r, reps, ker;
 
   s:=arg[1]; f:=arg[2];
 
@@ -633,7 +634,10 @@ function(arg)
   reps:=List([1..r], x-> []); reps[1][1]:=[f]; o!.reps:=reps;
 
   #kernels of representatives of R-classes with image belonging in scc[i]
-  o!.kernels_ht:=[HashTableForKernels(CanonicalTransSameKernel(f), deg)];
+  ker:=CanonicalTransSameKernel(f);
+  o!.kernels_ht:=[HTCreate(ker, rec(forflatplainlists:=true, 
+   hashlen:=CitrusHashLen!.kers))];
+  HTAdd(o!.kernels_ht[1], ker, 1);
 
   #calculate the multipliers for all scc's 
   o!.perms:=EmptyPlist(Length(o));
@@ -1640,7 +1644,8 @@ function(s)
 
   Info(InfoCitrus, 4, "OrbitsOfImages");
 
-  gens:=List(Generators(s), x-> x![1]);
+  gens:=List(Generators(s), x-> ShallowCopy(x![1]));
+  #JDM remove ShallowCopy in future if Orb is fixed.
   n := Degree(s); 
   ht_len:=CitrusHashLen!.rclassreps_orb;
   o:=EmptyPlist(ht_len);
