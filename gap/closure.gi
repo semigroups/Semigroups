@@ -82,10 +82,10 @@ function(s, coll)
   data:=EmptyPlist(Length(old_data!.data)); 
   data_len:=0;
   images:=HTCreate(SSortedList(img_lists[1]), rec(forflatplainlists:=true,
-   hashlen:=old_data!.images!.len)))
+   hashlen:=old_data!.images!.len));
 
-  old_gen1:=old_data!.gen1; old_gen2:=old_data!.gen2;
-  old_pos1:=old_data!.pos1; old_pos2:=old_data!.pos2;
+  #old_gen1:=old_data!.gen1; old_gen2:=old_data!.gen2;
+  #old_pos1:=old_data!.pos1; old_pos2:=old_data!.pos2;
   old_lens:=old_data!.lens; old_orbits:=old_data!.orbits;
 
   # process orbits of large images
@@ -107,7 +107,9 @@ function(s, coll)
               out:=[j, k, scc[m][1], m, val, n];
               HTAdd(data_ht, out, data_len);
               data[data_len]:=out;
-              #gen1, etc here
+              #old_rep_nr:=HTValue(old_data!.data_ht, out);
+              #pos2[data_len]:=old_pos2[old_rep_nr];
+              #gen2[data_len]:=old_gen2[old_rep_nr];
             od;
           od;
         od;  
@@ -122,7 +124,8 @@ function(s, coll)
   # process orbits of small images
 
   old_reps:=EmptyPlist(Length(old_data!.data));
-  old_data:=EmptyPlist(Length(old_data!.data));
+  #old_data:=EmptyPlist(Length(old_data!.data));
+  #old_reps_len:=0;
 
   for j in [max_rank, max_rank-1..1] do 
     if old_lens[j]>0 then 
@@ -150,8 +153,17 @@ function(s, coll)
           od;
           orbits[j][lens[j]]:=o;
         fi;
-        Append(old_reps, Concatenation(Concatenation(old_o!.reps)));#keep track
-        #of data here!
+        Append(old_reps, Concatenation(Concatenation(old_o!.reps)));
+        #reps:=old_o!.reps; scc:=old_o!.scc;
+        #for m in [1..Length(scc)] do 
+        #  for val in [1..Length(reps[m])] do 
+        #    for n in [1..Length(reps[m][val])] do 
+        #      old_reps_len:=old_reps_len+1;
+        #      old_data[old_reps_len]:=[j,k,scc[m][1],m,val,n];
+        #      old_reps[old_reps_len]:=reps[m][val][n];
+        #    od;
+        #  od;
+        #od;
       od;
     fi;
   od;
@@ -168,25 +180,29 @@ function(s, coll)
  
   # process old R-reps 
 
-  for i in old_reps do 
-    d:=InOrbitsOfImages(i, false, [fail, fail, fail, fail, fail, 0, fail],
+  for i in [1..Length(old_reps)] do 
+    j:=InOrbitsOfImages(old_reps[i], false, [fail, fail, fail, fail, fail, 0, fail],
            orbits, images);
-    if not d[1] then 
-      AddToOrbitsOfImages(t, i, d[2], new_data);
+    if not j[1] then
+   #   Add(pos2, HTValue(old_data!.data_ht, old_data[i])); 
+   #   Add(gen2, j[2]{[1..4]});
+      AddToOrbitsOfImages(t, old_reps[i], j[2], new_data);
     fi;
   od;
   
   # install new pts in the orbit
   
-  coll:=List(coll, x-> x![1]);  
+  coll:=List(coll, x-> x![1]); n:=Length(Generators(s)); 
 
-  for i in new_data!.data do 
-    g:=orbits[i[1]][i[2]]!.reps[i[4]][i[5]][i[6]];
+  for i in [1..Length(data)] do 
+    d:=data[i];
+    g:=orbits[d[1]][d[2]]!.reps[d[4]][d[5]][d[6]];
     m:=Length(coll); j:=Length(ht!.o);
     for y in [1..m] do 
       z:=g{coll[y]};
       if HTValue(ht, z)=fail then
         j:=j+1; z:=HTAdd(ht, z, j); ht!.o[j]:=ht!.els[z];
+#        pos1[j]:=i; gen1[j]:=r+y;
       fi;
     od;
   od;
