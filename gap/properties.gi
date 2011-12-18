@@ -1238,8 +1238,9 @@ function(gens)
     n:=Length(gens);
     for i in [1..n] do 
       Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
-      " generators so far\r");
+      " generators so far, for ");
       s:=ClosureSemigroup(s, gens[i]);
+      Print("\t", Size(OrbitsOfImages(s)), " elements\r");
     od;
     Print("\n");
   else
