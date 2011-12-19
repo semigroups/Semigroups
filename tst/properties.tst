@@ -917,7 +917,7 @@ false
 #gap> List(slow, IsAdequateSemigroup);
 #[ true, true, true, true, true, true, true, true ]
 
-gap> ReadCitrus("pkg/citrus/examples/munn8.citrus", 1078);;
+gap> ReadCitrus("pkg/citrus/examples/munn.citrus", 1078);;
 gap> s:=Semigroup(last);
 <semigroup with 8 generators>
 gap> Size(s);

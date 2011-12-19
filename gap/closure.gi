@@ -63,15 +63,20 @@ function(s, coll)
   fi;
 
   if not HasOrbitsOfImages(s) then 
-    Info(InfoCitrus, 2, "Nothing known about old semigroup.");
+    Info(InfoCitrus, 2, "No data known about old semigroup.");
     return t;
+  fi;
+
+  if s!.opt!.schreier then 
+    Error("not yet implemented");
   fi;
 
   # initialize R-class reps orbit
 
   old_data:=OrbitsOfImages(s);
   
-  ht:=StructuralCopy(old_data!.ht); o:=ht!.o; r:=Length(o);
+  ht:=StructuralCopy(old_data!.ht); o:=ht!.o; 
+  r:=Length(o);
   img_lists:=List(Generators(t), x-> x![1]);
   
   for i in [1..Length(coll)] do 
@@ -124,6 +129,7 @@ function(s, coll)
               out:=[j, k, scc[m][1], m, val, n];
               HTAdd(data_ht, out, data_len);
               data[data_len]:=out;
+              
               old_rep_nr:=HTValue(old_data!.data_ht, out);
               l:=Positions(old_pos1, old_rep_nr);#JDM suboptimal
               pos1{l}:=ListWithIdenticalEntries(Length(l), data_len);

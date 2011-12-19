@@ -989,7 +989,7 @@ function(d)
        orbits, images);
       #JDM could do SiftedPermutation directly here, maybe speed things up?
       if not data[1] then 
-	data:=AddToOrbitsOfImages(d, g![1], data[2], d!.o[1]);
+	data:=AddToOrbitsOfImages(d, g![1], data[2], d!.o[1], true);
       else 
         data:=data[2];
       fi;
@@ -1111,7 +1111,7 @@ function(d, f)
   # when `f in d' is called. JDM remove rectify
 
   if not data[1] then 
-    data:=AddToOrbitsOfImages(d, f![1], data[2], o);
+    data:=AddToOrbitsOfImages(d, f![1], data[2], o, false);
   else 
     data:=data[2];
   fi;

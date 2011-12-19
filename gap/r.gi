@@ -96,7 +96,7 @@ end);
 # Notes: if s is a d-class, then data should have j, k, l, m and g not = fail!
 
 InstallGlobalFunction(AddToOrbitsOfImages,
-function(s, f, data, o)
+function(s, f, data, o, install)
   local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, images, ht, gen1, 
   pos1, f_o, out, reps, ker, i, z, y;
 
@@ -111,7 +111,7 @@ function(s, f, data, o)
   O:=o!.orbits; gens:=o!.gens; d:=o!.data; lens:=o!.lens;
   data_ht:=o!.data_ht; 
 
-  if IsBound(o!.ht) then # o = OrbitsOfImages(s)
+  if install then # o = OrbitsOfImages(s)
     images:=o!.images; ht:=o!.ht; gen1:=o!.gen1; pos1:=o!.pos1; o:=ht!.o; 
   fi;
 
@@ -169,7 +169,7 @@ function(s, f, data, o)
 
   #install new pts in the orbit
 
-  if IsBound(ht) then
+  if install then
     m:=Length(gens); j:=Length(o);
     for y in [1..m] do
       z:=g{gens[y]};
@@ -493,11 +493,9 @@ function(s, f)
     return fail;
   fi;
  
-  if OrbitsOfImages(s)!.gen1=[] then 
+  if not s!.opt!.schreier then 
     Info(InfoCitrus, 1, "it is not possible to factorize elements of this ",
-    " semigroup.");
-    Info(InfoCitrus, 2, "Try recreating the semigroup using",
-    " Semigroup(Generators(s)).");
+    "semigroup.");
     return fail;
   fi;
 
@@ -1459,7 +1457,7 @@ function(s)
       if not d[1] then #new rep!
         if IsTransformationMonoid(s) or not i = 1 then 
           Add(O!.pos2, i); Add(O!.gen2, d[2]{[1..4]}); 
-          d:=AddToOrbitsOfImages(s, x, d[2], O);
+          d:=AddToOrbitsOfImages(s, x, d[2], O, true);
           iter!.i:=iter!.i+1; iter!.next_value:=d;
           return false;
         fi;
@@ -1942,6 +1940,12 @@ function(s, i)
   local o, gen1, pos1, gen2, pos2, word_1, word_2, j, orb, m, l;
 
   Info(InfoCitrus, 4, "TraceRClassRepsTree");
+
+  if not s!.opt!.schreier then 
+    Info(InfoCitrus, 1, "it is not possible to factorize elements of this ",
+    "semigroup.");
+    return fail;
+  fi;
 
   o:=OrbitsOfImages(s);
   gen1:=o!.gen1; pos1:=o!.pos1; gen2:=o!.gen2; pos2:=o!.pos2; o:=o!.orbits;
