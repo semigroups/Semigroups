@@ -17,3 +17,4 @@ ReadPkg("citrus/gap/closure.gd");
 ReadPkg("citrus/gap/config");
 
 DeclareInfoClass("InfoCitrus");;
+SetInfoLevel(InfoCitrus, 1);;

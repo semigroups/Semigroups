@@ -18,3 +18,4 @@ ReadPkg("citrus/gap/l.gi");
 ReadPkg("citrus/gap/d.gi");
 ReadPkg("citrus/gap/properties.gi");
 ReadPkg("citrus/gap/closure.gi");
+ReadPkg("citrus/gap/semi.gi");

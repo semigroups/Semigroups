@@ -489,10 +489,18 @@ function(s, f)
   local data, l, o, rep, p, w, g, q;
  
   if not f in s then 
-    Info(InfoCitrus, 2, "transformation is not an element of the semigroup.");
+    Info(InfoCitrus, 1, "transformation is not an element of the semigroup.");
     return fail;
   fi;
-  
+ 
+  if OrbitsOfImages(s)!.gen1=[] then 
+    Info(InfoCitrus, 1, "it is not possible to factorize elements of this ",
+    " semigroup.");
+    Info(InfoCitrus, 2, "Try recreating the semigroup using",
+    " Semigroup(Generators(s)).");
+    return fail;
+  fi;
+
   data:=PreInOrbitsOfImages(s, f, false)[2];
 
   l:=data[3]; o:=ImageOrbitFromData(s, data);
@@ -1944,8 +1952,8 @@ function(s, i)
     Add(word_1, gen1[pos2[j]]);
     if not ForAny(gen2[j], x-> x=fail) then 
       orb:=o[gen2[j][1]][gen2[j][2]]; m:=gen2[j][4]; l:=gen2[j][3]; 
-      word_2:= Concatenation(word_2, Reversed(TraceSchreierTreeOfSCCBack(orb,
-      m, l)));
+      word_2:= Concatenation(word_2, 
+       Reversed(TraceSchreierTreeOfSCCBack(orb, m, l)));
     fi;
     j:=pos1[pos2[j]];
   od;
