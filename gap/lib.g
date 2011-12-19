@@ -8,6 +8,8 @@
 ############################################################################# 
 ##
 
+# this file contains methods for lib functions that do not naturally fit in 
+# any of the other files...
 
 # new for 0.5! - Monoid 
 ##############################################################################

@@ -52,7 +52,7 @@ function(f, r)
   if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) or
    RankOfTransformation(f) <> RankOfTransformation(rep) or
    CanonicalTransSameKernel(f) <> CanonicalTransSameKernel(rep) then 
-    Info(InfoCitrus, 2, "degree, rank, or kernel not equal to those of", 
+    Info(InfoCitrus, 1, "degree, rank, or kernel not equal to those of", 
     " any of the R-class elements."); 
     return false;
   fi;
@@ -62,7 +62,7 @@ function(f, r)
   i:= Position(o, ImageSetOfTransformation(f));
 
   if i = fail or not o!.truth[d[4]][i] then #check they are in the same scc
-    Info(InfoCitrus, 2, "image not equal to that of any R-class element.");
+    Info(InfoCitrus, 1, "image not equal to that of any R-class element.");
     return false;
   fi;
 
