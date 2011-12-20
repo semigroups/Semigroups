@@ -1487,7 +1487,6 @@ function(s)
       
       if i=Length(o) then #at the end of the orbit!
         O!.finished:=true;
-        Unbind(O!.ht); Unbind(O!.lens);
         return true;
       fi;
     
