@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  greens.xml
-#Y  Copyright (C) 2011                             James D. Mitchell
+#Y  Copyright (C) 2011                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -50,11 +50,11 @@ false</Example>
 
 <#GAPDoc Label="XClassOfYClass">
   <ManSection><Heading>XClassOfYClass</Heading>
-    <Meth Name="DClassOfRClass" Arg="class"/>
-    <Meth Name="DClassOfLClass" Arg="class"/>
-    <Meth Name="RClassOfHClass" Arg="class"/>
-    <Meth Name="LClassOfHClass" Arg="class"/>
     <Meth Name="DClassOfHClass" Arg="class"/>
+    <Meth Name="DClassOfLClass" Arg="class"/>
+    <Meth Name="DClassOfRClass" Arg="class"/>
+    <Meth Name="LClassOfHClass" Arg="class"/>
+    <Meth Name="RClassOfHClass" Arg="class"/>
     <Returns>the Green's <M>X</M>-class containing the Green's 
         <M>Y</M>-class <A>class</A>.
     </Returns>
@@ -66,10 +66,15 @@ false</Example>
       The same result can be produced using:
       <Log>First(GreensXClasses(S), x-> Representative(x) in class);</Log>
       but this might be substantially slower. Note that <C>XClassOfYClass</C>
-      is also likely to
-      be faster than <Log>GreensXClassOfElement(S, Representative(class));</Log>
+      is also likely to be faster than 
+      <Log>GreensXClassOfElement(S, Representative(class));</Log>
       <P/>
 
+      <C>DClass</C> is a synonym for <C>DClassOfHClass</C>,
+      <C>DClassOfLClass</C>, and <C>DClassOfRClass</C>;
+      <C>LClass</C> is a synonym for <C>LClassOfHClass</C>; and 
+      <C>RClass</C> is a synonym for <C>RClassOfHClass</C>. 
+      
       See also <Ref Oper="GreensDClassOfElement" BookName="ref"/>
       and <Ref Oper="GreensDClassOfElementNC"/>.
       <Example>
@@ -89,25 +94,32 @@ true</Example>
 <#GAPDoc Label="GreensXClasses">
   <ManSection Label="GreensXClasses"><Heading>GreensXClasses</Heading>
     <Meth Name="GreensDClasses" Arg="obj"/>
+    <Meth Name="DClasses" Arg="obj"/>
     <Meth Name="GreensHClasses" Arg="obj"/>
+    <Meth Name="HClasses" Arg="obj"/>
     <Meth Name="GreensLClasses" Arg="obj"/>
+    <Meth Name="LClasses" Arg="obj"/>
     <Meth Name="GreensRClasses" Arg="obj"/>
-    <Returns>a list of Green's classes contained in
-     <A>obj</A> which can be a transformation semigroup,
-     &D;-, &L;-, or &R;-class where appropriate.
-     </Returns>
+    <Meth Name="RClasses" Arg="obj"/>
+    <Returns>a list of Green's classes.
+    </Returns>
     <Description>
       These functions produce essentially the same output as the &GAP; library
       functions with the same names; see 
       <Ref Oper="GreensDClasses" BookName="ref"/>. The main difference in usage
-      is that these functions can be applied to a wider class of objects as
-      described above. <P/>
-      
+      is that these functions can be applied to a wider class of objects:
+      &D;-classes of a transformation semigroup; &R;-classes of a
+      transformation semigroup or &D;-class; &L;-classes of a transformation
+      semigroup or &D;-class; &H;-classes of a transformation semigroup,
+      &R;-class, &L;-class, or &D;-class. <P/>
+     
+      Note that <C>GreensXClasses</C> and <C>XClasses</C> are
+      synonyms and have identical output. The shorter command is provided
+      for the sake of convenience.<P/>
+
       See also 
-      <Ref Attr="DClassReps"/>,  
-      <Ref Func="IteratorOfDClassReps"/>, 
-      <Ref Func="IteratorOfDClasses"/>,  and 
-      <Ref Func="NrDClasses"/>.
+      <Ref Attr="DClassReps"/>, <Ref Func="IteratorOfDClassReps"/>, 
+      <Ref Func="IteratorOfDClasses"/>, and <Ref Func="NrDClasses"/>.
       <Example>
 gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ), 
 > Transformation( [ 4, 3, 1, 2 ] ));;
@@ -159,12 +171,31 @@ gap> GreensHClasses(L);
 <#GAPDoc Label="GreensRClassOfElement">
   <ManSection><Heading>GreensXClassOfElementNC</Heading>
     <Oper Name="GreensDClassOfElement" Arg="X, f"/>
+    <Func Name="DClass" Arg="X, f"/>
     <Oper Name="GreensHClassOfElement" Arg="X, f"/>
+    <Func Name="HClass" Arg="X, f"/>
     <Oper Name="GreensLClassOfElement" Arg="X, f"/>
+    <Func Name="LClass" Arg="X, f"/>
     <Oper Name="GreensRClassOfElement" Arg="X, f"/>
+    <Func Name="RClass" Arg="X, f"/>
+    <Returns>a Green's class.</Returns>
     <Description>
-    Not currently documented as only the method for GreensRClassOfElement is
-    implemented when X is a D-class. 
+      These functions produce essentially the same output as the &GAP; library
+      functions with the same names; see 
+      <Ref Oper="GreensDClassOfElement" BookName="ref"/>. 
+      The main difference in usage
+      is that these functions can be applied to a wider class of objects:
+      a &D;-class of a transformation in a semigroup; 
+      an &R;-class of a transformation in a semigroup or &D;-class; 
+      an &L;-class of a transformation in a semigroup or &D;-class; 
+      an &H;-class of a transformation in a semigroup, 
+      &R;-class, &L;-class, or &D;-class. <P/>
+     
+      Note that <C>GreensXClassOfElement</C> and <C>XClass</C> are
+      synonyms and have identical output. The shorter command is provided
+      for the sake of convenience.<P/>
+
+    
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -172,17 +203,26 @@ gap> GreensHClasses(L);
 <#GAPDoc Label="GreensXClassOfElementNC">
   <ManSection><Heading>GreensXClassOfElementNC</Heading>
     <Oper Name="GreensDClassOfElementNC" Arg="S, f"/>
+    <Func Name="DClassNC" Arg="S, f"/>
     <Oper Name="GreensHClassOfElementNC" Arg="S, f"/>
+    <Func Name="HClassNC" Arg="S, f"/>
     <Oper Name="GreensLClassOfElementNC" Arg="S, f"/>
+    <Func Name="LClassNC" Arg="S, f"/>
     <Oper Name="GreensRClassOfElementNC" Arg="S, f"/>
+    <Func Name="RClassNC" Arg="S, f"/>
     <Returns>the Green's class of the transformation <A>f</A> in the
-    transformation semigroup <A>S</A>.
+     transformation semigroup <A>S</A>.
     </Returns>
     <Description>
-      <C>GreensXClassOfElementNC</C> first checks if <A>f</A> 
+      <C>GreensXClassOfElementNC</C> and <C>XClassNC</C> 
+      first checks if <A>f</A> 
        has already been shown to be an element of <A>S</A>.
       Note that if it is not known to &GAP; if <A>f</A> is an element of 
       <A>S</A>, then no further attempt to verify this is made. <P/>
+
+      Note that <C>GreensXClassOfElementNC</C> and <C>XClassNC</C> are synonyms
+      and have identical output. The shorter command is provided for the sake 
+      of convenience. <P/>
 
       It can be quicker to compute the class of an element using 
       <C>GreensRClassOfElementNC</C>, say, than using 

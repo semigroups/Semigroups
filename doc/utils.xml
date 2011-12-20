@@ -124,39 +124,6 @@ InstallationPath, "/doc"), "citrus.xml",
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="DClass">
-  <ManSection>
-    <Func Name="DClass" Arg="arg"/>
-    <Returns>A &D;-class.</Returns> 
-    <Description>
-      returns the result of  
-      <Ref Oper="GreensDClassOfElement" BookName="ref"/>, 
-      <Ref Oper="DClassOfRClass"/>, <Ref Oper="DClassOfLClass"/>, or 
-      <Ref Oper="DClassOfHClass"/> if <C>arg</C> is a transformation semigroup
-      and a transformation, a &R;-class, a
-      &L;-class, or an &H;-class,
-      respectively. <P/>
-
-      See also <Ref Func="DClassNC"/>. 
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="DClassNC">
-  <ManSection>
-    <Func Name="DClassNC" Arg="S, f"/>
-    <Returns>A &D;-class.</Returns> 
-    <Description>
-      returns the result of  <Ref Oper="GreensDClassOfElementNC"/>, 
-      if <A>S</A> is a transformation semigroup
-      and <A>f</A> a transformation.<P/>
-
-
-      See also <Ref Func="DClass"/>. 
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="Degree">
   <ManSection>
     <Func Name="Degree" Arg="obj"/>
@@ -219,33 +186,6 @@ gap> GeneratorsOfSemigroup(S);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="HClass">
-  <ManSection>
-    <Func Name="HClass" Arg="S, f"/>
-    <Returns>An &H;-class.</Returns>
-    <Description>
-      returns the result of 
-      <Ref Oper="GreensHClassOfElement" BookName="ref"/>, 
-      if <A>S</A> is a transformation semigroup and <A>f</A> is a
-      transformation.<P/> See also <Ref Func="HClassNC"/>. 
-   </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="HClassNC">
-  <ManSection>
-    <Func Name="HClassNC" Arg="S, f"/>
-    <Returns>An &H;-class.</Returns>
-    <Description>
-      returns the result of 
-      <Ref Oper="GreensHClassOfElementNC"/>, 
-      if <A>S</A> is a transformation semigroup and <A>f</A> is a
-      transformation. <P/>
-      See also <Ref Func="HClass"/>. 
-   </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="InfoCitrus">
   <ManSection>
     <InfoClass Name="InfoCitrus"/>
@@ -254,34 +194,6 @@ gap> GeneratorsOfSemigroup(S);
     &Citrus;. The info level is initially set to 0 and no info messages are
     displayed.
     </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="LClass">
-  <ManSection>
-    <Func Name="LClass" Arg="arg"/>
-    <Returns>An &L;-class.</Returns>
-    <Description>
-      returns the result of <Ref Oper="GreensLClassOfElement" BookName="ref"/>, 
-      or <Ref Oper="LClassOfHClass"/> if <A>arg</A> is a transformation
-      semigroup and a transformation, or an &H;-class, 
-      respectively. <P/>
-
-      See also <Ref Func="LClassNC"/>. 
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="LClassNC">
-  <ManSection>
-    <Func Name="LClassNC" Arg="S, f"/>
-    <Returns>An &L;-class.</Returns>
-    <Description>
-      returns the result of 
-      <Ref Oper="GreensLClassOfElementNC"/>, 
-      if <A>S</A> is a transformation semigroup and <A>f</A> is a
-      transformation. See also <Ref Func="LClass"/>. 
-   </Description>
   </ManSection>
 <#/GAPDoc>
 
@@ -302,38 +214,10 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="RClass">
-  <ManSection>
-    <Func Name="RClass" Arg="arg"/>
-    <Returns>An &R;-class.</Returns>
-    <Description>
-      returns the result of <Ref Oper="GreensRClassOfElement" BookName="ref"/>, 
-      or <Ref Oper="RClassOfHClass"/> if <A>arg</A> is a transformation
-      semigroup and a transformation, or an &H;-class, 
-      respectively. <P/>
-
-      See also <Ref Func="RClassNC"/>. 
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="RClassNC">
-  <ManSection>
-    <Func Name="RClassNC" Arg="S, f"/>
-    <Returns>An &R;-class.</Returns>
-    <Description>
-      returns the result of 
-      <Ref Oper="GreensRClassOfElementNC"/>, 
-      if <A>S</A> is a transformation semigroup and <A>f</A> is a
-      transformation. <P/>See also <Ref Func="RClass"/>. 
-   </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="ReadCitrus">
   <ManSection> 
     <Func Name="ReadCitrus" Arg="filename[, nr]"/>
-    <Returns>A list of transformations or a list of list of transformations.
+    <Returns>A list of transformations or a list of lists of transformations.
     </Returns>
     <Description>
       if <A>filename</A> is a file created using <Ref Func="WriteCitrus"/>,

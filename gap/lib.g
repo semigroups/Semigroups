@@ -57,12 +57,12 @@ end);
 InstallOtherMethod(MonoidByGenerators, "for a trans. collection",
 [IsTransformationCollection],
 function(gens)
-  local opt, S;
+  local opts, S;
    
-  opt:=rec(schreier:=true); 
+  opts:=rec(schreier:=true); 
    
   S:=Objectify( NewType( FamilyObj( gens ), 
-   IsMonoid and IsAttributeStoringRep ), rec(opt:=opt));
+   IsMonoid and IsAttributeStoringRep ), rec(opts:=opts));
 
   SetGeneratorsOfMagmaWithOne( S, AsList( gens ) );
   return S;
@@ -73,15 +73,15 @@ end);
 
 InstallOtherMethod(MonoidByGenerators, "for a trans. coll. and record",
 [IsTransformationCollection, IsRecord],
-function(gens, opt)
+function(gens, opts)
   local S;
   
-  if not "schreier" in RecNames(opt) then 
-    opt!.schreier:=true;
+  if not "schreier" in RecNames(opts) then 
+    opts!.schreier:=true;
   fi;
 
   S:=Objectify( NewType( FamilyObj( gens ), 
-   IsMonoid and IsAttributeStoringRep ), rec(opt:=opt));
+   IsMonoid and IsAttributeStoringRep ), rec(opts:=opts));
 
   SetGeneratorsOfMagmaWithOne( S, AsList( gens ) );
   return S;
@@ -128,12 +128,12 @@ end);
 InstallOtherMethod(SemigroupByGenerators, "for a trans. collection",
 [IsTransformationCollection],
 function(gens)
-  local opt, S;
+  local opts, S;
    
-  opt:=rec(schreier:=true); 
+  opts:=rec(schreier:=true); 
    
   S:=Objectify( NewType( FamilyObj( gens ), 
-   IsSemigroup and IsAttributeStoringRep ), rec(opt:=opt));
+   IsSemigroup and IsAttributeStoringRep ), rec(opts:=opts));
 
   SetGeneratorsOfMagma( S, AsList( gens ) );
   return S;
@@ -144,15 +144,15 @@ end);
 
 InstallOtherMethod(SemigroupByGenerators, "for a trans. collection and record",
 [IsTransformationCollection, IsRecord],
-function(gens, opt)
+function(gens, opts)
   local S;
 
-  if not "schreier" in RecNames(opt) then 
-    opt!.schreier:=true;
+  if not "schreier" in RecNames(opts) then 
+    opts!.schreier:=true;
   fi;
 
   S:=Objectify( NewType( FamilyObj( gens ), 
-   IsSemigroup and IsAttributeStoringRep ), rec(opt:=opt));
+   IsSemigroup and IsAttributeStoringRep ), rec(opts:=opts));
 
   SetGeneratorsOfMagma( S, AsList( gens ) );
   return S;

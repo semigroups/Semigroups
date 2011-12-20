@@ -67,7 +67,7 @@ function(s, coll)
     return t;
   fi;
 
-  if s!.opt!.schreier then 
+  if s!.opts!.schreier then 
     Error("not yet implemented");
   fi;
 

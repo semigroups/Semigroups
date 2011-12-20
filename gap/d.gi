@@ -948,7 +948,7 @@ function(d)
   return out;
 end);
 
-# new for 0.1! - RClassRepsData - "for a D-class of a trans. semigroup"
+# mod for 0.5! - RClassRepsData - "for a D-class of a trans. semigroup"
 #############################################################################
 # Notes: maybe write iterator/enumerator later! This is relatively slow in 
 # comparison to RClassReps, as here we have to search for the data.
@@ -984,12 +984,12 @@ function(d)
 
   for i in [1..r] do 
     for x in [1..c] do 
-      g:=scc[i]*cosets[x]^-1;
+      g:=scc[i]*cosets[x]^-1; #JDM don't take product here!
       data:=InOrbitsOfImages(g![1], true, [j, k, l[x], m, val[i], 0, fail], 
        orbits, images);
       #JDM could do SiftedPermutation directly here, maybe speed things up?
       if not data[1] then 
-	data:=AddToOrbitsOfImages(d, g![1], data[2], d!.o[1], true);
+	data:=AddToOrbitsOfImages(d, g![1], data[2], d!.o[1], false);
       else 
         data:=data[2];
       fi;

@@ -112,7 +112,11 @@ function(s, f, data, o, install)
   data_ht:=o!.data_ht; 
 
   if install then # o = OrbitsOfImages(s)
-    images:=o!.images; ht:=o!.ht; gen1:=o!.gen1; pos1:=o!.pos1; o:=ht!.o; 
+    images:=o!.images; ht:=o!.ht; 
+    if s!.opts!.schreier then 
+      gen1:=o!.gen1; pos1:=o!.pos1; 
+    fi;
+    o:=ht!.o; 
   fi;
 
   if k = fail then  #new img and l, m, val, n, g=fail
@@ -171,15 +175,23 @@ function(s, f, data, o, install)
 
   if install then
     m:=Length(gens); j:=Length(o);
-    for y in [1..m] do
-      z:=g{gens[y]};
-      if HTValue(ht, z)=fail then  
-        j:=j+1; 
-        z:=HTAdd(ht, z, j); o[j]:=ht!.els[z]; pos1[j]:=i; gen1[j]:=y;
-      fi;
-    od;
+    if s!.opts!.schreier then 
+      for y in [1..m] do
+        z:=g{gens[y]};
+        if HTValue(ht, z)=fail then  
+          j:=j+1; z:=HTAdd(ht, z, j); o[j]:=ht!.els[z]; 
+          pos1[j]:=i; gen1[j]:=y;
+        fi;
+      od;
+    else
+      for y in [1..m] do
+        z:=g{gens[y]};
+        if HTValue(ht, z)=fail then
+          j:=j+1; z:=HTAdd(ht, z, j); o[j]:=ht!.els[z];
+        fi;
+      od;
+    fi;
   fi;
-
   return out;
 end);
 
@@ -480,7 +492,7 @@ end);
 
 #FFF
 
-# new for 0.4! - Factorization - "for a trans. semigp. and trans."
+# mod for 0.5! - Factorization - "for a trans. semigp. and trans."
 #############################################################################
 
 InstallOtherMethod(Factorization, "for a trans. semigroup and trans.", 
@@ -493,7 +505,7 @@ function(s, f)
     return fail;
   fi;
  
-  if not s!.opt!.schreier then 
+  if not s!.opts!.schreier then 
     Info(InfoCitrus, 1, "it is not possible to factorize elements of this ",
     "semigroup.");
     return fail;
@@ -1396,9 +1408,109 @@ end);
 
 InstallGlobalFunction(IteratorOfRClassRepsData, 
 function(s)
-  local iter;
+  local iter, is_done_iterator;
   
   Info(InfoCitrus, 4, "IteratorOfRClassRepsData");
+
+  if s!.opts!.schreier then 
+    is_done_iterator:=function(iter)
+      local O, ht, o, i, orbits, images, x, d;
+   
+      if iter!.last_called_by_is_done then 
+        return iter!.next_value=fail;
+      fi;
+
+      iter!.last_called_by_is_done:=true;
+
+      O:=OrbitsOfImages(s);
+
+      iter!.next_value:=fail;
+
+      if iter!.i < Length(O!.data) then # we already know this rep
+        iter!.i:=iter!.i+1;
+        iter!.next_value:=O!.data[iter!.i];
+        return false;
+      elif O!.finished then  
+        return true;
+      fi;
+
+      ht:=O!.ht; o:=ht!.o; i:=O!.at;
+
+      if i=Length(o) then #at the end of the orbit!
+        O!.finished:=true;
+        return true;
+      fi;
+
+      orbits:=O!.orbits; images:=O!.images;
+
+      while i<Length(o) do 
+        O!.at:=O!.at+1; i:=i+1; x:=o[i];
+        d:=InOrbitsOfImages(x, false, [fail, fail, fail, fail, fail, 0, fail], 
+         orbits, images); 
+
+        if not d[1] then #new rep!
+          if IsTransformationMonoid(s) or not i = 1 then 
+            Add(O!.pos2, i); Add(O!.gen2, d[2]{[1..4]}); 
+            d:=AddToOrbitsOfImages(s, x, d[2], O, true);
+            iter!.i:=iter!.i+1; iter!.next_value:=d;
+            return false;
+          fi;
+        fi;
+      od;
+
+      O!.finished:=true;
+      return true;
+    end;
+  else
+    is_done_iterator:=function(iter)
+      local O, ht, o, i, orbits, images, x, d;
+                    
+      if iter!.last_called_by_is_done then
+        return iter!.next_value=fail;
+      fi;
+                                                
+      iter!.last_called_by_is_done:=true;
+  
+      O:=OrbitsOfImages(s);
+  
+      iter!.next_value:=fail;
+  
+      if iter!.i < Length(O!.data) then # we already know this rep
+        iter!.i:=iter!.i+1;
+        iter!.next_value:=O!.data[iter!.i];
+        return false;
+      elif O!.finished then
+        return true;
+      fi;
+      
+      ht:=O!.ht; o:=ht!.o; i:=O!.at;
+      
+      if i=Length(o) then #at the end of the orbit!
+        O!.finished:=true;
+        Unbind(O!.ht); Unbind(O!.lens);
+        return true;
+      fi;
+    
+      orbits:=O!.orbits; images:=O!.images;
+    
+      while i<Length(o) do
+        O!.at:=O!.at+1; i:=i+1; x:=o[i];
+        d:=InOrbitsOfImages(x, false, [fail, fail, fail, fail, fail, 0, fail],
+         orbits, images);
+       
+        if not d[1] then #new rep!
+          if IsTransformationMonoid(s) or not i = 1 then
+            d:=AddToOrbitsOfImages(s, x, d[2], O, true);
+            iter!.i:=iter!.i+1; iter!.next_value:=d;
+            return false;
+          fi;
+        fi;
+      od;
+    
+      O!.finished:=true;
+      return true;
+    end; 
+  fi;
 
   iter:=IteratorByFunctions( rec(
           
@@ -1415,58 +1527,7 @@ function(s)
 
   ######################################################################
 
-  IsDoneIterator:=function(iter)
-    local O, ht, o, i, orbits, images, x, d;
-   
-    if iter!.last_called_by_is_done then 
-      return iter!.next_value=fail;
-    fi;
-
-    iter!.last_called_by_is_done:=true;
-
-    O:=OrbitsOfImages(s);
-
-    iter!.next_value:=fail;
-
-    if iter!.i < Length(O!.data) then 
-    # we already know this rep
-      iter!.i:=iter!.i+1;
-      iter!.next_value:=O!.data[iter!.i];
-      return false;
-    elif O!.finished then  
-      return true;
-    fi;
-
-    ht:=O!.ht; o:=ht!.o; i:=O!.at;
-
-    if i=Length(o) then
-    #at the end of the orbit!
-      O!.finished:=true;
-      #Unbind(O!.ht); Unbind(O!.lens); JDM don't unedit these, otherwise
-      # ClosureSemigroup won't work!
-      return true;
-    fi;
-
-    orbits:=O!.orbits; images:=O!.images;
-
-    while i<Length(o) do 
-      O!.at:=O!.at+1; i:=i+1; x:=o[i];
-      d:=InOrbitsOfImages(x, false, [fail, fail, fail, fail, fail, 0, fail], 
-       orbits, images); 
-
-      if not d[1] then #new rep!
-        if IsTransformationMonoid(s) or not i = 1 then 
-          Add(O!.pos2, i); Add(O!.gen2, d[2]{[1..4]}); 
-          d:=AddToOrbitsOfImages(s, x, d[2], O, true);
-          iter!.i:=iter!.i+1; iter!.next_value:=d;
-          return false;
-        fi;
-      fi;
-    od;
-
-    O!.finished:=true;
-    return true;
-  end,
+  IsDoneIterator:=is_done_iterator,
 
   ######################################################################
 
@@ -1941,7 +2002,7 @@ function(s, i)
 
   Info(InfoCitrus, 4, "TraceRClassRepsTree");
 
-  if not s!.opt!.schreier then 
+  if not s!.opts!.schreier then 
     Info(InfoCitrus, 1, "it is not possible to factorize elements of this ",
     "semigroup.");
     return fail;
