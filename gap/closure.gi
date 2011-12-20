@@ -12,27 +12,40 @@
 #############################################################################
 
 InstallGlobalFunction(ClosureSemigroup,
-function(s, coll)
+function(arg)
 
-  if not IsTransformationSemigroup(s) or not (IsTransformationCollection(coll)
-   or IsTransformation(coll)) then 
+  if not IsTransformationSemigroup(arg[1]) or not 
+   (IsTransformationCollection(arg[2]) or IsTransformation(arg[2])) then 
     Error("Usage: arg. must be a trans. semigroup and transformation or ", 
     "collection of transformations.");
-    return fail;
+    return;
   fi;
 
-  if IsTransformationSemigroup(coll) then 
-    coll:=Generators(coll);
-  elif IsTransformation(coll) then 
-    coll:=[coll];
+  if Length(arg)=3 then 
+    if not IsRecord(arg[3]) then 
+      Error("Usage: 3rd arg. must be a record.");
+      return;
+    fi;
+    if not "schreier" in RecNames(arg[3]) then  
+      arg[3]!.schreier:=false;
+    fi;
+  else
+    arg[3]:=rec(schreier:=false);
   fi;
 
-  if not Degree(s)=Degree(coll[1]) then 
-    Error("Usage: degrees of transformations must equal degree of semigroup");
-    return fail;
+  if IsTransformationSemigroup(arg[2]) then 
+    arg[2]:=Generators(arg[2]);
+  elif IsTransformation(arg[2]) then 
+    arg[2]:=[arg[2]];
   fi;
 
-  return ClosureSemigroupNC(s, Filtered(coll, x-> not x in s));
+  if not Degree(arg[1])=Degree(arg[2][1]) then 
+    Error("Usage: degrees of transformations must equal degree of semigroup.");
+    return;
+  fi;
+
+  return ClosureSemigroupNC(arg[1], Filtered(arg[2], x-> not x in arg[1]), 
+   arg[3]);
 end);
 
 # new for 0.5! - ClosureSemigroupNC - "for a trans. semi. and trans. coll."
@@ -41,7 +54,7 @@ end);
 # belonging to s but with degree equal to that of s.  
 
 InstallGlobalFunction(ClosureSemigroupNC,
-function(s, coll)
+function(s, coll, opts)
   local info, t, old_data, ht, o, r, img_lists, j, max_rank, n, orbits, lens, data_ht, data, data_len, images, old_gen1, old_gen2, old_pos1, old_pos2, gen1, pos1, gen2, pos2, old_lens, old_orbits, scc, reps, out, old_rep_nr, l, old_reps, old_data_list, old_reps_len, old_o, new_data, d, g, m, z, i, k, val, y;
  
   if InfoLevel(InfoCitrus)>1 then 
@@ -56,19 +69,19 @@ function(s, coll)
     return s;
   fi;
 
+  if opts!.schreier then #JDM move lower when I implement it!:w
+    Error("not yet implemented");
+  fi;
+  
   if IsTransformationMonoid(s) then 
-    t:=Monoid(Concatenation(Generators(s), coll));
+    t:=Monoid(s, coll, opts);
   else
-    t:=Semigroup(Concatenation(Generators(s), coll));
+    t:=Semigroup(s, coll, opts);
   fi;
 
   if not HasOrbitsOfImages(s) then 
-    Info(InfoCitrus, 2, "No data known about old semigroup.");
+    Info(InfoCitrus, 2, "No data known about the old semigroup.");
     return t;
-  fi;
-
-  if s!.opts!.schreier then 
-    Error("not yet implemented");
   fi;
 
   # initialize R-class reps orbit
@@ -227,7 +240,6 @@ function(s, coll)
   
   coll:=List(coll, x-> x![1]); n:=Length(Generators(s)); 
 
-  Error("");
   for i in [1..Length(data)] do 
     d:=data[i];
     g:=orbits[d[1]][d[2]]!.reps[d[4]][d[5]][d[6]];

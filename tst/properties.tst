@@ -919,11 +919,11 @@ false
 
 gap> ReadCitrus("pkg/citrus/examples/munn.citrus", 1078);;
 gap> s:=Semigroup(last);
-<semigroup with 8 generators>
+<semigroup with 9 generators>
 gap> Size(s);
-8
+12
 gap> IsDTrivial(s);
-true
+false
 
 gap> ReadCitrus("pkg/citrus/examples/graph8c.citrus", 1303);;
 gap> s:=Semigroup(last);;

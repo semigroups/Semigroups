@@ -19,6 +19,7 @@ UnbindGlobal("Monoid");
 
 BindGlobal("Monoid", 
 function ( arg )
+  local out, i;
 
   if Length( arg ) = 1 and IsMatrix( arg[1] )  then
     return MonoidByGenerators( [ arg[1] ] );
@@ -28,21 +29,25 @@ function ( arg )
     return MonoidByGenerators( arg[1] );
   elif Length( arg ) = 2 and IsList( arg[1] )  then
     return MonoidByGenerators( arg[1], arg[2] );
-  elif Length(arg) = 2 and IsTransformationCollection(arg[1]) and
-   IsRecord(arg[2]) then 
-    return MonoidByGenerators( arg[1], arg[2] );
-  elif Length(arg) = 2 and IsTransformationCollection(arg[1]) and 
-    IsTransformation(arg[2]) then 
-    if IsTransformationMonoid(arg[1]) then 
-      return MonoidByGenerators(Concatenation(Generators(arg[1]), [arg[2]]));
-    fi;
-    return MonoidByGenerators(Concatenation(arg[1], [arg[2]]));
-  elif IsPermGroup(arg[1]) and IsTransformationCollection(arg[2]) then
-    return MonoidByGenerators(Concatenation(List(GeneratorsOfGroup(arg[1]),
-     x-> AsTransformation(x, Degree(arg[2][1]))), arg[2]));
-  elif IsPermGroup(arg[1]) and IsTransformation(arg[2]) then 
-    return MonoidByGenerators(Concatenation(List(GeneratorsOfGroup(arg[1]),  
-         x-> AsTransformation(x, Degree(arg[2][1]))), [arg[2]]));
+  elif IsTransformation(arg[1]) or IsTransformationCollection(arg[1]) then 
+    out:=[];
+    for i in [1..Length(arg)] do 
+      if IsTransformation(arg[i]) then 
+        out[i]:=[arg[i]];
+      elif IsTransformationCollection(arg[i]) then 
+        if IsTransformationSemigroup(arg[i]) then
+          out[i]:=Generators(arg[i]);
+        else
+          out[i]:=arg[i];
+        fi;
+      elif i=Length(arg) and IsRecord(arg[i]) then 
+        return MonoidByGenerators(Concatenation(out), arg[i]);
+      else
+        Error( "usage: Monoid(<gen>,...), Monoid(<gens>), Monoid(<D>)" );
+        return;
+      fi;
+    od;
+    return MonoidByGenerators(Concatenation(out));
   elif 0 < Length( arg )  then
     return MonoidByGenerators( arg );
   else
@@ -68,7 +73,7 @@ function(gens)
   return S;
 end);
 
-# new for 0.5! - Monoid -  "for a trans. coll. and record"
+# new for 0.5! - MonoidByGenerators -  "for a trans. coll. and record"
 ##############################################################################
 
 InstallOtherMethod(MonoidByGenerators, "for a trans. coll. and record",
@@ -95,25 +100,30 @@ UnbindGlobal("Semigroup");
 
 BindGlobal("Semigroup", 
 function ( arg )
+  local out, i;
   if Length( arg ) = 1 and IsMatrix( arg[1] )  then
     return SemigroupByGenerators( [ arg[1] ] );
   elif Length( arg ) = 1 and IsList( arg[1] ) and 0 < Length( arg[1] )  then
     return SemigroupByGenerators( arg[1] );
-  elif Length(arg) = 2 and IsTransformationCollection(arg[1]) and
-   IsRecord(arg[2]) then 
-    return SemigroupByGenerators( arg[1], arg[2] );
-  elif Length(arg) = 2 and IsTransformationCollection(arg[1]) and 
-    IsTransformation(arg[2]) then 
-    if IsTransformationSemigroup(arg[1]) then 
-      return SemigroupByGenerators(Concatenation(Generators(arg[1]), [arg[2]]));
-    fi;
-    return SemigroupByGenerators(Concatenation(arg[1], [arg[2]]));
-  elif IsPermGroup(arg[1]) and IsTransformationCollection(arg[2]) then
-    return SemigroupByGenerators(Concatenation(List(GeneratorsOfGroup(arg[1]),
-     x-> AsTransformation(x, Degree(arg[2][1]))), arg[2]));
-  elif IsPermGroup(arg[1]) and IsTransformation(arg[2]) then 
-    return SemigroupByGenerators(Concatenation(List(GeneratorsOfGroup(arg[1]),  
-         x-> AsTransformation(x, Degree(arg[2][1]))), [arg[2]]));
+  elif IsTransformation(arg[1]) or IsTransformationCollection(arg[1]) then 
+    out:=[];
+    for i in [1..Length(arg)] do 
+      if IsTransformation(arg[i]) then 
+        out[i]:=[arg[i]];
+      elif IsTransformationCollection(arg[i]) then 
+        if IsTransformationSemigroup(arg[i]) then
+          out[i]:=Generators(arg[i]);
+        else
+          out[i]:=arg[i];
+        fi;
+      elif i=Length(arg) and IsRecord(arg[i]) then 
+        return SemigroupByGenerators(Concatenation(out), arg[i]);
+      else
+        Error( "usage: Monoid(<gen>,...), Monoid(<gens>), Monoid(<D>)" );
+        return;
+      fi;
+    od;
+    return SemigroupByGenerators(Concatenation(out));
   elif 0 < Length( arg )  then
     return SemigroupByGenerators( arg );
   else
