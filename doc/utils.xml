@@ -127,15 +127,14 @@ InstallationPath, "/doc"), "citrus.xml",
       if <A>S</A> is a transformation monoid and returns the result of 
       <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/> 
       if <A>S</A> is a transformation semigroup but not a transformation 
-      monoid. 
-      <Example> 
-gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
+      monoid.
+<Example>gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
 > Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
 gap> GeneratorsOfSemigroup(M);
 [ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ), 
   Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
-gap> GeneratorsOfMonoid(M);   
+gap> GeneratorsOfMonoid(M);
 [ Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
 gap> Generators(M);

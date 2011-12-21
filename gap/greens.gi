@@ -41,7 +41,7 @@ end);
 # Notes: not algorithm X. 
 
 InstallMethod(\in, "for a transformation semigroup",
-[IsTransformation, IsTransformationSemigroup],
+[IsTransformation, IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(f, s)
   local gens, o, data, iter, orbits, images, next;
 

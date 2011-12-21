@@ -917,7 +917,7 @@ false
 #gap> List(slow, IsAdequateSemigroup);
 #[ true, true, true, true, true, true, true, true ]
 
-gap> ReadCitrus("pkg/citrus/examples/munn.citrus", 1078);;
+gap> ReadCitrus("pkg/citrus/examples/munn.citrus.gz", 1078);;
 gap> s:=Semigroup(last);
 <semigroup with 9 generators>
 gap> Size(s);
@@ -925,7 +925,7 @@ gap> Size(s);
 gap> IsDTrivial(s);
 false
 
-gap> ReadCitrus("pkg/citrus/examples/graph8c.citrus", 1303);;
+gap> ReadCitrus("pkg/citrus/examples/graph8c.citrus.gz", 1303);;
 gap> s:=Semigroup(last);;
 gap> t:=IdempotentGeneratedSubsemigp(s);;
 gap> Size(t);

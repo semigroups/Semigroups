@@ -23,8 +23,7 @@
       See also <Ref Oper="IsomorphismTransformationSemigroup" BookName="ref"/>. 
 
       <Example>
-gap> S:=Semigroup(ReadCitrus("pkg/citrus/examples/selfcomp_4_to_9.citrus",
-> 34));;
+gap> S:=Semigroup(ReadCitrus("pkg/citrus/examples/selfcomp.citrus", 34));;
 gap> Size(S);
 1016
 gap> AntiIsomorphismTransformationSemigroup(S); 

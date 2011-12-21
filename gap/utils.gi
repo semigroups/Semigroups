@@ -20,6 +20,26 @@ function()
    InstallationPath, "/doc"), "citrus.xml", 
    ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
      "transform.xml", "../PackageInfo.g"], "citrus", "MathJax");;
+  return;
+end);
+
+# new for 0.5! - CitrusManualExamples - "for no argument" 
+#############################################################################
+
+InstallGlobalFunction(CitrusManualExamples, 
+function()
+  local ex, tst, i;
+
+  ex:=ManualExamples("~/citrus/doc/", "citrus.xml",  [ "utils.xml",
+  "greens.xml", "orbits.xml", "properties.xml", 
+  "transform.xml", "../PackageInfo.g" ], "Single" );;
+
+  for i in [1..Length(ex)] do 
+    Print("*** Example ", i, " ***\n");
+    tst:=ReadTestExamplesString(ex[i]);
+  od;
+
+  return true;
 end);
 
 # new for 0.4! - CitrusMathJaxDefault - "for no argument"
@@ -37,6 +57,7 @@ GAPDoc2HTMLProcs.Head1MathJax:=Concatenation(
 "src=\"http://cdn.mathjax.org/mathjax/latest/MathJax",
 ".js?config=TeX-AMS-MML_HTMLorMML\">\n</script>\n<title>GAP (");
 Info(InfoWarning, 1, "don't forget to run CitrusMakeDoc()");
+return;
 end);
 
 # new for 0.4! - CitrusMathJaxLocal - "for a path to the MathJax folder"
@@ -61,6 +82,7 @@ function(arg)
   "\n src=\"", path, "/MathJax/MathJax.js?config=default",
   "\">\n</script>\n<title>GAP\ (");
   Info(InfoWarning, 1, "don't forget to run CitrusMakeDoc()");
+  return;
 end);
 
 # mod for 0.4! - CitrusTestAll - "for no argument"
@@ -71,6 +93,7 @@ function()
   Print(
   "Reading all .tst files in the directory citrus/tst/...\n\n"); 
   Read(Filename(DirectoriesPackageLibrary("citrus","tst"),"testall.g"));;
+  return;
 end);
 
 # new for 0.1! - CitrusTestInstall - "for no argument"
@@ -80,6 +103,7 @@ InstallGlobalFunction(CitrusTestInstall,
 function()
   ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),
    "testinstall.tst"));;
+  return;
 end);
 
 # new for 0.1! - CitrusTestManualExamples - "for no argument"
@@ -89,9 +113,9 @@ InstallGlobalFunction(CitrusTestManualExamples,
 function()
   local InfoLevelInfoWarning, InfoLevelInfoCitrus;
   SizeScreen([80]); 
-  InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-  InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
-  SetInfoLevel(InfoWarning, 0);;
+  InfoLevelInfoWarning:=InfoLevel(InfoWarning);
+  InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);
+  SetInfoLevel(InfoWarning, 0);
   SetInfoLevel(InfoCitrus, 0);
 
   TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
@@ -99,10 +123,10 @@ function()
      ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
       "transform.xml", "../PackageInfo.g"]);
   
-  SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-  SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-  Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
-
+  SetInfoLevel(InfoWarning, InfoLevelInfoWarning);
+  SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);
+  Unbind(InfoLevelInfoCitrus); Unbind(InfoLevelInfoWarning);
+  return;
 end);
 
 # new for 0.1! - DClass - "for a trans. semi and trans. or Green's class"
@@ -304,14 +328,8 @@ function(arg)
   local read_line, file, i, line;
   
   if not IsString(arg[1]) then 
-    Error("first argument must be a string");
+    Error("the first argument must be a string,");
   fi;
-  
-  #  if not IsReadableFile(arg[1]) then 
-  #    Error(arg[1], " is not a readable file");
-  #  fi; #JDM for some reason this doesn't work...
-  
-  #JDM add check that file is formatted ok!
 
   #####
 
@@ -336,23 +354,31 @@ function(arg)
 
   #####
 
-  file:=SplitString(StringFile(arg[1]), "\n"); #quicker than using a stream...
-
-  if Length(arg)>1  then 
+  file:=IO_FilteredFile([["gzip", ["-d"]]], arg[1]);
+  if file=fail then 
+    Error(arg[1], " is not a readable file,");
+    return;
+  fi;
+  if Length(arg)>1 then 
     if IsPosInt(arg[2]) then 
-      if arg[2]<=Length(file) then 
-        return read_line(file[arg[2]]);
+      i:=0;
+      repeat  
+        i:=i+1; line:=IO_ReadLine(file);
+      until i=arg[2] or line="";
+      
+      if line="" then 
+        Error(arg[1], " only has ", i-1, " lines,"); 
       else
-        Error(arg[1], " only has ", Length(file), " lines");
-        return fail;
+        return read_line(Chomp(line));
       fi;
     else
-      Error("the second argument should be a positive integer");
-      return fail;
+      Error("the second argument should be a positive integer,");
+      return;
     fi;
   fi;
-  
-  return List(file, read_line);
+
+  line:=IO_ReadLines(file);
+  return List(line, x-> Chomp(read_line(x)));
 end);
 
 # new for 0.5! - WriteCitrus - "for a trans. coll. and filename as string"

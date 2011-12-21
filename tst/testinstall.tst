@@ -155,6 +155,29 @@ gap> ForAll([1..NrRClasses(s)], i->
 > RClassReps(s)[i]);
 true
 
+gap>  ReadCitrus("pkg/citrus/examples/munn.citrus.gz", 1376);
+[ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ), 
+  Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 9 ] ), 
+  Transformation( [ 1, 2, 3, 4, 5, 6, 9, 9, 9 ] ), 
+  Transformation( [ 1, 2, 3, 4, 5, 9, 9, 9, 9 ] ), 
+  Transformation( [ 1, 2, 3, 4, 9, 9, 9, 9, 9 ] ), 
+  Transformation( [ 1, 2, 3, 9, 9, 9, 9, 9, 9 ] ), 
+  Transformation( [ 1, 2, 9, 9, 9, 9, 9, 9, 9 ] ), 
+  Transformation( [ 1, 9, 9, 9, 9, 9, 9, 9, 9 ] ) ]
+
+gap> gens:=[ Transformation( [ 1, 2, 3, 5, 4, 6, 7, 8 ] ),
+>   Transformation( [ 4, 4, 3, 1, 5, 6, 3, 8 ] ),
+>   Transformation( [ 3, 6, 1, 7, 3, 4, 8, 3 ] ),
+>   Transformation( [ 1, 2, 3, 4, 5, 3, 7, 8 ] ),
+>   Transformation( [ 1, 2, 3, 4, 1, 6, 7, 8 ] ),
+>   Transformation( [ 8, 8, 3, 4, 5, 7, 6, 1 ] ) ];;
+gap> s:=Monoid(gens);
+<monoid with 6 generators>
+gap> t:=ClosureSemigroup(s, [Transformation( [ 4, 4, 3, 1, 5, 6, 3, 8 ] )]);
+<monoid with 6 generators>
+gap> Size(t)=Size(Semigroup(Generators(t)));
+true
+
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
