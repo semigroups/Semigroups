@@ -62,7 +62,7 @@ function(s)
     n:=Degree(s[1]);
   fi;
 
-  ht:=HTCreate([1..n], rec(hashlen:=CitrusHashLen!.imgs));
+  ht:=HTCreate([1..n], rec(hashlen:=s!.opts!.hashlen!.S));
   HTAdd(ht, [1..n], true);
   o:=[[1..n]]; m:=1; 
 
@@ -111,7 +111,7 @@ function(s)
     n:=Degree(s[1]);
   fi;
  
-  ht:=HTCreate([1..n], rec(hashlen:=CitrusHashLen!.kers)); 
+  ht:=HTCreate([1..n], rec(hashlen:=s!.opts!.hashlen!.S)); 
   HTAdd(ht, [1..n], true);
   o:=[[1..n]]; m:=1;
 
@@ -143,33 +143,6 @@ function(s)
 
   return out;
 end);
-
-# new for 0.1! - HashTableForImages - not a user function!
-#############################################################################
-
-#InstallGlobalFunction(HashTableForImages, 
-#function(img)
-#  local img_set, len,ht;
-#
-#  img_set:=Set(img); len:=CitrusHashLen!.imgs;
-#  ht := HTCreate(img_set, rec( hfd := len, treehashsize := len));
-#  HTAdd(ht, img_set, 1);
-
-#  return ht;
-#end);
-
-# new for 0.1! - HashTableForKernels - not a user function!
-#############################################################################
-
-#InstallGlobalFunction(HashTableForKernels, 
-#function(ker, n)
-#  local len, ht;
-#  len:=CitrusHashLen!.kers;
-#  ht := HTCreate(ker, rec( hfd := len, treehashsize := len ));
-#  HTAdd(ht, ker, 1);
-
-#  return ht;
-#end);
 
 # new for 0.2! - HashFunctionForBlist - "for a blist"
 #############################################################################

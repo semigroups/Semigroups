@@ -158,7 +158,7 @@ function(s, f, data, o, install)
         fi;
         ker:=CanonicalTransSameKernel(g); 
         O[j][k]!.kernels_ht[m]:=HTCreate(ker, 
-         rec(forflatplainlists:=true, hashlen:=CitrusHashLen!.kers));
+         rec(forflatplainlists:=true, hashlen:=s!.opts!.hashlen!.S));
         HTAdd(O[j][k]!.kernels_ht[m], ker, 1);
         O[j][k]!.schutz[m]:=CreateImageOrbitSchutzGp(gens, O[j][k], g, m);
       fi;
@@ -653,7 +653,7 @@ function(arg)
   #kernels of representatives of R-classes with image belonging in scc[i]
   ker:=CanonicalTransSameKernel(f);
   o!.kernels_ht:=[HTCreate(ker, rec(forflatplainlists:=true, 
-   hashlen:=CitrusHashLen!.kers))];
+   hashlen:=s!.opts!.hashlen!.S))];
   HTAdd(o!.kernels_ht[1], ker, 1);
 
   #calculate the multipliers for all scc's 
@@ -846,7 +846,7 @@ function(s, f)
    s:=s, 
    deg := n, data:=[], images:=fail, lens:=List([1..n], function(x) if x=j then
    return 1; else return 0; fi; end), data_ht:=HTCreate([1,1,1,1,1,1],
-   rec(forflatplainlists:=true, hashlen:=CitrusHashLen!.imgs)));
+   rec(forflatplainlists:=true, hashlen:=s!.opts!.hashlen!.M)));
   #local orbits of images! 
   #JDM shouldn't data contain [j,1,1,1,1,1]??
 
@@ -1713,7 +1713,7 @@ function(s)
   gens:=List(Generators(s), x-> ShallowCopy(x![1]));
   #JDM remove ShallowCopy in future if Orb is fixed.
   n := Degree(s); 
-  ht_len:=CitrusHashLen!.rclassreps_orb;
+  ht_len:=s!.opts!.hashlen!.L;
   o:=EmptyPlist(ht_len);
 
   one := [ 1 .. n ]*1;
@@ -1735,12 +1735,12 @@ function(s)
     orbits:=EmptyPlist(n),
     lens:=[1..n]*0, #lens[j]=Length(orbits[j])
     images:=HTCreate(SSortedList(gens[1]), rec(forflatplainlists:=true, 
-     hashlen:=CitrusHashLen!.imgs)), 
+     hashlen:=s!.opts!.hashlen!.S)),
     at:=0, 
     gens:=gens, 
     ht:=ht,
     data_ht:=HTCreate([1,1,1,1,1,1], rec(forflatplainlists:=true, 
-     hashlen:=CitrusHashLen!.rclass_data)), 
+     hashlen:=s!.opts!.hashlen!.M)),
     data:=[], 
     gen1:=ListWithIdenticalEntries(Length(gens)+1, fail), 
     pos1:=ListWithIdenticalEntries(Length(gens)+1, fail),

@@ -64,7 +64,8 @@ InstallOtherMethod(MonoidByGenerators, "for a trans. collection",
 function(gens)
   local opts, S;
    
-  opts:=rec(schreier:=true, small:=false); 
+  opts:=rec(schreier:=true, small:=false, hashlen:=rec(S:=1009, M:=25013, 
+   L:=100003)); 
    
   S:=Objectify( NewType( FamilyObj( gens ), 
    IsMonoid and IsAttributeStoringRep ), rec(opts:=opts));
@@ -87,6 +88,12 @@ function(gens, opts)
     opts!.schreier:=true;
   elif not "small" in names then 
     opts!.small:=false;
+  elif not "hashlen" in names then
+    opts!.hashlen:=rec(S:=1009, M:=25013, L:=100003);
+  elif "hashlen" in names then 
+    n:=opts!.hashlen; 
+    opts!.hashlen:=rec(S:=NextPrimeInt(n/100), M:=NextPrimeInt(n/4), 
+     L:=NextPrimeInt(n));
   fi;
 
   if opts!.small then #small gen. set
@@ -103,7 +110,8 @@ function(gens, opts)
     fi;
 
     i:=0;
-    closure_opts:=rec(schreier:=opts!.schreier);
+    closure_opts:=rec(schreier:=opts!.schreier, small:=false, 
+     hashlen:=opts!.hashlen);
     s:=Monoid(gens[1], closure_opts);
 
     if InfoLevel(InfoCitrus)>1 then
@@ -184,8 +192,8 @@ InstallOtherMethod(SemigroupByGenerators, "for a trans. collection",
 function(gens)
   local opts, S;
    
-  opts:=rec(schreier:=true, small:=false); 
-   
+  opts:=rec(schreier:=true, small:=false, hashlen:=rec(S:=1009, M:=25013, 
+   L:=100003)); 
   S:=Objectify( NewType( FamilyObj( gens ), 
    IsSemigroup and IsAttributeStoringRep ), rec(opts:=opts));
 
@@ -207,6 +215,12 @@ function(gens, opts)
     opts!.schreier:=true;
   elif not "small" in names then 
     opts!.small:=false;
+  elif not "hashlen" in names then
+    opts!.hashlen:=rec(S:=1009, M:=25013, L:=100003);
+  elif "hashlen" in names then
+    n:=opts!.hashlen;
+    opts!.hashlen:=rec(S:=NextPrimeInt(n/100), M:=NextPrimeInt(n/4),
+     L:=NextPrimeInt(n));
   fi;
 
   if opts!.small then 
@@ -222,7 +236,8 @@ function(gens, opts)
     fi;
 
     i:=0;
-    closure_opts:=rec(schreier:=opts!.schreier);
+    closure_opts:=rec(schreier:=opts!.schreier, small:=false,
+     hashlen:=opts!.hashlen);
     s:=Semigroup(gens[1], closure_opts);
 
     if InfoLevel(InfoCitrus)>1 then

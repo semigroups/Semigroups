@@ -146,8 +146,8 @@ function(s)
   fi;
 
   iter:=IteratorOfRClassRepsData(s); n:=Degree(s);
-  ht:=HTCreate([1..n], rec(hashlen:=CitrusHashLen!.kers));
-  ht_o:=HTCreate([1,1,1,1], rec(hashlen:=CitrusHashLen!.kers));
+  ht:=HTCreate([1..n], rec(hashlen:=s!.opts!.hashlen!.S));
+  ht_o:=HTCreate([1,1,1,1], rec(hashlen:=s!.opts!.hashlen!.S));
   reg:=[]; i:=0; 
 
   repeat

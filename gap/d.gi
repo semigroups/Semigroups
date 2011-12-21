@@ -220,7 +220,7 @@ function(arg)
       
       img:=SSortedList(f![1]);
       O[j][k]!.images_ht[m]:=HTCreate(img, rec(forflatplainlists:=true,
-        hashlen:=CitrusHashLen!.imgs));
+        hashlen:=s!.opts!.hashlen!.S));
       HTAdd(O[j][k]!.images_ht[m], img, 1);
       O[j][k]!.rels:=O[j][k]!.rels+CreateKernelOrbitSCCRels(gens, O[j][k], m);
       g:=O[j][k]!.rels[l][2]*f;
@@ -735,7 +735,7 @@ function(arg)
   #images of representatives of D-classes with kernel belonging in scc[i]
   img:=SSortedList(f![1]);
   o!.images_ht:=[HTCreate(img, rec(forflatplainlists:=true, 
-   hashlen:=CitrusHashLen!.imgs))];
+   hashlen:=s!.opts!.hashlen!.S))];
   HTAdd(o!.images_ht[1], img, 1);
   #JDM remove ShallowCopy in future if Orb is fixed.
 
@@ -854,7 +854,7 @@ function(s, f)
    deg := n, data:=[[j,1,1,1,1,1]], images:=fail, lens:=List([1..n], 
    function(x) if x=j then return 1; else return 0; fi; end), 
    data_ht:=HTCreate([1,1,1,1,1,1], rec(forflatplainlists:=true,
-    hashlen:=CitrusHashLen!.dclass_data)));
+    hashlen:=s!.opts!.hashlen!.M)));
   #JDM images should not be fail in this...
   
   Info(InfoCitrus, 2, "finding kernel orbit...");
@@ -2032,12 +2032,12 @@ function(s)
     orbits:=EmptyPlist(n), 
     lens:=[1..n]*0, #lens[j]=Length(orbits[j])
     kernels:=HTCreate([1..n]*1, rec(forflatplainlists:=true,
-     hashlen:=CitrusHashLen!.kers)),
+     hashlen:=s!.opts!.hashlen!.S)),
     imgs_gens:=List(gens, x-> x![1]),
     gens:=gens,
     s:=s,
     data_ht:=HTCreate([1,1,1,1,1,1,1], rec(forflatplainlists:=true,
-     hashlen:=CitrusHashLen!.dclass_data)),
+     hashlen:=s!.opts!.hashlen!.S)),
     data:=[]));
 end);
 
