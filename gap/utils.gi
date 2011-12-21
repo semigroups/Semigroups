@@ -369,6 +369,7 @@ function(arg)
       
       if line="" then 
         Error(arg[1], " only has ", i-1, " lines,"); 
+        return;
       else
         return read_line(Chomp(line));
       fi;
@@ -382,12 +383,12 @@ function(arg)
   return List(line, x-> Chomp(read_line(x)));
 end);
 
-# new for 0.5! - WriteCitrus - "for a trans. coll. and filename as string"
+# new for 0.5! - WriteCitrus - "for a string and trans. coll."
 #############################################################################
 
-# Usage: transformation collection and filename as a string.
+# Usage: filename as a string and trans. coll. 
 
-# Returns: a string. 
+# Returns: nothing. 
 
 InstallGlobalFunction(WriteCitrus, 
 function(arg)
@@ -399,15 +400,15 @@ function(arg)
     return fail;
   fi;
 
-  if IsExistingFile(arg[2]) and not IsWritableFile(arg[2]) then 
-    Error(arg[2], " exists and is not a writable file");
+  if IsExistingFile(arg[1]) and not IsWritableFile(arg[1]) then 
+    Error(arg[1], " exists and is not a writable file");
     return fail;
   fi;
 
-  if IsTransformationCollection(arg[1]) then 
-    trans:=[arg[1]];
-  elif IsTransformationCollection(arg[1][1]) then 
-    trans:=arg[1];
+  if IsTransformationCollection(arg[2]) then 
+    trans:=[arg[2]];
+  elif IsTransformationCollection(arg[2][1]) then 
+    trans:=arg[2];
   else
     Error("Usage: first arg must be trans. semi., trans. coll. or list of same");
     return fail;
@@ -445,7 +446,7 @@ function(arg)
 
   #####
 
-  output := OutputTextFile( arg[2], true );
+  output := OutputTextFile( arg[1], true );
   SetPrintFormattingStatus(output, false);
   
   for s in gens do 
