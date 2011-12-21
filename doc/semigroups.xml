@@ -146,8 +146,33 @@ gap> Size(S);
     transformation <A>gens</A>. 
   
     <List>
+      <Mark><C>hashlen</C></Mark>
+      <Item>this component should be a positive integer, which roughly
+      specifies the lengths of hash tables used by &Citrus;.
+      &Citrus; uses hash tables in several fundamental methods.
+      The lengths of these tables are a compromise between performance and
+      memory usage; larger tables provide better performance for large
+      computations but use more memory. Note that it is unlikely that you will
+      need to specify this option unless you find that &GAP; runs out of
+      memory unexpectedly or that the performance of &Citrus;
+      is poorer than expected. If you find that &GAP; runs out of memory
+      unexpectedly, or you plan to do a large number of computations with
+      relatively small semigroups (say with tens of thousands of elements), 
+      then you might consider setting <C>hashlen</C> to be less than the 
+      default value of <C>100003</C> for each of these semigroups.  
+      If you find that the performance of &Citrus; is unexpectedly poor, or you 
+      plan to do a computation with a very large semigroup (say, more than 10
+      million elements), then you might consider setting <C>hashlen</C> to be
+      greater than the default value of <C>100003</C>. <P/>
+
+      You might find it useful to set the info level of
+      the info class <C>InfoOrb</C> to 2 or higher since this will
+      indicate when hash tables used by &Citrus; are being grown; see
+      <Ref Oper="SetInfoLevel" BookName="ref"/>.
+      </Item>
+
       <Mark><C>schreier</C></Mark>
-      <Item>If this component is set to <K>true</K>, then &Citrus; will keep
+      <Item>if this component is set to <K>true</K>, then &Citrus; will keep
       track of various pieces of information so that 
       <Ref Meth="Factorization"/> works for <A>S</A> and a transformation. 
       This will cause a slight decrease in performance and an increase in
@@ -158,7 +183,7 @@ gap> Size(S);
       The default value for this component is <K>true</K>.
       </Item>
       <Mark><C>small</C></Mark>
-      <Item>If this component is set to <K>true</K>, then &Citrus; will compute
+      <Item>if this component is set to <K>true</K>, then &Citrus; will compute
       a small subset of <A>gens</A> that generates <A>S</A> at the time that
       <A>S</A> is created. This will increase the amount of time required to
       create <A>S</A> substantially, but may decrease the amount of time

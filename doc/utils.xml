@@ -8,40 +8,6 @@
 #############################################################################
 ##
 
-<#GAPDoc Label="CitrusDefaultHTLen">
-  <Index>&Citrus; memory management</Index>
-  <ManSection>
-    <Func Name="CitrusDefaultHTLen" Arg=""/>
-    <Func Name="CitrusHiHTLen" Arg=""/>
-    <Func Name="CitrusLoHTLen" Arg=""/>
-    <Func Name="CitrusVeryLoHTLen" Arg=""/>
-    <Returns>Nothing.</Returns>
-    <Description>
-      &Citrus; uses hash tables in several fundamental methods.
-      The lengths of
-      these tables are a compromise between performance and memory usage; larger
-      tables provide better performance for large computations but use more
-      memory. The lengths of these hash tables can be coarsely controlled by 
-      using the functions above. If you plan to do a small number of
-      computations with large semigroups (hundreds of thousands to
-      hundreds of millions of elements), then you will probably be best using
-      <C>CitrusHiHTLen</C> or <C>CitrusDefaultHTLen</C>. On the other hand, if 
-      you plan to do lots of computations with small semigroups (up to a hundred
-      thousand elements, say), then using <C>CitrusLoHTLen</C> will use less
-      memory.<P/>
-
-      The values used can also be set directly by editing the values in the 
-      global variable <C>CitrusHashLen</C> in the <C>config</C> file in the
-      &Citrus; package directory.<P/>
-
-      You might find it useful to set the info level of 
-      the info class <C>InfoOrb</C> to 2 or higher since this will
-      indicate when hash tables used by &Citrus; are being grown; see 
-      <Ref Oper="SetInfoLevel" BookName="ref"/>.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="CitrusMakeDoc">
   <ManSection>
     <Func Name="CitrusMakeDoc" Arg=""/>
