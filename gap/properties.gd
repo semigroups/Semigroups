@@ -49,7 +49,6 @@ DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
 DeclareAttribute("MinimalIdeal", IsTransformationSemigroup);
 DeclareAttribute("PosetOfIdempotents", IsTransformationSemigroup);
 DeclareOperation("RedundantGenerator", [IsTransformationCollection]);
-DeclareGlobalFunction("SemigroupWithSmallGenSet");
 DeclareAttribute("SmallGeneratingSet", IsTransformationSemigroup);
 
 #EOF

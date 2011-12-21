@@ -64,7 +64,7 @@ InstallOtherMethod(MonoidByGenerators, "for a trans. collection",
 function(gens)
   local opts, S;
    
-  opts:=rec(schreier:=true); 
+  opts:=rec(schreier:=true, small:=false); 
    
   S:=Objectify( NewType( FamilyObj( gens ), 
    IsMonoid and IsAttributeStoringRep ), rec(opts:=opts));
@@ -79,17 +79,61 @@ end);
 InstallOtherMethod(MonoidByGenerators, "for a trans. coll. and record",
 [IsTransformationCollection, IsRecord],
 function(gens, opts)
-  local S;
+  local names, n, i, closure_opts, s, f;
   
-  if not "schreier" in RecNames(opts) then 
+  names:=RecNames(opts);
+
+  if not "schreier" in names then 
     opts!.schreier:=true;
+  elif not "small" in names then 
+    opts!.small:=false;
   fi;
 
-  S:=Objectify( NewType( FamilyObj( gens ), 
+  if opts!.small then #small gen. set
+    
+    gens:=ShallowCopy(gens);
+    gens:=SSortedList(gens); #remove duplicates 
+    gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
+    Sort(gens, function(x, y) return Rank(x)>Rank(y); end);;
+
+    n:=Length(gens[1]![1]);
+
+    if gens[1]![1]=[1..n] and Rank(gens[2])=n then #remove id
+      Remove(gens, 1);
+    fi;
+
+    i:=0;
+    closure_opts:=rec(schreier:=opts!.schreier);
+    s:=Monoid(gens[1], closure_opts);
+
+    if InfoLevel(InfoCitrus)>1 then
+      n:=Length(gens);
+      for i in [1..n] do
+        if not gens[i] in s then 
+          s:=ClosureSemigroupNC(s, [gens[i]], closure_opts);
+        fi;
+        Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
+        " generators so far");
+        if not opts!.schreier then 
+          Print(", for \t", Size(OrbitsOfImages(s)), " elements\r");
+        fi;
+      od;
+      Print("\n");
+    else
+      for f in gens do
+        if not f in s then 
+          s:=ClosureSemigroupNC(s, [f], closure_opts);
+        fi;
+      od;
+    fi;
+    return s;
+  fi;    
+
+  s:=Objectify( NewType( FamilyObj( gens ), 
    IsMonoid and IsAttributeStoringRep ), rec(opts:=opts));
 
-  SetGeneratorsOfMagmaWithOne( S, AsList( gens ) );
-  return S;
+  SetGeneratorsOfMagmaWithOne( s, AsList( gens ) );
+  return s;
 end);
 
 # new for 0.5! - Semigroup
@@ -140,7 +184,7 @@ InstallOtherMethod(SemigroupByGenerators, "for a trans. collection",
 function(gens)
   local opts, S;
    
-  opts:=rec(schreier:=true); 
+  opts:=rec(schreier:=true, small:=false); 
    
   S:=Objectify( NewType( FamilyObj( gens ), 
    IsSemigroup and IsAttributeStoringRep ), rec(opts:=opts));
@@ -155,17 +199,60 @@ end);
 InstallOtherMethod(SemigroupByGenerators, "for a trans. collection and record",
 [IsTransformationCollection, IsRecord],
 function(gens, opts)
-  local S;
+  local names, n, i, closure_opts, s, f;
+
+  names:=RecNames(opts);
 
   if not "schreier" in RecNames(opts) then 
     opts!.schreier:=true;
+  elif not "small" in names then 
+    opts!.small:=false;
   fi;
 
-  S:=Objectify( NewType( FamilyObj( gens ), 
+  if opts!.small then 
+    gens:=ShallowCopy(gens);
+    gens:=SSortedList(gens); #remove duplicates 
+    gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
+    Sort(gens, function(x, y) return Rank(x)>Rank(y); end);;
+
+    n:=Length(gens[1]![1]);
+
+    if gens[1]![1]=[1..n] and Rank(gens[2])=n then #remove id
+      Remove(gens, 1);
+    fi;
+
+    i:=0;
+    closure_opts:=rec(schreier:=opts!.schreier);
+    s:=Semigroup(gens[1], closure_opts);
+
+    if InfoLevel(InfoCitrus)>1 then
+      n:=Length(gens);
+      for i in [1..n] do
+        if not gens[i] in s then
+          s:=ClosureSemigroupNC(s, [gens[i]], closure_opts);
+        fi;
+        Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
+        " generators so far");
+        if not opts!.schreier then
+          Print(", for \t", Size(OrbitsOfImages(s)), " elements\r");
+        fi;
+      od;
+      Print("\n");
+    else
+      for f in gens do
+        if not f in s then
+          s:=ClosureSemigroupNC(s, [f], closure_opts);
+        fi;
+      od;
+    fi;
+    return s;
+  fi;
+
+  s:=Objectify( NewType( FamilyObj( gens ), 
    IsSemigroup and IsAttributeStoringRep ), rec(opts:=opts));
 
-  SetGeneratorsOfMagma( S, AsList( gens ) );
-  return S;
+  SetGeneratorsOfMagma( s, AsList( gens ) );
+  return s;
 end);
 
 #EOF

@@ -1213,51 +1213,12 @@ end);
 
 #SSS
 
-# new for 0.5! - SemigroupWithSmallGenSet - "for a trans. semi."
-#############################################################################
-
-InstallGlobalFunction(SemigroupWithSmallGenSet, 
-function(gens)
-  local n, i, s, f;
-
-  gens:=ShallowCopy(gens);
-  gens:=SSortedList(gens); #remove duplicates 
-  gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
-  Sort(gens, function(x, y) return Rank(x)>Rank(y); end);;
-
-  n:=Length(gens[1]![1]);
-  
-  if gens[1]![1]=[1..n] and Rank(gens[2])=n then 
-    Remove(gens, 1);
-  fi;
-
-  i:=0; 
-  s:=Semigroup(gens[1]);
-  
-  if InfoLevel(InfoCitrus)>1 then
-    n:=Length(gens);
-    for i in [1..n] do 
-      Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
-      " generators so far, for ");
-      s:=ClosureSemigroup(s, gens[i]);
-      Print("\t", Size(OrbitsOfImages(s)), " elements\r");
-    od;
-    Print("\n");
-  else
-    for f in gens do 
-      s:=ClosureSemigroup(s, f);
-    od;
-  fi;
-
-  return s;
-end);
-
 # fix for 0.5! - SmallGeneratingSet - "for a trans. semi."
 #############################################################################
 
 InstallOtherMethod(SmallGeneratingSet, "for a trans. semi.", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-s -> Generators(SemigroupWithSmallGenSet(Generators(s))));
+s -> Generators(Semigroup(Generators(s), rec(small:=true, schreier:=false))));
 
 # new for 0.2! - StructureDescription - "for a Brandt trans. semigroup"
 ############################################################################

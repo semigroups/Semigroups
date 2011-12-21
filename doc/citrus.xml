@@ -309,15 +309,7 @@ gap></Log>
   </Section>
 </Chapter>
 
-<Chapter Label="create"><Heading>Creating Semigroups and Monoids</Heading>
-  <Section><Heading>Semigroups by generators</Heading>
-    <#Include Label="RandomTransformationMonoid">
-  </Section>
-  
-  <Section><Heading>New semigroups from old</Heading>
-    <#Include Label="ClosureSemigroup"/>
-  </Section>
-</Chapter>
+<#Include SYSTEM "semigroups.xml">
 
 <Chapter Label="green"><Heading>Green's Relations</Heading>
   
