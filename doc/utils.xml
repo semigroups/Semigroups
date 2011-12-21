@@ -55,7 +55,7 @@
 MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
  InstallationPath, "/doc"), "citrus.xml", [
  "utils.xml", "greens.xml", "orbits.xml", "properties.xml",
- "transform.xml", "closure.xml", "../PackageInfo.g"], "citrus", "MathJax");;</Log>
+ "transform.xml", "../PackageInfo.g"], "citrus", "MathJax");;</Log>
 
       at the &GAP; prompt. 
     </Description>
