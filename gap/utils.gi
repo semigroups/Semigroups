@@ -23,25 +23,6 @@ function()
   return;
 end);
 
-# new for 0.5! - CitrusManualExamples - "for no argument" 
-#############################################################################
-
-InstallGlobalFunction(CitrusManualExamples, 
-function()
-  local ex, tst, i;
-
-  ex:=ManualExamples("~/citrus/doc/", "citrus.xml",  [ "utils.xml",
-  "greens.xml", "orbits.xml", "properties.xml", 
-  "transform.xml", "../PackageInfo.g" ], "Single" );;
-
-  for i in [1..Length(ex)] do 
-    Print("*** Example ", i, " ***\n");
-    tst:=ReadTestExamplesString(ex[i]);
-  od;
-
-  return true;
-end);
-
 # new for 0.4! - CitrusMathJaxDefault - "for no argument"
 #############################################################################
 
@@ -128,6 +109,26 @@ function()
   Unbind(InfoLevelInfoCitrus); Unbind(InfoLevelInfoWarning);
   return;
 end);
+
+# new for 0.5! - CitrusReadTestManualExamples - "for no argument" 
+#############################################################################
+
+InstallGlobalFunction(CitrusReadTestManualExamples, 
+function()
+  local ex, tst, i;
+
+  ex:=ManualExamples("~/citrus/doc/", "citrus.xml",  [ "utils.xml",
+  "greens.xml", "orbits.xml", "properties.xml", 
+  "transform.xml", "../PackageInfo.g" ], "Single" );;
+
+  for i in [1..Length(ex)] do 
+    Print("*** Example ", i, " ***\n");
+    tst:=ReadTestExamplesString(ex[i]);
+  od;
+
+  return true;
+end);
+
 
 # new for 0.1! - DClass - "for a trans. semi and trans. or Green's class"
 #############################################################################

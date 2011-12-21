@@ -9,12 +9,12 @@
 ##
 
 DeclareGlobalFunction("CitrusMakeDoc");
-DeclareGlobalFunction("CitrusManualExamples");
 DeclareGlobalFunction("CitrusMathJaxLocal");
 DeclareGlobalFunction("CitrusMathJaxDefault");
 DeclareGlobalFunction("CitrusTestAll");
 DeclareGlobalFunction("CitrusTestInstall");
 DeclareGlobalFunction("CitrusTestManualExamples");
+DeclareGlobalFunction("CitrusReadTestManualExamples");
 DeclareGlobalFunction("DClass");
 DeclareGlobalFunction("DClassNC");
 

@@ -23,7 +23,7 @@
       See also <Ref Oper="IsomorphismTransformationSemigroup" BookName="ref"/>. 
 
       <Example>
-gap> S:=Semigroup(ReadCitrus("pkg/citrus/examples/selfcomp.citrus", 34));;
+gap> S:=Semigroup(ReadCitrus("pkg/citrus/examples/selfcomp.citrus.gz", 34));;
 gap> Size(S);
 1016
 gap> AntiIsomorphismTransformationSemigroup(S); 
@@ -79,7 +79,7 @@ gap> StructureDescription(GroupOfUnits(S));
       
       See also <Ref Attr="Idempotents"/> and <Ref Attr="SmallGeneratingSet"/>.
 <Example>
-gap> S:=Semigroup(ReadCitrus("pkg/citrus/examples/graph8c.citrus", 13));;
+gap> S:=Semigroup(ReadCitrus("pkg/citrus/examples/graph8c.citrus.gz", 13));;
 gap> IdempotentGeneratedSubsemigp(S);
 &lt;semigroup with 652 generators></Example>
     </Description>

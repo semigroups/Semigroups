@@ -228,7 +228,7 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
       The file <A>filename</A> can be read using <Ref Func="ReadCitrus"/>.
       <P/>
 <Example>
-gap> ReadCitrus("pkg/citrus/examples/graph7c.citrus", 453);
+gap> ReadCitrus("pkg/citrus/examples/graph7c.citrus.gz", 453);
 [ Transformation( [ 1, 2, 2, 4, 5, 6, 7 ] ), 
   Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] ), 
   Transformation( [ 1, 2, 3, 4, 5, 7, 7 ] ), 
