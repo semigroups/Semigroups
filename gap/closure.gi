@@ -33,6 +33,8 @@ function(arg)
     arg[3]:=arg[1]!.opts;
   fi;
 
+  arg[3]!.small:=false;
+
   if IsTransformationSemigroup(arg[2]) then 
     arg[2]:=Generators(arg[2]);
   elif IsTransformation(arg[2]) then 

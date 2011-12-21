@@ -86,11 +86,15 @@ function(gens, opts)
 
   if not "schreier" in names then 
     opts!.schreier:=true;
-  elif not "small" in names then 
+  fi;
+
+  if not "small" in names then 
     opts!.small:=false;
-  elif not "hashlen" in names then
+  fi;
+  
+  if not "hashlen" in names then
     opts!.hashlen:=rec(S:=1009, M:=25013, L:=100003);
-  elif "hashlen" in names then 
+  elif IsPosInt(opts!.hashlen) then  
     n:=opts!.hashlen; 
     opts!.hashlen:=rec(S:=NextPrimeInt(n/100), M:=NextPrimeInt(n/4), 
      L:=NextPrimeInt(n));
@@ -213,11 +217,15 @@ function(gens, opts)
 
   if not "schreier" in RecNames(opts) then 
     opts!.schreier:=true;
-  elif not "small" in names then 
+  fi;
+
+  if not "small" in names then 
     opts!.small:=false;
-  elif not "hashlen" in names then
+  fi;
+
+  if not "hashlen" in names then
     opts!.hashlen:=rec(S:=1009, M:=25013, L:=100003);
-  elif "hashlen" in names then
+  elif IsPosInt(opts!.hashlen) then 
     n:=opts!.hashlen;
     opts!.hashlen:=rec(S:=NextPrimeInt(n/100), M:=NextPrimeInt(n/4),
      L:=NextPrimeInt(n));
