@@ -155,9 +155,13 @@ gap> GeneratorsOfSemigroup(S);
   <ManSection>
     <InfoClass Name="InfoCitrus"/>
     <Description>
-    is the info class (see <Ref Subsect="Info Functions" BookName="ref"/>) of 
-    &Citrus;. The info level is initially set to 0 and no info messages are
-    displayed.
+    <C>InfoCitrus</C> is the info class of the &Citrus; package. 
+    The info level is initially set to 1 and only basic info messages
+    are displayed. To increase the amount of information displayed during a
+    computation increase the info level to 2 or 3. To stop all info messages
+    from being displayed, set the info level to 0.  See also
+    <Ref Subsect="Info Functions" BookName="ref"/> and 
+    <Ref Func="SetInfoLevel" BookName="ref"/>. 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -188,7 +192,7 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
       if <A>filename</A> is a file created using <Ref Func="WriteCitrus"/>,
       then <C>ReadCitrus</C> returns the contents of this file as a list of
       lists of transformations. If the optional second argument <A>nr</A> is
-      present then <C>ReadCitrus</C> returns the transformations stored in the 
+      present, then <C>ReadCitrus</C> returns the transformations stored in the 
       <A>nr</A>th line of <A>filename</A>. <P/>
     </Description>
   </ManSection>
@@ -196,7 +200,7 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
 
 <#GAPDoc Label="WriteCitrus">
   <ManSection> 
-    <Func Name="WriteCitrus" Arg="trans, filename"/>
+    <Func Name="WriteCitrus" Arg="filename, trans"/>
     <Returns>Nothing.</Returns>
     <Description>
       This function provides a method for writing transformations to a file
@@ -213,11 +217,11 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
       for every list of transformations in <A>trans</A>. If any element of
       <A>trans</A> is a transformation semigroup, then the generators of that
       semigroup are written to <A>filename</A>. The first character <C>m</C> of 
-      the line is the number of characters in the degree of
+      the appended line is the number of characters in the degree of
       the transformations to be written, the next <C>m</C> characters are the 
       degree <C>n</C> of the transformations to be written, and the
       transformations themselves are written in blocks of <C>m*n</C> in the 
-      remainder of the line. For example, if the transformations:
+      remainder of the line. For example, the transformations:
       <Log>
 [ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ), 
   Transformation( [ 3, 8, 1, 9, 9, 4, 10, 5, 10, 6 ] )]</Log>

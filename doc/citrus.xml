@@ -3,7 +3,11 @@
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
    [ <!ENTITY Citrus "<Package>Citrus</Package>">
      <!ENTITY Smallsemi "<Package>Smallsemi</Package>">
-     <!ENTITY H "<Alt Only='HTML'>\(\mathcal{H}/)</Alt><Alt
+     <!ENTITY Monoid "<Package>Monoid</Package>">
+     <!ENTITY Orb "<Package>Orb</Package>">
+     <!ENTITY vspace "<Alt Only='LaTeX'>\vspace{\baselineskip}</Alt>">
+     <!ENTITY noindent "<Alt Only='LaTeX'>\noindent</Alt>">
+     <!ENTITY H "<Alt Only='HTML'>\(\mathcal{H}\)</Alt><Alt
      Only='Text'><E>H</E></Alt><Alt Only='LaTeX'><M>\mathcal{H}</M></Alt>">
      <!ENTITY R "<Alt Only='HTML'>\(\mathcal{R}\)</Alt><Alt
      Only='Text'><E>R</E></Alt><Alt Only='LaTeX'><M>\mathcal{R}</M></Alt>">
@@ -27,25 +31,23 @@
   </Author>
   
   <Copyright>&copyright; 2011 by J. D. Mitchell.<P/>
-    &Citrus; is free software; you can redistribute it and/or modify it
-    under the terms of the
-    <URL Text="GNU General Public License">
-    http://www.fsf.org/licenses/gpl.html</URL>
-    as published by the Free Software Foundation; either version 2 of
-    the License, or (at your option) any later version.
-  </Copyright>
+    &Citrus; is free software; you can redistribute it and/or modify it under
+    the terms of the <URL Text="GNU General Public
+    License">http://www.fsf.org/licenses/gpl.html</URL> as published by the
+    Free Software Foundation; either version 2 of the License, or (at your
+    option) any later version.  </Copyright>
 
   <Acknowledgements>
-    I would like to thank P. von Bunau, A. Distler, S. Linton, J. 
-    Neubueser, M. R. Quick, E. F. Robertson, and N. Ruskuc for
-    their help and suggestions. Special thanks go to J. Araujo for his 
-    mathematical suggestions and to M. Neunhoeffer for his invaluable help in
-    improving the efficiency of the package. <P/>
+    I would like to thank P. von Bunau, A. Distler, S. Linton, J.  Neubueser, 
+    M. R. Quick, E. F. Robertson, and N. Ruskuc for their help and
+    suggestions.  Special thanks go to J. Araujo for his mathematical
+    suggestions and to M.  Neunhoeffer for his invaluable help in improving the
+    efficiency of the package. <P/>
 
     I would also like to acknowledge the support of the Centre of Algebra at 
-    the University of Lisbon, and of EPSRC grant number GR/S/56085/01. 
-    <Br/><Br/>
+    the University of Lisbon, and of EPSRC grant number GR/S/56085/01.
     </Acknowledgements>
+   
 </TitlePage>
 
 <TableOfContents/>
@@ -55,61 +57,64 @@
   <Heading>
   The &Citrus; package</Heading>
   <Index>&Citrus; overview</Index>	
+  <Section><Heading>Warning</Heading> 
+    &Citrus; is still under development, and so some features may not function
+    as expected. At the present time, I do not know of any errors or serious
+    issues with &Citrus;.  If you find a bug or an issue with the package, then
+    please let me know by emailing me the details at: 
+    <Email>jdm3@st-and.ac.uk</Email>.
+  </Section>
+
   <Section><Heading>Overview</Heading>
     This is the manual for the &Citrus; package version &VERSION; for computing
-    with transformation semigroups. &Citrus; &VERSION; is an updated 
-    version of the <Package>Monoid</Package>
-    package for &GAP; 3 and 4; see<Alt Only="LaTeX">\vspace{\baselineskip}</Alt>
-    <P/><Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt>
-    <URL>http://schmidt.nuigalway.ie/monoid/index.html</URL><P/>
-    <Alt Only="LaTeX">\noindent</Alt>
-    for more information about the original <Package>Monoid</Package> package 
-    for &GAP; 3 by Goetz
-    Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc, or<Alt
-    Only="LaTeX">\vspace{\baselineskip}</Alt>
-    <P/><Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html
-    </URL><P/>
-    <Alt Only="LaTeX">\noindent</Alt> for more information about 
-    <Package>Monoid</Package> 3.1.4 for &GAP; 4.
+    with transformation semigroups. &Citrus; &VERSION; is an updated version of
+    the <URL Text="Monoid package for GAP 3">
+    http://schmidt.nuigalway.ie/monoid/index.html</URL>
+    by Goetz Pfeiffer, Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc
+    and the <URL Text="Monoid package for GAP 4">
+    http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html</URL> by J.
+    D. Mitchell.<P/>
 
-    The functionality of <Package>Monoid</Package> 3.1.4 has been split across 
-    two &GAP; 4.5 packages &Citrus; and <Package>Comatose</Package>.
+    The functionality of &Monoid; 3.1.4 for &GAP; 4 has been split between the  
+    &GAP; 4.5 packages &Citrus; and <URL Text="Comatose">
+    http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html"></URL>.
 
-    &Citrus; &VERSION; retains all the functionality of the 
-    original <Package>Monoid</Package> package for
-    &GAP; 3; and those functions from <Package>Monoid</Package> 3.1.4 not 
-    involved in the 
-    computation of
-    automorphism groups of semigroups. The <Package>Comatose</Package> package 
-    retains those
-    functions from <Package>Monoid</Package> 3.1.4 used to compute
-    automorphism groups of transformation semigroups. See<Alt
-    Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
-    <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html</URL><P/>
+    &Citrus; &VERSION; retains all the functionality of the original &Monoid;
+    package for &GAP; 3; and many of those functions from &Monoid; 3.1.4 not
+    involved in the computation of automorphism groups of semigroups. The
+    <URL Text="Comatose">
+    http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html
+    </URL> package retains those functions from &Monoid;
+    3.1.4 used to compute automorphism groups of transformation semigroups. <P/>
 
-    <Alt Only="LaTeX">\noindent</Alt> &Citrus; &VERSION;
-    contains more efficient methods than those 
-    available in the &GAP; library for calculating Green's classes, finding the
-    size, the elements, and testing membership in transformation semigroups;
-    see Chapter <Ref Chap="green"/>. 
-    After &Citrus; has been loaded many of these methods are
-    automatically used in preference to those in the library and do not need to 
-    be called explicitly by the user.
-    In addition, there are methods for testing if a semigroup satisfies a
-    particular property, such as if it is regular, simple, inverse, or 
-    completely regular; see Chapter <Ref Chap="properties"/>.<P/>
+    &noindent; &Citrus; &VERSION; contains more efficient methods than those
+    available in the &GAP; library (and in many cases more efficient than any
+    other software for computing with transformation semigroups) for creating 
+    transformation semigroups, calculating its Green's classes, size, elements,
+    group of units, minimal ideal, and testing membership, finding the
+    inverses of a regular element, and factorizing elements over the 
+    generators, and many more; see Chapters <Ref Chap="create"/> and  
+    <Ref Chap="green"/>. There are also methods for testing if a semigroup 
+    satisfies a particular property, such as if it is regular, simple, inverse, 
+    completely regular, and a variety of further properties; see Chapter 
+    <Ref Chap="properties"/>. A range of functions for creating and determining
+    properties of individual transformations such as the index and period or  
+    the least idempotent power; see Chapter 
+    <Ref Chap="Transformations and Actions"/>. 
+    A large catalogue of examples is provided; see Section 
+    <Ref Sect="examples"/>.
+    &Citrus; also provides abbreviated names for many of
+    the commonly used &GAP; library functions related to semigroups, and
+    functions to read and write large collections of transformations to a
+    file; see <Ref Func="ReadCitrus"/> and <Ref Func="WriteCitrus"/>. <P/>
 
-    <Alt Only="LaTeX">\noindent</Alt> The &Citrus; package is 
-    written in &GAP; code only but requires the <Package>Orb</Package> 
-    package.
-    The <Package>Orb</Package> package is used to efficiently compute
-    orbits in transformation semigroups and such methods underpin most of the
-    features of &Citrus;. See
-    <Alt Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
-    <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt>
-    <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html</URL><P/>
-    <Alt Only="LaTeX">\noindent</Alt> or the main &GAP; webpages for more 
-    information. 
+    &noindent; The &Citrus; package is written in &GAP; code only but requires 
+    the <URL Text="Orb">
+    http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
+    </URL> package.
+    The &Orb; package is used to efficiently compute
+    orbits in transformation semigroups and these methods underpin most of the
+    features of &Citrus;. 
   </Section>
 
   <Section Label="install">
@@ -117,14 +122,13 @@
 
     In this section we give a brief description of how to start using  
     &Citrus;. If you have any problems getting
-    &Citrus; working, then you could try emailling me at
+    &Citrus; working, then you could try emailing me at
     <Email>jdm3@st-and.ac.uk</Email>. <P/>
 
     It is assumed that you have a working copy of &GAP; with version number 
     4.5 or higher. The most up-to-date version of &GAP; and instructions on
     how to install it can be obtained from the main &GAP; webpage
-   <Alt    Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
-       <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt>
+    &vspace;<P/>&noindent;&vspace;
     <URL>http://www.gap-system.org</URL><P/>
 
     <Alt Only="LaTeX">\noindent</Alt> The following is a summary of the steps 
@@ -135,25 +139,25 @@
     
       <Item> download and install the <Package>Orb</Package> package version 
       &ORBVERS; or higher. For more details go to:
-      <Alt Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
-          <Alt Only="LaTeX">\noindent</Alt><URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
+      &vspace;<P/>&noindent; 
+      <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
       </URL><P/>
-      <Alt Only="LaTeX">\noindent</Alt> Note that both <Package>Orb</Package>
-      and &Citrus; are faster if <Package>Orb</Package>
+      &noindent; Note that both &Orb; and &Citrus; perform better if &Orb;
       is compiled. 
       </Item>
     
       <Item> download the package archive <C>&ARCHIVENAME;.tar.gz</C> from
-      <Alt Only="LaTeX">\vspace{\baselineskip}</Alt><P/>
-          <Alt Only="LaTeX">\noindent\vspace{\baselineskip}</Alt><URL>http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html
-      </URL></Item>
+      &vspace;<P/>&noindent;&vspace;
+      <URL>http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html
+      </URL>
+      </Item>
     
       <Item> unzip and untar the file, this should create a directory called
-      &ARCHIVENAME;.</Item>
+      <C>&ARCHIVENAME;</C>.</Item>
     
       <Item> 
       locate the <C>pkg</C> directory of your &GAP; directory, which contains
-      several other directories such as <C>lib</C>, <C>doc</C> and so on. Move 
+      the directories <C>lib</C>, <C>doc</C> and so on. Move 
       the directory &ARCHIVENAME; into the <C>pkg</C> directory.
       </Item>
     
@@ -228,12 +232,10 @@ gap></Log>
     <#Include Label="CitrusTestAll">
     <#Include Label="CitrusTestInstall">
     <#Include Label="CitrusTestManualExamples">
-
   </Section>
 
   <Section><Heading>More information during a computation</Heading>
     <#Include Label="InfoCitrus">
-
   </Section>
 
   <Section Label="examples"><Heading>The examples directory</Heading>
@@ -243,9 +245,13 @@ gap></Log>
     semigroups. These files can be read into &GAP; using 
     <Ref Func="ReadCitrus"/> and similar files can be created using 
     <Ref Func="WriteCitrus"/>.<P/>
-    
-    A list of the available files, their contents, and how they were created is
-    given below.
+
+    Further examples can be downloaded from &vspace;<P/>
+
+    <URL>http://tinyurl.com/jdmitchell/examples.html</URL>&vspace;<P/>
+
+    &noindent; A list of the available files, a desciption of their contents, 
+    and how they were created is given below.<P/>
 
     <List>
       <Item>
@@ -303,7 +309,10 @@ gap></Log>
         <M>71</M>; and some further randomly chosen values of <M>p,q,r</M>.
       </Item>
     </List>
-        
+  </Section>
+  <Section><Heading>Reading and writing transformations to a file</Heading>
+    The functions <Ref Func="ReadCitrus"/> and <Ref Func="WriteCitrus"/> can be
+    used to read or write large collections of transformations to a file. 
     <#Include Label="ReadCitrus">
     <#Include Label="WriteCitrus">
   </Section>
@@ -313,13 +322,11 @@ gap></Log>
 
 <Chapter Label="green"><Heading>Green's Relations</Heading>
   
-  <Section><Heading>Introduction</Heading>
+  <Section><Heading>Some theory</Heading>
     
     This chapter contains instructions on how to use the functions implemented 
-    in &Citrus; for
-    computing Green's relations and related notions for transformation         
-    semigroups and monoids.  
-    <P/>
+    in &Citrus; for computing Green's relations and related notions for 
+    transformation semigroups and monoids.<P/>
 		
     The theory behind these algorithms is developed in <Cite Key="pfeiffer1"/>
     and the algorithms themselves are more or less described in 
@@ -467,11 +474,18 @@ gap> GreensRClasses(S);
     (for a group &H;-class).</Item>
     </List>
     <P/>
-    Shorter versions of some of the
-    command mentioned in this section. 
+    &Citrus; contains functions synonymous to some of the
+    commands mentioned in this section but, for the sake of convenience with 
+    abbreviated names. 
   </Section>
 
-  <Section><Heading>Green's classes</Heading>
+  <Section><Heading>Individual Green's classes</Heading>
+  </Section>
+
+  <Section><Heading>Collections of Green's classes</Heading>
+  </Section>
+
+  <Section><Heading>Properties of Green's classes</Heading>
     <#Include Label="\&lt;">
     <#Include Label="XClassOfYClass">
     <#Include Label="GreensXClasses">

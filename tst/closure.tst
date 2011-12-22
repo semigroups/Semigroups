@@ -237,7 +237,6 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
-gap> Unbind(s);; Unbind(gens);;
+gap> Unbind(s);; Unbind(t);; Unbind(i);; Unbind(gens);;
 
 gap> STOP_TEST( "Citrus package: closure.tst", 10000);
-

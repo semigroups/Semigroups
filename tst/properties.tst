@@ -19,12 +19,12 @@ gap> SetInfoLevel(InfoWarning, 0);;
 gap> SetInfoLevel(InfoCitrus, 0);
 
 gap> file:="pkg/citrus/examples/misc.citrus.gz";;
-gap> semis:=List([1..20], i-> Semigroup(ReadCitrus(file, i)));;
-gap> List([1..15], i-> IsCompletelyRegularSemigroup(semis[i]));  
-[ false, true, false, false, true, true, true, true, true, false, false, 
-  false, false, true, false ]
-gap> List([15..20], i-> IsCompletelyRegularSemigroup(semis[i]));  
-[ true, false, false, false, false, false, true, false ]
+gap> semis:=List([1..22], i-> Semigroup(ReadCitrus(file, i)));;
+gap> List([1..15], i-> IsCompletelyRegularSemigroup(semis[i]));   
+[ false, true, false, false, false, true, true, true, true, true, false,
+  false, false, false, true ]
+gap> List([15..22], i-> IsCompletelyRegularSemigroup(semis[i]));  
+[ true, false, true, false, false, false, false, false ]
 
 gap> s:=Semigroup(Transformation([3,3,2,6,2,4,4,6]),
 > Transformation([3,3,2,6,2,4,4,6]));;
@@ -34,7 +34,7 @@ true
 gap> g1:=Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] );;
 gap> g2:=Transformation( [ 2, 3, 4, 5, 6, 8, 7, 1, 2, 2 ] );;
 gap> s:=Semigroup(Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ),
->Transformation( [ 2, 3, 4, 5, 6, 8, 7, 1, 2, 2 ] ));;
+> Transformation( [ 2, 3, 4, 5, 6, 8, 7, 1, 2, 2 ] ));;
 gap> IsSimpleSemigroup(s);
 true
 
@@ -64,7 +64,7 @@ gap> s:=Semigroup(Transformation([1,2,2,1,2]),
 gap> IsCompletelySimpleSemigroup(s);
 true
 
-gap> s:=semis[11];;
+gap> s:=semis[12];;
 gap> d:=GreensDClassOfElement(s, 
 > Transformation( [ 12, 2, 1, 3, 6, 6, 12, 2, 3, 3, 11, 3 ] ));;
 gap> g:=GroupHClassOfGreensDClass(d);;
@@ -79,8 +79,8 @@ false
 
 gap> List(semis, IsCliffordSemigroup);
 [ false, true, false, false, false, false, false, false, false, false, false, 
-  false, false, false, false, false, false, false, false, false, false, false,
-  false ]
+  false, false, false, false, false, false, false, false, false, false, false
+ ]
 gap> ForAll(GreensDClasses(semis[2]), x-> Length(GreensHClasses(x))=1 and 
 > IsRegularDClass(x));
 true
@@ -94,7 +94,7 @@ gap> s:=Semigroup(Transformation([1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]),
 > Transformation([1,2,3,4,5,6,7,4,4,4,4,4,4,4,4,4,4,4,4,4,4]),
 > Transformation([1,2,3,4,5,6,7,8,9,10,11,4,4,4,4,4,4,4,4,4,4]),
 > Transformation([1,2,3,4,4,4,4,4,4,4,4,12,13,14,15,16,4,4,4,4,4]),
-> Transformation([1..21]*1));;
+> Transformation([1..21]*1));; 
 gap> IsCliffordSemigroup(s);
 true
 gap> IsCommutativeSemigroup(s);
@@ -106,17 +106,16 @@ gap> ForAll(GreensDClasses(s), x-> Length(GreensHClasses(x))=1 and
 true
 
 gap> List(semis, IsRegularSemigroup);
-[ false, true, false, false, true, true, true, true, true, false, false,
-  true, true, true, false, true, false, false, false, false, true, true, 
-  false ]
+[ false, true, false, false, false, true, true, true, true, true, false,
+  false, true, true, true, false, true, false, false, false, false, true ]
 gap> IsInverseSemigroup(s);
-[ true, true ]
+true
 gap> IsBand(s);
 true
 gap> List(semis, IsBand);
 [ false, false, false, false, false, false, false, false, false, false,
   false, false, false, false, false, false, false, false, false, false, 
-  false, false, false ]
+  false, false ]
 
 gap> s:=ReesMatrixSemigroup(Group(()), [[(), (), ()], [(), (), ()], 
 > [(), (), ()], [(), (), ()]]);;
@@ -135,9 +134,10 @@ gap> 4^4-Factorial(4)+1;
 gap> ForAll(semis, x-> not IsIdempotentGenerated(x));
 true
 gap> List(semis, IsOrthodoxSemigroup);
-[ false, true, false, false, false, false, true, true, true, false, false, 
-  false, false, true, false ]
-gap> s:=semis[7];;
+[ false, true, false, false, false, false, false, true, true, true, false,
+  false, false, false, true, false, true, false, false, false, false, false ]
+
+gap> s:=semis[8];;
 gap> Size(s);;
 gap> t:=Semigroup(Idempotents(s));;
 gap> IsBand(t);    
@@ -153,17 +153,20 @@ gap> IsRightZeroSemigroup(s);
 false
 
 gap> s:=ReesMatrixSemigroup(Group(()), [[()], [()], [()], [()], [()], 
-> [()]]]);;
+> [()]]);;
 gap> s:=Range(IsomorphismTransformationSemigroup(s));;
 gap> IsRightZeroSemigroup(s);
 true
 gap> IsLeftZeroSemigroup(s);
-fals
-e
+false
 gap> List(semis, IsLeftZeroSemigroup);    
-[ false, false, false, false, false, false, false, false ]
+[ false, false, false, false, false, false, false, false, false, false,
+  false, false, false, false, false, false, false, false, false, false,
+  false, false ]
 gap> List(semis, IsRightZeroSemigroup);
-[ false, false, false, false, false, false, false, false ]
+[ false, false, false, false, false, false, false, false, false, false,
+  false, false, false, false, false, false, false, false, false, false,
+  false, false ]
 
 gap> gens:=[ Transformation( [ 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 2 ] ), 
 > Transformation( [ 1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11, 3 ] ), 

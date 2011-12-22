@@ -356,6 +356,7 @@ function(arg)
   #####
 
   file:=IO_FilteredFile([["gzip", ["-d"]]], arg[1]);
+
   if file=fail then 
     Error(arg[1], " is not a readable file,");
     return;
@@ -366,21 +367,23 @@ function(arg)
       repeat  
         i:=i+1; line:=IO_ReadLine(file);
       until i=arg[2] or line="";
-      
-      if line="" then 
+      IO_Close(file); 
+      if line="" then
         Error(arg[1], " only has ", i-1, " lines,"); 
         return;
       else
         return read_line(Chomp(line));
       fi;
     else
+      IO_Close(file);
       Error("the second argument should be a positive integer,");
       return;
     fi;
   fi;
 
   line:=IO_ReadLines(file);
-  return List(line, x-> Chomp(read_line(x)));
+  IO_Close(file);
+  return List(line, x-> read_line(Chomp(x)));
 end);
 
 # new for 0.5! - WriteCitrus - "for a string and trans. coll."
