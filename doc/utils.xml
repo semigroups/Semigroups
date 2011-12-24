@@ -13,7 +13,7 @@
     <Func Name="CitrusMakeDoc" Arg=""/>
     <Returns>Nothing.</Returns>    
     <Description>
-      this function should be called with no argument to compile the 
+      This function should be called with no argument to compile the 
       &Citrus; documentation. The same effect can be
       achieved by entering:
 
@@ -33,7 +33,7 @@ MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
     <Func Name="CitrusTestAll" Arg=""/>
     <Returns>Nothing.</Returns> 
     <Description>
-      this function should be called with no argument to comprehensively
+      This function should be called with no argument to comprehensively
       test that &Citrus; is working correctly. These tests
       should take no more than 1 minute to complete. The same effect can be
       achieved by entering:
@@ -52,7 +52,7 @@ MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
     <Func Name="CitrusTestManualExamples" Arg=""/>
     <Returns>Nothing.</Returns> 
     <Description>
-      this function should be called with no argument to test the examples in
+      This function should be called with no argument to test the examples in
       the &Citrus; manual. These tests
       should take no more than a few seconds to complete. The same 
       effect can be achieved by entering:
@@ -76,16 +76,16 @@ InstallationPath, "/doc"), "citrus.xml",
     <Func Name="CitrusTestInstall" Arg=""/>
     <Returns>Nothing.</Returns> 
     <Description>
-      this function should be called with no argument to test your installation
-      of &Citrus; is working correctly. These tests
-      should take no more than a fraction of a second to complete. The same 
-      effect can be achieved by entering:
+      This function should be called with no argument to test your installation
+      of &Citrus; is working correctly. These tests should take no more than a
+      fraction of a second to complete. The same effect can be achieved by
+      entering:
 
 <Log>ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"testinstall.tst"));;</Log>
 
-      at the &GAP; prompt. 
-      To more comprehensively test that &Citrus; is installed
-      correctly use <Ref Func="CitrusTestAll"/>. 
+      at the &GAP; prompt.  To more comprehensively test that &Citrus; is
+      installed correctly use <Ref Func="CitrusTestAll"/>. 
+
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -95,14 +95,13 @@ InstallationPath, "/doc"), "citrus.xml",
     <Func Name="Degree" Arg="obj"/>
     <Returns>A positive integer.</Returns>
     <Description>
-      returns the result of 
-      <Ref Oper="DegreeOfTransformation" BookName="ref"/>, 
-      if <A>obj</A> is a transformation semigroup
-      and 
-      <Ref Oper="DegreeOfTransformationSemigroup" BookName="ref"/> 
-      if <A>obj</A> a transformation.
+      Returns the result of 
+      <Ref Oper="DegreeOfTransformationSemigroup" BookName="ref"/>, 
+      if <A>obj</A> is a transformation semigroup and 
+      <Ref Oper="DegreeOfTransformation" BookName="ref"/> if
+      <A>obj</A> a transformation.  
     </Description>
-  </ManSection>
+  </ManSection> 
 <#/GAPDoc>
 
 <#GAPDoc Label="Rank">
@@ -110,8 +109,7 @@ InstallationPath, "/doc"), "citrus.xml",
     <Func Name="Rank" Arg="f"/>
     <Returns>A positive integer.</Returns>
     <Description>
-      returns the result of 
-      <Ref Oper="RankOfTransformation" BookName="ref"/>, 
+      Returns the result of <Ref Oper="RankOfTransformation" BookName="ref"/>, 
       if <A>f</A> is a transformation.
     </Description>
   </ManSection>
@@ -120,7 +118,7 @@ InstallationPath, "/doc"), "citrus.xml",
 <#GAPDoc Label="Generators">
   <ManSection>
     <Func Name="Generators" Arg="S"/>
-    <Returns>A list of a transformations.</Returns>
+    <Returns>A list of transformations.</Returns>
     <Description>
       returns the result of 
       <Ref Attr="GeneratorsOfMonoid" BookName="ref"/>, 
@@ -172,7 +170,7 @@ gap> GeneratorsOfSemigroup(S);
     <Func Name="RandomTransformationSemigroup" Arg="m, n"/>
     <Returns>A transformation semigroup.</Returns>
     <Description>
-      returns a random transformation monoid or semigroup of degree <A>n</A> 
+      Returns a random transformation monoid or semigroup of degree <A>n</A> 
       with <A>m</A> generators.
       <Example>
 gap&gt; S:=RandomTransformationMonoid(5,5);
@@ -189,7 +187,7 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
     <Returns>A list of transformations or a list of lists of transformations.
     </Returns>
     <Description>
-      if <A>filename</A> is a file created using <Ref Func="WriteCitrus"/>,
+      If <A>filename</A> is a file created using <Ref Func="WriteCitrus"/>,
       then <C>ReadCitrus</C> returns the contents of this file as a list of
       lists of transformations. If the optional second argument <A>nr</A> is
       present, then <C>ReadCitrus</C> returns the transformations stored in the 

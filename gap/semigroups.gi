@@ -301,8 +301,11 @@ function(gens, opts)
     opts!.hashlen:=rec(S:=1009, M:=25013, L:=100003);
   elif IsPosInt(opts!.hashlen) then  
     n:=opts!.hashlen; 
-    opts!.hashlen:=rec(S:=NextPrimeInt(n/100), M:=NextPrimeInt(n/4), 
+    opts!.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)), 
      L:=NextPrimeInt(n));
+  else
+    Error("the component hashlen should be a positive integer,");
+    return;
   fi;
 
   if opts!.small then #small gen. set
@@ -434,7 +437,7 @@ function(gens, opts)
     opts!.hashlen:=rec(S:=1009, M:=25013, L:=100003);
   elif IsPosInt(opts!.hashlen) then 
     n:=opts!.hashlen;
-    opts!.hashlen:=rec(S:=NextPrimeInt(n/100), M:=NextPrimeInt(n/4),
+    opts!.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)),
      L:=NextPrimeInt(n));
   fi;
 
