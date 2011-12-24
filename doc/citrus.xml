@@ -728,7 +728,7 @@ gap></Log>
 
   </Section>
 
-  <Section><Heading>Changing representation</Heading>
+  <Section><Heading>Changing the representation of a transformation</Heading>
     It is possible to change the representation of certain transformations
     using the functions described in this section.  
     <#Include Label="AsPermOfKerImg">

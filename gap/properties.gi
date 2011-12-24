@@ -1175,6 +1175,35 @@ function(s)
   return fail;
 end);
 
+#NNN
+
+# new for 0.5! - NrEltsOfRank - "for a transformation semigroup"
+#############################################################################
+
+InstallMethod(NrEltsOfRank, "for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
+function(s, m)
+  local iter, tot, r;
+  
+  if m > Degree(s) then 
+    return 0;
+  elif m > MaximumList(List(Generators(s), Rank)) then 
+    return 0;
+  fi;
+
+  iter:=IteratorOfRClasses(s);
+
+  tot:=0;
+
+  for r in iter do 
+    if r!.data[1]=m then 
+      tot:=tot+Size(r);
+    fi;
+  od;
+
+  return tot;
+end);
+
 #PPP
 
 # new for 0.5! - PosetOfIdempotents - "for a transformation semigroup"
