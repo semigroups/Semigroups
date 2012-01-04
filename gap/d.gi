@@ -1111,6 +1111,14 @@ InstallOtherMethod(GreensLClassOfElementNC,  "for D-class and transformation",
 function(d, f)
   local l, schutz, data, g, cosets, r, p;
 
+# JDM must change data[1][5] and data[2][5] too...
+# working on 
+# gap> ReadCitrus("pkg/citrus/examples/graph9c.citrus.gz", 100013);
+# d-class of Transformation( [ 1, 8, 6, 2, 7, 8, 8, 9, 5 ] )
+# and f:= Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] );
+
+  Info(InfoCitrus, 1, "this does not currently work!");
+
   l:=Position(ImageOrbit(d), ImageSetOfTransformation(f));
   schutz:=KernelOrbitStabChain(d);
   
