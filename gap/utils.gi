@@ -355,12 +355,13 @@ function(arg)
 
   #####
 
-  file:=IO_FilteredFile([["gzip", ["-d"]]], arg[1]);
+  file:=IO_FilteredFile([["gzip", ["-dcq"]]], arg[1], "r");
 
   if file=fail then 
     Error(arg[1], " is not a readable file,");
     return;
   fi;
+
   if Length(arg)>1 then 
     if IsPosInt(arg[2]) then 
       i:=0;

@@ -793,7 +793,7 @@ function(s, f)
   Info(InfoCitrus, 4, "GreensDClassOfElement");
 
   if not f in s then 
-    Info(InfoWarning, 1, "transformation is not an element of the semigroup");
+    Info(InfoCitrus, 1, "transformation is not an element of the semigroup");
     return fail;
   fi;
 
@@ -827,7 +827,7 @@ function(s, f)
   n:=DegreeOfTransformationSemigroup(s);
 
   if not DegreeOfTransformation(f)=n then 
-    Info(InfoWarning, 1, "Usage: trans. semigroup and trans. of equal degree");
+    Info(InfoCitrus, 1, "Usage: trans. semigroup and trans. of equal degree");
     return fail;
   fi;
 
@@ -1088,21 +1088,80 @@ function(d)
   return out;
 end);
 
-# mod for 0.4! - GreensRClassOfElement - "for D-class of trans. semigroup"
+# new for 0.5! - GreensLClassOfElement - "for D-class and transformation"
+#############################################################################
+
+InstallOtherMethod(GreensLClassOfElement, "for D-class and transformation",
+[IsGreensDClass and IsGreensClassOfTransSemigp, IsTransformation],
+function(d, f)
+
+  if not f in d then 
+    Info(InfoCitrus, 1, "transformation is not an element of the D-class");
+    return fail;  
+  fi;     
+
+  return GreensLClassOfElementNC(d, f);
+end);
+
+# new for 0.5! - GreensLClassOfElementNC - "for D-class and transformation"
+#############################################################################
+
+InstallOtherMethod(GreensLClassOfElementNC,  "for D-class and transformation",
+[IsGreensDClass and IsGreensClassOfTransSemigp, IsTransformation],
+function(d, f)
+  local l, schutz, data, g, cosets, r, p;
+
+  l:=Position(ImageOrbit(d), ImageSetOfTransformation(f));
+  schutz:=KernelOrbitStabChain(d);
+  
+  data:=ShallowCopy(d!.data);
+  data[1][3]:=l;
+  
+  if schutz=true then 
+    data[3]:=();
+  else
+    g:=f*ImageOrbitPerms(d)[l];
+    l:=Position(KernelOrbit(d), CanonicalTransSameKernel(g));
+    data[2][3]:=l;
+    g:=KernelOrbitRels(d)[l][2]*g;
+    g:=PermLeftQuoTransformationNC(Representative(d), g);
+    
+    cosets:=ImageOrbitCosets(d);
+    r:=0;
+    
+    if schutz=false then 
+      repeat
+        r:=r+1;
+      until g/cosets[r]=();
+      data[3]:=cosets[r];
+    else
+      p:=KerRightToImgLeft(d)^-1;
+      repeat
+        r:=r+1;
+      until SiftedPermutation(schutz, (g/cosets[r])^p)=();
+      data[3]:=cosets[r];
+    fi;
+  fi;
+
+  return CreateLClass(ParentAttr(d), data, d!.o, f);
+end);
+
+
+# mod for 0.4! - GreensRClassOfElement - "for D-class and transformation"
 #############################################################################
 # Notes: maybe think this through a bit more...
 
-InstallOtherMethod(GreensRClassOfElement, "for D-class of trans. semigroup", 
+InstallOtherMethod(GreensRClassOfElement, "for D-class and transformation", 
 [IsGreensDClass and IsGreensClassOfTransSemigp, IsTransformation], 
 function(d, f)
   local o, e, data, g, r;
    
   if not f in d then 
-    Info(InfoWarning, 1, "transformation is not an element of the D-class");
+    Info(InfoCitrus, 1, "transformation is not an element of the D-class");
     return fail;
   fi;
   
-  o:=d!.o[1]; e:=d!.data[1];
+  o:=d!.o; e:=d!.data;
   data:=InOrbitsOfImages(f![1], true, [e[1], e[2], 
    Position(o!.orbits[e[1]][e[2]],
    ImageSetOfTransformation(f)), e[4], fail, 0, fail], o!.orbits, o!.images);
@@ -1244,6 +1303,17 @@ function(arg)
   fi;
 
   return o!.orbits[d[1]][d[2]]!.d_schutz[d[4]][d[5]][d[6]][3];
+end);
+
+# new for 0.5! - ImageOrbitKersHT - for a D-class of a trans. semigp.
+############################################################################
+
+InstallOtherMethod(ImageOrbitKersHT, "for a D-class of a trans. semigp.",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+  local data;
+  data:=d!.data[1];
+  return d!.o[1]!.orbits[data[1]][data[2]]!.kernels_ht[data[4]];
 end);
 
 # new for 0.1! - ImageOrbitPerms - for a D-class of a trans. semigp.
@@ -1428,7 +1498,7 @@ function(s)
   Info(InfoCitrus, 4, "IteratorOfDClassReps");
   
   if not IsTransformationSemigroup(s) then 
-    Info(InfoWarning, 1, "Usage: argument should be a transformation", 
+    Info(InfoCitrus, 1, "Usage: argument should be a transformation", 
     " semigroup");
     return fail;
   fi;
@@ -1554,7 +1624,7 @@ function(arg)
   Info(InfoCitrus, 4, "IteratorOfDClasses");
 
   if not (Length(arg) mod 3)=1 or not IsTransformationSemigroup(arg[1]) then 
-    Info(InfoWarning, 1, "Usage: argument should be a transformation", 
+    Info(InfoCitrus, 1, "Usage: argument should be a transformation", 
      "semigroup");
     # optionally function, operator, value, function, operator, value, ...
     return fail;

@@ -327,8 +327,8 @@ end);
 # semigroup
 
 InstallOtherMethod(One, "for a full transformation semigroup", 
-[IsFullTransformationSemigroup],  x -> 
- TransformationNC([1.. Degree(x)*1]));
+[IsFullTransformationSemigroup],  s -> 
+ TransformationNC([1.. Degree(s)]*1));
 
 # new for 0.5! - One - "for a transformation semigroup"
 #############################################################################

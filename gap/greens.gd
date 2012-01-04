@@ -67,6 +67,8 @@ DeclareAttribute("HClassRepsData", IsTransformationSemigroup);
 DeclareAttribute("ImageOrbit", IsGreensRClass and 
  IsGreensClassOfTransSemigp, "mutable"); # mutable essential!
 DeclareGlobalFunction("ImageOrbitFromData");
+DeclareAttribute("ImageOrbitKersHT", IsGreensRClass and 
+ IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("ImageOrbitKersHTFromData");
 DeclareAttribute("ImageOrbitPerms", IsGreensRClass and 
  IsGreensClassOfTransSemigp);

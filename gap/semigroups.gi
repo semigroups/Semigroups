@@ -303,8 +303,8 @@ function(gens, opts)
     n:=opts!.hashlen; 
     opts!.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)), 
      L:=NextPrimeInt(n));
-  else
-    Error("the component hashlen should be a positive integer,");
+  elif not IsRecord(opts!.hashlen) then 
+    Error("the component hashlen should be a positive integer or a record,");
     return;
   fi;
 
@@ -439,6 +439,9 @@ function(gens, opts)
     n:=opts!.hashlen;
     opts!.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)),
      L:=NextPrimeInt(n));
+  elif not IsRecord(opts!.hashlen) then 
+    Error("the component hashlen should be a positive integer or a record,");
+    return;
   fi;
 
   if opts!.small then 

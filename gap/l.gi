@@ -360,7 +360,7 @@ function(s, f)
   Info(InfoCitrus, 4, "GreensLClassOfElement");
 
   if not f in s then 
-    Info(InfoWarning, 1, "transformation is not an element of the semigroup");
+    Info(InfoCitrus, 1, "transformation is not an element of the semigroup,");
     return fail;
   fi;
 
