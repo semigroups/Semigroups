@@ -1594,6 +1594,59 @@ gap> for i in iter do od;
 gap> IsDoneIterator(iter);
 true
 
+#GreensLClassOfElement(D-class, transformation);
+
+gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
+>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
+>   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
+>   Transformation( [ 4, 3, 4, 5, 6, 4, 1, 2 ] ),
+>   Transformation( [ 5, 4, 8, 8, 5, 6, 1, 5 ] ),
+>   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
+>   Transformation( [ 7, 1, 2, 2, 2, 7, 4, 5 ] ),
+>   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> f:=Transformation( [ 3, 2, 5, 3, 5, 3, 3, 3 ] );;
+gap> d:=DClass(s, f);
+{Transformation( [ 3, 2, 5, 3, 5, 3, 3, 3 ] )}
+gap> f:=Transformation( [ 6, 4, 8, 8, 8, 4, 6, 4 ] );;
+gap> l:=LClass(d, f);
+{Transformation( [ 4, 6, 8, 4, 8, 4, 4, 4 ] )}
+gap> ll:=LClass(s, f);
+{Transformation( [ 4, 6, 8, 4, 8, 4, 4, 4 ] )}
+gap> l=ll;
+true
+gap> ll=l;
+true
+gap> ll<l;
+false
+gap> l<ll;
+false
+gap> Elements(l)=Elements(ll);
+true
+gap> Size(l); Size(ll);
+2256
+2256
+gap> DClassOfLClass(ll)=DClassOfLClass(l);  
+true
+gap> DClassOfLClass(ll)=d;                
+true
+gap> NrHClasses(l);
+376
+gap> NrHClasses(ll);
+376
+gap> HClassReps(l)=HClassReps(ll);
+true
+gap> NrIdempotents(ll);
+109
+gap> NrIdempotents(l); 
+109
+gap> IsRegularDClass(d);
+true
+gap> Size(s);
+597369
+gap> Set(HClasses(l))=Set(HClasses(ll));
+true
+
 gap> Unbind(tmptmptmp); Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
 > Unbind(H); Unbind(I); Unbind(r); Unbind(d); Unbind(dr); Unbind(r2);
 > Unbind(out2); Unbind(out3); Unbind(a); Unbind(b); Unbind(M);

@@ -37,7 +37,7 @@ GAPDoc2HTMLProcs.Head1MathJax:=Concatenation(
 " type=\"text/javascript\"\n",
 "src=\"http://cdn.mathjax.org/mathjax/latest/MathJax",
 ".js?config=TeX-AMS-MML_HTMLorMML\">\n</script>\n<title>GAP (");
-Info(InfoWarning, 1, "don't forget to run CitrusMakeDoc()");
+Info(InfoCitrus, 1, "don't forget to run CitrusMakeDoc()");
 return;
 end);
 
@@ -62,7 +62,7 @@ function(arg)
   "xml:lang=\"en\"\ >\n<head>\n<script type=\"text/javascript\"",
   "\n src=\"", path, "/MathJax/MathJax.js?config=default",
   "\">\n</script>\n<title>GAP\ (");
-  Info(InfoWarning, 1, "don't forget to run CitrusMakeDoc()");
+  Info(InfoCitrus, 1, "don't forget to run CitrusMakeDoc()");
   return;
 end);
 
@@ -148,7 +148,7 @@ function(arg)
     return DClassOfHClass(arg[1]);
   fi;
   
-  Info(InfoWarning, 1, "Usage: (trans. semigp. and trans.) or H-class or",
+  Info(InfoCitrus, 1, "Usage: (trans. semigp. and trans.) or H-class or",
   " L-class or R-class.");
   return fail;
 end);
@@ -165,7 +165,7 @@ function(arg)
     return GreensDClassOfElementNC(arg[1], arg[2]);
   fi;
 
-  Info(InfoWarning, 1, "Usage: trans. semigp. and trans.");
+  Info(InfoCitrus, 1, "Usage: trans. semigp. and trans.");
   return fail;
 end);
 
@@ -211,7 +211,7 @@ function(arg)
     return GreensHClassOfElement(arg[1], arg[2]);
   fi;
 
-  Info(InfoWarning, 1, "Usage: trans. semigp. and trans.");
+  Info(InfoCitrus, 1, "Usage: trans. semigp. and trans.");
   return fail;
 end);
 
@@ -227,25 +227,26 @@ function(arg)
     return GreensHClassOfElementNC(arg[1], arg[2]);
   fi;
 
-  Info(InfoWarning, 1, "Usage: trans. semigp. and trans.");
+  Info(InfoCitrus, 1, "Usage: trans. semigp. and trans.");
   return fail;
 end);
 
-# new for 0.1! - LClass - "for a trans. semi. and trans. or H-class"
+# mod for 0.5! - LClass - "for a trans. semi. and trans. or H-class"
 #############################################################################
 # Usage: (trans. semigp. and trans.) or H-class.
 
 InstallGlobalFunction(LClass, 
 function(arg)
 
-  if Length(arg)=2 and IsTransformationSemigroup(arg[1]) 
-   and IsTransformation(arg[2]) then 
+  if Length(arg)=2 and (IsTransformationSemigroup(arg[1]) or
+  IsGreensDClass(arg[1])) and IsTransformation(arg[2]) then 
     return GreensLClassOfElement(arg[1], arg[2]);
   elif Length(arg)=1 and IsGreensHClass(arg[1]) then 
     return LClassOfHClass(arg[1]);
   fi;
   
-  Info(InfoWarning, 1, "Usage: (trans. semigp. and trans.) or H-class.");
+  Info(InfoCitrus, 1, "Usage: (trans. semigp. or D-class  and trans.) or ",
+  "H-class.");
   return fail;
 end);
 
@@ -256,12 +257,12 @@ end);
 InstallGlobalFunction(LClassNC, 
 function(arg)
 
-  if Length(arg)=2 and IsTransformationSemigroup(arg[1]) 
-   and IsTransformation(arg[2]) then 
+  if Length(arg)=2 and (IsTransformationSemigroup(arg[1]) or 
+    IsGreensDClass(arg[1])) and IsTransformation(arg[2]) then 
     return GreensLClassOfElementNC(arg[1], arg[2]);
   fi;
   
-  Info(InfoWarning, 1, "Usage: trans. semigp. and trans.");
+  Info(InfoCitrus, 1, "Usage: (trans. semigp. or D-class) and trans.");
   return fail;
 end);
 
@@ -301,7 +302,7 @@ function(arg)
     return RClassOfHClass(arg[1]);
   fi;
   
-  Info(InfoWarning, 1, "Usage: (trans. semigp. and trans.) or H-class.");
+  Info(InfoCitrus, 1, "Usage: (trans. semigp. and trans.) or H-class.");
   return fail;
 end);
 
@@ -317,7 +318,7 @@ function(arg)
     return GreensRClassOfElementNC(arg[1], arg[2]);
   fi;
   
-  Info(InfoWarning, 1, "Usage: trans. semigp. and trans.");
+  Info(InfoCitrus, 1, "Usage: trans. semigp. and trans.");
   return fail;
 end);
 

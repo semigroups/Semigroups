@@ -13,6 +13,7 @@
 
 # - L-class data should be [unrectified image data, rectified kernel data,
 # image orbit coset rep].
+# seems like all we really need is l, D-class data [2], coset rep...
 
 # - this file is alphabetized, keep it that way!
 
@@ -105,13 +106,13 @@ end);
 
 # new for 0.1! - CreateLClass - not a user function!
 #############################################################################
-# Usage: s = semigroup; data = [image data, kernel data, coset index] (image
+# Usage: s = semigroup; data = [image data, kernel data, coset rep] (image
 # data, kernel data any lengths); orbit = [OrbitsOfImages, OrbitsOfKernels];
 # rep = representative. 
 
 # Notes: image data should be unrectified (i.e. data[1][3] is the position of
 # the image of the rep in image orbit), kernel data should be rectified (so that
-# it corresponds to the D-class containing this L-class), and coset index is 
+# it corresponds to the D-class containing this L-class), and coset rep is 
 # InOrbitsOfKernels(%)[2][2][8].
 
 InstallGlobalFunction(CreateLClass, 
@@ -138,7 +139,8 @@ InstallOtherMethod(DClassOfLClass, "for an L-class of a trans. semigroup",
 function(l)
   local s, o, data, rep;
   
-  s:=l!.parent; o:=l!.o; data:=o[2]!.data[HTValue(o[2]!.data_ht, l!.data[2])];
+  s:=l!.parent; o:=l!.o; 
+  data:=o[2]!.data[HTValue(o[2]!.data_ht, l!.data[2])];
   rep:=DClassRepFromData(s, data, o);
 
   return CreateDClass(s, data, o, rep);
@@ -375,6 +377,7 @@ function(s, f)
      [d[1][2], d[2][2]])); 
     d[1][3]:=l; d[2][3]:=KernelOrbitSCCFromData(s, d[2])[1]; d[3]:=();
   else
+    d[2][2][3]:=KernelOrbitSCCFromData(s, d[2][2])[1]; #JDM rectify!
     d:=[d[1][2], d[2][2], ImageOrbitCosetsFromData(s, d[2][2])[d[2][2][8]]];
   fi;
 
@@ -816,7 +819,7 @@ l-> KerRightToImgLeftFromData(l!.parent, l!.data[2], l!.o[2]));
 
 # new for 0.1! - LClassRepFromData - not a user function
 ############################################################################
-# Usage: s = semigroup; d = [image data, kernel data, coset index];
+# Usage: s = semigroup; d = [image data, kernel data, coset rep];
 # o = [OrbitsOfImages, OrbitsOfKernels] (optional).
 
 InstallGlobalFunction(LClassRepFromData,

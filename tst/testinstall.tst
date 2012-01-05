@@ -178,6 +178,94 @@ gap> t:=ClosureSemigroup(s, [Transformation( [ 4, 4, 3, 1, 5, 6, 3, 8 ] )]);
 gap> Size(t)=Size(Semigroup(Generators(t)));
 true
 
+#gap> s:=Semigroup(ReadCitrus("pkg/citrus/examples/graph9c.citrus.gz", 100013));;
+gap> s:=Semigroup([ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ), 
+>  Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 8 ] ), 
+>  Transformation( [ 7, 2, 8, 4, 5, 6, 1, 9, 8 ] ), 
+>  Transformation( [ 5, 5, 3, 4, 1, 6, 7, 8, 9 ] ), 
+>  Transformation( [ 5, 7, 3, 4, 1, 6, 7, 8, 9 ] ), 
+>  Transformation( [ 1, 2, 8, 6, 5, 4, 7, 9, 8 ] ), 
+>  Transformation( [ 1, 8, 6, 2, 7, 8, 8, 9, 5 ] ), 
+>  Transformation( [ 1, 2, 3, 8, 8, 7, 7, 9, 5 ] ), 
+>  Transformation( [ 1, 2, 3, 1, 8, 7, 7, 5, 9 ] ), 
+>  Transformation( [ 7, 7, 2, 7, 8, 8, 9, 5, 1 ] ), 
+>  Transformation( [ 7, 2, 5, 2, 8, 8, 1, 9, 5 ] ), 
+>  Transformation( [ 7, 2, 8, 1, 8, 7, 1, 9, 5 ] ), 
+>  Transformation( [ 1, 1, 4, 8, 9, 9, 8, 5, 7 ] ), 
+>  Transformation( [ 1, 1, 1, 2, 5, 5, 7, 8, 9 ] ), 
+>  Transformation( [ 1, 2, 1, 1, 8, 7, 7, 5, 9 ] ), 
+>  Transformation( [ 1, 2, 8, 8, 8, 2, 7, 9, 5 ] ), 
+>  Transformation( [ 7, 2, 7, 1, 8, 8, 1, 5, 9 ] ), 
+>  Transformation( [ 8, 8, 2, 8, 5, 5, 9, 7, 1 ] ), 
+>  Transformation( [ 1, 2, 1, 1, 5, 5, 7, 8, 9 ] ), 
+>  Transformation( [ 5, 5, 4, 5, 8, 8, 9, 7, 1 ] ), 
+>  Transformation( [ 1, 2, 8, 8, 8, 1, 7, 9, 5 ] ), 
+>  Transformation( [ 7, 2, 7, 2, 5, 5, 1, 8, 9 ] ) ]);;
+gap> f:= Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] );;
+gap> d:=DClass(s, Transformation( [ 1, 8, 6, 2, 7, 8, 8, 9, 5 ] ));;
+gap> l:=LClass(d, f);
+{Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )}
+gap> ll:=LClass(s, f);
+{Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )}
+gap> l=ll;
+true
+gap> ll=l;
+true
+gap> ll<l;
+false
+gap> l<ll;
+false
+gap> Elements(l)=Elements(ll);
+true
+gap> Size(l); Size(ll);
+8
+8
+gap> DClassOfLClass(ll)=DClassOfLClass(l);
+true
+gap> DClassOfLClass(l)=d;
+true
+gap> NrHClasses(l); NrHClasses(ll);
+4
+4
+gap> HClassReps(l);
+[ Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] ), 
+  Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5, 9 ] ), 
+  Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] ), 
+  Transformation( [ 7, 7, 4, 2, 1, 8, 8, 5, 9 ] ) ]
+gap> HClassReps(ll);
+[ Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] ), 
+  Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5, 9 ] ), 
+  Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] ), 
+  Transformation( [ 7, 7, 4, 2, 1, 8, 8, 5, 9 ] ) ]
+gap> HClassRepsData(l);
+[ [ [ 7, 1, 2, 1, 1, 1 ], [ 7, 1, 1, 1, 1, 1 ], (8,9), () ], 
+  [ [ 7, 1, 2, 1, 1, 1 ], [ 7, 1, 1, 1, 1, 1 ], (8,9), (5,9) ], 
+  [ [ 7, 1, 2, 1, 1, 1 ], [ 7, 1, 2, 1, 1, 1 ], (8,9), () ], 
+  [ [ 7, 1, 2, 1, 1, 1 ], [ 7, 1, 2, 1, 1, 1 ], (8,9), (5,9) ] ]
+gap> HClassRepsData(ll);
+[ [ [ 7, 1, 2, 1, 2, 1 ], [ 7, 1, 1, 1, 1, 1 ], (8,9), () ], 
+  [ [ 7, 1, 2, 1, 2, 1 ], [ 7, 1, 1, 1, 1, 1 ], (8,9), (5,9) ], 
+  [ [ 7, 1, 2, 1, 2, 1 ], [ 7, 1, 2, 1, 1, 1 ], (8,9), () ], 
+  [ [ 7, 1, 2, 1, 2, 1 ], [ 7, 1, 2, 1, 1, 1 ], (8,9), (5,9) ] ]
+gap> Idempotents(l);    
+[  ]
+gap> Idempotents(ll);
+[  ]
+gap> IsRegularDClass(d);
+false
+gap> Size(s); 
+6982
+gap> Set(HClasses(l))=Set(HClasses(ll));
+true
+gap> LClassRepFromData(s, l!.data);
+Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )
+gap> LClassRepFromData(s, ll!.data);
+Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )
+gap> SchutzenbergerGroup(l);
+Group([ (5,9), (1,7) ])
+gap> SchutzenbergerGroup(ll);
+Group([ (5,9), (1,7) ])
+
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
