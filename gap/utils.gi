@@ -206,13 +206,13 @@ end);
 InstallGlobalFunction(HClass, 
 function(arg)
 
-  if Length(arg)=2 and IsTransformationSemigroup(arg[1]) 
-   and IsTransformation(arg[2]) then 
+  if Length(arg)=2 and (IsTransformationSemigroup(arg[1]) or
+   IsGreensClass(arg[1])) and IsTransformation(arg[2]) then 
     return GreensHClassOfElement(arg[1], arg[2]);
   fi;
 
-  Info(InfoCitrus, 1, "Usage: trans. semigp. and trans.");
-  return fail;
+  Error("Usage: (trans. semigp. or Green's class) and trans.");
+  return;
 end);
 
 # new for 0.1! - HClassNC - "for a trans. semi. and trans."
@@ -222,13 +222,13 @@ end);
 InstallGlobalFunction(HClassNC, 
 function(arg)
 
-  if Length(arg)=2 and IsTransformationSemigroup(arg[1]) 
-   and IsTransformation(arg[2]) then 
+  if Length(arg)=2 and (IsTransformationSemigroup(arg[1]) or
+   IsGreensDClass(arg[1])) and IsTransformation(arg[2]) then 
     return GreensHClassOfElementNC(arg[1], arg[2]);
   fi;
 
-  Info(InfoCitrus, 1, "Usage: trans. semigp. and trans.");
-  return fail;
+  Error("Usage: (trans. semigp. or D-class) and trans.");
+  return;
 end);
 
 # mod for 0.5! - LClass - "for a trans. semi. and trans. or H-class"

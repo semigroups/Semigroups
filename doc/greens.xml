@@ -432,7 +432,7 @@ gap> L:=GreensLClassOfElement(S, Transformation( [ 3, 1, 1, 3 ] ));;
 gap> Idempotents(L);
 [ Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 1, 1, 3, 3 ] ) ]
 gap> H:=GroupHClass(D);
-{Transformation( [ 1, 3, 3, 1 ] )}
+{Transformation( [ 3, 1, 1, 3 ] )}
 gap> Idempotents(H);
 [ Transformation( [ 1, 3, 3, 1 ] ) ]</Example> 
   </Description>

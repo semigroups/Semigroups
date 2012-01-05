@@ -7,7 +7,6 @@
 ##
 #############################################################################
 ##
-## $Id$
 
 # Notes
 # 
@@ -16,8 +15,6 @@
 
 # TODO
 # - Make sure all the description strings make sense and that they are uniform...
-
-# - GroupHClassOfGreensDClass...
 
 #############################################################################
 # other equalities of Green's classes handled by generic method in greens.gi!
@@ -29,7 +26,7 @@ InstallMethod(\=, "for H-class and H-class of trans. semigp.",
 [IsGreensHClass and IsGreensClassOfTransSemigp, IsGreensHClass and 
 IsGreensClassOfTransSemigp],
 function(h1, h2)
-return h1!.parent=h2!.parent and h1!.rep in h2;
+  return h1!.parent=h2!.parent and h1!.rep in h2;
 end);
 
 # new for 0.1! - \< - "for H-class and H-class of trans. semigp."
@@ -39,7 +36,7 @@ InstallMethod(\<, "for H-class and H-class of trans. semigp.",
 [IsGreensHClass and IsGreensClassOfTransSemigp, IsGreensHClass and 
 IsGreensClassOfTransSemigp],
 function(h1, h2)
-return h1!.parent=h2!.parent and h1!.rep < h2!.rep;
+  return h1!.parent=h2!.parent and h1!.rep < h2!.rep;
 end);
 
 # new for 0.1! - \in - "for trans. and H-class of trans. semigp."
@@ -208,14 +205,38 @@ function(s, f)
     if not l_ker=fail then #JDM_hack!
       d[2][3]:=l_ker; 
     fi;  
-    d[3]:=(); d[4]:=(); 
+    d[3]:=(); d[4]:=fail; 
   else
     d:=[d[1][2], d[2][2], ImageOrbitCosetsFromData(s, d[2][2])[d[2][2][8]],
-          ()];
+          fail];
   fi;
 
   return CreateHClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)], 
    HClassRepFromData(s, d));
+end);
+
+# new for 0.5! - GreensHClassOfElement - "for a Green's class and trans."
+############################################################################
+
+InstallOtherMethod(GreensHClassOfElement, "for Green's class and trans.", 
+[IsGreensClassOfTransSemigp, IsTransformation],
+function(class, f)
+  
+  if not f in class then 
+    Error("the transformation is not an element of the Green's class,");
+    return;
+  fi;
+
+  return GreensHClassOfElementNC(class, f);
+end);
+
+# new for 0.5! - GreensHClassOfElementNC - "for an H-class and trans."
+############################################################################
+
+InstallOtherMethod(GreensHClassOfElementNC, "for an H-class and trans.", 
+[IsGreensHClass and IsGreensClassOfTransSemigp, IsTransformation],
+function(h, f)
+  return h;
 end);
 
 # new for 0.1! - GreensHClassOfElementNC - "for a trans. semigp and trans."
@@ -598,20 +619,22 @@ end);
 
 # new for 0.1! - RClassOfHClass - "for an H-class of a trans. semigroup"
 #############################################################################
-# JDM this is not correct! the R-class of the H-class corresponds to d[1] and a
-# kernel orbit coset. The kernel orbit coset is not represented here. This
-# should require a change in d[1][6]! 
 
 InstallOtherMethod(RClassOfHClass, "for an H-class of a trans. semigroup", 
 [IsGreensHClass and IsGreensClassOfTransSemigp], 
 function(h)
   local s, d, o, rep;
 
-  s:=h!.parent; d:=h!.data; o:=h!.o;
-  d[1][3]:=ImageOrbitSCCFromData(s, d[1], o[1])[1];
-  rep:=RClassRepFromData(s, d[1], o[1]);
+  if h!.data[4]=fail then #created from R-class or D-class 
+    s:=h!.parent; d:=h!.data; o:=h!.o;
+    d[1][3]:=ImageOrbitSCCFromData(s, d[1], o[1])[1];
+    rep:=RClassRepFromData(s, d[1], o[1]);
 
-  return CreateRClass(s, d[1], o[1], rep);
+    return CreateRClass(s, d[1], o[1], rep);
+  fi;
+  # the below is probably best possible since no info about the R-class
+  # of an H-class created from an L-class is known. 
+  return RClass(ParentAttr(s), Representative(h));
 end);
 
 #PPP
@@ -626,11 +649,11 @@ InstallMethod(ParentAttr, "for H-class of a trans. semigroup",
 # new for 0.1! - PrintObj - IsIteratorOfHClassReps
 ############################################################################
 # JDM move to greens.gi?
+
 InstallMethod(PrintObj, [IsIteratorOfHClassReps], 
 function(iter)
-
-Print( "<iterator of H-class reps>");
-return;
+  Print( "<iterator of H-class reps>");
+  return;
 end);
 
 # new for 0.1! - PrintObj - IsIteratorOfHClasses

@@ -703,6 +703,49 @@ function(r)
   return out;
 end);
 
+# new for 0.5! - GreensHClassOfElementNC - "for an R-class and trans."
+###########################################################################
+
+InstallOtherMethod(GreensHClassOfElementNC, "for an R-class and trans.",
+[IsGreensRClass and IsGreensClassOfTransSemigp, IsTransformation], 
+function(r, f)
+  local d, data, l, schutz, g, cosets, i, p;
+
+  d:=DClassOfRClass(r); data:=ShallowCopy(d!.data);
+  data[1][3]:=Position(ImageOrbit(r), ImageSetOfTransformation(f));
+  
+  l:=Position(KernelOrbit(d), CanonicalTransSameKernel(f));
+  data[2][3]:=l;
+
+  data[4]:=fail; 
+
+  schutz:=KernelOrbitStabChain(d);
+
+  if schutz=true then
+    data[3]:=();
+  else
+    g:=PermLeftQuoTransformationNC(Representative(d),
+     KernelOrbitRels(d)[l][2]*f*ImageOrbitPerms(d)[data[1][3]]);
+
+    cosets:=ImageOrbitCosets(d);
+    i:=0;
+
+    if schutz=false then
+      repeat
+        i:=i+1;
+      until g/cosets[i]=();
+    else
+      p:=KerRightToImgLeft(d)^-1;
+      repeat
+        i:=i+1;
+      until SiftedPermutation(schutz, (g/cosets[i])^p)=();
+    fi;
+    data[3]:=cosets[i];
+  fi;
+
+  return CreateHClass(ParentAttr(r), data, d!.o,
+    HClassRepFromData(ParentAttr(d), data, d!.o));  
+end);
 
 # new for 0.1! - HClassRepsData - "for an R-class of a trans. semigp."
 #############################################################################
@@ -718,7 +761,7 @@ function(r)
 
   Info(InfoCitrus, 4, "HClassRepsData: for an R-class");
 
-  f:= r!.rep; scc:=ImageOrbitSCC(r);
+  f:=r!.rep; scc:=ImageOrbitSCC(r);
   d:=DClassOfRClass(r); cosets:=ImageOrbitCosets(d);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
@@ -1195,19 +1238,22 @@ function(f, rectify, data, o, images)
   reps:=o[j][k]!.reps[m][val];
   i:=Length(reps);
 
-  while n<i do 
-    n:=n+1;
-    if schutz=false then
+  if schutz=false then 
+    while n<i do 
+      n:=n+1;
       if reps[n]=g then 
-        return [true, [j,k,l,m,val,n,g, ()]];
+        return [true, [j, k, l, m, val, n, g, ()]];
       fi;
-    else 
+    od;
+  else    
+    while n<i do 
+      n:=n+1;
       p:=PermLeftQuoTransformationNC(reps[n], g); 
       if SiftedPermutation(schutz, p)=() then 
         return [true, [j,k,l,m,val,n,g,p]];
       fi;
-    fi;
-  od;
+    od;
+  fi;
 
   return [false, [j,k,l,m,val,n,g]];
 end);

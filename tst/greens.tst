@@ -737,7 +737,7 @@ gap> r:=RClass(s, f);;
 gap> l:=LClass(s, f);
 {Transformation( [ 7, 6, 5, 4, 3, 2, 1 ] )}
 gap> h:=HClass(s,f);
-{Transformation( [ 7, 6, 5, 4, 3, 2, 1 ] )}
+{Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] )}
 gap> d:=DClass(s,f);
 {Transformation( [ 7, 6, 5, 4, 3, 2, 1 ] )}
 gap> r=l; r=h; l=r; h=r; d=r; r=d; r=r;
@@ -1645,6 +1645,43 @@ true
 gap> Size(s);
 597369
 gap> Set(HClasses(l))=Set(HClasses(ll));
+true
+
+#GreensHClassOfElement(D-class, transformation);
+
+gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
+> Transformation([1,2,4,3,5,6,7,8,9,10]),
+> Transformation([1,2,3,4,5,6,10,9,8,7]),
+> Transformation([9,1,4,3,6,9,3,4,3,9])];;
+gap> s:=Monoid(gens);;
+gap> ExpandOrbitsOfKernels(s);
+true
+gap> f:=Transformation( [ 8, 5, 10, 5, 8, 5, 5, 5, 5, 10 ] );;
+gap> d:=DClass(s, f);
+{Transformation( [ 3, 9, 3, 4, 9, 3, 4, 3, 4, 3 ] )}
+gap> f:=Transformation( [ 6, 4, 5, 6, 4, 4, 6, 6, 4, 5 ] );;
+gap> h:=GreensHClassOfElement(d, f);
+{Transformation( [ 6, 5, 4, 6, 5, 5, 6, 6, 5, 4 ] )}
+gap> hh:=HClass(s, f);
+{Transformation( [ 6, 5, 4, 6, 5, 5, 6, 6, 5, 4 ] )}
+gap> hh=h;
+true
+gap> h=hh;
+true
+gap> Elements(h)=Elements(hh);
+true
+gap> f:=Transformation( [ 4, 8, 8, 8, 4, 4, 8, 4, 4, 8 ] );;
+gap> d:=DClass(s, f);
+{Transformation( [ 4, 3, 4, 3, 3, 4, 3, 4, 3, 4 ] )}
+gap> f:=Transformation( [ 4, 3, 3, 4, 3, 3, 3, 3, 4, 4 ] );;
+gap> h:=HClass(d,f);
+{Transformation( [ 4, 3, 3, 4, 3, 3, 3, 3, 4, 4 ] )}
+gap> hh:=HClass(s, f);;
+gap> hh=h;
+true
+gap> h=hh;
+true
+gap> Elements(h)=Elements(hh);
 true
 
 gap> Unbind(tmptmptmp); Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
