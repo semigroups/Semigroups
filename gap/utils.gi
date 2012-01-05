@@ -148,9 +148,9 @@ function(arg)
     return DClassOfHClass(arg[1]);
   fi;
   
-  Info(InfoCitrus, 1, "Usage: (trans. semigp. and trans.) or H-class or",
-  " L-class or R-class.");
-  return fail;
+  Error("Usage: (trans. semigp. and trans.) or H-class or L-class or", 
+   " R-class.");
+  return;
 end);
 
 # new for 0.1! - DClassNC - "for a trans. semi. and trans."
@@ -165,8 +165,8 @@ function(arg)
     return GreensDClassOfElementNC(arg[1], arg[2]);
   fi;
 
-  Info(InfoCitrus, 1, "Usage: trans. semigp. and trans.");
-  return fail;
+  Error("Usage: trans. semigp. and trans.,");
+  return;
 end);
 
 # new for 0.1! - Degree - "for a transformation"
@@ -245,9 +245,9 @@ function(arg)
     return LClassOfHClass(arg[1]);
   fi;
   
-  Info(InfoCitrus, 1, "Usage: (trans. semigp. or D-class  and trans.) or ",
+  Error("Usage: (trans. semigp. or D-class  and trans.) or ",
   "H-class.");
-  return fail;
+  return;
 end);
 
 # new for 0.1! - LClassNC - "for a trans. semi. and trans."
@@ -262,8 +262,8 @@ function(arg)
     return GreensLClassOfElementNC(arg[1], arg[2]);
   fi;
   
-  Info(InfoCitrus, 1, "Usage: (trans. semigp. or D-class) and trans.");
-  return fail;
+  Error("Usage: (trans. semigp. or D-class) and trans.");
+  return;
 end);
 
 # new for 0.1! - RandomTransformationSemigroup 
@@ -302,8 +302,8 @@ function(arg)
     return RClassOfHClass(arg[1]);
   fi;
   
-  Info(InfoCitrus, 1, "Usage: (trans. semigp. and trans.) or H-class.");
-  return fail;
+  Error("Usage: (trans. semigp. and trans.) or H-class,");
+  return;
 end);
 
 # new for 0.1! - RClassNC - "for a trans. semi. and trans."
@@ -318,8 +318,8 @@ function(arg)
     return GreensRClassOfElementNC(arg[1], arg[2]);
   fi;
   
-  Info(InfoCitrus, 1, "Usage: trans. semigp. and trans.");
-  return fail;
+  Error("Usage: trans. semigp. and trans.,");
+  return;
 end);
 
 # new for 0.5! - ReadCitrus - "for a string and optional pos. int."
@@ -401,13 +401,13 @@ function(arg)
   
   if not Length(arg)=2 then 
     Error("Usage: trans. semigroup, trans. collection or list of same", 
-    "and filename as string");
-    return fail;
+    "and filename as string,");
+    return;
   fi;
 
   if IsExistingFile(arg[1]) and not IsWritableFile(arg[1]) then 
-    Error(arg[1], " exists and is not a writable file");
-    return fail;
+    Error(arg[1], " exists and is not a writable file,");
+    return;
   fi;
 
   if IsTransformationCollection(arg[2]) then 
@@ -415,8 +415,9 @@ function(arg)
   elif IsTransformationCollection(arg[2][1]) then 
     trans:=arg[2];
   else
-    Error("Usage: first arg must be trans. semi., trans. coll. or list of same");
-    return fail;
+    Error("Usage: first arg must be trans. semi., trans. coll. or list of",
+    " same,");
+    return;
   fi;
 
   gens:=EmptyPlist(Length(trans));

@@ -501,14 +501,13 @@ function(s, f)
   local data, l, o, rep, p, w, g, q;
  
   if not f in s then 
-    Info(InfoCitrus, 1, "transformation is not an element of the semigroup.");
-    return fail;
+    Error("transformation is not an element of the semigroup.");
+    return;
   fi;
  
   if not s!.opts!.schreier then 
-    Info(InfoCitrus, 1, "it is not possible to factorize elements of this ",
-    "semigroup.");
-    return fail;
+    Error("it is not possible to factorize elements of this semigroup,");
+    return;
   fi;
 
   data:=PreInOrbitsOfImages(s, f, false)[2];
@@ -845,8 +844,8 @@ function(s, f)
   Info(InfoCitrus, 4, "GreensRClassOfElement: for trans. semi. and trans.");
 
   if not f in s then 
-    Info(InfoWarning, 1, "transformation is not an element of the semigroup");
-    return fail;
+    Error("the transformation is not an element of the semigroup,");
+    return;
   fi;
 
   d:=PreInOrbitsOfImages(s, f, true)[2];
@@ -871,8 +870,8 @@ function(s, f)
     Info(InfoCitrus, 2, "transformation is an element of semigroup");
     return CreateRClass(s, d[2], OrbitsOfImages(s), RClassRepFromData(s, d[2]));
   elif OrbitsOfImages(s)!.finished then #f not in s!
-    Info(InfoCitrus, 2, "transformation is not an element of semigroup");
-    return fail;
+    Error("transformation is not an element of semigroup,");
+    return;
   fi;
 
   Info(InfoCitrus, 2, "transformation may not be an element of semigroup");
@@ -1405,8 +1404,8 @@ function(s)
   Info(InfoCitrus, 4, "IteratorOfRClasses");
   
   if not IsTransformationSemigroup(s) then 
-    Info(InfoWarning, 1, "Usage: arg. should be a transformation semigroup.");
-    return fail;
+    Error("Usage: the argument should be a transformation semigroup,");
+    return;
   fi;
 
   iter:=IteratorByFunctions( rec(
@@ -1603,9 +1602,8 @@ function(s)
   Info(InfoCitrus, 4, "IteratorOfRClassReps");
 
   if not IsTransformationSemigroup(s) then
-    Info(InfoWarning, 1, "Usage: argument should be a transformation",
-    " semigroup");
-    return fail;
+    Error("Usage: argument should be a transformation semigroup,");
+    return;
   fi;
 
   iter:=IteratorByFunctions( rec(
@@ -2048,9 +2046,8 @@ function(s, i)
   Info(InfoCitrus, 4, "TraceRClassRepsTree");
 
   if not s!.opts!.schreier then 
-    Info(InfoCitrus, 1, "it is not possible to factorize elements of this ",
-    "semigroup.");
-    return fail;
+    Error("it is not possible to factorize elements of this semigroup,");
+    return;
   fi;
 
   o:=OrbitsOfImages(s);

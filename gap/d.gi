@@ -502,9 +502,8 @@ function(r)
     Info(InfoCitrus, 2, "transformation is an element of the semigroup");
     return GreensDClassOfElement(s, f);
   elif OrbitsOfImages(s)!.finished then #f not in s!
-    Info(InfoCitrus, 2, "transformation is not an element of the ",
-    "semigroup");
-    return fail;
+    Error("transformation is not an element of the semigroup,");
+    return;
   fi;
 
   #JDM see the comments in GreensRClassOfElementNC
@@ -793,8 +792,8 @@ function(s, f)
   Info(InfoCitrus, 4, "GreensDClassOfElement");
 
   if not f in s then 
-    Info(InfoCitrus, 1, "transformation is not an element of the semigroup");
-    return fail;
+    Error("transformation is not an element of the semigroup,");
+    return;
   fi;
 
   d:=PreInOrbitsOfKernels(s, f, true);
@@ -827,8 +826,8 @@ function(s, f)
   n:=DegreeOfTransformationSemigroup(s);
 
   if not DegreeOfTransformation(f)=n then 
-    Info(InfoCitrus, 1, "Usage: trans. semigroup and trans. of equal degree");
-    return fail;
+    Error("Usage: trans. semigroup and trans. of equal degree");
+    return;
   fi;
 
   d:=PreInOrbitsOfKernels(s, f, true);
@@ -837,9 +836,8 @@ function(s, f)
     #JDM inefficient as we run PreInOrbitsOfKernels twice!
     return GreensDClassOfElement(s, f);
   elif OrbitsOfImages(s)!.finished then #f not in s!
-    Info(InfoCitrus, 2, "transformation is not an element of the ",
-    "semigroup");
-    return fail;
+    Error("transformation is not an element of the semigroup,");
+    return;
   fi;
 
   Info(InfoCitrus, 2, "transformation may not be an element of the ",
@@ -1167,8 +1165,8 @@ InstallOtherMethod(GreensLClassOfElement, "for D-class and transformation",
 function(d, f)
 
   if not f in d then 
-    Info(InfoCitrus, 1, "transformation is not an element of the D-class");
-    return fail;  
+    Error("transformation is not an element of the D-class,");
+    return;  
   fi;     
 
   return GreensLClassOfElementNC(d, f);
@@ -1227,8 +1225,8 @@ function(d, f)
   local o, e, data, g, r;
    
   if not f in d then 
-    Info(InfoCitrus, 1, "transformation is not an element of the D-class");
-    return fail;
+    Error("transformation is not an element of the D-class,");
+    return;
   fi;
   
   o:=d!.o; e:=d!.data;
@@ -1568,9 +1566,8 @@ function(s)
   Info(InfoCitrus, 4, "IteratorOfDClassReps");
   
   if not IsTransformationSemigroup(s) then 
-    Info(InfoCitrus, 1, "Usage: argument should be a transformation", 
-    " semigroup");
-    return fail;
+    Error("Usage: argument should be a transformation semigroup,");
+    return;
   fi;
 
   iter:=IteratorByFunctions(rec(
@@ -1694,10 +1691,9 @@ function(arg)
   Info(InfoCitrus, 4, "IteratorOfDClasses");
 
   if not (Length(arg) mod 3)=1 or not IsTransformationSemigroup(arg[1]) then 
-    Info(InfoCitrus, 1, "Usage: argument should be a transformation", 
-     "semigroup");
+    Error("Usage: argument should be a transformation semigroup,");
     # optionally function, operator, value, function, operator, value, ...
-    return fail;
+    return;
   fi;
 
   #JDM do the same as the below for IteratorOfRClasses etc.. i.e. allow the
@@ -1762,7 +1758,7 @@ function(arg)
     rep:=NextIterator(iter!.reps);
     
     if rep=fail then 
-            return fail;
+      return fail;
     fi;
     
     iter!.i:=iter!.i+1;
@@ -2239,15 +2235,6 @@ function(arg)
   local s, f, kernels, o, data;
   
   s:=arg[1]; f:=arg[2];
-
-  if not IsTransformationSemigroup(s) then #this can probably be remove
-                                           #at some future point
-    Info(InfoWarning, 1, 
-    "Usage: s = semigroup (not a D-class), f = transformation,\n", 
-    "#I  o = [OrbitsOfImages(s)!.orbits, OrbitsOfImages(s)!.orbits] (optional),\n", 
-    "#I  d = [image data, kernel data] (including true/false) (optional).");
-    return fail;
-  fi;
 
   kernels:=OrbitsOfKernels(s)!.kernels;
 

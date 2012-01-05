@@ -266,6 +266,7 @@ end);
 
 # new for 0.5! - GreensHClassOfElementNC - "for an L-class and trans."
 #############################################################################
+# JDM is there a better way? If not clean it up!
 
 InstallOtherMethod(GreensHClassOfElementNC, "for an L-class and trans.", 
 [IsGreensLClass and IsGreensClassOfTransSemigp, IsTransformation],
@@ -289,7 +290,6 @@ function(l, f)
   return CreateHClass(ParentAttr(l), data, l!.o,
   HClassRepFromData(ParentAttr(l), data, l!.o));
 end);
-
 
 # new for 0.1! - GreensLClasses - "for a transformation semigroup"
 #############################################################################
@@ -325,8 +325,8 @@ function(s, f)
   Info(InfoCitrus, 4, "GreensLClassOfElement");
 
   if not f in s then 
-    Info(InfoCitrus, 1, "transformation is not an element of the semigroup,");
-    return fail;
+    Error("transformation is not an element of the semigroup,");
+    return;
   fi;
 
   d:=PreInOrbitsOfKernels(s, f, false); l:=d[1][2][3]; 
@@ -363,8 +363,8 @@ function(s, f)
   n:=DegreeOfTransformationSemigroup(s);
 
   if not DegreeOfTransformation(f)=n then
-    Info(InfoWarning, 1, "Usage: trans. semigroup and trans. of equal degree");
-    return fail;
+    Error("Usage: trans. semigroup and trans. of equal degree");
+    return;
   fi;
 
   d:=PreInOrbitsOfKernels(s, f, false);
@@ -374,9 +374,8 @@ function(s, f)
     #JDM inefficient as we run PreInOrbitsOfKernels twice!
     return GreensLClassOfElement(s, f);	
   elif OrbitsOfImages(s)!.finished then #f not in s!
-    Info(InfoCitrus, 2, "transformation is not an element of the ",
-     "semigroup");
-    return fail;
+    Error("transformation is not an element of the semigroup,");
+    return;
   fi;
 
   Info(InfoCitrus, 2, "transformation may not be an element of the ",
@@ -590,8 +589,8 @@ function(s)
   local iter;
 
   if not IsTransformationSemigroup(s) then
-    Info(InfoWarning, 1, "Usage: arg. should be a transformation semigroup.");
-     return fail;
+    Error("Usage: arg. should be a transformation semigroup,");
+     return;
   fi;
 
   Info(InfoCitrus, 4, "IteratorOfLClasses");
@@ -632,9 +631,8 @@ function(s)
   Info(InfoCitrus, 4, "IteratorOfLClassReps");
 
   if not IsTransformationSemigroup(s) then
-    Info(InfoWarning, 1, "Usage: argument should be a transformation",
-    " semigroup");
-    return fail;
+    Error("Usage: argument should be a transformation semigroup,");
+    return;
   fi;
 
   iter:=IteratorByFunctions( rec(

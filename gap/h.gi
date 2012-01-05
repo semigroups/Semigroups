@@ -188,8 +188,8 @@ function(s, f)
   Info(InfoCitrus, 4, "GreensHClassOfElement");
 
   if not f in s then 
-    Info(InfoWarning, 1, "transformation is not an element of the semigroup");
-    return fail;
+    Error("transformation is not an element of the semigroup,");
+    return;
   fi;
 
   d:=PreInOrbitsOfKernels(s, f, false); l_img:=d[1][2][3]; l_ker:=d[2][2][3];
@@ -252,8 +252,8 @@ function(s, f)
   n:=DegreeOfTransformationSemigroup(s);
 
   if not DegreeOfTransformation(f)=n then
-    Info(InfoWarning, 1, "Usage: trans. semigroup and trans. of equal degree");
-    return fail;
+    Error("Usage: trans. semigroup and trans. of equal degree");
+    return;
   fi;
 
   d:=PreInOrbitsOfKernels(s, f, false);
@@ -263,9 +263,8 @@ function(s, f)
     #JDM somewhat inefficient as we run PreInOrbitsOfKernels twice!
     return GreensHClassOfElement(s, f);
   elif OrbitsOfImages(s)!.finished then #f not in s!
-    Info(InfoCitrus, 2, "transformation is not an element of the ",
-     "semigroup");
-    return fail;
+    Error("transformation is not an element of the semigroup,");
+    return;
   fi;
 
   Info(InfoCitrus, 2, "transformation may not be an element of the ",
@@ -402,8 +401,8 @@ function(h)
   local g, f;
 
   if not IsGroupHClass(h) then
-    Info(InfoWarning, 1, "H-class is not a group");
-    return fail;
+    Error("the H-class is not a group,");
+    return;
   fi;
   
   g:=Group(());
@@ -424,8 +423,8 @@ function(s)
 local iter;
 
   if not IsTransformationSemigroup(s) then
-    Info(InfoWarning, 1, "Usage: arg. should be a transformation semigroup.");
-    return fail;
+    Error("Usage: arg. should be a transformation semigroup,");
+    return;
   fi;
 
   Info(InfoCitrus, 4, "IteratorOfHClasses");
@@ -465,9 +464,8 @@ function(s)
 
   Info(InfoCitrus, 4, "IteratorOfHClassReps");
   if not IsTransformationSemigroup(s) then
-    Info(InfoWarning, 1, "Usage: argument should be a transformation",
-     " semigroup");
-    return fail;
+    Error("Usage: argument should be a transformation semigroup,");
+    return;
   fi;
 
   iter:=IteratorByFunctions( rec(
@@ -634,6 +632,7 @@ function(h)
   fi;
   # the below is probably best possible since no info about the R-class
   # of an H-class created from an L-class is known. 
+  #JDM is the above right?
   return RClass(ParentAttr(s), Representative(h));
 end);
 

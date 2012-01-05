@@ -187,7 +187,7 @@ end);
 
 # new for 0.4! - EnumeratorOfRClasses - "for a trans. semigroup"
 #############################################################################
-# Notes: NumberElement does not work for RClassNCs
+# Notes: NumberElement does not work for RClassNCs, JDM maybe it should!
 
 InstallMethod(EnumeratorOfRClasses, "for a trans. semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
@@ -308,7 +308,6 @@ InstallOtherMethod(GreensJClassOfElement, "for a trans. semigroup and trans.",
 [IsTransformationSemigroup and HasIsFinite and IsFinite and
 HasGeneratorsOfSemigroup, IsTransformation], 
 function(s, f)
-#  Info(InfoWarning, 2, "Use GreensDClassOfElement instead!");
   return GreensDClassOfElement(s, f);
 end);
 

@@ -61,8 +61,8 @@ function(s)
   local h, m, g;
 
   if not IsMonoidAsSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is not a monoid");
-    return fail;
+    Error("the semigroup is not a monoid,");
+    return;
   fi;
 
   h:=GreensHClassOfElement(s, MultiplicativeNeutralElement(s));
@@ -1236,8 +1236,8 @@ IsTransformationCollection],
   if s=Semigroup(gens) then 
     return RedundantGenerator(gens);
   fi;
-  Info(InfoCitrus, 1, "Usage: trans. semi. and generating set.");
-  return fail;
+  Error("Usage: trans. semi. and generating set,");
+  return;
 end);
 
 #SSS
