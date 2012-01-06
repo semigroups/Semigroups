@@ -113,7 +113,8 @@ gap> GreensRClasses(d);;
 gap> GreensLClasses(d);;
 gap> SchutzenbergerGroup(d);
 Group(())
-gap> h:=List(GreensDClasses(S), GroupHClass);;
+gap> h:=List(GreensDClasses(S), function(d) if IsRegularDClass(d)
+> then return GroupHClass(d); else return fail; fi; end);;
 gap> MultiplicativeNeutralElement(S); 
 fail
 gap> IsMonoidAsSemigroup(S);         

@@ -1564,10 +1564,6 @@ gap> HClassRepsData(r);
   [ [ 7, 1, 2, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (2,7,3,4,6), fail ], 
   [ [ 7, 1, 2, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (2,4,7,6,3), fail ] ]
 
-gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
-
 gap> t:=FullTransformationSemigroup(5);;
 gap> iter:=Iterator(t);
 <iterator of full trans. semigroup>
@@ -1683,6 +1679,10 @@ gap> h=hh;
 true
 gap> Elements(h)=Elements(hh);
 true
+
+gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
+gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
 
 gap> Unbind(tmptmptmp); Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
 > Unbind(H); Unbind(I); Unbind(r); Unbind(d); Unbind(dr); Unbind(r2);
