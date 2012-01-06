@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  properties.xml
-#Y  Copyright (C) 2011                             James D. Mitchell
+#Y  Copyright (C) 2011-12                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -581,8 +581,7 @@ true</Example>
     <P/>
     
     See also <Ref Prop="IsTransformationMonoid" BookName="ref"/>, <Ref
-    Prop="IsTransformationSemigroup" BookName="ref"/>,
-    and 
+    Prop="IsTransformationSemigroup" BookName="ref"/>, and 
     <Ref Oper="IsomorphismTransformationSemigroup" BookName="ref"/>.
 
       <Example>
@@ -603,18 +602,21 @@ true</Example>
 <#GAPDoc Label="IsomorphismPermGroup">
   <ManSection>
     <Oper Name="IsomorphismPermGroup" Arg="S"/>
-    <Returns>An isomorphism from the transformation semigroup <A>S</A>
-          satisfying <Ref Prop="IsGroupAsSemigroup"/> to a permutation group.
+    <Returns>An isomorphism.
     </Returns>
     <Description>
-      <Example>
+    Returns an isomorphism from the transformation semigroup <A>S</A>
+    satisfying <Ref Prop="IsGroupAsSemigroup"/> to a permutation group.
+    If <A>S</A> does not satisfy <Ref Prop="IsGroupAsSemigroup"/>, then an
+    error is given. 
+<Example>
 gap> S:=Semigroup( Transformation( [ 2, 2, 3, 4, 6, 8, 5, 5 ] ),
 > Transformation( [ 3, 3, 8, 2, 5, 6, 4, 4 ] ) );;
 gap> IsGroupAsSemigroup(S);
 true
 gap> IsomorphismPermGroup(S); 
-MappingByFunction( &lt;semigroup with 2 generators>, Group([ (5,6,8), (2,3,8,4) 
- ]), &lt;Operation "AsPermutation"> )
+MappingByFunction( &lt;semigroup with 2 generators>, Group([ (5,6,8), (2,3,8,
+4) ]), &lt;Operation "AsPermutation"> )
 gap> StructureDescription(Range(IsomorphismPermGroup(S)));
 "S6"</Example>
     </Description>

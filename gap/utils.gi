@@ -1,15 +1,14 @@
 #############################################################################
 ##
 #W  utils.gi
-#Y  Copyright (C) 2011                                   James D. Mitchell
+#Y  Copyright (C) 2011-12                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-# this file contains functions with shorter names than some library functions
-# commonly used in the citrus package. 
+# this file contains utilies for use with the Citrus package. 
 
 # mod for 0.4! - CitrusMakeDoc - "for no argument"
 #############################################################################

@@ -1,6 +1,6 @@
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 +                                                                           +
-+   Copyright (C) 2011                                 James D. Mitchell    +
++   Copyright (C) 2011-12                              James D. Mitchell    +
 +                                                                           +
 +   'Citrus' is free software: you can redistribute it and/or modify        +
 +   it under the terms of the GNU General Public License as published by    +
@@ -29,8 +29,8 @@
                                                        'Citrus'.
                                                        ===========
   
-This  is  the  README  for the Citrus package version 0.4 for computing with
-transformation  semigroups. Citrus 0.4 is an updated and expanded version of
+This  is  the  README  for the Citrus package version 0.5 for computing with
+transformation  semigroups. Citrus 0.5 is an updated and expanded version of
 the Monoid package for GAP 3 (http://schmidt.nuigalway.ie/monoid/index.html)
 by  Goetz Pfeiffer, Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc and
 the           Monoid           package           for          GAP          4
@@ -39,7 +39,7 @@ Mitchell.
 
 The  functionality  of Monoid 3.1.4 for GAP 4 has been split between the GAP
 4.5            packages            Citrus            and            Comatose
-(http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html).  Citrus 0.4
+(http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html).  Citrus 0.5
 retains all the functionality of the original Monoid package for GAP 3; and
 many  of  those  functions  from  Monoid  3.1.4  not  involved  in  the
 computation   of   automorphism   groups   of   semigroups.   The   Comatose
@@ -47,7 +47,7 @@ computation   of   automorphism   groups   of   semigroups.   The   Comatose
 retains  those  functions  from  Monoid  3.1.4  used to compute automorphism
 groups of transformation semigroups.
 
-Citrus  0.4  contains more efficient methods than those available in the GAP
+Citrus  0.5  contains more efficient methods than those available in the GAP
 library  (and  in  many  cases  more  efficient  than any other software for
 computing   with  transformation  semigroups)  for  creating  transformation
 semigroups, calculating its Green's classes, size, elements, group of units,
@@ -60,8 +60,7 @@ creating and determining properties of individual transformations  such  as
 the  index and  period  or the least idempotent power. A large catalogue of
 examples is provided.  Citrus  also  provides abbreviated names for many of the
 commonly  used GAP library functions related to semigroups, and functions to
-read  and  write large  collections  of transformations  to  a  file;  see
-ReadCitrus (1.6-1) and WriteCitrus (1.6-2).
+read  and  write large  collections  of transformations  to  a  file.
 
 The  Citrus  package  is  written  in  GAP  code only but requires the Orb (
 http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html)
@@ -89,7 +88,7 @@ in .tar.gz format.
 Contents
 --------
 
-The `citrus-0.4' folder containing this README.txt file should contain the
+The `citrus-0.5' folder containing this README.txt file should contain the
 directories and files: CHANGELOG, PackageInfo.g, README, VERSIONS, doc,
 examples, gap, init.g, read.g, tst.
 
@@ -115,31 +114,31 @@ installation of Citrus:
 
       Note that Orb and Citrus both perform better if Orb is compiled.
 
- •    download the package archive citrus-0.4.tar.gz from
+ •    download the package archive citrus-0.5.tar.gz from
 
       http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html
 
  •    unzip  and  untar  the  file,  this  should  create a directory called
-      citrus-0.4.
+      citrus-0.5.
 
  •    locate  the  pkg  directory  of your GAP directory, which contains the
-      directories lib, doc and so on. Move the directory citrus-0.4 into the
+      directories lib, doc and so on. Move the directory citrus-0.5 into the
       pkg directory.
 
  •    start GAP in the usual way.
 
  •    type LoadPackage("citrus");
 
- •    compile the documentation by using CitrusMakeDoc (1.2-1)
+ •    compile the documentation by using CitrusMakeDoc.
 
 Below is an example of an installation of Citrus in a UNIX environment where
 GAPROOT  should  be  substituted  with  the  main  GAP  directory  (the  one
 containing the folders bin, lib, and so on) in your installation of GAP.
 
 ────────────────────────────────  Example  ─────────────────────────────────
-  > gunzip citrus-0.4.tar.gz 
-  > tar -xf citrus-0.4.tar 
-  > mv citrus-0.4 GAPROOT/pkg
+  > gunzip citrus-0.5.tar.gz 
+  > tar -xf citrus-0.5.tar 
+  > mv citrus-0.5 GAPROOT/pkg
   > gap 
   
   [ ... ]
@@ -152,7 +151,7 @@ containing the folders bin, lib, and so on) in your installation of GAP.
      Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
   ----------------------------------------------------------------------
   ----------------------------------------------------------------------
-  Loading  Citrus 0.4 (Citrus - ComputIng with TransfoRmation semigrUopS)
+  Loading  Citrus 0.5 (Citrus - ComputIng with TransfoRmation semigrUopS)
   by J. D. Mitchell (http://tinyurl.com/jdmitchell).
   ----------------------------------------------------------------------
   true

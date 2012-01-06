@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  PackageInfo.g
-#Y  Copyright (C) 2011                                      James D. Mitchell
+#Y  Copyright (C) 2011-12                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -9,20 +9,20 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "0.4">
+##  <!ENTITY VERSION "0.5">
 ##  <!ENTITY ORBVERS "3.8">
 ##  <!ENTITY RELEASEDATE "24 November 2011">
-##  <!ENTITY ARCHIVENAME "citrus-0.4">
+##  <!ENTITY ARCHIVENAME "citrus-0.5">
 ##  <!ENTITY COPYRIGHTYEARS "2011-12">
 ##  <#/GAPDoc>
 
 SetPackageInfo( rec(
 PackageName := "Citrus",
 Subtitle := "ComputIng with Transformation semigRoUps and monoidS",
-Version := "0.4",
+Version := "0.5",
 Date := "24/11/2011",
 ArchiveURL := 
-          "https://bitbucket.org/zen154115/citrus/downloads/citrus-0.4",
+          "https://bitbucket.org/zen154115/citrus/downloads/citrus-0.5",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -56,7 +56,7 @@ PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus",
 PackageDoc := rec(
   BookName  := "Citrus",
   Archive := 
-      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus-0.4.tar.gz",
+      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus-0.5.tar.gz",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",  
