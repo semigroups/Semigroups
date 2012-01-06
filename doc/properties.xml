@@ -561,13 +561,30 @@ true</Example>
 
 <#GAPDoc Label="IsomorphismTransformationMonoid">
   <ManSection>
-    <Oper Name="IsomorphismTransformationMonoid" Arg="S"/>
-    <Returns>An isomorphism from the transformation semigroup <A>S</A>
-      satisfying <Ref Prop="IsMonoidAsSemigroup"/> to a transformation monoid. 
+    <Oper Name="IsomorphismTransformationMonoid" Arg="obj"/>
+    <Oper Name="IsomorphismTransformationSemigroup" Arg="obj"/>
+    <Returns>An isomorphism.
     </Returns>
     <Description>
-      See also <Ref Prop="IsTransformationMonoid" BookName="ref"/> and
-            <Ref Prop="IsTransformationSemigroup" BookName="ref"/>.
+    If <A>obj</A> is a transformation semigroup satisfying <Ref
+    Prop="IsMonoidAsSemigroup"/>, then this function returns an isomorphism
+    from <A>obj</A> to a transformation monoid. <P/>
+    
+    If <A>obj</A> is a permutation group, then
+    <C>IsomorphismTransformationMonoid</C> returns an isomorphism from
+    <A>obj</A> to a transformation monoid acting on the set
+    <C>[1..NrMovedPoints(<A>obj</A>)]</C>.
+    If <A>obj</A> is a permutation group, then
+    <C>IsomorphismTransformationSemigroup</C> returns an isomorphism from
+    <A>obj</A> to a transformation semigroup acting on the set
+    <C>[1..NrMovedPoints(<A>obj</A>)]</C>.
+    <P/>
+    
+    See also <Ref Prop="IsTransformationMonoid" BookName="ref"/>, <Ref
+    Prop="IsTransformationSemigroup" BookName="ref"/>,
+    <Ref Oper="IsomorphismTransformationMonoid" BookName="ref"/>, 
+    and 
+    <Ref Oper="IsomorphismTransformationSemigroup" BookName="ref"/>.
 
       <Example>
 gap> S:=Semigroup( Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
