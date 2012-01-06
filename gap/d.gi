@@ -115,7 +115,7 @@ function(f, d)
         return true;  
       fi;
     od;
-  od;
+  fi;
 
   return false;
 end);
@@ -1247,23 +1247,27 @@ end);
 InstallOtherMethod(GreensRClassOfElementNC, "for D-class and transformation", 
 [IsGreensDClass and IsGreensClassOfTransSemigp, IsTransformation], 
 function(d, f)
-  local o, e, data, g, r;
+  local data, l, o, r;
  
-  o:=d!.o; e:=d!.data;
-  data:=InOrbitsOfImages(f![1], true, [e[1], e[2], 
-   Position(o!.orbits[e[1]][e[2]],
-   ImageSetOfTransformation(f)), e[4], fail, 0, fail], o!.orbits, o!.images);
-  
-  # JDM remove rectify!
+  data:=ShallowCopy(d!.data[1]);
+  l:=Position(ImageOrbit(d), ImageSetOfTransformation(f));
+  data[3]:=l;
+  data[5]:=fail; data[6]:=0; data[7]:=fail;
 
+  o:=d!.o[1];
+
+  data:=InOrbitsOfImages(f![1], true, data, o!.orbits, o!.images);
+  
   if not data[1] then 
     data:=AddToOrbitsOfImages(d, f![1], data[2], o, false);
   else 
     data:=data[2];
   fi;
 
-  g:=RClassRepFromData(d!.parent, data, o);
-  r:=CreateRClass(d!.parent, data, o, g);
+  data[3]:=l;
+
+  r:=CreateRClass(d!.parent, data, o, RClassRepFromData(ParentAttr(d), data,
+   o));
   SetDClassOfRClass(r, d);
   return r;
 end);
@@ -1272,6 +1276,7 @@ end);
 
 # new for 0.1! - HClassReps - "for a D-class"
 ############################################################################
+# JDM surely this can be improved too...
 
 InstallOtherMethod(HClassReps, "for a D-class",
 [IsGreensDClass and IsGreensClassOfTransSemigp],
@@ -1298,14 +1303,17 @@ function(d)
   local ker_o, ker_scc, n, out, k, img_o, img_scc, m, i, j, l, lookup;
 
   if HasIsRegularDClass(d) and not IsRegularDClass(d) then 
+    Info(InfoCitrus, 2, "the D-class is not regular.");
     return [];
   fi;
 
   if NrIdempotentsRClassFromData(d!.parent, d!.data[1], d!.o[1])=0 then 
+    Info(InfoCitrus, 2, "the D-class is not regular.");
     return [];
   fi;
 
   if RankOfTransformation(d!.rep)=DegreeOfTransformation(d!.rep) then
+    Info(InfoCitrus, 2, "the D-class is the group of units.");
     return [TransformationNC([1..DegreeOfTransformation(d!.rep)])];
   fi;
 
@@ -1624,11 +1632,7 @@ function(s)
 
     ShallowCopy := iter -> rec(),
 
-    i:=0, # representative index i.e. which representative we are at
-
-    s:= s,
-
-    next_value:=fail,
+    i:=0, s:=s, next_value:=fail,
 
     last_called_by_is_done:=false,
 
@@ -2377,5 +2381,3 @@ function(s)
 end);
 
 #EOF
-
-
