@@ -13,7 +13,6 @@ DeclareGlobalFunction("CitrusEvalWord");
 DeclareAttribute("GradedImagesOfTransSemigroup", IsTransformationSemigroup); 
 DeclareAttribute("GradedKernelsOfTransSemigroup", IsTransformationSemigroup);
 
-#DeclareGlobalFunction("HashFunctionForTransformation");
 DeclareGlobalFunction("HashFunctionForBlist");
 DeclareGlobalFunction("HashTableForImages");
 DeclareGlobalFunction("HashTableForKernels");

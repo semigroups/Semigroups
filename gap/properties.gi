@@ -61,8 +61,8 @@ function(s)
   local h, m, g;
 
   if not IsMonoidAsSemigroup(s) then 
-    Error("the semigroup is not a monoid,");
-    return;
+    Info(InfoCitrus, 2, "the semigroup is not a monoid,");
+    return fail;
   fi;
 
   h:=GreensHClassOfElement(s, MultiplicativeNeutralElement(s));
@@ -188,8 +188,6 @@ s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
 
 # mod for 0.1! - IsBand - "for a transformation semigroup"
 ###########################################################################
-#JDM must find some reasonable examples to test this on!
-# this could maybe be better!
 
 InstallMethod(IsBand, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], s-> 
@@ -197,7 +195,6 @@ InstallMethod(IsBand, "for a transformation semigroup",
 
 # new for 0.1! - IsBlockGroup - "for a transformation semigroup"
 #############################################################################
-# JDM check we didn't have a better version of this previously!
 
 InstallMethod(IsBlockGroup, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
@@ -262,18 +259,18 @@ function(s)
   local gens, idem, f, g;
 
   if HasIsInverseSemigroup(s) and not IsInverseSemigroup(s) then 
-    Info(InfoCitrus, 2, "not an inverse semigroup");
+    Info(InfoCitrus, 2, "the semigroup is not inverse");
     return false;
   elif not IsCompletelyRegularSemigroup(s) then 
-    Info(InfoCitrus, 2, "not completely regular semigroup");
+    Info(InfoCitrus, 2, "the semigroup is not completely regular");
     return false;
   elif IsGroupAsSemigroup(s) then
-    Info(InfoCitrus, 2, "a group");
+    Info(InfoCitrus, 2, "the semigroup is a group");
     return true;
   fi;
 
   if not IsRegularSemigroup(s) then 
-    Info(InfoCitrus, 2, "not a regular semigroup");
+    Info(InfoCitrus, 2, "the semigroup is not regular");
     return false;
   fi;
 
@@ -285,8 +282,8 @@ function(s)
   for f in gens do
     for g in idem do
       if not f*g=g*f then 
-        Info(InfoCitrus, 2, "idempotents are not central");
-        #JDM could have more info here
+        Info(InfoCitrus, 2, "the idempotents are not central");
+        Info(InfoCitrus, 2, f, " and ", g, "do not commute");
         return false;
       fi;
     od;
@@ -369,13 +366,15 @@ InstallTrueMethod(IsCompletelySimpleSemigroup, IsSimpleSemigroup and IsFinite);
 InstallOtherMethod(IsHTrivial, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local iter, g;
+  local iter, i, g;
 
   iter:=IteratorOfDClassRepsData(s);
-  
+  i:=0; 
   repeat 
+    i:=i+1;
     g:=DClassSchutzGpFromData(s, NextIterator(iter)[2]);
     if Size(g)>1 then 
+      Info(InfoCitrus, 2, "the D-class with index ", i, " is not H-trivial");
       return false;
     fi;
   until IsDoneIterator(iter);
@@ -395,16 +394,19 @@ InstallOtherMethod(IsHTrivial, "for a D-class of a trans. semigp",
 InstallMethod(IsLTrivial, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local iter, d;
+  local iter, i, d;
 
   iter:=IteratorOfDClassRepsData(s); 
-  
+  i:=0;
+
   #JDM here it would be useful to pass OrbitsOfKernels(s)!.orbits to 
   # KernelOrbitSchutzGpFromData...
 
   for d in iter do 
+    i:=i+1;
     if not (Size(KernelOrbitSchutzGpFromData(s, d[2]))=1 and 
      Length(KernelOrbitSCCFromData(s, d[2]))=1) then
+      Info(InfoCitrus, 2, "the D-class with index ", i, " is not L-trivial");
       return false;
     fi;
   od;
@@ -425,13 +427,16 @@ InstallOtherMethod(IsLTrivial, "for a D-class of a trans. semigp",
 InstallMethod(IsRTrivial, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local iter, r, d;
+  local i, iter, r, d;
+  i:=0;
 
   if OrbitsOfKernels(s)!.finished then 
     iter:=IteratorOfDClasses(s);
     for d in iter do 
+      i:=i+1;
       if not (Size(ImageOrbitSchutzGpFromData(s, d!.data[1]))=1 and 
        Length(ImageOrbitSCCFromData(s, d!.data[1]))=1) then
+        Info(InfoCitrus, 2, "the D-class with index ", i, " is not R-trivial");
         return false;
       fi;
     od;
@@ -444,9 +449,11 @@ function(s)
   #JDM here it would be useful to pass OrbitsOfImages(s)!.orbits to 
   # RClassSchutzGpFromData...
 
-  for d in iter do 
+  for d in iter do
+    i:=i+1;
     if not (Size(ImageOrbitSchutzGpFromData(s, d))=1 and 
      Length(ImageOrbitSCCFromData(s, d))=1) then 
+      Info(InfoCitrus, 2, "the R-class with index ", i, " is not trivial");
       return false;
     fi;
   od;
@@ -666,11 +673,34 @@ InstallOtherMethod(IsMonoidAsSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
  x-> not MultiplicativeNeutralElement(x)=fail);
 
-#JDM should have methods for IsomorphismTransformationSemigroup/Monoid for 
-# perm. groups. 
-
-# new for 0.4! - IsomorphismTransformationSemigroup - "for a perm group"
+# new for 0.5! - IsomorphismTransformationSemigroup - "for a perm group"
 #############################################################################
+
+InstallOtherMethod(IsomorphismTransformationSemigroup, "for a perm group",
+[IsPermGroup], 
+function(g)
+  local n, p, iso;
+
+  n:=NrMovedPoints(g);
+  p:=MappingPermListList(MovedPoints(g), [1..n]);
+  iso:=x-> AsTransformation(x^p, n);
+
+  return MappingByFunction(g, Semigroup(List(GeneratorsOfGroup(g), iso)), iso);
+end);
+
+# new for 0.5! - IsomorphismTransformationMonoid - "for a perm group"
+#############################################################################
+
+InstallOtherMethod(IsomorphismTransformationMonoid, "for a perm group",
+[IsPermGroup], 
+function(g)
+  local n, p, iso;
+  
+  n:=NrMovedPoints(g);
+  p:=MappingPermListList(MovedPoints(g), [1..n]);
+  iso:=x-> AsTransformation(x^p, n);  
+  return MappingByFunction(g, Monoid(List(GeneratorsOfGroup(g), iso)), iso);
+end);
 
 # new for 0.1! - IsomorphismTransformationMonoid - "for trans semi"
 #############################################################################
@@ -680,7 +710,8 @@ InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
 function(s)
 
   if not IsMonoidAsSemigroup(s) then 
-    Error( "Usage: trans. semigroup satisfying IsMonoidAsSemigroup" );
+    Error( "Usage: trans. semigroup satisfying IsMonoidAsSemigroup," );
+    return;
   fi;
 
   return MappingByFunction(s, Monoid(Difference(Generators(s),
@@ -695,7 +726,8 @@ InstallOtherMethod(IsomorphismPermGroup, "for a transformation semigroup",
 function(s)
 
   if not IsGroupAsSemigroup(s)  then
-    Error( "Usage: trans. semigroup satisfying IsGroupAsSemigroup" );
+    Error( "Usage: trans. semigroup satisfying IsGroupAsSemigroup,");
+    return; 
   fi;
 
   return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 

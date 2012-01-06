@@ -120,7 +120,7 @@ fail
 gap> IsMonoidAsSemigroup(S);         
 false
 gap> GroupOfUnits(S);
-Error, the semigroup is not a monoid,
+fail
 gap> MultiplicativeZero(S);
 Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8 ] )
 gap> h:=Filtered(h, x-> not x=fail);                             

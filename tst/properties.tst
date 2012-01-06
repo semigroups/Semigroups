@@ -568,8 +568,9 @@ gap> IsMonoidAsSemigroup(t);
 true
 gap> t:=Range(IsomorphismTransformationMonoid(t));;
 gap> IsomorphismPermGroup(t);
-MappingByFunction( <monoid with 3 generators>, <permutation group with 
-3 generators>, <Operation "AsPermutation"> )
+MappingByFunction( <monoid with 3 generators>, Group(
+[ (3,5,4)(6,8)(9,10), (1,2)(6,10,9,8,7), (1,2)(3,5)(6,10)(7,9)
+ ]), <Operation "AsPermutation"> )
 
 gap> gens:=[Transformation([4,4,4,1,1,6,7,8,9,10,11,1]),
 > Transformation([6,6,6,7,7,1,4,8,9,10,11,7]),
@@ -754,7 +755,7 @@ gap> gens:=[ Transformation( [ 4, 6, 5, 2, 1, 3 ] ),
 gap> s:=Semigroup(gens);;
 gap> g:=GroupOfUnits(s);;
 gap> Range(InjectionZeroMagma(g));
-<monoid with 3 generators>
+<monoid with 4 generators>
 gap> IsZeroGroup(last);
 true
 gap> IsZeroGroup(s);
