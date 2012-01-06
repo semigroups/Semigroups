@@ -10,14 +10,7 @@
 
 # - this file is alphabetized, keep it that way!
 
-# new for 0.1! - ChooseHashFunction - "for transformations and pos. int."
-#############################################################################
-
-#InstallMethod(ChooseHashFunction, "for transformations and pos. int.",
-#[IsTransformation, IsInt],
-#function(p, hashlen)
-#  return rec(func := HashFunctionForTransformation, data := [101, hashlen]);
-#end);
+#CCC
 
 # new for 0.2! - ChooseHashFunction - "for blist and pos. int."
 #############################################################################
@@ -28,8 +21,7 @@ function(p, hashlen)
   return rec(func := HashFunctionForBlist, data := [101, hashlen]);
 end);
 
-# new for 0.4! - CitrusEvalWord - "for list of trans. imgs. and list of pos.
-# ints".
+# new for 0.4! - CitrusEvalWord - "for trans. imgs. and  pos. ints".
 #############################################################################
 
 InstallGlobalFunction(CitrusEvalWord,
@@ -155,10 +147,10 @@ end);
 # new for 0.1! - HashFunctionForTransformation - not a user function!
 #############################################################################
 
-InstallGlobalFunction(HashFunctionForTransformation,
-function(v,data) 
-   return ORB_HashFunctionForIntList(v![1], data); 
-end);
+#InstallGlobalFunction(HashFunctionForTransformation,
+#function(v,data) 
+#   return ORB_HashFunctionForIntList(v![1], data); 
+#end);
 
 #III
 
@@ -327,14 +319,19 @@ end);
 # new for 0.4! - ReverseSchreierTreeOfSCC - "for an orbit and pos. int."
 ###########################################################################
 
-# JDM add check that i<=Length(OrbSCC(o))
-
 InstallGlobalFunction(ReverseSchreierTreeOfSCC,
 function(o, i)
-  local graph, rev, scc, gen, pos, seen, t, oo, j, k, l, m;
+  local r, graph, rev, scc, gen, pos, seen, t, oo, j, k, l, m;
+
+  r:=Length(OrbSCC(o));
+
+  if i>r then 
+    Error("the orbit only has ", r, " strongly connected components,");
+    return;
+  fi;
 
   if not IsBound(o!.reverse) then
-    o!.reverse:=EmptyPlist(Length(OrbSCC(o)));
+    o!.reverse:=EmptyPlist(r);
   fi;
  
   if IsBound(o!.reverse[i]) then
@@ -392,14 +389,19 @@ end);
 # new for 0.4! - SchreierTreeOfSCC - "for an orbit and pos. int."
 ###########################################################################
 
-# JDM add check that i<=Length(OrbSCC(o))
-
 InstallGlobalFunction(SchreierTreeOfSCC,
 function(o, i)
-  local scc, len, gen, pos, seen, t, oo, m, graph, j, k, l, len_k;
+  local r, scc, len, gen, pos, seen, t, oo, m, graph, j, k, l, len_k;
 
+  r:=Length(OrbSCC(o));
+
+  if i>r then 
+    Error("the orbit only has ", r, " strongly connected components,");
+    return;
+  fi;
+  
   if not IsBound(o!.trees) then
-    o!.trees:=EmptyPlist(Length(OrbSCC(o)));
+    o!.trees:=EmptyPlist(r);
   fi;
 
   if IsBound(o!.trees[i]) then 
@@ -444,7 +446,7 @@ InstallMethod(SchutzGps, "for a trans. semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 s-> List(CitrusSkeleton(s)!.schutz, x-> x[2]));
 
-# new for 0.4! - Skeleton - "for a trans. semigroup"
+# new for 0.4! - CitrusSkeleton - "for a trans. semigroup"
 #############################################################################
 
 InstallMethod(CitrusSkeleton, "for a trans. semigroup",

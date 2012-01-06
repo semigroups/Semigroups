@@ -55,6 +55,8 @@ function(f, l)
   if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) or 
    RankOfTransformation(f) <> RankOfTransformation(rep) or 
     ImageSetOfTransformation(f) <> ImageSetOfTransformation(rep) then
+    Info(InfoCitrus, 1, "degree, rank, or image not equal to those of",
+     " any of the L-class elements,");
     return false;
   fi;
 
@@ -64,12 +66,14 @@ function(f, l)
   i:=Position(o_ker, CanonicalTransSameKernel(f));
 
   if i = fail or not o_ker!.truth[d[2][4]][i] then 
+    Info(InfoCitrus, 1, "kernel not equal to that of any L-class element,");
     return false;
   fi;
 
   schutz:=KernelOrbitStabChain(l);
 
   if schutz=true then 
+    Info(InfoCitrus, 3, "Schutz. group of L-class is symmetric group");
     return true;
   fi;
 
@@ -78,6 +82,8 @@ function(f, l)
   g:=o_ker!.rels[i][2]*f*(d[3]/perms[d[1][3]])^-1;
 
   if g=rep then 
+    Info(InfoCitrus, 3, "transformation with rectified image equals ",
+     "L-class representative");
     return true;
   elif schutz=false then 
     return false;
@@ -363,7 +369,7 @@ function(s, f)
   n:=DegreeOfTransformationSemigroup(s);
 
   if not DegreeOfTransformation(f)=n then
-    Error("Usage: trans. semigroup and trans. of equal degree");
+    Error("Usage: trans. semigroup and trans. of equal degree,");
     return;
   fi;
 
@@ -383,7 +389,7 @@ function(s, f)
 
   j:=Length(ImageSetOfTransformation(f));
    
-  Info(InfoCitrus, 2, "finding orbit of image...");
+  Info(InfoCitrus, 3, "finding orbit of image...");
   img_o:=[]; img_o[j]:=[ForwardOrbitOfImage(s, f![1])];
   #JDM see comments in GreensDClassOfElementNC
   img_o:=rec( finished:=false, orbits:=img_o, gens:=Generators(s), s:=s,
@@ -391,13 +397,13 @@ function(s, f)
    function(x) if x=j then return 1; else return 0; fi; end),
    data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=s!.opts!.hashlen!.M)));
 
-  Info(InfoCitrus, 2, "finding orbit of kernel...");
+  Info(InfoCitrus, 3, "finding orbit of kernel...");
   ker_o:=[]; ker_o[j]:=[ForwardOrbitOfKernel(s, f)];
   ker_o:=rec( orbits:=ker_o, gens:=Generators(s), data:=[[[j,1,1,1,1,1],
      [j,1,1,1,1,1]]], kernels:=fail, data_ht:=HTCreate([1,1,1,1,1,1],
      rec(hashlen:=s!.opts!.hashlen!.S)));
 
-  Info(InfoCitrus, 2, "finding the kernel orbit schutz. group");
+  Info(InfoCitrus, 3, "finding the kernel orbit schutz. group");
   Add(ker_o!.orbits[j][1]!.d_schutz[1], [CreateSchutzGpOfDClass(s,
    [[j,1,1,1,1,1],[j,1,1,1,1,1]], [img_o, ker_o])]);
   HTAdd(ker_o!.data_ht, [j,1,1,1,1,1], 1);
@@ -484,16 +490,19 @@ function(l)
   local n, m, out, f, img, o, scc, j, lookup, i, k;
 
   if HasIsRegularLClass(l) and not IsRegularLClass(l) then 
+    Info(InfoCitrus, 2, "the L-class is not regular,");
     return [];
   fi;
 
   if NrIdempotentsRClassFromData(l!.parent, l!.data[1], l!.o[1])=0 then
+    Info(InfoCitrus, 2, "the L-class is not regular,");
     return [];
   fi;
 
   n:=DegreeOfTransformation(l!.rep); m:=RankOfTransformation(l!.rep);
   
   if m=n then
+    Info(InfoCitrus, 2, "the L-class is the group of units,");
     return [TransformationNC([1..n])];
   fi;
 
@@ -544,17 +553,18 @@ function(r)
   return r!.o[1]!.orbits[d[1]][d[2]]!.perms;
 end);
 
-# new for 0.1! - IsRegularLClass - "for an L-class of trans. semigroup"
+# new for 0.1! - IsRegularLClass - "for a Green's class of trans. semi."
 ###########################################################################
-# JDM: don't see a current need for IsRegularLClassData...
+# Notes: don't see a current need for IsRegularLClassData...
 
-InstallMethod(IsRegularLClass, "for an L-class of trans. semigroup",
+InstallMethod(IsRegularLClass, "for a Green's class of trans. semi.",
 [IsGreensClassOfTransSemigp], 
 function(l)
   local img, scc, o, i;
 
-  if not IsGreensLClass(l) then 
-    return false;
+  if not IsGreensLClass(l) then
+    Error(l, "is not an L-class,");    
+    return;
   fi;
 
   if HasNrIdempotents(l) then 
@@ -918,16 +928,19 @@ function(l)
   fi;
   
   if HasIsRegularLClass(l) and not IsRegularLClass(l) then 
+    Info(InfoCitrus, 2, "L-class is not regular");
     return 0;
   fi;
 
   if NrIdempotentsRClassFromData(l!.parent, l!.data[1], l!.o[1])=0 then
+    Info(InfoCitrus, 2, "L-class is not regular");
     return 0;
   fi;
   
   f:=l!.rep;
   
   if RankOfTransformation(f)=DegreeOfTransformation(f) then
+    Info(InfoCitrus, 2, "L-class is the group of units");
     return 1;
   fi;
   
@@ -1005,4 +1018,3 @@ function(l)
 end);
 
 #EOF
-
