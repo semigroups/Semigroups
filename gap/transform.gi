@@ -282,15 +282,17 @@ function(s, f)
   local ker, m, o;
 
   if not DegreeOfTransformationSemigroup(s)=DegreeOfTransformation(f) then 
-    Info(InfoCitrus, 2, "the degree of the semigroup and trans. differ");
-    return false;
+    Error("Usage: transformation semigroup and transformation of equal degree,");
+    return;
   fi;
 
-  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
+  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then
+    Info(InfoCitrus, 2, "the semigroup is regular,");
     return true;
   fi;
 
-  if not AsPermutation(f)=fail then      
+  if not AsPermutation(f)=fail then     
+    Info(InfoCitrus, 2, "the transformation belongs to a subgroup,");
     return true;
   fi;
 
@@ -331,7 +333,7 @@ InstallOtherMethod(One, "for a full transformation semigroup",
 
 # new for 0.5! - One - "for a transformation semigroup"
 #############################################################################
-# required due to hashing not working for ranges. 
+# Notes: required due to hashing not working for ranges. 
 
 InstallMethod(One, "for a transformation",
 [IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
@@ -393,8 +395,10 @@ function(img, n)
   if ForAll(img, IsPosInt) and Maximum(img)<=n then
     return RandomIdempotentNC(img, n);
   fi;
-
-  return fail;
+  Error("Usage: <img>, <n> where <img> is a list of pos. ints.",
+  " and <n> is a pos. int. such that the maximum of <img> is not greater than",
+  " <n>,");
+  return;
 end);
 
 # new for 0.1! - RandomIdempotentNC - "for an image and pos. int."
@@ -441,10 +445,13 @@ InstallOtherMethod(RandomTransformation,  "for an image and a pos. int.",
 [IsCyclotomicCollection, IsPosInt],
 function(img, n)
 
-  if ForAll(img, IsPosInt) and Maximum(img)<n+1 then 
+  if ForAll(img, IsPosInt) and Maximum(img)<=n then 
     return RandomTransformationNC(img, n);
   fi;
-  return fail;
+  Error("Usage: <img>, <n> where <img> is a list of pos. ints.",
+  " and <n> is a pos. int. such that the maximum of <img> is not greater than",
+  " <n>,");
+  return;
 end);
 
 # new for 0.1! - RankOfTransformation - "for a transformation (citrus pkg)"
