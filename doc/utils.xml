@@ -57,12 +57,14 @@ MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
       should take no more than a few seconds to complete. The same 
       effect can be achieved by entering:
 
-      <Log>SizeScreen([80]); SetInfoLevel(InfoWarning, 0);
-TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
-InstallationPath, "/doc"), "citrus.xml", 
-["utils.xml", "greens.xml",
-"orbits.xml", "properties.xml", "transform.xml"]);</Log>
+<Log>SizeScreen([80]);
+SetInfoLevel(InfoWarning, 0);
+SetInfoLevel(InfoCitrus, 0);
 
+TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
+   InstallationPath, "/doc"), "citrus.xml",
+   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
+    "transform.xml", "../PackageInfo.g"]);</Log>
       at the &GAP; prompt. 
       To more comprehensively test that &Citrus; is installed
       correctly use <Ref Func="CitrusTestAll"/>. See also <Ref
@@ -99,7 +101,7 @@ InstallationPath, "/doc"), "citrus.xml",
       <Ref Oper="DegreeOfTransformationSemigroup" BookName="ref"/>, 
       if <A>obj</A> is a transformation semigroup and 
       <Ref Oper="DegreeOfTransformation" BookName="ref"/> if
-      <A>obj</A> a transformation.  
+      <A>obj</A> is a transformation.  
     </Description>
   </ManSection> 
 <#/GAPDoc>
@@ -120,9 +122,9 @@ InstallationPath, "/doc"), "citrus.xml",
     <Func Name="Generators" Arg="S"/>
     <Returns>A list of transformations.</Returns>
     <Description>
-      returns the result of 
+      Returns the result of 
       <Ref Attr="GeneratorsOfMonoid" BookName="ref"/>, 
-      if <A>S</A> is a transformation monoid and returns the result of 
+      if <A>S</A> is a transformation monoid and the result of 
       <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/> 
       if <A>S</A> is a transformation semigroup but not a transformation 
       monoid.

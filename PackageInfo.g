@@ -13,6 +13,7 @@
 ##  <!ENTITY ORBVERS "3.8">
 ##  <!ENTITY RELEASEDATE "24 November 2011">
 ##  <!ENTITY ARCHIVENAME "citrus-0.4">
+##  <!ENTITY COPYRIGHTYEARS "2011-12">
 ##  <#/GAPDoc>
 
 SetPackageInfo( rec(

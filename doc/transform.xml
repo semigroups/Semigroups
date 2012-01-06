@@ -312,17 +312,17 @@ true</Example>
 <#GAPDoc Label="Random">
   <ManSection>
     <Meth Name="Random" Arg="S"/>
-    <Returns>a transformation.</Returns>
+    <Returns>A transformation.</Returns>
     <Description>
-      returns a random element of the transformation semigroup <A>S</A>. <P/>
+      Returns a random element of the transformation semigroup <A>S</A>. 
       
-      If the &R;-class structure of <A>S</A> is not known, then a short product
-      (at most <C>2*Length(GeneratorsOfSemigroup(<A>S</A>))</C>) 
-      of generators is returned. <P/>
+      If the &R;-class structure of <A>S</A> has not been calculated, then a
+      short product (at most <C>2*Length(GeneratorsOfSemigroup(<A>S</A>))</C>)
+      of generators is returned. 
       
       If the &R;-class structure of <A>S</A> is known, then a random element of
-      a randomly chosen &R;-class is returned. 
-    </Description>
+      a randomly chosen &R;-class is returned.  
+    </Description> 
   </ManSection>
 <#/GAPDoc>
 
