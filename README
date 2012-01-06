@@ -28,48 +28,54 @@
                                                package
                                                        'Citrus'.
                                                        ===========
+  
+This  is  the  README  for the Citrus package version 0.4 for computing with
+transformation  semigroups. Citrus 0.4 is an updated and expanded version of
+the Monoid package for GAP 3 (http://schmidt.nuigalway.ie/monoid/index.html)
+by  Goetz Pfeiffer, Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc and
+the           Monoid           package           for          GAP          4
+(http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html)   by  J.  D.
+Mitchell.
 
-This is the README file of the Citrus package version 0.4 for computing with 
-transformation semigroups. Citrus 0.4 is an updated version of the Monoid 
-package for GAP 3 and 4; see
+The  functionality  of Monoid 3.1.4 for GAP 4 has been split between the GAP
+4.5            packages            Citrus            and            Comatose
+(http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html).  Citrus 0.4
+retains all the functionality of the original Monoid package for GAP 3; and
+many  of  those  functions  from  Monoid  3.1.4  not  involved  in  the
+computation   of   automorphism   groups   of   semigroups.   The   Comatose
+(http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html)    package
+retains  those  functions  from  Monoid  3.1.4  used to compute automorphism
+groups of transformation semigroups.
 
-http://schmidt.nuigalway.ie/monoid/index.html
+Citrus  0.4  contains more efficient methods than those available in the GAP
+library  (and  in  many  cases  more  efficient  than any other software for
+computing   with  transformation  semigroups)  for  creating  transformation
+semigroups, calculating its Green's classes, size, elements, group of units,
+minimal  ideal,  and  testing  membership, finding the inverses of a regular
+element,  and  factorizing  elements over the generators, and many more.
+There  are  also  methods for  testing if a semigroup satisfies  a particular
+property, such as if it is regular, simple, inverse, completely  regular,  and
+a variety of further properties. A range  of functions  is provided for
+creating and determining properties of individual transformations  such  as
+the  index and  period  or the least idempotent power. A large catalogue of
+examples is provided.  Citrus  also  provides abbreviated names for many of the
+commonly  used GAP library functions related to semigroups, and functions to
+read  and  write large  collections  of transformations  to  a  file;  see
+ReadCitrus (1.6-1) and WriteCitrus (1.6-2).
 
-for more information about the original Monoid package by Goetz 
-Pfeiffer and Steve A. Linton, Edmund F. Robertson and Nik Ruskuc, or
+The  Citrus  package  is  written  in  GAP  code only but requires the Orb (
+http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html)
+package.   The  Orb  package  is  used  to  efficiently  compute  orbits  in
+transformation semigroups and these methods underpin most of the features of
+Citrus.
 
-http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html
+Citrus  is still under development, and so some features may not function as
+expected. At the present time, I do not know of any errors or serious issues
+with Citrus. If you find a bug or an issue with the package, then please let
+me know by emailing me the details at: jdm3@st-and.ac.uk.
 
-for more information about Monoid 3.1.4 for GAP 4. 
-
-The functionality of Monoid 3.1.4 has been split across two GAP 4.5 packages
-Citrus and Comatose (for ease of maintanence and development). 
-
-Citrus 0.4 retains all the functionality of the original Monoid package for
-GAP 3; and those functions from Monoid 3.1.4 not involved in the computation of
-automorphism groups of semigroups. The Comatose Package retains those
-functions from Monoid 3.1.4 used to compute automorphism groups of
-transformation semigroups. See 
-
-http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html
-
-Citrus 0.4 contains more efficient methods than those available in the GAP 
-library for calculating Green's classes, finding the size, the elements, and 
-testing membership in transformation semigroups. After Citrus has been loaded 
-many of these methods are automatically used in preference to those in the 
-library and do not need to be called explicitly by the user.
-
-In addition, there are methods for testing if a semigroup satisfies a 
-particular property, such as if it is regular, simple, inverse, or completely 
-regular. 
-
-The Citrus package is written in GAP code only but requires the `orb' package.
-`orb' is used to provide efficient methods for computing orbits in 
-transformation semigroups that underpin most of the features of Citrus. See:
-
-http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
-
-or the main GAP webpages for more information. 
+For more details about semigroups in GAP or Green's relations in particular,
+see the Citrus package manual.
 
 Getting Citrus
 --------------
@@ -83,61 +89,87 @@ in .tar.gz format.
 Contents
 --------
 
-The `citrus-0.4' folder containing this README.txt file should contain the 
-directories and files: `CHANGELOG', `doc', `examples', `gap', 
-'init.g', `PackageInfo.g', `read.g', `README', `tst', and `VERSIONS'. 
+The `citrus-0.4' folder containing this README.txt file should contain the
+directories and files: CHANGELOG, PackageInfo.g, README, VERSIONS, doc,
+examples, gap, init.g, read.g, tst.
 
 Installation
 ------------
 
-1) unpack the file (for example, by using `gunzip citrus-0.4.tar.gz' and 
-then `tar -xf citrus-0.4.tar' in UNIX).
+If you have any problems getting Citrus working, then you could try emailing
+me at: jdm3@st-and.ac.uk.
+  
+It is assumed that you have a working copy of GAP with version number 4.5 or
+higher.  The  most  up-to-date  version  of  GAP  and instructions on how to
+install it can be obtained from the main GAP webpage
+  
+  http://www.gap-system.org
+  
+The  following  is  a  summary of the steps that should lead to a successful
+installation of Citrus:
 
-2) move the resultant directory `citrus-0.4' into the `pkg' directory of your 
-GAP directory (the directory containing the directories `lib', `doc', 
-`pkg', and so on).
+•    download  and  install the Orb package version 3.8 or higher. For more
+     details go to:
 
-3) start GAP in the usual way.
+  http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
 
-4) type `LoadPackage("citrus");'. 
+      Note that Orb and Citrus both perform better if Orb is compiled.
 
-Example Installation
---------------------
+ •    download the package archive citrus-0.4.tar.gz from
 
-unix> gunzip citrus-0.4.tar.gz 
-unix> tar -xf citrus-0.4.tar 
-unix> mv citrus-0.4 GAPROOT/pkg
-unix> gap
+      http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html
 
-[ ... ]
+ •    unzip  and  untar  the  file,  this  should  create a directory called
+      citrus-0.4.
 
-gap> LoadPackage("citrus");
-----------------------------------------------------------------------------
-Loading  orb 3.8 (orb - Methods to enumerate orbits)
-by Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),
-   Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef), and
-   Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
-Homepage: http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
-----------------------------------------------------------------------------
-----------------------------------------------------------------------------
-Loading  Citrus 0.4 (Citrus: computing with transformation semigroups)
-by James Mitchell (http://www-groups.mcs.st-and.ac.uk/~jamesm).
-----------------------------------------------------------------------------
-true
-gap> 
+ •    locate  the  pkg  directory  of your GAP directory, which contains the
+      directories lib, doc and so on. Move the directory citrus-0.4 into the
+      pkg directory.
 
-Presuming that the above steps can be completed successfully you will be 
-running the Citrus package!
+ •    start GAP in the usual way.
+
+ •    type LoadPackage("citrus");
+
+ •    compile the documentation by using CitrusMakeDoc (1.2-1)
+
+Below is an example of an installation of Citrus in a UNIX environment where
+GAPROOT  should  be  substituted  with  the  main  GAP  directory  (the  one
+containing the folders bin, lib, and so on) in your installation of GAP.
+
+────────────────────────────────  Example  ─────────────────────────────────
+  > gunzip citrus-0.4.tar.gz 
+  > tar -xf citrus-0.4.tar 
+  > mv citrus-0.4 GAPROOT/pkg
+  > gap 
+  
+  [ ... ]
+  
+  gap> LoadPackage("citrus");
+  ----------------------------------------------------------------------
+  Loading  orb 3.8 (orb - Methods to enumerate orbits)
+  by Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),
+     Max Neunhoeffer (http://www-groups.mcs.st-and.ac.uk/~neunhoef), and
+     Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
+  ----------------------------------------------------------------------
+  ----------------------------------------------------------------------
+  Loading  Citrus 0.4 (Citrus - ComputIng with TransfoRmation semigrUopS)
+  by J. D. Mitchell (http://tinyurl.com/jdmitchell).
+  ----------------------------------------------------------------------
+  true
+  gap>
+────────────────────────────────────────────────────────────────────────────
+
+Compiling the documentation
+---------------------------
+  
+To  compile  the documentation use the function CitrusMakeDoc after starting
+GAP and loading Citrus. If you want to use the help system, it is essential
+that you compile the documentation.
 
 Further Information
 -------------------
 
-For details on how to use the Citrus package see the package documentation 
-(prepared using the GAPDOC package) in the `doc' subdirectory (view either 
-the html file `chap0.html' via a webbrowser or the file `manual.pdf' via a
-PDF viewer).
-
 If you use the Citrus package, I'd be interested to know about it
 (jdm3@st-and.ac.uk).  
 
-James Mitchell, Lisbon, 24th of July 2011.
+James Mitchell, St Andrews, 6th of January 2012.

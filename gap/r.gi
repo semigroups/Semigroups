@@ -501,7 +501,7 @@ function(s, f)
   local data, l, o, rep, p, w, g, q;
  
   if not f in s then 
-    Error("transformation is not an element of the semigroup.");
+    Error("transformation is not an element of the semigroup,");
     return;
   fi;
  
@@ -708,7 +708,7 @@ end);
 InstallOtherMethod(GreensHClassOfElementNC, "for an R-class and trans.",
 [IsGreensRClass and IsGreensClassOfTransSemigp, IsTransformation], 
 function(r, f)
-  local d, data, l, schutz, g, cosets, i, p;
+  local d, data, l, schutz, g, cosets, i, p, h;
 
   d:=DClassOfRClass(r); data:=ShallowCopy(d!.data);
   data[1][3]:=Position(ImageOrbit(r), ImageSetOfTransformation(f));
@@ -742,8 +742,10 @@ function(r, f)
     data[3]:=cosets[i];
   fi;
 
-  return CreateHClass(ParentAttr(r), data, d!.o,
+  h:=CreateHClass(ParentAttr(r), data, d!.o,
     HClassRepFromData(ParentAttr(d), data, d!.o));  
+  SetRClassOfHClass(h, r);
+  return h;
 end);
 
 # new for 0.1! - HClassRepsData - "for an R-class of a trans. semigp."

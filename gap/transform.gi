@@ -247,7 +247,6 @@ function(s, f)
   for i in [1..Length(imgs)] do
     if Grades(imgs)[i]=j and IsInjectiveTransOnList(g, imgs[i]) then
       for k in kers do
-        if not IsIdempotent(IdempotentNC(k, img)) then Error(""); fi;
         h:=IdempotentNC(k, img)*MappingPermListList(g{imgs[i]}, imgs[i]);
         if regular or h in s then 
           l:=l+1; out[l]:=h;

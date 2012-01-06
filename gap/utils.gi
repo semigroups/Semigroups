@@ -246,7 +246,7 @@ function(arg)
   fi;
   
   Error("Usage: (trans. semigp. or D-class  and trans.) or ",
-  "H-class.");
+  "H-class,");
   return;
 end);
 
@@ -262,7 +262,7 @@ function(arg)
     return GreensLClassOfElementNC(arg[1], arg[2]);
   fi;
   
-  Error("Usage: (trans. semigp. or D-class) and trans.");
+  Error("Usage: (trans. semigp. or D-class) and trans.,");
   return;
 end);
 

@@ -49,8 +49,10 @@ DeclareAttribute("NrRClasses", IsTransformationSemigroup);
 DeclareAttribute("RClassReps", IsTransformationSemigroup);
 DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
 
+
 DeclareSynonymAttr("DClasses", GreensDClasses);
 DeclareSynonymAttr("HClasses", GreensHClasses);
+DeclareSynonymAttr("JClasses", GreensJClasses);
 DeclareSynonymAttr("LClasses", GreensLClasses);
 DeclareSynonymAttr("RClasses", GreensRClasses);
 

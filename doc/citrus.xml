@@ -77,7 +77,7 @@
     
     The functionality of &Monoid; 3.1.4 for &GAP; 4 has been split between the
     &GAP; 4.5 packages &Citrus; and <URL Text="Comatose">
-    http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html"></URL>.
+    http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html</URL>.
 
     &Citrus; &VERSION; retains all the functionality of the original &Monoid;
     package for &GAP; 3; and many of those functions from &Monoid; 3.1.4 not

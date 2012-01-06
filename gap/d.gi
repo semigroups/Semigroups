@@ -902,7 +902,7 @@ end);
 InstallOtherMethod(GreensHClassOfElementNC, "for a D-class and trans.",
 [IsGreensDClass and IsGreensClassOfTransSemigp, IsTransformation], 
 function(d, f)
-  local l_img, data, schutz, g, r, reps, l_ker, cosets, p;
+  local l_img, data, schutz, g, r, reps, l_ker, cosets, p, h;
   
   l_img:=Position(ImageOrbit(d), ImageSetOfTransformation(f));
   
@@ -963,8 +963,10 @@ function(d, f)
     data[3]:=cosets[r];
   fi;
 
-  return CreateHClass(ParentAttr(d), data, d!.o, 
+  h:=CreateHClass(ParentAttr(d), data, d!.o, 
     HClassRepFromData(ParentAttr(d), data, d!.o));
+  SetDClassOfHClass(h, d);
+  return h;
 end);
 
 # new for 0.1! - LClassRepsData - "for a D-class of a trans. semigroup"
@@ -1221,8 +1223,10 @@ function(d, f)
     data[3]:=cosets[r];
   fi;
 
-  return CreateLClass(ParentAttr(d), data, d!.o,
-   Representative(d)*(data[3]/ImageOrbitPerms(d)[data[1][3]]));
+  l:=CreateLClass(ParentAttr(d), data, d!.o,
+   Representative(d)*(data[3]/ImageOrbitPerms(d)[data[1][3]]));;
+  SetDClassOfLClass(l, d);
+  return l;
 end);
 
 # mod for 0.5! - GreensRClassOfElement - "for D-class and transformation"

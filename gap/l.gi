@@ -277,7 +277,7 @@ end);
 InstallOtherMethod(GreensHClassOfElementNC, "for an L-class and trans.", 
 [IsGreensLClass and IsGreensClassOfTransSemigp, IsTransformation],
 function(l, f)
-  local data, l_ker, g, rep, p, cosets;
+  local data, l_ker, g, rep, p, cosets, h;
 
   data:=ShallowCopy(l!.data);
   l_ker:=Position(KernelOrbit(l), CanonicalTransSameKernel(f));
@@ -293,8 +293,10 @@ function(l, f)
   data[4]:=cosets[PositionCanonical(cosets, PermLeftQuoTransformationNC(rep,
    g)^p)];
 
-  return CreateHClass(ParentAttr(l), data, l!.o,
+  h:=CreateHClass(ParentAttr(l), data, l!.o,
   HClassRepFromData(ParentAttr(l), data, l!.o));
+  SetLClassOfHClass(h, l);
+  return h;
 end);
 
 # new for 0.1! - GreensLClasses - "for a transformation semigroup"

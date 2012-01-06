@@ -19,13 +19,13 @@ function(arg)
   if not IsTransformationSemigroup(arg[1]) or not 
    (IsTransformationCollection(arg[2]) or IsTransformation(arg[2])) then 
     Error("Usage: arg. must be a trans. semigroup and transformation or ", 
-    "collection of transformations.");
+    "collection of transformations,");
     return;
   fi;
 
   if Length(arg)=3 then 
     if not IsRecord(arg[3]) then 
-      Error("Usage: 3rd arg. must be a record.");
+      Error("Usage: 3rd arg. must be a record,");
       return;
     fi;
     if not "schreier" in RecNames(arg[3]) then  
@@ -44,7 +44,7 @@ function(arg)
   fi;
 
   if not Degree(arg[1])=Degree(arg[2][1]) then 
-    Error("Usage: degrees of transformations must equal degree of semigroup.");
+    Error("Usage: degrees of transformations must equal degree of semigroup,");
     return;
   fi;
 
@@ -63,7 +63,7 @@ function(s, coll, opts)
  
   if coll=[] then 
     Info(InfoCitrus, 2, "All the elements in the collection belong to the ",
-    " semigroup.");
+    " semigroup,");
     return s;
   fi;
   
@@ -248,7 +248,7 @@ function ( arg )
       elif i=Length(arg) and IsRecord(arg[i]) then 
         return MonoidByGenerators(Concatenation(out), arg[i]);
       else
-        Error( "usage: Monoid(<gen>,...), Monoid(<gens>), Monoid(<D>)" );
+        Error( "Usage: Monoid(<gen>,...), Monoid(<gens>), Monoid(<D>)," );
         return;
       fi;
     od;
@@ -256,9 +256,9 @@ function ( arg )
   elif 0 < Length( arg )  then
     return MonoidByGenerators( arg );
   else
-    Error( "usage: Monoid(<gen>,...), Monoid(<gens>), Monoid(<D>)" );
+    Error( "Usage: Monoid(<gen>,...), Monoid(<gens>), Monoid(<D>)," );
+    return;
   fi;
-  return;
 end);
 
 # new for 0.5! - MonoidByGenerators -  "for a trans. collection"
@@ -385,7 +385,7 @@ function ( arg )
       elif i=Length(arg) and IsRecord(arg[i]) then 
         return SemigroupByGenerators(Concatenation(out), arg[i]);
       else
-        Error( "usage: Monoid(<gen>,...), Monoid(<gens>), Monoid(<D>)" );
+        Error( "Usage: Monoid(<gen>,...), Monoid(<gens>), Monoid(<D>)," );
         return;
       fi;
     od;
@@ -393,9 +393,9 @@ function ( arg )
   elif 0 < Length( arg )  then
     return SemigroupByGenerators( arg );
   else
-    Error( "usage: Semigroup(<gen>,...),Semigroup(<gens>),Semigroup(<D>)");
+    Error( "Usage: Semigroup(<gen>,...),Semigroup(<gens>),Semigroup(<D>),");
+    return;
   fi;
-  return;
 end);
 
 # new for 0.5! - SemigroupByGenerators -  "for a trans. collection"
