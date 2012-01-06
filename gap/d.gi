@@ -607,7 +607,7 @@ function(d)
         return fail;
       fi;
       
-      R:=EnumeratorOfRClasses(d); #JDM was GreensRClasses
+      R:=GreensRClasses(d); #JDM should be Enumerator!
       n:=pos-1;
       m:=enum!.m;
       
@@ -622,7 +622,7 @@ function(d)
     NumberElement:=function(enum, f)
       local R, i, j;
         
-      R:=EnumeratorOfRClasses(d); #JDM was GreensRClasses
+      R:=GreensRClasses(d); #JDM should be Enumerator
       for i in [1..Length(R)] do 
         j:=Position(Enumerator(R[i]), f);
         if not j=fail then 

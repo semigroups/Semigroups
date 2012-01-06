@@ -53,6 +53,8 @@ function(f, h)
    RankOfTransformation(f) <> RankOfTransformation(rep) or 
    CanonicalTransSameKernel(f) <> CanonicalTransSameKernel(rep) or 
    ImageSetOfTransformation(f) <> ImageSetOfTransformation(rep) then
+    Info(InfoCitrus, 1, "degree, rank, kernel or image not equal to those of",
+        " any of the H-class elements,");
     return false;
   fi;
 
@@ -82,9 +84,10 @@ end);
 # img coset rep, ker coset rep]; orbit = [OrbitsOfImages, OrbitsOfKernels];
 # rep = H-class representative.
 
-# Notes: data[4]=ker coset rep, should be () unless we are creating the H-class
-# from an L-class, in which case data[3] should be the img coset rep used in the
-# L-class data. 
+# Notes: data[4]=ker coset rep, should be fail unless we are creating the
+# H-class from an L-class, in which case data[3] should be the img coset rep
+# used in the L-class data. Also note that an H-class created from an L-class
+# doesn't know anything a priori about the R-class containing it. 
 
 InstallGlobalFunction(CreateHClass, 
 function(s, data, orbit, rep)
@@ -252,7 +255,7 @@ function(s, f)
   n:=DegreeOfTransformationSemigroup(s);
 
   if not DegreeOfTransformation(f)=n then
-    Error("Usage: trans. semigroup and trans. of equal degree");
+    Error("Usage: trans. semigroup and trans. of equal degree,");
     return;
   fi;
 
@@ -274,7 +277,7 @@ function(s, f)
 
   j:=Length(ImageSetOfTransformation(f));
 
-  Info(InfoCitrus, 2, "finding orbit of image...");
+  Info(InfoCitrus, 3, "finding orbit of image...");
   img_o:=[]; img_o[j]:=[ForwardOrbitOfImage(s, f![1])];
   #JDM see comments in GreensDClassOfElementNC
   img_o:=rec( finished:=false, orbits:=img_o, gens:=Generators(s), s:=s,
@@ -282,7 +285,7 @@ function(s, f)
    function(x) if x=j then return 1; else return 0; fi; end),
    data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=s!.opts!.hashlen!.M)));
 
-  Info(InfoCitrus, 2, "finding orbit of kernel...");
+  Info(InfoCitrus, 3, "finding orbit of kernel...");
   ker_o:=[]; ker_o[j]:=[ForwardOrbitOfKernel(s, f)];
   ker_o:=rec( orbits:=ker_o, gens:=Generators(s), data:=[[[j,1,1,1,1,1],
    [j,1,1,1,1,1]]], kernels:=fail, data_ht:=HTCreate([1,1,1,1,1,1],
@@ -308,19 +311,22 @@ function(d)
   local s, data, o, n, m, ker, scc, lookup, f, h, i, j;
 
   if HasIsRegularDClass(d) and not IsRegularDClass(d) then 
-    return fail;
+    Error("the D-class is not regular,");
+    return;
   fi;
   
   s:=d!.parent; data:=d!.data; o:=d!.o;
 
   if NrIdempotentsRClassFromData(s, data[1], o[1])=0 then
-    return fail;
+    Error("the D-class is not regular,");
+    return;
   fi;
 
   n:=DegreeOfTransformationSemigroup(s);
   m:=RankOfTransformation(d!.rep);       
 
   if m=n then
+    Info(InfoCitrus, 2, "the D-class is the group of units");
     f:=TransformationNC([1..n]*1);
     h:=GreensHClassOfElementNC(s, f);
     SetIsGroupHClass(h, true); SetIdempotents(h, [f]);
@@ -345,7 +351,8 @@ function(d)
     fi;
   od;
 
-  return fail;
+  Error("the D-class is not regular,");
+  return;
 end);
 
 # new for 0.1! - GroupHClassOfGreensDClass - "for D-class of trans. semigp."
@@ -382,7 +389,6 @@ end);
 
 # new for 0.1! - IsGroupHClass - "for an H-class of a trans. semigp."
 ############################################################################
-# install methods for other types of Green's classes...
 
 InstallOtherMethod(IsGroupHClass, "for an H-class of a trans. semigp.", 
 [IsGreensHClass and IsGreensClassOfTransSemigp], 
@@ -391,6 +397,12 @@ function(h)
   f:=h!.rep;
   return IsInjectiveTransOnList(f, ImageSetOfTransformation(f));
 end);
+
+# new for 0.5! - IsGroupHClass - "for a non H-Class of a trans. semigp."
+############################################################################
+
+InstallOtherMethod(IsGroupHClass, "for a non H-Class of a trans. semigp.", 
+[IsGreensClassOfTransSemigp], ReturnFalse);
 
 # new for 0.1! - IsomorphismPermGroup - "for H-class of trans. semigp."
 ###########################################################################
@@ -643,7 +655,6 @@ end);
 
 InstallMethod(ParentAttr, "for H-class of a trans. semigroup", 
 [IsGreensHClass and IsGreensClassOfTransSemigp], x-> x!.parent);
-
 
 # new for 0.1! - PrintObj - IsIteratorOfHClassReps
 ############################################################################
