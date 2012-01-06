@@ -582,7 +582,6 @@ true</Example>
     
     See also <Ref Prop="IsTransformationMonoid" BookName="ref"/>, <Ref
     Prop="IsTransformationSemigroup" BookName="ref"/>,
-    <Ref Oper="IsomorphismTransformationMonoid" BookName="ref"/>, 
     and 
     <Ref Oper="IsomorphismTransformationSemigroup" BookName="ref"/>.
 
