@@ -149,7 +149,7 @@ function(arg)
   fi;
   
   Error("Usage: (trans. semigp. and trans.) or H-class or L-class or", 
-   " R-class.");
+   " R-class,");
   return;
 end);
 
@@ -211,7 +211,7 @@ function(arg)
     return GreensHClassOfElement(arg[1], arg[2]);
   fi;
 
-  Error("Usage: (trans. semigp. or Green's class) and trans.");
+  Error("Usage: (trans. semigp. or Green's class) and trans.,");
   return;
 end);
 
@@ -223,11 +223,11 @@ InstallGlobalFunction(HClassNC,
 function(arg)
 
   if Length(arg)=2 and (IsTransformationSemigroup(arg[1]) or
-   IsGreensDClass(arg[1])) and IsTransformation(arg[2]) then 
+   IsGreensClass(arg[1])) and IsTransformation(arg[2]) then 
     return GreensHClassOfElementNC(arg[1], arg[2]);
   fi;
 
-  Error("Usage: (trans. semigp. or D-class) and trans.");
+  Error("Usage: (trans. semigp. or Green's class) and trans.,");
   return;
 end);
 
@@ -295,14 +295,14 @@ InstallOtherMethod(Rank, "for a transformation",
 InstallGlobalFunction(RClass, 
 function(arg)
 
-  if Length(arg)=2 and IsTransformationSemigroup(arg[1]) 
-   and IsTransformation(arg[2]) then 
+  if Length(arg)=2 and (IsTransformationSemigroup(arg[1]) or
+  IsGreensDClass(arg[1])) and IsTransformation(arg[2]) then 
     return GreensRClassOfElement(arg[1], arg[2]);
   elif Length(arg)=1 and IsGreensHClass(arg[1]) then 
     return RClassOfHClass(arg[1]);
   fi;
   
-  Error("Usage: (trans. semigp. and trans.) or H-class,");
+  Error("Usage: (trans. semigp. or D-class and trans.) or H-class,");
   return;
 end);
 
@@ -313,12 +313,12 @@ end);
 InstallGlobalFunction(RClassNC, 
 function(arg)
 
-  if Length(arg)=2 and IsTransformationSemigroup(arg[1]) 
-   and IsTransformation(arg[2]) then 
+  if Length(arg)=2 and (IsTransformationSemigroup(arg[1]) or
+  IsGreensDClass(arg[1])) and IsTransformation(arg[2]) then 
     return GreensRClassOfElementNC(arg[1], arg[2]);
   fi;
   
-  Error("Usage: trans. semigp. and trans.,");
+  Error("Usage: (trans. semigp. or D-class) and trans.,");
   return;
 end);
 
@@ -331,9 +331,10 @@ function(arg)
   
   if not IsString(arg[1]) then 
     Error("the first argument must be a string,");
+    return;
   fi;
 
-  #####
+  ######JDM make separate functioN!
 
   read_line:=function(line)
     local m, n, r, dom, out, f, i, j;
