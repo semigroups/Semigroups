@@ -8,8 +8,6 @@
 #############################################################################
 ##
 
-#ReadTest("pkg/citrus/tst/schreier.tst");
-
 gap> START_TEST("Citrus package: schreier.tst");
 gap> LoadPackage("citrus", false);;
 

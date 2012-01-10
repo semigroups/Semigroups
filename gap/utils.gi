@@ -10,6 +10,14 @@
 
 # this file contains utilies for use with the Citrus package. 
 
+# new for 0.5! - CitrusDir - for no arg.
+#############################################################################
+
+InstallGlobalFunction(CitrusDir, 
+function()
+  return PackageInfo("citrus")[1]!.InstallationPath;
+end);
+
 # mod for 0.4! - CitrusMakeDoc - "for no argument"
 #############################################################################
 

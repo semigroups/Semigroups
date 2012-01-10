@@ -8,6 +8,7 @@
 #############################################################################
 ##
 
+DeclareGlobalFunction("CitrusDir");
 DeclareGlobalFunction("CitrusMakeDoc");
 DeclareGlobalFunction("CitrusMathJaxLocal");
 DeclareGlobalFunction("CitrusMathJaxDefault");

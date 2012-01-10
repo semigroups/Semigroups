@@ -155,7 +155,8 @@ gap> ForAll([1..NrRClasses(s)], i->
 > RClassReps(s)[i]);
 true
 
-gap>  ReadCitrus("pkg/citrus/examples/munn.citrus.gz", 1376);
+gap> file:=Concatenation(CitrusDir(), "/examples/munn.citrus.gz");;
+gap>  ReadCitrus(file, 1376);
 [ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ), 
   Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 9 ] ), 
   Transformation( [ 1, 2, 3, 4, 5, 6, 9, 9, 9 ] ), 

@@ -8,6 +8,21 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="CitrusDir">
+  <ManSection>
+    <Func Name="CitrusDir" Arg=""/>
+    <Returns>A string.</Returns>    
+    <Description>
+      This function returns the absolute path to the &Citrus; package directory
+      as a string. The same result can be obtained typing:
+
+      <Log>PackageInfo("citrus")[1]!.InstallationPath;</Log>
+
+      at the &GAP; prompt. 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="CitrusMakeDoc">
   <ManSection>
     <Func Name="CitrusMakeDoc" Arg=""/>
@@ -240,7 +255,8 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
       The file <A>filename</A> can be read using <Ref Func="ReadCitrus"/>.
       <P/>
 <Example>
-gap> ReadCitrus("pkg/citrus/examples/graph7c.citrus.gz", 453);
+gap> file:=Concatenation(CitrusDir(), "/examples/graph7c.citrus.gz");;
+gap> ReadCitrus(file, 453);
 [ Transformation( [ 1, 2, 2, 4, 5, 6, 7 ] ), 
   Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] ), 
   Transformation( [ 1, 2, 3, 4, 5, 7, 7 ] ), 

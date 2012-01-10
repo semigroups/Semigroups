@@ -325,6 +325,7 @@ gap></Log>
   <Section><Heading>Reading and writing transformations to a file</Heading>
     The functions <Ref Func="ReadCitrus"/> and <Ref Func="WriteCitrus"/> can be
     used to read or write transformations to a file. 
+    <#Include Label="CitrusDir">
     <#Include Label="ReadCitrus">
     <#Include Label="WriteCitrus">
   </Section>
