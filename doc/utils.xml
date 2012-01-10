@@ -194,6 +194,13 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
       lists of transformations. If the optional second argument <A>nr</A> is
       present, then <C>ReadCitrus</C> returns the transformations stored in the 
       <A>nr</A>th line of <A>filename</A>. <P/>
+      
+      Note that if the file <A>filename</A> is gzipped, then the message
+      <C>gzip: stdout: Broken pipe</C> might be displayed when
+      <C>ReadCitrus</C> is used. While this is unfortunate, it not an error
+      that affect the output of <C>ReadCitrus</C>. We hope to resolve this
+      issue in the future.
+
     </Description>
   </ManSection>
 <#/GAPDoc>

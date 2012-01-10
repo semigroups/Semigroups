@@ -32,4 +32,5 @@ DeclareGlobalFunction("RClass");
 DeclareGlobalFunction("RClassNC");
 
 DeclareGlobalFunction("ReadCitrus");
+DeclareGlobalFunction("ReadCitrusLine");
 DeclareGlobalFunction("WriteCitrus");

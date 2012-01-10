@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
    [ <!ENTITY Citrus "<Package>Citrus</Package>">
      <!ENTITY Smallsemi "<Package>Smallsemi</Package>">
@@ -226,6 +224,12 @@ gap></Log>
     <Ref Func="CitrusTestAll"/>. Please note that it will take a few seconds for
     <Ref Func="CitrusTestInstall"/> to finish and it will take no more than 1
     minute for <Ref Func="CitrusTestAll"/> to finish.<P/>
+
+    Note that after calling <Ref Func="CitrusTestAll"/>, <Ref
+    Func="CitrusTestAll"/>, or <Ref Func="CitrusTestManualExamples"/>, the
+    message <C>gzip: stdout: Broken pipe</C> might be displayed (several
+    times). While this is unfortunate, it is not an error and should simply be
+    ignored.  We hope to resolve this issue in the future.
 
     If something goes wrong, then please review the instructions in Section
     <Ref Sect="install"/> and ensure that &Citrus; has been properly
