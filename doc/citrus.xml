@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
    [ <!ENTITY Citrus "<Package>Citrus</Package>">
@@ -610,10 +610,18 @@ gap></Log>
     &Citrus; for creating transformations. 
     The following functions from the &GAP; reference manual are particularly
     relevant to this section:
-    <Ref Func="Transformation" BookName="ref"/>, 
-    <Ref Func="IdentityTransformation" BookName="ref"/>, and 
-    <Ref Func="RandomTransformation" BookName="ref"/>. 
-    
+
+    <List>
+    <Item>
+      <Ref Func="Transformation" BookName="ref"/>, 
+    </Item>
+    <Item>    
+      <Ref Func="IdentityTransformation" BookName="ref"/>, 
+    </Item>  
+    <Item>
+      <Ref Func="RandomTransformation" BookName="ref"/>. 
+    </Item>
+    </List>   
     <#Include Label="ConstantTransformation"/> 	
     <#Include Label="Idempotent">
     <#Include Label="RandomIdempotent">
@@ -667,15 +675,13 @@ gap></Log>
 
   <Section><Heading>Actions and orbits</Heading>
 
-    The following actions and orbits of transformation semigroups are used by 
-    &Citrus; in the computation of Green's 
-    relations and to test if an arbitrary transformation semigroup has a 
-    particular property;  see Chapter <Ref Chap="green"/> and Chapter 
-    <Ref Chap="properties"/>; see 
-    <Ref Sect="Basic Actions" BookName="ref"/> and
-    <Ref Func="Orb" BookName="orb"/>. 
-    <P/>
-    
+    Some of the following actions and orbits of transformation semigroups are
+    used by &Citrus; in the computation of Green's relations and to test if an
+    arbitrary transformation semigroup has a particular property;  see Chapter
+    <Ref Chap="green"/> and Chapter <Ref Chap="properties"/>; see <Ref
+    Sect="Basic Actions" BookName="ref"/> and <Ref Func="Orb"
+    BookName="orb"/>.  <P/>
+
     <#Include Label="GradedImagesOfTransSemigroup">
     <#Include Label="ImagesOfTransSemigroup">
     <#Include Label="OnKernelsAntiAction">
