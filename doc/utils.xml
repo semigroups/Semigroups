@@ -156,7 +156,8 @@ gap> GeneratorsOfSemigroup(S);
     <InfoClass Name="InfoCitrus"/>
     <Description>
     <C>InfoCitrus</C> is the info class of the &Citrus; package. 
-    The info level is initially set to 1 and only basic info messages
+    The info level is initially set to 0 and no info messages are displayed. 
+    We recommend that you set the level to 1 so that basic info messages
     are displayed. To increase the amount of information displayed during a
     computation increase the info level to 2 or 3. To stop all info messages
     from being displayed, set the info level to 0.  See also
