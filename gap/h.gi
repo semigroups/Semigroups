@@ -311,8 +311,8 @@ function(d)
   local s, data, o, n, m, ker, scc, lookup, f, h, i, j;
 
   if HasIsRegularDClass(d) and not IsRegularDClass(d) then 
-    Error("the D-class is not regular,");
-    return;
+    Info(InfoCitrus, 2, "the D-class is not regular,");
+    return fail;
   fi;
   
   s:=d!.parent; data:=d!.data; o:=d!.o;

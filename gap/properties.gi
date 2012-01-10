@@ -1209,10 +1209,10 @@ end);
 
 #NNN
 
-# new for 0.5! - NrEltsOfRank - "for a transformation semigroup"
+# new for 0.5! - NrElementsOfRank - "for a transformation semigroup"
 #############################################################################
 
-InstallMethod(NrEltsOfRank, "for a transformation semigroup",
+InstallMethod(NrElementsOfRank, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
 function(s, m)
   local iter, tot, r;

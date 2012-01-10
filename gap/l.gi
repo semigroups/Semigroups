@@ -565,8 +565,8 @@ function(l)
   local img, scc, o, i;
 
   if not IsGreensLClass(l) then
-    Error(l, "is not an L-class,");    
-    return;
+    Info(InfoCitrus, 2,  l, " is not an L-class,");    
+    return false;
   fi;
 
   if HasNrIdempotents(l) then 
