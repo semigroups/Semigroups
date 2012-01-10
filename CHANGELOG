@@ -21,8 +21,10 @@
             directory, methods for creating a Green's class inside another
             Green's class have been included (such as an R-class of a D-class
             or an H-class of an L-class), the hash functions used for
-            transformations etc have been improved, and methods for the
-            following operations are introduced:
+            transformations etc have been improved. 
+            
+            Some minor bugs have been fixed, and new methods or functions with
+            the following names have also been introduced:
 
             AntiIsomorphismTransformationSemigroup (for a trans. semigroup),
             IdempotentGeneratedSubsemigp, IsomorphismTransformationSemigroup
