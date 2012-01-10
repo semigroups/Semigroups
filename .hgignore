@@ -21,3 +21,4 @@ syntax: glob
 *.orig
 *.synctex.gz
 citrus.tex
+citrus_dev.tex
