@@ -8,6 +8,21 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="CitrusDir">
+  <ManSection>
+    <Func Name="CitrusDir" Arg=""/>
+    <Returns>A string.</Returns>    
+    <Description>
+      This function returns the absolute path to the &Citrus; package directory
+      as a string. The same result can be obtained typing:
+
+      <Log>PackageInfo("citrus")[1]!.InstallationPath;</Log>
+
+      at the &GAP; prompt. 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="CitrusMakeDoc">
   <ManSection>
     <Func Name="CitrusMakeDoc" Arg=""/>
@@ -156,7 +171,8 @@ gap> GeneratorsOfSemigroup(S);
     <InfoClass Name="InfoCitrus"/>
     <Description>
     <C>InfoCitrus</C> is the info class of the &Citrus; package. 
-    The info level is initially set to 1 and only basic info messages
+    The info level is initially set to 0 and no info messages are displayed. 
+    We recommend that you set the level to 1 so that basic info messages
     are displayed. To increase the amount of information displayed during a
     computation increase the info level to 2 or 3. To stop all info messages
     from being displayed, set the info level to 0.  See also
@@ -194,6 +210,13 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
       lists of transformations. If the optional second argument <A>nr</A> is
       present, then <C>ReadCitrus</C> returns the transformations stored in the 
       <A>nr</A>th line of <A>filename</A>. <P/>
+      
+      Note that if the file <A>filename</A> is gzipped, then the message
+      <C>gzip: stdout: Broken pipe</C> might be displayed when
+      <C>ReadCitrus</C> is used. While this is unfortunate, it not an error
+      that affect the output of <C>ReadCitrus</C>. We hope to resolve this
+      issue in the future.
+
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -232,7 +255,8 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
       The file <A>filename</A> can be read using <Ref Func="ReadCitrus"/>.
       <P/>
 <Example>
-gap> ReadCitrus("pkg/citrus/examples/graph7c.citrus.gz", 453);
+gap> file:=Concatenation(CitrusDir(), "/examples/graph7c.citrus.gz");;
+gap> ReadCitrus(file, 453);
 [ Transformation( [ 1, 2, 2, 4, 5, 6, 7 ] ), 
   Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] ), 
   Transformation( [ 1, 2, 3, 4, 5, 7, 7 ] ), 

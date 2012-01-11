@@ -19,7 +19,8 @@ gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> SetInfoLevel(InfoCitrus, 0);
 
-gap> gens:=ReadCitrus("pkg/citrus/examples/misc.citrus.gz"){[25..124]};;
+gap> file:=Concatenation(CitrusDir(), "/examples/misc.citrus.gz");;
+gap> gens:=ReadCitrus(file){[25..124]};;
 gap> out:=[];;
 gap> for x in gens do                            
 > s:=Semigroup(x);

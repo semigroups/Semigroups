@@ -11,7 +11,7 @@
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "0.5">
 ##  <!ENTITY ORBVERS "3.8">
-##  <!ENTITY RELEASEDATE "24 November 2011">
+##  <!ENTITY RELEASEDATE "10 January 2012">
 ##  <!ENTITY ARCHIVENAME "citrus-0.5">
 ##  <!ENTITY COPYRIGHTYEARS "2011-12">
 ##  <#/GAPDoc>
@@ -20,7 +20,7 @@ SetPackageInfo( rec(
 PackageName := "Citrus",
 Subtitle := "ComputIng with Transformation semigRoUps and monoidS",
 Version := "0.5",
-Date := "24/11/2011",
+Date := "10/01/2012",
 ArchiveURL := 
           "https://bitbucket.org/zen154115/citrus/downloads/citrus-0.5",
 ArchiveFormats := ".tar.gz",
@@ -67,7 +67,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.5",
-  NeededOtherPackages := [["orb", ">=3.8"]],
+  NeededOtherPackages := [["orb", ">=3.8"], ["io", ">=3.3"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.4"]], 
   ExternalConditions := []),
   AvailabilityTest := ReturnTrue,

@@ -107,35 +107,36 @@ install it can be obtained from the main GAP webpage
 The  following  is  a  summary of the steps that should lead to a successful
 installation of Citrus:
 
-•    download  and  install the Orb package version 3.8 or higher. For more
+ *   download  and  install the Orb package version 3.8 or higher. For more
      details go to:
 
   http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
 
-      Note that Orb and Citrus both perform better if Orb is compiled.
+     Note that Orb and Citrus both perform better if Orb is compiled.
 
- •    download the package archive citrus-0.5.tar.gz from
+ *   download the package archive citrus-0.5.tar.gz from
 
-      http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html
+     http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html
 
- •    unzip  and  untar  the  file,  this  should  create a directory called
-      citrus-0.5.
+ *   unzip  and  untar  the  file,  this  should  create a directory called
+     citrus-0.5.
 
- •    locate  the  pkg  directory  of your GAP directory, which contains the
-      directories lib, doc and so on. Move the directory citrus-0.5 into the
-      pkg directory.
+ *   locate  the  pkg  directory  of your GAP directory, which contains the
+     directories lib, doc and so on. Move the directory citrus-0.5 into the
+     pkg directory.
 
- •    start GAP in the usual way.
+ *   start GAP in the usual way.
 
- •    type LoadPackage("citrus");
+ *   type LoadPackage("citrus");
 
- •    compile the documentation by using CitrusMakeDoc.
+ *   compile the documentation by using CitrusMakeDoc.
 
 Below is an example of an installation of Citrus in a UNIX environment where
 GAPROOT  should  be  substituted  with  the  main  GAP  directory  (the  one
 containing the folders bin, lib, and so on) in your installation of GAP.
 
-────────────────────────────────  Example  ─────────────────────────────────
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
   > gunzip citrus-0.5.tar.gz 
   > tar -xf citrus-0.5.tar 
   > mv citrus-0.5 GAPROOT/pkg
@@ -156,7 +157,8 @@ containing the folders bin, lib, and so on) in your installation of GAP.
   ----------------------------------------------------------------------
   true
   gap>
-────────────────────────────────────────────────────────────────────────────
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 Compiling the documentation
 ---------------------------

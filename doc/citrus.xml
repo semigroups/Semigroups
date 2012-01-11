@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
    [ <!ENTITY Citrus "<Package>Citrus</Package>">
      <!ENTITY Smallsemi "<Package>Smallsemi</Package>">
@@ -227,6 +225,12 @@ gap></Log>
     <Ref Func="CitrusTestInstall"/> to finish and it will take no more than 1
     minute for <Ref Func="CitrusTestAll"/> to finish.<P/>
 
+    Note that after calling <Ref Func="CitrusTestAll"/>, <Ref
+    Func="CitrusTestAll"/>, or <Ref Func="CitrusTestManualExamples"/>, the
+    message <C>gzip: stdout: Broken pipe</C> might be displayed (several
+    times). While this is unfortunate, it is not an error and should simply be
+    ignored.  We hope to resolve this issue in the future.
+
     If something goes wrong, then please review the instructions in Section
     <Ref Sect="install"/> and ensure that &Citrus; has been properly
     installed.  If you continue having problems, please email me at
@@ -321,6 +325,7 @@ gap></Log>
   <Section><Heading>Reading and writing transformations to a file</Heading>
     The functions <Ref Func="ReadCitrus"/> and <Ref Func="WriteCitrus"/> can be
     used to read or write transformations to a file. 
+    <#Include Label="CitrusDir">
     <#Include Label="ReadCitrus">
     <#Include Label="WriteCitrus">
   </Section>
@@ -554,6 +559,7 @@ gap></Log>
     <#Include Label="IrredundantGeneratingSubset">
     <#Include Label="MinimalIdeal">
     <#Include Label="MultiplicativeZero">
+    <#Include Label="NrElementsOfRank">
     <#Include Label="Random">
     <#Include Label="Rank">
     <#Include Label="SmallGeneratingSet"> 
@@ -610,10 +616,18 @@ gap></Log>
     &Citrus; for creating transformations. 
     The following functions from the &GAP; reference manual are particularly
     relevant to this section:
-    <Ref Func="Transformation" BookName="ref"/>, 
-    <Ref Func="IdentityTransformation" BookName="ref"/>, and 
-    <Ref Func="RandomTransformation" BookName="ref"/>. 
-    
+
+    <List>
+    <Item>
+      <Ref Func="Transformation" BookName="ref"/>, 
+    </Item>
+    <Item>    
+      <Ref Func="IdentityTransformation" BookName="ref"/>, 
+    </Item>  
+    <Item>
+      <Ref Func="RandomTransformation" BookName="ref"/>. 
+    </Item>
+    </List>   
     <#Include Label="ConstantTransformation"/> 	
     <#Include Label="Idempotent">
     <#Include Label="RandomIdempotent">
@@ -667,15 +681,13 @@ gap></Log>
 
   <Section><Heading>Actions and orbits</Heading>
 
-    The following actions and orbits of transformation semigroups are used by 
-    &Citrus; in the computation of Green's 
-    relations and to test if an arbitrary transformation semigroup has a 
-    particular property;  see Chapter <Ref Chap="green"/> and Chapter 
-    <Ref Chap="properties"/>; see 
-    <Ref Sect="Basic Actions" BookName="ref"/> and
-    <Ref Func="Orb" BookName="orb"/>. 
-    <P/>
-    
+    Some of the following actions and orbits of transformation semigroups are
+    used by &Citrus; in the computation of Green's relations and to test if an
+    arbitrary transformation semigroup has a particular property;  see Chapter
+    <Ref Chap="green"/> and Chapter <Ref Chap="properties"/>; see <Ref
+    Sect="Basic Actions" BookName="ref"/> and <Ref Func="Orb"
+    BookName="orb"/>.  <P/>
+
     <#Include Label="GradedImagesOfTransSemigroup">
     <#Include Label="ImagesOfTransSemigroup">
     <#Include Label="OnKernelsAntiAction">

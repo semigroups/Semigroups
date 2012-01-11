@@ -16,4 +16,3 @@ ReadPkg("citrus/gap/transform.gd");
 ReadPkg("citrus/gap/semigroups.gd");
 
 DeclareInfoClass("InfoCitrus");;
-SetInfoLevel(InfoCitrus, 1);;

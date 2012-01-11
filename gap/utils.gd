@@ -8,6 +8,7 @@
 #############################################################################
 ##
 
+DeclareGlobalFunction("CitrusDir");
 DeclareGlobalFunction("CitrusMakeDoc");
 DeclareGlobalFunction("CitrusMathJaxLocal");
 DeclareGlobalFunction("CitrusMathJaxDefault");
@@ -32,4 +33,5 @@ DeclareGlobalFunction("RClass");
 DeclareGlobalFunction("RClassNC");
 
 DeclareGlobalFunction("ReadCitrus");
+DeclareGlobalFunction("ReadCitrusLine");
 DeclareGlobalFunction("WriteCitrus");

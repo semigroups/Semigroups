@@ -12,13 +12,10 @@
   <ManSection><Heading>Graded images and kernels</Heading>
   <Attr Name="GradedImagesOfTransSemigroup" Arg="S"/>
   <Attr Name="GradedKernelsOfTransSemigroup" Arg="S"/>
-  <Returns> a list where the <C>i</C>th
-    entry is a list of all the images or kernels of transformations in 
-    <A>S</A> with rank <C>i</C>.
-  </Returns>
+  <Returns>A list of images or kernels.</Returns>
   <Description>
   <C>GradedImagesOfTransSemigroup</C> returns a list where the <C>i</C>th 
-  entry is a list of all the images of transformations in <A>S</A> with rank 
+  entry is a list of all the images of transformations in <A>S</A> with size 
   <C>i</C>.  
   <P/>
   
@@ -46,21 +43,19 @@ gap> GradedKernelsOfTransSemigroup(S);
   <ManSection><Heading>Images and kernels</Heading>
   <Attr Name="ImagesOfTransSemigroup" Arg="S[, n]"/>
   <Attr Name="KernelsOfTransSemigroup" Arg="S[, n]"/>
-  <Returns>the orbit of images or kernels of the transformation semigroup
-  <A>S</A>.
-  </Returns>
+  <Returns>An orbit.</Returns>
   <Description>
-  <C>ImagesOfTransSemigroup</C> returns the  
-  <Ref Func="Orb" BookName="orb"/> object:
-  <Log>Orb(S, [1..Degree(S)], OnSets);</Log>
-  <P/>
+  The argument <A>S</A> should be a transformation semigroup and the optional
+  second argument <A>n</A> should be a positive integer not greater than the
+  degree of <A>S</A>.  <C>ImagesOfTransSemigroup</C> returns the  <Ref
+  Func="Orb" BookName="orb"/> object: <Log>Orb(S, [1..Degree(S)],
+  OnSets);</Log> which contains the image sets of all the transformations
+  belonging to <A>S</A>.  <P/>
   
   <C>KernelsOfTransSemigroup</C> returns the <Ref Func="Orb" BookName="orb"/>
-  object:
-  <Log>Orb(S, [1,..Degree(S)], OnKernelsAntiAction);</Log>
-  <P/>
-  If the optional second argument <A>n</A> (a positive integer) is present, 
-  then only the images or kernels of size at least <A>n</A> are found.<P/>
+  object: <Log>Orb(S, [1,..Degree(S)], OnKernelsAntiAction);</Log> <P/> If the
+  optional second argument <A>n</A> (a positive integer) is present, then only
+  the images or kernels of size at least <A>n</A> are found.<P/>
  
   Note that the image/kernel <C>[1..Degree(S)]</C> always occurs in both orbits
   even if there is no element of <A>S</A> with image/kernel equal to
@@ -112,12 +107,16 @@ gap> o:=ImagesOfTransSemigroup(S); Enumerate(o); AsList(o);
   <ManSection> 
     <Func Name="OnKernelsAntiAction" Arg="ker, f"/>
     <Returns>
-      <C>CanonicalTransSameKernel(f*g)</C> when <A>f</A> is a
-      transformation and <A>g</A> is a transformation with
-      <C>CanonicalTransSameKernel(<A>g</A>)=ker</C>.
+      A list of positive integers. 
     </Returns>
     <Description>
+    The argument <A>ker</A> should equal <C>CanonicalTransSameKernel(g);</C>
+    for some transformation <C>g</C> with degree equal to the degree of the
+    transformation <A>f</A>. 
+
+    <C>OnKernelsAntiAction</C> returns <C>CanonicalTransSameKernel(f*g)</C>.
     See also <Ref Func="CanonicalTransSameKernel"/>.
+
     <Example>
 gap> f:=Transformation( [ 3, 6, 9, 2, 4, 2, 2, 2, 8, 2 ] );;
 gap> g:=Transformation( [ 7, 1, 4, 3, 2, 7, 7, 6, 6, 5 ] );;
@@ -134,16 +133,15 @@ gap> CanonicalTransSameKernel(g*f);
 <#GAPDoc Label="OrbSCC">
   <ManSection>
     <Func Name="OrbSCC" Arg="o"/>
-    <Returns>the strongly connected components of an orbit.</Returns>
+    <Returns>The strongly connected components of an orbit.</Returns>
     <Description>
-      If <A>o</A> is an orbit created by the <Package>Orb</Package> 
-      package with the
-      option <C>orbitgraph=true</C>, then <C>OrbSCC</C> returns a set of sets
-      of positions in <A>o</A> corresponding to its strongly connected
+      If <A>o</A> is an orbit created by the <Package>Orb</Package> package
+      with the option <C>orbitgraph=true</C>, then <C>OrbSCC</C> returns a set
+      of sets of positions in <A>o</A> corresponding to its strongly connected
       components. <P/>
-      
+
       See also <Ref Func="OrbSCCLookup"/> and <Ref Func="OrbSCCTruthTable"/>.
-      
+
 <Example>
 gap> S:=FullTransformationSemigroup(4);;
 gap> o:=ImagesOfTransSemigroup(S);;
@@ -156,16 +154,14 @@ gap> OrbSCC(o);
 <#GAPDoc Label="OrbSCCLookup">
   <ManSection>
     <Func Name="OrbSCCLookup" Arg="o"/>
-    <Returns>a lookup table for the strongly connected components of an orbit.
+    <Returns>A lookup table for the strongly connected components of an orbit.
     </Returns>
     <Description>
-      If <A>o</A> is an orbit created by the <Package>Orb</Package> 
-      package with the
-      option <C>orbitgraph=true</C>, then <C>OrbSCCLookup</C> returns a lookup
-      table for its strongly connected
-      components. More precisely, <C>OrbSCCLookup(o)[i]</C> equals the index of
-      the strongly connected component containing <C>o[i]</C>.
-      <P/>
+      If <A>o</A> is an orbit created by the <Package>Orb</Package> package
+      with the option <C>orbitgraph=true</C>, then <C>OrbSCCLookup</C> returns
+      a lookup table for its strongly connected components. More precisely,
+      <C>OrbSCCLookup(o)[i]</C> equals the index of the strongly connected
+      component containing <C>o[i]</C>.  <P/>
 
       See also <Ref Func="OrbSCC"/> and <Ref Func="OrbSCCTruthTable"/>.
       
@@ -187,17 +183,17 @@ gap> OrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7];
 <#GAPDoc Label="OrbSCCTruthTable">
   <ManSection>
     <Func Name="OrbSCCTruthTable" Arg="o"/>
-    <Returns>truth tables for strongly connected components of an orbit.
+    <Returns>Truth tables for strongly connected components of an orbit.
     </Returns>
     <Description>
-      If <A>o</A> is an orbit created by the <Package>Orb</Package> 
-      package with the
-      option <C>orbitgraph=true</C>, then <C>OrbSCCTruthTable</C> returns 
-      a list of boolean lists such that <C>OrbSCCTruthTable(o)[i][j]</C> is
-      <K>true</K> if <C>j</C> belongs to <C>OrbSCC(o)[i]</C>.<P/>
-      
+      If <A>o</A> is an orbit created by the <Package>Orb</Package> package
+      with the option <C>orbitgraph=true</C>, then <C>OrbSCCTruthTable</C>
+      returns a list of boolean lists such that
+      <C>OrbSCCTruthTable(o)[i][j]</C> is <K>true</K> if <C>j</C> belongs to
+      <C>OrbSCC(o)[i]</C>.<P/>
+
       See also <Ref Func="OrbSCC"/> and <Ref Func="OrbSCCLookup"/>.
-      
+
 <Example>
 gap> S:=FullTransformationSemigroup(4);;
 gap> o:=ImagesOfTransSemigroup(S);;
@@ -219,18 +215,17 @@ gap> OrbSCCTruthTable(o);
 <#GAPDoc Label="ReverseSchreierTreeOfSCC">
   <ManSection>
     <Func Name="ReverseSchreierTreeOfSCC" Arg="o, i"/>
-    <Returns>the reverse Schreier tree corresponding to the <A>i</A>th strongly
-    connected component of an orbit. </Returns>
+    <Returns>The reverse Schreier tree corresponding to the <A>i</A>th strongly
+    connected component of an orbit. 
+    </Returns>
     <Description> 
-    If <A>o</A> is an orbit created by the <Package>Orb</Package> 
-    package with the option <C>orbitgraph=true</C> and action <C>act</C>, and 
-    <A>i</A> is a positive
-    integer, then <C>ReverseSchreierTreeOfSCC(<A>o</A>, <A>i</A>)</C> returns 
-    a pair <C>[ gen, pos ]</C> of lists with <C>Length(o)</C> entries such that 
-    <Log>act(o[j], o!.gens[gen[j]])=o[pos[j]].</Log> 
-    The pair <C>[ gen, pos ]</C> corresponds to a tree with root
-    <C>OrbSCC(o)[i][1]</C> and a path from every element
-    of <C>OrbSCC(o)[i]</C> to the root. <P/>
+    If <A>o</A> is an orbit created by the <Package>Orb</Package> package with
+    the option <C>orbitgraph=true</C> and action <C>act</C>, and <A>i</A> is a
+    positive integer, then <C>ReverseSchreierTreeOfSCC(<A>o</A>, <A>i</A>)</C>
+    returns a pair <C>[ gen, pos ]</C> of lists with <C>Length(o)</C> entries
+    such that <Log>act(o[j], o!.gens[gen[j]])=o[pos[j]].</Log> The pair <C>[
+    gen, pos ]</C> corresponds to a tree with root <C>OrbSCC(o)[i][1]</C> and a
+    path from every element of <C>OrbSCC(o)[i]</C> to the root. <P/>
 
     See also <Ref Func="OrbSCC"/>, <Ref Func="TraceSchreierTreeOfSCCBack"/>, 
     <Ref Func="SchreierTreeOfSCC"/>, and 
@@ -259,19 +254,17 @@ gap> Position(o, last);
 <#GAPDoc Label="SchreierTreeOfSCC">
   <ManSection>
     <Func Name="SchreierTreeOfSCC" Arg="o, i"/>
-    <Returns>the Schreier tree corresponding to the <A>i</A>th strongly
+    <Returns>The Schreier tree corresponding to the <A>i</A>th strongly
     connected component of an orbit. </Returns>
 
     <Description> 
-    If <A>o</A> is an orbit created by the <Package>Orb</Package> 
-    package with the option <C>orbitgraph=true</C> and action <C>act</C>, and 
-    <A>i</A> is a positive
-    integer, then <C>SchreierTreeOfSCC(<A>o</A>, <A>i</A>)</C> returns 
-    a pair <C>[ gen, pos ]</C> of lists with <C>Length(o)</C> entries such that 
-    <Log>act(o[pos[j]], o!.gens[gen[j]])=o[j].</Log> 
-    The pair <C>[ gen, pos ]</C> corresponds to a tree with root
-    <C>OrbSCC(o)[i][1]</C> and a path from the root to every element of
-     <C>OrbSCC(o)[i]</C>. <P/>
+    If <A>o</A> is an orbit created by the <Package>Orb</Package> package with
+    the option <C>orbitgraph=true</C> and action <C>act</C>, and <A>i</A> is a
+    positive integer, then <C>SchreierTreeOfSCC(<A>o</A>, <A>i</A>)</C> returns
+    a pair <C>[ gen, pos ]</C> of lists with <C>Length(o)</C> entries such that
+    <Log>act(o[pos[j]], o!.gens[gen[j]])=o[j].</Log> The pair <C>[ gen, pos
+    ]</C> corresponds to a tree with root <C>OrbSCC(o)[i][1]</C> and a path
+    from the root to every element of <C>OrbSCC(o)[i]</C>. <P/>
 
     See also <Ref Func="OrbSCC"/>, <Ref Func="TraceSchreierTreeOfSCCBack"/>, 
     <Ref Func="ReverseSchreierTreeOfSCC"/>, and 
@@ -303,19 +296,16 @@ gap> Position(o, last);
     <Returns>A word in the generators.</Returns>
     <Description>
     <A>orb</A>  must  be  an  orbit  object  with  a Schreier tree and orbit
-    graph, that is, 
-    the options <C>schreier</C> and <C>orbitgraph</C> must have been set to
-    <K>true</K> during the 
-    creation of the orbit, <A>m</A> must be the number of a strongly connected
-    component of <A>orb</A>, and <C>nr</C> must be the number of a point in  
-    the  <A>m</A>th strongly connect component of <A>orb</A>. This
-    operation traces the result of <Ref Func="ReverseSchreierTreeOfSCC"/> and
-     with arguments <A>orb</A> and <A>m</A> and returns a
-    word in the generators that maps the point with number
-    <A>nr</A> to the first point in the <A>m</A>th strongly connected 
-    component of <A>orb</A>.  
-    Here, a word is a list of integers, where positive integers
-    are numbers of  generators.
+    graph, that is, the options <C>schreier</C> and <C>orbitgraph</C> must have
+    been set to <K>true</K> during the creation of the orbit, <A>m</A> must be
+    the number of a strongly connected component of <A>orb</A>, and <C>nr</C>
+    must be the number of a point in  the  <A>m</A>th strongly connect
+    component of <A>orb</A>. This operation traces the result of <Ref
+    Func="ReverseSchreierTreeOfSCC"/> and with arguments <A>orb</A> and
+    <A>m</A> and returns a word in the generators that maps the point with
+    number <A>nr</A> to the first point in the <A>m</A>th strongly connected
+    component of <A>orb</A>.  Here, a word is a list of integers, where
+    positive integers are numbers of  generators.
 
     See also <Ref Func="OrbSCC"/>,<Ref Func="EvaluateWord"/>, 
     <Ref Func="ReverseSchreierTreeOfSCC"/>, 
@@ -344,21 +334,18 @@ gap> TraceSchreierTreeOfSCCBack(o, 4, 8);
   <ManSection> 
     <Func Name="TraceSchreierTreeOfSCCForward" Arg="orb, m, nr"/>
     <Returns>A word in the generators.</Returns>
-
     <Description>
     <A>orb</A>  must  be  an  orbit  object  with  a Schreier tree and orbit
-    graph, that is, 
-    the options <C>schreier</C> and <C>orbitgraph</C> must have been set to
-    <K>true</K> during the 
-    creation of the orbit, <A>m</A> must be the number of a strongly connected
-    component of <A>orb</A>, and <C>nr</C> must be the number of a point in  
-    the  <A>m</A>th strongly connect component of <A>orb</A>. This
-    operation traces the result of <Ref Func="SchreierTreeOfSCC"/> and
-     with arguments <A>orb</A> and <A>m</A> and returns a
-    word in the generators that maps the first point in the <A>m</A>th strongly 
-    connected component of <A>orb</A> to the point with number <A>nr</A>.  
-    Here, a word is a list of integers, where positive integers
-    are numbers of  generators.
+    graph, that is, the options <C>schreier</C> and <C>orbitgraph</C> must have
+    been set to <K>true</K> during the creation of the orbit, <A>m</A> must be
+    the number of a strongly connected component of <A>orb</A>, and <C>nr</C>
+    must be the number of a point in  the  <A>m</A>th strongly connect
+    component of <A>orb</A>. This operation traces the result of <Ref
+    Func="SchreierTreeOfSCC"/> and with arguments <A>orb</A> and <A>m</A> and
+    returns a word in the generators that maps the first point in the
+    <A>m</A>th strongly connected component of <A>orb</A> to the point with
+    number <A>nr</A>.  Here, a word is a list of integers, where positive
+    integers are numbers of  generators.
 
     See also <Ref Func="OrbSCC"/>, <Ref Func="EvaluateWord"/>, 
     <Ref Func="ReverseSchreierTreeOfSCC"/>, 

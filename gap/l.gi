@@ -565,7 +565,7 @@ function(l)
   local img, scc, o, i;
 
   if not IsGreensLClass(l) then
-    Info(InfoCitrus, 2, l " is not an L-class,");    
+    Info(InfoCitrus, 2,  l, " is not an L-class,");    
     return false;
   fi;
 

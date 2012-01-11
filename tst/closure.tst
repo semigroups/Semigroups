@@ -37,7 +37,8 @@ gap> NrDClasses(s);
 gap> GroupOfUnits(s);
 Group(())
 
-gap> gens:=ReadCitrus("pkg/citrus/examples/syntactic.citrus.gz", 299);;
+gap> file:=Concatenation(CitrusDir(), "/examples/syntactic.citrus.gz");;
+gap> gens:=ReadCitrus(file, 299);;
 gap> s:=Semigroup(gens[1]);;
 gap> for i in [2..Length(gens)] do 
 > s:=ClosureSemigroup(s, gens[i]);
@@ -59,7 +60,8 @@ gap> NrLClasses(s);
 gap> NrLClasses(t);
 353
 
-gap> gens:=ReadCitrus("pkg/citrus/examples/syntactic.citrus.gz", 299);;
+gap> file:=Concatenation(CitrusDir(), "/examples/syntactic.citrus.gz");;
+gap> gens:=ReadCitrus(file, 299);;
 gap> s:=Semigroup(gens[1], rec(schreier:=false));;
 gap> for i in [2..Length(gens)] do 
 > s:=ClosureSemigroup(s, gens[i]);
@@ -81,7 +83,8 @@ gap> NrLClasses(s);
 gap> NrLClasses(t);
 353
 
-gap> gens:=ReadCitrus("pkg/citrus/examples/path.citrus.gz", 10);;
+gap> file:=Concatenation(CitrusDir(), "/examples/path.citrus.gz");;
+gap> gens:=ReadCitrus(file, 10);;
 gap> s:=Semigroup(gens[1]);;         
 gap> for i in [2..Length(gens)] do
 > s:=ClosureSemigroup(s, gens[i]);
@@ -103,7 +106,8 @@ gap> NrRClasses(t); NrLClasses(t); NrDClasses(t); NrIdempotents(t);
 46
 423
 
-gap> gens:=ReadCitrus("pkg/citrus/examples/path.citrus.gz", 10);;
+gap> file:=Concatenation(CitrusDir(), "/examples/path.citrus.gz");;
+gap> gens:=ReadCitrus(file, 10);;
 gap> s:=Semigroup(gens[1]);;        
 gap> s:=ClosureSemigroup(s, gens[2], rec(schreier:=false));;
 gap> for i in [2..Length(gens)] do

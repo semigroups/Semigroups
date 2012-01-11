@@ -10,6 +10,14 @@
 
 # this file contains utilies for use with the Citrus package. 
 
+# new for 0.5! - CitrusDir - for no arg.
+#############################################################################
+
+InstallGlobalFunction(CitrusDir, 
+function()
+  return PackageInfo("citrus")[1]!.InstallationPath;
+end);
+
 # mod for 0.4! - CitrusMakeDoc - "for no argument"
 #############################################################################
 
@@ -326,37 +334,19 @@ end);
 
 InstallGlobalFunction(ReadCitrus, 
 function(arg)
-  local read_line, file, i, line;
+  local file, i, line;
   
   if not IsString(arg[1]) then 
     Error("the first argument must be a string,");
     return;
+  else
+    file:=SplitString(arg[1], ".");
+    if file[Length(file)] = "gz" then 
+      file:=IO_FilteredFile([["gzip", ["-dcq"]]], arg[1], "r");
+    else  
+      file:=IO_File(arg[1], "r");
+    fi;
   fi;
-
-  ######JDM make separate functioN!
-
-  read_line:=function(line)
-    local m, n, r, dom, out, f, i, j;
-    
-    m:=Int([line[1]]);            # block size <10
-    n:=Int(line{[2..m+1]});       # degree
-    r:=(Length(line)-(m+1))/(m*n);# number of generators 
-    dom:=[m+2..m*n+m+1]; out:=EmptyPlist(r);
-
-    for i in [1..r] do
-      out[i]:=EmptyPlist(n); 
-      f:=line{dom+m*(i-1)*n};
-      for j in [1..n] do 
-        Add(out[i], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
-      od;
-      out[i]:=TransformationNC(out[i]);
-    od;
-    return out;
-  end;
-
-  #####
-
-  file:=IO_FilteredFile([["gzip", ["-dcq"]]], arg[1], "r");
 
   if file=fail then 
     Error(arg[1], " is not a readable file,");
@@ -374,7 +364,7 @@ function(arg)
         Error(arg[1], " only has ", i-1, " lines,"); 
         return;
       else
-        return read_line(Chomp(line));
+        return ReadCitrusLine(Chomp(line));
       fi;
     else
       IO_Close(file);
@@ -385,7 +375,30 @@ function(arg)
 
   line:=IO_ReadLines(file);
   IO_Close(file);
-  return List(line, x-> read_line(Chomp(x)));
+  return List(line, x-> ReadCitrusLine(Chomp(x)));
+end);
+
+# new for 0.5! - ReadCitrusLine - "for a string"
+#############################################################################
+
+InstallGlobalFunction(ReadCitrusLine, 
+function(line)
+  local m, n, r, dom, out, f, i, j;
+    
+  m:=Int([line[1]]);            # block size <10
+  n:=Int(line{[2..m+1]});       # degree
+  r:=(Length(line)-(m+1))/(m*n);# number of generators 
+  dom:=[m+2..m*n+m+1]; out:=EmptyPlist(r);
+
+  for i in [1..r] do
+    out[i]:=EmptyPlist(n); 
+    f:=line{dom+m*(i-1)*n};
+    for j in [1..n] do 
+      Add(out[i], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
+    od;
+    out[i]:=TransformationNC(out[i]);
+  od;
+  return out;
 end);
 
 # new for 0.5! - WriteCitrus - "for a string and trans. coll."

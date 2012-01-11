@@ -11,10 +11,10 @@
 <#GAPDoc Label="AsPermOfKerImg">
   <ManSection>
     <Func Name="AsPermOfKerImg" Arg="f"/>
-    <Returns>a permutation.</Returns>
+    <Returns>A permutation.</Returns>
     <Description>
-      returns a permutation <C>p</C> such that 
-<Log>OnTuples(CanonicalTransSameKernel(f), p)=ImageListOfTransformation(f)</Log>
+      This function returns a permutation <C>p</C> such that 
+<Log>OnTuples(CanonicalTransSameKernel(f), p)=ImageListOfTransformation(f);</Log>
       See also <Ref Func="CanonicalTransSameKernel"/> and 
       <Ref Attr="ImageListOfTransformation" BookName="ref"/>. 
         
@@ -24,7 +24,7 @@ gap> CanonicalTransSameKernel(f); ImageListOfTransformation(f);
 [ 1, 2, 3, 2, 4, 3, 1, 5, 6, 4 ]
 [ 2, 1, 6, 1, 7, 6, 2, 8, 4, 7 ]
 gap> AsPermOfKerImg(f);
-(1,2)(3,6,4,7)(5,8) </Example>
+(1,2)(3,6,4,7)(5,8)</Example>
     </Description>
   </ManSection>
  <#/GAPDoc>
@@ -32,15 +32,16 @@ gap> AsPermOfKerImg(f);
 <#GAPDoc Label="AsPermutation">
   <ManSection>
     <Oper Name="AsPermutation" Arg="f [, A]"/>
-    <Returns>a permutation.</Returns>
+    <Returns>A permutation.</Returns>
     <Description>
-      returns the restriction of the transformation <A>f</A> to the set
-      <A>A</A> (if <A>A</A> is not specified then the image set of <A>f</A> is
-      used by default) as a <Ref Func="Permutation" BookName="ref"/> if
-      <A>f</A> acts as a permutation on <A>A</A>; see 
-      <Ref Attr="ImageSetOfTransformation" BookName="ref"/>.
-      
-    <Example>
+      <C>AsPermutation</C> returns the restriction of the transformation
+      <A>f</A> to the set of positive integers <A>A</A> as a <Ref
+      Func="Permutation" BookName="ref"/> if <A>f</A> acts as a permutation on
+      <A>A</A>.  If <A>A</A> is not specified, then the image set of <A>f</A>
+      is used by default; see <Ref Attr="ImageSetOfTransformation"
+      BookName="ref"/>.
+
+<Example>
 gap> f:=Transformation( [ 5, 8, 3, 5, 8, 6, 2, 2, 7, 8 ] );;
 gap> AsPermutation(f);
 fail
@@ -64,14 +65,17 @@ gap> AsPermutation(f, [3,8,7,10]);
 <#GAPDoc Label="CanonicalTransSameKernel">
   <ManSection>
     <Func Name="CanonicalTransSameKernel" Arg="obj"/>
-    <Returns>a list of positive integers.</Returns>
+    <Returns>A list of positive integers.</Returns>
     <Description>
-      returns the image list of the transformation <C>g</C> 
-      such that the kernel of <C>f</C> equals the kernel of <C>g</C> and 
-      <C>j^g=i</C> for all <C>j</C> in <C>KernelOfTransformation(g)[i]</C>
-      where <C>f=<A>obj</A></C> if <A>obj</A> is a transformation or
-      <C>f=Transformation(<A>obj</A>)</C> if <A>obj</A> is the image list of a
-      transformation.<P/>
+      The argument <A>obj</A> should be a transformation or the list of images
+      of a transformation. If <A>obj</A> is a transformation, then we define
+      <C>f:=<A>obj</A></C> and if <A>obj</A> is the image list of
+      a transformation we define <C>f:=Transformation(<A>obj</A>)</C>.
+      <C>CanonicalTransSameKernel</C> returns the image list of a
+      transformation <C>g</C> such that the kernel of <C>g</C> equals the
+      kernel of <C>f</C> and <C>j^g=i</C> for all <C>j</C> in
+      <C>KernelOfTransformation(g)[i]</C>. For a given transformation <C>f</C>,
+      there is a unique transformation <C>g</C> with this property. <P/>
 
       See also <Ref Attr="ImageListOfTransformation" BookName="ref"/> and
       <Ref Attr="KernelOfTransformation" BookName="ref"/>. 
@@ -90,7 +94,7 @@ gap> CanonicalTransSameKernel(f);
 <#GAPDoc Label="ConstantTransformation">
   <ManSection>
     <Func Name="ConstantTransformation" Arg="m, n"/>
-    <Returns>a constant transformation of degree <A>m</A> with value <A>n</A>. 
+    <Returns>A constant transformation of degree <A>m</A> with value <A>n</A>. 
     </Returns>
     <Description>
     <Example>
@@ -107,13 +111,13 @@ Transformation( [ 4, 4, 4, 4, 4, 4 ] )</Example>
     <Oper Name="EvaluateWord" Arg="gens, w"/>
     <Returns>A transformation.</Returns>
     <Description> 
-      <A>gens</A> must be a list of transformations, <A>w</A> a list of 
-      positive integers less than or equal to the length of <A>gens</A>.
-      This operation evaluates the word <A>w</A> in the generators 
-      <A>gens</A> and returns the result. More precisely,
-      <C>EvaluateWord</C> returns
-      <Log>Product(List(w, i-> gens[i]));</Log>
-      See also <Ref Meth="Factorization"/>.
+      The argument <A>gens</A> should be a list of transformations and the
+      argument <A>w</A> should be a list of positive integers less than or
+      equal to the length of <A>gens</A>.  This operation evaluates the word
+      <A>w</A> in the generators <A>gens</A>. More precisely,
+      <C>EvaluateWord</C> returns the equivalent of: <Log>Product(List(w, i->
+      gens[i]));</Log> see also <Ref Meth="Factorization"/>.
+
 <Example>
 gap> gens:=[ Transformation( [ 2, 4, 4, 6, 8, 8, 6, 6 ] ), 
 > Transformation( [ 2, 7, 4, 1, 4, 6, 5, 2 ] ), 
@@ -135,14 +139,12 @@ Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] )</Example>
   <Meth Name="Factorization" Arg="S, f"/>
     <Returns>A word in the generators.</Returns>
       <Description> 
-        if <A>S</A> is a transformation semigroup and <A>f</A> is a
-        transformation belonging to <A>S</A>, then <C>Factorization</C> 
-        returns a
-        word in the generators of <A>S</A> that is equal to <A>f</A>. Here, a
+        If <A>S</A> is a transformation semigroup and <A>f</A> is a
+        transformation belonging to <A>S</A>, then <C>Factorization</C> returns
+        a word in the generators of <A>S</A> that is equal to <A>f</A>. Here, a
         word is a list of positive integers where <C>i</C> corresponds to
         <C>GeneratorsOfSemigroups(S)[i]</C>. More specifically,
-    <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, f))=f;</Log>
-        <P/>
+        <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, f))=f;</Log> <P/>
 
         Note that <C>Factorization</C> does not return a word of minimum
         length. An empty list is evaluated to the identity transformation with
@@ -168,12 +170,12 @@ Transformation( [ 1, 10, 2, 10, 1, 2, 7, 10, 2, 7 ] )</Example>
   <ManSection><Heading>Idempotent</Heading>
     <Func Name="Idempotent" Arg="ker, img"/>
     <Func Name="IdempotentNC" Arg="ker, img"/>
-    <Returns>an idempotent transformation.</Returns>
+    <Returns>An idempotent transformation.</Returns>
     <Description>
-      returns an idempotent with <Ref Func="CanonicalTransSameKernel"/> equal 
-      to <A>ker</A> and image set equal to <A>img</A> after first checking that 
-      <Ref Func="IsInjectiveTransOnList"/> holds with argument <A>ker, img</A>.
-      <P/>
+      This function returns an idempotent with <Ref
+      Func="CanonicalTransSameKernel"/> equal to <A>ker</A> and image set equal
+      to <A>img</A> after first checking that <Ref
+      Func="IsInjectiveTransOnList"/> holds with argument <A>ker, img</A>.  <P/>
 
      <C>IdempotentNC</C> returns an idempotent with 
      <Ref Func="CanonicalTransSameKernel"/>
@@ -194,11 +196,12 @@ Transformation( [ 6, 2, 3, 6, 5, 6, 7, 2, 5, 10 ] )</Example>
 <#GAPDoc Label="IndexPeriodOfTransformation">
   <ManSection>
     <Attr Name="IndexPeriodOfTransformation" Arg="f"/>
-    <Returns>a pair of positive integers.</Returns>
+    <Returns>A pair of positive integers.</Returns>
     <Description>
-      returns the least positive integers <C>m, r</C> such that
+      Returns the least positive integers <C>m, r</C> such that
       <C><A>f</A>^(m+r)=<A>f</A>^m</C>, which are 
-      known as the <E>index</E> and <E>period</E> of the transformation. 
+      known as the <E>index</E> and <E>period</E> of the transformation
+      <A>f</A>. 
       <Example>
 gap> f:=Transformation( [ 3, 4, 4, 6, 1, 3, 3, 7, 1 ] );;
 gap> IndexPeriodOfTransformation(f);
@@ -213,7 +216,7 @@ true</Example>
   <ManSection><Heading>InversesOfTransformation</Heading>
     <Oper Name="InversesOfTransformation" Arg="S, f"/>
     <Oper Name="InversesOfTransformationNC" Arg="S, f"/>
-    <Returns>a list of transformations.</Returns>
+    <Returns>A list of transformations.</Returns>
     <Description>
       <C>InversesOfTransformation</C> returns a list of the inverses of the 
       transformation <A>f</A> in the transformation semigroup <A>S</A> after
@@ -250,11 +253,14 @@ true</Example>
     <Returns><K>true</K> or <K>false</K>.
     </Returns>
     <Description>
-      returns <K>true</K> if <A>obj</A> is injective on the list of positive
-      integers <A>list</A> and <K>false</K> if it is not, where <A>obj</A> is
-      either a transformation or the
-      image list of a transformation. If <A>list</A> is not duplicate free,
-      then <K>false</K> is returned. <P/>
+      The argument <A>obj</A> should be a transformation or the list of images
+      of a transformation and <A>list</A> should be a list of positive
+      integers.  If <A>obj</A> is a transformation, then we define
+      <C>f:=<A>obj</A></C> and if <A>obj</A> is the image list of a
+      transformation we define <C>f:=Transformation(<A>obj</A>)</C>.
+      <C>IsInjectiveTransOnList</C> returns <K>true</K> if <C>f</C> is injective
+      on <A>list</A> and <K>false</K> if it is not. If <A>list</A> is not
+      duplicate free, then <K>false</K> is returned. <P/>
 
       See also <Ref Attr="ImageListOfTransformation" BookName="ref"/> and 
       <Ref Oper="Transformation" BookName="ref"/>.
@@ -279,17 +285,17 @@ true</Example>
     <Returns><K>true</K> or <K>false</K>.
     </Returns>
     <Description>
-      returns <K>true</K> if <A>f</A> is a regular element of the 
+      This function returns <K>true</K> if <A>f</A> is a regular element of the 
       transformation semigroup <A>S</A> and <K>false</K> if it is not.<P/> 
 
-      A transformation <A>f</A> is regular in a transformation semigroup 
-      <A>S</A> if it lies inside a regular &D;-class; see
-      <Ref Attr="IsRegularDClass" BookName="ref"/> or 
-      <Ref Attr="IsRegularDClass"/>. 
-      Or equivalently if the 
-      orbit of the image of <A>f</A> containing a transversal of the kernel of 
+      A transformation <A>f</A> is <E>regular</E> in a transformation semigroup
+      <A>S</A> if it lies inside a regular &D;-class; see <Ref
+      Attr="IsRegularDClass" BookName="ref"/> or <Ref
+      Attr="IsRegularDClass"/>.  Equivalently <A>f</A> is regular if the orbit
+      of the image of <A>f</A> containing a transversal of the kernel of
       <A>f</A>; see <Ref Oper="Transformation" BookName="ref"/> and <Ref
       Attr="ImageSetOfTransformation" BookName="ref"/>.
+
       <Example>
 gap> S:=Monoid(Transformation([2,2,4,4,5,6]),Transformation([5,3,4,4,6,6]));;
 gap> f:=Generators(S)[1];;
@@ -314,14 +320,12 @@ true</Example>
     <Meth Name="Random" Arg="S"/>
     <Returns>A transformation.</Returns>
     <Description>
-      Returns a random element of the transformation semigroup <A>S</A>. 
-      
-      If the &R;-class structure of <A>S</A> has not been calculated, then a
-      short product (at most <C>2*Length(GeneratorsOfSemigroup(<A>S</A>))</C>)
-      of generators is returned. 
-      
-      If the &R;-class structure of <A>S</A> is known, then a random element of
-      a randomly chosen &R;-class is returned.  
+      Returns a random element of the transformation semigroup <A>S</A>.  If
+      the &R;-class structure of <A>S</A> has not been calculated, then a short
+      product (at most <C>2*Length(GeneratorsOfSemigroup(<A>S</A>))</C>) of
+      generators is returned.  If the &R;-class structure of <A>S</A> is known,
+      then a random element of a randomly chosen &R;-class is returned.  
+
     </Description> 
   </ManSection>
 <#/GAPDoc>
@@ -330,16 +334,15 @@ true</Example>
   <ManSection><Heading>RandomIdempotent</Heading>
     <Oper Name="RandomIdempotent" Arg="img, m"/>
     <Oper Name="RandomIdempotentNC" Arg="img, m"/>
-    <Returns>an idempotent transformation.</Returns>
+    <Returns>An idempotent transformation.</Returns>
     <Description>
-      returns a random idempotent with image set <A>img</A> of degree <A>m</A>
+      Returns a random idempotent with image set <A>img</A> of degree <A>m</A>
       after checking that the maximum value in <A>img</A> is at most <A>m</A>. 
       <P/>
 
       <C>RandomIdempotentNC</C> returns a random idempotent with image set
-      <A>img</A> of degree <A>m</A> 
-      without checking that the maximum value in <A>img</A> is at most
-      <A>m</A>.
+      <A>img</A> of degree <A>m</A> without checking that the maximum value in
+      <A>img</A> is at most <A>m</A>.
 
       <Log>
 gap> RandomIdempotent([ 1, 2, 3 ],5);
@@ -358,13 +361,13 @@ Transformation( [ 1, 2, 6, 4, 5, 6, 2, 5, 1, 6 ] )</Log>
   <ManSection><Heading>RandomTransformation</Heading>
     <Oper Name="RandomTransformation" Arg="arg"/>
     <Oper Name="RandomTransformationNC" Arg="arg"/>
-    <Returns>a transformation.</Returns>
+    <Returns>A transformation.</Returns>
     <Description>
-      if <A>arg</A> is a positive integer, then a random transformation of 
+      If <A>arg</A> is a positive integer, then a random transformation of 
       degree <A>arg</A> is returned; see <Ref Func="RandomTransformation"
       BookName="ref"/>.<P/>
 
-      If <A>arg</A><C>[1]</C> is a list of positive integers and 
+      If <A>arg</A><C>[1]</C> is a list of positive integers and
       <A>arg</A><C>[2]</C> is a positive integer, then
       <C>RandomTransformation</C> returns a random transformation with degree
       <A>arg</A><C>[2]</C> and image contained in <A>arg</A><C>[1]</C>. <P/>
@@ -383,10 +386,11 @@ Transformation( [ 3, 1, 2, 2, 1, 2 ] )</Log>
 <#GAPDoc Label="SmallestIdempotentPower">
 <ManSection> 
   <Attr Name="SmallestIdempotentPower" Arg="f"/>
-  <Returns>a positive integer.</Returns>
+  <Returns>A positive integer.</Returns>
   <Description>
-      returns the least positive integer <C>n</C> such that the transformation 
-     <C><A>f</A>^n</C> is an idempotent.
+      This function returns the least positive integer <C>n</C> such that the
+      transformation <C><A>f</A>^n</C> is an idempotent.
+
       <Example>
 gap> f:=Transformation( [ 6, 7, 4, 1, 7, 4, 6, 1, 3, 4 ] );;
 gap> SmallestIdempotentPower(f);
@@ -397,6 +401,8 @@ gap> SmallestIdempotentPower(f);
     </Description>  
   </ManSection>
 <#/GAPDoc>
+
+<!-- not currently used anywhere -->
 
 <#GAPDoc Label="TransformationActionNC">
   <ManSection>

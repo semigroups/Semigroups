@@ -155,7 +155,8 @@ gap> ForAll([1..NrRClasses(s)], i->
 > RClassReps(s)[i]);
 true
 
-gap>  ReadCitrus("pkg/citrus/examples/munn.citrus.gz", 1376);
+gap> file:=Concatenation(CitrusDir(), "/examples/munn.citrus.gz");;
+gap>  ReadCitrus(file, 1376);
 [ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ), 
   Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 9 ] ), 
   Transformation( [ 1, 2, 3, 4, 5, 6, 9, 9, 9 ] ), 
@@ -263,8 +264,29 @@ gap> LClassRepFromData(s, ll!.data);
 Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )
 gap> SchutzenbergerGroup(l);
 Group([ (5,9), (1,7) ])
-gap> SchutzenbergerGroup(ll);
+gap> g:=SchutzenbergerGroup(ll);
 Group([ (5,9), (1,7) ])
+
+# IsomorphismTransformationSemigroup/Monoid
+
+gap> IsomorphismTransformationSemigroup(g);
+MappingByFunction( Group([ (5,9), (1,7) ]), <semigroup with 
+2 generators>, function( x ) ... end )
+gap> s:=Range(last);
+<semigroup with 2 generators>
+gap> IsGroupAsSemigroup(s);
+true
+gap> Generators(s);
+[ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1, 4 ] ) ]
+gap> t:=Range(IsomorphismTransformationMonoid(g));
+<monoid with 2 generators>
+gap> Generators(t);
+[ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1, 4 ] ) ]
+
+gap> h:=Range(IsomorphismPermGroup(t));
+Group([ (2,4), (1,3) ])
+gap> IsomorphismGroups(g, h);
+[ (5,9), (1,7) ] -> [ (2,4), (1,3) ]
 
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;

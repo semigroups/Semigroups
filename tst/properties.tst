@@ -18,7 +18,7 @@ gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> SetInfoLevel(InfoCitrus, 0);
 
-gap> file:="pkg/citrus/examples/misc.citrus.gz";;
+gap> file:=Concatenation(CitrusDir(), "/examples/misc.citrus.gz");;
 gap> semis:=List([1..22], i-> Semigroup(ReadCitrus(file, i)));;
 gap> List([1..15], i-> IsCompletelyRegularSemigroup(semis[i]));   
 [ false, true, false, false, false, true, true, true, true, true, false,
@@ -889,7 +889,8 @@ false
 #gap> List(slow, IsAdequateSemigroup);
 #[ true, true, true, true, true, true, true, true ]
 
-gap> ReadCitrus("pkg/citrus/examples/munn.citrus.gz", 1078);;
+gap> file:=Concatenation(CitrusDir(), "/examples/munn.citrus.gz");;
+gap> ReadCitrus(file, 1078);;
 gap> s:=Semigroup(last);
 <semigroup with 9 generators>
 gap> Size(s);
@@ -897,7 +898,8 @@ gap> Size(s);
 gap> IsDTrivial(s);
 false
 
-gap> ReadCitrus("pkg/citrus/examples/graph8c.citrus.gz", 1303);;
+gap> file:=Concatenation(CitrusDir(), "/examples/graph8c.citrus.gz");;
+gap> ReadCitrus(file, 1303);;
 gap> s:=Semigroup(last);;
 gap> t:=IdempotentGeneratedSubsemigp(s);;
 gap> Size(t);

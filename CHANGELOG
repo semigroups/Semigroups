@@ -10,7 +10,26 @@
 
 0.4 -> 0.5
 
-??
+            major changes are: the documentation has been further revised,
+            functions for creating semigroups and monoids with certain
+            options have been introduced, several functions have had the word
+            `Greens' removed from their names to reduce the length, the
+            operation ClosureSemigroup has been introduced, the functions
+            ReadCitrus and WriteCitrus for reading and writing transformations
+            to a file have been introduced, several catalogues of examples of
+            transformation semigroups are now included in the examples
+            directory, methods for creating a Green's class inside another
+            Green's class have been included (such as an R-class of a D-class
+            or an H-class of an L-class), the hash functions used for
+            transformations etc have been improved. 
+            
+            Some minor bugs have been fixed, and new methods or functions with
+            the following names have also been introduced:
+
+            AntiIsomorphismTransformationSemigroup (for a trans. semigroup),
+            IdempotentGeneratedSubsemigp, IsomorphismTransformationSemigroup
+            (for a perm. gp), IsomorphismTransformationMonoid (for a perm. gp),
+            NrElementsOfRank.
 
 0.3 -> 0.4
 
