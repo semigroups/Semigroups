@@ -436,7 +436,7 @@ function(gens, opts)
   fi;
 
   if not IsBound(opts.small) then 
-    opts.small:=CitrusOptionsRec.schreier;
+    opts.small:=CitrusOptionsRec.small;
   fi;
 
   if not IsBound(opts.hashlen) then
