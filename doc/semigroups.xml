@@ -161,11 +161,11 @@ gap> Size(S);
       runs out of memory unexpectedly, or you plan to do a large number of
       computations with relatively small semigroups (say with tens of thousands
       of elements), then you might consider setting <C>hashlen</C> to be less
-      than the default value of <C>50021</C> for each of these semigroups.  If
+      than the default value of <C>25013</C> for each of these semigroups.  If
       you find that the performance of &Citrus; is unexpectedly poor, or you
       plan to do a computation with a very large semigroup (say, more than 10
       million elements), then you might consider setting <C>hashlen</C> to be
-      greater than the default value of <C>50021</C>. <P/>
+      greater than the default value of <C>25013</C>. <P/>
 
       You might find it useful to set the info level of the info class
       <C>InfoOrb</C> to 2 or higher since this will indicate when hash tables
@@ -222,7 +222,7 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
        The value of <C>CitrusOptionsRec</C> is defined in the file
        <C>citrus/gap/options.g</C> as: 
        <Log>rec( schreier:=true, small:=false,
-         hashlen:=rec(S:=503, M:=12511, L:=50021));</Log>
+         hashlen:=rec(S:=251, M:=6257, L:=25013));</Log>
               
    </Description> 
  </ManSection>
