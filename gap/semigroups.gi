@@ -423,7 +423,7 @@ function(gens)
   return S;
 end);
 
-# mod for 0.5! - SemigroupByGenerators -  "for a trans. coll. and record"
+# mod for 0.6! - SemigroupByGenerators -  "for a trans. coll. and record"
 ##############################################################################
 
 InstallOtherMethod(SemigroupByGenerators, "(Citrus) for trans coll and record",
