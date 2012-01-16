@@ -404,7 +404,7 @@ gap> D;
 gap> IsRegularDClass(D);
 false
 gap> GroupHClass(D);
-Error, the D-class is not regular,</Example>
+fail</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

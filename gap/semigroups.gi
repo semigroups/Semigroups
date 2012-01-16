@@ -10,7 +10,7 @@
 
 #CCC
 
-# new for 0.5! - ClosureSemigroup - "for a trans. semi. and trans. coll."
+# mod for 0.6! - ClosureSemigroup - "for a trans. semi. and trans. coll."
 #############################################################################
 
 InstallGlobalFunction(ClosureSemigroup,
@@ -25,17 +25,17 @@ function(arg)
 
   if Length(arg)=3 then 
     if not IsRecord(arg[3]) then 
-      Error("Usage: 3rd arg. must be a record,");
+      Error("Usage: the third argument must be a record,");
       return;
     fi;
-    if not "schreier" in RecNames(arg[3]) then  
-      arg[3]!.schreier:=false;
+    if IsBound(arg[3].schreier) then  
+      arg[3].schreier:=false;
     fi;
   else
     arg[3]:=arg[1]!.opts;
   fi;
 
-  arg[3]!.small:=false;
+  arg[3].small:=false;
 
   if IsTransformationSemigroup(arg[2]) then 
     arg[2]:=Generators(arg[2]);
@@ -73,7 +73,7 @@ function(s, coll, opts)
     t:=Semigroup(s, coll, opts);
   fi;
 
-  if not HasOrbitsOfImages(s) or opts!.schreier then 
+  if not HasOrbitsOfImages(s) or opts.schreier then 
     return t;
   fi;
 
@@ -225,7 +225,6 @@ UnbindGlobal("Monoid");
 BindGlobal("Monoid", 
 function ( arg )
   local out, i;
-
   if Length( arg ) = 1 and IsMatrix( arg[1] )  then
     return MonoidByGenerators( [ arg[1] ] );
   elif Length( arg ) = 2 and IsMatrix( arg[1] )  then
@@ -261,54 +260,65 @@ function ( arg )
   fi;
 end);
 
-# new for 0.5! - MonoidByGenerators -  "for a trans. collection"
+# new for 0.6! - MagmaByGenerators -  "for a trans. collection"
 ##############################################################################
 
-InstallOtherMethod(MonoidByGenerators, "for a trans. collection",
+InstallOtherMethod(MagmaByGenerators, "(Citrus) for a trans. collection",
 [IsTransformationCollection],
 function(gens)
-  local opts, S;
+  local M;
    
-  opts:=rec(schreier:=true, small:=false, hashlen:=rec(S:=1009, M:=25013, 
-   L:=100003)); 
+  M:=Objectify( NewType( FamilyObj( gens ), 
+   IsMagma and IsAttributeStoringRep ), rec(opts:=CitrusOptionsRec));
+
+  SetGeneratorsOfMagma( M, AsList( gens ) );
+  return M;
+end);
+
+
+# mod for 0.6! - MonoidByGenerators -  "for a trans. collection"
+##############################################################################
+
+InstallOtherMethod(MonoidByGenerators, "(Citrus) for a trans. collection",
+[IsTransformationCollection],
+function(gens)
+  local S;
    
   S:=Objectify( NewType( FamilyObj( gens ), 
-   IsMonoid and IsAttributeStoringRep ), rec(opts:=opts));
+   IsMonoid and IsAttributeStoringRep ), rec(opts:=CitrusOptionsRec));
 
   SetGeneratorsOfMagmaWithOne( S, AsList( gens ) );
   return S;
 end);
 
-# new for 0.5! - MonoidByGenerators -  "for a trans. coll. and record"
+# mod for 0.6! - MonoidByGenerators -  "for a trans. coll. and record"
 ##############################################################################
 
-InstallOtherMethod(MonoidByGenerators, "for a trans. coll. and record",
+InstallOtherMethod(MonoidByGenerators, "(Citrus) for a trans. coll. and record",
 [IsTransformationCollection, IsRecord],
 function(gens, opts)
-  local names, n, i, closure_opts, s, f;
+  local n, i, closure_opts, s, f;
   
-  names:=RecNames(opts);
-
-  if not "schreier" in names then 
-    opts!.schreier:=true;
+  if not IsBound(opts.schreier) then 
+    opts.schreier:=CitrusOptionsRec.schreier;
   fi;
 
-  if not "small" in names then 
-    opts!.small:=false;
+  if not IsBound(opts.small) then 
+    opts.small:=CitrusOptionsRec.small;
   fi;
   
-  if not "hashlen" in names then
-    opts!.hashlen:=rec(S:=1009, M:=25013, L:=100003);
-  elif IsPosInt(opts!.hashlen) then  
-    n:=opts!.hashlen; 
-    opts!.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)), 
+  if not IsBound(opts.hashlen) then
+    opts.hashlen:=CitrusOptionsRec.hashlen;
+  elif IsPosInt(opts.hashlen) then  
+    n:=opts.hashlen; 
+    opts.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)), 
      L:=NextPrimeInt(n));
-  elif not IsRecord(opts!.hashlen) then 
+  elif not IsRecord(opts.hashlen) then 
     Error("the component hashlen should be a positive integer or a record,");
     return;
   fi;
 
-  if opts!.small then #small gen. set
+  if opts.small then #small gen. set
     
     gens:=ShallowCopy(gens);
     gens:=SSortedList(gens); #remove duplicates 
@@ -322,8 +332,8 @@ function(gens, opts)
     fi;
 
     i:=0;
-    closure_opts:=rec(schreier:=opts!.schreier, small:=false, 
-     hashlen:=opts!.hashlen);
+    closure_opts:=rec(schreier:=opts.schreier, small:=false, 
+     hashlen:=opts.hashlen);
     s:=Monoid(gens[1], closure_opts);
 
     if InfoLevel(InfoCitrus)>1 then
@@ -334,7 +344,7 @@ function(gens, opts)
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
         " generators so far");
-        if not opts!.schreier then 
+        if not opts.schreier then 
           Print(", for \t", Size(OrbitsOfImages(s)), " elements\r");
         fi;
       od;
@@ -398,53 +408,49 @@ function ( arg )
   fi;
 end);
 
-# new for 0.5! - SemigroupByGenerators -  "for a trans. collection"
+# mod for 0.6! - SemigroupByGenerators -  "for a trans. collection"
 ##############################################################################
 
-InstallOtherMethod(SemigroupByGenerators, "for a trans. collection",
+InstallOtherMethod(SemigroupByGenerators, "(Citrus) for a trans. collection",
 [IsTransformationCollection],
 function(gens)
-  local opts, S;
+  local S;
    
-  opts:=rec(schreier:=true, small:=false, hashlen:=rec(S:=1009, M:=25013, 
-   L:=100003)); 
   S:=Objectify( NewType( FamilyObj( gens ), 
-   IsSemigroup and IsAttributeStoringRep ), rec(opts:=opts));
+   IsSemigroup and IsAttributeStoringRep ), rec(opts:=CitrusOptionsRec));
 
   SetGeneratorsOfMagma( S, AsList( gens ) );
   return S;
 end);
 
-# new for 0.5! - SemigroupByGenerators -  "for a trans. coll. and record"
+# mod for 0.5! - SemigroupByGenerators -  "for a trans. coll. and record"
 ##############################################################################
 
-InstallOtherMethod(SemigroupByGenerators, "for a trans. collection and record",
+InstallOtherMethod(SemigroupByGenerators, "(Citrus) for trans coll and record",
 [IsTransformationCollection, IsRecord],
 function(gens, opts)
-  local names, n, i, closure_opts, s, f;
+  local n, i, closure_opts, s, f;
 
-  names:=RecNames(opts);
-
-  if not "schreier" in RecNames(opts) then 
-    opts!.schreier:=true;
+  if not IsBound(opts.schreier) then 
+    opts.schreier:=CitrusOptionsRec.schreier;
   fi;
 
-  if not "small" in names then 
-    opts!.small:=false;
+  if not IsBound(opts.small) then 
+    opts.small:=CitrusOptionsRec.schreier;
   fi;
 
-  if not "hashlen" in names then
-    opts!.hashlen:=rec(S:=1009, M:=25013, L:=100003);
-  elif IsPosInt(opts!.hashlen) then 
-    n:=opts!.hashlen;
-    opts!.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)),
+  if not IsBound(opts.hashlen) then
+    opts.hashlen:=CitrusOptionsRec.hashlen;
+  elif IsPosInt(opts.hashlen) then 
+    n:=opts.hashlen;
+    opts.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)),
      L:=NextPrimeInt(n));
-  elif not IsRecord(opts!.hashlen) then 
+  elif not IsRecord(opts.hashlen) then 
     Error("the component hashlen should be a positive integer or a record,");
     return;
   fi;
 
-  if opts!.small then 
+  if opts.small then 
     gens:=ShallowCopy(gens);
     gens:=SSortedList(gens); #remove duplicates 
     gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
@@ -457,8 +463,8 @@ function(gens, opts)
     fi;
 
     i:=0;
-    closure_opts:=rec(schreier:=opts!.schreier, small:=false,
-     hashlen:=opts!.hashlen);
+    closure_opts:=rec(schreier:=opts.schreier, small:=false,
+     hashlen:=opts.hashlen);
     s:=Semigroup(gens[1], closure_opts);
 
     if InfoLevel(InfoCitrus)>1 then
@@ -469,7 +475,7 @@ function(gens, opts)
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
         " generators so far");
-        if not opts!.schreier then
+        if not opts.schreier then
           Print(", for \t", Size(OrbitsOfImages(s)), " elements\r");
         fi;
       od;
