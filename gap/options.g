@@ -13,7 +13,7 @@
 BindGlobal("CitrusOptionsRec", 
   rec(  schreier:=true, 
         small:=false,
-        hashlen:=rec(S:=503, M:=12511, L:=50021)
+        hashlen:=rec(S:=251, M:=6257, L:=25013)
       ));
 
 MakeReadWriteGlobal("CitrusOptionsRec");
