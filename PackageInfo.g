@@ -9,20 +9,20 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "0.5">
+##  <!ENTITY VERSION "0.6">
 ##  <!ENTITY ORBVERS "3.8">
-##  <!ENTITY RELEASEDATE "10 January 2012">
-##  <!ENTITY ARCHIVENAME "citrus-0.5">
+##  <!ENTITY RELEASEDATE "16 January 2012">
+##  <!ENTITY ARCHIVENAME "citrus-0.6">
 ##  <!ENTITY COPYRIGHTYEARS "2011-12">
 ##  <#/GAPDoc>
 
 SetPackageInfo( rec(
 PackageName := "Citrus",
 Subtitle := "ComputIng with Transformation semigRoUps and monoidS",
-Version := "0.5",
-Date := "10/01/2012",
+Version := "0.6",
+Date := "16/01/2012",
 ArchiveURL := 
-          "https://bitbucket.org/zen154115/citrus/downloads/citrus-0.5",
+          "https://bitbucket.org/zen154115/citrus/downloads/citrus-0.6",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -56,7 +56,7 @@ PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus",
 PackageDoc := rec(
   BookName  := "Citrus",
   Archive := 
-      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus-0.5.tar.gz",
+      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus-0.6.tar.gz",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",  

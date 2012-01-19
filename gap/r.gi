@@ -1275,7 +1275,7 @@ function(r)
   Info(InfoCitrus, 4, "IsRegularRClass: for a Green's class");
 
   if not IsGreensRClass(r) then 
-    Info(InfoCitrus, 2, "not an R-class");
+    Info(InfoCitrus, 2, r, " is not an R-class,");
     return false;
   fi;
 

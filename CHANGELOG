@@ -8,6 +8,13 @@
 #############################################################################
 
 
+0.5 -> 0.6 
+
+            fixed a bug relating to the creation of transformation semigroups 
+            using MagmaByGenerators. Also added the global variable 
+            CitrusOptionsRec containing the default values of the options used 
+            by Citrus when creating a semigroup. 
+
 0.4 -> 0.5
 
             major changes are: the documentation has been further revised,
