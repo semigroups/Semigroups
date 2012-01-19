@@ -66,6 +66,17 @@ function(x, y)
   return Objectify( TypeObj(x), [ c ] );
 end);
 
+# new for 0.7! - \* - "for a partial perm and partial perm"
+#############################################################################
+
+if IsBound(ProdPartialPerm_C) then 
+  InstallMethod(\*, "for a partial perm and partial perm (C version)", 
+  [IsPartialPerm, IsPartialPerm], ProdPartialPerm_C);
+else
+  InstallMethod(\*, "for a partial perm and partial perm",
+    [IsPartialPerm, IsPartialPerm], ReturnFail);
+fi;
+
 #AAA
 
 # new for 0.1! - AsPermOfKerImg - "for a transformation"
@@ -338,6 +349,13 @@ InstallMethod(One, "for a transformation",
 [IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
 
 #PPP
+
+# new for 0.7! - PartialPermNC - "for an image list"
+#############################################################################
+# Notes: 0 is for undefined...
+
+InstallGlobalFunction(PartialPermNC,
+  x-> Objectify(PartialPermType, [Immutable(x)]));
 
 # new for 0.1! - PrintObj - "for a transformation semigroup"
 ###########################################################################

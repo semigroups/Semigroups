@@ -7,7 +7,7 @@ const char * Revision_citrus_c =
 
 #include "src/compiled.h" 
 
-Obj FuncProdTrans( Obj self, Obj f, Obj g )
+Obj FuncProdPartialPerm_C( Obj self, Obj f, Obj g )
 {
     Obj fg;
     Int i,j,n;
@@ -18,7 +18,11 @@ Obj FuncProdTrans( Obj self, Obj f, Obj g )
     /* no garbage collection from here! */
     for (i = 1;i <= n;i++) {
         j = INT_INTOBJ(ELM_LIST(f,i));
-        SET_ELM_PLIST(fg,i,ELM_LIST(g,j));
+        if(j == 0){
+          SET_ELM_PLIST(fg,i,INTOBJ_INT(j));
+        } else {
+          SET_ELM_PLIST(fg,i,ELM_LIST(g,j));
+      }
     }
     /* finished */
     return fg;
@@ -31,9 +35,9 @@ Obj FuncProdTrans( Obj self, Obj f, Obj g )
 */
 static StructGVarFunc GVarFuncs [] = {
 
-  { "ProdTrans", 2, "f, g",
-    FuncProdTrans,
-    "pkg/citrus/src/citrus.c:FuncProdTrans" },
+  { "ProdPartialPerm_C", 2, "f, g",
+    FuncProdPartialPerm_C,
+    "pkg/citrus/src/citrus.c:FuncProdPartialPerm_C" },
 
   { 0 }
 
