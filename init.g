@@ -8,6 +8,16 @@
 #############################################################################
 ##
 
+
+if (not IsBound(CITRUSC)) and ("citrus" in SHOW_STAT()) then
+  LoadStaticModule("citrus");
+fi;
+if (not IsBound(CITRUSC)) and
+   (Filename(DirectoriesPackagePrograms("citrus"), "citrus.so") <> fail) then
+  LoadDynamicModule(Filename(DirectoriesPackagePrograms("citrus"), 
+    "citrus.so"));
+fi;
+
 ReadPkg("citrus/gap/utils.gd");
 ReadPkg("citrus/gap/orbits.gd");
 ReadPkg("citrus/gap/greens.gd");

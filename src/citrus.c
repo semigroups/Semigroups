@@ -7,32 +7,21 @@ const char * Revision_citrus_c =
 
 #include "src/compiled.h" 
 
-Obj FuncJDM( Obj self, Obj t, Obj l )
+Obj FuncProdTrans( Obj self, Obj f, Obj g )
 {
-    /* t is either a transformation or a plain list of integers of
-     * length n representing the image list of the transformation.
-     * l is a list containing positive integers between 1 and n.
-     * Returns true if and only if t takes different values on 
-     * all elements in l. */
-    Obj tab,tt;
+    Obj fg;
     Int i,j,n;
 
-    if (IS_POSOBJ(t)) tt = ELM_PLIST(t,1);
-    else tt = t;
-    n = LEN_LIST(tt);
-    tab = NEW_PLIST(T_PLIST_CYC,n);
-    SET_LEN_PLIST(tab,0);
+    n = LEN_LIST(f);
+    fg = NEW_PLIST(T_PLIST_CYC,n);
+    SET_LEN_PLIST(fg,n);
     /* no garbage collection from here! */
-    for (i = 1;i <= LEN_LIST(l);i++) {
-        j = INT_INTOBJ(ELM_LIST(tt,INT_INTOBJ(ELM_LIST(l,i))));
-        if (ELM_PLIST(tab,j) != 0) {
-            return False;
-        } else {
-            SET_ELM_PLIST(tab,j,INTOBJ_INT(1));
-        }
+    for (i = 1;i <= n;i++) {
+        j = INT_INTOBJ(ELM_LIST(f,i));
+        SET_ELM_PLIST(fg,i,ELM_LIST(g,j));
     }
     /* finished */
-    return True;
+    return fg;
 }
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
@@ -42,9 +31,9 @@ Obj FuncJDM( Obj self, Obj t, Obj l )
 */
 static StructGVarFunc GVarFuncs [] = {
 
-  { "JDM", 2, "t, l",
-    FuncJDM,
-    "pkg/citrus/src/citrus.c:FuncJDM" },
+  { "ProdTrans", 2, "f, g",
+    FuncProdTrans,
+    "pkg/citrus/src/citrus.c:FuncProdTrans" },
 
   { 0 }
 
