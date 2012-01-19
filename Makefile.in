@@ -1,5 +1,5 @@
 #
-# makefile for the citrus package                          Max Neunhoeffer
+# makefile for the orb package                             Max Neunhoeffer
 #
 ##  Copyright (C) 2009  Max Neunhoeffer
 ##  This file is free software, see license information at the end.
@@ -7,37 +7,34 @@
 CC=cc
 
 COMPILEOPTIONS="-O3 -fomit-frame-pointer"
+#COMPILEOPTIONS="-O3 -g -fomit-frame-pointer"
+#COMPILEOPTIONS="-O0 -g -Wall"
+# Some experiments:
+#COMPILEOPTIONS="-march=i686 -mcpu=pentium4 -O3 -fomit-frame-pointer"
+#COMPILEOPTIONS="-march=i686 -mcpu=pentium4 -O3 -fomit-frame-pointer -falign-loops=5 -finline-limit=6000"
 
 GAPINCL=-I$(GAPPATH)/src -I$(GAPPATH)/bin/@GAPARCH@
 
 .PHONY: bindir clean doc test
 
-default: bindir bin/@GAPARCH@/orb.so
+default: bindir bin/@GAPARCH@/citrus.so
 
 # this target creates a bin-directory
 bindir:
 	if test ! -d bin;  then mkdir bin;  fi
 	if test ! -d bin/@GAPARCH@;  then mkdir -p bin/@GAPARCH@;  fi
 
-bin/@GAPARCH@/orb.so: src/orb.c
+bin/@GAPARCH@/citrus.so: src/citrus.c
 	cp $(GAPPATH)/bin/@GAPARCH@/config.h bin/@GAPARCH@
-	$(GAPPATH)/bin/@GAPARCH@/gac -p ${COMPILEOPTIONS} -d -o bin/@GAPARCH@/orb.so src/orb.c
+	$(GAPPATH)/bin/@GAPARCH@/gac -p ${COMPILEOPTIONS} -d -o bin/@GAPARCH@/citrus.so src/citrus.c
 
-# make a statically linked GAP including the orb module
+# make a statically linked GAP including the citrus module
 static:
 	(cd $(GAPPATH)/bin/@GAPARCH@; \
-	./gac -o gap-static -p "-DORBSTATIC" -p ${COMPILEOPTIONS} -P "-static" \
-	../../pkg/orb/src/orb.c)
-
-doc: doc/manual.six
-
-doc/manual.six: doc/basic.xml doc/hash.xml doc/orb.xml doc/search.xml \
-		doc/bysuborbit.xml doc/install.xml doc/quotfinder.xml \
-		doc/examples.xml doc/intro.xml doc/random.xml VERSION
-	($(GAPPATH)/bin/gap.sh makedoc.g)
+	./gac -o gap-static -p "-DCITRUSSTATIC" -p ${COMPILEOPTIONS} -P \
+	"-static" ../../pkg/citrus/src/citrus.c)
 
 clean:
-	(cd doc ; ./clean)
 	rm -rf bin/@GAPARCH@ Makefile
 
 archive: doc
