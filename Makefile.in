@@ -1,0 +1,75 @@
+#
+# makefile for the citrus package                          Max Neunhoeffer
+#
+##  Copyright (C) 2009  Max Neunhoeffer
+##  This file is free software, see license information at the end.
+#
+CC=cc
+
+COMPILEOPTIONS="-O3 -fomit-frame-pointer"
+
+GAPINCL=-I$(GAPPATH)/src -I$(GAPPATH)/bin/@GAPARCH@
+
+.PHONY: bindir clean doc test
+
+default: bindir bin/@GAPARCH@/orb.so
+
+# this target creates a bin-directory
+bindir:
+	if test ! -d bin;  then mkdir bin;  fi
+	if test ! -d bin/@GAPARCH@;  then mkdir -p bin/@GAPARCH@;  fi
+
+bin/@GAPARCH@/orb.so: src/orb.c
+	cp $(GAPPATH)/bin/@GAPARCH@/config.h bin/@GAPARCH@
+	$(GAPPATH)/bin/@GAPARCH@/gac -p ${COMPILEOPTIONS} -d -o bin/@GAPARCH@/orb.so src/orb.c
+
+# make a statically linked GAP including the orb module
+static:
+	(cd $(GAPPATH)/bin/@GAPARCH@; \
+	./gac -o gap-static -p "-DORBSTATIC" -p ${COMPILEOPTIONS} -P "-static" \
+	../../pkg/orb/src/orb.c)
+
+doc: doc/manual.six
+
+doc/manual.six: doc/basic.xml doc/hash.xml doc/orb.xml doc/search.xml \
+		doc/bysuborbit.xml doc/install.xml doc/quotfinder.xml \
+		doc/examples.xml doc/intro.xml doc/random.xml VERSION
+	($(GAPPATH)/bin/gap.sh makedoc.g)
+
+clean:
+	(cd doc ; ./clean)
+	rm -rf bin/@GAPARCH@ Makefile
+
+archive: doc
+	(cd .. ; tar czvf orb-`cat orb/VERSION`.tar.gz --exclude ".svn" --exclude bin --exclude test orb)
+
+WEBPOS=/scratch/neunhoef/mywebpage.pub/Computer/Software/Gap/orb
+
+towww: archive
+	echo '<?xml version="1.0" encoding="ISO-8859-1"?>' >${WEBPOS}.version
+	echo '<mixer>' >>${WEBPOS}.version
+	cat VERSION >>${WEBPOS}.version
+	echo '</mixer>' >>${WEBPOS}.version
+	cp PackageInfo.g ${WEBPOS}
+	cp README ${WEBPOS}/README.orb
+	cp doc/manual.pdf ${WEBPOS}/orb.pdf
+	cp ../orb-`cat VERSION`.tar.gz ${WEBPOS}
+	@echo
+	@echo Now please adjust the archive link in 
+	@echo "    " ${WEBPOS}.mixer !
+
+##
+##  This program is free software; you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation; version 2 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program; if not, write to the Free Software
+##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+##
+
