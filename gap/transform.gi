@@ -594,6 +594,29 @@ function(img, n)
       fi; end));
 end);
 
+# new for 0.7! - RandomPartialPerm - "for a pos. int."
+#############################################################################
+# Notes: returns a partial permutation on at most n points. 
+
+# JDM would be good to have a uniform distribution here...
+
+InstallGlobalFunction(RandomPartialPerm,
+function(n)
+  local out, j, i;
+
+  out:=EmptyPlist(n); 
+  for i in [1..n] do 
+    j:=Random([1..n]);
+    if not j in out then 
+      out[i]:=j;
+    else
+      out[i]:=0;
+    fi;
+  od;
+
+  return PartialPermNC(out);
+end);
+
 # new for 0.1! - RandomTransformation - "for a pos. int."
 #############################################################################
 # Notes: the library method is obtained by replacing TransformationNC 
