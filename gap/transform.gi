@@ -32,6 +32,47 @@ function(x, y)
   return Objectify(TypeObj(x), [z]);
 end);
 
+# new for 0.7! - \^ - "for a partial perm and neg int"
+#############################################################################
+
+if IsBound(InvPartPerm_C) then 
+  InstallMethod(\^, "for a partial perm and neg int",
+  [IsPartialPerm and IsPartialPermRep, IsNegInt],
+  function(f, r)
+    return PartialPermNC(InvPartPerm_C(f))^-r;
+  end);
+else
+  InstallMethod(\^, "for a partial perm and neg int", 
+  [IsPartialPerm and IsPartialPermRep, IsNegInt],
+  function(f, r)
+    local ff, n, img, i;
+    ff:=f![1];
+    n:=Length(ff);
+    img:=ListWithIdenticalEntries(n, 0);
+    for i in [1..n] do 
+      if not ff[i]=0 then 
+        img[ff[i]]:=i;
+      fi;
+    od;
+    return PartialPermNC(img)^-r;
+  end);
+fi;
+
+# new for 0.7! - \^ - "for a pos int and partial perm"
+#############################################################################
+
+InstallMethod(\^, "for a pos int and partial perm",
+[IsPosInt, IsPartialPerm],
+function(i, f)
+  local ff;
+
+  ff:=f![1];
+  if i<Length(ff) and not ff[i]=0 then 
+    return ff[i];
+  fi;
+  return fail;
+end);
+
 # new for 0.1! - \* - "for a transformation and a permutation (citrus pkg)"
 #############################################################################
 
@@ -117,32 +158,6 @@ InstallMethod(\=, "for a partial perm and partial perm",
   function(f,g)
     return Dom(f)=Dom(g) and Ran(f)=Ran(g);
 end);
-
-# new for 0.7! - \^ - "for a partial perm and neg int"
-#############################################################################
-
-if IsBound(InvPartPerm_C) then 
-  InstallMethod(\^, "for a partial perm and neg int",
-  [IsPartialPerm and IsPartialPermRep, IsNegInt],
-  function(f, r)
-    return PartialPermNC(InvPartPerm_C(f))^-r;
-  end);
-else
-  InstallMethod(\^, "for a partial perm and neg int", 
-  [IsPartialPerm and IsPartialPermRep, IsNegInt],
-  function(f, r)
-    local ff, n, img, i;
-    ff:=f![1];
-    n:=Length(ff);
-    img:=ListWithIdenticalEntries(n, 0);
-    for i in [1..n] do 
-      if not ff[i]=0 then 
-        img[ff[i]]:=i;
-      fi;
-    od;
-    return PartialPermNC(img)^-r;
-  end);
-fi;
 
 #AAA
 
