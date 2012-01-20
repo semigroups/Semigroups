@@ -36,23 +36,24 @@ DeclareAttribute("SmallestIdempotentPower", IsTransformation);
 
 # partial permutations
 
-DeclareGlobalFunction("AsPermOfDomRan");
-
-DeclareRepresentation("IsPartialPerm",
-IsPositionalObjectRep and IsMultiplicativeElementWithOne and
-IsAttributeStoringRep and IsAssociativeElement, [1]);
-
-DeclareAttribute("Dom", IsPartialPerm);
-DeclareAttribute("Ran", IsPartialPerm);
-
+DeclareCategory("IsPartialPerm", IsMultiplicativeElementWithOne and   
+ IsAssociativeElement);
 DeclareCategoryCollections("IsPartialPerm");
-
+DeclareRepresentation("IsPartialPermRep",
+IsPositionalObjectRep, [1]);
 BindGlobal("PartialPermFamily", NewFamily("PartialPermFamily",
 IsPartialPerm));
-
 BindGlobal("PartialPermType", NewType(PartialPermFamily,
-IsPartialPerm));
-
+IsPartialPerm and IsPartialPermRep));
 DeclareGlobalFunction("PartialPermNC");
+
+DeclareAttribute("DegreeOfPartialPerm", IsPartialPerm);
+DeclareSynonymAttr("Deg", DegreeOfPartialPerm);
+DeclareGlobalFunction("DomainAndRangeOfPartialPerm");
+DeclareAttribute("DomainOfPartialPerm", IsPartialPerm);
+DeclareSynonymAttr("Dom", DomainOfPartialPerm);
+DeclareAttribute("RangeOfPartialPerm", IsPartialPerm);
+DeclareSynonymAttr("Ran", RangeOfPartialPerm);
+
 DeclareGlobalFunction("RandomPartialPerm");
 

@@ -12,6 +12,9 @@
 # set, f![3] is the kernel, f![4] is AsPermOfKerImg, f![5] is the rank of f
 # f![6] is the canonical trans. with same kernel
 
+# a partial perm is [image list with 0 for undefined, degree (# non-zero), 
+# domain, range]
+
 # - a method for RandomTransformation(m,n) i.e. a random transformation with
 # a given rank. 
 
@@ -69,12 +72,75 @@ end);
 # new for 0.7! - \* - "for a partial perm and partial perm"
 #############################################################################
 
-if IsBound(ProdPartialPerm_C) then 
+if IsBound(ProdPartPerm_C) then 
   InstallMethod(\*, "for a partial perm and partial perm (C version)", 
-  [IsPartialPerm, IsPartialPerm], ProdPartialPerm_C);
+    [IsPartialPerm and IsPartialPermRep, IsPartialPerm and IsPartialPermRep],
+    function(f,g)
+      return PartialPermNC(ProdPartPerm_C(f,g));
+    end);
 else
   InstallMethod(\*, "for a partial perm and partial perm",
-    [IsPartialPerm, IsPartialPerm], ReturnFail);
+    [IsPartialPerm and IsPartialPermRep, IsPartialPerm and IsPartialPermRep],
+    function(f,g)
+      local n, ff, gg, fg, j, i;
+  
+      ff:=f![1]; gg:=g![1];
+      n:=Length(ff);
+      fg:=EmptyPlist(n);
+
+      for i in [1..n] do 
+        j:=ff[i]; 
+        if j = 0 then   
+          fg[i]:=0;
+        else
+          fg[i]:=gg[j];
+        fi;
+      od;
+      return PartialPermNC(fg);
+    end);
+fi;
+
+# new for 0.7! - \< - "for a partial perm and partial perm"
+#############################################################################
+
+InstallMethod(\<, "for a partial perm and partial perm", 
+  [IsPartialPerm and IsPartialPermRep, IsPartialPerm and IsPartialPermRep],
+  function(f,g)
+    return f![1]<g![1];
+end);
+
+# new for 0.7! - \= - "for a partial perm and partial perm"
+#############################################################################
+
+InstallMethod(\=, "for a partial perm and partial perm", 
+  [IsPartialPerm and IsPartialPermRep, IsPartialPerm and IsPartialPermRep],
+  function(f,g)
+    return Dom(f)=Dom(g) and Ran(f)=Ran(g);
+end);
+
+# new for 0.7! - \^ - "for a partial perm and neg int"
+#############################################################################
+
+if IsBound(InvPartPerm_C) then 
+  InstallMethod(\^, "for a partial perm and neg int",
+  [IsPartialPerm and IsPartialPermRep, IsNegInt],
+  function(f, r)
+    return PartialPermNC(InvPartPerm_C(f))^-r;
+  end);
+else
+  InstallMethod(\^, "for a partial perm and neg int", 
+  [IsPartialPerm and IsPartialPermRep, IsNegInt],
+  function(f, r)
+    ff:=f![1];
+    n:=Length(ff);
+    img:=ListWithIdenticalEntries(n, 0);
+    for i in [1..n] do 
+      if not ff[i]=0 then 
+        img[ff[i]]:=i;
+      fi;
+    od;
+    return PartialPermNC(img)^-r;
+  end);
 fi;
 
 #AAA
@@ -149,6 +215,57 @@ end);
 
 #DDD
 
+# new for 0.7! - DegreeOfPartialPerm - "for a partial perm"
+############################################################################
+
+if IsBound(DegPartPerm_C) then 
+  InstallMethod(DegreeOfPartialPerm, "for a partial perm",
+  [IsPartialPerm and IsPartialPermRep], 
+  function(f)
+    if not IsBound(f![2]) then 
+      f![2]:=DegPartPerm_C(f);
+    fi;
+    return f![2];
+  end);
+else
+  InstallMethod(DegreeOfPartialPerm, "for a partial perm",
+  [IsPartialPerm and IsPartialPermRep],
+  function(f)
+    local deg, ff, n, i;
+  
+    if not IsBound(f![2]) then
+      deg:=0;
+      ff:=f![1];
+      n:=Length(ff);
+      for i in [1..n] do 
+        if not ff[i]=0 then
+          deg:=deg+1;
+        fi;
+      od;
+      f![2]:=deg;
+    fi;
+
+  return f![2];
+  end);
+fi;
+
+# new for 0.7! - DomainOfPartialPerm - "for a partial perm"
+############################################################################
+
+InstallMethod(DomainOfPartialPerm, "for a partial perm",
+[IsPartialPerm and IsPartialPermRep],
+function(f)
+local domran;
+
+  if IsBound(f![3]) then
+    return f![3];
+  fi;
+  domran:=DomainAndRangeOfPartialPerm(f);
+  f![3]:=domran[1];
+  f![4]:=domran[2];
+  return domran[1];
+end);
+
 # new for 0.1! - DegreeOfTransformationCollection - "for a trans. coll."
 ############################################################################
 # undocumented.
@@ -162,6 +279,39 @@ function(coll)
   fi;
   return DataType(TypeObj(coll[1]));
 end);
+
+# new for 0.7! - DomainAndRangeOfPartialPerm - "for a partial perm."
+############################################################################
+
+if IsBound(DomRanPartPerm_C) then 
+  InstallGlobalFunction(DomainAndRangeOfPartialPerm, 
+    f-> DomRanPartPerm_C(f, Deg(f)));
+else
+  InstallGlobalFunction(DomainAndRangeOfPartialPerm, 
+  function(f)
+    local ff, n, dom, ran, m, i;
+
+    if IsPartialPerm(f) then 
+      ff:=f![1];
+    else
+      ff:=f;
+    fi;
+
+    n:=Length(ff);
+    dom:=EmptyPlist(n);
+    ran:=EmptyPlist(n);
+    m:=0;
+
+    for i in [1..n] do 
+      if not ff[i]=0 then 
+        m:=m+1;
+        dom[m]:=i;
+        ran[m]:=ff[i];
+      fi;
+    od;
+    return [dom, ran];
+  end);
+fi;
 
 #III
 
@@ -374,6 +524,16 @@ function(s)
   return;
 end);
 
+# new for 0.7! - PrintObj - "for a partial perm"
+#############################################################################
+
+InstallMethod(PrintObj, "for a partial perm",
+[IsPartialPerm and IsPartialPermRep],
+function(f)
+Print(Dom(f), " -> ", Ran(f));
+return;
+end);
+
 #RRR
 
 # new for 0.1! - Random - "for a transformation semigroup (citrus pkg)"
@@ -469,6 +629,23 @@ function(img, n)
   " and <n> is a pos. int. such that the maximum of <img> is not greater than",
   " <n>,");
   return;
+end);
+
+# new for 0.7! - RangeOfPartialPerm - "for a partial perm"
+############################################################################
+
+InstallMethod(RangeOfPartialPerm, "for a partial perm",
+[IsPartialPerm and IsPartialPermRep],
+function(f)
+local domran;
+
+  if IsBound(f![4]) then
+    return f![4];
+  fi;
+  domran:=DomainAndRangeOfPartialPerm(f);
+  f![3]:=domran[1];
+  f![4]:=domran[2];
+  return domran[2];
 end);
 
 # new for 0.1! - RankOfTransformation - "for a transformation (citrus pkg)"
