@@ -131,6 +131,7 @@ else
   InstallMethod(\^, "for a partial perm and neg int", 
   [IsPartialPerm and IsPartialPermRep, IsNegInt],
   function(f, r)
+    local ff, n, img, i;
     ff:=f![1];
     n:=Length(ff);
     img:=ListWithIdenticalEntries(n, 0);
