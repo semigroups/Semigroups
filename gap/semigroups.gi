@@ -366,6 +366,64 @@ function(gens, opts)
   return s;
 end);
 
+#III
+
+# new for 0.7! - InverseSemigroup
+##############################################################################
+
+InstallGlobalFunction(InverseSemigroup,
+function( arg )
+  local out, i;
+  if IsPartialPerm(arg[1]) or IsPartialPermCollection(arg[1]) then 
+    out:=[];
+    for i in [1..Length(arg)] do 
+      if IsPartialPerm(arg[i]) then 
+        out[i]:=[arg[i]];
+      elif IsPartialPermCollection(arg[i]) then 
+        if IsPartialPermSemigroup(arg[i]) then
+          out[i]:=Generators(arg[i]);
+        else
+          out[i]:=arg[i];
+        fi;
+      elif i=Length(arg) and IsRecord(arg[i]) then 
+        return InverseSemigroupByGenerators(Concatenation(out), arg[i]);
+      else
+        Error( "Usage: InverseSemigroup(<gen>,...), InverseSemigroup(<gens>), InverseSemigroup(<D>)," );
+        return;
+      fi;
+    od;
+    return InverseSemigroupByGenerators(Concatenation(out));
+  else
+    Error( "Usage: Semigroup(<gen>,...),Semigroup(<gens>),Semigroup(<D>),");
+    return;
+  fi;
+end);
+
+# new for 0.7! - InverseSemigroupByGenerators
+################################################################################
+
+InstallMethod(InverseSemigroupByGenerators, "for partial perm coll", 
+[IsPartialPermCollection],
+function(coll)
+  local gens, i, g, s, f;
+
+  gens:=ShallowCopy(coll);
+  i:=Length(gens);
+  
+  for f in coll do
+    g:=f^-1;
+    if not g=f then 
+      i:=i+1; gens[i]:=g;
+    fi;
+  od;
+
+  s:=Objectify( NewType (FamilyObj( gens ), IsMagma and IsInverseSemigroup 
+  and IsAttributeStoringRep), rec());
+  SetGeneratorsOfMagma(s, gens);
+  SetGeneratorsOfInverseSemigroup(s, coll);
+  return s;
+end);
+
 #SSS
 
 # new for 0.5! - Semigroup
@@ -395,7 +453,7 @@ function ( arg )
       elif i=Length(arg) and IsRecord(arg[i]) then 
         return SemigroupByGenerators(Concatenation(out), arg[i]);
       else
-        Error( "Usage: Monoid(<gen>,...), Monoid(<gens>), Monoid(<D>)," );
+        Error( "Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>)," );
         return;
       fi;
     od;
