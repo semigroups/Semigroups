@@ -12,8 +12,8 @@
 # set, f![3] is the kernel, f![4] is AsPermOfKerImg, f![5] is the rank of f
 # f![6] is the canonical trans. with same kernel
 
-# a partial perm is [image list with 0 for undefined, degree (# non-zero), 
-# domain, range]
+# a partial perm is [image list with 0 for undefined, rank (# non-zero), 
+# degree, domain, range, max moved pt, min moved pt]
 
 # - a method for RandomTransformation(m,n) i.e. a random transformation with
 # a given rank. 
@@ -39,7 +39,7 @@ if IsBound(InvPartPerm_C) then
   InstallMethod(\^, "for a partial perm and neg int",
   [IsPartialPerm and IsPartialPermRep, IsNegInt],
   function(f, r)
-    return PartialPermNC(InvPartPerm_C(f))^-r;
+    return PartialPermNC(InvPartPerm_C(f, LargestMovedPoint(f)^f))^-r;
   end);
 else
   InstallMethod(\^, "for a partial perm and neg int", 
@@ -67,7 +67,7 @@ function(i, f)
   local ff;
 
   ff:=f![1];
-  if i<Length(ff) and not ff[i]=0 then 
+  if i<=Length(ff) and not ff[i]=0 then 
     return ff[i];
   fi;
   return fail;
@@ -234,36 +234,14 @@ end);
 # new for 0.7! - DegreeOfPartialPerm - "for a partial perm"
 ############################################################################
 
-if IsBound(DegPartPerm_C) then 
-  InstallMethod(DegreeOfPartialPerm, "for a partial perm",
-  [IsPartialPerm and IsPartialPermRep], 
-  function(f)
-    if not IsBound(f![2]) then 
-      f![2]:=DegPartPerm_C(f);
-    fi;
-    return f![2];
-  end);
-else
-  InstallMethod(DegreeOfPartialPerm, "for a partial perm",
-  [IsPartialPerm and IsPartialPermRep],
-  function(f)
-    local deg, ff, n, i;
-  
-    if not IsBound(f![2]) then
-      deg:=0;
-      ff:=f![1];
-      n:=Length(ff);
-      for i in [1..n] do 
-        if not ff[i]=0 then
-          deg:=deg+1;
-        fi;
-      od;
-      f![2]:=deg;
-    fi;
-
-  return f![2];
-  end);
-fi;
+InstallMethod(DegreeOfPartialPerm, "for a partial perm",
+[IsPartialPerm and IsPartialPermRep],
+function(f)
+  if not IsBound(f![3]) then 
+    f![3]:=Length(f![1]);
+  fi;
+  return f![3];
+end);
 
 # new for 0.7! - DomainOfPartialPerm - "for a partial perm"
 ############################################################################
@@ -273,12 +251,12 @@ InstallMethod(DomainOfPartialPerm, "for a partial perm",
 function(f)
 local domran;
 
-  if IsBound(f![3]) then
-    return f![3];
+  if IsBound(f![4]) then
+    return f![4];
   fi;
   domran:=DomainAndRangeOfPartialPerm(f);
-  f![3]:=domran[1];
-  f![4]:=domran[2];
+  f![4]:=domran[1];
+  f![5]:=domran[2];
   return domran[1];
 end);
 
@@ -301,7 +279,7 @@ end);
 
 if IsBound(DomRanPartPerm_C) then 
   InstallGlobalFunction(DomainAndRangeOfPartialPerm, 
-    f-> DomRanPartPerm_C(f, Deg(f)));
+    f-> DomRanPartPerm_C(f, Rank(f)));
 else
   InstallGlobalFunction(DomainAndRangeOfPartialPerm, 
   function(f)
@@ -495,6 +473,41 @@ function(s, coll)
   return ForAll(coll, x-> x in s);
 end);
 
+#LLL
+
+# new for 0.7! - LargestMovedPoint - "for a partial perm"
+###########################################################################
+
+if IsBound(LargestMovedPointPartPerm_C) then 
+  InstallOtherMethod(LargestMovedPoint, "for a partial perm",
+  [IsPartialPerm and IsPartialPermRep], 
+  function(f) 
+    if not IsBound(f![6]) then 
+      f![6]:=LargestMovedPointPartPerm_C(f);
+    fi;
+    return f![6];
+  end);
+else
+  InstallOtherMethod(LargestMovedPoint, "for a partial perm",
+  [IsPartialPerm and IsPartialPermRep], 
+  function(f)
+    local ff, n, i;
+
+    if not IsBound(f![6]) then 
+      ff:=f![1];
+      n:=DegreeOfPartialPerm(f);
+      for i in [n, n-1..1] do 
+        if not ff[i]=0 then 
+          break;
+        fi;
+      od;
+      f![6]:=i;
+    fi;
+
+    return f![6];
+  end);
+fi;
+
 #OOO
 
 # mod for 0.5! - One - "for a full transformation semigroup"
@@ -678,14 +691,48 @@ InstallMethod(RangeOfPartialPerm, "for a partial perm",
 function(f)
 local domran;
 
-  if IsBound(f![4]) then
-    return f![4];
+  if IsBound(f![5]) then
+    return f![5];
   fi;
   domran:=DomainAndRangeOfPartialPerm(f);
-  f![3]:=domran[1];
-  f![4]:=domran[2];
+  f![4]:=domran[1];
+  f![5]:=domran[2];
   return domran[2];
 end);
+
+# new for 0.7! - RankOfPartialPerm - "for a partial perm"
+############################################################################
+
+if IsBound(RankPartPerm_C) then 
+  InstallMethod(RankOfPartialPerm, "for a partial perm",
+  [IsPartialPerm and IsPartialPermRep], 
+  function(f)
+    if not IsBound(f![2]) then 
+      f![2]:=RankPartPerm_C(f);
+    fi;
+    return f![2];
+  end);
+else
+  InstallMethod(RankOfPartialPerm, "for a partial perm",
+  [IsPartialPerm and IsPartialPermRep],
+  function(f)
+    local rank, ff, n, i;
+  
+    if not IsBound(f![2]) then
+      rank:=0;
+      ff:=f![1];
+      n:=Length(ff);
+      for i in [1..n] do 
+        if not ff[i]=0 then
+          rank:=rank+1;
+        fi;
+      od;
+      f![2]:=rank;
+    fi;
+
+  return f![2];
+  end);
+fi;
 
 # new for 0.1! - RankOfTransformation - "for a transformation (citrus pkg)"
 #############################################################################

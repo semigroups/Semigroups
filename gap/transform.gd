@@ -48,12 +48,12 @@ IsPartialPerm and IsPartialPermRep));
 DeclareGlobalFunction("PartialPermNC");
 
 DeclareAttribute("DegreeOfPartialPerm", IsPartialPerm);
-DeclareSynonymAttr("Deg", DegreeOfPartialPerm);
 DeclareGlobalFunction("DomainAndRangeOfPartialPerm");
 DeclareAttribute("DomainOfPartialPerm", IsPartialPerm);
 DeclareSynonymAttr("Dom", DomainOfPartialPerm);
 DeclareAttribute("RangeOfPartialPerm", IsPartialPerm);
 DeclareSynonymAttr("Ran", RangeOfPartialPerm);
+DeclareAttribute("RankOfPartialPerm", IsPartialPerm);
 
 DeclareGlobalFunction("RandomPartialPerm");
 

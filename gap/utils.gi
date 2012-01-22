@@ -181,7 +181,13 @@ end);
 # Notes: returns DegreeOfTransformation.
 
 InstallOtherMethod(Degree, "for a transformation",
-[IsTransformation], f-> DegreeOfTransformation(f));
+[IsTransformation], DegreeOfTransformation);
+
+# new for 0.7! - Degree - "for a partial perm"
+#############################################################################
+
+InstallOtherMethod(Degree, "for a partial perm",
+[IsPartialPerm], DegreeOfPartialPerm);
 
 # new for 0.1! - Degree - "for a transformation semigroup"
 #############################################################################
@@ -293,7 +299,13 @@ end);
 # Notes: returns RankOfTransformation. 
 
 InstallOtherMethod(Rank, "for a transformation",
-[IsTransformation], f-> RankOfTransformation(f));
+[IsTransformation], RankOfTransformation);
+
+# new for 0.7 - Rank - "for a partial perm."
+#############################################################################
+
+InstallOtherMethod(Rank, "for a partial perm", 
+[IsPartialPerm], RankOfPartialPerm);
 
 # new for 0.1! - RClass - "for a trans. semi. and trans. or H-class"
 #############################################################################

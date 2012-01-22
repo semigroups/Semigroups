@@ -12,7 +12,7 @@ const char * Revision_citrus_c =
 Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
 {
     Obj fg,ff,gg;
-    Int i,j,n;
+    Int i,j,n,m;
 
     if (IS_POSOBJ(f)){ 
       ff = ELM_PLIST(f,1);
@@ -22,14 +22,15 @@ Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
       gg = g;
     }
 
-    n = LEN_LIST(ff);
+    n = LEN_LIST(ff); 
+    m = LEN_LIST(gg);
     fg = NEW_PLIST(T_PLIST_CYC,n);
     SET_LEN_PLIST(fg,n);
     /* no garbage collection from here! */
     for (i = 1;i <= n;i++) {
         j = INT_INTOBJ(ELM_LIST(ff,i));
-        if(j == 0){
-          SET_ELM_PLIST(fg,i,INTOBJ_INT(j));
+        if(j > m || j == 0){
+          SET_ELM_PLIST(fg,i,INTOBJ_INT(0));
         } else {
           SET_ELM_PLIST(fg,i,ELM_LIST(gg,j));
       }
@@ -40,14 +41,14 @@ Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
 
 /* domain and range of a partial permutation */
 
-Obj FuncDomRanPartPerm_C( Obj self, Obj f, Int deg)
+Obj FuncDomRanPartPerm_C( Obj self, Obj f, Int rank)
 { 
     Obj ff,dom,ran,out;
     Int i,j,m,n;
   
-    if(INT_INTOBJ(deg)==0){
-      dom = NEW_PLIST(T_PLIST_EMPTY,INT_INTOBJ(deg));
-      ran = NEW_PLIST(T_PLIST_EMPTY,INT_INTOBJ(deg));
+    if(INT_INTOBJ(rank)==0){
+      dom = NEW_PLIST(T_PLIST_EMPTY,INT_INTOBJ(rank));
+      ran = NEW_PLIST(T_PLIST_EMPTY,INT_INTOBJ(rank));
       out = NEW_PLIST(T_PLIST,2);
       SET_LEN_PLIST(out,2);
       SET_ELM_PLIST(out,1,dom);
@@ -64,9 +65,9 @@ Obj FuncDomRanPartPerm_C( Obj self, Obj f, Int deg)
 
     n = LEN_LIST(ff);
     dom = NEW_PLIST(T_PLIST_CYC,n);
-    SET_LEN_PLIST(dom,INT_INTOBJ(deg));
+    SET_LEN_PLIST(dom,INT_INTOBJ(rank));
     ran = NEW_PLIST(T_PLIST_CYC,n);
-    SET_LEN_PLIST(ran,INT_INTOBJ(deg));
+    SET_LEN_PLIST(ran,INT_INTOBJ(rank));
     m = 0;
 
     for (i = 1;i <= n;i++) {
@@ -84,12 +85,12 @@ Obj FuncDomRanPartPerm_C( Obj self, Obj f, Int deg)
     return out;
 }
 
-/* degree of a partial permutation */
+/* rank of a partial permutation */
 
-Obj FuncDegPartPerm_C( Obj self, Obj f)
+Obj FuncRankPartPerm_C( Obj self, Obj f)
 {
     Obj ff;
-    Int n,i,j,deg;
+    Int n,i,j,rank;
 
     if (IS_POSOBJ(f)){
       ff = ELM_PLIST(f,1);
@@ -101,18 +102,18 @@ Obj FuncDegPartPerm_C( Obj self, Obj f)
     n = LEN_LIST(ff);
     if (n==0) return INTOBJ_INT(n);
 
-    deg = 0;
+    rank = 0;
     for (i = 1;i <= n;i++){
       j = INT_INTOBJ(ELM_LIST(ff,i));
-      if(j!=0) deg++;
+      if(j!=0) rank++;
     }
       
-    return INTOBJ_INT(deg);
+    return INTOBJ_INT(rank);
 }
 
 /* inverse of a partial permutation */
 
-Obj FuncInvPartPerm_C ( Obj self, Obj f)
+Obj FuncInvPartPerm_C ( Obj self, Obj f, Int r)
 {
     Obj ff,img;
     Int n,i,j;
@@ -127,10 +128,10 @@ Obj FuncInvPartPerm_C ( Obj self, Obj f)
     n=LEN_LIST(ff);
     if(n==0) return NEW_PLIST(T_PLIST_EMPTY,INT_INTOBJ(0)); 
 
-    img=NEW_PLIST(T_PLIST_CYC,n);
-    SET_LEN_PLIST(img,n);
+    img=NEW_PLIST(T_PLIST_CYC,r);
+    SET_LEN_PLIST(img,r);
 
-    for (i = 1;i <= n;i++){
+    for (i = 1;i <= r;i++){
       SET_ELM_PLIST(img, i, INTOBJ_INT(0));
     }
 
@@ -144,6 +145,30 @@ Obj FuncInvPartPerm_C ( Obj self, Obj f)
     return img;
 }
 
+/* largest moved point partial permutation */ 
+
+Obj FuncLargestMovedPointPartPerm_C ( Obj self, Obj f )
+{
+    Obj ff;
+    Int n,i,j;
+
+   if (IS_POSOBJ(f)){
+      ff = ELM_PLIST(f,1);
+    }
+    else{
+      ff = f;
+    } 
+
+    n = LEN_LIST(ff); /* degree! */
+    for(i=n;1<=n;i--){
+      j = INT_INTOBJ(ELM_LIST(ff,i)); 
+      if (j!=0){
+        break;
+      }
+    }
+    return INTOBJ_INT(i);
+}
+
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
 /******************************************************************************
@@ -155,17 +180,21 @@ static StructGVarFunc GVarFuncs [] = {
     FuncProdPartPerm_C,
     "pkg/citrus/src/citrus.c:FuncProdPartPerm_C" },
 
-  { "DomRanPartPerm_C", 2, "f, deg",
+  { "DomRanPartPerm_C", 2, "f, rank",
     FuncDomRanPartPerm_C,
     "pkg/citrus/src/citrus.c:FuncDomRanPartPerm_C" },
 
-  { "DegPartPerm_C", 1, "f",
-    FuncDegPartPerm_C,
-    "pkg/citrus/src/citrus.c:FuncDegPartPerm_C" },
+  { "RankPartPerm_C", 1, "f",
+    FuncRankPartPerm_C,
+    "pkg/citrus/src/citrus.c:FuncRankPartPerm_C" },
 
-  { "InvPartPerm_C", 1, "f",
+  { "InvPartPerm_C", 2, "f,r",
     FuncInvPartPerm_C,
     "pkg/citrus/src/citrus.c:FuncInvPartPerm_C" },
+
+  { "LargestMovedPointPartPerm_C", 1, "f", 
+    FuncLargestMovedPointPartPerm_C,
+    "pkg/citrus/src/citrus.c:FuncLargestMovedPointPartPerm_C" },
 
   { 0 }
 
