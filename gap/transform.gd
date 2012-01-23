@@ -13,6 +13,7 @@
 if not IsBound(AsPermutation) then 
   DeclareOperation("AsPermutation",[IsObject]);
 fi;
+DeclareOperation("AsPermutationNC",[IsObject]);
 
 DeclareGlobalFunction("ConstantTransformation");
 DeclareOperation("DegreeOfTransformationCollection", [IsTransformationCollection]);
@@ -51,6 +52,7 @@ DeclareAttribute("DegreeOfPartialPerm", IsPartialPerm);
 DeclareGlobalFunction("DomainAndRangeOfPartialPerm");
 DeclareAttribute("DomainOfPartialPerm", IsPartialPerm);
 DeclareSynonymAttr("Dom", DomainOfPartialPerm);
+DeclareAttribute("ImageSetOfPartialPerm", IsPartialPerm);
 DeclareGlobalFunction("OnIntegerSetsWithPartialPerm");
 DeclareAttribute("RangeOfPartialPerm", IsPartialPerm);
 DeclareSynonymAttr("Ran", RangeOfPartialPerm);

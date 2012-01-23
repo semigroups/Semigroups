@@ -32,7 +32,7 @@ function(o, k, scc, truth, graph, gens, r)
   for i in scc do
     for j in [1..r] do
       if IsBound(graph[i][j]) and truth[k][graph[i][j]] then
-        g:=ClosureGroup(g, AsPermutation(f/p[i] * (gens[j]*p[graph[i][j]])));
+        g:=ClosureGroup(g, AsPermutationNC(f/p[i] * (gens[j]*p[graph[i][j]])));
       fi;
 
       if Size(g)>=bound then

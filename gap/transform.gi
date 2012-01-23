@@ -216,6 +216,26 @@ function(f, list)
   return MappingPermListList(list, a);
 end);
 
+# new for 0.7! - AsPermutation - "for a partial perm"
+###########################################################################
+
+InstallOtherMethod(AsPermutation, "for a partial perm",
+[IsPartialPerm and IsPartialPermRep], 
+function(f)
+
+  if not Dom(f)=ImageSetOfPartialPerm(f) then 
+    Error("the partial permutation is not a permutation,");
+    return;
+  fi;
+  return AsPermutationNC(f);
+end);
+
+# new for 0.7! - AsPermutationNC - "for a partial perm"
+###########################################################################
+
+InstallOtherMethod(AsPermutationNC, "for a partial perm",
+[IsPartialPerm and IsPartialPermRep], f-> f![1]{Ran(f)});
+
 # new for 0.7! - AsTransformationNC - "for a partial perm"
 ###########################################################################
 # Notes: n is the total degree!
@@ -450,6 +470,12 @@ function(s, f)
 
   return out;
 end);
+
+# new for 0.7! - ImageSetOfPartialPerm - "for a partial perm."
+#############################################################################
+
+InstallMethod(ImageSetOfPartialPerm, "for a partial perm.",
+[IsPartialPerm and IsPartialPermRep], f-> Set(Ran(f)));
 
 # new for 0.1! - InversesOfTransformation - "for trans. semi. and trans."
 #############################################################################
