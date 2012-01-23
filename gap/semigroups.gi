@@ -424,6 +424,22 @@ function(coll)
   return s;
 end);
 
+#PPP 
+
+# new for 0.7! - PrintObj - "for an inverse semigroup"
+################################################################################
+
+InstallMethod(PrintObj, "for an inverse semigroup",
+[IsInverseSemigroup], 
+function(s)
+  Print("<inverse semigroup with ", Length(Generators(s)), " generators");
+  if HasSize(s) then 
+    Print(", ", Size(s), " elements");
+  fi;
+  Print(">");
+  return;
+end);
+
 #SSS
 
 # new for 0.5! - Semigroup
@@ -553,6 +569,25 @@ function(gens, opts)
 
   SetGeneratorsOfMagma( s, AsList( gens ) );
   return s;
+end);
+
+# new for 0.7! - ViewObj - "for an inverse semigroup"
+################################################################################
+
+InstallMethod(ViewObj, "for an inverse semigroup",
+[IsInverseSemigroup], 
+function(s)
+  Print("<inverse semigroup with ", Length(Generators(s)));
+  if Length(Generators(s))=1 then  
+    Print(" generator");
+  else
+    Print(" generators");
+  fi;
+  if HasSize(s) then 
+    Print(", ", Size(s), " elements");
+  fi;
+  Print(">");
+  return;
 end);
 
 #EOF

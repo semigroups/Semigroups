@@ -51,6 +51,7 @@ DeclareAttribute("DegreeOfPartialPerm", IsPartialPerm);
 DeclareGlobalFunction("DomainAndRangeOfPartialPerm");
 DeclareAttribute("DomainOfPartialPerm", IsPartialPerm);
 DeclareSynonymAttr("Dom", DomainOfPartialPerm);
+DeclareGlobalFunction("OnIntegerSetsWithPartialPerm");
 DeclareAttribute("RangeOfPartialPerm", IsPartialPerm);
 DeclareSynonymAttr("Ran", RangeOfPartialPerm);
 DeclareAttribute("RankOfPartialPerm", IsPartialPerm);

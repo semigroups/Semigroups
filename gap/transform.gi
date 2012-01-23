@@ -62,6 +62,7 @@ fi;
 
 # new for 0.7! - \^ - "for a pos int and partial perm"
 #############################################################################
+# JDM C
 
 InstallMethod(\^, "for a pos int and partial perm",
 [IsPosInt, IsPartialPerm],
@@ -72,7 +73,7 @@ function(i, f)
   if i<=Length(ff) and not ff[i]=0 then 
     return ff[i];
   fi;
-  return fail;
+  return 0;
 end);
 
 # new for 0.1! - \* - "for a transformation and a permutation (citrus pkg)"
@@ -213,6 +214,41 @@ function(f, list)
   fi;
 
   return MappingPermListList(list, a);
+end);
+
+# new for 0.7! - AsTransformationNC - "for a partial perm"
+###########################################################################
+# Notes: n is the total degree!
+
+InstallOtherMethod(AsTransformationNC, "for a partial perm and deg",
+[IsPartialPerm and IsPartialPermRep, IsPosInt],
+function(f, n)
+  local ff, gg, i;
+  
+  ff:=f![1]; gg:=ListWithIdenticalEntries(n,n);
+  for i in [1..Length(ff)] do
+    if ff[i]=0 then
+      gg[i]:=n;
+    else
+      gg[i]:=ff[i];
+    fi;
+  od;
+
+  return TransformationNC(gg);
+end); 
+
+# new for 0.7! - AsTransformation - "for a partial perm"
+###########################################################################
+
+InstallOtherMethod(AsTransformation, "for a partial perm and deg", 
+[IsPartialPerm and IsPartialPermRep, IsPosInt],
+function(f, n)
+
+  if not LargestMovedPoint(f)<n and LargestMovedPoint(f^-1)<n then 
+    Error("the 2nd argument must be less than the largest moved point,");
+    return;
+  fi;
+  return AsTransformationNC(f, n);  
 end);
 
 #CCC
@@ -510,6 +546,15 @@ else
   end);
 fi;
 
+# new for 0.7! - LargestMovedPoint - "for a partial perm semigroup"
+###########################################################################
+
+InstallOtherMethod(LargestMovedPoint, "for a partial perm semigroup", 
+[IsPartialPermSemigroup], 
+function(s)
+  return MaximumList(List(GeneratorsOfSemigroup(s), LargestMovedPoint));
+end);
+
 #OOO
 
 # mod for 0.5! - One - "for a full transformation semigroup"
@@ -528,6 +573,18 @@ InstallOtherMethod(One, "for a full transformation semigroup",
 
 InstallMethod(One, "for a transformation",
 [IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
+
+# new for 0.7! - OnSets - "for set of pos. ints and inverse semi"
+#############################################################################
+# JDM C
+InstallGlobalFunction(OnIntegerSetsWithPartialPerm,
+function(set, f)
+  local out;
+
+  out:=Set(f![1]{set});
+  RemoveSet(out, 0);
+  return out;
+end);
 
 #PPP
 

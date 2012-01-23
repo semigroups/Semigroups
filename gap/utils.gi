@@ -212,6 +212,15 @@ function(s)
   return GeneratorsOfSemigroup(s);
 end);
 
+# new for 0.7! - Generators - "for an inverse semigroup"
+############################################################################
+
+InstallOtherMethod(Generators, "for an inverse semigroup",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s)
+  return GeneratorsOfInverseSemigroup(s);
+end);
+
 # new for 0.1! - HClass - "for a trans. semi. and trans."
 #############################################################################
 # Usage: trans. semigp. and trans.

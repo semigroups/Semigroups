@@ -169,6 +169,10 @@ Obj FuncLargestMovedPointPartPerm_C ( Obj self, Obj f )
     return INTOBJ_INT(i);
 }
 
+/*Obj FuncOnIntegerSetsWithPartPerm_C (Obj self, Obj f, Obj set)
+{*/
+    
+
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
 /******************************************************************************

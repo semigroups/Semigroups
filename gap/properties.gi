@@ -688,6 +688,27 @@ function(g)
   return MappingByFunction(g, Semigroup(List(GeneratorsOfGroup(g), iso)), iso);
 end);
 
+# new for 0.7! - IsomorphismTransformationSemigroup - "for partial perm semi"
+##############################################################################
+
+InstallOtherMethod(IsomorphismTransformationSemigroup, "for partial perm semi",
+[IsPartialPermSemigroup],
+function(s)
+  local n, gens1, m, gens2, i;
+  
+  n:=LargestMovedPoint(s)+1;
+  gens1:=GeneratorsOfSemigroup(s); 
+  m:=Length(gens1);
+  gens2:=EmptyPlist(m);
+
+  for i in [1..m] do 
+    gens2[i]:=AsTransformation(gens1[i], n);
+  od;
+
+  #UseIsomorphismRelation?
+  return MappingByFunction(s, Semigroup(gens2), x-> AsTransformationNC(x, n));
+end);
+
 # new for 0.5! - IsomorphismTransformationMonoid - "for a perm group"
 #############################################################################
 
