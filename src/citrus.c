@@ -128,8 +128,8 @@ Obj FuncInvPartPerm_C ( Obj self, Obj f, Int r)
     n=LEN_LIST(ff);
     if(n==0) return NEW_PLIST(T_PLIST_EMPTY,INT_INTOBJ(0)); 
 
-    img=NEW_PLIST(T_PLIST_CYC,r);
-    SET_LEN_PLIST(img,r);
+    img=NEW_PLIST(T_PLIST_CYC,INT_INTOBJ(r));
+    SET_LEN_PLIST(img,INT_INTOBJ(r));
 
     for (i = 1;i <= r;i++){
       SET_ELM_PLIST(img, i, INTOBJ_INT(0));

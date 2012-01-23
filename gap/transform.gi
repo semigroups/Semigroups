@@ -39,9 +39,11 @@ if IsBound(InvPartPerm_C) then
   InstallMethod(\^, "for a partial perm and neg int",
   [IsPartialPerm and IsPartialPermRep, IsNegInt],
   function(f, r)
-    return PartialPermNC(InvPartPerm_C(f, LargestMovedPoint(f)^f))^-r;
+    return PartialPermNC(InvPartPerm_C(f, Maximum(Ran(f))))^-r;
+    # JDM better way?
   end);
 else
+  #JDM modify the method below...
   InstallMethod(\^, "for a partial perm and neg int", 
   [IsPartialPerm and IsPartialPermRep, IsNegInt],
   function(f, r)
