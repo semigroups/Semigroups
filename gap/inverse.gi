@@ -14,18 +14,14 @@
 #############################################################################
 
 InstallGlobalFunction(CreateSCCMultipliers, 
-function(gens, o, j, scc)
+function(gens, o, j, scc, perms)
   local p, i;
   
-  p:=EmptyPlist(Length(o));
   for i in scc do 
-    p[i]:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i))^-1;
-    if p[i]=0 then 
-      Error("");
-    fi;
-#could use TraceSchreierTreeOfSCCBack here too..
+    perms[i]:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i))^-1;
+    #could use TraceSchreierTreeOfSCCBack here too..
   od;
-  return p;
+  return perms;
 end);
 
 # new for 0.7! - CreateSchutzGp - not a user function
@@ -90,8 +86,7 @@ function(s)
   m:=Length(gens);
 
   for i in [1..r] do 
-    if i=3 then Error(""); fi;
-    perms:=perms+CreateSCCMultipliers(gens, o, i, scc[i]);
+    CreateSCCMultipliers(gens, o, i, scc[i], perms);
     schutz[i]:=CreateSchutzGp(gens, o, EvaluateWord(gens,   
      TraceSchreierTreeForward(o, scc[i][1])), scc[i], truth[i], graph, r, perms);
   od;
