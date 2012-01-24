@@ -162,6 +162,16 @@ InstallMethod(\=, "for a partial perm and partial perm",
     return Dom(f)=Dom(g) and Ran(f)=Ran(g);
 end);
 
+# new for 0.7! - \/ - "for a partial perm and partial perm"
+#############################################################################
+# JDM C
+
+InstallOtherMethod(\/, "for a partial perm and partial perm",
+[IsPartialPerm and IsPartialPermRep, IsPartialPerm and IsPartialPermRep],
+function(f,g)
+  return f*g^-1;
+end);
+
 #AAA
 
 # new for 0.1! - AsPermOfKerImg - "for a transformation"
@@ -234,7 +244,7 @@ end);
 ###########################################################################
 
 InstallOtherMethod(AsPermutationNC, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep], f-> f![1]{Ran(f)});
+[IsPartialPerm and IsPartialPermRep], f-> PermListList(Dom(f), f![1]{Dom(f)}));
 
 # new for 0.7! - AsTransformationNC - "for a partial perm"
 ###########################################################################
@@ -600,7 +610,30 @@ InstallOtherMethod(One, "for a full transformation semigroup",
 InstallMethod(One, "for a transformation",
 [IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
 
-# new for 0.7! - OnSets - "for set of pos. ints and inverse semi"
+# new for 0.7! - One - "for a partial perm"
+#############################################################################
+
+InstallMethod(One, "for a partial perm",      
+  [IsPartialPerm and IsPartialPermRep],                   
+  function(f)
+    local n;
+    n:=Maximum(LargestMovedPoint(f), LargestMovedPoint(f^-1));
+    return PartialPermNC([1..n]);
+end); 
+
+# new for 0.7! - One - "for a partial perm""
+#############################################################################
+
+InstallMethod(OneMutable, "for a partial perm",      
+  [IsPartialPerm and IsPartialPermRep],                   
+  function(f)
+    local n;
+    n:=Maximum(LargestMovedPoint(f), LargestMovedPoint(f^-1));
+    return PartialPermNC([1..n]);
+end); 
+
+# new for 0.7! - OnIntegerSetsWithPartialPerm - "for set of pos. ints and 
+# inverse semi"
 #############################################################################
 # JDM C
 InstallGlobalFunction(OnIntegerSetsWithPartialPerm,

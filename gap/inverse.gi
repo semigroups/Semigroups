@@ -10,6 +10,23 @@
 
 ## functions and methods for inverse semigroups of partial permutations
 
+# new for 0.7! - CreateSCCMultipliers - not a user function 
+#############################################################################
+
+InstallGlobalFunction(CreateSCCMultipliers, 
+function(gens, o, j, scc)
+  local p, i;
+  
+  p:=EmptyPlist(Length(o));
+  for i in scc do 
+    p[i]:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i))^-1;
+    if p[i]=0 then 
+      Error("");
+    fi;
+#could use TraceSchreierTreeOfSCCBack here too..
+  od;
+  return p;
+end);
 
 # new for 0.7! - CreateSchutzGp - not a user function
 #############################################################################
@@ -18,8 +35,8 @@
 # r = Length(gens);
 
 InstallGlobalFunction(CreateSchutzGp, 
-function(o, k, scc, truth, graph, gens, r)
-  local bound, g, t, graph, is_sym, gens, i, j;
+function(gens, o, f, scc, truth, graph, r, p)
+  local bound, g, is_sym, i, j;
  
   if Length(o[scc[1]])<1000 then
     bound:=Factorial(Length(o[scc[1]]));
@@ -31,8 +48,8 @@ function(o, k, scc, truth, graph, gens, r)
 
   for i in scc do
     for j in [1..r] do
-      if IsBound(graph[i][j]) and truth[k][graph[i][j]] then
-        g:=ClosureGroup(g, AsPermutationNC(f/p[i] * (gens[j]*p[graph[i][j]])));
+      if IsBound(graph[i][j]) and truth[graph[i][j]] then
+        g:=ClosureGroup(g, AsPermutationNC(f^-1*f/p[i] * (gens[j]*p[graph[i][j]])));
       fi;
 
       if Size(g)>=bound then
@@ -59,8 +76,28 @@ end);
 InstallMethod(Size, "for an inverse semigp of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
+  local gens, n, o, scc, r, perms, schutz, graph, truth, m, i;
 
-  imgs:=Orb(s, [1..n], OnIntegerSetsWithPartialPerm);
+  gens:=GeneratorsOfSemigroup(s);
+  n:=LargestMovedPoint(s);
+  o:=Orb(gens, [1..n], OnIntegerSetsWithPartialPerm, 
+    rec(schreier:=true, orbitgraph:=true, storenumbers:=true, log:=true));
+  scc:=OrbSCC(o);
+  r:=Length(scc);
+  perms:=EmptyPlist(Length(o)); schutz:=EmptyPlist(r);
+  graph:=OrbitGraph(o);
+  truth:=OrbSCCTruthTable(o);
+  m:=Length(gens);
+
+  for i in [1..r] do 
+    if i=3 then Error(""); fi;
+    perms:=perms+CreateSCCMultipliers(gens, o, i, scc[i]);
+    schutz[i]:=CreateSchutzGp(gens, o, EvaluateWord(gens,   
+     TraceSchreierTreeForward(o, scc[i][1])), scc[i], truth[i], graph, r, perms);
+  od;
+  return Sum(List([1..r], m-> Length(scc[m])^2*Size(schutz[m][2])));
+end); 
+  
 
 
 

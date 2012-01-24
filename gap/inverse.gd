@@ -10,6 +10,7 @@
 
 ## functions and methods for inverse semigroups of partial permutations
 
+DeclareGlobalFunction("CreateSCCMultipliers");
 DeclareGlobalFunction("CreateSchutzGp");
 
 

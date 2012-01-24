@@ -24,6 +24,7 @@ ReadPkg("citrus/gap/greens.gd");
 ReadPkg("citrus/gap/properties.gd");
 ReadPkg("citrus/gap/transform.gd");
 ReadPkg("citrus/gap/semigroups.gd");
+ReadPkg("citrus/gap/inverse.gd");
 ReadPkg("citrus/gap/options.g");
 
 DeclareInfoClass("InfoCitrus");;
