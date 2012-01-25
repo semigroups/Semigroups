@@ -88,15 +88,15 @@ function(s)
     rec(schreier:=true, orbitgraph:=true, storenumbers:=true, log:=true));
   scc:=OrbSCC(o);
   r:=Length(scc);
-  perms:=EmptyPlist(Length(o)); schutz:=EmptyPlist(r);
+  mults:=EmptyPlist(Length(o)); schutz:=EmptyPlist(r);
   graph:=OrbitGraph(o);
   truth:=OrbSCCTruthTable(o);
   m:=Length(gens);
 
   for i in [1..r] do 
-    CreateSCCMultipliers(gens, o, i, scc[i], perms);
+    CreateSCCMultipliers(gens, o, i, scc[i], mults);
     schutz[i]:=CreateSchutzGp(gens, o, EvaluateWord(gens,   
-     TraceSchreierTreeForward(o, scc[i][1])), scc[i], truth[i], graph, r, perms);
+     TraceSchreierTreeForward(o, scc[i][1])), scc[i], truth[i], graph, r, mults);
   od;
   if IsPartialPermMonoid(s) then 
     return Sum(List([1..r], m-> Length(scc[m])^2*Size(schutz[m][2])));

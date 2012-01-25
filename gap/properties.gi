@@ -794,7 +794,8 @@ end);
 InstallMethod(IsPartialPermMonoid, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(s)
-  n:=LargestPointMoved(s);
+  local n;
+  n:=LargestMovedPoint(s);
   return PartialPermNC([1..n]) in GeneratorsOfInverseSemigroup(s);
 end);
 
