@@ -13,5 +13,3 @@ DeclareGlobalFunction("ClosureSemigroupNC");
 DeclareAttribute("GeneratorsOfInverseSemigroup", IsInverseSemigroup);
 DeclareGlobalFunction("InverseSemigroup");
 DeclareOperation("InverseSemigroupByGenerators", [IsPartialPermCollection]);
-DeclareSynonymAttr("IsPartialPermSemigroup", IsSemigroup and
-IsPartialPermCollection);

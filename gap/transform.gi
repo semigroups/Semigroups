@@ -582,15 +582,6 @@ else
   end);
 fi;
 
-# new for 0.7! - LargestMovedPoint - "for a partial perm semigroup"
-###########################################################################
-
-InstallOtherMethod(LargestMovedPoint, "for a partial perm semigroup", 
-[IsPartialPermSemigroup], 
-function(s)
-  return MaximumList(List(GeneratorsOfSemigroup(s), LargestMovedPoint));
-end);
-
 #OOO
 
 # mod for 0.5! - One - "for a full transformation semigroup"

@@ -786,6 +786,18 @@ function(s)
   return true;
 end);
 
+#IIIPPP
+
+# new for 0.7! - IsPartialPermMonoid - "for a partial perm semigroup"
+###########################################################################
+
+InstallMethod(IsPartialPermMonoid, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+function(s)
+  n:=LargestPointMoved(s);
+  return PartialPermNC([1..n]) in GeneratorsOfInverseSemigroup(s);
+end);
+
 #IIIRRR
 
 # new for 0.1! - IsRectangularBand - "for a transformation semigroup"
@@ -1108,6 +1120,18 @@ function(s)
 
   Info(InfoCitrus, 2, "more than two D-classes.");  
   return false;
+end);
+
+#LLL
+
+#new for 0.7! - LargestMovedPoint - "for a partial perm semigroup"
+###########################################################################
+# JDM C
+
+InstallOtherMethod(LargestMovedPoint, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+function(s)
+  return MaximumList(List(GeneratorsOfSemigroup(s), LargestMovedPoint));
 end);
 
 #MMM

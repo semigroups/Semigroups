@@ -14,14 +14,14 @@
 #############################################################################
 
 InstallGlobalFunction(CreateSCCMultipliers, 
-function(gens, o, j, scc, perms)
-  local p, i;
+function(gens, o, j, scc, mults)
+  local i;
   
   for i in scc do 
-    perms[i]:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i))^-1;
+    mults[i]:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i))^-1;
     #could use TraceSchreierTreeOfSCCBack here too..
   od;
-  return perms;
+  return mults;
 end);
 
 # new for 0.7! - CreateSchutzGp - not a user function
@@ -45,7 +45,8 @@ function(gens, o, f, scc, truth, graph, r, p)
   for i in scc do
     for j in [1..r] do
       if IsBound(graph[i][j]) and truth[graph[i][j]] then
-        g:=ClosureGroup(g, AsPermutationNC(f^-1*f/p[i] * (gens[j]*p[graph[i][j]])));
+        g:=ClosureGroup(g, AsPermutationNC(f^-1*f/p[i] * 
+         (gens[j]*p[graph[i][j]])));
       fi;
 
       if Size(g)>=bound then
@@ -69,10 +70,17 @@ function(gens, o, f, scc, truth, graph, r, p)
   return [StabChainImmutable(g), g];
 end);
 
+# new for 0.7! - InverseSemigroupData - "for an inverse semi of part. perms"
+##############################################################################
+
+
+# new for 0.7! - Size - for an inverse semigroup of partial perms
+##############################################################################
+
 InstallMethod(Size, "for an inverse semigp of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local gens, n, o, scc, r, perms, schutz, graph, truth, m, i;
+  local gens, n, o, scc, r, mults, schutz, graph, truth, m, i;
 
   gens:=GeneratorsOfSemigroup(s);
   n:=LargestMovedPoint(s);
@@ -90,7 +98,10 @@ function(s)
     schutz[i]:=CreateSchutzGp(gens, o, EvaluateWord(gens,   
      TraceSchreierTreeForward(o, scc[i][1])), scc[i], truth[i], graph, r, perms);
   od;
-  return Sum(List([1..r], m-> Length(scc[m])^2*Size(schutz[m][2])));
+  if IsPartialPermMonoid(s) then 
+    return Sum(List([1..r], m-> Length(scc[m])^2*Size(schutz[m][2])));
+  fi;
+  return Sum(List([1..r], m-> Length(scc[m])^2*Size(schutz[m][2])))-1;
 end); 
   
 

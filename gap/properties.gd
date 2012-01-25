@@ -37,6 +37,10 @@ DeclareProperty("IsMonoidAsSemigroup", IsTransformationSemigroup);
 DeclareOperation("IsomorphismTransformationMonoid",
  [IsTransformationSemigroup]);
 DeclareProperty("IsOrthodoxSemigroup", IsTransformationSemigroup);
+# contains [1..n] where n is the largest moved point.
+DeclareProperty("IsPartialPermMonoid", IsPartialPermSemigroup);
+DeclareSynonymAttr("IsPartialPermSemigroup", IsSemigroup and
+IsPartialPermCollection);
 DeclareProperty("IsRectangularBand", IsTransformationSemigroup);
 DeclareProperty("IsRightSimple", IsTransformationSemigroup);
 DeclareProperty("IsRightZeroSemigroup", IsTransformationSemigroup);
