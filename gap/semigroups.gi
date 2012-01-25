@@ -282,13 +282,7 @@ end);
 InstallOtherMethod(MonoidByGenerators, "(Citrus) for a trans. collection",
 [IsTransformationCollection],
 function(gens)
-  local S;
-   
-  S:=Objectify( NewType( FamilyObj( gens ), 
-   IsMonoid and IsAttributeStoringRep ), rec(opts:=CitrusOptionsRec));
-
-  SetGeneratorsOfMagmaWithOne( S, AsList( gens ) );
-  return S;
+  return MonoidByGenerators(gens, CitrusOptionsRec);
 end);
 
 # mod for 0.6! - MonoidByGenerators -  "for a trans. coll. and record"
@@ -488,13 +482,7 @@ end);
 InstallOtherMethod(SemigroupByGenerators, "(Citrus) for a trans. collection",
 [IsTransformationCollection],
 function(gens)
-  local S;
-   
-  S:=Objectify( NewType( FamilyObj( gens ), 
-   IsSemigroup and IsAttributeStoringRep ), rec(opts:=CitrusOptionsRec));
-
-  SetGeneratorsOfMagma( S, AsList( gens ) );
-  return S;
+   return SemigroupByGenerators(gens, CitrusOptionsRec);
 end);
 
 # mod for 0.6! - SemigroupByGenerators -  "for a trans. coll. and record"
