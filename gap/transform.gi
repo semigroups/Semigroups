@@ -39,7 +39,11 @@ if IsBound(InvPartPerm_C) then
   InstallMethod(\^, "for a partial perm and neg int",
   [IsPartialPerm and IsPartialPermRep, IsNegInt],
   function(f, r)
-    return PartialPermNC(InvPartPerm_C(f, Maximum(Ran(f))))^-r;
+    if not Ran(f)=[] then 
+      return PartialPermNC(InvPartPerm_C(f, Maximum(Ran(f))))^-r;
+    else
+      return f;
+    fi;
     # JDM better way?
   end);
 else
@@ -627,12 +631,18 @@ end);
 # inverse semi"
 #############################################################################
 # JDM C
+
 InstallGlobalFunction(OnIntegerSetsWithPartialPerm,
 function(set, f)
-  local out;
+  local ff, n, out, i;
+  ff:=f![1]; n:=Length(ff);
+  out:=EmptyPlist(n);
 
-  out:=Set(f![1]{set});
-  RemoveSet(out, 0);
+  for i in set do 
+    if not (i>n or ff[i]=0) then 
+      AddSet(out, ff[i]);
+    fi;
+  od;
   return out;
 end);
 

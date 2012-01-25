@@ -27,6 +27,7 @@ DeclareGlobalFunction("HClass");
 DeclareGlobalFunction("HClassNC");
 DeclareGlobalFunction("LClass");
 DeclareGlobalFunction("LClassNC");
+DeclareGlobalFunction("RandomPartialPermInverseSemigp");
 DeclareGlobalFunction("RandomTransformationSemigroup");
 DeclareGlobalFunction("RandomTransformationMonoid");
 DeclareGlobalFunction("RClass");

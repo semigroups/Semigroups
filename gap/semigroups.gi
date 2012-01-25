@@ -559,6 +559,25 @@ function(gens, opts)
   return s;
 end);
 
+# new for 0.7! - SymmetricInverseSemigp - "for a pos int"
+################################################################################
+
+InstallGlobalFunction(SymmetricInverseSemigp, 
+function(n)
+
+  if not (n=0 or IsPosInt(n)) then 
+    Error("the argument should be a non-negative integer,");
+    return;
+  fi;
+
+  if n=0 then 
+    return InverseSemigroup(PartialPermNC([]));
+  fi;
+
+  return InverseSemigroup(List(GeneratorsOfGroup(SymmetricGroup(n)), x-> 
+   PartialPermNC(ListPerm(x, n))), PartialPermNC([0..n-1]));
+end);  
+
 # new for 0.7! - ViewObj - "for an inverse semigroup"
 ################################################################################
 

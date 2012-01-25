@@ -12,6 +12,7 @@
 
 DeclareGlobalFunction("CreateSCCMultipliers");
 DeclareGlobalFunction("CreateSchutzGp");
-DeclareAttribute("InverseSemigroupData", IsPartialPermSemigroup and IsInverseSemigroup, "mutable");
+DeclareGlobalFunction("EnumerateInvSemigpData");
+DeclareAttribute("InvSemigpData", IsPartialPermSemigroup and IsInverseSemigroup, "mutable");
 
 

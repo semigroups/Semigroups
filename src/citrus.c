@@ -169,8 +169,22 @@ Obj FuncLargestMovedPointPartPerm_C ( Obj self, Obj f )
     return INTOBJ_INT(i);
 }
 
-/*Obj FuncOnIntegerSetsWithPartPerm_C (Obj self, Obj f, Obj set)
-{*/
+/* on sets for a partial permutation 
+
+Obj FuncOnIntegerSetsWithPartPerm_C (Obj self, Obj f, Obj set)
+{
+
+  if (IS_POSOBJ(f)){
+    ff = ELM_PLIST(f,1);
+  }
+  else{
+    ff = f;
+  }
+  
+  n = LEN_LIST(ff);
+  
+
+} */
     
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */

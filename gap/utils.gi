@@ -288,6 +288,14 @@ function(arg)
   return;
 end);
 
+# new for 0.7! - RandomPartialPermInverseSemigp
+#############################################################################
+
+InstallGlobalFunction(RandomPartialPermInverseSemigp,
+function(m,n)
+  return InverseSemigroup(Set(List([1..m], x-> RandomPartialPerm(n))));
+end);
+
 # new for 0.1! - RandomTransformationSemigroup 
 #############################################################################
 

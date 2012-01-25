@@ -70,9 +70,68 @@ function(gens, o, f, scc, truth, graph, r, p)
   return [StabChainImmutable(g), g];
 end);
 
-# new for 0.7! - InverseSemigroupData - "for an inverse semi of part. perms"
+# new for 0.7! - EnumerateInvSemigpData - "for an inverse semi of part perms"
 ##############################################################################
 
+InstallGlobalFunction(EnumerateInvSemigpData, 
+function(s)
+  local o, scc, r, mults, schutz, graph, truth, gens, modifier, i;
+  
+  o:=InvSemigpData(s)!.global_o;
+
+  if not IsClosed(o) then 
+    scc:=OrbSCC(o);
+    r:=Length(scc);
+    mults:=EmptyPlist(Length(o)); 
+    schutz:=EmptyPlist(r);
+    graph:=OrbitGraph(o);
+    truth:=OrbSCCTruthTable(o);
+    gens:=GeneratorsOfSemigroup(s);
+
+    for i in [1..r] do 
+      CreateSCCMultipliers(gens, o, i, scc[i], mults);
+      schutz[i]:=CreateSchutzGp(gens, o, EvaluateWord(gens,   
+       TraceSchreierTreeForward(o, scc[i][1])), scc[i], truth[i], graph, r, 
+       mults);
+    od;
+
+    if IsPartialPermMonoid(s) then 
+      modifier:=0;
+    else
+      modifier:=1;
+    fi;
+
+    SetSize(s, Sum(List([1..r], m-> Length(scc[m])^2*Size(schutz[m][2])))-
+     modifier);
+    SetNrDClasses(s, r-modifier);
+    SetNrRClasses(s, Length(o)-modifier);
+    SetNrLClasses(s, Length(o)-modifier);
+    SetNrHClasses(s, Sum(List([1..r], m-> Length(scc[m])^2-modifier)));
+    SetNrIdempotents(s, Length(o)-modifier);
+  fi;
+  
+  return;
+end); 
+
+# new for 0.7! - InvSemigpData - "for an inverse semi of part. perms"
+##############################################################################
+
+InstallMethod(InvSemigpData, "for an inverse semi of part perms",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s)
+  local n;
+
+  n:=LargestMovedPoint(s);
+  return rec(
+        global_o:=Orb(s, [1..n]*1, OnIntegerSetsWithPartialPerm, 
+        rec(schreier:=true, orbitgraph:=true, storenumbers:=true, 
+        log:=true, hashlen:=6257)),
+        
+        local_o:=EmptyPlist(n),
+        
+        images:=false, at:=0);
+        #JDM orb bug prevents us from using onflatplainlist above
+end);
 
 # new for 0.7! - Size - for an inverse semigroup of partial perms
 ##############################################################################
@@ -80,28 +139,8 @@ end);
 InstallMethod(Size, "for an inverse semigp of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local gens, n, o, scc, r, mults, schutz, graph, truth, m, i;
-
-  gens:=GeneratorsOfSemigroup(s);
-  n:=LargestMovedPoint(s);
-  o:=Orb(gens, [1..n], OnIntegerSetsWithPartialPerm, 
-    rec(schreier:=true, orbitgraph:=true, storenumbers:=true, log:=true));
-  scc:=OrbSCC(o);
-  r:=Length(scc);
-  mults:=EmptyPlist(Length(o)); schutz:=EmptyPlist(r);
-  graph:=OrbitGraph(o);
-  truth:=OrbSCCTruthTable(o);
-  m:=Length(gens);
-
-  for i in [1..r] do 
-    CreateSCCMultipliers(gens, o, i, scc[i], mults);
-    schutz[i]:=CreateSchutzGp(gens, o, EvaluateWord(gens,   
-     TraceSchreierTreeForward(o, scc[i][1])), scc[i], truth[i], graph, r, mults);
-  od;
-  if IsPartialPermMonoid(s) then 
-    return Sum(List([1..r], m-> Length(scc[m])^2*Size(schutz[m][2])));
-  fi;
-  return Sum(List([1..r], m-> Length(scc[m])^2*Size(schutz[m][2])))-1;
+  EnumerateInvSemigpData(s);
+  return Size(s);
 end); 
   
 
