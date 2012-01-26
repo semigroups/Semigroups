@@ -118,10 +118,6 @@ end);
 # new for 0.7! - \* - "for a partial perm and partial perm"
 #############################################################################
 
-tmp:=function(f)
-return ReadOffPartPerm_C(f, 1, f![1]+2*f![2]+6);
-end;
-
 if IsBound(ProdPartPerm_C) then 
   InstallMethod(\*, "for a partial perm and partial perm (C version)", 
     [IsPartialPerm and IsPartialPermRep, IsPartialPerm and IsPartialPermRep],
