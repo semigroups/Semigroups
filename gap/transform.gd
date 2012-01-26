@@ -48,12 +48,20 @@ BindGlobal("PartialPermType", NewType(PartialPermFamily,
 IsPartialPerm and IsPartialPermRep));
 DeclareGlobalFunction("PartialPermNC");
 
+#JDM minrange etc should probably be operations.
+
 DeclareAttribute("DegreeOfPartialPerm", IsPartialPerm);
 DeclareGlobalFunction("DenseCreatePartPerm");
 DeclareGlobalFunction("DomainAndRangeOfPartialPerm");
 DeclareAttribute("DomainOfPartialPerm", IsPartialPerm);
 DeclareSynonymAttr("Dom", DomainOfPartialPerm);
 DeclareAttribute("ImageSetOfPartialPerm", IsPartialPerm);
+DeclareAttribute("MaxDomain", IsPartialPerm);
+DeclareAttribute("MaxDomainRange", IsPartialPerm);
+DeclareAttribute("MaxRange", IsPartialPerm);
+DeclareAttribute("MinDomain", IsPartialPerm);
+DeclareAttribute("MinDomainRange", IsPartialPerm);
+DeclareAttribute("MinRange", IsPartialPerm);
 DeclareGlobalFunction("OnIntegerSetsWithPartialPerm");
 DeclareAttribute("RangeOfPartialPerm", IsPartialPerm);
 DeclareSynonymAttr("Ran", RangeOfPartialPerm);

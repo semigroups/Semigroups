@@ -83,35 +83,44 @@ Obj FuncDenseCreatePartPerm_C( Obj self, Obj img )
     return f;
 }
 
+/* read off partial permutation */
+
+Obj FuncReadOffPartPerm_C( Obj self, Obj f, Obj i, Obj j)
+{   
+    Int len, k;
+    Obj out;
+
+    len = INT_INTOBJ(j)-INT_INTOBJ(i)+1;
+    out = NEW_PLIST(T_PLIST_CYC, len);
+    SET_LEN_PLIST(out, len);
+    
+    for(k=0;k<=len-1;k++){
+      SET_ELM_PLIST(out,k+1, ELM_PLIST(f, INT_INTOBJ(i)+k));
+    }
+
+    return out;
+}
+
 /* product of partial permutations */
 
 Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
 {
-    Obj fg,ff,gg;
-    Int i,j,n,m;
+    Int n,m,i,j;
+    Obj fg;
 
-    if (IS_POSOBJ(f)){ 
-      ff = ELM_PLIST(f,1);
-      gg = ELM_PLIST(g,1);}
-    else{
-      ff = f;
-      gg = g;
-    }
-
-    n = LEN_LIST(ff); 
-    m = LEN_LIST(gg);
+    n = INT_INTOBJ(ELM_PLIST(f,1));
+    m = INT_INTOBJ(ELM_PLIST(g,1));
     fg = NEW_PLIST(T_PLIST_CYC,n);
     SET_LEN_PLIST(fg,n);
-    /* no garbage collection from here! */
-    for (i = 1;i <= n;i++) {
-        j = INT_INTOBJ(ELM_LIST(ff,i));
+
+    for (i =7;i <= 6+n;i++) {
+        j = INT_INTOBJ(ELM_LIST(f,i));
         if(j > m || j == 0){
           SET_ELM_PLIST(fg,i,INTOBJ_INT(0));
         } else {
-          SET_ELM_PLIST(fg,i,ELM_LIST(gg,j));
+          SET_ELM_PLIST(fg,i,ELM_LIST(g,j));
       }
     }
-    /* finished */
     return fg;
 }
 
@@ -152,6 +161,7 @@ Obj FuncInvPartPerm_C ( Obj self, Obj f, Int r)
 /* on sets for a partial permutation 
 
 Obj FuncOnIntegerSetsWithPartPerm_C (Obj self, Obj f, Obj set)
+and carrot! ^
 {
 
   if (IS_POSOBJ(f)){
@@ -174,13 +184,17 @@ Obj FuncOnIntegerSetsWithPartPerm_C (Obj self, Obj f, Obj set)
 */
 static StructGVarFunc GVarFuncs [] = {
 
-  { "ProdPartPerm_C", 2, "f, g",
-    FuncProdPartPerm_C,
-    "pkg/citrus/src/citrus.c:FuncProdPartPerm_C" },
-
   { "DenseCreatePartPerm_C", 1, "img",
     FuncDenseCreatePartPerm_C,
     "pkg/citrus/src/citrus.c:FuncDenseCreatePartPerm_C" },
+  
+  { "ReadOffPartPerm_C", 3, "f,i,j",
+    FuncReadOffPartPerm_C,
+    "pkg/citrus/src/citrus.c:FuncReadOffPartPerm_C" },
+  
+  { "ProdPartPerm_C", 2, "f, g",
+    FuncProdPartPerm_C,
+    "pkg/citrus/src/citrus.c:FuncProdPartPerm_C" },
 
   { "InvPartPerm_C", 2, "f,r",
     FuncInvPartPerm_C,

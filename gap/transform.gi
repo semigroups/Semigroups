@@ -12,8 +12,6 @@
 # set, f![3] is the kernel, f![4] is AsPermOfKerImg, f![5] is the rank of f
 # f![6] is the canonical trans. with same kernel
 
-# a partial perm is [image list with 0 for undefined, rank (# non-zero), 
-# degree, domain, range, max moved pt, min moved pt]
 
 # - a method for RandomTransformation(m,n) i.e. a random transformation with
 # a given rank. 
@@ -307,20 +305,14 @@ end);
 ############################################################################
 
 InstallMethod(DegreeOfPartialPerm, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep],
-function(f)
-  if not IsBound(f![3]) then 
-    f![3]:=Length(f![1]);
-  fi;
-  return f![3];
-end);
+[IsPartialPerm and IsPartialPermRep], f -> f![1]);
 
 # new for 0.7! - DenseCreatePartPerm - "for an img list"
 ############################################################################
 
-#if IsBound(DenseCreatePartPerm_C) then 
-#  InstallGlobalFunction(DenseCreatePartPerm, DenseCreatePartPerm_C);
-#else
+if IsBound(DenseCreatePartPerm_C) then 
+  InstallGlobalFunction(DenseCreatePartPerm, DenseCreatePartPerm_C);
+else
   InstallGlobalFunction(DenseCreatePartPerm,
   function(img)
     local deg, f, ran, max_ran, min_ran, rank, j, i;
@@ -371,23 +363,15 @@ end);
     ShrinkAllocationPlist(f);
     return f;
   end);
-#fi;
+fi;
+
 # new for 0.7! - DomainOfPartialPerm - "for a partial perm"
 ############################################################################
+# Notes: f![1] = deg ; f![2] = rank
 
 InstallMethod(DomainOfPartialPerm, "for a partial perm",
 [IsPartialPerm and IsPartialPermRep],
-function(f)
-local domran;
-
-  if IsBound(f![4]) then
-    return f![4];
-  fi;
-  domran:=DomainAndRangeOfPartialPerm(f);
-  f![4]:=domran[1];
-  f![5]:=domran[2];
-  return domran[1];
-end);
+f-> ReadOffPartPerm_C(f, 7+f![1], 6+f![1]+f![2]));
 
 # new for 0.1! - DegreeOfTransformationCollection - "for a trans. coll."
 ############################################################################
@@ -402,39 +386,6 @@ function(coll)
   fi;
   return DataType(TypeObj(coll[1]));
 end);
-
-# new for 0.7! - DomainAndRangeOfPartialPerm - "for a partial perm."
-############################################################################
-
-if IsBound(DomRanPartPerm_C) then 
-  InstallGlobalFunction(DomainAndRangeOfPartialPerm, 
-    f-> DomRanPartPerm_C(f, Rank(f)));
-else
-  InstallGlobalFunction(DomainAndRangeOfPartialPerm, 
-  function(f)
-    local ff, n, dom, ran, m, i;
-
-    if IsPartialPerm(f) then 
-      ff:=f![1];
-    else
-      ff:=f;
-    fi;
-
-    n:=Length(ff);
-    dom:=EmptyPlist(n);
-    ran:=EmptyPlist(n);
-    m:=0;
-
-    for i in [1..n] do 
-      if not ff[i]=0 then 
-        m:=m+1;
-        dom[m]:=i;
-        ran[m]:=ff[i];
-      fi;
-    od;
-    return [dom, ran];
-  end);
-fi;
 
 #III
 
@@ -608,40 +559,43 @@ function(s, coll)
   return ForAll(coll, x-> x in s);
 end);
 
-#LLL
+#MMM
 
-# new for 0.7! - LargestMovedPoint - "for a partial perm"
+# new for 0.7! - MaxDomain - "for a partial perm"
 ###########################################################################
 
-if IsBound(LargestMovedPointPartPerm_C) then 
-  InstallOtherMethod(LargestMovedPoint, "for a partial perm",
-  [IsPartialPerm and IsPartialPermRep], 
-  function(f) 
-    if not IsBound(f![6]) then 
-      f![6]:=LargestMovedPointPartPerm_C(f);
-    fi;
-    return f![6];
-  end);
-else
-  InstallOtherMethod(LargestMovedPoint, "for a partial perm",
-  [IsPartialPerm and IsPartialPermRep], 
-  function(f)
-    local ff, n, i;
+InstallMethod(MaxDomain, "for a partial perm",
+[IsPartialPerm and IsPartialPermRep], f-> f![f![1]+f![2]+6]);
 
-    if not IsBound(f![6]) then 
-      ff:=f![1];
-      n:=DegreeOfPartialPerm(f);
-      for i in [n, n-1..1] do 
-        if not ff[i]=0 then 
-          break;
-        fi;
-      od;
-      f![6]:=i;
-    fi;
+# new for 0.7! - MaxDomainRange - "for a partial perm"
+###########################################################################
 
-    return f![6];
-  end);
-fi;
+InstallMethod(MaxDomainRange, "for a partial perm",
+[IsPartialPerm and IsPartialPermRep], f-> f![6]);
+
+# new for 0.7! - MaxRange - "for a partial perm"
+###########################################################################
+
+InstallMethod(MaxRange, "for a partial perm",
+[IsPartialPerm and IsPartialPermRep], f-> f![4]);
+
+# new for 0.7! - MinDomain - "for a partial perm"
+###########################################################################
+
+InstallMethod(MinDomain, "for a partial perm",
+[IsPartialPerm and IsPartialPermRep], f-> f![7+f![1]]);
+
+# new for 0.7! - MinDomainRange - "for a partial perm"
+###########################################################################
+
+InstallMethod(MinDomainRange, "for a partial perm",
+[IsPartialPerm and IsPartialPermRep], f-> f![5]);
+
+# new for 0.7! - MinRange - "for a partial perm"
+###########################################################################
+
+InstallMethod(MinRange, "for a partial perm",
+[IsPartialPerm and IsPartialPermRep], f-> f![3]);
 
 #OOO
 
@@ -705,12 +659,12 @@ end);
 
 #PPP
 
-# new for 0.7! - PartialPermNC - "for an image list"
+# new for 0.7! - PartialPermNC - "for a dense image list"
 #############################################################################
 # Notes: 0 is for undefined...
 
 InstallGlobalFunction(PartialPermNC,
-  x-> Objectify(PartialPermType, [Immutable(x)]));
+  x-> Objectify(PartialPermType, DenseCreatePartPerm(x)));
 
 # new for 0.1! - PrintObj - "for a transformation semigroup"
 ###########################################################################
@@ -864,51 +818,13 @@ end);
 
 InstallMethod(RangeOfPartialPerm, "for a partial perm",
 [IsPartialPerm and IsPartialPermRep],
-function(f)
-local domran;
-
-  if IsBound(f![5]) then
-    return f![5];
-  fi;
-  domran:=DomainAndRangeOfPartialPerm(f);
-  f![4]:=domran[1];
-  f![5]:=domran[2];
-  return domran[2];
-end);
+f-> ReadOffPartPerm_C(f, 7+f![1]+f![2], 6+f![1]+2*f![2])); 
 
 # new for 0.7! - RankOfPartialPerm - "for a partial perm"
 ############################################################################
 
-if IsBound(RankPartPerm_C) then 
-  InstallMethod(RankOfPartialPerm, "for a partial perm",
-  [IsPartialPerm and IsPartialPermRep], 
-  function(f)
-    if not IsBound(f![2]) then 
-      f![2]:=RankPartPerm_C(f);
-    fi;
-    return f![2];
-  end);
-else
-  InstallMethod(RankOfPartialPerm, "for a partial perm",
-  [IsPartialPerm and IsPartialPermRep],
-  function(f)
-    local rank, ff, n, i;
-  
-    if not IsBound(f![2]) then
-      rank:=0;
-      ff:=f![1];
-      n:=Length(ff);
-      for i in [1..n] do 
-        if not ff[i]=0 then
-          rank:=rank+1;
-        fi;
-      od;
-      f![2]:=rank;
-    fi;
-
-  return f![2];
-  end);
-fi;
+InstallMethod(RankOfPartialPerm, "for a partial perm",
+[IsPartialPerm and IsPartialPermRep], f-> f![2]);
 
 # new for 0.1! - RankOfTransformation - "for a transformation (citrus pkg)"
 #############################################################################
