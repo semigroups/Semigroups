@@ -118,32 +118,18 @@ end);
 # new for 0.7! - \* - "for a partial perm and partial perm"
 #############################################################################
 
+tmp:=function(f)
+return ReadOffPartPerm_C(f, 1, f![1]+2*f![2]+6);
+end;
+
 if IsBound(ProdPartPerm_C) then 
   InstallMethod(\*, "for a partial perm and partial perm (C version)", 
     [IsPartialPerm and IsPartialPermRep, IsPartialPerm and IsPartialPermRep],
     function(f,g)
-      return PartialPermNC(ProdPartPerm_C(f,g));
+      return Objectify(PartialPermType, ProdPartPerm_C(f,g));
     end);
 else
-  InstallMethod(\*, "for a partial perm and partial perm",
-    [IsPartialPerm and IsPartialPermRep, IsPartialPerm and IsPartialPermRep],
-    function(f,g)
-      local n, ff, gg, fg, j, i;
-  
-      ff:=f![1]; gg:=g![1];
-      n:=Length(ff);
-      fg:=EmptyPlist(n);
-
-      for i in [1..n] do 
-        j:=ff[i]; 
-        if j = 0 then   
-          fg[i]:=0;
-        else
-          fg[i]:=gg[j];
-        fi;
-      od;
-      return PartialPermNC(fg);
-    end);
+  Error("not yet implemented");
 fi;
 
 # new for 0.7! - \< - "for a partial perm and partial perm"
@@ -492,6 +478,12 @@ function(s, f)
 
   return out;
 end);
+
+# new for 0.7! - DenseImageListOfPartialPerm - "for a partial perm"
+#############################################################################
+
+InstallMethod(DenseImageListOfPartialPerm, "for a partial perm",
+[IsPartialPerm and IsPartialPermRep], f-> ReadOffPartPerm_C(f, 7, 6+f![1]));
 
 # new for 0.7! - ImageSetOfPartialPerm - "for a partial perm."
 #############################################################################

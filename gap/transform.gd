@@ -52,6 +52,7 @@ DeclareGlobalFunction("PartialPermNC");
 
 DeclareAttribute("DegreeOfPartialPerm", IsPartialPerm);
 DeclareGlobalFunction("DenseCreatePartPerm");
+DeclareAttribute("DenseImageListOfPartialPerm", IsPartialPerm);
 DeclareGlobalFunction("DomainAndRangeOfPartialPerm");
 DeclareAttribute("DomainOfPartialPerm", IsPartialPerm);
 DeclareSynonymAttr("Dom", DomainOfPartialPerm);

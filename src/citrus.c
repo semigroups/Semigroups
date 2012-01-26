@@ -105,22 +105,67 @@ Obj FuncReadOffPartPerm_C( Obj self, Obj f, Obj i, Obj j)
 
 Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
 {
-    Int n,m,i,j;
-    Obj fg;
+    Int n,m,i,j,max_ran,min_ran,rank,kk;
+    Obj fg,k;
+    Int ran[513];
 
     n = INT_INTOBJ(ELM_PLIST(f,1));
     m = INT_INTOBJ(ELM_PLIST(g,1));
-    fg = NEW_PLIST(T_PLIST_CYC,n);
-    SET_LEN_PLIST(fg,n);
 
-    for (i =7;i <= 6+n;i++) {
-        j = INT_INTOBJ(ELM_LIST(f,i));
+    fg = NEW_PLIST(T_PLIST_CYC,3*n+6);
+    SET_ELM_PLIST(fg, 1, ELM_PLIST(f, 1));
+    SET_LEN_PLIST(fg,1);
+    
+    max_ran=0;
+    min_ran=n;
+    rank=0;
+    
+    for (i=1;i<=n;i++) {
+        j = INT_INTOBJ(ELM_PLIST(f,i+6));
         if(j > m || j == 0){
-          SET_ELM_PLIST(fg,i,INTOBJ_INT(0));
+          SET_ELM_PLIST(fg,i+6,INTOBJ_INT(0));
         } else {
-          SET_ELM_PLIST(fg,i,ELM_LIST(g,j));
+          k = ELM_PLIST(g,j+6);
+          kk = INT_INTOBJ(k);
+          SET_ELM_PLIST(fg,i+6,k);
+          if(kk!=0){ 
+            rank++;
+            SET_ELM_PLIST(fg,n+rank+6,INTOBJ_INT(i));
+            ran[rank]=kk;
+            if(kk>max_ran){
+              max_ran=kk;
+              }
+            if(kk<min_ran){
+              min_ran=kk;
+              }
+            }
+        }
       }
+    
+    SET_ELM_PLIST(fg,2,INTOBJ_INT(rank));
+    SET_ELM_PLIST(fg,3,INTOBJ_INT(min_ran));
+    SET_ELM_PLIST(fg,4,INTOBJ_INT(max_ran));
+    SET_LEN_PLIST(fg,4);
+    for(i=1;i<=rank;i++){
+      SET_ELM_PLIST(fg,n+rank+6+i,INTOBJ_INT(ran[i]));
     }
+ 
+    k=ELM_PLIST(fg,n+7);
+    if(min_ran<INT_INTOBJ(k)){
+      SET_ELM_PLIST(fg,5,INTOBJ_INT(min_ran));
+    }else{
+      SET_ELM_PLIST(fg,5,k);
+    }
+
+    k=ELM_PLIST(fg,n+rank+6);
+    if(max_ran>INT_INTOBJ(k)){
+      SET_ELM_PLIST(fg,6,INTOBJ_INT(max_ran));
+    }else{
+      SET_ELM_PLIST(fg,6,k);
+    }
+
+    SET_LEN_PLIST(fg,n+2*rank+6);
+    SHRINK_PLIST(fg,n+3*rank+6);
     return fg;
 }
 
@@ -192,7 +237,7 @@ static StructGVarFunc GVarFuncs [] = {
     FuncReadOffPartPerm_C,
     "pkg/citrus/src/citrus.c:FuncReadOffPartPerm_C" },
   
-  { "ProdPartPerm_C", 2, "f, g",
+  { "ProdPartPerm_C", 2, "f,g",
     FuncProdPartPerm_C,
     "pkg/citrus/src/citrus.c:FuncProdPartPerm_C" },
 
