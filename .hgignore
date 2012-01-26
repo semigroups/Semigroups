@@ -25,3 +25,4 @@ citrus_dev.tex
 Makefile
 bin/*
 Transitions*
+*.swo
