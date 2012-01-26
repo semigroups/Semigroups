@@ -7,6 +7,82 @@ const char * Revision_citrus_c =
 
 #include "src/compiled.h" 
 
+/*******************************************************************************
+**
+** A partial permutation is of the form:
+**
+** [degree, rank, min ran, max ran, min, max, img list, dom, ran, Set(ran)] 
+**
+** where <degree> is the length of <img list>, <rank> is the number of none zero
+** entries in the <img list>,  <min ran>, <max ran> are
+** self explanatory,  <min> is min(<min dom>, <min ran>), <max> is max(<max 
+** dom>, <max ran>), <dom> is the domain, <ran> is the range, <Set(ran)> is the 
+** range as a set (not calculated until needed), and <img list> is the list of 
+** images with 0 for undefined.
+*/
+
+Obj FuncDenseCreatePartPerm_C( Obj self, Obj img )
+{ 
+    Obj f, j;
+    Int deg, max_ran, min_ran, rank, i, jj;
+    Int ran[513];
+
+    deg = LEN_LIST(img);
+    f = NEW_PLIST(T_PLIST_CYC,3*deg+6); /* the output*/
+    SET_ELM_PLIST(f, 1, INTOBJ_INT(deg));
+    
+    max_ran=0; 
+    min_ran=deg; 
+    rank=0;
+
+    /* find dom, rank, max_ran, min_ran */
+    for(i=1;i<=deg;i++){
+      j = ELM_LIST(img, i);
+      SET_ELM_PLIST(f, i+6, j);
+      jj = INT_INTOBJ(j);
+      if(jj!=0){
+        rank++;
+        SET_ELM_PLIST(f,deg+rank+6,INTOBJ_INT(i)); /* dom*/
+        ran[rank]=jj;
+        if(jj>max_ran){
+          max_ran=jj;
+          }
+        if(jj<min_ran){
+          min_ran=jj;
+          }
+        }
+      }
+
+    SET_ELM_PLIST(f,2,INTOBJ_INT(rank));
+    SET_ELM_PLIST(f,3,INTOBJ_INT(min_ran));
+    SET_ELM_PLIST(f,4,INTOBJ_INT(max_ran));
+
+    /* set range */
+    for(i=1;i<=rank;i++){
+      SET_ELM_PLIST(f,deg+rank+6+i,INTOBJ_INT(ran[i]));
+    } 
+
+    /* set min */
+    j=ELM_PLIST(f,deg+7); /* min. dom. */
+    if(min_ran<INT_INTOBJ(j)){
+      SET_ELM_PLIST(f,5,INTOBJ_INT(min_ran));
+    }else{
+      SET_ELM_PLIST(f,5,j);
+    }
+    
+    /* set max */
+    j=ELM_PLIST(f,deg+rank+6); /* max. dom. */
+    if(max_ran>INT_INTOBJ(j)){
+      SET_ELM_PLIST(f,6,INTOBJ_INT(max_ran));
+    }else{
+      SET_ELM_PLIST(f,6,j);
+    }
+
+    SET_LEN_PLIST(f,deg+2*rank+6);
+    SHRINK_PLIST(f,deg+3*rank+6);
+    return f;
+}
+
 /* product of partial permutations */
 
 Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
@@ -37,78 +113,6 @@ Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
     }
     /* finished */
     return fg;
-}
-
-/* domain and range of a partial permutation */
-
-Obj FuncDomRanPartPerm_C( Obj self, Obj f, Int rank)
-{ 
-    Obj ff,dom,ran,out;
-    Int i,j,m,n;
-  
-    if(INT_INTOBJ(rank)==0){
-      dom = NEW_PLIST(T_PLIST_EMPTY,INT_INTOBJ(rank));
-      ran = NEW_PLIST(T_PLIST_EMPTY,INT_INTOBJ(rank));
-      out = NEW_PLIST(T_PLIST,2);
-      SET_LEN_PLIST(out,2);
-      SET_ELM_PLIST(out,1,dom);
-      SET_ELM_PLIST(out,2,ran);
-      return out;
-    }
-
-    if (IS_POSOBJ(f)){ 
-      ff = ELM_PLIST(f,1);
-    }
-    else{
-      ff = f;
-    }
-
-    n = LEN_LIST(ff);
-    dom = NEW_PLIST(T_PLIST_CYC,n);
-    SET_LEN_PLIST(dom,INT_INTOBJ(rank));
-    ran = NEW_PLIST(T_PLIST_CYC,n);
-    SET_LEN_PLIST(ran,INT_INTOBJ(rank));
-    m = 0;
-
-    for (i = 1;i <= n;i++) {
-      j = INT_INTOBJ(ELM_LIST(ff,i));
-      if(j != 0){
-        m=m+1;
-        SET_ELM_PLIST(dom,m,INTOBJ_INT(i));
-        SET_ELM_PLIST(ran,m,INTOBJ_INT(j));
-      } 
-    }
-    out = NEW_PLIST(T_PLIST,2);
-    SET_LEN_PLIST(out,2);
-    SET_ELM_PLIST(out,1,dom);
-    SET_ELM_PLIST(out,2,ran);
-    return out;
-}
-
-/* rank of a partial permutation */
-
-Obj FuncRankPartPerm_C( Obj self, Obj f)
-{
-    Obj ff;
-    Int n,i,j,rank;
-
-    if (IS_POSOBJ(f)){
-      ff = ELM_PLIST(f,1);
-    }
-    else{
-      ff = f;
-    }
-
-    n = LEN_LIST(ff);
-    if (n==0) return INTOBJ_INT(n);
-
-    rank = 0;
-    for (i = 1;i <= n;i++){
-      j = INT_INTOBJ(ELM_LIST(ff,i));
-      if(j!=0) rank++;
-    }
-      
-    return INTOBJ_INT(rank);
 }
 
 /* inverse of a partial permutation */
@@ -145,30 +149,6 @@ Obj FuncInvPartPerm_C ( Obj self, Obj f, Int r)
     return img;
 }
 
-/* largest moved point partial permutation */ 
-
-Obj FuncLargestMovedPointPartPerm_C ( Obj self, Obj f )
-{
-    Obj ff;
-    Int n,i,j;
-
-   if (IS_POSOBJ(f)){
-      ff = ELM_PLIST(f,1);
-    }
-    else{
-      ff = f;
-    } 
-
-    n = LEN_LIST(ff); /* degree! */
-    for(i=n;1<=n;i--){
-      j = INT_INTOBJ(ELM_LIST(ff,i)); 
-      if (j!=0){
-        break;
-      }
-    }
-    return INTOBJ_INT(i);
-}
-
 /* on sets for a partial permutation 
 
 Obj FuncOnIntegerSetsWithPartPerm_C (Obj self, Obj f, Obj set)
@@ -198,21 +178,13 @@ static StructGVarFunc GVarFuncs [] = {
     FuncProdPartPerm_C,
     "pkg/citrus/src/citrus.c:FuncProdPartPerm_C" },
 
-  { "DomRanPartPerm_C", 2, "f, rank",
-    FuncDomRanPartPerm_C,
-    "pkg/citrus/src/citrus.c:FuncDomRanPartPerm_C" },
-
-  { "RankPartPerm_C", 1, "f",
-    FuncRankPartPerm_C,
-    "pkg/citrus/src/citrus.c:FuncRankPartPerm_C" },
+  { "DenseCreatePartPerm_C", 1, "img",
+    FuncDenseCreatePartPerm_C,
+    "pkg/citrus/src/citrus.c:FuncDenseCreatePartPerm_C" },
 
   { "InvPartPerm_C", 2, "f,r",
     FuncInvPartPerm_C,
     "pkg/citrus/src/citrus.c:FuncInvPartPerm_C" },
-
-  { "LargestMovedPointPartPerm_C", 1, "f", 
-    FuncLargestMovedPointPartPerm_C,
-    "pkg/citrus/src/citrus.c:FuncLargestMovedPointPartPerm_C" },
 
   { 0 }
 

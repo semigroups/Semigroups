@@ -315,6 +315,63 @@ function(f)
   return f![3];
 end);
 
+# new for 0.7! - DenseCreatePartPerm - "for an img list"
+############################################################################
+
+#if IsBound(DenseCreatePartPerm_C) then 
+#  InstallGlobalFunction(DenseCreatePartPerm, DenseCreatePartPerm_C);
+#else
+  InstallGlobalFunction(DenseCreatePartPerm,
+  function(img)
+    local deg, f, ran, max_ran, min_ran, rank, j, i;
+
+    deg:=Length(img);
+    f:=EmptyPlist(4*deg+6);
+    f[1]:=deg;
+    ran:=[];
+
+    max_ran:=0; min_ran:=deg; rank:=0;
+
+    for i in [1..deg] do 
+      j:=img[i];
+      f[i+6]:=j;
+      if not j=0 then 
+        rank:=rank+1;
+        f[deg+rank+6]:=i;
+        ran[rank]:=j;
+        if j>max_ran then 
+          max_ran:=j;
+        fi;
+        if j<min_ran then 
+          min_ran:=j;
+        fi;
+      fi;
+    od;
+
+    f[2]:=rank;
+    f[3]:=min_ran;
+    f[4]:=max_ran;
+
+    for i in [1..rank] do 
+      f[deg+rank+6+i]:=ran[i];
+    od;
+
+    if min_ran<f[deg+7] then 
+      f[5]:=min_ran;
+    else
+      f[5]:=f[deg+7];
+    fi;
+
+    if max_ran>f[deg+rank+6] then 
+      f[6]:=max_ran;
+    else
+      f[6]:=f[deg+rank+6];
+    fi;
+
+    ShrinkAllocationPlist(f);
+    return f;
+  end);
+#fi;
 # new for 0.7! - DomainOfPartialPerm - "for a partial perm"
 ############################################################################
 
