@@ -213,36 +213,39 @@ Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
 
 /* inverse of a partial permutation */
 
-Obj FuncInvPartPerm_C ( Obj self, Obj f, Int r)
+Obj FuncInvPartPerm_C ( Obj self, Obj f )
 {
-    Obj ff,img;
+    Obj deg,rank,max_ran,f_inv;
     Int n,i,j;
 
-    if (IS_POSOBJ(f)){
-      ff = ELM_PLIST(f,1);
+    if(INT_INTOBJ(ELM_PLIST(f, 1)) == 0) return f;
+
+    deg = ELM_PLIST(f, 1);
+    rank =  ELM_PLIST(f, 2);
+    max_ran = ELM_PLIST(f, 4);
+    n = 2*INT_INTOBJ(rank) + INT_INTOBJ(max_ran) + 6;
+    f_inv = NEW_PLIST(T_PLIST_CYC, n);
+    SET_LEN_PLIST(f_inv, n); 
+ 
+    SET_ELM_PLIST(f_inv, 1, max_ran);
+    SET_ELM_PLIST(f_inv, 2, rank);
+    SET_ELM_PLIST(f_inv, 3, ELM_PLIST(f, 7+INT_INTOBJ(deg)));
+    SET_ELM_PLIST(f_inv, 4, ELM_PLIST(f, 6+INT_INTOBJ(deg)+INT_INTOBJ(rank)));
+    SET_ELM_PLIST(f_inv, 5, ELM_PLIST(f, 5));
+    SET_ELM_PLIST(f_inv, 6, ELM_PLIST(f, 6));
+
+    for(i=7;i<=INT_INTOBJ(max_ran)+6;i++){
+      SET_ELM_PLIST(f_inv, i, INTOBJ_INT(0));
     }
-    else{
-      ff = f;
-    }
 
-    n=LEN_LIST(ff);
-    if(n==0) return NEW_PLIST(T_PLIST_EMPTY,INT_INTOBJ(0)); 
-
-    img=NEW_PLIST(T_PLIST_CYC,INT_INTOBJ(r));
-    SET_LEN_PLIST(img,INT_INTOBJ(r));
-
-    for (i = 1;i <= r;i++){
-      SET_ELM_PLIST(img, i, INTOBJ_INT(0));
-    }
-
-    for (i = 1; i <= n;i++){
-      j = INT_INTOBJ(ELM_LIST(ff,i));
+    for(i=1;i<=INT_INTOBJ(deg);i++){
+      j = INT_INTOBJ(ELM_PLIST(f,i+6));
       if(j!=0){
-        SET_ELM_PLIST(img, j, INTOBJ_INT(i));
+        SET_ELM_PLIST(f_inv, j+6, INTOBJ_INT(i));
       }
     }
 
-    return img;
+    return f_inv;
 }
 
 /* on sets for a partial permutation 
@@ -283,7 +286,7 @@ static StructGVarFunc GVarFuncs [] = {
     FuncProdPartPerm_C,
     "pkg/citrus/src/citrus.c:FuncProdPartPerm_C" },
 
-  { "InvPartPerm_C", 2, "f,r",
+  { "InvPartPerm_C", 1, "f",
     FuncInvPartPerm_C,
     "pkg/citrus/src/citrus.c:FuncInvPartPerm_C" },
 
