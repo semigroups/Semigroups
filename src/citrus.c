@@ -27,7 +27,27 @@ Obj FuncDenseCreatePartPerm_C( Obj self, Obj img )
     Int deg, max_ran, min_ran, rank, i, jj;
     Int ran[513];
 
-    deg = LEN_LIST(img);
+    if(LEN_PLIST(img)==0){
+      f = NEW_PLIST(T_PLIST_CYC,1);
+      SET_LEN_PLIST(f, 1);
+      SET_ELM_PLIST(f, 1, INTOBJ_INT(0));
+      return f;
+    }
+    
+    for(i=LEN_PLIST(img);1<=i;i--){
+      if(INT_INTOBJ(ELM_PLIST(img, i))!=0) {
+        deg = i;
+        break;
+        }
+      }
+
+    if(deg==0){
+      f = NEW_PLIST(T_PLIST_CYC,1);
+      SET_LEN_PLIST(f, 1);
+      SET_ELM_PLIST(f, 1, INTOBJ_INT(0));
+      return f;
+    }
+    
     f = NEW_PLIST(T_PLIST_CYC,3*deg+6); /* the output*/
     SET_ELM_PLIST(f, 1, INTOBJ_INT(deg));
     
@@ -37,7 +57,7 @@ Obj FuncDenseCreatePartPerm_C( Obj self, Obj img )
 
     /* find dom, rank, max_ran, min_ran */
     for(i=1;i<=deg;i++){
-      j = ELM_LIST(img, i);
+      j = ELM_PLIST(img, i);
       SET_ELM_PLIST(f, i+6, j);
       jj = INT_INTOBJ(j);
       if(jj!=0){
@@ -105,22 +125,44 @@ Obj FuncReadOffPartPerm_C( Obj self, Obj f, Obj i, Obj j)
 
 Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
 {
-    Int n,m,i,j,max_ran,min_ran,rank,kk;
+    Int n,m,i,j,deg,max_ran,min_ran,rank,kk;
     Obj fg,k;
     Int ran[513];
 
     n = INT_INTOBJ(ELM_PLIST(f,1));
     m = INT_INTOBJ(ELM_PLIST(g,1));
+    
+    if(n==0||m==0){
+      fg = NEW_PLIST(T_PLIST_CYC,1);
+      SET_LEN_PLIST(fg, 1);
+      SET_ELM_PLIST(fg, 1, INTOBJ_INT(0));
+      return fg;
+    }
+   
+    deg = 0;
+    for(i=n;1<=i;i--){
+      j = INT_INTOBJ(ELM_PLIST(f,i+6));
+      if(j!=0 && j<=m && INT_INTOBJ(ELM_PLIST(g,j+6))!=0){
+        deg = i;
+        break;
+        }
+    } 
 
-    fg = NEW_PLIST(T_PLIST_CYC,3*n+6);
-    SET_ELM_PLIST(fg, 1, ELM_PLIST(f, 1));
-    SET_LEN_PLIST(fg,1);
+   if(deg==0){
+      fg = NEW_PLIST(T_PLIST_CYC,1);
+      SET_LEN_PLIST(fg, 1);
+      SET_ELM_PLIST(fg, 1, INTOBJ_INT(0));
+      return fg;
+    }
+
+    fg = NEW_PLIST(T_PLIST_CYC,3*deg+6);
+    SET_ELM_PLIST(fg, 1, INTOBJ_INT(deg));
     
     max_ran=0;
-    min_ran=n;
+    min_ran=0;
     rank=0;
-    
-    for (i=1;i<=n;i++) {
+
+    for (i=1;i<=deg;i++) {
         j = INT_INTOBJ(ELM_PLIST(f,i+6));
         if(j > m || j == 0){
           SET_ELM_PLIST(fg,i+6,INTOBJ_INT(0));
@@ -130,42 +172,42 @@ Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
           SET_ELM_PLIST(fg,i+6,k);
           if(kk!=0){ 
             rank++;
-            SET_ELM_PLIST(fg,n+rank+6,INTOBJ_INT(i));
+            SET_ELM_PLIST(fg,deg+rank+6,INTOBJ_INT(i));
             ran[rank]=kk;
             if(kk>max_ran){
               max_ran=kk;
               }
-            if(kk<min_ran){
+            if((min_ran==0)||(kk<min_ran)){
               min_ran=kk;
               }
             }
         }
       }
-    
+
     SET_ELM_PLIST(fg,2,INTOBJ_INT(rank));
     SET_ELM_PLIST(fg,3,INTOBJ_INT(min_ran));
     SET_ELM_PLIST(fg,4,INTOBJ_INT(max_ran));
-    SET_LEN_PLIST(fg,4);
+    
     for(i=1;i<=rank;i++){
-      SET_ELM_PLIST(fg,n+rank+6+i,INTOBJ_INT(ran[i]));
+      SET_ELM_PLIST(fg,deg+rank+6+i,INTOBJ_INT(ran[i]));
     }
  
-    k=ELM_PLIST(fg,n+7);
+    k=ELM_PLIST(fg,deg+7);
     if(min_ran<INT_INTOBJ(k)){
       SET_ELM_PLIST(fg,5,INTOBJ_INT(min_ran));
     }else{
       SET_ELM_PLIST(fg,5,k);
     }
 
-    k=ELM_PLIST(fg,n+rank+6);
+    k=ELM_PLIST(fg,deg+rank+6);
     if(max_ran>INT_INTOBJ(k)){
       SET_ELM_PLIST(fg,6,INTOBJ_INT(max_ran));
     }else{
       SET_ELM_PLIST(fg,6,k);
     }
 
-    SET_LEN_PLIST(fg,n+2*rank+6);
-    SHRINK_PLIST(fg,n+3*rank+6);
+    SET_LEN_PLIST(fg,deg+2*rank+6);
+    SHRINK_PLIST(fg,deg+3*rank+6);
     return fg;
 }
 
