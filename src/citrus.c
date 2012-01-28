@@ -212,6 +212,7 @@ Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
 }
 
 /* inverse of a partial permutation */
+/* use SortDensePlist here for domain and range */
 
 Obj FuncInvPartPerm_C ( Obj self, Obj f )
 {
@@ -238,12 +239,15 @@ Obj FuncInvPartPerm_C ( Obj self, Obj f )
       SET_ELM_PLIST(f_inv, i, INTOBJ_INT(0));
     }
 
-    for(i=1;i<=INT_INTOBJ(deg);i++){
+    for(i=1;i<=INT_INTOBJ(deg);i++){/*go from min dom to max dom here instead*/
       j = INT_INTOBJ(ELM_PLIST(f,i+6));
       if(j!=0){
         SET_ELM_PLIST(f_inv, j+6, INTOBJ_INT(i));
       }
     }
+    
+    /* sort range of f to get dom f_inv */
+    /* read off f_inv[j+6] for each j in dom f_inv to get ran f_inv */
 
     return f_inv;
 }
