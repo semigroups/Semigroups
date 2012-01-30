@@ -65,8 +65,9 @@ DeclareAttribute("MinDomainRange", IsPartialPerm);
 DeclareAttribute("MinRange", IsPartialPerm);
 DeclareGlobalFunction("OnIntegerSetsWithPartialPerm");
 DeclareAttribute("RangeOfPartialPerm", IsPartialPerm);
+DeclareAttribute("RangeSetOfPartialPerm", IsPartialPerm);
 DeclareSynonymAttr("Ran", RangeOfPartialPerm);
 DeclareAttribute("RankOfPartialPerm", IsPartialPerm);
-
 DeclareGlobalFunction("RandomPartialPerm");
+DeclareGlobalFunction("SparseCreatePartPerm");
 

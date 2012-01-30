@@ -37,12 +37,11 @@ if IsBound(InvPartPerm_C) then
   InstallMethod(\^, "for a partial perm and neg int",
   [IsPartialPerm and IsPartialPermRep, IsNegInt],
   function(f, r)
-    if not Ran(f)=[] then 
-      return PartialPermNC(InvPartPerm_C(f, Maximum(Ran(f))))^-r;
+    if not f![1]=0 then 
+      return Objectify(PartialPermType, InvPartPerm_C(f))^-r;
     else
       return f;
     fi;
-    # JDM better way?
   end);
 else
   #JDM modify the method below...
@@ -690,7 +689,18 @@ end);
 # Notes: 0 is for undefined...
 
 InstallGlobalFunction(PartialPermNC,
-  x-> Objectify(PartialPermType, DenseCreatePartPerm(x)));
+function(arg)
+  
+  if Length(arg)=1 then 
+    return Objectify(PartialPermType, DenseCreatePartPerm(arg[1]));
+  elif Length(arg)=2 then 
+    return Objectify(PartialPermType, SparseCreatePartPerm(arg[1], arg[2]));
+  fi;
+
+  Error("there should be one or two arguments,");
+  return;
+end);
+
 
 # new for 0.1! - PrintObj - "for a transformation semigroup"
 ###########################################################################
@@ -856,6 +866,28 @@ function(f)
   return ReadOffPartPerm_C(f, 7+f![1]+f![2], 6+f![1]+2*f![2]);
 end);
 
+# new for 0.7! - RangeSetOfPartialPerm - "for a partial perm"
+############################################################################
+
+InstallMethod(RangeSetOfPartialPerm, "for a partial perm", 
+[IsPartialPerm and IsPartialPermRep],
+function(f)
+  
+  if f![1]=0 then
+    return [];
+  fi;
+
+  if not IsBound(f![f![1]+2*f![2]+7]) then 
+    ranset:=RanSetOfPartPerm_C(f);
+    j:=6+f![1]+2*f![2];
+    for i in [1..f![2]] do 
+      f![j+i]:=ranset[i];
+    od;
+  fi; 
+
+  return ReadOffPartPerm_C(f, 7+f![1]+2*f![2], 6+f![1]+3*f![2]);
+end);
+
 # new for 0.7! - RankOfPartialPerm - "for a partial perm"
 ############################################################################
 
@@ -894,5 +926,15 @@ function(f)
   
   return i;
 end);
+
+
+# new for 0.7! - SparseCreatePartPerm - "for dom and ran"
+############################################################################
+
+if IsBound(SparseCreatePartPerm_C) then 
+  InstallGlobalFunction(SparseCreatePartPerm, SparseCreatePartPerm_C);
+else
+  Error("not yet implemented,");
+fi;
 
 #EOF

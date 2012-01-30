@@ -103,6 +103,74 @@ Obj FuncDenseCreatePartPerm_C( Obj self, Obj img )
     return f;
 }
 
+/* sparse create partial perm */
+
+Obj FuncSparseCreatePartPerm_C( Obj self, Obj dom, Obj ran )
+{ 
+    Obj f, j, k;
+    Int rank, deg, max_ran, min_ran, i, kk;
+
+    rank = LEN_PLIST(dom);
+
+    if(rank==0){
+      f = NEW_PLIST(T_PLIST_CYC,1);
+      SET_LEN_PLIST(f, 1);
+      SET_ELM_PLIST(f, 1, INTOBJ_INT(0));
+      return f;
+    }
+    
+    deg = INT_INTOBJ(ELM_PLIST(dom, rank));
+    f = NEW_PLIST(T_PLIST_CYC, 6+deg+3*rank);
+    SET_LEN_PLIST(f, 6+deg+2*rank);
+
+    SET_ELM_PLIST(f, 1, ELM_PLIST(dom, rank));
+    SET_ELM_PLIST(f, 2, INTOBJ_INT(rank));
+
+    max_ran=0; 
+    min_ran=0; 
+
+    for(i=1;i<=deg;i++){
+      SET_ELM_PLIST(f, i+6, INTOBJ_INT(0));
+    }
+
+    /* find dense img list, max_ran, min_ran */
+    for(i=1;i<=rank;i++){
+      j = ELM_PLIST(dom, i);
+      SET_ELM_PLIST(f, 6+i+deg, j);
+      k = ELM_PLIST(ran, i);
+      SET_ELM_PLIST(f, 6+i+deg+rank, k);
+      SET_ELM_PLIST(f, INT_INTOBJ(j)+6, k);
+      kk = INT_INTOBJ(k);
+      if(kk>max_ran){
+        max_ran=kk;
+      }
+      if((min_ran==0)||(kk<min_ran)){
+        min_ran=kk;
+      }
+    }
+
+    SET_ELM_PLIST(f,3,INTOBJ_INT(min_ran));
+    SET_ELM_PLIST(f,4,INTOBJ_INT(max_ran));
+
+    /* set min */
+    j=ELM_PLIST(dom,1);
+    if(min_ran<INT_INTOBJ(j)){
+      SET_ELM_PLIST(f,5,INTOBJ_INT(min_ran));
+    }else{
+      SET_ELM_PLIST(f,5,j);
+    }
+    
+    /* set max */
+    if(max_ran>deg){
+      SET_ELM_PLIST(f,6,INTOBJ_INT(max_ran));
+    }else{
+      SET_ELM_PLIST(f,6,ELM_PLIST(dom, rank));
+    }
+
+    return f;
+}
+
+
 /* read off partial permutation */
 
 Obj FuncReadOffPartPerm_C( Obj self, Obj f, Obj i, Obj j)
@@ -162,7 +230,7 @@ Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
     min_ran=0;
     rank=0;
 
-    for (i=1;i<=deg;i++) {
+    for (i=1;i<=deg;i++) {/* this loop should be over the dom of f JDM*/
         j = INT_INTOBJ(ELM_PLIST(f,i+6));
         if(j > m || j == 0){
           SET_ELM_PLIST(fg,i+6,INTOBJ_INT(0));
@@ -211,43 +279,81 @@ Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
     return fg;
 }
 
+/* range set of partial permutation */
+
+Obj FuncRanSetPartPerm_C ( Obj self, Obj f )
+{ Int deg, rank, i;
+  Obj out;
+
+  deg = INT_INTOBJ(ELM_PLIST(f, 1));
+  rank =  INT_INTOBJ(ELM_PLIST(f, 2));
+     
+  out = NEW_PLIST(T_PLIST_CYC,rank);
+  SET_LEN_PLIST(out,rank);
+  for(i=1;i<=rank;i++){
+    SET_ELM_PLIST(out,i, ELM_PLIST(f,rank+deg+6+i));
+  }
+  
+  SortDensePlist(out);
+  return out; /* really want to store this in f here JDM*/
+}
+
 /* inverse of a partial permutation */
-/* use SortDensePlist here for domain and range */
 
 Obj FuncInvPartPerm_C ( Obj self, Obj f )
 {
-    Obj deg,rank,max_ran,f_inv;
-    Int n,i,j;
+    Obj f_inv, j, k;
+    Int deg_f, rank, deg_f_inv, n, i;
 
-    if(INT_INTOBJ(ELM_PLIST(f, 1)) == 0) return f;
+    deg_f = INT_INTOBJ(ELM_PLIST(f, 1));
+    rank =  INT_INTOBJ(ELM_PLIST(f, 2));
 
-    deg = ELM_PLIST(f, 1);
-    rank =  ELM_PLIST(f, 2);
-    max_ran = ELM_PLIST(f, 4);
-    n = 2*INT_INTOBJ(rank) + INT_INTOBJ(max_ran) + 6;
+    deg_f_inv = INT_INTOBJ(ELM_PLIST(f, 4));
+    
+    n = 3*rank + deg_f_inv + 6; 
     f_inv = NEW_PLIST(T_PLIST_CYC, n);
     SET_LEN_PLIST(f_inv, n); 
  
-    SET_ELM_PLIST(f_inv, 1, max_ran);
-    SET_ELM_PLIST(f_inv, 2, rank);
-    SET_ELM_PLIST(f_inv, 3, ELM_PLIST(f, 7+INT_INTOBJ(deg)));
-    SET_ELM_PLIST(f_inv, 4, ELM_PLIST(f, 6+INT_INTOBJ(deg)+INT_INTOBJ(rank)));
+    SET_ELM_PLIST(f_inv, 1, ELM_PLIST(f, 4));
+    SET_ELM_PLIST(f_inv, 2, ELM_PLIST(f, 2));
+    SET_ELM_PLIST(f_inv, 3, ELM_PLIST(f, 7+deg_f));
+    SET_ELM_PLIST(f_inv, 4, ELM_PLIST(f, 6+deg_f+rank));
     SET_ELM_PLIST(f_inv, 5, ELM_PLIST(f, 5));
     SET_ELM_PLIST(f_inv, 6, ELM_PLIST(f, 6));
 
-    for(i=7;i<=INT_INTOBJ(max_ran)+6;i++){
+    /* initialise dense image list */
+    for(i=7;i<=deg_f_inv+6;i++){
       SET_ELM_PLIST(f_inv, i, INTOBJ_INT(0));
     }
 
-    for(i=1;i<=INT_INTOBJ(deg);i++){/*go from min dom to max dom here instead*/
-      j = INT_INTOBJ(ELM_PLIST(f,i+6));
-      if(j!=0){
-        SET_ELM_PLIST(f_inv, j+6, INTOBJ_INT(i));
+    if(LEN_PLIST(f)==(3*rank + deg_f + 6)){
+      for(i=1; i<=rank;i++){
+       j = ELM_PLIST(f,i+deg_f+6);
+       k = ELM_PLIST(f,i+deg_f+rank+6);
+       SET_ELM_PLIST(f_inv, 6+deg_f_inv+i, ELM_PLIST(f, 6+deg_f+2*rank)); 
+       SET_ELM_PLIST(f_inv, INT_INTOBJ(k)+6, j);
+       SET_ELM_PLIST(f_inv, i+6+deg_f_inv+2*rank, j);  
       }
+    }else{
+      /* do something JDM*/
+      /* set dense image list, domain, and sorted ran of f_inv */
+      for(i=1;i<=rank;i++){
+        j = ELM_PLIST(f,i+deg_f+6);
+        k = ELM_PLIST(f,i+deg_f+rank+6);
+        SET_ELM_PLIST(f_inv, 6+deg_f_inv+i, k); /* dom */
+        SET_ELM_PLIST(f_inv, INT_INTOBJ(k)+6, j); 
+        SET_ELM_PLIST(f_inv, i+6+deg_f_inv+2*rank, j);
+      }
+
+     /* sort the domain 
+     qsort(ADDR_OBJ(f_inv)+7+deg_f_inv, rank, sizeof(Int), cmp); */
+   }
+
+    /* set ran of f_inv */
+    for(i=1;i<=rank;i++){
+      n = INT_INTOBJ(ELM_PLIST(f_inv, 6+deg_f_inv+i));
+      SET_ELM_PLIST(f_inv, i+6+deg_f_inv+rank, ELM_PLIST(f_inv, n+6));
     }
-    
-    /* sort range of f to get dom f_inv */
-    /* read off f_inv[j+6] for each j in dom f_inv to get ran f_inv */
 
     return f_inv;
 }
@@ -281,7 +387,11 @@ static StructGVarFunc GVarFuncs [] = {
   { "DenseCreatePartPerm_C", 1, "img",
     FuncDenseCreatePartPerm_C,
     "pkg/citrus/src/citrus.c:FuncDenseCreatePartPerm_C" },
-  
+ 
+  { "SparseCreatePartPerm_C", 2, "dom, ran",
+    FuncSparseCreatePartPerm_C,
+    "pkg/citrus/src/citrus.c:FuncSparseCreatePartPerm_C" },
+
   { "ReadOffPartPerm_C", 3, "f,i,j",
     FuncReadOffPartPerm_C,
     "pkg/citrus/src/citrus.c:FuncReadOffPartPerm_C" },
@@ -289,6 +399,10 @@ static StructGVarFunc GVarFuncs [] = {
   { "ProdPartPerm_C", 2, "f,g",
     FuncProdPartPerm_C,
     "pkg/citrus/src/citrus.c:FuncProdPartPerm_C" },
+
+  { "RanSetPartPerm_C", 1, "f",
+    FuncRanSetPartPerm_C,
+    "pkg/citrus/src/citrus.c:FuncRanSetPartPerm_C" },
 
   { "InvPartPerm_C", 1, "f",
     FuncInvPartPerm_C,
