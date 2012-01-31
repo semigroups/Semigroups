@@ -33,7 +33,8 @@ Obj FuncDenseCreatePartPerm_C( Obj self, Obj img )
       SET_ELM_PLIST(f, 1, INTOBJ_INT(0));
       return f;
     }
-    
+
+    deg = 0;
     for(i=LEN_PLIST(img);1<=i;i--){
       if(INT_INTOBJ(ELM_PLIST(img, i))!=0) {
         deg = i;
@@ -279,23 +280,41 @@ Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
     return fg;
 }
 
+/* comparison for qsort */
+
+int cmp (const void *a, const void *b)
+{ int aa, bb;
+
+  aa = (long) a;
+  bb = (long) b;
+  return (int) aa-bb;
+}
+
 /* range set of partial permutation */
 
 Obj FuncRanSetPartPerm_C ( Obj self, Obj f )
-{ Int deg, rank, i;
+{ Int deg, rank, i, tmp;
   Obj out;
 
   deg = INT_INTOBJ(ELM_PLIST(f, 1));
   rank =  INT_INTOBJ(ELM_PLIST(f, 2));
-     
+  tmp = LEN_PLIST(f);
+
+  if(LEN_PLIST(f)==6+deg+2*rank){
+    SET_LEN_PLIST(f, 6+deg+3*rank);
+    for(i=1;i<=rank;i++){
+      SET_ELM_PLIST(f,2*rank+deg+6+i, ELM_PLIST(f,rank+deg+6+i));
+    }
+   qsort(ADDR_OBJ(f)+7+deg+2*rank, rank, sizeof(Int), cmp);
+  }
+
   out = NEW_PLIST(T_PLIST_CYC,rank);
   SET_LEN_PLIST(out,rank);
   for(i=1;i<=rank;i++){
-    SET_ELM_PLIST(out,i, ELM_PLIST(f,rank+deg+6+i));
+    SET_ELM_PLIST(out,i, ELM_PLIST(f,2*rank+deg+6+i));
   }
   
-  SortDensePlist(out);
-  return out; /* really want to store this in f here JDM*/
+  return out;
 }
 
 /* inverse of a partial permutation */

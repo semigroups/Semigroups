@@ -877,15 +877,7 @@ function(f)
     return [];
   fi;
 
-  if not IsBound(f![f![1]+2*f![2]+7]) then 
-    ranset:=RanSetOfPartPerm_C(f);
-    j:=6+f![1]+2*f![2];
-    for i in [1..f![2]] do 
-      f![j+i]:=ranset[i];
-    od;
-  fi; 
-
-  return ReadOffPartPerm_C(f, 7+f![1]+2*f![2], 6+f![1]+3*f![2]);
+  return RanSetPartPerm_C(f); 
 end);
 
 # new for 0.7! - RankOfPartialPerm - "for a partial perm"
