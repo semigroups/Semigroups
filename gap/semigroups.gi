@@ -575,7 +575,7 @@ function(n)
   fi;
 
   return InverseSemigroup(List(GeneratorsOfGroup(SymmetricGroup(n)), x-> 
-   PartialPermNC(ListPerm(x, n))), PartialPermNC([0..n-1]));
+   PartialPermNC(ListPerm(x, n))), PartialPermNC([0..n-1]*1));
 end);  
 
 # new for 0.7! - ViewObj - "for an inverse semigroup"
