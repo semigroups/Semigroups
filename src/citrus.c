@@ -53,7 +53,7 @@ Obj FuncDenseCreatePartPerm_C( Obj self, Obj img )
     SET_ELM_PLIST(f, 1, INTOBJ_INT(deg));
     
     max_ran=0; 
-    min_ran=deg; 
+    min_ran=0; 
     rank=0;
 
     /* find dom, rank, max_ran, min_ran */
@@ -68,7 +68,7 @@ Obj FuncDenseCreatePartPerm_C( Obj self, Obj img )
         if(jj>max_ran){
           max_ran=jj;
           }
-        if(jj<min_ran){
+        if(jj<min_ran||min_ran==0){
           min_ran=jj;
           }
         }
@@ -194,8 +194,8 @@ Obj FuncReadOffPartPerm_C( Obj self, Obj f, Obj i, Obj j)
 
 Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
 {
-    Int n,m,i,j,deg,max_ran,min_ran,rank,kk;
-    Obj fg,k;
+    Int n,m,i,j,deg,max_ran,min_ran,rank,kk,r,rank_f;
+    Obj fg,k,l;
     Int ran[513];
 
     n = INT_INTOBJ(ELM_PLIST(f,1));
@@ -209,10 +209,14 @@ Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
     }
    
     deg = 0;
-    for(i=n;1<=i;i--){
-      j = INT_INTOBJ(ELM_PLIST(f,i+6));
-      if(j!=0 && j<=m && INT_INTOBJ(ELM_PLIST(g,j+6))!=0){
-        deg = i;
+    rank_f = INT_INTOBJ(ELM_PLIST(f,2));
+
+    /* find degree/max. dom */
+    for(i=rank_f;1<=i;i--){
+      j = INT_INTOBJ(ELM_PLIST(f,6+n+rank_f+i));
+      if( j<=m && INT_INTOBJ(ELM_PLIST(g,j+6))!=0){
+        deg = INT_INTOBJ(ELM_PLIST(f,6+n+i));
+        r = i;
         break;
         }
     } 
@@ -226,27 +230,30 @@ Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
 
     fg = NEW_PLIST(T_PLIST_CYC,3*deg+6);
     SET_ELM_PLIST(fg, 1, INTOBJ_INT(deg));
-    
+   
+    for(i=1;i<=deg;i++){
+      SET_ELM_PLIST(fg, 6+i, INTOBJ_INT(0));
+    }
+
     max_ran=0;
     min_ran=0;
     rank=0;
 
-    for (i=1;i<=deg;i++) {/* this loop should be over the dom of f JDM*/
-        j = INT_INTOBJ(ELM_PLIST(f,i+6));
-        if(j > m || j == 0){
-          SET_ELM_PLIST(fg,i+6,INTOBJ_INT(0));
-        } else {
+    for (i=1;i<=r;i++){
+        j = INT_INTOBJ(ELM_PLIST(f,6+n+rank_f+i));
+        if(j<=m){
           k = ELM_PLIST(g,j+6);
           kk = INT_INTOBJ(k);
-          SET_ELM_PLIST(fg,i+6,k);
           if(kk!=0){ 
             rank++;
-            SET_ELM_PLIST(fg,deg+rank+6,INTOBJ_INT(i));
+            l = ELM_PLIST(f,6+n+i);
+            SET_ELM_PLIST(fg,deg+rank+6,l);
+            SET_ELM_PLIST(fg,INT_INTOBJ(l)+6,k);
             ran[rank]=kk;
             if(kk>max_ran){
               max_ran=kk;
               }
-            if((min_ran==0)||(kk<min_ran)){
+            if((kk<min_ran)||(min_ran==0)){
               min_ran=kk;
               }
             }
@@ -368,23 +375,34 @@ Obj FuncInvPartPerm_C ( Obj self, Obj f )
     return f_inv;
 }
 
-/* on sets for a partial permutation 
+/* on sets for a partial permutation */ 
 
-Obj FuncOnIntegerSetsWithPartPerm_C (Obj self, Obj f, Obj set)
-and carrot! ^
-{
+Obj FuncOnIntegerSetsWithPartPerm_C (Obj self, Obj set, Obj f)
+/* and carrot! ^*/
+{ Obj out, j, k;
+  Int deg, n, m, i, jj;
 
-  if (IS_POSOBJ(f)){
-    ff = ELM_PLIST(f,1);
+  deg = INT_INTOBJ(ELM_PLIST(f, 1));
+  n = LEN_PLIST(set);
+  out = NEW_PLIST(T_PLIST_CYC, n);
+  m = 0;
+
+  for(i=1;i<=n;i++){
+    j = ELM_PLIST(set, i);
+    jj = INT_INTOBJ(j);
+    if(jj<=deg){
+      k = ELM_PLIST(f, jj+6);
+      if(INT_INTOBJ(k)!=0){
+        m++;
+        SET_ELM_PLIST(out, m, k);
+      }
+    }
   }
-  else{
-    ff = f;
-  }
-  
-  n = LEN_LIST(ff);
-  
-
-} */
+  SET_LEN_PLIST(out, m);
+  SHRINK_PLIST(out, m);
+  SortDensePlist(out);
+  return out;
+}
     
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
@@ -417,6 +435,10 @@ static StructGVarFunc GVarFuncs [] = {
   { "InvPartPerm_C", 1, "f",
     FuncInvPartPerm_C,
     "pkg/citrus/src/citrus.c:FuncInvPartPerm_C" },
+
+  { "OnIntegerSetsWithPartPerm_C", 2, "set,f",
+    FuncOnIntegerSetsWithPartPerm_C,
+    "pkg/citrus/src/citrus.c:FuncOnIntegerSetsWithPartPerm_C" },
 
   { 0 }
 

@@ -485,13 +485,6 @@ function(f)
   return ReadOffPartPerm_C(f, 7, 6+f![1]);
 end);
 
-# new for 0.7! - ImageSetOfPartialPerm - "for a partial perm."
-#############################################################################
-# JDM new method!
-
-InstallMethod(ImageSetOfPartialPerm, "for a partial perm.",
-[IsPartialPerm and IsPartialPermRep], f-> Set(Ran(f)));
-
 # new for 0.7! - InternalRepOfPartialPerm - "for a partial perm"
 #############################################################################
 
@@ -680,19 +673,24 @@ InstallMethod(OneMutable, "for a partial perm",
 #############################################################################
 # JDM C
 
-InstallGlobalFunction(OnIntegerSetsWithPartialPerm,
-function(set, f)
-  local ff, n, out, i;
-  ff:=f![1]; n:=Length(ff);
-  out:=EmptyPlist(n);
+if IsBound(OnIntegerSetsWithPartPerm_C) then 
+  InstallGlobalFunction(OnIntegerSetsWithPartialPerm,
+  OnIntegerSetsWithPartPerm_C);
+else  
+  InstallGlobalFunction(OnIntegerSetsWithPartialPerm,
+  function(set, f)
+    local ff, n, out, i;
+    ff:=f![1]; n:=Length(ff);
+    out:=EmptyPlist(n);
 
-  for i in set do 
-    if not (i>n or ff[i]=0) then 
-      AddSet(out, ff[i]);
-    fi;
-  od;
-  return out;
-end);
+    for i in set do 
+      if not (i>n or ff[i]=0) then 
+        AddSet(out, ff[i]);
+      fi;
+    od;
+    return out;
+  end);
+fi;
 
 #PPP
 
