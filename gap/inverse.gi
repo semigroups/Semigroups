@@ -45,7 +45,7 @@ function(gens, o, f, scc, truth, graph, r, p)
   for i in scc do
     for j in [1..r] do
       if IsBound(graph[i][j]) and truth[graph[i][j]] then
-        g:=ClosureGroup(g, AsPermutationNC(f^-1*f/p[i] * 
+        g:=ClosureGroup(g, AsPermutation(f^-1*f/p[i] * 
          (gens[j]*p[graph[i][j]])));
       fi;
 
@@ -77,7 +77,7 @@ InstallGlobalFunction(EnumerateInvSemigpData,
 function(s)
   local o, scc, r, mults, schutz, graph, truth, gens, modifier, i;
   
-  o:=InvSemigpData(s)!.global_o;
+  o:=InvSemigpData(s);
 
   if not IsClosed(o) then 
     scc:=OrbSCC(o);
@@ -106,7 +106,7 @@ function(s)
     SetNrDClasses(s, r-modifier);
     SetNrRClasses(s, Length(o)-modifier);
     SetNrLClasses(s, Length(o)-modifier);
-    SetNrHClasses(s, Sum(List([1..r], m-> Length(scc[m])^2-modifier)));
+    SetNrHClasses(s, Sum(List([1..r], m-> Length(scc[m])^2))-modifier);
     SetNrIdempotents(s, Length(o)-modifier);
   fi;
   
@@ -122,14 +122,9 @@ function(s)
   local n;
 
   n:=LargestMovedPoint(s);
-  return rec(
-        global_o:=Orb(s, [1..n]*1, OnIntegerSetsWithPartialPerm, 
+  return Orb(s, [1..n]*1, OnIntegerSetsWithPartialPerm, 
         rec(schreier:=true, orbitgraph:=true, storenumbers:=true, 
-        log:=true, hashlen:=6257)),
-        
-        local_o:=EmptyPlist(n),
-        
-        images:=false, at:=0);
+        log:=true, hashlen:=6257));
         #JDM orb bug prevents us from using onflatplainlist above
 end);
 

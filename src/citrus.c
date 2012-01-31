@@ -383,6 +383,12 @@ Obj FuncOnIntegerSetsWithPartPerm_C (Obj self, Obj set, Obj f)
 
   deg = INT_INTOBJ(ELM_PLIST(f, 1));
   n = LEN_PLIST(set);
+  if(n==0){
+    out = NEW_PLIST(T_PLIST_EMPTY, 0);
+    SET_LEN_PLIST(out, 0);
+    return out;
+  }
+
   out = NEW_PLIST(T_PLIST_CYC, n);
   m = 0;
 

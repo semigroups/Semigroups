@@ -1132,7 +1132,7 @@ end);
 InstallOtherMethod(LargestMovedPoint, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(s)
-  return MaximumList(List(GeneratorsOfSemigroup(s), LargestMovedPoint));
+  return MaximumList(List(Generators(s), MaxDomainRange));
 end);
 
 #MMM
