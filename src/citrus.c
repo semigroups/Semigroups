@@ -300,7 +300,6 @@ Obj FuncRanSetPartPerm_C ( Obj self, Obj f )
   rank =  INT_INTOBJ(ELM_PLIST(f, 2));
 
   if(SIZE_OBJ(f)/sizeof(UInt)<7+deg+2*rank||ADDR_OBJ(f)[7+deg+2*rank]==0){
-    SET_LEN_PLIST(f, 6+deg+3*rank);
     for(i=1;i<=rank;i++){
       SET_ELM_PLIST(f,2*rank+deg+6+i, ELM_PLIST(f,rank+deg+6+i));
     }
@@ -325,9 +324,16 @@ Obj FuncInvPartPerm_C ( Obj self, Obj f )
 
     deg_f = INT_INTOBJ(ELM_PLIST(f, 1));
     rank =  INT_INTOBJ(ELM_PLIST(f, 2));
+    
+    /* check if f knows Set(Ran(f)) if not set it */
+    if(SIZE_OBJ(f)/sizeof(UInt)<7+deg_f+2*rank||ADDR_OBJ(f)[7+deg_f+2*rank]==0){
+      for(i=1;i<=rank;i++){
+        SET_ELM_PLIST(f,2*rank+deg_f+6+i, ELM_PLIST(f,rank+deg_f+6+i));
+      } 
+      qsort(ADDR_OBJ(f)+7+deg_f+2*rank, rank, sizeof(UInt), cmp);
+    }
 
     deg_f_inv = INT_INTOBJ(ELM_PLIST(f, 4));
-    
     n = 3*rank + deg_f_inv + 6; 
     f_inv = NEW_PLIST(T_PLIST_CYC, n);
     SET_LEN_PLIST(f_inv, n); 
@@ -344,28 +350,14 @@ Obj FuncInvPartPerm_C ( Obj self, Obj f )
       SET_ELM_PLIST(f_inv, i, INTOBJ_INT(0));
     }
 
-    if(LEN_PLIST(f)==(3*rank + deg_f + 6)){
-      for(i=1; i<=rank;i++){
-       j = ELM_PLIST(f,i+deg_f+6);
-       k = ELM_PLIST(f,i+deg_f+rank+6);
-       SET_ELM_PLIST(f_inv, 6+deg_f_inv+i, ELM_PLIST(f, 6+deg_f+2*rank)); 
-       SET_ELM_PLIST(f_inv, INT_INTOBJ(k)+6, j);
-       SET_ELM_PLIST(f_inv, i+6+deg_f_inv+2*rank, j);  
-      }
-    }else{
-      /* do something JDM*/
-      /* set dense image list, domain, and sorted ran of f_inv */
-      for(i=1;i<=rank;i++){
-        j = ELM_PLIST(f,i+deg_f+6);
-        k = ELM_PLIST(f,i+deg_f+rank+6);
-        SET_ELM_PLIST(f_inv, 6+deg_f_inv+i, k); /* dom */
-        SET_ELM_PLIST(f_inv, INT_INTOBJ(k)+6, j); 
-        SET_ELM_PLIST(f_inv, i+6+deg_f_inv+2*rank, j);
-      }
-
-     /* sort the domain 
-     qsort(ADDR_OBJ(f_inv)+7+deg_f_inv, rank, sizeof(Int), cmp); */
-   }
+    /* set dense img list, dom, and Set(ran) */
+    for(i=1;i<=rank;i++){
+      j = ELM_PLIST(f,i+deg_f+6);
+      k = ELM_PLIST(f,i+deg_f+rank+6);
+      SET_ELM_PLIST(f_inv, INT_INTOBJ(k)+6, j); /* dense img */
+      SET_ELM_PLIST(f_inv, 6+deg_f_inv+i, ELM_PLIST(f, 6+deg_f+2*rank+i)); 
+      SET_ELM_PLIST(f_inv, i+6+deg_f_inv+2*rank, j);
+    }
 
     /* set ran of f_inv */
     for(i=1;i<=rank;i++){

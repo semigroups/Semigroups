@@ -498,10 +498,10 @@ InstallMethod(ImageSetOfPartialPerm, "for a partial perm.",
 InstallGlobalFunction(InternalRepOfPartialPerm, 
 function(f)
 
-#  if not IsPartialPerm(f) then 
-#    Error("the argument should be a partial perm,");
-#    return;
-#  fi;
+  if not IsPartialPerm(f) then 
+    Error("the argument should be a partial perm,");
+    return;
+  fi;
 
   if IsBound(f![f![1]+2*f![2]+7]) then 
     return ReadOffPartPerm_C(f, 1, f![1]+3*f![2]+6);
