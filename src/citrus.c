@@ -378,7 +378,6 @@ Obj FuncInvPartPerm_C ( Obj self, Obj f )
 /* on sets for a partial permutation */ 
 
 Obj FuncOnIntegerSetsWithPartPerm_C (Obj self, Obj set, Obj f)
-/* and carrot! ^*/
 { Obj out, j, k;
   Int deg, n, m, i, jj;
 
@@ -403,7 +402,33 @@ Obj FuncOnIntegerSetsWithPartPerm_C (Obj self, Obj set, Obj f)
   SortDensePlist(out);
   return out;
 }
+
+/* equality test for partial permutations */
+
+Obj FuncEqPartPerm_C (Obj self, Obj f, Obj g)
+{ Int deg_f, deg_g, rank_f, rank_g, i;
+
+    deg_f = INT_INTOBJ(ELM_PLIST(f, 1));
+    deg_g = INT_INTOBJ(ELM_PLIST(g, 1));
     
+    if(deg_f!=deg_g) return False;
+
+    rank_f = INT_INTOBJ(ELM_PLIST(f, 2));
+    rank_g = INT_INTOBJ(ELM_PLIST(g, 2));
+
+    if(rank_f!=rank_g) return False;
+
+    /* search for a difference and return False if you find one          */
+    for(i=8+deg_f;i<=7+deg_f+2*rank_f;i++){
+      if(INT_INTOBJ(ELM_PLIST(f, i)) != INT_INTOBJ(ELM_PLIST(g, i))){
+        return False;
+      }
+    }
+
+    /* otherwise they must be equal                                        */
+    return True;
+}
+
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
@@ -439,6 +464,10 @@ static StructGVarFunc GVarFuncs [] = {
   { "OnIntegerSetsWithPartPerm_C", 2, "set,f",
     FuncOnIntegerSetsWithPartPerm_C,
     "pkg/citrus/src/citrus.c:FuncOnIntegerSetsWithPartPerm_C" },
+  
+  { "EqPartPerm_C", 2, "f,g",
+    FuncEqPartPerm_C,
+    "pkg/citrus/src/citrus.c:FuncEqPartPerm_C" },
 
   { 0 }
 

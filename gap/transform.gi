@@ -45,6 +45,7 @@ if IsBound(InvPartPerm_C) then
   end);
 else
   #JDM modify the method below...
+  Error("not yet implemented,");
   InstallMethod(\^, "for a partial perm and neg int", 
   [IsPartialPerm and IsPartialPermRep, IsNegInt],
   function(f, r)
@@ -146,10 +147,8 @@ end);
 #JDM C
 
 InstallMethod(\=, "for a partial perm and partial perm", 
-  [IsPartialPerm and IsPartialPermRep, IsPartialPerm and IsPartialPermRep],
-  function(f,g)
-    return Dom(f)=Dom(g) and Ran(f)=Ran(g);
-end);
+[IsPartialPerm and IsPartialPermRep, IsPartialPerm and IsPartialPermRep],
+EqPartPerm_C);
 
 # new for 0.7! - \/ - "for a partial perm and partial perm"
 #############################################################################
