@@ -283,29 +283,28 @@ Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
 /* comparison for qsort */
 
 int cmp (const void *a, const void *b)
-{ int aa, bb;
+{ Int aa, bb;
 
-  aa = (long) a;
-  bb = (long) b;
-  return (int) aa-bb;
+ aa = *((const Int *)a);
+ bb = *((const Int *)b);
+ return (int) (aa-bb);
 }
 
 /* range set of partial permutation */
 
 Obj FuncRanSetPartPerm_C ( Obj self, Obj f )
-{ Int deg, rank, i, tmp;
+{ Int deg, rank, i;
   Obj out;
 
   deg = INT_INTOBJ(ELM_PLIST(f, 1));
   rank =  INT_INTOBJ(ELM_PLIST(f, 2));
-  tmp = LEN_PLIST(f);
 
-  if(LEN_PLIST(f)==6+deg+2*rank){
+  if(SIZE_OBJ(f)/sizeof(UInt)<7+deg+2*rank||ADDR_OBJ(f)[7+deg+2*rank]==0){
     SET_LEN_PLIST(f, 6+deg+3*rank);
     for(i=1;i<=rank;i++){
       SET_ELM_PLIST(f,2*rank+deg+6+i, ELM_PLIST(f,rank+deg+6+i));
     }
-   qsort(ADDR_OBJ(f)+7+deg+2*rank, rank, sizeof(Int), cmp);
+   qsort(ADDR_OBJ(f)+7+deg+2*rank, rank, sizeof(UInt), cmp);
   }
 
   out = NEW_PLIST(T_PLIST_CYC,rank);

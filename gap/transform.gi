@@ -492,6 +492,23 @@ end);
 InstallMethod(ImageSetOfPartialPerm, "for a partial perm.",
 [IsPartialPerm and IsPartialPermRep], f-> Set(Ran(f)));
 
+# new for 0.7! - InternalRepOfPartialPerm - "for a partial perm"
+#############################################################################
+
+InstallGlobalFunction(InternalRepOfPartialPerm, 
+function(f)
+
+#  if not IsPartialPerm(f) then 
+#    Error("the argument should be a partial perm,");
+#    return;
+#  fi;
+
+  if IsBound(f![f![1]+2*f![2]+7]) then 
+    return ReadOffPartPerm_C(f, 1, f![1]+3*f![2]+6);
+  fi;
+  return ReadOffPartPerm_C(f, 1, f![1]+2*f![2]+6);
+end);
+
 # new for 0.1! - InversesOfTransformation - "for trans. semi. and trans."
 #############################################################################
 

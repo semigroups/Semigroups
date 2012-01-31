@@ -57,6 +57,7 @@ DeclareGlobalFunction("DomainAndRangeOfPartialPerm");
 DeclareAttribute("DomainOfPartialPerm", IsPartialPerm);
 DeclareSynonymAttr("Dom", DomainOfPartialPerm);
 DeclareAttribute("ImageSetOfPartialPerm", IsPartialPerm);
+DeclareGlobalFunction("InternalRepOfPartialPerm");
 DeclareAttribute("MaxDomain", IsPartialPerm);
 DeclareAttribute("MaxDomainRange", IsPartialPerm);
 DeclareAttribute("MaxRange", IsPartialPerm);
