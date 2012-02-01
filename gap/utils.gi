@@ -306,6 +306,7 @@ end);
 
 # new for 0.1! - RandomTransformationSemigroup 
 ###########################################################################
+
 InstallGlobalFunction(RandomTransformationMonoid,
 function(m,n)
   return Monoid(Set(List([1..m], x-> RandomTransformation(n))));
