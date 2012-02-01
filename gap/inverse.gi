@@ -74,12 +74,18 @@ end);
 ##############################################################################
 
 InstallGlobalFunction(EnumerateInvSemigpData, 
-function(s)
+function(s, mults, schutz)
   local o, scc, r, mults, schutz, graph, truth, gens, modifier, i;
   
   o:=InvSemigpData(s);
-
-  if not IsClosed(o) then 
+  
+  if IsPartialPermMonoid(s) then
+    modifier:=0;
+  else
+    modifier:=1;
+  fi;
+  
+  if not IsClosed(o) and schutz then 
     scc:=OrbSCC(o);
     r:=Length(scc);
     mults:=EmptyPlist(Length(o)); 
@@ -108,6 +114,37 @@ function(s)
     SetNrLClasses(s, Length(o)-modifier);
     SetNrHClasses(s, Sum(List([1..r], m-> Length(scc[m])^2))-modifier);
     SetNrIdempotents(s, Length(o)-modifier);
+  elif not IsClosed(o) and mults then 
+    scc:=OrbSCC(o);
+    r:=Length(scc);
+    mults:=EmptyPlist(Length(o));
+    gens:=GeneratorsOfSemigroup(s);
+
+    for i in [1..r] do
+      CreateSCCMultipliers(gens, o, i, scc[i], mults);
+    od;
+
+    if IsPartialPermMonoid(s) then
+      modifier:=0;
+    else
+      modifier:=1;
+    fi;
+
+    SetNrDClasses(s, r-modifier);
+    SetNrRClasses(s, Length(o)-modifier);
+    SetNrLClasses(s, Length(o)-modifier);
+    SetNrHClasses(s, Sum(List([1..r], m-> Length(scc[m])^2))-modifier);
+    SetNrIdempotents(s, Length(o)-modifier); 
+  elif not IsClosed(o) then 
+    scc:=OrbSCC(o);
+    r:=Length(scc);
+    
+   
+    SetNrDClasses(s, r-modifier);
+    SetNrRClasses(s, Length(o)-modifier);
+    SetNrLClasses(s, Length(o)-modifier);
+    SetNrHClasses(s, Sum(List([1..r], m-> Length(scc[m])^2))-modifier);
+    SetNrIdempotents(s, Length(o)-modifier); 
   fi;
   
   return;
@@ -137,7 +174,51 @@ function(s)
   EnumerateInvSemigpData(s);
   return Size(s);
 end); 
+
+# new for 0.7! - NrRClasses - for an inverse semigroup of partial perms
+##############################################################################
+
+InstallMethod(NrRClasses, "for an inverse semigp of partial perms",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s)
+  Enumerate(InvSemigpData(s));
+  return Length(InvSemigpData(s));
+end); 
+
+# new for 0.7! - NrLClasses - for an inverse semigroup of partial perms
+##############################################################################
+
+InstallMethod(NrLClasses, "for an inverse semigp of partial perms",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s)
+  Enumerate(InvSemigpData(s));
+  return Length(InvSemigpData(s));
+end); 
+
+# new for 0.7! - NrDClasses - for an inverse semigroup of partial perms
+##############################################################################
+
+InstallMethod(NrDClasses, "for an inverse semigp of partial perms",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s)
+  Enumerate(InvSemigpData(s));
+  return Length(OrbSCC(InvSemigpData(s)));
+end); 
+
+# new for 0.7! - NrHClasses - for an inverse semigroup of partial perms
+##############################################################################
+
+InstallMethod(NrHClasses, "for an inverse semigp of partial perms",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s)
+  local scc;
   
+  Enumerate(InvSemigpData(s));
+  scc:=OrbSCC(InvSemigpData(s));
+
+  return Sum(List(scc, m-> Length(m)^2))-modifier);
+end); 
+
 
 
 
