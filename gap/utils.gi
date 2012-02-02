@@ -358,7 +358,7 @@ function(arg)
   fi;
   
   Error("Usage: ((transformation semigroup or D-class) and transformation)",
-  "or (partial perm. inverse semigroup and partial perm.");
+  "or (partial perm. inverse semigroup and partial perm.)");
   return;
 end);
 
