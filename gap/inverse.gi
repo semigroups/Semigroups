@@ -76,16 +76,23 @@ end);
 InstallOtherMethod(DClassReps, "for an inverse semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local o, scc, r, gens, out, i;
+  local o, scc, r, i, gens, out, j;
   
   o:=RangesOrb(s);
   scc:=OrbSCC(o); 
   r:=Length(scc);
+  
+  if IsPartialPermMonoid(s) then 
+    i:=0;
+  else
+    i:=1;
+  fi;
+
   gens:=GeneratorsOfSemigroup(s);
   out:=EmptyPlist(r);
   
-  for i in [1..r] do 
-    out[i]:=EvaluateWord(gens, TraceSchreierTreeForward(o, scc[i][1]));
+  for j in [1..r-i] do 
+    out[j]:=EvaluateWord(gens, TraceSchreierTreeForward(o, scc[j+i][1]));
   od;
   return out;
 end);
@@ -100,9 +107,16 @@ function(s)
   
   o:=RangesOrb(s);
   
-  if not IsClosed(o) then 
-    scc:=OrbSCC(o);
-    r:=Length(scc);
+  if IsPartialPermMonoid(s) then 
+    modifier:=0;
+  else
+    modifier:=1;
+  fi;
+   
+  scc:=OrbSCC(o);
+  r:=Length(scc);
+  
+  if not o!.finished then 
     mults:=EmptyPlist(Length(o)); 
     schutz:=EmptyPlist(r);
     graph:=OrbitGraph(o);
@@ -127,22 +141,13 @@ function(s)
       schutz[i]:=CreateSchutzGp(gens, o, f, scc[i], 
          truth[i], graph, r, mults);
     od;
-
-    if IsPartialPermMonoid(s) then 
-      modifier:=0;
-    else
-      modifier:=1;
-    fi;
-    
-    SetSize(s, Sum(List([1..r], m-> Length(scc[m])^2*Size(schutz[m][2])))-
-     modifier);
-    SetNrDClasses(s, r-modifier);
-    SetNrRClasses(s, Length(o)-modifier);
-    SetNrLClasses(s, Length(o)-modifier);
-    SetNrHClasses(s, Sum(List([1..r], m-> Length(scc[m])^2))-modifier);
-    SetNrIdempotents(s, Length(o)-modifier);
+    o!.finished:=true;
+  else
+    schutz:=o!.schutz;
   fi;
   
+  SetSize(s, Sum(List([1..r], m-> Length(scc[m])^2*Size(schutz[m][2])))-
+     modifier);
   return;
 end); 
 
@@ -163,8 +168,14 @@ function(s)
   out:=EmptyPlist(Length(o));
   gens:=GeneratorsOfSemigroup(s);
 
-  for i in [1..Length(o)] do 
-    out[i]:=EvaluateWord(gens, TraceSchreierTreeForward(o, i))^-1;
+  if IsPartialPermMonoid(s) then 
+    i:=0;
+  else
+    i:=1;
+  fi;
+  
+  for j in [1..Length(o)-i] do 
+    out[j]:=EvaluateWord(gens, TraceSchreierTreeForward(o, j+i))^-1;
   od;
   return out;
 end);
@@ -178,7 +189,12 @@ InstallOtherMethod(NrRClasses, "for an inverse semigp of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
   Enumerate(RangesOrb(s));
-  return Length(RangesOrb(s));
+
+  if IsPartialPermMonoid(s) then 
+    return Length(RangesOrb(s));
+  fi;
+
+  return Length(RangesOrb(s))-1;
 end); 
 
 # new for 0.7! - NrLClasses - for an inverse semigroup of partial perms
@@ -187,8 +203,14 @@ end);
 InstallOtherMethod(NrLClasses, "for an inverse semigp of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
+  local i;
   Enumerate(RangesOrb(s));
-  return Length(RangesOrb(s));
+  
+  if IsPartialPermMonoid(s) then 
+    return Length(RangesOrb(s));
+  fi;
+
+  return Length(RangesOrb(s))-1;
 end); 
 
 # new for 0.7! - NrDClasses - for an inverse semigroup of partial perms
@@ -198,7 +220,11 @@ InstallOtherMethod(NrDClasses, "for an inverse semigp of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
   Enumerate(RangesOrb(s));
-  return Length(OrbSCC(RangesOrb(s)));
+  if IsPartialPermMonoid(s) then 
+    return Length(OrbSCC(RangesOrb(s)));
+  fi;
+
+  return Length(OrbSCC(RangesOrb(s)))-1;
 end); 
 
 # new for 0.7! - NrHClasses - for an inverse semigroup of partial perms
@@ -212,7 +238,11 @@ function(s)
   Enumerate(RangesOrb(s));
   scc:=OrbSCC(RangesOrb(s));
 
-  return Sum(List(scc, m-> Length(m)^2));
+  if IsPartialPermMonoid(s) then 
+    return Sum(List(scc, m-> Length(m)^2));
+  fi;
+
+  return Sum(List(scc, m-> Length(m)^2))-1;
 end); 
 
 # new for 0.7! - NrIdempotents - for an inverse semigroup of partial perms
@@ -222,7 +252,11 @@ InstallOtherMethod(NrIdempotents, "for an inverse semigp of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
   Enumerate(RangesOrb(s));
-  return Length(OrbSCC(RangesOrb(s)));
+  if IsPartialPermMonoid(s) then 
+    return Length(OrbSCC(RangesOrb(s)));
+  fi;
+
+  return Length(OrbSCC(RangesOrb(s)))-1;
 end); 
 
 #RRR
@@ -238,7 +272,7 @@ function(s)
   n:=LargestMovedPoint(s);
   return Orb(s, [1..n]*1, OnIntegerSetsWithPartialPerm, 
         rec(schreier:=true, orbitgraph:=true, storenumbers:=true, 
-        log:=true, hashlen:=6257));
+        log:=true, hashlen:=CitrusOptionsRec.hashlen.M, finished:=false));
         #JDM orb bug prevents us from using onflatplainlist above
 end);
 
@@ -255,8 +289,14 @@ function(s)
   out:=EmptyPlist(Length(o));
   gens:=GeneratorsOfSemigroup(s);
 
-  for i in [1..Length(o)] do 
-    out[i]:=EvaluateWord(gens, TraceSchreierTreeForward(o, i));
+  if IsPartialPermMonoid(s) then 
+    i:=0;
+  else
+    i:=1;
+  fi;
+
+  for j in [1..Length(o)-i] do 
+    out[j]:=EvaluateWord(gens, TraceSchreierTreeForward(o, j+i));
   od;
   return out;
 end);
@@ -273,10 +313,7 @@ function(s)
   return Size(s);
 end); 
 
-
-
-
-
+#EOF
 
 
 
