@@ -13,6 +13,7 @@
 DeclareGlobalFunction("CreateSCCMultipliers");
 DeclareGlobalFunction("CreateSchutzGp");
 DeclareGlobalFunction("EnumerateRangesOrb");
+DeclareProperty("IsGreensClassOfPartPermSemigroup", IsGreensClass);
+DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
 DeclareAttribute("RangesOrb", IsPartialPermSemigroup and IsInverseSemigroup, "mutable");
-
-
+DeclareGlobalFunction("ShortOrb");

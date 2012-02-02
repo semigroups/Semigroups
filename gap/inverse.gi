@@ -10,6 +10,8 @@
 
 ## functions and methods for inverse semigroups of partial permutations
 
+#CCC
+
 # new for 0.7! - CreateSCCMultipliers - not a user function 
 #############################################################################
 
@@ -70,6 +72,8 @@ function(gens, o, f, scc, truth, graph, r, p)
   return [StabChainImmutable(g), g];
 end);
 
+#DDD
+
 # new for 0.7! - DClassReps - "for an inverse semi of part perms"
 ##############################################################################
 
@@ -97,6 +101,17 @@ function(s)
   return out;
 end);
 
+# new for 0.7! - DClassType - "for a partial perm inverse semigroup"
+############################################################################
+
+InstallOtherMethod(DClassType, "for a partial perm inverse semigroup",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s);
+
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsGreensDClass and
+         IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup);
+end);
 
 # new for 0.7! - EnumerateRangesOrb - "for an inverse semi of part perms"
 ##############################################################################
@@ -153,6 +168,40 @@ function(s)
   return;
 end); 
 
+#GGG
+
+# new for 0.7! - GreensRClassOfElementNC - for an inv semi and part perm
+##############################################################################
+# Usage: data is position of Ran(f) in o, scc[1], and scc index.
+
+InstallOtherMethod(GreensRClassOfElementNC, "for an inv semi and part perm",
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
+ IsPartialPermRep],
+function(s, f)
+  local o, l, m, t, r, j;
+
+  if IsClosed(RangesOrb(s)) then 
+    o:=RangesOrb(s);
+    l:=Position(o, RangeSetOfPartialPerm(f));
+    if l=fail then 
+      Info(InfoCitrus, 1, "the partial perm. is not an element of the semigroup");
+      return fail;
+    fi;
+    m:=OrbSCCLookup(o)[l];
+    t:=OrbSCC(o)[m][1];
+  else
+    o:=ShortOrb(s, Ran(f));
+    Enumerate(o);
+    l:=1; m:=1; t:=1;
+  fi;
+
+  r:=Objectify(RClassType(s), rec(parent:=s, data:=[l,t,m], o:=o)); 
+
+  SetRepresentative(r, f);
+  SetEquivalenceClassRelation(r, GreensRRelation(s));
+  return r; 
+end);
+
 #HHH
 
 # new for 0.7! - HClassReps - for an inverse semigroup of partial perms
@@ -188,12 +237,23 @@ function(s)
     for j in [1..Length(scc[i+l])] do 
       for k in [1..Length(scc[i+l])] do 
         m:=m+1;
-#        if i+l= 3 then Error(""); fi;
         out[m]:=mults[scc[i+l][j]]*f^-1*f*mults[scc[i+l][k]]^-1;  
       od;
     od;
   od;
   return out;
+end);
+
+# new for 0.7! - HClassType - "for a partial perm inverse semigroup"
+############################################################################
+
+InstallOtherMethod(HClassType, "for a partial perm inverse semigroup",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s);
+
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsGreensHClass and
+         IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup);
 end);
 
 #LLL
@@ -221,6 +281,18 @@ function(s)
     out[j]:=EvaluateWord(gens, TraceSchreierTreeForward(o, j+i))^-1;
   od;
   return out;
+end);
+
+# new for 0.7! - LClassType - "for a partial perm inverse semigroup"
+############################################################################
+
+InstallOtherMethod(LClassType, "for a partial perm inverse semigroup",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s);
+
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsGreensLClass and
+         IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup);
 end);
 
 #NNN
@@ -304,6 +376,23 @@ end);
 
 #RRR
 
+# new for 0.7! - ShortOrb - "for an inverse semigp of partial perms"
+##############################################################################
+
+InstallGlobalFunction(ShortOrb, 
+function(s, set)
+
+  return Orb(s, set, OnIntegerSetsWithPartialPerm, 
+      rec(onflatplainlist:=true,
+        treehashsize:=CitrusOptionsRec.hashlen.M,
+        schreier:=true,
+        gradingfunc := function(o,x) return Length(x); end,
+        orbitgraph := true,
+        onlygrades:= function(x,y) return x=Length(set); end,
+        storenumbers:=true,
+        log:=true)); 
+end);
+
 # new for 0.7! - RangesOrb - "for an inverse semi of part. perms"
 ##############################################################################
 
@@ -343,6 +432,19 @@ function(s)
   od;
   return out;
 end);
+
+# new for 0.7! - RClassType - "for a partial perm inverse semigroup"
+############################################################################
+
+InstallOtherMethod(RClassType, "for a partial perm inverse semigroup",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s);
+
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsGreensRClass and
+         IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup);
+end);
+
 
 #SSS
 
