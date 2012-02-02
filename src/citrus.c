@@ -418,6 +418,7 @@ Obj FuncEqPartPerm_C (Obj self, Obj f, Obj g)
     deg_g = INT_INTOBJ(ELM_PLIST(g, 1));
     
     if(deg_f!=deg_g) return False;
+    if(deg_f==0) return True;
 
     rank_f = INT_INTOBJ(ELM_PLIST(f, 2));
     rank_g = INT_INTOBJ(ELM_PLIST(g, 2));
@@ -425,7 +426,7 @@ Obj FuncEqPartPerm_C (Obj self, Obj f, Obj g)
     if(rank_f!=rank_g) return False;
 
     /* search for a difference and return False if you find one          */
-    for(i=8+deg_f;i<=7+deg_f+2*rank_f;i++){
+    for(i=7+deg_f;i<=6+deg_f+2*rank_f;i++){
       if(INT_INTOBJ(ELM_PLIST(f, i)) != INT_INTOBJ(ELM_PLIST(g, i))){
         return False;
       }

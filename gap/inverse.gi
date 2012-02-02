@@ -141,6 +141,8 @@ function(s)
       schutz[i]:=CreateSchutzGp(gens, o, f, scc[i], 
          truth[i], graph, r, mults);
     od;
+    o!.mults:=mults;
+    o!.schutz:=schutz;
     o!.finished:=true;
   else
     schutz:=o!.schutz;
@@ -151,7 +153,48 @@ function(s)
   return;
 end); 
 
-#GGG
+#HHH
+
+# new for 0.7! - HClassReps - for an inverse semigroup of partial perms
+##############################################################################
+
+InstallOtherMethod(HClassReps, "for an inverse semi of partial perms",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s)
+  local o, scc, mults, r, gens, out, l, m, w, f, i, j, k;
+
+  o:=RangesOrb(s);
+  EnumerateRangesOrb(s);
+  scc:=OrbSCC(o);
+  mults:=o!.mults;
+  r:=Length(scc);
+  gens:=GeneratorsOfSemigroup(s);
+  out:=EmptyPlist(NrHClasses(s));
+
+  if IsPartialPermMonoid(s) then 
+    l:=0;
+  else
+    l:=1;
+  fi;
+
+  m:=0;
+  for i in [1..r-l] do 
+    w:=TraceSchreierTreeForward(o, i+l);
+    if w=[] then 
+      f:=PartialPermNC(o[scc[i+l][1]], o[scc[i+l][1]]);
+    else
+      f:=EvaluateWord(gens, TraceSchreierTreeForward(o, scc[i+l][1]));
+    fi;
+    for j in [1..Length(scc[i+l])] do 
+      for k in [1..Length(scc[i+l])] do 
+        m:=m+1;
+#        if i+l= 3 then Error(""); fi;
+        out[m]:=mults[scc[i+l][j]]*f^-1*f*mults[scc[i+l][k]]^-1;  
+      od;
+    od;
+  od;
+  return out;
+end);
 
 #LLL
 
@@ -161,7 +204,7 @@ end);
 InstallOtherMethod(LClassReps, "for an inv semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local o, out, gens, i;
+  local o, out, gens, i, j;
 
   o:=RangesOrb(s);
   EnumerateRangesOrb(s);
@@ -282,7 +325,7 @@ end);
 InstallOtherMethod(RClassReps, "for an inv semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local o, out, gens, i;
+  local o, out, gens, i, j;
 
   o:=RangesOrb(s);
   EnumerateRangesOrb(s);
