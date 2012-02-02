@@ -170,6 +170,68 @@ end);
 
 #GGG
 
+# new for 0.7! - GreensDClassOfElementNC - for an inv semi and part perm
+##############################################################################
+# Usage: data is position of Ran(f) in o, scc[1], and scc index.
+
+InstallOtherMethod(GreensDClassOfElementNC, "for an inv semi and part perm",
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
+ IsPartialPermRep],
+function(s, f)
+  local o, l, m, t, r, j;
+
+  if IsClosed(RangesOrb(s)) then 
+    o:=RangesOrb(s);
+    l:=Position(o, Dom(f));
+    if l=fail then 
+      Info(InfoCitrus, 1, "the partial perm. is not an element of the semigroup");
+      return fail;
+    fi;
+    m:=OrbSCCLookup(o)[l];
+    t:=OrbSCC(o)[m][1];
+  else
+    o:=ShortOrb(s, Dom(f));
+    l:=1; m:=1; t:=1;
+  fi;
+
+  r:=Objectify(DClassType(s), rec(parent:=s, data:=[l,t,m], o:=o)); 
+
+  SetRepresentative(r, f);
+  SetEquivalenceClassRelation(r, GreensDRelation(s));
+  return r; 
+end);
+
+# new for 0.7! - GreensLClassOfElementNC - for an inv semi and part perm
+##############################################################################
+# Usage: data is position of Ran(f) in o, scc[1], and scc index.
+
+InstallOtherMethod(GreensLClassOfElementNC, "for an inv semi and part perm",
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
+ IsPartialPermRep],
+function(s, f)
+  local o, l, m, t, r, j;
+
+  if IsClosed(RangesOrb(s)) then 
+    o:=RangesOrb(s);
+    l:=Position(o, Dom(f));
+    if l=fail then 
+      Info(InfoCitrus, 1, "the partial perm. is not an element of the semigroup");
+      return fail;
+    fi;
+    m:=OrbSCCLookup(o)[l];
+    t:=OrbSCC(o)[m][1];
+  else
+    o:=ShortOrb(s, Dom(f));
+    l:=1; m:=1; t:=1;
+  fi;
+
+  r:=Objectify(LClassType(s), rec(parent:=s, data:=[l,t,m], o:=o)); 
+
+  SetRepresentative(r, f);
+  SetEquivalenceClassRelation(r, GreensLRelation(s));
+  return r; 
+end);
+
 # new for 0.7! - GreensRClassOfElementNC - for an inv semi and part perm
 ##############################################################################
 # Usage: data is position of Ran(f) in o, scc[1], and scc index.
@@ -191,7 +253,6 @@ function(s, f)
     t:=OrbSCC(o)[m][1];
   else
     o:=ShortOrb(s, Ran(f));
-    Enumerate(o);
     l:=1; m:=1; t:=1;
   fi;
 
