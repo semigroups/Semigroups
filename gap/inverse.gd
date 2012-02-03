@@ -15,5 +15,7 @@ DeclareGlobalFunction("CreateSchutzGp");
 DeclareGlobalFunction("EnumerateRangesOrb");
 DeclareProperty("IsGreensClassOfPartPermSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
+DeclareAttribute("StabChainOfSchutzGp", IsGreensClass);
+#JDM more filters above...
 DeclareAttribute("RangesOrb", IsPartialPermSemigroup and IsInverseSemigroup, "mutable");
 DeclareGlobalFunction("ShortOrb");

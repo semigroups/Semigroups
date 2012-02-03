@@ -45,7 +45,7 @@ end);
 InstallMethod(\in, "for trans. and R-class of trans. semigp.", 
 [IsTransformation, IsGreensRClass and IsGreensClassOfTransSemigp],
 function(f, r)
-  local rep, s, d, o, i, g, schutz;
+  local rep, d, o, i, schutz, g;
 
   rep:=Representative(r);
 
@@ -57,7 +57,7 @@ function(f, r)
     return false;
   fi;
 
-  s:=r!.parent; d:=r!.data; o:=r!.o!.orbits[d[1]][d[2]];
+  d:=r!.data; o:=r!.o!.orbits[d[1]][d[2]];
 
   i:= Position(o, ImageSetOfTransformation(f));
 
@@ -1798,10 +1798,11 @@ end);
 
 #PPP
 
-# new for 0.1! - ParentAttr - "for a R-class of a trans. semigroup"
+# new for 0.1! - ParentAttr - "for Green's class of a trans. semigroup"
 ############################################################################
+# JDM move to greens.gi, is this a good name?
 
-InstallMethod(ParentAttr, "for a R-class of a trans. semigroup", 
+InstallMethod(ParentAttr, "for a Green's class of a trans. semigroup", 
 [IsGreensClass and IsGreensClassOfTransSemigp], x-> x!.parent);
 
 # new for 0.1! - PreInOrbitsOfImages - not a user function!
