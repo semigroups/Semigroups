@@ -73,39 +73,36 @@ function(f, s)
       o!.lookfunc:=o!.lookingfor;
 
       Enumerate(o);
-
-      if PositionOfFound(o)=false then
-        Unbind(o!.found);
-        o!.looking:=false; Unbind(o!.lookingfor); Unbind(o!.lookfunc);
-        return false;
-      fi;
       k:=PositionOfFound(o);
       Unbind(o!.found);
       o!.looking:=false; Unbind(o!.lookingfor); Unbind(o!.lookfunc);
+      
+      if k=false then
+        return false;
+      fi;
     fi;
 
     ran:=RangeSetOfPartialPerm(f);
-    l:=Position(o, ran);
        
-    if l=fail then 
-      if IsClosed(o) then 
-        return false;
-      fi;
-      o:=ShortOrb(s, Dom(f));
-      o!.looking:=true;
-      o!.lookingfor:=function(o, x) return x=ran; end;
-      o!.lookfunc:=o!.lookingfor;
-      Enumerate(o);
-      if PositionOfFound(o)=false then
-        return false;
-      fi;
-      l:=PositionOfFound(o);
+    if IsClosed(o) and Position(o, ran)=fail then 
+      return false;
     fi;
-  fi;   
+    # JDM could look ahead here...
 
-  m:=OrbSCCLookup(o)[l];
+    k:=1;
+    o:=ShortOrb(s, Dom(f));
+    Enumerate(o);
+    
+    l:=Position(o, ran);
   
-  if not OrbSCCLookup(o)[k]=m then 
+    if l=fail then 
+      return false;
+    fi;
+  fi;
+
+  m:=OrbSCCLookup(o)[k];
+  
+  if not OrbSCCLookup(o)[l]=m then 
     return false;
   fi;
   
@@ -347,7 +344,8 @@ end);
 InstallOtherMethod(AsList, "for an H-class of trans. semigp.",
 [IsGreensHClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
 function(r)
-  Error("not yet implemented");
+  
+
 end);
 
 # new for 0.7! - AsList - not a user function 
