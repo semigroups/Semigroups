@@ -132,6 +132,15 @@ else
   Error("not yet implemented"); #JDM
 fi;
 
+# new for 0.7! - \* - "for a partial perm and perm"
+#############################################################################
+
+InstallMethod(\*, "for a partial perm and perm",
+[IsPartialPerm and IsPartialPermRep, IsPerm],
+function(f,g)
+  return PartialPermNC(Dom(f), OnTuples(Ran(f), g));
+end);
+
 # new for 0.7! - \< - "for a partial perm and partial perm"
 #############################################################################
 #JDM C
