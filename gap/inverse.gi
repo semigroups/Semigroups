@@ -75,6 +75,8 @@ function(f, s)
       Enumerate(o);
 
       if PositionOfFound(o)=false then
+        Unbind(o!.found);
+        o!.looking:=false; Unbind(o!.lookingfor); Unbind(o!.lookfunc);
         return false;
       fi;
       k:=PositionOfFound(o);
@@ -98,8 +100,6 @@ function(f, s)
         return false;
       fi;
       l:=PositionOfFound(o);
-      Unbind(o!.found);
-      o!.looking:=false; Unbind(o!.lookingfor); Unbind(o!.lookfunc);
     fi;
   fi;   
 
