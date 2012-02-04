@@ -109,7 +109,7 @@ function(f, r)
   
   rep:=Representative(r);
 
-  if Degree(f)<>Degree(rep) or Rank(f)<>Rank(rep) then
+  if Rank(f)<>Rank(rep) then
     Info(InfoCitrus, 1, "degree or rank not equal to those of",
         " any of the D-class elements,");
     return false;
@@ -134,7 +134,7 @@ function(f, r)
     return true;
   fi;
 
-  g:=o!.mults[l_dom]*f*o!.mults[l_ran];
+  g:=o!.mults[l_dom]^-1*f*o!.mults[l_ran];
 
   if g=rep then 
     return true;
@@ -353,7 +353,7 @@ InstallOtherMethod(GreensDClassOfElementNC, "for an inv semi and part perm",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
  IsPartialPermRep],
 function(s, f)
-  local o, l, m, t, r, j;
+  local o, l, m, t, k, rep, d;
 
   if IsClosed(RangesOrb(s)) then 
     o:=RangesOrb(s);
@@ -364,17 +364,20 @@ function(s, f)
     fi;
     m:=OrbSCCLookup(o)[l];
     t:=OrbSCC(o)[m][1];
+    k:=Position(o, RangeSetOfPartialPerm(f));
+    rep:=o!.mults[l]^-1*f*o!.mults[k];
   else
     o:=ShortOrb(s, Dom(f));
+    rep:=f*f^-1;
     l:=1; m:=1; t:=1;
   fi;
 
 # more data required here for Ran(f) and Dom(f)
-  r:=Objectify(DClassType(s), rec(parent:=s, data:=[l,t,m], o:=o)); 
+  d:=Objectify(DClassType(s), rec(parent:=s, data:=[l,t,m], o:=o)); 
 
-  SetRepresentative(r, f);
-  SetEquivalenceClassRelation(r, GreensDRelation(s));
-  return r; 
+  SetRepresentative(d, rep);
+  SetEquivalenceClassRelation(d, GreensDRelation(s));
+  return d; 
 end);
 
 # new for 0.7! - GreensLClassOfElementNC - for an inv semi and part perm
