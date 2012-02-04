@@ -114,7 +114,7 @@ function(f, s)
 
   g:=o!.mults[k]^-1*f*o!.mults[l];
 
-  if g*g=g then # faster IsIdempotent method required...
+  if Dom(g)=Ran(g) then # g is an idempotent! 
     return true;
   elif schutz=false then
     return false;
