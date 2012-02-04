@@ -137,7 +137,8 @@ function(f, r)
   
   rep:=Representative(r);
 
-  if Degree(f)<>Degree(rep) or Rank(f)<>Rank(rep) or Dom(f)<>Dom(rep) then 
+  if Degree(f)<>Degree(rep) or MinDomain(f)<>MinDomain(rep) or 
+   Rank(f)<>Rank(rep) or Dom(f)<>Dom(rep) then 
     Info(InfoCitrus, 1, "degree, rank, or domain not equal to those of",
         " any of the R-class elements,");
     return false;
@@ -181,8 +182,9 @@ function(f, r)
   
   rep:=Representative(r);
 
-  if Degree(f)<>Degree(rep) or Rank(f)<>Rank(rep) or 
-    RangeSetOfPartialPerm(f)<>RangeSetOfPartialPerm(rep) then 
+  if MinRange(f)<>MinRange(rep) or MaxRange(f)<>MaxRange(rep) or 
+   Rank(f)<>Rank(rep) or RangeSetOfPartialPerm(f)<>RangeSetOfPartialPerm(rep) 
+   then 
     Info(InfoCitrus, 1, "degree, rank, or range not equal to those of",
         " any of the L-class elements,");
     return false;
@@ -315,6 +317,57 @@ function(r)
 
   for i in scc do
     Append(elts, g*mults[i]^-1);
+  od;
+  return elts;
+end);
+
+# new for 0.7! - AsList - not a user function 
+############################################################################
+
+InstallOtherMethod(AsList, "for an L-class of trans. semigp.",
+[IsGreensLClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
+function(r)
+  local f, g, elts, mults, scc, i;
+
+  f:=Representative(r); 
+  g:=List(SchutzenbergerGroup(r), x-> f*x);
+  elts:=EmptyPlist(Size(r));
+
+  mults:=r!.o!.mults; scc:=r!.o!.scc[r!.data[1]];
+
+  for i in scc do
+    Append(elts, mults[i]*g);
+  od;
+  return elts;
+end);
+
+# new for 0.7! - AsList - not a user function 
+############################################################################
+
+InstallOtherMethod(AsList, "for an H-class of trans. semigp.",
+[IsGreensHClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
+function(r)
+  Error("not yet implemented");
+end);
+
+# new for 0.7! - AsList - not a user function 
+############################################################################
+
+InstallOtherMethod(AsList, "for an D-class of trans. semigp.",
+[IsGreensDClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
+function(r)
+  local f, g, elts, mults, scc, i, j;
+
+  f:=Representative(r); 
+  g:=List(SchutzenbergerGroup(r), x-> f*x);
+  elts:=EmptyPlist(Size(r));
+
+  mults:=r!.o!.mults; scc:=r!.o!.scc[r!.data[1]];
+
+  for i in scc do
+    for j in scc do 
+      Append(elts, mults[j]*g*mults[i]^-1);
+    od;
   od;
   return elts;
 end);
@@ -1001,7 +1054,7 @@ end);
 ##############################################################################
 
 InstallMethod(Size, "for an D-class of an inverse semigroup",
-[IsGreensRClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
+[IsGreensDClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
 function(d)
   return Length(OrbSCC(d!.o)[d!.data[1]])^2*Size(SchutzenbergerGroup(d));
 end);
