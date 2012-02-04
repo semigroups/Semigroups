@@ -10,6 +10,122 @@
 
 ## functions and methods for inverse semigroups of partial permutations
 
+# new for 0.7! - \= - "for Green's class and Green's class of part perm semi"
+#############################################################################
+
+InstallMethod(\=, "for Green's class and class of part. perm. semigp.",
+[IsGreensClass and IsGreensClassOfPartPermSemigroup, IsGreensClass and
+IsGreensClassOfPartPermSemigroup],
+function(c1, c2)
+  if (IsGreensRClass(c1) and IsGreensRClass(c2)) or 
+   (IsGreensLClass(c1) and IsGreensLClass(c2)) or
+   (IsGreensDClass(c1) and IsGreensDClass(c2)) or
+   (IsGreensHClass(c1) and IsGreensHClass(c2)) then     
+    return c1!.parent=c2!.parent and Representative(c1) in c2;
+  fi;
+  return c1!.parent=c2!.parent and Representative(c1) in c2 and 
+   Size(c1)=Size(c2);
+end);
+
+# new for 0.7! - \< - "for Green's class and Green's class of part perm semi"
+#############################################################################
+
+InstallMethod(\<, "for Green's class and class of part. perm. semigp.",
+[IsGreensClass and IsGreensClassOfPartPermSemigroup, IsGreensClass and
+IsGreensClassOfPartPermSemigroup],
+function(c1, c2)
+  if (IsGreensRClass(c1) and IsGreensRClass(c2)) or 
+   (IsGreensLClass(c1) and IsGreensLClass(c2)) or
+   (IsGreensDClass(c1) and IsGreensDClass(c2)) or
+   (IsGreensHClass(c1) and IsGreensHClass(c2)) then     
+    return c1!.parent=c2!.parent and Representative(c1) < Representative(c2);
+  fi;
+  return false;
+end);
+
+# new for 0.7! - \in - "for an inverse semigroup"
+#############################################################################
+
+InstallMethod(\in, "for an inverse semigroup of part perms",
+[IsPartialPerm and IsPartialPermRep, IsInverseSemigroup and IsPartialPermSemigroup],
+function(f, s)
+  local o, k, l, ran, m, schutz, g;
+
+  if f![5]<SmallestMovedPoint(s) or f![6]>LargestMovedPoint(s) then 
+    return false;
+  fi;
+
+  o:=RangesOrb(s);
+
+  if IsClosed(o) then 
+    k:=Position(o, Dom(f));
+    if k=fail then 
+      return false;
+    fi;
+    l:=Position(o, RangeSetOfPartialPerm(f));
+    if l=fail then 
+      return false;
+    fi;
+  else
+    k:=Position(o, Dom(f));
+    if k=fail then 
+      o!.looking:=true; o!.lookingfor:=function(o, x) return x=Dom(f); end;
+      o!.lookfunc:=o!.lookingfor;
+
+      Enumerate(o);
+
+      if PositionOfFound(o)=false then
+        return false;
+      fi;
+      k:=PositionOfFound(o);
+      Unbind(o!.found);
+      o!.looking:=false; Unbind(o!.lookingfor); Unbind(o!.lookfunc);
+    fi;
+
+    ran:=RangeSetOfPartialPerm(f);
+    l:=Position(o, ran);
+       
+    if l=fail then 
+      if IsClosed(o) then 
+        return false;
+      fi;
+      o:=ShortOrb(s, Dom(f));
+      o!.looking:=true;
+      o!.lookingfor:=function(o, x) return x=ran; end;
+      o!.lookfunc:=o!.lookingfor;
+      Enumerate(o);
+      if PositionOfFound(o)=false then
+        return false;
+      fi;
+      l:=PositionOfFound(o);
+      Unbind(o!.found);
+      o!.looking:=false; Unbind(o!.lookingfor); Unbind(o!.lookfunc);
+    fi;
+  fi;   
+
+  m:=OrbSCCLookup(o)[l];
+  
+  if not OrbSCCLookup(o)[k]=m then 
+    return false;
+  fi;
+  
+  schutz:=RangeOrbStabChain(o, m);
+  
+  if schutz=true then 
+    return true;
+  fi;
+
+  g:=o!.mults[k]^-1*f*o!.mults[l];
+
+  if g*g=g then # faster IsIdempotent method required...
+    return true;
+  elif schutz=false then
+    return false;
+  fi;
+
+  return SiftedPermutation(schutz, g);
+end);
+
 # new for 0.7! - \in - "for an R-class of inv semi and part perm" 
 #############################################################################
 
@@ -17,7 +133,7 @@ InstallMethod(\in, "for an R-class of inv semi and part perm",
 [IsPartialPerm and IsPartialPermRep, IsGreensRClass and 
 IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
 function(f, r)
-  local rep, o, l, schutz, g;
+  local rep, o, l, m, schutz, g;
   
   rep:=Representative(r);
 
@@ -31,13 +147,14 @@ function(f, r)
   o:=r!.o;
   Enumerate(o);
   l:=Position(o, RangeSetOfPartialPerm(f));
-  
-  if l=fail or not OrbSCCTruthTable(o)[r!.data[3]][l] then 
+  m:=r!.data[1];
+
+  if l=fail or not OrbSCCTruthTable(o)[m][l] then 
     Info(InfoCitrus, 1, "range not equal to that of any R-class element,");
     return false;
   fi;
 
-  schutz:=StabChainOfSchutzGp(r); 
+  schutz:=RangeOrbStabChain(o, m, rep); 
 
   if schutz=true then 
     return true;
@@ -61,7 +178,7 @@ InstallMethod(\in, "for an L-class of inv semi and part perm",
 [IsPartialPerm and IsPartialPermRep, IsGreensLClass and 
 IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
 function(f, r)
-  local rep, o, l, schutz, g;
+  local rep, o, l, m, schutz, g;
   
   rep:=Representative(r);
 
@@ -75,19 +192,20 @@ function(f, r)
   o:=r!.o;
   Enumerate(o);
   l:=Position(o, Dom(f));
-  
-  if l=fail or not OrbSCCTruthTable(o)[r!.data[3]][l] then 
+  m:=r!.data[1];
+
+  if l=fail or not OrbSCCTruthTable(o)[m][l] then 
     Info(InfoCitrus, 1, "range not equal to that of any L-class element,");
     return false;
   fi;
 
-  schutz:=StabChainOfSchutzGp(r); 
+  schutz:=RangeOrbStabChain(o, m); 
 
   if schutz=true then 
     return true;
   fi;
 
-  g:=o!.mults[l]*f;
+  g:=o!.mults[l]^-1*f;
 
   if g=rep then 
     return true;
@@ -117,7 +235,7 @@ function(f, r)
 
   o:=r!.o; 
   Enumerate(o);
-  m:=r!.data[3];
+  m:=r!.data[1];
   
   l_dom:=Position(o, Dom(f)); l_ran:=Position(o, RangeSetOfPartialPerm(f));
   
@@ -128,7 +246,7 @@ function(f, r)
     return false;
   fi;
 
-  schutz:=StabChainOfSchutzGp(r); 
+  schutz:=RangeOrbStabChain(o, m, rep); 
 
   if schutz=true then 
     return true;
@@ -146,7 +264,6 @@ function(f, r)
 end);
 
 # new for 0.7! - \in - "for an H-class of inv semi and part perm" 
-##
 ############################################################################
 
 InstallMethod(\in, "for an H-class of inv semi and part perm",
@@ -164,13 +281,13 @@ function(f, r)
 
   o:=r!.o; data:=r!.data; mults:=o!.mults;
   
-  schutz:=StabChainOfSchutzGp(r); 
+  schutz:=RangeOrbStabChain(o, data[1]); 
 
   if schutz=true then 
     return true;
   fi;
 
-  g:=mults[data[1]]*f*mults[data[2]];
+  g:=mults[data[3]]^-1*f*mults[data[4]];
 
   if g=rep then 
     return true;
@@ -347,7 +464,7 @@ end);
 
 # new for 0.7! - GreensDClassOfElementNC - for an inv semi and part perm
 ##############################################################################
-# Usage: data is position of Ran(f) in o, scc[1], and scc index.
+# Notes: data is: [scc index, scc[1], pos of dom, pos of ran]
 
 InstallOtherMethod(GreensDClassOfElementNC, "for an inv semi and part perm",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
@@ -372,23 +489,22 @@ function(s, f)
     l:=1; m:=1; t:=1;
   fi;
 
-# more data required here for Ran(f) and Dom(f)
-  d:=Objectify(DClassType(s), rec(parent:=s, data:=[l,t,m], o:=o)); 
+  d:=Objectify(DClassType(s), rec(parent:=s, data:=[m,t,l,k], o:=o)); 
 
   SetRepresentative(d, rep);
   SetEquivalenceClassRelation(d, GreensDRelation(s));
   return d; 
 end);
 
-# new for 0.7! - GreensLClassOfElementNC - for an inv semi and part perm
+# new for 0.7! - GreensHClassOfElementNC - for an inv semi and part perm
 ##############################################################################
-# Usage: data is position of Ran(f) in o, scc[1], and scc index.
+# Notes: data is: [scc index, scc[1], pos of dom, pos of ran]
 
-InstallOtherMethod(GreensLClassOfElementNC, "for an inv semi and part perm",
+InstallOtherMethod(GreensHClassOfElementNC, "for an inv semi and part perm",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
  IsPartialPermRep],
 function(s, f)
-  local o, l, m, t, r, j;
+  local o, l, m, t, k, d;
 
   if IsClosed(RangesOrb(s)) then 
     o:=RangesOrb(s);
@@ -403,23 +519,56 @@ function(s, f)
     o:=ShortOrb(s, Dom(f));
     l:=1; m:=1; t:=1;
   fi;
+  k:=Position(o, RangeSetOfPartialPerm(f));
+  
+  d:=Objectify(HClassType(s), rec(parent:=s, data:=[m,t,l,k], o:=o)); 
 
-  r:=Objectify(LClassType(s), rec(parent:=s, data:=[l,t,m], o:=o)); 
+  SetRepresentative(d, f);
+  SetEquivalenceClassRelation(d, GreensDRelation(s));
+  return d; 
+end);
 
-  SetRepresentative(r, f);
+# new for 0.7! - GreensLClassOfElementNC - for an inv semi and part perm
+##############################################################################
+# Notes: data is: [scc index, scc[1], pos of ran]
+
+InstallOtherMethod(GreensLClassOfElementNC, "for an inv semi and part perm",
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
+ IsPartialPermRep],
+function(s, f)
+  local o, l, m, t, rep, r;
+
+  if IsClosed(RangesOrb(s)) then 
+    o:=RangesOrb(s);
+    l:=Position(o, Dom(f));
+    if l=fail then 
+      Info(InfoCitrus, 1, "the partial perm. is not an element of the semigroup");
+      return fail;
+    fi;
+    m:=OrbSCCLookup(o)[l];
+    t:=OrbSCC(o)[m][1];
+    rep:=o!.mults[l]^-1*f;
+  else
+    o:=ShortOrb(s, Dom(f));
+    l:=1; m:=1; t:=1;
+  fi;
+
+  r:=Objectify(LClassType(s), rec(parent:=s, data:=[m,t,l], o:=o)); 
+
+  SetRepresentative(r, rep);
   SetEquivalenceClassRelation(r, GreensLRelation(s));
   return r; 
 end);
 
 # new for 0.7! - GreensRClassOfElementNC - for an inv semi and part perm
 ##############################################################################
-# Usage: data is position of Ran(f) in o, scc[1], and scc index.
+# Notes: data is: [scc index, scc[1], pos of dom]
 
 InstallOtherMethod(GreensRClassOfElementNC, "for an inv semi and part perm",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
  IsPartialPermRep],
 function(s, f)
-  local o, l, m, t, r, j;
+  local o, l, m, t, rep, r;
 
   if IsClosed(RangesOrb(s)) then 
     o:=RangesOrb(s);
@@ -430,14 +579,15 @@ function(s, f)
     fi;
     m:=OrbSCCLookup(o)[l];
     t:=OrbSCC(o)[m][1];
+    rep:=f*o!.mults[l];
   else
     o:=ShortOrb(s, RangeSetOfPartialPerm(f));
     l:=1; m:=1; t:=1;
   fi;
   
-  r:=Objectify(RClassType(s), rec(parent:=s, data:=[l,t,m], o:=o)); 
+  r:=Objectify(RClassType(s), rec(parent:=s, data:=[m,t,l], o:=o)); 
 
-  SetRepresentative(r, f);
+  SetRepresentative(r, rep);
   SetEquivalenceClassRelation(r, GreensRRelation(s));
   return r; 
 end);
@@ -608,10 +758,10 @@ InstallOtherMethod(NrIdempotents, "for an inverse semigp of partial perms",
 function(s)
   Enumerate(RangesOrb(s));
   if IsPartialPermMonoid(s) then 
-    return Length(OrbSCC(RangesOrb(s)));
+    return Length(RangesOrb(s));
   fi;
 
-  return Length(OrbSCC(RangesOrb(s)))-1;
+  return Length(RangesOrb(s))-1;
 end); 
 
 # new for 0.7! - ParentAttr - "for a Green's class of a part perm semigroup
@@ -621,6 +771,49 @@ InstallMethod(ParentAttr, "for a R-class of a trans. semigroup",
 [IsGreensClass and IsGreensClassOfPartPermSemigroup], x-> x!.parent);
 
 #RRR
+
+# new for 0.7! - RangeOrbStabChain 
+##############################################################################
+# if the optional third arg is present it should have its range in position
+# scc[1] of o!! Otherwise this will mess everything up!
+
+InstallGlobalFunction(RangeOrbStabChain,
+function(arg)
+  local o, m, scc, f;
+
+  o:=arg[1]; m:=arg[2];
+  scc:=OrbSCC(o)[m];
+  
+  if IsBound(arg[3]) then 
+    f:=arg[3];
+  else
+    f:=TraceSchreierTreeForward(o, scc[1]);
+    if f=[] then 
+      f:=PartialPermNC(o[scc[1]], o[scc[1]]);
+    else
+      f:=EvaluateWord(o!.gens, f);
+    fi;
+  fi;
+
+  if not IsBound(o!.mults) then
+    o!.mults:=EmptyPlist(Length(o));
+  fi;
+
+  if not IsBound(o!.mults[scc[1]]) then
+    CreateSCCMultipliers(o!.gens, o, m, scc, o!.mults);
+  fi;
+
+  if not IsBound(o!.schutz) then
+    o!.schutz:=EmptyPlist(Length(scc));
+  fi;
+
+  if not IsBound(o!.schutz[m]) then
+    o!.schutz[m]:=CreateSchutzGp(o!.gens, o, f, scc, 
+     o!.truth[m], OrbitGraph(o), Length(o!.gens), o!.mults);
+  fi;
+
+  return o!.schutz[m][1];
+end);
 
 # new for 0.7! - RangesOrb - "for an inverse semi of part. perms"
 ##############################################################################
@@ -674,7 +867,6 @@ function(s);
          IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup);
 end);
 
-
 #SSS
 
 # new for 0.7! - SchutzenbergerGroup - "for Green's class of inverse semigroup"
@@ -686,7 +878,7 @@ function(r)
   local o, m, scc, s;
   
   o:=r!.o; 
-  m:=r!.data[3];
+  m:=r!.data[1];
   scc:=OrbSCC(o)[m];
   s:=r!.parent;
 
@@ -728,15 +920,41 @@ function(s, set)
         log:=true)); 
 end);
 
+# new for 0.7! - Size - for an D-class of an inverse semigroup
+##############################################################################
+
+InstallMethod(Size, "for an D-class of an inverse semigroup",
+[IsGreensRClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
+function(d)
+  return Length(OrbSCC(d!.o)[d!.data[1]])^2*Size(SchutzenbergerGroup(d));
+end);
+
+# new for 0.7! - Size - for an H-class of an inverse semigroup
+##############################################################################
+
+InstallMethod(Size, "for an H-class of an inverse semigroup",
+[IsGreensHClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
+function(h)
+  return Size(SchutzenbergerGroup(h));
+end);
+
+# new for 0.7! - Size - for an L-class of an inverse semigroup
+##############################################################################
+
+InstallMethod(Size, "for an L-class of an inverse semigroup",
+[IsGreensLClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
+function(l)
+  return Length(OrbSCC(l!.o)[l!.data[1]])*Size(SchutzenbergerGroup(l));
+end);
+
 # new for 0.7! - Size - for an R-class of an inverse semigroup
 ##############################################################################
 
 InstallMethod(Size, "for an R-class of an inverse semigroup",
 [IsGreensRClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
 function(r)
-  return Length(OrbSCC(r!.o)[r!.data[3]])*Size(SchutzenbergerGroup(r));
+  return Length(OrbSCC(r!.o)[r!.data[1]])*Size(SchutzenbergerGroup(r));
 end);
-
 
 # new for 0.7! - Size - for an inverse semigroup of partial perms
 ##############################################################################
@@ -747,42 +965,6 @@ function(s)
   EnumerateRangesOrb(s);
   return Size(s);
 end); 
-
-# new for 0.7! - StabChainOfSchutzGp - "for Green's class of inverse semigroup"
-##############################################################################
-
-InstallMethod(StabChainOfSchutzGp, "for Green's class of inverse semigroup",
-[IsGreensClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup], 
-function(r)
-  local o, m, scc, s;
-  
-  o:=r!.o; 
-  m:=r!.data[3];
-  scc:=OrbSCC(o)[m];
-  s:=r!.parent;
-
-  if not IsBound(o!.mults) then 
-    o!.mults:=EmptyPlist(Length(o));
-  fi;
-
-  if not IsBound(o!.mults[scc[1]]) then 
-    CreateSCCMultipliers(GeneratorsOfSemigroup(s), o, m, scc, o!.mults);    
-  fi;
-
-  if not IsBound(o!.schutz) then 
-    o!.schutz:=EmptyPlist(Length(scc));
-  fi;
-  
-  if not IsBound(o!.schutz[m]) then 
-    o!.schutz[m]:=CreateSchutzGp(GeneratorsOfSemigroup(s), o,
-     Representative(r), scc, o!.truth[m], OrbitGraph(o), 
-      Length(GeneratorsOfSemigroup(s)), o!.mults);
-  fi;
-
-  return o!.schutz[m][1];
-end);
-
-
 
 #EOF
 

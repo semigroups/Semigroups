@@ -170,6 +170,9 @@ function(arg)
   if Length(arg)=2 and IsTransformationSemigroup(arg[1])
    and IsTransformation(arg[2]) then
     return GreensDClassOfElementNC(arg[1], arg[2]);
+  elif Length(arg)=2 and (IsPartialPermSemigroup(arg[1]) and 
+   IsInverseSemigroup(arg[1]) and IsPartialPerm(arg[2])) then 
+    return GreensLClassOfElementNC(arg[1], arg[2]);
   fi;
 
   Error("Usage: trans. semigp. and trans.,");
@@ -282,6 +285,9 @@ function(arg)
   if Length(arg)=2 and (IsTransformationSemigroup(arg[1]) or 
     IsGreensDClass(arg[1])) and IsTransformation(arg[2]) then 
     return GreensLClassOfElementNC(arg[1], arg[2]);
+  elif Length(arg)=2 and (IsPartialPermSemigroup(arg[1]) and 
+   IsInverseSemigroup(arg[1]) and IsPartialPerm(arg[2])) then 
+    return GreensLClassOfElementNC(arg[1], arg[2]);
   fi;
   
   Error("Usage: (trans. semigp. or D-class) and trans.,");
@@ -353,7 +359,8 @@ function(arg)
   if Length(arg)=2 and (IsTransformationSemigroup(arg[1]) or
   IsGreensDClass(arg[1])) and IsTransformation(arg[2]) then 
     return GreensRClassOfElementNC(arg[1], arg[2]);
-  elif Length(arg)=2 and (IsPartialPermSemigroup(arg[1]) and IsInverseSemigroup(arg[1]) and IsPartialPerm(arg[2])) then 
+  elif Length(arg)=2 and (IsPartialPermSemigroup(arg[1]) and 
+   IsInverseSemigroup(arg[1]) and IsPartialPerm(arg[2])) then 
     return GreensRClassOfElementNC(arg[1], arg[2]);
   fi;
   

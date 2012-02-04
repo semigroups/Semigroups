@@ -1367,6 +1367,15 @@ InstallOtherMethod(SmallGeneratingSet, "for a trans. semi.",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 s -> Generators(Semigroup(Generators(s), rec(small:=true, schreier:=false))));
 
+# new for 0.7! - SmallestMovedPoint - "for a part. perm inverse semigroup
+#############################################################################
+
+InstallOtherMethod(SmallestMovedPoint, "for a part. perm inv. semi.",
+[IsPartialPermSemigroup],
+function(s)
+  return MinimumList(List(Generators(s), MinDomainRange));
+end);
+
 # new for 0.2! - StructureDescription - "for a Brandt trans. semigroup"
 ############################################################################
 
