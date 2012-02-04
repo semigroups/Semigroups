@@ -137,8 +137,7 @@ function(f, r)
   
   rep:=Representative(r);
 
-  if Degree(f)<>Degree(rep) or Rank(f)<>Rank(rep) or 
-    Dom(f)<>Dom(rep) then 
+  if Degree(f)<>Degree(rep) or Rank(f)<>Rank(rep) or Dom(f)<>Dom(rep) then 
     Info(InfoCitrus, 1, "degree, rank, or domain not equal to those of",
         " any of the R-class elements,");
     return false;
@@ -228,7 +227,7 @@ function(f, r)
   rep:=Representative(r);
 
   if Rank(f)<>Rank(rep) then
-    Info(InfoCitrus, 1, "degree or rank not equal to those of",
+    Info(InfoCitrus, 1, "rank not equal to those of",
         " any of the D-class elements,");
     return false;
   fi;
@@ -296,6 +295,28 @@ function(f, r)
   fi;
 
   return SiftedPermutation(schutz, AsPermutation(g))=(); 
+end);
+
+#AAA
+
+# new for 0.7! - AsList - not a user function 
+############################################################################
+
+InstallOtherMethod(AsList, "for an R-class of trans. semigp.",
+[IsGreensRClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
+function(r)
+  local f, g, elts, mults, scc, i;
+
+  f:=Representative(r); 
+  g:=List(SchutzenbergerGroup(r), x-> f*x);
+  elts:=EmptyPlist(Size(r));
+
+  mults:=r!.o!.mults; scc:=r!.o!.scc[r!.data[1]];
+
+  for i in scc do
+    Append(elts, g*mults[i]^-1);
+  od;
+  return elts;
 end);
 
 #CCC
@@ -462,6 +483,20 @@ end);
 
 #GGG
 
+# new for 0.7! - GreensDClassOfElement - for an inv semi and part perm
+##############################################################################
+
+InstallOtherMethod(GreensDClassOfElement, "for an inv semi and part perm",
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
+ IsPartialPermRep],
+function(s, f)
+  if not f in s then 
+    Error("the partial perm. is not an element of the semigroup,");
+    return;
+  fi;
+  return GreensDClassOfElementNC(s, f);
+end);
+
 # new for 0.7! - GreensDClassOfElementNC - for an inv semi and part perm
 ##############################################################################
 # Notes: data is: [scc index, scc[1], pos of dom, pos of ran]
@@ -496,6 +531,20 @@ function(s, f)
   return d; 
 end);
 
+# new for 0.7! - GreensHClassOfElement - for an inv semi and part perm
+##############################################################################
+
+InstallOtherMethod(GreensHClassOfElement, "for an inv semi and part perm",
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
+ IsPartialPermRep],
+function(s, f)
+  if not f in s then 
+    Error("the partial perm. is not an element of the semigroup,");
+    return;
+  fi;
+  return GreensHClassOfElementNC(s, f);
+end);
+
 # new for 0.7! - GreensHClassOfElementNC - for an inv semi and part perm
 ##############################################################################
 # Notes: data is: [scc index, scc[1], pos of dom, pos of ran]
@@ -528,6 +577,20 @@ function(s, f)
   return d; 
 end);
 
+# new for 0.7! - GreensLClassOfElement - for an inv semi and part perm
+##############################################################################
+
+InstallOtherMethod(GreensLClassOfElement, "for an inv semi and part perm",
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
+ IsPartialPermRep],
+function(s, f)
+  if not f in s then 
+    Error("the partial perm. is not an element of the semigroup,");
+    return;
+  fi;
+  return GreensLClassOfElementNC(s, f);
+end);
+
 # new for 0.7! - GreensLClassOfElementNC - for an inv semi and part perm
 ##############################################################################
 # Notes: data is: [scc index, scc[1], pos of ran]
@@ -558,6 +621,20 @@ function(s, f)
   SetRepresentative(r, rep);
   SetEquivalenceClassRelation(r, GreensLRelation(s));
   return r; 
+end);
+
+# new for 0.7! - GreensRClassOfElement - for an inv semi and part perm
+##############################################################################
+
+InstallOtherMethod(GreensRClassOfElement, "for an inv semi and part perm",
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
+ IsPartialPermRep],
+function(s, f)
+  if not f in s then 
+    Error("the partial perm. is not an element of the semigroup,");
+    return;
+  fi;
+  return GreensRClassOfElementNC(s, f);
 end);
 
 # new for 0.7! - GreensRClassOfElementNC - for an inv semi and part perm
