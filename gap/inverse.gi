@@ -344,7 +344,7 @@ end);
 InstallOtherMethod(AsList, "for an H-class of trans. semigp.",
 [IsGreensHClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
 function(h)
-  local mults, data, f, g;
+  local schutz, mults, data, f, g;
   
   schutz:=SchutzenbergerGroup(h);
   mults:=h!.o!.mults; data:=h!.data;
@@ -558,14 +558,16 @@ InstallMethod(Enumerator, "for R-class of part perm inv semigroup",
 IsGreensClassOfPartPermSemigroup],
 function(r)
 
-  enum:=EnumeratorByFunction(r, rec(
+  return EnumeratorByFunctions(r, rec(
 
     schutz:=Enumerator(SchutzenbergerGroup(r)),
 
     len:=Size(SchutzenbergerGroup(r)),
 
+    #########################################################################
+
     ElementNumber:=function(enum, pos)
-    local n, m, q, pos;
+      local n, m, q;
 
       if pos>Length(enum) then 
         return fail;
@@ -580,11 +582,52 @@ function(r)
       return enum[pos[2]]*RangeOrbMults(r)[RangeOrbSCC(r)[pos[1]]]^-1;
     end,
 
-  NumberElement
+    #########################################################################
+    
+    NumberElement:=function(enum, f)
+      local rep, o, data, i, j;
 
-  
+      rep:=Representative(r);
+      
+      if Degree(f)<>Degree(rep) or MinDomain(f)<>MinDomain(rep) or 
+       Rank(f)<>Rank(rep) or Dom(f)<>Dom(rep) then
+        Info(InfoCitrus, 1, "degree, rank, or domain not equal to those of",
+          " any of the R-class elements,");
+        return fail;
+      fi;
+      
+      if f=rep then 
+        return 1;
+      fi;
+
+      o:=r!.o; data:=r!.data;
+      i:=Position(r!.o, RangeSetOfPartialPerm(f));
+
+      if i = fail or not o!.truth[data[1]][i] then 
+        return fail;
+      fi;
+      
+      j:=Position(enum!.schutz, AsPermutation(f*o!.mults[i]));
+
+      if j=fail then 
+        return fail;
+      fi;
+      return enum!.len*(Position(RangeOrbSCC(r), i)-1)+j;
+    end,
+
+    #########################################################################
+
+    Membership:=function(elm, enum)
+      return elm in r;
+    end,
+
+    Length:=enum-> Size(r),
+
+    PrintObj:=function(enum)
+      Print("<enumerator of R-class>");
+      return;
+    end));
 end);
-
 
 #GGG
 
@@ -774,7 +817,7 @@ function(s, f)
     rep:=f*o!.mults[l];
   else
     o:=ShortOrb(s, RangeSetOfPartialPerm(f));
-    l:=1; m:=1; t:=1;
+    l:=1; m:=1; t:=1; rep:=f;
   fi;
   
   r:=Objectify(RClassType(s), rec(parent:=s, data:=[m,t,l], o:=o)); 
@@ -964,7 +1007,7 @@ InstallMethod(ParentAttr, "for a R-class of a trans. semigroup",
 
 #RRR
 
-# new for 0.7! - RangeOrbMults 
+# new for 0.7! - RangeOrbMults - for a Green's class of a part perm inv semi
 ##############################################################################
 
 InstallMethod(RangeOrbMults, "for a Green's class of a part perm inv semi",
@@ -974,10 +1017,10 @@ function(class)
   return class!.o!.mults;
 end);
 
-# new for 0.7! - RangeOrbSCC
+# new for 0.7! - RangeOrbSCC - for a Green's class of a part perm inv semi
 ##############################################################################
 
-InstallMethod(RangeOrbMults, "for a Green's class of a part perm inv semi",
+InstallMethod(RangeOrbSCC, "for a Green's class of a part perm inv semi",
 [IsGreensClass and IsGreensClassOfPartPermSemigroup and
 IsGreensClassOfInverseSemigroup],
 function(class)
