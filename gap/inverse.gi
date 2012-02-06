@@ -574,7 +574,7 @@ function(r)
       fi;
 
       if pos<=Length(enum!.schutz) then 
-        return Representative(r)*enum!.schutz[pos];
+        return enum!.schutz[pos]*Representative(r);
       fi;
 
       n:=pos-1; m:=enum!.len;

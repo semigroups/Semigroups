@@ -144,6 +144,7 @@ end);
 # new for 0.7! - \* - "for a perm and partial perm"
 #############################################################################
 
+#JDM this does not work since Dom(g) is not a set after this...
 InstallMethod(\*, "for a perm and partial perm",
 [IsPerm, IsPartialPerm and IsPartialPermRep],
 function(f,g)
