@@ -6,9 +6,9 @@
 #
 CC=cc
 
-#COMPILEOPTIONS="-O3 -fomit-frame-pointer"
+COMPILEOPTIONS="-O3 -fomit-frame-pointer"
 #COMPILEOPTIONS="-O3 -g -fomit-frame-pointer"
-COMPILEOPTIONS="-O0 -g -Wall"
+#COMPILEOPTIONS="-O0 -g -Wall"
 # Some experiments:
 #COMPILEOPTIONS="-march=i686 -mcpu=pentium4 -O3 -fomit-frame-pointer"
 #COMPILEOPTIONS="-march=i686 -mcpu=pentium4 -O3 -fomit-frame-pointer -falign-loops=5 -finline-limit=6000"

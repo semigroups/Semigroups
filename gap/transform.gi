@@ -141,6 +141,15 @@ function(f,g)
   return PartialPermNC(Dom(f), OnTuples(Ran(f), g));
 end);
 
+# new for 0.7! - \* - "for a perm and partial perm"
+#############################################################################
+
+InstallMethod(\*, "for a perm and partial perm",
+[IsPerm, IsPartialPerm and IsPartialPermRep],
+function(f,g)
+  return PartialPermNC(OnTuples(Dom(g), f^-1), Ran(g));
+end);
+
 # new for 0.7! - \< - "for a partial perm and partial perm"
 #############################################################################
 #JDM C
