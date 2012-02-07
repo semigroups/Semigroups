@@ -441,7 +441,7 @@ function(line)
   return out;
 end);
 
-# new for 0.5! - WriteCitrus - "for a string and trans. coll."
+# mod for 0.7! - WriteCitrus - "for a string and trans. coll."
 #############################################################################
 
 # Usage: filename as a string and trans. coll. 
@@ -450,7 +450,7 @@ end);
 
 InstallGlobalFunction(WriteCitrus, 
 function(arg)
-  local trans, gens, i, convert, output, n, m, str, s, f;
+  local trans, gens, convert, output, n, m, str, int, j, i, s, f;
   
   if not Length(arg)=2 then 
     Error("Usage: filename as string and trans, trans coll, partial perm or",
@@ -469,8 +469,8 @@ function(arg)
    IsPartialPermCollection(arg[2][1]) then 
     trans:=arg[2];
   else
-    Error("Usage: first arg must be trans. semi., trans. coll. or list of",
-    " same,");
+    Error("Usage: second arg must be trans or part perm semi, coll, or list",
+    " of same,");
     return;
   fi;
 
