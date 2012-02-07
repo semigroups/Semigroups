@@ -143,12 +143,13 @@ end);
 
 # new for 0.7! - \* - "for a perm and partial perm"
 #############################################################################
+# JDM probably a C method required here! 
+# Terrible hack!
 
-#JDM this does not work since Dom(g) is not a set after this...
 InstallMethod(\*, "for a perm and partial perm",
 [IsPerm, IsPartialPerm and IsPartialPermRep],
 function(f,g)
-  return PartialPermNC(OnTuples(Dom(g), f^-1), Ran(g));
+  return (g^-1*f^-1)^-1; 
 end);
 
 # new for 0.7! - \< - "for a partial perm and partial perm"
@@ -237,7 +238,7 @@ end);
 ###########################################################################
 
 InstallOtherMethod(AsPermutation, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep], f-> PermListList(Dom(f), Ran(f)));
+[IsPartialPerm and IsPartialPermRep], f-> MappingPermListList(Dom(f), Ran(f)));
 
 # new for 0.7! - AsTransformationNC - "for a partial perm"
 ###########################################################################
@@ -533,6 +534,12 @@ function(s, f)
 
   return fail;
 end);
+
+# new for 0.7! - IsEmptyPartialPerm - "for a partial perm"
+###########################################################################
+
+InstallMethod(IsEmptyPartialPerm, "for a partial perm", 
+[IsPartialPerm and IsPartialPermRep], x-> x![1]=0);
 
 # upd for 0.2! - IsRegularTransformation - "for a transformation"
 ###########################################################################

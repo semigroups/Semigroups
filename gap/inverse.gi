@@ -51,7 +51,8 @@ InstallMethod(\in, "for an inverse semigroup of part perms",
 function(f, s)
   local o, k, l, ran, m, schutz, g;
 
-  if f![5]<SmallestMovedPoint(s) or f![6]>LargestMovedPoint(s) then 
+  if not IsEmptyPartialPerm(f) and (MinDomainRange(f)<SmallestMovedPoint(s) or
+   MaxDomainRange(f)>LargestMovedPoint(s)) then 
     return false;
   fi;
 
@@ -70,18 +71,21 @@ function(f, s)
     k:=Position(o, Dom(f));
     if k=fail then 
       o!.looking:=true; o!.lookingfor:=function(o, x) return x=Dom(f); end;
-      o!.lookfunc:=o!.lookingfor; o!.found:=false;
+      o!.lookfunc:=o!.lookingfor;
 
       Enumerate(o);
       k:=PositionOfFound(o);
-      Unbind(o!.found);
-      o!.looking:=false; Unbind(o!.lookingfor); Unbind(o!.lookfunc);
+      o!.found:=false; o!.looking:=false; 
+      Unbind(o!.lookingfor); Unbind(o!.lookfunc);
       
       if k=false then
         return false;
       fi;
     fi;
 
+    if Dom(f)=[] then 
+      return true;
+    fi;
     ran:=RangeSetOfPartialPerm(f);
        
     if IsClosed(o) and Position(o, ran)=fail then 
@@ -99,6 +103,9 @@ function(f, s)
       return false;
     fi;
   fi;
+
+# JDM should use TraceSchreierTreeForward(o, k) and not f when Schutz gp is
+# created!
 
   m:=OrbSCCLookup(o)[k];
   
@@ -327,7 +334,7 @@ function(r)
   local f, g, elts, mults, scc, i;
 
   f:=Representative(r); 
-  g:=List(SchutzenbergerGroup(r), x-> f*x);
+  g:=List(SchutzenbergerGroup(r), x-> x*f);
   elts:=EmptyPlist(Size(r));
 
   mults:=r!.o!.mults; scc:=r!.o!.scc[r!.data[1]];
@@ -359,7 +366,7 @@ end);
 InstallOtherMethod(AsList, "for an D-class of trans. semigp.",
 [IsGreensDClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
 function(r)
-  local f, g, elts, mults, scc, i, j;
+  local f, g, elts, mults, scc, i, j, k;
 
   f:=Representative(r); 
   g:=List(SchutzenbergerGroup(r), x-> f*x);
@@ -367,9 +374,11 @@ function(r)
 
   mults:=r!.o!.mults; scc:=r!.o!.scc[r!.data[1]];
 
+  k:=0;
   for i in scc do
     for j in scc do 
-      Append(elts, mults[j]*g*mults[i]^-1);
+      k:=k+1;
+      elts[k]:=mults[j]*g*mults[i]^-1;
     od;
   od;
   return elts;
@@ -495,6 +504,8 @@ function(s);
          IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup);
 end);
 
+#EEE
+
 # new for 0.7! - EnumerateRangesOrb - "for an inverse semi of part perms"
 ##############################################################################
 
@@ -574,7 +585,7 @@ function(r)
       fi;
 
       if pos<=Length(enum!.schutz) then 
-        return enum!.schutz[pos]*Representative(r);
+        return Representative(r)*enum!.schutz[pos];
       fi;
 
       n:=pos-1; m:=enum!.len;
@@ -607,7 +618,7 @@ function(r)
         return fail;
       fi;
       
-      j:=Position(enum!.schutz, AsPermutation(f*o!.mults[i]));
+      j:=Position(enum!.schutz, AsPermutation(rep^-1*f*o!.mults[i]));
 
       if j=fail then 
         return fail;
@@ -625,6 +636,85 @@ function(r)
 
     PrintObj:=function(enum)
       Print("<enumerator of R-class>");
+      return;
+    end));
+end);
+
+# new for 0.7! - Enumerator - "for L-class of part perm inverse semigroup"
+##############################################################################
+
+InstallMethod(Enumerator, "for L-class of part perm inv semigroup",
+[IsGreensLClass and IsGreensClassOfInverseSemigroup and
+IsGreensClassOfPartPermSemigroup],
+function(r)
+
+  return EnumeratorByFunctions(r, rec(
+
+    schutz:=Enumerator(SchutzenbergerGroup(r)),
+
+    len:=Size(SchutzenbergerGroup(r)),
+
+    #########################################################################
+
+    ElementNumber:=function(enum, pos)
+      local n, m, q;
+
+      if pos>Length(enum) then 
+        return fail;
+      fi;
+
+      if pos<=Length(enum!.schutz) then 
+        return enum!.schutz[pos]*Representative(r);
+      fi;
+
+      n:=pos-1; m:=enum!.len;
+      q:=QuoInt(n, m); pos:=[ q, n - q * m]+1;
+      return RangeOrbMults(r)[RangeOrbSCC(r)[pos[1]]]*enum[pos[2]];
+    end,
+
+    #########################################################################
+    
+    NumberElement:=function(enum, f)
+      local rep, o, data, i, j;
+
+      rep:=Representative(r);
+      
+      if MaxRange(f)<>MaxRange(rep) or MinRange(f)<>MinRange(rep) or 
+       Rank(f)<>Rank(rep) or
+        RangeSetOfPartialPerm(f)<>RangeSetOfPartialPerm(rep) then
+        Info(InfoCitrus, 1, "degree, rank, or range not equal to those of",
+          " any of the L-class elements,");
+        return fail;
+      fi;
+      
+      if f=rep then 
+        return 1;
+      fi;
+
+      o:=r!.o; data:=r!.data;
+      i:=Position(r!.o, Dom(f));
+
+      if i = fail or not o!.truth[data[1]][i] then 
+        return fail;
+      fi;
+      j:=Position(enum!.schutz, AsPermutation(o!.mults[i]^-1*f*rep^-1));
+
+      if j=fail then 
+        return fail;
+      fi;
+      return enum!.len*(Position(RangeOrbSCC(r), i)-1)+j;
+    end,
+
+    #########################################################################
+
+    Membership:=function(elm, enum)
+      return elm in r;
+    end,
+
+    Length:=enum-> Size(r),
+
+    PrintObj:=function(enum)
+      Print("<enumerator of L-class>");
       return;
     end));
 end);
@@ -772,6 +862,7 @@ function(s, f)
   else
     o:=ShortOrb(s, Dom(f));
     l:=1; m:=1; t:=1;
+    rep:=f;
   fi;
 
   r:=Objectify(LClassType(s), rec(parent:=s, data:=[m,t,l], o:=o)); 
@@ -1007,6 +1098,32 @@ InstallMethod(ParentAttr, "for a R-class of a trans. semigroup",
 
 #RRR
 
+# new for 0.1! - Random - "for a part. perm. inv. semigroup (citrus pkg)"
+#############################################################################
+# move to greens.gi
+
+InstallMethod(Random, "for a part perm inv semigroup (citrus pkg)",
+[IsPartialPermSemigroup and IsInverseSemigroup],
+function(s)
+  local o, gens, i, w, k, m, l, g;
+
+  o:=RangesOrb(s);
+
+  if not IsClosed(o) then  
+    gens:=GeneratorsOfSemigroup(s);
+    i:=Random([1..Length(gens)]);
+    w:=List([1..i], x-> Random([1..Length(gens)]));
+    return EvaluateWord(gens, w);
+  else
+    k:=Random([1..Length(o)]);
+    m:=OrbSCCLookup(o)[k];
+    l:=Random(OrbSCC(o)[m]);
+    g:=Random(o!.schutz[m][2]);
+    return o!.mults[k]*g*o!.mults[l]^-1;
+  fi;
+end);
+
+
 # new for 0.7! - RangeOrbMults - for a Green's class of a part perm inv semi
 ##############################################################################
 
@@ -1130,7 +1247,7 @@ end);
 InstallMethod(SchutzenbergerGroup, "for Green's class of inverse semigroup",
 [IsGreensClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup], 
 function(r)
-  local o, m, scc, s;
+  local o, m, scc, s, rep;
   
   o:=r!.o; 
   m:=r!.data[1];
@@ -1150,8 +1267,12 @@ function(r)
   fi;
   
   if not IsBound(o!.schutz[m]) then 
+    rep:=Representative(r);
+    if IsGreensLClass(r) then 
+      rep:=rep^-1;
+    fi;
     o!.schutz[m]:=CreateSchutzGp(GeneratorsOfSemigroup(s), o,
-     Representative(r), scc, o!.truth[m], OrbitGraph(o), 
+     rep, scc, o!.truth[m], OrbitGraph(o), 
       Length(GeneratorsOfSemigroup(s)), o!.mults);
   fi;
 

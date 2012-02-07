@@ -63,6 +63,7 @@ DeclareAttribute("MaxRange", IsPartialPerm);
 DeclareAttribute("MinDomain", IsPartialPerm);
 DeclareAttribute("MinDomainRange", IsPartialPerm);
 DeclareAttribute("MinRange", IsPartialPerm);
+DeclareAttribute("IsEmptyPartialPerm", IsPartialPerm);
 DeclareGlobalFunction("OnIntegerSetsWithPartialPerm");
 DeclareAttribute("RangeOfPartialPerm", IsPartialPerm);
 DeclareAttribute("RangeSetOfPartialPerm", IsPartialPerm);
