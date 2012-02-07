@@ -238,7 +238,14 @@ end);
 ###########################################################################
 
 InstallOtherMethod(AsPermutation, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep], f-> MappingPermListList(Dom(f), Ran(f)));
+[IsPartialPerm and IsPartialPermRep], 
+function(f)
+
+  if not Dom(f)=RangeSetOfPartialPerm(f) then 
+    return fail;
+  fi;
+  return MappingPermListList(Dom(f), Ran(f));
+end);
 
 # new for 0.7! - AsTransformationNC - "for a partial perm"
 ###########################################################################

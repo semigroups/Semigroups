@@ -366,7 +366,7 @@ end);
 InstallOtherMethod(AsList, "for an D-class of trans. semigp.",
 [IsGreensDClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
 function(r)
-  local f, g, elts, mults, scc, i, j, k;
+  local f, g, elts, mults, scc, i, j;
 
   f:=Representative(r); 
   g:=List(SchutzenbergerGroup(r), x-> f*x);
@@ -374,11 +374,9 @@ function(r)
 
   mults:=r!.o!.mults; scc:=r!.o!.scc[r!.data[1]];
 
-  k:=0;
   for i in scc do
     for j in scc do 
-      k:=k+1;
-      elts[k]:=mults[j]*g*mults[i]^-1;
+      Append(elts, mults[j]*g*mults[i]^-1);
     od;
   od;
   return elts;
@@ -719,6 +717,96 @@ function(r)
     end));
 end);
 
+# new for 0.7! - Enumerator - "for D-class of part perm inverse semigroup"
+##############################################################################
+
+InstallMethod(Enumerator, "for D-class of part perm inv semigroup",
+[IsGreensDClass and IsGreensClassOfInverseSemigroup and
+IsGreensClassOfPartPermSemigroup],
+function(d)
+
+  return EnumeratorByFunctions(d, rec(
+
+    schutz:=Enumerator(SchutzenbergerGroup(d)),
+
+    #########################################################################
+
+    ElementNumber:=function(enum, pos)
+      local scc, n, m, r, q, q2, mults;
+      if pos>Length(enum) then 
+        return fail;
+      fi;
+
+      if pos<=Length(enum!.schutz) then 
+        return enum!.schutz[pos]*Representative(d);
+      fi;
+
+      scc:=RangeOrbSCC(d);
+      n:=pos-1; m:=Length(enum!.schutz); r:=Length(scc);
+      q:=QuoInt(n, m); q2:=QuoInt(q, r);
+      pos:=[ n-q*m, q2, q  - q2 * r ]+1;
+      mults:=RangeOrbMults(d);
+      return mults[scc[pos[2]]]*enum[pos[1]]*mults[scc[pos[3]]]^-1;
+    end,
+
+    #########################################################################
+    
+    NumberElement:=function(enum, f)
+      local rep, o, data, l_dom, l_ran, j;
+      
+      rep:=Representative(d);
+      
+      if Rank(f)<>Rank(rep) then 
+        Info(InfoCitrus, 1, "rank not equal to those of",
+          " any of the D-class elements,");
+        return fail;
+      fi;
+      
+      if f=rep then 
+        return 1;
+      fi;
+
+      o:=d!.o; m:=d!.data[1];
+      
+      k:=Position(o, Dom(f)); 
+      if k=fail or not OrbSCCTruthTable(o)[m][k] then 
+        Info(InfoCitrus, 1, "domain not equal to that of any",
+        " D-class element,");
+        return fail;
+      fi;
+
+      l:=Position(o, RangeSetOfPartialPerm(f));
+      if l=fail or not OrbSCCTruthTable(o)[m][l] then
+        Info(InfoCitrus, 1, "range not equal to that of any",
+        " D-class element,");
+        return fail;
+      fi;
+
+      j:=Position(enum!.schutz, AsPermutation(o!.mults[k]^-1*f*o!.mults[l]));
+
+      if j=fail then 
+        return fail;
+      fi;
+
+      return Length(enum!.schutz)*((Position(RangeOrbSCC(d),
+      k)-1)*Length(RangeOrbSCC(d))+(Position(RangeOrbSCC(d), l)-1))+j;
+    end,
+
+    #########################################################################
+
+    Membership:=function(elm, enum)
+      return elm in d;
+    end,
+
+    Length:=enum-> Size(d),
+
+    PrintObj:=function(enum)
+      Print("<enumerator of D-class>");
+      return;
+    end));
+end);
+
+
 #GGG
 
 # new for 0.7! - GreensDClassOfElement - for an inv semi and part perm
@@ -763,7 +851,7 @@ function(s, f)
   else
     o:=ShortOrb(s, Dom(f));
     rep:=f*f^-1;
-    l:=1; m:=1; t:=1;
+    k:=1; l:=1; m:=1; t:=1;
   fi;
 
   d:=Objectify(DClassType(s), rec(parent:=s, data:=[m,t,l,k], o:=o)); 
