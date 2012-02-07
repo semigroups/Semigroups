@@ -806,6 +806,63 @@ function(d)
     end));
 end);
 
+# new for 0.7! - Enumerator - "for H-class of part perm inverse semigroup"
+##############################################################################
+
+InstallMethod(Enumerator, "for H-class of part perm inv semigroup",
+[IsGreensHClass and IsGreensClassOfInverseSemigroup and
+IsGreensClassOfPartPermSemigroup],
+function(h)
+
+  return EnumeratorByFunctions(h, rec(
+
+    schutz:=Enumerator(SchutzenbergerGroup(h)),
+
+    #########################################################################
+
+    ElementNumber:=function(enum, pos)
+      local f,g;  
+      if pos>Length(enum) then 
+        return fail;
+      fi;
+      f:=h!.o!.mults[h!.data[3]];
+      g:=h!.o!.mults[h!.data[4]]; 
+
+      return f*enum!.schutz[pos]*g^-1;
+    end,
+
+    #########################################################################
+    
+    NumberElement:=function(enum, f)
+      local rep, g, k;
+      
+      rep:=Representative(h);
+      
+      if Degree(f)<>Degree(rep) or Rank(f)<>Rank(rep) or Dom(f)<>Dom(rep) or
+         RangeSetOfPartialPerm(f)<>RangeSetOfPartialPerm(rep) then 
+        return fail;
+      fi;
+     
+      g:=h!.o!.mults[h!.data[3]];
+      k:=h!.o!.mults[h!.data[4]]; 
+
+      return Position(enum!.schutz, AsPermutation(g^-1*f*k));
+    end,
+
+    #########################################################################
+
+    Membership:=function(elm, enum)
+      return elm in h;
+    end,
+
+    Length:=enum-> Size(h),
+
+    PrintObj:=function(enum)
+      Print("<enumerator of H-class>");
+      return;
+    end));
+end);
+
 
 #GGG
 

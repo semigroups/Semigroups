@@ -154,7 +154,7 @@ end);
 
 # new for 0.7! - \< - "for a partial perm and partial perm"
 #############################################################################
-#JDM C
+#JDM C : this currently give very poor performance!
 
 InstallMethod(\<, "for a partial perm and partial perm", 
   [IsPartialPerm and IsPartialPermRep, IsPartialPerm and IsPartialPermRep],
