@@ -453,8 +453,8 @@ function(arg)
   local trans, gens, i, convert, output, n, m, str, s, f;
   
   if not Length(arg)=2 then 
-    Error("Usage: trans. semigroup, trans. collection or list of same", 
-    "and filename as string,");
+    Error("Usage: filename as string and trans, trans coll, partial perm or",
+    " partial perm coll,");
     return;
   fi;
 
@@ -463,9 +463,10 @@ function(arg)
     return;
   fi;
 
-  if IsTransformationCollection(arg[2]) then 
+  if IsTransformationCollection(arg[2]) or IsPartialPermCollection(arg[2]) then 
     trans:=[arg[2]];
-  elif IsTransformationCollection(arg[2][1]) then 
+  elif IsTransformationCollection(arg[2][1]) or
+   IsPartialPermCollection(arg[2][1]) then 
     trans:=arg[2];
   else
     Error("Usage: first arg must be trans. semi., trans. coll. or list of",
@@ -474,8 +475,10 @@ function(arg)
   fi;
 
   gens:=EmptyPlist(Length(trans));
+
   for i in [1..Length(trans)] do 
-    if IsTransformationSemigroup(trans[i]) then 
+    if IsTransformationSemigroup(trans[i]) or
+     IsPartialPermSemigroup(trans[i]) then 
       if HasMinimalGeneratingSet(trans[i]) then
         gens[i]:=MinimalGeneratingSet(trans[i]);
       elif HasSmallGeneratingSet(trans[i]) then 
@@ -490,11 +493,11 @@ function(arg)
  
   #####
 
-  convert:=function(f, m)
+  convert:=function(list, m)
     local str, i;
     
     str:="";
-    for i in f![1] do 
+    for i in list do 
       i:=String(i);
       Append(str, Concatenation([ListWithIdenticalEntries(m-Length(i), ' ')],
       [i]));
@@ -507,20 +510,30 @@ function(arg)
 
   output := OutputTextFile( arg[1], true );
   SetPrintFormattingStatus(output, false);
-  
-  for s in gens do 
+  if IsTransformationCollection(gens[1]) then 
+    for s in gens do 
+      n:=String(DegreeOfTransformationCollection(s));
+      m:=Length(n);
+      str:=Concatenation(String(m), n);
+    
+      for f in s do
+        Append(str, convert(f![1], m));
+      od;
 
-    n:=String(DegreeOfTransformationCollection(s));
-    m:=Length(n);
-    str:=Concatenation(String(m), n);
-  
-    for f in s do
-      Append(str, convert(f, m));
+      AppendTo( output, str, "\n" );
     od;
+  elif IsPartialPermCollection(gens[1]) then 
+    for s in gens do 
+      str:="";
+      for f in s do 
+        int:=InternalRepOfPartialPerm(f);
+        j:=Length(String(int[6]));
+        Append(str, Concatenation(String(j), convert(int, j)));
+      od;
+      AppendTo(output, str, "\n");
+    od;
+  fi;
 
-    AppendTo( output, str, "\n" );
-  od;
-  
   CloseStream(output);
 
   return;
