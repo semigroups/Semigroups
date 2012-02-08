@@ -423,22 +423,47 @@ end);
 
 InstallGlobalFunction(ReadCitrusLine, 
 function(line)
-  local m, n, r, dom, out, f, i, j;
-    
-  m:=Int([line[1]]);            # block size <10
-  n:=Int(line{[2..m+1]});       # degree
-  r:=(Length(line)-(m+1))/(m*n);# number of generators 
-  dom:=[m+2..m*n+m+1]; out:=EmptyPlist(r);
+  local m, n, r, dom, out, f, i, k, deg, rank, j;
+  
+  if not line[1]='p' then         # transformations
+    m:=Int([line[1]]);            # block size <10
+    n:=Int(line{[2..m+1]});       # degree
+    r:=(Length(line)-(m+1))/(m*n);# number of generators 
+    dom:=[m+2..m*n+m+1]; out:=EmptyPlist(r);
 
-  for i in [1..r] do
-    out[i]:=EmptyPlist(n); 
-    f:=line{dom+m*(i-1)*n};
-    for j in [1..n] do 
-      Add(out[i], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
+    for i in [1..r] do
+      out[i]:=EmptyPlist(n); 
+      f:=line{dom+m*(i-1)*n};
+      for j in [1..n] do 
+        Add(out[i], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
+      od;
+      out[i]:=TransformationNC(out[i]);
     od;
-    out[i]:=TransformationNC(out[i]);
-  od;
-  return out;
+    return out;
+  else # partial perms
+    r:=Length(line)-1; i:=2; k:=0; out:=[];
+
+    while i<Length(line) do
+      k:=k+1;
+      m:=Int([line[i]]);                                      # blocksize
+      deg:=Int(NormalizedWhitespace(line{[i+1..m+i]}));       # max domain
+      rank:=Int(NormalizedWhitespace(line{[m+i+1..2*m+i]}));  # rank
+      f:=line{[i+1..i+m*(deg+3*rank+6)]};
+      out[k]:=EmptyPlist(deg+3*rank+6);
+      for j in [1..deg+2*rank+6] do 
+        Add(out[k], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
+      od;
+      j:=deg+2*rank+7;
+      if Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]}))<>0 then 
+        for j in [deg+2*rank+7..deg+3*rank+6] do
+          Add(out[k], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
+        od;
+      fi; 
+      out[k]:=Objectify(PartialPermType, out[k]);
+      i:=i+m*(deg+3*rank+6)+1;
+    od;
+    return out;
+  fi;
 end);
 
 # mod for 0.7! - WriteCitrus - "for a string and trans. coll."
@@ -524,11 +549,15 @@ function(arg)
     od;
   elif IsPartialPermCollection(gens[1]) then 
     for s in gens do 
-      str:="";
+      str:="p";
       for f in s do 
         int:=InternalRepOfPartialPerm(f);
+
         j:=Length(String(int[6]));
         Append(str, Concatenation(String(j), convert(int, j)));
+        if Length(int)<> 6+int[1]+3*int[2] then 
+          Append(str, Concatenation([ListWithIdenticalEntries(j*int[2], ' ')]));
+        fi;
       od;
       AppendTo(output, str, "\n");
     od;
@@ -538,9 +567,5 @@ function(arg)
 
   return;
 end);
-
-ReadCitrus2:=function(filename)
-
-
 
 #EOF

@@ -752,7 +752,7 @@ function(d)
     #########################################################################
     
     NumberElement:=function(enum, f)
-      local rep, o, data, l_dom, l_ran, j;
+      local rep, o, m, k, l, j;
       
       rep:=Representative(d);
       
@@ -917,6 +917,13 @@ function(s, f)
   SetEquivalenceClassRelation(d, GreensDRelation(s));
   return d; 
 end);
+
+# new for 0.7! - GreensHClasses - for an inv semi of partial perms
+############################################################################
+
+InstallOtherMethod(GreensHClasses, "for an inv semi of partial perms",
+[IsPartialPermSemigroup and IsInverseSemigroup],
+x-> x);
 
 # new for 0.7! - GreensHClasses - for an D-class of inv semi of partial perms
 ############################################################################
