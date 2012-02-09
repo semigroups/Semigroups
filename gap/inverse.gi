@@ -1145,6 +1145,46 @@ function(d)
   return out;
 end);
 
+# new for 0.7! - GreensLClasses - for an inv semi of part perms
+##############################################################################
+
+InstallOtherMethod(GreensLClasses, "for an inv semi of part perms",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s)
+  local l, o, scc, out, gens, type, mults, i, f, rep, m, j;
+
+  if IsPartialPermMonoid(s) then
+    l:=0;
+  else
+    l:=1;
+  fi;
+  
+  o:=RangesOrb(s);
+  EnumerateRangesOrb(s);
+  scc:=OrbSCC(o);
+  out:=EmptyPlist(Length(o));
+  gens:=GeneratorsOfSemigroup(s);
+  type:=LClassType(s);
+  mults:=o!.mults;
+
+  i:=0; 
+  
+  for m in [1..Length(scc)-l] do
+    f:=EvaluateWord(gens, TraceSchreierTreeForward(o, scc[m+l][1]));
+    f:=f^-1*f;
+    for j in scc[m+l] do 
+      i:=i+1;
+      rep:=f*mults[j]^-1;
+      out[i]:=Objectify(type, rec(parent:=s, data:=[m+l, scc[m+l][1], 
+       scc[m+l][1], j],  o:=o));;
+      SetRepresentative(out[i], rep);
+      SetEquivalenceClassRelation(out[i], GreensLRelation(s));
+   od;
+  od;
+
+  return out;
+end);
+
 # new for 0.7! - GreensRClasses - for a D-class of inv semi of part perms
 ##############################################################################
 
@@ -1178,6 +1218,46 @@ function(d)
     od;
     SetRClassReps(d, reps);
   fi;
+  return out;
+end);
+
+# new for 0.7! - GreensRClasses - for an inv semi of part perms
+##############################################################################
+
+InstallOtherMethod(GreensRClasses, "for an inv semi of part perms",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s)
+  local l, o, scc, out, gens, type, mults, i, f, rep, m, j;
+
+  if IsPartialPermMonoid(s) then
+    l:=0;
+  else
+    l:=1;
+  fi;
+  
+  o:=RangesOrb(s);
+  EnumerateRangesOrb(s);
+  scc:=OrbSCC(o);
+  out:=EmptyPlist(Length(o));
+  gens:=GeneratorsOfSemigroup(s);
+  type:=RClassType(s);
+  mults:=o!.mults;
+
+  i:=0; 
+  
+  for m in [1..Length(scc)-l] do
+    f:=EvaluateWord(gens, TraceSchreierTreeForward(o, scc[m+l][1]));
+    f:=f^-1*f;
+    for j in scc[m+l] do 
+      i:=i+1;
+      rep:=mults[j]*f;
+      out[i]:=Objectify(type, rec(parent:=s, data:=[m+l, scc[m+l][1], j, 
+       scc[m+l][1]], o:=o));;
+      SetRepresentative(out[i], rep);
+      SetEquivalenceClassRelation(out[i], GreensRRelation(s));
+   od;
+  od;
+
   return out;
 end);
 
@@ -1559,7 +1639,7 @@ function(s)
   local o, out, gens, i, j;
 
   o:=RangesOrb(s);
-  EnumerateRangesOrb(s);
+  Enumerate(o);
   out:=EmptyPlist(Length(o));
   gens:=GeneratorsOfSemigroup(s);
 
@@ -1570,7 +1650,7 @@ function(s)
   fi;
   
   for j in [1..Length(o)-i] do 
-    out[j]:=EvaluateWord(gens, TraceSchreierTreeForward(o, j+i))^-1;
+    out[j]:=EvaluateWord(gens, TraceSchreierTreeForward(o, j+i));
   od;
   return out;
 end);
@@ -1835,7 +1915,7 @@ function(s)
   local o, out, gens, i, j;
 
   o:=RangesOrb(s);
-  EnumerateRangesOrb(s);
+  Enumerate(o);
   out:=EmptyPlist(Length(o));
   gens:=GeneratorsOfSemigroup(s);
 
@@ -1846,7 +1926,7 @@ function(s)
   fi;
 
   for j in [1..Length(o)-i] do 
-    out[j]:=EvaluateWord(gens, TraceSchreierTreeForward(o, j+i));
+    out[j]:=EvaluateWord(gens, TraceSchreierTreeForward(o, j+i))^-1;
   od;
   return out;
 end);
