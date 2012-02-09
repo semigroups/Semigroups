@@ -1177,6 +1177,13 @@ function(s)
   return Semigroup(Elements(GreensDClassOfElementNC(s, f)));#JDM temp. 
 end);
 
+# new for 0.7! - MovedPoints - "for a partial perm semigroup"
+###########################################################################
+
+InstallOtherMethod(MovedPoints, "for a partial perm semigroup",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+s-> Union(List(GeneratorsOfSemigroup(s), Dom)));
+
 # new for 0.1! - MultiplicativeNeutralElement - "for a trans. semi."
 ###########################################################################
 
