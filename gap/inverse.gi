@@ -127,7 +127,7 @@ function(f, s)
     return false;
   fi;
 
-  return SiftedPermutation(schutz, g);
+  return SiftedPermutation(schutz, AsPermutation(g))=();
 end);
 
 # new for 0.7! - \in - "for an R-class of inv semi and part perm" 
