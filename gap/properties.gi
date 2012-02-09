@@ -75,6 +75,31 @@ function(s)
   return g;
 end);
 
+# new for 0.7! - GroupOfUnits - "for a partial perm semigroup"
+###########################################################################
+# Notes: returns a permutation group isomorphic to the group of units of the
+# input semigroup. 
+
+InstallMethod(GroupOfUnits, "for a tranformation semigroup", 
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup], 
+function(s)
+  local h, m, g;
+
+  if not IsPartialPermMonoid(s) then 
+    Info(InfoCitrus, 2, "the semigroup is not a monoid,");
+    return fail;
+  fi;
+
+  h:=GreensHClassOfElement(s, MultiplicativeNeutralElement(s));
+  m:=Size(h); g:=Group(());
+
+  repeat 
+    g:=ClosureGroup(g, AsPermutation(Random(h)));
+  until Size(g)=m;
+
+  return g;
+end);
+
 #III
 
 # new for 0.5! - IdempotentGeneratedSubsemigp - "for a trans. semi"
