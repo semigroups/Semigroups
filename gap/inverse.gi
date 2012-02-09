@@ -1109,6 +1109,78 @@ function(d)
   return out;
 end);
 
+# new for 0.7! - GreensLClasses - for a D-class of inv semi of part perms
+##############################################################################
+
+InstallOtherMethod(GreensLClasses, "for D-class of inv semi of part perms",
+[IsGreensDClass and IsGreensClassOfInverseSemigroup and
+IsGreensClassOfPartPermSemigroup],
+function(d)
+  local m, t, j, o, scc, s, type, out, reps, mults, f, i;
+
+  m:=d!.data[1]; t:=d!.data[2]; j:=d!.data[3]; o:=d!.o;
+  scc:=OrbSCC(d!.o)[m]; s:=d!.parent; 
+
+  type:=LClassType(s); out:=EmptyPlist(Length(scc));
+
+  if HasLClassReps(d) then 
+    reps:=LClassReps(d);
+    for i in [1..Length(scc)] do 
+      out[i]:=Objectify(type, rec(parent:=s, data:=[m,t,j,scc[i]], o:=o));;
+      SetRepresentative(out[i], reps[i]);
+      SetEquivalenceClassRelation(out[i], GreensLRelation(s));
+    od;
+  else
+    reps:=EmptyPlist(Length(scc));
+    mults:=OrbSCCMultipliers(d);
+    f:=Representative(d);
+    for i in [1..Length(scc)] do 
+      reps[i]:=f*mults[scc[i]]^-1;
+      out[i]:=Objectify(type, rec(parent:=s, data:=[m,t,j,scc[i]], o:=o));;
+      SetRepresentative(out[i], reps[i]);
+      SetEquivalenceClassRelation(out[i], GreensLRelation(s));
+    od;
+    SetLClassReps(d, reps);
+  fi;
+  return out;
+end);
+
+# new for 0.7! - GreensRClasses - for a D-class of inv semi of part perms
+##############################################################################
+
+InstallOtherMethod(GreensRClasses, "for D-class of inv semi of part perms",
+[IsGreensDClass and IsGreensClassOfInverseSemigroup and
+IsGreensClassOfPartPermSemigroup],
+function(d)
+  local m, t, j, o, scc, s, type, out, reps, mults, f, i;
+
+  m:=d!.data[1]; t:=d!.data[2]; j:=d!.data[4]; o:=d!.o;
+  scc:=OrbSCC(d!.o)[m]; s:=d!.parent; 
+
+  type:=RClassType(s); out:=EmptyPlist(Length(scc));
+
+  if HasRClassReps(d) then 
+    reps:=RClassReps(d);
+    for i in [1..Length(scc)] do 
+      out[i]:=Objectify(type, rec(parent:=s, data:=[m,t,scc[i],j], o:=o));;
+      SetRepresentative(out[i], reps[i]);
+      SetEquivalenceClassRelation(out[i], GreensRRelation(s));
+    od;
+  else
+    reps:=EmptyPlist(Length(scc));
+    mults:=OrbSCCMultipliers(d);
+    f:=Representative(d);
+    for i in [1..Length(scc)] do 
+      reps[i]:=mults[scc[i]]*f;
+      out[i]:=Objectify(type, rec(parent:=s, data:=[m,t,scc[i],j], o:=o));;
+      SetRepresentative(out[i], reps[i]);
+      SetEquivalenceClassRelation(out[i], GreensRRelation(s));
+    od;
+    SetRClassReps(d, reps);
+  fi;
+  return out;
+end);
+
 # new for 0.7! - GreensHClassOfElement - for an inv semi and part perm
 ##############################################################################
 
@@ -1503,6 +1575,27 @@ function(s)
   return out;
 end);
 
+# new for 0.7! - LClassReps - for D-class of part perm inv semi
+##############################################################################
+
+InstallOtherMethod(LClassReps, "for D-class of part perm inv semi",
+[IsGreensDClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
+function(d)
+  local scc, out, rep, mults, i, j;
+
+  scc:=OrbSCC(d!.o)[d!.data[1]];
+  out:=EmptyPlist(Length(scc));
+  rep:=Representative(d);
+  mults:=OrbSCCMultipliers(d);
+
+  i:=0;
+  for j in scc do 
+    i:=i+1;
+    out[i]:=rep*mults[j]^-1;
+  od;
+  return out;
+end);
+
 # new for 0.7! - LClassType - "for a partial perm inverse semigroup"
 ############################################################################
 
@@ -1532,21 +1625,26 @@ function(s)
   return Length(RangesOrb(s))-1;
 end); 
 
+# new for 0.7! - NrRClasses - for D-class of inverse semigroup of partial perms
+##############################################################################
+
+InstallOtherMethod(NrRClasses, "for D-class of semigp of partial perms",
+[IsGreensDClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
+function(d)
+  return Length(OrbSCC(d!.o)[d!.data[1]]);
+end); 
+
 # new for 0.7! - NrLClasses - for an inverse semigroup of partial perms
 ##############################################################################
 
 InstallOtherMethod(NrLClasses, "for an inverse semigp of partial perms",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(s)
-  local i;
-  Enumerate(RangesOrb(s));
-  
-  if IsPartialPermMonoid(s) then 
-    return Length(RangesOrb(s));
-  fi;
+[IsInverseSemigroup and IsPartialPermSemigroup], s-> NrRClasses(s));
 
-  return Length(RangesOrb(s))-1;
-end); 
+# new for 0.7! - NrLClasses - for an inverse semigroup of partial perms
+##############################################################################
+
+InstallOtherMethod(NrLClasses, "for D-class of semigp of partial perms",
+[IsGreensDClass and IsGreensClassOfPartPermSemigroup and                        IsGreensClassOfInverseSemigroup], d-> NrRClasses(d));
 
 # new for 0.7! - NrDClasses - for an inverse semigroup of partial perms
 ##############################################################################
@@ -1749,6 +1847,27 @@ function(s)
 
   for j in [1..Length(o)-i] do 
     out[j]:=EvaluateWord(gens, TraceSchreierTreeForward(o, j+i));
+  od;
+  return out;
+end);
+
+# new for 0.7! - RClassReps - for D-class of part perm inv semi
+##############################################################################
+
+InstallOtherMethod(RClassReps, "for D-class of part perm inv semi",
+[IsGreensDClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
+function(d)
+  local scc, out, rep, mults, i, j;
+
+  scc:=OrbSCC(d!.o)[d!.data[1]];
+  out:=EmptyPlist(Length(scc));
+  rep:=Representative(d);
+  mults:=OrbSCCMultipliers(d);
+
+  i:=0;
+  for j in scc do 
+    i:=i+1;
+    out[i]:=mults[j]*rep;
   od;
   return out;
 end);
