@@ -1678,6 +1678,14 @@ function(s)
   return out;
 end);
 
+# new for 0.7! - IsGroupHClass - "for a part perm inv semigroup"
+##############################################################################
+
+InstallOtherMethod(IsGroupHClass, "for H-class of part perm inv semigroup",
+[IsGreensHClass and IsGreensClassOfPartPermSemigroup and 
+IsGreensClassOfInverseSemigroup], h-> 
+ Dom(Representative(h))=RangeSetOfPartialPerm(Representative(h)));
+
 #LLL
 
 # new for 0.7! - LClassReps - for an inv semi of part perms
