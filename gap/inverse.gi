@@ -60,7 +60,7 @@ function(f, s)
 
   if IsClosed(o) then 
     k:=Position(o, Dom(f));
-    if k=fail then 
+    if k=fail or (k=1 and not IsPartialPermMonoid(s)) then 
       return false;
     fi;
     l:=Position(o, RangeSetOfPartialPerm(f));
@@ -85,6 +85,8 @@ function(f, s)
 
     if Dom(f)=[] then 
       return true;
+    elif k=1 and not IsPartialPermMonoid(s) then 
+      return false;
     fi;
     ran:=RangeSetOfPartialPerm(f);
        
@@ -1628,6 +1630,54 @@ function(s);
          IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup);
 end);
 
+#III
+
+# new for 0.7! - Idempotents - "for a class of a part perm inv semigroup"
+##############################################################################
+
+InstallOtherMethod(Idempotents, "for a class of a part perm inv semigroup",
+[IsGreensClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
+function(class)
+
+  if IsGreensRClass(class) then 
+    return [Representative(class)*Representative(class)^-1];
+  elif IsGreensLClass(class) then 
+    return [Representative(class)^-1*Representative(class)];
+  elif IsGreensDClass(class) then 
+    return List(OrbSCC(class!.o)[class!.data[1]], x-> 
+     PartialPermNC(class!.o[x],class!.o[x]));
+  elif IsGreensHClass(class) and IsGroupHClass(class) then 
+    return [Representative(class)*Representative(class)^-1];
+  fi;
+  return [];
+end);
+
+# new for 0.7! - Idempotents - "for a part perm inv semigroup"
+##############################################################################
+
+InstallOtherMethod(Idempotents, "for a part perm inv semigroup",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s)
+  local o, r, out, i;
+  
+  o:=RangesOrb(s);
+  Enumerate(o);
+  r:=Length(o);
+  
+  if IsPartialPermMonoid(s) then 
+    l:=0;
+  else
+    l:=1;
+  fi;
+
+ out:=EmptyPlist(r-l);
+ 
+  for i in [1..r-l] do
+    out[i]:=PartialPermNC(o[i+l], o[i+l]);
+  od;
+  return out;
+end);
+
 #LLL
 
 # new for 0.7! - LClassReps - for an inv semi of part perms
@@ -1793,6 +1843,24 @@ function(s)
   return Length(RangesOrb(s))-1;
 end); 
 
+#OOO
+
+# new for 0.7! - One - for a partial perm semigroup
+##############################################################################
+
+InstallMethod(OneImmutable, "for a partial perm semigroup",
+[IsPartialPermSemigroup], s-> PartialPermNC(MovedPoints(s), MovedPoints(s)));
+
+# new for 0.7! - OrbSCCMultipliers - for a Green's class of a part perm inv semi
+##############################################################################
+
+InstallOtherMethod(OrbSCCMultipliers, "for a class of a part perm inv semi",
+[IsGreensClass and IsGreensClassOfPartPermSemigroup and
+IsGreensClassOfInverseSemigroup],
+function(class)
+  return OrbSCCMultipliers(class!.o, class!.data[1]);
+end);
+
 # new for 0.7! - ParentAttr - "for a Green's class of a part perm semigroup
 ##############################################################################
 
@@ -1824,17 +1892,6 @@ function(s)
     g:=Random(o!.schutz[m][2]);
     return o!.mults[k]*g*o!.mults[l]^-1;
   fi;
-end);
-
-
-# new for 0.7! - OrbSCCMultipliers - for a Green's class of a part perm inv semi
-##############################################################################
-
-InstallOtherMethod(OrbSCCMultipliers, "for a class of a part perm inv semi",
-[IsGreensClass and IsGreensClassOfPartPermSemigroup and
-IsGreensClassOfInverseSemigroup],
-function(class)
-  return OrbSCCMultipliers(class!.o, class!.data[1]);
 end);
 
 # new for 0.7! - RangeOrbSCC - for a Green's class of a part perm inv semi
