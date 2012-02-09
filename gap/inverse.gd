@@ -16,6 +16,7 @@ DeclareGlobalFunction("EnumerateRangesOrb");
 DeclareProperty("IsGreensClassOfPartPermSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
 DeclareAttribute("RangeOrbMults", IsGreensClass);
+# rename RangeOrbSCC OrbSCC by making the latter an operation...
 DeclareAttribute("RangeOrbSCC", IsGreensClass);
 DeclareGlobalFunction("RangeOrbStabChain");
 #JDM more filters above...

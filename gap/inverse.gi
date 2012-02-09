@@ -351,13 +351,12 @@ end);
 InstallOtherMethod(AsList, "for an H-class of trans. semigp.",
 [IsGreensHClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
 function(h)
-  local schutz, mults, data, f, g;
+  local schutz, g;
   
   schutz:=SchutzenbergerGroup(h);
-  mults:=h!.o!.mults; data:=h!.data;
-  f:=mults[data[3]]; g:=mults[data[4]]^-1; 
+  g:=OrbSCCMultipliers(h)[h!.data[4]];
 
-  return List(schutz, x-> f*x*g);
+  return List(schutz, x-> Representative(h)*g*x*g^-1);
 end);
 
 # new for 0.7! - AsList - not a user function 
@@ -588,7 +587,7 @@ function(r)
 
       n:=pos-1; m:=enum!.len;
       q:=QuoInt(n, m); pos:=[ q, n - q * m]+1;
-      return enum[pos[2]]*RangeOrbMults(r)[RangeOrbSCC(r)[pos[1]]]^-1;
+      return enum[pos[2]]*OrbSCCMultipliers(r)[RangeOrbSCC(r)[pos[1]]]^-1;
     end,
 
     #########################################################################
@@ -667,7 +666,7 @@ function(r)
 
       n:=pos-1; m:=enum!.len;
       q:=QuoInt(n, m); pos:=[ q, n - q * m]+1;
-      return RangeOrbMults(r)[RangeOrbSCC(r)[pos[1]]]*enum[pos[2]];
+      return OrbSCCMultipliers(r)[RangeOrbSCC(r)[pos[1]]]*enum[pos[2]];
     end,
 
     #########################################################################
@@ -745,7 +744,7 @@ function(d)
       n:=pos-1; m:=Length(enum!.schutz); r:=Length(scc);
       q:=QuoInt(n, m); q2:=QuoInt(q, r);
       pos:=[ n-q*m, q2, q  - q2 * r ]+1;
-      mults:=RangeOrbMults(d);
+      mults:=OrbSCCMultipliers(d);
       return mults[scc[pos[2]]]*enum[pos[1]]*mults[scc[pos[3]]]^-1;
     end,
 
@@ -892,26 +891,26 @@ function(s, f)
 
   if IsClosed(RangesOrb(s)) then 
     o:=RangesOrb(s);
-    l:=Position(o, Dom(f));
-    if l=fail then 
+    k:=Position(o, Dom(f));
+    if k=fail then 
       Info(InfoCitrus, 1, "the partial perm. is not an element of the semigroup");
       return fail;
     fi;
-    m:=OrbSCCLookup(o)[l];
+    m:=OrbSCCLookup(o)[k];
     t:=OrbSCC(o)[m][1];
-    k:=Position(o, RangeSetOfPartialPerm(f));
-    if k=fail or not OrbSCCTruthTable(o)[m][k] then 
+    l:=Position(o, RangeSetOfPartialPerm(f));
+    if l=fail or not OrbSCCTruthTable(o)[m][l] then 
       Info(InfoCitrus, 1, "the partial perm. is not an element of the           semigroup");
       return fail;
     fi;
-    rep:=o!.mults[l]^-1*f*o!.mults[k];
+    rep:=o!.mults[k]^-1*f*o!.mults[l];
   else
     o:=ShortOrb(s, Dom(f));
     rep:=f*f^-1;
     k:=1; l:=1; m:=1; t:=1;
   fi;
 
-  d:=Objectify(DClassType(s), rec(parent:=s, data:=[m,t,l,k], o:=o)); 
+  d:=Objectify(DClassType(s), rec(parent:=s, data:=[m,t,k,l], o:=o)); 
 
   SetRepresentative(d, rep);
   SetEquivalenceClassRelation(d, GreensDRelation(s));
@@ -923,7 +922,67 @@ end);
 
 InstallOtherMethod(GreensHClasses, "for an inv semi of partial perms",
 [IsPartialPermSemigroup and IsInverseSemigroup],
-x-> x);
+function(s)
+  local o, scc, r, out, type, l, reps, m, mults, gens, w, f, i, j, k;
+  
+  o:=RangesOrb(s);
+  EnumerateRangesOrb(s);
+  scc:=OrbSCC(o);
+  r:=Length(scc);
+  out:=EmptyPlist(NrHClasses(s));
+
+  type:=HClassType(s);
+ 
+  if IsPartialPermMonoid(s) then 
+    l:=0;
+  else;
+    l:=1;
+  fi;
+
+  if HasHClassReps(s) then 
+    reps:=HClassReps(s);
+    m:=0;
+    for i in [1..r-l] do 
+      for j in scc[i+l] do
+        for k in scc[i+l] do
+          m:=m+1;
+          out[m]:=Objectify(type, rec(parent:=s, data:=[i+l,scc[i+l][1],j,k], 
+           o:=o));;
+          SetRepresentative(out[m], reps[m]);
+          SetEquivalenceClassRelation(out[m], GreensHRelation(s));
+        od;
+      od; 
+    od;
+  else
+    reps:=EmptyPlist(NrHClasses(s));
+    mults:=o!.mults;
+    gens:=GeneratorsOfSemigroup(s);
+    m:=0;
+
+    for i in [1..r-l] do 
+      w:=TraceSchreierTreeForward(o, scc[i+l][1]);
+      if w=[] then 
+        f:=PartialPermNC(o[scc[i+l][1]], o[scc[i+l][1]]);
+      else
+        f:=EvaluateWord(gens, w);
+      fi;
+    
+      for j in scc[i+l] do
+        for k in scc[i+l] do
+          m:=m+1;
+          reps[m]:=mults[j]*f^-1*f*mults[k]^-1;
+          out[m]:=Objectify(type, rec(parent:=s, data:=[i+l,scc[i+l][1],j,k], 
+           o:=o));;
+          SetRepresentative(out[m], reps[m]);
+          SetEquivalenceClassRelation(out[m], GreensHRelation(s));
+        od;
+      od;
+    od;
+    SetHClassReps(s, reps); 
+  fi;
+
+  return out;
+end);
 
 # new for 0.7! - GreensHClasses - for an D-class of inv semi of partial perms
 ############################################################################
@@ -953,7 +1012,7 @@ function(d)
     od; 
   else
     reps:=EmptyPlist(Length(scc)^2);
-    mults:=RangeOrbMults(d);
+    mults:=OrbSCCMultipliers(d);
     f:=Representative(d);
     
     k:=0; 
@@ -981,7 +1040,7 @@ IsGreensClassOfPartPermSemigroup],
 function(d)
   local m, t, j, o, scc, s, type, out, reps, mults, f, i;
   
-  m:=d!.data[1]; t:=d!.data[2]; j:=d!.data[3]; o:=d!.o;
+  m:=d!.data[1]; t:=d!.data[2]; j:=d!.data[4]; o:=d!.o;
   scc:=OrbSCC(d!.o)[m];
   s:=d!.parent;
   type:=HClassType(s);
@@ -996,7 +1055,7 @@ function(d)
     od;
   else
     reps:=EmptyPlist(Length(scc));
-    mults:=RangeOrbMults(d);
+    mults:=OrbSCCMultipliers(d);
     f:=Representative(d);
   
     for i in [1..Length(scc)] do
@@ -1035,7 +1094,7 @@ function(d)
     od; 
   else
     reps:=EmptyPlist(Length(scc));
-    mults:=RangeOrbMults(d);
+    mults:=OrbSCCMultipliers(d);
     f:=Representative(d);
   
     for i in [1..Length(scc)] do
@@ -1064,6 +1123,19 @@ function(s, f)
   return GreensHClassOfElementNC(s, f);
 end);
 
+# new for 0.7! - GreensHClassOfElement - for Green's class  and part perm
+##############################################################################
+
+InstallOtherMethod(GreensHClassOfElement, "for Green's class and part perm",
+[IsGreensClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup, IsPartialPerm and IsPartialPermRep],
+function(class, f)
+  if not f in class then 
+    Error("the partial perm. is not an element of the Green's class,");
+    return;
+  fi;
+  return GreensHClassOfElementNC(class, f);
+end);
+
 # new for 0.7! - GreensHClassOfElementNC - for an inv semi and part perm
 ##############################################################################
 # Notes: data is: [scc index, scc[1], pos of dom, pos of ran]
@@ -1076,30 +1148,107 @@ function(s, f)
 
   if IsClosed(RangesOrb(s)) then 
     o:=RangesOrb(s);
-    l:=Position(o, Dom(f));
-    if l=fail then 
+    k:=Position(o, Dom(f));
+    if k=fail then 
       Info(InfoCitrus, 1, "the partial perm. is not an element of the semigroup");
       return fail;
     fi;
-    m:=OrbSCCLookup(o)[l];
+    m:=OrbSCCLookup(o)[k];
     t:=OrbSCC(o)[m][1];
   else
     o:=ShortOrb(s, Dom(f));
     Enumerate(o);
-    l:=1; m:=1; t:=1;
+    k:=1; m:=1; t:=1;
   fi;
   
-  k:=Position(o, RangeSetOfPartialPerm(f));
-  if k=fail or not OrbSCCTruthTable(o)[m][k] then 
+  l:=Position(o, RangeSetOfPartialPerm(f));
+  if l=fail or not OrbSCCTruthTable(o)[m][l] then 
     Info(InfoCitrus, 1, "the partial perm. is not an element of the           semigroup");
     return fail;
   fi;
   
-  d:=Objectify(HClassType(s), rec(parent:=s, data:=[m,t,l,k], o:=o)); 
+  d:=Objectify(HClassType(s), rec(parent:=s, data:=[m,t,k,l], o:=o)); 
 
   SetRepresentative(d, f);
   SetEquivalenceClassRelation(d, GreensHRelation(s));
   return d; 
+end);
+
+# new for 0.7! - GreensHClassOfElementNC - for an R-class and part perm
+##############################################################################
+
+InstallOtherMethod(GreensHClassOfElementNC, "for an R-class and part perm",
+[IsGreensRClass and IsGreensClassOfPartPermSemigroup and 
+IsGreensClassOfPartPermSemigroup, IsPartialPerm and IsPartialPermRep],
+function(r, f)
+  local o, m, k, l, h;
+
+  o:=r!.o; m:=r!.data[1]; k:=r!.data[3];
+  
+  l:=Position(o, RangeSetOfPartialPerm(f));
+  if l=fail or not OrbSCCTruthTable(o)[m][l] then 
+    return fail;
+  fi;
+
+  h:=Objectify(HClassType(r!.parent), rec(parent:=r!.parent, 
+   data:=[m, r!.data[2], k, l], o:=o));
+
+  SetRepresentative(h, f);
+  SetEquivalenceClassRelation(h, GreensHRelation(r!.parent));
+  return h;
+end);
+
+# new for 0.7! - GreensHClassOfElementNC - for an L-class and part perm
+##############################################################################
+
+InstallOtherMethod(GreensHClassOfElementNC, "for an L-class and part perm",
+[IsGreensLClass and IsGreensClassOfPartPermSemigroup and 
+IsGreensClassOfPartPermSemigroup, IsPartialPerm and IsPartialPermRep],
+function(r, f)
+  local o, m, k, l, h;
+
+  o:=r!.o; m:=r!.data[1]; l:=r!.data[4];
+  
+  k:=Position(o, Dom(f));
+  if k=fail or not OrbSCCTruthTable(o)[m][k] then 
+    return fail;
+  fi;
+
+  h:=Objectify(HClassType(r!.parent), rec(parent:=r!.parent, 
+   data:=[m, r!.data[2], k, l], o:=o));
+
+  SetRepresentative(h, f);
+  SetEquivalenceClassRelation(h, GreensHRelation(r!.parent));
+  return h;
+end);
+
+# new for 0.7! - GreensHClassOfElementNC - for an D-class and part perm
+##############################################################################
+
+InstallOtherMethod(GreensHClassOfElementNC, "for an D-class and part perm",
+[IsGreensDClass and IsGreensClassOfPartPermSemigroup and 
+IsGreensClassOfPartPermSemigroup, IsPartialPerm and IsPartialPermRep],
+function(r, f)
+  local o, m, k, l, h;
+
+  o:=r!.o; m:=r!.data[1];
+  
+  k:=Position(o, Dom(f));
+  if k=fail or not OrbSCCTruthTable(o)[m][k] then 
+    return fail;
+  fi;
+
+  l:=Position(o, RangeSetOfPartialPerm(f));
+  if l=fail or not OrbSCCTruthTable(o)[m][l] then 
+    return fail;
+  fi;
+  
+  h:=Objectify(HClassType(r!.parent), rec(parent:=r!.parent, 
+   data:=[m, r!.data[2], k, l], o:=o));
+
+  SetRepresentative(h, f);
+  SetEquivalenceClassRelation(h, GreensHRelation(r!.parent));
+  return h;
 end);
 
 # new for 0.7! - GreensLClassOfElement - for an inv semi and part perm
@@ -1118,18 +1267,18 @@ end);
 
 # new for 0.7! - GreensLClassOfElementNC - for an inv semi and part perm
 ##############################################################################
-# Notes: data is: [scc index, scc[1], pos of ran]
+# Notes: data is: [scc index, scc[1], pos of dom, pos of ran]
 
 InstallOtherMethod(GreensLClassOfElementNC, "for an inv semi and part perm",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
  IsPartialPermRep],
 function(s, f)
-  local o, l, m, t, rep, r;
+  local o, k, m, t, rep, l, r;
 
   if IsClosed(RangesOrb(s)) then 
     o:=RangesOrb(s);
-    l:=Position(o, Dom(f));
-    if l=fail then 
+    k:=Position(o, Dom(f));
+    if k=fail then 
       Info(InfoCitrus, 1, "the partial perm. is not an element of the semigroup");
       return fail;
     fi;
@@ -1138,11 +1287,16 @@ function(s, f)
     rep:=o!.mults[l]^-1*f;
   else
     o:=ShortOrb(s, Dom(f));
-    l:=1; m:=1; t:=1;
-    rep:=f;
+    Enumerate(o);
+    k:=1; m:=1; t:=1; rep:=f;
   fi;
 
-  r:=Objectify(LClassType(s), rec(parent:=s, data:=[m,t,l], o:=o)); 
+  l:=Position(o, RangeSetOfPartialPerm(f));
+  if l=fail or not OrbSCCTruthTable(o)[m][l] then 
+    return fail;
+  fi;
+
+  r:=Objectify(LClassType(s), rec(parent:=s, data:=[m,t,k,l], o:=o)); 
 
   SetRepresentative(r, rep);
   SetEquivalenceClassRelation(r, GreensLRelation(s));
@@ -1165,13 +1319,13 @@ end);
 
 # new for 0.7! - GreensRClassOfElementNC - for an inv semi and part perm
 ##############################################################################
-# Notes: data is: [scc index, scc[1], pos of dom]
+# Notes: data is: [scc index, scc[1], pos of dom, pos of ran]
 
 InstallOtherMethod(GreensRClassOfElementNC, "for an inv semi and part perm",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
  IsPartialPermRep],
 function(s, f)
-  local o, l, m, t, rep, r;
+  local o, l, m, t, rep, k, r;
 
   if IsClosed(RangesOrb(s)) then 
     o:=RangesOrb(s);
@@ -1185,10 +1339,15 @@ function(s, f)
     rep:=f*o!.mults[l];
   else
     o:=ShortOrb(s, RangeSetOfPartialPerm(f));
+    Enumerate(o);
     l:=1; m:=1; t:=1; rep:=f;
   fi;
   
-  r:=Objectify(RClassType(s), rec(parent:=s, data:=[m,t,l], o:=o)); 
+  k:=Position(o, Dom(f));
+  if k=fail or not OrbSCCTruthTable(o)[m][k] then 
+    return fail;
+  fi;
+  r:=Objectify(RClassType(s), rec(parent:=s, data:=[m,t,k,l], o:=o)); 
 
   SetRepresentative(r, rep);
   SetEquivalenceClassRelation(r, GreensRRelation(s));
@@ -1221,16 +1380,16 @@ function(s)
 
   m:=0;
   for i in [1..r-l] do 
-    w:=TraceSchreierTreeForward(o, i+l);
+    w:=TraceSchreierTreeForward(o, scc[i+l][1]);
     if w=[] then 
       f:=PartialPermNC(o[scc[i+l][1]], o[scc[i+l][1]]);
     else
-      f:=EvaluateWord(gens, TraceSchreierTreeForward(o, scc[i+l][1]));
+      f:=EvaluateWord(gens, w);
     fi;
-    for j in [1..Length(scc[i+l])] do 
-      for k in [1..Length(scc[i+l])] do 
+    for j in scc[i+l] do 
+      for k in scc[i+l] do 
         m:=m+1;
-        out[m]:=mults[scc[i+l][j]]*f^-1*f*mults[scc[i+l][k]]^-1;  
+        out[m]:=mults[j]*f^-1*f*mults[k]^-1;  
       od;
     od;
   od;
@@ -1244,13 +1403,12 @@ InstallOtherMethod(HClassReps, "for an D-class of inv semi of partial perms",
 [IsGreensDClass and IsGreensClassOfInverseSemigroup and
 IsGreensClassOfPartPermSemigroup],
 function(d)
-  local scc, mults, f, m, out, k, i, j;
+  local scc, mults, f, out, k, i, j;
 
   scc:=OrbSCC(d!.o)[d!.data[1]]; 
-  mults:=RangeOrbMults(d);
+  mults:=OrbSCCMultipliers(d);
   f:=Representative(d);
-  m:=Length(scc);
-  out:=EmptyPlist(m^2); 
+  out:=EmptyPlist(Length(scc)^2); 
 
   k:=0;
   for i in scc do 
@@ -1269,16 +1427,17 @@ InstallOtherMethod(HClassReps, "for an L-class of inv semi of partial perms",
 [IsGreensLClass and IsGreensClassOfInverseSemigroup and
 IsGreensClassOfPartPermSemigroup],
 function(l)
-  local scc, mults, f, m, out, i;
+  local scc, mults, f, out, j, i;
 
   scc:=OrbSCC(l!.o)[l!.data[1]]; 
-  mults:=RangeOrbMults(l);
+  mults:=OrbSCCMultipliers(l);
   f:=Representative(l);
-  m:=Length(scc);
-  out:=EmptyPlist(m); 
+  out:=EmptyPlist(Length(scc)); 
 
-  for i in [1..m] do 
-    out[i]:=mults[scc[i]]*f;
+  j:=0;
+  for i in scc do 
+    j:=j+1;
+    out[j]:=mults[i]*f;
   od;
   return out;
 end);
@@ -1290,16 +1449,17 @@ InstallOtherMethod(HClassReps, "for an R-class of inv semi of partial perms",
 [IsGreensRClass and IsGreensClassOfInverseSemigroup and
 IsGreensClassOfPartPermSemigroup],
 function(r)
-  local scc, mults, f, m, out, i;
+  local scc, mults, f, out, j, i;
 
   scc:=OrbSCC(r!.o)[r!.data[1]]; 
-  mults:=RangeOrbMults(r);
+  mults:=OrbSCCMultipliers(r);
   f:=Representative(r);
-  m:=Length(scc);
-  out:=EmptyPlist(m); 
+  out:=EmptyPlist(Length(scc)); 
 
-  for i in [1..m] do 
-    out[i]:=f*mults[scc[i]]^-1;
+  j:=0;
+  for i in scc do 
+    j:=j+1;
+    out[i]:=f*mults[i]^-1;
   od;
   return out;
 end);
@@ -1489,18 +1649,19 @@ function(s)
 end);
 
 
-# new for 0.7! - RangeOrbMults - for a Green's class of a part perm inv semi
+# new for 0.7! - OrbSCCMultipliers - for a Green's class of a part perm inv semi
 ##############################################################################
 
-InstallMethod(RangeOrbMults, "for a Green's class of a part perm inv semi",
+InstallOtherMethod(OrbSCCMultipliers, "for a class of a part perm inv semi",
 [IsGreensClass and IsGreensClassOfPartPermSemigroup and
 IsGreensClassOfInverseSemigroup],
 function(class)
-  return class!.o!.mults;
+  return OrbSCCMultipliers(class!.o, class!.data[1]);
 end);
 
 # new for 0.7! - RangeOrbSCC - for a Green's class of a part perm inv semi
 ##############################################################################
+# JDM this should be a method for OrbSCC of a Green's class
 
 InstallMethod(RangeOrbSCC, "for a Green's class of a part perm inv semi",
 [IsGreensClass and IsGreensClassOfPartPermSemigroup and

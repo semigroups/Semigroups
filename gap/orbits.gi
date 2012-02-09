@@ -231,6 +231,8 @@ function(s, m)
               onlygradesdata:=[m..n], schreier:=true));
 end);
 
+#OOO
+
 # new for 0.2! - OnBlist - for blist and transformation 
 ###########################################################################
 # Notes: this is BlistList([1..Length(blist)], 
@@ -285,6 +287,27 @@ function(o)
   
   return scc;
 end); 
+
+# new for 0.7! - OrbSCCMultipliers - "for an orbit and scc index"
+#############################################################################
+
+InstallMethod(OrbSCCMultipliers, "for an orbit and scc index", 
+[IsOrbit, IsPosInt],
+function(o, m)
+  local scc;
+  
+  if not IsBound(o!.mults) then 
+    Enumerate(o);
+    o!.mults:=EmptyPlist(Length(o));
+  fi;
+
+  scc:=OrbSCC(o)[m];
+  if not IsBound(o!.mults[scc[1]]) then 
+    CreateSCCMultipliers(o!.gens, o, m, scc, o!.mults);
+  fi;
+
+  return o!.mults;
+end);
 
 # new for 0.4! - OrbSCCLookup - "for an orbit"
 #############################################################################
