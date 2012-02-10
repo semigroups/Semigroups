@@ -984,6 +984,15 @@ function(iter)
   return;
 end);
 
+# new for 0.7! - PrintObj - IsIteratorOfLClassElements
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfLClassElements],
+function(iter)
+  Print( "<iterator of L-class>");
+  return;
+end);
+
 #SSS
 
 # new for 0.1! - SchutzenbergerGroup - "for an L-class of a trans. semigp."

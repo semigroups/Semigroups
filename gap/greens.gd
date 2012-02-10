@@ -202,6 +202,7 @@ DeclareProperty("IsIteratorOfSemigroup", IsIterator);
 DeclareProperty("IsIteratorOfRClassElements", IsIterator);
 DeclareProperty("IsIteratorOfLClassElements", IsIterator);
 DeclareProperty("IsIteratorOfDClassElements", IsIterator);
+DeclareProperty("IsIteratorOfHClassElements", IsIterator);
 
 DeclareGlobalFunction("UnderlyingSemigroupOfIterator");
 DeclareProperty("IsCitrusPkgIterator", IsIterator);

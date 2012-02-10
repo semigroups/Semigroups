@@ -1658,7 +1658,7 @@ end);
 InstallOtherMethod(Idempotents, "for a part perm inv semigroup",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local o, r, out, i;
+  local o, r, l, out, i;
   
   o:=RangesOrb(s);
   Enumerate(o);
@@ -1685,6 +1685,214 @@ InstallOtherMethod(IsGroupHClass, "for H-class of part perm inv semigroup",
 [IsGreensHClass and IsGreensClassOfPartPermSemigroup and 
 IsGreensClassOfInverseSemigroup], h-> 
  Dom(Representative(h))=RangeSetOfPartialPerm(Representative(h)));
+
+# new for 0.7! - IsRegularDClass - "for D-class of inv semigroup"
+##############################################################################
+
+InstallTrueMethod(IsRegularDClass, IsGreensDClass and 
+IsGreensClassOfInverseSemigroup); 
+
+# new for 0.7! - IsRegularLClass - "for L-class of inv semigroup"
+##############################################################################
+InstallTrueMethod(IsRegularLClass, IsGreensLClass and 
+IsGreensClassOfInverseSemigroup); 
+
+# new for 0.7! - IsRegularRClass - "for R-class of inv semigroup"
+##############################################################################
+
+InstallTrueMethod(IsRegularRClass, IsGreensRClass and 
+IsGreensClassOfInverseSemigroup); 
+
+# new for 0.7! - Iterator - "for D-class of inv semigroup"
+##############################################################################
+
+InstallMethod(Iterator, "for D-class of inv semigroup",
+[IsGreensDClass and IsGreensClassOfInverseSemigroup
+and IsGreensClassOfPartPermSemigroup],
+function(d)
+  local iter;
+  if HasAsSSortedList(d) then 
+    iter:=IteratorList(AsSSortedList(d));
+  else
+    iter:=IteratorByFunctions(rec(
+
+      schutz:=List(SchutzenbergerGroup(d), x-> Representative(d)*x),
+
+      at:=[0,1,1],
+
+      m:=Length(RangeOrbSCC(d)), n:=Size(SchutzenbergerGroup(d)),
+
+      IsDoneIterator:=iter-> 
+       iter!.at[1]=iter!.m and iter!.at[2]=iter!.n and iter!.at[3]=iter!.m,
+
+      NextIterator:=function(iter)
+        local at;
+
+        at:=iter!.at;
+        if IsDoneIterator(iter) then 
+          return fail;
+        fi;
+
+        if at[1]<iter!.m then 
+          at[1]:=at[1]+1;
+        elif at[3]<iter!.m then 
+          at[1]:=1; at[3]:=at[3]+1;
+        elif at[2]<iter!.n then 
+          at[1]:=1; at[3]:=1; at[2]:=at[2]+1;
+        fi;
+
+        return OrbSCCMultipliers(d)[at[1]]*iter!.schutz[at[2]]*
+         OrbSCCMultipliers(d)[at[3]]^-1;
+      end,
+
+      ShallowCopy:=iter -> rec(schutz:=iter!.schutz, m:=iter!.m, n:=iter!.n, 
+      at:=[0,1,1])));
+  fi;
+
+  SetIsIteratorOfDClassElements(iter, true);
+  SetIsCitrusPkgIterator(iter, true);
+  return iter;
+end);
+
+# new for 0.7! - Iterator - "for H-class of inv semigroup"
+##############################################################################
+
+InstallMethod(Iterator, "for H-class of inv semigroup",
+[IsGreensHClass and IsGreensClassOfInverseSemigroup
+and IsGreensClassOfPartPermSemigroup],
+function(h)
+  local iter;
+  if HasAsSSortedList(h) then 
+    iter:=IteratorList(AsSSortedList(h));
+  else
+    iter:=IteratorByFunctions(rec(
+
+      schutz:=Enumerator(SchutzenbergerGroup(h)),
+      
+      pre:=Representative(h)*OrbSCCMultipliers(h)[h!.data[4]],
+  
+      post:=OrbSCCMultipliers(h)[h!.data[4]]^-1,
+
+      at:=0,
+
+      IsDoneIterator:=iter-> iter!.at=Length(iter!.schutz),
+       
+      NextIterator:=function(iter)
+
+        if IsDoneIterator(iter) then 
+          return fail;
+        fi;
+
+        iter!.at:=iter!.at+1;
+
+        return iter!.pre*iter!.schutz[iter!.at]*iter!.post;
+      end,
+
+      ShallowCopy:=iter -> rec(schutz:=iter!.schutz, pre:=iter!.pre, 
+       post:=iter!.post, at:=0)));
+  fi;
+
+  SetIsIteratorOfHClassElements(iter, true);
+  SetIsCitrusPkgIterator(iter, true);
+  return iter;
+end);
+
+# new for 0.7! - Iterator - "for L-class of inv semigroup"
+##############################################################################
+
+InstallMethod(Iterator, "for L-class of inv semigroup",
+[IsGreensLClass and IsGreensClassOfInverseSemigroup
+and IsGreensClassOfPartPermSemigroup],
+function(d)
+  local iter;
+  if HasAsSSortedList(d) then 
+    iter:=IteratorList(AsSSortedList(d));
+  else
+    iter:=IteratorByFunctions(rec(
+
+      schutz:=List(SchutzenbergerGroup(d), x-> x*Representative(d)),
+
+      at:=[0,1],
+
+      m:=Length(RangeOrbSCC(d)), n:=Size(SchutzenbergerGroup(d)),
+
+      IsDoneIterator:=iter-> 
+       iter!.at[1]=iter!.m and iter!.at[2]=iter!.n,
+
+      NextIterator:=function(iter)
+        local at;
+
+        at:=iter!.at;
+        if IsDoneIterator(iter) then 
+          return fail;
+        fi;
+
+        if at[1]<iter!.m then 
+          at[1]:=at[1]+1;
+        else
+          at[1]:=1; at[2]:=at[2]+1;
+        fi;
+
+        return OrbSCCMultipliers(d)[at[1]]*iter!.schutz[at[2]];
+      end,
+
+      ShallowCopy:=iter -> rec(schutz:=iter!.schutz, m:=iter!.m, n:=iter!.n, 
+      at:=[0,1])));
+  fi;
+
+  SetIsIteratorOfLClassElements(iter, true);
+  SetIsCitrusPkgIterator(iter, true);
+  return iter;
+end);
+
+# new for 0.7! - Iterator - "for R-class of inv semigroup"
+##############################################################################
+
+InstallMethod(Iterator, "for R-class of inv semigroup",
+[IsGreensRClass and IsGreensClassOfInverseSemigroup
+and IsGreensClassOfPartPermSemigroup],
+function(d)
+  local iter;
+  if HasAsSSortedList(d) then 
+    iter:=IteratorList(AsSSortedList(d));
+  else
+    iter:=IteratorByFunctions(rec(
+
+      schutz:=List(SchutzenbergerGroup(d), x-> Representative(d)*x),
+
+      at:=[0,1],
+
+      m:=Length(RangeOrbSCC(d)), n:=Size(SchutzenbergerGroup(d)),
+
+      IsDoneIterator:=iter-> 
+       iter!.at[1]=iter!.m and iter!.at[2]=iter!.n,
+
+      NextIterator:=function(iter)
+        local at;
+
+        at:=iter!.at;
+        if IsDoneIterator(iter) then 
+          return fail;
+        fi;
+
+        if at[1]<iter!.m then 
+          at[1]:=at[1]+1;
+        else
+          at[1]:=1; at[2]:=at[2]+1;
+        fi;
+
+        return iter!.schutz[at[2]]*OrbSCCMultipliers(d)[at[1]]^-1;
+      end,
+
+      ShallowCopy:=iter -> rec(schutz:=iter!.schutz, m:=iter!.m, n:=iter!.n, 
+      at:=[0,1])));
+  fi;
+
+  SetIsIteratorOfRClassElements(iter, true);
+  SetIsCitrusPkgIterator(iter, true);
+  return iter;
+end);
+
 
 #LLL
 

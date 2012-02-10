@@ -2318,6 +2318,15 @@ function(iter)
 return;
 end);
 
+# new for 0.7! - PrintObj - "for an iterator of a D-class"
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfDClassElements],
+function(iter)
+  Print( "<iterator of D-class>");
+return;
+end);
+
 #SSS
 
 # new for 0.1! - SchutzenbergerGroup - "for a D-class of a trans. semigp."

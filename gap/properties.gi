@@ -80,7 +80,7 @@ end);
 # Notes: returns a permutation group isomorphic to the group of units of the
 # input semigroup. 
 
-InstallMethod(GroupOfUnits, "for a tranformation semigroup", 
+InstallOtherMethod(GroupOfUnits, "for a partial perm semigroup", 
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local h, m, g;

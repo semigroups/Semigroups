@@ -676,6 +676,15 @@ function(iter)
   return;
 end);
 
+# new for 0.7! - PrintObj - IsIteratorOfHClassElements
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfHClassElements], 
+function(iter)
+  Print( "<iterator of H-class>");
+  return;
+end);
+
 #SSS
 
 # new for 0.1! - SchutzenbergerGroup - "for an H-class of a trans. semigp."
