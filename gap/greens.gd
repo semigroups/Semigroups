@@ -40,7 +40,7 @@ DeclareProperty("IsGreensClassOfTransSemigp", IsGreensClass);
 DeclareProperty("IsRegularRClass", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IteratorOfDClasses");
 DeclareGlobalFunction("IteratorOfDClassReps"); 
-DeclareGlobalFunction("IteratorOfRClasses");
+DeclareOperation("IteratorOfRClasses", [IsSemigroup]);
 DeclareGlobalFunction("IteratorOfRClassReps");
 DeclareAttribute("NrIdempotents", IsTransformationSemigroup);
 DeclareAttribute("NrDClasses", IsTransformationSemigroup); 

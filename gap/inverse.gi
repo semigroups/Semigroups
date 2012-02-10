@@ -1893,6 +1893,101 @@ function(d)
   return iter;
 end);
 
+# new for 0.7! - IteratorOfRClasses - "for part perm inverse semigroup""
+###############################################################################
+
+InstallMethod(IteratorOfRClasses, "for a part perm inverse semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup], 
+function(s)
+  local offset, iter;
+
+  if IsPartialPermMonoid(s) then
+    offset:=0;
+  else
+    offset:=1;
+  fi; 
+
+  if not IsClosed(RangesOrb(s)) then 
+    
+    iter:=IteratorByFunctions( rec(
+      
+      o:=RangesOrb(s), 
+
+      i:=offset,
+
+      IsDoneIterator:=iter-> IsClosed(iter!.o) and iter!.i>=Length(iter!.o),
+
+      NextIterator:=function(iter)
+        local i, o, f, r;
+        if IsDoneIterator(iter) then 
+          return fail;  
+        fi;
+
+        iter!.i:=iter!.i+1;
+        i:=iter!.i; o:=iter!.o;
+
+        if i>Length(o) then 
+          Enumerate(o, Length(o)+1);
+        fi;
+
+        if i>Length(o) then 
+          return fail;
+        fi;
+
+        f:=EvaluateWord(GeneratorsOfSemigroup(s), 
+         TraceSchreierTreeForward(o, i));
+        f:=f^-1*f;
+        
+        r:=Objectify(RClassType(s), rec(parent:=s, o:=ShortOrb(s, 
+        RangeSetOfPartialPerm(f)), data:=[1,1,1,1]));
+        SetRepresentative(r, f);
+        SetEquivalenceClassRelation(r, GreensRRelation(s));
+        return r;
+      end,
+
+      ShallowCopy:=iter-> rec(o:=iter!.o, i:=iter!.l)));
+  else
+    iter:=IteratorByFunctions( rec(
+                 
+      o:=RangesOrb(s),
+
+      m:=offset+1, i:=0,      
+
+      IsDoneIterator:=iter-> iter!.m=Length(OrbSCC(iter!.o)) and 
+       iter!.i=Length(OrbSCC(iter!.o)[iter!.m]),
+
+      NextIterator:=function(iter)
+        local i, o, m, scc, f;
+        if IsDoneIterator(iter) then
+          return fail; 
+        fi;
+
+        i:=iter!.i; o:=iter!.o; m:=iter!.m; scc:=OrbSCC(o);
+        if i<Length(scc[m]) then 
+          iter!.i:=iter!.i+1;
+          i:=i+1;
+        else
+          i:=1;  iter!.i:=1; 
+          m:=m+1; iter!.m:=iter!.m+1; 
+        fi;
+        
+        f:=EvaluateWord(GeneratorsOfSemigroup(s), 
+         TraceSchreierTreeForward(o, scc[m][1]));
+        f:=OrbSCCMultipliers(o, m)[scc[m][i]]*f^-1*f;
+        r:=Objectify(RClassType(s), rec(parent:=s, o:=RangesOrb(s),
+        data:=[m,scc[m][1],scc[m][i],scc[m][1]]));
+        SetRepresentative(r, f);
+        SetEquivalenceClassRelation(r, GreensRRelation(s));
+        return r;
+      end,
+
+      ShallowCopy:=iter-> rec(o:=iter!.o, i:=iter!.l)));
+  fi;
+
+  SetIsIteratorOfRClasses(iter, true);
+  SetIsCitrusPkgIterator(iter, true);
+  return iter;
+end);
 
 #LLL
 
@@ -2098,7 +2193,7 @@ function(s)
 
   if not IsClosed(o) then  
     gens:=GeneratorsOfSemigroup(s);
-    i:=Random([1..Length(gens)]);
+    i:=Random([1..Int(Length(gens)/2)]);
     w:=List([1..i], x-> Random([1..Length(gens)]));
     return EvaluateWord(gens, w);
   else
@@ -2320,8 +2415,8 @@ InstallGlobalFunction(ShortOrb,
 function(s, set)
 
   return Orb(s, set, OnIntegerSetsWithPartialPerm, 
-      rec(onflatplainlist:=true,
-        treehashsize:=CitrusOptionsRec.hashlen.M,
+      rec(forflatplainlists:=true,
+        hashlen:=CitrusOptionsRec.hashlen.M,
         schreier:=true,
         gradingfunc := function(o,x) return Length(x); end,
         orbitgraph := true,

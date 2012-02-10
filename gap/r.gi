@@ -1398,10 +1398,11 @@ function(r)
   return iter;
 end);
 
-# mod for 0.4! - IteratorOfRClasses - not a user function!
+# mod for 0.7! - IteratorOfRClasses - "for a trans. semigroup"
 #############################################################################
 
-InstallGlobalFunction(IteratorOfRClasses, 
+InstallMethod(IteratorOfRClasses, "for a trans. semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local iter;
 
