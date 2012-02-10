@@ -1491,16 +1491,16 @@ function(s, f)
     m:=OrbSCCLookup(o)[l];
     t:=OrbSCC(o)[m][1];
     rep:=f*o!.mults[l];
+    k:=Position(o, Dom(f));
+    if k=fail or not OrbSCCTruthTable(o)[m][k] then 
+      return fail;
+    fi;
   else
-    o:=ShortOrb(s, RangeSetOfPartialPerm(f));
-    Enumerate(o);
-    l:=1; m:=1; t:=1; rep:=f;
+    rep:=f*f^-1;
+    o:=ShortOrb(s, RangeSetOfPartialPerm(rep));
+    l:=1; m:=1; t:=1; k:=1;
   fi;
   
-  k:=Position(o, Dom(f));
-  if k=fail or not OrbSCCTruthTable(o)[m][k] then 
-    return fail;
-  fi;
   r:=Objectify(RClassType(s), rec(parent:=s, data:=[m,t,k,l], o:=o)); 
 
   SetRepresentative(r, rep);
@@ -1957,7 +1957,7 @@ function(s)
        iter!.i=Length(OrbSCC(iter!.o)[iter!.m]),
 
       NextIterator:=function(iter)
-        local i, o, m, scc, f;
+        local i, o, m, scc, f, r;
         if IsDoneIterator(iter) then
           return fail; 
         fi;
