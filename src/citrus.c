@@ -105,13 +105,30 @@ Obj FuncDenseCreatePartPerm_C( Obj self, Obj img )
 }
 
 /* sparse create partial perm */
+typedef short int pptype_t;
+static inline pptype_t ELM_PP(Obj o, Int pos)
+{
+    pptype_t *data = (pptype_t *) (ADDR_OBJ(o) + 1);
+    return data[pos-1];
+}
+static inline void SET_ELM_PP(Obj o, Int pos, pptype_t nr)
+{
+    pptype_t *data = (pptype_t *) (ADDR_OBJ(o) + 1);
+    data[pos-1] = nr;
+}
+static inline Int BYTES_PPLEN(pptype_t space)
+{
+    return sizeof(pptype_t)*space + sizeof(UInt);
+}
+
+Obj PartialPermType;
 
 Obj FuncSparseCreatePartPerm_C( Obj self, Obj dom, Obj ran )
 { 
     Obj f, j, k;
-    Int rank, deg, max_ran, min_ran, i, kk;
+    pptype_t rank, deg, max_ran, min_ran, i, kk;
 
-    rank = LEN_PLIST(dom);
+    rank = (pptype_t) LEN_PLIST(dom);
 
     if(rank==0){
       f = NEW_PLIST(T_PLIST_CYC,1);
@@ -122,6 +139,9 @@ Obj FuncSparseCreatePartPerm_C( Obj self, Obj dom, Obj ran )
     
     deg = INT_INTOBJ(ELM_PLIST(dom, rank));
     f = NEW_PLIST(T_PLIST_CYC, 6+deg+3*rank);
+    f = NewBag(T_DATOBJ, BYTES_PPLEN(6+deg+3*rank));
+    TYPE_DATOBJ(f) = PartialPermType;
+
     SET_LEN_PLIST(f, 6+deg+2*rank);
 
     SET_ELM_PLIST(f, 1, ELM_PLIST(dom, rank));
@@ -487,6 +507,8 @@ static Int InitKernel ( StructInitInfo *module )
 {
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
+
+    ImportGVarFromLibrary( "PartialPermType", &PartialPermType );
 
     /* return success                                                      */
     return 0;
