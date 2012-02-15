@@ -7,6 +7,36 @@ const char * Revision_citrus_c =
 
 #include "src/compiled.h" 
 
+
+/* import the type from GAP */
+Obj PartialPermType;
+
+/* define the type for entries in part. perm */
+typedef short int pptype;
+
+/* retrieve entry pos of internal rep of partial perm f */
+static inline pptype ELM_PP(Obj f, Int pos)
+{
+    pptype *data = (pptype *) (ADDR_OBJ(f) + 1);
+    return data[pos-1];
+}
+
+/* define entry pos of internal rep of partial perm f to be nr */
+static inline void SET_ELM_PP(Obj f, Int pos, pptype nr)
+{
+    pptype *data = (pptype *) (ADDR_OBJ(f) + 1);
+    data[pos-1] = nr;
+}
+
+static inline Obj NEW_PP(pptype len)
+{
+    Obj f;
+
+    f = NewBag(T_DATOBJ, sizeof(pptype)*(len)+sizeof(UInt));
+    TYPE_DATOBJ(f) = PartialPermType;
+    return f;
+}
+
 /*******************************************************************************
 **
 ** A partial permutation is of the form:
@@ -20,6 +50,68 @@ const char * Revision_citrus_c =
 ** range as a set (not calculated until needed), and <img list> is the list of 
 ** images with 0 for undefined.
 */
+
+/* create partial perm from sparse representation */
+
+Obj FuncSparseCreatePartPerm_C( Obj self, Obj dom, Obj ran )
+{   Int rank, deg, max_ran, min_ran, i, j, k;
+    Obj f;
+
+    rank = LEN_PLIST(dom);
+
+    if(rank==0){
+      f = NEW_PP(1);
+      SET_ELM_PP(f, 1, (pptype) 0);
+      return f;
+    }
+    
+    deg =  INT_INTOBJ(ELM_PLIST(dom, rank));
+    f = NEW_PP(6+deg+3*rank);
+
+    SET_ELM_PP(f, 1, (pptype) deg);
+    SET_ELM_PP(f, 2, (pptype) rank);
+
+    max_ran=0; 
+    min_ran=65535; 
+
+    /* find dense img list, max_ran, min_ran */
+    for(i=1;i<=rank;i++){
+      j = INT_INTOBJ(ELM_PLIST(dom, i));
+      SET_ELM_PP(f, 6+deg+i, (pptype) j);
+      
+      k = INT_INTOBJ(ELM_PLIST(ran, i));
+      SET_ELM_PP(f, 6+deg+rank+i, (pptype) k);
+      SET_ELM_PP(f, j+6, (pptype) k);
+
+      if(k>max_ran){
+        max_ran=k;
+      }
+      if(k<min_ran){
+        min_ran=k;
+      }
+    }
+
+    SET_ELM_PP(f,3,(pptype) min_ran);
+    SET_ELM_PP(f,4,(pptype) max_ran);
+
+    /* set min */
+    j=INT_INTOBJ(ELM_PLIST(dom,1));
+    if(min_ran<j){
+      SET_ELM_PP(f,5,(pptype) min_ran);
+    }else{
+      SET_ELM_PP(f,5,(pptype) j);
+    }
+    
+    /* set max */
+    if(max_ran>deg){
+      SET_ELM_PP(f,6,(pptype) max_ran);
+    }else{
+      SET_ELM_PP(f,6,(pptype) deg);
+    }
+
+    return f;
+}
+
 
 Obj FuncDenseCreatePartPerm_C( Obj self, Obj img )
 { 
@@ -104,107 +196,24 @@ Obj FuncDenseCreatePartPerm_C( Obj self, Obj img )
     return f;
 }
 
-/* sparse create partial perm */
-typedef short int pptype_t;
-static inline pptype_t ELM_PP(Obj o, Int pos)
-{
-    pptype_t *data = (pptype_t *) (ADDR_OBJ(o) + 1);
-    return data[pos-1];
-}
-static inline void SET_ELM_PP(Obj o, Int pos, pptype_t nr)
-{
-    pptype_t *data = (pptype_t *) (ADDR_OBJ(o) + 1);
-    data[pos-1] = nr;
-}
-static inline Int BYTES_PPLEN(pptype_t space)
-{
-    return sizeof(pptype_t)*space + sizeof(UInt);
-}
-
-Obj PartialPermType;
-
-Obj FuncSparseCreatePartPerm_C( Obj self, Obj dom, Obj ran )
-{ 
-    Obj f, j, k;
-    pptype_t rank, deg, max_ran, min_ran, i, kk;
-
-    rank = (pptype_t) LEN_PLIST(dom);
-
-    if(rank==0){
-      f = NEW_PLIST(T_PLIST_CYC,1);
-      SET_LEN_PLIST(f, 1);
-      SET_ELM_PLIST(f, 1, INTOBJ_INT(0));
-      return f;
-    }
-    
-    deg = INT_INTOBJ(ELM_PLIST(dom, rank));
-    f = NEW_PLIST(T_PLIST_CYC, 6+deg+3*rank);
-    f = NewBag(T_DATOBJ, BYTES_PPLEN(6+deg+3*rank));
-    TYPE_DATOBJ(f) = PartialPermType;
-
-    SET_LEN_PLIST(f, 6+deg+2*rank);
-
-    SET_ELM_PLIST(f, 1, ELM_PLIST(dom, rank));
-    SET_ELM_PLIST(f, 2, INTOBJ_INT(rank));
-
-    max_ran=0; 
-    min_ran=0; 
-
-    for(i=1;i<=deg;i++){
-      SET_ELM_PLIST(f, i+6, INTOBJ_INT(0));
-    }
-
-    /* find dense img list, max_ran, min_ran */
-    for(i=1;i<=rank;i++){
-      j = ELM_PLIST(dom, i);
-      SET_ELM_PLIST(f, 6+i+deg, j);
-      k = ELM_PLIST(ran, i);
-      SET_ELM_PLIST(f, 6+i+deg+rank, k);
-      SET_ELM_PLIST(f, INT_INTOBJ(j)+6, k);
-      kk = INT_INTOBJ(k);
-      if(kk>max_ran){
-        max_ran=kk;
-      }
-      if((min_ran==0)||(kk<min_ran)){
-        min_ran=kk;
-      }
-    }
-
-    SET_ELM_PLIST(f,3,INTOBJ_INT(min_ran));
-    SET_ELM_PLIST(f,4,INTOBJ_INT(max_ran));
-
-    /* set min */
-    j=ELM_PLIST(dom,1);
-    if(min_ran<INT_INTOBJ(j)){
-      SET_ELM_PLIST(f,5,INTOBJ_INT(min_ran));
-    }else{
-      SET_ELM_PLIST(f,5,j);
-    }
-    
-    /* set max */
-    if(max_ran>deg){
-      SET_ELM_PLIST(f,6,INTOBJ_INT(max_ran));
-    }else{
-      SET_ELM_PLIST(f,6,ELM_PLIST(dom, rank));
-    }
-
-    return f;
-}
-
 
 /* read off partial permutation */
 
-Obj FuncReadOffPartPerm_C( Obj self, Obj f, Obj i, Obj j)
-{   
-    Int len, k;
-    Obj out;
+Obj FuncELM_LIST_PP( Obj self, Obj f, Obj i)
+{ 
+  return INTOBJ_INT((Int) ELM_PP(f, INT_INTOBJ(i)));
+}
 
-    len = INT_INTOBJ(j)-INT_INTOBJ(i)+1;
+Obj FuncELMS_LIST_PP(Obj self, Obj f, Obj list)
+{   Int len, i;
+    Obj out;
+    
+    len = LEN_PLIST(list);
     out = NEW_PLIST(T_PLIST_CYC, len);
     SET_LEN_PLIST(out, len);
     
-    for(k=0;k<=len-1;k++){
-      SET_ELM_PLIST(out,k+1, ELM_PLIST(f, INT_INTOBJ(i)+k));
+    for(i=1;i<=len;i++){
+      SET_ELM_PLIST(out,i,  INTOBJ_INT((Int) ELM_PP(f, i)));
     }
 
     return out;
@@ -472,9 +481,13 @@ static StructGVarFunc GVarFuncs [] = {
     FuncSparseCreatePartPerm_C,
     "pkg/citrus/src/citrus.c:FuncSparseCreatePartPerm_C" },
 
-  { "ReadOffPartPerm_C", 3, "f,i,j",
-    FuncReadOffPartPerm_C,
-    "pkg/citrus/src/citrus.c:FuncReadOffPartPerm_C" },
+  { "ELM_LIST_PP", 2, "f,i", 
+    FuncELM_LIST_PP, 
+    "pkg/citrus/src/citrus.c:ELM_LIST_PP" },
+
+  { "ELMS_LIST_PP", 2, "f,list",
+    FuncELMS_LIST_PP,
+    "pkg/citrus/src/citrus.c:ELMS_LIST_PP" },
   
   { "ProdPartPerm_C", 2, "f,g",
     FuncProdPartPerm_C,

@@ -30,38 +30,6 @@ function(x, y)
   return Objectify(TypeObj(x), [z]);
 end);
 
-# new for 0.7! - \^ - "for a partial perm and neg int"
-#############################################################################
-
-if IsBound(InvPartPerm_C) then 
-  InstallMethod(\^, "for a partial perm and neg int",
-  [IsPartialPerm and IsPartialPermRep, IsNegInt],
-  function(f, r)
-    if not f![1]=0 then 
-      return Objectify(PartialPermType, InvPartPerm_C(f))^-r;
-    else
-      return f;
-    fi;
-  end);
-else
-  #JDM modify the method below...
-  Error("not yet implemented,");
-  InstallMethod(\^, "for a partial perm and neg int", 
-  [IsPartialPerm and IsPartialPermRep, IsNegInt],
-  function(f, r)
-    local ff, n, img, i;
-    ff:=f![1];
-    n:=Length(ff);
-    img:=ListWithIdenticalEntries(n, 0);
-    for i in [1..n] do 
-      if not ff[i]=0 then 
-        img[ff[i]]:=i;
-      fi;
-    od;
-    return PartialPermNC(img)^-r;
-  end);
-fi;
-
 # new for 0.7! - \^ - "for a pos int and partial perm"
 #############################################################################
 # JDM C
