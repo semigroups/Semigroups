@@ -87,16 +87,6 @@ function(f,g)
   return (g^-1*f^-1)^-1; 
 end);
 
-# new for 0.7! - \/ - "for a partial perm and partial perm"
-#############################################################################
-# JDM C
-
-InstallOtherMethod(\/, "for a partial perm and partial perm",
-[IsPartialPerm , IsPartialPerm ],
-function(f,g)
-  return f*g^-1;
-end);
-
 #AAA
 
 # new for 0.1! - AsPermOfKerImg - "for a transformation"

@@ -6,6 +6,10 @@ const char * Revision_citrus_c =
 #include <stdlib.h>
 
 #include "src/compiled.h" 
+#include "src/permutat.h" 
+
+/* from permutat.c */
+#define IMAGE(i,pt,dg)  (((i) < (dg)) ? (pt)[(i)] : (i))
 
 /* import the type from GAP */
 Obj PartialPermType;
@@ -801,6 +805,48 @@ Obj FuncQuoPP(Obj self, Obj f, Obj g)
   return fg;
 }
 
+/* product of partial perm and perm 2 */
+
+Obj FuncProdPPPerm2(Obj self, Obj f, Obj p)
+{
+  Int deg_f, rank_f, deg_p, max_ran, min_ran, i, j, k, min_dom, max_dom;
+  UInt2 * ptp;
+  Obj fp;
+  
+  deg_f = ELM_PP(f, 1);
+  if(deg_f==0) return NEW_EMPTY_PP();
+
+  fp = NEW_PP(LEN_PP(f));
+  rank_f = ELM_PP(f, 2);
+  deg_p = DEG_PERM2(p);
+  ptp = ADDR_PERM2(p);
+
+  SET_ELM_PP(fp, 1, deg_f);
+  SET_ELM_PP(fp, 2, rank_f);
+
+  max_ran=0;
+  min_ran=65535;
+
+  for(i=1;i<=rank_f;i++)
+  {
+    j = ELM_PP(f, 6+deg_f+i);
+    SET_ELM_PP(fp, 6+deg_f+i, j);           /* dom */
+    k = IMAGE(ELM_PP(f, 6+deg_f+rank_f+i)-1, ptp, deg_p)+1;       
+    SET_ELM_PP(fp, 6+deg_f+rank_f+i, k);    /* ran */
+    SET_ELM_PP(fp, 6+j, k);                 /* dense img */ 
+    if(k>max_ran) max_ran=k;
+    if(k<min_ran) min_ran=k;
+  }    
+   
+  SET_ELM_PP(fp, 3, min_ran); 
+  SET_ELM_PP(fp, 4, max_ran);
+  min_dom=ELM_PP(fp, 7+deg_f);
+  SET_ELM_PP(fp, 5, min_ran<min_dom?min_ran:min_dom);
+  max_dom=ELM_PP(fp, 6+deg_f+rank_f);
+  SET_ELM_PP(fp, 6, max_ran>max_dom?max_ran:max_dom);
+  
+  return fp;
+}
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
@@ -872,6 +918,10 @@ static StructGVarFunc GVarFuncs [] = {
   { "QuoPP", 2, "f, g", 
     FuncQuoPP,
     "pkg/citrus/src/citrus.c:FuncQuoPP" },
+
+  { "ProdPPPerm2", 2, "f, p",
+    FuncProdPPPerm2, 
+    "pkg/citrus/src/citrus.c:FuncProdPPPerm2" },
 
   { 0 }
 
