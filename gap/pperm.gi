@@ -23,6 +23,13 @@ InstallMethod(\*, "for a partial perm and partial perm",
 InstallMethod(\=, "for a partial perm and partial perm",
 [IsPartialPerm , IsPartialPerm ], EqPP);
 
+
+# new for 0.7! - \< - "for a partial perm and partial perm"
+#############################################################################
+
+InstallMethod(\<, "for a partial perm and partial perm",
+[IsPartialPerm , IsPartialPerm ], LeqPP);
+
 # new for 0.7! - Dom - "for a partial perm"
 ############################################################################
 # Notes: f[1] = deg ; f[2] = rank

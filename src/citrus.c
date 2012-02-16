@@ -579,7 +579,7 @@ Obj FuncFixedPointsPP(Obj self, Obj f)
 
 /* less than or equal */
 
-Obj FuncLEQ_PP(Obj self, Obj f, Obj g)
+Obj FuncLeqPP(Obj self, Obj f, Obj g)
 {
   Obj x;
   Int deg_f, deg_g, rank_f, rank_g, rank, i, j, k;
@@ -613,11 +613,12 @@ Obj FuncLEQ_PP(Obj self, Obj f, Obj g)
   return x;
 }
 
+/* restricted partial perm */
+
 /* right quotient */
 
 /* less than or equal in natural partial order */
 
-/* restricted partial perm */
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
@@ -674,9 +675,9 @@ static StructGVarFunc GVarFuncs [] = {
     FuncFixedPointsPP,
     "pkg/citrus/src/citrus.c:FuncFixedPointsPP" },
 
-  { "LEQ_PP", 2, "f, g",
-    FuncLEQ_PP,
-    "pkg/citrus/src/citrus.c:FuncLEQ_PP" },
+  { "LeqPP", 2, "f, g",
+    FuncLeqPP,
+    "pkg/citrus/src/citrus.c:FuncLeqPP" },
 
   { 0 }
 
