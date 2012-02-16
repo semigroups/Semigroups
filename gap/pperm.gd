@@ -16,7 +16,7 @@ DeclareOperation("PartialPerm", [IsCyclotomicCollection]);
 
 DeclareOperation("DomainOfPartialPerm", [IsPartialPerm]);
 DeclareGlobalFunction("Dom", DomainOfPartialPerm);
-DeclareOperation("FixedPoints", [IsPartialPerm]);
+DeclareOperation("FixedPointsOfPartialPerm", [IsPartialPerm]);
 DeclareGlobalFunction("InternalRepOfPartialPerm");
 DeclareOperation("OnIntegerSetsWithPartialPerm", [IsSet and
 IsCyclotomicCollection, IsPartialPerm]);
