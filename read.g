@@ -16,6 +16,7 @@ ReadPkg("citrus/gap/h.gi");
 ReadPkg("citrus/gap/r.gi");
 ReadPkg("citrus/gap/l.gi");
 ReadPkg("citrus/gap/d.gi");
+ReadPkg("citrus/gap/pperm.gi");
 ReadPkg("citrus/gap/properties.gi");
 ReadPkg("citrus/gap/semigroups.gi");
 ReadPkg("citrus/gap/inverse.gi");

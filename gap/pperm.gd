@@ -10,16 +10,23 @@ DeclareCategoryCollections("IsPartialPerm");
 BindGlobal("PartialPermFamily", NewFamily("PartialPermFamily",
  IsPartialPerm));
 BindGlobal("PartialPermType", NewType(PartialPermFamily,
- IsPartialPerm and IsPartialPermRep));
+ IsPartialPerm));
 DeclareGlobalFunction("PartialPermNC");
-DeclareOperation("PartialPerm", [IsCyclotomicColl]);
+DeclareOperation("PartialPerm", [IsCyclotomicCollection]);
+
+DeclareOperation("DomainOfPartialPerm", [IsPartialPerm]);
+DeclareGlobalFunction("Dom", DomainOfPartialPerm);
+DeclareOperation("RangeSetOfPartialPerm", [IsPartialPerm]);
+DeclareGlobalFunction("Ran");
+
+# redone above this line
 
 DeclareAttribute("DegreeOfPartialPerm", IsPartialPerm);
 DeclareGlobalFunction("DenseCreatePartPerm");
 DeclareAttribute("DenseImageListOfPartialPerm", IsPartialPerm);
 DeclareGlobalFunction("DomainAndRangeOfPartialPerm");
-DeclareAttribute("DomainOfPartialPerm", IsPartialPerm);
-DeclareSynonymAttr("Dom", DomainOfPartialPerm);
+
+
 DeclareGlobalFunction("InternalRepOfPartialPerm");
 DeclareAttribute("MaxDomain", IsPartialPerm);
 DeclareAttribute("MaxDomainRange", IsPartialPerm);
@@ -30,8 +37,6 @@ DeclareAttribute("MinRange", IsPartialPerm);
 DeclareAttribute("IsEmptyPartialPerm", IsPartialPerm);
 DeclareGlobalFunction("OnIntegerSetsWithPartialPerm");
 DeclareAttribute("RangeOfPartialPerm", IsPartialPerm);
-DeclareAttribute("RangeSetOfPartialPerm", IsPartialPerm);
-DeclareSynonymAttr("Ran", RangeOfPartialPerm);
 DeclareAttribute("RankOfPartialPerm", IsPartialPerm);
 DeclareGlobalFunction("RandomPartialPerm");
 DeclareGlobalFunction("SparseCreatePartPerm");

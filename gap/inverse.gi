@@ -47,7 +47,7 @@ end);
 #############################################################################
 
 InstallMethod(\in, "for an inverse semigroup of part perms",
-[IsPartialPerm and IsPartialPermRep, IsInverseSemigroup and IsPartialPermSemigroup],
+[IsPartialPerm , IsInverseSemigroup and IsPartialPermSemigroup],
 function(f, s)
   local o, k, l, ran, m, schutz, g;
 
@@ -136,7 +136,7 @@ end);
 #############################################################################
 
 InstallMethod(\in, "for an R-class of inv semi and part perm",
-[IsPartialPerm and IsPartialPermRep, IsGreensRClass and 
+[IsPartialPerm , IsGreensRClass and 
 IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
 function(f, r)
   local rep, o, l, m, schutz, g;
@@ -181,7 +181,7 @@ end);
 #############################################################################
 
 InstallMethod(\in, "for an L-class of inv semi and part perm",
-[IsPartialPerm and IsPartialPermRep, IsGreensLClass and 
+[IsPartialPerm , IsGreensLClass and 
 IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
 function(f, r)
   local rep, o, l, m, schutz, g;
@@ -227,7 +227,7 @@ end);
 #############################################################################
 
 InstallMethod(\in, "for an D-class of inv semi and part perm",
-[IsPartialPerm and IsPartialPermRep, IsGreensDClass and 
+[IsPartialPerm , IsGreensDClass and 
 IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
 function(f, r)
   local rep, o, m, l_dom, l_ran, schutz, g;
@@ -274,7 +274,7 @@ end);
 ############################################################################
 
 InstallMethod(\in, "for an H-class of inv semi and part perm",
-[IsPartialPerm and IsPartialPermRep, IsGreensHClass and 
+[IsPartialPerm , IsGreensHClass and 
 IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
 function(f, r)
   local rep, o, data, mults, schutz, g;
@@ -871,8 +871,8 @@ end);
 ##############################################################################
 
 InstallOtherMethod(GreensDClassOfElement, "for an inv semi and part perm",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
- IsPartialPermRep],
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm 
+ ],
 function(s, f)
   if not f in s then 
     Error("the partial perm. is not an element of the semigroup,");
@@ -886,8 +886,8 @@ end);
 # Notes: data is: [scc index, scc[1], pos of dom, pos of ran]
 
 InstallOtherMethod(GreensDClassOfElementNC, "for an inv semi and part perm",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
- IsPartialPermRep],
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm 
+ ],
 function(s, f)
   local o, l, m, t, k, rep, d;
 
@@ -1267,8 +1267,8 @@ end);
 ##############################################################################
 
 InstallOtherMethod(GreensHClassOfElement, "for an inv semi and part perm",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
- IsPartialPermRep],
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm 
+ ],
 function(s, f)
   if not f in s then 
     Error("the partial perm. is not an element of the semigroup,");
@@ -1281,7 +1281,7 @@ end);
 ##############################################################################
 
 InstallOtherMethod(GreensHClassOfElement, "for Green's class and part perm",
-[IsGreensClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup, IsPartialPerm and IsPartialPermRep],
+[IsGreensClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup, IsPartialPerm ],
 function(class, f)
   if not f in class then 
     Error("the partial perm. is not an element of the Green's class,");
@@ -1295,8 +1295,8 @@ end);
 # Notes: data is: [scc index, scc[1], pos of dom, pos of ran]
 
 InstallOtherMethod(GreensHClassOfElementNC, "for an inv semi and part perm",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
- IsPartialPermRep],
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm 
+ ],
 function(s, f)
   local o, l, m, t, k, d;
 
@@ -1333,7 +1333,7 @@ end);
 
 InstallOtherMethod(GreensHClassOfElementNC, "for an R-class and part perm",
 [IsGreensRClass and IsGreensClassOfPartPermSemigroup and 
-IsGreensClassOfPartPermSemigroup, IsPartialPerm and IsPartialPermRep],
+IsGreensClassOfPartPermSemigroup, IsPartialPerm ],
 function(r, f)
   local o, m, k, l, h;
 
@@ -1357,7 +1357,7 @@ end);
 
 InstallOtherMethod(GreensHClassOfElementNC, "for an L-class and part perm",
 [IsGreensLClass and IsGreensClassOfPartPermSemigroup and 
-IsGreensClassOfPartPermSemigroup, IsPartialPerm and IsPartialPermRep],
+IsGreensClassOfPartPermSemigroup, IsPartialPerm ],
 function(r, f)
   local o, m, k, l, h;
 
@@ -1381,7 +1381,7 @@ end);
 
 InstallOtherMethod(GreensHClassOfElementNC, "for an D-class and part perm",
 [IsGreensDClass and IsGreensClassOfPartPermSemigroup and 
-IsGreensClassOfPartPermSemigroup, IsPartialPerm and IsPartialPermRep],
+IsGreensClassOfPartPermSemigroup, IsPartialPerm ],
 function(r, f)
   local o, m, k, l, h;
 
@@ -1409,8 +1409,8 @@ end);
 ##############################################################################
 
 InstallOtherMethod(GreensLClassOfElement, "for an inv semi and part perm",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
- IsPartialPermRep],
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm 
+ ],
 function(s, f)
   if not f in s then 
     Error("the partial perm. is not an element of the semigroup,");
@@ -1424,8 +1424,8 @@ end);
 # Notes: data is: [scc index, scc[1], pos of dom, pos of ran]
 
 InstallOtherMethod(GreensLClassOfElementNC, "for an inv semi and part perm",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
- IsPartialPermRep],
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm 
+ ],
 function(s, f)
   local o, k, m, t, rep, l, r;
 
@@ -1461,8 +1461,8 @@ end);
 ##############################################################################
 
 InstallOtherMethod(GreensRClassOfElement, "for an inv semi and part perm",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
- IsPartialPermRep],
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm 
+ ],
 function(s, f)
   if not f in s then 
     Error("the partial perm. is not an element of the semigroup,");
@@ -1476,8 +1476,8 @@ end);
 # Notes: data is: [scc index, scc[1], pos of dom, pos of ran]
 
 InstallOtherMethod(GreensRClassOfElementNC, "for an inv semi and part perm",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm and   
- IsPartialPermRep],
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm 
+ ],
 function(s, f)
   local o, l, m, t, rep, k, r;
 

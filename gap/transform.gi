@@ -50,6 +50,19 @@ function(i, f)
   return fail;
 end);
 
+# new for 0.7! - \^ - "for a partial perm and neg int"
+#############################################################################
+
+InstallMethod(\^, "for a partial perm and neg int",
+[IsPartialPerm, IsNegInt],
+function(f, r)
+  if not f[1]=0 then
+    return Objectify(PartialPermType, InvPartPerm_C(f))^-r;
+  else
+    return f;
+  fi;
+end);
+
 # new for 0.1! - \* - "for a transformation and a permutation (citrus pkg)"
 #############################################################################
 
@@ -92,7 +105,7 @@ end);
 
 if IsBound(ProdPartPerm_C) then 
   InstallMethod(\*, "for a partial perm and partial perm (C version)", 
-    [IsPartialPerm and IsPartialPermRep, IsPartialPerm and IsPartialPermRep],
+    [IsPartialPerm , IsPartialPerm ],
     function(f,g)
       return Objectify(PartialPermType, ProdPartPerm_C(f,g));
     end);
@@ -104,7 +117,7 @@ fi;
 #############################################################################
 
 InstallMethod(\*, "for a partial perm and perm",
-[IsPartialPerm and IsPartialPermRep, IsPerm],
+[IsPartialPerm , IsPerm],
 function(f,g)
   return PartialPermNC(Dom(f), OnTuples(Ran(f), g));
 end);
@@ -115,7 +128,7 @@ end);
 # Terrible hack!
 
 InstallMethod(\*, "for a perm and partial perm",
-[IsPerm, IsPartialPerm and IsPartialPermRep],
+[IsPerm, IsPartialPerm ],
 function(f,g)
   return (g^-1*f^-1)^-1; 
 end);
@@ -125,7 +138,7 @@ end);
 #JDM C : this currently give very poor performance!
 
 InstallMethod(\<, "for a partial perm and partial perm", 
-  [IsPartialPerm and IsPartialPermRep, IsPartialPerm and IsPartialPermRep],
+  [IsPartialPerm , IsPartialPerm ],
   function(f,g)
     return DenseImageListOfPartialPerm(f)<DenseImageListOfPartialPerm(g);
 end);
@@ -135,7 +148,7 @@ end);
 #JDM C
 
 InstallMethod(\=, "for a partial perm and partial perm", 
-[IsPartialPerm and IsPartialPermRep, IsPartialPerm and IsPartialPermRep],
+[IsPartialPerm , IsPartialPerm ],
 EqPartPerm_C);
 
 # new for 0.7! - \/ - "for a partial perm and partial perm"
@@ -143,7 +156,7 @@ EqPartPerm_C);
 # JDM C
 
 InstallOtherMethod(\/, "for a partial perm and partial perm",
-[IsPartialPerm and IsPartialPermRep, IsPartialPerm and IsPartialPermRep],
+[IsPartialPerm , IsPartialPerm ],
 function(f,g)
   return f*g^-1;
 end);
@@ -206,7 +219,7 @@ end);
 ###########################################################################
 
 InstallOtherMethod(AsPermutation, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep], 
+[IsPartialPerm ], 
 function(f)
 
   if not Dom(f)=RangeSetOfPartialPerm(f) then 
@@ -220,7 +233,7 @@ end);
 # Notes: n is the total degree!
 
 InstallOtherMethod(AsTransformationNC, "for a partial perm and deg",
-[IsPartialPerm and IsPartialPermRep, IsPosInt],
+[IsPartialPerm , IsPosInt],
 function(f, n)
   local g, i;
   
@@ -240,7 +253,7 @@ end);
 ###########################################################################
 
 InstallOtherMethod(AsTransformation, "for a partial perm and deg", 
-[IsPartialPerm and IsPartialPermRep, IsPosInt],
+[IsPartialPerm , IsPosInt],
 function(f, n)
 
   if not MaxDomainRange(f)<n then 
@@ -272,7 +285,7 @@ end);
 ############################################################################
 
 InstallMethod(DegreeOfPartialPerm, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep], f -> f![1]);
+[IsPartialPerm ], f -> f![1]);
 
 # new for 0.7! - DenseCreatePartPerm - "for an img list"
 ############################################################################
@@ -337,14 +350,14 @@ fi;
 # Notes: f![1] = deg ; f![2] = rank
 
 InstallMethod(DomainOfPartialPerm, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep],
+[IsPartialPerm],
 function(f)
 
   if f![1]=0 then 
     return [];
   fi;
 
-  return ReadOffPartPerm_C(f, 7+f![1], 6+f![1]+f![2]);
+  return Sum(f, 7+f![1], 6+f![1]+f![2]);
 end);
 
 # new for 0.1! - DegreeOfTransformationCollection - "for a trans. coll."
@@ -471,29 +484,12 @@ end);
 #############################################################################
 
 InstallMethod(DenseImageListOfPartialPerm, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep], 
+[IsPartialPerm], 
 function(f)
   if f![1]=0 then 
     return [];
   fi;
-  return ReadOffPartPerm_C(f, 7, 6+f![1]);
-end);
-
-# new for 0.7! - InternalRepOfPartialPerm - "for a partial perm"
-#############################################################################
-
-InstallGlobalFunction(InternalRepOfPartialPerm, 
-function(f)
-
-  if not IsPartialPerm(f) then 
-    Error("the argument should be a partial perm,");
-    return;
-  fi;
-
-  if IsBound(f![f![1]+2*f![2]+7]) then 
-    return ReadOffPartPerm_C(f, 1, f![1]+3*f![2]+6);
-  fi;
-  return ReadOffPartPerm_C(f, 1, f![1]+2*f![2]+6);
+  return Sum(f, 7, 6+f![1]);
 end);
 
 # new for 0.1! - InversesOfTransformation - "for trans. semi. and trans."
@@ -514,7 +510,7 @@ end);
 ###########################################################################
 
 InstallMethod(IsEmptyPartialPerm, "for a partial perm", 
-[IsPartialPerm and IsPartialPermRep], x-> x![1]=0);
+[IsPartialPerm ], x-> x![1]=0);
 
 # upd for 0.2! - IsRegularTransformation - "for a transformation"
 ###########################################################################
@@ -568,7 +564,7 @@ end);
 ###########################################################################
 
 InstallMethod(MaxDomain, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep], 
+[IsPartialPerm], 
 function(f)
   if f![1]=0 then 
     return fail;
@@ -580,7 +576,7 @@ end);
 ###########################################################################
 
 InstallMethod(MaxDomainRange, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep], 
+[IsPartialPerm], 
 function(f)
   if f![1]=0 then 
     return fail;
@@ -592,7 +588,7 @@ end);
 ###########################################################################
 
 InstallMethod(MaxRange, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep],
+[IsPartialPerm],
 function(f)
   if f![1]=0 then 
     return fail;
@@ -604,7 +600,7 @@ end);
 ###########################################################################
 
 InstallMethod(MinDomain, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep],
+[IsPartialPerm],
 function(f)
   if f![1]=0 then 
     return fail;
@@ -616,7 +612,7 @@ end);
 ###########################################################################
 
 InstallMethod(MinDomainRange, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep],
+[IsPartialPerm],
 function(f)
   if f![1]=0 then 
     return fail;
@@ -628,7 +624,7 @@ end);
 ###########################################################################
 
 InstallMethod(MinRange, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep],
+[IsPartialPerm ],
 function(f)
   if f![1]=0 then 
     return fail;
@@ -660,13 +656,13 @@ InstallMethod(One, "for a transformation",
 # JDM C
 
 InstallMethod(One, "for a partial perm",      
-[IsPartialPerm and IsPartialPermRep], f-> f*f^-1);
+[IsPartialPerm ], f-> f*f^-1);
 
 # new for 0.7! - One - "for a partial perm""
 #############################################################################
 
 InstallMethod(OneMutable, "for a partial perm",      
-[IsPartialPerm and IsPartialPermRep], f-> f*f^-1);
+[IsPartialPerm ], f-> f*f^-1);
 
 # new for 0.7! - OnIntegerSetsWithPartialPerm - "for set of pos. ints and 
 # inverse semi"
@@ -694,29 +690,6 @@ fi;
 
 #PPP
 
-# new for 0.7! - PartialPerm - "for a dense image list"
-#############################################################################
-
-
-
-# new for 0.7! - PartialPermNC - "for a dense image list"
-#############################################################################
-# Notes: 0 is for undefined...
-
-InstallGlobalFunction(PartialPermNC,
-function(arg)
-  
-  if Length(arg)=1 then 
-    return Objectify(PartialPermType, DenseCreatePartPerm(arg[1]));
-  elif Length(arg)=2 then 
-    return Objectify(PartialPermType, SparseCreatePartPerm(arg[1], arg[2]));
-  fi;
-
-  Error("there should be one or two arguments,");
-  return;
-end);
-
-
 # new for 0.1! - PrintObj - "for a transformation semigroup"
 ###########################################################################
 
@@ -738,7 +711,7 @@ end);
 #############################################################################
 
 InstallMethod(PrintObj, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep],
+[IsPartialPerm ],
 function(f)
   if f![1]=0 then 
     Print("<empty mapping>");
@@ -872,20 +845,20 @@ end);
 ############################################################################
 
 InstallMethod(RangeOfPartialPerm, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep],
+[IsPartialPerm ],
 function(f)
   if f![1]=0 then 
     return [];
   fi;
 
-  return ReadOffPartPerm_C(f, 7+f![1]+f![2], 6+f![1]+2*f![2]);
+  return Sum(f, 7+f![1]+f![2], 6+f![1]+2*f![2]);
 end);
 
 # new for 0.7! - RangeSetOfPartialPerm - "for a partial perm"
 ############################################################################
 
 InstallMethod(RangeSetOfPartialPerm, "for a partial perm", 
-[IsPartialPerm and IsPartialPermRep],
+[IsPartialPerm ],
 function(f)
   
   if f![1]=0 then
@@ -899,7 +872,7 @@ end);
 ############################################################################
 
 InstallMethod(RankOfPartialPerm, "for a partial perm",
-[IsPartialPerm and IsPartialPermRep], f-> f![2]);
+[IsPartialPerm ], f-> f![2]);
 
 # new for 0.1! - RankOfTransformation - "for a transformation (citrus pkg)"
 #############################################################################
@@ -933,15 +906,5 @@ function(f)
   
   return i;
 end);
-
-
-# new for 0.7! - SparseCreatePartPerm - "for dom and ran"
-############################################################################
-
-if IsBound(SparseCreatePartPerm_C) then 
-  InstallGlobalFunction(SparseCreatePartPerm, SparseCreatePartPerm_C);
-else
-  Error("not yet implemented,");
-fi;
 
 #EOF

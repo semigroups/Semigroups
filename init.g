@@ -22,6 +22,7 @@ ReadPkg("citrus/gap/utils.gd");
 ReadPkg("citrus/gap/orbits.gd");
 ReadPkg("citrus/gap/greens.gd");
 ReadPkg("citrus/gap/transform.gd");
+ReadPkg("citrus/gap/pperm.gd");
 ReadPkg("citrus/gap/properties.gd");
 ReadPkg("citrus/gap/semigroups.gd");
 ReadPkg("citrus/gap/inverse.gd");
