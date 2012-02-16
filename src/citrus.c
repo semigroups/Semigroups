@@ -693,9 +693,29 @@ Obj FuncRestrictedPP(Obj self, Obj f, Obj set)
   return g;
 } 
 
-/* right quotient */
-
 /* less than or equal in natural partial order */
+
+Obj FuncNaturalLeqPP(Obj self, Obj f, Obj g)
+{ 
+  Int deg, rank, i;
+  deg = ELM_PP(f, 1);
+
+  if(deg==0) return True;
+
+  rank = ELM_PP(f, 2);
+
+  for(i=1;i<=rank;i++)
+  {
+    if(ELM_PP(g, 6+ELM_PP(f, 6+deg+i))!=ELM_PP(f, 6+deg+rank+i))
+    { 
+      return False;
+    }
+  }
+
+  return True;
+}
+
+/* right quotient */
 
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
@@ -759,7 +779,11 @@ static StructGVarFunc GVarFuncs [] = {
 
   { "RestrictedPP", 2, "f, set", 
     FuncRestrictedPP, 
-    "pkg/citrus/src/citrus.c:RestrictedPP" },
+    "pkg/citrus/src/citrus.c:FuncRestrictedPP" },
+
+  { "NaturalLeqPP", 2, "f, g", 
+    FuncNaturalLeqPP,
+    "pkg/citrus/src/citrus.c:FuncNaturalLeqPP" },
 
   { 0 }
 
