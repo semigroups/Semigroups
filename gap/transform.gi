@@ -50,19 +50,6 @@ function(i, f)
   return fail;
 end);
 
-# new for 0.7! - \^ - "for a partial perm and neg int"
-#############################################################################
-
-InstallMethod(\^, "for a partial perm and neg int",
-[IsPartialPerm, IsNegInt],
-function(f, r)
-  if not f[1]=0 then
-    return Objectify(PartialPermType, InvPartPerm_C(f))^-r;
-  else
-    return f;
-  fi;
-end);
-
 # new for 0.1! - \* - "for a transformation and a permutation (citrus pkg)"
 #############################################################################
 
@@ -129,14 +116,6 @@ InstallMethod(\<, "for a partial perm and partial perm",
   function(f,g)
     return DenseImageListOfPartialPerm(f)<DenseImageListOfPartialPerm(g);
 end);
-
-# new for 0.7! - \= - "for a partial perm and partial perm"
-#############################################################################
-#JDM C
-
-InstallMethod(\=, "for a partial perm and partial perm", 
-[IsPartialPerm , IsPartialPerm ],
-EqPartPerm_C);
 
 # new for 0.7! - \/ - "for a partial perm and partial perm"
 #############################################################################

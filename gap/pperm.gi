@@ -1,11 +1,27 @@
 
+# new for 0.7! - \^ - "for a partial perm and neg int"
+#############################################################################
 
+InstallMethod(\^, "for a partial perm and neg int",
+[IsPartialPerm, IsNegInt],
+function(f, r)
+  if r=-1 then  
+    return InvPP(f);
+  fi;
+  return InvPP(f)^-r;
+end);
 
 # new for 0.7! - \* - "for a partial perm and partial perm"
 #############################################################################
       
 InstallMethod(\*, "for a partial perm and partial perm", 
 [IsPartialPerm , IsPartialPerm ], ProdPP);
+
+# new for 0.7! - \= - "for a partial perm and partial perm"
+#############################################################################
+
+InstallMethod(\=, "for a partial perm and partial perm",
+[IsPartialPerm , IsPartialPerm ], EqPP);
 
 # new for 0.7! - Dom - "for a partial perm"
 ############################################################################

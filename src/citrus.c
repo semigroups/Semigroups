@@ -451,23 +451,25 @@ Obj FuncOnIntegerSetsWithPP (Obj self, Obj set, Obj f)
 
 /* equality test for partial permutations */
 
-Obj FuncEqPartPerm_C (Obj self, Obj f, Obj g)
+Obj FuncEqPP (Obj self, Obj f, Obj g)
 { Int deg_f, deg_g, rank_f, rank_g, i;
 
-    deg_f = INT_INTOBJ(ELM_PLIST(f, 1));
-    deg_g = INT_INTOBJ(ELM_PLIST(g, 1));
+    deg_f = (short int) ELM_PP(f, 1);
+    deg_g = (short int) ELM_PP(g, 1);
     
     if(deg_f!=deg_g) return False;
     if(deg_f==0) return True;
 
-    rank_f = INT_INTOBJ(ELM_PLIST(f, 2));
-    rank_g = INT_INTOBJ(ELM_PLIST(g, 2));
+    rank_f = (short int) ELM_PP(f, 2);
+    rank_g = (short int) ELM_PP(g, 2);
 
     if(rank_f!=rank_g) return False;
 
     /* search for a difference and return False if you find one          */
-    for(i=7+deg_f;i<=6+deg_f+2*rank_f;i++){
-      if(INT_INTOBJ(ELM_PLIST(f, i)) != INT_INTOBJ(ELM_PLIST(g, i))){
+    for(i=7+deg_f;i<=6+deg_f+rank_f;i++)
+    {
+      if(ELM_PP(f, i)!=ELM_PP(g, i)||ELM_PP(f, i+rank_f)!=ELM_PP(g, i+rank_f))
+      { 
         return False;
       }
     }
@@ -475,7 +477,6 @@ Obj FuncEqPartPerm_C (Obj self, Obj f, Obj g)
     /* otherwise they must be equal                                        */
     return True;
 }
-
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
@@ -516,9 +517,9 @@ static StructGVarFunc GVarFuncs [] = {
     FuncOnIntegerSetsWithPP,
     "pkg/citrus/src/citrus.c:FuncOnIntegerSetsWithPP" },
   
-  { "EqPartPerm_C", 2, "f,g",
-    FuncEqPartPerm_C,
-    "pkg/citrus/src/citrus.c:FuncEqPartPerm_C" },
+  { "EqPP", 2, "f,g",
+    FuncEqPP,
+    "pkg/citrus/src/citrus.c:FuncEqPP" },
 
   { 0 }
 
