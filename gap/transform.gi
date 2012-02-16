@@ -67,15 +67,6 @@ function(x, y)
   return Objectify( TypeObj(x), [ c ] );
 end);
 
-# new for 0.7! - \* - "for a partial perm and perm"
-#############################################################################
-
-InstallMethod(\*, "for a partial perm and perm",
-[IsPartialPerm , IsPerm],
-function(f,g)
-  return PartialPermNC(Dom(f), OnTuples(Ran(f), g));
-end);
-
 # new for 0.7! - \* - "for a perm and partial perm"
 #############################################################################
 # JDM probably a C method required here! 
