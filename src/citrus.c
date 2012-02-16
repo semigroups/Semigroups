@@ -45,6 +45,13 @@ static inline Obj NEW_EMPTY_PP()
   return f;
 }
 
+static inline Obj NEW_EMPTY_PLIST()
+{ Obj out;
+  out = NEW_PLIST(T_PLIST_EMPTY, 0);
+  SET_LEN_PLIST(out, 0);
+  return out;
+}
+
 static inline short int LEN_PP(Obj f)
 {
   return (short int) ELM_PP(f,1)+3*ELM_PP(f,2)+6;
@@ -342,12 +349,7 @@ Obj FuncRanSet ( Obj self, Obj f )
 
   deg = (short int) ELM_PP(f, 1);
   
-  if(deg==0)
-  {
-    out = NEW_PLIST(T_PLIST_EMPTY, 0);
-    SET_LEN_PLIST(out, 0);
-    return out;
-  }
+  if(deg==0) return NEW_EMPTY_PLIST();
 
   rank = (short int) ELM_PP(f, 2);
 
@@ -422,12 +424,7 @@ Obj FuncOnIntegerSetsWithPP (Obj self, Obj set, Obj f)
 
   deg = (short int) ELM_PP(f, 1);
   n = LEN_PLIST(set);
-  if(n==0||deg==0)
-  {
-    out = NEW_PLIST(T_PLIST_EMPTY, 0);
-    SET_LEN_PLIST(out, 0);
-    return out;
-  }
+  if(n==0||deg==0) return NEW_EMPTY_PLIST();
 
   out = NEW_PLIST(T_PLIST_CYC, n);
   m = 0;
@@ -553,6 +550,41 @@ Obj FuncRightOne(Obj self, Obj f)
   return one;
 }
 
+/* fixed points */
+
+Obj FuncFixedPointsPP(Obj self, Obj f)
+{ Int deg, rank, m, i;
+  Obj out;
+
+  deg = ELM_PP(f, 1);
+  if(deg==0) return NEW_EMPTY_PLIST();
+  
+  rank = ELM_PP(f, 2);
+  out = NEW_PLIST(T_PLIST_CYC, rank);
+  m = 0;
+
+  for(i=7+deg;i<=6+deg+rank;i++)
+  {
+    if(ELM_PP(f, i)==ELM_PP(f, i+rank))
+    { 
+      m++;
+      SET_ELM_PLIST(out, m, INTOBJ_INT(ELM_PP(f, i)));
+    }
+  }
+  SET_LEN_PLIST(out, m);
+  SHRINK_PLIST(out, m);
+  SortDensePlist(out);
+  return out;
+}
+
+/* right quotient */
+
+/* less than or equal */
+
+/* less than or equal in natural partial order */
+
+/* restricted partial perm */
+
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
 /******************************************************************************
@@ -603,6 +635,10 @@ static StructGVarFunc GVarFuncs [] = {
   { "RightOne", 1, "f",
     FuncRightOne,
     "pkg/citrus/src/citrus.c:FuncRightOne" },
+
+  { "FixedPointsPP", 1, "f",
+    FuncFixedPointsPP,
+    "pkg/citrus/src/citrus.c:FuncFixedPointsPP" },
 
   { 0 }
 

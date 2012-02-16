@@ -49,6 +49,12 @@ InstallOtherMethod(ELM_LIST, "for a part perm and a pos int",
 InstallOtherMethod(ELMS_LIST, "for a partial perm and a small dense list",
 [IsPartialPerm, IsDenseList and IsSmallList ], ELMS_LIST_PP );
 
+# new for 0.7! - FixedPoints - "for a partial perm" 
+############################################################################# 
+
+InstallMethod(FixedPoints, "for a partial perm",
+[IsPartialPerm], FixedPointsPP);
+
 # new for 0.7! - InternalRepOfPartialPerm - "for a partial perm" 
 ############################################################################# 
  
