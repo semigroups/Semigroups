@@ -615,6 +615,84 @@ Obj FuncLeqPP(Obj self, Obj f, Obj g)
 
 /* restricted partial perm */
 
+Obj FuncRestrictedPP(Obj self, Obj f, Obj set)
+{
+  Int deg_f, n, deg_g, i, j, r, min_ran, max_ran, rank, k;
+  Obj g;
+  Int ran[513];
+
+  deg_f = ELM_PP(f, 1);
+  n = LEN_LIST(set);
+  if(n==0||deg_f==0) return NEW_EMPTY_PP();
+
+  /* find degree of restricted part perm */
+  deg_g = 0;
+  for(i=n;1<=i;i--)
+  {
+    j = INT_INTOBJ(ELM_LIST(set, i));
+    if(j<=deg_f&&ELM_PP(f, j)!=0)
+    {
+      deg_g = j;
+      r = i;
+      break;
+    }
+  }
+
+  if(deg_g==0) return NEW_EMPTY_PP();
+
+  g = NEW_PP(3*deg_g+6);
+  SET_ELM_PP(f, 1, (pptype) deg_g);
+
+  max_ran=0;
+  min_ran=65535;
+  rank=0;
+
+  for(i=1;i<=r;i++)
+  {
+    j = INT_INTOBJ(ELM_LIST(set, i));
+    k = ELM_PP(f, 6+j);
+    if(k!=0)
+    {
+      rank++;
+      SET_ELM_PP(g, 6+j, k); /* dense img list */
+      SET_ELM_PP(g, 6+deg_g+rank, (pptype) j); /* dom */
+      ran[rank]=k;
+      if(k>max_ran) max_ran=k;
+      if(k<min_ran) min_ran=k;
+    }
+  }
+  
+  SET_ELM_PP(g,2,(pptype) rank);
+  SET_ELM_PP(g,3,(pptype) min_ran);
+  SET_ELM_PP(g,4,(pptype) max_ran); 
+
+  /* set range */
+  for(i=1;i<=rank;i++){
+    SET_ELM_PP(g,deg_g+rank+6+i,(pptype) ran[i]);
+  }
+
+  /* set min */
+  j=ELM_PP(g,deg_g+7); /* min. dom. */
+  if(min_ran<j)
+  {
+    SET_ELM_PP(g,5,(pptype) min_ran);
+  }
+  else
+  {
+    SET_ELM_PP(g,5,j);
+  }
+   
+  /* set max */
+  if(max_ran>deg_g){
+    SET_ELM_PP(g,6,(pptype) max_ran);
+  }else{
+    SET_ELM_PP(g,6,(pptype) deg_g);
+  }
+
+  ResizeBag(g, sizeof(pptype)*(LEN_PP(g))+sizeof(UInt));
+  return g;
+} 
+
 /* right quotient */
 
 /* less than or equal in natural partial order */
@@ -678,6 +756,10 @@ static StructGVarFunc GVarFuncs [] = {
   { "LeqPP", 2, "f, g",
     FuncLeqPP,
     "pkg/citrus/src/citrus.c:FuncLeqPP" },
+
+  { "RestrictedPP", 2, "f, set", 
+    FuncRestrictedPP, 
+    "pkg/citrus/src/citrus.c:RestrictedPP" },
 
   { 0 }
 
