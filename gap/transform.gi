@@ -651,30 +651,6 @@ InstallMethod(One, "for a partial perm",
 InstallMethod(OneMutable, "for a partial perm",      
 [IsPartialPerm ], f-> f*f^-1);
 
-# new for 0.7! - OnIntegerSetsWithPartialPerm - "for set of pos. ints and 
-# inverse semi"
-#############################################################################
-# JDM C
-
-if IsBound(OnIntegerSetsWithPartPerm_C) then 
-  InstallGlobalFunction(OnIntegerSetsWithPartialPerm,
-  OnIntegerSetsWithPartPerm_C);
-else  
-  InstallGlobalFunction(OnIntegerSetsWithPartialPerm,
-  function(set, f)
-    local ff, n, out, i;
-    ff:=f![1]; n:=Length(ff);
-    out:=EmptyPlist(n);
-
-    for i in set do 
-      if not (i>n or ff[i]=0) then 
-        AddSet(out, ff[i]);
-      fi;
-    od;
-    return out;
-  end);
-fi;
-
 #PPP
 
 # new for 0.1! - PrintObj - "for a transformation semigroup"

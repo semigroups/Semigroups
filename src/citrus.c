@@ -316,10 +316,10 @@ Obj FuncProdPP( Obj self, Obj f, Obj g )
 /* comparison for qsort */
 
 int cmp (const void *a, const void *b)
-{ Int aa, bb;
+{ pptype aa, bb;
 
- aa = *((const Int *)a);
- bb = *((const Int *)b);
+ aa = *((const pptype *)a);
+ bb = *((const pptype *)b);
  return (int) (aa-bb);
 }
 
@@ -346,7 +346,7 @@ Obj FuncRanSet ( Obj self, Obj f )
     {
       SET_ELM_PP(f,2*rank+deg+6+i, ELM_PP(f,rank+deg+6+i));
     }
-   qsort(ADDR_OBJ(f)+7+deg+2*rank, rank, sizeof(pptype), cmp);
+   qsort((pptype *)(ADDR_OBJ(f)+1)+6+deg+2*rank, rank, sizeof(pptype), cmp);
   }
 
   out = NEW_PLIST(T_PLIST_CYC,rank);
@@ -360,7 +360,7 @@ Obj FuncRanSet ( Obj self, Obj f )
 
 /* inverse of a partial permutation */
 
-Obj FuncInvPartPerm_C ( Obj self, Obj f )
+Obj FuncInvPP ( Obj self, Obj f )
 {
     Obj f_inv, j, k;
     Int deg_f, rank, deg_f_inv, n, i;
@@ -413,13 +413,14 @@ Obj FuncInvPartPerm_C ( Obj self, Obj f )
 
 /* on sets for a partial permutation */ 
 
-Obj FuncOnIntegerSetsWithPartPerm_C (Obj self, Obj set, Obj f)
-{ Obj out, j, k;
-  Int deg, n, m, i, jj;
+Obj FuncOnIntegerSetsWithPP (Obj self, Obj set, Obj f)
+{ Int deg, n, m, i, j, k;
+  Obj out;
 
-  deg = INT_INTOBJ(ELM_PLIST(f, 1));
+  deg = (short int) ELM_PP(f, 1);
   n = LEN_PLIST(set);
-  if(n==0){
+  if(n==0||deg==0)
+  {
     out = NEW_PLIST(T_PLIST_EMPTY, 0);
     SET_LEN_PLIST(out, 0);
     return out;
@@ -428,14 +429,16 @@ Obj FuncOnIntegerSetsWithPartPerm_C (Obj self, Obj set, Obj f)
   out = NEW_PLIST(T_PLIST_CYC, n);
   m = 0;
 
-  for(i=1;i<=n;i++){
-    j = ELM_PLIST(set, i);
-    jj = INT_INTOBJ(j);
-    if(jj<=deg){
-      k = ELM_PLIST(f, jj+6);
-      if(INT_INTOBJ(k)!=0){
+  for(i=1;i<=n;i++)
+  {
+    j = INT_INTOBJ(ELM_PLIST(set, i));
+    if(j<=deg)
+    {
+      k = (short int) ELM_PP(f, j+6);
+      if(k!=0)
+      {
         m++;
-        SET_ELM_PLIST(out, m, k);
+        SET_ELM_PLIST(out, m, INTOBJ_INT(k));
       }
     }
   }
@@ -504,13 +507,13 @@ static StructGVarFunc GVarFuncs [] = {
     FuncRanSet,
     "pkg/citrus/src/citrus.c:FuncRanSet" },
 
-  { "InvPartPerm_C", 1, "f",
-    FuncInvPartPerm_C,
-    "pkg/citrus/src/citrus.c:FuncInvPartPerm_C" },
+  { "InvPP", 1, "f",
+    FuncInvPP,
+    "pkg/citrus/src/citrus.c:FuncInvPP" },
 
-  { "OnIntegerSetsWithPartPerm_C", 2, "set,f",
-    FuncOnIntegerSetsWithPartPerm_C,
-    "pkg/citrus/src/citrus.c:FuncOnIntegerSetsWithPartPerm_C" },
+  { "OnIntegerSetsWithPP", 2, "set,f",
+    FuncOnIntegerSetsWithPP,
+    "pkg/citrus/src/citrus.c:FuncOnIntegerSetsWithPP" },
   
   { "EqPartPerm_C", 2, "f,g",
     FuncEqPartPerm_C,

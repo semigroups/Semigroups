@@ -47,6 +47,14 @@ function(f)
   return f{[1..f[1]+3*f[2]+6]}; 
 end); 
 
+#OOO
+
+# new for 0.7! - OnIntegerSetsWithPartialPerm 
+#############################################################################
+
+InstallMethod(OnIntegerSetsWithPartialPerm, "for a set of pos ints and p perm",
+[IsSet and IsCyclotomicCollection, IsPartialPerm], OnIntegerSetsWithPP);
+
 #PPP
 
 # new for 0.7! - PartialPermNC - "for a dense image list" 

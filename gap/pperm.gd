@@ -17,6 +17,8 @@ DeclareOperation("PartialPerm", [IsCyclotomicCollection]);
 DeclareOperation("DomainOfPartialPerm", [IsPartialPerm]);
 DeclareGlobalFunction("Dom", DomainOfPartialPerm);
 DeclareGlobalFunction("InternalRepOfPartialPerm");
+DeclareOperation("OnIntegerSetsWithPartialPerm", [IsSet and
+IsCyclotomicCollection, IsPartialPerm]);
 DeclareGlobalFunction("Ran");
 DeclareOperation("RangeOfPartialPerm", [IsPartialPerm]);
 DeclareOperation("RangeSetOfPartialPerm", [IsPartialPerm]);
@@ -36,7 +38,6 @@ DeclareAttribute("MinDomain", IsPartialPerm);
 DeclareAttribute("MinDomainRange", IsPartialPerm);
 DeclareAttribute("MinRange", IsPartialPerm);
 DeclareAttribute("IsEmptyPartialPerm", IsPartialPerm);
-DeclareGlobalFunction("OnIntegerSetsWithPartialPerm");
 DeclareAttribute("RankOfPartialPerm", IsPartialPerm);
 DeclareGlobalFunction("RandomPartialPerm");
 DeclareGlobalFunction("SparseCreatePartPerm");
