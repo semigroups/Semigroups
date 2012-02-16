@@ -36,6 +36,15 @@ static inline Obj NEW_PP(pptype len)
     return f;
 }
 
+static inline Obj NEW_EMPTY_PP()
+{
+  Obj f;
+  f = NewBag(T_DATOBJ, sizeof(pptype)*1+sizeof(UInt));
+  TYPE_DATOBJ(f) = PartialPermType;
+  SET_ELM_PP(f, 1, (pptype) 0);
+  return f;
+}
+
 static inline short int LEN_PP(Obj f)
 {
   return (short int) ELM_PP(f,1)+3*ELM_PP(f,2)+6;
@@ -88,15 +97,13 @@ Obj FuncSparsePartialPermNC( Obj self, Obj dom, Obj ran )
 {   Int rank, deg, max_ran, min_ran, i, j, k;
     Obj f;
 
-    rank = LEN_PLIST(dom);
+    rank = LEN_LIST(dom);
 
     if(rank==0){
-      f = NEW_PP(1);
-      SET_ELM_PP(f, 1, (pptype) 0);
-      return f;
+      return NEW_EMPTY_PP();
     }
     
-    deg =  INT_INTOBJ(ELM_PLIST(dom, rank));
+    deg =  INT_INTOBJ(ELM_LIST(dom, rank));
     f = NEW_PP(6+deg+3*rank);
 
     SET_ELM_PP(f, 1, (pptype) deg);
@@ -107,10 +114,10 @@ Obj FuncSparsePartialPermNC( Obj self, Obj dom, Obj ran )
 
     /* find dense img list, max_ran, min_ran */
     for(i=1;i<=rank;i++){
-      j = INT_INTOBJ(ELM_PLIST(dom, i));
+      j = INT_INTOBJ(ELM_LIST(dom, i));
       SET_ELM_PP(f, 6+deg+i, (pptype) j);
       
-      k = INT_INTOBJ(ELM_PLIST(ran, i));
+      k = INT_INTOBJ(ELM_LIST(ran, i));
       SET_ELM_PP(f, 6+deg+rank+i, (pptype) k);
       SET_ELM_PP(f, j+6, (pptype) k);
 
@@ -126,7 +133,7 @@ Obj FuncSparsePartialPermNC( Obj self, Obj dom, Obj ran )
     SET_ELM_PP(f,4,(pptype) max_ran);
 
     /* set min */
-    j=INT_INTOBJ(ELM_PLIST(dom,1));
+    j=INT_INTOBJ(ELM_LIST(dom,1));
     if(min_ran<j){
       SET_ELM_PP(f,5,(pptype) min_ran);
     }else{
@@ -150,25 +157,19 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
     Int deg, i, max_ran, min_ran, rank, j;
     Int ran[513];
 
-    if(LEN_PLIST(img)==0){
-      f = NEW_PP(1);
-      SET_ELM_PP(f, 1, (pptype) 0);
-      return f;
-    }
+    if(LEN_LIST(img)==0) return NEW_EMPTY_PP();
 
     deg = 0;
-    for(i=LEN_PLIST(img);1<=i;i--){
-      if(INT_INTOBJ(ELM_PLIST(img, i))!=0) {
+    for(i=LEN_LIST(img);1<=i;i--)
+    {
+      if(INT_INTOBJ(ELM_LIST(img, i))!=0) 
+      {
         deg = i;
         break;
-        }
       }
-
-    if(deg==0){
-      f = NEW_PP(1);
-      SET_ELM_PP(f, 1, (pptype) 0);
-      return f;
     }
+
+    if(deg==0) return NEW_EMPTY_PP();
     
     f = NEW_PP(3*deg+6); /* the output*/
     SET_ELM_PP(f, 1, (pptype) deg);
@@ -179,7 +180,7 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
 
     /* find dom, rank, max_ran, min_ran */
     for(i=1;i<=deg;i++){
-      j = INT_INTOBJ(ELM_PLIST(img, i));
+      j = INT_INTOBJ(ELM_LIST(img, i));
       SET_ELM_PP(f, i+6, (pptype) j);
       if(j!=0){
         rank++;
@@ -225,98 +226,90 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
 
 /* product of partial permutations */
 
-Obj FuncProdPartPerm_C( Obj self, Obj f, Obj g )
+Obj FuncProdPP( Obj self, Obj f, Obj g )
 {
-    Int n,m,i,j,deg,max_ran,min_ran,rank,kk,r,rank_f;
-    Obj fg,k,l;
+    Int n, m, deg, rank_f, i, j, r, k, l, max_ran, min_ran, rank;
+    Obj fg;
     Int ran[513];
 
-    n = INT_INTOBJ(ELM_PLIST(f,1));
-    m = INT_INTOBJ(ELM_PLIST(g,1));
+    n = (short int) ELM_PP(f,1);
+    m = (short int) ELM_PP(g,1);
     
-    if(n==0||m==0){
-      fg = NEW_PLIST(T_PLIST_CYC,1);
-      SET_LEN_PLIST(fg, 1);
-      SET_ELM_PLIST(fg, 1, INTOBJ_INT(0));
-      return fg;
-    }
+    if(n==0||m==0) return NEW_EMPTY_PP();
    
     deg = 0;
-    rank_f = INT_INTOBJ(ELM_PLIST(f,2));
+    rank_f = (short int) ELM_PP(f,2);
 
     /* find degree/max. dom */
-    for(i=rank_f;1<=i;i--){
-      j = INT_INTOBJ(ELM_PLIST(f,6+n+rank_f+i));
-      if( j<=m && INT_INTOBJ(ELM_PLIST(g,j+6))!=0){
-        deg = INT_INTOBJ(ELM_PLIST(f,6+n+i));
+    for(i=rank_f;1<=i;i--)
+    {
+      j = (short int) ELM_PP(f,6+n+rank_f+i);
+      if( j<=m && (short int) ELM_PP(g,j+6)!=0)
+      {
+        deg = (short int) ELM_PP(f,6+n+i);
         r = i;
         break;
-        }
+      }
     } 
 
-   if(deg==0){
-      fg = NEW_PLIST(T_PLIST_CYC,1);
-      SET_LEN_PLIST(fg, 1);
-      SET_ELM_PLIST(fg, 1, INTOBJ_INT(0));
-      return fg;
-    }
+   if(deg==0) return NEW_EMPTY_PP();
 
-    fg = NEW_PLIST(T_PLIST_CYC,3*deg+6);
-    SET_ELM_PLIST(fg, 1, INTOBJ_INT(deg));
+    fg = NEW_PP(3*deg+6);
+    SET_ELM_PP(fg, 1, (pptype) deg);
    
-    for(i=1;i<=deg;i++){
-      SET_ELM_PLIST(fg, 6+i, INTOBJ_INT(0));
-    }
-
     max_ran=0;
-    min_ran=0;
+    min_ran=(short int) ELM_PP(g,4);
     rank=0;
 
-    for (i=1;i<=r;i++){
-        j = INT_INTOBJ(ELM_PLIST(f,6+n+rank_f+i));
-        if(j<=m){
-          k = ELM_PLIST(g,j+6);
-          kk = INT_INTOBJ(k);
-          if(kk!=0){ 
-            rank++;
-            l = ELM_PLIST(f,6+n+i);
-            SET_ELM_PLIST(fg,deg+rank+6,l);
-            SET_ELM_PLIST(fg,INT_INTOBJ(l)+6,k);
-            ran[rank]=kk;
-            if(kk>max_ran){
-              max_ran=kk;
-              }
-            if((kk<min_ran)||(min_ran==0)){
-              min_ran=kk;
-              }
-            }
+    for (i=1;i<=r;i++)
+    {
+      j = (short int) ELM_PP(f,6+n+rank_f+i);
+      if(j<=m)
+      {
+        k = (short int) ELM_PP(g,j+6);
+        if(k!=0)
+        { 
+          rank++;
+          l = (short int) ELM_PP(f,6+n+i);
+          SET_ELM_PP(fg,deg+rank+6,(pptype) l);
+          SET_ELM_PP(fg,l+6, (pptype) k);
+          ran[rank]=k;
+          if(k>max_ran) max_ran=k;
+          if(k<min_ran) min_ran=k;
         }
       }
+    }
 
-    SET_ELM_PLIST(fg,2,INTOBJ_INT(rank));
-    SET_ELM_PLIST(fg,3,INTOBJ_INT(min_ran));
-    SET_ELM_PLIST(fg,4,INTOBJ_INT(max_ran));
+    SET_ELM_PP(fg,2,(pptype) rank);
+    SET_ELM_PP(fg,3,(pptype) min_ran);
+    SET_ELM_PP(fg,4,(pptype) max_ran);
     
-    for(i=1;i<=rank;i++){
-      SET_ELM_PLIST(fg,deg+rank+6+i,INTOBJ_INT(ran[i]));
+    for(i=1;i<=rank;i++)
+    {
+      SET_ELM_PP(fg,deg+rank+6+i,(pptype) ran[i]);
     }
  
-    k=ELM_PLIST(fg,deg+7);
-    if(min_ran<INT_INTOBJ(k)){
-      SET_ELM_PLIST(fg,5,INTOBJ_INT(min_ran));
-    }else{
-      SET_ELM_PLIST(fg,5,k);
+    k=ELM_PP(fg,deg+7);
+    if(min_ran<(short int) k)
+    {
+      SET_ELM_PP(fg,5,(pptype) min_ran);
+    }
+    else
+    {
+      SET_ELM_PP(fg,5,k);
     }
 
-    k=ELM_PLIST(fg,deg+rank+6);
-    if(max_ran>INT_INTOBJ(k)){
-      SET_ELM_PLIST(fg,6,INTOBJ_INT(max_ran));
-    }else{
-      SET_ELM_PLIST(fg,6,k);
+    k=ELM_PP(fg,deg+rank+6);
+    if(max_ran>(short int) k)
+    {
+      SET_ELM_PP(fg,6,(pptype) max_ran);
+    }
+    else
+    {
+      SET_ELM_PP(fg,6,k);
     }
 
-    SET_LEN_PLIST(fg,deg+2*rank+6);
-    SHRINK_PLIST(fg,deg+3*rank+6);
+    ResizeBag(fg, sizeof(pptype)*(LEN_PP(fg))+sizeof(UInt));
     return fg;
 }
 
@@ -493,9 +486,9 @@ static StructGVarFunc GVarFuncs [] = {
     FuncELMS_LIST_PP,
     "pkg/citrus/src/citrus.c:ELMS_LIST_PP" },
   
-  { "ProdPartPerm_C", 2, "f,g",
-    FuncProdPartPerm_C,
-    "pkg/citrus/src/citrus.c:FuncProdPartPerm_C" },
+  { "ProdPP", 2, "f,g",
+    FuncProdPP,
+    "pkg/citrus/src/citrus.c:FuncProdPP" },
 
   { "RanSetPartPerm_C", 1, "f",
     FuncRanSetPartPerm_C,

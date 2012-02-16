@@ -1,6 +1,12 @@
 
 
 
+# new for 0.7! - \* - "for a partial perm and partial perm"
+#############################################################################
+      
+InstallMethod(\*, "for a partial perm and partial perm", 
+[IsPartialPerm , IsPartialPerm ], ProdPP);
+
 # new for 0.7! - Dom - "for a partial perm"
 ############################################################################
 # Notes: f[1] = deg ; f[2] = rank
@@ -41,6 +47,8 @@ function(f)
   return f{[1..f[1]+3*f[2]+6]}; 
 end); 
 
+#PPP
+
 # new for 0.7! - PartialPermNC - "for a dense image list" 
 ############################################################################# 
 # Notes: 0 is for undefined... 
@@ -49,7 +57,7 @@ InstallGlobalFunction(PartialPermNC,
 function(arg) 
    
   if Length(arg)=1 then  
-    return Objectify(PartialPermType, DenseCreatePartPerm(arg[1])); 
+    return DensePartialPermNC(arg[1]); 
   elif Length(arg)=2 then  
     return SparsePartialPermNC(arg[1], arg[2]); 
   fi; 
@@ -57,6 +65,45 @@ function(arg)
   Error("there should be one or two arguments,"); 
   return; 
 end); 
+
+# new for 0.7! - PrintObj - "for a partial perm"
+#############################################################################
+
+InstallMethod(PrintObj, "for a partial perm",
+[IsPartialPerm],
+function(f)
+  local dom, ran;
+
+  if f[1]=0 then
+    Print("<empty mapping>");
+    return;
+  fi;
+  dom:=Dom(f); ran:=Ran(f);
+
+  if Rank(f)>2 then # JDM printing of [2,4] is [2, 4..4]!
+    if IsRange(dom) then 
+      ConvertToRangeRep(dom);
+    fi;
+    if IsRange(ran) then 
+      ConvertToRangeRep(ran);
+    fi;
+  fi;
+
+  if dom=ran then 
+    Print("<partial identity on ", dom, ">");
+    return;
+  fi;
+  Print(dom, " -> ", ran);
+  return;
+end);
+
+#RRR
+
+# new for 0.7! - RankOfPartialPerm - "for a partial perm"
+############################################################################
+
+InstallMethod(RankOfPartialPerm, "for a partial perm",
+[IsPartialPerm ], f-> f[2]);
 
 # new for 0.7! - Ran - "for a partial perm"
 ############################################################################

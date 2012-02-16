@@ -100,19 +100,6 @@ function(x, y)
   return Objectify( TypeObj(x), [ c ] );
 end);
 
-# new for 0.7! - \* - "for a partial perm and partial perm"
-#############################################################################
-
-if IsBound(ProdPartPerm_C) then 
-  InstallMethod(\*, "for a partial perm and partial perm (C version)", 
-    [IsPartialPerm , IsPartialPerm ],
-    function(f,g)
-      return Objectify(PartialPermType, ProdPartPerm_C(f,g));
-    end);
-else
-  Error("not yet implemented"); #JDM
-fi;
-
 # new for 0.7! - \* - "for a partial perm and perm"
 #############################################################################
 
@@ -707,20 +694,6 @@ function(s)
   return;
 end);
 
-# new for 0.7! - PrintObj - "for a partial perm"
-#############################################################################
-
-InstallMethod(PrintObj, "for a partial perm",
-[IsPartialPerm ],
-function(f)
-  if f![1]=0 then 
-    Print("<empty mapping>");
-    return;
-  fi; 
-  Print(Dom(f), " -> ", Ran(f));
-  return;
-end);
-
 #RRR
 
 # new for 0.1! - Random - "for a transformation semigroup (citrus pkg)"
@@ -867,12 +840,6 @@ function(f)
 
   return RanSetPartPerm_C(f); 
 end);
-
-# new for 0.7! - RankOfPartialPerm - "for a partial perm"
-############################################################################
-
-InstallMethod(RankOfPartialPerm, "for a partial perm",
-[IsPartialPerm ], f-> f![2]);
 
 # new for 0.1! - RankOfTransformation - "for a transformation (citrus pkg)"
 #############################################################################
