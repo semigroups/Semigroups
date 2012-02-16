@@ -486,11 +486,11 @@ Obj FuncLeftOne(Obj self, Obj f)
 { Obj one;
   Int deg, rank, min, max, i, j;
 
-  one = NEW_PP(LEN_PP(f));
   deg = ELM_PP(f, 1);
   
   if(deg==0) return f;
 
+  one = NEW_PP(LEN_PP(f));
   rank=ELM_PP(f, 2);
 
   SET_ELM_PP(one, 1, deg);
@@ -522,19 +522,18 @@ Obj FuncRightOne(Obj self, Obj f)
 { Obj one;
   Int deg, rank, min, max, i, j;
 
-  one = NEW_PP(LEN_PP(f));
   deg = ELM_PP(f, 1);
   
   if(deg==0) return f;
 
   rank=ELM_PP(f, 2);
-
-  SET_ELM_PP(one, 1, deg);
-  SET_ELM_PP(one, 2, rank);
-  
   min = ELM_PP(f, 3);
   max = ELM_PP(f, 4);
   
+  one = NEW_PP(6+max+3*rank);
+  
+  SET_ELM_PP(one, 1, max);
+  SET_ELM_PP(one, 2, rank);
   SET_ELM_PP(one, 3, min);
   SET_ELM_PP(one, 4, max);
   SET_ELM_PP(one, 5, min);
@@ -542,12 +541,12 @@ Obj FuncRightOne(Obj self, Obj f)
   
   if(ELM_PP(f, 7+deg+2*rank)==0) SET_RANSET_PP(f, deg, rank);
 
-  for(i=7+deg;i<=6+deg+rank;i++)
+  for(i=1;i<=rank;i++)
   {
-    j = ELM_PP(f, 2*rank+i);
-    SET_ELM_PP(one, i, j);        /* dom */
-    SET_ELM_PP(one, rank+i, j);   /* ran */
-    SET_ELM_PP(one, 2*rank+i, j); /* ran set */
+    j = ELM_PP(f, 6+deg+2*rank+i);
+    SET_ELM_PP(one, 6+max+i, j);        /* dom */
+    SET_ELM_PP(one, 6+max+rank+i, j);   /* ran */
+    SET_ELM_PP(one, 6+max+2*rank+i, j); /* ran set */
     SET_ELM_PP(one, 6+j, j); 
   }
 
