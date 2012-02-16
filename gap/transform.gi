@@ -30,26 +30,6 @@ function(x, y)
   return Objectify(TypeObj(x), [z]);
 end);
 
-# new for 0.7! - \^ - "for a pos int and partial perm"
-#############################################################################
-# JDM C
-
-InstallMethod(\^, "for a pos int and partial perm",
-[IsPosInt, IsPartialPerm],
-function(i, f)
-  local j;
-
-  if i>f![1] then 
-    return fail;
-  fi;
-
-  j:=f![6+i];
-  if j<>0 then 
-    return j;
-  fi;
-  return fail;
-end);
-
 # new for 0.1! - \* - "for a transformation and a permutation (citrus pkg)"
 #############################################################################
 

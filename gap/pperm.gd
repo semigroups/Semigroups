@@ -23,6 +23,8 @@ IsCyclotomicCollection, IsPartialPerm]);
 DeclareGlobalFunction("Ran");
 DeclareOperation("RangeOfPartialPerm", [IsPartialPerm]);
 DeclareOperation("RangeSetOfPartialPerm", [IsPartialPerm]);
+DeclareOperation("RestrictedPartialPerm", [IsPartialPerm, IsSet and
+IsCyclotomicCollection]);
 
 # redone above this line
 

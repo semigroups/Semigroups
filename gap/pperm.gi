@@ -11,6 +11,24 @@ function(f, r)
   return InvPP(f)^-r;
 end);
 
+# new for 0.7! - \^ - "for a pos int and partial perm" 
+############################################################################# 
+ 
+InstallMethod(\^, "for a pos int and partial perm", 
+[IsPosInt, IsPartialPerm], 
+function(i, f) 
+  local j; 
+  if i>f[1] then  
+    return fail; 
+  fi; 
+ 
+  j:=f[6+i]; 
+  if j<>0 then  
+    return j; 
+  fi; 
+  return fail; 
+end); 
+
 # new for 0.7! - \* - "for a partial perm and partial perm"
 #############################################################################
       
@@ -169,3 +187,12 @@ InstallMethod(RangeSetOfPartialPerm, "for a partial perm",
 
 InstallMethod(RankOfPartialPerm, "for a partial perm",
 [IsPartialPerm], f-> f[2]);
+
+# new for 0.7! - RestrictedPartialPerm - "for a partial perm"
+############################################################################
+
+InstallMethod(RestrictedPartialPerm, "for a part perm and set",
+[IsPartialPerm, IsSet and IsCyclotomicCollection], RestrictedPP);
+
+
+

@@ -641,7 +641,7 @@ Obj FuncRestrictedPP(Obj self, Obj f, Obj set)
   if(deg_g==0) return NEW_EMPTY_PP();
 
   g = NEW_PP(3*deg_g+6);
-  SET_ELM_PP(f, 1, (pptype) deg_g);
+  SET_ELM_PP(g, 1, (pptype) deg_g);
 
   max_ran=0;
   min_ran=65535;
