@@ -50,6 +50,27 @@ static inline short int LEN_PP(Obj f)
   return (short int) ELM_PP(f,1)+3*ELM_PP(f,2)+6;
 }
 
+/* comparison for qsort */
+
+int cmp (const void *a, const void *b)
+{ pptype aa, bb;
+
+ aa = *((const pptype *)a);
+ bb = *((const pptype *)b);
+ return (int) (aa-bb);
+}
+
+static inline void SET_RANSET_PP(Obj f, Int deg, Int rank)
+{   
+  Int i;
+ 
+  for(i=1;i<=rank;i++)
+  {
+    SET_ELM_PP(f,2*rank+deg+6+i, ELM_PP(f,rank+deg+6+i));
+  }
+  qsort((pptype *)(ADDR_OBJ(f)+1)+6+deg+2*rank, rank, sizeof(pptype), cmp);
+}  
+
 /* method for f[i] */
 
 Obj FuncELM_LIST_PP( Obj self, Obj f, Obj i)
@@ -313,16 +334,6 @@ Obj FuncProdPP( Obj self, Obj f, Obj g )
     return fg;
 }
 
-/* comparison for qsort */
-
-int cmp (const void *a, const void *b)
-{ pptype aa, bb;
-
- aa = *((const pptype *)a);
- bb = *((const pptype *)b);
- return (int) (aa-bb);
-}
-
 /* range set of partial permutation */
 
 Obj FuncRanSet ( Obj self, Obj f )
@@ -342,12 +353,8 @@ Obj FuncRanSet ( Obj self, Obj f )
 
   if((short int) ELM_PP(f, 7+deg+2*rank)==0)
   {
-    for(i=1;i<=rank;i++)
-    {
-      SET_ELM_PP(f,2*rank+deg+6+i, ELM_PP(f,rank+deg+6+i));
-    }
-   qsort((pptype *)(ADDR_OBJ(f)+1)+6+deg+2*rank, rank, sizeof(pptype), cmp);
-  }
+    SET_RANSET_PP(f, deg, rank);
+   }
 
   out = NEW_PLIST(T_PLIST_CYC,rank);
   SET_LEN_PLIST(out,rank);
@@ -373,12 +380,7 @@ Obj FuncInvPP ( Obj self, Obj f )
     /* check if f knows Set(Ran(f)) if not set it */
     if((short int) ELM_PP(f, 7+deg_f+2*rank)==0)
     {
-      for(i=1;i<=rank;i++)
-      {
-        SET_ELM_PP(f,2*rank+deg_f+6+i, ELM_PP(f,rank+deg_f+6+i));
-      }
-      qsort((pptype *)(ADDR_OBJ(f)+1)+6+deg_f+2*rank, rank, 
-          sizeof(pptype), cmp);
+      SET_RANSET_PP(f, deg_f, rank);
     }
      
     deg_f_inv = (short int) ELM_PP(f, 4);
@@ -478,6 +480,80 @@ Obj FuncEqPP (Obj self, Obj f, Obj g)
     return True;
 }
 
+/* idempotent on domain of partial perm */
+
+Obj FuncLeftOne(Obj self, Obj f)
+{ Obj one;
+  Int deg, rank, min, max, i, j;
+
+  one = NEW_PP(LEN_PP(f));
+  deg = ELM_PP(f, 1);
+  
+  if(deg==0) return f;
+
+  rank=ELM_PP(f, 2);
+
+  SET_ELM_PP(one, 1, deg);
+  SET_ELM_PP(one, 2, rank);
+  
+  min = ELM_PP(f, 7+deg);
+  max = ELM_PP(f, 6+deg+rank);
+  
+  SET_ELM_PP(one, 3, min);
+  SET_ELM_PP(one, 4, max);
+  SET_ELM_PP(one, 5, min);
+  SET_ELM_PP(one, 6, max);
+  
+  for(i=7+deg;i<=6+deg+rank;i++)
+  {
+    j = ELM_PP(f, i);
+    SET_ELM_PP(one, i, j);        /* dom */
+    SET_ELM_PP(one, i+rank, j);   /* ran */
+    SET_ELM_PP(one, i+2*rank, j); /* ran set */
+    SET_ELM_PP(one, 6+j, j); 
+  }
+
+  return one;
+}
+
+/* idempotent on range of partial perm */
+
+Obj FuncRightOne(Obj self, Obj f)
+{ Obj one;
+  Int deg, rank, min, max, i, j;
+
+  one = NEW_PP(LEN_PP(f));
+  deg = ELM_PP(f, 1);
+  
+  if(deg==0) return f;
+
+  rank=ELM_PP(f, 2);
+
+  SET_ELM_PP(one, 1, deg);
+  SET_ELM_PP(one, 2, rank);
+  
+  min = ELM_PP(f, 3);
+  max = ELM_PP(f, 4);
+  
+  SET_ELM_PP(one, 3, min);
+  SET_ELM_PP(one, 4, max);
+  SET_ELM_PP(one, 5, min);
+  SET_ELM_PP(one, 6, max);
+  
+  if(ELM_PP(f, 7+deg+2*rank)==0) SET_RANSET_PP(f, deg, rank);
+
+  for(i=7+deg;i<=6+deg+rank;i++)
+  {
+    j = ELM_PP(f, 2*rank+i);
+    SET_ELM_PP(one, i, j);        /* dom */
+    SET_ELM_PP(one, rank+i, j);   /* ran */
+    SET_ELM_PP(one, 2*rank+i, j); /* ran set */
+    SET_ELM_PP(one, 6+j, j); 
+  }
+
+  return one;
+}
+
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
 /******************************************************************************
@@ -520,6 +596,14 @@ static StructGVarFunc GVarFuncs [] = {
   { "EqPP", 2, "f,g",
     FuncEqPP,
     "pkg/citrus/src/citrus.c:FuncEqPP" },
+
+  { "LeftOne", 1, "f",
+    FuncLeftOne,
+    "pkg/citrus/src/citrus.c:FuncLeftOne" },
+
+  { "RightOne", 1, "f",
+    FuncRightOne,
+    "pkg/citrus/src/citrus.c:FuncRightOne" },
 
   { 0 }
 
