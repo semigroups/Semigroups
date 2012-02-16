@@ -88,22 +88,20 @@ function(f)
       ConvertToRangeRep(ran);
     fi;
   fi;
-
-  if dom=ran then 
-    Print("<partial identity on ", dom, ">");
+  if Rank(f)<20 then 
+      
+    if dom=ran then 
+      Print("<partial identity on ", dom, ">");
+      return;
+    fi;
+    Print(dom, " -> ", ran);
     return;
   fi;
-  Print(dom, " -> ", ran);
+  Print("<partial perm on ", Rank(f), " pts>");
   return;
 end);
 
 #RRR
-
-# new for 0.7! - RankOfPartialPerm - "for a partial perm"
-############################################################################
-
-InstallMethod(RankOfPartialPerm, "for a partial perm",
-[IsPartialPerm ], f-> f[2]);
 
 # new for 0.7! - Ran - "for a partial perm"
 ############################################################################
@@ -117,3 +115,20 @@ function(f)
   return f{[7+f[1]+f[2]..6+f[1]+2*f[2]]};
 end);
 
+# new for 0.7! - RangeOfPartialPerm - "for a partial perm"
+############################################################################
+
+InstallMethod(RangeOfPartialPerm, "for a partial perm",
+[IsPartialPerm], Ran);
+
+# new for 0.7! - RangeSetOfPartialPerm - "for a partial perm"
+############################################################################
+
+InstallMethod(RangeSetOfPartialPerm, "for a partial perm",
+[IsPartialPerm], RanSet);
+
+# new for 0.7! - RankOfPartialPerm - "for a partial perm"
+############################################################################
+
+InstallMethod(RankOfPartialPerm, "for a partial perm",
+[IsPartialPerm], f-> f[2]);

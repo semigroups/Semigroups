@@ -814,33 +814,6 @@ function(img, n)
   return;
 end);
 
-# new for 0.7! - RangeOfPartialPerm - "for a partial perm"
-############################################################################
-
-InstallMethod(RangeOfPartialPerm, "for a partial perm",
-[IsPartialPerm ],
-function(f)
-  if f![1]=0 then 
-    return [];
-  fi;
-
-  return Sum(f, 7+f![1]+f![2], 6+f![1]+2*f![2]);
-end);
-
-# new for 0.7! - RangeSetOfPartialPerm - "for a partial perm"
-############################################################################
-
-InstallMethod(RangeSetOfPartialPerm, "for a partial perm", 
-[IsPartialPerm ],
-function(f)
-  
-  if f![1]=0 then
-    return [];
-  fi;
-
-  return RanSetPartPerm_C(f); 
-end);
-
 # new for 0.1! - RankOfTransformation - "for a transformation (citrus pkg)"
 #############################################################################
 

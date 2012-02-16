@@ -325,26 +325,36 @@ int cmp (const void *a, const void *b)
 
 /* range set of partial permutation */
 
-Obj FuncRanSetPartPerm_C ( Obj self, Obj f )
+Obj FuncRanSet ( Obj self, Obj f )
 { Int deg, rank, i;
   Obj out;
 
-  deg = INT_INTOBJ(ELM_PLIST(f, 1));
-  rank =  INT_INTOBJ(ELM_PLIST(f, 2));
+  deg = (short int) ELM_PP(f, 1);
+  
+  if(deg==0)
+  {
+    out = NEW_PLIST(T_PLIST_EMPTY, 0);
+    SET_LEN_PLIST(out, 0);
+    return out;
+  }
 
-  if(SIZE_OBJ(f)/sizeof(UInt)<7+deg+2*rank||ADDR_OBJ(f)[7+deg+2*rank]==0){
-    for(i=1;i<=rank;i++){
-      SET_ELM_PLIST(f,2*rank+deg+6+i, ELM_PLIST(f,rank+deg+6+i));
+  rank = (short int) ELM_PP(f, 2);
+
+  if((short int) ELM_PP(f, 7+deg+2*rank)==0)
+  {
+    for(i=1;i<=rank;i++)
+    {
+      SET_ELM_PP(f,2*rank+deg+6+i, ELM_PP(f,rank+deg+6+i));
     }
-   qsort(ADDR_OBJ(f)+7+deg+2*rank, rank, sizeof(UInt), cmp);
+   qsort(ADDR_OBJ(f)+7+deg+2*rank, rank, sizeof(pptype), cmp);
   }
 
   out = NEW_PLIST(T_PLIST_CYC,rank);
   SET_LEN_PLIST(out,rank);
-  for(i=1;i<=rank;i++){
-    SET_ELM_PLIST(out,i, ELM_PLIST(f,2*rank+deg+6+i));
+  for(i=1;i<=rank;i++)
+  {
+    SET_ELM_PLIST(out,i, INTOBJ_INT((short int) ELM_PP(f,2*rank+deg+6+i)));
   }
-  
   return out;
 }
 
@@ -470,14 +480,6 @@ Obj FuncEqPartPerm_C (Obj self, Obj f, Obj g)
 */
 static StructGVarFunc GVarFuncs [] = {
 
-  { "DensePartialPermNC", 1, "img",
-    FuncDensePartialPermNC,
-    "pkg/citrus/src/citrus.c:FuncDensePartialPermNC" },
- 
-  { "SparsePartialPermNC", 2, "dom,ran",
-    FuncSparsePartialPermNC,
-    "pkg/citrus/src/citrus.c:FuncSparsePartialPermNC" },
-
   { "ELM_LIST_PP", 2, "f,i", 
     FuncELM_LIST_PP, 
     "pkg/citrus/src/citrus.c:ELM_LIST_PP" },
@@ -485,14 +487,22 @@ static StructGVarFunc GVarFuncs [] = {
   { "ELMS_LIST_PP", 2, "f,list",
     FuncELMS_LIST_PP,
     "pkg/citrus/src/citrus.c:ELMS_LIST_PP" },
-  
+ 
+  { "SparsePartialPermNC", 2, "dom,ran",
+    FuncSparsePartialPermNC,
+    "pkg/citrus/src/citrus.c:FuncSparsePartialPermNC" },
+
+  { "DensePartialPermNC", 1, "img",
+    FuncDensePartialPermNC,
+    "pkg/citrus/src/citrus.c:FuncDensePartialPermNC" },
+ 
   { "ProdPP", 2, "f,g",
     FuncProdPP,
     "pkg/citrus/src/citrus.c:FuncProdPP" },
 
-  { "RanSetPartPerm_C", 1, "f",
-    FuncRanSetPartPerm_C,
-    "pkg/citrus/src/citrus.c:FuncRanSetPartPerm_C" },
+  { "RanSet", 1, "f",
+    FuncRanSet,
+    "pkg/citrus/src/citrus.c:FuncRanSet" },
 
   { "InvPartPerm_C", 1, "f",
     FuncInvPartPerm_C,
