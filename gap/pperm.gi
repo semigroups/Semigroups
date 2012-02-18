@@ -185,7 +185,11 @@ function(f)
     Error("the argument should be a partial perm,"); 
     return; 
   fi; 
- 
+
+  if f[1]=0 then 
+    return f{[1..7]};
+  fi;
+  
   return f{[1..f[1]+3*f[2]+6]}; 
 end); 
 

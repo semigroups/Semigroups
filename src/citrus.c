@@ -43,10 +43,10 @@ static inline Obj NEW_PP(pptype len)
 static inline Obj NEW_EMPTY_PP()
 { short int i;
   Obj f;
-  f = NewBag(T_DATOBJ, sizeof(pptype)*6+sizeof(UInt));
+  f = NewBag(T_DATOBJ, sizeof(pptype)*7+sizeof(UInt));
   TYPE_DATOBJ(f) = PartialPermType;
-  for(i=1;i<=6;i++)
-    SET_ELM_PP(f, i, 0);
+  for(i=1;i<=7;i++)
+    SET_ELM_PP(f, i, (pptype) 0);
   return f;
 }
 
@@ -59,7 +59,7 @@ static inline Obj NEW_EMPTY_PLIST()
 
 static inline short int LEN_PP(Obj f)
 {
-  return (short int) ELM_PP(f,1)+3*ELM_PP(f,2)+6;
+  return (pptype) (ELM_PP(f,1)==0?7:ELM_PP(f,1)+3*ELM_PP(f,2)+6);
 }
 
 /* comparison for qsort */
