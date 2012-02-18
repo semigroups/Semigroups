@@ -110,9 +110,10 @@ end);
 InstallOtherMethod(AsTransformation, "for a partial perm and deg",
 [IsPartialPerm, IsPosInt],
 function(f, n)
-  if not n>=MaxDomRan(f)+1 then 
-    Error("2nd argument should be a pos. int. at least the largest point moved",
-    " by f");
+  if not n>MaxDomRan(f) then 
+    Error("2nd argument should be larger than the largest point moved");
+    return;
+  fi;
   return AsTransformationNC(f, n);
 end);
 
@@ -202,7 +203,80 @@ function(f)
   return f[1]; 
 end); 
 
+# new for 0.7! - MaxDomRan - "for a partial perm"
+###########################################################################
+
+InstallGlobalFunction(MaxDomRan,
+function(f)
+  if f[1]=0 then
+    return fail;
+  fi;
+  return f[6];
+end);
+
+# new for 0.7! - MaxRan - "for a partial perm"
+###########################################################################
+
+InstallMethod(MaxRan, 
+function(f)
+  if f[1]=0 then
+    return fail;
+  fi;
+  return f[4];
+end);
+
+# new for 0.7! - MinDom - "for a partial perm"
+###########################################################################
+
+InstallMethod(MinDom,
+function(f)
+  if f[1]=0 then
+    return fail;
+  fi;
+  return f[7+f[1]];
+end);
+
+# new for 0.7! - MinDomRan - "for a partial perm"
+###########################################################################
+
+InstallMethod(MinDomRan, 
+function(f)
+  if f[1]=0 then
+    return fail;
+  fi;
+  return f[5];
+end);
+
+# new for 0.7! - MinRan - "for a partial perm"
+###########################################################################
+
+InstallMethod(MinRan, 
+function(f)
+  if f[1]=0 then
+    return fail;
+  fi;
+  return f[3];
+end);
+
 #OOO
+
+# new for 0.7! - One - "for a partial perm"
+#############################################################################
+
+InstallMethod(One, "for a partial perm",
+[IsPartialPerm ], f-> DensePartialPermNC(Union(Dom(f), RanSet(f))));
+
+# new for 0.7! - One - "for a partial perm""
+#############################################################################
+
+InstallMethod(OneMutable, "for a partial perm",
+[IsPartialPerm ], f-> DensePartialPermNC(Union(Dom(f), RanSet(f))));
+
+# new for 0.7! - One - "for a partial perm""
+#############################################################################
+
+InstallMethod(OneMutable, "for a partial perm",
+[IsPartialPerm ], f-> f*f^-1);
 
 # new for 0.7! - OnIntegerSetsWithPartialPerm 
 #############################################################################
@@ -276,6 +350,29 @@ function(f)
   fi;
 
   return f{[7+f[1]+f[2]..6+f[1]+2*f[2]]};
+end);
+
+# new for 0.7! - RandomPartialPerm - "for a pos. int."
+#############################################################################
+# Notes: returns a partial permutation on at most n points. 
+
+# JDM would be good to have a uniform distribution here...
+
+InstallGlobalFunction(RandomPartialPerm,
+function(n)
+  local out, j, i;
+
+  out:=EmptyPlist(n);
+  for i in [1..n] do
+    j:=Random([1..n]);
+    if not j in out then
+      out[i]:=j;
+    else
+      out[i]:=0;
+    fi;
+  od;
+
+  return DensePartialPermNC(out);
 end);
 
 # new for 0.7! - RangeOfPartialPerm - "for a partial perm"
