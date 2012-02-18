@@ -122,8 +122,7 @@ end);
 # new for 0.7! - DenseRangeList - "for a partial perm"
 #############################################################################
 
-InstallMethod(DenseRangeList, "for a partial perm",
-[IsPartialPerm],
+InstallGlobalFunction(DenseRangeList,
 function(f)
   if f[1]=0 then
     return [];
@@ -217,7 +216,7 @@ end);
 # new for 0.7! - MaxRan - "for a partial perm"
 ###########################################################################
 
-InstallMethod(MaxRan, 
+InstallGlobalFunction(MaxRan, 
 function(f)
   if f[1]=0 then
     return fail;
@@ -228,7 +227,7 @@ end);
 # new for 0.7! - MinDom - "for a partial perm"
 ###########################################################################
 
-InstallMethod(MinDom,
+InstallGlobalFunction(MinDom,
 function(f)
   if f[1]=0 then
     return fail;
@@ -239,7 +238,7 @@ end);
 # new for 0.7! - MinDomRan - "for a partial perm"
 ###########################################################################
 
-InstallMethod(MinDomRan, 
+InstallGlobalFunction(MinDomRan, 
 function(f)
   if f[1]=0 then
     return fail;
@@ -250,7 +249,7 @@ end);
 # new for 0.7! - MinRan - "for a partial perm"
 ###########################################################################
 
-InstallMethod(MinRan, 
+InstallGlobalFunction(MinRan, 
 function(f)
   if f[1]=0 then
     return fail;
@@ -271,12 +270,6 @@ InstallMethod(One, "for a partial perm",
 
 InstallMethod(OneMutable, "for a partial perm",
 [IsPartialPerm ], f-> DensePartialPermNC(Union(Dom(f), RanSet(f))));
-
-# new for 0.7! - One - "for a partial perm""
-#############################################################################
-
-InstallMethod(OneMutable, "for a partial perm",
-[IsPartialPerm ], f-> f*f^-1);
 
 # new for 0.7! - OnIntegerSetsWithPartialPerm 
 #############################################################################

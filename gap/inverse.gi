@@ -51,8 +51,8 @@ InstallMethod(\in, "for an inverse semigroup of part perms",
 function(f, s)
   local o, k, l, ran, m, schutz, g;
 
-  if not IsEmptyPartialPerm(f) and (MinDomainRange(f)<SmallestMovedPoint(s) or
-   MaxDomainRange(f)>LargestMovedPoint(s)) then 
+  if not f[1]=0 and (f[5]<SmallestMovedPoint(s) or
+   f[6]>LargestMovedPoint(s)) then 
     return false;
   fi;
 
@@ -143,8 +143,8 @@ function(f, r)
   
   rep:=Representative(r);
 
-  if Degree(f)<>Degree(rep) or MinDomain(f)<>MinDomain(rep) or 
-   Rank(f)<>Rank(rep) or Dom(f)<>Dom(rep) then 
+  if Degree(f)<>Degree(rep) or MinDom(f)<>MinDom(rep) or f[2]<>rep[2] 
+   or Dom(f)<>Dom(rep) then 
     Info(InfoCitrus, 1, "degree, rank, or domain not equal to those of",
         " any of the R-class elements,");
     return false;
@@ -188,8 +188,7 @@ function(f, r)
   
   rep:=Representative(r);
 
-  if MinRange(f)<>MinRange(rep) or MaxRange(f)<>MaxRange(rep) or 
-   Rank(f)<>Rank(rep) or RangeSetOfPartialPerm(f)<>RangeSetOfPartialPerm(rep) 
+  if f[3]<>rep[3] or f[4]<>rep[4] or f[2]<>rep[2] or RanSet(f)<>RanSet(rep) 
    then 
     Info(InfoCitrus, 1, "degree, rank, or range not equal to those of",
         " any of the L-class elements,");
@@ -599,7 +598,7 @@ function(r)
 
       rep:=Representative(r);
       
-      if Degree(f)<>Degree(rep) or MinDomain(f)<>MinDomain(rep) or 
+      if Degree(f)<>Degree(rep) or MinDom(f)<>MinDom(rep) or 
        Rank(f)<>Rank(rep) or Dom(f)<>Dom(rep) then
         Info(InfoCitrus, 1, "degree, rank, or domain not equal to those of",
           " any of the R-class elements,");
@@ -678,9 +677,8 @@ function(r)
 
       rep:=Representative(r);
       
-      if MaxRange(f)<>MaxRange(rep) or MinRange(f)<>MinRange(rep) or 
-       Rank(f)<>Rank(rep) or
-        RangeSetOfPartialPerm(f)<>RangeSetOfPartialPerm(rep) then
+      if f[4]<>rep[4] or f[3]<>rep[3] or f[2]<>rep[2] or
+        RanSet(f)<>RanSet(rep) then
         Info(InfoCitrus, 1, "degree, rank, or range not equal to those of",
           " any of the L-class elements,");
         return fail;

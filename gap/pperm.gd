@@ -14,7 +14,7 @@ BindGlobal("PartialPermType", NewType(PartialPermFamily,
 DeclareGlobalFunction("PartialPermNC");
 DeclareOperation("PartialPerm", [IsCyclotomicCollection]);
 
-DeclareOperation("DenseRangeList", [IsPartialPerm]);
+DeclareGlobalFunction("DenseRangeList");
 DeclareOperation("DomainOfPartialPerm", [IsPartialPerm]);
 DeclareGlobalFunction("Dom", DomainOfPartialPerm);
 DeclareOperation("FixedPointsOfPartialPerm", [IsPartialPerm]);
@@ -29,16 +29,12 @@ IsCyclotomicCollection]);
 
 # redone above this line
 
-DeclareGlobalFunction("DomainAndRangeOfPartialPerm");
-
 DeclareGlobalFunction("MaxDom");
-DeclareOperation("MaxDomOfPartialPerm", [IsPartialPerm]);
 DeclareGlobalFunction("MaxDomRan");
-DeclareOperation("MaxDomRanOfPartialPerm", IsPartialPerm);
-
 DeclareGlobalFunction("MaxRan");
 DeclareGlobalFunction("MinDom");
 DeclareGlobalFunction("MinDomRan");
 DeclareGlobalFunction("MinRan");
-DeclareGlobalFunction("RankOfPP");
+DeclareOperation("RankOfPartialPerm", [IsPartialPerm]);
+
 DeclareGlobalFunction("RandomPartialPerm");

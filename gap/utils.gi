@@ -190,7 +190,7 @@ InstallOtherMethod(Degree, "for a transformation",
 #############################################################################
 
 InstallOtherMethod(Degree, "for a partial perm",
-[IsPartialPerm], DegreeOfPartialPerm);
+[IsPartialPerm], MaxDomRan);
 
 # new for 0.1! - Degree - "for a transformation semigroup"
 #############################################################################

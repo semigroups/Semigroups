@@ -1152,12 +1152,11 @@ end);
 
 #new for 0.7! - LargestMovedPoint - "for a partial perm semigroup"
 ###########################################################################
-# JDM C
 
 InstallOtherMethod(LargestMovedPoint, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(s)
-  return MaximumList(List(Generators(s), MaxDomainRange));
+  return MaximumList(List(Generators(s), f-> f[6]));
 end);
 
 #MMM
@@ -1405,7 +1404,7 @@ s -> Generators(Semigroup(Generators(s), rec(small:=true, schreier:=false))));
 InstallOtherMethod(SmallestMovedPoint, "for a part. perm inv. semi.",
 [IsPartialPermSemigroup],
 function(s)
-  return MinimumList(List(Generators(s), MinDomainRange));
+  return MinimumList(List(Generators(s), f->f[5]));
 end);
 
 # new for 0.2! - StructureDescription - "for a Brandt trans. semigroup"
