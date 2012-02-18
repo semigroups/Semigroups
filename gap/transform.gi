@@ -12,7 +12,6 @@
 # set, f![3] is the kernel, f![4] is AsPermOfKerImg, f![5] is the rank of f
 # f![6] is the canonical trans. with same kernel
 
-
 # - a method for RandomTransformation(m,n) i.e. a random transformation with
 # a given rank. 
 
@@ -132,19 +131,6 @@ function(f, list)
   return MappingPermListList(list, a);
 end);
 
-# new for 0.7! - AsPermutation - "for a partial perm"
-###########################################################################
-
-InstallOtherMethod(AsPermutation, "for a partial perm",
-[IsPartialPerm ], 
-function(f)
-
-  if not Dom(f)=RangeSetOfPartialPerm(f) then 
-    return fail;
-  fi;
-  return MappingPermListList(Dom(f), Ran(f));
-end);
-
 # new for 0.7! - AsTransformationNC - "for a partial perm"
 ###########################################################################
 # Notes: n is the total degree!
@@ -197,85 +183,6 @@ function(m,n)
 end);
 
 #DDD
-
-# new for 0.7! - DegreeOfPartialPerm - "for a partial perm"
-############################################################################
-
-InstallMethod(DegreeOfPartialPerm, "for a partial perm",
-[IsPartialPerm ], f -> f![1]);
-
-# new for 0.7! - DenseCreatePartPerm - "for an img list"
-############################################################################
-
-if IsBound(DenseCreatePartPerm_C) then 
-  InstallGlobalFunction(DenseCreatePartPerm, DenseCreatePartPerm_C);
-else
-  InstallGlobalFunction(DenseCreatePartPerm,
-  function(img)
-    local deg, f, ran, max_ran, min_ran, rank, j, i;
-
-    deg:=Length(img);
-    f:=EmptyPlist(4*deg+6);
-    f[1]:=deg;
-    ran:=[];
-
-    max_ran:=0; min_ran:=deg; rank:=0;
-
-    for i in [1..deg] do 
-      j:=img[i];
-      f[i+6]:=j;
-      if not j=0 then 
-        rank:=rank+1;
-        f[deg+rank+6]:=i;
-        ran[rank]:=j;
-        if j>max_ran then 
-          max_ran:=j;
-        fi;
-        if j<min_ran then 
-          min_ran:=j;
-        fi;
-      fi;
-    od;
-
-    f[2]:=rank;
-    f[3]:=min_ran;
-    f[4]:=max_ran;
-
-    for i in [1..rank] do 
-      f[deg+rank+6+i]:=ran[i];
-    od;
-
-    if min_ran<f[deg+7] then 
-      f[5]:=min_ran;
-    else
-      f[5]:=f[deg+7];
-    fi;
-
-    if max_ran>f[deg+rank+6] then 
-      f[6]:=max_ran;
-    else
-      f[6]:=f[deg+rank+6];
-    fi;
-
-    ShrinkAllocationPlist(f);
-    return f;
-  end);
-fi;
-
-# new for 0.7! - DomainOfPartialPerm - "for a partial perm"
-############################################################################
-# Notes: f![1] = deg ; f![2] = rank
-
-InstallMethod(DomainOfPartialPerm, "for a partial perm",
-[IsPartialPerm],
-function(f)
-
-  if f![1]=0 then 
-    return [];
-  fi;
-
-  return Sum(f, 7+f![1], 6+f![1]+f![2]);
-end);
 
 # new for 0.1! - DegreeOfTransformationCollection - "for a trans. coll."
 ############################################################################
@@ -397,18 +304,6 @@ function(s, f)
   return out;
 end);
 
-# new for 0.7! - DenseImageListOfPartialPerm - "for a partial perm"
-#############################################################################
-
-InstallMethod(DenseImageListOfPartialPerm, "for a partial perm",
-[IsPartialPerm], 
-function(f)
-  if f![1]=0 then 
-    return [];
-  fi;
-  return Sum(f, 7, 6+f![1]);
-end);
-
 # new for 0.1! - InversesOfTransformation - "for trans. semi. and trans."
 #############################################################################
 
@@ -422,12 +317,6 @@ function(s, f)
 
   return fail;
 end);
-
-# new for 0.7! - IsEmptyPartialPerm - "for a partial perm"
-###########################################################################
-
-InstallMethod(IsEmptyPartialPerm, "for a partial perm", 
-[IsPartialPerm ], x-> x![1]=0);
 
 # upd for 0.2! - IsRegularTransformation - "for a transformation"
 ###########################################################################
@@ -476,18 +365,6 @@ function(s, coll)
 end);
 
 #MMM
-
-# new for 0.7! - MaxDomain - "for a partial perm"
-###########################################################################
-
-InstallMethod(MaxDomain, "for a partial perm",
-[IsPartialPerm], 
-function(f)
-  if f![1]=0 then 
-    return fail;
-  fi;
-  return f![f![1]+f![2]+6];
-end);
 
 # new for 0.7! - MaxDomainRange - "for a partial perm"
 ###########################################################################

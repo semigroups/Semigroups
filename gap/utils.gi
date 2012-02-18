@@ -329,7 +329,7 @@ InstallOtherMethod(Rank, "for a transformation",
 #############################################################################
 
 InstallOtherMethod(Rank, "for a partial perm", 
-[IsPartialPerm], RankOfPartialPerm);
+[IsPartialPerm], f-> f[2]);
 
 # new for 0.1! - RClass - "for a trans. semi. and trans. or H-class"
 #############################################################################
