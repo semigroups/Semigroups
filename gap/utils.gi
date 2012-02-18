@@ -421,6 +421,8 @@ end);
 # new for 0.5! - ReadCitrusLine - "for a string"
 #############################################################################
 
+# requires updating... JDM
+
 InstallGlobalFunction(ReadCitrusLine, 
 function(line)
   local m, n, r, dom, out, f, i, k, deg, rank, j;

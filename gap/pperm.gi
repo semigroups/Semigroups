@@ -157,7 +157,7 @@ function(f)
   if Rank(f)<20 then 
       
     if dom=ran then 
-      Print("<partial identity on ", dom, ">");
+      Print("<identity on ", dom, ">");
       return;
     fi;
     Print(dom, " -> ", ran);
