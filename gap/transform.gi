@@ -67,17 +67,6 @@ function(x, y)
   return Objectify( TypeObj(x), [ c ] );
 end);
 
-# new for 0.7! - \* - "for a perm and partial perm"
-#############################################################################
-# JDM probably a C method required here! 
-# Terrible hack!
-
-InstallMethod(\*, "for a perm and partial perm",
-[IsPerm, IsPartialPerm ],
-function(f,g)
-  return (g^-1*f^-1)^-1; 
-end);
-
 #AAA
 
 # new for 0.1! - AsPermOfKerImg - "for a transformation"

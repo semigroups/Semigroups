@@ -17,6 +17,8 @@ Obj PartialPermType;
 /* define the type for entries in part. perm */
 typedef short int pptype;
 
+#define MAXPTSPP 512
+
 /* retrieve entry pos of internal rep of partial perm f */
 static inline pptype ELM_PP(Obj f, Int pos)
 {
@@ -54,6 +56,17 @@ static inline Obj NEW_EMPTY_PLIST()
   out = NEW_PLIST(T_PLIST_EMPTY, 0);
   SET_LEN_PLIST(out, 0);
   return out;
+}
+
+static inline Int TOO_MANY_PTS_ERROR(int cond)
+{
+  
+  if(cond)
+  { 
+    ErrorQuit("usage: can only create partial perms on at most 512 pts,", 
+      0L, 0L); 
+  }
+  return 0L;
 }
 
 static inline short int LEN_PP(Obj f)
@@ -131,11 +144,12 @@ Obj FuncSparsePartialPermNC( Obj self, Obj dom, Obj ran )
 
     rank = LEN_LIST(dom);
 
-    if(rank==0){
-      return NEW_EMPTY_PP();
-    }
+    if(rank==0) return NEW_EMPTY_PP();
     
     deg =  INT_INTOBJ(ELM_LIST(dom, rank));
+   
+    TOO_MANY_PTS_ERROR(rank>MAXPTSPP||deg>MAXPTSPP);
+
     f = NEW_PP(6+deg+3*rank);
 
     SET_ELM_PP(f, 1, (pptype) deg);
@@ -160,6 +174,8 @@ Obj FuncSparsePartialPermNC( Obj self, Obj dom, Obj ran )
         min_ran=k;
       }
     }
+
+    TOO_MANY_PTS_ERROR(max_ran>MAXPTSPP);
 
     SET_ELM_PP(f,3,(pptype) min_ran);
     SET_ELM_PP(f,4,(pptype) max_ran);
@@ -190,7 +206,7 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
     Int ran[513];
 
     if(LEN_LIST(img)==0) return NEW_EMPTY_PP();
-
+    
     deg = 0;
     for(i=LEN_LIST(img);1<=i;i--)
     {
@@ -200,6 +216,8 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
         break;
       }
     }
+
+    TOO_MANY_PTS_ERROR(deg>MAXPTSPP);
 
     if(deg==0) return NEW_EMPTY_PP();
     
@@ -226,6 +244,8 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
           }
         }
       }
+    
+    TOO_MANY_PTS_ERROR(max_ran>MAXPTSPP);
 
     SET_ELM_PP(f,2,(pptype) rank);
     SET_ELM_PP(f,3,(pptype) min_ran);
@@ -805,14 +825,21 @@ Obj FuncQuoPP(Obj self, Obj f, Obj g)
   return fg;
 }
 
-/* product of partial perm and perm 2 */
+/* product of partial perm and perm */
 
-Obj FuncProdPPPerm2(Obj self, Obj f, Obj p)
+Obj FuncProdPPPerm(Obj self, Obj f, Obj p)
 {
   Int deg_f, rank_f, deg_p, max_ran, min_ran, i, j, k, min_dom, max_dom;
   UInt2 * ptp;
   Obj fp;
-  
+ 
+  if(TNUM_OBJ(p) != T_PERM2)
+  {
+    ErrorQuit( 
+        "usage: can only multiply a partial perm and perm on at most 65535 pts", 
+        0L, 0L );
+    return 0L;
+  }
   deg_f = ELM_PP(f, 1);
   if(deg_f==0) return NEW_EMPTY_PP();
 
@@ -846,6 +873,76 @@ Obj FuncProdPPPerm2(Obj self, Obj f, Obj p)
   SET_ELM_PP(fp, 6, max_ran>max_dom?max_ran:max_dom);
   
   return fp;
+}
+
+/* product of perm and partial perm */
+
+Obj FuncProdPermPP(Obj self, Obj p, Obj f)
+{ pptype deg_f, rank, deg_p, deg, i, j, max_ran, min_ran, k, l, min_dom, max_dom;
+  UInt2 * ptp;
+  Obj pf;
+  
+  deg_f = ELM_PP(f, 1);
+  if(deg_f==0) return NEW_EMPTY_PP();
+
+  rank = ELM_PP(f, 2);
+  deg_p = (pptype) DEG_PERM2(p);
+  ptp = ADDR_PERM2(p);
+
+  if(deg_p>=deg_f)
+  {
+    deg=0;
+
+    /* find degree/max. dom */
+    for(i=deg_f-1;0<=i;i--)
+    {
+      j = IMAGE(i, ptp, deg_p)+1; 
+      if( j<=deg_f && ELM_PP(f,j+6)!=0)
+      {
+        deg=i+1;
+        break;
+      }
+    }  
+    if(deg==0) return NEW_EMPTY_PP();
+  }else{
+    deg=deg_f;
+  }    
+ 
+  pf=NEW_PP(deg+2*rank+6);
+  
+  SET_ELM_PP(pf, 1, deg);
+  SET_ELM_PP(pf, 2, rank);
+
+  max_ran=0; 
+  min_ran=ELM_PP(f, 4);
+  l=0;
+
+  for(i=1;i<=deg;i++)
+  {
+    j = IMAGE(i-1, ptp, deg_p)+1;
+    if(j<=deg_f)
+    { 
+      k=ELM_PP(f,j+6);
+      if(k!=0)
+      { 
+        l++;
+        SET_ELM_PP(pf,deg+l+6,i);       /* dom */
+        SET_ELM_PP(pf,deg+rank+l+6,k);  /* ran */
+        SET_ELM_PP(pf,i+6,k);           /* dense img */
+        if(k>max_ran) max_ran=k;                
+        if(k<min_ran) min_ran=k;
+      }
+    }
+  }
+
+  SET_ELM_PP(pf, 3, min_ran);
+  SET_ELM_PP(pf, 4, max_ran);
+  min_dom=ELM_PP(pf, 7+deg);
+  SET_ELM_PP(pf, 5, min_ran<min_dom?min_ran:min_dom);
+  max_dom=ELM_PP(pf, 6+deg+rank);
+  SET_ELM_PP(pf, 6, max_ran>max_dom?max_ran:max_dom);
+  
+  return pf;
 }
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
@@ -919,9 +1016,13 @@ static StructGVarFunc GVarFuncs [] = {
     FuncQuoPP,
     "pkg/citrus/src/citrus.c:FuncQuoPP" },
 
-  { "ProdPPPerm2", 2, "f, p",
-    FuncProdPPPerm2, 
-    "pkg/citrus/src/citrus.c:FuncProdPPPerm2" },
+  { "ProdPPPerm", 2, "f, p",
+    FuncProdPPPerm, 
+    "pkg/citrus/src/citrus.c:FuncProdPPPerm" },
+
+  { "ProdPermPP", 2, "p, f",
+    FuncProdPermPP, 
+    "pkg/citrus/src/citrus.c:FuncProdPermPP" },
 
   { 0 }
 

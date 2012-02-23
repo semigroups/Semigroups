@@ -39,7 +39,13 @@ InstallMethod(\*, "for a partial perm and partial perm",
 ############################################################################# 
   
 InstallMethod(\*, "for a partial perm and perm", 
-[IsPartialPerm , IsPerm], ProdPPPerm2); 
+[IsPartialPerm , IsPerm], ProdPPPerm); 
+
+# new for 0.7! - \* - "for a partial perm and perm" 
+############################################################################# 
+
+InstallMethod(\*, "for perm and partial perm",
+[IsPerm , IsPartialPerm], ProdPermPP);
 
 # new for 0.7! - \= - "for a partial perm and partial perm"
 #############################################################################
