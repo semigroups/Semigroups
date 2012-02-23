@@ -596,37 +596,36 @@ Obj FuncLeqPP(Obj self, Obj f, Obj g)
 }
 
 /* restricted partial perm */
-
 Obj FuncRestrictedPP(Obj self, Obj f, Obj set)
-{
-  Int deg_f, n, deg_g, i, j, r, min_ran, max_ran, rank, k;
+{ pptype deg_f, deg_g, min_ran, max_ran, rank, k;
+  Int n, i, j, r; 
   Obj g;
-  Int ran[513];
+  Int ran[LEN_LIST(set)];
 
-  deg_f = ELM_PP(f, 1);
-  n = LEN_LIST(set);
+  deg_f=ELM_PP(f, 1);
+  n=LEN_LIST(set);
   if(n==0||deg_f==0) return NEW_EMPTY_PP();
 
   /* find degree of restricted part perm */
-  deg_g = 0;
+  deg_g=0;
   for(i=n;1<=i;i--)
   {
-    j = INT_INTOBJ(ELM_LIST(set, i));
+    j=INT_INTOBJ(ELM_LIST(set, i));
     if(j<=deg_f&&ELM_PP(f, j)!=0)
     {
-      deg_g = j;
-      r = i;
+      deg_g=(pptype) j;
+      r=i;
       break;
     }
   }
 
   if(deg_g==0) return NEW_EMPTY_PP();
 
-  g = NEW_PP(3*deg_g+6);
-  SET_ELM_PP(g, 1, (pptype) deg_g);
+  g=NEW_PP(3*deg_g+6);
+  SET_ELM_PP(g,1,deg_g);
 
   max_ran=0;
-  min_ran=65535;
+  min_ran=ELM_PP(f,4);
   rank=0;
 
   for(i=1;i<=r;i++)
@@ -644,32 +643,21 @@ Obj FuncRestrictedPP(Obj self, Obj f, Obj set)
     }
   }
   
-  SET_ELM_PP(g,2,(pptype) rank);
-  SET_ELM_PP(g,3,(pptype) min_ran);
-  SET_ELM_PP(g,4,(pptype) max_ran); 
+  SET_ELM_PP(g,2,rank);
+  SET_ELM_PP(g,3,min_ran);
+  SET_ELM_PP(g,4,max_ran); 
 
   /* set range */
   for(i=1;i<=rank;i++){
-    SET_ELM_PP(g,deg_g+rank+6+i,(pptype) ran[i]);
+    SET_ELM_PP(g,deg_g+rank+6+i,ran[i]);
   }
 
   /* set min */
   j=ELM_PP(g,deg_g+7); /* min. dom. */
-  if(min_ran<j)
-  {
-    SET_ELM_PP(g,5,(pptype) min_ran);
-  }
-  else
-  {
-    SET_ELM_PP(g,5,j);
-  }
+  SET_ELM_PP(g,5,min_ran<j?min_ran:j);
    
   /* set max */
-  if(max_ran>deg_g){
-    SET_ELM_PP(g,6,(pptype) max_ran);
-  }else{
-    SET_ELM_PP(g,6,(pptype) deg_g);
-  }
+  SET_ELM_PP(g,6,max_ran>deg_g?max_ran:deg_g); 
 
   ResizeBag(g, sizeof(pptype)*(LEN_PP(g))+sizeof(UInt));
   return g;
