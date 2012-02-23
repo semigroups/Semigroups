@@ -268,7 +268,6 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
 }
 
 /* product of partial permutations */
-
 Obj FuncProdPP( Obj self, Obj f, Obj g )
 {   pptype deg_f, deg_g, deg, rank_f, i, r, max_ran, min_ran, rank, j, k, l;
     Obj fg;
@@ -664,10 +663,8 @@ Obj FuncRestrictedPP(Obj self, Obj f, Obj set)
 } 
 
 /* less than or equal in natural partial order */
-
 Obj FuncNaturalLeqPP(Obj self, Obj f, Obj g)
-{ 
-  Int deg, rank, i;
+{ pptype deg, rank, i;
   deg = ELM_PP(f, 1);
 
   if(deg==0) return True;
@@ -686,13 +683,12 @@ Obj FuncNaturalLeqPP(Obj self, Obj f, Obj g)
 }
 
 /* right quotient */
-
 Obj FuncQuoPP(Obj self, Obj f, Obj g)
-{
-  Int deg_f, deg_g, rank_f, rank_g, i, deg_lookup, deg, j, r, max_ran;
-  Int min_ran, k, l, rank, min_dom, max_dom;
-  Obj lookup, fg;
-  Int ran[513];
+{ pptype deg_f, deg_g, rank_f, rank_g, i, deg_lookup, deg, j, r, max_ran;
+  pptype min_ran, k, l, rank;
+  pptype ran[ELM_PP(f,2)<ELM_PP(g,2)?ELM_PP(f,2):ELM_PP(g,2)];
+  pptype lookup[ELM_PP(g,4)];
+  Obj fg;
 
   deg_f = ELM_PP(f, 1);
   deg_g = ELM_PP(g, 1);
@@ -703,21 +699,22 @@ Obj FuncQuoPP(Obj self, Obj f, Obj g)
   rank_g = ELM_PP(g, 2);
 
   /* find lookup for g^-1 */
-  lookup = NEW_PP(ELM_PP(g, 4));
+  deg_lookup = ELM_PP(g, 4); /* max dom g^-1 = max ran g */
+  
+  for(i=1;i<=deg_lookup;i++) lookup[i]=0;
 
   for(i=1;i<=rank_g;i++)
   {
-    SET_ELM_PP(lookup, ELM_PP(g, 6+deg_g+rank_g+i), ELM_PP(g, 6+deg_g+i));
+    lookup[ELM_PP(g, 6+deg_g+rank_g+i)]=ELM_PP(g, 6+deg_g+i);
   }
 
   /* find degree/max dom */
-  deg_lookup = ELM_PP(g, 4); /* max dom g^-1 = max ran g */
   deg = 0;
 
   for(i=rank_f;1<=i;i--)
   {
     j = ELM_PP(f,6+deg_f+rank_f+i);
-    if( j<=deg_g && ELM_PP(lookup,j)!=0)
+    if( j<=deg_lookup && lookup[j]!=0)
     {
       deg = ELM_PP(f,6+deg_f+i);
       r = i;
@@ -732,7 +729,7 @@ Obj FuncQuoPP(Obj self, Obj f, Obj g)
   SET_ELM_PP(fg, 1, deg);
   
   max_ran=0;
-  min_ran=ELM_PP(g, 7+deg_g);           /* max dom g = max ran g^-1 */
+  min_ran=ELM_PP(g, deg_g);             /* max dom g = max ran g^-1 */
   rank=0;
   
   for (i=1;i<=r;i++)
@@ -740,7 +737,7 @@ Obj FuncQuoPP(Obj self, Obj f, Obj g)
     j = ELM_PP(f, 6+deg_f+rank_f+i);    /* from ran(f) */
     if(j<=deg_lookup)
     {
-      k = ELM_PP(lookup,j);             /* from dom(g^-1) */
+      k = lookup[j];                    /* from dom(g^-1) */
       if(k!=0)
       {
         rank++;
@@ -754,13 +751,13 @@ Obj FuncQuoPP(Obj self, Obj f, Obj g)
     }
   }
   
-  SET_ELM_PP(fg,2, rank);
-  SET_ELM_PP(fg,3, min_ran);
-  SET_ELM_PP(fg,4, max_ran);
-  min_dom = ELM_PP(fg, 7+deg);
-  SET_ELM_PP(fg,5, min_ran<min_dom?min_ran:min_dom);
-  max_dom = ELM_PP(fg, 6+deg+rank);
-  SET_ELM_PP(fg,6, max_ran>max_dom?max_ran:max_dom);
+  SET_ELM_PP(fg,2,rank);
+  SET_ELM_PP(fg,3,min_ran);
+  SET_ELM_PP(fg,4,max_ran);
+  j=ELM_PP(fg,7+deg);
+  SET_ELM_PP(fg,5, min_ran<j?min_ran:j);
+  j=ELM_PP(fg, 6+deg+rank);
+  SET_ELM_PP(fg,6, max_ran>j?max_ran:j);
 
   for(i=1;i<=rank;i++)
   {
@@ -772,7 +769,6 @@ Obj FuncQuoPP(Obj self, Obj f, Obj g)
 }
 
 /* product of partial perm and perm */
-
 Obj FuncProdPPPerm(Obj self, Obj f, Obj p)
 {
   Int deg_f, rank_f, deg_p, max_ran, min_ran, i, j, k, min_dom, max_dom;

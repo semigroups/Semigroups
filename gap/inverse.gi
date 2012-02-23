@@ -188,7 +188,7 @@ function(f, r)
   
   rep:=Representative(r);
 
-  if f[3]<>rep[3] or f[4]<>rep[4] or f[2]<>rep[2] or RanSet(f)<>RanSet(rep) 
+  if f[3]<>rep[3] or f[4]<>rep[4] or f[2]<>rep[2] or RanSetPP(f)<>RanSetPP(rep) 
    then 
     Info(InfoCitrus, 1, "degree, rank, or range not equal to those of",
         " any of the L-class elements,");
@@ -678,7 +678,7 @@ function(r)
       rep:=Representative(r);
       
       if f[4]<>rep[4] or f[3]<>rep[3] or f[2]<>rep[2] or
-        RanSet(f)<>RanSet(rep) then
+        RanSetPP(f)<>RanSetPP(rep) then
         Info(InfoCitrus, 1, "degree, rank, or range not equal to those of",
           " any of the L-class elements,");
         return fail;
