@@ -342,52 +342,43 @@ Obj FuncProdPP( Obj self, Obj f, Obj g )
 }
 
 /* range set of partial permutation */
-
-Obj FuncRanSet ( Obj self, Obj f )
-{ Int deg, rank, i;
+Obj FuncRanSetPP ( Obj self, Obj f )
+{ pptype deg, rank, i;
   Obj out;
 
-  deg = (short int) ELM_PP(f, 1);
+  deg=ELM_PP(f, 1);
   
   if(deg==0) return NEW_EMPTY_PLIST();
 
-  rank = (short int) ELM_PP(f, 2);
+  rank=ELM_PP(f, 2);
 
-  if((short int) ELM_PP(f, 7+deg+2*rank)==0)
-  {
-    SET_RANSET_PP(f, deg, rank);
-   }
+  if(ELM_PP(f, 7+deg+2*rank)==0) SET_RANSET_PP(f, deg, rank);
 
   out = NEW_PLIST(T_PLIST_CYC,rank);
-  SET_LEN_PLIST(out,rank);
+  SET_LEN_PLIST(out,(Int) rank);
   for(i=1;i<=rank;i++)
   {
-    SET_ELM_PLIST(out,i, INTOBJ_INT((short int) ELM_PP(f,2*rank+deg+6+i)));
+    SET_ELM_PLIST(out,i, INTOBJ_INT(ELM_PP(f,2*rank+deg+6+i)));
   }
   return out;
 }
 
 /* inverse of a partial permutation */
-
 Obj FuncInvPP ( Obj self, Obj f )
 {
-    Int deg_f, rank, i, deg_f_inv, n, j, k;
+    pptype deg_f, rank, i, deg_f_inv, j;
     Obj f_inv;
 
-    deg_f = (short int) ELM_PP(f, 1);
-    if(deg_f==0) return f;
+    deg_f=ELM_PP(f,1);
+    if(deg_f==0) return NEW_EMPTY_PP();
 
-    rank = (short int) ELM_PP(f, 2);
+    rank=ELM_PP(f,2);
 
     /* check if f knows Set(Ran(f)) if not set it */
-    if((short int) ELM_PP(f, 7+deg_f+2*rank)==0)
-    {
-      SET_RANSET_PP(f, deg_f, rank);
-    }
+    if(ELM_PP(f,7+deg_f+2*rank)==0) SET_RANSET_PP(f,deg_f,rank);
      
-    deg_f_inv = (short int) ELM_PP(f, 4);
-    n = 3*rank + deg_f_inv + 6; 
-    f_inv = NEW_PP(6+deg_f_inv+3*rank);
+    deg_f_inv=ELM_PP(f,4); /* max ran(f) */
+    f_inv=NEW_PP(6+deg_f_inv+3*rank);
 
     SET_ELM_PP(f_inv, 1, ELM_PP(f, 4));
     SET_ELM_PP(f_inv, 2, ELM_PP(f, 2));
@@ -400,19 +391,17 @@ Obj FuncInvPP ( Obj self, Obj f )
     for(i=1;i<=rank;i++)
     {
       j = ELM_PP(f,i+deg_f+6);
-      k = ELM_PP(f,i+deg_f+rank+6);
-      SET_ELM_PP(f_inv, k+6, j); /* dense img */
+      SET_ELM_PP(f_inv, ELM_PP(f,i+deg_f+rank+6)+6, j); /* dense img */
       SET_ELM_PP(f_inv, 6+deg_f_inv+i, ELM_PP(f, 6+deg_f+2*rank+i)); /*dom*/
       SET_ELM_PP(f_inv, i+6+deg_f_inv+2*rank, j); /*ran set*/
     }
 
-    /* set ran */
+    /* specify ran */
     for(i=1;i<=rank;i++)
     {
-      n = ELM_PP(f_inv, 6+deg_f_inv+i);
-      SET_ELM_PP(f_inv, i+6+deg_f_inv+rank, ELM_PP(f_inv, n+6));
+      j = ELM_PP(f_inv, 6+deg_f_inv+i);
+      SET_ELM_PP(f_inv, i+6+deg_f_inv+rank, ELM_PP(f_inv, j+6));
     }
-
     return f_inv;
 }
 
@@ -948,9 +937,9 @@ static StructGVarFunc GVarFuncs [] = {
     FuncProdPP,
     "pkg/citrus/src/citrus.c:FuncProdPP" },
 
-  { "RanSet", 1, "f",
-    FuncRanSet,
-    "pkg/citrus/src/citrus.c:FuncRanSet" },
+  { "RanSetPP", 1, "f",
+    FuncRanSetPP,
+    "pkg/citrus/src/citrus.c:FuncRanSetPP" },
 
   { "InvPP", 1, "f",
     FuncInvPP,
