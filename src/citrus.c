@@ -463,16 +463,15 @@ Obj FuncEqPP (Obj self, Obj f, Obj g)
 }
 
 /* idempotent on domain of partial perm */
-
 Obj FuncLeftOne(Obj self, Obj f)
-{ Obj one;
-  Int deg, rank, min, max, i, j;
+{ pptype deg, rank, min, max, i, j;
+  Obj one;
 
-  deg = ELM_PP(f, 1);
+  deg=ELM_PP(f, 1);
   
-  if(deg==0) return f;
+  if(deg==0) return NEW_EMPTY_PP();
 
-  one = NEW_PP(LEN_PP(f));
+  one=NEW_PP(LEN_PP(f));
   rank=ELM_PP(f, 2);
 
   SET_ELM_PP(one, 1, deg);
@@ -492,7 +491,7 @@ Obj FuncLeftOne(Obj self, Obj f)
     SET_ELM_PP(one, i, j);        /* dom */
     SET_ELM_PP(one, i+rank, j);   /* ran */
     SET_ELM_PP(one, i+2*rank, j); /* ran set */
-    SET_ELM_PP(one, 6+j, j); 
+    SET_ELM_PP(one, 6+j, j);      /* dense img */
   }
 
   return one;
