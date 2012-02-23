@@ -366,43 +366,43 @@ Obj FuncRanSetPP ( Obj self, Obj f )
 /* inverse of a partial permutation */
 Obj FuncInvPP ( Obj self, Obj f )
 {
-    pptype deg_f, rank, i, deg_f_inv, j;
-    Obj f_inv;
+  pptype deg_f, rank, i, deg_f_inv, j;
+  Obj f_inv;
 
-    deg_f=ELM_PP(f,1);
-    if(deg_f==0) return NEW_EMPTY_PP();
+  deg_f=ELM_PP(f,1);
+  if(deg_f==0) return NEW_EMPTY_PP();
 
-    rank=ELM_PP(f,2);
+  rank=ELM_PP(f,2);
 
-    /* check if f knows Set(Ran(f)) if not set it */
-    if(ELM_PP(f,7+deg_f+2*rank)==0) SET_RANSET_PP(f,deg_f,rank);
-     
-    deg_f_inv=ELM_PP(f,4); /* max ran(f) */
-    f_inv=NEW_PP(6+deg_f_inv+3*rank);
+  /* check if f knows Set(Ran(f)) if not set it */
+  if(ELM_PP(f,7+deg_f+2*rank)==0) SET_RANSET_PP(f,deg_f,rank);
+   
+  deg_f_inv=ELM_PP(f,4); /* max ran(f) */
+  f_inv=NEW_PP(6+deg_f_inv+3*rank);
 
-    SET_ELM_PP(f_inv, 1, ELM_PP(f, 4));
-    SET_ELM_PP(f_inv, 2, ELM_PP(f, 2));
-    SET_ELM_PP(f_inv, 3, ELM_PP(f, 7+deg_f));
-    SET_ELM_PP(f_inv, 4, ELM_PP(f, 6+deg_f+rank));
-    SET_ELM_PP(f_inv, 5, ELM_PP(f, 5));
-    SET_ELM_PP(f_inv, 6, ELM_PP(f, 6));
+  SET_ELM_PP(f_inv, 1, ELM_PP(f, 4));
+  SET_ELM_PP(f_inv, 2, ELM_PP(f, 2));
+  SET_ELM_PP(f_inv, 3, ELM_PP(f, 7+deg_f));
+  SET_ELM_PP(f_inv, 4, ELM_PP(f, 6+deg_f+rank));
+  SET_ELM_PP(f_inv, 5, ELM_PP(f, 5));
+  SET_ELM_PP(f_inv, 6, ELM_PP(f, 6));
 
-    /* set dense img, dom, and ran set */
-    for(i=1;i<=rank;i++)
-    {
-      j = ELM_PP(f,i+deg_f+6);
-      SET_ELM_PP(f_inv, ELM_PP(f,i+deg_f+rank+6)+6, j); /* dense img */
-      SET_ELM_PP(f_inv, 6+deg_f_inv+i, ELM_PP(f, 6+deg_f+2*rank+i)); /*dom*/
-      SET_ELM_PP(f_inv, i+6+deg_f_inv+2*rank, j); /*ran set*/
-    }
+  /* set dense img, dom, and ran set */
+  for(i=1;i<=rank;i++)
+  {
+    j = ELM_PP(f,i+deg_f+6);
+    SET_ELM_PP(f_inv, ELM_PP(f,i+deg_f+rank+6)+6, j); /* dense img */
+    SET_ELM_PP(f_inv, 6+deg_f_inv+i, ELM_PP(f, 6+deg_f+2*rank+i)); /*dom*/
+    SET_ELM_PP(f_inv, i+6+deg_f_inv+2*rank, j); /*ran set*/
+  }
 
-    /* specify ran */
-    for(i=1;i<=rank;i++)
-    {
-      j = ELM_PP(f_inv, 6+deg_f_inv+i);
-      SET_ELM_PP(f_inv, i+6+deg_f_inv+rank, ELM_PP(f_inv, j+6));
-    }
-    return f_inv;
+  /* specify ran */
+  for(i=1;i<=rank;i++)
+  {
+    j = ELM_PP(f_inv, 6+deg_f_inv+i);
+    SET_ELM_PP(f_inv, i+6+deg_f_inv+rank, ELM_PP(f_inv, j+6));
+  }
+  return f_inv;
 }
 
 /* on sets for a partial permutation */ 
@@ -438,32 +438,28 @@ Obj FuncOnIntegerSetsWithPP (Obj self, Obj set, Obj f)
 }
 
 /* equality test for partial permutations */
-
 Obj FuncEqPP (Obj self, Obj f, Obj g)
-{ Int deg_f, deg_g, rank_f, rank_g, i;
+{ pptype deg_f, rank_f, i;
 
-    deg_f = (short int) ELM_PP(f, 1);
-    deg_g = (short int) ELM_PP(g, 1);
-    
-    if(deg_f!=deg_g) return False;
-    if(deg_f==0) return True;
+  deg_f=ELM_PP(f, 1);
+  
+  if(deg_f!=ELM_PP(g,1)) return False;
+  if(deg_f==0) return True;
 
-    rank_f = (short int) ELM_PP(f, 2);
-    rank_g = (short int) ELM_PP(g, 2);
+  rank_f=ELM_PP(f, 2);
 
-    if(rank_f!=rank_g) return False;
+  if(rank_f!=ELM_PP(g,2)) return False;
 
-    /* search for a difference and return False if you find one          */
-    for(i=7+deg_f;i<=6+deg_f+rank_f;i++)
-    {
-      if(ELM_PP(f, i)!=ELM_PP(g, i)||ELM_PP(f, i+rank_f)!=ELM_PP(g, i+rank_f))
-      { 
-        return False;
-      }
+  /* search for a difference */
+  for(i=7+deg_f;i<=6+deg_f+rank_f;i++)
+  {
+    if(ELM_PP(f, i)!=ELM_PP(g, i)||ELM_PP(f, i+rank_f)!=ELM_PP(g, i+rank_f))
+    { 
+      return False;
     }
+  }
 
-    /* otherwise they must be equal                                        */
-    return True;
+  return True;
 }
 
 /* idempotent on domain of partial perm */
