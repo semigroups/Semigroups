@@ -498,20 +498,19 @@ Obj FuncLeftOne(Obj self, Obj f)
 }
 
 /* idempotent on range of partial perm */
-
 Obj FuncRightOne(Obj self, Obj f)
 { Obj one;
-  Int deg, rank, min, max, i, j;
+  pptype deg, rank, min, max, i, j;
 
   deg = ELM_PP(f, 1);
   
   if(deg==0) return f;
 
   rank=ELM_PP(f, 2);
-  min = ELM_PP(f, 3);
-  max = ELM_PP(f, 4);
+  min=ELM_PP(f, 3);
+  max=ELM_PP(f, 4);
   
-  one = NEW_PP(6+max+3*rank);
+  one=NEW_PP(6+max+3*rank);
   
   SET_ELM_PP(one, 1, max);
   SET_ELM_PP(one, 2, rank);
