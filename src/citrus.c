@@ -896,7 +896,7 @@ Obj FuncProdPermPP(Obj self, Obj p, Obj f)
     deg=0;
 
     /* find degree/max. dom */
-    for(i=deg_f-1;0<=i;i--)
+    for(i=deg_p-1;0<=i;i--)
     {
       j = IMAGE(i, ptp, deg_p)+1; 
       if( j<=deg_f && ELM_PP(f,j+6)!=0)
