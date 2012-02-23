@@ -536,15 +536,16 @@ Obj FuncRightOne(Obj self, Obj f)
 /* fixed points */
 
 Obj FuncFixedPointsPP(Obj self, Obj f)
-{ Int deg, rank, m, i;
+{ pptype deg, rank, i;
+  Int m;
   Obj out;
 
-  deg = ELM_PP(f, 1);
+  deg=ELM_PP(f, 1);
   if(deg==0) return NEW_EMPTY_PLIST();
   
-  rank = ELM_PP(f, 2);
-  out = NEW_PLIST(T_PLIST_CYC, rank);
-  m = 0;
+  rank=ELM_PP(f, 2);
+  out=NEW_PLIST(T_PLIST_CYC, rank);
+  m=0;
 
   for(i=7+deg;i<=6+deg+rank;i++)
   {
