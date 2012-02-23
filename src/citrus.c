@@ -43,11 +43,12 @@ static inline Obj NEW_PP(pptype len)
 }
 
 static inline Obj NEW_EMPTY_PP()
-{
+{ short int i;
   Obj f;
-  f = NewBag(T_DATOBJ, sizeof(pptype)*1+sizeof(UInt));
+  f = NewBag(T_DATOBJ, sizeof(pptype)*6+sizeof(UInt));
   TYPE_DATOBJ(f) = PartialPermType;
-  SET_ELM_PP(f, 1, (pptype) 0);
+  for(i=1;i<=6;i++)
+    SET_ELM_PP(f, i, 0);
   return f;
 }
 
@@ -126,7 +127,8 @@ Obj FuncELMS_LIST_PP(Obj self, Obj f, Obj list)
 **
 ** A partial permutation is of the form:
 **
-** [degree, rank, min ran, max ran, min, max, img list, dom, ran, Set(ran)] 
+** [max dom, rank, min ran, max ran, min, max, img list, dom, ran,
+**  Set(ran)] Should maybe include min dom.
 **
 ** where <degree> is the length of <img list>, <rank> is the number of none zero
 ** entries in the <img list>,  <min ran>, <max ran> are

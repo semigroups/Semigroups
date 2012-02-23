@@ -19,7 +19,7 @@ gap> SetInfoLevel(InfoCitrus, 0);
 gap> f:=PartialPermNC([0,1,0,20]);
 [ 2, 4 ] -> [ 1, 20 ]
 gap> InternalRepOfPartialPerm(f);
-[ 4, 2, 1, 20, 1, 20, 0, 1, 0, 20, 2, 4, 1, 20 ]
+[ 4, 2, 1, 20, 1, 20, 0, 1, 0, 20, 2, 4, 1, 20, 0, 0 ]
 gap> f^2;
 <empty mapping>
 gap> f^-1;
@@ -35,23 +35,23 @@ gap> RangeSetOfPartialPerm(f^-1);
 gap> RangeSetOfPartialPerm(f);   
 [ 1, 20 ]
 gap> f^-1<f;
-false
-gap> f<f^-1;
 true
+gap> f<f^-1;
+false
 gap> f:=PartialPermNC([2,4], [20,1]);
 [ 2, 4 ] -> [ 20, 1 ]
 gap> f^-1=f;
 false
 gap> f=f^-1;
 false
-gap> f^01;
+gap> f^-1;
 [ 2, 4 ] -> [ 20, 1 ]
 gap> f^-1;
 [ 1, 20 ] -> [ 4, 2 ]
 gap> f*f^-1;
-[ 2, 4 ] -> [ 2, 4 ]
+<partial identity on [ 2, 4 ]>
 gap> f^-1*f;   
-[ 1, 20 ] -> [ 1, 20 ]
+<partial identity on [ 1, 20 ]>
 gap> f^2;
 <empty mapping>
 gap> f:=ReadCitrus("pkg/citrus/examples/inverse.citrus.gz", 1);

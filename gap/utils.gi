@@ -190,7 +190,7 @@ InstallOtherMethod(Degree, "for a transformation",
 #############################################################################
 
 InstallOtherMethod(Degree, "for a partial perm",
-[IsPartialPerm], DegreeOfPartialPerm);
+[IsPartialPerm], MaxDomRan);
 
 # new for 0.1! - Degree - "for a transformation semigroup"
 #############################################################################
@@ -329,7 +329,7 @@ InstallOtherMethod(Rank, "for a transformation",
 #############################################################################
 
 InstallOtherMethod(Rank, "for a partial perm", 
-[IsPartialPerm], RankOfPartialPerm);
+[IsPartialPerm], f-> f[2]);
 
 # new for 0.1! - RClass - "for a trans. semi. and trans. or H-class"
 #############################################################################
@@ -420,6 +420,8 @@ end);
 
 # new for 0.5! - ReadCitrusLine - "for a string"
 #############################################################################
+
+# requires updating... JDM
 
 InstallGlobalFunction(ReadCitrusLine, 
 function(line)

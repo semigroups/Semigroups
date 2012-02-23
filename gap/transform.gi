@@ -12,7 +12,6 @@
 # set, f![3] is the kernel, f![4] is AsPermOfKerImg, f![5] is the rank of f
 # f![6] is the canonical trans. with same kernel
 
-
 # - a method for RandomTransformation(m,n) i.e. a random transformation with
 # a given rank. 
 
@@ -121,54 +120,6 @@ function(f, list)
   return MappingPermListList(list, a);
 end);
 
-# new for 0.7! - AsPermutation - "for a partial perm"
-###########################################################################
-
-InstallOtherMethod(AsPermutation, "for a partial perm",
-[IsPartialPerm ], 
-function(f)
-
-  if not Dom(f)=RangeSetOfPartialPerm(f) then 
-    return fail;
-  fi;
-  return MappingPermListList(Dom(f), Ran(f));
-end);
-
-# new for 0.7! - AsTransformationNC - "for a partial perm"
-###########################################################################
-# Notes: n is the total degree!
-
-InstallOtherMethod(AsTransformationNC, "for a partial perm and deg",
-[IsPartialPerm , IsPosInt],
-function(f, n)
-  local g, i;
-  
-  g:=ListWithIdenticalEntries(n,n);
-  for i in [7..6+f![1]] do
-    if f![i]=0 then
-      g[i-6]:=n;
-    else
-      g[i-6]:=f![i];
-    fi;
-  od;
-
-  return TransformationNC(g);
-end); 
-
-# new for 0.7! - AsTransformation - "for a partial perm"
-###########################################################################
-
-InstallOtherMethod(AsTransformation, "for a partial perm and deg", 
-[IsPartialPerm , IsPosInt],
-function(f, n)
-
-  if not MaxDomainRange(f)<n then 
-    Error("the 2nd argument must be larger than the largest moved point,");
-    return;
-  fi;
-  return AsTransformationNC(f, n);  
-end);
-
 #CCC
 
 # new for 0.1! - ConstantTransformation - "for degree and value"
@@ -186,85 +137,6 @@ function(m,n)
 end);
 
 #DDD
-
-# new for 0.7! - DegreeOfPartialPerm - "for a partial perm"
-############################################################################
-
-InstallMethod(DegreeOfPartialPerm, "for a partial perm",
-[IsPartialPerm ], f -> f![1]);
-
-# new for 0.7! - DenseCreatePartPerm - "for an img list"
-############################################################################
-
-if IsBound(DenseCreatePartPerm_C) then 
-  InstallGlobalFunction(DenseCreatePartPerm, DenseCreatePartPerm_C);
-else
-  InstallGlobalFunction(DenseCreatePartPerm,
-  function(img)
-    local deg, f, ran, max_ran, min_ran, rank, j, i;
-
-    deg:=Length(img);
-    f:=EmptyPlist(4*deg+6);
-    f[1]:=deg;
-    ran:=[];
-
-    max_ran:=0; min_ran:=deg; rank:=0;
-
-    for i in [1..deg] do 
-      j:=img[i];
-      f[i+6]:=j;
-      if not j=0 then 
-        rank:=rank+1;
-        f[deg+rank+6]:=i;
-        ran[rank]:=j;
-        if j>max_ran then 
-          max_ran:=j;
-        fi;
-        if j<min_ran then 
-          min_ran:=j;
-        fi;
-      fi;
-    od;
-
-    f[2]:=rank;
-    f[3]:=min_ran;
-    f[4]:=max_ran;
-
-    for i in [1..rank] do 
-      f[deg+rank+6+i]:=ran[i];
-    od;
-
-    if min_ran<f[deg+7] then 
-      f[5]:=min_ran;
-    else
-      f[5]:=f[deg+7];
-    fi;
-
-    if max_ran>f[deg+rank+6] then 
-      f[6]:=max_ran;
-    else
-      f[6]:=f[deg+rank+6];
-    fi;
-
-    ShrinkAllocationPlist(f);
-    return f;
-  end);
-fi;
-
-# new for 0.7! - DomainOfPartialPerm - "for a partial perm"
-############################################################################
-# Notes: f![1] = deg ; f![2] = rank
-
-InstallMethod(DomainOfPartialPerm, "for a partial perm",
-[IsPartialPerm],
-function(f)
-
-  if f![1]=0 then 
-    return [];
-  fi;
-
-  return Sum(f, 7+f![1], 6+f![1]+f![2]);
-end);
 
 # new for 0.1! - DegreeOfTransformationCollection - "for a trans. coll."
 ############################################################################
@@ -386,18 +258,6 @@ function(s, f)
   return out;
 end);
 
-# new for 0.7! - DenseImageListOfPartialPerm - "for a partial perm"
-#############################################################################
-
-InstallMethod(DenseImageListOfPartialPerm, "for a partial perm",
-[IsPartialPerm], 
-function(f)
-  if f![1]=0 then 
-    return [];
-  fi;
-  return Sum(f, 7, 6+f![1]);
-end);
-
 # new for 0.1! - InversesOfTransformation - "for trans. semi. and trans."
 #############################################################################
 
@@ -411,12 +271,6 @@ function(s, f)
 
   return fail;
 end);
-
-# new for 0.7! - IsEmptyPartialPerm - "for a partial perm"
-###########################################################################
-
-InstallMethod(IsEmptyPartialPerm, "for a partial perm", 
-[IsPartialPerm ], x-> x![1]=0);
 
 # upd for 0.2! - IsRegularTransformation - "for a transformation"
 ###########################################################################
@@ -464,80 +318,6 @@ function(s, coll)
   return ForAll(coll, x-> x in s);
 end);
 
-#MMM
-
-# new for 0.7! - MaxDomain - "for a partial perm"
-###########################################################################
-
-InstallMethod(MaxDomain, "for a partial perm",
-[IsPartialPerm], 
-function(f)
-  if f![1]=0 then 
-    return fail;
-  fi;
-  return f![f![1]+f![2]+6];
-end);
-
-# new for 0.7! - MaxDomainRange - "for a partial perm"
-###########################################################################
-
-InstallMethod(MaxDomainRange, "for a partial perm",
-[IsPartialPerm], 
-function(f)
-  if f![1]=0 then 
-    return fail;
-  fi;
-  return f![6];
-end);
-
-# new for 0.7! - MaxRange - "for a partial perm"
-###########################################################################
-
-InstallMethod(MaxRange, "for a partial perm",
-[IsPartialPerm],
-function(f)
-  if f![1]=0 then 
-    return fail;
-  fi;
-  return f![4];
-end);
-
-# new for 0.7! - MinDomain - "for a partial perm"
-###########################################################################
-
-InstallMethod(MinDomain, "for a partial perm",
-[IsPartialPerm],
-function(f)
-  if f![1]=0 then 
-    return fail;
-  fi;
-  return f![7+f![1]];
-end);
-
-# new for 0.7! - MinDomainRange - "for a partial perm"
-###########################################################################
-
-InstallMethod(MinDomainRange, "for a partial perm",
-[IsPartialPerm],
-function(f)
-  if f![1]=0 then 
-    return fail;
-  fi;
-  return f![5];
-end);
-
-# new for 0.7! - MinRange - "for a partial perm"
-###########################################################################
-
-InstallMethod(MinRange, "for a partial perm",
-[IsPartialPerm ],
-function(f)
-  if f![1]=0 then 
-    return fail;
-  fi;
-  return f![3];
-end);
-
 #OOO
 
 # mod for 0.5! - One - "for a full transformation semigroup"
@@ -556,19 +336,6 @@ InstallOtherMethod(One, "for a full transformation semigroup",
 
 InstallMethod(One, "for a transformation",
 [IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
-
-# new for 0.7! - One - "for a partial perm"
-#############################################################################
-# JDM C
-
-InstallMethod(One, "for a partial perm",      
-[IsPartialPerm ], f-> f*f^-1);
-
-# new for 0.7! - One - "for a partial perm""
-#############################################################################
-
-InstallMethod(OneMutable, "for a partial perm",      
-[IsPartialPerm ], f-> f*f^-1);
 
 #PPP
 
@@ -647,29 +414,6 @@ function(img, n)
       else
         return Random(img);
       fi; end));
-end);
-
-# new for 0.7! - RandomPartialPerm - "for a pos. int."
-#############################################################################
-# Notes: returns a partial permutation on at most n points. 
-
-# JDM would be good to have a uniform distribution here...
-
-InstallGlobalFunction(RandomPartialPerm,
-function(n)
-  local out, j, i;
-
-  out:=EmptyPlist(n); 
-  for i in [1..n] do 
-    j:=Random([1..n]);
-    if not j in out then 
-      out[i]:=j;
-    else
-      out[i]:=0;
-    fi;
-  od;
-
-  return PartialPermNC(out);
 end);
 
 # new for 0.1! - RandomTransformation - "for a pos. int."
