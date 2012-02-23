@@ -204,10 +204,11 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
 { 
     Obj f;
     Int deg, i, max_ran, min_ran, rank, j;
-    Int ran[513];
+    Int ran[65535];
 
     if(LEN_LIST(img)==0) return NEW_EMPTY_PP();
     
+    /* remove trailing zeros */
     deg = 0;
     for(i=LEN_LIST(img);1<=i;i--)
     {
@@ -230,21 +231,19 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
     rank=0;
 
     /* find dom, rank, max_ran, min_ran */
-    for(i=1;i<=deg;i++){
+    for(i=1;i<=deg;i++)
+    {
       j = INT_INTOBJ(ELM_LIST(img, i));
       SET_ELM_PP(f, i+6, (pptype) j);
-      if(j!=0){
+      if(j!=0)
+      {
         rank++;
         SET_ELM_PP(f, deg+rank+6, (pptype) i); /* dom*/
         ran[rank]=j;
-        if(j>max_ran){
-          max_ran=j;
-          }
-        if(j<min_ran){
-          min_ran=j;
-          }
-        }
+        if(j>max_ran) max_ran=j;
+        if(j<min_ran) min_ran=j;
       }
+    }
     
     TOO_MANY_PTS_ERROR(max_ran>65535);
 
@@ -259,20 +258,11 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
 
     /* set min */
     j=ELM_PP(f,deg+7); /* min. dom. */
-    if(min_ran<(short int) j){
-      SET_ELM_PP(f,5,(pptype) min_ran);
-    }else{
-      SET_ELM_PP(f,5,j);
-    }
-    
-    /* set max */
-    j=ELM_PP(f,deg+rank+6); /* max. dom. */
-    if(max_ran>(short int) j){
-      SET_ELM_PP(f,6,(pptype) max_ran);
-    }else{
-      SET_ELM_PP(f,6,j);
-    }
+    SET_ELM_PP(f,5,min_ran<j?(pptype) min_ran:j);
 
+    /* set max */
+    SET_ELM_PP(f,6,max_ran>deg?(pptype) max_ran:(pptype) deg); 
+    
     ResizeBag(f, sizeof(pptype)*(LEN_PP(f))+sizeof(UInt));
     return f;
 }
@@ -280,52 +270,51 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
 /* product of partial permutations */
 
 Obj FuncProdPP( Obj self, Obj f, Obj g )
-{
-    Int n, m, deg, rank_f, i, j, r, k, l, max_ran, min_ran, rank;
+{   pptype deg_f, deg_g, deg, rank_f, i, r, max_ran, min_ran, rank, j, k, l;
     Obj fg;
-    Int ran[513];
+    pptype ran[ELM_PP(f,2)<ELM_PP(g,2)?ELM_PP(f,2):ELM_PP(g,2)];
 
-    n = (short int) ELM_PP(f,1);
-    m = (short int) ELM_PP(g,1);
+    deg_f=ELM_PP(f,1);
+    deg_g=ELM_PP(g,1);
     
-    if(n==0||m==0) return NEW_EMPTY_PP();
+    if(deg_f==0||deg_g==0) return NEW_EMPTY_PP();
    
-    deg = 0;
-    rank_f = (short int) ELM_PP(f,2);
+    deg=0;
+    rank_f=ELM_PP(f,2);
 
     /* find degree/max. dom */
     for(i=rank_f;1<=i;i--)
     {
-      j = (short int) ELM_PP(f,6+n+rank_f+i);
-      if( j<=m && (short int) ELM_PP(g,j+6)!=0)
+      j =ELM_PP(f,6+deg_f+rank_f+i);
+      if(j<=deg_g&&ELM_PP(g,j+6)!=0)
       {
-        deg = (short int) ELM_PP(f,6+n+i);
-        r = i;
+        deg=ELM_PP(f,6+deg_f+i);
+        r=i;
         break;
       }
     } 
 
-   if(deg==0) return NEW_EMPTY_PP();
+    if(deg==0) return NEW_EMPTY_PP();
 
     fg = NEW_PP(3*deg+6);
-    SET_ELM_PP(fg, 1, (pptype) deg);
+    SET_ELM_PP(fg,1,deg);
    
     max_ran=0;
-    min_ran=(short int) ELM_PP(g,4);
+    min_ran=ELM_PP(g,4); /* max ran(g) */
     rank=0;
 
     for (i=1;i<=r;i++)
     {
-      j = (short int) ELM_PP(f,6+n+rank_f+i);
-      if(j<=m)
+      j=ELM_PP(f,6+deg_f+rank_f+i);
+      if(j<=deg_g)
       {
-        k = (short int) ELM_PP(g,j+6);
+        k=ELM_PP(g,j+6);
         if(k!=0)
         { 
           rank++;
-          l = (short int) ELM_PP(f,6+n+i);
-          SET_ELM_PP(fg,deg+rank+6,(pptype) l);
-          SET_ELM_PP(fg,l+6, (pptype) k);
+          l=ELM_PP(f,6+deg_f+i);
+          SET_ELM_PP(fg,deg+rank+6,l);
+          SET_ELM_PP(fg,l+6,k);
           ran[rank]=k;
           if(k>max_ran) max_ran=k;
           if(k<min_ran) min_ran=k;
@@ -334,33 +323,19 @@ Obj FuncProdPP( Obj self, Obj f, Obj g )
     }
 
     SET_ELM_PP(fg,2,(pptype) rank);
-    SET_ELM_PP(fg,3,(pptype) min_ran);
-    SET_ELM_PP(fg,4,(pptype) max_ran);
-    
+    SET_ELM_PP(fg,3,min_ran);
+    SET_ELM_PP(fg,4,max_ran);
+   
+    /* install the range */
     for(i=1;i<=rank;i++)
     {
-      SET_ELM_PP(fg,deg+rank+6+i,(pptype) ran[i]);
+      SET_ELM_PP(fg,deg+rank+6+i,ran[i]);
     }
  
-    k=ELM_PP(fg,deg+7);
-    if(min_ran<(short int) k)
-    {
-      SET_ELM_PP(fg,5,(pptype) min_ran);
-    }
-    else
-    {
-      SET_ELM_PP(fg,5,k);
-    }
-
-    k=ELM_PP(fg,deg+rank+6);
-    if(max_ran>(short int) k)
-    {
-      SET_ELM_PP(fg,6,(pptype) max_ran);
-    }
-    else
-    {
-      SET_ELM_PP(fg,6,k);
-    }
+    /* set min and max */
+    j=ELM_PP(fg,deg+7);
+    SET_ELM_PP(fg,5,min_ran<j?min_ran:j);
+    SET_ELM_PP(fg,6,max_ran>deg?max_ran:deg);
 
     ResizeBag(fg, sizeof(pptype)*(LEN_PP(fg))+sizeof(UInt));
     return fg;
