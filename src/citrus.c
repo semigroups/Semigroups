@@ -21,7 +21,7 @@ const char * Revision_citrus_c =
 ** range as a set (not calculated until needed), and <img list> is the list of 
 ** images with 0 for undefined.
 **
-** An element of the internal rep of a partial perm must be at most 65536 and be
+** An element of the internal rep of a partial perm must be at most 65535 and be
 ** of pptype, but the length and indices can be larger than 65535 and so these
 ** currently have type Int. 
 **
@@ -770,18 +770,24 @@ Obj FuncQuoPP(Obj self, Obj f, Obj g)
 
 /* product of partial perm and perm */
 Obj FuncProdPPPerm(Obj self, Obj f, Obj p)
-{
-  Int deg_f, rank_f, deg_p, max_ran, min_ran, i, j, k, min_dom, max_dom;
+{ pptype deg_f, rank_f, deg_p, max_ran, min_ran, i, j, k;
+  /*Int lmp;*/
   UInt2 * ptp;
   Obj fp;
  
-  if(TNUM_OBJ(p) != T_PERM2)
-  {
-    ErrorQuit( 
-        "usage: can only multiply a partial perm and perm on at most 65535 pts", 
+  if(TNUM_OBJ(p)==T_PERM4)
+  {/* lmp=FuncLARGEST_MOVED_POINT_PERM(self,p);
+    if (INT_INTOBJ(lmp) <= 65535) 
+    {
+      FuncTRIM_PERM(self,p,lmp);
+    }else{*/
+      ErrorQuit( 
+     "usage: can only multiply a partial perm and perm on at most 65535 pts", 
         0L, 0L );
-    return 0L;
+      return 0L;
+   /* } */
   }
+  
   deg_f = ELM_PP(f, 1);
   if(deg_f==0) return NEW_EMPTY_PP();
 
@@ -809,10 +815,9 @@ Obj FuncProdPPPerm(Obj self, Obj f, Obj p)
    
   SET_ELM_PP(fp, 3, min_ran); 
   SET_ELM_PP(fp, 4, max_ran);
-  min_dom=ELM_PP(fp, 7+deg_f);
-  SET_ELM_PP(fp, 5, min_ran<min_dom?min_ran:min_dom);
-  max_dom=ELM_PP(fp, 6+deg_f+rank_f);
-  SET_ELM_PP(fp, 6, max_ran>max_dom?max_ran:max_dom);
+  j=ELM_PP(fp, 7+deg_f);
+  SET_ELM_PP(fp, 5, min_ran<j?min_ran:j);
+  SET_ELM_PP(fp, 6, max_ran>deg_f?max_ran:deg_f);
   
   return fp;
 }
@@ -820,7 +825,7 @@ Obj FuncProdPPPerm(Obj self, Obj f, Obj p)
 /* product of perm and partial perm */
 
 Obj FuncProdPermPP(Obj self, Obj p, Obj f)
-{ pptype deg_f, rank, deg_p, deg, i, j, max_ran, min_ran, k, l, min_dom, max_dom;
+{ pptype deg_f, rank, deg_p, deg, i, j, max_ran, min_ran, k, l;
   UInt2 * ptp;
   Obj pf;
   
@@ -879,10 +884,9 @@ Obj FuncProdPermPP(Obj self, Obj p, Obj f)
 
   SET_ELM_PP(pf, 3, min_ran);
   SET_ELM_PP(pf, 4, max_ran);
-  min_dom=ELM_PP(pf, 7+deg);
-  SET_ELM_PP(pf, 5, min_ran<min_dom?min_ran:min_dom);
-  max_dom=ELM_PP(pf, 6+deg+rank);
-  SET_ELM_PP(pf, 6, max_ran>max_dom?max_ran:max_dom);
+  j=ELM_PP(pf, 7+deg);
+  SET_ELM_PP(pf, 5, min_ran<j?min_ran:j);
+  SET_ELM_PP(pf, 6, max_ran>deg?max_ran:deg);
   
   return pf;
 }
@@ -979,12 +983,9 @@ static Int InitKernel ( StructInitInfo *module )
     InitHdlrFuncsFromTable( GVarFuncs );
 
     ImportGVarFromLibrary( "PartialPermType", &PartialPermType );
-
     /* return success                                                      */
     return 0;
 }
-
-Obj FuncADD_SET(Obj self, Obj set, Obj obj);
 
 /******************************************************************************
 *F  InitLibrary( <module> ) . . . . . . .  initialise library data structures
