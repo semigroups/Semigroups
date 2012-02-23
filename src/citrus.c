@@ -406,13 +406,13 @@ Obj FuncInvPP ( Obj self, Obj f )
 }
 
 /* on sets for a partial permutation */ 
-
 Obj FuncOnIntegerSetsWithPP (Obj self, Obj set, Obj f)
-{ Int deg, n, m, i, j, k;
+{ pptype deg, k;
+  Int n, i, j, m;
   Obj out;
 
-  deg = (short int) ELM_PP(f, 1);
-  n = LEN_PLIST(set);
+  deg=ELM_PP(f,1);
+  n=LEN_PLIST(set);
   if(n==0||deg==0) return NEW_EMPTY_PLIST();
 
   out = NEW_PLIST(T_PLIST_CYC, n);
@@ -420,10 +420,10 @@ Obj FuncOnIntegerSetsWithPP (Obj self, Obj set, Obj f)
 
   for(i=1;i<=n;i++)
   {
-    j = INT_INTOBJ(ELM_PLIST(set, i));
+    j=INT_INTOBJ(ELM_PLIST(set, i));
     if(j<=deg)
     {
-      k = (short int) ELM_PP(f, j+6);
+      k=ELM_PP(f, j+6);
       if(k!=0)
       {
         m++;

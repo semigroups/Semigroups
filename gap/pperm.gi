@@ -74,7 +74,7 @@ InstallOtherMethod(AsPermutation, "for a partial perm",
 [IsPartialPerm],
 function(f)
 
-  if not Dom(f)=RanSet(f) then
+  if not Dom(f)=RanSetPP(f) then
     return fail;
   fi;
   return MappingPermListList(Dom(f), Ran(f));
@@ -269,13 +269,13 @@ end);
 #############################################################################
 
 InstallMethod(One, "for a partial perm",
-[IsPartialPerm ], f-> DensePartialPermNC(Union(Dom(f), RanSet(f))));
+[IsPartialPerm ], f-> DensePartialPermNC(Union(Dom(f), RanSetPP(f))));
 
 # new for 0.7! - One - "for a partial perm""
 #############################################################################
 
 InstallMethod(OneMutable, "for a partial perm",
-[IsPartialPerm ], f-> DensePartialPermNC(Union(Dom(f), RanSet(f))));
+[IsPartialPerm ], f-> DensePartialPermNC(Union(Dom(f), RanSetPP(f))));
 
 # new for 0.7! - OnIntegerSetsWithPartialPerm 
 #############################################################################
@@ -384,7 +384,7 @@ InstallMethod(RangeOfPartialPerm, "for a partial perm",
 ############################################################################
 
 InstallMethod(RangeSetOfPartialPerm, "for a partial perm",
-[IsPartialPerm], RanSet);
+[IsPartialPerm], RanSetPP);
 
 # new for 0.7! - RankOfPartialPerm - "for a partial perm"
 ############################################################################
