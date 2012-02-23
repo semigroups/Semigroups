@@ -534,7 +534,6 @@ Obj FuncRightOne(Obj self, Obj f)
 }
 
 /* fixed points */
-
 Obj FuncFixedPointsPP(Obj self, Obj f)
 { pptype deg, rank, i;
   Int m;
@@ -562,34 +561,33 @@ Obj FuncFixedPointsPP(Obj self, Obj f)
 }
 
 /* less than or equal */
-
 Obj FuncLeqPP(Obj self, Obj f, Obj g)
 {
   Obj x;
-  Int deg_f, deg_g, rank_f, rank_g, rank, i, j, k;
+  pptype deg_f, deg_g, rank_f, rank_g, rank, i, j, k;
 
-  deg_f = ELM_PP(f, 1);
+  deg_f=ELM_PP(f, 1);
   if(deg_f==0) return True;
 
-  deg_g = ELM_PP(g, 1);
+  deg_g=ELM_PP(g, 1);
   if(deg_g==0) return False;
 
-  rank_f = ELM_PP(f, 2);
-  rank_g = ELM_PP(g, 2);
+  rank_f=ELM_PP(f, 2);
+  rank_g=ELM_PP(g, 2);
   if(rank_f<=rank_g)
   {
-    rank = rank_f;
-    x = True;
+    rank=rank_f;
+    x=True;
   }
   else
   {
-    rank = rank_g;
-    x = False;
+    rank=rank_g;
+    x=False;
   }
   for(i=1;i<=rank;i++)
   {
-    j = ELM_PP(f,6+deg_f+rank_f+i);
-    k = ELM_PP(g,6+deg_g+rank_g+i);
+    j=ELM_PP(f,6+deg_f+rank_f+i);
+    k=ELM_PP(g,6+deg_g+rank_g+i);
     if(j<k) return True;
     if(j>k) return False;
   }
