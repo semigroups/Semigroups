@@ -33,6 +33,8 @@ const char * Revision_citrus_c =
 
 /* from permutat.c */
 #define IMAGE(i,pt,dg)  (((i) < (dg)) ? (pt)[(i)] : (i))
+Obj FuncTRIM_PERM(Obj self, Obj perm, Obj n);
+Obj FuncLARGEST_MOVED_POINT_PERM(Obj self, Obj perm);
 
 /* import the type from GAP */
 Obj PartialPermType;
@@ -771,21 +773,20 @@ Obj FuncQuoPP(Obj self, Obj f, Obj g)
 /* product of partial perm and perm */
 Obj FuncProdPPPerm(Obj self, Obj f, Obj p)
 { pptype deg_f, rank_f, deg_p, max_ran, min_ran, i, j, k;
-  /*Int lmp;*/
   UInt2 * ptp;
-  Obj fp;
+  Obj fp, lmp;
  
   if(TNUM_OBJ(p)==T_PERM4)
-  {/* lmp=FuncLARGEST_MOVED_POINT_PERM(self,p);
+  { lmp=FuncLARGEST_MOVED_POINT_PERM(self,p);
     if (INT_INTOBJ(lmp) <= 65535) 
     {
       FuncTRIM_PERM(self,p,lmp);
-    }else{*/
+    }else{
       ErrorQuit( 
      "usage: can only multiply a partial perm and perm on at most 65535 pts", 
         0L, 0L );
       return 0L;
-   /* } */
+    } 
   }
   
   deg_f = ELM_PP(f, 1);
