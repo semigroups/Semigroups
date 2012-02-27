@@ -106,8 +106,8 @@ function(f, s)
     fi;
   fi;
 
-# JDM should use TraceSchreierTreeForward(o, k) and not f when Schutz gp is
-# created!
+  # JDM should use TraceSchreierTreeForward(o, k) and not f when Schutz gp is
+  # created!
 
   m:=OrbSCCLookup(o)[k];
   
@@ -235,7 +235,7 @@ function(f, r)
   
   rep:=Representative(r);
 
-  if Rank(f)<>Rank(rep) then
+  if f[2]<>rep[2] then
     Info(InfoCitrus, 1, "rank not equal to those of",
         " any of the D-class elements,");
     return false;
@@ -282,7 +282,7 @@ function(f, r)
   
   rep:=Representative(r);
 
-  if Degree(f)<>Degree(rep) or Rank(f)<>Rank(rep) or DomPP(f)<>DomPP(rep) or 
+  if f[1]<>rep[1] or f[2]<>rep[2] or DomPP(f)<>DomPP(rep) or 
    RanSetPP(f)<>RanSetPP(rep) then
     return false;
   fi;
@@ -755,11 +755,11 @@ function(d)
     #########################################################################
     
     NumberElement:=function(enum, f)
-      local rep, o, m, k, l, j, k;
+      local rep, o, m, k, l, j;
       
       rep:=Representative(d);
       
-      if Rank(f)<>Rank(rep) then 
+      if f[2]<>rep[2] then 
         Info(InfoCitrus, 1, "rank not equal to those of",
           " any of the D-class elements,");
         return fail;
@@ -785,8 +785,8 @@ function(d)
         return fail;
       fi;
 
-      k:=o!.mults[k]^-1*f*o!.mults[l];
-      j:=Position(enum!.schutz, MappingPermListList(DomPP(k), RanPP(k)));
+      m:=o!.mults[k]^-1*f*o!.mults[l];
+      j:=Position(enum!.schutz, MappingPermListList(DomPP(m), RanPP(m)));
 
       if j=fail then 
         return fail;
@@ -838,7 +838,7 @@ function(h)
     #########################################################################
     
     NumberElement:=function(enum, f)
-      local rep, g, k;
+      local rep, g;
       
       rep:=Representative(h);
       
@@ -847,11 +847,9 @@ function(h)
         return fail;
       fi;
      
-      g:=h!.o!.mults[h!.data[3]];
-      k:=h!.o!.mults[h!.data[4]]; 
-      l:=g^-1*f*k;
+      g:=h!.o!.mults[h!.data[3]]^-1*f*h!.o!.mults[h!.data[4]]; 
 
-      return Position(enum!.schutz, MappingPermListList(DomPP(l), RanPP(l)));
+      return Position(enum!.schutz, MappingPermListList(DomPP(g), RanPP(g)));
     end,
 
     #########################################################################
