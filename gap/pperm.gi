@@ -300,7 +300,7 @@ InstallMethod(OneMutable, "for a partial perm",
 #############################################################################
 
 InstallMethod(OnIntegerSetsWithPartialPerm, "for a set of pos ints and p perm",
-[IsSet and IsCyclotomicCollection, IsPartialPerm], OnIntegerSetsWithPP);
+[IsCyclotomicCollection, IsPartialPerm], OnIntegerSetsWithPP);
 
 #PPP
 

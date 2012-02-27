@@ -47,9 +47,9 @@ end);
 #############################################################################
 
 InstallMethod(\in, "for an inverse semigroup of part perms",
-[IsPartialPerm , IsInverseSemigroup and IsPartialPermSemigroup],
+[IsPartialPerm, IsInverseSemigroup and IsPartialPermSemigroup],
 function(f, s)
-  local o, k, l, ran, m, schutz, g;
+  local o, k, l, ran, m, schutz, g, dom_g, ran_g;
 
   if not f[1]=0 and (f[5]<SmallestMovedPoint(s) or f[6]>LargestMovedPoint(s)) 
    then 
@@ -122,14 +122,16 @@ function(f, s)
   fi;
 
   g:=o!.mults[k]^-1*f*o!.mults[l];
+  dom_g:=DomPP(g);
+  ran_g:=RanPP(g);
 
-  if DomPP(g)=RanPP(g) then # g is an idempotent! 
+  if dom_g=ran_g then # g is an idempotent! 
     return true;
   elif schutz=false then
     return false;
   fi;
 
-  return SiftedPermutation(schutz, AsPermutation(g))=();
+  return SiftedPermutation(schutz, MappingPermListList(dom_g, ran_g))=();
 end);
 
 # new for 0.7! - \in - "for an R-class of inv semi and part perm" 
@@ -143,7 +145,7 @@ function(f, r)
   
   rep:=Representative(r);
 
-  if Degree(f)<>Degree(rep) or MinDomPP(f)<>MinDomPP(rep) or f[2]<>rep[2] 
+  if f[1]<>rep[1] or f[f[1]+7]<>rep[rep[1]+7] or f[2]<>rep[2] 
    or DomPP(f)<>DomPP(rep) then 
     Info(InfoCitrus, 1, "degree, rank, or domain not equal to those of",
         " any of the R-class elements,");
@@ -174,7 +176,7 @@ function(f, r)
     return false;
   fi;
 
-  return SiftedPermutation(schutz, AsPermutation(g))=(); 
+  return SiftedPermutation(schutz, MappingPermListList(DomPP(g), RanPP(g)))=(); 
 end);
 
 # new for 0.7! - \in - "for an L-class of inv semi and part perm" 
@@ -219,7 +221,7 @@ function(f, r)
     return false;
   fi;
 
-  return SiftedPermutation(schutz, AsPermutation(g))=(); 
+  return SiftedPermutation(schutz, MappingPermListList(DomPP(g), RanPP(g)))=(); 
 end);
 
 # new for 0.7! - \in - "for an D-class of inv semi and part perm" 
@@ -266,7 +268,7 @@ function(f, r)
     return false;
   fi;
 
-  return SiftedPermutation(schutz, AsPermutation(g))=(); 
+  return SiftedPermutation(schutz, MappingPermListList(DomPP(g), RanPP(g)))=(); 
 end);
 
 # new for 0.7! - \in - "for an H-class of inv semi and part perm" 
@@ -301,7 +303,7 @@ function(f, r)
     return false;
   fi;
 
-  return SiftedPermutation(schutz, AsPermutation(g))=(); 
+  return SiftedPermutation(schutz, MappingPermListList(DomPP(g), RanPP(g)))=(); 
 end);
 
 #AAA
@@ -422,8 +424,8 @@ end);
 # r = Length(gens);
 
 InstallGlobalFunction(CreateSchutzGp, 
-function(gens, o, f, scc, truth, graph, r, p)
-  local bound, g, is_sym, i, j;
+function(gens, o, f, scc, truth, graph, r, mults)
+  local bound, g, is_sym, k, i, j;
  
   if Length(o[scc[1]])<1000 then
     bound:=Factorial(Length(o[scc[1]]));
@@ -436,8 +438,8 @@ function(gens, o, f, scc, truth, graph, r, p)
   for i in scc do
     for j in [1..r] do
       if IsBound(graph[i][j]) and truth[graph[i][j]] then
-        g:=ClosureGroup(g, AsPermutation(f^-1*f/p[i] * 
-         (gens[j]*p[graph[i][j]])));
+        k:=(RightOne(f)/mults[i])*(gens[j]*mults[graph[i][j]]);
+        g:=ClosureGroup(g, MappingPermListList(DomPP(k), RanPP(k)));
       fi;
 
       if Size(g)>=bound then
@@ -453,9 +455,9 @@ function(gens, o, f, scc, truth, graph, r, p)
   od;
 
   if is_sym then
-    return [true, g ];
+    return [ true, g ];
   elif Size(g)=1 then
-    return [false, g ];
+    return [ false, g ];
   fi;
 
   return [StabChainImmutable(g), g];
@@ -594,12 +596,12 @@ function(r)
     #########################################################################
     
     NumberElement:=function(enum, f)
-      local rep, o, data, i, j;
+      local rep, o, data, i, j, k;
 
       rep:=Representative(r);
       
-      if Degree(f)<>Degree(rep) or MinDomPP(f)<>MinDomPP(rep) or 
-       Rank(f)<>Rank(rep) or DomPP(f)<>DomPP(rep) then
+      if f[1]<>rep[1] or f[f[1]+7]<>rep[rep[1]+7] or f[2]<>rep[2] 
+       or DomPP(f)<>DomPP(rep) then
         Info(InfoCitrus, 1, "degree, rank, or domain not equal to those of",
           " any of the R-class elements,");
         return fail;
@@ -615,8 +617,9 @@ function(r)
       if i = fail or not o!.truth[data[1]][i] then 
         return fail;
       fi;
-      
-      j:=Position(enum!.schutz, AsPermutation(rep^-1*f*o!.mults[i]));
+     
+      k:=rep^-1*f*o!.mults[i];
+      j:=Position(enum!.schutz, MappingPermListList(DomPP(k), RanPP(k)));
 
       if j=fail then 
         return fail;
@@ -673,7 +676,7 @@ function(r)
     #########################################################################
     
     NumberElement:=function(enum, f)
-      local rep, o, data, i, j;
+      local rep, o, data, i, j, k;
 
       rep:=Representative(r);
       
@@ -694,7 +697,8 @@ function(r)
       if i = fail or not o!.truth[data[1]][i] then 
         return fail;
       fi;
-      j:=Position(enum!.schutz, AsPermutation(o!.mults[i]^-1*f*rep^-1));
+      k:=o!.mults[i]^-1*f/rep;
+      j:=Position(enum!.schutz, MappingPermListList(DomPP(k), RanPP(k)));
 
       if j=fail then 
         return fail;
@@ -751,7 +755,7 @@ function(d)
     #########################################################################
     
     NumberElement:=function(enum, f)
-      local rep, o, m, k, l, j;
+      local rep, o, m, k, l, j, k;
       
       rep:=Representative(d);
       
@@ -781,7 +785,8 @@ function(d)
         return fail;
       fi;
 
-      j:=Position(enum!.schutz, AsPermutation(o!.mults[k]^-1*f*o!.mults[l]));
+      k:=o!.mults[k]^-1*f*o!.mults[l];
+      j:=Position(enum!.schutz, MappingPermListList(DomPP(k), RanPP(k)));
 
       if j=fail then 
         return fail;
@@ -837,15 +842,16 @@ function(h)
       
       rep:=Representative(h);
       
-      if Degree(f)<>Degree(rep) or Rank(f)<>Rank(rep) or DomPP(f)<>DomPP(rep) or
+      if f[1]<>rep[1] or f[2]<>rep[2] or DomPP(f)<>DomPP(rep) or
          RanSetPP(f)<>RanSetPP(rep) then 
         return fail;
       fi;
      
       g:=h!.o!.mults[h!.data[3]];
       k:=h!.o!.mults[h!.data[4]]; 
+      l:=g^-1*f*k;
 
-      return Position(enum!.schutz, AsPermutation(g^-1*f*k));
+      return Position(enum!.schutz, MappingPermListList(DomPP(l), RanPP(l)));
     end,
 
     #########################################################################
@@ -2266,7 +2272,7 @@ function(s)
   local n;
 
   n:=LargestMovedPoint(s);
-  return Orb(s, [1..n]*1, OnIntegerSetsWithPartialPerm, 
+  return Orb(s, [1..n]*1, OnIntegerSetsWithPP, 
         rec(schreier:=true, orbitgraph:=true, storenumbers:=true, 
         log:=true, hashlen:=CitrusOptionsRec.hashlen.M, finished:=false));
         #JDM orb bug prevents us from using onflatplainlist above
@@ -2412,7 +2418,7 @@ end);
 InstallGlobalFunction(ShortOrb, 
 function(s, set)
 
-  return Orb(s, set, OnIntegerSetsWithPartialPerm, 
+  return Orb(s, set, OnIntegerSetsWithPP, 
       rec(forflatplainlists:=true,
         hashlen:=CitrusOptionsRec.hashlen.M,
         schreier:=true,
