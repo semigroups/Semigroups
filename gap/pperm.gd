@@ -30,6 +30,7 @@ DeclareGlobalFunction("MinDomPP");
 DeclareGlobalFunction("MinDomRanPP");
 DeclareGlobalFunction("MinRanPP");
 DeclareOperation("OnIntegerSetsWithPartialPerm", [IsCyclotomicCollection, IsPartialPerm]);
+DeclareGlobalFunction("PrettyPrintPP");
 DeclareGlobalFunction("RandomPartialPerm");
 DeclareGlobalFunction("RanPP");
 DeclareOperation("RangeOfPartialPerm", [IsPartialPerm]);

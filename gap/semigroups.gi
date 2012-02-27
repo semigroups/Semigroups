@@ -399,14 +399,14 @@ end);
 InstallMethod(InverseSemigroupByGenerators, "for partial perm coll", 
 [IsPartialPermCollection],
 function(coll)
-  local gens, i, g, s, f;
+  local gens, s, f;
 
   gens:=ShallowCopy(coll);
-  i:=Length(gens);
   
   for f in coll do
+    Add(gens, f);
     if not DomPP(f)=RanSetPP(f) then 
-      i:=i+1; gens[i]:=f;
+      Add(gens, f^-1);
     fi;
   od;
 

@@ -356,6 +356,54 @@ function(f)
   return;
 end);
 
+# new for 0.7! - PrettyPrintPP - "for a partial perm"
+#############################################################################
+
+InstallGlobalFunction(PrettyPrintPP,
+function(f)
+  local seen, dom, g, i, j, cycle, tmp;
+
+  seen:=ListWithIdenticalEntries(f[1], false);;
+  seen[1]:=true;
+  dom:=DomPP(f);;
+  g:=f^-1;
+  i:=1;
+
+  while i<>fail do 
+    j:=dom[i];
+    cycle:=[];
+    repeat
+      seen[j]:=true;
+      Add(cycle, j);
+      j:=j^f;
+    until j=fail or j=dom[i];
+    if j=fail then 
+      tmp:=[];
+      j:=dom[i]^g;
+      while j<>fail do  
+        seen[j]:=true;
+        Add(tmp, j);
+        j:=j^g;
+      od;
+      Print("[");
+      cycle:=Concatenation(Reversed(tmp), cycle);
+      for j in [1..Length(cycle)-1] do 
+        Print(cycle[j], ",");
+      od;
+      Print(cycle[j+1],"]");
+    elif Length(cycle)=1 then 
+      Print("(", cycle[1], ")");
+    else
+      Print("(");
+      for j in [1..Length(cycle)-1] do 
+        Print(cycle[j], ",");
+      od;
+      Print(cycle[j+1],")");
+    fi;
+    i:=PositionProperty(dom, x-> not seen[x]);
+  od;
+end);
+
 #RRR
 
 # new for 0.7! - RanPP - "for a partial perm"
