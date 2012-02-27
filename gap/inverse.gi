@@ -308,10 +308,10 @@ end);
 
 #AAA
 
-# new for 0.7! - AsList - not a user function 
+# new for 0.7! - AsList - "for an R-class of inverse semigp."
 ############################################################################
 
-InstallOtherMethod(AsList, "for an R-class of trans. semigp.",
+InstallOtherMethod(AsList, "for an R-class of inverse semigp.",
 [IsGreensRClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
 function(r)
   local f, g, elts, mults, scc, i;
@@ -328,10 +328,10 @@ function(r)
   return elts;
 end);
 
-# new for 0.7! - AsList - not a user function 
+# new for 0.7! - AsList - "for an L-class of inverse semigp." 
 ############################################################################
 
-InstallOtherMethod(AsList, "for an L-class of trans. semigp.",
+InstallOtherMethod(AsList, "for an L-class of inverse semigp.",
 [IsGreensLClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
 function(r)
   local f, g, elts, mults, scc, i;
@@ -348,10 +348,10 @@ function(r)
   return elts;
 end);
 
-# new for 0.7! - AsList - not a user function 
+# new for 0.7! - AsList - "for an H-class of inverse semigp."
 ############################################################################
 
-InstallOtherMethod(AsList, "for an H-class of trans. semigp.",
+InstallOtherMethod(AsList, "for an H-class of inverse semigp.",
 [IsGreensHClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
 function(h)
   local schutz, g;
@@ -362,10 +362,10 @@ function(h)
   return List(schutz, x-> Representative(h)*g*x/g);
 end);
 
-# new for 0.7! - AsList - not a user function 
+# new for 0.7! - AsList - "for an D-class of inverse semigp."
 ############################################################################
 
-InstallOtherMethod(AsList, "for an D-class of trans. semigp.",
+InstallOtherMethod(AsList, "for an D-class of inverse semigp.",
 [IsGreensDClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
 function(r)
   local f, g, elts, mults, scc, i, j;
@@ -402,17 +402,22 @@ end);
 # new for 0.7! - CreateSCCMultipliers - not a user function 
 #############################################################################
 
+#JDM not certain this is working as intended.
+
 InstallGlobalFunction(CreateSCCMultipliers, 
 function(gens, o, j, scc, mults)
-  local w, i;
+  local tree, m, out, i;
   
-  for i in scc do 
-    w:=TraceSchreierTreeOfSCCForward(o, j, i);
-    if w=[] then 
-      mults[i]:=PartialPermNC(o[i], o[i]);
-    else
-      mults[i]:=EvaluateWord(gens, w)^-1;
-    fi;    
+  tree:=SchreierTreeOfSCC(o, j);
+  m:=Length(scc); out:=EmptyPlist(m);
+
+  mults[scc[1]]:=PartialPermNC(o[scc[1]], o[scc[1]]);
+
+  for i in [2..m] do 
+    while i > scc[1] do
+      mults[scc[i]]:=mults[tree[2][scc[i]]]*gens[tree[1][scc[i]]];
+      i:=tree[2][i];
+    od;
   od;
   return mults;
 end);
@@ -2177,7 +2182,7 @@ end);
 # new for 0.7! - ParentAttr - "for a Green's class of a part perm semigroup
 ##############################################################################
 
-InstallMethod(ParentAttr, "for a R-class of a trans. semigroup",
+InstallMethod(ParentAttr, "for a R-class of inverse semigroup",
 [IsGreensClass and IsGreensClassOfPartPermSemigroup], x-> x!.parent);
 
 #RRR
@@ -2271,9 +2276,9 @@ function(s)
 
   n:=LargestMovedPoint(s);
   return Orb(s, [1..n]*1, OnIntegerSetsWithPP, 
-        rec(schreier:=true, orbitgraph:=true, storenumbers:=true, 
-        log:=true, hashlen:=CitrusOptionsRec.hashlen.M, finished:=false));
-        #JDM orb bug prevents us from using onflatplainlist above
+        rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true, 
+        storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M, 
+        finished:=false));
 end);
 
 # new for 0.7! - RClassReps - for an inv semi of part perms

@@ -405,9 +405,8 @@ function(coll)
   i:=Length(gens);
   
   for f in coll do
-    g:=f^-1;
-    if not g=f then 
-      i:=i+1; gens[i]:=g;
+    if not DomPP(f)=RanSetPP(f) then 
+      i:=i+1; gens[i]:=f;
     fi;
   od;
 
