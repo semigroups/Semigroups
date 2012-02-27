@@ -73,7 +73,7 @@ static inline Obj NEW_EMPTY_PP()
   f = NewBag(T_DATOBJ, sizeof(pptype)*7+sizeof(UInt));
   TYPE_DATOBJ(f) = PartialPermType;
   for(i=1;i<=7;i++)
-    SET_ELM_PP(f, i, 0);
+    SET_ELM_PP(f, i, (pptype) 0);
   return f;
 }
 
@@ -99,7 +99,7 @@ static inline Int TOO_MANY_PTS_ERROR(int cond)
 /* length of the partial perm internal rep */
 static inline Int LEN_PP(Obj f)
 {
-  return (ELM_PP(f, 1)==0)?7:ELM_PP(f,1)+3*ELM_PP(f,2)+6;
+  return (pptype) (ELM_PP(f,1)==0?7:ELM_PP(f,1)+3*ELM_PP(f,2)+6);
 }
 
 /* comparison for qsort */
