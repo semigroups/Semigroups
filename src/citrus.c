@@ -824,7 +824,6 @@ Obj FuncProdPPPerm(Obj self, Obj f, Obj p)
 }
 
 /* product of perm and partial perm */
-
 Obj FuncProdPermPP(Obj self, Obj p, Obj f)
 { pptype deg_f, rank, deg_p, deg, i, j, max_ran, min_ran, k, l;
   UInt2 * ptp;

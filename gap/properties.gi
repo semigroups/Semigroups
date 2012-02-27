@@ -1206,7 +1206,7 @@ end);
 
 InstallOtherMethod(MovedPoints, "for a partial perm semigroup",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
-s-> Union(List(GeneratorsOfSemigroup(s), Dom)));
+s-> Union(List(GeneratorsOfSemigroup(s), DomPP)));
 
 # new for 0.1! - MultiplicativeNeutralElement - "for a trans. semi."
 ###########################################################################

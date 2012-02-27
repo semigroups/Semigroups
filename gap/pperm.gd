@@ -1,8 +1,12 @@
-
-
-
-
-# partial permutations
+#############################################################################
+###
+##W  pperm.gd
+##Y  Copyright (C) 2011-12                                James D. Mitchell
+###
+###  Licensing information can be found in the README file of this package.
+###
+##############################################################################
+###
 
 DeclareCategory("IsPartialPerm", IsMultiplicativeElementWithOne and
  IsAssociativeElement);
@@ -16,25 +20,24 @@ DeclareOperation("PartialPerm", [IsCyclotomicCollection]);
 
 DeclareGlobalFunction("DenseRangeList");
 DeclareOperation("DomainOfPartialPerm", [IsPartialPerm]);
-DeclareGlobalFunction("Dom", DomainOfPartialPerm);
+DeclareGlobalFunction("DomPP", DomainOfPartialPerm);
 DeclareOperation("FixedPointsOfPartialPerm", [IsPartialPerm]);
 DeclareGlobalFunction("InternalRepOfPartialPerm");
+DeclareGlobalFunction("MaxDomPP");
+DeclareGlobalFunction("MaxDomRanPP");
+DeclareGlobalFunction("MaxRanPP");
+DeclareGlobalFunction("MinDomPP");
+DeclareGlobalFunction("MinDomRanPP");
+DeclareGlobalFunction("MinRanPP");
 DeclareOperation("OnIntegerSetsWithPartialPerm", [IsSet and
 IsCyclotomicCollection, IsPartialPerm]);
-DeclareGlobalFunction("Ran");
+DeclareGlobalFunction("RandomPartialPerm");
+DeclareGlobalFunction("RanPP");
 DeclareOperation("RangeOfPartialPerm", [IsPartialPerm]);
 DeclareOperation("RangeSetOfPartialPerm", [IsPartialPerm]);
+DeclareOperation("RankOfPartialPerm", [IsPartialPerm]);
 DeclareOperation("RestrictedPartialPerm", [IsPartialPerm, IsSet and
 IsCyclotomicCollection]);
 
-# redone above this line
 
-DeclareGlobalFunction("MaxDom");
-DeclareGlobalFunction("MaxDomRan");
-DeclareGlobalFunction("MaxRan");
-DeclareGlobalFunction("MinDom");
-DeclareGlobalFunction("MinDomRan");
-DeclareGlobalFunction("MinRan");
-DeclareOperation("RankOfPartialPerm", [IsPartialPerm]);
 
-DeclareGlobalFunction("RandomPartialPerm");

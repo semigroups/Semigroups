@@ -51,26 +51,26 @@ InstallMethod(\in, "for an inverse semigroup of part perms",
 function(f, s)
   local o, k, l, ran, m, schutz, g;
 
-  if not f[1]=0 and (f[5]<SmallestMovedPoint(s) or
-   f[6]>LargestMovedPoint(s)) then 
+  if not f[1]=0 and (f[5]<SmallestMovedPoint(s) or f[6]>LargestMovedPoint(s)) 
+   then 
     return false;
   fi;
 
   o:=RangesOrb(s);
 
   if IsClosed(o) then 
-    k:=Position(o, Dom(f));
+    k:=Position(o, DomPP(f));
     if k=fail or (k=1 and not IsPartialPermMonoid(s)) then 
       return false;
     fi;
-    l:=Position(o, RangeSetOfPartialPerm(f));
+    l:=Position(o, RanSetPP(f));
     if l=fail then 
       return false;
     fi;
   else
-    k:=Position(o, Dom(f));
+    k:=Position(o, DomPP(f));
     if k=fail then 
-      o!.looking:=true; o!.lookingfor:=function(o, x) return x=Dom(f); end;
+      o!.looking:=true; o!.lookingfor:=function(o, x) return x=DomPP(f); end;
       o!.lookfunc:=o!.lookingfor;
 
       Enumerate(o);
@@ -83,12 +83,12 @@ function(f, s)
       fi;
     fi;
 
-    if Dom(f)=[] then 
+    if DomPP(f)=[] then 
       return true;
     elif k=1 and not IsPartialPermMonoid(s) then 
       return false;
     fi;
-    ran:=RangeSetOfPartialPerm(f);
+    ran:=RanSetPP(f);
        
     if IsClosed(o) and Position(o, ran)=fail then 
       return false;
@@ -96,7 +96,7 @@ function(f, s)
     # JDM could look ahead here...
 
     k:=1;
-    o:=ShortOrb(s, Dom(f));
+    o:=ShortOrb(s, DomPP(f));
     Enumerate(o);
     
     l:=Position(o, ran);
@@ -123,7 +123,7 @@ function(f, s)
 
   g:=o!.mults[k]^-1*f*o!.mults[l];
 
-  if Dom(g)=Ran(g) then # g is an idempotent! 
+  if DomPP(g)=RanPP(g) then # g is an idempotent! 
     return true;
   elif schutz=false then
     return false;
@@ -143,8 +143,8 @@ function(f, r)
   
   rep:=Representative(r);
 
-  if Degree(f)<>Degree(rep) or MinDom(f)<>MinDom(rep) or f[2]<>rep[2] 
-   or Dom(f)<>Dom(rep) then 
+  if Degree(f)<>Degree(rep) or MinDomPP(f)<>MinDomPP(rep) or f[2]<>rep[2] 
+   or DomPP(f)<>DomPP(rep) then 
     Info(InfoCitrus, 1, "degree, rank, or domain not equal to those of",
         " any of the R-class elements,");
     return false;
@@ -152,7 +152,7 @@ function(f, r)
 
   o:=r!.o;
   Enumerate(o);
-  l:=Position(o, RangeSetOfPartialPerm(f));
+  l:=Position(o, RanSetPP(f));
   m:=r!.data[1];
 
   if l=fail or not OrbSCCTruthTable(o)[m][l] then 
@@ -197,7 +197,7 @@ function(f, r)
 
   o:=r!.o;
   Enumerate(o);
-  l:=Position(o, Dom(f));
+  l:=Position(o, DomPP(f));
   m:=r!.data[1];
 
   if l=fail or not OrbSCCTruthTable(o)[m][l] then 
@@ -243,7 +243,7 @@ function(f, r)
   Enumerate(o);
   m:=r!.data[1];
   
-  l_dom:=Position(o, Dom(f)); l_ran:=Position(o, RangeSetOfPartialPerm(f));
+  l_dom:=Position(o, DomPP(f)); l_ran:=Position(o, RanSetPP(f));
   
   if l_dom=fail or l_ran=fail or not OrbSCCTruthTable(o)[m][l_dom] or 
    not OrbSCCTruthTable(o)[m][l_ran] then 
@@ -280,8 +280,8 @@ function(f, r)
   
   rep:=Representative(r);
 
-  if Degree(f)<>Degree(rep) or Rank(f)<>Rank(rep) or Dom(f)<>Dom(rep) or 
-   RangeSetOfPartialPerm(f)<>RangeSetOfPartialPerm(rep) then
+  if Degree(f)<>Degree(rep) or Rank(f)<>Rank(rep) or DomPP(f)<>DomPP(rep) or 
+   RanSetPP(f)<>RanSetPP(rep) then
     return false;
   fi;
 
@@ -598,8 +598,8 @@ function(r)
 
       rep:=Representative(r);
       
-      if Degree(f)<>Degree(rep) or MinDom(f)<>MinDom(rep) or 
-       Rank(f)<>Rank(rep) or Dom(f)<>Dom(rep) then
+      if Degree(f)<>Degree(rep) or MinDomPP(f)<>MinDomPP(rep) or 
+       Rank(f)<>Rank(rep) or DomPP(f)<>DomPP(rep) then
         Info(InfoCitrus, 1, "degree, rank, or domain not equal to those of",
           " any of the R-class elements,");
         return fail;
@@ -610,7 +610,7 @@ function(r)
       fi;
 
       o:=r!.o; data:=r!.data;
-      i:=Position(r!.o, RangeSetOfPartialPerm(f));
+      i:=Position(r!.o, RanSetPP(f));
 
       if i = fail or not o!.truth[data[1]][i] then 
         return fail;
@@ -689,7 +689,7 @@ function(r)
       fi;
 
       o:=r!.o; data:=r!.data;
-      i:=Position(r!.o, Dom(f));
+      i:=Position(r!.o, DomPP(f));
 
       if i = fail or not o!.truth[data[1]][i] then 
         return fail;
@@ -767,14 +767,14 @@ function(d)
 
       o:=d!.o; m:=d!.data[1];
       
-      k:=Position(o, Dom(f)); 
+      k:=Position(o, DomPP(f)); 
       if k=fail or not OrbSCCTruthTable(o)[m][k] then 
         Info(InfoCitrus, 1, "domain not equal to that of any",
         " D-class element,");
         return fail;
       fi;
 
-      l:=Position(o, RangeSetOfPartialPerm(f));
+      l:=Position(o, RanSetPP(f));
       if l=fail or not OrbSCCTruthTable(o)[m][l] then
         Info(InfoCitrus, 1, "range not equal to that of any",
         " D-class element,");
@@ -837,8 +837,8 @@ function(h)
       
       rep:=Representative(h);
       
-      if Degree(f)<>Degree(rep) or Rank(f)<>Rank(rep) or Dom(f)<>Dom(rep) or
-         RangeSetOfPartialPerm(f)<>RangeSetOfPartialPerm(rep) then 
+      if Degree(f)<>Degree(rep) or Rank(f)<>Rank(rep) or DomPP(f)<>DomPP(rep) or
+         RanSetPP(f)<>RanSetPP(rep) then 
         return fail;
       fi;
      
@@ -891,21 +891,21 @@ function(s, f)
 
   if IsClosed(RangesOrb(s)) then 
     o:=RangesOrb(s);
-    k:=Position(o, Dom(f));
+    k:=Position(o, DomPP(f));
     if k=fail then 
       Info(InfoCitrus, 1, "the partial perm. is not an element of the semigroup");
       return fail;
     fi;
     m:=OrbSCCLookup(o)[k];
     t:=OrbSCC(o)[m][1];
-    l:=Position(o, RangeSetOfPartialPerm(f));
+    l:=Position(o, RanSetPP(f));
     if l=fail or not OrbSCCTruthTable(o)[m][l] then 
       Info(InfoCitrus, 1, "the partial perm. is not an element of the           semigroup");
       return fail;
     fi;
     rep:=o!.mults[k]^-1*f*o!.mults[l];
   else
-    o:=ShortOrb(s, Dom(f));
+    o:=ShortOrb(s, DomPP(f));
     rep:=f*f^-1;
     k:=1; l:=1; m:=1; t:=1;
   fi;
@@ -1290,7 +1290,7 @@ end);
 
 # new for 0.7! - GreensHClassOfElementNC - for an inv semi and part perm
 ##############################################################################
-# Notes: data is: [scc index, scc[1], pos of dom, pos of ran]
+# Notes: data is: [scc index, scc[1], pos of DomPP, pos of ran]
 
 InstallOtherMethod(GreensHClassOfElementNC, "for an inv semi and part perm",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm 
@@ -1300,7 +1300,7 @@ function(s, f)
 
   if IsClosed(RangesOrb(s)) then 
     o:=RangesOrb(s);
-    k:=Position(o, Dom(f));
+    k:=Position(o, DomPP(f));
     if k=fail then 
       Info(InfoCitrus, 1, "the partial perm. is not an element of the semigroup");
       return fail;
@@ -1308,12 +1308,12 @@ function(s, f)
     m:=OrbSCCLookup(o)[k];
     t:=OrbSCC(o)[m][1];
   else
-    o:=ShortOrb(s, Dom(f));
+    o:=ShortOrb(s, DomPP(f));
     Enumerate(o);
     k:=1; m:=1; t:=1;
   fi;
   
-  l:=Position(o, RangeSetOfPartialPerm(f));
+  l:=Position(o, RanSetPP(f));
   if l=fail or not OrbSCCTruthTable(o)[m][l] then 
     Info(InfoCitrus, 1, "the partial perm. is not an element of the           semigroup");
     return fail;
@@ -1337,7 +1337,7 @@ function(r, f)
 
   o:=r!.o; m:=r!.data[1]; k:=r!.data[3];
   
-  l:=Position(o, RangeSetOfPartialPerm(f));
+  l:=Position(o, RanSetPP(f));
   if l=fail or not OrbSCCTruthTable(o)[m][l] then 
     return fail;
   fi;
@@ -1361,7 +1361,7 @@ function(r, f)
 
   o:=r!.o; m:=r!.data[1]; l:=r!.data[4];
   
-  k:=Position(o, Dom(f));
+  k:=Position(o, DomPP(f));
   if k=fail or not OrbSCCTruthTable(o)[m][k] then 
     return fail;
   fi;
@@ -1385,12 +1385,12 @@ function(r, f)
 
   o:=r!.o; m:=r!.data[1];
   
-  k:=Position(o, Dom(f));
+  k:=Position(o, DomPP(f));
   if k=fail or not OrbSCCTruthTable(o)[m][k] then 
     return fail;
   fi;
 
-  l:=Position(o, RangeSetOfPartialPerm(f));
+  l:=Position(o, RanSetPP(f));
   if l=fail or not OrbSCCTruthTable(o)[m][l] then 
     return fail;
   fi;
@@ -1429,7 +1429,7 @@ function(s, f)
 
   if IsClosed(RangesOrb(s)) then 
     o:=RangesOrb(s);
-    k:=Position(o, Dom(f));
+    k:=Position(o, DomPP(f));
     if k=fail then 
       Info(InfoCitrus, 1, "the partial perm. is not an element of the semigroup");
       return fail;
@@ -1438,12 +1438,12 @@ function(s, f)
     t:=OrbSCC(o)[m][1];
     rep:=o!.mults[l]^-1*f;
   else
-    o:=ShortOrb(s, Dom(f));
+    o:=ShortOrb(s, DomPP(f));
     Enumerate(o);
     k:=1; m:=1; t:=1; rep:=f;
   fi;
 
-  l:=Position(o, RangeSetOfPartialPerm(f));
+  l:=Position(o, RanSetPP(f));
   if l=fail or not OrbSCCTruthTable(o)[m][l] then 
     return fail;
   fi;
@@ -1481,7 +1481,7 @@ function(s, f)
 
   if IsClosed(RangesOrb(s)) then 
     o:=RangesOrb(s);
-    l:=Position(o, RangeSetOfPartialPerm(f));
+    l:=Position(o, RanSetPP(f));
     if l=fail then 
       Info(InfoCitrus, 1, "the partial perm. is not an element of the semigroup");
       return fail;
@@ -1489,13 +1489,13 @@ function(s, f)
     m:=OrbSCCLookup(o)[l];
     t:=OrbSCC(o)[m][1];
     rep:=f*o!.mults[l];
-    k:=Position(o, Dom(f));
+    k:=Position(o, DomPP(f));
     if k=fail or not OrbSCCTruthTable(o)[m][k] then 
       return fail;
     fi;
   else
     rep:=f*f^-1;
-    o:=ShortOrb(s, RangeSetOfPartialPerm(rep));
+    o:=ShortOrb(s, RanSetPP(rep));
     l:=1; m:=1; t:=1; k:=1;
   fi;
   
@@ -1682,7 +1682,7 @@ end);
 InstallOtherMethod(IsGroupHClass, "for H-class of part perm inv semigroup",
 [IsGreensHClass and IsGreensClassOfPartPermSemigroup and 
 IsGreensClassOfInverseSemigroup], h-> 
- Dom(Representative(h))=RangeSetOfPartialPerm(Representative(h)));
+ DomPP(Representative(h))=RanSetPP(Representative(h)));
 
 # new for 0.7! - IsRegularDClass - "for D-class of inv semigroup"
 ##############################################################################
@@ -1937,7 +1937,7 @@ function(s)
         f:=f^-1*f;
         
         r:=Objectify(RClassType(s), rec(parent:=s, o:=ShortOrb(s, 
-        RangeSetOfPartialPerm(f)), data:=[1,1,1,1]));
+        RanSetPP(f)), data:=[1,1,1,1]));
         SetRepresentative(r, f);
         SetEquivalenceClassRelation(r, GreensRRelation(s));
         return r;

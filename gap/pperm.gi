@@ -1,3 +1,12 @@
+#############################################################################
+##
+#W  pperm.gi
+##Y  Copyright (C) 2011-12                                James D. Mitchell
+##
+###  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
 
 # new for 0.7! - \^ - "for a partial perm and neg int"
 #############################################################################
@@ -74,11 +83,17 @@ InstallOtherMethod(AsPermutation, "for a partial perm",
 [IsPartialPerm],
 function(f)
 
-  if not Dom(f)=RanSetPP(f) then
+  if not DomPP(f)=RanSetPP(f) then
     return fail;
   fi;
-  return MappingPermListList(Dom(f), Ran(f));
+  return MappingPermListList(DomPP(f), RanPP(f));
 end);
+
+# new for 0.7! - AsPermutationNC - "for a partial perm"
+###########################################################################
+
+InstallOtherMethod(AsPermutationNC, "for a partial perm",
+[IsPartialPerm], f-> MappingPermListList(DomPP(f), RanPP(f)));
 
 # new for 0.7! - AsTransformationNC - "for a partial perm and pos int"
 ###########################################################################
@@ -107,7 +122,7 @@ end);
 InstallOtherMethod(AsTransformationNC, "for a partial perm and deg",
 [IsPartialPerm],
 function(f)
-  return AsTransformationNC(f, MaxDomRan(f)+1);
+  return AsTransformationNC(f, MaxDomRanPP(f)+1);
 end);
 
 # new for 0.7! - AsTransformationNC - "for a partial perm"
@@ -116,7 +131,7 @@ end);
 InstallOtherMethod(AsTransformation, "for a partial perm and deg",
 [IsPartialPerm, IsPosInt],
 function(f, n)
-  if not n>MaxDomRan(f) then 
+  if not n>MaxDomRanPP(f) then 
     Error("2nd argument should be larger than the largest point moved");
     return;
   fi;
@@ -140,7 +155,7 @@ end);
 ############################################################################
 # Notes: f[1] = deg ; f[2] = rank
 
-InstallGlobalFunction(Dom,
+InstallGlobalFunction(DomPP,
 function(f)
 
   if f[1]=0 then
@@ -155,7 +170,7 @@ end);
 # Notes: f![1] = deg ; f![2] = rank
 
 InstallMethod(DomainOfPartialPerm, "for a partial perm",
-[IsPartialPerm], Dom);
+[IsPartialPerm], DomPP);
 
 #EEE
 
@@ -201,10 +216,10 @@ end);
 
 #MMM
 
-# new for 0.7! - MaxDom - "for a partial perm" 
+# new for 0.7! - MaxDomPP - "for a partial perm" 
 ########################################################################### 
  
-InstallGlobalFunction(MaxDom,
+InstallGlobalFunction(MaxDomPP,
 function(f) 
   if f[1]=0 then  
     return fail; 
@@ -212,10 +227,10 @@ function(f)
   return f[1]; 
 end); 
 
-# new for 0.7! - MaxDomRan - "for a partial perm"
+# new for 0.7! - MaxDomRanPP - "for a partial perm"
 ###########################################################################
 
-InstallGlobalFunction(MaxDomRan,
+InstallGlobalFunction(MaxDomRanPP,
 function(f)
   if f[1]=0 then
     return fail;
@@ -223,10 +238,10 @@ function(f)
   return f[6];
 end);
 
-# new for 0.7! - MaxRan - "for a partial perm"
+# new for 0.7! - MaxRanPP - "for a partial perm"
 ###########################################################################
 
-InstallGlobalFunction(MaxRan, 
+InstallGlobalFunction(MaxRanPP, 
 function(f)
   if f[1]=0 then
     return fail;
@@ -234,10 +249,10 @@ function(f)
   return f[4];
 end);
 
-# new for 0.7! - MinDom - "for a partial perm"
+# new for 0.7! - MinDomPP - "for a partial perm"
 ###########################################################################
 
-InstallGlobalFunction(MinDom,
+InstallGlobalFunction(MinDomPP,
 function(f)
   if f[1]=0 then
     return fail;
@@ -245,10 +260,10 @@ function(f)
   return f[7+f[1]];
 end);
 
-# new for 0.7! - MinDomRan - "for a partial perm"
+# new for 0.7! - MinDomRanPP - "for a partial perm"
 ###########################################################################
 
-InstallGlobalFunction(MinDomRan, 
+InstallGlobalFunction(MinDomRanPP, 
 function(f)
   if f[1]=0 then
     return fail;
@@ -256,10 +271,10 @@ function(f)
   return f[5];
 end);
 
-# new for 0.7! - MinRan - "for a partial perm"
+# new for 0.7! - MinRanPP - "for a partial perm"
 ###########################################################################
 
-InstallGlobalFunction(MinRan, 
+InstallGlobalFunction(MinRanPP, 
 function(f)
   if f[1]=0 then
     return fail;
@@ -273,13 +288,13 @@ end);
 #############################################################################
 
 InstallMethod(One, "for a partial perm",
-[IsPartialPerm ], f-> DensePartialPermNC(Union(Dom(f), RanSetPP(f))));
+[IsPartialPerm ], f-> DensePartialPermNC(Union(DomPP(f), RanSetPP(f))));
 
 # new for 0.7! - One - "for a partial perm""
 #############################################################################
 
 InstallMethod(OneMutable, "for a partial perm",
-[IsPartialPerm ], f-> DensePartialPermNC(Union(Dom(f), RanSetPP(f))));
+[IsPartialPerm ], f-> DensePartialPermNC(Union(DomPP(f), RanSetPP(f))));
 
 # new for 0.7! - OnIntegerSetsWithPartialPerm 
 #############################################################################
@@ -318,7 +333,7 @@ function(f)
     Print("<empty mapping>");
     return;
   fi;
-  dom:=Dom(f); ran:=Ran(f);
+  dom:=DomPP(f); ran:=RanPP(f);
 
   if Rank(f)>2 then # JDM printing of [2,4] is [2, 4..4]!
     if IsRange(dom) then 
@@ -343,10 +358,10 @@ end);
 
 #RRR
 
-# new for 0.7! - Ran - "for a partial perm"
+# new for 0.7! - RanPP - "for a partial perm"
 ############################################################################
 
-InstallGlobalFunction(Ran, 
+InstallGlobalFunction(RanPP, 
 function(f)
   if f[1]=0 then
     return [];
@@ -382,7 +397,7 @@ end);
 ############################################################################
 
 InstallMethod(RangeOfPartialPerm, "for a partial perm",
-[IsPartialPerm], Ran);
+[IsPartialPerm], RanPP);
 
 # new for 0.7! - RangeSetOfPartialPerm - "for a partial perm"
 ############################################################################

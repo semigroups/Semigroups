@@ -190,14 +190,14 @@ InstallOtherMethod(Degree, "for a transformation",
 #############################################################################
 
 InstallOtherMethod(Degree, "for a partial perm",
-[IsPartialPerm], MaxDomRan);
+[IsPartialPerm], MaxDomRanPP);
 
 # new for 0.1! - Degree - "for a transformation semigroup"
 #############################################################################
 # Notes: returns DegreeOfTransformationSemigroup.
 
 InstallOtherMethod(Degree, "for a transformation semigroup",
-[IsTransformationSemigroup], s-> DegreeOfTransformationSemigroup(s));
+[IsTransformationSemigroup], DegreeOfTransformationSemigroup);
 
 # new for 0.1! - Generators - "for a semigroup or monoid"
 ############################################################################
