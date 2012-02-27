@@ -121,7 +121,7 @@ function(f, s)
     return true;
   fi;
 
-  g:=o!.mults[k]^-1*f*o!.mults[l];
+  g:=o!.mults[k]^-1*f*o!.mults[l]; #LQuoPP
   dom_g:=DomPP(g);
   ran_g:=RanPP(g);
 
@@ -213,7 +213,7 @@ function(f, r)
     return true;
   fi;
 
-  g:=o!.mults[l]^-1*f;
+  g:=o!.mults[l]^-1*f; #LQuoPP
 
   if g=rep then 
     return true;
@@ -260,7 +260,7 @@ function(f, r)
     return true;
   fi;
 
-  g:=o!.mults[l_dom]^-1*f*o!.mults[l_ran];
+  g:=o!.mults[l_dom]^-1*f*o!.mults[l_ran]; #LQuoPP
 
   if g=rep then 
     return true;
@@ -295,7 +295,7 @@ function(f, r)
     return true;
   fi;
 
-  g:=mults[data[3]]^-1*f*mults[data[4]];
+  g:=mults[data[3]]^-1*f*mults[data[4]]; #LQuoPP
 
   if g=rep then 
     return true;
@@ -323,7 +323,7 @@ function(r)
   mults:=r!.o!.mults; scc:=r!.o!.scc[r!.data[1]];
 
   for i in scc do
-    Append(elts, g*mults[i]^-1);
+    Append(elts, g/mults[i]);
   od;
   return elts;
 end);
@@ -359,7 +359,7 @@ function(h)
   schutz:=SchutzenbergerGroup(h);
   g:=OrbSCCMultipliers(h)[h!.data[4]];
 
-  return List(schutz, x-> Representative(h)*g*x*g^-1);
+  return List(schutz, x-> Representative(h)*g*x/g);
 end);
 
 # new for 0.7! - AsList - not a user function 
@@ -378,7 +378,7 @@ function(r)
 
   for i in scc do
     for j in scc do 
-      Append(elts, mults[j]*g*mults[i]^-1);
+      Append(elts, mults[j]*g/mults[i]);
     od;
   od;
   return elts;
@@ -590,7 +590,7 @@ function(r)
 
       n:=pos-1; m:=enum!.len;
       q:=QuoInt(n, m); pos:=[ q, n - q * m]+1;
-      return enum[pos[2]]*OrbSCCMultipliers(r)[RangeOrbSCC(r)[pos[1]]]^-1;
+      return enum[pos[2]]/OrbSCCMultipliers(r)[RangeOrbSCC(r)[pos[1]]];
     end,
 
     #########################################################################
@@ -618,7 +618,7 @@ function(r)
         return fail;
       fi;
      
-      k:=rep^-1*f*o!.mults[i];
+      k:=rep^-1*f*o!.mults[i]; #LQuoPP
       j:=Position(enum!.schutz, MappingPermListList(DomPP(k), RanPP(k)));
 
       if j=fail then 
@@ -697,7 +697,7 @@ function(r)
       if i = fail or not o!.truth[data[1]][i] then 
         return fail;
       fi;
-      k:=o!.mults[i]^-1*f/rep;
+      k:=o!.mults[i]^-1*f/rep; #LQuoPP
       j:=Position(enum!.schutz, MappingPermListList(DomPP(k), RanPP(k)));
 
       if j=fail then 
@@ -749,7 +749,7 @@ function(d)
       q:=QuoInt(n, m); q2:=QuoInt(q, r);
       pos:=[ n-q*m, q2, q  - q2 * r ]+1;
       mults:=OrbSCCMultipliers(d);
-      return mults[scc[pos[2]]]*enum[pos[1]]*mults[scc[pos[3]]]^-1;
+      return mults[scc[pos[2]]]*enum[pos[1]]/mults[scc[pos[3]]];
     end,
 
     #########################################################################
@@ -785,7 +785,7 @@ function(d)
         return fail;
       fi;
 
-      m:=o!.mults[k]^-1*f*o!.mults[l];
+      m:=o!.mults[k]^-1*f*o!.mults[l]; #LQuoPP
       j:=Position(enum!.schutz, MappingPermListList(DomPP(m), RanPP(m)));
 
       if j=fail then 
@@ -832,7 +832,7 @@ function(h)
       f:=h!.o!.mults[h!.data[3]];
       g:=h!.o!.mults[h!.data[4]]; 
 
-      return f*enum!.schutz[pos]*g^-1;
+      return f*enum!.schutz[pos]/g;
     end,
 
     #########################################################################
@@ -847,7 +847,7 @@ function(h)
         return fail;
       fi;
      
-      g:=h!.o!.mults[h!.data[3]]^-1*f*h!.o!.mults[h!.data[4]]; 
+      g:=h!.o!.mults[h!.data[3]]^-1*f*h!.o!.mults[h!.data[4]]; #LQuoPP
 
       return Position(enum!.schutz, MappingPermListList(DomPP(g), RanPP(g)));
     end,
@@ -907,10 +907,10 @@ function(s, f)
       Info(InfoCitrus, 1, "the partial perm. is not an element of the           semigroup");
       return fail;
     fi;
-    rep:=o!.mults[k]^-1*f*o!.mults[l];
+    rep:=o!.mults[k]^-1*f*o!.mults[l]; #LQuoPP!
   else
     o:=ShortOrb(s, DomPP(f));
-    rep:=f*f^-1;
+    rep:=LeftOne(f);
     k:=1; l:=1; m:=1; t:=1;
   fi;
 
@@ -968,13 +968,13 @@ function(s)
       if w=[] then 
         f:=PartialPermNC(o[scc[i+l][1]], o[scc[i+l][1]]);
       else
-        f:=EvaluateWord(gens, w);
+        f:=RightOne(EvaluateWord(gens, w));
       fi;
     
       for j in scc[i+l] do
         for k in scc[i+l] do
           m:=m+1;
-          reps[m]:=mults[j]*f^-1*f*mults[k]^-1;
+          reps[m]:=mults[j]*f/mults[k];
           out[m]:=Objectify(type, rec(parent:=s, data:=[i+l,scc[i+l][1],j,k], 
            o:=o));;
           SetRepresentative(out[m], reps[m]);
@@ -1023,7 +1023,7 @@ function(d)
     for i in scc do
       for j in scc do
         k:=k+1;
-        reps[k]:=mults[i]*f*mults[j]^-1;
+        reps[k]:=mults[i]*f/mults[j];
         out[k]:=Objectify(type, rec(parent:=s, data:=[m,t,i,j], o:=o));;
         SetRepresentative(out[k], reps[k]);
         SetEquivalenceClassRelation(out[k], GreensHRelation(s));
@@ -1102,7 +1102,7 @@ function(d)
     f:=Representative(d);
   
     for i in [1..Length(scc)] do
-      reps[i]:=f*mults[scc[i]]^-1;
+      reps[i]:=f/mults[scc[i]];
       out[i]:=Objectify(type, rec(parent:=s, data:=[m,t,j,scc[i]], o:=o));;
       SetRepresentative(out[i], reps[i]);
       SetEquivalenceClassRelation(out[i], GreensHRelation(s));
@@ -1139,7 +1139,7 @@ function(d)
     mults:=OrbSCCMultipliers(d);
     f:=Representative(d);
     for i in [1..Length(scc)] do 
-      reps[i]:=f*mults[scc[i]]^-1;
+      reps[i]:=f/mults[scc[i]];
       out[i]:=Objectify(type, rec(parent:=s, data:=[m,t,j,scc[i]], o:=o));;
       SetRepresentative(out[i], reps[i]);
       SetEquivalenceClassRelation(out[i], GreensLRelation(s));
@@ -1175,10 +1175,10 @@ function(s)
   
   for m in [1..Length(scc)-l] do
     f:=EvaluateWord(gens, TraceSchreierTreeForward(o, scc[m+l][1]));
-    f:=f^-1*f;
+    f:=RightOne(f);
     for j in scc[m+l] do 
       i:=i+1;
-      rep:=f*mults[j]^-1;
+      rep:=f/mults[j];
       out[i]:=Objectify(type, rec(parent:=s, data:=[m+l, scc[m+l][1], 
        scc[m+l][1], j],  o:=o));;
       SetRepresentative(out[i], rep);
@@ -1251,7 +1251,7 @@ function(s)
   
   for m in [1..Length(scc)-l] do
     f:=EvaluateWord(gens, TraceSchreierTreeForward(o, scc[m+l][1]));
-    f:=f^-1*f;
+    f:=RightOne(f);
     for j in scc[m+l] do 
       i:=i+1;
       rep:=mults[j]*f;
@@ -1440,7 +1440,7 @@ function(s, f)
     fi;
     m:=OrbSCCLookup(o)[l];
     t:=OrbSCC(o)[m][1];
-    rep:=o!.mults[l]^-1*f;
+    rep:=o!.mults[l]^-1*f; #LQuoPP
   else
     o:=ShortOrb(s, DomPP(f));
     Enumerate(o);
@@ -1498,7 +1498,7 @@ function(s, f)
       return fail;
     fi;
   else
-    rep:=f*f^-1;
+    rep:=LeftOne(f);
     o:=ShortOrb(s, RanSetPP(rep));
     l:=1; m:=1; t:=1; k:=1;
   fi;
@@ -1540,12 +1540,12 @@ function(s)
     if w=[] then 
       f:=PartialPermNC(o[scc[i+l][1]], o[scc[i+l][1]]);
     else
-      f:=EvaluateWord(gens, w);
+      f:=RightOne(EvaluateWord(gens, w));
     fi;
     for j in scc[i+l] do 
       for k in scc[i+l] do 
         m:=m+1;
-        out[m]:=mults[j]*f^-1*f*mults[k]^-1;  
+        out[m]:=mults[j]*f/mults[k];  
       od;
     od;
   od;
@@ -1570,7 +1570,7 @@ function(d)
   for i in scc do 
     for j in scc do 
       k:=k+1;
-      out[k]:=mults[i]*f*mults[j]^-1;
+      out[k]:=mults[i]*f/mults[j];
     od;
   od;
   return out;
@@ -1615,7 +1615,7 @@ function(r)
   j:=0;
   for i in scc do 
     j:=j+1;
-    out[i]:=f*mults[i]^-1;
+    out[i]:=f/mults[i];
   od;
   return out;
 end);
@@ -1642,14 +1642,14 @@ InstallOtherMethod(Idempotents, "for a class of a part perm inv semigroup",
 function(class)
 
   if IsGreensRClass(class) then 
-    return [Representative(class)*Representative(class)^-1];
+    return [Representative(class)];
   elif IsGreensLClass(class) then 
-    return [Representative(class)^-1*Representative(class)];
+    return [Representative(class)];
   elif IsGreensDClass(class) then 
     return List(OrbSCC(class!.o)[class!.data[1]], x-> 
      PartialPermNC(class!.o[x],class!.o[x]));
   elif IsGreensHClass(class) and IsGroupHClass(class) then 
-    return [Representative(class)*Representative(class)^-1];
+    return [Representative(class)];
   fi;
   return [];
 end);
@@ -1743,8 +1743,8 @@ function(d)
           at[1]:=1; at[3]:=1; at[2]:=at[2]+1;
         fi;
 
-        return OrbSCCMultipliers(d)[at[1]]*iter!.schutz[at[2]]*
-         OrbSCCMultipliers(d)[at[3]]^-1;
+        return OrbSCCMultipliers(d)[at[1]]*iter!.schutz[at[2]]/
+         OrbSCCMultipliers(d)[at[3]];
       end,
 
       ShallowCopy:=iter -> rec(schutz:=iter!.schutz, m:=iter!.m, n:=iter!.n, 
@@ -1883,7 +1883,7 @@ function(d)
           at[1]:=1; at[2]:=at[2]+1;
         fi;
 
-        return iter!.schutz[at[2]]*OrbSCCMultipliers(d)[at[1]]^-1;
+        return iter!.schutz[at[2]]/OrbSCCMultipliers(d)[at[1]];
       end,
 
       ShallowCopy:=iter -> rec(schutz:=iter!.schutz, m:=iter!.m, n:=iter!.n, 
@@ -1938,7 +1938,7 @@ function(s)
 
         f:=EvaluateWord(GeneratorsOfSemigroup(s), 
          TraceSchreierTreeForward(o, i));
-        f:=f^-1*f;
+        f:=RightOne(f);
         
         r:=Objectify(RClassType(s), rec(parent:=s, o:=ShortOrb(s, 
         RanSetPP(f)), data:=[1,1,1,1]));
@@ -1975,7 +1975,7 @@ function(s)
         
         f:=EvaluateWord(GeneratorsOfSemigroup(s), 
          TraceSchreierTreeForward(o, scc[m][1]));
-        f:=OrbSCCMultipliers(o, m)[scc[m][i]]*f^-1*f;
+        f:=OrbSCCMultipliers(o, m)[scc[m][i]]*RightOne(f);
         r:=Objectify(RClassType(s), rec(parent:=s, o:=RangesOrb(s),
         data:=[m,scc[m][1],scc[m][i],scc[m][1]]));
         SetRepresentative(r, f);
@@ -2034,7 +2034,7 @@ function(d)
   i:=0;
   for j in scc do 
     i:=i+1;
-    out[i]:=rep*mults[j]^-1;
+    out[i]:=rep/mults[j];
   od;
   return out;
 end);
@@ -2203,7 +2203,7 @@ function(s)
     m:=OrbSCCLookup(o)[k];
     l:=Random(OrbSCC(o)[m]);
     g:=Random(o!.schutz[m][2]);
-    return o!.mults[k]*g*o!.mults[l]^-1;
+    return o!.mults[k]*g/o!.mults[l];
   fi;
 end);
 
@@ -2401,7 +2401,7 @@ function(h)
   fi;
  
   if not IsBound(o!.schutz[m]) then
-    rep:=o!.mults[h!.data[3]]^-1*Representative(h)*o!.mults[h!.data[4]];
+    rep:=o!.mults[h!.data[3]]^-1*Representative(h)*o!.mults[h!.data[4]]; #LQuoPP
     o!.schutz[m]:=CreateSchutzGp(GeneratorsOfSemigroup(s), o,
      rep, scc, o!.truth[m], OrbitGraph(o),
       Length(GeneratorsOfSemigroup(s)), o!.mults);
