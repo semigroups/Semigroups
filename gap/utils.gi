@@ -199,6 +199,36 @@ InstallOtherMethod(Degree, "for a partial perm",
 InstallOtherMethod(Degree, "for a transformation semigroup",
 [IsTransformationSemigroup], DegreeOfTransformationSemigroup);
 
+# new for 0.7! - Display - "for a partial perm"
+#############################################################################
+
+InstallMethod(Display, "for a partial perm",
+[IsPartialPerm], function(f)
+  Print("PartialPermNC( ", DomPP(f), ", ", RanPP(f), " )");
+  return;
+end);
+
+# new for 0.7! - Display - "for a partial perm coll"
+#############################################################################
+
+InstallMethod(Display, "for a partial perm",
+[IsPartialPermCollection], 
+function(coll)
+  local i;
+  
+  Print("gap> gens:=[");
+  for i in [1..Length(coll)] do 
+    if not i=1 then Print("> "); fi;
+    Display(coll[i]); 
+    if not i=Length(coll) then 
+      Print(",\n");
+    else
+      Print("];\n");
+    fi;
+  od;
+  return;
+end);
+
 # new for 0.1! - Generators - "for a semigroup or monoid"
 ############################################################################
 # Notes: returns the monoid generators of a monoid, and the semigroup 
