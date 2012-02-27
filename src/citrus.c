@@ -828,8 +828,21 @@ Obj FuncProdPPPerm(Obj self, Obj f, Obj p)
 Obj FuncProdPermPP(Obj self, Obj p, Obj f)
 { pptype deg_f, rank, deg_p, deg, i, j, max_ran, min_ran, k, l;
   UInt2 * ptp;
-  Obj pf;
+  Obj pf, lmp;
   
+  if(TNUM_OBJ(p)==T_PERM4)
+  { lmp=FuncLARGEST_MOVED_POINT_PERM(self,p);
+    if (INT_INTOBJ(lmp) <= 65535) 
+    {
+      FuncTRIM_PERM(self,p,lmp);
+    }else{
+      ErrorQuit( 
+     "usage: can only multiply a partial perm and perm on at most 65535 pts", 
+        0L, 0L );
+      return 0L;
+    } 
+  }
+
   deg_f = ELM_PP(f, 1);
   if(deg_f==0) return NEW_EMPTY_PP();
 
