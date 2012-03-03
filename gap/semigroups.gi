@@ -558,6 +558,19 @@ function(gens, opts)
   return s;
 end);
 
+# new for 0.7! - SingularSemigp - "for a pos int"
+################################################################################
+
+InstallGlobalFunction( SingularSemigroup,  
+function(n) 
+  local img, x, S, T; 
+  img:=Concatenation([1..n-1], [n-1]); 
+  x:=TransformationNC(img); 
+  S:=FullTransformationSemigroup(n); 
+  T:=SubsemigroupNC(S, Idempotents(GreensDClassOfElementNC(S, x))); 
+  return T; 
+end); 
+
 # new for 0.7! - SymmetricInverseSemigp - "for a pos int"
 ################################################################################
 
