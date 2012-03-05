@@ -716,13 +716,15 @@ function(d)
   if d=g then 
     return IsomorphismPermGroup(g);
   fi;
-
-  g:=Range(IsomorphismPermGroup(g));
+  
   rep:=Representative(g); 
+  g:=Range(IsomorphismPermGroup(g));
 
+  rreps:=HClassReps(LClass(d, rep)); 
+  lreps:=HClassReps(RClass(d, rep));
+  mat:=[];
+  
   if NrIdempotents(d)=NrHClasses(d) then # RMS
-    rreps:=HClassReps(RClass(d, rep)); lreps:=HClassReps(LClass(d, rep));
-    mat:=[];
     for i in [1..Length(lreps)] do 
       mat[i]:=[];
       for j in [1..Length(rreps)] do 
@@ -732,42 +734,57 @@ function(d)
   
     rms:=ReesMatrixSemigroup(g, mat);
     
-    iso:=function(d)
-      local col, row;
-      col:=PositionProperty(lreps, x->
-       ImageSetOfTransformation(d)=ImageSetOfTransformation(x));
-      row:=PositionProperty(rreps, x->
-       CanonicalTransSameKernel(d)=CanonicalTransSameKernel(x));
-      return ReesMatrixSemigroupElementNC(rms, row,
-        AsPermutation(rreps[row])^-1*AsPermutation(d)*
-        AsPermutation(lreps[col])^-1, col);
+    iso:=function(f)
+      local o, i, j;
+      o:=ImageOrbit(d);
+      i:=Position(o, ImageSetOfTransformation(f));
+      i:=Position(OrbSCC(o)[OrbSCCLookup(o)[i]], i);
+      o:=KernelOrbit(d);
+      j:=Position(o, CanonicalTransSameKernel(f));
+      j:=Position(OrbSCC(o)[OrbSCCLookup(o)[j]], j);
+
+      return ReesMatrixSemigroupElementNC(rms, j,
+        AsPermutation(rreps[j])^-1*AsPermutation(f)*
+        AsPermutation(lreps[i])^-1, i);
     end;
 
-    inv:=function(rmselt)
-      local i,a,lambda;
+    inv:=function(x)
+      local i, a, j;
+      i:=RowIndexOfReesMatrixSemigroupElement(x);
+      a:=UnderlyingElementOfReesMatrixSemigroupElement(x);
+      j:=ColumnIndexOfReesMatrixSemigroupElement(x);
+      return rreps[i]*a*lreps[j];
+    end;
+  else #RZMS
+    inj:=InjectionZeroMagma(g);
+    g:=Range(inj);
+    zero:=MultiplicativeZero(g);
 
-          i:=RowIndexOfReesMatrixSemigroupElement(rmselt);
-          a:=UnderlyingElementOfReesMatrixSemigroupElement(rmselt);
-          lambda:=ColumnIndexOfReesMatrixSemigroupElement(rmselt);
-          return rreps[i]*a*lreps[lambda];
-        end;
-      else
-        #find inverses for rreps and lreps
+    for i in [1..Length(lreps)] do
+      mat[i]:=[];
+      for j in [1..Length(rreps)] do
+        y:=lreps[i]*rreps[j];
+        if y in d then 
+          mat[i][j]:=AsPermutation(y)^inj;
+        else
+          mat[i][j]:=zero;
+        fi;
+      od;
+    od;
+#JDM JDM here! 
+    Q:=List([1..Length(rreps)], x->
+     PositionProperty( List(mat, y-> y[x]), z-> not z=MultiplicativeZero(zg)));
+    invrreps:=List([1..Length(rreps)], x-> mat[Q[x]][x]^-1*lreps[Q[x]]);
 
-        Q:=List([1..Length(rreps)], x->
-         PositionProperty( List(mat, y-> y[x]), z-> not
-          z=MultiplicativeZero(zg)));
-        invrreps:=List([1..Length(rreps)], x-> mat[Q[x]][x]^-1*lreps[Q[x]]);
+    R:=List([1..Length(lreps)], x-> PositionProperty(mat[x], y-> not
+     y=MultiplicativeZero(zg)));
+    invlreps:=List([1..Length(lreps)], x-> rreps[R[x]]*mat[x][R[x]]^-1);
 
-        R:=List([1..Length(lreps)], x-> PositionProperty(mat[x], y-> not
-         y=MultiplicativeZero(zg)));
-        invlreps:=List([1..Length(lreps)], x-> rreps[R[x]]*mat[x][R[x]]^-1);
-
-        mat:=List(mat, x-> List(x, function(y)
-          if not y=MultiplicativeZero(zg) then
-            return ZeroGroupElt(y);
-          fi;
-        return y; end));
+    mat:=List(mat, x-> List(x, function(y)
+      if not y=MultiplicativeZero(zg) then
+        return ZeroGroupElt(y);
+      fi;
+    return y; end));
 
         rms:=ReesZeroMatrixSemigroup(zg, mat);
         func:=function(d)
@@ -825,15 +842,11 @@ function(d)
     end;
   fi;
 
-  hom:=SemigroupHomomorphismByFunctionNC(D, rms, func);
-  SetInverseGeneralMapping(hom,
-   SemigroupHomomorphismByFunctionNC(rms, D, invfunc));
+  hom:=MappingByFunction(d, rms, iso);
+  SetInverseGeneralMapping(hom, MappingByFunction(rms, D, inv));
   SetIsInjective(hom, true);
   SetIsSurjective(hom, true);
   SetIsTotal(hom, true);
-  if not HasIsZeroSemigroup(rms) then
-    SetIsZeroSemigroup(rms, false);
-  fi;
 
   return hom;
 end);
@@ -1527,6 +1540,19 @@ IsTransformationCollection],
   fi;
   Error("Usage: trans. semi. and generating set,");
   return;
+end);
+
+# new for 0.7! - ReesMatrixSemigroupElementNC
+#############################################################################
+
+InstallGlobalFunction(ReesMatrixSemigroupElementNC,
+function(rms, i, g, j)
+  local elt;
+  elt := Objectify(FamilyObj(rms)!.wholeSemigroup!.eType, rec());
+  SetUnderlyingElementOfReesMatrixSemigroupElement(elt, g);
+  SetColumnIndexOfReesMatrixSemigroupElement(elt, j);
+  SetRowIndexOfReesMatrixSemigroupElement(elt, i);
+  return elt;
 end);
 
 #SSS

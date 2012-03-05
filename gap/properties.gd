@@ -55,6 +55,7 @@ DeclareOperation("NrElementsOfRank", [IsTransformationSemigroup and
 HasGeneratorsOfSemigroup, IsPosInt]);
 DeclareAttribute("PosetOfIdempotents", IsTransformationSemigroup);
 DeclareOperation("RedundantGenerator", [IsTransformationCollection]);
+DeclareGlobalFunction("ReesMatrixSemigroupElementNC");
 DeclareAttribute("SmallGeneratingSet", IsTransformationSemigroup);
 
 #EOF
