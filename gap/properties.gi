@@ -698,6 +698,146 @@ InstallOtherMethod(IsMonoidAsSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
  x-> not MultiplicativeNeutralElement(x)=fail);
 
+# new for 0.7! - IsomorphismReesMatrixSemigroup - "for a D-class" 
+#############################################################################
+
+InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class of trans. semi.",
+[IsGreensDClass and IsGreensClassOfTransSemigp],
+function(d)
+
+  if not IsRegularDClass(d) then
+    Error("there is no Rees matrix semigroup isomorphic to the principal", 
+    " factor, of a non-regular D-class");
+    return;
+  fi;
+
+  g:=GroupHClass(d);
+
+  if d=g then 
+    return IsomorphismPermGroup(g);
+  fi;
+
+  g:=Range(IsomorphismPermGroup(g));
+  rep:=Representative(g); 
+
+  if NrIdempotents(d)=NrHClasses(d) then # RMS
+    rreps:=HClassReps(RClass(d, rep)); lreps:=HClassReps(LClass(d, rep));
+    mat:=[];
+    for i in [1..Length(lreps)] do 
+      mat[i]:=[];
+      for j in [1..Length(rreps)] do 
+        mat[i][j]:=AsPermutation(lreps[i]*rreps[j]);
+      od;
+    od;
+  
+    rms:=ReesMatrixSemigroup(g, mat);
+    
+    iso:=function(d)
+      local col, row;
+      col:=PositionProperty(lreps, x->
+       ImageSetOfTransformation(d)=ImageSetOfTransformation(x));
+      row:=PositionProperty(rreps, x->
+       CanonicalTransSameKernel(d)=CanonicalTransSameKernel(x));
+      return ReesMatrixSemigroupElementNC(rms, row,
+        AsPermutation(rreps[row])^-1*AsPermutation(d)*
+        AsPermutation(lreps[col])^-1, col);
+    end;
+
+    inv:=function(rmselt)
+      local i,a,lambda;
+
+          i:=RowIndexOfReesMatrixSemigroupElement(rmselt);
+          a:=UnderlyingElementOfReesMatrixSemigroupElement(rmselt);
+          lambda:=ColumnIndexOfReesMatrixSemigroupElement(rmselt);
+          return rreps[i]*a*lreps[lambda];
+        end;
+      else
+        #find inverses for rreps and lreps
+
+        Q:=List([1..Length(rreps)], x->
+         PositionProperty( List(mat, y-> y[x]), z-> not
+          z=MultiplicativeZero(zg)));
+        invrreps:=List([1..Length(rreps)], x-> mat[Q[x]][x]^-1*lreps[Q[x]]);
+
+        R:=List([1..Length(lreps)], x-> PositionProperty(mat[x], y-> not
+         y=MultiplicativeZero(zg)));
+        invlreps:=List([1..Length(lreps)], x-> rreps[R[x]]*mat[x][R[x]]^-1);
+
+        mat:=List(mat, x-> List(x, function(y)
+          if not y=MultiplicativeZero(zg) then
+            return ZeroGroupElt(y);
+          fi;
+        return y; end));
+
+        rms:=ReesZeroMatrixSemigroup(zg, mat);
+        func:=function(d)
+          local col, row;
+
+          col:=PositionProperty(lreps, x->
+          ImageSetOfTransformation(d)=ImageSetOfTransformation(x));
+          if not col=fail then
+            row:=PositionProperty(rreps, x->
+            KernelOfTransformation(d)=KernelOfTransformation(x));
+            return ReesZeroMatrixSemigroupElementNC(rms, row,
+             ZeroGroupElt(AsPermutation(invrreps[row]*d*invlreps[col])), col);
+          fi;
+
+          return MultiplicativeZero(rms);
+        end;
+
+        invfunc:=function(rmselt)
+          local i,a,lambda;
+
+          if rmselt=MultiplicativeZero(zg) then
+            Error("the multiplicative zero has no preimage");
+          fi;
+
+          i:=RowIndexOfReesZeroMatrixSemigroupElement(rmselt);
+          a:=UnderlyingGroupEltOfZGElt(
+          UnderlyingElementOfReesZeroMatrixSemigroupElement(rmselt));
+          lambda:=ColumnIndexOfReesZeroMatrixSemigroupElement(rmselt);
+
+          return rreps[i]*a*lreps[lambda];
+        end;
+      fi;
+    fi;
+  else  #it's not a regular D-class
+        #and so it's a zero semigroup
+
+    rms:=ZeroSemigroup(Size(D)+1);
+    func:=function(x)
+      if x in D then
+        return Elements(rms)[Position(Elements(D), x)+1];
+      else
+        return MultiplicativeZero(rms);
+      fi;
+    end;
+
+    invfunc:=function(x)
+      local str;
+      if x=MultiplicativeZero(rms) then
+        Error("the multiplicative zero has no preimage");
+      fi;
+
+      #str:=String(x);
+      #return Elements(D)[Int(str{[2..Length(str)]})];
+      return Elements(D)[x![1]];
+    end;
+  fi;
+
+  hom:=SemigroupHomomorphismByFunctionNC(D, rms, func);
+  SetInverseGeneralMapping(hom,
+   SemigroupHomomorphismByFunctionNC(rms, D, invfunc));
+  SetIsInjective(hom, true);
+  SetIsSurjective(hom, true);
+  SetIsTotal(hom, true);
+  if not HasIsZeroSemigroup(rms) then
+    SetIsZeroSemigroup(rms, false);
+  fi;
+
+  return hom;
+end);
+
 # new for 0.5! - IsomorphismTransformationSemigroup - "for a perm group"
 #############################################################################
 
