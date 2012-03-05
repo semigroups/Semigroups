@@ -755,95 +755,70 @@ function(d)
       j:=ColumnIndexOfReesMatrixSemigroupElement(x);
       return rreps[i]*a*lreps[j];
     end;
-  else #RZMS
+  else # RZMS
     inj:=InjectionZeroMagma(g);
     g:=Range(inj);
     zero:=MultiplicativeZero(g);
+    bound_r:=List([1..Length(rreps)], ReturnFalse);
+    bound_l:=List([1..Length(lreps)], ReturnFalse);
+    inv_l:=EmptyPlist(Length(lreps));
+    inv_r:=EmptyPlist(Length(rreps));
 
     for i in [1..Length(lreps)] do
-      mat[i]:=[];
+      mat[i]:=[]; 
       for j in [1..Length(rreps)] do
         y:=lreps[i]*rreps[j];
         if y in d then 
-          mat[i][j]:=AsPermutation(y)^inj;
+          mat[i][j]:=AsPermutation(y);
+          if not bound_r[j] then 
+            bound_r[j]:=true;
+            inv_r[j]:=mat[i][j]^-1*lreps[i];
+          fi;
+          if not bound_l[i] then 
+            bound_l[i]:=true;
+            inv_l[i]:=rreps[j]*mat[i][j]^-1;
+          fi;
+          mat[i][j]:=mat[i][j]^inj;
         else
           mat[i][j]:=zero;
         fi;
       od;
     od;
-#JDM JDM here! 
-    Q:=List([1..Length(rreps)], x->
-     PositionProperty( List(mat, y-> y[x]), z-> not z=MultiplicativeZero(zg)));
-    invrreps:=List([1..Length(rreps)], x-> mat[Q[x]][x]^-1*lreps[Q[x]]);
+    
+    rms:=ReesZeroMatrixSemigroup(zg, mat);
+#JDMJDM
+    func:=function(d)
+      local col, row;
 
-    R:=List([1..Length(lreps)], x-> PositionProperty(mat[x], y-> not
-     y=MultiplicativeZero(zg)));
-    invlreps:=List([1..Length(lreps)], x-> rreps[R[x]]*mat[x][R[x]]^-1);
-
-    mat:=List(mat, x-> List(x, function(y)
-      if not y=MultiplicativeZero(zg) then
-        return ZeroGroupElt(y);
+      col:=PositionProperty(lreps, x->
+      ImageSetOfTransformation(d)=ImageSetOfTransformation(x));
+      if not col=fail then
+        row:=PositionProperty(rreps, x->
+        KernelOfTransformation(d)=KernelOfTransformation(x));
+        return ReesZeroMatrixSemigroupElementNC(rms, row,
+         ZeroGroupElt(AsPermutation(invrreps[row]*d*invlreps[col])), col);
       fi;
-    return y; end));
 
-        rms:=ReesZeroMatrixSemigroup(zg, mat);
-        func:=function(d)
-          local col, row;
-
-          col:=PositionProperty(lreps, x->
-          ImageSetOfTransformation(d)=ImageSetOfTransformation(x));
-          if not col=fail then
-            row:=PositionProperty(rreps, x->
-            KernelOfTransformation(d)=KernelOfTransformation(x));
-            return ReesZeroMatrixSemigroupElementNC(rms, row,
-             ZeroGroupElt(AsPermutation(invrreps[row]*d*invlreps[col])), col);
-          fi;
-
-          return MultiplicativeZero(rms);
-        end;
-
-        invfunc:=function(rmselt)
-          local i,a,lambda;
-
-          if rmselt=MultiplicativeZero(zg) then
-            Error("the multiplicative zero has no preimage");
-          fi;
-
-          i:=RowIndexOfReesZeroMatrixSemigroupElement(rmselt);
-          a:=UnderlyingGroupEltOfZGElt(
-          UnderlyingElementOfReesZeroMatrixSemigroupElement(rmselt));
-          lambda:=ColumnIndexOfReesZeroMatrixSemigroupElement(rmselt);
-
-          return rreps[i]*a*lreps[lambda];
-        end;
-      fi;
-    fi;
-  else  #it's not a regular D-class
-        #and so it's a zero semigroup
-
-    rms:=ZeroSemigroup(Size(D)+1);
-    func:=function(x)
-      if x in D then
-        return Elements(rms)[Position(Elements(D), x)+1];
-      else
-        return MultiplicativeZero(rms);
-      fi;
+      return MultiplicativeZero(rms);
     end;
 
-    invfunc:=function(x)
-      local str;
-      if x=MultiplicativeZero(rms) then
+    invfunc:=function(rmselt)
+      local i,a,lambda;
+
+      if rmselt=MultiplicativeZero(zg) then
         Error("the multiplicative zero has no preimage");
       fi;
 
-      #str:=String(x);
-      #return Elements(D)[Int(str{[2..Length(str)]})];
-      return Elements(D)[x![1]];
+      i:=RowIndexOfReesZeroMatrixSemigroupElement(rmselt);
+      a:=UnderlyingGroupEltOfZGElt(
+      UnderlyingElementOfReesZeroMatrixSemigroupElement(rmselt));
+      lambda:=ColumnIndexOfReesZeroMatrixSemigroupElement(rmselt);
+
+      return rreps[i]*a*lreps[lambda];
     end;
   fi;
 
-  hom:=MappingByFunction(d, rms, iso);
-  SetInverseGeneralMapping(hom, MappingByFunction(rms, D, inv));
+  hom:=MappingByFunction(d, rms, iso, inv);
   SetIsInjective(hom, true);
   SetIsSurjective(hom, true);
   SetIsTotal(hom, true);
