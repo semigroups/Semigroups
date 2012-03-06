@@ -99,7 +99,7 @@ static inline Int TOO_MANY_PTS_ERROR(int cond)
 /* length of the partial perm internal rep */
 static inline Int LEN_PP(Obj f)
 {
-  return (pptype) (ELM_PP(f,1)==0?7:ELM_PP(f,1)+3*ELM_PP(f,2)+6);
+  return (ELM_PP(f,1)==0?7:ELM_PP(f,1)+3*ELM_PP(f,2)+6);
 }
 
 /* comparison for qsort */

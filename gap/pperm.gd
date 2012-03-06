@@ -18,6 +18,7 @@ BindGlobal("PartialPermType", NewType(PartialPermFamily,
 DeclareGlobalFunction("PartialPermNC");
 DeclareOperation("PartialPerm", [IsCyclotomicCollection]);
 
+DeclareOperation("AsPartialPermNC", [IsTransformation and IsTransformationRep]);
 DeclareGlobalFunction("DenseRangeList");
 DeclareOperation("DomainOfPartialPerm", [IsPartialPerm]);
 DeclareGlobalFunction("DomPP", DomainOfPartialPerm);

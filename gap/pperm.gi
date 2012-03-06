@@ -76,6 +76,24 @@ InstallOtherMethod(\/, "for a partial perm and partial perm",
 
 #AAA
 
+# new for 0.7! - AsPartialPermNC - "for a transformation"
+###########################################################################
+
+InstallMethod(AsPartialPermNC, "for a partial perm", 
+[IsTransformation and IsTransformationRep],
+function(f)
+  local img, n;
+  img:=f![1];
+  n:=Length(f![1]);
+  return PartialPermNC(List(img, function(x) 
+    if x=n then 
+      return 0; 
+    else 
+      return x; 
+    fi;
+  end));
+end);
+
 # new for 0.7! - AsPermutation - "for a partial perm"
 ###########################################################################
 
@@ -119,11 +137,17 @@ end);
 # new for 0.7! - AsTransformationNC - "for a partial perm"
 ###########################################################################
 
-InstallOtherMethod(AsTransformationNC, "for a partial perm and deg",
+InstallOtherMethod(AsTransformationNC, "for a partial perm",
 [IsPartialPerm],
 function(f)
   return AsTransformationNC(f, MaxDomRanPP(f)+1);
 end);
+
+# new for 0.7! - AsTransformation - "for a partial perm"
+###########################################################################
+
+InstallOtherMethod(AsTransformation, "for a partial perm",
+[IsPartialPerm], AsTransformationNC);
 
 # new for 0.7! - AsTransformationNC - "for a partial perm"
 ###########################################################################
@@ -427,6 +451,11 @@ end);
 InstallGlobalFunction(RandomPartialPerm,
 function(n)
   local out, j, i;
+
+  if n>65535 then 
+    Error("usage: can only create partial perms on at most 65535 pts,");
+    return;
+  fi;
 
   out:=EmptyPlist(n);
   for i in [1..n] do
