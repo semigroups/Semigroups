@@ -795,7 +795,7 @@ function(d)
   local g, rep, rreps, lreps, mat, rms, iso, inv, hom, i, j;
 
   if not IsRegularDClass(d) or not NrIdempotents(d)=NrHClasses(d) then
-    Error("every H-class of the D-class should be a group,"
+    Error("every H-class of the D-class should be a group,",
     " try InjectionPrincipalFactor instead,");
     return;
   fi;
@@ -1520,6 +1520,12 @@ end);
 InstallMethod(PosetOfIdempotents, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], ReturnFail);
 
+# new for 0.7! - PrincipalFactor - "for a D-class of a trans. semi."
+#############################################################################
+
+InstallMethod(PrincipalFactor, "for a D-class of a trans. semi.", 
+[IsGreensDClass and IsGreensClassOfTransSemigp], 
+d-> Range(InjectionPrincipalFactor(d)));
 
 #RRR
 
@@ -1615,6 +1621,20 @@ function(s)
   
   return Concatenation("B(", StructureDescription(GroupHClass(d)), ", ",
   String(NrRClasses(d)), ")");
+end);
+
+# new for 0.7! - ViewObj - "for a zero group"
+############################################################################
+
+InstallMethod(PrintObj, "for a zero group",
+[IsZeroGroup],
+function(g)
+  Print("<zero group");
+  if HasSize(g) then 
+    Print(" of size ", Size(g));
+  fi;
+  Print(" with ", Length(GeneratorsOfMonoid(g)), " generators>");
+  return;
 end);
 
 #EOF
