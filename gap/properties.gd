@@ -12,6 +12,7 @@ DeclareAttribute("AntiIsomorphismTransformationSemigroup",
  IsSemigroup);
 DeclareAttribute("GroupOfUnits", IsTransformationSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigp", IsTransformationSemigroup);
+DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
 DeclareProperty("IsAbundantSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsAdequateSemigroup", IsTransformationSemigroup);
@@ -54,8 +55,10 @@ DeclareAttribute("MinimalIdeal", IsTransformationSemigroup);
 DeclareOperation("NrElementsOfRank", [IsTransformationSemigroup and
 HasGeneratorsOfSemigroup, IsPosInt]);
 DeclareAttribute("PosetOfIdempotents", IsTransformationSemigroup);
+DeclareAttribute("PrincipalFactor", IsGreensDClass);
 DeclareOperation("RedundantGenerator", [IsTransformationCollection]);
 DeclareGlobalFunction("ReesMatrixSemigroupElementNC");
+DeclareGlobalFunction("ReesZeroMatrixSemigroupElementNC");
 DeclareAttribute("SmallGeneratingSet", IsTransformationSemigroup);
 
 #EOF
