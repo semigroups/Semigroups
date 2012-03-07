@@ -428,7 +428,7 @@ Obj FuncOnIntegerSetsWithPP (Obj self, Obj set, Obj f)
   Obj out;
 
   deg=ELM_PP(f,1);
-  n=LEN_PLIST(set);
+  n=LEN_LIST(set);
   if(n==0||deg==0) return NEW_EMPTY_PLIST();
 
   out = NEW_PLIST(T_PLIST_CYC, n);
@@ -436,7 +436,7 @@ Obj FuncOnIntegerSetsWithPP (Obj self, Obj set, Obj f)
 
   for(i=1;i<=n;i++)
   {
-    j=INT_INTOBJ(ELM_PLIST(set, i));
+    j=INT_INTOBJ(ELM_LIST(set, i));
     if(j<=deg)
     {
       k=ELM_PP(f, j+6);

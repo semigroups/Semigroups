@@ -499,6 +499,4 @@ InstallMethod(RankOfPartialPerm, "for a partial perm",
 InstallMethod(RestrictedPartialPerm, "for a part perm and set",
 [IsPartialPerm, IsSet and IsCyclotomicCollection], RestrictedPP);
 
-
-
-
+#EOF
