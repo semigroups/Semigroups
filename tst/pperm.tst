@@ -90,38 +90,21 @@ gap> i^f in RanPP(f);
 true
 gap> (i^f)^(f^-1);
 5694
-gap> ForAll(DomPP(f), (i^f)^(f^-1)=i);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `CallFuncList' on 2 arguments called from
-tnum <= LAST_LIST_TNUM called from
-<function "ForAll">( <arguments> )
- called from read-eval loop at line 12 of *stdin*
-you can 'quit;' to quit to outer loop, or
-you can 'return;' to continue
-brk> quit;
 gap> ForAll(DomPP(f), i-> (i^f)^(f^-1)=i);
 true
 gap> f:=RandomPartialPerm(10000);
 <partial perm on 6318 pts>
 gap> ForAll(DomPP(f), i-> (i^f)^(f^-1)=i);
 true
-gap> time;
-199
 gap> ForAll(RanSetPP(f), i-> (i^(f^-1))^f=i);     
 true
 gap> f:=RandomPartialPerm(10000);
 <partial perm on 6344 pts>
 gap> ForAll(RanSetPP(f), i-> (i^(f^-1))^f=i);
 true
-gap> p:=Random(SymmetricGroup(100));
-(1,34,11,60,92,31,3,42,94,17,89,10,57,76,38,29,28,12,45,32,18,9,90,63,50,59,
-54,61,5,16,53,39,37,96,69,74,36,19,91,64,79,47,21,81,52,58,82,20,98,99)(2,41,
-26,88,55,86,14,51,87,68,48,23,27,30,6,24,77,35,22,80,7,97,85,25,73)(4,13,46,
-62,66,84,100,72,15,49,44,67,71,95,40,33,93,78,8)(43,83,56,65)(70,75)
 gap> p:=Random(SymmetricGroup(6));  
 (1,3,2)(4,5)
-gap> f:=RandomPartialPerm(10);   
-[ 1, 3, 4, 5, 6, 7, 9, 10 ] -> [ 6, 1, 4, 9, 2, 3, 7, 5 ]
+gap> f:=PartialPermNC([ 1, 3, 4, 5, 6, 7, 9, 10 ], [ 6, 1, 4, 9, 2, 3, 7, 5 ]);
 gap> p*f;
 [ 1, 2, 4, 5, 6, 7, 9, 10 ] -> [ 1, 6, 9, 4, 2, 3, 7, 5 ]
 gap> f*p;

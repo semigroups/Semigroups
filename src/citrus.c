@@ -152,6 +152,21 @@ Obj FuncELMS_LIST_PP(Obj self, Obj f, Obj list)
     return out;
 }
 
+/* create partial perm from full representation */
+Obj FuncFullPartialPermNC( Obj self, Obj rep )
+{   Int len, i;
+    Obj f;
+
+    len=LEN_PLIST(rep);
+    f=NEW_PP(len);
+    for(i=1;i<=len;i++)
+    { 
+      SET_ELM_PP(f,i,(pptype) INT_INTOBJ(ELM_PLIST(rep, i)));
+    }
+  
+    return f;
+}
+
 /* create partial perm from sparse representation */
 Obj FuncSparsePartialPermNC( Obj self, Obj dom, Obj ran )
 {   Int rank, deg, j, k, max_ran, min_ran;
@@ -166,7 +181,7 @@ Obj FuncSparsePartialPermNC( Obj self, Obj dom, Obj ran )
    
     TOO_MANY_PTS_ERROR(rank>65535||deg>65535);
 
-    f = NEW_PP(6+deg+3*rank);
+    f=NEW_PP(6+deg+3*rank);
 
     SET_ELM_PP(f, 1, (pptype) deg);
     SET_ELM_PP(f, 2, (pptype) rank);
@@ -176,10 +191,10 @@ Obj FuncSparsePartialPermNC( Obj self, Obj dom, Obj ran )
 
     /* find dense img list, max_ran, min_ran */
     for(i=1;i<=rank;i++){
-      j = INT_INTOBJ(ELM_LIST(dom, i));
+      j=INT_INTOBJ(ELM_LIST(dom, i));
       SET_ELM_PP(f, 6+deg+i, (pptype) j);
       
-      k = INT_INTOBJ(ELM_LIST(ran, i));
+      k=INT_INTOBJ(ELM_LIST(ran, i));
       SET_ELM_PP(f, 6+deg+rank+i, (pptype) k);
       SET_ELM_PP(f, j+6, (pptype) k);
 
@@ -918,7 +933,11 @@ static StructGVarFunc GVarFuncs [] = {
   { "ELMS_LIST_PP", 2, "f,list",
     FuncELMS_LIST_PP,
     "pkg/citrus/src/citrus.c:ELMS_LIST_PP" },
- 
+
+  { "FullPartialPermNC", 1, "rep",
+    FuncFullPartialPermNC,
+    "pkg/citrus/src/citrus.c:FuncFullPartialPermNC" },
+
   { "SparsePartialPermNC", 2, "dom,ran",
     FuncSparsePartialPermNC,
     "pkg/citrus/src/citrus.c:FuncSparsePartialPermNC" },

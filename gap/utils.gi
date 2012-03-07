@@ -491,7 +491,7 @@ function(line)
           Add(out[k], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
         od;
       fi; 
-      out[k]:=Objectify(PartialPermType, out[k]);
+      out[k]:=FullPartialPermNC(out[k]);
       i:=i+m*(deg+3*rank+6)+1;
     od;
     return out;
@@ -584,7 +584,6 @@ function(arg)
       str:="p";
       for f in s do 
         int:=InternalRepOfPartialPerm(f);
-
         j:=Length(String(int[6]));
         Append(str, Concatenation(String(j), convert(int, j)));
         if Length(int)<> 6+int[1]+3*int[2] then 
