@@ -312,13 +312,18 @@ end);
 #############################################################################
 
 InstallMethod(One, "for a partial perm",
-[IsPartialPerm ], f-> DensePartialPermNC(Union(DomPP(f), RanSetPP(f))));
+[IsPartialPerm ], 
+function(f)
+  local x;
+  x:=Union(DomPP(f), RanSetPP(f));
+  return SparsePartialPermNC(x, x);
+end);
 
 # new for 0.7! - One - "for a partial perm""
 #############################################################################
 
 InstallMethod(OneMutable, "for a partial perm",
-[IsPartialPerm ], f-> DensePartialPermNC(Union(DomPP(f), RanSetPP(f))));
+[IsPartialPerm ], One);
 
 # new for 0.7! - OnIntegerSetsWithPartialPerm 
 #############################################################################
