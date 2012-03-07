@@ -72,8 +72,8 @@ gap> f[4]^-4;
 [ 2, 7, 8 ] -> [ 2, 7, 3 ]
 gap> 
 
-gap> f:=RandomPartialPerm(10000);
-<partial perm on 6324 pts>
+gap> f:=ReadCitrus("pkg/citrus/examples/inverse.citrus.gz", 1)[1];
+<partial perm on 6326 pts>
 gap> f^6*f^-6=LeftOne(f);
 false
 gap> f^6*f^-6=LeftOne(f^6);
@@ -82,14 +82,20 @@ gap> (f^-1)^6=f^-6;
 true
 gap> (f^-1)^16=f^-16;
 true
-gap> i:=Random(DomPP(f));
-5694
+gap> i:=7541;;
+gap> i in DomPP(f);
+false
 gap> i^f;
-3042
+fail
+gap> i:=9912;;
+gap> i in DomPP(f);
+true
+gap> i^f;
+3545
 gap> i^f in RanPP(f);
 true
 gap> (i^f)^(f^-1);
-5694
+9912
 gap> ForAll(DomPP(f), i-> (i^f)^(f^-1)=i);
 true
 gap> f:=RandomPartialPerm(10000);

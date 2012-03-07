@@ -482,15 +482,9 @@ function(line)
       rank:=Int(NormalizedWhitespace(line{[m+i+1..2*m+i]}));  # rank
       f:=line{[i+1..i+m*(deg+3*rank+6)]};
       out[k]:=EmptyPlist(deg+3*rank+6);
-      for j in [1..deg+2*rank+6] do 
+      for j in [1..deg+3*rank+6] do 
         Add(out[k], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
       od;
-      j:=deg+2*rank+7;
-      if Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]}))<>0 then 
-        for j in [deg+2*rank+7..deg+3*rank+6] do
-          Add(out[k], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
-        od;
-      fi; 
       out[k]:=FullPartialPermNC(out[k]);
       i:=i+m*(deg+3*rank+6)+1;
     od;
@@ -590,6 +584,7 @@ function(arg)
           Append(str, Concatenation([ListWithIdenticalEntries(j*int[2], ' ')]));
         fi;
       od;
+      #Print(str, "\n");
       AppendTo(output, str, "\n");
     od;
   fi;
