@@ -333,6 +333,23 @@ gap> NaturalLeqPP(g, f);
 true
 gap> NaturalLeqPP(f, g);
 false
+gap> f:=PartialPermNC(
+> [ 9, 45, 53, 15, 42, 97, 71, 66, 7, 88, 6, 98, 95, 36, 20, 59, 94, 0, 81, 70,
+>  65, 29, 78, 37, 74, 48, 52, 4, 32, 93, 18, 13, 55, 0, 49, 0, 99, 46, 35,
+>  84, 0, 79, 80, 0, 85, 0, 89, 0, 0, 27, 0, 0, 0, 73, 33, 0, 77, 69, 41, 0,
+>  63, 0, 0, 0, 75, 56, 0, 0, 0, 90, 64, 0, 0, 0, 100, 0, 0, 3, 0, 0, 2, 26,
+>  11, 39, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 10, 61, 25 ]);
+<partial perm on 62 pts>
+gap> OnPointsPP(50, f);
+27
+gap> OnPointsPP(27, f);
+52
+gap> OnPointsPP(52, f);
+fail
+gap> 50^f;
+27
+gap> 27^f;
+52
 
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;

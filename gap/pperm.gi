@@ -24,19 +24,7 @@ end);
 ############################################################################# 
  
 InstallMethod(\^, "for a pos int and partial perm", 
-[IsPosInt, IsPartialPerm], 
-function(i, f) 
-  local j; 
-  if i>f[1] then  
-    return fail; 
-  fi; 
- 
-  j:=f[6+i]; 
-  if j<>0 then  
-    return j; 
-  fi; 
-  return fail; 
-end); 
+[IsPosInt, IsPartialPerm], OnPointsPP);
 
 # new for 0.7! - \* - "for a partial perm and partial perm"
 #############################################################################
