@@ -919,6 +919,16 @@ Obj FuncProdPermPP(Obj self, Obj p, Obj f)
   return pf;
 }
 
+/* i^f */ 
+Obj FuncOnPointsPP(Obj self, Obj i, Obj f)
+{   pptype j;
+    j=INT_INTOBJ(i);
+    if(j>ELM_PP(f, 1)) return Fail;
+    j=ELM_PP(f, 6+j);
+    if(j!=0) return INTOBJ_INT(j);
+    return Fail;
+}
+
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
 /******************************************************************************
@@ -1001,6 +1011,10 @@ static StructGVarFunc GVarFuncs [] = {
   { "ProdPermPP", 2, "p, f",
     FuncProdPermPP, 
     "pkg/citrus/src/citrus.c:FuncProdPermPP" },
+
+  { "OnPointsPP", 2, "i, f",
+    FuncOnPointsPP, 
+    "pkg/citrus/src/citrus.c:FuncOnPointsPP" },
 
   { 0 }
 
