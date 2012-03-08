@@ -77,8 +77,9 @@ function(f, s)
     if k=fail then 
       o!.looking:=true; o!.lookingfor:=function(o, x) return x=DomPP(f); end;
       o!.lookfunc:=o!.lookingfor;
-
-      Enumerate(o);
+      if not IsClosed(o) then 
+        Enumerate(o, infinity);
+      fi;
       k:=PositionOfFound(o);
       o!.found:=false; o!.looking:=false; 
       Unbind(o!.lookingfor); Unbind(o!.lookfunc);
@@ -102,7 +103,7 @@ function(f, s)
 
     k:=1;
     o:=ShortOrb(s, DomPP(f));
-    Enumerate(o);
+    Enumerate(o, infinity);
     
     l:=Position(o, ran);
   
@@ -158,7 +159,9 @@ function(f, r)
   fi;
 
   o:=r!.o;
-  Enumerate(o);
+  if not IsClosed(o) then     
+    Enumerate(o, infinity);
+  fi;
   l:=Position(o, RanSetPP(f));
   m:=r!.data[1];
 
@@ -204,7 +207,9 @@ function(f, r)
   fi;
 
   o:=r!.o;
-  Enumerate(o);
+  if not IsClosed(o) then 
+    Enumerate(o, infinity);
+  fi;
   l:=Position(o, DomPP(f));
   m:=r!.data[1];
 
@@ -248,7 +253,9 @@ function(f, r)
   fi;
 
   o:=r!.o; 
-  Enumerate(o);
+  if not IsClosed(o) then 
+    Enumerate(o, infinity);
+  fi;
   m:=r!.data[1];
   
   l_dom:=Position(o, DomPP(f)); l_ran:=Position(o, RanSetPP(f));
@@ -1286,6 +1293,7 @@ function(s)
   i:=0;
 
   for m in [1..Length(scc)-l] do 
+    i:=i+1;
     f:=PartialPermNC(o[scc[m+l][1]], o[scc[m+l][1]]);
     out[i]:=Objectify(type, rec(parent:=s, data:=[m+l], o:=o));
     SetRepresentative(out[i], f);
@@ -1687,7 +1695,9 @@ function(s)
   local o, r, l, out, i;
   
   o:=RangesOrb(s);
-  Enumerate(o);
+  if not IsClosed(o) then 
+    Enumerate(o, infinity);
+  fi;
   r:=Length(o);
   
   if IsPartialPermMonoid(s) then 
@@ -2021,7 +2031,9 @@ function(s)
   local o, out, gens, i, j;
 
   o:=RangesOrb(s);
-  Enumerate(o);
+  if not IsClosed(o) then 
+    Enumerate(o, infinity);
+  fi;
   out:=EmptyPlist(Length(o));
   gens:=GeneratorsOfSemigroup(s);
 
@@ -2078,7 +2090,9 @@ end);
 InstallOtherMethod(NrRClasses, "for an inverse semigp of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  Enumerate(RangesOrb(s));
+  if not IsClosed(RangesOrb(s)) then 
+    Enumerate(RangesOrb(s));
+  fi;
 
   if IsPartialPermMonoid(s) then 
     return Length(RangesOrb(s));
@@ -2114,7 +2128,9 @@ InstallOtherMethod(NrLClasses, "for D-class of semigp of partial perms",
 InstallOtherMethod(NrDClasses, "for an inverse semigp of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  Enumerate(RangesOrb(s));
+  if not IsClosed(RangesOrb(s)) then 
+    Enumerate(RangesOrb(s));
+  fi;
   if IsPartialPermMonoid(s) then 
     return Length(OrbSCC(RangesOrb(s)));
   fi;
@@ -2129,8 +2145,10 @@ InstallOtherMethod(NrHClasses, "for an inverse semigp of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
   local scc;
+  if not IsClosed(RangesOrb(s)) then 
+    Enumerate(RangesOrb(s));
+  fi;
   
-  Enumerate(RangesOrb(s));
   scc:=OrbSCC(RangesOrb(s));
 
   if IsPartialPermMonoid(s) then 
@@ -2167,7 +2185,10 @@ IsGreensClassOfPartPermSemigroup], r-> Length(OrbSCC(r!.o)[r!.data[1]]));
 InstallOtherMethod(NrIdempotents, "for an inverse semigp of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  Enumerate(RangesOrb(s));
+  if not IsClosed(RangesOrb(s)) then 
+    Enumerate(RangesOrb(s));
+  fi;
+  
   if IsPartialPermMonoid(s) then 
     return Length(RangesOrb(s));
   fi;
@@ -2495,7 +2516,9 @@ end);
 InstallMethod(Size, "for an inverse semigp of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  EnumerateRangesOrb(s);
+  if not IsClosed(RangesOrb(s)) then 
+    Enumerate(RangesOrb(s));
+  fi;
   return Size(s);
 end); 
 
