@@ -297,7 +297,9 @@ function(o, m)
   local scc;
   
   if not IsBound(o!.mults) then 
-    Enumerate(o);
+    if not IsClosed(o) then 
+      Enumerate(o);
+    fi;
     o!.mults:=EmptyPlist(Length(o));
   fi;
 

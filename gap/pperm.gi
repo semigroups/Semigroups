@@ -167,15 +167,15 @@ end);
 ############################################################################
 # Notes: f[1] = deg ; f[2] = rank
 
-InstallGlobalFunction(DomPP,
-function(f)
+#InstallGlobalFunction(DomPP,
+#function(f)
 
-  if f[1]=0 then
-    return [];
-  fi;
+#  if f[1]=0 then
+#    return [];
+#  fi;
 
-  return f{[7+f[1]..6+f[1]+f[2]]};
-end);
+#  return f{[7+f[1]..6+f[1]+f[2]]};
+#end);
 
 # new for 0.7! - DomainOfPartialPerm - "for a partial perm"
 ############################################################################

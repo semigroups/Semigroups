@@ -20,8 +20,8 @@ DeclareOperation("PartialPerm", [IsCyclotomicCollection]);
 
 DeclareOperation("AsPartialPermNC", [IsTransformation and IsTransformationRep]);
 DeclareGlobalFunction("DenseRangeList");
+#DeclareGlobalFunction("DomPP");
 DeclareOperation("DomainOfPartialPerm", [IsPartialPerm]);
-DeclareGlobalFunction("DomPP", DomainOfPartialPerm);
 DeclareOperation("FixedPointsOfPartialPerm", [IsPartialPerm]);
 DeclareGlobalFunction("InternalRepOfPartialPerm");
 DeclareGlobalFunction("MaxDomPP");

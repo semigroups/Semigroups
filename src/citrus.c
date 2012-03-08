@@ -357,6 +357,23 @@ Obj FuncProdPP( Obj self, Obj f, Obj g )
     return fg;
 }
 
+/* domain of partial permutation */
+Obj FuncDomPP (Obj self, Obj f )
+{ pptype deg, rank, i;
+  Obj out;
+
+  deg=ELM_PP(f, 1);
+  if(deg==0) return NEW_EMPTY_PLIST();
+  rank=ELM_PP(f, 2);
+  out=NEW_PLIST(T_PLIST_CYC,rank);
+  SET_LEN_PLIST(out,(Int) rank);
+  for(i=1;i<=rank;i++)
+  {
+    SET_ELM_PLIST(out,i,INTOBJ_INT(ELM_PP(f,6+deg+i)));
+  }
+  return out;
+}
+
 /* range set of partial permutation */
 Obj FuncRanSetPP ( Obj self, Obj f )
 { pptype deg, rank, i;
@@ -959,6 +976,10 @@ static StructGVarFunc GVarFuncs [] = {
   { "ProdPP", 2, "f,g",
     FuncProdPP,
     "pkg/citrus/src/citrus.c:FuncProdPP" },
+
+  { "DomPP", 1, "f",
+    FuncDomPP,
+    "pkg/citrus/src/citrus.c:FuncDomPP" },
 
   { "RanSetPP", 1, "f",
     FuncRanSetPP,
