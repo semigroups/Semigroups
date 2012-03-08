@@ -180,7 +180,8 @@ function(f, r)
   elif schutz=false then 
     return false;
   fi;
-
+  
+  g:=rep^-1*g;
   return SiftedPermutation(schutz, MappingPermListList(DomPP(g), RanPP(g)))=(); 
 end);
 
@@ -1264,6 +1265,35 @@ function(s)
   return out;
 end);
 
+# new for 0.7! - GreensDClasses - for an inv semi of part perms
+##############################################################################
+
+InstallOtherMethod(GreensDClasses, "for an inv semi of part perms",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s)
+  local l, o, scc, out, gens, type, mults, drel, i, f, m;
+
+  if IsPartialPermMonoid(s) then 
+    l:=0;
+  else
+    l:=1;
+  fi;
+
+  o:=RangesOrb(s); EnumerateRangesOrb(s); scc:=OrbSCC(o);
+  out:=EmptyPlist(Length(scc)); gens:=GeneratorsOfSemigroup(s);
+  type:=DClassType(s); mults:=o!.mults; drel:=GreensDRelation(s);
+
+  i:=0;
+
+  for m in [1..Length(scc)-l] do 
+    f:=PartialPermNC(o[scc[m+l][1]], o[scc[m+l][1]]);
+    out[i]:=Objectify(type, rec(parent:=s, data:=[m+l], o:=o));
+    SetRepresentative(out[i], f);
+    SetEquivalenceClassRelation(out[i], drel);
+  od;
+  return out;
+end);
+
 # new for 0.7! - GreensHClassOfElement - for an inv semi and part perm
 ##############################################################################
 
@@ -1722,7 +1752,7 @@ function(d)
        iter!.at[1]=iter!.m and iter!.at[2]=iter!.n and iter!.at[3]=iter!.m,
 
       NextIterator:=function(iter)
-        local at;
+        local at, scc;
 
         at:=iter!.at;
         if IsDoneIterator(iter) then 
@@ -1737,8 +1767,9 @@ function(d)
           at[1]:=1; at[3]:=1; at[2]:=at[2]+1;
         fi;
 
-        return OrbSCCMultipliers(d)[at[1]]*iter!.schutz[at[2]]/
-         OrbSCCMultipliers(d)[at[3]];
+        scc:=RangeOrbSCC(d);
+        return OrbSCCMultipliers(d)[scc[at[1]]]*iter!.schutz[at[2]]/
+         OrbSCCMultipliers(d)[scc[at[3]]];
       end,
 
       ShallowCopy:=iter -> rec(schutz:=iter!.schutz, m:=iter!.m, n:=iter!.n, 
@@ -1829,7 +1860,7 @@ function(d)
           at[1]:=1; at[2]:=at[2]+1;
         fi;
 
-        return OrbSCCMultipliers(d)[at[1]]*iter!.schutz[at[2]];
+        return OrbSCCMultipliers(d)[RangeOrbSCC(d)[at[1]]]*iter!.schutz[at[2]];
       end,
 
       ShallowCopy:=iter -> rec(schutz:=iter!.schutz, m:=iter!.m, n:=iter!.n, 
@@ -1877,7 +1908,7 @@ function(d)
           at[1]:=1; at[2]:=at[2]+1;
         fi;
 
-        return iter!.schutz[at[2]]/OrbSCCMultipliers(d)[at[1]];
+        return iter!.schutz[at[2]]/OrbSCCMultipliers(d)[RangeOrbSCC(d)[at[1]]];
       end,
 
       ShallowCopy:=iter -> rec(schutz:=iter!.schutz, m:=iter!.m, n:=iter!.n, 

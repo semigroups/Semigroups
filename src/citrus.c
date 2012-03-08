@@ -883,7 +883,7 @@ Obj FuncProdPermPP(Obj self, Obj p, Obj f)
     deg=deg_f;
   }    
  
-  pf=NEW_PP(deg+2*rank+6);
+  pf=NEW_PP(deg+3*rank+6);
   
   SET_ELM_PP(pf, 1, deg);
   SET_ELM_PP(pf, 2, rank);
