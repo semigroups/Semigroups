@@ -163,20 +163,6 @@ function(f)
   return f{[7..6+f[1]]};
 end);
 
-# new for 0.7! - Dom - "for a partial perm"
-############################################################################
-# Notes: f[1] = deg ; f[2] = rank
-
-#InstallGlobalFunction(DomPP,
-#function(f)
-
-#  if f[1]=0 then
-#    return [];
-#  fi;
-
-#  return f{[7+f[1]..6+f[1]+f[2]]};
-#end);
-
 # new for 0.7! - DomainOfPartialPerm - "for a partial perm"
 ############################################################################
 # Notes: f![1] = deg ; f![2] = rank
@@ -422,18 +408,6 @@ function(f)
 end);
 
 #RRR
-
-# new for 0.7! - RanPP - "for a partial perm"
-############################################################################
-
-InstallGlobalFunction(RanPP, 
-function(f)
-  if f[1]=0 then
-    return [];
-  fi;
-
-  return f{[7+f[1]+f[2]..6+f[1]+2*f[2]]};
-end);
 
 # new for 0.7! - RandomPartialPerm - "for a pos. int."
 #############################################################################
