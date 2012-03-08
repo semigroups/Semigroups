@@ -170,7 +170,7 @@ function(f, r)
     return false;
   fi;
 
-  schutz:=CreateOrbSCCStabChain(o, m, rep); 
+  schutz:=OrbSCCStabChain(r); 
 
   if schutz=true then 
     return true;
@@ -218,7 +218,7 @@ function(f, r)
     return false;
   fi;
 
-  schutz:=CreateOrbSCCStabChain(o, m); 
+  schutz:=OrbSCCStabChain(r); 
 
   if schutz=true then 
     return true;
@@ -267,7 +267,7 @@ function(f, r)
     return false;
   fi;
 
-  schutz:=CreateOrbSCCStabChain(o, m, rep); 
+  schutz:=OrbSCCStabChain(r); 
 
   if schutz=true then 
     return true;
@@ -302,7 +302,7 @@ function(f, r)
 
   o:=r!.o; data:=r!.data; mults:=o!.mults;
   
-  schutz:=CreateOrbSCCStabChain(o, data[1]); 
+  schutz:=OrbSCCStabChain(r); 
 
   if schutz=true then 
     return true;
