@@ -1581,7 +1581,6 @@ function(d, f)
   return l; 
 end);
 
-
 # new for 0.7! - GreensRClassOfElement - for an inv semi and part perm
 ##############################################################################
 
@@ -1613,7 +1612,7 @@ function(s, f)
       return fail;
     fi;
     m:=OrbSCCLookup(o)[l];
-    rep:=f*o!.mults[l]; l:=1;
+    rep:=f*o!.mults[l]; l:=o!.scc[m][1];
     k:=Position(o, DomPP(f));
     if k=fail or not OrbSCCTruthTable(o)[m][k] then 
       return fail;
@@ -1628,6 +1627,37 @@ function(s, f)
 
   SetRepresentative(r, rep);
   SetEquivalenceClassRelation(r, GreensRRelation(s));
+  return r; 
+end);
+
+# new for 0.7! - GreensRClassOfElementNC - for D-class and part perm
+##############################################################################
+# Notes: data is: [scc index, scc[1], pos of dom, pos of ran]
+
+InstallOtherMethod(GreensRClassOfElementNC, "for a D-class and part perm",
+[IsGreensDClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup, IsPartialPerm],
+function(d, f)
+  local o, m, k, rep, l;
+
+  o:=d!.o; m:=d!.data[1];
+  l:=Position(o, RanSetPP(f));
+  
+  if l=fail then 
+    return fail;
+  fi;
+
+  rep:=f*o!.mults[l];
+  k:=Position(o, DomPP(f));
+
+  if k=fail or not OrbSCCTruthTable(o)[m][k] then 
+    return fail;
+  fi;
+
+  r:=Objectify(RClassType(d!.parent), rec(parent:=d!.parent, 
+   data:=[m,k,o!.scc[m][1]], o:=o)); 
+
+  SetRepresentative(r, rep);
+  SetEquivalenceClassRelation(r, GreensLRelation(d!.parent));
   return r; 
 end);
 
