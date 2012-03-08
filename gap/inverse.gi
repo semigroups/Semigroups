@@ -328,7 +328,7 @@ function(r)
   mults:=r!.o!.mults; scc:=r!.o!.scc[r!.data[1]];
 
   for i in scc do
-    Append(elts, g/mults[i]);
+    Append(elts, List(g, x-> x/mults[i]));
   od;
   return elts;
 end);
@@ -646,7 +646,7 @@ function(r)
         return fail;
       fi;
      
-      k:=f*o!.mults[i];
+      k:=rep^-1*f*o!.mults[i];
       j:=Position(enum!.schutz, MappingPermListList(DomPP(k), RanPP(k)));
 
       if j=fail then 
