@@ -121,7 +121,7 @@ function(f, s)
     return false;
   fi;
   
-  schutz:=RangeOrbStabChain(o, m);
+  schutz:=CreateOrbSCCStabChain(o, m);
   
   if schutz=true then 
     return true;
@@ -170,7 +170,7 @@ function(f, r)
     return false;
   fi;
 
-  schutz:=RangeOrbStabChain(o, m, rep); 
+  schutz:=CreateOrbSCCStabChain(o, m, rep); 
 
   if schutz=true then 
     return true;
@@ -218,7 +218,7 @@ function(f, r)
     return false;
   fi;
 
-  schutz:=RangeOrbStabChain(o, m); 
+  schutz:=CreateOrbSCCStabChain(o, m); 
 
   if schutz=true then 
     return true;
@@ -267,7 +267,7 @@ function(f, r)
     return false;
   fi;
 
-  schutz:=RangeOrbStabChain(o, m, rep); 
+  schutz:=CreateOrbSCCStabChain(o, m, rep); 
 
   if schutz=true then 
     return true;
@@ -302,7 +302,7 @@ function(f, r)
 
   o:=r!.o; data:=r!.data; mults:=o!.mults;
   
-  schutz:=RangeOrbStabChain(o, data[1]); 
+  schutz:=CreateOrbSCCStabChain(o, data[1]); 
 
   if schutz=true then 
     return true;
@@ -370,7 +370,7 @@ function(h)
   local schutz, g;
   
   schutz:=SchutzenbergerGroup(h);
-  g:=OrbSCCMultipliers(h)[h!.data[3]];
+  g:=OrbMultipliers(h)[h!.data[3]];
 
   return List(schutz, x-> Representative(h)*g*x/g);
 end);
@@ -412,12 +412,12 @@ end);
 
 #CCC
 
-# new for 0.7! - CreateSCCMultipliers - not a user function 
+# new for 0.7! - CreateOrbSCCMultipliers - not a user function 
 #############################################################################
 
 #JDM not certain this is working as intended.
 
-#InstallGlobalFunction(CreateSCCMultipliers, 
+#InstallGlobalFunction(CreateOrbSCCMultipliers, 
 #function(gens, o, j, scc, mults)
 #  local tree, m, out, i;
 #  
@@ -436,22 +436,80 @@ end);
 #  od;
 # od;
 #return mults;
+
 #end);
-InstallGlobalFunction(CreateSCCMultipliers, 
-function(gens, o, j, scc, mults)
-  local w, i;
+
+InstallGlobalFunction(CreateOrbSCCMultipliers, 
+function(gens, o, m, scc)
   
+  if not IsBound(o!.mults) then 
+    if not IsClosed(o) then 
+      Enumerate(o);
+    fi;
+    o!.mults:=EmptyPlist(Length(o));
+  fi;
+
+  if not IsBound(o!.mults[scc[1]]) then 
+    CreateOrbSCCMultipliersNC(gens, o, m, scc, o!.mults);
+  fi;
+  return o!.mults;
+end);
+
+InstallGlobalFunction(CreateOrbSCCMultipliersNC, 
+function(gens, o, m, scc, mults)
+  local w, i;
+
   for i in scc do 
-    w:=TraceSchreierTreeOfSCCForward(o, j, i);
+    w:=TraceSchreierTreeOfSCCForward(o, m, i);
     if w=[] then 
       mults[i]:=PartialPermNC(o[i], o[i]);
     else
       mults[i]:=EvaluateWord(gens, w)^-1;
     fi;    
   od;
+  o!.mults:=mults;
   return mults;
 end);
 
+# new for 0.7! - CreateOrbSCCStabChain 
+##############################################################################
+# if the optional third arg is present it should have its range in position
+# scc[1] of o!! Otherwise this will mess everything up!
+
+InstallGlobalFunction(CreateOrbSCCStabChain,
+function(arg)
+  local o, m, scc, f;
+
+  o:=arg[1]; m:=arg[2];
+
+  if IsBound(o!.schutz) then
+    if IsBound(o!.schutz[m]) then 
+      return o!.schutz[m][1];
+    fi;
+  else
+    o!.schutz:=EmptyPlist(Length(scc));
+  fi;
+
+  scc:=OrbSCC(o)[m];
+  
+  if IsBound(arg[3]) then 
+    f:=arg[3];
+  else
+    f:=TraceSchreierTreeForward(o, scc[1]);
+    if f=[] then 
+      f:=PartialPermNC(o[scc[1]], o[scc[1]]);
+    else
+      f:=EvaluateWord(o!.gens, f);
+    fi;
+  fi;
+
+  CreateOrbSCCMultipliers(o!.gens, o, m, scc);
+
+  o!.schutz[m]:=CreateSchutzGp(o!.gens, o, f, scc, 
+   o!.truth[m], OrbitGraph(o), Length(o!.gens), o!.mults);
+
+  return o!.schutz[m][1];
+end);
 
 # new for 0.7! - CreateSchutzGp - not a user function
 #############################################################################
@@ -626,7 +684,7 @@ function(r)
 
       n:=pos-1; m:=enum!.len;
       q:=QuoInt(n, m); pos:=[ q, n - q * m]+1;
-      return enum[pos[2]]/OrbSCCMultipliers(r)[RangeOrbSCC(r)[pos[1]]];
+      return enum[pos[2]]/OrbMultipliers(r)[RangeOrbSCC(r)[pos[1]]];
     end,
 
     #########################################################################
@@ -706,7 +764,7 @@ function(r)
 
       n:=pos-1; m:=enum!.len;
       q:=QuoInt(n, m); pos:=[ q, n - q * m]+1;
-      return OrbSCCMultipliers(r)[RangeOrbSCC(r)[pos[1]]]*enum[pos[2]];
+      return OrbMultipliers(r)[RangeOrbSCC(r)[pos[1]]]*enum[pos[2]];
     end,
 
     #########################################################################
@@ -784,7 +842,7 @@ function(d)
       n:=pos-1; m:=Length(enum!.schutz); r:=Length(scc);
       q:=QuoInt(n, m); q2:=QuoInt(q, r);
       pos:=[ n-q*m, q2, q  - q2 * r ]+1;
-      mults:=OrbSCCMultipliers(d);
+      mults:=OrbMultipliers(d);
       return mults[scc[pos[2]]]*enum[pos[1]]/mults[scc[pos[3]]];
     end,
 
@@ -1040,7 +1098,7 @@ function(d)
     od; 
   else
     reps:=EmptyPlist(Length(scc)^2);
-    mults:=OrbSCCMultipliers(d);
+    mults:=OrbMultipliers(d);
     f:=Representative(d);
     
     k:=0; 
@@ -1080,7 +1138,7 @@ function(d)
     od;
   else
     reps:=EmptyPlist(Length(scc));
-    mults:=OrbSCCMultipliers(d);
+    mults:=OrbMultipliers(d);
     f:=Representative(d);
   
     for i in [1..Length(scc)] do
@@ -1117,7 +1175,7 @@ function(r)
     od; 
   else
     reps:=EmptyPlist(Length(scc));
-    mults:=OrbSCCMultipliers(r);
+    mults:=OrbMultipliers(r);
     f:=Representative(r);
   
     for i in [1..Length(scc)] do
@@ -1154,7 +1212,7 @@ function(d)
     od;
   else
     reps:=EmptyPlist(Length(scc));
-    mults:=OrbSCCMultipliers(d);
+    mults:=OrbMultipliers(d);
     f:=Representative(d);
     for i in [1..Length(scc)] do 
       reps[i]:=f/mults[scc[i]];
@@ -1224,7 +1282,7 @@ function(d)
     od;
   else
     reps:=EmptyPlist(Length(scc));
-    mults:=OrbSCCMultipliers(d);
+    mults:=OrbMultipliers(d);
     f:=Representative(d);
     for i in [1..Length(scc)] do 
       reps[i]:=mults[scc[i]]*f;
@@ -1594,7 +1652,7 @@ function(d)
   local scc, mults, f, out, k, i, j;
 
   scc:=OrbSCC(d!.o)[d!.data[1]]; 
-  mults:=OrbSCCMultipliers(d);
+  mults:=OrbMultipliers(d);
   f:=Representative(d);
   out:=EmptyPlist(Length(scc)^2); 
 
@@ -1618,7 +1676,7 @@ function(l)
   local scc, mults, f, out, j, i;
 
   scc:=OrbSCC(l!.o)[l!.data[1]]; 
-  mults:=OrbSCCMultipliers(l);
+  mults:=OrbMultipliers(l);
   f:=Representative(l);
   out:=EmptyPlist(Length(scc)); 
 
@@ -1640,7 +1698,7 @@ function(r)
   local scc, mults, f, out, j, i;
 
   scc:=OrbSCC(r!.o)[r!.data[1]]; 
-  mults:=OrbSCCMultipliers(r);
+  mults:=OrbMultipliers(r);
   f:=Representative(r);
   out:=EmptyPlist(Length(scc)); 
 
@@ -1778,8 +1836,8 @@ function(d)
         fi;
 
         scc:=RangeOrbSCC(d);
-        return OrbSCCMultipliers(d)[scc[at[1]]]*iter!.schutz[at[2]]/
-         OrbSCCMultipliers(d)[scc[at[3]]];
+        return OrbMultipliers(d)[scc[at[1]]]*iter!.schutz[at[2]]/
+         OrbMultipliers(d)[scc[at[3]]];
       end,
 
       ShallowCopy:=iter -> rec(schutz:=iter!.schutz, m:=iter!.m, n:=iter!.n, 
@@ -1806,9 +1864,9 @@ function(h)
 
       schutz:=Enumerator(SchutzenbergerGroup(h)),
       
-      pre:=Representative(h)*OrbSCCMultipliers(h)[h!.data[3]],
+      pre:=Representative(h)*OrbMultipliers(h)[h!.data[3]],
   
-      post:=OrbSCCMultipliers(h)[h!.data[3]]^-1,
+      post:=OrbMultipliers(h)[h!.data[3]]^-1,
 
       at:=0,
 
@@ -1870,7 +1928,7 @@ function(d)
           at[1]:=1; at[2]:=at[2]+1;
         fi;
 
-        return OrbSCCMultipliers(d)[RangeOrbSCC(d)[at[1]]]*iter!.schutz[at[2]];
+        return OrbMultipliers(d)[RangeOrbSCC(d)[at[1]]]*iter!.schutz[at[2]];
       end,
 
       ShallowCopy:=iter -> rec(schutz:=iter!.schutz, m:=iter!.m, n:=iter!.n, 
@@ -1918,7 +1976,7 @@ function(d)
           at[1]:=1; at[2]:=at[2]+1;
         fi;
 
-        return iter!.schutz[at[2]]/OrbSCCMultipliers(d)[RangeOrbSCC(d)[at[1]]];
+        return iter!.schutz[at[2]]/OrbMultipliers(d)[RangeOrbSCC(d)[at[1]]];
       end,
 
       ShallowCopy:=iter -> rec(schutz:=iter!.schutz, m:=iter!.m, n:=iter!.n, 
@@ -2004,7 +2062,7 @@ function(s)
           m:=m+1; iter!.m:=iter!.m+1; 
         fi;
         
-        f:=RestrictedPP(OrbSCCMultipliers(o, m)[scc[m][i]], o[scc[m][1]]);
+        f:=RestrictedPP(OrbMultipliers(o, m)[scc[m][i]], o[scc[m][1]]);
         r:=Objectify(RClassType(s), rec(parent:=s, o:=RangesOrb(s),
         data:=[m,scc[m][i],scc[m][1]]));
         SetRepresentative(r, f);
@@ -2060,7 +2118,7 @@ function(d)
   scc:=OrbSCC(d!.o)[d!.data[1]];
   out:=EmptyPlist(Length(scc));
   rep:=Representative(d);
-  mults:=OrbSCCMultipliers(d);
+  mults:=OrbMultipliers(d);
 
   i:=0;
   for j in scc do 
@@ -2204,14 +2262,25 @@ end);
 InstallMethod(OneImmutable, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> PartialPermNC(MovedPoints(s), MovedPoints(s)));
 
-# new for 0.7! - OrbSCCMultipliers - for a Green's class of a part perm inv semi
+# new for 0.7! - OrbMultipliers - for a Green's class of a part perm inv semi
 ##############################################################################
 
-InstallOtherMethod(OrbSCCMultipliers, "for a class of a part perm inv semi",
+InstallMethod(OrbMultipliers, "for a class of a part perm inv semi",
 [IsGreensClass and IsGreensClassOfPartPermSemigroup and
 IsGreensClassOfInverseSemigroup],
-function(class)
-  return OrbSCCMultipliers(class!.o, class!.data[1]);
+function(C)
+  return CreateOrbSCCMultipliers(GeneratorsOfSemigroup(C!.parent), 
+   C!.o, C!.data[1], OrbSCC(C!.o)[C!.data[1]]);
+end);
+
+# new for 0.7! - OrbSCCStabChain 
+###############################################################################
+
+InstallMethod(OrbSCCStabChain, "for a class of a part perm inv semi",
+[IsGreensClass and IsGreensClassOfPartPermSemigroup and
+IsGreensClassOfInverseSemigroup],
+function(C)
+  return CreateOrbSCCStabChain(C!.o, C!.data[1], Representative(C));
 end);
 
 # new for 0.7! - ParentAttr - "for a Green's class of a part perm semigroup
@@ -2258,49 +2327,6 @@ function(class)
   return OrbSCC(class!.o)[class!.data[1]];
 end);
 
-# new for 0.7! - RangeOrbStabChain 
-##############################################################################
-# if the optional third arg is present it should have its range in position
-# scc[1] of o!! Otherwise this will mess everything up!
-
-InstallGlobalFunction(RangeOrbStabChain,
-function(arg)
-  local o, m, scc, f;
-
-  o:=arg[1]; m:=arg[2];
-  scc:=OrbSCC(o)[m];
-  
-  if IsBound(arg[3]) then 
-    f:=arg[3];
-  else
-    f:=TraceSchreierTreeForward(o, scc[1]);
-    if f=[] then 
-      f:=PartialPermNC(o[scc[1]], o[scc[1]]);
-    else
-      f:=EvaluateWord(o!.gens, f);
-    fi;
-  fi;
-
-  if not IsBound(o!.mults) then
-    o!.mults:=EmptyPlist(Length(o));
-  fi;
-
-  if not IsBound(o!.mults[scc[1]]) then
-    CreateSCCMultipliers(o!.gens, o, m, scc, o!.mults);
-  fi;
-
-  if not IsBound(o!.schutz) then
-    o!.schutz:=EmptyPlist(Length(scc));
-  fi;
-
-  if not IsBound(o!.schutz[m]) then
-    o!.schutz[m]:=CreateSchutzGp(o!.gens, o, f, scc, 
-     o!.truth[m], OrbitGraph(o), Length(o!.gens), o!.mults);
-  fi;
-
-  return o!.schutz[m][1];
-end);
-
 # new for 0.7! - RangesOrb - "for an inverse semi of part. perms"
 ##############################################################################
 
@@ -2337,8 +2363,8 @@ function(s)
   fi;
 
   l:=0;
-  for j in [1+i..Length(scc)] do 
-    mults:=OrbSCCMultipliers(o, j);
+  for j in [1+i..Length(scc)] do
+    mults:=CreateOrbSCCMultipliers(gens, o, j, scc[j]);
     f:=PartialPermNC(o[scc[j][1]], o[scc[j][1]]);
     for k in scc[j] do 
       l:=l+1; 
@@ -2359,7 +2385,7 @@ function(d)
   scc:=OrbSCC(d!.o)[d!.data[1]];
   out:=EmptyPlist(Length(scc));
   rep:=Representative(d);
-  mults:=OrbSCCMultipliers(d);
+  mults:=OrbMultipliers(d);
 
   i:=0;
   for j in scc do 
@@ -2396,13 +2422,7 @@ function(r)
   scc:=OrbSCC(o)[m];
   s:=r!.parent;
 
-  if not IsBound(o!.mults) then 
-    o!.mults:=EmptyPlist(Length(o));
-  fi;
-
-  if not IsBound(o!.mults[scc[1]]) then 
-    CreateSCCMultipliers(GeneratorsOfSemigroup(s), o, m, scc, o!.mults);    
-  fi;
+  CreateOrbSCCMultipliers(GeneratorsOfSemigroup(s), o, m, scc);    
 
   if not IsBound(o!.schutz) then 
     o!.schutz:=EmptyPlist(Length(scc));
@@ -2435,13 +2455,7 @@ function(h)
   scc:=OrbSCC(o)[m];
   s:=h!.parent;
 
-  if not IsBound(o!.mults) then
-    o!.mults:=EmptyPlist(Length(o));
-  fi;
-
-  if not IsBound(o!.mults[scc[1]]) then
-    CreateSCCMultipliers(GeneratorsOfSemigroup(s), o, m, scc, o!.mults);
-  fi;
+  CreateOrbSCCMultipliers(GeneratorsOfSemigroup(s), o, m, scc);
 
   if not IsBound(o!.schutz) then
     o!.schutz:=EmptyPlist(Length(scc));

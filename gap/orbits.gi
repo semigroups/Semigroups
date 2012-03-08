@@ -288,29 +288,6 @@ function(o)
   return scc;
 end); 
 
-# new for 0.7! - OrbSCCMultipliers - "for an orbit and scc index"
-#############################################################################
-
-InstallMethod(OrbSCCMultipliers, "for an orbit and scc index", 
-[IsOrbit, IsPosInt],
-function(o, m)
-  local scc;
-  
-  if not IsBound(o!.mults) then 
-    if not IsClosed(o) then 
-      Enumerate(o);
-    fi;
-    o!.mults:=EmptyPlist(Length(o));
-  fi;
-
-  scc:=OrbSCC(o)[m];
-  if not IsBound(o!.mults[scc[1]]) then 
-    CreateSCCMultipliers(o!.gens, o, m, scc, o!.mults);
-  fi;
-
-  return o!.mults;
-end);
-
 # new for 0.4! - OrbSCCLookup - "for an orbit"
 #############################################################################
 

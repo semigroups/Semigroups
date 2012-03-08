@@ -10,13 +10,16 @@
 
 ## functions and methods for inverse semigroups of partial permutations
 
-DeclareGlobalFunction("CreateSCCMultipliers");
+DeclareGlobalFunction("CreateOrbSCCMultipliers");
+DeclareGlobalFunction("CreateOrbSCCMultipliersNC");
+DeclareGlobalFunction("CreateOrbSCCStabChain");
 DeclareGlobalFunction("CreateSchutzGp");
 DeclareGlobalFunction("EnumerateRangesOrb");
 DeclareProperty("IsGreensClassOfPartPermSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
-DeclareAttribute("RangeOrbMults", IsGreensClass);
-# rename RangeOrbSCC OrbSCC by making the latter an operation...
+DeclareAttribute("OrbMultipliers", IsGreensClass);
+DeclareAttribute("OrbSCCStabChain", IsGreensClass);
+
 DeclareAttribute("RangeOrbSCC", IsGreensClass);
 DeclareGlobalFunction("RangeOrbStabChain");
 #JDM more filters above...

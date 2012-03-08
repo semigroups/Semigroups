@@ -27,7 +27,7 @@ DeclareAttribute("KernelsOfTransSemigroup", IsTransformationSemigroup,
 DeclareGlobalFunction("OnBlist");
 DeclareGlobalFunction("OnKernelsAntiAction");
 DeclareGlobalFunction("OrbSCC");
-DeclareOperation("OrbSCCMultipliers", [IsOrbit, IsPosInt]);
+#DeclareOperation("OrbSCCMultipliers", [IsOrbit, IsPosInt]);
 DeclareGlobalFunction("OrbSCCLookup");
 DeclareGlobalFunction("OrbSCCTruthTable");
 DeclareGlobalFunction("ReverseSchreierTreeOfSCC");
