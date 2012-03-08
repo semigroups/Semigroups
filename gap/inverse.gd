@@ -12,16 +12,13 @@
 
 DeclareGlobalFunction("CreateOrbSCCMultipliers");
 DeclareGlobalFunction("CreateOrbSCCMultipliersNC");
-DeclareGlobalFunction("CreateOrbSCCStabChain");
-DeclareGlobalFunction("CreateSchutzGp");
-DeclareGlobalFunction("EnumerateRangesOrb");
+DeclareGlobalFunction("CreateOrbSCCSchutzGp");
+DeclareGlobalFunction("CreateOrbSCCSchutzGpNC");
+DeclareGlobalFunction("EnumerateInverseSemiData");
 DeclareProperty("IsGreensClassOfPartPermSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
+DeclareAttribute("LongOrb", IsPartialPermSemigroup and IsInverseSemigroup,
+ "mutable");
 DeclareAttribute("OrbMultipliers", IsGreensClass);
 DeclareAttribute("OrbSCCStabChain", IsGreensClass);
-
-DeclareAttribute("RangeOrbSCC", IsGreensClass);
-DeclareGlobalFunction("RangeOrbStabChain");
-#JDM more filters above...
-DeclareAttribute("RangesOrb", IsPartialPermSemigroup and IsInverseSemigroup, "mutable");
 DeclareGlobalFunction("ShortOrb");

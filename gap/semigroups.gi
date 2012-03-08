@@ -404,7 +404,6 @@ function(coll)
   gens:=ShallowCopy(coll);
   
   for f in coll do
-    Add(gens, f);
     if not DomPP(f)=RanSetPP(f) then 
       Add(gens, f^-1);
     fi;
