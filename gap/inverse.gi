@@ -1849,6 +1849,7 @@ IsGreensClassOfInverseSemigroup);
 
 # new for 0.7! - IsRegularLClass - "for L-class of inv semigroup"
 ##############################################################################
+
 InstallTrueMethod(IsRegularLClass, IsGreensLClass and 
 IsGreensClassOfInverseSemigroup); 
 
@@ -2049,6 +2050,96 @@ function(d)
   SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
+# new for 0.7! - IteratorOfLClasses - "for part perm inverse semigroup""
+###############################################################################
+
+InstallMethod(IteratorOfLClasses, "for a part perm inverse semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup], 
+function(s)
+  local offset, iter;
+
+  if IsPartialPermMonoid(s) then
+    offset:=0;
+  else
+    offset:=1;
+  fi; 
+
+  if not IsClosed(LongOrb(s)) then 
+    
+    iter:=IteratorByFunctions( rec(
+      
+      o:=LongOrb(s), 
+
+      i:=offset,
+
+      IsDoneIterator:=iter-> IsClosed(iter!.o) and iter!.i>=Length(iter!.o),
+
+      NextIterator:=function(iter)
+        local i, o, r;
+        if IsDoneIterator(iter) then 
+          return fail;  
+        fi;
+
+        iter!.i:=iter!.i+1;
+        i:=iter!.i; o:=iter!.o;
+
+        if i>Length(o) then 
+          Enumerate(o, Length(o)+1);
+        fi;
+
+        if i>Length(o) then 
+          return fail;
+        fi;
+
+        r:=Objectify(LClassType(s), rec(parent:=s, o:=ShortOrb(s, o[i]), 
+        data:=[1,1,1]));
+        SetRepresentative(r, PartialPermNC(o[i], o[i]));
+        SetEquivalenceClassRelation(r, GreensLRelation(s));
+        return r;
+      end,
+
+      ShallowCopy:=iter-> rec(o:=iter!.o, i:=iter!.i)));
+  else
+    iter:=IteratorByFunctions( rec(
+                 
+      o:=LongOrb(s),
+
+      m:=offset+1, i:=0,      
+
+      IsDoneIterator:=iter-> iter!.m=Length(OrbSCC(iter!.o)) and 
+       iter!.i=Length(OrbSCC(iter!.o)[iter!.m]),
+
+      NextIterator:=function(iter)
+        local i, o, m, scc, f, r;
+        if IsDoneIterator(iter) then
+          return fail; 
+        fi;
+
+        i:=iter!.i; o:=iter!.o; m:=iter!.m; scc:=OrbSCC(o);
+        if i<Length(scc[m]) then 
+          iter!.i:=iter!.i+1;
+          i:=i+1;
+        else
+          i:=1;  iter!.i:=1; 
+          m:=m+1; iter!.m:=iter!.m+1; 
+        fi;
+        
+        f:=RestrictedPP(OrbMultipliers(o, m)[scc[m][i]], o[scc[m][1]])^-1;
+        r:=Objectify(LClassType(s), rec(parent:=s, o:=LongOrb(s),
+        data:=[m,scc[m][1],scc[m][i]]);
+        SetRepresentative(r, f);
+        SetEquivalenceClassRelation(r, GreensLRelation(s));
+        return r;
+      end,
+
+      ShallowCopy:=iter-> rec(o:=iter!.o, i:=iter!.i)));
+  fi;
+
+  SetIsIteratorOfLClasses(iter, true);
+  SetIsCitrusPkgIterator(iter, true);
+  return iter;
+end);
+
 
 # new for 0.7! - IteratorOfRClasses - "for part perm inverse semigroup""
 ###############################################################################
