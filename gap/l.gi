@@ -593,17 +593,13 @@ function(l)
   return false;
 end);
 
-# new for 0.1! - IteratorOfLClasses - user function!
+# new for 0.1! - IteratorOfLClasses - 
 ###########################################################################
 
-InstallGlobalFunction(IteratorOfLClasses, 
+InstallMethod(IteratorOfLClasses, "for a trans. semigroup",
+[IsTransformationSemigroup], 
 function(s)
   local iter;
-
-  if not IsTransformationSemigroup(s) then
-    Error("Usage: arg. should be a transformation semigroup,");
-     return;
-  fi;
 
   Info(InfoCitrus, 4, "IteratorOfLClasses");
 
@@ -636,16 +632,12 @@ end);
 # new for 0.1! - IteratorOfLClassReps - user function!
 ###########################################################################
 
-InstallGlobalFunction(IteratorOfLClassReps,
+InstallMethod(IteratorOfLClassReps, "for a trans. semigroup", 
+[IsTransformationSemigroup], 
 function(s)
   local iter;
 
   Info(InfoCitrus, 4, "IteratorOfLClassReps");
-
-  if not IsTransformationSemigroup(s) then
-    Error("Usage: argument should be a transformation semigroup,");
-    return;
-  fi;
 
   iter:=IteratorByFunctions( rec(
 

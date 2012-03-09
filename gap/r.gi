@@ -1407,11 +1407,6 @@ function(s)
   local iter;
 
   Info(InfoCitrus, 4, "IteratorOfRClasses");
-  
-  if not IsTransformationSemigroup(s) then 
-    Error("Usage: the argument should be a transformation semigroup,");
-    return;
-  fi;
 
   iter:=IteratorByFunctions( rec(
           
@@ -1597,20 +1592,16 @@ function(s)
   return iter;
 end);
 
-# new for 0.1! - IteratorOfRClassReps - not a user function!
+# new for 0.1! - IteratorOfRClassReps - "for a trans. semigroup"!
 #############################################################################
 
-InstallGlobalFunction(IteratorOfRClassReps,
+InstallMethod(IteratorOfRClassReps, "for a trans. semigroup",
+[IsTransformationSemigroup],
 function(s)
   local iter;
 
   Info(InfoCitrus, 4, "IteratorOfRClassReps");
-
-  if not IsTransformationSemigroup(s) then
-    Error("Usage: argument should be a transformation semigroup,");
-    return;
-  fi;
-
+  
   iter:=IteratorByFunctions( rec(
 
     s:=s, data:=IteratorOfRClassRepsData(s),

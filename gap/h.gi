@@ -470,15 +470,12 @@ end);
 # new for 0.1! - IteratorOfHClassReps - user function!
 ############################################################################
 
-InstallGlobalFunction(IteratorOfHClassReps,
+InstallMethod(IteratorOfHClassReps, "for a trans. semigroup",
+[IsTransformationSemigroup], 
 function(s)
   local iter;
 
   Info(InfoCitrus, 4, "IteratorOfHClassReps");
-  if not IsTransformationSemigroup(s) then
-    Error("Usage: argument should be a transformation semigroup,");
-    return;
-  fi;
 
   iter:=IteratorByFunctions( rec(
 

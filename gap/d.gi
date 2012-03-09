@@ -1590,17 +1590,13 @@ end);
 #############################################################################
 # Usage: s = transformation semigroup.
 
-InstallGlobalFunction(IteratorOfDClassReps, 
+InstallMethod(IteratorOfDClassReps, "for a trans. semigroup", 
+[IsTransformationSemigroup],
 function(s)
   local iter;
 
   Info(InfoCitrus, 4, "IteratorOfDClassReps");
   
-  if not IsTransformationSemigroup(s) then 
-    Error("Usage: argument should be a transformation semigroup,");
-    return;
-  fi;
-
   iter:=IteratorByFunctions(rec(
     
     s:=s, data:=IteratorOfDClassRepsData(s), 
@@ -1711,12 +1707,14 @@ end);
 # JDM why not use IteratorOfDClassRepsData below, it should be more
 # straightforward, see IteratorOfLClasses.
 
-InstallGlobalFunction(IteratorOfDClasses, 
-function(arg)
-  local iter, s;
+InstallMethod(IteratorOfDClasses, "for a trans. semigroup",
+[IsTransformationSemigroup], 
+function(s)
+  local arg, iter;
 
   Info(InfoCitrus, 4, "IteratorOfDClasses");
 
+  arg:=[s]; #JDM
   if not (Length(arg) mod 3)=1 or not IsTransformationSemigroup(arg[1]) then 
     Error("Usage: argument should be a transformation semigroup,");
     # optionally function, operator, value, function, operator, value, ...

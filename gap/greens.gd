@@ -29,26 +29,54 @@
 #############################################################################
 #############################################################################
 
-# in greens.xml
+DeclareGlobalFunction("CreateDClass");
+DeclareGlobalFunction("CreateHClass");
+DeclareGlobalFunction("CreateLClass");
+DeclareGlobalFunction("CreateRClass");
 
-DeclareAttribute("DClassReps", IsTransformationSemigroup);
-DeclareOperation("EnumeratorOfRClasses", [IsTransformationSemigroup]);
-DeclareOperation("GreensDClassOfElementNC", [IsTransformationSemigroup]); 
-DeclareOperation("GreensRClassOfElementNC", [IsTransformationSemigroup]);
-DeclareAttribute("HClassReps", IsTransformationSemigroup);
+DeclareAttribute("DClassType", IsSemigroup);
+DeclareAttribute("HClassType", IsSemigroup);
+DeclareAttribute("LClassType", IsSemigroup);
+DeclareAttribute("RClassType", IsSemigroup);
+
+DeclareAttribute("DClassReps", IsSemigroup);
+DeclareAttribute("HClassReps", IsSemigroup);
+DeclareAttribute("LClassReps", IsSemigroup); 
+DeclareAttribute("RClassReps", IsSemigroup);
+
+DeclareOperation("EnumeratorOfRClasses", [IsSemigroup]);
+
+DeclareOperation("GreensDClassOfElementNC", [IsSemigroup]); 
+DeclareOperation("GreensHClassOfElementNC", [IsSemigroup]); 
+DeclareOperation("GreensLClassOfElementNC", [IsSemigroup]); 
+DeclareOperation("GreensRClassOfElementNC", [IsSemigroup]);
+
 DeclareProperty("IsGreensClassOfTransSemigp", IsGreensClass);
-DeclareProperty("IsRegularRClass", IsGreensClassOfTransSemigp);
-DeclareGlobalFunction("IteratorOfDClasses");
-DeclareGlobalFunction("IteratorOfDClassReps"); 
-DeclareOperation("IteratorOfRClasses", [IsSemigroup]);
-DeclareGlobalFunction("IteratorOfRClassReps");
-DeclareAttribute("NrIdempotents", IsTransformationSemigroup);
-DeclareAttribute("NrDClasses", IsTransformationSemigroup); 
-DeclareAttribute("NrHClasses", IsTransformationSemigroup);
-DeclareAttribute("NrRClasses", IsTransformationSemigroup);
-DeclareAttribute("RClassReps", IsTransformationSemigroup);
-DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
 
+DeclareProperty("IsRegularLClass", IsGreensClass); 
+DeclareProperty("IsRegularRClass", IsGreensClass);
+
+DeclareOperation("IteratorOfDClasses", [IsSemigroup]);
+DeclareOperation("IteratorOfHClasses", [IsSemigroup]);
+DeclareOperation("IteratorOfLClasses", [IsSemigroup]); 
+DeclareOperation("IteratorOfRClasses", [IsSemigroup]);
+
+DeclareOperation("IteratorOfDClassReps", [IsSemigroup]); 
+DeclareOperation("IteratorOfLClassReps", [IsSemigroup]); 
+DeclareOperation("IteratorOfHClassReps", [IsSemigroup]); 
+DeclareOperation("IteratorOfRClassReps", [IsSemigroup]);
+
+DeclareAttribute("NrIdempotents", IsSemigroup);
+
+DeclareAttribute("NrDClasses", IsSemigroup); 
+DeclareAttribute("NrHClasses", IsSemigroup);
+DeclareAttribute("NrLClasses", IsSemigroup);
+DeclareAttribute("NrRClasses", IsSemigroup);
+DeclareAttribute("NrRegularDClasses", IsSemigroup); 
+
+DeclareAttribute("PartialOrderOfDClasses", IsSemigroup);
+
+DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
 
 DeclareSynonymAttr("DClasses", GreensDClasses);
 DeclareSynonymAttr("HClasses", GreensHClasses);
@@ -61,7 +89,6 @@ DeclareSynonymAttr("RClasses", GreensRClasses);
 DeclareGlobalFunction("AddToOrbitsOfImages");
 DeclareGlobalFunction("CreateImageOrbitSCCPerms");
 DeclareGlobalFunction("CreateImageOrbitSchutzGp");
-DeclareGlobalFunction("CreateRClass");
 DeclareGlobalFunction("DisplayOrbitsOfImages");
 DeclareGlobalFunction("ExpandOrbitsOfImages");
 DeclareGlobalFunction("ForwardOrbitOfImage");
@@ -89,27 +116,26 @@ DeclareProperty("IsIteratorOfRClassRepsData", IsIterator);
 DeclareGlobalFunction("IsRegularRClassData");
 DeclareProperty("IsRClassNC", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IteratorOfNewRClassRepsData");
-DeclareGlobalFunction("IteratorOfRClassRepsData");
+
+DeclareOperation("IteratorOfHClassRepsData", [IsSemigroup]);
+DeclareOperation("IteratorOfRClassRepsData", [IsSemigroup]);
 DeclareGlobalFunction("HClassRepsDataFromData");
 DeclareGlobalFunction("NrIdempotentsRClassFromData");
 DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
 DeclareGlobalFunction("PreInOrbitsOfImages");
 DeclareGlobalFunction("RClassIndexFromData");
+DeclareGlobalFunction("HClassRepFromData");
 DeclareGlobalFunction("RClassRepFromData");
 DeclareAttribute("RClassRepsData", IsTransformationSemigroup);
-DeclareAttribute("RClassType", IsTransformationSemigroup);
 DeclareGlobalFunction("TraceRClassRepsTree");
 
 # the documentation for the functions below can be found in 
 # /monoid/doc/d.xml
 
-DeclareAttribute("PartialOrderOfDClasses", IsTransformationSemigroup);
-DeclareAttribute("NrRegularDClasses", IsTransformationSemigroup); 
 
 # the following functions in d.gi are currently undocumented
 
 DeclareGlobalFunction("AddToOrbitsOfKernels");
-DeclareGlobalFunction("CreateDClass");
 DeclareGlobalFunction("CreateKernelOrbitSchutzGp");
 DeclareGlobalFunction("CreateKernelOrbitSCCRels");
 DeclareGlobalFunction("CreateSchutzGpOfDClass");
@@ -117,7 +143,6 @@ DeclareGlobalFunction("DClassRClassRepsDataFromData");
 DeclareGlobalFunction("DClassRepFromData");
 DeclareAttribute("DClassRepsData", IsTransformationSemigroup);
 DeclareGlobalFunction("DClassSchutzGpFromData");
-DeclareAttribute("DClassType", IsTransformationSemigroup);
 DeclareGlobalFunction("DisplayOrbitsOfKernels");
 DeclareGlobalFunction("ExpandOrbitsOfKernels");
 DeclareGlobalFunction("ForwardOrbitOfKernel");
@@ -161,37 +186,15 @@ DeclareGlobalFunction("SizeOrbitsOfKernels");
 
 # the following functions in l.gi are currently undocumented
 
-DeclareGlobalFunction("CreateLClass");
-DeclareOperation("GreensLClassOfElementNC", [IsTransformationSemigroup]); 
 DeclareGlobalFunction("LClassRepFromData");
-DeclareAttribute("LClassReps", IsTransformationSemigroup); 
-DeclareAttribute("LClassType", IsTransformationSemigroup);
-DeclareProperty("IsRegularLClass", IsGreensClassOfTransSemigp); 
-DeclareGlobalFunction("IteratorOfLClasses"); 
 DeclareGlobalFunction("IteratorOfLClassRepsData");
-DeclareGlobalFunction("IteratorOfLClassReps"); 
-DeclareAttribute("NrLClasses", IsTransformationSemigroup);
 
 # the following functions in h.gi are currently undocumented
-
-DeclareGlobalFunction("CreateHClass");
-DeclareOperation("GreensHClassOfElementNC", [IsTransformationSemigroup]); 
-DeclareGlobalFunction("HClassRepFromData");
-DeclareAttribute("HClassType", IsTransformationSemigroup);
-DeclareGlobalFunction("IteratorOfHClasses");
-DeclareGlobalFunction("IteratorOfHClassReps"); 
-DeclareGlobalFunction("IteratorOfHClassRepsData");
 
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
 DeclareProperty("IsIteratorOfLClassReps", IsIterator);
 DeclareProperty("IsIteratorOfDClassReps", IsIterator);
 DeclareProperty("IsIteratorOfHClassReps", IsIterator);
-
-# IteratorOfRClasses and IteratorOfLClasses
-# should be operations so that they can be applied to 
-# D-classes as well as transformation semigroups!
-# and IteratorOfDClass should be an operation so that I can make an
-# iterator that of D-classes satisfying some properties a la smallsemi..
 
 DeclareProperty("IsIteratorOfRClasses", IsIterator);
 DeclareProperty("IsIteratorOfLClasses", IsIterator);

@@ -2050,6 +2050,7 @@ function(d)
   SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
+
 # new for 0.7! - IteratorOfLClasses - "for part perm inverse semigroup""
 ###############################################################################
 
@@ -2126,7 +2127,7 @@ function(s)
         
         f:=RestrictedPP(OrbMultipliers(o, m)[scc[m][i]], o[scc[m][1]])^-1;
         r:=Objectify(LClassType(s), rec(parent:=s, o:=LongOrb(s),
-        data:=[m,scc[m][1],scc[m][i]]);
+         data:=[m,scc[m][1],scc[m][i]]));
         SetRepresentative(r, f);
         SetEquivalenceClassRelation(r, GreensLRelation(s));
         return r;
@@ -2139,7 +2140,6 @@ function(s)
   SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
-
 
 # new for 0.7! - IteratorOfRClasses - "for part perm inverse semigroup""
 ###############################################################################
