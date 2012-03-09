@@ -1637,7 +1637,7 @@ end);
 InstallOtherMethod(GreensRClassOfElementNC, "for a D-class and part perm",
 [IsGreensDClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup, IsPartialPerm],
 function(d, f)
-  local o, m, k, rep, l;
+  local o, m, l, rep, k, r;
 
   o:=d!.o; m:=d!.data[1];
   l:=Position(o, RanSetPP(f));
