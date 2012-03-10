@@ -356,6 +356,24 @@ function(arg)
   return;
 end);
 
+# new for 0.7! - ListByIterator - "for an iterator and pos int"
+#############################################################################
+
+InstallGlobalFunction(ListByIterator, 
+function(iter, len)
+  local out, i, x;
+
+  out:=EmptyPlist(len);
+  i:=0;
+
+  for x in iter do  
+    i:=i+1;
+    out[i]:=x;
+  od;
+  
+  return out;
+end);
+
 # new for 0.7! - RandomPartialPermInverseSemigp
 #############################################################################
 

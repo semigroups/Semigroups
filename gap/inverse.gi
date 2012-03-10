@@ -321,6 +321,7 @@ end);
 
 # new for 0.7! - AsList - "for an R-class of inverse semigp."
 ############################################################################
+# JDM ListByIterator?
 
 InstallOtherMethod(AsList, "for an R-class of inverse semigp.",
 [IsGreensRClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
@@ -341,6 +342,7 @@ end);
 
 # new for 0.7! - AsList - "for an L-class of inverse semigp." 
 ############################################################################
+# JDM ListByIterator?
 
 InstallOtherMethod(AsList, "for an L-class of inverse semigp.",
 [IsGreensLClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
@@ -361,6 +363,7 @@ end);
 
 # new for 0.7! - AsList - "for an H-class of inverse semigp."
 ############################################################################
+# JDM ListByIterator?
 
 InstallOtherMethod(AsList, "for an H-class of inverse semigp.",
 [IsGreensHClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
@@ -375,6 +378,7 @@ end);
 
 # new for 0.7! - AsList - "for an D-class of inverse semigp."
 ############################################################################
+# JDM ListByIterator?
 
 InstallOtherMethod(AsList, "for an D-class of inverse semigp.",
 [IsGreensDClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
@@ -553,6 +557,7 @@ end);
 
 # new for 0.7! - DClassReps - "for an inverse semi of part perms"
 ##############################################################################
+# JDM ListByIterator.
 
 InstallOtherMethod(DClassReps, "for an inverse semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
@@ -584,7 +589,6 @@ end);
 InstallOtherMethod(DClassType, "for a partial perm inverse semigroup",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s);
-
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsGreensDClass and
          IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup);
@@ -997,6 +1001,7 @@ end);
 
 # new for 0.7! - GreensHClasses - for an inv semi of partial perms
 ############################################################################
+# JDM ListByIterator?
 
 InstallOtherMethod(GreensHClasses, "for an inv semi of partial perms",
 [IsPartialPermSemigroup and IsInverseSemigroup],
@@ -1050,6 +1055,7 @@ end);
 
 # new for 0.7! - GreensHClasses - for an D-class of inv semi of partial perms
 ############################################################################
+# ListByIterator
 
 InstallOtherMethod(GreensHClasses, "for D-class of inv semi of partial perms",
 [IsGreensDClass and IsGreensClassOfInverseSemigroup and
@@ -1090,6 +1096,7 @@ end);
 
 # new for 0.7! - GreensHClasses - for an L-class of inv semi of partial perms
 ############################################################################
+# ListByIterator
 
 InstallOtherMethod(GreensHClasses, "for L-class of inv semi of partial perms",
 [IsGreensLClass and IsGreensClassOfInverseSemigroup and
@@ -1122,6 +1129,7 @@ end);
 
 # new for 0.7! - GreensHClasses - for an R-class of inv semi of partial perms
 ############################################################################
+# ListByIterator
 
 InstallOtherMethod(GreensHClasses, "for R-class of inv semi of partial perms",
 [IsGreensRClass and IsGreensClassOfInverseSemigroup and
@@ -1155,6 +1163,7 @@ end);
 
 # new for 0.7! - GreensLClasses - for a D-class of inv semi of part perms
 ##############################################################################
+# ListByIterator
 
 InstallOtherMethod(GreensLClasses, "for D-class of inv semi of part perms",
 [IsGreensDClass and IsGreensClassOfInverseSemigroup and
@@ -1189,30 +1198,8 @@ end);
 InstallOtherMethod(GreensLClasses, "for an inv semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local l, o, scc, out, type, mults, i, f, rep, m, j;
-
-  if IsPartialPermMonoid(s) then
-    l:=0;
-  else
-    l:=1;
-  fi;
-  
-  o:=LongOrb(s); EnumerateInverseSemiData(s);
-  scc:=OrbSCC(o); out:=EmptyPlist(Length(o));
-  type:=LClassType(s); mults:=o!.mults;
-
-  i:=0; 
-  
-  for m in [1..Length(scc)-l] do
-    f:=PartialPermNC(o[scc[m+l][1]], o[scc[m+l][1]]);
-    for j in scc[m+l] do 
-      i:=i+1;
-      rep:=f/mults[j];
-      out[i]:=CreateLClass(s, [m+l,scc[m+l][1],j], o, rep);
-   od;
-  od;
-
-  return out;
+  EnumerateInverseSemiData(s); 
+  return ListByIterator(IteratorOfLClasses(s), NrLClasses(s));
 end);
 
 # new for 0.7! - GreensRClasses - for a D-class of inv semi of part perms
@@ -1222,10 +1209,9 @@ InstallOtherMethod(GreensRClasses, "for D-class of inv semi of part perms",
 [IsGreensDClass and IsGreensClassOfInverseSemigroup and
 IsGreensClassOfPartPermSemigroup],
 function(d)
-  local m, o, scc, s, type, rrel, out, reps, mults, f, i;
+  local m, o, scc, s, out, reps, mults, f, i;
 
   m:=d!.data[1]; o:=d!.o; scc:=OrbSCC(o)[m]; s:=d!.parent; 
-  type:=RClassType(s); rrel:=GreensRRelation(s); 
   
   out:=EmptyPlist(Length(scc));
 
@@ -1253,30 +1239,8 @@ end);
 InstallOtherMethod(GreensRClasses, "for an inv semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local l, o, scc, out, gens, type, mults, rrel, i, f, rep, m, j;
-
-  if IsPartialPermMonoid(s) then
-    l:=0;
-  else
-    l:=1;
-  fi;
-  
-  o:=LongOrb(s); EnumerateInverseSemiData(s); scc:=OrbSCC(o);
-  out:=EmptyPlist(Length(o)); gens:=GeneratorsOfSemigroup(s);
-  type:=RClassType(s); mults:=o!.mults; rrel:=GreensRRelation(s);
-
-  i:=0; 
-  
-  for m in [1..Length(scc)-l] do
-    f:=PartialPermNC(o[scc[m+l][1]], o[scc[m+l][1]]);
-    for j in scc[m+l] do 
-      i:=i+1;
-      rep:=mults[j]*f;
-      out[i]:=CreateRClass(s, [m+l, j, scc[m+l][1]], o, rep);
-   od;
-  od;
-
-  return out;
+  EnumerateInverseSemiData(s); 
+  return ListByIterator(IteratorOfRClasses(s), NrRClasses(s));
 end);
 
 # new for 0.7! - GreensDClasses - for an inv semi of part perms
@@ -1586,6 +1550,7 @@ end);
 
 # new for 0.7! - HClassReps - for an inverse semigroup of partial perms
 ##############################################################################
+# ListByIterator
 
 InstallOtherMethod(HClassReps, "for an inverse semi of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
@@ -1626,6 +1591,7 @@ end);
 
 # new for 0.7! - HClassReps - for an D-class of inv semi of partial perms
 ############################################################################
+# ListByIterator
 
 InstallOtherMethod(HClassReps, "for an D-class of inv semi of partial perms",
 [IsGreensDClass and IsGreensClassOfInverseSemigroup and
@@ -1650,6 +1616,7 @@ end);
 
 # new for 0.7! - HClassReps - for an L-class of inv semi of partial perms
 ############################################################################
+# ListByIterator
 
 InstallOtherMethod(HClassReps, "for an L-class of inv semi of partial perms",
 [IsGreensLClass and IsGreensClassOfInverseSemigroup and
@@ -1672,6 +1639,7 @@ end);
 
 # new for 0.7! - HClassReps - for an R-class of inv semi of partial perms
 ############################################################################
+# ListByIterator
 
 InstallOtherMethod(HClassReps, "for an R-class of inv semi of partial perms",
 [IsGreensRClass and IsGreensClassOfInverseSemigroup and
@@ -2174,7 +2142,7 @@ CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
 
 # new for 0.7! - LClassReps - for an inv semi of part perms
 ##############################################################################
-
+#JDMJDM
 InstallOtherMethod(LClassReps, "for an inv semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
@@ -2427,37 +2395,20 @@ end);
 # new for 0.7! - RClassReps - for an inv semi of part perms
 ##############################################################################
 
-InstallOtherMethod(RClassReps, "for an inv semi of part perms",
+InstallMethod(RClassReps, "for an inv semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local o, scc, out, gens, i, l, mults, f, j, k;
 
-  o:=LongOrb(s);
-  scc:=OrbSCC(o);
-
-  out:=EmptyPlist(Length(o));
-  gens:=GeneratorsOfSemigroup(s);
-
-  if IsPartialPermMonoid(s) then 
-    i:=0;
-  else
-    i:=1;
+  if not IsClosed(LongOrb(s)) then 
+    Enumerate(LongOrb(s), infinity);
   fi;
 
-  l:=0;
-  for j in [1+i..Length(scc)] do
-    mults:=CreateOrbSCCMultipliers(gens, o, j, scc[j]);
-    f:=PartialPermNC(o[scc[j][1]], o[scc[j][1]]);
-    for k in scc[j] do 
-      l:=l+1; 
-      out[l]:=mults[k]*f;
-    od;
-  od;
-  return out;
+  return ListByIterator(IteratorOfRClassReps(s), NrRClasses(s));
 end);
 
 # new for 0.7! - RClassReps - for D-class of part perm inv semi
 ##############################################################################
+#JDM ListByIterator.
 
 InstallOtherMethod(RClassReps, "for D-class of part perm inv semi",
 [IsGreensDClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
@@ -2483,7 +2434,6 @@ end);
 InstallOtherMethod(RClassType, "for a partial perm inverse semigroup",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s);
-
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsGreensRClass and
          IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup);
