@@ -93,7 +93,7 @@ InstallGlobalFunction(CreateHClass,
 function(s, data, orbit, rep)
   local d, h;
 
-  data:=[data[1]{[1..6]}, data[2]{[1..6]}, data[3], data[4]];
+  #data:=[data[1]{[1..6]}, data[2]{[1..6]}, data[3], data[4]];
 
   h:=Objectify(HClassType(s), rec(parent:=s, data:=data, 
   o:=orbit, rep:=rep));

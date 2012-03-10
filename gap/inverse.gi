@@ -992,11 +992,7 @@ function(s, f)
     m:=1; 
   fi;
 
-  d:=Objectify(DClassType(s), rec(parent:=s, data:=[m], o:=o)); 
-
-  SetRepresentative(d, rep);
-  SetEquivalenceClassRelation(d, GreensDRelation(s));
-  return d; 
+  return CreateDClass(s, [m], o, rep); 
 end);
 
 # new for 0.7! - GreensHClasses - for an inv semi of partial perms
@@ -1005,15 +1001,13 @@ end);
 InstallOtherMethod(GreensHClasses, "for an inv semi of partial perms",
 [IsPartialPermSemigroup and IsInverseSemigroup],
 function(s)
-  local o, scc, r, out, type, l, reps, m, mults, gens, w, f, i, j, k;
+  local o, scc, r, out, l, reps, m, mults, gens, f, i, j, k;
   
   o:=LongOrb(s);
   EnumerateInverseSemiData(s);
   scc:=OrbSCC(o);
   r:=Length(scc);
   out:=EmptyPlist(NrHClasses(s));
-
-  type:=HClassType(s);
  
   if IsPartialPermMonoid(s) then 
     l:=0;
@@ -1028,9 +1022,7 @@ function(s)
       for j in scc[i+l] do
         for k in scc[i+l] do
           m:=m+1;
-          out[m]:=Objectify(type, rec(parent:=s, data:=[i+l,j,k], o:=o));;
-          SetRepresentative(out[m], reps[m]);
-          SetEquivalenceClassRelation(out[m], GreensHRelation(s));
+          out[m]:=CreateHClass(s, [i+l,j,k], o, reps[m]);
         od;
       od; 
     od;
@@ -1046,9 +1038,7 @@ function(s)
         for k in scc[i+l] do
           m:=m+1;
           reps[m]:=mults[j]*f/mults[k];
-          out[m]:=Objectify(type, rec(parent:=s, data:=[i+l,j,k], o:=o));;
-          SetRepresentative(out[m], reps[m]);
-          SetEquivalenceClassRelation(out[m], GreensHRelation(s));
+          out[m]:=CreateHClass(s, [i+l,j,k], o, reps[m]);
         od;
       od;
     od;
@@ -1065,10 +1055,10 @@ InstallOtherMethod(GreensHClasses, "for D-class of inv semi of partial perms",
 [IsGreensDClass and IsGreensClassOfInverseSemigroup and
 IsGreensClassOfPartPermSemigroup],
 function(d)
-  local m, t, o, scc, s, type, out, reps, k, mults, f, i, j;
+  local m, o, scc, s, out, reps, k, mults, f, i, j;
   
   m:=d!.data[1]; o:=d!.o; scc:=OrbSCC(o)[m]; s:=d!.parent;
-  type:=HClassType(s); out:=EmptyPlist(Length(scc)^2);
+  out:=EmptyPlist(Length(scc)^2);
   
   if HasHClassReps(d) then 
     reps:=HClassReps(d);
@@ -1076,9 +1066,7 @@ function(d)
     for i in scc do
       for j in scc do
         k:=k+1;
-        out[k]:=Objectify(type, rec(parent:=s, data:=[m,i,j], o:=o));;
-        SetRepresentative(out[k], reps[k]);
-        SetEquivalenceClassRelation(out[k], GreensHRelation(s));
+        out[k]:=CreateHClass(s, [m,i,j], o, reps[k]);
       od;
     od; 
   else
@@ -1091,9 +1079,7 @@ function(d)
       for j in scc do
         k:=k+1;
         reps[k]:=mults[i]*f/mults[j];
-        out[k]:=Objectify(type, rec(parent:=s, data:=[m,i,j], o:=o));;
-        SetRepresentative(out[k], reps[k]);
-        SetEquivalenceClassRelation(out[k], GreensHRelation(s));
+        out[k]:=CreateHClass(s, [m,i,j], o, reps[k]);
       od;
     od;
     SetHClassReps(d, reps); 
@@ -1109,17 +1095,15 @@ InstallOtherMethod(GreensHClasses, "for L-class of inv semi of partial perms",
 [IsGreensLClass and IsGreensClassOfInverseSemigroup and
 IsGreensClassOfPartPermSemigroup],
 function(d)
-  local m, t, j, o, scc, s, type, out, reps, mults, f, i;
+  local m, j, o, scc, s, out, reps, mults, f, i;
   
   m:=d!.data[1]; j:=d!.data[3]; o:=d!.o; scc:=OrbSCC(d!.o)[m];
-  s:=d!.parent; type:=HClassType(s); out:=EmptyPlist(Length(scc));
+  s:=d!.parent; out:=EmptyPlist(Length(scc));
   
   if HasHClassReps(d) then 
     reps:=HClassReps(d);
     for i in [1..Length(scc)] do
-      out[i]:=Objectify(type, rec(parent:=s, data:=[m,scc[i],j], o:=o));;
-      SetRepresentative(out[i], reps[i]);
-      SetEquivalenceClassRelation(out[i], GreensHRelation(s));
+      out[i]:=CreateHClass(s, [m,scc[i],j], o, reps[i]);
     od;
   else
     reps:=EmptyPlist(Length(scc));
@@ -1128,9 +1112,7 @@ function(d)
   
     for i in [1..Length(scc)] do
       reps[i]:=mults[scc[i]]*f;
-      out[i]:=Objectify(type, rec(parent:=s, data:=[m,scc[i],j], o:=o));;
-      SetRepresentative(out[i], reps[i]);
-      SetEquivalenceClassRelation(out[i], GreensHRelation(s));
+      out[i]:=CreateHClass(s, [m,scc[i],j], o, reps[i]);
     od;
     SetHClassReps(d, reps); 
   fi;
@@ -1145,18 +1127,16 @@ InstallOtherMethod(GreensHClasses, "for R-class of inv semi of partial perms",
 [IsGreensRClass and IsGreensClassOfInverseSemigroup and
 IsGreensClassOfPartPermSemigroup],
 function(r)
-  local m, k, l, o, scc, s, type, hrel, out, reps, mults, f, i;
+  local m, k, l, o, scc, s, out, reps, mults, f, i;
   
-  m:=r!.data[1]; k:=r!.data[2]; l:=r!.data[3]; o:=r!.o; scc:=OrbSCC(o)[m];
-  s:=r!.parent; type:=HClassType(s); hrel:=GreensHRelation(s);
+  m:=r!.data[1]; k:=r!.data[2]; l:=r!.data[3]; o:=r!.o; 
+  scc:=OrbSCC(o)[m]; s:=r!.parent; 
   out:=EmptyPlist(Length(scc));
   
   if HasHClassReps(r) then 
     reps:=HClassReps(r);
     for i in [1..Length(scc)] do
-      out[i]:=Objectify(type, rec(parent:=s, data:=[m,k,scc[i]], o:=o));;
-      SetRepresentative(out[i], reps[i]);
-      SetEquivalenceClassRelation(out[i], hrel);
+      out[i]:=CreateHClass(s, [m,k,scc[i]], o, reps[i]);
     od; 
   else
     reps:=EmptyPlist(Length(scc));
@@ -1165,9 +1145,7 @@ function(r)
   
     for i in [1..Length(scc)] do
       reps[i]:=f/mults[scc[i]];
-      out[i]:=Objectify(type, rec(parent:=s, data:=[m,k,scc[i]], o:=o));;
-      SetRepresentative(out[i], reps[i]);
-      SetEquivalenceClassRelation(out[i], hrel);
+      out[i]:=CreateHClass(s, [m,k,scc[i]], o, reps[i]);
     od;
     SetHClassReps(r, reps); 
   fi;
@@ -1182,18 +1160,15 @@ InstallOtherMethod(GreensLClasses, "for D-class of inv semi of part perms",
 [IsGreensDClass and IsGreensClassOfInverseSemigroup and
 IsGreensClassOfPartPermSemigroup],
 function(d)
-  local m, t, j, o, scc, s, type, out, reps, mults, f, i;
+  local m, o, scc, s, out, reps, mults, f, i;
 
   m:=d!.data[1]; o:=d!.o; scc:=OrbSCC(d!.o)[m]; s:=d!.parent; 
-
-  type:=LClassType(s); out:=EmptyPlist(Length(scc));
+  out:=EmptyPlist(Length(scc));
 
   if HasLClassReps(d) then 
     reps:=LClassReps(d);
     for i in [1..Length(scc)] do 
-      out[i]:=Objectify(type, rec(parent:=s, data:=[m,scc[1],scc[i]], o:=o));;
-      SetRepresentative(out[i], reps[i]);
-      SetEquivalenceClassRelation(out[i], GreensLRelation(s));
+      out[i]:=CreateLClass(s, [m,scc[1],scc[i]], o, reps[i]);
     od;
   else
     reps:=EmptyPlist(Length(scc));
@@ -1201,9 +1176,7 @@ function(d)
     f:=Representative(d);
     for i in [1..Length(scc)] do 
       reps[i]:=f/mults[scc[i]];
-      out[i]:=Objectify(type, rec(parent:=s, data:=[m,scc[1],scc[i]], o:=o));;
-      SetRepresentative(out[i], reps[i]);
-      SetEquivalenceClassRelation(out[i], GreensLRelation(s));
+      out[i]:=CreateLClass(s, [m,scc[1],scc[i]], o, reps[i]);
     od;
     SetLClassReps(d, reps);
   fi;
@@ -1216,7 +1189,7 @@ end);
 InstallOtherMethod(GreensLClasses, "for an inv semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local l, o, scc, out, gens, type, mults, i, f, rep, m, j;
+  local l, o, scc, out, type, mults, i, f, rep, m, j;
 
   if IsPartialPermMonoid(s) then
     l:=0;
@@ -1235,9 +1208,7 @@ function(s)
     for j in scc[m+l] do 
       i:=i+1;
       rep:=f/mults[j];
-      out[i]:=Objectify(type,rec(parent:=s,data:=[m+l,scc[m+l][1],j], o:=o));;
-      SetRepresentative(out[i], rep);
-      SetEquivalenceClassRelation(out[i], GreensLRelation(s));
+      out[i]:=CreateLClass(s, [m+l,scc[m+l][1],j], o, rep);
    od;
   od;
 
@@ -1261,9 +1232,7 @@ function(d)
   if HasRClassReps(d) then 
     reps:=RClassReps(d);
     for i in [1..Length(scc)] do 
-      out[i]:=Objectify(type, rec(parent:=s, data:=[m,scc[i],scc[1]], o:=o));;
-      SetRepresentative(out[i], reps[i]);
-      SetEquivalenceClassRelation(out[i], rrel);
+      out[i]:=CreateRClass(s, [m,scc[i],scc[1]], o, reps[i]);
     od;
   else
     reps:=EmptyPlist(Length(scc));
@@ -1271,9 +1240,7 @@ function(d)
     f:=Representative(d);
     for i in [1..Length(scc)] do 
       reps[i]:=mults[scc[i]]*f;
-      out[i]:=Objectify(type, rec(parent:=s, data:=[m,scc[i],scc[1]], o:=o));;
-      SetRepresentative(out[i], reps[i]);
-      SetEquivalenceClassRelation(out[i], rrel);
+      out[i]:=CreateRClass(s, [m,scc[i],scc[1]], o, reps[i]);
     od;
     SetRClassReps(d, reps);
   fi;
@@ -1305,10 +1272,7 @@ function(s)
     for j in scc[m+l] do 
       i:=i+1;
       rep:=mults[j]*f;
-      out[i]:=Objectify(type, rec(parent:=s, data:=[m+l, j, scc[m+l][1]], 
-       o:=o));;
-      SetRepresentative(out[i], rep);
-      SetEquivalenceClassRelation(out[i], rrel);
+      out[i]:=CreateRClass(s, [m+l, j, scc[m+l][1]], o, rep);
    od;
   od;
 
@@ -1321,7 +1285,7 @@ end);
 InstallOtherMethod(GreensDClasses, "for an inv semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local l, o, scc, out, gens, type, mults, drel, i, f, m;
+  local l, o, scc, out, i, f, m;
 
   if IsPartialPermMonoid(s) then 
     l:=0;
@@ -1329,18 +1293,14 @@ function(s)
     l:=1;
   fi;
 
-  o:=LongOrb(s); EnumerateInverseSemiData(s); scc:=OrbSCC(o);
-  out:=EmptyPlist(Length(scc)); gens:=GeneratorsOfSemigroup(s);
-  type:=DClassType(s); mults:=o!.mults; drel:=GreensDRelation(s);
+  o:=LongOrb(s); EnumerateInverseSemiData(s); 
+  scc:=OrbSCC(o); out:=EmptyPlist(Length(scc)); 
 
   i:=0;
-
   for m in [1..Length(scc)-l] do 
     i:=i+1;
     f:=PartialPermNC(o[scc[m+l][1]], o[scc[m+l][1]]);
-    out[i]:=Objectify(type, rec(parent:=s, data:=[m+l], o:=o));
-    SetRepresentative(out[i], f);
-    SetEquivalenceClassRelation(out[i], drel);
+    out[i]:=CreateDClass(s,[m+l], o, f);
   od;
   return out;
 end);
@@ -1379,7 +1339,7 @@ end);
 InstallOtherMethod(GreensHClassOfElementNC, "for an inv semi and part perm",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
 function(s, f)
-  local o, l, m, t, k, d;
+  local o, k, m, l;
 
   if IsClosed(LongOrb(s)) then 
     o:=LongOrb(s);
@@ -1401,11 +1361,7 @@ function(s, f)
     return fail;
   fi;
   
-  d:=Objectify(HClassType(s), rec(parent:=s, data:=[m,k,l], o:=o)); 
-
-  SetRepresentative(d, f);
-  SetEquivalenceClassRelation(d, GreensHRelation(s));
-  return d; 
+  return CreateHClass(s, [m,k,l], o, f); 
 end);
 
 # new for 0.7! - GreensHClassOfElementNC - for an R-class and part perm
@@ -1415,7 +1371,7 @@ InstallOtherMethod(GreensHClassOfElementNC, "for an R-class and part perm",
 [IsGreensRClass and IsGreensClassOfPartPermSemigroup and 
 IsGreensClassOfInverseSemigroup, IsPartialPerm],
 function(r, f)
-  local o, m, k, l, h;
+  local o, m, k, l;
 
   o:=r!.o; m:=r!.data[1]; k:=r!.data[2];
   
@@ -1424,12 +1380,7 @@ function(r, f)
     return fail;
   fi;
 
-  h:=Objectify(HClassType(r!.parent), rec(parent:=r!.parent, 
-   data:=[m, k, l], o:=o));
-
-  SetRepresentative(h, f);
-  SetEquivalenceClassRelation(h, GreensHRelation(r!.parent));
-  return h;
+  return CreateHClass(r!.parent, [m, k, l], o, f);
 end);
 
 # new for 0.7! - GreensHClassOfElementNC - for an L-class and part perm
@@ -1448,12 +1399,7 @@ function(r, f)
     return fail;
   fi;
 
-  h:=Objectify(HClassType(r!.parent), rec(parent:=r!.parent, 
-   data:=[m, k, l], o:=o));
-
-  SetRepresentative(h, f);
-  SetEquivalenceClassRelation(h, GreensHRelation(r!.parent));
-  return h;
+  return CreateHClass(r!.parent, [m, k, l], o, f);
 end);
 
 # new for 0.7! - GreensHClassOfElementNC - for an D-class and part perm
@@ -1477,12 +1423,7 @@ function(r, f)
     return fail;
   fi;
   
-  h:=Objectify(HClassType(r!.parent), rec(parent:=r!.parent, 
-   data:=[m, k, l], o:=o));
-
-  SetRepresentative(h, f);
-  SetEquivalenceClassRelation(h, GreensHRelation(r!.parent));
-  return h;
+  return CreateHClass(r!.parent, [m, k, l], o, f);
 end);
 
 # new for 0.7! - GreensLClassOfElement - for an inv semi and part perm
@@ -1519,7 +1460,7 @@ end);
 InstallOtherMethod(GreensLClassOfElementNC, "for an inv semi and part perm",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
 function(s, f)
-  local o, k, m, rep, l, r;
+  local o, k, m, rep, l;
 
   if IsClosed(LongOrb(s)) then 
     o:=LongOrb(s);
@@ -1541,11 +1482,7 @@ function(s, f)
     return fail;
   fi;
 
-  r:=Objectify(LClassType(s), rec(parent:=s, data:=[m,k,l], o:=o)); 
-
-  SetRepresentative(r, rep);
-  SetEquivalenceClassRelation(r, GreensLRelation(s));
-  return r; 
+  return CreateLClass(s, [m, k, l], o, rep);
 end);
 
 # new for 0.7! - GreensLClassOfElementNC - for D-class and part perm
@@ -1572,21 +1509,14 @@ function(d, f)
     return fail;
   fi;
 
-
-  l:=Objectify(LClassType(d!.parent), rec(parent:=d!.parent, 
-   data:=[m,o!.scc[m][1],l], o:=o)); 
-
-  SetRepresentative(l, rep);
-  SetEquivalenceClassRelation(l, GreensLRelation(d!.parent));
-  return l; 
+  return CreateLClass(d!.parent, [m, o!.scc[m][1], l], o, rep);
 end);
 
 # new for 0.7! - GreensRClassOfElement - for an inv semi and part perm
 ##############################################################################
 
 InstallOtherMethod(GreensRClassOfElement, "for an inv semi and part perm",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm 
- ],
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
 function(s, f)
   if not f in s then 
     Error("the partial perm. is not an element of the semigroup,");
@@ -1602,7 +1532,7 @@ end);
 InstallOtherMethod(GreensRClassOfElementNC, "for an inv semi and part perm",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
 function(s, f)
-  local o, l, m, t, rep, k, r;
+  local o, l, m, rep, k;
 
   if IsClosed(LongOrb(s)) then 
     o:=LongOrb(s);
@@ -1622,12 +1552,8 @@ function(s, f)
     o:=ShortOrb(s, RanSetPP(rep));
     m:=1; k:=1; l:=1;
   fi;
-  
-  r:=Objectify(RClassType(s), rec(parent:=s, data:=[m,k,l], o:=o)); 
-
-  SetRepresentative(r, rep);
-  SetEquivalenceClassRelation(r, GreensRRelation(s));
-  return r; 
+ 
+  return CreateRClass(s, [m,k,l], o, rep);
 end);
 
 # new for 0.7! - GreensRClassOfElementNC - for D-class and part perm
@@ -1637,7 +1563,7 @@ end);
 InstallOtherMethod(GreensRClassOfElementNC, "for a D-class and part perm",
 [IsGreensDClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup, IsPartialPerm],
 function(d, f)
-  local o, m, l, rep, k, r;
+  local o, m, l, rep, k;
 
   o:=d!.o; m:=d!.data[1];
   l:=Position(o, RanSetPP(f));
@@ -1653,12 +1579,7 @@ function(d, f)
     return fail;
   fi;
 
-  r:=Objectify(RClassType(d!.parent), rec(parent:=d!.parent, 
-   data:=[m,k,o!.scc[m][1]], o:=o)); 
-
-  SetRepresentative(r, rep);
-  SetEquivalenceClassRelation(r, GreensLRelation(d!.parent));
-  return r; 
+  return CreateRClass(d!.parent, [m,k,o!.scc[m][1]], o, rep);
 end);
 
 #HHH

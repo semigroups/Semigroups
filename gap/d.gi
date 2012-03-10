@@ -275,7 +275,7 @@ InstallGlobalFunction(CreateDClass,
 function(s, data, orbit, rep)
   local d;
 
-  data:=[data[1]{[1..6]}, data[2]{[1..6]}];
+  #data:=[data[1]{[1..6]}, data[2]{[1..6]}];
 
   d:=Objectify(DClassType(s), rec(parent:=s, data:=data, 
    o:=orbit, rep:=rep));
