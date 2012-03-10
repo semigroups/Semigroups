@@ -199,6 +199,12 @@ InstallOtherMethod(Degree, "for a partial perm",
 InstallOtherMethod(Degree, "for a transformation semigroup",
 [IsTransformationSemigroup], DegreeOfTransformationSemigroup);
 
+# new for 0.7! - Degree - "for a partial perm semigroup"
+#############################################################################
+
+InstallOtherMethod(Degree, "for a partial perm semigroup",
+[IsPartialPermSemigroup], LargestMovedPoint);
+
 # new for 0.7! - Display - "for a partial perm"
 #############################################################################
 

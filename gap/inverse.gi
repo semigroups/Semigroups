@@ -524,6 +524,7 @@ function(gens, o, f, scc, truth, graph, r, mults)
   for i in scc do
     for j in [1..r] do
       if IsBound(graph[i][j]) and truth[graph[i][j]] then
+        #Error("");
         k:=(RightOne(f)/mults[i])*(gens[j]*mults[graph[i][j]]);
         g:=ClosureGroup(g, MappingPermListList(DomPP(k), RanPP(k)));
       fi;
@@ -597,7 +598,7 @@ end);
 
 InstallGlobalFunction(EnumerateInverseSemiData, 
 function(s)
-  local o, scc, r, mults, schutz, graph, truth, gens, w, f, modifier, i, j;
+  local o, modifier, scc, r, mults, schutz, graph, truth, gens, n, w, f, i;
   
   o:=LongOrb(s);
   
@@ -616,7 +617,7 @@ function(s)
     graph:=OrbitGraph(o);;
     truth:=OrbSCCTruthTable(o);;
     gens:=GeneratorsOfSemigroup(s);
-
+    n:=Length(gens);
     for i in [1..r] do 
       CreateOrbSCCMultipliersNC(gens, o, i, scc[i], mults);
       w:=TraceSchreierTreeForward(o, scc[i][1]);
@@ -626,7 +627,7 @@ function(s)
         f:=EvaluateWord(gens, w);
       fi;
       schutz[i]:=CreateOrbSCCSchutzGpNC(gens, o, f, scc[i], 
-         truth[i], graph, r, mults);
+         truth[i], graph, n, mults);
     od;
     o!.mults:=mults;
     o!.schutz:=schutz;
@@ -2055,8 +2056,7 @@ end);
 ###############################################################################
 #JDMJDM there should be a method for IteratorOfLClassRepsData which spits out
 #the reps and their data, then these methods are simply call that and
-#CreateXClass. 
-
+#CreateLClass. 
 
 InstallMethod(IteratorOfLClasses, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], 

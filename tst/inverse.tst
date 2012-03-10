@@ -29,8 +29,10 @@ gap> gens:=[PartialPermNC( [ 1, 2, 4 ], [ 1, 5, 2 ] ),
 > PartialPermNC( [ 1, 3, 5 ], [ 5, 4, 1 ] )];;
 gap> s:=InverseSemigroup(gens);                 
 <inverse semigroup with 10 generators>
+gap> Size(s);
+860
 gap> NrRClasses(s);
-30
+31
 gap> RClassReps(s);
 [ <identity on [ 1, 2, 5 ]>, [ 2, 3, 5 ] -> [ 2, 1, 5 ], 
   [ 2, 4, 5 ] -> [ 2, 1, 5 ], [ 1 .. 3 ] -> [ 5, 2, 1 ], 
