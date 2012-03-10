@@ -2053,6 +2053,10 @@ end);
 
 # new for 0.7! - IteratorOfLClasses - "for part perm inverse semigroup""
 ###############################################################################
+#JDMJDM there should be a method for IteratorOfLClassRepsData which spits out
+#the reps and their data, then these methods are simply call that and
+#CreateXClass. 
+
 
 InstallMethod(IteratorOfLClasses, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], 

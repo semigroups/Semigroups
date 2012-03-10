@@ -1622,7 +1622,8 @@ end);
 #############################################################################
 # Usage: s = transformation semigroup.
 
-InstallGlobalFunction(IteratorOfDClassRepsData, 
+InstallMethod(IteratorOfDClassRepsData, "for a trans. semigroup",
+[IsTransformationSemigroup], 
 function(s)
   local iter;
   

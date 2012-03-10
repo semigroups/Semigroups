@@ -66,6 +66,11 @@ DeclareOperation("IteratorOfLClassReps", [IsSemigroup]);
 DeclareOperation("IteratorOfHClassReps", [IsSemigroup]); 
 DeclareOperation("IteratorOfRClassReps", [IsSemigroup]);
 
+DeclareOperation("IteratorOfDClassRepsData", [IsSemigroup]);
+DeclareOperation("IteratorOfHClassRepsData", [IsSemigroup]);
+DeclareOperation("IteratorOfLClassRepsData", [IsSemigroup]);
+DeclareOperation("IteratorOfRClassRepsData", [IsSemigroup]);
+
 DeclareAttribute("NrIdempotents", IsSemigroup);
 
 DeclareAttribute("NrDClasses", IsSemigroup); 
@@ -117,8 +122,6 @@ DeclareGlobalFunction("IsRegularRClassData");
 DeclareProperty("IsRClassNC", IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("IteratorOfNewRClassRepsData");
 
-DeclareOperation("IteratorOfHClassRepsData", [IsSemigroup]);
-DeclareOperation("IteratorOfRClassRepsData", [IsSemigroup]);
 DeclareGlobalFunction("HClassRepsDataFromData");
 DeclareGlobalFunction("NrIdempotentsRClassFromData");
 DeclareAttribute("OrbitsOfImages", IsTransformationSemigroup, "mutable");
@@ -156,7 +159,6 @@ DeclareAttribute("ImageOrbitCosets", IsGreensDClass and
  IsGreensClassOfTransSemigp);
 DeclareGlobalFunction("InOrbitsOfKernels");
 DeclareProperty("IsIteratorOfDClassRepsData", IsIterator);
-DeclareGlobalFunction("IteratorOfDClassRepsData");
 DeclareGlobalFunction("IteratorOfNewDClassReps");
 DeclareAttribute("KernelOrbit", IsGreensDClass and
  IsGreensClassOfTransSemigp, "mutable");
@@ -187,7 +189,6 @@ DeclareGlobalFunction("SizeOrbitsOfKernels");
 # the following functions in l.gi are currently undocumented
 
 DeclareGlobalFunction("LClassRepFromData");
-DeclareGlobalFunction("IteratorOfLClassRepsData");
 
 # the following functions in h.gi are currently undocumented
 

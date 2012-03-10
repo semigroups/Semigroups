@@ -430,14 +430,10 @@ end);
 ############################################################################
 # move to greens.gi
 
-InstallGlobalFunction(IteratorOfHClasses,
+InstallMethod(IteratorOfHClasses, "for a trans. semigroup",
+[IsTransformationSemigroup],
 function(s)
 local iter;
-
-  if not IsTransformationSemigroup(s) then
-    Error("Usage: arg. should be a transformation semigroup,");
-    return;
-  fi;
 
   Info(InfoCitrus, 4, "IteratorOfHClasses");
 
@@ -500,13 +496,14 @@ end);
 # new for 0.1! - IteratorOfHClassRepsData - not a user function
 ############################################################################
 
-InstallGlobalFunction(IteratorOfHClassRepsData, 
+InstallMethod(IteratorOfHClassRepsData, "for a trans. semigroup",
+[IsTransformationSemigroup], 
 function(s)
-local iter;
+  local iter;
 
-Info(InfoCitrus, 4, "IteratorOfHClassRepsData");
+  Info(InfoCitrus, 4, "IteratorOfHClassRepsData");
 
-iter:=IteratorByFunctions( rec(
+  iter:=IteratorByFunctions( rec(
 	
     i:=0, s:=s, 
 	
@@ -521,14 +518,14 @@ iter:=IteratorByFunctions( rec(
     local i;
     
       if IsDoneIterator(iter) then 
-              return fail;
+        return fail;
       fi;
       
       iter!.i:=iter!.i+1;
       i:=iter!.i;
       
       if i<=Length(iter!.data) then 
-              return iter!.data[i];
+        return iter!.data[i];
       fi;
       
       iter!.data:=HClassRepsDataFromData(s, NextIterator(iter!.r),

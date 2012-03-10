@@ -1451,7 +1451,8 @@ end);
 # new for 0.1! - IteratorOfRClassRepsData - not a user function!
 #############################################################################
 
-InstallGlobalFunction(IteratorOfRClassRepsData, 
+InstallMethod(IteratorOfRClassRepsData, "for a trans. semigroup",
+[IsTransformationSemigroup],
 function(s)
   local iter, is_done_iterator;
   

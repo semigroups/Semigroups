@@ -664,7 +664,8 @@ end);
 # new for 0.1! - IteratorOfLClassRepsData - not a user function
 ###########################################################################
 
-InstallGlobalFunction(IteratorOfLClassRepsData, 
+InstallMethod(IteratorOfLClassRepsData, "for a trans. semigroup",
+[IsTransformationSemigroup], 
 function(s)
   local o, iter; 
 
