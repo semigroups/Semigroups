@@ -125,7 +125,7 @@ InstallGlobalFunction(CreateLClass,
 function(s, data, orbit, rep)
   local l;
 
-  data:=[data[1]{[1..6]}, data[2]{[1..6]}, data[3]];
+  #data:=[data[1]{[1..6]}, data[2]{[1..6]}, data[3]];
 
   l:=Objectify(LClassType(s), rec(parent:=s, data:=data, 
    o:=orbit, rep:=rep));

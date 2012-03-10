@@ -292,6 +292,32 @@ function(arg)
   return;
 end);
 
+#III
+
+# new for 0.7! - IteratorByIterator - "for an iterator and function"
+#############################################################################
+
+InstallGlobalFunction(IteratorByIterator,
+function(old_iter, convert, filts)
+  local iter, filt;
+  iter:=IteratorByFunctions(rec(
+    data:=old_iter,
+    IsDoneIterator:=iter-> IsDoneIterator(iter!.data),
+    NextIterator:=function(iter)
+      local x;
+      x:=NextIterator(iter!.data);
+      if x=fail then 
+        return fail;
+      fi;
+      return convert(x);
+    end,
+    ShallowCopy:=iter-> rec(data:=old_iter)));
+  for filt in filts do 
+    SetFilterObj(iter, filt);
+  od;
+  return iter;
+end);
+
 # mod for 0.5! - LClass - "for a trans. semi. and trans. or H-class"
 #############################################################################
 # Usage: (trans. semigp. and trans.) or H-class.

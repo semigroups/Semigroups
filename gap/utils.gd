@@ -25,6 +25,7 @@ fi;
 
 DeclareGlobalFunction("HClass");
 DeclareGlobalFunction("HClassNC");
+DeclareGlobalFunction("IteratorByIterator");
 DeclareGlobalFunction("LClass");
 DeclareGlobalFunction("LClassNC");
 DeclareGlobalFunction("RandomInverseSemigroup");
