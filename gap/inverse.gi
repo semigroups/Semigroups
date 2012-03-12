@@ -1909,6 +1909,76 @@ function(d)
   return iter;
 end);
 
+# new for 0.7! - IteratorOfDClassRepsData - "for part perm inverse semigroup""
+###############################################################################
+
+InstallMethod(IteratorOfDClassRepsData, "for a part perm inverse semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup], 
+function(s)
+  local offset, o, scc;
+
+  if IsPartialPermMonoid(s) then
+    offset:=0;
+  else
+    offset:=1;
+  fi; 
+
+  o:=LongOrb(s); scc:=OrbSCC(o);
+  
+  return IteratorByFunctions( rec(
+                 
+    o:=o, m:=offset+1, scc_limit:=Length(scc),
+
+    IsDoneIterator:=iter-> iter!.m=iter!.scc_limit,
+
+    NextIterator:=function(iter)
+      local m, o, scc, mults;
+      m:=iter!.m; 
+
+      if m=iter!.scc_limit then 
+        return fail;
+      fi;
+     
+      o:=iter!.o;   scc:=OrbSCC(o); 
+      m:=m+1;       iter!.m:=m;
+
+      mults:=CreateOrbSCCMultipliers(o!.gens, o, m, scc[m]); 
+      
+      return [s, [m], LongOrb(s),
+       PartialPermNC(o[scc[m][1]], o[scc[m][1]])];
+    end,
+
+    ShallowCopy:=iter-> rec(o:=iter!.o, m:=iter!.m, at:=[0,1],
+    scc_limit:=iter!.scc_limit, at_limit:=iter!.at_limit)));
+end);
+
+# new for 0.7! - IteratorOfDClassReps - "for a part perm inverse semigroup"
+###############################################################################
+
+InstallMethod(IteratorOfDClassReps, "for a part perm inverse semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup],
+function(s)
+  if HasDClassReps(s) then 
+    return IteratorList(DClassReps(s));
+  fi;
+  return IteratorByIterator(IteratorOfDClassRepsData(s), x-> x[4],
+   [IsIteratorOfDClassReps]);
+end);
+
+# new for 0.7! - IteratorOfHClasses - "for a part perm inverse semigroup"
+###############################################################################
+
+InstallMethod(IteratorOfDClasses, "for a part perm inverse semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup],
+function(s)
+  if HasGreensDClasses(s) then 
+    return IteratorList(GreensDClasses(s));
+  fi;
+  return IteratorByIterator(IteratorOfDClassRepsData(s), x->
+   CallFuncList(CreateDClass, x), [IsIteratorOfDClasses]);
+end);
+
+
 # new for 0.7! - IteratorOfHClassRepsData - "for part perm inverse semigroup""
 ###############################################################################
 
@@ -1972,13 +2042,11 @@ end);
 InstallMethod(IteratorOfHClassReps, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
 function(s)
-
   if HasHClassReps(s) then 
     return IteratorList(HClassReps(s));
   fi;
-
   return IteratorByIterator(IteratorOfHClassRepsData(s), x-> x[4],
-   [IsIteratorOfHClassReps])
+   [IsIteratorOfHClassReps]);
 end);
 
 # new for 0.7! - IteratorOfHClasses - "for a part perm inverse semigroup"
@@ -1986,8 +2054,13 @@ end);
 
 InstallMethod(IteratorOfHClasses, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
-s-> IteratorByIterator(IteratorOfHClassRepsData(s), x->
-CallFuncList(CreateHClass, x), [IsIteratorOfHClasses]));
+function(s)
+  if HasGreensHClasses(s) then 
+    return IteratorList(GreensHClasses(s));
+  fi;
+  return IteratorByIterator(IteratorOfHClassRepsData(s), x->
+   CallFuncList(CreateHClass, x), [IsIteratorOfHClasses]);
+end);
 
 # new for 0.7! - IteratorOfLClassRepsData - "for part perm inverse semigroup""
 ###############################################################################
