@@ -182,7 +182,7 @@ function(f, r)
     return false;
   fi;
   
-  g:=rep^-1*g;
+  g:=rep^-1*g; #LQuoP #JDM is this necessary?
   return SiftedPermutation(schutz, MappingPermListList(DomPP(g), RanPP(g)))=(); 
 end);
 
@@ -212,7 +212,7 @@ function(f, r)
   m:=r!.data[1];
 
   if l=fail or not OrbSCCTruthTable(o)[m][l] then 
-    Info(InfoCitrus, 1, "range not equal to that of any L-class element,");
+    Info(InfoCitrus, 1, "domain not equal to that of any L-class element,");
     return false;
   fi;
 
@@ -319,85 +319,12 @@ end);
 
 #AAA
 
-# new for 0.7! - AsList - "for an R-class of inverse semigp."
+# new for 0.7! - AsList - "for a Green's class of inverse semigp."
 ############################################################################
-# JDM ListByIterator?
 
-InstallOtherMethod(AsList, "for an R-class of inverse semigp.",
-[IsGreensRClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
-function(r)
-  local f, g, elts, mults, scc, i;
-
-  f:=Representative(r); 
-  g:=List(SchutzenbergerGroup(r), x-> f*x);
-  elts:=EmptyPlist(Size(r));
-
-  mults:=r!.o!.mults; scc:=r!.o!.scc[r!.data[1]];
-
-  for i in scc do
-    Append(elts, List(g, x-> x/mults[i]));
-  od;
-  return elts;
-end);
-
-# new for 0.7! - AsList - "for an L-class of inverse semigp." 
-############################################################################
-# JDM ListByIterator?
-
-InstallOtherMethod(AsList, "for an L-class of inverse semigp.",
-[IsGreensLClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
-function(r)
-  local f, g, elts, mults, scc, i;
-
-  f:=Representative(r); 
-  g:=List(SchutzenbergerGroup(r), x-> x*f);
-  elts:=EmptyPlist(Size(r));
-
-  mults:=r!.o!.mults; scc:=r!.o!.scc[r!.data[1]];
-
-  for i in scc do
-    Append(elts, mults[i]*g);
-  od;
-  return elts;
-end);
-
-# new for 0.7! - AsList - "for an H-class of inverse semigp."
-############################################################################
-# JDM ListByIterator?
-
-InstallOtherMethod(AsList, "for an H-class of inverse semigp.",
-[IsGreensHClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
-function(h)
-  local schutz, g;
-  
-  schutz:=SchutzenbergerGroup(h);
-  g:=OrbMultipliers(h)[h!.data[3]];
-
-  return List(schutz, x-> Representative(h)*g*x/g);
-end);
-
-# new for 0.7! - AsList - "for an D-class of inverse semigp."
-############################################################################
-# JDM ListByIterator?
-
-InstallOtherMethod(AsList, "for an D-class of inverse semigp.",
-[IsGreensDClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
-function(r)
-  local f, g, elts, mults, scc, i, j;
-
-  f:=Representative(r); 
-  g:=List(SchutzenbergerGroup(r), x-> f*x);
-  elts:=EmptyPlist(Size(r));
-
-  mults:=r!.o!.mults; scc:=r!.o!.scc[r!.data[1]];
-
-  for i in scc do
-    for j in scc do 
-      Append(elts, mults[j]*g/mults[i]);
-    od;
-  od;
-  return elts;
-end);
+InstallOtherMethod(AsList, "for an Green's class of inverse semigp.",
+[IsGreensClass and IsGreensClassOfInverseSemigroup and IsGreensClassOfPartPermSemigroup],
+r-> ListByIterator(Iterator(r), Size(r)));
 
 # new for 0.7! - AsSSortedList - "for Green's class of partial perm semigroup"
 #############################################################################
