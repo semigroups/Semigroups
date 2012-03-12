@@ -854,7 +854,7 @@ function(s, f)
 
   d:=PreInOrbitsOfImages(s, f, true)[2];
 
-  return CreateRClass(s, d, OrbitsOfImages(s), RClassRepFromData(s, d));
+  return CreateRClass(s, d{[1..6]}, OrbitsOfImages(s), RClassRepFromData(s, d));
 end);
 
 # new for 0.1! - GreensRClassOfElementNC - "for a trans. semigp and trans."
@@ -872,7 +872,8 @@ function(s, f)
 
   if d[1] then # f in s!
     Info(InfoCitrus, 2, "transformation is an element of semigroup");
-    return CreateRClass(s, d[2], OrbitsOfImages(s), RClassRepFromData(s, d[2]));
+    return CreateRClass(s, d[2]{[1..6]}, OrbitsOfImages(s),
+     RClassRepFromData(s, d[2]));
   elif OrbitsOfImages(s)!.finished then #f not in s!
     Error("transformation is not an element of semigroup,");
     return;
@@ -1423,7 +1424,7 @@ function(s)
         return fail;
       fi;
           
-      return CreateRClass(s, d, OrbitsOfImages(s), RClassRepFromData(s, d));
+      return CreateRClass(s, d{[1..6]}, OrbitsOfImages(s), RClassRepFromData(s, d));
     end,
 
     ShallowCopy:=iter-> rec(data:=IteratorOfRClassRepsData(s))));

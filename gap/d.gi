@@ -814,9 +814,8 @@ function(s, f)
     d:=[d[1][2],d[2][2]];
   fi;
 
-  d:=CreateDClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)], 
-   DClassRepFromData(s, d));
-
+  d:=CreateDClass(s, [d[1]{[1..6]}, d[2]{[1..6]}], [OrbitsOfImages(s),
+  OrbitsOfKernels(s)], DClassRepFromData(s, d));
   return d;
 end);
 
@@ -1161,7 +1160,7 @@ function(d)
 
   for data in reps do 
     f:=RClassRepFromData(s, data, o);
-    r:=CreateRClass(s, data, o, f);
+    r:=CreateRClass(s, data{[1..6]}, o, f);
     SetDClassOfRClass(r, d);
     i:=i+1;
     out[i]:=r;
@@ -1270,8 +1269,8 @@ function(d, f)
 
   data[3]:=l;
 
-  r:=CreateRClass(d!.parent, data, o, RClassRepFromData(ParentAttr(d), data,
-   o));
+  r:=CreateRClass(d!.parent, data{[1..6]}, o, RClassRepFromData(ParentAttr(d),
+   data, o));
   SetDClassOfRClass(r, d);
   return r;
 end);
@@ -1790,7 +1789,7 @@ function(s)
     iter!.i:=iter!.i+1;
     d:=OrbitsOfKernels(iter!.s)!.data[iter!.i];
 
-    return CreateDClass(s, d, [OrbitsOfImages(s), 
+    return CreateDClass(s, [d[1]{[1..6]}, d[2]{[1..6]}], [OrbitsOfImages(s), 
      OrbitsOfKernels(s)], rep);
     end,
     

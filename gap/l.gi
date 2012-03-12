@@ -352,8 +352,8 @@ function(s, f)
     d:=[d[1][2], d[2][2], ImageOrbitCosetsFromData(s, d[2][2])[d[2][2][8]]];
   fi;
 
-  l:=CreateLClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)], 
-  LClassRepFromData(s, d));
+  l:=CreateLClass(s, [d[1]{[1..6]}, d[2]{[1..6]}, d[3]], [OrbitsOfImages(s),
+  OrbitsOfKernels(s)], LClassRepFromData(s, d));
   return l;
 end);
 
@@ -618,7 +618,8 @@ function(s)
 	      return fail;
 	    fi;
 	
-	  return CreateLClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)], 
+          return CreateLClass(s, [d[1]{[1..6]}, d[2]{[1..6]}, d[3]],
+          [OrbitsOfImages(s), OrbitsOfKernels(s)], 
 	   LClassRepFromData(s, d));
 	  end,
 	

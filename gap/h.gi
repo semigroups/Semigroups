@@ -214,8 +214,8 @@ function(s, f)
           fail];
   fi;
 
-  return CreateHClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)], 
-   HClassRepFromData(s, d));
+  return CreateHClass(s, [d[1]{[1..6]}, d[2]{[1..6]}, d[3], d[4]],
+  [OrbitsOfImages(s), OrbitsOfKernels(s)], HClassRepFromData(s, d));
 end);
 
 # new for 0.5! - GreensHClassOfElement - "for a Green's class and trans."
@@ -452,8 +452,8 @@ local iter;
         return fail;
       fi;
     
-      return CreateHClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)], 
-       HClassRepFromData(s, d));;
+      return CreateHClass(s, [d[1]{[1..6]}, d[2]{[1..6]}, d[3], d[4]],
+      [OrbitsOfImages(s), OrbitsOfKernels(s)], HClassRepFromData(s, d));;
     end,
 
     ShallowCopy:=iter-> rec(data:=IteratorOfHClassRepsData(s))));
@@ -619,29 +619,6 @@ function(h)
   return 0;
 end);
 
-#RRR
-
-# new for 0.1! - RClassOfHClass - "for an H-class of a trans. semigroup"
-#############################################################################
-
-InstallOtherMethod(RClassOfHClass, "for an H-class of a trans. semigroup", 
-[IsGreensHClass and IsGreensClassOfTransSemigp], 
-function(h)
-  local s, d, o, rep;
-
-  if h!.data[4]=fail then #created from R-class or D-class 
-    s:=h!.parent; d:=h!.data; o:=h!.o;
-    d[1][3]:=ImageOrbitSCCFromData(s, d[1], o[1])[1];
-    rep:=RClassRepFromData(s, d[1], o[1]);
-
-    return CreateRClass(s, d[1], o[1], rep);
-  fi;
-  # the below is probably best possible since no info about the R-class
-  # of an H-class created from an L-class is known. 
-  #JDM is the above right?
-  return RClass(ParentAttr(s), Representative(h));
-end);
-
 #PPP
 
 # new for 0.1! - ParentAttr - "for H-class of a trans. semigroup"
@@ -678,6 +655,30 @@ function(iter)
   Print( "<iterator of H-class>");
   return;
 end);
+
+#RRR
+
+# new for 0.1! - RClassOfHClass - "for an H-class of a trans. semigroup"
+#############################################################################
+
+InstallOtherMethod(RClassOfHClass, "for an H-class of a trans. semigroup", 
+[IsGreensHClass and IsGreensClassOfTransSemigp], 
+function(h)
+  local s, d, o, rep;
+
+  if h!.data[4]=fail then #created from R-class or D-class 
+    s:=h!.parent; d:=h!.data; o:=h!.o;
+    d[1][3]:=ImageOrbitSCCFromData(s, d[1], o[1])[1];
+    rep:=RClassRepFromData(s, d[1], o[1]);
+
+    return CreateRClass(s, d[1], o[1], rep);
+  fi;
+  # the below is probably best possible since no info about the R-class
+  # of an H-class created from an L-class is known. 
+  #JDM is the above right?
+  return RClass(ParentAttr(s), Representative(h));
+end);
+
 
 #SSS
 
