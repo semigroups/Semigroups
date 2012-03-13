@@ -1358,6 +1358,41 @@ function(s)
   return Semigroup(Elements(GreensDClassOfElementNC(s, f)));#JDM temp. 
 end);
 
+# new for 0.7! - MinimalIdeal - "for a partial perm semi"
+###########################################################################
+
+InstallMethod(MinimalIdeal, "for a partial perm semi",
+[IsPartialPermSemigroup],
+function(s)
+  local n, gens, max, o, i, bound, f;
+
+  n:=Degree(s);
+  gens:=Generators(s);
+  max:=Maximum(List(gens, Degree));
+
+  if max=n then
+    bound:=2^n;
+  else
+    bound:=Sum([1..max], x-> Binomial(n, x));
+  fi;
+
+  o:=Orb(gens, [1..n]*1, OnIntegerSetsWithPP, rec( schreier:=true,
+   gradingfunc:=function(o, x) return Length(x); end,
+    onlygrades:=[1..max],
+     lookingfor:=function(o, x) return Length(x)=1; end));
+  
+  Enumerate(o, bound);
+
+  if IsPosInt(PositionOfFound(o)) then
+    i:=PositionOfFound(o);
+  else
+    i:=Position(Grades(o), Minimum(Grades(o)));
+  fi;
+
+  f:=EvaluateWord(gens, TraceSchreierTreeForward(o, i));
+  return InverseSemigroup(Elements(GreensDClassOfElementNC(s, f)));#JDM temp. 
+end);
+
 # new for 0.7! - MovedPoints - "for a partial perm semigroup"
 ###########################################################################
 

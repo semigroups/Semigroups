@@ -51,7 +51,7 @@ DeclareProperty("IsSemilatticeAsSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsTransformationSemigroup);
 DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
-DeclareAttribute("MinimalIdeal", IsTransformationSemigroup);
+DeclareAttribute("MinimalIdeal", IsSemigroup);
 DeclareOperation("NrElementsOfRank", [IsTransformationSemigroup and
 HasGeneratorsOfSemigroup, IsPosInt]);
 DeclareAttribute("PosetOfIdempotents", IsTransformationSemigroup);
