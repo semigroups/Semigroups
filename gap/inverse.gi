@@ -431,12 +431,12 @@ function(arg)
   if IsBound(arg[3]) then
     f:=arg[3];
   else
-    f:=TraceSchreierTreeForward(o, scc[1]);
-    if f=[] then
+    #f:=TraceSchreierTreeForward(o, scc[1]);
+    # if f=[] then
       f:=PartialPermNC(o[scc[1]], o[scc[1]]);
-    else
-      f:=EvaluateWord(o!.gens, f);
-    fi;
+    #else
+    #  f:=EvaluateWord(o!.gens, f);
+    #fi;
   fi;  
 
   CreateOrbSCCMultipliers(o!.gens, o, m, scc);
@@ -557,12 +557,12 @@ function(s)
     n:=Length(gens);
     for i in [1..r] do 
       CreateOrbSCCMultipliersNC(gens, o, i, scc[i], mults);
-      w:=TraceSchreierTreeForward(o, scc[i][1]);
-      if w=[] then 
-        f:=PartialPermNC(o[scc[i][1]], o[scc[i][1]]);
-      else
-        f:=EvaluateWord(gens, w);
-      fi;
+      #w:=TraceSchreierTreeForward(o, scc[i][1]);
+      #if w=[] then 
+      f:=PartialPermNC(o[scc[i][1]], o[scc[i][1]]);
+      #else
+      #  f:=EvaluateWord(gens, w);
+      #fi;
       schutz[i]:=CreateOrbSCCSchutzGpNC(gens, o, f, scc[i], 
          truth[i], graph, n, mults);
     od;
@@ -1545,12 +1545,12 @@ function(s)
 
   m:=0;
   for i in [1..r-l] do 
-    w:=TraceSchreierTreeForward(o, scc[i+l][1]);
-    if w=[] then 
-      f:=PartialPermNC(o[scc[i+l][1]], o[scc[i+l][1]]);
-    else
-      f:=RightOne(EvaluateWord(gens, w));
-    fi;
+    #w:=TraceSchreierTreeForward(o, scc[i+l][1]);
+    #if w=[] then 
+    f:=PartialPermNC(o[scc[i+l][1]], o[scc[i+l][1]]);
+    #else
+    #  f:=RightOne(EvaluateWord(gens, w));
+    #fi;
     for j in scc[i+l] do 
       for k in scc[i+l] do 
         m:=m+1;
@@ -2068,7 +2068,7 @@ end);
 InstallMethod(IteratorOfLClassRepsData, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], 
 function(s)
-  local offset, iter;
+  local offset, iter, o, scc;
 
   if IsPartialPermMonoid(s) then
     offset:=0;
@@ -2088,16 +2088,18 @@ function(s)
 
       NextIterator:=function(iter)
         local i, o, r;
-        if IsDoneIterator(iter) then 
+        
+        o:=iter!.o; i:=iter!.i;
+
+        if IsClosed(o) and i>=Length(o) then 
           return fail;  
         fi;
-
-        iter!.i:=iter!.i+1;
-        i:=iter!.i; o:=iter!.o;
-
+        
+        i:=i+1;
+        
         if i>Length(o) then 
           if not IsClosed(o) then 
-            Enumerate(o, Length(o)+1);
+            Enumerate(o, i);
             if i>Length(o) then 
               return fail;
             fi;
@@ -2106,40 +2108,51 @@ function(s)
           fi;
         fi;
 
+        iter!.i:=i; 
+  
         return [s, [1,1,1], ShortOrb(s, o[i]), PartialPermNC(o[i], o[i])];
       end,
 
       ShallowCopy:=iter-> rec(o:=iter!.o, i:=iter!.i)));
   else ####
+
+    o:=LongOrb(s); scc:=OrbSCC(o);
+
     iter:=IteratorByFunctions( rec(
                  
-      o:=LongOrb(s),
+      o:=o,
 
       m:=offset+1, i:=0,      
 
-      IsDoneIterator:=iter-> iter!.m=Length(OrbSCC(iter!.o)) and 
-       iter!.i=Length(OrbSCC(iter!.o)[iter!.m]),
+      scc_limit:=Length(scc),
+      i_limit:=Length(scc[Length(scc)]),
+
+      IsDoneIterator:=iter-> iter!.m=iter!.scc_limit and 
+       iter!.i=iter!.i_limit,
 
       NextIterator:=function(iter)
-        local i, o, m, scc, f, r, mults;
-        if IsDoneIterator(iter) then
+        local i, m, o, scc, mults;
+
+        i:=iter!.i; m:=iter!.m; 
+        if i=iter!.i_limit and m=iter!.scc_limit then
           return fail; 
         fi;
 
-        i:=iter!.i; o:=iter!.o; m:=iter!.m; scc:=OrbSCC(o);
+        o:=iter!.o; scc:=OrbSCC(o);
         if i<Length(scc[m]) then 
-          iter!.i:=iter!.i+1;
           i:=i+1;
         else
-          i:=1;  iter!.i:=1; 
-          m:=m+1; iter!.m:=iter!.m+1; 
+          i:=1; m:=m+1;
         fi;
+        iter!.i:=i; iter!.m:=m;
+  
         mults:=CreateOrbSCCMultipliers(o!.gens, o, m, scc[m]); 
         return [s, [m, scc[m][1], scc[m][i]], LongOrb(s),
          RestrictedPP(mults[scc[m][i]]^-1, o[scc[m][1]])];
       end,
 
-      ShallowCopy:=iter-> rec(o:=iter!.o, i:=iter!.i)));
+      ShallowCopy:=iter-> rec(o:=iter!.o, i:=iter!.i, m:=iter!.m,
+       scc_limit:=iter!.scc_limit, i_limit:=iter!.i_limit)));
   fi;
   
   return iter;
@@ -2167,7 +2180,7 @@ CallFuncList(CreateLClass, x), [IsIteratorOfLClasses]));
 InstallMethod(IteratorOfRClassRepsData, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], 
 function(s)
-  local offset, iter;
+  local offset, iter, o, scc;
 
   if IsPartialPermMonoid(s) then
     offset:=0;
@@ -2187,16 +2200,18 @@ function(s)
 
       NextIterator:=function(iter)
         local i, o, r;
-        if IsDoneIterator(iter) then 
+        
+        o:=iter!.o; i:=iter!.i;
+
+        if IsClosed(o) and i>=Length(o) then 
           return fail;  
         fi;
-
-        iter!.i:=iter!.i+1;
-        i:=iter!.i; o:=iter!.o;
-
+        
+        i:=i+1;
+        
         if i>Length(o) then 
           if not IsClosed(o) then 
-            Enumerate(o, Length(o)+1);
+            Enumerate(o, i);
             if i>Length(o) then 
               return fail;
             fi;
@@ -2205,40 +2220,51 @@ function(s)
           fi;
         fi;
 
+        iter!.i:=i; 
+  
         return [s, [1,1,1], ShortOrb(s, o[i]), PartialPermNC(o[i], o[i])];
       end,
 
       ShallowCopy:=iter-> rec(o:=iter!.o, i:=iter!.i)));
   else ####
+
+    o:=LongOrb(s); scc:=OrbSCC(o);
+
     iter:=IteratorByFunctions( rec(
                  
-      o:=LongOrb(s),
+      o:=o,
 
       m:=offset+1, i:=0,      
 
-      IsDoneIterator:=iter-> iter!.m=Length(OrbSCC(iter!.o)) and 
-       iter!.i=Length(OrbSCC(iter!.o)[iter!.m]),
+      scc_limit:=Length(scc),
+      i_limit:=Length(scc[Length(scc)]),
+
+      IsDoneIterator:=iter-> iter!.m=iter!.scc_limit and 
+       iter!.i=iter!.i_limit,
 
       NextIterator:=function(iter)
         local i, o, m, scc, f, r, mults;
-        if IsDoneIterator(iter) then
+        
+        i:=iter!.i; m:=iter!.m; 
+        if i=iter!.i_limit and m=iter!.scc_limit then
           return fail; 
         fi;
 
-        i:=iter!.i; o:=iter!.o; m:=iter!.m; scc:=OrbSCC(o);
+        o:=iter!.o; scc:=OrbSCC(o);
         if i<Length(scc[m]) then 
-          iter!.i:=iter!.i+1;
           i:=i+1;
         else
-          i:=1;  iter!.i:=1; 
-          m:=m+1; iter!.m:=iter!.m+1; 
+          i:=1; m:=m+1;
         fi;
+        iter!.i:=i; iter!.m:=m;
+  
         mults:=CreateOrbSCCMultipliers(o!.gens, o, m, scc[m]); 
         return [s, [m, scc[m][i], scc[m][1]], LongOrb(s),
          RestrictedPP(mults[scc[m][i]], o[scc[m][i]])];
       end,
 
-      ShallowCopy:=iter-> rec(o:=iter!.o, i:=iter!.i)));
+      ShallowCopy:=iter-> rec(o:=iter!.o, i:=iter!.i, m:=iter!.m,
+       scc_limit:=iter!.scc_limit, i_limit:=iter!.i_limit)));
   fi;
   
   return iter;
@@ -2268,23 +2294,28 @@ CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
 InstallOtherMethod(LClassReps, "for an inv semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local o, out, gens, i, j;
+  local o, scc, out, gens, i, l, mults, f, j, k;
 
   o:=LongOrb(s);
-  if not IsClosed(o) then 
-    Enumerate(o, infinity);
-  fi;
+  scc:=OrbSCC(o);
+
   out:=EmptyPlist(Length(o));
   gens:=GeneratorsOfSemigroup(s);
 
-  if IsPartialPermMonoid(s) then 
+  if IsPartialPermMonoid(s) then
     i:=0;
   else
     i:=1;
   fi;
-  
-  for j in [1..Length(o)-i] do 
-    out[j]:=EvaluateWord(gens, TraceSchreierTreeForward(o, j+i));
+
+  l:=0;
+  for j in [1+i..Length(scc)] do
+    mults:=CreateOrbSCCMultipliers(gens, o, j, scc[j]);
+    f:=PartialPermNC(o[scc[j][1]], o[scc[j][1]]);
+    for k in scc[j] do
+      l:=l+1;
+      out[l]:=f/mults[k];
+    od;
   od;
   return out;
 end);
@@ -2435,6 +2466,44 @@ function(s)
 
   return Length(LongOrb(s))-1;
 end); 
+
+# new for 0.7! - NrIdempotents - for an H-class of an inv semi
+##############################################################################
+
+InstallMethod(NrIdempotents, "for an H-class of an inverse semi",
+[IsGreensRClass and IsGreensClassOfPartPermSemigroup and
+IsGreensClassOfInverseSemigroup],
+function(h)
+  local f;
+  
+  f:=Representative(h);
+  if DomPP(f)=RanSetPP(f) then 
+    return 1;
+  fi;
+
+  return 0;
+end);
+
+# new for 0.7! - NrIdempotents - for a D- class of an inv semi
+##############################################################################
+
+InstallMethod(NrIdempotents, "for an D-class of an inverse semi",
+[IsGreensRClass and IsGreensClassOfPartPermSemigroup and
+IsGreensClassOfInverseSemigroup], NrRClasses);
+
+# new for 0.7! - NrIdempotents - for an L-class of an inv semi
+##############################################################################
+
+InstallMethod(NrIdempotents, "for an L-class of an inverse semi",
+[IsGreensLClass and IsGreensClassOfPartPermSemigroup and
+IsGreensClassOfInverseSemigroup], x-> 1);
+
+# new for 0.7! - NrIdempotents - for an R-class of an inv semis
+##############################################################################
+
+InstallMethod(NrIdempotents, "for an R-class of an inverse semi",
+[IsGreensRClass and IsGreensClassOfPartPermSemigroup and
+IsGreensClassOfInverseSemigroup], x-> 1);
 
 #OOO
 

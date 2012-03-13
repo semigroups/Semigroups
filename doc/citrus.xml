@@ -20,7 +20,8 @@
 
 <TitlePage>
   <Title>&Citrus;</Title>
-  <Subtitle>Computing with Transformation Semigroups</Subtitle>
+  <Subtitle>Computing with Semigroups of Transformations and Partial
+    Permutations</Subtitle>
   <Version>Version &VERSION;</Version>
   
   <Author>J. D. Mitchell
@@ -61,13 +62,13 @@
   <Index>&Citrus; overview</Index>	
     
     This is the manual for the &Citrus; package version &VERSION; for computing
-    with transformation semigroups. &Citrus; &VERSION; is an updated and
-    expanded version of the <URL Text="Monoid package for GAP 3">
-    http://schmidt.nuigalway.ie/monoid/index.html</URL> by Goetz Pfeiffer,
-    Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc and the <URL
-    Text="Monoid package for GAP 4">
-    http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html</URL> by J.
-    D. Mitchell.<P/>
+    with semigroups of transformations and partial permutations. &Citrus;
+    &VERSION; is an updated and expanded version of the <URL Text="Monoid
+      package for GAP 3"> http://schmidt.nuigalway.ie/monoid/index.html</URL>
+    by Goetz Pfeiffer, Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc and
+    the <URL Text="Monoid package for GAP 4">
+      http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html</URL> by
+    J.  D. Mitchell.<P/>
 
     Some of the theory behind the algorithms in &Citrus; is described in 
     <Cite Key="pfeiffer1"/> and described in <Cite Key="pfeiffer2"/>.  Another
@@ -87,35 +88,36 @@
 
     &noindent; &Citrus; &VERSION; contains more efficient methods than those
     available in the &GAP; library (and in many cases more efficient than any
-    other software for computing with transformation semigroups) for creating 
-    transformation semigroups, calculating its Green's classes, size, elements,
-    group of units, minimal ideal, and testing membership, finding the
-    inverses of a regular element, and factorizing elements over the 
-    generators, and many more; see Chapters <Ref Chap="create"/> and  
-    <Ref Chap="green"/>. There are also methods for testing if a semigroup 
-    satisfies a particular property, such as if it is regular, simple, inverse, 
-    completely regular, and a variety of further properties; see Chapter 
-    <Ref Chap="properties"/>. A range of functions is provided 
-    for creating and determining properties of individual transformations such
-    as the index and period or the least idempotent power; see Chapter <Ref
-    Chap="Transformations and Actions"/>.  A large catalogue of examples is
-    provided; see Section <Ref Sect="examples"/>.  &Citrus; also provides
-    abbreviated names for many of the commonly used &GAP; library functions
+    other software for computing with transformation semigroups) for creating
+    semigroups of transformations and partial permutations, calculating their
+    Green's classes, size, elements, group of units, minimal ideal, and testing
+    membership, finding the inverses of a regular element, and factorizing
+    elements over the generators, and many more; see Chapters <Ref
+      Chap="create"/> and  <Ref Chap="green"/>. There are also methods for
+    testing if a semigroup satisfies a particular property, such as if it is
+    regular, simple, inverse, completely regular, and a variety of further
+    properties; see Chapter <Ref Chap="properties"/>. A range of functions is
+    provided for creating and determining properties of individual
+    transformations and partial permutations such as the index and period or
+    the least idempotent power; see Chapter <Ref Chap="Transformations and
+      Actions"/>.  A large catalogue of examples is provided; see Section <Ref
+      Sect="examples"/>.  &Citrus; also provides abbreviated names for many of
+    the commonly used &GAP; library functions
     related to semigroups, and functions to read and write large collections of
-    transformations to a file; see <Ref Func="ReadCitrus"/> and 
-    <Ref Func="WriteCitrus"/>. <P/>
+    transformations or partial permutations to a file; see <Ref
+      Func="ReadCitrus"/> and <Ref Func="WriteCitrus"/>. <P/>
 
     &noindent; The &Citrus; package is written in &GAP; code only but requires 
     the <URL Text="Orb">
     http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
     </URL> package. The &Orb; package is used to efficiently compute orbits in
-    transformation semigroups and these methods underpin most of the features
-    of &Citrus;.<P/>
+    semigroups of transformations and partial permutations, and these methods
+    underpin most of the features of &Citrus;.<P/>
     
     &Citrus; is still under development, and so some features may not function
     as expected. At the present time, I do not know of any errors or serious
     issues with &Citrus;.  If you find a bug or an issue with the package, then
-    please let me know by emailing me the details at: 
+    please let me know by emailing me the details at:
     <Email>jdm3@st-and.ac.uk</Email>.<P/>
 
     For more details about semigroups in &GAP; or Green's relations in
@@ -321,7 +323,6 @@ gap></Log>
     </List>
   </Section>
 
-
   <Section><Heading>Reading and writing transformations to a file</Heading>
     The functions <Ref Func="ReadCitrus"/> and <Ref Func="WriteCitrus"/> can be
     used to read or write transformations to a file. 
@@ -334,10 +335,12 @@ gap></Log>
 
     Due to inherent difficulties with computing Green's &L;-, &D;-, and
     &H;-classes in transformation semigroups, the methods used to compute with
-    Green's &R;-classes are the most efficient in &Citrus;.  Thus wherever
+    Green's &R;-classes are the most efficient in &Citrus;.  Thus, if you are
+    computing with a transformation semigroup, wherever
     possible it is advisable to use the commands relating to Green's
     &R;-classes rather than those relating to Green's &L;-, &D;-, or
-    &H;-classes.<P/>
+    &H;-classes. No such difficulties are present when computing with
+    semigroups of partial permutations. <P/>
     
     The methods in &Citrus; allow the computation of individual Green's
     classes without the need to compute all the elements of the underlying
@@ -360,9 +363,11 @@ gap></Log>
     references to the &GAP; manual.<P/>
 
     &Citrus; contains special methods for the following &GAP; functions where 
-    the argument is an arbitrary Green's class of a transformation semigroup
-    (specifically a  Green's class satisfying 
-    <Ref Prop="IsGreensClassOfTransSemigp"/>) or a transformation semigroup
+    the argument is an arbitrary Green's class of a semigroup of
+    transformations or partial permutations
+    (specifically a Green's class satisfying 
+    <Ref Prop="IsGreensClassOfTransSemigp"/> or 
+    <Ref Prop="IsGreensClassOfPartialPermSemigp">) or a semigroup
     itself (where appropriate).
     For more details about semigroups in &GAP; or Green's relations in
     particular, see <Ref Sect="Semigroups" BookName="ref"/> or 
@@ -444,7 +449,7 @@ gap></Log>
 
 <#Include SYSTEM "semigroups.xml">
 
-<Chapter Label="green"><Heading>Green's relations and classes</Heading>
+<Chapter Label="green"><Heading>Green's classes</Heading>
 
   In this chapter we describe the functions in &Citrus; for computing Green's
   classes and related properties of semigroups. 
