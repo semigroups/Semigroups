@@ -301,7 +301,7 @@ function(s, f)
 end);
 
 
-# new for 0.1! - GroupHClass - "for a D-class of a trans. semigp."
+# new for 0.1! - roupHClass - "for a D-class of a trans. semigp."
 ############################################################################
 # JDM move to d.gi!
 
@@ -355,12 +355,12 @@ function(d)
   return;
 end);
 
-# new for 0.1! - GroupHClassOfGreensDClass - "for D-class of trans. semigp."
+# mod for 0.7! - GroupHClassOfGreensDClass - "for D-class"
 ############################################################################
 # move to d.gi! JDM
 
-InstallMethod(GroupHClassOfGreensDClass, "for D-class of trans. semigp.",
-[IsGreensDClass and IsGreensClassOfTransSemigp], d-> GroupHClass(d));
+InstallMethod(GroupHClassOfGreensDClass, "for D-class",
+[IsGreensDClass], GroupHClass);
 
 #III 
 

@@ -1120,6 +1120,14 @@ function(r)
   return out;
 end);
 
+# new for 0.7! - GroupHClass - for a D-class of inv semi
+############################################################################
+
+InstallOtherMethod(GroupHClass, "for a D-class of inverse semi",
+[IsGreensDClass and IsGreensClassOfInverseSemigroup and
+IsGreensClassOfPartPermSemigroup],
+d-> GreensHClassOfElementNC(d, Representative(d)));
+
 # new for 0.7! - GreensLClasses - for a D-class of inv semi of part perms
 ##############################################################################
 
