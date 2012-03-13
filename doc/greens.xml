@@ -1,12 +1,97 @@
-#############################################################################
-##
-#W  greens.xml
-#Y  Copyright (C) 2011-12                                James D. Mitchell
-##
-##  Licensing information can be found in the README file of this package.
-##
-#############################################################################
-##
+
+<Chapter Label="green"><Heading>Green's classes</Heading>
+
+  In this chapter we describe the functions in &Citrus; for computing Green's
+  classes and related properties of semigroups.
+
+  <Section><Heading>Single Green's classes</Heading>
+    <ManSection><Heading>XClassOfYClass</Heading>
+      <Meth Name="DClassOfHClass" Arg="class"/>
+      <Meth Name="DClassOfLClass" Arg="class"/>
+      <Meth Name="DClassOfRClass" Arg="class"/>
+      <Meth Name="LClassOfHClass" Arg="class"/>
+      <Meth Name="RClassOfHClass" Arg="class"/>
+      <Returns>The Green's <M>X</M>-class containing the Green's 
+          <M>Y</M>-class <A>class</A>.
+      </Returns>
+      <Description>
+        Note that if it is not known to &GAP; whether or not the representative
+        of <A>class</A> is an element of the semigroup containing <A>class</A>,
+        then no attempt is made to check this.<P/>
+
+        The same result can be produced using:
+        <Log>First(GreensXClasses(S), x-> Representative(x) in class);</Log>
+        but this might be substantially slower. Also <C>XClassOfYClass</C>
+        is likely to be faster than 
+        <Log>GreensXClassOfElement(S, Representative(class));</Log>
+        <P/>
+
+        <C>DClass</C> can also be used as a synonym for <C>DClassOfHClass</C>,
+        <C>DClassOfLClass</C>, and <C>DClassOfRClass</C>;
+        <C>LClass</C> as a synonym for <C>LClassOfHClass</C>; and 
+        <C>RClass</C> as a synonym for <C>RClassOfHClass</C>. 
+        
+        See also <Ref Oper="GreensDClassOfElement" BookName="ref"/>
+        and <Ref Oper="GreensDClassOfElementNC"/>.
+        <Example>
+gap> S:=Semigroup(Transformation( [ 1, 3, 2 ] ), 
+> Transformation( [ 2, 1, 3 ] ), Transformation( [ 3, 2, 1 ] ), 
+> Transformation( [ 1, 3, 1 ] ) );;
+gap> R:=GreensRClassOfElement(S, Transformation( [ 3, 2, 1 ] ));
+{Transformation( [ 1, 2, 3 ] )}
+gap> DClassOfRClass(R);
+{Transformation( [ 1, 2, 3 ] )}
+gap> IsGreensDClass(DClassOfRClass(R));
+true
+gap> S:=InverseSemigroup(PartialPermNC([ 1, 2, 3, 6, 8, 10 ], 
+> [ 2, 6, 7, 9, 1, 5 ]), PartialPermNC([ 1, 2, 3, 4, 6, 7, 8, 10 ], 
+> [ 3, 8, 1, 9, 4, 10, 5, 6 ]));
+&lt;inverse semigroup with 2 generators>
+gap> f:=Generators(S)[1];
+[ 1, 2, 3, 6, 8, 10 ] -> [ 2, 6, 7, 9, 1, 5 ]
+gap> h:=HClass(s, f);
+{[ 1, 2, 3, 6, 8, 10 ] -> [ 2, 6, 7, 9, 1, 5 ]}
+gap> r:=RClassOfHClass(h);
+{[ 1, 2, 3, 6, 8, 10 ] -> [ 2, 6, 7, 9, 1, 5 ]}
+gap> l:=LClass(h);
+{<identity on [ 1, 2, 5, 6, 7, 9 ]>}
+gap> DClass(r)=DClass(l);
+true
+gap> DClass(h)=DClass(l);
+true
+</Example>
+      </Description>
+    </ManSection>
+
+    <#Include Label="GreensXClassOfElement">
+    <#Include Label="GreensXClassOfElementNC">
+    <#Include Label="GroupHClass">
+  </Section>
+
+  <Section><Heading>Iterators and enumerators of Green's classes
+  </Heading>
+
+    <#Include Label="GreensXClasses">
+    <#Include Label="IteratorOfXClassReps">
+    <#Include Label="IteratorOfXClasses">
+    <#Include Label="UnderlyingSemigroupOfIterator">
+    <#Include Label="XClassReps">
+  </Section>
+
+  <Section><Heading>Properties and attributes of Green's classes</Heading>
+    <#Include Label="\&lt;">
+    <#Include Label="Idempotents">
+    <#Include Label="IsGreensClassOfTransSemigp">
+    <#Include Label="IsRegularXClass">
+    <#Include Label="NrIdempotents">
+    <#Include Label="NrRegularDClasses">
+    <#Include Label="NrXClasses">
+    <#Include Label="PartialOrderOfDClasses">
+    <#Include Label="SchutzenbergerGroup">
+  </Section>
+</Chapter>
+
+
 
 <#GAPDoc Label="\&lt;">
   <ManSection><Heading>Less than for Green's classes</Heading>
@@ -48,46 +133,6 @@ false</Example>
 <#/GAPDoc>
 
 <#GAPDoc Label="XClassOfYClass">
-  <ManSection><Heading>XClassOfYClass</Heading>
-    <Meth Name="DClassOfHClass" Arg="class"/>
-    <Meth Name="DClassOfLClass" Arg="class"/>
-    <Meth Name="DClassOfRClass" Arg="class"/>
-    <Meth Name="LClassOfHClass" Arg="class"/>
-    <Meth Name="RClassOfHClass" Arg="class"/>
-    <Returns>The Green's <M>X</M>-class containing the Green's 
-        <M>Y</M>-class <A>class</A>.
-    </Returns>
-    <Description>
-      Note that if it is not known to &GAP; whether or not the representative
-      of <A>class</A> is an element of the semigroup containing <A>class</A>,
-      then no attempt is made to check this.<P/>
-
-      The same result can be produced using:
-      <Log>First(GreensXClasses(S), x-> Representative(x) in class);</Log>
-      but this might be substantially slower. Note that <C>XClassOfYClass</C>
-      is also likely to be faster than 
-      <Log>GreensXClassOfElement(S, Representative(class));</Log>
-      <P/>
-
-      <C>DClass</C> can also be used as a synonym for <C>DClassOfHClass</C>,
-      <C>DClassOfLClass</C>, and <C>DClassOfRClass</C>;
-      <C>LClass</C> as a synonym for <C>LClassOfHClass</C>; and 
-      <C>RClass</C> as a synonym for <C>RClassOfHClass</C>. 
-      
-      See also <Ref Oper="GreensDClassOfElement" BookName="ref"/>
-      and <Ref Oper="GreensDClassOfElementNC"/>.
-      <Example>
-gap> S:=Semigroup(Transformation( [ 1, 3, 2 ] ), 
-> Transformation( [ 2, 1, 3 ] ), Transformation( [ 3, 2, 1 ] ), 
-> Transformation( [ 1, 3, 1 ] ) );;
-gap> R:=GreensRClassOfElement(S, Transformation( [ 3, 2, 1 ] ));
-{Transformation( [ 1, 2, 3 ] )}
-gap> DClassOfRClass(R);
-{Transformation( [ 1, 2, 3 ] )}
-gap> IsGreensDClass(DClassOfRClass(R));
-true</Example>
-    </Description>
-  </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="GreensXClasses">

@@ -16,7 +16,6 @@ gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> SetInfoLevel(InfoCitrus, 0);
 
-
 gap> gens:=[PartialPermNC( [ 1, 2, 4 ], [ 1, 5, 2 ] ),
 > PartialPermNC( [ 1, 2, 3 ], [ 2, 3, 5 ] ),
 > PartialPermNC( [ 1, 3, 4 ], [ 2, 5, 4 ] ),
@@ -69,6 +68,8 @@ gap> HClassReps(s);
 gap> GreensHClasses(s);
 [ {<identity on [ 1, 2 ]>}, {[ 1, 2 ] -> [ 1, 3 ]}, {[ 1, 3 ] -> [ 1, 2 ]},
   {<identity on [ 1, 3 ]>}, {<identity on [ 1 ]>} ]
+
+
 
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;

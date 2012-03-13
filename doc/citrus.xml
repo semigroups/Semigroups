@@ -448,41 +448,7 @@ gap></Log>
 </Chapter>
 
 <#Include SYSTEM "semigroups.xml">
-
-<Chapter Label="green"><Heading>Green's classes</Heading>
-
-  In this chapter we describe the functions in &Citrus; for computing Green's
-  classes and related properties of semigroups. 
-
-  <Section><Heading>Single Green's classes</Heading>
-    <#Include Label="XClassOfYClass">
-    <#Include Label="GreensXClassOfElement">
-    <#Include Label="GreensXClassOfElementNC">
-    <#Include Label="GroupHClass">
-  </Section>
-
-  <Section><Heading>Iterators and enumerators of Green's classes
-  </Heading>
-
-    <#Include Label="GreensXClasses">
-    <#Include Label="IteratorOfXClassReps"> 
-    <#Include Label="IteratorOfXClasses"> 
-    <#Include Label="UnderlyingSemigroupOfIterator">
-    <#Include Label="XClassReps">
-  </Section>
-
-  <Section><Heading>Properties and attributes of Green's classes</Heading>
-    <#Include Label="\&lt;">
-    <#Include Label="Idempotents">
-    <#Include Label="IsGreensClassOfTransSemigp">
-    <#Include Label="IsRegularXClass">
-    <#Include Label="NrIdempotents">
-    <#Include Label="NrRegularDClasses">
-    <#Include Label="NrXClasses">
-    <#Include Label="PartialOrderOfDClasses">
-    <#Include Label="SchutzenbergerGroup">
-  </Section>
-</Chapter>
+<#Include SYSTEM "greens.xml">
 
 <Chapter Label="properties"><Heading>Properties and attributes of semigroups
 </Heading>

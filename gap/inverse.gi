@@ -288,32 +288,30 @@ end);
 InstallMethod(\in, "for an H-class of inv semi and part perm",
 [IsPartialPerm , IsGreensHClass and 
 IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
-function(f, r)
+function(f, h)
   local rep, o, data, mults, schutz, g;
   
-  rep:=Representative(r);
+  rep:=Representative(h);
 
   if f[1]<>rep[1] or f[2]<>rep[2] or DomPP(f)<>DomPP(rep) or 
    RanSetPP(f)<>RanSetPP(rep) then
     return false;
   fi;
 
-  o:=r!.o; data:=r!.data; mults:=o!.mults;
+  o:=h!.o; data:=h!.data; mults:=o!.mults;
   
-  schutz:=OrbSCCStabChain(r); 
+  schutz:=OrbSCCStabChain(h); 
 
   if schutz=true then 
     return true;
   fi;
 
-  g:=mults[data[2]]^-1*f*mults[data[3]]; #LQuoPP
-
-  if g=rep then 
+  if f=rep then 
     return true;
   elif schutz=false then 
     return false;
   fi;
-
+  g:=mults[data[2]]^-1*f*mults[data[3]]; #LQuoPP
   return SiftedPermutation(schutz, MappingPermListList(DomPP(g), RanPP(g)))=(); 
 end);
 
@@ -417,7 +415,7 @@ InstallGlobalFunction(CreateOrbSCCSchutzGp,
 function(arg)
   local o, m, scc, f;
   
-  o:=arg[1]; m:=arg[2];
+  o:=arg[1]; m:=arg[2]; scc:=OrbSCC(o)[m];
 
   if IsBound(o!.schutz) then 
     if IsBound(o!.schutz[m]) then 
@@ -427,7 +425,6 @@ function(arg)
     o!.schutz:=EmptyPlist(Length(scc));
   fi;
  
-  scc:=OrbSCC(o)[m];
   if IsBound(arg[3]) then
     f:=arg[3];
   else
@@ -489,6 +486,38 @@ function(gens, o, f, scc, truth, graph, r, mults)
 end);
 
 #DDD
+
+# new for 0.7! - DClassOfHClass - "for an H-class of a inverse semigroup"
+##############################################################################
+
+InstallOtherMethod(DClassOfHClass, "for an H-class of a inverse semigroup",
+[IsGreensHClass and IsGreensClassOfPartPermSemigroup and
+IsGreensClassOfInverseSemigroup], 
+function(h)
+  local o, i, scc;
+
+  o:=h!.o; i:=h!.data[1]; scc:=OrbSCC(o);
+  return CreateDClass(h!.parent, [i], o, PartialPermNC(o[scc[i][1]],
+   o[scc[i][1]]));
+end);        
+
+# new for 0.7! - DClassOfLClass - "for an L-class of a inverse semigroup"
+##############################################################################
+
+InstallOtherMethod(DClassOfLClass, "for an L-class of a inverse semigroup",
+[IsGreensLClass and IsGreensClassOfPartPermSemigroup and
+IsGreensClassOfInverseSemigroup], 
+l-> CreateDClass(l!.parent, [l!.data[1]], l!.o,
+LeftOne(Representative(l))));        
+
+# new for 0.7! - DClassOfRClass - "for an R-class of a inverse semigroup"
+##############################################################################
+
+InstallOtherMethod(DClassOfRClass, "for an R-class of a inverse semigroup",
+[IsGreensRClass and IsGreensClassOfPartPermSemigroup and
+IsGreensClassOfInverseSemigroup], 
+r-> CreateDClass(r!.parent, [r!.data[1]], r!.o,
+RightOne(Representative(r))));        
 
 # new for 0.7! - DClassReps - "for an inverse semi of part perms"
 ##############################################################################
@@ -2028,8 +2057,8 @@ function(s)
       mults:=CreateOrbSCCMultipliers(o!.gens, o, m, scc[m]); 
       
       return [s, [m, scc[m][at[1]], scc[m][at[2]]], LongOrb(s),
-       RestrictedPP(mults[scc[m][at[1]]], o[scc[m][at[1]]])/
-       mults[scc[m][at[2]]]];
+       mults[scc[m][at[1]]]*PartialPermNC(o[scc[m][1]],
+       o[scc[m][1]])*mults[scc[m][at[2]]]^-1];
     end,
 
     ShallowCopy:=iter-> rec(o:=iter!.o, m:=iter!.m, at:=[0,1],
@@ -2288,6 +2317,21 @@ CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
 
 #LLL
 
+# new for 0.7! - LClassOfHClass - "for an H-class of an inverse semigrp"
+#############################################################################
+
+InstallMethod(LClassOfHClass, "for an H-class of an inverse semigroup",
+[IsGreensHClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
+function(h)
+  local o, scc, data, mults;
+
+  o:=h!.o; scc:=OrbSCC(o); data:=h!.data;
+  mults:=OrbMultipliers(h);
+
+  return CreateLClass(h!.parent, [data[1], scc[data[1]][1], data[3]], h!.o, 
+   mults[data[2]]^-1*Representative(h));
+end);
+
 # new for 0.7! - LClassReps - for an inv semi of part perms
 ##############################################################################
 
@@ -2351,6 +2395,21 @@ function(s);
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsGreensLClass and
          IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup);
+end);
+
+# new for 0.7! - LongOrb - "for an inverse semi of part. perms"
+##############################################################################
+
+InstallMethod(LongOrb, "for an inverse semi of part perms",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s)
+  local n;
+
+  n:=LargestMovedPoint(s);
+  return Orb(s, [1..n]*1, OnIntegerSetsWithPP, 
+        rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true, 
+        storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M, 
+        finished:=false));
 end);
 
 #NNN
@@ -2453,7 +2512,7 @@ IsGreensClassOfPartPermSemigroup], r-> Length(OrbSCC(r!.o)[r!.data[1]]));
 # new for 0.7! - NrIdempotents - for an inverse semigroup of partial perms
 ##############################################################################
 
-InstallOtherMethod(NrIdempotents, "for an inverse semigp of partial perms",
+InstallMethod(NrIdempotents, "for an inverse semigp of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
   if not IsClosed(LongOrb(s)) then 
@@ -2470,8 +2529,8 @@ end);
 # new for 0.7! - NrIdempotents - for an H-class of an inv semi
 ##############################################################################
 
-InstallMethod(NrIdempotents, "for an H-class of an inverse semi",
-[IsGreensRClass and IsGreensClassOfPartPermSemigroup and
+InstallOtherMethod(NrIdempotents, "for an H-class of an inverse semi",
+[IsGreensHClass and IsGreensClassOfPartPermSemigroup and
 IsGreensClassOfInverseSemigroup],
 function(h)
   local f;
@@ -2487,21 +2546,21 @@ end);
 # new for 0.7! - NrIdempotents - for a D- class of an inv semi
 ##############################################################################
 
-InstallMethod(NrIdempotents, "for an D-class of an inverse semi",
+InstallOtherMethod(NrIdempotents, "for an D-class of an inverse semi",
 [IsGreensRClass and IsGreensClassOfPartPermSemigroup and
 IsGreensClassOfInverseSemigroup], NrRClasses);
 
 # new for 0.7! - NrIdempotents - for an L-class of an inv semi
 ##############################################################################
 
-InstallMethod(NrIdempotents, "for an L-class of an inverse semi",
+InstallOtherMethod(NrIdempotents, "for an L-class of an inverse semi",
 [IsGreensLClass and IsGreensClassOfPartPermSemigroup and
 IsGreensClassOfInverseSemigroup], x-> 1);
 
 # new for 0.7! - NrIdempotents - for an R-class of an inv semis
 ##############################################################################
 
-InstallMethod(NrIdempotents, "for an R-class of an inverse semi",
+InstallOtherMethod(NrIdempotents, "for an R-class of an inverse semi",
 [IsGreensRClass and IsGreensClassOfPartPermSemigroup and
 IsGreensClassOfInverseSemigroup], x-> 1);
 
@@ -2543,9 +2602,8 @@ InstallMethod(ParentAttr, "for a R-class of inverse semigroup",
 
 #RRR
 
-# new for 0.1! - Random - "for a part. perm. inv. semigroup (citrus pkg)"
+# new for 0.7! - Random - "for a part. perm. inv. semigroup (citrus pkg)"
 #############################################################################
-# move to greens.gi
 
 InstallMethod(Random, "for a part perm inv semigroup (citrus pkg)",
 [IsPartialPermSemigroup and IsInverseSemigroup],
@@ -2568,19 +2626,19 @@ function(s)
   fi;
 end);
 
-# new for 0.7! - LongOrb - "for an inverse semi of part. perms"
-##############################################################################
+# new for 0.7! - RClassOfHClass - "for an H-class of an inverse semigrp"
+#############################################################################
 
-InstallMethod(LongOrb, "for an inverse semi of part perms",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(s)
-  local n;
+InstallMethod(RClassOfHClass, "for an H-class of an inverse semigroup",
+[IsGreensHClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
+function(h)
+  local o, scc, data, mults;
 
-  n:=LargestMovedPoint(s);
-  return Orb(s, [1..n]*1, OnIntegerSetsWithPP, 
-        rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true, 
-        storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M, 
-        finished:=false));
+  o:=h!.o; scc:=OrbSCC(o); data:=h!.data;
+  mults:=OrbMultipliers(h);
+
+  return CreateRClass(h!.parent, [data[1], data[2], scc[data[1]][1]], h!.o, 
+   Representative(h)*mults[data[3]]);
 end);
 
 # new for 0.7! - RClassReps - for an inv semi of part perms
@@ -2690,7 +2748,7 @@ function(h)
  
   if not IsBound(o!.schutz[m]) then
     rep:=o!.mults[h!.data[2]]^-1*Representative(h)*o!.mults[h!.data[3]]; #LQuoPP
-    o!.schutz[m]:=CreateOrbSCCSchutzGp(GeneratorsOfSemigroup(s), o,
+    o!.schutz[m]:=CreateOrbSCCSchutzGpNC(GeneratorsOfSemigroup(s), o,
      rep, scc, o!.truth[m], OrbitGraph(o),
       Length(GeneratorsOfSemigroup(s)), o!.mults);
   fi;
