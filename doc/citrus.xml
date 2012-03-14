@@ -447,7 +447,9 @@ gap></Log>
 
 </Chapter>
 
+<#Include SYSTEM="pperm.xml">
 <#Include SYSTEM "semigroups.xml">
+
 <#Include SYSTEM "greens.xml">
 
 <Chapter Label="properties"><Heading>Properties and attributes of semigroups
