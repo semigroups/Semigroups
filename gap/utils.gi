@@ -26,7 +26,7 @@ function()
   MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
    InstallationPath, "/doc"), "citrus.xml", 
    ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
-     "transform.xml", "../PackageInfo.g"], "citrus", "MathJax");;
+     "transform.xml", "pperm.xml", "../PackageInfo.g"], "citrus", "MathJax");;
   return;
 end);
 
@@ -109,7 +109,7 @@ function()
   TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
      InstallationPath, "/doc"), "citrus.xml", 
      ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
-      "transform.xml", "../PackageInfo.g"]);
+      "transform.xml", "pperm.xml", "../PackageInfo.g"]);
   
   SetInfoLevel(InfoWarning, InfoLevelInfoWarning);
   SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);
@@ -125,7 +125,7 @@ function()
   local ex, tst, i;
 
   ex:=ManualExamples("~/citrus/doc/", "citrus.xml",  [ "utils.xml",
-  "greens.xml", "orbits.xml", "properties.xml", 
+  "greens.xml", "orbits.xml", "properties.xml", "pperm.xml", 
   "transform.xml", "../PackageInfo.g" ], "Single" );;
 
   for i in [1..Length(ex)] do 

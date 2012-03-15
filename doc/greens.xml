@@ -97,7 +97,7 @@ gap> h:=HClass(s, f);
 gap> r:=RClassOfHClass(h);
 {[ 1, 2, 3, 6, 8, 10 ] -> [ 2, 6, 7, 9, 1, 5 ]}
 gap> l:=LClass(h);
-{<identity on [ 1, 2, 5, 6, 7, 9 ]>}
+{&lt;identity on [ 1, 2, 5, 6, 7, 9 ]>}
 gap> DClass(r)=DClass(l);
 true
 gap> DClass(h)=DClass(l);

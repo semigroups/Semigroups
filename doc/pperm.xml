@@ -1,86 +1,76 @@
-<Chapter Label="create"><Heading>Transformations and partial permutations
-  </Heading>
-  A <E>transformation</E> is just a function from the set 
-  <M>\{1,\ldots, n\}</M> to itself, and a <E>partial permutation</E> is an
-  injective function from a subset of <M>\{1,\ldots, n\}</M> to 
-  <M>\{1,\ldots, n\}</M> where <M>n</M> is a positive integer. 
-  In this chapter, we describe functions for creating and determining
-  fundamental properties of transformations and partial permutations.
-  Semigroups in the &Citrus; package are semigroups of transformations and
-  partial permutations, and so we describe how to create and manipulate these
-  objects first. 
-  
-  <Section><Heading>Partial permutations</Heading>
-    General introduction to partial perms such as that in Howie's book,
-    including rank, domain, range, idempotent. JDM  
-    <ManSection>
-      <Func Name="PartialPerm" Arg="dom, ran"/>
-      <Func Name="PartialPerm" Arg="list"/>
-      <Func Name="PartialPermNC" Arg="dom, ran"/>
-      <Func Name="PartialPermNC" Arg="list"/>
-      <Returns>A partial permutation.</Returns>
-      <Description>
-        Partial permutations can be created in two ways: by giving the domain
-        and the range, or the dense range list. <P/>
+#############################################################################
+##
+#W  pperm.xml
+#Y  Copyright (C) 2011-12                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
 
-        The partial permutation defined by a domain <A>dom</A> and range
-        <A>ran</A>, where <A>dom</A> is a set of positive integers and
-        <A>ran</A> is a duplicate free list of positive integers, maps
-        <A>dom</A><C>[i]</C> to <A>ran</A><C>[i]</C>. For example,
-        the partial permutation mapping <M>1</M> and <M>5</M> to <M>20</M> and
-        <M>2</M> can be created using: 
-        <Log>PartialPermNC([1,5],[20,2]); </Log> <P/>
+<#GAPDoc Label="PartialPerm"/>
+  <ManSection>
+    <Func Name="PartialPerm" Arg="dom, ran"/>
+    <Func Name="PartialPerm" Arg="list"/>
+    <Func Name="PartialPermNC" Arg="dom, ran"/>
+    <Func Name="PartialPermNC" Arg="list"/>
+    <Returns>A partial permutation.</Returns>
+    <Description>
+      Partial permutations can be created in two ways: by giving the domain
+      and the range, or the dense range list. <P/>
 
-        The partial permutation defined by a dense range list <A>list</A>, maps
-        the positive integer <C>i</C> to <A>list<A><C>[i]</C> if
-        <A>list</A><C>[i]<>0</C> and is undefined at <C>i</C> if 
-        <A>list</A><C>[i]=0</C>.  For example, the partial permutation mapping
-        <M>1</M> and <M>5</M> to <M>20</M> and <M>2</M> can be created
-        using:
-        <Log> 
-          PartialPermNC([20,0,0,0,2]);
-        </Log><P/>
+      The partial permutation defined by a domain <A>dom</A> and range
+      <A>ran</A>, where <A>dom</A> is a set of positive integers and
+      <A>ran</A> is a duplicate free list of positive integers, maps
+      <A>dom</A><C>[i]</C> to <A>ran</A><C>[i]</C>. For example,
+      the partial permutation mapping <M>1</M> and <M>5</M> to <M>20</M> and
+      <M>2</M> can be created using: 
+      <Log>PartialPermNC([1,5],[20,2]); </Log> <P/>
 
-        If the largest point in the domain is larger than the
-        rank of the partial permutation, then using the dense range list to
-        define the partial permutation will require less typing; otherwise
-        using the domain and the range will require less typing. For example,
-        the partial permutation mapping <M>10000<M> to <M>1<M> can be defined
-        using:
-        <Log>PartialPermNC([10000], [1]);</Log>
-        but using the dense range list would require a list with <M>9999</M>
-        entries equal to <M>0</M> and the final entry equal to <M>1</M>. 
-        On the other hand, the identity on <C>[1,2,3,4,6]</C> can be defined
-        using:
-        <Log>PartialPermNC([1,2,3,4,0,6]);</Log>
-        <P/>
-        
-        <C>PartialPerm</C> checks that the argument defines a partial
-        permatutation whereas <C>PartialPermNC</C> does not.
-        <C>PartialPermNC</C> is a kernel function written in C, which performs
-        no checks on it argument, and so if the argument does not define a
-        partial permutation, then the results can be unpredictable, and it
-        could even potentially cause &GAP; to crash. <P/>
+      The partial permutation defined by a dense range list <A>list</A>, maps
+      the positive integer <C>i</C> to <A>list</A><C>[i]</C> if
+      <A>list</A><C>[i]&lt;&gt;>0</C> and is undefined at <C>i</C> if 
+      <A>list</A><C>[i]=0</C>.  For example, the partial permutation mapping
+      <M>1</M> and <M>5</M> to <M>20</M> and <M>2</M> can be created
+      using: <Log>PartialPermNC([20,0,0,0,2]);</Log><P/>
 
-        It is currently only possible to create partial permutations acting 
-        on positive integers not greater than <M>65535</M>. Note that this
-        might cause some unexpected behaviour when multiplying partial
-        permutations by permutations. For example, if
-        <C>f:=PartialPerm([1,2,3]);</C>, then 
-        <C>f*(1,100000)*(1,100000)</C> will return an error since the result of
-        <C>f*(1,100000)</C> would be a partial permutation acting on too many
-        points. However, the product <C>f*((1,100000)*(1,100000))</C> is just
-        <C>f</C> and no error is given.
-        <P/>
+      If the largest point in the domain is larger than the
+      rank of the partial permutation, then using the dense range list to
+      define the partial permutation will require less typing; otherwise
+      using the domain and the range will require less typing. For example,
+      the partial permutation mapping <M>10000</M> to <M>1</M> can be defined
+      using:
+      <Log>PartialPermNC([10000], [1]);</Log>
+      but using the dense range list would require a list with <M>9999</M>
+      entries equal to <M>0</M> and the final entry equal to <M>1</M>. 
+      On the other hand, the identity on <C>[1,2,3,4,6]</C> can be defined
+      using:
+      <Log>PartialPermNC([1,2,3,4,0,6]);</Log>
+      <P/>
+      
+      <C>PartialPerm</C> checks that the argument defines a partial
+      permatutation whereas <C>PartialPermNC</C> does not.
+      <C>PartialPermNC</C> is a kernel function written in C, which performs
+      no checks on it argument, and so if the argument does not define a
+      partial permutation, then the results can be unpredictable, and it
+      could even potentially cause &GAP; to crash. <P/>
 
-        Please note that a partial permutation in &GAP; is never a permutation
-        nor is a permutation ever a partial permutation. For example, the
-        permutation <C>(1,4,2)</C> fixes <C>3</C> but the partial permutation
-        <C>PartialPerm([4,1,0,2]);</C> is not defined on <C>3</C>. 
+      It is currently only possible to create partial permutations acting 
+      on positive integers not greater than <M>65535</M>. Note that this
+      might cause some unexpected behaviour when multiplying partial
+      permutations by permutations. For example, if
+      <C>f:=PartialPerm([1,2,3]);</C>, then 
+      <C>f*(1,100000)*(1,100000)</C> will return an error since the result of
+      <C>f*(1,100000)</C> would be a partial permutation acting on too many
+      points. However, the product <C>f*((1,100000)*(1,100000))</C> is just
+      <C>f</C> and no error is given.
+      <P/>
 
-      </Description>
-    </ManSection>
-  </Section>
+      Please note that a partial permutation in &GAP; is never a permutation
+      nor is a permutation ever a partial permutation. For example, the
+      permutation <C>(1,4,2)</C> fixes <C>3</C> but the partial permutation
+      <C>PartialPerm([4,1,0,2]);</C> is not defined on <C>3</C>. 
 
-  
-</Chapter>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

@@ -1,0 +1,34 @@
+<TitlePage>
+  <Title>&Citrus;</Title>
+  <Subtitle>Computing with Semigroups of Transformations and Partial
+    Permutations</Subtitle>
+  <Version>Version &VERSION;</Version>
+
+  <Author>J. D. Mitchell
+    <Email>jdm3@st-and.ac.uk</Email>
+    <Homepage>http://tinyurl.com/jdmitchell</Homepage>
+  </Author>
+
+  <Copyright>&copyright; &COPYRIGHTYEARS; by J. D. Mitchell.<P/>
+
+    &Citrus; is free software; you can redistribute it and/or modify it under
+    the terms of the <URL Text="GNU General Public License">
+    http://www.fsf.org/licenses/gpl.html</URL> as published by the Free Software
+    Foundation; either version 2 of the License, or (at your option) any later
+    version.
+
+  </Copyright>
+
+  <Acknowledgements>
+    I would like to thank P. von Bunau, A. Distler, S. Linton, J.  Neubueser,
+    M. R. Quick, E. F. Robertson, and N. Ruskuc for their help and
+    suggestions.  Special thanks go to J. Araujo for his mathematical
+    suggestions and to M.  Neunhoeffer for his invaluable help in improving the
+    efficiency of the package. <P/>
+
+    I would also like to acknowledge the support of the Centre of Algebra at
+    the University of Lisbon, and of EPSRC grant number GR/S/56085/01.
+
+  </Acknowledgements>
+
+</TitlePage>
