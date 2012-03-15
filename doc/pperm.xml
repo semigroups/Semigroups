@@ -74,3 +74,196 @@
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="DomPP"/>
+  <ManSection>
+    <Func Name="DomPP" Arg="f"/>
+    <Oper Name="DomainOfPartialPerm" Arg="f"/>
+    <Returns>A set of positive integers.</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RanPP"/>
+  <ManSection>
+    <Func Name="RanPP" Arg="f"/>
+    <Oper Name="RangeOfPartialPerm" Arg="f"/>
+    <Returns>A duplicate-free list of positive integers.</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RanSetPP"/>
+  <ManSection>
+    <Func Name="RanSetPP" Arg="f"/>
+    <Oper Name="RangeSetOfPartialPerm" Arg="f"/>
+    <Returns>A set of positive integers.</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="InvPP"/>
+  <ManSection>
+    <Func Name="InvPP" Arg="f"/>
+    <Returns>The inverse of <A>f</A>.</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="OnIntegerSetsWithPP"/>
+  <ManSection>
+    <Func Name="OnIntegerSetsWithPP" Arg="set, f"/>
+    <Oper Name="OnIntegerSetsWithPartialPerm" Arg="set, f"/>
+    <Returns>The inverse of <A>f</A>.</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="LeftOne"/>
+  <ManSection>
+    <Func Name="LeftOne" Arg="f"/>
+    <Oper Name="RightOne" Arg="f"/>
+    <Returns>The idempotent partial permutation <A>f</A><C>*</C><A>f^-1</A> or
+      <A>f^-1</A><C>*</C><A>f</A>.
+    </Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="FixedPointsPP"/>
+  <ManSection>
+    <Func Name="FixedPointsPP" Arg="f"/>
+    <Oper Name="FixedPointsOfPartialPerm" Arg="f"/>
+    <Returns>A set of positive integers.</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RestrictedPP"/>
+  <ManSection>
+    <Func Name="RestrictedPP" Arg="f, set"/>
+    <Oper Name="RestrictedPartialPerm" Arg="f, set"/>
+    <Returns>A partial permutation.</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NaturalLeqPP"/>
+  <ManSection>
+    <Func Name="NaturalLeqPP" Arg="f, g"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsPartialPerm"/>
+  <ManSection>
+    <Filt Name="IsPartialPerm" Arg="obj" Type="category"/>
+    <Filt Name="IsPartialPermCollection" Arg="obj" Type="category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RandomPartialPerm"/>
+  <ManSection>
+    <Func Name="RandomPartialPerm" Arg="obj"/>
+    <Returns>A partial permutation.</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="PartialPermFamily"/>
+  <ManSection>
+    <Var Name="PartialPermFamily"/>
+    <Var Name="PartialPermType"/>
+    <Returns>?</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DenseRangeList"/>
+  <ManSection>
+    <Func Name="DenseRangeList" Arg="obj"/>
+    <Returns>A list of positive integers.</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="InternalRepOfPartialPerm"/>
+  <ManSection>
+    <Func Name="InternalRepOfPartialPerm" Arg="f"/>
+    <Returns>A list of positive integers.</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="MaxDomPP"/>
+  <ManSection>
+    <Func Name="MaxDomPP" Arg="f"/>
+    <Func Name="MinDomPP" Arg="f"/>
+    <Func Name="MaxRanPP" Arg="f"/>
+    <Func Name="MinRanPP" Arg="f"/>
+    <Func Name="MaxDomRanPP" Arg="f"/>
+    <Func Name="MinDomRanPP" Arg="f"/>
+    <Returns>A positive integer.</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RankPP"/>
+  <ManSection>
+    <Func Name="RankOfPartialPerm" Arg="obj"/>
+    <Returns>A positive integer.</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsPartialPerm"/>
+  <ManSection>
+    <Func Name="RankOfPartialPerm" Arg="obj"/>
+    <Returns>A positive integer.</Returns>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<ManSection>
+  <Meth Name="\^" Arg="f, i"> 
+  <Description>
+    This method is for an operation with a tricky name.
+  </Description>
+</ManSection>

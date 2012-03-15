@@ -36,10 +36,38 @@
   partial permutations, and so we describe how to create and manipulate these
   objects first.
   
-  <Section><Heading>Partial permutations</Heading>
-    General introduction to partial perms such as that in Howie's book,
-    including rank, domain, range, idempotent. JDM
+  General introduction to partial perms such as that in Howie's book,
+  including rank, domain, range, idempotent. JDM
+  
+  <Section><Heading>Creating partial permutations</Heading>
+    In addition to the functions described in this section, partial
+    permutations can also be created from permutations and certain
+    transformations;  see Section <Ref Sect="Changing representation"/>
     <#Include Label="PartialPerm">
+    <#Include Label="RestrictedPP">
+    <#Include Label="RandomPartialPerm">
+  </Section>
+    
+  <Section><Heading>Properties of partial permutations</Heading>
+    <#Include Label="IsPartialPerm">
+    <#Include Label="PartialPermFamily">
+    <#Include Label="DomPP">
+    <#Include Label="RanPP">
+    <#Include Label="RanSetPP">
+    <#Include Label="FixedPointsPP">
+    <#Include Label="DenseRangeList">
+    <#Include Label="InternalRepOfPartialPerm">
+    <#Include Label="MaxDomPP">
+    <#Include Label="RankPP"/>
+  </Section>
+  
+  <Section><Heading>Operators on partial permutations</Heading>
+    <#Include Label="LeftOne">
+  </Section>
+  
+  <Section Label="Changing representation"><Heading>Changing
+      representation</Heading>
+    <#Include Label="AsPartialPerm">
   </Section>
 </Chapter>
 
