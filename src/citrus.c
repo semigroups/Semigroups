@@ -624,7 +624,7 @@ Obj FuncLeqPP(Obj self, Obj f, Obj g)
 
   rank_f=ELM_PP(f, 2);
   rank_g=ELM_PP(g, 2);
-  if(rank_f<=rank_g)
+  if(rank_f<rank_g)
   {
     rank=rank_f;
     x=True;

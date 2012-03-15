@@ -85,6 +85,15 @@ end);
 # new for 0.7! - AsPartialPerm - "for a permutation and a set"
 ###########################################################################
 
+InstallOtherMethod(AsPartialPerm, "for a perm", 
+[IsPerm],
+function(p)
+  return AsPartialPerm(p, MovedPoints(p)); 
+end);
+
+# new for 0.7! - AsPartialPerm - "for a permutation and a set"
+###########################################################################
+
 InstallMethod(AsPartialPerm, "for a perm and a set", 
 [IsPerm, IsSet],
 function(p, dom)

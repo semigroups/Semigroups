@@ -480,11 +480,20 @@ InstallTrueMethod(IsCompletelySimpleSemigroup, IsSimpleSemigroup and IsFinite);
 
 # new for 0.7! - IsFactorisableSemigroup - "for a partial perm semigroup"
 ###########################################################################
+#JDM prove this method is correct!
 
 InstallMethod(IsFactorisableSemigroup, "for a partial perm semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], 
 function(s)
+  local g;
+  
+  g:=GroupOfUnits(s);
+  
+  if g=fail then 
+    return false;
+  fi;
 
+  return ForAll(Generators(s), x-> ForAny(g, y-> NaturalLeqPP(x, y)));
 end);
 
 #IIIGGG
