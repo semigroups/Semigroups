@@ -444,12 +444,10 @@ gap></Log>
     this section but, for the sake of convenience with abbreviated names; for
     further details see below.
   </Section>
-
 </Chapter>
 
 <#Include SYSTEM="pperm.xml">
 <#Include SYSTEM "semigroups.xml">
-
 <#Include SYSTEM "greens.xml">
 
 <Chapter Label="properties"><Heading>Properties and attributes of semigroups
