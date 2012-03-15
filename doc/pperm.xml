@@ -41,7 +41,7 @@
           PartialPermNC([20,0,0,0,2]);
         </Log><P/>
 
-        If the largest point in the domain is larger than half the
+        If the largest point in the domain is larger than the
         rank of the partial permutation, then using the dense range list to
         define the partial permutation will require less typing; otherwise
         using the domain and the range will require less typing. For example,

@@ -10,55 +10,57 @@
 
 DeclareAttribute("AntiIsomorphismTransformationSemigroup",
  IsSemigroup);
-DeclareAttribute("GroupOfUnits", IsTransformationSemigroup);
-DeclareAttribute("IdempotentGeneratedSubsemigp", IsTransformationSemigroup);
+DeclareAttribute("GroupOfUnits", IsSemigroup);
+DeclareAttribute("IdempotentGeneratedSubsemigp", IsSemigroup);
 DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
-DeclareProperty("IsAbundantSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsAdequateSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsBand", IsTransformationSemigroup);
-DeclareProperty("IsBlockGroup", IsTransformationSemigroup);
-DeclareProperty("IsBrandtSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsCliffordSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsCommutativeSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsCompletelyRegularSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsCompletelySimpleSemigroup", IsTransformationSemigroup);   
-DeclareProperty("IsRTrivial", IsTransformationSemigroup);
-DeclareProperty("IsLTrivial", IsTransformationSemigroup);
-DeclareProperty("IsHTrivial", IsTransformationSemigroup);
+DeclareProperty("IsAbundantSemigroup", IsSemigroup);
+DeclareProperty("IsAdequateSemigroup", IsSemigroup);
+DeclareProperty("IsBand", IsSemigroup);
+DeclareProperty("IsBlockGroup", IsSemigroup);
+DeclareProperty("IsBrandtSemigroup", IsSemigroup);
+DeclareProperty("IsCliffordSemigroup", IsSemigroup);
+DeclareProperty("IsCommutativeSemigroup", IsSemigroup);
+DeclareProperty("IsCompletelyRegularSemigroup", IsSemigroup);
+DeclareProperty("IsCompletelySimpleSemigroup", IsSemigroup);   
+DeclareProperty("IsRTrivial", IsSemigroup);
+DeclareProperty("IsLTrivial", IsSemigroup);
+DeclareProperty("IsHTrivial", IsSemigroup);
 DeclareSynonymAttr("IsDTrivial", IsRTrivial and IsLTrivial);
 DeclareSynonymAttr("IsAperiodicSemigroup", IsHTrivial);
 DeclareSynonymAttr("IsCombinatorialSemigroup", IsHTrivial);
-DeclareProperty("IsGroupAsSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsIdempotentGenerated", IsTransformationSemigroup);
-DeclareProperty("IsLeftSimple", IsTransformationSemigroup);
-DeclareProperty("IsLeftZeroSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsMonogenicSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsMonoidAsSemigroup", IsTransformationSemigroup);
+DeclareProperty("IsFactorisableSemigroup", IsSemigroup);
+DeclareProperty("IsGroupAsSemigroup", IsSemigroup);
+DeclareProperty("IsIdempotentGenerated", IsSemigroup);
+DeclareProperty("IsLeftSimple", IsSemigroup);
+DeclareProperty("IsLeftZeroSemigroup", IsSemigroup);
+DeclareProperty("IsMonogenicSemigroup", IsSemigroup);
+DeclareProperty("IsMonoidAsSemigroup", IsSemigroup);
+DeclareOperation("IsomorphismPartialPermSemigroup", [IsPermGroup]);
 DeclareOperation("IsomorphismTransformationMonoid",
- [IsTransformationSemigroup]);
-DeclareProperty("IsOrthodoxSemigroup", IsTransformationSemigroup);
+ [IsSemigroup]);
+DeclareProperty("IsOrthodoxSemigroup", IsSemigroup);
 DeclareSynonymAttr("IsPartialPermSemigroup", IsSemigroup and
 IsPartialPermCollection);
 # contains [1..n] where n is the largest moved point.
 DeclareProperty("IsPartialPermMonoid", IsPartialPermSemigroup);
-DeclareProperty("IsRectangularBand", IsTransformationSemigroup);
-DeclareProperty("IsRightSimple", IsTransformationSemigroup);
-DeclareProperty("IsRightZeroSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsSemiband", IsTransformationSemigroup);
+DeclareProperty("IsRectangularBand", IsSemigroup);
+DeclareProperty("IsRightSimple", IsSemigroup);
+DeclareProperty("IsRightZeroSemigroup", IsSemigroup);
+DeclareProperty("IsSemiband", IsSemigroup);
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
-DeclareProperty("IsSemilatticeAsSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsZeroRectangularBand", IsTransformationSemigroup);
-DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
+DeclareProperty("IsSemilatticeAsSemigroup", IsSemigroup);
+DeclareProperty("IsSynchronizingSemigroup", IsSemigroup);
+DeclareProperty("IsZeroRectangularBand", IsSemigroup);
+DeclareProperty("IsZeroSemigroup", IsSemigroup);
 DeclareAttribute("MinimalIdeal", IsSemigroup);
-DeclareOperation("NrElementsOfRank", [IsTransformationSemigroup and
+DeclareOperation("NrElementsOfRank", [IsSemigroup and
 HasGeneratorsOfSemigroup, IsPosInt]);
-DeclareAttribute("PosetOfIdempotents", IsTransformationSemigroup);
+DeclareAttribute("PosetOfIdempotents", IsSemigroup);
 DeclareAttribute("PrincipalFactor", IsGreensDClass);
 DeclareOperation("RedundantGenerator", [IsTransformationCollection]);
 DeclareGlobalFunction("ReesMatrixSemigroupElementNC");
 DeclareGlobalFunction("ReesZeroMatrixSemigroupElementNC");
-DeclareAttribute("SmallGeneratingSet", IsTransformationSemigroup);
+DeclareAttribute("SmallGeneratingSet", IsSemigroup);
 
 #EOF

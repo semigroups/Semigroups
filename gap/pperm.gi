@@ -82,6 +82,15 @@ function(f)
   end));
 end);
 
+# new for 0.7! - AsPartialPerm - "for a permutation and a set"
+###########################################################################
+
+InstallMethod(AsPartialPerm, "for a perm and a set", 
+[IsPerm, IsSet],
+function(p, dom)
+  return PartialPermNC(dom, OnTuples(dom, p)); 
+end);
+
 # new for 0.7! - AsPermutation - "for a partial perm"
 ###########################################################################
 

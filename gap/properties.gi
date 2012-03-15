@@ -83,7 +83,7 @@ end);
 InstallOtherMethod(GroupOfUnits, "for a partial perm semigroup", 
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local h, m, g;
+  local h, m, g, iso, u;
 
   if not IsPartialPermMonoid(s) then 
     Info(InfoCitrus, 2, "the semigroup is not a monoid,");
@@ -97,7 +97,12 @@ function(s)
     g:=ClosureGroup(g, AsPermutation(Random(h)));
   until Size(g)=m;
 
-  return g;
+  iso:=IsomorphismPartialPermSemigroup(g);
+  u:=Range(iso);
+  SetIsomorphismPermGroup(u, InverseGeneralMapping(iso));
+  UseIsomorphismRelation(u, g);
+  
+  return u;
 end);
 
 #III
@@ -471,6 +476,17 @@ InstallMethod(IsCompletelySimpleSemigroup, "for a trans. semi.",
 
 InstallTrueMethod(IsCompletelySimpleSemigroup, IsSimpleSemigroup and IsFinite);
 
+#IIIFFF
+
+# new for 0.7! - IsFactorisableSemigroup - "for a partial perm semigroup"
+###########################################################################
+
+InstallMethod(IsFactorisableSemigroup, "for a partial perm semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup], 
+function(s)
+
+end);
+
 #IIIGGG
 
 # new for 0.1! - IsHTrivial - "for a transformation semigroup"
@@ -613,6 +629,22 @@ function(s)
   od;
 
   return true;
+end);
+
+# new for 0.7! - IsGroupAsSemigroup - "for a partial perm semigroup"
+###########################################################################
+ 
+InstallMethod(IsGroupAsSemigroup, "for a partial perm semigroup", 
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local gens, dom, ran;
+
+  gens:=Generators(s); 
+  dom:=DomPP(gens[1]); ran:=RanSetPP(gens[1]);
+  if not dom=ran then 
+    return false;
+  fi;
+  return ForAll(gens, x-> DomPP(x)=dom and RanSetPP(x)=ran);
 end);
 
 #IIIIII
@@ -786,6 +818,19 @@ InstallOtherMethod(IsMonoidAsSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
  x-> not MultiplicativeNeutralElement(x)=fail);
 
+# new for 0.7! - IsomorphismPartialPermSemigroup - "for a perm group"
+#############################################################################
+
+InstallMethod(IsomorphismPartialPermSemigroup, "for a perm group",
+[IsPermGroup],
+function(g)
+  local dom;
+
+  dom:=MovedPoints(g);
+  return MappingByFunction(g, InverseSemigroup(List(GeneratorsOfGroup(g), p-> 
+   AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
+end);
+
 # new for 0.7! - IsomorphismReesMatrixSemigroup - "for a D-class" 
 #############################################################################
 
@@ -932,6 +977,22 @@ function(s)
 
   if not IsGroupAsSemigroup(s)  then
     Error( "Usage: trans. semigroup satisfying IsGroupAsSemigroup,");
+    return; 
+  fi;
+
+  return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
+   AsPermutation);
+end);
+
+# new for 0.7! - IsomorphismPermGroup - "for a partial perm semigroup"
+#############################################################################
+
+InstallOtherMethod(IsomorphismPermGroup, "for a partial perm semigroup", 
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+
+  if not IsGroupAsSemigroup(s)  then
+    Error( "Usage: partial perm. semigroup satisfying IsGroupAsSemigroup,");
     return; 
   fi;
 
