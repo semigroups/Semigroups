@@ -34,41 +34,148 @@
   fundamental properties of transformations and partial permutations.
   Semigroups in the &Citrus; package are semigroups of transformations and
   partial permutations, and so we describe how to create and manipulate these
-  objects first.
+  objects first.<P/>
+  
+  The functions described in this section relating to transformations extend 
+  the functionality of &GAP; library; see also 
+  <Ref Chap="Transformations" BookName="ref"/>.<P/>
   
   General introduction to partial perms such as that in Howie's book,
   including rank, domain, range, idempotent. JDM
+
+  <Section><Heading>Creating transformations</Heading>
+    In this section we describe the functions available in &Citrus; for
+    creating transformations.  The following functions from the &GAP; reference
+    manual are particularly relevant to this section:
+
+    <List>
+    <Item>
+      <Ref Func="Transformation" BookName="ref"/>, 
+    </Item>
+    <Item>    
+      <Ref Func="IdentityTransformation" BookName="ref"/>, 
+    </Item>  
+    <Item>
+      <Ref Func="RandomTransformation" BookName="ref"/>,
+    </Item>
+    <Item>
+      <Ref Func="AsTransformation" BookName="ref"/>.
+    </Item>
+    </List>   
+    <#Include Label="ConstantTransformation"/> 	
+    <#Include Label="Idempotent">
+    <#Include Label="RandomIdempotent">
+    <#Include Label="RandomTransformation">
+  </Section>
   
   <Section><Heading>Creating partial permutations</Heading>
-    In addition to the functions described in this section, partial
-    permutations can also be created from permutations and certain
-    transformations;  see Section <Ref Sect="Changing representation"/>
+    In this section we describe the functions available in &Citrus; for
+    creating partial permutations.  In addition to the functions described in
+    this section, partial permutations can also be created from permutations
+    and certain transformations;  see Section 
+    <Ref Sect="Changing representation"/>.
+
     <#Include Label="PartialPerm">
-    <#Include Label="RestrictedPP">
+    <#Include Label="RestrictedPartialPerm">
     <#Include Label="RandomPartialPerm">
   </Section>
-    
+  
+  <Section><Heading>Properties of transformations</Heading>
+    In this section we describe the functions available in
+    &Citrus; for finding various properties of 
+    transformations. <P/>
+
+    In addition to those functions described below, &Citrus; 
+    also contains a special method for
+   <Ref Attr="RankOfTransformation" BookName="ref"/>. 
+
+    <#Include Label="CanonicalTransSameKernel">
+    <#Include Label="EvaluateWord">
+    <#Include Label="Factorization">
+    <#Include Label="IndexPeriodOfTransformation">
+    <#Include Label="InversesOfTransformation">
+    <#Include Label="IsInjectiveTransOnList">
+    <#Include Label="IsRegularTransformation">
+    <#Include Label="SmallestIdempotentPower">
+  </Section>
+   
   <Section><Heading>Properties of partial permutations</Heading>
+    In this section we describe the functions available in &Citrus; for
+    finding various properties of partial permutations. 
+    <P/>
+
     <#Include Label="IsPartialPerm">
-    <#Include Label="PartialPermFamily">
-    <#Include Label="DomPP">
-    <#Include Label="RanPP">
-    <#Include Label="RanSetPP">
-    <#Include Label="FixedPointsPP">
+    <#Include Label="DomainOfPartialPerm">
+    <#Include Label="RangeOfPartialPerm">
+    <#Include Label="RangeSetOfPartialPerm">
+    <#Include Label="FixedPointsOfPartialPerm">
     <#Include Label="DenseRangeList">
-    <#Include Label="InternalRepOfPartialPerm">
-    <#Include Label="MaxDomPP">
-    <#Include Label="RankPP"/>
+    <#Include Label="RankOfPartialPerm"/>
+    <#Include Label="DegreeOfPartialPerm"/>
+
   </Section>
   
   <Section><Heading>Operators on partial permutations</Heading>
+    <Index Key="^"><C>^</C></Index>
+    <C><A>f</A> ^ <A>-1</A></C>
+    <P/>
+    <Alt Only="LaTex">\noindent</Alt><C><A>i</A> ^ <A>f</A></C>
+    <P/>
+    <Index Key="*"><C>*</C></Index>
+    <Alt Only="LaTex">\noindent</Alt><C><A>f</A> * <A>g</A></C>
+    <P/>
+
+
     <#Include Label="LeftOne">
   </Section>
   
-  <Section Label="Changing representation"><Heading>Changing
-      representation</Heading>
-    <#Include Label="AsPartialPerm">
+  <Section><Heading>Operators for transformations</Heading>
+    <Index Key="^"><C>^</C></Index>
+    <C><A>f</A> ^ <A>g</A></C>
+    <P/>
+    <Index Key="*"><C>*</C></Index>
+    <Alt Only="LaTex">\noindent</Alt><C><A>f</A> * <A>g</A></C>
+    <P/>
+    
+    &Citrus; contains more efficient methods than the &GAP;
+    library for <Ref Oper="\*" BookName="ref"/> when <A>f</A> and <A>g</A> are
+    transformations or permutations (and at least one of <A>f</A> and <A>g</A>
+    is a transformation).<P/>
+
+     <C><A>f</A>^<A>g</A></C> returns <C><A>g</A>^-1*<A>f</A>*<A>g</A></C> when 
+     <A>f</A> is a transformation and <A>g</A> is a permutation 
+     <Ref Oper="\^" BookName="ref"/>.
   </Section>
+
+  <Section Label="Changing representation">
+    <Heading>Changing representations</Heading>
+    It is possible to change the representation of certain transformations and
+    partial permutations using the functions described in this section.  
+    <#Include Label="AsPermOfKerImg">
+    <#Include Label="AsPermutation">
+    <#Include Label="AsPartialPerm">
+    <#Include Label="AsTransformation">
+  </Section>
+  
+  <Section><Heading>Actions and orbits</Heading>
+    Some of the following actions and orbits of transformation semigroups are
+    used by &Citrus; in the computation of Green's relations and to test if an
+    arbitrary transformation semigroup has a particular property;  see Chapter
+    <Ref Chap="green"/> and Chapter <Ref Chap="properties"/>; see <Ref
+    Sect="Basic Actions" BookName="ref"/> and <Ref Func="Orb"
+    BookName="orb"/>.  <P/>
+
+    <#Include Label="GradedImagesOfTransSemigroup">
+    <#Include Label="ImagesOfTransSemigroup">
+    <#Include Label="OnKernelsAntiAction">
+    <#Include Label="OrbSCC">
+    <#Include Label="OrbSCCLookup">
+    <#Include Label="OrbSCCTruthTable">
+    <#Include Label="ReverseSchreierTreeOfSCC">
+    <#Include Label="SchreierTreeOfSCC">
+    <#Include Label="TraceSchreierTreeOfSCCBack">
+    <#Include Label="TraceSchreierTreeOfSCCForward">
+  </Section>	
 </Chapter>
 
 <#Include SYSTEM "semigroups.xml">
@@ -232,104 +339,6 @@
     <#Include Label="IsomorphismTransformationMonoid">
     <#Include Label="IsomorphismPermGroup">
   </Section>
-</Chapter>
-
-<Chapter Label="Transformations and Actions">
-  <Heading>Transformations and actions</Heading>
-
-    The functions described in this section extend the functionality of &GAP;
-    relating to transformations; see also 
-    <Ref Chap="Transformations" BookName="ref"/>.
-
-  <Section><Heading>Creating transformations</Heading>
-    In this section we describe the functions available in
-    &Citrus; for creating transformations. 
-    The following functions from the &GAP; reference manual are particularly
-    relevant to this section:
-
-    <List>
-    <Item>
-      <Ref Func="Transformation" BookName="ref"/>, 
-    </Item>
-    <Item>    
-      <Ref Func="IdentityTransformation" BookName="ref"/>, 
-    </Item>  
-    <Item>
-      <Ref Func="RandomTransformation" BookName="ref"/>. 
-    </Item>
-    </List>   
-    <#Include Label="ConstantTransformation"/> 	
-    <#Include Label="Idempotent">
-    <#Include Label="RandomIdempotent">
-    <#Include Label="RandomTransformation">
-  </Section>
-
-  <Section><Heading>Properties of transformations</Heading>
-    In this section we describe the functions available in
-    &Citrus; for finding various properties of 
-    transformations. <P/>
-
-    In addition to those functions described below, &Citrus; 
-    also contains a special method for
-   <Ref Attr="RankOfTransformation" BookName="ref"/>. 
-
-    <#Include Label="CanonicalTransSameKernel">
-    <#Include Label="EvaluateWord">
-    <#Include Label="Factorization">
-    <#Include Label="IndexPeriodOfTransformation">
-    <#Include Label="InversesOfTransformation">
-    <#Include Label="IsInjectiveTransOnList">
-    <#Include Label="IsRegularTransformation">
-    <#Include Label="SmallestIdempotentPower">
-  </Section>
-
-  <Section><Heading>Operators for transformations</Heading>
-    <Index Key="^"><C>^</C></Index>
-   <C><A>f</A> ^ <A>g</A></C>
-    <P/>
-    <Index Key="*"><C>*</C></Index>
-    <Alt Only="LaTex">\noindent</Alt><C><A>f</A> * <A>g</A></C>
-    <P/>
-    
-    &Citrus; contains more efficient methods than the &GAP;
-    library for <Ref Oper="\*" BookName="ref"/> when <A>f</A> and <A>g</A> are
-    transformations or permutations (and at least one of <A>f</A> and <A>g</A>
-    is a transformation).<P/>
-
-     <C><A>f</A>^<A>g</A></C> returns <C><A>g</A>^-1*<A>f</A>*<A>g</A></C> when 
-     <A>f</A> is a transformation and <A>g</A> is a permutation 
-     <Ref Oper="\^" BookName="ref"/>.
-
-  </Section>
-
-  <Section><Heading>Changing the representation of a transformation</Heading>
-    It is possible to change the representation of certain transformations
-    using the functions described in this section.  
-    <#Include Label="AsPermOfKerImg">
-    <#Include Label="AsPermutation">
-  </Section>
-
-  <Section><Heading>Actions and orbits</Heading>
-
-    Some of the following actions and orbits of transformation semigroups are
-    used by &Citrus; in the computation of Green's relations and to test if an
-    arbitrary transformation semigroup has a particular property;  see Chapter
-    <Ref Chap="green"/> and Chapter <Ref Chap="properties"/>; see <Ref
-    Sect="Basic Actions" BookName="ref"/> and <Ref Func="Orb"
-    BookName="orb"/>.  <P/>
-
-    <#Include Label="GradedImagesOfTransSemigroup">
-    <#Include Label="ImagesOfTransSemigroup">
-    <#Include Label="OnKernelsAntiAction">
-    <#Include Label="OrbSCC">
-    <#Include Label="OrbSCCLookup">
-    <#Include Label="OrbSCCTruthTable">
-    <#Include Label="ReverseSchreierTreeOfSCC">
-    <#Include Label="SchreierTreeOfSCC">
-    <#Include Label="TraceSchreierTreeOfSCCBack">
-    <#Include Label="TraceSchreierTreeOfSCCForward">
-  </Section>	
-
 </Chapter>
 </Body>
 

@@ -20,6 +20,7 @@ DeclareOperation("PartialPerm", [IsCyclotomicCollection]);
 
 DeclareOperation("AsPartialPerm", [IsPerm, IsSet]);
 DeclareOperation("AsPartialPermNC", [IsTransformation and IsTransformationRep]);
+DeclareOperation("DegreeOfPartialPerm", [IsPartialPerm]);
 DeclareGlobalFunction("DenseRangeList");
 DeclareOperation("DomainOfPartialPerm", [IsPartialPerm]);
 DeclareOperation("FixedPointsOfPartialPerm", [IsPartialPerm]);
@@ -36,7 +37,9 @@ DeclareGlobalFunction("RandomPartialPerm");
 DeclareOperation("RangeOfPartialPerm", [IsPartialPerm]);
 DeclareOperation("RangeSetOfPartialPerm", [IsPartialPerm]);
 DeclareOperation("RankOfPartialPerm", [IsPartialPerm]);
-DeclareOperation("RestrictedPartialPerm", [IsPartialPerm, IsSet and
+DeclareOperation("RestrictedPartialPermNC", [IsPartialPerm, IsList and
+IsCyclotomicCollection]);
+DeclareOperation("RestrictedPartialPerm", [IsPartialPerm, IsList and
 IsCyclotomicCollection]);
 
 

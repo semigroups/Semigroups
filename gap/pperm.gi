@@ -170,6 +170,11 @@ end);
 
 #DDD
 
+# new for 0.7! - DegreeOfPartialPerm - "for a partial perm"
+#############################################################################
+
+InstallGlobalFunction(DegreeOfPartialPerm, "for a partial perm", f-> f[6]);
+
 # new for 0.7! - DenseRangeList - "for a partial perm"
 #############################################################################
 
@@ -477,6 +482,18 @@ InstallMethod(RankOfPartialPerm, "for a partial perm",
 ############################################################################
 
 InstallMethod(RestrictedPartialPerm, "for a part perm and set",
-[IsPartialPerm, IsSet and IsCyclotomicCollection], RestrictedPP);
+[IsPartialPerm, IsList and IsCyclotomicCollection], 
+function(f, set)
+  if not IsSet(set) or not ForAll(set, IsPotInt) then 
+    return fail;
+  fi;
+  return RestrictedPP(f, set);
+end);
+
+# new for 0.7! - RestrictedPartialPermNC - "for a partial perm"
+############################################################################
+
+InstallMethod(RestrictedPartialPermNC, "for a part perm and set",
+[IsPartialPerm, IsList and IsCyclotomicCollection], RestrictedPP);
 
 #EOF

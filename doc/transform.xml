@@ -62,6 +62,15 @@ gap> AsPermutation(f, [3,8,7,10]);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="AsTransformation">
+  <ManSection>
+    <Oper Name="AsTransformation" Arg="f [, A]"/>
+    <Returns>A transformation.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="CanonicalTransSameKernel">
   <ManSection>
     <Func Name="CanonicalTransSameKernel" Arg="obj"/>
@@ -115,8 +124,9 @@ Transformation( [ 4, 4, 4, 4, 4, 4 ] )</Example>
       argument <A>w</A> should be a list of positive integers less than or
       equal to the length of <A>gens</A>.  This operation evaluates the word
       <A>w</A> in the generators <A>gens</A>. More precisely,
-      <C>EvaluateWord</C> returns the equivalent of: <Log>Product(List(w, i->
-      gens[i]));</Log> see also <Ref Meth="Factorization"/>.
+      <C>EvaluateWord</C> returns the equivalent of: 
+      <Log>Product(List(w, i-> gens[i]));</Log> 
+      see also <Ref Meth="Factorization"/>.
 
 <Example>
 gap> gens:=[ Transformation( [ 2, 4, 4, 6, 8, 8, 6, 6 ] ), 

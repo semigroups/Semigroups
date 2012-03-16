@@ -34,6 +34,9 @@
       <M>1</M> and <M>5</M> to <M>20</M> and <M>2</M> can be created
       using: <Log>PartialPermNC([20,0,0,0,2]);</Log><P/>
 
+      Regardless of which of these two methods are used to create a partial
+      permutation in &GAP; the internal representation is the same. <P/>
+
       If the largest point in the domain is larger than the
       rank of the partial permutation, then using the dense range list to
       define the partial permutation will require less typing; otherwise
@@ -75,47 +78,51 @@
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="DomPP"/>
+<#GAPDoc Label="DomainOfPartialPerm"/>
   <ManSection>
-    <Func Name="DomPP" Arg="f"/>
     <Oper Name="DomainOfPartialPerm" Arg="f"/>
     <Returns>A set of positive integers.</Returns>
     <Description>
-      Blah.
+      The <E>domain</E> of a partial permutation <A>f</A> is the set of
+      positive integers where <A>f</A> is defined. 
+      <Example>
+gap> f:=PartialPermNC( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] );;
+gap> DomainOfPartialPerm(f);
+[ 1, 2, 3, 6, 8, 10 ]</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="RanPP"/>
+<#GAPDoc Label="RangeOfPartialPerm"/>
   <ManSection>
-    <Func Name="RanPP" Arg="f"/>
     <Oper Name="RangeOfPartialPerm" Arg="f"/>
     <Returns>A duplicate-free list of positive integers.</Returns>
     <Description>
-      Blah.
+      The <E>range</E> of a partial permutation <A>f</A> is the list of images
+      of the elements of the domain <A>f</A> where
+      <Log>RangeOfPartialPerm(f)[i]=DomainOfPartialPerm(f)[i]^f.</Log>
+<Example>
+gap> f:=PartialPermNC( [ 1, 2, 3, 4, 5, 8, 10 ], [ 7, 1, 4, 3, 2, 6, 5 ] );;
+gap> RangeOfPartialPerm(f);
+[ 7, 1, 4, 3, 2, 6, 5 ]</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="RanSetPP"/>
+<#GAPDoc Label="RangeSetOfPartialPerm"/>
   <ManSection>
-    <Func Name="RanSetPP" Arg="f"/>
     <Oper Name="RangeSetOfPartialPerm" Arg="f"/>
     <Returns>A set of positive integers.</Returns>
     <Description>
-      Blah.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="InvPP"/>
-  <ManSection>
-    <Func Name="InvPP" Arg="f"/>
-    <Returns>The inverse of <A>f</A>.</Returns>
-    <Description>
-      Blah.
-    </Description>
-  </ManSection>
+      The range of a partial permutation <A>f</A> is the list of images of the
+      elements of the domain <A>f</A>. <C>RangeSetOfPartialPerm</C> returns the
+      range of a partial permutation sorted into increasing order. 
+      <Example>
+gap>f:=PartialPermNC( [ 1, 2, 3, 5, 7, 10 ], [ 10, 2, 3, 5, 7, 6 ] );;
+gap> RangeSetOfPartialPerm(f);
+[ 2, 3, 5, 6, 7, 10 ]</Example>
+    </Description> 
+  </ManSection> 
 <#/GAPDoc>
 
 <#GAPDoc Label="OnIntegerSetsWithPP"/>
@@ -142,24 +149,44 @@
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="FixedPointsPP"/>
+<#GAPDoc Label="FixedPointsOfPartialPerm"/>
   <ManSection>
-    <Func Name="FixedPointsPP" Arg="f"/>
     <Oper Name="FixedPointsOfPartialPerm" Arg="f"/>
     <Returns>A set of positive integers.</Returns>
     <Description>
-      Blah.
+      A positive integer <C>i</C> is fixed by a partial permutation <A>f</A> if
+      <C>i^</C><A>f</A><C>=i</C>. <C>FixedPointsOfPartialPerm</C> returns the
+      set of points fixed by the partial permutation <A>f</A>.
+      <Example>
+gap> f:=PartialPermNC( 
+> [ 1, 2, 3, 5, 6, 8, 10, 11, 14, 17, 20, 21, 22, 24, 25, 26, 32 ], 
+> [ 30, 20, 29, 24, 9, 14, 26, 5, 25, 15, 11, 6, 35, 2, 10, 19, 23 ] );;
+gap> FixedPointsOfPartialPerm(f);
+[  ]
+gap> f:=PartialPermNC([1..10]);
+&lt;identity on [ 1 .. 10 ]>
+gap> FixedPointsOfPartialPerm(f);
+[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="RestrictedPP"/>
+<#GAPDoc Label="RestrictedPartialPerm"/>
   <ManSection>
-    <Func Name="RestrictedPP" Arg="f, set"/>
     <Oper Name="RestrictedPartialPerm" Arg="f, set"/>
+    <Oper Name="RestrictedPartialPermNC" Arg="f, set"/>
     <Returns>A partial permutation.</Returns>
     <Description>
-      Blah.
+      <C>RestrictedPartialPerm</C> returns a new partial permutation that acts
+      on the points in the set of positive integers <A>set</A> in  the  same
+      way as the partial permutation <A>f</A>, and that is undefined on those
+      points that are not in <A>set</A>.<P/>
+
+      <C>RestrictedPartialPermNC</C> does not check whether <A>set</A> is a set
+      of positive integers. 
+
+      <Example>
+      </Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -180,7 +207,19 @@
     <Filt Name="IsPartialPermCollection" Arg="obj" Type="category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      Blah.
+      Each <E>partial permutation</E> in &GAP; lies in the category
+      <C>IsPartialPerm</C>. Basic operations for partial permutations are 
+      <Ref Oper="DomainOfPartialPerm"/>, <Ref Oper="RangeOfPartialPerm"/>, 
+      <Ref Oper="RangeSetOfPartialPerm"/>, <Ref Oper="RankOfPartialPerm"/>,
+      <Ref Oper="DegreeOfPartialPerm"/>, multiplication of two partial 
+      permutations is via <K>\*</K>, and exponentiation with the first argument
+      a positive integer <C>i</C> and second arugment a partial permutation
+      <C>f</C> where the result is the image <C>i^f</C> of the point <C>i</C>
+      under <C>f</C>.<P/>
+
+      <C>IsPartialPermCollection</C> is the category of collections of partial
+      permutations. For example, a semigroup of partial permutations is belongs
+      in <C>IsPartialPermCollection</C>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -208,52 +247,55 @@
 
 <#GAPDoc Label="DenseRangeList"/>
   <ManSection>
-    <Func Name="DenseRangeList" Arg="obj"/>
+    <Func Name="DenseRangeList" Arg="f"/>
     <Returns>A list of positive integers.</Returns>
     <Description>
-      Blah.
+      The <E>dense range list</E> of a partial permutation <A>f</A> is a list of
+      positive integers <C>list</C> such that <C>list[i]=i^</C><A>f</A> 
+      where <C>i^</C><A>f</A><C>=0</C> if <A>f</A> is undefined on <C>i</C>.  
+      <Example>
+gap> f:=PartialPermNC( [ 1, 2, 3, 4, 8, 9, 10 ], [ 5, 8, 9, 7, 2, 6, 10 ] );;
+gap> DenseRangeList(f);
+[ 5, 8, 9, 7, 0, 0, 0, 2, 6, 10 ]</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="InternalRepOfPartialPerm"/>
+<#GAPDoc Label="DegreeOfPartialPerm"/>
   <ManSection>
-    <Func Name="InternalRepOfPartialPerm" Arg="f"/>
-    <Returns>A list of positive integers.</Returns>
-    <Description>
-      Blah.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="MaxDomPP"/>
-  <ManSection>
-    <Func Name="MaxDomPP" Arg="f"/>
-    <Func Name="MinDomPP" Arg="f"/>
-    <Func Name="MaxRanPP" Arg="f"/>
-    <Func Name="MinRanPP" Arg="f"/>
-    <Func Name="MaxDomRanPP" Arg="f"/>
-    <Func Name="MinDomRanPP" Arg="f"/>
+    <Func Name="DegreeOfPartialPerm" Arg="f"/>
+    <Func Name="Degree" Arg="f"/>
     <Returns>A positive integer.</Returns>
     <Description>
-      Blah.
+      The <E>degree</E> of a partial permutation <A>f</A> is the largest
+      positive integer in the union of its domain and range. 
+      <Example>
+gap> f:=PartialPermNC( [ 1, 2, 3, 4, 6, 10 ], [ 1, 8, 2, 3, 4, 9 ] );;
+gap> DegreeOfPartialPerm(f);
+10</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="RankPP"/>
+<#GAPDoc Label="RankOfPartialPerm"/>
   <ManSection>
-    <Func Name="RankOfPartialPerm" Arg="obj"/>
+    <Func Name="RankOfPartialPerm" Arg="f"/>
+    <Func Name="Rank" Arg="f"/>
     <Returns>A positive integer.</Returns>
     <Description>
-      Blah.
+      The <E>rank</E> of a partial permutation <A>f</A> is the number of points
+      in its domain (or equivalently its range). 
+      <Example>
+gap> f:=PartialPermNC( [ 1, 2, 3, 4, 5, 6 ], [ 10, 3, 9, 1, 5, 8 ] );;
+gap> RankOfPartialPerm(f);
+6</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="AsPartialPerm"/>
   <ManSection>
-    <Func Name="RankOfPartialPerm" Arg="obj"/>
+    <Func Name="AsPartialPerm" Arg="obj"/>
     <Returns>A positive integer.</Returns>
     <Description>
       Blah.
