@@ -114,21 +114,7 @@
     <#Include Label="DegreeOfPartialPerm"/>
 
   </Section>
-  
-  <Section><Heading>Operators on partial permutations</Heading>
-    <Index Key="^"><C>^</C></Index>
-    <C><A>f</A> ^ <A>-1</A></C>
-    <P/>
-    <Alt Only="LaTex">\noindent</Alt><C><A>i</A> ^ <A>f</A></C>
-    <P/>
-    <Index Key="*"><C>*</C></Index>
-    <Alt Only="LaTex">\noindent</Alt><C><A>f</A> * <A>g</A></C>
-    <P/>
-
-
-    <#Include Label="LeftOne">
-  </Section>
-  
+ 
   <Section><Heading>Operators for transformations</Heading>
     <Index Key="^"><C>^</C></Index>
     <C><A>f</A> ^ <A>g</A></C>
@@ -146,7 +132,20 @@
      <A>f</A> is a transformation and <A>g</A> is a permutation 
      <Ref Oper="\^" BookName="ref"/>.
   </Section>
+  <Section><Heading>Operators on partial permutations</Heading>
+    <Index Key="^"><C>^</C></Index>
+    <C><A>f</A> ^ <A>-1</A></C>
+    <P/>
+    <Alt Only="LaTex">\noindent</Alt><C><A>i</A> ^ <A>f</A></C>
+    <P/>
+    <Index Key="*"><C>*</C></Index>
+    <Alt Only="LaTex">\noindent</Alt><C><A>f</A> * <A>g</A></C>
+    <P/>
 
+
+    <#Include Label="LeftOne">
+  </Section>
+ 
   <Section Label="Changing representation">
     <Heading>Changing representations</Heading>
     It is possible to change the representation of certain transformations and
