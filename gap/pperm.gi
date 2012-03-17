@@ -218,6 +218,27 @@ InstallMethod(FixedPointsOfPartialPerm, "for a partial perm",
 
 #III
 
+# new for 0.7! - IndexPeriodOfPartialPerm - "for a partial perm"
+############################################################################# 
+# JDM this could avoid multiplying just by considering the orbits of points
+# under f as in PrettyPrint.
+
+InstallGlobalFunction("IndexPeriodOfPartialPerm", 
+function(f)
+  local i, g;
+  if not IsPartialPerm(f) then 
+    Error("usage: a partial permutation,");
+    return;
+  fi;
+
+  i:=1; g:=f;
+  
+  while not DomPP(g)=RanSetPP(g) do 
+    i:=i+1; g:=g*f;
+  od;
+  return [i, Order(AsPermutation(g))];
+end);
+
 # new for 0.7! - InternalRepOfPartialPerm - "for a partial perm" 
 ############################################################################# 
  
@@ -496,5 +517,22 @@ end);
 
 InstallMethod(RestrictedPartialPermNC, "for a part perm and set",
 [IsPartialPerm, IsList and IsCyclotomicCollection], RestrictedPP);
+
+# new for 0.7! - SmallestIdempotentPower - "for a partial perm"
+############################################################################
+
+InstallOtherMethod(SmallestIdempotentPower, "for a partial perm",
+[IsPartialPerm],
+function(f)
+  local g, i, p;
+
+  g:=f; i:=1;
+
+  while AsPermutation(g)<>() do 
+    i:=i+1; g:=g*f;
+  od;
+
+  return i;
+end);
 
 #EOF

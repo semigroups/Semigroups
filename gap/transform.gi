@@ -190,10 +190,14 @@ end);
 # fix for 0.2! - IndexPeriodOfTransformation - "for a transformation"
 #############################################################################
 
-InstallMethod(IndexPeriodOfTransformation, "for a transformation", 
-[IsTransformation], 
+InstallGlobalFunction(IndexPeriodOfTransformation, 
 function(f)
   local i, g, h, j;
+
+  if not IsTransformation(f) then 
+    Error("usage: a transformation");
+    return;
+  fi;
 
   i:=1; g:=f;
 
@@ -473,7 +477,7 @@ end);
 # Notes: returns the smallest pos. int. such that f^r is an idempotent. 
 
 InstallMethod(SmallestIdempotentPower, "for a transformation",
-[IsTransformation],
+[IsTransformation], 
 function(f)
   local g, i, p;
 

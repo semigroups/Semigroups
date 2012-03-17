@@ -24,6 +24,7 @@ DeclareOperation("DegreeOfPartialPerm", [IsPartialPerm]);
 DeclareGlobalFunction("DenseRangeList");
 DeclareOperation("DomainOfPartialPerm", [IsPartialPerm]);
 DeclareOperation("FixedPointsOfPartialPerm", [IsPartialPerm]);
+DeclareGlobalFunction("IndexPeriodOfPartialPerm");
 DeclareGlobalFunction("InternalRepOfPartialPerm");
 DeclareGlobalFunction("MaxDomPP");
 DeclareGlobalFunction("MaxDomRanPP");

@@ -57,6 +57,16 @@ gap> NrRClasses(U);
   </ManSection>
 
   <ManSection>
+    <Func Name="InverseSemigroup"  Arg="obj1, obj2, ... [, opts]"/>
+    <Returns>An inverse semigroup.</Returns>
+  </ManSection>
+  
+  <ManSection>
+    <Func Name="InverseSemigroupByGenerators"  Arg="obj1, obj2, ... [, opts]"/>
+    <Returns>An inverse semigroup.</Returns>
+  </ManSection>
+
+  <ManSection>
     <Meth Name="MonoidByGenerators" Arg="coll[, opts]"/>
     <Meth Name="SemigroupByGenerators" Arg="coll[, opts]"/>
     <Returns>A monoid or semigroup.</Returns>
@@ -79,7 +89,10 @@ gap> NrRClasses(U);
   </ManSection>
 
   <#Include Label="RandomTransformationMonoid"> 
-
+  <ManSection>
+    <Func Name="RandomInverseSemigroup"  Arg="m,n"/>
+    <Returns>An inverse semigroup.</Returns>
+  </ManSection>
  </Section> 
 
   <Section><Heading>New semigroups from old</Heading> 
@@ -131,7 +144,12 @@ gap> Size(S);
 233606</Example>
     </Description>
   </ManSection>
-  </Section> 
+
+   <ManSection>
+    <Func Name="ClosureInverseSemigroup"  Arg="S, coll [, opts]"/>
+    <Returns>An inverse semigroup.</Returns>
+  </ManSection>
+ </Section> 
 
   <Section Label="opts"><Heading>Options when creating semigroups</Heading>
     When using any of  <Ref Func="Semigroup"/>, 
@@ -179,7 +197,7 @@ gap> Size(S);
       various pieces of information so that it is possible to factorize
       elements of <A>S</A> using <Ref Meth="Factorization"/>.  This will cause
       a slight decrease in performance and an increase in memory usage.  If
-      this component is set to <K>false</K>, then will not be possible to
+      this component is set to <K>false</K>, then it will not be possible to
       factorize the elements of <A>S</A> using <Ref Meth="Factorization"/>.
       The default value for this component is <K>true</K>.  </Item>
       
@@ -227,6 +245,12 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
    </Description> 
  </ManSection>
 
+    </Section>
+    <Section><Heading>Expressing semigroup elements as words in
+        generators</Heading> 
+
+      <#Include Label="EvaluateWord">
+      <#Include Label="Factorization">
     </Section>
 </Chapter>
 

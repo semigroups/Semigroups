@@ -73,10 +73,15 @@
     creating partial permutations.  In addition to the functions described in
     this section, partial permutations can also be created from permutations
     and certain transformations;  see Section 
-    <Ref Sect="Changing representation"/>.
+    <Ref Sect="Changing representation"/>. <P/>
+
+    <E>Please note that the functions for partial permutations and inverse
+      semigroups are only available if you have compiled &Citrus;.</E> 
 
     <#Include Label="PartialPerm">
     <#Include Label="RestrictedPartialPerm">
+    <#Include Label="One">
+    <#Include Label="LeftOne">
     <#Include Label="RandomPartialPerm">
   </Section>
   
@@ -90,8 +95,6 @@
    <Ref Attr="RankOfTransformation" BookName="ref"/>. 
 
     <#Include Label="CanonicalTransSameKernel">
-    <#Include Label="EvaluateWord">
-    <#Include Label="Factorization">
     <#Include Label="IndexPeriodOfTransformation">
     <#Include Label="InversesOfTransformation">
     <#Include Label="IsInjectiveTransOnList">
@@ -112,38 +115,81 @@
     <#Include Label="DenseRangeList">
     <#Include Label="RankOfPartialPerm"/>
     <#Include Label="DegreeOfPartialPerm"/>
-
+    <#Include Label="IndexPeriodOfPartialPerm"/>
+  
   </Section>
  
   <Section><Heading>Operators for transformations</Heading>
-    <Index Key="^"><C>^</C></Index>
-    <C><A>f</A> ^ <A>g</A></C>
-    <P/>
-    <Index Key="*"><C>*</C></Index>
-    <Alt Only="LaTex">\noindent</Alt><C><A>f</A> * <A>g</A></C>
-    <P/>
-    
-    &Citrus; contains more efficient methods than the &GAP;
-    library for <Ref Oper="\*" BookName="ref"/> when <A>f</A> and <A>g</A> are
-    transformations or permutations (and at least one of <A>f</A> and <A>g</A>
-    is a transformation).<P/>
-
-     <C><A>f</A>^<A>g</A></C> returns <C><A>g</A>^-1*<A>f</A>*<A>g</A></C> when 
+    <List> 
+    <Mark><C><A>f</A> ^ <A>g</A></C></Mark>
+    <Item><Index Key="^"><C>^</C></Index>
+    returns <C><A>g</A>^-1*<A>f</A>*<A>g</A></C> when 
      <A>f</A> is a transformation and <A>g</A> is a permutation 
      <Ref Oper="\^" BookName="ref"/>.
+     </Item>
+    
+     <Mark>
+       <C><A>f</A> * <A>g</A></C>
+     </Mark>
+     <Item>
+       <Index Key="*"><C>*</C></Index>
+       returns the composition of the transformations <A>f</A> and <A>g</A>.
+       &Citrus; contains more efficient methods than the &GAP;
+    library for <Ref Oper="\*" BookName="ref"/> when <A>f</A> and <A>g</A> are
+    transformations or permutations (and at least one of <A>f</A> and <A>g</A>
+    is a transformation).
+     </Item>
+   </List>
+    
   </Section>
+
   <Section><Heading>Operators on partial permutations</Heading>
+    <List><Mark>
+        <C><A>f</A> ^ <A>-1</A></C></Mark>
+    <Item>
     <Index Key="^"><C>^</C></Index>
-    <C><A>f</A> ^ <A>-1</A></C>
-    <P/>
-    <Alt Only="LaTex">\noindent</Alt><C><A>i</A> ^ <A>f</A></C>
-    <P/>
+      returns the inverse of the partial permutation <A>f</A>.
+    </Item>
+    <Mark><C><A>i</A> ^ <A>f</A></C></Mark>
+    <Item>
+      returns the image of the positive integer <A>i</A> under the partial
+      permutation <A>f</A> if <A>f</A> is defined on <A>i</A> and <K>fail</K>
+      if <A>f</A> is undefined on <A>i</A>. 
+    </Item>
+    <Mark><C><A>f</A> * <A>g</A></C></Mark>
+    <Item>
     <Index Key="*"><C>*</C></Index>
-    <Alt Only="LaTex">\noindent</Alt><C><A>f</A> * <A>g</A></C>
-    <P/>
+      returns the composition of the partial permutations <A>f</A> and 
+      <A>g</A>. Unlike transformations, but similar to permutations, in &GAP; 
+      it is possible to multiply any two partial permutations. It is also
+      possible to multiply partial permutations and permutations acting on
+      integers not larger than 65535; see <Ref Func="PartialPerm"/> for some
+      further comments about composing partial permutations and permutations. 
+    </Item>
+    <Mark><C><A>f</A> &lt; <A>g</A></C></Mark>
+    <Item> 
+      returns <K>true</K> if <C>RangeOfPartialPerm(<A>f</A>)</C> is
+      lexicographically less than <C>RangeOfPartialPerm(<A>g</A>)</C> and
+      <K>false</K> if it is not. Note that this is not the natural partial
+      order on elements of an inverse semigroups; see <Ref
+        Func="NaturalLeqPP"/>.
+    </Item>
+    <Mark><C><A>f</A> = <A>g</A></C></Mark>                  
+    <Item>                                                      
+      returns <K>true</K> if the partial permutation <A>f</A> equals the
+      partial permutation <A>g</A> and returns <K>false</K> if it is not. 
+    </Item>
+    <Mark><C><A>f</A> / <A>g</A></C></Mark>   
+    <Item> 
+      returns <C><A>f</A> * <A>g^-1</A></C> where <A>f</A> and <A>g</A> are
+      partial permutations; <C><A>f</A> / <A>g</A></C> has better
+      performance than <C><A>f</A> * <A>g^-1</A></C>. 
+      </Item>
+    </List> 
+   
+    <#Include Label="NaturalLeqPP"/>
 
-
-    <#Include Label="LeftOne">
+   
   </Section>
  
   <Section Label="Changing representation">
@@ -156,26 +202,17 @@
     <#Include Label="AsTransformation">
   </Section>
   
-  <Section><Heading>Actions and orbits</Heading>
-    Some of the following actions and orbits of transformation semigroups are
-    used by &Citrus; in the computation of Green's relations and to test if an
-    arbitrary transformation semigroup has a particular property;  see Chapter
-    <Ref Chap="green"/> and Chapter <Ref Chap="properties"/>; see <Ref
-    Sect="Basic Actions" BookName="ref"/> and <Ref Func="Orb"
-    BookName="orb"/>.  <P/>
-
-    <#Include Label="GradedImagesOfTransSemigroup">
-    <#Include Label="ImagesOfTransSemigroup">
-    <#Include Label="OnKernelsAntiAction">
-    <#Include Label="OrbSCC">
-    <#Include Label="OrbSCCLookup">
-    <#Include Label="OrbSCCTruthTable">
-    <#Include Label="ReverseSchreierTreeOfSCC">
-    <#Include Label="SchreierTreeOfSCC">
-    <#Include Label="TraceSchreierTreeOfSCCBack">
-    <#Include Label="TraceSchreierTreeOfSCCForward">
-  </Section>	
-</Chapter>
+  <Section><Heading>Actions</Heading>
+    The following actions of transformations and partial permutations are used
+    by &Citrus; in the computation of Green's relations and to test if an
+    arbitrary transformation semigroup has a particular property;  see Chapters
+    <Ref Chap="green"/>, <Ref Chap="properties"/>, and <Ref Sect="Basic
+      Actions" BookName="ref"/>.  <P/>
+    
+    <#Include Label="OnKernelsAntiAction"> 
+    <#Include Label="OnIntegerSetsWithPartialPerm"> 
+  </Section>
+ </Chapter>
 
 <#Include SYSTEM "semigroups.xml">
 
@@ -213,7 +250,6 @@
     <#Include Label="SchutzenbergerGroup">
   </Section>
 </Chapter>
-
 
 <Chapter Label="properties"><Heading>Properties and attributes of semigroups
 </Heading>
@@ -339,6 +375,22 @@
     <#Include Label="IsomorphismPermGroup">
   </Section>
 </Chapter>
+
+<Chapter><Heading>Orbits</Heading>
+  <Section><Heading>Orbits</Heading>
+    <#Include Label="GradedImagesOfTransSemigroup">
+    <#Include Label="ImagesOfTransSemigroup">
+    <#Include Label="OrbSCC">
+    <#Include Label="OrbSCCLookup">
+    <#Include Label="OrbSCCTruthTable">
+    <#Include Label="ReverseSchreierTreeOfSCC">
+    <#Include Label="SchreierTreeOfSCC">
+    <#Include Label="TraceSchreierTreeOfSCCBack">
+    <#Include Label="TraceSchreierTreeOfSCCForward">
+  </Section>
+</Chapter>	
+
+
 </Body>
 
 <Bibliography Databases="citrus" />

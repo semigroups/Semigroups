@@ -73,7 +73,6 @@
       nor is a permutation ever a partial permutation. For example, the
       permutation <C>(1,4,2)</C> fixes <C>3</C> but the partial permutation
       <C>PartialPerm([4,1,0,2]);</C> is not defined on <C>3</C>. 
-
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -100,7 +99,7 @@ gap> DomainOfPartialPerm(f);
     <Description>
       The <E>range</E> of a partial permutation <A>f</A> is the list of images
       of the elements of the domain <A>f</A> where
-      <Log>RangeOfPartialPerm(f)[i]=DomainOfPartialPerm(f)[i]^f.</Log>
+      <C>RangeOfPartialPerm(f)[i]=DomainOfPartialPerm(f)[i]^f.</C>
 <Example>
 gap> f:=PartialPermNC( [ 1, 2, 3, 4, 5, 8, 10 ], [ 7, 1, 4, 3, 2, 6, 5 ] );;
 gap> RangeOfPartialPerm(f);
@@ -125,13 +124,21 @@ gap> RangeSetOfPartialPerm(f);
   </ManSection> 
 <#/GAPDoc>
 
-<#GAPDoc Label="OnIntegerSetsWithPP"/>
+<#GAPDoc Label="OnIntegerSetsWithPartialPerm"/>
   <ManSection>
-    <Func Name="OnIntegerSetsWithPP" Arg="set, f"/>
     <Oper Name="OnIntegerSetsWithPartialPerm" Arg="set, f"/>
-    <Returns>The inverse of <A>f</A>.</Returns>
+    <Returns>A set of positive integers.</Returns>
     <Description>
-      Blah.
+      <C>OnIntegerSetsWithPartialPerm</C> is a special method for <Ref
+        Func="OnSets" BookName="ref"/> for a set of positive integers
+      <A>set</A> and a partial permutation <A>f</A>.
+      <Example>
+gap> f:=PartialPermNC([ 1, 2, 4, 5, 6, 8, 9, 10, 11, 15, 16, 17, 18 ],
+> [ 13, 20, 2, 14, 18, 7, 3, 19, 9, 11, 5, 16, 8 ]);;
+gap> OnSets([1,2,3], f);
+[ 13, 20, fail ]
+gap> OnIntegerSetsWithPartialPerm([1,2,3], f);
+[ 13, 20 ]</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -139,12 +146,29 @@ gap> RangeSetOfPartialPerm(f);
 <#GAPDoc Label="LeftOne"/>
   <ManSection>
     <Func Name="LeftOne" Arg="f"/>
-    <Oper Name="RightOne" Arg="f"/>
+    <Func Name="RightOne" Arg="f"/>
     <Returns>The idempotent partial permutation <A>f</A><C>*</C><A>f^-1</A> or
       <A>f^-1</A><C>*</C><A>f</A>.
     </Returns>
     <Description>
-      Blah.
+      <C>LeftOne</C> returns the identity partial permutation on
+      <C>DomainOfPartialPerm(<A>f</A>)</C>, which is equal to
+      <A>f</A><C>*</C><A>f^-1</A>; see <Ref Func="DomainOfPartialPerm"/>.<P/>
+
+      <C>RightOne</C> returns the idenpartial permutation on
+      <C>RangeOfPartialPerm(<A>f</A>)</C>, which is equal to 
+      <A>f^-1</A><C>*</C><A>f</A>; see <Ref Func="RangeOfPartialPerm"/>.<P/>
+
+      The methods for <C>LeftOne</C> and <C>RightOne</C> are more efficient
+      than composing <A>f</A> with <A>f^-1</A> or vice versa. 
+      
+      <Example>
+gap> f:=PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ], 
+[ 3, 12, 14, 4, 11, 18, 17, 2, 9, 5, 15, 8, 20, 10, 19 ] );;
+gap> LeftOne(f);
+&lt;identity on [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ]>
+gap> RightOne(f);
+&lt;identity on [ 2, 3, 4, 5, 8, 9, 10, 11, 12, 14, 15, 17, 18, 19, 20 ]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -183,7 +207,8 @@ gap> FixedPointsOfPartialPerm(f);
       points that are not in <A>set</A>.<P/>
 
       <C>RestrictedPartialPermNC</C> does not check whether <A>set</A> is a set
-      of positive integers. 
+      of positive integers, if it is not, then the results of this function
+      are unpredictable.
 
       <Example>
 gap> f:=PartialPermNC( [ 1, 3, 4, 7, 8, 9 ], [ 9, 4, 1, 6, 2, 8 ] );;
@@ -198,7 +223,29 @@ gap> RestrictedPartialPerm(f, [2,3,6,10]);
     <Func Name="NaturalLeqPP" Arg="f, g"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      Blah.
+      The <E>natural partial order</E> <M>\leq</M> on an inverse semigroup
+      <M>S</M> is defined by <M>s\leq</M><M>t</M> if there exists an idempotent
+      <M>e</M> in <M>S</M> such that <M>s=et</M>. Hence if <A>f</A> and
+      <A>g</A> are partial permutations, then <A>f</A><M>\leq</M><A>g</A> if
+      and only if <A>f</A> is a restriction of <A>g</A>; 
+      see <Ref Oper="RestrictedPartialPerm"/>. <C>NaturalLeqPP</C>
+      returns <K>true</K> if <A>f</A> is a restriction of <A>g</A> and
+      <K>false</K> if it is not. 
+      <Example> 
+gap> f:=PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ], 
+[ 3, 12, 14, 4, 11, 18, 17, 2, 9, 5, 15, 8, 20, 10, 19 ] );;
+gap> gap> set:=[ 1, 2, 3, 9, 13, 20 ];;
+gap> g:=RestrictedPartialPerm(f, set);
+[ 1 .. 3 ] -> [ 3, 12, 14 ]
+gap> NaturalLeqPP(g,f);
+true
+gap> NaturalLeqPP(f,g);
+false
+gap> g:=PartialPermNC( [ 1, 2, 3, 4, 5, 8, 10 ], [ 7, 1, 4, 3, 2, 6, 5 ] );;
+gap> NaturalLeqPP(f, g);
+false
+gap> NaturalLeqPP(g, f);
+false</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -214,13 +261,13 @@ gap> RestrictedPartialPerm(f, [2,3,6,10]);
       <Ref Oper="DomainOfPartialPerm"/>, <Ref Oper="RangeOfPartialPerm"/>, 
       <Ref Oper="RangeSetOfPartialPerm"/>, <Ref Oper="RankOfPartialPerm"/>,
       <Ref Oper="DegreeOfPartialPerm"/>, multiplication of two partial 
-      permutations is via <K>\*</K>, and exponentiation with the first argument
-      a positive integer <C>i</C> and second arugment a partial permutation
+      permutations is via <K>*</K>, and exponentiation with the first argument
+      a positive integer <C>i</C> and second argument a partial permutation
       <C>f</C> where the result is the image <C>i^f</C> of the point <C>i</C>
       under <C>f</C>.<P/>
 
       <C>IsPartialPermCollection</C> is the category of collections of partial
-      permutations. For example, a semigroup of partial permutations is belongs
+      permutations. For example, a semigroup of partial permutations belongs
       in <C>IsPartialPermCollection</C>.
     </Description>
   </ManSection>
@@ -240,17 +287,6 @@ gap> RestrictedPartialPerm(f, [2,3,6,10]);
       <C>n/2</C>. 
       <Log>gap> f:=RandomPartialPerm(10);  
 [ 1, 2, 3, 4, 7, 8, 9 ] -> [ 5, 9, 1, 7, 2, 8, 4 ]</Log>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="PartialPermFamily"/>
-  <ManSection>
-    <Var Name="PartialPermFamily"/>
-    <Var Name="PartialPermType"/>
-    <Returns>?</Returns>
-    <Description>
-      Blah.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -305,17 +341,51 @@ gap> RankOfPartialPerm(f);
 
 <#GAPDoc Label="AsPartialPerm"/>
   <ManSection>
-    <Func Name="AsPartialPerm" Arg="obj"/>
-    <Returns>A positive integer.</Returns>
+    <Func Name="AsPartialPerm" Arg=""/>
+    <Returns>A partial permutation.</Returns>
     <Description>
-      Blah.
+      
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<ManSection>
-  <Meth Name="\^" Arg="f, i"> 
-  <Description>
-    This method is for an operation with a tricky name.
-  </Description>
-</ManSection>
+<#GAPDoc Label="IndexPeriodOfPartialPerm">
+  <ManSection>
+    <Func Name="IndexPeriodOfPartialPerm" Arg="f"/>
+    <Returns>A pair of positive integers.</Returns>
+    <Description>
+      Returns the least positive integers <C>m, r</C> such that
+      <C><A>f</A>^(m+r)=<A>f</A>^m</C>, which are 
+      known as the <E>index</E> and <E>period</E> of the transformation
+      <A>f</A>. 
+      <Example>
+gap> f:=PartialPermNC([ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ], 
+> [ 3, 12, 14, 4, 11, 18, 17, 2, 9, 5, 15, 8, 20, 10, 19 ]);;
+gap> IndexPeriodOfPartialPerm(f);                                    
+[ 5, 2 ]
+gap> f^5=f^7;
+true</Example> 
+    </Description>
+  </ManSection>
+  <#/GAPDoc>
+  
+  <#GAPDoc Label="One"/>
+  <ManSection>
+    <Func Name="One" Arg="f"/>
+    <Returns>A partial permutation.</Returns>
+    <Description>
+      As described in the reference manual <Ref Attr="OneImmutable"
+        BookName="ref"/>, 
+      <C>One</C> returns the multiplicative neutral element of the partial
+      permutation <A>f</A>, which is the identity partial permutation on the
+      union of the domain and range of <A>f</A>; see <Ref
+        Func="DomainOfPartialPerm"/> and <Ref Func="RangeOfPartialPerm"/>.
+      <Example>
+gap> f:=PartialPermNC([ 1, 2, 3, 4, 5, 7, 10 ], [ 3, 7, 9, 6, 1, 10, 2 ]);;
+gap> One(f);
+&lt;identity on [ 1, 2, 3, 4, 5, 6, 7, 9, 10 ]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+
