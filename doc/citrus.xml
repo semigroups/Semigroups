@@ -22,7 +22,7 @@
 <TableOfContents/>
 
 <Body>
-  <#Include SYSTEM="intro.xml">
+<#Include SYSTEM="intro.xml">
   
 <Chapter Label="create"><Heading>Transformations and partial permutations
 </Heading>
@@ -84,6 +84,9 @@
     <#Include Label="LeftOne">
     <#Include Label="RandomPartialPerm">
   </Section>
+  
+  <Section><Heading>Displaying partial permutations</Heading>
+    </Section>
   
   <Section><Heading>Properties of transformations</Heading>
     In this section we describe the functions available in
@@ -188,8 +191,6 @@
     </List> 
    
     <#Include Label="NaturalLeqPP"/>
-
-   
   </Section>
  
   <Section Label="Changing representation">
@@ -201,7 +202,9 @@
     <#Include Label="AsPartialPerm">
     <#Include Label="AsTransformation">
   </Section>
-  
+
+
+
   <Section><Heading>Actions</Heading>
     The following actions of transformations and partial permutations are used
     by &Citrus; in the computation of Green's relations and to test if an
