@@ -1704,7 +1704,7 @@ function(r)
   j:=0;
   for i in scc do 
     j:=j+1;
-    out[i]:=f/mults[i];
+    out[j]:=f/mults[i];
   od;
   return out;
 end);

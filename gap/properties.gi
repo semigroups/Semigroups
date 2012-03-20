@@ -855,7 +855,7 @@ function(d)
 
   if not (IsGreensClassOfTransSemigp(d) or IsGreensClassOfPartPermSemigroup(d))
   then 
-    Error("usage: a D-class of transformation or partial perm semigroup");
+    Error("usage: a D-class of transformation or partial perm semigroup,");
   fi;
 
   if not IsRegularDClass(d) or not NrIdempotents(d)=NrHClasses(d) then
