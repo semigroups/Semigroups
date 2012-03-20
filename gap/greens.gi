@@ -184,7 +184,6 @@ function(s)
   return Immutable(out);
 end);
 
-
 # new for 0.4! - EnumeratorOfRClasses - "for a trans. semigroup"
 #############################################################################
 # Notes: NumberElement does not work for RClassNCs, JDM maybe it should!
@@ -305,11 +304,8 @@ end);
 #############################################################################
 
 InstallOtherMethod(GreensJClassOfElement, "for a trans. semigroup and trans.",
-[IsTransformationSemigroup and HasIsFinite and IsFinite and
-HasGeneratorsOfSemigroup, IsTransformation], 
-function(s, f)
-  return GreensDClassOfElement(s, f);
-end);
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation], 
+GreensDClassOfElement);
 
 #III
 

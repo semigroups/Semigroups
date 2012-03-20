@@ -607,6 +607,29 @@ function(s)
   return;
 end); 
 
+# new for 0.7! - Enumerator - "for an inverse semigroup"
+#############################################################################
+# Notes: this is not an enumerator as I could not get an enumerator to perform 
+# well here. 
+
+InstallOtherMethod(Enumerator, "for an inverse semigroup",
+[IsInverseSemigroup and IsPartialPermSemigroup], 
+function(s)
+  local out, iter, j, i;
+
+  out:=EmptyPlist(Size(s));
+
+  iter:=Iterator(s);
+  j:=0;
+
+  for i in iter do
+    j:=j+1;
+    out[j]:=i;
+  od;
+
+  return Immutable(out);
+end);
+
 # new for 0.7! - Enumerator - "for R-class of part perm inverse semigroup"
 ##############################################################################
 
@@ -1400,6 +1423,12 @@ function(r, f)
   return CreateHClass(r!.parent, [m, k, l], o, f);
 end);
 
+# new for 0.7! - GreensJClassOfElement - for an inverse semi  and partial perm"
+#############################################################################
+  
+InstallOtherMethod(GreensJClassOfElement, "for inverse semi and partial perm",
+[IsInverseSemigroup and IsPartialPermSemigroup and HasGeneratorsOfSemigroup, IsPartialPerm], GreensDClassOfElement);
+
 # new for 0.7! - GreensLClassOfElement - for an inv semi and part perm
 ##############################################################################
 
@@ -1725,6 +1754,50 @@ function(s)
   for i in [1..r-l] do
     out[i]:=PartialPermNC(o[i+l], o[i+l]);
   od;
+  return out;
+end);
+
+# new for 0.7! - Idempotents - "for a part perm inv semigroup and pos int"
+##############################################################################
+
+InstallOtherMethod(Idempotents, "for a part perm inv semigroup and pos int",
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPosInt],
+function(s, i)
+  local o, j, out, k;
+ 
+  if i>MaximumList(List(Generators(s), Rank)) then 
+    return [];
+  fi;
+
+  o:=LongOrb(s); 
+  k:=0;
+
+  if IsClosed(o) then 
+    out:=EmptyPlist(Length(o));
+    for j in o do 
+      if Length(j)=i then 
+        k:=k+1;
+        out[k]:=PartialPermNC(j, j);
+      fi;
+    od;
+    ShrinkAllocationPlist(out);
+    return out;
+  fi;
+
+  o:=Orb(s, [1..LargestMovedPoint(s)]*1, OnIntegerSetsWithPP,
+        rec(forflatplainlists:=true, hashlen:=CitrusOptionsRec.hashlen.M,
+        gradingfunc:=function(o, x) return Length(x); end,
+        onlygrades:=function(x, y) return x>=i; end));
+
+  Enumerate(o, infinity);
+  out:=EmptyPlist(Length(o));
+  for j in [1..Length(o)] do 
+    if Grades(o)[j]=i then 
+      k:=k+1;
+      out[k]:=PartialPermNC(o[j], o[j]);
+    fi;
+  od;
+  ShrinkAllocationPlist(out);
   return out;
 end);
 
