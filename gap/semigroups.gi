@@ -312,7 +312,7 @@ function(gens, opts)
     return;
   fi;
 
-  if opts.small then #small gen. set
+  if opts.small and Length(gens)>1 then #small gen. set
     
     gens:=ShallowCopy(gens);
     gens:=SSortedList(gens); #remove duplicates 
@@ -510,7 +510,7 @@ function(gens, opts)
     return;
   fi;
 
-  if opts.small then 
+  if opts.small and Length(gens)>1 then 
     gens:=ShallowCopy(gens);
     gens:=SSortedList(gens); #remove duplicates 
     gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
