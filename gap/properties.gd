@@ -42,7 +42,6 @@ DeclareOperation("IsomorphismTransformationMonoid",
 DeclareProperty("IsOrthodoxSemigroup", IsSemigroup);
 DeclareSynonymAttr("IsPartialPermSemigroup", IsSemigroup and
 IsPartialPermCollection);
-# contains [1..n] where n is the largest moved point.
 DeclareProperty("IsPartialPermMonoid", IsPartialPermSemigroup);
 DeclareProperty("IsRectangularBand", IsSemigroup);
 DeclareProperty("IsRightSimple", IsSemigroup);
@@ -50,7 +49,7 @@ DeclareProperty("IsRightZeroSemigroup", IsSemigroup);
 DeclareProperty("IsSemiband", IsSemigroup);
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
 DeclareProperty("IsSemilatticeAsSemigroup", IsSemigroup);
-DeclareProperty("IsSynchronizingSemigroup", IsSemigroup);
+DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsZeroSemigroup", IsSemigroup);
 DeclareAttribute("MinimalIdeal", IsSemigroup);
@@ -62,5 +61,39 @@ DeclareOperation("RedundantGenerator", [IsTransformationCollection]);
 DeclareGlobalFunction("ReesMatrixSemigroupElementNC");
 DeclareGlobalFunction("ReesZeroMatrixSemigroupElementNC");
 DeclareAttribute("SmallGeneratingSet", IsSemigroup);
+
+InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
+InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
+InstallTrueMethod(IsBlockGroup, IsInverseSemigroup);
+InstallTrueMethod(IsBand, IsSemilatticeAsSemigroup);
+InstallTrueMethod(IsBrandtSemigroup, IsInverseSemigroup and IsZeroSimpleSemigroup);
+InstallTrueMethod(IsCliffordSemigroup, IsDTrivial and IsInverseSemigroup);
+InstallTrueMethod(IsCompletelyRegularSemigroup, IsCliffordSemigroup);
+InstallTrueMethod(IsCompletelyRegularSemigroup, IsSimpleSemigroup);
+InstallTrueMethod(IsCompletelySimpleSemigroup, IsSimpleSemigroup and IsFinite);
+InstallTrueMethod(IsDTrivial, IsSemilatticeAsSemigroup);
+InstallTrueMethod(IsGroupAsSemigroup, IsInverseSemigroup and IsSimpleSemigroup);
+InstallTrueMethod(IsHTrivial, IsLTrivial);
+InstallTrueMethod(IsHTrivial, IsRTrivial);
+InstallTrueMethod(IsIdempotentGenerated, IsSemilatticeAsSemigroup);
+InstallTrueMethod(IsInverseSemigroup, IsSemilatticeAsSemigroup);
+InstallTrueMethod(IsInverseSemigroup, IsCliffordSemigroup);
+InstallTrueMethod(IsLeftSimple, IsGroupAsSemigroup);
+InstallTrueMethod(IsLeftZeroSemigroup, IsInverseSemigroup and IsTrivial);
+InstallTrueMethod(IsLTrivial, IsInverseSemigroup and IsRTrivial);
+InstallTrueMethod(IsLTrivial, IsDTrivial);
+InstallTrueMethod(IsMonoidAsSemigroup, IsGroupAsSemigroup);
+InstallTrueMethod(IsOrthodoxSemigroup, IsInverseSemigroup);
+InstallTrueMethod(IsRectangularBand, IsHTrivial and IsSimpleSemigroup);
+InstallTrueMethod(IsRegularSemigroup, IsInverseSemigroup);
+InstallTrueMethod(IsRegularSemigroup, IsSimpleSemigroup);
+InstallTrueMethod(IsRightSimple, IsGroupAsSemigroup);
+InstallTrueMethod(IsRightZeroSemigroup, IsInverseSemigroup and IsTrivial);
+InstallTrueMethod(IsRTrivial, IsInverseSemigroup and IsLTrivial);
+InstallTrueMethod(IsRTrivial, IsDTrivial);
+InstallTrueMethod(IsSemiband, IsIdempotentGenerated);
+InstallTrueMethod(IsSemilatticeAsSemigroup, IsCommutative and IsBand);
+InstallTrueMethod(IsSimpleSemigroup, IsGroupAsSemigroup);
+InstallTrueMethod(IsZeroSemigroup, IsInverseSemigroup and IsTrivial);
 
 #EOF
