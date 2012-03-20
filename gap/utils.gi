@@ -242,7 +242,7 @@ end);
 # generators of a semigroup. 
 
 InstallOtherMethod(Generators, "for a semigroup or monoid",
-[IsSemigroup],
+[IsSemigroup and HasGeneratorsOfSemigroup],
 function(s)
 
   if IsMonoid(s) then

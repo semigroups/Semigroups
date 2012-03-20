@@ -28,9 +28,9 @@ InstallMethod(\<, "for Green's class and Green's class of trans. semigp.",
 # new for 0.1! - \= - "for trans. semigp. and trans. semigp."
 #############################################################################
 
-InstallMethod(\=, "for trans. semigp. and trans. semigp.",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, 
-IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(\=, "for a semigp. and a semigp.",
+[IsSemigroup and HasGeneratorsOfSemigroup, 
+IsSemigroup and HasGeneratorsOfSemigroup],
 function(s, t)
   return ForAll(Generators(s), x-> x in t) and 
    ForAll(Generators(t), x-> x in s);
