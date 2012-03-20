@@ -467,8 +467,9 @@ function(l)
     SetNrHClasses(l, Length(scc)*Length(cosets));
   fi;
 
-  k:=0; data:=l!.data;
-
+  k:=0; 
+  data:=[StructuralCopy(l!.data[1]), StructuralCopy(l!.data[2]),
+  StructuralCopy(l!.data[3])]; 
   for i in scc do 
     for j in cosets do 
       k:=k+1;

@@ -1122,7 +1122,7 @@ function(d)
   s:=d!.parent; o:=d!.o; m:=NrLClasses(d); out:=EmptyPlist(m); 
 
   for i in [1..m] do 
-    data:=LClassRepsData(d)[i]; 
+    data:=List(LClassRepsData(d)[i], ShallowCopy); 
     if HasLClassReps(d) then 
       f:=LClassReps(d)[i];
     else
