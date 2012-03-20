@@ -118,12 +118,17 @@ s-> Semigroup(Idempotents(s)));
 # new for 0.7! - InjectionPrincipalFactor - "for a D-class of a trans. semi"
 #############################################################################
 
-InstallMethod(InjectionPrincipalFactor, "for a D-class of a trans. semi.",
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
+InstallMethod(InjectionPrincipalFactor, "for a D-class",
+[IsGreensDClass], 
 function(d)
   local g, rep, rreps, lreps, mat, inj, zero, bound_r, bound_l, inv_l, inv_r,
   f, rms, iso, inv, hom, i, j;
 
+  if not (IsGreensClassOfTransSemigp(d) or IsGreensClassOfPartPermSemigroup(d))
+   then 
+    Error("usage: a D-class of a transformation or partial permutation semigroup");
+    return;
+  fi;
   if not IsRegularDClass(d) then
     Error("not yet implemented,");
     return;
@@ -843,10 +848,15 @@ end);
 # new for 0.7! - IsomorphismReesMatrixSemigroup - "for a D-class" 
 #############################################################################
 
-InstallOtherMethod(IsomorphismReesMatrixSemigroup, "for a D-class of trans. semi.",
-[IsGreensDClass and IsGreensClassOfTransSemigp],
+InstallOtherMethod(IsomorphismReesMatrixSemigroup, "for D-class",
+[IsGreensDClass],
 function(d)
   local g, rep, rreps, lreps, mat, rms, iso, inv, hom, i, j;
+
+  if not (IsGreensClassOfTransSemigp(d) or IsGreensClassOfPartPermSemigroup(d))
+  then 
+    Error("usage: a D-class of transformation or partial perm semigroup");
+  fi;
 
   if not IsRegularDClass(d) or not NrIdempotents(d)=NrHClasses(d) then
     Error("every H-class of the D-class should be a group,",

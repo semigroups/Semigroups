@@ -1528,6 +1528,20 @@ function(s, f)
   return GreensRClassOfElementNC(s, f);
 end);
 
+# new for 0.7! - GreensRClassOfElement - for a D-class and part perm
+##############################################################################
+
+InstallOtherMethod(GreensRClassOfElement, "for a D-class and part perm",
+[IsGreensDClass and IsGreensClassOfPartPermSemigroup and
+IsGreensClassOfInverseSemigroup, IsPartialPerm],
+function(d, f)
+  if not f in d then 
+    Error("the partial perm. is not an element of the D-class,");
+    return;
+  fi;
+  return GreensRClassOfElementNC(d, f);
+end);
+
 # new for 0.7! - GreensRClassOfElementNC - for an inv semi and part perm
 ##############################################################################
 # Notes: data is: [scc index, scc[1], pos of dom, pos of ran]
@@ -2676,7 +2690,7 @@ end);
 ##############################################################################
 
 InstallOtherMethod(NrIdempotents, "for an D-class of an inverse semi",
-[IsGreensRClass and IsGreensClassOfPartPermSemigroup and
+[IsGreensDClass and IsGreensClassOfPartPermSemigroup and
 IsGreensClassOfInverseSemigroup], NrRClasses);
 
 # new for 0.7! - NrIdempotents - for an L-class of an inv semi
