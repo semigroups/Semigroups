@@ -1827,6 +1827,54 @@ IsGreensClassOfInverseSemigroup);
 InstallTrueMethod(IsRegularRClass, IsGreensRClass and 
 IsGreensClassOfInverseSemigroup); 
 
+# new for 0.2! - Iterator - "for a trivial trans. semigp."
+#############################################################################
+# Notes: required until Enumerator does not call iterator. 
+
+InstallOtherMethod(Iterator, "for a trivial partial perm semigroup",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
+function(s)
+  return TrivialIterator(Generators(s)[1]);
+end);
+
+# new for 0.1! - Iterator - "for an inverse semigroup"
+#############################################################################
+
+InstallMethod(Iterator, "for an inverse semigroup",
+[IsInverseSemigroup and IsPartialPermSemigroup], 
+function(s)
+  local iter;
+
+  iter:= IteratorByFunctions( rec(
+
+    R:=IteratorOfDClasses(s),
+
+    r:=fail, s:=s,
+
+    NextIterator:=function(iter)
+
+      if IsDoneIterator(iter) then
+        return fail;
+      fi;
+
+      if iter!.r=fail or IsDoneIterator(iter!.r) then
+        iter!.r:=Iterator(NextIterator(iter!.R));
+      fi;
+
+      return NextIterator(iter!.r);
+    end,
+
+    IsDoneIterator:= iter -> IsDoneIterator(iter!.R) and
+     IsDoneIterator(iter!.r),
+
+    ShallowCopy:= iter -> rec(R:=IteratorOfDClasses(s), r:=fail)));
+
+  SetIsIteratorOfSemigroup(iter, true);
+  SetIsCitrusPkgIterator(iter, true);
+
+  return iter;
+end);
+
 # new for 0.7! - Iterator - "for D-class of inv semigroup"
 ##############################################################################
 
@@ -2597,7 +2645,7 @@ InstallMethod(NrIdempotents, "for an inverse semigp of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
   if not IsClosed(LongOrb(s)) then 
-    Enumerate(LongOrb(s));
+    Enumerate(LongOrb(s), infinity);
   fi;
   
   if IsPartialPermMonoid(s) then 
