@@ -31,7 +31,7 @@ gap> AsPermOfKerImg(f);
 
 <#GAPDoc Label="AsPermutation">
   <ManSection>
-    <Oper Name="AsPermutation" Arg="f [, A]"/>
+    <Oper Name="AsPermutation" Arg="f  [, A]"/>
     <Returns>A permutation.</Returns>
     <Description>
       <C>AsPermutation</C> returns the restriction of the transformation

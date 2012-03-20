@@ -341,10 +341,60 @@ gap> RankOfPartialPerm(f);
 
 <#GAPDoc Label="AsPartialPerm"/>
   <ManSection>
-    <Func Name="AsPartialPerm" Arg=""/>
+    <Func Name="AsPartialPerm" Arg="f [, set]"/>
+    <Func Name="AsPartialPermNC" Arg="f [, set]"/>
     <Returns>A partial permutation.</Returns>
     <Description>
-      
+      <List>
+        <Mark>For permutations:</Mark>
+        <Item><C>AsPartialPerm</C> and <C>AsPartialPermNC</C> return the 
+          partial permutation that equals <A>f</A> on the set of positive
+          integers <A>set</A> and is undefined elsewhere. 
+          If the optional second argument <A>set</A> is not specfied, then
+          <C>MovedPoints(f)</C> is used; see <Ref Attr="MovedPoints"
+            BookName="ref"/>.<P/>
+          
+          If the optional second argument <A>set</A> is specified, then 
+          <C>AsPartialPerm</C> first checks that <A>set</A> is a set of
+          positive integers and then calls <C>AsPartialPermNC</C>. If the
+          optional second argument is not specified, 
+          then <C>AsPartialPerm</C> simply calls <C>AsPartialPermNC</C> and no
+          further checks are performed. 
+          <P/>
+          
+          Note that as explained in <Ref Func="PartialPerm"/> <E>a permutation 
+          is never a partial permutation</E> in &GAP;, please keep this in mind
+        when using <C>AsPartialPerm</C>.
+        </Item>
+        <Mark>For transformations:</Mark>
+        <Item>
+          If <A>f</A> is a transformation such that
+          <C>Degree(<A>f</A>)^<A>f</A>=Degree(<A>f</A>)</C>
+          and <A>f</A> is injective except on those <C>i</C> such that
+          <C>i^<A>f</A>=Degree(f)</C>, then <C>AsPartialPerm</C> returns
+          the corresponding partial permutation.<P/>
+          <C>AsPartialPerm</C> first
+          verifies that <A>f</A> has the required form, whereas
+          <C>AsPartialPermNC</C> does not. There is currently no method for
+          <C>AsPartialPerm</C> or <C>AsPartialPermNC</C> with two arguments. 
+        </Item>
+      </List>
+      <Example>
+gap> f:=(2,8,19,9,14,10,20,17,4,13,12,3,5,7,18,16);;
+gap> AsPartialPerm(f);
+[ 2, 3, 4, 5, 7, 8, 9, 10, 12, 13, 14, 16, 17, 18, 19, 20 ] -> 
+[ 8, 5, 13, 7, 18, 19, 14, 20, 3, 12, 10, 2, 4, 16, 9, 17 ]
+gap> AsPartialPerm(f, [1,2,3]);
+[ 1 .. 3 ] -> [ 1, 8, 5 ]
+gap> f:=Transformation( [ 8, 3, 5, 9, 6, 2, 9, 7, 9 ] );
+Transformation( [ 8, 3, 5, 9, 6, 2, 9, 7, 9 ] )
+gap> AsPartialPerm(f);
+[ 1, 2, 3, 5, 6, 8 ] -> [ 8, 3, 5, 6, 2, 7 ]
+gap> AsPartialPermNC(f);
+[ 1, 2, 3, 5, 6, 8 ] -> [ 8, 3, 5, 6, 2, 7 ]
+gap> f:=Transformation( [ 2, 10, 2, 4, 4, 7, 6, 9, 10, 1 ] )
+gap> AsPartialPerm(f);
+fail</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

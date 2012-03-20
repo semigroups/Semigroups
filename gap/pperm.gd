@@ -16,10 +16,10 @@ BindGlobal("PartialPermFamily", NewFamily("PartialPermFamily",
 BindGlobal("PartialPermType", NewType(PartialPermFamily,
  IsPartialPerm));
 DeclareGlobalFunction("PartialPermNC");
-DeclareOperation("PartialPerm", [IsCyclotomicCollection]);
+DeclareGlobalFunction("PartialPerm");
 
-DeclareOperation("AsPartialPerm", [IsPerm, IsSet]);
-DeclareOperation("AsPartialPermNC", [IsTransformation and IsTransformationRep]);
+DeclareOperation("AsPartialPerm", [IsObject]);
+DeclareOperation("AsPartialPermNC", [IsObject]);
 DeclareOperation("DegreeOfPartialPerm", [IsPartialPerm]);
 DeclareGlobalFunction("DenseRangeList");
 DeclareOperation("DomainOfPartialPerm", [IsPartialPerm]);

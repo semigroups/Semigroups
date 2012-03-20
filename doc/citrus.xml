@@ -89,6 +89,10 @@
     Partial permutations <C>f</C> with rank less than 20 are displayed as:
     <Log>DomainOfPartialPerm(f) -> RangeOfPartialPerm(f)</Log>
     see <Ref Func="DomainOfPartialPerm"/> and <Ref Func="RangeOfPartialPerm"/>.
+    The empty mapping is displayed as:
+    <Log>&lt;empty mapping></Log>
+    and a partial identity is displayed as, for example,
+    <Log>&lt;identity on [ 1, 2, 3, 4, 5, 8, 12, 19, 20 ]></Log>
     <P/>
 
     If a partial permutation in &GAP; has rank 20 points or more, then to make

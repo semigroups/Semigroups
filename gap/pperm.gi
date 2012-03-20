@@ -67,7 +67,22 @@ InstallOtherMethod(\/, "for a partial perm and partial perm",
 # new for 0.7! - AsPartialPermNC - "for a transformation"
 ###########################################################################
 
-InstallMethod(AsPartialPermNC, "for a partial perm", 
+InstallMethod(AsPartialPerm, "for a transformation", 
+[IsTransformation and IsTransformationRep],
+function(f)
+  local img, n;
+  img:=f![1];
+  n:=Length(f![1]);
+  img:=PartialPerm(List(img, function(x) 
+    if x=n then 
+      return 0; 
+    else 
+      return x; 
+    fi;
+  end));
+end);
+
+InstallMethod(AsPartialPermNC, "for a transformation", 
 [IsTransformation and IsTransformationRep],
 function(f)
   local img, n;
@@ -85,20 +100,33 @@ end);
 # new for 0.7! - AsPartialPerm - "for a permutation and a set"
 ###########################################################################
 
-InstallOtherMethod(AsPartialPerm, "for a perm", 
+InstallMethod(AsPartialPermNC, "for a perm", 
 [IsPerm],
 function(p)
   return AsPartialPerm(p, MovedPoints(p)); 
 end);
 
+InstallMethod(AsPartialPerm, "for a perm", 
+[IsPerm], AsPartialPermNC);
+
 # new for 0.7! - AsPartialPerm - "for a permutation and a set"
 ###########################################################################
 
-InstallMethod(AsPartialPerm, "for a perm and a set", 
-[IsPerm, IsSet],
+InstallOtherMethod(AsPartialPermNC, "for a perm and a set", 
+[IsPerm, IsList],
 function(p, dom)
   return PartialPermNC(dom, OnTuples(dom, p)); 
 end);
+
+InstallOtherMethod(AsPartialPerm, "for a perm and a set", 
+[IsPerm, IsList], 
+function(p, dom)
+  if ForAll(dom, IsPosInt) and IsSet(dom) then 
+    return AsPartialPermNC(p, dom);
+  fi;
+  return fail;
+end);
+
 
 # new for 0.7! - AsPermutation - "for a partial perm"
 ###########################################################################
@@ -211,7 +239,7 @@ function(coll)
     if not i=Length(coll) then
       Print(",\n");
     else
-      Print(" ];\n");
+      Print(" ]\n");
     fi;
   od;
   return;
@@ -382,10 +410,24 @@ InstallMethod(OnIntegerSetsWithPartialPerm, "for a set of pos ints and p perm",
 
 #PPP
 
-# new for 0.7! - PartialPermNC - "for a dense image list" 
+# new for 0.7! - PartialPermNC
 ############################################################################# 
 # Notes: 0 is for undefined... 
- 
+
+InstallGlobalFunction(PartialPerm, 
+function(arg)
+  if Length(arg)=2 and IsSet(arg[1]) and ForAll(arg[1], IsPosInt) and
+   IsDuplicateFreeList(arg[2]) and ForAll(arg[2], IsPosInt) and
+   Length(arg[1])=Length(arg[2]) then 
+    return SparsePartialPermNC(arg[1], arg[2]);
+  elif Length(arg)=1 then 
+    if not IsInjectiveTransOnList(arg[1], Filtered(arg[1], x-> x<>0)) then 
+      return DensePartialPermNC(arg[1]);
+    fi;
+  fi;
+  return fail;
+end);
+
 InstallGlobalFunction(PartialPermNC, 
 function(arg) 
    
