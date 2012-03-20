@@ -31,15 +31,17 @@ gap> AsPermOfKerImg(f);
 
 <#GAPDoc Label="AsPermutation">
   <ManSection>
-    <Oper Name="AsPermutation" Arg="f  [, A]"/>
+    <Oper Name="AsPermutation" Arg="f  [, set]"/>
     <Returns>A permutation.</Returns>
     <Description>
-      <C>AsPermutation</C> returns the restriction of the transformation
-      <A>f</A> to the set of positive integers <A>A</A> as a <Ref
-      Func="Permutation" BookName="ref"/> if <A>f</A> acts as a permutation on
-      <A>A</A>.  If <A>A</A> is not specified, then the image set of <A>f</A>
-      is used by default; see <Ref Attr="ImageSetOfTransformation"
-      BookName="ref"/>.
+      If the transformation or partial permutation <A>f</A> is a permutation of
+      the set of positive integers <A>set</A>, then <C>AsPermutation</C>
+      returns this permutation;  see <Ref Func="Permutation" BookName="ref"/>
+      If the optional argument <A>set</A> is not specified, then the image set
+      of <A>f</A> is used by default for transformations and the range of
+      <A>f</A> is used by default for partial permutations; see 
+      <Ref Attr="ImageSetOfTransformation" BookName="ref"/> and 
+      <Ref Func="RangeSetOfPartialPerm"/>.
 
 <Example>
 gap> f:=Transformation( [ 5, 8, 3, 5, 8, 6, 2, 2, 7, 8 ] );;

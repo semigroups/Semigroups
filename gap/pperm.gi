@@ -73,7 +73,10 @@ function(f)
   local img, n;
   img:=f![1];
   n:=Length(f![1]);
-  img:=PartialPerm(List(img, function(x) 
+  if not n^f=n then 
+    return fail; 
+  fi;
+  return PartialPerm(List(img, function(x) 
     if x=n then 
       return 0; 
     else 
@@ -141,11 +144,26 @@ function(f)
   return MappingPermListList(DomPP(f), RanPP(f));
 end);
 
+InstallOtherMethod(AsPermutation, "for a partial perm",
+[IsPartialPerm, IsList],
+function(f, set)
+
+  if not (IsSet(set) and ForAll(set, IsPosInt)) or not 
+   OnIntegerSetsWithPP(set, f)=set then
+    return fail;
+  fi;
+  return MappingPermListList(set, OnTuples(set, f));
+end);
+
+
 # new for 0.7! - AsPermutationNC - "for a partial perm"
 ###########################################################################
 
 InstallOtherMethod(AsPermutationNC, "for a partial perm",
 [IsPartialPerm], f-> MappingPermListList(DomPP(f), RanPP(f)));
+
+InstallOtherMethod(AsPermutationNC, "for a partial perm",
+[IsPartialPerm], f-> MappingPermListList(set, OnTuples(set, f)));
 
 # new for 0.7! - AsTransformationNC - "for a partial perm and pos int"
 ###########################################################################
@@ -421,7 +439,7 @@ function(arg)
    Length(arg[1])=Length(arg[2]) then 
     return SparsePartialPermNC(arg[1], arg[2]);
   elif Length(arg)=1 then 
-    if not IsInjectiveTransOnList(arg[1], Filtered(arg[1], x-> x<>0)) then 
+    if IsInjectiveTransOnList(arg[1], Filtered(arg[1], x-> x<>0)) then 
       return DensePartialPermNC(arg[1]);
     fi;
   fi;
