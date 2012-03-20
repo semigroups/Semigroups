@@ -2737,6 +2737,38 @@ function(C)
   return CreateOrbSCCSchutzGp(C!.o, C!.data[1], Representative(C))[1];
 end);
 
+#PPP
+
+# new for 0.7! - PartialOrderOfDClasses - "for a partial perm inv semigroup"
+##############################################################################
+
+InstallMethod(PartialOrderOfDClasses, "for an inverse semigroup",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s)
+  local scc, graph, lookup, offset, out, i, j;
+
+  Error("this is just a subset of the poset!!!");
+  scc:=OrbSCC(LongOrb(s));
+  graph:=OrbitGraph(LongOrb(s));
+  lookup:=OrbSCCLookup(LongOrb(s));
+
+  if IsPartialPermMonoid(s) then 
+    offset:=0;
+  else
+    offset:=1;
+  fi;
+
+  out:=EmptyPlist(Length(scc)-offset);
+
+  for i in [1..Length(scc)-offset] do 
+    out[i]:=[];
+    for j in scc[i] do 
+      UniteSet(out[i], List(graph[j], k-> lookup[k]-offset));
+    od;
+  od;
+  return out;
+end);
+
 # new for 0.7! - ParentAttr - "for a Green's class of a part perm semigroup
 ##############################################################################
 

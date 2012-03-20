@@ -443,8 +443,8 @@ gap> One(f);
     <Returns>Nothing.</Returns>
     <Description>
       <C>PrettyPrintPP</C> will print the partial permutation <A>f</A> as a
-      product of disjoint permutations and open cycles (for lack of a better
-      word). An <E>open cycle</E> is a list <C>X</C> of length <C>n</C> such
+      product of disjoint permutations and chains. 
+      A <E>chain</E> is a list <C>X</C> of length <C>n</C> such
       that:
       <List><Item>
           <C>X[1]</C> is an element of the domain of <A>f</A> but not the
@@ -455,7 +455,7 @@ gap> One(f);
           domain.</Item>
       </List>
       In the display, permutations are displayed as they usually are in &GAP;,
-      fixed points are displayed enclosed in round brackets, and open cycles
+      fixed points are displayed enclosed in round brackets, and chains
       are displayed enclosed in square brackets.
 
       <Example>
