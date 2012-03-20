@@ -36,7 +36,9 @@ gap> AsPermOfKerImg(f);
     <Description>
       If the transformation or partial permutation <A>f</A> is a permutation of
       the set of positive integers <A>set</A>, then <C>AsPermutation</C>
-      returns this permutation;  see <Ref Func="Permutation" BookName="ref"/>
+      returns this permutation;  see <Ref Func="Permutation"
+        BookName="ref"/>.<P/>
+
       If the optional argument <A>set</A> is not specified, then the image set
       of <A>f</A> is used by default for transformations and the range of
       <A>f</A> is used by default for partial permutations; see 
@@ -59,18 +61,55 @@ gap> AsPermutation(f);
 gap> AsPermutation(f, [1,5]);
 (1,5)
 gap> AsPermutation(f, [3,8,7,10]);
-(3,8)(7,10)</Example>
+(3,8)(7,10)
+gap> f:=PartialPerm([ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ],
+[ 3, 12, 14, 4, 11, 18, 17, 2, 9, 5, 15, 8, 20, 10, 19 ]);;
+gap> PrettyPrintPP(f);
+[1,3,14][16,8,2,12,15](4)(5,11)[6,18,10,9][7,17,20](19)
+gap> AsPermutation(f);
+fail
+gap> AsPermutation(f, [4,5,11]);
+(5,11)
+gap> f:=RandomPartialPerm(20);
+[ 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18, 19, 20 ] -> 
+[ 13, 1, 8, 5, 4, 14, 11, 12, 9, 20, 2, 18, 7, 3, 19 ]
+gap> AsPermutation(f^-1*f);
+()</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="AsTransformation">
   <ManSection>
-    <Oper Name="AsTransformation" Arg="f [, A]"/>
+    <Oper Name="AsTransformation" Arg="f [, n]"/>
     <Returns>A transformation.</Returns>
     <Description>
-    </Description>
-  </ManSection>
+      If <A>f</A> is a partial permutation and <C>m</C> is the largest point in
+      the union of the domain and range of <A>f</A>, then
+      <C>AsTransformation</C> returns the transformation <C>g</C> such that
+      <C>i^g=i^f</C> for all <C>i</C> in the domain of <A>f</A> and
+      <C>i^g=m+1</C> for all <C>i</C> in <M>\{1,\ldots, m+1\}</M> that is not
+      in the domain of <A>f</A>. <P/>
+
+      If the optional second argument <A>n</A> is a positive integer greater
+      than the largest point in the union of the domain and range of <A>f</A>,
+      then the transformation obtained is defined by replacing <C>m</C> in the
+      definition of <C>g</C> in previous paragraph by <C>n</C>. <P/>
+
+      It is also possible to use <C>AsTransformation</C> to convert
+      permutations and binary relations into transformations; see 
+      <Ref Func="AsTransformation" BookName="ref"/>.
+
+      <Example>
+gap> f:=PartialPerm([ 1, 2, 3, 4, 5, 8, 10 ], [ 3, 1, 4, 2, 5, 6, 7 ]);;
+gap> AsTransformation(f);
+Transformation( [ 3, 1, 4, 2, 5, 11, 11, 6, 11, 7, 11 ] )
+gap> AsTransformation(f, 12);
+Transformation( [ 3, 1, 4, 2, 5, 12, 12, 6, 12, 7, 12, 12 ] )
+gap> AsTransformation(f, 14);
+Transformation( [ 3, 1, 4, 2, 5, 14, 14, 6, 14, 7, 14, 14, 14, 14 ] )</Example>
+    </Description> 
+  </ManSection> 
 <#/GAPDoc>
 
 <#GAPDoc Label="CanonicalTransSameKernel">

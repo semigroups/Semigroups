@@ -155,15 +155,17 @@ function(f, set)
   return MappingPermListList(set, OnTuples(set, f));
 end);
 
-
 # new for 0.7! - AsPermutationNC - "for a partial perm"
 ###########################################################################
+# JDM currently undocumented...
 
 InstallOtherMethod(AsPermutationNC, "for a partial perm",
 [IsPartialPerm], f-> MappingPermListList(DomPP(f), RanPP(f)));
 
 InstallOtherMethod(AsPermutationNC, "for a partial perm",
-[IsPartialPerm], f-> MappingPermListList(set, OnTuples(set, f)));
+[IsPartialPerm, IsList], function(f, set)
+  return MappingPermListList(set, OnTuples(set, f));
+end);
 
 # new for 0.7! - AsTransformationNC - "for a partial perm and pos int"
 ###########################################################################
@@ -192,7 +194,7 @@ end);
 InstallOtherMethod(AsTransformationNC, "for a partial perm",
 [IsPartialPerm],
 function(f)
-  return AsTransformationNC(f, MaxDomRanPP(f)+1);
+  return AsTransformationNC(f, f[6]+1);
 end);
 
 # new for 0.7! - AsTransformation - "for a partial perm"
@@ -207,7 +209,7 @@ InstallOtherMethod(AsTransformation, "for a partial perm",
 InstallOtherMethod(AsTransformation, "for a partial perm and deg",
 [IsPartialPerm, IsPosInt],
 function(f, n)
-  if not n>MaxDomRanPP(f) then 
+  if not n>f[6] then 
     Error("2nd argument should be larger than the largest point moved");
     return;
   fi;
