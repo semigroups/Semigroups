@@ -86,6 +86,27 @@
   </Section>
   
   <Section><Heading>Displaying partial permutations</Heading>
+    Partial permutations <C>f</C> with rank less than 20 are displayed as:
+    <Log>DomainOfPartialPerm(f) -> RangeOfPartialPerm(f)</Log>
+    see <Ref Func="DomainOfPartialPerm"/> and <Ref Func="RangeOfPartialPerm"/>.
+    <P/>
+
+    If a partial permutation in &GAP; has rank 20 points or more, then to make
+    the display more readable the domain and the range of the partial 
+    permutatation are not printed, for example, a partial permutation with
+    rank 27 will be displayed as:
+    <Log>&lt;partial perm on 27 pts></Log>
+    If you want to display a partial permutation in a form that can be copied
+    and pasted back into &GAP;, then use <C>Display</C>:
+    <Log>gap> Display(f);               
+PartialPermNC( [ 1, 2, 3, 5, 6, 7, 8 ], [ 5, 9, 10, 6, 3, 8, 4 ] )</Log>
+    Likewise, you can display a collection of partial permutations using
+  <C>Display</C>:
+  <Log>gap> Display(Generators(s));
+[ PartialPermNC( [ 1, 2, 3, 4, 5, 8, 10 ], [ 3, 1, 4, 2, 5, 6, 7 ] ),
+PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
+
+    <#Include Label="PrettyPrintPP">
   </Section>
   
   <Section><Heading>Properties of transformations</Heading>
