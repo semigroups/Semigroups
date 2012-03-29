@@ -1851,6 +1851,23 @@ end);
 InstallMethod(PosetOfIdempotents, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], ReturnFail);
 
+# new for 0.7! - PrimitiveIdempotents - "for an inverse semigroup"
+#############################################################################
+
+InstallMethod(PrimitiveIdempotents, "for an inverse semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup],
+function(s)
+  local zero, rank;
+  zero:=MultiplicativeZero(s);
+  if zero=fail then 
+    rank:=zero[2];
+  else
+    rank:=Set(List(OrbSCC(LongOrb(s)), x-> Length(LongOrb(s)[x[1]])))[2];
+  fi;
+
+  return Idempotents(s, rank);
+end);
+
 # new for 0.7! - PrincipalFactor - "for a D-class"
 #############################################################################
 
