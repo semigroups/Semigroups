@@ -2105,7 +2105,7 @@ function(s)
   
   return IteratorByFunctions( rec(
                  
-    o:=o, m:=offset+1, scc_limit:=Length(scc),
+    o:=o, m:=offset, scc_limit:=Length(scc),
 
     IsDoneIterator:=iter-> iter!.m=iter!.scc_limit,
 
@@ -2582,6 +2582,7 @@ function(s)
       fi;
     od;
   od;
+  Perform(out, ShrinkAllocationPlist);
   return out;
 end);
 
