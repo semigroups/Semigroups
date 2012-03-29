@@ -19,6 +19,8 @@ DeclareProperty("IsGreensClassOfPartPermSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
 DeclareAttribute("LongOrb", IsPartialPermSemigroup and IsInverseSemigroup,
  "mutable");
+DeclareAttribute("NaturalPartialOrder", IsPartialPermSemigroup and
+IsInverseSemigroup);
 DeclareAttribute("OrbMultipliers", IsGreensClass);
 DeclareAttribute("OrbSCCStabChain", IsGreensClass);
 DeclareGlobalFunction("ShortOrb");

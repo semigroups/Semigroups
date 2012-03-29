@@ -1149,7 +1149,13 @@ end);
 InstallOtherMethod(GroupHClass, "for a D-class of inverse semi",
 [IsGreensDClass and IsGreensClassOfInverseSemigroup and
 IsGreensClassOfPartPermSemigroup],
-d-> GreensHClassOfElementNC(d, Representative(d)));
+function(d)
+  local h;
+
+  h:=GreensHClassOfElementNC(d, Representative(d));
+  SetIsGroupHClass(h, true);
+  return h;
+end);
 
 # new for 0.7! - GreensLClasses - for a D-class of inv semi of part perms
 ##############################################################################
@@ -2557,6 +2563,28 @@ end);
 
 #NNN
 
+# new for 0.7! - NaturalPartialOrder - "for an inverse semigroup"
+##############################################################################
+# C function for me!
+
+InstallMethod(NaturalPartialOrder, "for an inverse semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup],
+function(s)
+  local elts, n, out, i, j;
+    
+  elts:=Reversed(Elements(s));
+  n:=Length(elts);
+  out:=List([1..n], x-> EmptyPlist(n));
+  for i in [1..n] do 
+    for j in [i+1..n] do 
+      if NaturalLeqPP(elts[j], elts[i]) then 
+        AddSet(out[i], j);
+      fi;
+    od;
+  od;
+  return out;
+end);
+
 # new for 0.7! - NrRClasses - for an inverse semigroup of partial perms
 ##############################################################################
 
@@ -2745,12 +2773,14 @@ end);
 InstallMethod(PartialOrderOfDClasses, "for an inverse semigroup",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local scc, graph, lookup, offset, out, i, j;
-
-  Error("this is just a subset of the poset!!!");
-  scc:=OrbSCC(LongOrb(s));
-  graph:=OrbitGraph(LongOrb(s));
-  lookup:=OrbSCCLookup(LongOrb(s));
+  local d, n, out, gens, o, lookup, offset, i, x, f;
+  
+  d:=GreensDClasses(s);
+  n:=Length(d);
+  out:=List([1..n], x-> EmptyPlist(n));
+  gens:=GeneratorsOfSemigroup(s);
+  o:=LongOrb(s);
+  lookup:=OrbSCCLookup(o);
 
   if IsPartialPermMonoid(s) then 
     offset:=0;
@@ -2758,14 +2788,16 @@ function(s)
     offset:=1;
   fi;
 
-  out:=EmptyPlist(Length(scc)-offset);
-
-  for i in [1..Length(scc)-offset] do 
-    out[i]:=[];
-    for j in scc[i] do 
-      UniteSet(out[i], List(graph[j], k-> lookup[k]-offset));
+  for i in [1..n] do 
+    for x in gens do 
+      for f in RClassReps(d[i]) do 
+        AddSet(out[i], lookup[Position(o, DomPP(x*f))]-offset);
+        AddSet(out[i], lookup[Position(o, RanSetPP(f^-1*x))]-offset);
+      od;
     od;
   od;
+
+  Perform(out, ShrinkAllocationPlist);
   return out;
 end);
 
@@ -2993,6 +3025,13 @@ function(s)
   EnumerateInverseSemiData(s);
   return Size(s);
 end); 
+
+# new for 0.7! - StructureDescription - for a group H-class of inv semi
+##############################################################################
+
+InstallOtherMethod(StructureDescription, "for group H-class of inv semi",
+[IsGroupHClass and IsGreensClassOfPartPermSemigroup], 
+h-> StructureDescription(Range(IsomorphismPermGroup(h))));
 
 #EOF
 
