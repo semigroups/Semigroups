@@ -10,6 +10,95 @@
 
 #CCC
 
+# new for 0.7! - ClosureInverseSemigroup - "for an inverse semi"
+#############################################################################
+
+InstallGlobalFunction(ClosureInverseSemigroup,
+function(arg)
+  
+  if not (IsPartialPermSemigroup(arg[1]) and IsInverseSemigroup(arg[1])) or not 
+   (IsPartialPermCollection(arg[2]) or IsPartialPerm(arg[2])) then 
+    Error("Usage: arg. must be a inverse semigroup of partial perms and ",
+    "and a partial perm or collection of partial perms,");
+    return;
+  fi;
+
+  if Length(arg)=3 then 
+  #  if not IsRecord(arg[3]) then 
+  #    Error("Usage: the third argument must be a record,");
+  #    return;
+  #  fi;
+  #  if IsBound(arg[3].schreier) then  
+  #    arg[3].schreier:=false;
+  #  fi;
+  else
+    #arg[3]:=arg[1]!.opts;
+    arg[3]:=rec();
+  fi;
+
+  #arg[3].small:=false;
+
+  if IsSemigroup(arg[2]) then 
+    arg[2]:=GeneratorsOfSemigroup(arg[2]);
+  elif IsPartialPerm(arg[2]) then 
+    arg[2]:=[arg[2]];
+  fi;
+
+  return ClosureInverseSemigroupNC(arg[1], Filtered(arg[2], x-> 
+   not x in arg[1]), arg[3]);
+end);
+
+# new for 0.7! - ClosureInverseSemigroupNC - "for an inverse semi"
+#############################################################################
+
+InstallGlobalFunction(ClosureInverseSemigroupNC,
+function(s, coll, opts)
+  local t, coll_copy, o, f;
+ 
+  if coll=[] then
+    Info(InfoCitrus, 2, "All the elements in the collection belong to the ",
+    " semigroup,");
+    return s;
+  fi;
+
+  coll_copy:=ShallowCopy(coll);
+  for f in coll do
+    if not DomPP(f)=RanSetPP(f) then 
+      Add(coll_copy, f^-1);
+    fi;
+  od;  
+
+  o:=StructuralCopy(LongOrb(s));
+  AddGeneratorsToOrbit(o, coll_copy);
+
+  if IsPartialPermMonoid(s) then
+    t:=InverseMonoid(o!.gens);#, opts);
+  else
+    Error("");
+    t:=InverseSemigroupByGenerators(coll, coll_copy);
+  fi;
+
+  if LargestMovedPoint(coll)>LargestMovedPoint(s) then 
+    return t;
+  fi;
+
+  if IsBound(o!.scc) then 
+    Unbind(o!.scc); Unbind(o!.truth); Unbind(o!.trees); 
+  fi;
+  
+  if IsBound(o!.mults) then 
+    Unbind(o!.mults); 
+  fi;
+  
+  if IsBound(o!.schutz) then 
+    Unbind(o!.schutz);
+  fi;
+  
+  o!.finished:=false;
+  SetLongOrb(t, o);
+  return t;
+end);
+
 # mod for 0.6! - ClosureSemigroup - "for a trans. semi. and trans. coll."
 #############################################################################
 
@@ -367,52 +456,57 @@ end);
 
 InstallGlobalFunction(InverseSemigroup,
 function( arg )
-  local out, i;
+  local invgens, gens, i, f;
   if IsPartialPerm(arg[1]) or IsPartialPermCollection(arg[1]) then 
-    out:=[];
+    invgens:=[]; gens:=[];
     for i in [1..Length(arg)] do 
       if IsPartialPerm(arg[i]) then 
-        out[i]:=[arg[i]];
+        invgens[i]:=[arg[i]];
+        Add(gens, arg[i]);
+        if not DomPP(invgens[i])=RanSetPP(invgens[i]) then 
+          Add(gens, arg[i]^-1);
+        fi;
       elif IsPartialPermCollection(arg[i]) then 
         if IsPartialPermSemigroup(arg[i]) then
-          out[i]:=Generators(arg[i]);
+          invgens[i]:=Generators(arg[i]);
+          Append(gens[i], GeneratorsOfSemigroup(arg[i]));
         else
-          out[i]:=arg[i];
+          invgens[i]:=arg[i];
+          for f in invgens[i] do 
+            Add(gens, f);
+            if not DomPP(f)=RanSetPP(f) then 
+              Add(gens, f^-1);
+            fi;
+          od;
         fi;
       elif i=Length(arg) and IsRecord(arg[i]) then 
-        return InverseSemigroupByGenerators(Concatenation(out), arg[i]);
+        return InverseSemigroupByGenerators(Concatenation(invgens), gens,
+         arg[i]);
       else
-        Error( "Usage: InverseSemigroup(<gen>,...), InverseSemigroup(<gens>), InverseSemigroup(<D>)," );
+        Error( "usage: InverseSemigroup(<gen>,...), InverseSemigroup(<gens>),"
+        ,  "InverseSemigroup(<D>)," );
         return;
       fi;
     od;
-    return InverseSemigroupByGenerators(Concatenation(out));
-  else
-    Error( "Usage: Semigroup(<gen>,...),Semigroup(<gens>),Semigroup(<D>),");
-    return;
+    return InverseSemigroupByGenerators(Concatenation(invgens), gens);
   fi;
+  Error( "usage: InverseSemigroup(<gen>,...),InverseSemigroup(<gens>),",
+   "InverseSemigroup(<D>),");
+  return;
 end);
 
 # new for 0.7! - InverseSemigroupByGenerators
 ################################################################################
 
 InstallMethod(InverseSemigroupByGenerators, "for partial perm coll", 
-[IsPartialPermCollection],
-function(coll)
-  local gens, s, f;
-
-  gens:=ShallowCopy(coll);
-  
-  for f in coll do
-    if not DomPP(f)=RanSetPP(f) then 
-      Add(gens, f^-1);
-    fi;
-  od;
+[IsPartialPermCollection, IsPartialPermCollection],
+function(invgens, gens)
+  local s;
 
   s:=Objectify( NewType (FamilyObj( gens ), IsMagma and IsInverseSemigroup 
   and IsAttributeStoringRep), rec());
   SetGeneratorsOfMagma(s, gens);
-  SetGeneratorsOfInverseSemigroup(s, coll);
+  SetGeneratorsOfInverseSemigroup(s, invgens);
   return s;
 end);
 

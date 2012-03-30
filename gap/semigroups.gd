@@ -8,10 +8,14 @@
 ############################################################################# 
 ##
 
+DeclareGlobalFunction("ClosureInverseSemigroup");
+DeclareGlobalFunction("ClosureInverseSemigroupNC");
 DeclareGlobalFunction("ClosureSemigroup");
 DeclareGlobalFunction("ClosureSemigroupNC");
 DeclareAttribute("GeneratorsOfInverseSemigroup", IsInverseSemigroup);
+DeclareGlobalFunction("InverseMonoid");
 DeclareGlobalFunction("InverseSemigroup");
-DeclareOperation("InverseSemigroupByGenerators", [IsPartialPermCollection]);
+DeclareOperation("InverseMonoidByGenerators", [IsPartialPermCollection]);
+DeclareOperation("InverseSemigroupByGenerators", [IsPartialPermCollection, IsPartialPermCollection]);
 DeclareGlobalFunction("SingularSemigroup");
 DeclareGlobalFunction("SymmetricInverseSemigp");

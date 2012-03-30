@@ -1530,10 +1530,10 @@ end);
 ###########################################################################
 
 InstallOtherMethod(LargestMovedPoint, "for a partial perm semigroup",
-[IsPartialPermSemigroup],
-function(s)
-  return MaximumList(List(Generators(s), f-> f[6]));
-end);
+[IsPartialPermSemigroup], s-> LargestMovedPoint(Generators(s)));
+
+InstallOtherMethod(LargestMovedPoint, "for a partial perm collection",
+[IsPartialPermCollection], coll-> MaximumList(List(coll, f-> f[6])));
 
 #MMM
 
