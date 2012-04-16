@@ -1873,7 +1873,7 @@ function(s)
 
     NextIterator:=function(iter)
 
-      if IsDoneIterator(iter) then
+      if IsDoneIterator(iter!.R) and IsDoneIterator(iter!.r) then
         return fail;
       fi;
 

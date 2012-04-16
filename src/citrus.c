@@ -780,7 +780,7 @@ Obj FuncQuoPP(Obj self, Obj f, Obj g)
   SET_ELM_PP(fg, 1, deg);
   
   max_ran=0;
-  min_ran=ELM_PP(g, deg_g);             /* max dom g = max ran g^-1 */
+  min_ran=ELM_PP(g, 6+deg_g);             /* max dom g = max ran g^-1 */
   rank=0;
   
   for (i=1;i<=r;i++)
