@@ -74,8 +74,9 @@ function(s, coll, opts)
   if IsPartialPermMonoid(s) then
     t:=InverseMonoid(o!.gens);#, opts);
   else
-    Error("");
-    t:=InverseSemigroupByGenerators(coll, coll_copy);
+    #Error("");
+    t:=InverseSemigroupByGeneratorsNC(o!.gens, 
+     Concatenation(Generators(s), coll));
   fi;
 
   if LargestMovedPoint(coll)>LargestMovedPoint(s) then 
@@ -456,39 +457,28 @@ end);
 
 InstallGlobalFunction(InverseSemigroup,
 function( arg )
-  local invgens, gens, i, f;
+  local out, i;
+
   if IsPartialPerm(arg[1]) or IsPartialPermCollection(arg[1]) then 
-    invgens:=[]; gens:=[];
+    out:=[]; 
     for i in [1..Length(arg)] do 
       if IsPartialPerm(arg[i]) then 
-        invgens[i]:=[arg[i]];
-        Add(gens, arg[i]);
-        if not DomPP(invgens[i])=RanSetPP(invgens[i]) then 
-          Add(gens, arg[i]^-1);
-        fi;
+        out[i]:=[arg[i]];
       elif IsPartialPermCollection(arg[i]) then 
         if IsPartialPermSemigroup(arg[i]) then
-          invgens[i]:=Generators(arg[i]);
-          Append(gens[i], GeneratorsOfSemigroup(arg[i]));
+          out[i]:=Generators(arg[i]);
         else
-          invgens[i]:=arg[i];
-          for f in invgens[i] do 
-            Add(gens, f);
-            if not DomPP(f)=RanSetPP(f) then 
-              Add(gens, f^-1);
-            fi;
-          od;
+          out[i]:=arg[i];
         fi;
       elif i=Length(arg) and IsRecord(arg[i]) then 
-        return InverseSemigroupByGenerators(Concatenation(invgens), gens,
-         arg[i]);
+        return InverseSemigroupByGenerators(Concatenation(out), arg[i]);
       else
         Error( "usage: InverseSemigroup(<gen>,...), InverseSemigroup(<gens>),"
         ,  "InverseSemigroup(<D>)," );
         return;
       fi;
     od;
-    return InverseSemigroupByGenerators(Concatenation(invgens), gens);
+    return InverseSemigroupByGenerators(Concatenation(out));
   fi;
   Error( "usage: InverseSemigroup(<gen>,...),InverseSemigroup(<gens>),",
    "InverseSemigroup(<D>),");
@@ -499,15 +489,52 @@ end);
 ################################################################################
 
 InstallMethod(InverseSemigroupByGenerators, "for partial perm coll", 
+[IsPartialPermCollection],
+function(coll)
+  local gens, s, f;
+
+  gens:=ShallowCopy(coll);
+  
+  for f in coll do
+    if not DomPP(f)=RanSetPP(f) then 
+      Add(gens, f^-1);
+    fi;
+  od;
+
+  return InverseSemigroupByGeneratorsNC(gens, coll);
+end);
+
+# new for 0.7! - InverseSemigroupByGeneratorsNC
+################################################################################
+
+InstallMethod(InverseSemigroupByGeneratorsNC, "for partial perm coll and same",
 [IsPartialPermCollection, IsPartialPermCollection],
-function(invgens, gens)
+function(gens, coll)
   local s;
 
-  s:=Objectify( NewType (FamilyObj( gens ), IsMagma and IsInverseSemigroup 
+  s:=Objectify( NewType (FamilyObj( gens ), IsMagma and IsInverseSemigroup
   and IsAttributeStoringRep), rec());
   SetGeneratorsOfMagma(s, gens);
-  SetGeneratorsOfInverseSemigroup(s, invgens);
+  SetGeneratorsOfInverseSemigroup(s, coll);
   return s;
+end);
+
+# new for 0.7! - IsSubsemigroup - "for partial perm semi and same"
+################################################################################
+
+InstallOtherMethod(IsSubsemigroup, "for partial perm semi and same",
+[IsPartialPermSemigroup, IsPartialPermSemigroup],
+function(s, t)
+  return ForAll(GeneratorsOfSemigroup(t), x-> x in s);
+end);
+
+# new for 0.7! - IsSubsemigroup - "for partial perm semi and inv semigroup"
+################################################################################
+ 
+InstallOtherMethod(IsSubsemigroup, "for a partial perm semi and inv. semi",
+[IsPartialPermSemigroup, IsPartialPermSemigroup and IsInverseSemigroup],
+function(s, t)
+  return ForAll(Generators(t), x-> x in s);
 end);
 
 #PPP 
