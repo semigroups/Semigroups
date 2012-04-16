@@ -17,6 +17,6 @@ DeclareGlobalFunction("InverseMonoid");
 DeclareGlobalFunction("InverseSemigroup");
 DeclareOperation("InverseMonoidByGenerators", [IsPartialPermCollection]);
 DeclareOperation("InverseSemigroupByGenerators", [IsPartialPermCollection]);
-DeclareOperation("InverseSemigroupByGeneratorsNC", [IsPartialPermCollection, IsPartialPermCollection]);
+DeclareOperation("InverseSemigroupByGeneratorsNC", [IsPartialPermCollection, IsPartialPermCollection, IsRecord]);
 DeclareGlobalFunction("SingularSemigroup");
 DeclareGlobalFunction("SymmetricInverseSemigp");
