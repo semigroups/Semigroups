@@ -1945,6 +1945,14 @@ InstallOtherMethod(SmallGeneratingSet, "for a trans. semi.",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 s -> Generators(Semigroup(Generators(s), rec(small:=true, schreier:=false))));
 
+# new for 0.7! - SmallGeneratingSet - "for an inverse semi"
+#############################################################################
+
+InstallOtherMethod(SmallGeneratingSet, "for a trans. semi.", 
+[IsPartialPermSemigroup and IsInverseSemigroup],
+s -> Generators(InverseSemigroup(Generators(s), rec(small:=true, 
+ schreier:=false))));
+
 # new for 0.7! - SmallestMovedPoint - "for a part. perm inverse semigroup
 #############################################################################
 

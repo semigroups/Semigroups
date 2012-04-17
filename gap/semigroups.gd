@@ -12,11 +12,15 @@ DeclareGlobalFunction("ClosureInverseSemigroup");
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
 DeclareGlobalFunction("ClosureSemigroup");
 DeclareGlobalFunction("ClosureSemigroupNC");
+DeclareAttribute("GeneratorsOfInverseMonoid", IsInverseSemigroup);
 DeclareAttribute("GeneratorsOfInverseSemigroup", IsInverseSemigroup);
 DeclareGlobalFunction("InverseMonoid");
 DeclareGlobalFunction("InverseSemigroup");
 DeclareOperation("InverseMonoidByGenerators", [IsPartialPermCollection]);
 DeclareOperation("InverseSemigroupByGenerators", [IsPartialPermCollection]);
-DeclareOperation("InverseSemigroupByGeneratorsNC", [IsPartialPermCollection, IsPartialPermCollection, IsRecord]);
+DeclareOperation("InverseMonoidByGeneratorsNC", [IsPartialPermCollection, 
+IsPartialPermCollection, IsRecord]);
+DeclareOperation("InverseSemigroupByGeneratorsNC", [IsPartialPermCollection, 
+IsPartialPermCollection, IsRecord]);
 DeclareGlobalFunction("SingularSemigroup");
 DeclareGlobalFunction("SymmetricInverseSemigp");
