@@ -29,9 +29,10 @@ DeclareGlobalFunction("IteratorByIterator");
 DeclareGlobalFunction("LClass");
 DeclareGlobalFunction("LClassNC");
 DeclareGlobalFunction("ListByIterator");
+DeclareGlobalFunction("RandomInverseMonoid");
 DeclareGlobalFunction("RandomInverseSemigroup");
-DeclareGlobalFunction("RandomTransformationSemigroup");
 DeclareGlobalFunction("RandomTransformationMonoid");
+DeclareGlobalFunction("RandomTransformationSemigroup");
 DeclareGlobalFunction("RClass");
 DeclareGlobalFunction("RClassNC");
 

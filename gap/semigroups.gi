@@ -24,19 +24,18 @@ function(arg)
   fi;
 
   if Length(arg)=3 then 
-  #  if not IsRecord(arg[3]) then 
-  #    Error("Usage: the third argument must be a record,");
-  #    return;
-  #  fi;
-  #  if IsBound(arg[3].schreier) then  
-  #    arg[3].schreier:=false;
-  #  fi;
+    if not IsRecord(arg[3]) then 
+      Error("Usage: the third argument must be a record,");
+      return;
+    fi;
+    if IsBound(arg[3].schreier) then  
+      arg[3].schreier:=false;
+    fi;
   else
-    #arg[3]:=arg[1]!.opts;
-    arg[3]:=rec();
+    arg[3]:=arg[1]!.opts;
   fi;
 
-  #arg[3].small:=false;
+  arg[3].small:=false;
 
   if IsSemigroup(arg[2]) then 
     arg[2]:=GeneratorsOfSemigroup(arg[2]);
@@ -72,7 +71,8 @@ function(s, coll, opts)
   AddGeneratorsToOrbit(o, coll_copy);
 
   if IsPartialPermMonoid(s) then
-    t:=InverseMonoid(o!.gens, opts);
+    t:=InverseMonoidByGeneratorsNC(o!.gens, 
+      Concatenation(Generators(s), coll), opts);
   else
     t:=InverseSemigroupByGeneratorsNC(o!.gens, 
      Concatenation(Generators(s), coll), opts);
@@ -526,16 +526,14 @@ InstallMethod(InverseMonoidByGenerators, "for partial perm coll",
 function(coll)
   local one, gens, f;
   
-  one:=Union( List(coll, DomPP ) );
-  gens:=[PartialPermNC(one, one)];
-  Append(gens,ShallowCopy(coll));
+  gens:=ShallowCopy(coll);
 
   for f in coll do
     if not DomPP(f)=RanSetPP(f) then 
       Add(gens, f^-1);
     fi;
   od;
-
+  
   return InverseMonoidByGeneratorsNC(gens, coll, CitrusOptionsRec);
 end);
 
@@ -558,7 +556,7 @@ function(coll)
   return InverseSemigroupByGeneratorsNC(gens, coll, CitrusOptionsRec);
 end);
 
-# new for 0.7! - InverseSemigroupByGenerators - "for partial perm coll and
+# new for 0.7! - InverseMonoidByGenerators - "for partial perm coll and
 # record"
 ################################################################################
 
@@ -588,13 +586,11 @@ function(coll, opts)
   fi;
 
   if not opts.small then
-    one:=Union( List(coll, DomPP ) );
-    gens:=[PartialPermNC(one, one)];
-    Append(gens, ShallowCopy(coll));
+    gens:=ShallowCopy(coll);
       
     for f in coll do
       if not DomPP(f)=RanSetPP(f) then
-        Add(gens, f^-1);
+        Add(gens, f^-1); 
       fi;
     od;
   else
@@ -674,11 +670,12 @@ function(gens, coll, opts)
     return s;
   fi;
 
-  s:=Objectify( NewType (FamilyObj( gens ), IsMagma and IsInverseMonoid
-  and IsAttributeStoringRep), rec(opts:=opts));
-  SetGeneratorsOfMagma(s, gens);
-  SetGeneratorsOfInverseSemigroup(s, coll);
-  SetGeneratorsOfInverseMonoid(s, coll{[2..Length(coll)]});
+  s:=Objectify( NewType (FamilyObj( gens ), IsMagmaWithOne and
+   IsInverseSemigroup and IsAttributeStoringRep), rec(opts:=opts));
+  SetMovedPoints(s, Union(List(gens, DomPP)));
+  SetGeneratorsOfMagmaWithOne(s, gens);
+  SetGeneratorsOfInverseSemigroup(s, Concatenation([One(s)], coll));
+  SetGeneratorsOfInverseMonoid(s, coll);
   return s;
 end);
 
@@ -734,6 +731,20 @@ function(s, t)
 end);
 
 #PPP 
+
+# new for 0.7! - PrintObj - "for an inverse monoid"
+################################################################################
+
+InstallMethod(PrintObj, "for an inverse monoid",
+[IsInverseMonoid], 
+function(s)
+  Print("<inverse monoid with ", Length(Generators(s)), " generators");
+  if HasSize(s) then 
+    Print(", ", Size(s), " elements");
+  fi;
+  Print(">");
+  return;
+end);
 
 # new for 0.7! - PrintObj - "for an inverse semigroup"
 ################################################################################
@@ -905,6 +916,25 @@ function(n)
   return InverseSemigroup(List(GeneratorsOfGroup(SymmetricGroup(n)), x-> 
    PartialPermNC(ListPerm(x, n))), PartialPermNC([0..n-1]*1));
 end);  
+
+# new for 0.7! - ViewObj - "for an inverse monoid"
+################################################################################
+
+InstallMethod(ViewObj, "for an inverse monoid",
+[IsInverseMonoid], 
+function(s)
+  Print("<inverse monoid with ", Length(Generators(s)));
+  if Length(Generators(s))=1 then  
+    Print(" generator");
+  else
+    Print(" generators");
+  fi;
+  if HasSize(s) then 
+    Print(", ", Size(s), " elements");
+  fi;
+  Print(">");
+  return;
+end);
 
 # new for 0.7! - ViewObj - "for an inverse semigroup"
 ################################################################################

@@ -525,7 +525,7 @@ RightOne(Representative(r))));
 InstallOtherMethod(DClassReps, "for an inverse semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local o, scc, r, i, gens, out, j;
+  local o, scc, r, i, out, j;
   
   o:=LongOrb(s);
   scc:=OrbSCC(o); 
@@ -537,7 +537,6 @@ function(s)
     i:=1;
   fi;
 
-  gens:=GeneratorsOfSemigroup(s);
   out:=EmptyPlist(r);
   
   for j in [1..r-i] do 
@@ -582,16 +581,11 @@ function(s)
     schutz:=EmptyPlist(r);
     graph:=OrbitGraph(o);;
     truth:=OrbSCCTruthTable(o);;
-    gens:=GeneratorsOfSemigroup(s);
+    gens:=o!.gens;
     n:=Length(gens);
     for i in [1..r] do 
       CreateOrbSCCMultipliersNC(gens, o, i, scc[i], mults);
-      #w:=TraceSchreierTreeForward(o, scc[i][1]);
-      #if w=[] then 
       f:=PartialPermNC(o[scc[i][1]], o[scc[i][1]]);
-      #else
-      #  f:=EvaluateWord(gens, w);
-      #fi;
       schutz[i]:=CreateOrbSCCSchutzGpNC(gens, o, f, scc[i], 
          truth[i], graph, n, mults);
     od;
@@ -991,7 +985,7 @@ end);
 InstallOtherMethod(GreensHClasses, "for an inv semi of partial perms",
 [IsPartialPermSemigroup and IsInverseSemigroup],
 function(s)
-  local o, scc, r, out, l, reps, m, mults, gens, f, i, j, k;
+  local o, scc, r, out, l, reps, m, mults, f, i, j, k;
   
   o:=LongOrb(s);
   EnumerateInverseSemiData(s);
@@ -1019,7 +1013,6 @@ function(s)
   else
     reps:=EmptyPlist(NrHClasses(s));
     mults:=o!.mults;
-    gens:=GeneratorsOfSemigroup(s);
     m:=0;
 
     for i in [1..r-l] do 
@@ -1256,7 +1249,7 @@ end);
 InstallOtherMethod(GreensRClasses, "for an inv semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local l, o, scc, out, gens, type, mults, rrel, i, f, rep, m, j;
+  local l, o, scc, out, type, mults, rrel, i, f, rep, m, j;
 
   if IsPartialPermMonoid(s) then
     l:=0;
@@ -1265,7 +1258,8 @@ function(s)
   fi;
   
   o:=LongOrb(s); EnumerateInverseSemiData(s); scc:=OrbSCC(o);
-  out:=EmptyPlist(Length(o)); gens:=GeneratorsOfSemigroup(s);
+  out:=EmptyPlist(Length(o)); 
+
   type:=RClassType(s); mults:=o!.mults; rrel:=GreensRRelation(s);
 
   i:=0; 
@@ -1613,14 +1607,13 @@ end);
 InstallOtherMethod(HClassReps, "for an inverse semi of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local o, scc, mults, r, gens, out, l, m, w, f, i, j, k;
+  local o, scc, mults, r, out, l, m, f, i, j, k;
 
   o:=LongOrb(s);
   EnumerateInverseSemiData(s);
   scc:=OrbSCC(o);
   mults:=o!.mults;
   r:=Length(scc);
-  gens:=GeneratorsOfSemigroup(s);
   out:=EmptyPlist(NrHClasses(s));
 
   if IsPartialPermMonoid(s) then 
@@ -1631,12 +1624,7 @@ function(s)
 
   m:=0;
   for i in [1..r-l] do 
-    #w:=TraceSchreierTreeForward(o, scc[i+l][1]);
-    #if w=[] then 
     f:=PartialPermNC(o[scc[i+l][1]], o[scc[i+l][1]]);
-    #else
-    #  f:=RightOne(EvaluateWord(gens, w));
-    #fi;
     for j in scc[i+l] do 
       for k in scc[i+l] do 
         m:=m+1;
@@ -2491,9 +2479,8 @@ function(s)
 
   o:=LongOrb(s);
   scc:=OrbSCC(o);
-
   out:=EmptyPlist(Length(o));
-  gens:=GeneratorsOfSemigroup(s);
+  gens:=o!.gens;
 
   if IsPartialPermMonoid(s) then
     i:=0;
@@ -2752,8 +2739,8 @@ InstallMethod(OrbMultipliers, "for a class of a part perm inv semi",
 [IsGreensClass and IsGreensClassOfPartPermSemigroup and
 IsGreensClassOfInverseSemigroup],
 function(C)
-  return CreateOrbSCCMultipliers(GeneratorsOfSemigroup(C!.parent), 
-   C!.o, C!.data[1], OrbSCC(C!.o)[C!.data[1]]);
+  return CreateOrbSCCMultipliers(C!.o!.gens, C!.o, C!.data[1], 
+   OrbSCC(C!.o)[C!.data[1]]);
 end);
 
 # new for 0.7! - OrbSCCStabChain 
@@ -2779,8 +2766,8 @@ function(s)
   d:=GreensDClasses(s);
   n:=Length(d);
   out:=List([1..n], x-> EmptyPlist(n));
-  gens:=GeneratorsOfSemigroup(s);
   o:=LongOrb(s);
+  gens:=o!.gens;
   lookup:=OrbSCCLookup(o);
 
   if IsPartialPermMonoid(s) then 
@@ -2859,9 +2846,8 @@ function(s)
 
   o:=LongOrb(s);
   scc:=OrbSCC(o);
-
   out:=EmptyPlist(Length(o));
-  gens:=GeneratorsOfSemigroup(s);
+  gens:=o!.gens;
 
   if IsPartialPermMonoid(s) then 
     i:=0;
@@ -2948,7 +2934,7 @@ function(h)
   scc:=OrbSCC(o)[m];
   s:=h!.parent;
 
-  CreateOrbSCCMultipliers(GeneratorsOfSemigroup(s), o, m, scc);
+  CreateOrbSCCMultipliers(o!.gens, o, m, scc);
 
   if not IsBound(o!.schutz) then
     o!.schutz:=EmptyPlist(Length(scc));
@@ -2956,9 +2942,8 @@ function(h)
  
   if not IsBound(o!.schutz[m]) then
     rep:=o!.mults[h!.data[2]]^-1*Representative(h)*o!.mults[h!.data[3]]; #LQuoPP
-    o!.schutz[m]:=CreateOrbSCCSchutzGpNC(GeneratorsOfSemigroup(s), o,
-     rep, scc, o!.truth[m], OrbitGraph(o),
-      Length(GeneratorsOfSemigroup(s)), o!.mults);
+    o!.schutz[m]:=CreateOrbSCCSchutzGpNC(o!.gens, o, rep, scc, o!.truth[m],
+     OrbitGraph(o), Length(o!.gens), o!.mults);
   fi;
 
   return o!.schutz[m][2]; 

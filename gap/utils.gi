@@ -229,6 +229,9 @@ end);
 InstallOtherMethod(Generators, "for an inverse semigroup",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
+  if IsMonoid(s) then 
+    return GeneratorsOfInverseMonoid(s);
+  fi;
   return GeneratorsOfInverseSemigroup(s);
 end);
 
@@ -357,6 +360,15 @@ function(iter, len)
   
   return out;
 end);
+
+# new for 0.7! - RandomPartialPermInverseMonoid
+#############################################################################
+
+InstallGlobalFunction(RandomInverseMonoid,
+function(m,n)
+  return InverseMonoid(Set(List([1..m], x-> RandomPartialPerm(n))));
+end);
+
 
 # new for 0.7! - RandomPartialPermInverseSemigp
 #############################################################################
