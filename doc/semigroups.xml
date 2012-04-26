@@ -57,8 +57,11 @@ gap> NrRClasses(U);
   </ManSection>
 
   <ManSection>
+    <Func Name="InverseMonoid"  Arg="obj1, obj2, ... [, opts]"/>
     <Func Name="InverseSemigroup"  Arg="obj1, obj2, ... [, opts]"/>
-    <Returns>An inverse semigroup.</Returns>
+    <Returns>An inverse semigroup or monoid.</Returns>
+
+
   </ManSection>
   
   <ManSection>
