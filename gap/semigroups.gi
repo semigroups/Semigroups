@@ -15,6 +15,7 @@
 
 InstallGlobalFunction(ClosureInverseSemigroup,
 function(arg)
+  local n;
   
   if not (IsPartialPermSemigroup(arg[1]) and IsInverseSemigroup(arg[1])) or not 
    (IsPartialPermCollection(arg[2]) or IsPartialPerm(arg[2])) then 
@@ -28,14 +29,26 @@ function(arg)
       Error("Usage: the third argument must be a record,");
       return;
     fi;
-    if IsBound(arg[3].schreier) then  
-      arg[3].schreier:=false;
+
+    arg[3].schreier:=false;
+
+    if not IsBound(arg[3].small) then
+      arg[3].small:=CitrusOptionsRec.small;
+    fi;
+
+    if not IsBound(arg[3].hashlen) then
+      arg[3].hashlen:=CitrusOptionsRec.hashlen;
+    elif IsPosInt(arg[3].hashlen) then
+      n:=arg[3].hashlen;
+      arg[3].hashlen:=rec(S:=NextPrimeInt(Int(n/100)),
+       M:=NextPrimeInt(Int(n/4)), L:=NextPrimeInt(n));
+    elif not IsRecord(arg[3].hashlen) then
+      Error("the component hashlen should be a positive integer or a record,");
+      return;
     fi;
   else
     arg[3]:=arg[1]!.opts;
   fi;
-
-  arg[3].small:=false;
 
   if IsSemigroup(arg[2]) then 
     arg[2]:=GeneratorsOfSemigroup(arg[2]);
@@ -297,8 +310,6 @@ function(s, coll, opts)
   od;
   
   # process kernel orbits here too!
-  # if IsBound(OrbitsOfKernels(s)) then 
-  # fi;
 
   return t;
 end);
@@ -888,7 +899,7 @@ end);
 # new for 0.7! - SingularSemigp - "for a pos int"
 ################################################################################
 
-InstallGlobalFunction( SingularSemigroup,  
+InstallGlobalFunction(SingularSemigroup,  
 function(n) 
   local img, x, S, T; 
   img:=Concatenation([1..n-1], [n-1]); 

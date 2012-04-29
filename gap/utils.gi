@@ -361,7 +361,7 @@ function(iter, len)
   return out;
 end);
 
-# new for 0.7! - RandomPartialPermInverseMonoid
+# new for 0.7! - RandomInverseMonoid
 #############################################################################
 
 InstallGlobalFunction(RandomInverseMonoid,
@@ -370,7 +370,7 @@ function(m,n)
 end);
 
 
-# new for 0.7! - RandomPartialPermInverseSemigp
+# new for 0.7! - RandomInverseSemigp
 #############################################################################
 
 InstallGlobalFunction(RandomInverseSemigroup,
