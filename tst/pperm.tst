@@ -225,33 +225,31 @@ gap> OnTuples(RanPP(g), g^-1)=DomPP(g);
 true
 gap> f:=ReadCitrus("pkg/citrus/examples/inverse.citrus.gz", 5)[1];
 <partial perm on 627 pts>
-gap> MaxDomPP(f);
+gap> f[1]; #max dom
 1000
-gap> MaxDomRanPP(f);
+gap> f[6]; #max dom ran
 1000
-gap> MaxRanPP(f);
+gap> f[4]; #max ran
 999
-gap> MinRanPP(f);
+gap> f[3]; #min ran
 1
-gap> MinDomRanPP(f);
+gap> f[5]; #min dom ran
 1
-gap> MinRanPP(f);
-1
-gap> MinDomPP(f);
+gap> f[f[1]+7]; # min dom
 1
 gap> f:=ReadCitrus("pkg/citrus/examples/inverse.citrus.gz", 6)[1];   
 <partial perm on 31542 pts>
-gap> MaxDomRanPP(f);
+gap> f[6];
 50000
-gap> MaxRanPP(f);   
+gap> f[4];   
 50000
-gap> MinDomPP(f); #something wrong here!
+gap> f[f[1]+7];
 1
 gap> f[1];
 49997
-gap> MinDomRanPP(f);
+gap> f[5];
 1
-gap> MinRanPP(f);
+gap> f[3];
 4
 gap> f[50007];
 4
