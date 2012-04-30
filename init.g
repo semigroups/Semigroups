@@ -26,6 +26,7 @@ ReadPackage("citrus/gap/pperm.gd");
 ReadPackage("citrus/gap/properties.gd");
 ReadPackage("citrus/gap/semigroups.gd");
 ReadPackage("citrus/gap/inverse.gd");
+ReadPackage("citrus/gap/examples.gd");
 ReadPackage("citrus/gap/options.g");
 
 DeclareInfoClass("InfoCitrus");;

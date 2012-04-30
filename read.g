@@ -20,3 +20,4 @@ ReadPackage("citrus/gap/pperm.gi");
 ReadPackage("citrus/gap/properties.gi");
 ReadPackage("citrus/gap/semigroups.gi");
 ReadPackage("citrus/gap/inverse.gi");
+ReadPackage("citrus/gap/examples.gi");

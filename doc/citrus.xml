@@ -199,7 +199,7 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
       returns <K>true</K> if <C>RangeOfPartialPerm(<A>f</A>)</C> is
       lexicographically less than <C>RangeOfPartialPerm(<A>g</A>)</C> and
       <K>false</K> if it is not. Note that this is not the natural partial
-      order on elements of an inverse semigroups; see <Ref
+      order on elements of an inverse semigroup; see <Ref
         Func="NaturalLeqPP"/>.
     </Item>
     <Mark><C><A>f</A> = <A>g</A></C></Mark>                  
