@@ -1,0 +1,7 @@
+
+
+
+
+DeclareGlobalFunction("MonoidOfMultiplicationByN");
+DeclareGlobalFunction("POI");
+
