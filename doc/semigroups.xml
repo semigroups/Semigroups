@@ -88,15 +88,16 @@ gap> f:=PartialPermNC(
 >  18, 20, 22, 23, 25, 26, 30, 31, 32, 33, 34, 39, 40, 42, 43, 45 ], 
 > [ 4, 47, 34, 19, 32, 22, 12, 15, 16, 45, 49, 8, 24, 40, 17, 
 >  46, 14, 6, 44, 2, 48, 41, 10, 31, 18, 50, 23, 5, 37, 11, 38, 30, 21 ] );;
-gap> s:=InverseSemigroup(s, f, Idempotents(SymmetricInverseSemigp(10)));
-&gt;inverse semigroup with 1027 generators>
-gap> s:=InverseSemigroup(s, f, t, rec(small:=true));
-&gt;inverse semigroup with 13 generators>
-gap> Size(s);
+gap> S:=InverseSemigroup(S, f, Idempotents(SymmetricInverseSemigp(10)));
+&lt;inverse semigroup with 1027 generators>
+gap> S:=InverseSemigroup(S, f, Idempotents(SymmetricInverseSemigp(10)),
+> rec(small:=true));
+&lt;inverse semigroup with 13 generators>
+gap> Size(S);
 17147970
-gap> s:=InverseMonoid(Generators(s));
-&gt;inverse monoid with 13 generators>
-gap> Size(s);
+gap> S:=InverseMonoid(Generators(S));
+&lt;inverse monoid with 13 generators>
+gap> Size(S);
 17147971</Example>
   </Description>
   </ManSection>
@@ -150,9 +151,9 @@ gap> Size(s);
       permutations with degree at most <A>n</A>  with <A>m</A> generators.
       <Example>
 gap> S:=RandomInverseSemigroup(10,10);                                
-&gt;inverse semigroup with 10 generators>
+&lt;inverse semigroup with 10 generators>
 gap> S:=RandomInverseMonoid(10,10);   
-&gt;inverse monoid with 10 generators></Example>
+&lt;inverse monoid with 10 generators></Example>
     </Description>
   </ManSection>
  </Section> 
@@ -236,14 +237,14 @@ gap> f:=PartialPermNC(
 > [ 1, 2, 3, 4, 5, 7, 8, 10, 11, 13, 18, 19, 20 ],
 > [ 5, 1, 7, 3, 10, 2, 12, 14, 11, 16, 6, 9, 15 ]);;
 gap> S:=ClosureInverseSemigroup(S, f);
-&gt;inverse monoid with 3 generators>
+&lt;inverse monoid with 3 generators>
 gap> Size(S);
 9727
 gap> T:=Idempotents(SymmetricInverseSemigp(10));;
-gap> s:=ClosureInverseSemigroup(S, T);
-&gt;inverse monoid with 858 generators>
-gap> s:=InverseSemigroup(SmallGeneratingSet(s));
-&gt;inverse semigroup with 14 generators></Example>
+gap> S:=ClosureInverseSemigroup(S, T);
+&lt;inverse monoid with 858 generators>
+gap> S:=InverseSemigroup(SmallGeneratingSet(S));
+&lt;inverse semigroup with 14 generators></Example>
     </Description>
   </ManSection>
  </Section> 
@@ -364,7 +365,7 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
 
           <Example>
 gap> SingularSemigroup(5);
-&gt;semigroup with 20 generators></Example>
+&lt;semigroup with 20 generators></Example>
         </Description>
       </ManSection>
 
@@ -377,7 +378,7 @@ gap> SingularSemigroup(5);
           permutations on the set <M>\{1,\ldots, n\}</M>.
           <Example>
 gap> s:=SymmetricInverseSemigp(15);
-&gt;inverse semigroup with 3 generators>
+&lt;inverse semigroup with 3 generators>
 gap> Size(s);
 306827170866106</Example>
         </Description>

@@ -117,7 +117,7 @@ gap> RangeOfPartialPerm(f);
       elements of the domain <A>f</A>. <C>RangeSetOfPartialPerm</C> returns the
       range of a partial permutation sorted into increasing order. 
       <Example>
-gap>f:=PartialPermNC( [ 1, 2, 3, 5, 7, 10 ], [ 10, 2, 3, 5, 7, 6 ] );;
+gap> f:=PartialPermNC( [ 1, 2, 3, 5, 7, 10 ], [ 10, 2, 3, 5, 7, 6 ] );;
 gap> RangeSetOfPartialPerm(f);
 [ 2, 3, 5, 6, 7, 10 ]</Example>
     </Description> 
@@ -164,7 +164,7 @@ gap> OnIntegerSetsWithPartialPerm([1,2,3], f);
       
       <Example>
 gap> f:=PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ], 
-[ 3, 12, 14, 4, 11, 18, 17, 2, 9, 5, 15, 8, 20, 10, 19 ] );;
+> [ 3, 12, 14, 4, 11, 18, 17, 2, 9, 5, 15, 8, 20, 10, 19 ] );;
 gap> LeftOne(f);
 &lt;identity on [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ]>
 gap> RightOne(f);
@@ -233,8 +233,8 @@ gap> RestrictedPartialPerm(f, [2,3,6,10]);
       <K>false</K> if it is not. 
       <Example> 
 gap> f:=PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ], 
-[ 3, 12, 14, 4, 11, 18, 17, 2, 9, 5, 15, 8, 20, 10, 19 ] );;
-gap> gap> set:=[ 1, 2, 3, 9, 13, 20 ];;
+> [ 3, 12, 14, 4, 11, 18, 17, 2, 9, 5, 15, 8, 20, 10, 19 ] );;
+gap> set:=[ 1, 2, 3, 9, 13, 20 ];;
 gap> g:=RestrictedPartialPerm(f, set);
 [ 1 .. 3 ] -> [ 3, 12, 14 ]
 gap> NaturalLeqPP(g,f);
@@ -458,12 +458,11 @@ gap> One(f);
       fixed points are displayed enclosed in round brackets, and chains
       are displayed enclosed in square brackets.
 
-      <Example>
-gap> f:=RandomPartialPerm(20);                                        
-[ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ] -> 
-[ 3, 12, 14, 4, 11, 18, 17, 2, 9, 5, 15, 8, 20, 10, 19 ]
+      <Log>
+gap> f:=PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ],
+> [ 3, 12, 14, 4, 11, 18, 17, 2, 9, 5, 15, 8, 20, 10, 19 ]);;
 gap> PrettyPrintPP(f);
-[1,3,14][16,8,2,12,15](4)(5,11)[6,18,10,9][7,17,20](19)</Example>
+[1,3,14][16,8,2,12,15](4)(5,11)[6,18,10,9][7,17,20](19)</Log>
     </Description> 
   </ManSection> 
 <#/GAPDoc>

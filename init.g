@@ -18,14 +18,14 @@ if (not IsBound(CITRUSC)) and
     "citrus.so"));
 fi;
 
-ReadPkg("citrus/gap/utils.gd");
-ReadPkg("citrus/gap/orbits.gd");
-ReadPkg("citrus/gap/greens.gd");
-ReadPkg("citrus/gap/transform.gd");
-ReadPkg("citrus/gap/pperm.gd");
-ReadPkg("citrus/gap/properties.gd");
-ReadPkg("citrus/gap/semigroups.gd");
-ReadPkg("citrus/gap/inverse.gd");
-ReadPkg("citrus/gap/options.g");
+ReadPackage("citrus/gap/utils.gd");
+ReadPackage("citrus/gap/orbits.gd");
+ReadPackage("citrus/gap/greens.gd");
+ReadPackage("citrus/gap/transform.gd");
+ReadPackage("citrus/gap/pperm.gd");
+ReadPackage("citrus/gap/properties.gd");
+ReadPackage("citrus/gap/semigroups.gd");
+ReadPackage("citrus/gap/inverse.gd");
+ReadPackage("citrus/gap/options.g");
 
 DeclareInfoClass("InfoCitrus");;
