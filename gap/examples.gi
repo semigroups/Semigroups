@@ -28,4 +28,10 @@ function(n)
   return InverseMonoid(out); 
 end);
 
+InstallGlobalFunction(POPI,
+function(n)
+  return InverseMonoid(PartialPermNC(Concatenation([2..n],[1])), 
+   PartialPermNC(Concatenation([1..n-2],[n])));
+end);
+
 
