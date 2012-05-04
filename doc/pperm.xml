@@ -218,9 +218,9 @@ gap> RestrictedPartialPerm(f, [2,3,6,10]);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="NaturalLeqPP"/>
+<#GAPDoc Label="NaturalLeqPartialPerm"/>
   <ManSection>
-    <Func Name="NaturalLeqPP" Arg="f, g"/>
+    <Func Name="NaturalLeqPartialPerm" Arg="f, g"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       The <E>natural partial order</E> <M>\leq</M> on an inverse semigroup
@@ -228,7 +228,7 @@ gap> RestrictedPartialPerm(f, [2,3,6,10]);
       <M>e</M> in <M>S</M> such that <M>s=et</M>. Hence if <A>f</A> and
       <A>g</A> are partial permutations, then <A>f</A><M>\leq</M><A>g</A> if
       and only if <A>f</A> is a restriction of <A>g</A>; 
-      see <Ref Oper="RestrictedPartialPerm"/>. <C>NaturalLeqPP</C>
+      see <Ref Oper="RestrictedPartialPerm"/>. <C>NaturalLeqPartialPerm</C>
       returns <K>true</K> if <A>f</A> is a restriction of <A>g</A> and
       <K>false</K> if it is not. 
       <Example> 
@@ -237,14 +237,14 @@ gap> f:=PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ],
 gap> set:=[ 1, 2, 3, 9, 13, 20 ];;
 gap> g:=RestrictedPartialPerm(f, set);
 [ 1 .. 3 ] -> [ 3, 12, 14 ]
-gap> NaturalLeqPP(g,f);
+gap> NaturalLeqPartialPerm(g,f);
 true
-gap> NaturalLeqPP(f,g);
+gap> NaturalLeqPartialPerm(f,g);
 false
 gap> g:=PartialPermNC( [ 1, 2, 3, 4, 5, 8, 10 ], [ 7, 1, 4, 3, 2, 6, 5 ] );;
-gap> NaturalLeqPP(f, g);
+gap> NaturalLeqPartialPerm(f, g);
 false
-gap> NaturalLeqPP(g, f);
+gap> NaturalLeqPartialPerm(g, f);
 false</Example>
     </Description>
   </ManSection>

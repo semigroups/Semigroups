@@ -301,7 +301,7 @@ InstallMethod(FixedPointsOfPartialPerm, "for a partial perm",
 # JDM this could avoid multiplying just by considering the orbits of points
 # under f as in PrettyPrint.
 
-InstallGlobalFunction("IndexPeriodOfPartialPerm", 
+InstallGlobalFunction(IndexPeriodOfPartialPerm, 
 function(f)
   local i, g;
   if not IsPartialPerm(f) then 
@@ -335,7 +335,10 @@ function(f)
   return f{[1..f[1]+3*f[2]+6]}; 
 end); 
 
-#MMM
+#NNN
+
+InstallMethod(NaturalLeqPartialPerm, "for a pp and pp",
+[IsPartialPerm, IsPartialPerm], NaturalLeqPP);
 
 #OOO
 

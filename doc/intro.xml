@@ -29,31 +29,30 @@
 
     &noindent; &Citrus; &VERSION; contains more efficient methods than those
     available in the &GAP; library (and in many cases more efficient than any
-    other software for computing with transformation semigroups) for creating
-    semigroups of transformations and partial permutations, calculating their
-    Green's classes, size, elements, group of units, minimal ideal, and testing
-    membership, finding the inverses of a regular element, and factorizing
-    elements over the generators, and many more; see Chapters 
-    <Ref Chap="create"/> and  <Ref Chap="green"/>. There are also methods for
-    testing if a semigroup satisfies a particular property, such as if it is
-    regular, simple, inverse, completely regular, and a variety of further
-    properties; see Chapter <Ref Chap="properties"/>. A range of functions is
-    provided for creating and determining properties of individual
-    transformations and partial permutations such as the index and period or
-    the least idempotent power; see Chapter 
-    <Ref Chap="Transformations and Actions"/>.  A large catalogue of examples
-    is provided; see Section <Ref Sect="examples"/>.  &Citrus; also provides
-    abbreviated names for many of the commonly used &GAP; library functions
-    related to semigroups, and functions to read and write large collections of
-    transformations or partial permutations to a file; see 
-    <Ref Func="ReadCitrus"/> and <Ref Func="WriteCitrus"/>. <P/>
+    other software) for creating semigroups of transformations and partial
+    permutations, calculating their Green's classes, size, elements, group of
+    units, minimal ideal, and testing membership, finding the inverses of a
+    regular element, and factorizing elements over the generators, and many
+    more; see Chapters <Ref Chap="create"/> and  <Ref Chap="green"/>. There are
+    also methods for testing if a semigroup satisfies a particular property,
+    such as if it is regular, simple, inverse, completely regular, and a
+    variety of further properties; see Chapter <Ref Chap="properties"/>. A
+    range of functions is provided for creating and determining properties of
+    individual transformations and partial permutations such as the index and
+    period or the least idempotent power; see Chapter <Ref
+      Chap="Transformations and partial permutations"/>.  A large catalogue of
+    examples is provided; see Chapter <Ref Sect="Examples"/>.  &Citrus; also
+    provides abbreviated names for many of the commonly used &GAP; library
+    functions related to semigroups, and functions to read and write large
+    collections of transformations or partial permutations to a file; see <Ref
+      Func="ReadCitrus"/> and <Ref Func="WriteCitrus"/>. <P/>
 
-    &noindent; The &Citrus; package is written in &GAP; code only but requires 
-    the <URL Text="Orb">
+    &noindent; The &Citrus; package is written in <B>c</B> and &GAP; code and 
+    requires the <URL Text="Orb">
     http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
     </URL> package. The &Orb; package is used to efficiently compute orbits in
     semigroups of transformations and partial permutations, and these methods
-    underpin most of the features of &Citrus;.<P/>
+    underpin many of the features of &Citrus;.<P/>
     
     &Citrus; is still under development, and so some features may not function
     as expected. At the present time, I do not know of any errors or serious
@@ -106,7 +105,9 @@
       the directories <C>lib</C>, <C>doc</C> and so on. Move the directory
       <C>&ARCHIVENAME;</C> into the <C>pkg</C> directory.  
       </Item>
-    
+
+      <Item> COMPILE IT</Item>
+
       <Item> start &GAP; in the usual way.</Item>
     
       <Item> type <C>LoadPackage("citrus");</C></Item>
@@ -115,6 +116,9 @@
       </Item>
 
     </List>
+
+    <E><B>Please note that</B> &Citrus; can only be used to compute with
+      semigroups of partial permutations if it has been compiled.  </E><P/>
 
     Below is an example of an installation of &Citrus; in a UNIX environment
     where <C>GAPROOT</C>  should be substituted with the main &GAP; directory
@@ -191,82 +195,10 @@ gap></Log>
 
   </Section>
 
-  <Section Label="examples"><Heading>The examples directory</Heading>
-  <Index>&Citrus; examples</Index>
-    
-    The <C>examples</C> folder of the &Citrus; package directory contains
-    catalogues of some naturally occurring transformation semigroups. These
-    files can be read into &GAP; using <Ref Func="ReadCitrus"/> and similar
-    files can be created using <Ref Func="WriteCitrus"/>.<P/>
-
-    Further examples can be downloaded from &vspace;<P/>
-
-    <URL>http://tinyurl.com/jdmitchell/examples.html</URL>&vspace;<P/>
-
-    &noindent; A summary of the available files, a desciption of their
-    contents, and how they were created is given below.<P/>
-
-    <List>
-      <Item>
-        the files <C>eul<A>n</A>c.citrus.gz</C> with
-        <M>n=3,...,10</M>; <C>graph<A>n</A>c.citrus.gz</C> with 
-        <M>n=3,...,8</M>; and <C>selfcomp.citrus.gz</C>
-        contain small generating sets for the endomorphism monoids of
-        all connected Eulerian graphs, all connected graphs, and all self
-        complimentary graphs with <M>n</M> vertices, respectively. 
-        These files were created using the catalogues of
-        such graphs available at:<P/>
-
-        <URL>http://cs.anu.edu.au/~bdm/data/graphs.html</URL><P/>
-       
-        a C program written by Max Neunhoeffer which produces a relatively
-        large list of endomorphisms containing a generating set for the
-        endomorphism monoid, <Ref Meth="SmallGeneratingSet"/> and then
-        <Ref Oper="IrredundantGeneratingSubset"/> in &Citrus;. 
-        The monoid generated by the transformations output
-        by <C>ReadCitrus("eul7c.citrus.gz", i);</C>, say, is the monoid of 
-        endomorphisms of the <C>i</C>th graph in the file:<P/>
-
-        <URL>http://cs.anu.edu.au/~bdm/data/eul7c.g6</URL>
-      </Item>
-
-      <Item> 
-        the file <C>munn.citrus.gz</C> contains generators for all the Munn
-        semigroups of semilattices with 2 to 8 elements. The
-        semilattices were obtained from the &Smallsemi; package using the
-        command:
-        
-        <Log>AllSmallSemigroups([2..8], IsSemilatticeAsSemigroup, true);</Log>
-        and the generators for the Munn semigroups were calculated using &GAP;
-        code written jointly by J. D. Mitchell, Yann Peresse (St Andrews), 
-        Yanhui Wang (York). More information is available at:<P/>
-  
-        <URL>http://tinyurl.com/jdmitchell/examples.html</URL>
-      </Item>
-
-      <Item> 
-        the files <C>syntactic.citrus.gz</C> contain generators for the
-        syntactic semigroups of word acceptors of certain triangle groups,
-        provided by Markus Pfeiffer (St Andrews).
-        A <E>triangle group</E> is a group defined by a presentation of the 
-        form 
-        <Display> 
-        \langle x, y | x^p, y^q, (xy)^r\rangle
-        </Display>
-        for some positive integers <M>p, q, r</M>. The file contains
-        generators of the syntactic semigroups of word acceptors of triangle
-        groups where <M>p</M> ranges from <M>1</M> to <M>94</M>, <M>q=3</M>,
-        and <M>r=2</M>; <M>p=101</M>, <M>q</M> ranges from <M>3</M> to
-        <M>99</M> and <M>r=2</M>;  
-        <M>p=101</M>, <M>q=72</M>, and <M>r</M> ranges from <M>7</M> to
-        <M>71</M>; and some further randomly chosen values of <M>p,q,r</M>.
-      </Item>
-    </List>
-  </Section>
-
-  <Section><Heading>Reading and writing transformations to a file</Heading>
+    <Section><Heading>Reading and writing transformations and partial
+      permutations to a file</Heading>
     The functions <Ref Func="ReadCitrus"/> and <Ref Func="WriteCitrus"/> can be
-    used to read or write transformations to a file. 
+    used to read or write transformations or partial permutations to a file. 
     <#Include Label="CitrusDir">
     <#Include Label="ReadCitrus">
     <#Include Label="WriteCitrus">

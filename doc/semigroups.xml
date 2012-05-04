@@ -360,39 +360,5 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
       <#Include Label="EvaluateWord">
       <#Include Label="Factorization">
     </Section>
-  
-    <Section><Heading>Standard examples</Heading>
-      In this section we describe functions for creating several standard
-      examples of semigroups of transformations and partial permutations. 
-
-      <ManSection>
-        <Func Name="SingularSemigroup" Arg="n"/>
-        <Returns>The semigroup of non-invertible transformations.</Returns>
-        <Description>
-          If <A>n</A> is a positive integer, then <C>SingularSemigroup</C>
-          returns the semigroup of non-invertible transformations. 
-
-          <Example>
-gap> SingularSemigroup(5);
-&lt;semigroup with 20 generators></Example>
-        </Description>
-      </ManSection>
-
-      <ManSection>
-        <Func Name="SymmetricInverseSemigp" Arg="n"/>
-        <Returns>The symmetric inverse semigroup.</Returns>
-        <Description>
-          If <A>n</A> is a positive integer, then <C>SymmetricInverseSemigp</C>
-          returns the symmetric inverse semigroup consisting of all partial
-          permutations on the set <M>\{1,\ldots, n\}</M>.
-          <Example>
-gap> S:=SymmetricInverseSemigp(15);
-&lt;inverse semigroup with 3 generators>
-gap> Size(S);
-306827170866106</Example>
-        </Description>
-      </ManSection>
-    </Section>
-
   </Chapter>
 

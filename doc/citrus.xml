@@ -24,7 +24,7 @@
 <Body>
 <#Include SYSTEM="intro.xml">
   
-<Chapter Label="create"><Heading>Transformations and partial permutations
+<Chapter Label="Transformations and partial permutations"><Heading>Transformations and partial permutations
 </Heading>
   A <E>transformation</E> is just a function from the set 
   <M>\{1,\ldots, n\}</M> to itself, and a <E>partial permutation</E> is an
@@ -40,8 +40,8 @@
   the functionality of &GAP; library; see also 
   <Ref Chap="Transformations" BookName="ref"/>.<P/>
   
-  General introduction to partial perms such as that in Howie's book,
-  including rank, domain, range, idempotent. JDM
+  <!--General introduction to partial perms such as that in Howie's book,
+  including rank, domain, range, idempotent. JDM-->
 
   <Section><Heading>Creating transformations</Heading>
     In this section we describe the functions available in &Citrus; for
@@ -200,7 +200,7 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
       lexicographically less than <C>RangeOfPartialPerm(<A>g</A>)</C> and
       <K>false</K> if it is not. Note that this is not the natural partial
       order on elements of an inverse semigroup; see <Ref
-        Func="NaturalLeqPP"/>.
+        Func="NaturalLeqPartialPerm"/>.
     </Item>
     <Mark><C><A>f</A> = <A>g</A></C></Mark>                  
     <Item>                                                      
@@ -215,7 +215,7 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
       </Item>
     </List> 
    
-    <#Include Label="NaturalLeqPP"/>
+    <#Include Label="NaturalLeqPartialPerm"/>
   </Section>
  
   <Section Label="Changing representation">
@@ -403,6 +403,8 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
     <#Include Label="IsomorphismPermGroup">
   </Section>
 </Chapter>
+
+<#Include SYSTEM="examples.xml"> 
 
 <Chapter><Heading>Orbits</Heading>
   <Section><Heading>Orbits</Heading>
