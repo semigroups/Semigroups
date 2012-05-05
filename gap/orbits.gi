@@ -386,6 +386,35 @@ function(o, i)
   return [gen, pos];
 end);
 
+#TTT
+
+# new for 0.7! - TransformationActionNC - "for mult elt, list, function"
+###############################################################################
+
+InstallMethod(TransformationActionNC, "for mult elt, list, function",
+[IsObject, IsList, IsFunction],
+function(f, dom, act)
+  local n, out, i;
+  
+  n:=Size(dom);
+  out:=EmptyPlist(n);
+  
+  for i in [1..n] do 
+    out[i]:=Position(dom, act(dom[i], f));
+  od;
+
+  return TransformationNC(out);
+end);
+
+# new for 0.7! - TransformationActionNC - "for semigroup, list, function"
+###############################################################################
+
+InstallOtherMethod(TransformationActionNC, "for a semigroup, list, function",
+[IsSemigroup, IsList, IsFunction],
+function(s, dom, act)
+  return List(Generators(s), f-> TransformationActionNC(f, dom, act));
+end);
+
 #SSS
 
 # new for 0.4! - SchreierTreeOfSCC - "for an orbit and pos. int."

@@ -404,8 +404,6 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
   </Section>
 </Chapter>
 
-<#Include SYSTEM="examples.xml"> 
-
 <Chapter><Heading>Orbits</Heading>
   <Section><Heading>Orbits</Heading>
     <#Include Label="GradedImagesOfTransSemigroup">

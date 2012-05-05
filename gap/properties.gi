@@ -1123,6 +1123,20 @@ function(s)
    AsPermutation);
 end);
 
+# new for 0.7! - IsomorphismTransformationSemigroup - "for a matrix semigroup"
+###########################################################################
+
+InstallOtherMethod(IsomorphismTransformationSemigroup, "for a matrix semigroup",
+[IsMatrixSemigroup], 
+function(S)        
+  local n, F, T;
+  n:=Length(GeneratorsOfSemigroup(S)[1][1]);
+  F:=BaseDomain(GeneratorsOfSemigroup(S)[1]);        
+  T:=Semigroup(TransformationActionNC(S, Elements(F^n), OnRight));        
+  return MappingByFunction(S, T,
+   x-> TransformationActionNC(Elements(F^Size(F)), OnRight, x));
+end);
+
 #IIIOOO
 
 # new for 0.1! - IsOrthodoxSemigroup - "for a transformation semigroup"
