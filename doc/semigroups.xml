@@ -237,12 +237,12 @@ gap> f:=PartialPermNC(
 > [ 1, 2, 3, 4, 5, 7, 8, 10, 11, 13, 18, 19, 20 ],
 > [ 5, 1, 7, 3, 10, 2, 12, 14, 11, 16, 6, 9, 15 ]);;
 gap> S:=ClosureInverseSemigroup(S, f);
-&lt;inverse monoid with 3 generators>
+&lt;inverse semigroup with 3 generators>
 gap> Size(S);
-9727
+9726
 gap> T:=Idempotents(SymmetricInverseSemigp(10));;
 gap> S:=ClosureInverseSemigroup(S, T);
-&lt;inverse monoid with 858 generators>
+&lt;inverse semigroup with 858 generators>
 gap> S:=InverseSemigroup(SmallGeneratingSet(S));
 &lt;inverse semigroup with 14 generators></Example>
     </Description>
@@ -382,8 +382,8 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
 
       <Example>
 gap> S:=FullMatrixSemigroup(3,4);
-&lt;3x3 full matrix semigroup over GF(2^2)>
-gap> T:=Range(IsomorphismTransformationSemigroup(S));
+&lt;full matrix semigroup 3x3 over GF(2^2)>
+gap> T:=Range(IsomorphismTransformationSemigroup(S));;
 gap> Size(T);
 262144</Example>
       </Description>
@@ -404,7 +404,7 @@ gap> S:=RandomTransformationSemigroup(4,4);
 gap> IsFullMatrixSemigroup(S);
 false
 gap> S:=GeneralLinearSemigroup(3,3);
-&lt;3x3 full matrix semigroup over GF(3)>
+&lt;full matrix semigroup 3x3 over GF(3)>
 gap> IsFullMatrixSemigroup(S);
 true</Example>
       </Description>
@@ -419,13 +419,16 @@ true</Example>
         of principal ideals of <A>S</A>; called the <E>Munn semigroup</E> of
         <A>S</A>.<P/> 
 
-        <B>Please note:</B> the <Package>Grape</Package> package is required
-        for this function to work.
+        This function was written jointly by J. D. Mitchell, Yann Peresse 
+        (St Andrews), Yanhui Wang (York). <P/>
+
+        <B>Please note:</B> the <Package>Grape</Package> package version 4.4
+        or higher should be fully installed for this function to work.
 
         <Example>
 gap> S:=InverseSemigroup(
 > PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 10 ], [ 4, 6, 7, 3, 8, 2, 9, 5 ] ),
-> PartialPermNC( [ 1, 2, 7, 9 ], [ 5, 6, 4, 3 ] ) );;
+> PartialPermNC( [ 1, 2, 7, 9 ], [ 5, 6, 4, 3 ] ) );
 &lt;inverse semigroup with 2 generators>
 gap> T:=InverseSemigroup(Idempotents(S), rec(small:=true));
 &lt;inverse semigroup with 26 generators>
@@ -513,8 +516,8 @@ gap> Binomial(20,10);
 gap> IsSubsemigroup(POPI(10), POI(10));
 true
 gap> S:=O(5);
-&lt;monoid with 8 generators>
-gap> IsSemiBand(S);
+&lt;monoid with 5 generators>
+gap> IsIdempotentGenerated(S);
 true
 gap> IsRegularSemigroup(S);
 true
@@ -630,9 +633,9 @@ gap> Size(S);
         command:
         
         <Log>AllSmallSemigroups([2..8], IsSemilatticeAsSemigroup, true);</Log>
-        and the generators for the Munn semigroups were calculated using &GAP;
-        code written jointly by J. D. Mitchell, Yann Peresse (St Andrews), 
-        Yanhui Wang (York). More information is available at:<P/>
+        and the generators for the Munn semigroups were calculated using 
+        <Ref Oper="MunnSemigroup"/>.
+        More information is available at:<P/>
   
         <URL>http://tinyurl.com/jdmitchell/examples.html</URL>
       </Item>
