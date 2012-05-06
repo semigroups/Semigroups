@@ -142,11 +142,11 @@ gap> for i in [2..100] do
 > s:=ClosureInverseSemigroup(s, gens[i]);
 > od;
 gap> s;
-<inverse monoid with 54 generators>
+<inverse semigroup with 54 generators>
 gap> Size(s);
-89616898
+89616897
 gap> NrDClasses(s);
-15
+14
 gap> s:=InverseSemigroup(gens, rec(small:=true));
 <inverse semigroup with 28 generators>
 gap> NrDClasses(s);

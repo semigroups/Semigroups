@@ -410,6 +410,34 @@ true</Example>
       </Description>
     </ManSection>
 
+    <ManSection>
+      <Oper Name="MunnSemigroup" Arg="S"/>
+      <Returns>The Munn semigroup of a semilattice.</Returns>
+      <Description>
+        If <A>S</A> is a semilattice, then <C>MunnSemigroup(<A>S</A>);</C>
+        returns the inverse semigroup of partial permutations of isomorphisms
+        of principal ideals of <A>S</A>; called the <E>Munn semigroup</E> of
+        <A>S</A>.<P/> 
+
+        <B>Please note:</B> the <Package>Grape</Package> package is required
+        for this function to work.
+
+        <Example>
+gap> S:=InverseSemigroup(
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 10 ], [ 4, 6, 7, 3, 8, 2, 9, 5 ] ),
+> PartialPermNC( [ 1, 2, 7, 9 ], [ 5, 6, 4, 3 ] ) );;
+&lt;inverse semigroup with 2 generators>
+gap> T:=InverseSemigroup(Idempotents(S), rec(small:=true));
+&lt;inverse semigroup with 26 generators>
+gap> M:=MunnSemigroup(T);
+&lt;inverse semigroup with 18 generators>
+gap> NrIdempotents(M);
+60
+gap> NrIdempotents(S);
+60</Example>
+      </Description>
+    </ManSection>
+
     <ManSection><Heading>Semigroups of order preserving functions</Heading>
       <Oper Name="O" Arg="n"/>
       <Oper Name="POI" Arg="n"/>
