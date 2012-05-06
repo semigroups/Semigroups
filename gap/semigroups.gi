@@ -83,13 +83,14 @@ function(s, coll, opts)
   o:=StructuralCopy(LongOrb(s));
   AddGeneratorsToOrbit(o, coll_copy);
 
-  if IsPartialPermMonoid(s) then
-    t:=InverseMonoidByGeneratorsNC(o!.gens, 
-      Concatenation(Generators(s), coll), opts);
-  else
+  #if IsPartialPermMonoid(s) then
+  #  Error("");
+  #  t:=InverseMonoidByGeneratorsNC(o!.gens, 
+  #    Concatenation(Generators(s), coll), opts);
+  #else
     t:=InverseSemigroupByGeneratorsNC(o!.gens, 
      Concatenation(Generators(s), coll), opts);
-  fi;
+  #fi;
 
   if LargestMovedPoint(coll)>LargestMovedPoint(s) then 
     return t;

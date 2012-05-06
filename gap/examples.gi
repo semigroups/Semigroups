@@ -91,10 +91,15 @@ if (not ARCH_IS_WINDOWS() and
   end);
 else
   InstallMethod(MunnSemigroup, "for a semilattice",
-  [IsSemilatticeAsSemigroup],
+  [IsSemigroup],
   function(s)
   local sl, GraphFromIdeal, IdealOfSemilattice, AutGpIdeal, IdentityTrans, 
   d, max, ideals, out, min, n, f, j, g, not_iso, k, g_j, g_k, p, i;
+
+    if not IsSemilatticeAsSemigroup(s) then 
+      Info(InfoWarning, 1, "usage: argument should be a semilattice,");
+      return fail;
+    fi;
 
     sl:=PartialOrderOfDClasses(s);
 
@@ -130,18 +135,6 @@ else
     end;
 
    ############
-
-    IdentityTrans:=function(sl, ideal)
-      local n, f;
-
-      n:=Size(sl)+1;
-      f:=ListWithIdenticalEntries(n, n);
-      f{ideal}:=ideal;
-
-      return Transformation(f);
-    end;
-
-   ############
       
     d:=List([1..Size(sl)], i-> IdealOfSemilattice(sl, i));
     max:=Maximum(List(d, Length));
@@ -153,17 +146,15 @@ else
 
     out:=[];
 
-    min:=ideals[1][1][1]; n:=Size(sl)+1;
-
-    f:=ListWithIdenticalEntries(n, n);
-    f[min]:=min; Add(out, TransformationNC(f));
+    min:=ideals[1][1][1]; n:=Size(sl);
+    Add(out, PartialPermNC([min], [min]));
 
     for i in ideals[2] do
       for j in ideals[2] do
-        f:=ListWithIdenticalEntries(n, n);
+        f:=ListWithIdenticalEntries(n, 0);
         f[min]:=min;
         f[Difference(i, [min])[1]]:=Difference(j, [min])[1];
-        Add(out, TransformationNC(f));
+        Add(out, PartialPermNC(f));
       od;
     od;
 
@@ -171,7 +162,7 @@ else
       while not ideals[i]=[] do
         j:=ideals[i][1];
         ideals[i]:=Difference(ideals[i], [j]);
-        f:=IdentityTrans(sl, j); g:=AutGpIdeal(sl, j);
+        f:=PartialPermNC(j, j); g:=AutGpIdeal(sl, j);
         if not IsTrivial(g) then
           Append(out, List(GeneratorsOfGroup(g), x-> f*x));
         else
@@ -185,7 +176,7 @@ else
             p:=MappingPermListList(j,
              Vertices(g_j))*p*MappingPermListList(Vertices(g_k), k);
             Add(out, f*p);
-            Add(out, IdentityTrans(sl, k)*p^-1);
+            Add(out, PartialPermNC(k, k)*p^-1);
           else
             Add(not_iso, k);
           fi;
@@ -194,7 +185,7 @@ else
       od;
     od;
 
-    return Semigroup(out); 
+    return InverseSemigroup(out, rec(small:=true)); 
   end);
 fi;
 
