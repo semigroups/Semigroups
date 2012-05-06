@@ -39,6 +39,8 @@ end);
 InstallMethod(GeneralLinearSemigroup, "for 2 pos ints", 
 [IsPosInt, IsPosInt], FullMatrixSemigroup);
 
+#III
+
 # new for 0.7! - IsFullMatrixSemigroup - "for a pos int and pos int"
 ################################################################################
 
@@ -50,6 +52,8 @@ InstallMethod(IsFullMatrixSemigroup, "for a semigroup",
 
 InstallOtherMethod(IsGeneralLinearSemigroup, "for a semigroup",
 [IsSemigroup], ReturnFalse);
+
+#MMM
 
 # new for 0.7! - MonoidOfMultiplicationByN - "for a pos int"
 ################################################################################
@@ -69,6 +73,130 @@ function(n)
 
   return Monoid(Transformation(out{[1..n]}),Transformation(out{[n+1..2*n]}));
 end);
+
+# new for 0.7! - MunnSemigroup - "for a semilattice as a semigroup"
+################################################################################
+
+if (not ARCH_IS_WINDOWS() and
+  Filename(DirectoriesPackagePrograms("grape"),"dreadnautB") = fail) or 
+  ShortFileNameWindows(Filename(DirectoriesPackageLibrary(
+         "grape","bin"),"dreadnautB.exe")) = fail then
+  InstallMethod(MunnSemigroup, "for a semilattice", 
+  [IsSemilatticeAsSemigroup], 
+  function(s)
+    Info(InfoWarning, 1, "the nauty/dreadnaut binaries in GRAPE are not", 
+    " installed and so");
+    Info(InfoWarning, 1, "this function does not work.");
+    return fail;
+  end);
+else
+  InstallMethod(MunnSemigroup, "for a semilattice",
+  [IsSemilatticeAsSemigroup],
+  function(s)
+  local sl, GraphFromIdeal, IdealOfSemilattice, AutGpIdeal, IdentityTrans, 
+  d, max, ideals, out, min, n, f, j, g, not_iso, k, g_j, g_k, p, i;
+
+    sl:=PartialOrderOfDClasses(s);
+
+    ############
+
+    GraphFromIdeal:=function(sl, ideal)
+      local adj, i;
+      adj:=[];
+      for i in [1..Size(sl)] do
+        if i in ideal then
+          adj[i]:=sl[i];
+        fi;
+      od;
+      return Graph(Group(()), ideal, OnPoints, function(i,j) return j in adj[i];
+      end, true);
+    end;
+
+    ############
+
+    IdealOfSemilattice:=function(sl, i)
+      local out;
+      out:=Difference(Union(sl{sl[i]}), sl[i]);
+      return Union(sl[i], Union(List(out, x-> IdealOfSemilattice(sl, x))));
+    end;
+
+    ############
+
+    AutGpIdeal:=function(sl, ideal)
+      local g;
+      g:=GraphFromIdeal(sl, ideal);
+      return AutGroupGraph(g)^(MappingPermListList(ideal,
+       Vertices(g))^-1);
+    end;
+
+   ############
+
+    IdentityTrans:=function(sl, ideal)
+      local n, f;
+
+      n:=Size(sl)+1;
+      f:=ListWithIdenticalEntries(n, n);
+      f{ideal}:=ideal;
+
+      return Transformation(f);
+    end;
+
+   ############
+      
+    d:=List([1..Size(sl)], i-> IdealOfSemilattice(sl, i));
+    max:=Maximum(List(d, Length));
+    ideals:=List([1..max], x-> []);
+
+    for i in [1..Length(d)] do
+      Add(ideals[Length(d[i])],d[i]);
+    od;
+
+    out:=[];
+
+    min:=ideals[1][1][1]; n:=Size(sl)+1;
+
+    f:=ListWithIdenticalEntries(n, n);
+    f[min]:=min; Add(out, TransformationNC(f));
+
+    for i in ideals[2] do
+      for j in ideals[2] do
+        f:=ListWithIdenticalEntries(n, n);
+        f[min]:=min;
+        f[Difference(i, [min])[1]]:=Difference(j, [min])[1];
+        Add(out, TransformationNC(f));
+      od;
+    od;
+
+    for i in [3..Length(ideals)] do
+      while not ideals[i]=[] do
+        j:=ideals[i][1];
+        ideals[i]:=Difference(ideals[i], [j]);
+        f:=IdentityTrans(sl, j); g:=AutGpIdeal(sl, j);
+        if not IsTrivial(g) then
+          Append(out, List(GeneratorsOfGroup(g), x-> f*x));
+        else
+          Add(out, f);
+        fi;
+        not_iso:=[];
+        for k in ideals[i] do
+          g_j:=GraphFromIdeal(sl, j); g_k:=GraphFromIdeal(sl, k);
+          p:=GraphIsomorphism(g_j, g_k);
+          if not p=fail then
+            p:=MappingPermListList(j,
+             Vertices(g_j))*p*MappingPermListList(Vertices(g_k), k);
+            Add(out, f*p);
+            Add(out, IdentityTrans(sl, k)*p^-1);
+          else
+            Add(not_iso, k);
+          fi;
+        od;
+        ideals[i]:=not_iso;
+      od;
+    od;
+
+    return Semigroup(out); 
+  end);
+fi;
 
 #OOO
 

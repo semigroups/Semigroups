@@ -68,10 +68,11 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.5",
   NeededOtherPackages := [["orb", ">=3.8"], ["io", ">=3.3"]],
-  SuggestedOtherPackages := [["gapdoc", ">=1.4"]], 
+  SuggestedOtherPackages := [["gapdoc", ">=1.4"], ["grape", ">=4.4"]], 
   ExternalConditions := []),
   AvailabilityTest := ReturnTrue,
   Autoload := false,
   TestFile := "tst/testinstall.tst",
-  Keywords := ["transformation semigroups", "green's relations"]
+  Keywords := ["transformation semigroups", "partial permutations",
+  "inverse semigroups", "Green's relations"]
 ));

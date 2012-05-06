@@ -14,6 +14,7 @@ DeclareOperation("MonoidOfMultiplicationByN", [IsPosInt]);
 DeclareProperty("IsFullMatrixSemigroup", IsSemigroup);
 DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
 DeclareProperty("IsMatrixSemigroup", IsSemigroup);
+DeclareOperation("MunnSemigroup", [IsSemilatticeAsSemigroup]);
 DeclareOperation("O", [IsPosInt]);
 DeclareOperation("POI", [IsPosInt]);
 DeclareOperation("POPI", [IsPosInt]);
