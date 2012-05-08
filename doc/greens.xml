@@ -804,8 +804,7 @@ gap> NrDClasses(S);
 <#GAPDoc Label="PartialOrderOfDClasses">
   <ManSection>
   <Attr Name="PartialOrderOfDClasses" Arg="S"/>
-  <Returns>The partial order of &D;-classes of the transformation semigroup 
-  <A>S</A>.
+  <Returns>The partial order of the &D;-classes of <A>S</A>.
  </Returns>
   <Description>
   Returns a list <C>l</C> where <C>j</C> is in <C>l[i]</C> if and only if 
@@ -813,7 +812,7 @@ gap> NrDClasses(S);
   <C>GreensDClasses(S)[i]</C> in the partial order of &D;-
   classes of <A>S</A>.
   The transitive closure of the relation <Math>\{\:(j,i):\:\: j\in
-  l[i]\:\}</Math> is the partial order of &D;-classes. <P/>
+    l[i]\:\}</Math> is the partial order of &D;-classes of <A>S</A>. <P/>
 
   The partial order on the &D;-classes is defined by 
   <Math>x\leq y</Math> if and only if <Math>S^1xS^1</Math> is a subset of  

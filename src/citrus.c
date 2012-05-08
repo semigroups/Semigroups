@@ -615,12 +615,12 @@ Obj FuncLeqPP(Obj self, Obj f, Obj g)
 {
   pptype deg_f, deg_g, rank_f, rank_g, i, j, k;
 
-  deg_f=ELM_PP(f, 1);
-  if(deg_f==0) return True;
-
   deg_g=ELM_PP(g, 1);
   if(deg_g==0) return False;
-
+  
+  deg_f=ELM_PP(f, 1);
+  if(deg_f==0) return True;
+  
   rank_f=ELM_PP(f, 2);
   rank_g=ELM_PP(g, 2);
   if(rank_f<rank_g) return True;
