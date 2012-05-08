@@ -756,7 +756,7 @@ MORE EXAMPLES</Example>
 
      <List>
 
-       <Mark>Partial permutation semigroup</Mark>
+       <Mark>Partial permutation semigroups</Mark>
        <Item>
          If <A>S</A> is a partial permutation semigroup that does not satisfy
          <Ref Prop="IsMonoid" BookName="ref"/> but does satisfy <Ref
@@ -1138,6 +1138,18 @@ gap> IsZeroSimpleSemigroup(S);
 false</Example>
     </Description>
   </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="LargestMovedPoint">
+<ManSection>
+  <Attr Name="LargestMovedPoint" Arg="S" Label="for a partial perm"/>
+  <Attr Name="MovedPoints" Arg="S"/>
+  <Attr Name="NrMovedPoints" Arg="S"/>
+  <Attr Name="SmallestMovedPoint" Arg="S"/>
+  <Returns>A positive integer or a list of positive integer.</Returns>
+  <Description>
+  </Description>
+</ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="MinimalIdeal">

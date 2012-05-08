@@ -83,6 +83,7 @@
     of partial permutations that do not apply to other kinds of semigroups. 
 
     <#Include Label="NaturalPartialOrder">
+    <#Include Label="LargestMovedPoint">
 
   </Section>
   
