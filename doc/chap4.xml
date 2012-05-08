@@ -121,8 +121,9 @@
 
   <Section><Heading>Changing the representation of a semigroup</Heading>
     <#Include Label="AntiIsomorphismTransformationSemigroup">
-    <#Include Label="IsomorphismTransformationMonoid">
+    <#Include Label="IsomorphismPartialPermSemigroup">
     <#Include Label="IsomorphismPermGroup">
+    <#Include Label="IsomorphismTransformationMonoid">
   </Section>
 </Chapter>
 

@@ -2539,10 +2539,8 @@ end);
 InstallMethod(LongOrb, "for an inverse semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
-  local n;
 
-  n:=LargestMovedPoint(s);
-  return Orb(s, [1..n]*1, OnIntegerSetsWithPP, 
+  return Orb(s, MovedPoints(s), OnIntegerSetsWithPP, 
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true, 
         storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M, 
         finished:=false));

@@ -102,6 +102,7 @@ gap> IdempotentGeneratedSubsemigp(S);
 <#GAPDoc Label="InjectionPrincipalFactor">
 <ManSection>
   <Oper Name="InjectionPrincipalFactor" Arg="D"/>
+  <Oper Name="IsomorphismReesMatrixSemigroup" Arg="D"/>
   <Returns>A injective mapping.</Returns>
   <Description> 
     If <A>D</A> is a &D;-class of a semigroup <C>S</C> and <A>D</A> is a
@@ -127,14 +128,19 @@ gap> IdempotentGeneratedSubsemigp(S);
     from the &D;-class <A>D</A> to a Rees matrix semigroup, which
     contains the principal factor of <A>D</A> as a subsemigroup. <P/>
 
-    If <A>D</A> is a subsemigroup of its parent semigroup, then the returned
-    function is an isomorphism from <A>D</A> to a Rees matrix semigroup; see
+    If <A>D</A> is a subsemigroup of its parent semigroup, then the
+    function returned by <C>InjectionPrincipalFactor</C> or
+    <C>IsomorphismReesMatrixSemigroup</C> 
+    is an isomorphism from <A>D</A> to a Rees matrix semigroup; see
     <Ref Func="ReesMatrixSemigroup" BookName="ref"/>.<P/>
 
-    If <A>D</A> is not a semigroup, then the returned function is an
+    If <A>D</A> is not a semigroup, then the function returned by
+    <C>InjectionPrincipalFactor</C> is an
     injective function from <A>D</A> to a Rees 0-matrix semigroup isomorphic
     to the principal factor of <A>D</A>; see 
-    <Ref Func="ReesZeroMatrixSemigroup" BookName="ref"/>. 
+    <Ref Func="ReesZeroMatrixSemigroup" BookName="ref"/>. In this case, 
+    <C>IsomorphismReesMatrixSemigroup</C> returns an error.
+    
     <Example>
 gap> S:=InverseSemigroup(
 > PartialPermNC( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ),
@@ -461,19 +467,24 @@ true</Example>
 </ManSection>
 <#/GAPDoc>
 
-
 <#GAPDoc Label="IsGroupAsSemigroup">
   <ManSection>
     <Prop Name="IsGroupAsSemigroup" Arg="S"/>
-    <Returns><K>true</K> if the transformation semigroup <A>S</A> is a group
-          and <K>false</K> if it is not.
-    </Returns>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
+      If the semigroup of transformations or partial permutations <A>S</A>
+      is actually a group, then <C>IsGroupAsSemigroup</C> returns <K>true</K>.
+      If it is not a group, then <K>false</K> is returned.
       <Example>
 gap> gens:=[ Transformation( [ 2, 4, 5, 3, 7, 8, 6, 9, 1 ] ), 
 >  Transformation( [ 3, 5, 6, 7, 8, 1, 9, 2, 4 ] ) ];;
 gap> S:=Semigroup(gens);;
 gap> IsGroupAsSemigroup(S);
+true
+gap> g:=SymmetricGroup(5);;
+gap> s:=Range(IsomorphismPartialPermSemigroup(g));
+&lt;inverse semigroup with 2 generators>
+gap> IsGroupAsSemigroup(s);
 true</Example>
     </Description>
   </ManSection>
@@ -506,25 +517,31 @@ true</Example>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsInverseSemigroup">
-  <ManSection>
-    <Prop Name="IsInverseSemigroup" Arg="S"/>
-    <Returns><K>true</K> if the transformation semigroup <A>S</A> is an inverse
-          semigroup and <K>false</K> if it is not. 
-    </Returns>
-    <Description>
-      A semigroup is an <E>inverse semigroup</E> if every element 
-      <C>x</C> has a unique semigroup inverse, that is, an 
-      element <C>y</C> such that <C>x*y*x=x</C> and <C>y*x*y=y</C>.
+<ManSection>
+  <Prop Name="IsInverseSemigroup" Arg="S"/>
+  <Prop Name="IsInverseMonoid" Arg="S"/>
+  <Returns><K>true</K> or <K>false</K>.</Returns>
+  <Description>
+    If <A>S</A> is a semigroup of transformations or partial permutations, then
+    <C>IsInverseSemigroup</C> returns <K>true</K> if <A>S</A> is an inverse
+    semigroup and <K>false</K> if it is not. If <A>S</A> is monoid of
+    transformations or partial permutations, then <C>IsInverseMonoid</C>
+    returns <K>true</K> if <A>S</A> is an inverse semigroup and <K>false</K> if
+    it is not.<P/>
 
-      <Example>
+    A semigroup is an <E>inverse semigroup</E> if every element 
+    <C>x</C> has a unique semigroup inverse, that is, a unique
+    element <C>y</C> such that <C>x*y*x=x</C> and <C>y*x*y=y</C>.
+
+    <Example>
 gap> gens:=[Transformation([1,2,4,5,6,3,7,8]),
 > Transformation([3,3,4,5,6,2,7,8]),
 > Transformation([1,2,5,3,6,8,4,4])];;
 gap> S:=Semigroup(gens);;
 gap> IsInverseSemigroup(S);
 true</Example>
-    </Description>
-  </ManSection>
+  </Description>
+</ManSection>
 <#/GAPDoc>
 
 <!-- the following does not currently exist! -->
@@ -655,31 +672,55 @@ true</Example>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsomorphismTransformationMonoid">
-  <ManSection>
-    <Oper Name="IsomorphismTransformationMonoid" Arg="obj"/>
-    <Oper Name="IsomorphismTransformationSemigroup" Arg="obj"/>
-    <Returns>An isomorphism.
-    </Returns>
-    <Description>
-    If <A>obj</A> is a transformation semigroup satisfying <Ref
-    Prop="IsMonoidAsSemigroup"/>, then this function returns an isomorphism
-    from <A>obj</A> to a transformation monoid. <P/>
-    
-    If <A>obj</A> is a permutation group, then
-    <C>IsomorphismTransformationMonoid</C> returns an isomorphism from
-    <A>obj</A> to a transformation monoid acting on the set
-    <C>[1..NrMovedPoints(<A>obj</A>)]</C>.
-    If <A>obj</A> is a permutation group, then
-    <C>IsomorphismTransformationSemigroup</C> returns an isomorphism from
-    <A>obj</A> to a transformation semigroup acting on the set
-    <C>[1..NrMovedPoints(<A>obj</A>)]</C>.
-    <P/>
-    
-    See also <Ref Prop="IsTransformationMonoid" BookName="ref"/>, <Ref
-    Prop="IsTransformationSemigroup" BookName="ref"/>, and 
-    <Ref Oper="IsomorphismTransformationSemigroup" BookName="ref"/>.
+<ManSection>
+  <Oper Name="IsomorphismTransformationMonoid" Arg="S"/>
+  <Oper Name="IsomorphismTransformationSemigroup" Arg="S"/>
+  <Returns>An isomorphism.
+  </Returns>
+  <Description>
+  <C>IsomorphismTransformationSemigroup(<A>S</A>)</C>
+   returns an isomorphism from the semigroup <A>S</A> to an
+   semigroup of transformations.<P/>
 
-      <Example>
+   <C>IsomorphismTransformationMonoid(<A>S</A>)</C> returns an isomorphism from
+   the monoid <A>S</A> to a monoid of transformations. <P/>
+   
+   We only describe <C>IsomorphismTransformationMonoid</C>,
+   the corresponding statements for <C>IsomorphismTransformationSemigroup</C>
+   also hold.
+
+   <List>
+
+     <Mark>Partial permutation semigroup</Mark>
+     <Item>
+       If <A>S</A> is a partial permutation monoid, then
+       <C>IsomorphismTransformationMonoid(<A>S</A>)</C> returns an isomorphism
+       from <A>S</A> to a monoid of partial permutations on
+       <C>[1..LargestMovedPoint(<A>S</A>)+1]</C> obtained using <Ref
+         Func="AsTransformation"/>. The inverse of this isomorphism is obtained
+       using <Ref Func="AsPartialPerm"/>; see <Ref Attr="LargestMovedPoint"/>, 
+       <Ref Func="InverseMonoid"/> and <Ref Func="Monoid" BookName="ref"/>.
+     </Item>
+     
+    <Mark>Permutation groups</Mark>
+    <Item>
+      If <A>S</A> is a permutation group, then
+      <C>IsomorphismTransformationMonoid</C> returns an isomorphism from
+      <A>S</A> to a transformation monoid acting on the set
+      <C>[1..NrMovedPoints(<A>S</A>)]</C> obtained using 
+      <Ref Func="AsTransformation"/>; see 
+      <Ref Attr="NrMovedPoints" BookName="ref"/>.
+    </Item>
+
+    <Mark>Transformation semigroups</Mark>
+    <Item>
+      If <A>obj</A> is a transformation semigroup satisfying <Ref
+      Prop="IsMonoidAsSemigroup"/>, then this function returns an isomorphism
+      from <A>obj</A> to a transformation monoid. <P/>
+    </Item>
+  </List>
+
+  <Example>
 gap> S:=Semigroup( Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
 > Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
 gap> IsTransformationMonoid(S);
@@ -689,21 +730,106 @@ true
 gap> M:=Range(IsomorphismTransformationMonoid(S));
 &lt;monoid with 2 generators>
 gap> IsTransformationMonoid(M);
-true</Example>
+true
+MORE EXAMPLES</Example>
     </Description>
-  </ManSection>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsomorphismPartialPermSemigroup">
+<ManSection>
+  <Oper Name="IsomorphismPartialPermMonoid" Arg="S"/>
+  <Oper Name="IsomorphismPartialPermSemigroup" Arg="S"/>
+  <Returns>An isomorphism.</Returns>
+  <Description>
+    <C>IsomorphismPartialPermSemigroup(<A>S</A>)</C>
+     returns an isomorphism from the inverse semigroup or group <A>S</A> to an
+     inverse semigroup of partial permutations.<P/>
+
+     <C>IsomorphismPartialPermMonoid(<A>S</A>)</C> returns an isomorphism from
+     the inverse monoid or group <A>S</A> to an inverse monoid of partial
+     permutations.<P/> 
+     
+     We only describe <C>IsomorphismPartialPermMonoid</C>,
+     the corresponding statements for <C>IsomorphismPartialPermSemigroup</C>
+     also hold.
+
+     <List>
+
+       <Mark>Partial permutation semigroup</Mark>
+       <Item>
+         If <A>S</A> is a partial permutation semigroup that does not satisfy
+         <Ref Prop="IsMonoid" BookName="ref"/> but does satisfy <Ref
+           Prop="IsMonoidAsSemigroup"/>, then
+         <C>IsomorphismPartialPermMonoid(<A>S</A>)</C> returns an isomorphism
+         from <A>S</A> to an inverse monoid of partial permutations; see
+         <Ref Func="InverseMonoid"/>.
+       </Item>
+       
+      <Mark>Permutation groups</Mark>
+      <Item>
+        If <A>S</A> is a permutation group, then
+        <C>IsomorphismPartialPermMonoid</C> returns an isomorphism from
+        <A>S</A> to an inverse monoid of partial permutations on the set
+        <C>MovedPoints(<A>S</A>)</C> obtained using <Ref Func="AsPartialPerm"/>.
+        The inverse of this isomorphism is obtained using <Ref
+          Func="AsPermutation"/>; see <Ref Attr="MovedPoints" BookName="ref"/>.
+      </Item>
+      <Mark>Transformation semigroups</Mark>
+      <Item>
+        If <A>S</A> is a transformation semigroup satisfying <Ref
+          Prop="IsInverseMonoid"/>, then
+        <C>IsomorphismPartialPermMonoid</C> returns an isomorphism from
+        <A>S</A> to an inverse monoid of partial permutations on a subset of
+        <C>[1..DegreeOfTransformationSemigroup(<A>S</A>)]</C>.
+      </Item>
+    </List>
+    <Example>
+gap> s:=InverseSemigroup( 
+> PartialPermNC( [ 1, 2, 3, 4, 5 ], [ 4, 2, 3, 1, 5 ] ),
+> PartialPermNC( [ 1, 2, 4, 5 ], [ 3, 1, 4, 2 ] ) );;
+gap> IsMonoid(s); 
+false
+gap> IsMonoidAsSemigroup(s);
+true
+gap> iso:=IsomorphismPartialPermMonoid(s)
+MappingByFunction( &lt;inverse semigroup with 
+2 generators>, &lt;inverse monoid with 
+2 generators>, function( x ) ... end, function( x ) ... end )
+gap> Size(s);
+508
+gap> Size(Range(iso));
+508
+gap> g:=Group((1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8));;
+gap> IsomorphismPartialPermSemigroup(g);
+MappingByFunction( Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8),
+  (1,4)(2,6)(3,7)(5,8) ]), &lt;inverse semigroup with
+3 generators>, function( p ) ... end, function( f ) ... end )
+gap> s:=Semigroup(Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ), 
+> Transformation( [ 3, 6, 5, 7, 2, 1, 7 ] ) );;
+gap> iso:=IsomorphismPartialPermMonoid(s);
+MappingByFunction( &lt;inverse monoid with 2 generators>, &lt;inverse monoid with 
+2 generators>, function( f ) ... end, function( x ) ... end )
+gap> MovedPoint(Range(iso));
+[ 1, 2, 3, 5, 6, 7 ]</Example>
+  </Description>
+</ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsomorphismPermGroup">
-  <ManSection>
-    <Oper Name="IsomorphismPermGroup" Arg="S"/>
-    <Returns>An isomorphism.
-    </Returns>
-    <Description>
-    Returns an isomorphism from the transformation semigroup <A>S</A>
-    satisfying <Ref Prop="IsGroupAsSemigroup"/> to a permutation group.
-    If <A>S</A> does not satisfy <Ref Prop="IsGroupAsSemigroup"/>, then an
-    error is given. 
+<ManSection>
+  <Oper Name="IsomorphismPermGroup" Arg="S"/>
+  <Returns>An isomorphism.
+  </Returns>
+  <Description>
+    If the semigroup of transformations or partial permutations <A>S</A>
+    satisfies <Ref Prop="IsGroupAsSemigroup"/>, then
+    <C>IsomorphismPermGroup</C> returns an isomorphism to a permutation
+    group.<P/> 
+   
+    If <A>S</A> does not satisfy <Ref Prop="IsGroupAsSemigroup"/>,
+    then an error is given.
+
 <Example>
 gap> S:=Semigroup( Transformation( [ 2, 2, 3, 4, 6, 8, 5, 5 ] ),
 > Transformation( [ 3, 3, 8, 2, 5, 6, 4, 4 ] ) );;
@@ -711,11 +837,16 @@ gap> IsGroupAsSemigroup(S);
 true
 gap> IsomorphismPermGroup(S); 
 MappingByFunction( &lt;semigroup with 2 generators>, Group([ (5,6,8), (2,3,8,4) 
- ]), &lt;Operation "AsPermutation"> )
+]), &lt;Operation "AsPermutation"> )
 gap> StructureDescription(Range(IsomorphismPermGroup(S)));
-"S6"</Example>
-    </Description>
-  </ManSection>
+"S6"
+gap> s:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
+&lt;inverse semigroup with 2 generators>
+gap> IsomorphismPermGroup(s);
+MappingByFunction( &lt;inverse semigroup with 2 generators>, Group(
+[ (1,2,3,4), (1,2) ]), &lt;Operation "AsPermutation">, function( x ) ... end )</Example>
+  </Description>
+</ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsOrthodoxSemigroup">

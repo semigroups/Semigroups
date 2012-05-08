@@ -276,8 +276,15 @@ gap> inv:=InverseGeneralMapping(iso);;
 gap> f:=Transformation( [ 7, 1, 7, 7, 7, 7, 7 ] );;
 gap> f^iso;
 [ 2, 7 ] -> [ 1, 7 ]
-gap> ForAll(j1, f-> (f^iso)^inv=f);
+gap> ForAll(s, f-> (f^iso)^inv=f);
 true
+gap> ForAll(s, f-> f^iso in Range(iso));
+true
+gap> Size(Range(iso));
+631
+gap> Size(s);
+631
+
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
