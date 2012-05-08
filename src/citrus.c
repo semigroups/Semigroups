@@ -613,8 +613,7 @@ Obj FuncFixedPointsPP(Obj self, Obj f)
 /* less than or equal */
 Obj FuncLeqPP(Obj self, Obj f, Obj g)
 {
-  Obj x;
-  pptype deg_f, deg_g, rank_f, rank_g, rank, i, j, k;
+  pptype deg_f, deg_g, rank_f, rank_g, i, j, k;
 
   deg_f=ELM_PP(f, 1);
   if(deg_f==0) return True;
@@ -624,25 +623,18 @@ Obj FuncLeqPP(Obj self, Obj f, Obj g)
 
   rank_f=ELM_PP(f, 2);
   rank_g=ELM_PP(g, 2);
-  if(rank_f<rank_g)
+  if(rank_f<rank_g) return True;
+  if(rank_g<rank_f) return False;
+
+  for(i=1;i<=2*rank_f;i++)
   {
-    rank=rank_f;
-    x=True;
-  }
-  else
-  {
-    rank=rank_g;
-    x=False;
-  }
-  for(i=1;i<=rank;i++)
-  {
-    j=ELM_PP(f,6+deg_f+rank_f+i);
-    k=ELM_PP(g,6+deg_g+rank_g+i);
+    j=ELM_PP(f,6+deg_f+i);
+    k=ELM_PP(g,6+deg_g+i);
     if(j<k) return True;
     if(j>k) return False;
   }
 
-  return x;
+  return False;
 }
 
 /* restricted partial perm */
