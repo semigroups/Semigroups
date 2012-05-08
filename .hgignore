@@ -26,3 +26,5 @@ Makefile
 bin/*
 Transitions*
 *.swo
+*.g6
+*.gz

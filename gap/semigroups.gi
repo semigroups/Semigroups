@@ -771,6 +771,40 @@ function(s)
   Print(">");
   return;
 end);
+#RRR
+
+# new for 0.7! - RandomInverseMonoid
+#############################################################################
+
+InstallGlobalFunction(RandomInverseMonoid,
+function(m,n)
+  return InverseMonoid(Set(List([1..m], x-> RandomPartialPerm(n))));
+end);
+
+
+# new for 0.7! - RandomInverseSemigp
+#############################################################################
+
+InstallGlobalFunction(RandomInverseSemigroup,
+function(m,n)
+  return InverseSemigroup(Set(List([1..m], x-> RandomPartialPerm(n))));
+end);
+
+# new for 0.1! - RandomTransformationSemigroup 
+#############################################################################
+
+InstallGlobalFunction(RandomTransformationSemigroup,
+function(m,n)
+  return Semigroup(Set(List([1..m], x-> RandomTransformation(n))));
+end);
+
+# new for 0.1! - RandomTransformationSemigroup 
+###########################################################################
+
+InstallGlobalFunction(RandomTransformationMonoid,
+function(m,n)
+  return Monoid(Set(List([1..m], x-> RandomTransformation(n))));
+end);
 
 #SSS
 

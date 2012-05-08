@@ -43,6 +43,23 @@ MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="CitrusOptionsRec">
+  <ManSection>    
+     <Var Name="CitrusOptionsRec"/>    
+     <Description>
+       This global variable is a record whose components contain the default
+       values of certain options for transformation semigroups created after
+       &Citrus; has been loaded. A description of these options is given above 
+       in Section <Ref Sect="opts"/>. <P/>
+
+       The value of <C>CitrusOptionsRec</C> is defined in the file
+       <C>citrus/gap/options.g</C> as: 
+       <Log>rec( schreier:=true, small:=false,
+         hashlen:=rec(S:=251, M:=6257, L:=25013));</Log>
+     </Description> 
+   </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="CitrusTestAll">
   <ManSection>
     <Func Name="CitrusTestAll" Arg=""/>
@@ -178,23 +195,6 @@ gap> GeneratorsOfSemigroup(S);
     from being displayed, set the info level to 0.  See also
     <Ref Subsect="Info Functions" BookName="ref"/> and 
     <Ref Func="SetInfoLevel" BookName="ref"/>. 
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="RandomTransformationMonoid">
-  <ManSection>
-    <Func Name="RandomTransformationMonoid" Arg="m, n"/>
-    <Func Name="RandomTransformationSemigroup" Arg="m, n"/>
-    <Returns>A transformation semigroup.</Returns>
-    <Description>
-      Returns a random transformation monoid or semigroup of degree <A>n</A> 
-      with <A>m</A> generators.
-      <Example>
-gap&gt; S:=RandomTransformationMonoid(5,5);
-&lt;monoid with 5 generators&gt;
-gap&gt; S:=RandomTransformationSemigroup(5,5);
-&lt;semigroup with 5 generators&gt;</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

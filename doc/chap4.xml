@@ -1,0 +1,106 @@
+<Chapter Label="green"><Heading>Determining the structure of a semigroup</Heading>
+
+  In this chapter we describe the functions in &Citrus; for determining the
+  structure of a semigroup of transformations or partial permutations, in
+  particular for computing Green's classes and related properties of 
+  semigroups. 
+  
+  <Section><Heading>Expressing semigroup elements as words in
+    generators</Heading>
+    In some cases it is possible to express the elements of a transformation
+    semigroup as a word in the generators. This section describes how to
+    accomplish this in &Citrus;. <P/>
+
+    Note that at present it is not possible to factorize elements in a
+    semigroup of partial permutations.
+
+    <#Include Label="EvaluateWord">
+    <#Include Label="Factorization">
+  </Section>
+
+  <Section><Heading>Creating Green's classes</Heading>
+    <#Include Label="XClassOfYClass">
+    <#Include Label="GreensXClassOfElement">
+    <#Include Label="GreensXClassOfElementNC">
+    <#Include Label="GroupHClass">
+  </Section>
+  
+  <Section><Heading>Iterators and enumerators
+  </Heading>
+    <#Include Label="GreensXClasses">
+    <#Include Label="IteratorOfXClassReps"> 
+    <#Include Label="IteratorOfXClasses"> 
+    <#Include Label="UnderlyingSemigroupOfIterator">
+    <#Include Label="XClassReps">
+  </Section>
+
+  <Section><Heading>Properties of Green's classes</Heading>
+    <#Include Label="\&lt;">
+    <#Include Label="Idempotents">
+    <#Include Label="IsGreensClassOfTransSemigp">
+    <#Include Label="IsRegularXClass">
+    <#Include Label="NrIdempotents">
+    <#Include Label="NrRegularDClasses">
+    <#Include Label="NrXClasses">
+    <#Include Label="PartialOrderOfDClasses">
+    <#Include Label="SchutzenbergerGroup">
+  </Section>
+
+  <Section><Heading>Attributes of semigroups</Heading>
+    In this section we describe the attributes <Ref Sect="Attributes"
+    BookName="ref"/> of an arbitrary transformation semigroup that can be found
+    using &Citrus;.
+    <#Include Label="Degree">
+    <#Include Label="Generators">
+    <#Include Label="GradedImagesOfTransSemigroup">
+    <#Include Label="GroupOfUnits">
+    <#Include Label="IdempotentGeneratedSubsemigp">
+    <#Include Label="IrredundantGeneratingSubset">
+    <#Include Label="ImagesOfTransSemigroup">
+    <#Include Label="MinimalIdeal">
+    <#Include Label="MultiplicativeZero">
+    <#Include Label="NrElementsOfRank">
+    <#Include Label="Random">
+    <#Include Label="Rank">
+    <#Include Label="SmallGeneratingSet"> 
+  </Section>
+  
+  <Section><Heading>Properties of semigroups</Heading>
+    In this section we describe several properties 
+    <Ref Sect="Properties" BookName="ref"/> of an
+    arbitrary transformation semigroup that can be determined using
+    &Citrus;.
+    <#Include Label="IsBand">
+    <#Include Label="IsBlockGroup">
+    <#Include Label="IsBrandtSemigroup">
+    <#Include Label="IsCliffordSemigroup">
+    <#Include Label="IsCommutativeSemigroup">
+    <#Include Label="IsCompletelyRegularSemigroup">
+    <#Include Label="IsRTrivial">
+    <#Include Label="IsGroupAsSemigroup">
+    <#Include Label="IsIdempotentGenerated">
+    <#Include Label="IsInverseSemigroup">
+    <#Include Label="IsLeftSimple">
+    <#Include Label="IsLeftZeroSemigroup">
+    <#Include Label="IsMonogenicSemigroup">
+    <#Include Label="IsMonoidAsSemigroup">
+    <#Include Label="IsOrthodoxSemigroup">
+    <#Include Label="IsRectangularBand">
+    <#Include Label="IsRegularSemigroup">
+    <#Include Label="IsRightZeroSemigroup">
+    <#Include Label="IsSemilatticeAsSemigroup">
+    <#Include Label="IsSimpleSemigroup">
+    <#Include Label="IsSynchronizingSemigroup">
+    <#Include Label="IsZeroGroup">
+    <#Include Label="IsZeroRectangularBand">
+    <#Include Label="IsZeroSemigroup">
+    <#Include Label="IsZeroSimpleSemigroup">
+  </Section>
+
+  <Section><Heading>Changing the representation of a semigroup</Heading>
+    <#Include Label="AntiIsomorphismTransformationSemigroup">
+    <#Include Label="IsomorphismTransformationMonoid">
+    <#Include Label="IsomorphismPermGroup">
+  </Section>
+</Chapter>
+
