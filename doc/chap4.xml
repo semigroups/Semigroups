@@ -39,6 +39,7 @@
     <#Include Label="Idempotents">
     <#Include Label="InjectionPrincipalFactor">
     <#Include Label="IsGreensClassOfTransSemigp">
+    <#Include Label="IsGreensClassOfPartialPermSemigp">
     <#Include Label="IsRegularXClass">
     <#Include Label="NrIdempotents">
     <#Include Label="NrRegularDClasses">
@@ -96,7 +97,7 @@
     <#Include Label="IsCliffordSemigroup">
     <#Include Label="IsCommutativeSemigroup">
     <#Include Label="IsCompletelyRegularSemigroup">
-    <#Include Label="IsRTrivial">
+    <#Include Label="IsFactorisableSemigroup">
     <#Include Label="IsGroupAsSemigroup">
     <#Include Label="IsIdempotentGenerated">
     <#Include Label="IsInverseSemigroup">
@@ -108,6 +109,7 @@
     <#Include Label="IsRectangularBand">
     <#Include Label="IsRegularSemigroup">
     <#Include Label="IsRightZeroSemigroup">
+    <#Include Label="IsRTrivial">
     <#Include Label="IsSemilatticeAsSemigroup">
     <#Include Label="IsSimpleSemigroup">
     <#Include Label="IsSynchronizingSemigroup">

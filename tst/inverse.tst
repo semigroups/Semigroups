@@ -257,6 +257,27 @@ gap> d;
 gap> Size(DClass(h))=Size(RClass(h))^2/2;
 true
 
+gap> s:=Semigroup(ReadCitrus("pkg/citrus/examples/graph7c.citrus.gz", 600));
+<semigroup with 2 generators>
+gap> iso:=IsomorphismPartialPermSemigroup(s);;
+gap> inv:=InverseGeneralMapping(iso);;
+gap> f:=Transformation( [ 1, 7, 3, 4, 5, 6, 7 ] );;
+gap> f^iso;
+<identity on [ 1, 3, 4, 5, 6, 7 ]>
+gap> (f^iso)^inv;
+Transformation( [ 1, 7, 3, 4, 5, 6, 7 ] )
+gap> ForAll(s, f-> (f^iso)^inv=f);
+true
+
+gap> s:=Semigroup( Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ), 
+> Transformation( [ 3, 6, 5, 7, 2, 1, 7 ] ) );;
+gap> iso:=IsomorphismPartialPermSemigroup(s);;
+gap> inv:=InverseGeneralMapping(iso);;
+gap> f:=Transformation( [ 7, 1, 7, 7, 7, 7, 7 ] );;
+gap> f^iso;
+[ 2, 7 ] -> [ 1, 7 ]
+gap> ForAll(j1, f-> (f^iso)^inv=f);
+true
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;

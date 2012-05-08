@@ -25,8 +25,9 @@ InstallGlobalFunction(CitrusMakeDoc,
 function()
   MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
    InstallationPath, "/doc"), "citrus.xml", 
-   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "semigroups.xml",
-     "transform.xml", "pperm.xml", "../PackageInfo.g"], "citrus", "MathJax");;
+   ["utils.xml", "greens.xml", "inverse.xml", "orbits.xml", "properties.xml",
+   "semigroups.xml", "transform.xml", "pperm.xml", "../PackageInfo.g"],
+   "citrus", "MathJax");;
   return;
 end);
 

@@ -135,7 +135,26 @@ gap> IdempotentGeneratedSubsemigp(S);
     injective function from <A>D</A> to a Rees 0-matrix semigroup isomorphic
     to the principal factor of <A>D</A>; see 
     <Ref Func="ReesZeroMatrixSemigroup" BookName="ref"/>. 
-    <Example>JDM</Example>
+    <Example>
+gap> S:=InverseSemigroup(
+> PartialPermNC( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 6, 7, 8, 10 ], 
+> [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
+gap> f:=PartialPermNC([ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ]);;
+gap> d:=GreensDClassOfElement(S, f);
+{&lt;identity on [ 1, 2, 5, 6, 7, 9 ]>}
+gap> InjectionPrincipalFactor(d);
+MappingByFunction( {&lt;identity on [ 1, 2, 5, 6, 7, 9 
+ ]>}, Rees Zero Matrix Semigroup over &lt;zero group with 
+2 generators>, function( f ) ... end, function( x ) ... end )
+gap> rms:=Range(last);
+Rees Zero Matrix Semigroup over &lt;zero group with 2 generators>
+gap> SandwichMatrixOfReesZeroMatrixSemigroup(rms);
+[ [ (), 0, 0 ], [ 0, (), 0 ], [ 0, 0, () ] ]
+gap> Size(rms);
+10
+gap> Size(d);
+9</Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -419,6 +438,29 @@ false</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="IsFactorisableSemigroup">
+<ManSection>
+  <Prop Name="IsFactorisableSemigroup" Arg="S"/>
+  <Returns><K>true</K> or <K>false</K>.</Returns>
+  <Description>
+    An inverse monoid is <E>factorisable</E> if every element is the product
+    of an element of the group of units and an idempotent; see also 
+    <Ref Attr="GroupOfUnits"/> and <Ref Attr="Idempotents"/>. Hence an
+    inverse semigroup of partial permutations is factorisable if and only if
+    each of its generators is the restriction of some element in the group of
+    units. 
+    <Example>
+gap> S:=InverseSemigroup( PartialPermNC( [ 1, 2, 4 ], [ 3, 1, 4 ] ),
+> PartialPermNC( [ 1, 2, 3, 5 ], [ 4, 1, 5, 2 ] ) );;
+gap> IsFactorisableSemigroup(S);
+false
+gap> IsFactorisableSemigroup(SymmetricInverseSemigp(5)); 
+true</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
 
 <#GAPDoc Label="IsGroupAsSemigroup">
   <ManSection>

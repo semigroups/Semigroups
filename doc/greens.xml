@@ -493,7 +493,11 @@ gap> Idempotents(H);
   <ManSection><Prop Name="IsGreensClassOfTransSemigp" Arg="obj"/>
   <Returns><K>true</K> or <K>false</K>.</Returns>
   <Description>
-  This attribute is required so that a Green's class knows that it belongs to 
+  <C>IsGreensClassOfTransSemigp</C> return <K>true</K> if the object <A>obj</A>
+  is a Green's class of a transformation semigroup and <K>false</K> if it is
+  not. <P/>
+
+  This property is required so that a Green's class knows that it belongs to 
   a transformation semigroup, so that the methods defined in the
   &Citrus; are used in preference to those in the library.
   <Example>

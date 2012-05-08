@@ -522,15 +522,27 @@ InstallMethod(IsCompletelySimpleSemigroup, "for a semi.",
 InstallMethod(IsFactorisableSemigroup, "for a partial perm semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], 
 function(s)
-  local g;
+  local G, iso, enum, f;
   
-  g:=GroupOfUnits(s);
+  G:=GroupOfUnits(s);
   
-  if g=fail then 
+  if G=fail then 
     return false;
+  elif IsTrivial(G) then 
+    return IsSemilatticeAsSemigroup(s);
   fi;
+  
+  iso:=InverseGeneralMapping(IsomorphismPermGroup(G));
+  enum:=Enumerator(Source(iso));
 
-  return ForAll(Generators(s), x-> ForAny(g, y-> NaturalLeqPP(x, y)));
+  for f in Generators(s) do 
+    if not f in G then 
+      if not ForAny(enum, g-> NaturalLeqPP(f, g^iso)) then 
+        return false;
+      fi;
+    fi;
+  od;
+  return true;
 end);
 
 #IIIGGG
@@ -968,6 +980,32 @@ function(g)
    AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
 end);
 
+# new for 0.7! - IsomorphismPartialPermSemigroup - "for trans semi"
+#############################################################################
+
+InstallOtherMethod(IsomorphismPartialPermSemigroup, "for a trans semi",
+[IsTransformationSemigroup],
+function(s)
+  local iso;
+
+  if not IsInverseSemigroup(s) then 
+    Error("usage: the argument should be an inverse semgiroup,");
+    return;
+  fi;
+  
+  iso:=function(f)
+    local dom, ran;
+  
+    dom:=OnSets([1..Degree(s)], InversesOfTransformationNC(s, f)[1]);
+    ran:=List(dom, i-> i^f);
+    return PartialPermNC(dom, ran);
+  end;
+
+  return MappingByFunction(s, 
+   InverseSemigroup(List(GeneratorsOfSemigroup(s), iso)), iso, 
+    x-> AsTransformationNC(x, Degree(s)));
+end);
+
 # new for 0.7! - IsomorphismReesMatrixSemigroup - "for a D-class" 
 #############################################################################
 
@@ -1065,7 +1103,7 @@ end);
 InstallOtherMethod(IsomorphismTransformationSemigroup, "for partial perm semi",
 [IsPartialPermSemigroup],
 function(s)
-  local n, gens1, m, gens2, i;
+  local n, gens1, m, gens2, iso, u, i;
   
   n:=LargestMovedPoint(s)+1;
   gens1:=GeneratorsOfSemigroup(s); 
@@ -1076,8 +1114,8 @@ function(s)
     gens2[i]:=AsTransformation(gens1[i], n);
   od;
 
-  #UseIsomorphismRelation?
-  return MappingByFunction(s, Semigroup(gens2), x-> AsTransformationNC(x, n));
+  return MappingByFunction(s, Semigroup(gens2), x-> AsTransformationNC(x, n),
+   AsPartialPermNC);
 end);
 
 # new for 0.5! - IsomorphismTransformationMonoid - "for a perm group"

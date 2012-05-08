@@ -1,0 +1,34 @@
+#############################################################################
+##
+#W  inverse.xml
+#Y  Copyright (C) 2011-12                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="IsGreensClassOfPartialPermSemigp">
+<ManSection>
+  <Prop Name="IsGreensClassOfPartialPermSemigp" Arg="obj"/>
+  <Returns><K>true</K> or <K>false</K>.</Returns>
+  <Description>
+    <C>IsGreensClassOfPartialPermSemigp</C> return <K>true</K> if the object
+    <A>obj</A> is a Green's class of a semigroup of partial permutations and
+    <K>false</K> if it is not. <P/>
+
+    This property is required so that a Green's class knows that it belongs to 
+    a semigroup of partial permutations, so that the methods defined in the
+    &Citrus; are used in preference to those in the library.
+    <Example> 
+gap> S:=InverseSemigroup( PartialPermNC( [ 1, 3 ], [ 4, 3 ] ),
+> PartialPermNC( [ 1, 2, 3 ], [ 4, 1, 2 ] ) );;
+gap> D:=GreensDClassOfElement(S, PartialPermNC( [ 1, 3 ], [ 4, 3 ] ) );        
+{&lt;identity on [ 1, 3 ]>}
+gap> IsGreensClassOfPartPermSemigroup(D);
+true</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+
