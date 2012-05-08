@@ -1,8 +1,8 @@
 
 <Chapter Label="create"><Heading>Creating semigroups and monoids</Heading> 
   In this chapter we describe the various ways that semigroups and monoids can
-  be created in &Citrus; and the options that are available at the time of
-  creation. <P/>
+  be created in &Citrus;, the options that are available at the time of
+  creation, and describe some standard examples availabl in &Citrus;. <P/>
   
   Any transformation semigroup created before &Citrus; has been loaded must be
   recreated after &Citrus; is loaded so that the options record (described in
@@ -347,20 +347,7 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
      </ManSection>
 
     </Section>
-    <Section><Heading>Expressing semigroup elements as words in
-        generators</Heading> 
-
-      In some cases it is possible to express the elements of a transformation
-      semigroup as a word in the generators. This section describes how to
-      accomplish this in &Citrus;. <P/>
-
-      Note that at present it is not possible to factorize elements in a
-      semigroup of partial permutations. 
-
-      <#Include Label="EvaluateWord">
-      <#Include Label="Factorization">
-    </Section>
-
+    
     <Section><Heading>Standard examples</Heading>
     In this section we describe functions for creating several standard
     examples of semigroups of transformations and partial permutations. 
