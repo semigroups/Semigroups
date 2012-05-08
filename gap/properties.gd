@@ -37,6 +37,7 @@ DeclareProperty("IsLeftSimple", IsSemigroup);
 DeclareProperty("IsLeftZeroSemigroup", IsSemigroup);
 DeclareProperty("IsMonogenicSemigroup", IsSemigroup);
 DeclareProperty("IsMonoidAsSemigroup", IsSemigroup);
+DeclareOperation("IsomorphismPartialPermMonoid", [IsPermGroup]);
 DeclareOperation("IsomorphismPartialPermSemigroup", [IsPermGroup]);
 DeclareOperation("IsomorphismTransformationMonoid",
  [IsSemigroup]);

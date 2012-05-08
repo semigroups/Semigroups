@@ -811,26 +811,26 @@ gap> NrDClasses(S);
   <C>GreensDClasses(S)[j]</C> is immediately less than 
   <C>GreensDClasses(S)[i]</C> in the partial order of &D;-
   classes of <A>S</A>.
-  The transitive closure of the relation <Math>\{\:(j,i):\:\: j\in
-    l[i]\:\}</Math> is the partial order of &D;-classes of <A>S</A>. <P/>
+  The transitive closure of the relation <M>\{(j,i): j\in
+    l[i]\}</M> is the partial order of &D;-classes of <A>S</A>. <P/>
 
   The partial order on the &D;-classes is defined by 
-  <Math>x\leq y</Math> if and only if <Math>S^1xS^1</Math> is a subset of  
-  <Math>S^1yS^1</Math>. <P/>
+  <M>x\leq y</M> if and only if <M>S^1xS^1</M> is a subset of  
+  <M>S^1yS^1</M>. <P/>
 
   See also <Ref Attr="GreensDClasses"/>, 
   <Ref Attr="GreensDClasses" BookName="ref"/>, 
   <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>,
   and <Ref Oper="\&lt;"/>.
   <Example>
-gap> S:=Semigroup( Transformation( [ 2, 4, 6, 1, 6, 5 ] ), 
->  Transformation( [ 5, 2, 5, 3, 5, 3 ] ));;
+gap> S:=Semigroup( Transformation( [ 2, 4, 1, 2 ] ), 
+> Transformation( [ 3, 3, 4, 1 ] )  
 gap> PartialOrderOfDClasses(S);
-[ [ 1, 2, 3 ], [ 2, 3, 4, 5, 6 ], [ 3, 4, 5, 6 ], [ 4 ], [ 4, 5 ], [ 4, 6 ] ]
+[ [ 3 ], [ 2, 3 ], [ 3, 4 ], [ 4 ] ]
 gap> IsGreensLessThanOrEqual(GreensDClasses(S)[1], GreensDClasses(S)[2]);
 false
 gap> IsGreensLessThanOrEqual(GreensDClasses(S)[2], GreensDClasses(S)[1]);
-true
+false
 gap> IsGreensLessThanOrEqual(GreensDClasses(S)[3], GreensDClasses(S)[1]);
 true
 gap> S:=InverseSemigroup( PartialPermNC( [ 1, 2, 3 ], [ 1, 3, 4 ] ),

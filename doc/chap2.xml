@@ -214,6 +214,7 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
     
     <#Include Label="OnKernelsAntiAction"> 
     <#Include Label="OnIntegerSetsWithPartialPerm"> 
+    <#Include Label="TransformationActionNC">
   </Section>
   <Section><Heading>Orbits</Heading>
     The following functions supplement the &Orb; package by providing methods

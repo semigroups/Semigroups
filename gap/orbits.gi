@@ -403,7 +403,7 @@ function(f, dom, act)
     out[i]:=Position(dom, act(dom[i], f));
   od;
 
-  return TransformationNC(out);
+  return Transformation(out);
 end);
 
 # new for 0.7! - TransformationActionNC - "for semigroup, list, function"

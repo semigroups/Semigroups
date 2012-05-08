@@ -456,27 +456,4 @@ gap> f^6;
   </ManSection>
 <#/GAPDoc>
 
-<!-- not currently used anywhere -->
-
-<#GAPDoc Label="TransformationActionNC">
-  <ManSection>
-    <Oper Name="TransformationActionNC" Arg="list, act, elm"/>
-    <Description>
-      returns the list <C>list</C> acted on by <C>elm</C> via the action 
-      <C>act</C>.
-      <Example>
-gap> mat:=OneMutable(GeneratorsOfGroup(GL(3,3))[1]);
-[ [ Z(3)^0, 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3) ], 
-  [ 0*Z(3), 0*Z(3), Z(3)^0 ] ]
-gap> mat[3][3]:=Z(3)*0; 
-0*Z(3)
-gap> F:=BaseDomain(mat);
-GF(3)
-gap> TransformationActionNC(Elements(F^3), OnRight, mat);
-Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 10, 10, 10, 13, 13, 13, 16, 16, 
-16, 19, 19, 19, 22, 22, 22, 25, 25, 25 ] )</Example> 
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 #EOF

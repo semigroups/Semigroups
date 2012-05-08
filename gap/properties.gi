@@ -58,7 +58,7 @@ end);
 InstallMethod(GroupOfUnits, "for a tranformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local h, m, g;
+  local h, m, g, iso, u;
 
   if not IsMonoidAsSemigroup(s) then 
     Info(InfoCitrus, 2, "the semigroup is not a monoid,");
@@ -72,7 +72,12 @@ function(s)
     g:=ClosureGroup(g, AsPermutation(Random(h)));
   until Size(g)=m;
 
-  return g;
+  iso:=IsomorphismTransformationMonoid(g);
+  u:=Range(iso);
+  SetIsomorphismPermGroup(u, InverseGeneralMapping(iso));
+  SetIsGroupAsSemigroup(u, true);
+  UseIsomorphismRelation(u, g);
+  return u;
 end);
 
 # new for 0.7! - GroupOfUnits - "for a partial perm semigroup"
@@ -97,9 +102,10 @@ function(s)
     g:=ClosureGroup(g, AsPermutation(Random(h)));
   until Size(g)=m;
 
-  iso:=IsomorphismPartialPermSemigroup(g);
+  iso:=IsomorphismPartialPermMonoid(g);
   u:=Range(iso);
   SetIsomorphismPermGroup(u, InverseGeneralMapping(iso));
+  SetIsGroupAsSemigroup(u, true);
   UseIsomorphismRelation(u, g);
   
   return u;
@@ -115,7 +121,7 @@ InstallMethod(IdempotentGeneratedSubsemigp, "for a semigroup",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 s-> Semigroup(Idempotents(s)));
 
-# new for 0.7! - InjectionPrincipalFactor - "for a D-class of a trans. semi"
+# new for 0.7! - InjectionPrincipalFactor - "for a D-class"
 #############################################################################
 
 InstallMethod(InjectionPrincipalFactor, "for a D-class",
@@ -935,6 +941,19 @@ end);
 InstallOtherMethod(IsMonoidAsSemigroup, "for a semigroup",
 [IsSemigroup and HasGeneratorsOfSemigroup], 
  x-> not MultiplicativeNeutralElement(x)=fail);
+
+# new for 0.7! - IsomorphismPartialPermSemigroup - "for a perm group"
+#############################################################################
+
+InstallMethod(IsomorphismPartialPermMonoid, "for a perm group",
+[IsPermGroup],
+function(g)
+  local dom;
+
+  dom:=MovedPoints(g);
+  return MappingByFunction(g, InverseMonoid(List(GeneratorsOfGroup(g), p-> 
+   AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
+end);
 
 # new for 0.7! - IsomorphismPartialPermSemigroup - "for a perm group"
 #############################################################################
@@ -1992,6 +2011,20 @@ function(s)
   return Concatenation("B(", StructureDescription(GroupHClass(d)), ", ",
   String(NrRClasses(d)), ")");
 end);
+
+# new for 0.7! - StructureDescription - "for a trans. semi. as group"
+############################################################################
+
+InstallOtherMethod(StructureDescription, "for a group as semigroup",
+[IsTransformationSemigroup and IsGroupAsSemigroup],
+s-> StructureDescription(Range(IsomorphismPermGroup(s))));
+
+# new for 0.7! - StructureDescription - "for a part. perm. semi. as group""
+############################################################################
+
+InstallOtherMethod(StructureDescription, "for a group as semigroup",
+[IsPartialPermSemigroup and IsGroupAsSemigroup],
+s-> StructureDescription(Range(IsomorphismPermGroup(s))));
 
 # new for 0.7! - ViewObj - "for a zero group"
 ############################################################################

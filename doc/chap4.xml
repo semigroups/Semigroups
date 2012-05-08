@@ -37,6 +37,7 @@
   <Section><Heading>Properties of Green's classes</Heading>
     <#Include Label="\&lt;">
     <#Include Label="Idempotents">
+    <#Include Label="InjectionPrincipalFactor">
     <#Include Label="IsGreensClassOfTransSemigp">
     <#Include Label="IsRegularXClass">
     <#Include Label="NrIdempotents">
@@ -76,8 +77,7 @@
     <#Include Label="ImagesOfTransSemigroup">
   </Section>
 
-  <Section Label="AttrPPerm"><Heading>Attributes for inverse semigroups of
-      partial permutations</Heading>
+  <Section Label="AttrPPerm"><Heading>Attributes for inverse semigroups</Heading>
     In this section we describe those attributes specific to inverse semigroups
     of partial permutations that do not apply to other kinds of semigroups. 
 
