@@ -147,8 +147,7 @@ gap> Size(s);
 89616897
 gap> NrDClasses(s);
 14
-gap> s:=InverseSemigroup(gens, rec(small:=true));
-<inverse semigroup with 28 generators>
+gap> s:=InverseSemigroup(gens, rec(small:=true));;
 gap> NrDClasses(s);
 14
 

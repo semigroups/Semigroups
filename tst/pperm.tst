@@ -142,9 +142,9 @@ gap> f:=PartialPermNC([ 1, 2, 3, 5, 6, 7, 8, 10 ],
 gap> g:=PartialPermNC([ 1, 2, 3, 5, 7, 8 ], [ 8, 10, 9, 1, 5, 6 ]);
 [ 1, 2, 3, 5, 7, 8 ] -> [ 8, 10, 9, 1, 5, 6 ]
 gap> f<g;
-true
-gap> g<f;
 false
+gap> g<f;
+true
 gap> f=g;
 false
 gap> f/g;
@@ -327,9 +327,9 @@ gap> RanPP(g);
 gap> f<f^-1;                                             
 true
 gap> g<g^-1; 
-false
-gap> g^-1<g;   
 true
+gap> g^-1<g;   
+false
 gap> NaturalLeqPP(g, f);
 true
 gap> NaturalLeqPP(f, g);
