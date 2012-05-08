@@ -109,7 +109,7 @@ function()
   TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
      InstallationPath, "/doc"), "citrus.xml", 
      ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
-      "transform.xml", "pperm.xml", "../PackageInfo.g"]);
+     "semigroups.xml", "transform.xml", "pperm.xml", "../PackageInfo.g"]);
   
   SetInfoLevel(InfoWarning, InfoLevelInfoWarning);
   SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);

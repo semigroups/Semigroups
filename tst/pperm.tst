@@ -356,6 +356,32 @@ gap> f:=PartialPermNC( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] );;
 gap> f<f;
 false
 
+gap> f:=PartialPermNC([]);;
+gap> f<f;
+false
+
+gap> S:=InverseSemigroup([ PartialPermNC( [ 1, 3 ], [ 1, 3 ] ),
+> PartialPermNC( [ 1, 2 ], [ 3, 2 ] ) ] );;
+gap> Size(S);
+11
+gap> NaturalPartialOrder(S);
+[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 4, 5 ], [ 1, 3, 4, 5 ],
+  [ 1, 2, 6 ], [ 1, 4, 5 ], [ 1, 4, 6 ] ]
+gap> NaturalLeqPartialPerm(Elements(S)[4], Elements(S)[10]);
+true
+gap> NaturalLeqPartialPerm(Elements(S)[4], Elements(S)[9]);
+false
+gap> List(Elements(S), x-> NaturalLeqPartialPerm(Elements(S)[1], x));
+[ true, true, true, true, true, true, true, true, true, true, true ]
+gap> List(Elements(S), x-> NaturalLeqPartialPerm(Elements(S)[2], x));
+[ false, true, false, false, false, false, true, false, true, false, false ]
+gap> PositionsProperty([1..11], x-> NaturalLeqPartialPerm(Elements(S)[4], 
+> Elements(S)[x]));
+[ 4, 7, 8, 10, 11 ]
+gap> PositionsProperty([1..11], x-> NaturalLeqPartialPerm(Elements(S)[2],
+> Elements(S)[x]));
+[ 2, 7, 9 ]
+
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;

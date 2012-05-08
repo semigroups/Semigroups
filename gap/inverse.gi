@@ -2559,11 +2559,11 @@ InstallMethod(NaturalPartialOrder, "for an inverse semigroup",
 function(s)
   local elts, n, out, i, j;
     
-  elts:=Reversed(Elements(s));
+  elts:=Elements(s);
   n:=Length(elts);
   out:=List([1..n], x-> EmptyPlist(n));
-  for i in [1..n] do 
-    for j in [i+1..n] do 
+  for i in [n, n-1..1] do 
+    for j in [i-1,i-2 ..1] do 
       if NaturalLeqPP(elts[j], elts[i]) then 
         AddSet(out[i], j);
       fi;
