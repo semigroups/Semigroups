@@ -205,8 +205,8 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
   <Section><Heading>Actions</Heading>
     The following actions of transformations and partial permutations are used
     by &Citrus; in the computation of Green's relations and to test if an
-    arbitrary transformation semigroup has a particular property;  see Chapters
-    <Ref Chap="green"/>, <Ref Chap="properties"/>, and <Ref Sect="Basic
+    arbitrary transformation semigroup has a particular property;  see 
+    Chapter <Ref Chap="green"/> and <Ref Sect="Basic
       Actions" BookName="ref"/>.  <P/>
     
     <#Include Label="OnKernelsAntiAction"> 

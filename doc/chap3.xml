@@ -114,17 +114,16 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
 
    </Section>
     
-  <Section><Heading>Standard examples</Heading>
+  <Section Label="Examples"><Heading>Standard examples</Heading>
     In this section we describe functions for creating several standard
     examples of semigroups of transformations and partial permutations. 
     
     <#Include Label="FullMatrixSemigroup">
     <#Include Label="IsFullMatrixSemigroup">
     <#Include Label="MunnSemigroup">
-    <#Include Label="MunnSemigroup">
     <#Include Label="OPOIPOPI">
     <#Include Label="SingularSemigroup">
-
+    <#Include Label="SymmetricInverseSemigp">
   </Section>
 
 <Section Label="Catalogues"><Heading>The examples directory</Heading>

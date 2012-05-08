@@ -48,21 +48,41 @@
 
   <Section><Heading>Attributes of semigroups</Heading>
     In this section we describe the attributes <Ref Sect="Attributes"
-    BookName="ref"/> of an arbitrary transformation semigroup that can be found
-    using &Citrus;.
+      BookName="ref"/> of arbitrary semigroups of transformations or partial
+    permutations  that can be found using &Citrus;. Specific attributes that
+    only apply to transformation semigroups or partial permutation semigroups
+    can be found in Sections <Ref Sect="AttrTransform"/> and <Ref
+      Sect="AttrPPerm"/>.
+
     <#Include Label="Degree">
     <#Include Label="Generators">
-    <#Include Label="GradedImagesOfTransSemigroup">
     <#Include Label="GroupOfUnits">
     <#Include Label="IdempotentGeneratedSubsemigp">
     <#Include Label="IrredundantGeneratingSubset">
-    <#Include Label="ImagesOfTransSemigroup">
     <#Include Label="MinimalIdeal">
     <#Include Label="MultiplicativeZero">
     <#Include Label="NrElementsOfRank">
     <#Include Label="Random">
     <#Include Label="Rank">
     <#Include Label="SmallGeneratingSet"> 
+  </Section>
+  
+  <Section Label="AttrTransform"><Heading>Attributes for transformation
+      semigroups</Heading>
+    In this section we describe those attributes specific to transformation
+    semigroups that do not apply to other types of semigroups. 
+
+    <#Include Label="GradedImagesOfTransSemigroup">
+    <#Include Label="ImagesOfTransSemigroup">
+  </Section>
+
+  <Section Label="AttrPPerm"><Heading>Attributes for inverse semigroups of
+      partial permutations</Heading>
+    In this section we describe those attributes specific to inverse semigroups
+    of partial permutations that do not apply to other kinds of semigroups. 
+
+    <#Include Label="NaturalPartialOrder">
+
   </Section>
   
   <Section><Heading>Properties of semigroups</Heading>

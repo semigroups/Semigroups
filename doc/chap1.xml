@@ -36,16 +36,17 @@
     more; see Chapters <Ref Chap="create"/> and  <Ref Chap="green"/>. There are
     also methods for testing if a semigroup satisfies a particular property,
     such as if it is regular, simple, inverse, completely regular, and a
-    variety of further properties; see Chapter <Ref Chap="properties"/>. A
+    variety of further properties; see Chapter <Ref Chap="green"/>. A
     range of functions is provided for creating and determining properties of
     individual transformations and partial permutations such as the index and
     period or the least idempotent power; see Chapter <Ref
       Chap="Transformations and partial permutations"/>.  A large catalogue of
-    examples is provided; see Chapter <Ref Sect="Examples"/>.  &Citrus; also
-    provides abbreviated names for many of the commonly used &GAP; library
-    functions related to semigroups, and functions to read and write large
-    collections of transformations or partial permutations to a file; see <Ref
-      Func="ReadCitrus"/> and <Ref Func="WriteCitrus"/>. <P/>
+    examples is provided; see Sections <Ref Sect="Examples"/> and <Ref
+      Sect="Catalogues"/>.  &Citrus; also provides abbreviated names for many
+    of the commonly used &GAP; library functions related to semigroups, and
+    functions to read and write large collections of transformations or partial
+    permutations to a file; see <Ref Func="ReadCitrus"/> and <Ref
+      Func="WriteCitrus"/>. <P/>
 
     &noindent; The &Citrus; package is written in <B>c</B> and &GAP; code and 
     requires the <URL Text="Orb">

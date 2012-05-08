@@ -256,7 +256,6 @@ true</Example>
   </ManSection>
 <#/GAPDoc>
 
-
 <#GAPDoc Label="IsCliffordSemigroup">
   <ManSection>
     <Prop Name="IsCliffordSemigroup" Arg="S"/>
@@ -981,6 +980,39 @@ fail</Example>
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="NaturalPartialOrder">
+<ManSection>
+  <Oper Name="NaturalPartialOrder" Arg="S"/>
+  <Returns>The natural partial order on an inverse semigroup.</Returns>
+  <Description>
+    The <E>natural partial order</E> <M>\leq</M> on an inverse semigroup
+    <M>S</M> is defined by <M>s\leq</M><M>t</M> if there exists an idempotent
+    <M>e</M> in <M>S</M> such that <M>s=et</M>. Hence if <A>f</A> and
+    <A>g</A> are partial permutations, then <A>f</A><M>\leq</M><A>g</A> if
+    and only if <A>f</A> is a restriction of <A>g</A>;
+    see <Ref Oper="RestrictedPartialPerm"/>.<P/> 
+
+    <C>NaturalPartialOrder</C> returns the natural partial order on the inverse
+    semigroup of partial permutations <A>S</A> as a list of sets of positive
+    integers where entry <C>i</C> in <C>NaturalPartialOrder(<A>S</A>)</C> is
+    the set of positions in <C>Elements(<A>S</A>)</C> of elements less than
+    <C>Elements(<A>S</A>)[i]</C>. See also 
+    <Ref Func="NaturalLeqPartialPerm"/>.<P/>
+  
+    <Example>
+gap> S:=InverseSemigroup([ PartialPermNC( [ 1, 3 ], [ 1, 3 ] ),
+> PartialPermNC( [ 1, 2 ], [ 3, 2 ] ) ] );
+&lt;inverse semigroup with 2 generators>
+gap> Size(S);
+11
+gap> NaturalPartialOrder(S);
+[ [ 2, 5, 6, 10, 11 ], [ 3, 11 ], [ 11 ], [ 6, 11 ], [ 6, 10, 11 ], [ 11 ], 
+[ 9, 11 ], [ 9, 10, 11 ], [ 10, 11 ], [ 11 ], [  ] ]</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+</ManSection>
 <#GAPDoc Label="NrElementsOfRank">
   <ManSection>
     <Attr Name="NrElementsOfRank" Arg="S, n"/>
@@ -1021,7 +1053,6 @@ gap> Sum(last);
   </Description>
   </ManSection>
 <#/GAPDoc>
-
 
 <#GAPDoc Label="SmallGeneratingSet">
   <ManSection>
