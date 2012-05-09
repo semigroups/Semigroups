@@ -1852,7 +1852,7 @@ function(iter)
 
   s:=iter!.s;
   O:=OrbitsOfImages(s);
-# JDM O!.ht!.o is unbound if the calc is completed. 
+  # JDM O!.ht!.o is unbound if the calc is completed. 
   Print( "<iterator of R-class reps data, ", Length(O!.ht!.o), " candidates, ", 
    Size(OrbitsOfImages(s)), " elements, ", NrRClasses(OrbitsOfImages(s)), 
    " R-classes>");
@@ -1865,12 +1865,15 @@ end);
 InstallMethod(PrintObj, [IsIteratorOfRClassReps], 
 function(iter)
   local O, s;
+  if IsBound(iter!.s) then 
+    s:=iter!.s; O:=OrbitsOfImages(s);
 
-  s:=iter!.s; O:=OrbitsOfImages(s);
-
-  Print( "<iterator of R-class reps, ", Length(O!.ht!.o), " candidates, ", 
-   Size(OrbitsOfImages(s)), " elements, ", NrRClasses(OrbitsOfImages(s)), 
-   " R-classes>");
+    Print( "<iterator of R-class reps, ", Length(O!.ht!.o), " candidates, ", 
+     Size(OrbitsOfImages(s)), " elements, ", NrRClasses(OrbitsOfImages(s)), 
+     " R-classes>");
+    return;
+  fi;
+  Print("<iterator of R-class reps>");
   return;
 end);
 

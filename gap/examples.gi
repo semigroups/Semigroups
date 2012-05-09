@@ -90,6 +90,7 @@ if (not ARCH_IS_WINDOWS() and
     return fail;
   end);
 else
+  # JDM use ClosureInverseSemigroup to improve things here!
   InstallMethod(MunnSemigroup, "for a semilattice",
   [IsSemigroup],
   function(s)

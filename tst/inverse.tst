@@ -475,6 +475,360 @@ true
 gap> HClass(D, f)=HClassNC(s, f);  
 true
 
+gap> s:=SymmetricInverseSemigp(6);
+<inverse semigroup with 3 generators>
+gap> e:=IdempotentGeneratedSubsemigp(s);
+<inverse semigroup with 7 generators>
+gap> m:=MunnSemigroup(e);
+D<inverse semigroup with 6 generators>
+gap> DClassReps(m);
+[ <partial perm on 64 pts>, <partial perm on 32 pts>, 
+  <identity on [ 38, 42, 45, 47, 48, 51, 53, 54, 56, 57, 58, 60, 61, 62, 63, 
+      64 ]>, <identity on [ 48, 54, 57, 58, 61, 62, 63, 64 ]>, 
+  <identity on [ 58, 62, 63, 64 ]>, <identity on [ 63, 64 ]>, 
+  <identity on [ 64 ]> ]
+gap> NrLClasses(m);
+64
+gap> IsRTrivial(m);
+false
+gap> Size(m);
+13327
+gap> f:=Random(m);         
+[ 27, 30, 31, 32, 58, 62, 63, 64 ] -> [ 8, 16, 28, 60, 49, 59, 32, 64 ]
+gap> d:=DClassNC(m, f);
+{<identity on [ 48, 54, 57, 58, 61, 62, 63, 64 ]>}
+gap> LClassReps(d);
+[ <identity on [ 48, 54, 57, 58, 61, 62, 63, 64 ]>, 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 8, 16, 28, 49, 32, 59, 60, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 47, 53, 56, 58, 60, 62, 63, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 42, 51, 53, 54, 60, 61, 62, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 13, 16, 29, 50, 32, 59, 61, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 39, 49, 50, 51, 59, 60, 61, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 45, 51, 56, 57, 60, 61, 63, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 46, 52, 55, 58, 59, 62, 63, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 41, 50, 52, 54, 59, 61, 62, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 22, 28, 29, 51, 32, 60, 61, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 14, 16, 30, 52, 32, 59, 62, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 40, 49, 52, 53, 59, 60, 62, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 44, 50, 55, 57, 59, 61, 63, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 27, 30, 31, 58, 32, 62, 63, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 24, 29, 30, 54, 32, 61, 62, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 23, 28, 30, 53, 32, 60, 62, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 15, 16, 31, 55, 32, 59, 63, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 43, 49, 55, 56, 59, 60, 63, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 26, 29, 31, 57, 32, 61, 63, 64 ], 
+  [ 48, 54, 57, 58, 61, 62, 63, 64 ] -> [ 25, 28, 31, 56, 32, 60, 63, 64 ] ]
+gap> List(DClasses(m), NrRClasses);
+[ 1, 6, 15, 20, 15, 6, 1 ]
+gap> d:=DClasses(m)[2];
+{<partial perm on 32 pts>}
+gap> d:=DClasses(m)[6]; 
+{<identity on [ 63, 64 ]>}
+gap> Display(Representative(d));
+PartialPermNC( [ 63, 64 ], [ 63, 64 ] )
+gap> LClassReps(d);
+[ <identity on [ 63, 64 ]>, [ 63, 64 ] -> [ 32, 64 ], 
+  [ 63, 64 ] -> [ 62, 64 ], [ 63, 64 ] -> [ 59, 64 ], 
+  [ 63, 64 ] -> [ 61, 64 ], [ 63, 64 ] -> [ 60, 64 ] ]
+gap> RClassReps(d);                              
+[ <identity on [ 63, 64 ]>, [ 32, 64 ] -> [ 63, 64 ], 
+  [ 62, 64 ] -> [ 63, 64 ], [ 59, 64 ] -> [ 63, 64 ], 
+  [ 61, 64 ] -> [ 63, 64 ], [ 60, 64 ] -> [ 63, 64 ] ]
+gap> d:=DClassNC(m, Representative(d));
+{<identity on [ 63, 64 ]>}
+gap> LClassReps(d);
+[ <identity on [ 63, 64 ]>, [ 63, 64 ] -> [ 32, 64 ], 
+  [ 63, 64 ] -> [ 62, 64 ], [ 63, 64 ] -> [ 59, 64 ], 
+  [ 63, 64 ] -> [ 61, 64 ], [ 63, 64 ] -> [ 60, 64 ] ]
+gap> RClassReps(m);             
+[ <partial perm on 64 pts>, <partial perm on 32 pts>, 
+  <partial perm on 32 pts>, <partial perm on 32 pts>, 
+  <partial perm on 32 pts>, <partial perm on 32 pts>, 
+  <partial perm on 32 pts>, 
+  <identity on [ 38, 42, 45, 47, 48, 51, 53, 54, 56, 57, 58, 60, 61, 62, 63, 
+      64 ]>, [ 4, 8, 13, 16, 22, 28, 29, 32, 39, 49, 50, 51, 59, 60, 61, 64 
+     ] -> [ 38, 42, 45, 51, 47, 53, 56, 60, 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 37, 41, 44, 46, 48, 50, 52, 54, 55, 57, 58, 59, 61, 62, 63, 64 ] -> 
+    [ 38, 42, 45, 47, 48, 51, 53, 54, 56, 57, 58, 60, 61, 62, 63, 64 ], 
+  [ 34, 39, 40, 41, 42, 49, 50, 51, 52, 53, 54, 59, 60, 61, 62, 64 ] -> 
+    [ 38, 42, 45, 47, 48, 51, 53, 54, 56, 57, 58, 60, 61, 62, 63, 64 ], 
+  [ 6, 8, 14, 16, 23, 28, 30, 32, 40, 49, 52, 53, 59, 60, 62, 64 ] -> 
+    [ 38, 42, 45, 51, 47, 53, 56, 60, 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 36, 40, 43, 46, 47, 49, 52, 53, 55, 56, 58, 59, 60, 62, 63, 64 ] -> 
+    [ 38, 42, 45, 47, 48, 51, 53, 54, 56, 57, 58, 60, 61, 62, 63, 64 ], 
+  [ 18, 22, 23, 24, 28, 29, 30, 32, 42, 51, 53, 54, 60, 61, 62, 64 ] -> 
+    [ 38, 42, 45, 47, 51, 53, 56, 60, 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 21, 24, 26, 27, 29, 30, 31, 32, 48, 54, 57, 58, 61, 62, 63, 64 ] -> 
+    [ 38, 42, 45, 47, 51, 53, 56, 60, 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 35, 39, 43, 44, 45, 49, 50, 51, 55, 56, 57, 59, 60, 61, 63, 64 ] -> 
+    [ 38, 42, 45, 47, 48, 51, 53, 54, 56, 57, 58, 60, 61, 62, 63, 64 ], 
+  [ 10, 13, 14, 16, 24, 29, 30, 32, 41, 50, 52, 54, 59, 61, 62, 64 ] -> 
+    [ 38, 42, 45, 51, 47, 53, 56, 60, 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 7, 8, 15, 16, 25, 28, 31, 32, 43, 49, 55, 56, 59, 60, 63, 64 ] -> 
+    [ 38, 42, 45, 51, 47, 53, 56, 60, 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 20, 23, 25, 27, 28, 30, 31, 32, 47, 53, 56, 58, 60, 62, 63, 64 ] -> 
+    [ 38, 42, 45, 47, 51, 53, 56, 60, 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 19, 22, 25, 26, 28, 29, 31, 32, 45, 51, 56, 57, 60, 61, 63, 64 ] -> 
+    [ 38, 42, 45, 47, 51, 53, 56, 60, 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 11, 13, 15, 16, 26, 29, 31, 32, 44, 50, 55, 57, 59, 61, 63, 64 ] -> 
+    [ 38, 42, 45, 51, 47, 53, 56, 60, 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 12, 14, 15, 16, 27, 30, 31, 32, 46, 52, 55, 58, 59, 62, 63, 64 ] -> 
+    [ 38, 42, 45, 51, 47, 53, 56, 60, 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  <identity on [ 48, 54, 57, 58, 61, 62, 63, 64 ]>, 
+  [ 8, 16, 28, 32, 49, 59, 60, 64 ] -> [ 48, 54, 57, 61, 58, 62, 63, 64 ], 
+  [ 47, 53, 56, 58, 60, 62, 63, 64 ] -> [ 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 42, 51, 53, 54, 60, 61, 62, 64 ] -> [ 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 13, 16, 29, 32, 50, 59, 61, 64 ] -> [ 48, 54, 57, 61, 58, 62, 63, 64 ], 
+  [ 39, 49, 50, 51, 59, 60, 61, 64 ] -> [ 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 45, 51, 56, 57, 60, 61, 63, 64 ] -> [ 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 46, 52, 55, 58, 59, 62, 63, 64 ] -> [ 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 41, 50, 52, 54, 59, 61, 62, 64 ] -> [ 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 22, 28, 29, 32, 51, 60, 61, 64 ] -> [ 48, 54, 57, 61, 58, 62, 63, 64 ], 
+  [ 14, 16, 30, 32, 52, 59, 62, 64 ] -> [ 48, 54, 57, 61, 58, 62, 63, 64 ], 
+  [ 40, 49, 52, 53, 59, 60, 62, 64 ] -> [ 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 44, 50, 55, 57, 59, 61, 63, 64 ] -> [ 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 27, 30, 31, 32, 58, 62, 63, 64 ] -> [ 48, 54, 57, 61, 58, 62, 63, 64 ], 
+  [ 24, 29, 30, 32, 54, 61, 62, 64 ] -> [ 48, 54, 57, 61, 58, 62, 63, 64 ], 
+  [ 23, 28, 30, 32, 53, 60, 62, 64 ] -> [ 48, 54, 57, 61, 58, 62, 63, 64 ], 
+  [ 15, 16, 31, 32, 55, 59, 63, 64 ] -> [ 48, 54, 57, 61, 58, 62, 63, 64 ], 
+  [ 43, 49, 55, 56, 59, 60, 63, 64 ] -> [ 48, 54, 57, 58, 61, 62, 63, 64 ], 
+  [ 26, 29, 31, 32, 57, 61, 63, 64 ] -> [ 48, 54, 57, 61, 58, 62, 63, 64 ], 
+  [ 25, 28, 31, 32, 56, 60, 63, 64 ] -> [ 48, 54, 57, 61, 58, 62, 63, 64 ], 
+  <identity on [ 58, 62, 63, 64 ]>, [ 16, 32, 59, 64 ] -> [ 58, 62, 63, 64 ], 
+  [ 57, 61, 63, 64 ] -> [ 58, 62, 63, 64 ], 
+  [ 54, 61, 62, 64 ] -> [ 58, 62, 63, 64 ], 
+  [ 28, 32, 60, 64 ] -> [ 58, 62, 63, 64 ], 
+  [ 49, 59, 60, 64 ] -> [ 58, 62, 63, 64 ], 
+  [ 56, 60, 63, 64 ] -> [ 58, 62, 63, 64 ], 
+  [ 53, 60, 62, 64 ] -> [ 58, 62, 63, 64 ], 
+  [ 51, 60, 61, 64 ] -> [ 58, 62, 63, 64 ], 
+  [ 29, 32, 61, 64 ] -> [ 58, 62, 63, 64 ], 
+  [ 50, 59, 61, 64 ] -> [ 58, 62, 63, 64 ], 
+  [ 55, 59, 63, 64 ] -> [ 58, 62, 63, 64 ], 
+  [ 52, 59, 62, 64 ] -> [ 58, 62, 63, 64 ], 
+  [ 30, 32, 62, 64 ] -> [ 58, 62, 63, 64 ], 
+  [ 31, 32, 63, 64 ] -> [ 58, 62, 63, 64 ], <identity on [ 63, 64 ]>, 
+  [ 32, 64 ] -> [ 63, 64 ], [ 62, 64 ] -> [ 63, 64 ], 
+  [ 59, 64 ] -> [ 63, 64 ], [ 61, 64 ] -> [ 63, 64 ], 
+  [ 60, 64 ] -> [ 63, 64 ], <identity on [ 64 ]> ]
+gap> RClassReps(d);
+[ <identity on [ 63, 64 ]>, [ 32, 64 ] -> [ 63, 64 ], 
+  [ 62, 64 ] -> [ 63, 64 ], [ 59, 64 ] -> [ 63, 64 ], 
+  [ 61, 64 ] -> [ 63, 64 ], [ 60, 64 ] -> [ 63, 64 ] ]
+gap> Size(d);
+36
+gap> Size(DClasses(s)[6]);
+36
+
+gap> s:=InverseSemigroup( [ PartialPermNC( [ 1, 2, 3, 5 ], [ 2, 1, 6, 3 ] ),
+> PartialPermNC( [ 1, 2, 3, 6 ], [ 3, 5, 2, 6 ] ) ]);;
+gap> f:=PartialPermNC([ 1 .. 3 ], [ 6, 3, 1 ]);;
+gap> d:=DClassNC(s, f);
+{<identity on [ 1 .. 3 ]>}
+gap> GroupHClass(d);
+{<identity on [ 1 .. 3 ]>}
+gap> StructureDescription(last);
+"1"
+gap> ForAny(DClasses(s), x-> not IsTrivial(GroupHClass(x)));
+true
+gap> First(DClasses(s), x-> not IsTrivial(GroupHClass(x)));
+{<identity on [ 1, 2 ]>}
+gap> StructureDescription(GroupHClass(last));
+"C2"
+
+gap> s:=InverseSemigroup(
+> [ PartialPermNC( [ 1, 2, 3, 4, 5, 7 ], [ 10, 6, 3, 4, 9, 1 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8 ], [ 6, 10, 7, 4, 8, 2, 9, 1 ] ) ]);;
+gap> Idempotents(s, 1);
+[ <identity on [ 4 ]> ]
+gap> Idempotents(s, 0);
+[  ]
+gap> PartialPermNC([]) in s; 
+false
+gap> Idempotents(s, 2);
+[ <identity on [ 3, 4 ]>, <identity on [ 4, 7 ]>, <identity on [ 2, 4 ]>, 
+  <identity on [ 4, 10 ]>, <identity on [ 1, 4 ]>, <identity on [ 4, 9 ]>, 
+  <identity on [ 4, 8 ]>, <identity on [ 4, 6 ]>, <identity on [ 4, 5 ]> ]
+gap> Idempotents(s, 10);
+[  ]
+gap> f:=PartialPermNC( [ 2, 4, 9, 10 ], [ 7, 4, 3, 2 ] );;
+gap> r:=RClassNC(s, f);
+{[ 2, 4, 9, 10 ] -> [ 6, 4, 7, 2 ]}
+gap> Idempotents(r);
+[ <identity on [ 2, 4, 9, 10 ]> ]
+
+gap> s:=RandomInverseSemigroup(2,10);
+<inverse semigroup with 2 generators>
+gap> ForAll(RClasses(s), IsRegularRClass);
+true
+gap> time;
+5
+gap> s:=InverseSemigroup( 
+> PartialPermNC( [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14, 15 ], 
+> [ 6, 4, 18, 3, 11, 8, 5, 14, 19, 13, 12, 20, 1 ] ),
+> PartialPermNC( [ 1, 2, 4, 5, 6, 7, 9, 10, 11, 12, 15, 16, 18, 20 ], 
+> [ 1, 18, 3, 7, 4, 9, 19, 5, 14, 16, 12, 17, 15, 6 ] ) );;
+gap> iter:=IteratorOfDClassReps(s);
+<iterator of D-class reps>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 4, 5, 6, 8, 11, 12, 13, 14, 18, 19, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 4, 5, 6, 7, 9, 12, 14, 15, 16, 17, 18, 19 ]>
+gap> NextIterator(iter);
+<identity on [ 3, 5, 6, 11, 12, 13, 18, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 4, 6, 7, 14, 15, 16 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 2, 4, 6, 9, 10, 11, 15, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 6, 8, 11, 14, 18, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 4, 7, 9, 12, 15, 16, 17, 19 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 4, 5, 9, 12, 14, 18, 19 ]>
+gap> NextIterator(iter);
+<identity on [ 11, 12, 13, 18 ]>
+gap> NextIterator(iter);
+<identity on [ 4, 6, 7, 14, 15, 16 ]>
+gap> NextIterator(iter);
+<identity on [ 2, 4, 10, 15, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 6, 8, 11, 18, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 4, 9, 12, 17 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 2, 4, 9, 15 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 4, 6, 11, 13, 14, 19 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 6, 7, 18, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 5, 6, 11, 13, 18, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 4, 6, 14, 15 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 2, 4, 11, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 6, 8, 14, 18 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 9, 12, 16, 17, 19 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 5, 12, 18, 19 ]>
+gap> NextIterator(iter);
+<identity on [ 3, 6, 14, 18, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 7, 15, 16, 19 ]>
+gap> NextIterator(iter);
+<identity on [ 12, 13 ]>
+gap> NextIterator(iter);
+<identity on [ 14 .. 16 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 8, 11, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 3, 4, 9, 12, 17 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 2, 9 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 4, 19 ]>
+gap> NextIterator(iter);
+<identity on [ 5, 6, 11, 13, 18 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 2, 4, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 3, 6, 14, 18 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 3, 16, 19 ]>
+gap> NextIterator(iter);
+<identity on [ 2, 4, 13, 15 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 6, 7, 18 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 2, 6, 10, 15, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 3, 6, 11, 12, 13, 18, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 11, 18, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 11 .. 13 ]>
+gap> NextIterator(iter);
+<identity on [ 2, 10, 20 ]>
+gap> NextIterator(iter);
+<identity on [ 3, 4, 6, 13 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 4, 15 ]>
+gap> NextIterator(iter);
+<identity on [ 6, 14, 18 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 16, 17, 19 ]>
+gap> NextIterator(iter);
+<identity on [ 1, 7, 15, 16 ]>
+gap> s:=RandomInverseSemigroup(2,100);
+<inverse semigroup with 2 generators>
+gap> iter:=IteratorOfDClassReps(s);
+<iterator of D-class reps>
+# JDM the above should take no time (but it currently takes time)
+gap> s:=RandomInverseSemigroup(2,100);
+<inverse semigroup with 2 generators>
+gap> iter:=IteratorOfLClassReps(s);
+<iterator of L-class reps>
+gap> for i in [1..10000] do NextIterator(iter); od;
+gap> s:=RandomInverseSemigroup(2,10);        
+<inverse semigroup with 2 generators>
+gap> iter:=IteratorOfLClassReps(s);
+<iterator of L-class reps>
+gap> for i in iter do od;
+gap> iter:=IteratorOfDClassReps(s);
+<iterator of D-class reps>
+gap> for i in iter do od;
+gap> iter:=IteratorOfRClassReps(s);
+<iterator of R-class reps>
+gap> for i in iter do od;
+
+gap> s:=RandomInverseSemigroup(100,100);
+<inverse semigroup with 100 generators>
+gap> iter:=IteratorOfRClasses(s);       
+<iterator of R-classes>
+gap> for i in [1..100] do NextIterator(iter); od;
+gap> iter:=IteratorOfLClasses(s);      
+<iterator of L-classes>
+gap> for i in [1..100] do NextIterator(iter); od;
+
+gap> s:=InverseSemigroup(
+> [ PartialPermNC( [ 1, 2, 3, 5, 7, 9, 10 ], [ 6, 7, 2, 9, 1, 5, 3 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 6, 7, 9, 10 ], [ 8, 1, 9, 4, 10, 5, 6, 7 ] ) ]);;
+gap> NrIdempotents(s);
+236 
+gap> f:=PartialPermNC([ 2, 3, 7, 9, 10 ], [ 7, 2, 1, 5, 3 ]);;
+gap> d:=DClassNC(s, f);;
+gap> NrIdempotents(d);
+13
+gap> l:=LClass(d, f);
+{[ 2, 3, 7, 9, 10 ] -> [ 7, 2, 1, 5, 3 ]}
+gap> NrIdempotents(l);
+1
+gap> DClass(l);
+{<identity on [ 2, 3, 7, 9, 10 ]>}
+gap> last=d;
+true
+gap> NrIdempotents(last2);
+13
+
+gap> S:=InverseSemigroup(
+> PartialPermNC( [ 1, 2, 3 ], [ 1, 3, 5 ] ),
+> PartialPermNC( [ 1, 2, 4 ], [ 1, 2, 3 ] ),
+> PartialPermNC( [ 1, 2, 5 ], [ 4, 5, 2 ] ) );;
+gap> f:=PartialPermNC( [ 1, 5 ], [ 3, 2 ] );;
+gap> SchutzenbergerGroup(LClass(S, f));
+Group(())
+gap> SchutzenbergerGroup(RClass(S, f));
+Group(())
+gap> SchutzenbergerGroup(HClass(S, f));
+Group(())
+gap> SchutzenbergerGroup(DClass(S, f));
+Group(())
+gap> List(DClasses(S), SchutzenbergerGroup);
+[ Group(()), Group(()), Group(()), Group(()), Group([ (2,5) ]), Group(()) ]
+
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;

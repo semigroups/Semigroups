@@ -2298,12 +2298,15 @@ end);
 InstallMethod(PrintObj, [IsIteratorOfDClassReps], 
 function(iter)
   local s;
+  if IsBound(iter!.s) then 
+    s:=iter!.s;
 
-  s:=iter!.s;
-
-  Print( "<iterator of D-class reps, ", Length(OrbitsOfImages(s)!.data), 
+    Print( "<iterator of D-class reps, ", Length(OrbitsOfImages(s)!.data), 
     " candidates, ", SizeOrbitsOfKernels(s), " elements, ", 
-    Length(OrbitsOfKernels(s)!.data), " D-classes>");
+      Length(OrbitsOfKernels(s)!.data), " D-classes>");
+    return;
+  fi;
+  Print("<iterator of D-class reps>");
   return;
 end);
 

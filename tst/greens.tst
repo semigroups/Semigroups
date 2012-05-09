@@ -1725,6 +1725,61 @@ gap> GreensHClasses(L);
 [ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 4, 4, 3, 4 ] )},
   {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 4, 4, 4, 3 ] )} ]
 
+gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ),
+> Transformation( [ 4, 3, 1, 2 ] ));;
+gap> DClassReps(S);
+[ Transformation( [ 1, 2, 3, 4 ] ), Transformation( [ 3, 4, 4, 4 ] ),
+  Transformation( [ 4, 4, 4, 4 ] ) ]
+gap> HClassReps(S);
+[ Transformation( [ 1, 2, 3, 4 ] ), Transformation( [ 3, 4, 4, 4 ] ),
+  Transformation( [ 1, 2, 2, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ),
+  Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ),
+  Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 4, 4, 3, 4 ] ),
+  Transformation( [ 2, 2, 1, 2 ] ), Transformation( [ 4, 3, 4, 4 ] ),
+  Transformation( [ 2, 1, 2, 2 ] ), Transformation( [ 4, 4, 4, 3 ] ),
+  Transformation( [ 2, 2, 2, 1 ] ) ]
+gap> LClassReps(S);
+[ Transformation( [ 1, 2, 3, 4 ] ), Transformation( [ 3, 4, 4, 4 ] ),
+  Transformation( [ 1, 2, 2, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ),
+  Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ),
+  Transformation( [ 1, 1, 1, 1 ] ) ]
+gap> RClassReps(S);
+[ Transformation( [ 1, 2, 3, 4 ] ), Transformation( [ 3, 4, 4, 4 ] ),
+  Transformation( [ 4, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ),
+  Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
+gap> D:=GreensDClasses(S)[2];
+{Transformation( [ 3, 4, 4, 4 ] )}
+gap> LClassReps(D);
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ) ]
+gap> HClassReps(D);
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ),
+  Transformation( [ 4, 4, 3, 4 ] ), Transformation( [ 2, 2, 1, 2 ] ),
+  Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 2, 1, 2, 2 ] ),
+  Transformation( [ 4, 4, 4, 3 ] ), Transformation( [ 2, 2, 2, 1 ] ) ]
+gap> RClassReps(D);
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ),
+  Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
+gap> R:=GreensRClasses(D)[1];;
+gap> HClassReps(R);
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ) ]
+gap> L:=GreensLClasses(D)[1];;
+gap> HClassReps(L);
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ),
+  Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
+
+gap> S:=Semigroup( Transformation( [ 4, 4, 3, 5, 3 ] ),
+> Transformation( [ 5, 1, 1, 4, 1 ] ),
+> Transformation( [ 5, 5, 4, 4, 5 ] ) );;
+gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
+Sym( [ 4 .. 5 ] )
+gap> SchutzenbergerGroup(RClass(S, f));
+Group([ (4,5) ])
+gap> SchutzenbergerGroup(LClass(S, f));
+Group([ (4,5) ])
+gap> SchutzenbergerGroup(HClass(S, f));
+Group([ (4,5) ])
+
+
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;

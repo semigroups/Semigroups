@@ -118,7 +118,11 @@ end);
 
 InstallMethod(IdempotentGeneratedSubsemigp, "for a semigroup", 
 [IsSemigroup and HasGeneratorsOfSemigroup],
-s-> Semigroup(Idempotents(s)));
+s-> Semigroup(Idempotents(s), rec(small:=true)));
+
+InstallMethod(IdempotentGeneratedSubsemigp, "for a semigroup",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+s-> InverseSemigroup(Idempotents(s), rec(small:=true)));
 
 # new for 0.7! - InjectionPrincipalFactor - "for a D-class"
 #############################################################################

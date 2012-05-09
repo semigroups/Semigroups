@@ -30,7 +30,6 @@
     <#Include Label="GreensXClasses">
     <#Include Label="IteratorOfXClassReps"> 
     <#Include Label="IteratorOfXClasses"> 
-    <#Include Label="UnderlyingSemigroupOfIterator">
     <#Include Label="XClassReps">
   </Section>
 

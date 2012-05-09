@@ -1769,10 +1769,14 @@ end);
 ##############################################################################
 
 InstallOtherMethod(Idempotents, "for a part perm inv semigroup and pos int",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPosInt],
+[IsInverseSemigroup and IsPartialPermSemigroup, IsInt],
 function(s, i)
   local o, j, out, k;
- 
+  
+  if i<0 then 
+    Error("the argument should be a non-negative integer,");
+  fi;
+
   if i>MaximumList(List(Generators(s), Rank)) then 
     return [];
   fi;
@@ -2077,6 +2081,10 @@ end);
 
 # new for 0.7! - IteratorOfDClassRepsData - "for part perm inverse semigroup""
 ###############################################################################
+# JDM this should have a method like IteratorOfRClassRepsData and
+# IteratorOfLClassRepsData since the scc:=OrbSCC line makes this work not so
+# well!
+
 
 InstallMethod(IteratorOfDClassRepsData, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], 
@@ -2147,6 +2155,9 @@ end);
 
 # new for 0.7! - IteratorOfHClassRepsData - "for part perm inverse semigroup""
 ###############################################################################
+# JDM this should have a method like IteratorOfRClassRepsData and
+# IteratorOfLClassRepsData since the scc:=OrbSCC line makes this work not so
+# well!
 
 InstallMethod(IteratorOfHClassRepsData, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], 
@@ -2826,7 +2837,7 @@ function(s)
     k:=Random([1..Length(o)]);
     m:=OrbSCCLookup(o)[k];
     l:=Random(OrbSCC(o)[m]);
-    g:=Random(o!.schutz[m][2]);
+    g:=Random(CreateOrbSCCSchutzGp(o,m)[2]);
     return o!.mults[k]*g/o!.mults[l];
   fi;
 end);
