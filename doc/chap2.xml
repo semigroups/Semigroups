@@ -114,6 +114,10 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
     <#Include Label="RangeOfPartialPerm">
     <#Include Label="RangeSetOfPartialPerm">
     <#Include Label="FixedPointsOfPartialPerm">
+    <#Include Label="MovedPoints">
+    <#Include Label="NrMovedPoints">
+    <#Include Label="LargestMovedPoint">
+    <#Include Label="SmallestMovedPoint">
     <#Include Label="DenseRangeList">
     <#Include Label="RankOfPartialPerm"/>
     <#Include Label="DegreeOfPartialPerm"/>

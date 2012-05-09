@@ -1656,17 +1656,6 @@ function(s)
   return NrDClasses(s)=2 and not MultiplicativeZero(s)=fail;  
 end);
 
-#LLL
-
-#new for 0.7! - LargestMovedPoint - "for a partial perm semigroup"
-###########################################################################
-
-InstallOtherMethod(LargestMovedPoint, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> LargestMovedPoint(Generators(s)));
-
-InstallOtherMethod(LargestMovedPoint, "for a partial perm collection",
-[IsPartialPermCollection], coll-> MaximumList(List(coll, f-> f[6])));
-
 #MMM
 
 # new for 0.1! - MinimalIdeal - "for a transformation semigroup"
@@ -1745,13 +1734,6 @@ function(s)
   SetIsGroupAsSemigroup(I, true);
   return I;
 end);
-
-# new for 0.7! - MovedPoints - "for a partial perm semigroup"
-###########################################################################
-
-InstallOtherMethod(MovedPoints, "for a partial perm semigroup",
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
-s-> Union(List(GeneratorsOfSemigroup(s), DomPP)));
 
 # new for 0.1! - MultiplicativeNeutralElement - "for a trans. semi."
 ###########################################################################
@@ -2084,15 +2066,6 @@ InstallOtherMethod(SmallGeneratingSet, "for a trans. semi.",
 [IsPartialPermSemigroup and IsInverseSemigroup],
 s -> Generators(InverseSemigroup(Generators(s), rec(small:=true, 
  schreier:=false))));
-
-# new for 0.7! - SmallestMovedPoint - "for a part. perm inverse semigroup
-#############################################################################
-
-InstallOtherMethod(SmallestMovedPoint, "for a part. perm inv. semi.",
-[IsPartialPermSemigroup],
-function(s)
-  return MinimumList(List(Generators(s), f->f[5]));
-end);
 
 # new for 0.2! - StructureDescription - "for a Brandt trans. semigroup"
 ############################################################################

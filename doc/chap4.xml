@@ -51,41 +51,42 @@
   <Section><Heading>Attributes of semigroups</Heading>
     In this section we describe the attributes <Ref Sect="Attributes"
       BookName="ref"/> of arbitrary semigroups of transformations or partial
-    permutations  that can be found using &Citrus;. Specific attributes that
+    permutations  that can be found using &Citrus;. 
+   
+    <!--Specific attributes that
     only apply to transformation semigroups or partial permutation semigroups
     can be found in Sections <Ref Sect="AttrTransform"/> and <Ref
-      Sect="AttrPPerm"/>.
+      Sect="AttrPPerm"/>.-->
 
     <#Include Label="Degree">
     <#Include Label="Generators">
     <#Include Label="GroupOfUnits">
+    <#Include Label="GradedImagesOfTransSemigroup">
     <#Include Label="IdempotentGeneratedSubsemigp">
+    <#Include Label="ImagesOfTransSemigroup">
     <#Include Label="IrredundantGeneratingSubset">
     <#Include Label="MinimalIdeal">
     <#Include Label="MultiplicativeZero">
+    <#Include Label="NaturalPartialOrder">
     <#Include Label="NrElementsOfRank">
     <#Include Label="Random">
     <#Include Label="Rank">
     <#Include Label="SmallGeneratingSet"> 
   </Section>
   
-  <Section Label="AttrTransform"><Heading>Attributes for transformation
+  <!--<Section Label="AttrTransform"><Heading>Attributes for transformation
       semigroups</Heading>
     In this section we describe those attributes specific to transformation
     semigroups that do not apply to other types of semigroups. 
 
-    <#Include Label="GradedImagesOfTransSemigroup">
-    <#Include Label="ImagesOfTransSemigroup">
   </Section>
 
   <Section Label="AttrPPerm"><Heading>Attributes for inverse semigroups</Heading>
     In this section we describe those attributes specific to inverse semigroups
     of partial permutations that do not apply to other kinds of semigroups. 
 
-    <#Include Label="NaturalPartialOrder">
-    <#Include Label="LargestMovedPoint">
 
-  </Section>
+  </Section>-->
   
   <Section><Heading>Properties of semigroups</Heading>
     In this section we describe several properties 

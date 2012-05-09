@@ -382,6 +382,47 @@ gap> PositionsProperty([1..11], x-> NaturalLeqPartialPerm(Elements(S)[2],
 > Elements(S)[x]));
 [ 2, 7, 9 ]
 
+gap> s:=InverseSemigroup( 
+> PartialPermNC( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ),
+> PartialPermNC( [ 1, 2, 4, 5, 8, 10 ], [ 6, 2, 7, 8, 10, 4 ] ),
+> PartialPermNC( [ 1, 2, 4, 6, 8, 9 ], [ 7, 10, 1, 9, 4, 2 ] ),
+> PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 8 ], [ 6, 2, 8, 4, 7, 5, 3 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 8, 10 ], [ 3, 1, 4, 2, 5, 6, 7 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 8, 10 ], [ 7, 1, 4, 3, 2, 6, 5 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 6, 7, 8 ], [ 5, 9, 10, 6, 3, 8, 4 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 10 ], [ 4, 7, 6, 9, 10, 1, 3, 2 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 6, 7, 8, 10 ], [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
+gap> NrMovedPoints(s);
+10
+gap> MovedPoints(s);
+[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+gap> LargestMovedPoint(s);
+10
+gap> SmallestMovedPoint(s); 
+1
+gap> f:=PartialPermNC([ 9 ], [ 3 ]);;
+gap> NrMovedPoints(f);
+1
+gap> MovedPoints(f);
+[ 9 ]
+gap> SmallestMovedPoint(f);
+9
+gap> LargestMovedPoint(f);
+9
+gap> coll:=[ PartialPermNC([]), PartialPermNC([ 2, 3, 6 ], [ 2, 4, 5 ]), 
+> PartialPermNC([ 9, 10 ], [ 7, 8 ]), PartialPermNC([ 6, 9 ], [ 5, 4 ]) ];;
+gap> NrMovedPoints(coll);
+4
+gap> MovedPoints(coll);
+[ 3, 6, 9, 10 ]
+gap> LargestMovedPoint(coll);
+10
+gap> SmallestMovedPoint(coll);
+3
+gap> SmallestMovedPoint(coll);
+9
+
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;

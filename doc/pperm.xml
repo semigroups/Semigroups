@@ -195,6 +195,126 @@ gap> FixedPointsOfPartialPerm(f);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="MovedPoints"/>
+  <ManSection>
+    <Oper Name="MovedPoints" Arg="f" Label="for a partial perm"/>
+    <Oper Name="MovedPoints" Arg="C" Label="for a partial perm coll"/>
+    <Returns>A set of positive integers.</Returns>
+    <Description>
+      A positive integer <C>i</C> is moved by a partial permutation <A>f</A> if
+      <C>i^</C><A>f</A><C>&lt;>i</C>. <C>MovedPoints</C> returns
+      the set of points moved by: the partial permutation <A>f</A> or at
+      least one partial
+      permutation in the collection <A>C</A>, respectively.
+      <Example>
+gap> f:=PartialPermNC( 
+> [ 1, 2, 3, 5, 6, 8, 10, 11, 14, 17, 20, 21, 22, 24, 25, 26, 32 ], 
+> [ 30, 20, 29, 24, 9, 14, 26, 5, 25, 15, 11, 6, 35, 2, 10, 19, 23 ] );;
+gap> MovedPoints(f);
+[ 1, 2, 3, 5, 6, 8, 10, 11, 14, 17, 20, 21, 22, 24, 25, 26, 32 ]
+gap> f:=PartialPermNC([1..10]);
+&lt;identity on [ 1 .. 10 ]>
+gap> MovedPoints(f);
+[ ]</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NrMovedPoints"/>
+  <ManSection>
+    <Oper Name="NrMovedPoints" Arg="f" Label="for a partial perm"/>
+    <Oper Name="NrMovedPoints" Arg="C" Label="for a partial perm coll"/>
+    <Returns>A positive integer.</Returns>
+    <Description>
+      A positive integer <C>i</C> is moved by a partial permutation <A>f</A> if
+      <C>i^</C><A>f</A><C>&lt;>i</C>. <C>NrMovedPoints</C> returns
+      the number of points moved by: the partial permutation <A>f</A> or the
+      by at least one partial
+      permutation in the collection <A>C</A>, respectively.
+      <Example>
+gap> f:=PartialPermNC( 
+> [ 1, 2, 3, 5, 6, 8, 10, 11, 14, 17, 20, 21, 22, 24, 25, 26, 32 ], 
+> [ 30, 20, 29, 24, 9, 14, 26, 5, 25, 15, 11, 6, 35, 2, 10, 19, 23 ] );;
+gap> NrMovedPoints(f);
+17
+gap> f:=PartialPermNC([1..10]);
+&lt;identity on [ 1 .. 10 ]>
+gap> NrMovedPoints(f);
+0</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="LargestMovedPoint"/>
+<ManSection>
+  <Oper Name="LargestMovedPoint" Arg="f" Label="for a partial perm"/>
+  <Oper Name="LargestMovedPoint" Arg="C" Label="for a partial perm coll"/>
+  <Returns>A non-negative integer.</Returns>
+  <Description>
+    A positive integer <C>i</C> is moved by a partial permutation <A>f</A> if
+    <C>i^</C><A>f</A><C>&lt;>i</C>. <P/>
+
+    <List>
+      <Mark>For a partial permutation</Mark>
+      <Item> <C>LargestMovedPoint</C> returns
+    the largest point moved by the partial permutation <A>f</A> or
+    <M>0</M> if no points are moved by <A>f</A>. </Item>
+  <Mark>For a partial permutation collection</Mark>
+  <Item><C>LargestMovedPoint</C> returns
+        the largest point moved by at least one of the partial permutations in the collection  <A>C</A> or
+            <M>0</M> if no points are moved by any element of <A>C</A>.
+          </Item>
+        </List>
+    
+    <Example>
+gap> f:=PartialPermNC( 
+> [ 1, 2, 3, 5, 6, 8, 10, 11, 14, 17, 20, 21, 22, 24, 25, 26, 32 ], 
+> [ 30, 20, 29, 24, 9, 14, 26, 5, 25, 15, 11, 6, 35, 2, 10, 19, 23 ] );;
+gap> LargestMovedPoint(f);
+32
+gap> f:=PartialPermNC([1..10]);
+&lt;identity on [ 1 .. 10 ]>
+gap> LargestMovedPoint(f);
+0</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SmallestMovedPoint"/>
+<ManSection>
+  <Oper Name="SmallestMovedPoint" Arg="f" Label="for a partial perm"/>
+  <Oper Name="SmallestMovedPoint" Arg="C" Label="for a partial perm coll"/>
+  <Returns>A non-negative integer.</Returns>
+  <Description>
+    A positive integer <C>i</C> is moved by a partial permutation <A>f</A> if
+    <C>i^</C><A>f</A><C>&lt;>i</C>. <P/>
+
+    <List>
+      <Mark>For a partial permutation</Mark>
+      <Item> <C>SmallestMovedPoint</C> returns
+    the smallest point moved by the partial permutation <A>f</A> or
+    <M>0</M> if no points are moved by <A>f</A>. </Item>
+  <Mark>For a partial permutation collection</Mark>
+  <Item><C>SmallestMovedPoint</C> returns
+        the smallest point moved by at least one of the partial permutations in the collection  <A>C</A> or
+            <M>0</M> if no points are moved by any element of <A>C</A>.
+          </Item>
+        </List>
+    
+    <Example>
+gap> f:=PartialPermNC( 
+> [ 1, 2, 3, 5, 6, 8, 10, 11, 14, 17, 20, 21, 22, 24, 25, 26, 32 ], 
+> [ 30, 20, 29, 24, 9, 14, 26, 5, 25, 15, 11, 6, 35, 2, 10, 19, 23 ] );;
+gap> SmallestMovedPoint(f);
+1
+gap> f:=PartialPermNC([1..10]);
+&lt;identity on [ 1 .. 10 ]>
+gap> SmallestMovedPoint(f);
+0</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="RestrictedPartialPerm"/>
   <ManSection>
     <Oper Name="RestrictedPartialPerm" Arg="f, set"/>

@@ -610,6 +610,89 @@ Obj FuncFixedPointsPP(Obj self, Obj f)
   return out;
 }
 
+/* moved points */
+Obj FuncMovedPointsPP(Obj self, Obj f)
+{ pptype deg, rank, i;
+  Int m;
+  Obj out;
+
+  deg=ELM_PP(f, 1);
+  if(deg==0) return NEW_EMPTY_PLIST();
+  
+  rank=ELM_PP(f, 2);
+  out=NEW_PLIST(T_PLIST_CYC, rank);
+  m=0;
+
+  for(i=7+deg;i<=6+deg+rank;i++)
+  {
+    if(ELM_PP(f, i)!=ELM_PP(f, i+rank))
+    { 
+      m++;
+      SET_ELM_PLIST(out, m, INTOBJ_INT(ELM_PP(f, i)));
+    }
+  }
+  if(m==0) return NEW_EMPTY_PLIST();
+  /* why is the above line required here but not in FixedPoints?? */
+  SET_LEN_PLIST(out, m);
+  SHRINK_PLIST(out, m);
+  SortDensePlist(out);
+  return out;
+}
+
+/* nr moved points */
+Obj FuncNrMovedPointsPP(Obj self, Obj f)
+{ pptype deg, rank, i;
+  Int m;
+
+  deg=ELM_PP(f, 1);
+  if(deg==0) return INTOBJ_INT(0);
+  
+  rank=ELM_PP(f, 2);
+  m=0;
+
+  for(i=7+deg;i<=6+deg+rank;i++)
+  {
+    if(ELM_PP(f, i)!=ELM_PP(f, i+rank)) m++;
+  }
+  return INTOBJ_INT(m);
+}
+
+/* largest moved points */
+Obj FuncLargestMovedPointPP(Obj self, Obj f)
+{ pptype deg, rank, i;
+  Int m;
+
+  deg=ELM_PP(f, 1);
+  if(deg==0) return INTOBJ_INT(0);
+  
+  rank=ELM_PP(f, 2);
+  m=0;
+
+  for(i=6+deg+rank;i>=7+deg;i--)
+  {
+    if(ELM_PP(f, i)!=ELM_PP(f, i+rank)) return INTOBJ_INT(ELM_PP(f, i));
+  }
+  return INTOBJ_INT(0);
+}
+
+/* smallest moved points */
+Obj FuncSmallestMovedPointPP(Obj self, Obj f)
+{ pptype deg, rank, i;
+  Int m;
+
+  deg=ELM_PP(f, 1);
+  if(deg==0) return INTOBJ_INT(0);
+  
+  rank=ELM_PP(f, 2);
+  m=0;
+
+  for(i=7+deg;i<=6+deg+rank;i++)
+  {
+    if(ELM_PP(f, i)!=ELM_PP(f, i+rank)) return INTOBJ_INT(ELM_PP(f, i));
+  }
+  return INTOBJ_INT(0);
+}
+
 /* less than or equal */
 Obj FuncLeqPP(Obj self, Obj f, Obj g)
 {
@@ -1021,6 +1104,22 @@ static StructGVarFunc GVarFuncs [] = {
   { "FixedPointsPP", 1, "f",
     FuncFixedPointsPP,
     "pkg/citrus/src/citrus.c:FuncFixedPointsPP" },
+
+  { "MovedPointsPP", 1, "f",
+    FuncMovedPointsPP,
+    "pkg/citrus/src/citrus.c:FuncMovedPointsPP" },
+
+  { "NrMovedPointsPP", 1, "f",
+    FuncNrMovedPointsPP,
+    "pkg/citrus/src/citrus.c:FuncNrMovedPointsPP" },
+
+  { "LargestMovedPointPP", 1, "f",
+    FuncLargestMovedPointPP,
+    "pkg/citrus/src/citrus.c:FuncLargestMovedPointPP" },
+
+  { "SmallestMovedPointPP", 1, "f",
+    FuncSmallestMovedPointPP,
+    "pkg/citrus/src/citrus.c:FuncSmallestMovedPointPP" },
 
   { "LeqPP", 2, "f, g",
     FuncLeqPP,
