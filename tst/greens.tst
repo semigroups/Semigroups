@@ -1681,6 +1681,50 @@ true
 gap> Elements(h)=Elements(hh);
 true
 
+gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ),
+> Transformation( [ 4, 3, 1, 2 ] ));;
+gap> GreensDClasses(S);
+[ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )},
+  {Transformation( [ 4, 4, 4, 4 ] )} ]
+gap> GreensHClasses(S);
+[ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )},
+  {Transformation( [ 1, 2, 2, 2 ] )}, {Transformation( [ 4, 4, 4, 4 ] )},
+  {Transformation( [ 2, 2, 2, 2 ] )}, {Transformation( [ 3, 3, 3, 3 ] )},
+  {Transformation( [ 1, 1, 1, 1 ] )}, {Transformation( [ 4, 4, 3, 4 ] )},
+  {Transformation( [ 2, 2, 1, 2 ] )}, {Transformation( [ 4, 3, 4, 4 ] )},
+  {Transformation( [ 2, 1, 2, 2 ] )}, {Transformation( [ 4, 4, 4, 3 ] )},
+  {Transformation( [ 2, 2, 2, 1 ] )} ]
+gap> GreensLClasses(S);
+[ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )},
+  {Transformation( [ 1, 2, 2, 2 ] )}, {Transformation( [ 4, 4, 4, 4 ] )},
+  {Transformation( [ 2, 2, 2, 2 ] )}, {Transformation( [ 3, 3, 3, 3 ] )},
+  {Transformation( [ 1, 1, 1, 1 ] )} ]
+gap> GreensRClasses(S);
+[ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )},
+  {Transformation( [ 4, 4, 4, 4 ] )}, {Transformation( [ 4, 4, 3, 4 ] )},
+  {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 4, 4, 4, 3 ] )} ]
+gap> D:=GreensDClasses(S)[2];
+{Transformation( [ 3, 4, 4, 4 ] )}
+gap> GreensLClasses(D);
+[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 1, 2, 2, 2 ] )} ]
+gap> GreensRClasses(D);
+[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 4, 4, 3, 4 ] )},
+  {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 4, 4, 4, 3 ] )} ]
+gap> GreensHClasses(D);
+[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 1, 2, 2, 2 ] )},
+  {Transformation( [ 4, 4, 3, 4 ] )}, {Transformation( [ 2, 2, 1, 2 ] )},
+  {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 2, 1, 2, 2 ] )},
+  {Transformation( [ 4, 4, 4, 3 ] )}, {Transformation( [ 2, 2, 2, 1 ] )} ]
+gap> R:=GreensRClasses(D)[1];
+{Transformation( [ 3, 4, 4, 4 ] )}
+gap> GreensHClasses(R);
+[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 1, 2, 2, 2 ] )} ]
+gap> L:=GreensLClasses(D)[1];
+{Transformation( [ 3, 4, 4, 4 ] )}
+gap> GreensHClasses(L);
+[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 4, 4, 3, 4 ] )},
+  {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 4, 4, 4, 3 ] )} ]
+
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;

@@ -174,7 +174,7 @@ function(arg)
     return GreensDClassOfElementNC(arg[1], arg[2]);
   elif Length(arg)=2 and (IsPartialPermSemigroup(arg[1]) and 
    IsInverseSemigroup(arg[1]) and IsPartialPerm(arg[2])) then 
-    return GreensLClassOfElementNC(arg[1], arg[2]);
+    return GreensDClassOfElementNC(arg[1], arg[2]);
   fi;
 
   Error("Usage: (trans. semigp. and trans.) or ", 

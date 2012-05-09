@@ -125,7 +125,8 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
   
   </Section>
  
-  <Section><Heading>Operators for transformations</Heading>
+  <Section Label="OperatorsT">
+    <Heading>Operators for transformations</Heading>
     <List> 
     <Mark><C><A>f</A> ^ <A>g</A></C></Mark>
     <Item><Index Key="^"><C>^</C> (for a transformation and a permutation)
@@ -146,7 +147,8 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
    </List>
   </Section>
 
-  <Section><Heading>Operators for partial permutations</Heading>
+  <Section Label="OperatorsPP">
+    <Heading>Operators for partial permutations</Heading>
     <List><Mark><C><A>f</A> ^ <A>-1</A></C></Mark>
     <Item>
     <Index Key="^"><C>^</C> (for a partial perm and negative int)</Index>

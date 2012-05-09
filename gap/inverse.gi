@@ -298,9 +298,9 @@ function(f, h)
     return false;
   fi;
 
-  o:=h!.o; data:=h!.data; mults:=o!.mults;
-  
   schutz:=OrbSCCStabChain(h); 
+  
+  o:=h!.o; data:=h!.data; mults:=o!.mults;
 
   if schutz=true then 
     return true;

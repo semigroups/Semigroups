@@ -14,17 +14,12 @@
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       The Green's class <A>left-expr</A> is less than or equal to
-      <A>right-expr</A> if they both belong to the same transformation
+      <A>right-expr</A> if they belong to the same
       semigroup and the representative of <A>left-expr</A> is less than the
-      representative of <A>right-expr</A>.<P/>
-
-      More precisely, <C>left-expr &lt; right-expr</C> if 
-      <Log>ParentAttr(left-expr)=ParentAttr(right-expr)</Log> and 
-      <Log>ImageListOfTransformation(Representative(left-expr))&lt; 
-      ImageListOfTransformation(Representative(right-expr))</Log>
-      see also <Ref Attr="ImageListOfTransformation" BookName="ref"/> and 
-      <Ref Attr="Representative" BookName="ref"/>.<P/>
-
+      representative of <A>right-expr</A> under <C>&lt;</C>; see also 
+      <Ref Attr="Representative" BookName="ref"/>, and Sections <Ref
+        Sect="OperatorsT"/> and <Ref Sect="OperatorsPP"/>.<P/>
+      
       Please note that this is not the usual order on the Green's classes of a
       semigroup as defined in <Ref Sect="Green's Relations" BookName="ref"/>.
       See also <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>.
@@ -42,7 +37,20 @@ true
 gap> IsGreensLessThanOrEqual(A,B);
 true
 gap> IsGreensLessThanOrEqual(B,A);
-false</Example>
+false
+gap> s:=SymmetricInverseSemigp(4);;
+gap> A:=GreensJClassOfElement(s, PartialPermNC([ 1 .. 3 ], [ 1, 3, 4 ]) );
+{&lt;identity on [ 1 .. 3 ]>}
+gap> B:=GreensJClassOfElement(s, PartialPermNC([ 1, 2 ], [ 3, 1 ]) );
+{&lt;identity on [ 1, 2 ]>}
+gap> A&lt;B;
+false
+gap> B&lt;A;
+true
+gap> IsGreensLessThanOrEqual(A, B);
+false
+gap> IsGreensLessThanOrEqual(B, A);
+true</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -54,10 +62,12 @@ false</Example>
     <Meth Name="DClassOfRClass" Arg="class"/>
     <Meth Name="LClassOfHClass" Arg="class"/>
     <Meth Name="RClassOfHClass" Arg="class"/>
-    <Returns>The Green's <M>X</M>-class containing the Green's 
-        <M>Y</M>-class <A>class</A>.
-    </Returns>
+    <Returns>A Green's class.</Returns>
     <Description>
+     <C>XClassOfYClass</C> returns the <C>X</C>-class containing the
+     <C>Y</C>-class where <C>X</C> and <C>Y</C> should be replaced by an
+     appropriate choice of <C>D, H, L,</C> and <C>R</C>.<P/>
+     
       Note that if it is not known to &GAP; whether or not the representative
       of <A>class</A> is an element of the semigroup containing <A>class</A>,
       then no attempt is made to check this.<P/>
@@ -128,23 +138,26 @@ true</Example>
       <List>
       <Mark><C>GreensDClasses</C> and <C>DClasses</C></Mark>
       <Item>
-        <A>X</A> must be a transformation semigroup.
+        <A>X</A> should be a semigroup of transformations or partial
+        permutations.
       </Item>                              
 
       <Mark><C>GreensHClasses</C> and <C>HClasses</C></Mark>
       <Item>
-        <A>X</A> can be a transformation semigroup, &R;-class, &L;-class, or
-        &D;-class.
+        <A>X</A> can be a semigroup of transformations or partial permutations,
+        &R;-class, &L;-class, or &D;-class.
       </Item>
 
       <Mark><C>GreensLClasses</C> and <C>LClasses</C></Mark>
       <Item>
-        <A>X</A> can be a transformation semigroup, or &D;-class.  
+        <A>X</A> can be a semigroup of transformations or partial permutations,
+        or &D;-class.  
       </Item>
 
       <Mark><C>GreensRClasses</C> and <C>RClasses</C></Mark>
       <Item>
-        <A>X</A> can be a transformation semigroup, or &D;-class.
+        <A>X</A> can be a semigroup of transformations or partial permutations,
+        or &D;-class.
       </Item>
       </List>   
      
@@ -160,19 +173,6 @@ gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ),
 gap> GreensDClasses(S);
 [ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )}, 
   {Transformation( [ 4, 4, 4, 4 ] )} ]
-gap> GreensHClasses(S);
-[ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )}, 
-  {Transformation( [ 1, 2, 2, 2 ] )}, {Transformation( [ 4, 4, 4, 4 ] )}, 
-  {Transformation( [ 2, 2, 2, 2 ] )}, {Transformation( [ 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 1, 1, 1, 1 ] )}, {Transformation( [ 4, 4, 3, 4 ] )}, 
-  {Transformation( [ 2, 2, 1, 2 ] )}, {Transformation( [ 4, 3, 4, 4 ] )}, 
-  {Transformation( [ 2, 1, 2, 2 ] )}, {Transformation( [ 4, 4, 4, 3 ] )}, 
-  {Transformation( [ 2, 2, 2, 1 ] )} ]
-gap> GreensLClasses(S);
-[ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )}, 
-  {Transformation( [ 1, 2, 2, 2 ] )}, {Transformation( [ 4, 4, 4, 4 ] )}, 
-  {Transformation( [ 2, 2, 2, 2 ] )}, {Transformation( [ 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 1, 1, 1, 1 ] )} ]
 gap> GreensRClasses(S);
 [ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )}, 
   {Transformation( [ 4, 4, 4, 4 ] )}, {Transformation( [ 4, 4, 3, 4 ] )}, 
@@ -184,20 +184,29 @@ gap> GreensLClasses(D);
 gap> GreensRClasses(D);
 [ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 4, 4, 3, 4 ] )}, 
   {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 4, 4, 4, 3 ] )} ]
-gap> GreensHClasses(D);
-[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 1, 2, 2, 2 ] )}, 
-  {Transformation( [ 4, 4, 3, 4 ] )}, {Transformation( [ 2, 2, 1, 2 ] )}, 
-  {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 2, 1, 2, 2 ] )}, 
-  {Transformation( [ 4, 4, 4, 3 ] )}, {Transformation( [ 2, 2, 2, 1 ] )} ]
 gap> R:=GreensRClasses(D)[1];
 {Transformation( [ 3, 4, 4, 4 ] )}
 gap> GreensHClasses(R);
 [ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 1, 2, 2, 2 ] )} ]
-gap> L:=GreensLClasses(D)[1];
-{Transformation( [ 3, 4, 4, 4 ] )}
-gap> GreensHClasses(L);
-[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 4, 4, 3, 4 ] )}, 
-  {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 4, 4, 4, 3 ] )} ]</Example>    
+gap> s:=InverseSemigroup( PartialPermNC( [ 1, 2, 3 ], [ 2, 4, 1 ] ),
+> PartialPermNC( [ 1, 3, 4 ], [ 3, 4, 1 ] ) );;
+gap> GreensDClasses(s);
+[ {&lt;identity on [ 1, 2, 4 ]>}, {&lt;identity on [ 1, 3, 4 ]>},
+  {&lt;identity on [ 2, 4 ]>}, {&lt;identity on [ 4 ]>}, {&lt;empty mapping>} ]
+gap> GreensLClasses(s);
+[ {&lt;identity on [ 1, 2, 4 ]>}, {[ 1, 2, 4 ] -> [ 3, 1, 2 ]},
+  {&lt;identity on [ 1, 3, 4 ]>}, {&lt;identity on [ 2, 4 ]>},
+  {[ 2, 4 ] -> [ 3, 1 ]}, {[ 2, 4 ] -> [ 1, 2 ]}, {[ 2, 4 ] -> [ 3, 2 ]},
+  {[ 2, 4 ] -> [ 4, 3 ]}, {[ 2, 4 ] -> [ 1, 4 ]}, {&lt;identity on [ 4 ]>},
+  {[ 4 ] -> [ 1 ]}, {[ 4 ] -> [ 3 ]}, {[ 4 ] -> [ 2 ]}, {&lt;empty mapping>} ]
+gap> D:=GreensDClasses(s)[3];
+{&lt;identity on [ 2, 4 ]>}
+gap> GreensLClasses(D);
+[ {&lt;identity on [ 2, 4 ]>}, {[ 2, 4 ] -> [ 3, 1 ]}, {[ 2, 4 ] -> [ 1, 2 ]},
+  {[ 2, 4 ] -> [ 3, 2 ]}, {[ 2, 4 ] -> [ 4, 3 ]}, {[ 2, 4 ] -> [ 1, 4 ]} ]
+gap> GreensRClasses(D);
+[ {&lt;identity on [ 2, 4 ]>}, {[ 1, 3 ] -> [ 4, 2 ]}, {[ 1, 2 ] -> [ 2, 4 ]},
+  {[ 2, 3 ] -> [ 4, 2 ]}, {[ 3, 4 ] -> [ 4, 2 ]}, {[ 1, 4 ] -> [ 2, 4 ]} ]</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -221,30 +230,31 @@ gap> GreensHClasses(L);
       <List>
       <Mark><C>GreensDClassOfElement</C> and <C>DClass</C></Mark>
       <Item>
-        <A>X</A> must be a transformation semigroup.
+        <A>X</A> must be a semigroup of transformations or partial permutations.
       </Item>
 
       <Mark><C>GreensHClassOfElement</C> and <C>HClass</C></Mark>
       <Item>
-        <A>X</A> can be a transformation semigroup, &R;-class, &L;-class, or
-        &D;-class.
+        <A>X</A> can be a semigroup of transformations or partial permutations,
+        &R;-class, &L;-class, or &D;-class.
       </Item>
 
       <Mark><C>GreensLClassOfElement</C> and <C>LClass</C></Mark>
       <Item>
-        <A>X</A> can be a transformation semigroup, or &D;-class.  
+        <A>X</A> can be a semigroup of transformations or partial permutations,
+        or &D;-class.  
       </Item>
 
       <Mark><C>GreensRClassOfElement</C> and <C>RClass</C></Mark>
       <Item>
-        <A>X</A> can be a transformation semigroup, or &D;-class.
+        <A>X</A> can be a semigroup of transformations or partial permutations,
+        or &D;-class.
       </Item>
       </List>
      
       Note that <C>GreensXClassOfElement</C> and <C>XClass</C> are synonyms and
       have identical output. The shorter command is provided for the sake of
       convenience.<P/>
-    
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -301,7 +311,13 @@ gap> Size(R);
 1
 gap> L:=GreensLClassOfElementNC(S, f);;
 gap> Size(L);
-1 </Example>
+1 
+gap> f:=PartialPermNC([ 1, 2, 3, 4, 7, 8, 9, 10 ],
+> [ 2, 3, 4, 5, 6, 8, 10, 11 ]);;
+gap> L:=LClass(POI(13), f);
+{[ 1, 2, 3, 4, 7, 8, 9, 10 ] -> [ 2, 3, 4, 5, 6, 8, 10, 11 ]}
+gap> Size(L);
+1287</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -315,7 +331,7 @@ gap> Size(L);
     <Returns>A list of transformations.</Returns>
     <Description>
       <C>XClassReps</C> returns a list of the representatives of the Green's
-      classes of <A>obj</A>, which can be a transformation semigroup, &D;-,
+      classes of <A>obj</A>, which can be a semigroup of transformations or partial permutations, &D;-,
       &L;-, or &R;-class (where appropriate).<P/>
       
       The same output can be obtained by calling, for example: 
@@ -430,11 +446,11 @@ fail</Example>
   <Attr Name="Idempotents" Arg="obj[,n]"/>
   <Returns>A list of idempotents.</Returns> 
   <Description>
-  <A>obj</A> should be a transformation semigroup, &D;-class, &H;-class,
+  <A>obj</A> should be a semigroup of transformations or partial permutations, &D;-class, &H;-class,
   &L;-class, or &R;-class.<P/> 
 
   If the optional second argument <A>n</A> is present and <A>obj</A> is a
-  transformation semigroup, then a list of the 
+  semigroup of transformations or partial permutations, then a list of the 
   idempotents in <A>obj</A> of rank <A>n</A> is returned. If you are only 
   interested in the idempotents of a given rank, then the second version of the 
   function will likely be faster. However, if the optional second argument is
@@ -586,7 +602,7 @@ true</Example>
   </Returns>
   <Description>
   Returns an iterator of the representatives of the Green's classes contained
-  in the transformation semigroup <A>S</A>.  See <Ref Sect="Iterators"
+  in the semigroup of transformations or partial permutations <A>S</A>.  See <Ref Sect="Iterators"
   BookName="ref"/> for more information on iterators.<P/>
 
   See also <Ref Oper="GreensRClasses" BookName="ref"/>, <Ref
@@ -629,7 +645,7 @@ gap> iter;
   </Returns>
 
   <Description>   
-  Returns an iterator of the Green's classes in the transformation semigroup
+  Returns an iterator of the Green's classes in the semigroup of transformations or partial permutations
   <A>S</A>.  See <Ref Sect="Iterators" BookName="ref"/> for more information on
   iterators.<P/>
 
@@ -682,8 +698,8 @@ gap> Size(R);
   </Returns>
   <Description>  
   <C>NrXClasses</C> returns the number of Green's classes in <A>obj</A> where
-  <A>obj</A> can be a transformation semigroup, &D;-, &L;-, or &R;-class of a
-  transformation semigroup (where appropriate).  If the actual Green's classes
+  <A>obj</A> can be a semigroup of transformations or partial permutations, &D;-, &L;-, or &R;-class of a
+  semigroup of transformations or partial permutations (where appropriate).  If the actual Green's classes
   are not required, then it is  more efficient to use
   <Log>NrHClasses(obj)</Log> than <Log>Length(HClasses(obj))</Log> since the
   Green's classes themselves are not created when <C>NrXClasses</C> is called.
@@ -745,8 +761,8 @@ gap> NrRClasses(D);
   </Returns>
   <Description>
    This function returns the number of idempotents in <A>obj</A> where
-   <A>obj</A> can be a transformation semigroup, &D;-, &L;-, &H;-, or &R;-class
-   of a transformation semigroup. If the
+   <A>obj</A> can be a semigroup of transformations or partial permutations, &D;-, &L;-, &H;-, or &R;-class
+   of a semigroup of transformations or partial permutations. If the
    actual idempotents are not required, then it is more efficient to use
    <Log>NrIdempotents(obj)</Log> than <Log>Length(Idempotents(obj))</Log> since
    the idempotents themselves are not created when <C>NrIdempotents</C> is
@@ -792,7 +808,7 @@ gap> NrIdempotents(H);
     </Returns> 
     <Description>
     <C>NrRegularDClasses</C> returns the number of regular &D;-classes of the
-    transformation semigroup <A>S</A>.  See also <Ref Func="IsRegularDClass"/>
+    semigroup of transformations or partial permutations <A>S</A>.  See also <Ref Func="IsRegularDClass"/>
     and <Ref Func="IsRegularDClass" BookName="ref"/>.  
 
 <Example>gap> S:=Semigroup( [ Transformation( [ 1, 3, 4, 1, 3, 5 ] ), 
@@ -863,10 +879,10 @@ true</Example>
   <Description>
   <C>SchutzenbergerGroup</C> returns the generalized Schutzenberger group
   (defined below) of the &R;-, &D;-, &L;-, or &H;-class <A>class</A> of a
-  transformation semigroup.  <P/>
+  semigroup of transformations or partial permutations.  <P/>
   
   If <A>class</A> is an &R;-class of a
-  transformation semigroup <C>S</C> with representative <C>f</C> and
+  semigroup of transformations or partial permutations <C>S</C> with representative <C>f</C> and
   <C>im(f)</C> denotes the image of <C>f</C>, then
   <C>SchutzenbergerGroup(<A>class</A>)</C> is the permutation group 
   
@@ -880,7 +896,7 @@ true</Example>
   </Alt>
   <P/>
 
-  If <A>class</A> is an &L;-class of a transformation semigroup <C>S</C> with
+  If <A>class</A> is an &L;-class of a semigroup of transformations or partial permutations <C>S</C> with
   representative <C>f</C> and <C>ker(f)</C> denote the kernel of <C>f</C>, then
   <C>SchutzenbergerGroup(<A>class</A>)</C> is the permutation group
   <Alt Not="Text">
