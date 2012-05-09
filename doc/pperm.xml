@@ -10,10 +10,10 @@
 
 <#GAPDoc Label="PartialPerm"/>
   <ManSection>
-    <Func Name="PartialPerm" Arg="dom, ran"/>
-    <Func Name="PartialPerm" Arg="list"/>
-    <Func Name="PartialPermNC" Arg="dom, ran"/>
-    <Func Name="PartialPermNC" Arg="list"/>
+    <Func Name="PartialPerm" Arg="dom, ran" Label="for a domain and range"/>
+    <Func Name="PartialPerm" Arg="list" Label="for a dense range"/>
+    <Func Name="PartialPermNC" Arg="dom, ran" Label="for a domain and range"/>
+    <Func Name="PartialPermNC" Arg="list" Label="for a dense range"/>
     <Returns>A partial permutation.</Returns>
     <Description>
       Partial permutations can be created in two ways: by giving the domain
@@ -310,7 +310,7 @@ gap> DenseRangeList(f);
 <#GAPDoc Label="DegreeOfPartialPerm"/>
   <ManSection>
     <Func Name="DegreeOfPartialPerm" Arg="f"/>
-    <Func Name="Degree" Arg="f"/>
+    <Func Name="Degree" Arg="f" Label="for a partial perm"/>
     <Returns>A positive integer.</Returns>
     <Description>
       The <E>degree</E> of a partial permutation <A>f</A> is the largest
@@ -326,7 +326,7 @@ gap> DegreeOfPartialPerm(f);
 <#GAPDoc Label="RankOfPartialPerm"/>
   <ManSection>
     <Func Name="RankOfPartialPerm" Arg="f"/>
-    <Func Name="Rank" Arg="f"/>
+    <Func Name="Rank" Arg="f" Label="for a partial perm"/>
     <Returns>A positive integer.</Returns>
     <Description>
       The <E>rank</E> of a partial permutation <A>f</A> is the number of points
@@ -362,9 +362,10 @@ gap> RankOfPartialPerm(f);
           further checks are performed. 
           <P/>
           
-          Note that as explained in <Ref Func="PartialPerm"/> <E>a permutation 
-          is never a partial permutation</E> in &GAP;, please keep this in mind
-        when using <C>AsPartialPerm</C>.
+          Note that as explained in 
+          <Ref Func="PartialPerm" Label="for a domain and range"/> 
+          <E>a permutation is never a partial permutation</E> in &GAP;, please
+          keep this in mind when using <C>AsPartialPerm</C>.
         </Item>
         <Mark>For transformations:</Mark>
         <Item>
@@ -419,8 +420,8 @@ true</Example>
   <#/GAPDoc>
   
   <#GAPDoc Label="One"/>
-<ManSection><Heading>One (for a partial permutation)</Heading>
-    <Func Name="One" Arg="f"/>
+<ManSection><Heading>One (for a partial perm)</Heading>
+    <Func Name="One" Arg="f" Label="for a partial perm"/>
     <Returns>A partial permutation.</Returns>
     <Description>
       As described in the reference manual <Ref Attr="OneImmutable"

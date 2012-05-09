@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="\&lt;">
   <ManSection><Heading>Less than for Green's classes</Heading>
-    <Meth Name="\&lt;" Arg='left-expr, right-expr'/>
+    <Meth Name="\&lt;" Arg='left-expr, right-expr' Label="for Green's classes"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       The Green's class <A>left-expr</A> is less than or equal to
@@ -825,7 +825,7 @@ gap> NrDClasses(S);
   See also <Ref Attr="GreensDClasses"/>, 
   <Ref Attr="GreensDClasses" BookName="ref"/>, 
   <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>,
-  and <Ref Oper="\&lt;"/>.
+  and <Ref Oper="\&lt;" Label="for Green's classes"/>.
   <Example>
 gap> S:=Semigroup( Transformation( [ 2, 4, 1, 2 ] ), 
 > Transformation( [ 3, 3, 4, 1 ] )  

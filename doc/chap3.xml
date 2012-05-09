@@ -127,7 +127,6 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
   </Section>
 
 <Section Label="Catalogues"><Heading>The examples directory</Heading>
-  <Index>&Citrus; examples</Index>
     
     The <C>examples</C> folder of the &Citrus; package directory contains
     catalogues of some naturally occurring semigroups of transformations and

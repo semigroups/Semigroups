@@ -1,6 +1,6 @@
   <Chapter Label="citrus">
   <Heading>The &Citrus; package</Heading>
-  <Index>&Citrus; overview</Index>	
+  <Index Key="Citrus">&Citrus; package overview</Index>	
     
     This is the manual for the &Citrus; package version &VERSION; for computing
     with semigroups of transformations and partial permutations. &Citrus;
@@ -249,7 +249,7 @@ gap></Log>
     <Ref Sect="Green's Relations" BookName="ref"/>.
     <List>
       <Item>
-        <Ref Oper="\&lt;"/>, <C>=</C> and <C>in</C> (see  
+        <Ref Oper="\&lt;" Label="for Green's classes"/>, <C>=</C> and <C>in</C> (see  
         <Ref Sect="Comparisons" BookName="ref"/>),
       </Item>
       <Item>

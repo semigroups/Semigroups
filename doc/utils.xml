@@ -126,7 +126,7 @@ TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
 
 <#GAPDoc Label="Degree">
   <ManSection>
-    <Func Name="Degree" Arg="obj"/>
+    <Func Name="Degree" Arg="obj" Label="for a transformation collection"/>
     <Returns>A positive integer.</Returns>
     <Description>
       Returns the result of 
@@ -140,7 +140,7 @@ TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
 
 <#GAPDoc Label="Rank">
   <ManSection>
-    <Func Name="Rank" Arg="f"/>
+    <Func Name="Rank" Arg="f" Label="for a transformation"/>
     <Returns>A positive integer.</Returns>
     <Description>
       Returns the result of <Ref Oper="RankOfTransformation" BookName="ref"/>, 
