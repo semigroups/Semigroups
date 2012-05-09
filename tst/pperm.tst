@@ -420,8 +420,6 @@ gap> LargestMovedPoint(coll);
 10
 gap> SmallestMovedPoint(coll);
 3
-gap> SmallestMovedPoint(coll);
-9
 
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;

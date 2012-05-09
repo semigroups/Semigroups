@@ -35,7 +35,7 @@ gap> NrLClasses(s);
 gap> NrDClasses(s);
 662
 gap> GroupOfUnits(s);
-Group(())
+<monoid with 1 generator>
 
 gap> file:=Concatenation(CitrusDir(), "/examples/syntactic.citrus.gz");;
 gap> gens:=ReadCitrus(file, 299);;
@@ -146,7 +146,7 @@ true
 gap> MultiplicativeZero(s);
 fail
 gap> GroupOfUnits(s);
-Group(())
+<monoid with 1 generator>
 
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 >   Transformation( [ 4, 2, 1, 5, 5 ] ),
@@ -162,7 +162,7 @@ true
 gap> MultiplicativeZero(s);
 fail
 gap> GroupOfUnits(s);
-Group(())
+<monoid with 1 generator>
 
 gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 > Transformation( [ 2, 4, 1, 2 ] ),

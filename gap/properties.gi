@@ -58,23 +58,22 @@ end);
 InstallMethod(GroupOfUnits, "for a tranformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local h, m, g, iso, u;
+  local one, h, m, g, u;
 
   if not IsMonoidAsSemigroup(s) then 
     Info(InfoCitrus, 2, "the semigroup is not a monoid,");
     return fail;
   fi;
 
-  h:=GreensHClassOfElement(s, MultiplicativeNeutralElement(s));
+  one:=MultiplicativeNeutralElement(s);
+  h:=GreensHClassOfElement(s, one);
   m:=Size(h); g:=Group(());
 
-  repeat 
+  while Size(g)<m do
     g:=ClosureGroup(g, AsPermutation(Random(h)));
-  until Size(g)=m;
+  od;
 
-  iso:=IsomorphismTransformationMonoid(g);
-  u:=Range(iso);
-  SetIsomorphismPermGroup(u, InverseGeneralMapping(iso));
+  u:=Monoid(List(GeneratorsOfGroup(g), x-> one*x));
   SetIsGroupAsSemigroup(u, true);
   UseIsomorphismRelation(u, g);
   return u;
@@ -98,9 +97,9 @@ function(s)
   h:=GreensHClassOfElement(s, MultiplicativeNeutralElement(s));
   m:=Size(h); g:=Group(());
 
-  repeat 
+  while Size(g)<m do 
     g:=ClosureGroup(g, AsPermutation(Random(h)));
-  until Size(g)=m;
+  od;
 
   iso:=IsomorphismPartialPermMonoid(g);
   u:=Range(iso);
@@ -970,7 +969,7 @@ InstallOtherMethod(IsMonoidAsSemigroup, "for a semigroup",
 [IsSemigroup and HasGeneratorsOfSemigroup], 
  x-> not MultiplicativeNeutralElement(x)=fail);
 
-# new for 0.7! - IsomorphismPartialPermSemigroup - "for a perm group"
+# new for 0.7! - IsomorphismPartialPermMonoid - "for a perm group"
 #############################################################################
 
 InstallMethod(IsomorphismPartialPermMonoid, "for a perm group",
@@ -991,7 +990,7 @@ InstallMethod(IsomorphismPartialPermSemigroup, "for a perm group",
 function(g)
   local dom;
 
-  dom:=Points(g);
+  dom:=MovedPoints(g);
   return MappingByFunction(g, InverseSemigroup(List(GeneratorsOfGroup(g), p-> 
    AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
 end);

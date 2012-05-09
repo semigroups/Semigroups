@@ -278,10 +278,10 @@ gap> f^iso;
 [ 2, 7 ] -> [ 1, 7 ]
 gap> ForAll(s, f-> (f^iso)^inv=f);
 true
-gap> ForAll(s, f-> f^iso in Range(iso));
-true
 gap> Size(Range(iso));
 631
+gap> ForAll(s, f-> f^iso in Range(iso));
+true
 gap> Size(s);
 631
 

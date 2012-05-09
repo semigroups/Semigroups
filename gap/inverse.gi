@@ -56,7 +56,7 @@ InstallMethod(\in, "for an inverse semigroup of part perms",
 function(f, s)
   local o, k, l, ran, m, schutz, g, dom_g, ran_g;
 
-  if not f[1]=0 and (f[5]<SmallestMovedPoint(s) or f[6]>LargestMovedPoint(s)) 
+  if not f[1]=0 and (f[5]<Points(s)[1] or f[6]>Points(s)[Length(Points(s))]) 
    then 
     return false;
   fi;
@@ -2802,7 +2802,7 @@ InstallMethod(Points, "for a partial perm semigroup",
 # new for 0.7! - Points - "for a partial perm collection"
 ##############################################################################
 
-InstallMethod(Points, "for a partial perm coll",
+InstallOtherMethod(Points, "for a partial perm coll",
 [IsPartialPermCollection], coll-> Union(List(coll, DomPP)));
 
 #RRR
