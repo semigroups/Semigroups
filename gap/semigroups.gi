@@ -684,7 +684,7 @@ function(gens, coll, opts)
 
   s:=Objectify( NewType (FamilyObj( gens ), IsMagmaWithOne and
    IsInverseSemigroup and IsAttributeStoringRep), rec(opts:=opts));
-  SetMovedPoints(s, Union(List(gens, DomPP)));
+  SetPoints(s, Union(List(gens, DomPP)));
   SetGeneratorsOfMagmaWithOne(s, gens);
   SetGeneratorsOfInverseSemigroup(s, Concatenation([One(s)], coll));
   SetGeneratorsOfInverseMonoid(s, coll);

@@ -2540,7 +2540,7 @@ InstallMethod(LongOrb, "for an inverse semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
 
-  return Orb(s, MovedPoints(s), OnIntegerSetsWithPP, 
+  return Orb(s, Points(s), OnIntegerSetsWithPP, 
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true, 
         storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M, 
         finished:=false));
@@ -2727,7 +2727,7 @@ IsGreensClassOfInverseSemigroup], x-> 1);
 ##############################################################################
 
 InstallMethod(OneImmutable, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> PartialPermNC(MovedPoints(s), MovedPoints(s)));
+[IsPartialPermSemigroup], s-> PartialPermNC(Points(s), Points(s)));
 
 # new for 0.7! - OrbMultipliers - for a Green's class of a part perm inv semi
 ##############################################################################
@@ -2792,6 +2792,18 @@ end);
 
 InstallMethod(ParentAttr, "for a R-class of inverse semigroup",
 [IsGreensClass and IsGreensClassOfPartPermSemigroup], x-> x!.parent);
+
+# new for 0.7! - Points - "for a partial perm semigroup"
+##############################################################################
+
+InstallMethod(Points, "for a partial perm semigroup",
+[IsPartialPermSemigroup], s-> Union(List(GeneratorsOfSemigroup(s), DomPP)));
+
+# new for 0.7! - Points - "for a partial perm collection"
+##############################################################################
+
+InstallMethod(Points, "for a partial perm coll",
+[IsPartialPermCollection], coll-> Union(List(coll, DomPP)));
 
 #RRR
 

@@ -205,7 +205,10 @@ gap> FixedPointsOfPartialPerm(f);
       <C>i^</C><A>f</A><C>&lt;>i</C>. <C>MovedPoints</C> returns
       the set of points moved by: the partial permutation <A>f</A> or at
       least one partial
-      permutation in the collection <A>C</A>, respectively.
+      permutation in the collection <A>C</A>, respectively.<P/>
+      The operation <Ref Oper="Points" Label="for a partial perm coll"/>
+      returns a list of all the points on
+      which the collection <A>C</A> acts, not only those points that are moved. 
       <Example>
 gap> f:=PartialPermNC( 
 > [ 1, 2, 3, 5, 6, 8, 10, 11, 14, 17, 20, 21, 22, 24, 25, 26, 32 ], 

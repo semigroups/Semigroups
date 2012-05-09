@@ -978,7 +978,7 @@ InstallMethod(IsomorphismPartialPermMonoid, "for a perm group",
 function(g)
   local dom;
 
-  dom:=MovedPoints(g);
+  dom:=Points(g);
   return MappingByFunction(g, InverseMonoid(List(GeneratorsOfGroup(g), p-> 
    AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
 end);
@@ -991,7 +991,7 @@ InstallMethod(IsomorphismPartialPermSemigroup, "for a perm group",
 function(g)
   local dom;
 
-  dom:=MovedPoints(g);
+  dom:=Points(g);
   return MappingByFunction(g, InverseSemigroup(List(GeneratorsOfGroup(g), p-> 
    AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
 end);
@@ -1238,7 +1238,7 @@ function(s)
   fi;
 
   return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
-   AsPermutation, x-> AsPartialPerm(x, MovedPoints(s)));
+   AsPermutation, x-> AsPartialPerm(x, Points(s)));
 end);
 
 # new for 0.7! - IsomorphismTransformationSemigroup - "for a matrix semigroup"
@@ -1294,7 +1294,7 @@ end);
 InstallMethod(IsPartialPermMonoid, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(s)
-  return ForAny(GeneratorsOfInverseSemigroup(s), x-> DomPP(x)=MovedPoints(s));
+  return ForAny(GeneratorsOfInverseSemigroup(s), x-> DomPP(x)=Points(s));
 end);
 
 #IIIRRR

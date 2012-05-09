@@ -69,6 +69,7 @@
     <#Include Label="MultiplicativeZero">
     <#Include Label="NaturalPartialOrder">
     <#Include Label="NrElementsOfRank">
+    <#Include Label="Points">
     <#Include Label="Random">
     <#Include Label="Rank">
     <#Include Label="SmallGeneratingSet"> 

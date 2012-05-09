@@ -24,3 +24,4 @@ IsInverseSemigroup);
 DeclareAttribute("OrbMultipliers", IsGreensClass);
 DeclareAttribute("OrbSCCStabChain", IsGreensClass);
 DeclareGlobalFunction("ShortOrb");
+DeclareOperation("Points", [IsPartialPermCollection]);

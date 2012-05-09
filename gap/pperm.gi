@@ -106,7 +106,7 @@ end);
 InstallMethod(AsPartialPermNC, "for a perm", 
 [IsPerm],
 function(p)
-  return AsPartialPerm(p, MovedPoints( )); 
+  return AsPartialPerm(p, MovedPoints(p)); 
 end);
 
 InstallMethod(AsPartialPerm, "for a perm", 
@@ -294,95 +294,6 @@ InstallOtherMethod(ELMS_LIST, "for a partial perm and a small dense list",
 InstallMethod(FixedPointsOfPartialPerm, "for a partial perm",
 [IsPartialPerm], FixedPointsPP);
 
-# new for 0.7! - NrMovedPoints - "for a partial perm" 
-############################################################################# 
-
-InstallOtherMethod(NrMovedPoints, "for a partial perm",
-[IsPartialPerm], NrMovedPointsPP);
-
-# new for 0.7! - NrMovedPoints - "for a partial perm semigroup" 
-############################################################################# 
-
-InstallOtherMethod(NrMovedPoints, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> Length(MovedPoints(s)));
-
-# new for 0.7! - NrMovedPoints - "for a partial perm collection" 
-############################################################################# 
-
-InstallOtherMethod(NrMovedPoints, "for a partial perm",
-[IsPartialPermCollection], c-> Length(MovedPoints(c)));
-
-# new for 0.7! - MovedPoints - "for a partial perm" 
-############################################################################# 
-
-InstallOtherMethod(MovedPoints, "for a partial perm",
-[IsPartialPerm], MovedPointsPP);
-
-# new for 0.7! - MovedPoints - "for a partial perm semigroup"
-#############################################################################
-
-InstallOtherMethod(MovedPoints, "for a partial perm semigroup",
-[IsPartialPermSemigroup],
-s-> Union(List(GeneratorsOfSemigroup(s), MovedPointsPP)));
-
-# new for 0.7! - MovedPoints - "for a partial perm coll"
-#############################################################################
-
-InstallOtherMethod(MovedPoints, "for a partial perm coll",
-[IsPartialPermCollection],
-s-> Union(List(s, MovedPointsPP)));
-
-# new for 0.7! - LargestMovedPoint - "for a partial perm" 
-############################################################################# 
-
-InstallOtherMethod(LargestMovedPoint, "for a partial perm",
-[IsPartialPerm], LargestMovedPointPP);
-
-#new for 0.7! - LargestMovedPoint - "for a partial perm semigroup"
-###########################################################################
-
-InstallOtherMethod(LargestMovedPoint, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> MaximumList(List(Generators(s), LargestMovedPointPP)));
-
-#new for 0.7! - LargestMovedPoint - "for a partial perm collection"
-###########################################################################
-
-InstallOtherMethod(LargestMovedPoint, "for a partial perm collection",
-[IsPartialPermCollection], coll-> MaximumList(List(coll, LargestMovedPointPP)));
-
-# new for 0.7! - SmallestMovedPoint - "for a partial perm" 
-############################################################################# 
-
-InstallOtherMethod(SmallestMovedPoint, "for a partial perm",
-[IsPartialPerm], SmallestMovedPointPP);
-
-# new for 0.7! - SmallestMovedPoint - "for a partial perm semigroup" 
-############################################################################# 
-
-InstallOtherMethod(SmallestMovedPoint, "for a partial perm",
-[IsPartialPermSemigroup], s-> MinimumList(List(Generators(s),                   SmallestMovedPointPP)));
-
-# new for 0.7! - SmallestMovedPoint - "for a partial perm coll" 
-############################################################################# 
-
-InstallOtherMethod(SmallestMovedPoint, "for a partial perm",
-[IsPartialPermCollection],
-function(coll)
-  local i, min, j;
-
-  i:=PositionProperty(coll, x-> x[1]<>0);
-  min:=SmallestMovedPointPP(coll[i]);
-
-  for j in [i+1..Length(coll)] do 
-    j:=SmallestMovedPointPP(coll[j]);
-    if j<min and j>0 then 
-      min:=j;
-    fi;
-  od;
-
-  return min;
-end);
-
 
 #III
 
@@ -425,10 +336,73 @@ function(f)
   return f{[1..f[1]+3*f[2]+6]}; 
 end); 
 
+#LLL
+
+# new for 0.7! - LargestMovedPoint - "for a partial perm" 
+############################################################################# 
+
+InstallOtherMethod(LargestMovedPoint, "for a partial perm",
+[IsPartialPerm], LargestMovedPointPP);
+
+#new for 0.7! - LargestMovedPoint - "for a partial perm semigroup"
+###########################################################################
+
+InstallOtherMethod(LargestMovedPoint, "for a partial perm semigroup",
+[IsPartialPermSemigroup], s-> MaximumList(List(Generators(s), LargestMovedPointPP)));
+
+#new for 0.7! - LargestMovedPoint - "for a partial perm collection"
+###########################################################################
+
+InstallOtherMethod(LargestMovedPoint, "for a partial perm collection",
+[IsPartialPermCollection], coll-> MaximumList(List(coll, LargestMovedPointPP)));
+
+#MMM
+
+# new for 0.7! - MovedPoints - "for a partial perm" 
+############################################################################# 
+
+InstallOtherMethod(MovedPoints, "for a partial perm",
+[IsPartialPerm], MovedPointsPP);
+
+# new for 0.7! - MovedPoints - "for a partial perm semigroup"
+#############################################################################
+
+InstallOtherMethod(MovedPoints, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+s-> Union(List(GeneratorsOfSemigroup(s), MovedPointsPP)));
+
+# new for 0.7! - MovedPoints - "for a partial perm coll"
+#############################################################################
+
+InstallOtherMethod(MovedPoints, "for a partial perm coll",
+[IsPartialPermCollection],
+s-> Union(List(s, MovedPointsPP)));
+
 #NNN
+
+# new for 0.7! - NaturalLeqPartialPerm - "for a pp and pp"
+############################################################################# 
 
 InstallMethod(NaturalLeqPartialPerm, "for a pp and pp",
 [IsPartialPerm, IsPartialPerm], NaturalLeqPP);
+
+# new for 0.7! - NrMovedPoints - "for a partial perm" 
+############################################################################# 
+
+InstallOtherMethod(NrMovedPoints, "for a partial perm",
+[IsPartialPerm], NrMovedPointsPP);
+
+# new for 0.7! - NrMovedPoints - "for a partial perm semigroup" 
+############################################################################# 
+
+InstallOtherMethod(NrMovedPoints, "for a partial perm semigroup",
+[IsPartialPermSemigroup], s-> Length(MovedPoints(s)));
+
+# new for 0.7! - NrMovedPoints - "for a partial perm collection" 
+############################################################################# 
+
+InstallOtherMethod(NrMovedPoints, "for a partial perm",
+[IsPartialPermCollection], c-> Length(MovedPoints(c)));
 
 #OOO
 
@@ -637,6 +611,8 @@ end);
 InstallMethod(RestrictedPartialPermNC, "for a part perm and set",
 [IsPartialPerm, IsList and IsCyclotomicCollection], RestrictedPP);
 
+#SSS
+
 # new for 0.7! - SmallestIdempotentPower - "for a partial perm"
 ############################################################################
 
@@ -652,6 +628,39 @@ function(f)
   od;
 
   return i;
+end);
+
+# new for 0.7! - SmallestMovedPoint - "for a partial perm" 
+############################################################################# 
+
+InstallOtherMethod(SmallestMovedPoint, "for a partial perm",
+[IsPartialPerm], SmallestMovedPointPP);
+
+# new for 0.7! - SmallestMovedPoint - "for a partial perm semigroup" 
+############################################################################# 
+
+InstallOtherMethod(SmallestMovedPoint, "for a partial perm",
+[IsPartialPermSemigroup], s-> MinimumList(List(Generators(s),                   SmallestMovedPointPP)));
+
+# new for 0.7! - SmallestMovedPoint - "for a partial perm coll" 
+############################################################################# 
+
+InstallOtherMethod(SmallestMovedPoint, "for a partial perm",
+[IsPartialPermCollection],
+function(coll)
+  local i, min, j;
+
+  i:=PositionProperty(coll, x-> x[1]<>0);
+  min:=SmallestMovedPointPP(coll[i]);
+
+  for j in [i+1..Length(coll)] do 
+    j:=SmallestMovedPointPP(coll[j]);
+    if j<min and j>0 then 
+      min:=j;
+    fi;
+  od;
+
+  return min;
 end);
 
 #EOF
