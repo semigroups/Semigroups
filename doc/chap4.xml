@@ -102,6 +102,7 @@
     <#Include Label="IsMonogenicSemigroup">
     <#Include Label="IsMonogenicInverseSemigroup">
     <#Include Label="IsMonoidAsSemigroup">
+    <#Include Label="IsPartialPermSemigroup">
     <#Include Label="IsOrthodoxSemigroup">
     <#Include Label="IsRectangularBand">
     <#Include Label="IsRegularSemigroup">

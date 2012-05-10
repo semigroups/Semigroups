@@ -2617,6 +2617,12 @@ InstallOtherMethod(NrLClasses, "for an inverse semigp of partial perms",
 # new for 0.7! - NrLClasses - for an inverse semigroup of partial perms
 ##############################################################################
 
+InstallOtherMethod(NrLClasses, "for an inverse semigp of partial perms",
+[IsInverseSemigroup and IsPartialPermSemigroup], NrRClasses);
+
+# new for 0.7! - NrLClasses - for an inverse semigroup of partial perms
+##############################################################################
+
 InstallOtherMethod(NrLClasses, "for D-class of semigp of partial perms",
 [IsGreensDClass and IsGreensClassOfPartPermSemigroup and                        IsGreensClassOfInverseSemigroup], NrRClasses);
 
@@ -2635,6 +2641,12 @@ function(s)
 
   return Length(OrbSCC(LongOrb(s)))-1;
 end); 
+
+# new for 0.7! - NrRegularDClasses - for an inverse semigroup of partial perms
+##############################################################################
+
+InstallOtherMethod(NrRegularDClasses, "for an inverse semigp of partial perms",
+[IsInverseSemigroup and IsPartialPermSemigroup], NrDClasses);
 
 # new for 0.7! - NrHClasses - for an inverse semigroup of partial perms
 ##############################################################################
