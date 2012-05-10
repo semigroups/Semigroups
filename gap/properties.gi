@@ -1175,10 +1175,36 @@ function(s)
   gens2:=EmptyPlist(m);
 
   for i in [1..m] do 
-    gens2[i]:=AsTransformation(gens1[i], n);
+    gens2[i]:=AsTransformationNC(gens1[i], n);
   od;
 
   return MappingByFunction(s, Semigroup(gens2), x-> AsTransformationNC(x, n),
+   AsPartialPermNC);
+end);
+
+# new for 0.7! - IsomorphismTransformationMonoid - "for partial perm semi"
+##############################################################################
+
+InstallOtherMethod(IsomorphismTransformationMonoid, "for partial perm semi",
+[IsPartialPermSemigroup],
+function(s)
+  local n, gens1, m, gens2, iso, u, i;
+  
+  if not IsMonoidAsSemigroup(s) then 
+    Error("the argument should be a monoid,");
+    return;
+  fi;
+
+  n:=LargestMovedPoint(s)+1;
+  gens1:=GeneratorsOfMonoid(s); 
+  m:=Length(gens1);
+  gens2:=EmptyPlist(m);
+
+  for i in [1..m] do 
+    gens2[i]:=AsTransformationNC(gens1[i], n);
+  od;
+
+  return MappingByFunction(s, Monoid(gens2), x-> AsTransformationNC(x, n),
    AsPartialPermNC);
 end);
 
