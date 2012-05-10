@@ -50,14 +50,18 @@
   <Section><Heading>Attributes of semigroups</Heading>
     In this section we describe the attributes <Ref Sect="Attributes"
       BookName="ref"/> of arbitrary semigroups of transformations or partial
-    permutations  that can be found using &Citrus;. 
-   
-    <!--Specific attributes that
-    only apply to transformation semigroups or partial permutation semigroups
-    can be found in Sections <Ref Sect="AttrTransform"/> and <Ref
-      Sect="AttrPPerm"/>.-->
+    permutations  that can be found using &Citrus;. <P/>
 
-    <#Include Label="Degree">
+    In addition to those functions described in this section, the operation
+    <Ref Oper="Degree" Label="for a transformation coll"/> is
+    also relevant for transformation semigroups; and the following operations
+    are also relevant to semigroups of partial permutations:
+    <Ref Oper="MovedPoints" Label="for a partial perm coll"/>, 
+    <Ref Oper="NrMovedPoints" Label="for a partial perm coll"/>, 
+    <Ref Oper="LargestMovedPoint" Label="for a partial perm coll"/>, 
+    <Ref Oper="SmallestMovedPoint" Label="for a partial perm coll"/>, 
+    <Ref Oper="Degree" Label="for a partial perm coll"/>.<P/>
+
     <#Include Label="Generators">
     <#Include Label="GroupOfUnits">
     <#Include Label="GradedImagesOfTransSemigroup">
@@ -68,25 +72,10 @@
     <#Include Label="MultiplicativeZero">
     <#Include Label="NaturalPartialOrder">
     <#Include Label="NrElementsOfRank">
-    <#Include Label="Points">
+    <#Include Label="DomainOfPartialPermSemigroup">
     <#Include Label="Random">
-    <#Include Label="Rank">
     <#Include Label="SmallGeneratingSet"> 
   </Section>
-  
-  <!--<Section Label="AttrTransform"><Heading>Attributes for transformation
-      semigroups</Heading>
-    In this section we describe those attributes specific to transformation
-    semigroups that do not apply to other types of semigroups. 
-
-  </Section>
-
-  <Section Label="AttrPPerm"><Heading>Attributes for inverse semigroups</Heading>
-    In this section we describe those attributes specific to inverse semigroups
-    of partial permutations that do not apply to other kinds of semigroups. 
-
-
-  </Section>-->
   
   <Section><Heading>Properties of semigroups</Heading>
     In this section we describe several properties 

@@ -434,10 +434,16 @@ gap> DenseRangeList(f);
   <ManSection>
     <Func Name="DegreeOfPartialPerm" Arg="f"/>
     <Func Name="Degree" Arg="f" Label="for a partial perm"/>
+    <Func Name="Degree" Arg="C" Label="for a partial perm coll"/>
     <Returns>A positive integer.</Returns>
     <Description>
       The <E>degree</E> of a partial permutation <A>f</A> is the largest
-      positive integer in the union of its domain and range. 
+      positive integer in the union of its domain and range. <P/>
+
+      The degree of a partial permutation collection <A>C</A> is the largest
+      degree of any partial permutation in <A>C</A>, i.e. the largest point in
+      the domain or range of any element in <A>C</A>.
+
       <Example>
 gap> f:=PartialPermNC( [ 1, 2, 3, 4, 6, 10 ], [ 1, 8, 2, 3, 4, 9 ] );;
 gap> DegreeOfPartialPerm(f);
@@ -590,5 +596,27 @@ gap> PrettyPrintPP(f);
     </Description> 
   </ManSection> 
 <#/GAPDoc>
+
+<#GAPDoc Label="SmallestIdempotentPowerPP">
+<ManSection> 
+  <Oper Name="SmallestIdempotentPower" Arg="f" Label="for a partial perm"/>
+  <Returns>A positive integer.</Returns>
+  <Description>
+      This function returns the least positive integer <C>n</C> such that the
+      partial permutation <C><A>f</A>^n</C> is an idempotent. See also <Ref
+                Oper="SmallestIdempotentPower" Label="for a transformation"/>.
+  
+      <Example>
+gap> f:=PartialPermNC(
+> [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16, 17, 23, 25, 29 ],
+> [ 30, 8, 28, 21, 23, 15, 10, 14, 1, 18, 16, 5, 7, 26, 6, 9, 11, 19 ] );;
+gap> SmallestIdempotentPower(f);
+6
+gap> f^6;
+&lt;empty mapping></Example>
+    </Description>  
+  </ManSection>
+<#/GAPDoc>
+
 
 

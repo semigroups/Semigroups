@@ -23,5 +23,7 @@ DeclareAttribute("NaturalPartialOrder", IsPartialPermSemigroup and
 IsInverseSemigroup);
 DeclareAttribute("OrbMultipliers", IsGreensClass);
 DeclareAttribute("OrbSCCStabChain", IsGreensClass);
-DeclareGlobalFunction("ShortOrb");
 DeclareAttribute("Points", IsPartialPermSemigroup);
+DeclareGlobalFunction("ShortOrb");
+
+DeclareSynonymAttr("DomainOfPartialPermSemigroup", Points);
