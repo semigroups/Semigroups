@@ -73,28 +73,24 @@ function(s, coll, opts)
     return s;
   fi;
 
+  o:=LongOrb(s);
+  
+  if not IsSubset(o[1], Points(coll)) then #the original LongOrb seed is wrong
+    return InverseSemigroup(Concatenation(Generators(s), coll), opts);
+  fi;
+
   coll_copy:=ShallowCopy(coll);
   for f in coll do
     if not DomPP(f)=RanSetPP(f) then 
       Add(coll_copy, f^-1);
     fi;
   od;  
-
-  o:=StructuralCopy(LongOrb(s));
+  
+  o:=StructuralCopy(o);
   AddGeneratorsToOrbit(o, coll_copy);
 
-  #if IsPartialPermMonoid(s) then
-  #  Error("");
-  #  t:=InverseMonoidByGeneratorsNC(o!.gens, 
-  #    Concatenation(Generators(s), coll), opts);
-  #else
-    t:=InverseSemigroupByGeneratorsNC(o!.gens, 
-     Concatenation(Generators(s), coll), opts);
-  #fi;
-
-  if LargestMovedPoint(coll)>LargestMovedPoint(s) then 
-    return t;
-  fi;
+  t:=InverseSemigroupByGeneratorsNC(o!.gens, 
+   Concatenation(Generators(s), coll), opts);
 
   if IsBound(o!.scc) then 
     Unbind(o!.scc); Unbind(o!.truth); Unbind(o!.trees); Unbind(o!.scc_lookup);
@@ -711,8 +707,6 @@ function(gens, coll, opts)
     
     for f in coll do
       if not f in s then 
-        if not IsSubsemigroup(ClosureInverseSemigroupNC(s, [f], closure_opts), s) then Error("");
-        fi;
         s:=ClosureInverseSemigroupNC(s, [f], closure_opts);
       fi;
     od;

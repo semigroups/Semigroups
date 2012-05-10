@@ -549,6 +549,7 @@ true</Example>
 
       <Example>
 gap> S:=SingularSemigroup(4);
+&lt;semigroup with 12 generators>
 gap> IsIdempotentGenerated(S);
 true</Example>
     </Description>
@@ -882,7 +883,7 @@ gap> IsMonoid(s);
 false
 gap> IsMonoidAsSemigroup(s);
 true
-gap> iso:=IsomorphismPartialPermMonoid(s)
+gap> iso:=IsomorphismPartialPermMonoid(s);
 MappingByFunction( &lt;inverse semigroup with 
 2 generators>, &lt;inverse monoid with 
 2 generators>, function( x ) ... end, function( x ) ... end )
@@ -900,8 +901,8 @@ gap> s:=Semigroup(Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ),
 gap> iso:=IsomorphismPartialPermMonoid(s);
 MappingByFunction( &lt;inverse monoid with 2 generators>, &lt;inverse monoid with 
 2 generators>, function( f ) ... end, function( x ) ... end )
-gap> MovedPoint(Range(iso));
-[ 1, 2, 3, 5, 6, 7 ]</Example>
+gap> MovedPoints(Range(iso));
+[ 1, 2, 3, 5, 6 ]</Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -927,7 +928,7 @@ gap> IsGroupAsSemigroup(S);
 true
 gap> IsomorphismPermGroup(S); 
 MappingByFunction( &lt;semigroup with 2 generators>, Group([ (5,6,8), (2,3,8,4) 
-]), &lt;Operation "AsPermutation"> )
+ ]), &lt;Operation "AsPermutation">, function( x ) ... end )
 gap> StructureDescription(Range(IsomorphismPermGroup(S)));
 "S6"
 gap> s:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));

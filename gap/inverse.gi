@@ -1473,6 +1473,7 @@ function(s, f)
       return fail;
     fi;
     m:=OrbSCCLookup(o)[k];
+    CreateOrbSCCSchutzGp(o, m); 
     rep:=o!.mults[k]^-1*f; #LQuoPP
   else
     o:=ShortOrb(s, DomPP(f));
@@ -2546,6 +2547,9 @@ end);
 
 # new for 0.7! - LongOrb - "for an inverse semi of part. perms"
 ##############################################################################
+# seed is required for finding a small generating set. If the seed is not
+# specified and the second generator acts on some point that the first does
+# not, then the resulting LongOrb does not properly relate to the semigroup. 
 
 InstallMethod(LongOrb, "for an inverse semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],

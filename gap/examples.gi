@@ -186,7 +186,7 @@ else
       od;
     od;
 
-    return InverseSemigroup(out, rec(small:=true)); 
+    return InverseSemigroup(out); 
   end);
 fi;
 

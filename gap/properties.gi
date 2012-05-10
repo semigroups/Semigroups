@@ -1048,7 +1048,7 @@ InstallMethod(IsomorphismPartialPermMonoid, "for a perm group",
 function(g)
   local dom;
 
-  dom:=Points(g);
+  dom:=MovedPoints(g);
   return MappingByFunction(g, InverseMonoid(List(GeneratorsOfGroup(g), p-> 
    AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
 end);

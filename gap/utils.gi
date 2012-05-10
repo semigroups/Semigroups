@@ -133,8 +133,16 @@ function()
     Print("*** Example ", i, " ***\n");
     tst:=ReadTestExamplesString(ex[i]);
   od;
+  if IsBoundGlobal("CitrusManualExamples") then 
+    MakeReadWriteGlobal("CitrusManualExamples");
+    UnbindGlobal("CitrusManualExamples");
+  fi;
 
-  return true;
+  BindGlobal("CitrusManualExamples", ex);
+  Print("the manual examples are in the global variable",
+  " CitrusManualExamples\n");
+
+  return;
 end);
 
 
