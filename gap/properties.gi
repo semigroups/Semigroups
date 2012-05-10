@@ -260,6 +260,49 @@ function(coll)
   return out;
 end);
 
+# new for 0.7! - IrredundantGeneratingSubset - "for a partial perm coll."
+###########################################################################
+# Notes: this does not work all that well, use SmallGeneratingSet first. 
+
+InstallOtherMethod(IrredundantGeneratingSubset, "for a partial perm collection", 
+[IsPartialPermCollection],
+function(coll)
+  local gens, j, out, i, redund, f;
+  
+  if IsPartialPermSemigroup(coll) then 
+    coll:=ShallowCopy(Generators(coll));
+  fi;
+  
+  gens:=Set(ShallowCopy(coll)); j:=Length(gens);
+  coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));
+  Sort(coll, function(x, y) return Rank(x)>Rank(y); end);
+  
+  out:=EmptyPlist(Length(coll));
+  redund:=EmptyPlist(Length(coll));
+  i:=0;
+
+  repeat 
+    i:=i+1; f:=coll[i];
+    if InfoLevel(InfoCitrus)>=3 then 
+      Print("at \t", i, " of \t", Length(coll), " with \t", Length(redund), 
+      " redundant, \t", Length(out), " non-redundant\r");
+    fi;
+
+    if not f in redund and not f in out then 
+      if f in InverseSemigroup(Difference(gens, [f])) then 
+        AddSet(redund, f); gens:=Difference(gens, [f]);
+      else
+        AddSet(out, f);
+      fi;
+    fi;
+  until Length(redund)+Length(out)=j;
+
+  if InfoLevel(InfoCitrus)>1 then 
+    Print("\n");
+  fi;
+  return out;
+end);
+
 #IIIAAA
 
 # new for 0.4! - IsAbundantSemigroup - "for a trans. semigroup"
@@ -430,7 +473,7 @@ function(s)
 end);
 
 InstallMethod(IsCliffordSemigroup, "for an inverse semigroup", 
-[IsInverseSemigroup], IsDTrivial);
+[IsInverseSemigroup], s-> ForAll(OrbSCC(LongOrb(s)), x-> Length(x)=1));
 
 # new for 0.1! - IsCommutativeSemigroup - "for a transformation semigroup"
 ###########################################################################
@@ -926,6 +969,30 @@ end);
 #############################################################################
 
 InstallMethod(IsMonogenicSemigroup, "for an inverse semigroup", 
+[IsInverseSemigroup and IsPartialPermSemigroup], 
+function(s)
+  if not IsMonogenicInverseSemigroup(s) then 
+    return false;
+  fi;
+  return IsMonogenicSemigroup(Range(IsomorphismTransformationSemigroup(s)));
+end);
+
+# new for 0.7 - IsMonogenicInverseSemigroup - "for a trans. semigroup"
+#############################################################################
+
+InstallMethod(IsMonogenicInverseSemigroup, "for a trans. semigroup", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  if not IsInverseSemigroup(s) then 
+    return false;
+  fi;
+  return IsMonogenicInverseSemigroup(Range(IsomorphismPartialPermSemigroup(s)));
+end);
+ 
+# new for 0.7 - IsMonogenicInverseSemigroup - "for an inverse semigroup"
+#############################################################################
+
+InstallMethod(IsMonogenicInverseSemigroup, "for an inverse semigroup", 
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
   local gens, m, I, max, index, j, x, pos, f, i, p;

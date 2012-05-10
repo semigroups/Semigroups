@@ -549,8 +549,8 @@ true</Example>
   <#/GAPDoc>
   
   <#GAPDoc Label="One"/>
-<ManSection><Heading>One (for a partial perm)</Heading>
-    <Func Name="One" Arg="f" Label="for a partial perm"/>
+<ManSection><Heading>One</Heading>
+    <Meth Name="One" Arg="f" Label="for a partial perm"/>
     <Returns>A partial permutation.</Returns>
     <Description>
       As described in the reference manual <Ref Attr="OneImmutable"

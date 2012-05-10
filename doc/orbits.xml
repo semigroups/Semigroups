@@ -49,9 +49,9 @@ gap> GradedKernelsOfTransSemigroup(S);
   The argument <A>S</A> should be a transformation semigroup and the optional
   second argument <A>n</A> should be a positive integer not greater than the
   degree of <A>S</A>.  <C>ImagesOfTransSemigroup</C> returns the  <Ref
-  Func="Orb" BookName="orb"/> object: <Log>Orb(S, [1..Degree(S)],
-  OnSets);</Log> which contains the image sets of all the transformations
-  belonging to <A>S</A>.  <P/>
+    Func="Orb" BookName="orb"/> object: 
+  <Log>Orb(S, [1..Degree(S)], OnSets);</Log> which contains the image sets of
+  all the transformations belonging to <A>S</A>.  <P/>
   
   <C>KernelsOfTransSemigroup</C> returns the <Ref Func="Orb" BookName="orb"/>
   object: <Log>Orb(S, [1,..Degree(S)], OnKernelsAntiAction);</Log> <P/> If the

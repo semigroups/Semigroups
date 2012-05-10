@@ -65,8 +65,8 @@ true</Example>
     <Returns>A Green's class.</Returns>
     <Description>
      <C>XClassOfYClass</C> returns the <C>X</C>-class containing the
-     <C>Y</C>-class where <C>X</C> and <C>Y</C> should be replaced by an
-     appropriate choice of <C>D, H, L,</C> and <C>R</C>.<P/>
+     <C>Y</C>-class <A>class</A> where <C>X</C> and <C>Y</C> should be replaced
+     by an appropriate choice of <C>D, H, L,</C> and <C>R</C>.<P/>
      
       Note that if it is not known to &GAP; whether or not the representative
       of <A>class</A> is an element of the semigroup containing <A>class</A>,
@@ -275,8 +275,8 @@ gap> GreensRClasses(D);
       Oper="GreensDClassOfElement"/>  except that no effort is made to verify
       if <A>f</A> is an element of <A>X</A>.  More precisely,
       <C>GreensXClassOfElementNC</C> and <C>XClassNC</C> first check if
-      <A>f</A> has already been shown to be an element of <A>S</A>.  If it is
-      not known to &GAP; if <A>f</A> is an element of <A>S</A>, then no further
+      <A>f</A> has already been shown to be an element of <A>X</A>.  If it is
+      not known to &GAP; if <A>f</A> is an element of <A>X</A>, then no further
       attempt to verify this is made. <P/>
 
       Note that <C>GreensXClassOfElementNC</C> and <C>XClassNC</C> are synonyms
@@ -821,7 +821,7 @@ gap> NrRClasses(s);
    &D;-, &L;-, &H;-, or &R;-class
    of a semigroup of transformations or partial permutations. If the
    actual idempotents are not required, then it is more efficient to use
-   <Log>NrIdempotents(obj)</Log> than <Log>Length(Idempotents(obj))</Log> since
+   <C>NrIdempotents(obj)</C> than <C>Length(Idempotents(obj))</C> since
    the idempotents themselves are not created when <C>NrIdempotents</C> is
    called.<P/>
 
@@ -854,7 +854,6 @@ gap> NrIdempotents(L);
 gap> H:=GroupHClass(D);;
 gap> NrIdempotents(H);
 1
-&lt;inverse semigroup with 2 generators>
 gap> s:=InverseSemigroup(
 > [ PartialPermNC( [ 1, 2, 3, 5, 7, 9, 10 ], [ 6, 7, 2, 9, 1, 5, 3 ] ),
 > PartialPermNC( [ 1, 2, 3, 5, 6, 7, 9, 10 ], [ 8, 1, 9, 4, 10, 5, 6, 7 ] ) ]);;

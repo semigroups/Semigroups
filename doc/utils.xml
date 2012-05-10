@@ -127,14 +127,36 @@ TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
 <#GAPDoc Label="Generators">
   <ManSection>
     <Func Name="Generators" Arg="S"/>
-    <Returns>A list of transformations.</Returns>
+    <Returns>A list of transformations or partial permutations.</Returns>
     <Description>
-      Returns the result of 
-      <Ref Attr="GeneratorsOfMonoid" BookName="ref"/>, 
-      if <A>S</A> is a transformation monoid and the result of 
-      <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/> 
-      if <A>S</A> is a transformation semigroup but not a transformation 
-      monoid.
+      <C>Generators</C> returns the generating set used to define 
+      the semigroup <A>S</A> of transformations or partial permutations.  
+      The generators of a monoid or inverse semigroup
+      <A>S</A> can be defined in several ways, for example, including or
+      excluding the identity element, including or not the inverses of the
+      generators. <C>Generators(<A>S</A>)</C>
+      uses the definition that returns the least number of generators. Nothing
+      new is computed when <C>Generators</C> is called and this function 
+      should not be confused with <Ref Attr="SmallGeneratingSet"/>.
+
+      <List>
+        <Mark>Transformation semigroup</Mark>
+        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
+          <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/>.
+        </Item>
+        <Mark>Transformation monoid</Mark>
+        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
+          <Ref Attr="GeneratorsOfMonoid" BookName="ref"/>.
+        </Item>
+        <Mark>Inverse semigroup</Mark>
+        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
+          <Ref Attr="GeneratorsOfInverseSemigroup"/>.
+        </Item>
+        <Mark>Inverse monoid</Mark>
+        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
+          <Ref Attr="GeneratorsOfInverseMonoid"/>.
+        </Item>
+      </List>
 <Example>gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
 > Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
 gap> GeneratorsOfSemigroup(M);

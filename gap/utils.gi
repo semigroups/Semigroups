@@ -208,7 +208,7 @@ InstallOtherMethod(Degree, "for a transformation semigroup",
 InstallOtherMethod(Degree, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> MaximumList(List(Generators(s), Degree)));
 
-# new for 0.7! - Degree - "for a partial perm semigroup"
+# new for 0.7! - Degree - "for a partial perm collection"
 #############################################################################
 
 InstallOtherMethod(Degree, "for a partial perm collection",
