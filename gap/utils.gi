@@ -109,7 +109,7 @@ function()
 
   TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
      InstallationPath, "/doc"), "citrus.xml", 
-     ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
+     ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "inverse.xml",
      "semigroups.xml", "transform.xml", "pperm.xml", "../PackageInfo.g"]);
   
   SetInfoLevel(InfoWarning, InfoLevelInfoWarning);
@@ -126,8 +126,8 @@ function()
   local ex, tst, i;
 
   ex:=ManualExamples("~/citrus/doc/", "citrus.xml",  [ "utils.xml",
-  "greens.xml", "orbits.xml", "properties.xml", "pperm.xml", 
-  "transform.xml", "../PackageInfo.g" ], "Single" );;
+  "greens.xml", "orbits.xml", "properties.xml", "pperm.xml", "inverse.xml",
+  "semigroups.xml",  "transform.xml", "../PackageInfo.g" ], "Single" );;
 
   for i in [1..Length(ex)] do 
     Print("*** Example ", i, " ***\n");

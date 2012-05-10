@@ -1236,7 +1236,7 @@ InstallOtherMethod(IsomorphismTransformationSemigroup, "for partial perm semi",
 function(s)
   local n, gens1, m, gens2, iso, u, i;
   
-  n:=LargestMovedPoint(s)+1;
+  n:=Maximum(Points(s))+1;
   gens1:=GeneratorsOfSemigroup(s); 
   m:=Length(gens1);
   gens2:=EmptyPlist(m);
@@ -1812,7 +1812,7 @@ function(s)
     bound:=Sum([1..max], x-> Binomial(n, x));
   fi;
 
-  o:=Orb(gens, [1..n]*1, OnIntegerSetsWithPP, rec( schreier:=true,
+  o:=Orb(gens, Points(s), OnIntegerSetsWithPP, rec( schreier:=true,
    gradingfunc:=function(o, x) return Length(x); end,
     onlygrades:=[0..max],
      lookingfor:=function(o, x) return Length(x)=0; end));
@@ -1974,7 +1974,7 @@ function(s)
     return fail;
   fi;
 
-  o:=Orb(s, [1..Degree(s)]*1, OnIntegerSetsWithPP, 
+  o:=Orb(s, Points(s), OnIntegerSetsWithPP, 
   rec(
    gradingfunc:=function(o, x) return Length(x); end,
     onlygrades:=[0..Degree(s)],

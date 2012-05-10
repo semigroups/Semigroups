@@ -1796,7 +1796,7 @@ function(s, i)
     return out;
   fi;
 
-  o:=Orb(s, [1..LargestMovedPoint(s)]*1, OnIntegerSetsWithPP,
+  o:=Orb(s, Points(s), OnIntegerSetsWithPP,
         rec(forflatplainlists:=true, hashlen:=CitrusOptionsRec.hashlen.M,
         gradingfunc:=function(o, x) return Length(x); end,
         onlygrades:=function(x, y) return x>=i; end));

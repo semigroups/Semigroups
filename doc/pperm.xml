@@ -218,7 +218,7 @@ gap> MovedPoints(f);
 gap> f:=PartialPermNC([1..10]);
 &lt;identity on [ 1 .. 10 ]>
 gap> MovedPoints(f);
-[ ]</Example>
+[  ]</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -354,8 +354,7 @@ gap> RestrictedPartialPerm(f, [2,3,6,10]);
       see <Ref Oper="RestrictedPartialPerm"/>. <C>NaturalLeqPartialPerm</C>
       returns <K>true</K> if <A>f</A> is a restriction of <A>g</A> and
       <K>false</K> if it is not. 
-      <Example> 
-gap> f:=PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ], 
+      <Example>gap> f:=PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ], 
 > [ 3, 12, 14, 4, 11, 18, 17, 2, 9, 5, 15, 8, 20, 10, 19 ] );;
 gap> set:=[ 1, 2, 3, 9, 13, 20 ];;
 gap> g:=RestrictedPartialPerm(f, set);

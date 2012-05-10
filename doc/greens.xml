@@ -719,7 +719,7 @@ gap> S:=InverseSemigroup(
 > [ 5, 3, 12, 9, 20, 15, 8, 16, 13, 1, 17, 11, 14, 10, 2 ] ),
 >  PartialPermNC( [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 17, 18, 19, 20 ], 
 > [ 8, 3, 9, 20, 2, 12, 14, 15, 4, 18, 13, 1, 17, 19, 5 ] ) ]);;
-gap> iter:=IteratorOfRClasses(s);
+gap> iter:=IteratorOfRClasses(S);
 &lt;iterator of R-classes>
 gap> repeat r:=NextIterator(iter); until Size(r)>1000;
 gap> r;

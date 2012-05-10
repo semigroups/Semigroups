@@ -399,7 +399,7 @@ gap> F:=BaseDomain(mat);
 GF(3)
 gap> TransformationActionNC(mat, Elements(F^3), OnRight);
 Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 10, 10, 10, 13, 13, 13, 16, 16,
-16, 19, 19, 19, 22, 22, 22, 25, 25, 25 ] )</Example>
+  1, 19, 19, 19, 22, 22, 22, 25, 25, 25 ] )</Example>
   </Description>
 </ManSection>
 <#/GAPDoc>

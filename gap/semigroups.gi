@@ -621,7 +621,7 @@ InstallOtherMethod(InverseSemigroupByGenerators,
 [IsPartialPermCollection, IsRecord],
 function(coll, opts)
   local n, f, gens;
-  
+
   if not IsBound(opts.schreier) then
     opts.schreier:=CitrusOptionsRec.schreier;
   fi;
@@ -703,7 +703,7 @@ function(gens, coll, opts)
   if opts.small and Length(gens)>1 then 
     coll:=SSortedList(ShallowCopy(coll));
     coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));;
-    Sort(coll, function(x, y) return Rank(x)>Rank(y); end);;
+    Sort(coll, function(x, y) return x[2]>y[2]; end);;
     
     closure_opts:=rec(schreier:=opts.schreier, small:=false,
          hashlen:=opts.hashlen);
@@ -711,6 +711,8 @@ function(gens, coll, opts)
     
     for f in coll do
       if not f in s then 
+        if not IsSubsemigroup(ClosureInverseSemigroupNC(s, [f], closure_opts), s) then Error("");
+        fi;
         s:=ClosureInverseSemigroupNC(s, [f], closure_opts);
       fi;
     od;
