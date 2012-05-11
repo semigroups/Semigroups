@@ -219,9 +219,9 @@ Obj FuncSparsePartialPermNC( Obj self, Obj dom, Obj ran )
 /* create dense partial perm */
 Obj FuncDensePartialPermNC( Obj self, Obj img )
 { 
-    Obj f;
-    Int deg, i, max_ran, min_ran, rank, j;
-    Int ran[65535];
+    Obj f, buf;
+    Int deg, i, max_ran, min_ran, rank, j, k;
+    Int ran[512];
 
     if(LEN_LIST(img)==0) return NEW_EMPTY_PP();
     
@@ -246,10 +246,12 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
     max_ran=0; 
     min_ran=65535; 
     rank=0;
+    i=0;
 
     /* find dom, rank, max_ran, min_ran */
-    for(i=1;i<=deg;i++)
+    while(i<deg&&rank<512)
     {
+      i++;
       j = INT_INTOBJ(ELM_LIST(img, i));
       SET_ELM_PP(f, i+6, (pptype) j);
       if(j!=0)
@@ -261,7 +263,25 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
         if(j<min_ran) min_ran=j;
       }
     }
-    
+   
+    if(i<deg){
+      buf=NEW_PP(65023); /* internal only */
+      /* carry on */
+      for(k=i+1;k<=deg;k++)
+      {
+        j = INT_INTOBJ(ELM_LIST(img, k));
+        SET_ELM_PP(f, k+6, (pptype) j);
+        if(j!=0)
+        {
+          rank++;
+          SET_ELM_PP(f, deg+rank+6, (pptype) k); /* dom*/
+          SET_ELM_PP(buf, rank, (pptype) j);
+          if(j>max_ran) max_ran=j;
+          if(j<min_ran) min_ran=j;
+        }
+      }
+    }
+
     TOO_MANY_PTS_ERROR(max_ran>65535);
 
     SET_ELM_PP(f,2,(pptype) rank);
@@ -269,9 +289,15 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
     SET_ELM_PP(f,4,(pptype) max_ran);
 
     /* set range */
-    for(i=1;i<=rank;i++){
+    for(i=1;i<=(rank<513?rank:512);i++)
+    {
       SET_ELM_PP(f,deg+rank+6+i,(pptype) ran[i]);
-    } 
+    }
+      
+    for(i=513;i<=rank;i++) 
+    {      
+      SET_ELM_PP(f,deg+rank+6+i,ELM_PP(buf,i)); 
+    }   
 
     /* set min */
     j=ELM_PP(f,deg+7); /* min. dom. */
