@@ -214,30 +214,40 @@ end);
 # new for 0.7! - POI - "for a pos int"
 ################################################################################
 
-InstallMethod(POI, "for a pos int",
-[IsPosInt],
-function(n)
-  local out, i;
+if Citrus_C then 
+  InstallMethod(POI, "for a pos int",
+  [IsPosInt],
+  function(n)
+    local out, i;
 
-  out:=EmptyPlist(n);
-  out[1]:=PartialPermNC([0..n-1]);
-  for i in [0..n-2] do 
-    out[i+2]:=[1..n];
-    out[i+2][(n-i)-1]:=n-i; out[i+2][n-i]:=0;
-    out[i+2]:=PartialPermNC(out[i+2]);
-  od;
-  return InverseMonoid(out); 
-end);
+    out:=EmptyPlist(n);
+    out[1]:=PartialPermNC([0..n-1]);
+    for i in [0..n-2] do 
+      out[i+2]:=[1..n];
+      out[i+2][(n-i)-1]:=n-i; out[i+2][n-i]:=0;
+      out[i+2]:=PartialPermNC(out[i+2]);
+    od;
+    return InverseMonoid(out); 
+  end);
+else
+  InstallMethod(POI, "for a pos int",
+  [IsPosInt], CitrusIsNotCompiled);
+fi;
 
 # new for 0.7! - POPI - "for a pos int"
 ################################################################################
 
-InstallMethod(POPI, "for a pos int",
-[IsPosInt],
-function(n)
-  return InverseMonoid(PartialPermNC(Concatenation([2..n],[1])), 
-   PartialPermNC(Concatenation([1..n-2],[n])));
-end);
+if Citrus_C then 
+  InstallMethod(POPI, "for a pos int",
+  [IsPosInt],
+  function(n)
+    return InverseMonoid(PartialPermNC(Concatenation([2..n],[1])), 
+     PartialPermNC(Concatenation([1..n-2],[n])));
+  end);
+else 
+  InstallMethod(POPI, "for a pos int",
+  [IsPosInt], CitrusIsNotCompiled);
+fi;
 
 # new for 0.7! - PowerSemigroup - "for a group"
 ################################################################################
@@ -285,17 +295,22 @@ end);
 # new for 0.7! - SymmetricInverseSemigp - "for a pos int"
 ################################################################################
 
-InstallMethod(SymmetricInverseSemigp, "for a pos int",
-[IsPosInt],
-function(n)
+if Citrus_C then 
+  InstallMethod(SymmetricInverseSemigp, "for a pos int",
+  [IsPosInt],
+  function(n)
 
-  if n=0 then
-    return InverseSemigroup(PartialPermNC([]));
-  fi;
+    if n=0 then
+      return InverseSemigroup(PartialPermNC([]));
+    fi;
 
-  return InverseSemigroup(List(GeneratorsOfGroup(SymmetricGroup(n)), x->
-   PartialPermNC(ListPerm(x, n))), PartialPermNC([0..n-1]*1));
-end);
+    return InverseSemigroup(List(GeneratorsOfGroup(SymmetricGroup(n)), x->
+     PartialPermNC(ListPerm(x, n))), PartialPermNC([0..n-1]*1));
+  end);
+else
+  InstallMethod(SymmetricInverseSemigp, "for a pos int",
+  [IsPosInt], CitrusIsNotCompiled);
+fi;
 
 #VVV
 

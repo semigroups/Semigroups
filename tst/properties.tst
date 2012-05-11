@@ -902,50 +902,6 @@ gap> t:=IdempotentGeneratedSubsemigp(s);;
 gap> Size(t);
 105
 
-gap> g:=DihedralGroup(8);;
-gap> g:=Range(IsomorphismPermGroup(g));;
-gap> iso:=IsomorphismPartialPermSemigroup(g);
-MappingByFunction( Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), 
-  (1,4)(2,6)(3,7)(5,8) ]), <inverse semigroup with 
-3 generators>, function( p ) ... end, function( f ) ... end )
-gap> inv:=InverseGeneralMapping(iso);
-MappingByFunction( <inverse semigroup with 3 generators>, Group(
-[ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8) 
- ]), function( f ) ... end, function( p ) ... end )
-gap> f:=(1,5)(2,3)(4,8)(6,7);;
-gap> f^iso;
-[ 1 .. 8 ] -> [ 5, 3, 2, 8, 1, 7, 6, 4 ]
-gap> (f^iso)^inv;
-(1,5)(2,3)(4,8)(6,7)
-gap> ForAll(g, f-> (f^iso)^inv=f);
-true
-gap> Size(Range(iso));
-8
-
-gap> s:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
-<inverse semigroup with 2 generators>
-gap> IsomorphismPermGroup(s);
-MappingByFunction( <inverse semigroup with 2 generators>, Group(
-[ (1,2,3,4), (1,2) ]), <Operation "AsPermutation">, function( x ) ... end )
-gap> iso:=last;
-MappingByFunction( <inverse semigroup with 2 generators>, Group(
-[ (1,2,3,4), (1,2) ]), <Operation "AsPermutation">, function( x ) ... end )
-gap> inv:=InverseGeneralMapping(iso);
-MappingByFunction( Group([ (1,2,3,4), (1,2) ]), <inverse semigroup with 
-2 generators>, function( x ) ... end, <Operation "AsPermutation"> )
-gap> f:=Random(s);
-[ 1 .. 4 ] -> [ 2, 1, 3, 4 ]
-gap> f^iso;       
-(1,2)
-gap> (f^iso)^inv; 
-[ 1 .. 4 ] -> [ 2, 1, 3, 4 ]
-gap> ForAll(s, f-> (f^iso)^inv=f);
-true
-gap> Size(s);
-24
-gap> Size(Range(iso));
-24
-
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;

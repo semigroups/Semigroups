@@ -186,7 +186,7 @@ function(d)
   iso:=function(f)
     local o, i, j;
     o:=ImageOrbit(d);
-    i:=Position(o, ImageSetOfTransformation(f));
+    i:=Position(o, ImageSetOfTransformation(f)); #JDM this can't work for PPerms
     if i=fail then 
       return fail;
     fi;
@@ -473,7 +473,8 @@ function(s)
 end);
 
 InstallMethod(IsCliffordSemigroup, "for an inverse semigroup", 
-[IsInverseSemigroup], s-> ForAll(OrbSCC(LongOrb(s)), x-> Length(x)=1));
+[IsInverseSemigroup and IsPartialPermSemigroup], 
+s-> ForAll(OrbSCC(LongOrb(s)), x-> Length(x)=1));
 
 # new for 0.1! - IsCommutativeSemigroup - "for a transformation semigroup"
 ###########################################################################
@@ -497,6 +498,9 @@ function(s)
 
   return true;
 end);
+
+# new for 0.1! - IsCommutativeSemigroup - "for a partial perm semigroup"
+###########################################################################
 
 InstallMethod(IsCommutativeSemigroup, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
@@ -592,6 +596,7 @@ if IsBound(NaturalLeqPP) then
     return true;
   end);
 fi;
+
 #IIIGGG
 
 # new for 0.1! - IsHTrivial - "for a transformation semigroup"
@@ -614,6 +619,9 @@ function(s)
   until IsDoneIterator(iter);
   return true;
 end);
+
+# new for 0.1! - IsHTrivial - "for a partial perm inv semigroup"
+###########################################################################
 
 InstallMethod(IsHTrivial, "for a partial perm inv semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
@@ -1056,6 +1064,9 @@ if Citrus_C then
     return MappingByFunction(g, InverseMonoid(List(GeneratorsOfGroup(g), p-> 
      AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
   end);
+else
+  InstallMethod(IsomorphismPartialPermMonoid, "for a perm group",
+  [IsPermGroup], CitrusIsNotCompiled);
 fi;
 
 # new for 0.7! - IsomorphismPartialPermSemigroup - "for a perm group"
@@ -1071,13 +1082,15 @@ if Citrus_C then
     return MappingByFunction(g, InverseSemigroup(List(GeneratorsOfGroup(g), p-> 
      AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
   end);
+else
+  InstallMethod(IsomorphismPartialPermSemigroup, "for a perm group",
+  [IsPermGroup], CitrusIsNotCompiled);
 fi;
 
 # new for 0.7! - IsomorphismPartialPermSemigroup - "for trans semi"
 #############################################################################
 
 if Citrus_C then 
-
   InstallOtherMethod(IsomorphismPartialPermMonoid, "for a part perm semi",
   [IsPartialPermSemigroup],
   function(s)
@@ -1120,6 +1133,10 @@ if Citrus_C then
      InverseMonoid(List(GeneratorsOfSemigroup(s), iso)), iso, 
       x-> AsTransformationNC(x, Degree(s)));
   end);
+else
+  InstallOtherMethod(IsomorphismPartialPermMonoid, "for a trans semi",
+  [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+  CitrusIsNotCompiled);
 fi;
 
 # new for 0.7! - IsomorphismPartialPermSemigroup - "for trans semi"
@@ -1148,6 +1165,10 @@ if Citrus_C then
      InverseSemigroup(List(GeneratorsOfSemigroup(s), iso)), iso, 
       x-> AsTransformationNC(x, Degree(s)));
   end);
+else
+  InstallOtherMethod(IsomorphismPartialPermSemigroup, "for a trans semi",
+  [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+  CitrusIsNotCompiled);
 fi;
 
 # new for 0.7! - IsomorphismReesMatrixSemigroup - "for a D-class" 

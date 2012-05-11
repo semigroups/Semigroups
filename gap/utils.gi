@@ -89,9 +89,26 @@ end);
 
 InstallGlobalFunction(CitrusTestAll, 
 function()
+  local dir_str, tst, dir, str, x;
+  
   Print(
   "Reading all .tst files in the directory citrus/tst/...\n\n"); 
-  Read(Filename(DirectoriesPackageLibrary("citrus","tst"),"testall.g"));;
+  dir_str:=Concatenation(PackageInfo("citrus")[1]!.InstallationPath,"/tst");
+  tst:=DirectoryContents(dir_str);
+  dir:=Directory(dir_str);
+  for x in tst do
+    str:=SplitString(x, ".");
+    if Length(str)>=2 and str[2]="tst" then
+      if not Citrus_C and str[1] in ["inverse", "pperm", "semigroups"]
+        then 
+        Print("not reading ", dir_str, "/", x, "\n(Citrus is not compiled)\n");
+      else
+        Print("reading ", dir_str,"/", x, " ...\n");
+        ReadTest(Filename(dir, x));
+      fi;
+      Print("\n");
+    fi;
+  od;  
   return;
 end);
 
@@ -102,6 +119,10 @@ InstallGlobalFunction(CitrusTestInstall,
 function()
   ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),
    "testinstall.tst"));;
+  if Citrus_C then 
+    ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),
+       "testcompiled.tst"));;
+  fi;
   return;
 end);
 
@@ -111,6 +132,12 @@ end);
 InstallGlobalFunction(CitrusTestManualExamples,
 function()
   local InfoLevelInfoWarning, InfoLevelInfoCitrus;
+  
+  if not Citrus_C then 
+    Print("Citrus is not compiled and so this will produce many many errors.\n");
+    return fail;
+  fi;
+
   SizeScreen([80]); 
   InfoLevelInfoWarning:=InfoLevel(InfoWarning);
   InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);
@@ -135,6 +162,11 @@ InstallGlobalFunction(CitrusReadTestManualExamples,
 function()
   local ex, tst, i;
 
+  if not Citrus_C then 
+    Print("Citrus is not compiled and so this will produce many many errors.");
+    return fail;
+  fi;
+  
   ex:=ManualExamples("~/citrus/doc/", "citrus.xml",  [ "utils.xml",
   "greens.xml", "orbits.xml", "properties.xml", "pperm.xml", "inverse.xml",
   "semigroups.xml",  "transform.xml", "../PackageInfo.g" ], "Single" );;
@@ -519,7 +551,7 @@ function(line)
 end);
 
 if IsBound(FullPartialPermNC) then 
-  InstallGlobalFuncion(ReadCitrusLinePP, 
+  InstallGlobalFunction(ReadCitrusLinePP, 
   function(line)
     local r, i, k, out, m, deg, rank, f, j;
     
