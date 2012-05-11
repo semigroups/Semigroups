@@ -1182,6 +1182,15 @@ else
   CitrusIsNotCompiled);
 fi;
 
+# new for 0.7! - IsomorphismReesMatrixSemigroup - "for a simple inverse semi"
+#############################################################################
+
+InstallOtherMethod(IsomorphismReesMatrixSemigroup, "for a simple inverse semi",
+[IsPartialPermSemigroup and IsInverseSemigroup and IsSimpleSemigroup],
+function(s)
+  return IsomorphismReesMatrixSemigroup(DClass(s, Representative(s)));
+end);
+
 # new for 0.7! - IsomorphismReesMatrixSemigroup - "for a D-class" 
 #############################################################################
 
@@ -1280,7 +1289,12 @@ InstallOtherMethod(IsomorphismTransformationSemigroup, "for partial perm semi",
 [IsPartialPermSemigroup],
 function(s)
   local n, gens1, m, gens2, iso, u, i;
-  
+ 
+  if Points(s)=[] then # semigroup consisting of the empty set
+    return MappingByFunction(s, Semigroup(Transformation([1])), 
+    x-> Transformation([1]), x-> PartialPermNC([]));
+  fi;
+
   n:=Maximum(Points(s))+1;
   gens1:=GeneratorsOfSemigroup(s); 
   m:=Length(gens1);
