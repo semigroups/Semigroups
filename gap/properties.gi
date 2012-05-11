@@ -154,6 +154,8 @@ function(d)
   mat:=[];
 
   inj:=InjectionZeroMagma(g);
+  SetIsTotal(inj, true);
+  SetIsSingleValued(inj, true);
   g:=Range(inj);
   zero:=MultiplicativeZero(g);
   bound_r:=List([1..Length(rreps)], ReturnFalse);
@@ -185,14 +187,14 @@ function(d)
   rms:=ReesZeroMatrixSemigroup(g, mat);
   iso:=function(f)
     local o, i, j;
-    o:=ImageOrbit(d);
-    i:=Position(o, ImageSetOfTransformation(f)); #JDM this can't work for PPerms
+    o:=LambdaOrb(d);
+    i:=Position(o, LambdaPt(f));
     if i=fail then 
       return fail;
     fi;
     i:=Position(OrbSCC(o)[OrbSCCLookup(o)[i]], i);
-    o:=KernelOrbit(d);
-    j:=Position(o, CanonicalTransSameKernel(f));
+    o:=RhoOrb(d);
+    j:=Position(o, RhoPt(f));
     if j=fail then 
       return fail;
     fi;
@@ -204,9 +206,10 @@ function(d)
 
   inv:=function(x)
     local i, a, j;
-    i:=RowIndexOfReesMatrixSemigroupElement(x);
-    a:=UnderlyingElementOfReesZeroMatrixSemigroupElement(x)^(inj^-1);
-    j:=ColumnIndexOfReesMatrixSemigroupElement(x);
+    i:=RowIndexOfReesZeroMatrixSemigroupElement(x);
+    a:=Images(InverseGeneralMapping(inj),
+     UnderlyingElementOfReesZeroMatrixSemigroupElement(x))[1];
+    j:=ColumnIndexOfReesZeroMatrixSemigroupElement(x);
     return rreps[i]*a*lreps[j];
   end;
 

@@ -678,4 +678,31 @@ function(arg)
   return;
 end);
 
+InstallMethod(LambdaPt, "for a trans",
+[IsTransformation], ImageSetOfTransformation);
+
+InstallMethod(LambdaPt, "for a partial perm",
+[IsPartialPerm], RanSetPP);
+
+InstallMethod(RhoPt, "for a trans",
+[IsTransformation], CanonicalTransSameKernel);
+
+InstallMethod(RhoPt, "for a partial perm",
+[IsPartialPerm], DomPP);
+
+InstallOtherMethod(LambdaOrb, "for a D-class of a trans. semi",
+[IsGreensDClass and IsGreensClassOfTransSemigp], ImageOrbit);
+
+InstallOtherMethod(LambdaOrb, "for a D-class of a part perm semi",
+[IsGreensDClass and IsGreensClassOfPartPermSemigroup], d-> d!.o);
+
+InstallOtherMethod(RhoOrb, "for a D-class of a trans. semi",
+[IsGreensDClass and IsGreensClassOfTransSemigp], KernelOrbit);
+
+InstallOtherMethod(RhoOrb, "for a D-class of a part perm semi",
+[IsGreensDClass and IsGreensClassOfPartPermSemigroup], d-> d!.o);
+
+
+
+
 #EOF
