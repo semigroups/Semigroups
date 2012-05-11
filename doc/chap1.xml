@@ -48,7 +48,7 @@
     permutations to a file; see <Ref Func="ReadCitrus"/> and <Ref
       Func="WriteCitrus"/>. <P/>
 
-    &noindent; The &Citrus; package is written in <B>c</B> and &GAP; code and 
+    &noindent; The &Citrus; package is written in C and &GAP; code and 
     requires the <URL Text="Orb">
     http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
     </URL> package. The &Orb; package is used to efficiently compute orbits in
@@ -107,16 +107,23 @@
       <C>&ARCHIVENAME;</C> into the <C>pkg</C> directory.  
       </Item>
 
-      <Item> COMPILE IT</Item>
+      <Item> To use the functions in &Citrus; for partial permutations and
+        inverse semigroups, you must compile the C part of the package 
+        (in the "pkg" directory) by doing:
+        <Listing>
+<![CDATA[cd citrus
+./configure
+make]]></Listing>
+    </Item>
 
-      <Item> start &GAP; in the usual way.</Item>
+    <Item> start &GAP; in the usual way.</Item>
+  
+    <Item> type <C>LoadPackage("citrus");</C></Item>
     
-      <Item> type <C>LoadPackage("citrus");</C></Item>
-      
-      <Item> compile the documentation by using <Ref Func="CitrusMakeDoc"/>
-      </Item>
+    <Item> compile the documentation by using <Ref Func="CitrusMakeDoc"/>
+    </Item>
 
-    </List>
+  </List>
 
     <E><B>Please note that</B> &Citrus; can only be used to compute with
       semigroups of partial permutations if it has been compiled.  </E><P/>

@@ -33,10 +33,10 @@
       achieved by entering:
 
       <Log>
-MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
- InstallationPath, "/doc"), "citrus.xml", [
- "utils.xml", "greens.xml", "orbits.xml", "properties.xml",
- "transform.xml", "../PackageInfo.g"], "citrus", "MathJax");;</Log>
+MakeGAPDocDoc( Concatenation( PackageInfo( "citrus" )[1]!.InstallationPath, 
+"/doc" ), "citrus.xml", [ "utils.xml", "greens.xml", "inverse.xml", 
+"orbits.xml", "properties.xml", "semigroups.xml", "transform.xml", "pperm.xml", 
+"../PackageInfo.g" ], "citrus", "MathJax" );</Log>
 
       at the &GAP; prompt. 
     </Description>
@@ -85,19 +85,8 @@ MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
     <Returns>Nothing.</Returns> 
     <Description>
       This function should be called with no argument to test the examples in
-      the &Citrus; manual. These tests
-      should take no more than a few seconds to complete. The same 
-      effect can be achieved by entering:
-
-<Log>SizeScreen([80]);
-SetInfoLevel(InfoWarning, 0);
-SetInfoLevel(InfoCitrus, 0);
-
-TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
-   InstallationPath, "/doc"), "citrus.xml",
-   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
-    "transform.xml", "../PackageInfo.g"]);</Log>
-      at the &GAP; prompt. 
+      the &Citrus; manual. These tests should take no more than a few minutes
+      to complete.
       To more comprehensively test that &Citrus; is installed
       correctly use <Ref Func="CitrusTestAll"/>. See also <Ref
       Func="CitrusTestInstall"/>.
