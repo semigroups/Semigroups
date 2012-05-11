@@ -1473,7 +1473,7 @@ function(s, f)
       return fail;
     fi;
     m:=OrbSCCLookup(o)[k];
-    CreateOrbSCCSchutzGp(o, m); 
+    CreateOrbSCCSchutzGp(o, m); #JDM replace this with something more sensible
     rep:=o!.mults[k]^-1*f; #LQuoPP
   else
     o:=ShortOrb(s, DomPP(f));
@@ -1504,7 +1504,8 @@ function(d, f)
   if k=fail then 
     return fail;
   fi;
-
+  
+  CreateOrbSCCSchutzGp(o, m); #JDM replace this with something more sensible
   rep:=o!.mults[k]^-1*f;
   
   l:=Position(o, RanSetPP(f));
@@ -1560,6 +1561,8 @@ function(s, f)
       return fail;
     fi;
     m:=OrbSCCLookup(o)[l];
+    
+    CreateOrbSCCSchutzGp(o, m); #JDM replace this with something more sensible
     rep:=f*o!.mults[l]; l:=o!.scc[m][1];
     k:=Position(o, DomPP(f));
     if k=fail or not OrbSCCTruthTable(o)[m][k] then 
@@ -1590,6 +1593,7 @@ function(d, f)
     return fail;
   fi;
 
+  CreateOrbSCCSchutzGp(o, m); #JDM replace this with something more sensible
   rep:=f*o!.mults[l];
   k:=Position(o, DomPP(f));
 

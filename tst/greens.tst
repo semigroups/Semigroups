@@ -1767,19 +1767,6 @@ gap> HClassReps(L);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ),
   Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
 
-gap> S:=Semigroup( Transformation( [ 4, 4, 3, 5, 3 ] ),
-> Transformation( [ 5, 1, 1, 4, 1 ] ),
-> Transformation( [ 5, 5, 4, 4, 5 ] ) );;
-gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
-Sym( [ 4 .. 5 ] )
-gap> SchutzenbergerGroup(RClass(S, f));
-Group([ (4,5) ])
-gap> SchutzenbergerGroup(LClass(S, f));
-Group([ (4,5) ])
-gap> SchutzenbergerGroup(HClass(S, f));
-Group([ (4,5) ])
-
-
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
