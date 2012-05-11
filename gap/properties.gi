@@ -367,8 +367,9 @@ InstallMethod(IsBand, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], s-> 
  IsCompletelyRegularSemigroup(s) and IsHTrivial(s));
 
-InstallMethod(IsBand, "for an inverse semigroup", 
+InstallOtherMethod(IsBand, "for an inverse semigroup", 
 [IsInverseSemigroup], IsSemilatticeAsSemigroup);
+#JDM remove other!
 
 # new for 0.1! - IsBlockGroup - "for a transformation semigroup"
 #############################################################################
@@ -425,8 +426,9 @@ InstallMethod(IsBrandtSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 s-> IsZeroSimpleSemigroup(s) and IsInverseSemigroup(s));
 
-InstallMethod(IsBrandtSemigroup, "for an inverse semigroup", 
+InstallOtherMethod(IsBrandtSemigroup, "for an inverse semigroup", 
 [IsInverseSemigroup], IsZeroSimpleSemigroup);
+#JDM remove other!
 
 #IIICCC
 
@@ -472,9 +474,10 @@ function(s)
   return true;
 end);
 
-InstallMethod(IsCliffordSemigroup, "for an inverse semigroup", 
+InstallOtherMethod(IsCliffordSemigroup, "for an inverse semigroup", 
 [IsInverseSemigroup and IsPartialPermSemigroup], 
 s-> ForAll(OrbSCC(LongOrb(s)), x-> Length(x)=1));
+#JDM remove other!
 
 # new for 0.1! - IsCommutativeSemigroup - "for a transformation semigroup"
 ###########################################################################
@@ -551,15 +554,16 @@ function(s)
   return true;
 end);
 
-InstallMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
+InstallOtherMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsCliffordSemigroup);
+# JDM remove other!
 
 # new for 0.1! - IsCompletelySimpleSemigroup - "for a trans. semigroup"
 ###########################################################################
 # Notes: this test required to avoid conflict with Smallsemi, DeclareSynonymAttr
 # causes problems. 
 
-InstallMethod(IsCompletelySimpleSemigroup, "for a semi.",
+InstallOtherMethod(IsCompletelySimpleSemigroup, "for a semi.",
 [IsSemigroup and HasGeneratorsOfSemigroup], 
  x-> IsSimpleSemigroup(x) and IsFinite(x));
 
@@ -823,8 +827,10 @@ end);
 # new for 0.7! - IsIdempotentGenerated - "for an inverse semigroup"
 ###########################################################################
 
-InstallMethod(IsIdempotentGenerated, "for an inverse semigroup",
+InstallOtherMethod(IsIdempotentGenerated, "for an inverse semigroup",
 [IsInverseSemigroup], IsSemilatticeAsSemigroup);
+
+# remove other JDM
 
 # new for 0.7! - IsInverseMonoid - "for a trans semigroup"
 ###########################################################################
@@ -924,7 +930,8 @@ function(s)
   return false;
 end);
 
-InstallMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
+#JDM remove other!
+InstallOtherMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
 #IIIMMM
@@ -978,8 +985,9 @@ end);
 
 # new for 0.7 - IsMonogenicSemigroup - "for an inverse semigroup"
 #############################################################################
+#JDM remove Other!
 
-InstallMethod(IsMonogenicSemigroup, "for an inverse semigroup", 
+InstallOtherMethod(IsMonogenicSemigroup, "for an inverse semigroup", 
 [IsInverseSemigroup and IsPartialPermSemigroup], 
 function(s)
   if not IsMonogenicInverseSemigroup(s) then 
@@ -1448,7 +1456,8 @@ function(s)
   return IsHTrivial(s);
 end);
 
-InstallMethod(IsRectangularBand, "for an inverse semigroup",
+#JDM remove other!
+InstallOtherMethod(IsRectangularBand, "for an inverse semigroup",
 [IsInverseSemigroup], s-> IsHTrivial(s) and IsSimpleSemigroup(s));
 
 # new for 0.1! - IsRegularSemigroup - "for a transformation semigroup"
@@ -1520,7 +1529,9 @@ function(s)
   return false;
 end);
 
-InstallMethod(IsRightZeroSemigroup, "for an inverse semigroup",
+#remove other! JDM
+
+InstallOtherMethod(IsRightZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
 #IIISSS
@@ -1528,9 +1539,8 @@ InstallMethod(IsRightZeroSemigroup, "for an inverse semigroup",
 # new for 0.1! - IsSemiband - "for a transformation semigroup"
 ###############################################################################
 
-InstallMethod(IsSemiband, "for a semigroup",
-[IsSemigroup and HasGeneratorsOfSemigroup],
-IsIdempotentGenerated);
+InstallOtherMethod(IsSemiband, "for a semigroup",
+[IsSemigroup and HasGeneratorsOfSemigroup], IsIdempotentGenerated);
 
 # new for 0.1! - IsSemilatticeAsSemigroup - "for a trans. semigroup"
 ###############################################################################
@@ -1539,10 +1549,10 @@ InstallMethod(IsSemilatticeAsSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
  s-> IsCommutative(s) and IsBand(s));
 
-# new for 0.1! - IsSemilatticeAsSemigroup - "for an inv. semi""
+# new for 0.7! - IsSemilatticeAsSemigroup - "for an inv. semi""
 ###############################################################################
 
-InstallMethod(IsSemilatticeAsSemigroup, "for an inverse semigroup",
+InstallOtherMethod(IsSemilatticeAsSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], s-> ForAll(Generators(s), x-> x^2=x));
 
 # new for 0.1! - IsSimpleSemigroup - "for a tran. semi."
@@ -1698,7 +1708,9 @@ function(s)
   return true;
 end);
 
-InstallMethod(IsZeroSemigroup, "for an inverse semigroup",
+#JDM remove other!
+
+InstallOtherMethod(IsZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
 # new for 0.2! - IsZeroSimpleSemigroup - "for a transformation semigroup"

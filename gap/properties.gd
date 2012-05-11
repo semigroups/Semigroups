@@ -8,6 +8,10 @@
 #############################################################################
 ##
 
+# properties marked JDM have filter IsTransformationSemigroup so that Citrus
+# and Smallsemi can be loaded together. These should be changed back to
+# IsSemigroup when a permanent solution can be found. 
+
 DeclareAttribute("AntiIsomorphismTransformationSemigroup",
  IsSemigroup);
 DeclareAttribute("GroupOfUnits", IsSemigroup);
@@ -16,13 +20,14 @@ DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
 DeclareProperty("IsAbundantSemigroup", IsSemigroup);
 DeclareProperty("IsAdequateSemigroup", IsSemigroup);
-DeclareProperty("IsBand", IsSemigroup);
+DeclareProperty("IsBand", IsTransformationSemigroup); #JDM
 DeclareProperty("IsBlockGroup", IsSemigroup);
-DeclareProperty("IsBrandtSemigroup", IsSemigroup);
-DeclareProperty("IsCliffordSemigroup", IsSemigroup);
+DeclareProperty("IsBrandtSemigroup", IsTransformationSemigroup); #JDM
+DeclareProperty("IsCliffordSemigroup", IsTransformationSemigroup);#JDM
 DeclareProperty("IsCommutativeSemigroup", IsSemigroup);
-DeclareProperty("IsCompletelyRegularSemigroup", IsSemigroup);
-DeclareProperty("IsCompletelySimpleSemigroup", IsSemigroup);   
+DeclareProperty("IsCompletelyRegularSemigroup", IsTransformationSemigroup);
+#JDM
+DeclareProperty("IsCompletelySimpleSemigroup", IsTransformationSemigroup); #JDM
 DeclareProperty("IsRTrivial", IsSemigroup);
 DeclareProperty("IsLTrivial", IsSemigroup);
 DeclareProperty("IsHTrivial", IsSemigroup);
@@ -31,13 +36,13 @@ DeclareSynonymAttr("IsAperiodicSemigroup", IsHTrivial);
 DeclareSynonymAttr("IsCombinatorialSemigroup", IsHTrivial);
 DeclareProperty("IsFactorisableSemigroup", IsSemigroup);
 DeclareProperty("IsGroupAsSemigroup", IsSemigroup);
-DeclareProperty("IsIdempotentGenerated", IsSemigroup);
+DeclareProperty("IsIdempotentGenerated", IsTransformationSemigroup); #JDM
 DeclareProperty("IsInverseMonoid", IsInverseSemigroup);
 DeclareProperty("IsLeftSimple", IsSemigroup);
-DeclareProperty("IsLeftZeroSemigroup", IsSemigroup);
+DeclareProperty("IsLeftZeroSemigroup", IsTransformationSemigroup); #JDm
 DeclareProperty("IsMonogenicInverseSemigroup", IsSemigroup);
-DeclareProperty("IsMonogenicSemigroup", IsSemigroup);
-DeclareProperty("IsMonoidAsSemigroup", IsSemigroup);
+DeclareProperty("IsMonogenicSemigroup", IsTransformationSemigroup); #JDM
+DeclareProperty("IsMonoidAsSemigroup", IsTransformationSemigroup); #JDM
 DeclareOperation("IsomorphismPartialPermMonoid", [IsPermGroup]);
 DeclareOperation("IsomorphismPartialPermSemigroup", [IsPermGroup]);
 DeclareOperation("IsomorphismTransformationMonoid",
@@ -46,15 +51,15 @@ DeclareProperty("IsOrthodoxSemigroup", IsSemigroup);
 DeclareSynonymAttr("IsPartialPermSemigroup", IsSemigroup and
 IsPartialPermCollection);
 DeclareProperty("IsPartialPermMonoid", IsPartialPermSemigroup);
-DeclareProperty("IsRectangularBand", IsSemigroup);
+DeclareProperty("IsRectangularBand", IsTransformationSemigroup); #JDM
 DeclareProperty("IsRightSimple", IsSemigroup);
-DeclareProperty("IsRightZeroSemigroup", IsSemigroup);
-DeclareProperty("IsSemiband", IsSemigroup);
+DeclareProperty("IsRightZeroSemigroup", IsTransformationSemigroup); #JDM
+DeclareProperty("IsSemiband", IsTransformationSemigroup); #JDM
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
-DeclareProperty("IsSemilatticeAsSemigroup", IsSemigroup);
+DeclareProperty("IsSemilatticeAsSemigroup", IsTransformationSemigroup); #JDM
 DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
-DeclareProperty("IsZeroSemigroup", IsSemigroup);
+DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup); #JDM
 DeclareAttribute("MinimalIdeal", IsSemigroup);
 DeclareOperation("NrElementsOfRank", [IsSemigroup and
 HasGeneratorsOfSemigroup, IsPosInt]);
