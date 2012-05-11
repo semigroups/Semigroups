@@ -77,16 +77,13 @@ end);
 # new for 0.7! - MunnSemigroup - "for a semilattice as a semigroup"
 ################################################################################
 
-if (not ARCH_IS_WINDOWS() and
-  Filename(DirectoriesPackagePrograms("grape"),"dreadnautB") = fail) or 
-  ShortFileNameWindows(Filename(DirectoriesPackageLibrary(
-         "grape","bin"),"dreadnautB.exe")) = fail then
+if Filename(DirectoriesPackagePrograms("grape"),"dreadnautB") = fail then
   InstallMethod(MunnSemigroup, "for a semilattice", 
-  [IsSemilatticeAsSemigroup], 
+  [IsSemigroup], 
   function(s)
     Info(InfoWarning, 1, "the nauty/dreadnaut binaries in GRAPE are not", 
-    " installed and so");
-    Info(InfoWarning, 1, "this function does not work.");
+    " installed and so this ");
+    Info(InfoWarning, 1, "function does not work.");
     return fail;
   end);
 else
