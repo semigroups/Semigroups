@@ -565,32 +565,33 @@ InstallMethod(IsCompletelySimpleSemigroup, "for a semi.",
 ###########################################################################
 #JDM prove this method is correct!
 
-InstallMethod(IsFactorisableSemigroup, "for a partial perm semigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup], 
-function(s)
-  local G, iso, enum, f;
-  
-  G:=GroupOfUnits(s);
-  
-  if G=fail then 
-    return false;
-  elif IsTrivial(G) then 
-    return IsSemilatticeAsSemigroup(s);
-  fi;
-  
-  iso:=InverseGeneralMapping(IsomorphismPermGroup(G));
-  enum:=Enumerator(Source(iso));
-
-  for f in Generators(s) do 
-    if not f in G then 
-      if not ForAny(enum, g-> NaturalLeqPP(f, g^iso)) then 
-        return false;
-      fi;
+if IsBound(NaturalLeqPP) then 
+  InstallMethod(IsFactorisableSemigroup, "for a partial perm semigroup",
+  [IsPartialPermSemigroup and IsInverseSemigroup], 
+  function(s)
+    local G, iso, enum, f;
+    
+    G:=GroupOfUnits(s);
+    
+    if G=fail then 
+      return false;
+    elif IsTrivial(G) then 
+      return IsSemilatticeAsSemigroup(s);
     fi;
-  od;
-  return true;
-end);
+    
+    iso:=InverseGeneralMapping(IsomorphismPermGroup(G));
+    enum:=Enumerator(Source(iso));
 
+    for f in Generators(s) do 
+      if not f in G then 
+        if not ForAny(enum, g-> NaturalLeqPP(f, g^iso)) then 
+          return false;
+        fi;
+      fi;
+    od;
+    return true;
+  end);
+fi;
 #IIIGGG
 
 # new for 0.1! - IsHTrivial - "for a transformation semigroup"
@@ -762,19 +763,21 @@ end);
 
 # new for 0.7! - IsGroupAsSemigroup - "for a partial perm semigroup"
 ###########################################################################
- 
-InstallMethod(IsGroupAsSemigroup, "for a partial perm semigroup", 
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local gens, dom, ran;
 
-  gens:=Generators(s); 
-  dom:=DomPP(gens[1]); ran:=RanSetPP(gens[1]);
-  if not dom=ran then 
-    return false;
-  fi;
-  return ForAll(gens, x-> DomPP(x)=dom and RanSetPP(x)=ran);
-end);
+if IsBound(DomPP) and IsBound(RanSetPP) then 
+  InstallMethod(IsGroupAsSemigroup, "for a partial perm semigroup", 
+  [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+  function(s)
+    local gens, dom, ran;
+
+    gens:=Generators(s); 
+    dom:=DomPP(gens[1]); ran:=RanSetPP(gens[1]);
+    if not dom=ran then 
+      return false;
+    fi;
+    return ForAll(gens, x-> DomPP(x)=dom and RanSetPP(x)=ran);
+  end);
+fi;
 
 #IIIIII
 
@@ -1043,99 +1046,109 @@ InstallOtherMethod(IsMonoidAsSemigroup, "for a semigroup",
 # new for 0.7! - IsomorphismPartialPermMonoid - "for a perm group"
 #############################################################################
 
-InstallMethod(IsomorphismPartialPermMonoid, "for a perm group",
-[IsPermGroup],
-function(g)
-  local dom;
+if Citrus_C then 
+  InstallMethod(IsomorphismPartialPermMonoid, "for a perm group",
+  [IsPermGroup],
+  function(g)
+    local dom;
 
-  dom:=MovedPoints(g);
-  return MappingByFunction(g, InverseMonoid(List(GeneratorsOfGroup(g), p-> 
-   AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
-end);
+    dom:=MovedPoints(g);
+    return MappingByFunction(g, InverseMonoid(List(GeneratorsOfGroup(g), p-> 
+     AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
+  end);
+fi;
 
 # new for 0.7! - IsomorphismPartialPermSemigroup - "for a perm group"
 #############################################################################
 
-InstallMethod(IsomorphismPartialPermSemigroup, "for a perm group",
-[IsPermGroup],
-function(g)
-  local dom;
+if Citrus_C then 
+  InstallMethod(IsomorphismPartialPermSemigroup, "for a perm group",
+  [IsPermGroup],
+  function(g)
+    local dom;
 
-  dom:=MovedPoints(g);
-  return MappingByFunction(g, InverseSemigroup(List(GeneratorsOfGroup(g), p-> 
-   AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
-end);
-
-# new for 0.7! - IsomorphismPartialPermSemigroup - "for trans semi"
-#############################################################################
-
-InstallOtherMethod(IsomorphismPartialPermMonoid, "for a part perm semi",
-[IsPartialPermSemigroup],
-function(s)
-
-  if IsMonoid(s) then 
-    return MappingByFunction(s, s, x-> x, x-> x);
-  elif not IsMonoidAsSemigroup(s) then 
-    Error("usage, partial perm. semigroup satisfying IsMonoidAsSemigroup,");
-    return;
-  fi;
-
-  return MappingByFunction(s, 
-   InverseMonoid(Difference(Generators(s), [One(s)])), x-> x, x-> x); 
-end);
+    dom:=MovedPoints(g);
+    return MappingByFunction(g, InverseSemigroup(List(GeneratorsOfGroup(g), p-> 
+     AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
+  end);
+fi;
 
 # new for 0.7! - IsomorphismPartialPermSemigroup - "for trans semi"
 #############################################################################
 
-InstallOtherMethod(IsomorphismPartialPermMonoid, "for a trans semi",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local iso;
+if Citrus_C then 
 
-  if not IsInverseMonoid(s) then 
-    Error("usage: the argument should be an inverse monoid,");
-    return;
-  fi;
-  
-  iso:=function(f)
-    local dom, ran;
-  
-    dom:=OnSets([1..Degree(s)], InversesOfTransformationNC(s, f)[1]);
-    ran:=List(dom, i-> i^f);
-    return PartialPermNC(dom, ran);
-  end;
+  InstallOtherMethod(IsomorphismPartialPermMonoid, "for a part perm semi",
+  [IsPartialPermSemigroup],
+  function(s)
 
-  return MappingByFunction(s, 
-   InverseMonoid(List(GeneratorsOfSemigroup(s), iso)), iso, 
-    x-> AsTransformationNC(x, Degree(s)));
-end);
+    if IsMonoid(s) then 
+      return MappingByFunction(s, s, x-> x, x-> x);
+    elif not IsMonoidAsSemigroup(s) then 
+      Error("usage, partial perm. semigroup satisfying IsMonoidAsSemigroup,");
+      return;
+    fi;
 
+    return MappingByFunction(s, 
+     InverseMonoid(Difference(Generators(s), [One(s)])), x-> x, x-> x); 
+  end);
+fi;
 
 # new for 0.7! - IsomorphismPartialPermSemigroup - "for trans semi"
 #############################################################################
 
-InstallOtherMethod(IsomorphismPartialPermSemigroup, "for a trans semi",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local iso;
+if Citrus_C then 
+  InstallOtherMethod(IsomorphismPartialPermMonoid, "for a trans semi",
+  [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+  function(s)
+    local iso;
 
-  if not IsInverseSemigroup(s) then 
-    Error("usage: the argument should be an inverse semigroup,");
-    return;
-  fi;
-  
-  iso:=function(f)
-    local dom, ran;
-  
-    dom:=OnSets([1..Degree(s)], InversesOfTransformationNC(s, f)[1]);
-    ran:=List(dom, i-> i^f);
-    return PartialPermNC(dom, ran);
-  end;
+    if not IsInverseMonoid(s) then 
+      Error("usage: the argument should be an inverse monoid,");
+      return;
+    fi;
+    
+    iso:=function(f)
+      local dom, ran;
+    
+      dom:=OnSets([1..Degree(s)], InversesOfTransformationNC(s, f)[1]);
+      ran:=List(dom, i-> i^f);
+      return PartialPermNC(dom, ran);
+    end;
 
-  return MappingByFunction(s, 
-   InverseSemigroup(List(GeneratorsOfSemigroup(s), iso)), iso, 
-    x-> AsTransformationNC(x, Degree(s)));
-end);
+    return MappingByFunction(s, 
+     InverseMonoid(List(GeneratorsOfSemigroup(s), iso)), iso, 
+      x-> AsTransformationNC(x, Degree(s)));
+  end);
+fi;
+
+# new for 0.7! - IsomorphismPartialPermSemigroup - "for trans semi"
+#############################################################################
+
+if Citrus_C then 
+  InstallOtherMethod(IsomorphismPartialPermSemigroup, "for a trans semi",
+  [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+  function(s)
+    local iso;
+
+    if not IsInverseSemigroup(s) then 
+      Error("usage: the argument should be an inverse semigroup,");
+      return;
+    fi;
+  
+    iso:=function(f)
+      local dom, ran;
+  
+      dom:=OnSets([1..Degree(s)], InversesOfTransformationNC(s, f)[1]);
+      ran:=List(dom, i-> i^f);
+      return PartialPermNC(dom, ran);
+    end;
+
+    return MappingByFunction(s, 
+     InverseSemigroup(List(GeneratorsOfSemigroup(s), iso)), iso, 
+      x-> AsTransformationNC(x, Degree(s)));
+  end);
+fi;
 
 # new for 0.7! - IsomorphismReesMatrixSemigroup - "for a D-class" 
 #############################################################################
@@ -1181,13 +1194,13 @@ function(d)
   iso:=function(f)
     local o, i, j;
     o:=ImageOrbit(d);
-    i:=Position(o, ImageSetOfTransformation(f));
+    i:=Position(o, ImageSetOfTransformation(f)); #JDM this can't work!
     if i=fail then 
       return fail;
     fi;
     i:=Position(OrbSCC(o)[OrbSCCLookup(o)[i]], i);
     o:=KernelOrbit(d);
-    j:=Position(o, CanonicalTransSameKernel(f));
+    j:=Position(o, CanonicalTransSameKernel(f)); #JDM this can't work!
     if j=fail then 
       return fail;
     fi;
@@ -1387,11 +1400,13 @@ end);
 # new for 0.7! - IsPartialPermMonoid - "for a partial perm semigroup"
 ###########################################################################
 
-InstallMethod(IsPartialPermMonoid, "for a partial perm semigroup",
-[IsPartialPermSemigroup],
-function(s)
-  return ForAny(GeneratorsOfInverseSemigroup(s), x-> DomPP(x)=Points(s));
-end);
+if IsBound(DomPP) then 
+  InstallMethod(IsPartialPermMonoid, "for a partial perm semigroup",
+  [IsPartialPermSemigroup],
+  function(s)
+    return ForAny(GeneratorsOfInverseSemigroup(s), x-> DomPP(x)=Points(s));
+  end);
+fi;
 
 #IIIRRR
 
@@ -1797,39 +1812,41 @@ end);
 # new for 0.7! - MinimalIdeal - "for a partial perm semi"
 ###########################################################################
 
-InstallMethod(MinimalIdeal, "for a partial perm semi",
-[IsPartialPermSemigroup],
-function(s)
-  local n, gens, max, bound, o, i, f, I;
+if IsBound(OnIntegerSetsWithPP) then 
+  InstallMethod(MinimalIdeal, "for a partial perm semi",
+  [IsPartialPermSemigroup],
+  function(s)
+    local n, gens, max, bound, o, i, f, I;
 
-  n:=Degree(s);
-  gens:=Generators(s);
-  max:=Maximum(List(gens, Degree));
+    n:=Degree(s);
+    gens:=Generators(s);
+    max:=Maximum(List(gens, Degree));
 
-  if max=n then
-    bound:=2^n;
-  else
-    bound:=Sum([1..max], x-> Binomial(n, x));
-  fi;
+    if max=n then
+      bound:=2^n;
+    else
+      bound:=Sum([1..max], x-> Binomial(n, x));
+    fi;
 
-  o:=Orb(gens, Points(s), OnIntegerSetsWithPP, rec( schreier:=true,
-   gradingfunc:=function(o, x) return Length(x); end,
-    onlygrades:=[0..max],
-     lookingfor:=function(o, x) return Length(x)=0; end));
-  
-  Enumerate(o, bound);
+    o:=Orb(gens, Points(s), OnIntegerSetsWithPP, rec( schreier:=true,
+     gradingfunc:=function(o, x) return Length(x); end,
+      onlygrades:=[0..max],
+       lookingfor:=function(o, x) return Length(x)=0; end));
+    
+    Enumerate(o, bound);
 
-  if IsPosInt(PositionOfFound(o)) then
-    i:=PositionOfFound(o);
-  else
-    i:=Position(Grades(o), Minimum(Grades(o)));
-  fi;
+    if IsPosInt(PositionOfFound(o)) then
+      i:=PositionOfFound(o);
+    else
+      i:=Position(Grades(o), Minimum(Grades(o)));
+    fi;
 
-  f:=EvaluateWord(gens, TraceSchreierTreeForward(o, i));
-  I:=InverseSemigroup(Elements(GreensDClassOfElementNC(s, f)));
-  SetIsGroupAsSemigroup(I, true);
-  return I;
-end);
+    f:=EvaluateWord(gens, TraceSchreierTreeForward(o, i));
+    I:=InverseSemigroup(Elements(GreensDClassOfElementNC(s, f)));
+    SetIsGroupAsSemigroup(I, true);
+    return I;
+  end);
+fi;
 
 # new for 0.1! - MultiplicativeNeutralElement - "for a trans. semi."
 ###########################################################################
@@ -1949,53 +1966,55 @@ end);
 # new for 0.7! - MultiplicativeZero - "for a partial perm inv semigroup"
 ###########################################################################
 
-InstallOtherMethod(MultiplicativeZero, "for a partial perm inv semigroup",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(s)
-  local o, min, len, m, f, i;
-  
-  o:=LongOrb(s);
-  
-  if ForAny(o, x-> Length(x)=0) then 
-    return PartialPermNC([]);
-  elif IsClosed(o) then
-    min:=Length(o[1]);
-    for i in [2..Length(o)] do 
-      len:=Length(o[i]);
-      if len<min then 
-        min:=len;
+if IsBound(OnIntegerSetsWithPP) then 
+  InstallOtherMethod(MultiplicativeZero, "for a partial perm inv semigroup",
+  [IsInverseSemigroup and IsPartialPermSemigroup],
+  function(s)
+    local o, min, len, m, f, i;
+    
+    o:=LongOrb(s);
+    
+    if ForAny(o, x-> Length(x)=0) then 
+      return PartialPermNC([]);
+    elif IsClosed(o) then
+      min:=Length(o[1]);
+      for i in [2..Length(o)] do 
+        len:=Length(o[i]);
+        if len<min then 
+          min:=len;
+        fi;
+      od;
+      m:=OrbSCCLookup(o)[min];
+      f:=PartialPermNC(o[min], o[min]);
+      if IsTrivial(CreateOrbSCCSchutzGp(o, m, f)[2]) then 
+        return f;
       fi;
-    od;
-    m:=OrbSCCLookup(o)[min];
-    f:=PartialPermNC(o[min], o[min]);
-    if IsTrivial(CreateOrbSCCSchutzGp(o, m, f)[2]) then 
+      return fail;
+    fi;
+
+    o:=Orb(s, Points(s), OnIntegerSetsWithPP, 
+    rec(
+     gradingfunc:=function(o, x) return Length(x); end,
+      onlygrades:=[0..Degree(s)],
+       lookingfor:=function(o, x) return Length(x)=0; end));
+
+    Enumerate(o, infinity);
+
+    if IsPosInt(PositionOfFound(o)) then
+      min:=PositionOfFound(o);
+    else
+      min:=Position(Grades(o), Minimum(Grades(o)));
+    fi;
+
+    f:=PartialPermNC(o[min], o[min]);;
+
+    if Size(GreensHClassOfElementNC(s, f))=1 then
       return f;
     fi;
+
     return fail;
-  fi;
-
-  o:=Orb(s, Points(s), OnIntegerSetsWithPP, 
-  rec(
-   gradingfunc:=function(o, x) return Length(x); end,
-    onlygrades:=[0..Degree(s)],
-     lookingfor:=function(o, x) return Length(x)=0; end));
-
-  Enumerate(o, infinity);
-
-  if IsPosInt(PositionOfFound(o)) then
-    min:=PositionOfFound(o);
-  else
-    min:=Position(Grades(o), Minimum(Grades(o)));
-  fi;
-
-  f:=PartialPermNC(o[min], o[min]);;
-
-  if Size(GreensHClassOfElementNC(s, f))=1 then
-    return f;
-  fi;
-
-  return fail;
-end);
+  end);
+fi;
 
 #NNN
 

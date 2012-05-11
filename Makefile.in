@@ -36,6 +36,7 @@ static:
 
 clean:
 	rm -rf bin/@GAPARCH@ Makefile
+	rmdir bin
 
 archive: doc
 	(cd .. ; tar czvf orb-`cat orb/VERSION`.tar.gz --exclude ".svn" --exclude bin --exclude test orb)

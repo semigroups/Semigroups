@@ -13,101 +13,111 @@
 # new for 0.7! - ClosureInverseSemigroup - "for an inverse semi"
 #############################################################################
 
-InstallGlobalFunction(ClosureInverseSemigroup,
-function(arg)
-  local n;
-  
-  if not (IsPartialPermSemigroup(arg[1]) and IsInverseSemigroup(arg[1])) or not 
-   (IsPartialPermCollection(arg[2]) or IsPartialPerm(arg[2])) then 
-    Error("Usage: arg. must be a inverse semigroup of partial perms and ",
-    "and a partial perm or collection of partial perms,");
-    return;
-  fi;
-
-  if Length(arg)=3 then 
-    if not IsRecord(arg[3]) then 
-      Error("Usage: the third argument must be a record,");
+if Citrus_C then 
+  InstallGlobalFunction(ClosureInverseSemigroup,
+  function(arg)
+    local n;
+    
+    if not (IsPartialPermSemigroup(arg[1]) and IsInverseSemigroup(arg[1])) or
+      not (IsPartialPermCollection(arg[2]) or IsPartialPerm(arg[2])) then 
+      Error("Usage: arg. must be a inverse semigroup of partial perms and ",
+      "and a partial perm or collection of partial perms,");
       return;
     fi;
 
-    arg[3].schreier:=false;
+    if Length(arg)=3 then 
+      if not IsRecord(arg[3]) then 
+        Error("Usage: the third argument must be a record,");
+        return;
+      fi;
 
-    if not IsBound(arg[3].small) then
-      arg[3].small:=CitrusOptionsRec.small;
+      arg[3].schreier:=false;
+
+      if not IsBound(arg[3].small) then
+        arg[3].small:=CitrusOptionsRec.small;
+      fi;
+
+      if not IsBound(arg[3].hashlen) then
+        arg[3].hashlen:=CitrusOptionsRec.hashlen;
+      elif IsPosInt(arg[3].hashlen) then
+        n:=arg[3].hashlen;
+        arg[3].hashlen:=rec(S:=NextPrimeInt(Int(n/100)),
+         M:=NextPrimeInt(Int(n/4)), L:=NextPrimeInt(n));
+      elif not IsRecord(arg[3].hashlen) then
+        Error("the component hashlen should be a positive integer or a record,");
+        return;
+      fi;
+    else
+      arg[3]:=arg[1]!.opts;
     fi;
 
-    if not IsBound(arg[3].hashlen) then
-      arg[3].hashlen:=CitrusOptionsRec.hashlen;
-    elif IsPosInt(arg[3].hashlen) then
-      n:=arg[3].hashlen;
-      arg[3].hashlen:=rec(S:=NextPrimeInt(Int(n/100)),
-       M:=NextPrimeInt(Int(n/4)), L:=NextPrimeInt(n));
-    elif not IsRecord(arg[3].hashlen) then
-      Error("the component hashlen should be a positive integer or a record,");
-      return;
+    if IsSemigroup(arg[2]) then 
+      arg[2]:=GeneratorsOfSemigroup(arg[2]);
+    elif IsPartialPerm(arg[2]) then 
+      arg[2]:=[arg[2]];
     fi;
-  else
-    arg[3]:=arg[1]!.opts;
-  fi;
 
-  if IsSemigroup(arg[2]) then 
-    arg[2]:=GeneratorsOfSemigroup(arg[2]);
-  elif IsPartialPerm(arg[2]) then 
-    arg[2]:=[arg[2]];
-  fi;
-
-  return ClosureInverseSemigroupNC(arg[1], Filtered(arg[2], x-> 
-   not x in arg[1]), arg[3]);
-end);
+    return ClosureInverseSemigroupNC(arg[1], Filtered(arg[2], x-> 
+     not x in arg[1]), arg[3]);
+  end);
+else 
+  InstallGlobalFunction(ClosureInverseSemigroup, 
+  function(arg) return CitrusIsNotCompiled(); end);
+fi;
 
 # new for 0.7! - ClosureInverseSemigroupNC - "for an inverse semi"
 #############################################################################
 
-InstallGlobalFunction(ClosureInverseSemigroupNC,
-function(s, coll, opts)
-  local t, coll_copy, o, f;
- 
-  if coll=[] then
-    Info(InfoCitrus, 2, "All the elements in the collection belong to the ",
-    " semigroup,");
-    return s;
-  fi;
-
-  o:=LongOrb(s);
-  
-  if not IsSubset(o[1], Points(coll)) then #the original LongOrb seed is wrong
-    return InverseSemigroup(Concatenation(Generators(s), coll), opts);
-  fi;
-
-  coll_copy:=ShallowCopy(coll);
-  for f in coll do
-    if not DomPP(f)=RanSetPP(f) then 
-      Add(coll_copy, f^-1);
+if IsBound(DomPP) and IsBound(RanSetPP) then 
+  InstallGlobalFunction(ClosureInverseSemigroupNC,
+  function(s, coll, opts)
+    local t, coll_copy, o, f;
+   
+    if coll=[] then
+      Info(InfoCitrus, 2, "All the elements in the collection belong to the ",
+      " semigroup,");
+      return s;
     fi;
-  od;  
-  
-  o:=StructuralCopy(o);
-  AddGeneratorsToOrbit(o, coll_copy);
 
-  t:=InverseSemigroupByGeneratorsNC(o!.gens, 
-   Concatenation(Generators(s), coll), opts);
+    o:=LongOrb(s);
+    
+    if not IsSubset(o[1], Points(coll)) then #the original LongOrb seed is wrong
+      return InverseSemigroup(Concatenation(Generators(s), coll), opts);
+    fi;
 
-  if IsBound(o!.scc) then 
-    Unbind(o!.scc); Unbind(o!.truth); Unbind(o!.trees); Unbind(o!.scc_lookup);
-  fi;
-  
-  if IsBound(o!.mults) then 
-    Unbind(o!.mults); 
-  fi;
-  
-  if IsBound(o!.schutz) then 
-    Unbind(o!.schutz);
-  fi;
-  
-  o!.finished:=false;
-  SetLongOrb(t, o);
-  return t;
-end);
+    coll_copy:=ShallowCopy(coll);
+    for f in coll do
+      if not DomPP(f)=RanSetPP(f) then 
+        Add(coll_copy, f^-1);
+      fi;
+    od;  
+    
+    o:=StructuralCopy(o);
+    AddGeneratorsToOrbit(o, coll_copy);
+
+    t:=InverseSemigroupByGeneratorsNC(o!.gens, 
+     Concatenation(Generators(s), coll), opts);
+
+    if IsBound(o!.scc) then 
+      Unbind(o!.scc); Unbind(o!.truth); Unbind(o!.trees); Unbind(o!.scc_lookup);
+    fi;
+    
+    if IsBound(o!.mults) then 
+      Unbind(o!.mults); 
+    fi;
+    
+    if IsBound(o!.schutz) then 
+      Unbind(o!.schutz);
+    fi;
+    
+    o!.finished:=false;
+    SetLongOrb(t, o);
+    return t;
+  end);
+else 
+  InstallGlobalFunction(ClosureInverseSemigroupNC, 
+  function(s, coll, opts) return CitrusIsNotCompiled(); end);
+fi;
 
 # mod for 0.6! - ClosureSemigroup - "for a trans. semi. and trans. coll."
 #############################################################################
@@ -462,230 +472,249 @@ end);
 # new for 0.7! - InverseMonoid
 ##############################################################################
 
-InstallGlobalFunction(InverseMonoid,
-function( arg )
-  local out, i;
+if Citrus_C then 
+  InstallGlobalFunction(InverseMonoid,
+  function( arg )
+    local out, i;
 
-  if IsPartialPerm(arg[1]) or IsPartialPermCollection(arg[1]) then 
-    out:=[]; 
-    for i in [1..Length(arg)] do 
-      if IsPartialPerm(arg[i]) then 
-        out[i]:=[arg[i]];
-      elif IsPartialPermCollection(arg[i]) then 
-        if IsPartialPermSemigroup(arg[i]) then
-          out[i]:=Generators(arg[i]);
+    if IsPartialPerm(arg[1]) or IsPartialPermCollection(arg[1]) then 
+      out:=[]; 
+      for i in [1..Length(arg)] do 
+        if IsPartialPerm(arg[i]) then 
+          out[i]:=[arg[i]];
+        elif IsPartialPermCollection(arg[i]) then 
+          if IsPartialPermSemigroup(arg[i]) then
+            out[i]:=Generators(arg[i]);
+          else
+            out[i]:=arg[i];
+          fi;
+        elif i=Length(arg) and IsRecord(arg[i]) then 
+          return InverseMonoidByGenerators(Concatenation(out), arg[i]);
         else
-          out[i]:=arg[i];
+          Error( "usage: InverseMonoid(<gen>,...), InverseMonoid(<gens>),"
+          ,  "InverseMonoid(<D>)," );
+          return;
         fi;
-      elif i=Length(arg) and IsRecord(arg[i]) then 
-        return InverseMonoidByGenerators(Concatenation(out), arg[i]);
-      else
-        Error( "usage: InverseMonoid(<gen>,...), InverseMonoid(<gens>),"
-        ,  "InverseMonoid(<D>)," );
-        return;
-      fi;
-    od;
-    return InverseMonoidByGenerators(Concatenation(out));
-  fi;
-  Error( "usage: InverseMonoid(<gen>,...),InverseMonoid(<gens>),",
-   "InverseMonoid(<D>),");
-  return;
-end);
-
+      od;
+      return InverseMonoidByGenerators(Concatenation(out));
+    fi;
+    Error( "usage: InverseMonoid(<gen>,...),InverseMonoid(<gens>),",
+     "InverseMonoid(<D>),");
+    return;
+  end);
+else 
+  InstallGlobalFunction(InverseMonoid, 
+  function(arg) return CitrusIsNotCompiled(); end);
+fi;
 
 # new for 0.7! - InverseSemigroup
 ##############################################################################
 
-InstallGlobalFunction(InverseSemigroup,
-function( arg )
-  local out, i;
+if Citrus_C then 
+  InstallGlobalFunction(InverseSemigroup,
+  function( arg )
+    local out, i;
 
-  if IsPartialPerm(arg[1]) or IsPartialPermCollection(arg[1]) then 
-    out:=[]; 
-    for i in [1..Length(arg)] do 
-      if IsPartialPerm(arg[i]) then 
-        out[i]:=[arg[i]];
-      elif IsPartialPermCollection(arg[i]) then 
-        if IsPartialPermSemigroup(arg[i]) then
-          out[i]:=Generators(arg[i]);
+    if IsPartialPerm(arg[1]) or IsPartialPermCollection(arg[1]) then 
+      out:=[]; 
+      for i in [1..Length(arg)] do 
+        if IsPartialPerm(arg[i]) then 
+          out[i]:=[arg[i]];
+        elif IsPartialPermCollection(arg[i]) then 
+          if IsPartialPermSemigroup(arg[i]) then
+            out[i]:=Generators(arg[i]);
+          else
+            out[i]:=arg[i];
+          fi;
+        elif i=Length(arg) and IsRecord(arg[i]) then 
+          return InverseSemigroupByGenerators(Concatenation(out), arg[i]);
         else
-          out[i]:=arg[i];
+          Error( "usage: InverseSemigroup(<gen>,...), InverseSemigroup(<gens>),"
+          ,  "InverseSemigroup(<D>)," );
+          return;
         fi;
-      elif i=Length(arg) and IsRecord(arg[i]) then 
-        return InverseSemigroupByGenerators(Concatenation(out), arg[i]);
-      else
-        Error( "usage: InverseSemigroup(<gen>,...), InverseSemigroup(<gens>),"
-        ,  "InverseSemigroup(<D>)," );
-        return;
-      fi;
-    od;
-    return InverseSemigroupByGenerators(Concatenation(out));
-  fi;
-  Error( "usage: InverseSemigroup(<gen>,...),InverseSemigroup(<gens>),",
-   "InverseSemigroup(<D>),");
-  return;
-end);
+      od;
+      return InverseSemigroupByGenerators(Concatenation(out));
+    fi;
+    Error( "usage: InverseSemigroup(<gen>,...),InverseSemigroup(<gens>),",
+     "InverseSemigroup(<D>),");
+    return;
+  end);
+else 
+  InstallGlobalFunction(InverseSemigroup, 
+  function(arg) return CitrusIsNotCompiled(); end);
+fi;
 
 # new for 0.7! - InverseMonoidByGenerators
 ################################################################################
 
-InstallMethod(InverseMonoidByGenerators, "for partial perm coll", 
-[IsPartialPermCollection],
-function(coll)
-  local one, gens, f;
+if IsBound(DomPP) and IsBound(RanSetPP) then 
+  InstallMethod(InverseMonoidByGenerators, "for partial perm coll", 
+  [IsPartialPermCollection],
+  function(coll)
+    local one, gens, f;
   
-  gens:=ShallowCopy(coll);
+    gens:=ShallowCopy(coll);
 
-  for f in coll do
-    if not DomPP(f)=RanSetPP(f) then 
-      Add(gens, f^-1);
-    fi;
-  od;
+    for f in coll do
+      if not DomPP(f)=RanSetPP(f) then 
+        Add(gens, f^-1);
+      fi;
+    od;
   
-  return InverseMonoidByGeneratorsNC(gens, coll, CitrusOptionsRec);
-end);
+    return InverseMonoidByGeneratorsNC(gens, coll, CitrusOptionsRec);
+  end);
+fi;
 
 # new for 0.7! - InverseSemigroupByGenerators
 ################################################################################
 
-InstallMethod(InverseSemigroupByGenerators, "for partial perm coll", 
-[IsPartialPermCollection],
-function(coll)
-  local gens, f;
+if IsBound(DomPP) and IsBound(RanSetPP) then 
+  InstallMethod(InverseSemigroupByGenerators, "for partial perm coll", 
+  [IsPartialPermCollection],
+  function(coll)
+    local gens, f;
 
-  gens:=ShallowCopy(coll);
-  
-  for f in coll do
-    if not DomPP(f)=RanSetPP(f) then 
-      Add(gens, f^-1);
-    fi;
-  od;
+    gens:=ShallowCopy(coll);
+    
+    for f in coll do
+      if not DomPP(f)=RanSetPP(f) then 
+        Add(gens, f^-1);
+      fi;
+    od;
 
-  return InverseSemigroupByGeneratorsNC(gens, coll, CitrusOptionsRec);
-end);
+    return InverseSemigroupByGeneratorsNC(gens, coll, CitrusOptionsRec);
+  end);
+fi;
 
 # new for 0.7! - InverseMonoidByGenerators - "for partial perm coll and
 # record"
 ################################################################################
 
-InstallOtherMethod(InverseMonoidByGenerators, 
-"for partial perm coll and record",
-[IsPartialPermCollection, IsRecord],
-function(coll, opts)
-  local n, one, f, gens;
-  
-  if not IsBound(opts.schreier) then
-    opts.schreier:=CitrusOptionsRec.schreier;
-  fi;
+if IsBound(DomPP) and IsBound(RanSetPP) then 
+  InstallOtherMethod(InverseMonoidByGenerators, 
+  "for partial perm coll and record",
+  [IsPartialPermCollection, IsRecord],
+  function(coll, opts)
+    local n, one, f, gens;
+    
+    if not IsBound(opts.schreier) then
+      opts.schreier:=CitrusOptionsRec.schreier;
+    fi;
 
-  if not IsBound(opts.small) then
-    opts.small:=CitrusOptionsRec.small;
-  fi;
+    if not IsBound(opts.small) then
+      opts.small:=CitrusOptionsRec.small;
+    fi;
 
-  if not IsBound(opts.hashlen) then
-    opts.hashlen:=CitrusOptionsRec.hashlen;
-  elif IsPosInt(opts.hashlen) then
-    n:=opts.hashlen;
-    opts.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)),
-     L:=NextPrimeInt(n));
-  elif not IsRecord(opts.hashlen) then
-    Error("the component hashlen should be a positive integer or a record,");
-    return;
-  fi;
+    if not IsBound(opts.hashlen) then
+      opts.hashlen:=CitrusOptionsRec.hashlen;
+    elif IsPosInt(opts.hashlen) then
+      n:=opts.hashlen;
+      opts.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)),
+       L:=NextPrimeInt(n));
+    elif not IsRecord(opts.hashlen) then
+      Error("the component hashlen should be a positive integer or a record,");
+      return;
+    fi;
 
-  if not opts.small then
-    gens:=ShallowCopy(coll);
-      
-    for f in coll do
-      if not DomPP(f)=RanSetPP(f) then
-        Add(gens, f^-1); 
-      fi;
-    od;
-  else
-    gens:=coll;
-  fi;
+    if not opts.small then
+      gens:=ShallowCopy(coll);
+        
+      for f in coll do
+        if not DomPP(f)=RanSetPP(f) then
+          Add(gens, f^-1); 
+        fi;
+      od;
+    else
+      gens:=coll;
+    fi;
 
-  return InverseMonoidByGeneratorsNC(gens, coll, opts);
-end);
+    return InverseMonoidByGeneratorsNC(gens, coll, opts);
+  end);
+fi;
 
 # new for 0.7! - InverseSemigroupByGenerators - "for partial perm coll and
 # record"
 ################################################################################
 
-InstallOtherMethod(InverseSemigroupByGenerators, 
-"for partial perm coll and record",
-[IsPartialPermCollection, IsRecord],
-function(coll, opts)
-  local n, f, gens;
+if IsBound(DomPP) and IsBound(RanSetPP) then 
+  InstallOtherMethod(InverseSemigroupByGenerators, 
+  "for partial perm coll and record",
+  [IsPartialPermCollection, IsRecord],
+  function(coll, opts)
+    local n, f, gens;
 
-  if not IsBound(opts.schreier) then
-    opts.schreier:=CitrusOptionsRec.schreier;
-  fi;
+    if not IsBound(opts.schreier) then
+      opts.schreier:=CitrusOptionsRec.schreier;
+    fi;
 
-  if not IsBound(opts.small) then
-    opts.small:=CitrusOptionsRec.small;
-  fi;
+    if not IsBound(opts.small) then
+      opts.small:=CitrusOptionsRec.small;
+    fi;
 
-  if not IsBound(opts.hashlen) then
-    opts.hashlen:=CitrusOptionsRec.hashlen;
-  elif IsPosInt(opts.hashlen) then
-    n:=opts.hashlen;
-    opts.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)),
-     L:=NextPrimeInt(n));
-  elif not IsRecord(opts.hashlen) then
-    Error("the component hashlen should be a positive integer or a record,");
-    return;
-  fi;
+    if not IsBound(opts.hashlen) then
+      opts.hashlen:=CitrusOptionsRec.hashlen;
+    elif IsPosInt(opts.hashlen) then
+      n:=opts.hashlen;
+      opts.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)),
+       L:=NextPrimeInt(n));
+    elif not IsRecord(opts.hashlen) then
+      Error("the component hashlen should be a positive integer or a record,");
+      return;
+    fi;
 
-  if not opts.small then
-    gens:=ShallowCopy(coll);
-      
-    for f in coll do
-      if not DomPP(f)=RanSetPP(f) then
-        Add(gens, f^-1);
-      fi;
-    od;
-  else
-    gens:=coll;
-  fi;
+    if not opts.small then
+      gens:=ShallowCopy(coll);
+        
+      for f in coll do
+        if not DomPP(f)=RanSetPP(f) then
+          Add(gens, f^-1);
+        fi;
+      od;
+    else
+      gens:=coll;
+    fi;
 
-  return InverseSemigroupByGeneratorsNC(gens, coll, opts);
-end);
+    return InverseSemigroupByGeneratorsNC(gens, coll, opts);
+  end);
+fi;
 
 # new for 0.7! - InverseMonoidByGeneratorsNC
 ################################################################################
 
-InstallMethod(InverseMonoidByGeneratorsNC, 
-"for partial perm coll, partial perm coll, and record",
-[IsPartialPermCollection, IsPartialPermCollection, IsRecord],
-function(gens, coll, opts)
-  local i, closure_opts, s, f;
+if IsBound(DomPP) then 
+  InstallMethod(InverseMonoidByGeneratorsNC, 
+  "for partial perm coll, partial perm coll, and record",
+  [IsPartialPermCollection, IsPartialPermCollection, IsRecord],
+  function(gens, coll, opts)
+    local i, closure_opts, s, f;
 
-  if opts.small and Length(gens)>1 then 
-    coll:=SSortedList(ShallowCopy(coll));
-    coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));;
-    Sort(coll, function(x, y) return Rank(x)>Rank(y); end);;
-    
-    closure_opts:=rec(schreier:=opts.schreier, small:=false,
-         hashlen:=opts.hashlen);
-    s:=InverseMonoid(coll[1], closure_opts);
-    
-    for f in coll do
-      if not f in s then 
-        s:=ClosureInverseSemigroupNC(s, [f], closure_opts);
-      fi;
-    od;
+    if opts.small and Length(gens)>1 then 
+      coll:=SSortedList(ShallowCopy(coll));
+      coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));;
+      Sort(coll, function(x, y) return Rank(x)>Rank(y); end);;
+      
+      closure_opts:=rec(schreier:=opts.schreier, small:=false,
+           hashlen:=opts.hashlen);
+      s:=InverseMonoid(coll[1], closure_opts);
+      
+      for f in coll do
+        if not f in s then 
+          s:=ClosureInverseSemigroupNC(s, [f], closure_opts);
+        fi;
+      od;
+      return s;
+    fi;
+
+    s:=Objectify( NewType (FamilyObj( gens ), IsMagmaWithOne and
+     IsInverseSemigroup and IsAttributeStoringRep), rec(opts:=opts));
+    SetPoints(s, Union(List(gens, DomPP)));
+    SetGeneratorsOfMagmaWithOne(s, gens);
+    SetGeneratorsOfInverseSemigroup(s, Concatenation([One(s)], coll));
+    SetGeneratorsOfInverseMonoid(s, coll);
     return s;
-  fi;
-
-  s:=Objectify( NewType (FamilyObj( gens ), IsMagmaWithOne and
-   IsInverseSemigroup and IsAttributeStoringRep), rec(opts:=opts));
-  SetPoints(s, Union(List(gens, DomPP)));
-  SetGeneratorsOfMagmaWithOne(s, gens);
-  SetGeneratorsOfInverseSemigroup(s, Concatenation([One(s)], coll));
-  SetGeneratorsOfInverseMonoid(s, coll);
-  return s;
-end);
+  end);
+fi;
 
 # new for 0.7! - InverseSemigroupByGeneratorsNC
 ################################################################################
@@ -769,22 +798,34 @@ function(s)
 end);
 #RRR
 
-# new for 0.7! - RandomInverseMonoid
+# new for 0.7! - RandomInverseMonoid - for a pos int and pos int
 #############################################################################
 
-InstallGlobalFunction(RandomInverseMonoid,
-function(m,n)
-  return InverseMonoid(Set(List([1..m], x-> RandomPartialPerm(n))));
-end);
+if Citrus_C then 
+  InstallMethod(RandomInverseMonoid, "for pos int and pos int",
+  [IsPosInt, IsPosInt],
+  function(m,n)
+    return InverseMonoid(Set(List([1..m], x-> RandomPartialPerm(n))));
+  end);
+else
+  InstallMethod(RandomInverseMonoid, "for pos int and pos int",
+  [IsPosInt, IsPosInt], CitrusIsNotCompiled);
+fi;
 
-
-# new for 0.7! - RandomInverseSemigp
+# new for 0.7! - RandomInverseSemigp - for a pos int and pos int
 #############################################################################
 
-InstallGlobalFunction(RandomInverseSemigroup,
-function(m,n)
-  return InverseSemigroup(Set(List([1..m], x-> RandomPartialPerm(n))));
-end);
+if Citrus_C then 
+  InstallMethod(RandomInverseSemigroup, "for pos int and pos int",
+  [IsPosInt, IsPosInt],
+  function(m,n)
+    return InverseSemigroup(Set(List([1..m], x-> RandomPartialPerm(n))));
+  end);
+else
+  InstallMethod(RandomInverseSemigroup, "for pos int and pos int",
+  [IsPosInt, IsPosInt], CitrusIsNotCompiled);
+fi;
+
 
 # new for 0.1! - RandomTransformationSemigroup 
 #############################################################################

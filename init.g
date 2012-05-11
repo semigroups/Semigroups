@@ -24,9 +24,18 @@ ReadPackage("citrus/gap/greens.gd");
 ReadPackage("citrus/gap/transform.gd");
 ReadPackage("citrus/gap/pperm.gd");
 ReadPackage("citrus/gap/properties.gd");
-ReadPackage("citrus/gap/semigroups.gd");
 ReadPackage("citrus/gap/inverse.gd");
+ReadPackage("citrus/gap/semigroups.gd");
 ReadPackage("citrus/gap/examples.gd");
 ReadPackage("citrus/gap/options.g");
 
 DeclareInfoClass("InfoCitrus");;
+
+if not IsBound(CITRUSC) then 
+  Info(InfoWarning, 1, "Citrus: the Citrus package binary is not available,",
+  " and so the");
+  Info(InfoWarning, 1, "Citrus: functions in Citrus for partial permutations",
+  " are not available.");
+fi;
+
+BindGlobal("Citrus_C", IsBound(CITRUSC));

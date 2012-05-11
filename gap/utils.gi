@@ -18,6 +18,16 @@ function()
   return PackageInfo("citrus")[1]!.InstallationPath;
 end);
 
+# new for 0.7 - CitrusIsNotCompiled - for no arg
+#############################################################################
+
+InstallGlobalFunction(CitrusIsNotCompiled, 
+function(arg)
+  Info(InfoWarning, 1, "Citrus is not compiled and consequently this",  
+  " function is unavailable.");
+  return fail;
+end);
+
 # mod for 0.4! - CitrusMakeDoc - "for no argument"
 #############################################################################
 
@@ -481,10 +491,8 @@ function(arg)
   return List(line, x-> ReadCitrusLine(Chomp(x)));
 end);
 
-# new for 0.5! - ReadCitrusLine - "for a string"
+# mod for 0.7! - ReadCitrusLine - "for a string"
 #############################################################################
-
-# requires updating... JDM
 
 InstallGlobalFunction(ReadCitrusLine, 
 function(line)
@@ -505,7 +513,16 @@ function(line)
       out[i]:=TransformationNC(out[i]);
     od;
     return out;
-  else # partial perms
+  elif line[1]='p' then # partial perms
+    return ReadCitrusLinePP(line);
+  fi;
+end);
+
+if IsBound(FullPartialPermNC) then 
+  InstallGlobalFuncion(ReadCitrusLinePP, 
+  function(line)
+    local r, i, k, out, m, deg, rank, f, j;
+    
     r:=Length(line)-1; i:=2; k:=0; out:=[];
 
     while i<Length(line) do
@@ -522,8 +539,10 @@ function(line)
       i:=i+m*(deg+3*rank+6)+1;
     od;
     return out;
-  fi;
-end);
+  end);
+else
+  InstallGlobalFunction(ReadCitrusLinePP, ReturnFail);
+fi;
 
 # mod for 0.7! - WriteCitrus - "for a string and trans. coll."
 #############################################################################

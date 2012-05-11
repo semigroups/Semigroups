@@ -70,7 +70,13 @@ Dependencies := rec(
   NeededOtherPackages := [["orb", ">=4.2"], ["io", ">=3.3"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.4"]], 
   ExternalConditions := []),
-  AvailabilityTest := ReturnTrue,
+  AvailabilityTest := function()
+  
+    if Filename(DirectoriesPackagePrograms("citrus"), "bin") = fail then
+      LogPackageLoadingMessage(PACKAGE_ERROR, "the binary is not available");
+    fi;
+    return true; 
+  end,
   Autoload := false,
   TestFile := "tst/testinstall.tst",
   Keywords := ["transformation semigroups", "partial permutations",

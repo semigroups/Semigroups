@@ -29,13 +29,12 @@ DeclareGlobalFunction("IteratorByIterator");
 DeclareGlobalFunction("LClass");
 DeclareGlobalFunction("LClassNC");
 DeclareGlobalFunction("ListByIterator");
-DeclareGlobalFunction("RandomInverseMonoid");
-DeclareGlobalFunction("RandomInverseSemigroup");
-DeclareGlobalFunction("RandomTransformationMonoid");
-DeclareGlobalFunction("RandomTransformationSemigroup");
 DeclareGlobalFunction("RClass");
 DeclareGlobalFunction("RClassNC");
 
 DeclareGlobalFunction("ReadCitrus");
 DeclareGlobalFunction("ReadCitrusLine");
+DeclareGlobalFunction("ReadCitrusLinePP");
 DeclareGlobalFunction("WriteCitrus");
+
+DeclareGlobalFunction("CitrusIsNotCompiled");
