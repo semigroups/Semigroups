@@ -1225,14 +1225,14 @@ function(d)
   
   iso:=function(f)
     local o, i, j;
-    o:=ImageOrbit(d);
-    i:=Position(o, ImageSetOfTransformation(f)); #JDM this can't work!
+    o:=LambdaOrb(d);
+    i:=Position(o, LambdaPt(f));
     if i=fail then 
       return fail;
     fi;
     i:=Position(OrbSCC(o)[OrbSCCLookup(o)[i]], i);
-    o:=KernelOrbit(d);
-    j:=Position(o, CanonicalTransSameKernel(f)); #JDM this can't work!
+    o:=RhoOrb(d);
+    j:=Position(o, RhoPt(f)); 
     if j=fail then 
       return fail;
     fi;
