@@ -99,7 +99,8 @@ function()
   for x in tst do
     str:=SplitString(x, ".");
     if Length(str)>=2 and str[2]="tst" then
-      if not Citrus_C and str[1] in ["inverse", "pperm", "semigroups"]
+      if not Citrus_C and str[1] in ["inverse", "pperm", "semigroups", 
+         "testcompiled"]
         then 
         Print("not reading ", dir_str, "/", x, "\n(Citrus is not compiled)\n");
       else
