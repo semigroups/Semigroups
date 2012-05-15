@@ -638,8 +638,8 @@ gap> NextIterator(iter);
 Transformation( [ 5, 5, 4, 5, 1 ] )
 gap> iter;
 &lt;iterator of R-class reps, 10 candidates, 20 elements, 2 R-classes>
-gap> s:=InverseSemigroup(ReadCitrus("pkg/citrus/examples/inverse.citrus.gz",
-> 8));
+gap> file:=Concatenation(CitrusDir(), "/examples/inverse.citrus.gz");;
+gap> s:=InverseSemigroup(ReadCitrus(file, 8));
 &lt;inverse semigroup with 2 generators>
 gap> NrMovedPoints(s);
 983
