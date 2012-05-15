@@ -680,14 +680,18 @@ end);
 InstallMethod(LambdaPt, "for a trans",
 [IsTransformation], ImageSetOfTransformation);
 
-InstallMethod(LambdaPt, "for a partial perm",
-[IsPartialPerm], RanSetPP);
+if IsBound(RanSetPP) then 
+  InstallMethod(LambdaPt, "for a partial perm",
+    [IsPartialPerm], RanSetPP);
+fi;
 
 InstallMethod(RhoPt, "for a trans",
 [IsTransformation], CanonicalTransSameKernel);
 
-InstallMethod(RhoPt, "for a partial perm",
-[IsPartialPerm], DomPP);
+if IsBound(DomPP) then 
+  InstallMethod(RhoPt, "for a partial perm",
+   [IsPartialPerm], DomPP);
+fi;
 
 InstallOtherMethod(LambdaOrb, "for a D-class of a trans. semi",
 [IsGreensDClass and IsGreensClassOfTransSemigp], ImageOrbit);
