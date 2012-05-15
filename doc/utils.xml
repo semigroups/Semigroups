@@ -67,12 +67,7 @@ MakeGAPDocDoc( Concatenation( PackageInfo( "citrus" )[1]!.InstallationPath,
     <Description>
       This function should be called with no argument to comprehensively
       test that &Citrus; is working correctly. These tests
-      should take no more than 1 minute to complete. The same effect can be
-      achieved by entering:
-
-      <Log>Read(Filename(DirectoriesPackageLibrary("citrus","tst"),"testall.g"));;</Log>
-
-      at the &GAP; prompt. 
+      should take no more than a few minutes to complete. 
       To quickly test that &Citrus; is installed correctly
       use <Ref Func="CitrusTestInstall"/>. 
     </Description>
@@ -101,14 +96,9 @@ MakeGAPDocDoc( Concatenation( PackageInfo( "citrus" )[1]!.InstallationPath,
     <Description>
       This function should be called with no argument to test your installation
       of &Citrus; is working correctly. These tests should take no more than a
-      fraction of a second to complete. The same effect can be achieved by
-      entering:
-
-<Log>ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"testinstall.tst"));;</Log>
-
-      at the &GAP; prompt.  To more comprehensively test that &Citrus; is
+      fraction of a second to complete. 
+      To more comprehensively test that &Citrus; is
       installed correctly use <Ref Func="CitrusTestAll"/>. 
-
     </Description>
   </ManSection>
 <#/GAPDoc>

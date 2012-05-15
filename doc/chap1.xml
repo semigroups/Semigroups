@@ -100,7 +100,11 @@
         semilattice <Ref Oper="MunnSemigroup"/>, then download and fully
         install the &Grape; package version &GRAPEVERS; or higher.  For more
         details go to:&vspace;<P/>&noindent;
-        <URL>http://www.maths.qmul.ac.uk/~leonard/grape/</URL>
+        <URL>http://www.maths.qmul.ac.uk/~leonard/grape/</URL><P/>
+         If
+    &Grape; is not fully installed, then &Citrus; can be used as normal with the
+    except that the operation <Ref Oper="MunnSemigroup"/> does not work.
+
       </Item>
 
       <Item> download the package archive <C>&ARCHIVENAME;.tar.gz</C> from
