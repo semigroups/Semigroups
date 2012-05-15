@@ -9,7 +9,6 @@
 ##
 
 #ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"properties.tst"));
-
 gap> START_TEST("Citrus package: properties.tst");
 gap> LoadPackage("citrus", false);;
 
@@ -23,7 +22,7 @@ gap> SetInfoLevel(InfoCitrus, 0);
 gap> file:=Concatenation(CitrusDir(), "/examples/misc.citrus.gz");;
 gap> semis:=List([1..22], i-> Semigroup(ReadCitrus(file, i)));;
 gap> List([1..15], i-> IsCompletelyRegularSemigroup(semis[i]));   
-[ false, true, false, false, false, true, true, true, true, true, false,
+[ false, true, false, false, false, true, true, true, true, true, false, 
   false, false, false, true ]
 gap> List([15..22], i-> IsCompletelyRegularSemigroup(semis[i]));  
 [ true, false, true, false, false, false, false, false ]
@@ -88,7 +87,7 @@ false
 #
 gap> List(semis, IsCliffordSemigroup);
 [ false, true, false, false, false, false, false, false, false, false, false, 
-  false, false, false, false, false, false, false, false, false, false, false
+  false, false, false, false, false, false, false, false, false, false, false 
  ]
 gap> ForAll(GreensDClasses(semis[2]), x-> Length(GreensHClasses(x))=1 and 
 > IsRegularDClass(x));
@@ -117,14 +116,14 @@ true
 
 #
 gap> List(semis, IsRegularSemigroup);
-[ false, true, false, false, false, true, true, true, true, true, false,
+[ false, true, false, false, false, true, true, true, true, true, false, 
   false, true, true, true, false, true, false, false, false, false, true ]
 gap> IsInverseSemigroup(s);
 true
 gap> IsBand(s);
 true
 gap> List(semis, IsBand);
-[ false, false, false, false, false, false, false, false, false, false,
+[ false, false, false, false, false, false, false, false, false, false, 
   false, false, false, false, false, false, false, false, false, false, 
   false, false ]
 
@@ -147,7 +146,7 @@ gap> 4^4-Factorial(4)+1;
 gap> ForAll(semis, x-> not IsIdempotentGenerated(x));
 true
 gap> List(semis, IsOrthodoxSemigroup);
-[ false, true, false, false, false, false, false, true, true, true, false,
+[ false, true, false, false, false, false, false, true, true, true, false, 
   false, false, false, true, false, true, false, false, false, false, false ]
 
 #
@@ -176,12 +175,12 @@ true
 gap> IsLeftZeroSemigroup(s);
 false
 gap> List(semis, IsLeftZeroSemigroup);    
-[ false, false, false, false, false, false, false, false, false, false,
-  false, false, false, false, false, false, false, false, false, false,
+[ false, false, false, false, false, false, false, false, false, false, 
+  false, false, false, false, false, false, false, false, false, false, 
   false, false ]
 gap> List(semis, IsRightZeroSemigroup);
-[ false, false, false, false, false, false, false, false, false, false,
-  false, false, false, false, false, false, false, false, false, false,
+[ false, false, false, false, false, false, false, false, false, false, 
+  false, false, false, false, false, false, false, false, false, false, 
   false, false ]
 
 #
@@ -623,7 +622,7 @@ gap> IsMonoidAsSemigroup(t);
 true
 gap> t:=Range(IsomorphismTransformationMonoid(t));;
 gap> IsomorphismPermGroup(t);
-MappingByFunction( <monoid with 3 generators>, <permutation group with
+MappingByFunction( <monoid with 3 generators>, <permutation group with 
 3 generators>, <Operation "AsPermutation">, function( x ) ... end )
 
 #
@@ -900,8 +899,6 @@ gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 gap> s:=Semigroup(gens);;
 gap> IsAbundantSemigroup(s);
 false
-#gap> time;
-#164
 
 #
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
@@ -965,20 +962,6 @@ gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
 > Transformation([9,1,4,3,6,9,3,4,3,9])];;
 gap> s:=Monoid(gens);;
 gap> IsAdequateSemigroup(s);
-false
-#gap> Read("/Users/jdm/Desktop/gap4r5/pkg/citrus/dev/examples/schmidt.gap");
-#gap> slow:=List(SLOWAUT, x-> Semigroup(List(x, TransformationNC)));;
-#gap> List(slow, IsAdequateSemigroup);
-#[ true, true, true, true, true, true, true, true ]
-
-#
-gap> file:=Concatenation(CitrusDir(), "/examples/munn.citrus.gz");;
-gap> ReadCitrus(file, 1078);;
-gap> s:=Semigroup(last);
-<semigroup with 9 generators>
-gap> Size(s);
-12
-gap> IsDTrivial(s);
 false
 
 #

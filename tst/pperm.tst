@@ -7,7 +7,6 @@
 ##
 #############################################################################
 ##
-
 gap> START_TEST("Citrus package: pperm.tst");
 gap> LoadPackage("citrus", false);;
 
@@ -274,8 +273,6 @@ gap> f:=PartialPermNC([2039, 2149, 21443, 13431, 1, 2, 3]);
 [ 1 .. 7 ] -> [ 2039, 2149, 21443, 13431, 1, 2, 3 ]
 gap> OnIntegerSetsWithPartialPerm([1..10000], f); 
 [ 1, 2, 3, 2039, 2149, 13431, 21443 ]
-#gap> PrettyPrintPP(f);
-#[5,1,2039][6,2,2149][7,3,21443][4,13431]
 gap> RanPP(f);
 [ 2039, 2149, 21443, 13431, 1, 2, 3 ]
 gap> RangeOfPartialPerm(f);
@@ -372,7 +369,7 @@ gap> S:=InverseSemigroup([ PartialPermNC( [ 1, 3 ], [ 1, 3 ] ),
 gap> Size(S);
 11
 gap> NaturalPartialOrder(S);
-[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 4, 5 ], [ 1, 3, 4, 5 ],
+[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 4, 5 ], [ 1, 3, 4, 5 ], 
   [ 1, 2, 6 ], [ 1, 4, 5 ], [ 1, 4, 6 ] ]
 gap> NaturalLeqPartialPerm(Elements(S)[4], Elements(S)[10]);
 true
