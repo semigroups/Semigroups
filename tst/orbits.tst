@@ -14,11 +14,13 @@
 gap> START_TEST("Citrus package: orbits.tst");
 gap> LoadPackage("citrus", false);;
 
+#
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
 gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> SetInfoLevel(InfoCitrus, 0);
 
+#
 gap> gens:=[ Transformation( [ 1, 5, 2, 2, 3, 5, 2 ] ), 
 >  Transformation( [ 7, 3, 6, 5, 2, 4, 1 ] ), 
 >  Transformation( [ 7, 5, 3, 2, 5, 5, 6 ] ) ];;
@@ -261,8 +263,10 @@ gap> Set(ImagesOfTransSemigroup(m));
   [ 5, 7, 8 ], [ 5, 8 ], [ 6 ], [ 6, 7 ], [ 6, 7, 8 ], [ 6, 8 ], [ 7 ],
   [ 7, 8 ], [ 8 ] ]
 
+#
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
 
+#
 gap> STOP_TEST( "Citrus package: orbits.tst", 10000);

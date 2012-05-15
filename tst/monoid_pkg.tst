@@ -7,22 +7,21 @@
 #
 #############################################################################
 ##
-
 #ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"monoid_pkg.tst"));
 # approx. 9s
-
 # a concatenation of relevant tests from the monoid/tst. 
-
 # Miscellaneous
 
 gap> START_TEST("Citrus package: monoid_pkg.tst");
 gap> LoadPackage("citrus", false);;
 
+#
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
 gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> SetInfoLevel(InfoCitrus, 0);
 
+#
 gap> g:=CyclicGroup(3);;
 gap> r:=GF(2);;
 gap> gr:=GroupRing(r, g);;
@@ -71,12 +70,14 @@ gap> List(h, x-> StructureDescription(x));
 gap> IsCliffordSemigroup(s);
 true
 
+#
 gap> a:=IdempotentNC([ 1, 2, 1, 1, 2, 3, 4, 5 ], [3,5,6,7,8])*(3,5);;
 gap> b:=IdempotentNC([ 1, 2, 1, 1, 2, 3, 4, 5 ], [3,5,6,7,8])*(3,6,7,8);;
 gap> s:=Semigroup(a,b);;
 gap> IsGroupAsSemigroup(s);
 true
 
+#
 gap> gens:=[Transformation([3,5,3,3,5,6]), Transformation([6,2,4,2,2,6])];;
 gap> S:=Semigroup(gens);;
 gap> GroupHClass(GreensDClassOfElement(S, Elements(S)[1]));
@@ -85,6 +86,7 @@ gap> IsomorphismPermGroup(last);
 MappingByFunction( {Transformation( [ 5, 5, 5, 5, 5, 6 
  ] )}, Group(()), <Operation "AsPermutation"> )
 
+#
 gap> gens:=[ Transformation( [ 4, 4, 8, 8, 8, 8, 4, 8 ] ),
 >   Transformation( [ 8, 2, 8, 2, 5, 5, 8, 8 ] ),
 >   Transformation( [ 8, 8, 3, 7, 8, 3, 7, 8 ] ),
@@ -149,7 +151,6 @@ gap> IsBand(S);
 false
 
 # from greens.tst
-
 gap> gens:=[ Transformation( [ 4, 5, 7, 1, 8, 6, 1, 7 ] ), 
 >  Transformation( [ 5, 5, 3, 8, 3, 7, 4, 6 ] ), 
 >  Transformation( [ 5, 7, 4, 4, 1, 4, 4, 4 ] ), 
@@ -958,7 +959,6 @@ gap> AsSet(Enumerate(KernelsOfTransSemigroup(S,4)));
 [ [ 1 .. 4 ] ]
 
 # from install_no_grape.tst
-
 gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ),
 >   Transformation( [ 6, 6, 4, 4, 2, 1, 4 ] ) ];;
 gap> s:=Semigroup(gens);;
@@ -984,6 +984,7 @@ gap> s:=Semigroup(gens);
 gap> NrRegularDClasses(s);
 3
 
+#
 gap> g1:=Transformation([2,2,4,4,5,6]);;
 gap> g2:=Transformation([5,3,4,4,6,6]);;
 gap> m1:=Monoid(g1,g2);;
@@ -1034,6 +1035,7 @@ gap> g2:=Transformation( [ 5, 6, 6, 3, 8, 6, 3, 7, 8, 4 ] );;
 gap> g3:=Transformation( [ 8, 6, 3, 2, 8, 10, 9, 2, 6, 2 ] );;
 gap> m23:=Monoid(g1,g2,g3);;
 
+#
 gap> SmallMonoids:=[m1, m2, m3, m4, m5, m6, m7, m8, m9, m11, m14, m15, m18,
 > m22, m23];;
 gap> List(SmallMonoids, IsCompletelyRegularSemigroup);
@@ -1073,6 +1075,7 @@ gap> List(SmallMonoids, IsZeroGroup);
 [ false, false, false, false, false, false, false, false, false, false,
   false, false, false, false, false ]
 
+#
 gap> gens:=[ Transformation( [ 2, 4, 1, 5, 4, 4, 7, 3, 8, 1 ] ),
 >   Transformation( [ 3, 2, 8, 8, 4, 4, 8, 6, 5, 7 ] ),
 >   Transformation( [ 4, 10, 6, 6, 1, 2, 4, 10, 9, 7 ] ),
@@ -1511,8 +1514,10 @@ gap> MultiplicativeZero(S);
 Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
 gap> Unbind(semis); Unbind(S); Unbind(m);
 
+#
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
 
+#
 gap> STOP_TEST( "Citrus package: monoid_pkg.tst", 10000);

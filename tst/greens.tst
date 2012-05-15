@@ -14,11 +14,13 @@
 gap> START_TEST("Citrus package: greens.tst");
 gap> LoadPackage("citrus", false);;
 
+#
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
 gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> SetInfoLevel(InfoCitrus, 0);
 
+#
 gap> file:=Concatenation(CitrusDir(), "/examples/misc.citrus.gz");;
 gap> gens:=ReadCitrus(file){[25..124]};;
 gap> out:=[];;
@@ -45,7 +47,6 @@ gap> out;
   [ 83, 1382 ], [ 158, 1074 ], [ 2, 2 ], [ 26, 535 ], [ 3, 6 ], [ 3, 3 ], 
   [ 44, 1834 ], [ 158, 1776 ], [ 19, 326 ], [ 9, 45 ], [ 32, 379 ], 
   [ 23, 149 ] ]
-# 800ms for the previous!
 gap> m:=Semigroup(gens[32]);;
 gap> Size(m);
 495
@@ -87,140 +88,139 @@ gap> out;
   68, 10, 1, 2, 8, 22, 201, 7, 10, 11, 2, 1, 363, 68, 2423, 11, 57, 84, 12, 
   156, 16, 10, 1, 52, 1, 20, 257, 74, 333, 74, 2, 28, 3, 3, 35, 93, 18, 16, 
   25, 33 ]
-# 1500ms for the previous
 gap> ForAll(GreensLClasses(m), x-> ForAll(Idempotents(x), y-> 
 > y in x));                 
 true
 gap> idem:=Set(Concatenation(List(GreensLClasses(m), Idempotents)));
-[ Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] ),
-  Transformation( [ 1, 1, 1, 1, 5, 1, 1 ] ),
-  Transformation( [ 1, 1, 1, 1, 5, 1, 5 ] ),
-  Transformation( [ 1, 1, 1, 1, 5, 5, 1 ] ),
-  Transformation( [ 1, 1, 1, 4, 1, 1, 1 ] ),
-  Transformation( [ 1, 1, 1, 4, 1, 4, 1 ] ),
-  Transformation( [ 1, 1, 1, 4, 4, 1, 4 ] ),
-  Transformation( [ 1, 1, 1, 4, 5, 1, 5 ] ),
-  Transformation( [ 1, 1, 1, 5, 5, 1, 5 ] ),
-  Transformation( [ 1, 1, 4, 4, 1, 1, 1 ] ),
-  Transformation( [ 1, 1, 4, 4, 4, 1, 4 ] ),
-  Transformation( [ 1, 1, 5, 5, 5, 1, 5 ] ),
-  Transformation( [ 1, 2, 1, 1, 1, 1, 1 ] ),
-  Transformation( [ 1, 2, 1, 1, 2, 1, 1 ] ),
-  Transformation( [ 1, 2, 1, 1, 2, 1, 2 ] ),
-  Transformation( [ 1, 2, 1, 1, 2, 2, 2 ] ),
-  Transformation( [ 1, 2, 1, 1, 5, 1, 1 ] ),
-  Transformation( [ 1, 2, 1, 2, 2, 1, 2 ] ),
-  Transformation( [ 1, 2, 1, 2, 2, 2, 2 ] ),
-  Transformation( [ 1, 2, 2, 1, 1, 1, 1 ] ),
-  Transformation( [ 1, 2, 2, 1, 1, 2, 1 ] ),
-  Transformation( [ 1, 2, 2, 1, 2, 2, 1 ] ),
-  Transformation( [ 1, 2, 2, 1, 5, 5, 1 ] ),
-  Transformation( [ 1, 4, 1, 4, 4, 1, 4 ] ),
-  Transformation( [ 1, 4, 1, 4, 4, 4, 4 ] ),
-  Transformation( [ 1, 5, 1, 1, 5, 1, 1 ] ),
-  Transformation( [ 1, 5, 1, 1, 5, 1, 5 ] ),
-  Transformation( [ 1, 5, 1, 1, 5, 5, 5 ] ),
-  Transformation( [ 1, 5, 1, 4, 5, 4, 5 ] ),
-  Transformation( [ 1, 5, 1, 5, 5, 1, 5 ] ),
-  Transformation( [ 1, 5, 1, 5, 5, 5, 5 ] ),
-  Transformation( [ 1, 5, 5, 1, 5, 5, 1 ] ),
-  Transformation( [ 2, 2, 2, 2, 2, 2, 2 ] ),
-  Transformation( [ 2, 2, 2, 2, 2, 6, 2 ] ),
-  Transformation( [ 2, 2, 2, 2, 5, 2, 2 ] ),
-  Transformation( [ 2, 2, 2, 2, 5, 2, 5 ] ),
-  Transformation( [ 2, 2, 2, 2, 5, 5, 2 ] ),
-  Transformation( [ 2, 2, 2, 2, 6, 6, 2 ] ),
-  Transformation( [ 2, 2, 2, 2, 7, 2, 7 ] ),
-  Transformation( [ 2, 2, 2, 5, 5, 2, 5 ] ),
-  Transformation( [ 2, 2, 2, 6, 2, 6, 2 ] ),
-  Transformation( [ 2, 2, 2, 7, 7, 2, 7 ] ),
-  Transformation( [ 2, 2, 5, 5, 5, 2, 5 ] ),
-  Transformation( [ 2, 2, 7, 7, 7, 2, 7 ] ),
-  Transformation( [ 3, 3, 3, 3, 3, 3, 3 ] ),
-  Transformation( [ 3, 3, 3, 3, 5, 3, 3 ] ),
-  Transformation( [ 3, 3, 3, 3, 5, 3, 5 ] ),
-  Transformation( [ 3, 3, 3, 3, 5, 5, 3 ] ),
-  Transformation( [ 3, 3, 3, 3, 7, 3, 7 ] ),
-  Transformation( [ 3, 3, 3, 4, 3, 3, 3 ] ),
-  Transformation( [ 3, 3, 3, 4, 3, 4, 3 ] ),
-  Transformation( [ 3, 3, 3, 4, 4, 3, 4 ] ),
-  Transformation( [ 3, 3, 3, 4, 5, 3, 5 ] ),
-  Transformation( [ 3, 3, 3, 4, 7, 3, 7 ] ),
-  Transformation( [ 3, 3, 3, 5, 5, 3, 5 ] ),
-  Transformation( [ 3, 3, 3, 7, 7, 3, 7 ] ),
-  Transformation( [ 3, 4, 3, 4, 4, 3, 4 ] ),
-  Transformation( [ 3, 4, 3, 4, 4, 4, 4 ] ),
-  Transformation( [ 3, 5, 3, 3, 5, 3, 3 ] ),
-  Transformation( [ 3, 5, 3, 3, 5, 3, 5 ] ),
-  Transformation( [ 3, 5, 3, 3, 5, 5, 5 ] ),
-  Transformation( [ 3, 5, 3, 4, 5, 4, 5 ] ),
-  Transformation( [ 3, 5, 3, 5, 5, 3, 5 ] ),
-  Transformation( [ 3, 5, 3, 5, 5, 5, 5 ] ),
-  Transformation( [ 3, 7, 3, 3, 7, 3, 7 ] ),
-  Transformation( [ 3, 7, 3, 3, 7, 7, 7 ] ),
-  Transformation( [ 3, 7, 3, 4, 7, 4, 7 ] ),
-  Transformation( [ 3, 7, 3, 7, 7, 3, 7 ] ),
-  Transformation( [ 3, 7, 3, 7, 7, 7, 7 ] ),
-  Transformation( [ 4, 3, 3, 4, 3, 3, 4 ] ),
-  Transformation( [ 4, 3, 3, 4, 4, 3, 4 ] ),
-  Transformation( [ 4, 3, 3, 4, 4, 4, 4 ] ),
-  Transformation( [ 4, 3, 3, 4, 5, 5, 4 ] ),
-  Transformation( [ 4, 4, 4, 4, 4, 4, 4 ] ),
-  Transformation( [ 4, 4, 4, 4, 5, 4, 4 ] ),
-  Transformation( [ 4, 4, 4, 4, 5, 4, 5 ] ),
-  Transformation( [ 4, 4, 4, 4, 5, 5, 4 ] ),
-  Transformation( [ 4, 4, 4, 4, 7, 4, 7 ] ),
-  Transformation( [ 4, 5, 4, 4, 5, 4, 4 ] ),
-  Transformation( [ 4, 5, 4, 4, 5, 4, 5 ] ),
-  Transformation( [ 4, 5, 4, 4, 5, 5, 5 ] ),
-  Transformation( [ 4, 5, 5, 4, 5, 5, 4 ] ),
-  Transformation( [ 4, 7, 4, 4, 7, 4, 7 ] ),
-  Transformation( [ 4, 7, 4, 4, 7, 7, 7 ] ),
-  Transformation( [ 5, 2, 2, 5, 5, 2, 5 ] ),
-  Transformation( [ 5, 2, 2, 5, 5, 5, 5 ] ),
-  Transformation( [ 5, 2, 5, 5, 5, 5, 5 ] ),
-  Transformation( [ 5, 3, 3, 5, 5, 3, 5 ] ),
-  Transformation( [ 5, 3, 3, 5, 5, 5, 5 ] ),
-  Transformation( [ 5, 5, 3, 3, 5, 5, 5 ] ),
-  Transformation( [ 5, 5, 4, 4, 5, 5, 5 ] ),
-  Transformation( [ 5, 5, 5, 4, 5, 4, 5 ] ),
-  Transformation( [ 5, 5, 5, 4, 5, 5, 5 ] ),
-  Transformation( [ 5, 5, 5, 5, 5, 5, 5 ] ),
-  Transformation( [ 6, 2, 2, 6, 6, 6, 6 ] ),
-  Transformation( [ 6, 2, 6, 2, 2, 6, 2 ] ),
-  Transformation( [ 6, 2, 6, 6, 2, 6, 2 ] ),
-  Transformation( [ 6, 2, 6, 6, 2, 6, 6 ] ),
-  Transformation( [ 6, 2, 6, 6, 6, 6, 6 ] ),
-  Transformation( [ 6, 6, 6, 6, 6, 6, 6 ] ),
-  Transformation( [ 6, 6, 6, 6, 7, 6, 7 ] ),
-  Transformation( [ 6, 6, 6, 7, 7, 6, 7 ] ),
-  Transformation( [ 6, 6, 7, 7, 7, 6, 7 ] ),
-  Transformation( [ 6, 7, 6, 6, 7, 6, 7 ] ),
-  Transformation( [ 6, 7, 6, 7, 7, 6, 7 ] ),
-  Transformation( [ 7, 2, 2, 7, 2, 2, 7 ] ),
-  Transformation( [ 7, 2, 2, 7, 5, 5, 7 ] ),
-  Transformation( [ 7, 2, 2, 7, 6, 6, 7 ] ),
-  Transformation( [ 7, 2, 2, 7, 7, 2, 7 ] ),
-  Transformation( [ 7, 2, 2, 7, 7, 7, 7 ] ),
-  Transformation( [ 7, 2, 7, 7, 2, 7, 7 ] ),
-  Transformation( [ 7, 2, 7, 7, 5, 7, 7 ] ),
-  Transformation( [ 7, 2, 7, 7, 7, 7, 7 ] ),
-  Transformation( [ 7, 3, 3, 7, 3, 3, 7 ] ),
-  Transformation( [ 7, 3, 3, 7, 7, 3, 7 ] ),
-  Transformation( [ 7, 3, 3, 7, 7, 7, 7 ] ),
-  Transformation( [ 7, 5, 5, 7, 5, 5, 7 ] ),
-  Transformation( [ 7, 5, 7, 7, 5, 7, 7 ] ),
-  Transformation( [ 7, 6, 6, 7, 6, 6, 7 ] ),
-  Transformation( [ 7, 6, 6, 7, 7, 6, 7 ] ),
-  Transformation( [ 7, 7, 3, 3, 7, 7, 7 ] ),
-  Transformation( [ 7, 7, 4, 4, 7, 7, 7 ] ),
-  Transformation( [ 7, 7, 7, 4, 7, 4, 7 ] ),
-  Transformation( [ 7, 7, 7, 4, 7, 7, 7 ] ),
-  Transformation( [ 7, 7, 7, 6, 7, 6, 7 ] ),
-  Transformation( [ 7, 7, 7, 7, 5, 5, 7 ] ),
-  Transformation( [ 7, 7, 7, 7, 5, 7, 7 ] ),
-  Transformation( [ 7, 7, 7, 7, 6, 6, 7 ] ),
-  Transformation( [ 7, 7, 7, 7, 7, 6, 7 ] ),
+[ Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] ), 
+  Transformation( [ 1, 1, 1, 1, 5, 1, 1 ] ), 
+  Transformation( [ 1, 1, 1, 1, 5, 1, 5 ] ), 
+  Transformation( [ 1, 1, 1, 1, 5, 5, 1 ] ), 
+  Transformation( [ 1, 1, 1, 4, 1, 1, 1 ] ), 
+  Transformation( [ 1, 1, 1, 4, 1, 4, 1 ] ), 
+  Transformation( [ 1, 1, 1, 4, 4, 1, 4 ] ), 
+  Transformation( [ 1, 1, 1, 4, 5, 1, 5 ] ), 
+  Transformation( [ 1, 1, 1, 5, 5, 1, 5 ] ), 
+  Transformation( [ 1, 1, 4, 4, 1, 1, 1 ] ), 
+  Transformation( [ 1, 1, 4, 4, 4, 1, 4 ] ), 
+  Transformation( [ 1, 1, 5, 5, 5, 1, 5 ] ), 
+  Transformation( [ 1, 2, 1, 1, 1, 1, 1 ] ), 
+  Transformation( [ 1, 2, 1, 1, 2, 1, 1 ] ), 
+  Transformation( [ 1, 2, 1, 1, 2, 1, 2 ] ), 
+  Transformation( [ 1, 2, 1, 1, 2, 2, 2 ] ), 
+  Transformation( [ 1, 2, 1, 1, 5, 1, 1 ] ), 
+  Transformation( [ 1, 2, 1, 2, 2, 1, 2 ] ), 
+  Transformation( [ 1, 2, 1, 2, 2, 2, 2 ] ), 
+  Transformation( [ 1, 2, 2, 1, 1, 1, 1 ] ), 
+  Transformation( [ 1, 2, 2, 1, 1, 2, 1 ] ), 
+  Transformation( [ 1, 2, 2, 1, 2, 2, 1 ] ), 
+  Transformation( [ 1, 2, 2, 1, 5, 5, 1 ] ), 
+  Transformation( [ 1, 4, 1, 4, 4, 1, 4 ] ), 
+  Transformation( [ 1, 4, 1, 4, 4, 4, 4 ] ), 
+  Transformation( [ 1, 5, 1, 1, 5, 1, 1 ] ), 
+  Transformation( [ 1, 5, 1, 1, 5, 1, 5 ] ), 
+  Transformation( [ 1, 5, 1, 1, 5, 5, 5 ] ), 
+  Transformation( [ 1, 5, 1, 4, 5, 4, 5 ] ), 
+  Transformation( [ 1, 5, 1, 5, 5, 1, 5 ] ), 
+  Transformation( [ 1, 5, 1, 5, 5, 5, 5 ] ), 
+  Transformation( [ 1, 5, 5, 1, 5, 5, 1 ] ), 
+  Transformation( [ 2, 2, 2, 2, 2, 2, 2 ] ), 
+  Transformation( [ 2, 2, 2, 2, 2, 6, 2 ] ), 
+  Transformation( [ 2, 2, 2, 2, 5, 2, 2 ] ), 
+  Transformation( [ 2, 2, 2, 2, 5, 2, 5 ] ), 
+  Transformation( [ 2, 2, 2, 2, 5, 5, 2 ] ), 
+  Transformation( [ 2, 2, 2, 2, 6, 6, 2 ] ), 
+  Transformation( [ 2, 2, 2, 2, 7, 2, 7 ] ), 
+  Transformation( [ 2, 2, 2, 5, 5, 2, 5 ] ), 
+  Transformation( [ 2, 2, 2, 6, 2, 6, 2 ] ), 
+  Transformation( [ 2, 2, 2, 7, 7, 2, 7 ] ), 
+  Transformation( [ 2, 2, 5, 5, 5, 2, 5 ] ), 
+  Transformation( [ 2, 2, 7, 7, 7, 2, 7 ] ), 
+  Transformation( [ 3, 3, 3, 3, 3, 3, 3 ] ), 
+  Transformation( [ 3, 3, 3, 3, 5, 3, 3 ] ), 
+  Transformation( [ 3, 3, 3, 3, 5, 3, 5 ] ), 
+  Transformation( [ 3, 3, 3, 3, 5, 5, 3 ] ), 
+  Transformation( [ 3, 3, 3, 3, 7, 3, 7 ] ), 
+  Transformation( [ 3, 3, 3, 4, 3, 3, 3 ] ), 
+  Transformation( [ 3, 3, 3, 4, 3, 4, 3 ] ), 
+  Transformation( [ 3, 3, 3, 4, 4, 3, 4 ] ), 
+  Transformation( [ 3, 3, 3, 4, 5, 3, 5 ] ), 
+  Transformation( [ 3, 3, 3, 4, 7, 3, 7 ] ), 
+  Transformation( [ 3, 3, 3, 5, 5, 3, 5 ] ), 
+  Transformation( [ 3, 3, 3, 7, 7, 3, 7 ] ), 
+  Transformation( [ 3, 4, 3, 4, 4, 3, 4 ] ), 
+  Transformation( [ 3, 4, 3, 4, 4, 4, 4 ] ), 
+  Transformation( [ 3, 5, 3, 3, 5, 3, 3 ] ), 
+  Transformation( [ 3, 5, 3, 3, 5, 3, 5 ] ), 
+  Transformation( [ 3, 5, 3, 3, 5, 5, 5 ] ), 
+  Transformation( [ 3, 5, 3, 4, 5, 4, 5 ] ), 
+  Transformation( [ 3, 5, 3, 5, 5, 3, 5 ] ), 
+  Transformation( [ 3, 5, 3, 5, 5, 5, 5 ] ), 
+  Transformation( [ 3, 7, 3, 3, 7, 3, 7 ] ), 
+  Transformation( [ 3, 7, 3, 3, 7, 7, 7 ] ), 
+  Transformation( [ 3, 7, 3, 4, 7, 4, 7 ] ), 
+  Transformation( [ 3, 7, 3, 7, 7, 3, 7 ] ), 
+  Transformation( [ 3, 7, 3, 7, 7, 7, 7 ] ), 
+  Transformation( [ 4, 3, 3, 4, 3, 3, 4 ] ), 
+  Transformation( [ 4, 3, 3, 4, 4, 3, 4 ] ), 
+  Transformation( [ 4, 3, 3, 4, 4, 4, 4 ] ), 
+  Transformation( [ 4, 3, 3, 4, 5, 5, 4 ] ), 
+  Transformation( [ 4, 4, 4, 4, 4, 4, 4 ] ), 
+  Transformation( [ 4, 4, 4, 4, 5, 4, 4 ] ), 
+  Transformation( [ 4, 4, 4, 4, 5, 4, 5 ] ), 
+  Transformation( [ 4, 4, 4, 4, 5, 5, 4 ] ), 
+  Transformation( [ 4, 4, 4, 4, 7, 4, 7 ] ), 
+  Transformation( [ 4, 5, 4, 4, 5, 4, 4 ] ), 
+  Transformation( [ 4, 5, 4, 4, 5, 4, 5 ] ), 
+  Transformation( [ 4, 5, 4, 4, 5, 5, 5 ] ), 
+  Transformation( [ 4, 5, 5, 4, 5, 5, 4 ] ), 
+  Transformation( [ 4, 7, 4, 4, 7, 4, 7 ] ), 
+  Transformation( [ 4, 7, 4, 4, 7, 7, 7 ] ), 
+  Transformation( [ 5, 2, 2, 5, 5, 2, 5 ] ), 
+  Transformation( [ 5, 2, 2, 5, 5, 5, 5 ] ), 
+  Transformation( [ 5, 2, 5, 5, 5, 5, 5 ] ), 
+  Transformation( [ 5, 3, 3, 5, 5, 3, 5 ] ), 
+  Transformation( [ 5, 3, 3, 5, 5, 5, 5 ] ), 
+  Transformation( [ 5, 5, 3, 3, 5, 5, 5 ] ), 
+  Transformation( [ 5, 5, 4, 4, 5, 5, 5 ] ), 
+  Transformation( [ 5, 5, 5, 4, 5, 4, 5 ] ), 
+  Transformation( [ 5, 5, 5, 4, 5, 5, 5 ] ), 
+  Transformation( [ 5, 5, 5, 5, 5, 5, 5 ] ), 
+  Transformation( [ 6, 2, 2, 6, 6, 6, 6 ] ), 
+  Transformation( [ 6, 2, 6, 2, 2, 6, 2 ] ), 
+  Transformation( [ 6, 2, 6, 6, 2, 6, 2 ] ), 
+  Transformation( [ 6, 2, 6, 6, 2, 6, 6 ] ), 
+  Transformation( [ 6, 2, 6, 6, 6, 6, 6 ] ), 
+  Transformation( [ 6, 6, 6, 6, 6, 6, 6 ] ), 
+  Transformation( [ 6, 6, 6, 6, 7, 6, 7 ] ), 
+  Transformation( [ 6, 6, 6, 7, 7, 6, 7 ] ), 
+  Transformation( [ 6, 6, 7, 7, 7, 6, 7 ] ), 
+  Transformation( [ 6, 7, 6, 6, 7, 6, 7 ] ), 
+  Transformation( [ 6, 7, 6, 7, 7, 6, 7 ] ), 
+  Transformation( [ 7, 2, 2, 7, 2, 2, 7 ] ), 
+  Transformation( [ 7, 2, 2, 7, 5, 5, 7 ] ), 
+  Transformation( [ 7, 2, 2, 7, 6, 6, 7 ] ), 
+  Transformation( [ 7, 2, 2, 7, 7, 2, 7 ] ), 
+  Transformation( [ 7, 2, 2, 7, 7, 7, 7 ] ), 
+  Transformation( [ 7, 2, 7, 7, 2, 7, 7 ] ), 
+  Transformation( [ 7, 2, 7, 7, 5, 7, 7 ] ), 
+  Transformation( [ 7, 2, 7, 7, 7, 7, 7 ] ), 
+  Transformation( [ 7, 3, 3, 7, 3, 3, 7 ] ), 
+  Transformation( [ 7, 3, 3, 7, 7, 3, 7 ] ), 
+  Transformation( [ 7, 3, 3, 7, 7, 7, 7 ] ), 
+  Transformation( [ 7, 5, 5, 7, 5, 5, 7 ] ), 
+  Transformation( [ 7, 5, 7, 7, 5, 7, 7 ] ), 
+  Transformation( [ 7, 6, 6, 7, 6, 6, 7 ] ), 
+  Transformation( [ 7, 6, 6, 7, 7, 6, 7 ] ), 
+  Transformation( [ 7, 7, 3, 3, 7, 7, 7 ] ), 
+  Transformation( [ 7, 7, 4, 4, 7, 7, 7 ] ), 
+  Transformation( [ 7, 7, 7, 4, 7, 4, 7 ] ), 
+  Transformation( [ 7, 7, 7, 4, 7, 7, 7 ] ), 
+  Transformation( [ 7, 7, 7, 6, 7, 6, 7 ] ), 
+  Transformation( [ 7, 7, 7, 7, 5, 5, 7 ] ), 
+  Transformation( [ 7, 7, 7, 7, 5, 7, 7 ] ), 
+  Transformation( [ 7, 7, 7, 7, 6, 6, 7 ] ), 
+  Transformation( [ 7, 7, 7, 7, 7, 6, 7 ] ), 
   Transformation( [ 7, 7, 7, 7, 7, 7, 7 ] ) ]
 gap> idem=Set(Idempotents(m));
 true
@@ -264,7 +264,6 @@ gap> out;
   [ 737, 737 ], [ 2807, 2807 ], [ 636, 636 ], [ 495, 495 ], [ 2, 2 ], 
   [ 201, 201 ], [ 3, 3 ], [ 3, 3 ], [ 471, 471 ], [ 715, 715 ], [ 118, 118 ], 
   [ 28, 28 ], [ 197, 197 ], [ 88, 88 ] ]
-# 2.5s for previous
 gap> out:=[];; out2:=[];; out3:=[];;
 gap> for i in gens do 
 > s:=Semigroup(i);
@@ -400,7 +399,7 @@ gap> gens:=[ Transformation( [ 1, 2, 1, 2, 1 ] ),
 > Transformation( [ 3, 4, 2, 1, 4 ] ) ];;
 gap> S:=Semigroup(gens);; 
 gap> RClassReps(S);
-[ Transformation( [ 1, 2, 1, 2, 1 ] ), Transformation( [ 3, 4, 2, 1, 4 ] ),
+[ Transformation( [ 1, 2, 1, 2, 1 ] ), Transformation( [ 3, 4, 2, 1, 4 ] ), 
   Transformation( [ 1, 2, 2, 1, 2 ] ), Transformation( [ 2, 1, 2, 1, 1 ] ) ]
 gap> a:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
 gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
@@ -1565,6 +1564,7 @@ gap> HClassRepsData(r);
   [ [ 7, 1, 2, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (2,7,3,4,6), fail ], 
   [ [ 7, 1, 2, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (2,4,7,6,3), fail ] ]
 
+#
 gap> t:=FullTransformationSemigroup(5);;
 gap> iter:=Iterator(t);
 <iterator of full trans. semigroup>
@@ -1592,7 +1592,6 @@ gap> IsDoneIterator(iter);
 true
 
 #GreensLClassOfElement(D-class, transformation);
-
 gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 >   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
@@ -1645,7 +1644,6 @@ gap> Set(HClasses(l))=Set(HClasses(ll));
 true
 
 #GreensHClassOfElement(D-class, transformation);
-
 gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
 > Transformation([1,2,4,3,5,6,7,8,9,10]),
 > Transformation([1,2,3,4,5,6,10,9,8,7]),
@@ -1681,6 +1679,7 @@ true
 gap> Elements(h)=Elements(hh);
 true
 
+#
 gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ),
 > Transformation( [ 4, 3, 1, 2 ] ));;
 gap> GreensDClasses(S);
@@ -1725,6 +1724,7 @@ gap> GreensHClasses(L);
 [ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 4, 4, 3, 4 ] )},
   {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 4, 4, 4, 3 ] )} ]
 
+#
 gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ),
 > Transformation( [ 4, 3, 1, 2 ] ));;
 gap> DClassReps(S);
@@ -1767,10 +1767,12 @@ gap> HClassReps(L);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ),
   Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
 
+#
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
 
+#
 gap> Unbind(tmptmptmp); Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
 > Unbind(H); Unbind(I); Unbind(r); Unbind(d); Unbind(dr); Unbind(r2);
 > Unbind(out2); Unbind(out3); Unbind(a); Unbind(b); Unbind(M);

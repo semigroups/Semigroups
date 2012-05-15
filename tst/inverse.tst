@@ -16,6 +16,7 @@ gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> SetInfoLevel(InfoCitrus, 0);
 
+#
 gap> gens:=[PartialPermNC( [ 1, 2, 4 ], [ 1, 5, 2 ] ),
 > PartialPermNC( [ 1, 2, 3 ], [ 2, 3, 5 ] ),
 > PartialPermNC( [ 1, 3, 4 ], [ 2, 5, 4 ] ),
@@ -56,6 +57,7 @@ gap> List(last, DomPP);
 gap> IsDuplicateFreeList(last);
 true
 
+#
 gap> s:=InverseSemigroup(PartialPermNC([ 1, 2 ], [ 1, 2 ]),
 > PartialPermNC([ 1, 2 ], [ 1, 3 ]));;
 gap> GreensHClasses(s);
@@ -69,6 +71,7 @@ gap> GreensHClasses(s);
 [ {<identity on [ 1, 2 ]>}, {[ 1, 2 ] -> [ 1, 3 ]}, {[ 1, 3 ] -> [ 1, 2 ]},
   {<identity on [ 1, 3 ]>}, {<identity on [ 1 ]>} ]
 
+#
 gap> gens:=[PartialPermNC( [ 1, 2, 3, 5, 6, 7, 8, 11, 12, 16, 19 ], 
 > [ 9, 18, 20, 11, 5, 16, 8, 19, 14, 13, 1 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18, 19, 20 ], 
@@ -257,6 +260,7 @@ gap> d;
 gap> Size(DClass(h))=Size(RClass(h))^2/2;
 true
 
+#
 gap> s:=Semigroup(ReadCitrus("pkg/citrus/examples/graph7c.citrus.gz", 600));
 <semigroup with 2 generators>
 gap> iso:=IsomorphismPartialPermSemigroup(s);;
@@ -269,6 +273,7 @@ Transformation( [ 1, 7, 3, 4, 5, 6, 7 ] )
 gap> ForAll(s, f-> (f^iso)^inv=f);
 true
 
+#
 gap> s:=Semigroup( Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ), 
 > Transformation( [ 3, 6, 5, 7, 2, 1, 7 ] ) );;
 gap> iso:=IsomorphismPartialPermSemigroup(s);;
@@ -285,6 +290,7 @@ true
 gap> Size(s);
 631
 
+#
 gap> s:=InverseSemigroup( PartialPermNC( [ 1, 2, 3 ], [ 2, 4, 1 ] ),
 > PartialPermNC( [ 1, 3, 4 ], [ 3, 4, 1 ] ) );;
 gap> GreensDClasses(s);
@@ -370,6 +376,7 @@ gap> Position(HClasses(R), h);
 gap> DClassOfRClass(R)=D;
 true
 
+#
 gap> s:=InverseSemigroup(
 > PartialPermNC( [ 1, 2, 3, 5 ], [ 1, 4, 6, 3 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 6 ], [ 3, 6, 4, 5, 1 ] ) );;
@@ -394,6 +401,7 @@ gap> HClass(s, f)=HClass(L, f);
 true
 gap> 
 
+#
 gap> s:=POI(10);
 <inverse monoid with 10 generators>
 gap> f:=PartialPermNC([ 2, 4, 5, 7 ], [ 2, 3, 5, 7 ]);;
@@ -475,6 +483,7 @@ true
 gap> HClass(D, f)=HClassNC(s, f);  
 true
 
+#
 gap> m:=InverseSemigroup(
 > PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 
 >  18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 
@@ -650,6 +659,7 @@ gap> Size(d);
 gap> Size(DClasses(m)[6]);
 36
 
+#
 gap> s:=InverseSemigroup( [ PartialPermNC( [ 1, 2, 3, 5 ], [ 2, 1, 6, 3 ] ),
 > PartialPermNC( [ 1, 2, 3, 6 ], [ 3, 5, 2, 6 ] ) ]);;
 gap> f:=PartialPermNC([ 1 .. 3 ], [ 6, 3, 1 ]);;
@@ -666,6 +676,7 @@ gap> First(DClasses(s), x-> not IsTrivial(GroupHClass(x)));
 gap> StructureDescription(GroupHClass(last));
 "C2"
 
+#
 gap> s:=InverseSemigroup(
 > [ PartialPermNC( [ 1, 2, 3, 4, 5, 7 ], [ 10, 6, 3, 4, 9, 1 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8 ], [ 6, 10, 7, 4, 8, 2, 9, 1 ] ) ]);;
@@ -687,11 +698,13 @@ gap> r:=RClassNC(s, f);
 gap> Idempotents(r);
 [ <identity on [ 2, 4, 9, 10 ]> ]
 
+#
 gap> s:=RandomInverseSemigroup(2,10);
 <inverse semigroup with 2 generators>
 gap> ForAll(RClasses(s), IsRegularRClass);
 true
 
+#
 gap> s:=InverseSemigroup( 
 > PartialPermNC( [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14, 15 ], 
 > [ 6, 4, 18, 3, 11, 8, 5, 14, 19, 13, 12, 20, 1 ] ),
@@ -813,6 +826,7 @@ gap> iter:=IteratorOfRClassReps(s);
 <iterator of R-class reps>
 gap> for i in iter do od;
 
+#
 gap> s:=RandomInverseSemigroup(100,100);
 <inverse semigroup with 100 generators>
 gap> iter:=IteratorOfRClasses(s);       
@@ -822,6 +836,7 @@ gap> iter:=IteratorOfLClasses(s);
 <iterator of L-classes>
 gap> for i in [1..100] do NextIterator(iter); od;
 
+#
 gap> s:=InverseSemigroup(
 > [ PartialPermNC( [ 1, 2, 3, 5, 7, 9, 10 ], [ 6, 7, 2, 9, 1, 5, 3 ] ),
 > PartialPermNC( [ 1, 2, 3, 5, 6, 7, 9, 10 ], [ 8, 1, 9, 4, 10, 5, 6, 7 ] ) ]);;
@@ -842,6 +857,7 @@ true
 gap> NrIdempotents(last2);
 13
 
+#
 gap> S:=InverseSemigroup(
 > PartialPermNC( [ 1, 2, 3 ], [ 1, 3, 5 ] ),
 > PartialPermNC( [ 1, 2, 4 ], [ 1, 2, 3 ] ),
@@ -858,8 +874,10 @@ Group(())
 gap> List(DClasses(S), SchutzenbergerGroup);
 [ Group(()), Group(()), Group(()), Group(()), Group([ (2,5) ]), Group(()) ]
 
+#
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
 
+#
 gap> STOP_TEST("Citrus package: inverse.tst", 10000);

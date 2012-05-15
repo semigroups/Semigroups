@@ -13,11 +13,13 @@
 gap> START_TEST("Citrus package: closure.tst");
 gap> LoadPackage("citrus", false);;
 
+#
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
 gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> SetInfoLevel(InfoCitrus, 0);
 
+#
 gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ), 
 >  Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ), 
 >  Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ), 
@@ -37,6 +39,7 @@ gap> NrDClasses(s);
 gap> GroupOfUnits(s);
 <monoid with 1 generator>
 
+#
 gap> file:=Concatenation(CitrusDir(), "/examples/syntactic.citrus.gz");;
 gap> gens:=ReadCitrus(file, 299);;
 gap> s:=Semigroup(gens[1]);;
@@ -60,6 +63,7 @@ gap> NrLClasses(s);
 gap> NrLClasses(t);
 353
 
+#
 gap> file:=Concatenation(CitrusDir(), "/examples/syntactic.citrus.gz");;
 gap> gens:=ReadCitrus(file, 299);;
 gap> s:=Semigroup(gens[1], rec(schreier:=false));;
@@ -83,6 +87,7 @@ gap> NrLClasses(s);
 gap> NrLClasses(t);
 353
 
+#
 gap> file:=Concatenation(CitrusDir(), "/examples/path.citrus.gz");;
 gap> gens:=ReadCitrus(file, 10);;
 gap> s:=Semigroup(gens[1]);;         
@@ -106,6 +111,7 @@ gap> NrRClasses(t); NrLClasses(t); NrDClasses(t); NrIdempotents(t);
 46
 423
 
+#
 gap> file:=Concatenation(CitrusDir(), "/examples/path.citrus.gz");;
 gap> gens:=ReadCitrus(file, 10);;
 gap> s:=Semigroup(gens[1]);;        
@@ -130,6 +136,7 @@ gap> NrRClasses(t); NrLClasses(t); NrDClasses(t); NrIdempotents(t);
 46
 423
 
+#
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 >   Transformation( [ 4, 2, 1, 5, 5 ] ),
 >   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
@@ -148,6 +155,7 @@ fail
 gap> GroupOfUnits(s);
 <monoid with 1 generator>
 
+#
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 >   Transformation( [ 4, 2, 1, 5, 5 ] ),
 >   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
@@ -164,6 +172,7 @@ fail
 gap> GroupOfUnits(s);
 <monoid with 1 generator>
 
+#
 gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 > Transformation( [ 2, 4, 1, 2 ] ),
 > Transformation( [ 3, 1, 1, 3 ] ),
@@ -183,6 +192,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 6
 20
 
+#
 gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 > Transformation( [ 2, 4, 1, 2 ] ),
 > Transformation( [ 3, 1, 1, 3 ] ),
@@ -202,6 +212,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 6
 20
 
+#
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 1, 4, 1, 2 ] ),
 >  Transformation( [ 2, 4, 1, 1 ] ),
@@ -221,6 +232,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 6
 29
 
+#
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 1, 4, 1, 2 ] ),
 >  Transformation( [ 3, 4, 2, 2 ] ),
@@ -238,9 +250,9 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 9
 22
 
+#
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
 gap> Unbind(s);; Unbind(t);; Unbind(i);; Unbind(gens);;
-
 gap> STOP_TEST( "Citrus package: closure.tst", 10000);

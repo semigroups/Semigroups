@@ -8,15 +8,18 @@
 #############################################################################
 ##
 
+#
 # ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"semigroups.tst")); 
 gap> START_TEST("Citrus package: semigroups.tst");
 gap> LoadPackage("citrus", false);;
 
+#
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
 gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> SetInfoLevel(InfoCitrus, 0);
 
+#
 gap> gens:=[ PartialPermNC( [ 1, 2, 3, 4, 6, 7, 10 ], [ 5, 3, 4, 1, 9, 6, 8 ] ),
 > PartialPermNC( [ 1, 2, 3, 5, 6, 7, 9 ], [ 8, 9, 6, 7, 3, 4, 5 ] ),
 > PartialPermNC( [ 1, 2, 3, 5, 6, 8, 9 ], [ 2, 4, 1, 7, 3, 10, 8 ] ),
@@ -151,6 +154,7 @@ gap> s:=InverseSemigroup(gens, rec(small:=true));;
 gap> NrDClasses(s);
 14
 
+#
 gap> s:=InverseMonoid(PartialPermNC( [ 1, 2, 3, 5 ], [ 5, 6, 8, 2 ] ),
 > PartialPermNC( [ 1, 2, 3, 5, 9, 10 ], [ 7, 2, 1, 5, 9, 4 ] ) );;
 gap> Generators(s);
@@ -173,6 +177,7 @@ gap> GeneratorsOfMonoid(s);
   [ 2, 5, 6, 8 ] -> [ 5, 1, 2, 3 ], 
   [ 1, 2, 4, 5, 7, 9 ] -> [ 3, 2, 10, 5, 1, 9 ] ] 
 
+#
 gap> g:=DihedralGroup(8);;
 gap> g:=Range(IsomorphismPermGroup(g));;
 gap> iso:=IsomorphismPartialPermSemigroup(g);
@@ -193,6 +198,7 @@ true
 gap> Size(Range(iso));
 8
 
+#
 gap> s:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
 <inverse semigroup with 2 generators>
 gap> IsomorphismPermGroup(s);
@@ -217,9 +223,11 @@ gap> Size(s);
 gap> Size(Range(iso));
 24
 
+#
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
 gap> Unbind(s);; Unbind(gens);;
 
+#
 gap> STOP_TEST( "Citrus package: semigroups.tst", 10000);

@@ -11,11 +11,13 @@
 gap> START_TEST("Citrus package: pperm.tst");
 gap> LoadPackage("citrus", false);;
 
+#
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
 gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> SetInfoLevel(InfoCitrus, 0);
 
+#
 gap> f:=PartialPermNC([0,1,0,20]);
 [ 2, 4 ] -> [ 1, 20 ]
 gap> InternalRepOfPartialPerm(f);
@@ -72,6 +74,7 @@ gap> f[4]^-4;
 [ 2, 7, 8 ] -> [ 2, 7, 3 ]
 gap> 
 
+#
 gap> f:=ReadCitrus("pkg/citrus/examples/inverse.citrus.gz", 1)[1];
 <partial perm on 6326 pts>
 gap> f^6*f^-6=LeftOne(f);
@@ -254,6 +257,7 @@ gap> f[3];
 gap> f[50007];
 4
 
+#
 gap> f:=PartialPermNC([ 1, 2, 3, 4, 5, 6, 7, 11, 12, 13, 14, 19 ],
 > [ 5, 13, 7, 6, 10, 15, 9, 14, 4, 20, 19, 2 ]);
 [ 1, 2, 3, 4, 5, 6, 7, 11, 12, 13, 14, 19 ] -> 
@@ -352,14 +356,17 @@ gap> 50^f;
 gap> 27^f;
 52
 
+#
 gap> f:=PartialPermNC( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] );;
 gap> f<f;
 false
 
+#
 gap> f:=PartialPermNC([]);;
 gap> f<f;
 false
 
+#
 gap> S:=InverseSemigroup([ PartialPermNC( [ 1, 3 ], [ 1, 3 ] ),
 > PartialPermNC( [ 1, 2 ], [ 3, 2 ] ) ] );;
 gap> Size(S);
@@ -382,6 +389,7 @@ gap> PositionsProperty([1..11], x-> NaturalLeqPartialPerm(Elements(S)[2],
 > Elements(S)[x]));
 [ 2, 7, 9 ]
 
+#
 gap> s:=InverseSemigroup( 
 > PartialPermNC( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ),
 > PartialPermNC( [ 1, 2, 4, 5, 8, 10 ], [ 6, 2, 7, 8, 10, 4 ] ),
@@ -421,8 +429,10 @@ gap> LargestMovedPoint(coll);
 gap> SmallestMovedPoint(coll);
 3
 
+#
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
 
+#
 gap> STOP_TEST("Citrus package: pperm.tst", 10000);

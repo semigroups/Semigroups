@@ -28,7 +28,7 @@ function(arg)
   return fail;
 end);
 
-# mod for 0.4! - CitrusMakeDoc - "for no argument"
+# mod for 0.7! - CitrusMakeDoc - "for no argument"
 #############################################################################
 
 InstallGlobalFunction(CitrusMakeDoc, 
@@ -84,7 +84,7 @@ function(arg)
   return;
 end);
 
-# mod for 0.4! - CitrusTestAll - "for no argument"
+# mod for 0.7! - CitrusTestAll - "for no argument"
 #############################################################################
 
 InstallGlobalFunction(CitrusTestAll, 
@@ -104,7 +104,7 @@ function()
         Print("not reading ", dir_str, "/", x, "\n(Citrus is not compiled)\n");
       else
         Print("reading ", dir_str,"/", x, " ...\n");
-        ReadTest(Filename(dir, x));
+        Test(Filename(dir, x));
       fi;
       Print("\n");
     fi;
@@ -117,10 +117,10 @@ end);
 
 InstallGlobalFunction(CitrusTestInstall, 
 function()
-  ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),
+  Test(Filename(DirectoriesPackageLibrary("citrus","tst"),
    "testinstall.tst"));;
   if Citrus_C then 
-    ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),
+    Test(Filename(DirectoriesPackageLibrary("citrus","tst"),
        "testcompiled.tst"));;
   fi;
   return;
@@ -480,16 +480,16 @@ end);
 InstallGlobalFunction(ReadCitrus, 
 function(arg)
   local file, i, line;
-  
+ 
   if not IsString(arg[1]) then 
     Error("the first argument must be a string,");
     return;
   else
     file:=SplitString(arg[1], ".");
     if file[Length(file)] = "gz" then 
-      file:=IO_FilteredFile([["gzip", ["-dcq"]]], arg[1], "r");
+      file:=IO_FilteredFile([["gzip", ["-dcq"]]], arg[1]);
     else  
-      file:=IO_File(arg[1], "r");
+      file:=IO_File(arg[1]);
     fi;
   fi;
 
@@ -497,7 +497,6 @@ function(arg)
     Error(arg[1], " is not a readable file,");
     return;
   fi;
-
   if Length(arg)>1 then 
     if IsPosInt(arg[2]) then 
       i:=0;
@@ -517,7 +516,7 @@ function(arg)
       return;
     fi;
   fi;
-
+  
   line:=IO_ReadLines(file);
   IO_Close(file);
   return List(line, x-> ReadCitrusLine(Chomp(x)));
