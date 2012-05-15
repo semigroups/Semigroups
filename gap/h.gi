@@ -93,7 +93,7 @@ InstallGlobalFunction(CreateHClass,
 function(s, data, orbit, rep)
   local d, h;
 
-  data:=[data[1]{[1..6]}, data[2]{[1..6]}, data[3], data[4]];
+  #data:=[data[1]{[1..6]}, data[2]{[1..6]}, data[3], data[4]];
 
   h:=Objectify(HClassType(s), rec(parent:=s, data:=data, 
   o:=orbit, rep:=rep));
@@ -214,8 +214,8 @@ function(s, f)
           fail];
   fi;
 
-  return CreateHClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)], 
-   HClassRepFromData(s, d));
+  return CreateHClass(s, [d[1]{[1..6]}, d[2]{[1..6]}, d[3], d[4]],
+  [OrbitsOfImages(s), OrbitsOfKernels(s)], HClassRepFromData(s, d));
 end);
 
 # new for 0.5! - GreensHClassOfElement - "for a Green's class and trans."
@@ -301,7 +301,7 @@ function(s, f)
 end);
 
 
-# new for 0.1! - GroupHClass - "for a D-class of a trans. semigp."
+# new for 0.1! - roupHClass - "for a D-class of a trans. semigp."
 ############################################################################
 # JDM move to d.gi!
 
@@ -355,12 +355,12 @@ function(d)
   return;
 end);
 
-# new for 0.1! - GroupHClassOfGreensDClass - "for D-class of trans. semigp."
+# mod for 0.7! - GroupHClassOfGreensDClass - "for D-class"
 ############################################################################
 # move to d.gi! JDM
 
-InstallMethod(GroupHClassOfGreensDClass, "for D-class of trans. semigp.",
-[IsGreensDClass and IsGreensClassOfTransSemigp], d-> GroupHClass(d));
+InstallMethod(GroupHClassOfGreensDClass, "for D-class",
+[IsGreensDClass], GroupHClass);
 
 #III 
 
@@ -430,14 +430,10 @@ end);
 ############################################################################
 # move to greens.gi
 
-InstallGlobalFunction(IteratorOfHClasses,
+InstallMethod(IteratorOfHClasses, "for a trans. semigroup",
+[IsTransformationSemigroup],
 function(s)
 local iter;
-
-  if not IsTransformationSemigroup(s) then
-    Error("Usage: arg. should be a transformation semigroup,");
-    return;
-  fi;
 
   Info(InfoCitrus, 4, "IteratorOfHClasses");
 
@@ -456,8 +452,8 @@ local iter;
         return fail;
       fi;
     
-      return CreateHClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)], 
-       HClassRepFromData(s, d));;
+      return CreateHClass(s, [d[1]{[1..6]}, d[2]{[1..6]}, d[3], d[4]],
+      [OrbitsOfImages(s), OrbitsOfKernels(s)], HClassRepFromData(s, d));;
     end,
 
     ShallowCopy:=iter-> rec(data:=IteratorOfHClassRepsData(s))));
@@ -470,15 +466,12 @@ end);
 # new for 0.1! - IteratorOfHClassReps - user function!
 ############################################################################
 
-InstallGlobalFunction(IteratorOfHClassReps,
+InstallMethod(IteratorOfHClassReps, "for a trans. semigroup",
+[IsTransformationSemigroup], 
 function(s)
   local iter;
 
   Info(InfoCitrus, 4, "IteratorOfHClassReps");
-  if not IsTransformationSemigroup(s) then
-    Error("Usage: argument should be a transformation semigroup,");
-    return;
-  fi;
 
   iter:=IteratorByFunctions( rec(
 
@@ -503,13 +496,14 @@ end);
 # new for 0.1! - IteratorOfHClassRepsData - not a user function
 ############################################################################
 
-InstallGlobalFunction(IteratorOfHClassRepsData, 
+InstallMethod(IteratorOfHClassRepsData, "for a trans. semigroup",
+[IsTransformationSemigroup], 
 function(s)
-local iter;
+  local iter;
 
-Info(InfoCitrus, 4, "IteratorOfHClassRepsData");
+  Info(InfoCitrus, 4, "IteratorOfHClassRepsData");
 
-iter:=IteratorByFunctions( rec(
+  iter:=IteratorByFunctions( rec(
 	
     i:=0, s:=s, 
 	
@@ -524,14 +518,14 @@ iter:=IteratorByFunctions( rec(
     local i;
     
       if IsDoneIterator(iter) then 
-              return fail;
+        return fail;
       fi;
       
       iter!.i:=iter!.i+1;
       i:=iter!.i;
       
       if i<=Length(iter!.data) then 
-              return iter!.data[i];
+        return iter!.data[i];
       fi;
       
       iter!.data:=HClassRepsDataFromData(s, NextIterator(iter!.r),
@@ -625,29 +619,6 @@ function(h)
   return 0;
 end);
 
-#RRR
-
-# new for 0.1! - RClassOfHClass - "for an H-class of a trans. semigroup"
-#############################################################################
-
-InstallOtherMethod(RClassOfHClass, "for an H-class of a trans. semigroup", 
-[IsGreensHClass and IsGreensClassOfTransSemigp], 
-function(h)
-  local s, d, o, rep;
-
-  if h!.data[4]=fail then #created from R-class or D-class 
-    s:=h!.parent; d:=h!.data; o:=h!.o;
-    d[1][3]:=ImageOrbitSCCFromData(s, d[1], o[1])[1];
-    rep:=RClassRepFromData(s, d[1], o[1]);
-
-    return CreateRClass(s, d[1], o[1], rep);
-  fi;
-  # the below is probably best possible since no info about the R-class
-  # of an H-class created from an L-class is known. 
-  #JDM is the above right?
-  return RClass(ParentAttr(s), Representative(h));
-end);
-
 #PPP
 
 # new for 0.1! - ParentAttr - "for H-class of a trans. semigroup"
@@ -675,6 +646,39 @@ function(iter)
   Print( "<iterator of H-classes>");
   return;
 end);
+
+# new for 0.7! - PrintObj - IsIteratorOfHClassElements
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfHClassElements], 
+function(iter)
+  Print( "<iterator of H-class>");
+  return;
+end);
+
+#RRR
+
+# new for 0.1! - RClassOfHClass - "for an H-class of a trans. semigroup"
+#############################################################################
+
+InstallOtherMethod(RClassOfHClass, "for an H-class of a trans. semigroup", 
+[IsGreensHClass and IsGreensClassOfTransSemigp], 
+function(h)
+  local s, d, o, rep;
+
+  if h!.data[4]=fail then #created from R-class or D-class 
+    s:=h!.parent; d:=h!.data; o:=h!.o;
+    d[1][3]:=ImageOrbitSCCFromData(s, d[1], o[1])[1];
+    rep:=RClassRepFromData(s, d[1], o[1]);
+
+    return CreateRClass(s, d[1], o[1], rep);
+  fi;
+  # the below is probably best possible since no info about the R-class
+  # of an H-class created from an L-class is known. 
+  #JDM is the above right?
+  return RClass(ParentAttr(s), Representative(h));
+end);
+
 
 #SSS
 

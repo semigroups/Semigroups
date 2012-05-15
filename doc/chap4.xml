@@ -1,0 +1,127 @@
+<Chapter Label="green"><Heading>Determining the structure of a semigroup</Heading>
+
+  In this chapter we describe the functions in &Citrus; for determining the
+  structure of a semigroup of transformations or partial permutations, in
+  particular for computing Green's classes and related properties of 
+  semigroups. 
+  
+  <Section><Heading>Expressing semigroup elements as words in
+    generators</Heading>
+    In some cases it is possible to express the elements of a transformation
+    semigroup as a word in the generators. This section describes how to
+    accomplish this in &Citrus;. <P/>
+
+    Note that at present it is not possible to factorize elements in a
+    semigroup of partial permutations.
+
+    <#Include Label="EvaluateWord">
+    <#Include Label="Factorization">
+  </Section>
+
+  <Section><Heading>Creating Green's classes</Heading>
+    <#Include Label="XClassOfYClass">
+    <#Include Label="GreensXClassOfElement">
+    <#Include Label="GreensXClassOfElementNC">
+    <#Include Label="GroupHClass">
+  </Section>
+  
+  <Section><Heading>Iterators and enumerators of classes and representatives
+  </Heading>
+    <#Include Label="GreensXClasses">
+    <#Include Label="IteratorOfXClassReps"> 
+    <#Include Label="IteratorOfXClasses"> 
+    <#Include Label="XClassReps">
+  </Section>
+
+  <Section><Heading>Attributes and properties directly related to Green's classes</Heading>
+    <#Include Label="\&lt;">
+    <#Include Label="InjectionPrincipalFactor">
+    <#Include Label="PrincipalFactor">
+    <#Include Label="IsGreensClassOfTransSemigp">
+    <#Include Label="IsGreensClassOfPartialPermSemigp">
+    <#Include Label="IsRegularXClass">
+    <#Include Label="NrRegularDClasses">
+    <#Include Label="NrXClasses">
+    <#Include Label="PartialOrderOfDClasses">
+    <#Include Label="SchutzenbergerGroup">
+  </Section>
+
+  <Section><Heading>Further attributes of semigroups</Heading>
+    In this section we describe the attributes <Ref Sect="Attributes"
+      BookName="ref"/> of arbitrary semigroups of transformations or partial
+    permutations  that can be found using &Citrus;. <P/>
+
+    In addition to those functions described in this section, the operation
+    <Ref Oper="Degree" Label="for a transformation coll"/> is
+    also relevant for transformation semigroups; and the following operations
+    are also relevant to semigroups of partial permutations:
+    <Ref Oper="MovedPoints" Label="for a partial perm coll"/>, 
+    <Ref Oper="NrMovedPoints" Label="for a partial perm coll"/>, 
+    <Ref Oper="LargestMovedPoint" Label="for a partial perm coll"/>, 
+    <Ref Oper="SmallestMovedPoint" Label="for a partial perm coll"/>, 
+    <Ref Oper="Degree" Label="for a partial perm coll"/>.<P/>
+    
+    <#Include Label="DomainOfPartialPermSemigroup">
+    <#Include Label="GeneratorsOfInverseSemigroup">
+    <#Include Label="GeneratorsOfInverseMonoid">
+    <#Include Label="Generators">
+    <#Include Label="GroupOfUnits">
+    <#Include Label="Idempotents">
+    <#Include Label="NrIdempotents">
+    <#Include Label="IdempotentGeneratedSubsemigp">
+    <#Include Label="IrredundantGeneratingSubset">
+    <#Include Label="MinimalIdeal">
+    <#Include Label="MultiplicativeZero">
+    <#Include Label="NaturalPartialOrder">
+    <#Include Label="NrElementsOfRank">
+    <#Include Label="PrimitiveIdempotents">
+    <#Include Label="Random">
+    <#Include Label="SmallGeneratingSet"> 
+    <#Include Label="GradedImagesOfTransSemigroup">
+    <#Include Label="ImagesOfTransSemigroup">
+
+  </Section>
+  
+  <Section><Heading>Further properties of semigroups</Heading>
+    In this section we describe several properties 
+    <Ref Sect="Properties" BookName="ref"/> of an
+    arbitrary semigroup of transformations or partial permutations 
+    that can be determined using &Citrus;.
+    <#Include Label="IsBand">
+    <#Include Label="IsBlockGroup">
+    <#Include Label="IsBrandtSemigroup">
+    <#Include Label="IsCliffordSemigroup">
+    <#Include Label="IsCommutativeSemigroup">
+    <#Include Label="IsCompletelyRegularSemigroup">
+    <#Include Label="IsFactorisableSemigroup">
+    <#Include Label="IsGroupAsSemigroup">
+    <#Include Label="IsIdempotentGenerated">
+    <#Include Label="IsInverseSemigroup">
+    <#Include Label="IsLeftSimple">
+    <#Include Label="IsLeftZeroSemigroup">
+    <#Include Label="IsMonogenicSemigroup">
+    <#Include Label="IsMonogenicInverseSemigroup">
+    <#Include Label="IsMonoidAsSemigroup">
+    <#Include Label="IsPartialPermSemigroup">
+    <#Include Label="IsOrthodoxSemigroup">
+    <#Include Label="IsRectangularBand">
+    <#Include Label="IsRegularSemigroup">
+    <#Include Label="IsRightZeroSemigroup">
+    <#Include Label="IsRTrivial">
+    <#Include Label="IsSemilatticeAsSemigroup">
+    <#Include Label="IsSimpleSemigroup">
+    <#Include Label="IsSynchronizingSemigroup">
+    <#Include Label="IsZeroGroup">
+    <#Include Label="IsZeroRectangularBand">
+    <#Include Label="IsZeroSemigroup">
+    <#Include Label="IsZeroSimpleSemigroup">
+  </Section>
+
+  <Section><Heading>Changing the representation of a semigroup</Heading>
+    <#Include Label="AntiIsomorphismTransformationSemigroup">
+    <#Include Label="IsomorphismPartialPermSemigroup">
+    <#Include Label="IsomorphismPermGroup">
+    <#Include Label="IsomorphismTransformationMonoid">
+  </Section>
+</Chapter>
+

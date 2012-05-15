@@ -1,0 +1,233 @@
+#############################################################################
+##
+#W  semigroups.tst
+#Y  Copyright (C) 2011-12                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+#
+# ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"semigroups.tst")); 
+gap> START_TEST("Citrus package: semigroups.tst");
+gap> LoadPackage("citrus", false);;
+
+#
+gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
+gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> SetInfoLevel(InfoWarning, 0);;
+gap> SetInfoLevel(InfoCitrus, 0);
+
+#
+gap> gens:=[ PartialPermNC( [ 1, 2, 3, 4, 6, 7, 10 ], [ 5, 3, 4, 1, 9, 6, 8 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 6, 7, 9 ], [ 8, 9, 6, 7, 3, 4, 5 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 6, 8, 9 ], [ 2, 4, 1, 7, 3, 10, 8 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 8 ], [ 8, 4, 5, 3, 7, 2, 10 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 8 ], [ 9, 2, 8, 10, 6, 3, 7 ] ),
+> PartialPermNC( [ 1, 2, 4, 6, 7, 8 ], [ 3, 1, 5, 7, 6, 10 ] ),
+> PartialPermNC( [ 1, 2, 4, 5, 6, 7, 10 ], [ 1, 8, 2, 5, 3, 7, 9 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 8, 9 ], [ 8, 2, 9, 5, 7, 6, 10 ] ),
+> PartialPermNC( [ 1, 2, 4, 5, 6, 7 ], [ 4, 8, 10, 3, 6, 9 ] ),
+> PartialPermNC( [ 1, 2, 4, 6, 8, 9 ], [ 2, 6, 4, 8, 10, 3 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 6, 7, 9 ], [ 4, 10, 9, 5, 6, 2, 3 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7 ], [ 7, 4, 8, 6, 1, 5, 10 ] ),
+> PartialPermNC( [ 1, 3, 4, 7, 8 ], [ 1, 6, 3, 5, 9 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 6, 7, 9 ], [ 6, 5, 1, 4, 10, 7, 8 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 7, 8, 9 ], [ 4, 6, 2, 5, 10, 3, 8 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 6, 9 ], [ 3, 7, 8, 2, 5, 10 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 7, 8, 10 ], [ 3, 4, 2, 1, 5, 10, 8 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 8, 9, 10 ], [ 6, 5, 10, 7, 9, 1, 4, 8 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 8, 9 ], [ 6, 10, 7, 8, 5, 3 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 10 ], [ 3, 7, 10, 8, 2, 6 ] ),
+> PartialPermNC( [ 1, 2, 5, 6, 10 ], [ 7, 4, 8, 3, 2 ] ),
+> PartialPermNC( [ 1, 2, 4, 5, 6, 8, 10 ], [ 6, 9, 5, 7, 4, 2, 1 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 6, 9 ], [ 8, 2, 4, 7, 9, 1 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 9, 10 ], [ 9, 3, 4, 2, 6, 10, 8, 5 ] ),
+> PartialPermNC( [ 1, 2, 3, 10 ], [ 4, 9, 7, 10 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 7, 8, 10 ], [ 7, 10, 1, 2, 9, 8, 3, 5 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7 ], [ 9, 6, 4, 3, 10, 1, 7 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 7, 8, 10 ], [ 5, 9, 4, 8, 1, 7, 2 ] ),
+> PartialPermNC( [ 1, 2, 3, 6, 7, 9, 10 ], [ 4, 2, 5, 7, 3, 6, 9 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 8, 9 ], [ 9, 8, 7, 10, 4, 5, 2 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 8, 9 ], [ 4, 10, 1, 2, 8, 3, 9 ] ),
+> PartialPermNC( [ 1, 2, 4, 5, 9, 10 ], [ 10, 8, 3, 7, 1, 2 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 9, 10 ], [ 6, 10, 2, 7, 3, 4 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 10 ], [ 8, 9, 10, 7, 6 ] ),
+> PartialPermNC( [ 1, 2, 3, 6 ], [ 9, 10, 5, 8 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 6, 8 ], [ 9, 8, 5, 7, 6, 10 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7 ], [ 1, 8, 5, 2, 10, 4, 6 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 8, 10 ], [ 4, 5, 8, 7, 9, 2 ] ),
+> PartialPermNC( [ 1, 2, 4, 5, 6, 8, 9 ], [ 8, 1, 3, 10, 2, 6, 5 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 7, 8, 10 ], [ 10, 8, 3, 7, 6, 2, 1, 9 ] ),
+> PartialPermNC( [ 1, 3, 4, 6, 10 ], [ 7, 2, 8, 6, 5 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 9 ], [ 8, 3, 9, 10, 2, 1, 5 ] ),
+> PartialPermNC( [ 1, 3, 5, 6, 10 ], [ 9, 3, 4, 8, 6 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 7, 9 ], [ 7, 3, 2, 8, 4, 1, 10 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 6, 7 ], [ 6, 3, 5, 7, 10, 8 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6 ], [ 8, 7, 9, 4, 3, 6 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 8 ], [ 2, 1, 9, 7, 4, 5, 8 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 10 ], [ 10, 2, 6, 1, 3, 5, 9 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 6, 10 ], [ 2, 3, 1, 4, 6, 10 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 8, 9, 10 ], [ 8, 2, 7, 6, 5, 3, 4 ] ),
+> PartialPermNC( [ 1, 2, 3, 7, 9 ], [ 9, 5, 8, 1, 7 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 10 ], [ 10, 6, 9, 5, 2, 1 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 6, 7, 8 ], [ 9, 3, 10, 1, 7, 4, 6 ] ),
+> PartialPermNC( [ 1, 3, 4, 5, 7, 10 ], [ 1, 6, 7, 5, 10, 4 ] ),
+> PartialPermNC( [ 1, 3, 4, 6, 7, 8 ], [ 8, 2, 3, 1, 10, 7 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 8, 10 ], [ 2, 6, 5, 8, 3, 4 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 8, 9 ], [ 1, 10, 9, 3, 6, 4 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 6, 9, 10 ], [ 10, 2, 6, 1, 8, 5, 7 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 7 ], [ 1, 2, 10, 8, 9 ] ),
+> PartialPermNC( [ 1, 2, 4, 5, 6, 9 ], [ 9, 5, 4, 10, 7, 2 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 7, 10 ], [ 3, 10, 2, 4, 8, 7, 6 ] ),
+> PartialPermNC( [ 1, 3, 4, 5, 6, 7 ], [ 6, 7, 3, 10, 4, 5 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 6, 8 ], [ 3, 4, 9, 7, 10, 1 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 7 ], [ 7, 5, 10, 3, 1 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 9, 10 ], 
+> [ 5, 7, 1, 3, 2, 8, 4, 6, 10 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 6, 7, 9 ], [ 6, 8, 2, 7, 1, 5, 4 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 6, 8, 9 ], [ 8, 4, 6, 5, 9, 10, 1 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 6, 7, 9 ], [ 5, 9, 3, 1, 6, 8, 10 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 7 ], [ 9, 3, 7, 4, 1, 10 ] ),
+> PartialPermNC( [ 1, 3, 4, 5, 7, 9, 10 ], [ 7, 10, 2, 8, 9, 1, 6 ] ),
+> PartialPermNC( [ 1, 3, 4, 5, 7, 8, 9 ], [ 7, 2, 3, 5, 10, 4, 6 ] ),
+> PartialPermNC( [ 1, 2, 3, 7, 8, 9 ], [ 10, 7, 5, 4, 1, 9 ] ),
+> PartialPermNC( [ 1, 3, 4, 5, 6, 8, 9 ], [ 8, 1, 7, 10, 4, 5, 9 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5 ], [ 10, 3, 7, 1, 6 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 7, 8, 9, 10 ], [ 3, 5, 7, 6, 10, 2, 9, 4 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 9 ], [ 5, 8, 7, 4, 6 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 8, 9 ], [ 2, 1, 10, 5, 8, 9, 6 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 6, 7, 8 ], [ 8, 3, 2, 4, 9, 7, 1 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 7, 8 ], [ 3, 5, 1, 9, 4, 6, 8 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 6, 8 ], [ 3, 7, 2, 5, 10, 9 ] ),
+> PartialPermNC( [ 1, 2, 3, 6, 7, 9, 10 ], [ 5, 7, 2, 4, 6, 10, 1 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 6, 8 ], [ 7, 5, 4, 1, 3, 10 ] ),
+> PartialPermNC( [ 1, 2, 3, 6, 7, 8, 9, 10 ], [ 9, 6, 8, 3, 5, 7, 10, 4 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 8 ], [ 8, 2, 5, 1, 10 ] ),
+> PartialPermNC( [ 1, 2, 3, 7, 8, 9 ], [ 5, 3, 7, 1, 2, 6 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 9 ], [ 6, 9, 10, 2, 1 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 9 ], [ 8, 3, 9, 7, 5 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 6, 8, 9, 10 ], [ 6, 7, 10, 1, 4, 2, 8, 5 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6 ], [ 7, 10, 3, 9, 2, 8 ] ),
+> PartialPermNC( [ 1, 2, 4, 5, 6, 8 ], [ 9, 1, 8, 7, 6, 3 ] ),
+> PartialPermNC( [ 1, 2, 4, 5, 6, 7 ], [ 6, 4, 1, 5, 3, 9 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 6, 7, 10 ], [ 8, 2, 4, 9, 3, 7, 10 ] ),
+> PartialPermNC( [ 1, 2, 4, 5, 6, 8 ], [ 6, 2, 3, 8, 4, 10 ] ),
+> PartialPermNC( [ 1, 2, 3, 6, 7, 9, 10 ], [ 10, 2, 7, 4, 9, 1, 8 ] ),
+> PartialPermNC( [ 1, 2, 4, 5, 6, 7, 8 ], [ 2, 3, 8, 6, 9, 5, 1 ] ),
+> PartialPermNC( [ 1, 3, 4, 5, 7, 8 ], [ 4, 8, 2, 6, 5, 9 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 7, 8, 9 ], [ 6, 9, 7, 3, 5, 2, 10 ] ),
+> PartialPermNC( [ 1, 2, 4, 7, 9, 10 ], [ 8, 2, 3, 5, 1, 6 ] ),
+> PartialPermNC( [ 1, 2, 5, 8, 9, 10 ], [ 7, 1, 3, 10, 5, 8 ] ),
+> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 9 ], [ 1, 3, 5, 4, 9, 6, 7 ] ) ];;
+gap> s:=InverseSemigroup(gens);      
+<inverse semigroup with 100 generators>
+gap> Size(s);
+89616897
+gap> s:=InverseSemigroup(gens[1]);
+<inverse semigroup with 1 generator>
+gap> for i in [2..100] do 
+> s:=ClosureInverseSemigroup(s, gens[i]);
+> od;
+gap> s;
+<inverse semigroup with 54 generators>
+gap> Size(s);
+89616897
+gap> s:=InverseMonoid(gens);
+<inverse monoid with 100 generators>
+gap> Size(s);
+89616898
+gap> IsSubsemigroup(s, InverseSemigroup(s, rec(small:=true)));
+true
+gap> s:=InverseMonoid(gens[1]);;
+gap> for i in [2..100] do
+> s:=ClosureInverseSemigroup(s, gens[i]);
+> od;
+gap> s;
+<inverse semigroup with 54 generators>
+gap> Size(s);
+89616897
+gap> NrDClasses(s);
+14
+gap> s:=InverseSemigroup(gens, rec(small:=true));;
+gap> NrDClasses(s);
+14
+
+#
+gap> s:=InverseMonoid(PartialPermNC( [ 1, 2, 3, 5 ], [ 5, 6, 8, 2 ] ),
+> PartialPermNC( [ 1, 2, 3, 5, 9, 10 ], [ 7, 2, 1, 5, 9, 4 ] ) );;
+gap> Generators(s);
+[ [ 1, 2, 3, 5 ] -> [ 5, 6, 8, 2 ], 
+  [ 1, 2, 3, 5, 9, 10 ] -> [ 7, 2, 1, 5, 9, 4 ] ]
+gap> GeneratorsOfInverseSemigroup(s);
+[ <identity on [ 1 .. 10 ]>, [ 1, 2, 3, 5 ] -> [ 5, 6, 8, 2 ], 
+  [ 1, 2, 3, 5, 9, 10 ] -> [ 7, 2, 1, 5, 9, 4 ] ]
+gap> GeneratorsOfInverseMonoid(s);   
+[ [ 1, 2, 3, 5 ] -> [ 5, 6, 8, 2 ], 
+  [ 1, 2, 3, 5, 9, 10 ] -> [ 7, 2, 1, 5, 9, 4 ] ]
+gap> GeneratorsOfSemigroup(s);
+[ <identity on [ 1 .. 10 ]>, [ 1, 2, 3, 5 ] -> [ 5, 6, 8, 2 ], 
+  [ 1, 2, 3, 5, 9, 10 ] -> [ 7, 2, 1, 5, 9, 4 ], 
+  [ 2, 5, 6, 8 ] -> [ 5, 1, 2, 3 ], 
+  [ 1, 2, 4, 5, 7, 9 ] -> [ 3, 2, 10, 5, 1, 9 ] ]
+gap> GeneratorsOfMonoid(s);   
+[ [ 1, 2, 3, 5 ] -> [ 5, 6, 8, 2 ], 
+  [ 1, 2, 3, 5, 9, 10 ] -> [ 7, 2, 1, 5, 9, 4 ], 
+  [ 2, 5, 6, 8 ] -> [ 5, 1, 2, 3 ], 
+  [ 1, 2, 4, 5, 7, 9 ] -> [ 3, 2, 10, 5, 1, 9 ] ]
+
+#
+gap> g:=DihedralGroup(8);;
+gap> g:=Range(IsomorphismPermGroup(g));;
+gap> iso:=IsomorphismPartialPermSemigroup(g);
+MappingByFunction( Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), 
+  (1,4)(2,6)(3,7)(5,8) ]), <inverse semigroup with 
+3 generators>, function( p ) ... end, function( f ) ... end )
+gap> inv:=InverseGeneralMapping(iso);
+MappingByFunction( <inverse semigroup with 3 generators>, Group(
+[ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8) 
+ ]), function( f ) ... end, function( p ) ... end )
+gap> f:=(1,5)(2,3)(4,8)(6,7);;
+gap> f^iso;
+[ 1 .. 8 ] -> [ 5, 3, 2, 8, 1, 7, 6, 4 ]
+gap> (f^iso)^inv;
+(1,5)(2,3)(4,8)(6,7)
+gap> ForAll(g, f-> (f^iso)^inv=f);
+true
+gap> Size(Range(iso));
+8
+
+#
+gap> s:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
+<inverse semigroup with 2 generators>
+gap> IsomorphismPermGroup(s);
+MappingByFunction( <inverse semigroup with 2 generators>, Group(
+[ (1,2,3,4), (1,2) ]), <Operation "AsPermutation">, function( x ) ... end )
+gap> iso:=last;
+MappingByFunction( <inverse semigroup with 2 generators>, Group(
+[ (1,2,3,4), (1,2) ]), <Operation "AsPermutation">, function( x ) ... end )
+gap> inv:=InverseGeneralMapping(iso);
+MappingByFunction( Group([ (1,2,3,4), (1,2) ]), <inverse semigroup with 
+2 generators>, function( x ) ... end, <Operation "AsPermutation"> )
+gap> f:=Random(s);
+[ 1 .. 4 ] -> [ 2, 1, 3, 4 ]
+gap> f^iso;       
+(1,2)
+gap> (f^iso)^inv; 
+[ 1 .. 4 ] -> [ 2, 1, 3, 4 ]
+gap> ForAll(s, f-> (f^iso)^inv=f);
+true
+gap> Size(s);
+24
+gap> Size(Range(iso));
+24
+
+#
+gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
+gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+gap> Unbind(s);; Unbind(gens);;
+
+#
+gap> STOP_TEST( "Citrus package: semigroups.tst", 10000);

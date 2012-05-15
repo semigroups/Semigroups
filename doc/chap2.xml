@@ -1,0 +1,266 @@
+<Chapter Label="Transformations and partial permutations"><Heading>Transformations and partial permutations
+</Heading>
+  A <E>transformation</E> is just a function from the set 
+  <M>\{1,\ldots, n\}</M> to itself, and a <E>partial permutation</E> is an
+  injective function from a subset of <M>\{1,\ldots, n\}</M> to 
+  <M>\{1,\ldots, n\}</M> where <M>n</M> is a positive integer. 
+  In this chapter, we describe functions for creating and determining
+  fundamental properties of transformations and partial permutations.
+  Semigroups in the &Citrus; package are semigroups of transformations and
+  partial permutations, and so we describe how to create and manipulate these
+  objects first.<P/>
+  
+  The functions described in this section relating to transformations extend 
+  the functionality of &GAP; library; see also 
+  <Ref Chap="Transformations" BookName="ref"/>.<P/>
+  
+  <!--General introduction to partial perms such as that in Howie's book,
+  including rank, domain, range, idempotent. JDM-->
+
+  <Section><Heading>Creating transformations</Heading>
+    In this section we describe the functions available in &Citrus; for
+    creating transformations.  The following functions from the &GAP; reference
+    manual are particularly relevant to this section:
+
+    <List>
+    <Item>
+      <Ref Func="Transformation" BookName="ref"/>, 
+    </Item>
+    <Item>    
+      <Ref Func="IdentityTransformation" BookName="ref"/>, 
+    </Item>  
+    <Item>
+      <Ref Func="RandomTransformation" BookName="ref"/>,
+    </Item>
+    <Item>
+      <Ref Func="AsTransformation" BookName="ref"/>.
+    </Item>
+    </List>   
+    <#Include Label="ConstantTransformation"/> 	
+    <#Include Label="Idempotent">
+    <#Include Label="RandomIdempotent">
+    <#Include Label="RandomTransformation">
+  </Section>
+  
+  <Section><Heading>Creating partial permutations</Heading>
+    In this section we describe the functions available in &Citrus; for
+    creating partial permutations.  In addition to the functions described in
+    this section, partial permutations can also be created from permutations
+    and certain transformations;  see Section 
+    <Ref Sect="Changing representation"/>. <P/>
+
+    <E>Please note that the functions for partial permutations and inverse
+      semigroups are only available if you have compiled &Citrus;.</E> 
+
+    <#Include Label="PartialPerm">
+    <#Include Label="RestrictedPartialPerm">
+    <#Include Label="One">
+    <#Include Label="LeftOne">
+    <#Include Label="RandomPartialPerm">
+  </Section>
+  
+  <Section><Heading>Displaying partial permutations</Heading>
+    Partial permutations <C>f</C> with rank less than 20 are displayed as:
+    <Log>DomainOfPartialPerm(f) -> RangeOfPartialPerm(f)</Log>
+    see <Ref Func="DomainOfPartialPerm"/> and <Ref Func="RangeOfPartialPerm"/>.
+    The empty mapping is displayed as:
+    <Log>&lt;empty mapping></Log>
+    and a partial identity is displayed as, for example,
+    <Log>&lt;identity on [ 1, 2, 3, 4, 5, 8, 12, 19, 20 ]></Log>
+    <P/>
+
+    If a partial permutation in &GAP; has rank 20 points or more, then to make
+    the display more readable the domain and the range of the partial 
+    permutatation are not printed, for example, a partial permutation with
+    rank 27 will be displayed as:
+    <Log>&lt;partial perm on 27 pts></Log>
+    If you want to display a partial permutation in a form that can be copied
+    and pasted back into &GAP;, then use <C>Display</C>:
+    <Log>gap> Display(f);               
+PartialPermNC( [ 1, 2, 3, 5, 6, 7, 8 ], [ 5, 9, 10, 6, 3, 8, 4 ] )</Log>
+    Likewise, you can display a collection of partial permutations using
+  <C>Display</C>:
+  <Log>gap> Display(Generators(s));
+[ PartialPermNC( [ 1, 2, 3, 4, 5, 8, 10 ], [ 3, 1, 4, 2, 5, 6, 7 ] ),
+PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
+
+    <#Include Label="PrettyPrintPP">
+  </Section>
+  
+  <Section><Heading>Properties of transformations</Heading>
+    In this section we describe the functions available in
+    &Citrus; for finding various properties of 
+    transformations. <P/>
+
+    In addition to those functions described below, &Citrus; 
+    also contains a special method for
+   <Ref Attr="RankOfTransformation" BookName="ref"/>. 
+
+    <#Include Label="CanonicalTransSameKernel">
+    <#Include Label="IndexPeriodOfTransformation">
+    <#Include Label="InversesOfTransformation">
+    <#Include Label="IsInjectiveTransOnList">
+    <#Include Label="IsRegularTransformation">
+    <#Include Label="DegreeOfTransformation">
+    <#Include Label="RankOfTransformation">
+    <#Include Label="SmallestIdempotentPowerT">
+  </Section>
+   
+  <Section><Heading>Properties of partial permutations</Heading>
+    In this section we describe the functions available in &Citrus; for
+    finding various properties of partial permutations. 
+    <P/>
+
+    <#Include Label="IsPartialPerm">
+    <#Include Label="DomainOfPartialPerm">
+    <#Include Label="RangeOfPartialPerm">
+    <#Include Label="RangeSetOfPartialPerm">
+    <#Include Label="FixedPointsOfPartialPerm">
+    <#Include Label="MovedPoints">
+    <#Include Label="NrMovedPoints">
+    <#Include Label="LargestMovedPoint">
+    <#Include Label="SmallestMovedPoint">
+    <#Include Label="DenseRangeList">
+    <#Include Label="RankOfPartialPerm"/>
+    <#Include Label="DegreeOfPartialPerm"/>
+    <#Include Label="IndexPeriodOfPartialPerm"/>
+    <#Include Label="SmallestIdempotentPowerPP">
+  </Section>
+ 
+  <Section Label="OperatorsT">
+    <Heading>Operators for transformations</Heading>
+    <List> 
+    <Mark><C><A>i</A> ^ <A>f</A></C></Mark>
+    <Item>
+      <Index Key="^"><C>^</C> (for a pos int and a transformation)</Index>
+      returns the image of the positive integer <A>i</A> under the
+      transformation <A>f</A> if <A>i</A> is less than the degree of <A>f</A>. 
+    </Item>
+    <Mark><C><A>f</A> ^ <A>g</A></C></Mark>
+    <Item><Index Key="^"><C>^</C> (for a transformation and a permutation)
+      </Index>
+    returns <C><A>g</A>^-1*<A>f</A>*<A>g</A></C> when 
+     <A>f</A> is a transformation and <A>g</A> is a permutation 
+     <Ref Oper="\^" BookName="ref"/>.
+     </Item>
+     <Mark><C><A>f</A> * <A>g</A></C></Mark>
+     <Item>
+       <Index Key="*"><C>*</C> (for transformations)</Index>
+       returns the composition of the transformations <A>f</A> and <A>g</A>.
+       &Citrus; contains more efficient methods than the &GAP;
+    library for <Ref Oper="\*" BookName="ref"/> when <A>f</A> and <A>g</A> are
+    transformations or permutations (and at least one of <A>f</A> and <A>g</A>
+    is a transformation).
+     </Item>
+    <Mark><C><A>f</A> &lt; <A>g</A></C></Mark>
+    <Item> 
+      <Index Key="&lt;"><C>&lt;</C> (for transformations)</Index>
+      returns <K>true</K> if <C>ImageListOfTransformation(<A>f</A>)</C>
+      is lexicographically less than <C>ImageListOfTransformation(<A>g</A>)</C>
+      and <K>false</K> if it is not. 
+      See <Ref Attr="ImageListOfTransformation" BookName="ref"/>.
+    </Item>
+    <Mark><C><A>f</A> = <A>g</A></C></Mark>                  
+    <Item>                                            
+      <Index Key="="><C>=</C> (for transformations)</Index>
+      returns <K>true</K> if the transformation <A>f</A> equals the
+      transformation <A>g</A> and returns <K>false</K> if it does not. 
+    </Item>
+   </List>
+  </Section>
+
+  <Section Label="OperatorsPP">
+    <Heading>Operators for partial permutations</Heading>
+    <List><Mark><C><A>f</A> ^ <A>-1</A></C></Mark>
+    <Item>
+    <Index Key="^"><C>^</C> (for a partial perm and negative int)</Index>
+      returns the inverse of the partial permutation <A>f</A>.
+    </Item>
+    <Mark><C><A>i</A> ^ <A>f</A></C></Mark>
+    <Item>
+      <Index Key="^"><C>^</C> (for a pos int and a partial perm)</Index>
+      returns the image of the positive integer <A>i</A> under the partial
+      permutation <A>f</A> if <A>f</A> is defined on <A>i</A> and <K>fail</K>
+      if <A>f</A> is undefined on <A>i</A>. 
+    </Item>
+    <Mark><C><A>f</A> * <A>g</A></C></Mark>
+    <Item>
+    <Index Key="*"><C>*</C> (for partial permutations)</Index>
+      returns the composition of the partial permutations <A>f</A> and 
+      <A>g</A>. Unlike transformations, but similar to permutations, in &GAP; 
+      it is possible to multiply any two partial permutations. It is also
+      possible to multiply partial permutations and permutations acting on
+      integers not larger than 65535; see <Ref Func="PartialPerm" Label="for a domain and range"/> for some further comments about composing
+      partial permutations and permutations. 
+    </Item>
+    <Mark><C><A>f</A> &lt; <A>g</A></C></Mark>
+    <Item> 
+      <Index Key="&lt;"><C>&lt;</C> (for partial permutations)</Index>
+      returns <K>true</K> if
+      <C>Concatenation(DomainOfPartialPerm(<A>f</A>),
+        RangeOfPartialPerm(<A>f</A>))</C> is short-lex
+      less than <C>Concatenation(DomainOfPartialPerm(<A>g</A>),
+        RangeOfPartialPerm(<A>g</A>))</C>  and
+      <K>false</K> if it is not. Note that this is not the natural partial
+      order on elements of an inverse semigroup; see <Ref
+        Func="NaturalLeqPartialPerm"/>.
+    </Item>
+    <Mark><C><A>f</A> = <A>g</A></C></Mark>                  
+    <Item>                                            
+      <Index Key="="><C>=</C> (for partial permutations)</Index>
+      returns <K>true</K> if the partial permutation <A>f</A> equals the
+      partial permutation <A>g</A> and returns <K>false</K> if it is not. 
+    </Item>
+    <Mark><C><A>f</A> / <A>g</A></C></Mark>   
+    <Item> 
+      <Index Key="/"><C>/</C> (for partial permutations)</Index>
+      returns <C><A>f</A> * <A>g^-1</A></C> where <A>f</A> and <A>g</A> are
+      partial permutations; <C><A>f</A> / <A>g</A></C> has better
+      performance than <C><A>f</A> * <A>g^-1</A></C>. 
+      </Item>
+    </List> 
+   
+    <#Include Label="NaturalLeqPartialPerm"/>
+  </Section>
+ 
+  <Section Label="Changing representation">
+    <Heading>Changing representations</Heading>
+    It is possible to change the representation of certain transformations and
+    partial permutations using the functions described in this section.  
+    <#Include Label="AsPermOfKerImg">
+    <#Include Label="AsPermutation">
+    <#Include Label="AsPartialPerm">
+    <#Include Label="AsTransformation">
+  </Section>
+
+  <Section><Heading>Actions</Heading>
+    The following actions of transformations and partial permutations are used
+    by &Citrus; in the computation of Green's relations and to test if an
+    arbitrary transformation semigroup has a particular property;  see 
+    Chapter <Ref Chap="green"/> and <Ref Sect="Basic
+      Actions" BookName="ref"/>.  <P/>
+    
+    <#Include Label="OnKernelsAntiAction"> 
+    <#Include Label="OnIntegerSetsWithPartialPerm"> 
+    <#Include Label="TransformationActionNC">
+  </Section>
+  <Section><Heading>Orbits</Heading>
+    The following functions supplement the &Orb; package by providing methods
+    for computations related to the strongly connected components of an
+    orbit of a semigroup. <P/>
+
+    Please note that if any of the functions in this section is applied to an
+    open orbit, then the orbit is enumerated before anything else. It is not
+    possible to calculate the strongly connected components of an orbit of a
+    semigroup acting on a set until the entire orbit has been found.
+
+    <#Include Label="OrbSCC">
+    <#Include Label="OrbSCCLookup">
+    <#Include Label="OrbSCCTruthTable">
+    <#Include Label="ReverseSchreierTreeOfSCC">
+    <#Include Label="SchreierTreeOfSCC">
+    <#Include Label="TraceSchreierTreeOfSCCBack">
+    <#Include Label="TraceSchreierTreeOfSCCForward">
+  </Section>
+ </Chapter>
+

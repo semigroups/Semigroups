@@ -8,15 +8,18 @@
 #############################################################################
 ##
 
+# full transformations
+
 if not IsBound(AsPermutation) then 
   DeclareOperation("AsPermutation",[IsObject]);
 fi;
+DeclareOperation("AsPermutationNC",[IsObject]);
 
 DeclareGlobalFunction("ConstantTransformation");
 DeclareOperation("DegreeOfTransformationCollection", [IsTransformationCollection]);
 DeclareGlobalFunction("Idempotent");
 DeclareGlobalFunction("IdempotentNC");
-DeclareAttribute("IndexPeriodOfTransformation", IsTransformation);
+DeclareGlobalFunction("IndexPeriodOfTransformation");
 DeclareOperation("InversesOfTransformationNC", [IsTransformationSemigroup,  
  IsTransformation]);
 DeclareOperation("InversesOfTransformation", [IsTransformationSemigroup,
@@ -30,5 +33,5 @@ DeclareOperation("RandomIdempotent", [IsCyclotomicCollColl]);
 DeclareOperation("RandomIdempotentNC", [IsCyclotomicCollColl]);
 DeclareOperation("RandomTransformationNC", [IsCyclotomicCollection, 
  IsCyclotomicCollection]);
-DeclareAttribute("SmallestIdempotentPower", IsTransformation);
+DeclareOperation("SmallestIdempotentPower", [IsTransformation]);
 

@@ -25,13 +25,21 @@ fi;
 
 DeclareGlobalFunction("HClass");
 DeclareGlobalFunction("HClassNC");
+DeclareGlobalFunction("IteratorByIterator");
 DeclareGlobalFunction("LClass");
 DeclareGlobalFunction("LClassNC");
-DeclareGlobalFunction("RandomTransformationSemigroup");
-DeclareGlobalFunction("RandomTransformationMonoid");
+DeclareGlobalFunction("ListByIterator");
 DeclareGlobalFunction("RClass");
 DeclareGlobalFunction("RClassNC");
 
 DeclareGlobalFunction("ReadCitrus");
 DeclareGlobalFunction("ReadCitrusLine");
+DeclareGlobalFunction("ReadCitrusLinePP");
 DeclareGlobalFunction("WriteCitrus");
+
+DeclareGlobalFunction("CitrusIsNotCompiled");
+
+DeclareAttribute("LambdaPt", IsObject);
+DeclareAttribute("RhoPt", IsObject);
+DeclareAttribute("LambdaOrb", IsSemigroup);
+DeclareAttribute("RhoOrb", IsSemigroup);

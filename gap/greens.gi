@@ -28,9 +28,9 @@ InstallMethod(\<, "for Green's class and Green's class of trans. semigp.",
 # new for 0.1! - \= - "for trans. semigp. and trans. semigp."
 #############################################################################
 
-InstallMethod(\=, "for trans. semigp. and trans. semigp.",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, 
-IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(\=, "for a semigp. and a semigp.",
+[IsSemigroup and HasGeneratorsOfSemigroup, 
+IsSemigroup and HasGeneratorsOfSemigroup],
 function(s, t)
   return ForAll(Generators(s), x-> x in t) and 
    ForAll(Generators(t), x-> x in s);
@@ -184,7 +184,6 @@ function(s)
   return Immutable(out);
 end);
 
-
 # new for 0.4! - EnumeratorOfRClasses - "for a trans. semigroup"
 #############################################################################
 # Notes: NumberElement does not work for RClassNCs, JDM maybe it should!
@@ -305,11 +304,8 @@ end);
 #############################################################################
 
 InstallOtherMethod(GreensJClassOfElement, "for a trans. semigroup and trans.",
-[IsTransformationSemigroup and HasIsFinite and IsFinite and
-HasGeneratorsOfSemigroup, IsTransformation], 
-function(s, f)
-  return GreensDClassOfElement(s, f);
-end);
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation], 
+GreensDClassOfElement);
 
 #III
 
@@ -420,7 +416,7 @@ InstallOtherMethod(IsGreensLClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensHClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 
-# new for 0.2! - Iterator - "for a trivial trans. semigp."
+# mod for 0.7! - Iterator - "for a trivial trans. semigp."
 #############################################################################
 # Notes: required until Enumerator for a trans. semigp does not call iterator. 
 # This works but is maybe not the best!
@@ -428,7 +424,7 @@ InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(Iterator, "for a trivial trans. semigp", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
 function(s)
-  return TrivialIterator(RClassReps(s)[1]);
+  return TrivialIterator(Generators(s)[1]);
 end);
 
 # new for 0.1! - Iterator - "for a transformation semigroup"

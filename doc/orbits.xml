@@ -15,7 +15,8 @@
   <Returns>A list of images or kernels.</Returns>
   <Description>
   <C>GradedImagesOfTransSemigroup</C> returns a list where the <C>i</C>th 
-  entry is a list of all the images of transformations in <A>S</A> with size 
+  entry is a list of all the images of transformations in the
+  transformation semigroup <A>S</A> with size 
   <C>i</C>.  
   <P/>
   
@@ -48,9 +49,9 @@ gap> GradedKernelsOfTransSemigroup(S);
   The argument <A>S</A> should be a transformation semigroup and the optional
   second argument <A>n</A> should be a positive integer not greater than the
   degree of <A>S</A>.  <C>ImagesOfTransSemigroup</C> returns the  <Ref
-  Func="Orb" BookName="orb"/> object: <Log>Orb(S, [1..Degree(S)],
-  OnSets);</Log> which contains the image sets of all the transformations
-  belonging to <A>S</A>.  <P/>
+    Func="Orb" BookName="orb"/> object: 
+  <Log>Orb(S, [1..Degree(S)], OnSets);</Log> which contains the image sets of
+  all the transformations belonging to <A>S</A>.  <P/>
   
   <C>KernelsOfTransSemigroup</C> returns the <Ref Func="Orb" BookName="orb"/>
   object: <Log>Orb(S, [1,..Degree(S)], OnKernelsAntiAction);</Log> <P/> If the
@@ -368,5 +369,38 @@ gap> TraceSchreierTreeOfSCCForward(o, 4, 7);
 [ 2, 2 ]</Example>
     </Description>
   </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="TransformationActionNC"/>
+<ManSection>
+  <Oper Name="TransformationActionNC" Arg="obj, list, func"/>
+  <Returns>A transformation or collection of transformations.</Returns>
+  <Description>
+    If <A>obj</A> is a &GAP; object that acts on the list <A>list</A> via the
+    function <A>func</A>, then <C>TransformationActionNC</C> returns this
+    action as a transformation; see also <Ref Func="Transformation"
+      BookName="ref"/>. Mathematically, the argument <A>obj</A> should be an 
+    element of a semigroup so that the action of <A>obj</A> on <A>list</A> via
+    <A>func</A> is a <B>semigroup action</B>. However, it is not
+    technically necessary for <A>obj</A> to be an element of a semigroup in
+    &GAP;. <P/>
+
+    If <A>obj</A> is a semigroup, then <C>TransformationActionNC</C> returns
+    the list obtained from applying <C>TransformationActionNC</C> to every
+    generator of <A>obj</A>.
+
+    <Example>
+gap> mat:=OneMutable(GeneratorsOfGroup(GL(3,3))[1]);
+[ [ Z(3)^0, 0*Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0, 0*Z(3) ],
+  [ 0*Z(3), 0*Z(3), Z(3)^0 ] ]
+gap> mat[3][3]:=Z(3)*0;
+0*Z(3)
+gap> F:=BaseDomain(mat);
+GF(3)
+gap> TransformationActionNC(mat, Elements(F^3), OnRight);
+Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 10, 10, 10, 13, 13, 13, 16, 16,
+  16, 19, 19, 19, 22, 22, 22, 25, 25, 25 ] )</Example>
+  </Description>
+</ManSection>
 <#/GAPDoc>
 

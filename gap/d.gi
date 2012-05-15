@@ -275,7 +275,7 @@ InstallGlobalFunction(CreateDClass,
 function(s, data, orbit, rep)
   local d;
 
-  data:=[data[1]{[1..6]}, data[2]{[1..6]}];
+  #data:=[data[1]{[1..6]}, data[2]{[1..6]}];
 
   d:=Objectify(DClassType(s), rec(parent:=s, data:=data, 
    o:=orbit, rep:=rep));
@@ -814,9 +814,8 @@ function(s, f)
     d:=[d[1][2],d[2][2]];
   fi;
 
-  d:=CreateDClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)], 
-   DClassRepFromData(s, d));
-
+  d:=CreateDClass(s, [d[1]{[1..6]}, d[2]{[1..6]}], [OrbitsOfImages(s),
+  OrbitsOfKernels(s)], DClassRepFromData(s, d));
   return d;
 end);
 
@@ -1123,7 +1122,7 @@ function(d)
   s:=d!.parent; o:=d!.o; m:=NrLClasses(d); out:=EmptyPlist(m); 
 
   for i in [1..m] do 
-    data:=LClassRepsData(d)[i]; 
+    data:=List(LClassRepsData(d)[i], ShallowCopy); 
     if HasLClassReps(d) then 
       f:=LClassReps(d)[i];
     else
@@ -1161,7 +1160,7 @@ function(d)
 
   for data in reps do 
     f:=RClassRepFromData(s, data, o);
-    r:=CreateRClass(s, data, o, f);
+    r:=CreateRClass(s, data{[1..6]}, o, f);
     SetDClassOfRClass(r, d);
     i:=i+1;
     out[i]:=r;
@@ -1270,8 +1269,8 @@ function(d, f)
 
   data[3]:=l;
 
-  r:=CreateRClass(d!.parent, data, o, RClassRepFromData(ParentAttr(d), data,
-   o));
+  r:=CreateRClass(d!.parent, data{[1..6]}, o, RClassRepFromData(ParentAttr(d),
+   data, o));
   SetDClassOfRClass(r, d);
   return r;
 end);
@@ -1590,17 +1589,13 @@ end);
 #############################################################################
 # Usage: s = transformation semigroup.
 
-InstallGlobalFunction(IteratorOfDClassReps, 
+InstallMethod(IteratorOfDClassReps, "for a trans. semigroup", 
+[IsTransformationSemigroup],
 function(s)
   local iter;
 
   Info(InfoCitrus, 4, "IteratorOfDClassReps");
   
-  if not IsTransformationSemigroup(s) then 
-    Error("Usage: argument should be a transformation semigroup,");
-    return;
-  fi;
-
   iter:=IteratorByFunctions(rec(
     
     s:=s, data:=IteratorOfDClassRepsData(s), 
@@ -1626,7 +1621,8 @@ end);
 #############################################################################
 # Usage: s = transformation semigroup.
 
-InstallGlobalFunction(IteratorOfDClassRepsData, 
+InstallMethod(IteratorOfDClassRepsData, "for a trans. semigroup",
+[IsTransformationSemigroup], 
 function(s)
   local iter;
   
@@ -1711,12 +1707,14 @@ end);
 # JDM why not use IteratorOfDClassRepsData below, it should be more
 # straightforward, see IteratorOfLClasses.
 
-InstallGlobalFunction(IteratorOfDClasses, 
-function(arg)
-  local iter, s;
+InstallMethod(IteratorOfDClasses, "for a trans. semigroup",
+[IsTransformationSemigroup], 
+function(s)
+  local arg, iter;
 
   Info(InfoCitrus, 4, "IteratorOfDClasses");
 
+  arg:=[s]; #JDM
   if not (Length(arg) mod 3)=1 or not IsTransformationSemigroup(arg[1]) then 
     Error("Usage: argument should be a transformation semigroup,");
     # optionally function, operator, value, function, operator, value, ...
@@ -1791,7 +1789,7 @@ function(arg)
     iter!.i:=iter!.i+1;
     d:=OrbitsOfKernels(iter!.s)!.data[iter!.i];
 
-    return CreateDClass(s, d, [OrbitsOfImages(s), 
+    return CreateDClass(s, [d[1]{[1..6]}, d[2]{[1..6]}], [OrbitsOfImages(s), 
      OrbitsOfKernels(s)], rep);
     end,
     
@@ -2300,12 +2298,15 @@ end);
 InstallMethod(PrintObj, [IsIteratorOfDClassReps], 
 function(iter)
   local s;
+  if IsBound(iter!.s) then 
+    s:=iter!.s;
 
-  s:=iter!.s;
-
-  Print( "<iterator of D-class reps, ", Length(OrbitsOfImages(s)!.data), 
+    Print( "<iterator of D-class reps, ", Length(OrbitsOfImages(s)!.data), 
     " candidates, ", SizeOrbitsOfKernels(s), " elements, ", 
-    Length(OrbitsOfKernels(s)!.data), " D-classes>");
+      Length(OrbitsOfKernels(s)!.data), " D-classes>");
+    return;
+  fi;
+  Print("<iterator of D-class reps>");
   return;
 end);
 
@@ -2315,6 +2316,15 @@ end);
 InstallMethod(PrintObj, [IsIteratorOfDClasses], 
 function(iter)
   Print( "<iterator of D-classes>");
+return;
+end);
+
+# new for 0.7! - PrintObj - "for an iterator of a D-class"
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfDClassElements],
+function(iter)
+  Print( "<iterator of D-class>");
 return;
 end);
 

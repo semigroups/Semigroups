@@ -8,13 +8,19 @@
 #############################################################################
 ##
 
-ReadPkg("citrus/gap/utils.gi");
-ReadPkg("citrus/gap/orbits.gi");
-ReadPkg("citrus/gap/greens.gi");
-ReadPkg("citrus/gap/transform.gi");
-ReadPkg("citrus/gap/h.gi");
-ReadPkg("citrus/gap/r.gi");
-ReadPkg("citrus/gap/l.gi");
-ReadPkg("citrus/gap/d.gi");
-ReadPkg("citrus/gap/properties.gi");
-ReadPkg("citrus/gap/semigroups.gi");
+ReadPackage("citrus/gap/utils.gi");
+ReadPackage("citrus/gap/orbits.gi");
+ReadPackage("citrus/gap/greens.gi");
+ReadPackage("citrus/gap/transform.gi");
+ReadPackage("citrus/gap/h.gi");
+ReadPackage("citrus/gap/r.gi");
+ReadPackage("citrus/gap/l.gi");
+ReadPackage("citrus/gap/d.gi");
+ReadPackage("citrus/gap/properties.gi");
+ReadPackage("citrus/gap/semigroups.gi");
+ReadPackage("citrus/gap/examples.gi");
+
+if IsBound(CITRUSC) then 
+  ReadPackage("citrus/gap/pperm.gi");
+  ReadPackage("citrus/gap/inverse.gi");
+fi;

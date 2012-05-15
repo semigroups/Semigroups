@@ -45,7 +45,7 @@ end);
 InstallMethod(\in, "for trans. and R-class of trans. semigp.", 
 [IsTransformation, IsGreensRClass and IsGreensClassOfTransSemigp],
 function(f, r)
-  local rep, s, d, o, i, g, schutz;
+  local rep, d, o, i, schutz, g;
 
   rep:=Representative(r);
 
@@ -57,7 +57,7 @@ function(f, r)
     return false;
   fi;
 
-  s:=r!.parent; d:=r!.data; o:=r!.o!.orbits[d[1]][d[2]];
+  d:=r!.data; o:=r!.o!.orbits[d[1]][d[2]];
 
   i:= Position(o, ImageSetOfTransformation(f));
 
@@ -224,6 +224,8 @@ end);
 # for a Green's class is removed. The default AsSSortedList for a collection
 # is what should be used (it is identical)!
 
+# JDM one method for all types of classes!
+
 InstallOtherMethod(AsSSortedList, "for R-class of trans. semigp.",
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 function(r)
@@ -335,7 +337,7 @@ InstallGlobalFunction(CreateRClass,
 function(s, data, orbit, rep)
   local r;
 
-  data:=data{[1..6]};
+  #data:=data{[1..6]};
 
   r:=Objectify(RClassType(s), rec(parent:=s, data:=data, 
    o:=orbit, rep:=rep));
@@ -852,7 +854,7 @@ function(s, f)
 
   d:=PreInOrbitsOfImages(s, f, true)[2];
 
-  return CreateRClass(s, d, OrbitsOfImages(s), RClassRepFromData(s, d));
+  return CreateRClass(s, d{[1..6]}, OrbitsOfImages(s), RClassRepFromData(s, d));
 end);
 
 # new for 0.1! - GreensRClassOfElementNC - "for a trans. semigp and trans."
@@ -870,7 +872,8 @@ function(s, f)
 
   if d[1] then # f in s!
     Info(InfoCitrus, 2, "transformation is an element of semigroup");
-    return CreateRClass(s, d[2], OrbitsOfImages(s), RClassRepFromData(s, d[2]));
+    return CreateRClass(s, d[2]{[1..6]}, OrbitsOfImages(s),
+     RClassRepFromData(s, d[2]));
   elif OrbitsOfImages(s)!.finished then #f not in s!
     Error("transformation is not an element of semigroup,");
     return;
@@ -1396,19 +1399,15 @@ function(r)
   return iter;
 end);
 
-# mod for 0.4! - IteratorOfRClasses - not a user function!
+# mod for 0.7! - IteratorOfRClasses - "for a trans. semigroup"
 #############################################################################
 
-InstallGlobalFunction(IteratorOfRClasses, 
+InstallMethod(IteratorOfRClasses, "for a trans. semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local iter;
 
   Info(InfoCitrus, 4, "IteratorOfRClasses");
-  
-  if not IsTransformationSemigroup(s) then 
-    Error("Usage: the argument should be a transformation semigroup,");
-    return;
-  fi;
 
   iter:=IteratorByFunctions( rec(
           
@@ -1425,7 +1424,7 @@ function(s)
         return fail;
       fi;
           
-      return CreateRClass(s, d, OrbitsOfImages(s), RClassRepFromData(s, d));
+      return CreateRClass(s, d{[1..6]}, OrbitsOfImages(s), RClassRepFromData(s, d));
     end,
 
     ShallowCopy:=iter-> rec(data:=IteratorOfRClassRepsData(s))));
@@ -1453,7 +1452,8 @@ end);
 # new for 0.1! - IteratorOfRClassRepsData - not a user function!
 #############################################################################
 
-InstallGlobalFunction(IteratorOfRClassRepsData, 
+InstallMethod(IteratorOfRClassRepsData, "for a trans. semigroup",
+[IsTransformationSemigroup],
 function(s)
   local iter, is_done_iterator;
   
@@ -1594,20 +1594,16 @@ function(s)
   return iter;
 end);
 
-# new for 0.1! - IteratorOfRClassReps - not a user function!
+# new for 0.1! - IteratorOfRClassReps - "for a trans. semigroup"!
 #############################################################################
 
-InstallGlobalFunction(IteratorOfRClassReps,
+InstallMethod(IteratorOfRClassReps, "for a trans. semigroup",
+[IsTransformationSemigroup],
 function(s)
   local iter;
 
   Info(InfoCitrus, 4, "IteratorOfRClassReps");
-
-  if not IsTransformationSemigroup(s) then
-    Error("Usage: argument should be a transformation semigroup,");
-    return;
-  fi;
-
+  
   iter:=IteratorByFunctions( rec(
 
     s:=s, data:=IteratorOfRClassRepsData(s),
@@ -1798,10 +1794,11 @@ end);
 
 #PPP
 
-# new for 0.1! - ParentAttr - "for a R-class of a trans. semigroup"
+# new for 0.1! - ParentAttr - "for Green's class of a trans. semigroup"
 ############################################################################
+# JDM move to greens.gi, is this a good name?
 
-InstallMethod(ParentAttr, "for a R-class of a trans. semigroup", 
+InstallMethod(ParentAttr, "for a Green's class of a trans. semigroup", 
 [IsGreensClass and IsGreensClassOfTransSemigp], x-> x!.parent);
 
 # new for 0.1! - PreInOrbitsOfImages - not a user function!
@@ -1855,7 +1852,7 @@ function(iter)
 
   s:=iter!.s;
   O:=OrbitsOfImages(s);
-# JDM O!.ht!.o is unbound if the calc is completed. 
+  # JDM O!.ht!.o is unbound if the calc is completed. 
   Print( "<iterator of R-class reps data, ", Length(O!.ht!.o), " candidates, ", 
    Size(OrbitsOfImages(s)), " elements, ", NrRClasses(OrbitsOfImages(s)), 
    " R-classes>");
@@ -1868,12 +1865,15 @@ end);
 InstallMethod(PrintObj, [IsIteratorOfRClassReps], 
 function(iter)
   local O, s;
+  if IsBound(iter!.s) then 
+    s:=iter!.s; O:=OrbitsOfImages(s);
 
-  s:=iter!.s; O:=OrbitsOfImages(s);
-
-  Print( "<iterator of R-class reps, ", Length(O!.ht!.o), " candidates, ", 
-   Size(OrbitsOfImages(s)), " elements, ", NrRClasses(OrbitsOfImages(s)), 
-   " R-classes>");
+    Print( "<iterator of R-class reps, ", Length(O!.ht!.o), " candidates, ", 
+     Size(OrbitsOfImages(s)), " elements, ", NrRClasses(OrbitsOfImages(s)), 
+     " R-classes>");
+    return;
+  fi;
+  Print("<iterator of R-class reps>");
   return;
 end);
 

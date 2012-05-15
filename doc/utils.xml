@@ -33,14 +33,31 @@
       achieved by entering:
 
       <Log>
-MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
- InstallationPath, "/doc"), "citrus.xml", [
- "utils.xml", "greens.xml", "orbits.xml", "properties.xml",
- "transform.xml", "../PackageInfo.g"], "citrus", "MathJax");;</Log>
+MakeGAPDocDoc( Concatenation( PackageInfo( "citrus" )[1]!.InstallationPath, 
+"/doc" ), "citrus.xml", [ "utils.xml", "greens.xml", "inverse.xml", 
+"orbits.xml", "properties.xml", "semigroups.xml", "transform.xml", "pperm.xml", 
+"../PackageInfo.g" ], "citrus", "MathJax" );</Log>
 
       at the &GAP; prompt. 
     </Description>
   </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="CitrusOptionsRec">
+  <ManSection>    
+     <Var Name="CitrusOptionsRec"/>    
+     <Description>
+       This global variable is a record whose components contain the default
+       values of certain options for transformation semigroups created after
+       &Citrus; has been loaded. A description of these options is given above 
+       in Section <Ref Sect="opts"/>. <P/>
+
+       The value of <C>CitrusOptionsRec</C> is defined in the file
+       <C>citrus/gap/options.g</C> as: 
+       <Log>rec( schreier:=true, small:=false,
+         hashlen:=rec(S:=251, M:=6257, L:=25013));</Log>
+     </Description> 
+   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="CitrusTestAll">
@@ -68,19 +85,8 @@ MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
     <Returns>Nothing.</Returns> 
     <Description>
       This function should be called with no argument to test the examples in
-      the &Citrus; manual. These tests
-      should take no more than a few seconds to complete. The same 
-      effect can be achieved by entering:
-
-<Log>SizeScreen([80]);
-SetInfoLevel(InfoWarning, 0);
-SetInfoLevel(InfoCitrus, 0);
-
-TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
-   InstallationPath, "/doc"), "citrus.xml",
-   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
-    "transform.xml", "../PackageInfo.g"]);</Log>
-      at the &GAP; prompt. 
+      the &Citrus; manual. These tests should take no more than a few minutes
+      to complete.
       To more comprehensively test that &Citrus; is installed
       correctly use <Ref Func="CitrusTestAll"/>. See also <Ref
       Func="CitrusTestInstall"/>.
@@ -107,42 +113,39 @@ TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="Degree">
-  <ManSection>
-    <Func Name="Degree" Arg="obj"/>
-    <Returns>A positive integer.</Returns>
-    <Description>
-      Returns the result of 
-      <Ref Oper="DegreeOfTransformationSemigroup" BookName="ref"/>, 
-      if <A>obj</A> is a transformation semigroup and 
-      <Ref Oper="DegreeOfTransformation" BookName="ref"/> if
-      <A>obj</A> is a transformation.  
-    </Description>
-  </ManSection> 
-<#/GAPDoc>
-
-<#GAPDoc Label="Rank">
-  <ManSection>
-    <Func Name="Rank" Arg="f"/>
-    <Returns>A positive integer.</Returns>
-    <Description>
-      Returns the result of <Ref Oper="RankOfTransformation" BookName="ref"/>, 
-      if <A>f</A> is a transformation.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="Generators">
   <ManSection>
     <Func Name="Generators" Arg="S"/>
-    <Returns>A list of transformations.</Returns>
+    <Returns>A list of transformations or partial permutations.</Returns>
     <Description>
-      Returns the result of 
-      <Ref Attr="GeneratorsOfMonoid" BookName="ref"/>, 
-      if <A>S</A> is a transformation monoid and the result of 
-      <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/> 
-      if <A>S</A> is a transformation semigroup but not a transformation 
-      monoid.
+      <C>Generators</C> returns the generating set used to define 
+      the semigroup <A>S</A> of transformations or partial permutations.  
+      The generators of a monoid or inverse semigroup
+      <A>S</A> can be defined in several ways, for example, including or
+      excluding the identity element, including or not the inverses of the
+      generators. <C>Generators(<A>S</A>)</C>
+      uses the definition that returns the least number of generators. Nothing
+      new is computed when <C>Generators</C> is called and this function 
+      should not be confused with <Ref Attr="SmallGeneratingSet"/>.
+
+      <List>
+        <Mark>Transformation semigroup</Mark>
+        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
+          <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/>.
+        </Item>
+        <Mark>Transformation monoid</Mark>
+        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
+          <Ref Attr="GeneratorsOfMonoid" BookName="ref"/>.
+        </Item>
+        <Mark>Inverse semigroup</Mark>
+        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
+          <Ref Attr="GeneratorsOfInverseSemigroup"/>.
+        </Item>
+        <Mark>Inverse monoid</Mark>
+        <Item><C>Generators(<A>S</A>)</C> is a synonym for 
+          <Ref Attr="GeneratorsOfInverseMonoid"/>.
+        </Item>
+      </List>
 <Example>gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
 > Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
 gap> GeneratorsOfSemigroup(M);
@@ -182,34 +185,19 @@ gap> GeneratorsOfSemigroup(S);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="RandomTransformationMonoid">
-  <ManSection>
-    <Func Name="RandomTransformationMonoid" Arg="m, n"/>
-    <Func Name="RandomTransformationSemigroup" Arg="m, n"/>
-    <Returns>A transformation semigroup.</Returns>
-    <Description>
-      Returns a random transformation monoid or semigroup of degree <A>n</A> 
-      with <A>m</A> generators.
-      <Example>
-gap&gt; S:=RandomTransformationMonoid(5,5);
-&lt;monoid with 5 generators&gt;
-gap&gt; S:=RandomTransformationSemigroup(5,5);
-&lt;semigroup with 5 generators&gt;</Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="ReadCitrus">
   <ManSection> 
     <Func Name="ReadCitrus" Arg="filename[, nr]"/>
-    <Returns>A list of transformations or a list of lists of transformations.
+    <Returns>A list of: transformations, partial permutations, lists of
+      partial permutations or lists of transformations.
     </Returns>
     <Description>
       If <A>filename</A> is a file created using <Ref Func="WriteCitrus"/>,
       then <C>ReadCitrus</C> returns the contents of this file as a list of
-      lists of transformations. If the optional second argument <A>nr</A> is
-      present, then <C>ReadCitrus</C> returns the transformations stored in the 
-      <A>nr</A>th line of <A>filename</A>. <P/>
+      lists of transformations and partial permutations. If the optional second
+      argument <A>nr</A> is present, then <C>ReadCitrus</C> returns the
+      transformations or partial permutations stored in the <A>nr</A>th line of
+      <A>filename</A>. <P/>
       
       Note that if the file <A>filename</A> is gzipped, then the message
       <C>gzip: stdout: Broken pipe</C> might be displayed when
@@ -223,23 +211,26 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
 
 <#GAPDoc Label="WriteCitrus">
   <ManSection> 
-    <Func Name="WriteCitrus" Arg="filename, trans"/>
+    <Func Name="WriteCitrus" Arg="filename, list"/>
     <Returns>Nothing.</Returns>
     <Description>
-      This function provides a method for writing transformations to a file
-      that uses a relatively small amount of disk space. The resulting file
-      can be further compressed using <C>gzip</C>.<P/>
+      This function provides a method for writing transformations and partial
+      permutations to a file that uses a relatively small amount of disk space.
+      The resulting file can be further compressed using <C>gzip</C>.<P/>
       
-      <A>trans</A> should be a list of transformations of equal degree, a 
-      transformation semigroup, or a list of lists of transformations or 
-      transformation semigroups and <A>filename</A> should be a string 
-      containing the name of a file where the transformations in <A>trans</A> 
-      will be stored. <P/>
+      <A>list</A> should be a list of: transformations of equal degree, partial
+      permutations, a semigroup of transformations or partial permutations, or
+      a list of lists of transformations, partial permutations, or semigroups
+      of transformations or partial permutations; and <A>filename</A> should be
+      a string containing the name of a file where the entries in
+      <A>list</A> will be written. <P/>
 
       <C>WriteCitrus</C> appends a line to the file <A>filename</A>
-      for every list of transformations in <A>trans</A>. If any element of
-      <A>trans</A> is a transformation semigroup, then the generators of that
-      semigroup are written to <A>filename</A>. The first character <C>m</C> of 
+      for every entry in <A>list</A>. If any element of
+      <A>list</A> is a semigroup, then the generators of that
+      semigroup are written to <A>filename</A>. <P/>
+      
+      The first character <C>m</C> of 
       the appended line is the number of characters in the degree of
       the transformations to be written, the next <C>m</C> characters are the 
       degree <C>n</C> of the transformations to be written, and the

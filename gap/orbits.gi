@@ -231,6 +231,8 @@ function(s, m)
               onlygradesdata:=[m..n], schreier:=true));
 end);
 
+#OOO
+
 # new for 0.2! - OnBlist - for blist and transformation 
 ###########################################################################
 # Notes: this is BlistList([1..Length(blist)], 
@@ -382,6 +384,35 @@ function(o, i)
   
   o!.reverse[i]:=[gen, pos];
   return [gen, pos];
+end);
+
+#TTT
+
+# new for 0.7! - TransformationActionNC - "for mult elt, list, function"
+###############################################################################
+
+InstallMethod(TransformationActionNC, "for mult elt, list, function",
+[IsObject, IsList, IsFunction],
+function(f, dom, act)
+  local n, out, i;
+  
+  n:=Size(dom);
+  out:=EmptyPlist(n);
+  
+  for i in [1..n] do 
+    out[i]:=Position(dom, act(dom[i], f));
+  od;
+
+  return Transformation(out);
+end);
+
+# new for 0.7! - TransformationActionNC - "for semigroup, list, function"
+###############################################################################
+
+InstallOtherMethod(TransformationActionNC, "for a semigroup, list, function",
+[IsSemigroup, IsList, IsFunction],
+function(s, dom, act)
+  return List(Generators(s), f-> TransformationActionNC(f, dom, act));
 end);
 
 #SSS

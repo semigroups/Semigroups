@@ -125,7 +125,7 @@ InstallGlobalFunction(CreateLClass,
 function(s, data, orbit, rep)
   local l;
 
-  data:=[data[1]{[1..6]}, data[2]{[1..6]}, data[3]];
+  #data:=[data[1]{[1..6]}, data[2]{[1..6]}, data[3]];
 
   l:=Objectify(LClassType(s), rec(parent:=s, data:=data, 
    o:=orbit, rep:=rep));
@@ -352,8 +352,8 @@ function(s, f)
     d:=[d[1][2], d[2][2], ImageOrbitCosetsFromData(s, d[2][2])[d[2][2][8]]];
   fi;
 
-  l:=CreateLClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)], 
-  LClassRepFromData(s, d));
+  l:=CreateLClass(s, [d[1]{[1..6]}, d[2]{[1..6]}, d[3]], [OrbitsOfImages(s),
+  OrbitsOfKernels(s)], LClassRepFromData(s, d));
   return l;
 end);
 
@@ -467,8 +467,9 @@ function(l)
     SetNrHClasses(l, Length(scc)*Length(cosets));
   fi;
 
-  k:=0; data:=l!.data;
-
+  k:=0; 
+  data:=[StructuralCopy(l!.data[1]), StructuralCopy(l!.data[2]),
+  StructuralCopy(l!.data[3])]; 
   for i in scc do 
     for j in cosets do 
       k:=k+1;
@@ -593,17 +594,13 @@ function(l)
   return false;
 end);
 
-# new for 0.1! - IteratorOfLClasses - user function!
+# new for 0.1! - IteratorOfLClasses - 
 ###########################################################################
 
-InstallGlobalFunction(IteratorOfLClasses, 
+InstallMethod(IteratorOfLClasses, "for a trans. semigroup",
+[IsTransformationSemigroup], 
 function(s)
   local iter;
-
-  if not IsTransformationSemigroup(s) then
-    Error("Usage: arg. should be a transformation semigroup,");
-     return;
-  fi;
 
   Info(InfoCitrus, 4, "IteratorOfLClasses");
 
@@ -622,7 +619,8 @@ function(s)
 	      return fail;
 	    fi;
 	
-	  return CreateLClass(s, d, [OrbitsOfImages(s), OrbitsOfKernels(s)], 
+          return CreateLClass(s, [d[1]{[1..6]}, d[2]{[1..6]}, d[3]],
+          [OrbitsOfImages(s), OrbitsOfKernels(s)], 
 	   LClassRepFromData(s, d));
 	  end,
 	
@@ -636,16 +634,12 @@ end);
 # new for 0.1! - IteratorOfLClassReps - user function!
 ###########################################################################
 
-InstallGlobalFunction(IteratorOfLClassReps,
+InstallMethod(IteratorOfLClassReps, "for a trans. semigroup", 
+[IsTransformationSemigroup], 
 function(s)
   local iter;
 
   Info(InfoCitrus, 4, "IteratorOfLClassReps");
-
-  if not IsTransformationSemigroup(s) then
-    Error("Usage: argument should be a transformation semigroup,");
-    return;
-  fi;
 
   iter:=IteratorByFunctions( rec(
 
@@ -672,7 +666,8 @@ end);
 # new for 0.1! - IteratorOfLClassRepsData - not a user function
 ###########################################################################
 
-InstallGlobalFunction(IteratorOfLClassRepsData, 
+InstallMethod(IteratorOfLClassRepsData, "for a trans. semigroup",
+[IsTransformationSemigroup], 
 function(s)
   local o, iter; 
 
@@ -981,6 +976,15 @@ end);
 InstallMethod(PrintObj, [IsIteratorOfLClasses], 
 function(iter)
   Print( "<iterator of L-classes>");
+  return;
+end);
+
+# new for 0.7! - PrintObj - IsIteratorOfLClassElements
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfLClassElements],
+function(iter)
+  Print( "<iterator of L-class>");
   return;
 end);
 

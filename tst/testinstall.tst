@@ -13,11 +13,13 @@
 gap> START_TEST("Citrus package: testinstall.tst");
 gap> LoadPackage( "citrus", false );;
 
+# Set info levels
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
 gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> SetInfoLevel(InfoCitrus, 0);
 
+# 
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 1, 4, 1, 2 ] ),
 >  Transformation( [ 3, 4, 2, 2 ] ),
@@ -46,7 +48,6 @@ gap> Size(t);
 60
 
 # Issue 1
-
 gap> f:=
 > Transformation( [ 74, 33, 77, 60, 65, 37, 24, 22, 16, 49, 58, 16, 62, 7, 69, 
 >  38, 97, 44, 56, 5, 3, 74, 89, 28, 95, 94, 56, 6, 38, 58, 45, 63, 32, 32, 
@@ -76,13 +77,11 @@ gap> IndexPeriodOfTransformation(f);
 [ 16, 7 ]
 
 # Issue 2
-
 gap> s:=Semigroup(Transformation([4,4,4,4]));;
 gap> AsList(s);
 [ Transformation( [ 4, 4, 4, 4 ] ) ]
 
 # Issue 3
-
 gap> f:=Transformation( [ 7, 5, 3, 2, 6, 7, 10, 8, 8, 3 ] );;
 gap> AsPermutation(f, [1,2]);
 fail
@@ -104,7 +103,6 @@ gap> IsRegularTransformation(s, f);
 false
 
 # Issue 9
-
 gap> gens:=[ Transformation( [ 1, 2, 3, 9, 5, 11, 7, 8, 9, 10, 11, 12 ] ),
 > Transformation( [ 1, 2, 3, 9, 5, 11, 9, 8, 9, 8, 11, 12 ] ), 
 > Transformation( [ 1, 2, 5, 7, 8, 11, 9, 12, 9, 12, 11, 10 ] ),
@@ -155,17 +153,7 @@ gap> ForAll([1..NrRClasses(s)], i->
 > RClassReps(s)[i]);
 true
 
-gap> file:=Concatenation(CitrusDir(), "/examples/munn.citrus.gz");;
-gap>  ReadCitrus(file, 1376);
-[ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ), 
-  Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 9 ] ), 
-  Transformation( [ 1, 2, 3, 4, 5, 6, 9, 9, 9 ] ), 
-  Transformation( [ 1, 2, 3, 4, 5, 9, 9, 9, 9 ] ), 
-  Transformation( [ 1, 2, 3, 4, 9, 9, 9, 9, 9 ] ), 
-  Transformation( [ 1, 2, 3, 9, 9, 9, 9, 9, 9 ] ), 
-  Transformation( [ 1, 2, 9, 9, 9, 9, 9, 9, 9 ] ), 
-  Transformation( [ 1, 9, 9, 9, 9, 9, 9, 9, 9 ] ) ]
-
+#
 gap> gens:=[ Transformation( [ 1, 2, 3, 5, 4, 6, 7, 8 ] ),
 >   Transformation( [ 4, 4, 3, 1, 5, 6, 3, 8 ] ),
 >   Transformation( [ 3, 6, 1, 7, 3, 4, 8, 3 ] ),
@@ -268,7 +256,6 @@ gap> g:=SchutzenbergerGroup(ll);
 Group([ (5,9), (1,7) ])
 
 # IsomorphismTransformationSemigroup/Monoid
-
 gap> IsomorphismTransformationSemigroup(g);
 MappingByFunction( Group([ (5,9), (1,7) ]), <semigroup with 
 2 generators>, function( x ) ... end )
@@ -282,14 +269,13 @@ gap> t:=Range(IsomorphismTransformationMonoid(g));
 <monoid with 2 generators>
 gap> Generators(t);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1, 4 ] ) ]
-
 gap> h:=Range(IsomorphismPermGroup(t));
 Group([ (2,4), (1,3) ])
 gap> IsomorphismGroups(g, h);
 [ (5,9), (1,7) ] -> [ (2,4), (1,3) ]
 
+#
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
-
 gap> STOP_TEST( "Citrus package: testinstall.tst", 10000);

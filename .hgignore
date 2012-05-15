@@ -22,3 +22,9 @@ syntax: glob
 *.synctex.gz
 citrus.tex
 citrus_dev.tex
+Makefile
+bin/*
+Transitions*
+*.swo
+*.g6
+*.gz

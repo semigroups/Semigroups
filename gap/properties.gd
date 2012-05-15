@@ -8,49 +8,106 @@
 #############################################################################
 ##
 
+# properties marked JDM have filter IsTransformationSemigroup so that Citrus
+# and Smallsemi can be loaded together. These should be changed back to
+# IsSemigroup when a permanent solution can be found. 
+
 DeclareAttribute("AntiIsomorphismTransformationSemigroup",
  IsSemigroup);
-DeclareAttribute("GroupOfUnits", IsTransformationSemigroup);
-DeclareAttribute("IdempotentGeneratedSubsemigp", IsTransformationSemigroup);
+DeclareAttribute("GroupOfUnits", IsSemigroup);
+DeclareAttribute("IdempotentGeneratedSubsemigp", IsSemigroup);
+DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
-DeclareProperty("IsAbundantSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsAdequateSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsBand", IsTransformationSemigroup);
-DeclareProperty("IsBlockGroup", IsTransformationSemigroup);
-DeclareProperty("IsBrandtSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsCliffordSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsCommutativeSemigroup", IsTransformationSemigroup);
+DeclareProperty("IsAbundantSemigroup", IsSemigroup);
+DeclareProperty("IsAdequateSemigroup", IsSemigroup);
+DeclareProperty("IsBand", IsTransformationSemigroup); #JDM
+DeclareProperty("IsBlockGroup", IsSemigroup);
+DeclareProperty("IsBrandtSemigroup", IsTransformationSemigroup); #JDM
+DeclareProperty("IsCliffordSemigroup", IsTransformationSemigroup);#JDM
+DeclareProperty("IsCommutativeSemigroup", IsSemigroup);
 DeclareProperty("IsCompletelyRegularSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsCompletelySimpleSemigroup", IsTransformationSemigroup);   
-DeclareProperty("IsRTrivial", IsTransformationSemigroup);
-DeclareProperty("IsLTrivial", IsTransformationSemigroup);
-DeclareProperty("IsHTrivial", IsTransformationSemigroup);
+#JDM
+DeclareProperty("IsCompletelySimpleSemigroup", IsTransformationSemigroup); #JDM
+DeclareProperty("IsRTrivial", IsSemigroup);
+DeclareProperty("IsLTrivial", IsSemigroup);
+DeclareProperty("IsHTrivial", IsSemigroup);
 DeclareSynonymAttr("IsDTrivial", IsRTrivial and IsLTrivial);
 DeclareSynonymAttr("IsAperiodicSemigroup", IsHTrivial);
 DeclareSynonymAttr("IsCombinatorialSemigroup", IsHTrivial);
-DeclareProperty("IsGroupAsSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsIdempotentGenerated", IsTransformationSemigroup);
-DeclareProperty("IsLeftSimple", IsTransformationSemigroup);
-DeclareProperty("IsLeftZeroSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsMonogenicSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsMonoidAsSemigroup", IsTransformationSemigroup);
+DeclareProperty("IsFactorisableSemigroup", IsSemigroup);
+DeclareProperty("IsGroupAsSemigroup", IsSemigroup);
+DeclareProperty("IsIdempotentGenerated", IsTransformationSemigroup); #JDM
+DeclareProperty("IsInverseMonoid", IsInverseSemigroup);
+DeclareProperty("IsLeftSimple", IsSemigroup);
+DeclareProperty("IsLeftZeroSemigroup", IsTransformationSemigroup); #JDm
+DeclareProperty("IsMonogenicInverseSemigroup", IsSemigroup);
+DeclareProperty("IsMonogenicSemigroup", IsTransformationSemigroup); #JDM
+DeclareProperty("IsMonoidAsSemigroup", IsTransformationSemigroup); #JDM
+DeclareOperation("IsomorphismPartialPermMonoid", [IsPermGroup]);
+DeclareOperation("IsomorphismPartialPermSemigroup", [IsPermGroup]);
 DeclareOperation("IsomorphismTransformationMonoid",
- [IsTransformationSemigroup]);
-DeclareProperty("IsOrthodoxSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsRectangularBand", IsTransformationSemigroup);
-DeclareProperty("IsRightSimple", IsTransformationSemigroup);
-DeclareProperty("IsRightZeroSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsSemiband", IsTransformationSemigroup);
+ [IsSemigroup]);
+DeclareProperty("IsOrthodoxSemigroup", IsSemigroup);
+DeclareSynonymAttr("IsPartialPermSemigroup", IsSemigroup and
+IsPartialPermCollection);
+DeclareProperty("IsPartialPermMonoid", IsPartialPermSemigroup);
+DeclareProperty("IsRectangularBand", IsTransformationSemigroup); #JDM
+DeclareProperty("IsRightSimple", IsSemigroup);
+DeclareProperty("IsRightZeroSemigroup", IsTransformationSemigroup); #JDM
+DeclareProperty("IsSemiband", IsTransformationSemigroup); #JDM
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
-DeclareProperty("IsSemilatticeAsSemigroup", IsTransformationSemigroup);
+DeclareProperty("IsSemilatticeAsSemigroup", IsTransformationSemigroup); #JDM
 DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsZeroRectangularBand", IsTransformationSemigroup);
-DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup);
-DeclareAttribute("MinimalIdeal", IsTransformationSemigroup);
-DeclareOperation("NrElementsOfRank", [IsTransformationSemigroup and
+DeclareProperty("IsZeroRectangularBand", IsSemigroup);
+DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup); #JDM
+DeclareAttribute("MinimalIdeal", IsSemigroup);
+DeclareOperation("NrElementsOfRank", [IsSemigroup and
 HasGeneratorsOfSemigroup, IsPosInt]);
-DeclareAttribute("PosetOfIdempotents", IsTransformationSemigroup);
+DeclareAttribute("PosetOfIdempotents", IsSemigroup);
+DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
+DeclareAttribute("PrincipalFactor", IsGreensDClass);
 DeclareOperation("RedundantGenerator", [IsTransformationCollection]);
-DeclareAttribute("SmallGeneratingSet", IsTransformationSemigroup);
+DeclareGlobalFunction("ReesMatrixSemigroupElementNC");
+DeclareGlobalFunction("ReesZeroMatrixSemigroupElementNC");
+DeclareAttribute("SmallGeneratingSet", IsSemigroup);
+
+InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
+InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
+InstallTrueMethod(IsBlockGroup, IsInverseSemigroup);
+InstallTrueMethod(IsBand, IsSemilatticeAsSemigroup);
+InstallTrueMethod(IsBrandtSemigroup, IsInverseSemigroup and IsZeroSimpleSemigroup);
+InstallTrueMethod(IsCliffordSemigroup, IsSemilatticeAsSemigroup);
+InstallTrueMethod(IsCompletelyRegularSemigroup, IsCliffordSemigroup);
+InstallTrueMethod(IsCompletelyRegularSemigroup, IsSimpleSemigroup);
+InstallTrueMethod(IsCompletelySimpleSemigroup, IsSimpleSemigroup and IsFinite);
+InstallTrueMethod(IsDTrivial, IsSemilatticeAsSemigroup);
+InstallTrueMethod(IsGroupAsSemigroup, IsInverseSemigroup and IsSimpleSemigroup);
+InstallTrueMethod(IsHTrivial, IsLTrivial);
+InstallTrueMethod(IsHTrivial, IsRTrivial);
+InstallTrueMethod(IsIdempotentGenerated, IsSemilatticeAsSemigroup);
+InstallTrueMethod(IsInverseMonoid, IsInverseSemigroup and IsMonoid);
+InstallTrueMethod(IsInverseSemigroup, IsSemilatticeAsSemigroup);
+InstallTrueMethod(IsInverseSemigroup, IsCliffordSemigroup);
+InstallTrueMethod(IsLeftSimple, IsInverseSemigroup and IsGroupAsSemigroup);
+InstallTrueMethod(IsLeftZeroSemigroup, IsInverseSemigroup and IsTrivial);
+InstallTrueMethod(IsLTrivial, IsInverseSemigroup and IsRTrivial);
+InstallTrueMethod(IsLTrivial, IsDTrivial);
+InstallTrueMethod(IsMonoidAsSemigroup, IsGroupAsSemigroup);
+InstallTrueMethod(IsOrthodoxSemigroup, IsInverseSemigroup);
+InstallTrueMethod(IsRectangularBand, IsHTrivial and IsSimpleSemigroup);
+InstallTrueMethod(IsRegularSemigroup, IsInverseSemigroup);
+InstallTrueMethod(IsRegularSemigroup, IsSimpleSemigroup);
+InstallTrueMethod(IsRightSimple, IsInverseSemigroup and IsGroupAsSemigroup);
+InstallTrueMethod(IsRightZeroSemigroup, IsInverseSemigroup and IsTrivial);
+InstallTrueMethod(IsRTrivial, IsInverseSemigroup and IsLTrivial);
+InstallTrueMethod(IsRTrivial, IsDTrivial);
+InstallTrueMethod(IsSemiband, IsIdempotentGenerated);
+InstallTrueMethod(IsSemilatticeAsSemigroup, IsDTrivial and IsInverseSemigroup);
+InstallTrueMethod(IsSemilatticeAsSemigroup, IsCommutative and IsBand);
+InstallTrueMethod(IsSimpleSemigroup, IsGroupAsSemigroup);
+InstallTrueMethod(IsZeroSemigroup, IsInverseSemigroup and IsTrivial);
+InstallTrueMethod(IsMonogenicInverseSemigroup, IsInverseSemigroup and IsMonogenicSemigroup);
+InstallTrueMethod(IsZeroRectangularBand, IsZeroGroup);
+InstallTrueMethod(IsZeroGroup, IsZeroRectangularBand and IsInverseSemigroup);
 
 #EOF
