@@ -79,6 +79,14 @@ flags (environment variables 'CC' and 'CFLAGS') need to be chosen to match the
 setup of the original GAP compilation. For example you have to specify 32-bit
 or 64-bit mode correctly!
 
+The Grape Package
+-----------------
+
+The Grape package is required for the function MunnSemigroup to work and so
+Grape is a suggested package for Citrus. If Grape is not fully installed,
+then Citrus can be used as normal with the except that the function
+MunnSemigroup does not work. 
+
 Installation
 ------------
 
@@ -97,6 +105,12 @@ installation of Citrus:
   http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
 
      Note that Orb and Citrus both perform better if Orb is compiled.
+
+ *   if you want to be able to calculate the Munn semigroup of a semilattice,
+     then download and fully install the Grape package version 4.5 or higher.
+     For more details go to:
+
+     http://www.maths.qmul.ac.uk/~leonard/grape/
 
  *   download the package archive citrus-x.x.tar.gz from
 
@@ -126,6 +140,7 @@ installation of Citrus:
  *   compile the documentation by typing 
  
         CitrusMakeDoc();
+
 
 Further Information
 -------------------

@@ -53,7 +53,11 @@
     http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
     </URL> package. The &Orb; package is used to efficiently compute orbits in
     semigroups of transformations and partial permutations, and these methods
-    underpin many of the features of &Citrus;.<P/>
+    underpin many of the features of &Citrus;. The &Grape; package is used in
+    the function <Ref Oper="MunnSemigroup"/> but nowhere else in &Citrus;. If
+    &Grape; is not fully installed, then &Citrus; can be used as normal with the
+    except that the operation <Ref Oper="MunnSemigroup"/> does not work.
+    <P/>
     
     &Citrus; is still under development, and so some features may not function
     as expected. At the present time, I do not know of any errors or serious
@@ -91,7 +95,14 @@
       &noindent; Note that &Orb; and &Citrus; both perform better if &Orb;
       is compiled. 
       </Item>
-    
+
+      <Item>  if you want to be able to calculate the Munn semigroup of a
+        semilattice <Ref Oper="MunnSemigroup"/>, then download and fully
+        install the &Grape; package version &GRAPEVERS; or higher.  For more
+        details go to:&vspace;<P/>&noindent;
+        <URL>http://www.maths.qmul.ac.uk/~leonard/grape/</URL>
+      </Item>
+
       <Item> download the package archive <C>&ARCHIVENAME;.tar.gz</C> from
       &vspace;<P/>&noindent;&vspace;
       <URL>http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html
@@ -114,6 +125,7 @@
 <![CDATA[cd citrus
 ./configure
 make]]></Listing>
+    Further information about this step can be found in Section <Ref Sect="Compiling"/>. 
     </Item>
 
     <Item> start &GAP; in the usual way.</Item>
@@ -162,12 +174,44 @@ gap></Log>
     should run some the tests described in Section <Ref Sect="testing"/>.<P/>
 
   </Section>
-  <Section Label="doc"><Heading>Compiling the documentation</Heading>
 
-    To compile the documentation use <Ref Func="CitrusMakeDoc"/>. If you want
-    to use the help system, it is essential that you compile the documentation. 
-  
-    <#Include Label="CitrusMakeDoc">
+  <Section Label="Compiling">
+    <Heading>Compiling the kernel component of &Citrus;</Heading>
+As of version 0.7, the &Citrus; package has a &GAP; kernel component in C which
+should be compiled. This component contains low-level functions relating to
+partial permutations and it is not possible to use these features or any
+related features in &Citrus; without compiling the package. It is possible to
+run &Citrus; without compiling it, but &Citrus; is limited to computing with
+transformation semigroups in this case.<P/>
+
+To compile the GAP kernel component in the 'pkg' directory do:
+<Listing>
+<![CDATA[cd citrus
+./configure
+make]]></Listing><P/>
+
+If you installed the package in another 'pkg' directory than the standard 'pkg'
+directory in your &GAP; installation, then you have to do two things. Firstly
+during compilation you have to use the option '--with-gaproot=PATH' of the
+'configure' script where 'PATH' is a path to the main GAP root directory (if
+not given the default '../..' is assumed).<P/>
+
+If you installed &GAP; on several architectures, you must execute the
+configure/make step for each of the architectures. You can either do this
+immediately after configuring and compiling GAP itself on this architecture, or
+alternatively (when using version 4.5 of GAP or newer) set the environment
+variable 'CONFIGNAME' to the name of the configuration you used when compiling
+GAP before running './configure'.  Note however that your compiler choice and
+flags (environment variables 'CC' and 'CFLAGS') need to be chosen to match the
+setup of the original GAP compilation. For example you have to specify 32-bit
+or 64-bit mode correctly!
+</Section>
+<Section Label="doc"><Heading>Compiling the documentation</Heading>
+
+  To compile the documentation use <Ref Func="CitrusMakeDoc"/>. If you want
+  to use the help system, it is essential that you compile the documentation. 
+
+  <#Include Label="CitrusMakeDoc">
 
   </Section>
     

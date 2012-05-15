@@ -1,12 +1,31 @@
 #############################################################################
 ##
 #W  CHANGELOG
-#Y  Copyright (C) 2011                                      James D. Mitchell
+#Y  Copyright (C) 2011-12                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 
+
+0.6 -> 0.7 
+            the most major change is the introduction of special methods for
+            partial permutations and inverse semigroups. So that these methods
+            are efficient, a GAP kernel component (in C) has also been
+            introduced for various low-level computations with partial
+            permutations. Essentially all functions previously available for
+            transformation semigroups are now available for inverse semigroups
+            of partial permutations. The manual has been expanded and
+            reorganised, some standard examples have been included (semigroups
+            of order preserving transformations or partial permutations, the
+            symmetric inverse semigroup, the full matrix semigroup over a
+            finite field), the endomorphism monoids of the non-abelian groups
+            with at most 64 elements have been included in the catalogues of
+            examples, the functions InjectionPrincipalFactor,
+            IsomorphismReesMatrixSemigroup, and PrincipalFactor, and some
+            specific properties and attributes of inverse semigroups have been
+            introduced (such as IsFactorisableSemigroup and
+            PrimitiveIdempotents).
 
 0.5 -> 0.6 
 

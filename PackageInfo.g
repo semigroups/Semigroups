@@ -11,7 +11,8 @@
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "0.7">
 ##  <!ENTITY ORBVERS "4.2">
-##  <!ENTITY RELEASEDATE "?? May 2012">
+##  <!ENTITY GRAPEVERS "4.5">
+##  <!ENTITY RELEASEDATE "15 May 2012">
 ##  <!ENTITY ARCHIVENAME "citrus-0.7">
 ##  <!ENTITY COPYRIGHTYEARS "2011-12">
 ##  <#/GAPDoc>
@@ -68,7 +69,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.5.3",
   NeededOtherPackages := [["orb", ">=4.2"], ["io", ">=3.3"]],
-  SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.4"]], 
+  SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"]], 
   ExternalConditions := []),
   AvailabilityTest := ReturnTrue, 
 # JDM can't think of sensible test for the binary :(

@@ -2,8 +2,12 @@
    [ <!ENTITY Citrus "<Package>Citrus</Package>">
    <!ENTITY Smallsemi "<URL
    Text='Smallsemi'>http://www-history.mcs.st-and.ac.uk/~jamesm/smallsemi/index.html</URL>">
+   <!ENTITY Grape "<URL
+   Text='Grape'>http://www.maths.qmul.ac.uk/~leonard/grape/</URL>">
      <!ENTITY Monoid "<Package>Monoid</Package>">
-     <!ENTITY Orb "<Package>Orb</Package>">
+     <!ENTITY Orb "<URL Text='Orb'>
+     http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
+</URL>">
      <!ENTITY vspace "<Alt Only='LaTeX'>\vspace{\baselineskip}</Alt>">
      <!ENTITY noindent "<Alt Only='LaTeX'>\noindent</Alt>">
      <!ENTITY H "<Alt Only='HTML'>\(\mathcal{H}\)</Alt><Alt
