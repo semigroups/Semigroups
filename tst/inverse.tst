@@ -257,7 +257,7 @@ gap> Size(DClass(h))=Size(RClass(h))^2/2;
 true
 
 #
-gap> file:=Concatenation(CitrusDir(), "/examples/graph7c.citrus.gz");
+gap> file:=Concatenation(CitrusDir(), "/examples/graph7c.citrus.gz");;
 gap> s:=Semigroup(ReadCitrus(file, 600));
 <semigroup with 2 generators>
 gap> iso:=IsomorphismPartialPermSemigroup(s);;
