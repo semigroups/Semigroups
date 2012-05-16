@@ -534,7 +534,7 @@ fail</Example>
     <Description>
       Returns the least positive integers <C>m, r</C> such that
       <C><A>f</A>^(m+r)=<A>f</A>^m</C>, which are 
-      known as the <E>index</E> and <E>period</E> of the transformation
+      known as the <E>index</E> and <E>period</E> of the partial permutation
       <A>f</A>. 
       <Example>
 gap> f:=PartialPermNC([ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ], 
