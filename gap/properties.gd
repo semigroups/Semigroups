@@ -58,6 +58,7 @@ DeclareProperty("IsSemiband", IsTransformationSemigroup); #JDM
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
 DeclareProperty("IsSemilatticeAsSemigroup", IsTransformationSemigroup); #JDM
 DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
+DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsZeroSemigroup", IsTransformationSemigroup); #JDM
 DeclareAttribute("MinimalIdeal", IsSemigroup);
