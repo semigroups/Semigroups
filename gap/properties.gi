@@ -366,7 +366,7 @@ s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
 # mod for 0.1! - IsBand - "for a transformation semigroup"
 ###########################################################################
 
-InstallMethod(IsBand, "for a transformation semigroup", 
+InstallOtherMethod(IsBand, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], s-> 
  IsCompletelyRegularSemigroup(s) and IsHTrivial(s));
 
@@ -425,7 +425,7 @@ end);
 # new for 0.2! - IsBrandtSemigroup - "for a transformation semigroup"
 #############################################################################
 
-InstallMethod(IsBrandtSemigroup, "for a transformation semigroup", 
+InstallOtherMethod(IsBrandtSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 s-> IsZeroSimpleSemigroup(s) and IsInverseSemigroup(s));
 
@@ -438,7 +438,7 @@ InstallOtherMethod(IsBrandtSemigroup, "for an inverse semigroup",
 # new for 0.1! - IsCliffordSemigroup - "for a transformation semigroup"
 ###########################################################################
 
-InstallMethod(IsCliffordSemigroup, "for a transformation semigroup", 
+InstallOtherMethod(IsCliffordSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local gens, idem, f, g;
@@ -485,7 +485,7 @@ s-> ForAll(OrbSCC(LongOrb(s)), x-> Length(x)=1));
 # new for 0.1! - IsCommutativeSemigroup - "for a transformation semigroup"
 ###########################################################################
 
-InstallMethod(IsCommutativeSemigroup, "for a transformation semigroup",
+InstallOtherMethod(IsCommutativeSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, n, i, j; 
@@ -508,7 +508,7 @@ end);
 # new for 0.1! - IsCommutativeSemigroup - "for a partial perm semigroup"
 ###########################################################################
 
-InstallMethod(IsCommutativeSemigroup, "for a partial perm semigroup",
+InstallOtherMethod(IsCommutativeSemigroup, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(s)
   local gens, n, i, j; 
@@ -531,7 +531,7 @@ end);
 # new for 0.1! - IsCompletelyRegularSemigroup - "for a trans. semigp."
 ###########################################################################
 
-InstallMethod(IsCompletelyRegularSemigroup, "for a transformation semigroup", 
+InstallOtherMethod(IsCompletelyRegularSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, o, f;
@@ -748,7 +748,7 @@ InstallOtherMethod(IsRTrivial, "for D-class of a part. perm. semigp.",
 # new for 0.1! - IsGroupAsSemigroup - "for a transformation semigroup"
 ###########################################################################
  
-InstallMethod(IsGroupAsSemigroup, "for a transformation semigroup", 
+InstallOtherMethod(IsGroupAsSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, ker, img, f;
@@ -780,7 +780,7 @@ end);
 ###########################################################################
 
 if IsBound(DomPP) and IsBound(RanSetPP) then 
-  InstallMethod(IsGroupAsSemigroup, "for a partial perm semigroup", 
+  InstallOtherMethod(IsGroupAsSemigroup, "for a partial perm semigroup", 
   [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
   function(s)
     local gens, dom, ran;
@@ -897,7 +897,7 @@ end);
 # new for 0.2! - IsLeftSimple - "for a transformation semigroup"
 ###########################################################################
 
-InstallMethod(IsLeftSimple, "for a transformation semigroup",
+InstallOtherMethod(IsLeftSimple, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local iter;
@@ -919,7 +919,7 @@ InstallMethod(IsLeftSimple, "for an inverse semigroup",
 # new for 0.1! - IsLeftZeroSemigroup - "for a transformation semigroup"
 ###########################################################################
 
-InstallMethod(IsLeftZeroSemigroup, "for a transformation semigroup", 
+InstallOtherMethod(IsLeftZeroSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, imgs;
@@ -933,7 +933,6 @@ function(s)
   return false;
 end);
 
-#JDM remove other!
 InstallOtherMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
@@ -942,7 +941,7 @@ InstallOtherMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
 # new for 0.2 - IsMonogenicSemigroup - "for a transformation semigroup"
 #############################################################################
 
-InstallMethod(IsMonogenicSemigroup, "for a transformation semigroup", 
+InstallOtherMethod(IsMonogenicSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local gens, m, I, max, index, j, x, pos, f, i, p;
@@ -1459,7 +1458,7 @@ fi;
 # new for 0.1! - IsRectangularBand - "for a transformation semigroup"
 ###########################################################################
 
-InstallMethod(IsRectangularBand, "for a transformation semigroup", 
+InstallOtherMethod(IsRectangularBand, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
 
@@ -1473,7 +1472,6 @@ function(s)
   return IsHTrivial(s);
 end);
 
-#JDM remove other!
 InstallOtherMethod(IsRectangularBand, "for an inverse semigroup",
 [IsInverseSemigroup], s-> IsHTrivial(s) and IsSimpleSemigroup(s));
 
@@ -1531,7 +1529,7 @@ InstallMethod(IsRightSimple, "for an inverse semigroup",
 # new for 0.1! - IsRightZeroSemigroup - "for a transformation semigroup"
 ###########################################################################
 
-InstallMethod(IsRightZeroSemigroup, "for a transformation semigroup", 
+InstallOtherMethod(IsRightZeroSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, kers;
@@ -1545,8 +1543,6 @@ function(s)
 
   return false;
 end);
-
-#remove other! JDM
 
 InstallOtherMethod(IsRightZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
@@ -1562,7 +1558,7 @@ InstallOtherMethod(IsSemiband, "for a semigroup",
 # new for 0.1! - IsSemilatticeAsSemigroup - "for a trans. semigroup"
 ###############################################################################
 
-InstallMethod(IsSemilatticeAsSemigroup, "for a transformation semigroup",
+InstallOtherMethod(IsSemilatticeAsSemigroup, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
  s-> IsCommutative(s) and IsBand(s));
 

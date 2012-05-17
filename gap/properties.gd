@@ -8,9 +8,8 @@
 #############################################################################
 ##
 
-# properties marked JDM have filter IsTransformationSemigroup so that Citrus
-# and Smallsemi can be loaded together. These should be changed back to
-# IsSemigroup when a permanent solution can be found. 
+# Things to intro from Smallsemi: IsSemigroupWithClosedIdempotents,
+# IsSemigroupWithZero
 
 DeclareAttribute("AntiIsomorphismTransformationSemigroup",
  IsSemigroup);
