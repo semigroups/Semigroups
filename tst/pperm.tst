@@ -74,7 +74,8 @@ gap> f[4]^-4;
 gap> 
 
 #
-gap> f:=ReadCitrus("pkg/citrus/examples/inverse.citrus.gz", 1)[1];
+gap> file:=Concatenation(CitrusDir(), "/examples/inverse.citrus.gz");;
+gap> f:=ReadCitrus(file, 1)[1];
 <partial perm on 6326 pts>
 gap> f^6*f^-6=LeftOne(f);
 false
@@ -107,7 +108,7 @@ gap> ForAll(DomPP(f), i-> (i^f)^g=i);
 true
 gap> ForAll(RanSetPP(f), i-> (i^g)^f=i);     
 true
-gap> f:=ReadCitrus("pkg/citrus/examples/inverse.citrus.gz", 3)[1];
+gap> f:=ReadCitrus(file, 3)[1];
 <partial perm on 6317 pts>
 gap> g:=f^-1;;
 gap> ForAll(RanSetPP(f), i-> (i^g)^f=i);
@@ -121,7 +122,7 @@ gap> f*p;
 [ 1, 3, 4, 5, 6, 7, 9, 10 ] -> [ 6, 3, 5, 9, 1, 2, 7, 4 ]
 gap> FixedPointsPP(f*p);
 [ 3 ]
-gap> f:=ReadCitrus("pkg/citrus/examples/inverse.citrus.gz", 4)[1];
+gap> f:=ReadCitrus(file, 4)[1];
 <partial perm on 12675 pts>
 gap> p:=Random(SymmetricGroup(65000));;
 gap> f*p;
@@ -225,7 +226,7 @@ gap> OnTuples(RanPP(g), g^-1)=DomPP(f);
 false
 gap> OnTuples(RanPP(g), g^-1)=DomPP(g);
 true
-gap> f:=ReadCitrus("pkg/citrus/examples/inverse.citrus.gz", 5)[1];
+gap> f:=ReadCitrus(file, 5)[1];
 <partial perm on 627 pts>
 gap> f[1]; #max dom
 1000
@@ -239,7 +240,7 @@ gap> f[5]; #min dom ran
 1
 gap> f[f[1]+7]; # min dom
 1
-gap> f:=ReadCitrus("pkg/citrus/examples/inverse.citrus.gz", 6)[1];   
+gap> f:=ReadCitrus(file, 6)[1];   
 <partial perm on 31542 pts>
 gap> f[6];
 50000
@@ -283,7 +284,7 @@ gap> RanSetPP(f);
 [ 1, 2, 3, 2039, 2149, 13431, 21443 ]
 gap> RankOfPartialPerm(f);
 7
-gap> f:=ReadCitrus("pkg/citrus/examples/inverse.citrus.gz", 4)[1];
+gap> f:=ReadCitrus(file, 4)[1];
 <partial perm on 12675 pts>
 gap> RestrictedPP(f, [1..100]);
 <partial perm on 100 pts>

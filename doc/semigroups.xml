@@ -162,7 +162,7 @@ true</Example>
         This function was written jointly by J. D. Mitchell, Yann Peresse 
         (St Andrews), Yanhui Wang (York). <P/>
 
-        <B>Please note:</B> the <Package>Grape</Package> package version 4.4
+        <B>Please note:</B> the &Grape; package version &GRAPEVERS;
         or higher should be fully installed for this function to work.
 
         <Example>
