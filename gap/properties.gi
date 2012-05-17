@@ -1653,21 +1653,6 @@ function(s)
   gens[1]^2=gens[1];
 end); 
 
-#IIIZZZ
-
-# new for 0.1! - IsZeroGroup - "for a semigroup"
-###########################################################################
-
-<<<<<<< local
-<<<<<<< local
-InstallMethod(IsTrivial, "for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  local gens;
-  gens:=Generators(s);
-  return (Length(gens)>1 and not ForAny(gens, x-> gens[1]<>x)) or 
-  gens[1]^2=gens[1];
-end); 
 
 #IIIUUU
 
