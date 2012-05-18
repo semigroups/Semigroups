@@ -537,7 +537,8 @@ fail</Example>
       known as the <E>index</E> and <E>period</E> of the partial permutation
       <A>f</A>. 
       <Example>
-gap> f:=PartialPermNC([ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ], 
+gap> f:=PartialPermNC(
+> [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ], 
 > [ 3, 12, 14, 4, 11, 18, 17, 2, 9, 5, 15, 8, 20, 10, 19 ]);;
 gap> IndexPeriodOfPartialPerm(f);                                    
 [ 5, 2 ]
