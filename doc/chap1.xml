@@ -107,7 +107,7 @@
 
       </Item>
 
-      <Item> download the package archive <C>&ARCHIVENAME;.tar.gz</C> from
+      <Item> download the package archive <F>&ARCHIVENAME;.tar.gz</F> from
       &vspace;<P/>&noindent;&vspace;
       <URL>http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html
       </URL>
@@ -144,15 +144,15 @@ make]]></Listing>
     <E><B>Please note that</B> &Citrus; can only be used to compute with
       semigroups of partial permutations if it has been compiled.  </E><P/>
 
-    Below is an example of an installation of &Citrus; in a UNIX environment
-    where <C>GAPROOT</C>  should be substituted with the main &GAP; directory
+    Below is an example of an installation of &Citrus; in a Unix environment
+    where <C>home</C>  should be substituted with the main &GAP; directory
     (the one containing the folders <C>bin</C>, <C>lib</C>, and so on) in your
     installation of &GAP;.<P/>
 
     <Log>
 > gunzip &ARCHIVENAME;.tar.gz 
 > tar -xf &ARCHIVENAME;.tar 
-> mv &ARCHIVENAME; GAPROOT/pkg
+> mv &ARCHIVENAME; home/pkg
 > gap 
 
 [ ... ]
