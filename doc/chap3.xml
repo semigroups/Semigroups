@@ -144,9 +144,9 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
     <List>
       <Mark>Endomorphisms of graphs</Mark>
       <Item>
-        the files <C>eul<A>n</A>c.citrus.gz</C> with
-        <M>n=3,...,10</M>; <C>graph<A>n</A>c.citrus.gz</C> with 
-        <M>n=3,...,8</M>; and <C>selfcomp.citrus.gz</C>
+        the files <F>eul<A>n</A>c.citrus.gz</F> with
+        <M>n=3,...,10</M>; <F>graph<A>n</A>c.citrus.gz</F> with 
+        <M>n=3,...,8</M>; and <F>selfcomp.citrus.gz</F>
         contain small generating sets for the endomorphism monoids of
         all connected Eulerian graphs, all connected graphs, and all self
         complimentary graphs with <M>n</M> vertices, respectively. 
@@ -168,7 +168,7 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
       
       <Mark>Munn semigroups</Mark>
       <Item> 
-        the file <C>munn.citrus.gz</C> contains generators for all the Munn
+        the file <F>munn.citrus.gz</F> contains generators for all the Munn
         semigroups of semilattices with 2 to 8 elements. The
         semilattices were obtained from the &Smallsemi; package using the
         command:
@@ -183,7 +183,7 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
 
       <Mark>Syntactic semigroups</Mark>
       <Item> 
-        the files <C>syntactic.citrus.gz</C> contain generators for the
+        the files <F>syntactic.citrus.gz</F> contain generators for the
         syntactic semigroups of word acceptors of certain triangle groups,
         provided by Markus Pfeiffer (St Andrews).
         A <E>triangle group</E> is a group defined by a presentation of the 
@@ -201,7 +201,7 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
       </Item>
       <Mark>Endomorphisms of groups</Mark>
       <Item>
-        the files <C>nonabelian_groups_<A>n</A>.citrus.gz</C> with
+        the files <F>nonabelian_groups_<A>n</A>.citrus.gz</F> with
         <M>n=6,....,64</M> contains small generating sets for the endomorphism
         monoids of all non-abelian groups with <A>n</A> elements. 
         These files were created using the Small Groups Library in &GAP;
