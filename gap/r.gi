@@ -1886,15 +1886,17 @@ function(iter)
   return;
 end);
 
-# mod for 0.5! - PrintObj - for IsIteratorOfSemigroup
+# mod for 0.8! - PrintObj - for IsIteratorOfSemigroup
 ############################################################################
 
 InstallMethod(PrintObj, [IsIteratorOfSemigroup], 
 function(iter)
   if IsFullTransformationSemigroup(iter!.s) then 
     Print("<iterator of full trans. semigroup>");
-  else
+  elif IsTransformationSemigroup(iter!.s) then 
     Print("<iterator of transformation semigroup>");
+  elif IsPartialPermSemigroup(iter!.s) then 
+    Print("<iterator of semigroup of partial perms>");
   fi;
   return;
 end);

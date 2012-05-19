@@ -24,6 +24,8 @@ DeclareOperation("InverseSemigroupByGeneratorsNC", [IsPartialPermCollection,
 IsPartialPermCollection, IsRecord]);
 DeclareOperation("RandomInverseMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomInverseSemigroup", [IsPosInt, IsPosInt]);
-#JDM the below should be operations too!
-DeclareGlobalFunction("RandomTransformationMonoid");
-DeclareGlobalFunction("RandomTransformationSemigroup");
+DeclareOperation("RandomTransformationMonoid", [IsPosInt, IsPosInt]);
+DeclareOperation("RandomTransformationSemigroup", [IsPosInt, IsPosInt]);
+DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
+
+#EOF

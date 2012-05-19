@@ -826,19 +826,20 @@ else
   [IsPosInt, IsPosInt], CitrusIsNotCompiled);
 fi;
 
-
-# new for 0.1! - RandomTransformationSemigroup 
+# mod for 0.8! - RandomTransformationSemigroup 
 #############################################################################
 
-InstallGlobalFunction(RandomTransformationSemigroup,
+InstallMethod(RandomTransformationSemigroup, "for pos int and pos int",
+[IsPosInt, IsPosInt], 
 function(m,n)
   return Semigroup(Set(List([1..m], x-> RandomTransformation(n))));
 end);
 
-# new for 0.1! - RandomTransformationSemigroup 
+# mod for 0.8! - RandomTransformationSemigroup 
 ###########################################################################
 
-InstallGlobalFunction(RandomTransformationMonoid,
+InstallMethod(RandomTransformationMonoid, "for a pos int and pos int",
+[IsPosInt, IsPosInt], 
 function(m,n)
   return Monoid(Set(List([1..m], x-> RandomTransformation(n))));
 end);
@@ -966,6 +967,101 @@ function(gens, opts)
 
   SetGeneratorsOfMagma( s, AsList( gens ) );
   return s;
+end);
+
+# new for 0.8! - SubsemigroupByProperty - "for a trans. semi. and func"
+################################################################################
+
+InstallMethod(SubsemigroupByProperty, "for a trans. semi. and func",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsFunction], 
+function(S, func)
+  local limit;
+
+  if HasSize(S) then 
+    limit:=Size(S);
+  else
+    limit:=infinity;
+  fi;
+
+  return SubsemigroupByProperty(S, func, rec(limit:=limit));
+end);
+
+
+# new for 0.8! - SubsemigroupByProperty - "for a trans. semi., func, rec"
+################################################################################
+
+InstallOtherMethod(SubsemigroupByProperty, "for a trans. semi., func, rec",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsRecord], 
+function(S, func, opt)
+  local limit, iter, T, f;
+ 
+  if not IsBound(opt.limit) then 
+    if HasSize(S) then 
+      limit:=Size(S);
+    else
+      limit:=infinity;
+    fi;
+  else
+    limit:=opt.limit;
+  fi;
+  
+  iter:=Iterator(S);
+  T:=Semigroup(NextIterator(iter));
+  while Size(T)<limit and not IsDoneIterator(iter) do 
+    f:=NextIterator(iter);
+    if func(f) then 
+      T:=ClosureSemigroup(T, f);
+    fi;
+  od;
+
+  return T;
+end);
+
+# new for 0.8! - SubsemigroupByProperty - "for a part perm semi. and func"
+################################################################################
+
+InstallMethod(SubsemigroupByProperty, "for a part perm semi. and func",
+[IsPartialPermSemigroup and IsInverseSemigroup, IsFunction], 
+function(S, func)
+  local limit;
+
+  if HasSize(S) then 
+    limit:=Size(S);
+  else
+    limit:=infinity;
+  fi;
+
+  return SubsemigroupByProperty(S, func, rec(limit:=limit));
+end);
+
+# new for 0.8! - SubsemigroupByProperty - "for a part perm semi., func, rec"
+################################################################################
+
+InstallOtherMethod(SubsemigroupByProperty, "for a part perm semi, func, rec",
+[IsPartialPermSemigroup and IsInverseSemigroup, IsFunction, IsRecord], 
+function(S, func, opt)
+  local limit, iter, T, f;
+  
+  if not IsBound(opt.limit) then 
+    if HasSize(S) then 
+      limit:=Size(S);
+    else
+      limit:=infinity;
+    fi;
+  else
+    limit:=opt.limit;
+  fi;
+  
+  iter:=Iterator(S);
+  T:=InverseSemigroup(NextIterator(iter));
+  while Size(T)<limit and not IsDoneIterator(iter) do 
+    f:=NextIterator(iter);
+    if func(f) then 
+      T:=ClosureInverseSemigroup(T, f);
+    fi;
+  od;
+
+  return T;
 end);
 
 # new for 0.7! - ViewObj - "for an inverse monoid"

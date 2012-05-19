@@ -8,6 +8,7 @@
 ############################################################################# 
 ##
 
+DeclareOperation("DP", [IsPosInt]);
 DeclareOperation("FullMatrixSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("MonoidOfMultiplicationByN", [IsPosInt]);
