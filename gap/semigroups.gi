@@ -975,15 +975,16 @@ end);
 InstallMethod(SubsemigroupByProperty, "for a trans. semi. and func",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsFunction], 
 function(S, func)
-  local limit;
+  local limit, n;
 
   if HasSize(S) then 
     limit:=Size(S);
   else
-    limit:=infinity;
+    n:=Degree(S);
+    limit:=n^n;
   fi;
 
-  return SubsemigroupByProperty(S, func, rec(limit:=limit));
+  return SubsemigroupByProperty(S, func, limit);
 end);
 
 
@@ -991,20 +992,10 @@ end);
 ################################################################################
 
 InstallOtherMethod(SubsemigroupByProperty, "for a trans. semi., func, rec",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsRecord], 
-function(S, func, opt)
-  local limit, iter, T, f;
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsPosInt], 
+function(S, func, limit)
+  local iter, T, f;
  
-  if not IsBound(opt.limit) then 
-    if HasSize(S) then 
-      limit:=Size(S);
-    else
-      limit:=infinity;
-    fi;
-  else
-    limit:=opt.limit;
-  fi;
-  
   iter:=Iterator(S);
   T:=Semigroup(NextIterator(iter));
   while Size(T)<limit and not IsDoneIterator(iter) do 
@@ -1023,34 +1014,25 @@ end);
 InstallMethod(SubsemigroupByProperty, "for a part perm semi. and func",
 [IsPartialPermSemigroup and IsInverseSemigroup, IsFunction], 
 function(S, func)
-  local limit;
+  local limit, n;
 
   if HasSize(S) then 
     limit:=Size(S);
   else
-    limit:=infinity;
+    n:=NrMovedPoints(S);
+    limit:=Sum(List([0..n], r-> Binomial(n,r)^2*Factorial(r)));
   fi;
 
-  return SubsemigroupByProperty(S, func, rec(limit:=limit));
+  return SubsemigroupByProperty(S, func, limit);
 end);
 
 # new for 0.8! - SubsemigroupByProperty - "for a part perm semi., func, rec"
 ################################################################################
 
 InstallOtherMethod(SubsemigroupByProperty, "for a part perm semi, func, rec",
-[IsPartialPermSemigroup and IsInverseSemigroup, IsFunction, IsRecord], 
-function(S, func, opt)
-  local limit, iter, T, f;
-  
-  if not IsBound(opt.limit) then 
-    if HasSize(S) then 
-      limit:=Size(S);
-    else
-      limit:=infinity;
-    fi;
-  else
-    limit:=opt.limit;
-  fi;
+[IsPartialPermSemigroup and IsInverseSemigroup, IsFunction, IsPosInt], 
+function(S, func, limit)
+  local iter, T, f;
   
   iter:=Iterator(S);
   T:=InverseSemigroup(NextIterator(iter));
@@ -1060,7 +1042,6 @@ function(S, func, opt)
       T:=ClosureInverseSemigroup(T, f);
     fi;
   od;
-
   return T;
 end);
 

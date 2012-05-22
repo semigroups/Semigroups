@@ -500,3 +500,26 @@ gap&gt; S:=RandomTransformationSemigroup(5,5);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="SubsemigroupByProperty">
+<ManSection>
+  <Oper Name="SubsemigroupByProperty" Arg="S, func" Label="for a semigroup and
+    function"/>
+  <Oper Name="SubsemigroupByProperty" Arg="S, func, limit" Label="for a
+    semigroup, function, and limit on the size of the subsemigroup"/>
+  <Returns>A semigroup.</Returns>
+  <Description>
+    <C>SubsemigroupByProperty</C> creates a subsemigroup of the semigroup
+    <A>S</A> of transformations or partial permutations consisting of those
+    elements fulfilling <A>func</A> (which should be a function returning
+    <K>true</K> or <K>false</K>). No test is done to check if the property
+    actually defines a subsemigroup. <P/>
+
+    If the optional third argument <A>limit</A> is present and a positive
+    integer, then once the subsemigroup has at least <A>limit</A> elements the
+    computation stops.
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+
+

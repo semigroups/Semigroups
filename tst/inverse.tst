@@ -881,6 +881,31 @@ gap> IsDTrivial(s);
 false
 
 #
+gap> IsIsometryPP:=function(f)
+> local n, i, j, k, l;
+>  n:=f[2];
+>  for i in [1..n-1] do
+>    k:=DomPP(f)[i];
+>    for j in [i+1..n] do
+>      l:=DomPP(f)[j];
+>      if not AbsInt(k^f-l^f)=AbsInt(k-l) then
+>        return false;
+>      fi;
+>    od;
+>  od;
+>  return true;
+> end;
+gap> s:=SubsemigroupByProperty(SymmetricInverseSemigp(5), IsIsometryPP);;
+gap> Size(s);
+142
+gap> s:=SubsemigroupByProperty(SymmetricInverseSemigp(6), IsIsometryPP);;
+gap> Size(s);
+319
+gap> s:=SubsemigroupByProperty(SymmetricInverseSemigp(7), IsIsometryPP);;
+gap> Size(s);
+686
+
+#
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
