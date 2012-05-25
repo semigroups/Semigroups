@@ -27,6 +27,7 @@
   <Section><Heading>New semigroups from old</Heading> 
     <#Include Label="ClosureInverseSemigroup">
     <#Include Label="ClosureSemigroup">
+    <#Include Label="SubsemigroupByProperty">
   </Section> 
   
   <Section Label="opts"><Heading>Options when creating semigroups</Heading>
@@ -144,8 +145,8 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
     <List>
       <Mark>Endomorphisms of graphs</Mark>
       <Item>
-        the files <F>eul<A>n</A>c.citrus.gz</F> with
-        <M>n=3,...,10</M>; <F>graph<A>n</A>c.citrus.gz</F> with 
+        the files <C>eul<A>n</A>c.citrus.gz</C> with
+        <M>n=3,...,10</M>; <C>graph<A>n</A>c.citrus.gz</C> with 
         <M>n=3,...,8</M>; and <F>selfcomp.citrus.gz</F>
         contain small generating sets for the endomorphism monoids of
         all connected Eulerian graphs, all connected graphs, and all self
@@ -201,7 +202,7 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
       </Item>
       <Mark>Endomorphisms of groups</Mark>
       <Item>
-        the files <F>nonabelian_groups_<A>n</A>.citrus.gz</F> with
+        the files <C>nonabelian_groups_<A>n</A>.citrus.gz</C> with
         <M>n=6,....,64</M> contains small generating sets for the endomorphism
         monoids of all non-abelian groups with <A>n</A> elements. 
         These files were created using the Small Groups Library in &GAP;

@@ -803,7 +803,7 @@ fi;
 InstallOtherMethod(IsIdempotentGenerated, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s) 
-local gens, r, i, t;
+  local gens, r, t;
 
   gens:=Generators(s);
   
@@ -818,10 +818,7 @@ local gens, r, i, t;
   fi;
 
   r:=List(gens, Rank); 
-
-  i:=Concatenation(List([Maximum(r),Maximum(r)-1..Minimum(r)], i-> 
-   Idempotents(s, i)));
-  t:=Semigroup(i);
+  t:=Semigroup(Idempotents(s));
   SetIdempotentGeneratedSubsemigp(s, t);
 
   return ForAll(gens, f-> f in t);
@@ -1855,12 +1852,14 @@ function(s)
   fi;
 
   f:=EvaluateWord(gens, TraceSchreierTreeForward(o, i));
+  i:=Semigroup(Elements(GreensDClassOfElementNC(s, f)));
+
   #i:=SemigroupIdealByGenerators(s, [f]);
-  #SetIsSimpleSemigroup(i, true);
+  SetIsSimpleSemigroup(i, true);
   #SetIsMinimalIdeal(i, true);
   #SetUnderlyingDClassOfMinIdeal(i, GreensDClassOfElement(s, f));
   #return i;
-  return Semigroup(Elements(GreensDClassOfElementNC(s, f)));#JDM temp. 
+  return i;#JDM temp. 
 end);
 
 # new for 0.7! - MinimalIdeal - "for a partial perm semi"
