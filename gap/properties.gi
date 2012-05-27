@@ -816,6 +816,7 @@ function(s)
   i:=Concatenation(List([Maximum(r),Maximum(r)-1..Minimum(r)], i-> 
    Idempotents(s, i)));
   t:=Semigroup(i);
+  # this is not the idempotent generated subsemigroup!
 
   return ForAll(gens, f-> f in t);
 end);
