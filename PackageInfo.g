@@ -20,7 +20,7 @@ SetPackageInfo( rec(
 PackageName := "Citrus",
 Subtitle := "ComputIng with Transformation semigRoUps and monoidS",
 Version := "0.8",
-Date := "27/05/2012",
+Date := "28/05/2012",
 ArchiveURL := 
           "https://bitbucket.org/zen154115/citrus/downloads/citrus-0.8",
 ArchiveFormats := ".tar.gz",
