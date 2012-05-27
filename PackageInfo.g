@@ -18,7 +18,7 @@
 
 SetPackageInfo( rec(
 PackageName := "Citrus",
-Subtitle := "ComputIng with Transformation semigRoUps and monoidS",
+Subtitle := "ComputIng wiTh semigRoUps and monoidS",
 Version := "0.8",
 Date := "28/05/2012",
 ArchiveURL := 
@@ -61,7 +61,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",  
   SixFile   := "doc/manual.six",
-  LongTitle := "Citrus - ComputIng with TransfoRmation semigrUopS",
+  LongTitle := "Citrus - ComputIng wiTh semigRUopS",
   Autoload  := true
 ),
 
