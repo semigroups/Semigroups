@@ -816,10 +816,11 @@ function(s)
     Info(InfoCitrus, 2, "the semigroup is inverse");
     return IsSemilatticeAsSemigroup(s);
   fi;
-
+  
   r:=List(gens, Rank); 
-  t:=Semigroup(Idempotents(s));
-  SetIdempotentGeneratedSubsemigp(s, t);
+  i:=Concatenation(List([Maximum(r),Maximum(r)-1..Minimum(r)], i-> 
+   Idempotents(s, i)));
+  t:=Semigroup(i);
 
   return ForAll(gens, f-> f in t);
 end);
