@@ -894,7 +894,7 @@ gap> IsIsometryPP:=function(f)
 >    od;
 >  od;
 >  return true;
-> end;
+> end;;
 gap> s:=SubsemigroupByProperty(SymmetricInverseSemigp(5), IsIsometryPP);;
 gap> Size(s);
 142

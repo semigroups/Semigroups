@@ -94,7 +94,7 @@ fail</Example>
 gap> file:=Concatenation(CitrusDir(), "/examples/graph8c.citrus.gz");;
 gap> S:=Semigroup(ReadCitrus(file, 13));;
 gap> IdempotentGeneratedSubsemigp(S);
-&lt;monoid with 19 generators>
+&lt;monoid with 20 generators>
 gap> S:=SymmetricInverseSemigp(5);
 &lt;inverse semigroup with 3 generators>
 gap> IdempotentGeneratedSubsemigp(S);

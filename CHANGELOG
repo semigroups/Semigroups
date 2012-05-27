@@ -8,6 +8,11 @@
 #############################################################################
 
 
+0.7 -> 0.8 
+            
+            minor changes due to incompatibility with Smallsemi 0.6.4 which 
+            caused some test files to fail when Nilmat was loaded after Citrus.
+
 0.6 -> 0.7 
             the most major change is the introduction of special methods for
             partial permutations and inverse semigroups. So that these methods
