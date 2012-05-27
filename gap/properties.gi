@@ -796,27 +796,22 @@ fi;
 
 #IIIIII
 
-# new for 0.1! - IsIdempotentGenerated - "for a trans semi"
+# mod for 0.8! - IsIdempotentGenerated - "for a trans semi"
 ###########################################################################
 # Notes: should use ClosureSemigroup. JDM
 
 InstallOtherMethod(IsIdempotentGenerated, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s) 
-  local gens, r, t;
-
+  local gens, r, i, t;
+ 
   gens:=Generators(s);
-  
+
   if ForAll(gens, IsIdempotent) then 
     Info(InfoCitrus, 2, "all the generators are idempotents");
     return true;
   fi;
 
-  if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is inverse");
-    return IsSemilatticeAsSemigroup(s);
-  fi;
-  
   r:=List(gens, Rank); 
   i:=Concatenation(List([Maximum(r),Maximum(r)-1..Minimum(r)], i-> 
    Idempotents(s, i)));
@@ -830,8 +825,6 @@ end);
 
 InstallOtherMethod(IsIdempotentGenerated, "for an inverse semigroup",
 [IsInverseSemigroup], IsSemilatticeAsSemigroup);
-
-# remove other JDM
 
 # new for 0.7! - IsInverseMonoid - "for a trans semigroup"
 ###########################################################################
