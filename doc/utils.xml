@@ -29,16 +29,7 @@
     <Returns>Nothing.</Returns>    
     <Description>
       This function should be called with no argument to compile the 
-      &Citrus; documentation. The same effect can be
-      achieved by entering:
-
-      <Log>
-MakeGAPDocDoc( Concatenation( PackageInfo( "citrus" )[1]!.InstallationPath, 
-"/doc" ), "citrus.xml", [ "utils.xml", "greens.xml", "inverse.xml", 
-"orbits.xml", "properties.xml", "semigroups.xml", "transform.xml", "pperm.xml", 
-"../PackageInfo.g" ], "citrus", "MathJax" );</Log>
-
-      at the &GAP; prompt. 
+      &Citrus; documentation. 
     </Description>
   </ManSection>
 <#/GAPDoc>
