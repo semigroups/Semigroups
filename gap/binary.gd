@@ -3,5 +3,7 @@
 
 
 
-DeclareProperty("IsBinaryRelationCollection", IsGeneralMappingCollection);
 
+DeclareProperty("IsBinaryRelationCollection", IsGeneralMappingCollection);
+DeclareSynonymAttr("IsBinaryRelationSemigroup", IsSemigroup and
+IsBinaryRelationCollection);

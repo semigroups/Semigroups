@@ -1398,19 +1398,32 @@ function(S)
   F:=BaseDomain(GeneratorsOfSemigroup(S)[1]);        
   T:=Semigroup(TransformationActionNC(S, Elements(F^n), OnRight));        
   return MappingByFunction(S, T,
-   x-> TransformationActionNC(Elements(F^Size(F)), OnRight, x));
+   x-> TransformationActionNC(x, Elements(F^Size(F)), OnRight));
 end);
 
 # new for 1.0! - IsomorphismTransformationSemigroup - "for a semi of bin rel"
 ###########################################################################
 
 InstallOtherMethod(IsomorphismTransformationSemigroup, "for semigp of bin rels",
-[IsMatrixSemigroup], 
-function(S)        
+[IsBinaryRelationSemigroup], 
+function(s)        
+  local n, pts, o, t, pos, i;
 
+  n:=DegreeOfBinaryRelation(Generators(s)[1]);
+  pts:=EmptyPlist(2^n);
 
+  for i in [1..n] do 
+    o:=Orb(s, [i], OnPoints); #JDM multiseed orb
+    Enumerate(o);
+    pts:=Union(pts, AsList(o));
+  od;
+  ShrinkAllocationPlist(pts);
+  t:=Semigroup(TransformationActionNC(s, pts, OnPoints));
+  pos:=List([1..n], x-> Position(pts, [x]));
+  
+  return MappingByFunction(s, t, x-> TransformationActionNC(x, pts, OnPoints),
+  x-> BinaryRelationOnPoints(List([1..n], i-> pts[pos[i]^x])));
 end);
-
 
 #IIIOOO
 

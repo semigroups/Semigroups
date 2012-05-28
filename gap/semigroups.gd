@@ -22,9 +22,9 @@ DeclareOperation("InverseMonoidByGeneratorsNC", [IsPartialPermCollection,
 IsPartialPermCollection, IsRecord]);
 DeclareOperation("InverseSemigroupByGeneratorsNC", [IsPartialPermCollection, 
 IsPartialPermCollection, IsRecord]);
-DeclareSynonymAttr("IsBinaryRelationSemigroup", IsSemigroup and IsBinaryRelationCollection);
-DeclareOperation("RandomInverseMonoid", [IsPosInt, IsPosInt]);
+DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomInverseSemigroup", [IsPosInt, IsPosInt]);
+DeclareOperation("RandomInverseMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomTransformationMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomTransformationSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);

@@ -796,7 +796,21 @@ function(s)
   Print(">");
   return;
 end);
+
 #RRR
+
+# new for 1.0! - RandomBinaryRelationSemigroup - "for pos int and pos int"
+#############################################################################
+
+InstallMethod(RandomBinaryRelationSemigroup, "for pos int and pos int",
+[IsPosInt, IsPosInt],
+function(m,n)
+  local s;
+
+  s:=Semigroup(List([1..m], x-> RandomBinaryRelationOnPoints(n)));
+  SetIsBinaryRelationSemigroup(s, true);
+  return s;
+end);
 
 # new for 0.7! - RandomInverseMonoid - for a pos int and pos int
 #############################################################################
