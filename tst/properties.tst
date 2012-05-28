@@ -972,6 +972,23 @@ gap> t:=IdempotentGeneratedSubsemigp(s);;
 gap> Size(t);
 105
 
+
+#
+gap> gens:=[ [ [ 2 ], [ 1 ], [ 4 ], [ 2 ], [ 3, 4 ] ], 
+>  [ [ 2, 3 ], [ 1, 2, 3, 4 ], [ 1 ], [ 1, 2, 4 ], [ 5 ] ], 
+>  [ [ 3 ], [ 1, 4 ], [ 1, 2, 3 ], [ 1, 3, 4 ], [ 2, 4, 5 ] ] ];;
+gap> s:=Semigroup(List(gens, BinaryRelationOnPoints));;
+gap> Size(s);
+180
+gap> iso:=IsomorphismTransformationSemigroup(s);;
+gap> inv:=InverseGeneralMapping(iso);; t:=Range(iso);;
+gap> ForAll(s, x-> (x^iso)^inv=x);
+true
+gap> ForAll(t, x-> (x^inv)^iso=x);
+true
+gap> Size(t);
+180
+
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
