@@ -188,13 +188,13 @@ function(d)
   iso:=function(f)
     local o, i, j;
     o:=LambdaOrb(d);
-    i:=Position(o, LambdaPt(f));
+    i:=Position(o, LambdaFunc(f));
     if i=fail then 
       return fail;
     fi;
     i:=Position(OrbSCC(o)[OrbSCCLookup(o)[i]], i);
     o:=RhoOrb(d);
-    j:=Position(o, RhoPt(f));
+    j:=Position(o, RhoFunc(f));
     if j=fail then 
       return fail;
     fi;
@@ -1226,13 +1226,13 @@ function(d)
   iso:=function(f)
     local o, i, j;
     o:=LambdaOrb(d);
-    i:=Position(o, LambdaPt(f));
+    i:=Position(o, LambdaFunc(f));
     if i=fail then 
       return fail;
     fi;
     i:=Position(OrbSCC(o)[OrbSCCLookup(o)[i]], i);
     o:=RhoOrb(d);
-    j:=Position(o, RhoPt(f)); 
+    j:=Position(o, RhoFunc(f)); 
     if j=fail then 
       return fail;
     fi;

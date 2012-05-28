@@ -20,6 +20,7 @@ ReadPackage("citrus/gap/properties.gi");
 ReadPackage("citrus/gap/semigroups.gi");
 ReadPackage("citrus/gap/examples.gi");
 ReadPackage("citrus/gap/binary.gi");
+ReadPackage("citrus/gap/acting.gi");
 
 if IsBound(CITRUSC) then 
   ReadPackage("citrus/gap/pperm.gi");

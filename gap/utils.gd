@@ -39,7 +39,3 @@ DeclareGlobalFunction("WriteCitrus");
 
 DeclareGlobalFunction("CitrusIsNotCompiled");
 
-DeclareAttribute("LambdaPt", IsObject);
-DeclareAttribute("RhoPt", IsObject);
-DeclareAttribute("LambdaOrb", IsSemigroup);
-DeclareAttribute("RhoOrb", IsSemigroup);
