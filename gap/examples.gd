@@ -8,6 +8,8 @@
 ############################################################################# 
 ##
 
+DeclareOperation("FullBinaryRelationSemigroup", [IsPosInt]);
+DeclareSynonymAttr("B", FullBinaryRelationSemigroup);
 DeclareOperation("FullMatrixSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("MonoidOfMultiplicationByN", [IsPosInt]);
@@ -19,5 +21,7 @@ DeclareOperation("O", [IsPosInt]);
 DeclareOperation("POI", [IsPosInt]);
 DeclareOperation("POPI", [IsPosInt]);
 DeclareOperation("PowerSemigroup", [IsGroup]);
+DeclareOperation("RegularBinaryRelationSemigroup", [IsPosInt]);
+DeclareSynonymAttr("RB", RegularBinaryRelationSemigroup);
 DeclareOperation("SingularSemigroup", [IsPosInt]);
 DeclareOperation("SymmetricInverseSemigp", [IsPosInt]);

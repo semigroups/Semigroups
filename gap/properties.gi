@@ -1401,6 +1401,17 @@ function(S)
    x-> TransformationActionNC(Elements(F^Size(F)), OnRight, x));
 end);
 
+# new for 1.0! - IsomorphismTransformationSemigroup - "for a semi of bin rel"
+###########################################################################
+
+InstallOtherMethod(IsomorphismTransformationSemigroup, "for semigp of bin rels",
+[IsMatrixSemigroup], 
+function(S)        
+
+
+end);
+
+
 #IIIOOO
 
 # new for 0.1! - IsOrthodoxSemigroup - "for a transformation semigroup"

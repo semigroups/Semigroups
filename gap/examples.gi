@@ -10,6 +10,28 @@
 
 #FFF
 
+# new for 1.0! - FullBinaryRelationSemigroup - "for a pos int"
+###############################################################################
+
+
+# new for 1.0! - RegularBinaryRelationSemigroup - "for a pos int"
+###############################################################################
+
+InstallMethod(RegularBinaryRelationSemigroup, "for a pos int",
+[IsPosInt],
+function(n) 
+  local gens, s;
+
+  gens:=[ Concatenation(List([2..n], x-> [x]),[[1]]), 
+          Concatenation([[2],[1]], List([3..n], x-> [x])),
+          Concatenation(List([1..n-1], x-> [x]), [[1,n]]),
+          Concatenation(List([1..n-1], x-> [x]), [[]]) ] ;
+  
+  s:=Semigroup(List(gens, BinaryRelationByListOfImagesNC));
+  SetIsBinaryRelationCollection(s, true);
+  return s;
+end);
+
 # new for 0.7! - FullMatrixSemigroup - "for a pos int and pos int"
 ################################################################################
 

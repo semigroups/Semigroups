@@ -1,0 +1,7 @@
+
+
+
+
+
+DeclareProperty("IsBinaryRelationCollection", IsGeneralMappingCollection);
+
