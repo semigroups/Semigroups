@@ -3,8 +3,10 @@
 
 
 DeclareProperty("IsActingSemigroup", IsSemigroup);
-DeclareProperty("IsActingSemigroupElt", IsMultiplicativeElement and
-IsAssociativeElement);
+#DeclareProperty("IsActingSemigroupElt", IsMultiplicativeElementWithOne and
+#IsAssociativeElement);
+#JDM temp. moved to pperm.gd since InstallTrueMethod(IsActingSemigroupElt,
+#IsPartialPerm) refuses to work.
 
 # action for use in LambdaOrb etc..
 DeclareAttribute("RhoAct", IsActingSemigroup);
@@ -64,7 +66,9 @@ DeclareProperty("IsActingSemigroupGC", IsGreensClass);
 InstallTrueMethod(IsActingSemigroup, IsTransformationSemigroup);
 InstallTrueMethod(IsActingSemigroup, IsPartialPermSemigroup);
 InstallTrueMethod(IsActingSemigroupElt, IsTransformation);
+#JDM for some reason the below doesn't work, returns method not found
 InstallTrueMethod(IsActingSemigroupElt, IsPartialPerm);
+
 InstallTrueMethod(IsActingSemigroupGC, IsGreensClassOfTransSemigp);
 InstallTrueMethod(IsActingSemigroupGC, IsGreensClassOfPartPermSemigroup);
 

@@ -8,13 +8,18 @@
 ##############################################################################
 ###
 
+#JDM this is only here temporarily! See below.
+DeclareProperty("IsActingSemigroupElt", IsMultiplicativeElementWithOne and
+IsAssociativeElement);
+#JDM IsActingSemigroupElt should not be necessary below...
+# see acting.gd for more details
 DeclareCategory("IsPartialPerm", IsMultiplicativeElementWithOne and
- IsAssociativeElement);
+ IsAssociativeElement and IsActingSemigroupElt);
 DeclareCategoryCollections("IsPartialPerm");
 BindGlobal("PartialPermFamily", NewFamily("PartialPermFamily",
- IsPartialPerm));
+ IsPartialPerm, CanEasilySortElements, CanEasilySortElements));
 BindGlobal("PartialPermType", NewType(PartialPermFamily,
- IsPartialPerm));
+ IsPartialPerm and IsDataObjectRep));
 DeclareGlobalFunction("PartialPermNC");
 DeclareGlobalFunction("PartialPerm");
 
@@ -37,6 +42,4 @@ DeclareOperation("RestrictedPartialPermNC", [IsPartialPerm, IsList and
 IsCyclotomicCollection]);
 DeclareOperation("RestrictedPartialPerm", [IsPartialPerm, IsList and
 IsCyclotomicCollection]);
-
-
 

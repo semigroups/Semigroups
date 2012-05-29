@@ -314,8 +314,6 @@ InstallGlobalFunction(CreateRClass,
 function(s, data, orbit, rep)
   local r;
 
-  #data:=data{[1..6]};
-
   r:=Objectify(RClassType(s), rec(parent:=s, data:=data, 
    o:=orbit, rep:=rep));
 

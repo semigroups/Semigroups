@@ -18,9 +18,7 @@ InstallOtherMethod(RhoOrb, "for a D-class of a part perm semi",
 [IsGreensDClass and IsGreensClassOfPartPermSemigroup], d-> d!.o);
 
 
-
-
-########
+# setup
 
 InstallMethod(LambdaAct, "for a transformation semi",
 [IsTransformationSemigroup], x-> OnSets);
@@ -94,6 +92,20 @@ InstallMethod(LambdaMult, "for a partial perm semi",
   return MappingPermListList(OnIntegerSetsWithPP(pt, f), pt);
 end);
 
+# where the work is done..
+
+InstallMethod(\in, "for acting semi elt and graded lambda orbs",
+[IsActingSemigroupElt, IsGradedLambdaOrbs],
+function(f, o)
+  
+  # created from the same type of obj?
+  if not FamilyObj(f)=ElementsFamily(FamilyObj(o)) then 
+    return fail;
+  fi;
+
+  return InGradedLambdaOrbs(o, f)[1];
+end);
+
 #CCC
 
 # new for 1.0! - CreateLambdaOrbMults -
@@ -162,6 +174,17 @@ schutzstab, lambda_perm)
   return;
 end);
 
+#EEE
+
+# new for 1.0! - ELM_LIST - for graded lambda orbs 
+##############################################################################
+
+InstallOtherMethod(ELM_LIST, "for graded lambda orbs, and pos int",
+[IsGradedLambdaOrbs, IsPosInt], 
+function(o, j)
+  return o!.orbits[j];
+end);
+
 #GGG
 
 # new for 1.0! - GradedLambdaOrb - "for an acting semigroup and elt"
@@ -221,6 +244,15 @@ function(s)
 end);
 
 #III
+
+# new for 1.0! - IsBound - for graded lambda orbs and pos int
+##############################################################################
+
+InstallMethod(IsBound\[\], "for graded lambda orbs and pos int",
+[IsGradedLambdaOrbs, IsPosInt], 
+function(o, j)
+  return IsBound(o!.orbits[j]);
+end);
 
 # new for 1.0! - InGradedLambdaOrbs - "for an acting semigroup"
 ##############################################################################
@@ -361,7 +393,9 @@ end);
 
 InstallMethod(PrintObj, [IsGradedLambdaOrbs],
 function(o)
+  Print("<graded lambda orbs: ");
   Print(o!.orbits);
+  Print(" >");
   return;
 end);
 
