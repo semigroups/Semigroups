@@ -63,11 +63,13 @@ DeclareAttribute("RhoDomain", IsActingSemigroup);
 
 DeclareProperty("IsActingSemigroupGC", IsGreensClass);
 
+DeclareAttribute("OrbOfRClasses", IsActingSemigroup);
+
 InstallTrueMethod(IsActingSemigroup, IsTransformationSemigroup);
 InstallTrueMethod(IsActingSemigroup, IsPartialPermSemigroup);
 InstallTrueMethod(IsActingSemigroupElt, IsTransformation);
 #JDM for some reason the below doesn't work, returns method not found
-InstallTrueMethod(IsActingSemigroupElt, IsPartialPerm);
+#InstallTrueMethod(IsActingSemigroupElt, IsPartialPerm);
 
 InstallTrueMethod(IsActingSemigroupGC, IsGreensClassOfTransSemigp);
 InstallTrueMethod(IsActingSemigroupGC, IsGreensClassOfPartPermSemigroup);

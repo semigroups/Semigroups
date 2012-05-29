@@ -16,6 +16,7 @@ IsAssociativeElement);
 DeclareCategory("IsPartialPerm", IsMultiplicativeElementWithOne and
  IsAssociativeElement and IsActingSemigroupElt);
 DeclareCategoryCollections("IsPartialPerm");
+
 BindGlobal("PartialPermFamily", NewFamily("PartialPermFamily",
  IsPartialPerm, CanEasilySortElements, CanEasilySortElements));
 BindGlobal("PartialPermType", NewType(PartialPermFamily,

@@ -17,7 +17,6 @@ InstallOtherMethod(RhoOrb, "for a D-class of a trans. semi",
 InstallOtherMethod(RhoOrb, "for a D-class of a part perm semi",
 [IsGreensDClass and IsGreensClassOfPartPermSemigroup], d-> d!.o);
 
-
 # setup
 
 InstallMethod(LambdaAct, "for a transformation semi",
@@ -238,6 +237,7 @@ InstallMethod(GradedLambdaOrbs, "for an acting semigroup",
 function(s)
   
   return Objectify(NewType(FamilyObj(s), IsGradedLambdaOrbs), rec(
+    semigroup:=s,
     finished:=false,
     orbits:=EmptyPlist(LambdaDegree(s)),
     lens:=[1..LambdaDegree(s)]*0));
@@ -258,11 +258,11 @@ end);
 ##############################################################################
 
 InstallGlobalFunction(InGradedLambdaOrbs, 
-[IsActingSemigroup],
-function(s, f)
-  local o, x, j, k, l, m;
-  
-  o:=GradedLambdaOrbs(s);
+[IsGradedLambdaOrbs, IsActingSemigroupElt],
+function(o, f)
+  local s, x, j, k, l, m;
+ 
+  s:=o!.semigroup;
   x:=LambdaFunc(s)(f);
   j:=LambdaRank(s)(x);
   
@@ -281,6 +281,11 @@ function(s, f)
   return [true, j, k, m, OrbSCC(o[j][k])[m][1], l];
 end);
 
+InstallMethod(InOrbOfRClasses, "for an acting semigroup and acting semi elt",
+[IsActingSemigroup, IsActingSemigroupElt],
+function(s, f)
+  
+end);
 
 #LLL
 
@@ -386,7 +391,29 @@ function(s)
         finished:=false, scc_reps:=[()], semigroup:=s));
 end);
 
+
+
+
 #PPP
+
+# new for 1.0! - Position - "for graded lambda orbs and acting semi elt"
+##############################################################################
+
+InstallOtherMethod(Position, "for graded lambda orbs and acting semi elt",
+[IsGradedLambdaOrbs, IsActingSemigroupElt, IsZeroCyc],
+function(o, f, n)
+  local out;
+  
+  if not FamilyObj(f)=ElementsFamily(FamilyObj(o)) then
+    return fail;
+  fi;
+  
+  out:=InGradedLambdaOrbs(o, f);
+  if not out[1] then 
+    return fail;
+  fi;
+  return out{[2..6]};
+end);
 
 # new for 1.0! - PrintObj - "for graded lambda orbs"
 ##############################################################################
