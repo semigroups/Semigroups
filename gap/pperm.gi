@@ -294,7 +294,6 @@ InstallOtherMethod(ELMS_LIST, "for a partial perm and a small dense list",
 InstallMethod(FixedPointsOfPartialPerm, "for a partial perm",
 [IsPartialPerm], FixedPointsPP);
 
-
 #III
 
 # new for 0.7! - IndexPeriodOfPartialPerm - "for a partial perm"

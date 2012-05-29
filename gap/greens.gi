@@ -10,20 +10,36 @@
 
 #############################################################################
 
-# new for 0.1! - \= - "for Green's class and Green's class of trans. semigp."
+# new for 1.0! - \= - "for Green's class and Green's class of acting semigp"
 #############################################################################
 
-InstallMethod(\=, "for Green's class and Green's class of trans. semigp.",
-[IsGreensClassOfTransSemigp, IsGreensClassOfTransSemigp],
+InstallMethod(\=, "for Green's class and class of acting semigp",
+[IsActingSemigroupGC, IsActingSemigroupGC],
 function(x, y)
-  return x!.parent=y!.parent and x!.rep in y and Size(x)=Size(y);
+  if (IsGreensRClass(x) and IsGreensRClass(y)) or
+   (IsGreensLClass(x) and IsGreensLClass(y)) or
+   (IsGreensDClass(x) and IsGreensDClass(y)) or
+   (IsGreensHClass(x) and IsGreensHClass(y)) then
+    return x!.parent=y!.parent and Representative(x) in y;
+  fi;
+  return x!.parent=y!.parent and Representative(x) in y and
+   Size(x)=Size(y);
 end);
 
-# new for 0.1! - \< - "for Green's class and Green's class of trans. semigp."
+# new for 1.0! - \< - "for Green's class and Green's class of acting semigp"
 #############################################################################
 
-InstallMethod(\<, "for Green's class and Green's class of trans. semigp.", 
-[IsGreensClassOfTransSemigp, IsGreensClassOfTransSemigp], ReturnFail);
+InstallMethod(\<, "for Green's class and class of acting semigp",
+[IsActingSemigroupGC, IsActingSemigroupGC],
+function(x, y)
+  if (IsGreensRClass(x) and IsGreensRClass(y)) or
+   (IsGreensLClass(x) and IsGreensLClass(y)) or
+   (IsGreensDClass(x) and IsGreensDClass(y)) or
+   (IsGreensHClass(x) and IsGreensHClass(y)) then
+    return x!.parent=y!.parent and Representative(x) < Representative(y);
+  fi;
+  return false;
+end);
 
 # new for 0.1! - \= - "for trans. semigp. and trans. semigp."
 #############################################################################

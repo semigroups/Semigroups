@@ -21,6 +21,24 @@ function(p, hashlen)
   return rec(func := HashFunctionForBlist, data := [101, hashlen]);
 end);
 
+# new for 1.0! - EvaluateWord - "for partial perm coll and list pos ints"
+#############################################################################
+
+InstallOtherMethod(EvaluateWord, "for partial perm coll and list pos ints", 
+[IsPartialPermCollection, IsList],
+function ( gens, w )
+    local  i, res, pts;
+    if Length( w ) = 0  then
+        pts:=Points(gens);
+        return PartialPermNC(pts, pts);
+    fi;
+    res := gens[w[1]];
+    for i  in [ 2 .. Length( w ) ]  do
+        res := res * gens[w[i]];
+    od;
+    return res;
+end);
+
 # new for 0.4! - CitrusEvalWord - "for trans. imgs. and  pos. ints".
 #############################################################################
 

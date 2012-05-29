@@ -15,29 +15,6 @@
 
 # - this file should only contain functions relating to images/R-classes!
 
-#############################################################################
-# other equalities of Green's classes handled by generic method in greens.gi!
-
-# new for 0.1! - \= - "for R-class and R-class of trans. semigp."
-#############################################################################
-
-InstallMethod(\=, "for R-class and R-class of trans. semigp.",
-[IsGreensRClass and IsGreensClassOfTransSemigp, IsGreensRClass and 
-IsGreensClassOfTransSemigp],
-function(r1, r2)
-  return r1!.parent=r2!.parent and r1!.rep in r2;
-end);
-
-# new for 0.1! - \< - "for R-class and R-class of trans. semigp."
-#############################################################################
-
-InstallMethod(\<, "for R-class and R-class of trans. semigp.",
-[IsGreensRClass and IsGreensClassOfTransSemigp, IsGreensRClass and 
-IsGreensClassOfTransSemigp],
-function(r1, r2)
-  return r1!.parent=r2!.parent and r1!.rep < r2!.rep;
-end);
-
 # new for 0.1! - \in - "for trans. and R-class of trans. semigp."
 #############################################################################
 # Algorithm E. 

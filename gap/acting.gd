@@ -11,8 +11,10 @@ DeclareAttribute("RhoAct", IsActingSemigroup);
 DeclareAttribute("LambdaAct", IsActingSemigroup);
 
 # grading for use in GradedLambdaOrb/GradedRhoOrb
-DeclareAttribute("LambdaGrading", IsActingSemigroup);
-DeclareAttribute("RhoGrading", IsActingSemigroup);
+DeclareAttribute("LambdaRank", IsActingSemigroup);
+DeclareAttribute("RhoRank", IsActingSemigroup);
+DeclareAttribute("LambdaDegree", IsActingSemigroup);
+DeclareAttribute("RhoDegree", IsActingSemigroup);
 
 # the actual functions lambda and rho
 DeclareAttribute("LambdaFunc", IsActingSemigroup);
@@ -23,15 +25,22 @@ DeclareAttribute("LambdaHT", IsActingSemigroup);
 DeclareAttribute("RhoHT", IsActingSemigroup);
 
 # long orbits <=> LongOrb
-DeclareAttribute("LambdaOrb", IsActingSemigroup);
-DeclareAttribute("RhoOrb", IsActingSemigroup);
+DeclareAttribute("LambdaOrb", IsActingSemigroup, "mutable");
+DeclareAttribute("RhoOrb", IsActingSemigroup, "mutable");
 DeclareProperty("IsLambdaOrb", IsOrbit);
 DeclareProperty("IsRhoOrb", IsOrbit);
 
-DeclareGlobalFunction("LambdaOrbSCCMults");
-DeclareGlobalFunction("CreateLambdaOrbSCCMults");
+DeclareGlobalFunction("LambdaOrbMults");
+DeclareGlobalFunction("LambdaOrbRep");
+DeclareGlobalFunction("CreateLambdaOrbMults");
 DeclareGlobalFunction("LambdaOrbSchutzGp");
-DeclareGlobalFunction("CreateLambdaOrbSchutzGp");
+DeclareGlobalFunction("LambdaOrbStabChain");
+DeclareGlobalFunction("CreateLambdaOrbGS");
+
+DeclareAttribute("LambdaMult", IsActingSemigroup);
+DeclareAttribute("RhoMult", IsActingSemigroup);
+DeclareAttribute("LambdaPerm", IsActingSemigroup);
+DeclareAttribute("RhoPerm", IsActingSemigroup);
 
 # ForwardOrbitOfImage/Kernel/ShortOrb
 DeclareGlobalFunction("GradedLambdaOrb");
@@ -39,16 +48,24 @@ DeclareGlobalFunction("GradedRhoOrb");
 DeclareProperty("IsGradedLambdaOrb", IsOrbit);
 DeclareProperty("IsGradedRhoOrb", IsOrbit);
 
+DeclareGlobalFunction("InGradedLambdaOrbs");
+
 # list of short orbits <=> OrbitsOfImages
+DeclareAttribute("GradedLambdaOrbs", IsActingSemigroup, "mutable");
+DeclareAttribute("GradedRhoOrbs", IsActingSemigroup, "mutable");
+DeclareProperty("IsGradedLambdaOrbs", IsOrbit);
+DeclareProperty("IsGradedRhoOrbs", IsOrbit);
 
-DeclareAttribute("LambdaOrbs", IsActingSemigroup);
-DeclareAttribute("RhoOrbs", IsActingSemigroup);
+DeclareAttribute("LambdaDomain", IsActingSemigroup);
+DeclareAttribute("RhoDomain", IsActingSemigroup);
 
-DeclareGlobalFunction("OrbSCCRep");
+DeclareProperty("IsActingSemigroupGC", IsGreensClass);
 
 InstallTrueMethod(IsActingSemigroup, IsTransformationSemigroup);
 InstallTrueMethod(IsActingSemigroup, IsPartialPermSemigroup);
 InstallTrueMethod(IsActingSemigroupElt, IsTransformation);
 InstallTrueMethod(IsActingSemigroupElt, IsPartialPerm);
+InstallTrueMethod(IsActingSemigroupGC, IsGreensClassOfTransSemigp);
+InstallTrueMethod(IsActingSemigroupGC, IsGreensClassOfPartPermSemigroup);
 
 #EOF

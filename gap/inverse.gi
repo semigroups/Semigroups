@@ -15,39 +15,6 @@
 # L-data: [scc index, pos. of dom=scc[1], pos of ran]
 # H-data: [scc index, pos. of dom, pos of ran]
 
-# new for 0.7! - \= - "for Green's class and Green's class of part perm semi"
-#############################################################################
-
-InstallMethod(\=, "for Green's class and class of part. perm. semigp.",
-[IsGreensClass and IsGreensClassOfPartPermSemigroup, IsGreensClass and
-IsGreensClassOfPartPermSemigroup],
-function(c1, c2)
-  if (IsGreensRClass(c1) and IsGreensRClass(c2)) or 
-   (IsGreensLClass(c1) and IsGreensLClass(c2)) or
-   (IsGreensDClass(c1) and IsGreensDClass(c2)) or
-   (IsGreensHClass(c1) and IsGreensHClass(c2)) then     
-    return c1!.parent=c2!.parent and Representative(c1) in c2;
-  fi;
-  return c1!.parent=c2!.parent and Representative(c1) in c2 and 
-   Size(c1)=Size(c2);
-end);
-
-# new for 0.7! - \< - "for Green's class and Green's class of part perm semi"
-#############################################################################
-
-InstallMethod(\<, "for Green's class and class of part. perm. semigp.",
-[IsGreensClass and IsGreensClassOfPartPermSemigroup, IsGreensClass and
-IsGreensClassOfPartPermSemigroup],
-function(c1, c2)
-  if (IsGreensRClass(c1) and IsGreensRClass(c2)) or 
-   (IsGreensLClass(c1) and IsGreensLClass(c2)) or
-   (IsGreensDClass(c1) and IsGreensDClass(c2)) or
-   (IsGreensHClass(c1) and IsGreensHClass(c2)) then     
-    return c1!.parent=c2!.parent and Representative(c1) < Representative(c2);
-  fi;
-  return false;
-end);
-
 # new for 0.7! - \in - "for an inverse semigroup"
 #############################################################################
 
