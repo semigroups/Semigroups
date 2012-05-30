@@ -26,6 +26,7 @@ DeclareGlobalFunction("PartialPerm");
 
 DeclareOperation("AsPartialPerm", [IsObject]);
 DeclareOperation("AsPartialPermNC", [IsObject]);
+DeclareGlobalFunction("CITRUS_HashFunctionForPP");
 DeclareOperation("DegreeOfPartialPerm", [IsPartialPerm]);
 DeclareGlobalFunction("DenseRangeList");
 DeclareOperation("DomainOfPartialPerm", [IsPartialPerm]);

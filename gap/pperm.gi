@@ -216,6 +216,27 @@ function(f, n)
   return AsTransformationNC(f, n);
 end);
 
+#CCC
+
+# new for 1.0! - CITRUS_HashFunctionForPP - for a partial perm and data
+#############################################################################
+
+InstallGlobalFunction( CITRUS_HashFunctionForPP, 
+function(f, data)
+  local l;
+  l:=f[1]+2*f[2]+6;
+  return HashKeyBag(f,255,0,2*l) mod data + 1;
+end);
+
+# new for 1.0! - ChooseHashFunction - for a partial perm
+#############################################################################
+
+InstallMethod( ChooseHashFunction, "for a partial perm",
+[IsPartialPerm, IsInt],
+function(f, hashlen)
+  return rec( func:=CITRUS_HashFunctionForPP, data:=hashlen);
+end);
+
 #DDD
 
 # new for 0.7! - DegreeOfPartialPerm - "for a partial perm"

@@ -59,16 +59,16 @@ InstallMethod(LambdaDegree, "for an acting semigroup",
 [IsActingSemigroup], s-> Length(LambdaDomain(s)));
 
 InstallMethod(LambdaHT, "for a transformation semi",
-[IsTransformationSemigroup],
+[IsActingSemigroup],
 function(s)
 return HTCreate(LambdaFunc(s)(Generators(s)[1]), rec(forflatplainlists:=true,
      hashlen:=s!.opts.hashlen.S));
 end);
 
-InstallMethod(LambdaHT, "for a partial perm semi",
-[IsPartialPermSemigroup],
+InstallMethod(RhoHT, "for a partial perm semi",
+[IsActingSemigroup],
 function(s)
-return HTCreate(LambdaFunc(s)(Generators(s)[1]), rec(forflatplainlists:=true,
+return HTCreate(RhoFunc(s)(Generators(s)[1]), rec(forflatplainlists:=true,
      hashlen:=s!.opts.hashlen.S));
 end);
 
@@ -94,15 +94,17 @@ end);
 # where the work is done..
 
 InstallMethod(\in, "for acting semi elt and graded lambda orbs",
-[IsActingSemigroupElt, IsGradedLambdaOrbs],
-function(f, o)
+[IsObject, IsGradedLambdaOrbs],
+function(lambda_f, o)
+  local s;
   
   # created from the same type of obj?
-  if not FamilyObj(f)=ElementsFamily(FamilyObj(o)) then 
+  if not FamilyObj(lambda_f)=ElementsFamily(FamilyObj(o)) then 
     return fail;
   fi;
 
-  return InGradedLambdaOrbs(o, f)[1];
+  s:=o!.semigroup;
+  return not HTValue(LambdaHT(s), lambda_f)=fail;
 end);
 
 #CCC
@@ -184,6 +186,101 @@ function(o, j)
   return o!.orbits[j];
 end);
 
+# new for 1.0! - EnumerateROrb - for the ROrb of an acting semigroup
+##############################################################################
+
+InstallGlobalFunction(EnumerateROrb, 
+function(o, limit)
+  local s, act, ht, i, orb, graph, nr, gens, nrgens, genstoapply, graded, rreps, lambda, rho, rank, lens, rhoht, x, pos, new, k, l, lambda_o, m, val, y, schutz, reps, n, p, j;
+
+  s:=o!.semigroup;
+  act:=o.act; 
+  ht:=o.ht; 
+  i:=o.pos; 
+  orb:=o!.orbit;
+  graph:=o!.graph;
+  nr:=Length(orb);
+  gens:=o.gens; 
+  nrgens:=Length(gens); 
+  genstoapply:=[1..nrgens];
+  graded:=GradedLambdaOrbs(s);
+  rreps:=RhoGradedRReps(s);
+  lambda:=LambdaFunc(s);
+  rho:=RhoFunc(s);
+  rank:=LambdaRank(s);
+  lens:=graded!.lens;
+  rhoht:=RhoHT(s);
+
+  while i<=limit and i<=nr do 
+    i:=i+1;
+    for j in genstoapply do 
+      x:=act(orb[i], gens[j]);
+      pos:=HTValue(ht, x);
+      new:=false;
+
+      #check if x is already in ht
+      if pos<>fail then 
+        graph[i][j]:=pos;
+      else      
+        #check if lambda orb of x is already known. 
+        k:=lambda(x);
+        #expand
+        pos:=Position(graded, k);
+        if pos=fail then #new lambda orbit, new R-class
+          new:=true;
+          #expand
+          GradedLambdaOrb(s, x, true);
+          l:=rank(k);
+          rreps[l][lens[l]][1][1]:=x;
+        else #old lambda orbit
+          lambda_o:=graded[pos[1]][pos[2]];
+          #expand by keeping lookups in graded or o?!
+          m:=OrbSCCLookup(lambda_o)[pos[3]];
+          val:=HTValue(rhoht[pos[1]][pos[2]][m], rho(x));
+          y:=x*LambdaOrbMult(lambda_o, m)[pos[3]];
+
+          if val=fail then #new rho value
+            new:=true;
+            val:=Length(rreps[pos[1]][pos[2]][m])+1;
+            rreps[pos[1]][pos[2]][m][val]:=y;
+            HTAdd(rhoht[pos[1]][pos[2]][m], rho(x));
+          else  # old rho value
+            schutz:=LambdaOrbStabChain(graded[pos[1]][pos[2]], m);
+            if schutz=true then 
+              graph[i][j]:=HTValue(ht, rreps[pos[1]][pos[2]][m][val][1]);
+            else
+              reps:=rreps[pos[1]][pos[2]][m][val];
+              n:=0;
+              if schutz=false then 
+                new:=ForAny(reps, x-> x=y);
+              else
+                n:=0; new:=true;
+                while n<Length(reps) and new do 
+                  n:=n+1;
+                  p:=LambdaPerm(s)(reps[n], y);
+                  if SiftedPermutation(schutz, p)=() then 
+                    graph[i][j]:=HTValue(ht, reps[n]);
+                    new:=false;
+                  fi;
+                od;
+              fi;
+            fi;
+          fi;
+        fi;
+      fi;  
+      if new then  
+        nr:=nr+1;
+        orb[nr]:=x;
+        HTAdd(ht, x, nr);
+        graph[n]:=EmptyPlist(nrgens);
+        graph[i][j]:= nr;
+      fi;
+    od;
+  od;
+  
+  return o;
+end);
+
 #GGG
 
 # new for 1.0! - GradedLambdaOrb - "for an acting semigroup and elt"
@@ -191,16 +288,22 @@ end);
 
 InstallGlobalFunction(GradedLambdaOrb,
 function(s, f, opt)
-  local o, onlygrades, onlygradesdata, gradingfunc;
+  local graded, data, gradingfunc, onlygrades, onlygradesdata, o, j, k, l;
 
   if opt then   #global
+    graded:=GradedLambdaOrbs(s);
+    data:=Position(graded, f);
+  
+    if not data=fail then 
+      return graded[data[1]][data[2]];
+    fi;
+    
     gradingfunc := function(o,x) return [LambdaRank(s)(x), x]; end;
     onlygrades:=function(x, data_ht)
       return x[1]=LambdaRank(s)(LambdaFunc(s)(f))
        and HTValue(data_ht, x[2])=fail; 
     end;
     onlygradesdata:=LambdaHT(s);
-    #JDM check if GradedLambdaOrb of f is already in GradedLambdaOrbs?
   else          #local
     gradingfunc:=function(o,x) return LambdaRank(s)(x); end;
     onlygrades:=function(x,data_ht) 
@@ -209,7 +312,7 @@ function(s, f, opt)
     onlygradesdata:=fail;
   fi;  
  
- o:=Orb(s, LambdaFunc(s)(f), LambdaAct(s),
+  o:=Orb(s, LambdaFunc(s)(f), LambdaAct(s),
       rec(
         semigroup:=s,
         forflatplainlists:=true, #JDM probably don't want to assume this..
@@ -223,8 +326,20 @@ function(s, f, opt)
         log:=true));
   
   o!.scc_reps:=[f];
-
   SetIsGradedLambdaOrb(o, true);
+
+  if opt then # store o
+    j:=LambdaRank(s)(LambdaFunc(s)(f));
+    k:=graded!.lens[j]+1;
+    graded[j][k]:=o;
+    Enumerate(o);
+    for l in [1..Length(o)] do
+      HTAdd(onlygradesdata, o[l], [j,k,l]);
+    od;
+    o!.data:=[j,k,1,1,1];
+    graded!.lens[j]:=k;
+  fi;
+
   return o;
 end);
 
@@ -239,7 +354,7 @@ function(s)
   return Objectify(NewType(FamilyObj(s), IsGradedLambdaOrbs), rec(
     semigroup:=s,
     finished:=false,
-    orbits:=EmptyPlist(LambdaDegree(s)),
+    orbits:=List([1..LambdaDegree(s)], x-> []),
     lens:=[1..LambdaDegree(s)]*0));
 end);
 
@@ -267,24 +382,16 @@ function(o, f)
   j:=LambdaRank(s)(x);
   
   if not IsBound(o[j]) then 
-    return [false, j, fail, fail, fail, fail];
+    return [false, j, 1, 1, 1, 1];
   fi;
 
   k:=HTValue(LambdaHT(s), x);
 
   if k=fail then 
-    return [false, j, fail, fail, fail, fail];
+    return [false, j, 1, o!.lens[j]+1, 1, 1];
   fi;
 
-  l:=Position(o[j][k], x);
-  m:=OrbSCCLookup(o[j][k])[l];
-  return [true, j, k, m, OrbSCC(o[j][k])[m][1], l];
-end);
-
-InstallMethod(InOrbOfRClasses, "for an acting semigroup and acting semi elt",
-[IsActingSemigroup, IsActingSemigroupElt],
-function(s, f)
-  
+  return ;
 end);
 
 #LLL
@@ -391,28 +498,21 @@ function(s)
         finished:=false, scc_reps:=[()], semigroup:=s));
 end);
 
-
-
-
 #PPP
 
 # new for 1.0! - Position - "for graded lambda orbs and acting semi elt"
 ##############################################################################
 
 InstallOtherMethod(Position, "for graded lambda orbs and acting semi elt",
-[IsGradedLambdaOrbs, IsActingSemigroupElt, IsZeroCyc],
-function(o, f, n)
-  local out;
+[IsGradedLambdaOrbs, IsObject, IsZeroCyc],
+function(o, lambda_f, n)
+  local s;
   
-  if not FamilyObj(f)=ElementsFamily(FamilyObj(o)) then
+  if not FamilyObj(lambda_f)=ElementsFamily(FamilyObj(o)) then
     return fail;
   fi;
-  
-  out:=InGradedLambdaOrbs(o, f);
-  if not out[1] then 
-    return fail;
-  fi;
-  return out{[2..6]};
+  s:=o!.semigroup; 
+  return HTValue(LambdaHT(s), lambda_f);
 end);
 
 # new for 1.0! - PrintObj - "for graded lambda orbs"
@@ -421,8 +521,49 @@ end);
 InstallMethod(PrintObj, [IsGradedLambdaOrbs],
 function(o)
   Print("<graded lambda orbs: ");
-  Print(o!.orbits);
+  View(o!.orbits);
   Print(" >");
   return;
+end);
+
+#RRR
+
+# new for 1.0! - RhoGradedRReps - "for an acting semigroup"
+##############################################################################
+
+InstallMethod(RhoGradedRReps, "for an acting semigroup",
+[IsActingSemigroup], 
+function(s)
+  return List([1..LambdaDegree(s)], x-> []);
+end);
+
+# new for 1.0! - ROrb - "for an acting semigroup"
+##############################################################################
+
+InstallMethod(ROrb, "for an acting semigroup",
+[IsActingSemigroup],
+function(s)
+  local pt, act;
+  gens:=Generators(s);
+
+  #JDM remove this case split when transformations are improved
+  if IsTransformationSemigroup(s) then 
+    pt:=gens[1]![1];
+    act:=function(x,y) return y{x}; end;
+    forflatplainlists:=true;
+  elif IsPartialPermSemigroup(s) then 
+    pt:=gens[1];
+    act:=function(x,y) return ProdPP(y,x); end;
+    forflatplainlists:=false;
+  else
+    return fail;
+  fi;
+  
+
+
+  return rec(ht:=HTCreate(pt, rec(hashlen:=s!.opts.hashlen.L,
+    forflatplainlists:=forflatplainlists)), 
+     pos:=0, act:=act, orbit:=[pt], graph:=[EmptyPlist(Length(gens))], 
+     gens:=gens, semigroup:=s);
 end);
 

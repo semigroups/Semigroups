@@ -22,9 +22,12 @@ DeclareAttribute("RhoDegree", IsActingSemigroup);
 DeclareAttribute("LambdaFunc", IsActingSemigroup);
 DeclareAttribute("RhoFunc", IsActingSemigroup);
 
-# hash table of all lambda/rho values found so far
-DeclareAttribute("LambdaHT", IsActingSemigroup);
-DeclareAttribute("RhoHT", IsActingSemigroup);
+# hash table of all lambda/rho values found so far, HTValue of LambdaHT points
+# to where the graded orbit is in GradedLambdaOrbs
+DeclareAttribute("LambdaHT", IsActingSemigroup, "mutable");
+# HTValue of RhoHT points to where in RhoGradedRReps are R-class reps with the
+# same lambda orbit and rho value
+DeclareAttribute("RhoHT", IsActingSemigroup, "mutable");
 
 # long orbits <=> LongOrb
 DeclareAttribute("LambdaOrb", IsActingSemigroup, "mutable");
@@ -63,7 +66,13 @@ DeclareAttribute("RhoDomain", IsActingSemigroup);
 
 DeclareProperty("IsActingSemigroupGC", IsGreensClass);
 
-DeclareAttribute("OrbOfRClasses", IsActingSemigroup);
+# the below is an actual orb obj
+DeclareAttribute("ROrb", IsActingSemigroup, "mutable");
+DeclareAttribute("RhoGradedRReps", IsActingSemigroup, "mutable");
+# the above should be a list of lists organized like GradedLambdaOrbs
+# also with a ht storing the Rho grades. 
+
+DeclareGlobalFunction("EnumerateROrb");
 
 InstallTrueMethod(IsActingSemigroup, IsTransformationSemigroup);
 InstallTrueMethod(IsActingSemigroup, IsPartialPermSemigroup);
