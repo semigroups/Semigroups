@@ -1,4 +1,6 @@
 
+# this is all written from the perspective that transformations are
+# well-implemented.
 
 
 # old
@@ -34,7 +36,7 @@ InstallMethod(LambdaDomain, "for a transformation semi",
 [IsPartialPermSemigroup], s-> Points(s));
 
 InstallMethod(LambdaFunc, "for a trans",
-[IsTransformationSemigroup], x-> SSortedList);
+[IsTransformationSemigroup], x-> ImageSetOfTransformation);
 
 if IsBound(RanSetPP) then
   InstallMethod(LambdaFunc, "for a partial perm",
@@ -61,7 +63,7 @@ InstallMethod(LambdaDegree, "for an acting semigroup",
 InstallMethod(LambdaHT, "for an acting semi",
 [IsActingSemigroup],
 function(s)
-return HTCreate(LambdaFunc(s)(SemigroupData(s).gens[1]), 
+return HTCreate(LambdaFunc(s)(GeneratorsOfSemigroup(s)[1]), 
 rec(forflatplainlists:=true,
      hashlen:=s!.opts.hashlen.S));
 end);
@@ -70,7 +72,7 @@ InstallMethod(RhoHT, "for an acting semi",
 [IsActingSemigroup],
 function(s)
   local x;
-  x:=SemigroupData(s).gens[1]; 
+  x:=GeneratorsOfSemigroup(s)[1]; 
   return HTCreate(Concatenation(LambdaFunc(s)(x), RhoFunc(s)(x)),
   rec(forflatplainlists:=true,
      hashlen:=s!.opts.hashlen.S));
@@ -195,17 +197,15 @@ end);
 
 InstallGlobalFunction(EnumerateSemigroupData, 
 function(s, limit)
-  local o, data, act, ht, i, orb, graph, nr, gens, nrgens, genstoapply, graded, reps, lambda, rho, rank, lens, rhoht, nrrepsets, x, pos, lam_x, l, lambda_o, m, val, y, new, schutz, subreps, n, p, j, z;
+  local data, ht, i, orb, graph, nr, gens, nrgens, genstoapply, graded, reps, lambda, rho, rank, lens, rhoht, nrrepsets, x, pos, lam_x, o, m, y, scc1, z, val, schutz, n, p, j, old;
 
   data:=SemigroupData(s);
-  left_act:=data.left_act; 
-  right_act:=data.right_act;
-  ht:=data.ht; 
+  ht:=data.ht;
   i:=data.pos; 
   orb:=data.orbit;
   graph:=data.graph;
   nr:=Length(orb);
-  gens:=data.gens; 
+  gens:=GeneratorsOfSemigroup(s); 
   nrgens:=Length(gens); 
   genstoapply:=[1..nrgens];
   graded:=GradedLambdaOrbs(s);
@@ -213,14 +213,14 @@ function(s, limit)
   lambda:=LambdaFunc(s);
   rho:=RhoFunc(s);
   rank:=LambdaRank(s);
-  lens:=graded!.lens;
+  lens:=data.lens;
   rhoht:=RhoHT(s);
   nrrepsets:=data.nrrepsets;
 
-  while i<=limit and i<=nr do 
+  while i<=limit and i<nr do 
     i:=i+1;
     for j in genstoapply do 
-      x:=left_act(orb[i][4], gens[j]);
+      x:=gens[j]*orb[i][4];
       #check if x is already in ht
       pos:=HTValue(ht, x);
       if pos<>fail then 
@@ -235,7 +235,8 @@ function(s, limit)
         #expand
         o:=GradedLambdaOrb(s, x, true);
         nrrepsets:=nrrepsets+1;
-        reps[nrrepsets]:=[x];
+        reps[nrrepsets]:=[x]; 
+        lens[nrrepsets]:=1;
         HTAdd(rhoht, Concatenation(lam_x, rho(x)), nrrepsets);
         x:=[s,[1,1,1],o,x];
       else #old lambda orbit
@@ -243,37 +244,56 @@ function(s, limit)
         #expand by keeping lookups in graded or o?!
         m:=OrbSCCLookup(o)[pos[3]];
         #use Create... instead
-        y:=right_act(x, LambdaOrbMults(o, m)[pos[3]]);
-        val:=HTValue(rhoht, Concatenation(o[o!.scc[m][1]],rho(y)));
+        y:=x*LambdaOrbMults(o, m)[pos[3]];
+# maybe check HTValue(ht, y)??
+        scc1:=o!.scc[m][1];
+        z:=Concatenation(o[o!.scc[m][1]],rho(y));
+        val:=HTValue(rhoht, z);
 
         if val=fail then #new rho value
-          new:=true;
-          val:=Length(reps[pos[1]][pos[2]][m])+1;
-          reps[pos[1]][pos[2]][m][val]:=y;
-          HTAdd(rhoht[pos[1]][pos[2]][m], rho(x));
+          nrrepsets:=nrrepsets+1;
+          reps[nrrepsets]:=[y];
+          lens[nrrepsets]:=1;
+          HTAdd(rhoht, z, nrrepsets);
+          x:=[s, [m,scc1,pos[3]],o,y];
         else  # old rho value
           #use Create... instead
           schutz:=LambdaOrbStabChain(graded[pos[1]][pos[2]], m);
           if schutz=true then 
-            graph[i][j]:=HTValue(ht, reps[pos[1]][pos[2]][m][val][1]);
+            graph[i][j]:=HTValue(ht, reps[val][1]);
+            continue;
           else
-            subreps:=reps[pos[1]][pos[2]][m][val];
             if schutz=false then 
-              for z in reps do 
-                if z=y then 
-                  continue;
+              old:=false;
+              for n in [1..lens[val]] do 
+                if reps[val][n]=y then 
+                  old:=true;
+                  graph[i][j]:=HTValue(ht, reps[val][n]);
+                  break;
                 fi;
               od;
+              if old then 
+                continue;
+              fi;
+              reps[val][n+1]:=y;
+              lens[val]:=lens[val]+1;
+              x:=[s,[m,scc1,pos[3]],o,y];
             else
-              n:=0; 
-              while n<Length(reps) and new do 
-                n:=n+1;
-                p:=LambdaPerm(s)(reps[n], y);
+              old:=false; 
+              for n in [1..lens[val]] do 
+                p:=LambdaPerm(s)(reps[val][n], y);
                 if SiftedPermutation(schutz, p)=() then 
-                  graph[i][j]:=HTValue(ht, reps[n]);
-                  continue;
+                  old:=true;
+                  graph[i][j]:=HTValue(ht, reps[val][n]);
+                  break;
                 fi;
               od;
+              if old then 
+                continue;
+              fi;
+              reps[val][n+1]:=y;
+              lens[val]:=lens[val]+1;
+              x:=[s,[m,scc1,pos[3]],o,y];
             fi;
           fi;
         fi;
@@ -297,13 +317,9 @@ InstallGlobalFunction(GradedLambdaOrb,
 function(s, f, opt)
   local graded, data, gradingfunc, onlygrades, onlygradesdata, o, j, k, l;
 
-  if IsTransformation(f) then 
-    f:=f![1];
-  fi;
-
   if opt then   #global
     graded:=GradedLambdaOrbs(s);
-    data:=Position(graded, f);
+    data:=Position(graded, LambdaFunc(s)(f));
   
     if not data=fail then 
       return graded[data[1]][data[2]];
@@ -545,41 +561,21 @@ end);
 InstallMethod(SemigroupData, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
-  local gens, pt, left_act, right_act, forflatplainlists, data, pos, lam_pt, o,
-  m, scc1;
+  local gens, pt, data, pos, lam_pt, o, m, scc1;
   
   gens:=GeneratorsOfSemigroup(s);
 
-  #JDM remove this case split when transformations are improved
   if IsTransformationSemigroup(s) then 
-    gens:=List(gens, x-> x![1]);
-    pt:=[1..Length(gens[1])]*1;
-    left_act:=function(x,y) return x{y}; end;
-    right_act:=function(x,y) return OnTuples(x,y); end;
-    forflatplainlists:=true;
+    pt:=One(gens[1]);
   elif IsPartialPermSemigroup(s) then 
     pt:=PartialPermNC(Points(gens), Points(gens));
-    left_act:=function(x,y) return ProdPP(y,x); end;
-    right_act:=function(x,y) return ProdPP(x,y); end;
-    forflatplainlists:=false;
   else
     return fail;
   fi;
 
-  data:=rec(ht:=HTCreate(pt, rec(hashlen:=s!.opts.hashlen.L,
-    forflatplainlists:=forflatplainlists)), 
-     pos:=0, left_act:=left_act, right_act:=right_act,
-     graph:=[EmptyPlist(Length(gens))], 
-     reps:=[], gens:=gens, nrrepsets:=0, orbit:=[[,,,pt]]);
-  #remove gens when p trans are properly implemented.
-
-  #the following 6 lines can be removed when gens weirdness is resolved
-  SetLambdaHT(s, HTCreate(LambdaFunc(s)(pt),
-  rec(forflatplainlists:=true,
-       hashlen:=s!.opts.hashlen.S)));
-  SetRhoHT(s, HTCreate(Concatenation(LambdaFunc(s)(pt), RhoFunc(s)(pt)),
-    rec(forflatplainlists:=true,
-         hashlen:=s!.opts.hashlen.S)));
+  data:=rec(ht:=HTCreate(pt, rec(hashlen:=s!.opts.hashlen.L)), 
+     pos:=0, graph:=[EmptyPlist(Length(gens))], 
+     reps:=[], nrrepsets:=0, orbit:=[[,,,pt]], lens:=[]);
 
   if pt in gens then #install its orbit etc.. #make this InitSemigroupData
     lam_pt:=LambdaFunc(s)(pt);
