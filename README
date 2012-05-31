@@ -106,9 +106,14 @@ installation of Citrus:
 
      Note that Orb and Citrus both perform better if Orb is compiled.
 
+ *   download and install the IO package version 4.1 or higher. For more
+     details go to:
+
+  http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html
+
  *   if you want to be able to calculate the Munn semigroup of a semilattice,
-     then download and fully install the Grape package version 4.5 or higher.
-     For more details go to:
+     then download and fully install (i.e. compile it) the Grape package
+     version 4.5 or higher.  For more details go to:
 
      http://www.maths.qmul.ac.uk/~leonard/grape/
 

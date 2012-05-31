@@ -49,15 +49,15 @@
       Func="WriteCitrus"/>. <P/>
 
     &noindent; The &Citrus; package is written in C and &GAP; code and 
-    requires the <URL Text="Orb">
-    http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
-    </URL> package. The &Orb; package is used to efficiently compute orbits in
-    semigroups of transformations and partial permutations, and these methods
-    underpin many of the features of &Citrus;. The &Grape; package is used in
-    the function <Ref Oper="MunnSemigroup"/> but nowhere else in &Citrus;. If
-    &Grape; is not fully installed, then &Citrus; can be used as normal with the
-    except that the operation <Ref Oper="MunnSemigroup"/> does not work.
-    <P/>
+    requires the &Orb; and &IO; packages. The &Orb; package is used to
+    efficiently compute orbits in semigroups of transformations and partial
+    permutations, and these methods underpin many of the features of &Citrus;.
+    The &IO; package is used to read and write transformations and partial
+    permutations to a file.
+    The &Grape; package is used in the function <Ref Oper="MunnSemigroup"/> but
+    nowhere else in &Citrus;. If &Grape; is not fully installed, then &Citrus;
+    can be used as normal with the except that the operation <Ref
+      Oper="MunnSemigroup"/> does not work.  <P/>
     
     &Citrus; is still under development, and so some features may not function
     as expected. At the present time, I do not know of any errors or serious
@@ -87,13 +87,20 @@
 
     <List>
     
-      <Item> download and install the <Package>Orb</Package> package version 
+      <Item> download and install the &Orb; package version 
       &ORBVERS; or higher. For more details go to:
       &vspace;<P/>&noindent; 
       <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
       </URL><P/>
       &noindent; Note that &Orb; and &Citrus; both perform better if &Orb;
       is compiled. 
+      </Item>
+
+     <Item> download and install the &IO; package version                 
+      &IOVERS; or higher. For more details go to:
+      &vspace;<P/>&noindent;
+      <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/ io.html
+      </URL>
       </Item>
 
       <Item>  if you want to be able to calculate the Munn semigroup of a
