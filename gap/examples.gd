@@ -15,7 +15,7 @@ DeclareProperty("IsFullMatrixSemigroup", IsSemigroup);
 DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
 DeclareProperty("IsMatrixSemigroup", IsSemigroup);
 DeclareOperation("MunnSemigroup", [IsSemigroup]);
-DeclareOperation("O", [IsPosInt]);
+DeclareOperation("OrderEndomorphisms", [IsPosInt]);
 DeclareOperation("POI", [IsPosInt]);
 DeclareOperation("POPI", [IsPosInt]);
 DeclareOperation("PowerSemigroup", [IsGroup]);
