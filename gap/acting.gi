@@ -36,7 +36,7 @@ InstallMethod(LambdaDomain, "for a transformation semi",
 [IsPartialPermSemigroup], s-> Points(s));
 
 InstallMethod(LambdaFunc, "for a trans",
-[IsTransformationSemigroup], x-> ImageSetOfTransformation);
+[IsTransformationSemigroup], x-> y-> SSortedList(y![1]));
 
 if IsBound(RanSetPP) then
   InstallMethod(LambdaFunc, "for a partial perm",
@@ -237,7 +237,6 @@ function(s, limit)
         graph[i][j]:=pos;
         continue; 
       fi;
-      
       #check if lambda orb of x is already known
       lamx:=lambda(x);
       pos:=HTValue(lambdaht, lamx);
@@ -305,10 +304,9 @@ function(s, limit)
         #put lambda x in the first position in its scc
         y:=x*mults[pos[3]];
 
-        #maybe check HTValue(ht, y)??
-
         #check if we've seen rho(y) before
-        rhoy:=Concatenation(o[o!.scc[m][1]],rho(y));
+        rhoy:=ShallowCopy(o[scc[1]]);
+        Append(rhoy, rho(y));
         val:=HTValue(rhoht, rhoy);
 
         # this is what we keep if it is new
@@ -334,7 +332,7 @@ function(s, limit)
 
           #check membership in schutzstab
           if schutzstab[m]=true then 
-            graph[i][j]:=HTValue(ht, reps[val][1]); #lookup?
+            #graph[i][j]:=HTValue(ht, reps[val][1]); #lookup?
             continue;
           else
             if schutzstab[m]=false then 
@@ -342,7 +340,7 @@ function(s, limit)
               for n in [1..lens[val]] do 
                 if reps[val][n]=y then 
                   old:=true;
-                  graph[i][j]:=HTValue(ht, reps[val][n]); #lookup?
+                  #graph[i][j]:=HTValue(ht, reps[val][n]); #lookup?
                   break;
                 fi;
               od;
@@ -355,7 +353,7 @@ function(s, limit)
                 p:=lambdaperm(reps[val][n], y);
                 if SiftedPermutation(schutzstab[m], p)=() then 
                   old:=true;
-                  graph[i][j]:=HTValue(ht, reps[val][n]); #lookup?
+                  #graph[i][j]:=HTValue(ht, reps[val][n]); #lookup?
                   break;
                 fi;
               od;
