@@ -216,65 +216,66 @@ function(o, limit)
     for j in genstoapply do 
       x:=act(orb[i], gens[j]);
       pos:=HTValue(ht, x);
-      new:=false;
 
       #check if x is already in ht
       if pos<>fail then 
         graph[i][j]:=pos;
-      else      
-        #check if lambda orb of x is already known. 
-        k:=lambda(x);
+        continue;
+      fi;
+      #check if lambda orb of x is already known. 
+      k:=lambda(x);
+      #expand
+      pos:=Position(graded, k);
+      if pos=fail then #new lambda orbit, new R-class
         #expand
-        pos:=Position(graded, k);
-        if pos=fail then #new lambda orbit, new R-class
-          new:=true;
-          #expand
-          GradedLambdaOrb(s, x, true);
-          l:=rank(k);
-          rreps[l][lens[l]][1][1]:=x;
-        else #old lambda orbit
-          lambda_o:=graded[pos[1]][pos[2]];
-          #expand by keeping lookups in graded or o?!
-          m:=OrbSCCLookup(lambda_o)[pos[3]];
-          val:=HTValue(rhoht[pos[1]][pos[2]][m], rho(x));
-          y:=x*LambdaOrbMult(lambda_o, m)[pos[3]];
+        GradedLambdaOrb(s, x, true);
+        l:=rank(k);
+        rreps[l][lens[l]][1][1]:=x;
+      else #old lambda orbit
+        lambda_o:=graded[pos[1]][pos[2]];
+        #expand by keeping lookups in graded or o?!
+        m:=OrbSCCLookup(lambda_o)[pos[3]];
+        val:=HTValue(rhoht[pos[1]][pos[2]][m], rho(x));
+        #use Create... instead
+        y:=x*LambdaOrbMult(lambda_o, m)[pos[3]];
 
-          if val=fail then #new rho value
-            new:=true;
-            val:=Length(rreps[pos[1]][pos[2]][m])+1;
-            rreps[pos[1]][pos[2]][m][val]:=y;
-            HTAdd(rhoht[pos[1]][pos[2]][m], rho(x));
-          else  # old rho value
-            schutz:=LambdaOrbStabChain(graded[pos[1]][pos[2]], m);
-            if schutz=true then 
-              graph[i][j]:=HTValue(ht, rreps[pos[1]][pos[2]][m][val][1]);
+        if val=fail then #new rho value
+          new:=true;
+          val:=Length(rreps[pos[1]][pos[2]][m])+1;
+          rreps[pos[1]][pos[2]][m][val]:=y;
+          HTAdd(rhoht[pos[1]][pos[2]][m], rho(x));
+        else  # old rho value
+          #use Create... instead
+          schutz:=LambdaOrbStabChain(graded[pos[1]][pos[2]], m);
+          if schutz=true then 
+            graph[i][j]:=HTValue(ht, rreps[pos[1]][pos[2]][m][val][1]);
+          else
+            reps:=rreps[pos[1]][pos[2]][m][val];
+            if schutz=false then 
+              for z in reps do 
+                if z=y then 
+                  continue;
+                fi;
+              od;
             else
-              reps:=rreps[pos[1]][pos[2]][m][val];
-              n:=0;
-              if schutz=false then 
-                new:=ForAny(reps, x-> x=y);
-              else
-                n:=0; new:=true;
-                while n<Length(reps) and new do 
-                  n:=n+1;
-                  p:=LambdaPerm(s)(reps[n], y);
-                  if SiftedPermutation(schutz, p)=() then 
-                    graph[i][j]:=HTValue(ht, reps[n]);
-                    new:=false;
-                  fi;
-                od;
-              fi;
+              n:=0; 
+              while n<Length(reps) and new do 
+                n:=n+1;
+                p:=LambdaPerm(s)(reps[n], y);
+                if SiftedPermutation(schutz, p)=() then 
+                  graph[i][j]:=HTValue(ht, reps[n]);
+                  continue;
+                fi;
+              od;
             fi;
           fi;
         fi;
-      fi;  
-      if new then  
-        nr:=nr+1;
-        orb[nr]:=x;
-        HTAdd(ht, x, nr);
-        graph[n]:=EmptyPlist(nrgens);
-        graph[i][j]:= nr;
       fi;
+      nr:=nr+1;
+      orb[nr]:=x;
+      HTAdd(ht, x, nr);
+      graph[n]:=EmptyPlist(nrgens);
+      graph[i][j]:= nr;
     od;
   od;
   
