@@ -197,7 +197,7 @@ end);
 
 InstallGlobalFunction(EnumerateSemigroupData, 
 function(s, limit)
-  local data, ht, i, orb, graph, nr, gens, nrgens, genstoapply, graded, reps, lambda, rho, rank, lens, rhoht, nrrepsets, x, pos, lam_x, o, m, y, scc1, z, val, schutz, n, p, j, old;
+  local data, ht, i, orb, graph, nr, gens, nrgens, genstoapply, graded, gradedlens, reps, lambda, rho, lens, lambdaht, lambdaact, rhoht, nrrepsets, lambdaperm, lambdamult, rank, hashlen, gradingfunc, x, pos, lamx, rankx, o, scc, r, lookup, m, mults, y, rhoy, val, schutzstab, old, p, j, n;
 
   data:=SemigroupData(s);
   ht:=data.ht;
@@ -209,92 +209,162 @@ function(s, limit)
   nrgens:=Length(gens); 
   genstoapply:=[1..nrgens];
   graded:=GradedLambdaOrbs(s);
+  gradedlens:=graded!.lens;
   reps:=data.reps;
   lambda:=LambdaFunc(s);
   rho:=RhoFunc(s);
-  rank:=LambdaRank(s);
   lens:=data.lens;
+  lambdaht:=LambdaHT(s);
+  lambdaact:=LambdaAct(s);  
   rhoht:=RhoHT(s);
   nrrepsets:=data.nrrepsets;
+  lambdaperm:=LambdaPerm(s);
+  lambdamult:=LambdaMult(s);
+  rank:=LambdaRank(s);
+     
+  hashlen:=CitrusOptionsRec.hashlen.M;  
+  gradingfunc := function(o,x) return [rank(x), x]; end;
 
   while i<=limit and i<nr do 
     i:=i+1;
+    
     for j in genstoapply do 
       x:=gens[j]*orb[i][4];
-      #check if x is already in ht
+      
+      #check if x is already an R-class rep
       pos:=HTValue(ht, x);
       if pos<>fail then 
         graph[i][j]:=pos;
         continue; 
       fi;
+      
       #check if lambda orb of x is already known
-      lam_x:=lambda(x);
-      #expand
-      pos:=Position(graded, lam_x);
+      lamx:=lambda(x);
+      pos:=HTValue(lambdaht, lamx);
+      
       if pos=fail then #new lambda orbit, new R-class
-        #expand
-        o:=GradedLambdaOrb(s, x, true);
+        
+        #setup graded lambda orb
+        rankx:=rank(lamx);
+        gradedlens[rankx]:=gradedlens[rankx]+1;
+        
+        o:=Orb(gens, lamx, lambdaact,
+          rec(
+            semigroup:=s,
+            forflatplainlists:=true,
+            hashlen:=hashlen,
+            schreier:=true,
+            gradingfunc:=gradingfunc,
+            orbitgraph:=true,
+            onlygrades:=function(y, onlygradesdata)
+              return y[1]=rankx and 
+                HTValue(onlygradesdata, y[2])=fail;
+              end,
+            onlygradesdata:=lambdaht,
+            storenumbers:=true,
+            log:=true, 
+            scc_reps:=[x], 
+            data:=[rankx, gradedlens[rankx]]));
+        
+        SetIsGradedLambdaOrb(o, true);
+
+        #store graded lambda orb
+        graded[rankx][gradedlens[rankx]]:=o;
+        
+        #install points in lambdaht
+        Enumerate(o, infinity);
+        for y in [1..Length(o)] do 
+          HTAdd(lambdaht, o[y], [rankx, gradedlens[rankx], y]);
+        od;
+
+        #     
         nrrepsets:=nrrepsets+1;
         reps[nrrepsets]:=[x]; 
         lens[nrrepsets]:=1;
-        HTAdd(rhoht, Concatenation(lam_x, rho(x)), nrrepsets);
+        HTAdd(rhoht, Concatenation(lamx, rho(x)), nrrepsets);
         x:=[s,[1,1,1],o,x];
+
       else #old lambda orbit
         o:=graded[pos[1]][pos[2]];
-        #expand by keeping lookups in graded or o?!
-        m:=OrbSCCLookup(o)[pos[3]];
-        #use Create... instead
-        y:=x*LambdaOrbMults(o, m)[pos[3]];
-# maybe check HTValue(ht, y)??
-        scc1:=o!.scc[m][1];
-        z:=Concatenation(o[o!.scc[m][1]],rho(y));
-        val:=HTValue(rhoht, z);
+        
+        #find the scc
+        scc:=OrbSCC(o); r:=Length(scc);
+        lookup:=o!.scc_lookup;
+        m:=lookup[pos[3]];
+        scc:=scc[m]; 
 
-        if val=fail then #new rho value
+        #get the multipliers
+        if not IsBound(o!.mults) then 
+          o!.mults:=EmptyPlist(Length(o));
+        fi;
+        mults:=o!.mults;
+        if not IsBound(mults[scc[1]]) then 
+          CreateLambdaOrbMults(lambdamult, gens, o, m, scc);
+        fi;
+        
+        #put lambda x in the first position in its scc
+        y:=x*mults[pos[3]];
+
+        #maybe check HTValue(ht, y)??
+
+        #check if we've seen rho(y) before
+        rhoy:=Concatenation(o[o!.scc[m][1]],rho(y));
+        val:=HTValue(rhoht, rhoy);
+
+        # this is what we keep if it is new
+        x:=[s, [m, scc[1], pos[3]], o, y];
+
+        if val=fail then  #new rho value
           nrrepsets:=nrrepsets+1;
+          HTAdd(rhoht, rhoy, nrrepsets);
           reps[nrrepsets]:=[y];
           lens[nrrepsets]:=1;
-          HTAdd(rhoht, z, nrrepsets);
-          x:=[s, [m,scc1,pos[3]],o,y];
-        else  # old rho value
-          #use Create... instead
-          schutz:=LambdaOrbStabChain(graded[pos[1]][pos[2]], m);
-          if schutz=true then 
-            graph[i][j]:=HTValue(ht, reps[val][1]);
+        else              # old rho value
+          
+          #get schutz gp stab chain
+          if not IsBound(o!.schutzstab) then 
+            o!.schutzstab:=EmptyPlist(r);
+            o!.schutz:=EmptyPlist(r);
+          fi;
+          schutzstab:=o!.schutzstab;
+          if not IsBound(schutzstab[m]) then 
+            CreateLambdaOrbGS(o, m, scc, gens, nrgens, reps[val][1], lookup,
+             OrbitGraph(o), mults, o!.schutz, schutzstab, lambdaperm);
+          fi;
+
+          #check membership in schutzstab
+          if schutzstab[m]=true then 
+            graph[i][j]:=HTValue(ht, reps[val][1]); #lookup?
             continue;
           else
-            if schutz=false then 
+            if schutzstab[m]=false then 
               old:=false;
               for n in [1..lens[val]] do 
                 if reps[val][n]=y then 
                   old:=true;
-                  graph[i][j]:=HTValue(ht, reps[val][n]);
+                  graph[i][j]:=HTValue(ht, reps[val][n]); #lookup?
                   break;
                 fi;
               od;
               if old then 
                 continue;
               fi;
-              reps[val][n+1]:=y;
-              lens[val]:=lens[val]+1;
-              x:=[s,[m,scc1,pos[3]],o,y];
             else
               old:=false; 
               for n in [1..lens[val]] do 
-                p:=LambdaPerm(s)(reps[val][n], y);
-                if SiftedPermutation(schutz, p)=() then 
+                p:=lambdaperm(reps[val][n], y);
+                if SiftedPermutation(schutzstab[m], p)=() then 
                   old:=true;
-                  graph[i][j]:=HTValue(ht, reps[val][n]);
+                  graph[i][j]:=HTValue(ht, reps[val][n]); #lookup?
                   break;
                 fi;
               od;
               if old then 
                 continue;
               fi;
-              reps[val][n+1]:=y;
-              lens[val]:=lens[val]+1;
-              x:=[s,[m,scc1,pos[3]],o,y];
             fi;
+            reps[val][n+1]:=y;
+            lens[val]:=lens[val]+1;
           fi;
         fi;
       fi;
@@ -597,6 +667,7 @@ function(s)
  
     HTAdd(data.ht, pt, 1);
     data.orbit:=[[s, pos, o, pt]];
+    data.lens[1]:=1;
     data.nrrepsets:=data.nrrepsets+1;
     data.reps[data.nrrepsets]:=[pt];
     HTAdd(RhoHT(s), Concatenation(lam_pt, RhoFunc(s)(pt)), data.nrrepsets);
