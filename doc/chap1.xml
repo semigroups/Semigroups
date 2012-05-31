@@ -129,7 +129,7 @@
       <C>&ARCHIVENAME;</C> into the <C>pkg</C> directory.  
       </Item>
 
-      <Item> To use the functions in &Citrus; for partial permutations and
+      <Item> to use the functions in &Citrus; for partial permutations and
         inverse semigroups, you must compile the C part of the package 
         (in the "pkg" directory) by doing:
         <Listing>
