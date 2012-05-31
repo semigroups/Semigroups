@@ -1,25 +1,43 @@
+#############################################################################
+###
+##W  acting.gi
+##Y  Copyright (C) 2011-12                                James D. Mitchell
+###
+###  Licensing information can be found in the README file of this package.
+###
+##############################################################################
+###
 
-# this is all written from the perspective that transformations are
-# well-implemented.
 
+##############################################################################
+# Notes                                                                      #
+##############################################################################
+
+# - this is all written from the perspective that transformations are
+#   well-implemented.
+
+##############################################################################
 
 # old
 
-#JDM this should be mod to remove ImageOrbit
 InstallOtherMethod(LambdaOrb, "for a D-class of a trans. semi",
 [IsGreensDClass and IsGreensClassOfTransSemigp], ImageOrbit);
 
 InstallOtherMethod(LambdaOrb, "for a D-class of a part perm semi",
 [IsGreensDClass and IsGreensClassOfPartPermSemigroup], d-> d!.o);
 
-#JDM this should be mod
 InstallOtherMethod(RhoOrb, "for a D-class of a trans. semi",
 [IsGreensDClass and IsGreensClassOfTransSemigp], KernelOrbit);
 
 InstallOtherMethod(RhoOrb, "for a D-class of a part perm semi",
 [IsGreensDClass and IsGreensClassOfPartPermSemigroup], d-> d!.o);
 
-# setup
+###############################################################################
+# Setup - install the basic things required for specific acting semigroups    #
+###############################################################################
+
+# new for 1.0 - LambdaAct
+###############################################################################
 
 InstallMethod(LambdaAct, "for a transformation semi",
 [IsTransformationSemigroup], x-> OnSets);
@@ -29,36 +47,23 @@ if IsBound(OnIntegerSetsWithPP) then
   [IsPartialPermSemigroup], x-> OnIntegerSetsWithPP);
 fi;
 
-InstallMethod(LambdaDomain, "for a transformation semi",
-[IsTransformationSemigroup], s-> [1..Degree(s)]*1);
-
-InstallMethod(LambdaDomain, "for a transformation semi",
-[IsPartialPermSemigroup], s-> Points(s));
-
-InstallMethod(LambdaFunc, "for a trans",
-[IsTransformationSemigroup], x-> y-> SSortedList(y![1]));
-
-if IsBound(RanSetPP) then
-  InstallMethod(LambdaFunc, "for a partial perm",
-    [IsPartialPermSemigroup], x-> RanSetPP);
-fi;
-
-InstallMethod(RhoFunc, "for a trans",
-[IsTransformationSemigroup], x-> CanonicalTransSameKernel);
-
-if IsBound(DomPP) then
-  InstallMethod(RhoFunc, "for a partial perm",
-   [IsPartialPermSemigroup], x-> DomPP);
-fi;
-
-InstallMethod(LambdaRank, "for a transformation semigroup", 
-[IsTransformationSemigroup], x-> Length);
-
-InstallMethod(LambdaRank, "for a semigroup of partial perms", 
-[IsPartialPermSemigroup], x-> Length);
+# new for 1.0! - LambdaDegree
+###############################################################################
 
 InstallMethod(LambdaDegree, "for an acting semigroup", 
 [IsActingSemigroup], s-> Length(LambdaDomain(s)));
+
+# new for 1.0! - LambdaDomain
+###############################################################################
+
+InstallMethod(LambdaDomain, "for a transformation semi",
+[IsTransformationSemigroup], s-> [1..Degree(s)]*1);
+
+InstallMethod(LambdaDomain, "for a partial perm semi",
+[IsPartialPermSemigroup], s-> Points(s));
+
+# new for 1.0! - LambdaHT
+###############################################################################
 
 InstallMethod(LambdaHT, "for an acting semi",
 [IsActingSemigroup],
@@ -68,24 +73,19 @@ rec(forflatplainlists:=true,
      hashlen:=s!.opts.hashlen.S));
 end);
 
-InstallMethod(RhoHT, "for an acting semi",
-[IsActingSemigroup],
-function(s)
-  local x;
-  x:=GeneratorsOfSemigroup(s)[1]; 
-  return HTCreate(Concatenation(LambdaFunc(s)(x), RhoFunc(s)(x)),
-  rec(forflatplainlists:=true,
-     hashlen:=s!.opts.hashlen.S));
-end);
+# new for 1.0! - LambdaFunc
+###############################################################################
 
-InstallMethod(LambdaPerm, "for a transformation semi",
-[IsTransformationSemigroup], s-> PermLeftQuoTransformationNC);
+InstallMethod(LambdaFunc, "for a trans semi",
+[IsTransformationSemigroup], x-> y-> SSortedList(y![1]));
 
-InstallMethod(LambdaPerm, "for a partial perm semi",
-[IsPartialPermSemigroup], s-> function(f,g)
-  local h;
-  h:=f^-1*g;
-  return MappingPermListList(DomPP(h), RanPP(h)); end);
+if IsBound(RanSetPP) then
+  InstallMethod(LambdaFunc, "for a partial perm",
+    [IsPartialPermSemigroup], x-> RanSetPP);
+fi;
+
+# new for 1.0! - LambdaMult
+###############################################################################
 
 InstallMethod(LambdaMult, "for a transformation semi",
 [IsTransformationSemigroup], s-> function(pt, f)
@@ -97,48 +97,75 @@ InstallMethod(LambdaMult, "for a partial perm semi",
   return MappingPermListList(OnIntegerSetsWithPP(pt, f), pt);
 end);
 
-# where the work is done..
+# new for 1.0! - LambdaPerm
+###############################################################################
 
-InstallMethod(\in, "for acting semi elt and graded lambda orbs",
+InstallMethod(LambdaPerm, "for a transformation semi",
+[IsTransformationSemigroup], s-> PermLeftQuoTransformationNC);
+
+InstallMethod(LambdaPerm, "for a partial perm semi",
+[IsPartialPermSemigroup], s-> function(f,g)
+  local h;
+  h:=f^-1*g;
+  return MappingPermListList(DomPP(h), RanPP(h)); 
+end);
+
+# new for 1.0! - LambdaRank
+###############################################################################
+
+InstallMethod(LambdaRank, "for a transformation semigroup", 
+[IsTransformationSemigroup], x-> Length);
+
+InstallMethod(LambdaRank, "for a semigroup of partial perms", 
+[IsPartialPermSemigroup], x-> Length);
+
+# new for 1.0! - RhoFunc
+###############################################################################
+
+InstallMethod(RhoFunc, "for a trans semi",
+[IsTransformationSemigroup], x-> CanonicalTransSameKernel);
+
+if IsBound(DomPP) then
+  InstallMethod(RhoFunc, "for a partial perm semi",
+   [IsPartialPermSemigroup], x-> DomPP);
+fi;
+
+# new for 1.0! - RhoHT
+###############################################################################
+
+InstallMethod(RhoHT, "for an acting semi",
+[IsActingSemigroup],
+function(s)
+  local x;
+  x:=GeneratorsOfSemigroup(s)[1]; 
+  return HTCreate(Concatenation(LambdaFunc(s)(x), RhoFunc(s)(x)),
+  rec(forflatplainlists:=true,
+     hashlen:=s!.opts.hashlen.S));
+end);
+
+############################################################################### 
+###############################################################################
+
+# new for 1.0! - \in - for lambda value of acting semi elt & graded lamda orbs
+##############################################################################
+
+InstallMethod(\in, "for lambda value of acting semi elt and graded lambda orbs",
 [IsObject, IsGradedLambdaOrbs],
-function(lambda_f, o)
-  local s;
-  
-  # created from the same type of obj?
-  #if not FamilyObj(lambda_f)=ElementsFamily(FamilyObj(o)) then 
-  #  return fail;
-  #fi;
-
-  s:=o!.semigroup;
-  return not HTValue(LambdaHT(s), lambda_f)=fail;
+function(lamf, o)
+  return not HTValue(LambdaHT(ParentAttr(o)), lamf)=fail;
 end);
 
 #CCC
 
-# new for 1.0! - CreateLambdaOrbMults -
-##############################################################################
-# from o[i] to o[scc[m][1]]
-
-# lambda_perm = lambda perm of s, gens = generators of semigroup, o = lambda
-# orb, m = scc index, scc = the actual scc, f = scc rep.
-
-InstallGlobalFunction(CreateLambdaOrbMults, 
-function(lambda_mult, gens, o, m, scc)
-  local mults, f, i;
-
-  mults:=o!.mults;
-
-  for i in scc do 
-    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, i));
-    mults[i]:=lambda_mult(o[scc[1]], f);
-  od;    
-  o!.mults:=mults;
-  return;
-end);
-
 # new for 1.0! - CreateLambdaOrbGS -
 ##############################################################################
-# 
+# Usage: o = lambda orb, m = scc index, scc = a strongly connected component,
+# gens = generators of semigroup, nrgens = the number of gens, 
+# rep = LambdaOrbRep(o, m), lookup = OrbSCCLookup(o)[m], 
+# orbitgraph = OrbitGraph(o), mults = LambdaOrbMults(o, m), 
+# schutz = 
+
+# I'm not sure this is worth it...
 
 InstallGlobalFunction(CreateLambdaOrbGS, 
 function(o, m, scc, gens, nrgens, rep, lookup, orbitgraph, mults, schutz,
@@ -178,6 +205,27 @@ schutzstab, lambda_perm)
   else
     schutzstab[m]:=StabChainImmutable(g);
   fi;
+  return;
+end);
+
+# new for 1.0! - CreateLambdaOrbMults
+##############################################################################
+# Usage: lambda_perm = LambdaPerm(s), gens = generators of semigroup, 
+# o = lambda orb, m = scc index, scc = the actual scc.
+#
+# Notes: from o[i] to o[scc[m][1]]
+
+InstallGlobalFunction(CreateLambdaOrbMults, 
+function(lambda_mult, gens, o, m, scc)
+  local mults, f, i;
+
+  mults:=o!.mults;
+
+  for i in scc do 
+    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, i));
+    mults[i]:=lambda_mult(o[scc[1]], f);
+  od;    
+  o!.mults:=mults;
   return;
 end);
 
@@ -249,7 +297,6 @@ function(s, limit)
         
         o:=Orb(gens, lamx, lambdaact,
           rec(
-            semigroup:=s,
             forflatplainlists:=true,
             hashlen:=hashlen,
             schreier:=true,
@@ -409,7 +456,6 @@ function(s, f, opt)
  
   o:=Orb(s, LambdaFunc(s)(f), LambdaAct(s),
       rec(
-        semigroup:=s,
         forflatplainlists:=true, #JDM probably don't want to assume this..
         hashlen:=CitrusOptionsRec.hashlen.M,
         schreier:=true,
@@ -418,9 +464,9 @@ function(s, f, opt)
         onlygrades:=onlygrades,
         onlygradesdata:=onlygradesdata,
         storenumbers:=true,
-        log:=true));
+        log:=true,
+        scc_reps:=[f]));
   
-  o!.scc_reps:=[f];
   SetIsGradedLambdaOrb(o, true);
 
   if opt then # store o
@@ -447,8 +493,6 @@ InstallMethod(GradedLambdaOrbs, "for an acting semigroup",
 function(s)
   
   return Objectify(NewType(FamilyObj(s), IsGradedLambdaOrbs), rec(
-    semigroup:=s,
-    finished:=false,
     orbits:=List([1..LambdaDegree(s)], x-> []),
     lens:=[1..LambdaDegree(s)]*0));
 end);
@@ -464,32 +508,21 @@ function(o, j)
   return IsBound(o!.orbits[j]);
 end);
 
-# new for 1.0! - InGradedLambdaOrbs - "for an acting semigroup"
+#LLL
+
+# new for 1.0! - LambdaOrb - "for an acting semigroup"
 ##############################################################################
 
-InstallGlobalFunction(InGradedLambdaOrbs, 
-[IsGradedLambdaOrbs, IsActingSemigroupElt],
-function(o, f)
-  local s, x, j, k, l, m;
- 
-  s:=o!.semigroup;
-  x:=LambdaFunc(s)(f);
-  j:=LambdaRank(s)(x);
-  
-  if not IsBound(o[j]) then 
-    return [false, j, 1, 1, 1, 1];
-  fi;
+InstallMethod(LambdaOrb, "for an acting semigroup",
+[IsActingSemigroup],
+function(s)
 
-  k:=HTValue(LambdaHT(s), x);
-
-  if k=fail then 
-    return [false, j, 1, o!.lens[j]+1, 1, 1];
-  fi;
-
-  return ;
+  return Orb(s, LambdaDomain(s), LambdaAct(s),
+        rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
+        storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
+        finished:=false, scc_reps:=[()]));
 end);
 
-#LLL
 
 # new for 1.0! - LambdaOrbMults - "for a lambda orb and scc index"
 ##############################################################################
@@ -508,7 +541,7 @@ function(o, m)
     o!.mults:=EmptyPlist(Length(o)); 
   fi; 
    
-  CreateLambdaOrbMults(LambdaMult(o!.semigroup), o!.gens, o, m, scc);
+  CreateLambdaOrbMults(LambdaMult(ParentAttr(o)), o!.gens, o, m, scc);
   return o!.mults;
 end);
 
@@ -549,7 +582,7 @@ function(o, m)
   
   CreateLambdaOrbGS(o, m, o!.scc[m], gens, Length(gens), 
    LambdaOrbRep(o, m), o!.scc_lookup, OrbitGraph(o), LambdaOrbMults(o, m),
-   o!.schutz, o!.schutzstab, LambdaPerm(o!.semigroup)); 
+   o!.schutz, o!.schutzstab, LambdaPerm(ParentAttr(o))); 
   
   return o!.schutz[m];
 end);
@@ -575,24 +608,11 @@ function(o, m)
   CreateLambdaOrbGS(o, m, o!.scc[m], gens, Length(gens), 
    LambdaOrbRep(o, m), o!.scc_lookup, OrbitGraph(o), 
    LambdaOrbMults(o, m), o!.schutz,
-   o!.schutzstab, LambdaPerm(o!.semigroup)); 
+   o!.schutzstab, LambdaPerm(ParentAttr(o))); 
   
   return o!.schutzstab[m];
 end);
   
-# new for 1.0! - LambdaOrb - "for an acting semigroup"
-##############################################################################
-
-InstallMethod(LambdaOrb, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-
-  return Orb(s, LambdaDomain(s), LambdaAct(s),
-        rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
-        storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
-        finished:=false, scc_reps:=[()], semigroup:=s));
-end);
-
 #PPP
 
 # new for 1.0! - Position - "for graded lambda orbs and acting semi elt"
@@ -600,14 +620,8 @@ end);
 
 InstallOtherMethod(Position, "for graded lambda orbs and acting semi elt",
 [IsGradedLambdaOrbs, IsObject, IsZeroCyc],
-function(o, lambda_f, n)
-  local s;
-  
-  #if not FamilyObj(lambda_f)=ElementsFamily(FamilyObj(o)) then
-  #  return fail;
-  #fi;
-  s:=o!.semigroup; 
-  return HTValue(LambdaHT(s), lambda_f);
+function(o, lamf, n)
+  return HTValue(LambdaHT(ParentAttr(o)), lamf);
 end);
 
 # new for 1.0! - PrintObj - "for graded lambda orbs"

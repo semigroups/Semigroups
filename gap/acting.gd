@@ -53,8 +53,6 @@ DeclareGlobalFunction("GradedRhoOrb");
 DeclareProperty("IsGradedLambdaOrb", IsOrbit);
 DeclareProperty("IsGradedRhoOrb", IsOrbit);
 
-DeclareGlobalFunction("InGradedLambdaOrbs");
-
 # list of short orbits <=> OrbitsOfImages
 DeclareAttribute("GradedLambdaOrbs", IsActingSemigroup, "mutable");
 DeclareAttribute("GradedRhoOrbs", IsActingSemigroup, "mutable");
@@ -70,6 +68,8 @@ DeclareProperty("IsActingSemigroupGC", IsGreensClass);
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
 
 DeclareGlobalFunction("EnumerateSemigroupData");
+
+# IMPLICATIONS
 
 InstallTrueMethod(IsActingSemigroup, IsTransformationSemigroup);
 InstallTrueMethod(IsActingSemigroup, IsPartialPermSemigroup);
