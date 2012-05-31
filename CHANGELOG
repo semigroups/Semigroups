@@ -8,10 +8,20 @@
 #############################################################################
 
 
+0.8 -> 0.9 
+
+            renamed the function for creating the semigroup of order-preserving
+            transformations on an n-chain from O to OrderEndomorphisms after it
+            was pointed out that it is not sensible to have function names with
+            one character. Also made some minor adjustments to the manual.
+
 0.7 -> 0.8 
             
             minor changes due to incompatibility with Smallsemi 0.6.4 which 
             caused some test files to fail when Nilmat was loaded after Citrus.
+            The clashes and the failed test were caused by various properties
+            being declared for IsTransformationSemigroup rather than
+            IsSemigroup. 
 
 0.6 -> 0.7 
             the most major change is the introduction of special methods for

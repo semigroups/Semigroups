@@ -214,7 +214,7 @@ fi;
 # new for 0.7! - O - "for a pos int"
 ################################################################################
 
-InstallMethod(O, "for a pos int",
+InstallMethod(OrderEndomorphisms, "for a pos int",
 [IsPosInt],
 function(n)
   local gens, i;

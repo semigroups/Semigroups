@@ -16,15 +16,12 @@
     reference is <Cite Key="lallement"/>.<P/> 
     
     The functionality of &Monoid; 3.1.4 for &GAP; 4 has been split between the
-    &GAP; 4.5 packages &Citrus; and <URL Text="Comatose">
-    http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html</URL>.
+    &GAP; 4.5 packages &Citrus; and &Comatose;.
 
     &Citrus; &VERSION; retains all the functionality of the original &Monoid;
     package for &GAP; 3; and many of those functions from &Monoid; 3.1.4 not
     involved in the computation of automorphism groups of semigroups. The
-    <URL Text="Comatose">
-    http://www-history.mcs.st-and.ac.uk/~jamesm/comatose/index.html
-    </URL> package retains those functions from &Monoid;
+    &Comatose; package retains those functions from &Monoid;
     3.1.4 used to compute automorphism groups of transformation semigroups. <P/>
 
     &noindent; &Citrus; &VERSION; contains more efficient methods than those
@@ -49,15 +46,15 @@
       Func="WriteCitrus"/>. <P/>
 
     &noindent; The &Citrus; package is written in C and &GAP; code and 
-    requires the <URL Text="Orb">
-    http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
-    </URL> package. The &Orb; package is used to efficiently compute orbits in
-    semigroups of transformations and partial permutations, and these methods
-    underpin many of the features of &Citrus;. The &Grape; package is used in
-    the function <Ref Oper="MunnSemigroup"/> but nowhere else in &Citrus;. If
-    &Grape; is not fully installed, then &Citrus; can be used as normal with the
-    except that the operation <Ref Oper="MunnSemigroup"/> does not work.
-    <P/>
+    requires the &Orb; and &IO; packages. The &Orb; package is used to
+    efficiently compute orbits in semigroups of transformations and partial
+    permutations, and these methods underpin many of the features of &Citrus;.
+    The &IO; package is used to read and write transformations and partial
+    permutations to a file.
+    The &Grape; package is used in the function <Ref Oper="MunnSemigroup"/> but
+    nowhere else in &Citrus;. If &Grape; is not fully installed, then &Citrus;
+    can be used as normal with the except that the operation <Ref
+      Oper="MunnSemigroup"/> does not work.  <P/>
     
     &Citrus; is still under development, and so some features may not function
     as expected. At the present time, I do not know of any errors or serious
@@ -87,13 +84,20 @@
 
     <List>
     
-      <Item> download and install the <Package>Orb</Package> package version 
+      <Item> download and install the &Orb; package version 
       &ORBVERS; or higher. For more details go to:
       &vspace;<P/>&noindent; 
       <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
       </URL><P/>
       &noindent; Note that &Orb; and &Citrus; both perform better if &Orb;
       is compiled. 
+      </Item>
+
+     <Item> download and install the &IO; package version                 
+      &IOVERS; or higher. For more details go to:
+      &vspace;<P/>&noindent;
+      <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/ io.html
+      </URL>
       </Item>
 
       <Item>  if you want to be able to calculate the Munn semigroup of a
@@ -122,7 +126,7 @@
       <C>&ARCHIVENAME;</C> into the <C>pkg</C> directory.  
       </Item>
 
-      <Item> To use the functions in &Citrus; for partial permutations and
+      <Item> to use the functions in &Citrus; for partial permutations and
         inverse semigroups, you must compile the C part of the package 
         (in the "pkg" directory) by doing:
         <Listing>
