@@ -122,6 +122,17 @@ end);
 
 #CCC
 
+# new for 1.0 - ChooseHashFunction - "for a transformation"
+#############################################################################
+
+InstallMethod(ChooseHashFunction, "for a transformation",
+[IsTransformation, IsInt], 
+function(f, hashlen)
+  return rec(func:=function(x, data) 
+    return ORB_HashFunctionForPlainFlatList(x![1], data); 
+  end, data:=hashlen);
+end);
+
 # new for 0.1! - ConstantTransformation - "for degree and value"
 #############################################################################
 # Usage: degree and value. 

@@ -67,12 +67,9 @@ DeclareAttribute("RhoDomain", IsActingSemigroup);
 DeclareProperty("IsActingSemigroupGC", IsGreensClass);
 
 # the below is an actual orb obj
-DeclareAttribute("ROrb", IsActingSemigroup, "mutable");
-DeclareAttribute("RhoGradedRReps", IsActingSemigroup, "mutable");
-# the above should be a list of lists organized like GradedLambdaOrbs
-# also with a ht storing the Rho grades. 
+DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
 
-DeclareGlobalFunction("EnumerateROrb");
+DeclareGlobalFunction("EnumerateSemigroupData");
 
 InstallTrueMethod(IsActingSemigroup, IsTransformationSemigroup);
 InstallTrueMethod(IsActingSemigroup, IsPartialPermSemigroup);
