@@ -513,6 +513,37 @@ Obj FuncOnIntegerSetsWithPP (Obj self, Obj set, Obj f)
   return out;
 }
 
+/* on tuples for a partial permutation */ 
+Obj FuncOnIntegerTuplesWithPP (Obj self, Obj set, Obj f)
+{ pptype deg, k;
+  Int n, i, j, m;
+  Obj out;
+
+  deg=ELM_PP(f,1);
+  n=LEN_LIST(set);
+  if(n==0||deg==0) return NEW_EMPTY_PLIST();
+
+  out = NEW_PLIST(T_PLIST_CYC, n);
+  m = 0;
+
+  for(i=1;i<=n;i++)
+  {
+    j=INT_INTOBJ(ELM_LIST(set, i));
+    if(j<=deg)
+    {
+      k=ELM_PP(f, j+6);
+      if(k!=0)
+      {
+        m++;
+        SET_ELM_PLIST(out, m, INTOBJ_INT(k));
+      }
+    }
+  }
+  SET_LEN_PLIST(out, m);
+  SHRINK_PLIST(out, m);
+  return out;
+}
+
 /* equality test for partial permutations */
 Obj FuncEqPP (Obj self, Obj f, Obj g)
 { pptype deg_f, rank_f, i;
@@ -1111,6 +1142,10 @@ static StructGVarFunc GVarFuncs [] = {
     FuncInvPP,
     "pkg/citrus/src/citrus.c:FuncInvPP" },
 
+  { "OnIntegerTuplesWithPP", 2, "tup,f",
+    FuncOnIntegerTuplesWithPP,
+    "pkg/citrus/src/citrus.c:FuncOnIntegerTuplesWithPP" },
+  
   { "OnIntegerSetsWithPP", 2, "set,f",
     FuncOnIntegerSetsWithPP,
     "pkg/citrus/src/citrus.c:FuncOnIntegerSetsWithPP" },

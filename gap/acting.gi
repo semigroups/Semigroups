@@ -97,7 +97,7 @@ end);
 
 InstallMethod(LambdaMult, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> function(pt, f) 
-  return MappingPermListList(OnIntegerSetsWithPP(pt, f), pt);
+  return MappingPermListList(OnIntegerTuplesWithPP(pt, f), pt);
 end);
 
 # new for 1.0! - LambdaPerm
@@ -522,7 +522,7 @@ function(s, data, x)
     o:=GradedLambdaOrb(s, x, true);
     pos:=[1,1,1]; #[scc index, scc[1], pos of LambdaFunc(x) in o]
   else
-    o:=GradedLambdaOrbs(s)[pos[1]][pos[2]];
+   o:=GradedLambdaOrbs(s)[pos[1]][pos[2]];
     m:=OrbSCCLookup(o)[pos[3]];
     scc:=o!.scc[m];
     pos:=[m, scc[1], pos[3]];
@@ -537,6 +537,7 @@ function(s, data, x)
   data!.repslens[1]:=1;
   data!.lenreps:=data!.lenreps+1;
   data!.reps[data!.lenreps]:=[x];
+  data!.repslookup[1]:=[1];
   HTAdd(LambdaRhoHT(s), Concatenation(lamx, RhoFunc(s)(x)), data!.lenreps);
 
   return data;

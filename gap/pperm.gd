@@ -24,6 +24,7 @@ DeclareGlobalFunction("IndexPeriodOfPartialPerm");
 DeclareGlobalFunction("InternalRepOfPartialPerm");
 DeclareOperation("NaturalLeqPartialPerm", [IsPartialPerm, IsPartialPerm]);
 DeclareOperation("OnIntegerSetsWithPartialPerm", [IsCyclotomicCollection, IsPartialPerm]);
+DeclareOperation("OnIntegerTuplesWithPartialPerm", [IsCyclotomicCollection, IsPartialPerm]);
 DeclareGlobalFunction("PrettyPrintPP");
 DeclareGlobalFunction("RandomPartialPerm");
 DeclareOperation("RangeOfPartialPerm", [IsPartialPerm]);
