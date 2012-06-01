@@ -23,6 +23,8 @@ IsPartialPermCollection, IsRecord]);
 DeclareOperation("InverseSemigroupByGeneratorsNC", [IsPartialPermCollection, 
 IsPartialPermCollection, IsRecord]);
 DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);
+
+DeclareOperation("RandomBlockGroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomInverseSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomInverseMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomTransformationMonoid", [IsPosInt, IsPosInt]);

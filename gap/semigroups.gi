@@ -812,6 +812,20 @@ function(m,n)
   return s;
 end);
 
+# new for 1.0! - RandomBlockGroup - for a pos int and pos int
+#############################################################################
+
+if Citrus_C then 
+  InstallMethod(RandomBlockGroup, "for pos int and pos int",
+  [IsPosInt, IsPosInt],
+  function(m,n)
+    return Semigroup(Set(List([1..m], x-> RandomPartialPerm(n))));
+  end);
+else
+  InstallMethod(RandomBlockGroup, "for pos int and pos int",
+  [IsPosInt, IsPosInt], CitrusIsNotCompiled);
+fi;
+
 # new for 0.7! - RandomInverseMonoid - for a pos int and pos int
 #############################################################################
 
@@ -903,8 +917,8 @@ end);
 # mod for 0.6! - SemigroupByGenerators -  "for a trans. collection"
 ##############################################################################
 
-InstallOtherMethod(SemigroupByGenerators, "(Citrus) for a trans. collection",
-[IsTransformationCollection],
+InstallOtherMethod(SemigroupByGenerators, "for an acting elt collection",
+[IsActingEltCollection],
 function(gens)
    return SemigroupByGenerators(gens, CitrusOptionsRec);
 end);
@@ -913,7 +927,7 @@ end);
 ##############################################################################
 
 InstallOtherMethod(SemigroupByGenerators, "(Citrus) for trans coll and record",
-[IsTransformationCollection, IsRecord],
+[IsActingEltCollection, IsRecord],
 function(gens, opts)
   local n, i, closure_opts, s, f;
 

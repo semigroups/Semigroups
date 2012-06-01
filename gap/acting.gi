@@ -241,7 +241,7 @@ function(s, limit)
       if pos=fail then #new lambda orbit, new R-class
         
         #setup graded lambda orb
-        rankx:=rank(lamx);
+        rankx:=rank(lamx)+1;
         gradedlens[rankx]:=gradedlens[rankx]+1;
         
         o:=Orb(gens, lamx, lambdaact,
@@ -478,7 +478,8 @@ function(s, f, opt)
   SetIsGradedLambdaOrb(o, true);
 
   if opt then # store o
-    j:=LambdaRank(s)(LambdaFunc(s)(f));
+    j:=LambdaRank(s)(LambdaFunc(s)(f))+1;
+    # the +1 is essential as the rank can be 0
     k:=graded!.lens[j]+1;
     graded[j][k]:=o;
     Enumerate(o);
@@ -501,8 +502,8 @@ InstallMethod(GradedLambdaOrbs, "for an acting semigroup",
 function(s)
   
   return Objectify(NewType(FamilyObj(s), IsGradedLambdaOrbs), rec(
-    orbits:=List([1..LambdaDegree(s)], x-> []),
-    lens:=[1..LambdaDegree(s)]*0, semi:=s));
+    orbits:=List([1..LambdaDegree(s)+1], x-> []), 
+    lens:=[1..LambdaDegree(s)+1]*0, semi:=s));
 end);
 
 #III
@@ -531,12 +532,12 @@ function(s, data, x)
     fi;
   fi;  
 
-  HTAdd(data.ht, x, 1);
-  data.orbit:=[[s, pos, o, x]];
-  data.repslens[1]:=1;
-  data.lenreps:=data.lenreps+1;
-  data.reps[data.lenreps]:=[x];
-  HTAdd(LambdaRhoHT(s), Concatenation(lamx, RhoFunc(s)(x)), data.lenreps);
+  HTAdd(data!.ht, x, 1);
+  data!.orbit:=[[s, pos, o, x]];
+  data!.repslens[1]:=1;
+  data!.lenreps:=data!.lenreps+1;
+  data!.reps[data!.lenreps]:=[x];
+  HTAdd(LambdaRhoHT(s), Concatenation(lamx, RhoFunc(s)(x)), data!.lenreps);
 
   return data;
 end);

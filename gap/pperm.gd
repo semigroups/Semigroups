@@ -9,12 +9,12 @@
 ###
 
 #JDM this is only here temporarily! See below.
-DeclareProperty("IsActingSemigroupElt", IsMultiplicativeElementWithOne and
+DeclareCategory("IsActingElt", IsMultiplicativeElementWithOne and
 IsAssociativeElement);
-#JDM IsActingSemigroupElt should not be necessary below...
+#JDM IsActingElt should not be necessary below...
 # see acting.gd for more details
 DeclareCategory("IsPartialPerm", IsMultiplicativeElementWithOne and
- IsAssociativeElement and IsActingSemigroupElt);
+ IsAssociativeElement and IsActingElt);
 DeclareCategoryCollections("IsPartialPerm");
 
 BindGlobal("PartialPermFamily", NewFamily("PartialPermFamily",
