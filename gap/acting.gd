@@ -39,10 +39,8 @@ DeclareProperty("IsRhoOrb", IsOrbit);
 
 DeclareGlobalFunction("LambdaOrbMults");
 DeclareGlobalFunction("LambdaOrbRep");
-DeclareGlobalFunction("CreateLambdaOrbMults");
 DeclareGlobalFunction("LambdaOrbSchutzGp");
 DeclareGlobalFunction("LambdaOrbStabChain");
-DeclareGlobalFunction("CreateLambdaOrbGS");
 
 DeclareAttribute("LambdaMult", IsActingSemigroup);
 DeclareAttribute("RhoMult", IsActingSemigroup);

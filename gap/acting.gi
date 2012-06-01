@@ -155,80 +155,6 @@ function(lamf, o)
   return not HTValue(LambdaHT(ParentAttr(o)), lamf)=fail;
 end);
 
-#CCC
-
-# new for 1.0! - CreateLambdaOrbGS -
-##############################################################################
-# Usage: o = lambda orb, m = scc index, scc = a strongly connected component,
-# gens = generators of semigroup, nrgens = the number of gens, 
-# rep = LambdaOrbRep(o, m), lookup = OrbSCCLookup(o)[m], 
-# orbitgraph = OrbitGraph(o), mults = LambdaOrbMults(o, m), 
-# schutz = 
-
-# I'm not sure this is worth it...
-
-InstallGlobalFunction(CreateLambdaOrbGS, 
-function(o, m, scc, gens, nrgens, rep, lookup, orbitgraph, mults, schutz,
-schutzstab, lambda_perm)
-  local g, is_sym, bound, f, i, j;
- 
- g:=Group(()); is_sym:=false;
-  
-  if Length(o[scc[1]])<1000 then
-    bound:=Factorial(Length(o[scc[1]]));
-  else
-    bound:=infinity;
-  fi; 
-
-  for i in scc do 
-    for j in [1..nrgens] do 
-      if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]]=m then 
-        f:=lambda_perm(rep, rep/mults[i]*(gens[j]*mults[orbitgraph[i][j]]));
-        if not f=() then 
-          g:=ClosureGroup(g, f);
-        fi;
-
-        if Size(g)>=bound then 
-          is_sym:=true;
-          break;
-        fi;
-      fi;
-    od;
-  od;
-
-  schutz[m]:=g;  
-  
-  if is_sym then 
-    schutzstab[m]:=true;
-  elif Size(g)=1 then 
-    schutzstab[m]:=false;
-  else
-    schutzstab[m]:=StabChainImmutable(g);
-  fi;
-  return;
-end);
-
-# new for 1.0! - CreateLambdaOrbMults
-##############################################################################
-# Usage: lambda_perm = LambdaPerm(s), gens = generators of semigroup, 
-# o = lambda orb, m = scc index, scc = the actual scc.
-#
-# Notes: from o[i] to o[scc[m][1]]
-
-InstallGlobalFunction(CreateLambdaOrbMults, 
-function(lambda_mult, gens, o, m, scc)
-  local mults, f, i;
-
-  mults:=o!.mults;
-
-  for i in scc do 
-    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, i));
-    mults[i]:=lambda_mult(o[scc[1]], f);
-  od;    
-  o!.mults:=mults;
-  return;
-end);
-
 #EEE
 
 # new for 1.0! - ELM_LIST - for graded lambda orbs 
@@ -242,6 +168,8 @@ end);
 
 # new for 1.0! - EnumerateSemigroupData - for an acting semigroup and limit
 ##############################################################################
+
+#lookingfor?, schreier?, SLP?
 
 InstallGlobalFunction(EnumerateSemigroupData, 
 function(s, limit)
@@ -439,11 +367,12 @@ function(s, limit)
           fi;
 
           #check membership in schutz gp via stab chain
-          if schutzstab[m]=true then 
+          
+          if schutzstab[m]=true then # schutz gp is symmetric group
             graph[i][j]:=repslookup[val][1];
             continue;
           else
-            if schutzstab[m]=false then 
+            if schutzstab[m]=false then # schutz gp is trivial
               old:=false;
               for n in [1..repslens[val]] do 
                 if reps[val][n]=y then 
@@ -455,7 +384,7 @@ function(s, limit)
               if old then 
                 continue;
               fi;
-            else
+            else # schutz gp neither trivial nor symmetric group
               old:=false; 
               for n in [1..repslens[val]] do 
                 p:=lambdaperm(reps[val][n], y);
@@ -528,7 +457,8 @@ function(s, f, opt)
         storenumbers:=true,
         log:=true,
         scc_reps:=[f]));
-  
+
+  SetParentAttr(o, s); 
   SetIsGradedLambdaOrb(o, true);
 
   if opt then # store o
@@ -553,10 +483,14 @@ end);
 InstallMethod(GradedLambdaOrbs, "for an acting semigroup", 
 [IsActingSemigroup],
 function(s)
+  local graded;
   
-  return Objectify(NewType(FamilyObj(s), IsGradedLambdaOrbs), rec(
+  graded:=Objectify(NewType(FamilyObj(s), IsGradedLambdaOrbs), rec(
     orbits:=List([1..LambdaDegree(s)], x-> []),
     lens:=[1..LambdaDegree(s)]*0));
+  SetParentAttr(graded, s);
+
+  return graded;
 end);
 
 #III
@@ -625,7 +559,7 @@ end);
 
 InstallGlobalFunction(LambdaOrbMults, 
 function(o, m) 
-  local scc;
+  local scc, mults, gens, lambdamult, f, i;
  
   scc:=OrbSCC(o)[m];
 
@@ -636,9 +570,17 @@ function(o, m)
   else
     o!.mults:=EmptyPlist(Length(o)); 
   fi; 
-   
-  CreateLambdaOrbMults(LambdaMult(ParentAttr(o)), o!.gens, o, m, scc);
-  return o!.mults;
+  
+  mults:=o!.mults;
+  gens:=GeneratorsOfSemigroup(s);  
+  lambdamult:=LambdaMult(s);
+
+  for i in scc do
+    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, i));
+    mults[i]:=lambdamult(o[scc[1]], f);
+  od;
+ 
+  return mults;
 end);
 
 # new for 1.0! - LambdaOrbRep - "for an orbit and pos int"
@@ -662,7 +604,8 @@ end);
 
 InstallGlobalFunction(LambdaOrbSchutzGp, 
 function(o, m)
-  local gens;
+  local gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults, len,
+  bound, g, is_sym, f, k, l;
   
   if IsBound(o!.schutz) then 
     if IsBound(o!.schutz[m]) then 
@@ -673,12 +616,51 @@ function(o, m)
     o!.schutzstab:=EmptyPlist(Length(OrbSCC(o)));
   fi;
 
-  gens:=o!.gens;
+  gens:=GeneratorsOfSemigroup(ParentAttr(o)); 
+  nrgens:=Length(gens);
+  scc:=OrbSCC(o)[m];      
+  lookup:=o!.scc_lookup;
+  orbitgraph:=OrbitGraph(o);
+  lambdaperm:=LambdaPerm(s);
+  rep:=LambdaOrbRep(o, m);
+  mults:=LambdaOrbMults(o, m);
+
+  len:=LambdaRank(s)(o[scc[1]]);
+
+  if len<1000 then
+    bound:=Factorial(len);
+  else
+    bound:=infinity;
+  fi;
+
+  g:=Group(()); is_sym:=false;
   
-  CreateLambdaOrbGS(o, m, o!.scc[m], gens, Length(gens), 
-   LambdaOrbRep(o, m), o!.scc_lookup, OrbitGraph(o), LambdaOrbMults(o, m),
-   o!.schutz, o!.schutzstab, LambdaPerm(ParentAttr(o))); 
-  
+  for k in scc do
+    for l in [1..nrgens] do
+      if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
+        f:=lambdaperm(rep, rep/mults[k]*(gens[l]*mults[orbitgraph[k][l]]));
+        g:=ClosureGroup(g, f);
+        if Size(g)>=bound then
+          is_sym:=true;
+          break;
+        fi;
+      fi;
+    od;
+    if is_sym then
+      break;
+    fi;
+  od;
+
+  o!.schutz[m]:=g;
+
+  if is_sym then
+    o!.schutzstab[m]:=true;
+  elif Size(g)=1 then
+    o!.schutzstab[m]:=false;
+  else
+    o!.schutzstab[m]:=StabChainImmutable(g);
+  fi;
+
   return o!.schutz[m];
 end);
 
@@ -687,24 +669,14 @@ end);
 
 InstallGlobalFunction(LambdaOrbStabChain, 
 function(o, m)
-  local gens;
   
   if IsBound(o!.schutzstab) then 
     if IsBound(o!.schutzstab[m]) then 
       return o!.schutzstab[m];
     fi;
-  else
-    o!.schutz:=EmptyPlist(Length(OrbSCC(o))); 
-    o!.schutzstab:=EmptyPlist(Length(OrbSCC(o)));
   fi;
-
-  gens:=o!.gens;
-  
-  CreateLambdaOrbGS(o, m, o!.scc[m], gens, Length(gens), 
-   LambdaOrbRep(o, m), o!.scc_lookup, OrbitGraph(o), 
-   LambdaOrbMults(o, m), o!.schutz,
-   o!.schutzstab, LambdaPerm(ParentAttr(o))); 
-  
+ 
+  LambdaOrbSchutzGp(o, m);
   return o!.schutzstab[m];
 end);
   
