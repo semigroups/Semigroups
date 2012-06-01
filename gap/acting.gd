@@ -67,6 +67,7 @@ DeclareProperty("IsActingSemigroupGC", IsGreensClass);
 # the below is an actual orb obj
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
 
+DeclareGlobalFunction("InitSemigroupData");
 DeclareGlobalFunction("EnumerateSemigroupData");
 
 # IMPLICATIONS
