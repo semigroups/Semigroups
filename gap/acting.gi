@@ -218,11 +218,16 @@ function(s, limit)
     HasGradedLambdaOrbs(s)) or (HasLambdaHT(s) and LambdaHT(s)!.nr<20) or
     (HasLambdaOrb(s) and HasGradedLambdaOrbs(s) and
     Length(LambdaOrb(s))>=LambdaHT(s)!.nr) then 
+    #this seems to make almost not difference!!
+
     if not IsBound(data!.graded) then
       data!.graded:=false;
     fi;
     
-    lambdaorb:=LambdaOrb(s);
+    o:=LambdaOrb(s);
+    Enumerate(o, infinity);
+    scc:=OrbSCC(o); r:=Length(scc);
+    lookup:=o!.scc_lookup;
     
     while nr<=limit and i<nr do 
       i:=i+1;
@@ -236,159 +241,77 @@ function(s, limit)
           graph[i][j]:=pos;
           continue; 
         fi;
-        #check if lambda orb of x is already known
-        lamx:=lambda(x);
-        pos:=Position(lambdaorb, lamx);
         
-        if pos=fail and not IsClosed(lambdaorb) then 
-          o!.looking:=true; o!.lookingfor:=function(o, x) return x=lamx; end;
-          o!.lookfunc:=o!.lookingfor;
-          Enumerate(o);
-          o!.found:=false; o!.looking:=false;
-          Unbind(o!.lookingfor); Unbind(o!.lookfunc);  
+        lamx:=lambda(x);
+        pos:=Position(o, lamx);
+          
+        #find the scc
+        m:=lookup[pos];
 
-          #     
+        #get the multipliers
+        mults:=LambdaOrbMults(o, m);         
+
+        #put lambda x in the first position in its scc
+        if not pos=scc[m][1] then 
+          y:=x*mults[pos];
+        else
+          y:=x;
+        fi;
+
+        #check if we've seen rho(y) before
+        rhoy:=ShallowCopy(o[scc[m][1]]);
+        Append(rhoy, rho(y));
+        val:=HTValue(lambdarhoht, rhoy);
+
+        # this is what we keep if it is new
+        x:=[s, [m, scc[m][1], pos], o, y];
+
+        if val=fail then  #new rho value
           lenreps:=lenreps+1;
+          HTAdd(lambdarhoht, rhoy, lenreps);
           nr:=nr+1;
-           
-          reps[lenreps]:=[x];
+          reps[lenreps]:=[y];
           repslookup[lenreps]:=[nr];
           repslens[lenreps]:=1;
-          HTAdd(lambdarhoht, Concatenation(lamx, rho(x)), lenreps);
-          x:=[s, [1, 1, 1], o, x];
-
-        else #old lambda orbit
-          o:=graded[pos[1]][pos[2]];
+        else              # old rho value
+          schutz:=LambdaOrbStabChain(o, m);
           
-          #find the scc
-          scc:=OrbSCC(o); r:=Length(scc);
-          lookup:=o!.scc_lookup;
-          m:=lookup[pos[3]];
-          scc:=scc[m]; 
-
-          #get the multipliers
-          if not IsBound(o!.mults) then 
-            o!.mults:=EmptyPlist(Length(o));
-          fi;
-          mults:=o!.mults;
-          if not IsBound(mults[scc[1]]) then 
-            for k in scc do
-              f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, k));
-              mults[k]:=lambdamult(o[scc[1]], f);
-            od; 
-          fi;
+          #check membership in schutz gp via stab chain
           
-          #put lambda x in the first position in its scc
-          if not pos[3]=scc[1] then 
-            y:=x*mults[pos[3]];
+          if schutz=true then # schutz gp is symmetric group
+            graph[i][j]:=repslookup[val][1];
+            continue;
           else
-            y:=x;
-          fi;
-
-          #check if we've seen rho(y) before
-          rhoy:=ShallowCopy(o[scc[1]]);
-          Append(rhoy, rho(y));
-          val:=HTValue(lambdarhoht, rhoy);
-
-          # this is what we keep if it is new
-          x:=[s, [m, scc[1], pos[3]], o, y];
-
-          if val=fail then  #new rho value
-            lenreps:=lenreps+1;
-            HTAdd(lambdarhoht, rhoy, lenreps);
-            nr:=nr+1;
-            reps[lenreps]:=[y];
-            repslookup[lenreps]:=[nr];
-            repslens[lenreps]:=1;
-          else              # old rho value
-            
-            #get schutz gp stab chain
-            if not IsBound(o!.schutzstab) then 
-              o!.schutzstab:=EmptyPlist(r);
-              o!.schutz:=EmptyPlist(r);
-            fi;
-            schutzstab:=o!.schutzstab;
-            
-            #create the schutz gp and stab chain if necessary
-            if not IsBound(schutzstab[m]) then 
-              
-              #doing LambdaOrbStabChain(o, m) should do exactly the same!
-              schutz:=o!.schutz;
-              g:=Group(()); is_sym:=false;
-              len:=rank(o[scc[1]]);
-
-              if len<1000 then
-               bound:=Factorial(len);
-              else
-                bound:=infinity;
-              fi;
-
-              orbitgraph:=OrbitGraph(o);
-              for k in scc do
-                for l in [1..nrgens] do
-                  if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
-                    f:=lambdaperm(reps[val][1], reps[val][1]/mults[k]*
-                     (gens[l]*mults[orbitgraph[k][l]]));
-                    g:=ClosureGroup(g, f);
-                    if Size(g)>=bound then
-                      is_sym:=true;
-                      break;
-                    fi;
-                  fi;
-                od;
-                if is_sym then 
+            if schutz=false then # schutz gp is trivial
+              old:=false;
+              for n in [1..repslens[val]] do 
+                if reps[val][n]=y then 
+                  old:=true;
+                  graph[i][j]:=repslookup[val][n];
                   break;
                 fi;
               od;
-
-              schutz[m]:=g; 
-
-              if is_sym then
-                schutzstab[m]:=true;
-              elif Size(g)=1 then
-                schutzstab[m]:=false;
-              else
-                schutzstab[m]:=StabChainImmutable(g);
-              fi; 
-            fi;
-
-            #check membership in schutz gp via stab chain
-            
-            if schutzstab[m]=true then # schutz gp is symmetric group
-              graph[i][j]:=repslookup[val][1];
-              continue;
-            else
-              if schutzstab[m]=false then # schutz gp is trivial
-                old:=false;
-                for n in [1..repslens[val]] do 
-                  if reps[val][n]=y then 
-                    old:=true;
-                    graph[i][j]:=repslookup[val][n];
-                    break;
-                  fi;
-                od;
-                if old then 
-                  continue;
-                fi;
-              else # schutz gp neither trivial nor symmetric group
-                old:=false; 
-                for n in [1..repslens[val]] do 
-                  p:=lambdaperm(reps[val][n], y);
-                  if SiftedPermutation(schutzstab[m], p)=() then 
-                    old:=true;
-                    graph[i][j]:=repslookup[val][n]; 
-                    break;
-                  fi;
-                od;
-                if old then 
-                  continue;
-                fi;
+              if old then 
+                continue;
               fi;
-              nr:=nr+1;
-              reps[val][n+1]:=y;
-              repslookup[val][n+1]:=nr;
-              repslens[val]:=repslens[val]+1;
+            else # schutz gp neither trivial nor symmetric group
+              old:=false; 
+              for n in [1..repslens[val]] do 
+                p:=lambdaperm(reps[val][n], y);
+                if SiftedPermutation(schutz, p)=() then 
+                  old:=true;
+                  graph[i][j]:=repslookup[val][n]; 
+                  break;
+                fi;
+              od;
+              if old then 
+                continue;
+              fi;
             fi;
+            nr:=nr+1;
+            reps[val][n+1]:=y;
+            repslookup[val][n+1]:=nr;
+            repslens[val]:=repslens[val]+1;
           fi;
         fi;
         orb[nr]:=x;
@@ -397,13 +320,6 @@ function(s, limit)
         graph[i][j]:= nr;
       od;
     od;
-
-    data!.pos:=i;
-    data!.lenreps:=lenreps;
-
-    return true;
-   
-
   else
     if not IsBound(data!.graded) then 
       data!.graded:=true;
@@ -615,12 +531,11 @@ function(s, limit)
         graph[i][j]:= nr;
       od;
     od;
-
-    data!.pos:=i;
-    data!.lenreps:=lenreps;
-
-    return true;
   fi;
+  data!.pos:=i;
+  data!.lenreps:=lenreps;
+
+  return true;
 end);
 
 #JDM
@@ -759,7 +674,7 @@ function(s)
   return Orb(s, LambdaDomain(s), LambdaAct(s),
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
         storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
-        finished:=false, scc_reps:=[()]));
+        finished:=false, scc_reps:=[()], semi:=s));
 end);
 
 # new for 1.0! - LambdaOrbMults - "for a lambda orb and scc index"
