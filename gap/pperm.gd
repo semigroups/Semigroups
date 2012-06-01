@@ -8,22 +8,11 @@
 ##############################################################################
 ###
 
-#JDM this is only here temporarily! See below.
-DeclareCategory("IsActingElt", IsMultiplicativeElementWithOne and
-IsAssociativeElement);
-#JDM IsActingElt should not be necessary below...
-# see acting.gd for more details
 DeclareCategory("IsPartialPerm", IsMultiplicativeElementWithOne and
- IsAssociativeElement and IsActingElt);
+ IsAssociativeElement); 
 DeclareCategoryCollections("IsPartialPerm");
-
-BindGlobal("PartialPermFamily", NewFamily("PartialPermFamily",
- IsPartialPerm, CanEasilySortElements, CanEasilySortElements));
-BindGlobal("PartialPermType", NewType(PartialPermFamily,
- IsPartialPerm and IsDataObjectRep));
 DeclareGlobalFunction("PartialPermNC");
 DeclareGlobalFunction("PartialPerm");
-
 DeclareOperation("AsPartialPerm", [IsObject]);
 DeclareOperation("AsPartialPermNC", [IsObject]);
 DeclareGlobalFunction("CITRUS_HashFunctionForPP");

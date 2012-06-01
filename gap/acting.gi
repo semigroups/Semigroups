@@ -220,12 +220,12 @@ function(s, limit)
   
   # options for graded lambda orbs
   hashlen:=CitrusOptionsRec.hashlen.M;  
-  gradingfunc := function(o,x) return [rank(x), x]; end;
+  gradingfunc := function(o,x) return [rank(x)+1, x]; end;
 
   while nr<=limit and i<nr do 
     i:=i+1;
     
-    for j in genstoapply do 
+    for j in genstoapply do #JDM
       x:=gens[j]*orb[i][4];
       
       #check if x is already an R-class rep
