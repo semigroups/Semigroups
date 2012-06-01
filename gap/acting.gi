@@ -86,6 +86,9 @@ fi;
 
 # new for 1.0! - LambdaMult
 ###############################################################################
+# LambdaMult(s)(pt, f) returns a permutation taking acting in the same way as
+# f^-1 on pt. This is required to produce the lambda orb mults
+# (LambdaOrbMults). 
 
 InstallMethod(LambdaMult, "for a transformation semi",
 [IsTransformationSemigroup], s-> function(pt, f)
@@ -99,6 +102,9 @@ end);
 
 # new for 1.0! - LambdaPerm
 ###############################################################################
+# LambdaPerm(s) returns a permutation from two acting semigroup elements with
+# equal LambdaFunc and RhoFunc. This is required to check if one of the two
+# elements belongs to the schutz gp of a lambda orb.
 
 InstallMethod(LambdaPerm, "for a transformation semi",
 [IsTransformationSemigroup], s-> PermLeftQuoTransformationNC);
@@ -415,8 +421,14 @@ function(s, limit)
       graph[i][j]:= nr;
     od;
   od;
+
+  data.pos:=i;
+  data.lenreps:=lenreps;
+
   return true;
 end);
+
+#JDM
 
 #GGG
 
@@ -431,7 +443,7 @@ function(s, f, opt)
     graded:=GradedLambdaOrbs(s);
     pos:=HTValue(LambdaHT(s), LambdaFunc(s)(f));
   
-    if not pos=fail then 
+    if pos<>fail then 
       return graded[pos[1]][pos[2]];
     fi;
     
@@ -552,7 +564,6 @@ function(s)
         storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
         finished:=false, scc_reps:=[()]));
 end);
-
 
 # new for 1.0! - LambdaOrbMults - "for a lambda orb and scc index"
 ##############################################################################
@@ -733,6 +744,8 @@ function(s)
     if not IsMonoid(s) then 
       SetIsMonoidAsSemigroup(s, true);
     fi;
+  else
+    SetIsMonoidAsSemigroup(s, false);
   fi;
 
   return data;
