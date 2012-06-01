@@ -245,7 +245,7 @@ end);
 
 InstallGlobalFunction(EnumerateSemigroupData, 
 function(s, limit)
-  local data, ht, i, orb, graph, nr, gens, nrgens, genstoapply, graded, gradedlens, reps, reps_lookup, lambda, rho, lens, lambdaht, lambdaact, rhoht, nrrepsets, lambdaperm, lambdamult, rank, hashlen, gradingfunc, x, pos, lamx, rankx, o, scc, r, lookup, m, mults, y, rhoy, val, schutzstab, schutz, g, is_sym, len, bound, orbitgraph, f, old, p, j, k, l, n;
+  local data, ht, orb, nr, i, graph, reps, reps_lookup, repslens, lenreps, graded, gradedlens, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, rhoht, hashlen, gradingfunc, x, pos, lamx, rankx, o, scc, r, lookup, m, mults, y, rhoy, val, schutzstab, schutz, g, is_sym, len, bound, orbitgraph, f, old, p, j, k, l, n;
 
   data:=SemigroupData(s);
   ht:=data.ht;      # ht and orb contain existing R-class reps
@@ -259,8 +259,8 @@ function(s, limit)
 
   reps_lookup:=data.reps_lookup;# Position(orb, reps[i][j])=reps_lookup[i][j]
                                 # = HTValue(ht, reps[i][j])
-  lens:=data.lens;            # Length(reps[i])=lens[i] 
-  nrrepsets:=data.nrrepsets;  # nrrepsets=Length(reps)
+  repslens:=data.repslens;    # Length(reps[i])=repslens[i] 
+  lenreps:=data.lenreps;  # lenreps=Length(reps)
   
   graded:=GradedLambdaOrbs(s);  # existing graded lambda orbs
   gradedlens:=graded!.lens;     # gradedlens[j]=Length(graded[j]);
@@ -335,12 +335,12 @@ function(s, limit)
         od;
 
         #     
-        nrrepsets:=nrrepsets+1;
+        lenreps:=lenreps+1;
         nr:=nr+1;
-        reps[nrrepsets]:=[x];
-        reps_lookup[nrrepsets]:=[nr];
-        lens[nrrepsets]:=1;
-        HTAdd(rhoht, Concatenation(lamx, rho(x)), nrrepsets);
+        reps[lenreps]:=[x];
+        reps_lookup[lenreps]:=[nr];
+        repslens[lenreps]:=1;
+        HTAdd(rhoht, Concatenation(lamx, rho(x)), lenreps);
         x:=[s, [1, 1, 1], o, x];
 
       else #old lambda orbit
@@ -377,12 +377,12 @@ function(s, limit)
         x:=[s, [m, scc[1], pos[3]], o, y];
 
         if val=fail then  #new rho value
-          nrrepsets:=nrrepsets+1;
-          HTAdd(rhoht, rhoy, nrrepsets);
+          lenreps:=lenreps+1;
+          HTAdd(rhoht, rhoy, lenreps);
           nr:=nr+1;
-          reps[nrrepsets]:=[y];
-          reps_lookup[nrrepsets]:=[nr];
-          lens[nrrepsets]:=1;
+          reps[lenreps]:=[y];
+          reps_lookup[lenreps]:=[nr];
+          repslens[lenreps]:=1;
         else              # old rho value
           
           #get schutz gp stab chain
@@ -442,7 +442,7 @@ function(s, limit)
           else
             if schutzstab[m]=false then 
               old:=false;
-              for n in [1..lens[val]] do 
+              for n in [1..repslens[val]] do 
                 if reps[val][n]=y then 
                   old:=true;
                   graph[i][j]:=reps_lookup[val][n];
@@ -454,7 +454,7 @@ function(s, limit)
               fi;
             else
               old:=false; 
-              for n in [1..lens[val]] do 
+              for n in [1..repslens[val]] do 
                 p:=lambdaperm(reps[val][n], y);
                 if SiftedPermutation(schutzstab[m], p)=() then 
                   old:=true;
@@ -469,7 +469,7 @@ function(s, limit)
             nr:=nr+1;
             reps[val][n+1]:=y;
             reps_lookup[val][n+1]:=nr;
-            lens[val]:=lens[val]+1;
+            repslens[val]:=repslens[val]+1;
           fi;
         fi;
       fi;
@@ -584,10 +584,10 @@ function(s, data, x)
 
   HTAdd(data.ht, x, 1);
   data.orbit:=[[s, pos, o, x]];
-  data.lens[1]:=1;
-  data.nrrepsets:=data.nrrepsets+1;
-  data.reps[data.nrrepsets]:=[x];
-  HTAdd(RhoHT(s), Concatenation(lamx, RhoFunc(s)(x)), data.nrrepsets);
+  data.repslens[1]:=1;
+  data.lenreps:=data.lenreps+1;
+  data.reps[data.lenreps]:=[x];
+  HTAdd(RhoHT(s), Concatenation(lamx, RhoFunc(s)(x)), data.lenreps);
 
   return data;
 end);
@@ -749,7 +749,7 @@ function(s)
 
   data:=rec(ht:=HTCreate(x, rec(hashlen:=s!.opts.hashlen.L)), 
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
-     reps:=[], reps_lookup:=[], nrrepsets:=0, orbit:=[[,,,x]], lens:=[]);
+     reps:=[], reps_lookup:=[], lenreps:=0, orbit:=[[,,,x]], repslens:=[]);
 
   if x in gens then 
     InitSemigroupData(s, data, x);
