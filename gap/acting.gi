@@ -152,7 +152,7 @@ end);
 InstallMethod(\in, "for lambda value of acting semi elt and graded lambda orbs",
 [IsObject, IsGradedLambdaOrbs],
 function(lamf, o)
-  return not HTValue(LambdaHT(ParentAttr(o)), lamf)=fail;
+  return not HTValue(LambdaHT(o!.semi), lamf)=fail;
 end);
 
 #EEE
@@ -173,7 +173,11 @@ end);
 
 InstallGlobalFunction(EnumerateSemigroupData, 
 function(s, limit)
-  local data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps, graded, gradedlens, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, hashlen, gradingfunc, x, pos, lamx, rankx, o, scc, r, lookup, m, mults, y, rhoy, val, schutzstab, schutz, g, is_sym, len, bound, orbitgraph, f, old, p, j, k, l, n;
+  local data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps,
+  graded, gradedlens, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact,
+  lambdaperm, lambdamult, rank, rho, lambdarhoht, hashlen, gradingfunc, x, pos,
+  lamx, rankx, o, scc, r, lookup, m, mults, y, rhoy, val, schutzstab, schutz,
+  g, is_sym, len, bound, orbitgraph, f, old, p, j, k, l, n;
 
   data:=SemigroupData(s);
   ht:=data.ht;      # ht and orb contain existing R-class reps
@@ -447,6 +451,7 @@ function(s, f, opt)
  
   o:=Orb(s, LambdaFunc(s)(f), LambdaAct(s),
       rec(
+        semi:=s,
         forflatplainlists:=true, #JDM probably don't want to assume this..
         hashlen:=CitrusOptionsRec.hashlen.M,
         schreier:=true,
@@ -458,7 +463,6 @@ function(s, f, opt)
         log:=true,
         scc_reps:=[f]));
 
-  SetParentAttr(o, s); 
   SetIsGradedLambdaOrb(o, true);
 
   if opt then # store o
@@ -483,14 +487,10 @@ end);
 InstallMethod(GradedLambdaOrbs, "for an acting semigroup", 
 [IsActingSemigroup],
 function(s)
-  local graded;
   
-  graded:=Objectify(NewType(FamilyObj(s), IsGradedLambdaOrbs), rec(
+  return Objectify(NewType(FamilyObj(s), IsGradedLambdaOrbs), rec(
     orbits:=List([1..LambdaDegree(s)], x-> []),
-    lens:=[1..LambdaDegree(s)]*0));
-  SetParentAttr(graded, s);
-
-  return graded;
+    lens:=[1..LambdaDegree(s)]*0, semi:=s));
 end);
 
 #III
@@ -559,7 +559,7 @@ end);
 
 InstallGlobalFunction(LambdaOrbMults, 
 function(o, m) 
-  local scc, mults, gens, lambdamult, f, i;
+  local scc, s, mults, gens, lambdamult, f, i;
  
   scc:=OrbSCC(o)[m];
 
@@ -571,6 +571,7 @@ function(o, m)
     o!.mults:=EmptyPlist(Length(o)); 
   fi; 
   
+  s:=o!.semi;
   mults:=o!.mults;
   gens:=GeneratorsOfSemigroup(s);  
   lambdamult:=LambdaMult(s);
@@ -604,7 +605,7 @@ end);
 
 InstallGlobalFunction(LambdaOrbSchutzGp, 
 function(o, m)
-  local gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults, len,
+  local s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults, len,
   bound, g, is_sym, f, k, l;
   
   if IsBound(o!.schutz) then 
@@ -616,7 +617,8 @@ function(o, m)
     o!.schutzstab:=EmptyPlist(Length(OrbSCC(o)));
   fi;
 
-  gens:=GeneratorsOfSemigroup(ParentAttr(o)); 
+  s:=o!.semi;
+  gens:=GeneratorsOfSemigroup(s); 
   nrgens:=Length(gens);
   scc:=OrbSCC(o)[m];      
   lookup:=o!.scc_lookup;
@@ -688,7 +690,7 @@ end);
 InstallOtherMethod(Position, "for graded lambda orbs and acting semi elt",
 [IsGradedLambdaOrbs, IsObject, IsZeroCyc],
 function(o, lamf, n)
-  return HTValue(LambdaHT(ParentAttr(o)), lamf);
+  return HTValue(LambdaHT(o!.semi), lamf);
 end);
 
 # new for 1.0! - PrintObj - "for graded lambda orbs"
