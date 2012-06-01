@@ -1,5 +1,12 @@
-
-
+#############################################################################
+###
+##W  acting.gd
+##Y  Copyright (C) 2011-12                                James D. Mitchell
+###
+###  Licensing information can be found in the README file of this package.
+###
+##############################################################################
+###
 
 DeclareCategory("IsActingElt", IsMultiplicativeElementWithOne and
 IsAssociativeElement);
@@ -22,7 +29,9 @@ DeclareAttribute("RhoFunc", IsActingSemigroup);
 
 # hash table of all lambda values found so far, HTValue of LambdaHT points
 # to where the graded orbit is in GradedLambdaOrbs
+# only applies in graded case
 DeclareAttribute("LambdaHT", IsActingSemigroup, "mutable");
+# should be renamed GradedLambdaHT ?
 
 # hash table of all valid lambda-rho values found so far, HTValue of
 # LambdaRhoHT points to where the existing R-class reps with same lambda-rho
