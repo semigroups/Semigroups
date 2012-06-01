@@ -22,12 +22,14 @@ DeclareAttribute("RhoDegree", IsActingSemigroup);
 DeclareAttribute("LambdaFunc", IsActingSemigroup);
 DeclareAttribute("RhoFunc", IsActingSemigroup);
 
-# hash table of all lambda/rho values found so far, HTValue of LambdaHT points
+# hash table of all lambda values found so far, HTValue of LambdaHT points
 # to where the graded orbit is in GradedLambdaOrbs
 DeclareAttribute("LambdaHT", IsActingSemigroup, "mutable");
-# HTValue of RhoHT points to where in RhoGradedRReps are R-class reps with the
-# same lambda orbit and rho value
-DeclareAttribute("RhoHT", IsActingSemigroup, "mutable");
+
+# hash table of all valid lambda-rho values found so far, HTValue of
+# LambdaRhoHT points to where the existing R-class reps with same lambda-rho
+# value are in SemigroupData(s).reps. 
+DeclareAttribute("LambdaRhoHT", IsActingSemigroup, "mutable");
 
 # long orbits <=> LongOrb
 DeclareAttribute("LambdaOrb", IsActingSemigroup, "mutable");

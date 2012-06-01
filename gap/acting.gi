@@ -130,10 +130,10 @@ if IsBound(DomPP) then
    [IsPartialPermSemigroup], x-> DomPP);
 fi;
 
-# new for 1.0! - RhoHT
+# new for 1.0! - LambdaRhoHT
 ###############################################################################
 
-InstallMethod(RhoHT, "for an acting semi",
+InstallMethod(LambdaRhoHT, "for an acting semi",
 [IsActingSemigroup],
 function(s)
   local x;
@@ -245,7 +245,7 @@ end);
 
 InstallGlobalFunction(EnumerateSemigroupData, 
 function(s, limit)
-  local data, ht, orb, nr, i, graph, reps, reps_lookup, repslens, lenreps, graded, gradedlens, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, rhoht, hashlen, gradingfunc, x, pos, lamx, rankx, o, scc, r, lookup, m, mults, y, rhoy, val, schutzstab, schutz, g, is_sym, len, bound, orbitgraph, f, old, p, j, k, l, n;
+  local data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps, graded, gradedlens, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, hashlen, gradingfunc, x, pos, lamx, rankx, o, scc, r, lookup, m, mults, y, rhoy, val, schutzstab, schutz, g, is_sym, len, bound, orbitgraph, f, old, p, j, k, l, n;
 
   data:=SemigroupData(s);
   ht:=data.ht;      # ht and orb contain existing R-class reps
@@ -253,14 +253,14 @@ function(s, limit)
   nr:=Length(orb);
   i:=data.pos;       # points in orb in position at most i have descendants
   graph:=data.graph; # orbit graph of orbit of R-classes under left mult 
-  reps:=data.reps;              # reps grouped by equal lambda and rho value
-                                # HTValue(lambdarhoht, Concatenation(lambda(x),
-                                # rho(x))
+  reps:=data.reps;   # reps grouped by equal lambda and rho value
+                     # HTValue(lambdarhoht, Concatenation(lambda(x),
+                     # rho(x))
 
-  reps_lookup:=data.reps_lookup;# Position(orb, reps[i][j])=reps_lookup[i][j]
+  repslookup:=data.repslookup;# Position(orb, reps[i][j])=repslookup[i][j]
                                 # = HTValue(ht, reps[i][j])
-  repslens:=data.repslens;    # Length(reps[i])=repslens[i] 
-  lenreps:=data.lenreps;  # lenreps=Length(reps)
+  repslens:=data.repslens;      # Length(reps[i])=repslens[i] 
+  lenreps:=data.lenreps;        # lenreps=Length(reps)
   
   graded:=GradedLambdaOrbs(s);  # existing graded lambda orbs
   gradedlens:=graded!.lens;     # gradedlens[j]=Length(graded[j]);
@@ -278,7 +278,7 @@ function(s, limit)
   lambdamult:=LambdaMult(s);
   rank:=LambdaRank(s);
   rho:=RhoFunc(s);
-  rhoht:=RhoHT(s);
+  lambdarhoht:=LambdaRhoHT(s);
   
   # options for graded lambda orbs
   hashlen:=CitrusOptionsRec.hashlen.M;  
@@ -338,9 +338,9 @@ function(s, limit)
         lenreps:=lenreps+1;
         nr:=nr+1;
         reps[lenreps]:=[x];
-        reps_lookup[lenreps]:=[nr];
+        repslookup[lenreps]:=[nr];
         repslens[lenreps]:=1;
-        HTAdd(rhoht, Concatenation(lamx, rho(x)), lenreps);
+        HTAdd(lambdarhoht, Concatenation(lamx, rho(x)), lenreps);
         x:=[s, [1, 1, 1], o, x];
 
       else #old lambda orbit
@@ -358,7 +358,10 @@ function(s, limit)
         fi;
         mults:=o!.mults;
         if not IsBound(mults[scc[1]]) then 
-          CreateLambdaOrbMults(lambdamult, gens, o, m, scc);
+          for k in scc do
+            f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, k));
+            mults[k]:=lambdamult(o[scc[1]], f);
+          od; 
         fi;
         
         #put lambda x in the first position in its scc
@@ -371,17 +374,17 @@ function(s, limit)
         #check if we've seen rho(y) before
         rhoy:=ShallowCopy(o[scc[1]]);
         Append(rhoy, rho(y));
-        val:=HTValue(rhoht, rhoy);
+        val:=HTValue(lambdarhoht, rhoy);
 
         # this is what we keep if it is new
         x:=[s, [m, scc[1], pos[3]], o, y];
 
         if val=fail then  #new rho value
           lenreps:=lenreps+1;
-          HTAdd(rhoht, rhoy, lenreps);
+          HTAdd(lambdarhoht, rhoy, lenreps);
           nr:=nr+1;
           reps[lenreps]:=[y];
-          reps_lookup[lenreps]:=[nr];
+          repslookup[lenreps]:=[nr];
           repslens[lenreps]:=1;
         else              # old rho value
           
@@ -437,7 +440,7 @@ function(s, limit)
 
           #check membership in schutz gp via stab chain
           if schutzstab[m]=true then 
-            graph[i][j]:=reps_lookup[val][1];
+            graph[i][j]:=repslookup[val][1];
             continue;
           else
             if schutzstab[m]=false then 
@@ -445,7 +448,7 @@ function(s, limit)
               for n in [1..repslens[val]] do 
                 if reps[val][n]=y then 
                   old:=true;
-                  graph[i][j]:=reps_lookup[val][n];
+                  graph[i][j]:=repslookup[val][n];
                   break;
                 fi;
               od;
@@ -458,7 +461,7 @@ function(s, limit)
                 p:=lambdaperm(reps[val][n], y);
                 if SiftedPermutation(schutzstab[m], p)=() then 
                   old:=true;
-                  graph[i][j]:=reps_lookup[val][n]; 
+                  graph[i][j]:=repslookup[val][n]; 
                   break;
                 fi;
               od;
@@ -468,7 +471,7 @@ function(s, limit)
             fi;
             nr:=nr+1;
             reps[val][n+1]:=y;
-            reps_lookup[val][n+1]:=nr;
+            repslookup[val][n+1]:=nr;
             repslens[val]:=repslens[val]+1;
           fi;
         fi;
@@ -489,14 +492,14 @@ end);
 
 InstallGlobalFunction(GradedLambdaOrb,
 function(s, f, opt)
-  local graded, data, gradingfunc, onlygrades, onlygradesdata, o, j, k, l;
+  local graded, pos, gradingfunc, onlygrades, onlygradesdata, o, j, k, l;
 
   if opt then   #global
     graded:=GradedLambdaOrbs(s);
-    data:=Position(graded, LambdaFunc(s)(f));
+    pos:=HTValue(LambdaHT(s), LambdaFunc(s)(f));
   
-    if not data=fail then 
-      return graded[data[1]][data[2]];
+    if not pos=fail then 
+      return graded[pos[1]][pos[2]];
     fi;
     
     gradingfunc := function(o,x) return [LambdaRank(s)(x), x]; end;
@@ -536,7 +539,7 @@ function(s, f, opt)
     for l in [1..Length(o)] do
       HTAdd(onlygradesdata, o[l], [j,k,l]);
     od;
-    o!.data:=[j,k,1,1,1];
+    o!.data:=[j,k]; 
     graded!.lens[j]:=k;
   fi;
 
@@ -587,7 +590,7 @@ function(s, data, x)
   data.repslens[1]:=1;
   data.lenreps:=data.lenreps+1;
   data.reps[data.lenreps]:=[x];
-  HTAdd(RhoHT(s), Concatenation(lamx, RhoFunc(s)(x)), data.lenreps);
+  HTAdd(LambdaRhoHT(s), Concatenation(lamx, RhoFunc(s)(x)), data.lenreps);
 
   return data;
 end);
@@ -749,7 +752,7 @@ function(s)
 
   data:=rec(ht:=HTCreate(x, rec(hashlen:=s!.opts.hashlen.L)), 
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
-     reps:=[], reps_lookup:=[], lenreps:=0, orbit:=[[,,,x]], repslens:=[]);
+     reps:=[], repslookup:=[], lenreps:=0, orbit:=[[,,,x]], repslens:=[]);
 
   if x in gens then 
     InitSemigroupData(s, data, x);
