@@ -64,11 +64,10 @@ DeclareAttribute("RhoDomain", IsActingSemigroup);
 
 DeclareProperty("IsActingSemigroupGC", IsGreensClass);
 
-# the below is an actual orb obj
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
-
 DeclareGlobalFunction("InitSemigroupData");
 DeclareGlobalFunction("EnumerateSemigroupData");
+DeclareCategory("IsSemigroupData", IsRecord);
 
 # IMPLICATIONS
 

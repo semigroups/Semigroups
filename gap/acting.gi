@@ -186,19 +186,19 @@ function(s, limit)
   g, is_sym, len, bound, orbitgraph, f, old, p, j, k, l, n;
 
   data:=SemigroupData(s);
-  ht:=data.ht;      # ht and orb contain existing R-class reps
-  orb:=data.orbit;  
+  ht:=data!.ht;      # ht and orb contain existing R-class reps
+  orb:=data!.orbit;  
   nr:=Length(orb);
-  i:=data.pos;       # points in orb in position at most i have descendants
-  graph:=data.graph; # orbit graph of orbit of R-classes under left mult 
-  reps:=data.reps;   # reps grouped by equal lambda and rho value
+  i:=data!.pos;       # points in orb in position at most i have descendants
+  graph:=data!.graph; # orbit graph of orbit of R-classes under left mult 
+  reps:=data!.reps;   # reps grouped by equal lambda and rho value
                      # HTValue(lambdarhoht, Concatenation(lambda(x),
                      # rho(x))
 
-  repslookup:=data.repslookup;# Position(orb, reps[i][j])=repslookup[i][j]
+  repslookup:=data!.repslookup;# Position(orb, reps[i][j])=repslookup[i][j]
                                 # = HTValue(ht, reps[i][j])
-  repslens:=data.repslens;      # Length(reps[i])=repslens[i] 
-  lenreps:=data.lenreps;        # lenreps=Length(reps)
+  repslens:=data!.repslens;      # Length(reps[i])=repslens[i] 
+  lenreps:=data!.lenreps;        # lenreps=Length(reps)
   
   graded:=GradedLambdaOrbs(s);  # existing graded lambda orbs
   gradedlens:=graded!.lens;     # gradedlens[j]=Length(graded[j]);
@@ -222,7 +222,7 @@ function(s, limit)
   hashlen:=CitrusOptionsRec.hashlen.M;  
   gradingfunc := function(o,x) return [rank(x), x]; end;
 
-  while i<=limit and i<nr do 
+  while nr<=limit and i<nr do 
     i:=i+1;
     
     for j in genstoapply do 
@@ -422,8 +422,8 @@ function(s, limit)
     od;
   od;
 
-  data.pos:=i;
-  data.lenreps:=lenreps;
+  data!.pos:=i;
+  data!.lenreps:=lenreps;
 
   return true;
 end);
@@ -738,6 +738,8 @@ function(s)
   data:=rec(ht:=HTCreate(x, rec(hashlen:=s!.opts.hashlen.L)), 
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
      reps:=[], repslookup:=[], lenreps:=0, orbit:=[[,,,x]], repslens:=[]);
+  
+  Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
 
   if x in gens then 
     InitSemigroupData(s, data, x);
@@ -751,3 +753,16 @@ function(s)
   return data;
 end);
 
+#VVV
+
+# new for 1.0! - ViewObj - "for semigroup data"
+##############################################################################
+
+InstallMethod(ViewObj, [IsSemigroupData],
+function(data)
+  Print("<semigroup data: ", Length(data!.orbit), " reps, ",
+  Length(data!.reps), " lambda-rho values>");
+  return;
+end);
+
+#EOF
