@@ -31,7 +31,7 @@ const char * Revision_citrus_c =
 ** Internal functions
 *******************************************************************************/
 
-/* from permutat.c */
+/* from permutat.c should be in permutat.h */
 #define IMAGE(i,pt,dg)  (((i) < (dg)) ? (pt)[(i)] : (i))
 Obj FuncTRIM_PERM(Obj self, Obj perm, Obj n);
 Obj FuncLARGEST_MOVED_POINT_PERM(Obj self, Obj perm);
