@@ -124,7 +124,8 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
     <#Include Label="MunnSemigroup">
     <#Include Label="OPOIPOPI">
     <#Include Label="SingularSemigroup">
-    <#Include Label="SymmetricInverseSemigp">
+    <#Include Label="SymmetricInverseSemigroup">
+    <#Include Label="RegularBinaryRelationSemigroup">
   </Section>
 
 <Section Label="Catalogues"><Heading>The examples directory</Heading>
