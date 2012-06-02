@@ -174,15 +174,16 @@ end);
 # new for 1.0! - EnumerateSemigroupData - for an acting semigroup and limit
 ##############################################################################
 
-#lookingfor?, schreier?, SLP?
+#lookingfor?, schreier!, SLP, store index in the output x, 
 
 InstallGlobalFunction(EnumerateSemigroupData, 
 function(s, limit)
   local data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps,
-  graded, gradedlens, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact,
-  lambdaperm, lambdamult, rank, rho, lambdarhoht, hashlen, gradingfunc, x, pos,
-  lamx, rankx, o, scc, r, lookup, m, mults, y, rhoy, val, schutzstab, schutz,
-  g, is_sym, len, bound, orbitgraph, f, old, p, j, k, l, n;
+  schreierpos, schreiergen, gens, nrgens, genstoapply, lambda, lambdaht,
+  lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup,
+  x, pos, lamx, m, mults, y, rhoy, val, schutz, old, p, graded, gradedlens,
+  hashlen, gradingfunc, rankx, f, schutzstab, g, is_sym, len, bound,
+  orbitgraph, j, n, k, l;
 
   data:=SemigroupData(s);
   ht:=data!.ht;       # ht and orb contain existing R-class reps
@@ -198,7 +199,12 @@ function(s, limit)
                                 # = HTValue(ht, reps[i][j])
   repslens:=data!.repslens;     # Length(reps[i])=repslens[i] 
   lenreps:=data!.lenreps;       # lenreps=Length(reps)
- 
+
+  # schreier
+
+  schreierpos:=data.schreierpos;
+  schreiergen:=data.schreiergen;
+
   # generators
   gens:=GeneratorsOfSemigroup(s); 
   nrgens:=Length(gens); 
@@ -264,7 +270,8 @@ function(s, limit)
         val:=HTValue(lambdarhoht, rhoy);
 
         # this is what we keep if it is new
-        x:=[s, [m, scc[m][1], pos], o, y];
+        x:=[s, [m, scc[m][1], pos], o, y, nr+1];
+        # semigroup, lambda orb data, lambda orb, rep, index
 
         if val=fail then  #new rho value
           lenreps:=lenreps+1;
@@ -315,6 +322,8 @@ function(s, limit)
           fi;
         fi;
         orb[nr]:=x;
+        schreierpos[nr]:=i; # orb[nr] is obtained from orb[i]
+        schreiergen[nr]:=j; # by multiplying by gens[j]
         HTAdd(ht, x[4], nr);
         graph[nr]:=EmptyPlist(nrgens);
         graph[i][j]:= nr;
@@ -389,7 +398,7 @@ function(s, limit)
           repslookup[lenreps]:=[nr];
           repslens[lenreps]:=1;
           HTAdd(lambdarhoht, Concatenation(lamx, rho(x)), lenreps);
-          x:=[s, [1, 1, 1], o, x];
+          x:=[s, [1, 1, 1], o, x, nr];
 
         else #old lambda orbit
           o:=graded[pos[1]][pos[2]];
@@ -425,7 +434,7 @@ function(s, limit)
           val:=HTValue(lambdarhoht, rhoy);
 
           # this is what we keep if it is new
-          x:=[s, [m, scc[1], pos[3]], o, y];
+          x:=[s, [m, scc[1], pos[3]], o, y, nr+1];
 
           if val=fail then  #new rho value
             lenreps:=lenreps+1;
@@ -460,7 +469,8 @@ function(s, limit)
               orbitgraph:=OrbitGraph(o);
               for k in scc do
                 for l in [1..nrgens] do
-                  if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
+                  if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m
+                    then
                     f:=lambdaperm(reps[val][1], reps[val][1]/mults[k]*
                      (gens[l]*mults[orbitgraph[k][l]]));
                     g:=ClosureGroup(g, f);
@@ -526,6 +536,8 @@ function(s, limit)
           fi;
         fi;
         orb[nr]:=x;
+        schreierpos[nr]:=i; # orb[nr] is obtained from orb[i]
+        schreiergen[nr]:=j; # by multiplying by gens[j]
         HTAdd(ht, x[4], nr);
         graph[nr]:=EmptyPlist(nrgens);
         graph[i][j]:= nr;
@@ -849,11 +861,12 @@ function(s)
 
   data:=rec(ht:=HTCreate(x, rec(hashlen:=s!.opts.hashlen.L)), 
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
-     reps:=[], repslookup:=[], lenreps:=0, orbit:=[[,,,x]], repslens:=[]);
+     reps:=[], repslookup:=[], lenreps:=0, orbit:=[[,,,x]], repslens:=[], 
+     schreierpos:=[], schreiergen:=[]);
   
   Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
 
-  if x in gens then 
+  if IsMonoid(s) or x in gens then 
     InitSemigroupData(s, data, x);
     if not IsMonoid(s) then 
       SetIsMonoidAsSemigroup(s, true);
