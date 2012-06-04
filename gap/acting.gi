@@ -171,6 +171,15 @@ function(o, j)
   return o!.orbits[j];
 end);
 
+# new for 1.0! - ELM_LIST - for graded lambda orbs 
+##############################################################################
+
+InstallOtherMethod(ELM_LIST, "for acting semigp data, and pos int",
+[IsSemigroupData, IsPosInt], 
+function(o, nr)
+  return o!.orbit[nr];
+end);
+
 # new for 1.0! - EnumerateSemigroupData - for an acting semigroup and limit
 ##############################################################################
 
@@ -246,7 +255,6 @@ function(s, limit)
         
         lamx:=lambda(x);
         pos:=Position(o, lamx);
-        #if nr=11 then Error(); fi;
         
         #find the scc
         m:=lookup[pos];
@@ -557,6 +565,22 @@ end);
 
 #JDM
 
+#FFF
+
+# new for 1.0! - Factorization - "for an acting semigroup and acting elt"
+##############################################################################
+
+InstallOtherMethod(Factorization, "for an acting semigroup and acting elt",
+[IsActingSemigroup, IsActingElt],
+function(s, x)
+
+  # suppose that the data is fully enumerated...
+
+
+
+end);
+
+
 #GGG
 
 # new for 1.0! - GradedLambdaOrb - "for an acting semigroup and elt"
@@ -833,6 +857,70 @@ function(o, lamf, n)
   return HTValue(LambdaHT(o!.semi), lamf);
 end);
 
+# new for 1.0! - Position - "for acting semigroup data and acting elt"
+##############################################################################
+# returns the index of the representative of the R-class containing x in the
+# parent of data. 
+
+InstallOtherMethod(Position, "for acting semigroup data and acting elt",
+[IsSemigroupData, IsObject, IsZeroCyc],
+function(data, x, n)
+  local val, s, o, l, m, scc, schutz, repslookup, mults, y, reps, repslen, lambdaperm;
+
+  val:=HTValue(data!.ht, x);
+
+  if val<>fail then 
+    return val;
+  fi;
+
+  s:=data!.semi;
+
+  if data!.graded then 
+    o:=GradedLambdaOrb(s, x, true);
+  else
+    o:=LambdaOrb(s);
+  fi; 
+
+  l:=Position(o, LambdaFunc(s)(x));
+  m:=OrbSCCLookup(o)[l];
+  scc:=OrbSCC(o);
+  
+  val:=HTValue(LambdaRhoHT(s), Concatenation(o[scc[m][1]], RhoFunc(s)(x)));
+  schutz:=LambdaOrbStabChain(o, m);
+  repslookup:=data!.repslookup;
+
+  if schutz=true then 
+    return repslookup[val][1];
+  fi;
+ 
+  if not l=scc[m][1] then 
+    mults:=LambdaOrbMults(o, m);
+    y:=x*mults[l];
+  else
+    y:=x;
+  fi; 
+
+  reps:=data!.reps; repslen:=data!.repslen;
+
+  if schutz=false then 
+    for n in [1..repslen[val]] do 
+      if reps[val][n]=y then 
+        return repslookup[val][n];
+      fi;
+    od;
+  else
+    lambdaperm:=LambdaPerm(s);
+    for n in [1..repslen[val]] do 
+      if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=() then 
+        return repslookup[val][n];
+      fi;
+    od;
+  fi; 
+  return fail;
+end);
+
+
+
 # new for 1.0! - PrintObj - "for graded lambda orbs"
 ##############################################################################
 
@@ -867,7 +955,8 @@ function(s)
   data:=rec(ht:=HTCreate(x, rec(hashlen:=s!.opts.hashlen.L)), 
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
      reps:=[], repslookup:=[], lenreps:=0, orbit:=[[,,,x]], repslens:=[], 
-     schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail]);
+     schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail], 
+     semi:=s);
   
   Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
 
