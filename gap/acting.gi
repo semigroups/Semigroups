@@ -573,11 +573,19 @@ end);
 InstallOtherMethod(Factorization, "for an acting semigroup and acting elt",
 [IsActingSemigroup, IsActingElt],
 function(s, x)
+  local data, nr, o, m, word;
 
   # suppose that the data is fully enumerated...
+  data:=SemigroupData(s);
+  nr:=Position(data, x);
+  o:=data[nr][3];
+  m:=data[nr][2][1];
 
+  word:=TraceSchreierTreeForward(data, nr);
+  Append(word, TraceSchreierTreeOfSCCForward(o, m, 
+   Position(o, LambdaFunc(s)(x))));
 
-
+  return word;
 end);
 
 
