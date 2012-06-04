@@ -178,12 +178,7 @@ end);
 
 InstallGlobalFunction(EnumerateSemigroupData, 
 function(s, limit)
-  local data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps,
-  schreierpos, schreiergen, gens, nrgens, genstoapply, lambda, lambdaht,
-  lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup,
-  x, pos, lamx, m, mults, y, rhoy, val, schutz, old, p, graded, gradedlens,
-  hashlen, gradingfunc, rankx, f, schutzstab, g, is_sym, len, bound,
-  orbitgraph, j, n, k, l;
+  local data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, pos, lamx, m, mults, y, rhoy, val, schutz, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, f, schutzstab, g, is_sym, len, bound, orbitgraph, j, n, k, l;
 
   data:=SemigroupData(s);
   ht:=data!.ht;       # ht and orb contain existing R-class reps
@@ -202,8 +197,9 @@ function(s, limit)
 
   # schreier
 
-  schreierpos:=data.schreierpos;
-  schreiergen:=data.schreiergen;
+  schreierpos:=data!.schreierpos;
+  schreiergen:=data!.schreiergen;
+  schreiermult:=data!.schreiermult;
 
   # generators
   gens:=GeneratorsOfSemigroup(s); 
@@ -262,6 +258,7 @@ function(s, limit)
           y:=x*mults[pos];
         else
           y:=x;
+          pos:=fail;
         fi;
 
         #check if we've seen rho(y) before
@@ -270,10 +267,10 @@ function(s, limit)
         val:=HTValue(lambdarhoht, rhoy);
 
         # this is what we keep if it is new
-        x:=[s, [m, scc[m][1], pos], o, y, nr+1];
+        x:=[s, [m, scc[m][1]], o, y, nr+1];
         # semigroup, lambda orb data, lambda orb, rep, index
 
-        if val=fail then  #new rho value
+        if val=fail then  #new rho value, and hence new R-rep
           lenreps:=lenreps+1;
           HTAdd(lambdarhoht, rhoy, lenreps);
           nr:=nr+1;
@@ -324,6 +321,8 @@ function(s, limit)
         orb[nr]:=x;
         schreierpos[nr]:=i; # orb[nr] is obtained from orb[i]
         schreiergen[nr]:=j; # by multiplying by gens[j]
+        schreiermult[nr]:=pos; # and ends up in position <pos> of 
+                               # its lambda orb
         HTAdd(ht, x[4], nr);
         graph[nr]:=EmptyPlist(nrgens);
         graph[i][j]:= nr;
@@ -385,7 +384,7 @@ function(s, limit)
           #store graded lambda orb
           graded[rankx][gradedlens[rankx]]:=o;
           
-          #install points in lambdaht
+          #install points from new lambda orb in lambdaht
           Enumerate(o, infinity);
           for y in [1..Length(o)] do 
             HTAdd(lambdaht, o[y], [rankx, gradedlens[rankx], y]);
@@ -398,8 +397,8 @@ function(s, limit)
           repslookup[lenreps]:=[nr];
           repslens[lenreps]:=1;
           HTAdd(lambdarhoht, Concatenation(lamx, rho(x)), lenreps);
-          x:=[s, [1, 1, 1], o, x, nr];
-
+          x:=[s, [1, 1], o, x, nr];
+          pos:=true;
         else #old lambda orbit
           o:=graded[pos[1]][pos[2]];
           
@@ -424,8 +423,9 @@ function(s, limit)
           #put lambda x in the first position in its scc
           if not pos[3]=scc[1] then 
             y:=x*mults[pos[3]];
+            pos:=pos[3];
           else
-            y:=x;
+            y:=x; 
           fi;
 
           #check if we've seen rho(y) before
@@ -434,7 +434,8 @@ function(s, limit)
           val:=HTValue(lambdarhoht, rhoy);
 
           # this is what we keep if it is new
-          x:=[s, [m, scc[1], pos[3]], o, y, nr+1];
+          x:=[s, [m, scc[1]], o, y, nr+1];
+
 
           if val=fail then  #new rho value
             lenreps:=lenreps+1;
@@ -538,6 +539,9 @@ function(s, limit)
         orb[nr]:=x;
         schreierpos[nr]:=i; # orb[nr] is obtained from orb[i]
         schreiergen[nr]:=j; # by multiplying by gens[j]
+        schreiermult[nr]:=pos; # and then by multiplying by o!.mults[pos]
+                               # pos = fail if gens[j]*orb[nr] is the R-rep
+                               # (its lambda value is in scc[1])
         HTAdd(ht, x[4], nr);
         graph[nr]:=EmptyPlist(nrgens);
         graph[i][j]:= nr;
@@ -862,7 +866,7 @@ function(s)
   data:=rec(ht:=HTCreate(x, rec(hashlen:=s!.opts.hashlen.L)), 
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
      reps:=[], repslookup:=[], lenreps:=0, orbit:=[[,,,x]], repslens:=[], 
-     schreierpos:=[], schreiergen:=[]);
+     schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail]);
   
   Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
 
@@ -877,6 +881,34 @@ function(s)
 
   return data;
 end);
+
+#TTT
+
+# new for 1.0! - TraceSchreierTreeForward - "for semi data and pos int"
+##############################################################################
+
+InstallOtherMethod(TraceSchreierTreeForward, "for semigp data and pos int",
+[IsSemigroupData, IsPosInt],
+function(data, pos)
+  local word, i, o, m;
+  
+  word:=[];
+  i:=pos;
+
+  while i > 1 do 
+    Add(word, data!.schreiergen[i]);
+    i:=data!.schreierpos[i];
+  od;
+
+  # check if word is really the R-rep
+  if data!.schreiermult[pos]<>fail then 
+    o:=data!.orbit[pos][3];    # the lambda orb
+    m:=data!.orbit[pos][2][1]; # the scc
+    Append(word, TraceSchreierTreeOfSCCBack(o, m, data!.schreiermult[pos])); 
+  fi;
+  return word;
+end);
+
 
 #VVV
 
