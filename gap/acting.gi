@@ -899,7 +899,7 @@ end);
 InstallOtherMethod(Position, "for acting semigroup data and acting elt",
 [IsSemigroupData, IsObject, IsZeroCyc],
 function(data, x, n)
-  local val, s, o, l, m, scc, schutz, repslookup, mults, y, reps, repslen, lambdaperm;
+  local val, s, o, l, m, scc, schutz, repslookup, mults, y, reps, repslens, lambdaperm;
 
   val:=HTValue(data!.ht, x);
 
@@ -909,12 +909,13 @@ function(data, x, n)
 
   s:=data!.semi;
 
-  if data!.graded then 
+  if IsBound(data!.graded) and data!.graded then 
     o:=GradedLambdaOrb(s, x, true);
   else
     o:=LambdaOrb(s);
   fi; 
 
+  Enumerate(o);
   l:=Position(o, LambdaFunc(s)(x));
   m:=OrbSCCLookup(o)[l];
   scc:=OrbSCC(o);
@@ -934,17 +935,17 @@ function(data, x, n)
     y:=x;
   fi; 
 
-  reps:=data!.reps; repslen:=data!.repslen;
+  reps:=data!.reps; repslens:=data!.repslens;
 
   if schutz=false then 
-    for n in [1..repslen[val]] do 
+    for n in [1..repslens[val]] do 
       if reps[val][n]=y then 
         return repslookup[val][n];
       fi;
     od;
   else
     lambdaperm:=LambdaPerm(s);
-    for n in [1..repslen[val]] do 
+    for n in [1..repslens[val]] do 
       if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=() then 
         return repslookup[val][n];
       fi;
@@ -952,8 +953,6 @@ function(data, x, n)
   fi; 
   return fail;
 end);
-
-
 
 # new for 1.0! - PrintObj - "for graded lambda orbs"
 ##############################################################################
@@ -1009,10 +1008,10 @@ end);
 # new for 1.0! - SLPOfElm - "for an acting semigroup and acting elt"
 ##############################################################################
 
-InstallMethod(SLP, "for an acting semigroup and acting elt",
+InstallMethod(SemigroupEltSLP, "for an acting semigroup and acting elt",
 [IsActingSemigroup, IsActingElt],
 function(s, x)
-  local data, nr, gens, zip, slp0, o, m, scc, l, mult, y, p, schutz, stab, slp;
+  local data, nr, gens, zip, o, m, scc, l, mult, y, p, schutz, stab, slpstrong, slp;
 
   # suppose that the data is fully enumerated...
   data:=SemigroupData(s);
@@ -1044,20 +1043,19 @@ function(s, x)
    EvaluateWord(gens, mult)))^-1;
 
   p:=LambdaPerm(s)(data[nr][4], y);
+  
   if p<>() then
-    schutz:=LambdaOrbSchutzGp(o, m);
-    stab:=StabilizerChain(schutz);
+    Error();
+    schutz:=GroupWithMemory(LambdaOrbSchutzGp(o, m));
+    stab:=StabilizerChain(schutz); 
+    slpstrong := SLPOfElms(StrongGenerators(stab));
+    ForgetMemory(stab);
     
     # slp for p in terms of strong generators
     slp:=SiftGroupElementSLP(stab, p).slp;
     
-    schutz:=GroupWithMemory(schutz);
-    stab:=StabilizerChain(schutz);
-    
-    # slp for strong generators in terms original schutz gp generators
-    slp:=CompositionOfStraightLinePrograms(slp,
-     SLPOfElms(StrongGenerators(stab)));
-    ForgetMemory(stab);
+    # slp for p in terms original schutz gp generators
+    slp:=CompositionOfStraightLinePrograms(slp, slpstrong);
     
     # slp for schutz gp generators in terms of semigp generators
     slp:=CompositionOfStraightLinePrograms(slp, LambdaOrbSLP(o, m));
@@ -1074,8 +1072,11 @@ function(s, x)
   fi;
 
   # slp for multiplier
-  return ProductOfStraightLinePrograms(slp, 
-   StraightLineProgram([zip(mult)], Length(gens)));
+  if mult<>[] then 
+    return ProductOfStraightLinePrograms(slp, 
+     StraightLineProgram([zip(mult)], Length(gens)));
+  fi;
+  return slp;
 end);
 
 #TTT
@@ -1131,5 +1132,6 @@ function(data)
   Length(data!.reps), " lambda-rho values>");
   return;
 end);
+
 
 #EOF

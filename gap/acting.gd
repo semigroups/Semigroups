@@ -49,9 +49,7 @@ DeclareGlobalFunction("LambdaOrbRep");
 DeclareGlobalFunction("LambdaOrbSchutzGp");
 DeclareGlobalFunction("LambdaOrbStabChain");
 DeclareGlobalFunction("LambdaOrbSLP");
-DeclareOperation("SLP", [IsActingSemigroup, IsActingElt]);
-DeclareGlobalFunction("ConvertSLPToFactorization");
-DeclareGlobalFunction("ConvertFactorizationToSLP");
+DeclareOperation("SemigroupEltSLP", [IsActingSemigroup, IsActingElt]);
 
 DeclareAttribute("LambdaMult", IsActingSemigroup);
 DeclareAttribute("RhoMult", IsActingSemigroup);
