@@ -160,6 +160,54 @@ function(lamf, o)
   return not HTValue(LambdaHT(o!.semi), lamf)=fail;
 end);
 
+#CCC
+
+# new for 1.0! - ConvertSLPToFactorization - "for a straight line prog"
+##############################################################################
+
+InstallGlobalFunction(ConvertSLPToFactorization, 
+function(slp)
+  local gens, str, i, out, j;
+  
+  if not IsStraightLineProgram(slp) then 
+    Error("usage: the argument should be a straight line program,");
+    return;
+  fi;
+  
+  r := ShallowCopy( gensnames );
+  a := ListWithIdenticalEntries( Length( r ), true );
+  respos := false;
+  for line  in LinesOfStraightLineProgram( slp )  do
+      if not IsEmpty( line ) and IsInt( line[1] )  then
+          Add( r, StringOfResultOfLineOfStraightLineProgram( line, r, a, 
+             LaTeX ) );
+          respos := Length( r );
+          a[respos] := false;
+      elif 2 <= Length( line ) and IsInt( line[2] )  then
+          respos := line[2];
+          r[respos] := StringOfResultOfLineOfStraightLineProgram( line[1], 
+             r, a, LaTeX );
+          a[respos] := false;
+      else
+          result := "[ ";
+          for l  in line  do
+              Append( result, StringOfResultOfLineOfStraightLineProgram( l, 
+                 r, a, LaTeX ) );
+              Append( result, ", " );
+          od;
+          if not IsEmpty( line )  then
+              Unbind( result[Length( result )] );
+              Unbind( result[Length( result )] );
+          fi;
+          Append( result, " ]" );
+          return result;
+      fi;
+  od;
+  return r[respos];
+end
+
+end);
+
 #EEE
 
 # new for 1.0! - ELM_LIST - for graded lambda orbs 
@@ -211,7 +259,7 @@ function(s, limit)
   schreiermult:=data!.schreiermult;
 
   # generators
-  gens:=GeneratorsOfSemigroup(s); 
+  gens:=Generators(s); 
   nrgens:=Length(gens); 
   genstoapply:=[1..nrgens];
   
@@ -337,7 +385,7 @@ function(s, limit)
         graph[i][j]:= nr;
       od;
     od;
-  else
+  else #JDM
     if not IsBound(data!.graded) then 
       data!.graded:=true;
     fi;
@@ -422,7 +470,7 @@ function(s, limit)
             o!.mults:=EmptyPlist(Length(o));
           fi;
           mults:=o!.mults;
-          if not IsBound(mults[scc[1]]) then 
+          if not IsBound(mults[scc[1]]) then ;
             for k in scc do
               f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, m, k));
               mults[k]:=lambdamult(o[k], f);
@@ -444,7 +492,6 @@ function(s, limit)
 
           # this is what we keep if it is new
           x:=[s, [m, scc[1]], o, y, nr+1];
-
 
           if val=fail then  #new rho value
             lenreps:=lenreps+1;
@@ -567,27 +614,6 @@ end);
 
 #FFF
 
-# new for 1.0! - Factorization - "for an acting semigroup and acting elt"
-##############################################################################
-
-InstallOtherMethod(Factorization, "for an acting semigroup and acting elt",
-[IsActingSemigroup, IsActingElt],
-function(s, x)
-  local data, nr, o, m, word;
-
-  # suppose that the data is fully enumerated...
-  data:=SemigroupData(s);
-  nr:=Position(data, x);
-  o:=data[nr][3];
-  m:=data[nr][2][1];
-
-  word:=TraceSchreierTreeForward(data, nr);
-  Append(word, TraceSchreierTreeOfSCCForward(o, m, 
-   Position(o, LambdaFunc(s)(x))));
-
-  return word;
-end);
-
 
 #GGG
 
@@ -667,8 +693,9 @@ end);
 
 #III
 
-# new for 1.01! - InitSemigroupData - "for acting semi, data, and element"
+# new for 1.0! - InitSemigroupData - "for acting semi, data, and element"
 #############################################################################
+# this assumes we are using graded orbs. JDM
 
 InstallGlobalFunction(InitSemigroupData, 
 function(s, data, x)
@@ -699,6 +726,7 @@ function(s, data, x)
   data!.repslookup[1]:=[1];
   HTAdd(LambdaRhoHT(s), Concatenation(lamx, RhoFunc(s)(x)), data!.lenreps);
 
+  data!.graded:=true;
   return data;
 end);
 
@@ -745,7 +773,7 @@ function(o, m)
   
   s:=o!.semi;
   mults:=o!.mults;
-  gens:=GeneratorsOfSemigroup(s);  
+  gens:=Generators(s);  
   lambdamult:=LambdaMult(s);
 
   for i in scc do
@@ -777,8 +805,8 @@ end);
 
 InstallGlobalFunction(LambdaOrbSchutzGp, 
 function(o, m)
-  local s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults, len,
-  bound, g, is_sym, f, k, l;
+  local s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults, slp,
+  lenslp, len, bound, g, is_sym, f, h, k, l;
   
   if IsBound(o!.schutz) then 
     if IsBound(o!.schutz[m]) then 
@@ -787,10 +815,11 @@ function(o, m)
   else
     o!.schutz:=EmptyPlist(Length(OrbSCC(o))); 
     o!.schutzstab:=EmptyPlist(Length(OrbSCC(o)));
+    o!.slp:=EmptyPlist(Length(OrbSCC(o)));
   fi;
 
   s:=o!.semi;
-  gens:=GeneratorsOfSemigroup(s); 
+  gens:=Generators(s); 
   nrgens:=Length(gens);
   scc:=OrbSCC(o)[m];      
   lookup:=o!.scc_lookup;
@@ -798,6 +827,7 @@ function(o, m)
   lambdaperm:=LambdaPerm(s);
   rep:=LambdaOrbRep(o, m);
   mults:=LambdaOrbMults(o, m);
+  slp:=[]; lenslp:=0;
 
   len:=LambdaRank(s)(o[scc[1]]);
 
@@ -813,10 +843,15 @@ function(o, m)
     for l in [1..nrgens] do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
         f:=lambdaperm(rep, rep/mults[k]*(gens[l]*mults[orbitgraph[k][l]]));
-        g:=ClosureGroup(g, f);
-        if Size(g)>=bound then
-          is_sym:=true;
-          break;
+        h:=ClosureGroup(g, f);
+        if Size(h)>Size(g) then 
+          g:=h; 
+          lenslp:=lenslp+1;
+          slp[lenslp]:=[k,l];
+          if Size(g)>=bound then
+            is_sym:=true;
+            break;
+          fi;
         fi;
       fi;
     od;
@@ -826,6 +861,7 @@ function(o, m)
   od;
 
   o!.schutz[m]:=g;
+  o!.slp[m]:=slp;
 
   if is_sym then
     o!.schutzstab[m]:=true;
@@ -836,6 +872,42 @@ function(o, m)
   fi;
 
   return o!.schutz[m];
+end);
+
+# new for 1.0! - LambdaOrbSLP - "for a lambda orb and scc index"
+##############################################################################
+
+InstallGlobalFunction(LambdaOrbSLP, 
+function(o, m)
+  local g, slp, nr, r, graph, slp_lines, word, i, j;
+
+  if IsBound(o!.slp) then 
+    if IsBound(o!.slp[m]) and IsStraightLineProgram(o!.slp[m]) then 
+      return o!.slp[m];
+    fi;
+  fi;
+ 
+  g:=LambdaOrbSchutzGp(o, m);
+  slp:=o!.slp[m];
+  nr:=Length(slp);
+  slp_lines:=EmptyPlist(nr);
+  r:=Length(Generators(o!.semi));
+  
+  if nr<>0 then
+    graph:=OrbitGraph(o);
+    for i in [1..nr] do 
+      word:=Concatenation(TraceSchreierTreeOfSCCForward(o, m, slp[i][1]),
+       [slp[i][2]], 
+        TraceSchreierTreeOfSCCBack(o, m, graph[slp[i][1]][slp[i][2]]));
+      slp_lines[i]:=[];
+      for j in [1..Length(word)] do 
+        slp_lines[i][2*j-1]:=word[j];
+        slp_lines[i][2*j]:=1;
+      od;
+    od;
+  fi;
+
+  return StraightLineProgram([slp_lines], r);
 end);
 
 # new for 1.0! - LambdaOrbStabChain - "for a lambda orb and scc index"
@@ -950,7 +1022,7 @@ InstallMethod(SemigroupData, "for an acting semigroup",
 function(s)
   local gens, x, data;
   
-  gens:=GeneratorsOfSemigroup(s);
+  gens:=Generators(s);
 
   if IsTransformationSemigroup(s) then 
     x:=One(gens[1]);
@@ -978,6 +1050,56 @@ function(s)
   fi;
 
   return data;
+end);
+
+# new for 1.0! - SLPOfElm - "for an acting semigroup and acting elt"
+##############################################################################
+
+InstallMethod(SLP, "for an acting semigroup and acting elt",
+[IsActingSemigroup, IsActingElt],
+function(s, x)
+  local data, nr, word, o, m, scc, l, word_end, gens, y, p, schutz, stab, slp1, slp2, slp3;
+
+  # suppose that the data is fully enumerated...
+  data:=SemigroupData(s);
+  # EnumerateSemigroupData(s, lookingfor:=??)
+  
+  nr:=Position(data, x); 
+
+  # find word equaling rep of R-class of x
+  word:=TraceSchreierTreeForward(data, nr);
+
+  # find group element
+  o:=data[nr][3]; 
+  m:=data[nr][2][1];
+  scc:=OrbSCC(o);
+  l:=Position(o, LambdaFunc(s)(x));
+  word_end:=TraceSchreierTreeOfSCCForward(o, m, l);
+  gens:=Generators(s);
+
+  y:=x*MappingPermListList(o[scc[m][1]], OnTuples(o[scc[m][1]], 
+   EvaluateWord(gens, word_end)))^-1;
+
+  p:=LambdaPerm(s)(data[nr][4], y);
+  if p<>() then
+    schutz:=LambdaOrbSchutzGp(o, m);
+    stab:=StabilizerChain(schutz);
+
+    # slp for p in terms of strong generators
+    slp1:=SiftGroupElementSLP(stab, p).slp;
+    schutz:=GroupWithMemory(schutz);
+    stab:=StabilizerChain(schutz);
+
+    # slp for strong generators in terms original schutz gp generators
+    slp2:=SLPOfElms(StrongGenerators(stab));
+  
+    # slp for schutz gp generators in terms of semigp generators
+    slp3:=LambdaOrbSLP(o, m);
+  fi;
+
+  # append the multiplier 
+  Append(word, word_end);
+  return word;
 end);
 
 #TTT
