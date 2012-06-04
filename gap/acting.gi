@@ -91,12 +91,12 @@ fi;
 
 InstallMethod(LambdaMult, "for a transformation semi",
 [IsTransformationSemigroup], s-> function(pt, f)
-  return MappingPermListList(f![1]{pt}, pt);
+  return MappingPermListList(pt, f![1]{pt});
 end);
 
 InstallMethod(LambdaMult, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> function(pt, f) 
-  return MappingPermListList(OnIntegerTuplesWithPP(pt, f), pt);
+  return MappingPermListList(pt, OnIntegerTuplesWithPP(pt, f));
 end);
 
 # new for 1.0! - LambdaPerm
@@ -236,7 +236,7 @@ function(s, limit)
       
       for j in genstoapply do #JDM
         x:=gens[j]*orb[i][4];
-        
+       
         #check if x is already an R-class rep
         pos:=HTValue(ht, x);
         if pos<>fail then 
@@ -246,7 +246,8 @@ function(s, limit)
         
         lamx:=lambda(x);
         pos:=Position(o, lamx);
-          
+        #if nr=11 then Error(); fi;
+        
         #find the scc
         m:=lookup[pos];
 
@@ -415,8 +416,8 @@ function(s, limit)
           mults:=o!.mults;
           if not IsBound(mults[scc[1]]) then 
             for k in scc do
-              f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, k));
-              mults[k]:=lambdamult(o[scc[1]], f);
+              f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, m, k));
+              mults[k]:=lambdamult(o[k], f);
             od; 
           fi;
           
@@ -716,8 +717,8 @@ function(o, m)
   lambdamult:=LambdaMult(s);
 
   for i in scc do
-    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, i));
-    mults[i]:=lambdamult(o[scc[1]], f);
+    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, m, i));
+    mults[i]:=lambdamult(o[i], f);
   od;
  
   return mults;
@@ -886,29 +887,43 @@ end);
 
 # new for 1.0! - TraceSchreierTreeForward - "for semi data and pos int"
 ##############################################################################
+# returns a word in the generators of the parent of <data> equal to the R-class
+# representative store in <data!.orbit[pos]>.
+
+# Notes: the code is more complicated than you might think since the R-class
+# reps are obtained from earlier reps by left multiplication but the orbit
+# multipliers correspond to right multiplication.
 
 InstallOtherMethod(TraceSchreierTreeForward, "for semigp data and pos int",
 [IsSemigroupData, IsPosInt],
 function(data, pos)
-  local word, i, o, m;
+  local word, word2, schreiergen, schreierpos, schreiermult, orb, o, m;
   
-  word:=[];
-  i:=pos;
+  word:=[];  # the word obtained by tracing schreierpos and schreiergen
+             # (left multiplication)
+  word2:=[]; # the word corresponding to multipliers applied (if any)
+             # (right multiplication)
+  
+  schreiergen:=data!.schreiergen; 
+  schreierpos:=data!.schreierpos;
+  schreiermult:=data!.schreiermult;
 
-  while i > 1 do 
-    Add(word, data!.schreiergen[i]);
-    i:=data!.schreierpos[i];
+  orb:=data!.orbit;
+
+  while pos > 1 do 
+    Add(word, schreiergen[pos]);
+    if schreiermult[pos]<>fail then # a multiplier was applied!
+      o:=orb[pos][3];               # the lambda orb
+      m:=orb[pos][2][1];            # the scc
+      Append(word2, 
+       Reversed(TraceSchreierTreeOfSCCBack(o, m, schreiermult[pos])));
+    fi;
+    pos:=schreierpos[pos];
   od;
 
-  # check if word is really the R-rep
-  if data!.schreiermult[pos]<>fail then 
-    o:=data!.orbit[pos][3];    # the lambda orb
-    m:=data!.orbit[pos][2][1]; # the scc
-    Append(word, TraceSchreierTreeOfSCCBack(o, m, data!.schreiermult[pos])); 
-  fi;
+  Append(word, Reversed(word2));
   return word;
 end);
-
 
 #VVV
 
