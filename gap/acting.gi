@@ -162,52 +162,6 @@ end);
 
 #CCC
 
-# new for 1.0! - ConvertSLPToFactorization - "for a straight line prog"
-##############################################################################
-
-InstallGlobalFunction(ConvertSLPToFactorization, 
-function(slp)
-  local gens, str, i, out, j;
-  
-  if not IsStraightLineProgram(slp) then 
-    Error("usage: the argument should be a straight line program,");
-    return;
-  fi;
-  
-  r := ShallowCopy( gensnames );
-  a := ListWithIdenticalEntries( Length( r ), true );
-  respos := false;
-  for line  in LinesOfStraightLineProgram( slp )  do
-      if not IsEmpty( line ) and IsInt( line[1] )  then
-          Add( r, StringOfResultOfLineOfStraightLineProgram( line, r, a, 
-             LaTeX ) );
-          respos := Length( r );
-          a[respos] := false;
-      elif 2 <= Length( line ) and IsInt( line[2] )  then
-          respos := line[2];
-          r[respos] := StringOfResultOfLineOfStraightLineProgram( line[1], 
-             r, a, LaTeX );
-          a[respos] := false;
-      else
-          result := "[ ";
-          for l  in line  do
-              Append( result, StringOfResultOfLineOfStraightLineProgram( l, 
-                 r, a, LaTeX ) );
-              Append( result, ", " );
-          od;
-          if not IsEmpty( line )  then
-              Unbind( result[Length( result )] );
-              Unbind( result[Length( result )] );
-          fi;
-          Append( result, " ]" );
-          return result;
-      fi;
-  od;
-  return r[respos];
-end
-
-end);
-
 #EEE
 
 # new for 1.0! - ELM_LIST - for graded lambda orbs 
@@ -1058,48 +1012,70 @@ end);
 InstallMethod(SLP, "for an acting semigroup and acting elt",
 [IsActingSemigroup, IsActingElt],
 function(s, x)
-  local data, nr, word, o, m, scc, l, word_end, gens, y, p, schutz, stab, slp1, slp2, slp3;
+  local data, nr, gens, zip, slp0, o, m, scc, l, mult, y, p, schutz, stab, slp;
 
   # suppose that the data is fully enumerated...
   data:=SemigroupData(s);
   # EnumerateSemigroupData(s, lookingfor:=??)
   
   nr:=Position(data, x); 
+  gens:=Generators(s);
+  
+  zip:=function(list)
+    local len, out, i;
 
-  # find word equaling rep of R-class of x
-  word:=TraceSchreierTreeForward(data, nr);
+    len:=Length(list);
+    out:=EmptyPlist(2*len);
+    for i in [1..len] do 
+      out[2*i-1]:=list[i];
+      out[2*i]:=1;
+    od;
+    return out;
+  end;
 
   # find group element
   o:=data[nr][3]; 
   m:=data[nr][2][1];
   scc:=OrbSCC(o);
-  l:=Position(o, LambdaFunc(s)(x));
-  word_end:=TraceSchreierTreeOfSCCForward(o, m, l);
-  gens:=Generators(s);
+  l:=Position(o, LambdaFunc(s)(x)); 
+  mult:=TraceSchreierTreeOfSCCForward(o, m, l);
 
   y:=x*MappingPermListList(o[scc[m][1]], OnTuples(o[scc[m][1]], 
-   EvaluateWord(gens, word_end)))^-1;
+   EvaluateWord(gens, mult)))^-1;
 
   p:=LambdaPerm(s)(data[nr][4], y);
   if p<>() then
     schutz:=LambdaOrbSchutzGp(o, m);
     stab:=StabilizerChain(schutz);
-
+    
     # slp for p in terms of strong generators
-    slp1:=SiftGroupElementSLP(stab, p).slp;
+    slp:=SiftGroupElementSLP(stab, p).slp;
+    
     schutz:=GroupWithMemory(schutz);
     stab:=StabilizerChain(schutz);
-
+    
     # slp for strong generators in terms original schutz gp generators
-    slp2:=SLPOfElms(StrongGenerators(stab));
-  
+    slp:=CompositionOfStraightLinePrograms(slp,
+     SLPOfElms(StrongGenerators(stab)));
+    ForgetMemory(stab);
+    
     # slp for schutz gp generators in terms of semigp generators
-    slp3:=LambdaOrbSLP(o, m);
+    slp:=CompositionOfStraightLinePrograms(slp, LambdaOrbSLP(o, m));
   fi;
 
-  # append the multiplier 
-  Append(word, word_end);
-  return word;
+  # find word equaling rep of R-class of x
+  if IsBound(slp) then 
+    slp:=ProductOfStraightLinePrograms(
+     StraightLineProgram([zip(TraceSchreierTreeForward(data, nr))],
+      Length(gens)), slp);
+  else
+    slp:=StraightLineProgram(
+     [zip(TraceSchreierTreeForward(data, nr))], Length(gens));
+  fi;
+
+  # slp for multiplier
+  return ProductOfStraightLinePrograms(slp, 
+   StraightLineProgram([zip(mult)], Length(gens)));
 end);
 
 #TTT
