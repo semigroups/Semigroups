@@ -185,7 +185,7 @@ end);
 # new for 1.0! - EnumerateSemigroupData - for an acting semigroup and limit
 ##############################################################################
 
-#lookingfor?, schreier!, SLP, store index in the output x, 
+#lookingfor? 
 
 InstallGlobalFunction(EnumerateSemigroupData, 
 function(s, limit)
@@ -649,39 +649,44 @@ end);
 
 # new for 1.0! - InitSemigroupData - "for acting semi, data, and element"
 #############################################################################
-# this assumes we are using graded orbs. JDM
+# this assumes we are using graded orbs.
 
 InstallGlobalFunction(InitSemigroupData, 
 function(s, data, x)
   local lamx, pos, o, m, scc;
 
   lamx:=LambdaFunc(s)(x);
-  pos:=HTValue(LambdaHT(s), lamx);
 
-  if pos=fail then 
-    o:=GradedLambdaOrb(s, x, true);
-    pos:=[1,1,1]; #[scc index, scc[1], pos of LambdaFunc(x) in o]
-  else
-   o:=GradedLambdaOrbs(s)[pos[1]][pos[2]];
-    m:=OrbSCCLookup(o)[pos[3]];
-    scc:=o!.scc[m];
-    pos:=[m, scc[1], pos[3]];
-    if not pos[3]=scc[1] then 
-      x:=x*LambdaOrbMults(o, m)[pos[3]];
-      lamx:=o[scc[1]];
-    fi;
-  fi;  
+  if HasGradedLambdaOrbs(s) or (HasLambdaHT(s) and LambdaHT(s)!.nr<20) or
+    (HasLambdaOrb(s) and HasGradedLambdaOrbs(s) and
+    Length(LambdaOrb(s))>=LambdaHT(s)!.nr) then 
+    
+    pos:=HTValue(LambdaHT(s), lamx);
 
-  HTAdd(data!.ht, x, 1);
-  data!.orbit:=[[s, pos, o, x]];
-  data!.repslens[1]:=1;
-  data!.lenreps:=data!.lenreps+1;
-  data!.reps[data!.lenreps]:=[x];
-  data!.repslookup[1]:=[1];
-  HTAdd(LambdaRhoHT(s), Concatenation(lamx, RhoFunc(s)(x)), data!.lenreps);
+    if pos=fail then 
+      o:=GradedLambdaOrb(s, x, true);
+      pos:=[1,1,1]; #[scc index, scc[1], pos of LambdaFunc(x) in o]
+    else
+      o:=GradedLambdaOrbs(s)[pos[1]][pos[2]];
+      m:=OrbSCCLookup(o)[pos[3]];
+      scc:=o!.scc[m];
+      pos:=[m, scc[1], pos[3]];
+      if not pos[3]=scc[1] then 
+        x:=x*LambdaOrbMults(o, m)[pos[3]];
+        lamx:=o[scc[1]];
+      fi;
+    fi;  
 
-  data!.graded:=true;
-  return data;
+    HTAdd(data!.ht, x, 1);
+    data!.orbit:=[[s, pos, o, x]];
+    data!.repslens[1]:=1;
+    data!.lenreps:=data!.lenreps+1;
+    data!.reps[data!.lenreps]:=[x];
+    data!.repslookup[1]:=[1];
+    HTAdd(LambdaRhoHT(s), Concatenation(lamx, RhoFunc(s)(x)), data!.lenreps);
+
+    data!.graded:=true;
+    return data;
 end);
 
 # new for 1.0! - IsBound - for graded lambda orbs and pos int
@@ -830,6 +835,8 @@ end);
 
 # new for 1.0! - LambdaOrbSLP - "for a lambda orb and scc index"
 ##############################################################################
+# returns an slp for the generators of LambdaOrbSchutzGp(o, m) in the
+# generators of the semigroup.
 
 InstallGlobalFunction(LambdaOrbSLP, 
 function(o, m)
@@ -1005,13 +1012,16 @@ function(s)
   return data;
 end);
 
-# new for 1.0! - SLPOfElm - "for an acting semigroup and acting elt"
+# new for 1.0! - SemigroupEltSLP - "for an acting semigroup and acting elt"
 ##############################################################################
 
 InstallMethod(SemigroupEltSLP, "for an acting semigroup and acting elt",
 [IsActingSemigroup, IsActingElt],
 function(s, x)
-  local data, nr, gens, zip, o, m, scc, l, mult, y, p, schutz, stab, slpstrong, slp;
+  local data, nr, gens, zip, o, m, scc, l, mult, y, p, schutz, stab, slpstrong,
+   slp;
+
+  Info(InfoWarning, 1, "this does not always return the correct answer!");
 
   # suppose that the data is fully enumerated...
   data:=SemigroupData(s);
@@ -1045,7 +1055,6 @@ function(s, x)
   p:=LambdaPerm(s)(data[nr][4], y);
   
   if p<>() then
-    Error();
     schutz:=GroupWithMemory(LambdaOrbSchutzGp(o, m));
     stab:=StabilizerChain(schutz); 
     slpstrong := SLPOfElms(StrongGenerators(stab));
@@ -1132,6 +1141,5 @@ function(data)
   Length(data!.reps), " lambda-rho values>");
   return;
 end);
-
 
 #EOF
