@@ -24,16 +24,16 @@ bindir:
 	if test ! -d bin;  then mkdir bin;  fi
 	if test ! -d bin/@GAPARCH@;  then mkdir -p bin/@GAPARCH@;  fi
 
-bin/@GAPARCH@/citrus.so: src/citrus.c
+bin/@GAPARCH@/citrus.so: src/ptrans.c src/pperm.c 
 	cp $(GAPPATH)/bin/@GAPARCH@/config.h bin/@GAPARCH@
-	$(GAPPATH)/bin/@GAPARCH@/gac -p ${COMPILEOPTIONS} -d -o bin/@GAPARCH@/citrus.so src/citrus.c
+	$(GAPPATH)/bin/@GAPARCH@/gac -p ${COMPILEOPTIONS} -d -o bin/@GAPARCH@/citrus.so src/ptrans.c src/pperm.c
 
 # make a statically linked GAP including the citrus module
 static:
 	(cd $(GAPPATH)/bin/@GAPARCH@; \
 	./gac -o gap-static -p "-DCITRUSSTATIC" -p ${COMPILEOPTIONS} -P \
 	"-static" ../../pkg/citrus/src/citrus.c)
-
+# this won't work, the pkg folder isn't called citrus among other things
 clean:
 	rm -rf bin/@GAPARCH@ Makefile
 	rmdir bin

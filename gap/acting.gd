@@ -85,7 +85,7 @@ InstallTrueMethod(IsActingSemigroup, IsPartialPermSemigroup);
 InstallTrueMethod(IsActingElt, IsTransformation);
 InstallTrueMethod(IsActingElt, IsPartialPerm);
 
-InstallTrueMethod(IsActingSemigroupGC, IsGreensClassOfTransSemigp);
-InstallTrueMethod(IsActingSemigroupGC, IsGreensClassOfPartPermSemigroup);
+InstallTrueMethod(IsActingSemigroupGreensClass, IsGreensClassOfTransSemigp);
+InstallTrueMethod(IsActingSemigroupGreensClass, IsGreensClassOfPartPermSemigroup);
 
 #EOF

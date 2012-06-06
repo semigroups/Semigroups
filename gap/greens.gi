@@ -14,7 +14,7 @@
 #############################################################################
 
 InstallMethod(\=, "for Green's class and class of acting semigp",
-[IsActingSemigroupGC, IsActingSemigroupGC],
+[IsActingSemigroupGreensClass, IsActingSemigroupGreensClass],
 function(x, y)
   if (IsGreensRClass(x) and IsGreensRClass(y)) or
    (IsGreensLClass(x) and IsGreensLClass(y)) or
@@ -30,7 +30,7 @@ end);
 #############################################################################
 
 InstallMethod(\<, "for Green's class and class of acting semigp",
-[IsActingSemigroupGC, IsActingSemigroupGC],
+[IsActingSemigroupGreensClass, IsActingSemigroupGreensClass],
 function(x, y)
   if (IsGreensRClass(x) and IsGreensRClass(y)) or
    (IsGreensLClass(x) and IsGreensLClass(y)) or
