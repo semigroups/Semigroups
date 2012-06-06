@@ -188,8 +188,18 @@ end);
 #lookingfor? 
 
 InstallGlobalFunction(EnumerateSemigroupData, 
-function(s, limit)
-  local data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, pos, lamx, m, mults, y, rhoy, val, schutz, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, f, schutzstab, g, is_sym, len, bound, orbitgraph, j, n, k, l;
+function(arg)
+  local s, limit, lookfunc, looking, data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, pos, lamx, m, mults, y, rhoy, val, schutz, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, f, schutzstab, g, is_sym, len, bound, orbitgraph, j, n, k, l;
+
+  s:=arg[1]; limit:=arg[2];
+
+  # are we looking for something?
+  if IsBound(arg[3]) then 
+    lookfunc:=arg[3];
+    looking:=true;
+  else
+    looking:=false;
+  fi;
 
   data:=SemigroupData(s);
   ht:=data!.ht;       # ht and orb contain existing R-class reps
@@ -227,8 +237,7 @@ function(s, limit)
   rho:=RhoFunc(s);
   lambdarhoht:=LambdaRhoHT(s);
 
-  if not data!.graded=false then # decided when data is created in 
-                                 # InitSemigroupData
+  if data!.graded=false then # decided when data is created in InitSemigroupData
     
     o:=LambdaOrb(s);
     Enumerate(o, infinity);
@@ -250,7 +259,6 @@ function(s, limit)
         
         lamx:=lambda(x);
         pos:=Position(o, lamx);
-        
         #find the scc
         m:=lookup[pos];
 
@@ -327,15 +335,20 @@ function(s, limit)
         schreiergen[nr]:=j; # by multiplying by gens[j]
         schreiermult[nr]:=pos; # and ends up in position <pos> of 
                                # its lambda orb
-        HTAdd(ht, x[4], nr);
+        HTAdd(ht, y, nr);
         graph[nr]:=EmptyPlist(nrgens);
         graph[i][j]:= nr;
+        if looking then 
+          if lookfunc(data, y) then 
+            data!.pos:=i;
+            data!.found:=nr;
+            data!.lenreps:=lenreps;
+            return data;
+          fi;
+        fi;
       od;
     od;
   else #JDM
-    if not IsBound(data!.graded) then 
-      data!.graded:=true;
-    fi;
     
     graded:=GradedLambdaOrbs(s);  # existing graded lambda orbs
     gradedlens:=graded!.lens;     # gradedlens[j]=Length(graded[j]);
@@ -561,7 +574,6 @@ end);
 
 #FFF
 
-
 #GGG
 
 # new for 1.0! - GradedLambdaOrb - "for an acting semigroup and elt"
@@ -649,7 +661,7 @@ function(s, data, x)
   local lamx, pos, o, m, scc;
 
   # decide if we are using graded orbits or not.
-  if (not HasGradedLambdaOrbs(s)) or (HasLambdaHT(s) and LambdaHT(s)!.nr<20) 
+  if (not HasGradedLambdaOrbs(s)) #or (HasLambdaHT(s) and LambdaHT(s)!.nr<20) 
    or (HasLambdaOrb(s) and HasGradedLambdaOrbs(s) and
     Length(LambdaOrb(s))>=LambdaHT(s)!.nr) then 
     data!.graded:=false;
@@ -945,8 +957,12 @@ function(data, x, n)
   l:=Position(o, LambdaFunc(s)(x));
   m:=OrbSCCLookup(o)[l];
   scc:=OrbSCC(o);
-  
+
   val:=HTValue(LambdaRhoHT(s), Concatenation(o[scc[m][1]], RhoFunc(s)(x)));
+  if val=fail then 
+    return fail;
+  fi;
+
   schutz:=LambdaOrbStabChain(o, m);
   repslookup:=data!.repslookup;
 
@@ -1047,7 +1063,7 @@ function(s, x)
 
   # suppose that the data is fully enumerated...
   data:=SemigroupData(s);
-  # EnumerateSemigroupData(s, lookingfor:=??)
+  #EnumerateSemigroupData(s, lookingfor:=??)
   
   nr:=Position(data, x); 
   gens:=Generators(s);
