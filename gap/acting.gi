@@ -160,6 +160,34 @@ function(lamf, o)
   return not HTValue(LambdaHT(o!.semi), lamf)=fail;
 end);
 
+# new for 1.0! - \in - for acting semi elt and semigroup data
+##############################################################################
+# expand?
+
+InstallMethod(\in, "for acting semi elt and semigroup data",
+[IsActingElt, IsSemigroupData],
+function(f, data)
+  return not Position(data, f)=fail;
+end);
+
+# new for 1.0! - \in - for an acting elt and acting semigroup
+##############################################################################
+
+InstallMethod(\in, "for an acting elt and acting semigroup",
+[IsActingElt, IsActingSemigroup],
+function(f, s)
+  
+  if not ElementsFamily(FamilyObj(s))=FamilyObj(f) then 
+    Error("the element and semigroup are not of the same type,");
+    return;
+  fi;
+ 
+
+
+end);
+
+
+
 #CCC
 
 #EEE
@@ -185,8 +213,6 @@ end);
 # new for 1.0! - EnumerateSemigroupData - for an acting semigroup and limit
 ##############################################################################
 
-#lookingfor? 
-
 InstallGlobalFunction(EnumerateSemigroupData, 
 function(arg)
   local s, limit, lookfunc, looking, data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, pos, lamx, m, mults, y, rhoy, val, schutz, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, f, schutzstab, g, is_sym, len, bound, orbitgraph, j, n, k, l;
@@ -195,7 +221,7 @@ function(arg)
 
   # are we looking for something?
   if IsBound(arg[3]) then 
-    lookfunc:=arg[3];
+    lookfunc:=arg[3]; # this should be as cheap as possible!
     looking:=true;
   else
     looking:=false;
@@ -338,7 +364,11 @@ function(arg)
         HTAdd(ht, y, nr);
         graph[nr]:=EmptyPlist(nrgens);
         graph[i][j]:= nr;
+        
+        # are we looking for something?
         if looking then 
+          
+          # did we find it?
           if lookfunc(data, y) then 
             data!.pos:=i;
             data!.found:=nr;
@@ -566,6 +596,9 @@ function(arg)
   fi;
   data!.pos:=i;
   data!.lenreps:=lenreps;
+  if looking then 
+    data!.found:=false;
+  fi;
 
   return true;
 end);
@@ -1051,7 +1084,8 @@ end);
 # new for 1.0! - SemigroupEltSLP - "for an acting semigroup and acting elt"
 ##############################################################################
 #JDM this is not really working due to the slps for group elements containing
-#inverses.
+#inverses. Also even if they don't, then we don't correct for the group elt,
+#and so the answer is out by a multiple of a group elt.
 
 InstallMethod(SemigroupEltSLP, "for an acting semigroup and acting elt",
 [IsActingSemigroup, IsActingElt],
