@@ -518,7 +518,7 @@ end);
 
 InstallOtherMethod(DClassType, "for a partial perm inverse semigroup",
 [IsInverseSemigroup and IsPartialPermSemigroup],
-function(s);
+function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsGreensDClass and
          IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup);

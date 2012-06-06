@@ -753,13 +753,24 @@ end);
 # new for 1.0! - EnumerateSemigroupData - "for a regular acting semi"
 ##############################################################################
 
-InstallOtherMethod(EnumerateSemigroupData, 
-"for a regular acting semigroup, limit, and function",
-[IsActingSemigroup and IsRegularSemigroup, IsCyclotomic, IsFunction],
+InstallOtherMethod(EnumerateSemigroupData, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  local o, scc, r, m;
 
+  o:=LambdaOrb(s);
+
+  if not o!.enumerated then 
+    scc:=OrbSCC(o);
+    r:=Length(scc);
+    for m in [1..r] do
+      #JDM expand!
+      LambdaOrbSchutzGp(o, m);
+    od;
+  fi;
+  
+  return o;
 end);
-
-
 
 #FFF
 
@@ -921,10 +932,11 @@ function(s)
     x:=PartialPermNC(Points(Generators(s)), Points(Generators(s)));
   fi;     
 
+  # the component enumerated is only used for regular semigroups
   return Orb(s, LambdaDomain(s), LambdaAct(s),
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
         storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
-        finished:=false, scc_reps:=[x], semi:=s));
+        enumerated:=false, scc_reps:=[x], semi:=s));
 end);
 
 # new for 1.0! - LambdaOrbMults - "for a lambda orb and scc index"
