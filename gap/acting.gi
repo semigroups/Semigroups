@@ -380,6 +380,9 @@ function(s, limit)
   return EnumerateSemigroupData(s, limit, ReturnFalse);
 end);
 
+# new for 1.0! - EnumerateSemigroupData - for an acting semigroup, limit, func
+##############################################################################
+
 InstallMethod(EnumerateSemigroupData, "for an acting semi, limit, and func",
 [IsActingSemigroup, IsCyclotomic, IsFunction],
 function(s, limit, lookfunc)
@@ -750,7 +753,11 @@ end);
 # new for 1.0! - EnumerateSemigroupData - "for a regular acting semi"
 ##############################################################################
 
+InstallOtherMethod(EnumerateSemigroupData, 
+"for a regular acting semigroup, limit, and function",
+[IsActingSemigroup and IsRegularSemigroup, IsCyclotomic, IsFunction],
 
+end);
 
 
 
