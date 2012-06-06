@@ -71,7 +71,7 @@ DeclareProperty("IsGradedRhoOrbs", IsOrbit);
 DeclareAttribute("LambdaDomain", IsActingSemigroup);
 DeclareAttribute("RhoDomain", IsActingSemigroup);
 
-DeclareProperty("IsActingSemigroupGC", IsGreensClass);
+DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
 DeclareGlobalFunction("InitSemigroupData");
