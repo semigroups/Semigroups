@@ -75,7 +75,7 @@ DeclareProperty("IsActingSemigroupGC", IsGreensClass);
 
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
 DeclareGlobalFunction("InitSemigroupData");
-DeclareGlobalFunction("EnumerateSemigroupData");
+DeclareOperation("EnumerateSemigroupData", [IsActingSemigroup, IsCyclotomic, IsFunction]);
 DeclareCategory("IsSemigroupData", IsRecord);
 
 # IMPLICATIONS

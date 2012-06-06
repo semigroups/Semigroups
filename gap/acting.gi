@@ -374,15 +374,23 @@ end);
 # new for 1.0! - EnumerateSemigroupData - for an acting semigroup and limit
 ##############################################################################
 
-InstallGlobalFunction(EnumerateSemigroupData, 
-function(arg)
-  local s, limit, lookfunc, looking, data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, pos, lamx, m, mults, y, rhoy, val, schutz, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, f, schutzstab, g, is_sym, len, bound, orbitgraph, j, n, k, l;
+InstallOtherMethod(EnumerateSemigroupData, "for an actin semi and limit", 
+[IsActingSemigroup, IsCyclotomic],
+function(s, limit)
+  return EnumerateSemigroupData(s, limit, ReturnFalse);
+end);
 
-  s:=arg[1]; limit:=arg[2];
+InstallMethod(EnumerateSemigroupData, "for an acting semi, limit, and func",
+[IsActingSemigroup, IsCyclotomic, IsFunction],
+function(s, limit, lookfunc)
+  local looking, data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, pos, lamx, m, mults, y, rhoy, val, schutz, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, schutzstab, j, n;
+
+  #s:=arg[1]; limit:=arg[2];
 
   # are we looking for something?
-  if IsBound(arg[3]) then 
-    lookfunc:=arg[3]; # this should be as cheap as possible!
+  #if IsBound(arg[3]) then 
+  #  lookfunc:=arg[3]; # this should be as cheap as possible!
+  if lookfunc<>ReturnFalse then 
     looking:=true;
   else
     looking:=false;
@@ -738,6 +746,13 @@ function(arg)
 end);
 
 #JDM
+
+# new for 1.0! - EnumerateSemigroupData - "for a regular acting semi"
+##############################################################################
+
+
+
+
 
 #FFF
 
