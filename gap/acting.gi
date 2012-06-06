@@ -172,11 +172,14 @@ end);
 
 # new for 1.0! - \in - for an acting elt and acting semigroup
 ##############################################################################
+# JDM remove the 100 from below when the \in method for transformation
+# semigroup is removed. 
 
 InstallMethod(\in, "for an acting elt and acting semigroup",
 [IsActingElt, IsActingSemigroup], 100, 
 function(f, s)
-  local data, val, lambda, o, l, lookfunc, m, n, reps, repslens, lambdaperm, lambdarho, max, found, schutz, g, len;
+  local data, val, lambda, o, l, lookfunc, m, n, reps, repslens, lambdaperm,
+   lambdarho, max, found, schutz, g, len, scc;
   
   if not ElementsFamily(FamilyObj(s))=FamilyObj(f) then 
     Error("the element and semigroup are not of the same type,");
@@ -527,7 +530,7 @@ function(arg)
           
           # did we find it?
           if lookfunc(data, y) then 
-            data!.pos:=i;
+            data!.pos:=i-1;
             data!.found:=nr;
             data!.lenreps:=lenreps;
             return data;
