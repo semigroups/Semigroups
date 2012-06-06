@@ -450,6 +450,7 @@ function(arg)
         m:=lookup[pos];
 
         #get the multipliers
+        #JDM expand!
         mults:=LambdaOrbMults(o, m);         
 
         #put lambda x in the first position in its scc
@@ -477,6 +478,7 @@ function(arg)
           repslookup[lenreps]:=[nr];
           repslens[lenreps]:=1;
         else              # old rho value
+          # JDM expand!
           schutz:=LambdaOrbStabChain(o, m);
           
           #check membership in schutz gp via stab chain
@@ -617,16 +619,19 @@ function(arg)
           scc:=scc[m]; 
 
           #get the multipliers
-          if not IsBound(o!.mults) then 
-            o!.mults:=EmptyPlist(Length(o));
-          fi;
-          mults:=o!.mults;
-          if not IsBound(mults[scc[1]]) then ;
-            for k in scc do
-              f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, m, k));
-              mults[k]:=lambdamult(o[k], f);
-            od; 
-          fi;
+          #JDM expand
+          mults:=LambdaOrbMults(o, m);
+          
+          #if not IsBound(o!.mults) then 
+          #  o!.mults:=EmptyPlist(Length(o));
+          #fi;
+          #mults:=o!.mults;
+          #if not IsBound(mults[scc[1]]) then ;
+          #  for k in scc do
+          #    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, m, k));
+          #    mults[k]:=lambdamult(o[k], f);
+          #  od; 
+          #fi;
           
           #put lambda x in the first position in its scc
           if not pos[3]=scc[1] then 
@@ -654,55 +659,8 @@ function(arg)
           else              # old rho value
             
             #get schutz gp stab chain
-            if not IsBound(o!.schutzstab) then 
-              o!.schutzstab:=EmptyPlist(r);
-              o!.schutz:=EmptyPlist(r);
-            fi;
-            schutzstab:=o!.schutzstab;
-            
-            #create the schutz gp and stab chain if necessary
-            if not IsBound(schutzstab[m]) then 
-              
-              #doing LambdaOrbStabChain(o, m) should do exactly the same!
-              schutz:=o!.schutz;
-              g:=Group(()); is_sym:=false;
-              len:=rank(o[scc[1]]);
-
-              if len<1000 then
-               bound:=Factorial(len);
-              else
-                bound:=infinity;
-              fi;
-
-              orbitgraph:=OrbitGraph(o);
-              for k in scc do
-                for l in [1..nrgens] do
-                  if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m
-                    then
-                    f:=lambdaperm(reps[val][1], reps[val][1]/mults[k]*
-                     (gens[l]*mults[orbitgraph[k][l]]));
-                    g:=ClosureGroup(g, f);
-                    if Size(g)>=bound then
-                      is_sym:=true;
-                      break;
-                    fi;
-                  fi;
-                od;
-                if is_sym then 
-                  break;
-                fi;
-              od;
-
-              schutz[m]:=g; 
-
-              if is_sym then
-                schutzstab[m]:=true;
-              elif Size(g)=1 then
-                schutzstab[m]:=false;
-              else
-                schutzstab[m]:=StabChainImmutable(g);
-              fi; 
-            fi;
+            #JDM expand!
+            schutzstab:=LambdaOrbStabChain(o, m);
 
             #check membership in schutz gp via stab chain
             
