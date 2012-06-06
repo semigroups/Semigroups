@@ -649,7 +649,9 @@ end);
 
 # new for 1.0! - InitSemigroupData - "for acting semi, data, and element"
 #############################################################################
-# this assumes we are using graded orbs.
+# - this assumes we are using graded orbs.
+# - rewrite so that the generators are really added here, rather than one.
+
 
 InstallGlobalFunction(InitSemigroupData, 
 function(s, data, x)
@@ -657,10 +659,6 @@ function(s, data, x)
 
   lamx:=LambdaFunc(s)(x);
 
-  if HasGradedLambdaOrbs(s) or (HasLambdaHT(s) and LambdaHT(s)!.nr<20) or
-    (HasLambdaOrb(s) and HasGradedLambdaOrbs(s) and
-    Length(LambdaOrb(s))>=LambdaHT(s)!.nr) then 
-    
     pos:=HTValue(LambdaHT(s), lamx);
 
     if pos=fail then 
@@ -706,11 +704,18 @@ end);
 InstallMethod(LambdaOrb, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
+  local x;
+  
+  if IsTransformationSemigroup(s) then
+    x:=One(Generators(s)[1]);
+  elif IsPartialPermSemigroup(s) then 
+    x:=PartialPermNC(Points(Generators(s)), Points(Generators(s)));
+  fi;     
 
   return Orb(s, LambdaDomain(s), LambdaAct(s),
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
         storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
-        finished:=false, scc_reps:=[()], semi:=s));
+        finished:=false, scc_reps:=[x], semi:=s));
 end);
 
 # new for 1.0! - LambdaOrbMults - "for a lambda orb and scc index"
