@@ -174,19 +174,176 @@ end);
 ##############################################################################
 
 InstallMethod(\in, "for an acting elt and acting semigroup",
-[IsActingElt, IsActingSemigroup],
+[IsActingElt, IsActingSemigroup], 100, 
 function(f, s)
+  local data, val, lambda, o, l, lookfunc, m, n, reps, repslens, lambdaperm, lambdarho, max, found, schutz, g, len;
   
   if not ElementsFamily(FamilyObj(s))=FamilyObj(f) then 
     Error("the element and semigroup are not of the same type,");
     return;
   fi;
  
+  #JDM add quick checks as in inverse.gi
 
+  data:=SemigroupData(s);
+  len:=Length(data!.orbit);  
 
+  # check if f is an existing R-rep
+  val:=HTValue(data!.ht, f);
+
+  if val<>fail then 
+    return true;
+  fi;
+
+  lambda:=LambdaFunc(s)(f);
+
+  # look for lambda!
+  if not data!.graded then 
+    o:=LambdaOrb(s);
+    l:=Position(o, lambda);
+    
+    if l=fail then 
+      if IsClosed(o) then 
+        return false;
+      fi;
+      o!.looking:=true; o!.lookingfor:=function(o, x) return x=lambda; end;
+      o!.lookfunc:=o!.lookingfor;
+      Enumerate(o);
+      l:=PositionOfFound(o);
+      o!.found:=false; o!.looking:=false; 
+      Unbind(o!.lookingfor); Unbind(o!.lookfunc);
+      if l=false then 
+        return false;
+      fi;
+    fi;
+  else 
+    o:=GradedLambdaOrbs(s);
+    l:=HTValue(LambdaHT(s), lambda);
+    
+    if l=fail then 
+      if data!.finished then 
+        return false;
+      fi;
+      lookfunc:=function(data, x) return LambdaFunc(s)(x)=lambda; end;
+      # lookahead?
+      data:=EnumerateSemigroupData(s, infinity, lookfunc);
+      l:=data!.found;
+      if l=false then 
+        return false;
+      fi;
+    fi;
+  fi;
+  
+  # the only case when l is found but f not in s.
+  if l=1 and not IsMonoidAsSemigroup(s) then 
+    return false;
+  fi;
+
+  # strongly connected component of lambda, the disadvantage in the case that
+  # data!.graded=false is that the next line enumerates the whole of o.
+  m:=OrbSCCLookup(o)[l];
+  scc:=OrbSCC(o);
+
+  # check if lambdarho is already known
+  lambdarho:=ShallowCopy(o[scc[m][1]]);
+  Append(lambdarho, RhoFunc(s)(f));
+  val:=HTValue(LambdaRhoHT(s), lambdarho);
+
+  lookfunc:=function(data, x) 
+    return Concatenation(LambdaFunc(s)(x), RhoFunc(s)(x))=lambdarho;
+  end;
+  
+  # if lambdarho is not already known, then look for it
+  if val=fail then 
+    data:=EnumerateSemigroupData(s, infinity, lookfunc);
+    val:=data!.found;
+
+    # lambdarho not found, so f not in s
+    if val=false then 
+      return false;
+    fi;
+  fi;
+
+  schutz:=LambdaOrbStabChain(o, m);
+
+  # if the schutz gp is the symmetric group, then f in s!
+  if schutz=true then 
+    return true;
+  fi;
+
+  # make sure lambda of f is in the first place of its scc
+  if l<>scc[m][1] then 
+    g:=f*LambdaOrbMults(o, m)[l];
+  else
+    g:=f;
+  fi;
+
+  # check if anything changed
+  if len<Length(data!.orbit) or l<>scc[m][1] then 
+
+    # check again if g is an R-class rep.
+    if HTValue(data!.ht, g)<>fail then
+      return true;
+    fi;
+  fi;
+
+  reps:=data!.reps; repslens:=data!.repslens;
+  
+  # if schutz is false, then g has to be an R-rep which it is not...
+  if schutz<>false then 
+
+    # check if f already corresponds to an element of reps[val]
+    lambdaperm:=LambdaPerm(s);
+    for n in [1..repslens[val]] do 
+      if SiftedPermutation(schutz, lambdaperm(reps[val][n], g))=() then
+        return true;
+      fi;
+    od;
+  else
+    n:=repslens[val];
+  fi; 
+  
+  # enumerate until we find f or the number of elts in reps[val] exceeds max
+  max:=Factorial(LambdaRank(s)(lambda))/Size(LambdaOrbSchutzGp(o, m));
+
+  if repslens[val]<max then 
+    if schutz=false then 
+      repeat 
+
+        # look for more R-reps with same lambda-rho value
+        data:=EnumerateSemigroupData(s, infinity, lookfunc);
+        found:=data!.found;
+        if found<>false then 
+          reps:=data!.reps; repslens:=data!.repslens;
+          for m in [n+1..repslens[val]] do 
+            if reps[val][m]=g then 
+              return true;
+            fi;
+          od;
+          n:=repslens[val];
+        fi;
+      until found=false or repslens[val]>=max;
+    else 
+      repeat
+        
+        # look for more R-reps with same lambda-rho value
+        data:=EnumerateSemigroupData(s, infinity, lookfunc);
+        found:=data!.found;
+        if found<>false then 
+          reps:=data!.reps; repslens:=data!.repslens;
+          for m in [n+1..repslens[val]] do 
+            if SiftedPermutation(schutz, lambdaperm(reps[val][m], g))=() then 
+              return true;
+            fi;
+          od;
+          n:=repslens[val];
+        fi;
+      until found=false or repslens[val]>=max;
+    fi;
+  fi;
+
+  return false;
 end);
-
-
 
 #CCC
 
@@ -599,8 +756,10 @@ function(arg)
   if looking then 
     data!.found:=false;
   fi;
-
-  return true;
+  if nr=i then 
+    data!.finished:=true;
+  fi;
+  return data;
 end);
 
 #JDM
@@ -980,7 +1139,8 @@ function(data, x, n)
 
   s:=data!.semi;
 
-  if IsBound(data!.graded) and data!.graded then 
+  if data!.graded then 
+    # JDM this assumes that x is an element of s, probably shouldn't do this!
     o:=GradedLambdaOrb(s, x, true);
   else
     o:=LambdaOrb(s);
@@ -1064,7 +1224,7 @@ function(s)
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
      reps:=[], repslookup:=[], lenreps:=0, orbit:=[[,,,x]], repslens:=[], 
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail], 
-     semi:=s);
+     semi:=s, finished:=false);
   
   Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
 

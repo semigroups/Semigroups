@@ -59,6 +59,7 @@ function(f, s)
     elif k=1 and not IsPartialPermMonoid(s) then 
       return false;
     fi;
+#JDM if LongOrb(s) is closed, then we already know Position(o, ran) from above!
     ran:=RanSetPP(f);
        
     if IsClosed(o) and Position(o, ran)=fail then 
