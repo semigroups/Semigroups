@@ -227,15 +227,8 @@ function(s, limit)
   rho:=RhoFunc(s);
   lambdarhoht:=LambdaRhoHT(s);
 
-  if (IsBound(data!.graded) and data!.graded=false) or (not
-    HasGradedLambdaOrbs(s)) or (HasLambdaHT(s) and LambdaHT(s)!.nr<20) or
-    (HasLambdaOrb(s) and HasGradedLambdaOrbs(s) and
-    Length(LambdaOrb(s))>=LambdaHT(s)!.nr) then 
-    #this seems to make almost not difference!!
-
-    if not IsBound(data!.graded) then
-      data!.graded:=false;
-    fi;
+  if not data!.graded=false then # decided when data is created in 
+                                 # InitSemigroupData
     
     o:=LambdaOrb(s);
     Enumerate(o, infinity);
@@ -649,32 +642,47 @@ end);
 
 # new for 1.0! - InitSemigroupData - "for acting semi, data, and element"
 #############################################################################
-# - this assumes we are using graded orbs.
-# - rewrite so that the generators are really added here, rather than one.
-
+# - maybe rewrite so that the generators are really added here, rather than one.
 
 InstallGlobalFunction(InitSemigroupData, 
 function(s, data, x)
   local lamx, pos, o, m, scc;
 
-  lamx:=LambdaFunc(s)(x);
-
-    pos:=HTValue(LambdaHT(s), lamx);
-
-    if pos=fail then 
-      o:=GradedLambdaOrb(s, x, true);
-      pos:=[1,1,1]; #[scc index, scc[1], pos of LambdaFunc(x) in o]
+  # decide if we are using graded orbits or not.
+  if (not HasGradedLambdaOrbs(s)) or (HasLambdaHT(s) and LambdaHT(s)!.nr<20) 
+   or (HasLambdaOrb(s) and HasGradedLambdaOrbs(s) and
+    Length(LambdaOrb(s))>=LambdaHT(s)!.nr) then 
+    data!.graded:=false;
+  else
+    data!.graded:=true;
+  fi;
+  
+  # install first point if we are in a monoid
+  if not x=false then 
+    
+    # find the orbit containing LambdaFunc(s)(x)...
+    lamx:=LambdaFunc(s)(x);
+    if not data!.graded then 
+      o:=LambdaOrb(s);
+      pos:=[1, 1, 1];
     else
-      o:=GradedLambdaOrbs(s)[pos[1]][pos[2]];
-      m:=OrbSCCLookup(o)[pos[3]];
-      scc:=o!.scc[m];
-      pos:=[m, scc[1], pos[3]];
-      if not pos[3]=scc[1] then 
-        x:=x*LambdaOrbMults(o, m)[pos[3]];
-        lamx:=o[scc[1]];
-      fi;
-    fi;  
-
+      pos:=HTValue(LambdaHT(s), lamx);
+      if pos=fail then 
+        o:=GradedLambdaOrb(s, x, true);
+        pos:=[1, 1, 1]; #[scc index, scc[1], pos of LambdaFunc(x) in o]
+      else
+        o:=GradedLambdaOrbs(s)[pos[1]][pos[2]];
+        m:=OrbSCCLookup(o)[pos[3]];
+        scc:=o!.scc[m];
+        pos:=[m, scc[1], pos[3]];
+        if not pos[3]=scc[1] then 
+          x:=x*LambdaOrbMults(o, m)[pos[3]];
+          lamx:=o[scc[1]];
+        fi;
+      fi;  
+    fi;
+    
+    # install the info about x in data
     HTAdd(data!.ht, x, 1);
     data!.orbit:=[[s, pos, o, x]];
     data!.repslens[1]:=1;
@@ -682,9 +690,9 @@ function(s, data, x)
     data!.reps[data!.lenreps]:=[x];
     data!.repslookup[1]:=[1];
     HTAdd(LambdaRhoHT(s), Concatenation(lamx, RhoFunc(s)(x)), data!.lenreps);
+  fi;
 
-    data!.graded:=true;
-    return data;
+  return data;
 end);
 
 # new for 1.0! - IsBound - for graded lambda orbs and pos int
@@ -722,8 +730,8 @@ end);
 ##############################################################################
 
 InstallGlobalFunction(LambdaOrbMults, 
-function(o, m) 
-  local scc, s, mults, gens, lambdamult, f, i;
+    function(o, m) 
+    local scc, s, mults, gens, lambdamult, f, i;
  
   scc:=OrbSCC(o)[m];
 
@@ -891,7 +899,13 @@ function(o, m)
   LambdaOrbSchutzGp(o, m);
   return o!.schutzstab[m];
 end);
-  
+
+# new for 1.0! - Length - for semigroup data of acting semigroup
+##############################################################################
+
+InstallOtherMethod(Length, "for semigroup data of acting semigroup",
+[IsSemigroupData], x-> Length(x!.orbit));
+
 #PPP
 
 # new for 1.0! - Position - "for graded lambda orbs and acting semi elt"
@@ -1011,6 +1025,7 @@ function(s)
       SetIsMonoidAsSemigroup(s, true);
     fi;
   else
+    InitSemigroupData(s, data, false);
     SetIsMonoidAsSemigroup(s, false);
   fi;
 
@@ -1019,6 +1034,8 @@ end);
 
 # new for 1.0! - SemigroupEltSLP - "for an acting semigroup and acting elt"
 ##############################################################################
+#JDM this is not really working due to the slps for group elements containing
+#inverses.
 
 InstallMethod(SemigroupEltSLP, "for an acting semigroup and acting elt",
 [IsActingSemigroup, IsActingElt],
