@@ -173,10 +173,11 @@ end);
 # new for 1.0! - \in - for an acting elt and acting semigroup
 ##############################################################################
 # JDM remove the 100 from below when the \in method for transformation
-# semigroup is removed. 
+# semigroup is removed. Insert 100 below to use this method in preference to
+# the other \in method, doing this messes everything up in the old set up. 
 
 InstallMethod(\in, "for an acting elt and acting semigroup",
-[IsActingElt, IsActingSemigroup], 100, 
+[IsActingElt, IsActingSemigroup],
 function(f, s)
   local data, val, lambda, o, l, lookfunc, m, n, reps, repslens, lambdaperm,
    lambdarho, max, found, schutz, g, len, scc;
@@ -538,7 +539,7 @@ function(arg)
         fi;
       od;
     od;
-  else #JDM
+  else #JDM graded
     
     graded:=GradedLambdaOrbs(s);  # existing graded lambda orbs
     gradedlens:=graded!.lens;     # gradedlens[j]=Length(graded[j]);
@@ -751,6 +752,18 @@ function(arg)
         HTAdd(ht, x[4], nr);
         graph[nr]:=EmptyPlist(nrgens);
         graph[i][j]:= nr;
+        
+        # are we looking for something?
+        if looking then
+
+          # did we find it?
+          if lookfunc(data, y) then
+            data!.pos:=i-1;
+            data!.found:=nr;
+            data!.lenreps:=lenreps;
+            return data;
+          fi;
+        fi;
       od;
     od;
   fi;
