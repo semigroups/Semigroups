@@ -587,7 +587,8 @@ function(arg)
               storenumbers:=true,
               log:=true, 
               scc_reps:=[x], 
-              data:=[rankx, gradedlens[rankx]]));
+              data:=[rankx, gradedlens[rankx]],
+              semi:=s));
           
           SetIsGradedLambdaOrb(o, true);
 
@@ -664,11 +665,11 @@ function(arg)
 
             #check membership in schutz gp via stab chain
             
-            if schutzstab[m]=true then # schutz gp is symmetric group
+            if schutzstab=true then # schutz gp is symmetric group
               graph[i][j]:=repslookup[val][1];
               continue;
             else
-              if schutzstab[m]=false then # schutz gp is trivial
+              if schutzstab=false then # schutz gp is trivial
                 old:=false;
                 for n in [1..repslens[val]] do 
                   if reps[val][n]=y then 
@@ -684,7 +685,7 @@ function(arg)
                 old:=false; 
                 for n in [1..repslens[val]] do 
                   p:=lambdaperm(reps[val][n], y);
-                  if SiftedPermutation(schutzstab[m], p)=() then 
+                  if SiftedPermutation(schutzstab, p)=() then 
                     old:=true;
                     graph[i][j]:=repslookup[val][n]; 
                     break;
