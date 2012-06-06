@@ -8,9 +8,13 @@
 ##############################################################################
 ###
 
-DeclareCategory("IsPartialPerm", IsMultiplicativeElementWithOne and
+DeclareCategory("IsPartialTrans", IsMultiplicativeElementWithOne and
  IsAssociativeElement); 
+DeclareCategory("IsPartialPerm", IsMultiplicativeElementWithOne and
+ IsAssociativeElement and IsPartialTrans); 
+DeclareCategoryCollections("IsPartialTrans");
 DeclareCategoryCollections("IsPartialPerm");
+
 DeclareGlobalFunction("PartialPermNC");
 DeclareGlobalFunction("PartialPerm");
 DeclareOperation("AsPartialPerm", [IsObject]);

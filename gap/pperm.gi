@@ -8,10 +8,17 @@
 #############################################################################
 ##
 
+BindGlobal("PartialTransFamily", NewFamily("PartialTransFamily",
+ IsPartialTrans, CanEasilySortElements, CanEasilySortElements));
+
+BindGlobal("PartialTransType", NewType(PartialTransFamily,
+ IsPartialTrans and IsDataObjectRep and IsActingElt));
+
 BindGlobal("PartialPermFamily", NewFamily("PartialPermFamily",
  IsPartialPerm, CanEasilySortElements, CanEasilySortElements));
+
 BindGlobal("PartialPermType", NewType(PartialPermFamily,
- IsPartialPerm and IsDataObjectRep and IsActingElt));
+ IsPartialTrans and IsPartialPerm and IsDataObjectRep and IsActingElt));
 
 # new for 0.7! - \^ - "for a partial perm and neg int"
 #############################################################################
