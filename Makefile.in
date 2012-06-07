@@ -24,9 +24,9 @@ bindir:
 	if test ! -d bin;  then mkdir bin;  fi
 	if test ! -d bin/@GAPARCH@;  then mkdir -p bin/@GAPARCH@;  fi
 
-bin/@GAPARCH@/citrus.so: src/ptrans.c src/pperm.c src/init.c
+bin/@GAPARCH@/citrus.so: src/ptrans.c src/pperm.c 
 	cp $(GAPPATH)/bin/@GAPARCH@/config.h bin/@GAPARCH@
-	$(GAPPATH)/bin/@GAPARCH@/gac -p ${COMPILEOPTIONS} -d -o bin/@GAPARCH@/citrus.so src/ptrans.c src/pperm.c src/init.c
+	$(GAPPATH)/bin/@GAPARCH@/gac -p ${COMPILEOPTIONS} -d -o bin/@GAPARCH@/citrus.so src/ptrans.c src/pperm.c 
 
 # make a statically linked GAP including the citrus module
 static:

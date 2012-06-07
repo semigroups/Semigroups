@@ -75,39 +75,3 @@ static inline Int TOO_MANY_PTS_ERROR(int cond)
   return 0L;
 }
 
-/*******************************************************************************
-** GAP function declarations
-*******************************************************************************/
-
-Obj FuncELM_LIST_PT( Obj self, Obj f, Obj i);
-Obj FuncELMS_LIST_PT( Obj self, Obj f, Obj i);
-Obj FuncELM_LIST_PP( Obj self, Obj f, Obj i);
-Obj FuncELMS_LIST_PP(Obj self, Obj f, Obj list);
-Obj FuncFullPartialPermNC( Obj self, Obj rep );
-Obj FuncSparsePartialPermNC( Obj self, Obj dom, Obj ran );
-Obj FuncDensePartialPermNC( Obj self, Obj img );
-Obj FuncProdPP( Obj self, Obj f, Obj g );
-Obj FuncDomPP (Obj self, Obj f );
-Obj FuncRanPP (Obj self, Obj f );
-Obj FuncRanSetPP ( Obj self, Obj f );
-Obj FuncInvPP ( Obj self, Obj f );
-Obj FuncOnIntegerSetsWithPP (Obj self, Obj set, Obj f);
-Obj FuncOnIntegerTuplesWithPP (Obj self, Obj set, Obj f);
-Obj FuncEqPP (Obj self, Obj f, Obj g);
-Obj FuncLeftOne(Obj self, Obj f);
-Obj FuncRightOne(Obj self, Obj f);
-Obj FuncFixedPointsPP(Obj self, Obj f);
-Obj FuncMovedPointsPP(Obj self, Obj f);
-Obj FuncNrMovedPointsPP(Obj self, Obj f);
-Obj FuncLargestMovedPointPP(Obj self, Obj f);
-Obj FuncSmallestMovedPointPP(Obj self, Obj f);
-Obj FuncLeqPP(Obj self, Obj f, Obj g);
-Obj FuncRestrictedPP(Obj self, Obj f, Obj set);
-Obj FuncNaturalLeqPP(Obj self, Obj f, Obj g);
-Obj FuncQuoPP(Obj self, Obj f, Obj g);
-Obj FuncProdPPPerm(Obj self, Obj f, Obj p);
-Obj FuncProdPermPP(Obj self, Obj p, Obj f);
-Obj FuncOnPointsPP(Obj self, Obj i, Obj f);
-
-
-

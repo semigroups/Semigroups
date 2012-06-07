@@ -1,4 +1,7 @@
 
+const char * Revision_citrus_c =
+   "$Id: citrus.c,v$";
+
 #include "ptrans.h"
 
 /*******************************************************************************
@@ -20,6 +23,19 @@
 ** currently have type Int. 
 **
 *******************************************************************************/
+
+/*******************************************************************************
+** Internal functions
+*******************************************************************************/
+    
+/* comparison for qsort */
+int cmp (const void *a, const void *b)
+{ pttype aa, bb;
+
+ aa = *((const pttype *)a);
+ bb = *((const pttype *)b);
+ return (int) (aa-bb);
+}
 
 /*******************************************************************************
 ** Macros for partial perms specifically
@@ -44,7 +60,7 @@ static inline void SET_RANSET_PP(Obj f, pttype deg, pttype rank)
 }  
 
 /*******************************************************************************
-** GAP functions
+** GAP functions for partial permutations
 *******************************************************************************/
 
 /* method for f[i] */
@@ -1015,6 +1031,304 @@ Obj FuncOnPointsPP(Obj self, Obj i, Obj f)
     return Fail;
 }
 
+/*******************************************************************************
+**
+** A partial transformation is of the form:
+**
+** [deg = max_dom, len_dom, rank, min ran, max ran, min, max, dense img list, 
+**  canonical trans same kernel, dom, ran, Set(ran)]
+** 
+** and hence has length
+**
+** 7+2*(len_dom)+2*(dom_size)+rank
+**
+** where <len_dom> is the length of <img list>, 
+** <dom_size> is the number of non-zero entries in <dense img list>,
+** <rank> is the length of <ran>, <min ran>, <max ran> are self explanatory,
+** <min> is min(<min dom>, <min ran>), <max> is max(<max dom>, <max ran>),
+** <dense img list> is the dense image list (no trailing zeros!),
+** <canonical trans same kernel> is the dense image list of what it says,
+** <dom> is the domain, <ran> is the range, <Set(ran)> is the 
+** range as a set (not calculated until needed).
+**
+** An element of the internal rep of a partial trans must be at most 
+** 65535 and be of pttype, but the length and indices can be larger than 65535
+** and so these currently have type Int. 
+**
+*******************************************************************************/
+
+/*******************************************************************************
+** Macros for partial transformations specifically
+*******************************************************************************/
+
+/* length of the partial trans internal rep */
+static inline Int LEN_PT(Obj f)
+{
+  return (ELM_PT(f,1)==0?8:7+2*ELM_PT(f,1)+2*ELM_PT(f,2)+ELM_PT(f,3));
+}
+
+/*******************************************************************************
+** GAP functions for partial transformations
+*******************************************************************************/
+
+/* method for f[i] */
+Obj FuncELM_LIST_PT( Obj self, Obj f, Obj i)
+{   
+  if(INT_INTOBJ(i)>LEN_PT(f)) return Fail;
+  return INTOBJ_INT(ELM_PT(f, INT_INTOBJ(i)));
+} 
+
+/* method for f{list} */ 
+Obj FuncELMS_LIST_PT(Obj self, Obj f, Obj list) 
+{   Int len, i; 
+    Obj out; 
+     
+    len = LEN_LIST(list); 
+    if(len>LEN_PT(f)) len = LEN_PT(f); 
+    out = NEW_PLIST(T_PLIST_CYC, len); 
+    SET_LEN_PLIST(out, len); 
+     
+    for(i=1;i<=len;i++){ 
+      SET_ELM_PLIST(out,i,   
+        INTOBJ_INT(ELM_PT(f, INT_INTOBJ(ELM_LIST(list, i))))); 
+    } 
+ 
+    return out; 
+} 
+
+/* create partial trans from sparse representation */
+Obj FuncSparsePartialTransNC( Obj self, Obj dom, Obj ran )
+{ Int len_dom, deg, max_ran, min_ran, j;
+  pttype i;
+  Obj f;
+
+  len_dom=LEN_LIST(dom);
+  if(len_dom==0) return NEW_EMPTY_PT();
+
+  deg=INT_INTOBJ(ELM_LIST(dom,len_dom));
+  
+  TOO_MANY_PTS_ERROR(len_dom>65535||deg>65535); 
+  
+  f=NEW_PT(7+2*deg+3*len_dom);
+  SET_ELM_PT(f, 1, (pttype) deg);
+  SET_ELM_PT(f, 2, (pttype) len_dom);
+
+  max_ran=0;
+  min_ran=65535;
+
+  /* find dense img list, kernel, max_ran, min_ran, and rank? */
+  for(i=1;i<=len_dom;i++){
+    j=INT_INTOBJ(ELM_LIST(dom, i));
+    SET_ELM_PT(f, 7+deg, j);
+  }
+
+  return f; 
+}
+
+/*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
+
+/******************************************************************************
+*V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
+*/
+static StructGVarFunc GVarFuncs [] = {
+
+  { "ELM_LIST_PP", 2, "f,i",
+    FuncELM_LIST_PP,
+    "pkg/citrus/src/pperm.c:ELM_LIST_PP" },
+  
+  { "ELMS_LIST_PP", 2, "f,list",
+    FuncELMS_LIST_PP,
+    "pkg/citrus/src/pperm.c:ELMS_LIST_PP" },
+
+  { "FullPartialPermNC", 1, "rep",
+    FuncFullPartialPermNC,
+    "pkg/citrus/src/pperm.c:FuncFullPartialPermNC" },
+
+  { "SparsePartialPermNC", 2, "dom,ran",
+    FuncSparsePartialPermNC,
+    "pkg/citrus/src/pperm.c:FuncSparsePartialPermNC" },
+
+  { "DensePartialPermNC", 1, "img",
+    FuncDensePartialPermNC,
+    "pkg/citrus/src/pperm.c:FuncDensePartialPermNC" },
+ 
+  { "ProdPP", 2, "f,g",
+    FuncProdPP,
+    "pkg/citrus/src/pperm.c:FuncProdPP" },
+
+  { "DomPP", 1, "f",
+    FuncDomPP,
+    "pkg/citrus/src/pperm.c:FuncDomPP" },
+
+  { "RanPP", 1, "f",
+    FuncRanPP,
+    "pkg/citrus/src/pperm.c:FuncRanPP" },
+
+  { "RanSetPP", 1, "f",
+    FuncRanSetPP,
+    "pkg/citrus/src/pperm.c:FuncRanSetPP" },
+
+  { "InvPP", 1, "f",
+    FuncInvPP,
+    "pkg/citrus/src/pperm.c:FuncInvPP" },
+
+  { "OnIntegerTuplesWithPP", 2, "tup,f",
+    FuncOnIntegerTuplesWithPP,
+    "pkg/citrus/src/pperm.c:FuncOnIntegerTuplesWithPP" },
+  
+  { "OnIntegerSetsWithPP", 2, "set,f",
+    FuncOnIntegerSetsWithPP,
+    "pkg/citrus/src/pperm.c:FuncOnIntegerSetsWithPP" },
+  
+  { "EqPP", 2, "f,g",
+    FuncEqPP,
+    "pkg/citrus/src/pperm.c:FuncEqPP" },
+
+  { "LeftOne", 1, "f",
+    FuncLeftOne,
+    "pkg/citrus/src/pperm.c:FuncLeftOne" },
+
+  { "RightOne", 1, "f",
+    FuncRightOne,
+    "pkg/citrus/src/pperm.c:FuncRightOne" },
+
+  { "FixedPointsPP", 1, "f",
+    FuncFixedPointsPP,
+    "pkg/citrus/src/pperm.c:FuncFixedPointsPP" },
+
+  { "MovedPointsPP", 1, "f",
+    FuncMovedPointsPP,
+    "pkg/citrus/src/pperm.c:FuncMovedPointsPP" },
+
+  { "NrMovedPointsPP", 1, "f",
+    FuncNrMovedPointsPP,
+    "pkg/citrus/src/pperm.c:FuncNrMovedPointsPP" },
+
+  { "LargestMovedPointPP", 1, "f",
+    FuncLargestMovedPointPP,
+    "pkg/citrus/src/pperm.c:FuncLargestMovedPointPP" },
+
+  { "SmallestMovedPointPP", 1, "f",
+    FuncSmallestMovedPointPP,
+    "pkg/citrus/src/pperm.c:FuncSmallestMovedPointPP" },
+
+  { "LeqPP", 2, "f, g",
+    FuncLeqPP,
+    "pkg/citrus/src/pperm.c:FuncLeqPP" },
+
+  { "RestrictedPP", 2, "f, set", 
+    FuncRestrictedPP, 
+    "pkg/citrus/src/pperm.c:FuncRestrictedPP" },
+
+  { "NaturalLeqPP", 2, "f, g", 
+    FuncNaturalLeqPP,
+    "pkg/citrus/src/pperm.c:FuncNaturalLeqPP" },
+
+  { "QuoPP", 2, "f, g", 
+    FuncQuoPP,
+    "pkg/citrus/src/pperm.c:FuncQuoPP" },
+
+  { "ProdPPPerm", 2, "f, p",
+    FuncProdPPPerm, 
+    "pkg/citrus/src/pperm.c:FuncProdPPPerm" },
+
+  { "ProdPermPP", 2, "p, f",
+    FuncProdPermPP, 
+    "pkg/citrus/src/pperm.c:FuncProdPermPP" },
+
+  { "OnPointsPP", 2, "i, f",
+    FuncOnPointsPP, 
+    "pkg/citrus/src/pperm.c:FuncOnPointsPP" },
+
+  /* partial transformation start here */
+
+  { "ELM_LIST_PT", 2, "f,i",
+    FuncELM_LIST_PT,
+    "pkg/citrus/src/ptrans.c:ELM_LIST_PT" },
+  
+  { "ELMS_LIST_PT", 2, "f,list",
+    FuncELMS_LIST_PT,
+    "pkg/citrus/src/ptrans.c:ELMS_LIST_PT" },
+
+  { "FuncSparsePartialTransNC", 2, "dom,ran",
+     FuncSparsePartialTransNC,
+    "pkg/citrus/src/ptrans.c:FuncSparsePartialTransNC" },
 
 
+  { 0 }
+
+};
+
+/******************************************************************************
+*F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
+*/
+static Int InitKernel ( StructInitInfo *module )
+{
+    /* init filters and functions                                          */
+    InitHdlrFuncsFromTable( GVarFuncs );
+
+    ImportGVarFromLibrary( "PartialPermType", &PartialPermType );
+    ImportGVarFromLibrary( "PartialTransType", &PartialTransType );
+    /* return success                                                      */
+    return 0;
+}
+
+/******************************************************************************
+*F  InitLibrary( <module> ) . . . . . . .  initialise library data structures
+*/
+static Int InitLibrary ( StructInitInfo *module )
+{
+    Int             i, gvar;
+    Obj             tmp;
+
+    /* init filters and functions */
+    for ( i = 0;  GVarFuncs[i].name != 0;  i++ ) {
+      gvar = GVarName(GVarFuncs[i].name);
+      AssGVar(gvar,NewFunctionC( GVarFuncs[i].name, GVarFuncs[i].nargs,
+                                 GVarFuncs[i].args, GVarFuncs[i].handler ) );
+      MakeReadOnlyGVar(gvar);
+    }
+
+    tmp = NEW_PREC(0);
+    gvar = GVarName("CITRUSC"); AssGVar( gvar, tmp ); MakeReadOnlyGVar(gvar);
+
+    /* return success                                                      */
+    return 0;
+}
+
+/******************************************************************************
+*F  InitInfopl()  . . . . . . . . . . . . . . . . . table of init functions
+*/
+static StructInitInfo module = {
+#ifdef CITRUSSTATIC
+ /* type        = */ MODULE_STATIC,
+#else
+ /* type        = */ MODULE_DYNAMIC,
+#endif
+ /* name        = */ "citrus",
+ /* revision_c  = */ 0,
+ /* revision_h  = */ 0,
+ /* version     = */ 0,
+ /* crc         = */ 0,
+ /* initKernel  = */ InitKernel,
+ /* initLibrary = */ InitLibrary,
+ /* checkInit   = */ 0,
+ /* preSave     = */ 0,
+ /* postSave    = */ 0,
+ /* postRestore = */ 0
+};
+
+#ifndef CITRUSSTATIC
+StructInitInfo * Init__Dynamic ( void )
+{
+  module.revision_c = Revision_citrus_c;
+  return &module;
+}
+#endif
+
+StructInitInfo * Init__citrus ( void )
+{
+  module.revision_c = Revision_citrus_c;
+  return &module;
+}
 
