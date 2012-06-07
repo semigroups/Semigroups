@@ -2,7 +2,7 @@
 const char * Revision_citrus_c =
    "$Id: citrus.c,v$";
 
-#include "ptrans.h"
+#include "citrus.h"
 
 /*******************************************************************************
 **
