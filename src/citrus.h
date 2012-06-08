@@ -9,8 +9,7 @@ Obj FuncLARGEST_MOVED_POINT_PERM(Obj self, Obj perm);
 
 /* import the type from GAP */
 Obj PartialPermType;
-Obj PartialTransType;
-Obj TransType;
+Obj TransformationType;
 
 /* define the type for entries in part. perm */
 typedef UInt2 pttype;
@@ -46,23 +45,13 @@ static inline Obj NEW_PP(Int len)
     return f;
 }
 
-/* create a new partial trans */
-static inline Obj NEW_PT(Int len)
-{
-    Obj f;
-
-    f = NewBag(T_DATOBJ, sizeof(pttype)*(len)+sizeof(UInt));
-    TYPE_DATOBJ(f) = PartialTransType;
-    return f;
-}
-
-/* create a new trans */
+/* create a new transformation */
 static inline Obj NEW_T(Int len)
 {
     Obj f;
 
     f = NewBag(T_DATOBJ, sizeof(pttype)*(len)+sizeof(UInt));
-    TYPE_DATOBJ(f) = TransType;
+    TYPE_DATOBJ(f) = TransformationType;
     return f;
 }
 

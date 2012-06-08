@@ -9,6 +9,9 @@
 ##
 
 
+MakeReadWriteGlobal("TransformationNC");
+UnbindGlobal("TransformationNC");
+
 if (not IsBound(CITRUSC)) and ("citrus" in SHOW_STAT()) then
   LoadStaticModule("citrus");
 fi;

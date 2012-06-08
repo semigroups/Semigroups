@@ -1,47 +1,26 @@
 
-BindGlobal("PartialTransFamily", NewFamily("PartialTransFamily",
- IsPartialTrans, CanEasilySortElements, CanEasilySortElements));
+MakeReadWriteGlobal("TransformationFamily");
+UnbindGlobal("TransformationFamily");
+MakeReadWriteGlobal("TransformationType");
+UnbindGlobal("TransformationType");
 
-BindGlobal("PartialTransType", NewType(PartialTransFamily,
- IsPartialTrans and IsDataObjectRep and IsActingElt));
+BindGlobal("TransformationFamily", NewFamily("TransformationFamily",
+ IsTransformation, CanEasilySortElements, CanEasilySortElements));
 
-BindGlobal("TransFamily", NewFamily("TransFamily",
- IsPartialTrans, CanEasilySortElements, CanEasilySortElements));
+BindGlobal("TransformationType", NewType(TransformationFamily,
+ IsTransformation and IsDataObjectRep and IsActingElt));
 
-BindGlobal("TransType", NewType(TransFamily,
- IsPartialTrans and IsTrans and IsDataObjectRep and IsActingElt));
-
-# new for 0.7! - ELM_LIST - "for a part trans and pos int"
+# new for 0.7! - ELM_LIST - "for a trans and pos int"
 ############################################################################
 
-InstallOtherMethod(ELM_LIST, "for a part trans and a pos int",
-[IsPartialTrans, IsPosInt], ELM_LIST_PT);
+InstallOtherMethod(ELM_LIST, "for a trans and a pos int",
+[IsTransformation, IsPosInt], ELM_LIST_T);
 
-# new for 0.7! - ELMS_LIST - "for a part trans and small dense list"
+# new for 0.7! - ELMS_LIST - "for a trans and small dense list"
 ############################################################################
 
-InstallOtherMethod(ELMS_LIST, "for a partial trans and a small dense list",
-[IsPartialTrans, IsDenseList and IsSmallList ], ELMS_LIST_PT );
-
-# new for 0.7! - InternalRepOfPartialTrans - "for a partial trans" 
-############################################################################# 
- 
-InstallGlobalFunction(InternalRepOfPartialTrans,  
-function(f) 
- 
-  if not IsPartialTrans(f) then 
-    Error("the argument should be a partial trans,"); 
-    return; 
-  elif IsPartialPerm(f) then 
-    return InternalRepOfPartialPerm(f);
-  fi; 
-
-  if f[1]=0 then 
-    return f{[1..7]};
-  fi;
-  
-  return f{[1..7+2*f[1]+2*f[2]+f[3]]}; 
-end); 
+InstallOtherMethod(ELMS_LIST, "for a trans and a small dense list",
+[IsTransformation, IsDenseList and IsSmallList ], ELMS_LIST_T );
 
 # new for 0.7! - InternalRepOfTransformation - "for a transformation" 
 ############################################################################# 
@@ -49,56 +28,19 @@ end);
 InstallGlobalFunction(InternalRepOfTransformation,  
 function(f) 
  
-  if not IsTrans(f) then 
-    Error("the argument should be a trans,"); 
+  if not IsTransformation(f) then 
+    Error("the argument should be a transformation,"); 
     return; 
   fi; 
 
   return f{[1..4+2*f[1]+f[2]]}; 
 end); 
 
-
-# new for 0.7! - PrintObj - "for a partial trans" 
+# new for 0.7! - PrintObj - "for a transformation" 
 ############################################################################# 
  
-InstallMethod(PrintObj, "for a partial trans", 
-[IsPartialTrans], 
-function(f) 
-  local dom, ran; 
- 
-  if f[1]=0 then 
-    Print("<empty mapping>"); 
-    return; 
-  fi;
- 
-  dom:=DomPT(f); ran:=RanPT(f); 
- 
-  if f[3]>2 then # JDM printing of [2,4] is [2, 4..4]! 
-    if IsRange(dom) then  
-      ConvertToRangeRep(dom); 
-    fi; 
-    if IsRange(ran) then  
-      ConvertToRangeRep(ran); 
-    fi; 
-  fi; 
-  if f[3]<20 then  
-       
-    if dom=ran then  
-      Print("<identity on ", dom, ">"); 
-      return; 
-    fi; 
-    Print(dom, " -> ", ran); 
-    return; 
-  fi; 
-  Print("<partial transformation on ", f[2], " pts with rank ", f[3], ">"); 
-  return; 
-end);
-
-# new for 0.7! - PrintObj - "for a trans" 
-############################################################################# 
- 
-InstallMethod(PrintObj, "for a trans", 
-[IsTrans], 
+InstallMethod(PrintObj, "for a transformation",
+[IsTransformation], 
 function(f) 
  
   if f[1]<20 then  

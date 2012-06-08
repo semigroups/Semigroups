@@ -9,8 +9,7 @@
 ###
 
 DeclareCategory("IsPartialPerm", IsMultiplicativeElementWithOne and
- IsAssociativeElement and IsPartialTrans); 
-DeclareCategoryCollections("IsPartialTrans");
+ IsAssociativeElement); 
 DeclareCategoryCollections("IsPartialPerm");
 
 DeclareGlobalFunction("PartialPermNC");
