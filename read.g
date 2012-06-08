@@ -11,7 +11,7 @@
 ReadPackage("citrus/gap/utils.gi");
 ReadPackage("citrus/gap/orbits.gi");
 ReadPackage("citrus/gap/greens.gi");
-ReadPackage("citrus/gap/transform.gi");
+ReadPackage("citrus/gap/transform.gi"); #JDM should this be in the if below?
 ReadPackage("citrus/gap/h.gi");
 ReadPackage("citrus/gap/r.gi");
 ReadPackage("citrus/gap/l.gi");
@@ -23,7 +23,6 @@ ReadPackage("citrus/gap/binary.gi");
 
 if IsBound(CITRUSC) then 
   ReadPackage("citrus/gap/pperm.gi");
-  ReadPackage("citrus/gap/ptrans.gi");
   ReadPackage("citrus/gap/inverse.gi");
 fi;
 

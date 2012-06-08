@@ -8,6 +8,10 @@
 #############################################################################
 ##
 
+# new 
+
+DeclareGlobalFunction("InternalRepOfTransformation");
+
 # full transformations
 
 if not IsBound(AsPermutation) then 

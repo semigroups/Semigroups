@@ -8,6 +8,62 @@
 #############################################################################
 ##
 
+MakeReadWriteGlobal("TransformationFamily");
+UnbindGlobal("TransformationFamily");
+MakeReadWriteGlobal("TransformationType");
+UnbindGlobal("TransformationType");
+             
+BindGlobal("TransformationFamily", NewFamily("TransformationFamily",
+ IsTransformation, CanEasilySortElements, CanEasilySortElements));
+                    
+BindGlobal("TransformationType", NewType(TransformationFamily,
+ IsTransformation and IsDataObjectRep and IsActingElt));
+
+# new for 1.0! - ELM_LIST - "for a trans and pos int"
+############################################################################
+
+InstallOtherMethod(ELM_LIST, "for a trans and a pos int",
+[IsTransformation, IsPosInt], ELM_LIST_T);
+
+# new for 1.0! - ELMS_LIST - "for a trans and small dense list"
+############################################################################
+
+InstallOtherMethod(ELMS_LIST, "for a trans and a small dense list",
+[IsTransformation, IsDenseList and IsSmallList ], ELMS_LIST_T );
+
+# new for 1.0! - InternalRepOfTransformation - "for a transformation" 
+############################################################################# 
+ 
+InstallGlobalFunction(InternalRepOfTransformation,  
+function(f) 
+  
+  if not IsTransformation(f) then 
+    Error("the argument should be a transformation,"); 
+    return; 
+  fi; 
+  
+  return f{[1..4+2*f[1]+f[2]]}; 
+end); 
+
+# new for 1.0! - PrintObj - "for a transformation" 
+############################################################################# 
+ 
+InstallMethod(PrintObj, "for a transformation",
+[IsTransformation], 
+function(f) 
+ 
+  if f[1]<20 then  
+    Print("<transformation ", RanT(f), ">");
+    return;
+  fi; 
+  Print("<transformation on ", f[1], " pts with rank ", f[2], ">"); 
+  return; 
+end);
+
+############################################################################# 
+#old
+############################################################################# 
+
 # if f is a transformation, then f![1] is the image list, f![2] is the image
 # set, f![3] is the kernel, f![4] is AsPermOfKerImg, f![5] is the rank of f
 # f![6] is the canonical trans. with same kernel

@@ -1,4 +1,0 @@
-
-
-DeclareGlobalFunction("InternalRepOfTransformation");
-
