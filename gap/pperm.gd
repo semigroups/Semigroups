@@ -8,8 +8,6 @@
 ##############################################################################
 ###
 
-DeclareCategory("IsPartialTrans", IsMultiplicativeElementWithOne and
- IsAssociativeElement); 
 DeclareCategory("IsPartialPerm", IsMultiplicativeElementWithOne and
  IsAssociativeElement and IsPartialTrans); 
 DeclareCategoryCollections("IsPartialTrans");

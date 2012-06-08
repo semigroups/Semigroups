@@ -8,12 +8,6 @@
 #############################################################################
 ##
 
-BindGlobal("PartialTransFamily", NewFamily("PartialTransFamily",
- IsPartialTrans, CanEasilySortElements, CanEasilySortElements));
-
-BindGlobal("PartialTransType", NewType(PartialTransFamily,
- IsPartialTrans and IsDataObjectRep and IsActingElt));
-
 BindGlobal("PartialPermFamily", NewFamily("PartialPermFamily",
  IsPartialPerm, CanEasilySortElements, CanEasilySortElements));
 

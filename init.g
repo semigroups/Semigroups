@@ -22,6 +22,7 @@ ReadPackage("citrus/gap/utils.gd");
 ReadPackage("citrus/gap/orbits.gd");
 ReadPackage("citrus/gap/greens.gd");
 ReadPackage("citrus/gap/transform.gd");
+ReadPackage("citrus/gap/ptrans.gd");
 ReadPackage("citrus/gap/pperm.gd");
 ReadPackage("citrus/gap/binary.gd");
 ReadPackage("citrus/gap/properties.gd");

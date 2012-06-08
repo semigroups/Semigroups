@@ -23,6 +23,7 @@ ReadPackage("citrus/gap/binary.gi");
 
 if IsBound(CITRUSC) then 
   ReadPackage("citrus/gap/pperm.gi");
+  ReadPackage("citrus/gap/ptrans.gi");
   ReadPackage("citrus/gap/inverse.gi");
 fi;
 

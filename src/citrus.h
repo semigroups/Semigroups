@@ -8,8 +8,9 @@ Obj FuncTRIM_PERM(Obj self, Obj perm, Obj n);
 Obj FuncLARGEST_MOVED_POINT_PERM(Obj self, Obj perm);
 
 /* import the type from GAP */
-Obj PartialTransType;
 Obj PartialPermType;
+Obj PartialTransType;
+Obj TransType;
 
 /* define the type for entries in part. perm */
 typedef UInt2 pttype;
@@ -35,13 +36,33 @@ static inline void SET_ELM_PT(Obj f, Int pos, pttype nr)
     data[pos-1] = nr; 
 } 
 
+/* create a new partial perm */
+static inline Obj NEW_PP(Int len)
+{
+    Obj f;
+
+    f = NewBag(T_DATOBJ, sizeof(pttype)*(len)+sizeof(UInt));
+    TYPE_DATOBJ(f) = PartialPermType;
+    return f;
+}
+
 /* create a new partial trans */
 static inline Obj NEW_PT(Int len)
 {
     Obj f;
 
     f = NewBag(T_DATOBJ, sizeof(pttype)*(len)+sizeof(UInt));
-    TYPE_DATOBJ(f) = PartialPermType;
+    TYPE_DATOBJ(f) = PartialTransType;
+    return f;
+}
+
+/* create a new trans */
+static inline Obj NEW_T(Int len)
+{
+    Obj f;
+
+    f = NewBag(T_DATOBJ, sizeof(pttype)*(len)+sizeof(UInt));
+    TYPE_DATOBJ(f) = TransType;
     return f;
 }
 

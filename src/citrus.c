@@ -94,7 +94,7 @@ Obj FuncFullPartialPermNC( Obj self, Obj rep )
     Obj f;
 
     len=LEN_PLIST(rep);
-    f=NEW_PT(len);
+    f=NEW_PP(len);
     for(i=1;i<=len;i++)
     { 
       SET_ELM_PT(f,i,(pttype) INT_INTOBJ(ELM_PLIST(rep, i)));
@@ -117,7 +117,7 @@ Obj FuncSparsePartialPermNC( Obj self, Obj dom, Obj ran )
    
     TOO_MANY_PTS_ERROR(rank>65535||deg>65535);
 
-    f=NEW_PT(6+deg+3*rank);
+    f=NEW_PP(6+deg+3*rank);
 
     SET_ELM_PT(f, 1, (pttype) deg);
     SET_ELM_PT(f, 2, (pttype) rank);
@@ -176,7 +176,7 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
 
     if(deg==0) return NEW_EMPTY_PT();
     
-    f = NEW_PT(3*deg+6); /* the output*/
+    f = NEW_PP(3*deg+6); /* the output*/
     SET_ELM_PT(f, 1, (pttype) deg);
     
     max_ran=0; 
@@ -201,7 +201,7 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
     }
    
     if(i<deg){
-      buf=NEW_PT(65023); /* internal only */
+      buf=NEW_PP(65023); /* internal only */
       /* carry on */
       for(k=i+1;k<=deg;k++)
       {
@@ -274,7 +274,7 @@ Obj FuncProdPP( Obj self, Obj f, Obj g )
 
     if(deg==0) return NEW_EMPTY_PT();
 
-    fg = NEW_PT(3*deg+6);
+    fg = NEW_PP(3*deg+6);
     SET_ELM_PT(fg,1,deg);
    
     max_ran=0;
@@ -390,7 +390,7 @@ Obj FuncInvPP ( Obj self, Obj f )
   if(ELM_PT(f,7+deg_f+2*rank)==0) SET_RANSET_PP(f,deg_f,rank);
    
   deg_f_inv=ELM_PT(f,4); /* max ran(f) */
-  f_inv=NEW_PT(6+deg_f_inv+3*rank);
+  f_inv=NEW_PP(6+deg_f_inv+3*rank);
 
   SET_ELM_PT(f_inv, 1, ELM_PT(f, 4));
   SET_ELM_PT(f_inv, 2, ELM_PT(f, 2));
@@ -514,7 +514,7 @@ Obj FuncLeftOne(Obj self, Obj f)
   
   if(deg==0) return NEW_EMPTY_PT();
 
-  one=NEW_PT(LEN_PP(f));
+  one=NEW_PP(LEN_PP(f));
   rank=ELM_PT(f, 2);
 
   SET_ELM_PT(one, 1, deg);
@@ -553,7 +553,7 @@ Obj FuncRightOne(Obj self, Obj f)
   min=ELM_PT(f, 3);
   max=ELM_PT(f, 4);
   
-  one=NEW_PT(6+max+3*rank);
+  one=NEW_PP(6+max+3*rank);
   
   SET_ELM_PT(one, 1, max);
   SET_ELM_PT(one, 2, rank);
@@ -739,7 +739,7 @@ Obj FuncRestrictedPP(Obj self, Obj f, Obj set)
 
   if(deg_g==0) return NEW_EMPTY_PT();
 
-  g=NEW_PT(3*deg_g+6);
+  g=NEW_PP(3*deg_g+6);
   SET_ELM_PT(g,1,deg_g);
 
   max_ran=0;
@@ -844,7 +844,7 @@ Obj FuncQuoPP(Obj self, Obj f, Obj g)
   if(deg==0) return NEW_EMPTY_PT();
   
   /* initialize the quotient */
-  fg = NEW_PT(3*deg+6);
+  fg = NEW_PP(3*deg+6);
   SET_ELM_PT(fg, 1, deg);
   
   max_ran=0;
@@ -909,7 +909,7 @@ Obj FuncProdPPPerm(Obj self, Obj f, Obj p)
   deg_f = ELM_PT(f, 1);
   if(deg_f==0) return NEW_EMPTY_PT();
 
-  fp = NEW_PT(LEN_PP(f));
+  fp = NEW_PP(LEN_PP(f));
   rank_f = ELM_PT(f, 2);
   deg_p = DEG_PERM2(p);
   ptp = ADDR_PERM2(p);
@@ -985,7 +985,7 @@ Obj FuncProdPermPP(Obj self, Obj p, Obj f)
     deg=deg_f;
   }    
  
-  pf=NEW_PT(deg+3*rank+6);
+  pf=NEW_PP(deg+3*rank+6);
   
   SET_ELM_PT(pf, 1, deg);
   SET_ELM_PT(pf, 2, rank);
@@ -1098,7 +1098,8 @@ Obj FuncELMS_LIST_PT(Obj self, Obj f, Obj list)
 
 /* create partial trans from sparse representation */
 Obj FuncSparsePartialTransNC( Obj self, Obj dom, Obj ran )
-{ Int len_dom, deg, max_ran, min_ran, j;
+{ Int len_dom, deg, max_ran, min_ran, j, k, rank;
+  Int lookup[512];
   pttype i;
   Obj f;
 
@@ -1115,15 +1116,185 @@ Obj FuncSparsePartialTransNC( Obj self, Obj dom, Obj ran )
 
   max_ran=0;
   min_ran=65535;
+  rank=0;
+
+  /* init the kernel lookup */
+  for(i=1;i<=len_dom;i++) lookup[i]=0;
 
   /* find dense img list, kernel, max_ran, min_ran, and rank? */
   for(i=1;i<=len_dom;i++){
-    j=INT_INTOBJ(ELM_LIST(dom, i));
-    SET_ELM_PT(f, 7+deg, j);
-  }
+    j=INT_INTOBJ(ELM_LIST(dom, i)); /* dom[i] */
+    SET_ELM_PT(f, 7+2*deg+i, (pttype) j);
+    
+    k=INT_INTOBJ(ELM_LIST(ran, i)); /* ran[i] */
+    SET_ELM_PT(f, 7+2*deg+len_dom+i, (pttype) k);
 
+    SET_ELM_PT(f, j+7, (pttype) k); /* set dense range */
+
+    if(lookup[k]==0)
+    { rank++;
+      lookup[k]=rank;
+      SET_ELM_PT(f, 7+2*len_dom+2*deg+rank, k); /* range set */
+    }
+    
+    SET_ELM_PT(f, 7+deg+j, (pttype) lookup[k]); /* set kernel */
+
+    if(k>max_ran) max_ran=k;
+    if(k<min_ran) min_ran=k;
+  }
+ 
+  TOO_MANY_PTS_ERROR(max_ran>65535);
+
+  SET_ELM_PT(f, 3, (pttype) rank);
+  SET_ELM_PT(f, 4, (pttype) min_ran);
+  SET_ELM_PT(f, 5, (pttype) max_ran);
+
+  /* set min and max */
+  j=INT_INTOBJ(ELM_LIST(dom,1));
+  SET_ELM_PT(f, 6, min_ran<j?(pttype) min_ran:(pttype) j);
+  SET_ELM_PT(f, 7, max_ran>deg?(pttype)max_ran:(pttype) deg);
+
+  /* sort the range set*/
+  qsort((pttype *)(ADDR_OBJ(f)+1)+7+2*deg+2*len_dom, rank, sizeof(pttype), cmp);
+
+  ResizeBag(f, sizeof(pttype)*(LEN_PT(f))+sizeof(UInt));
   return f; 
 }
+
+/* domain of partial transformation */
+Obj FuncDomPT (Obj self, Obj f )
+{ pttype deg, len_dom, i;
+  Obj out;
+    
+  deg=ELM_PT(f, 1);
+  if(deg==0) return NEW_EMPTY_PLIST();
+  len_dom=ELM_PT(f, 2);
+  out=NEW_PLIST(T_PLIST_CYC,len_dom);
+  SET_LEN_PLIST(out,(Int) len_dom);
+  for(i=1;i<=len_dom;i++)
+  { 
+    SET_ELM_PLIST(out,i,INTOBJ_INT(ELM_PT(f,7+2*deg+i)));
+  }
+  return out;
+} 
+
+/* range of partial transformation */
+Obj FuncRanPT (Obj self, Obj f )
+{ pttype deg, len_dom, i;
+  Obj out;
+    
+  deg=ELM_PT(f, 1);
+  if(deg==0) return NEW_EMPTY_PLIST();
+  len_dom=ELM_PT(f, 2);
+  out=NEW_PLIST(T_PLIST_CYC,len_dom);
+  SET_LEN_PLIST(out,(Int) len_dom);
+  for(i=1;i<=len_dom;i++)
+  { 
+    SET_ELM_PLIST(out,i,INTOBJ_INT(ELM_PT(f,7+2*deg+len_dom+i)));
+  }
+  return out;
+} 
+/*******************************************************************************
+**
+** A transformation is of the form:
+**
+** [deg, rank, min ran, max ran, img list, canonical trans same kernel,
+**  Set(ran)]
+** 
+** and hence has length
+**
+** 4+2*deg+rank
+**
+** An element of the internal rep of a partial trans must be at most 
+** 65535 and be of pttype, but the length and indices can be larger than 65535
+** and so these currently have type Int. 
+**
+*******************************************************************************/
+
+/*******************************************************************************
+** Macros for partial transformations specifically
+*******************************************************************************/
+
+/* length of trans internal rep */
+static inline Int LEN_T(Obj f)
+{
+  return (ELM_PT(f,1)==0?5:4+2*ELM_PT(f,1)+ELM_PT(f,2));
+}
+
+/*******************************************************************************
+** GAP functions for partial transformations
+*******************************************************************************/
+
+Obj FuncTransNC( Obj self, Obj img )
+{ Int deg, max_ran, min_ran, rank, i, j;
+  Obj f; 
+  Int lookup[512];
+
+  deg=LEN_LIST(img);
+  
+  if(deg==0){
+    ErrorQuit("usage: cannot create an empty transformation,", 0L, 0L);
+    return 0L;
+  }
+  
+  TOO_MANY_PTS_ERROR(deg>65535); 
+  
+  f=NEW_T(4+3*deg);
+  SET_ELM_PT(f, 1, (pttype) deg);
+
+  max_ran=0;
+  min_ran=65535;
+  rank=0;
+
+  /* init the kernel lookup */
+  for(i=1;i<=deg;i++) lookup[i]=0;
+
+  /* find dense img list, kernel, max_ran, min_ran, and rank? */
+  for(i=1;i<=deg;i++){
+    j=INT_INTOBJ(ELM_LIST(img, i)); /* img[i] */
+    SET_ELM_PT(f, 4+i, (pttype) j);
+    
+    if(lookup[j]==0)
+    { rank++;
+      lookup[j]=rank;
+      SET_ELM_PT(f, 4+2*deg+rank, (pttype) j); /* range set */
+    }
+    
+    SET_ELM_PT(f, 4+deg+i, (pttype) lookup[j]); /* set kernel */
+
+    if(j>max_ran) max_ran=j;
+    if(j<min_ran) min_ran=j;
+  }
+ 
+  TOO_MANY_PTS_ERROR(max_ran>65535);
+
+  SET_ELM_PT(f, 2, (pttype) rank);
+
+  /* set min and max */
+  SET_ELM_PT(f, 3, (pttype) min_ran);
+  SET_ELM_PT(f, 4, (pttype) max_ran);
+
+  /* sort the range set*/
+  qsort((pttype *)(ADDR_OBJ(f)+1)+4+2*deg, rank, sizeof(pttype), cmp);
+
+  ResizeBag(f, sizeof(pttype)*(4+2*deg+rank)+sizeof(UInt));
+  return f; 
+}
+
+/* range of partial transformation */
+Obj FuncRanT (Obj self, Obj f )
+{ pttype deg, i;
+  Obj out;
+    
+  deg=ELM_PT(f, 1);
+  out=NEW_PLIST(T_PLIST_CYC,deg);
+  SET_LEN_PLIST(out,(Int) deg);
+  for(i=1;i<=deg;i++)
+  { 
+    SET_ELM_PLIST(out,i,INTOBJ_INT(ELM_PT(f,4+i)));
+  }
+  return out;
+} 
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
@@ -1134,126 +1305,143 @@ static StructGVarFunc GVarFuncs [] = {
 
   { "ELM_LIST_PP", 2, "f,i",
     FuncELM_LIST_PP,
-    "pkg/citrus/src/pperm.c:ELM_LIST_PP" },
+    "pkg/citrus/src/citrus.c:ELM_LIST_PP" },
   
   { "ELMS_LIST_PP", 2, "f,list",
     FuncELMS_LIST_PP,
-    "pkg/citrus/src/pperm.c:ELMS_LIST_PP" },
+    "pkg/citrus/src/citrus.c:ELMS_LIST_PP" },
 
   { "FullPartialPermNC", 1, "rep",
     FuncFullPartialPermNC,
-    "pkg/citrus/src/pperm.c:FuncFullPartialPermNC" },
+    "pkg/citrus/src/citrus.c:FuncFullPartialPermNC" },
 
   { "SparsePartialPermNC", 2, "dom,ran",
     FuncSparsePartialPermNC,
-    "pkg/citrus/src/pperm.c:FuncSparsePartialPermNC" },
+    "pkg/citrus/src/citrus.c:FuncSparsePartialPermNC" },
 
   { "DensePartialPermNC", 1, "img",
     FuncDensePartialPermNC,
-    "pkg/citrus/src/pperm.c:FuncDensePartialPermNC" },
+    "pkg/citrus/src/citrus.c:FuncDensePartialPermNC" },
  
   { "ProdPP", 2, "f,g",
     FuncProdPP,
-    "pkg/citrus/src/pperm.c:FuncProdPP" },
+    "pkg/citrus/src/citrus.c:FuncProdPP" },
 
   { "DomPP", 1, "f",
     FuncDomPP,
-    "pkg/citrus/src/pperm.c:FuncDomPP" },
+    "pkg/citrus/src/citrus.c:FuncDomPP" },
 
   { "RanPP", 1, "f",
     FuncRanPP,
-    "pkg/citrus/src/pperm.c:FuncRanPP" },
+    "pkg/citrus/src/citrus.c:FuncRanPP" },
 
   { "RanSetPP", 1, "f",
     FuncRanSetPP,
-    "pkg/citrus/src/pperm.c:FuncRanSetPP" },
+    "pkg/citrus/src/citrus.c:FuncRanSetPP" },
 
   { "InvPP", 1, "f",
     FuncInvPP,
-    "pkg/citrus/src/pperm.c:FuncInvPP" },
+    "pkg/citrus/src/citrus.c:FuncInvPP" },
 
   { "OnIntegerTuplesWithPP", 2, "tup,f",
     FuncOnIntegerTuplesWithPP,
-    "pkg/citrus/src/pperm.c:FuncOnIntegerTuplesWithPP" },
+    "pkg/citrus/src/citrus.c:FuncOnIntegerTuplesWithPP" },
   
   { "OnIntegerSetsWithPP", 2, "set,f",
     FuncOnIntegerSetsWithPP,
-    "pkg/citrus/src/pperm.c:FuncOnIntegerSetsWithPP" },
+    "pkg/citrus/src/citrus.c:FuncOnIntegerSetsWithPP" },
   
   { "EqPP", 2, "f,g",
     FuncEqPP,
-    "pkg/citrus/src/pperm.c:FuncEqPP" },
+    "pkg/citrus/src/citrus.c:FuncEqPP" },
 
   { "LeftOne", 1, "f",
     FuncLeftOne,
-    "pkg/citrus/src/pperm.c:FuncLeftOne" },
+    "pkg/citrus/src/citrus.c:FuncLeftOne" },
 
   { "RightOne", 1, "f",
     FuncRightOne,
-    "pkg/citrus/src/pperm.c:FuncRightOne" },
+    "pkg/citrus/src/citrus.c:FuncRightOne" },
 
   { "FixedPointsPP", 1, "f",
     FuncFixedPointsPP,
-    "pkg/citrus/src/pperm.c:FuncFixedPointsPP" },
+    "pkg/citrus/src/citrus.c:FuncFixedPointsPP" },
 
   { "MovedPointsPP", 1, "f",
     FuncMovedPointsPP,
-    "pkg/citrus/src/pperm.c:FuncMovedPointsPP" },
+    "pkg/citrus/src/citrus.c:FuncMovedPointsPP" },
 
   { "NrMovedPointsPP", 1, "f",
     FuncNrMovedPointsPP,
-    "pkg/citrus/src/pperm.c:FuncNrMovedPointsPP" },
+    "pkg/citrus/src/citrus.c:FuncNrMovedPointsPP" },
 
   { "LargestMovedPointPP", 1, "f",
     FuncLargestMovedPointPP,
-    "pkg/citrus/src/pperm.c:FuncLargestMovedPointPP" },
+    "pkg/citrus/src/citrus.c:FuncLargestMovedPointPP" },
 
   { "SmallestMovedPointPP", 1, "f",
     FuncSmallestMovedPointPP,
-    "pkg/citrus/src/pperm.c:FuncSmallestMovedPointPP" },
+    "pkg/citrus/src/citrus.c:FuncSmallestMovedPointPP" },
 
   { "LeqPP", 2, "f, g",
     FuncLeqPP,
-    "pkg/citrus/src/pperm.c:FuncLeqPP" },
+    "pkg/citrus/src/citrus.c:FuncLeqPP" },
 
   { "RestrictedPP", 2, "f, set", 
     FuncRestrictedPP, 
-    "pkg/citrus/src/pperm.c:FuncRestrictedPP" },
+    "pkg/citrus/src/citrus.c:FuncRestrictedPP" },
 
   { "NaturalLeqPP", 2, "f, g", 
     FuncNaturalLeqPP,
-    "pkg/citrus/src/pperm.c:FuncNaturalLeqPP" },
+    "pkg/citrus/src/citrus.c:FuncNaturalLeqPP" },
 
   { "QuoPP", 2, "f, g", 
     FuncQuoPP,
-    "pkg/citrus/src/pperm.c:FuncQuoPP" },
+    "pkg/citrus/src/citrus.c:FuncQuoPP" },
 
   { "ProdPPPerm", 2, "f, p",
     FuncProdPPPerm, 
-    "pkg/citrus/src/pperm.c:FuncProdPPPerm" },
+    "pkg/citrus/src/citrus.c:FuncProdPPPerm" },
 
   { "ProdPermPP", 2, "p, f",
     FuncProdPermPP, 
-    "pkg/citrus/src/pperm.c:FuncProdPermPP" },
+    "pkg/citrus/src/citrus.c:FuncProdPermPP" },
 
   { "OnPointsPP", 2, "i, f",
     FuncOnPointsPP, 
-    "pkg/citrus/src/pperm.c:FuncOnPointsPP" },
+    "pkg/citrus/src/citrus.c:FuncOnPointsPP" },
 
-  /* partial transformation start here */
+  /* transformations start here */
+
+  { "TransNC", 1, "img",
+     FuncTransNC,
+    "pkg/citrus/src/citrus.c:FuncTransNC" },
+
+  { "RanT", 1, "f",
+     FuncRanT,
+    "pkg/citrus/src/citrus.c:FuncRanT" },
+
+  /* partial transformations start here */
 
   { "ELM_LIST_PT", 2, "f,i",
     FuncELM_LIST_PT,
-    "pkg/citrus/src/ptrans.c:ELM_LIST_PT" },
+    "pkg/citrus/src/citrus.c:ELM_LIST_PT" },
   
   { "ELMS_LIST_PT", 2, "f,list",
     FuncELMS_LIST_PT,
-    "pkg/citrus/src/ptrans.c:ELMS_LIST_PT" },
+    "pkg/citrus/src/citrus.c:ELMS_LIST_PT" },
 
-  { "FuncSparsePartialTransNC", 2, "dom,ran",
+  { "SparsePartialTransNC", 2, "dom,ran",
      FuncSparsePartialTransNC,
-    "pkg/citrus/src/ptrans.c:FuncSparsePartialTransNC" },
+    "pkg/citrus/src/citrus.c:FuncSparsePartialTransNC" },
 
+  { "DomPT", 1, "f",
+     FuncDomPT,
+    "pkg/citrus/src/citrus.c:FuncDomPT" },
+
+  { "RanPT", 1, "f",
+     FuncRanPT,
+    "pkg/citrus/src/citrus.c:FuncRanPT" },
 
   { 0 }
 
@@ -1269,6 +1457,7 @@ static Int InitKernel ( StructInitInfo *module )
 
     ImportGVarFromLibrary( "PartialPermType", &PartialPermType );
     ImportGVarFromLibrary( "PartialTransType", &PartialTransType );
+    ImportGVarFromLibrary( "TransType", &TransType );
     /* return success                                                      */
     return 0;
 }
