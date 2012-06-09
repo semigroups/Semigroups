@@ -1087,7 +1087,6 @@ Obj FuncELMS_LIST_T(Obj self, Obj f, Obj list)
     return out;
 }
 
-
 Obj FuncTransformationNC( Obj self, Obj img )
 { Int deg, max_ran, min_ran, rank, i, j;
   Obj f; 
@@ -1117,13 +1116,13 @@ Obj FuncTransformationNC( Obj self, Obj img )
     j=INT_INTOBJ(ELM_LIST(img, i)); /* img[i] */
     SET_ELM_PT(f, 4+i, (pttype) j);
     
-    if(lookup[j]==0)
-    { rank++;
+    if(lookup[j]==0){ 
+      rank++;
       lookup[j]=rank;
       SET_ELM_PT(f, 4+2*deg+rank, (pttype) j); /* range set */
     }
     
-    SET_ELM_PT(f, 4+deg+i, (pttype) lookup[j]); /* set kernel */
+    SET_ELM_PT(f, 4+deg+i, (pttype) lookup[j]); /* kernel */
 
     if(j>max_ran) max_ran=j;
     if(j<min_ran) min_ran=j;
@@ -1144,7 +1143,7 @@ Obj FuncTransformationNC( Obj self, Obj img )
   return f; 
 }
 
-/* range of partial transformation */
+/* range of transformation */
 Obj FuncRanT (Obj self, Obj f )
 { pttype deg, i;
   Obj out;
@@ -1155,6 +1154,55 @@ Obj FuncRanT (Obj self, Obj f )
   for(i=1;i<=deg;i++)
   { 
     SET_ELM_PLIST(out,i,INTOBJ_INT(ELM_PT(f,4+i)));
+  }
+  return out;
+} 
+
+/* kernel of transformation */
+Obj FuncKerT (Obj self, Obj f )
+{ pttype deg, i;
+  Obj out;
+    
+  deg=ELM_PT(f, 1);
+  out=NEW_PLIST(T_PLIST_CYC,deg);
+  SET_LEN_PLIST(out,(Int) deg);
+  for(i=1;i<=deg;i++)
+  { 
+    SET_ELM_PLIST(out,i,INTOBJ_INT(ELM_PT(f,4+deg+i)));
+  }
+  return out;
+} 
+
+/* range set of transformation */
+
+Obj FuncRanSetT (Obj self, Obj f )
+{ pttype deg, rank, i;
+  Obj out;
+    
+  deg=ELM_PT(f, 1);
+  rank=ELM_PT(f, 2);
+  out=NEW_PLIST(T_PLIST_CYC,rank);
+  SET_LEN_PLIST(out,(Int) rank);
+  for(i=1;i<=rank;i++)
+  { 
+    SET_ELM_PLIST(out,i,INTOBJ_INT(ELM_PT(f,4+2*deg+i)));
+  }
+  return out;
+} 
+
+/* image set-kernel of transformation */
+Obj FuncRanSetKerT(Obj self, Obj f)
+{ pttype deg, rank, i;
+  Obj out;
+    
+  deg=ELM_PT(f, 1); 
+  rank=ELM_PT(f, 2);
+  out=NEW_PLIST(T_PLIST_CYC, deg+rank);
+  SET_LEN_PLIST(out,(Int) deg+rank);
+
+  for(i=1;i<=rank;i++) SET_ELM_PLIST(out,i,INTOBJ_INT(ELM_PT(f,4+2*deg+i)));
+  for(i=1;i<=deg;i++){
+    SET_ELM_PLIST(out,i+rank,INTOBJ_INT(ELM_PT(f,4+deg+i)));
   }
   return out;
 } 
@@ -1291,6 +1339,18 @@ static StructGVarFunc GVarFuncs [] = {
   { "RanT", 1, "f",
      FuncRanT,
     "pkg/citrus/src/citrus.c:FuncRanT" },
+
+  { "KerT", 1, "f",
+     FuncKerT,
+    "pkg/citrus/src/citrus.c:FuncKerT" },
+
+  { "RanSetT", 1, "f",
+     FuncRanSetT,
+    "pkg/citrus/src/citrus.c:FuncRanSetT" },
+
+  { "RanSetKerT", 1, "f",
+     FuncRanSetKerT,
+    "pkg/citrus/src/citrus.c:FuncRanSetKerT" },
 
   { 0 }
 
