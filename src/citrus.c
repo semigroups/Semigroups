@@ -1307,6 +1307,56 @@ Obj FuncProdTPerm(Obj self, Obj f, Obj p)
   return fp;
 }
 
+/* product of permutation and transformation */
+Obj FuncProdPermT(Obj self, Obj p, Obj f)
+{ pttype deg, rank, deg_p, i, j;
+  UInt2 * ptp;
+  Obj pf, lmp;
+  pttype lookup[ELM_PT(f, 1)];
+
+  deg=ELM_PT(f, 1);
+  lmp=FuncLARGEST_MOVED_POINT_PERM(self, p);
+  
+  if(INT_INTOBJ(lmp)>deg){
+    ErrorQuit("usage: cannot multiply transformations and perms acting on different sets", 0L, 0L);
+    return 0L;
+  }
+
+  if(TNUM_OBJ(p)==T_PERM4){ 
+    FuncTRIM_PERM(self,p,lmp);
+  }
+
+  rank = ELM_PT(f, 2);
+  deg_p  = DEG_PERM2(p);
+  ptp = ADDR_PERM2(p);
+
+  pf = NEW_T(LEN_T(f));
+  SET_ELM_PT(pf, 1, deg);
+  SET_ELM_PT(pf, 2, rank);  
+  SET_ELM_PT(pf, 3, ELM_PT(f, 3));
+  SET_ELM_PT(pf, 4, ELM_PT(f, 4));
+
+  for(i=1;i<=deg; i++){
+    j = ELM_PT(f, IMAGE(i-1, ptp, deg_p)+5); /* f(p(i)) */
+    SET_ELM_PT(pf, 4+i, j);
+    
+    if(lookup[j]==0){
+      rank++;
+      lookup[j]=rank;
+    }
+    /* kernel */
+    SET_ELM_PT(f, 4+deg+i, lookup[j]);
+  }
+
+  /* ran set */
+  for(i=1;i<=rank; i++){
+    SET_ELM_PT(pf, 4+2*deg+i, ELM_PT(f, 4+2*deg+i));
+  }
+  
+  return pf;
+}
+
+
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
 /******************************************************************************
@@ -1456,9 +1506,13 @@ static StructGVarFunc GVarFuncs [] = {
      FuncProdTT,
     "pkg/citrus/src/citrus.c:FuncProdTT" },
 
-  { "ProdTPerm", 2, "f, g",
+  { "ProdTPerm", 2, "f, p",
      FuncProdTPerm,
     "pkg/citrus/src/citrus.c:FuncProdTPerm" },
+
+  { "ProdPermT", 2, "p, f",
+     FuncProdPermT,
+    "pkg/citrus/src/citrus.c:FuncProdPermT" },
 
   { 0 }
 
