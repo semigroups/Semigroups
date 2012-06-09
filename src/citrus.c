@@ -1326,31 +1326,30 @@ Obj FuncProdPermT(Obj self, Obj p, Obj f)
     FuncTRIM_PERM(self,p,lmp);
   }
 
-  rank = ELM_PT(f, 2);
   deg_p  = DEG_PERM2(p);
   ptp = ADDR_PERM2(p);
 
   pf = NEW_T(LEN_T(f));
   SET_ELM_PT(pf, 1, deg);
-  SET_ELM_PT(pf, 2, rank);  
+  SET_ELM_PT(pf, 2, ELM_PT(f, 2));  
   SET_ELM_PT(pf, 3, ELM_PT(f, 3));
   SET_ELM_PT(pf, 4, ELM_PT(f, 4));
 
-  for(i=1;i<=deg; i++){
+  rank=0;
+  
+  for(i=1;i<=deg;i++) lookup[i]=0;
+  
+  for(i=1;i<=deg;i++){
     j = ELM_PT(f, IMAGE(i-1, ptp, deg_p)+5); /* f(p(i)) */
     SET_ELM_PT(pf, 4+i, j);
     
     if(lookup[j]==0){
       rank++;
       lookup[j]=rank;
+      SET_ELM_PT(pf, 4+2*deg+rank, ELM_PT(f, 4+2*deg+rank)); /* ran set */
     }
     /* kernel */
-    SET_ELM_PT(f, 4+deg+i, lookup[j]);
-  }
-
-  /* ran set */
-  for(i=1;i<=rank; i++){
-    SET_ELM_PT(pf, 4+2*deg+i, ELM_PT(f, 4+2*deg+i));
+    SET_ELM_PT(pf, 4+deg+i, lookup[j]);
   }
   
   return pf;
