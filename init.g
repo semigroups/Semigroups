@@ -10,6 +10,8 @@
 
 MakeReadWriteGlobal("TransformationNC");
 UnbindGlobal("TransformationNC");
+MakeReadWriteGlobal("Transformation");
+UnbindGlobal("Transformation");
 MakeReadWriteGlobal("PermLeftQuoTransformationNC");
 UnbindGlobal("PermLeftQuoTransformationNC");
 

@@ -128,6 +128,22 @@ function(f)
   return; 
 end);
 
+#TTT
+
+# new for 1.0! - Transformation - "for a list of pos ints"
+############################################################################# 
+
+BindGlobal("Transformation", function(list) 
+  local n;
+  n:=Length(list);
+  if ForAny([1..n], i-> not list[i] in [1..n]) then 
+    Error("usage: a list of positive integers not greater than the length of the list");
+    return;
+  fi;
+  return TransformationNC(list);
+end);
+
+
 ############################################################################# 
 #old
 ############################################################################# 
