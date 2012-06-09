@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+# new
+
 MakeReadWriteGlobal("TransformationFamily");
 UnbindGlobal("TransformationFamily");
 MakeReadWriteGlobal("TransformationType");
@@ -53,7 +55,7 @@ InstallMethod(PrintObj, "for a transformation",
 function(f) 
  
   if f[1]<20 then  
-    Print("<transformation ", RanT(f), ">");
+    Print("Transformation( ", RanT(f), " )");
     return;
   fi; 
   Print("<transformation on ", f[1], " pts with rank ", f[2], ">"); 

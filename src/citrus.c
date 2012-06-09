@@ -1174,7 +1174,6 @@ Obj FuncKerT (Obj self, Obj f )
 } 
 
 /* range set of transformation */
-
 Obj FuncRanSetT (Obj self, Obj f )
 { pttype deg, rank, i;
   Obj out;
@@ -1206,6 +1205,54 @@ Obj FuncRanSetKerT(Obj self, Obj f)
   }
   return out;
 } 
+
+/* product of transformations */
+Obj FuncProdTT(Obj self, Obj f, Obj g)
+{ pttype deg, min_ran, max_ran, j, i, rank;
+  pttype lookup[ELM_PT(f, 1)];
+  Obj fg;
+
+  deg=ELM_PT(f, 1);
+  if(deg!=ELM_PT(g, 1)){
+    ErrorQuit("usage: transformations have different degrees", 0L, 0L);
+    return 0L;
+  }
+  
+  fg=NEW_T(4+3*deg);
+  SET_ELM_PT(fg, 1, deg);
+
+  min_ran=ELM_PT(g, 4);
+  max_ran=ELM_PT(g, 3);
+  rank=0;
+
+  /* init the kernel lookup */
+  for(i=1;i<=deg;i++) lookup[i]=0;
+
+  for(i=1;i<=deg; i++){
+    j=ELM_PT(g, 4+ELM_PT(f, 4+i)); /* g(f(i)) */
+    SET_ELM_PT(fg, 4+i, j);
+    
+    if(lookup[j]==0){
+      rank++;
+      lookup[j]=rank;
+      SET_ELM_PT(fg, 4+2*deg+rank, j); /* range set */
+    }
+
+    SET_ELM_PT(fg, 4+deg+i, lookup[j]); /* kernel */
+    
+    if(j>max_ran) max_ran=j;
+    if(j<min_ran) min_ran=j;
+  }
+
+  SET_ELM_PT(fg, 2, rank);
+  SET_ELM_PT(fg, 3, min_ran);
+  SET_ELM_PT(fg, 4, max_ran);
+
+  qsort((pttype *)(ADDR_OBJ(fg)+1)+4+2*deg, rank, sizeof(pttype), cmp);
+
+  ResizeBag(fg, sizeof(pttype)*(4+2*deg+rank)+sizeof(UInt)); 
+  return fg;
+}
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
@@ -1351,6 +1398,10 @@ static StructGVarFunc GVarFuncs [] = {
   { "RanSetKerT", 1, "f",
      FuncRanSetKerT,
     "pkg/citrus/src/citrus.c:FuncRanSetKerT" },
+
+  { "ProdTT", 2, "f, g",
+     FuncProdTT,
+    "pkg/citrus/src/citrus.c:FuncProdTT" },
 
   { 0 }
 

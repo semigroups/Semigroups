@@ -12,7 +12,7 @@
 
 DeclareGlobalFunction("InternalRepOfTransformation");
 
-# full transformations
+# old
 
 if not IsBound(AsPermutation) then 
   DeclareOperation("AsPermutation",[IsObject]);
