@@ -76,7 +76,7 @@ end);
 ###############################################################################
 
 InstallMethod(LambdaFunc, "for a trans semi",
-[IsTransformationSemigroup], x-> y-> SSortedList(y![1]));
+[IsTransformationSemigroup], x-> RanSetT);
 
 if IsBound(RanSetPP) then
   InstallMethod(LambdaFunc, "for a partial perm",
@@ -91,7 +91,7 @@ fi;
 
 InstallMethod(LambdaMult, "for a transformation semi",
 [IsTransformationSemigroup], s-> function(pt, f)
-  return MappingPermListList(pt, f![1]{pt});
+  return MappingPermListList(pt, OnTuples(pt, f));
 end);
 
 InstallMethod(LambdaMult, "for a partial perm semi",
@@ -128,7 +128,7 @@ InstallMethod(LambdaRank, "for a semigroup of partial perms",
 ###############################################################################
 
 InstallMethod(RhoFunc, "for a trans semi",
-[IsTransformationSemigroup], x-> CanonicalTransSameKernel);
+[IsTransformationSemigroup], KerT);
 
 if IsBound(DomPP) then
   InstallMethod(RhoFunc, "for a partial perm semi",

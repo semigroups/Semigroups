@@ -28,6 +28,49 @@ BindGlobal("TransformationType", NewType(TransformationFamily,
 InstallMethod(\*, "for transformation and transformation",
 [IsTransformation, IsTransformation], ProdTT);
 
+# new for 1.0! - \* - "for a trans and trans"
+############################################################################
+
+InstallMethod(\*, "for transformation and perm",
+[IsTransformation, IsPerm], ProdTPerm);
+
+# new for 1.0! - \* - "for a trans and trans"
+############################################################################
+
+InstallMethod(\*, "for perm and transformation",
+[IsPerm, IsTransformation], ProdPermT);
+
+#CCC
+
+# new for 1.0 - ChooseHashFunction - "for a transformation"
+#############################################################################
+
+InstallMethod(ChooseHashFunction, "for a transformation",
+[IsTransformation, IsInt], 
+function(f, hashlen)
+  return rec(func:=function(x, data) 
+    return ORB_HashFunctionForPlainFlatList(RanT(x), data); 
+  end, data:=hashlen);
+end);
+
+#DDD
+
+# new for 1.0! - DegreeOfTransformation - "for a transformation"
+############################################################################
+
+MakeReadWriteGlobal("DegreeOfTransformation");
+UnbindGlobal("DegreeOfTransformation");
+BindGlobal("DegreeOfTransformation", f-> f[1]);
+
+# new for 1.0! - RankOfTransformation - "for a transformation"
+############################################################################
+
+MakeReadWriteGlobal("RankOfTransformation");
+UnbindGlobal("RankOfTransformation");
+BindGlobal("RankOfTransformation", f-> f[2]);
+
+#EEE
+
 # new for 1.0! - ELM_LIST - "for a trans and pos int"
 ############################################################################
 
@@ -39,6 +82,8 @@ InstallOtherMethod(ELM_LIST, "for a trans and a pos int",
 
 InstallOtherMethod(ELMS_LIST, "for a trans and a small dense list",
 [IsTransformation, IsDenseList and IsSmallList ], ELMS_LIST_T );
+
+#III
 
 # new for 1.0! - InternalRepOfTransformation - "for a transformation" 
 ############################################################################# 
@@ -53,6 +98,8 @@ function(f)
   
   return f{[1..4+2*f[1]+f[2]]}; 
 end); 
+
+#PPP
 
 # new for 1.0! - PrintObj - "for a transformation" 
 ############################################################################# 
@@ -88,30 +135,6 @@ function(x, y)
   y_inv:=OnTuples([1..Length(xx)], y^-1);
   z:=xy{y_inv}; MakeImmutable(z);
   return Objectify(TypeObj(x), [z]);
-end);
-
-# new for 0.1! - \* - "for a transformation and a permutation (citrus pkg)"
-#############################################################################
-
-InstallMethod(\*, "for a transformation and a permutation (citrus pkg)", 
-[IsTransformation and IsTransformationRep, IsPerm], 10,
-function(x, y)
-  local c;
-  c:=OnTuples(x![1], y);
-  MakeImmutable(c);
-  return Objectify( TypeObj(x), [ c ] );
-end);
-
-# new for 0.2! - \* - "for permutation and transformation (citrus pkg)"
-#############################################################################
-
-InstallMethod(\*, "for a permutation and transformation (citrus pkg)",
-[IsPerm, IsTransformation and IsTransformationRep], 10,
-function(x, y)
-  local yy, xx, z;
-  yy:=y![1]; xx:=OnTuples([1..Length(yy)], x);
-  z:=yy{xx}; MakeImmutable(z);
-  return Objectify( TypeObj(y), [ z ] );
 end);
 
 #AAA
@@ -166,19 +189,6 @@ function(f, list)
   fi;
 
   return MappingPermListList(list, a);
-end);
-
-#CCC
-
-# new for 1.0 - ChooseHashFunction - "for a transformation"
-#############################################################################
-
-InstallMethod(ChooseHashFunction, "for a transformation",
-[IsTransformation, IsInt], 
-function(f, hashlen)
-  return rec(func:=function(x, data) 
-    return ORB_HashFunctionForPlainFlatList(x![1], data); 
-  end, data:=hashlen);
 end);
 
 # new for 0.1! - ConstantTransformation - "for degree and value"
@@ -514,19 +524,6 @@ function(img, n)
   " and <n> is a pos. int. such that the maximum of <img> is not greater than",
   " <n>,");
   return;
-end);
-
-# new for 0.1! - RankOfTransformation - "for a transformation (citrus pkg)"
-#############################################################################
-
-InstallMethod(RankOfTransformation, "for a transformation (citrus pkg)", 
-[IsTransformation], 
-function(f)
-
-  if not IsBound(f![5]) then 
-    f![5]:=Length(ImageSetOfTransformation(f));
-  fi;
-  return f![5];
 end);
 
 #SSS

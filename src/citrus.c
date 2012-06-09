@@ -1355,6 +1355,67 @@ Obj FuncProdPermT(Obj self, Obj p, Obj f)
   return pf;
 }
 
+/* on sets for a transformation */ 
+Obj FuncOnIntegerSetsWithT (Obj self, Obj set, Obj f)
+{ pttype deg, k;
+  Int n, i, j, m;
+  Obj out;
+  Int seen[ELM_PT(f,1)];
+
+  deg=ELM_PT(f,1);
+  n=LEN_LIST(set);
+  if(n==0) return NEW_EMPTY_PLIST();
+
+  out = NEW_PLIST(T_PLIST_CYC, n);
+  m = 0;
+  
+  for(i=1;i<=deg;i++) seen[i]=0;
+
+  for(i=1;i<=n;i++)
+  {
+    j=INT_INTOBJ(ELM_LIST(set, i));
+    if(j<=deg){
+      k=ELM_PT(f, j+4);
+      if(seen[k]==0){
+        seen[k]=1; 
+        m++;
+        SET_ELM_PLIST(out, m, INTOBJ_INT(k));
+      }
+    }
+  }
+  SET_LEN_PLIST(out, m);
+  SHRINK_PLIST(out, m);
+  SortDensePlist(out);
+  return out;
+}
+
+/* on tuples for a transformation */ 
+Obj FuncOnIntegerTuplesWithT (Obj self, Obj set, Obj f)
+{ pttype deg, k;
+  Int n, i, j, m;
+  Obj out;
+
+  deg=ELM_PT(f,1);
+  n=LEN_LIST(set);
+  if(n==0) return NEW_EMPTY_PLIST();
+
+  out = NEW_PLIST(T_PLIST_CYC, n);
+  m = 0;
+
+  for(i=1;i<=n;i++)
+  {
+    j=INT_INTOBJ(ELM_LIST(set, i));
+    if(j<=deg)
+    {
+      k=ELM_PT(f, j+4);
+      m++;
+      SET_ELM_PLIST(out, m, INTOBJ_INT(k));
+    }
+  }
+  SET_LEN_PLIST(out, m);
+  SHRINK_PLIST(out, m);
+  return out;
+}
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
@@ -1512,6 +1573,14 @@ static StructGVarFunc GVarFuncs [] = {
   { "ProdPermT", 2, "p, f",
      FuncProdPermT,
     "pkg/citrus/src/citrus.c:FuncProdPermT" },
+
+  { "OnIntegerSetsWithT", 2, "set, f",
+     FuncOnIntegerSetsWithT,
+    "pkg/citrus/src/citrus.c:FuncOnIntegerSetsWithT" },
+
+  { "OnIntegerTuplesWithT", 2, "tup, f",
+     FuncOnIntegerTuplesWithT,
+    "pkg/citrus/src/citrus.c:FuncOnIntegerTuplesWithT" },
 
   { 0 }
 
