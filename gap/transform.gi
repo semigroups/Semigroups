@@ -21,6 +21,13 @@ BindGlobal("TransformationFamily", NewFamily("TransformationFamily",
 BindGlobal("TransformationType", NewType(TransformationFamily,
  IsTransformation and IsDataObjectRep and IsActingElt));
 
+
+# new for 1.0! - \* - "for a trans and trans"
+############################################################################
+
+InstallMethod(\*, "for transformation and transformation",
+[IsTransformation, IsTransformation], ProdTT);
+
 # new for 1.0! - ELM_LIST - "for a trans and pos int"
 ############################################################################
 
@@ -66,10 +73,6 @@ end);
 #old
 ############################################################################# 
 
-# if f is a transformation, then f![1] is the image list, f![2] is the image
-# set, f![3] is the kernel, f![4] is AsPermOfKerImg, f![5] is the rank of f
-# f![6] is the canonical trans. with same kernel
-
 # - a method for RandomTransformation(m,n) i.e. a random transformation with
 # a given rank. 
 
@@ -109,19 +112,6 @@ function(x, y)
   yy:=y![1]; xx:=OnTuples([1..Length(yy)], x);
   z:=yy{xx}; MakeImmutable(z);
   return Objectify( TypeObj(y), [ z ] );
-end);
-
-# new for 0.1! - \* - "for a transformation and a transformation (citrus pkg)"
-#############################################################################
-
-InstallMethod(\*, "for a transformation and transformation (citrus pkg)", 
-[IsTransformation and IsTransformationRep, 
- IsTransformation and IsTransformationRep], 10,
-function(x, y)
-  local  a, b, c;
-  a := x![1]; b := y![1]; c := b{a};
-  MakeImmutable(c);
-  return Objectify( TypeObj(x), [ c ] );
 end);
 
 #AAA
