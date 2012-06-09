@@ -39,7 +39,7 @@ InstallOtherMethod(RhoOrb, "for a D-class of a part perm semi",
 ###############################################################################
 
 InstallMethod(LambdaAct, "for a transformation semi",
-[IsTransformationSemigroup], x-> OnSets);
+[IsTransformationSemigroup], x-> OnIntegerSetsWithT);
 
 if IsBound(OnIntegerSetsWithPP) then 
   InstallMethod(LambdaAct, "for a partial perm semi",
@@ -91,7 +91,7 @@ fi;
 
 InstallMethod(LambdaMult, "for a transformation semi",
 [IsTransformationSemigroup], s-> function(pt, f)
-  return MappingPermListList(pt, OnTuples(pt, f));
+  return MappingPermListList(pt, OnIntegerSetsWithT(pt, f));
 end);
 
 InstallMethod(LambdaMult, "for a partial perm semi",

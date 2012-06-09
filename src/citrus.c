@@ -1389,6 +1389,8 @@ Obj FuncOnIntegerSetsWithT (Obj self, Obj set, Obj f)
   return out;
 }
 
+Obj FuncPermList(Obj self, Obj list);
+
 /* on tuples for a transformation */ 
 Obj FuncOnIntegerTuplesWithT (Obj self, Obj set, Obj f)
 { pttype deg, k;
@@ -1415,6 +1417,28 @@ Obj FuncOnIntegerTuplesWithT (Obj self, Obj set, Obj f)
   SET_LEN_PLIST(out, m);
   SHRINK_PLIST(out, m);
   return out;
+}
+
+Obj FuncPermLeftQuoTransformationNC(Obj self, Obj f, Obj g)
+{ pttype deg, i, x;
+  Obj pl;
+
+    deg = ELM_PT(f, 1);
+    pl = NEW_PLIST(T_PLIST_CYC,deg);
+    SET_LEN_PLIST(pl, (Int) deg);
+    /* From now on no more garbage collections! */
+    for (i = 1;i <= deg;i++) {
+        x = ELM_PT(f,i);
+        if (ELM_PLIST(pl,x) == NULL) {
+            SET_ELM_PLIST(pl,x,INTOBJ_INT(ELM_PT(g,i)));
+        }
+    }
+    for (i = 1;i <= deg;i++) {
+        if (ELM_PLIST(pl,i) == NULL) {
+            SET_ELM_PLIST(pl,i,INTOBJ_INT(i));
+        }
+    }
+    return FuncPermList(self,pl);
 }
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
@@ -1581,6 +1605,10 @@ static StructGVarFunc GVarFuncs [] = {
   { "OnIntegerTuplesWithT", 2, "tup, f",
      FuncOnIntegerTuplesWithT,
     "pkg/citrus/src/citrus.c:FuncOnIntegerTuplesWithT" },
+
+  { "PermLeftQuoTransformationNC", 2, "f, g",
+     FuncPermLeftQuoTransformationNC,
+    "pkg/citrus/src/citrus.c:FuncPermLeftQuoTransformationNC" },
 
   { 0 }
 
