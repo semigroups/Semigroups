@@ -10,6 +10,8 @@
 
 MakeReadWriteGlobal("TransformationNC");
 UnbindGlobal("TransformationNC");
+MakeReadWriteGlobal("PermLeftQuoTransformationNC");
+UnbindGlobal("PermLeftQuoTransformationNC");
 
 if (not IsBound(CITRUSC)) and ("citrus" in SHOW_STAT()) then
   LoadStaticModule("citrus");

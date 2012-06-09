@@ -233,12 +233,12 @@ function(arg)
   return;
 end);
 
-# new for 0.1! - Degree - "for a transformation"
+# new for 1.0! - Degree - "for a transformation"
 #############################################################################
 # Notes: returns DegreeOfTransformation.
 
 InstallOtherMethod(Degree, "for a transformation",
-[IsTransformation], DegreeOfTransformation);
+[IsTransformation], f-> f[1]);
 
 # new for 0.7! - Degree - "for a partial perm"
 #############################################################################

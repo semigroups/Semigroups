@@ -1428,9 +1428,9 @@ Obj FuncPermLeftQuoTransformationNC(Obj self, Obj f, Obj g)
     SET_LEN_PLIST(pl, (Int) deg);
     /* From now on no more garbage collections! */
     for (i = 1;i <= deg;i++) {
-        x = ELM_PT(f,i);
+        x = ELM_PT(f,i+4);
         if (ELM_PLIST(pl,x) == NULL) {
-            SET_ELM_PLIST(pl,x,INTOBJ_INT(ELM_PT(g,i)));
+            SET_ELM_PLIST(pl,x,INTOBJ_INT(ELM_PT(g,i+4)));
         }
     }
     for (i = 1;i <= deg;i++) {
@@ -1439,6 +1439,39 @@ Obj FuncPermLeftQuoTransformationNC(Obj self, Obj f, Obj g)
         }
     }
     return FuncPermList(self,pl);
+}
+
+/* less than or equal for transformations */
+Obj FuncLeqT(Obj self, Obj f, Obj g)
+{ pttype i, j, k, deg;
+
+  deg=ELM_PT(f,1);
+  if(deg!=ELM_PT(g,1)){
+    ErrorQuit("usage: transformations should have equal degree,", 0L, 0L);
+    return 0L;
+  }
+
+  for(i=1;i<=deg;i++){
+    j=ELM_PT(f,4+i);
+    k=ELM_PT(g,4+i);
+    if(j<k) return True;
+    if(j>k) return False;
+  }
+
+  return False;
+}
+
+/* less than or equal for transformations */
+Obj FuncEqT(Obj self, Obj f, Obj g)
+{ pttype i, deg;
+
+  deg=ELM_PT(f,1);
+  if(deg!=ELM_PT(g,1)) return False;
+
+  for(i=1;i<=deg;i++){
+    if(ELM_PT(f,4+i)!=ELM_PT(g,4+i)) return False;
+  }
+  return True;
 }
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
@@ -1609,6 +1642,14 @@ static StructGVarFunc GVarFuncs [] = {
   { "PermLeftQuoTransformationNC", 2, "f, g",
      FuncPermLeftQuoTransformationNC,
     "pkg/citrus/src/citrus.c:FuncPermLeftQuoTransformationNC" },
+
+  { "LeqT", 2, "f, g",
+     FuncLeqT,
+    "pkg/citrus/src/citrus.c:FuncLeqT" },
+
+  { "EqT", 2, "f, g",
+     FuncEqT,
+    "pkg/citrus/src/citrus.c:FuncEqT" },
 
   { 0 }
 

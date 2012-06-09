@@ -40,6 +40,18 @@ InstallMethod(\*, "for transformation and perm",
 InstallMethod(\*, "for perm and transformation",
 [IsPerm, IsTransformation], ProdPermT);
 
+# new for 1.0! - \< - "for a trans and trans"
+############################################################################
+
+InstallMethod(\<, "for perm and transformation",
+[IsTransformation, IsTransformation], LeqT);
+
+# new for 1.0! - \= - "for a trans and trans"
+############################################################################
+
+InstallMethod(\=, "for trans and trans",
+[IsTransformation, IsTransformation], EqT);
+
 #CCC
 
 # new for 1.0 - ChooseHashFunction - "for a transformation"
