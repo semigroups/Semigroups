@@ -1456,6 +1456,10 @@ static StructGVarFunc GVarFuncs [] = {
      FuncProdTT,
     "pkg/citrus/src/citrus.c:FuncProdTT" },
 
+  { "ProdTPerm", 2, "f, g",
+     FuncProdTPerm,
+    "pkg/citrus/src/citrus.c:FuncProdTPerm" },
+
   { 0 }
 
 };
