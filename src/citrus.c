@@ -1254,6 +1254,59 @@ Obj FuncProdTT(Obj self, Obj f, Obj g)
   return fg;
 }
 
+/* product of transformation and permutation */
+Obj FuncProdTPerm(Obj self, Obj f, Obj p)
+{ pttype deg, rank, deg_p, max_ran, min_ran, i, j;
+  UInt2 * ptp;
+  Obj fp, lmp;
+
+  deg=ELM_PT(f, 1);
+  lmp=FuncLARGEST_MOVED_POINT_PERM(self, p);
+  
+  if(INT_INTOBJ(lmp)>deg){
+    ErrorQuit("usage: cannot multiply a transformation and a perm acting on different sets", 0L, 0L);
+    return 0L;
+  }
+
+  if(TNUM_OBJ(p)==T_PERM4){ 
+    FuncTRIM_PERM(self,p,lmp);
+  }
+
+  rank = ELM_PT(f, 2);
+  deg_p  = DEG_PERM2(p);
+  ptp = ADDR_PERM2(p);
+
+  fp = NEW_T(LEN_T(f));
+  SET_ELM_PT(fp, 1, deg);
+  SET_ELM_PT(fp, 2, rank);  
+  
+  max_ran=1;
+  min_ran=deg;
+
+  for(i=1;i<=deg; i++){
+    j = IMAGE(ELM_PT(f, 4+i)-1, ptp, deg_p)+1; /* p(f(i)) */
+    SET_ELM_PT(fp, 4+i, j);
+
+    /* ker(fp)=ker(f) */
+    SET_ELM_PT(fp, 4+deg+i, ELM_PT(f, 4+deg+i));
+
+    if(j>max_ran) max_ran=j;
+    if(j<min_ran) min_ran=j;
+  }
+
+  SET_ELM_PT(f, 3, min_ran);
+  SET_ELM_PT(f, 4, max_ran);
+
+  /* ran set */
+  for(i=1;i<=rank; i++){
+    j=IMAGE(ELM_PT(f, 4+2*deg+i)-1, ptp, deg_p)+1;
+    SET_ELM_PT(fp, 4+2*deg+i, j);
+  }
+  qsort((pttype *)(ADDR_OBJ(fp)+1)+4+2*deg, rank, sizeof(pttype), cmp);
+  
+  return fp;
+}
+
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
 /******************************************************************************
