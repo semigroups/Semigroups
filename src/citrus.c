@@ -1048,8 +1048,6 @@ Obj FuncOnPointsPP(Obj self, Obj i, Obj f)
 **
 *******************************************************************************/
 
-#define ADDR_T(f) ((pttype*)(ADDR_OBJ(f)))
-
 /*******************************************************************************
 ** Macros for transformations specifically
 *******************************************************************************/
@@ -1460,12 +1458,9 @@ Obj FuncEqT(Obj self, Obj f, Obj g)
 
   deg=ELM_PT(f,1);
   if(deg!=ELM_PT(g,1)) return False;
-  
-  pttype *ptf = (pttype *) (ADDR_OBJ(f) + 1);
-  pttype *ptg = (pttype *) (ADDR_OBJ(g) + 1);
 
   for(i=1;i<=deg;i++){
-    if(ptf[i-1]!=ptg[i-1]) return False;
+    if(ELM_PT(f,4+i)!=ELM_PT(g,4+i)) return False;
   }
   return True;
 }
