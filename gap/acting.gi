@@ -388,11 +388,6 @@ InstallMethod(EnumerateSemigroupData, "for an acting semi, limit, and func",
 function(s, limit, lookfunc)
   local looking, data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, pos, lamx, m, mults, y, tmp, rhoy, val, schutz, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, schutzstab, j, n;
 
-  #s:=arg[1]; limit:=arg[2];
-
-  # are we looking for something?
-  #if IsBound(arg[3]) then 
-  #  lookfunc:=arg[3]; # this should be as cheap as possible!
   if lookfunc<>ReturnFalse then 
     looking:=true;
   else
@@ -400,7 +395,7 @@ function(s, limit, lookfunc)
   fi;
 
   data:=SemigroupData(s);
-  ht:=data!.ht;       # ht and orb contain existing R-class reps
+  #ht:=data!.ht;       # ht and orb contain existing R-class reps
   orb:=data!.orbit;  
   nr:=Length(orb);
   i:=data!.pos;       # points in orb in position at most i have descendants
@@ -449,11 +444,14 @@ function(s, limit, lookfunc)
         x:=gens[j]*orb[i][4];
        
         #check if x is already an R-class rep
-        pos:=HTValue(ht, x);
-        if pos<>fail then 
-          graph[i][j]:=pos;
-          continue; 
-        fi;
+        
+        # JDM it appears to be quicker to not do this step
+        
+        #pos:=HTValue(ht, x);
+        #if pos<>fail then 
+        #  graph[i][j]:=pos;
+        #  continue; 
+        #fi;
         
         lamx:=lambda(x);
         pos:=Position(o, lamx);
@@ -535,7 +533,7 @@ function(s, limit, lookfunc)
         schreiergen[nr]:=j; # by multiplying by gens[j]
         schreiermult[nr]:=pos; # and ends up in position <pos> of 
                                # its lambda orb
-        HTAdd(ht, y, nr);
+        #HTAdd(ht, y, nr); #faster still!
         graph[nr]:=EmptyPlist(nrgens);
         graph[i][j]:= nr;
         
@@ -1229,7 +1227,7 @@ function(s)
     return fail;
   fi;
 
-  data:=rec(ht:=HTCreate(x, rec(hashlen:=s!.opts.hashlen.L)), 
+  data:=rec( 
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
      reps:=[], repslookup:=[], lenreps:=0, orbit:=[[,,,x]], repslens:=[], 
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail], 
