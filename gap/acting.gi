@@ -379,7 +379,7 @@ end);
 InstallMethod(EnumerateSemigroupData, "for an acting semi, limit, and func",
 [IsActingSemigroup, IsCyclotomic, IsFunction],
 function(s, limit, lookfunc)
-  local looking, data, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, pos, lamx, m, mults, y, tmp, rhoy, val, schutz, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, schutzstab, j, n;
+  local looking, data, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, pos, lamx, m, mults, y, rhoy, val, schutz, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, schutzstab, j, n; 
 
   if lookfunc<>ReturnFalse then 
     looking:=true;
