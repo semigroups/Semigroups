@@ -192,13 +192,6 @@ function(f, s)
   data:=SemigroupData(s);
   len:=Length(data!.orbit);  
 
-  # check if f is an existing R-rep
-  val:=HTValue(data!.ht, f);
-
-  if val<>fail then 
-    return true;
-  fi;
-
   lambda:=LambdaFunc(s)(f);
 
   # look for lambda!
@@ -280,15 +273,6 @@ function(f, s)
     g:=f*LambdaOrbMults(o, m)[l];
   else
     g:=f;
-  fi;
-
-  # check if anything changed
-  if len<Length(data!.orbit) or l<>scc[m][1] then 
-
-    # check again if g is an R-class rep.
-    if HTValue(data!.ht, g)<>fail then
-      return true;
-    fi;
   fi;
 
   reps:=data!.reps; repslens:=data!.repslens;
@@ -386,7 +370,7 @@ end);
 InstallMethod(EnumerateSemigroupData, "for an acting semi, limit, and func",
 [IsActingSemigroup, IsCyclotomic, IsFunction],
 function(s, limit, lookfunc)
-  local looking, data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, pos, lamx, m, mults, y, tmp, rhoy, val, schutz, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, schutzstab, j, n;
+  local looking, data, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, pos, lamx, m, mults, y, tmp, rhoy, val, schutz, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, schutzstab, j, n;
 
   if lookfunc<>ReturnFalse then 
     looking:=true;
@@ -395,8 +379,7 @@ function(s, limit, lookfunc)
   fi;
 
   data:=SemigroupData(s);
-  #ht:=data!.ht;       # ht and orb contain existing R-class reps
-  orb:=data!.orbit;  
+  orb:=data!.orbit;   # the so far found R-reps data 
   nr:=Length(orb);
   i:=data!.pos;       # points in orb in position at most i have descendants
   graph:=data!.graph; # orbit graph of orbit of R-classes under left mult 
@@ -442,19 +425,10 @@ function(s, limit, lookfunc)
       
       for j in genstoapply do #JDM
         x:=gens[j]*orb[i][4];
-       
-        #check if x is already an R-class rep
-        
-        # JDM it appears to be quicker to not do this step
-        
-        #pos:=HTValue(ht, x);
-        #if pos<>fail then 
-        #  graph[i][j]:=pos;
-        #  continue; 
-        #fi;
         
         lamx:=lambda(x);
         pos:=Position(o, lamx);
+        
         #find the scc
         m:=lookup[pos];
 
@@ -533,7 +507,6 @@ function(s, limit, lookfunc)
         schreiergen[nr]:=j; # by multiplying by gens[j]
         schreiermult[nr]:=pos; # and ends up in position <pos> of 
                                # its lambda orb
-        #HTAdd(ht, y, nr); #faster still!
         graph[nr]:=EmptyPlist(nrgens);
         graph[i][j]:= nr;
         
@@ -565,12 +538,6 @@ function(s, limit, lookfunc)
       for j in genstoapply do #JDM
         x:=gens[j]*orb[i][4];
         
-        #check if x is already an R-class rep
-        pos:=HTValue(ht, x);
-        if pos<>fail then 
-          graph[i][j]:=pos;
-          continue; 
-        fi;
         #check if lambda orb of x is already known
         lamx:=lambda(x);
         pos:=HTValue(lambdaht, lamx);
@@ -717,7 +684,6 @@ function(s, limit, lookfunc)
         schreiermult[nr]:=pos; # and then by multiplying by o!.mults[pos]
                                # pos = fail if gens[j]*orb[nr] is the R-rep
                                # (its lambda value is in scc[1])
-        HTAdd(ht, x[4], nr);
         graph[nr]:=EmptyPlist(nrgens);
         graph[i][j]:= nr;
         
@@ -893,7 +859,6 @@ function(s, data, x)
     fi;
     
     # install the info about x in data
-    HTAdd(data!.ht, x, 1);
     data!.orbit:=[[s, pos, o, x]];
     data!.repslens[1]:=1;
     data!.lenreps:=data!.lenreps+1;
