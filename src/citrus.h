@@ -18,7 +18,7 @@ typedef UInt2 pttype;
 int cmp (const void *a, const void *b);
 
 /*******************************************************************************
-** Macros used in ptrans.c and pperm.c
+** Macros used in citrus.c
 *******************************************************************************/
 
 /* retrieve entry pos of internal rep of partial trans f */ 

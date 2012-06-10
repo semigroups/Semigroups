@@ -355,10 +355,19 @@ function(o, nr)
   return o!.orbit[nr];
 end);
 
+# new for 1.0! - EnumerateSemigroupData - for an acting semigroup
+##############################################################################
+
+InstallOtherMethod(EnumerateSemigroupData, "for an acting semigroup", 
+[IsActingSemigroup],
+function(s)
+  return EnumerateSemigroupData(s, infinity, ReturnFalse);
+end);
+
 # new for 1.0! - EnumerateSemigroupData - for an acting semigroup and limit
 ##############################################################################
 
-InstallOtherMethod(EnumerateSemigroupData, "for an actin semi and limit", 
+InstallOtherMethod(EnumerateSemigroupData, "for an acting semi and limit", 
 [IsActingSemigroup, IsCyclotomic],
 function(s, limit)
   return EnumerateSemigroupData(s, limit, ReturnFalse);

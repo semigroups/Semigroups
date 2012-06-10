@@ -1036,7 +1036,7 @@ Obj FuncOnPointsPP(Obj self, Obj i, Obj f)
 ** A transformation is of the form:
 **
 ** [deg, rank, min ran, max ran, img list, canonical trans same kernel,
-**  Set(ran)]
+**  Set(ran), is_sorted_set_ran]
 ** 
 ** and hence has length
 **
@@ -1048,6 +1048,8 @@ Obj FuncOnPointsPP(Obj self, Obj i, Obj f)
 **
 *******************************************************************************/
 
+#define ADDR_T(f) ((pttype*)(ADDR_OBJ(f)))
+
 /*******************************************************************************
 ** Macros for transformations specifically
 *******************************************************************************/
@@ -1055,7 +1057,7 @@ Obj FuncOnPointsPP(Obj self, Obj i, Obj f)
 /* length of trans internal rep */
 static inline Int LEN_T(Obj f)
 {
-  return (ELM_PT(f,1)==0?5:4+2*ELM_PT(f,1)+ELM_PT(f,2));
+  return 5+2*ELM_PT(f,1)+ELM_PT(f,2);
 }
 
 /*******************************************************************************
@@ -1087,6 +1089,7 @@ Obj FuncELMS_LIST_T(Obj self, Obj f, Obj list)
     return out;
 }
 
+/* method for creating transformation */
 Obj FuncTransformationNC( Obj self, Obj img )
 { Int deg, max_ran, min_ran, rank, i, j;
   Obj f; 
@@ -1137,9 +1140,10 @@ Obj FuncTransformationNC( Obj self, Obj img )
   SET_ELM_PT(f, 4, (pttype) max_ran);
 
   /* sort the range set*/
-  qsort((pttype *)(ADDR_OBJ(f)+1)+4+2*deg, rank, sizeof(pttype), cmp);
+  /*qsort((pttype *)(ADDR_OBJ(f)+1)+4+2*deg, rank, sizeof(pttype), cmp);*/
+  SET_ELM_PT(f, 5+2*deg+rank, 0);
 
-  ResizeBag(f, sizeof(pttype)*(4+2*deg+rank)+sizeof(UInt));
+  ResizeBag(f, sizeof(pttype)*(5+2*deg+rank)+sizeof(UInt));
   return f; 
 }
 
@@ -1177,31 +1181,20 @@ Obj FuncKerT (Obj self, Obj f )
 Obj FuncRanSetT (Obj self, Obj f )
 { pttype deg, rank, i;
   Obj out;
-    
+  
   deg=ELM_PT(f, 1);
   rank=ELM_PT(f, 2);
+
+  if(ELM_PT(f, 5+2*deg+rank)==0){
+    qsort((pttype *)(ADDR_OBJ(f)+1)+4+2*deg, rank, sizeof(pttype), cmp);
+    SET_ELM_PT(f, 5+2*deg+rank, 1);
+  }
+  
   out=NEW_PLIST(T_PLIST_CYC,rank);
   SET_LEN_PLIST(out,(Int) rank);
   for(i=1;i<=rank;i++)
   { 
     SET_ELM_PLIST(out,i,INTOBJ_INT(ELM_PT(f,4+2*deg+i)));
-  }
-  return out;
-} 
-
-/* image set-kernel of transformation */
-Obj FuncRanSetKerT(Obj self, Obj f)
-{ pttype deg, rank, i;
-  Obj out;
-    
-  deg=ELM_PT(f, 1); 
-  rank=ELM_PT(f, 2);
-  out=NEW_PLIST(T_PLIST_CYC, deg+rank);
-  SET_LEN_PLIST(out,(Int) deg+rank);
-
-  for(i=1;i<=rank;i++) SET_ELM_PLIST(out,i,INTOBJ_INT(ELM_PT(f,4+2*deg+i)));
-  for(i=1;i<=deg;i++){
-    SET_ELM_PLIST(out,i+rank,INTOBJ_INT(ELM_PT(f,4+deg+i)));
   }
   return out;
 } 
@@ -1248,9 +1241,9 @@ Obj FuncProdTT(Obj self, Obj f, Obj g)
   SET_ELM_PT(fg, 3, min_ran);
   SET_ELM_PT(fg, 4, max_ran);
 
-  qsort((pttype *)(ADDR_OBJ(fg)+1)+4+2*deg, rank, sizeof(pttype), cmp);
+  SET_ELM_PT(fg, 5+2*deg+rank, 0);
 
-  ResizeBag(fg, sizeof(pttype)*(4+2*deg+rank)+sizeof(UInt)); 
+  ResizeBag(fg, sizeof(pttype)*(5+2*deg+rank)+sizeof(UInt)); 
   return fg;
 }
 
@@ -1302,8 +1295,8 @@ Obj FuncProdTPerm(Obj self, Obj f, Obj p)
     j=IMAGE(ELM_PT(f, 4+2*deg+i)-1, ptp, deg_p)+1;
     SET_ELM_PT(fp, 4+2*deg+i, j);
   }
-  qsort((pttype *)(ADDR_OBJ(fp)+1)+4+2*deg, rank, sizeof(pttype), cmp);
-  
+  /* ran set unsorted */
+  SET_ELM_PT(fp, 5+2*deg+rank, 0);
   return fp;
 }
 
@@ -1351,7 +1344,8 @@ Obj FuncProdPermT(Obj self, Obj p, Obj f)
     /* kernel */
     SET_ELM_PT(pf, 4+deg+i, lookup[j]);
   }
-  
+  SET_ELM_PT(pf, 5+2*deg+rank, 1); 
+
   return pf;
 }
 
@@ -1457,19 +1451,21 @@ Obj FuncLeqT(Obj self, Obj f, Obj g)
     if(j<k) return True;
     if(j>k) return False;
   }
-
   return False;
 }
 
-/* less than or equal for transformations */
+/* equal for transformations */
 Obj FuncEqT(Obj self, Obj f, Obj g)
 { pttype i, deg;
 
   deg=ELM_PT(f,1);
   if(deg!=ELM_PT(g,1)) return False;
+  
+  pttype *ptf = (pttype *) (ADDR_OBJ(f) + 1);
+  pttype *ptg = (pttype *) (ADDR_OBJ(g) + 1);
 
   for(i=1;i<=deg;i++){
-    if(ELM_PT(f,4+i)!=ELM_PT(g,4+i)) return False;
+    if(ptf[i-1]!=ptg[i-1]) return False;
   }
   return True;
 }
@@ -1614,10 +1610,6 @@ static StructGVarFunc GVarFuncs [] = {
   { "RanSetT", 1, "f",
      FuncRanSetT,
     "pkg/citrus/src/citrus.c:FuncRanSetT" },
-
-  { "RanSetKerT", 1, "f",
-     FuncRanSetKerT,
-    "pkg/citrus/src/citrus.c:FuncRanSetKerT" },
 
   { "ProdTT", 2, "f, g",
      FuncProdTT,

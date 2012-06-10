@@ -52,6 +52,19 @@ InstallMethod(\<, "for perm and transformation",
 InstallMethod(\=, "for trans and trans",
 [IsTransformation, IsTransformation], EqT);
 
+# new for 1.0! - \^ - "for a pos int and trans"
+############################################################################
+
+InstallMethod(\^, "for a pos int and trans",
+[IsPosInt, IsTransformation], 
+function(i, f)
+  if not 1<=i and i<=ELM_LIST_T(f, 1) then 
+    Error("usage: an integer from 1 to the degree of the transformation,");
+    return;
+  fi;
+  return ELM_LIST_T(f, i+4);
+end);
+
 #CCC
 
 # new for 1.0 - ChooseHashFunction - "for a transformation"
@@ -108,7 +121,7 @@ function(f)
     return; 
   fi; 
   
-  return f{[1..4+2*f[1]+f[2]]}; 
+  return f{[1..5+2*f[1]+f[2]]}; 
 end); 
 
 #PPP
