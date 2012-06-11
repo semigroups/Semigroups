@@ -66,112 +66,6 @@ end);
 
 #AAA
 
-# mod for 0.4! - AddToOrbitsOfImages - not a user function! 
-#############################################################################
-# Usage: s = semigroup or d-class; f = trans. img. list; data = image data; 
-# o = OrbitsOfImages(s).
-# Notes: if s is a d-class, then data should have j, k, l, m and g not = fail!
-
-InstallGlobalFunction(AddToOrbitsOfImages,
-function(s, f, data, o, install)
-  local j, k, l, m, val, n, g, O, gens, d, lens, data_ht, images, ht, gen1, 
-  pos1, f_o, out, reps, ker, i, z, y;
-
-  j:=data[1]; 	# img size
-  k:=data[2]; 	# index of orbit containing img
-  l:=data[3]; 	# position of img in O[j][k]
-  m:=data[4]; 	# scc of O[j][k] containing img
-  val:=data[5]; # position of ker in O[j][k]!.kernels_ht[m]
-  n:=data[6]; 	# the length of O[j][k]!.reps[m][val]
-  g:=data[7];	# f*O[j][k]!.perms[l];
-
-  O:=o!.orbits; gens:=o!.gens; d:=o!.data; lens:=o!.lens;
-  data_ht:=o!.data_ht; 
-
-  if install then # o = OrbitsOfImages(s)
-    images:=o!.images; ht:=o!.ht; 
-    if s!.opts!.schreier then 
-      gen1:=o!.gen1; pos1:=o!.pos1; 
-    fi;
-    o:=ht!.o; 
-  fi;
-
-  if k = fail then  #new img and l, m, val, n, g=fail
-                    #don't call this function with a d-class and k=fail!
-
-  #########################################################################
-          
-    lens[j]:=lens[j]+1;
-    f_o:=ForwardOrbitOfImage(s, f, images, gens);
-          
-    if IsBound(O[j]) then 
-      O[j][lens[j]]:=f_o;
-    else
-      O[j]:=[f_o];
-    fi;
-          
-    for i in f_o do 
-      HTAdd(images, i, lens[j]);
-    od;
-          
-    out:=[j, lens[j], 1, 1, 1, 1];
-    g:=f;
-   
-  ###########################################################################
-
-  else #old img
-    reps:=O[j][k]!.reps[m];
-
-    if not val=fail then #old kernel
-      reps[val][n+1]:=g;
-      out:=[j, k, l, m, val, n+1];
-    else #new kernel
-      val:=Length(reps)+1;
-      if reps=[] then #scc not previously considered 
-        O[j][k]!.perms:=O[j][k]!.perms+CreateImageOrbitSCCPerms(gens, 
-         O[j][k], m);
-        if g=fail then 
-          g:=OnTuples(f, O[j][k]!.perms[l]);
-        fi;
-        ker:=CanonicalTransSameKernel(g); 
-        O[j][k]!.kernels_ht[m]:=HTCreate(ker, 
-         rec(forflatplainlists:=true, hashlen:=s!.opts!.hashlen!.S));
-        HTAdd(O[j][k]!.kernels_ht[m], ker, 1);
-        O[j][k]!.schutz[m]:=CreateImageOrbitSchutzGp(gens, O[j][k], g, m);
-      fi;
-      
-      reps[val]:=[g];
-      out:=[j, k, O[j][k]!.scc[m][1], m, val, 1];
-      HTAdd(O[j][k]!.kernels_ht[m], CanonicalTransSameKernel( g ), val);
-    fi;
-  fi;
-
-  i:=Length(d)+1; d[i]:=out; HTAdd(data_ht, out, i);
-
-  #install new pts in the orbit
-
-  if install then
-    m:=Length(gens); j:=Length(o);
-    if s!.opts!.schreier then 
-      for y in [1..m] do
-        z:=g{gens[y]};
-        if HTValue(ht, z)=fail then  
-          j:=j+1; z:=HTAdd(ht, z, j); o[j]:=ht!.els[z]; 
-          pos1[j]:=i; gen1[j]:=y;
-        fi;
-      od;
-    else
-      for y in [1..m] do
-        z:=g{gens[y]};
-        if HTValue(ht, z)=fail then
-          j:=j+1; z:=HTAdd(ht, z, j); o[j]:=ht!.els[z];
-        fi;
-      od;
-    fi;
-  fi;
-  return out;
-end);
-
 # new for 0.1! - AsList - "for an R-class of trans. semigp."
 #############################################################################
 # Algorithm D.
@@ -212,96 +106,6 @@ end);
 
 #CCC
 
-# mod for 0.4! - CreateImageOrbitSCCPerms - not a user function!
-#############################################################################
-# Usage: gens = imgs of generators; o = image orbit; j = index of scc.
-
-InstallGlobalFunction(CreateImageOrbitSCCPerms,
-function(gens, o, j)
-  local p, scc, f, i;
-
-  p:=EmptyPlist(Length(o)); scc:=o!.scc[j];
-
-  for i in scc do
-    f:=CitrusEvalWord(gens, TraceSchreierTreeOfSCCBack(o, j, i));
-    p[i]:=MappingPermListList(o[i], f{o[i]});
-  od; 
-  
-  #JDM this worked, but not with Factorization!!
-  
-  #for i in scc do
-  #  f:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, j, i)); 
-  #  p[i]:=MappingPermListList(OnTuples(o[scc[1]], f), o[scc[1]]);
-  #od;
-
-  return p;
-end);
-
-# mod for 0.4! - CreateImageOrbitSchutzGp - not a user function!
-#############################################################################
-# Usage: gens = generators as list of imgs; o = image orbit;
-# f = img. list of rep of scc with index k;
-# k = index of scc containing position of image of f in o.
-
-InstallGlobalFunction(CreateImageOrbitSchutzGp,
-function(gens, o, f, k) 
-  local scc, bound, g, p, t, graph, is_sym, l, words, h, K, i, j;
-
-  scc:=o!.scc[k];
-
-  if Length(o[scc[1]])<1000 then 
-    bound:=Factorial(Length(o[scc[1]]));
-  else
-    bound:=infinity;
-  fi;
-
-  g:=Group(()); p:=o!.perms; t:=o!.truth;
-  graph:=OrbitGraph(o); is_sym:=false; l:=0; words:=[];
-
-  for i in scc do 
-    for j in [1..Length(gens)] do 
-     
-      if IsBound(graph[i][j]) and t[k][graph[i][j]] then
-        #h:=PermLeftQuoTransformationNC(f, f/p[i] * (gens[j]*p[graph[i][j]]));
-        
-        #h:=PermLeftQuoTransformationNC(f,
-        # f*EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, k, i)) * 
-        #  (gens[j]*p[graph[i][j]]));
-        
-        h:=OnTuples(gens[j], p[graph[i][j]]){CitrusEvalWord(gens,
-        TraceSchreierTreeOfSCCForward(o, k, i))};
-        h:=PermLeftQuoTransformationNC(f, h{f});
-        
-        if not h=() then 
-          K:=ClosureGroup(g, h);
-          if Size(K)>Size(g) then 
-            g:=K; l:=l+1; words[l]:=[i,j];
-          fi;
-        fi;
-
-      fi; 
-    
-      if Size(g)>=bound then 
-        is_sym:=true;
-        break;
-      fi;
-    od;
-
-    if Size(g)>=bound then 
-      break;
-    fi;
-
-  od;
-
-  if is_sym then
-    return [true, g, words];
-  elif Size(g)=1 then 
-    return [false, g, words];
-  fi;
-    
-  return [StabChainImmutable(g), g, words];
-end);
-
 # new for 0.1! - CreateRClass - not a user function!
 #############################################################################
 # Usage: s = semigroup; data = image data (any lengths); 
@@ -323,43 +127,6 @@ function(s, data, orbit, rep)
 end);
 
 #DDD
-
-# new for 0.1! - DisplayOrbitsOfImages - not a user function!
-#############################################################################
-
-InstallGlobalFunction(DisplayOrbitsOfImages, 
-function(s)
-  local o, k, i, j;
-
-  o:=OrbitsOfImages(s);
-
-  Print("finished: \t", o!.finished, "\n");
-  Print("orbits: \t"); 
-
-  if ForAny([1..Degree(s)], j-> IsBound(o!.orbits[j])) then 
-    k:=0;
-    for i in o!.orbits do 
-      for j in i do 
-        if k=1 then 
-          Print("\t\t"); 
-        else
-          k:=1;
-        fi;
-        View(j); Print("\n");
-      od;
-    od;
-  else 
-    Print("\n");
-  fi;
-
-  Print("at: \t\t", o!.at, "\n");
-  Print("ht: \t\t"); View(o!.ht); Print("\n");
-  Print("size: \t\t", Size(OrbitsOfImages(s)), "\n");
-  Print("R-classes: \t", NrRClasses(OrbitsOfImages(s)), "\n");
-  Print("data ht: \t"); View(o!.data_ht); Print("\n");
-  Print("images: \t"); View(o!.images); Print("\n");
-  return true;
-end);
 
 #EEE
 
@@ -447,24 +214,6 @@ function(r)
     end));
 
   return enum;
-end);
-
-# new for 0.1! - ExpandOrbitsOfImages - not a user function!
-#############################################################################
-
-InstallGlobalFunction(ExpandOrbitsOfImages, 
-function(s)
-  local o, iter, i;
-
-  Info(InfoCitrus, 4, "ExpandOrbitsOfImages");
-
-  o:=OrbitsOfImages(s);
-
-  if not o!.finished then 
-    iter:=IteratorOfNewRClassRepsData(s);
-    for i in iter do od;
-  fi;
-  return true;
 end);
 
 #FFF
