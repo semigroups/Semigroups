@@ -1216,32 +1216,32 @@ Obj FuncProdTT(Obj self, Obj f, Obj g)
   max_ran=ELM_PT(g, 3);
   rank=0;
 
-  /* init the kernel lookup 
-  for(i=1;i<=deg;i++) lookup[i]=0;*/
+  /* init the kernel lookup */
+  for(i=1;i<=deg;i++) lookup[i]=0;
 
   for(i=1;i<=deg; i++){
     j=ELM_PT(g, 4+ELM_PT(f, 4+i)); /* g(f(i)) */
     SET_ELM_PT(fg, 4+i, j);
     
-    /*if(lookup[j]==0){
+    if(lookup[j]==0){
       rank++;
       lookup[j]=rank;
-      SET_ELM_PT(fg, 4+2*deg+rank, j);
+      SET_ELM_PT(fg, 4+2*deg+rank, j); /* range set */
     }
 
-    SET_ELM_PT(fg, 4+deg+i, lookup[j]);
+    SET_ELM_PT(fg, 4+deg+i, lookup[j]); /* kernel */
     
     if(j>max_ran) max_ran=j;
-    if(j<min_ran) min_ran=j;*/
+    if(j<min_ran) min_ran=j;
   }
-/*
+
   SET_ELM_PT(fg, 2, rank);
   SET_ELM_PT(fg, 3, min_ran);
   SET_ELM_PT(fg, 4, max_ran);
 
   SET_ELM_PT(fg, 5+2*deg+rank, 0);
 
-  ResizeBag(fg, sizeof(pttype)*(5+2*deg+rank)+sizeof(UInt)); */
+  ResizeBag(fg, sizeof(pttype)*(5+2*deg+rank)+sizeof(UInt)); 
   return fg;
 }
 
@@ -1298,8 +1298,7 @@ Obj FuncProdTPerm(Obj self, Obj f, Obj p)
   return fp;
 }
 
-
-/* JDM this seems particularly bad, worse than ProdTT */
+/* JDM this seems particularly bad, it seems worse than ProdTT */
 /* product of permutation and transformation */
 Obj FuncProdPermT(Obj self, Obj p, Obj f)
 { pttype deg, rank, deg_p, i, j;
@@ -1344,7 +1343,8 @@ Obj FuncProdPermT(Obj self, Obj p, Obj f)
     /* kernel */
     SET_ELM_PT(pf, 4+deg+i, lookup[j]);
   }
-  SET_ELM_PT(pf, 5+2*deg+rank, 1); 
+  /* ran set sorted? */
+  SET_ELM_PT(pf, 5+2*deg+rank, ELM_PT(f, 5+2*deg+rank)); 
 
   return pf;
 }

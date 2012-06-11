@@ -177,10 +177,9 @@ end);
 # the other \in method, doing this messes everything up in the old set up. 
 
 InstallMethod(\in, "for an acting elt and acting semigroup",
-[IsActingElt, IsActingSemigroup],
+[IsActingElt, IsActingSemigroup], 100,
 function(f, s)
-  local data, val, lambda, o, l, lookfunc, m, n, reps, repslens, lambdaperm,
-   lambdarho, max, found, schutz, g, len, scc;
+  local data, len, ht, val, lambda, o, l, lookfunc, m, scc, lambdarho, schutz, g, reps, repslens, lambdaperm, n, max, found;
   
   if not ElementsFamily(FamilyObj(s))=FamilyObj(f) then 
     Error("the element and semigroup are not of the same type,");
@@ -191,6 +190,14 @@ function(f, s)
 
   data:=SemigroupData(s);
   len:=Length(data!.orbit);  
+  ht:=data!.ht;
+
+  # check if f is an existing R-rep
+  val:=HTValue(ht, f);
+
+  if val<>fail then 
+    return true;
+  fi;
 
   lambda:=LambdaFunc(s)(f);
 
@@ -275,6 +282,15 @@ function(f, s)
     g:=f;
   fi;
 
+  # check if anything changed
+  if len<Length(data!.orbit) or l<>scc[m][1] then 
+
+    # check again if g is an R-class rep.
+    if HTValue(ht, g)<>fail then
+      return true;
+    fi;
+  fi;
+
   reps:=data!.reps; repslens:=data!.repslens;
   
   # if schutz is false, then g has to be an R-rep which it is not...
@@ -287,8 +303,6 @@ function(f, s)
         return true;
       fi;
     od;
-  else
-    n:=repslens[val];
   fi; 
   
   # enumerate until we find f or the number of elts in reps[val] exceeds max
@@ -302,13 +316,10 @@ function(f, s)
         data:=EnumerateSemigroupData(s, infinity, lookfunc);
         found:=data!.found;
         if found<>false then 
-          reps:=data!.reps; repslens:=data!.repslens;
-          for m in [n+1..repslens[val]] do 
-            if reps[val][m]=g then 
-              return true;
-            fi;
-          od;
-          n:=repslens[val];
+          val:=HTValue(ht, g);
+          if val<>fail then 
+            return true;
+          fi;
         fi;
       until found=false or repslens[val]>=max;
     else 
@@ -379,7 +390,7 @@ end);
 InstallMethod(EnumerateSemigroupData, "for an acting semi, limit, and func",
 [IsActingSemigroup, IsCyclotomic, IsFunction],
 function(s, limit, lookfunc)
-  local looking, data, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, pos, lamx, m, mults, y, rhoy, val, schutz, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, schutzstab, j, n; 
+  local looking, data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, lamx, pos, m, mults, y, rhoy, val, schutz, tmp, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, schutzstab, j, n;
 
   if lookfunc<>ReturnFalse then 
     looking:=true;
@@ -388,6 +399,7 @@ function(s, limit, lookfunc)
   fi;
 
   data:=SemigroupData(s);
+  ht:=data!.ht;
   orb:=data!.orbit;   # the so far found R-reps data 
   nr:=Length(orb);
   i:=data!.pos;       # points in orb in position at most i have descendants
@@ -441,12 +453,12 @@ function(s, limit, lookfunc)
         #find the scc
         m:=lookup[pos];
 
-        #get the multipliers
-        #JDM expand!
-        mults:=LambdaOrbMults(o, m);         
-
         #put lambda x in the first position in its scc
         if not pos=scc[m][1] then 
+          
+          #get the multipliers
+          #JDM expand!
+          mults:=LambdaOrbMults(o, m);         
           y:=x*mults[pos];
         else
           y:=x;
@@ -480,15 +492,9 @@ function(s, limit, lookfunc)
             continue;
           else
             if schutz=false then # schutz gp is trivial
-              old:=false;
-              for n in [1..repslens[val]] do 
-                if reps[val][n]=y then 
-                  old:=true;
-                  graph[i][j]:=repslookup[val][n];
-                  break;
-                fi;
-              od;
-              if old then 
+              tmp:=HTValue(ht, y);
+              if tmp<>fail then 
+                graph[i][j]:=tmp;
                 continue;
               fi;
             else # schutz gp neither trivial nor symmetric group
@@ -516,6 +522,7 @@ function(s, limit, lookfunc)
         schreiergen[nr]:=j; # by multiplying by gens[j]
         schreiermult[nr]:=pos; # and ends up in position <pos> of 
                                # its lambda orb
+        HTAdd(ht, y, nr);
         graph[nr]:=EmptyPlist(nrgens);
         graph[i][j]:= nr;
         
@@ -868,6 +875,7 @@ function(s, data, x)
     fi;
     
     # install the info about x in data
+    HTAdd(data!.ht, x, 1);
     data!.orbit:=[[s, pos, o, x]];
     data!.repslens[1]:=1;
     data!.lenreps:=data!.lenreps+1;
@@ -1201,7 +1209,7 @@ function(s)
     return fail;
   fi;
 
-  data:=rec( 
+  data:=rec( ht:=HTCreate(x, rec(hashlen:=s!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
      reps:=[], repslookup:=[], lenreps:=0, orbit:=[[,,,x]], repslens:=[], 
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail], 
