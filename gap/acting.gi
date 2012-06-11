@@ -185,8 +185,29 @@ function(f, s)
     Error("the element and semigroup are not of the same type,");
     return;
   fi;
- 
-  #JDM add quick checks as in inverse.gi
+
+  if HasAsSSortedList(s) then 
+    return f in AsSSortedList(s); 
+  fi;
+
+  if Degree(f)<>Degree(s) then 
+    Info(InfoCitrus, 2, "element and semigroup have different degrees.");
+    return false;       
+  fi;
+
+  if not (IsMonoid(s) and IsOne(f)) and 
+   Rank(f) > MaximumList(List(gens, Rank)) then
+    Info(InfoCitrus, 2, "element has larger rank than any element of ",
+     "semigroup.");
+    return false;
+  fi;
+
+  if HasMinimalIdeal(s) and 
+   Rank(f) < Rank(Representative(MinimalIdeal(s))) then
+    Info(InfoCitrus, 2, "element has smaller rank than any element of ",
+     "semigroup.");
+    return false;
+  fi;  
 
   data:=SemigroupData(s);
   len:=Length(data!.orbit);  
