@@ -489,20 +489,6 @@ InstallMethod(One, "for a transformation",
 
 #SSS
 
-# new for 0.1! - Size - "for a transformation semigroup"
-#############################################################################
-# Algorithm V.
-
-InstallMethod(Size, "for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-
-  Info(InfoCitrus, 4, "Size: for a trans. semigroup");
-
-  ExpandOrbitsOfImages(s);
-  return Size(OrbitsOfImages(s));
-end);
-
 # new for 0.1! - Size - "for a simple transformation semigroup"
 #############################################################################
 # JDM check this is actually superior to the above method for Size

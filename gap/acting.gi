@@ -196,7 +196,7 @@ function(f, s)
   fi;
 
   if not (IsMonoid(s) and IsOne(f)) and 
-   Rank(f) > MaximumList(List(gens, Rank)) then
+   Rank(f) > MaximumList(List(Generators(s), Rank)) then
     Info(InfoCitrus, 2, "element has larger rank than any element of ",
      "semigroup.");
     return false;
@@ -533,9 +533,9 @@ function(s, limit, lookfunc)
               fi;
             fi;
             nr:=nr+1;
-            reps[val][n+1]:=y;
-            repslookup[val][n+1]:=nr;
             repslens[val]:=repslens[val]+1;
+            reps[val][repslens[val]]:=y;
+            repslookup[val][repslens[val]]:=nr;
           fi;
         fi;
         orb[nr]:=x;
@@ -560,7 +560,7 @@ function(s, limit, lookfunc)
         fi;
       od;
     od;
-  else #JDM graded
+  else #JDM graded- this should be updated as per the first part of this func
     
     graded:=GradedLambdaOrbs(s);  # existing graded lambda orbs
     gradedlens:=graded!.lens;     # gradedlens[j]=Length(graded[j]);
@@ -1257,6 +1257,8 @@ end);
 #inverses. Also even if they don't, then we don't correct for the group elt,
 #and so the answer is out by a multiple of a group elt.
 
+#JDm rough!
+
 InstallMethod(SemigroupEltSLP, "for an acting semigroup and acting elt",
 [IsActingSemigroup, IsActingElt],
 function(s, x)
@@ -1328,6 +1330,28 @@ function(s, x)
      StraightLineProgram([zip(mult)], Length(gens)));
   fi;
   return slp;
+end);
+
+# new for 1.0! - Size - "for an acting semigroup"
+##############################################################################
+
+InstallMethod(Size, "for an acting semigroup",
+[IsActingSemigroup], 100,
+function(s)
+  local data, reps, nr, repslookup, orbit, i, j;
+   
+  data:=EnumerateSemigroupData(s, infinity, ReturnFalse);
+  reps:=data!.reps;
+  nr:=Length(reps);
+  repslookup:=data!.repslookup;
+  orbit:=data!.orbit;
+  i:=0;
+
+  for j in [1..nr] do 
+    data:=orbit[repslookup[j][1]];
+    i:=i+Length(reps[j])*Size(LambdaOrbSchutzGp(data[3], data[2][1]))*Length(OrbSCC(data[3])[data[2][1]]);
+  od;
+  return i; 
 end);
 
 #TTT

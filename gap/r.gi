@@ -1659,30 +1659,6 @@ function(r)
   return Size(SchutzenbergerGroup(r))*Length(ImageOrbitSCC(r));
 end);
 
-# new for 0.5! - Size - "for orbits of images"
-#############################################################################
-# Usage: s = semigroup.
-
-InstallOtherMethod(Size, "for orbits of images",
-[IsOrbitsOfImages],
-function(data)
-  local i, j, o, orbits;
-  
-  i:=0; orbits:=data!.orbits;
-
-  for o in Concatenation(Compacted(orbits)) do 
-    for j in [1..Length(o!.scc)] do
-      if IsBound(o!.schutz[j]) and IsBound(o!.reps[j]) and 
-       IsBound(o!.scc[j]) then 
-        i:=i+Size(o!.schutz[j][2])*
-        Sum(List(o!.reps[j]), Length)*Length(o!.scc[j]);
-      fi;
-    od;
-  od;
-
-  return i;
-end);
-
 #TTT
 
 # new for 0.4! - TraceRClassRepsTree - not a user function!
