@@ -252,6 +252,24 @@ function(s)
   return out;
 end);
 
+# mod for 1.0! - GreensRClassOfElement - "for an acting semigp and elt."
+#############################################################################
+
+InstallOtherMethod(GreensRClassOfElement, "for an acting semigp and elt",
+[IsActingSemigroup, IsActingElt],
+function(s, f)
+  local pos;
+
+  if not f in s then
+    Error("the element does not belong to the semigroup,");
+    return;
+  fi;
+
+  pos:=Position(SemigroupData(s), f);
+  
+  return CallFuncList(CreateRClass, SemigroupData(s)[pos]);
+end);
+
 # new for 0.1! - GreensHClasses - "for a transformation semigroup"
 ##############################################################################
 

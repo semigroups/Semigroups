@@ -281,12 +281,15 @@ function(f, s)
   # if lambdarho is not already known, then look for it
   if val=fail then 
     data:=EnumerateSemigroupData(s, infinity, lookfunc);
-    val:=data!.found;
+    val:=data!.found; # position in data!.orbit 
 
     # lambdarho not found, so f not in s
     if val=false then 
       return false;
     fi;
+    val:=data!.orbit[val][6]; # the index of the list of reps with same
+                              # lambdarho value as f. 
+                              # = HTValue(LambdaRhoHT(s), lambdarho);
   fi;
 
   schutz:=LambdaOrbStabChain(o, m);
@@ -497,8 +500,9 @@ function(s, limit, lookfunc)
         val:=HTValue(lambdarhoht, rhoy);
 
         # this is what we keep if it is new
-        x:=[s, [m, scc[m][1]], o, y, nr+1];
-        # semigroup, lambda orb data, lambda orb, rep, index
+        x:=[s, [m, scc[m][1]], o, y, nr+1, val];
+        # semigroup, lambda orb data, lambda orb, rep, index, position of reps
+        # with equal lambda-rho value
 
         if val=fail then  #new rho value, and hence new R-rep
           lenreps:=lenreps+1;
@@ -507,6 +511,7 @@ function(s, limit, lookfunc)
           reps[lenreps]:=[y];
           repslookup[lenreps]:=[nr];
           repslens[lenreps]:=1;
+          x[6]:=lenreps;
         else              # old rho value
           # JDM expand!
           schutz:=LambdaOrbStabChain(o, m);

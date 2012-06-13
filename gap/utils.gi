@@ -420,12 +420,12 @@ function(iter, len)
 end);
 
 
-# new for 0.1! - Rank - "for a transformation"
+# mod for 1.0! - Rank - "for a transformation"
 #############################################################################
 # Notes: returns RankOfTransformation. 
 
 InstallOtherMethod(Rank, "for a transformation",
-[IsTransformation], RankOfTransformation);
+[IsTransformation], f-> f[2]);
 
 # new for 0.7 - Rank - "for a partial perm."
 #############################################################################

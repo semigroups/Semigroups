@@ -443,26 +443,6 @@ function(s, data, o)
   return out;
 end);
 
-# new for 0.1! - GreensRClassOfElement - "for a trans. semigp and trans."
-#############################################################################
-
-InstallOtherMethod(GreensRClassOfElement, "for a trans. semigp and trans.", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation],
-function(s, f)
-  local d;
-
-  Info(InfoCitrus, 4, "GreensRClassOfElement: for trans. semi. and trans.");
-
-  if not f in s then 
-    Error("the transformation is not an element of the semigroup,");
-    return;
-  fi;
-
-  d:=PreInOrbitsOfImages(s, f, true)[2];
-
-  return CreateRClass(s, d{[1..6]}, OrbitsOfImages(s), RClassRepFromData(s, d));
-end);
-
 # new for 0.1! - GreensRClassOfElementNC - "for a trans. semigp and trans."
 #############################################################################
 # JDM double check everything is ok here!
