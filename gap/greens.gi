@@ -613,6 +613,11 @@ InstallOtherMethod(IsGreensLClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensHClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 
+# new for 1.0! - Iterator - "for an R-class of an acting semi"
+#############################################################################
+
+
+
 # mod for 0.7! - Iterator - "for a trivial trans. semigp."
 #############################################################################
 # Notes: required until Enumerator for a trans. semigp does not call iterator. 
@@ -811,8 +816,57 @@ end);
 InstallMethod(One, "for a transformation",
 [IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
 
-#SSS
+#PPP
 
+# mod for 1.0! - ParentAttr - "for Green's class of an acting semigroup"
+############################################################################
+
+InstallMethod(ParentAttr, "for a Green's class of an acting semigroup", 
+[IsGreensClass and IsActingSemigroupGreensClass], x-> x!.parent);
+
+# mod for 1.0! - PrintObj - IsIteratorOfRClassReps
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfRClassReps],
+function(iter)
+  Print("<iterator of R-class reps>");
+  return;
+end);
+
+# new for 0.1! - PrintObj - for IsIteratorOfRClasses
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfRClasses],
+function(iter)
+  Print( "<iterator of R-classes>");
+  return;
+end); 
+
+# mod for 0.8! - PrintObj - for IsIteratorOfSemigroup
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfSemigroup],
+function(iter)
+  if IsFullTransformationSemigroup(iter!.s) then
+    Print("<iterator of full trans. semigroup>");
+  elif IsTransformationSemigroup(iter!.s) then
+    Print("<iterator of transformation semigroup>");
+  elif IsPartialPermSemigroup(iter!.s) then
+    Print("<iterator of semigroup of partial perms>");
+  fi;
+  return;
+end);
+
+# new for 0.1! - PrintObj - for IsIteratorOfRClassElements
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfRClassElements],
+function(iter)
+  Print("<iterator of R-class>");
+  return;
+end);
+
+#SSS
 
 # new for 1.0! - SchutzenbergerGroup - "for an R-class of an acting semigp."
 #############################################################################
