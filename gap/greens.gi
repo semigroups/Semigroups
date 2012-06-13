@@ -267,13 +267,13 @@ function(r)
       o:=r!.o; data:=r!.data;
       l:=Position(o, LambdaFunc(s)(f));
 
-      if l = fail or not OrbSCCLookup(o)[l]<>data[1] then 
+      if l = fail or OrbSCCLookup(o)[l]<>data[1] then 
         return fail;
       fi;
      
       g:=f*mults[l];
 
-      j:=Position(enum!.schutz, LambdaPerm(rep, g));
+      j:=Position(enum!.schutz, LambdaPerm(s)(rep, g));
 
       if j=fail then 
         return fail;

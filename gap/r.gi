@@ -989,19 +989,6 @@ function(s);
 	 IsGreensClassOfTransSemigp);
 end);
 
-#SSS
-
-# new for 0.1! - SchutzenbergerGroup - "for a R-class of a trans. semigp."
-############################################################################
-
-InstallOtherMethod(SchutzenbergerGroup, "for a R-class of a trans. semigp.",
-[IsGreensRClass and IsGreensClassOfTransSemigp], 
-function(r)
-  local d;
-  d:=r!.data;
-  return r!.o!.orbits[d[1]][d[2]]!.schutz[d[4]][2];
-end);
-
 #TTT
 
 # new for 0.4! - TraceRClassRepsTree - not a user function!
