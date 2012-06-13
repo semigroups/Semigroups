@@ -954,8 +954,8 @@ end);
 ##############################################################################
 
 InstallGlobalFunction(LambdaOrbMults, 
-    function(o, m) 
-    local scc, s, mults, gens, lambdamult, f, i;
+  function(o, m) 
+  local scc, s, mults, gens, lambdamult, f, i;
  
   scc:=OrbSCC(o)[m];
 

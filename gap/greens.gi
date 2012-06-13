@@ -104,6 +104,37 @@ function(f, r)
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
+#AAA
+
+# new for 1.0! - AsList - "for an R-class of an acting semigp."
+#############################################################################
+# Algorithm D.
+
+InstallOtherMethod(AsList, "for an R-class of an acting semigp.",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(r)        
+  local f, g, elts, o, m, mults, scc, p, i;
+  
+  f:=Representative(r); 
+  o:=r!.o; 
+  m:=r!.data[1];
+ 
+  g:=List(LambdaOrbSchutzGp(o, m), x-> f*x);
+  elts:=EmptyPlist(Size(r));
+  
+  mults:=LambdaOrbMults(o, m);
+  scc:=OrbSCC(o)[m];
+  
+  for i in scc do
+    p:=mults[i]; 
+    Append(elts, g*p^-1);
+  od;
+  
+  return elts;
+end);
+
+#CCC
+
 # mod for 1.0! - CreateRClass - not a user function!
 #############################################################################
 # Usage: s = semigroup; data = lambda orbit data (any length) (specifies where
@@ -681,6 +712,20 @@ InstallMethod(One, "for a transformation",
 [IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
 
 #SSS
+
+# new for 1.0! - Size - "for an R-class of an acting semigp."
+#############################################################################
+# Algorithm C. 
+
+InstallOtherMethod(Size, "for an R-class of an acting semigp.",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(r)
+  local o, m;
+
+  o:=r!.o; m:=r!.data[1];      
+  return Size(LambdaOrbSchutzGp(o, m))*Length(OrbSCC(o)[m]);
+end);
+
 
 # new for 0.1! - Size - "for a simple transformation semigroup"
 #############################################################################

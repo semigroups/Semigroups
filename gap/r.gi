@@ -15,30 +15,6 @@
 
 # - this file should only contain functions relating to images/R-classes!
 
-#AAA
-
-# new for 0.1! - AsList - "for an R-class of trans. semigp."
-#############################################################################
-# Algorithm D.
-
-InstallOtherMethod(AsList, "for an R-class of trans. semigp.", 
-[IsGreensRClass and IsGreensClassOfTransSemigp], 
-function(r)
-  local f, g, elts, perms, scc, p, i;
-  
-  Info(InfoCitrus, 4, "AsList: for an R-class");
-
-  f:=r!.rep; g:=List(SchutzenbergerGroup(r), x-> f*x);
-  elts:=EmptyPlist(Size(r));
-
-  perms:=ImageOrbitPerms(r); scc:=ImageOrbitSCC(r);
-
-  for i in scc do 
-    p:=perms[i];
-    elts:=Concatenation(elts, g*p^-1);
-  od;
-  return elts;
-end);
 
 # new for 0.1! - AsSSortedList - "for R-class of trans. semigp."
 #############################################################################
@@ -1132,17 +1108,6 @@ function(r)
   local d;
   d:=r!.data;
   return r!.o!.orbits[d[1]][d[2]]!.schutz[d[4]][2];
-end);
-
-# new for 0.1! - Size - "for an R-class of a trans. semigp."
-#############################################################################
-# Algorithm C. 
-
-InstallOtherMethod(Size, "for an R-class of an acting semigp.", 
-[IsGreensRClass and IsActingSemigroupGreensClass],
-function(r)
-
-  return Size(SchutzenbergerGroup(r))*Length(ImageOrbitSCC(r));
 end);
 
 #TTT
