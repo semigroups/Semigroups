@@ -457,6 +457,22 @@ function(s)
     ShallowCopy:=iter-> rec(i:=0)));
 end);
 
+# new for 1.0! - IteratorOfRClassReps - "for an acting semigroup"
+#############################################################################
+
+InstallMethod(IteratorOfRClassReps, "for an acting semigroup",
+[IsActingSemigroup],
+s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4],
+[IsIteratorOfRClassReps]));
+
+# new for 1.0! - IteratorOfRClasses - "for an acting semigroup"
+#############################################################################
+
+InstallMethod(IteratorOfRClasses, "for an acting semigroup",
+[IsActingSemigroup],
+s-> IteratorByIterator(IteratorOfRClassData(s), x->
+CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
+
 #NNN
 
 # new for 0.1! - NrIdempotents - "for a transformation semigroup"
