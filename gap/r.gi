@@ -807,109 +807,6 @@ function(arg)
   return o!.schutz[d[4]][1];
 end);
 
-# new for 0.1! - InOrbitsOfImages - not a user function!
-#############################################################################
-# Usage: f = transformation; 
-# rectify = should l correspond to f (false) or be o[scc[1]] (true);
-# data = image data; o = OrbitsOfImages(s)!.orbits;
-# images = OrbitsOfImages(s)!.images (ht of images of elements found so far).
-
-# Notes: previous default was that rectify = false
-
-InstallGlobalFunction(InOrbitsOfImages, 
-function(f, rectify, data, o, images)
-  local j, k, l, m, val, n, g, img, schutz, reps, i, p, perms;
-
-  j:=data[1]; k:=data[2]; l:=data[3];
-  m:=data[4]; val:=data[5]; n:=data[6]; 
-  g:=data[7]; 
-
-  if k=fail then 
-    #img:=ImageSetOfTransformation(f);
-    img:=SSortedList(f);
-    if j=fail then 
-      j:=Length(img);
-    fi;
-  fi;
-
-  if not IsBound(o[j]) then
-    return [false, [j, fail, fail, fail, fail, 0, fail]];
-  fi;
-
-  if k=fail then #l=fail, m=fail, g=fail
-          
-    k:=HTValue(images, img);
-          
-    if k=fail then 
-      return [false, [j, fail, fail, fail, fail, 0, fail]];
-    fi;
-          
-    l:=Position(o[j][k], img); 
-    m:=o[j][k]!.scc_lookup[l];
-    perms:=o[j][k]!.perms;
-    
-    if not IsBound(perms[l]) then 
-      return [false, [ j, k, l, m, fail, 0, fail ] ];
-    fi;
-
-    #g:=f*perms[l];
-    g:=OnTuples(f, perms[l]);
-  fi;
-
-  if g=fail then 
-  #this can happen if coming from RClassReps.
-    if IsBound(o[j][k]!.perms[l]) then 
-      #g:=f*o[j][k]!.perms[l];
-      g:=OnTuples(f, o[j][k]!.perms[l]);
-    else
-      return [false, [j,k,l,m,val,n,g]];
-    fi;
-  fi;
-
-  if rectify then 
-    l:=o[j][k]!.scc[m][1];
-  fi;
-
-  if val=fail then
-    if not IsBound(o[j][k]!.kernels_ht[m]) then 
-      return [false, [j, k, l, m, fail, 0, g]];
-    fi;
-
-    val:=HTValue(o[j][k]!.kernels_ht[m], CanonicalTransSameKernel(f));
-    if val=fail then 
-      return [false, [j, k, l, m, fail, 0, g]];
-    fi;
-  fi;
-
-  schutz:=o[j][k]!.schutz[m][1];
-
-  if schutz=true then 
-    return [true, [j,k,l,m,val,1,g, fail]];
-  fi;
-
-  reps:=o[j][k]!.reps[m][val];
-  i:=Length(reps);
-
-  if schutz=false then 
-    while n<i do 
-      n:=n+1;
-      if reps[n]=g then 
-        return [true, [j, k, l, m, val, n, g, ()]];
-      fi;
-    od;
-  else    
-    while n<i do 
-      n:=n+1;
-      p:=PermLeftQuoTransformationNC(reps[n], g); 
-      if SiftedPermutation(schutz, p)=() then 
-        return [true, [j,k,l,m,val,n,g,p]];
-      fi;
-    od;
-  fi;
-
-  return [false, [j,k,l,m,val,n,g]];
-end);
-
 # new for 0.4! - IsRClassNC - "for a Green's class of trans. semigroup"
 #############################################################################
 
@@ -1283,20 +1180,6 @@ InstallOtherMethod(NrHClasses, "for an R-class of a trans. semigroup",
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 r-> NrLClasses(DClassOfRClass(r)));
 
-# mod for 0.5! - NrRClasses - "for a transformation semigroup"
-#############################################################################
-
-InstallMethod(NrRClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-
-  Info(InfoCitrus, 4, "NrRClasses");
-
-  ExpandOrbitsOfImages(s);
-  #return NrRClasses(OrbitsOfImages(s));
-  return Length(OrbitsOfImages(s)!.data);
-end);
-
 # new for 0.1! - NrIdempotents - "for an R-class of a trans. semigp."
 #############################################################################
 
@@ -1650,11 +1533,9 @@ end);
 #############################################################################
 # Algorithm C. 
 
-InstallOtherMethod(Size, "for an R-class of a trans. semigp.", 
-[IsGreensRClass and IsGreensClassOfTransSemigp],
+InstallOtherMethod(Size, "for an R-class of an acting semigp.", 
+[IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-
-  Info(InfoCitrus, 4, "Size: for an R-class");
 
   return Size(SchutzenbergerGroup(r))*Length(ImageOrbitSCC(r));
 end);

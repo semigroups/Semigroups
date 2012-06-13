@@ -413,13 +413,18 @@ InstallMethod(EnumerateSemigroupData, "for an acting semi, limit, and func",
 function(s, limit, lookfunc)
   local looking, data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, lamx, pos, m, mults, y, rhoy, val, schutz, tmp, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, schutzstab, j, n;
 
-  if lookfunc<>ReturnFalse then 
+  data:=SemigroupData(s);
+  
+  if data!.finished then 
+    return data;
+  fi;
+ 
+ if lookfunc<>ReturnFalse then 
     looking:=true;
   else
     looking:=false;
   fi;
 
-  data:=SemigroupData(s);
   ht:=data!.ht;
   orb:=data!.orbit;   # the so far found R-reps data 
   nr:=Length(orb);
@@ -877,17 +882,17 @@ function(s, data, x)
     lamx:=LambdaFunc(s)(x);
     if not data!.graded then 
       o:=LambdaOrb(s);
-      pos:=[1, 1, 1];
+      pos:=[1, 1];
     else
       pos:=HTValue(LambdaHT(s), lamx);
       if pos=fail then 
         o:=GradedLambdaOrb(s, x, true);
-        pos:=[1, 1, 1]; #[scc index, scc[1], pos of LambdaFunc(x) in o]
+        pos:=[1, 1]; #[scc index, scc[1], pos of LambdaFunc(x) in o]
       else
         o:=GradedLambdaOrbs(s)[pos[1]][pos[2]];
         m:=OrbSCCLookup(o)[pos[3]];
         scc:=o!.scc[m];
-        pos:=[m, scc[1], pos[3]];
+        pos:=[m, scc[1]];
         if not pos[3]=scc[1] then 
           x:=x*LambdaOrbMults(o, m)[pos[3]];
           lamx:=o[scc[1]];
@@ -897,7 +902,7 @@ function(s, data, x)
     
     # install the info about x in data
     HTAdd(data!.ht, x, 1);
-    data!.orbit:=[[s, pos, o, x]];
+    data!.orbit:=[[s, pos, o, x, 1]];
     data!.repslens[1]:=1;
     data!.lenreps:=data!.lenreps+1;
     data!.reps[data!.lenreps]:=[x];
@@ -1243,9 +1248,11 @@ function(s)
     if not IsMonoid(s) then 
       SetIsMonoidAsSemigroup(s, true);
     fi;
+    data!.modifier:=0;
   else
     InitSemigroupData(s, data, false);
     SetIsMonoidAsSemigroup(s, false);
+    data!.modifier:=1;
   fi;
 
   return data;

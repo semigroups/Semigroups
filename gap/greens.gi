@@ -427,6 +427,36 @@ function(s)
   return iter;
 end);
 
+# new for 1.0! - IteratorOfRClassData - "for an acting semigroup"
+#############################################################################
+
+InstallMethod(IteratorOfRClassData, "for an acting semigroup",
+[IsActingSemigroup],
+function(s)
+
+  return IteratorByFunctions( rec( 
+    
+    i:=0,
+
+    IsDoneIterator:=iter-> SemigroupData(s)!.finished and 
+     iter!.i>=Length(SemigroupData(s)),
+
+    NextIterator:=function(iter)
+      local data;
+
+      iter!.i:=iter!.i+1;
+      
+      data:=EnumerateSemigroupData(s, iter!.i, ReturnFalse);
+
+      if iter!.i>Length(data!.orbit) then 
+        return fail;
+      fi;
+      return data!.orbit[iter!.i];
+    end,
+    
+    ShallowCopy:=iter-> rec(i:=0)));
+end);
+
 #NNN
 
 # new for 0.1! - NrIdempotents - "for a transformation semigroup"
@@ -477,6 +507,18 @@ function(s)
   od;
 
   return i;
+end);
+
+# mod for 1.0! - NrRClasses - "for an acting semigroup"
+#############################################################################
+
+InstallMethod(NrRClasses, "for an acting semigroup",       
+[IsActingSemigroup and HasGeneratorsOfSemigroup],        
+function(s)
+  local data;
+  
+  data:=EnumerateSemigroupData(s, infinity, ReturnFalse);
+  return Length(data!.orbit)-data!.modifier;
 end);
 
 #OOO

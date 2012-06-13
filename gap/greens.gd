@@ -71,6 +71,8 @@ DeclareOperation("IteratorOfHClassRepsData", [IsSemigroup]);
 DeclareOperation("IteratorOfLClassRepsData", [IsSemigroup]);
 DeclareOperation("IteratorOfRClassRepsData", [IsSemigroup]);
 
+DeclareOperation("IteratorOfRClassData", [IsSemigroup]);
+
 DeclareAttribute("NrIdempotents", IsSemigroup);
 
 DeclareAttribute("NrDClasses", IsSemigroup); 
