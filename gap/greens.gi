@@ -66,10 +66,11 @@ InstallGlobalFunction(CreateRClass,
 function(arg)
   local r;
   
-  r:=Objectify(RClassType(s), rec(parent:=arg[1], data:=arg[2], o:=arg[3]));
+  r:=Objectify(RClassType(arg[1]), 
+   rec(parent:=arg[1], data:=arg[2], o:=arg[3]));
 
   SetRepresentative(r, arg[4]);
-  SetEquivalenceClassRelation(r, GreensRRelation(s));
+  SetEquivalenceClassRelation(r, GreensRRelation(arg[1]));
   return r;
 end);
 
@@ -229,6 +230,27 @@ function(s)
 end);
 
 #GGG
+
+# mod for 1.0! - GreensRClasses - "for an acting semigroup"
+##############################################################################
+
+InstallMethod(GreensRClasses, "for an acting semigroup",
+[IsActingSemigroup], 
+function(s)
+  local data, orbit, r, nr, out, i;
+
+  data:=EnumerateSemigroupData(s, infinity, ReturnFalse);
+  orbit:=data!.orbit;
+  r:=data!.modifier;
+  nr:=Length(orbit); 
+  
+  out:=EmptyPlist(nr);
+
+  for i in [1+r..nr] do 
+    out[i-r]:=CallFuncList(CreateRClass, orbit[i]);
+  od;
+  return out;
+end);
 
 # new for 0.1! - GreensHClasses - "for a transformation semigroup"
 ##############################################################################

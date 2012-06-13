@@ -106,30 +106,6 @@ end);
 
 #CCC
 
-# new for 0.1! - CreateRClass - not a user function!
-#############################################################################
-# Usage: s = semigroup; data = image data (any lengths); 
-# orbit = OrbitsOfImages(s) or local variant; rep = representative.
-
-# Notes: data[3]=l should be for the representative which has rectified image,
-# rep should be with rectified image only!
-
-InstallGlobalFunction(CreateRClass, 
-function(arg)
-  local r;
-  
-  #if Length(arg)=5 then 
-  #  r:=Objectify(RClassType(s), rec(parent:=arg[1], data:=arg[2], o:=arg[3],
-  #   index:=arg[5]));
-  #else
-  r:=Objectify(RClassType(s), rec(parent:=arg[1], data:=arg[2], o:=arg[3]));
-  #fi;
-
-  SetRepresentative(r, arg[4]);
-  SetEquivalenceClassRelation(r, GreensRRelation(s));
-  return r;
-end);
-
 #DDD
 
 #EEE
@@ -462,28 +438,6 @@ function(s, data, o)
       out[k]:=StructuralCopy(data);
       out[k][1][3]:=i; out[k][3]:=j; out[k][4]:=fail;
     od;
-  od;
-
-  return out;
-end);
-
-# new for 0.1! - GreensRClasses - "for a transformation semigroup"
-#############################################################################
-
-InstallMethod(GreensRClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  local iter, out, i, r;
-
-  Info(InfoCitrus, 4, "GreensRClasses: for a trans. semi.");
-
-  iter:=IteratorOfRClasses(s);
-  out:=EmptyPlist(NrRClasses(s));
-  i:=0;
-
-  for r in iter do 
-    i:=i+1;
-    out[i]:=r;
   od;
 
   return out;
