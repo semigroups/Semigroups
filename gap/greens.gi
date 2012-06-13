@@ -59,6 +59,7 @@ end);
 InstallMethod(\in, "for trans. and R-class of trans. semigp.",
 [IsActingElt, IsGreensRClass and IsActingSemigroupGreensClass],
 function(f, r)
+  local rep, s, data, o, l, schutz, g;
 
   rep:=Representative(r); 
   s:=ParentAttr(r);
@@ -76,20 +77,20 @@ function(f, r)
     Enumerate(o, infinity);
   fi;
 
-  l:=Position(o, Lambda(s)(f));
+  l:=Position(o, LambdaFunc(s)(f));
 
   if l = fail or OrbSCCLookup(o)[l]<>data[1] then 
     return false;
   fi;
 
-  schutz:=LambdaOrbitStabChain(o, data[1]);
+  schutz:=LambdaOrbStabChain(o, data[1]);
 
   if schutz=true then
     Info(InfoCitrus, 3, "Schutz. group of R-class is symmetric group");
     return true;
   fi;
 
-  g:=f*LambdaOrbitMults(o, data[1])[l];
+  g:=f*LambdaOrbMults(o, data[1])[l];
 
   if g=rep then
     Info(InfoCitrus, 3, "transformation with rectified lambda value equals ",
@@ -707,4 +708,4 @@ end);
 InstallGlobalFunction(UnderlyingSemigroupOfIterator, 
 [IsCitrusPkgIterator], iter-> iter!.s);
 
-EOF
+#EOF
