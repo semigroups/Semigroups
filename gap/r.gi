@@ -443,63 +443,6 @@ function(s, data, o)
   return out;
 end);
 
-# new for 0.1! - GreensRClassOfElementNC - "for a trans. semigp and trans."
-#############################################################################
-# JDM double check everything is ok here!
-
-InstallOtherMethod(GreensRClassOfElementNC, "for a trans. semigp and trans.", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation],
-function(s, f)
-  local d, j, r, o, n;
-
-  Info(InfoCitrus, 4, "GreensRClassOfElementNC: for trans. semi. and trans.");
-
-  d:=PreInOrbitsOfImages(s, f, true);
-
-  if d[1] then # f in s!
-    Info(InfoCitrus, 2, "transformation is an element of semigroup");
-    return CreateRClass(s, d[2]{[1..6]}, OrbitsOfImages(s),
-     RClassRepFromData(s, d[2]));
-  elif OrbitsOfImages(s)!.finished then #f not in s!
-    Error("transformation is not an element of semigroup,");
-    return;
-  fi;
-
-  Info(InfoCitrus, 2, "transformation may not be an element of semigroup");
-
-  j:=Length(ImageSetOfTransformation(f));
-  n:=DegreeOfTransformationSemigroup(s);
-  o:=[]; o[j]:=[ForwardOrbitOfImage(s, f![1])]; 
-
-  #JDM also PreInOrbitsOfImages might have some non-fail values, in which case
-  # we should use them. If everything is known except val or n, then we don't
-  # really want to do what we are doing here...
-
-  o:=rec( finished:=false, orbits:=o, gens:=List(Generators(s), x-> x![1]), 
-   s:=s, 
-   deg := n, data:=[], images:=fail, lens:=List([1..n], function(x) if x=j then
-   return 1; else return 0; fi; end), data_ht:=HTCreate([1,1,1,1,1,1],
-   rec(forflatplainlists:=true, hashlen:=s!.opts!.hashlen!.M)));
-  #local orbits of images! 
-  #JDM shouldn't data contain [j,1,1,1,1,1]??
-
-  r:=CreateRClass(s, [j,1,1,1,1,1], o, f);
-  SetIsRClassNC(r, true);
-  return r;
-end);
-
-# new for 0.1! - RClassRepsData - "for a transformation semigroup"
-#############################################################################
-# move to greens.gi
-
-InstallMethod(RClassRepsData, "for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  Info(InfoCitrus, 4, "RClassRepsData: for a trans. semi.");
-  ExpandOrbitsOfImages(s);
-  return OrbitsOfImages(s)!.data;
-end);
-
 #HHH
 
 # new for 0.1! - HClassReps - "for an R-class of a trans. semigp."

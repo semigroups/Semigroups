@@ -270,6 +270,28 @@ function(s, f)
   return CallFuncList(CreateRClass, SemigroupData(s)[pos]);
 end);
 
+# mod for 1.0! - GreensRClassOfElement - "for an acting semigp and elt."
+#############################################################################
+
+InstallOtherMethod(GreensRClassOfElementNC, "for an acting semigp and elt",
+[IsActingSemigroup, IsActingElt],
+function(s, f)
+  local pos, o, g;
+  
+  pos:=HTValue(LambdaHT(s), LambdaFunc(s)(f));
+  
+  if pos<>fail then 
+    o:=GradedLambdaOrbs(s)[pos[1]][pos[2]];
+    g:=f*LambdaOrbMults(o, pos[1])[pos[3]];
+  else
+    o:=GradedLambdaOrb(s, f, false);
+    g:=f;
+    pos:=[1,1];
+  fi;
+
+  return CreateRClass(s, pos, o, g);
+end);
+
 # new for 0.1! - GreensHClasses - "for a transformation semigroup"
 ##############################################################################
 
