@@ -52,6 +52,27 @@ function(s, t)
    ForAll(Generators(t), x-> x in s);
 end); 
 
+# mod for 1.0! - CreateRClass - not a user function!
+#############################################################################
+# Usage: s = semigroup; data = lambda orbit data (any length) (specifies where
+# in orbit to find the lambda value relating to the R-class); 
+# orbit = lambda orbit; rep = representative.
+
+# rep should be with rectified image only!
+
+#JDM use the index here?
+
+InstallGlobalFunction(CreateRClass,
+function(arg)
+  local r;
+  
+  r:=Objectify(RClassType(s), rec(parent:=arg[1], data:=arg[2], o:=arg[3]));
+
+  SetRepresentative(r, arg[4]);
+  SetEquivalenceClassRelation(r, GreensRRelation(s));
+  return r;
+end);
+
 #HHH
 
 # new for 0.1! - HClassReps - "for a transformation semigp."
