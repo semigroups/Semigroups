@@ -119,7 +119,7 @@ function(r)
   o:=r!.o; 
   m:=r!.data[1];
  
-  g:=List(LambdaOrbSchutzGp(o, m), x-> f*x);
+  g:=List(SchutzenbergerGroup(r), x-> f*x);
   elts:=EmptyPlist(Size(r));
   
   mults:=LambdaOrbMults(o, m);
@@ -206,6 +206,94 @@ InstallMethod(DClassReps, "for a trans. semigroup",
 end);
 
 #EEE
+
+# new for 0.7! - Enumerator - "for R-class of part perm inverse semigroup"
+##############################################################################
+
+InstallMethod(Enumerator, "for R-class of part perm inv semigroup",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(r)
+  local mults, scc;
+
+  mults:=LambdaOrbMults(r!.o, r!.data[1]);
+  scc:=OrbSCC(r!.o)[r!.data[1]];
+
+  return EnumeratorByFunctions(r, rec(
+
+    schutz:=Enumerator(SchutzenbergerGroup(r)),
+
+    len:=Size(SchutzenbergerGroup(r)),
+
+
+    #########################################################################
+
+    ElementNumber:=function(enum, pos)
+      local n, m, q;
+
+      if pos>Length(enum) then 
+        return fail;
+      fi;
+
+      if pos<=Length(enum!.schutz) then 
+        return Representative(r)*enum!.schutz[pos];
+      fi;
+
+      n:=pos-1; m:=enum!.len;
+      
+      q:=QuoInt(n, m); 
+      pos:=[ q, n - q * m]+1;
+     
+     return enum[pos[2]]/mults[scc[pos[1]]];
+    end,
+
+    #########################################################################
+    
+    NumberElement:=function(enum, f)
+      local s, rep, o, data, l, g, j;
+
+      s:=ParentAttr(r);
+      rep:=Representative(r);
+      
+      if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
+       Degree(f) <> Degree(rep) or Rank(f) <> Rank(rep) or 
+        RhoFunc(s)(f) <> RhoFunc(s)(rep) then 
+        return fail;
+      fi;
+      
+      if f=rep then 
+        return 1;
+      fi;
+
+      o:=r!.o; data:=r!.data;
+      l:=Position(o, LambdaFunc(s)(f));
+
+      if l = fail or not OrbSCCLookup(o)[l]<>data[1] then 
+        return fail;
+      fi;
+     
+      g:=f*mults[l];
+
+      j:=Position(enum!.schutz, LambdaPerm(rep, g));
+
+      if j=fail then 
+        return fail;
+      fi;
+      return enum!.len*(Position(scc, l)-1)+j;
+    end,
+
+    #########################################################################
+
+    Membership:=function(elm, enum)
+      return elm in r;
+    end,
+
+    Length:=enum-> Size(r),
+
+    PrintObj:=function(enum)
+      Print("<enumerator of R-class>");
+      return;
+    end));
+end);
 
 # new for 0.1! - Enumerator - "for a transformation semigroup"
 #############################################################################
@@ -717,13 +805,23 @@ end);
 
 #OOO
 
-# new for 0.5! - One - "for a transformation semigroup"
+# new for 0.5! - One - "for a transformation"
 #############################################################################
 
 InstallMethod(One, "for a transformation",
 [IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
 
 #SSS
+
+
+# new for 1.0! - SchutzenbergerGroup - "for an R-class of an acting semigp."
+#############################################################################
+
+InstallOtherMethod(SchutzenbergerGroup, "for an R-class of an acting semigp.",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(r)
+  return LambdaOrbSchutzGp(r!.o, r!.data[1]);
+end);
 
 # new for 1.0! - Size - "for an R-class of an acting semigp."
 #############################################################################
@@ -735,7 +833,7 @@ function(r)
   local o, m;
   o:=r!.o; m:=r!.data[1];      
   
-  return Size(LambdaOrbSchutzGp(o, m))*Length(OrbSCC(o)[m]);
+  return Size(SchutzenbergerGroup(r))*Length(OrbSCC(o)[m]);
 end);
 
 # new for 0.1! - Size - "for a simple transformation semigroup"

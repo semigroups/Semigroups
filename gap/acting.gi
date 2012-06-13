@@ -954,9 +954,10 @@ end);
 ##############################################################################
 
 InstallGlobalFunction(LambdaOrbMults, 
-  function(o, m) 
-  local scc, s, mults, gens, lambdamult, f, i;
- 
+  function(arg) 
+  local o, m, scc, s, mults, gens, lambdamult, f, i;
+
+  o:=arg[1]; m:=arg[2];
   scc:=OrbSCC(o)[m];
 
   if IsBound(o!.mults) then  
