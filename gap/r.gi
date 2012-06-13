@@ -575,31 +575,6 @@ function(r)
   return f*g*ImageOrbitPerms(r)[i]^-1; 
 end);
 
-# new for 0.1! - RClassReps - "for a transformation semigroup"
-#############################################################################
-
-InstallMethod(RClassReps, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  Info(InfoCitrus, 4, "RClassReps: for a trans. semi.");
-
-  ExpandOrbitsOfImages(s);
-  return List(OrbitsOfImages(s)!.data, x-> RClassRepFromData(s, x));
-end);
-
-
-# new for 0.1! - RClassType - "for a transformation semigroup"
-############################################################################
-
-InstallMethod(RClassType, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s);
-
-  return NewType( FamilyObj( s ), IsEquivalenceClass and 
-	 IsEquivalenceClassDefaultRep and IsGreensRClass and 
-	 IsGreensClassOfTransSemigp);
-end);
-
 #TTT
 
 # new for 0.4! - TraceRClassRepsTree - not a user function!

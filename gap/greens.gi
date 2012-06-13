@@ -866,6 +866,39 @@ function(iter)
   return;
 end);
 
+#RRR
+
+# mod for 1.0! - RClassReps - "for an acting semigroup"
+############################################################################
+
+InstallMethod(RClassReps, "for an acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local data, orbit, nr, r, out, i;
+
+  data:=EnumerateSemigroupData(s); 
+  orbit:=data!.orbit;
+  nr:=Length(orbit);
+  r:=data!.modifier;
+  out:=EmptyPlist(nr-r);
+
+  for i in [1+r..nr] do 
+    out[i-r]:=orbit[i][4];
+  od;
+  return out;
+end);
+
+# new for 0.1! - RClassType - "for a transformation semigroup"
+############################################################################
+
+InstallMethod(RClassType, "for a transformation semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s);
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsGreensRClass and
+         IsActingSemigroupGreensClass);
+end);
+
 #SSS
 
 # new for 1.0! - SchutzenbergerGroup - "for an R-class of an acting semigp."
