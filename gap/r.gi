@@ -15,55 +15,6 @@
 
 # - this file should only contain functions relating to images/R-classes!
 
-# new for 0.1! - \in - "for trans. and R-class of trans. semigp."
-#############################################################################
-# Algorithm E. 
-
-InstallMethod(\in, "for trans. and R-class of trans. semigp.", 
-[IsTransformation, IsGreensRClass and IsGreensClassOfTransSemigp],
-function(f, r)
-  local rep, d, o, i, schutz, g;
-
-  rep:=Representative(r);
-
-  if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) or
-   RankOfTransformation(f) <> RankOfTransformation(rep) or
-   CanonicalTransSameKernel(f) <> CanonicalTransSameKernel(rep) then 
-    Info(InfoCitrus, 1, "degree, rank, or kernel not equal to those of", 
-    " any of the R-class elements,"); 
-    return false;
-  fi;
-
-  d:=r!.data; o:=r!.o!.orbits[d[1]][d[2]];
-
-  i:= Position(o, ImageSetOfTransformation(f));
-
-  if i = fail or not o!.truth[d[4]][i] then #check they are in the same scc
-    Info(InfoCitrus, 1, "image not equal to that of any R-class element,");
-    return false;
-  fi;
-
-  schutz:=ImageOrbitStabChain(r);
-  
-  if schutz=true then
-    Info(InfoCitrus, 3, "Schutz. group of R-class is symmetric group");
-    return true;
-  fi;
-
-  g:=f*o!.perms[i];
-
-  if g=rep then
-    Info(InfoCitrus, 3, "transformation with rectified image equals ", 
-    "R-class representative");
-    return true;
-  elif schutz=false then
-    Info(InfoCitrus, 3, "Schutz. group of R-class is trivial");
-    return false;
-  fi;
-
-  return SiftedPermutation(schutz, PermLeftQuoTransformationNC(rep, g))=();
-end);
-
 #AAA
 
 # new for 0.1! - AsList - "for an R-class of trans. semigp."

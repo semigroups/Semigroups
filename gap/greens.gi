@@ -52,6 +52,57 @@ function(s, t)
    ForAll(Generators(t), x-> x in s);
 end); 
 
+# new for 1.0! - \in - "for acting elt and acting semigp."
+#############################################################################
+# Algorithm E. 
+
+InstallMethod(\in, "for trans. and R-class of trans. semigp.",
+[IsActingElt, IsGreensRClass and IsActingSemigroupGreensClass],
+function(f, r)
+
+  rep:=Representative(r); 
+  s:=ParentAttr(r);
+
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or Degree(f) <> Degree(rep) or
+   Rank(f) <> Rank(rep) or RhoFunc(s)(f) <> RhoFunc(s)(rep) then
+    Info(InfoCitrus, 1, "degree, rank, or rho value not equal to those of",
+    " any of the R-class elements,");
+    return false;
+  fi;
+
+  data:=r!.data; o:=r!.o;
+  
+  if not IsClosed(o) then 
+    Enumerate(o, infinity);
+  fi;
+
+  l:=Position(o, Lambda(s)(f));
+
+  if l = fail or OrbSCCLookup(o)[l]<>data[1] then 
+    return false;
+  fi;
+
+  schutz:=LambdaOrbitStabChain(o, data[1]);
+
+  if schutz=true then
+    Info(InfoCitrus, 3, "Schutz. group of R-class is symmetric group");
+    return true;
+  fi;
+
+  g:=f*LambdaOrbitMults(o, data[1])[l];
+
+  if g=rep then
+    Info(InfoCitrus, 3, "transformation with rectified lambda value equals ",
+    "R-class representative");
+    return true;
+  elif schutz=false then
+    Info(InfoCitrus, 3, "Schutz. group of R-class is trivial");
+    return false;
+  fi;
+
+  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
+end);
+
 # mod for 1.0! - CreateRClass - not a user function!
 #############################################################################
 # Usage: s = semigroup; data = lambda orbit data (any length) (specifies where
@@ -270,7 +321,7 @@ function(s, f)
   return CallFuncList(CreateRClass, SemigroupData(s)[pos]);
 end);
 
-# mod for 1.0! - GreensRClassOfElement - "for an acting semigp and elt."
+# mod for 1.0! - GreensRClassOfElementNC - "for an acting semigp and elt."
 #############################################################################
 
 InstallOtherMethod(GreensRClassOfElementNC, "for an acting semigp and elt",
@@ -656,4 +707,4 @@ end);
 InstallGlobalFunction(UnderlyingSemigroupOfIterator, 
 [IsCitrusPkgIterator], iter-> iter!.s);
 
-#EOF
+EOF
