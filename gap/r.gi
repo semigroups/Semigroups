@@ -16,25 +16,6 @@
 # - this file should only contain functions relating to images/R-classes!
 
 
-# new for 0.1! - AsSSortedList - "for R-class of trans. semigp."
-#############################################################################
-# this should be removed after the library method for AsSSortedList 
-# for a Green's class is removed. The default AsSSortedList for a collection
-# is what should be used (it is identical)!
-
-# JDM one method for all types of classes!
-
-InstallOtherMethod(AsSSortedList, "for R-class of trans. semigp.",
-[IsGreensRClass and IsGreensClassOfTransSemigp], 
-function(r)
-  Info(InfoCitrus, 4, "AsSSortedList: for an R-class");
-  return ConstantTimeAccessList(EnumeratorSorted(r));
-end);
-
-#CCC
-
-#DDD
-
 #EEE
 
 # new for 0.1! - Enumerator - "for R-class of trans. semigp."

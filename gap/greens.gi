@@ -133,6 +133,18 @@ function(r)
   return elts;
 end);
 
+# new for 0.1! - AsSSortedList - "for a Green's class of an acting semigp"
+#############################################################################
+# this should be removed after the library method for AsSSortedList 
+# for a Green's class is removed. The default AsSSortedList for a collection
+# is what should be used (it is identical)!
+
+InstallOtherMethod(AsSSortedList, "for a Green's class of an acting semigp",
+[IsGreensClass and IsActingSemigroupGreensClass], 
+function(c)
+  return ConstantTimeAccessList(EnumeratorSorted(c));
+end);
+
 #CCC
 
 # mod for 1.0! - CreateRClass - not a user function!
@@ -721,11 +733,10 @@ InstallOtherMethod(Size, "for an R-class of an acting semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
   local o, m;
-
   o:=r!.o; m:=r!.data[1];      
+  
   return Size(LambdaOrbSchutzGp(o, m))*Length(OrbSCC(o)[m]);
 end);
-
 
 # new for 0.1! - Size - "for a simple transformation semigroup"
 #############################################################################
