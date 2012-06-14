@@ -68,7 +68,7 @@ DeclareAttribute("PrincipalFactor", IsGreensDClass);
 DeclareOperation("RedundantGenerator", [IsTransformationCollection]);
 DeclareGlobalFunction("ReesMatrixSemigroupElementNC");
 DeclareGlobalFunction("ReesZeroMatrixSemigroupElementNC");
-DeclareAttribute("SmallGeneratingSet", IsSemigroup);
+#DeclareAttribute("SmallGeneratingSet", IsSemigroup);
 
 InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
