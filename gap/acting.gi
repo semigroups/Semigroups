@@ -1345,6 +1345,27 @@ function(s, x)
   return slp;
 end);
 
+# new for 1.0! - Size - "for an acting semigroup data"
+##############################################################################
+
+InstallOtherMethod(Size, "for semigroup data",
+[IsSemigroupData],
+function(data)
+  local reps, nr, repslookup, orbit, i, j;
+   
+  reps:=data!.reps;
+  nr:=Length(reps);
+  repslookup:=data!.repslookup;
+  orbit:=data!.orbit;
+  i:=0;
+
+  for j in [1..nr] do 
+    data:=orbit[repslookup[j][1]];
+    i:=i+Length(reps[j])*Size(LambdaOrbSchutzGp(data[3], data[2][1]))*Length(OrbSCC(data[3])[data[2][1]]);
+  od;
+  return i; 
+end);
+
 # new for 1.0! - Size - "for an acting semigroup"
 ##############################################################################
 

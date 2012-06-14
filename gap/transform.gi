@@ -248,7 +248,7 @@ end);
 
 #DDD
 
-# new for 0.1! - DegreeOfTransformationCollection - "for a trans. coll."
+# mod for 1.0! - DegreeOfTransformationCollection - "for a trans. coll."
 ############################################################################
 # undocumented.
 
@@ -257,9 +257,9 @@ InstallMethod(DegreeOfTransformationCollection, "for a trans. coll.",
 function(coll)
 
   if IsTransformationSemigroup(coll) then 
-    return DataType(TypeObj(GeneratorsOfSemigroup(coll)[1]));
+    return DegreeOfTransformationSemigroup(coll);
   fi;
-  return DataType(TypeObj(coll[1]));
+  return DegreeOfTransformation(coll[1]);
 end);
 
 #III
