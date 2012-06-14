@@ -37,7 +37,7 @@ function()
    InstallationPath, "/doc"), "citrus.xml", 
    ["utils.xml", "greens.xml", "inverse.xml", "orbits.xml", "properties.xml",
    "semigroups.xml", "transform.xml", "pperm.xml", "../PackageInfo.g"],
-   "citrus", "MathJax");;
+   "citrus", "MathJax", "../../..");;
   return;
 end);
 
