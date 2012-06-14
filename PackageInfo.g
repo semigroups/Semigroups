@@ -19,7 +19,8 @@
 
 SetPackageInfo( rec(
 PackageName := "Citrus",
-Subtitle := "ComputIng wiTh semigRoUps and monoidS",
+Subtitle := "Computing with Semigroups of Transformations and Partial
+Permutations",
 Version := "0.9",
 Date := "31/05/2012",
 ArchiveURL := 
@@ -48,9 +49,21 @@ PackageInfoURL :=
   "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/PackageInfo.g",
 
 AbstractHTML := Concatenation( 
-  "The <span class=\"pkgname\">Citrus</span> package, is a ",
-  "<span class=\"pkgname\">GAP</span>  package  for transformation", 
-  "monoids and related objects."),
+  "The Citrus package is a ",
+  "GAP  package for computing with semigroups ",
+  "of transformations and partial permutations. Citrus contains more ",
+  "efficient methods than those available in the GAP library (and in many ",
+  "cases more efficient than any other software) for creating semigroups of ",
+  "transformations and partial permutations, calculating their Green's ",
+  "classes, size, elements, group of units, minimal ideal, small generating ",
+  "sets, and testing membership, finding the inverses of a regular element, ",
+  "and factorizing elements over the generators, and many more. It is also ", 
+  "possible to test if a semigroup ", 
+  "satisfies a particular property, such as if it is regular, simple, " ,
+  "inverse, completely regular, and a variety of further properties. ",
+  "Several catalogues of examples are provided, such as generators for the ",
+  "endomorphism monoids of every connected graphs with at most 8 vertices ", 
+  "and of the non-abelian groups with order at most 64."),
 
 PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus",
                
