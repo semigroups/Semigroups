@@ -513,24 +513,17 @@ GreensDClassOfElement);
 
 # mod for 1.0! - Idempotents - "for a R-class of a trans. semigp."
 #############################################################################
-#JDM I don't currently see a way of doing this in the general context. 
 
 InstallOtherMethod(Idempotents, "for a R-class of a trans. semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local s, data, out, rho, o, scc, j, tester, creator, lambda, i;
+  local s, out, rho, o, scc, j, tester, creator, i;
 
-  if HasIsRegularRClass(r) and not IsRegularRClass(r) then
+  if not IsRegularRClass(r) then
     return [];
   fi;
   
   s:=ParentAttr(r);
-  data:=SemigroupData(s);
-
-  if IsBound(r!.reps_pos) and IsBound(data!.nridempotents[r!.reps_pos])
-    and data!.nridempotents[r!.reps_pos]=0 then 
-    return [];
-  fi;
 
   if Rank(Representative(r))=Degree(s) then
     return [One(s)];
@@ -546,15 +539,15 @@ function(r)
   creator:=IdempotentLambdaRhoCreator(s);
 
   for i in scc do
-    lambda:=o[i];
-    if tester(lambda, rho) then
+    if tester(o[i], rho) then
       j:=j+1;
-      out[j]:=creator(lambda, rho);
+      out[j]:=creator(o[i], rho);
     fi;
   od;
 
-  if not HasNrIdempotents(r) then
-    SetNrIdempotents(r, j);
+  if IsBound(r!.pos_reps) and not 
+   IsBound(SemigroupData(s)!.nridempotents[r!.pos_reps]) then 
+    SemigroupData(s)!.nridempotents[r!.pos_reps]:=j;
   fi;
 
   return out;
@@ -666,6 +659,50 @@ InstallOtherMethod(IsGreensRClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensLClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensHClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
+
+# new for 1.0! - IsRegularRClass - "for an R-class of an acting semi"
+#############################################################################
+
+InstallMethod(IsRegularRClass, "for an R-class of an acting semigp",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(r)
+  local s, data, rho, o, scc, j, tester, i;
+ 
+  s:=ParentAttr(r);
+
+  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then
+   return true;
+  fi;
+
+  data:=SemigroupData(ParentAttr(r));
+
+  if IsBound(r!.reps_pos) then 
+    if IsBound(data!.nridempotents[r!.reps_pos]) then 
+      return data!.nridempotents[r!.reps_pos]>0;
+    fi;
+    if Length(data!.reps[r!.reps_pos])>1 then 
+      data!.nridempotents[r!.reps_pos]:=0;
+      return false;
+    fi;
+  fi;
+
+  rho:=RhoFunc(s)(Representative(r));
+  o:=r!.o;
+  scc:=OrbSCC(o)[r!.data[1]];
+  j:=0;
+  tester:=IdempotentLambdaRhoTester(s);
+
+  for i in scc do
+    if tester(o[i], rho) then
+      return true;
+    fi;
+  od;
+
+  if IsBound(r!.reps_pos) then 
+    data!.nridempotents[r!.reps_pos]:=0;
+  fi;
+  return false;
+end);
 
 # new for 1.0! - Iterator - "for an R-class of an acting semi"
 #############################################################################
