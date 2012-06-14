@@ -1245,7 +1245,7 @@ function(s)
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
      reps:=[], repslookup:=[], lenreps:=0, orbit:=[[,,,x]], repslens:=[], 
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail], 
-     semi:=s, finished:=false);
+     semi:=s, finished:=false, nridempotents:=[]);
   
   Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
 
