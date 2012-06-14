@@ -164,6 +164,11 @@ function(arg)
   r:=Objectify(RClassType(arg[1]), 
    rec(parent:=arg[1], data:=arg[2], o:=arg[3]));
 
+  if Length(arg)>4 then 
+    r!.orbit_pos:=arg[5];
+    r!.reps_pos:=arg[6];
+  fi;
+
   SetRepresentative(r, arg[4]);
   SetEquivalenceClassRelation(r, GreensRRelation(arg[1]));
   return r;
@@ -505,6 +510,55 @@ InstallOtherMethod(GreensJClassOfElement, "for a trans. semigroup and trans.",
 GreensDClassOfElement);
 
 #III
+
+# mod for 1.0! - Idempotents - "for a R-class of a trans. semigp."
+#############################################################################
+#JDM I don't currently see a way of doing this in the general context. 
+
+InstallOtherMethod(Idempotents, "for a R-class of a trans. semigp.",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(r)
+  local s, data, out, rho, o, scc, j, tester, creator, lambda, i;
+
+  if HasIsRegularRClass(r) and not IsRegularRClass(r) then
+    return [];
+  fi;
+  
+  s:=ParentAttr(r);
+  data:=SemigroupData(s);
+
+  if IsBound(r!.reps_pos) and IsBound(data!.nridempotents[r!.reps_pos])
+    and data!.nridempotents[r!.reps_pos]=0 then 
+    return [];
+  fi;
+
+  if Rank(Representative(r))=Degree(s) then
+    return [One(s)];
+  fi;
+
+  out:=[]; 
+  
+  rho:=RhoFunc(s)(Representative(r));
+  o:=r!.o; 
+  scc:=OrbSCC(o)[r!.data[1]]; 
+  j:=0;
+  tester:=IdempotentLambdaRhoTester(s);
+  creator:=IdempotentLambdaRhoCreator(s);
+
+  for i in scc do
+    lambda:=o[i];
+    if tester(lambda, rho) then
+      j:=j+1;
+      out[j]:=creator(lambda, rho);
+    fi;
+  od;
+
+  if not HasNrIdempotents(r) then
+    SetNrIdempotents(r, j);
+  fi;
+
+  return out;
+end);
 
 # mod for 0.4! - Idempotents - "for a transformation semigroup"
 #############################################################################

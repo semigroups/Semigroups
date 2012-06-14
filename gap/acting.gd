@@ -78,6 +78,9 @@ DeclareGlobalFunction("InitSemigroupData");
 DeclareOperation("EnumerateSemigroupData", [IsActingSemigroup, IsCyclotomic, IsFunction]);
 DeclareCategory("IsSemigroupData", IsRecord);
 
+DeclareAttribute("IdempotentLambdaRhoTester", IsActingSemigroup);
+DeclareAttribute("IdempotentLambdaRhoCreator", IsActingSemigroup);
+
 # IMPLICATIONS
 
 InstallTrueMethod(IsActingSemigroup, IsTransformationSemigroup);

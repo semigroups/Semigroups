@@ -148,6 +148,36 @@ function(s)
      hashlen:=s!.opts.hashlen.S));
 end);
 
+# new for 1.0! - IdempotentLambdaRhoTester - "for a trans semigp"
+##############################################################################
+#JDM this should be revised.
+
+
+InstallMethod(IdempotentLambdaRhoTester, "for a trans semigp", 
+[IsTransformationSemigroup], s-> function(x, y) 
+return IsInjectiveTransOnList(y, x); end);
+
+# new for 1.0! - IdempotentLambdaRhoTester - "for a partial perm semigp"
+##############################################################################
+
+InstallMethod(IdempotentLambdaRhoTester, "for a partial perm semigp", 
+[IsPartialPermSemigroup], s-> EQ);
+
+# new for 1.0! - IdempotentLambdaRhoCreator - "for a trans semigp"
+##############################################################################
+#JDM we should update/replace IdempotentNC.
+
+InstallMethod(IdempotentLambdaRhoCreator, "for a trans semigp",
+[IsTransformationSemigroup], s-> 
+function(x,y)
+return IdempotentNC(y,x); end);
+
+# new for 1.0! - IdempotentLambdaRhoCreator - "for a partial perm semigp"
+##############################################################################
+
+InstallMethod(IdempotentLambdaRhoCreator, "for a partial perm semigp",
+[IsPartialPermSemigroup], s-> PartialPermNC);
+
 ############################################################################### 
 ###############################################################################
 
@@ -190,10 +220,11 @@ function(f, s)
     return f in AsSSortedList(s); 
   fi;
 
-  if Degree(f)<>Degree(s) then 
-    Info(InfoCitrus, 2, "element and semigroup have different degrees.");
-    return false;       
-  fi;
+  #JDM this doesn't work for semigroups of partial perms...
+  #if Degree(f)<>Degree(s) then 
+  #  Info(InfoCitrus, 2, "element and semigroup have different degrees.");
+  #  return false;       
+  #fi;
 
   if not (IsMonoid(s) and IsOne(f)) and 
    Rank(f) > MaximumList(List(Generators(s), Rank)) then

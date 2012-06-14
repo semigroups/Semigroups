@@ -8,13 +8,6 @@
 #############################################################################
 ##
 
-#############################################################################
-# Notes
-
-# - this file is alphabetized, keep it that way!
-
-# - this file should only contain functions relating to images/R-classes!
-
 #FFF
 
 # mod for 0.5! - Factorization - "for a trans. semigp. and trans."
@@ -303,48 +296,6 @@ end);
 
 #III
 
-# new for 0.1! - Idempotents - "for a R-class of a trans. semigp."
-#############################################################################
-# I don't see the need for iterator and enumerator of idempotents, as there
-# are just not that many idempotents in general. Or if there are, then 
-# we cannot compute the R-class even.... 
-
-InstallOtherMethod(Idempotents, "for a R-class of a trans. semigp.",
-[IsGreensRClass and IsGreensClassOfTransSemigp], 
-function(r)
-  local out, f, ker, o, scc, j, i;
-
-  Info(InfoCitrus, 4, "Idempotents: for an R-class");
-
-  if HasIsRegularRClass(r) and not IsRegularRClass(r) then 
-    return [];
-  fi;
-
-  if NrIdempotentsRClassFromData(r!.parent, r!.data, r!.o)=0 then
-    return [];
-  fi;
-
-  if RankOfTransformation(r!.rep)=DegreeOfTransformation(r!.rep) then
-    return [TransformationNC([1..DegreeOfTransformation(r!.rep)])];
-  fi;
-
-  out:=[]; ker:=CanonicalTransSameKernel(r!.rep);
-  o:=ImageOrbit(r); scc:=ImageOrbitSCC(r); j:=0;
-
-  for i in scc do
-    i:=o[i];
-    if IsInjectiveTransOnList(ker, i) then  
-      j:=j+1;
-      out[j]:=IdempotentNC(ker, i);
-    fi;
-  od;
-
-  if not HasNrIdempotents(r) then 
-    SetNrIdempotents(r, j);
-  fi;
-
-  return out;
-end);
 
 # new for 0.1! - IsRegularRClass - "for a Green's class of trans. semigroup"
 #############################################################################
@@ -415,68 +366,6 @@ function(arg)
   od;
 
   return false;
-end);
-
-#JDM here
-
-# new for 0.1! - Iterator - "for a R-class of a trans. semigroup"
-#############################################################################
-# this is more efficient!
-
-InstallMethod(Iterator, "for a R-class of a trans. semigroup",
-[IsGreensRClass and IsGreensClassOfTransSemigp],
-function(r)
-  local iter;
-
-  Info(InfoCitrus, 4, "Iterator: for an R-class");
-
-  if HasAsSSortedList(r) then 
-    iter:=IteratorList(AsSSortedList(r));
-  else
-    iter:=IteratorByFunctions(rec( 
-          
-      schutz:=List(SchutzenbergerGroup(r), x-> r!.rep*x),
-      #turns out this is a good idea!
-
-      m:=Size(SchutzenbergerGroup(r)), s:=r!.parent, 
-          
-      perms:=ImageOrbitPermsFromData(r!.parent, r!.data, r!.o),
-          
-      scc:=ImageOrbitSCC(r), 
-          
-      n:=Length(ImageOrbitSCC(r)),
-          
-      at:=[1,0],
-          
-      IsDoneIterator:=iter-> iter!.at[1]=iter!.n and iter!.at[2]=iter!.m,
-          
-      NextIterator:=function(iter)
-          
-        if IsDoneIterator(iter) then 
-          return fail;
-        fi;
-
-        if iter!.at[2]<iter!.m then 
-          iter!.at[2]:=iter!.at[2]+1;
-        else
-          iter!.at[1]:=iter!.at[1]+1; 
-          iter!.at[2]:=1;
-        fi;
-        
-        return iter!.schutz[iter!.at[2]]*iter!.perms[iter!.scc[iter!.at[1]]]^-1;
-      
-      end,
-          
-      ShallowCopy:=iter-> rec( schutz:=List(SchutzenbergerGroup(r), x-> 
-       r!.rep*x),
-      m:=Size(SchutzenbergerGroup(r)), 
-      perms:=ImageOrbitPermsFromData(r!.parent, r!.data, r!.o), 
-      scc:=ImageOrbitSCC(r), n:=Length(ImageOrbitSCC(r)), at:=[1,0])));
-  fi;
-
-  SetIsIteratorOfRClassElements(iter, true);
-  SetIsCitrusPkgIterator(iter, true); 
-  return iter;
 end);
 
 #NNN
