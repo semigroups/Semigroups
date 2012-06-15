@@ -68,18 +68,6 @@ function(x, y)
   return false;
 end);
 
-# new for 1.0! - \= - "for an acting semigp and acting semigp"
-#############################################################################
-# JDM move this to semigroups.gi
-
-InstallMethod(\=, "for an acting semigp and acting semigp",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, 
-IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s, t)
-  return ForAll(Generators(s), x-> x in t) and 
-   ForAll(Generators(t), x-> x in s);
-end); 
-
 # new for 1.0! - \in - "for acting elt and acting semigp."
 #############################################################################
 # Algorithm E. 
@@ -210,43 +198,9 @@ end);
 
 #HHH
 
-# new for 0.1! - HClassReps - "for a transformation semigp."
-############################################################################
-
-InstallMethod(HClassReps, "for a transformation semigp.",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local out, iter, i, f;
-  Info(InfoCitrus, 4, "HClassReps");
-
-  out:=EmptyPlist(NrHClasses(s));
-  iter:=IteratorOfHClassReps(s);
-  i:=0;
-
-  for f in iter do
-    i:=i+1;
-    out[i]:=f;
-  od;
-
-  return out;
-end);
-
-#DDD
-
-# new for 0.1! - DClassReps - "for a trans. semigroup"
-#############################################################################
-
-InstallMethod(DClassReps, "for a trans. semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-  function(s)
-
-  ExpandOrbitsOfKernels(s);
-  return List(OrbitsOfKernels(s)!.data, x-> DClassRepFromData(s, x));
-end);
-
 #EEE
 
-# new for 0.7! - Enumerator - "for R-class of part perm inverse semigroup"
+# mod for 1.0! - Enumerator - "for R-class of part perm inverse semigroup"
 ##############################################################################
 
 InstallMethod(Enumerator, "for R-class of part perm inv semigroup",
@@ -262,7 +216,6 @@ function(r)
     schutz:=Enumerator(SchutzenbergerGroup(r)),
 
     len:=Size(SchutzenbergerGroup(r)),
-
 
     #########################################################################
 
@@ -334,17 +287,15 @@ function(r)
     end));
 end);
 
-# new for 0.1! - Enumerator - "for a transformation semigroup"
+# mod for 1.0! - Enumerator - "for a transformation semigroup"
 #############################################################################
 # Notes: this is not an enumerator as I could not get an enumerator to perform 
 # well here. 
 
-InstallOtherMethod(Enumerator, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+InstallMethod(Enumerator, "for an acting semigroup", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local out, iter, j, i;
-
-  Info(InfoCitrus, 4, "Enumerator: for a trans. semigroup");
 
   out:=EmptyPlist(Size(s)); 
 
@@ -357,98 +308,6 @@ function(s)
   od;
 
   return Immutable(out);
-end);
-
-# new for 0.4! - EnumeratorOfRClasses - "for a trans. semigroup"
-#############################################################################
-# Notes: NumberElement does not work for RClassNCs, JDM maybe it should!
-
-InstallMethod(EnumeratorOfRClasses, "for a trans. semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  local enum;
-
-  if HasGreensRClasses(s) then 
-    enum:=EnumeratorByFunctions(s, rec(
-      
-      ElementNumber:=function(enum, pos)
-        return GreensRClasses(s)[pos];
-      end,
-
-      NumberElement:=function(enum, r)
-        
-        if not ParentAttr(r)=s then 
-          return fail;
-        fi;
-
-        if IsRClassNC(r) then 
-          return fail;
-        fi;
-
-        return RClassIndexFromData(s, r!.data);
-      end,
-
-      Membership:=function(r, enum)
-        return not Position(enum, r)=fail;
-      end,
-      
-      Length:=enum -> NrRClasses(s),
-
-      PrintObj:=function(enum)
-        Print( "<enumerator of R-classes>");
-        return;
-      end));
-
-    return enum;
-  fi;
-
-  enum:=EnumeratorByFunctions(s, rec(
-   
-    ElementNumber:=function(enum, pos)
-      local data, m, iter, i;
-
-      data:=OrbitsOfImages(s)!.data; m:=Length(data);
-
-      if m>=pos then 
-        data:=data[pos];
-      elif OrbitsOfImages(s)!.finished then 
-        return fail;
-      else
-        iter:=IteratorOfNewRClassRepsData(s);
-        for i in [1..pos-m-1] do 
-          NextIterator(iter);
-        od;
-        data:=NextIterator(iter);
-      fi;
-
-      if not data=fail then 
-        return CreateRClass(s, data, OrbitsOfImages(s),
-          RClassRepFromData(s, data));        
-      fi;
-      return fail;
-    end,
-
-    NumberElement:=function(enum, r)
-
-      if not ParentAttr(r)=s then
-        return fail;
-      fi;
-
-      if IsRClassNC(r) then
-        return fail;
-      fi;  
-
-      return RClassIndexFromData(s, r!.data);
-    end,
-
-    Length:=enum -> NrRClasses(s),
-
-    PrintObj:=function(enum)
-      Print( "<enumerator of R-classes>");
-      return;
-  end));
-      
-  return enum;
 end);
 
 #GGG
@@ -509,33 +368,11 @@ function(s, f)
   return CreateRClass(s, [1,1], GradedLambdaOrb(s, f, false), f);
 end);
 
-# new for 0.1! - GreensHClasses - "for a transformation semigroup"
-##############################################################################
-
-InstallMethod(GreensHClasses, "for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  local iter, out, i, h;
-
-  Info(InfoCitrus, 4, "GreensHClasses");
-
-  iter:=IteratorOfHClasses(s);
-  out:=EmptyPlist(NrHClasses(s));
-  i:=0;
-
-  for h in iter do 
-    i:=i+1;
-    out[i]:=h;
-  od;
-
-  return out;
-end);
-
-# new for 0.1! - GreensJClassOfElement - for a trans. semigroup and trans."
+# mod for 1.0! - GreensJClassOfElement - for an acting semi and elt."
 #############################################################################
 
-InstallOtherMethod(GreensJClassOfElement, "for a trans. semigroup and trans.",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation], 
+InstallOtherMethod(GreensJClassOfElement, "for acting semigroup and elt.",
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsActingElt], 
 GreensDClassOfElement);
 
 #III
@@ -582,98 +419,6 @@ function(r)
   return out;
 end);
 
-# mod for 0.4! - Idempotents - "for a transformation semigroup"
-#############################################################################
-
-InstallOtherMethod(Idempotents, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local n, out, kers, imgs, j, i, ker, img;
-
-  if IsRegularSemigroup(s) then 
-    n:=DegreeOfTransformationSemigroup(s);
-
-    if HasNrIdempotents(s) then 
-      out:=EmptyPlist(NrIdempotents(s));
-    else
-      out:=[];
-    fi;
-
-    kers:=GradedKernelsOfTransSemigroup(s); 
-    imgs:=GradedImagesOfTransSemigroup(s);
-
-    j:=0;
-    
-    for i in [1..n] do
-      for ker in kers[i] do
-        for img in imgs[i] do 
-          if IsInjectiveTransOnList(ker, img) then 
-            j:=j+1;
-            out[j]:=IdempotentNC(ker, img);
-          fi;
-        od;
-      od;
-    od;
-
-    if not HasNrIdempotents(s) then 
-      SetNrIdempotents(s, j);
-    fi;
-    return out;
-  fi;
-
-  return Concatenation(List(GreensRClasses(s), Idempotents));
-end);
-
-# new for 0.1! - Idempotents - "for a trans. semigroup and pos. int."
-#############################################################################
-
-InstallOtherMethod(Idempotents, "for a trans. semigroup and pos. int.", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
-function(s, i)
-  local out, n, kers, imgs, j, ker, img, r;
-  
-  n:=DegreeOfTransformationSemigroup(s);
-  
-  if i>n then 
-    return [];
-  fi;
-
-  if HasIdempotents(s) then 
-    return Filtered(Idempotents(s), x-> RankOfTransformation(x)=i);
-  fi; 
-
-  if HasNrIdempotents(s) then
-    out:=EmptyPlist(NrIdempotents(s));
-  else
-    out:=[];
-  fi;
-
-  if IsRegularSemigroup(s) then 
-
-    kers:=GradedKernelsOfTransSemigroup(s)[i]; 
-    imgs:=GradedImagesOfTransSemigroup(s)[i];
-    j:=0;
-
-    for ker in kers do
-      for img in imgs do 
-        if IsInjectiveTransOnList(ker, img) then 
-          j:=j+1;
-          out[j]:=IdempotentNC(ker, img);
-        fi;
-      od;
-    od;
-
-    return out;
-  fi;
-
-  for r in GreensRClasses(s) do 
-    if RankOfTransformation(r!.rep)=i then 
-      out:=Concatenation(out, Idempotents(r));
-    fi;
-  od;
-  return out;
-end);
-
 # new for 0.1! - IsGreensClassOfTransSemigp - "for a Green's class"
 #############################################################################
 
@@ -682,6 +427,7 @@ InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
 
 # new for 0.1! - IsGreensClass - "for a Green's class"
 #############################################################################
+# JDM remove these?
 
 InstallOtherMethod(IsGreensClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensRClass, "for an object", [IsObject], ReturnFalse);
@@ -781,22 +527,22 @@ function(r)
     return iter;
 end);
 
-# mod for 0.7! - Iterator - "for a trivial trans. semigp."
+# mod for 1.0! - Iterator - "for a trivial acting semigroup"
 #############################################################################
 # Notes: required until Enumerator for a trans. semigp does not call iterator. 
 # This works but is maybe not the best!
 
-InstallOtherMethod(Iterator, "for a trivial trans. semigp", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
+InstallOtherMethod(Iterator, "for a trivial acting semigp", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
 function(s)
   return TrivialIterator(Generators(s)[1]);
 end);
 
-# new for 0.1! - Iterator - "for a transformation semigroup"
+# mod for 1.0! - Iterator - "for an acting semigroup"
 #############################################################################
 
-InstallMethod(Iterator, "for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(Iterator, "for an acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local iter;
 
@@ -827,7 +573,6 @@ function(s)
     ShallowCopy:= iter -> rec(R:=IteratorOfRClasses(s), r:=fail)));
 
   SetIsIteratorOfSemigroup(iter, true);
-  SetIsCitrusPkgIterator(iter, true);
 
   return iter;
 end);
@@ -856,7 +601,6 @@ function(s)
     Degree(s)))));
 
   SetIsIteratorOfSemigroup(iter, true);
-  SetIsCitrusPkgIterator(iter, true);
 
   return iter;
 end);
@@ -1133,10 +877,248 @@ end);
 
 #UUU
 
-# new for 0.1! - UnderlyingSemigroupOfIterator - "for a citrus pkg iterator"
+# old 
+
+# new for 0.1! - HClassReps - "for a transformation semigp."
+############################################################################
+
+InstallMethod(HClassReps, "for a transformation semigp.",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local out, iter, i, f;
+  Info(InfoCitrus, 4, "HClassReps");
+
+  out:=EmptyPlist(NrHClasses(s));
+  iter:=IteratorOfHClassReps(s);
+  i:=0;
+
+  for f in iter do
+    i:=i+1;
+    out[i]:=f;
+  od;
+
+  return out;
+end);
+
+#DDD
+
+# new for 0.1! - DClassReps - "for a trans. semigroup"
 #############################################################################
 
-InstallGlobalFunction(UnderlyingSemigroupOfIterator, 
-[IsCitrusPkgIterator], iter-> iter!.s);
+InstallMethod(DClassReps, "for a trans. semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+  function(s)
+
+  ExpandOrbitsOfKernels(s);
+  return List(OrbitsOfKernels(s)!.data, x-> DClassRepFromData(s, x));
+end);
+
+# new for 0.4! - EnumeratorOfRClasses - "for a trans. semigroup"
+#############################################################################
+# Notes: NumberElement does not work for RClassNCs, JDM maybe it should!
+
+InstallMethod(EnumeratorOfRClasses, "for a trans. semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+function(s)
+  local enum;
+
+  if HasGreensRClasses(s) then 
+    enum:=EnumeratorByFunctions(s, rec(
+      
+      ElementNumber:=function(enum, pos)
+        return GreensRClasses(s)[pos];
+      end,
+
+      NumberElement:=function(enum, r)
+        
+        if not ParentAttr(r)=s then 
+          return fail;
+        fi;
+
+        if IsRClassNC(r) then 
+          return fail;
+        fi;
+
+        return RClassIndexFromData(s, r!.data);
+      end,
+
+      Membership:=function(r, enum)
+        return not Position(enum, r)=fail;
+      end,
+      
+      Length:=enum -> NrRClasses(s),
+
+      PrintObj:=function(enum)
+        Print( "<enumerator of R-classes>");
+        return;
+      end));
+
+    return enum;
+  fi;
+
+  enum:=EnumeratorByFunctions(s, rec(
+   
+    ElementNumber:=function(enum, pos)
+      local data, m, iter, i;
+
+      data:=OrbitsOfImages(s)!.data; m:=Length(data);
+
+      if m>=pos then 
+        data:=data[pos];
+      elif OrbitsOfImages(s)!.finished then 
+        return fail;
+      else
+        iter:=IteratorOfNewRClassRepsData(s);
+        for i in [1..pos-m-1] do 
+          NextIterator(iter);
+        od;
+        data:=NextIterator(iter);
+      fi;
+
+      if not data=fail then 
+        return CreateRClass(s, data, OrbitsOfImages(s),
+          RClassRepFromData(s, data));        
+      fi;
+      return fail;
+    end,
+
+    NumberElement:=function(enum, r)
+
+      if not ParentAttr(r)=s then
+        return fail;
+      fi;
+
+      if IsRClassNC(r) then
+        return fail;
+      fi;  
+
+      return RClassIndexFromData(s, r!.data);
+    end,
+
+    Length:=enum -> NrRClasses(s),
+
+    PrintObj:=function(enum)
+      Print( "<enumerator of R-classes>");
+      return;
+  end));
+      
+  return enum;
+end);
+
+# new for 0.1! - GreensHClasses - "for a transformation semigroup"
+##############################################################################
+
+InstallMethod(GreensHClasses, "for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+function(s)
+  local iter, out, i, h;
+
+  Info(InfoCitrus, 4, "GreensHClasses");
+
+  iter:=IteratorOfHClasses(s);
+  out:=EmptyPlist(NrHClasses(s));
+  i:=0;
+
+  for h in iter do 
+    i:=i+1;
+    out[i]:=h;
+  od;
+
+  return out;
+end);
+
+# mod for 0.4! - Idempotents - "for a transformation semigroup"
+#############################################################################
+
+InstallOtherMethod(Idempotents, "for a transformation semigroup", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local n, out, kers, imgs, j, i, ker, img;
+
+  if IsRegularSemigroup(s) then 
+    n:=DegreeOfTransformationSemigroup(s);
+
+    if HasNrIdempotents(s) then 
+      out:=EmptyPlist(NrIdempotents(s));
+    else
+      out:=[];
+    fi;
+
+    kers:=GradedKernelsOfTransSemigroup(s); 
+    imgs:=GradedImagesOfTransSemigroup(s);
+
+    j:=0;
+    
+    for i in [1..n] do
+      for ker in kers[i] do
+        for img in imgs[i] do 
+          if IsInjectiveTransOnList(ker, img) then 
+            j:=j+1;
+            out[j]:=IdempotentNC(ker, img);
+          fi;
+        od;
+      od;
+    od;
+
+    if not HasNrIdempotents(s) then 
+      SetNrIdempotents(s, j);
+    fi;
+    return out;
+  fi;
+
+  return Concatenation(List(GreensRClasses(s), Idempotents));
+end);
+
+# new for 0.1! - Idempotents - "for a trans. semigroup and pos. int."
+#############################################################################
+
+InstallOtherMethod(Idempotents, "for a trans. semigroup and pos. int.", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
+function(s, i)
+  local out, n, kers, imgs, j, ker, img, r;
+  
+  n:=DegreeOfTransformationSemigroup(s);
+  
+  if i>n then 
+    return [];
+  fi;
+
+  if HasIdempotents(s) then 
+    return Filtered(Idempotents(s), x-> RankOfTransformation(x)=i);
+  fi; 
+
+  if HasNrIdempotents(s) then
+    out:=EmptyPlist(NrIdempotents(s));
+  else
+    out:=[];
+  fi;
+
+  if IsRegularSemigroup(s) then 
+
+    kers:=GradedKernelsOfTransSemigroup(s)[i]; 
+    imgs:=GradedImagesOfTransSemigroup(s)[i];
+    j:=0;
+
+    for ker in kers do
+      for img in imgs do 
+        if IsInjectiveTransOnList(ker, img) then 
+          j:=j+1;
+          out[j]:=IdempotentNC(ker, img);
+        fi;
+      od;
+    od;
+
+    return out;
+  fi;
+
+  for r in GreensRClasses(s) do 
+    if RankOfTransformation(r!.rep)=i then 
+      out:=Concatenation(out, Idempotents(r));
+    fi;
+  od;
+  return out;
+end);
+
+
 
 #EOF

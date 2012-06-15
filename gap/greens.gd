@@ -220,9 +220,6 @@ DeclareProperty("IsIteratorOfLClassElements", IsIterator);
 DeclareProperty("IsIteratorOfDClassElements", IsIterator);
 DeclareProperty("IsIteratorOfHClassElements", IsIterator);
 
-DeclareGlobalFunction("UnderlyingSemigroupOfIterator");
-DeclareProperty("IsCitrusPkgIterator", IsIterator);
-
 DeclareProperty("IsOrbitsOfImages", IsObject);
 DeclareProperty("IsOrbitsOfKernels", IsObject);
 DeclareProperty("IsCitrusPkgImgKerOrbit", IsOrbit);

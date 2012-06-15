@@ -627,7 +627,6 @@ function(s)
 	  ShallowCopy:=iter-> rec(data:=IteratorOfLClassRepsData(s))));
 
   SetIsIteratorOfLClasses(iter, true);
-  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 
@@ -658,8 +657,6 @@ function(s)
     iter!.s))));
 
   SetIsIteratorOfLClassReps(iter, true);
-  SetIsCitrusPkgIterator(iter, true);
-
   return iter;
 end);
 
@@ -725,7 +722,6 @@ function(s)
 
   ######################################################################
   
-  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 

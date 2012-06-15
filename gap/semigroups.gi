@@ -8,6 +8,17 @@
 ############################################################################# 
 ##
 
+# new for 1.0! - \= - "for an acting semigp and acting semigp"
+#############################################################################
+
+InstallMethod(\=, "for an acting semigp and acting semigp",
+[IsActingSemigroup and HasGeneratorsOfSemigroup,
+IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s, t)
+  return ForAll(Generators(s), x-> x in t) and
+   ForAll(Generators(t), x-> x in s);
+end);
+
 #CCC
 
 # new for 0.7! - ClosureInverseSemigroup - "for an inverse semi"

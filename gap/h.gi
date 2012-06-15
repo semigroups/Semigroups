@@ -459,7 +459,6 @@ local iter;
     ShallowCopy:=iter-> rec(data:=IteratorOfHClassRepsData(s))));
 
   SetIsIteratorOfHClasses(iter, true);
-  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 
@@ -489,7 +488,6 @@ function(s)
     ShallowCopy := iter -> rec( data:=IteratorOfHClassRepsData(iter!.s))));
 
   SetIsIteratorOfHClassReps(iter, true);
-  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 
@@ -538,7 +536,6 @@ function(s)
     ShallowCopy:=iter-> rec(i:=0, r:=IteratorOfRClasses(s), 
      data:=[])));
 
-  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 

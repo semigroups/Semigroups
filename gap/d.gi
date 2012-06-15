@@ -722,7 +722,6 @@ function(arg)
           storenumbers:=true,
           log:=true));
 
-  SetIsCitrusPkgImgKerOrbit(o, true);
   o!.img:=false; #for ViewObj method
   Enumerate(o, bound);
   r:=Length(OrbSCC(o));
@@ -1612,7 +1611,6 @@ function(s)
     ShallowCopy:= iter -> rec( s:=s, data:=IteratorOfDClassRepsData(s))));
 
   SetIsIteratorOfDClassReps(iter, true);
-  SetIsCitrusPkgIterator(iter, true);
 
   return iter;
 end);
@@ -1697,7 +1695,6 @@ function(s)
     end));
 
   SetIsIteratorOfDClassRepsData(iter, true);
-  SetIsCitrusPkgIterator(iter, true);
 
   return iter;
 end);
@@ -1797,7 +1794,6 @@ function(s)
      reps:=IteratorOfRClassReps(s))));
 
   SetIsIteratorOfDClasses(iter, true);
-  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 

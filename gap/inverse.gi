@@ -1812,16 +1812,6 @@ IsGreensClassOfInverseSemigroup);
 InstallTrueMethod(IsRegularRClass, IsGreensRClass and 
 IsGreensClassOfInverseSemigroup); 
 
-# new for 0.2! - Iterator - "for a trivial trans. semigp."
-#############################################################################
-# Notes: required until Enumerator does not call iterator. 
-
-InstallOtherMethod(Iterator, "for a trivial partial perm semigroup",
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
-function(s)
-  return TrivialIterator(Generators(s)[1]);
-end);
-
 # new for 0.1! - Iterator - "for an inverse semigroup"
 #############################################################################
 
@@ -1855,7 +1845,6 @@ function(s)
     ShallowCopy:= iter -> rec(R:=IteratorOfDClasses(s), r:=fail)));
 
   SetIsIteratorOfSemigroup(iter, true);
-  SetIsCitrusPkgIterator(iter, true);
 
   return iter;
 end);
@@ -1908,7 +1897,7 @@ function(d)
   fi;
 
   SetIsIteratorOfDClassElements(iter, true);
-  SetIsCitrusPkgIterator(iter, true);
+  
   return iter;
 end);
 
@@ -1951,7 +1940,6 @@ function(h)
   fi;
 
   SetIsIteratorOfHClassElements(iter, true);
-  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 
@@ -2000,7 +1988,6 @@ function(d)
   fi;
 
   SetIsIteratorOfLClassElements(iter, true);
-  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 
@@ -2048,7 +2035,6 @@ function(d)
   fi;
 
   SetIsIteratorOfRClassElements(iter, true);
-  SetIsCitrusPkgIterator(iter, true);
   return iter;
 end);
 
