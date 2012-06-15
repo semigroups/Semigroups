@@ -16,6 +16,9 @@
 InstallMethod(GreensClassData, "for a Green's class of an acting semigroup", 
 [IsActingSemigroupGreensClass], x-> x!.data);
 
+# new for 1.0! - LambdaOrb - "for Green's class of an acting semigroup"
+############################################################################
+
 InstallOtherMethod(LambdaOrb, "for a Green's class of an acting semi",
 [IsActingSemigroupGreensClass], x-> x!.o);
 
@@ -695,32 +698,49 @@ function(r)
   return nr;
 end);
 
-# new for 0.1! - NrIdempotents - "for a transformation semigroup"
+# new for 0.1! - NrIdempotents - "for an acting semigroup"
 #############################################################################
 
-InstallMethod(NrIdempotents, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(NrIdempotents, "for an acting semigroup", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local i, iter, d;
-  
-  i:=0;
+  local nr, data, reps, repslens, repslookup, len, rhofunc, tester, f, j, o, m, scc, rho, x, i, k;
 
   if HasIdempotents(s) then 
     return Length(Idempotents(s));
   fi;
 
-  if OrbitsOfKernels(s)!.finished and HasGreensDClasses(s) then 
-    for d in GreensDClasses(s) do 
-      i:=i+NrIdempotents(d);
+  nr:=0;
+
+  if HasGreensDClasses(s) then 
+    for x in GreensDClasses(s) do 
+      nr:=nr+NrIdempotents(x);
     od;
   else
-    iter:=IteratorOfRClassRepsData(s);
-    for d in iter do 
-      i:=i+NrIdempotentsRClassFromData(s, d);
+    data:=EnumerateSemigroupData(s, infinity, ReturnFalse);
+    reps:=data!.reps; repslens:=data!.repslens;
+    repslookup:=data!.repslookup;
+
+    len:=Length(reps);
+    rhofunc:=RhoFunc(s);
+    tester:=IdempotentLambdaRhoTester(s);
+
+    for i in [1..len] do 
+      f:=reps[i][1]; 
+      j:=repslookup[i][1];
+      o:=data[j][3];
+      m:=data[j][2][1];
+      scc:=OrbSCC(o)[m];
+      rho:=rhofunc(f);
+      for k in scc do 
+        if tester(o[k], rho) then 
+          nr:=nr+1;
+        fi;
+      od;
     od;
   fi;
 
-  return i;
+  return nr;
 end);
 
 # new for 0.1! - NrHClasses - "for a transformation semigroup"
@@ -794,7 +814,9 @@ function(iter)
     Print("<iterator of full trans. semigroup>");
   elif IsTransformationSemigroup(iter!.s) then
     Print("<iterator of transformation semigroup>");
-  elif IsPartialPermSemigroup(iter!.s) then
+  elif IsPartialPermSemigroup(iter!.s) and IsInverseSemigroup(iter!.s) then
+    Print("<iterator of inverse semigroup>");
+  elif IsPartialPermSemigroup(iter!.s) then 
     Print("<iterator of semigroup of partial perms>");
   fi;
   return;

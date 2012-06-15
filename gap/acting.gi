@@ -536,6 +536,8 @@ function(s, limit, lookfunc)
           # position of reps with equal lambda-rho value
 
         else              # old rho value
+          x:=[s, [m, scc[m][1]], o, y, nr+1, val];
+          
           # JDM expand!
           schutz:=LambdaOrbStabChain(o, m);
           
