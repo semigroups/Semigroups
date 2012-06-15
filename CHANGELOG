@@ -7,6 +7,14 @@
 ##
 #############################################################################
 
+0.9 -> 0.99 
+            another minor release. Specific changes were: removed the
+            declaration of SmallGeneratingSet for IsSemigroup since it appears
+            not to be used and caused a warning to be shown when rcwa was
+            loaded after Citrus. Added a new abstract to the PackageInfo.g
+            file, and the documentation, and updated the webpages, in
+            particular so that the html version of the manual is linked to that
+            on the GAP webpage and the links to other manuals work. 
 
 0.8 -> 0.9 
 
