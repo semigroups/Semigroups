@@ -743,28 +743,6 @@ function(s)
   return nr;
 end);
 
-# new for 0.1! - NrHClasses - "for a transformation semigroup"
-#############################################################################
- 
-InstallMethod(NrHClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local i, iter, o, d;
-  i:=0;
-
-  iter:=IteratorOfDClassRepsData(s);
-  o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
-
-  for d in iter do 
-    i:=i+Length(ImageOrbitCosetsFromData(s, d[2], o[2]))*
-     Length(ImageOrbitSCCFromData(s, d[1], o[1]))*
-      Length(KernelOrbitSCCFromData(s, d[2], o[2]))*
-       Length(KernelOrbitCosetsFromData(s, d[2], o[2]));
-  od;
-
-  return i;
-end);
-
 # mod for 1.0! - NrRClasses - "for an acting semigroup"
 #############################################################################
 
@@ -781,6 +759,7 @@ end);
 
 # new for 0.5! - One - "for a transformation"
 #############################################################################
+# this should go to transform.gi
 
 InstallMethod(One, "for a transformation",
 [IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
@@ -874,27 +853,11 @@ InstallOtherMethod(Size, "for an R-class of an acting semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
   local o, m;
-  o:=r!.o; m:=r!.data[1];      
+ 
+  o:=LambdaOrb(r); 
+  m:=GreensClassData(r)[1];
   
   return Size(SchutzenbergerGroup(r))*Length(OrbSCC(o)[m]);
-end);
-
-# new for 0.1! - Size - "for a simple transformation semigroup"
-#############################################################################
-# JDM check this is actually superior to the above method for Size
-
-InstallOtherMethod(Size, "for a simple transformation semigroup",
-[IsSimpleSemigroup and IsTransformationSemigroup],
-function(s)
-  local gens, ims, kers, H;
-
-  gens:=Generators(s);
-
-  ims:=Size(Set(List(gens, ImageSetOfTransformation)));
-  kers:=Size(Set(List(gens, CanonicalTransSameKernel)));
-  H:=GreensHClassOfElement(s, gens[1]);
-
-  return Size(H)*ims*kers;
 end);
 
 #UUU
@@ -1140,6 +1103,47 @@ function(s, i)
   od;
   return out;
 end);
+
+# new for 0.1! - NrHClasses - "for a transformation semigroup"
+#############################################################################
+ 
+InstallMethod(NrHClasses, "for a transformation semigroup", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local i, iter, o, d;
+  i:=0;
+
+  iter:=IteratorOfDClassRepsData(s);
+  o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
+
+  for d in iter do 
+    i:=i+Length(ImageOrbitCosetsFromData(s, d[2], o[2]))*
+     Length(ImageOrbitSCCFromData(s, d[1], o[1]))*
+      Length(KernelOrbitSCCFromData(s, d[2], o[2]))*
+       Length(KernelOrbitCosetsFromData(s, d[2], o[2]));
+  od;
+
+  return i;
+end);
+
+# new for 0.1! - Size - "for a simple transformation semigroup"
+#############################################################################
+# JDM check this is actually superior to the above method for Size
+
+InstallOtherMethod(Size, "for a simple transformation semigroup",
+[IsSimpleSemigroup and IsTransformationSemigroup],
+function(s)
+  local gens, ims, kers, H;
+
+  gens:=Generators(s);
+
+  ims:=Size(Set(List(gens, ImageSetOfTransformation)));
+  kers:=Size(Set(List(gens, CanonicalTransSameKernel)));
+  H:=GreensHClassOfElement(s, gens[1]);
+
+  return Size(H)*ims*kers;
+end);
+
 
 
 
