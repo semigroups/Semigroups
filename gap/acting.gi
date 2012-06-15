@@ -17,19 +17,10 @@
 
 ##############################################################################
 
-# old
+# for convenience
 
-InstallOtherMethod(LambdaOrb, "for a D-class of a trans. semi",
-[IsGreensDClass and IsGreensClassOfTransSemigp], ImageOrbit);
-
-InstallOtherMethod(LambdaOrb, "for a D-class of a part perm semi",
-[IsGreensDClass and IsGreensClassOfPartPermSemigroup], d-> d!.o);
-
-InstallOtherMethod(RhoOrb, "for a D-class of a trans. semi",
-[IsGreensDClass and IsGreensClassOfTransSemigp], KernelOrbit);
-
-InstallOtherMethod(RhoOrb, "for a D-class of a part perm semi",
-[IsGreensDClass and IsGreensClassOfPartPermSemigroup], d-> d!.o);
+InstallOtherMethod(LambdaOrb, "for a Green's class of an acting semi",
+[IsActingSemigroupGreensClass], x-> x!.o);
 
 ###############################################################################
 # Setup - install the basic things required for specific acting semigroups    #
@@ -467,7 +458,7 @@ function(s, limit, lookfunc)
   reps:=data!.reps;   # reps grouped by equal lambda and rho value
                       # HTValue(lambdarhoht, Concatenation(lambda(x),
                       # rho(x))
-
+  
   repslookup:=data!.repslookup; # Position(orb, reps[i][j])=repslookup[i][j]
                                 # = HTValue(ht, reps[i][j])
   repslens:=data!.repslens;     # Length(reps[i])=repslens[i] 
@@ -531,9 +522,7 @@ function(s, limit, lookfunc)
         val:=HTValue(lambdarhoht, rhoy);
 
         # this is what we keep if it is new
-        x:=[s, [m, scc[m][1]], o, y, nr+1, val];
-        # semigroup, lambda orb data, lambda orb, rep, index, position of reps
-        # with equal lambda-rho value
+        # x:=[s, [m, scc[m][1]], o, y, nr+1, val];
 
         if val=fail then  #new rho value, and hence new R-rep
           lenreps:=lenreps+1;
@@ -542,7 +531,10 @@ function(s, limit, lookfunc)
           reps[lenreps]:=[y];
           repslookup[lenreps]:=[nr];
           repslens[lenreps]:=1;
-          x[6]:=lenreps;
+          x:=[s, [m, scc[m][1]], o, y, nr, lenreps];
+          # semigroup, lambda orb data, lambda orb, rep, index in orbit,
+          # position of reps with equal lambda-rho value
+
         else              # old rho value
           # JDM expand!
           schutz:=LambdaOrbStabChain(o, m);
@@ -938,7 +930,7 @@ function(s, data, x)
     
     # install the info about x in data
     HTAdd(data!.ht, x, 1);
-    data!.orbit:=[[s, pos, o, x, 1]];
+    data!.orbit:=[[s, pos, o, x, 1, 1]];
     data!.repslens[1]:=1;
     data!.lenreps:=data!.lenreps+1;
     data!.reps[data!.lenreps]:=[x];
@@ -1215,7 +1207,7 @@ function(data, x, n)
     return repslookup[val][1];
   fi;
  
-  if not l=scc[m][1] then 
+  if l<>scc[m][1] then 
     mults:=LambdaOrbMults(o, m);
     y:=x*mults[l];
   else
@@ -1276,7 +1268,7 @@ function(s)
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
      reps:=[], repslookup:=[], lenreps:=0, orbit:=[[,,,x]], repslens:=[], 
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail], 
-     semi:=s, finished:=false, nridempotents:=[]);
+     semi:=s, finished:=false);
   
   Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
 

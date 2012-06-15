@@ -46,9 +46,6 @@ DeclareOperation("IsomorphismPartialPermSemigroup", [IsPermGroup]);
 DeclareOperation("IsomorphismTransformationMonoid",
  [IsSemigroup]);
 DeclareProperty("IsOrthodoxSemigroup", IsSemigroup);
-DeclareSynonymAttr("IsPartialPermSemigroup", IsSemigroup and
-IsPartialPermCollection);
-DeclareProperty("IsPartialPermMonoid", IsPartialPermSemigroup);
 DeclareProperty("IsRectangularBand", IsSemigroup); 
 DeclareProperty("IsRightSimple", IsSemigroup);
 DeclareProperty("IsRightZeroSemigroup", IsSemigroup); 
@@ -68,7 +65,6 @@ DeclareAttribute("PrincipalFactor", IsGreensDClass);
 DeclareOperation("RedundantGenerator", [IsTransformationCollection]);
 DeclareGlobalFunction("ReesMatrixSemigroupElementNC");
 DeclareGlobalFunction("ReesZeroMatrixSemigroupElementNC");
-#DeclareAttribute("SmallGeneratingSet", IsSemigroup);
 
 InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);

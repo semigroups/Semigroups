@@ -8,6 +8,32 @@
 #############################################################################
 ##
 
+# for convenience...
+
+# new for 1.0! - GreensClassData - "for a Green's class of an acting semigroup"
+##############################################################################
+
+InstallMethod(GreensClassData, "for a Green's class of an acting semigroup", 
+[IsActingSemigroupGreensClass], x-> x!.data);
+
+InstallOtherMethod(LambdaOrb, "for a Green's class of an acting semi",
+[IsActingSemigroupGreensClass], x-> x!.o);
+
+# mod for 1.0! - ParentAttr - "for Green's class of an acting semigroup"
+############################################################################
+
+InstallMethod(ParentAttr, "for a Green's class of an acting semigroup", 
+[IsGreensClass and IsActingSemigroupGreensClass], x-> x!.parent);
+
+# new for 1.0! - SchutzenbergerGroup - "for an R-class of an acting semigp."
+#############################################################################
+
+InstallOtherMethod(SchutzenbergerGroup, "for an R-class of an acting semigp.",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(r)
+  return LambdaOrbSchutzGp(r!.o, r!.data[1]);
+end);
+
 #############################################################################
 
 # new for 1.0! - \= - "for Green's class and Green's class of acting semigp"
@@ -20,9 +46,9 @@ function(x, y)
    (IsGreensLClass(x) and IsGreensLClass(y)) or
    (IsGreensDClass(x) and IsGreensDClass(y)) or
    (IsGreensHClass(x) and IsGreensHClass(y)) then
-    return x!.parent=y!.parent and Representative(x) in y;
+    return ParentAttr(x)=ParentAttr(y) and Representative(x) in y;
   fi;
-  return x!.parent=y!.parent and Representative(x) in y and
+  return ParentAttr(x)=ParentAttr(y) and Representative(x) in y and
    Size(x)=Size(y);
 end);
 
@@ -36,13 +62,15 @@ function(x, y)
    (IsGreensLClass(x) and IsGreensLClass(y)) or
    (IsGreensDClass(x) and IsGreensDClass(y)) or
    (IsGreensHClass(x) and IsGreensHClass(y)) then
-    return x!.parent=y!.parent and Representative(x) < Representative(y);
+    return ParentAttr(x)=ParentAttr(y) and Representative(x) <
+     Representative(y);
   fi;
   return false;
 end);
 
 # new for 1.0! - \= - "for an acting semigp and acting semigp"
 #############################################################################
+# JDM move this to semigroups.gi
 
 InstallMethod(\=, "for an acting semigp and acting semigp",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, 
@@ -71,7 +99,8 @@ function(f, r)
     return false;
   fi;
 
-  data:=r!.data; o:=r!.o;
+  data:=GreensClassData(r); 
+  o:=LambdaOrb(r);
   
   if not IsClosed(o) then 
     Enumerate(o, infinity);
@@ -116,8 +145,8 @@ function(r)
   local f, g, elts, o, m, mults, scc, p, i;
   
   f:=Representative(r); 
-  o:=r!.o; 
-  m:=r!.data[1];
+  o:=LambdaOrb(r); 
+  m:=GreensClassData(r)[1];
  
   g:=List(SchutzenbergerGroup(r), x-> f*x);
   elts:=EmptyPlist(Size(r));
@@ -151,15 +180,16 @@ end);
 #############################################################################
 # Usage: s = semigroup; data = lambda orbit data (any length) (specifies where
 # in orbit to find the lambda value relating to the R-class); 
-# orbit = lambda orbit; rep = representative.
+# orbit = lambda orbit; rep = representative; 
+# (optional) position in the orbit of the rep of R-class;
+# (optional) position in reps of the list containing reps with the same
+# lambda-rho value as the R-class rep
 
 # rep should be with rectified image only!
 
-#JDM use the index here?
-
 InstallGlobalFunction(CreateRClass,
 function(arg)
-  local r;
+  local r, val;
   
   r:=Objectify(RClassType(arg[1]), 
    rec(parent:=arg[1], data:=arg[2], o:=arg[3]));
@@ -167,10 +197,14 @@ function(arg)
   if Length(arg)>4 then 
     r!.orbit_pos:=arg[5];
     r!.reps_pos:=arg[6];
+    val:=false;
+  else
+    val:=true;
   fi;
 
   SetRepresentative(r, arg[4]);
   SetEquivalenceClassRelation(r, GreensRRelation(arg[1]));
+  SetIsGreensClassNC(r, val);
   return r;
 end);
 
@@ -454,7 +488,6 @@ function(s, f)
   fi;
 
   pos:=Position(SemigroupData(s), f);
-  
   return CallFuncList(CreateRClass, SemigroupData(s)[pos]);
 end);
 
@@ -464,20 +497,16 @@ end);
 InstallOtherMethod(GreensRClassOfElementNC, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
-  local pos, o, g;
+  local data, pos;
   
-  pos:=HTValue(LambdaHT(s), LambdaFunc(s)(f));
+  data:=SemigroupData(s);
+  pos:=Position(data, f);
   
   if pos<>fail then 
-    o:=GradedLambdaOrbs(s)[pos[1]][pos[2]];
-    g:=f*LambdaOrbMults(o, pos[1])[pos[3]];
-  else
-    o:=GradedLambdaOrb(s, f, false);
-    g:=f;
-    pos:=[1,1];
-  fi;
+    return CallFuncList(CreateRClass, data[pos]);
+  fi;  
 
-  return CreateRClass(s, pos, o, g);
+  return CreateRClass(s, [1,1], GradedLambdaOrb(s, f, false), f);
 end);
 
 # new for 0.1! - GreensHClasses - "for a transformation semigroup"
@@ -517,7 +546,7 @@ GreensDClassOfElement);
 InstallOtherMethod(Idempotents, "for a R-class of a trans. semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local s, out, rho, o, scc, j, tester, creator, i;
+  local s, out, rho, o, m, scc, j, tester, creator, i;
 
   if not IsRegularRClass(r) then
     return [];
@@ -532,8 +561,9 @@ function(r)
   out:=[]; 
   
   rho:=RhoFunc(s)(Representative(r));
-  o:=r!.o; 
-  scc:=OrbSCC(o)[r!.data[1]]; 
+  o:=LambdaOrb(r); 
+  m:=GreensClassData(r)[1];
+  scc:=OrbSCC(o)[m];
   j:=0;
   tester:=IdempotentLambdaRhoTester(s);
   creator:=IdempotentLambdaRhoCreator(s);
@@ -545,9 +575,8 @@ function(r)
     fi;
   od;
 
-  if IsBound(r!.pos_reps) and not 
-   IsBound(SemigroupData(s)!.nridempotents[r!.pos_reps]) then 
-    SemigroupData(s)!.nridempotents[r!.pos_reps]:=j;
+  if HasNrIdempotents(r) then 
+    SetNrIdempotents(r, j);   
   fi;
 
   return out;
@@ -666,41 +695,38 @@ InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 InstallMethod(IsRegularRClass, "for an R-class of an acting semigp",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local s, data, rho, o, scc, j, tester, i;
- 
-  s:=ParentAttr(r);
+  local s, data, rho, o, m, scc, tester, i;
 
-  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then
-   return true;
+  if HasNrIdempotents(r) then 
+    return NrIdempotents(r)<>0;
   fi;
 
-  data:=SemigroupData(ParentAttr(r));
-
-  if IsBound(r!.reps_pos) then 
-    if IsBound(data!.nridempotents[r!.reps_pos]) then 
-      return data!.nridempotents[r!.reps_pos]>0;
-    fi;
-    if Length(data!.reps[r!.reps_pos])>1 then 
-      data!.nridempotents[r!.reps_pos]:=0;
+  s:=ParentAttr(r);
+        
+  if not IsGreensClassNC(r) then
+    if SemigroupData(s)!.repslens[r!.reps_pos]>1 then
       return false;
     fi;
-  fi;
+  fi; 
 
+  data:=SemigroupData(ParentAttr(r));
+  
+  # is r the group of units...
+  if Rank(Representative(r))=Degree(s) then
+    return true;
+  fi;   
+ 
   rho:=RhoFunc(s)(Representative(r));
-  o:=r!.o;
-  scc:=OrbSCC(o)[r!.data[1]];
-  j:=0;
+  o:=LambdaOrb(r);
+  m:=GreensClassData(r)[1];
+  scc:=OrbSCC(o)[m];
   tester:=IdempotentLambdaRhoTester(s);
 
   for i in scc do
     if tester(o[i], rho) then
-      return true;
+      return true; 
     fi;
   od;
-
-  if IsBound(r!.reps_pos) then 
-    data!.nridempotents[r!.reps_pos]:=0;
-  fi;
   return false;
 end);
 
@@ -712,7 +738,7 @@ InstallMethod(Iterator, "for an R-class of an acting semigp",
 function(r)
   local o, m, mults, iter, scc;
 
-  o:=r!.o; m:=r!.data[1];
+  o:=LambdaOrb(r); m:=GreensClassData(r)[1];
   mults:=LambdaOrbMults(o, m);
   scc:=OrbSCC(o)[m];
 
@@ -883,6 +909,48 @@ CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
 
 #NNN
 
+# new for 1.0! - NrIdempotents - "for an R-class of an acting semigp."
+#############################################################################
+
+InstallOtherMethod(NrIdempotents, "for an R-class of an acting semigp.",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(r)
+  local s, rho, o, m, scc, nr, tester, i;
+
+  if HasIsRegularRClass(r) and not IsRegularRClass(r) then 
+    return 0;
+  fi;
+
+  s:=ParentAttr(r);     
+
+  # check if we already know this...
+  if not IsGreensClassNC(r) then
+    if SemigroupData(s)!.repslens[r!.reps_pos]>1 then 
+      return 0;
+    fi;
+  fi;
+
+  # is r the group of units...
+  if Rank(Representative(r))=Degree(s) then
+    return 1;
+  fi;
+
+  rho:=RhoFunc(s)(Representative(r));
+  o:=LambdaOrb(r); 
+  m:=GreensClassData(r)[1];
+  scc:=OrbSCC(o)[m];
+  nr:=0;
+  tester:=IdempotentLambdaRhoTester(s);
+
+  for i in scc do
+    if tester(o[i], rho) then
+      nr:=nr+1;
+    fi;
+  od;
+
+  return nr;
+end);
+
 # new for 0.1! - NrIdempotents - "for a transformation semigroup"
 #############################################################################
 
@@ -954,12 +1022,6 @@ InstallMethod(One, "for a transformation",
 [IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
 
 #PPP
-
-# mod for 1.0! - ParentAttr - "for Green's class of an acting semigroup"
-############################################################################
-
-InstallMethod(ParentAttr, "for a Green's class of an acting semigroup", 
-[IsGreensClass and IsActingSemigroupGreensClass], x-> x!.parent);
 
 # mod for 1.0! - PrintObj - IsIteratorOfRClassReps
 ############################################################################
@@ -1037,15 +1099,6 @@ function(s);
 end);
 
 #SSS
-
-# new for 1.0! - SchutzenbergerGroup - "for an R-class of an acting semigp."
-#############################################################################
-
-InstallOtherMethod(SchutzenbergerGroup, "for an R-class of an acting semigp.",
-[IsGreensRClass and IsActingSemigroupGreensClass],
-function(r)
-  return LambdaOrbSchutzGp(r!.o, r!.data[1]);
-end);
 
 # new for 1.0! - Size - "for an R-class of an acting semigp."
 #############################################################################
