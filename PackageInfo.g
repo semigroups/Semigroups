@@ -9,21 +9,21 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "0.9.1">
+##  <!ENTITY VERSION "0.99">
 ##  <!ENTITY ORBVERS "4.2">
 ##  <!ENTITY IOVERS "4.1">
 ##  <!ENTITY GRAPEVERS "4.5">
-##  <!ENTITY ARCHIVENAME "citrus-0.9.1">
+##  <!ENTITY ARCHIVENAME "citrus-0.99">
 ##  <!ENTITY COPYRIGHTYEARS "2011-12">
 ##  <#/GAPDoc>
 
 SetPackageInfo( rec(
 PackageName := "Citrus",
 Subtitle := "Computing with Semigroups of Transformations and Partial Permutations",
-Version := "0.9.1",
+Version := "0.99",
 Date := "15/06/2012",
 ArchiveURL := 
-          "https://bitbucket.org/zen154115/citrus/downloads/citrus-0.9.1",
+          "https://bitbucket.org/zen154115/citrus/downloads/citrus-0.99",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -71,7 +71,7 @@ PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus",
 PackageDoc := rec(
   BookName  := "Citrus",
   Archive := 
-      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus-0.9.1.tar.gz",
+      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus-0.99.tar.gz",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",  
