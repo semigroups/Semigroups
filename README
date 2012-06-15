@@ -152,8 +152,6 @@ Grape is a suggested package for Citrus. If Grape is not fully installed,
 then Citrus can be used as normal with the exception that the function
 MunnSemigroup does not work. 
 
-
-
 Further Information
 -------------------
 
