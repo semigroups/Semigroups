@@ -38,6 +38,11 @@ DeclareAttribute("LambdaHT", IsActingSemigroup, "mutable");
 # value are in SemigroupData(s).reps. 
 DeclareAttribute("LambdaRhoHT", IsActingSemigroup, "mutable");
 
+# LambdaRhoLookup(d)[i]=j if SemigroupData(s)!.orbit[j][4] in reps[i]
+#
+DeclareAttribute("LambdaRhoLookup", IsGreensDClass and
+ IsActingSemigroupGreensClass);
+
 # long orbits <=> LongOrb
 DeclareAttribute("LambdaOrb", IsActingSemigroup, "mutable");
 DeclareAttribute("RhoOrb", IsActingSemigroup, "mutable");

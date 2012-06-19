@@ -437,7 +437,7 @@ InstallOtherMethod(Enumerate,
 "for an acting semi data, limit, and func",
 [IsSemigroupData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, s, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, lamx, pos, m, mults, y, rhoy, val, schutz, tmp, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, schutzstab, j, n;
+  local looking, ht, orb, nr, i, graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, schreierpos, schreiergen, schreiermult, s, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, lamx, pos, m, mults, y, rhoy, val, schutz, tmp, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, schutzstab, j, n;
 
   if IsClosed(data) then 
     return data;
@@ -460,7 +460,14 @@ function(data, limit, lookfunc)
   
   repslookup:=data!.repslookup; # Position(orb, reps[i][j])=repslookup[i][j]
                                 # = HTValue(ht, reps[i][j])
-  repslens:=data!.repslens;     # Length(reps[i])=repslens[i] 
+  
+  orblookup1:=data!.orblookup1; # orblookup1[i] position in reps containing 
+                                # orb[i][4] (the R-rep)
+
+  orblookup2:=data!.orblookup2; # orblookup2[i] position in reps[orblookup1[i]] 
+                                # containing orb[i][4] (the R-rep)
+
+ repslens:=data!.repslens;     # Length(reps[i])=repslens[i] 
   lenreps:=data!.lenreps;       # lenreps=Length(reps)
 
   # schreier
@@ -530,13 +537,15 @@ function(data, limit, lookfunc)
           nr:=nr+1;
           reps[lenreps]:=[y];
           repslookup[lenreps]:=[nr];
+          orblookup1[nr]:=lenreps;
+          orblookup2[nr]:=1;
           repslens[lenreps]:=1;
-          x:=[s, [m, scc[m][1]], o, y, nr, lenreps];
+          x:=[s, [m, scc[m][1]], o, y, nr];
           # semigroup, lambda orb data, lambda orb, rep, index in orbit,
           # position of reps with equal lambda-rho value
 
         else              # old rho value
-          x:=[s, [m, scc[m][1]], o, y, nr+1, val];
+          x:=[s, [m, scc[m][1]], o, y, nr+1];
           
           # JDM expand!
           schutz:=LambdaOrbStabChain(o, m);
@@ -571,6 +580,8 @@ function(data, limit, lookfunc)
             repslens[val]:=repslens[val]+1;
             reps[val][repslens[val]]:=y;
             repslookup[val][repslens[val]]:=nr;
+            orblookup1[nr]:=val;
+            orblookup2[nr]:=repslens[val];
           fi;
         fi;
         orb[nr]:=x;
@@ -1151,6 +1162,37 @@ function(o, m)
   return o!.schutzstab[m];
 end);
 
+# new for 1.0! - LambdaRhoLookup - "for a D-class of an acting semigroup"
+##############################################################################
+
+InstallMethod(LambdaRhoLookup, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass], 
+function(d)
+  local orbit_pos, data, orb_scc, orblookup1, orblookup2, repslookup, out, i;
+
+  # position in SemigroupData(s)!.orbit of the first R-rep in d
+  orbit_pos:=d!.orbit_pos;
+  data:=SemigroupData(ParentAttr(d));
+  
+  # scc of R-reps corresponding to d 
+  orb_scc:=OrbSCC(data)[OrbSCCLookup(data)[orbit_pos]];
+
+  # positions in reps containing R-reps in d 
+  orblookup1:=data!.orblookup1;
+  orblookup2:=data!.orblookup2;
+  repslookup:=data!.repslookup;
+
+  out:=[]; 
+  for i in orb_scc do 
+    if not IsBound(out[orblookup1[i]]) then 
+      out[orblookup1[i]]:=[];
+    fi;
+    Add(out[orblookup1[i]],repslookup[orblookup1[i]][orblookup2[i]]);
+  od;
+
+  return out;
+end);
+
 # new for 1.0! - Length - for semigroup data of acting semigroup
 ##############################################################################
 
@@ -1195,7 +1237,7 @@ function(data, x, n)
     return val;
   fi;
 
-  s:=data!.semi;
+  s:=ParentAttr(data);
 
   if data!.graded then 
     # JDM this assumes that x is an element of s, probably shouldn't do this!
@@ -1230,7 +1272,7 @@ function(data, x, n)
 
   reps:=data!.reps; repslens:=data!.repslens;
 
-  if schutz=false then 
+  if schutz=false then #JDM change this so that it just returns HTValue(data!.ht);
     for n in [1..repslens[val]] do 
       if reps[val][n]=y then 
         return repslookup[val][n];
@@ -1280,9 +1322,9 @@ function(s)
 
   data:=rec( ht:=HTCreate(x, rec(hashlen:=s!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
-     reps:=[], repslookup:=[], lenreps:=0, orbit:=[[,,,x]], repslens:=[], 
-     schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail], 
-     semi:=s);
+     reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[],
+     lenreps:=0, orbit:=[[,,,x]], repslens:=[], 
+     schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail]);
   
   Objectify(NewType(FamilyObj(s), IsSemigroupData and IsAttributeStoringRep),
    data);

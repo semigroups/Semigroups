@@ -71,11 +71,59 @@ function(x, y)
   return fail;
 end);
 
-# new for 1.0! - \in - "for acting elt and acting semigp."
+# new for 1.0! - \in - "for acting elt and D-class of acting semigp"
+#############################################################################
+
+InstallMethod(\in, "for acting elt and D-class of acting semigp.",
+[IsActingElt, IsGreensDClass and IsActingSemigroupGreensClass],
+function(f, d)
+  local rep, s, lambda_scc, o, l, val, data, scc, m;
+  
+  rep:=Representative(d); 
+  s:=ParentAttr(d);
+  
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or Degree(f) <> Degree(rep) or
+   Rank(f) <> Rank(rep) then
+    Info(InfoCitrus, 1, "degree or rank not equal to those of",
+    " any of the D-class elements,");
+    return false;
+  fi;
+
+  lambda_scc:=GreensClassData(d)[1];
+  o:=LambdaOrb(d);
+
+  if not IsClosed(o) then 
+    Enumerate(o, infinity);
+  fi;
+
+  l:=Position(o, LambdaFunc(s)(f));
+
+  # check lambda val of f is in the same scc as lambda vals of R-reps of d
+  if l = fail or OrbSCCLookup(o)[l]<>lambda_scc then 
+    return false;
+  fi;
+  
+  val:=ShallowCopy(o[lambda_scc][1]);
+  Append(val, RhoFunc(s)(f));
+  val:=HTValue(LambdaRhoHT(s), val);
+
+  data:=SemigroupData(s);
+
+  # check that lambda-rho val corresponds to some R-rep of d
+  if val = fail or not IsBound(LambdaRhoLookup(d)[val]) then
+    return false;
+  fi;
+   
+
+
+end);
+
+
+# new for 1.0! - \in - "for acting elt and R-class of acting semigp"
 #############################################################################
 # Algorithm E. 
 
-InstallMethod(\in, "for trans. and R-class of trans. semigp.",
+InstallMethod(\in, "for acting elt and R-class of acting semigp.",
 [IsActingElt, IsGreensRClass and IsActingSemigroupGreensClass],
 function(f, r)
   local rep, s, data, o, l, schutz, g;
@@ -113,7 +161,7 @@ function(f, r)
   g:=f*LambdaOrbMults(o, data[1])[l];
 
   if g=rep then
-    Info(InfoCitrus, 3, "transformation with rectified lambda value equals ",
+    Info(InfoCitrus, 3, "element with rectified lambda value equals ",
     "R-class representative");
     return true;
   elif schutz=false then
@@ -167,6 +215,30 @@ end);
 
 #CCC
 
+# new for 0.1! - CreateDClass - not a user function! 
+############################################################################# 
+# Usage: same as CreateRClass for global D-classes 
+
+InstallGlobalFunction(CreateDClass,  
+function(arg) 
+  local d, val;
+ 
+  d:=Objectify(DClassType(arg[1]), rec(parent:=arg[1], data:=arg[2],  
+   o:=arg[3])); 
+  
+  if Length(arg)>4 then 
+    d!.orbit_pos:=arg[5];
+    val:=false;
+  else
+    val:=true;
+  fi;
+
+  SetRepresentative(d, arg[4]); 
+  SetEquivalenceClassRelation(d, GreensDRelation(arg[1])); 
+  SetIsGreensClassNC(d, val);
+  return d; 
+end); 
+
 # mod for 1.0! - CreateRClass - not a user function!
 #############################################################################
 # Usage: s = semigroup; data = lambda orbit data (any length) (specifies where
@@ -187,7 +259,6 @@ function(arg)
 
   if Length(arg)>4 then 
     r!.orbit_pos:=arg[5];
-    r!.reps_pos:=arg[6];
     val:=false;
   else
     val:=true;
@@ -321,7 +392,7 @@ end);
 InstallMethod(GreensDClasses, "for an acting semigroup",
 [IsActingSemigroup], 
 function(s)
-  local data, scc, out, orbit, r, i;
+  local data, orbit, r, scc, out, x, i;
 
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   
@@ -344,7 +415,7 @@ end);
 InstallMethod(GreensRClasses, "for an acting semigroup",
 [IsActingSemigroup], 
 function(s)
-  local data, orbit, r, nr, out, i;
+  local data, orbit, r, out, i;
 
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   
@@ -474,14 +545,13 @@ function(r)
   fi;
 
   s:=ParentAttr(r);
-        
+  data:=SemigroupData(s);
+  
   if not IsGreensClassNC(r) then
-    if SemigroupData(s)!.repslens[r!.reps_pos]>1 then
+    if data!.repslens[data!.orblookup[r!.orbit_pos]]>1 then
       return false;
     fi;
   fi; 
-
-  data:=SemigroupData(ParentAttr(r));
   
   # is r the group of units...
   if Rank(Representative(r))=Degree(s) then
@@ -685,7 +755,7 @@ CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
 InstallOtherMethod(NrIdempotents, "for an R-class of an acting semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local s, rho, o, m, scc, nr, tester, i;
+  local s, data, rho, o, m, scc, nr, tester, i;
 
   if HasIsRegularRClass(r) and not IsRegularRClass(r) then 
     return 0;
@@ -695,7 +765,8 @@ function(r)
 
   # check if we already know this...
   if not IsGreensClassNC(r) then
-    if SemigroupData(s)!.repslens[r!.reps_pos]>1 then 
+    data:=SemigroupData(s);
+    if data!.repslens[data!.orblookup[r!.orbit_pos]]>1 then
       return 0;
     fi;
   fi;

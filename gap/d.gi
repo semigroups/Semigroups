@@ -218,29 +218,6 @@ end);
 
 #CCC
 
-# new for 0.1! - CreateDClass - not a user function!
-#############################################################################
-# Usage: s = semigroup; data = [image data, kernel data] (any lengths);
-# orbit = [OrbitsOfImages, OrbitsOfKernels] or local variants;
-# rep = representative.
-
-# Notes: data[1][3] & data[2][3] should be rectified, rep should have rectified
-# image and kernel.
-
-InstallGlobalFunction(CreateDClass, 
-function(s, data, orbit, rep)
-  local d;
-
-  #data:=[data[1]{[1..6]}, data[2]{[1..6]}];
-
-  d:=Objectify(DClassType(s), rec(parent:=s, data:=data, 
-   o:=orbit, rep:=rep));
-  
-  SetRepresentative(d, rep);
-  SetEquivalenceClassRelation(d, GreensDRelation(s));
-  return d;
-end);
-
 # new for 0.1! - CreateKernelOrbitSCCRels - not a user function
 #############################################################################
 # Usage: gens = generators of a semigroup or monoid;
