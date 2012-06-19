@@ -323,7 +323,7 @@ InstallMethod(GreensRClasses, "for an acting semigroup",
 function(s)
   local data, orbit, r, nr, out, i;
 
-  data:=Enumerate(s, infinity, ReturnFalse);
+  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   orbit:=data!.orbit;
   r:=data!.modifier;
   nr:=Length(orbit); 
@@ -627,7 +627,7 @@ function(s)
 
       iter!.i:=iter!.i+1;
       
-      data:=Enumerate(s, iter!.i, ReturnFalse);
+      data:=Enumerate(SemigroupData(s), iter!.i, ReturnFalse);
 
       if iter!.i>Length(data!.orbit) then 
         return fail;
@@ -717,7 +717,7 @@ function(s)
       nr:=nr+NrIdempotents(x);
     od;
   else
-    data:=Enumerate(s, infinity, ReturnFalse);
+    data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
     reps:=data!.reps; repslens:=data!.repslens;
     repslookup:=data!.repslookup;
 
@@ -743,6 +743,15 @@ function(s)
   return nr;
 end);
 
+# mod for 1.0! - NrDClasses - "for an acting semigroup"
+#############################################################################
+
+InstallMethod(NrDClasses, "for an acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  return Length(OrbSCC(SemigroupData(s)))-SemigroupData(s)!.modifier;
+end);
+ 
 # mod for 1.0! - NrRClasses - "for an acting semigroup"
 #############################################################################
 
@@ -751,7 +760,7 @@ InstallMethod(NrRClasses, "for an acting semigroup",
 function(s)
   local data;
   
-  data:=Enumerate(s, infinity, ReturnFalse);
+  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   return Length(data!.orbit)-data!.modifier;
 end);
 
@@ -820,7 +829,7 @@ InstallMethod(RClassReps, "for an acting semigroup",
 function(s)
   local data, orbit, nr, r, out, i;
 
-  data:=Enumerate(s); 
+  data:=Enumerate(SemigroupData(s)); 
   orbit:=data!.orbit;
   nr:=Length(orbit);
   r:=data!.modifier;

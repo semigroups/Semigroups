@@ -1968,17 +1968,6 @@ d-> KerRightToImgLeftFromData(d!.parent, d!.data[2], d!.o[2]));
 
 #NNN
 
-# new for 0.1! - NrDClasses - "for a transformation semigroup"
-#############################################################################
-
-InstallMethod(NrDClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  Info(InfoCitrus, 4, "NrDClasses");
-  ExpandOrbitsOfKernels(s);
-  return Length(OrbitsOfKernels(s)!.data);
-end);
-
 # new for 0.1! - NrHClasses - "for a D-class of a trans. semigroup"
 #############################################################################
 
