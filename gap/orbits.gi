@@ -273,7 +273,7 @@ function(ker, f)
   return CanonicalTransSameKernel(ker{f![1]});  
 end);
 
-# new for 0.4! - OrbSCC - "for an orbit"
+# mod for 1.0! - OrbSCC - "for an orbit"
 #############################################################################
 
 InstallGlobalFunction(OrbSCC,
@@ -285,7 +285,7 @@ function(o)
   fi;
 
   if not IsClosed(o) then #JDM good idea?
-    Enumerate(o);
+    Enumerate(o, infinity);
   fi;
 
   scc:=Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)),
@@ -301,7 +301,7 @@ function(o)
     od;
   fi;
 
-  o!.truth:=List([1..r], i-> BlistList([1..Length(o)], scc[i]));
+  #o!.truth:=List([1..r], i-> BlistList([1..Length(o)], scc[i]));
   
   return scc;
 end); 
@@ -320,17 +320,19 @@ function(o)
   return o!.scc_lookup;
 end);
 
-# new for 0.4! - OrbSCCTruthTable - "for an orbit"
+# mod for 1.0! - OrbSCCTruthTable - "for an orbit"
 #############################################################################
 
 InstallGlobalFunction(OrbSCCTruthTable, 
 function(o)
+  local scc, r;
 
   if IsBound(o!.truth) then
     return o!.truth;
   fi;
 
-  OrbSCC(o);
+  scc:=OrbSCC(o); r:=Length(scc);
+  o!.truth:=List([1..r], i-> BlistList([1..Length(o)], scc[i]));
   return o!.truth;
 end);
 
@@ -380,7 +382,10 @@ function(o, i)
   gen:=ListWithIdenticalEntries(Length(o), fail);
   pos:=ListWithIdenticalEntries(Length(o), fail);
   seen:=BlistList([1..Length(o)], [scc[1]]);
-  t:=o!.truth[i]; oo:=EmptyPlist(Length(scc));
+ 
+  #JDM remove use of truth table here!
+  t:=OrbSCCTruthTable(o)[i]; 
+  oo:=EmptyPlist(Length(scc));
   oo[1]:=scc[1]; j:=0;
 
   while Length(oo)<Length(scc) do
@@ -466,7 +471,8 @@ function(o, i)
   gen:=ListWithIdenticalEntries(len, fail);
   pos:=ListWithIdenticalEntries(len, fail);
   seen:=BlistList([1..len], [scc[1]]);
-  t:=o!.truth[i];
+#JDM remove the use of truth table here
+  t:=OrbSCCTruthTable(o)[i];
   oo:=[scc[1]]; m:=1;
   graph:=OrbitGraph(o);
   j:=0;

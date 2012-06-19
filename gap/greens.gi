@@ -68,7 +68,7 @@ function(x, y)
     return ParentAttr(x)=ParentAttr(y) and Representative(x) <
      Representative(y);
   fi;
-  return false;
+  return fail;
 end);
 
 # new for 1.0! - \in - "for acting elt and acting semigp."
@@ -323,7 +323,7 @@ InstallMethod(GreensRClasses, "for an acting semigroup",
 function(s)
   local data, orbit, r, nr, out, i;
 
-  data:=EnumerateSemigroupData(s, infinity, ReturnFalse);
+  data:=Enumerate(s, infinity, ReturnFalse);
   orbit:=data!.orbit;
   r:=data!.modifier;
   nr:=Length(orbit); 
@@ -619,7 +619,7 @@ function(s)
     
     i:=0,
 
-    IsDoneIterator:=iter-> SemigroupData(s)!.finished and 
+    IsDoneIterator:=iter-> IsClosed(SemigroupData(s)) and 
      iter!.i>=Length(SemigroupData(s)),
 
     NextIterator:=function(iter)
@@ -627,7 +627,7 @@ function(s)
 
       iter!.i:=iter!.i+1;
       
-      data:=EnumerateSemigroupData(s, iter!.i, ReturnFalse);
+      data:=Enumerate(s, iter!.i, ReturnFalse);
 
       if iter!.i>Length(data!.orbit) then 
         return fail;
@@ -717,7 +717,7 @@ function(s)
       nr:=nr+NrIdempotents(x);
     od;
   else
-    data:=EnumerateSemigroupData(s, infinity, ReturnFalse);
+    data:=Enumerate(s, infinity, ReturnFalse);
     reps:=data!.reps; repslens:=data!.repslens;
     repslookup:=data!.repslookup;
 
@@ -751,7 +751,7 @@ InstallMethod(NrRClasses, "for an acting semigroup",
 function(s)
   local data;
   
-  data:=EnumerateSemigroupData(s, infinity, ReturnFalse);
+  data:=Enumerate(s, infinity, ReturnFalse);
   return Length(data!.orbit)-data!.modifier;
 end);
 
@@ -820,7 +820,7 @@ InstallMethod(RClassReps, "for an acting semigroup",
 function(s)
   local data, orbit, nr, r, out, i;
 
-  data:=EnumerateSemigroupData(s); 
+  data:=Enumerate(s); 
   orbit:=data!.orbit;
   nr:=Length(orbit);
   r:=data!.modifier;
@@ -832,10 +832,21 @@ function(s)
   return out;
 end);
 
-# new for 0.1! - RClassType - "for a transformation semigroup"
+# new for 1.0! - DClassType - "for an acting semigroup"
+############################################################################# 
+
+InstallMethod(DClassType, "for an acting semigroups",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s);
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+          IsEquivalenceClassDefaultRep and IsGreensDClass and
+          IsActingSemigroupGreensClass);
+end);
+
+# new for 1.0! - RClassType - "for an acting semigroup"
 ############################################################################
 
-InstallMethod(RClassType, "for a transformation semigroup",
+InstallMethod(RClassType, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s);
   return NewType( FamilyObj( s ), IsEquivalenceClass and

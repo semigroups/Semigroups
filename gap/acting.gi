@@ -268,12 +268,12 @@ function(f, s)
     l:=HTValue(LambdaHT(s), lambda);
     
     if l=fail then 
-      if data!.finished then 
+      if IsClosed(data) then 
         return false;
       fi;
       lookfunc:=function(data, x) return LambdaFunc(s)(x)=lambda; end;
       # lookahead?
-      data:=EnumerateSemigroupData(s, infinity, lookfunc);
+      data:=Enumerate(s, infinity, lookfunc);
       l:=data!.found;
       if l=false then 
         return false;
@@ -302,7 +302,7 @@ function(f, s)
   
   # if lambdarho is not already known, then look for it
   if val=fail then 
-    data:=EnumerateSemigroupData(s, infinity, lookfunc);
+    data:=Enumerate(s, infinity, lookfunc);
     val:=data!.found; # position in data!.orbit 
 
     # lambdarho not found, so f not in s
@@ -359,7 +359,7 @@ function(f, s)
       repeat 
 
         # look for more R-reps with same lambda-rho value
-        data:=EnumerateSemigroupData(s, infinity, lookfunc);
+        data:=Enumerate(s, infinity, lookfunc);
         found:=data!.found;
         if found<>false then 
           val:=HTValue(ht, g);
@@ -372,7 +372,7 @@ function(f, s)
       repeat
         
         # look for more R-reps with same lambda-rho value
-        data:=EnumerateSemigroupData(s, infinity, lookfunc);
+        data:=Enumerate(s, infinity, lookfunc);
         found:=data!.found;
         if found<>false then 
           reps:=data!.reps; repslens:=data!.repslens;
@@ -412,35 +412,36 @@ function(o, nr)
   return o!.orbit[nr];
 end);
 
-# new for 1.0! - EnumerateSemigroupData - for an acting semigroup
+# new for 1.0! - Enumerate - for an acting semigroup
 ##############################################################################
 
-InstallOtherMethod(EnumerateSemigroupData, "for an acting semigroup", 
+InstallOtherMethod(Enumerate, "for an acting semigroup", 
 [IsActingSemigroup],
 function(s)
-  return EnumerateSemigroupData(s, infinity, ReturnFalse);
+  return Enumerate(s, infinity, ReturnFalse);
 end);
 
-# new for 1.0! - EnumerateSemigroupData - for an acting semigroup and limit
+# new for 1.0! - Enumerate - for an acting semigroup and limit
 ##############################################################################
 
-InstallOtherMethod(EnumerateSemigroupData, "for an acting semi and limit", 
+InstallOtherMethod(Enumerate, "for an acting semi and limit", 
 [IsActingSemigroup, IsCyclotomic],
 function(s, limit)
-  return EnumerateSemigroupData(s, limit, ReturnFalse);
+  return Enumerate(s, limit, ReturnFalse);
 end);
 
-# new for 1.0! - EnumerateSemigroupData - for an acting semigroup, limit, func
+# new for 1.0! - Enumerate - for an acting semigroup, limit, func
 ##############################################################################
 
-InstallMethod(EnumerateSemigroupData, "for an acting semi, limit, and func",
+InstallOtherMethod(Enumerate, 
+"for an acting semi, limit, and func",
 [IsActingSemigroup, IsCyclotomic, IsFunction],
 function(s, limit, lookfunc)
   local looking, data, ht, orb, nr, i, graph, reps, repslookup, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, lamx, pos, m, mults, y, rhoy, val, schutz, tmp, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, schutzstab, j, n;
 
   data:=SemigroupData(s);
   
-  if data!.finished then 
+  if IsClosed(data) then 
     return data;
   fi;
  
@@ -779,17 +780,17 @@ function(s, limit, lookfunc)
     data!.found:=false;
   fi;
   if nr=i then 
-    data!.finished:=true;
+    SetFilterObj(data, IsClosed);
   fi;
   return data;
 end);
 
 #JDM
 
-# new for 1.0! - EnumerateSemigroupData - "for a regular acting semi"
+# new for 1.0! - Enumerate - "for a regular acting semi"
 ##############################################################################
 
-InstallOtherMethod(EnumerateSemigroupData, "for a regular acting semigroup",
+InstallOtherMethod(Enumerate, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
   local o, scc, r, m;
@@ -1156,6 +1157,17 @@ end);
 InstallOtherMethod(Length, "for semigroup data of acting semigroup",
 [IsSemigroupData], x-> Length(x!.orbit));
 
+#OOO
+
+# new for 1.0! - OrbitGraphAsSets - for semigroup data of acting semigroup
+##############################################################################
+
+InstallOtherMethod(OrbitGraphAsSets, "for semigroup data of acting semigroup",  
+[IsSemigroupData], 99,
+function(data)
+  return List(data!.graph, Set);
+end);
+
 #PPP
 
 # new for 1.0! - Position - "for graded lambda orbs and acting semi elt"
@@ -1270,7 +1282,7 @@ function(s)
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
      reps:=[], repslookup:=[], lenreps:=0, orbit:=[[,,,x]], repslens:=[], 
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail], 
-     semi:=s, finished:=false);
+     semi:=s);
   
   Objectify(NewType(FamilyObj(s), IsSemigroupData), data);
 
@@ -1307,7 +1319,7 @@ function(s, x)
 
   # suppose that the data is fully enumerated...
   data:=SemigroupData(s);
-  #EnumerateSemigroupData(s, lookingfor:=??)
+  #Enumerate(s, lookingfor:=??)
   
   nr:=Position(data, x); 
   gens:=Generators(s);
@@ -1399,7 +1411,7 @@ InstallMethod(Size, "for an acting semigroup",
 function(s)
   local data, reps, nr, repslookup, orbit, i, j;
    
-  data:=EnumerateSemigroupData(s, infinity, ReturnFalse);
+  data:=Enumerate(s, infinity, ReturnFalse);
   reps:=data!.reps;
   nr:=Length(reps);
   repslookup:=data!.repslookup;
@@ -1460,7 +1472,7 @@ end);
 # new for 1.0! - ViewObj - "for semigroup data"
 ##############################################################################
 
-InstallMethod(ViewObj, [IsSemigroupData],
+InstallMethod(ViewObj, [IsSemigroupData], 999,
 function(data)
   Print("<semigroup data: ", Length(data!.orbit), " reps, ",
   Length(data!.reps), " lambda-rho values>");

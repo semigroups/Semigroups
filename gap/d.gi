@@ -10,38 +10,7 @@
 #############################################################################
 ## Notes
 
-# - install iterator method for D-classes? maybe not.
-
-# - use ImageOrbitFromData instead of ImageOrbit (does this make any
-# difference?)
-
-# - check that wherever we have called d:=InOrbitsOfImages we do not perform
-# f*perms[l] afterwards but instead use d[7]!
-
 # - RegularDClasses
-
-#############################################################################
-# other equalities of Green's classes handled by generic method in r.gi!
-
-# new for 0.1! - \= - "for D-class and D-class of trans. semigp." 
-############################################################################
-
-InstallMethod(\=, "for D-class and D-class of trans. semigp.",
-[IsGreensDClass and IsGreensClassOfTransSemigp, IsGreensDClass and 
-IsGreensClassOfTransSemigp],
-function(d1, d2)
-  return d1!.parent=d2!.parent and d1!.rep in d2;
-end);
-
-# new for 0.1! - \< - "for D-class and D-class of trans. semigp." 
-############################################################################
-
-InstallMethod(\<, "for D-class and D-class of trans. semigp.",
-[IsGreensDClass and IsGreensClassOfTransSemigp, IsGreensDClass and 
-IsGreensClassOfTransSemigp],
-function(d1, d2)
-  return d1!.parent=d2!.parent and d1!.rep < d2!.rep;
-end);
 
 # new for 0.1! - \in - "for trans. and D-class of trans. semigp."
 #############################################################################
@@ -245,19 +214,6 @@ function(arg)
   fi;
 
   return data;
-end);
-
-# new for 0.1! - AsSSortedList - "for a D-class of trans. semigp."
-#############################################################################
-# this should be removed after the library method for AsSSortedList 
-# for a Green's class is removed. The default AsSSortedList for a collection
-# is what should be used (it is identical)!
-
-InstallOtherMethod(AsSSortedList, "for a D-class of trans. semigp.",
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(d)
-  Info(InfoCitrus, 4, "AsSSortedList: for a D-class");
-  return ConstantTimeAccessList(EnumeratorSorted(d));
 end);
 
 #CCC
@@ -534,52 +490,6 @@ function(r)
   return CreateDClass(s, [r!.data, [j,1,1,1,1,1]], [img_o, ker_o], f);
 end);
 
-# new for 0.1! - DClassType - "for a transformation semigroup"
-############################################################################# 
-
-InstallMethod(DClassType, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s);
-  return NewType( FamilyObj( s ), IsEquivalenceClass and 
-	  IsEquivalenceClassDefaultRep and IsGreensDClass and 
-	  IsGreensClassOfTransSemigp);
-end);
-
-# new for 0.1! - DisplayOrbitsOfKernels - not a user function!
-#############################################################################
-
-InstallGlobalFunction(DisplayOrbitsOfKernels,
-function(s)
-  local o, k, i, j;
-
-  o:=OrbitsOfKernels(s);
-
-  Print("finished: \t", o!.finished, "\n");
-  Print("orbits: \t");
-
-  if ForAny([1..Degree(s)], j-> IsBound(o!.orbits[j])) then
-    k:=0;
-    for i in o!.orbits do
-      for j in i do
-        if k=1 then
-          Print("\t\t");
-        else
-          k:=1;
-        fi;
-        View(j); Print("\n");
-      od;
-    od;
-  else
-    Print("\n");
-  fi;
-
-  Print("size: \t\t", SizeOrbitsOfKernels(s), "\n");
-  Print("D-classes: \t", Length(o!.data), "\n");
-  #Print("data ht: "); View(o!.data_ht); Print("\n");
-  Print("kernels: \t"); View(o!.kernels); Print("\n");
-  return true;
-end);
-
 #EEE
 
 # mod for 0.5! - Enumerator - "for a D-class of trans. semigp."
@@ -759,14 +669,6 @@ function(arg)
 end);
 
 #GGG
-
-# new for 0.1! - GeneratorsAsListOfImages - "for a trans. semigp."
-#############################################################################
-# move to convenience!
-
-InstallMethod(GeneratorsAsListOfImages, "for a trans. semigp.", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-s-> List(Generators(s), f-> f![1]));
 
 # new for 0.1! - GreensDClasses - "for a transformation semigroup"
 #############################################################################
