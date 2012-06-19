@@ -315,6 +315,29 @@ end);
 
 #GGG
 
+# mod for 1.0! - GreensDClasses - "for an acting semigroup"
+##############################################################################
+
+InstallMethod(GreensDClasses, "for an acting semigroup",
+[IsActingSemigroup], 
+function(s)
+  local data, scc, out, orbit, r, i;
+
+  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  
+  orbit:=data!.orbit;
+  r:=data!.modifier;
+
+  scc:=OrbSCC(data);
+  out:=EmptyPlist(Length(scc));
+  
+  for i in [1+r..Length(scc)] do 
+    x:=Concatenation(orbit[i], scc[i]);
+    out[i-r]:=CallFuncList(CreateDClass, orbit[i]);
+  od;
+  return out;
+end);
+
 # mod for 1.0! - GreensRClasses - "for an acting semigroup"
 ##############################################################################
 
@@ -324,13 +347,13 @@ function(s)
   local data, orbit, r, nr, out, i;
 
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  
   orbit:=data!.orbit;
   r:=data!.modifier;
-  nr:=Length(orbit); 
   
-  out:=EmptyPlist(nr);
+  out:=EmptyPlist(Length(orbit));
 
-  for i in [1+r..nr] do 
+  for i in [1+r..Length(orbit)] do 
     out[i-r]:=CallFuncList(CreateRClass, orbit[i]);
   od;
   return out;

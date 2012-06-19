@@ -670,26 +670,6 @@ end);
 
 #GGG
 
-# new for 0.1! - GreensDClasses - "for a transformation semigroup"
-#############################################################################
-
-InstallMethod(GreensDClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  local iter, out, i, d;
-
-  iter:=IteratorOfDClasses(s);
-  out:=EmptyPlist(NrDClasses(s));
-  i:=0;
-
-  for d in iter do
-    i:=i+1;
-    out[i]:=d;
-  od;
-
-  return out;
-end);
-
 # new for 0.1! - GreensDClassOfElement - "for a trans. semigp and trans."
 #############################################################################
 
