@@ -38,8 +38,9 @@ DeclareAttribute("LambdaHT", IsActingSemigroup, "mutable");
 # value are in SemigroupData(s).reps. 
 DeclareAttribute("LambdaRhoHT", IsActingSemigroup, "mutable");
 
-# LambdaRhoLookup(d)[i]=j if SemigroupData(s)!.orbit[j][4] in reps[i]
-#
+# LambdaRhoLookup(d)[i]=j if orbit[j][4] in reps[i] 
+# and LambdaRhoLookup(d) is only bound for those indices i where 
+# there is an R-rep in the scc of the D-class in reps[i] 
 DeclareAttribute("LambdaRhoLookup", IsGreensDClass and
  IsActingSemigroupGreensClass);
 

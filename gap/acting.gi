@@ -32,9 +32,21 @@ InstallOtherMethod(LambdaOrb, "for a Green's class of an acting semi",
 InstallMethod(LambdaAct, "for a transformation semi",
 [IsTransformationSemigroup], x-> OnIntegerSetsWithT);
 
+InstallMethod(RhoAct, "for a transformation semi",
+[IsTransformationSemigroup], x-> OnKerT);
+
 if IsBound(OnIntegerSetsWithPP) then 
   InstallMethod(LambdaAct, "for a partial perm semi",
   [IsPartialPermSemigroup], x-> OnIntegerSetsWithPP);
+  
+  InstallMethod(RhoAct, "for a partial perm semi",
+  [IsPartialPermSemigroup], 
+  function(s)
+    return 
+      function(set, f) 
+        return OnIntegerSetsWithPP(set, f^-1);
+      end;
+  end);
 fi;
 
 # new for 1.0! - LambdaDegree
@@ -1299,6 +1311,35 @@ function(o)
   Print(" >");
   return;
 end);
+
+#RRR
+
+# new for 1.0! - RhoOrb - "for an acting semigroup"
+##############################################################################
+
+InstallMethod(RhoOrb, "for an acting semigroup",
+[IsActingSemigroup],
+function(s)
+
+  if IsClosed(SemigroupData(s)) then 
+    o:=...
+    return;
+  fi;
+
+  #JDM it would be much better to just do One(s); 
+  if IsTransformationSemigroup(s) then
+    x:=One(Generators(s)[1]);
+  elif IsPartialPermSemigroup(s) then
+    x:=PartialPermNC(Points(Generators(s)), Points(Generators(s)));
+  fi;    
+
+  # the component enumerated is only used for regular semigroups
+  return Orb(s, RhoDomain(s), RhoAct(s),
+        rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
+        storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
+        enumerated:=false, scc_reps:=[x], semi:=s));
+end);
+
 
 #SSS
 

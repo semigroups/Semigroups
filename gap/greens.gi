@@ -113,8 +113,16 @@ function(f, d)
   if val = fail or not IsBound(LambdaRhoLookup(d)[val]) then
     return false;
   fi;
-   
-
+  
+# if there is only one value in any set of LambdaRhoLookup (and hence all) then 
+# just check if PermLeftQuoTransformationNC=LambdaPerm(f, anyone of those one
+# values) in LambdaOrbSchutzGp. If RhoOrbSchutzGp is known, then check if there
+# are more cosets of SchutzGp(d)=LambdaOrbSchutzGp\cap RhoOrbSchutzGp in
+# LambdaOrbSchutzGp or in RhoOrbSchutzGp and check membership in whichever has
+# fewer cosets. Otherwise calculate RhoOrbSchutzGp. Note that the elements in
+# any of the sets in LambdaRhoLookup are a transversal of SchutzGp(d) in
+# RhoOrbSchutzGp and so if LambdaOrbSchutzGp is trivial, then they are just
+# the elements (and hence a generating set) for RhoOrbSchutzGp. 
 
 end);
 
