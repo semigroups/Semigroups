@@ -35,7 +35,6 @@ DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
 DeclareProperty("IsGreensClassOfPartPermSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassNC", IsActingSemigroupGreensClass);
-DeclareAttribute("GreensClassData", IsActingSemigroupGreensClass);
 
 #old
 

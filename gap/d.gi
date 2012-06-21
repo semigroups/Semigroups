@@ -1225,7 +1225,7 @@ function(d)
   return d!.o[1]!.orbits[e[1]][e[2]];
 end);
 
-# new for 0.1! - ImageOrbitCosets - "for a D-class of trans. semigroup"
+# new for 0.1! - mageOrbitCosets - "for a D-class of trans. semigroup"
 ###########################################################################
 # Notes: returns a transversal of right cosets of SchutzenbergerGroup(d)
 # (which is ImgLeft) in ImageOrbitSchutzGp (which is ImgLeft). 

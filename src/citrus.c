@@ -1040,9 +1040,9 @@ Obj FuncOnPointsPP(Obj self, Obj i, Obj f)
 ** 
 ** and hence has length
 **
-** 4+2*deg+rank
+** 4+2*deg+rank+1
 **
-** An element of the internal rep of a partial trans must be at most 
+** An element of the internal rep of a transformation must be at most 
 ** 65535 and be of pttype, but the length and indices can be larger than 65535
 ** and so these currently have type Int. 
 **
@@ -1383,6 +1383,37 @@ Obj FuncOnIntegerSetsWithT (Obj self, Obj set, Obj f)
   return out;
 }
 
+/* on kernels left action for transformations */ 
+Obj FuncOnKerT (Obj self, Obj ker, Obj f)
+{ pttype deg=ELM_PT(f,1);
+  pttype i, j, rank;
+  Obj out;
+  pttype lookup[deg];
+
+  if(deg!=LEN_LIST(ker)){
+    ErrorQuit("usage: the length of the first argument should equal the degree of the second", 0L, 0L);
+    return 0L;
+  }
+
+  out = NEW_PLIST(T_PLIST_CYC, (Int) deg);
+  SET_LEN_PLIST(out, (Int) deg); 
+
+  for(i=1; i<=deg;i++) lookup[i]=0; 
+ 
+  rank=0;
+  
+  for(i=1;i<=deg;i++){
+    j=INT_INTOBJ(ELM_LIST(ker, ELM_PT(f, 4+i))); /* f first! */
+    if(lookup[j]==0){
+      rank++;
+      lookup[j]=rank;
+    }
+    SET_ELM_PLIST(out, i, INTOBJ_INT(lookup[j]));
+  }
+  return out;
+}
+
+/* JDM another one for a header file */
 Obj FuncPermList(Obj self, Obj list);
 
 /* on tuples for a transformation */ 
@@ -1623,6 +1654,10 @@ static StructGVarFunc GVarFuncs [] = {
   { "OnIntegerSetsWithT", 2, "set, f",
      FuncOnIntegerSetsWithT,
     "pkg/citrus/src/citrus.c:FuncOnIntegerSetsWithT" },
+
+  { "OnKerT", 2, "ker, f",
+     FuncOnKerT,
+    "pkg/citrus/src/citrus.c:FuncOnKerT" },
 
   { "OnIntegerTuplesWithT", 2, "tup, f",
      FuncOnIntegerTuplesWithT,

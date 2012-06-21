@@ -10,17 +10,31 @@
 
 # for convenience...
 
-# new for 1.0! - GreensClassData - "for a Green's class of an acting semigroup"
+# new for 1.0! - LambdaOrbSCCIndex - "for a Green's class of an acting semigp"
 ##############################################################################
 
-InstallMethod(GreensClassData, "for a Green's class of an acting semigroup", 
-[IsActingSemigroupGreensClass], x-> x!.data);
+InstallMethod(LambdaOrbSCCIndex, "for a Green's class of an acting semigroup", 
+[IsActingSemigroupGreensClass], x-> x!.lambda_scc);
+
+# new for 1.0! - LambdaOrbSCCIndex - "for a Green's class of an acting semigp"
+##############################################################################
+
+InstallMethod(RhoOrbSCCIndex, "for a Green's class of an acting semigroup", 
+[IsActingSemigroupGreensClass and IsGreensDClass], 
+function(d)
+  o:=RhoOrb(d);
+  return OrbSCCLookup(o)[Position(o,
+   RhoFunc(ParentAttr(d))(Representative(d)))];
+end);
 
 # new for 1.0! - LambdaOrb - "for Green's class of an acting semigroup"
 ############################################################################
 
 InstallOtherMethod(LambdaOrb, "for a Green's class of an acting semi",
 [IsActingSemigroupGreensClass], x-> x!.o);
+
+InstallOtherMethod(RhoOrb, "for a Green's class of an acting semi",
+[IsActingSemigroupGreensClass], x-> x!.rho_o);
 
 # mod for 1.0! - ParentAttr - "for Green's class of an acting semigroup"
 ############################################################################
@@ -34,7 +48,7 @@ InstallMethod(ParentAttr, "for a Green's class of an acting semigroup",
 InstallOtherMethod(SchutzenbergerGroup, "for an R-class of an acting semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  return LambdaOrbSchutzGp(r!.o, r!.data[1]);
+  return LambdaOrbSchutzGp(r!.o, r!.lambda_scc);
 end);
 
 #############################################################################
@@ -71,13 +85,15 @@ function(x, y)
   return fail;
 end);
 
-# new for 1.0! - \in - "for acting elt and D-class of acting semigp"
+# new for 1.0! - \in - "for acting elt and D-classNC of acting semigp"
 #############################################################################
+# Notes: a D-classNC is one created using lambda and rho orbits and not from
+# finding strongly connected components of SemigroupData(s).
 
 InstallMethod(\in, "for acting elt and D-class of acting semigp.",
-[IsActingElt, IsGreensDClass and IsActingSemigroupGreensClass],
+[IsActingElt, IsGreensDClass and IsActingSemigroupGreensClass and IsGreensClassNC],
 function(f, d)
-  local rep, s, lambda_scc, o, l, val, data, scc, m;
+  local rep, s, g, m, o, scc, l, schutz, cosets, x;
   
   rep:=Representative(d); 
   s:=ParentAttr(d);
@@ -89,31 +105,171 @@ function(f, d)
     return false;
   fi;
 
-  lambda_scc:=GreensClassData(d)[1];
-  o:=LambdaOrb(d);
+  g:=f;
 
-  if not IsClosed(o) then 
-    Enumerate(o, infinity);
-  fi;
+  m:=LambdaOrbSCCIndex(d); o:=LambdaOrb(d); scc:=OrbSCC(o);
 
-  l:=Position(o, LambdaFunc(s)(f));
+  l:=Position(o, LambdaFunc(s)(g));
 
-  # check lambda val of f is in the same scc as lambda vals of R-reps of d
-  if l = fail or OrbSCCLookup(o)[l]<>lambda_scc then 
+  if l = fail or OrbSCCLookup(o)[l]<>m then 
     return false;
   fi;
   
-  val:=ShallowCopy(o[lambda_scc][1]);
-  Append(val, RhoFunc(s)(f));
+  if l<>scc[m][1] then 
+    g:=g*LambdaOrbMults(o, m)[l];
+  fi;
+
+  m:=RhoOrbSCCIndex(d); o:=RhoOrb(d); scc:=OrbSCC(o); 
+
+  l:=Position(o, RhoFunc(s)(g));
+
+  if l = fail or OrbSCCLookup(o)[l]<>m then 
+    return false;
+  fi;
+
+  schutz:=RhoOrbStabChain(o, m);
+
+  if schutz=true then 
+    return true;
+  fi;
+
+  if l<>scc[m][1] then 
+    g:=RhoOrbMults(o, m)[l]*g;
+  fi;
+
+  cosets:=LambdaCosets(d);
+  g:=LambdaPerm(rep, g);
+
+  if schutz<>false then 
+    for x in cosets do 
+      if SiftedPermutation(schutz, g/x)=() then 
+        return true;
+      fi;
+    od;
+  else #JDM is search really necessary? 
+    for x in cosets do 
+      if g/x=() then 
+        return true;
+      fi;
+    od;
+  fi;
+
+  return false;
+end);
+
+# new for 1.0! - \in - "for acting elt and D-class of acting semigp"
+#############################################################################
+# Notes: a D-class is one created from finding strongly connected components of
+# SemigroupData(s).
+
+InstallMethod(\in, "for acting elt and D-class of acting semigp.",
+[IsActingElt, IsGreensDClass and IsActingSemigroupGreensClass],
+function(f, d)
+  local rep, s, g, m, o, scc, l, rho, val, lookup, lambdaperm, schutz, data,
+  reps, cosets, x;
+  
+  rep:=Representative(d); 
+  s:=ParentAttr(d);
+  
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or Degree(f) <> Degree(rep) or
+   Rank(f) <> Rank(rep) then
+    Info(InfoCitrus, 1, "degree or rank not equal to those of",
+    " any of the D-class elements,");
+    return false;
+  fi;
+
+  g:=f;
+
+  m:=LambdaOrbSCCIndex(d); o:=LambdaOrb(d); scc:=OrbSCC(o);
+
+  l:=Position(o, LambdaFunc(s)(g));
+
+  if l = fail or OrbSCCLookup(o)[l]<>m then 
+    return false;
+  fi;
+  
+  if l<>scc[m][1] then 
+    g:=g*LambdaOrbMults(o, m)[l];
+  fi;
+
+  rho:=RhoFunc(s)(g);
+
+  val:=ShallowCopy(o[scc[m][1]]);
+  Append(val, rho);
   val:=HTValue(LambdaRhoHT(s), val);
 
-  data:=SemigroupData(s);
+  lookup:=LambdaRhoLookup(d);
 
-  # check that lambda-rho val corresponds to some R-rep of d
-  if val = fail or not IsBound(LambdaRhoLookup(d)[val]) then
+  if val=fail or not IsBound(lookup[val]) then 
     return false;
   fi;
+
+  data:=SemigroupData(s);
+  reps:=data!.reps;
+  lambdaperm:=LambdaPerm(s);
+  schutz:=LambdaOrbStabChain(o, m);
   
+  if Length(lookup[val])=1 then 
+    g:=lambdaperm(g, reps[val][lookup[val][1]]);
+    
+    if g=() or schutz=true then 
+      return true;
+    elif schutz=false then 
+      return false;
+    fi;
+    return SiftedPermutation(schutz, g)=();
+  fi;
+
+  if Length(lookup[val])<=Index(LambdaOrbSchutzGp(o, m), 
+   SchutzenbergerGroup(d)) then 
+
+    if schutz=true then 
+      return true;
+    elif schutz<>false then 
+      for m in lookup[val] do 
+        if SiftedPermutation(schutz, lambdaperm(reps[val][m], g))=() then 
+          return true;
+        fi;
+      od;
+    else # schutz is false and so g has to be one the R-reps of D-class
+      m:=HTValue(data!.ht, g);
+      lookup:=OrbSCCLookup(data);
+      if m<>fail and lookup[m]=lookup[d!.orbit_pos] then 
+        return true;
+      fi;
+    fi;
+    return false;
+  fi;
+ 
+  # do the old thing
+  o:=RhoOrb(d); m:=RhoOrbSCCIndex(d); 
+  schutz:=RhoOrbStabChain(o, m);
+
+  if schutz=true then 
+    return true;
+  fi;
+
+  l:=Position(o, RhoFunc(s)(g)); scc:=OrbSCC(o); 
+  
+  if l<>scc[m][1] then 
+    g:=RhoOrbMults(o, m)[l]*g;
+  fi;
+
+  # schutz<>false as if it is then Length(lookup[val])=1<=Index above.
+  g:=LambdaPerm(g, rep);
+  cosets:=LambdaCosets(d);
+  # must do something like KerRightToImgLeft(d)
+
+  for x in cosets do 
+    if SiftedPermutation(schutz, g/x)=() then 
+      return true;
+    fi;
+  od;
+
+  return false;
+end);
+
+
 # if there is only one value in any set of LambdaRhoLookup (and hence all) then 
 # just check if PermLeftQuoTransformationNC=LambdaPerm(f, anyone of those one
 # values) in LambdaOrbSchutzGp. If RhoOrbSchutzGp is known, then check if there
@@ -124,8 +280,6 @@ function(f, d)
 # RhoOrbSchutzGp and so if LambdaOrbSchutzGp is trivial, then they are just
 # the elements (and hence a generating set) for RhoOrbSchutzGp. 
 
-end);
-
 
 # new for 1.0! - \in - "for acting elt and R-class of acting semigp"
 #############################################################################
@@ -134,7 +288,7 @@ end);
 InstallMethod(\in, "for acting elt and R-class of acting semigp.",
 [IsActingElt, IsGreensRClass and IsActingSemigroupGreensClass],
 function(f, r)
-  local rep, s, data, o, l, schutz, g;
+  local rep, s, m, o, l, schutz, g;
 
   rep:=Representative(r); 
   s:=ParentAttr(r);
@@ -146,7 +300,7 @@ function(f, r)
     return false;
   fi;
 
-  data:=GreensClassData(r); 
+  m:=LambdaOrbSCCIndex(r);
   o:=LambdaOrb(r);
   
   if not IsClosed(o) then 
@@ -155,18 +309,18 @@ function(f, r)
 
   l:=Position(o, LambdaFunc(s)(f));
 
-  if l = fail or OrbSCCLookup(o)[l]<>data[1] then 
+  if l = fail or OrbSCCLookup(o)[l]<>m then 
     return false;
   fi;
 
-  schutz:=LambdaOrbStabChain(o, data[1]);
+  schutz:=LambdaOrbStabChain(o, m);
 
   if schutz=true then
     Info(InfoCitrus, 3, "Schutz. group of R-class is symmetric group");
     return true;
   fi;
 
-  g:=f*LambdaOrbMults(o, data[1])[l];
+  g:=f*LambdaOrbMults(o, m)[l];
 
   if g=rep then
     Info(InfoCitrus, 3, "element with rectified lambda value equals ",
@@ -193,7 +347,7 @@ function(r)
   
   f:=Representative(r); 
   o:=LambdaOrb(r); 
-  m:=GreensClassData(r)[1];
+  m:=LambdaOrbSCCIndex(r);
  
   g:=List(SchutzenbergerGroup(r), x-> f*x);
   elts:=EmptyPlist(Size(r));
@@ -231,19 +385,12 @@ InstallGlobalFunction(CreateDClass,
 function(arg) 
   local d, val;
  
-  d:=Objectify(DClassType(arg[1]), rec(parent:=arg[1], data:=arg[2],  
-   o:=arg[3])); 
+  d:=Objectify(DClassType(arg[1]), rec(parent:=arg[1], lambda_scc:=arg[2],  
+   o:=arg[3], rho_o:=RhoOrb(arg[1]), orbit_pos:=arg[5])); 
   
-  if Length(arg)>4 then 
-    d!.orbit_pos:=arg[5];
-    val:=false;
-  else
-    val:=true;
-  fi;
-
   SetRepresentative(d, arg[4]); 
   SetEquivalenceClassRelation(d, GreensDRelation(arg[1])); 
-  SetIsGreensClassNC(d, val);
+  SetIsGreensClassNC(d, false);
   return d; 
 end); 
 
@@ -263,7 +410,7 @@ function(arg)
   local r, val;
   
   r:=Objectify(RClassType(arg[1]), 
-   rec(parent:=arg[1], data:=arg[2], o:=arg[3]));
+   rec(parent:=arg[1], lambda_scc:=arg[2], o:=arg[3]));
 
   if Length(arg)>4 then 
     r!.orbit_pos:=arg[5];
@@ -290,8 +437,8 @@ InstallMethod(Enumerator, "for R-class of part perm inv semigroup",
 function(r)
   local mults, scc;
 
-  mults:=LambdaOrbMults(r!.o, r!.data[1]);
-  scc:=OrbSCC(r!.o)[r!.data[1]];
+  mults:=LambdaOrbMults(r!.o, r!.lambda_scc);
+  scc:=OrbSCC(r!.o)[r!.lambda_scc];
 
   return EnumeratorByFunctions(r, rec(
 
@@ -323,7 +470,7 @@ function(r)
     #########################################################################
     
     NumberElement:=function(enum, f)
-      local s, rep, o, data, l, g, j;
+      local s, rep, o, m, l, g, j;
 
       s:=ParentAttr(r);
       rep:=Representative(r);
@@ -338,10 +485,10 @@ function(r)
         return 1;
       fi;
 
-      o:=r!.o; data:=r!.data;
+      o:=r!.o; m:=r!.lambda_scc;
       l:=Position(o, LambdaFunc(s)(f));
 
-      if l = fail or OrbSCCLookup(o)[l]<>data[1] then 
+      if l = fail or OrbSCCLookup(o)[l]<>m then 
         return fail;
       fi;
      
@@ -411,7 +558,6 @@ function(s)
   out:=EmptyPlist(Length(scc));
   
   for i in [1+r..Length(scc)] do 
-    x:=Concatenation(orbit[i], scc[i]);
     out[i-r]:=CallFuncList(CreateDClass, orbit[i]);
   od;
   return out;
@@ -504,7 +650,7 @@ function(r)
   
   rho:=RhoFunc(s)(Representative(r));
   o:=LambdaOrb(r); 
-  m:=GreensClassData(r)[1];
+  m:=LambdaOrbSCCIndex(r);
   scc:=OrbSCC(o)[m];
   j:=0;
   tester:=IdempotentLambdaRhoTester(s);
@@ -568,7 +714,7 @@ function(r)
  
   rho:=RhoFunc(s)(Representative(r));
   o:=LambdaOrb(r);
-  m:=GreensClassData(r)[1];
+  m:=LambdaOrbSCCIndex(r);
   scc:=OrbSCC(o)[m];
   tester:=IdempotentLambdaRhoTester(s);
 
@@ -588,7 +734,7 @@ InstallMethod(Iterator, "for an R-class of an acting semigp",
 function(r)
   local o, m, mults, iter, scc;
 
-  o:=LambdaOrb(r); m:=GreensClassData(r)[1];
+  o:=LambdaOrb(r); m:=LambdaOrbSCCIndex(r);
   mults:=LambdaOrbMults(o, m);
   scc:=OrbSCC(o)[m];
 
@@ -718,7 +864,7 @@ function(s)
 
   return IteratorByFunctions( rec( 
     
-    i:=0,
+    i:=SemigroupData(s)!.modifier,
 
     IsDoneIterator:=iter-> IsClosed(SemigroupData(s)) and 
      iter!.i>=Length(SemigroupData(s)),
@@ -786,7 +932,7 @@ function(r)
 
   rho:=RhoFunc(s)(Representative(r));
   o:=LambdaOrb(r); 
-  m:=GreensClassData(r)[1];
+  m:=LambdaOrbSCCIndex(r);
   scc:=OrbSCC(o)[m];
   nr:=0;
   tester:=IdempotentLambdaRhoTester(s);
@@ -831,7 +977,7 @@ function(s)
       f:=reps[i][1]; 
       j:=repslookup[i][1];
       o:=data[j][3];
-      m:=data[j][2][1];
+      m:=data[j][2];
       scc:=OrbSCC(o)[m];
       rho:=rhofunc(f);
       for k in scc do 
@@ -967,6 +1113,60 @@ end);
 
 #SSS
 
+# new for 1.0! - SchutzenbergerGroup - "for a D-class of an acting semigroup"
+#############################################################################
+
+InstallMethod(SchutzenbergerGroup, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  local o, m, lambda_schutz, lambda_stab, rho_schutz;
+  
+  o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
+  lambda_schutz:=LambdaOrbSchutzGp(o, m); 
+  
+  if IsTrivial(lambda_schutz) then 
+    return lambda_schutz;
+  fi;
+
+  lambda_stab:=LambdaOrbStabChain(o, m);
+  o:=RhoOrb(d); m:=RhoOrbSCCIndex(d);
+  
+  if not IsBound(o!.schutz) or not IsBound(o!.schutz[m]) then 
+    #do something complicated
+    # - create the RhoOrbSchutzGp using the elements of LambdaRhoLookup
+    #  and lambda_stab, bound on size, sifting to avoid adding gens 
+    #  outside the intersection of RhoOrbSchutzGp and LambdaOrbSchutzGp
+    orbit_pos:=d!.orbit_pos;
+    data:=SemigroupData(ParentAttr(d));
+    i:=OrbSCC(data)[OrbSCCLookup(data)[orbit_pos]][1];
+    val:=data!.orblookup1[i];
+    
+    cosets:=[];
+    
+    for m in lookup[val] do 
+      Add(cosets, LambdaPerm(s)(reps[val][m], rep);
+    od;
+
+
+  fi;
+
+  rho_schutz:=RhoOrbSchutzGp(o, m);
+  
+  if RhoOrbStabChain(o, m)=true then 
+    return lambda_schutz;
+  elif IsTrivial(rho_schutz) then 
+    return rho_schutz;
+  fi;
+  
+  p:=ReturnFail;
+  
+  if lambda_stab=true then 
+    return rho_schutz^p;
+  fi;
+
+  return Intersection(lambda_schutz, rho_schutz^p);
+end);
+
 # new for 1.0! - Size - "for an R-class of an acting semigp."
 #############################################################################
 # Algorithm C. 
@@ -976,9 +1176,7 @@ InstallOtherMethod(Size, "for an R-class of an acting semigp.",
 function(r)
   local o, m;
  
-  o:=LambdaOrb(r); 
-  m:=GreensClassData(r)[1];
-  
+  o:=LambdaOrb(r); m:=LambdaOrbSCCIndex(r);
   return Size(SchutzenbergerGroup(r))*Length(OrbSCC(o)[m]);
 end);
 

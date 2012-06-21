@@ -26,7 +26,7 @@ InstallOtherMethod(LambdaOrb, "for a Green's class of an acting semi",
 # Setup - install the basic things required for specific acting semigroups    #
 ###############################################################################
 
-# new for 1.0 - LambdaAct
+# new for 1.0 - LambdaAct and RhoAct
 ###############################################################################
 
 InstallMethod(LambdaAct, "for a transformation semi",
@@ -62,7 +62,13 @@ InstallMethod(LambdaDomain, "for a transformation semi",
 [IsTransformationSemigroup], s-> [1..Degree(s)]*1);
 
 InstallMethod(LambdaDomain, "for a partial perm semi",
-[IsPartialPermSemigroup], s-> Points(s));
+[IsPartialPermSemigroup], Points);
+
+InstallMethod(RhoDomain, "for a transformation semi",
+[IsTransformationSemigroup], s-> [1..Degree(s)]*1);
+
+InstallMethod(RhoDomain, "for a partial perm semi",
+[IsPartialPermSemigroup], Points);
 
 # new for 1.0! - LambdaHT
 ###############################################################################
@@ -552,12 +558,12 @@ function(data, limit, lookfunc)
           orblookup1[nr]:=lenreps;
           orblookup2[nr]:=1;
           repslens[lenreps]:=1;
-          x:=[s, [m, scc[m][1]], o, y, nr];
+          x:=[s, m, o, y, nr];
           # semigroup, lambda orb data, lambda orb, rep, index in orbit,
           # position of reps with equal lambda-rho value
 
         else              # old rho value
-          x:=[s, [m, scc[m][1]], o, y, nr+1];
+          x:=[s, m, o, y, nr+1];
           
           # JDM expand!
           schutz:=LambdaOrbStabChain(o, m);
@@ -679,7 +685,7 @@ function(data, limit, lookfunc)
           repslookup[lenreps]:=[nr];
           repslens[lenreps]:=1;
           HTAdd(lambdarhoht, Concatenation(lamx, rho(x)), lenreps);
-          x:=[s, [1, 1], o, x, nr];
+          x:=[s, 1, o, x, nr];
           pos:=true;
         else #old lambda orbit
           o:=graded[pos[1]][pos[2]];
@@ -941,13 +947,12 @@ function(s, data, x)
       pos:=HTValue(LambdaHT(s), lamx);
       if pos=fail then 
         o:=GradedLambdaOrb(s, x, true);
-        pos:=[1, 1]; #[scc index, scc[1], pos of LambdaFunc(x) in o]
+        m:=1; #[scc index, scc[1], pos of LambdaFunc(x) in o]
       else
         o:=GradedLambdaOrbs(s)[pos[1]][pos[2]];
         m:=OrbSCCLookup(o)[pos[3]];
         scc:=o!.scc[m];
-        pos:=[m, scc[1]];
-        if not pos[3]=scc[1] then 
+        if pos[3]<>scc[1] then 
           x:=x*LambdaOrbMults(o, m)[pos[3]];
           lamx:=o[scc[1]];
         fi;
@@ -956,7 +961,7 @@ function(s, data, x)
     
     # install the info about x in data
     HTAdd(data!.ht, x, 1);
-    data!.orbit:=[[s, pos, o, x, 1, 1]];
+    data!.orbit:=[[s, m, o, x, 1, 1]];
     data!.repslens[1]:=1;
     data!.lenreps:=data!.lenreps+1;
     data!.reps[data!.lenreps]:=[x];
@@ -1199,7 +1204,8 @@ function(d)
     if not IsBound(out[orblookup1[i]]) then 
       out[orblookup1[i]]:=[];
     fi;
-    Add(out[orblookup1[i]],repslookup[orblookup1[i]][orblookup2[i]]);
+    #Add(out[orblookup1[i]], repslookup[orblookup1[i]][orblookup2[i]]);
+    Add(out[orblookup1[i]], orblookup2[i]);
   od;
 
   return out;
@@ -1320,12 +1326,13 @@ end);
 InstallMethod(RhoOrb, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
+  local x;
 
-  if IsClosed(SemigroupData(s)) then 
-    o:=...
-    return;
-  fi;
-
+  # it might be better in the case of having IsClosed(SemigroupData)
+  # to just fake the orbit below (we have all the info already).
+  # But it seems to be so fast to calculate the 
+  # in most cases that there is no point. 
+  
   #JDM it would be much better to just do One(s); 
   if IsTransformationSemigroup(s) then
     x:=One(Generators(s)[1]);
@@ -1340,6 +1347,13 @@ function(s)
         enumerated:=false, scc_reps:=[x], semi:=s));
 end);
 
+# new for 1.0! - RhoOrbSchutzGp - "for a rho orb, scc index, bound, and gp"
+##############################################################################
+
+InstallGlobalFunction(RhoOrbSchutzGp, 
+function(arg)
+
+end);
 
 #SSS
 
@@ -1422,7 +1436,7 @@ function(s, x)
 
   # find group element
   o:=data[nr][3]; 
-  m:=data[nr][2][1];
+  m:=data[nr][2];
   scc:=OrbSCC(o);
   l:=Position(o, LambdaFunc(s)(x)); 
   mult:=TraceSchreierTreeOfSCCForward(o, m, l);
@@ -1482,7 +1496,7 @@ function(data)
 
   for j in [1..nr] do 
     data:=orbit[repslookup[j][1]];
-    i:=i+Length(reps[j])*Size(LambdaOrbSchutzGp(data[3], data[2][1]))*Length(OrbSCC(data[3])[data[2][1]]);
+    i:=i+Length(reps[j])*Size(LambdaOrbSchutzGp(data[3], data[2]))*Length(OrbSCC(data[3])[data[2]]);
   od;
   return i; 
 end);
@@ -1504,7 +1518,7 @@ function(s)
 
   for j in [1..nr] do 
     data:=orbit[repslookup[j][1]];
-    i:=i+Length(reps[j])*Size(LambdaOrbSchutzGp(data[3], data[2][1]))*Length(OrbSCC(data[3])[data[2][1]]);
+    i:=i+Length(reps[j])*Size(LambdaOrbSchutzGp(data[3], data[2]))*Length(OrbSCC(data[3])[data[2]]);
   od;
   return i; 
 end);
@@ -1540,7 +1554,7 @@ function(data, pos)
     Add(word, schreiergen[pos]);
     if schreiermult[pos]<>fail then # a multiplier was applied!
       o:=orb[pos][3];               # the lambda orb
-      m:=orb[pos][2][1];            # the scc
+      m:=orb[pos][2];            # the scc
       Append(word2, 
        Reversed(TraceSchreierTreeOfSCCBack(o, m, schreiermult[pos])));
     fi;
