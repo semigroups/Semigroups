@@ -59,10 +59,12 @@ DeclareGlobalFunction("RhoOrbSchutzGp");
 DeclareGlobalFunction("LambdaOrbStabChain");
 DeclareGlobalFunction("RhoOrbStabChain");
 DeclareGlobalFunction("LambdaOrbSLP");
+
 DeclareAttribute("LambdaOrbSCCIndex", IsActingSemigroupGreensClass);
 DeclareAttribute("RhoOrbSCCIndex", IsActingSemigroupGreensClass);
 DeclareAttribute("LambdaCosets", IsActingSemigroupGreensClass);
 DeclareAttribute("RhoCosets", IsActingSemigroupGreensClass);
+
 DeclareOperation("SemigroupEltSLP", [IsActingSemigroup, IsActingElt]);
 
 DeclareAttribute("LambdaMult", IsActingSemigroup);
