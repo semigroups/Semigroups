@@ -94,7 +94,7 @@ fi;
 
 # new for 1.0! - LambdaMult
 ###############################################################################
-# LambdaMult(s)(pt, f) returns a permutation taking acting in the same way as
+# LambdaMult(s)(pt, f) returns a permutation acting in the same way as
 # f^-1 on pt. This is required to produce the lambda orb mults
 # (LambdaOrbMults). 
 
@@ -107,6 +107,33 @@ InstallMethod(LambdaMult, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> function(pt, f) 
   return MappingPermListList(pt, OnIntegerTuplesWithPP(pt, f));
 end);
+
+# new for 1.0! - LambdaMult
+###############################################################################
+#JDM c method for this!
+
+InstallMethod(RhoMult, "for a transformation semi",
+[IsTransformationSemigroup], s-> 
+  function(ker, f)
+    local g, n, m, lookup, i, j;
+  
+    g:=ker{RanT(f)};
+    n:=f[1]; m:=MaximumList(ker);
+    lookup:=EmptyPlist(n);
+    
+    i:=0; j:=0;
+    repeat 
+      i:=i+1;
+      if not IsBound(lookup[g[i]]) then 
+        lookup[g[i]]:=i;
+        j:=j+1;
+      fi;
+    until j=m;
+    return TransformationNC(List([1..n], i-> lookup[ker[i]]));
+  end);
+
+InstallMethod(RhoMult, "for a partial perm semi",
+[IsPartialPermSemigroup], s-> f-> f^-1); 
 
 # new for 1.0! - LambdaPerm
 ###############################################################################
@@ -129,6 +156,9 @@ end);
 
 InstallMethod(LambdaRank, "for a transformation semigroup", 
 [IsTransformationSemigroup], x-> Length);
+
+InstallMethod(RhoRank, "for a transformation semigroup", 
+[IsTransformationSemigroup], x-> MaximumList);
 
 InstallMethod(LambdaRank, "for a semigroup of partial perms", 
 [IsPartialPermSemigroup], x-> Length);
@@ -1008,10 +1038,9 @@ end);
 ##############################################################################
 
 InstallGlobalFunction(LambdaOrbMults, 
-  function(arg) 
-  local o, m, scc, s, mults, gens, lambdamult, f, i;
+  function(o, m) 
+  local scc, s, mults, gens, lambdamult, f, i;
 
-  o:=arg[1]; m:=arg[2];
   scc:=OrbSCC(o)[m];
 
   if IsBound(o!.mults) then  
@@ -1122,7 +1151,7 @@ function(o, m)
     o!.schutzstab[m]:=StabChainImmutable(g);
   fi;
 
-  return o!.schutz[m];
+  return g;
 end);
 
 # new for 1.0! - LambdaOrbSLP - "for a lambda orb and scc index"
@@ -1347,12 +1376,115 @@ function(s)
         enumerated:=false, scc_reps:=[x], semi:=s));
 end);
 
-# new for 1.0! - RhoOrbSchutzGp - "for a rho orb, scc index, bound, and gp"
+# new for 1.0! - RhoOrbMults - "for a rho orb and scc index"
+##############################################################################
+# f takes o[scc[1]] to o[i] and rhomult(o[i], f) takes o[i] to o[scc[1]]
+
+InstallGlobalFunction(RhoOrbMults,
+function(o, m)
+  local scc, s, mults, gens, rhomult, f, i;
+
+  scc:=OrbSCC(o)[m];
+
+  if IsBound(o!.mults) then
+    if IsBound(o!.mults[scc[1]]) then
+      return o!.mults;
+    fi;
+  else
+    o!.mults:=EmptyPlist(Length(o));
+  fi;
+
+  s:=o!.semi;
+  mults:=o!.mults;
+  gens:=Generators(s);
+  rhomult:=RhoMult(s);
+
+  for i in scc do
+    f:=EvaluateWord(gens, Reversed(TraceSchreierTreeOfSCCForward(o, m, i)));
+    mults[i]:=[f, rhomult(o[scc[1]], f)];
+  od;
+
+  return mults;
+end);
+
+# new for 1.0! - RhoOrbRep - "for a rho orb and scc index"
 ##############################################################################
 
-InstallGlobalFunction(RhoOrbSchutzGp, 
-function(arg)
+InstallGlobalFunction(RhoOrbRep, 
+function(o, m)
+  local w;
 
+  if IsBound(o!.scc_reps[m]) then 
+    return o!.scc_reps[m];
+  fi;
+
+  w:=Reversed(TraceSchreierTreeForward(o, OrbSCC(o)[m][1]));
+  o!.scc_reps[m]:=o!.scc_reps[1]*EvaluateWord(o!.gens, w);
+  return o!.scc_reps[m];
+end);
+
+# new for 1.0! - RhoOrbSchutzGp - "for a rho orb, scc index, and bound"
+##############################################################################
+# could use IsRegular here to speed up?
+
+InstallGlobalFunction(RhoOrbSchutzGp, 
+function(o, m, bound)
+  local g, s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults, rho_rank, i, j;
+  
+  if IsBound(o!.schutz) then 
+    if IsBound(o!.schutz[m]) then 
+      return o!.schutz[m];
+    fi;
+  else
+    o!.schutz:=EmptyPlist(Length(OrbSCC(o)));
+    o!.schutzstab:=EmptyPlist(Length(OrbSCC(o)));
+  fi;
+  
+  g:=Group(());
+
+  if bound=1 then 
+    o!.schutz[m]:=g;
+    o!.schutzstab[m]:=false;
+    return g;
+  fi;
+
+  s:=o!.semi;
+  gens:=Generators(s);
+  nrgens:=Length(gens);
+  scc:=OrbSCC(o)[m];
+  lookup:=o!.scc_lookup;
+  orbitgraph:=OrbitGraph(o);
+  lambdaperm:=LambdaPerm(s);
+  rep:=RhoOrbRep(o, m);
+  mults:=RhoOrbMults(o, m);
+  
+  for i in scc do 
+    for j in [1..nrgens] do 
+      if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]]=m then 
+        g:=ClosureGroup(g, 
+         lambdaperm(rep, mults[orbitgraph[i][j]][2]*gens[j]*mults[i][1]*rep));
+        if Size(g)>=bound then 
+          break;
+        fi;
+      fi;
+    od;
+    if Size(g)>=bound then 
+      break;
+    fi;
+  od;
+  
+  o!.schutz[m]:=g;
+  rho_rank:=RhoRank(s)(o[scc[1]]);
+
+  if rho_rank<1000 and Size(g)=Factorial(rho_rank) then 
+    o!.schutzstab[m]:=true;
+  elif Size(g)=1 then 
+    o!.schutzstab[m]:=false;
+  else
+    o!.schutzstab[m]:=StabChainImmutable(g);
+  fi;
+
+  return g;
 end);
 
 #SSS

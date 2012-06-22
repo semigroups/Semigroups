@@ -22,6 +22,8 @@ InstallMethod(LambdaOrbSCCIndex, "for a Green's class of an acting semigroup",
 InstallMethod(RhoOrbSCCIndex, "for a Green's class of an acting semigroup", 
 [IsActingSemigroupGreensClass and IsGreensDClass], 
 function(d)
+  local o;
+
   o:=RhoOrb(d);
   return OrbSCCLookup(o)[Position(o,
    RhoFunc(ParentAttr(d))(Representative(d)))];
@@ -1131,24 +1133,12 @@ function(d)
   lambda_stab:=LambdaOrbStabChain(o, m);
   o:=RhoOrb(d); m:=RhoOrbSCCIndex(d);
   
-  if not IsBound(o!.schutz) or not IsBound(o!.schutz[m]) then 
+  #if not IsBound(o!.schutz) or not IsBound(o!.schutz[m]) then 
     #do something complicated
     # - create the RhoOrbSchutzGp using the elements of LambdaRhoLookup
     #  and lambda_stab, bound on size, sifting to avoid adding gens 
     #  outside the intersection of RhoOrbSchutzGp and LambdaOrbSchutzGp
-    orbit_pos:=d!.orbit_pos;
-    data:=SemigroupData(ParentAttr(d));
-    i:=OrbSCC(data)[OrbSCCLookup(data)[orbit_pos]][1];
-    val:=data!.orblookup1[i];
-    
-    cosets:=[];
-    
-    for m in lookup[val] do 
-      Add(cosets, LambdaPerm(s)(reps[val][m], rep);
-    od;
-
-
-  fi;
+  #fi;
 
   rho_schutz:=RhoOrbSchutzGp(o, m);
   

@@ -188,17 +188,13 @@ InstallGlobalFunction(AsPermOfKerImg,
 function(f)
   local ker, img, n, p, i;
 
-  if not IsBound(f![4]) then 
-    ker:=CanonicalTransSameKernel(f); img:=f![1]; 
+  ker:=KerT(f); img:=RanT(f); 
     n:=Length(img); p:=EmptyPlist(n); 
     for i in [1..n] do 
       p[ker[i]]:=img[i];
     od;
       
-    f![4]:=PermList(Concatenation(p, Difference([1..n], p)));
-  fi; #JDM check if MappingPermListList isn't faster here!
-
-  return f![4];
+    return PermList(Concatenation(p, Difference([1..n], p)));
 end);
 
 # new for 0.1! - AsPermutation - "for a permutation"

@@ -62,7 +62,7 @@ AbstractHTML := Concatenation(
   "satisfies a particular property, such as if it is regular, simple, " ,
   "inverse, completely regular, and a variety of further properties. ",
   "Several catalogues of examples are provided, such as generators for the ",
-  "endomorphism monoids of every connected graphs with at most 8 vertices ", 
+  "endomorphism monoids of every connected graph with at most 8 vertices ", 
   "and generators for the endomorphism monoids of the non-abelian groups with ",
   "order at most 64."),
 
