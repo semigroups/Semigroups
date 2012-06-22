@@ -1192,6 +1192,23 @@ function(o, m)
   return StraightLineProgram([slp_lines], r);
 end);
 
+# new for 1.0! - RhoOrbStabChain - "for a rho orb and scc index"
+##############################################################################
+
+InstallGlobalFunction(RhoOrbStabChain, 
+function(o, m)
+  
+  if IsBound(o!.schutzstab) then 
+    if IsBound(o!.schutzstab[m]) then 
+      return o!.schutzstab[m];
+    fi;
+  fi;
+ 
+  RhoOrbSchutzGp(o, m, infinity);
+  return o!.schutzstab[m];
+end);
+
+
 # new for 1.0! - LambdaOrbStabChain - "for a lambda orb and scc index"
 ##############################################################################
 

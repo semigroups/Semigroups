@@ -1121,7 +1121,7 @@ end);
 InstallMethod(SchutzenbergerGroup, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local o, m, lambda_schutz, lambda_stab, rho_schutz;
+  local o, m, lambda_schutz, lambda_stab, rho_schutz, p;
   
   o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
   lambda_schutz:=LambdaOrbSchutzGp(o, m); 
@@ -1140,15 +1140,16 @@ function(d)
     #  outside the intersection of RhoOrbSchutzGp and LambdaOrbSchutzGp
   #fi;
 
-  rho_schutz:=RhoOrbSchutzGp(o, m);
-  
   if RhoOrbStabChain(o, m)=true then 
     return lambda_schutz;
-  elif IsTrivial(rho_schutz) then 
+  fi;
+    
+  rho_schutz:=RhoOrbSchutzGp(o, m, infinity);
+  if IsTrivial(rho_schutz) then 
     return rho_schutz;
   fi;
   
-  p:=ReturnFail;
+  p:=MappingPermListList(RanT(RhoOrbRep(o, m)), RanT(Representative(d)));
   
   if lambda_stab=true then 
     return rho_schutz^p;
