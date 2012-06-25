@@ -473,6 +473,8 @@ end);
 
 #HHH
 
+
+
 #EEE
 
 # mod for 1.0! - Enumerator - "for a D-class of acting semigp."
@@ -780,6 +782,41 @@ function(s, f)
   return d;
 end);
 
+# mod for 1.0! - GreensRClassOfElement - "for D-class and acting elt"
+#############################################################################
+
+InstallOtherMethod(GreensRClassOfElement, "for D-class and acting elt",
+[IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
+function(d, f)
+    
+  if not f in d then
+    Error("the element does not belong to the D-class,");
+    return;
+  fi;
+  
+  return GreensRClassOfElementNC(d, f);
+end);
+
+# mod for 1.0! - GreensRClassOfElementNC - "for D-class and acting elt"
+#############################################################################
+
+InstallOtherMethod(GreensRClassOfElementNC, "for D-class and acting elt",
+[IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
+function(d, f)
+  local s, r;
+
+  s:=ParentAttr(d);
+  r:=Objectify(RClassType(s), rec());
+
+  SetParentAttr(r, s);
+  SetLambdaOrbSCCIndex(r, LambdaOrbSCCIndex(d));
+  SetLambdaOrb(r, LambdaOrb(d));
+  SetRepresentative(r, f);
+  SetEquivalenceClassRelation(r, GreensRRelation(s));
+  SetIsGreensClassNC(r, true);
+  return r;
+end);
+
 # mod for 1.0! - GreensRClassOfElement - "for an acting semigp and elt."
 #############################################################################
 
@@ -795,21 +832,6 @@ function(s, f)
 
   pos:=Position(SemigroupData(s), f);
   return CallFuncList(CreateRClass, SemigroupData(s)[pos]);
-end);
-
-# mod for 1.0! - GreensRClassOfElement - "for D-class and acting elt"
-#############################################################################
-
-InstallOtherMethod(GreensRClassOfElement, "for D-class and acting elt",
-[IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
-function(d, f)
-    
-  if not f in d then
-    Error("the element does not belong to the D-class,");
-    return;
-  fi;
-  
-  return GreensRClassOfElementNC(d, f);
 end);
 
 # mod for 1.0! - GreensRClassOfElementNC - "for an acting semigp and elt."
@@ -1072,6 +1094,42 @@ function(s)
 
   return iter;
 end);
+
+# new for 1.0! - IteratorOfDClassData - "for an acting semigroup"
+#############################################################################
+# Notes: this should not be used if IsClosed(SemigroupData(s)); 
+
+InstallMethod(IteratorOfDClasses, "for an acting semigroup",
+[IsActingSemigroup],
+function(s)
+
+  if IsClosed(SemigroupData(s)) then 
+    return IteratorList(GreensRClasses(s));
+  fi;
+
+  return IteratorByFunctions( rec( 
+
+    classes:=[],
+
+    R:=IteratorOfRClasses(s),
+
+    IsDoneIterator:=iter-> IsDoneIterator(iter!.R),
+
+    NextIterator:=function(iter)
+      local R, classes, r, d; 
+      R:=iter!.R; classes:=iter!.classes;
+      repeat 
+        r:=NextIterator(R);
+      until IsDoneIterator(R) or 
+       ForAll(classes, d-> not Representative(r) in d);
+      d:=DClassOfRClass(r);
+      Add(classes, d);
+      return d;
+    end,
+    
+    ShallowCopy:=iter-> rec(classes:=[], R:=IteratorOfRClasses(s))));
+end);
+
 
 # new for 1.0! - IteratorOfRClassData - "for an acting semigroup"
 #############################################################################
