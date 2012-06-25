@@ -1236,26 +1236,22 @@ end);
 InstallMethod(LambdaRhoLookup, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass], 
 function(d)
-  local orbit_pos, data, orb_scc, orblookup1, orblookup2, repslookup, out, i;
+  local data, orb_scc, orblookup1, orblookup2, out, i;
 
-  # position in SemigroupData(s)!.orbit of the first R-rep in d
-  orbit_pos:=d!.orbit_pos;
   data:=SemigroupData(ParentAttr(d));
   
   # scc of R-reps corresponding to d 
-  orb_scc:=OrbSCC(data)[OrbSCCLookup(data)[orbit_pos]];
+  orb_scc:=SemigroupDataSCC(d);
 
   # positions in reps containing R-reps in d 
   orblookup1:=data!.orblookup1;
   orblookup2:=data!.orblookup2;
-  repslookup:=data!.repslookup;
 
   out:=[]; 
   for i in orb_scc do 
     if not IsBound(out[orblookup1[i]]) then 
       out[orblookup1[i]]:=[];
     fi;
-    #Add(out[orblookup1[i]], repslookup[orblookup1[i]][orblookup2[i]]);
     Add(out[orblookup1[i]], orblookup2[i]);
   od;
 

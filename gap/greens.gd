@@ -37,6 +37,8 @@ DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassNC", IsActingSemigroupGreensClass);
 DeclareAttribute("LambdaOrbSCC", IsActingSemigroupGreensClass);
 DeclareAttribute("RhoOrbSCC", IsActingSemigroupGreensClass);
+DeclareAttribute("SemigroupDataSCC", IsActingSemigroupGreensClass);
+DeclareAttribute("SemigroupDataSCCIndex", IsActingSemigroupGreensClass);
 
 #old
 
