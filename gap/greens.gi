@@ -672,6 +672,16 @@ function(s)
   return out;
 end);
 
+# mod for 1.0! - GreensLClasses - "for a D-class of an acting semigroup"
+##############################################################################
+
+InstallMethod(GreensLClasses, "for a D-class of an acting semigroup",
+[IsActingSemigroupGreensClass and IsGreensDClass], 
+function(d)
+  Error("not yet implemented");
+  return;
+end);
+
 # new for 1.0! - GreensRClasses - "for a D-class of an acting semigroup"
 ##############################################################################
 
@@ -785,6 +795,21 @@ function(s, f)
 
   pos:=Position(SemigroupData(s), f);
   return CallFuncList(CreateRClass, SemigroupData(s)[pos]);
+end);
+
+# mod for 1.0! - GreensRClassOfElement - "for D-class and acting elt"
+#############################################################################
+
+InstallOtherMethod(GreensRClassOfElement, "for D-class and acting elt",
+[IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
+function(d, f)
+    
+  if not f in d then
+    Error("the element does not belong to the D-class,");
+    return;
+  fi;
+  
+  return GreensRClassOfElementNC(d, f);
 end);
 
 # mod for 1.0! - GreensRClassOfElementNC - "for an acting semigp and elt."

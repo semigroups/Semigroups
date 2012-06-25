@@ -95,93 +95,6 @@ function(d, f)
   return h;
 end);
 
-# mod for 0.5! - RClassRepsData - "for a D-class of a trans. semigroup"
-#############################################################################
-# Notes: maybe write iterator/enumerator later! This is relatively slow in 
-# comparison to RClassReps, as here we have to search for the data.
-
-#JDM this should be rethought...
-
-InstallOtherMethod(RClassRepsData, "for a D-class of a trans. semigroup", 
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(d)
-  local out, f, rels, scc, cosets, j, k, l, m, val, orbits, images, t, r, c, 
-   g, data, i, x;
-
-  out:=DClassRClassRepsDataFromData(d!.parent, d!.data, d!.o);
-  # read the R-classes of d found during the enumeration of D-classes.
-
-  if Length(out)=NrRClasses(d) then 
-    return out;
-  fi;
-
-  f:=Representative(d); rels:=KernelOrbitRels(d);
-  scc:=KernelOrbitSCC(d); cosets:=KernelOrbitCosets(d);
-
-  j:=d!.data[1][1]; k:=d!.data[1][2]; l:=d!.data[1][3]; m:=d!.data[1][4];
-
-  scc:=List(scc, i-> rels[i][1]*f);
-  val:=List(scc, g-> HTValue(ImageOrbit(d)!.kernels_ht[m], 
-   CanonicalTransSameKernel(g)));
-
-  l:=List(cosets, x-> Position(ImageOrbit(d),
-   ImageSetOfTransformation(f*x^-1)));
-
-  out:=EmptyPlist(NrRClasses(d));
-  orbits:=d!.o[1]!.orbits; images:=d!.o[1]!.images;
-  t:=0; r:=Length(scc); c:=Length(cosets);
-
-  for i in [1..r] do 
-    for x in [1..c] do 
-      g:=scc[i]*cosets[x]^-1; #JDM don't take product here!
-      data:=InOrbitsOfImages(g![1], true, [j, k, l[x], m, val[i], 0, fail], 
-       orbits, images);
-      #JDM could do SiftedPermutation directly here, maybe speed things up?
-      if not data[1] then 
-	data:=AddToOrbitsOfImages(d, g![1], data[2], d!.o[1], false);
-      else 
-        data:=data[2];
-      fi;
-      t:=t+1;
-      out[t]:=data;
-    od;
-  od;
-  return out;
-end);
-
-# new for 0.1! - RClassReps - "for a D-class of a trans. semigroup"
-#############################################################################
-# JDM use this for IsGreensClassNC in 1.0!
-
-InstallOtherMethod(RClassReps, "for a D-class of a trans. semigroup", 
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(d)
-  local rels, scc, cosets, f, out, k, g, i, j;
-
-  if HasRClassRepsData(d) then 
-    return List(RClassRepsData(d), x-> 
-     RClassRepFromData(d!.parent, x, d!.o[1]));
-  fi;
-
-  rels:=KernelOrbitRels(d); scc:=KernelOrbitSCC(d);
-  cosets:=KernelOrbitCosets(d); f:=d!.rep;
-
-  out:=EmptyPlist(Length(scc)*Length(cosets));
-  SetNrRClasses(d, Length(scc)*Length(cosets));
-
-  k:=0;
-  
-  for i in scc do
-    g:=rels[i][1]*f;
-    for j in cosets do
-      k:=k+1;
-      out[k]:=g*j^-1;
-    od;
-  od;
-
-  return out;
-end);
-
 # new for 0.1! - GreensLClasses - "for a D-class of a trans. semigroup"
 #############################################################################
 
@@ -203,38 +116,6 @@ function(d)
     l:=CreateLClass(s, data, o, f);
     SetDClassOfLClass(l, d);
     out[i]:=l;
-  od;
-
-  return out;
-end);
-
-# new for 0.1! - GreensRClasses - "for a D-class of a trans. semigroup"
-#############################################################################
-# Notes: it would be helpful to have a IteratorOfRClasses for use in 
-# the  enumerator of a D-class. This is relatively slow in comparison to 
-# GreensRClassReps, as finding RClassRepsData involves a search. 
-# This could be improved by using GreensRClassReps to give the reps of 
-# R-classes and then just setting the attributes of the R-class by finding 
-# the value from the d!.data[1]. Alternatively, R-classes of a D-class could be
-# found in the same way that L-classes of a D-class are found.
-
-# JDM rethink this!
-
-InstallOtherMethod(GreensRClasses, "for a D-class of a trans. semigroup",
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(d)
-  local s, o, out, i, reps, f, r, data;
-
-  s:=d!.parent; o:=d!.o[1]; 
-  out:=EmptyPlist(NrRClasses(d)); 
-  i:=0; reps:=RClassRepsData(d);
-
-  for data in reps do 
-    f:=RClassRepFromData(s, data, o);
-    r:=CreateRClass(s, data{[1..6]}, o, f);
-    SetDClassOfRClass(r, d);
-    i:=i+1;
-    out[i]:=r;
   od;
 
   return out;
@@ -297,21 +178,6 @@ function(d, f)
    Representative(d)*(data[3]/ImageOrbitPerms(d)[data[1][3]]));;
   SetDClassOfLClass(l, d);
   return l;
-end);
-
-# mod for 0.5! - GreensRClassOfElement - "for D-class and transformation"
-#############################################################################
-
-InstallOtherMethod(GreensRClassOfElement, "for D-class and transformation", 
-[IsGreensDClass and IsGreensClassOfTransSemigp, IsTransformation], 
-function(d, f)
-
-  if not f in d then 
-    Error("transformation is not an element of the D-class,");
-    return;
-  fi;
-
-  return GreensRClassOfElementNC(d, f);
 end);
 
 # new for 0.5! - GreensRClassOfElementNC - "for D-class and transformation"
