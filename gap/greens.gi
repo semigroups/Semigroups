@@ -140,8 +140,6 @@ end);
 # Notes: a D-classNC is one created using lambda and rho orbits and not from
 # finding strongly connected components of SemigroupData(s).
 
-#JDM this requires testing
-
 InstallMethod(\in, "for acting elt and D-class of acting semigp.",
 [IsActingElt, IsGreensDClass and IsActingSemigroupGreensClass and IsGreensClassNC],
 function(f, d)
@@ -149,11 +147,9 @@ function(f, d)
   
   rep:=Representative(d); 
   s:=ParentAttr(d);
-  
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or Degree(f) <> Degree(rep) or
-   Rank(f) <> Rank(rep) then
-    Info(InfoCitrus, 1, "degree or rank not equal to those of",
-    " any of the D-class elements,");
+ 
+  # much much better performance using f[2]<>rep[2] below
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] then
     return false;
   fi;
 
@@ -190,7 +186,7 @@ function(f, d)
   fi;
 
   cosets:=LambdaCosets(d);
-  g:=LambdaPerm(rep, g);
+  g:=LambdaPerm(s)(rep, g);
 
   if schutz<>false then 
     for x in cosets do 
@@ -1095,41 +1091,64 @@ function(s)
   return iter;
 end);
 
-# new for 1.0! - IteratorOfDClassData - "for an acting semigroup"
+# new for 1.0! - IteratorOfDClasses - "for an acting semigroup"
 #############################################################################
-# Notes: this should not be used if IsClosed(SemigroupData(s)); 
 
 InstallMethod(IteratorOfDClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
 
   if IsClosed(SemigroupData(s)) then 
-    return IteratorList(GreensRClasses(s));
+    return IteratorList(GreensDClasses(s));
   fi;
 
   return IteratorByFunctions( rec( 
 
     classes:=[],
 
-    R:=IteratorOfRClasses(s),
+    R:=IteratorOfRClassData(s),
 
-    IsDoneIterator:=iter-> IsDoneIterator(iter!.R),
+    last_called_by_is_done:=false,
+
+    next_value:=fail,
+
+    IsDoneIterator:=function(iter)
+      local R, X, x, d; 
+      if iter!.last_called_by_is_done then 
+        return iter!.next_value=fail;
+      fi;
+      
+      iter!.last_called_by_is_done:=true;
+      
+      iter!.next_value:=fail;
+       
+      R:=iter!.R; X:=iter!.classes;
+      
+      repeat 
+        x:=NextIterator(R);
+      until x=fail or ForAll(X, d-> not x[4] in d);
+      
+      
+      if x<>fail then 
+        d:=DClassOfRClass(CallFuncList(CreateRClass, x));
+        Add(X, d);
+        iter!.next_value:=d;
+        return false;
+      fi;
+      return true;
+    end,
 
     NextIterator:=function(iter)
-      local R, classes, r, d; 
-      R:=iter!.R; classes:=iter!.classes;
-      repeat 
-        r:=NextIterator(R);
-      until IsDoneIterator(R) or 
-       ForAll(classes, d-> not Representative(r) in d);
-      d:=DClassOfRClass(r);
-      Add(classes, d);
-      return d;
+      if not iter!.last_called_by_is_done then 
+        IsDoneIterator(iter);
+      fi;
+      iter!.last_called_by_is_done:=false;
+      return iter!.next_value;
     end,
     
-    ShallowCopy:=iter-> rec(classes:=[], R:=IteratorOfRClasses(s))));
+    ShallowCopy:=iter-> rec(classes:=[], R:=IteratorOfRClassData(s),
+     last_called_by_is_done:=false, next_value:=fail)));
 end);
-
 
 # new for 1.0! - IteratorOfRClassData - "for an acting semigroup"
 #############################################################################
