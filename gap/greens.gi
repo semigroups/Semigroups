@@ -1079,6 +1079,36 @@ InstallMethod(IteratorOfRClasses, "for an acting semigroup",
 s-> IteratorByIterator(IteratorOfRClassData(s), x->
 CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
 
+#LLL
+
+# new for 1.0! - LClassReps - "for an acting semigroup D-class"
+#############################################################################
+
+InstallOtherMethod(LClassReps, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  local o, m, mults, scc, cosets, f, out, k, i, j;
+  
+  o:=LambdaOrb(d); 
+  m:=LambdaOrbSCCIndex(d);
+  mults:=LambdaOrbMults(o, m);
+  scc:=LambdaOrbSCC(d);
+  cosets:=LambdaCosets(d);
+  f:=Representative(d);
+  
+  out:=EmptyPlist(Length(scc)*Length(cosets));
+
+  k:=0;
+  for i in scc do
+    for j in cosets do
+      k:=k+1;
+     out[k]:=f*(j/mults[i]);
+    od;
+  od;
+
+  return out;
+end);
+
 #NNN
 
 # new for 1.0! - NrIdempotents - "for an R-class of an acting semigp."
