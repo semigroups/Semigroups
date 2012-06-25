@@ -1402,7 +1402,7 @@ end);
 # parent of data. 
 
 InstallOtherMethod(Position, "for acting semigroup data and acting elt",
-[IsSemigroupData, IsObject, IsZeroCyc],
+[IsSemigroupData, IsObject, IsZeroCyc], 100,
 function(data, x, n)
   local val, s, o, l, m, scc, schutz, repslookup, mults, y, reps, repslens, lambdaperm;
 

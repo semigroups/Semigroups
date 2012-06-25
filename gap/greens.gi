@@ -16,13 +16,21 @@
 InstallMethod(RhoSchutzGp, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local o, m, p;
+  local o, m, f, l, p;
 
   o:=RhoOrb(d); 
   m:=RhoOrbSCCIndex(d);
 
+  #JDM it would be better to not have to do the next 6 lines
+  f:=Representative(d);
+  l:=Position(o, RhoFunc(s)(f));
+
+  if l<>OrbSCC(o)[m][1] then 
+    f:=RhoOrbMults(o, m)[l][2]*f;
+  fi;
+
   #JDM the line below obviously won't work in the general case
-  p:=MappingPermListList(RanT(RhoOrbRep(o, m)), RanT(Representative(d)));
+  p:=MappingPermListList(RanT(RhoOrbRep(o, m)), RanT(f));
   return RhoOrbSchutzGp(o, m, infinity)^p;
 end);
 
@@ -1437,6 +1445,40 @@ InstallMethod(One, "for a transformation",
 [IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
 
 #PPP
+
+# mod for 1.0! - PartialOrderOfDClasses - "for an acting semigroup"
+#############################################################################
+# JDM this is slower than the old version :(
+
+InstallMethod(PartialOrderOfDClasses, "for an acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local d, n, out, gens, data, lookup, j, i, x, f;
+
+  d:=GreensDClasses(s); 
+  n:=NrDClasses(s);
+  out:=List([1..n], x-> EmptyPlist(n));
+  gens:=Generators(s);  
+  data:=SemigroupData(s);
+  lookup:=OrbSCCLookup(data);
+
+  for i in [1..n] do
+    for x in gens do
+
+      for f in RClassReps(d[i]) do
+        j:=Position(data, x*f);
+        AddSet(out[i], lookup[j]);
+      od;
+
+      for f in LClassReps(d[i]) do
+        j:=Position(data, f*x);
+        AddSet(out[i], lookup[j]);
+      od;
+    od;
+  od;
+  Perform(out, ShrinkAllocationPlist);
+  return out;
+end);
 
 # mod for 1.0! - PrintObj - IsIteratorOfRClassReps
 ############################################################################

@@ -214,40 +214,4 @@ function(s)
   return Number(OrbitsOfKernels(s)!.data, x-> IsRegularRClassData(s, x[1], o));
 end);
 
-#PPP
-
-# new for 0.1! - PartialOrderOfDClasses - "for a transformation semigroup"
-#############################################################################
-
-InstallMethod(PartialOrderOfDClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  local d, n, out, gens, data_ht, o, j, data, i, x, f, orbits;
-
-  d:=GreensDClasses(s); n:=NrDClasses(s); 
-  out:= List([1..n], x-> EmptyPlist(n));
-  gens:=Generators(s);  data_ht:=OrbitsOfKernels(s)!.data_ht;
-  o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
-  orbits:=[o[1]!.orbits, o[2]!.orbits];
-
-  for i in [1..n] do
-    for x in gens do
-      
-      for f in RClassReps(d[i]) do
-        data:=PreInOrbitsOfKernels(s, x * f, true, orbits)[2][2]{[1..6]};
-        data[3]:=KernelOrbitSCCFromData(s, data, o[2])[1];
-        AddSet(out[i], HTValue(data_ht, data));
-      od;
-      
-      for f in LClassReps(d[i]) do
-        data:=PreInOrbitsOfKernels(s, f * x, true, orbits)[2][2]{[1..6]};
-        data[3]:=KernelOrbitSCCFromData(s, data, o[2])[1];
-        AddSet(out[i], HTValue(data_ht, data));
-      od;
-    od;
-  od;
-
-  return out;
-end);
-
 #EOF
