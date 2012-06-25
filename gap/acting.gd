@@ -31,6 +31,7 @@ DeclareAttribute("RhoFunc", IsActingSemigroup);
 # to where the graded orbit is in GradedLambdaOrbs
 # only applies in graded case
 DeclareAttribute("LambdaHT", IsActingSemigroup, "mutable");
+DeclareAttribute("RhoHT", IsActingSemigroup, "mutable");
 # should be renamed GradedLambdaHT ?
 
 # hash table of all valid lambda-rho values found so far, HTValue of

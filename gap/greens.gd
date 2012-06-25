@@ -39,6 +39,8 @@ DeclareAttribute("LambdaOrbSCC", IsActingSemigroupGreensClass);
 DeclareAttribute("RhoOrbSCC", IsActingSemigroupGreensClass);
 DeclareAttribute("SemigroupDataSCC", IsActingSemigroupGreensClass);
 DeclareAttribute("SemigroupDataSCCIndex", IsActingSemigroupGreensClass);
+DeclareAttribute("RhoSchutzGp", IsActingSemigroupGreensClass and
+ IsGreensDClass);
 
 #old
 

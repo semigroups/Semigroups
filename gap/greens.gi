@@ -10,6 +10,22 @@
 
 # for convenience...
 
+# new for 1.0! - RhoSchutzGp - "for a D-class of an acting semigroup"
+##############################################################################
+
+InstallMethod(RhoSchutzGp, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  local o, m, p;
+
+  o:=RhoOrb(d); 
+  m:=RhoOrbSCCIndex(d);
+
+  #JDM the line below obviously won't work in the general case
+  p:=MappingPermListList(RanT(RhoOrbRep(o, m)), RanT(Representative(d)));
+  return RhoOrbSchutzGp(o, m, infinity)^p;
+end);
+
 # new for 1.0! - SemigroupDataSCC - "for a D-class of an acting semigp"
 ##############################################################################
 
@@ -49,8 +65,7 @@ end);
 InstallMethod(RhoCosets, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  return RightTransversal(RhoOrbSchutzGp(RhoOrb(d), RhoOrbSCCIndex(d),
-   infinity), SchutzenbergerGroup(d));
+  return RightTransversal(RhoSchutzGp(d), SchutzenbergerGroup(d));
 end);
 
 # new for 1.0! - RhoOrbSCCIndex - "for a Green's class of an acting semigp"
@@ -1284,6 +1299,41 @@ end);
 
 #RRR
 
+# mod for 1.0! - RClassReps - "for a D-class of an acting semigroup"
+############################################################################
+
+InstallOtherMethod(RClassReps, "for a D-class of an acting semigroup",
+[IsActingSemigroupGreensClass and IsGreensDClass],
+function(d)
+  local data, o, m, f, mults, scc, cosets, out, k, g, i, j;
+
+  if not IsGreensClassNC(d) then
+    data:=SemigroupData(ParentAttr(d));
+    return List(SemigroupDataSCC(d), i-> data[i][4]);
+  fi;
+
+  o:=RhoOrb(d); 
+  m:=RhoOrbSCCIndex(d);
+  f:=Representative(d);
+  mults:=RhoOrbMults(o, m);
+  scc:=RhoOrbSCC(d);
+  cosets:=RhoCosets(d);
+
+  out:=EmptyPlist(Length(scc)*Length(cosets));
+  SetNrRClasses(d, Length(scc)*Length(cosets));
+  k:=0;
+
+  for i in scc do
+    g:=mults[i][1]*f;
+    for j in cosets do
+      k:=k+1;
+      out[k]:=g*j^-1;
+    od;
+  od;
+
+  return out;
+end);
+
 # mod for 1.0! - RClassReps - "for an acting semigroup"
 ############################################################################
 
@@ -1357,19 +1407,16 @@ function(d)
     return lambda_schutz;
   fi;
     
-  rho_schutz:=RhoOrbSchutzGp(o, m, infinity);
+  rho_schutz:=RhoSchutzGp(d);
   if IsTrivial(rho_schutz) then 
     return rho_schutz;
   fi;
   
-  #JDM the below of course won't work for non-transformations
-  p:=MappingPermListList(RanT(RhoOrbRep(o, m)), RanT(Representative(d)));
-  
   if lambda_stab=true then 
-    return rho_schutz^p;
+    return rho_schutz;
   fi;
 
-  return Intersection(lambda_schutz, rho_schutz^p);
+  return Intersection(lambda_schutz, rho_schutz);
 end);
 
 # new for 1.0! - Size - "for a D-class of an acting semigp."
@@ -1441,7 +1488,7 @@ function(r)
 
   s:=ParentAttr(r); 
   f:=Representative(r);
-  d:=Objectify(DClassType(s, rec()));
+  d:=Objectify(DClassType(s), rec());
 
   SetParentAttr(d, s);
   SetLambdaOrbSCCIndex(d, LambdaOrbSCCIndex(r));
