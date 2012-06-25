@@ -10,6 +10,27 @@
 
 # for convenience...
 
+# new for 1.0! - LambdaCosets - "for a D-class of an acting semigp"
+##############################################################################
+
+InstallMethod(LambdaCosets, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
+  return RightTransversal(LambdaOrbSchutzGp(o, m), SchutzenbergerGroup(d));
+end);
+
+# new for 1.0! - RhoCosets - "for a D-class of an acting semigp"
+##############################################################################
+
+InstallMethod(RhoCosets, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  o:=RhoOrb(d); m:=RhoOrbSCCIndex(d);
+  return RightTransversal(RhoOrbSchutzGp(o, m, infinity),
+   SchutzenbergerGroup(d));
+end);
+
 # new for 1.0! - LambdaOrbSCCIndex - "for a Green's class of an acting semigp"
 ##############################################################################
 
@@ -37,6 +58,17 @@ InstallOtherMethod(LambdaOrb, "for a Green's class of an acting semi",
 
 InstallOtherMethod(RhoOrb, "for a Green's class of an acting semi",
 [IsActingSemigroupGreensClass], x-> x!.rho_o);
+
+# new for 1.0! - LambdaOrbSCC - "for Green's class of an acting semigroup"
+############################################################################
+
+InstallOtherMethod(LambdaOrbSCC, "for a D-class of an acting semi",
+[IsActingSemigroupGreensClass and IsGreensDClass],
+d-> OrbSCC(d!.o)[d!.lambda_scc]);
+
+InstallOtherMethod(RhoOrbSCC, "for a Green's class of an acting semi",
+[IsActingSemigroupGreensClass], d-> OrbSCC(d!.rho_o)[RhoOrbSCCIndex(d)]);
+
 
 # mod for 1.0! - ParentAttr - "for Green's class of an acting semigroup"
 ############################################################################
@@ -91,6 +123,8 @@ end);
 #############################################################################
 # Notes: a D-classNC is one created using lambda and rho orbits and not from
 # finding strongly connected components of SemigroupData(s).
+
+#JDM this requires testing
 
 InstallMethod(\in, "for acting elt and D-class of acting semigp.",
 [IsActingElt, IsGreensDClass and IsActingSemigroupGreensClass and IsGreensClassNC],
@@ -260,7 +294,6 @@ function(f, d)
   # schutz<>false as if it is then Length(lookup[val])=1<=Index above.
   g:=LambdaPerm(g, rep);
   cosets:=LambdaCosets(d);
-  # must do something like KerRightToImgLeft(d)
 
   for x in cosets do 
     if SiftedPermutation(schutz, g/x)=() then 
@@ -270,7 +303,6 @@ function(f, d)
 
   return false;
 end);
-
 
 # if there is only one value in any set of LambdaRhoLookup (and hence all) then 
 # just check if PermLeftQuoTransformationNC=LambdaPerm(f, anyone of those one
@@ -282,6 +314,7 @@ end);
 # RhoOrbSchutzGp and so if LambdaOrbSchutzGp is trivial, then they are just
 # the elements (and hence a generating set) for RhoOrbSchutzGp. 
 
+# JDM the above is currently not used
 
 # new for 1.0! - \in - "for acting elt and R-class of acting semigp"
 #############################################################################
@@ -1156,6 +1189,20 @@ function(d)
   fi;
 
   return Intersection(lambda_schutz, rho_schutz^p);
+end);
+
+# new for 1.0! - Size - "for a D-class of an acting semigp."
+#############################################################################
+
+InstallOtherMethod(Size, "for a D-class of an acting semigp.",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  local l, r;
+  
+  l:=LambdaOrbSchutzGp(LambdaOrb(d), LambdaOrbSCCIndex(d));
+  r:=RhoOrbSchutzGp(RhoOrb(d), RhoOrbSCCIndex(d), infinity);
+  return Size(r)*Size(l)*Length(LambdaOrbSCC(d))*Length(RhoOrbSCC(d))/
+   Size(SchutzenbergerGroup(d));
 end);
 
 # new for 1.0! - Size - "for an R-class of an acting semigp."

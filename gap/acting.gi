@@ -108,7 +108,7 @@ InstallMethod(LambdaMult, "for a partial perm semi",
   return MappingPermListList(pt, OnIntegerTuplesWithPP(pt, f));
 end);
 
-# new for 1.0! - LambdaMult
+# new for 1.0! - RhoMult 
 ###############################################################################
 #JDM c method for this!
 
@@ -144,6 +144,7 @@ InstallMethod(RhoMult, "for a partial perm semi",
 InstallMethod(LambdaPerm, "for a transformation semi",
 [IsTransformationSemigroup], s-> PermLeftQuoTransformationNC);
 
+#JDM c method for this!
 InstallMethod(LambdaPerm, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> function(f,g)
   local h;
@@ -151,7 +152,7 @@ InstallMethod(LambdaPerm, "for a partial perm semi",
   return MappingPermListList(DomPP(h), RanPP(h)); 
 end);
 
-# new for 1.0! - LambdaRank
+# new for 1.0! - LambdaRank and RhoRank
 ###############################################################################
 
 InstallMethod(LambdaRank, "for a transformation semigroup", 
@@ -161,6 +162,9 @@ InstallMethod(RhoRank, "for a transformation semigroup",
 [IsTransformationSemigroup], x-> MaximumList);
 
 InstallMethod(LambdaRank, "for a semigroup of partial perms", 
+[IsPartialPermSemigroup], x-> Length);
+
+InstallMethod(RhoRank, "for a semigroup of partial perms", 
 [IsPartialPermSemigroup], x-> Length);
 
 # new for 1.0! - RhoFunc
@@ -190,7 +194,6 @@ end);
 # new for 1.0! - IdempotentLambdaRhoTester - "for a trans semigp"
 ##############################################################################
 #JDM this should be revised.
-
 
 InstallMethod(IdempotentLambdaRhoTester, "for a trans semigp", 
 [IsTransformationSemigroup], s-> function(x, y) 
@@ -357,9 +360,10 @@ function(f, s)
     if val=false then 
       return false;
     fi;
-    val:=data!.orbit[val][6]; # the index of the list of reps with same
-                              # lambdarho value as f. 
-                              # = HTValue(LambdaRhoHT(s), lambdarho);
+    val:=data!.orblookup1[val]; 
+    # the index of the list of reps with same
+    # lambdarho value as f. 
+    # = HTValue(LambdaRhoHT(s), lambdarho);
   fi;
 
   schutz:=LambdaOrbStabChain(o, m);
@@ -990,6 +994,7 @@ function(s, data, x)
     fi;
     
     # install the info about x in data
+    # JDM some date missing here!
     HTAdd(data!.ht, x, 1);
     data!.orbit:=[[s, m, o, x, 1, 1]];
     data!.repslens[1]:=1;
