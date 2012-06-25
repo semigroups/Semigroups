@@ -682,8 +682,9 @@ end);
 
 # new for 1.0! - GreensRClasses - "for a D-class of an acting semigroup"
 ##############################################################################
+# JDM another method required for GreensClassNC
 
-InstallMethod(GreensRClasses, "for an acting semigroup",
+InstallMethod(GreensRClasses, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass], 
 function(d)
   local scc, out, orbit, j, i;
@@ -864,10 +865,25 @@ GreensDClassOfElement);
 
 #III
 
-# mod for 1.0! - Idempotents - "for a R-class of a trans. semigp."
+# new for 1.0! - Idempotents - "for a D-class of an acting semigp."
 #############################################################################
 
-InstallOtherMethod(Idempotents, "for a R-class of a trans. semigp.",
+InstallOtherMethod(Idempotents, "for a D-class of an acting semigp.",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  local R, out, x;
+  R:=GreensRClasses(d);
+  out:=[];
+  for x in R do 
+    Append(out, Idempotents(x));
+  od;
+  return out;
+end);
+
+# mod for 1.0! - Idempotents - "for an R-class of an acting semigp"
+#############################################################################
+
+InstallOtherMethod(Idempotents, "for an R-class of an acting semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
   local s, out, rho, o, m, scc, j, tester, creator, i;
@@ -922,13 +938,52 @@ InstallOtherMethod(IsGreensLClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensHClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 
+# new for 1.0! - IsRegularDClass - "for an D-class of an acting semi"
+#############################################################################
+
+InstallMethod(IsRegularDClass, "for an D-class of an acting semigp",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  local s, data, rho, scc, o, tester, i;
+
+  if HasNrIdempotents(d) then 
+    return NrIdempotents(d)<>0;
+  fi;
+
+  s:=ParentAttr(d);
+  data:=SemigroupData(s);
+  
+  if not IsGreensClassNC(d) then
+    if data!.repslens[data!.orblookup1[d!.orbit_pos]]>1 then
+      return false;
+    fi;
+  fi; 
+  
+  # is r the group of units...
+  if Rank(Representative(d))=Degree(s) then
+    return true;
+  fi;   
+ 
+  rho:=RhoFunc(s)(Representative(d));
+  scc:=LambdaOrbSCC(d);
+  o:=LambdaOrb(d); 
+  tester:=IdempotentLambdaRhoTester(s);
+
+  for i in scc do
+    if tester(o[i], rho) then
+      return true; 
+    fi;
+  od;
+  return false;
+end);
+
 # new for 1.0! - IsRegularRClass - "for an R-class of an acting semi"
 #############################################################################
 
 InstallMethod(IsRegularRClass, "for an R-class of an acting semigp",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local s, data, rho, o, m, scc, tester, i;
+  local s, data, rho, o, scc, tester, i;
 
   if HasNrIdempotents(r) then 
     return NrIdempotents(r)<>0;
@@ -938,7 +993,7 @@ function(r)
   data:=SemigroupData(s);
   
   if not IsGreensClassNC(r) then
-    if data!.repslens[data!.orblookup[r!.orbit_pos]]>1 then
+    if data!.repslens[data!.orblookup1[r!.orbit_pos]]>1 then
       return false;
     fi;
   fi; 
@@ -950,8 +1005,7 @@ function(r)
  
   rho:=RhoFunc(s)(Representative(r));
   o:=LambdaOrb(r);
-  m:=LambdaOrbSCCIndex(r);
-  scc:=OrbSCC(o)[m];
+  scc:=LambdaOrbSCC(r);
   tester:=IdempotentLambdaRhoTester(s);
 
   for i in scc do
@@ -1128,7 +1182,6 @@ function(s)
         x:=NextIterator(R);
       until x=fail or ForAll(X, d-> not x[4] in d);
       
-      
       if x<>fail then 
         d:=DClassOfRClass(CallFuncList(CreateRClass, x));
         Add(X, d);
@@ -1149,6 +1202,14 @@ function(s)
     ShallowCopy:=iter-> rec(classes:=[], R:=IteratorOfRClassData(s),
      last_called_by_is_done:=false, next_value:=fail)));
 end);
+
+# new for 1.0! - IteratorOfDClassReps - "for an acting semigroup"
+#############################################################################
+
+InstallMethod(IteratorOfDClassReps, "for an acting semigroup",
+[IsActingSemigroup],
+s-> IteratorByIterator(IteratorOfDClasses(s), Representative,
+[IsIteratorOfDClassReps]));
 
 # new for 1.0! - IteratorOfRClassData - "for an acting semigroup"
 #############################################################################
@@ -1228,6 +1289,13 @@ end);
 
 #NNN
 
+# new for 1.0! - NrIdempotents - "for a D-class of an acting semigp"
+#############################################################################
+
+InstallOtherMethod(NrIdempotents, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+d-> Sum(List(GreensRClasses(d), NrIdempotents)));
+
 # new for 1.0! - NrIdempotents - "for an R-class of an acting semigp."
 #############################################################################
 
@@ -1243,9 +1311,10 @@ function(r)
   s:=ParentAttr(r);     
 
   # check if we already know this...
-  if not IsGreensClassNC(r) then
+  if not IsGreensClassNC(r) and not (HasIsRegularRClass(r) and
+   IsRegularRClass(r)) then
     data:=SemigroupData(s);
-    if data!.repslens[data!.orblookup[r!.orbit_pos]]>1 then
+    if data!.repslens[data!.orblookup1[r!.orbit_pos]]>1 then
       return 0;
     fi;
   fi;
@@ -1321,10 +1390,24 @@ end);
 
 InstallMethod(NrDClasses, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  return Length(OrbSCC(SemigroupData(s)))-SemigroupData(s)!.modifier;
+s-> Length(OrbSCC(SemigroupData(s)))-SemigroupData(s)!.modifier);
+
+# mod for 1.0! - NrHClasses - "for a D-class of an acting semigroup"
+#############################################################################
+
+InstallOtherMethod(NrHClasses, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  return NrRClasses(d)*NrLClasses(d);
 end);
- 
+
+# mod for 1.0! - NrLClasses - "for a D-class of an acting semigroup"
+#############################################################################
+
+InstallOtherMethod(NrLClasses, "for a D-class of an acting semigroup",       
+[IsActingSemigroupGreensClass and IsGreensDClass],
+d-> Length(LambdaCosets(d))*Length(LambdaOrbSCC(d)));
+
 # mod for 1.0! - NrRClasses - "for a D-class of an acting semigroup"
 #############################################################################
 
@@ -1348,7 +1431,7 @@ end);
 
 # new for 0.5! - One - "for a transformation"
 #############################################################################
-# this should go to transform.gi
+# JDM this should go to transform.gi
 
 InstallMethod(One, "for a transformation",
 [IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
@@ -1396,6 +1479,33 @@ end);
 InstallMethod(PrintObj, [IsIteratorOfRClassElements],
 function(iter)
   Print("<iterator of R-class>");
+  return;
+end);
+
+# mod for 1.0! - PrintObj - for IsIteratorOfDClassReps
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfDClassReps],
+function(iter)
+  Print("<iterator of D-class reps>");
+  return;
+end);
+
+# new for 0.1! - PrintObj - "for iterator of D-classes"
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfDClasses], 
+function(iter)
+  Print( "<iterator of D-classes>");
+  return;
+end);
+  
+# new for 0.7! - PrintObj - "for an iterator of a D-class"
+############################################################################
+   
+InstallMethod(PrintObj, [IsIteratorOfDClassElements],
+function(iter)
+  Print( "<iterator of D-class>");
   return;
 end);
 
