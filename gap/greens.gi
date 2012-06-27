@@ -1854,95 +1854,39 @@ function(s)
   return out;
 end);
 
-# new for 0.4! - EnumeratorOfRClasses - "for a trans. semigroup"
+# mod for 1.0! - EnumeratorOfRClasses - "for an acting semigroup"
 #############################################################################
-# Notes: NumberElement does not work for RClassNCs, JDM maybe it should!
+# Notes: the only purpose for this is the method for NumberElement.  Otherwise
+# use (if nothing much is known) IteratorOfRClasses or if everything is know
+# just use RClasses.
 
-InstallMethod(EnumeratorOfRClasses, "for a trans. semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+InstallMethod(EnumeratorOfRClasses, "for an acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local enum;
 
-  if HasGreensRClasses(s) then 
-    enum:=EnumeratorByFunctions(s, rec(
-      
-      ElementNumber:=function(enum, pos)
-        return GreensRClasses(s)[pos];
-      end,
-
-      NumberElement:=function(enum, r)
-        
-        if not ParentAttr(r)=s then 
-          return fail;
-        fi;
-
-        if IsRClassNC(r) then 
-          return fail;
-        fi;
-
-        return RClassIndexFromData(s, r!.data);
-      end,
-
-      Membership:=function(r, enum)
-        return not Position(enum, r)=fail;
-      end,
-      
-      Length:=enum -> NrRClasses(s),
-
-      PrintObj:=function(enum)
-        Print( "<enumerator of R-classes>");
-        return;
-      end));
-
-    return enum;
-  fi;
-
-  enum:=EnumeratorByFunctions(s, rec(
-   
+  return EnumeratorByFunctions(s, rec(
+    
     ElementNumber:=function(enum, pos)
-      local data, m, iter, i;
-
-      data:=OrbitsOfImages(s)!.data; m:=Length(data);
-
-      if m>=pos then 
-        data:=data[pos];
-      elif OrbitsOfImages(s)!.finished then 
-        return fail;
-      else
-        iter:=IteratorOfNewRClassRepsData(s);
-        for i in [1..pos-m-1] do 
-          NextIterator(iter);
-        od;
-        data:=NextIterator(iter);
-      fi;
-
-      if not data=fail then 
-        return CreateRClass(s, data, OrbitsOfImages(s),
-          RClassRepFromData(s, data));        
-      fi;
-      return fail;
+      return GreensRClasses(s)[pos];
     end,
 
     NumberElement:=function(enum, r)
-
-      if not ParentAttr(r)=s then
-        return fail;
-      fi;
-
-      if IsRClassNC(r) then
-        return fail;
-      fi;  
-
-      return RClassIndexFromData(s, r!.data);
+      return Position(SemigroupData(s), Representative(r))-
+       SemigroupData(s)!.modifier;
     end,
 
+    Membership:=function(r, enum)
+      return Position(enum, r)<>fail;
+    end,
+    
     Length:=enum -> NrRClasses(s),
 
     PrintObj:=function(enum)
       Print( "<enumerator of R-classes>");
       return;
-  end));
-      
+    end));
+
   return enum;
 end);
 
