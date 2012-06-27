@@ -1062,46 +1062,43 @@ function(s, data, x)
   local lamx, pos, o, m, scc;
 
   # decide if we are using graded orbits or not.
-  if (not HasGradedLambdaOrbs(s)) #or (HasLambdaHT(s) and LambdaHT(s)!.nr<20) 
-   or (HasLambdaOrb(s) and HasGradedLambdaOrbs(s) and
-    Length(LambdaOrb(s))>=LambdaHT(s)!.nr) then 
+  if (not HasGradedLambdaOrbs(s)) or (HasLambdaOrb(s) and
+   HasGradedLambdaOrbs(s) and Length(LambdaOrb(s))>=LambdaHT(s)!.nr) then 
     data!.graded:=false;
   else
     data!.graded:=true;
   fi;
   
   # install first point if we are in a monoid
-  if not x=false then 
+  if x<>false then 
     
     # find the orbit containing LambdaFunc(s)(x)...
     lamx:=LambdaFunc(s)(x);
     if not data!.graded then 
       o:=LambdaOrb(s);
-      pos:=[1, 1];
+      m:=1;
     else
-      pos:=HTValue(LambdaHT(s), lamx);
+      pos:=HTValue(LambdaHT(s), lamx); #scc index, scc[1], pos of lamx in o
       if pos=fail then 
         o:=GradedLambdaOrb(s, x, true);
-        m:=1; #[scc index, scc[1], pos of LambdaFunc(x) in o]
+        m:=1; #scc index
       else
         o:=GradedLambdaOrbs(s)[pos[1]][pos[2]];
         m:=OrbSCCLookup(o)[pos[3]];
-        scc:=o!.scc[m];
-        if pos[3]<>scc[1] then 
-          x:=x*LambdaOrbMults(o, m)[pos[3]];
-          lamx:=o[scc[1]];
-        fi;
+        # LambdaFunc(x) must be in 1st place of scc since scc has length 1!
       fi;  
     fi;
     
     # install the info about x in data
-    # JDM some date missing here!
     HTAdd(data!.ht, x, 1);
-    data!.orbit:=[[s, m, o, x, 1, 1]];
+    data!.orbit:=[[s, m, o, x, 1]];
     data!.repslens[1]:=1;
     data!.lenreps:=data!.lenreps+1;
     data!.reps[data!.lenreps]:=[x];
     data!.repslookup[1]:=[1];
+    data!.orblookup1[1]:=1;
+    data!.orblookup2[1]:=1;
+
     HTAdd(LambdaRhoHT(s), Concatenation(lamx, RhoFunc(s)(x)), data!.lenreps);
   fi;
 

@@ -23,7 +23,7 @@ function(d)
 
   #JDM it would be better to not have to do the next 6 lines
   f:=Representative(d);
-  l:=Position(o, RhoFunc(s)(f));
+  l:=Position(o, RhoFunc(ParentAttr(d))(f));
 
   if l<>OrbSCC(o)[m][1] then 
     f:=RhoOrbMults(o, m)[l][2]*f;
@@ -673,7 +673,7 @@ function(s)
   out:=EmptyPlist(Length(scc));
   
   for i in [1+r..Length(scc)] do 
-    out[i-r]:=CallFuncList(CreateDClass, orbit[i]);
+    out[i-r]:=CallFuncList(CreateDClass, orbit[scc[i][1]]);
   od;
   return out;
 end);
@@ -1448,31 +1448,70 @@ InstallMethod(One, "for a transformation",
 
 # mod for 1.0! - PartialOrderOfDClasses - "for an acting semigroup"
 #############################################################################
-# JDM this is slower than the old version :(
+# JDM graded version!
 
 InstallMethod(PartialOrderOfDClasses, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local d, n, out, gens, data, lookup, j, i, x, f;
+  local d, n, out, gens, data, graph, datalookup, o, lambdafunc, rhofunc, scc, lookup, lambdarhoht, lambdaperm, repslookup, schutz, mults, reps, repslens, ht, l, m, val, j, f, i, x, k;
 
   d:=GreensDClasses(s); 
-  n:=NrDClasses(s);
+  n:=Length(d);
   out:=List([1..n], x-> EmptyPlist(n));
   gens:=Generators(s);  
+  
   data:=SemigroupData(s);
-  lookup:=OrbSCCLookup(data);
+  graph:=SemigroupData(s)!.graph;
+  datalookup:=OrbSCCLookup(data)-SemigroupData(s)!.modifier;  
+  reps:=data!.reps;
+  repslens:=data!.repslens;
+  ht:=data!.ht;
+  repslookup:=data!.repslookup;
+  
+  lambdafunc:=LambdaFunc(s);
+  rhofunc:=RhoFunc(s);
+  lambdarhoht:=LambdaRhoHT(s);
+  lambdaperm:=LambdaPerm(s);
+  
+  o:=LambdaOrb(s);
+  scc:=OrbSCC(o); 
+  lookup:=OrbSCCLookup(o);
+  schutz:=o!.schutzstab;
+  mults:=o!.mults;
 
   for i in [1..n] do
     for x in gens do
-
-      for f in RClassReps(d[i]) do
-        j:=Position(data, x*f);
-        AddSet(out[i], lookup[j]);
+      for j in SemigroupDataSCC(d[i]) do 
+        for k in graph[j] do  
+          AddSet(out[i], datalookup[k]);
+        od;
       od;
 
       for f in LClassReps(d[i]) do
-        j:=Position(data, f*x);
-        AddSet(out[i], lookup[j]);
+        l:=Position(o, lambdafunc(f));
+        m:=lookup[l];
+        val:=HTValue(lambdarhoht, Concatenation(o[scc[m][1]], rhofunc(f)));
+        
+        if schutz[m]=true then 
+          j:=repslookup[val][1];
+        else
+          if l<>scc[m][1] then 
+            f:=f*mults[l];
+          fi;
+          if schutz[m]=false then 
+            j:=HTValue(ht, f);
+          else
+            n:=0; j:=0;
+            repeat 
+              n:=n+1;
+              if SiftedPermutation(schutz[m], lambdaperm(reps[val][n], f))=()
+               then  
+                j:=repslookup[val][n];
+              fi;
+            until j<>0;
+          fi;
+        fi;
+        AddSet(out[i], datalookup[j]);
       od;
     od;
   od;
