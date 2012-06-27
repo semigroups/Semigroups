@@ -2044,7 +2044,6 @@ end);
 # IteratorOfLClassRepsData since the scc:=OrbSCC line makes this work not so
 # well!
 
-
 InstallMethod(IteratorOfDClassRepsData, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], 
 function(s)

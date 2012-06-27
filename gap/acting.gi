@@ -143,7 +143,10 @@ InstallMethod(RhoMult, "for a transformation semi",
   end);
 
 InstallMethod(RhoMult, "for a partial perm semi",
-[IsPartialPermSemigroup], s-> f-> f^-1); 
+[IsPartialPermSemigroup], s-> 
+  function(dom, f)
+    return f^-1;
+  end);
 
 # new for 1.0! - LambdaPerm
 ###############################################################################
@@ -155,12 +158,37 @@ InstallMethod(LambdaPerm, "for a transformation semi",
 [IsTransformationSemigroup], s-> PermLeftQuoTransformationNC);
 
 #JDM c method for this!
-InstallMethod(LambdaPerm, "for a partial perm semi",
-[IsPartialPermSemigroup], s-> function(f,g)
-  local h;
-  h:=f^-1*g;
-  return MappingPermListList(DomPP(h), RanPP(h)); 
-end);
+
+if IsBound(DomPP) and IsBound(RanPP) then 
+  InstallMethod(LambdaPerm, "for a partial perm semi",
+  [IsPartialPermSemigroup], s-> function(f,g)
+    local h;
+    h:=f^-1*g;
+    return MappingPermListList(DomPP(h), RanPP(h)); 
+  end);
+fi;
+
+# new for 1.0! - RhoPerm
+###############################################################################
+# RhoPerm(s)(f, g) returns a permutation p mapping LambdaFunc(s)(f) to
+# LambdaFunc(s)(g) when RhoFunc(s)(f)=RhoFunc(s)(g) so that 
+#  gf^-1(i)=p(i).
+
+#JDM c method for both of these...
+
+InstallMethod(RhoPerm, "for a transformation semi",
+[IsTransformationSemigroup], s-> 
+  function(f, g) 
+    return MappingPermListList(RanT(f), RanT(g));
+  end);
+
+if IsBound(RanPP) then 
+  InstallMethod(RhoPerm, "for a partial perm semi",
+  [IsPartialPermSemigroup], s-> 
+    function(f, g)
+      return MappingPermListList(RanPP(f), RanPP(g));
+    end);
+fi;
 
 # new for 1.0! - LambdaRank and RhoRank
 ###############################################################################

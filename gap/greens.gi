@@ -16,10 +16,15 @@
 InstallMethod(RhoSchutzGp, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local o, m, f, l, p;
+  local o, m, schutz, f, l, p;
 
   o:=RhoOrb(d); 
   m:=RhoOrbSCCIndex(d);
+  schutz:=RhoOrbSchutzGp(o, m, infinity);
+
+  if IsTrivial(schutz) then 
+    return schutz;
+  fi;
 
   #JDM it would be better to not have to do the next 6 lines
   f:=Representative(d);
@@ -29,9 +34,8 @@ function(d)
     f:=RhoOrbMults(o, m)[l][2]*f;
   fi;
 
-  #JDM the line below obviously won't work in the general case
-  p:=MappingPermListList(RanT(RhoOrbRep(o, m)), RanT(f));
-  return RhoOrbSchutzGp(o, m, infinity)^p;
+  p:=RhoPerm(ParentAttr(d))(RhoOrbRep(o, m), f);
+  return schutz^p;
 end);
 
 # new for 1.0! - SemigroupDataSCC - "for a D-class of an acting semigp"
@@ -92,8 +96,8 @@ end);
 # new for 1.0! - LambdaOrbSCC - "for Green's class of an acting semigroup"
 ############################################################################
 
-InstallOtherMethod(LambdaOrbSCC, "for a D-class of an acting semi",
-[IsActingSemigroupGreensClass and IsGreensDClass],
+InstallOtherMethod(LambdaOrbSCC, "for a Green's class of an acting semi",
+[IsActingSemigroupGreensClass and IsGreensClass],
 d-> OrbSCC(LambdaOrb(d))[LambdaOrbSCCIndex(d)]);
 
 InstallOtherMethod(RhoOrbSCC, "for a Green's class of an acting semi",
@@ -346,8 +350,9 @@ function(f, r)
   rep:=Representative(r); 
   s:=ParentAttr(r);
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or Degree(f) <> Degree(rep) or
-   Rank(f) <> Rank(rep) or RhoFunc(s)(f) <> RhoFunc(s)(rep) then
+  #JDM degree causes problems for partial perms below...
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) #or Degree(f) <> Degree(rep)
+   or Rank(f) <> Rank(rep) or RhoFunc(s)(f) <> RhoFunc(s)(rep) then
     Info(InfoCitrus, 1, "degree, rank, or rho value not equal to those of",
     " any of the R-class elements,");
     return false;
@@ -477,12 +482,11 @@ end);
 
 #HHH
 
-
-
 #EEE
 
 # mod for 1.0! - Enumerator - "for a D-class of acting semigp."
 #############################################################################
+# JDM should have a separate method for IsGreensClassNC
 
 InstallOtherMethod(Enumerator, "for a D-class of acting semigp.",
 [IsGreensDClass and IsActingSemigroupGreensClass],
@@ -514,18 +518,17 @@ function(d)
     end,
 
     #######################################################################
-
+    # JDM this should be improved and fixed!
     NumberElement:=function(enum, f)
-      local R, i, j;
+      local i;
+      i:=Position(SemigroupDataSCC(d), 
+       Position(SemigroupData(ParentAttr(d)), f));
+      
+      if i=fail then 
+        return fail;
+      fi;
 
-      R:=GreensRClasses(d);
-      for i in [1..Length(R)] do
-        j:=Position(Enumerator(R[i]), f);
-        if not j=fail then
-          return enum!.m*(i-1)+j;
-        fi;
-      od;
-      return fail;
+      return enum!.m*(i-1)+Position(Enumerator(GreensRClasses(d)[i]), f);
     end,
 
     #######################################################################
@@ -591,8 +594,9 @@ function(r)
       rep:=Representative(r);
       
       if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-       Degree(f) <> Degree(rep) or Rank(f) <> Rank(rep) or 
-        RhoFunc(s)(f) <> RhoFunc(s)(rep) then 
+       # degree causes problems for partial perms
+       #Degree(f) <> Degree(rep) or 
+       Rank(f) <> Rank(rep) or RhoFunc(s)(f) <> RhoFunc(s)(rep) then 
         return fail;
       fi;
       
