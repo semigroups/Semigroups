@@ -739,6 +739,7 @@ end);
 
 # mod for 1.0! - GreensDClassOfElement - "for an acting semigp and elt."
 #############################################################################
+#JDM shouldn't we rectify the lambda and rho value of the rep? 
 
 InstallOtherMethod(GreensDClassOfElement, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
@@ -791,6 +792,41 @@ function(s, f)
   SetRepresentative(d, f);
   SetEquivalenceClassRelation(d, GreensDRelation(s));
   SetIsGreensClassNC(d, true);
+  return d;
+end);
+
+# mod for 1.0! - GreensLClassOfElement - "for an acting semigp and elt."
+#############################################################################
+# JDM this is not really implemented yet...
+InstallOtherMethod(GreensLClassOfElement, "for an acting semigp and elt",
+[IsActingSemigroup, IsActingElt],
+function(s, f)
+  local pos, d, o;
+
+  if not f in s then
+    Error("the element does not belong to the semigroup,");
+    return;
+  fi;
+
+  if IsClosed(SemigroupData(s)) then 
+    pos:=Position(SemigroupData(s), f);
+    return CallFuncList(CreateDClass, SemigroupData(s)[pos]);
+  fi;
+  
+  d:=Objectify(LClassType(s, rec()));
+  SetParentSemigroup(d, s);
+
+  o:=GradedLambdaOrb(s, f, true);     
+  SetLambdaOrb(d, o);
+  SetLambdaOrbSCCIndex(d, OrbSCCLookup(o)[Position(o, LambdaFunc(s)(f))]);
+  
+  o:=GradedRhoOrb(s, f, true);
+  SetRhoOrb(d, o);
+  SetRhoOrbSCCIndex(d, OrbSCCLookup(o)[Position(o, RhoFunc(s)(f))]);
+
+  SetRepresentative(d, f);
+  SetEquivalenceClassRelation(d, GreensDRelation(s));
+  SetIsGreensClassNC(d, false);
   return d;
 end);
 
