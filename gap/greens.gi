@@ -28,13 +28,13 @@ function(d)
 
   #JDM it would be better to not have to do the next 6 lines
   f:=Representative(d);
-  l:=Position(o, RhoFunc(ParentAttr(d))(f));
+  l:=Position(o, RhoFunc(ParentSemigroup(d))(f));
 
   if l<>OrbSCC(o)[m][1] then 
     f:=RhoOrbMults(o, m)[l][2]*f;
   fi;
 
-  p:=RhoPerm(ParentAttr(d))(RhoOrbRep(o, m), f);
+  p:=RhoPerm(ParentSemigroup(d))(RhoOrbRep(o, m), f);
   return schutz^p;
 end);
 
@@ -46,7 +46,7 @@ InstallMethod(SemigroupDataSCC, "for a D-class of an acting semigroup",
 function(d)
   local data;
   
-  data:=SemigroupData(ParentAttr(d));
+  data:=SemigroupData(ParentSemigroup(d));
 
   # scc of R-reps corresponding to d 
   return OrbSCC(data)[OrbSCCLookup(data)[d!.orbit_pos]];
@@ -58,7 +58,7 @@ end);
 InstallMethod(SemigroupDataSCCIndex, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  return OrbSCCLookup(SemigroupData(ParentAttr(d)))[d!.orbit_pos];
+  return OrbSCCLookup(SemigroupData(ParentSemigroup(d)))[d!.orbit_pos];
 end);
 
 # new for 1.0! - LambdaCosets - "for a D-class of an acting semigp"
@@ -90,7 +90,7 @@ function(d)
 
   o:=RhoOrb(d);
   return OrbSCCLookup(o)[Position(o,
-   RhoFunc(ParentAttr(d))(Representative(d)))];
+   RhoFunc(ParentSemigroup(d))(Representative(d)))];
 end);
 
 # new for 1.0! - LambdaOrbSCC - "for Green's class of an acting semigroup"
@@ -125,9 +125,9 @@ function(x, y)
    (IsGreensLClass(x) and IsGreensLClass(y)) or
    (IsGreensDClass(x) and IsGreensDClass(y)) or
    (IsGreensHClass(x) and IsGreensHClass(y)) then
-    return ParentAttr(x)=ParentAttr(y) and Representative(x) in y;
+    return ParentSemigroup(x)=ParentSemigroup(y) and Representative(x) in y;
   fi;
-  return ParentAttr(x)=ParentAttr(y) and Representative(x) in y and
+  return ParentSemigroup(x)=ParentSemigroup(y) and Representative(x) in y and
    Size(x)=Size(y);
 end);
 
@@ -141,7 +141,7 @@ function(x, y)
    (IsGreensLClass(x) and IsGreensLClass(y)) or
    (IsGreensDClass(x) and IsGreensDClass(y)) or
    (IsGreensHClass(x) and IsGreensHClass(y)) then
-    return ParentAttr(x)=ParentAttr(y) and Representative(x) <
+    return ParentSemigroup(x)=ParentSemigroup(y) and Representative(x) <
      Representative(y);
   fi;
   return fail;
@@ -158,7 +158,7 @@ function(f, d)
   local rep, s, g, m, o, scc, l, schutz, cosets, x;
   
   rep:=Representative(d); 
-  s:=ParentAttr(d);
+  s:=ParentSemigroup(d);
  
   # much much better performance using f[2]<>rep[2] below
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] then
@@ -229,7 +229,7 @@ function(f, d)
   reps, cosets, x;
   
   rep:=Representative(d); 
-  s:=ParentAttr(d);
+  s:=ParentSemigroup(d);
  
   # much much better performance using f[2]<>rep[2] below
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] then
@@ -348,7 +348,7 @@ function(f, r)
   local rep, s, m, o, l, schutz, g;
 
   rep:=Representative(r); 
-  s:=ParentAttr(r);
+  s:=ParentSemigroup(r);
 
   #JDM degree causes problems for partial perms below...
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) #or Degree(f) <> Degree(rep)
@@ -440,13 +440,16 @@ end);
 # Usage: arg[1] = semigroup; arg[2] = lambda orb scc index;
 # arg[3] = lambda orb; arg[4] = rep; arg[5] = position in SemigroupData of rep.
 
+# JDM it would be better to not set so much here just to save arg in rec and
+# have methods for each of these attributes. 
+
 InstallGlobalFunction(CreateDClass,  
 function(arg) 
   local d, val;
  
   d:=Objectify(DClassType(arg[1]), rec(orbit_pos:=arg[5])); 
   
-  SetParentAttr(d, arg[1]);
+  SetParentSemigroup(d, arg[1]);
   SetLambdaOrbSCCIndex(d, arg[2]);
   SetLambdaOrb(d, arg[3]);
   SetRepresentative(d, arg[4]); 
@@ -470,7 +473,7 @@ function(arg)
   
   r:=Objectify(RClassType(arg[1]), rec(orbit_pos:=arg[5]));
 
-  SetParentAttr(r, arg[1]);
+  SetParentSemigroup(r, arg[1]);
   SetLambdaOrbSCCIndex(r, arg[2]);
   SetLambdaOrb(r, arg[3]);
   SetRepresentative(r, arg[4]);
@@ -522,7 +525,7 @@ function(d)
     NumberElement:=function(enum, f)
       local i;
       i:=Position(SemigroupDataSCC(d), 
-       Position(SemigroupData(ParentAttr(d)), f));
+       Position(SemigroupData(ParentSemigroup(d)), f));
       
       if i=fail then 
         return fail;
@@ -590,7 +593,7 @@ function(r)
     NumberElement:=function(enum, f)
       local s, rep, o, m, l, g, j;
 
-      s:=ParentAttr(r);
+      s:=ParentSemigroup(r);
       rep:=Representative(r);
       
       if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
@@ -703,7 +706,7 @@ function(d)
 
   scc:=SemigroupDataSCC(d);
   out:=EmptyPlist(Length(scc));
-  orbit:=SemigroupData(ParentAttr(d))!.orbit;
+  orbit:=SemigroupData(ParentSemigroup(d))!.orbit;
   j:=0;
 
   for i in scc do 
@@ -753,7 +756,7 @@ function(s, f)
   fi;
   
   d:=Objectify(DClassType(s, rec()));
-  SetParentAttr(d, s);
+  SetParentSemigroup(d, s);
 
   o:=GradedLambdaOrb(s, f, true);     
   SetLambdaOrb(d, o);
@@ -779,7 +782,7 @@ function(s, f)
   
   d:=Objectify(DClassType(s), rec());
  
-  SetParentAttr(d, s);
+  SetParentSemigroup(d, s);
   SetLambdaOrbSCCIndex(d, 1);
   SetLambdaOrb(d, GradedLambdaOrb(s, f, false));
   SetRhoOrbSCCIndex(d, 1);
@@ -814,10 +817,10 @@ InstallOtherMethod(GreensRClassOfElementNC, "for D-class and acting elt",
 function(d, f)
   local s, r;
 
-  s:=ParentAttr(d);
+  s:=ParentSemigroup(d);
   r:=Objectify(RClassType(s), rec());
 
-  SetParentAttr(r, s);
+  SetParentSemigroup(r, s);
   SetLambdaOrbSCCIndex(r, LambdaOrbSCCIndex(d));
   SetLambdaOrb(r, LambdaOrb(d));
   SetRepresentative(r, f);
@@ -859,7 +862,7 @@ function(s, f)
 
   r:=Objectify(RClassType(s), rec());
 
-  SetParentAttr(r, s);
+  SetParentSemigroup(r, s);
   SetLambdaOrbSCCIndex(r, 1);
   SetLambdaOrb(r, GradedLambdaOrb(s, f, false));
   SetRepresentative(r, f);
@@ -904,7 +907,7 @@ function(r)
     return [];
   fi;
   
-  s:=ParentAttr(r);
+  s:=ParentSemigroup(r);
 
   if Rank(Representative(r))=Degree(s) then
     return [One(s)];
@@ -938,7 +941,7 @@ end);
 #############################################################################
 
 InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
-[IsGreensClass], x-> IsTransformationSemigroup(ParentAttr(x)));
+[IsGreensClass], x-> IsTransformationSemigroup(ParentSemigroup(x)));
 
 # new for 0.1! - IsGreensClass - "for a Green's class"
 #############################################################################
@@ -962,7 +965,7 @@ function(d)
     return NrIdempotents(d)<>0;
   fi;
 
-  s:=ParentAttr(d);
+  s:=ParentSemigroup(d);
   data:=SemigroupData(s);
   
   if not IsGreensClassNC(d) then
@@ -1001,7 +1004,7 @@ function(r)
     return NrIdempotents(r)<>0;
   fi;
 
-  s:=ParentAttr(r);
+  s:=ParentSemigroup(r);
   data:=SemigroupData(s);
   
   if not IsGreensClassNC(r) then
@@ -1324,7 +1327,7 @@ function(r)
     return 0;
   fi;
 
-  s:=ParentAttr(r);     
+  s:=ParentSemigroup(r);     
 
   # check if we already know this...
   if not IsGreensClassNC(r) and not (HasIsRegularRClass(r) and
@@ -1448,6 +1451,13 @@ end);
 InstallOtherMethod(NrLClasses, "for a D-class of an acting semigroup",       
 [IsActingSemigroupGreensClass and IsGreensDClass],
 d-> Length(LambdaCosets(d))*Length(LambdaOrbSCC(d)));
+
+# mod for 1.0! - NrLClasses - "for an acting semigroup"
+#############################################################################
+#JDM could do better not to create the D-classes.
+
+InstallMethod(NrLClasses, "for an acting semigroup",
+[IsActingSemigroup], s-> Sum(List(GreensDClasses(s), NrLClasses)));
 
 # mod for 1.0! - NrRClasses - "for a D-class of an acting semigroup"
 #############################################################################
@@ -1639,7 +1649,7 @@ function(d)
   local data, o, m, f, mults, scc, cosets, out, k, g, i, j;
 
   if not IsGreensClassNC(d) then
-    data:=SemigroupData(ParentAttr(d));
+    data:=SemigroupData(ParentSemigroup(d));
     return List(SemigroupDataSCC(d), i-> data[i][4]);
   fi;
 
@@ -1812,16 +1822,17 @@ InstallMethod(DClassOfRClass, "for an R-class of an acting semigroup",
 function(r)
   local s, f, d;
 
-  if not IsGreensClassNC(r) and IsClosed(SemigroupData(ParentAttr(r))) then 
+  if not IsGreensClassNC(r) and IsClosed(SemigroupData(ParentSemigroup(r)))
+   then 
     return CallFuncList(CreateDClass, 
-     SemigroupData(ParentAttr(r))[r!.orbit_pos]);
+     SemigroupData(ParentSemigroup(r))[r!.orbit_pos]);
   fi;
 
-  s:=ParentAttr(r); 
+  s:=ParentSemigroup(r); 
   f:=Representative(r);
   d:=Objectify(DClassType(s), rec());
 
-  SetParentAttr(d, s);
+  SetParentSemigroup(d, s);
   SetLambdaOrbSCCIndex(d, LambdaOrbSCCIndex(r));
   SetLambdaOrb(d, LambdaOrb(r));
   SetRhoOrbSCCIndex(d, 1);

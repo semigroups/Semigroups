@@ -585,7 +585,7 @@ function(data, limit, lookfunc)
   schreiermult:=data!.schreiermult;
 
   # generators
-  s:=ParentAttr(data);
+  s:=ParentSemigroup(data);
   gens:=Generators(s); 
   nrgens:=Length(gens); 
   genstoapply:=[1..nrgens];
@@ -1364,7 +1364,7 @@ InstallMethod(LambdaRhoLookup, "for a D-class of an acting semigroup",
 function(d)
   local data, orb_scc, orblookup1, orblookup2, out, i;
 
-  data:=SemigroupData(ParentAttr(d));
+  data:=SemigroupData(ParentSemigroup(d));
   
   # scc of R-reps corresponding to d 
   orb_scc:=SemigroupDataSCC(d);
@@ -1437,7 +1437,7 @@ function(data, x, n)
     return val;
   fi;
 
-  s:=ParentAttr(data);
+  s:=ParentSemigroup(data);
 
   if data!.graded then 
     # JDM this assumes that x is an element of s, probably shouldn't do this!
@@ -1691,7 +1691,7 @@ function(s)
     SetIsMonoidAsSemigroup(s, false);
     data!.modifier:=1;
   fi;
-  SetParentAttr(data, s);
+  SetParentSemigroup(data, s);
   return data;
 end);
 

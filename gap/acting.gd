@@ -74,6 +74,8 @@ DeclareAttribute("RhoMult", IsActingSemigroup);
 DeclareAttribute("LambdaPerm", IsActingSemigroup);
 DeclareAttribute("RhoPerm", IsActingSemigroup);
 
+DeclareAttribute("ParentSemigroup", IsObject);
+
 # ForwardOrbitOfImage/Kernel/ShortOrb
 DeclareGlobalFunction("GradedLambdaOrb");
 DeclareGlobalFunction("GradedRhoOrb");

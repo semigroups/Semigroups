@@ -22,26 +22,6 @@
 #############################################################################
 # other equalities of Green's classes handled by generic method in greens.gi!
 
-# new for 0.1! - \= - "for L-class and L-class of trans. semigp."
-#############################################################################
-
-InstallMethod(\=, "for L-class and L-class of trans. semigp.",
-[IsGreensLClass and IsGreensClassOfTransSemigp, IsGreensLClass and 
-IsGreensClassOfTransSemigp],
-function(l1, l2)
-  return l1!.parent=l2!.parent and l1!.rep in l2;
-end);
-
-# new for 0.1! - \< - "for L-class and L-class of trans. semigp."
-############################################################################
-
-InstallMethod(\<, "for L-class and L-class of trans. semigp.",
-[IsGreensLClass and IsGreensClassOfTransSemigp, IsGreensLClass and 
-IsGreensClassOfTransSemigp],
-function(h1, h2)
-  return h1!.parent=h2!.parent and h1!.rep < h2!.rep;
-end);
-
 # new for 0.1! - \in - "for trans. and L-class of trans. semigp."
 #############################################################################
 
@@ -93,19 +73,6 @@ function(f, l)
   p:=KerRightToImgLeftFromData(s, d[2], o[2])^-1;
 
   return SiftedPermutation(schutz, PermLeftQuoTransformationNC(rep, g)^p)=();
-end);
-
-# new for 0.1! - AsSSortedList - "for L-class of trans. semigp."
-#############################################################################
-# this should be removed after the library method for AsSSortedList 
-# for a Green's class is removed. The default AsSSortedList for a collection
-# is what should be used (it is identical)!
-
-InstallOtherMethod(AsSSortedList, "for L-class of trans. semigp.",
-[IsGreensLClass and IsGreensClassOfTransSemigp], 
-function(l)
-  Info(InfoCitrus, 4, "AsSSortedList: for an L-class");
-  return ConstantTimeAccessList(EnumeratorSorted(l));
 end);
 
 #CCC
@@ -882,24 +849,6 @@ return NewType( FamilyObj( s ), IsEquivalenceClass and
 end);
 
 #NNN
-
-# new for 0.1! - NrLClasses - "for a transformation semigroup"
-#############################################################################
-# JDM move this to greens.gi
-
-InstallMethod(NrLClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup],
-function(s)
-  local i, d;
-
-  ExpandOrbitsOfKernels(s); i:=0;
-  
-  for d in OrbitsOfKernels(s)!.data do 
-    i:=i+Length(ImageOrbitCosetsFromData(s, d[2]))* 
-     Length(ImageOrbitSCCFromData(s, d[1]));
-  od;
-  return i;
-end);
 
 # new for 0.1! - NrHClasses - "for an L-class of a trans. semigroup"
 #############################################################################
