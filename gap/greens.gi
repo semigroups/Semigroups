@@ -1354,41 +1354,34 @@ end);
 InstallMethod(NrIdempotents, "for an acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local nr, data, reps, repslens, repslookup, len, rhofunc, tester, f, j, o, m, scc, rho, x, i, k;
+  local data, reps, repslookup, lenreps, repslens, rhofunc, tester, f, m, o,
+  rho, nr, i, k;
 
   if HasIdempotents(s) then 
     return Length(Idempotents(s));
   fi;
 
-  nr:=0;
+  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  
+  reps:=data!.reps; 
+  repslookup:=data!.repslookup;
+  lenreps:=data!.lenreps;
+  repslens:=data!.repslens;
 
-  if HasGreensDClasses(s) then 
-    for x in GreensDClasses(s) do 
-      nr:=nr+NrIdempotents(x);
+  rhofunc:=RhoFunc(s);
+  tester:=IdempotentLambdaRhoTester(s);
+
+  for i in [1..lenreps] do 
+    f:=reps[i][1]; 
+    m:=data[repslookup[i][1]][2];
+    o:=data[repslookup[i][1]][3];
+    rho:=rhofunc(f);
+    for k in OrbSCC(o)[m] do 
+      if tester(o[k], rho) then 
+        nr:=nr+repslens[i];
+      fi;
     od;
-  else
-    data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
-    reps:=data!.reps; repslens:=data!.repslens;
-    repslookup:=data!.repslookup;
-
-    len:=Length(reps);
-    rhofunc:=RhoFunc(s);
-    tester:=IdempotentLambdaRhoTester(s);
-
-    for i in [1..len] do 
-      f:=reps[i][1]; 
-      j:=repslookup[i][1];
-      o:=data[j][3];
-      m:=data[j][2];
-      scc:=OrbSCC(o)[m];
-      rho:=rhofunc(f);
-      for k in scc do 
-        if tester(o[k], rho) then 
-          nr:=nr+1;
-        fi;
-      od;
-    od;
-  fi;
+  od;
 
   return nr;
 end);
@@ -1399,6 +1392,38 @@ end);
 InstallMethod(NrDClasses, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 s-> Length(OrbSCC(SemigroupData(s)))-SemigroupData(s)!.modifier);
+
+# mod for 1.0! - NrRegularDClasses - "for an acting semigroup"
+#############################################################################
+
+InstallMethod(NrRegularDClasses, "for an acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local data, datascc, rhofunc, tester, nr, r, x, o, scc, rho, i, j;
+  
+  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  datascc:=OrbSCC(data);
+  
+  rhofunc:=RhoFunc(s);
+  tester:=IdempotentLambdaRhoTester(s);
+  nr:=0;
+  r:=data!.modifier;
+
+  for i in [1+r..Length(datascc)] do
+    # data of the first R-class in the D-class corresponding to x
+    x:=data[datascc[i][1]];
+    o:=x[3]; scc:=OrbSCC(o)[x[2]]; 
+    rho:=rhofunc(x[4]);
+
+    for j in scc do  
+      if tester(o[j], rho) then
+        nr:=nr+1;
+        break;
+      fi;
+    od;
+  od;
+  return nr;
+end);
 
 # mod for 1.0! - NrHClasses - "for a D-class of an acting semigroup"
 #############################################################################

@@ -199,19 +199,5 @@ function(d)
   return List(Concatenation(out), x-> HClassRepFromData(s, x, [img, ker]));
 end);
 
-#NNN
-
-# new for 0.1! - NrRegularDClasses - "for a transformation semigroup"
-#############################################################################
-
-InstallMethod(NrRegularDClasses, "for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local o;
-  ExpandOrbitsOfKernels(s);
-  o:=OrbitsOfImages(s);
-
-  return Number(OrbitsOfKernels(s)!.data, x-> IsRegularRClassData(s, x[1], o));
-end);
 
 #EOF
