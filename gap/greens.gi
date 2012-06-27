@@ -1481,6 +1481,7 @@ function(s)
 
   for i in [1..n] do
     for x in gens do
+      # collect info about left multiplying R-class reps of d[i] by gens
       for j in SemigroupDataSCC(d[i]) do 
         for k in graph[j] do  
           AddSet(out[i], datalookup[k]);
@@ -1488,10 +1489,14 @@ function(s)
       od;
 
       for f in LClassReps(d[i]) do
+        # the below is an expanded version of Position(data, f * x)
+        f:=f*x;
         l:=Position(o, lambdafunc(f));
         m:=lookup[l];
         val:=HTValue(lambdarhoht, Concatenation(o[scc[m][1]], rhofunc(f)));
-        
+        if not IsBound(schutz[m]) then 
+          LambdaOrbSchutzGp(o, m);
+        fi;
         if schutz[m]=true then 
           j:=repslookup[val][1];
         else
