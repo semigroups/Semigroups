@@ -194,7 +194,7 @@ function(f, d)
   fi;
 
   if l<>scc[m][1] then 
-    g:=RhoOrbMults(o, m)[l]*g;
+    g:=RhoOrbMults(o, m)[l][2]*g;
   fi;
 
   cosets:=LambdaCosets(d);
@@ -594,7 +594,7 @@ function(r)
       rep:=Representative(r);
       
       if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-       # degree causes problems for partial perms
+       #JDM degree causes problems for partial perms
        #Degree(f) <> Degree(rep) or 
        Rank(f) <> Rank(rep) or RhoFunc(s)(f) <> RhoFunc(s)(rep) then 
         return fail;
@@ -635,7 +635,7 @@ function(r)
     end));
 end);
 
-# mod for 1.0! - Enumerator - "for a transformation semigroup"
+# mod for 1.0! - Enumerator - "for an acting semigroup"
 #############################################################################
 # Notes: this is not an enumerator as I could not get an enumerator to perform 
 # well here. 
@@ -1163,12 +1163,13 @@ end);
 InstallMethod(IteratorOfDClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
-
+  local iter;
+  
   if IsClosed(SemigroupData(s)) then 
     return IteratorList(GreensDClasses(s));
   fi;
 
-  return IteratorByFunctions( rec( 
+  iter:=IteratorByFunctions( rec( 
 
     classes:=[],
 
@@ -1192,6 +1193,7 @@ function(s)
       
       repeat 
         x:=NextIterator(R);
+      #JDM is there a better method?
       until x=fail or ForAll(X, d-> not x[4] in d);
       
       if x<>fail then 
@@ -1213,6 +1215,8 @@ function(s)
     
     ShallowCopy:=iter-> rec(classes:=[], R:=IteratorOfRClassData(s),
      last_called_by_is_done:=false, next_value:=fail)));
+  SetIsIteratorOfDClasses(iter, true);
+  return iter;
 end);
 
 # new for 1.0! - IteratorOfDClassReps - "for an acting semigroup"
@@ -1829,15 +1833,25 @@ function(r)
   return d;
 end);
 
-# new for 0.1! - DClassReps - "for a trans. semigroup"
+# mod for 1.0! - DClassReps - "for an acting semigroup"
 #############################################################################
 
-InstallMethod(DClassReps, "for a trans. semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-  function(s)
+InstallMethod(DClassReps, "for an acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local data, scc, r, i, out, j;
 
-  ExpandOrbitsOfKernels(s);
-  return List(OrbitsOfKernels(s)!.data, x-> DClassRepFromData(s, x));
+  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  scc:=OrbSCC(data); 
+  r:=Length(scc);
+  i:=SemigroupData(s)!.modifier;
+  
+  out:=EmptyPlist(r-i);
+
+  for j in [1+i..r] do 
+    out[j-i]:=data[scc[j][1]][4];
+  od;
+  return out;
 end);
 
 # new for 0.4! - EnumeratorOfRClasses - "for a trans. semigroup"
@@ -2085,8 +2099,5 @@ function(s)
 
   return Size(H)*ims*kers;
 end);
-
-
-
 
 #EOF
