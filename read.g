@@ -24,6 +24,6 @@ ReadPackage("citrus/gap/examples.gi");
 ReadPackage("citrus/gap/utils.gi");
 
 #JDM old
-ReadPackage("citrus/gap/h.gi");
-ReadPackage("citrus/gap/l.gi");
-ReadPackage("citrus/gap/d.gi");
+#ReadPackage("citrus/gap/h.gi");
+#ReadPackage("citrus/gap/l.gi");
+#ReadPackage("citrus/gap/d.gi");

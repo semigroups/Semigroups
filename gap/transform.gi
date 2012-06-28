@@ -468,29 +468,31 @@ end);
 
 #RRR
 
-# new for 0.1! - Random - "for a transformation semigroup (citrus pkg)"
+# new for 1.0! - Random - "for an acting semigroup"
 #############################################################################
 # move to greens.gi
 
-InstallMethod(Random, "for a transformation semigroup (citrus pkg)", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(Random, "for an acting semigroup", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local o, gens, n, i, w, d, g;
+  local data, gens, n, i, w, g;
 
-  o:=OrbitsOfImages(s);
+  data:=SemigroupData(s);
 
-  if not o!.finished then 
+  if not IsClosed(data) then 
     gens:=GeneratorsOfSemigroup(s);
-    n:=DegreeOfTransformationSemigroup(s);
+    n:=Degree(s);
     i:=Random([1..2*Length(gens)]);
     w:=List([1..i], x-> Random([1..Length(gens)]));
     return EvaluateWord(gens, w);
-  else
-    d:=Random(o!.data);
-    g:=Random(ImageOrbitSchutzGpFromData(s, d));
-    i:=Random(ImageOrbitSCCFromData(s, d));
-    return RClassRepFromData(s, d)*g*ImageOrbitPermsFromData(s, d)[i]^-1; 
   fi;
+
+  i:=data!.modifier;
+
+  n:=Random([1+i..Length(data)]);
+  g:=Random(LambdaOrbSchutzGp(data[n][3], data[n][2]));
+  i:=Random([1..Length(data[n][3])]);
+  return data[n][4]*g*LambdaOrbMults(data[n][3], data[n][2])[i]^-1; 
 end);
 
 # new for 0.1! - RandomIdempotent - "for an image and pos. int."

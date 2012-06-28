@@ -1075,8 +1075,8 @@ InstallMethod(GradedRhoOrbs, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
   return Objectify(NewType(FamilyObj(s), IsGradedRhoOrbs), rec(
-    orbits:=List([1..RhoDegree(s)+1], x-> []), 
-    lens:=[1..RhoDegree(s)+1]*0, semi:=s));
+    orbits:=List([1..LambdaDegree(s)+1], x-> []), 
+    lens:=[1..LambdaDegree(s)+1]*0, semi:=s));
 end);
 
 #III
@@ -1335,7 +1335,7 @@ function(o, m)
     fi;
   fi;
  
-  RhoOrbSchutzGp(o, m, infinity);
+  RhoOrbSchutzGp(o, m);
   return o!.schutzstab[m];
 end);
 

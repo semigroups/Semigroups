@@ -954,18 +954,4 @@ function(l)
   return g^(KerRightToImgLeft(l)*d[3]/x);
 end);
 
-# new for 0.1! - Size - "for an L-class of a trans. semigp."
-#############################################################################
-##  Algorithm C. 
-
-InstallOtherMethod(Size, "for an L-class of a trans. semigp.", 
-[IsGreensLClass and IsGreensClassOfTransSemigp],
-function(l)
-
-  Info(InfoCitrus, 4, "Size: for an L-class");
-
-  return Size(KernelOrbitSchutzGp(l))
-   *Length(KernelOrbitSCC(l));
-end);
-
 #EOF

@@ -98,20 +98,25 @@ end);
 
 InstallOtherMethod(LambdaOrbSCC, "for a Green's class of an acting semi",
 [IsActingSemigroupGreensClass and IsGreensClass],
-d-> OrbSCC(LambdaOrb(d))[LambdaOrbSCCIndex(d)]);
+x-> OrbSCC(LambdaOrb(x))[LambdaOrbSCCIndex(x)]);
 
 InstallOtherMethod(RhoOrbSCC, "for a Green's class of an acting semi",
-[IsActingSemigroupGreensClass and IsGreensDClass], 
-d-> OrbSCC(RhoOrb(d))[RhoOrbSCCIndex(d)]);
+[IsActingSemigroupGreensClass and IsGreensClass], 
+x-> OrbSCC(RhoOrb(x))[RhoOrbSCCIndex(x)]);
 
 # new for 1.0! - SchutzenbergerGroup - "for an R-class of an acting semigp."
 #############################################################################
 
 InstallOtherMethod(SchutzenbergerGroup, "for an R-class of an acting semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
-function(r)
-  return LambdaOrbSchutzGp(LambdaOrb(r), LambdaOrbSCCIndex(r));
-end);
+r-> LambdaOrbSchutzGp(LambdaOrb(r), LambdaOrbSCCIndex(r)));
+
+# new for 1.0! - SchutzenbergerGroup - "for an L-class of an acting semigp."
+#############################################################################
+
+InstallOtherMethod(SchutzenbergerGroup, "for an L-class of an acting semigp.",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+l-> RhoOrbSchutzGp(RhoOrb(l), RhoOrbSCCIndex(l), infinity));
 
 #############################################################################
 
@@ -797,37 +802,37 @@ end);
 
 # mod for 1.0! - GreensLClassOfElement - "for an acting semigp and elt."
 #############################################################################
-# JDM this is not really implemented yet...
+
 InstallOtherMethod(GreensLClassOfElement, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
-  local pos, d, o;
+  local l, o, i, m, scc;
 
   if not f in s then
     Error("the element does not belong to the semigroup,");
     return;
   fi;
-
-  if IsClosed(SemigroupData(s)) then 
-    pos:=Position(SemigroupData(s), f);
-    return CallFuncList(CreateDClass, SemigroupData(s)[pos]);
-  fi;
   
-  d:=Objectify(LClassType(s, rec()));
-  SetParentSemigroup(d, s);
-
-  o:=GradedLambdaOrb(s, f, true);     
-  SetLambdaOrb(d, o);
-  SetLambdaOrbSCCIndex(d, OrbSCCLookup(o)[Position(o, LambdaFunc(s)(f))]);
+  l:=Objectify(LClassType(s), rec());
+  SetParentSemigroup(l, s);
   
   o:=GradedRhoOrb(s, f, true);
-  SetRhoOrb(d, o);
-  SetRhoOrbSCCIndex(d, OrbSCCLookup(o)[Position(o, RhoFunc(s)(f))]);
+  SetRhoOrb(l, o);
+  
+  i:=Position(o, RhoFunc(s)(f));
+  m:=OrbSCCLookup(o)[i];
+  scc:=OrbSCC(o)[m];
+  
+  SetRhoOrbSCCIndex(l, m);
+  
+  if i<>scc[1] then 
+    f:=RhoOrbMults(o, m)[i]*f;
+  fi;
 
-  SetRepresentative(d, f);
-  SetEquivalenceClassRelation(d, GreensDRelation(s));
-  SetIsGreensClassNC(d, false);
-  return d;
+  SetRepresentative(l, f);
+  SetEquivalenceClassRelation(l, GreensLRelation(s));
+  SetIsGreensClassNC(l, false);
+  return l;
 end);
 
 # mod for 1.0! - GreensRClassOfElement - "for D-class and acting elt"
@@ -1742,6 +1747,17 @@ function(s);
           IsActingSemigroupGreensClass);
 end);
 
+# mod for 1.0! - LClassType - "for an acting semigroup"
+############################################################################
+
+InstallMethod(LClassType, "for an acting semigroup",
+[IsActingSemigroup],
+function(s);
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsGreensLClass and
+         IsActingSemigroupGreensClass);
+end);
+
 # new for 1.0! - RClassType - "for an acting semigroup"
 ############################################################################
 
@@ -1816,12 +1832,15 @@ end);
 
 InstallOtherMethod(Size, "for an R-class of an acting semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
-function(r)
-  local o, m;
- 
-  o:=LambdaOrb(r); m:=LambdaOrbSCCIndex(r);
-  return Size(SchutzenbergerGroup(r))*Length(OrbSCC(o)[m]);
-end);
+r-> Size(SchutzenbergerGroup(r))*Length(LambdaOrbSCC(r)));
+
+# new for 1.0! - Size - "for an L-class of an acting semigp."
+#############################################################################
+# Algorithm C. 
+
+InstallOtherMethod(Size, "for an L-class of an acting semigp.",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+l-> Size(SchutzenbergerGroup(l))*Length(RhoOrbSCC(l)));
 
 #UUU
 
@@ -2057,20 +2076,7 @@ end);
 InstallMethod(NrHClasses, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local i, iter, o, d;
-  i:=0;
-
-  iter:=IteratorOfDClassRepsData(s);
-  o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
-
-  for d in iter do 
-    i:=i+Length(ImageOrbitCosetsFromData(s, d[2], o[2]))*
-     Length(ImageOrbitSCCFromData(s, d[1], o[1]))*
-      Length(KernelOrbitSCCFromData(s, d[2], o[2]))*
-       Length(KernelOrbitCosetsFromData(s, d[2], o[2]));
-  od;
-
-  return i;
+  Error("not yet implemented");
 end);
 
 # new for 0.1! - Size - "for a simple transformation semigroup"
