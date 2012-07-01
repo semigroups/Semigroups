@@ -224,7 +224,7 @@ InstallMethod(LambdaRhoHT, "for an acting semi",
 function(s)
   local x;
   x:=GeneratorsOfSemigroup(s)[1]; 
-  return HTCreate(Concatenation(LambdaFunc(s)(x), RhoFunc(s)(x)),
+  return HTCreate(Concatenation([1], RhoFunc(s)(x)),
   rec(forflatplainlists:=true,
      hashlen:=s!.opts.hashlen.S));
 end);
@@ -390,7 +390,7 @@ function(f, s)
   scc:=OrbSCC(o);
 
   # check if lambdarho is already known
-  lambdarho:=ShallowCopy(o[scc[m][1]]);
+  lambdarho:=[m];
   Append(lambdarho, RhoFunc(s)(f));
   val:=HTValue(LambdaRhoHT(s), lambdarho);
 
@@ -631,7 +631,11 @@ function(data, limit, lookfunc)
         fi;
 
         #check if we've seen rho(y) before
-        rhoy:=ShallowCopy(o[scc[m][1]]);
+        #rhoy:=ShallowCopy(o[scc[m][1]]);
+        #Append(rhoy, rho(y));
+        #val:=HTValue(lambdarhoht, rhoy);
+
+        rhoy:=[m];
         Append(rhoy, rho(y));
         val:=HTValue(lambdarhoht, rhoy);
 
@@ -1127,7 +1131,7 @@ function(s, data, x)
     data!.orblookup1[1]:=1;
     data!.orblookup2[1]:=1;
 
-    HTAdd(LambdaRhoHT(s), Concatenation(lamx, RhoFunc(s)(x)), data!.lenreps);
+    HTAdd(LambdaRhoHT(s), Concatenation([m], RhoFunc(s)(x)), data!.lenreps);
   fi;
 
   return data;
@@ -1335,7 +1339,7 @@ function(o, m)
     fi;
   fi;
  
-  RhoOrbSchutzGp(o, m);
+  RhoOrbSchutzGp(o, m, infinity);
   return o!.schutzstab[m];
 end);
 
@@ -1451,7 +1455,7 @@ function(data, x, n)
   m:=OrbSCCLookup(o)[l];
   scc:=OrbSCC(o);
 
-  val:=HTValue(LambdaRhoHT(s), Concatenation(o[scc[m][1]], RhoFunc(s)(x)));
+  val:=HTValue(LambdaRhoHT(s), Concatenation([m], RhoFunc(s)(x)));
   if val=fail then 
     return fail;
   fi;

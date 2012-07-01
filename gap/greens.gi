@@ -116,7 +116,17 @@ r-> LambdaOrbSchutzGp(LambdaOrb(r), LambdaOrbSCCIndex(r)));
 
 InstallOtherMethod(SchutzenbergerGroup, "for an L-class of an acting semigp.",
 [IsGreensLClass and IsActingSemigroupGreensClass],
-l-> RhoOrbSchutzGp(RhoOrb(l), RhoOrbSCCIndex(l), infinity));
+function(l)
+  local o, m, p;
+
+  o:=RhoOrb(l); m:=RhoOrbSCCIndex(l);
+  
+  if not IsGreensClassNC(l) then 
+    p:=RhoPerm(ParentSemigroup(l))(RhoOrbRep(o, m), Representative(l));
+    return RhoOrbSchutzGp(o, m, infinity)^p;
+  fi;
+  return RhoOrbSchutzGp(o, m, infinity); 
+end);
 
 #############################################################################
 
@@ -257,7 +267,7 @@ function(f, d)
 
   rho:=RhoFunc(s)(g);
 
-  val:=ShallowCopy(o[scc[m][1]]);
+  val:=[m];
   Append(val, rho);
   val:=HTValue(LambdaRhoHT(s), val);
 
@@ -342,6 +352,62 @@ end);
 # the elements (and hence a generating set) for RhoOrbSchutzGp. 
 
 # JDM the above is currently not used
+
+# new for 1.0! - \in - "for acting elt and L-class of acting semigp"
+#############################################################################
+#JDM this method differs from the one in 0.99. 
+
+InstallMethod(\in, "for acting elt and L-class of acting semigp.",
+[IsActingElt, IsGreensLClass and IsActingSemigroupGreensClass],
+function(f, l)
+  local rep, s, m, o, i, schutz, g, p;
+
+  rep:=Representative(l); 
+  s:=ParentSemigroup(l);
+
+  #JDM degree causes problems for partial perms below...
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) #or Degree(f) <> Degree(rep)
+   or Rank(f) <> Rank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
+    Info(InfoCitrus, 1, "degree, rank, or lambda value not equal to those of",
+    " any of the L-class elements,");
+    return false;
+  fi;
+
+  m:=RhoOrbSCCIndex(l);
+  o:=RhoOrb(l);
+  
+  if not IsClosed(o) then 
+    Enumerate(o, infinity);
+  fi;
+
+  i:=Position(o, RhoFunc(s)(f));
+
+  if i = fail or OrbSCCLookup(o)[i]<>m then 
+    return false;
+  fi;
+
+  schutz:=RhoOrbStabChain(o, m);
+
+  if schutz=true then
+    Info(InfoCitrus, 3, "Schutz. group of L-class is symmetric group");
+    return true;
+  fi;
+
+  g:=RhoOrbMults(o, m)[i][2]*f;
+
+  if g=rep then
+    Info(InfoCitrus, 3, "element with rectified lambda value equals ",
+    "R-class representative");
+    return true;
+  elif schutz=false then
+    Info(InfoCitrus, 3, "Schutz. group of R-class is trivial");
+    return false;
+  fi;
+
+  p:=RhoPerm(s)(g, RhoOrbRep(o, m));
+
+  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g)^p)=();
+end);
 
 # new for 1.0! - \in - "for acting elt and R-class of acting semigp"
 #############################################################################
@@ -526,7 +592,7 @@ function(d)
     end,
 
     #######################################################################
-    # JDM this should be improved and fixed!
+    
     NumberElement:=function(enum, f)
       local i;
       i:=Position(SemigroupDataSCC(d), 
@@ -542,7 +608,7 @@ function(d)
     #######################################################################
 
     Membership:=function(elm, enum)
-      return elm in d; #the D-class itself!
+      return elm in d;
     end,
 
     Length:=enum -> Size(d),
@@ -639,6 +705,94 @@ function(r)
 
     PrintObj:=function(enum)
       Print("<enumerator of R-class>");
+      return;
+    end));
+end);
+
+# mod for 1.0! - Enumerator - "for L-class of an acting semigroup"
+##############################################################################
+
+InstallMethod(Enumerator, "for L-class of an acting semigroup",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+function(l)
+  local o, m, mults, scc;
+
+  o:=RhoOrb(l); 
+  m:=RhoOrbSCCIndex(l);
+  mults:=RhoOrbMults(o, m);
+  scc:=OrbSCC(o)[m];
+
+  return EnumeratorByFunctions(l, rec(
+
+    schutz:=Enumerator(SchutzenbergerGroup(l)),
+
+    len:=Size(SchutzenbergerGroup(l)),
+
+    #########################################################################
+
+    ElementNumber:=function(enum, pos)
+      local n, m, q;
+
+      if pos>Length(enum) then 
+        return fail;
+      fi;
+
+      if pos<=Length(enum!.schutz) then 
+        return Representative(l)*enum!.schutz[pos];
+      fi;
+
+      n:=pos-1; m:=enum!.len;
+      
+      q:=QuoInt(n, m); 
+      pos:=[ q, n - q * m]+1;
+     
+     return mults[scc[pos[1]]][1]*enum[pos[2]];
+    end,
+
+    #########################################################################
+    
+    NumberElement:=function(enum, f)
+      local s, rep, o, m, i, g, j;
+
+      s:=ParentSemigroup(l);
+      rep:=Representative(l);
+      
+      if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
+       #JDM degree causes problems for partial perms
+       #Degree(f) <> Degree(rep) or 
+       Rank(f) <> Rank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then 
+        return fail;
+      fi;
+      
+      if f=rep then 
+        return 1;
+      fi;
+
+      o:=RhoOrb(l); m:=RhoOrbSCCIndex(l);
+      i:=Position(o, RhoFunc(s)(f));
+
+      if i = fail or OrbSCCLookup(o)[i]<>m then 
+        return fail;
+      fi;
+     
+      j:=Position(enum!.schutz, LambdaPerm(s)(rep, mults[i][2]*f));
+
+      if j=fail then 
+        return fail;
+      fi;
+      return enum!.len*(Position(scc, i)-1)+j;
+    end,
+
+    #########################################################################
+
+    Membership:=function(elm, enum)
+      return elm in l;
+    end,
+
+    Length:=enum-> Size(l),
+
+    PrintObj:=function(enum)
+      Print("<enumerator of L-class>");
       return;
     end));
 end);
@@ -744,12 +898,11 @@ end);
 
 # mod for 1.0! - GreensDClassOfElement - "for an acting semigp and elt."
 #############################################################################
-#JDM shouldn't we rectify the lambda and rho value of the rep? 
 
 InstallOtherMethod(GreensDClassOfElement, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
-  local pos, d, o;
+  local pos, d, o, scc, l, m;
 
   if not f in s then
     Error("the element does not belong to the semigroup,");
@@ -761,16 +914,32 @@ function(s, f)
     return CallFuncList(CreateDClass, SemigroupData(s)[pos]);
   fi;
   
-  d:=Objectify(DClassType(s, rec()));
+  d:=Objectify(DClassType(s), rec());
   SetParentSemigroup(d, s);
 
   o:=GradedLambdaOrb(s, f, true);     
+  scc:=OrbSCC(o);
+  l:=Position(o, LambdaFunc(s)(f));
+  m:=OrbSCCLookup(o)[l];
+  
+  if l<>scc[m][1] then 
+    f:=f*LambdaOrbMults(o, m)[l];
+  fi;
+
   SetLambdaOrb(d, o);
-  SetLambdaOrbSCCIndex(d, OrbSCCLookup(o)[Position(o, LambdaFunc(s)(f))]);
+  SetLambdaOrbSCCIndex(d, m); 
   
   o:=GradedRhoOrb(s, f, true);
+  scc:=OrbSCC(o);
+  l:=Position(o, RhoFunc(s)(f));
+  m:=OrbSCCLookup(o)[l];
+
+  if l<>scc[m][1] then 
+    f:=RhoOrbMults(o, m)[l][2]*f;
+  fi;
+
   SetRhoOrb(d, o);
-  SetRhoOrbSCCIndex(d, OrbSCCLookup(o)[Position(o, RhoFunc(s)(f))]);
+  SetRhoOrbSCCIndex(d, m);
 
   SetRepresentative(d, f);
   SetEquivalenceClassRelation(d, GreensDRelation(s));
@@ -826,12 +995,31 @@ function(s, f)
   SetRhoOrbSCCIndex(l, m);
   
   if i<>scc[1] then 
-    f:=RhoOrbMults(o, m)[i]*f;
+    f:=RhoOrbMults(o, m)[i][2]*f;
   fi;
 
   SetRepresentative(l, f);
   SetEquivalenceClassRelation(l, GreensLRelation(s));
   SetIsGreensClassNC(l, false);
+  return l;
+end);
+
+# mod for 1.0! - GreensLClassOfElementNC - "for an acting semigp and elt."
+#############################################################################
+
+InstallOtherMethod(GreensLClassOfElementNC, "for an acting semigp and elt",
+[IsActingSemigroup, IsActingElt],
+function(s, f)
+  local l;
+
+  l:=Objectify(LClassType(s), rec());
+  
+  SetParentSemigroup(l, s);
+  SetRhoOrbSCCIndex(l, 1);
+  SetRhoOrb(l, GradedRhoOrb(s, f, false));
+  SetRepresentative(l, f);
+  SetEquivalenceClassRelation(l, GreensLRelation(s));
+  SetIsGreensClassNC(l, true);
   return l;
 end);
 
@@ -1507,6 +1695,13 @@ InstallOtherMethod(NrRClasses, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass],
 d-> Length(SemigroupDataSCC(d)));
 
+# mod for 1.0! - NrRClasses - "for a D-class of an acting semigroup"
+#############################################################################
+
+InstallOtherMethod(NrRClasses, "for a D-class of an acting semigroup",       
+[IsActingSemigroupGreensClass and IsGreensDClass and IsGreensClassNC],
+d-> Length(RhoCosets(d))*Length(RhoOrbSCC(d)));
+
 # mod for 1.0! - NrRClasses - "for an acting semigroup"
 #############################################################################
 
@@ -1519,20 +1714,10 @@ function(s)
   return Length(data!.orbit)-data!.modifier;
 end);
 
-#OOO
-
-# new for 0.5! - One - "for a transformation"
-#############################################################################
-# JDM this should go to transform.gi
-
-InstallMethod(One, "for a transformation",
-[IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
-
 #PPP
 
 # mod for 1.0! - PartialOrderOfDClasses - "for an acting semigroup"
 #############################################################################
-# JDM graded version!
 
 InstallMethod(PartialOrderOfDClasses, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -1577,7 +1762,7 @@ function(s)
         f:=f*x;
         l:=Position(o, lambdafunc(f));
         m:=lookup[l];
-        val:=HTValue(lambdarhoht, Concatenation(o[scc[m][1]], rhofunc(f)));
+        val:=HTValue(lambdarhoht, Concatenation([m], rhofunc(f)));
         if not IsBound(schutz[m]) then 
           LambdaOrbSchutzGp(o, m);
         fi;
@@ -1607,6 +1792,51 @@ function(s)
   Perform(out, ShrinkAllocationPlist);
   return out;
 end);
+ 
+# new for 0.7! - PrintObj - for IsIteratorOfDClassElements
+############################################################################
+   
+InstallMethod(PrintObj, [IsIteratorOfDClassElements],
+function(iter)
+  Print( "<iterator of D-class>");
+  return;
+end);
+
+# new for 0.1! - PrintObj - for IsIteratorOfRClassElements
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfRClassElements],
+function(iter)
+  Print("<iterator of R-class>");
+  return;
+end);
+
+# new for 0.7! - PrintObj - IsIteratorOfLClassElements
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfLClassElements],
+function(iter)
+  Print( "<iterator of L-class>");
+  return;
+end);
+
+# mod for 1.0! - PrintObj - for IsIteratorOfDClassReps
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfDClassReps],
+function(iter)
+  Print("<iterator of D-class reps>");
+  return;
+end);
+
+# new for 0.1! - PrintObj - for IsIteratorOfLClassReps
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfLClassReps], 
+function(iter)
+  Print( "<iterator of L-class reps>");
+  return;
+end);
 
 # mod for 1.0! - PrintObj - IsIteratorOfRClassReps
 ############################################################################
@@ -1614,6 +1844,24 @@ end);
 InstallMethod(PrintObj, [IsIteratorOfRClassReps],
 function(iter)
   Print("<iterator of R-class reps>");
+  return;
+end);
+
+# new for 0.1! - PrintObj - "for iterator of D-classes"
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfDClasses], 
+function(iter)
+  Print( "<iterator of D-classes>");
+  return;
+end);
+ 
+# new for 0.1! - PrintObj - for IsIteratorOfLClasses
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfLClasses],
+function(iter)
+  Print( "<iterator of L-classes>");
   return;
 end);
 
@@ -1640,42 +1888,6 @@ function(iter)
   elif IsPartialPermSemigroup(iter!.s) then 
     Print("<iterator of semigroup of partial perms>");
   fi;
-  return;
-end);
-
-# new for 0.1! - PrintObj - for IsIteratorOfRClassElements
-############################################################################
-
-InstallMethod(PrintObj, [IsIteratorOfRClassElements],
-function(iter)
-  Print("<iterator of R-class>");
-  return;
-end);
-
-# mod for 1.0! - PrintObj - for IsIteratorOfDClassReps
-############################################################################
-
-InstallMethod(PrintObj, [IsIteratorOfDClassReps],
-function(iter)
-  Print("<iterator of D-class reps>");
-  return;
-end);
-
-# new for 0.1! - PrintObj - "for iterator of D-classes"
-############################################################################
-
-InstallMethod(PrintObj, [IsIteratorOfDClasses], 
-function(iter)
-  Print( "<iterator of D-classes>");
-  return;
-end);
-  
-# new for 0.7! - PrintObj - "for an iterator of a D-class"
-############################################################################
-   
-InstallMethod(PrintObj, [IsIteratorOfDClassElements],
-function(iter)
-  Print( "<iterator of D-class>");
   return;
 end);
 
@@ -1783,6 +1995,7 @@ function(d)
   lambda_schutz:=LambdaOrbSchutzGp(o, m); 
   
   if IsTrivial(lambda_schutz) then 
+    SetRhoCosets(d, ?);
     return lambda_schutz;
   fi;
 
@@ -1797,19 +2010,26 @@ function(d)
   #fi;
 
   if RhoOrbStabChain(o, m)=true then 
+    SetRhoCosets(d, ?);
     return lambda_schutz;
   fi;
-    
-  rho_schutz:=RhoSchutzGp(d);
+
+  rho_schutz:=RhoOrbSchutzGp(o, m, infinity);
+
   if IsTrivial(rho_schutz) then 
-    return rho_schutz;
-  fi;
-  
-  if lambda_stab=true then 
-    return rho_schutz;
+    SetRhoCosets(d, ?);
+    return schutz;
   fi;
 
-  return Intersection(lambda_schutz, rho_schutz);
+  p:=RhoPerm(ParentSemigroup(d))(RhoOrbRep(o, m), f);
+  
+  if lambda_stab=true then 
+    SetRhoCosets(d, ?);
+    return rho_schutz^p;
+  fi;
+
+  SetRhoCosets(d, ?);
+  return Intersection(lambda_schutz, rho_schutz^p);
 end);
 
 # new for 1.0! - Size - "for a D-class of an acting semigp."

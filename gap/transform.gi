@@ -430,6 +430,12 @@ end);
 
 #OOO
 
+# new for 0.5! - One - "for a transformation"
+#############################################################################
+
+InstallMethod(One, "for a transformation",
+[IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
+
 # mod for 0.5! - One - "for a full transformation semigroup"
 ###########################################################################
 # Notes: this should not be necessary. Better if '\in' for a full
