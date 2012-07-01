@@ -343,39 +343,21 @@ function(f, s)
   lambda:=LambdaFunc(s)(f);
 
   # look for lambda!
-  if not data!.graded then 
-    o:=LambdaOrb(s);
-    l:=Position(o, lambda);
+  o:=LambdaOrb(s);
+  l:=Position(o, lambda);
     
-    if l=fail then 
-      if IsClosed(o) then 
-        return false;
-      fi;
-      o!.looking:=true; o!.lookingfor:=function(o, x) return x=lambda; end;
-      o!.lookfunc:=o!.lookingfor;
-      Enumerate(o);
-      l:=PositionOfFound(o);
-      o!.found:=false; o!.looking:=false; 
-      Unbind(o!.lookingfor); Unbind(o!.lookfunc);
-      if l=false then 
-        return false;
-      fi;
+  if l=fail then 
+    if IsClosed(o) then 
+      return false;
     fi;
-  else 
-    o:=GradedLambdaOrbs(s);
-    l:=HTValue(LambdaHT(s), lambda);
-    
-    if l=fail then 
-      if IsClosed(data) then 
-        return false;
-      fi;
-      lookfunc:=function(data, x) return LambdaFunc(s)(x)=lambda; end;
-      # lookahead?
-      data:=Enumerate(data, infinity, lookfunc);
-      l:=data!.found;
-      if l=false then 
-        return false;
-      fi;
+    o!.looking:=true; o!.lookingfor:=function(o, x) return x=lambda; end;
+    o!.lookfunc:=o!.lookingfor;
+    Enumerate(o);
+    l:=PositionOfFound(o);
+    o!.found:=false; o!.looking:=false; 
+    Unbind(o!.lookingfor); Unbind(o!.lookfunc);
+    if l=false then 
+      return false;
     fi;
   fi;
   
@@ -395,7 +377,8 @@ function(f, s)
   val:=HTValue(LambdaRhoHT(s), lambdarho);
 
   lookfunc:=function(data, x) 
-    return Concatenation(LambdaFunc(s)(x), RhoFunc(s)(x))=lambdarho;
+    return Concatenation([OrbSCCLookup(o)[Position(o, LambdaFunc(s)(x))]],
+     RhoFunc(s)(x))=lambdarho;
   end;
   
   # if lambdarho is not already known, then look for it
@@ -488,8 +471,6 @@ function(f, s)
 
   return false;
 end);
-
-#CCC
 
 #EEE
 

@@ -10,32 +10,14 @@
 
 # for convenience...
 
-# new for 1.0! - RhoSchutzGp - "for a D-class of an acting semigroup"
+# new for 1.0! - RhoCosets - "for a D-class of an acting semigp"
 ##############################################################################
 
-InstallMethod(RhoSchutzGp, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
+InstallMethod(RhoCosets, "for a D-class of an acting semigp",
+[IsGreensDClass and IsActingSemigroupGreensClass], 
 function(d)
-  local o, m, schutz, f, l, p;
-
-  o:=RhoOrb(d); 
-  m:=RhoOrbSCCIndex(d);
-  schutz:=RhoOrbSchutzGp(o, m, infinity);
-
-  if IsTrivial(schutz) then 
-    return schutz;
-  fi;
-
-  #JDM it would be better to not have to do the next 6 lines
-  f:=Representative(d);
-  l:=Position(o, RhoFunc(ParentSemigroup(d))(f));
-
-  if l<>OrbSCC(o)[m][1] then 
-    f:=RhoOrbMults(o, m)[l][2]*f;
-  fi;
-
-  p:=RhoPerm(ParentSemigroup(d))(RhoOrbRep(o, m), f);
-  return schutz^p;
+  SchutzenbergerGroup(d);
+  return RhoCosets(d);
 end);
 
 # new for 1.0! - SemigroupDataSCC - "for a D-class of an acting semigp"
@@ -69,15 +51,6 @@ InstallMethod(LambdaCosets, "for a D-class of an acting semigroup",
 function(d)
   return RightTransversal(LambdaOrbSchutzGp(LambdaOrb(d),
    LambdaOrbSCCIndex(d)), SchutzenbergerGroup(d));
-end);
-
-# new for 1.0! - RhoCosets - "for a D-class of an acting semigp"
-##############################################################################
-
-InstallMethod(RhoCosets, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
-function(d)
-  return RightTransversal(RhoSchutzGp(d), SchutzenbergerGroup(d));
 end);
 
 # new for 1.0! - RhoOrbSCCIndex - "for a Green's class of an acting semigp"
@@ -1051,7 +1024,14 @@ function(d, f)
 
   SetParentSemigroup(r, s);
   SetLambdaOrbSCCIndex(r, LambdaOrbSCCIndex(d));
-  SetLambdaOrb(r, LambdaOrb(d));
+  SetLambdaOrb(r, o);
+  
+  o:=LambdaOrb(d); 
+  l:=Position(o, LambdaFunc(s)(f));
+  if l<>OrbSCC(o)[OrbSCCLookup(o)[l]][1] then 
+    f:=f*LambdaOrbMults(o, m);
+  fi;
+  
   SetRepresentative(r, f);
   SetEquivalenceClassRelation(r, GreensRRelation(s));
   SetIsGreensClassNC(r, true);
@@ -1989,47 +1969,41 @@ end);
 InstallMethod(SchutzenbergerGroup, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local o, m, lambda_schutz, lambda_stab, rho_schutz, p;
+  local o, m, lambda_schutz, lambda_stab, rho_schutz, rho_stab, schutz, p;
   
   o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
   lambda_schutz:=LambdaOrbSchutzGp(o, m); 
-  
-  if IsTrivial(lambda_schutz) then 
-    SetRhoCosets(d, ?);
-    return lambda_schutz;
-  fi;
-
   lambda_stab:=LambdaOrbStabChain(o, m);
+  
   o:=RhoOrb(d); m:=RhoOrbSCCIndex(d);
-  
-  #if not IsBound(o!.schutz) or not IsBound(o!.schutz[m]) then 
-    #do something complicated
-    # - create the RhoOrbSchutzGp using the elements of LambdaRhoLookup
-    #  and lambda_stab, bound on size, sifting to avoid adding gens 
-    #  outside the intersection of RhoOrbSchutzGp and LambdaOrbSchutzGp
-  #fi;
-
-  if RhoOrbStabChain(o, m)=true then 
-    SetRhoCosets(d, ?);
-    return lambda_schutz;
-  fi;
-
   rho_schutz:=RhoOrbSchutzGp(o, m, infinity);
+  rho_stab:=RhoOrbStabChain(o, m);
 
-  if IsTrivial(rho_schutz) then 
-    SetRhoCosets(d, ?);
-    return schutz;
+  if rho_stab=true then
+    schutz:=lambda_schutz;
+    if lambda_stab=true then 
+      SetRhoCosets(d, [()]);
+      return lambda_schutz;
+    fi;
+  elif rho_stab=false then 
+    SetRhoCosets(d, [()]);
+    return rho_schutz;
   fi;
 
-  p:=RhoPerm(ParentSemigroup(d))(RhoOrbRep(o, m), f);
-  
-  if lambda_stab=true then 
-    SetRhoCosets(d, ?);
-    return rho_schutz^p;
+  p:=RhoPerm(ParentSemigroup(d))(RhoOrbRep(o, m), Representative(d));
+  rho_schutz:=rho_schutz^p;
+
+  if lambda_stab=false then 
+    SetRhoCosets(d, Enumerator(rho_schutz));
+    return lambda_schutz;
+  elif lambda_stab=true then 
+    schutz:=rho_schutz;
+  else 
+    schutz:=Intersection(lambda_schutz, rho_schutz);
   fi;
 
-  SetRhoCosets(d, ?);
-  return Intersection(lambda_schutz, rho_schutz^p);
+  SetRhoCosets(d, RightTransversal(rho_schutz, schutz));
+  return schutz;
 end);
 
 # new for 1.0! - Size - "for a D-class of an acting semigp."
