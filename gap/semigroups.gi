@@ -193,13 +193,13 @@ function(s, coll, opts)
     t:=Semigroup(s, coll, opts);
   fi;
 
-  if not HasOrbitsOfImages(s) or opts.schreier then 
+  #if not HasOrbitsOfImages(s) or opts.schreier then 
     return t;
-  fi;
+  #fi;
 
   #no schreier###############################################################
   
-  old_data:=OrbitsOfImages(s);
+  #old_data:=OrbitsOfImages(s);
   n:=Degree(t);
   
   # set up orbits of images of t
@@ -295,20 +295,20 @@ function(s, coll, opts)
 
   # set orbits of images of t
 
-  new_data:= Objectify(NewType(FamilyObj(t), IsOrbitsOfImages), 
-   rec(finished:=false, orbits:=orbits, lens:=lens, images:=images,
-    at:=old_data!.at, gens:=gens, ht:=ht, data_ht:=data_ht, data:=data));
+  #new_data:= Objectify(NewType(FamilyObj(t), IsOrbitsOfImages), 
+  # rec(finished:=false, orbits:=orbits, lens:=lens, images:=images,
+  #  at:=old_data!.at, gens:=gens, ht:=ht, data_ht:=data_ht, data:=data));
 
-  SetOrbitsOfImages(t, new_data); 
+  #SetOrbitsOfImages(t, new_data); 
  
   # process old R-reps 
 
   for i in [1..Length(old_reps)] do 
-    j:=InOrbitsOfImages(old_reps[i], false, 
-     [fail, fail, fail, fail, fail, 0, fail], orbits, images);
-    if not j[1] then
-      AddToOrbitsOfImages(t, old_reps[i], j[2], new_data, false);
-    fi;
+    #j:=InOrbitsOfImages(old_reps[i], false, 
+    # [fail, fail, fail, fail, fail, 0, fail], orbits, images);
+    #if not j[1] then
+    #  AddToOrbitsOfImages(t, old_reps[i], j[2], new_data, false);
+    #fi;
   od;
   
   # install new pts in the orbit
@@ -457,7 +457,7 @@ function(gens, opts)
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
         " generators so far");
         if not opts.schreier then 
-          Print(", for \t", Size(OrbitsOfImages(s)), " elements\r");
+          #Print(", for \t", Size(OrbitsOfImages(s)), " elements\r");
         fi;
       od;
       Print("\n");
@@ -987,7 +987,7 @@ function(gens, opts)
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
         " generators so far");
         if not opts.schreier then
-          Print(", for \t", Size(OrbitsOfImages(s)), " elements\r");
+          #Print(", for \t", Size(OrbitsOfImages(s)), " elements\r");
         fi;
       od;
       Print("\n");

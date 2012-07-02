@@ -511,7 +511,7 @@ InstallGlobalFunction(CreateLClass,
 function(arg)
   local l;
 
-  l:=Objectify(LClassType(s), rec());
+  l:=Objectify(LClassType(arg[1]), rec());
 
   SetParentSemigroup(l, arg[1]);
   SetRhoOrbSCCIndex(l, arg[2]);
@@ -1071,18 +1071,20 @@ end);
 InstallOtherMethod(GreensRClassOfElementNC, "for D-class and acting elt",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
 function(d, f)
-  local s, r;
+  local s, r, o, l, m;
 
   s:=ParentSemigroup(d);
   r:=Objectify(RClassType(s), rec());
 
   SetParentSemigroup(r, s);
   SetLambdaOrbSCCIndex(r, LambdaOrbSCCIndex(d));
-  SetLambdaOrb(r, o);
   
   o:=LambdaOrb(d); 
+  SetLambdaOrb(r, o);
   l:=Position(o, LambdaFunc(s)(f));
-  if l<>OrbSCC(o)[OrbSCCLookup(o)[l]][1] then 
+  m:=OrbSCCLookup(o)[l];
+
+  if l<>OrbSCC(o)[m][1] then 
     f:=f*LambdaOrbMults(o, m);
   fi;
   

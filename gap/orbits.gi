@@ -114,7 +114,7 @@ function(s)
   local gens, n, ht, o, m, out, len, new, k, i, j;
 
   if IsSemigroup(s) then  
-    gens:=GeneratorsAsListOfImages(s);
+    #gens:=GeneratorsAsListOfImages(s);
     n:=Degree(s);
   else
     gens:=s;
@@ -226,9 +226,9 @@ function(s)
 
   n:=DegreeOfTransformationSemigroup(s); 
   
-  return Orb(GeneratorsAsListOfImages(s), [1..n], function(f,g) return
-   CanonicalTransSameKernel(f{g}); end, rec(storenumbers:=true, 
-   treehashsize:=1009, schreier:=true));
+  #return Orb(GeneratorsAsListOfImages(s), [1..n], function(f,g) return
+  # CanonicalTransSameKernel(f{g}); end, rec(storenumbers:=true, 
+  # treehashsize:=1009, schreier:=true));
 end);
 
 # new for 0.1! - KernelsOfTransSemigroup - "for trans. semi. and  pos. int."
@@ -240,13 +240,13 @@ function(s, m)
   local n;
 
   n:=DegreeOfTransformationSemigroup(s); 
-
-  return Orb(GeneratorsAsListOfImages(s), [1..n], 
-              function(f,g) return CanonicalTransSameKernel(f{g}); end, 
-              rec(storenumbers:=true, treehashsize:=1009, 
-              gradingfunc:=function(o,x) return Maximum(x); end,
-              onlygrades:=function(x, y) return x in y; end, 
-              onlygradesdata:=[m..n], schreier:=true));
+return;
+  #return Orb(GeneratorsAsListOfImages(s), [1..n], 
+  #            function(f,g) return CanonicalTransSameKernel(f{g}); end, 
+  #            rec(storenumbers:=true, treehashsize:=1009, 
+  #            gradingfunc:=function(o,x) return Maximum(x); end,
+  #            onlygrades:=function(x, y) return x in y; end, 
+  #            onlygradesdata:=[m..n], schreier:=true));
 end);
 
 #OOO
@@ -500,31 +500,6 @@ end);
 InstallMethod(SchutzGps, "for a trans. semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 s-> List(CitrusSkeleton(s)!.schutz, x-> x[2]));
-
-# new for 0.4! - CitrusSkeleton - "for a trans. semigroup"
-#############################################################################
-
-InstallMethod(CitrusSkeleton, "for a trans. semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  local o, scc, r, gens, perms, schutz, i;
-
-  o:=ImagesOfTransSemigroup(s); Enumerate(o); 
-  scc:=OrbSCC(o); r:=Length(scc); gens:=GeneratorsAsListOfImages(s);
-  o!.perms:=EmptyPlist(Length(o)); schutz:=EmptyPlist(r);
-
-  for i in [1..r] do 
-    ReverseSchreierTreeOfSCC(o, i);
-    o!.perms:=o!.perms+CreateImageOrbitSCCPerms(gens, o, i);
-    SchreierTreeOfSCC(o, i);
-    schutz[i]:=CreateImageOrbitSchutzGp(gens, o,
-     CitrusEvalWord(gens, TraceSchreierTreeForward(o, scc[i][1])), i);
-  od;
-  
-  o!.schutz:=schutz;
-  
-  return o;
-end);
 
 # new for 0.1! - StrongOrbitsInForwardOrbit - for IsOrbit
 #############################################################################

@@ -377,8 +377,8 @@ function(f, s)
   val:=HTValue(LambdaRhoHT(s), lambdarho);
 
   lookfunc:=function(data, x) 
-    return Concatenation([OrbSCCLookup(o)[Position(o, LambdaFunc(s)(x))]],
-     RhoFunc(s)(x))=lambdarho;
+    return Concatenation([OrbSCCLookup(o)[Position(o, LambdaFunc(s)(x[4]))]],
+     RhoFunc(s)(x[4]))=lambdarho;
   end;
   
   # if lambdarho is not already known, then look for it
@@ -580,303 +580,123 @@ function(data, limit, lookfunc)
   rho:=RhoFunc(s);
   lambdarhoht:=LambdaRhoHT(s);
 
-  if data!.graded=false then # decided when data is created in InitSemigroupData
+  o:=LambdaOrb(s);
+  Enumerate(o, infinity);
+  scc:=OrbSCC(o); r:=Length(scc);
+  lookup:=o!.scc_lookup;
+  
+  while nr<=limit and i<nr do 
+    i:=i+1;
     
-    o:=LambdaOrb(s);
-    Enumerate(o, infinity);
-    scc:=OrbSCC(o); r:=Length(scc);
-    lookup:=o!.scc_lookup;
-    
-    while nr<=limit and i<nr do 
-      i:=i+1;
+    for j in genstoapply do #JDM
+      x:=gens[j]*orb[i][4];
       
-      for j in genstoapply do #JDM
-        x:=gens[j]*orb[i][4];
-        
-        lamx:=lambda(x);
-        pos:=Position(o, lamx);
-        
-        #find the scc
-        m:=lookup[pos];
+      lamx:=lambda(x);
+      pos:=Position(o, lamx);
+      
+      #find the scc
+      m:=lookup[pos];
 
-        #put lambda x in the first position in its scc
-        if not pos=scc[m][1] then 
-          
-          #get the multipliers
-          #JDM expand!
-          mults:=LambdaOrbMults(o, m);         
-          y:=x*mults[pos];
+      #put lambda x in the first position in its scc
+      if not pos=scc[m][1] then 
+        
+        #get the multipliers
+        #JDM expand!
+        mults:=LambdaOrbMults(o, m);         
+        y:=x*mults[pos];
+      else
+        y:=x;
+        pos:=fail;
+      fi;
+
+      #check if we've seen rho(y) before
+      #rhoy:=ShallowCopy(o[scc[m][1]]);
+      #Append(rhoy, rho(y));
+      #val:=HTValue(lambdarhoht, rhoy);
+
+      rhoy:=[m];
+      Append(rhoy, rho(y));
+      val:=HTValue(lambdarhoht, rhoy);
+
+      # this is what we keep if it is new
+      # x:=[s, [m, scc[m][1]], o, y, nr+1, val];
+
+      if val=fail then  #new rho value, and hence new R-rep
+        lenreps:=lenreps+1;
+        HTAdd(lambdarhoht, rhoy, lenreps);
+        nr:=nr+1;
+        reps[lenreps]:=[y];
+        repslookup[lenreps]:=[nr];
+        orblookup1[nr]:=lenreps;
+        orblookup2[nr]:=1;
+        repslens[lenreps]:=1;
+        x:=[s, m, o, y, nr];
+        # semigroup, lambda orb data, lambda orb, rep, index in orbit,
+        # position of reps with equal lambda-rho value
+
+      else              # old rho value
+        x:=[s, m, o, y, nr+1];
+        
+        # JDM expand!
+        schutz:=LambdaOrbStabChain(o, m);
+        
+        #check membership in schutz gp via stab chain
+        
+        if schutz=true then # schutz gp is symmetric group
+          graph[i][j]:=repslookup[val][1];
+          continue;
         else
-          y:=x;
-          pos:=fail;
-        fi;
-
-        #check if we've seen rho(y) before
-        #rhoy:=ShallowCopy(o[scc[m][1]]);
-        #Append(rhoy, rho(y));
-        #val:=HTValue(lambdarhoht, rhoy);
-
-        rhoy:=[m];
-        Append(rhoy, rho(y));
-        val:=HTValue(lambdarhoht, rhoy);
-
-        # this is what we keep if it is new
-        # x:=[s, [m, scc[m][1]], o, y, nr+1, val];
-
-        if val=fail then  #new rho value, and hence new R-rep
-          lenreps:=lenreps+1;
-          HTAdd(lambdarhoht, rhoy, lenreps);
-          nr:=nr+1;
-          reps[lenreps]:=[y];
-          repslookup[lenreps]:=[nr];
-          orblookup1[nr]:=lenreps;
-          orblookup2[nr]:=1;
-          repslens[lenreps]:=1;
-          x:=[s, m, o, y, nr];
-          # semigroup, lambda orb data, lambda orb, rep, index in orbit,
-          # position of reps with equal lambda-rho value
-
-        else              # old rho value
-          x:=[s, m, o, y, nr+1];
-          
-          # JDM expand!
-          schutz:=LambdaOrbStabChain(o, m);
-          
-          #check membership in schutz gp via stab chain
-          
-          if schutz=true then # schutz gp is symmetric group
-            graph[i][j]:=repslookup[val][1];
-            continue;
-          else
-            if schutz=false then # schutz gp is trivial
-              tmp:=HTValue(ht, y);
-              if tmp<>fail then 
-                graph[i][j]:=tmp;
-                continue;
-              fi;
-            else # schutz gp neither trivial nor symmetric group
-              old:=false; 
-              for n in [1..repslens[val]] do 
-                p:=lambdaperm(reps[val][n], y);
-                if SiftedPermutation(schutz, p)=() then 
-                  old:=true;
-                  graph[i][j]:=repslookup[val][n]; 
-                  break;
-                fi;
-              od;
-              if old then 
-                continue;
-              fi;
-            fi;
-            nr:=nr+1;
-            repslens[val]:=repslens[val]+1;
-            reps[val][repslens[val]]:=y;
-            repslookup[val][repslens[val]]:=nr;
-            orblookup1[nr]:=val;
-            orblookup2[nr]:=repslens[val];
-          fi;
-        fi;
-        orb[nr]:=x;
-        schreierpos[nr]:=i; # orb[nr] is obtained from orb[i]
-        schreiergen[nr]:=j; # by multiplying by gens[j]
-        schreiermult[nr]:=pos; # and ends up in position <pos> of 
-                               # its lambda orb
-        HTAdd(ht, y, nr);
-        graph[nr]:=EmptyPlist(nrgens);
-        graph[i][j]:= nr;
-        
-        # are we looking for something?
-        if looking then 
-          
-          # did we find it?
-          if lookfunc(data, y) then 
-            data!.pos:=i-1;
-            data!.found:=nr;
-            data!.lenreps:=lenreps;
-            return data;
-          fi;
-        fi;
-      od;
-    od;
-  else #JDM graded- this should be updated as per the first part of this func
-    
-    lambdaht:=LambdaHT(s);
-    graded:=GradedLambdaOrbs(s);  # existing graded lambda orbs
-    gradedlens:=graded!.lens;     # gradedlens[j]=Length(graded[j]);
-       
-    # options for graded lambda orbs
-    hashlen:=CitrusOptionsRec.hashlen.M;  
-    gradingfunc := function(o,x) return [rank(x)+1, x]; end;
-
-    while nr<=limit and i<nr do 
-      i:=i+1;
-      
-      for j in genstoapply do #JDM
-        x:=gens[j]*orb[i][4];
-        
-        #check if lambda orb of x is already known
-        lamx:=lambda(x);
-        pos:=HTValue(lambdaht, lamx);
-        
-        if pos=fail then #new lambda orbit, new R-class
-          
-          #setup graded lambda orb
-          rankx:=rank(lamx)+1;
-          gradedlens[rankx]:=gradedlens[rankx]+1;
-          
-          o:=Orb(gens, lamx, lambdaact,
-            rec(
-              forflatplainlists:=true,
-              hashlen:=hashlen,
-              schreier:=true,
-              gradingfunc:=gradingfunc,
-              orbitgraph:=true,
-              onlygrades:=function(y, onlygradesdata)
-                return y[1]=rankx and 
-                  HTValue(onlygradesdata, y[2])=fail;
-                end,
-              onlygradesdata:=lambdaht,
-              storenumbers:=true,
-              log:=true, 
-              scc_reps:=[x], 
-              data:=[rankx, gradedlens[rankx]],
-              semi:=s));
-          
-          SetIsGradedLambdaOrb(o, true);
-
-          #store graded lambda orb
-          graded[rankx][gradedlens[rankx]]:=o;
-          
-          #install points from new lambda orb in lambdaht
-          Enumerate(o, infinity);
-          for y in [1..Length(o)] do 
-            HTAdd(lambdaht, o[y], [rankx, gradedlens[rankx], y]);
-          od;
-
-          #     
-          lenreps:=lenreps+1;
-          nr:=nr+1;
-          reps[lenreps]:=[x];
-          repslookup[lenreps]:=[nr];
-          repslens[lenreps]:=1;
-          HTAdd(lambdarhoht, Concatenation(lamx, rho(x)), lenreps);
-          x:=[s, 1, o, x, nr];
-          pos:=true;
-        else #old lambda orbit
-          o:=graded[pos[1]][pos[2]];
-          
-          #find the scc
-          scc:=OrbSCC(o); r:=Length(scc);
-          lookup:=o!.scc_lookup;
-          m:=lookup[pos[3]];
-          scc:=scc[m]; 
-
-          #get the multipliers
-          #JDM expand
-          mults:=LambdaOrbMults(o, m);
-          
-          #if not IsBound(o!.mults) then 
-          #  o!.mults:=EmptyPlist(Length(o));
-          #fi;
-          #mults:=o!.mults;
-          #if not IsBound(mults[scc[1]]) then ;
-          #  for k in scc do
-          #    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, m, k));
-          #    mults[k]:=lambdamult(o[k], f);
-          #  od; 
-          #fi;
-          
-          #put lambda x in the first position in its scc
-          if not pos[3]=scc[1] then 
-            y:=x*mults[pos[3]];
-            pos:=pos[3];
-          else
-            y:=x; 
-          fi;
-
-          #check if we've seen rho(y) before
-          rhoy:=ShallowCopy(o[scc[1]]);
-          Append(rhoy, rho(y));
-          val:=HTValue(lambdarhoht, rhoy);
-
-          # this is what we keep if it is new
-          x:=[s, [m, scc[1]], o, y, nr+1];
-
-          if val=fail then  #new rho value
-            lenreps:=lenreps+1;
-            HTAdd(lambdarhoht, rhoy, lenreps);
-            nr:=nr+1;
-            reps[lenreps]:=[y];
-            repslookup[lenreps]:=[nr];
-            repslens[lenreps]:=1;
-          else              # old rho value
-            
-            #get schutz gp stab chain
-            #JDM expand!
-            schutzstab:=LambdaOrbStabChain(o, m);
-
-            #check membership in schutz gp via stab chain
-            
-            if schutzstab=true then # schutz gp is symmetric group
-              graph[i][j]:=repslookup[val][1];
+          if schutz=false then # schutz gp is trivial
+            tmp:=HTValue(ht, y);
+            if tmp<>fail then 
+              graph[i][j]:=tmp;
               continue;
-            else
-              if schutzstab=false then # schutz gp is trivial
-                old:=false;
-                for n in [1..repslens[val]] do 
-                  if reps[val][n]=y then 
-                    old:=true;
-                    graph[i][j]:=repslookup[val][n];
-                    break;
-                  fi;
-                od;
-                if old then 
-                  continue;
-                fi;
-              else # schutz gp neither trivial nor symmetric group
-                old:=false; 
-                for n in [1..repslens[val]] do 
-                  p:=lambdaperm(reps[val][n], y);
-                  if SiftedPermutation(schutzstab, p)=() then 
-                    old:=true;
-                    graph[i][j]:=repslookup[val][n]; 
-                    break;
-                  fi;
-                od;
-                if old then 
-                  continue;
-                fi;
+            fi;
+          else # schutz gp neither trivial nor symmetric group
+            old:=false; 
+            for n in [1..repslens[val]] do 
+              p:=lambdaperm(reps[val][n], y);
+              if SiftedPermutation(schutz, p)=() then 
+                old:=true;
+                graph[i][j]:=repslookup[val][n]; 
+                break;
               fi;
-              nr:=nr+1;
-              reps[val][n+1]:=y;
-              repslookup[val][n+1]:=nr;
-              repslens[val]:=repslens[val]+1;
+            od;
+            if old then 
+              continue;
             fi;
           fi;
+          nr:=nr+1;
+          repslens[val]:=repslens[val]+1;
+          reps[val][repslens[val]]:=y;
+          repslookup[val][repslens[val]]:=nr;
+          orblookup1[nr]:=val;
+          orblookup2[nr]:=repslens[val];
         fi;
-        orb[nr]:=x;
-        schreierpos[nr]:=i; # orb[nr] is obtained from orb[i]
-        schreiergen[nr]:=j; # by multiplying by gens[j]
-        schreiermult[nr]:=pos; # and then by multiplying by o!.mults[pos]
-                               # pos = fail if gens[j]*orb[nr] is the R-rep
-                               # (its lambda value is in scc[1])
-        graph[nr]:=EmptyPlist(nrgens);
-        graph[i][j]:= nr;
+      fi;
+      orb[nr]:=x;
+      schreierpos[nr]:=i; # orb[nr] is obtained from orb[i]
+      schreiergen[nr]:=j; # by multiplying by gens[j]
+      schreiermult[nr]:=pos; # and ends up in position <pos> of 
+                             # its lambda orb
+      HTAdd(ht, y, nr);
+      graph[nr]:=EmptyPlist(nrgens);
+      graph[i][j]:= nr;
+      
+      # are we looking for something?
+      if looking then 
         
-        # are we looking for something?
-        if looking then
-
-          # did we find it?
-          if lookfunc(data, y) then
-            data!.pos:=i-1;
-            data!.found:=nr;
-            data!.lenreps:=lenreps;
-            return data;
-          fi;
+        # did we find it?
+        if lookfunc(data, y) then 
+          data!.pos:=i-1;
+          data!.found:=nr;
+          data!.lenreps:=lenreps;
+          return data;
         fi;
-      od;
+      fi;
     od;
-  fi;
+  od;
+  
   data!.pos:=i;
   data!.lenreps:=lenreps;
   if looking then 

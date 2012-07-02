@@ -346,7 +346,7 @@ function(s)
       fi;
         
       if reg[val]=false then #old kernel
-        o:=ImageOrbitFromData(s, data); scc:=ImageOrbitSCCFromData(s, data);
+        #o:=ImageOrbitFromData(s, data); scc:=ImageOrbitSCCFromData(s, data);
         reg[val]:=ForAny(scc, j-> IsInjectiveTransOnList(ker, o[j]));
       fi;
     fi;
@@ -395,7 +395,7 @@ function(s)
   iter:=IteratorOfDClassRepsData(s); 
     
   for d in iter do
-    i:=NrIdempotentsRClassFromData(s, d[1]);
+    #i:=NrIdempotentsRClassFromData(s, d[1]);
     if i>1 then #this could be better
     # we only need to find 2 transversals to return false.
       Info(InfoCitrus, 2, "at least one R-class contains more than 1", 
@@ -404,9 +404,9 @@ function(s)
     fi;
     
     #now check that D-classes are square...
-    f:=AsSet(DClassRepFromData(s, d)![1]);
-    o:=KernelOrbitFromData(s, d);
-    scc:=KernelOrbitSCCFromData(s, d[2]);
+    #f:=AsSet(DClassRepFromData(s, d)![1]);
+    #o:=KernelOrbitFromData(s, d);
+    #scc:=KernelOrbitSCCFromData(s, d[2]);
     reg:=false;
     for i in scc do 
       if IsInjectiveTransOnList(o[i], f) then 
@@ -619,7 +619,7 @@ function(s)
   i:=0; 
   repeat 
     i:=i+1;
-    g:=DClassSchutzGpFromData(s, NextIterator(iter)[2]);
+    #g:=DClassSchutzGpFromData(s, NextIterator(iter)[2]);
     if Size(g)>1 then 
       Info(InfoCitrus, 2, "the D-class with index ", i, " is not H-trivial");
       return false;
@@ -665,11 +665,11 @@ function(s)
 
   for d in iter do 
     i:=i+1;
-    if not (Size(KernelOrbitSchutzGpFromData(s, d[2]))=1 and 
-     Length(KernelOrbitSCCFromData(s, d[2]))=1) then
+    #if not (Size(KernelOrbitSchutzGpFromData(s, d[2]))=1 and 
+    # Length(KernelOrbitSCCFromData(s, d[2]))=1) then
       Info(InfoCitrus, 2, "the D-class with index ", i, " is not L-trivial");
       return false;
-    fi;
+    #fi;
   od;
 
   return true;
@@ -699,32 +699,32 @@ function(s)
   local i, iter, r, d;
   i:=0;
 
-  if OrbitsOfKernels(s)!.finished then 
+  #if OrbitsOfKernels(s)!.finished then 
     iter:=IteratorOfDClasses(s);
     for d in iter do 
       i:=i+1;
-      if not (Size(ImageOrbitSchutzGpFromData(s, d!.data[1]))=1 and 
-       Length(ImageOrbitSCCFromData(s, d!.data[1]))=1) then
+   #   if not (Size(ImageOrbitSchutzGpFromData(s, d!.data[1]))=1 and 
+   #    Length(ImageOrbitSCCFromData(s, d!.data[1]))=1) then
         Info(InfoCitrus, 2, "the D-class with index ", i, " is not R-trivial");
         return false;
-      fi;
+    #  fi;
     od;
 	
     return true;
-  fi;
+  #fi;
 
-  iter:=IteratorOfRClassRepsData(s); 
+  #iter:=IteratorOfRClassRepsData(s); 
 
   #JDM here it would be useful to pass OrbitsOfImages(s)!.orbits to 
   # RClassSchutzGpFromData...
 
   for d in iter do
     i:=i+1;
-    if not (Size(ImageOrbitSchutzGpFromData(s, d))=1 and 
-     Length(ImageOrbitSCCFromData(s, d))=1) then 
+   # if not (Size(ImageOrbitSchutzGpFromData(s, d))=1 and 
+   #  Length(ImageOrbitSCCFromData(s, d))=1) then 
       Info(InfoCitrus, 2, "the R-class with index ", i, " is not trivial");
       return false;
-    fi;
+    #fi;
   od;
 
   return true;
@@ -865,21 +865,21 @@ function(s)
     return false;
   fi;
 
-  if OrbitsOfKernels(s)!.finished then 
-    iter:=IteratorOfDClassRepsData(s); D:=true;
-  else 
-    iter:=IteratorOfRClassRepsData(s); D:=false;
-  fi;
+  #if OrbitsOfKernels(s)!.finished then 
+  #  iter:=IteratorOfDClassRepsData(s); D:=true;
+  #else 
+  #  iter:=IteratorOfRClassRepsData(s); D:=false;
+  #fi;
     
   for d in iter do
     if D then 
       d:=d[1];
     fi;
-    if not NrIdempotentsRClassFromData(s, d)=1 then 
+   # if not NrIdempotentsRClassFromData(s, d)=1 then 
       Info(InfoCitrus, 2, "at least one R-class contains more than 1", 
       " idempotent");
       return false;
-    fi;
+   # fi;
   od;
 
   return true;
@@ -1669,10 +1669,33 @@ end);
 
 #IIIUUU
 
-# new for 0.8! - IsUnitRegularSemigroup - "for a trans semigroup"
+# new for 1.0! - IsUnitRegularSemigroup - "for a trans semigroup"
 ###########################################################################
 
+InstallMethod(IsUnitRegularSemigroup, "for a trans semigroup",
+[IsTransformationSemigroup], 
+function(s)
+  local g, lookfunc, data;
+  g:=GroupOfUnits(s);
+  
+  if g=fail then 
+    return false;
+  fi;
 
+  lookfunc:=function(o, x) 
+    local oo;
+    oo:=Orb(g, RanT(x[4]), OnSets, rec( 
+      forflatplainlists:=true, 
+      hashlen:=s!.opts.hashlen.S,
+      lookingfor:=function(o, y) 
+        return IsInjectiveTransOnList(x[4], y); end));
+    Enumerate(oo);
+    return PositionOfFound(oo)=false;
+  end;
+
+  data:=Enumerate(SemigroupData(s), infinity, lookfunc);
+  return PositionOfFound(data)<>false; 
+end);
 
 #IIIZZZ
 
