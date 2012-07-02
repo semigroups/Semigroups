@@ -504,12 +504,29 @@ function(arg)
   return d; 
 end); 
 
+# mod for 1.0! - CreateLClass - not a user function!
+#############################################################################
+
+InstallGlobalFunction(CreateLClass,
+function(arg)
+  local l;
+
+  l:=Objectify(LClassType(s), rec());
+
+  SetParentSemigroup(l, arg[1]);
+  SetRhoOrbSCCIndex(l, arg[2]);
+  SetRhoOrb(l, arg[3]);
+  SetRepresentative(l, arg[4]);
+  
+  SetEquivalenceClassRelation(l, GreensLRelation(arg[1]));
+  SetIsGreensClassNC(l, true); 
+  return l;
+end);
+
 # mod for 1.0! - CreateRClass - not a user function!
 #############################################################################
 # Usage: arg[1] = semigroup; arg[2] = lambda orb scc index;
 # arg[3] = lambda orb; arg[4] = rep; arg[5] = position in SemigroupData of rep.
-
-# rep should be with rectified image only!
 
 InstallGlobalFunction(CreateRClass,
 function(arg)
@@ -817,14 +834,51 @@ function(s)
   return out;
 end);
 
+# mod for 1.0! - GreensLClasses - "for an acting semigroup"
+##############################################################################
+
+InstallMethod(GreensLClasses, "for an acting semigroup",
+[IsActingSemigroup], 
+function(s)
+  local D, out, d;
+
+  D:=GreensDClasses(s);
+  out:=EmptyPlist(NrLClasses(s));
+
+  for d in D do 
+    Append(out, GreensLClasses(d));
+  od;
+  return out;
+end);
+
 # mod for 1.0! - GreensLClasses - "for a D-class of an acting semigroup"
 ##############################################################################
 
 InstallMethod(GreensLClasses, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass], 
 function(d)
-  Error("not yet implemented");
-  return;
+  local mults, scc, cosets, f, s, o, m, orbit_pos, out, k, i, j;
+ 
+  mults:=LambdaOrbMults(LambdaOrb(d), LambdaOrbSCCIndex(d));
+  scc:=LambdaOrbSCC(d);
+  cosets:=LambdaCosets(d);
+  f:=Representative(d);
+ 
+  s:=ParentSemigroup(d);
+  o:=RhoOrb(d);
+  m:=RhoOrbSCCIndex(d);
+  
+  out:=EmptyPlist(Length(scc)*Length(cosets));
+
+  k:=0;
+  for i in scc do
+    for j in cosets do
+      k:=k+1;
+      out[k]:=CreateLClass(s, m, o, f*(j/mults[i]));
+    od;
+  od;
+
+  return out;
 end);
 
 # new for 1.0! - GreensRClasses - "for a D-class of an acting semigroup"
@@ -916,7 +970,7 @@ function(s, f)
 
   SetRepresentative(d, f);
   SetEquivalenceClassRelation(d, GreensDRelation(s));
-  SetIsGreensClassNC(d, false);
+  SetIsGreensClassNC(d, true);
   return d;
 end);
 
@@ -1663,7 +1717,8 @@ d-> Length(LambdaCosets(d))*Length(LambdaOrbSCC(d)));
 
 # mod for 1.0! - NrLClasses - "for an acting semigroup"
 #############################################################################
-#JDM could do better not to create the D-classes.
+#JDM could do better not to create the D-classes. Maybe not, we must store the
+#schutz gp of the D-class somewhere and so it might as well be the D-class.
 
 InstallMethod(NrLClasses, "for an acting semigroup",
 [IsActingSemigroup], s-> Sum(List(GreensDClasses(s), NrLClasses)));
@@ -2062,6 +2117,36 @@ function(s)
 end);
 
 #DDD
+
+# new for 1.0! - DClassOfLClass - "for a D-class of an acting semigroup"
+#############################################################################
+
+InstallMethod(DClassOfLClass, "for an L-class of an acting semigroup",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+function(l)
+  local s, f, d;
+  
+  if not IsGreensClassNC(l) and IsClosed(SemigroupData(ParentSemigroup(l)))
+   then 
+    return CallFuncList(CreateDClass, 
+     SemigroupData(ParentSemigroup(l))[l!.orbit_pos]);
+  fi;
+
+  s:=ParentSemigroup(l); 
+  f:=Representative(l);
+  d:=Objectify(DClassType(s), rec());
+
+  SetParentSemigroup(d, s);
+  SetRhoOrbSCCIndex(d, RhoOrbSCCIndex(l));
+  SetRhoOrb(d, RhoOrb(l));
+  SetLambdaOrbSCCIndex(d, 1);
+  SetLambdaOrb(d, GradedLambdaOrb(s, f, true));
+
+  SetRepresentative(d, f);
+  SetEquivalenceClassRelation(d, GreensDRelation(s));
+  SetIsGreensClassNC(d, true); 
+  return d;
+end);
 
 # new for 1.0! - DClassOfRClass - "for a D-class of an acting semigroup"
 #############################################################################

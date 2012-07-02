@@ -729,7 +729,7 @@ Obj FuncRestrictedPP(Obj self, Obj f, Obj set)
   for(i=n;1<=i;i--)
   {
     j=INT_INTOBJ(ELM_LIST(set, i));
-    if(j<=deg_f&&ELM_PT(f, j)!=0)
+    if(j<=deg_f&&ELM_PT(f, j+6)!=0)
     {
       deg_g=(pttype) j;
       r=i;

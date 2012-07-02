@@ -11,49 +11,6 @@
 #############################################################################
 # Notes
 
-# - L-class data should be [unrectified image data, rectified kernel data,
-# image orbit coset rep].
-# seems like all we really need is l, D-class data [2], coset rep...
-
-#CCC
-
-# new for 0.1! - CreateLClass - not a user function!
-#############################################################################
-# Usage: s = semigroup; data = [image data, kernel data, coset rep] (image
-# data, kernel data any lengths); orbit = [OrbitsOfImages, OrbitsOfKernels];
-# rep = representative. 
-
-InstallGlobalFunction(CreateLClass, 
-function(s, data, orbit, rep)
-  local l;
-
-  #data:=[data[1]{[1..6]}, data[2]{[1..6]}, data[3]];
-
-  l:=Objectify(LClassType(s), rec(parent:=s, data:=data, 
-   o:=orbit, rep:=rep));
-  
-  SetRepresentative(l, rep);
-  SetEquivalenceClassRelation(l, GreensLRelation(s));
-  return l;
-end);
-
-#DDD
-
-# new for 0.1! - DClassOfLClass - "for an L-class of a trans. semigroup"
-#############################################################################
-
-InstallOtherMethod(DClassOfLClass, "for an L-class of a trans. semigroup",
-[IsGreensLClass and IsGreensClassOfTransSemigp],
-function(l)
-  local s, o, data, rep;
-  
-  s:=l!.parent; o:=l!.o; 
-  data:=o[2]!.data[HTValue(o[2]!.data_ht, l!.data[2])];
-  rep:=DClassRepFromData(s, data, o);
-
-  return CreateDClass(s, data, o, rep);
-end);
-
 #GGG
 
 # new for 0.1! - GreensHClasses - "for an L-class of a trans. semigp."
@@ -112,29 +69,6 @@ function(l, f)
   HClassRepFromData(ParentAttr(l), data, l!.o));
   SetLClassOfHClass(h, l);
   return h;
-end);
-
-# new for 0.1! - GreensLClasses - "for a transformation semigroup"
-#############################################################################
-# JDM move to greens.gi
-
-InstallMethod(GreensLClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup], 
-function(s)
-  local iter, out, i, l;
-
-  Info(InfoCitrus, 4, "GreensLClasses");
-
-  iter:=IteratorOfLClasses(s);
-  out:=EmptyPlist(NrLClasses(s));
-  i:=0;
-
-  for l in iter do 
-    i:=i+1;
-    out[i]:=l;
-  od;
-
-  return out;
 end);
 
 #HHH
