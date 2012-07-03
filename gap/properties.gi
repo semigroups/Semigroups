@@ -50,58 +50,35 @@ end);
 
 #GGG
 
-# new for 0.1! - GroupOfUnits - "for a tranformation semigroup"
+# mod for 1.0! - GroupOfUnits - "for an acting semigroup"
 ###########################################################################
-# Notes: returns a permutation group isomorphic to the group of units of the
-# input semigroup. 
 
 InstallMethod(GroupOfUnits, "for a tranformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+[IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local one, h, m, g, u;
+  local r, m, g, iso, u;
 
   if not IsMonoidAsSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is not a monoid,");
-    return fail;
+    Error("usage: the semigroup is not a monoid,");
+    return;
   fi;
 
-  one:=MultiplicativeNeutralElement(s);
-  h:=GreensHClassOfElement(s, one);
-  m:=Size(h); g:=Group(());
+  r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
+  m:=Size(r); g:=Group(AsPermutation(Random(r)));
 
   while Size(g)<m do
-    g:=ClosureGroup(g, AsPermutation(Random(h)));
+    g:=ClosureGroup(g, AsPermutation(Random(r)));
   od;
 
-  u:=Monoid(List(GeneratorsOfGroup(g), x-> one*x));
-  SetIsGroupAsSemigroup(u, true);
-  UseIsomorphismRelation(u, g);
-  return u;
-end);
-
-# new for 0.7! - GroupOfUnits - "for a partial perm semigroup"
-###########################################################################
-# Notes: returns a permutation group isomorphic to the group of units of the
-# input semigroup. 
-
-InstallOtherMethod(GroupOfUnits, "for a partial perm semigroup", 
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  local h, m, g, iso, u;
-
-  if not IsPartialPermMonoid(s) then 
-    Info(InfoCitrus, 2, "the semigroup is not a monoid,");
-    return fail;
+  if IsTransformationSemigroup(s) then 
+    iso:=IsomorphismTransformationSemigroup(g);
+  elif IsPartialPermSemigroup(s) then 
+    Error("not yet implemented");
+  else
+    Error("usage: a semigroup of transformations or partial perms,");
+    return;
   fi;
 
-  h:=GreensHClassOfElement(s, MultiplicativeNeutralElement(s));
-  m:=Size(h); g:=Group(());
-
-  while Size(g)<m do 
-    g:=ClosureGroup(g, AsPermutation(Random(h)));
-  od;
-
-  iso:=IsomorphismPartialPermMonoid(g);
   u:=Range(iso);
   SetIsomorphismPermGroup(u, InverseGeneralMapping(iso));
   SetIsGroupAsSemigroup(u, true);
@@ -1676,19 +1653,22 @@ InstallMethod(IsUnitRegularSemigroup, "for a trans semigroup",
 [IsTransformationSemigroup], 
 function(s)
   local g, lookfunc, data;
+
   g:=GroupOfUnits(s);
   
   if g=fail then 
     return false;
   fi;
 
+  g:=Range(IsomorphismPermGroup(g));
+
   lookfunc:=function(o, x) 
     local oo;
-    oo:=Orb(g, RanT(x[4]), OnSets, rec( 
+    oo:=Orb(g, RanSetT(x), OnSets, rec( 
       forflatplainlists:=true, 
       hashlen:=s!.opts.hashlen.S,
       lookingfor:=function(o, y) 
-        return IsInjectiveTransOnList(x[4], y); end));
+        return IsInjectiveTransOnList(RanT(x), y); end));
     Enumerate(oo);
     return PositionOfFound(oo)=false;
   end;

@@ -15,6 +15,8 @@ UnbindGlobal("TransformationFamily");
 MakeReadWriteGlobal("TransformationType");
 UnbindGlobal("TransformationType");
              
+MakeReadWriteGlobal("TransformationFamily");
+UnbindGlobal("TransformationFamily");
 BindGlobal("TransformationFamily", NewFamily("TransformationFamily",
  IsTransformation, CanEasilySortElements, CanEasilySortElements));
                     
@@ -203,15 +205,15 @@ end);
 
 InstallMethod(AsPermutation, "for a permutation", [IsPerm], p -> p);
 
-# fix for 0.2! - AsPermutation - "for a transformation"
+# mod for 1.0! - AsPermutation - "for a transformation"
 ###########################################################################
 #JDM this could use the method below, and that should have some more checks!
 
 InstallMethod(AsPermutation, "for a transformation", 
 [IsTransformation], 
-f-> AsPermutation(f, ImageSetOfTransformation(f)));
+f-> AsPermutation(f, RanSetT(f)));
 
-# fix for 0.2! - AsPermutation - "for a transformation and set"
+# mod for 1.0! - AsPermutation - "for a transformation and set"
 ###########################################################################
 
 InstallOtherMethod(AsPermutation, "for a transformation and a set", 
@@ -219,7 +221,7 @@ InstallOtherMethod(AsPermutation, "for a transformation and a set",
 function(f, list)
   local a;
 
-  a:=f![1]{list};
+  a:=RanT(f){list};
   
   if not Set(a)=Set(list) then 
     return fail;
