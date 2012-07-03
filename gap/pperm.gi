@@ -442,7 +442,7 @@ function(arg)
    Length(arg[1])=Length(arg[2]) then 
     return SparsePartialPermNC(arg[1], arg[2]);
   elif Length(arg)=1 then 
-    if IsInjectiveTransOnList(arg[1], Filtered(arg[1], x-> x<>0)) then 
+    if IsDuplicateFreeList( Filtered( arg[1], x -> x<>0 ) ) then
       return DensePartialPermNC(arg[1]);
     fi;
   fi;
