@@ -20,7 +20,7 @@
 SetPackageInfo( rec(
 PackageName := "Citrus",
 Subtitle := "Computing with Semigroups of Transformations and Partial Permutations",
-Version := "0.99",
+Version := "0.99.patch",
 Date := "15/06/2012",
 ArchiveURL := 
           "https://bitbucket.org/zen154115/citrus/downloads/citrus-0.99",
