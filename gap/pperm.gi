@@ -442,12 +442,14 @@ function(arg)
    Length(arg[1])=Length(arg[2]) then 
     return SparsePartialPermNC(arg[1], arg[2]);
   elif Length(arg)=1 then 
-    if IsInjectiveTransOnList(arg[1], Filtered(arg[1], x-> x<>0)) then 
+    if IsDuplicateFree(Filtered(arg[1], x-> x<>0) then 
       return DensePartialPermNC(arg[1]);
     fi;
   fi;
   return fail;
 end);
+
+############################################################################# 
 
 InstallGlobalFunction(PartialPermNC, 
 function(arg) 
@@ -458,7 +460,7 @@ function(arg)
     return SparsePartialPermNC(arg[1], arg[2]); 
   fi; 
  
-  Error("there should be one or two arguments,"); 
+  Error("usage: there should be one or two arguments,"); 
   return; 
 end); 
 
