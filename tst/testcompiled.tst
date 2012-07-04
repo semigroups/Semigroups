@@ -110,8 +110,8 @@ gap> [ Size( s ), Size( AsSet( s ) ) ];
 
 # from JS' email
 gap> s:=InverseMonoid( PartialPerm( [1,3,2] ), PartialPerm([1]) );
-gap> [ Size( im ), Size( AsSet( im ) ) ];
-gap> Perform( im, function(pp) PrettyPrintPP(pp); Print("\n"); end );
+gap> [ Size( s ), Size( AsSet( s ) ) ];
+gap> Perform( s, function(pp) PrettyPrintPP(pp); Print("\n"); end );
 (1)(2)(3)
 (1)(2,3)
 (1)

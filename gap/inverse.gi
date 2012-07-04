@@ -2551,15 +2551,12 @@ end);
 
 # new for 0.7! - LongOrb - "for an inverse semi of part. perms"
 ##############################################################################
-# seed is required for finding a small generating set. If the seed is not
-# specified and the second generator acts on some point that the first does
-# not, then the resulting LongOrb does not properly relate to the semigroup. 
 
 InstallMethod(LongOrb, "for an inverse semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
 
-  return Orb(s, Points(s), OnIntegerSetsWithPP, 
+  return Orb(s, Points(s)*1, OnIntegerSetsWithPP, 
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true, 
         storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M, 
         finished:=false));
