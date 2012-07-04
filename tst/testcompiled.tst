@@ -10,7 +10,6 @@
 
 # ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),
 # "testcompiled.tst"));
-
 gap> START_TEST("Citrus package: testcompiled.tst");
 gap> LoadPackage( "citrus", false );;
 
@@ -109,8 +108,9 @@ gap> [ Size( s ), Size( AsSet( s ) ) ];
 [ 12, 12 ]
 
 # from JS' email
-gap> s:=InverseMonoid( PartialPerm( [1,3,2] ), PartialPerm([1]) );
+gap> s:=InverseMonoid( PartialPerm( [1,3,2] ), PartialPerm([1]) );;
 gap> [ Size( s ), Size( AsSet( s ) ) ];
+[ 3, 3 ]
 gap> Perform( s, function(pp) PrettyPrintPP(pp); Print("\n"); end );
 (1)(2)(3)
 (1)(2,3)
