@@ -15,8 +15,6 @@ UnbindGlobal("TransformationFamily");
 MakeReadWriteGlobal("TransformationType");
 UnbindGlobal("TransformationType");
              
-MakeReadWriteGlobal("TransformationFamily");
-UnbindGlobal("TransformationFamily");
 BindGlobal("TransformationFamily", NewFamily("TransformationFamily",
  IsTransformation, CanEasilySortElements, CanEasilySortElements));
                     
