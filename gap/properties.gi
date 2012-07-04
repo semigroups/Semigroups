@@ -2018,7 +2018,7 @@ if IsBound(OnIntegerSetsWithPP) then
   InstallOtherMethod(MultiplicativeZero, "for a partial perm inv semigroup",
   [IsInverseSemigroup and IsPartialPermSemigroup],
   function(s)
-    local o, min, len, m, f, i;
+    local o, min, len, j, m, f, lookingfor, i;
     
     o:=LongOrb(s);
     
@@ -2029,11 +2029,12 @@ if IsBound(OnIntegerSetsWithPP) then
       for i in [2..Length(o)] do 
         len:=Length(o[i]);
         if len<min then 
+          j:=i;
           min:=len;
         fi;
       od;
-      m:=OrbSCCLookup(o)[min];
-      f:=PartialPermNC(o[min], o[min]);
+      m:=OrbSCCLookup(o)[j];
+      f:=PartialPermNC(o[j], o[j]);
       if IsTrivial(CreateOrbSCCSchutzGp(o, m, f)[2]) then 
         return f;
       fi;
