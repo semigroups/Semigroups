@@ -97,6 +97,7 @@ gap> x:=PartialPerm([2..7],[1..6]); RestrictedPartialPerm(x,[2..7]);
 [ 2 .. 7 ] -> [ 1 .. 6 ]
 [ 2 .. 7 ] -> [ 1 .. 6 ]
 
+# from JS' SizeInverseMonoid.tst
 gap> s:=InverseMonoid( PartialPerm( [1,2,3,4,5,6,7,8] ),
 > PartialPerm( [1,6,3,4,8,2,7,5] ),
 > PartialPerm( [1,2,7,4,8,6,3,5] ),
@@ -106,6 +107,14 @@ gap> s:=InverseMonoid( PartialPerm( [1,2,3,4,5,6,7,8] ),
 > PartialPerm( [1,0,0,0,0,0,0,0] ));;
 gap> [ Size( s ), Size( AsSet( s ) ) ];
 [ 12, 12 ]
+
+# from JS' email
+gap> s:=InverseMonoid( PartialPerm( [1,3,2] ), PartialPerm([1]) );
+gap> [ Size( im ), Size( AsSet( im ) ) ];
+gap> Perform( im, function(pp) PrettyPrintPP(pp); Print("\n"); end );
+(1)(2)(3)
+(1)(2,3)
+(1)
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
