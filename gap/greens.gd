@@ -146,3 +146,4 @@ DeclareProperty("IsIteratorOfLClassElements", IsIterator);
 DeclareProperty("IsIteratorOfDClassElements", IsIterator);
 DeclareProperty("IsIteratorOfHClassElements", IsIterator);
 
+#EOF

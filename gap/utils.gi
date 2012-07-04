@@ -550,6 +550,8 @@ function(line)
   fi;
 end);
 
+#############################################################################
+
 if IsBound(FullPartialPermNC) then 
   InstallGlobalFunction(ReadCitrusLinePP, 
   function(line)
