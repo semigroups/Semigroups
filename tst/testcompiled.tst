@@ -10,7 +10,6 @@
 
 # ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),
 # "testcompiled.tst"));
-
 gap> START_TEST("Citrus package: testcompiled.tst");
 gap> LoadPackage( "citrus", false );;
 
@@ -72,6 +71,50 @@ gap> F:=IsomorphismReesMatrixSemigroup(d);;
 gap> G:=InverseGeneralMapping(F);;
 gap> ForAll(d, f-> (f^F)^G=f);        
 true
+
+# from JS' MultiplicativeZero.tst
+gap> s:=InverseMonoid( PartialPerm( [1,2,3,4] ),
+> PartialPerm( [1,3,2,4] ),
+> PartialPerm( [1,2,0,0] ),
+> PartialPerm( [1,0,0,4] ) );;
+gap> f := PartialPerm( [1,0,0,0] );;
+gap> f in s;
+true
+gap> ForAll(s, x -> f*x = f and x*f = f );
+true
+gap> f;
+<identity on [ 1 ]>
+gap> MultiplicativeZero(s);
+<identity on [ 1 ]>
+
+# from JS' PartialPermInjective.tst
+gap> PartialPerm( [0,0,1,2] );
+[ 3, 4 ] -> [ 1, 2 ]
+
+# from JS' RestricterPartialPerm.tst
+gap> x:=PartialPerm([2..7],[1..6]); RestrictedPartialPerm(x,[2..7]);
+[ 2 .. 7 ] -> [ 1 .. 6 ]
+[ 2 .. 7 ] -> [ 1 .. 6 ]
+
+# from JS' SizeInverseMonoid.tst
+gap> s:=InverseMonoid( PartialPerm( [1,2,3,4,5,6,7,8] ),
+> PartialPerm( [1,6,3,4,8,2,7,5] ),
+> PartialPerm( [1,2,7,4,8,6,3,5] ),
+> PartialPerm( [1,0,0,4,5,0,0,8] ),
+> PartialPerm( [1,2,0,4,0,6,0,0] ),
+> PartialPerm( [1,0,3,4,0,0,7,0] ),
+> PartialPerm( [1,0,0,0,0,0,0,0] ));;
+gap> [ Size( s ), Size( AsSet( s ) ) ];
+[ 12, 12 ]
+
+# from JS' email
+gap> s:=InverseMonoid( PartialPerm( [1,3,2] ), PartialPerm([1]) );;
+gap> [ Size( s ), Size( AsSet( s ) ) ];
+[ 3, 3 ]
+gap> Perform( s, function(pp) PrettyPrintPP(pp); Print("\n"); end );
+(1)(2)(3)
+(1)(2,3)
+(1)
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
