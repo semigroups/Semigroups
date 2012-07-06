@@ -21,9 +21,9 @@ SetPackageInfo( rec(
 PackageName := "Citrus",
 Subtitle := "Computing with Semigroups of Transformations and Partial Permutations",
 Version := "1.0",
-Date := "15/06/2012",
+Date := "06/07/2012",
 ArchiveURL := 
-          "https://bitbucket.org/zen154115/citrus/downloads/citrus-0.99",
+          "https://bitbucket.org/zen154115/citrus/downloads/citrus-1.0",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -70,20 +70,17 @@ PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus",
                
 PackageDoc := rec(
   BookName  := "Citrus",
-  Archive := 
-      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus-0.99.tar.gz",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",  
   SixFile   := "doc/manual.six",
-  LongTitle := "Citrus - ComputIng wiTh semigRUopS",
+  LongTitle := "Citrus - Computing with semigruops",
   Autoload  := true
 ),
 
 Dependencies := rec(
-  GAP := ">=4.5.3",
-  NeededOtherPackages := [["orb", ">=4.2"], ["io", ">=4.1"], 
-  ["genss", ">=1.3"]],
+  GAP := ">=4.5.4",
+  NeededOtherPackages := [["orb", ">=4.2"], ["io", ">=4.1"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"]], 
   ExternalConditions := []),
   AvailabilityTest := ReturnTrue, 
