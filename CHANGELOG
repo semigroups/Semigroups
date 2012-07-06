@@ -7,6 +7,16 @@
 ##
 #############################################################################
 
+0.99 -> 0.999 
+            A minor release fixing several bugs relating to partial
+            permutations and monoids thereof, pointed out by Jack Schmidt.
+            More specifically, MultiplicativeZero sometimes incorrectly
+            returned fail for a inverse semigroup of partial permutations,
+            sometimes PartialPerm incorrectly returned fail when given a dense
+            range as an argument, sometimes the size of an inverse monoid was 1
+            more than the correct value, and RestrictedPP sometimes failed when
+            it should not have. 
+
 0.9 -> 0.99 
             another minor release. Specific changes were: removed the
             declaration of SmallGeneratingSet for IsSemigroup since it appears
@@ -17,14 +27,12 @@
             on the GAP webpage and the links to other manuals work. 
 
 0.8 -> 0.9 
-
             renamed the function for creating the semigroup of order-preserving
             transformations on an n-chain from O to OrderEndomorphisms after it
             was pointed out that it is not sensible to have function names with
             one character. Also made some minor adjustments to the manual.
 
 0.7 -> 0.8 
-            
             minor changes due to incompatibility with Smallsemi 0.6.4 which 
             caused some test files to fail when Nilmat was loaded after Citrus.
             The clashes and the failed test were caused by various properties
@@ -51,14 +59,12 @@
             PrimitiveIdempotents).
 
 0.5 -> 0.6 
-
             fixed a bug relating to the creation of transformation semigroups 
             using MagmaByGenerators. Also added the global variable 
             CitrusOptionsRec containing the default values of the options used 
             by Citrus when creating a semigroup. 
 
 0.4 -> 0.5
-
             major changes are: the documentation has been further revised,
             functions for creating semigroups and monoids with certain
             options have been introduced, several functions have had the word
@@ -81,7 +87,6 @@
             NrElementsOfRank.
 
 0.3 -> 0.4
-
             major changes are: the documentation has been updated, some changes
             to core functions for R-classes/image orbits have resulted in a 
             performance improvement, there is a method for the operation
@@ -96,7 +101,6 @@
             IsomorphismTransformationSemigroup (for a perm. gp). 
 
 0.2 -> 0.3 
-            
             fixed a critical (but rare) bug in AddToOrbitsOfKernels that caused
             computations relating to D-classes, H-classes, or L-classes to
             return incorrect answers in some cases. 

@@ -9,21 +9,21 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "0.99">
+##  <!ENTITY VERSION "0.999">
 ##  <!ENTITY ORBVERS "4.2">
 ##  <!ENTITY IOVERS "4.1">
 ##  <!ENTITY GRAPEVERS "4.5">
-##  <!ENTITY ARCHIVENAME "citrus-0.99">
+##  <!ENTITY ARCHIVENAME "citrus-0.999">
 ##  <!ENTITY COPYRIGHTYEARS "2011-12">
 ##  <#/GAPDoc>
 
 SetPackageInfo( rec(
 PackageName := "Citrus",
 Subtitle := "Computing with Semigroups of Transformations and Partial Permutations",
-Version := "0.99.patch",
-Date := "15/06/2012",
+Version := "0.999",
+Date := "06/07/2012",
 ArchiveURL := 
-          "https://bitbucket.org/zen154115/citrus/downloads/citrus-0.99",
+          "https://bitbucket.org/zen154115/citrus/downloads/citrus-0.999",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -62,7 +62,7 @@ AbstractHTML := Concatenation(
   "satisfies a particular property, such as if it is regular, simple, " ,
   "inverse, completely regular, and a variety of further properties. ",
   "Several catalogues of examples are provided, such as generators for the ",
-  "endomorphism monoids of every connected graphs with at most 8 vertices ", 
+  "endomorphism monoids of every connected graph with at most 8 vertices ", 
   "and generators for the endomorphism monoids of the non-abelian groups with ",
   "order at most 64."),
 
@@ -71,17 +71,17 @@ PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus",
 PackageDoc := rec(
   BookName  := "Citrus",
   Archive := 
-      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus-0.99.tar.gz",
+      "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/citrus-0.999.tar.gz",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",  
   SixFile   := "doc/manual.six",
-  LongTitle := "Citrus - ComputIng wiTh semigRUopS",
+  LongTitle := "Citrus - Computing with semigruops",
   Autoload  := true
 ),
 
 Dependencies := rec(
-  GAP := ">=4.5.3",
+  GAP := ">=4.5.4",
   NeededOtherPackages := [["orb", ">=4.2"], ["io", ">=4.1"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"]], 
   ExternalConditions := []),
