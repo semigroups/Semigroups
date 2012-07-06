@@ -9,35 +9,11 @@
 ##
 
 # Notes
-# 
 # - H-class data is [unrectified image data, unrectified kernel data, image
 # orbit coset rep, kernel orbit coset rep]
 
-# TODO
-# - Make sure all the description strings make sense and that they are uniform...
-
 #############################################################################
 # other equalities of Green's classes handled by generic method in greens.gi!
-
-# new for 0.1! - \= - "for H-class and H-class of trans. semigp."
-############################################################################
-
-InstallMethod(\=, "for H-class and H-class of trans. semigp.",
-[IsGreensHClass and IsGreensClassOfTransSemigp, IsGreensHClass and 
-IsGreensClassOfTransSemigp],
-function(h1, h2)
-  return h1!.parent=h2!.parent and h1!.rep in h2;
-end);
-
-# new for 0.1! - \< - "for H-class and H-class of trans. semigp."
-############################################################################
-
-InstallMethod(\<, "for H-class and H-class of trans. semigp.",
-[IsGreensHClass and IsGreensClassOfTransSemigp, IsGreensHClass and 
-IsGreensClassOfTransSemigp],
-function(h1, h2)
-  return h1!.parent=h2!.parent and h1!.rep < h2!.rep;
-end);
 
 # new for 0.1! - \in - "for trans. and H-class of trans. semigp."
 ############################################################################
@@ -62,19 +38,6 @@ function(f, h)
 end);
 
 #AAA
-
-# new for 0.1! - AsSSortedList - "for H-class of trans. semigp."
-#############################################################################
-# this should be removed after the library method for AsSSortedList 
-# for a Green's class is removed. The default AsSSortedList for a collection
-# is what should be used (it is identical)!
-
-InstallOtherMethod(AsSSortedList, "for H-class of trans. semigp.",
-[IsGreensHClass and IsGreensClassOfTransSemigp], 
-function(h)
-  Info(InfoCitrus, 4, "AsSSortedList: for an H-class");
-  return ConstantTimeAccessList(EnumeratorSorted(h));
-end);
 
 #CCC
 

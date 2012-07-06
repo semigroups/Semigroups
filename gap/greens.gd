@@ -34,15 +34,25 @@
 DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
 DeclareProperty("IsGreensClassOfPartPermSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
+
+# indicates if the class was created using info from SemigroupData
+DeclareProperty("IsGreensClassSD", IsActingSemigroupGreensClass);
+# indicates if the rep is known to be an element of the semi or not
 DeclareProperty("IsGreensClassNC", IsActingSemigroupGreensClass);
+# IsGreensClassNC=true implies IsGreensClassSD=false, but no other implications
+# except the contrapositive IsGreensClassSD=true implies IsGreensClassNC=false
+# Hence the admissible pairs for [IsGreensClassNC, IsGreensClassSD] are:
+# [true, false], [false, true], [false, false].
+
 DeclareAttribute("LambdaOrbSCC", IsActingSemigroupGreensClass);
 DeclareAttribute("RhoOrbSCC", IsActingSemigroupGreensClass);
 DeclareAttribute("SemigroupDataSCC", IsActingSemigroupGreensClass);
 DeclareAttribute("SemigroupDataSCCIndex", IsActingSemigroupGreensClass);
+DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
 
 #old
 
-DeclareGlobalFunction("CreateDClass");
+DeclareGlobalFunction("CreateDClass"); # corresponds to [false, true] above
 DeclareGlobalFunction("CreateHClass");
 DeclareGlobalFunction("CreateLClass");
 DeclareGlobalFunction("CreateRClass");

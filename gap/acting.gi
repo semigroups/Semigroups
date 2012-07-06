@@ -17,11 +17,6 @@
 
 ##############################################################################
 
-# for convenience
-
-InstallOtherMethod(LambdaOrb, "for a Green's class of an acting semi",
-[IsActingSemigroupGreensClass], x-> x!.o);
-
 ###############################################################################
 # Setup - install the basic things required for specific acting semigroups    #
 ###############################################################################
@@ -377,8 +372,7 @@ function(f, s)
   val:=HTValue(LambdaRhoHT(s), lambdarho);
 
   lookfunc:=function(data, x) 
-    return Concatenation([OrbSCCLookup(o)[Position(o, LambdaFunc(s)(x[4]))]],
-     RhoFunc(s)(x[4]))=lambdarho;
+    return Concatenation([x[2]], RhoFunc(s)(x[4]))=lambdarho;
   end;
   
   # if lambdarho is not already known, then look for it
@@ -556,7 +550,7 @@ function(data, limit, lookfunc)
   orblookup2:=data!.orblookup2; # orblookup2[i] position in reps[orblookup1[i]] 
                                 # containing orb[i][4] (the R-rep)
 
- repslens:=data!.repslens;     # Length(reps[i])=repslens[i] 
+  repslens:=data!.repslens;     # Length(reps[i])=repslens[i] 
   lenreps:=data!.lenreps;       # lenreps=Length(reps)
 
   # schreier
@@ -685,9 +679,8 @@ function(data, limit, lookfunc)
       
       # are we looking for something?
       if looking then 
-        
         # did we find it?
-        if lookfunc(data, y) then 
+        if lookfunc(data, x) then 
           data!.pos:=i-1;
           data!.found:=nr;
           data!.lenreps:=lenreps;
@@ -740,6 +733,9 @@ end);
 # new for 1.0! - GradedLambdaOrb - "for an acting semigroup and elt"
 ##############################################################################
 
+# if GradedLambdaOrb(s, f, true) is called, then the returned orbit o has 
+# the position in o of lambda val of f stored in o!.data.
+
 InstallGlobalFunction(GradedLambdaOrb,
 function(s, f, opt)
   local graded, pos, gradingfunc, onlygrades, onlygradesdata, o, j, k, l;
@@ -749,6 +745,7 @@ function(s, f, opt)
     pos:=HTValue(LambdaHT(s), LambdaFunc(s)(f));
   
     if pos<>fail then 
+      graded[pos[1]][pos[2]]!.lambda_l:=pos[3];
       return graded[pos[1]][pos[2]];
     fi;
     
@@ -791,7 +788,7 @@ function(s, f, opt)
     for l in [1..Length(o)] do
       HTAdd(onlygradesdata, o[l], [j,k,l]);
     od;
-    o!.data:=[j,k]; 
+    o!.lambda_l:=1; 
     graded!.lens[j]:=k;
   fi;
 
@@ -810,6 +807,9 @@ function(s, f, opt)
     pos:=HTValue(RhoHT(s), RhoFunc(s)(f));
   
     if pos<>fail then 
+      
+      # store the position of RhoFunc(s)(f) in o 
+      graded[pos[1]][pos[2]]!.rho_l:=pos[3];
       return graded[pos[1]][pos[2]];
     fi;
     
@@ -852,7 +852,9 @@ function(s, f, opt)
     for l in [1..Length(o)] do
       HTAdd(onlygradesdata, o[l], [j,k,l]);
     od;
-    o!.data:=[j,k]; 
+    
+    # store the position of RhoFunc(s)(f) in o 
+    o!.rho_l:=1; 
     graded!.lens[j]:=k;
   fi;
 
@@ -1131,7 +1133,8 @@ end);
 # new for 1.0! - RhoOrbStabChain - "for a rho orb and scc index"
 ##############################################################################
 
-InstallGlobalFunction(RhoOrbStabChain, 
+InstallOtherMethod(RhoOrbStabChain, "for a rho orb and scc index",
+[IsOrbit, IsPosInt],
 function(o, m)
   
   if IsBound(o!.schutzstab) then 
@@ -1143,7 +1146,6 @@ function(o, m)
   RhoOrbSchutzGp(o, m, infinity);
   return o!.schutzstab[m];
 end);
-
 
 # new for 1.0! - LambdaOrbStabChain - "for a lambda orb and scc index"
 ##############################################################################

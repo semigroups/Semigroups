@@ -59,7 +59,7 @@ DeclareGlobalFunction("LambdaOrbRep");
 DeclareGlobalFunction("RhoOrbRep");
 DeclareGlobalFunction("RhoOrbSchutzGp");
 DeclareGlobalFunction("LambdaOrbStabChain");
-DeclareGlobalFunction("RhoOrbStabChain");
+DeclareAttribute("RhoOrbStabChain", IsActingSemigroupGreensClass);
 DeclareGlobalFunction("LambdaOrbSLP");
 
 DeclareAttribute("LambdaOrbSCCIndex", IsActingSemigroupGreensClass);
