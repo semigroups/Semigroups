@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+# simplify! Have only one type of D-class!
+
 # if a class has IsGreensClassSD=false, then its rep must be rectified at the
 # time of creation. 
 #
