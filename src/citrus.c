@@ -816,19 +816,20 @@ Obj FuncRestrictedPP(Obj self, Obj f, Obj set)
 
 /* less than or equal in natural partial order */
 Obj FuncNaturalLeqPP(Obj self, Obj f, Obj g)
-{ pptype deg, rank, i;
-  deg = ELM_PP(f, 1);
+{ pttype deg_f, deg_g, rank, i, j;
 
-  if(deg==0) return True;
+  deg_f = ELM_PT(f, 1);
 
-  rank = ELM_PP(f, 2);
+  if(deg_f==0) return True;
+
+  rank = ELM_PT(f, 2);
+  deg_g = ELM_PT(g, 1);
 
   for(i=1;i<=rank;i++)
   {
-    if(ELM_PP(g, 6+ELM_PP(f, 6+deg+i))!=ELM_PP(f, 6+deg+rank+i))
-    { 
-      return False;
-    }
+    j=ELM_PT(f, 6+deg_f+i);
+    if(j>deg_g) return False;
+    if(ELM_PT(g, 6+j)!=ELM_PT(f, 6+deg_f+rank+i)) return False;
   }
 
   return True;
