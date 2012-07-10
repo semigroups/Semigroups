@@ -1168,6 +1168,30 @@ function(s, f)
   return d;
 end);
 
+# new for 1.0! - GreensHClassOfElement - "for Green's class and elt."
+############################################################################
+
+InstallOtherMethod(GreensHClassOfElement, "for Green's class and elt",
+[IsActingSemigroupGreensClass, IsActingElt],
+function(x, f)
+
+  if not f in x then
+    Error("the element does not belong to the Green's class,");
+    return;
+  fi;
+
+  return GreensHClassOfElementNC(x, f);
+end);
+
+# mod for 1.0! - GreensHClassOfElementNC - "for an H-class and elt."
+############################################################################
+
+InstallOtherMethod(GreensHClassOfElementNC, "for an H-class and elt.",
+[IsGreensHClass and IsActingSemigroupGreensClass, IsActingElt],
+function(h, f)
+  return h;
+end);
+
 # mod for 1.0! - GreensHClassOfElement - "for an acting semigp and elt."
 #############################################################################
 
@@ -1456,6 +1480,33 @@ end);
 InstallOtherMethod(GreensJClassOfElement, "for acting semigroup and elt.",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsActingElt], 
 GreensDClassOfElement);
+
+# mod for 1.0! - GroupHClass - "for a D-class of an acting semigroup"
+############################################################################
+
+InstallOtherMethod(GroupHClass, "for a D-class of an acting semigp.",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  local s, rho, o, scc, tester, i;
+
+  if not IsRegularDClass(d) then 
+    return fail;  
+  fi;
+  
+  s:=ParentSemigroup(d);
+  rho:=RhoFunc(s)(Representative(d));
+  o:=LambdaOrb(d);
+  scc:=OrbSCC(o)[LambdaOrbSCCIndex(d)];
+  tester:=IdempotentLambdaRhoTester(s);
+
+  for i in scc do 
+    if tester(o[i], rho) then 
+      return GreensHClassOfElementNC(d, 
+       IdempotentLambdaRhoCreator(s)(o[i], rho));
+    fi;
+  od;
+  return;
+end);
 
 # mod for 0.7! - GroupHClassOfGreensDClass - "for D-class"
 ############################################################################
@@ -2696,7 +2747,34 @@ h-> StructureDescription(Range(IsomorphismPermGroup(h))));
 
 #UUU
 
-# old 
+#HHH
+
+# new for 1.0! - HClassReps - "for an R-class of an acting semigroup"
+##############################################################################
+
+InstallOtherMethod(HClassReps, "for an R-class of an acting semigroup",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(r)
+  local o, m, scc, mults, cosets, out, k, i, j;
+
+  o:=LambdaOrb(r); 
+  m:=LambdaOrbSCCIndex(r);
+  
+  scc:=OrbSCC(o)[m];
+  mults:=LambdaOrbMults(o, m);
+  cosets:=RhoCosets(DClassOfRClass(r));
+
+  out:=EmptyPlist(Length(scc)*Length(cosets));
+  k:=0;
+  
+  for i in scc do 
+    for j in cosets do 
+      k:=k+1;
+      out[k]:=f*(j/mults[i]);
+    od;
+  od;
+  return out;
+end);
 
 # new for 0.1! - HClassReps - "for a transformation semigp."
 ############################################################################
@@ -2960,6 +3038,36 @@ function(s)
     end));
 
   return enum;
+end);
+
+# new for 1.0! - GreensHClasses - "for an R-class of an acting semigroup"
+##############################################################################
+
+InstallOtherMethod(GreensHClasses, "for an R-class of an acting semigroup",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(r)
+  local o, m, scc, mults, cosets, out, k, i, j;
+
+  o:=LambdaOrb(r); 
+  m:=LambdaOrbSCCIndex(r);
+  
+  scc:=OrbSCC(o)[m];
+  mults:=LambdaOrbMults(o, m);
+  cosets:=RhoCosets(DClassOfRClass(r));
+  
+  out:=EmptyPlist(Length(scc)*Length(cosets));
+  k:=0;
+
+  for i in scc do 
+    for j in cosets do 
+      k:=k+1;
+      out[k]:=GreensHClassOfElementNC(d, f*(j/mults[i]));
+      SetRClassOfHClass(out[k], r);
+      SetDClassOfHClass(out[k], d);
+      #JDM also set schutz gp here?
+    od;
+  od;
+  return out;
 end);
 
 # new for 0.1! - GreensHClasses - "for a transformation semigroup"

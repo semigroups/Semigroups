@@ -38,84 +38,8 @@ function(s, data, orbit, rep)
   return h;
 end);
 
+
 #GGG
-
-############################################################################
-
-InstallOtherMethod(GreensHClassOfElement, "for Green's class and trans.", 
-[IsGreensClassOfTransSemigp, IsTransformation],
-function(class, f)
-  
-  if not f in class then 
-    Error("the transformation is not an element of the Green's class,");
-    return;
-  fi;
-
-  return GreensHClassOfElementNC(class, f);
-end);
-
-# new for 0.5! - GreensHClassOfElementNC - "for an H-class and trans."
-############################################################################
-
-InstallOtherMethod(GreensHClassOfElementNC, "for an H-class and trans.", 
-[IsGreensHClass and IsGreensClassOfTransSemigp, IsTransformation],
-function(h, f)
-  return h;
-end);
-
-# new for 0.1! - GroupHClass - "for a D-class of a trans. semigp."
-############################################################################
-# JDM move to d.gi!
-
-InstallMethod(GroupHClass, "for a D-class of a trans. semigp.",
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-function(d)
-  local s, data, o, n, m, ker, scc, lookup, f, h, i, j;
-
-  if HasIsRegularDClass(d) and not IsRegularDClass(d) then 
-    Info(InfoCitrus, 2, "the D-class is not regular,");
-    return fail;
-  fi;
-  
-  s:=d!.parent; data:=d!.data; o:=d!.o;
-
-  if NrIdempotentsRClassFromData(s, data[1], o[1])=0 then
-    Error("the D-class is not regular,");
-    return;
-  fi;
-
-  n:=DegreeOfTransformationSemigroup(s);
-  m:=RankOfTransformation(d!.rep);       
-
-  if m=n then
-    Info(InfoCitrus, 2, "the D-class is the group of units");
-    f:=TransformationNC([1..n]*1);
-    h:=GreensHClassOfElementNC(s, f);
-    SetIsGroupHClass(h, true); SetIdempotents(h, [f]);
-    return h;
-  fi;
-
-  ker:=KernelOrbit(d)[KernelOrbitSCC(d)[1]]; 
-  o:=ImageOrbit(d); scc:=ImageOrbitSCC(d);
-
-  for i in scc do
-    if IsInjectiveTransOnList(ker, o[i]) then 
-      lookup:=EmptyPlist(n);
-      for j in [1..m] do
-        lookup[ker[o[i][j]]]:=o[i][j];
-      od;
-
-      f:=TransformationNC(List(ker, x-> lookup[x]));
-      h:=GreensHClassOfElementNC(s, f);
-      SetIsGroupHClass(h, true);
-      SetIdempotents(h, [f]);
-      return h;
-    fi;
-  od;
-
-  Error("the D-class is not regular,");
-  return;
-end);
 
 #III 
 
@@ -231,7 +155,6 @@ function(s)
 
   return iter;
 end);
-
 
 
 #EOF
