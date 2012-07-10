@@ -247,28 +247,6 @@ end);
 InstallOtherMethod(IsGroupHClass, "for a non H-Class of a trans. semigp.", 
 [IsGreensClassOfTransSemigp], ReturnFalse);
 
-# new for 0.1! - IsomorphismPermGroup - "for H-class of trans. semigp."
-###########################################################################
-
-InstallOtherMethod(IsomorphismPermGroup, "for H-class of trans. semigp.", 
-[IsGreensHClass and IsGreensClassOfTransSemigp],
-function(h)
-  local g, f;
-
-  if not IsGroupHClass(h) then
-    Error("the H-class is not a group,");
-    return;
-  fi;
-  
-  g:=Group(());
-
-  for f in Enumerator(h) do 
-    g:=ClosureGroup(g, AsPermutation(f));
-  od;
-
-  return MappingByFunction(h, g, AsPermutation);
-end);
-
 # new for 0.1! - IteratorOfHClasses - "for a transformation semigroup"
 ############################################################################
 # move to greens.gi

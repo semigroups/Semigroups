@@ -1523,6 +1523,28 @@ InstallOtherMethod(IsGreensLClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensHClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 
+# mod for 1.0! - IsomorphismPermGroup - "for H-class of an acting semi"
+###########################################################################
+
+InstallOtherMethod(IsomorphismPermGroup, "for H-class of an acting semi",
+[IsGreensHClass and IsActingSemigroupGreensClass],
+function(h)
+  local g, f;
+
+  if not IsGroupHClass(h) then
+    Error("the H-class is not a group,");
+    return;
+  fi;
+
+  g:=Group(());
+
+  for f in Enumerator(h) do
+    g:=ClosureGroup(g, AsPermutation(f));
+  od;
+
+  return MappingByFunction(h, g, AsPermutation, x-> Idempotents(h)[1]*x);
+end);
+
 # new for 1.0! - IsRegularDClass - "for an D-class of an acting semi"
 #############################################################################
 
