@@ -271,28 +271,6 @@ function(s)
   return iter;
 end);
 
-
-# new for 0.1! - LClassReps - "for a trans. semigroup"
-#############################################################################
-
-InstallMethod(LClassReps, "for a trans. semigroup", 
-[IsTransformationSemigroup], 
-function(s)
-  local out, iter, i, f;
-  Info(InfoCitrus, 4, "LClassReps");
-
-  out:=EmptyPlist(NrLClasses(s));
-  iter:=IteratorOfLClassReps(s);
-  i:=0;
-
-  for f in iter do 
-    i:=i+1;
-    out[i]:=f;
-  od;
-
-  return out;
-end);
-
 #NNN
 
 # new for 0.1! - NrHClasses - "for an L-class of a trans. semigroup"

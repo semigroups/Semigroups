@@ -1699,10 +1699,10 @@ function(s)
       if iter!.i>Length(data!.orbit) then 
         return fail;
       fi;
-      return data!.orbit[iter!.i];
+      return data[iter!.i];
     end,
     
-    ShallowCopy:=iter-> rec(i:=0)));
+    ShallowCopy:=iter-> rec(i:=SemigroupData(s)!.modifier)));
 end);
 
 # new for 1.0! - IteratorOfRClassReps - "for an acting semigroup"
@@ -1722,6 +1722,21 @@ s-> IteratorByIterator(IteratorOfRClassData(s), x->
 CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
 
 #LLL
+
+# new for 1.0! - LClassReps - "for an acting semigp."
+#############################################################################
+
+InstallOtherMethod(LClassReps, "for an acting semigp.",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local R, out, x;
+  D:=GreensDClasses(s);
+  out:=[];
+  for x in D do 
+    Append(out, LClassReps(x));
+  od;
+  return out;
+end);
 
 # new for 1.0! - LClassReps - "for an acting semigroup D-class"
 #############################################################################
