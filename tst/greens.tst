@@ -434,49 +434,6 @@ gap> SchutzenbergerGroup(GreensLClassOfElement(S, f));
 Group([ (4,5) ])
 gap> SchutzenbergerGroup(GreensHClassOfElement(S, f));
 Group([ (4,5) ])
-gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
-> Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ]);;
-gap> ImagesOfTransSemigroup(S, 6);
-<open orbit, 1 points with Schreier tree with grading>
-gap> Enumerate(last);
-<closed orbit, 1 points with Schreier tree with grading>
-gap> ImagesOfTransSemigroup(S, 5);
-<open orbit, 1 points with Schreier tree with grading>
-gap> Enumerate(last);
-<closed orbit, 1 points with Schreier tree with grading>
-gap> ImagesOfTransSemigroup(S, 4);
-<open orbit, 1 points with Schreier tree with grading>
-gap> Enumerate(last);
-<closed orbit, 2 points with Schreier tree with grading>
-gap> AsList(last);
-[ [ 1 .. 6 ], [ 1, 2, 5, 6 ] ]
-gap> ImagesOfTransSemigroup(S, 3);
-<open orbit, 1 points with Schreier tree with grading>
-gap> Enumerate(last);
-<closed orbit, 4 points with Schreier tree with grading>
-gap> AsList(last);
-[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 5, 6 ] ]
-gap> ImagesOfTransSemigroup(S, 2);
-<open orbit, 1 points with Schreier tree with grading>
-gap> Enumerate(last);
-<closed orbit, 8 points with Schreier tree with grading>
-gap> AsList(last);
-[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 6 ], [ 2, 5, 6 ], [ 1, 4 ], 
-  [ 2, 5 ], [ 4, 6 ] ]
-gap> ImagesOfTransSemigroup(S, 1);
-<open orbit, 1 points with Schreier tree with grading>
-gap> Enumerate(last);
-<closed orbit, 13 points with Schreier tree with grading>
-gap> AsList(last);
-[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 6 ], [ 2, 5, 6 ], [ 1, 4 ], 
-  [ 2, 5 ], [ 4, 6 ], [ 6 ], [ 1 ], [ 2 ], [ 4 ], [ 5 ] ]
-gap> ImagesOfTransSemigroup(S);
-<open orbit, 1 points with Schreier tree>
-gap> Enumerate(last);
-<closed orbit, 13 points with Schreier tree>
-gap> AsList(last);
-[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 6 ], [ 2, 5, 6 ], [ 1, 4 ], 
-  [ 2, 5 ], [ 4, 6 ], [ 6 ], [ 1 ], [ 2 ], [ 4 ], [ 5 ] ]
 gap> S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
 > Transformation( [ 3, 3, 1, 1 ] ) ]);;
 gap> Idempotents(S, 1);
@@ -694,7 +651,6 @@ gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >  Transformation( [ 7, 1, 2, 2, 2, 7, 4, 5 ] ), 
 >  Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
 gap> s:=Semigroup(gens{[1..4]});;
-gap> ExpandOrbitsOfImages(s);;
 gap> gens[5] in s;
 false
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ), 
@@ -1004,8 +960,8 @@ gap> gens:=[Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] ),
 > Transformation( [ 5, 1, 4, 1, 4, 4, 7, 8 ] )];;
 gap> s:=Monoid(gens);;
 gap> f:=Transformation( [ 8, 8, 1, 5, 8, 5, 8, 8 ] );;
-gap> PreInOrbitsOfImages(s, f, false);
-[ false, [ 3, fail, fail, fail, fail, 0, fail ] ]
+gap> f in SemigroupData(s);
+false
 gap> iter:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> NextIterator(iter);;

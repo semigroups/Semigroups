@@ -144,7 +144,7 @@ function(d)
     return rho_schutz;
   fi;
 
-  p:=RhoPerm(ParentSemigroup(d))(Representative(d), RhoOrbRep(o, m));
+  p:=RhoPerm(ParentSemigroup(d))(RhoOrbRep(o, m), Representative(d));
   rho_schutz:=rho_schutz^p;
 
   if lambda_stab=false then 
@@ -201,7 +201,6 @@ function(h)
 
   return Intersection(lambda_schutz^lambda_p, rho_schutz^rho_p);
 end);
-
 
 # new for 1.0! - SchutzenbergerGroup - "for an L-class of an acting semigp."
 #############################################################################
@@ -731,7 +730,7 @@ function(h)
     #########################################################################
 
     NumberElement:=function(enum, f)
-      local rep;
+      local s, rep;
       s:=ParentSemigroup(h);
       rep:=Representative(h);
 
@@ -1257,6 +1256,8 @@ end);
 InstallOtherMethod(GreensHClassOfElementNC, "for a D-class and elt",
 [IsActingSemigroupGreensClass and IsGreensDClass, IsActingElt],
 function(d, f)
+  local s, h;
+ 
   s:=ParentSemigroup(d);
   h:=Objectify(HClassType(s), rec());
   SetParentSemigroup(h, s);
@@ -1319,7 +1320,7 @@ InstallOtherMethod(GreensHClassOfElementNC, "for an L-class and elt",
 function(l, f)
   local s, h, o;
   
-  s:=ParentSemigroup(r);
+  s:=ParentSemigroup(l);
   h:=Objectify(HClassType(s), rec());
   SetParentSemigroup(h, s);
 
@@ -2971,8 +2972,6 @@ InstallOtherMethod(StructureDescription, "for group H-class of acting semi",
 [IsGreensHClass and IsActingSemigroupGreensClass and IsGroupHClass],
 h-> StructureDescription(Range(IsomorphismPermGroup(h))));
 
-#UUU
-
 #HHH
 
 # new for 1.0! - HClassReps - "for an L-class of an acting semigroup"
@@ -2988,14 +2987,14 @@ function(l)
   
   scc:=OrbSCC(o)[m];
   mults:=RhoOrbMults(o, m);
-  cosets:=LambdaCosets(DClassOfLClass(d));
+  cosets:=RhoCosets(DClassOfLClass(l));
   f:=Representative(l); 
   
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
 
   for i in scc do 
-    i:=mults[i][1]*f 
+    i:=mults[i][1]*f;
     for j in cosets do 
       k:=k+1;
       out[k]:=i*j;
@@ -3004,21 +3003,20 @@ function(l)
   return out;
 end);
 
-
 # new for 1.0! - HClassReps - "for an R-class of an acting semigroup"
 ##############################################################################
 
 InstallOtherMethod(HClassReps, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local o, m, scc, mults, cosets, out, k, i, j;
+  local o, m, scc, mults, cosets, f, out, k, i, j;
 
   o:=LambdaOrb(r); 
   m:=LambdaOrbSCCIndex(r);
   
   scc:=OrbSCC(o)[m];
   mults:=LambdaOrbMults(o, m);
-  cosets:=RhoCosets(DClassOfRClass(r));
+  cosets:=LambdaCosets(DClassOfRClass(r));
   f:=Representative(r);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
@@ -3028,7 +3026,7 @@ function(r)
     i:=f*i;
     for j in scc do 
       k:=k+1;
-      out[k]:=i*mults[j];
+      out[k]:=i/mults[j];
     od;
   od;
   return out;
@@ -3043,26 +3041,12 @@ function(d)
   return Concatenation(List(GreensRClasses(d), HClassReps));
 end);
 
-# new for 0.1! - HClassReps - "for a transformation semigp."
+# new for 1.0! - HClassReps - "for an acting semigp."
 ############################################################################
 
-InstallMethod(HClassReps, "for a transformation semigp.",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local out, iter, i, f;
-  Info(InfoCitrus, 4, "HClassReps");
-
-  out:=EmptyPlist(NrHClasses(s));
-  iter:=IteratorOfHClassReps(s);
-  i:=0;
-
-  for f in iter do
-    i:=i+1;
-    out[i]:=f;
-  od;
-
-  return out;
-end);
+InstallMethod(HClassReps, "for an acting semigp.",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+s-> Concatenation(List(GreensRClasses(s), HClassReps)));
 
 #DDD
 
@@ -3313,7 +3297,7 @@ end);
 InstallOtherMethod(GreensHClasses, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local o, m, scc, mults, d, cosets, out, k, i, j;
+  local o, m, scc, mults, d, cosets, f, out, k, i, j;
 
   o:=LambdaOrb(r); 
   m:=LambdaOrbSCCIndex(r);
@@ -3321,7 +3305,7 @@ function(r)
   scc:=OrbSCC(o)[m];
   mults:=LambdaOrbMults(o, m);
   d:=DClassOfRClass(r);
-  cosets:=RhoCosets(d);
+  cosets:=LambdaCosets(d);
   f:=Representative(r);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
@@ -3329,8 +3313,8 @@ function(r)
   for i in cosets do 
     i:=f*i;
     for j in scc do 
-      k:=k+1;
-      out[k]:=GreensHClassOfElementNC(d, i/mults[j]));
+      k:=k+1; 
+      out[k]:=GreensHClassOfElementNC(d, i/mults[j]);
       SetRClassOfHClass(out[k], r);
       SetDClassOfHClass(out[k], d);
       #JDM also set schutz gp here!
@@ -3353,13 +3337,13 @@ function(l)
   scc:=OrbSCC(o)[m];
   mults:=RhoOrbMults(o, m);
   d:=DClassOfLClass(l);
-  cosets:=LambdaCosets(d);
+  cosets:=RhoCosets(d);
   f:=Representative(l); 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
 
   for i in scc do 
-    i:=mults[i][1]*f 
+    i:=mults[i][1]*f;
     for j in cosets do 
       k:=k+1;
       out[k]:=GreensHClassOfElementNC(d, i*j);
@@ -3390,44 +3374,43 @@ function(s)
   return Concatenation(List(GreensRClasses(s), GreensHClasses));
 end);
 
-# mod for 0.4! - Idempotents - "for a transformation semigroup"
+# mod for 1.0! - Idempotents - "for an acting semigroup" 
 #############################################################################
 
-InstallOtherMethod(Idempotents, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallOtherMethod(Idempotents, "for an acting semigroup", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local n, out, kers, imgs, j, i, ker, img;
 
-  if IsRegularSemigroup(s) then 
-    n:=DegreeOfTransformationSemigroup(s);
+  #if IsRegularSemigroup(s) then 
+  #  n:=DegreeOfTransformationSemigroup(s);
 
-    if HasNrIdempotents(s) then 
-      out:=EmptyPlist(NrIdempotents(s));
-    else
-      out:=[];
-    fi;
+#    if HasNrIdempotents(s) then 
+#      out:=EmptyPlist(NrIdempotents(s));
+#    else
+#      out:=[];
+#    fi;#
 
-    kers:=GradedKernelsOfTransSemigroup(s); 
-    imgs:=GradedImagesOfTransSemigroup(s);
+#    kers:=GradedKernelsOfTransSemigroup(s); 
+#    imgs:=GradedImagesOfTransSemigroup(s);
 
-    j:=0;
+#    j:=0;
     
-    for i in [1..n] do
-      for ker in kers[i] do
-        for img in imgs[i] do 
-          if IsInjectiveTransOnList(ker, img) then 
-            j:=j+1;
-            out[j]:=IdempotentNC(ker, img);
-          fi;
-        od;
-      od;
-    od;
+#    for i in [1..n] do
+#      for ker in kers[i] do
+#        for img in imgs[i] do 
+#          if IsInjectiveTransOnList(ker, img) then 
+#            j:=j+1;
+#            out[j]:=IdempotentNC(ker, img);
+#          fi;
+#        od;
+#      od;
+#    od;
 
-    if not HasNrIdempotents(s) then 
-      SetNrIdempotents(s, j);
-    fi;
-    return out;
-  fi;
+#    if not HasNrIdempotents(s) then 
+#      SetNrIdempotents(s, j);
+#    fi;
+#    return out;
+#  fi;
 
   return Concatenation(List(GreensRClasses(s), Idempotents));
 end);
@@ -3496,12 +3479,13 @@ InstallOtherMethod(NrHClasses, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 r-> NrLClasses(DClassOfRClass(r)));
 
-# new for 0.1! - NrHClasses - "for a transformation semigroup"
+# mod for 1.0! - NrHClasses - "for an acting semigroup"
 #############################################################################
  
-InstallMethod(NrHClasses, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(NrHClasses, "for an acting semigroup", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
+  return Sum(List(GreensDClasses(s), NrHClasses));
 end);
 
 # new for 0.1! - Size - "for a simple transformation semigroup"

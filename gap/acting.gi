@@ -1390,7 +1390,7 @@ function(o, m)
   fi;
 
   w:=Reversed(TraceSchreierTreeForward(o, OrbSCC(o)[m][1]));
-  o!.scc_reps[m]:=o!.scc_reps[1]*EvaluateWord(o!.gens, w);
+  o!.scc_reps[m]:=EvaluateWord(o!.gens, w)*o!.scc_reps[1];
   return o!.scc_reps[m];
 end);
 
