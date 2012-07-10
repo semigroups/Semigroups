@@ -15,27 +15,6 @@
 #############################################################################
 # other equalities of Green's classes handled by generic method in greens.gi!
 
-# new for 0.1! - \in - "for trans. and H-class of trans. semigp."
-############################################################################
-
-InstallOtherMethod(\in, "for trans. and H-class of trans. semigp.",
-[IsTransformation, IsGreensHClass and IsGreensClassOfTransSemigp], 
-function(f, h)
-  local rep;
-
-  rep:= h!.rep; 
-
-  if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) or 
-   RankOfTransformation(f) <> RankOfTransformation(rep) or 
-   CanonicalTransSameKernel(f) <> CanonicalTransSameKernel(rep) or 
-   ImageSetOfTransformation(f) <> ImageSetOfTransformation(rep) then
-    Info(InfoCitrus, 1, "degree, rank, kernel or image not equal to those of",
-        " any of the H-class elements,");
-    return false;
-  fi;
-
-  return PermLeftQuoTransformationNC(rep, f) in SchutzenbergerGroup(h);  
-end);
 
 #AAA
 
@@ -143,45 +122,6 @@ end);
 
 #GGG
 
-# new for 0.1! - GreensHClassOfElement - "for a trans. semigp. and trans."
-############################################################################
-
-InstallMethod(GreensHClassOfElement, "for a trans. semigp. and trans.", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation],
-function(s, f)
-  local d, l_img, l_ker;
-
-  Info(InfoCitrus, 4, "GreensHClassOfElement");
-
-  if not f in s then 
-    Error("transformation is not an element of the semigroup,");
-    return;
-  fi;
-
-  d:=PreInOrbitsOfKernels(s, f, false); l_img:=d[1][2][3]; l_ker:=d[2][2][3];
-
-  if not d[2][1] then #D-class containing f not previously calculated
-    d:=[d[1][2], d[2][2]];
-    d[1][3]:=ImageOrbitSCCFromData(s, d[1])[1];
-    if not l_ker=fail then
-      d[2][3]:=KernelOrbitSCCFromData(s, d[2])[1];
-    fi;
-    d:=StructuralCopy(AddToOrbitsOfKernels(s, TransformationNC(d[1][7]), d)); 
-    d[1][3]:=l_img; 
-    if not l_ker=fail then #JDM_hack!
-      d[2][3]:=l_ker; 
-    fi;  
-    d[3]:=(); d[4]:=fail; 
-  else
-    d:=[d[1][2], d[2][2], ImageOrbitCosetsFromData(s, d[2][2])[d[2][2][8]],
-          fail];
-  fi;
-
-  return CreateHClass(s, [d[1]{[1..6]}, d[2]{[1..6]}, d[3], d[4]],
-  [OrbitsOfImages(s), OrbitsOfKernels(s)], HClassRepFromData(s, d));
-end);
-
-# new for 0.5! - GreensHClassOfElement - "for a Green's class and trans."
 ############################################################################
 
 InstallOtherMethod(GreensHClassOfElement, "for Green's class and trans.", 
@@ -205,66 +145,7 @@ function(h, f)
   return h;
 end);
 
-# new for 0.1! - GreensHClassOfElementNC - "for a trans. semigp and trans."
-#############################################################################
-
-InstallOtherMethod(GreensHClassOfElementNC, "for a trans. semigp and trans.", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsTransformation],
-function(s, f)
-  local n, d, j, img_o, ker_o, kernels;
-
-  Info(InfoCitrus, 4, "GreensHClassOfElementNC");
-
-  n:=DegreeOfTransformationSemigroup(s);
-
-  if not DegreeOfTransformation(f)=n then
-    Error("Usage: trans. semigroup and trans. of equal degree,");
-    return;
-  fi;
-
-  d:=PreInOrbitsOfKernels(s, f, false);
-
-  if d[1][1] then 
-    Info(InfoCitrus, 2, "transformation is an element of the semigroup");
-    #JDM somewhat inefficient as we run PreInOrbitsOfKernels twice!
-    return GreensHClassOfElement(s, f);
-  elif OrbitsOfImages(s)!.finished then #f not in s!
-    Error("transformation is not an element of the semigroup,");
-    return;
-  fi;
-
-  Info(InfoCitrus, 2, "transformation may not be an element of the ",
-  "semigroup");
-
-  # JDM not really sure what the point of doing the following is!
-
-  j:=Length(ImageSetOfTransformation(f));
-
-  Info(InfoCitrus, 3, "finding orbit of image...");
-  img_o:=[]; img_o[j]:=[ForwardOrbitOfImage(s, f![1])];
-  #JDM see comments in GreensDClassOfElementNC
-  img_o:=rec( finished:=false, orbits:=img_o, gens:=Generators(s), s:=s,
-   deg := n, data:=[[j,1,1,1,1,1]], images:=fail, lens:=List([1..n],
-   function(x) if x=j then return 1; else return 0; fi; end),
-   data_ht:=HTCreate([1,1,1,1,1,1], rec(hashlen:=s!.opts!.hashlen!.M)));
-
-  Info(InfoCitrus, 3, "finding orbit of kernel...");
-  ker_o:=[]; ker_o[j]:=[ForwardOrbitOfKernel(s, f)];
-  ker_o:=rec( orbits:=ker_o, gens:=Generators(s), data:=[[[j,1,1,1,1,1],
-   [j,1,1,1,1,1]]], kernels:=fail, data_ht:=HTCreate([1,1,1,1,1,1],
-   rec(hashlen:=s!.opts!.hashlen!.S)));
- 
-  Info(InfoCitrus, 2, "finding the kernel orbit schutz. group");
-  Add(ker_o!.orbits[j][1]!.d_schutz[1], [CreateSchutzGpOfDClass(s,
-   [[j,1,1,1,1,1],[j,1,1,1,1,1]], [img_o, ker_o])]);
-  HTAdd(ker_o!.data_ht, [j,1,1,1,1,1], 1);
-
-  return CreateHClass(s, [[j,1,1,1,1,1], [j,1,1,1,1,1], (), ()], 
-   [img_o, ker_o], f);
-end);
-
-
-# new for 0.1! - roupHClass - "for a D-class of a trans. semigp."
+# new for 0.1! - GroupHClass - "for a D-class of a trans. semigp."
 ############################################################################
 # JDM move to d.gi!
 
@@ -531,18 +412,6 @@ function(arg)
   
   f:=RClassRepFromData(s, d[1], o[1]);
   return f*(d[3]/perms[d[1][3]]);
-end);
-
-# new for 0.1! - HClassType - not a user function!
-############################################################################
-
-InstallMethod(HClassType, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s);
- 
- return NewType( FamilyObj( s ), IsEquivalenceClass and 
-  IsEquivalenceClassDefaultRep and IsGreensHClass and 
-  IsGreensClassOfTransSemigp);
 end);
 
 #LLL

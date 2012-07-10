@@ -243,6 +243,26 @@ function(f, d)
   return false;
 end);
 
+# new for 1.0! - \in - "for acting elt and H-class of acting semigp"
+#############################################################################
+
+InstallOtherMethod(\in, "for trans. and H-class of trans. semigp.",
+[IsActingElt, IsGreensHClass and IsActingSemigroupGreensClass],
+function(f, h)
+
+  s:=ParentSemigroup(h);
+  rep:= Representative(h);
+
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] or
+   RhoFunc(s)(f) <> RhoFunc(s)(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep)
+   # degree causes problems here again JDM
+   then 
+    return false;
+  fi;
+
+  return LambdaPerm(s)(rep, f) in SchutzenbergerGroup(h);
+end);
+
 # new for 1.0! - \in - "for acting elt and L-class of acting semigp"
 #############################################################################
 #JDM this method differs from the one in 0.99. 
@@ -1004,6 +1024,59 @@ function(s, f)
   SetEquivalenceClassRelation(d, GreensDRelation(s));
   SetIsGreensClassNC(d, true);
   return d;
+end);
+
+# mod for 1.0! - GreensHClassOfElement - "for an acting semigp and elt."
+#############################################################################
+
+InstallOtherMethod(GreensHClassOfElement, "for an acting semigp and elt",
+[IsActingSemigroup, IsActingElt],
+function(s, f)
+  local h, o;
+
+  if not f in s then
+    Error("the element does not belong to the semigroup,");
+    return;
+  fi;
+
+  h:=Objectify(HClassType(s), rec());
+  SetParentSemigroup(h, s);
+
+  o:=LambdaOrb(s);
+  SetLambdaOrb(h, o);
+  SetLambdaOrbSCCIndex(h, OrbSCCLookup(o)[Position(o, LambdaFunc(s)(f))]); 
+  
+  o:=GradedRhoOrb(s, f, true);
+  SetRhoOrb(h, o);
+  SetRhoOrbSCCIndex(h, OrbSCCLookup(o)[o!.rho_l]);
+
+  SetRepresentative(h, f);
+  SetEquivalenceClassRelation(h, GreensHRelation(s));
+  SetIsGreensClassNC(h, false);
+  return h;
+end);
+
+# mod for 1.0! - GreensHClassOfElementNC - "for an acting semigp and elt."
+#############################################################################
+
+InstallOtherMethod(GreensHClassOfElementNC, "for an acting semigp and elt",
+[IsActingSemigroup, IsActingElt],
+function(s, f)
+  local h;
+
+  h:=Objectify(HClassType(s), rec());
+  SetParentSemigroup(h, s);
+
+  SetLambdaOrb(h, GradedLambdaOrb(s, f, false));
+  SetLambdaOrbSCCIndex(h, 1);
+ 
+  SetRhoOrb(h, GradedRhoOrb(s, f, false));
+  SetRhoOrbSCCIndex(h, 1);
+
+  SetRepresentative(h, f);
+  SetEquivalenceClassRelation(h, GreensHRelation(s));
+  SetIsGreensClassNC(h, true);
+  return h;
 end);
 
 # mod for 1.0! - GreensLClassOfElement - "for an acting semigp and elt."
@@ -2296,6 +2369,17 @@ function(s);
   return NewType( FamilyObj( s ), IsEquivalenceClass and
           IsEquivalenceClassDefaultRep and IsGreensDClass and
           IsActingSemigroupGreensClass);
+end);
+
+# mod for 1.0! - HClassType - not a user function!
+############################################################################
+
+InstallMethod(HClassType, "for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s);
+ return NewType( FamilyObj( s ), IsEquivalenceClass and
+  IsEquivalenceClassDefaultRep and IsGreensHClass and
+  IsActingSemigroupGreensClass);
 end);
 
 # mod for 1.0! - LClassType - "for an acting semigroup"
