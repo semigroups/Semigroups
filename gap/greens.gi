@@ -1168,30 +1168,6 @@ function(s, f)
   return d;
 end);
 
-# new for 1.0! - GreensHClassOfElement - "for Green's class and elt."
-############################################################################
-
-InstallOtherMethod(GreensHClassOfElement, "for Green's class and elt",
-[IsActingSemigroupGreensClass, IsActingElt],
-function(x, f)
-
-  if not f in x then
-    Error("the element does not belong to the Green's class,");
-    return;
-  fi;
-
-  return GreensHClassOfElementNC(x, f);
-end);
-
-# mod for 1.0! - GreensHClassOfElementNC - "for an H-class and elt."
-############################################################################
-
-InstallOtherMethod(GreensHClassOfElementNC, "for an H-class and elt.",
-[IsGreensHClass and IsActingSemigroupGreensClass, IsActingElt],
-function(h, f)
-  return h;
-end);
-
 # mod for 1.0! - GreensHClassOfElement - "for an acting semigp and elt."
 #############################################################################
 
@@ -1245,7 +1221,34 @@ function(s, f)
   return h;
 end);
 
-# mod for 1.0! - GreensHClassOfElementNC - "for an D-class and elt."
+# new for 1.0! - GreensHClassOfElement - "for D-class and elt."
+############################################################################
+
+InstallOtherMethod(GreensHClassOfElement, "for D-class and elt",
+[IsActingSemigroupGreensClass and IsGreensDClass, IsActingElt],
+function(d, f)
+  local s, h;
+
+  if not f in d then
+    Error("the element does not belong to the Green's class,");
+    return;
+  fi;
+
+  s:=ParentSemigroup(d);
+  h:=Objectify(HClassType(s), rec());
+  SetParentSemigroup(h, s);
+
+  SetLambdaOrb(h, LambdaOrb(d));
+  SetLambdaOrbSCCIndex(h, LambdaOrbSCCIndex(d));
+  SetRhoOrb(h, RhoOrb(d));
+  SetRhoOrbSCCIndex(h, RhoOrbSCCIndex(d));
+  SetRepresentative(h, f);
+  SetEquivalenceClassRelation(h, GreensHRelation(s));
+  SetIsGreensClassNC(h, IsGreensClassNC(d));
+  return h;
+end);
+
+# mod for 1.0! - GreensHClassOfElementNC - "for D-class and elt."
 #############################################################################
 
 InstallOtherMethod(GreensHClassOfElementNC, "for a D-class and elt",
@@ -1261,7 +1264,42 @@ function(d, f)
   SetRhoOrbSCCIndex(h, RhoOrbSCCIndex(d));
   SetRepresentative(h, f);
   SetEquivalenceClassRelation(h, GreensHRelation(s));
-  SetIsGreensClassNC(h, IsGreensClassNC(d));
+  SetIsGreensClassNC(h, false);
+end);
+
+# new for 1.0! - GreensHClassOfElement - "for R-class and elt."
+############################################################################
+
+InstallOtherMethod(GreensHClassOfElement, "for R-class and elt",
+[IsActingSemigroupGreensClass and IsGreensRClass, IsActingElt],
+function(r, f)
+  local s, h, o;
+
+  if not f in r then
+    Error("the element does not belong to the Green's class,");
+    return;
+  fi;
+
+  s:=ParentSemigroup(r);
+  h:=Objectify(HClassType(s), rec());
+  SetParentSemigroup(h, s);
+
+  SetLambdaOrb(h, LambdaOrb(r));
+  SetLambdaOrbSCCIndex(h, LambdaOrbSCCIndex(r));
+ 
+  o:=GradedRhoOrb(s, f, IsGreensClassNC(r)<>true);
+  SetRhoOrb(h, o);
+
+  if IsGreensClassNC(r) then 
+    SetRhoOrbSCCIndex(h, 1);
+  else
+    SetRhoOrbSCCIndex(h, OrbSCCLookup(o)[Position(o, RhoFunc(s)(f))]);
+  fi;
+  
+  SetRepresentative(h, f);
+  SetEquivalenceClassRelation(h, GreensHRelation(s));
+  SetIsGreensClassNC(h, IsGreensClassNC(r));
+  return h;
 end);
 
 # mod for 1.0! - GreensHClassOfElementNC - "for an R-class and elt."
@@ -1290,7 +1328,7 @@ function(r, f)
   
   SetRepresentative(h, f);
   SetEquivalenceClassRelation(h, GreensHRelation(s));
-  SetIsGreensClassNC(h, IsGreensClassNC(r));
+  SetIsGreensClassNC(h, false);
   return h;
 end);
 
