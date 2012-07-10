@@ -852,7 +852,7 @@ function(d)
   s:=ParentSemigroup(d);
   o:=RhoOrb(d);
   m:=RhoOrbSCCIndex(d);
-  lrel:=GreensLClasses(s); 
+  lrel:=GreensLRelation(s); 
   nc:=IsGreensClassNC(d);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
@@ -1641,7 +1641,7 @@ function(s)
       
       repeat 
         x:=NextIterator(R);
-      #JDM is there a better method?
+        #JDM is there a better method?
       until x=fail or ForAll(X, d-> not x[4] in d);
       
       if x<>fail then 
@@ -1667,6 +1667,67 @@ function(s)
   return iter;
 end);
 
+# new for 1.0! - IteratorOfLClasses - "for an acting semigroup"
+#############################################################################
+
+InstallMethod(IteratorOfLClasses, "for an acting semigroup",
+[IsActingSemigroup],
+function(s)
+  local iter;
+  
+  if HasGreensLClasses(s) then 
+    return IteratorList(GreensLClasses(s));
+  fi;
+
+  iter:=IteratorByFunctions( rec( 
+
+    i:=0,
+
+    D:=IteratorOfDClasses(s),
+
+    L:=[],
+
+    last_called_by_is_done:=false,
+
+    next_value:=fail,
+
+    IsDoneIterator:=function(iter)
+      
+      if iter!.last_called_by_is_done then 
+        return iter!.next_value=fail;
+      fi;
+      
+      iter!.last_called_by_is_done:=true;
+      iter!.next_value:=fail;
+      iter!.i:=iter!.i+1;
+
+      if iter!.i>Length(iter!.L) and not IsDoneIterator(iter!.D) then 
+        iter!.i:=1;
+        iter!.L:=GreensLClasses(NextIterator(iter!.D));
+      fi;
+      
+      if iter!.i<=Length(iter!.L) then 
+        iter!.next_value:=iter!.L[iter!.i];
+        return false;
+      fi;
+        
+      return true;
+    end,
+
+    NextIterator:=function(iter)
+      if not iter!.last_called_by_is_done then 
+        IsDoneIterator(iter);
+      fi;
+      iter!.last_called_by_is_done:=false;
+      return iter!.next_value;
+    end,
+    
+    ShallowCopy:=iter-> rec(i:=0, D:=IteratorOfDClasses(s),
+     L:=[], last_called_by_is_done:=false, next_value:=fail)));
+  SetIsIteratorOfLClasses(iter, true);
+  return iter;
+end);
+
 # new for 1.0! - IteratorOfDClassReps - "for an acting semigroup"
 #############################################################################
 
@@ -1674,6 +1735,14 @@ InstallMethod(IteratorOfDClassReps, "for an acting semigroup",
 [IsActingSemigroup],
 s-> IteratorByIterator(IteratorOfDClasses(s), Representative,
 [IsIteratorOfDClassReps]));
+
+# new for 1.0! - IteratorOfLClassReps - "for an acting semigroup"
+#############################################################################
+
+InstallMethod(IteratorOfLClassReps, "for an acting semigroup",
+[IsActingSemigroup],
+s-> IteratorByIterator(IteratorOfLClasses(s), Representative,
+[IsIteratorOfLClassReps]));
 
 # new for 1.0! - IteratorOfRClassData - "for an acting semigroup"
 #############################################################################
@@ -1729,7 +1798,7 @@ CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
 InstallOtherMethod(LClassReps, "for an acting semigp.",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local R, out, x;
+  local D, out, x;
   D:=GreensDClasses(s);
   out:=[];
   for x in D do 
