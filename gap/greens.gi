@@ -559,18 +559,8 @@ function(d)
       g:=LambdaPerm(s)(rep, g);
      
       # couldn't the following just be replaced with PositionCanonical?
-      if schutz=true then
-        if Length(cosets)=1 then 
-          j:=1;
-        else
-          j:=PositionCanonical(cosets, g);
-        fi;
-      elif schutz=false then 
-        if g=() then 
-          j:=1;
-        else
-          return fail;
-        fi;
+      if schutz=true or schutz=false then
+        j:=PositionCanonical(cosets, g);
       else
         for j in [1..Length(cosets)] do
           if SiftedPermutation(schutz, g*cosets[j])=() then 
@@ -2142,13 +2132,14 @@ function(d)
   if rho_stab=true then
     schutz:=lambda_schutz;
     if lambda_stab=true then 
-      SetRhoOrbStabChain(d, lambda_stab);
-      SetRhoCosets(d, [()]);
+      SetRhoOrbStabChain(d, true);
+      #right transversal required so can use PositionCanonical
+      SetRhoCosets(d, RightTransversal(schutz, schutz));
       return lambda_schutz;
     fi;
   elif rho_stab=false then 
-    SetRhoOrbStabChain(d, rho_stab);
-    SetRhoCosets(d, [()]);
+    SetRhoOrbStabChain(d, false);
+    SetRhoCosets(d, RightTransversal(rho_schutz, rho_schutz));
     return rho_schutz;
   fi;
 
@@ -2156,7 +2147,7 @@ function(d)
   rho_schutz:=rho_schutz^p;
 
   if lambda_stab=false then 
-    SetRhoOrbStabChain(d, lambda_stab);
+    SetRhoOrbStabChain(d, false);
     SetRhoCosets(d, Enumerator(rho_schutz));
     return lambda_schutz;
   elif lambda_stab=true then 
