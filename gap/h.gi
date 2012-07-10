@@ -382,54 +382,6 @@ function(s)
   return iter;
 end);
 
-#HHH
-
-# new for 0.1! - HClassRepFromData - not a user function!
-############################################################################
-# Usage: s = semigroup; 
-# d = [image data, kernel data, image cosets rep, kernel cosets rep];
-# o = [OrbitsOfImages, OrbitsOfKernels] (optional).
-  
-InstallGlobalFunction(HClassRepFromData,
-function(arg)
-  local s, d, o, f, perms, rels;
-  
-  s:=arg[1]; d:=arg[2];
-  if Length(arg)=3 then 
-    o:=arg[3];
-   else
-     o:=[OrbitsOfImages(s), OrbitsOfKernels(s)];
-  fi;
- 
-  perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
-  
-  if not d[4]=fail then #created from an L-class
-    f:=LClassRepFromData(s, d, o);
-    rels:=KernelOrbitRelsFromData(s, d[2], o[2]);
-    return rels[d[2][3]][1]*f*d[4];
-  fi;
-  
-  f:=RClassRepFromData(s, d[1], o[1]);
-  return f*(d[3]/perms[d[1][3]]);
-end);
-
-#LLL
-
-# new for 0.1! - LClassOfHClass - "for an H-class of a trans. semigroup"
-#############################################################################
-
-InstallOtherMethod(LClassOfHClass, "for an H-class of a trans. semigroup", 
-[IsGreensHClass and IsGreensClassOfTransSemigp], 
-function(h)
-  local s, d, o, rep;
-
-  s:=h!.parent; d:=h!.data; o:=h!.o;
-  d[2][3]:=KernelOrbitSCCFromData(s, d[2], o[2])[1];
-  rep:=LClassRepFromData(s, d, o);
-
-  return CreateLClass(s, d, o, rep);
-end);
-
 
 
 #EOF

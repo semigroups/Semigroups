@@ -2683,6 +2683,38 @@ function(r)
   return d;
 end);
 
+# new for 1.0! - LClassOfHClass - "for a H-class of an acting semigroup"
+#############################################################################
+
+InstallMethod(LClassOfHClass, "for an H-class of an acting semigroup",
+[IsGreensHClass and IsActingSemigroupGreensClass],
+function(h)
+  local s, f, o, m, r, l;
+
+  s:=ParentSemigroup(h); 
+  f:=Representative(h);
+  o:=RhoOrb(h);
+  m:=RhoOrbSCCIndex(h);
+
+  l:=Objectify(LClassType(s), rec());
+
+  SetParentSemigroup(l, s);
+  SetRhoOrbSCCIndex(l, m);
+  SetRhoOrb(l, o);
+  
+  l:=Position(o, RhoFunc(s)(f));
+
+  if l<>OrbSCC(o)[m][1] then 
+    SetRepresentative(l, RhoOrbMults(o, m)[2]*f*LambdaOrbMults(o, m));
+  else
+    SetRepresentative(l, f);
+  fi;
+
+  SetEquivalenceClassRelation(l, GreensLRelation(s));
+  SetIsGreensClassNC(l, IsGreensClassNC(h)); 
+  return l;
+end);
+
 # new for 1.0! - RClassOfHClass - "for a H-class of an acting semigroup"
 #############################################################################
 
@@ -2714,6 +2746,7 @@ function(h)
   SetIsGreensClassNC(r, IsGreensClassNC(h)); 
   return r;
 end);
+
 
 # mod for 1.0! - DClassReps - "for an acting semigroup"
 #############################################################################
