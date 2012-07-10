@@ -1259,6 +1259,48 @@ function(d)
   return out;
 end);
 
+# mod for 1.0! - Idempotents - "for an L-class of an acting semigp"
+#############################################################################
+
+InstallOtherMethod(Idempotents, "for an L-class of an acting semigp.",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+function(l)
+  local s, out, lambda, o, m, scc, j, tester, creator, i;
+
+  if not IsRegularLClass(l) then
+    return [];
+  fi;
+  
+  s:=ParentSemigroup(l);
+
+  if Rank(Representative(l))=Degree(s) then
+    return [One(s)];
+  fi;
+
+  out:=[]; 
+  
+  lambda:=LambdaFunc(s)(Representative(l));
+  o:=RhoOrb(l); 
+  m:=RhoOrbSCCIndex(l);
+  scc:=OrbSCC(o)[m];
+  j:=0;
+  tester:=IdempotentLambdaRhoTester(s);
+  creator:=IdempotentLambdaRhoCreator(s);
+
+  for i in scc do
+    if tester(lambda, o[i]) then
+      j:=j+1;
+      out[j]:=creator(lambda, o[i]);
+    fi;
+  od;
+
+  if not HasNrIdempotents(l) then 
+    SetNrIdempotents(l, j);   
+  fi;
+
+  return out;
+end);
+
 # mod for 1.0! - Idempotents - "for an R-class of an acting semigp"
 #############################################################################
 
@@ -1294,7 +1336,7 @@ function(r)
     fi;
   od;
 
-  if HasNrIdempotents(r) then 
+  if not HasNrIdempotents(r) then 
     SetNrIdempotents(r, j);   
   fi;
 
@@ -1332,8 +1374,8 @@ function(d)
   s:=ParentSemigroup(d);
   data:=SemigroupData(s);
   
-  if not IsGreensClassNC(d) then
-    if data!.repslens[data!.orblookup1[d!.orbit_pos]]>1 then
+  if HasSemigroupDataIndex(d) then
+    if data!.repslens[data!.orblookup1[SemigroupDataIndex(d)]]>1 then
       return false;
     fi;
   fi; 
@@ -1356,6 +1398,45 @@ function(d)
   return false;
 end);
 
+# new for 1.0! - IsRegularLClass - "for an L-class of an acting semi"
+#############################################################################
+
+InstallMethod(IsRegularLClass, "for an L-class of an acting semigp",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+function(l)
+  local s, data, lambda, o, scc, tester, i;
+
+  if HasNrIdempotents(l) then 
+    return NrIdempotents(l)<>0;
+  fi;
+
+  s:=ParentSemigroup(l);
+  data:=SemigroupData(s);
+  
+  if HasSemigroupDataIndex(l) then
+    if data!.repslens[data!.orblookup1[SemigroupDataIndex(l)]]>1 then
+      return false;
+    fi;
+  fi; 
+  
+  # is r the group of units...
+  if Rank(Representative(l))=Degree(s) then
+    return true;
+  fi;   
+ 
+  lambda:=LambdaFunc(s)(Representative(l));
+  o:=RhoOrb(l);
+  scc:=RhoOrbSCC(l);
+  tester:=IdempotentLambdaRhoTester(s);
+
+  for i in scc do
+    if tester(lambda, o[i]) then
+      return true; 
+    fi;
+  od;
+  return false;
+end);
+
 # new for 1.0! - IsRegularRClass - "for an R-class of an acting semi"
 #############################################################################
 
@@ -1372,7 +1453,7 @@ function(r)
   data:=SemigroupData(s);
   
   if not IsGreensClassNC(r) then
-    if data!.repslens[data!.orblookup1[r!.orbit_pos]]>1 then
+    if data!.repslens[data!.orblookup1[SemigroupDataIndex(r)]]>1 then
       return false;
     fi;
   fi; 
@@ -1679,6 +1760,51 @@ InstallOtherMethod(NrIdempotents, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 d-> Sum(List(GreensRClasses(d), NrIdempotents)));
 
+# new for 1.0! - NrIdempotents - "for an L-class of an acting semigp."
+#############################################################################
+
+InstallOtherMethod(NrIdempotents, "for an L-class of an acting semigp.",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+function(l)
+  local s, data, lambda, o, m, scc, nr, tester, i;
+
+  if HasIsRegularRClass(l) and not IsRegularRClass(l) then 
+    return 0;
+  fi;
+
+  s:=ParentSemigroup(l);     
+
+  # check if we already know this...
+  if HasSemigroupDataIndex(l) and not (HasIsRegularRClass(l) and
+   IsRegularLClass(l)) then
+    data:=SemigroupData(s);
+    if data!.repslens[data!.orblookup1[SemigroupDataIndex(l)]]>1 then
+      return 0;
+    fi;
+  fi;
+
+  # is r the group of units...
+  if Rank(Representative(l))=Degree(s) then
+    return 1;
+  fi;
+
+  lambda:=LambdaFunc(s)(Representative(l));
+  o:=RhoOrb(l); 
+  m:=RhoOrbSCCIndex(l);
+  scc:=OrbSCC(o)[m];
+  nr:=0;
+  tester:=IdempotentLambdaRhoTester(s);
+
+  for i in scc do
+    if tester(lambda, o[i]) then
+      nr:=nr+1;
+    fi;
+  od;
+
+  return nr;
+end);
+
+
 # new for 1.0! - NrIdempotents - "for an R-class of an acting semigp."
 #############################################################################
 
@@ -1697,7 +1823,7 @@ function(r)
   if not IsGreensClassNC(r) and not (HasIsRegularRClass(r) and
    IsRegularRClass(r)) then
     data:=SemigroupData(s);
-    if data!.repslens[data!.orblookup1[r!.orbit_pos]]>1 then
+    if data!.repslens[data!.orblookup1[SemigroupDataIndex(r)]]>1 then
       return 0;
     fi;
   fi;
