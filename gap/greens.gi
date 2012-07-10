@@ -168,7 +168,7 @@ end);
 InstallMethod(SchutzenbergerGroup, "for a H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
-  local lambda_o, lambda_m, lambda_schutz, lambda_stab, rho_o, rho_m, rho_schutz, rho_stab, rep, lambda_p, rho_p;
+  local lambda_o, lambda_m, lambda_schutz, lambda_stab, rho_o, rho_m, rho_schutz, rho_stab, rep, s, lambda_p, rho_p;
   
   lambda_o:=LambdaOrb(h); lambda_m:=LambdaOrbSCCIndex(h);
   lambda_schutz:=LambdaOrbSchutzGp(lambda_o, lambda_m); 
@@ -184,6 +184,7 @@ function(h)
     return rho_schutz;
   fi;
   
+  s:=ParentSemigroup(h);
   lambda_p:=LambdaOrbMults(lambda_o, lambda_m)[Position(lambda_o,
    LambdaFunc(s)(rep))]^-1;
  
@@ -338,6 +339,7 @@ end);
 InstallOtherMethod(\in, "for trans. and H-class of trans. semigp.",
 [IsActingElt, IsGreensHClass and IsActingSemigroupGreensClass],
 function(f, h)
+  local s, rep;
 
   s:=ParentSemigroup(h);
   rep:= Representative(h);
@@ -2308,12 +2310,12 @@ function(iter)
   return;
 end);
 
-# new for 0.1! - PrintObj - for IsIteratorOfRClassElements
+# new for 0.7! - PrintObj - IsIteratorOfHClassElements
 ############################################################################
 
-InstallMethod(PrintObj, [IsIteratorOfRClassElements],
+InstallMethod(PrintObj, [IsIteratorOfHClassElements],
 function(iter)
-  Print("<iterator of R-class>");
+  Print( "<iterator of H-class>");
   return;
 end);
 
@@ -2326,12 +2328,30 @@ function(iter)
   return;
 end);
 
+# new for 0.1! - PrintObj - for IsIteratorOfRClassElements
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfRClassElements],
+function(iter)
+  Print("<iterator of R-class>");
+  return;
+end);
+
 # mod for 1.0! - PrintObj - for IsIteratorOfDClassReps
 ############################################################################
 
 InstallMethod(PrintObj, [IsIteratorOfDClassReps],
 function(iter)
   Print("<iterator of D-class reps>");
+  return;
+end);
+
+# mod for 1.0! - PrintObj - for IsIteratorOfHClassReps
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfHClassReps],
+function(iter)
+  Print("<iterator of H-class reps>");
   return;
 end);
 
@@ -2359,6 +2379,15 @@ end);
 InstallMethod(PrintObj, [IsIteratorOfDClasses], 
 function(iter)
   Print( "<iterator of D-classes>");
+  return;
+end);
+
+# new for 0.1! - PrintObj - "for iterator of H-classes"
+############################################################################
+
+InstallMethod(PrintObj, [IsIteratorOfHClasses], 
+function(iter)
+  Print( "<iterator of H-classes>");
   return;
 end);
  

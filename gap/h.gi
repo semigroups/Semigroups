@@ -447,43 +447,5 @@ function(h)
   return 0;
 end);
 
-#PPP
-
-# new for 0.1! - ParentAttr - "for H-class of a trans. semigroup"
-############################################################################
-
-InstallMethod(ParentAttr, "for H-class of a trans. semigroup", 
-[IsGreensHClass and IsGreensClassOfTransSemigp], x-> x!.parent);
-
-# new for 0.1! - PrintObj - IsIteratorOfHClassReps
-############################################################################
-# JDM move to greens.gi?
-
-InstallMethod(PrintObj, [IsIteratorOfHClassReps], 
-function(iter)
-  Print( "<iterator of H-class reps>");
-  return;
-end);
-
-# new for 0.1! - PrintObj - IsIteratorOfHClasses
-############################################################################
-# JDM move to greens.gi.
-
-InstallMethod(PrintObj, [IsIteratorOfHClasses], 
-function(iter)
-  Print( "<iterator of H-classes>");
-  return;
-end);
-
-# new for 0.7! - PrintObj - IsIteratorOfHClassElements
-############################################################################
-
-InstallMethod(PrintObj, [IsIteratorOfHClassElements], 
-function(iter)
-  Print( "<iterator of H-class>");
-  return;
-end);
-
-#RRR
 
 #EOF
