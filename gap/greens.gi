@@ -49,6 +49,16 @@ function(d)
   return RhoCosets(d);
 end);
 
+# new for 1.0! - RhoOrbStabChain - "for a D-class of an acting semigp"
+##############################################################################
+
+InstallMethod(RhoOrbStabChain, "for a D-class of an acting semigp",
+[IsGreensDClass and IsActingSemigroupGreensClass], 
+function(d)
+  SchutzenbergerGroup(d);
+  return RhoOrbStabChain(d);
+end);
+
 # new for 1.0! - SemigroupDataSCC - "for a D-class of an acting semigp"
 ##############################################################################
 # JDM this is useful in PartialOrderOfDClasses...
@@ -203,7 +213,7 @@ function(f, d)
     return false;
   fi;
 
-  schutz:=RhoOrbStabChain(o, m);
+  schutz:=RhoOrbStabChain(d);
 
   if schutz=true then 
     return true;
@@ -520,9 +530,8 @@ function(d)
         return fail;
       fi;
 
-      g:=f;
       lm:=LambdaOrbSCCIndex(d); lo:=LambdaOrb(d); lscc:=OrbSCC(lo);
-      ll:=Position(lo, LambdaFunc(s)(g));
+      ll:=Position(lo, LambdaFunc(s)(f));
 
       if ll = fail or OrbSCCLookup(lo)[ll]<>lm then
         return fail;
@@ -531,7 +540,7 @@ function(d)
       if ll<>lscc[lm][1] then
         f:=f*LambdaOrbMults(lo, lm)[ll];
       fi;
-
+      g:=f;
       lschutz:=Enumerator(LambdaOrbSchutzGp(lo, lm));
 
       rm:=RhoOrbSCCIndex(d); ro:=RhoOrb(d); rscc:=OrbSCC(ro);
@@ -543,12 +552,9 @@ function(d)
       
       if rl<>rscc[rm][1] then
         g:=RhoOrbMults(ro, rm)[rl][2]*f;
-      else
-        g:=f;
       fi;
 
-      #JDM this can't be right, here or in \in this needs to be conjugated.
-      schutz:=RhoOrbStabChain(ro, rm);
+      schutz:=RhoOrbStabChain(d);
       cosets:=RhoCosets(d);
       g:=LambdaPerm(s)(rep, g);
      
@@ -569,9 +575,10 @@ function(d)
         for j in [1..Length(cosets)] do
           if SiftedPermutation(schutz, g*cosets[j])=() then 
             break;
+          else
+            j:=fail;
           fi;
         od;
-        j:=fail;
       fi;
       
       if j=fail then 
@@ -2135,18 +2142,21 @@ function(d)
   if rho_stab=true then
     schutz:=lambda_schutz;
     if lambda_stab=true then 
+      SetRhoOrbStabChain(d, lambda_stab);
       SetRhoCosets(d, [()]);
       return lambda_schutz;
     fi;
   elif rho_stab=false then 
+    SetRhoOrbStabChain(d, rho_stab);
     SetRhoCosets(d, [()]);
     return rho_schutz;
   fi;
 
-  p:=RhoPerm(ParentSemigroup(d))(RhoOrbRep(o, m), Representative(d));
+  p:=RhoPerm(ParentSemigroup(d))(Representative(d), RhoOrbRep(o, m));
   rho_schutz:=rho_schutz^p;
 
   if lambda_stab=false then 
+    SetRhoOrbStabChain(d, lambda_stab);
     SetRhoCosets(d, Enumerator(rho_schutz));
     return lambda_schutz;
   elif lambda_stab=true then 
@@ -2155,6 +2165,7 @@ function(d)
     schutz:=Intersection(lambda_schutz, rho_schutz);
   fi;
 
+  SetRhoOrbStabChain(d, StabChainImmutable(rho_schutz));
   SetRhoCosets(d, RightTransversal(rho_schutz, schutz));
   return schutz;
 end);
