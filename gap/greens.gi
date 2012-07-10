@@ -1245,6 +1245,25 @@ function(s, f)
   return h;
 end);
 
+# mod for 1.0! - GreensHClassOfElementNC - "for an D-class and elt."
+#############################################################################
+
+InstallOtherMethod(GreensHClassOfElementNC, "for a D-class and elt",
+[IsActingSemigroupGreensClass and IsGreensDClass, IsActingElt],
+function(d, f)
+  s:=ParentSemigroup(d);
+  h:=Objectify(HClassType(s), rec());
+  SetParentSemigroup(h, s);
+
+  SetLambdaOrb(h, LambdaOrb(d));
+  SetLambdaOrbSCCIndex(h, LambdaOrbSCCIndex(d));
+  SetRhoOrb(h, RhoOrb(d));
+  SetRhoOrbSCCIndex(h, RhoOrbSCCIndex(d));
+  SetRepresentative(h, f);
+  SetEquivalenceClassRelation(h, GreensHRelation(s));
+  SetIsGreensClassNC(h, IsGreensClassNC(d));
+end);
+
 # mod for 1.0! - GreensHClassOfElementNC - "for an R-class and elt."
 #############################################################################
 
@@ -2806,6 +2825,15 @@ function(r)
   return out;
 end);
 
+# mod for 1.0! - HClassReps - "for an D-class of an acting semigroup"
+############################################################################
+
+InstallOtherMethod(HClassReps, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  return Concatenation(List(GreensRClasses(d), HClassReps));
+end);
+
 # new for 0.1! - HClassReps - "for a transformation semigp."
 ############################################################################
 
@@ -3099,6 +3127,16 @@ function(r)
     od;
   od;
   return out;
+end);
+
+# new for 0.1! - GreensHClasses - "for a D-class of an acting semigroup"
+#############################################################################
+# JDM could this be better/more efficient?!
+
+InstallOtherMethod(GreensHClasses, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  return Concatenation(List(GreensRClasses(d), GreensHClasses));
 end);
 
 # new for 0.1! - GreensHClasses - "for a transformation semigroup"
