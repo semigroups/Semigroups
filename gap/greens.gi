@@ -2836,6 +2836,36 @@ h-> StructureDescription(Range(IsomorphismPermGroup(h))));
 
 #HHH
 
+# new for 1.0! - HClassReps - "for an L-class of an acting semigroup"
+##############################################################################
+
+InstallOtherMethod(HClassReps, "for an L-class of an acting semigroup",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+function(l)
+  local o, m, scc, mults, cosets, f, out, k, i, j;
+
+  o:=RhoOrb(l); 
+  m:=RhoOrbSCCIndex(l);
+  
+  scc:=OrbSCC(o)[m];
+  mults:=RhoOrbMults(o, m);
+  cosets:=LambdaCosets(DClassOfLClass(d));
+  f:=Representative(l); 
+  
+  out:=EmptyPlist(Length(scc)*Length(cosets));
+  k:=0;
+
+  for i in scc do 
+    i:=mults[i][1]*f 
+    for j in cosets do 
+      k:=k+1;
+      out[k]:=i*j;
+    od;
+  od;
+  return out;
+end);
+
+
 # new for 1.0! - HClassReps - "for an R-class of an acting semigroup"
 ##############################################################################
 
@@ -2850,14 +2880,16 @@ function(r)
   scc:=OrbSCC(o)[m];
   mults:=LambdaOrbMults(o, m);
   cosets:=RhoCosets(DClassOfRClass(r));
+  f:=Representative(r);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
   
-  for i in scc do 
-    for j in cosets do 
+  for i in cosets do 
+    i:=f*i;
+    for j in scc do 
       k:=k+1;
-      out[k]:=f*(j/mults[i]);
+      out[k]:=i*mults[j];
     od;
   od;
   return out;
@@ -3151,15 +3183,48 @@ function(r)
   mults:=LambdaOrbMults(o, m);
   d:=DClassOfRClass(r);
   cosets:=RhoCosets(d);
+  f:=Representative(r);
+
+  out:=EmptyPlist(Length(scc)*Length(cosets));
+  k:=0;
+  for i in cosets do 
+    i:=f*i;
+    for j in scc do 
+      k:=k+1;
+      out[k]:=GreensHClassOfElementNC(d, i/mults[j]));
+      SetRClassOfHClass(out[k], r);
+      SetDClassOfHClass(out[k], d);
+      #JDM also set schutz gp here!
+    od;
+  od;
+  return out;
+end);
+
+# new for 1.0! - GreensHClasses - "for an L-class of an acting semigroup"
+##############################################################################
+
+InstallOtherMethod(GreensHClasses, "for an L-class of an acting semigroup",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+function(l)
+  local o, m, scc, mults, d, cosets, f, out, k, i, j;
+
+  o:=RhoOrb(l); 
+  m:=RhoOrbSCCIndex(l);
   
+  scc:=OrbSCC(o)[m];
+  mults:=RhoOrbMults(o, m);
+  d:=DClassOfLClass(l);
+  cosets:=LambdaCosets(d);
+  f:=Representative(l); 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
 
   for i in scc do 
+    i:=mults[i][1]*f 
     for j in cosets do 
       k:=k+1;
-      out[k]:=GreensHClassOfElementNC(d, f*(j/mults[i]));
-      SetRClassOfHClass(out[k], r);
+      out[k]:=GreensHClassOfElementNC(d, i*j);
+      SetLClassOfHClass(out[k], l);
       SetDClassOfHClass(out[k], d);
       #JDM also set schutz gp here?
     od;
@@ -3290,6 +3355,13 @@ function(s, i)
   od;
   return out;
 end);
+
+# new for 0.1! - NrHClasses - "for an L-class of an acting semigroup"
+#############################################################################
+
+InstallOtherMethod(NrHClasses, "for an L-class of an acting semigroup",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+l-> NrRClasses(DClassOfLClass(l)));
 
 # new for 0.1! - NrHClasses - "for an R-class of an acting semigroup"
 #############################################################################
