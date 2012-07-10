@@ -714,7 +714,7 @@ InstallOtherMethod(Enumerator, "for H-class of acting semigp.",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
 
-  EnumeratorByFunctions(h, rec(
+  return EnumeratorByFunctions(h, rec(
 
     schutz:=Enumerator(SchutzenbergerGroup(h)),
 
@@ -2846,7 +2846,7 @@ end);
 InstallMethod(LClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
-  local s, f, o, m, r, l;
+  local s, f, o, m, l, i;
 
   s:=ParentSemigroup(h); 
   f:=Representative(h);
