@@ -3309,26 +3309,13 @@ function(d)
   return Concatenation(List(GreensRClasses(d), GreensHClasses));
 end);
 
-# new for 0.1! - GreensHClasses - "for a transformation semigroup"
+# mod for 1.0! - GreensHClasses - "for an acting semigroup"
 ##############################################################################
 
-InstallMethod(GreensHClasses, "for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+InstallMethod(GreensHClasses, "for an acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local iter, out, i, h;
-
-  Info(InfoCitrus, 4, "GreensHClasses");
-
-  iter:=IteratorOfHClasses(s);
-  out:=EmptyPlist(NrHClasses(s));
-  i:=0;
-
-  for h in iter do 
-    i:=i+1;
-    out[i]:=h;
-  od;
-
-  return out;
+  return Concatenation(List(GreensRClasses(s), GreensHClasses));
 end);
 
 # mod for 0.4! - Idempotents - "for a transformation semigroup"
