@@ -1523,6 +1523,24 @@ InstallOtherMethod(IsGreensLClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensHClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 
+# mod for 1.0! - IsGroupHClass - "for an H-class of an acting semigp."
+############################################################################
+
+InstallOtherMethod(IsGroupHClass, "for an H-class of an acting semigp.",
+[IsGreensHClass and IsActingSemigroupGreensClass],
+function(h)
+  local s, f;
+  s:=ParentSemigroup(h);
+  f:=Representative(h);
+  return IdempotentLambdaRhoTester(LambdaFunc(s)(f), RhoFunc(s)(f));
+end);
+
+# mod for 1.0! - IsGroupHClass - "for an acting semi Green's class"
+############################################################################
+
+InstallOtherMethod(IsGroupHClass, "for an acting semi Green's class",
+[IsActingSemigroupGreensClass], ReturnFalse);
+
 # mod for 1.0! - IsomorphismPermGroup - "for H-class of an acting semi"
 ###########################################################################
 

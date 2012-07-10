@@ -230,23 +230,6 @@ function(h)
   return [];
 end);
 
-# new for 0.1! - IsGroupHClass - "for an H-class of a trans. semigp."
-############################################################################
-
-InstallOtherMethod(IsGroupHClass, "for an H-class of a trans. semigp.", 
-[IsGreensHClass and IsGreensClassOfTransSemigp], 
-function(h)
-  local f;
-  f:=h!.rep;
-  return IsInjectiveTransOnList(f, ImageSetOfTransformation(f));
-end);
-
-# new for 0.5! - IsGroupHClass - "for a non H-Class of a trans. semigp."
-############################################################################
-
-InstallOtherMethod(IsGroupHClass, "for a non H-Class of a trans. semigp.", 
-[IsGreensClassOfTransSemigp], ReturnFalse);
-
 # new for 0.1! - IteratorOfHClasses - "for a transformation semigroup"
 ############################################################################
 # move to greens.gi
