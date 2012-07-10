@@ -43,24 +43,6 @@ function(s, data, orbit, rep)
   return h;
 end);
 
-#DDD
-
-# new for 0.1! - DClassOfHClass - for an H-class of a trans. semigroup
-#############################################################################
-
-InstallOtherMethod(DClassOfHClass, "for an H-class of a trans. semigroup",
-[IsGreensHClass and IsGreensClassOfTransSemigp], 
-function(h)
-  local s, d, o, rep;
-
-  s:=h!.parent; d:=h!.data; o:=h!.o;  
-  d[1][3]:=ImageOrbitSCCFromData(s, d[1], o[1])[1]; 
-  d[2][3]:=KernelOrbitSCCFromData(s, d[2], o[2])[1];
-  rep:=DClassRepFromData(s, d, o);
-
-  return CreateDClass(s, d, o, rep);
-end);
-
 #EEE
 
 # new for 0.1! - Enumerator - "for H-class of trans. semigp."
@@ -198,37 +180,7 @@ function(d)
   return;
 end);
 
-# mod for 0.7! - GroupHClassOfGreensDClass - "for D-class"
-############################################################################
-# move to d.gi! JDM
-
-InstallMethod(GroupHClassOfGreensDClass, "for D-class",
-[IsGreensDClass], GroupHClass);
-
 #III 
-
-# new for 0.1! - Idempotents - "for an H-class of a trans. semigp."
-############################################################################
-
-InstallOtherMethod(Idempotents, "for an H-class of a trans. semigp.", 
-[IsGreensHClass and IsGreensClassOfTransSemigp], 
-function(h)
-  local f, img, ker, lookup, i;
-
-  if IsGroupHClass(h) then 
-    f:=h!.rep; img:=ImageSetOfTransformation(f);
-    ker:=CanonicalTransSameKernel(f);
-    lookup:=EmptyPlist(Length(ker)); #degree
-
-    for i in [1..Length(img)] do #rank
-      lookup[ker[img[i]]]:=img[i];
-    od;
-
-    return [TransformationNC(List(ker, x-> lookup[x]))];
-  fi;
-
-  return [];
-end);
 
 # new for 0.1! - IteratorOfHClasses - "for a transformation semigroup"
 ############################################################################
