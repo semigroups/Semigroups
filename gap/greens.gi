@@ -707,6 +707,57 @@ function(d)
   end));
 end);
 
+# mod for 1.0! - Enumerator - "for H-class of acting semigp."
+#############################################################################
+
+InstallOtherMethod(Enumerator, "for H-class of acting semigp.",
+[IsGreensHClass and IsActingSemigroupGreensClass],
+function(h)
+
+  EnumeratorByFunctions(h, rec(
+
+    schutz:=Enumerator(SchutzenbergerGroup(h)),
+
+    #########################################################################
+
+    ElementNumber:=function(enum, pos)
+      if pos>Length(enum) then
+        return fail;
+      fi;
+
+      return Representative(h)*enum!.schutz[pos];
+    end,
+
+    #########################################################################
+
+    NumberElement:=function(enum, f)
+      local rep;
+      s:=ParentSemigroup(h);
+      rep:=Representative(h);
+
+      if Rank(f) <> Rank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) or
+       RhoFunc(s)(f) <> RhoFunc(s)(rep) then
+        return fail;
+      fi;
+
+      return Position(enum!.schutz, LambdaPerm(s)(rep, f));
+    end,
+
+    ###########################################################################
+
+    Membership:=function(elm, enum)
+      return elm in h; #the H-class itself!
+    end,
+
+    Length:=enum -> Size(h),
+
+    PrintObj:=function(enum)
+      Print( "<enumerator of H-class>");
+      return;
+
+  end));
+end);
+
 # mod for 1.0! - Enumerator - "for R-class of an acting semigroup"
 ##############################################################################
 

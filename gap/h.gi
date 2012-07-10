@@ -12,11 +12,6 @@
 # - H-class data is [unrectified image data, unrectified kernel data, image
 # orbit coset rep, kernel orbit coset rep]
 
-#############################################################################
-# other equalities of Green's classes handled by generic method in greens.gi!
-
-#AAA
-
 #CCC
 
 # new for 0.1! - CreateHClass - not a user function
@@ -41,64 +36,6 @@ function(s, data, orbit, rep)
   SetRepresentative(h, rep);
   SetEquivalenceClassRelation(h, GreensHRelation(s));
   return h;
-end);
-
-#EEE
-
-# new for 0.1! - Enumerator - "for H-class of trans. semigp."
-#############################################################################
-
-InstallOtherMethod(Enumerator, "for H-class of trans. semigp.", 
-[IsGreensHClass and IsGreensClassOfTransSemigp], 
-function(h)
-  local enum;
-
-  Info(InfoCitrus, 4, "Enumerator: for an H-class");
-
-  enum:=EnumeratorByFunctions(h, rec(
-          
-    schutz:=Enumerator(SchutzenbergerGroup(h)),
-          
-    #########################################################################
-          
-    ElementNumber:=function(enum, pos)
-      if pos>Length(enum) then 
-        return fail;
-      fi;
-      
-      return h!.rep*enum!.schutz[pos];
-    end, 
-          
-    #########################################################################
-          
-    NumberElement:=function(enum, f)
-      local rep;
-      rep:=h!.rep;
-
-      if DegreeOfTransformation(f) <> DegreeOfTransformation(rep) or
-       RankOfTransformation(f) <> RankOfTransformation(rep) or
-       ImageSetOfTransformation(f) <> ImageSetOfTransformation(rep) or
-       CanonicalTransSameKernel(f) <> CanonicalTransSameKernel(rep) then
-        return fail;
-      fi;
-      
-      return Position(enum!.schutz, PermLeftQuoTransformationNC(rep, f));
-    end, 
-
-    ###########################################################################
-    
-    Membership:=function(elm, enum) 
-      return elm in h; #the H-class itself!
-    end,
-    
-    Length:=enum -> Size(h),
-
-    PrintObj:=function(enum)
-      Print( "<enumerator of H-class>");
-      return;
-    end));
-
-  return enum;
 end);
 
 #GGG
