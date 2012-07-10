@@ -114,12 +114,93 @@ InstallOtherMethod(RhoOrbSCC, "for a Green's class of an acting semi",
 [IsActingSemigroupGreensClass and IsGreensClass], 
 x-> OrbSCC(RhoOrb(x))[RhoOrbSCCIndex(x)]);
 
-# new for 1.0! - SchutzenbergerGroup - "for an R-class of an acting semigp."
+# new for 1.0! - SchutzenbergerGroup - "for a D-class of an acting semigroup"
 #############################################################################
 
-InstallOtherMethod(SchutzenbergerGroup, "for an R-class of an acting semigp.",
-[IsGreensRClass and IsActingSemigroupGreensClass],
-r-> LambdaOrbSchutzGp(LambdaOrb(r), LambdaOrbSCCIndex(r)));
+InstallMethod(SchutzenbergerGroup, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  local o, m, lambda_schutz, lambda_stab, rho_schutz, rho_stab, schutz, p;
+  
+  o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
+  lambda_schutz:=LambdaOrbSchutzGp(o, m); 
+  lambda_stab:=LambdaOrbStabChain(o, m);
+  
+  o:=RhoOrb(d); m:=RhoOrbSCCIndex(d);
+  rho_schutz:=RhoOrbSchutzGp(o, m, infinity);
+  rho_stab:=RhoOrbStabChain(o, m);
+
+  if rho_stab=true then
+    schutz:=lambda_schutz;
+    if lambda_stab=true then 
+      SetRhoOrbStabChain(d, true);
+      #right transversal required so can use PositionCanonical
+      SetRhoCosets(d, RightTransversal(schutz, schutz));
+      return lambda_schutz;
+    fi;
+  elif rho_stab=false then 
+    SetRhoOrbStabChain(d, false);
+    SetRhoCosets(d, RightTransversal(rho_schutz, rho_schutz));
+    return rho_schutz;
+  fi;
+
+  p:=RhoPerm(ParentSemigroup(d))(Representative(d), RhoOrbRep(o, m));
+  rho_schutz:=rho_schutz^p;
+
+  if lambda_stab=false then 
+    SetRhoOrbStabChain(d, false);
+    SetRhoCosets(d, Enumerator(rho_schutz));
+    return lambda_schutz;
+  elif lambda_stab=true then 
+    schutz:=rho_schutz;
+  else 
+    schutz:=Intersection(lambda_schutz, rho_schutz);
+  fi;
+
+  SetRhoOrbStabChain(d, StabChainImmutable(rho_schutz));
+  SetRhoCosets(d, RightTransversal(rho_schutz, schutz));
+  return schutz;
+end);
+
+# new for 1.0! - SchutzenbergerGroup - "for a H-class of an acting semigroup"
+#############################################################################
+
+InstallMethod(SchutzenbergerGroup, "for a H-class of an acting semigroup",
+[IsGreensHClass and IsActingSemigroupGreensClass],
+function(h)
+  local lambda_o, lambda_m, lambda_schutz, lambda_stab, rho_o, rho_m, rho_schutz, rho_stab, rep, lambda_p, rho_p;
+  
+  lambda_o:=LambdaOrb(h); lambda_m:=LambdaOrbSCCIndex(h);
+  lambda_schutz:=LambdaOrbSchutzGp(lambda_o, lambda_m); 
+  lambda_stab:=LambdaOrbStabChain(lambda_o, lambda_m);
+  
+  rho_o:=RhoOrb(h); rho_m:=RhoOrbSCCIndex(h);
+  rho_schutz:=RhoOrbSchutzGp(rho_o, rho_m, infinity);
+  rho_stab:=RhoOrbStabChain(rho_o, rho_m);
+
+  rep:=Representative(h);
+
+  if rho_stab=false or lambda_stab=false then 
+    return rho_schutz;
+  fi;
+  
+  lambda_p:=LambdaOrbMults(lambda_o, lambda_m)[Position(lambda_o,
+   LambdaFunc(s)(rep))]^-1;
+ 
+  if rho_stab=true then 
+    return lambda_schutz^lambda_p;
+  fi;
+
+  rho_p:=RhoOrbMults(rho_o, rho_m)[Position(rho_o, RhoFunc(s)(rep))][2];
+  rho_p:=RhoPerm(ParentSemigroup(h))(rho_p*rep, RhoOrbRep(rho_o, rho_m));
+
+  if lambda_stab=true then 
+    return rho_schutz^rho_p;    
+  fi;
+
+  return Intersection(lambda_schutz^lambda_p, rho_schutz^rho_p);
+end);
+
 
 # new for 1.0! - SchutzenbergerGroup - "for an L-class of an acting semigp."
 #############################################################################
@@ -132,11 +213,19 @@ function(l)
   o:=RhoOrb(l); m:=RhoOrbSCCIndex(l);
   
   if not IsGreensClassNC(l) then 
+    #JDM maybe no need to do this if we know how l is created from a D-class
     p:=RhoPerm(ParentSemigroup(l))(RhoOrbRep(o, m), Representative(l));
     return RhoOrbSchutzGp(o, m, infinity)^p;
   fi;
   return RhoOrbSchutzGp(o, m, infinity); 
 end);
+
+# new for 1.0! - SchutzenbergerGroup - "for an R-class of an acting semigp."
+#############################################################################
+
+InstallOtherMethod(SchutzenbergerGroup, "for an R-class of an acting semigp.",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+r-> LambdaOrbSchutzGp(LambdaOrb(r), LambdaOrbSCCIndex(r)));
 
 #############################################################################
 #############################################################################
@@ -2406,54 +2495,6 @@ end);
 
 #SSS
 
-# new for 1.0! - SchutzenbergerGroup - "for a D-class of an acting semigroup"
-#############################################################################
-
-InstallMethod(SchutzenbergerGroup, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
-function(d)
-  local o, m, lambda_schutz, lambda_stab, rho_schutz, rho_stab, schutz, p;
-  
-  o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
-  lambda_schutz:=LambdaOrbSchutzGp(o, m); 
-  lambda_stab:=LambdaOrbStabChain(o, m);
-  
-  o:=RhoOrb(d); m:=RhoOrbSCCIndex(d);
-  rho_schutz:=RhoOrbSchutzGp(o, m, infinity);
-  rho_stab:=RhoOrbStabChain(o, m);
-
-  if rho_stab=true then
-    schutz:=lambda_schutz;
-    if lambda_stab=true then 
-      SetRhoOrbStabChain(d, true);
-      #right transversal required so can use PositionCanonical
-      SetRhoCosets(d, RightTransversal(schutz, schutz));
-      return lambda_schutz;
-    fi;
-  elif rho_stab=false then 
-    SetRhoOrbStabChain(d, false);
-    SetRhoCosets(d, RightTransversal(rho_schutz, rho_schutz));
-    return rho_schutz;
-  fi;
-
-  p:=RhoPerm(ParentSemigroup(d))(Representative(d), RhoOrbRep(o, m));
-  rho_schutz:=rho_schutz^p;
-
-  if lambda_stab=false then 
-    SetRhoOrbStabChain(d, false);
-    SetRhoCosets(d, Enumerator(rho_schutz));
-    return lambda_schutz;
-  elif lambda_stab=true then 
-    schutz:=rho_schutz;
-  else 
-    schutz:=Intersection(lambda_schutz, rho_schutz);
-  fi;
-
-  SetRhoOrbStabChain(d, StabChainImmutable(rho_schutz));
-  SetRhoCosets(d, RightTransversal(rho_schutz, schutz));
-  return schutz;
-end);
-
 # new for 1.0! - Size - "for a D-class of an acting semigp."
 #############################################################################
 
@@ -2467,6 +2508,13 @@ function(d)
   return Size(r)*Size(l)*Length(LambdaOrbSCC(d))*Length(RhoOrbSCC(d))/
    Size(SchutzenbergerGroup(d));
 end);
+
+# new for 1.0! - Size - "for a H-class of an acting semigp."
+#############################################################################
+
+InstallOtherMethod(Size, "for an H-class of an acting semigroup",
+[IsGreensHClass and IsActingSemigroupGreensClass],
+h-> Size(SchutzenbergerGroup(h)));
 
 # new for 1.0! - Size - "for an R-class of an acting semigp."
 #############################################################################

@@ -1429,6 +1429,17 @@ function(o, m, bound)
   rep:=RhoOrbRep(o, m);
   mults:=RhoOrbMults(o, m);
   
+  i:=RhoRank(s)(o[scc[1]]);
+
+  if i<1000 then
+    j:=Factorial(i);
+    if bound>j then 
+      bound:=j;
+    fi;
+  else
+    bound:=infinity;
+  fi;
+
   for i in scc do 
     for j in [1..nrgens] do 
       if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]]=m then 

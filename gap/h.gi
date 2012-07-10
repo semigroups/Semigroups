@@ -15,7 +15,6 @@
 #############################################################################
 # other equalities of Green's classes handled by generic method in greens.gi!
 
-
 #AAA
 
 #CCC
@@ -510,20 +509,6 @@ end);
 
 
 #SSS
-
-# new for 0.1! - SchutzenbergerGroup - "for an H-class of a trans. semigp."
-############################################################################
-
-InstallOtherMethod(SchutzenbergerGroup, "for an H-class of a trans. semigp.",
-[IsGreensHClass and IsGreensClassOfTransSemigp], 
-function(h)
-  local s, d, o, perms;
-
-  s:=h!.parent; d:=h!.data; o:=h!.o;
-  perms:=ImageOrbitPermsFromData(s, d[1], o[1]);
-
-  return DClassSchutzGpFromData(s, d[2], o[2])^(d[3]/perms[d[1][3]]);
-end);
 
 # new for 0.1! - Size - "for an H-class of a trans. semigp."
 ############################################################################
