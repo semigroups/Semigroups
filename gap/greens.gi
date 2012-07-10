@@ -2008,6 +2008,18 @@ InstallOtherMethod(NrIdempotents, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 d-> Sum(List(GreensRClasses(d), NrIdempotents)));
 
+# new for 1.0! - NrIdempotents - "for a H-class of an acting semigp"
+#############################################################################
+
+InstallOtherMethod(NrIdempotents, "for a H-class of an acting semigroup",
+[IsGreensHClass and IsActingSemigroupGreensClass],
+function(h)
+  if IsGroupHClass(h) then 
+    return 1;
+  fi;
+  return 0;
+end);
+
 # new for 1.0! - NrIdempotents - "for an L-class of an acting semigp."
 #############################################################################
 
