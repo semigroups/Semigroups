@@ -2150,6 +2150,70 @@ function(s)
   return iter;
 end);
 
+# new for 1.0! - IteratorOfHClasses - "for an acting semigroup"
+#############################################################################
+# JDM could use IteratorOfRClasses here instead, not sure which is better...
+
+InstallMethod(IteratorOfHClasses, "for an acting semigroup",
+[IsActingSemigroup],
+function(s)
+  local iter;
+  
+  if HasGreensHClasses(s) then 
+    return IteratorList(GreensHClasses(s));
+  fi;
+
+  iter:=IteratorByFunctions( rec( 
+
+    i:=0,
+
+    D:=IteratorOfDClasses(s),
+
+    H:=[],
+
+    last_called_by_is_done:=false,
+
+    next_value:=fail,
+
+    IsDoneIterator:=function(iter)
+      
+      if iter!.last_called_by_is_done then 
+        return iter!.next_value=fail;
+      fi;
+      
+      iter!.last_called_by_is_done:=true;
+      iter!.next_value:=fail;
+      iter!.i:=iter!.i+1;
+
+      if iter!.i>Length(iter!.H) and not IsDoneIterator(iter!.D) then 
+        iter!.i:=1;
+        iter!.H:=GreensHClasses(NextIterator(iter!.D));
+      fi;
+      
+      if iter!.i<=Length(iter!.H) then 
+        iter!.next_value:=iter!.H[iter!.i];
+        return false;
+      fi;
+        
+      return true;
+    end,
+
+    NextIterator:=function(iter)
+      if not iter!.last_called_by_is_done then 
+        IsDoneIterator(iter);
+      fi;
+      iter!.last_called_by_is_done:=false;
+      return iter!.next_value;
+    end,
+    
+    ShallowCopy:=iter-> rec(i:=0, D:=IteratorOfDClasses(s),
+     H:=[], last_called_by_is_done:=false, next_value:=fail)));
+
+  SetIsIteratorOfHClasses(iter, true);
+  return iter;
+end);
+
+
 # new for 1.0! - IteratorOfLClasses - "for an acting semigroup"
 #############################################################################
 
@@ -2218,6 +2282,14 @@ InstallMethod(IteratorOfDClassReps, "for an acting semigroup",
 [IsActingSemigroup],
 s-> IteratorByIterator(IteratorOfDClasses(s), Representative,
 [IsIteratorOfDClassReps]));
+
+# new for 1.0! - IteratorOfHClassReps - "for an acting semigroup"
+#############################################################################
+
+InstallMethod(IteratorOfHClassReps, "for an acting semigroup",
+[IsActingSemigroup],
+s-> IteratorByIterator(IteratorOfHClasses(s), Representative,
+[IsIteratorOfHClassReps]));
 
 # new for 1.0! - IteratorOfLClassReps - "for an acting semigroup"
 #############################################################################
