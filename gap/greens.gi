@@ -1245,6 +1245,36 @@ function(s, f)
   return h;
 end);
 
+# mod for 1.0! - GreensHClassOfElementNC - "for an R-class and elt."
+#############################################################################
+
+InstallOtherMethod(GreensHClassOfElementNC, "for an R-class and elt",
+[IsActingSemigroupGreensClass and IsGreensRClass, IsActingElt],
+function(r, f)
+  local s, h, o;
+  
+  s:=ParentSemigroup(r);
+  h:=Objectify(HClassType(s), rec());
+  SetParentSemigroup(h, s);
+
+  SetLambdaOrb(h, LambdaOrb(r));
+  SetLambdaOrbSCCIndex(h, LambdaOrbSCCIndex(r));
+ 
+  o:=GradedRhoOrb(s, f, IsGreensClassNC(r)<>true);
+  SetRhoOrb(h, o);
+
+  if IsGreensClassNC(r) then 
+    SetRhoOrbSCCIndex(h, 1);
+  else
+    SetRhoOrbSCCIndex(h, OrbSCCLookup(o)[Position(o, RhoFunc(s)(f))]);
+  fi;
+  
+  SetRepresentative(h, f);
+  SetEquivalenceClassRelation(h, GreensHRelation(s));
+  SetIsGreensClassNC(h, IsGreensClassNC(r));
+  return h;
+end);
+
 # mod for 1.0! - GreensLClassOfElement - "for an acting semigp and elt."
 #############################################################################
 
@@ -3046,14 +3076,15 @@ end);
 InstallOtherMethod(GreensHClasses, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local o, m, scc, mults, cosets, out, k, i, j;
+  local o, m, scc, mults, d, cosets, out, k, i, j;
 
   o:=LambdaOrb(r); 
   m:=LambdaOrbSCCIndex(r);
   
   scc:=OrbSCC(o)[m];
   mults:=LambdaOrbMults(o, m);
-  cosets:=RhoCosets(DClassOfRClass(r));
+  d:=DClassOfRClass(r);
+  cosets:=RhoCosets(d);
   
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
@@ -3184,13 +3215,19 @@ function(s, i)
   return out;
 end);
 
+# new for 0.1! - NrHClasses - "for an R-class of an acting semigroup"
+#############################################################################
+
+InstallOtherMethod(NrHClasses, "for an R-class of an acting semigroup",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+r-> NrLClasses(DClassOfRClass(r)));
+
 # new for 0.1! - NrHClasses - "for a transformation semigroup"
 #############################################################################
  
 InstallMethod(NrHClasses, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  Error("not yet implemented");
 end);
 
 # new for 0.1! - Size - "for a simple transformation semigroup"
