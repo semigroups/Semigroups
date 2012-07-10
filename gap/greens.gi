@@ -174,16 +174,19 @@ function(h)
   lambda_schutz:=LambdaOrbSchutzGp(lambda_o, lambda_m); 
   lambda_stab:=LambdaOrbStabChain(lambda_o, lambda_m);
   
+  if lambda_stab=false then 
+    return lambda_schutz;
+  fi;
+
   rho_o:=RhoOrb(h); rho_m:=RhoOrbSCCIndex(h);
   rho_schutz:=RhoOrbSchutzGp(rho_o, rho_m, infinity);
   rho_stab:=RhoOrbStabChain(rho_o, rho_m);
 
-  rep:=Representative(h);
-
-  if rho_stab=false or lambda_stab=false then 
+  if rho_stab=false then 
     return rho_schutz;
   fi;
-  
+
+  rep:=Representative(h);
   s:=ParentSemigroup(h);
   lambda_p:=LambdaOrbMults(lambda_o, lambda_m)[Position(lambda_o,
    LambdaFunc(s)(rep))]^-1;
@@ -1791,7 +1794,7 @@ end);
 #############################################################################
 
 InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
-[IsGreensClass], x-> IsTransformationSemigroup(ParentSemigroup(x)));
+[IsGreensClass], x-> IsTransformationSemigroup(ParentAttr(x)));
 
 # new for 0.1! - IsGreensClass - "for a Green's class"
 #############################################################################
@@ -1812,7 +1815,7 @@ function(h)
   local s, f;
   s:=ParentSemigroup(h);
   f:=Representative(h);
-  return IdempotentLambdaRhoTester(LambdaFunc(s)(f), RhoFunc(s)(f));
+  return IdempotentLambdaRhoTester(s)(LambdaFunc(s)(f), RhoFunc(s)(f));
 end);
 
 # mod for 1.0! - IsGroupHClass - "for an acting semi Green's class"
@@ -1936,7 +1939,7 @@ function(r)
   s:=ParentSemigroup(r);
   data:=SemigroupData(s);
   
-  if not IsGreensClassNC(r) then
+  if HasSemigroupDataIndex(r) then
     if data!.repslens[data!.orblookup1[SemigroupDataIndex(r)]]>1 then
       return false;
     fi;
@@ -2420,7 +2423,7 @@ InstallOtherMethod(NrIdempotents, "for an L-class of an acting semigp.",
 function(l)
   local s, data, lambda, o, m, scc, nr, tester, i;
 
-  if HasIsRegularRClass(l) and not IsRegularRClass(l) then 
+  if HasIsRegularLClass(l) and not IsRegularLClass(l) then 
     return 0;
   fi;
 
@@ -2471,7 +2474,7 @@ function(r)
   s:=ParentSemigroup(r);     
 
   # check if we already know this...
-  if not IsGreensClassNC(r) and not (HasIsRegularRClass(r) and
+  if HasSemigroupDataIndex(r) and not (HasIsRegularRClass(r) and
    IsRegularRClass(r)) then
     data:=SemigroupData(s);
     if data!.repslens[data!.orblookup1[SemigroupDataIndex(r)]]>1 then
@@ -2506,8 +2509,7 @@ end);
 InstallMethod(NrIdempotents, "for an acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local data, reps, repslookup, lenreps, repslens, rhofunc, tester, f, m, o,
-  rho, nr, i, k;
+  local data, reps, repslookup, lenreps, repslens, rhofunc, tester, nr, f, m, o, rho, i, k;
 
   if HasIdempotents(s) then 
     return Length(Idempotents(s));
@@ -2523,6 +2525,7 @@ function(s)
   rhofunc:=RhoFunc(s);
   tester:=IdempotentLambdaRhoTester(s);
 
+  nr:=0;
   for i in [1..lenreps] do 
     f:=reps[i][1]; 
     m:=data[repslookup[i][1]][2];

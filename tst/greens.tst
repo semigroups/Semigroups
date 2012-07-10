@@ -387,9 +387,10 @@ gap> C:=GreensLClassOfElement(S, gens[1]*gens[2]*gens[1]);
 {Transformation( [ 5, 3, 5, 4, 3 ] )}
 gap> Representative(C);
 Transformation( [ 5, 3, 5, 4, 3 ] )
-gap> AsList(KernelOrbit(C));
+gap> AsList(RhoOrb(C));
 [ [ 1, 2, 1, 3, 2 ] ]
-gap> KernelOrbitRels(C){KernelOrbitSCC(C)};
+gap> RhoOrbMults(RhoOrb(C),
+> RhoOrbSCCIndex(C)){OrbSCC(RhoOrb(C))[RhoOrbSCCIndex(C)]};
 [ [ Transformation( [ 1, 2, 3, 4, 5 ] ), Transformation( [ 1, 2, 1, 4, 2 ] ) 
      ] ]
 gap> SchutzenbergerGroup(C);
@@ -409,9 +410,10 @@ gap> Transformation( [ 4, 1, 6, 5, 2, 2 ] ) in rc;
 true
 gap> Representative(rc);
 Transformation( [ 3, 2, 5, 4, 1, 1 ] )
-gap> AsList(ImageOrbit(rc));
+gap> AsList(LambdaOrb(rc)){OrbSCC(LambdaOrb(rc))[LambdaOrbSCCIndex(rc)]};
 [ [ 1, 2, 3, 4, 5 ], [ 1, 2, 4, 5, 6 ], [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ] ]
-gap> ImageOrbitPerms(rc){ImageOrbitSCC(rc)};
+gap> LambdaOrbMults(LambdaOrb(rc),
+> LambdaOrbSCCIndex(rc)){OrbSCC(LambdaOrb(rc))[LambdaOrbSCCIndex(rc)]};
 [ (), (1,2,3,6)(4,5), (3,5)(4,6), (1,2)(3,4,5,6) ]
 gap> SchutzenbergerGroup(rc);
 Group([ (1,3,5), (1,2,3)(4,5) ])
@@ -427,7 +429,7 @@ gap> gens:=[ Transformation( [ 4, 4, 3, 5, 3 ] ),
 gap> S:=Semigroup(gens);;
 gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
 gap> SchutzenbergerGroup(GreensDClassOfElement(S, f));
-Sym( [ 4 .. 5 ] )
+Group([ (4,5) ])
 gap> SchutzenbergerGroup(GreensRClassOfElement(S, f));
 Group([ (4,5) ])
 gap> SchutzenbergerGroup(GreensLClassOfElement(S, f));

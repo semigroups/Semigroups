@@ -357,9 +357,11 @@ function(f, s)
   fi;
   
   # the only case when l is found but f not in s.
-  if l=1 and not IsMonoidAsSemigroup(s) then 
-    return false;
-  fi;
+  # JDM the below doesn't work since IsMonoidAsSemigroup returns false when it
+  # shouldn't 
+  #if l=1 and not IsMonoidAsSemigroup(s) then 
+  #  return false;
+  #fi;
 
   # strongly connected component of lambda, the disadvantage in the case that
   # data!.graded=false is that the next line enumerates the whole of o.
