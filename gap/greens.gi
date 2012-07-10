@@ -478,6 +478,9 @@ end);
 InstallOtherMethod(Enumerator, "for a D-class of acting semigp.",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
+    
+    Enumerate(LambdaOrb(d), infinity);
+    Enumerate(RhoOrb(d), infinity);
 
     return EnumeratorByFunctions(d, rec(
 
@@ -507,50 +510,81 @@ function(d)
     #######################################################################
 
     NumberElement:=function(enum, f)
-      
+      local s, rep, g, lm, lo, lscc, ll, lschutz, rm, ro, rscc, rl, schutz,
+      cosets, j, r; 
+
       s:=ParentSemigroup(d);
+      rep:=Representative(d);
 
       if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] then
         return fail;
       fi;
 
       g:=f;
-      m:=LambdaOrbSCCIndex(d); o:=LambdaOrb(d); scc:=OrbSCC(o);
-      l:=Position(o, LambdaFunc(s)(g));
+      lm:=LambdaOrbSCCIndex(d); lo:=LambdaOrb(d); lscc:=OrbSCC(lo);
+      ll:=Position(lo, LambdaFunc(s)(g));
 
-      if l = fail or OrbSCCLookup(o)[l]<>m then
+      if ll = fail or OrbSCCLookup(lo)[ll]<>lm then
         return fail;
       fi;
      
-      if l<>scc[m][1] then
-        g:=g*LambdaOrbMults(o, m)[l];
+      if ll<>lscc[lm][1] then
+        f:=f*LambdaOrbMults(lo, lm)[ll];
       fi;
 
-      m:=RhoOrbSCCIndex(d); o:=RhoOrb(d); scc:=OrbSCC(o);
-      l:=Position(o, RhoFunc(s)(g));
+      lschutz:=Enumerator(LambdaOrbSchutzGp(lo, lm));
 
-      if l = fail or OrbSCCLookup(o)[l]<>m then
+      rm:=RhoOrbSCCIndex(d); ro:=RhoOrb(d); rscc:=OrbSCC(ro);
+      rl:=Position(ro, RhoFunc(s)(g));
+
+      if rl = fail or OrbSCCLookup(ro)[rl]<>rm then
         return fail;
       fi;
       
-      if l<>scc[m][1] then
-        g:=RhoOrbMults(o, m)[l][2]*g;
+      if rl<>rscc[rm][1] then
+        g:=RhoOrbMults(ro, rm)[rl][2]*f;
+      else
+        g:=f;
       fi;
 
-      schutz:=LambdaOrbStabChain(o, m);
+      #JDM this can't be right, here or in \in this needs to be conjugated.
+      schutz:=RhoOrbStabChain(ro, rm);
       cosets:=RhoCosets(d);
       g:=LambdaPerm(s)(rep, g);
-#JDM HERE
-      if schutz=true then 
-      
+     
+      # couldn't the following just be replaced with PositionCanonical?
+      if schutz=true then
+        if Length(cosets)=1 then 
+          j:=1;
+        else
+          j:=PositionCanonical(cosets, g);
+        fi;
       elif schutz=false then 
-        
+        if g=() then 
+          j:=1;
+        else
+          return fail;
+        fi;
       else
-        for j in cosets do
+        for j in [1..Length(cosets)] do
+          if SiftedPermutation(schutz, g*cosets[j])=() then 
+            break;
+          fi;
         od;
+        j:=fail;
       fi;
-
+      
+      if j=fail then 
+        return fail;
+      fi;
+      #JDM better to avoid the following line (which is essential)
+      r:=(Position(rscc[rm], rl)-1)*Length(cosets)+j-1;
+      #return enum!.m*r+Position(Enumerator(GreensRClasses(d)[r+1]), f);
+      return enum!.m*r+Length(lschutz)*(Position(lscc[lm], ll)-1)+
+      Position(lschutz, LambdaPerm(s)(RhoOrbMults(ro, rm)[rl][1]*
+       rep/cosets[j], f));
     end,
+
     #######################################################################
     
     Membership:=function(elm, enum)
@@ -831,7 +865,7 @@ function(d)
     g:=f*j;
     for i in scc do
       k:=k+1;
-      l:=Objectify(LClassType(arg[1]), rec());
+      l:=Objectify(LClassType(s), rec());
 
       SetParentSemigroup(l, s);
       SetRhoOrbSCCIndex(l, m);
