@@ -2532,6 +2532,13 @@ InstallOtherMethod(Size, "for an L-class of an acting semigp.",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 l-> Size(SchutzenbergerGroup(l))*Length(RhoOrbSCC(l)));
 
+# new for 0.1! - StructureDescription - "for group H-class of acting semi"
+############################################################################
+
+InstallOtherMethod(StructureDescription, "for group H-class of acting semi",
+[IsGreensHClass and IsActingSemigroupGreensClass and IsGroupHClass],
+h-> StructureDescription(Range(IsomorphismPermGroup(h))));
+
 #UUU
 
 # old 
@@ -2625,7 +2632,7 @@ function(r)
     m:=OrbSCCLookup(o)[rho_l];
     SetRhoOrbSCCIndex(d, m);
     if rho_l<>OrbSCC(o)[m][1] then 
-      SetRepresentative(d, RhoOrbMults(o, m)*f);
+      SetRepresentative(d, RhoOrbMults(o, m)[rho_l][2]*f);
     else
       SetRepresentative(d, f);
     fi;
@@ -2633,6 +2640,38 @@ function(r)
 
   SetIsGreensClassNC(d, IsGreensClassNC(r)); 
   return d;
+end);
+
+# new for 1.0! - RClassOfHClass - "for a H-class of an acting semigroup"
+#############################################################################
+
+InstallMethod(RClassOfHClass, "for an H-class of an acting semigroup",
+[IsGreensHClass and IsActingSemigroupGreensClass],
+function(h)
+  local s, f, o, m, r, l;
+
+  s:=ParentSemigroup(h); 
+  f:=Representative(h);
+  o:=LambdaOrb(h);
+  m:=LambdaOrbSCCIndex(h);
+
+  r:=Objectify(RClassType(s), rec());
+
+  SetParentSemigroup(r, s);
+  SetLambdaOrbSCCIndex(r, m);
+  SetLambdaOrb(r, o);
+  
+  l:=Position(o, LambdaFunc(s)(f));
+
+  if l<>OrbSCC(o)[m][1] then 
+    SetRepresentative(r, f*LambdaOrbMults(o, m)[l]);
+  else
+    SetRepresentative(r, f);
+  fi;
+
+  SetEquivalenceClassRelation(r, GreensRRelation(s));
+  SetIsGreensClassNC(r, IsGreensClassNC(h)); 
+  return r;
 end);
 
 # mod for 1.0! - DClassReps - "for an acting semigroup"

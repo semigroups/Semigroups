@@ -486,42 +486,4 @@ end);
 
 #RRR
 
-# new for 0.1! - RClassOfHClass - "for an H-class of a trans. semigroup"
-#############################################################################
-
-InstallOtherMethod(RClassOfHClass, "for an H-class of a trans. semigroup", 
-[IsGreensHClass and IsGreensClassOfTransSemigp], 
-function(h)
-  local s, d, o, rep;
-
-  if h!.data[4]=fail then #created from R-class or D-class 
-    s:=h!.parent; d:=h!.data; o:=h!.o;
-    d[1][3]:=ImageOrbitSCCFromData(s, d[1], o[1])[1];
-    rep:=RClassRepFromData(s, d[1], o[1]);
-
-    return CreateRClass(s, d[1], o[1], rep);
-  fi;
-  # the below is probably best possible since no info about the R-class
-  # of an H-class created from an L-class is known. 
-  #JDM is the above right?
-  return RClass(ParentAttr(s), Representative(h));
-end);
-
-
-#SSS
-
-# new for 0.1! - Size - "for an H-class of a trans. semigp."
-############################################################################
-
-InstallMethod(Size, "for an H-class of a trans. semigp.",
-[IsGreensHClass and IsGreensClassOfTransSemigp],
-  h-> Size(DClassSchutzGpFromData(h!.parent, h!.data[2], h!.o[2])));
-
-# new for 0.1! - StructureDescription - "for group H-class of trans. semigp."
-############################################################################
-
-InstallOtherMethod(StructureDescription, "for group H-class of trans. semigp.",
-[IsGreensHClass and IsGreensClassOfTransSemigp and IsGroupHClass],
-h-> StructureDescription(Range(IsomorphismPermGroup(h))));
-
 #EOF
