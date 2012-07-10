@@ -303,25 +303,6 @@ InstallOtherMethod(NrHClasses, "for an R-class of a trans. semigroup",
 [IsGreensRClass and IsGreensClassOfTransSemigp], 
 r-> NrLClasses(DClassOfRClass(r)));
 
-#RRR
-
-# new for 0.1! - Random - "for an R-class of a trans. semigp."
-############################################################################
-
-InstallOtherMethod(Random, "for an R-class of a trans. semigp.",
-[IsGreensRClass and IsGreensClassOfTransSemigp],
-function(r)
-  local f, g, i;
-
-  Info(InfoCitrus, 4, "Random: for an R-class");
-
-  f:=r!.rep;
-  g:=Random(SchutzenbergerGroup(r));
-  i:=Random(ImageOrbitSCC(r));
-  
-  return f*g*ImageOrbitPerms(r)[i]^-1; 
-end);
-
 #TTT
 
 # new for 0.4! - TraceRClassRepsTree - not a user function!

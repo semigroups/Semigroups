@@ -1804,7 +1804,6 @@ function(l)
   return nr;
 end);
 
-
 # new for 1.0! - NrIdempotents - "for an R-class of an acting semigp."
 #############################################################################
 
