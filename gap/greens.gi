@@ -1075,6 +1075,7 @@ function(d)
       SetRepresentative(r, g*j^-1);
       SetEquivalenceClassRelation(r, rrel);
       SetIsGreensClassNC(r, nc);
+      SetDClassOfRClass(r, d);
       out[k]:=r;
     od;
   od;
@@ -3390,7 +3391,7 @@ end);
 InstallMethod(GreensHClasses, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  return Concatenation(List(GreensRClasses(s), GreensHClasses));
+  return Concatenation(List(GreensDClasses(s), GreensHClasses));
 end);
 
 # mod for 1.0! - Idempotents - "for an acting semigroup" 
