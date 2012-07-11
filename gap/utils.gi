@@ -352,7 +352,7 @@ function(old_iter, convert, filts)
       fi;
       return convert(x);
     end,
-    ShallowCopy:=iter-> rec(data:=old_iter)));
+    ShallowCopy:=iter-> rec(data:=ShallowCopy(old_iter))));
   for filt in filts do 
     SetFilterObj(iter, filt);
   od;

@@ -1927,6 +1927,13 @@ end);
 # new for 1.0! - IsRegularRClass - "for an R-class of an acting semi"
 #############################################################################
 
+InstallOtherMethod(IsRegularRClass, "for a non-R-class of an acting semi",
+[IsGreensClass and IsActingSemigroupGreensClass], 
+function(x)
+  return GreensRClassOfElement(ParentSemigroup(x), Representative(x))=x and
+   IsRegularRClass(x);
+end);
+
 InstallMethod(IsRegularRClass, "for an R-class of an acting semigp",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)

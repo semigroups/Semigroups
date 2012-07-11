@@ -471,7 +471,7 @@ Transformation( [ 3, 3, 3, 3, 3, 2, 3 ] )
 gap> AsList(LambdaOrb(r){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]});
 [ [ 2, 3 ], [ 4, 6 ], [ 2, 6 ], [ 1, 4 ], [ 1, 6 ], [ 2, 4 ], [ 3, 6 ] ]
 gap> LambdaOrbMults(LambdaOrb(r),
-> LambdaOrbSCCIndex(r)){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]}
+> LambdaOrbSCCIndex(r)){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]};
 [ (), (2,4)(3,5,6), (2,3,4,5,6), (1,2)(3,4), (1,2)(3,4,5,6), (2,3,4), 
   (2,4,5,6) ]
 gap> SchutzenbergerGroup(r);
@@ -559,8 +559,6 @@ gap> gens:=[ Transformation( [ 5, 1, 4, 6, 2, 3 ] ),
 > Transformation( [ 6, 5, 1, 3, 3, 4 ] ), 
 > Transformation( [ 1, 3, 4, 3, 2, 1 ] ) ];;
 gap> s:=Semigroup(gens);;
-gap> ExpandOrbitsOfImages(s);
-true
 gap> Size(s);
 43779
 gap> NrRClasses(s);
@@ -858,6 +856,7 @@ gap> r:=RClass(s, f);
 gap> AsList(r);;
 gap> Size(r);
 2520
+true
 gap> Length(AsList(r));
 2520
 gap> ForAll(AsList(r), x-> x in r);
@@ -910,8 +909,6 @@ gap> s:=Semigroup([
 >  Transformation( [ 5, 6, 10, 11, 10, 4, 10, 12, 5, 7, 4, 10 ] ), 
 >  Transformation( [ 6, 8, 12, 5, 4, 8, 10, 7, 4, 1, 10, 11 ] ) ]);;
 gap> f:=Transformation( [ 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8 ] );;
-gap> ForwardOrbitOfImage(s, f![1]);
-<closed orbit, 40 images with size 2, 1 components, 1 kernels, 1 reps>
 gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ), 
 >   Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1, 7 ] ), 
 >   Transformation( [ 3, 8, 1, 9, 9, 4, 10, 5, 10, 6 ] ), 
@@ -970,16 +967,12 @@ gap> iter:=IteratorOfRClasses(s);
 gap> NextIterator(iter);;
 gap> NextIterator(iter);
 {Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] )}
-gap> PreInOrbitsOfImages(s, f, true);
-[ false, [ 3, fail, fail, fail, fail, 0, fail ] ]
+gap> f in SemigroupData(s);
+false
 gap> NextIterator(iter);
 {Transformation( [ 5, 1, 4, 1, 4, 4, 7, 8 ] )}
-gap> PreInOrbitsOfImages(s, f, false);
-[ false, [ 3, fail, fail, fail, fail, 0, fail ] ]
-gap> NextIterator(iter);
-{Transformation( [ 8, 8, 1, 5, 8, 5, 8, 8 ] )}
-gap> PreInOrbitsOfImages(s, f, true);
-[ true, [ 3, 1, 1, 1, 1, 1, [ 8, 8, 1, 5, 8, 5, 8, 8 ], () ] ]
+gap> f in SemigroupData(s);
+true
 gap> gens:=[Transformation( [ 10, 8, 7, 4, 1, 4, 10, 10, 7, 2 ] ),
 > Transformation( [ 5, 2, 5, 5, 9, 10, 8, 3, 8, 10 ] )];;
 gap> s:=Monoid(gens);;
@@ -1048,9 +1041,7 @@ gap> f:=Transformation( [ 39, 6, 6, 17, 25, 17, 39, 28, 28, 5, 6, 17, 4, 25, 32,
 > 25, 32, 6, 4, 6, 28, 28, 32, 17, 17, 5, 17, 39, 17, 32, 5, 25, 6, 32, 39,
 > 25, 28, 6, 25, 39, 17, 17, 17, 28, 17, 6, 6, 6, 17, 39 ] );;
 gap> r:=RClass(s, f);
-{Transformation( [ 6, 32, 32, 28, 25, 28, 6, 17, 17, 5, 32, 28, 4, 25, 39, 
-  25, 39, 32, 4, 32, 17, 17, 39, 28, 28, 5, 28, 6, 28, 39, 5, 25, 32, 39, 6, 
-  25, 17, 32, 25, 6, 28, 28, 28, 17, 28, 32, 32, 32, 28, 6 ] )}
+{<transformation on 50 pts with rank 8>}
 gap> Size(r);
 30683520
 gap> iter:=Iterator(r);
@@ -1064,8 +1055,7 @@ gap> s:=Semigroup(gens);;
 gap> f:=Transformation( [ 12, 14, 3, 11, 4, 18, 12, 14, 12, 14, 12, 18, 18, 3,
 > 18, 3, 18, 14, 18, 2 ] );;
 gap> r:=RClass(s, f);
-{Transformation( [ 18, 2, 3, 4, 11, 12, 18, 2, 18, 2, 18, 12, 12, 3, 12, 3, 
-  12, 2, 12, 14 ] )}
+{<transformation on 20 pts with rank 7>}
 gap> NrHClasses(r);
 177
 gap> GreensHClasses(r);;
@@ -1083,7 +1073,8 @@ gap> gens:=[ Transformation( [ 2, 6, 1, 7, 5, 3, 4 ] ),
 >   Transformation( [ 5, 1, 6, 1, 1, 5, 1 ] ),
 >   Transformation( [ 3, 5, 2, 3, 2, 2, 3 ] ) ];;
 gap> s:=Semigroup(gens);;
-gap> ExpandOrbitsOfImages(s);;
+gap> Size(s);
+21343
 gap> f:=Transformation( [ 7, 3, 7, 7, 7, 7, 3 ] );;
 gap> r:=RClass(s, f);
 {Transformation( [ 2, 4, 2, 2, 2, 2, 4 ] )}
