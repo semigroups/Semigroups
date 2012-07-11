@@ -433,28 +433,10 @@ gap> SchutzenbergerGroup(GreensHClassOfElement(S, f));
 Group([ (4,5) ])
 gap> S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
 > Transformation( [ 3, 3, 1, 1 ] ) ]);;
-gap> Idempotents(S, 1);
-[  ]
-gap> Idempotents(S, 2);                        
-[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
-  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
-gap> Idempotents(S, 3);                        
-[  ]
-gap> Idempotents(S, 4);                        
-[ Transformation( [ 1, 2, 3, 4 ] ) ]
 gap> Idempotents(S);
 [ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
   Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 4, 2, 2, 4 ] ), 
   Transformation( [ 1, 2, 3, 4 ] ) ]
-gap> S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
-> Transformation( [ 3, 3, 4, 1 ] ) ]);;
-gap> RhoOrb(S); 
-<open orbit, 1 points with Schreier tree>
-gap> Enumerate(last);
-<closed orbit, 9 points with Schreier tree>
-gap> AsList(last);
-[ [ 1 .. 4 ], [ 1, 2, 3, 1 ], [ 1, 1, 2, 3 ], [ 1, 2, 2, 1 ], [ 1, 1, 2, 2 ], 
-  [ 1, 2, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 1, 1 ], [ 1, 1, 2, 1 ] ]
 gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ), 
 >   Transformation( [ 6, 6, 4, 4, 2, 1, 4 ] ) ];;
 gap> S:=Semigroup(gens);;
@@ -572,7 +554,7 @@ gap> d:=DClassOfRClass(r);
 gap> Size(d);
 23400
 gap> Position(GreensDClasses(s), d);
-1
+3
 gap> List(GreensRClasses(s), x-> Position(GreensDClasses(s), 
 > DClassOfRClass(x)));
 [ 2, 3, 3, 3, 3, 3, 1, 1, 1, 1, 4, 3, 1, 1, 1, 3, 1, 4, 3, 1, 1, 1, 4, 3, 1, 
@@ -845,7 +827,6 @@ gap> r:=RClass(s, f);
 gap> AsList(r);;
 gap> Size(r);
 2520
-true
 gap> Length(AsList(r));
 2520
 gap> ForAll(AsList(r), x-> x in r);
@@ -1261,6 +1242,7 @@ Group([ (4,5) ])
 gap> s:=FullTransformationSemigroup(8);;
 gap> f:=Transformation([1,1,2,3,4,5,6,7]);;
 gap> Size(s);
+16777216
 gap> iter:=IteratorOfDClasses(s);
 <iterator of D-classes>
 gap> d:=NextIterator(iter);;

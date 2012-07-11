@@ -68,6 +68,18 @@ gap> f in SemigroupData(s);
 true
 
 #
+gap> S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
+> Transformation( [ 3, 3, 4, 1 ] ) ]);;
+gap> RhoOrb(S);
+<open orbit, 1 points with Schreier tree with log>
+gap> Enumerate(last);
+<closed orbit, 9 points with Schreier tree with log>
+gap> AsList(last);
+[ [ 1, 2, 3, 4 ], [ 1, 2, 3, 1 ], [ 1, 1, 2, 3 ], [ 1, 2, 2, 1 ], 
+  [ 1, 1, 2, 2 ], [ 1, 2, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 1, 1 ], 
+  [ 1, 1, 2, 1 ] ]
+
+#
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
 gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
