@@ -339,21 +339,15 @@ function(f, s)
 
   # look for lambda!
   o:=LambdaOrb(s);
+  
+  if not IsClosed(o) then 
+    Enumerate(o, infinity);
+  fi;
+  
   l:=Position(o, lambda);
     
   if l=fail then 
-    if IsClosed(o) then 
-      return false;
-    fi;
-    o!.looking:=true; o!.lookingfor:=function(o, x) return x=lambda; end;
-    o!.lookfunc:=o!.lookingfor;
-    Enumerate(o);
-    l:=PositionOfFound(o);
-    o!.found:=false; o!.looking:=false; 
-    Unbind(o!.lookingfor); Unbind(o!.lookfunc);
-    if l=false then 
-      return false;
-    fi;
+    return false;
   fi;
   
   # the only case when l is found but f not in s.
@@ -363,8 +357,7 @@ function(f, s)
   #  return false;
   #fi;
 
-  # strongly connected component of lambda, the disadvantage in the case that
-  # data!.graded=false is that the next line enumerates the whole of o.
+  # strongly connected component of lambda orb
   m:=OrbSCCLookup(o)[l];
   scc:=OrbSCC(o);
 
@@ -440,8 +433,8 @@ function(f, s)
         data:=Enumerate(data, infinity, lookfunc);
         found:=data!.found;
         if found<>false then 
-          val:=HTValue(ht, g);
-          if val<>fail then 
+          n:=HTValue(ht, g);
+          if n<>fail then 
             return true;
           fi;
         fi;

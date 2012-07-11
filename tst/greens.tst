@@ -453,7 +453,7 @@ gap> Idempotents(S);
   Transformation( [ 1, 2, 3, 4 ] ) ]
 gap> S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
 > Transformation( [ 3, 3, 4, 1 ] ) ]);;
-gap> KernelsOfTransSemigroup(S); 
+gap> RhoOrb(S); 
 <open orbit, 1 points with Schreier tree>
 gap> Enumerate(last);
 <closed orbit, 9 points with Schreier tree>
@@ -468,9 +468,10 @@ gap> Length(GreensRClasses(S));
 gap> r:=GreensRClasses(S)[10];;
 gap> Representative(r);
 Transformation( [ 3, 3, 3, 3, 3, 2, 3 ] )
-gap> AsList(ImageOrbit(r));
+gap> AsList(LambdaOrb(r){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]});
 [ [ 2, 3 ], [ 4, 6 ], [ 2, 6 ], [ 1, 4 ], [ 1, 6 ], [ 2, 4 ], [ 3, 6 ] ]
-gap> ImageOrbitPerms(r){ImageOrbitSCC(r)};
+gap> LambdaOrbMults(LambdaOrb(r),
+> LambdaOrbSCCIndex(r)){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]}
 [ (), (2,4)(3,5,6), (2,3,4,5,6), (1,2)(3,4), (1,2)(3,4,5,6), (2,3,4), 
   (2,4,5,6) ]
 gap> SchutzenbergerGroup(r);
