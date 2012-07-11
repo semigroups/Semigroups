@@ -1796,6 +1796,13 @@ end);
 InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
 [IsGreensClass], x-> IsTransformationSemigroup(ParentAttr(x)));
 
+# new for 1.0! - IsGreensClassOfTransSemigp - "for a Green's class"
+#############################################################################
+
+InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
+[IsActingSemigroupGreensClass], x->
+IsTransformationSemigroup(ParentSemigroup(x)));
+
 # new for 0.1! - IsGreensClass - "for a Green's class"
 #############################################################################
 # JDM remove these?
@@ -2108,7 +2115,9 @@ function(s)
   local iter;
   
   if IsClosed(SemigroupData(s)) then 
-    return IteratorList(GreensDClasses(s));
+    iter:=IteratorList(GreensDClasses(s));
+    SetIsIteratorOfDClasses(iter, true);
+    return iter;
   fi;
 
   iter:=IteratorByFunctions( rec( 
