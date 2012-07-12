@@ -25,7 +25,7 @@ function(f, s)
 
   if Points(s)=[] then 
     return f[1]=0;
-  else f[1]<>0 and (f[5]<Points(s)[1] or
+  elif f[1]<>0 and (f[5]<Points(s)[1] or
    f[6]>Points(s)[Length(Points(s))]) then 
     return false;
   fi;
