@@ -196,7 +196,7 @@ function(h)
   fi;
 
   rho_p:=RhoOrbMults(rho_o, rho_m)[Position(rho_o, RhoFunc(s)(rep))][2];
-  rho_p:=RhoPerm(ParentSemigroup(h))(rho_p*rep, RhoOrbRep(rho_o, rho_m));
+  rho_p:=RhoPerm(ParentSemigroup(h))(RhoOrbRep(rho_o, rho_m), rho_p*rep);
 
   if lambda_stab=true then 
     return rho_schutz^rho_p;    
