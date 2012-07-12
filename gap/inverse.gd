@@ -25,5 +25,6 @@ DeclareAttribute("OrbMultipliers", IsGreensClass);
 DeclareAttribute("OrbSCCStabChain", IsGreensClass);
 DeclareAttribute("Points", IsPartialPermSemigroup);
 DeclareGlobalFunction("ShortOrb");
+DeclareGlobalFunction("IsJoinIrreducible");
 
 DeclareSynonymAttr("DomainOfPartialPermSemigroup", Points);
