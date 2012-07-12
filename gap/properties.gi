@@ -301,7 +301,7 @@ function(s)
     return true;
   fi;
 
-  iter:=IteratorOfRClassRepsData(s); n:=Degree(s);
+  iter:=IteratorOfRClassData(s); n:=Degree(s);
   ht:=HTCreate([1..n], rec(hashlen:=s!.opts!.hashlen!.S));
   ht_o:=HTCreate([1,1,1,1], rec(hashlen:=s!.opts!.hashlen!.S));
   reg:=[]; i:=0; 
@@ -314,7 +314,7 @@ function(s)
     if not IsDoneIterator(iter) then 
       HTAdd(ht_o, data{[1,2,4,5]}, true);
 
-      f:=RClassRepFromData(s, data); ker:=CanonicalTransSameKernel(f);
+      #f:=RClassRepFromData(s, data); ker:=CanonicalTransSameKernel(f);
       val:=HTValue(ht, ker);
 
       if val=fail then #new kernel
@@ -369,7 +369,7 @@ function(s)
     return false;
   fi;
 
-  iter:=IteratorOfDClassRepsData(s); 
+  iter:=IteratorOfDClassData(s); 
     
   for d in iter do
     #i:=NrIdempotentsRClassFromData(s, d[1]);
@@ -592,7 +592,7 @@ InstallMethod(IsHTrivial, "for a transformation semigroup",
 function(s)
   local iter, i, g;
 
-  iter:=IteratorOfDClassRepsData(s);
+  iter:=IteratorOfDClassData(s);
   i:=0; 
   repeat 
     i:=i+1;
@@ -634,7 +634,7 @@ InstallMethod(IsLTrivial, "for a transformation semigroup",
 function(s)
   local iter, i, d;
 
-  iter:=IteratorOfDClassRepsData(s); 
+  iter:=IteratorOfDClassData(s); 
   i:=0;
 
   #JDM here it would be useful to pass OrbitsOfKernels(s)!.orbits to 
@@ -690,7 +690,7 @@ function(s)
     return true;
   #fi;
 
-  #iter:=IteratorOfRClassRepsData(s); 
+  #iter:=IteratorOfRClassData(s); 
 
   #JDM here it would be useful to pass OrbitsOfImages(s)!.orbits to 
   # RClassSchutzGpFromData...
@@ -843,9 +843,9 @@ function(s)
   fi;
 
   #if OrbitsOfKernels(s)!.finished then 
-  #  iter:=IteratorOfDClassRepsData(s); D:=true;
+  #  iter:=IteratorOfDClassData(s); D:=true;
   #else 
-  #  iter:=IteratorOfRClassRepsData(s); D:=false;
+  #  iter:=IteratorOfRClassData(s); D:=false;
   #fi;
     
   for d in iter do
@@ -879,7 +879,7 @@ function(s)
     return NrLClasses(s)=1;
   fi;
   
-  iter:=IteratorOfLClassRepsData(s); NextIterator(iter);
+  iter:=IteratorOfLClassData(s); NextIterator(iter);
   return IsDoneIterator(iter);
 end);
 
@@ -1487,12 +1487,12 @@ function(s)
     return ForAll(GreensDClasses(s), IsRegularDClass);
   fi;
 
-  iter:=IteratorOfRClassRepsData(s);
+  iter:=IteratorOfRClassData(s);
 
   for d in iter do 
-    if not IsRegularRClassData(s, d) then 
+    #if not IsRegularRClassData(s, d) then 
       return false;
-    fi;
+    #fi;
   od; 
 
   return true;
@@ -1513,7 +1513,7 @@ function(s)
     return NrRClasses(s)=1;
   fi;
 
-  iter:=IteratorOfRClassRepsData(s); NextIterator(iter);
+  iter:=IteratorOfRClassData(s); NextIterator(iter);
   return IsDoneIterator(iter);
 end);
 
@@ -1822,7 +1822,7 @@ function(s)
     z:=MultiplicativeZero(s);
   fi;
 
-  iter:=IteratorOfDClassRepsData(s); i:=0;
+  iter:=IteratorOfDClassData(s); i:=0;
   repeat 
     i:=i+1; NextIterator(iter);
   until i>2 or IsDoneIterator(iter);

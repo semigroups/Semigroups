@@ -60,14 +60,11 @@ DeclareGlobalFunction("RhoOrbRep");
 DeclareGlobalFunction("RhoOrbSchutzGp");
 DeclareGlobalFunction("LambdaOrbStabChain");
 DeclareAttribute("RhoOrbStabChain", IsActingSemigroupGreensClass);
-DeclareGlobalFunction("LambdaOrbSLP");
 
 DeclareAttribute("LambdaOrbSCCIndex", IsActingSemigroupGreensClass);
 DeclareAttribute("RhoOrbSCCIndex", IsActingSemigroupGreensClass);
 DeclareAttribute("LambdaCosets", IsActingSemigroupGreensClass);
 DeclareAttribute("RhoCosets", IsActingSemigroupGreensClass);
-
-DeclareOperation("SemigroupEltSLP", [IsActingSemigroup, IsActingElt]);
 
 DeclareAttribute("LambdaMult", IsActingSemigroup);
 DeclareAttribute("RhoMult", IsActingSemigroup);
@@ -93,7 +90,6 @@ DeclareAttribute("RhoDomain", IsActingSemigroup);
 
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
 DeclareGlobalFunction("InitSemigroupData");
-DeclareOperation("EnumerateSemigroupData", [IsActingSemigroup, IsCyclotomic, IsFunction]);
 DeclareCategory("IsSemigroupData", IsRecord);
 
 DeclareAttribute("IdempotentLambdaRhoTester", IsActingSemigroup);

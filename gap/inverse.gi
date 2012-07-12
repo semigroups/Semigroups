@@ -2038,13 +2038,13 @@ function(d)
   return iter;
 end);
 
-# new for 0.7! - IteratorOfDClassRepsData - "for part perm inverse semigroup""
+# new for 0.7! - IteratorOfDClassData - "for part perm inverse semigroup""
 ###############################################################################
-# JDM this should have a method like IteratorOfRClassRepsData and
-# IteratorOfLClassRepsData since the scc:=OrbSCC line makes this work not so
+# JDM this should have a method like IteratorOfRClassData and
+# IteratorOfLClassData since the scc:=OrbSCC line makes this work not so
 # well!
 
-InstallMethod(IteratorOfDClassRepsData, "for a part perm inverse semigroup",
+InstallMethod(IteratorOfDClassData, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], 
 function(s)
   local offset, o, scc;
@@ -2093,7 +2093,7 @@ function(s)
   if HasDClassReps(s) then 
     return IteratorList(DClassReps(s));
   fi;
-  return IteratorByIterator(IteratorOfDClassRepsData(s), x-> x[4],
+  return IteratorByIterator(IteratorOfDClassData(s), x-> x[4],
    [IsIteratorOfDClassReps]);
 end);
 
@@ -2106,18 +2106,18 @@ function(s)
   if HasGreensDClasses(s) then 
     return IteratorList(GreensDClasses(s));
   fi;
-  return IteratorByIterator(IteratorOfDClassRepsData(s), x->
+  return IteratorByIterator(IteratorOfDClassData(s), x->
    CallFuncList(CreateDClass, x), [IsIteratorOfDClasses]);
 end);
 
 
-# new for 0.7! - IteratorOfHClassRepsData - "for part perm inverse semigroup""
+# new for 0.7! - IteratorOfHClassData - "for part perm inverse semigroup""
 ###############################################################################
-# JDM this should have a method like IteratorOfRClassRepsData and
-# IteratorOfLClassRepsData since the scc:=OrbSCC line makes this work not so
+# JDM this should have a method like IteratorOfRClassData and
+# IteratorOfLClassData since the scc:=OrbSCC line makes this work not so
 # well!
 
-InstallMethod(IteratorOfHClassRepsData, "for a part perm inverse semigroup",
+InstallMethod(IteratorOfHClassData, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], 
 function(s)
   local offset, o, scc;
@@ -2180,7 +2180,7 @@ function(s)
   if HasHClassReps(s) then 
     return IteratorList(HClassReps(s));
   fi;
-  return IteratorByIterator(IteratorOfHClassRepsData(s), x-> x[4],
+  return IteratorByIterator(IteratorOfHClassData(s), x-> x[4],
    [IsIteratorOfHClassReps]);
 end);
 
@@ -2193,14 +2193,14 @@ function(s)
   if HasGreensHClasses(s) then 
     return IteratorList(GreensHClasses(s));
   fi;
-  return IteratorByIterator(IteratorOfHClassRepsData(s), x->
+  return IteratorByIterator(IteratorOfHClassData(s), x->
    CallFuncList(CreateHClass, x), [IsIteratorOfHClasses]);
 end);
 
-# new for 0.7! - IteratorOfLClassRepsData - "for part perm inverse semigroup""
+# new for 0.7! - IteratorOfLClassData - "for part perm inverse semigroup""
 ###############################################################################
 
-InstallMethod(IteratorOfLClassRepsData, "for a part perm inverse semigroup",
+InstallMethod(IteratorOfLClassData, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], 
 function(s)
   local offset, iter, o, scc;
@@ -2298,7 +2298,7 @@ end);
 
 InstallMethod(IteratorOfLClassReps, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
-s-> IteratorByIterator(IteratorOfLClassRepsData(s), x-> x[4],
+s-> IteratorByIterator(IteratorOfLClassData(s), x-> x[4],
 [IsIteratorOfLClassReps]));
 
 # new for 0.7! - IteratorOfLClasses - "for a part perm inverse semigroup"
@@ -2306,13 +2306,13 @@ s-> IteratorByIterator(IteratorOfLClassRepsData(s), x-> x[4],
 
 InstallMethod(IteratorOfLClasses, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
-s-> IteratorByIterator(IteratorOfLClassRepsData(s), x->
+s-> IteratorByIterator(IteratorOfLClassData(s), x->
 CallFuncList(CreateLClass, x), [IsIteratorOfLClasses]));
 
-# new for 0.7! - IteratorOfRClassRepsData - "for part perm inverse semigroup""
+# new for 0.7! - IteratorOfRClassData - "for part perm inverse semigroup""
 ###############################################################################
 
-InstallMethod(IteratorOfRClassRepsData, "for a part perm inverse semigroup",
+InstallMethod(IteratorOfRClassData, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], 
 function(s)
   local offset, iter, o, scc;
@@ -2410,7 +2410,7 @@ end);
 
 InstallMethod(IteratorOfRClassReps, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
-s-> IteratorByIterator(IteratorOfRClassRepsData(s), x-> x[4],
+s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4],
 [IsIteratorOfRClassReps]));
 
 # new for 0.7! - IteratorOfRClasses - "for a part perm inverse semigroup"
@@ -2418,7 +2418,7 @@ s-> IteratorByIterator(IteratorOfRClassRepsData(s), x-> x[4],
 
 InstallMethod(IteratorOfRClasses, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
-s-> IteratorByIterator(IteratorOfRClassRepsData(s), x->
+s-> IteratorByIterator(IteratorOfRClassData(s), x->
 CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
 
 #LLL

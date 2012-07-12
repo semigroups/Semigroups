@@ -34,16 +34,7 @@
 DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
 DeclareProperty("IsGreensClassOfPartPermSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
-
-# indicates if the class was created using info from SemigroupData
-DeclareProperty("IsGreensClassSD", IsActingSemigroupGreensClass);
-# indicates if the rep is known to be an element of the semi or not
 DeclareProperty("IsGreensClassNC", IsActingSemigroupGreensClass);
-# IsGreensClassNC=true implies IsGreensClassSD=false, but no other implications
-# except the contrapositive IsGreensClassSD=true implies IsGreensClassNC=false
-# Hence the admissible pairs for [IsGreensClassNC, IsGreensClassSD] are:
-# [true, false], [false, true], [false, false].
-
 DeclareAttribute("LambdaOrbSCC", IsActingSemigroupGreensClass);
 DeclareAttribute("RhoOrbSCC", IsActingSemigroupGreensClass);
 DeclareAttribute("SemigroupDataSCC", IsActingSemigroupGreensClass);
@@ -52,7 +43,7 @@ DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
 
 #old
 
-DeclareGlobalFunction("CreateDClass"); # corresponds to [false, true] above
+DeclareGlobalFunction("CreateDClass");
 DeclareGlobalFunction("CreateHClass");
 DeclareGlobalFunction("CreateLClass");
 DeclareGlobalFunction("CreateRClass");
@@ -89,12 +80,10 @@ DeclareOperation("IteratorOfLClassReps", [IsSemigroup]);
 DeclareOperation("IteratorOfHClassReps", [IsSemigroup]); 
 DeclareOperation("IteratorOfRClassReps", [IsSemigroup]);
 
-DeclareOperation("IteratorOfDClassRepsData", [IsSemigroup]);
-DeclareOperation("IteratorOfHClassRepsData", [IsSemigroup]);
-DeclareOperation("IteratorOfLClassRepsData", [IsSemigroup]);
-DeclareOperation("IteratorOfRClassRepsData", [IsSemigroup]);
-
 DeclareOperation("IteratorOfRClassData", [IsSemigroup]);
+DeclareOperation("IteratorOfDClassData", [IsSemigroup]);
+DeclareOperation("IteratorOfHClassData", [IsSemigroup]);
+DeclareOperation("IteratorOfLClassData", [IsSemigroup]);
 
 DeclareAttribute("NrIdempotents", IsSemigroup);
 
@@ -114,31 +103,8 @@ DeclareSynonymAttr("JClasses", GreensJClasses);
 DeclareSynonymAttr("LClasses", GreensLClasses);
 DeclareSynonymAttr("RClasses", GreensRClasses);
 
-# the following functions in r.gi are currently undocumented
-
-DeclareAttribute("HClassRepsData", IsTransformationSemigroup);
-
-DeclareProperty("IsIteratorOfRClassRepsData", IsIterator);
-DeclareGlobalFunction("IsRegularRClassData");
-
-DeclareGlobalFunction("HClassRepFromData");
-DeclareGlobalFunction("RClassRepFromData");
-DeclareAttribute("RClassRepsData", IsTransformationSemigroup);
-DeclareGlobalFunction("TraceRClassRepsTree");
-
-# the documentation for the functions below can be found in 
-# /monoid/doc/d.xml
-
-
-# the following functions in d.gi are currently undocumented
-
 DeclareAttribute("GroupHClass", IsGreensDClass and
  IsGreensClassOfTransSemigp);
-
-# the following functions in l.gi are currently undocumented
-
-
-# the following functions in h.gi are currently undocumented
 
 DeclareProperty("IsIteratorOfRClassReps", IsIterator);
 DeclareProperty("IsIteratorOfLClassReps", IsIterator);
