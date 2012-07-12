@@ -56,8 +56,10 @@ InstallMethod(\in, "for an inverse semigroup of part perms",
 function(f, s)
   local o, k, l, ran, m, schutz, g, dom_g, ran_g;
 
-  if not f[1]=0 and (f[5]<Points(s)[1] or f[6]>Points(s)[Length(Points(s))]) 
-   then 
+  if Points(s)=[] then 
+    return f[1]=0;
+  else f[1]<>0 and (f[5]<Points(s)[1] or
+   f[6]>Points(s)[Length(Points(s))]) then 
     return false;
   fi;
 
