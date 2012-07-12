@@ -3384,13 +3384,13 @@ function(r)
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
+  
   for i in cosets do 
     i:=f*i;
     for j in scc do 
       k:=k+1; 
       out[k]:=GreensHClassOfElementNC(d, i/mults[j]);
       SetRClassOfHClass(out[k], r);
-      SetDClassOfHClass(out[k], d);
       #JDM also set schutz gp here!
     od;
   od;
@@ -3422,7 +3422,6 @@ function(l)
       k:=k+1;
       out[k]:=GreensHClassOfElementNC(d, i*j);
       SetLClassOfHClass(out[k], l);
-      SetDClassOfHClass(out[k], d);
       #JDM also set schutz gp here?
     od;
   od;
