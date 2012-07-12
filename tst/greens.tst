@@ -58,7 +58,7 @@ gap> H:=GreensHClasses(m);;
 gap> I:=Concatenation(List(GreensRClasses(m), GreensHClasses));;
 gap> ForAll(H, x-> Number(I, y-> Representative(x) in y)=1);
 true
-gap> Set(Concatenation(List(GreensRClasses(m), GreensHClasses)))=
+gap> Set(Concatenation(List(GreensDClasses(m), GreensHClasses)))=
 > Set(GreensHClasses(m));
 true
 gap> m:=Semigroup(gens[74]);;
@@ -1497,12 +1497,12 @@ gap> GreensDClasses(S);
   {Transformation( [ 4, 4, 4, 4 ] )} ]
 gap> GreensHClasses(S);
 [ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 1, 2, 2, 2 ] )}, 
+  {Transformation( [ 4, 4, 3, 4 ] )}, {Transformation( [ 2, 2, 1, 2 ] )}, 
+  {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 2, 1, 2, 2 ] )}, 
+  {Transformation( [ 4, 4, 4, 3 ] )}, {Transformation( [ 2, 2, 2, 1 ] )}, 
   {Transformation( [ 4, 3, 1, 2 ] )}, {Transformation( [ 4, 4, 4, 4 ] )}, 
   {Transformation( [ 2, 2, 2, 2 ] )}, {Transformation( [ 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 1, 1, 1, 1 ] )}, {Transformation( [ 4, 4, 3, 4 ] )}, 
-  {Transformation( [ 2, 2, 1, 2 ] )}, {Transformation( [ 4, 3, 4, 4 ] )}, 
-  {Transformation( [ 2, 1, 2, 2 ] )}, {Transformation( [ 4, 4, 4, 3 ] )}, 
-  {Transformation( [ 2, 2, 2, 1 ] )} ]
+  {Transformation( [ 1, 1, 1, 1 ] )} ]
 gap> GreensLClasses(S);
 [ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 1, 2, 2, 2 ] )}, 
   {Transformation( [ 4, 3, 1, 2 ] )}, {Transformation( [ 4, 4, 4, 4 ] )}, 

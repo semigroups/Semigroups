@@ -260,14 +260,13 @@ function(x, y)
    (IsGreensDClass(x) and IsGreensDClass(y)) or
    (IsGreensHClass(x) and IsGreensHClass(y)) then
     return ParentSemigroup(x)=ParentSemigroup(y) and Representative(x) <
-     Representative(y);
+     Representative(y) and (not Representative(x) in y);
   fi;
   return fail;
 end);
 
 # new for 1.0! - \in - "for acting elt and D-class of acting semigp"
 #############################################################################
-
 #JDM revise this as per the other version of \in just deleted :)
 
 InstallMethod(\in, "for acting elt and D-class of acting semigp.",
