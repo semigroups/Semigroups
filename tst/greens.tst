@@ -589,6 +589,8 @@ gap> gens:=[ Transformation( [ 1, 2, 6, 4, 7, 5, 7 ] ),
 >  Transformation( [ 1, 6, 6, 3, 3, 7, 1 ] ) ];;
 gap> s:=Semigroup(gens);
 <semigroup with 22 generators>
+gap> Size(s);
+677391
 gap> f:=Transformation( [ 1, 5, 3, 2, 7, 6, 7 ] );;
 gap> f in s;
 true
@@ -605,8 +607,6 @@ gap> reps:=RClassReps(d);
   Transformation( [ 4, 5, 6, 7, 1, 6, 2 ] ) ]
 gap> List(reps, x-> Position(GreensRClasses(s), GreensRClassOfElement(s, x)));
 [ 1, 3, 6, 13, 5, 7, 16, 2 ]
-gap> Size(s);
-677391
 gap> r:=GreensRClasses(s)[63];;
 gap> Idempotents(r);
 [ Transformation( [ 1, 7, 3, 4, 5, 7, 7 ] ), 

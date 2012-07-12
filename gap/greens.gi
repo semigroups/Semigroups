@@ -1071,7 +1071,7 @@ function(d)
       SetParentSemigroup(r, s);
       SetLambdaOrbSCCIndex(r, m);
       SetLambdaOrb(r, o);
-      SetRepresentative(r, g*j^-1);
+      SetRepresentative(r, g/j);
       SetEquivalenceClassRelation(r, rrel);
       SetIsGreensClassNC(r, nc);
       SetDClassOfRClass(r, d);
@@ -1614,13 +1614,15 @@ InstallOtherMethod(GreensRClassOfElementNC, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
   local pos, r;
+ 
+  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
+    pos:=Position(SemigroupData(s), f);
   
-  pos:=Position(SemigroupData(s), f);
+    if pos<>fail then 
+      return CallFuncList(CreateRClass, SemigroupData(s)[pos]);
+    fi;  
+  fi;
   
-  if pos<>fail then 
-    return CallFuncList(CreateRClass, SemigroupData(s)[pos]);
-  fi;  
-
   r:=Objectify(RClassType(s), rec());
 
   SetParentSemigroup(r, s);
@@ -1680,12 +1682,37 @@ InstallMethod(GroupHClassOfGreensDClass, "for D-class",
 InstallOtherMethod(Idempotents, "for a D-class of an acting semigp.",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local R, out, x;
-  R:=GreensRClasses(d);
-  out:=[];
-  for x in R do 
-    Append(out, Idempotents(x));
+  local s, out, nr, tester, creator, rho_o, rho_scc, lambda_o, lambda_scc, i, j;
+
+  s:=ParentSemigroup(d);
+
+  if Rank(Representative(d))=Degree(s) then
+    return [One(s)];
+  fi;
+
+  out:=[]; nr:=0;
+  tester:=IdempotentLambdaRhoTester(s);
+  creator:=IdempotentLambdaRhoCreator(s);
+  
+  rho_o:=RhoOrb(d);
+  rho_scc:=RhoOrbSCC(d);
+  lambda_o:=LambdaOrb(d); 
+  lambda_scc:=LambdaOrbSCC(d);
+
+  for i in lambda_scc do
+    i:=lambda_o[i];
+    for j in rho_scc do 
+      j:=rho_o[j];
+      if tester(i, j) then
+        nr:=nr+1;
+        out[nr]:=creator(i, j);
+      fi;
+    od;
   od;
+
+  if not HasNrIdempotents(d) then 
+    SetNrIdempotents(d, nr);   
+  fi;
   return out;
 end);
 
@@ -2417,7 +2444,35 @@ end);
 
 InstallOtherMethod(NrIdempotents, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
-d-> Sum(List(GreensRClasses(d), NrIdempotents)));
+function(d)
+  local s, nr, tester, rho_o, rho_scc, lambda_o, lambda_scc, i, j;
+  
+  s:=ParentSemigroup(d);
+  
+  if Rank(Representative(d))=Degree(s) then
+    return 1;
+  fi;
+  
+  nr:=0;
+  tester:=IdempotentLambdaRhoTester(s);
+  
+  rho_o:=RhoOrb(d);
+  rho_scc:=RhoOrbSCC(d);
+  lambda_o:=LambdaOrb(d);
+  lambda_scc:=LambdaOrbSCC(d);
+  
+  for i in lambda_scc do
+    i:=lambda_o[i];
+    for j in rho_scc do   
+      j:=rho_o[j];
+      if tester(i, j) then
+        nr:=nr+1;
+      fi;
+    od;
+  od;
+  
+  return nr;
+end);
 
 # new for 1.0! - NrIdempotents - "for a H-class of an acting semigp"
 #############################################################################
