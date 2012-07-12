@@ -29,3 +29,5 @@ DeclareAttribute("OrbMultipliers", IsGreensClass);
 DeclareAttribute("OrbSCCStabChain", IsGreensClass);
 DeclareGlobalFunction("ShortOrb");
 
+DeclareGlobalFunction("IsJoinIrreducible");
+
