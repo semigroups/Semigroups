@@ -339,7 +339,9 @@ function(f, s)
 
   # look for lambda!
   o:=LambdaOrb(s);
-  
+ 
+  # JDM this is a disadvantage of the approach of enumerating the entire
+  # LambdaOrb when applied to a single \in test.
   if not IsClosed(o) then 
     Enumerate(o, infinity);
   fi;
