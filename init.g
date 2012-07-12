@@ -37,6 +37,8 @@ ReadPackage("citrus/gap/inverse.gd");
 ReadPackage("citrus/gap/properties.gd");
 ReadPackage("citrus/gap/orbits.gd");
 
+ReadPackage("citrus/gap/slp.gd");
+
 ReadPackage("citrus/gap/examples.gd");
 ReadPackage("citrus/gap/utils.gd");
 ReadPackage("citrus/gap/options.g");

@@ -497,7 +497,7 @@ function(s)
 
   n:=Random([1+i..Length(data)]);
   g:=Random(LambdaOrbSchutzGp(data[n][3], data[n][2]));
-  i:=Random([1..Length(data[n][3])]);
+  i:=Random(OrbSCC(data[n][3])[data[n][2]]);
   return data[n][4]*g*LambdaOrbMults(data[n][3], data[n][2])[i]^-1; 
 end);
 
