@@ -1828,44 +1828,6 @@ InstallOtherMethod(IsGroupHClass, "for H-class of part perm inv semigroup",
 IsGreensClassOfInverseSemigroup], h-> 
  DomPP(Representative(h))=RanSetPP(Representative(h)));
 
-# new for 0.9999! - IsJoinIrreducible - "for an inv semi and partial perm"
-##############################################################################
-# an element x of an inverse semigroup S is *join irreducible*, if 
-# x=sup(U) for some subset U of S implies x in U (where sup is taken wrt the
-# natural partial order. 
-
-InstallGlobalFunction(IsJoinIrreducible,
-function(S, x)
-  local y, elts, i, k, j;
-
-  if x=MultiplicativeZero(S) then 
-    return false;
-  elif x in MinimalIdeal(S) then 
-    return true;
-  fi;
-
-  y:=Representative(GreensDClassOfElement(S, x));
-  elts:=Idempotents(S);
-  i:=Position(elts, y);
-
-  k:=0;
-
-  for j in [i-1,i-2 ..1] do
-    if NaturalLeqPP(elts[j], elts[i]) then
-      k:=j;
-      break;
-    fi;
-  od;
-
-  for j in [k-1,k-2..1] do 
-    if NaturalLeqPP(elts[j], elts[i]) and not NaturalLeqPP(elts[j], elts[k])
-     then 
-      return false;
-    fi;
-  od;
-  return true;
-end);  
-
 # new for 0.7! - IsRegularDClass - "for D-class of inv semigroup"
 ##############################################################################
 
