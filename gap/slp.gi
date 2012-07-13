@@ -115,9 +115,7 @@ end);
 InstallMethod(SemigroupEltSLP, "for an acting semigroup and acting elt",
 [IsActingSemigroup, IsActingElt],
 function(s, x)
-  local data, nr, gens, zip, o, m, scc, l, mult, y, p, schutz, stab, slpstrong,
-   slp;
-
+  local data, nr, gens, zip, o, m, scc, l, word, v, y, p, slp;
 
   # suppose that the data is fully enumerated...
   data:=SemigroupData(s);
@@ -143,12 +141,16 @@ function(s, x)
   m:=data[nr][2];
   scc:=OrbSCC(o);
   l:=Position(o, LambdaFunc(s)(x));
-  mult:=TraceSchreierTreeOfSCCForward(o, m, l);
+  word:=TraceSchreierTreeOfSCCForward(o, m, l);
+  v:=EvaluateWord(gens, word);
 
-  y:=x*MappingPermListList(o[scc[m][1]], OnTuples(o[scc[m][1]],
-   EvaluateWord(gens, mult)))^-1;
+  y:=x*MappingPermListList(OnIntegerTuplesWithT(o[scc[m][1]], v),
+   o[scc[m][1]]); 
+
+  # LambdaMult(o[scc[m][1]], v)^-1
 
   p:=LambdaPerm(s)(data[nr][4], y);
+  # x=rep*p*v
 
   if p<>() then
     slp:=SiftShorterSLP(LambdaOrbSchutzGp(o, m), p);
@@ -167,9 +169,9 @@ function(s, x)
   fi;
 
   # slp for multiplier
-  if mult<>[] then
+  if word<>[] then
     return ProductOfStraightLinePrograms(slp,
-     StraightLineProgram([zip(mult)], Length(gens)));
+     StraightLineProgram([zip(word)], Length(gens)));
   fi;
   return slp;
 end);

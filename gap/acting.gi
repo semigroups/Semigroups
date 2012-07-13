@@ -100,7 +100,7 @@ fi;
 # new for 1.0! - LambdaMult
 ###############################################################################
 # LambdaMult(s)(pt, f) returns a permutation acting in the same way as
-# f^-1 on pt. This is required to produce the lambda orb mults
+# f on pt. This is required to produce the lambda orb mults
 # (LambdaOrbMults). 
 
 InstallMethod(LambdaMult, "for a transformation semi",
@@ -992,8 +992,10 @@ InstallGlobalFunction(LambdaOrbMults,
   lambdamult:=LambdaMult(s);
 
   for i in scc do
-    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, m, i));
-    mults[i]:=lambdamult(o[i], f);
+    #f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, m, i));
+    #mults[i]:=lambdamult(o[i], f);
+    mults[i]:=[EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, i),
+     EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, m, i)];
   od;
  
   return mults;
