@@ -1357,7 +1357,7 @@ function(o, m)
 
   for i in scc do
     f:=EvaluateWord(gens, Reversed(TraceSchreierTreeOfSCCForward(o, m, i)));
-    mults[i]:=[f, inv(o[i], f)];
+    mults[i]:=[f, inv(o[scc[1]], f)];
   od;
 
   return mults;
