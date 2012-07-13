@@ -498,7 +498,7 @@ function(s)
   n:=Random([1+i..Length(data)]);
   g:=Random(LambdaOrbSchutzGp(data[n][3], data[n][2]));
   i:=Random(OrbSCC(data[n][3])[data[n][2]]);
-  return data[n][4]*g*LambdaOrbMults(data[n][3], data[n][2])[i]^-1; 
+  return data[n][4]*g*LambdaOrbMults(data[n][3], data[n][2])[i][1]; 
 end);
 
 # new for 0.1! - RandomIdempotent - "for an image and pos. int."

@@ -103,21 +103,44 @@ fi;
 # f on pt. This is required to produce the lambda orb mults
 # (LambdaOrbMults). 
 
-InstallMethod(LambdaMult, "for a transformation semi",
-[IsTransformationSemigroup], s-> function(pt, f)
-  return MappingPermListList(pt, OnIntegerTuplesWithT(pt, f));
-end);
+#InstallMethod(LambdaMult, "for a transformation semi",
+#[IsTransformationSemigroup], s-> function(pt, f)
+#  return MappingPermListList(pt, OnIntegerTuplesWithT(pt, f));
+#end);
 
-InstallMethod(LambdaMult, "for a partial perm semi",
-[IsPartialPermSemigroup], s-> function(pt, f) 
-  return MappingPermListList(pt, OnIntegerTuplesWithPP(pt, f));
-end);
+#InstallMethod(LambdaMult, "for a partial perm semi",
+#[IsPartialPermSemigroup], s-> function(pt, f) 
+#  return MappingPermListList(pt, OnIntegerTuplesWithPP(pt, f));
+#end);
 
-# new for 1.0! - RhoMult 
+# new for 1.0! - LambdaInverse
+###############################################################################
+
+InstallMethod(LambdaInverse, "for a transformation semigroup",
+[IsTransformationSemigroup], s-> 
+  function(im, f)
+    local i, j, n, k, out;
+
+    out:=List([1..f[1]], x-> 1);
+    
+    for i in im do 
+      out[f[i+4]]:=i;
+    od;
+
+    return TransformationNC(out);
+  end);
+
+# new for 1.0! - RhoInverse 
 ###############################################################################
 #JDM c method for this!
 
-InstallMethod(RhoMult, "for a transformation semi",
+# returns an acting semigroup element acting like the inverse of f on 
+# the specified rho value. 
+
+#JDM this could be better since where ever we use it we also know what f is
+#mapping onto ker!
+
+InstallMethod(RhoInverse, "for a transformation semi",
 [IsTransformationSemigroup], s-> 
   function(ker, f)
     local g, n, m, lookup, i, j;
@@ -137,7 +160,7 @@ InstallMethod(RhoMult, "for a transformation semi",
     return TransformationNC(List([1..n], i-> lookup[ker[i]]));
   end);
 
-InstallMethod(RhoMult, "for a partial perm semi",
+InstallMethod(RhoInverse, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> 
   function(dom, f)
     return f^-1;
@@ -163,22 +186,21 @@ if IsBound(DomPP) and IsBound(RanPP) then
   end);
 fi;
 
-# new for 1.0! - RhoPerm
+# new for 1.0! - LambdaConjugator
 ###############################################################################
-# RhoPerm(s)(f, g) returns a permutation p mapping LambdaFunc(s)(f) to
-# LambdaFunc(s)(g) when RhoFunc(s)(f)=RhoFunc(s)(g) so that 
-#  gf^-1(i)=p(i).
+# returns a permutation mapping LambdaFunc(s)(f) to LambdaFunc(s)(g) so that 
+# gf^-1(i)=p(i) when RhoFunc(s)(f)=RhoFunc(s)(g)!!
 
 #JDM c method for both of these...
 
-InstallMethod(RhoPerm, "for a transformation semi",
-[IsTransformationSemigroup], s-> 
+InstallMethod(LambdaConjugator, "for a transformation semi",
+[IsActingSemigroup], s-> 
   function(f, g) 
     return MappingPermListList(RanT(f), RanT(g));
   end);
 
 if IsBound(RanPP) then 
-  InstallMethod(RhoPerm, "for a partial perm semi",
+  InstallMethod(LambdaConjugator, "for a partial perm semi",
   [IsPartialPermSemigroup], s-> 
     function(f, g)
       return MappingPermListList(RanPP(f), RanPP(g));
@@ -396,7 +418,7 @@ function(f, s)
 
   # make sure lambda of f is in the first place of its scc
   if l<>scc[m][1] then 
-    g:=f*LambdaOrbMults(o, m)[l];
+    g:=f*LambdaOrbMults(o, m)[l][2];
   else
     g:=f;
   fi;
@@ -566,8 +588,6 @@ function(data, limit, lookfunc)
   lambda:=LambdaFunc(s);
   lambdaact:=LambdaAct(s);  
   lambdaperm:=LambdaPerm(s);
-  lambdamult:=LambdaMult(s);
-  rank:=LambdaRank(s);
   rho:=RhoFunc(s);
   lambdarhoht:=LambdaRhoHT(s);
 
@@ -594,7 +614,7 @@ function(data, limit, lookfunc)
         #get the multipliers
         #JDM expand!
         mults:=LambdaOrbMults(o, m);         
-        y:=x*mults[pos];
+        y:=x*mults[pos][2];
       else
         y:=x;
         pos:=fail;
@@ -971,10 +991,13 @@ end);
 
 # new for 1.0! - LambdaOrbMults - "for a lambda orb and scc index"
 ##############################################################################
+# this should be revised so that we do not repeatedly call TraceSchreierTree..
+# which involves x, x*y, x*y*z, ... (lots of unnecessary products).
+# JDM
 
 InstallGlobalFunction(LambdaOrbMults, 
   function(o, m) 
-  local scc, s, mults, gens, lambdamult, f, i;
+  local scc, s, mults, gens, inv, f, i;
 
   scc:=OrbSCC(o)[m];
 
@@ -989,13 +1012,11 @@ InstallGlobalFunction(LambdaOrbMults,
   s:=o!.semi;
   mults:=o!.mults;
   gens:=Generators(s);  
-  lambdamult:=LambdaMult(s);
+  inv:=LambdaInverse(s);
 
   for i in scc do
-    #f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, m, i));
-    #mults[i]:=lambdamult(o[i], f);
-    mults[i]:=[EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, i),
-     EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, m, i)];
+    f:=EvaluateWord(gens, TraceSchreierTreeOfSCCBack(o, m, i));
+    mults[i]:=[inv(o[i], f), f];
   od;
  
   return mults;
@@ -1059,7 +1080,10 @@ function(o, m)
   for k in scc do
     for l in [1..nrgens] do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
-        f:=lambdaperm(rep, rep/mults[k]*(gens[l]*mults[orbitgraph[k][l]]));
+# JDM maybe keep TraceSchreierTreeOfSCCForward(o, m, k) in o?
+        f:=lambdaperm(rep, rep*EvaluateWord(gens,
+         TraceSchreierTreeOfSCCForward(o, m, k))
+          *gens[l]*mults[orbitgraph[k][l]][2]);
         h:=ClosureGroup(g, f);
         if Size(h)>Size(g) then 
           g:=h; 
@@ -1233,7 +1257,7 @@ function(data, x, n)
  
   if l<>scc[m][1] then 
     mults:=LambdaOrbMults(o, m);
-    y:=x*mults[l];
+    y:=x*mults[l][2];
   else
     y:=x;
   fi; 
@@ -1314,7 +1338,7 @@ end);
 
 InstallGlobalFunction(RhoOrbMults,
 function(o, m)
-  local scc, s, mults, gens, rhomult, f, i;
+  local scc, s, mults, gens, inv, f, i;
 
   scc:=OrbSCC(o)[m];
 
@@ -1329,11 +1353,11 @@ function(o, m)
   s:=o!.semi;
   mults:=o!.mults;
   gens:=Generators(s);
-  rhomult:=RhoMult(s);
+  inv:=RhoInverse(s);
 
   for i in scc do
     f:=EvaluateWord(gens, Reversed(TraceSchreierTreeOfSCCForward(o, m, i)));
-    mults[i]:=[f, rhomult(o[scc[1]], f)];
+    mults[i]:=[f, inv(o[i], f)];
   od;
 
   return mults;

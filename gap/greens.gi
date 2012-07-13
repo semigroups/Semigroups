@@ -144,7 +144,8 @@ function(d)
     return rho_schutz;
   fi;
 
-  p:=RhoPerm(ParentSemigroup(d))(RhoOrbRep(o, m), Representative(d));
+  p:=LambdaConjugator(ParentSemigroup(d))(RhoOrbRep(o, m),
+   Representative(d));
   rho_schutz:=rho_schutz^p;
 
   if lambda_stab=false then 
@@ -188,15 +189,17 @@ function(h)
 
   rep:=Representative(h);
   s:=ParentSemigroup(h);
+  
   lambda_p:=LambdaOrbMults(lambda_o, lambda_m)[Position(lambda_o,
-   LambdaFunc(s)(rep))]^-1;
+   LambdaFunc(s)(rep))][2];
+  lambda_p:=LambdaConjugator(s)(rep*lambda_p, rep);
  
   if rho_stab=true then 
     return lambda_schutz^lambda_p;
   fi;
 
   rho_p:=RhoOrbMults(rho_o, rho_m)[Position(rho_o, RhoFunc(s)(rep))][2];
-  rho_p:=RhoPerm(ParentSemigroup(h))(RhoOrbRep(rho_o, rho_m), rho_p*rep);
+  rho_p:=LambdaConjugator(s)(RhoOrbRep(rho_o, rho_m), rho_p*rep);
 
   if lambda_stab=true then 
     return rho_schutz^rho_p;    
@@ -217,7 +220,8 @@ function(l)
   
   if not IsGreensClassNC(l) then 
     #JDM maybe no need to do this if we know how l is created from a D-class
-    p:=RhoPerm(ParentSemigroup(l))(RhoOrbRep(o, m), Representative(l));
+    p:=LambdaConjugator(ParentSemigroup(l))(RhoOrbRep(o, m),
+     Representative(l));
     return RhoOrbSchutzGp(o, m, infinity)^p;
   fi;
   return RhoOrbSchutzGp(o, m, infinity); 
@@ -293,7 +297,7 @@ function(f, d)
   fi;
   
   if l<>scc[m][1] then 
-    g:=g*LambdaOrbMults(o, m)[l];
+    g:=g*LambdaOrbMults(o, m)[l][2];
   fi;
 
   m:=RhoOrbSCCIndex(d); o:=RhoOrb(d); scc:=OrbSCC(o); 
@@ -449,7 +453,7 @@ function(f, r)
     return true;
   fi;
 
-  g:=f*LambdaOrbMults(o, m)[l];
+  g:=f*LambdaOrbMults(o, m)[l][2];
 
   if g=rep then
     Info(InfoCitrus, 3, "element with rectified lambda value equals ",
@@ -485,8 +489,8 @@ function(r)
   scc:=OrbSCC(o)[m];
   
   for i in scc do
-    p:=mults[i]; 
-    Append(elts, g*p^-1);
+    p:=mults[i][1]; 
+    Append(elts, g*p);
   od;
   
   return elts;
@@ -650,7 +654,7 @@ function(d)
       fi;
      
       if ll<>lscc[lm][1] then
-        f:=f*LambdaOrbMults(lo, lm)[ll];
+        f:=f*LambdaOrbMults(lo, lm)[ll][2];
       fi;
       g:=f;
       lschutz:=Enumerator(LambdaOrbSchutzGp(lo, lm));
@@ -796,7 +800,7 @@ function(r)
       q:=QuoInt(n, m); 
       pos:=[ q, n - q * m]+1;
      
-     return enum[pos[2]]/mults[scc[pos[1]]];
+     return enum[pos[2]]*mults[scc[pos[1]]][1];
     end,
 
     #########################################################################
@@ -825,7 +829,7 @@ function(r)
         return fail;
       fi;
      
-      g:=f*mults[l];
+      g:=f*mults[l][2];
 
       j:=Position(enum!.schutz, LambdaPerm(s)(rep, g));
 
@@ -1030,7 +1034,7 @@ function(d)
       SetParentSemigroup(l, s);
       SetRhoOrbSCCIndex(l, m);
       SetRhoOrb(l, o);
-      SetRepresentative(l, g/mults[i]);
+      SetRepresentative(l, g*mults[i][1]);
       SetEquivalenceClassRelation(l, lrel);
       SetIsGreensClassNC(l, nc); 
       out[k]:=l;
@@ -1124,7 +1128,7 @@ function(s, f)
   m:=OrbSCCLookup(o)[l];
   
   if l<>OrbSCC(o)[m][1] then 
-    f:=f*LambdaOrbMults(o, m)[l];
+    f:=f*LambdaOrbMults(o, m)[l][2];
   fi;
 
   SetLambdaOrb(d, o);
@@ -1513,7 +1517,7 @@ function(d, f)
   m:=OrbSCCLookup(o)[i];
 
   if i<>OrbSCC(o)[m][1] then 
-    f:=LambdaOrbMults(o, m)[i][2]*f;
+    f:=RhoOrbMults(o, m)[i][2]*f;
   fi;
   
   SetRepresentative(l, f);
@@ -1550,7 +1554,7 @@ function(d, f)
   m:=OrbSCCLookup(o)[l];
 
   if l<>OrbSCC(o)[m][1] then 
-    f:=f*LambdaOrbMults(o, m)[l];
+    f:=f*LambdaOrbMults(o, m)[l][2];
   fi;
   
   SetRepresentative(r, f);
@@ -1580,7 +1584,7 @@ function(d, f)
   m:=OrbSCCLookup(o)[l];
 
   if l<>OrbSCC(o)[m][1] then 
-    f:=f*LambdaOrbMults(o, m)[l];
+    f:=f*LambdaOrbMults(o, m)[l][2];
   fi;
   
   SetRepresentative(r, f);
@@ -2044,7 +2048,7 @@ function(r)
           at[1]:=1; at[2]:=at[2]+1;
         fi;
        
-        return iter!.schutz[at[2]]/mults[scc[at[1]]];
+        return iter!.schutz[at[2]]*mults[scc[at[1]]][1];
       end,
       
       ShallowCopy:=iter -> rec(schutz:=iter!.schutz, at:=[0,1], 
@@ -2430,7 +2434,7 @@ function(d)
   for i in scc do
     for j in cosets do
       k:=k+1;
-     out[k]:=f*(j/mults[i]);
+     out[k]:=f*j*mults[i][1];
     od;
   od;
 
@@ -3100,7 +3104,7 @@ function(r)
     i:=f*i;
     for j in scc do 
       k:=k+1;
-      out[k]:=i/mults[j];
+      out[k]:=i*mults[j][1];
     od;
   od;
   return out;
@@ -3153,7 +3157,7 @@ function(l)
     m:=OrbSCCLookup(o)[lambda_l];
     SetLambdaOrbSCCIndex(d, m);
     if lambda_l<>OrbSCC(o)[m][1] then 
-      SetRepresentative(d, f*LambdaOrbMults(o, m));
+      SetRepresentative(d, f*LambdaOrbMults(o, m)[lambda_l][2]);
     else
       SetRepresentative(d, f);
     fi;
@@ -3222,7 +3226,7 @@ function(h)
   l:=Position(o, LambdaFunc(s)(f));
 
   if l<>OrbSCC(o)[m][1] then 
-    f:=f*LambdaOrbMults(o, m)[l];
+    f:=f*LambdaOrbMults(o, m)[l][2];
   fi;
 
   o:=RhoOrb(h);
@@ -3297,7 +3301,7 @@ function(h)
   l:=Position(o, LambdaFunc(s)(f));
 
   if l<>OrbSCC(o)[m][1] then 
-    SetRepresentative(r, f*LambdaOrbMults(o, m)[l]);
+    SetRepresentative(r, f*LambdaOrbMults(o, m)[l][2]);
   else
     SetRepresentative(r, f);
   fi;
@@ -3389,7 +3393,7 @@ function(r)
     i:=f*i;
     for j in scc do 
       k:=k+1; 
-      out[k]:=GreensHClassOfElementNC(d, i/mults[j]);
+      out[k]:=GreensHClassOfElementNC(d, i*mults[j][1]);
       SetRClassOfHClass(out[k], r);
       #JDM also set schutz gp here!
     od;

@@ -66,10 +66,11 @@ DeclareAttribute("RhoOrbSCCIndex", IsActingSemigroupGreensClass);
 DeclareAttribute("LambdaCosets", IsActingSemigroupGreensClass);
 DeclareAttribute("RhoCosets", IsActingSemigroupGreensClass);
 
-DeclareAttribute("LambdaMult", IsActingSemigroup);
-DeclareAttribute("RhoMult", IsActingSemigroup);
+#DeclareAttribute("LambdaMult", IsActingSemigroup);
+DeclareAttribute("RhoInverse", IsActingSemigroup);
+DeclareAttribute("LambdaInverse", IsActingSemigroup);
 DeclareAttribute("LambdaPerm", IsActingSemigroup);
-DeclareAttribute("RhoPerm", IsActingSemigroup);
+DeclareAttribute("LambdaConjugator", IsActingSemigroup);
 
 DeclareAttribute("ParentSemigroup", IsObject);
 
