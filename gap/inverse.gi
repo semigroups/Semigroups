@@ -1813,7 +1813,7 @@ function(S, x)
   fi;
 
   y:=Representative(GreensDClassOfElement(S, x));
-  elts:=Idempotents(S);
+  elts:=Set(Idempotents(S));
   i:=Position(elts, y);
 
   k:=0;
