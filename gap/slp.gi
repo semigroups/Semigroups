@@ -117,10 +117,12 @@ InstallMethod(SemigroupEltSLP, "for an acting semigroup and acting elt",
 function(s, x)
   local data, nr, gens, zip, o, m, scc, l, word, v, y, p, slp;
 
-  # suppose that the data is fully enumerated...
+  if not x in s then 
+    Error("the element does not belong to the semigroup,");
+    return;
+  fi;
+  
   data:=SemigroupData(s);
-  #Enumerate(s, lookingfor:=??)
-
   nr:=Position(data, x);
   gens:=Generators(s);
 
