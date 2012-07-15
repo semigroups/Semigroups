@@ -8,14 +8,6 @@
 #############################################################################
 ##
 
-# Things to intro from Smallsemi: IsSemigroupWithClosedIdempotents,
-# IsSemigroupWithZero
-
-DeclareAttribute("AntiIsomorphismTransformationSemigroup",
- IsSemigroup);
-DeclareAttribute("GroupOfUnits", IsSemigroup);
-DeclareAttribute("IdempotentGeneratedSubsemigp", IsSemigroup);
-DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
 DeclareProperty("IsAbundantSemigroup", IsSemigroup);
 DeclareProperty("IsAdequateSemigroup", IsSemigroup);
@@ -41,10 +33,6 @@ DeclareProperty("IsLeftZeroSemigroup", IsSemigroup);
 DeclareProperty("IsMonogenicInverseSemigroup", IsSemigroup);
 DeclareProperty("IsMonogenicSemigroup", IsSemigroup); 
 DeclareProperty("IsMonoidAsSemigroup", IsSemigroup); 
-DeclareOperation("IsomorphismPartialPermMonoid", [IsPermGroup]);
-DeclareOperation("IsomorphismPartialPermSemigroup", [IsPermGroup]);
-DeclareOperation("IsomorphismTransformationMonoid",
- [IsSemigroup]);
 DeclareProperty("IsOrthodoxSemigroup", IsSemigroup);
 DeclareProperty("IsRectangularBand", IsSemigroup); 
 DeclareProperty("IsRightSimple", IsSemigroup);
@@ -56,13 +44,6 @@ DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsZeroSemigroup", IsSemigroup); 
-DeclareAttribute("MinimalIdeal", IsSemigroup);
-DeclareOperation("NrElementsOfRank", [IsSemigroup and
-HasGeneratorsOfSemigroup, IsPosInt]);
-DeclareAttribute("PosetOfIdempotents", IsSemigroup);
-DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
-DeclareAttribute("PrincipalFactor", IsGreensDClass);
-DeclareOperation("RedundantGenerator", [IsTransformationCollection]);
 DeclareGlobalFunction("ReesMatrixSemigroupElementNC");
 DeclareGlobalFunction("ReesZeroMatrixSemigroupElementNC");
 

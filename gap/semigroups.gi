@@ -332,6 +332,56 @@ function(s, coll, opts)
   return t;
 end);
 
+#DDD
+
+# new for 0.1! - Degree - "for a transformation semigroup"
+#############################################################################
+
+InstallOtherMethod(Degree, "for a transformation semigroup",
+[IsTransformationSemigroup], DegreeOfTransformationSemigroup);
+
+# new for 0.7! - Degree - "for a partial perm semigroup"
+#############################################################################
+
+InstallOtherMethod(Degree, "for a partial perm semigroup",
+[IsPartialPermSemigroup], s-> MaximumList(List(Generators(s), Degree)));
+
+# new for 0.7! - Degree - "for a partial perm collection"
+#############################################################################
+
+InstallOtherMethod(Degree, "for a partial perm collection",
+[IsPartialPermCollection], C-> MaximumList(List(C, Degree)));
+
+#GGG
+
+# new for 0.1! - Generators - "for a semigroup or monoid"
+############################################################################
+# Notes: returns the monoid generators of a monoid, and the semigroup 
+# generators of a semigroup. 
+
+InstallOtherMethod(Generators, "for a semigroup or monoid",
+[IsSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+
+  if IsMonoid(s) then
+    return GeneratorsOfMonoid(s);
+  fi;
+
+  return GeneratorsOfSemigroup(s);
+end);
+
+# new for 0.7! - Generators - "for an inverse semigroup"
+############################################################################
+
+InstallOtherMethod(Generators, "for an inverse semigroup",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(s)
+  if IsMonoid(s) then
+    return GeneratorsOfInverseMonoid(s);
+  fi;
+  return GeneratorsOfInverseSemigroup(s);
+end);
+
 #MMM
 
 # new for 0.5! - Monoid 

@@ -11,6 +11,7 @@
 # new 
 
 DeclareGlobalFunction("InternalRepOfTransformation");
+DeclareOperation("TransformationActionNC", [IsObject, IsList, IsFunction]);
 
 # old
 

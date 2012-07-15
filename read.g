@@ -16,12 +16,14 @@ ReadPackage("citrus/gap/acting.gi");
 
 ReadPackage("citrus/gap/semigroups.gi");
 ReadPackage("citrus/gap/greens.gi");
+ReadPackage("citrus/gap/slp.gi");
 if IsBound(CITRUSC) then ReadPackage("citrus/gap/inverse.gi"); fi;
 ReadPackage("citrus/gap/properties.gi");
+ReadPackage("citrus/gap/attributes.gi");
 ReadPackage("citrus/gap/orbits.gi");
 
 ReadPackage("citrus/gap/examples.gi");
+
 ReadPackage("citrus/gap/utils.gi");
 
-ReadPackage("citrus/gap/slp.gi");
 

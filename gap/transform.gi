@@ -80,6 +80,13 @@ end);
 
 #DDD
 
+# new for 1.0! - Degree - "for a transformation"
+#############################################################################
+# Notes: returns DegreeOfTransformation.
+
+InstallOtherMethod(Degree, "for a transformation",
+[IsTransformation], f-> f[1]);
+
 # new for 1.0! - DegreeOfTransformation - "for a transformation"
 ############################################################################
 
@@ -93,6 +100,13 @@ BindGlobal("DegreeOfTransformation", f-> f[1]);
 MakeReadWriteGlobal("RankOfTransformation");
 UnbindGlobal("RankOfTransformation");
 BindGlobal("RankOfTransformation", f-> f[2]);
+
+# mod for 1.0! - Rank - "for a transformation"
+#############################################################################
+# Notes: returns RankOfTransformation. 
+
+InstallOtherMethod(Rank, "for a transformation",
+[IsTransformation], f-> f[2]); 
 
 #EEE
 
@@ -156,6 +170,32 @@ BindGlobal("Transformation", function(list)
   return TransformationNC(list);
 end);
 
+# new for 0.7! - TransformationActionNC - "for mult elt, list, function"
+###############################################################################
+
+InstallMethod(TransformationActionNC, "for mult elt, list, function",
+[IsObject, IsList, IsFunction],
+function(f, dom, act)
+  local n, out, i;
+
+  n:=Size(dom);
+  out:=EmptyPlist(n);
+
+  for i in [1..n] do
+    out[i]:=Position(dom, act(dom[i], f));
+  od;
+
+  return Transformation(out);
+end);
+
+# new for 0.7! - TransformationActionNC - "for semigroup, list, function"
+###############################################################################
+
+InstallOtherMethod(TransformationActionNC, "for a semigroup, list, function",
+[IsSemigroup, IsList, IsFunction],
+function(s, dom, act)
+  return List(Generators(s), f-> TransformationActionNC(f, dom, act));
+end);
 
 ############################################################################# 
 #old

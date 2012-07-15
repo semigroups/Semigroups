@@ -10,26 +10,6 @@
 
 # for convenience...
 
-# new for 1.0! - EquivalenceClassRelation - "for a Green's class of acting semi"
-##############################################################################
-
-InstallMethod(EquivalenceClassRelation, "for a Green's class of acting semi",
-[IsActingSemigroupGreensClass], 
-function(x)
-
-  if IsGreensRClass(x) then 
-    return GreensRRelation(ParentSemigroup(x));
-  elif IsGreensLClass(x) then 
-    return GreensLRelation(ParentSemigroup(x));
-  elif IsGreensDClass(x) then 
-    return GreensDRelation(ParentSemigroup(x));
-  elif IsGreensHClass(x) then 
-    return GreensHRelation(ParentSemigroup(x));
-  fi;
-
-  return fail;
-end);
-
 # new for 1.0! - RhoOrbStabChain - "for an L-class of an acting semi"
 ##############################################################################
 
@@ -2398,6 +2378,38 @@ CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
 
 #LLL
 
+# mod for 1.0! - LClass 
+#############################################################################
+
+InstallGlobalFunction(LClass,
+function(arg)
+
+  if Length(arg)=2 and (IsActingSemigroup(arg[1]) or IsGreensDClass(arg[1]))
+   and IsActingElt(arg[2]) then  
+    return GreensLClassOfElement(arg[1], arg[2]);
+  elif Length(arg)=1 and IsGreensHClass(arg[1]) then
+    return LClassOfHClass(arg[1]);
+  fi;
+
+  Error("usage: (acting semigroup or D-class, and acting element) or H-class,");
+  return;
+end);
+
+# new for 0.1! - LClassNC
+#############################################################################
+
+InstallGlobalFunction(LClassNC,
+function(arg)
+
+  if Length(arg)=2 and (IsActingSemigroup(arg[1]) or IsGreensDClass(arg[1]))
+   and IsActingElt(arg[2]) then  
+    return GreensLClassOfElementNC(arg[1], arg[2]);
+  fi;
+
+  Error("usage: acting semigroup or D-class, and acting element,");
+  return;
+end);
+
 # new for 1.0! - LClassReps - "for an acting semigp."
 #############################################################################
 
@@ -2760,7 +2772,7 @@ function(s)
           j:=repslookup[val][1];
         else
           if l<>scc[m][1] then 
-            f:=f*mults[l];
+            f:=f*mults[l][2];
           fi;
           if schutz[m]=false then 
             j:=HTValue(ht, f);
@@ -2904,11 +2916,45 @@ function(iter)
     Print("<iterator of inverse semigroup>");
   elif IsPartialPermSemigroup(iter!.s) then 
     Print("<iterator of semigroup of partial perms>");
+  elif IsSymmetricInverseSemigroup(iter!.s) then 
+    Print("<iterator of symmetric inverse semigroup>");
   fi;
   return;
 end);
 
 #RRR
+
+# new for 0.1! - RClass 
+#############################################################################
+
+InstallGlobalFunction(RClass,
+function(arg)
+
+  if Length(arg)=2 and (IsActingSemigroup(arg[1]) or IsGreensDClass(arg[1]))
+   and IsActingElt(arg[2]) then 
+    return GreensRClassOfElement(arg[1], arg[2]);
+  elif Length(arg)=1 and IsGreensHClass(arg[1]) then
+    return RClassOfHClass(arg[1]);
+  fi;
+  
+  Error("usage: (acting semigroup or D-class, and acting element) or H-class,");
+  return;
+end);
+
+# new for 0.1! - RClassNC
+#############################################################################
+
+InstallGlobalFunction(RClassNC,
+function(arg)
+
+  if Length(arg)=2 and (IsActingSemigroup(arg[1]) or IsGreensDClass(arg[1]))
+   and IsActingElt(arg[2]) then 
+    return GreensRClassOfElementNC(arg[1], arg[2]);
+  fi;
+  
+  Error("usage: acting semigroup or D-class, and acting element,");
+  return;
+end);
 
 # mod for 1.0! - RClassReps - "for a D-class of an acting semigroup"
 ############################################################################
@@ -3052,6 +3098,36 @@ h-> StructureDescription(Range(IsomorphismPermGroup(h))));
 
 #HHH
 
+# new for 0.1! - HClass - "for acting semi or Green's class, and acting elt
+#############################################################################
+
+InstallGlobalFunction(HClass,
+function(arg)
+
+  if Length(arg)=2 and (IsActingSemigroup(arg[1]) or IsGreensClass(arg[1])) and
+   IsActingElt(arg[2]) then 
+    return GreensHClassOfElement(arg[1], arg[2]);
+  fi;
+
+  Error("usage: acting semigroup or Green's class, and acting element,");
+  return;
+end);
+
+# new for 0.1! - HClassNC - "for acting semi or Green's class, and acting elt
+#############################################################################
+
+InstallGlobalFunction(HClassNC,
+function(arg)
+
+  if Length(arg)=2 and (IsActingSemigroup(arg[1]) or IsGreensClass(arg[1])) and
+   IsActingElt(arg[2]) then 
+    return GreensHClassOfElementNC(arg[1], arg[2]);
+  fi;
+
+  Error("usage: acting semigroup or Green's class, and acting element,");
+  return;
+end);
+
 # new for 1.0! - HClassReps - "for an L-class of an acting semigroup"
 ##############################################################################
 
@@ -3127,6 +3203,40 @@ InstallMethod(HClassReps, "for an acting semigp.",
 s-> Concatenation(List(GreensRClasses(s), HClassReps)));
 
 #DDD
+
+# mod for 1.0! - DClass - "for an acting semi and elt or Green's class"
+#############################################################################
+
+InstallGlobalFunction(DClass,
+function(arg)
+
+  if Length(arg)=2 and IsActingSemigroup(arg[1]) and IsActingElt(arg[2]) then
+    return GreensDClassOfElement(arg[1], arg[2]);
+  elif Length(arg)=1 and IsGreensRClass(arg[1]) then
+    return DClassOfRClass(arg[1]);
+  elif Length(arg)=1 and IsGreensLClass(arg[1]) then
+    return DClassOfLClass(arg[1]);
+  elif Length(arg)=1 and IsGreensHClass(arg[1]) then
+    return DClassOfHClass(arg[1]);
+  fi;
+
+  Error("usage: for acting semigroup and acting elt, or a Green's class,");
+  return;
+end);
+
+# mod for 1.0! - DClassNC - "for an acting semigroup and acting elt"
+#############################################################################
+
+InstallGlobalFunction(DClassNC,
+function(arg)
+
+  if Length(arg)=2 and IsActingSemigroup(arg[1]) and IsActingElt(arg[2]) then
+    return GreensDClassOfElementNC(arg[1], arg[2]);
+  fi;
+
+  Error("usage: acting semigroup and acting elt,");
+  return;
+end);
 
 # new for 1.0! - DClassOfLClass - "for a D-class of an acting semigroup"
 #############################################################################
@@ -3490,56 +3600,6 @@ function(s)
 #  fi;
 
   return Concatenation(List(GreensRClasses(s), Idempotents));
-end);
-
-# new for 0.1! - Idempotents - "for a trans. semigroup and pos. int."
-#############################################################################
-
-InstallOtherMethod(Idempotents, "for a trans. semigroup and pos. int.", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
-function(s, i)
-  local out, n, kers, imgs, j, ker, img, r;
-  
-  n:=DegreeOfTransformationSemigroup(s);
-  
-  if i>n then 
-    return [];
-  fi;
-
-  if HasIdempotents(s) then 
-    return Filtered(Idempotents(s), x-> RankOfTransformation(x)=i);
-  fi; 
-
-  if HasNrIdempotents(s) then
-    out:=EmptyPlist(NrIdempotents(s));
-  else
-    out:=[];
-  fi;
-
-  if IsRegularSemigroup(s) then 
-
-    kers:=GradedKernelsOfTransSemigroup(s)[i]; 
-    imgs:=GradedImagesOfTransSemigroup(s)[i];
-    j:=0;
-
-    for ker in kers do
-      for img in imgs do 
-        if IsInjectiveTransOnList(ker, img) then 
-          j:=j+1;
-          out[j]:=IdempotentNC(ker, img);
-        fi;
-      od;
-    od;
-
-    return out;
-  fi;
-
-  for r in GreensRClasses(s) do 
-    if RankOfTransformation(r!.rep)=i then 
-      out:=Concatenation(out, Idempotents(r));
-    fi;
-  od;
-  return out;
 end);
 
 # new for 0.1! - NrHClasses - "for an L-class of an acting semigroup"

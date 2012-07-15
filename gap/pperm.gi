@@ -245,6 +245,12 @@ end);
 
 #DDD
 
+# new for 0.7! - Degree - "for a partial perm"
+#############################################################################
+
+InstallOtherMethod(Degree, "for a partial perm",
+[IsPartialPerm], f-> f[6]);
+
 # new for 0.7! - DegreeOfPartialPerm - "for a partial perm"
 #############################################################################
 
@@ -625,6 +631,12 @@ InstallMethod(RangeSetOfPartialPerm, "for a partial perm",
 ############################################################################
 
 InstallMethod(RankOfPartialPerm, "for a partial perm",
+[IsPartialPerm], f-> f[2]);
+
+# new for 0.7 - Rank - "for a partial perm."
+#############################################################################
+
+InstallOtherMethod(Rank, "for a partial perm",
 [IsPartialPerm], f-> f[2]);
 
 # new for 0.7! - RestrictedPartialPerm - "for a partial perm"

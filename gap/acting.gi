@@ -130,6 +130,12 @@ InstallMethod(LambdaInverse, "for a transformation semigroup",
     return TransformationNC(out);
   end);
 
+InstallMethod(LambdaInverse, "for a partial perm semigroup",
+[IsPartialPermSemigroup], s-> 
+function(ran, f)
+  return f^-1;
+end);
+
 # new for 1.0! - RhoInverse 
 ###############################################################################
 #JDM c method for this!

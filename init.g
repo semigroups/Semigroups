@@ -34,6 +34,8 @@ ReadPackage("citrus/gap/greens.gd");
 ReadPackage("citrus/gap/acting.gd");
 ReadPackage("citrus/gap/inverse.gd");
 
+
+ReadPackage("citrus/gap/attributes.gd");
 ReadPackage("citrus/gap/properties.gd");
 ReadPackage("citrus/gap/orbits.gd");
 
