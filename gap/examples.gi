@@ -233,6 +233,22 @@ end);
 
 #PPP
 
+# new for 1.0! - PartialTransformationSemigroup - "for a pos int"
+################################################################################
+
+InstallMethod(PartialTransformationSemigroup, "for a pos int", 
+[IsPosInt],
+function(n)
+  local a, b, c, d;
+
+  a:= [1..n+1];  a[1]:= 2;  a[2]:= 1;
+  b:= [0..n];  b[1]:= n;  b[n+1]:= n+1;
+  c:= [1..n+1];  c[1]:= n+1;
+  d:= [1..n+1];  d[1]:= 2;
+
+  return Monoid(List([a, b, c, d], TransformationNC));
+end);
+
 # new for 0.7! - POI - "for a pos int"
 ################################################################################
 
@@ -314,11 +330,11 @@ function(n)
   return T;
 end);
 
-# new for 0.7! - SymmetricInverseSemigp - "for a pos int"
+# new for 0.7! - SymmetricInverseSemigroup - "for a pos int"
 ################################################################################
 
 if Citrus_C then 
-  InstallMethod(SymmetricInverseSemigp, "for a pos int",
+  InstallMethod(SymmetricInverseSemigroup, "for a pos int",
   [IsPosInt],
   function(n)
 
@@ -330,7 +346,7 @@ if Citrus_C then
      PartialPermNC(ListPerm(x, n))), PartialPermNC([0..n-1]*1));
   end);
 else
-  InstallMethod(SymmetricInverseSemigp, "for a pos int",
+  InstallMethod(SymmetricInverseSemigroup, "for a pos int",
   [IsPosInt], CitrusIsNotCompiled);
 fi;
 

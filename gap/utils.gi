@@ -189,16 +189,16 @@ function()
 end);
 
 
-# new for 0.1! - DClass - "for a trans. semi and trans. or Green's class"
+# mod for 1.0! - DClass - "for a trans. semi and trans. or Green's class"
 #############################################################################
 # Usage: (trans. semigp. and trans.) or H-class or L-class or R-class.
+
+# move to greens.gi
 
 InstallGlobalFunction(DClass, 
 function(arg)
 
-  if Length(arg)=2 and ((IsTransformationSemigroup(arg[1]) 
-   and IsTransformation(arg[2])) or (IsPartialPermSemigroup(arg[1]) and
-   IsPartialPerm(arg[2]))) then 
+  if Length(arg)=2 and IsActingSemigroup(arg[1]) and IsActingElt(arg[2]) then 
     return GreensDClassOfElement(arg[1], arg[2]);
   elif Length(arg)=1 and IsGreensRClass(arg[1]) then 
     return DClassOfRClass(arg[1]);
@@ -208,8 +208,8 @@ function(arg)
     return DClassOfHClass(arg[1]);
   fi;
   
-  Error("Usage: (trans. semigp. and trans.), (partial perm. semigp. and",
-  " partial perm) or H-class or L-class or R-class,");
+  Error("usage: for acting semigroup and acting elt, or H-class or ",
+   "L-class or R-class,");
   return;
 end);
 
