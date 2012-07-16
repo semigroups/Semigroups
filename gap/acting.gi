@@ -741,6 +741,12 @@ function(s)
         enumerated:=false, scc_reps:=[x], semi:=s));
 end);
 
+# new for 1.0! - LambdaOrb - "for acting semigroup with inversion"
+##############################################################################
+
+InstallMethod(LambdaOrb, "for an acting semigroup with inversion",
+[IsActingSemigroupWithInversion], RhoOrb);
+
 # new for 1.0! - LambdaOrbMults - "for a lambda orb and scc index"
 ##############################################################################
 # this should be revised so that we do not repeatedly call TraceSchreierTree..

@@ -32,6 +32,7 @@
 #new
 
 DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
+DeclareProperty("IsRegularActingSemigroupGreensClass", IsGreensClass);
 DeclareProperty("IsGreensClassOfPartPermSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassNC", IsActingSemigroupGreensClass);

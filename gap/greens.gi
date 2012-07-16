@@ -253,6 +253,8 @@ end);
 #############################################################################
 #JDM revise this as per the other version of \in just deleted :)
 
+# there is a better method for regular/inverse semigroups.
+
 InstallMethod(\in, "for acting elt and D-class of acting semigp.",
 [IsActingElt, IsGreensDClass and IsActingSemigroupGreensClass],
 function(f, d)
@@ -320,14 +322,16 @@ end);
 
 # new for 1.0! - \in - "for acting elt and H-class of acting semigp"
 #############################################################################
+ 
+# this method works for classes of regular and inverse semigroups also.
 
-InstallOtherMethod(\in, "for trans. and H-class of trans. semigp.",
+InstallOtherMethod(\in, "for elt and acting semigroup H-class",
 [IsActingElt, IsGreensHClass and IsActingSemigroupGreensClass],
 function(f, h)
   local s, rep;
 
   s:=ParentSemigroup(h);
-  rep:= Representative(h);
+  rep:=Representative(h);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] or
    RhoFunc(s)(f) <> RhoFunc(s)(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep)
@@ -342,6 +346,8 @@ end);
 # new for 1.0! - \in - "for acting elt and L-class of acting semigp"
 #############################################################################
 #JDM this method differs from the one in 0.99. 
+
+# this method works for classes of regular and inverse semigroups also.
 
 InstallMethod(\in, "for acting elt and L-class of acting semigp.",
 [IsActingElt, IsGreensLClass and IsActingSemigroupGreensClass],
@@ -397,6 +403,8 @@ end);
 #############################################################################
 # Algorithm E. 
 
+# this method works for classes of regular and inverse semigroups also.
+
 InstallMethod(\in, "for acting elt and R-class of acting semigp.",
 [IsActingElt, IsGreensRClass and IsActingSemigroupGreensClass],
 function(f, r)
@@ -448,33 +456,6 @@ function(f, r)
 end);
 
 #AAA
-
-# new for 1.0! - AsList - "for an R-class of an acting semigp."
-#############################################################################
-# Algorithm D.
-
-InstallOtherMethod(AsList, "for an R-class of an acting semigp.",
-[IsGreensRClass and IsActingSemigroupGreensClass],
-function(r)        
-  local f, g, elts, o, m, mults, scc, p, i;
-  
-  f:=Representative(r); 
-  o:=LambdaOrb(r); 
-  m:=LambdaOrbSCCIndex(r);
- 
-  g:=List(SchutzenbergerGroup(r), x-> f*x);
-  elts:=EmptyPlist(Size(r));
-  
-  mults:=LambdaOrbMults(o, m);
-  scc:=OrbSCC(o)[m];
-  
-  for i in scc do
-    p:=mults[i][1]; 
-    Append(elts, g*p);
-  od;
-  
-  return elts;
-end);
 
 # new for 0.1! - AsSSortedList - "for a Green's class of an acting semigp"
 #############################################################################

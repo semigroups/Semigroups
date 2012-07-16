@@ -15,54 +15,6 @@
 # L-data: [scc index, pos. of dom=scc[1], pos of ran]
 # H-data: [scc index, pos. of dom, pos of ran]
 
-# new for 0.7! - \in - "for an R-class of inv semi and part perm" 
-#############################################################################
-
-InstallMethod(\in, "for an R-class of inv semi and part perm",
-[IsPartialPerm , IsGreensRClass and 
-IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
-function(f, r)
-  local rep, o, l, m, schutz, g;
-  
-  rep:=Representative(r);
-
-  if f[1]<>rep[1] or f[f[1]+7]<>rep[rep[1]+7] or f[2]<>rep[2] 
-   or DomPP(f)<>DomPP(rep) then 
-    Info(InfoCitrus, 1, "degree, rank, or domain not equal to those of",
-        " any of the R-class elements,");
-    return false;
-  fi;
-
-  o:=r!.o;
-  if not IsClosed(o) then     
-    Enumerate(o, infinity);
-  fi;
-  l:=Position(o, RanSetPP(f));
-  m:=r!.data[1];
-
-  if l=fail or not OrbSCCTruthTable(o)[m][l] then 
-    Info(InfoCitrus, 1, "range not equal to that of any R-class element,");
-    return false;
-  fi;
-
-  schutz:=OrbSCCStabChain(r); 
-
-  if schutz=true then 
-    return true;
-  fi;
-
-  g:=f*o!.mults[l];
-
-  if g=rep then 
-    return true;
-  elif schutz=false then 
-    return false;
-  fi;
-  
-  g:=rep^-1*g; #LQuoP #JDM is this necessary?
-  return SiftedPermutation(schutz, MappingPermListList(DomPP(g), RanPP(g)))=(); 
-end);
-
 # new for 0.7! - \in - "for an L-class of inv semi and part perm" 
 #############################################################################
 

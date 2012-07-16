@@ -116,3 +116,63 @@ function(f, s)
   return SiftedPermutation(schutz, LambdaPerm(s)(One(g), g))=();
 end);
 
+
+# new for 1.0! - \in - "for acting elt and D-class of acting semigp"
+#############################################################################
+#JDM revise this as per the other version of \in just deleted :)
+
+InstallMethod(\in, "for acting elt and D-class of acting semigp.",
+[IsActingElt, IsGreensDClass and IsActingSemigroupGreensClass],
+function(f, d)
+  local rep, s, g, m, o, scc, l, schutz;
+
+  rep:=Representative(d);
+  s:=ParentSemigroup(d);
+
+  # much much better performance using f[2]<>rep[2] below
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] then
+    return false;
+  fi;
+
+  g:=f;
+
+  m:=LambdaOrbSCCIndex(d); o:=LambdaOrb(d); scc:=OrbSCC(o);
+
+  l:=Position(o, LambdaFunc(s)(g));
+
+  if l = fail or OrbSCCLookup(o)[l]<>m then
+    return false;
+  fi;
+
+  if l<>scc[m][1] then
+    g:=g*LambdaOrbMults(o, m)[l][2];
+  fi;
+
+  m:=RhoOrbSCCIndex(d); o:=RhoOrb(d); scc:=OrbSCC(o);
+
+  l:=Position(o, RhoFunc(s)(g));
+
+  if l = fail or OrbSCCLookup(o)[l]<>m then
+    return false;
+  fi;
+
+  schutz:=RhoOrbStabChain(d);
+
+  if schutz=true then
+    return true;
+  fi;
+
+  if l<>scc[m][1] then
+    g:=RhoOrbMults(o, m)[l][2]*g;
+  fi;
+
+  if g=rep then 
+    return true;
+  elif schutz=false then 
+    return false;
+  fi;
+
+  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g);
+end);
+
+
