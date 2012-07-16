@@ -502,6 +502,22 @@ function(arg)
   return; 
 end); 
 
+# new for 0.7! - Points - "for a partial perm semigroup"
+##############################################################################
+
+InstallOtherMethod(Points, "for a partial perm coll",
+[IsPartialPermSemigroup], s-> Union(List(GeneratorsOfSemigroup(s), x->          Union(DomPP(x), RanSetPP(x)))));
+
+InstallMethod(Points, "for a partial perm semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup], s->
+Union(List(GeneratorsOfSemigroup(s), DomPP)));
+
+# new for 0.7! - Points - "for a partial perm collection"
+##############################################################################
+
+InstallOtherMethod(Points, "for a partial perm coll",
+[IsPartialPermCollection], coll-> Union(List(coll, x-> Union(DomPP(x),          RanSetPP(x)))));
+
 # new for 0.7! - PrintObj - "for a partial perm"
 #############################################################################
 

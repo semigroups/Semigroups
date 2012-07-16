@@ -1266,7 +1266,8 @@ function(data)
 
   for j in [1..nr] do 
     data:=orbit[repslookup[j][1]];
-    i:=i+Length(reps[j])*Size(LambdaOrbSchutzGp(data[3], data[2]))*Length(OrbSCC(data[3])[data[2]]);
+    i:=i+Length(reps[j])*Size(LambdaOrbSchutzGp(data[3], data[2]))
+     *Length(OrbSCC(data[3])[data[2]]);
   od;
   return i; 
 end);
