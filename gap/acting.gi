@@ -1104,7 +1104,7 @@ function(o, m)
 
   s:=o!.semi;
   mults:=o!.mults;
-  gens:=Generators(s);
+  gens:=GeneratorsOfSemigroup(s);
   inv:=RhoInverse(s);
 
   for i in scc do

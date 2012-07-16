@@ -33,6 +33,10 @@ if IsBound(OnIntegerSetsWithPP) then
         return OnIntegerSetsWithPP(set, f^-1);
       end;
   end);
+  
+  InstallMethod(RhoAct, "for an inverse semigp of partial perms",
+  [IsInverseSemigroup and IsPartialPermSemigroup],
+  s-> OnIntegerSetsWithPP);
 fi;
 
 # new for 1.0! - LambdaDegree
@@ -76,7 +80,6 @@ return HTCreate(RhoFunc(s)(GeneratorsOfSemigroup(s)[1]),
  rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S));
 end);
 
-
 # new for 1.0! - LambdaFunc
 ###############################################################################
 
@@ -87,22 +90,6 @@ if IsBound(RanSetPP) then
   InstallMethod(LambdaFunc, "for a partial perm",
     [IsPartialPermSemigroup], x-> RanSetPP);
 fi;
-
-# new for 1.0! - LambdaMult
-###############################################################################
-# LambdaMult(s)(pt, f) returns a permutation acting in the same way as
-# f on pt. This is required to produce the lambda orb mults
-# (LambdaOrbMults). 
-
-#InstallMethod(LambdaMult, "for a transformation semi",
-#[IsTransformationSemigroup], s-> function(pt, f)
-#  return MappingPermListList(pt, OnIntegerTuplesWithT(pt, f));
-#end);
-
-#InstallMethod(LambdaMult, "for a partial perm semi",
-#[IsPartialPermSemigroup], s-> function(pt, f) 
-#  return MappingPermListList(pt, OnIntegerTuplesWithPP(pt, f));
-#end);
 
 # new for 1.0! - LambdaInverse
 ###############################################################################
