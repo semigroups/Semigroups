@@ -35,8 +35,17 @@ DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
 DeclareProperty("IsGreensClassOfPartPermSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassNC", IsActingSemigroupGreensClass);
+
+
 DeclareAttribute("LambdaOrbSCC", IsActingSemigroupGreensClass);
+DeclareAttribute("LambdaOrbSCCIndex", IsActingSemigroupGreensClass);
+
 DeclareAttribute("RhoOrbSCC", IsActingSemigroupGreensClass);
+DeclareAttribute("RhoOrbSCCIndex", IsActingSemigroupGreensClass);
+
+DeclareAttribute("LambdaCosets", IsActingSemigroupGreensClass);
+DeclareAttribute("RhoCosets", IsActingSemigroupGreensClass);
+
 DeclareAttribute("SemigroupDataSCC", IsActingSemigroupGreensClass);
 DeclareAttribute("SemigroupDataSCCIndex", IsActingSemigroupGreensClass);
 DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);

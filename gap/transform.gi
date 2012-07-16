@@ -372,8 +372,8 @@ function(s, f)
   j:=Length(img); g:=f![1];
   kers:=[]; k:=0;
 
-  if not HasGradedKernelsOfTransSemigroup(s) then 
-    o:=KernelsOfTransSemigroup(s, j);
+  #if not HasGradedKernelsOfTransSemigroup(s) then 
+  #  o:=KernelsOfTransSemigroup(s, j);
     Enumerate(o);
 
     for i in [1..Length(o)] do 
@@ -382,17 +382,17 @@ function(s, f)
       fi;
     od;
   
-  else
-    o:=GradedKernelsOfTransSemigroup(s)[j];
+  #else
+    #o:=GradedKernelsOfTransSemigroup(s)[j];
     for i in [1..Length(o)] do 
       if IsInjectiveTransOnList(o[i], img) then 
         k:=k+1;
         kers[k]:=o[i];
       fi;
     od;
-  fi;
+  #fi;
 
-  l:=0; imgs:=ImagesOfTransSemigroup(s, j); Enumerate(imgs);
+  #l:=0; imgs:=ImagesOfTransSemigroup(s, j); Enumerate(imgs);
 
   for i in [1..Length(imgs)] do
     if Grades(imgs)[i]=j and IsInjectiveTransOnList(g, imgs[i]) then

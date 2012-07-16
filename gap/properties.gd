@@ -40,6 +40,7 @@ DeclareProperty("IsRightZeroSemigroup", IsSemigroup);
 DeclareProperty("IsSemiband", IsSemigroup); 
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
 DeclareProperty("IsSemilatticeAsSemigroup", IsSemigroup); 
+DeclareProperty("IsSymmetricInverseSemigroup", IsPartialPermSemigroup);
 DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);

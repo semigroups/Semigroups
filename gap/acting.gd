@@ -13,26 +13,11 @@ IsAssociativeElement);
 DeclareCategoryCollections("IsActingElt");
 DeclareProperty("IsActingSemigroup", IsSemigroup and IsActingEltCollection);
 
-# action for use in LambdaOrb etc..
-DeclareAttribute("RhoAct", IsActingSemigroup);
-DeclareAttribute("LambdaAct", IsActingSemigroup);
-
-# grading for use in GradedLambdaOrb/GradedRhoOrb
-DeclareAttribute("LambdaRank", IsActingSemigroup);
-DeclareAttribute("RhoRank", IsActingSemigroup);
-DeclareAttribute("LambdaDegree", IsActingSemigroup);
-DeclareAttribute("RhoDegree", IsActingSemigroup);
-
-# the actual functions lambda and rho
-DeclareAttribute("LambdaFunc", IsActingSemigroup);
-DeclareAttribute("RhoFunc", IsActingSemigroup);
-
 # hash table of all lambda values found so far, HTValue of LambdaHT points
 # to where the graded orbit is in GradedLambdaOrbs
 # only applies in graded case
-DeclareAttribute("LambdaHT", IsActingSemigroup, "mutable");
-DeclareAttribute("RhoHT", IsActingSemigroup, "mutable");
-# should be renamed GradedLambdaHT ?
+DeclareAttribute("GradedLambdaHT", IsActingSemigroup, "mutable");
+DeclareAttribute("GradedRhoHT", IsActingSemigroup, "mutable");
 
 # hash table of all valid lambda-rho values found so far, HTValue of
 # LambdaRhoHT points to where the existing R-class reps with same lambda-rho
@@ -61,17 +46,6 @@ DeclareGlobalFunction("RhoOrbSchutzGp");
 DeclareGlobalFunction("LambdaOrbStabChain");
 DeclareAttribute("RhoOrbStabChain", IsActingSemigroupGreensClass);
 
-DeclareAttribute("LambdaOrbSCCIndex", IsActingSemigroupGreensClass);
-DeclareAttribute("RhoOrbSCCIndex", IsActingSemigroupGreensClass);
-DeclareAttribute("LambdaCosets", IsActingSemigroupGreensClass);
-DeclareAttribute("RhoCosets", IsActingSemigroupGreensClass);
-
-#DeclareAttribute("LambdaMult", IsActingSemigroup);
-DeclareAttribute("RhoInverse", IsActingSemigroup);
-DeclareAttribute("LambdaInverse", IsActingSemigroup);
-DeclareAttribute("LambdaPerm", IsActingSemigroup);
-DeclareAttribute("LambdaConjugator", IsActingSemigroup);
-
 DeclareAttribute("ParentSemigroup", IsObject);
 
 # ForwardOrbitOfImage/Kernel/ShortOrb
@@ -86,22 +60,27 @@ DeclareAttribute("GradedRhoOrbs", IsActingSemigroup, "mutable");
 DeclareProperty("IsGradedLambdaOrbs", IsOrbit);
 DeclareProperty("IsGradedRhoOrbs", IsOrbit);
 
-DeclareAttribute("LambdaDomain", IsActingSemigroup);
-DeclareAttribute("RhoDomain", IsActingSemigroup);
-
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
 DeclareGlobalFunction("InitSemigroupData");
 DeclareCategory("IsSemigroupData", IsRecord);
 
-DeclareAttribute("IdempotentLambdaRhoTester", IsActingSemigroup);
-DeclareAttribute("IdempotentLambdaRhoCreator", IsActingSemigroup);
+# INVERSE SEMIGROUPS
+
+DeclareProperty("IsActingSemigroupWithInversion", IsActingSemigroup and
+IsInverseSemigroup);
+DeclareCategory("IsInverseActingElt", IsMultiplicativeElementWithOne and
+IsAssociativeElement);
+DeclareCategoryCollections("IsInverseActingElt");
 
 # IMPLICATIONS
 
 InstallTrueMethod(IsActingSemigroup, IsTransformationSemigroup);
 InstallTrueMethod(IsActingSemigroup, IsPartialPermSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInversion, IsPartialPermSemigroup and
+IsInverseSemigroup);
 InstallTrueMethod(IsActingElt, IsTransformation);
 InstallTrueMethod(IsActingElt, IsPartialPerm);
+InstallTrueMethod(IsInverseActingElt, IsPartialPerm);
 
 InstallTrueMethod(IsActingSemigroupGreensClass, IsGreensClassOfTransSemigp);
 InstallTrueMethod(IsActingSemigroupGreensClass, IsGreensClassOfPartPermSemigroup);

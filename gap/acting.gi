@@ -12,232 +12,7 @@
 # Notes                                                                      #
 ##############################################################################
 
-# - this is all written from the perspective that transformations are
-#   well-implemented.
-
 ##############################################################################
-
-###############################################################################
-# Setup - install the basic things required for specific acting semigroups    #
-###############################################################################
-
-# new for 1.0 - LambdaAct and RhoAct
-###############################################################################
-
-InstallMethod(LambdaAct, "for a transformation semi",
-[IsTransformationSemigroup], x-> OnIntegerSetsWithT);
-
-InstallMethod(RhoAct, "for a transformation semi",
-[IsTransformationSemigroup], x-> OnKerT);
-
-if IsBound(OnIntegerSetsWithPP) then 
-  InstallMethod(LambdaAct, "for a partial perm semi",
-  [IsPartialPermSemigroup], x-> OnIntegerSetsWithPP);
-  
-  InstallMethod(RhoAct, "for a partial perm semi",
-  [IsPartialPermSemigroup], 
-  function(s)
-    return 
-      function(set, f) 
-        return OnIntegerSetsWithPP(set, f^-1);
-      end;
-  end);
-fi;
-
-# new for 1.0! - LambdaDegree
-###############################################################################
-
-InstallMethod(LambdaDegree, "for an acting semigroup", 
-[IsActingSemigroup], s-> Length(LambdaDomain(s)));
-
-# new for 1.0! - LambdaDomain
-###############################################################################
-
-InstallMethod(LambdaDomain, "for a transformation semi",
-[IsTransformationSemigroup], s-> [1..Degree(s)]*1);
-
-InstallMethod(LambdaDomain, "for a partial perm semi",
-[IsPartialPermSemigroup], Points);
-
-InstallMethod(RhoDomain, "for a transformation semi",
-[IsTransformationSemigroup], s-> [1..Degree(s)]*1);
-
-InstallMethod(RhoDomain, "for a partial perm semi",
-[IsPartialPermSemigroup], Points);
-
-# new for 1.0! - LambdaHT
-###############################################################################
-
-InstallMethod(LambdaHT, "for an acting semi",
-[IsActingSemigroup],
-function(s)
-return HTCreate(LambdaFunc(s)(GeneratorsOfSemigroup(s)[1]), 
- rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S));
-end);
-
-# new for 1.0! - RhoHT 
-###############################################################################
-
-InstallMethod(RhoHT, "for an acting semi",
-[IsActingSemigroup],
-function(s)
-return HTCreate(RhoFunc(s)(GeneratorsOfSemigroup(s)[1]), 
- rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S));
-end);
-
-
-# new for 1.0! - LambdaFunc
-###############################################################################
-
-InstallMethod(LambdaFunc, "for a trans semi",
-[IsTransformationSemigroup], x-> RanSetT);
-
-if IsBound(RanSetPP) then
-  InstallMethod(LambdaFunc, "for a partial perm",
-    [IsPartialPermSemigroup], x-> RanSetPP);
-fi;
-
-# new for 1.0! - LambdaMult
-###############################################################################
-# LambdaMult(s)(pt, f) returns a permutation acting in the same way as
-# f on pt. This is required to produce the lambda orb mults
-# (LambdaOrbMults). 
-
-#InstallMethod(LambdaMult, "for a transformation semi",
-#[IsTransformationSemigroup], s-> function(pt, f)
-#  return MappingPermListList(pt, OnIntegerTuplesWithT(pt, f));
-#end);
-
-#InstallMethod(LambdaMult, "for a partial perm semi",
-#[IsPartialPermSemigroup], s-> function(pt, f) 
-#  return MappingPermListList(pt, OnIntegerTuplesWithPP(pt, f));
-#end);
-
-# new for 1.0! - LambdaInverse
-###############################################################################
-
-InstallMethod(LambdaInverse, "for a transformation semigroup",
-[IsTransformationSemigroup], s-> 
-  function(im, f)
-    local i, j, n, k, out;
-
-    out:=List([1..f[1]], x-> 1);
-    
-    for i in im do 
-      out[f[i+4]]:=i;
-    od;
-
-    return TransformationNC(out);
-  end);
-
-InstallMethod(LambdaInverse, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> 
-function(ran, f)
-  return f^-1;
-end);
-
-# new for 1.0! - RhoInverse 
-###############################################################################
-#JDM c method for this!
-
-# returns an acting semigroup element acting like the inverse of f on 
-# the specified rho value. 
-
-#JDM this could be better since where ever we use it we also know what f is
-#mapping onto ker!
-
-InstallMethod(RhoInverse, "for a transformation semi",
-[IsTransformationSemigroup], s-> 
-  function(ker, f)
-    local g, n, m, lookup, i, j;
-  
-    g:=ker{RanT(f)};
-    n:=f[1]; m:=MaximumList(ker);
-    lookup:=EmptyPlist(n);
-    
-    i:=0; j:=0;
-    repeat 
-      i:=i+1;
-      if not IsBound(lookup[g[i]]) then 
-        lookup[g[i]]:=i;
-        j:=j+1;
-      fi;
-    until j=m;
-    return TransformationNC(List([1..n], i-> lookup[ker[i]]));
-  end);
-
-InstallMethod(RhoInverse, "for a partial perm semi",
-[IsPartialPermSemigroup], s-> 
-  function(dom, f)
-    return f^-1;
-  end);
-
-# new for 1.0! - LambdaPerm
-###############################################################################
-# LambdaPerm(s) returns a permutation from two acting semigroup elements with
-# equal LambdaFunc and RhoFunc. This is required to check if one of the two
-# elements belongs to the schutz gp of a lambda orb.
-
-InstallMethod(LambdaPerm, "for a transformation semi",
-[IsTransformationSemigroup], s-> PermLeftQuoTransformationNC);
-
-#JDM c method for this!
-
-if IsBound(DomPP) and IsBound(RanPP) then 
-  InstallMethod(LambdaPerm, "for a partial perm semi",
-  [IsPartialPermSemigroup], s-> function(f,g)
-    local h;
-    h:=f^-1*g;
-    return MappingPermListList(DomPP(h), RanPP(h)); 
-  end);
-fi;
-
-# new for 1.0! - LambdaConjugator
-###############################################################################
-# returns a permutation mapping LambdaFunc(s)(f) to LambdaFunc(s)(g) so that 
-# gf^-1(i)=p(i) when RhoFunc(s)(f)=RhoFunc(s)(g)!!
-
-#JDM c method for both of these...
-
-InstallMethod(LambdaConjugator, "for a transformation semi",
-[IsActingSemigroup], s-> 
-  function(f, g) 
-    return MappingPermListList(RanT(f), RanT(g));
-  end);
-
-if IsBound(RanPP) then 
-  InstallMethod(LambdaConjugator, "for a partial perm semi",
-  [IsPartialPermSemigroup], s-> 
-    function(f, g)
-      return MappingPermListList(RanPP(f), RanPP(g));
-    end);
-fi;
-
-# new for 1.0! - LambdaRank and RhoRank
-###############################################################################
-
-InstallMethod(LambdaRank, "for a transformation semigroup", 
-[IsTransformationSemigroup], x-> Length);
-
-InstallMethod(RhoRank, "for a transformation semigroup", 
-[IsTransformationSemigroup], x-> MaximumList);
-
-InstallMethod(LambdaRank, "for a semigroup of partial perms", 
-[IsPartialPermSemigroup], x-> Length);
-
-InstallMethod(RhoRank, "for a semigroup of partial perms", 
-[IsPartialPermSemigroup], x-> Length);
-
-# new for 1.0! - RhoFunc
-###############################################################################
-
-InstallMethod(RhoFunc, "for a trans semi",
-[IsTransformationSemigroup], x-> KerT);
-
-if IsBound(DomPP) then
-  InstallMethod(RhoFunc, "for a partial perm semi",
-   [IsPartialPermSemigroup], x-> DomPP);
-fi;
 
 # new for 1.0! - LambdaRhoHT
 ###############################################################################
@@ -252,35 +27,6 @@ function(s)
      hashlen:=s!.opts.hashlen.S));
 end);
 
-# new for 1.0! - IdempotentLambdaRhoTester - "for a trans semigp"
-##############################################################################
-#JDM this should be revised.
-
-InstallMethod(IdempotentLambdaRhoTester, "for a trans semigp", 
-[IsTransformationSemigroup], s-> function(x, y) 
-return IsInjectiveTransOnList(y, x); end);
-
-# new for 1.0! - IdempotentLambdaRhoTester - "for a partial perm semigp"
-##############################################################################
-
-InstallMethod(IdempotentLambdaRhoTester, "for a partial perm semigp", 
-[IsPartialPermSemigroup], s-> EQ);
-
-# new for 1.0! - IdempotentLambdaRhoCreator - "for a trans semigp"
-##############################################################################
-#JDM we should update/replace IdempotentNC.
-
-InstallMethod(IdempotentLambdaRhoCreator, "for a trans semigp",
-[IsTransformationSemigroup], s-> 
-function(x,y)
-return IdempotentNC(y,x); end);
-
-# new for 1.0! - IdempotentLambdaRhoCreator - "for a partial perm semigp"
-##############################################################################
-
-InstallMethod(IdempotentLambdaRhoCreator, "for a partial perm semigp",
-[IsPartialPermSemigroup], s-> PartialPermNC);
-
 ############################################################################### 
 ###############################################################################
 
@@ -290,7 +36,7 @@ InstallMethod(IdempotentLambdaRhoCreator, "for a partial perm semigp",
 InstallMethod(\in, "for lambda value of acting semi elt and graded lambda orbs",
 [IsObject, IsGradedLambdaOrbs],
 function(lamf, o)
-  return not HTValue(LambdaHT(o!.semi), lamf)=fail;
+  return not HTValue(GradedLambdaHT(o!.semi), lamf)=fail;
 end);
 
 # new for 1.0! - \in - for rho value of acting semi elt & graded rho orbs
@@ -299,7 +45,7 @@ end);
 InstallMethod(\in, "for rho value of acting semi elt and graded rho orbs",
 [IsObject, IsGradedLambdaOrbs],
 function(rho, o)
-  return not HTValue(RhoHT(o!.semi), rho)=fail;
+  return not HTValue(GradedRhoHT(o!.semi), rho)=fail;
 end);
 
 # new for 1.0! - \in - for acting semi elt and semigroup data
@@ -765,7 +511,7 @@ function(s, f, opt)
 
   if opt then   #global
     graded:=GradedLambdaOrbs(s);
-    pos:=HTValue(LambdaHT(s), LambdaFunc(s)(f));
+    pos:=HTValue(GradedLambdaHT(s), LambdaFunc(s)(f));
   
     if pos<>fail then 
       graded[pos[1]][pos[2]]!.lambda_l:=pos[3];
@@ -777,7 +523,7 @@ function(s, f, opt)
       return x[1]=LambdaRank(s)(LambdaFunc(s)(f))
        and HTValue(data_ht, x[2])=fail; 
     end;
-    onlygradesdata:=LambdaHT(s);
+    onlygradesdata:=GradedLambdaHT(s);
   else          #local
     gradingfunc:=function(o,x) return LambdaRank(s)(x); end;
     onlygrades:=function(x,data_ht) 
@@ -827,7 +573,7 @@ function(s, f, opt)
 
   if opt then   #global
     graded:=GradedRhoOrbs(s);
-    pos:=HTValue(RhoHT(s), RhoFunc(s)(f));
+    pos:=HTValue(GradedRhoHT(s), RhoFunc(s)(f));
   
     if pos<>fail then 
       
@@ -841,7 +587,7 @@ function(s, f, opt)
       return x[1]=RhoRank(s)(RhoFunc(s)(f))
        and HTValue(data_ht, x[2])=fail; 
     end;
-    onlygradesdata:=RhoHT(s);
+    onlygradesdata:=GradedRhoHT(s);
   else          #local
     gradingfunc:=function(o,x) return RhoRank(s)(x); end;
     onlygrades:=function(x,data_ht) 
@@ -921,7 +667,7 @@ function(s, data, x)
 
   # decide if we are using graded orbits or not.
   if (not HasGradedLambdaOrbs(s)) or (HasLambdaOrb(s) and
-   HasGradedLambdaOrbs(s) and Length(LambdaOrb(s))>=LambdaHT(s)!.nr) then 
+   HasGradedLambdaOrbs(s) and Length(LambdaOrb(s))>=GradedLambdaHT(s)!.nr) then 
     data!.graded:=false;
   else
     data!.graded:=true;
@@ -936,7 +682,7 @@ function(s, data, x)
       o:=LambdaOrb(s);
       m:=1;
     else
-      pos:=HTValue(LambdaHT(s), lamx); #scc index, scc[1], pos of lamx in o
+      pos:=HTValue(GradedLambdaHT(s), lamx); #scc index, scc[1], pos of lamx in o
       if pos=fail then 
         o:=GradedLambdaOrb(s, x, true);
         m:=1; #scc index
@@ -1207,7 +953,7 @@ end);
 InstallOtherMethod(Position, "for graded lambda orbs and lambda value",
 [IsGradedLambdaOrbs, IsObject, IsZeroCyc],
 function(o, lamf, n)
-  return HTValue(LambdaHT(o!.semi), lamf);
+  return HTValue(GradedLambdaHT(o!.semi), lamf);
 end);
 
 # new for 1.0! - Position - "for graded rho orbs and rho value"
@@ -1216,7 +962,7 @@ end);
 InstallOtherMethod(Position, "for graded rho orbs and rho value",
 [IsGradedRhoOrbs, IsObject, IsZeroCyc],
 function(o, rho, n)
-  return HTValue(RhoHT(o!.semi), rho);
+  return HTValue(GradedRhoHT(o!.semi), rho);
 end);
 
 # new for 1.0! - Position - "for acting semigroup data and acting elt"

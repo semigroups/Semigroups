@@ -1,3 +1,4 @@
+
 #############################################################################
 ##
 #W  properties.gi
@@ -664,8 +665,8 @@ function(s)
     return IsCliffordSemigroup(s);
   fi;
 
-  n:=Degree(s); imgs:=ImagesOfTransSemigroup(s); Enumerate(imgs, 2^n);
-  kers:=KernelsOfTransSemigroup(s); Enumerate(kers, Length(imgs));
+#  n:=Degree(s); imgs:=ImagesOfTransSemigroup(s); Enumerate(imgs, 2^n);
+#  kers:=KernelsOfTransSemigroup(s); Enumerate(kers, Length(imgs));
 
   if not (IsClosed(kers) and Length(kers)=Length(imgs)) then 
     Info(InfoCitrus, 2, "the numbers of kernels and images are not equal");

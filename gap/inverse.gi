@@ -19,7 +19,7 @@
 #############################################################################
 
 InstallMethod(\in, "for an inverse semigroup of part perms",
-[IsPartialPerm, IsInverseSemigroup and IsPartialPermSemigroup],
+[IsPartialPerm, IsActingSemigroupWithInversion],
 function(f, s)
   local o, k, l, ran, m, schutz, g, dom_g, ran_g;
 
