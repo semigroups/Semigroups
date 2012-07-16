@@ -116,13 +116,12 @@ function(f, s)
   return SiftedPermutation(schutz, LambdaPerm(s)(One(g), g))=();
 end);
 
-
-# new for 1.0! - \in - "for acting elt and D-class of acting semigp"
+# new for 1.0! - \in - "for acting elt and D-class of regular acting semigp"
 #############################################################################
-#JDM revise this as per the other version of \in just deleted :)
+#JDM revise this if revising \in for elt and D-class in greens.gi
 
 InstallMethod(\in, "for acting elt and D-class of acting semigp.",
-[IsActingElt, IsGreensDClass and IsActingSemigroupGreensClass],
+[IsActingElt, IsGreensDClass and IsRegularActingSemigroupGreensClass],
 function(f, d)
   local rep, s, g, m, o, scc, l, schutz;
 
@@ -172,7 +171,47 @@ function(f, d)
     return false;
   fi;
 
-  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g);
+  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
+# new for 1.0! - DClassReps - "for a regular acting semigroup"
+##############################################################################
 
+InstallOtherMethod(DClassReps, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  local lambda_o, r, i, out, rho_o, scc, lookup, rhofunc, f, l, m;
+
+  lambda_o:=LambdaOrb(s);
+  r:=Length(OrbSCC(lambda_o));
+  
+  i:=ActingSemigroupModifier(s);
+  out:=EmptyPlist(r);
+  
+  rho_o:=RhoOrb(s);
+  scc:=OrbSCC(rho_o);
+  lookup:=OrbSCCLookup(rho_o);
+  rhofunc:=RhoFunc(s);
+
+  for m in [1..r-i] do 
+    f:=LambdaOrbRep(lambda_o, m+i);
+    l:=Position(rho_o, rhofunc(f));
+
+    if l<>scc[lookup[l]][1] then 
+      f:=RhoOrbMults(rho_o, lookup[l])[l][2]*f;
+    fi;
+    out[m]:=f;
+  od;
+  return out;
+end);
+
+# new for 1.0! - DClassType - "for a regular acting semigroup"
+############################################################################
+
+InstallOtherMethod(DClassType, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsGreensDClass and
+         IsRegularActingSemigroupGreensClass);
+end);

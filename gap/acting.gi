@@ -237,6 +237,21 @@ function(f, s)
   return false;
 end);
 
+#AAA 
+
+# new for 1.0! - ActingSemigroupModifier - for an acting semigroup
+##############################################################################
+
+InstallMethod(ActingSemigroupModifier, "for an acting semigroup",
+[IsActingSemigroup],
+function(s)
+
+  if IsMonoidAsSemigroup(s) then 
+    return 0;
+  fi;
+  return 1;
+end);
+
 #EEE
 
 # new for 1.0! - ELM_LIST - for graded lambda orbs 
@@ -1110,7 +1125,8 @@ function(o, m)
 
   s:=o!.semi;
   mults:=o!.mults;
-  gens:=GeneratorsOfSemigroup(s);
+  # this definition of gens is essential!
+  gens:=o!.gens;
   inv:=RhoInverse(s);
 
   for i in scc do

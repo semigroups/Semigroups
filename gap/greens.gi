@@ -3298,6 +3298,8 @@ end);
 # new for 1.0! - DClassOfHClass - "for a H-class of an acting semigroup"
 #############################################################################
 
+# no new method required for regular/inverse semigroups. 
+
 InstallMethod(DClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
@@ -3341,6 +3343,8 @@ end);
 # new for 1.0! - LClassOfHClass - "for a H-class of an acting semigroup"
 #############################################################################
 
+# no new method required for regular/inverse semigroups. 
+
 InstallMethod(LClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
@@ -3372,6 +3376,8 @@ end);
 
 # new for 1.0! - RClassOfHClass - "for a H-class of an acting semigroup"
 #############################################################################
+
+# no new method required for regular/inverse semigroups. 
 
 InstallMethod(RClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
@@ -3405,6 +3411,8 @@ end);
 
 # mod for 1.0! - DClassReps - "for an acting semigroup"
 #############################################################################
+
+# separate methods for both regular and inverse semigroups.
 
 InstallMethod(DClassReps, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
