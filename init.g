@@ -33,6 +33,7 @@ ReadPackage("citrus/gap/semigroups.gd");
 ReadPackage("citrus/gap/greens.gd");
 ReadPackage("citrus/gap/acting.gd");
 ReadPackage("citrus/gap/setup.gd");
+ReadPackage("citrus/gap/regular.gd");
 ReadPackage("citrus/gap/inverse.gd");
 
 ReadPackage("citrus/gap/attributes.gd");

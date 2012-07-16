@@ -78,6 +78,7 @@ InstallTrueMethod(IsActingSemigroup, IsTransformationSemigroup);
 InstallTrueMethod(IsActingSemigroup, IsPartialPermSemigroup);
 InstallTrueMethod(IsActingSemigroupWithInversion, IsPartialPermSemigroup and
 IsInverseSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInversion, IsPartialPermSemigroup and IsRegularSemigroup);
 InstallTrueMethod(IsActingElt, IsTransformation);
 InstallTrueMethod(IsActingElt, IsPartialPerm);
 InstallTrueMethod(IsInverseActingElt, IsPartialPerm);

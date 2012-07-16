@@ -18,6 +18,7 @@ ReadPackage("citrus/gap/setup.gi");
 ReadPackage("citrus/gap/semigroups.gi");
 ReadPackage("citrus/gap/greens.gi");
 ReadPackage("citrus/gap/slp.gi");
+ReadPackage("citrus/gap/regular.gi");
 if IsBound(CITRUSC) then ReadPackage("citrus/gap/inverse.gi"); fi;
 ReadPackage("citrus/gap/properties.gi");
 ReadPackage("citrus/gap/attributes.gi");

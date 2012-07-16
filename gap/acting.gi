@@ -65,7 +65,7 @@ end);
 # the other \in method, doing this messes everything up in the old set up. 
 
 InstallMethod(\in, "for an acting elt and acting semigroup",
-[IsActingElt, IsActingSemigroup], 100,
+[IsActingElt, IsActingSemigroup], 
 function(f, s)
   local data, len, ht, val, lambda, o, l, lookfunc, m, scc, lambdarho, schutz, g, reps, repslens, lambdaperm, n, max, found;
   
