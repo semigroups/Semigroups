@@ -438,22 +438,22 @@ InstallOtherMethod(NrMovedPoints, "for a partial perm",
 
 #OOO
 
-# new for 0.7! - One - "for a partial perm"
+# new for 0.7! - OneMutable - "for a partial perm"
 #############################################################################
 
-InstallMethod(One, "for a partial perm",
-[IsPartialPerm ], 
+InstallMethod(OneMutable, "for a partial perm",
+[IsPartialPerm], 
 function(f)
   local x;
   x:=Union(DomPP(f), RanSetPP(f));
   return SparsePartialPermNC(x, x);
-end);
+end); 
 
-# new for 0.7! - One - "for a partial perm""
-#############################################################################
+# new for 0.7! - One - for a partial perm semigroup
+##############################################################################
 
-InstallMethod(OneMutable, "for a partial perm",
-[IsPartialPerm ], One);
+InstallMethod(OneMutable, "for a partial perm semigroup",
+[IsPartialPermSemigroup], s-> PartialPermNC(Points(s), Points(s)));
 
 # new for 0.7! - OnIntegerSetsWithPartialPerm 
 #############################################################################

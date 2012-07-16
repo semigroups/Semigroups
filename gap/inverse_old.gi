@@ -8,17 +8,6 @@
 #############################################################################
 ##
 
-# new for 0.7! - DClassType - "for a partial perm inverse semigroup"
-############################################################################
-
-InstallOtherMethod(DClassType, "for a partial perm inverse semigroup",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(s)
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsGreensDClass and
-         IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup);
-end);
-
 #EEE
 
 # new for 0.7! - EnumerateInverseSemiData - "for an inverse semi of part perms"
@@ -2236,12 +2225,6 @@ InstallOtherMethod(NrIdempotents, "for an R-class of an inverse semi",
 IsGreensClassOfInverseSemigroup], x-> 1);
 
 #OOO
-
-# new for 0.7! - One - for a partial perm semigroup
-##############################################################################
-
-InstallMethod(OneImmutable, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> PartialPermNC(Points(s), Points(s)));
 
 # new for 0.7! - OrbMultipliers - for a Green's class of a part perm inv semi
 ##############################################################################

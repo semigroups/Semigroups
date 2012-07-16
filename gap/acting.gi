@@ -1298,7 +1298,7 @@ end);
 ##############################################################################
 
 InstallMethod(Size, "for an acting semigroup",
-[IsActingSemigroup], 100,
+[IsActingSemigroup], 
 function(s)
   local data, reps, nr, repslookup, orbit, i, j;
    

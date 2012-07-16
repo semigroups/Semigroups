@@ -178,6 +178,14 @@ end);
 
 #MMM
 
+# new for 1.0! - MultiplicativeNeutralElement - "for an acting semigroup"
+###########################################################################
+
+InstallOtherMethod(MultiplicativeNeutralElement, "for an acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+end);
+
 # new for 0.1! - MultiplicativeZero - "for an acting semigroup"
 ###########################################################################
 
