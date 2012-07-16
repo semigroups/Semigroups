@@ -246,7 +246,7 @@ InstallMethod(ActingSemigroupModifier, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
 
-  if IsMonoidAsSemigroup(s) then 
+  if IsMonoid(s) or ForAny(Generators(s), x-> Rank(x)=Degree(s)) then 
     return 0;
   fi;
   return 1;
@@ -1198,7 +1198,6 @@ function(o, m, bound)
   else
     bound:=infinity;
   fi;
-
   for i in scc do 
     for j in [1..nrgens] do 
       if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]]=m then 

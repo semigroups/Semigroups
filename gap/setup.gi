@@ -34,9 +34,9 @@ if IsBound(OnIntegerSetsWithPP) then
       end;
   end);
   
-  InstallMethod(RhoAct, "for an inverse semigp of partial perms",
-  [IsInverseSemigroup and IsPartialPermSemigroup],
-  s-> OnIntegerSetsWithPP);
+  #InstallMethod(RhoAct, "for an inverse semigp of partial perms",
+  #[IsInverseSemigroup and IsPartialPermSemigroup],
+  #s-> OnIntegerSetsWithPP);
 fi;
 
 # new for 1.0! - LambdaDegree

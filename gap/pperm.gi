@@ -452,7 +452,7 @@ end);
 # new for 0.7! - One - for a partial perm semigroup
 ##############################################################################
 
-InstallMethod(OneMutable, "for a partial perm semigroup",
+InstallOtherMethod(OneMutable, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> PartialPermNC(Points(s), Points(s)));
 
 # new for 0.7! - OnIntegerSetsWithPartialPerm 
