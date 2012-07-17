@@ -213,7 +213,7 @@ InstallOtherMethod(DClassType, "for a regular acting semigroup",
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsGreensDClass and
-         IsRegularActingSemigroupGreensClass);
+         IsRegularActingSemigroupGreensClass and IsActingSemigroupGreensClass);
 end);
 
 

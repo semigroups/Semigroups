@@ -345,12 +345,12 @@ function(data, limit, lookfunc)
   schreiermult:=data!.schreiermult;
 
   # generators
-  s:=ParentSemigroup(data);
-  gens:=Generators(s); 
+  gens:=data!.gens; 
   nrgens:=Length(gens); 
   genstoapply:=[1..nrgens];
   
   # lambda/rho
+  s:=ParentSemigroup(data);
   lambda:=LambdaFunc(s);
   lambdaact:=LambdaAct(s);  
   lambdaperm:=LambdaPerm(s);
@@ -648,7 +648,6 @@ end);
 
 # new for 1.0! - InitSemigroupData - "for acting semi, data, and element"
 #############################################################################
-# - maybe rewrite so that the generators are really added here, rather than one.
 
 InstallGlobalFunction(InitSemigroupData, 
 function(s, data, x)
@@ -723,9 +722,10 @@ end);
 
 # new for 1.0! - LambdaOrb - "for acting semigroup with inversion"
 ##############################################################################
+# move to inverse.gi and do it properly!
 
-InstallMethod(LambdaOrb, "for an acting semigroup with inversion",
-[IsActingSemigroupWithInversion], RhoOrb);
+#InstallMethod(LambdaOrb, "for an acting semigroup with inversion",
+#[IsActingSemigroupWithInversion], RhoOrb);
 
 # new for 1.0! - LambdaOrbMults - "for a lambda orb and scc index"
 ##############################################################################
@@ -749,7 +749,7 @@ InstallGlobalFunction(LambdaOrbMults,
   
   s:=o!.semi;
   mults:=o!.mults;
-  gens:=Generators(s);  
+  gens:=o!.gens;  
   inv:=LambdaInverse(s);
 
   for i in scc do
@@ -795,7 +795,7 @@ function(o, m)
   fi;
 
   s:=o!.semi;
-  gens:=Generators(s); 
+  gens:=o!.gens; 
   nrgens:=Length(gens);
   scc:=OrbSCC(o)[m];      
   lookup:=o!.scc_lookup;
@@ -1136,7 +1136,7 @@ function(o, m, bound)
   fi;
 
   s:=o!.semi;
-  gens:=Generators(s);
+  gens:=o!.gens;
   nrgens:=Length(gens);
   scc:=OrbSCC(o)[m];
   lookup:=o!.scc_lookup;
@@ -1192,21 +1192,27 @@ end);
 InstallMethod(SemigroupData, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
-  local gens, x, data;
-  
-  gens:=Generators(s);
+  local gens, one, data;
+ 
+  if IsMonoid(s) then 
+    gens:=GeneratorsOfMonoid(s);
+  else
+    gens:=GeneratorsOfSemigroup(s);
+  fi;
 
-  data:=rec( ht:=HTCreate(x, rec(hashlen:=s!.opts.hashlen.L)),
+  one:=One(gens);
+
+  data:=rec( gens:=gens, ht:=HTCreate(one, rec(hashlen:=s!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[],
-     lenreps:=0, orbit:=[[,,,One(gens)]], repslens:=[], 
+     lenreps:=0, orbit:=[[,,,one]], repslens:=[], 
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail]);
   
   Objectify(NewType(FamilyObj(s), IsSemigroupData and IsAttributeStoringRep),
    data);
 
   if IsMonoid(s) or ForAny(gens, x-> Degree(x)=Degree(s)) then 
-    InitSemigroupData(s, data, One(gens));
+    InitSemigroupData(s, data, one);
     if not IsMonoid(s) then 
       SetIsMonoidAsSemigroup(s, true);
     fi;

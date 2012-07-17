@@ -2710,10 +2710,10 @@ function(s)
   d:=GreensDClasses(s); 
   n:=Length(d);
   out:=List([1..n], x-> EmptyPlist(n));
-  gens:=Generators(s);  
   
   data:=SemigroupData(s);
-  graph:=SemigroupData(s)!.graph;
+  gens:=data!.gens;
+  graph:=data!.graph;
   datalookup:=OrbSCCLookup(data)-ActingSemigroupModifier(s);  
   reps:=data!.reps;
   repslens:=data!.repslens;

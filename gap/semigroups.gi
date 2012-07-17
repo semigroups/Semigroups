@@ -334,18 +334,6 @@ end);
 
 #DDD
 
-# new for 0.7! - Degree - "for a partial perm semigroup"
-#############################################################################
-
-InstallOtherMethod(Degree, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> MaximumList(List(Generators(s), Degree)));
-
-# new for 0.7! - Degree - "for a partial perm collection"
-#############################################################################
-
-InstallOtherMethod(Degree, "for a partial perm collection",
-[IsPartialPermCollection], C-> MaximumList(List(C, Degree)));
-
 #GGG
 
 # new for 0.1! - Generators - "for a semigroup or monoid"
