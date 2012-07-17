@@ -1989,67 +1989,6 @@ end);
 InstallOtherMethod(NrLClasses, "for D-class of semigp of partial perms",
 [IsGreensDClass and IsGreensClassOfPartPermSemigroup and                        IsGreensClassOfInverseSemigroup], NrRClasses);
 
-# new for 0.7! - NrIdempotents - for an H-class of an inv semi
-##############################################################################
-
-InstallOtherMethod(NrIdempotents, "for an H-class of an inverse semi",
-[IsGreensHClass and IsGreensClassOfPartPermSemigroup and
-IsGreensClassOfInverseSemigroup],
-function(h)
-  local f;
-  
-  f:=Representative(h);
-  if DomPP(f)=RanSetPP(f) then 
-    return 1;
-  fi;
-
-  return 0;
-end);
-
-# new for 0.7! - NrIdempotents - for a D- class of an inv semi
-##############################################################################
-
-InstallOtherMethod(NrIdempotents, "for an D-class of an inverse semi",
-[IsGreensDClass and IsGreensClassOfPartPermSemigroup and
-IsGreensClassOfInverseSemigroup], NrRClasses);
-
-# new for 0.7! - NrIdempotents - for an L-class of an inv semi
-##############################################################################
-
-InstallOtherMethod(NrIdempotents, "for an L-class of an inverse semi",
-[IsGreensLClass and IsGreensClassOfPartPermSemigroup and
-IsGreensClassOfInverseSemigroup], x-> 1);
-
-# new for 0.7! - NrIdempotents - for an R-class of an inv semis
-##############################################################################
-
-InstallOtherMethod(NrIdempotents, "for an R-class of an inverse semi",
-[IsGreensRClass and IsGreensClassOfPartPermSemigroup and
-IsGreensClassOfInverseSemigroup], x-> 1);
-
-#OOO
-
-# new for 0.7! - OrbMultipliers - for a Green's class of a part perm inv semi
-##############################################################################
-# partial perm that maps o[scc[i]] to o[scc[1]] 
-
-InstallMethod(OrbMultipliers, "for a class of a part perm inv semi",
-[IsGreensClass and IsGreensClassOfPartPermSemigroup and
-IsGreensClassOfInverseSemigroup],
-function(C)
-  return CreateOrbSCCMultipliers(C!.o!.gens, C!.o, C!.data[1], 
-   OrbSCC(C!.o)[C!.data[1]]);
-end);
-
-# new for 0.7! - OrbSCCStabChain 
-###############################################################################
-
-InstallMethod(OrbSCCStabChain, "for a class of a part perm inv semi",
-[IsGreensClass and IsGreensClassOfPartPermSemigroup and
-IsGreensClassOfInverseSemigroup],
-function(C)
-  return CreateOrbSCCSchutzGp(C!.o, C!.data[1], Representative(C))[1];
-end);
 
 #PPP
 

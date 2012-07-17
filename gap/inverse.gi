@@ -47,7 +47,7 @@ InstallOtherMethod(NrRClasses, "for an acting semigroup with inversion",
 InstallOtherMethod(NrHClasses, "for an acting semigroup with inversion",
 [IsActingSemigroupWithInversion],
 function(s)
-  local scc;
+  local o, scc;
   o:=Enumerate(LambdaOrb(s), infinity);
   scc:=OrbSCC(o);
 
