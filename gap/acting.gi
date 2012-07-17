@@ -1211,7 +1211,7 @@ function(s)
   Objectify(NewType(FamilyObj(s), IsSemigroupData and IsAttributeStoringRep),
    data);
 
-  if IsMonoid(s) or ForAny(gens, x-> Degree(x)=Degree(s)) then 
+  if IsMonoid(s) or ForAny(gens, x-> Rank(x)=Rank(one)) then 
     InitSemigroupData(s, data, one);
     if not IsMonoid(s) then 
       SetIsMonoidAsSemigroup(s, true);

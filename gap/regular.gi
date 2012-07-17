@@ -208,13 +208,271 @@ end);
 # new for 1.0! - DClassType - "for a regular acting semigroup"
 ############################################################################
 
+# same method for inverse semigroups
+
 InstallOtherMethod(DClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsGreensDClass and
-         IsRegularActingSemigroupGreensClass and IsActingSemigroupGreensClass);
+         IsEquivalenceClassDefaultRep and IsRegularDClass and
+         IsRegularActingSemigroupGreensClass);
 end);
 
+# new for 1.0! - HClassType - "for a regular acting semigroup"
+############################################################################
+
+# same method for inverse semigroups
+
+InstallOtherMethod(HClassType, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsGroupHClass and
+         IsRegularActingSemigroupGreensClass);
+end);
+
+# new for 1.0! - LClassType - "for a regular acting semigroup"
+############################################################################
+
+# same method for inverse semigroups
+
+InstallOtherMethod(LClassType, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsRegularLClass and
+         IsRegularActingSemigroupGreensClass);
+end);
+
+# new for 1.0! - RClassType - "for a regular acting semigroup"
+############################################################################
+
+# same method for inverse semigroups
+
+InstallOtherMethod(RClassType, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsRegularRClass and
+         IsRegularActingSemigroupGreensClass);
+end);
+
+# new for 1.0! - NrDClasses - "for a regular acting semigroup"
+############################################################################
+
+# same method for inverse semigroups
+
+InstallMethod(NrDClasses, "for a regular acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup and IsRegularSemigroup],
+function(s)
+  local o;
+  o:=Enumerate(LambdaOrb(s), infinity);
+  return Length(OrbSCC(o))-ActingSemigroupModifier(s);
+end);
+
+# new for 1.0! - NrHClasses - "for a regular acting semigroup"
+############################################################################
+
+# different method for inverse semigroups
+
+InstallMethod(NrHClasses, "for a regular acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup and IsRegularSemigroup],
+function(s)
+  local lambda_o, rho_o, nr, lambda_scc, rho_scc, r, i, rhofunc, lookup, rho, m;
+  
+  lambda_o:=LambdaOrb(s);
+  if not IsClosed(lambda_o) then 
+    Enumerate(lambda_o, infinity);
+  fi;
+  
+  rho_o:=LambdaOrb(s);
+  if not IsClosed(rho_o) then 
+    Enumerate(rho_o, infinity);
+  fi;
+  
+  nr:=0;
+  lambda_scc:=OrbSCC(lambda_o);
+  rho_scc:=OrbSCC(rho_o);
+  r:=Length(lambda_scc);
+  i:=ActingSemigroupModifier(s);
+  rhofunc:=RhoFunc(s);
+  lookup:=OrbSCCLookup(rho_o);
+
+  for m in [1+i..r] do 
+    rho:=rhofunc(LambdaOrbRep(lambda_o, m));
+    nr:=nr+Length(lambda_scc[m])*Length(rho_scc[lookup[Position(rho_o, rho)]]);
+  od;
+
+  return nr;
+end);
+
+# new for 1.0! - NrHClasses - "for a D-class of regular acting semigroup"
+############################################################################
+
+# same method for inverse semigroups (although there could be one if we
+# have to introduce IsInverseActingSemigroupGreensClass).
+
+InstallMethod(NrHClasses, "for a D-class of regular acting semigroup",
+[IsRegularActingSemigroupGreensClass and IsGreensDClass],
+function(d)
+  return Length(Enumerate(LambdaOrb(d), infinity))*
+   Length(Enumerate(RhoOrb(d), infinity));
+end);
+
+# new for 1.0! - NrHClasses - "for a L-class of regular acting semigroup"
+############################################################################
+
+# same method for inverse semigroups 
+
+InstallMethod(NrHClasses, "for a L-class of regular acting semigroup",
+[IsRegularActingSemigroupGreensClass and IsGreensLClass],
+function(l)
+   return Length(Enumerate(RhoOrb(l), infinity));
+end);
+
+# new for 1.0! - NrHClasses - "for a R-class of regular acting semigroup"
+############################################################################
+
+# same method for inverse semigroups (although there could be one if we
+# have to introduce IsInverseActingSemigroupGreensClass).
+
+InstallMethod(NrHClasses, "for a R-class of regular acting semigroup",
+[IsRegularActingSemigroupGreensClass and IsGreensRClass],
+function(r)
+   return Length(Enumerate(LambdaOrb(r), infinity));
+end);
+
+# new for 1.0! - NrLClasses - "for a regular acting semigroup"
+############################################################################
+
+# same method for inverse semigroups
+
+InstallMethod(NrLClasses, "for a regular acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup and IsRegularSemigroup],
+function(s)
+  local o;
+  o:=Enumerate(LambdaOrb(s), infinity);
+  return Length(o)-ActingSemigroupModifier(s);
+end);
+
+# new for 1.0! - NrLClasses - "for a D-class of regular acting semigroup"
+############################################################################
+
+# same method for inverse semigroups
+
+InstallMethod(NrLClasses, "for a D-class of regular acting semigroup",
+[IsRegularActingSemigroupGreensClass and IsGreensDClass],
+function(d)
+  local o;
+  o:=Enumerate(LambdaOrb(d), infinity);
+  return Length(o);
+end);
+
+# new for 1.0! - NrRClasses - "for a regular acting semigroup"
+############################################################################
+
+# different method for inverse semigroups
+
+InstallMethod(NrRClasses, "for a regular acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup and IsRegularSemigroup],
+function(s)
+  local o;
+  o:=Enumerate(RhoOrb(s), infinity);
+  return Length(o)-ActingSemigroupModifier(s);
+end);
+
+# new for 1.0! - NrRClasses - "for a D-class of regular acting semigroup"
+############################################################################
+
+# same method for inverse semigroups (although there could be one if we
+# have to introduce IsInverseActingSemigroupGreensClass).
+
+InstallMethod(NrRClasses, "for a D-class of regular acting semigroup",
+[IsRegularActingSemigroupGreensClass and IsGreensDClass],
+function(d)
+  local o;
+  o:=Enumerate(RhoOrb(d), infinity);
+  return Length(o);
+end);
+
+# new for 1.0! - NrIdempotents - for a regular acting semigroup
+############################################################################
+
+# different method for inverse
+
+InstallOtherMethod(NrIdempotents, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  local nr, tester, rho_o, scc, lambda_o, gens, rhofunc, lookup, rep, rho, j,
+  i, k;
+
+  nr:=0;
+  tester:=IdempotentLambdaRhoTester(s);
+  rho_o:=RhoOrb(s);
+  scc:=OrbSCC(rho_o); 
+  lambda_o:=LambdaOrb(s);
+  gens:=lambda_o!.gens;
+  rhofunc:=RhoFunc(s);
+  lookup:=OrbSCCLookup(rho_o);
+
+  for i in [1..Length(lambda_o)] do
+    rep:=EvaluateWord(TraceSchreierTreeForward(lambda_o, i), gens);
+    rho:=rhofunc(rep);
+    j:=lookup[Position(rho_o, rho)];
+    for k in scc[j] do
+      if tester(lambda_o[i], rho_o[k]) then
+        nr:=nr+1;
+      fi;
+    od;
+  od;
+
+  return nr;
+end);
+
+# new for 1.0! - NrRegularDClasses - "for a regular acting semigroup"
+############################################################################
+
+# same method for inverse semigroups
+
+InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup and IsRegularSemigroup],
+NrDClasses);
+
+# new for 1.0! - Size - "for a regular acting semigroup"
+############################################################################
+
+# different method for inverse semigroups
+
+InstallMethod(Size, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  local lambda_o, rho_o, nr, lambda_scc, rho_scc, r, i, rhofunc, lookup, rho, m;
+
+  lambda_o:=LambdaOrb(s);
+  if not IsClosed(lambda_o) then 
+    Enumerate(lambda_o, infinity);
+  fi;
+  
+  rho_o:=LambdaOrb(s);
+  if not IsClosed(rho_o) then 
+    Enumerate(rho_o, infinity);
+  fi;
+  
+  nr:=0;
+  lambda_scc:=OrbSCC(lambda_o);
+  rho_scc:=OrbSCC(rho_o);
+  r:=Length(lambda_scc);
+  i:=ActingSemigroupModifier(s);
+  rhofunc:=RhoFunc(s);
+  lookup:=OrbSCCLookup(rho_o);
+
+  for m in [1+i..r] do 
+    rho:=rhofunc(LambdaOrbRep(lambda_o, m));
+    nr:=nr+Length(lambda_scc[m])*Size(LambdaOrbSchutzGp(lambda_o,m))*
+     Length(rho_scc[lookup[Position(rho_o, rho)]]);
+  od;
+
+  return nr;
+end);
 
 
