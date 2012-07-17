@@ -933,6 +933,8 @@ end);
 # mod for 1.0! - GreensDClasses - "for an acting semigroup"
 ##############################################################################
 
+# different method for regular/inverse
+
 InstallMethod(GreensDClasses, "for an acting semigroup",
 [IsActingSemigroup], 
 function(s)

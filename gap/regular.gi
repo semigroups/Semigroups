@@ -342,6 +342,8 @@ end);
 # new for 1.0! - GreensDClasses - for regular acting semi
 ############################################################################
 
+# same method for inverse.
+
 InstallOtherMethod(GreensDClasses, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
@@ -358,8 +360,6 @@ function(s)
   od;
   return out;
 end);
-
-
 
 # new for 1.0! - GreensRClassOfElement - for regular acting semi and elt"
 ############################################################################
