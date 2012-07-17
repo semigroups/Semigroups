@@ -16,8 +16,8 @@
 InstallMethod(\in, "for an acting elt and regular acting semigroup",
 [IsActingElt, IsActingSemigroup and IsRegularSemigroup], 
 function(f, s)
-  local lambda_o, rho_o, lambda, rho, lambda_l, rho_l, m, schutz, scc, g;
-  
+  local lambda_o, rho_o, lambda, rho, lambda_l, rho_l, m, schutz, scc, g, rep;
+
   if not ElementsFamily(FamilyObj(s))=FamilyObj(f) then 
     Error("the element and semigroup are not of the same type,");
     return;
@@ -74,12 +74,11 @@ function(f, s)
     fi;
   fi;
 
-  if not IsClosed(lambda_o) then  
-    lambda_o:=GradedLambdaOrb(s, f, false);
-    Enumerate(lambda_o, infinity);
-    lambda_l:=1;
-  fi;
- 
+  #if not IsClosed(lambda_o) then
+  #  lambda_o:=GradedLambdaOrb(s, f, false);
+  #  lambda_l:=1;
+  #fi;
+
   m:=OrbSCCLookup(lambda_o)[lambda_l];
   schutz:=LambdaOrbStabChain(lambda_o, m);
 
@@ -100,7 +99,11 @@ function(f, s)
     return false;
   fi;
 
-  return SiftedPermutation(schutz, LambdaPerm(s)(One(g), g))=();
+  rep:=CanonicalRep(lambda_o, m);
+  m:=OrbSCCLookup(rho_o)[rho_l];
+  g:=RhoOrbMults(rho_o, m)[rho_l][2]*g;
+
+  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
 # new for 1.0! - \in - "for acting elt and D-class of regular acting semigp"
@@ -161,6 +164,35 @@ function(f, d)
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
+# new for 1.0! - CanonicalRep - "for a lambda orb and scc index"
+##############################################################################
+
+InstallGlobalFunction(CanonicalRep, 
+function(o, m)
+  local f, s, rho_o, l;
+
+  if IsBound(o!.reps) then 
+    if IsBound(o!.reps[m]) then 
+      return o!.reps;
+    fi;
+  else
+    o!.reps:=EmptyPlist(Length(OrbSCC(o)));
+  fi;
+
+  f:=LambdaOrbRep(o, m);
+  s:=o!.semi;   
+  rho_o:=RhoOrb(s);
+  l:=Position(rho_o, RhoFunc(s)(f));
+  m:=OrbSCCLookup(rho_o)[l];
+
+  if l<>OrbSCC(rho_o)[m][1] then
+    f:=RhoOrbMults(rho_o, m)[l][2]*f;
+  fi;
+  
+  o!.reps[m]:=f;
+  return f;
+end);
+
 # new for 1.0! - DClassReps - "for a regular acting semigroup"
 ##############################################################################
 
@@ -190,6 +222,156 @@ function(s)
     out[m]:=f;
   od;
   return out;
+end);
+
+# mod for 1.0! - Enumerator - "for D-class of regular acting semigp."
+#############################################################################
+
+InstallOtherMethod(Enumerator, "for a D-class of acting semigp.",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+    
+    return EnumeratorByFunctions(d, rec(
+
+    schutz:=Enumerator(SchutzenbergerGroup(d)),
+
+    #######################################################################
+
+    ElementNumber:=function(enum, pos)
+      local l_scc, r_scc, i, j, k, x, y, z, lmults, rmults;
+      if pos>Length(enum) then
+        return fail;
+      fi;
+
+      if pos<=Length(enum!.schutz) then 
+        return Representative(d)*enum!.schutz[pos];
+      fi;
+
+      l_scc:=LambdaOrbSCC(d);
+      r_scc:=RhoOrbSCC(d);
+
+      pos:=pos-1; 
+      
+      i:=Length(enum!.schutz); 
+      j:=Length(l_scc);
+      k:=Length(r_scc);
+
+      x:=QuoInt(pos, i*j); 
+      y:=QuoInt(pos-x*i*j, i);
+      z:=pos-x*i*j-y*i;
+
+      lmults:=LambdaOrbMults(LambdaOrb(d), LambdaOrbSCCIndex(d));
+      rmults:=RhoOrbMults(RhoOrb(d), RhoOrbSCCIndex(d));
+      
+      return rmults[r_scc[x+1]][1]*enum[z+1]*lmults[l_scc[y+1]][1];
+    end,
+
+    #######################################################################
+
+    NumberElement:=function(enum, f)
+      local rep, s, o, m, x, y, z, i, j, k, g; 
+      
+      rep:=Representative(d);
+
+      if f[2]<>rep[2] then
+        return fail;
+      fi;
+
+      if f=rep then
+        return 1;
+      fi;
+
+      s:=ParentSemigroup(d);
+      
+      o:=RhoOrb(d); m:=RhoOrbSCCIndex(d);
+      x:=Position(o, RhoFunc(s)(f));
+
+      if x=fail or OrbSCCLookup(o)[x]<>m then
+        return fail;
+      fi;
+
+      g:=f;
+      
+      if x<>OrbSCC(o)[m][1] then 
+        g:=RhoOrbMults(o, m)[x][2]*g;
+      fi;
+      
+      o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
+      y:=Position(o, LambdaFunc(s)(g));
+
+      if y=fail or OrbSCCLookup(o)[y]<>m then
+        return fail;
+      fi;
+
+      if y<>OrbSCC(o)[m][1] then 
+        g:=g*LambdaOrbMults(o, m)[y][2];
+      fi;
+   
+      z:=Position(enum!.schutz, LambdaPerm(s)(rep, g));
+
+      if z=fail then
+        return fail;
+      fi;
+      
+      i:=Length(enum!.schutz); 
+      j:=Length(LambdaOrbSCC(d));
+      k:=Length(RhoOrbSCC(d));
+
+      return i*j*(Position(RhoOrbSCC(d), x)-1)+(Position(LambdaOrbSCC(d),
+      y)-1)*i+z;
+    end,
+
+    #######################################################################
+
+    Membership:=function(elm, enum)
+      return elm in d;
+    end,
+
+    Length:=enum -> Size(d),
+
+    PrintObj:=function(enum)
+      Print( "<enumerator of D-class>");
+    return;
+  end));
+end);
+
+# new for 1.0! - GreensRClassOfElement - for regular acting semi and elt"
+############################################################################
+
+# same method for inverse.
+
+InstallOtherMethod(GreensRClassOfElement, "for regular acting semi and elt",
+[IsRegularSemigroup and IsActingSemigroup, IsActingElt],
+function(s, f)
+  local r, o, l, m;
+
+  if not f in s then 
+    Error("the element does not belong to the semigroup,");
+    return;
+  fi;
+
+  r:=Objectify(RClassType(s), rec());
+  SetParentSemigroup(r, s);
+  SetEquivalenceClassRelation(r, GreensRRelation(s));
+  SetIsGreensClassNC(r, false);
+
+  if IsClosed(LambdaOrb(s)) then 
+    o:=LambdaOrb(s);
+    l:=Position(o, LambdaFunc(s)(f));
+    m:=OrbSCCLookup(o)[l];
+    if l<>OrbSCC(o)[m][1] then 
+      f:=f*LambdaOrbMults(o, m)[l][2];
+    fi;
+  else
+    o:=GradedLambdaOrb(s, f, true);
+    m:=1;
+  fi;
+  
+  SetLambdaOrb(r, o);
+  SetLambdaOrbSCCIndex(r, m);
+  SetRepresentative(r, f);
+
+  return r;
 end);
 
 # new for 1.0! - DClassType - "for a regular acting semigroup"
@@ -267,15 +449,8 @@ InstallMethod(NrHClasses, "for a regular acting semigroup",
 function(s)
   local lambda_o, rho_o, nr, lambda_scc, rho_scc, r, i, rhofunc, lookup, rho, m;
   
-  lambda_o:=LambdaOrb(s);
-  if not IsClosed(lambda_o) then 
-    Enumerate(lambda_o, infinity);
-  fi;
-  
-  rho_o:=LambdaOrb(s);
-  if not IsClosed(rho_o) then 
-    Enumerate(rho_o, infinity);
-  fi;
+  lambda_o:=Enumerate(LambdaOrb(s), infinity);
+  rho_o:=Enumerate(RhoOrb(s), infinity);
   
   nr:=0;
   lambda_scc:=OrbSCC(lambda_o);
@@ -412,6 +587,26 @@ InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup and IsRegularSemigroup],
 NrDClasses);
 
+#SSS
+
+# new for 1.0! - SchutzenbergerGroup - "for D-class of regular acting semigroup"
+#############################################################################
+
+# same method for inverse
+
+InstallMethod(SchutzenbergerGroup, "for D-class of regular acting semigroup",
+[IsGreensDClass and IsRegularActingSemigroupGreensClass],
+d-> LambdaOrbSchutzGp(LambdaOrb(d), LambdaOrbSCCIndex(d)));
+
+# new for 1.0! - SchutzenbergerGroup - "for H-class of regular acting semigroup"
+#############################################################################
+
+# same method for inverse
+
+InstallMethod(SchutzenbergerGroup, "for H-class of regular acting semigroup",
+[IsGreensHClass and IsRegularActingSemigroupGreensClass],
+h-> LambdaOrbSchutzGp(LambdaOrb(h), LambdaOrbSCCIndex(h)));
+
 # new for 1.0! - Size - "for a regular acting semigroup"
 ############################################################################
 
@@ -448,5 +643,6 @@ function(s)
 
   return nr;
 end);
+
 
 
