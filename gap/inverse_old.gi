@@ -342,19 +342,6 @@ end);
 
 #GGG
 
-# new for 0.7! - GreensDClassOfElement - for an inv semi and part perm
-##############################################################################
-
-InstallOtherMethod(GreensDClassOfElement, "for an inv semi and part perm",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
-function(s, f)
-  if not f in s then 
-    Error("the partial perm. is not an element of the semigroup,");
-    return;
-  fi;
-  return GreensDClassOfElementNC(s, f);
-end);
-
 # new for 0.7! - GreensDClassOfElementNC - for an inv semi and part perm
 ##############################################################################
 # Notes: data is: [scc index, scc[1], pos of dom, pos of ran]

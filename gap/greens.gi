@@ -1071,6 +1071,8 @@ end);
 # mod for 1.0! - GreensDClassOfElement - "for an acting semigp and elt."
 #############################################################################
 
+# same method for inverse/regular
+
 InstallOtherMethod(GreensDClassOfElement, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
@@ -1094,7 +1096,7 @@ function(s, f)
 
   SetLambdaOrb(d, o);
   SetLambdaOrbSCCIndex(d, m); 
-  
+  #JDM why not add if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then .. 
   o:=GradedRhoOrb(s, f, true);
   l:=o!.rho_l; #Position(o, RhoFunc(s)(f));
   m:=OrbSCCLookup(o)[l];
@@ -1114,6 +1116,8 @@ end);
 
 # mod for 1.0! - GreensDClassOfElementNC - "for an acting semigp and elt."
 #############################################################################
+
+# same method for inverse/regular
 
 InstallOtherMethod(GreensDClassOfElementNC, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
@@ -1138,6 +1142,8 @@ end);
 # mod for 1.0! - GreensHClassOfElement - "for an acting semigp and elt."
 #############################################################################
 
+# same method for regular/inverse.
+
 InstallOtherMethod(GreensHClassOfElement, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
@@ -1154,7 +1160,8 @@ function(s, f)
   o:=LambdaOrb(s);
   SetLambdaOrb(h, o);
   SetLambdaOrbSCCIndex(h, OrbSCCLookup(o)[Position(o, LambdaFunc(s)(f))]); 
-  
+
+  #JDM why not add if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then .. 
   o:=GradedRhoOrb(s, f, true);
   SetRhoOrb(h, o);
   SetRhoOrbSCCIndex(h, OrbSCCLookup(o)[o!.rho_l]);
@@ -1167,6 +1174,8 @@ end);
 
 # mod for 1.0! - GreensHClassOfElementNC - "for an acting semigp and elt."
 #############################################################################
+
+# same method for regular/inverse.
 
 InstallOtherMethod(GreensHClassOfElementNC, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],

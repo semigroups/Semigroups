@@ -214,7 +214,7 @@ InstallOtherMethod(HClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsGroupHClass and IsGreensHClass and
+         IsEquivalenceClassDefaultRep and IsGreensHClass and
          IsRegularActingSemigroupGreensClass);
 end);
 
