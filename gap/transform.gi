@@ -498,33 +498,6 @@ end);
 
 #RRR
 
-# new for 1.0! - Random - "for an acting semigroup"
-#############################################################################
-# move to greens.gi
-
-InstallMethod(Random, "for an acting semigroup", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local data, gens, n, i, w, g;
-
-  data:=SemigroupData(s);
-
-  if not IsClosed(data) then 
-    gens:=GeneratorsOfSemigroup(s);
-    n:=Degree(s);
-    i:=Random([1..2*Length(gens)]);
-    w:=List([1..i], x-> Random([1..Length(gens)]));
-    return EvaluateWord(gens, w);
-  fi;
-
-  i:=data!.modifier;
-
-  n:=Random([1+i..Length(data)]);
-  g:=Random(LambdaOrbSchutzGp(data[n][3], data[n][2]));
-  i:=Random(OrbSCC(data[n][3])[data[n][2]]);
-  return data[n][4]*g*LambdaOrbMults(data[n][3], data[n][2])[i][1]; 
-end);
-
 # new for 0.1! - RandomIdempotent - "for an image and pos. int."
 #############################################################################
 # Usage: returns a random idempotent with specified image and degree <n>. 

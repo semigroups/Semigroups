@@ -184,7 +184,44 @@ end);
 InstallOtherMethod(MultiplicativeNeutralElement, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
+  local gens, n, f, r;
+
+  gens:=Generators(s);
+  n:=Maximum(List(gens, Rank));
+
+  if n=Degree(s) then
+    return One(s);
+  fi;
+
+  f:=First(gens, f-> Rank(f)=n);
+
+  r:=GreensRClassOfElementNC(s, f); #NC? JDM 
+
+  if not NrIdempotents(r)=1 then
+    Info(InfoCitrus, 2, "the number of idempotents in the R-class of the",
+    " first maximum rank");
+    Info(InfoCitrus, 2, " generator is not 1");
+    return fail;
+  fi;
+
+  f:=Idempotents(r)[1];
+
+  if ForAll(gens, x-> x*f=x and f*x=x) then
+    return f;
+  fi;
+
+  Info(InfoCitrus, 2, "the unique idempotent in the R-class of the first",
+  " maximum rank");
+  Info(InfoCitrus, 2, " generator is not the identity");
+  return fail;
 end);
+
+# it just so happens that the MultiplicativeNeutralElement of a semigroup of
+# partial permutations has to coincide with the One. This is not the case for
+# transformation semigroups
+
+InstallOtherMethod(MultiplicativeNeutralElement, "for a partial perm semi",
+[IsPartialPermSemigroup], One);
 
 # new for 0.1! - MultiplicativeZero - "for an acting semigroup"
 ###########################################################################
