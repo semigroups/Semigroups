@@ -10,49 +10,6 @@
 
 #EEE
 
-# new for 0.7! - EnumerateInverseSemiData - "for an inverse semi of part perms"
-##############################################################################
-
-InstallGlobalFunction(EnumerateInverseSemiData, 
-function(s)
-  local o, modifier, scc, r, mults, schutz, graph, truth, gens, n, w, f, i;
-  
-  o:=LongOrb(s);
-  
-  if IsPartialPermMonoid(s) then 
-    modifier:=0;
-  else
-    modifier:=1;
-  fi;
-   
-  scc:=OrbSCC(o);
-  r:=Length(scc);
-  
-  if not o!.finished then 
-    mults:=EmptyPlist(Length(o)); 
-    schutz:=EmptyPlist(r);
-    graph:=OrbitGraph(o);;
-    truth:=OrbSCCTruthTable(o);;
-    gens:=o!.gens;
-    n:=Length(gens);
-    for i in [1..r] do 
-      CreateOrbSCCMultipliersNC(gens, o, i, scc[i], mults);
-      f:=PartialPermNC(o[scc[i][1]], o[scc[i][1]]);
-      schutz[i]:=CreateOrbSCCSchutzGpNC(gens, o, f, scc[i], 
-         truth[i], graph, n, mults);
-    od;
-    o!.mults:=mults;
-    o!.schutz:=schutz;
-    o!.finished:=true;
-  else
-    schutz:=o!.schutz;
-  fi;
-  
-  SetSize(s, Sum(List([1..r], m-> Length(scc[m])^2*Size(schutz[m][2])))-
-     modifier);
-  return;
-end); 
-
 # new for 0.7! - Enumerator - "for an inverse semigroup"
 #############################################################################
 # Notes: this is not an enumerator as I could not get an enumerator to perform 

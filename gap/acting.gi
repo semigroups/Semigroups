@@ -127,11 +127,10 @@ function(f, s)
   fi;
   
   # the only case when l is found but f not in s.
-  # JDM the below doesn't work since IsMonoidAsSemigroup returns false when it
-  # shouldn't 
-  #if l=1 and not IsMonoidAsSemigroup(s) then 
-  #  return false;
-  #fi;
+
+  if l=1 and ActingSemigroupModifier(s)=1 then 
+    return false;
+  fi;
 
   # strongly connected component of lambda orb
   m:=OrbSCCLookup(o)[l];
@@ -485,31 +484,6 @@ function(data, limit, lookfunc)
   return data;
 end);
 
-#JDM
-
-# new for 1.0! - Enumerate - "for a regular acting semi"
-##############################################################################
-# JDM how do we do this for SemigroupData?!
-
-InstallOtherMethod(Enumerate, "for a regular acting semigroup data",
-[IsActingSemigroup and IsRegularSemigroup],
-function(s)
-  local o, scc, r, m;
-
-  o:=LambdaOrb(s);
-
-  if not o!.enumerated then 
-    scc:=OrbSCC(o);
-    r:=Length(scc);
-    for m in [1..r] do
-      #JDM expand!
-      LambdaOrbSchutzGp(o, m);
-    od;
-  fi;
-  
-  return o;
-end);
-
 #FFF
 
 #GGG
@@ -741,19 +715,10 @@ end);
 InstallMethod(LambdaOrb, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
-  local x;
-  
-  if IsTransformationSemigroup(s) then
-    x:=One(Generators(s)[1]);
-  elif IsPartialPermSemigroup(s) then 
-    x:=PartialPermNC(Points(Generators(s)), Points(Generators(s)));
-  fi;     
-
-  # the component enumerated is only used for regular semigroups
   return Orb(s, LambdaDomain(s), LambdaAct(s),
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
         storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
-        enumerated:=false, scc_reps:=[x], semi:=s));
+        scc_reps:=[One(Generators(s))], semi:=s));
 end);
 
 # new for 1.0! - LambdaOrb - "for acting semigroup with inversion"
@@ -1090,19 +1055,11 @@ function(s)
   # to just fake the orbit below (we have all the info already).
   # But it seems to be so fast to calculate the 
   # in most cases that there is no point. 
-  
-  #JDM it would be much better to just do One(s); 
-  if IsTransformationSemigroup(s) then
-    x:=One(Generators(s)[1]);
-  elif IsPartialPermSemigroup(s) then
-    x:=PartialPermNC(Points(Generators(s)), Points(Generators(s)));
-  fi;    
 
-  # the component enumerated is only used for regular semigroups
   return Orb(s, RhoDomain(s), RhoAct(s),
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
         storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
-        enumerated:=false, scc_reps:=[x], semi:=s));
+        scc_reps:=[One(Generators(s))], semi:=s));
 end);
 
 # new for 1.0! - RhoOrbMults - "for a rho orb and scc index"
@@ -1239,33 +1196,23 @@ function(s)
   
   gens:=Generators(s);
 
-  if IsTransformationSemigroup(s) then 
-    x:=One(gens[1]);
-  elif IsPartialPermSemigroup(s) then 
-    x:=PartialPermNC(Points(gens), Points(gens));
-  else
-    return fail;
-  fi;
-
   data:=rec( ht:=HTCreate(x, rec(hashlen:=s!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[],
-     lenreps:=0, orbit:=[[,,,x]], repslens:=[], 
+     lenreps:=0, orbit:=[[,,,One(gens)]], repslens:=[], 
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail]);
   
   Objectify(NewType(FamilyObj(s), IsSemigroupData and IsAttributeStoringRep),
    data);
 
-  if IsMonoid(s) or x in gens then 
-    InitSemigroupData(s, data, x);
+  if IsMonoid(s) or ForAny(gens, x-> Degree(x)=Degree(s)) then 
+    InitSemigroupData(s, data, One(gens));
     if not IsMonoid(s) then 
       SetIsMonoidAsSemigroup(s, true);
     fi;
-    data!.modifier:=0;
   else
     InitSemigroupData(s, data, false);
-    SetIsMonoidAsSemigroup(s, false);
-    data!.modifier:=1;
+    SetActingSemigroupModifier(s, 1);
   fi;
   SetParentSemigroup(data, s);
   return data;

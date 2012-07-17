@@ -449,11 +449,22 @@ function(f)
   return SparsePartialPermNC(x, x);
 end); 
 
-# new for 0.7! - One - for a partial perm semigroup
+# new for 1.0! - OneMutable - for a partial perm collection
+##############################################################################
+
+InstallOtherMethod(OneMutable, "for a partial perm coll", 
+[IsPartialPermCollection], 
+function(x)
+  local id;
+  id:=Union(List(x, f-> Union(DomPP(f), RanSetPP(f))));
+  return SparsePartialPermNC(id, id);
+end);
+
+# new for 0.7! - OneMutable - for a partial perm semigroup
 ##############################################################################
 
 InstallOtherMethod(OneMutable, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> PartialPermNC(Points(s), Points(s)));
+[IsPartialPermSemigroup], s-> SparsePartialPermNC(Points(s), Points(s)));
 
 # new for 0.7! - OnIntegerSetsWithPartialPerm 
 #############################################################################
@@ -505,10 +516,13 @@ end);
 # new for 0.7! - Points - "for a partial perm semigroup"
 ##############################################################################
 
-InstallOtherMethod(Points, "for a partial perm coll",
+InstallOtherMethod(Points, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> Union(List(GeneratorsOfSemigroup(s), x->          Union(DomPP(x), RanSetPP(x)))));
 
-InstallMethod(Points, "for a partial perm semigroup",
+# new for 0.7! - Points - "for a partial perm inverse semigroup"
+##############################################################################
+
+InstallMethod(Points, "for a partial perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], s->
 Union(List(GeneratorsOfSemigroup(s), DomPP)));
 

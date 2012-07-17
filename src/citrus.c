@@ -216,6 +216,8 @@ Obj FuncDensePartialPermNC( Obj self, Obj img )
           if(j<min_ran) min_ran=j;
         }
       }
+    }else{
+       buf=INTOBJ_INT(0); 
     }
 
     TOO_MANY_PTS_ERROR(max_ran>65535);
@@ -1469,15 +1471,15 @@ Obj FuncPermLeftQuoTransformationNC(Obj self, Obj f, Obj g)
 
 /* less than or equal for transformations */
 Obj FuncLeqT(Obj self, Obj f, Obj g)
-{ pttype i, j, k, deg;
+{ pttype i, j, k, deg_f, deg_g;
 
-  deg=ELM_PT(f,1);
-  if(deg!=ELM_PT(g,1)){
-    ErrorQuit("usage: transformations should have equal degree,", 0L, 0L);
-    return 0L;
-  }
+  deg_f=ELM_PT(f,1);
+  deg_g=ELM_PT(g,1);
 
-  for(i=1;i<=deg;i++){
+  if(deg_f<deg_g) return True;
+  if(deg_f>deg_g) return False;
+
+  for(i=1;i<=deg_f;i++){
     j=ELM_PT(f,4+i);
     k=ELM_PT(g,4+i);
     if(j<k) return True;

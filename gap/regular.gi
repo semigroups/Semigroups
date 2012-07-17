@@ -215,3 +215,6 @@ function(s)
          IsEquivalenceClassDefaultRep and IsGreensDClass and
          IsRegularActingSemigroupGreensClass);
 end);
+
+
+

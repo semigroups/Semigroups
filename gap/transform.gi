@@ -12,15 +12,15 @@
 
 MakeReadWriteGlobal("TransformationFamily");
 UnbindGlobal("TransformationFamily");
+
 MakeReadWriteGlobal("TransformationType");
 UnbindGlobal("TransformationType");
-             
+
 BindGlobal("TransformationFamily", NewFamily("TransformationFamily",
  IsTransformation, CanEasilySortElements, CanEasilySortElements));
                     
 BindGlobal("TransformationType", NewType(TransformationFamily,
  IsTransformation and IsDataObjectRep and IsActingElt));
-
 
 # new for 1.0! - \* - "for a trans and trans"
 ############################################################################
@@ -80,6 +80,13 @@ end);
 
 #DDD
 
+# new for 1.0! - DegreeOfTransformation - "for a transformation"
+############################################################################
+
+MakeReadWriteGlobal("DegreeOfTransformation");
+UnbindGlobal("DegreeOfTransformation");
+BindGlobal("DegreeOfTransformation", f-> f[1]);
+
 # new for 1.0! - Degree - "for a transformation"
 #############################################################################
 # Notes: returns DegreeOfTransformation.
@@ -87,12 +94,25 @@ end);
 InstallOtherMethod(Degree, "for a transformation",
 [IsTransformation], f-> f[1]);
 
-# new for 1.0! - DegreeOfTransformation - "for a transformation"
+# mod for 1.0! - DegreeOfTransformationCollection - "for a trans. coll."
 ############################################################################
 
-MakeReadWriteGlobal("DegreeOfTransformation");
-UnbindGlobal("DegreeOfTransformation");
-BindGlobal("DegreeOfTransformation", f-> f[1]);
+InstallMethod(DegreeOfTransformationCollection, "for a trans. coll.", 
+[IsTransformationCollection], 
+function(coll)
+
+  if IsTransformationSemigroup(coll) then 
+    return DegreeOfTransformationSemigroup(coll);
+  fi;
+  if not ForAll(coll, x-> x[1]=coll[1][1]) then 
+    Error("usage: collection of transformations of equal degree,");
+    return;
+  fi;
+  return coll[1][1];
+end);
+
+InstallOtherMethod(Degree, "for a transformation coll.",
+[IsTransformationCollection], DegreeOfTransformationCollection);
 
 # new for 1.0! - RankOfTransformation - "for a transformation"
 ############################################################################
@@ -220,23 +240,6 @@ end);
 
 #AAA
 
-# new for 0.1! - AsPermOfKerImg - "for a transformation"
-#############################################################################
-# Notes: returns a perm such that i -> ker[i]^f, performs no checks. 
-
-InstallGlobalFunction(AsPermOfKerImg,
-function(f)
-  local ker, img, n, p, i;
-
-  ker:=KerT(f); img:=RanT(f); 
-    n:=Length(img); p:=EmptyPlist(n); 
-    for i in [1..n] do 
-      p[ker[i]]:=img[i];
-    od;
-      
-    return PermList(Concatenation(p, Difference([1..n], p)));
-end);
-
 # new for 0.1! - AsPermutation - "for a permutation"
 ############################################################################
 # Notes: just in case!
@@ -283,20 +286,6 @@ function(m,n)
 end);
 
 #DDD
-
-# mod for 1.0! - DegreeOfTransformationCollection - "for a trans. coll."
-############################################################################
-# undocumented.
-
-InstallMethod(DegreeOfTransformationCollection, "for a trans. coll.", 
-[IsTransformationCollection], 
-function(coll)
-
-  if IsTransformationSemigroup(coll) then 
-    return DegreeOfTransformationSemigroup(coll);
-  fi;
-  return DegreeOfTransformation(coll[1]);
-end);
 
 #III
 
@@ -470,28 +459,23 @@ end);
 
 #OOO
 
-# new for 0.5! - One - "for a transformation"
+# new for 0.5! - OneMutable - "for a transformation"
 #############################################################################
 
-InstallMethod(One, "for a transformation",
-[IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
+InstallMethod(OneMutable, "for a transformation",
+[IsTransformation], s-> TransformationNC([1..Degree(s)]*1));
 
-# mod for 0.5! - One - "for a full transformation semigroup"
+# new for 1.0! - OneMutable - "for a transformation collection"
+#############################################################################
+
+InstallOtherMethod(OneMutable, "for a transformation coll",
+[IsTransformationCollection], coll-> TransformationNC([1..Degree(coll)]*1));
+
+# mod for 0.5! - OneMutable - "for a full transformation semigroup"
 ###########################################################################
-# Notes: this should not be necessary. Better if '\in' for a full
-# transformation semigroup took priority over '\in' for a transformation
-# semigroup
 
-InstallOtherMethod(One, "for a full transformation semigroup", 
-[IsFullTransformationSemigroup],  s -> 
- TransformationNC([1.. Degree(s)]*1));
-
-# new for 0.5! - One - "for a transformation semigroup"
-#############################################################################
-# Notes: required due to hashing not working for ranges. 
-
-InstallMethod(One, "for a transformation",
-[IsTransformation], 10, s-> TransformationNC([1..Degree(s)]*1));
+InstallOtherMethod(OneMutable, "for a full transformation semigroup", 
+[IsFullTransformationSemigroup], s->TransformationNC([1.. Degree(s)]*1));
 
 #PPP
 
