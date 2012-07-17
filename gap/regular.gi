@@ -201,8 +201,8 @@ InstallOtherMethod(DClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsRegularDClass and
-         IsRegularActingSemigroupGreensClass);
+         IsEquivalenceClassDefaultRep and IsRegularDClass and IsGreensDClass 
+         and IsRegularActingSemigroupGreensClass);
 end);
 
 # new for 1.0! - HClassType - "for a regular acting semigroup"
@@ -214,7 +214,7 @@ InstallOtherMethod(HClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsGroupHClass and
+         IsEquivalenceClassDefaultRep and IsGroupHClass and IsGreensHClass and
          IsRegularActingSemigroupGreensClass);
 end);
 
@@ -227,7 +227,7 @@ InstallOtherMethod(LClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsRegularLClass and
+         IsEquivalenceClassDefaultRep and IsRegularLClass and IsGreensLClass and
          IsRegularActingSemigroupGreensClass);
 end);
 
@@ -240,7 +240,7 @@ InstallOtherMethod(RClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsRegularRClass and
+         IsEquivalenceClassDefaultRep and IsRegularRClass and IsGreensRClass and
          IsRegularActingSemigroupGreensClass);
 end);
 
@@ -301,10 +301,7 @@ end);
 
 InstallOtherMethod(NrHClasses, "for a D-class of regular acting semigroup",
 [IsRegularActingSemigroupGreensClass and IsGreensDClass],
-function(d)
-  return Length(Enumerate(LambdaOrb(d), infinity))*
-   Length(Enumerate(RhoOrb(d), infinity));
-end);
+d-> Length(LambdaOrbSCC(d))*Length(RhoOrbSCC(d)));
 
 # new for 1.0! - NrHClasses - "for a L-class of regular acting semigroup"
 ############################################################################
@@ -325,9 +322,7 @@ end);
 
 InstallOtherMethod(NrHClasses, "for a R-class of regular acting semigroup",
 [IsRegularActingSemigroupGreensClass and IsGreensRClass],
-function(r)
-   return Length(Enumerate(LambdaOrb(r), infinity));
-end);
+r-> Length(LambdaOrbSCC(r)));
 
 # new for 1.0! - NrLClasses - "for a regular acting semigroup"
 ############################################################################
@@ -349,11 +344,7 @@ end);
 
 InstallOtherMethod(NrLClasses, "for a D-class of regular acting semigroup",
 [IsRegularActingSemigroupGreensClass and IsGreensDClass],
-function(d)
-  local o;
-  o:=Enumerate(LambdaOrb(d), infinity);
-  return Length(o);
-end);
+d-> Length(LambdaOrbSCC(d)));
 
 # new for 1.0! - NrRClasses - "for a regular acting semigroup"
 ############################################################################
@@ -376,11 +367,7 @@ end);
 
 InstallOtherMethod(NrRClasses, "for a D-class of regular acting semigroup",
 [IsRegularActingSemigroupGreensClass and IsGreensDClass],
-function(d)
-  local o;
-  o:=Enumerate(RhoOrb(d), infinity);
-  return Length(o);
-end);
+d-> Length(RhoOrbSCC(d)));
 
 # new for 1.0! - NrIdempotents - for a regular acting semigroup
 ############################################################################

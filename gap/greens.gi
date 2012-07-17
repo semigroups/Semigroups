@@ -1071,8 +1071,6 @@ end);
 # mod for 1.0! - GreensDClassOfElement - "for an acting semigp and elt."
 #############################################################################
 
-# same method for regular/inverse
-
 InstallOtherMethod(GreensDClassOfElement, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
@@ -1111,11 +1109,6 @@ function(s, f)
   SetRepresentative(d, f);
   SetEquivalenceClassRelation(d, GreensDRelation(s));
   SetIsGreensClassNC(d, false);
-
-  if HasIsRegularSemigroup(s) then 
-    SetIsRegularActingSemigroupGreensClass(d, IsRegularSemigroup(s));
-  fi;
-
   return d;
 end);
 
@@ -1139,11 +1132,6 @@ function(s, f)
   SetRepresentative(d, f);
   SetEquivalenceClassRelation(d, GreensDRelation(s));
   SetIsGreensClassNC(d, true);
-
-  if HasIsRegularSemigroup(s) then 
-    SetIsRegularActingSemigroupGreensClass(d, IsRegularSemigroup(s));
-  fi;
-
   return d;
 end);
 
@@ -1174,11 +1162,6 @@ function(s, f)
   SetRepresentative(h, f);
   SetEquivalenceClassRelation(h, GreensHRelation(s));
   SetIsGreensClassNC(h, false);
-
-  if HasIsRegularSemigroup(s) then 
-    SetIsRegularActingSemigroupGreensClass(h, IsRegularSemigroup(s));
-  fi;
-
   return h;
 end);
 
@@ -1202,11 +1185,6 @@ function(s, f)
   SetRepresentative(h, f);
   SetEquivalenceClassRelation(h, GreensHRelation(s));
   SetIsGreensClassNC(h, true);
-
-  if HasIsRegularSemigroup(s) then 
-    SetIsRegularActingSemigroupGreensClass(h, IsRegularSemigroup(s));
-  fi;
-
   return h;
 end);
 
@@ -1421,10 +1399,6 @@ function(s, f)
   SetEquivalenceClassRelation(l, GreensLRelation(s));
   SetIsGreensClassNC(l, false);
 
-  if HasIsRegularSemigroup(s) then 
-    SetIsRegularActingSemigroupGreensClass(l, IsRegularSemigroup(s));
-  fi;
-
   return l;
 end);
 
@@ -1444,11 +1418,6 @@ function(s, f)
   SetRepresentative(l, f);
   SetEquivalenceClassRelation(l, GreensLRelation(s));
   SetIsGreensClassNC(l, true);
-
-  if HasIsRegularSemigroup(s) then 
-    SetIsRegularActingSemigroupGreensClass(l, IsRegularSemigroup(s));
-  fi;
-
   return l;
 end);
 
