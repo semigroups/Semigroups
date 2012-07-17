@@ -110,7 +110,7 @@ end);
 #############################################################################
 #JDM revise this if revising \in for elt and D-class in greens.gi
 
-InstallMethod(\in, "for acting elt and D-class of acting semigp.",
+InstallMethod(\in, "for acting elt and D-class of regular acting semigp.",
 [IsActingElt, IsGreensDClass and IsRegularActingSemigroupGreensClass],
 function(f, d)
   local rep, s, g, m, o, scc, l, schutz;
@@ -227,6 +227,10 @@ end);
 # mod for 1.0! - Enumerator - "for D-class of regular acting semigp."
 #############################################################################
 
+# same method for inverse
+
+#JDM could write another method if nec.
+
 InstallOtherMethod(Enumerator, "for a D-class of acting semigp.",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
@@ -334,6 +338,28 @@ function(d)
     return;
   end));
 end);
+
+# new for 1.0! - GreensDClasses - for regular acting semi
+############################################################################
+
+InstallOtherMethod(GreensDClasses, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  local o, r, scc, out, i;
+
+  o:=Enumerate(LambdaOrb(s), infinity);
+
+  r:=ActingSemigroupModifier(s);
+  scc:=OrbSCC(data);
+  out:=EmptyPlist(Length(scc));
+
+  for i in [1+r..Length(scc)] do 
+    out[i-r]:=CallFuncList(CreateDClass, [s, i, o, LambdaOrbRep(o,m)]);
+  od;
+  return out;
+end);
+
+
 
 # new for 1.0! - GreensRClassOfElement - for regular acting semi and elt"
 ############################################################################
@@ -586,6 +612,12 @@ end);
 InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup and IsRegularSemigroup],
 NrDClasses);
+
+#RRR
+
+InstallMethod(RhoOrbStabChain, "for D-class of reg acting semigp",
+[IsGreensDClass and IsRegularActingSemigroupGreensClass],
+d-> StabChainImmutable(SchutzenbergerGroup(d)));
 
 #SSS
 

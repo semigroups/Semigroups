@@ -478,7 +478,9 @@ function(arg)
   SetParentSemigroup(d, arg[1]);
   SetLambdaOrb(d, arg[3]);
   SetLambdaOrbSCCIndex(d, arg[2]);
-  SetSemigroupDataIndex(d, arg[5]);
+  if IsBound(arg[5]) then 
+    SetSemigroupDataIndex(d, arg[5]);
+  fi;
 
   rep:=arg[4];
   o:=RhoOrb(arg[1]);
@@ -669,6 +671,8 @@ end);
 # mod for 1.0! - Enumerator - "for H-class of acting semigp."
 #############################################################################
 
+# same method for inverse/regular
+
 InstallOtherMethod(Enumerator, "for H-class of acting semigp.",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
@@ -719,6 +723,8 @@ end);
 
 # mod for 1.0! - Enumerator - "for R-class of an acting semigroup"
 ##############################################################################
+
+# same method for regular/inverse
 
 InstallMethod(Enumerator, "for R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
@@ -810,6 +816,8 @@ end);
 # mod for 1.0! - Enumerator - "for L-class of an acting semigroup"
 ##############################################################################
 
+# same method for inverse/regular
+
 InstallMethod(Enumerator, "for L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
@@ -899,6 +907,8 @@ end);
 #############################################################################
 # Notes: this is not an enumerator as I could not get an enumerator to perform 
 # well here. 
+
+# same method for regular/inverse
 
 InstallMethod(Enumerator, "for an acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
