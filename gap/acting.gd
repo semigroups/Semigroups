@@ -70,7 +70,7 @@ DeclareAttribute("ActingSemigroupModifier", IsActingSemigroup);
 
 # INVERSE SEMIGROUPS
 
-DeclareProperty("IsActingSemigroupWithInversion", IsActingSemigroup and
+DeclareProperty("IsActingSemigroupWithInverseOp", IsActingSemigroup and
 IsInverseSemigroup);
 DeclareCategory("IsInverseActingElt", IsMultiplicativeElementWithOne and
 IsAssociativeElement);
@@ -80,9 +80,9 @@ DeclareCategoryCollections("IsInverseActingElt");
 
 InstallTrueMethod(IsActingSemigroup, IsTransformationSemigroup);
 InstallTrueMethod(IsActingSemigroup, IsPartialPermSemigroup);
-InstallTrueMethod(IsActingSemigroupWithInversion, IsPartialPermSemigroup and
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsPartialPermSemigroup and
 IsInverseSemigroup);
-InstallTrueMethod(IsActingSemigroupWithInversion, IsPartialPermSemigroup and IsRegularSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsPartialPermSemigroup and IsRegularSemigroup);
 InstallTrueMethod(IsActingElt, IsTransformation);
 InstallTrueMethod(IsActingElt, IsPartialPerm);
 InstallTrueMethod(IsInverseActingElt, IsPartialPerm);
