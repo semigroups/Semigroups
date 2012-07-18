@@ -478,7 +478,7 @@ function(arg)
   SetParentSemigroup(d, arg[1]);
   SetLambdaOrb(d, arg[3]);
   SetLambdaOrbSCCIndex(d, arg[2]);
-  if IsBound(arg[5]) then 
+  if arg[5]<>fail then 
     SetSemigroupDataIndex(d, arg[5]);
   fi;
 
@@ -508,8 +508,6 @@ end);
 # mod for 1.0! - CreateLClass - not a user function!
 #############################################################################
 
-# so far only used in GreensLClasses of a D-class. 
-
 InstallGlobalFunction(CreateLClass,
 function(arg)
   local l;
@@ -522,7 +520,7 @@ function(arg)
   SetRepresentative(l, arg[4]);
   
   SetEquivalenceClassRelation(l, GreensLRelation(arg[1]));
-  SetIsGreensClassNC(l, true); 
+  SetIsGreensClassNC(l, arg[5]); 
   return l;
 end);
 
@@ -1051,6 +1049,7 @@ end);
 ##############################################################################
 
 # different method for regular/inverse
+# JDM could write another method for regular/inverse if needed.
 
 InstallMethod(GreensHClasses, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
@@ -1060,6 +1059,8 @@ end);
 
 # mod for 1.0! - GreensLClasses - "for an acting semigroup"
 ##############################################################################
+
+# same method for regular/inverse
 
 InstallMethod(GreensLClasses, "for an acting semigroup",
 [IsActingSemigroup], 
@@ -1160,6 +1161,8 @@ end);
 
 # mod for 1.0! - GreensRClasses - "for an acting semigroup"
 ##############################################################################
+
+# different method for regular/inverse
 
 InstallMethod(GreensRClasses, "for an acting semigroup",
 [IsActingSemigroup], 

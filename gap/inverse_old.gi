@@ -143,71 +143,6 @@ function(d)
   return out;
 end);
 
-# new for 0.7! - GreensHClasses - for an L-class of inv semi of partial perms
-############################################################################
-
-InstallOtherMethod(GreensHClasses, "for L-class of inv semi of partial perms",
-[IsGreensLClass and IsGreensClassOfInverseSemigroup and
-IsGreensClassOfPartPermSemigroup],
-function(d)
-  local m, j, o, scc, s, out, reps, mults, f, i;
-  
-  m:=d!.data[1]; j:=d!.data[3]; o:=d!.o; scc:=OrbSCC(d!.o)[m];
-  s:=d!.parent; out:=EmptyPlist(Length(scc));
-  
-  if HasHClassReps(d) then 
-    reps:=HClassReps(d);
-    for i in [1..Length(scc)] do
-      out[i]:=CreateHClass(s, [m,scc[i],j], o, reps[i]);
-    od;
-  else
-    reps:=EmptyPlist(Length(scc));
-    mults:=OrbMultipliers(d);
-    f:=Representative(d);
-  
-    for i in [1..Length(scc)] do
-      reps[i]:=mults[scc[i]]*f;
-      out[i]:=CreateHClass(s, [m,scc[i],j], o, reps[i]);
-    od;
-    SetHClassReps(d, reps); 
-  fi;
-
-  return out;
-end);
-
-# new for 0.7! - GreensHClasses - for an R-class of inv semi of partial perms
-############################################################################
-
-InstallOtherMethod(GreensHClasses, "for R-class of inv semi of partial perms",
-[IsGreensRClass and IsGreensClassOfInverseSemigroup and
-IsGreensClassOfPartPermSemigroup],
-function(r)
-  local m, k, l, o, scc, s, out, reps, mults, f, i;
-  
-  m:=r!.data[1]; k:=r!.data[2]; l:=r!.data[3]; o:=r!.o; 
-  scc:=OrbSCC(o)[m]; s:=r!.parent; 
-  out:=EmptyPlist(Length(scc));
-  
-  if HasHClassReps(r) then 
-    reps:=HClassReps(r);
-    for i in [1..Length(scc)] do
-      out[i]:=CreateHClass(s, [m,k,scc[i]], o, reps[i]);
-    od; 
-  else
-    reps:=EmptyPlist(Length(scc));
-    mults:=OrbMultipliers(r);
-    f:=Representative(r);
-  
-    for i in [1..Length(scc)] do
-      reps[i]:=f/mults[scc[i]];
-      out[i]:=CreateHClass(s, [m,k,scc[i]], o, reps[i]);
-    od;
-    SetHClassReps(r, reps); 
-  fi;
-
-  return out;
-end);
-
 # new for 0.7! - GroupHClass - for a D-class of inv semi
 ############################################################################
 
@@ -252,38 +187,6 @@ function(d)
   return out;
 end);
 
-# new for 0.7! - GreensLClasses - for an inv semi of part perms
-##############################################################################
-
-InstallOtherMethod(GreensLClasses, "for an inv semi of part perms",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(s)
-  local l, o, scc, out, type, mults, i, f, rep, m, j;
-
-  if IsPartialPermMonoid(s) then
-    l:=0;
-  else
-    l:=1;
-  fi;
-  
-  o:=LongOrb(s); EnumerateInverseSemiData(s);
-  scc:=OrbSCC(o); out:=EmptyPlist(Length(o));
-  type:=LClassType(s); mults:=o!.mults;
-
-  i:=0; 
-  
-  for m in [1..Length(scc)-l] do
-    f:=PartialPermNC(o[scc[m+l][1]], o[scc[m+l][1]]);
-    for j in scc[m+l] do 
-      i:=i+1;
-      rep:=f/mults[j];
-      out[i]:=CreateLClass(s, [m+l,scc[m+l][1],j], o, rep);
-   od;
-  od;
-
-  return out;
-end);
-
 # new for 0.7! - GreensRClasses - for a D-class of inv semi of part perms
 ##############################################################################
 
@@ -315,40 +218,6 @@ function(d)
   return out;
 end);
 
-# new for 0.7! - GreensRClasses - for an inv semi of part perms
-##############################################################################
-
-InstallOtherMethod(GreensRClasses, "for an inv semi of part perms",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(s)
-  local l, o, scc, out, type, mults, rrel, i, f, rep, m, j;
-
-  if IsPartialPermMonoid(s) then
-    l:=0;
-  else
-    l:=1;
-  fi;
-  
-  o:=LongOrb(s); EnumerateInverseSemiData(s); scc:=OrbSCC(o);
-  out:=EmptyPlist(Length(o)); 
-
-  type:=RClassType(s); mults:=o!.mults; rrel:=GreensRRelation(s);
-
-  i:=0; 
-  
-  for m in [1..Length(scc)-l] do
-    f:=PartialPermNC(o[scc[m+l][1]], o[scc[m+l][1]]);
-    for j in scc[m+l] do 
-      i:=i+1;
-      rep:=mults[j]*f;
-      out[i]:=CreateRClass(s, [m+l, j, scc[m+l][1]], o, rep);
-   od;
-  od;
-
-  return out;
-end);
-
-
 # new for 0.7! - GreensRClassOfElementNC - for D-class and part perm
 ##############################################################################
 # Notes: data is: [scc index, scc[1], pos of dom, pos of ran]
@@ -377,40 +246,6 @@ function(d, f)
 end);
 
 #HHH
-
-# new for 0.7! - HClassReps - for an inverse semigroup of partial perms
-##############################################################################
-
-InstallOtherMethod(HClassReps, "for an inverse semi of partial perms",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(s)
-  local o, scc, mults, r, out, l, m, f, i, j, k;
-
-  o:=LongOrb(s);
-  EnumerateInverseSemiData(s);
-  scc:=OrbSCC(o);
-  mults:=o!.mults;
-  r:=Length(scc);
-  out:=EmptyPlist(NrHClasses(s));
-
-  if IsPartialPermMonoid(s) then 
-    l:=0;
-  else
-    l:=1;
-  fi;
-
-  m:=0;
-  for i in [1..r-l] do 
-    f:=PartialPermNC(o[scc[i+l][1]], o[scc[i+l][1]]);
-    for j in scc[i+l] do 
-      for k in scc[i+l] do 
-        m:=m+1;
-        out[m]:=mults[j]*f/mults[k];  
-      od;
-    od;
-  od;
-  return out;
-end);
 
 # new for 0.7! - HClassReps - for an D-class of inv semi of partial perms
 ############################################################################

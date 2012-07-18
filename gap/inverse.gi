@@ -22,7 +22,7 @@ function(s)
   l:=ActingSemigroupModifier(s);
   n:=0; 
     
-  for i in [1..lambda_l-l] do
+  for i in [1..lambda_len-l] do
     lambda_m:=i+l;
     lambda_mults:=LambdaOrbMults(lambda_o, lambda_m);
     f:=RightOne(LambdaOrbRep(lambda_o, lambda_m));
@@ -41,6 +41,43 @@ function(s)
       od;
     od;
   od;
+  return out;
+end);
+                    
+# new for 0.7! - GreensRClasses - for acting semigroup with inversion
+##############################################################################
+                    
+InstallOtherMethod(GreensRClasses, "for acting semigroup with inversion",
+[IsActingSemigroupWithInversion],
+function(s)         
+  local l, o, scc, out, type, rrel, i, f, mults, r, m, j;
+                    
+  l:=ActingSemigroupModifier(s);
+                    
+  o:=LambdaOrb(s);
+  scc:=OrbSCC(o);   
+  out:=EmptyPlist(Length(o));
+  type:=RClassType(s);
+  rrel:=GreensRRelation(s);
+
+  i:=0;             
+                    
+  for m in [1+l..Length(scc)] do
+    f:=RightOne(LambdaOrbRep(o, m));
+    mults:=LambdaOrbMults(o, m);
+    for j in scc[m] do
+      i:=i+1;       
+      r:=Objectify(type, rec());
+      SetParentSemigroup(r, s);
+      SetLambdaOrbSCCIndex(r, m);
+      SetLambdaOrb(r, o);
+      SetRepresentative(r, mults[j][1]*f);
+      SetEquivalenceClassRelation(r, rrel);
+      SetIsGreensClassNC(r, false);
+      out[i]:=r;
+    od;             
+  od;
+
   return out;
 end);
 
@@ -62,7 +99,7 @@ function(s)
   l:=ActingSemigroupModifier(s);
   n:=0; 
     
-  for i in [1..lambda_l-l] do
+  for i in [1..lambda_len-l] do
     lambda_m:=i+l;
     lambda_mults:=LambdaOrbMults(lambda_o, lambda_m);
     f:=RightOne(LambdaOrbRep(lambda_o, lambda_m));

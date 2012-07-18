@@ -367,7 +367,7 @@ end);
 # different method for inverse.
 
 InstallOtherMethod(GreensHClasses, "for a regular acting semigroup", 
-[IsRegularActingSemigroup],
+[IsActingSemigroup and IsRegularSemigroup],
 function(s)
   local lambda_o, lambda_scc, rho_o, rho_scc, lambda_len, lookup, rhofunc, out, type, hrel, l, n, lambda_m, lambda_mults, f, rho_m, rho_mults, h, i, j, k;
 
@@ -386,7 +386,7 @@ function(s)
   l:=ActingSemigroupModifier(s);     
   n:=0;
 
-  for i in [1..lambda_l-l] do
+  for i in [1..lambda_len-l] do
     lambda_m:=i+l;
     lambda_mults:=LambdaOrbMults(lambda_o, lambda_m);
     f:=CanonicalRep(lambda_o, lambda_m);
@@ -444,7 +444,7 @@ function(l)
     for j in scc do
       k:=k+1;
       out[k]:=GreensHClassOfElementNC(l, mults[j][1]*f);
-      SetLClassOfHClass(out[k], r);
+      SetLClassOfHClass(out[k], l);
     od; 
   fi;
   return out;
@@ -487,6 +487,54 @@ function(r)
   fi;
   return out;
 end);
+
+# new for 0.7! - GreensRClasses - for regular acting semigroup
+##############################################################################
+
+# different method for inverse 
+
+InstallOtherMethod(GreensRClasses, "for a regular acting semigroup", 
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  local rho_o, rho_scc, lambda_o, lambda_scc, rho_len, lookup, lambdafunc, out, type, hrel, l, n, rho_m, f, lambda_l, lambda_m, mults, i, j;
+  
+  rho_o:=RhoOrb(s);
+  rho_scc:=OrbSCC(rho_o);
+  lambda_o:=LambdaOrb(s);
+  lambda_scc:=OrbSCC(lambda_o);
+
+  rho_len:=Length(rho_scc);
+  lookup:=OrbSCCLookup(lambda_o);
+  lambdafunc:=LambdaFunc(s);
+
+  out:=EmptyPlist(NrRClasses(s));
+  type:=RClassType(s);
+  hrel:=GreensRRelation(s);
+  l:=ActingSemigroupModifier(s);     
+  n:=0;
+
+  for i in [1..rho_len-l] do
+    rho_m:=i+l;
+    f:=RhoOrbRep(rho_o, rho_m);
+    lambda_l:=Position(lambda_o, lambdafunc(f));
+    lambda_m:=lookup[lambda_l];
+    f:=f*LambdaOrbMults(lambda_o, lambda_m)[lambda_l][2];
+   
+    mults:=RhoOrbMults(rho_o, rho_m);
+    for j in rho_scc[rho_m] do
+      n:=n+1;
+      out[n]:=Objectify(type, rec());
+      SetParentSemigroup(out[n], s);
+      SetLambdaOrb(out[n], lambda_o);
+      SetLambdaOrbSCCIndex(out[n], lambda_m);
+      SetRepresentative(out[n], mults[j][1]*f);
+      SetEquivalenceClassRelation(out[n], rrel);
+      SetIsGreensClassNC(out[n], false);
+    od;
+  od;
+  return out;
+end);
+
 
 # new for 1.0! - GreensRClassOfElement - for regular acting semi and elt"
 ############################################################################
@@ -535,7 +583,7 @@ end);
 # different method for inverse.
 
 InstallOtherMethod(HClassReps, "for a regular acting semigroup", 
-[IsRegularActingSemigroup],
+[IsRegularSemigroup and IsActingSemigroup],
 function(s)
   local lambda_o, lambda_scc, rho_o, rho_scc, lambda_len, lookup, rhofunc, out, l, n, lambda_m, lambda_mults, f, rho_m, rho_mults, i, j, k;
   
@@ -552,7 +600,7 @@ function(s)
   l:=ActingSemigroupModifier(s);     
   n:=0;
 
-  for i in [1..lambda_l-l] do
+  for i in [1..lambda_len-l] do
     lambda_m:=i+l;
     lambda_mults:=LambdaOrbMults(lambda_o, lambda_m);
     f:=CanonicalRep(lambda_o, lambda_m);
