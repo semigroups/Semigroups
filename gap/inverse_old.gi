@@ -482,30 +482,6 @@ end);
 
 #RRR
 
-# new for 0.7! - Random - "for a part. perm. inv. semigroup (citrus pkg)"
-#############################################################################
-
-InstallMethod(Random, "for a part perm inv semigroup (citrus pkg)",
-[IsPartialPermSemigroup and IsInverseSemigroup],
-function(s)
-  local o, gens, i, w, k, m, l, g;
-
-  o:=LongOrb(s);
-
-  if not IsClosed(o) then  
-    gens:=GeneratorsOfSemigroup(s);
-    i:=Random([1..Int(Length(gens)/2)]);
-    w:=List([1..i], x-> Random([1..Length(gens)]));
-    return EvaluateWord(gens, w);
-  else
-    k:=Random([1..Length(o)]);
-    m:=OrbSCCLookup(o)[k];
-    l:=Random(OrbSCC(o)[m]);
-    g:=Random(CreateOrbSCCSchutzGp(o,m)[2]);
-    return o!.mults[k]*g/o!.mults[l];
-  fi;
-end);
-
 # new for 0.7! - RClassOfHClass - "for an H-class of an inverse semigrp"
 #############################################################################
 
@@ -519,38 +495,6 @@ function(h)
 
   return CreateRClass(h!.parent, [data[1], data[2], scc[data[1]][1]], h!.o, 
    Representative(h)*mults[data[3]]);
-end);
-
-# new for 0.7! - RClassReps - for D-class of part perm inv semi
-##############################################################################
-
-InstallOtherMethod(RClassReps, "for D-class of part perm inv semi",
-[IsGreensDClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
-function(d)
-  local scc, out, rep, mults, i, j;
-
-  scc:=OrbSCC(d!.o)[d!.data[1]];
-  out:=EmptyPlist(Length(scc));
-  rep:=Representative(d);
-  mults:=OrbMultipliers(d);
-
-  i:=0;
-  for j in scc do 
-    i:=i+1;
-    out[i]:=mults[j]*rep;
-  od;
-  return out;
-end);
-
-# new for 0.7! - RClassType - "for a partial perm inverse semigroup"
-############################################################################
-
-InstallOtherMethod(RClassType, "for a partial perm inverse semigroup",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(s);
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsGreensRClass and
-         IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup);
 end);
 
 #SSS
