@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+## Methods for Green's classes of regular acting semigroups
+
 # new for 1.0! - DClassType - "for a regular acting semigroup"
 ############################################################################
 
@@ -60,11 +62,10 @@ function(s)
          IsActingSemigroupGreensClass);
 end);
 
-
-## Methods for Green's classes of regular acting semigroups
-
 # new for 1.0! - \in - "for a regular acting semigroup and elt"
 ##############################################################################
+
+# different method for inverse
 
 InstallMethod(\in, "for an acting elt and regular acting semigroup",
 [IsActingElt, IsActingSemigroup and IsRegularSemigroup], 
@@ -126,11 +127,6 @@ function(f, s)
       return false;
     fi;
   fi;
-
-  #if not IsClosed(lambda_o) then
-  #  lambda_o:=GradedLambdaOrb(s, f, false);
-  #  lambda_l:=1;
-  #fi;
 
   m:=OrbSCCLookup(lambda_o)[lambda_l];
   schutz:=LambdaOrbStabChain(lambda_o, m);

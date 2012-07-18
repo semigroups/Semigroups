@@ -2292,58 +2292,6 @@ function(r)
   return false;
 end);
 
-# new for 1.0! - Iterator - "for an R-class of an acting semi"
-#############################################################################
-
-# same method for regular/inverse
-
-InstallMethod(Iterator, "for an R-class of an acting semigp",
-[IsGreensRClass and IsActingSemigroupGreensClass],
-function(r)
-  local o, m, mults, iter, scc;
-
-  o:=LambdaOrb(r); m:=LambdaOrbSCCIndex(r);
-  mults:=LambdaOrbMults(o, m);
-  scc:=OrbSCC(o)[m];
-
-  if HasAsSSortedList(r) then 
-    iter:=IteratorList(AsSSortedList(r));
-  else
-    iter:=IteratorByFunctions(rec(
-
-      schutz:=List(SchutzenbergerGroup(r), x-> Representative(r)*x), 
-      at:=[0,1],
-      m:=Length(scc),
-      n:=Size(SchutzenbergerGroup(r)), 
-
-      IsDoneIterator:=iter-> iter!.at[1]=iter!.m and iter!.at[2]=iter!.n,
-
-      NextIterator:=function(iter)
-        local at;
-
-        at:=iter!.at;
-        
-        if at[1]=iter!.m and at[2]=iter!.n then 
-          return fail;
-        fi;
-
-        if at[1]<iter!.m then
-          at[1]:=at[1]+1;
-        else
-          at[1]:=1; at[2]:=at[2]+1;
-        fi;
-       
-        return iter!.schutz[at[2]]*mults[scc[at[1]]][1];
-      end,
-      
-      ShallowCopy:=iter -> rec(schutz:=iter!.schutz, at:=[0,1], 
-       m:=iter!.m, n:=iter!.n)));
-    fi;
-    
-    SetIsIteratorOfRClassElements(iter, true);
-    return iter;
-end);
-
 # mod for 1.0! - Iterator - "for a trivial acting semigroup"
 #############################################################################
 # Notes: required until Enumerator for a trans. semigp does not call iterator. 
