@@ -1038,6 +1038,7 @@ end);
 # JDM could this be better/more efficient?!
 
 # same method for regular/inverse
+# JDM could do a different method if needed
 
 InstallOtherMethod(GreensHClasses, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
@@ -1060,7 +1061,7 @@ end);
 # mod for 1.0! - GreensLClasses - "for an acting semigroup"
 ##############################################################################
 
-# same method for regular/inverse
+# different method for regular/inverse
 
 InstallMethod(GreensLClasses, "for an acting semigroup",
 [IsActingSemigroup], 
@@ -1078,6 +1079,8 @@ end);
 
 # mod for 1.0! - GreensLClasses - "for a D-class of an acting semigroup"
 ##############################################################################
+
+# different method for regular/inverse
 
 InstallMethod(GreensLClasses, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass], 
@@ -1119,6 +1122,8 @@ end);
 
 # new for 1.0! - GreensRClasses - "for a D-class of an acting semigroup"
 ##############################################################################
+
+# different method for regular/inverse
 
 InstallMethod(GreensRClasses, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass], 
@@ -1757,6 +1762,8 @@ end);
 # mod for 1.0! - GreensJClassOfElement - for an acting semi and elt."
 #############################################################################
 
+# same method for regular/inverse
+
 InstallOtherMethod(GreensJClassOfElement, "for acting semigroup and elt.",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsActingElt], 
 GreensDClassOfElement);
@@ -1798,6 +1805,8 @@ end);
 # mod for 0.7! - GroupHClassOfGreensDClass - "for D-class"
 ############################################################################
 
+# same method for regular/inverse
+
 InstallMethod(GroupHClassOfGreensDClass, "for D-class",
 [IsGreensDClass], GroupHClass);
 
@@ -1805,6 +1814,8 @@ InstallMethod(GroupHClassOfGreensDClass, "for D-class",
 
 # new for 1.0! - Idempotents - "for a D-class of an acting semigp."
 #############################################################################
+
+# same method for regular/inverse
 
 InstallOtherMethod(Idempotents, "for a D-class of an acting semigp.",
 [IsGreensDClass and IsActingSemigroupGreensClass],
@@ -1818,24 +1829,29 @@ function(d)
   fi;
 
   out:=[]; nr:=0;
-  tester:=IdempotentLambdaRhoTester(s);
   creator:=IdempotentLambdaRhoCreator(s);
   
-  rho_o:=RhoOrb(d);
-  rho_scc:=RhoOrbSCC(d);
   lambda_o:=LambdaOrb(d); 
   lambda_scc:=LambdaOrbSCC(d);
 
-  for i in lambda_scc do
-    i:=lambda_o[i];
-    for j in rho_scc do 
-      j:=rho_o[j];
-      if tester(i, j) then
-        nr:=nr+1;
-        out[nr]:=creator(i, j);
-      fi;
+  if IsActingSemigroupWithInversion(s) then 
+    nr:=Length(lambda_scc);
+    out:=List(lambda_scc, x-> creator(lambda_o[x], lambda_o[x]));
+  else
+    tester:=IdempotentLambdaRhoTester(s);
+    rho_o:=RhoOrb(d);
+    rho_scc:=RhoOrbSCC(d);
+    for i in lambda_scc do
+      i:=lambda_o[i];
+      for j in rho_scc do 
+        j:=rho_o[j];
+        if tester(i, j) then
+          nr:=nr+1;
+          out[nr]:=creator(i, j);
+        fi;
+      od;
     od;
-  od;
+  fi;
 
   if not HasNrIdempotents(d) then 
     SetNrIdempotents(d, nr);   
@@ -1845,6 +1861,8 @@ end);
 
 # new for 1.0! - Idempotents - "for an H-class of an acting semigroup"
 #############################################################################
+
+# same method for regular/inverse
 
 InstallOtherMethod(Idempotents, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
@@ -1863,6 +1881,8 @@ end);
 # mod for 1.0! - Idempotents - "for an L-class of an acting semigp"
 #############################################################################
 
+# same method for regular/inverse
+
 InstallOtherMethod(Idempotents, "for an L-class of an acting semigp.",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
@@ -1876,6 +1896,8 @@ function(l)
 
   if Rank(Representative(l))=Degree(s) then
     return [One(s)];
+  elif IsActingSemigroupWithInversion(s) then 
+    return [RightOne(Representative(l))];
   fi;
 
   out:=[]; 
@@ -1905,6 +1927,8 @@ end);
 # mod for 1.0! - Idempotents - "for an R-class of an acting semigp"
 #############################################################################
 
+# same method for regular/inverse
+
 InstallOtherMethod(Idempotents, "for an R-class of an acting semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
@@ -1918,6 +1942,8 @@ function(r)
 
   if Rank(Representative(r))=Degree(s) then
     return [One(s)];
+  elif IsActingSemigroupWithInversion(s) then 
+    return [LeftOne(Representative(r))];
   fi;
 
   out:=[]; 
@@ -1942,6 +1968,66 @@ function(r)
   fi;
 
   return out;
+end);
+
+# mod for 1.0! - Idempotents - "for an acting semigroup" 
+#############################################################################
+
+# same method for regular/inverse
+
+InstallOtherMethod(Idempotents, "for an acting semigroup", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local lambda_o, creator, r, l, out, nr, tester, rho_o, scc, gens, rhofunc, lookup, rep, rho, j, i, k;
+
+  if IsActingSemigroupWithInversion(s) then 
+    lambda_o:=Enumerate(LambdaOrb(s), infinity);
+    creator:=IdempotentLambdaRhoCreator(s);
+    r:=Length(lambda_o);
+    l:=ActingSemigroupModifier(s);
+    out:=EmptyPlist(r-l);
+
+    for i in [1..r-l] do
+      out[i]:=creater(lambda_o[i+l], lambda_o[i+l]);
+    od;
+    return out;
+  elif IsRegularSemigroup(s) then 
+
+    if HasNrIdempotents(s) then 
+      out:=EmptyPlist(NrIdempotents(s));
+    else
+      out:=[];
+    fi;
+    
+    nr:=0;
+    tester:=IdempotentLambdaRhoTester(s);
+    creator:=IdempotentLambdaRhoCreator(s);
+    rho_o:=RhoOrb(s);
+    scc:=OrbSCC(rho_o);
+    lambda_o:=LambdaOrb(s);
+    gens:=lambda_o!.gens;
+    rhofunc:=RhoFunc(s);
+    lookup:=OrbSCCLookup(rho_o);
+
+    for i in [1..Length(lambda_o)] do
+      rep:=EvaluateWord(TraceSchreierTreeForward(lambda_o, i), gens);
+      rho:=rhofunc(rep);
+      j:=lookup[Position(rho_o, rho)];
+      for k in scc[j] do
+        if tester(lambda_o[i], rho_o[k]) then
+          nr:=nr+1;
+          out[nr]:=creator(lambda_o[i], rho_o[k]);
+        fi;
+      od;
+    od;
+
+    if not HasNrIdempotents(s) then 
+      SetNrIdempotents(s, j);
+    fi;
+    return out;
+  fi;
+
+  return Concatenation(List(GreensRClasses(s), Idempotents));
 end);
 
 # new for 0.1! - IsGreensClassOfTransSemigp - "for a Green's class"
@@ -3700,47 +3786,6 @@ function(s)
     end));
 
   return enum;
-end);
-
-# mod for 1.0! - Idempotents - "for an acting semigroup" 
-#############################################################################
-
-InstallOtherMethod(Idempotents, "for an acting semigroup", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-
-  #if IsRegularSemigroup(s) then 
-  #  n:=DegreeOfTransformationSemigroup(s);
-
-#    if HasNrIdempotents(s) then 
-#      out:=EmptyPlist(NrIdempotents(s));
-#    else
-#      out:=[];
-#    fi;#
-
-#    kers:=GradedKernelsOfTransSemigroup(s); 
-#    imgs:=GradedImagesOfTransSemigroup(s);
-
-#    j:=0;
-    
-#    for i in [1..n] do
-#      for ker in kers[i] do
-#        for img in imgs[i] do 
-#          if IsInjectiveTransOnList(ker, img) then 
-#            j:=j+1;
-#            out[j]:=IdempotentNC(ker, img);
-#          fi;
-#        od;
-#      od;
-#    od;
-
-#    if not HasNrIdempotents(s) then 
-#      SetNrIdempotents(s, j);
-#    fi;
-#    return out;
-#  fi;
-
-  return Concatenation(List(GreensRClasses(s), Idempotents));
 end);
 
 # new for 0.1! - NrHClasses - "for an L-class of an acting semigroup"

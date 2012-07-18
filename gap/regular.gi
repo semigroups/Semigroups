@@ -534,6 +534,45 @@ function(s)
   return out;
 end);
 
+# new for 0.7! - GreensLClasses - for regular D-class ofacting semigroup
+##############################################################################
+
+# same method for inverse.
+
+InstallOtherMethod(GreensLClasses, "for regular D-class of acting semigroup", 
+[IsActingSemigroupGreensClass and IsRegularDClass],
+function(d)
+  local mults, scc, f, s, o, m, lrel, nc, out, k, l, i;
+
+  mults:=LambdaOrbMults(LambdaOrb(d), LambdaOrbSCCIndex(d));
+  scc:=LambdaOrbSCC(d);
+  f:=Representative(d);
+
+  s:=ParentSemigroup(d);
+  o:=RhoOrb(d);
+  m:=RhoOrbSCCIndex(d);
+  lrel:=GreensLRelation(s);
+  nc:=IsGreensClassNC(d);
+  out:=EmptyPlist(Length(scc));
+
+  k:=0;
+  for i in scc do
+    k:=k+1;
+    l:=Objectify(LClassType(s), rec());
+
+    SetParentSemigroup(l, s);
+    SetRhoOrbSCCIndex(l, m);
+    SetRhoOrb(l, o);
+    SetRepresentative(l, f*mults[i][1]);
+    SetEquivalenceClassRelation(l, lrel);
+    SetIsGreensClassNC(l, nc);
+    SetDClassOfLClass(l, d);
+    out[k]:=l;
+  od;
+
+  return out;
+end);
+
 # new for 0.7! - GreensRClasses - for regular acting semigroup
 ##############################################################################
 
@@ -542,7 +581,7 @@ end);
 InstallOtherMethod(GreensRClasses, "for a regular acting semigroup", 
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local rho_o, rho_scc, lambda_o, lambda_scc, rho_len, lookup, lambdafunc, out, type, hrel, l, n, rho_m, f, lambda_l, lambda_m, mults, i, j;
+  local rho_o, rho_scc, lambda_o, lambda_scc, rho_len, lookup, lambdafunc, out, type, rrel, l, n, rho_m, f, lambda_l, lambda_m, mults, i, j;
   
   rho_o:=RhoOrb(s);
   rho_scc:=OrbSCC(rho_o);
@@ -555,7 +594,7 @@ function(s)
 
   out:=EmptyPlist(NrRClasses(s));
   type:=RClassType(s);
-  hrel:=GreensRRelation(s);
+  rrel:=GreensRRelation(s);
   l:=ActingSemigroupModifier(s);     
   n:=0;
 
@@ -581,6 +620,45 @@ function(s)
   return out;
 end);
 
+# new for 1.0! - GreensRClasses - "for a regular D-class of acting semigroup"
+##############################################################################
+
+# same method for inverse
+
+InstallMethod(GreensRClasses, "for a regular D-class of acting semigroup",
+[IsActingSemigroupGreensClass and IsRegularDClass],
+function(d)
+  local mults, scc, f, s, o, m, rrel, nc, out, k, r, i;
+
+  mults:=RhoOrbMults(RhoOrb(d), RhoOrbSCCIndex(d));
+  scc:=RhoOrbSCC(d);
+  f:=Representative(d);
+
+  s:=ParentSemigroup(d);
+  o:=LambdaOrb(d);
+  m:=LambdaOrbSCCIndex(d);
+  rrel:=GreensRRelation(s);   
+  nc:=IsGreensClassNC(d);
+
+  out:=EmptyPlist(Length(scc));
+
+  k:=0;
+  for i in scc do
+    k:=k+1;
+    r:=Objectify(RClassType(s), rec());
+
+    SetParentSemigroup(r, s);
+    SetLambdaOrbSCCIndex(r, m);
+    SetLambdaOrb(r, o);
+    SetRepresentative(r, mults[i][1]*f);
+    SetEquivalenceClassRelation(r, rrel);
+    SetIsGreensClassNC(r, nc);
+    SetDClassOfRClass(r, d);
+    out[k]:=r;
+  od;
+
+  return out;
+end);
 
 # new for 1.0! - GreensRClassOfElement - for regular acting semi and elt"
 ############################################################################
