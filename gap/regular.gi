@@ -718,6 +718,142 @@ end);
 
 #III
 
+# new for 1.0! - IteratorOfDClassData - "for regular acting semigroup"
+###############################################################################
+
+# this could really be a method for IteratorOfGradedLambdaOrbs
+
+InstallMethod(IteratorOfDClassData, "for regular acting semigp",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+local iter;
+
+  if not IsClosed(LambdaOrb(s)) then 
+    iter:=IteratorByFunctions( rec(
+
+      seen:=HTCreate(LambdaFunc(s)(LambdaOrb(s)!.gens[1]),
+       rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S)),
+      
+      o:=GradedLambdaOrb(s, LambdaOrb(s)!.gens[1], true),
+
+      m:=0,
+
+      # JDM please write proper method!
+      IsDoneIterator:=iter-> IsClosed(LambdaOrb(s)),
+
+      NextIterator:=function(iter)
+        local m, seen, lambda_o, new, val, f;  
+        m:=iter!.m;
+        
+        if m=Length(OrbSCC(iter!.o)) then 
+          m:=1;
+          seen:=iter!.seen;
+          # look for a new lambda value
+          lambda_o:=LambdaOrb(s);
+          lambda_o!.looking:=true;
+          lambda_o!.lookingfor:=
+          function(o, x) 
+            local val;
+            val:=Position(GradedLambdaOrbs(s), x);
+            return val=fail or HTValue(seen, val)=fail; 
+          end;
+          lambda_o!.lookfunc:=lambda_o!.lookingfor;
+          Enumerate(lambda_o);
+          new:=PositionOfFound(lambda_o);
+          lambda_o!.found:=false; lambda_o!.looking:=false;
+          Unbind(lambda_o!.lookingfor); Unbind(lambda_o!.lookfunc);
+          if new=false then 
+            return fail;
+          fi;
+          val:=Position(GradedLambdaOrbs(s), lambda_o[new]);
+          if val<>fail then 
+            iter!.o:=GradedLambdaOrbs(s)[val[1]][val[2]];
+            HTAdd(seen, val, true);
+          else
+            iter!.o:=GradedLambdaOrb(s,
+             EvaluateWord(lambda_o!.gens, TraceSchreierTreeForward(lambda_o,
+             new)), true);
+            HTAdd(seen, Position(GradedLambdaOrbs(s), lambda_o[new]), true);
+          fi;
+        else
+          m:=m+1;
+        fi;
+        iter!.m:=m; 
+        
+        f:=LambdaOrbRep(iter!.o, m); 
+        return [s, 1, GradedLambdaOrb(s, f, false), 1, 
+         GradedRhoOrb(s, f, false), f, false];
+      end,
+      #JDM fill this in!
+      ShallowCopy:=iter-> rec()));
+
+    HTAdd(iter!.seen, iter!.o!.val, true);
+  else ####
+
+    iter:=IteratorByFunctions( rec(
+                 
+      m:=ActingSemigroupModifier(s), 
+     
+      i:=0,      
+
+      scc_limit:=Length(OrbSCC(LambdaOrb(s))),
+
+      IsDoneIterator:=iter-> iter!.m=iter!.scc_limit,
+
+      NextIterator:=function(iter)
+        local m, o, f, scc; 
+        m:=iter!.m; 
+
+        if m=iter!.scc_limit then
+          return fail; 
+        fi;
+
+        o:=LambdaOrb(s); scc:=OrbSCC(o);
+
+        m:=m+1;
+        iter!.m:=m;
+ 
+        # f ok here? JDM
+        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][1])); 
+        return [s, m, LambdaOrb(s), f];
+      end,
+
+      #JDM fill this in!
+      ShallowCopy:=iter-> rec()));
+  fi;
+  return iter;
+end);
+
+# new for 0.7! - IteratorOfDClassReps - "for a regular acting semigroup"
+###############################################################################
+
+# same method for inverse
+
+InstallMethod(IteratorOfDClassReps, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  if HasDClassReps(s) then
+    return IteratorList(DClassReps(s));
+  fi;
+  return IteratorByIterator(IteratorOfDClassData(s), x-> CanonicalRhoRep(x[4]),
+   [IsIteratorOfDClassReps]);
+end);
+
+# new for 0.7! - IteratorOfDClasses - "for a regular acting semigroup"
+###############################################################################
+
+# same method for inverse
+
+InstallMethod(IteratorOfDClasses, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  if HasGreensDClasses(s) then
+    return IteratorList(GreensDClasses(s));
+  fi;
+  return IteratorByIterator(IteratorOfDClassData(s), x->
+   CallFuncList(CreateDClass, x), [IsIteratorOfDClasses]);
+end);
+
 # new for 0.7! - IteratorOfLClassData - "for a regular acting semigroup
 ###############################################################################
 

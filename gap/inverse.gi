@@ -216,7 +216,7 @@ InstallMethod(IteratorOfLClassReps, "for acting semigp with inverse op",
 s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4]^-1,
 [IsIteratorOfLClassReps]));
 
-# new for 0.7! - IteratorOfRClasses - "for acting semigroup with inverse op" 
+# new for 0.7! - IteratorOfLClasses - "for acting semigroup with inverse op" 
 ###############################################################################
 
 InstallMethod(IteratorOfLClasses, "for acting semigroup with inverse op",

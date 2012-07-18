@@ -14,6 +14,26 @@
 
 ##############################################################################
 
+# new for 1.0! - GradedLambdaHT
+###############################################################################
+
+InstallMethod(GradedLambdaHT, "for an acting semi",
+[IsActingSemigroup],
+function(s)
+return HTCreate(LambdaFunc(s)(GeneratorsOfSemigroup(s)[1]),
+ rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S));
+end);
+
+# new for 1.0! - GradedRhoHT 
+###############################################################################
+
+InstallMethod(GradedRhoHT, "for an acting semi",
+[IsActingSemigroup],
+function(s)
+return HTCreate(RhoFunc(s)(GeneratorsOfSemigroup(s)[1]),
+ rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S));
+end);
+
 # new for 1.0! - CanonicalRhoRep - "for an acting semi and an acting element"
 ##############################################################################
 # returns the element <f> premultiplied by RhoOrbMult so that the resulting 
@@ -579,7 +599,8 @@ function(s, f, opt)
     for l in [1..Length(o)] do
       HTAdd(onlygradesdata, o[l], [j,k,l]);
     od;
-    o!.lambda_l:=1; 
+    o!.lambda_l:=1;
+    o!.val:=[j,k,1]; 
     graded!.lens[j]:=k;
   fi;
 

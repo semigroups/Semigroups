@@ -359,32 +359,6 @@ function(s)
     scc_limit:=iter!.scc_limit, at_limit:=iter!.at_limit)));
 end);
 
-# new for 0.7! - IteratorOfDClassReps - "for a part perm inverse semigroup"
-###############################################################################
-
-InstallMethod(IteratorOfDClassReps, "for a part perm inverse semigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup],
-function(s)
-  if HasDClassReps(s) then 
-    return IteratorList(DClassReps(s));
-  fi;
-  return IteratorByIterator(IteratorOfDClassData(s), x-> x[4],
-   [IsIteratorOfDClassReps]);
-end);
-
-# new for 0.7! - IteratorOfHClasses - "for a part perm inverse semigroup"
-###############################################################################
-
-InstallMethod(IteratorOfDClasses, "for a part perm inverse semigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup],
-function(s)
-  if HasGreensDClasses(s) then 
-    return IteratorList(GreensDClasses(s));
-  fi;
-  return IteratorByIterator(IteratorOfDClassData(s), x->
-   CallFuncList(CreateDClass, x), [IsIteratorOfDClasses]);
-end);
-
 # new for 0.7! - IteratorOfHClassData - "for part perm inverse semigroup""
 ###############################################################################
 # JDM this should have a method like IteratorOfRClassData and

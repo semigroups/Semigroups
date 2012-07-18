@@ -60,26 +60,6 @@ InstallMethod(RhoDomain, "for a transformation semi",
 InstallMethod(RhoDomain, "for a partial perm semi",
 [IsPartialPermSemigroup], Points);
 
-# new for 1.0! - GradedLambdaHT
-###############################################################################
-
-InstallMethod(GradedLambdaHT, "for an acting semi",
-[IsActingSemigroup],
-function(s)
-return HTCreate(LambdaFunc(s)(GeneratorsOfSemigroup(s)[1]), 
- rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S));
-end);
-
-# new for 1.0! - GradedRhoHT 
-###############################################################################
-
-InstallMethod(GradedRhoHT, "for an acting semi",
-[IsActingSemigroup],
-function(s)
-return HTCreate(RhoFunc(s)(GeneratorsOfSemigroup(s)[1]), 
- rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S));
-end);
-
 # new for 1.0! - LambdaFunc
 ###############################################################################
 

@@ -2401,6 +2401,8 @@ end);
 # new for 1.0! - IteratorOfDClasses - "for an acting semigroup"
 #############################################################################
 
+# different method for regular/inverse
+
 InstallMethod(IteratorOfDClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
@@ -2525,7 +2527,6 @@ function(s)
   return iter;
 end);
 
-
 # new for 1.0! - IteratorOfLClasses - "for an acting semigroup"
 #############################################################################
 
@@ -2591,6 +2592,8 @@ end);
 
 # new for 1.0! - IteratorOfDClassReps - "for an acting semigroup"
 #############################################################################
+
+# different method for regular/inverse
 
 InstallMethod(IteratorOfDClassReps, "for an acting semigroup",
 [IsActingSemigroup],
