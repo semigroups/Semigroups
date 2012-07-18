@@ -99,10 +99,7 @@ function(f, s)
     return false;
   fi;
 
-  rep:=CanonicalRhoRep(LambdaOrbRep(lambda_o, m));
-  m:=OrbSCCLookup(rho_o)[rho_l];
-  g:=RhoOrbMults(rho_o, m)[rho_l][2]*g;
-
+  rep:=RectifyRho(rho_o, LambdaOrbRep(lambda_o, m));
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
@@ -318,16 +315,17 @@ end);
 InstallOtherMethod(GreensDClasses, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
-  local o, scc, out, r, i;
+  local o, rho_o, scc, out, r, i;
 
   o:=LambdaOrb(s);
+  rho_o:=RhoOrb(s);
   scc:=OrbSCC(o);
   out:=EmptyPlist(Length(scc));
   r:=ActingSemigroupModifier(s);
   
   for i in [1+r..Length(scc)] do 
     out[i-r]:=CallFuncList(CreateDClass, 
-     [s, i, o, CanonicalRhoRep(LambdaOrbRep(o,i))]);
+     [s, i, o, RectifyRho(rho_o, LambdaOrbRep(o,i))]);
   od;
   return out;
 end);
@@ -813,7 +811,7 @@ local iter;
         
         f:=LambdaOrbRep(iter!.o, m)*LambdaOrbMults(iter!.o,
         m)[iter!.o!.lambda_l][2]; 
-        iter!.next_value:=[s, 1, iter!.o, 1, GradedRhoOrb(s, f, false), f, false];
+        iter!.next_value:=[s, m, iter!.o, f];
         return false;
       end,
 
@@ -880,7 +878,7 @@ function(s)
   if HasDClassReps(s) then
     return IteratorList(DClassReps(s));
   fi;
-  return IteratorByIterator(IteratorOfDClassData(s), x-> CanonicalRhoRep(x[4]),
+  return IteratorByIterator(IteratorOfDClassData(s), x-> x[4],
    [IsIteratorOfDClassReps]);
 end);
 
@@ -896,7 +894,7 @@ function(s)
     return IteratorList(GreensDClasses(s));
   fi;
   return IteratorByIterator(IteratorOfDClassData(s), x->
-   CallFuncList(CreateDClass, x), [IsIteratorOfDClasses]);
+   CallFuncList(CreateDClassNC, x), [IsIteratorOfDClasses]);
 end);
 
 # new for 0.7! - IteratorOfLClassData - "for a regular acting semigroup
@@ -943,8 +941,8 @@ local iter, scc;
         iter!.i:=i; 
         
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)); 
-        return [s, 1, GradedRhoOrb(s, o[i], true), 
-         CanonicalRhoRep(s, f), false];
+        o:=GradedRhoOrb(s, o[i], true);
+        return [s, 1, o, RectifyRho(o, f), false];
       end,
 
       ShallowCopy:=iter-> rec(i:=ActingSemigroupModifier(s))));
@@ -987,7 +985,7 @@ local iter, scc;
  
         # f ok here? JDM
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][i])); 
-        return [s, m, RhoOrb(s), CanonicalRhoRep(f), false];
+        return [s, m, RhoOrb(s), RectifyRho(RhoOrb(s), f), false];
       end,
 
       ShallowCopy:=iter-> rec(m:=ActingSemigroupModifier(s), i:=0,
@@ -1041,8 +1039,8 @@ local iter, scc;
         iter!.i:=i; 
         
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)); 
-        return [s, 1, GradedLambdaOrb(s, o[i], true), 
-         CanonicalLambdaRep(s, f), false];
+        o:=GradedLambdaOrb(s, o[i], true);
+        return [s, 1, o, RectifyLambda(o, f), false];
       end,
 
       ShallowCopy:=iter-> rec(i:=ActingSemigroupModifier(s))));
@@ -1085,7 +1083,7 @@ local iter, scc;
  
         # f ok here? JDM
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][i])); 
-        return [s, m, LambdaOrb(s), CanonicalLambdaRep(f), false];
+        return [s, m, LambdaOrb(s), RectifyLambda(LambdaOrb(s), f), false];
       end,
 
       ShallowCopy:=iter-> rec(m:=ActingSemigroupModifier(s), i:=0,

@@ -505,6 +505,35 @@ function(arg)
   return d; 
 end); 
 
+# new for 1.0! - CreateDClassNC - not a user function! 
+############################################################################# 
+# Usage: arg[1] = semigroup; arg[2] = lambda orb scc index;
+# arg[3] = lambda orb; arg[4] = rep; 
+# arg[5] = IsGreensClassNc
+
+# only for D-classes being created in GreensDClasses or similar!
+
+InstallGlobalFunction(CreateDClassNC,  
+function(arg) 
+  local d, rep, o, l, m;
+ 
+  d:=Objectify(DClassType(arg[1]), rec()); 
+          
+  SetParentSemigroup(d, arg[1]);
+  SetLambdaOrb(d, arg[3]);
+  SetLambdaOrbSCCIndex(d, arg[2]);
+  SetRepresentative(d, RectifyLambda(arg[3], arg[4]));
+  
+  SetRhoOrb(d, GradedLambdaOrb(arg[1], arg[4], false));
+  SetRhoOrbSCCIndex(d, 1);
+ 
+  SetEquivalenceClassRelation(d, GreensDRelation(arg[1])); 
+  SetIsGreensClassNC(d, arg[5]);
+
+  return d; 
+end); 
+
+
 # mod for 1.0! - CreateLClass - not a user function!
 #############################################################################
 

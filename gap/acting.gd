@@ -46,8 +46,8 @@ DeclareGlobalFunction("RhoOrbSchutzGp");
 DeclareGlobalFunction("LambdaOrbStabChain");
 DeclareAttribute("RhoOrbStabChain", IsActingSemigroupGreensClass);
 
-DeclareGlobalFunction("CanonicalLambdaRep");
-DeclareGlobalFunction("CanonicalRhoRep");
+DeclareGlobalFunction("RectifyLambda");
+DeclareGlobalFunction("RectifyRho");
 DeclareAttribute("ParentSemigroup", IsObject);
 
 # ForwardOrbitOfImage/Kernel/ShortOrb

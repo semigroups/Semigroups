@@ -55,6 +55,7 @@ DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
 #old
 
 DeclareGlobalFunction("CreateDClass");
+DeclareGlobalFunction("CreateDClassNC");
 DeclareGlobalFunction("CreateHClass");
 DeclareGlobalFunction("CreateLClass");
 DeclareGlobalFunction("CreateRClass");

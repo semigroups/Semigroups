@@ -34,17 +34,17 @@ return HTCreate(RhoFunc(s)(GeneratorsOfSemigroup(s)[1]),
  rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S));
 end);
 
-# new for 1.0! - CanonicalRhoRep - "for an acting semi and an acting element"
+# new for 1.0! - RectifyRho - "for a rho orb and an acting element"
 ##############################################################################
 # returns the element <f> premultiplied by RhoOrbMult so that the resulting 
 # element has its RhoValue in the first position of its scc.
 
-InstallGlobalFunction(CanonicalRhoRep,
-function(s, f)
-  local o, l, m;
+InstallGlobalFunction(RectifyRho,
+function(o, f)
+  local l, m;
 
-  o:=Enumerate(RhoOrb(s), infinity);
-  l:=Position(o, RhoFunc(s)(f));
+  o:=Enumerate(o, infinity);
+  l:=Position(o, RhoFunc(o!.semi)(f));
   m:=OrbSCCLookup(o)[l];
 
   if l<>OrbSCC(o)[m][1] then
@@ -53,12 +53,12 @@ function(s, f)
   return f;
 end);
 
-InstallGlobalFunction(CanonicalLambdaRep,
-function(s, f)
-  local o, l, m;
+InstallGlobalFunction(RectifyLambda,
+function(o, f)
+  local l, m;
 
-  o:=Enumerate(LambdaOrb(s), infinity);
-  l:=Position(o, LambdaFunc(s)(f));
+  o:=Enumerate(o, infinity);
+  l:=Position(o, LambdaFunc(o!.semi)(f));
   m:=OrbSCCLookup(o)[l];
 
   if l<>OrbSCC(o)[m][1] then
