@@ -2756,7 +2756,7 @@ end);
 InstallOtherMethod(LClassReps, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local o, m, mults, scc, cosets, f, out, k, i, j;
+  local o, m, mults, scc, f, out, k, cosets, g, j, i;
   
   o:=LambdaOrb(d); 
   m:=LambdaOrbSCCIndex(d);
@@ -2770,7 +2770,7 @@ function(d)
     k:=0;
     for j in scc do
       k:=k+1;
-      out[k]:=g*mults[j][1];
+      out[k]:=f*mults[j][1];
     od;
   else
     cosets:=LambdaCosets(d);
@@ -3368,7 +3368,7 @@ function(d)
 
   if IsActingSemigroupWithInverseOp(ParentSemigroup(d)) then 
     return List(LClassReps(d), x-> x^-1);
-  if IsRegularDClass(d) then 
+  elif IsRegularDClass(d) then 
     out:=EmptyPlist(Length(scc));
     k:=0;
     for i in scc do
@@ -3389,6 +3389,7 @@ function(d)
       od;
     od;
   fi;
+
   return out;
 end);
 
@@ -3486,7 +3487,7 @@ function(d)
     return Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))^2;
   elif IsRegularDClass(d) then 
     return Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))
-     *Length(RhoOrbSCC(d))
+     *Length(RhoOrbSCC(d));
   fi;
   l:=LambdaOrbSchutzGp(LambdaOrb(d), LambdaOrbSCCIndex(d));
   r:=RhoOrbSchutzGp(RhoOrb(d), RhoOrbSCCIndex(d), infinity);

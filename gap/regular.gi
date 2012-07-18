@@ -1187,7 +1187,7 @@ CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
 InstallOtherMethod(LClassReps, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local rho_o, lambda_o, scc, len, out, l, n, m, f, mults, i, j;
+  local rho_o, lambda_o, scc, nr, out, l, n, f, mults, m, j;
   
   rho_o:=RhoOrb(s);
   lambda_o:=LambdaOrb(s);

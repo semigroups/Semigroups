@@ -333,6 +333,7 @@ end);
 InstallMethod(PartialOrderOfDClasses, "for acting semigp with inverse op",
 [IsActingSemigroupWithInverseOp],      
 function(s)            
+  local d, n, out, o, gens, lookup, l, lambdafunc, i, x, f;
                        
   d:=GreensDClasses(s);
   n:=Length(d);
