@@ -131,16 +131,21 @@ end);
 # new for 1.0! - SchutzenbergerGroup - "for a H-class of an acting semigroup"
 #############################################################################
 
-# different method for regular/inverse
+# same method for regular/inverse
 
 InstallMethod(SchutzenbergerGroup, "for a H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
   local lambda_o, lambda_m, lambda_schutz, lambda_stab, rho_o, rho_m, rho_schutz, rho_stab, rep, s, lambda_p, rho_p;
-  
+ 
   lambda_o:=LambdaOrb(h); lambda_m:=LambdaOrbSCCIndex(h);
   lambda_schutz:=LambdaOrbSchutzGp(lambda_o, lambda_m); 
-  lambda_stab:=LambdaOrbStabChain(lambda_o, lambda_m);
+  s:=ParentSemigroup(h);
+  
+  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
+    return lambda_schutz;
+  fi;
+ lambda_stab:=LambdaOrbStabChain(lambda_o, lambda_m);
   
   if lambda_stab=false then 
     return lambda_schutz;
@@ -155,7 +160,6 @@ function(h)
   fi;
 
   rep:=Representative(h);
-  s:=ParentSemigroup(h);
   
   lambda_p:=LambdaOrbMults(lambda_o, lambda_m)[Position(lambda_o,
    LambdaFunc(s)(rep))][2];
