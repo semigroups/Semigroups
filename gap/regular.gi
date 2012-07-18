@@ -99,7 +99,7 @@ function(f, s)
     return false;
   fi;
 
-  rep:=CanonicalRep(lambda_o, m);
+  rep:=CanonicalRhoRep(LambdaOrbRep(lambda_o, m));
   m:=OrbSCCLookup(rho_o)[rho_l];
   g:=RhoOrbMults(rho_o, m)[rho_l][2]*g;
 
@@ -164,32 +164,36 @@ function(f, d)
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
-# new for 1.0! - CanonicalRep - "for a lambda orb and scc index"
+# new for 1.0! - CanonicalRhoRep - "for an acting semi and an acting element"
 ##############################################################################
+# returns the element <f> premultiplied by RhoOrbMult so that the resulting 
+# element has its RhoValue in the first position of its scc.
 
-InstallGlobalFunction(CanonicalRep, 
-function(o, m)
-  local f, s, rho_o, l;
+InstallGlobalFunction(CanonicalRhoRep, 
+function(s, f)
+  local o, l, m;
 
-  if IsBound(o!.reps) then 
-    if IsBound(o!.reps[m]) then 
-      return o!.reps;
-    fi;
-  else
-    o!.reps:=EmptyPlist(Length(OrbSCC(o)));
+  o:=Enumerate(RhoOrb(s), infinity);
+  l:=Position(o, RhoFunc(s)(f));
+  m:=OrbSCCLookup(o)[l];
+
+  if l<>OrbSCC(o)[m][1] then
+    f:=RhoOrbMults(o, m)[l][2]*f;
   fi;
+  return f;
+end);
 
-  f:=LambdaOrbRep(o, m);
-  s:=o!.semi;   
-  rho_o:=Enumerate(RhoOrb(s), infinity);
-  l:=Position(rho_o, RhoFunc(s)(f));
-  m:=OrbSCCLookup(rho_o)[l];
+InstallGlobalFunction(CanonicalLambdaRep, 
+function(s, f)
+  local o, l, m;
 
-  if l<>OrbSCC(rho_o)[m][1] then
-    f:=RhoOrbMults(rho_o, m)[l][2]*f;
+  o:=Enumerate(LambdaOrb(s), infinity);
+  l:=Position(o, LambdaFunc(s)(f));
+  m:=OrbSCCLookup(o)[l];
+
+  if l<>OrbSCC(o)[m][1] then
+    f:=f*LambdaOrbMults(o, m)[l][2];
   fi;
-  
-  o!.reps[m]:=f;
   return f;
 end);
 
@@ -347,16 +351,16 @@ end);
 InstallOtherMethod(GreensDClasses, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
-  local o, r, scc, out, i;
+  local o, scc, out, r, i;
 
-  o:=Enumerate(LambdaOrb(s), infinity);
-
-  r:=ActingSemigroupModifier(s);
+  o:=LambdaOrb(s);
   scc:=OrbSCC(o);
   out:=EmptyPlist(Length(scc));
-
+  r:=ActingSemigroupModifier(s);
+  
   for i in [1+r..Length(scc)] do 
-    out[i-r]:=CallFuncList(CreateDClass, [s, i, o, CanonicalRep(o,i)]);
+    out[i-r]:=CallFuncList(CreateDClass, 
+     [s, i, o, CanonicalRhoRep(LambdaOrbRep(o,i))]);
   od;
   return out;
 end);
@@ -389,9 +393,11 @@ function(s)
   for i in [1..lambda_len-l] do
     lambda_m:=i+l;
     lambda_mults:=LambdaOrbMults(lambda_o, lambda_m);
-    f:=CanonicalRep(lambda_o, lambda_m);
-    rho_m:=lookup[Position(rho_o, rhofunc(f))];
+    f:=LambdaOrbRep(lambda_o, lambda_m);
+    rho_l:=Position(rho_o, rhofunc(f));
+    rho_m:=lookup[rho_l];
     rho_mults:=RhoOrbMults(rho_o, rho_m);
+    f:=rho_mults[rho_l][2]*f;
     for j in lambda_scc[lambda_m] do
       f:=f*lambda_mults[j][1];
       for k in rho_scc[rho_m] do
@@ -727,9 +733,11 @@ function(s)
   for i in [1..lambda_len-l] do
     lambda_m:=i+l;
     lambda_mults:=LambdaOrbMults(lambda_o, lambda_m);
-    f:=CanonicalRep(lambda_o, lambda_m);
-    rho_m:=lookup[Position(rho_o, rhofunc(f))];
+    f:=LambdaOrbRep(lambda_o, lambda_m);
+    rho_l:=Position(rho_o, rhofunc(f));
+    rho_m:=lookup[rho_l];
     rho_mults:=RhoOrbMults(rho_o, rho_m);
+    f:=rho_mults[rho_l][2]*f;
     for j in lambda_scc[lambda_m] do
       f:=f*lambda_mults[j][1];
       for k in rho_scc[rho_m] do
@@ -740,6 +748,120 @@ function(s)
   od;
   return out;
 end);
+
+#III
+
+# new for 0.7! - IteratorOfRClassData - "for a regular acting semigroup
+###############################################################################
+
+InstallMethod(IteratorOfRClassData, "for regular acting semigp",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+
+  if not IsClosed(RhoOrb(s)) then 
+    
+    iter:=IteratorByFunctions( rec(
+
+      i:=ActingSemigroupModifier(s),
+
+      IsDoneIterator:=iter-> IsClosed(RhoOrb(s)) and 
+       iter!.i>=Length(RhoOrb(o)),
+
+      NextIterator:=function(iter)
+        local i, o, r, f;
+        
+        o:=RhoOrb(s); i:=iter!.i;
+
+        if IsClosed(o) and i>=Length(o) then 
+          return fail;  
+        fi;
+        
+        i:=i+1;
+        
+        if i>Length(o) then 
+          if not IsClosed(o) then 
+            Enumerate(o, i);
+            if i>Length(o) then 
+              return fail;
+            fi;
+          else 
+            return fail;
+          fi;
+        fi;
+
+        iter!.i:=i; 
+        
+        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)); 
+        return [s, 1, GradedLambdaOrb(s, o[i], true), 
+         CanonicalLambdaRep(s, f), false];
+      end,
+
+      ShallowCopy:=iter-> rec(i:=ActingSemigroupModifier(s))));
+  else ####
+
+    scc:=OrbSCC(RhoOrb(s));
+
+    iter:=IteratorByFunctions( rec(
+                 
+      m:=ActingSemigroupModifier(s), 
+     
+      i:=0,      
+
+      scc_limit:=Length(scc),
+
+      i_limit:=Length(scc[Length(scc)]),
+
+      IsDoneIterator:=iter-> iter!.m=iter!.scc_limit and 
+       iter!.i=iter!.i_limit,
+
+      NextIterator:=function(iter)
+        local i, o, m, scc, f, r, mults;
+        
+        i:=iter!.i; 
+        m:=iter!.m; 
+
+        if m=iter!.scc_limit and i=iter!.i_limit then
+          return fail; 
+        fi;
+
+        o:=RhoOrb(s); scc:=OrbSCC(o);
+
+        if i<Length(scc[m]) then 
+          i:=i+1;
+        else
+          i:=1; m:=m+1;
+        fi;
+
+        iter!.i:=i; iter!.m:=m;
+ 
+        # f ok here? JDM
+        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][i])); 
+        return [s, m, LambdaOrb(s), CanonicalLambdaRep(f), false];
+      end,
+
+      ShallowCopy:=iter-> rec(m:=ActingSemigroupModifier(s), i:=0,
+      scc_limit:=iter!.scc_limit, i_limit:=iter!.i_limit)));
+  fi;
+  
+  return iter;
+end);
+
+
+# new for 0.7! - IteratorOfRClassReps - "for regular acting semigroup" 
+###############################################################################
+
+InstallMethod(IteratorOfRClassReps, "for regular acting semigp",
+[IsActingSemigroup and IsRegularSemigroup],
+s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4],
+[IsIteratorOfRClassReps]));
+
+# new for 0.7! - IteratorOfRClasses - "for regularacting semigroup 
+###############################################################################
+
+InstallMethod(IteratorOfRClasses, "for regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+s-> IteratorByIterator(IteratorOfRClassData(s), x->
+CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
 
 # new for 1.0! - DClassType - "for a regular acting semigroup"
 ############################################################################

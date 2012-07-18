@@ -58,6 +58,7 @@ DeclareGlobalFunction("CreateDClass");
 DeclareGlobalFunction("CreateHClass");
 DeclareGlobalFunction("CreateLClass");
 DeclareGlobalFunction("CreateRClass");
+DeclareGlobalFunction("CreateRClassNC");
 
 DeclareAttribute("DClassType", IsSemigroup);
 DeclareAttribute("HClassType", IsSemigroup);

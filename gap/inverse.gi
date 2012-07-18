@@ -155,7 +155,7 @@ function(s)
         iter!.i:=i; 
         #JDM is f correct here? Not canonical rep?
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)); 
-        return [s, 1, GradedLambdaOrb(s, o[i], true), f];
+        return [s, 1, GradedLambdaOrb(s, o[i], true), f, false];
       end,
 
       ShallowCopy:=iter-> rec(i:=ActingSemigroupModifier(s))));
@@ -198,7 +198,7 @@ function(s)
  
         # f ok here? JDM
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][i])); 
-        return [s, m, LambdaOrb(s), f];
+        return [s, m, LambdaOrb(s), f, false];
       end,
 
       ShallowCopy:=iter-> rec(m:=ActingSemigroupModifier(s), i:=0,
@@ -208,6 +208,21 @@ function(s)
   return iter;
 end);
 
+# new for 0.7! - IteratorOfRClassReps - "for acting semigroup with inverse op"
+###############################################################################
+
+InstallMethod(IteratorOfRClassReps, "for acting semigp with inverse op",
+[IsActingSemigroupWithInverseOp],
+s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4],
+[IsIteratorOfRClassReps]));
+
+# new for 0.7! - IteratorOfRClasses - "for acting semigroup with inverse op" 
+###############################################################################
+
+InstallMethod(IteratorOfRClasses, "for acting semigroup with inverse op",
+[IsActingSemigroupWithInverseOp],
+s-> IteratorByIterator(IteratorOfRClassData(s), x->
+CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
 
 #NNN
 

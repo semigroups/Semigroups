@@ -548,6 +548,29 @@ function(arg)
   return r;
 end);
 
+# mod for 1.0! - CreateRClass - not a user function!
+#############################################################################
+# Usage: arg[1] = semigroup; arg[2] = lambda orb scc index;
+# arg[3] = lambda orb; arg[4] = rep; arg[5] = IsRClassNC.
+
+# only use for R-classes created from SemigroupData. 
+
+InstallGlobalFunction(CreateRClassNC,
+function(arg)
+  local r;
+  
+  r:=Objectify(RClassType(arg[1]), rec());
+
+  SetParentSemigroup(r, arg[1]);
+  SetLambdaOrbSCCIndex(r, arg[2]);
+  SetLambdaOrb(r, arg[3]);
+  SetRepresentative(r, arg[4]);
+
+  SetEquivalenceClassRelation(r, GreensRRelation(arg[1]));
+  SetIsGreensClassNC(r, arg[5]);
+  return r;
+end);
+
 #EEE
 
 # mod for 1.0! - Enumerator - "for a D-class of acting semigp."
