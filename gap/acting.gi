@@ -14,6 +14,39 @@
 
 ##############################################################################
 
+# new for 1.0! - CanonicalRhoRep - "for an acting semi and an acting element"
+##############################################################################
+# returns the element <f> premultiplied by RhoOrbMult so that the resulting 
+# element has its RhoValue in the first position of its scc.
+
+InstallGlobalFunction(CanonicalRhoRep,
+function(s, f)
+  local o, l, m;
+
+  o:=Enumerate(RhoOrb(s), infinity);
+  l:=Position(o, RhoFunc(s)(f));
+  m:=OrbSCCLookup(o)[l];
+
+  if l<>OrbSCC(o)[m][1] then
+    f:=RhoOrbMults(o, m)[l][2]*f;
+  fi;
+  return f;
+end);
+
+InstallGlobalFunction(CanonicalLambdaRep,
+function(s, f)
+  local o, l, m;
+
+  o:=Enumerate(LambdaOrb(s), infinity);
+  l:=Position(o, LambdaFunc(s)(f));
+  m:=OrbSCCLookup(o)[l];
+
+  if l<>OrbSCC(o)[m][1] then
+    f:=f*LambdaOrbMults(o, m)[l][2];
+  fi;
+  return f;
+end);
+
 # new for 1.0! - LambdaRhoHT
 ###############################################################################
 

@@ -2399,8 +2399,6 @@ end);
 # new for 1.0! - IteratorOfDClasses - "for an acting semigroup"
 #############################################################################
 
-# different method for regular/inverse
-
 InstallMethod(IteratorOfDClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
@@ -2614,6 +2612,8 @@ s-> IteratorByIterator(IteratorOfLClasses(s), Representative,
 # new for 1.0! - IteratorOfRClassData - "for an acting semigroup"
 #############################################################################
 
+#different method for regular/inverse
+
 InstallMethod(IteratorOfRClassData, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
@@ -2644,6 +2644,8 @@ end);
 # new for 1.0! - IteratorOfRClassReps - "for an acting semigroup"
 #############################################################################
 
+# same method for inverse/regular.
+
 InstallMethod(IteratorOfRClassReps, "for an acting semigroup",
 [IsActingSemigroup],
 s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4],
@@ -2651,6 +2653,8 @@ s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4],
 
 # new for 1.0! - IteratorOfRClasses - "for an acting semigroup"
 #############################################################################
+
+# different method for regular/inverse
 
 InstallMethod(IteratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],

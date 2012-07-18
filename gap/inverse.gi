@@ -120,7 +120,7 @@ end);
 InstallMethod(IteratorOfRClassData, "for acting semigp with inverse op",
 [IsActingSemigroupWithInverseOp], 
 function(s)
-
+local iter, scc;
   if not IsClosed(LambdaOrb(s)) then 
     
     iter:=IteratorByFunctions( rec(
@@ -128,7 +128,7 @@ function(s)
       i:=ActingSemigroupModifier(s),
 
       IsDoneIterator:=iter-> IsClosed(LambdaOrb(s)) and 
-       iter!.i>=Length(LambdaOrb(o)),
+       iter!.i>=Length(LambdaOrb(s)),
 
       NextIterator:=function(iter)
         local i, o, r, f;
