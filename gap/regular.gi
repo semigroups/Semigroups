@@ -8,6 +8,59 @@
 #############################################################################
 ##
 
+# new for 1.0! - DClassType - "for a regular acting semigroup"
+############################################################################
+
+# same method for inverse semigroups
+
+InstallOtherMethod(DClassType, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsRegularDClass and IsGreensDClass 
+         and IsRegularActingSemigroupGreensClass);
+end);
+
+# new for 1.0! - HClassType - "for a regular acting semigroup"
+############################################################################
+
+# same method for inverse semigroups
+
+InstallOtherMethod(HClassType, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsGreensHClass and
+         IsRegularActingSemigroupGreensClass);
+end);
+
+# new for 1.0! - LClassType - "for a regular acting semigroup"
+############################################################################
+
+# same method for inverse semigroups
+
+InstallOtherMethod(LClassType, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsRegularLClass and IsGreensLClass and
+         IsRegularActingSemigroupGreensClass);
+end);
+
+# new for 1.0! - RClassType - "for a regular acting semigroup"
+############################################################################
+
+# same method for inverse semigroups
+
+InstallOtherMethod(RClassType, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsRegularRClass and IsGreensRClass and
+         IsRegularActingSemigroupGreensClass);
+end);
+
+
 ## Methods for Green's classes of regular acting semigroups
 
 # new for 1.0! - \in - "for a regular acting semigroup and elt"
@@ -722,7 +775,8 @@ end);
 
 # the first part of this could really be a method for IteratorOfGradedLambdaOrbs
 
-# there should be a different method for inverse
+# same method for inverse
+# there could be a different method for inverse
 
 InstallMethod(IteratorOfDClassData, "for regular acting semigp",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -811,7 +865,7 @@ local iter;
         
         f:=LambdaOrbRep(iter!.o, m)*LambdaOrbMults(iter!.o,
         m)[iter!.o!.lambda_l][2]; 
-        iter!.next_value:=[s, m, iter!.o, f];
+        iter!.next_value:=[s, m, iter!.o, f, false];
         return false;
       end,
 
@@ -858,7 +912,7 @@ local iter;
  
         # f ok here? JDM
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][1])); 
-        return [s, m, LambdaOrb(s), f];
+        return [s, m, LambdaOrb(s), f, false];
       end,
 
       #JDM fill this in!
@@ -1123,57 +1177,70 @@ InstallMethod(IteratorOfRClasses, "for regular acting semigroup",
 s-> IteratorByIterator(IteratorOfRClassData(s), x->
 CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
 
-# new for 1.0! - DClassType - "for a regular acting semigroup"
-############################################################################
+#LLL
 
-# same method for inverse semigroups
+# new for 1.0! - LClassReps - "for regular acting semigroup 
+###############################################################################
 
-InstallOtherMethod(DClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
+# same method for inverse
+
+InstallOtherMethod(LClassReps, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsRegularDClass and IsGreensDClass 
-         and IsRegularActingSemigroupGreensClass);
+  local rho_o, lambda_o, scc, len, out, l, n, m, f, mults, i, j;
+  
+  rho_o:=RhoOrb(s);
+  lambda_o:=LambdaOrb(s);
+  scc:=OrbSCC(lambda_o);
+
+  nr:=Length(scc);
+  out:=EmptyPlist(NrLClasses(s));
+  l:=ActingSemigroupModifier(s);     
+  n:=0;
+
+  for m in [1+l..nr] do
+    f:=RectifyRho(rho_o, LambdaOrbRep(lambda_o, m));
+    mults:=LambdaOrbMults(lambda_o, m);
+    for j in scc[m] do
+      n:=n+1;
+      out[n]:=f*mults[j][1];
+    od;
+  od;
+  return out;
 end);
 
-# new for 1.0! - HClassType - "for a regular acting semigroup"
-############################################################################
+# new for 1.0! - RClassReps - "for regular acting semigroup 
+###############################################################################
 
-# same method for inverse semigroups
+# same method for inverse
 
-InstallOtherMethod(HClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
+InstallOtherMethod(RClassReps, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsGreensHClass and
-         IsRegularActingSemigroupGreensClass);
+  local lambda_o, rho_o, scc, nr, out, l, n, f, mults, m, j;
+  
+  lambda_o:=LambdaOrb(s);
+  rho_o:=RhoOrb(s);
+  scc:=OrbSCC(rho_o);
+
+  nr:=Length(scc);
+  out:=EmptyPlist(NrRClasses(s));
+  l:=ActingSemigroupModifier(s);     
+  n:=0;
+
+  for m in [1+l..nr] do
+    f:=RectifyLambda(lambda_o, RhoOrbRep(rho_o, m));
+    mults:=RhoOrbMults(rho_o, m);
+    for j in scc[m] do
+      n:=n+1;
+      out[n]:=mults[j][1]*f;
+    od;
+  od;
+  return out;
 end);
 
-# new for 1.0! - LClassType - "for a regular acting semigroup"
-############################################################################
 
-# same method for inverse semigroups
-
-InstallOtherMethod(LClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
-function(s)
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsRegularLClass and IsGreensLClass and
-         IsRegularActingSemigroupGreensClass);
-end);
-
-# new for 1.0! - RClassType - "for a regular acting semigroup"
-############################################################################
-
-# same method for inverse semigroups
-
-InstallOtherMethod(RClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
-function(s)
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsRegularRClass and IsGreensRClass and
-         IsRegularActingSemigroupGreensClass);
-end);
+#NNN
 
 # new for 1.0! - NrDClasses - "for a regular acting semigroup"
 ############################################################################

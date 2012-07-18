@@ -533,11 +533,10 @@ function(arg)
   return d; 
 end); 
 
-
 # mod for 1.0! - CreateLClass - not a user function!
 #############################################################################
 
-# this is the analogue of CreateRClassNC
+# this is the analogue of Create.ClassNC
 
 InstallGlobalFunction(CreateLClass,
 function(arg)
@@ -2734,6 +2733,8 @@ end);
 
 # new for 1.0! - LClassReps - "for an acting semigp."
 #############################################################################
+
+# different method for regular/inverse
 
 InstallOtherMethod(LClassReps, "for an acting semigp.",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
