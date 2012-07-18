@@ -1296,19 +1296,17 @@ d-> Length(LambdaOrbSCC(d))*Length(RhoOrbSCC(d)));
 # new for 1.0! - NrHClasses - "for a L-class of regular acting semigroup"
 ############################################################################
 
-# same method for inverse semigroups 
+# same method for inverse semigroups (although there could be one if we
+# have to introduce IsInverseActingSemigroupGreensClass).
 
 InstallOtherMethod(NrHClasses, "for a L-class of regular acting semigroup",
 [IsRegularActingSemigroupGreensClass and IsGreensLClass],
-function(l)
-   return Length(Enumerate(RhoOrb(l), infinity));
-end);
+l-> Length(RhoOrbSCC(l)));
 
 # new for 1.0! - NrHClasses - "for a R-class of regular acting semigroup"
 ############################################################################
 
-# same method for inverse semigroups (although there could be one if we
-# have to introduce IsInverseActingSemigroupGreensClass).
+# same method for inverse semigroups 
 
 InstallOtherMethod(NrHClasses, "for a R-class of regular acting semigroup",
 [IsRegularActingSemigroupGreensClass and IsGreensRClass],

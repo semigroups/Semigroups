@@ -35,6 +35,7 @@ DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
 DeclareProperty("IsRegularActingSemigroupGreensClass", IsGreensClass);
 InstallTrueMethod(IsActingSemigroupGreensClass,
 IsRegularActingSemigroupGreensClass);
+
 DeclareProperty("IsGreensClassOfPartPermSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassNC", IsActingSemigroupGreensClass);
