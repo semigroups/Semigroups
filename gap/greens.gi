@@ -952,6 +952,90 @@ function(s)
   return out;
 end);
 
+# new for 1.0! - GreensHClasses - "for an R-class of an acting semigroup"
+##############################################################################
+
+InstallOtherMethod(GreensHClasses, "for an R-class of an acting semigroup",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(r)
+  local o, m, scc, mults, d, cosets, f, out, k, i, j;
+
+  o:=LambdaOrb(r); 
+  m:=LambdaOrbSCCIndex(r);
+  
+  scc:=OrbSCC(o)[m];
+  mults:=LambdaOrbMults(o, m);
+  d:=DClassOfRClass(r);
+  cosets:=LambdaCosets(d);
+  f:=Representative(r);
+
+  out:=EmptyPlist(Length(scc)*Length(cosets));
+  k:=0;
+  
+  for i in cosets do 
+    i:=f*i;
+    for j in scc do 
+      k:=k+1; 
+      out[k]:=GreensHClassOfElementNC(d, i*mults[j][1]);
+      SetRClassOfHClass(out[k], r);
+      #JDM also set schutz gp here!
+    od;
+  od;
+  return out;
+end);
+
+# new for 1.0! - GreensHClasses - "for an L-class of an acting semigroup"
+##############################################################################
+
+InstallOtherMethod(GreensHClasses, "for an L-class of an acting semigroup",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+function(l)
+  local o, m, scc, mults, d, cosets, f, out, k, i, j;
+
+  o:=RhoOrb(l); 
+  m:=RhoOrbSCCIndex(l);
+  
+  scc:=OrbSCC(o)[m];
+  mults:=RhoOrbMults(o, m);
+  d:=DClassOfLClass(l);
+  cosets:=RhoCosets(d);
+  f:=Representative(l); 
+  out:=EmptyPlist(Length(scc)*Length(cosets));
+  k:=0;
+
+  for i in scc do 
+    i:=mults[i][1]*f;
+    for j in cosets do 
+      k:=k+1;
+      out[k]:=GreensHClassOfElementNC(d, i*j);
+      SetLClassOfHClass(out[k], l);
+      #JDM also set schutz gp here?
+    od;
+  od;
+  return out;
+end);
+
+# new for 0.1! - GreensHClasses - "for a D-class of an acting semigroup"
+#############################################################################
+# JDM could this be better/more efficient?!
+
+# different method for regular/inverse
+
+InstallOtherMethod(GreensHClasses, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  return Concatenation(List(GreensRClasses(d), GreensHClasses));
+end);
+
+# mod for 1.0! - GreensHClasses - "for an acting semigroup"
+##############################################################################
+
+InstallMethod(GreensHClasses, "for an acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup], 
+function(s)
+  return Concatenation(List(GreensDClasses(s), GreensHClasses));
+end);
+
 # mod for 1.0! - GreensLClasses - "for an acting semigroup"
 ##############################################################################
 
@@ -3302,6 +3386,8 @@ end);
 # new for 1.0! - HClassReps - "for an acting semigp."
 ############################################################################
 
+# different method for regular/inverse
+
 InstallMethod(HClassReps, "for an acting semigp.",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 s-> Concatenation(List(GreensRClasses(s), HClassReps)));
@@ -3589,88 +3675,6 @@ function(s)
     end));
 
   return enum;
-end);
-
-# new for 1.0! - GreensHClasses - "for an R-class of an acting semigroup"
-##############################################################################
-
-InstallOtherMethod(GreensHClasses, "for an R-class of an acting semigroup",
-[IsGreensRClass and IsActingSemigroupGreensClass],
-function(r)
-  local o, m, scc, mults, d, cosets, f, out, k, i, j;
-
-  o:=LambdaOrb(r); 
-  m:=LambdaOrbSCCIndex(r);
-  
-  scc:=OrbSCC(o)[m];
-  mults:=LambdaOrbMults(o, m);
-  d:=DClassOfRClass(r);
-  cosets:=LambdaCosets(d);
-  f:=Representative(r);
-
-  out:=EmptyPlist(Length(scc)*Length(cosets));
-  k:=0;
-  
-  for i in cosets do 
-    i:=f*i;
-    for j in scc do 
-      k:=k+1; 
-      out[k]:=GreensHClassOfElementNC(d, i*mults[j][1]);
-      SetRClassOfHClass(out[k], r);
-      #JDM also set schutz gp here!
-    od;
-  od;
-  return out;
-end);
-
-# new for 1.0! - GreensHClasses - "for an L-class of an acting semigroup"
-##############################################################################
-
-InstallOtherMethod(GreensHClasses, "for an L-class of an acting semigroup",
-[IsGreensLClass and IsActingSemigroupGreensClass],
-function(l)
-  local o, m, scc, mults, d, cosets, f, out, k, i, j;
-
-  o:=RhoOrb(l); 
-  m:=RhoOrbSCCIndex(l);
-  
-  scc:=OrbSCC(o)[m];
-  mults:=RhoOrbMults(o, m);
-  d:=DClassOfLClass(l);
-  cosets:=RhoCosets(d);
-  f:=Representative(l); 
-  out:=EmptyPlist(Length(scc)*Length(cosets));
-  k:=0;
-
-  for i in scc do 
-    i:=mults[i][1]*f;
-    for j in cosets do 
-      k:=k+1;
-      out[k]:=GreensHClassOfElementNC(d, i*j);
-      SetLClassOfHClass(out[k], l);
-      #JDM also set schutz gp here?
-    od;
-  od;
-  return out;
-end);
-
-# new for 0.1! - GreensHClasses - "for a D-class of an acting semigroup"
-#############################################################################
-# JDM could this be better/more efficient?!
-
-InstallOtherMethod(GreensHClasses, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass],
-function(d)
-  return Concatenation(List(GreensRClasses(d), GreensHClasses));
-end);
-
-# mod for 1.0! - GreensHClasses - "for an acting semigroup"
-##############################################################################
-
-InstallMethod(GreensHClasses, "for an acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  return Concatenation(List(GreensDClasses(s), GreensHClasses));
 end);
 
 # mod for 1.0! - Idempotents - "for an acting semigroup" 

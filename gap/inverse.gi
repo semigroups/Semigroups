@@ -2,6 +2,81 @@
 
 #GGG
 
+# new for 1.0! - GreensHClasses - for an acting semigroup with inversion
+############################################################################
+
+#JDM RhoOrb of h is not defined here, maybe it should be!?
+
+InstallOtherMethod(GreensHClasses, "for an acting semigroup with inversion",
+[IsActingSemigroupWithInversion],
+function(s)
+  local lambda_o, lambda_scc, lambda_len, out, type, hrel, l, n, lambda_m, lambda_mults, f, h, i, j, k;
+  
+  lambda_o:=Enumerate(LambdaOrb(s), infinity);
+  lambda_scc:=OrbSCC(lambda_o);
+  lambda_len:=Length(lambda_scc);
+  
+  out:=EmptyPlist(NrHClasses(s));
+  type:=HClassType(s);
+  hrel:=GreensHRelation(s);
+  l:=ActingSemigroupModifier(s);
+  n:=0; 
+    
+  for i in [1..lambda_l-l] do
+    lambda_m:=i+l;
+    lambda_mults:=LambdaOrbMults(lambda_o, lambda_m);
+    f:=RightOne(LambdaOrbRep(lambda_o, lambda_m));
+    for j in lambda_scc[lambda_m] do
+      f:=f*lambda_mults[j][1];
+      for k in lambda_scc[lambda_m] do
+        n:=n+1;
+        h:=Objectify(type, rec());
+        SetParentSemigroup(h, s);
+        SetLambdaOrb(h, lambda_o);
+        SetLambdaOrbSCCIndex(h, lambda_m);
+        SetRepresentative(h, lambda_mults[k][1]*f);
+        SetEquivalenceClassRelation(h, hrel);
+        SetIsGreensClassNC(h, false);
+        out[n]:=h;
+      od;
+    od;
+  od;
+  return out;
+end);
+
+#HHH
+
+# new for 1.0! - HClassReps - for an acting semigroup with inversion
+############################################################################
+
+InstallOtherMethod(HClassReps, "for an acting semigroup with inversion",
+[IsActingSemigroupWithInversion],
+function(s)
+  local lambda_o, lambda_scc, lambda_len, out, type, hrel, l, n, lambda_m, lambda_mults, f, h, i, j, k;
+  
+  lambda_o:=Enumerate(LambdaOrb(s), infinity);
+  lambda_scc:=OrbSCC(lambda_o);
+  lambda_len:=Length(lambda_scc);
+  
+  out:=EmptyPlist(NrHClasses(s));
+  l:=ActingSemigroupModifier(s);
+  n:=0; 
+    
+  for i in [1..lambda_l-l] do
+    lambda_m:=i+l;
+    lambda_mults:=LambdaOrbMults(lambda_o, lambda_m);
+    f:=RightOne(LambdaOrbRep(lambda_o, lambda_m));
+    for j in lambda_scc[lambda_m] do
+      f:=f*lambda_mults[j][1];
+      for k in lambda_scc[lambda_m] do
+        n:=n+1;
+        out[n]:=lambda_mults[k][1]*f;
+      od;
+    od;
+  od;
+  return out;
+end);
+
 #NNN
 
 # new for 0.7! - NaturalPartialOrder - "for an inverse semigroup"

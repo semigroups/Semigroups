@@ -103,58 +103,6 @@ end);
 
 #GGG
 
-# new for 0.7! - GreensHClasses - for an inv semi of partial perms
-############################################################################
-
-InstallOtherMethod(GreensHClasses, "for an inv semi of partial perms",
-[IsPartialPermSemigroup and IsInverseSemigroup],
-function(s)
-  local o, scc, r, out, l, reps, m, mults, f, i, j, k;
-  
-  o:=LongOrb(s);
-  EnumerateInverseSemiData(s);
-  scc:=OrbSCC(o);
-  r:=Length(scc);
-  out:=EmptyPlist(NrHClasses(s));
- 
-  if IsPartialPermMonoid(s) then 
-    l:=0;
-  else;
-    l:=1;
-  fi;
-
-  if HasHClassReps(s) then 
-    reps:=HClassReps(s);
-    m:=0;
-    for i in [1..r-l] do 
-      for j in scc[i+l] do
-        for k in scc[i+l] do
-          m:=m+1;
-          out[m]:=CreateHClass(s, [i+l,j,k], o, reps[m]);
-        od;
-      od; 
-    od;
-  else
-    reps:=EmptyPlist(NrHClasses(s));
-    mults:=o!.mults;
-    m:=0;
-
-    for i in [1..r-l] do 
-      f:=PartialPermNC(o[scc[i+l][1]], o[scc[i+l][1]]);
-      for j in scc[i+l] do
-        for k in scc[i+l] do
-          m:=m+1;
-          reps[m]:=mults[j]*f/mults[k];
-          out[m]:=CreateHClass(s, [i+l,j,k], o, reps[m]);
-        od;
-      od;
-    od;
-    SetHClassReps(s, reps); 
-  fi;
-
-  return out;
-end);
-
 # new for 0.7! - GreensHClasses - for an D-class of inv semi of partial perms
 ############################################################################
 
@@ -397,32 +345,6 @@ function(s)
    od;
   od;
 
-  return out;
-end);
-
-# new for 0.7! - GreensDClasses - for an inv semi of part perms
-##############################################################################
-
-InstallOtherMethod(GreensDClasses, "for an inv semi of part perms",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(s)
-  local l, o, scc, out, i, f, m;
-
-  if IsPartialPermMonoid(s) then 
-    l:=0;
-  else
-    l:=1;
-  fi;
-
-  o:=LongOrb(s); EnumerateInverseSemiData(s); 
-  scc:=OrbSCC(o); out:=EmptyPlist(Length(scc)); 
-
-  i:=0;
-  for m in [1..Length(scc)-l] do 
-    i:=i+1;
-    f:=PartialPermNC(o[scc[m+l][1]], o[scc[m+l][1]]);
-    out[i]:=CreateDClass(s,[m+l], o, f);
-  od;
   return out;
 end);
 
