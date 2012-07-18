@@ -1212,7 +1212,7 @@ end);
 # new for 1.0! - RClassReps - "for regular acting semigroup 
 ###############################################################################
 
-# same method for inverse
+# different method for inverse
 
 InstallOtherMethod(RClassReps, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -1238,7 +1238,6 @@ function(s)
   od;
   return out;
 end);
-
 
 #NNN
 
@@ -1403,10 +1402,59 @@ InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup and IsRegularSemigroup],
 NrDClasses);
 
+#PPP
+
+# new for 0.7! - PartialOrderOfDClasses - "for a regular acting semigroup" 
+############################################################################## 
+
+#JDM
+
+InstallMethod(PartialOrderOfDClasses, "for a regular acting semigroup", 
+[IsRegularSemigroup and IsActingSemigroup], 
+function(s) 
+  Error("not yet implemented,");   
+end); 
+
 #RRR
 
-InstallMethod(RhoOrbStabChain, "for D-class of reg acting semigp",
-[IsGreensDClass and IsRegularActingSemigroupGreensClass],
+# new for 1.0! - Random - "for a regular acting semigroup"
+#############################################################################
+
+# different method for inverse
+
+InstallMethod(Random, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  local lambda_o, gens, i, w, m, f, rho_o, rho_m;
+  
+  lambda_o:=LambdaOrb(s);
+
+  if not IsClosed(lambda_o) then
+    gens:=GeneratorsOfSemigroup(s);    
+    i:=Random([1..Int(Length(gens)/2)]);
+    w:=List([1..i], x-> Random([1..Length(gens)]));
+    return EvaluateWord(gens, w);
+  fi;
+  
+  i:=Random([1..Length(lambda_o)]);
+  m:=OrbSCCLookup(lambda_o)[i];
+  f:=LambdaOrbRep(lambda_o, m);
+  
+  if IsClosed(RhoOrb(s)) then 
+    rho_o:=RhoOrb(s);
+    rho_m:=OrbSCCLookup(rho_o)[Position(rho_o, RhoFunc(s)(f))];
+  fi;
+  return
+  Random(RhoOrbMults(rho_o, rho_m))[1]*f*
+   Random(LambdaOrbSchutzGp(lambda_o, m))*
+    LambdaOrbMults(lambda_o, m)[i][1];
+end);
+
+# new for 1.0! - RhoOrbStabChain - "for a regular D-class "
+#############################################################################
+
+InstallMethod(RhoOrbStabChain, "for a regular D-class",
+[IsRegularDClass and IsActingSemigroupGreensClass],
 d-> StabChainImmutable(SchutzenbergerGroup(d)));
 
 #SSS

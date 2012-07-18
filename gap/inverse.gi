@@ -81,6 +81,56 @@ function(s)
   return out;
 end);
 
+# new for 1.0! - RClassReps - for acting semigroup with inverse op
+##############################################################################
+                    
+InstallOtherMethod(RClassReps, "for acting semigroup with inverse op",
+[IsActingSemigroupWithInverseOp],
+function(s)         
+  local o, scc, nr, out, l, n, f, mults, m, j;
+                    
+  o:=LambdaOrb(s);
+  scc:=OrbSCC(o);   
+  
+  nr:=Length(scc);
+  out:=EmptyPlist(Length(o));
+  l:=ActingSemigroupModifier(s);
+  n:=0;             
+                    
+  for m in [1+l..nr] do
+    f:=RightOne(LambdaOrbRep(o, m));
+    mults:=LambdaOrbMults(o, m);
+    for j in scc[m] do
+      n:=n+1;       
+      out[n]:=mults[j][1]*f;
+    od;             
+  od;
+  return out;
+end);
+
+# new for 0.7! - Random - "for an acting semigroup with inverse op"
+#############################################################################
+
+InstallMethod(Random, "for an acting semigroup with inverse op",
+[IsActingSemigroupWithInverseOp],
+function(s)
+  local o, gens, i, w, k, m, l, g;
+
+  o:=LambdaOrb(s);
+
+  if not IsClosed(o) then
+    gens:=GeneratorsOfSemigroup(s);    
+    i:=Random([1..Int(Length(gens)/2)]);
+    w:=List([1..i], x-> Random([1..Length(gens)]));
+    return EvaluateWord(gens, w);
+  fi;
+  k:=Random([1..Length(o)]);
+  m:=OrbSCCLookup(o)[k];
+  l:=Random(OrbSCC(o)[m]);
+  g:=Random(LambdaOrbSchutzGp(o, m));
+  return o!.mults[k][1]*g*o!.mults[l][1];
+end);
+
 #HHH
 
 # new for 1.0! - HClassReps - for an acting semigroup with inverse op
@@ -275,6 +325,35 @@ function(s)
   scc:=OrbSCC(o);
 
   return Sum(List(scc, m-> Length(m)^2))-ActingSemigroupModifier(s);
+end);
+
+# new for 0.7! - PartialOrderOfDClasses - "for acting semigp with inverse op
+############################################################################## 
+ 
+InstallMethod(PartialOrderOfDClasses, "for acting semigp with inverse op",
+[IsActingSemigroupWithInverseOp],      
+function(s)            
+                       
+  d:=GreensDClasses(s);
+  n:=Length(d);
+  out:=List([1..n], x-> EmptyPlist(n)); 
+  o:=LambdaOrb(s);        
+  gens:=o!.gens;
+  lookup:=OrbSCCLookup(o);
+  l:=ActingSemigroupModifier(s);
+  lambdafunc:=LambdaFunc(s);
+ 
+  for i in [1..n] do  
+    for x in gens do  
+      for f in RClassReps(d[i]) do
+        AddSet(out[i], lookup[Position(o, lambdafunc(x*f))]-l);      
+        AddSet(out[i], lookup[Position(o, lambdafunc(f^-1*x))]-l);     
+      od; 
+    od;
+  od; 
+ 
+  Perform(out, ShrinkAllocationPlist);
+  return out; 
 end);
 
 

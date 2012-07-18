@@ -2751,6 +2751,8 @@ end);
 # new for 1.0! - LClassReps - "for an acting semigroup D-class"
 #############################################################################
 
+# same method for regular/inverse
+
 InstallOtherMethod(LClassReps, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
@@ -2760,19 +2762,29 @@ function(d)
   m:=LambdaOrbSCCIndex(d);
   mults:=LambdaOrbMults(o, m);
   scc:=LambdaOrbSCC(d);
-  cosets:=LambdaCosets(d);
   f:=Representative(d);
-  
-  out:=EmptyPlist(Length(scc)*Length(cosets));
+ 
+  if IsRegularDClass(d) then 
+    out:=EmptyPlist(Length(scc));
 
-  k:=0;
-  for i in scc do
-    for j in cosets do
+    k:=0;
+    for j in scc do
       k:=k+1;
-     out[k]:=f*j*mults[i][1];
+      out[k]:=g*mults[j][1];
     od;
-  od;
+  else
+    cosets:=LambdaCosets(d);
+    out:=EmptyPlist(Length(scc)*Length(cosets));
 
+    k:=0;
+    for i in cosets do
+      g:=f*i;
+      for j in scc do
+        k:=k+1;
+        out[k]:=g*mults[j][1];
+      od;
+    od;
+  fi;
   return out;
 end);
 
@@ -3027,7 +3039,12 @@ end);
 
 InstallOtherMethod(NrLClasses, "for a D-class of an acting semigroup",       
 [IsActingSemigroupGreensClass and IsGreensDClass],
-d-> Length(LambdaCosets(d))*Length(LambdaOrbSCC(d)));
+function(d)
+  if IsActingSemigroupWithInverseOp(ParentSemigroup(d)) then 
+    return NrRClasses(d);
+  fi;
+  return Length(LambdaCosets(d))*Length(LambdaOrbSCC(d));
+end);
 
 # mod for 1.0! - NrLClasses - "for an acting semigroup"
 #############################################################################
@@ -3065,14 +3082,10 @@ end);
 
 #PPP
 
-# new for 1.0! - ParentSemigroup - "for a Green's class of an acting semi"
-#############################################################################
-
-InstallMethod(ParentSemigroup, "for a Green's class of an acting semi",
-[IsActingSemigroupGreensClass and IsGreensClass], x-> x!.s);
-
 # mod for 1.0! - PartialOrderOfDClasses - "for an acting semigroup"
 #############################################################################
+
+# different method for regular/inverse
 
 InstallMethod(PartialOrderOfDClasses, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -3279,6 +3292,8 @@ end);
 
 # new for 1.0! - Random - "for an acting semigroup"
 #############################################################################
+
+# different method for inverse/regular
 
 InstallMethod(Random, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],

@@ -313,52 +313,6 @@ function(d)
   return iter;
 end);
 
-# new for 0.7! - IteratorOfDClassData - "for part perm inverse semigroup""
-###############################################################################
-# JDM this should have a method like IteratorOfRClassData and
-# IteratorOfLClassData since the scc:=OrbSCC line makes this work not so
-# well!
-
-InstallMethod(IteratorOfDClassData, "for a part perm inverse semigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup], 
-function(s)
-  local offset, o, scc;
-
-  if IsPartialPermMonoid(s) then
-    offset:=0;
-  else
-    offset:=1;
-  fi; 
-
-  o:=LongOrb(s); scc:=OrbSCC(o);
-  
-  return IteratorByFunctions( rec(
-                 
-    o:=o, m:=offset, scc_limit:=Length(scc),
-
-    IsDoneIterator:=iter-> iter!.m=iter!.scc_limit,
-
-    NextIterator:=function(iter)
-      local m, o, scc, mults;
-      m:=iter!.m; 
-
-      if m=iter!.scc_limit then 
-        return fail;
-      fi;
-     
-      o:=iter!.o;   scc:=OrbSCC(o); 
-      m:=m+1;       iter!.m:=m;
-
-      mults:=CreateOrbSCCMultipliers(o!.gens, o, m, scc[m]); 
-      
-      return [s, [m], LongOrb(s),
-       PartialPermNC(o[scc[m][1]], o[scc[m][1]])];
-    end,
-
-    ShallowCopy:=iter-> rec(o:=iter!.o, m:=iter!.m, at:=[0,1],
-    scc_limit:=iter!.scc_limit, at_limit:=iter!.at_limit)));
-end);
-
 # new for 0.7! - IteratorOfHClassData - "for part perm inverse semigroup""
 ###############################################################################
 # JDM this should have a method like IteratorOfRClassData and
@@ -526,57 +480,6 @@ function(s);
          IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup);
 end);
 
-#NNN
-
-# currently no IsInverseActingSemigroupGreensClass exists to use the following
-# method; KEEP
-
-InstallOtherMethod(NrLClasses, "for D-class of semigp of partial perms",
-[IsGreensDClass and IsGreensClassOfPartPermSemigroup and                        IsGreensClassOfInverseSemigroup], NrRClasses);
-
-
-#PPP
-
-# new for 0.7! - PartialOrderOfDClasses - "for a partial perm inv semigroup"
-##############################################################################
-
-InstallMethod(PartialOrderOfDClasses, "for an inverse semigroup",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(s)
-  local d, n, out, gens, o, lookup, offset, i, x, f;
-  
-  d:=GreensDClasses(s);
-  n:=Length(d);
-  out:=List([1..n], x-> EmptyPlist(n));
-  o:=LongOrb(s);
-  gens:=o!.gens;
-  lookup:=OrbSCCLookup(o);
-
-  if IsPartialPermMonoid(s) then 
-    offset:=0;
-  else
-    offset:=1;
-  fi;
-
-  for i in [1..n] do 
-    for x in gens do 
-      for f in RClassReps(d[i]) do 
-        AddSet(out[i], lookup[Position(o, DomPP(x*f))]-offset);
-        AddSet(out[i], lookup[Position(o, RanSetPP(f^-1*x))]-offset);
-      od;
-    od;
-  od;
-
-  Perform(out, ShrinkAllocationPlist);
-  return out;
-end);
-
-# new for 0.7! - ParentAttr - "for a Green's class of a part perm semigroup
-##############################################################################
-
-InstallMethod(ParentAttr, "for a R-class of inverse semigroup",
-[IsGreensClass and IsGreensClassOfPartPermSemigroup], x-> x!.parent);
-
 #RRR
 
 # new for 0.7! - Random - "for a part. perm. inv. semigroup (citrus pkg)"
@@ -616,37 +519,6 @@ function(h)
 
   return CreateRClass(h!.parent, [data[1], data[2], scc[data[1]][1]], h!.o, 
    Representative(h)*mults[data[3]]);
-end);
-
-# new for 0.7! - RClassReps - for an inv semi of part perms
-##############################################################################
-
-InstallOtherMethod(RClassReps, "for an inv semi of part perms",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(s)
-  local o, scc, out, gens, i, l, mults, f, j, k;
-
-  o:=LongOrb(s);
-  scc:=OrbSCC(o);
-  out:=EmptyPlist(Length(o));
-  gens:=o!.gens;
-
-  if IsPartialPermMonoid(s) then 
-    i:=0;
-  else
-    i:=1;
-  fi;
-
-  l:=0;
-  for j in [1+i..Length(scc)] do
-    mults:=CreateOrbSCCMultipliers(gens, o, j, scc[j]);
-    f:=PartialPermNC(o[scc[j][1]], o[scc[j][1]]);
-    for k in scc[j] do 
-      l:=l+1; 
-      out[l]:=mults[k]*f;
-    od;
-  od;
-  return out;
 end);
 
 # new for 0.7! - RClassReps - for D-class of part perm inv semi
