@@ -718,8 +718,108 @@ end);
 
 #III
 
+# new for 0.7! - IteratorOfLClassData - "for a regular acting semigroup
+###############################################################################
+
+# no method required for inverse
+
+InstallMethod(IteratorOfLClassData, "for regular acting semigp",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+local iter, scc;
+
+  if not IsClosed(LambdaOrb(s)) then 
+    
+    iter:=IteratorByFunctions( rec(
+
+      i:=ActingSemigroupModifier(s),
+
+      IsDoneIterator:=iter-> IsClosed(LambdaOrb(s)) and 
+       iter!.i>=Length(LambdaOrb(s)),
+
+      NextIterator:=function(iter)
+        local i, o, r, f;
+        
+        o:=LambdaOrb(s); i:=iter!.i;
+
+        if IsClosed(o) and i>=Length(o) then 
+          return fail;  
+        fi;
+        
+        i:=i+1;
+        
+        if i>Length(o) then 
+          if not IsClosed(o) then 
+            Enumerate(o, i);
+            if i>Length(o) then 
+              return fail;
+            fi;
+          else 
+            return fail;
+          fi;
+        fi;
+
+        iter!.i:=i; 
+        
+        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)); 
+        return [s, 1, GradedRhoOrb(s, o[i], true), 
+         CanonicalRhoRep(s, f), false];
+      end,
+
+      ShallowCopy:=iter-> rec(i:=ActingSemigroupModifier(s))));
+  else ####
+
+    scc:=OrbSCC(LambdaOrb(s));
+
+    iter:=IteratorByFunctions( rec(
+                 
+      m:=ActingSemigroupModifier(s), 
+     
+      i:=0,      
+
+      scc_limit:=Length(scc),
+
+      i_limit:=Length(scc[Length(scc)]),
+
+      IsDoneIterator:=iter-> iter!.m=iter!.scc_limit and 
+       iter!.i=iter!.i_limit,
+
+      NextIterator:=function(iter)
+        local i, o, m, scc, f, r, mults;
+        
+        i:=iter!.i; 
+        m:=iter!.m; 
+
+        if m=iter!.scc_limit and i=iter!.i_limit then
+          return fail; 
+        fi;
+
+        o:=LambdaOrb(s); scc:=OrbSCC(o);
+
+        if i<Length(scc[m]) then 
+          i:=i+1;
+        else
+          i:=1; m:=m+1;
+        fi;
+
+        iter!.i:=i; iter!.m:=m;
+ 
+        # f ok here? JDM
+        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][i])); 
+        return [s, m, RhoOrb(s), CanonicalRhoRep(f), false];
+      end,
+
+      ShallowCopy:=iter-> rec(m:=ActingSemigroupModifier(s), i:=0,
+      scc_limit:=iter!.scc_limit, i_limit:=iter!.i_limit)));
+  fi;
+  
+  return iter;
+end);
+
 # new for 0.7! - IteratorOfRClassData - "for a regular acting semigroup
 ###############################################################################
+
+# different method for inverse
 
 InstallMethod(IteratorOfRClassData, "for regular acting semigp",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -814,8 +914,30 @@ local iter, scc;
   return iter;
 end);
 
-# new for 0.7! - IteratorOfRClasses - "for regularacting semigroup 
+# new for 0.7! - IteratorOfLClassReps - "for a part perm inverse semigroup"
 ###############################################################################
+
+# different method for inverse
+
+InstallMethod(IteratorOfLClassReps, "for a part perm inverse semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup],
+s-> IteratorByIterator(IteratorOfLClassData(s), x-> x[4],
+[IsIteratorOfLClassReps]));
+
+# new for 0.7! - IteratorOfLClasses - "for a part perm inverse semigroup"
+###############################################################################
+
+# different method for inverse
+
+InstallMethod(IteratorOfLClasses, "for a part perm inverse semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup],
+s-> IteratorByIterator(IteratorOfLClassData(s), x->
+CallFuncList(CreateLClass, x), [IsIteratorOfLClasses]));
+
+# new for 0.7! - IteratorOfRClasses - "for regular acting semigroup 
+###############################################################################
+
+# same method for inverse
 
 InstallMethod(IteratorOfRClasses, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],

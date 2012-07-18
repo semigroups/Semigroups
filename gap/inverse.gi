@@ -208,21 +208,21 @@ local iter, scc;
   return iter;
 end);
 
-# new for 0.7! - IteratorOfRClassReps - "for acting semigroup with inverse op"
+# new for 0.7! - IteratorOfLClassReps - "for acting semigroup with inverse op"
 ###############################################################################
 
-InstallMethod(IteratorOfRClassReps, "for acting semigp with inverse op",
+InstallMethod(IteratorOfLClassReps, "for acting semigp with inverse op",
 [IsActingSemigroupWithInverseOp],
-s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4],
-[IsIteratorOfRClassReps]));
+s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4]^-1,
+[IsIteratorOfLClassReps]));
 
 # new for 0.7! - IteratorOfRClasses - "for acting semigroup with inverse op" 
 ###############################################################################
 
-InstallMethod(IteratorOfRClasses, "for acting semigroup with inverse op",
+InstallMethod(IteratorOfLClasses, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 s-> IteratorByIterator(IteratorOfRClassData(s), x->
-CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
+CallFuncList(CreateLClassNC, x), [IsIteratorOfLClasses]));
 
 #NNN
 

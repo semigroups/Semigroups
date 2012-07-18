@@ -508,6 +508,8 @@ end);
 # mod for 1.0! - CreateLClass - not a user function!
 #############################################################################
 
+# this is the analogue of CreateRClassNC
+
 InstallGlobalFunction(CreateLClass,
 function(arg)
   local l;
@@ -2527,6 +2529,8 @@ end);
 # new for 1.0! - IteratorOfLClasses - "for an acting semigroup"
 #############################################################################
 
+# different method for regular/inverse
+
 InstallMethod(IteratorOfLClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
@@ -2603,6 +2607,8 @@ s-> IteratorByIterator(IteratorOfHClasses(s), Representative,
 
 # new for 1.0! - IteratorOfLClassReps - "for an acting semigroup"
 #############################################################################
+
+# different method for regular/inverse
 
 InstallMethod(IteratorOfLClassReps, "for an acting semigroup",
 [IsActingSemigroup],
