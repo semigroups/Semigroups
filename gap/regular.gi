@@ -352,7 +352,7 @@ function(s)
   o:=Enumerate(LambdaOrb(s), infinity);
 
   r:=ActingSemigroupModifier(s);
-  scc:=OrbSCC(data);
+  scc:=OrbSCC(o);
   out:=EmptyPlist(Length(scc));
 
   for i in [1+r..Length(scc)] do 
