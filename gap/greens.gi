@@ -2295,7 +2295,6 @@ function(r)
           return fail;
         fi;
 
-
         if at[1]<iter!.m then
           at[1]:=at[1]+1;
         else

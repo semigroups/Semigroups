@@ -720,8 +720,11 @@ end);
 
 # new for 1.0! - IteratorOfDClassData - "for regular acting semigroup"
 ###############################################################################
+# JDM review this...
 
-# this could really be a method for IteratorOfGradedLambdaOrbs
+# the first part of this could really be a method for IteratorOfGradedLambdaOrbs
+
+# there should be a different method for inverse
 
 InstallMethod(IteratorOfDClassData, "for regular acting semigp",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -729,20 +732,32 @@ function(s)
 local iter;
 
   if not IsClosed(LambdaOrb(s)) then 
+    if Length(LambdaOrb(s))=1 and ActingSemigroupModifier(s)=1 then 
+      Enumerate(LambdaOrb(s), 2);
+    fi;
     iter:=IteratorByFunctions( rec(
 
-      seen:=HTCreate(LambdaFunc(s)(LambdaOrb(s)!.gens[1]),
+      last_called_by_is_done:=false,
+
+      next_value:=fail,
+
+      seen:=HTCreate([1,1],
        rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S)),
       
       o:=GradedLambdaOrb(s, LambdaOrb(s)!.gens[1], true),
 
       m:=0,
 
-      # JDM please write proper method!
-      IsDoneIterator:=iter-> IsClosed(LambdaOrb(s)),
+      IsDoneIterator:=function(iter)
+        local m, seen, lambda_o, new, val, f, i;  
 
-      NextIterator:=function(iter)
-        local m, seen, lambda_o, new, val, f;  
+        if iter!.last_called_by_is_done then 
+          return iter!.next_value=fail;
+        fi;
+
+        iter!.last_called_by_is_done:=true;
+        iter!.next_value:=fail;
+
         m:=iter!.m;
         
         if m=Length(OrbSCC(iter!.o)) then 
@@ -750,44 +765,74 @@ local iter;
           seen:=iter!.seen;
           # look for a new lambda value
           lambda_o:=LambdaOrb(s);
-          lambda_o!.looking:=true;
-          lambda_o!.lookingfor:=
-          function(o, x) 
-            local val;
-            val:=Position(GradedLambdaOrbs(s), x);
-            return val=fail or HTValue(seen, val)=fail; 
-          end;
-          lambda_o!.lookfunc:=lambda_o!.lookingfor;
-          Enumerate(lambda_o);
-          new:=PositionOfFound(lambda_o);
-          lambda_o!.found:=false; lambda_o!.looking:=false;
-          Unbind(lambda_o!.lookingfor); Unbind(lambda_o!.lookfunc);
-          if new=false then 
-            return fail;
+
+          # check existing lambda values
+          new:=false;
+          for i in [1+ActingSemigroupModifier(s)..Length(lambda_o)] do 
+            val:=Position(GradedLambdaOrbs(s), lambda_o[i]);
+            if val=fail or HTValue(seen, val{[1,2]})=fail then          
+              new:=i;
+              break;
+            fi;
+          od;
+
+          # look for new lambda value
+          if new=false then  
+            lambda_o!.looking:=true;
+            lambda_o!.lookingfor:=
+              function(o, x) 
+                local val;
+                val:=Position(GradedLambdaOrbs(s), x);
+                return val=fail or HTValue(seen, val{[1,2]})=fail; 
+              end;
+            lambda_o!.lookfunc:=lambda_o!.lookingfor;
+            Enumerate(lambda_o);
+            new:=PositionOfFound(lambda_o);
+            lambda_o!.found:=false; lambda_o!.looking:=false;
+            Unbind(lambda_o!.lookingfor); Unbind(lambda_o!.lookfunc);
           fi;
+
+          if new=false then 
+            return true;
+          fi;
+          
           val:=Position(GradedLambdaOrbs(s), lambda_o[new]);
           if val<>fail then 
             iter!.o:=GradedLambdaOrbs(s)[val[1]][val[2]];
-            HTAdd(seen, val, true);
+            HTAdd(seen, val{[1,2]}, true);
           else
             iter!.o:=GradedLambdaOrb(s,
              EvaluateWord(lambda_o!.gens, TraceSchreierTreeForward(lambda_o,
              new)), true);
-            HTAdd(seen, Position(GradedLambdaOrbs(s), lambda_o[new]), true);
+            HTAdd(seen, iter!.o!.val{[1,2]}, true);
           fi;
         else
           m:=m+1;
         fi;
         iter!.m:=m; 
         
-        f:=LambdaOrbRep(iter!.o, m); 
-        return [s, 1, GradedLambdaOrb(s, f, false), 1, 
-         GradedRhoOrb(s, f, false), f, false];
+        f:=LambdaOrbRep(iter!.o, m)*LambdaOrbMults(iter!.o,
+        m)[iter!.o!.lambda_l][2]; 
+        iter!.next_value:=[s, 1, iter!.o, 1, GradedRhoOrb(s, f, false), f, false];
+        return false;
       end,
-      #JDM fill this in!
-      ShallowCopy:=iter-> rec()));
 
-    HTAdd(iter!.seen, iter!.o!.val, true);
+      NextIterator:=function(iter)
+        if not iter!.last_called_by_is_done then
+          IsDoneIterator(iter);
+        fi;
+        iter!.last_called_by_is_done:=false;
+        return iter!.next_value;
+      end,
+
+      ShallowCopy:=iter-> rec( last_called_by_is_done:=false,
+      next_value:=fail,
+      seen:=HTCreate([1,1],
+       rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S)),
+      o:=GradedLambdaOrb(s, LambdaOrb(s)!.gens[1], true),
+      m:=0)));
+
+    HTAdd(iter!.seen, iter!.o!.val{[1,2]}, true);
   else ####
 
     iter:=IteratorByFunctions( rec(
