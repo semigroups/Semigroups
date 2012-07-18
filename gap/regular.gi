@@ -412,6 +412,82 @@ function(s)
   return out;
 end);
 
+# new for 1.0! - GreensHClasses - "for L-class of regular acting semigroup"
+##############################################################################
+
+# same method for inverse
+
+InstallOtherMethod(GreensHClasses, "for L-class of regular acting semigroup",
+[IsRegularLClass and IsActingSemigroupGreensClass],
+function(l)
+  local o, m, scc, mults, f, out, k, j;
+
+  o:=RhoOrb(l);
+  m:=RhoOrbSCCIndex(l);
+ 
+  scc:=OrbSCC(o)[m];
+  mults:=RhoOrbMults(o, m);
+  f:=Representative(l);
+
+  out:=EmptyPlist(Length(scc));
+  k:=0;
+ 
+  if not IsGreensClassNC(l) then 
+    for j in scc do
+      k:=k+1;
+      out[k]:=GreensHClassOfElementNC(l, mults[j][1]*f);
+      SetLClassOfHClass(out[k], l);
+      ResetFilterObj(out[k], IsGreensClassNC); 
+      #JDM also set schutz gp here!?
+    od;
+  else
+    for j in scc do
+      k:=k+1;
+      out[k]:=GreensHClassOfElementNC(l, mults[j][1]*f);
+      SetLClassOfHClass(out[k], r);
+    od; 
+  fi;
+  return out;
+end);
+
+# new for 1.0! - GreensHClasses - "for R-class of regular acting semigroup"
+##############################################################################
+
+# same method for inverse
+
+InstallOtherMethod(GreensHClasses, "for R-class of regular acting semigroup",
+[IsRegularRClass and IsActingSemigroupGreensClass],
+function(r)
+  local o, m, scc, mults, f, out, k, j;
+
+  o:=LambdaOrb(r);
+  m:=LambdaOrbSCCIndex(r);
+ 
+  scc:=OrbSCC(o)[m];
+  mults:=LambdaOrbMults(o, m);
+  f:=Representative(r);
+
+  out:=EmptyPlist(Length(scc));
+  k:=0;
+ 
+  if not IsGreensClassNC(r) then 
+    for j in scc do
+      k:=k+1;
+      out[k]:=GreensHClassOfElementNC(r, f*mults[j][1]);
+      SetRClassOfHClass(out[k], r);
+      ResetFilterObj(out[k], IsGreensClassNC); 
+      #JDM also set schutz gp here!?
+    od;
+  else
+    for j in scc do
+      k:=k+1;
+      out[k]:=GreensHClassOfElementNC(r, f*mults[j][1]);
+      SetRClassOfHClass(out[k], r);
+    od; 
+  fi;
+  return out;
+end);
+
 # new for 1.0! - GreensRClassOfElement - for regular acting semi and elt"
 ############################################################################
 

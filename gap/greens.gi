@@ -955,6 +955,11 @@ end);
 # new for 1.0! - GreensHClasses - "for an R-class of an acting semigroup"
 ##############################################################################
 
+# JDM change other GreensHClasses etc to do the same as this one w.r.t.
+# IsGreensClassNC
+
+# different method for regular/inverse
+
 InstallOtherMethod(GreensHClasses, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
@@ -971,21 +976,36 @@ function(r)
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
-  
-  for i in cosets do 
-    i:=f*i;
-    for j in scc do 
-      k:=k+1; 
-      out[k]:=GreensHClassOfElementNC(d, i*mults[j][1]);
-      SetRClassOfHClass(out[k], r);
-      #JDM also set schutz gp here!
+ 
+  if not IsGreensClassNC(r) then 
+    for i in cosets do 
+      i:=f*i;
+      for j in scc do 
+        k:=k+1; 
+        out[k]:=GreensHClassOfElementNC(d, i*mults[j][1]);
+        SetRClassOfHClass(out[k], r);
+        ResetFilterObj(out[k], IsGreensClassNC);
+        #JDM also set schutz gp here!
+      od;
     od;
-  od;
+  else
+    for i in cosets do 
+      i:=f*i;
+      for j in scc do 
+        k:=k+1; 
+        out[k]:=GreensHClassOfElementNC(d, i*mults[j][1]);
+        SetRClassOfHClass(out[k], r);
+        #JDM also set schutz gp here!
+      od;
+    od;
+  fi;
   return out;
 end);
 
 # new for 1.0! - GreensHClasses - "for an L-class of an acting semigroup"
 ##############################################################################
+
+# different method for regular/inverse
 
 InstallOtherMethod(GreensHClasses, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
@@ -1019,7 +1039,7 @@ end);
 #############################################################################
 # JDM could this be better/more efficient?!
 
-# different method for regular/inverse
+# same method for regular/inverse
 
 InstallOtherMethod(GreensHClasses, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
@@ -1029,6 +1049,8 @@ end);
 
 # mod for 1.0! - GreensHClasses - "for an acting semigroup"
 ##############################################################################
+
+# different method for regular/inverse
 
 InstallMethod(GreensHClasses, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
