@@ -38,6 +38,7 @@ DeclareProperty("IsLambdaOrb", IsOrbit);
 DeclareProperty("IsRhoOrb", IsOrbit);
 
 DeclareGlobalFunction("LambdaOrbMults");
+DeclareGlobalFunction("LambdaOrbMult");
 DeclareGlobalFunction("RhoOrbMults");
 DeclareGlobalFunction("RhoOrbMult");
 DeclareGlobalFunction("LambdaOrbSchutzGp");
