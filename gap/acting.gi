@@ -1141,6 +1141,7 @@ function(o, m)
   inv:=RhoInverse(s);
 
   for i in scc do
+    Error();
     f:=EvaluateWord(gens, Reversed(TraceSchreierTreeOfSCCForward(o, m, i)));
     mults[i]:=[f, inv(o[scc[1]], f)];
   od;

@@ -374,7 +374,7 @@ function(s)
   
   for i in [1+r..Length(scc)] do 
     out[i-r]:=CallFuncList(CreateDClass, 
-     [s, i, o, RectifyRho(rho_o, LambdaOrbRep(o,i))]);
+     [s, i, o, RectifyRho(rho_o, LambdaOrbRep(o,i)), fail]);
   od;
   return out;
 end);
@@ -1235,6 +1235,36 @@ function(s)
   return out;
 end);
 
+# new for 1.0! - RClassReps - "for regular acting semigroup 
+###############################################################################
+
+# different method for inverse
+
+InstallOtherMethod(RClassReps, "for a D-class of an acting semigroup",
+[IsActingSemigroupGreensClass and IsRegularDClass],
+function(d)
+  local o, m, mults, scc, f, out, k, i;
+
+  o:=RhoOrb(d);
+  m:=RhoOrbSCCIndex(d);
+  mults:=RhoOrbMults(o, m);
+  scc:=RhoOrbSCC(d);
+  f:=Representative(d);
+
+#  if IsActingSemigroupWithInverseOp(ParentSemigroup(d)) then
+#    return List(LClassReps(d), x-> x^-1);
+#  elif IsRegularDClass(d) then
+
+  out:=EmptyPlist(Length(scc));
+  k:=0;
+  for i in scc do
+    k:=k+1;
+    out[k]:=mults[i][1]*f;
+  od;
+  return out;
+end);
+
+
 #NNN
 
 # new for 1.0! - NrDClasses - "for a regular acting semigroup"
@@ -1398,16 +1428,39 @@ NrDClasses);
 
 #PPP
 
-# new for 0.7! - PartialOrderOfDClasses - "for a regular acting semigroup" 
+# new for 1.0! - PartialOrderOfDClasses - "for a regular acting semigroup" 
 ############################################################################## 
 
-#JDM
+# different method for inverse
 
-InstallMethod(PartialOrderOfDClasses, "for a regular acting semigroup", 
-[IsRegularSemigroup and IsActingSemigroup], 
-function(s) 
-  Error("not yet implemented,");   
-end); 
+InstallMethod(PartialOrderOfDClasses, "for a regular acting semigp",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  local d, n, out, o, gens, lookup, l, lambdafunc, i, x, f;
+
+  d:=GreensDClasses(s);
+  n:=Length(d);
+  out:=List([1..n], x-> EmptyPlist(n));
+  o:=LambdaOrb(s);
+  gens:=o!.gens;
+  lookup:=OrbSCCLookup(o);
+  l:=ActingSemigroupModifier(s);
+  lambdafunc:=LambdaFunc(s);
+
+  for i in [1..n] do
+    for x in gens do
+      for f in RClassReps(d[i]) do
+        AddSet(out[i], lookup[Position(o, lambdafunc(x*f))]-l);
+      od;
+      for f in LClassReps(d[i]) do 
+        AddSet(out[i], lookup[Position(o, lambdafunc(f*x))]-l);
+      od;
+    od;
+  od;
+
+  Perform(out, ShrinkAllocationPlist);
+  return out;
+end);
 
 #RRR
 
@@ -1472,15 +1525,8 @@ InstallMethod(Size, "for a regular acting semigroup",
 function(s)
   local lambda_o, rho_o, nr, lambda_scc, rho_scc, r, i, rhofunc, lookup, rho, m;
 
-  lambda_o:=LambdaOrb(s);
-  if not IsClosed(lambda_o) then 
-    Enumerate(lambda_o, infinity);
-  fi;
-  
-  rho_o:=LambdaOrb(s);
-  if not IsClosed(rho_o) then 
-    Enumerate(rho_o, infinity);
-  fi;
+  lambda_o:=Enumerate(LambdaOrb(s), infinity);
+  rho_o:=Enumerate(RhoOrb(s), infinity);
   
   nr:=0;
   lambda_scc:=OrbSCC(lambda_o);

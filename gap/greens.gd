@@ -81,6 +81,10 @@ DeclareProperty("IsGreensClassOfTransSemigp", IsGreensClass);
 DeclareProperty("IsRegularLClass", IsGreensClass); 
 DeclareProperty("IsRegularRClass", IsGreensClass);
 
+DeclareProperty("IsInverseOpLClass", IsGreensClass); 
+DeclareProperty("IsInverseOpRClass", IsGreensClass);
+DeclareProperty("IsInverseOpDClass", IsGreensClass); 
+
 DeclareOperation("IteratorOfDClasses", [IsSemigroup]);
 DeclareOperation("IteratorOfHClasses", [IsSemigroup]);
 DeclareOperation("IteratorOfLClasses", [IsSemigroup]); 

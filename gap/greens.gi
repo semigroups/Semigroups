@@ -515,8 +515,6 @@ end);
 # arg[3] = lambda orb; arg[4] = rep; 
 # arg[5] = IsGreensClassNc
 
-# only for D-classes being created in GreensDClasses or similar!
-
 InstallGlobalFunction(CreateDClassNC,  
 function(arg) 
   local d, rep, o, l, m;
@@ -3305,7 +3303,7 @@ end);
 # mod for 1.0! - RClassReps - "for a D-class of an acting semigroup"
 ############################################################################
 
-# same method for regular/inverse
+# different method for regular/inverse
 
 InstallOtherMethod(RClassReps, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass],
@@ -3318,30 +3316,18 @@ function(d)
   scc:=RhoOrbSCC(d);
   f:=Representative(d);
 
-  if IsActingSemigroupWithInverseOp(ParentSemigroup(d)) then 
-    return List(LClassReps(d), x-> x^-1);
-  elif IsRegularDClass(d) then 
-    out:=EmptyPlist(Length(scc));
-    k:=0;
-    for i in scc do
-      k:=k+1;
-      out[k]:=mults[i][1]*g;
-    od;
-  else 
-    cosets:=RhoCosets(d);
-    out:=EmptyPlist(Length(scc)*Length(cosets));
+  cosets:=RhoCosets(d);
+  out:=EmptyPlist(Length(scc)*Length(cosets));
   
-    k:=0;
+  k:=0;
 
-    for i in scc do
-      g:=mults[i][1]*f;
-      for j in cosets do
-        k:=k+1;
-        out[k]:=g*j^-1;
-      od;
+  for i in scc do
+    g:=mults[i][1]*f;
+    for j in cosets do
+      k:=k+1;
+      out[k]:=g*j^-1;
     od;
-  fi;
-
+  od;
   return out;
 end);
 
@@ -3386,7 +3372,7 @@ end);
 # different method for regular/inverse
 
 InstallMethod(HClassType, "for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s);
  return NewType( FamilyObj( s ), IsEquivalenceClass and
   IsEquivalenceClassDefaultRep and IsGreensHClass and
@@ -3861,7 +3847,7 @@ function(s)
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   scc:=OrbSCC(data); 
   r:=Length(scc);
-  i:=SemigroupData(s)!.modifier;
+  i:=ActingSemigroupModifier(s);
   
   out:=EmptyPlist(r-i);
 
@@ -3912,7 +3898,7 @@ end);
 # new for 0.1! - NrHClasses - "for an L-class of an acting semigroup"
 #############################################################################
 
-# different method for regular/inverse, combine?JDM
+# different method for regular/inverse
 
 InstallOtherMethod(NrHClasses, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
@@ -3921,7 +3907,7 @@ l-> NrRClasses(DClassOfLClass(l)));
 # new for 0.1! - NrHClasses - "for an R-class of an acting semigroup"
 #############################################################################
 
-# different method for regular/inverse, combine?JDM
+# different method for regular/inverse
 
 InstallOtherMethod(NrHClasses, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
@@ -3930,30 +3916,12 @@ r-> NrLClasses(DClassOfRClass(r)));
 # mod for 1.0! - NrHClasses - "for an acting semigroup"
 #############################################################################
  
-# different method for regular/inverse, combine?JDM
+# different method for regular/inverse
 
 InstallMethod(NrHClasses, "for an acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   return Sum(List(GreensDClasses(s), NrHClasses));
-end);
-
-# new for 0.1! - Size - "for a simple transformation semigroup"
-#############################################################################
-# JDM check this is actually superior to the above method for Size
-
-InstallOtherMethod(Size, "for a simple transformation semigroup",
-[IsSimpleSemigroup and IsTransformationSemigroup],
-function(s)
-  local gens, ims, kers, H;
-
-  gens:=Generators(s);
-
-  ims:=Size(Set(List(gens, ImageSetOfTransformation)));
-  kers:=Size(Set(List(gens, CanonicalTransSameKernel)));
-  H:=GreensHClassOfElement(s, gens[1]);
-
-  return Size(H)*ims*kers;
 end);
 
 #EOF

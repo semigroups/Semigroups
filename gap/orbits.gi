@@ -144,9 +144,13 @@ function(o, i)
   fi;
 
   scc:=o!.scc[i]; rev:=o!.rev;
+  #gen:=ListWithIdenticalEntries(Length(o), fail);
+  #pos:=ListWithIdenticalEntries(Length(o), fail);
+  gen:=EmptyPlist(Length(o));
+  pos:=EmptyPlist(Length(o));
 
-  gen:=ListWithIdenticalEntries(Length(o), fail);
-  pos:=ListWithIdenticalEntries(Length(o), fail);
+  gen[scc[1]]:=fail; pos[scc[1]]:=fail;
+
   seen:=BlistList([1..Length(o)], [scc[1]]);
  
   #JDM remove use of truth table here!
@@ -207,8 +211,13 @@ function(o, i)
   fi;
 
   scc:=o!.scc[i]; len:=Length(o);
-  gen:=ListWithIdenticalEntries(len, fail);
-  pos:=ListWithIdenticalEntries(len, fail);
+
+  #gen:=ListWithIdenticalEntries(len, fail);
+  #pos:=ListWithIdenticalEntries(len, fail);
+  gen:=EmptyPlist(len);
+  pos:=EmptyPlist(len);
+  gen[scc[1]]:=fail; pos[scc[1]]:=fail;
+
   seen:=BlistList([1..len], [scc[1]]);
 #JDM remove the use of truth table here
   t:=OrbSCCTruthTable(o)[i];

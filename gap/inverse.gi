@@ -108,6 +108,13 @@ function(s)
   return out;
 end);
 
+# new for 1.0! - RClassReps - for D-class of acting semigroup with inverse op
+##############################################################################
+
+InstallOtherMethod(RClassReps, "for a D-class of an acting semigroup",
+[IsActingSemigroupGreensClass and IsInverseOpDClass],
+d-> List(LClassReps(d), x-> x^-1));
+
 # new for 0.7! - Random - "for an acting semigroup with inverse op"
 #############################################################################
 
