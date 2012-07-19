@@ -192,6 +192,7 @@ function(o, i)
   if not IsBound(o!.scc) then 
     OrbSCC(o);
   fi;
+
   if not IsBound(o!.trees) then
     o!.trees:=EmptyPlist(Length(o));
   fi;

@@ -113,9 +113,6 @@ end);
 
 # new for 1.0! - \in - for an acting elt and acting semigroup
 ##############################################################################
-# JDM remove the 100 from below when the \in method for transformation
-# semigroup is removed. Insert 100 below to use this method in preference to
-# the other \in method, doing this messes everything up in the old set up. 
 
 InstallMethod(\in, "for an acting elt and acting semigroup",
 [IsActingElt, IsActingSemigroup], 
@@ -431,27 +428,19 @@ function(data, limit, lookfunc)
       #put lambda x in the first position in its scc
       if not pos=scc[m][1] then 
         
-        #get the multipliers
         #JDM expand!
-        #mults:=LambdaOrbMults(o, m);         
-        
         y:=x*LambdaOrbMult(o, m, pos)[2];
       else
         y:=x;
         pos:=fail;
       fi;
 
-      #check if we've seen rho(y) before
-      #rhoy:=ShallowCopy(o[scc[m][1]]);
-      #Append(rhoy, rho(y));
-      #val:=HTValue(lambdarhoht, rhoy);
-
       rhoy:=[m];
       Append(rhoy, rho(y));
       val:=HTValue(lambdarhoht, rhoy);
 
       # this is what we keep if it is new
-      # x:=[s, [m, scc[m][1]], o, y, nr+1, val];
+      # x:=[s, m, o, y, nr+1, val];
 
       if val=fail then  #new rho value, and hence new R-rep
         lenreps:=lenreps+1;
@@ -487,8 +476,9 @@ function(data, limit, lookfunc)
           else # schutz gp neither trivial nor symmetric group
             old:=false; 
             for n in [1..repslens[val]] do 
-              p:=lambdaperm(reps[val][n], y);
-              if SiftedPermutation(schutz, p)=() then 
+              #p:=lambdaperm(reps[val][n], y);
+              #if SiftedPermutation(schutz, p)=() then 
+              if SiftGroupElement(schutz,lambdaperm(reps[val][n],y)).isone then
                 old:=true;
                 graph[i][j]:=repslookup[val][n]; 
                 break;
@@ -776,18 +766,8 @@ function(s)
         scc_reps:=[One(Generators(s))], semi:=s));
 end);
 
-# new for 1.0! - LambdaOrb - "for acting semigroup with inversion"
-##############################################################################
-# move to inverse.gi and do it properly!
-
-#InstallMethod(LambdaOrb, "for an acting semigroup with inversion",
-#[IsActingSemigroupWithInversion], RhoOrb);
-
 # new for 1.0! - LambdaOrbMults - "for a lambda orb and scc index"
 ##############################################################################
-# this should be revised so that we do not repeatedly call TraceSchreierTree..
-# which involves x, x*y, x*y*z, ... (lots of unnecessary products).
-# JDM
 
 InstallGlobalFunction(LambdaOrbMults,
 function(o, m)
@@ -895,8 +875,7 @@ end);
 
 InstallGlobalFunction(LambdaOrbSchutzGp, 
 function(o, m)
-  local s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, mults, slp,
-  lenslp, len, bound, g, is_sym, f, h, k, l;
+  local s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, slp, lenslp, len, bound, g, is_sym, f, h, k, l;
   
   if IsBound(o!.schutz) then 
     if IsBound(o!.schutz[m]) then 
@@ -916,7 +895,6 @@ function(o, m)
   orbitgraph:=OrbitGraph(o);
   lambdaperm:=LambdaPerm(s);
   rep:=LambdaOrbRep(o, m);
-  #mults:=LambdaOrbMults(o, m);
   slp:=[]; lenslp:=0;
 
   len:=LambdaRank(s)(o[scc[1]]);
@@ -932,11 +910,10 @@ function(o, m)
   for k in scc do
     for l in [1..nrgens] do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
-# JDM maybe keep TraceSchreierTreeOfSCCForward(o, m, k) in o?
+        # JDM maybe keep TraceSchreierTreeOfSCCForward(o, m, k) in o?
         f:=lambdaperm(rep, rep*EvaluateWord(gens,
          TraceSchreierTreeOfSCCForward(o, m, k))
           *gens[l]*LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
-          #mults[orbitgraph[k][l]][2]);
         h:=ClosureGroup(g, f);
         if Size(h)>Size(g) then 
           g:=h; 
@@ -962,7 +939,8 @@ function(o, m)
   elif Size(g)=1 then
     o!.schutzstab[m]:=false;
   else
-    o!.schutzstab[m]:=StabChainImmutable(g);
+    #o!.schutzstab[m]:=StabChainImmutable(g);
+    o!.schutzstab[m]:=StabilizerChain(g);
   fi;
 
   return g;
@@ -1074,7 +1052,7 @@ end);
 InstallOtherMethod(Position, "for acting semigroup data and acting elt",
 [IsSemigroupData, IsObject, IsZeroCyc], 100,
 function(data, x, n)
-  local val, s, o, l, m, scc, schutz, repslookup, mults, y, reps, repslens, lambdaperm;
+  local val, s, o, l, m, scc, schutz, repslookup, y, reps, repslens, lambdaperm;
 
   val:=HTValue(data!.ht, x);
 
@@ -1109,8 +1087,6 @@ function(data, x, n)
   fi;
  
   if l<>scc[m][1] then 
-    #mults:=LambdaOrbMults(o, m);
-    #y:=x*mults[l][2];
     y:=x*LambdaOrbMult(o, m, l)[2];
   else
     y:=x;
@@ -1118,16 +1094,13 @@ function(data, x, n)
 
   reps:=data!.reps; repslens:=data!.repslens;
 
-  if schutz=false then #JDM change this so that it just returns HTValue(data!.ht);
-    for n in [1..repslens[val]] do 
-      if reps[val][n]=y then 
-        return repslookup[val][n];
-      fi;
-    od;
+  if schutz=false then 
+    return HTValue(data!.ht, y);
   else
     lambdaperm:=LambdaPerm(s);
     for n in [1..repslens[val]] do 
-      if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=() then 
+      #if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=() then 
+      if SiftGroupElement(schutz, lambdaperm(reps[val][n], y)).isone then
         return repslookup[val][n];
       fi;
     od;

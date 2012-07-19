@@ -8,7 +8,9 @@
 #############################################################################
 ##
 
-# Notes: everything here uses RhoSomething, so don't use LambdaAnything
+# Notes: everything here uses LambdaSomething, so don't use RhoAnything
+
+# the first three functions should be updated!
 
 # methods for inverse acting semigroups consisting of acting elements with a
 # ^-1 operator. 
@@ -17,7 +19,7 @@
 ##############################################################################
 
 InstallMethod(\in, "for inverse acting elt and acting semigroup with inversion",
-[IsInverseActingElt, IsActingSemigroupWithInversion],
+[IsInverseActingElt, IsActingSemigroupWithInverseOp],
 function(f, s)
   local dom, o, rho, rho_l, lambda_l, lambda, m, schutz, scc, g;
   
@@ -125,7 +127,7 @@ end);
 ##############################################################################
 
 InstallOtherMethod(DClassReps, "for an acting semigroup with inversion",
-[IsActingSemigroupWithInversion],
+[IsActingSemigroupWithInverseOp],
 function(s)            
   local o, r, i, out, f, m;
   
@@ -146,7 +148,7 @@ end);
 ##############################################################################
 
 InstallOtherMethod(Size, "for an acting semigroup with inversion",
-[IsActingSemigroupWithInversion],
+[IsActingSemigroupWithInverseOp],
 function(s)
   local o, scc, r, i, nr, m;
 

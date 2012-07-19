@@ -110,7 +110,8 @@ InstallMethod(RhoInverse, "for a transformation semi",
     local g, n, m, lookup, i, j;
   
     g:=ker{RanT(f)};
-    n:=f[1]; m:=MaximumList(ker);
+    n:=f[1]; 
+    m:=MaximumList(ker);
     lookup:=EmptyPlist(n);
     
     i:=0; j:=0;
