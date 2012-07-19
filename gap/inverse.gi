@@ -1,4 +1,164 @@
+#############################################################################
+##
+#W  inverse.gi
+#Y  Copyright (C) 2011-12                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
 
+# Notes: everything here uses RhoSomething, so don't use LambdaAnything
+
+# methods for inverse acting semigroups consisting of acting elements with a
+# ^-1 operator. 
+
+# new for 1.0! - \in - "for an acting semigroup with inversion and elt"
+##############################################################################
+
+InstallMethod(\in, "for inverse acting elt and acting semigroup with inversion",
+[IsInverseActingElt, IsActingSemigroupWithInversion],
+function(f, s)
+  local dom, o, rho, rho_l, lambda_l, lambda, m, schutz, scc, g;
+  
+  if not ElementsFamily(FamilyObj(s))=FamilyObj(f) then 
+    Error("the element and semigroup are not of the same type,");
+    return;
+  fi;
+
+  if HasAsSSortedList(s) then 
+    return f in AsSSortedList(s); 
+  fi;
+
+  dom:=RhoDomain(s);
+
+  if dom=[] then 
+    return Degree(f)=0;
+  # any way of using points here? JDM
+  fi;
+
+  o:=RhoOrb(s);
+  rho:=RhoFunc(s)(f);
+
+  if IsClosed(o) then
+    rho_l:=Position(o, rho);
+    if rho_l=fail or (rho_l=1 and not IsMonoidAsSemigroup(s)) then
+      return false;
+    fi;
+    lambda_l:=Position(o, LambdaFunc(s)(f));
+    if lambda_l=fail then
+      return false;
+    fi;
+  else
+
+    rho_l:=Position(o, rho);
+    if rho_l=fail then
+      o!.looking:=true; o!.lookingfor:=function(o, x) return x=rho; end;
+      o!.lookfunc:=o!.lookingfor;
+      Enumerate(o);
+      rho_l:=PositionOfFound(o);
+      o!.found:=false; o!.looking:=false;
+      Unbind(o!.lookingfor); Unbind(o!.lookfunc);
+
+      if rho_l=false then
+        return false;
+      fi;
+    fi;
+
+    if rho=[] then
+      return true;
+    elif rho_l=1 and not IsMonoidAsSemigroup(s) then
+      return false;
+    fi;
+
+    lambda:=LambdaFunc(s)(f);
+    
+    if IsClosed(o) then
+      lambda_l:=Position(o, lambda);
+      if lambda_l=fail then
+        return false;
+      fi;
+    else 
+      o:=GradedRhoOrb(s, f, false);
+      Enumerate(o, infinity);
+      rho_l:=1;
+      lambda_l:=Position(o, lambda);
+      if lambda_l=fail then
+        return false;
+      fi;
+    fi;
+  fi;
+
+  m:=OrbSCCLookup(o)[rho_l];
+
+  if OrbSCCLookup(o)[lambda_l]<>m then
+    return false;
+  fi;
+
+  schutz:=RhoOrbStabChain(o, m);
+
+  if schutz=true then
+    return true;
+  fi;
+
+  scc:=OrbSCC(o)[m];
+  g:=f;
+  if lambda_l<>scc[1] then 
+    g:=g*RhoOrbMults(o, m)[lambda_l][1];
+  fi;
+
+  if rho_l<>scc[1] then 
+    g:=RhoOrbMults(o, m)[rho_l][2]*g;
+  fi;
+
+  if IsIdempotent(g) then 
+    return true;
+  elif schutz=false then
+    return false;
+  fi;
+
+  #JDM really One?
+  return SiftedPermutation(schutz, LambdaPerm(s)(One(g), g))=();
+end);
+
+# new for 1.0! - DClassReps - "for an acting semigroup with inversion"
+##############################################################################
+
+InstallOtherMethod(DClassReps, "for an acting semigroup with inversion",
+[IsActingSemigroupWithInversion],
+function(s)            
+  local o, r, i, out, f, m;
+  
+  o:=RhoOrb(s);
+  r:=Length(OrbSCC(o));
+  i:=ActingSemigroupModifier(s);
+  out:=EmptyPlist(r);
+  
+  for m in [1..r-i] do 
+    f:=RhoOrbRep(o, m+i);
+# JDM method for RightOne of inverse acting element required.
+    out[m]:=RightOne(f);
+  od;
+  return out;
+end);
+
+# new for 1.0! - Size - "for an acting semigroup with inversion"
+##############################################################################
+
+InstallOtherMethod(Size, "for an acting semigroup with inversion",
+[IsActingSemigroupWithInversion],
+function(s)
+  local o, scc, r, i, nr, m;
+
+  o:=RhoOrb(s);   scc:=OrbSCC(o);
+  r:=Length(scc); i:=ActingSemigroupModifier(s);
+  nr:=0;
+
+  for m in [1+i..r] do 
+    nr:=nr+Length(scc[m])^2*Size(RhoOrbSchutzGp(o, m, infinity));
+  od;
+  return nr;
+end);
 
 #GGG
 
