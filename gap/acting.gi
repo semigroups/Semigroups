@@ -1116,37 +1116,33 @@ function(s)
         scc_reps:=[One(Generators(s))], semi:=s));
 end);
 
-# new for 1.0! - RhoOrbMults - "for a rho orb and scc index"
+# new for 1.0! - RhoOrbMults - "for a rho orb and index"
 ##############################################################################
-# f takes o[scc[1]] to o[i] and rhomult(o[i], f) takes o[i] to o[scc[1]]
+# f takes o[scc[1]] to o[i] and inv(o[i], f) takes o[i] to o[scc[1]]
 
 InstallGlobalFunction(RhoOrbMults,
-function(o, m)
-  local scc, s, mults, gens, inv, f, i;
-
-  scc:=OrbSCC(o)[m];
+function(o, i)
+  local m, scc, genpos, f;
 
   if IsBound(o!.mults) then
-    if IsBound(o!.mults[scc[1]]) then
-      return o!.mults;
+    if IsBound(o!.mults[i]) then
+      return o!.mults[i];
     fi;
   else
     o!.mults:=EmptyPlist(Length(o));
   fi;
 
-  s:=o!.semi;
-  mults:=o!.mults;
-  # this definition of gens is essential!
-  gens:=o!.gens;
-  inv:=RhoInverse(s);
-
-  for i in scc do
-    Error();
-    f:=EvaluateWord(gens, Reversed(TraceSchreierTreeOfSCCForward(o, m, i)));
-    mults[i]:=[f, inv(o[scc[1]], f)];
-  od;
-
-  return mults;
+  m:=OrbSCCLookup(o)[i];
+  scc:=o!.scc[m];
+  
+  if i=scc[1] then 
+    o!.mults[i]:=[One(o!.gens), One(o!.gens)];
+  else
+    genpos:=SchreierTreeOfSCC(o, m);
+    f:=o!.gens[genpos[1][i]]*RhoOrbMults(o, genpos[2][i])[1];
+    o!.mults[i]:=[f, RhoInverse(o!.semi)(o[scc[1]], f)];
+  fi;
+  return o!.mults[i];
 end);
 
 # new for 1.0! - RhoOrbRep - "for a rho orb and scc index"

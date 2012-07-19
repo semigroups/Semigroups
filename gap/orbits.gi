@@ -20,8 +20,7 @@ InstallOtherMethod(EvaluateWord, "for partial perm coll and list pos ints",
 function ( gens, w )
     local  i, res, pts;
     if Length( w ) = 0  then
-        pts:=Points(gens);
-        return PartialPermNC(pts, pts);
+        return One(gens);
     fi;
     res := gens[w[1]];
     for i  in [ 2 .. Length( w ) ]  do
