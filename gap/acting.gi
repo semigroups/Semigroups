@@ -222,7 +222,8 @@ function(f, s)
 
   # make sure lambda of f is in the first place of its scc
   if l<>scc[m][1] then 
-    g:=f*LambdaOrbMults(o, m)[l][2];
+    #g:=f*LambdaOrbMults(o, m)[l][2];
+    g:=f*LambdaOrbMult(o, m, l)[2];
   else
     g:=f;
   fi;
@@ -432,8 +433,9 @@ function(data, limit, lookfunc)
         
         #get the multipliers
         #JDM expand!
-        mults:=LambdaOrbMults(o, m);         
-        y:=x*mults[pos][2];
+        #mults:=LambdaOrbMults(o, m);         
+        
+        y:=x*LambdaOrbMult(o, m, pos)[2];
       else
         y:=x;
         pos:=fail;
@@ -914,7 +916,7 @@ function(o, m)
   orbitgraph:=OrbitGraph(o);
   lambdaperm:=LambdaPerm(s);
   rep:=LambdaOrbRep(o, m);
-  mults:=LambdaOrbMults(o, m);
+  #mults:=LambdaOrbMults(o, m);
   slp:=[]; lenslp:=0;
 
   len:=LambdaRank(s)(o[scc[1]]);
@@ -933,7 +935,8 @@ function(o, m)
 # JDM maybe keep TraceSchreierTreeOfSCCForward(o, m, k) in o?
         f:=lambdaperm(rep, rep*EvaluateWord(gens,
          TraceSchreierTreeOfSCCForward(o, m, k))
-          *gens[l]*mults[orbitgraph[k][l]][2]);
+          *gens[l]*LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
+          #mults[orbitgraph[k][l]][2]);
         h:=ClosureGroup(g, f);
         if Size(h)>Size(g) then 
           g:=h; 
@@ -1106,8 +1109,9 @@ function(data, x, n)
   fi;
  
   if l<>scc[m][1] then 
-    mults:=LambdaOrbMults(o, m);
-    y:=x*mults[l][2];
+    #mults:=LambdaOrbMults(o, m);
+    #y:=x*mults[l][2];
+    y:=x*LambdaOrbMult(o, m, l)[2];
   else
     y:=x;
   fi; 
