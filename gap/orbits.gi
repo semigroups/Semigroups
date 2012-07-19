@@ -187,17 +187,13 @@ end);
 
 InstallGlobalFunction(SchreierTreeOfSCC,
 function(o, i)
-  local r, scc, len, gen, pos, seen, t, oo, m, graph, j, k, l, len_k;
+  local scc, len, gen, pos, seen, t, oo, m, graph, j, k, l, len_k;
 
-  r:=Length(OrbSCC(o));
-
-  if i>r then 
-    Error("the orbit only has ", r, " strongly connected components,");
-    return;
+  if not IsBound(o!.scc) then 
+    OrbSCC(o);
   fi;
-  
   if not IsBound(o!.trees) then
-    o!.trees:=EmptyPlist(r);
+    o!.trees:=EmptyPlist(Length(o));
   fi;
 
   if IsBound(o!.trees[i]) then 
