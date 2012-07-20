@@ -435,7 +435,7 @@ gap> S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ),
 > Transformation( [ 3, 3, 1, 1 ] ) ]);;
 gap> Idempotents(S);
 [ Transformation( [ 1, 2, 3, 4 ] ), Transformation( [ 1, 1, 3, 3 ] ), 
-  Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
   Transformation( [ 4, 2, 2, 4 ] ) ]
 gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ), 
 >   Transformation( [ 6, 6, 4, 4, 2, 1, 4 ] ) ];;
@@ -943,8 +943,6 @@ gap> Idempotents(r);
   Transformation( [ 8, 8, 9, 5, 5, 5, 8, 8, 9, 5 ] ), 
   Transformation( [ 8, 8, 9, 10, 10, 10, 8, 8, 9, 10 ] ) ]
 gap> h:=HClass(s, f);;
-gap> IsRegularRClass(h);
-false
 gap> f:=Transformation( [ 5, 9, 8, 8, 8, 8, 5, 5, 8, 5 ] );;
 gap> r:=RClass(s, f);;
 gap> NrIdempotents(r);
@@ -998,7 +996,7 @@ gap> r:=RClass(s, f);
 gap> Size(r);
 30683520
 gap> iter:=Iterator(r);
-<iterator of R-class>
+<iterator>
 gap> for i in [1..100000] do NextIterator(iter); od;
 gap> gens:=[  Transformation( [ 3, 12, 14, 4, 11, 18, 17, 2, 2, 9, 5, 15, 2, 18, 
 > 17, 8, 20, 10, 19, 12 ] ),

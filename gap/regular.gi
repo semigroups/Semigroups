@@ -1535,8 +1535,7 @@ end);
 # new for 1.0! - Size - "for a regular D-class of acting semigroup"
 #############################################################################
 
-InstallOtherMethod(Size, "for a regular 
-D-class of an acting semigp.",
+InstallOtherMethod(Size, "for a regular D-class of an acting semigp.",
 [IsRegularDClass and IsActingSemigroupGreensClass],
 function(d)
   return Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))
