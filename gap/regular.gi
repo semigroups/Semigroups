@@ -1463,8 +1463,7 @@ function(s)
   rho_m:=OrbSCCLookup(rho_o)[Position(rho_o, RhoFunc(s)(f))]; 
   j:=Random(OrbSCC(rho_o)[rho_m]);
 
-  return
-  RhoOrbMult(rho_o, rho_m, j)[1]*f*
+  return RhoOrbMult(rho_o, rho_m, j)[1]*f*
    Random(LambdaOrbSchutzGp(lambda_o, m))*
     LambdaOrbMult(lambda_o, m, i)[1];
 end);
