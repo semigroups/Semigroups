@@ -163,8 +163,8 @@ function(h)
 
   rep:=Representative(h);
   
-  lambda_p:=LambdaOrbMults(lambda_o, lambda_m)[Position(lambda_o,
-   LambdaFunc(s)(rep))][2];
+  lambda_p:=LambdaOrbMult(lambda_o, lambda_m, Position(lambda_o,
+   LambdaFunc(s)(rep)))[2];
   lambda_p:=LambdaConjugator(s)(rep*lambda_p, rep);
  
   if rho_stab=true then 
@@ -276,7 +276,7 @@ function(f, d)
   fi;
   
   if l<>scc[m][1] then 
-    g:=g*LambdaOrbMults(o, m)[l][2];
+    g:=g*LambdaOrbMult(o, m, l)[2];
   fi;
 
   m:=RhoOrbSCCIndex(d); o:=RhoOrb(d); scc:=OrbSCC(o); 
@@ -438,7 +438,7 @@ function(f, r)
     return true;
   fi;
 
-  g:=f*LambdaOrbMults(o, m)[l][2];
+  g:=f*LambdaOrbMult(o, m, l)[2];
 
   if g=rep then
     Info(InfoCitrus, 3, "element with rectified lambda value equals ",
@@ -653,7 +653,7 @@ function(d)
       fi;
      
       if ll<>lscc[lm][1] then
-        f:=f*LambdaOrbMults(lo, lm)[ll][2];
+        f:=f*LambdaOrbMult(lo, lm, ll)[2];
       fi;
       g:=f;
       lschutz:=Enumerator(LambdaOrbSchutzGp(lo, lm));
@@ -1692,7 +1692,7 @@ end);
 InstallOtherMethod(GreensRClassOfElement, "for D-class and acting elt",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
 function(d, f)
-  local s, r, o, l, m;
+  local s, r;
     
   if not f in d then
     Error("the element does not belong to the D-class,");
@@ -1703,21 +1703,14 @@ function(d, f)
   r:=Objectify(RClassType(s), rec());
 
   SetParentSemigroup(r, s);
+  SetLambdaOrb(r, LambdaOrb(d));
   SetLambdaOrbSCCIndex(r, LambdaOrbSCCIndex(d));
+  SetRepresentative(r, RectifyLambda(s, LambdaOrb(d), f).rep);
   
-  o:=LambdaOrb(d); 
-  SetLambdaOrb(r, o);
-  l:=Position(o, LambdaFunc(s)(f));
-  m:=OrbSCCLookup(o)[l];
-
-  if l<>OrbSCC(o)[m][1] then 
-    f:=f*LambdaOrbMults(o, m)[l][2];
-  fi;
-  
-  SetRepresentative(r, f);
   SetEquivalenceClassRelation(r, GreensRRelation(s));
   SetIsGreensClassNC(r, IsGreensClassNC(d));
   SetDClassOfRClass(r, d);
+
   return r;
 end);
 
@@ -1735,18 +1728,10 @@ function(d, f)
   r:=Objectify(RClassType(s), rec());
 
   SetParentSemigroup(r, s);
+  SetLambdaOrb(r, LambdaOrb(d));
   SetLambdaOrbSCCIndex(r, LambdaOrbSCCIndex(d));
+  SetRepresentative(r, RectifyLambda(s, LambdaOrb(d), f));
   
-  o:=LambdaOrb(d); 
-  SetLambdaOrb(r, o);
-  l:=Position(o, LambdaFunc(s)(f));
-  m:=OrbSCCLookup(o)[l];
-
-  if l<>OrbSCC(o)[m][1] then 
-    f:=f*LambdaOrbMults(o, m)[l][2];
-  fi;
-  
-  SetRepresentative(r, f);
   SetEquivalenceClassRelation(r, GreensRRelation(s));
   SetIsGreensClassNC(r, true);
   SetDClassOfRClass(r, d);
@@ -3251,7 +3236,7 @@ function(s)
 
   g:=Random(LambdaOrbSchutzGp(o, m));
   i:=Random(OrbSCC(o)[m]);
-  return rep*g*LambdaOrbMults(o, m)[i][1];
+  return rep*g*LambdaOrbMult(o, m, i)[1];
 end);
 
 # new for 0.1! - RClass 
@@ -3656,7 +3641,7 @@ function(l)
     m:=OrbSCCLookup(o)[lambda_l];
     SetLambdaOrbSCCIndex(d, m);
     if lambda_l<>OrbSCC(o)[m][1] then 
-      SetRepresentative(d, f*LambdaOrbMults(o, m)[lambda_l][2]);
+      SetRepresentative(d, f*LambdaOrbMult(o, m, lambda_l)[2]);
     else
       SetRepresentative(d, f);
     fi;
@@ -3729,7 +3714,7 @@ function(h)
   l:=Position(o, LambdaFunc(s)(f));
 
   if l<>OrbSCC(o)[m][1] then 
-    f:=f*LambdaOrbMults(o, m)[l][2];
+    f:=f*LambdaOrbMult(o, m, l)[2];
   fi;
 
   o:=RhoOrb(h);
@@ -3741,7 +3726,7 @@ function(h)
   l:=Position(o, RhoFunc(s)(f));
 
   if l<>OrbSCC(o)[m][1] then 
-    f:=RhoOrbMults(o, m)[l][2]*f;
+    f:=RhoOrbMult(o, m, l)[2]*f;
   fi;
 
   SetRepresentative(d, f);
@@ -3808,7 +3793,7 @@ function(h)
   l:=Position(o, LambdaFunc(s)(f));
 
   if l<>OrbSCC(o)[m][1] then 
-    SetRepresentative(r, f*LambdaOrbMults(o, m)[l][2]);
+    SetRepresentative(r, f*LambdaOrbMult(o, m, l)[2]);
   else
     SetRepresentative(r, f);
   fi;
