@@ -3405,9 +3405,6 @@ end);
 
 # same method for inverse/regular.
 
-# JDM maybe have to split this into separate methods if this has poor
-# performance.
-
 InstallOtherMethod(Size, "for a D-class of an acting semigp.",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
