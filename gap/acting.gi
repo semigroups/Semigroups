@@ -464,8 +464,7 @@ function(data, limit, lookfunc)
           else # schutz gp neither trivial nor symmetric group
             old:=false; 
             for n in [1..repslens[val]] do 
-              #p:=lambdaperm(reps[val][n], y);
-              if SiftedPermutation(schutz, p)=() then 
+              if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=() then 
               #if SiftGroupElement(schutz,lambdaperm(reps[val][n],y)).isone then
                 old:=true;
                 graph[i][j]:=repslookup[val][n]; 
