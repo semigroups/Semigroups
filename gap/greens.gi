@@ -2301,13 +2301,14 @@ InstallMethod(Iterator, "for an R-class of an acting semigp",
 function(r)
   local o, m, mults, iter, scc;
 
-  o:=LambdaOrb(r); m:=LambdaOrbSCCIndex(r);
-  mults:=LambdaOrbMults(o, m);
-  scc:=OrbSCC(o)[m];
-
   if HasAsSSortedList(r) then 
     iter:=IteratorList(AsSSortedList(r));
   else
+    o:=LambdaOrb(r); 
+    m:=LambdaOrbSCCIndex(r);
+    mults:=LambdaOrbMults(o, m);
+    scc:=OrbSCC(o)[m];
+
     iter:=IteratorByFunctions(rec(
 
       schutz:=List(SchutzenbergerGroup(r), x-> Representative(r)*x), 
@@ -2367,34 +2368,35 @@ InstallMethod(Iterator, "for an acting semigroup",
 function(s)
   local iter;
 
-  Info(InfoCitrus, 4, "Iterator: for a trans. semigroup");
+  if HasAsSSortedList(s) then 
+    iter:=IteratorList(AsSSortedList(s));
+  else
+    iter:= IteratorByFunctions( rec(
 
-  iter:= IteratorByFunctions( rec(
+      R:=IteratorOfRClasses(s),
 
-    R:=IteratorOfRClasses(s),
+      r:=fail, s:=s,
 
-    r:=fail, s:=s,
+      NextIterator:=function(iter)
 
-    NextIterator:=function(iter)
+        if IsDoneIterator(iter) then
+          return fail;
+        fi;
 
-      if IsDoneIterator(iter) then
-        return fail;
-      fi;
+        if iter!.r=fail or IsDoneIterator(iter!.r) then
+          iter!.r:=Iterator(NextIterator(iter!.R));
+        fi;
 
-      if iter!.r=fail or IsDoneIterator(iter!.r) then
-        iter!.r:=Iterator(NextIterator(iter!.R));
-      fi;
+        return NextIterator(iter!.r);
+      end,
 
-      return NextIterator(iter!.r);
-    end,
+      IsDoneIterator:= iter -> IsDoneIterator(iter!.R) and
+       IsDoneIterator(iter!.r),
 
-    IsDoneIterator:= iter -> IsDoneIterator(iter!.R) and
-     IsDoneIterator(iter!.r),
-
-    ShallowCopy:= iter -> rec(R:=IteratorOfRClasses(s), r:=fail)));
+      ShallowCopy:= iter -> rec(R:=IteratorOfRClasses(s), r:=fail)));
+  fi;
 
   SetIsIteratorOfSemigroup(iter, true);
-
   return iter;
 end);
 
@@ -2424,7 +2426,6 @@ function(s)
     Degree(s)))));
 
   SetIsIteratorOfSemigroup(iter, true);
-
   return iter;
 end);
 
@@ -2504,54 +2505,54 @@ function(s)
   local iter;
   
   if HasGreensHClasses(s) then 
-    return IteratorList(GreensHClasses(s));
-  fi;
+    iter:=IteratorList(GreensHClasses(s));
+  else
+    iter:=IteratorByFunctions( rec( 
 
-  iter:=IteratorByFunctions( rec( 
+      i:=0,
 
-    i:=0,
+      D:=IteratorOfDClasses(s),
 
-    D:=IteratorOfDClasses(s),
+      H:=[],
 
-    H:=[],
+      last_called_by_is_done:=false,
 
-    last_called_by_is_done:=false,
+      next_value:=fail,
 
-    next_value:=fail,
-
-    IsDoneIterator:=function(iter)
-      
-      if iter!.last_called_by_is_done then 
-        return iter!.next_value=fail;
-      fi;
-      
-      iter!.last_called_by_is_done:=true;
-      iter!.next_value:=fail;
-      iter!.i:=iter!.i+1;
-
-      if iter!.i>Length(iter!.H) and not IsDoneIterator(iter!.D) then 
-        iter!.i:=1;
-        iter!.H:=GreensHClasses(NextIterator(iter!.D));
-      fi;
-      
-      if iter!.i<=Length(iter!.H) then 
-        iter!.next_value:=iter!.H[iter!.i];
-        return false;
-      fi;
+      IsDoneIterator:=function(iter)
         
-      return true;
-    end,
+        if iter!.last_called_by_is_done then 
+          return iter!.next_value=fail;
+        fi;
+        
+        iter!.last_called_by_is_done:=true;
+        iter!.next_value:=fail;
+        iter!.i:=iter!.i+1;
 
-    NextIterator:=function(iter)
-      if not iter!.last_called_by_is_done then 
-        IsDoneIterator(iter);
-      fi;
-      iter!.last_called_by_is_done:=false;
-      return iter!.next_value;
-    end,
-    
-    ShallowCopy:=iter-> rec(i:=0, D:=IteratorOfDClasses(s),
-     H:=[], last_called_by_is_done:=false, next_value:=fail)));
+        if iter!.i>Length(iter!.H) and not IsDoneIterator(iter!.D) then 
+          iter!.i:=1;
+          iter!.H:=GreensHClasses(NextIterator(iter!.D));
+        fi;
+        
+        if iter!.i<=Length(iter!.H) then 
+          iter!.next_value:=iter!.H[iter!.i];
+          return false;
+        fi;
+          
+        return true;
+      end,
+
+      NextIterator:=function(iter)
+        if not iter!.last_called_by_is_done then 
+          IsDoneIterator(iter);
+        fi;
+        iter!.last_called_by_is_done:=false;
+        return iter!.next_value;
+      end,
+      
+      ShallowCopy:=iter-> rec(i:=0, D:=IteratorOfDClasses(s),
+       H:=[], last_called_by_is_done:=false, next_value:=fail)));
+  fi;
 
   SetIsIteratorOfHClasses(iter, true);
   return iter;
@@ -2568,54 +2569,55 @@ function(s)
   local iter;
   
   if HasGreensLClasses(s) then 
-    return IteratorList(GreensLClasses(s));
+    iter:=IteratorList(GreensLClasses(s));
+  else
+    iter:=IteratorByFunctions( rec( 
+
+      i:=0,
+
+      D:=IteratorOfDClasses(s),
+
+      L:=[],
+
+      last_called_by_is_done:=false,
+
+      next_value:=fail,
+
+      IsDoneIterator:=function(iter)
+        
+        if iter!.last_called_by_is_done then 
+          return iter!.next_value=fail;
+        fi;
+        
+        iter!.last_called_by_is_done:=true;
+        iter!.next_value:=fail;
+        iter!.i:=iter!.i+1;
+
+        if iter!.i>Length(iter!.L) and not IsDoneIterator(iter!.D) then 
+          iter!.i:=1;
+          iter!.L:=GreensLClasses(NextIterator(iter!.D));
+        fi;
+        
+        if iter!.i<=Length(iter!.L) then 
+          iter!.next_value:=iter!.L[iter!.i];
+          return false;
+        fi;
+          
+        return true;
+      end,
+
+      NextIterator:=function(iter)
+        if not iter!.last_called_by_is_done then 
+          IsDoneIterator(iter);
+        fi;
+        iter!.last_called_by_is_done:=false;
+        return iter!.next_value;
+      end,
+      
+      ShallowCopy:=iter-> rec(i:=0, D:=IteratorOfDClasses(s),
+       L:=[], last_called_by_is_done:=false, next_value:=fail)));
   fi;
 
-  iter:=IteratorByFunctions( rec( 
-
-    i:=0,
-
-    D:=IteratorOfDClasses(s),
-
-    L:=[],
-
-    last_called_by_is_done:=false,
-
-    next_value:=fail,
-
-    IsDoneIterator:=function(iter)
-      
-      if iter!.last_called_by_is_done then 
-        return iter!.next_value=fail;
-      fi;
-      
-      iter!.last_called_by_is_done:=true;
-      iter!.next_value:=fail;
-      iter!.i:=iter!.i+1;
-
-      if iter!.i>Length(iter!.L) and not IsDoneIterator(iter!.D) then 
-        iter!.i:=1;
-        iter!.L:=GreensLClasses(NextIterator(iter!.D));
-      fi;
-      
-      if iter!.i<=Length(iter!.L) then 
-        iter!.next_value:=iter!.L[iter!.i];
-        return false;
-      fi;
-        
-      return true;
-    end,
-
-    NextIterator:=function(iter)
-      if not iter!.last_called_by_is_done then 
-        IsDoneIterator(iter);
-      fi;
-      iter!.last_called_by_is_done:=false;
-      return iter!.next_value;
-    end,
-    
-    ShallowCopy:=iter-> rec(i:=0, D:=IteratorOfDClasses(s),
-     L:=[], last_called_by_is_done:=false, next_value:=fail)));
   SetIsIteratorOfLClasses(iter, true);
   return iter;
 end);
@@ -2632,6 +2634,8 @@ s-> IteratorByIterator(IteratorOfDClasses(s), Representative,
 
 # new for 1.0! - IteratorOfHClassReps - "for an acting semigroup"
 #############################################################################
+
+#?? method for regular/inverse
 
 InstallMethod(IteratorOfHClassReps, "for an acting semigroup",
 [IsActingSemigroup],
