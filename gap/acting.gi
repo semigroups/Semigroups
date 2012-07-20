@@ -69,7 +69,7 @@ function(s, o, f)
   if l<>OrbSCC(o)[m][1] then
     f:=f*LambdaOrbMult(o, m, l)[2];
   fi;
-  return rec(rep:=f, m:=m, l:=l);
+  return rec(l:=l, m:=m, rep:=f);
 end);
 
 # new for 1.0! - LambdaRhoHT
@@ -1011,15 +1011,12 @@ function(data, x, n)
   fi;
 
   s:=ParentSemigroup(data);
+  o:=LambdaOrb(s);
 
-  if data!.graded then 
-    # JDM this assumes that x is an element of s, probably shouldn't do this!
-    o:=GradedLambdaOrb(s, x, true);
-  else
-    o:=LambdaOrb(s);
-  fi; 
-
-  Enumerate(o);
+  if not IsClosed(o) then 
+    Enumerate(o, infinity);
+  fi;
+  
   l:=Position(o, LambdaFunc(s)(x));
   m:=OrbSCCLookup(o)[l];
   scc:=OrbSCC(o);

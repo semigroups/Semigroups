@@ -1271,11 +1271,11 @@ function(s, f)
   rectify:=RectifyLambda(s, o, f);
   SetLambdaOrb(d, o);
   SetLambdaOrbSCCIndex(d, rectify.m); 
+  f:=rectify.rep;   
   
   if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then
     o:=RhoOrb(s);
     rectify:=RectifyRho(s, o, rectify.rep);
-    f:=rectify.rep; 
     m:=rectify.m;
   else
     o:=GradedRhoOrb(s, f, true);
@@ -1283,7 +1283,7 @@ function(s, f)
     m:=OrbSCCLookup(o)[l];
 
     if l<>OrbSCC(o)[m][1] then 
-      f:=RhoOrbMults(o, m)[l][2]*rectify.rep;
+      f:=RhoOrbMult(o, m, l)[2]*f;
     fi;
   fi;
 
@@ -3338,7 +3338,7 @@ function(s)
   data:=Enumerate(SemigroupData(s)); 
   orbit:=data!.orbit;
   nr:=Length(orbit);
-  out:=EmptyPlist(nr-r);
+  out:=EmptyPlist(nr-1);
 
   for i in [2..nr] do 
     out[i-1]:=orbit[i][4];

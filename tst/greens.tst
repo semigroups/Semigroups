@@ -391,7 +391,7 @@ gap> AsList(RhoOrb(C));
 [ [ 1, 2, 1, 3, 2 ] ]
 gap> RhoOrbMults(RhoOrb(C),
 > RhoOrbSCCIndex(C)){OrbSCC(RhoOrb(C))[RhoOrbSCCIndex(C)]};
-[ [ Transformation( [ 1, 2, 3, 4, 5 ] ), Transformation( [ 1, 2, 1, 4, 2 ] ) 
+[ [ Transformation( [ 1, 2, 3, 4, 5 ] ), Transformation( [ 1, 2, 3, 4, 5 ] ) 
      ] ]
 gap> SchutzenbergerGroup(C);
 Group([ (3,5,4), (3,5) ])
