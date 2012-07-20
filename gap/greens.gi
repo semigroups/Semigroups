@@ -3413,13 +3413,6 @@ InstallOtherMethod(Size, "for a D-class of an acting semigp.",
 function(d)
   local l, r;
  
-  if HasIsActingSemigroupWithInverseOp(ParentSemigroup(d)) and 
-   IsActingSemigroupWithInverseOp(ParentSemigroup(d)) then 
-    return Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))^2;
-  elif IsRegularDClass(d) then 
-    return Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))
-     *Length(RhoOrbSCC(d));
-  fi;
   l:=LambdaOrbSchutzGp(LambdaOrb(d), LambdaOrbSCCIndex(d));
   r:=RhoOrbSchutzGp(RhoOrb(d), RhoOrbSCCIndex(d), infinity);
   return Size(r)*Size(l)*Length(LambdaOrbSCC(d))*Length(RhoOrbSCC(d))/

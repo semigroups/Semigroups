@@ -145,11 +145,11 @@ function(f, s)
   return SiftGroupElement(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
-# new for 1.0! - \in - "for acting elt and D-class of regular acting semigp"
+# new for 1.0! - \in - "for acting elt and regular D-class of acting semigp"
 #############################################################################
 #JDM revise this if revising \in for elt and D-class in greens.gi
 
-InstallMethod(\in, "for acting elt and D-class of regular acting semigp.",
+InstallMethod(\in, "for acting elt and regular D-class of acting semigp.",
 [IsActingElt, IsRegularDClass and IsActingSemigroupGreensClass],
 function(f, d)
   local rep, s, g, m, o, scc, l, schutz;
@@ -199,7 +199,7 @@ function(f, d)
     return false;
   fi;
 
-  return SiftGroupElement(schutz, LambdaPerm(s)(rep, g))=();
+  return SiftGroupElement(schutz, LambdaPerm(s)(rep, g)).isone;
 end);
 
 # new for 1.0! - DClassReps - "for a regular acting semigroup"
@@ -1532,5 +1532,14 @@ function(s)
   return nr;
 end);
 
+# new for 1.0! - Size - "for a regular D-class of acting semigroup"
+#############################################################################
 
+InstallOtherMethod(Size, "for a regular 
+D-class of an acting semigp.",
+[IsRegularDClass and IsActingSemigroupGreensClass],
+function(d)
+  return Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))
+   *Length(RhoOrbSCC(d));
+end);
 

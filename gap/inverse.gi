@@ -151,16 +151,23 @@ InstallOtherMethod(Size, "for an acting semigroup with inversion",
 function(s)
   local o, scc, r, nr, m;
 
-  o:=RhoOrb(s);   
+  o:=LambdaOrb(s);   
   scc:=OrbSCC(o);
   r:=Length(scc); 
   nr:=0;
 
   for m in [2..r] do 
-    nr:=nr+Length(scc[m])^2*Size(RhoOrbSchutzGp(o, m, infinity));
+    nr:=nr+Length(scc[m])^2*Size(LambdaOrbSchutzGp(o, m));
   od;
   return nr;
 end);
+
+# new for 1.0! - Size - "for an inverse op D-class"
+##############################################################################
+
+InstallOtherMethod(Size, "for an inverse op D-class",
+[IsInverseOpDClass and IsActingSemigroupGreensClass],
+d-> Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))^2);
 
 #GGG
 
