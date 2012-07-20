@@ -432,8 +432,9 @@ Obj FuncOnIntegerSetsWithPP (Obj self, Obj set, Obj f)
   out = NEW_PLIST(T_PLIST_CYC, n);
   m = 0;
 
-  for(i=1;i<=n;i++)
+  for(i=1;i<=(deg<n?deg:n);i++)
   {
+    /* since set is a set ELM_LIST(set, i)>=i */
     j=INT_INTOBJ(ELM_LIST(set, i));
     if(j<=deg)
     {
@@ -1367,9 +1368,10 @@ Obj FuncOnIntegerSetsWithT (Obj self, Obj set, Obj f)
   m = 0;
   
   for(i=1;i<=deg;i++) seen[i]=0;
-
-  for(i=1;i<=n;i++)
+  
+  for(i=1;i<=(deg<n?deg:n);i++)
   {
+    /* since set is a set, ELM_LIST(set, i)>=i */
     j=INT_INTOBJ(ELM_LIST(set, i));
     if(j<=deg){
       k=ELM_PT(f, j+4);

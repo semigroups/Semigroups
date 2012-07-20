@@ -68,8 +68,6 @@ DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
 DeclareGlobalFunction("InitSemigroupData");
 DeclareCategory("IsSemigroupData", IsRecord);
 
-DeclareAttribute("ActingSemigroupModifier", IsActingSemigroup);
-
 # INVERSE SEMIGROUPS
 
 DeclareProperty("IsActingSemigroupWithInverseOp", IsActingSemigroup and

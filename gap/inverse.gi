@@ -129,17 +129,16 @@ end);
 InstallOtherMethod(DClassReps, "for an acting semigroup with inversion",
 [IsActingSemigroupWithInverseOp],
 function(s)            
-  local o, r, i, out, f, m;
+  local o, r, out, f, m;
   
   o:=RhoOrb(s);
   r:=Length(OrbSCC(o));
-  i:=ActingSemigroupModifier(s);
   out:=EmptyPlist(r);
   
-  for m in [1..r-i] do 
-    f:=RhoOrbRep(o, m+i);
+  for m in [2..r] do 
+    f:=RhoOrbRep(o, m);
 # JDM method for RightOne of inverse acting element required.
-    out[m]:=RightOne(f);
+    out[m-1]:=RightOne(f);
   od;
   return out;
 end);
@@ -150,13 +149,14 @@ end);
 InstallOtherMethod(Size, "for an acting semigroup with inversion",
 [IsActingSemigroupWithInverseOp],
 function(s)
-  local o, scc, r, i, nr, m;
+  local o, scc, r, nr, m;
 
-  o:=RhoOrb(s);   scc:=OrbSCC(o);
-  r:=Length(scc); i:=ActingSemigroupModifier(s);
+  o:=RhoOrb(s);   
+  scc:=OrbSCC(o);
+  r:=Length(scc); 
   nr:=0;
 
-  for m in [1+i..r] do 
+  for m in [2..r] do 
     nr:=nr+Length(scc[m])^2*Size(RhoOrbSchutzGp(o, m, infinity));
   od;
   return nr;
@@ -172,20 +172,18 @@ end);
 InstallOtherMethod(GreensHClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)
-  local lambda_o, lambda_scc, lambda_len, out, type, hrel, l, n, lambda_m, lambda_mults, f, h, i, j, k;
+  local lambda_o, lambda_scc, len, out, type, hrel, n, lambda_mults, f, h, lambda_m, j, k;
   
   lambda_o:=Enumerate(LambdaOrb(s), infinity);
   lambda_scc:=OrbSCC(lambda_o);
-  lambda_len:=Length(lambda_scc);
+  len:=Length(lambda_scc);
   
   out:=EmptyPlist(NrHClasses(s));
   type:=HClassType(s);
   hrel:=GreensHRelation(s);
-  l:=ActingSemigroupModifier(s);
   n:=0; 
     
-  for i in [1..lambda_len-l] do
-    lambda_m:=i+l;
+  for lambda_m in [2..len] do
     lambda_mults:=LambdaOrbMults(lambda_o, lambda_m);
     f:=RightOne(LambdaOrbRep(lambda_o, lambda_m));
     for j in lambda_scc[lambda_m] do
@@ -214,8 +212,6 @@ InstallOtherMethod(GreensRClasses, "for acting semigroup with inverse op",
 function(s)         
   local l, o, scc, out, type, rrel, i, f, mults, r, m, j;
                     
-  l:=ActingSemigroupModifier(s);
-                    
   o:=LambdaOrb(s);
   scc:=OrbSCC(o);   
   out:=EmptyPlist(Length(o));
@@ -224,7 +220,7 @@ function(s)
 
   i:=0;             
                     
-  for m in [1+l..Length(scc)] do
+  for m in [2..Length(scc)] do
     f:=RightOne(LambdaOrbRep(o, m));
     mults:=LambdaOrbMults(o, m);
     for j in scc[m] do
@@ -249,17 +245,16 @@ end);
 InstallOtherMethod(RClassReps, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)         
-  local o, scc, nr, out, l, n, f, mults, m, j;
+  local o, scc, nr, out, n, f, mults, m, j;
                     
   o:=LambdaOrb(s);
   scc:=OrbSCC(o);   
   
   nr:=Length(scc);
   out:=EmptyPlist(Length(o));
-  l:=ActingSemigroupModifier(s);
   n:=0;             
                     
-  for m in [1+l..nr] do
+  for m in [2..nr] do
     f:=RightOne(LambdaOrbRep(o, m));
     mults:=LambdaOrbMults(o, m);
     for j in scc[m] do
@@ -308,25 +303,23 @@ end);
 InstallOtherMethod(HClassReps, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)
-  local lambda_o, lambda_scc, lambda_len, out, type, hrel, l, n, lambda_m, lambda_mults, f, h, i, j, k;
+  local o, scc, len, out, n, mults, f, m, j, k;
   
-  lambda_o:=Enumerate(LambdaOrb(s), infinity);
-  lambda_scc:=OrbSCC(lambda_o);
-  lambda_len:=Length(lambda_scc);
+  o:=Enumerate(LambdaOrb(s), infinity);
+  scc:=OrbSCC(o);
+  len:=Length(scc);
   
   out:=EmptyPlist(NrHClasses(s));
-  l:=ActingSemigroupModifier(s);
   n:=0; 
     
-  for i in [1..lambda_len-l] do
-    lambda_m:=i+l;
-    lambda_mults:=LambdaOrbMults(lambda_o, lambda_m);
-    f:=RightOne(LambdaOrbRep(lambda_o, lambda_m));
-    for j in lambda_scc[lambda_m] do
-      f:=f*lambda_mults[j][1];
-      for k in lambda_scc[lambda_m] do
+  for m in [2..len] do
+    mults:=LambdaOrbMults(o, m);
+    f:=RightOne(LambdaOrbRep(o, m));
+    for j in scc[m] do
+      f:=f*mults[j][1];
+      for k in scc[m] do
         n:=n+1;
-        out[n]:=lambda_mults[k][1]*f;
+        out[n]:=mults[k][1]*f;
       od;
     od;
   od;
@@ -344,7 +337,7 @@ local iter, scc;
     
     iter:=IteratorByFunctions( rec(
 
-      i:=ActingSemigroupModifier(s),
+      i:=1,
 
       IsDoneIterator:=iter-> IsClosed(LambdaOrb(s)) and 
        iter!.i>=Length(LambdaOrb(s)),
@@ -377,14 +370,14 @@ local iter, scc;
         return [s, 1, GradedLambdaOrb(s, o[i], true), f, false];
       end,
 
-      ShallowCopy:=iter-> rec(i:=ActingSemigroupModifier(s))));
+      ShallowCopy:=iter-> rec(i:=1)));
   else ####
 
     scc:=OrbSCC(LambdaOrb(s));
 
     iter:=IteratorByFunctions( rec(
                  
-      m:=ActingSemigroupModifier(s), 
+      m:=1, 
      
       i:=0,      
 
@@ -420,7 +413,7 @@ local iter, scc;
         return [s, m, LambdaOrb(s), f, false];
       end,
 
-      ShallowCopy:=iter-> rec(m:=ActingSemigroupModifier(s), i:=0,
+      ShallowCopy:=iter-> rec(m:=1, i:=0,
       scc_limit:=iter!.scc_limit, i_limit:=iter!.i_limit)));
   fi;
   
@@ -473,8 +466,7 @@ end);
 InstallOtherMethod(NrIdempotents, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp], 
 function(s)
-  return Length(Enumerate(LambdaOrb(s), infinity))-
-   ActingSemigroupModifier(s);     
+  return Length(Enumerate(LambdaOrb(s), infinity))-1;     
 end);
 
 # mod for 1.0! - NrRClasses - for an acting semigroup with inverse op
@@ -493,7 +485,7 @@ function(s)
   o:=Enumerate(LambdaOrb(s), infinity);
   scc:=OrbSCC(o);
 
-  return Sum(List(scc, m-> Length(m)^2))-ActingSemigroupModifier(s);
+  return Sum(List(scc, m-> Length(m)^2))-1;
 end);
 
 # new for 0.7! - PartialOrderOfDClasses - "for acting semigp with inverse op
@@ -510,14 +502,13 @@ function(s)
   o:=LambdaOrb(s);        
   gens:=o!.gens;
   lookup:=OrbSCCLookup(o);
-  l:=ActingSemigroupModifier(s);
   lambdafunc:=LambdaFunc(s);
  
   for i in [1..n] do  
     for x in gens do  
       for f in RClassReps(d[i]) do
-        AddSet(out[i], lookup[Position(o, lambdafunc(x*f))]-l);      
-        AddSet(out[i], lookup[Position(o, lambdafunc(f^-1*x))]-l);     
+        AddSet(out[i], lookup[Position(o, lambdafunc(x*f))]-1);      
+        AddSet(out[i], lookup[Position(o, lambdafunc(f^-1*x))]-1);     
       od; 
     od;
   od; 

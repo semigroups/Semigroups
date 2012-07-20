@@ -176,12 +176,6 @@ function(f, s)
     return false;
   fi;
   
-  # the only case when l is found but f not in s.
-
-  if l=1 and ActingSemigroupModifier(s)=1 then 
-    return false;
-  fi;
-
   # strongly connected component of lambda orb
   m:=OrbSCCLookup(o)[l];
   scc:=OrbSCC(o);
@@ -289,20 +283,7 @@ function(f, s)
   return false;
 end);
 
-#AAA 
-
-# new for 1.0! - ActingSemigroupModifier - for an acting semigroup
-##############################################################################
-
-InstallMethod(ActingSemigroupModifier, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-
-  if IsMonoid(s) or ForAny(Generators(s), x-> Rank(x)=Degree(s)) then 
-    return 0;
-  fi;
-  return 1;
-end);
+#AAA
 
 #EEE
 
@@ -699,50 +680,7 @@ end);
 
 InstallGlobalFunction(InitSemigroupData, 
 function(s, data, x)
-  local lamx, pos, o, m, scc;
 
-  # decide if we are using graded orbits or not.
-  if (not HasGradedLambdaOrbs(s)) or (HasLambdaOrb(s) and
-   HasGradedLambdaOrbs(s) and Length(LambdaOrb(s))>=GradedLambdaHT(s)!.nr) then 
-    data!.graded:=false;
-  else
-    data!.graded:=true;
-  fi;
-  
-  # install first point if we are in a monoid
-  if x<>false then 
-    
-    # find the orbit containing LambdaFunc(s)(x)...
-    lamx:=LambdaFunc(s)(x);
-    if not data!.graded then 
-      o:=LambdaOrb(s);
-      m:=1;
-    else
-      pos:=HTValue(GradedLambdaHT(s), lamx); #scc index, scc[1], pos of lamx in o
-      if pos=fail then 
-        o:=GradedLambdaOrb(s, x, true);
-        m:=1; #scc index
-      else
-        o:=GradedLambdaOrbs(s)[pos[1]][pos[2]];
-        m:=OrbSCCLookup(o)[pos[3]];
-        # LambdaFunc(x) must be in 1st place of scc since scc has length 1!
-      fi;  
-    fi;
-    
-    # install the info about x in data
-    HTAdd(data!.ht, x, 1);
-    data!.orbit:=[[s, m, o, x, 1]];
-    data!.repslens[1]:=1;
-    data!.lenreps:=data!.lenreps+1;
-    data!.reps[data!.lenreps]:=[x];
-    data!.repslookup[1]:=[1];
-    data!.orblookup1[1]:=1;
-    data!.orblookup2[1]:=1;
-
-    HTAdd(LambdaRhoHT(s), Concatenation([m], RhoFunc(s)(x)), data!.lenreps);
-  fi;
-
-  return data;
 end);
 
 # new for 1.0! - IsBound - for graded lambda orbs and pos int
@@ -762,7 +700,7 @@ end);
 InstallMethod(LambdaOrb, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
-  return Orb(s, LambdaDomain(s), LambdaAct(s),
+  return Orb(s, [1..65536], LambdaAct(s),
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
         storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
         scc_reps:=[One(Generators(s))], semi:=s));
@@ -1147,7 +1085,7 @@ function(s)
   # But it seems to be so fast to calculate the 
   # in most cases that there is no point. 
 
-  return Orb(s, RhoDomain(s), RhoAct(s),
+  return Orb(s, [1..65536], RhoAct(s),
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
         storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
         scc_reps:=[One(Generators(s))], semi:=s));
@@ -1357,16 +1295,7 @@ function(s)
   
   Objectify(NewType(FamilyObj(s), IsSemigroupData and IsAttributeStoringRep),
    data);
-
-  if IsMonoid(s) or ForAny(gens, x-> Rank(x)=Rank(one)) then 
-    InitSemigroupData(s, data, one);
-    if not IsMonoid(s) then 
-      SetIsMonoidAsSemigroup(s, true);
-    fi;
-  else
-    InitSemigroupData(s, data, false);
-    SetActingSemigroupModifier(s, 1);
-  fi;
+  
   SetParentSemigroup(data, s);
   return data;
 end);

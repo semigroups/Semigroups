@@ -88,11 +88,9 @@ function(f, s)
   lambda_l:=Position(lambda_o, lambda);
   rho_l:=Position(rho_o, rho);
 
-  if IsClosed(lambda_o) and (lambda_l=fail or (lambda_l=1 and
-   ActingSemigroupModifier(s)=1)) then
+  if IsClosed(lambda_o) and lambda_l=fail then
       return false;
-  elif IsClosed(rho_o) and (rho_l=fail or (rho_l=1 and 
-   ActingSemigroupModifier(s)=1)) then
+  elif IsClosed(rho_o) and rho_l=fail then
       return false;
   fi;
   
@@ -108,10 +106,6 @@ function(f, s)
     if lambda_l=false then
       return false;
     fi;
-  fi;
-
-  if lambda_l=1 and ActingSemigroupModifier(s)=1 then
-    return false;
   fi;
 
   if rho_l=fail then
@@ -221,7 +215,6 @@ function(s)
   lambda_o:=LambdaOrb(s);
   r:=Length(OrbSCC(lambda_o));
   
-  i:=ActingSemigroupModifier(s);
   out:=EmptyPlist(r);
   
   rho_o:=RhoOrb(s);
@@ -229,14 +222,14 @@ function(s)
   lookup:=OrbSCCLookup(rho_o);
   rhofunc:=RhoFunc(s);
 
-  for m in [1..r-i] do 
-    f:=LambdaOrbRep(lambda_o, m+i);
+  for m in [2..r] do 
+    f:=LambdaOrbRep(lambda_o, m);
     l:=Position(rho_o, rhofunc(f));
 
     if l<>scc[lookup[l]][1] then 
       f:=RhoOrbMults(rho_o, lookup[l])[l][2]*f;
     fi;
-    out[m]:=f;
+    out[m-1]:=f;
   od;
   return out;
 end);
@@ -370,10 +363,9 @@ function(s)
   rho_o:=RhoOrb(s);
   scc:=OrbSCC(o);
   out:=EmptyPlist(Length(scc));
-  r:=ActingSemigroupModifier(s);
   
-  for i in [1+r..Length(scc)] do 
-    out[i-r]:=CallFuncList(CreateDClass, 
+  for i in [2..Length(scc)] do 
+    out[i-1]:=CallFuncList(CreateDClass, 
      [s, i, o, RectifyRho(rho_o, LambdaOrbRep(o,i)), fail]);
   od;
   return out;
@@ -387,25 +379,23 @@ end);
 InstallOtherMethod(GreensHClasses, "for a regular acting semigroup", 
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local lambda_o, lambda_scc, rho_o, rho_scc, lambda_len, lookup, rhofunc, out, type, hrel, l, n, lambda_m, lambda_mults, f, rho_l, rho_m, rho_mults, h, i, j, k;
+  local lambda_o, lambda_scc, rho_o, rho_scc, len, lookup, rhofunc, out, type, hrel, l, n, lambda_mults, f, rho_l, rho_m, rho_mults, h, lambda_m, j, k;
 
   lambda_o:=Enumerate(LambdaOrb(s), infinity);
   lambda_scc:=OrbSCC(lambda_o);
   rho_o:=Enumerate(RhoOrb(s), infinity);
   rho_scc:=OrbSCC(rho_o);
 
-  lambda_len:=Length(lambda_scc);
+  len:=Length(lambda_scc);
   lookup:=OrbSCCLookup(rho_o);
   rhofunc:=RhoFunc(s);
 
   out:=EmptyPlist(NrHClasses(s));
   type:=HClassType(s);
   hrel:=GreensHRelation(s);
-  l:=ActingSemigroupModifier(s);     
   n:=0;
 
-  for i in [1..lambda_len-l] do
-    lambda_m:=i+l;
+  for lambda_m in [2..len] do
     lambda_mults:=LambdaOrbMults(lambda_o, lambda_m);
     f:=LambdaOrbRep(lambda_o, lambda_m);
     rho_l:=Position(rho_o, rhofunc(f));
@@ -516,25 +506,23 @@ end);
 InstallOtherMethod(GreensLClasses, "for a regular acting semigroup", 
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local rho_o, rho_scc, lambda_o, lambda_scc, lambda_len, lookup, rhofunc, out, type, lrel, l, n, lambda_m, f, rho_l, rho_m, mults, i, j;
+  local rho_o, rho_scc, lambda_o, lambda_scc, len, lookup, rhofunc, out, type, lrel, l, n, f, rho_l, rho_m, mults, lambda_m, j;
   
   rho_o:=RhoOrb(s);
   rho_scc:=OrbSCC(rho_o);
   lambda_o:=LambdaOrb(s);
   lambda_scc:=OrbSCC(lambda_o);
 
-  lambda_len:=Length(lambda_scc);
+  len:=Length(lambda_scc);
   lookup:=OrbSCCLookup(rho_o);
   rhofunc:=RhoFunc(s);
 
   out:=EmptyPlist(NrLClasses(s));
   type:=LClassType(s);
   lrel:=GreensLRelation(s);
-  l:=ActingSemigroupModifier(s);     
   n:=0;
 
-  for i in [1..lambda_len-l] do
-    lambda_m:=i+l;
+  for lambda_m in [2..len] do
     f:=LambdaOrbRep(lambda_o, lambda_m);
     rho_l:=Position(rho_o, rhofunc(f));
     rho_m:=lookup[rho_l];
@@ -601,25 +589,23 @@ end);
 InstallOtherMethod(GreensRClasses, "for a regular acting semigroup", 
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local rho_o, rho_scc, lambda_o, lambda_scc, rho_len, lookup, lambdafunc, out, type, rrel, l, n, rho_m, f, lambda_l, lambda_m, mults, i, j;
+  local rho_o, rho_scc, lambda_o, lambda_scc, len, lookup, lambdafunc, out, type, rrel, l, n, f, lambda_l, lambda_m, mults, rho_m, j;
   
   rho_o:=RhoOrb(s);
   rho_scc:=OrbSCC(rho_o);
   lambda_o:=LambdaOrb(s);
   lambda_scc:=OrbSCC(lambda_o);
 
-  rho_len:=Length(rho_scc);
+  len:=Length(rho_scc);
   lookup:=OrbSCCLookup(lambda_o);
   lambdafunc:=LambdaFunc(s);
 
   out:=EmptyPlist(NrRClasses(s));
   type:=RClassType(s);
   rrel:=GreensRRelation(s);
-  l:=ActingSemigroupModifier(s);     
   n:=0;
 
-  for i in [1..rho_len-l] do
-    rho_m:=i+l;
+  for rho_m in [2..len] do
     f:=RhoOrbRep(rho_o, rho_m);
     lambda_l:=Position(lambda_o, lambdafunc(f));
     lambda_m:=lookup[lambda_l];
@@ -729,23 +715,21 @@ end);
 InstallOtherMethod(HClassReps, "for a regular acting semigroup", 
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
-  local lambda_o, lambda_scc, rho_o, rho_scc, lambda_len, lookup, rhofunc, out, l, n, lambda_m, lambda_mults, f, rho_l, rho_m, rho_mults, i, j, k;
+  local lambda_o, lambda_scc, rho_o, rho_scc, len, lookup, rhofunc, out, n, lambda_mults, f, rho_l, rho_m, rho_mults, lambda_m, j, k;
   
   lambda_o:=Enumerate(LambdaOrb(s), infinity);
   lambda_scc:=OrbSCC(lambda_o);
   rho_o:=Enumerate(RhoOrb(s), infinity);
   rho_scc:=OrbSCC(rho_o);
 
-  lambda_len:=Length(lambda_scc);
+  len:=Length(lambda_scc);
   lookup:=OrbSCCLookup(rho_o);
   rhofunc:=RhoFunc(s);
 
   out:=EmptyPlist(NrHClasses(s));
-  l:=ActingSemigroupModifier(s);     
   n:=0;
 
-  for i in [1..lambda_len-l] do
-    lambda_m:=i+l;
+  for lambda_m in [2..len] do
     lambda_mults:=LambdaOrbMults(lambda_o, lambda_m);
     f:=LambdaOrbRep(lambda_o, lambda_m);
     rho_l:=Position(rho_o, rhofunc(f));
@@ -780,7 +764,8 @@ function(s)
 local iter;
 
   if not IsClosed(LambdaOrb(s)) then 
-    if Length(LambdaOrb(s))=1 and ActingSemigroupModifier(s)=1 then 
+    #JDM next 3 lines still necessary?
+    if Length(LambdaOrb(s))=1 then 
       Enumerate(LambdaOrb(s), 2);
     fi;
     iter:=IteratorByFunctions( rec(
@@ -816,7 +801,7 @@ local iter;
 
           # check existing lambda values
           new:=false;
-          for i in [1+ActingSemigroupModifier(s)..Length(lambda_o)] do 
+          for i in [2..Length(lambda_o)] do 
             val:=Position(GradedLambdaOrbs(s), lambda_o[i]);
             if val=fail or HTValue(seen, val{[1,2]})=fail then          
               new:=i;
@@ -885,7 +870,7 @@ local iter;
 
     iter:=IteratorByFunctions( rec(
                  
-      m:=ActingSemigroupModifier(s), 
+      m:=1, 
      
       i:=0,      
 
@@ -961,7 +946,7 @@ local iter, scc;
     
     iter:=IteratorByFunctions( rec(
 
-      i:=ActingSemigroupModifier(s),
+      i:=1,
 
       IsDoneIterator:=iter-> IsClosed(LambdaOrb(s)) and 
        iter!.i>=Length(LambdaOrb(s)),
@@ -995,14 +980,14 @@ local iter, scc;
         return [s, 1, o, RectifyRho(o, f), false];
       end,
 
-      ShallowCopy:=iter-> rec(i:=ActingSemigroupModifier(s))));
+      ShallowCopy:=iter-> rec(i:=1)));
   else ####
 
     scc:=OrbSCC(LambdaOrb(s));
 
     iter:=IteratorByFunctions( rec(
                  
-      m:=ActingSemigroupModifier(s), 
+      m:=1, 
      
       i:=0,      
 
@@ -1038,7 +1023,7 @@ local iter, scc;
         return [s, m, RhoOrb(s), RectifyRho(RhoOrb(s), f), false];
       end,
 
-      ShallowCopy:=iter-> rec(m:=ActingSemigroupModifier(s), i:=0,
+      ShallowCopy:=iter-> rec(m:=1, i:=0,
       scc_limit:=iter!.scc_limit, i_limit:=iter!.i_limit)));
   fi;
   
@@ -1059,7 +1044,7 @@ local iter, scc;
     
     iter:=IteratorByFunctions( rec(
 
-      i:=ActingSemigroupModifier(s),
+      i:=1,
 
       IsDoneIterator:=iter-> IsClosed(RhoOrb(s)) and 
        iter!.i>=Length(RhoOrb(s)),
@@ -1093,14 +1078,14 @@ local iter, scc;
         return [s, 1, o, RectifyLambda(o, f), false];
       end,
 
-      ShallowCopy:=iter-> rec(i:=ActingSemigroupModifier(s))));
+      ShallowCopy:=iter-> rec(i:=1)));
   else ####
 
     scc:=OrbSCC(RhoOrb(s));
 
     iter:=IteratorByFunctions( rec(
                  
-      m:=ActingSemigroupModifier(s), 
+      m:=1, 
      
       i:=0,      
 
@@ -1136,7 +1121,7 @@ local iter, scc;
         return [s, m, LambdaOrb(s), RectifyLambda(LambdaOrb(s), f), false];
       end,
 
-      ShallowCopy:=iter-> rec(m:=ActingSemigroupModifier(s), i:=0,
+      ShallowCopy:=iter-> rec(m:=1, i:=0,
       scc_limit:=iter!.scc_limit, i_limit:=iter!.i_limit)));
   fi;
   
@@ -1183,18 +1168,17 @@ CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
 InstallOtherMethod(LClassReps, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local rho_o, lambda_o, scc, nr, out, l, n, f, mults, m, j;
+  local rho_o, lambda_o, scc, len, out, n, f, mults, m, j;
   
   rho_o:=RhoOrb(s);
   lambda_o:=LambdaOrb(s);
   scc:=OrbSCC(lambda_o);
 
-  nr:=Length(scc);
+  len:=Length(scc);
   out:=EmptyPlist(NrLClasses(s));
-  l:=ActingSemigroupModifier(s);     
   n:=0;
 
-  for m in [1+l..nr] do
+  for m in [2..len] do
     f:=RectifyRho(rho_o, LambdaOrbRep(lambda_o, m));
     mults:=LambdaOrbMults(lambda_o, m);
     for j in scc[m] do
@@ -1213,18 +1197,17 @@ end);
 InstallOtherMethod(RClassReps, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local lambda_o, rho_o, scc, nr, out, l, n, f, mults, m, j;
+  local lambda_o, rho_o, scc, len, out, n, f, mults, m, j;
   
   lambda_o:=LambdaOrb(s);
   rho_o:=RhoOrb(s);
   scc:=OrbSCC(rho_o);
 
-  nr:=Length(scc);
+  len:=Length(scc);
   out:=EmptyPlist(NrRClasses(s));
-  l:=ActingSemigroupModifier(s);     
   n:=0;
 
-  for m in [1+l..nr] do
+  for m in [2..len] do
     f:=RectifyLambda(lambda_o, RhoOrbRep(rho_o, m));
     mults:=RhoOrbMults(rho_o, m);
     for j in scc[m] do
@@ -1277,7 +1260,7 @@ InstallMethod(NrDClasses, "for a regular acting semigroup",
 function(s)
   local o;
   o:=Enumerate(LambdaOrb(s), infinity);
-  return Length(OrbSCC(o))-ActingSemigroupModifier(s);
+  return Length(OrbSCC(o))-1;
 end);
 
 # new for 1.0! - NrHClasses - "for a regular acting semigroup"
@@ -1297,11 +1280,10 @@ function(s)
   lambda_scc:=OrbSCC(lambda_o);
   rho_scc:=OrbSCC(rho_o);
   r:=Length(lambda_scc);
-  i:=ActingSemigroupModifier(s);
   rhofunc:=RhoFunc(s);
   lookup:=OrbSCCLookup(rho_o);
 
-  for m in [1+i..r] do 
+  for m in [2..r] do 
     rho:=rhofunc(LambdaOrbRep(lambda_o, m));
     nr:=nr+Length(lambda_scc[m])*Length(rho_scc[lookup[Position(rho_o, rho)]]);
   od;
@@ -1348,7 +1330,7 @@ InstallMethod(NrLClasses, "for a regular acting semigroup",
 function(s)
   local o;
   o:=Enumerate(LambdaOrb(s), infinity);
-  return Length(o)-ActingSemigroupModifier(s);
+  return Length(o)-1;
 end);
 
 # new for 1.0! - NrLClasses - "for a D-class of regular acting semigroup"
@@ -1370,7 +1352,7 @@ InstallMethod(NrRClasses, "for a regular acting semigroup",
 function(s)
   local o;
   o:=Enumerate(RhoOrb(s), infinity);
-  return Length(o)-ActingSemigroupModifier(s);
+  return Length(o)-1;
 end);
 
 # new for 1.0! - NrRClasses - "for a D-class of regular acting semigroup"
@@ -1436,7 +1418,7 @@ NrDClasses);
 InstallMethod(PartialOrderOfDClasses, "for a regular acting semigp",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local d, n, out, o, gens, lookup, l, lambdafunc, i, x, f;
+  local d, n, out, o, gens, lookup, lambdafunc, i, x, f;
 
   d:=GreensDClasses(s);
   n:=Length(d);
@@ -1444,16 +1426,15 @@ function(s)
   o:=LambdaOrb(s);
   gens:=o!.gens;
   lookup:=OrbSCCLookup(o);
-  l:=ActingSemigroupModifier(s);
   lambdafunc:=LambdaFunc(s);
 
   for i in [1..n] do
     for x in gens do
       for f in RClassReps(d[i]) do
-        AddSet(out[i], lookup[Position(o, lambdafunc(x*f))]-l);
+        AddSet(out[i], lookup[Position(o, lambdafunc(x*f))]-1);
       od;
       for f in LClassReps(d[i]) do 
-        AddSet(out[i], lookup[Position(o, lambdafunc(f*x))]-l);
+        AddSet(out[i], lookup[Position(o, lambdafunc(f*x))]-1);
       od;
     od;
   od;
@@ -1533,11 +1514,10 @@ function(s)
   lambda_scc:=OrbSCC(lambda_o);
   rho_scc:=OrbSCC(rho_o);
   r:=Length(lambda_scc);
-  i:=ActingSemigroupModifier(s);
   rhofunc:=RhoFunc(s);
   lookup:=OrbSCCLookup(rho_o);
 
-  for m in [1+i..r] do 
+  for m in [2..r] do 
     rho:=rhofunc(LambdaOrbRep(lambda_o, m));
     nr:=nr+Length(lambda_scc[m])*Size(LambdaOrbSchutzGp(lambda_o,m))*
      Length(rho_scc[lookup[Position(rho_o, rho)]]);

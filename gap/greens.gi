@@ -997,12 +997,11 @@ function(s)
 
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   
-  r:=ActingSemigroupModifier(s);
   scc:=OrbSCC(data);
   out:=EmptyPlist(Length(scc));
   
-  for i in [1+r..Length(scc)] do #JDM expand and remove CreateDClass
-    out[i-r]:=CallFuncList(CreateDClass, data[scc[i][1]]);
+  for i in [2..Length(scc)] do #JDM expand and remove CreateDClass
+    out[i-1]:=CallFuncList(CreateDClass, data[scc[i][1]]);
   od;
   return out;
 end);
@@ -1234,12 +1233,10 @@ function(s)
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   
   orbit:=data!.orbit;
-  r:=ActingSemigroupModifier(s);
-  
   out:=EmptyPlist(Length(orbit));
 
-  for i in [1+r..Length(orbit)] do 
-    out[i-r]:=CallFuncList(CreateRClass, orbit[i]);
+  for i in [2..Length(orbit)] do 
+    out[i-1]:=CallFuncList(CreateRClass, orbit[i]);
   od;
   return out;
 end);
@@ -2041,11 +2038,10 @@ function(s)
     lambda_o:=Enumerate(LambdaOrb(s), infinity);
     creator:=IdempotentLambdaRhoCreator(s);
     r:=Length(lambda_o);
-    l:=ActingSemigroupModifier(s);
     out:=EmptyPlist(r-l);
 
-    for i in [1..r-l] do
-      out[i]:=creator(lambda_o[i+l], lambda_o[i+l]);
+    for i in [2..r] do
+      out[i-1]:=creator(lambda_o[i], lambda_o[i]);
     od;
     return out;
   elif IsRegularSemigroup(s) then 
@@ -2608,7 +2604,7 @@ function(s)
 
   return IteratorByFunctions( rec( 
     
-    i:=ActingSemigroupModifier(s),
+    i:=1,
 
     IsDoneIterator:=iter-> IsClosed(SemigroupData(s)) and 
      iter!.i>=Length(SemigroupData(s)),
@@ -2626,7 +2622,7 @@ function(s)
       return data[iter!.i];
     end,
     
-    ShallowCopy:=iter-> rec(i:=ActingSemigroupModifier(s))));
+    ShallowCopy:=iter-> rec(i:=1)));
 end);
 
 # new for 1.0! - IteratorOfRClassReps - "for an acting semigroup"
@@ -2937,7 +2933,7 @@ end);
 
 InstallMethod(NrDClasses, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-s-> Length(OrbSCC(SemigroupData(s)))-ActingSemigroupModifier(s));
+s-> Length(OrbSCC(SemigroupData(s)))-1);
 
 # mod for 1.0! - NrRegularDClasses - "for an acting semigroup"
 #############################################################################
@@ -2955,9 +2951,8 @@ function(s)
   rhofunc:=RhoFunc(s);
   tester:=IdempotentLambdaRhoTester(s);
   nr:=0;
-  r:=ActingSemigroupModifier(s);
 
-  for i in [1+r..Length(datascc)] do
+  for i in [2..Length(datascc)] do
     # data of the first R-class in the D-class corresponding to x
     x:=data[datascc[i][1]];
     o:=x[3]; scc:=OrbSCC(o)[x[2]]; 
@@ -3029,7 +3024,7 @@ function(s)
   local data;
   
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
-  return Length(data!.orbit)-ActingSemigroupModifier(s);
+  return Length(data!.orbit)-1;
 end);
 
 #PPP
@@ -3051,7 +3046,7 @@ function(s)
   data:=SemigroupData(s);
   gens:=data!.gens;
   graph:=data!.graph;
-  datalookup:=OrbSCCLookup(data)-ActingSemigroupModifier(s);  
+  datalookup:=OrbSCCLookup(data)-1;  
   reps:=data!.reps;
   repslens:=data!.repslens;
   ht:=data!.ht;
@@ -3262,9 +3257,7 @@ function(s)
     return EvaluateWord(gens, w);
   fi;
 
-  i:=ActingSemigroupModifier(s);
-
-  n:=Random([1+i..Length(data)]);
+  n:=Random([2..Length(data)]);
   g:=Random(LambdaOrbSchutzGp(data[n][3], data[n][2]));
   i:=Random(OrbSCC(data[n][3])[data[n][2]]);
   return data[n][4]*g*LambdaOrbMults(data[n][3], data[n][2])[i][1];
@@ -3346,11 +3339,10 @@ function(s)
   data:=Enumerate(SemigroupData(s)); 
   orbit:=data!.orbit;
   nr:=Length(orbit);
-  r:=ActingSemigroupModifier(s);
   out:=EmptyPlist(nr-r);
 
-  for i in [1+r..nr] do 
-    out[i-r]:=orbit[i][4];
+  for i in [2..nr] do 
+    out[i-1]:=orbit[i][4];
   od;
   return out;
 end);
@@ -3849,12 +3841,10 @@ function(s)
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   scc:=OrbSCC(data); 
   r:=Length(scc);
-  i:=ActingSemigroupModifier(s);
-  
-  out:=EmptyPlist(r-i);
+  out:=EmptyPlist(r-1);
 
-  for j in [1+i..r] do 
-    out[j-i]:=data[scc[j][1]][4];
+  for i in [2..r] do 
+    out[i-1]:=data[scc[i][1]][4];
   od;
   return out;
 end);
@@ -3879,8 +3869,7 @@ function(s)
     end,
 
     NumberElement:=function(enum, r)
-      return Position(SemigroupData(s), Representative(r))-
-       ActingSemigroupModifier(s);
+      return Position(SemigroupData(s), Representative(r))-1;
     end,
 
     Membership:=function(r, enum)
