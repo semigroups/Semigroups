@@ -16,7 +16,6 @@
 InstallMethod(RhoOrbStabChain, "for an L-class of an acting semi",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  #return StabChainImmutable(SchutzenbergerGroup(l));
   return StabilizerChain(SchutzenbergerGroup(l));
 end);
 
@@ -302,7 +301,7 @@ function(f, d)
 
   if schutz<>false then 
     for x in cosets do 
-      if SiftGroupElement(schutz, g/x)=() then 
+      if SiftGroupElement(schutz, g/x).isone then 
         return true;
       fi;
     od;
@@ -393,7 +392,7 @@ function(f, l)
     return false;
   fi;
   
-  return SiftGroupElement(schutz, LambdaPerm(s)(rep, g))=();
+  return SiftGroupElement(schutz, LambdaPerm(s)(rep, g)).isone;
 end);
 
 # new for 1.0! - \in - "for acting elt and R-class of acting semigp"
@@ -438,7 +437,11 @@ function(f, r)
     return true;
   fi;
 
-  g:=f*LambdaOrbMult(o, m, l)[2];
+  g:=f;
+  
+  if l<>OrbSCC(o)[m][1] then 
+    g:=f*LambdaOrbMult(o, m, l)[2];
+  fi;
 
   if g=rep then
     Info(InfoCitrus, 3, "element with rectified lambda value equals ",
@@ -449,7 +452,7 @@ function(f, r)
     return false;
   fi;
 
-  return SiftGroupElement(schutz, LambdaPerm(s)(rep, g))=();
+  return SiftGroupElement(schutz, LambdaPerm(s)(rep, g)).isone;
 end);
 
 #AAA
@@ -473,7 +476,7 @@ end);
 # Usage: arg[1] = semigroup; arg[2] = lambda orb scc index;
 # arg[3] = lambda orb; arg[4] = rep; arg[5] = position in SemigroupData of rep.
 
-# only for D-classes being created in GreensDClasses or similar!
+# not used anywhere!
 
 InstallGlobalFunction(CreateDClass,  
 function(arg) 
@@ -484,12 +487,10 @@ function(arg)
   SetParentSemigroup(d, arg[1]);
   SetLambdaOrb(d, arg[3]);
   SetLambdaOrbSCCIndex(d, arg[2]);
-  
-  if arg[5]<>fail then 
-    SetSemigroupDataIndex(d, arg[5]);
-  fi;
+  SetSemigroupDataIndex(d, arg[5]);
 
   rectify:=RectifyRho(arg[1], RhoOrb(arg[1]), arg[4]);
+  
   SetRepresentative(d, rectify.rep);
   SetRhoOrb(d, RhoOrb(arg[1]));
   SetRhoOrbSCCIndex(d, rectify.m);
@@ -514,7 +515,7 @@ function(arg)
   SetParentSemigroup(d, arg[1]);
   SetLambdaOrb(d, arg[3]);
   SetLambdaOrbSCCIndex(d, arg[2]);
-  SetRepresentative(d, RectifyLambda(arg[3], arg[4]));
+  SetRepresentative(d, RectifyLambda(arg[1], arg[3], arg[4]).rep);
   
   SetRhoOrb(d, GradedLambdaOrb(arg[1], arg[4], false));
   SetRhoOrbSCCIndex(d, 1);
@@ -678,7 +679,7 @@ function(d)
         j:=PositionCanonical(cosets, g);
       else
         for j in [1..Length(cosets)] do
-          if SiftGroupElement(schutz, g*cosets[j])=() then 
+          if SiftGroupElement(schutz, g*cosets[j]).isone then 
             break;
           else
             j:=fail;
@@ -981,15 +982,34 @@ end);
 InstallMethod(GreensDClasses, "for an acting semigroup",
 [IsActingSemigroup], 
 function(s)
-  local data, r, scc, out, i;
+  local data, scc, out, type, drel, o, arg, d, rectify, i;
 
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   
   scc:=OrbSCC(data);
   out:=EmptyPlist(Length(scc));
-  
+  type:=DClassType(s);
+  drel:=GreensDRelation(s);
+  o:=RhoOrb(s);
+
   for i in [2..Length(scc)] do 
-    out[i-1]:=CallFuncList(CreateDClass, data[scc[i][1]]);
+    arg:=data[scc[i][1]];
+    d:=Objectify(type, rec()); 
+     
+    SetParentSemigroup(d, s);
+    SetLambdaOrbSCCIndex(d, arg[2]);
+    SetLambdaOrb(d, arg[3]);
+    SetSemigroupDataIndex(d, arg[5]);
+
+    rectify:=RectifyRho(arg[1], o, arg[4]);
+    
+    SetRepresentative(d, rectify.rep);
+    SetRhoOrb(d, o);
+    SetRhoOrbSCCIndex(d, rectify.m);
+    SetEquivalenceClassRelation(d, drel); 
+    SetIsGreensClassNC(d, false);
+
+    out[i-1]:=d;
   od;
   return out;
 end);
@@ -1974,12 +1994,14 @@ function(r)
     return [LeftOne(Representative(r))];
   fi;
 
-  out:=[]; 
   
   rho:=RhoFunc(s)(Representative(r));
   o:=LambdaOrb(r); 
   m:=LambdaOrbSCCIndex(r);
   scc:=OrbSCC(o)[m];
+
+  out:=EmptyPlist(Length(scc)); 
+
   j:=0;
   tester:=IdempotentLambdaRhoTester(s);
   creator:=IdempotentLambdaRhoCreator(s);
@@ -1995,6 +2017,7 @@ function(r)
     SetNrIdempotents(r, j);   
   fi;
 
+  ShrinkAllocationPlist(out);
   return out;
 end);
 
@@ -2036,8 +2059,8 @@ function(s)
     rhofunc:=RhoFunc(s);
     lookup:=OrbSCCLookup(rho_o);
 
-    for i in [1..Length(lambda_o)] do
-      rep:=EvaluateWord(TraceSchreierTreeForward(lambda_o, i), gens);
+    for i in [2..Length(lambda_o)] do
+      rep:=EvaluateWord(gens, TraceSchreierTreeForward(lambda_o, i));
       rho:=rhofunc(rep);
       j:=lookup[Position(rho_o, rho)];
       for k in scc[j] do
@@ -3067,7 +3090,7 @@ function(s)
             n:=0; j:=0;
             repeat 
               n:=n+1;
-              if SiftGroupElement(schutz[m], lambdaperm(reps[val][n], f))=()
+              if SiftGroupElement(schutz[m], lambdaperm(reps[val][n], f)).isone
                then  
                 j:=repslookup[val][n];
               fi;

@@ -1300,33 +1300,65 @@ end);
 InstallOtherMethod(IsRectangularBand, "for an inverse semigroup",
 [IsInverseSemigroup], s-> IsHTrivial(s) and IsSimpleSemigroup(s));
 
-# new for 0.1! - IsRegularSemigroup - "for a transformation semigroup"
+# mod for 1.0! - IsRegularSemigroup - "for an acting semigroup"
 ###########################################################################
 
-InstallOtherMethod(IsRegularSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallOtherMethod(IsRegularSemigroup, "for an acting semigroup", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local iter, d;
+  local tester, n, rhofunc, lookfunc, data, i;
 
-  if IsSimpleSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is simple");
-    return true;
-  elif IsCompletelyRegularSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is completely regular");
-    return true;
-  elif HasGreensDClasses(s) then 
+#  if IsSimpleSemigroup(s) then 
+#    Info(InfoCitrus, 2, "the semigroup is simple");
+#    return true;
+#  elif IsCompletelyRegularSemigroup(s) then 
+#    Info(InfoCitrus, 2, "the semigroup is completely regular");
+#    return true;
+  
+  if HasGreensDClasses(s) then 
     return ForAll(GreensDClasses(s), IsRegularDClass);
   fi;
 
-  iter:=IteratorOfRClassData(s);
+  tester:=IdempotentLambdaRhoTester(s);
+  n:=Degree(s);
+  rhofunc:=RhoFunc(s);
 
-  for d in iter do 
-    #if not IsRegularRClassData(s, d) then 
+  # look for s not being regular
+  lookfunc:=function(data, x)
+    local rho, scc, i;
+    if data!.repslens[data!.orblookup1[x[5]]]>1 then
+      return true;
+    fi;
+    
+    # data corresponds to the group of units...
+    if x[4][2]=n then 
       return false;
-    #fi;
-  od; 
+    fi;
+    
+    rho:=rhofunc(x[4]);
+    scc:=OrbSCC(x[3])[x[2]];
+    for i in scc do 
+      if tester(x[3][i], rho) then 
+        return false;
+      fi;
+    od;
+    return true;
+  end;
 
-  return true;
+  data:=SemigroupData(s);
+
+  for i in [2..Length(data)] do 
+    if lookfunc(data, data[i]) then 
+      return false;
+    fi;
+  od;
+
+  if IsClosed(data) then 
+    return true;
+  fi;
+
+  data:=Enumerate(data, infinity, lookfunc);
+  return data!.found=false;
 end);
 
 # new for 0.2! - IsRightSimple - "for a transformation semigroup"

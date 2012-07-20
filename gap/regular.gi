@@ -355,17 +355,33 @@ end);
 InstallOtherMethod(GreensDClasses, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
-  local o, rho_o, scc, out, r, i;
+  local lambda_o, rho_o, len, out, type, drel, d, rectify, m;
 
-  o:=LambdaOrb(s);
+  lambda_o:=LambdaOrb(s);
   rho_o:=RhoOrb(s);
-  scc:=OrbSCC(o);
-  out:=EmptyPlist(Length(scc));
- 
-#JDM don't use CreateDClass here!
-  for i in [2..Length(scc)] do 
-    out[i-1]:=CallFuncList(CreateDClass, 
-     [s, i, o, RectifyRho(s, rho_o, LambdaOrbRep(o,i)), fail]);
+  
+  len:=Length(OrbSCC(lambda_o)); 
+  out:=EmptyPlist(len-1);
+  
+  type:=DClassType(s);
+  drel:=GreensDRelation(s);
+
+  for m in [2..len] do 
+    d:=Objectify(type, rec());
+    
+    SetParentSemigroup(d, s);
+    SetLambdaOrbSCCIndex(d, m);
+    SetLambdaOrb(d, lambda_o);
+
+    rectify:=RectifyRho(s, rho_o, LambdaOrbRep(lambda_o, m));
+   
+    SetRepresentative(d, rectify.rep);
+    SetRhoOrb(d, rho_o);
+    SetRhoOrbSCCIndex(d, rectify.m);
+    SetEquivalenceClassRelation(d, drel);
+    SetIsGreensClassNC(d, false);
+
+    out[m-1]:=d;
   od;
   return out;
 end);
@@ -608,7 +624,7 @@ function(s)
     f:=RhoOrbRep(rho_o, rho_m);
     lambda_l:=Position(lambda_o, lambdafunc(f));
     lambda_m:=lookup[lambda_l];
-    f:=f*LambdaOrbMults(lambda_o, lambda_m, lambda_l)[2];
+    f:=f*LambdaOrbMult(lambda_o, lambda_m, lambda_l)[2];
     mults:=RhoOrbMults(rho_o, rho_m);
     for j in rho_scc[rho_m] do
       n:=n+1;
