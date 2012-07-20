@@ -1395,6 +1395,8 @@ Obj FuncOnKerT (Obj self, Obj ker, Obj f)
   Obj out;
   pttype lookup[deg];
 
+  if(LEN_LIST(ker)>65535) return FuncKerT(self, f);
+
   if(deg!=LEN_LIST(ker)){
     ErrorQuit("usage: the length of the first argument should equal the degree of the second", 0L, 0L);
     return 0L;

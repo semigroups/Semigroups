@@ -88,10 +88,9 @@ function(f, s)
   lambda_l:=Position(lambda_o, lambda);
   rho_l:=Position(rho_o, rho);
 
-  if IsClosed(lambda_o) and lambda_l=fail then
-      return false;
-  elif IsClosed(rho_o) and rho_l=fail then
-      return false;
+  if (IsClosed(lambda_o) and lambda_l=fail) or 
+   (IsClosed(rho_o) and rho_l=fail) then
+    return false;
   fi;
   
   if lambda_l=fail then
@@ -133,7 +132,7 @@ function(f, s)
   g:=f;
   
   if lambda_l<>scc[1] then 
-    g:=g*LambdaOrbMults(lambda_o, m)[lambda_l][2];
+    g:=g*LambdaOrbMult(lambda_o, m, lambda_l)[2];
   fi;
 
   if IsIdempotent(g) then 
@@ -164,7 +163,6 @@ function(f, d)
   fi;
 
   g:=f;
-
   m:=LambdaOrbSCCIndex(d); o:=LambdaOrb(d); scc:=OrbSCC(o);
 
   l:=Position(o, LambdaFunc(s)(g));
@@ -174,7 +172,7 @@ function(f, d)
   fi;
 
   if l<>scc[m][1] then
-    g:=g*LambdaOrbMults(o, m)[l][2];
+    g:=g*LambdaOrbMult(o, m, l)[2];
   fi;
 
   m:=RhoOrbSCCIndex(d); o:=RhoOrb(d); scc:=OrbSCC(o);
@@ -192,7 +190,7 @@ function(f, d)
   fi;
 
   if l<>scc[m][1] then
-    g:=RhoOrbMults(o, m)[l][2]*g;
+    g:=RhoOrbMult(o, m, l)[2]*g;
   fi;
 
   if g=rep then 
@@ -307,7 +305,7 @@ function(d)
       g:=f;
       
       if x<>OrbSCC(o)[m][1] then 
-        g:=RhoOrbMults(o, m)[x][2]*g;
+        g:=RhoOrbMult(o, m, x)[2]*g;
       fi;
       
       o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
@@ -318,7 +316,7 @@ function(d)
       fi;
 
       if y<>OrbSCC(o)[m][1] then 
-        g:=g*LambdaOrbMults(o, m)[y][2];
+        g:=g*LambdaOrbMult(o, m, y)[2];
       fi;
    
       z:=Position(enum!.schutz, LambdaPerm(s)(rep, g));
@@ -610,8 +608,7 @@ function(s)
     f:=RhoOrbRep(rho_o, rho_m);
     lambda_l:=Position(lambda_o, lambdafunc(f));
     lambda_m:=lookup[lambda_l];
-    f:=f*LambdaOrbMults(lambda_o, lambda_m)[lambda_l][2];
-   
+    f:=f*LambdaOrbMults(lambda_o, lambda_m, lambda_l)[2];
     mults:=RhoOrbMults(rho_o, rho_m);
     for j in rho_scc[rho_m] do
       n:=n+1;
@@ -675,7 +672,7 @@ end);
 InstallOtherMethod(GreensRClassOfElement, "for regular acting semi and elt",
 [IsRegularSemigroup and IsActingSemigroup, IsActingElt],
 function(s, f)
-  local r, o, l, m;
+  local r, o, rectify;
 
   if not f in s then 
     Error("the element does not belong to the semigroup,");
@@ -689,20 +686,14 @@ function(s, f)
 
   if IsClosed(LambdaOrb(s)) then 
     o:=LambdaOrb(s);
-    l:=Position(o, LambdaFunc(s)(f));
-    m:=OrbSCCLookup(o)[l];
-    if l<>OrbSCC(o)[m][1] then 
-      f:=f*LambdaOrbMults(o, m)[l][2];
-    fi;
   else
     o:=GradedLambdaOrb(s, f, true);
-    m:=1;
   fi;
-  
-  SetLambdaOrb(r, o);
-  SetLambdaOrbSCCIndex(r, m);
-  SetRepresentative(r, f);
 
+  rectify:=RectifyLambda(s, o, f); 
+  SetLambdaOrb(r, o);
+  SetLambdaOrbSCCIndex(r, rectify.m);
+  SetRepresentative(r, rectify.rep);
   return r;
 end);
 
@@ -845,8 +836,8 @@ local iter;
         fi;
         iter!.m:=m; 
         
-        f:=LambdaOrbRep(iter!.o, m)*LambdaOrbMults(iter!.o,
-        m)[iter!.o!.lambda_l][2]; 
+        f:=LambdaOrbRep(iter!.o, m)*
+         LambdaOrbMult(iter!.o, m, iter!.o!.lambda_l)[2]; 
         iter!.next_value:=[s, m, iter!.o, f, false];
         return false;
       end,
@@ -1454,29 +1445,28 @@ end);
 InstallMethod(Random, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local lambda_o, gens, i, w, m, f, rho_o, rho_m;
+  local gens, i, w, lambda_o, m, f, rho_o, rho_m, j;
   
-  lambda_o:=LambdaOrb(s);
-
-  if not IsClosed(lambda_o) then
+  if not IsClosed(LambdaOrb(s)) or not IsClosed(RhoOrb(s)) then
     gens:=GeneratorsOfSemigroup(s);    
     i:=Random([1..Int(Length(gens)/2)]);
     w:=List([1..i], x-> Random([1..Length(gens)]));
     return EvaluateWord(gens, w);
   fi;
   
+  lambda_o:=LambdaOrb(s);
   i:=Random([1..Length(lambda_o)]);
   m:=OrbSCCLookup(lambda_o)[i];
   f:=LambdaOrbRep(lambda_o, m);
   
-  if IsClosed(RhoOrb(s)) then 
-    rho_o:=RhoOrb(s);
-    rho_m:=OrbSCCLookup(rho_o)[Position(rho_o, RhoFunc(s)(f))];
-  fi;
+  rho_o:=RhoOrb(s);
+  rho_m:=OrbSCCLookup(rho_o)[Position(rho_o, RhoFunc(s)(f))]; 
+  j:=Random(OrbSCC(rho_o)[rho_m]);
+
   return
-  Random(RhoOrbMults(rho_o, rho_m))[1]*f*
+  RhoOrbMult(rho_o, rho_m, j)[1]*f*
    Random(LambdaOrbSchutzGp(lambda_o, m))*
-    LambdaOrbMults(lambda_o, m)[i][1];
+    LambdaOrbMult(lambda_o, m, i)[1];
 end);
 
 # new for 1.0! - RhoOrbStabChain - "for a regular D-class "
