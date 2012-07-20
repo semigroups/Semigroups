@@ -477,34 +477,22 @@ end);
 
 InstallGlobalFunction(CreateDClass,  
 function(arg) 
-  local d, rep, o, l, m;
+  local d, rectify;
  
   d:=Objectify(DClassType(arg[1]), rec()); 
           
   SetParentSemigroup(d, arg[1]);
   SetLambdaOrb(d, arg[3]);
   SetLambdaOrbSCCIndex(d, arg[2]);
+  
   if arg[5]<>fail then 
     SetSemigroupDataIndex(d, arg[5]);
   fi;
 
-  rep:=arg[4];
-  o:=RhoOrb(arg[1]);
-  
-  if not IsClosed(o) then 
-    Enumerate(o, infinity);
-  fi;
-
-  l:=Position(o, RhoFunc(arg[1])(rep));
-  m:=OrbSCCLookup(o)[l];
-
-  if l<>OrbSCC(o)[m][1] then 
-    rep:=RhoOrbMults(o, m)[l][2]*rep;
-  fi;
-
-  SetRepresentative(d, rep);
-  SetRhoOrb(d, o);
-  SetRhoOrbSCCIndex(d, m);
+  rectify:=RectifyRho(arg[1], RhoOrb(arg[1]), arg[4]);
+  SetRepresentative(d, rectify.rep);
+  SetRhoOrb(d, RhoOrb(arg[1]));
+  SetRhoOrbSCCIndex(d, rectify.m);
   SetEquivalenceClassRelation(d, GreensDRelation(arg[1])); 
   SetIsGreensClassNC(d, false);
 
@@ -1000,7 +988,7 @@ function(s)
   scc:=OrbSCC(data);
   out:=EmptyPlist(Length(scc));
   
-  for i in [2..Length(scc)] do #JDM expand and remove CreateDClass
+  for i in [2..Length(scc)] do 
     out[i-1]:=CallFuncList(CreateDClass, data[scc[i][1]]);
   od;
   return out;
@@ -1244,12 +1232,12 @@ end);
 # mod for 1.0! - GreensDClassOfElement - "for an acting semigp and elt."
 #############################################################################
 
-# same method for inverse/regular
+# same method for regular, should be a different method for inverse
 
 InstallOtherMethod(GreensDClassOfElement, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
-  local d, o, l, m;
+  local d, o, rectify, m, l;
 
   if not f in s then
     Error("the element does not belong to the semigroup,");
@@ -1260,22 +1248,23 @@ function(s, f)
   SetParentSemigroup(d, s);
 
   o:=LambdaOrb(s);
-  l:=Position(o, LambdaFunc(s)(f));
-  m:=OrbSCCLookup(o)[l];
-  
-  if l<>OrbSCC(o)[m][1] then 
-    f:=f*LambdaOrbMults(o, m)[l][2];
-  fi;
-
+  rectify:=RectifyLambda(s, o, f);
   SetLambdaOrb(d, o);
-  SetLambdaOrbSCCIndex(d, m); 
-  #JDM why not add if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then .. 
-  o:=GradedRhoOrb(s, f, true);
-  l:=o!.rho_l; #Position(o, RhoFunc(s)(f));
-  m:=OrbSCCLookup(o)[l];
+  SetLambdaOrbSCCIndex(d, rectify.m); 
+  
+  if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then
+    o:=RhoOrb(s);
+    rectify:=RectifyRho(s, o, rectify.rep);
+    f:=rectify.rep; 
+    m:=rectify.m;
+  else
+    o:=GradedRhoOrb(s, f, true);
+    l:=o!.rho_l; #Position(o, RhoFunc(s)(f));
+    m:=OrbSCCLookup(o)[l];
 
-  if l<>OrbSCC(o)[m][1] then 
-    f:=RhoOrbMults(o, m)[l][2]*f;
+    if l<>OrbSCC(o)[m][1] then 
+      f:=RhoOrbMults(o, m)[l][2]*rectify.rep;
+    fi;
   fi;
 
   SetRhoOrb(d, o);
@@ -3245,7 +3234,7 @@ end);
 InstallMethod(Random, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local data, gens, n, i, w, g;
+  local data, gens, n, i, w, m, o, rep, g;
   
   data:=SemigroupData(s);
   
@@ -3258,9 +3247,11 @@ function(s)
   fi;
 
   n:=Random([2..Length(data)]);
-  g:=Random(LambdaOrbSchutzGp(data[n][3], data[n][2]));
-  i:=Random(OrbSCC(data[n][3])[data[n][2]]);
-  return data[n][4]*g*LambdaOrbMults(data[n][3], data[n][2])[i][1];
+  m:=data[n][2]; o:=data[n][3]; rep:=data[n][4];
+
+  g:=Random(LambdaOrbSchutzGp(o, m));
+  i:=Random(OrbSCC(o)[m]);
+  return rep*g*LambdaOrbMults(o, m)[i][1];
 end);
 
 # new for 0.1! - RClass 

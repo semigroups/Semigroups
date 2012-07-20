@@ -363,7 +363,8 @@ function(s)
   rho_o:=RhoOrb(s);
   scc:=OrbSCC(o);
   out:=EmptyPlist(Length(scc));
-  
+ 
+#JDM don't use CreateDClass here!
   for i in [2..Length(scc)] do 
     out[i-1]:=CallFuncList(CreateDClass, 
      [s, i, o, RectifyRho(s, rho_o, LambdaOrbRep(o,i)), fail]);

@@ -53,7 +53,7 @@ function(s, o, f)
   if l<>o!.scc[m][1] then
     f:=RhoOrbMult(o, m, l)[2]*f;
   fi;
-  return f;
+  return rec(rep:=f, m:=m, l:=l);
 end);
 
 InstallGlobalFunction(RectifyLambda,
@@ -69,7 +69,7 @@ function(s, o, f)
   if l<>OrbSCC(o)[m][1] then
     f:=f*LambdaOrbMult(o, m, l)[2];
   fi;
-  return f;
+  return rec(rep:=f, m:=m, l:=l);
 end);
 
 # new for 1.0! - LambdaRhoHT
@@ -716,18 +716,23 @@ end);
 
 InstallGlobalFunction(LambdaOrbMults,
 function(o, m)
-  local scc, gens, mults, genpos, inv, LambdaOrbMultLocal, i;
+  local scc, gens, mults, genpos, inv, trace, i;
 
-  scc:=OrbSCC(o)[m];
+  scc:=OrbSCC(o);
 
-  if IsBound(o!.mults) then
-    if IsBound(o!.mults[scc[1]]) then
+  if IsBound(o!.hasmults) then
+    if o!.hasmults[m] then 
       return o!.mults;
     fi;
-  else
-    o!.mults:=EmptyPlist(Length(o));
+  else 
+    if not IsBound(o!.mults) then 
+      o!.mults:=EmptyPlist(Length(o));
+    fi;
+    o!.hasmults:=BlistList([1..Length(scc)], []);
   fi;
 
+  o!.hasmults[m]:=true;
+  scc:=OrbSCC(o)[m];
   gens:=o!.gens;
   mults:=o!.mults;
   
@@ -738,19 +743,19 @@ function(o, m)
   genpos:=ReverseSchreierTreeOfSCC(o, m);
   inv:=function(i, f) return LambdaInverse(o!.semi)(o[i], f); end;
 
-  LambdaOrbMultLocal:=function(i)
+  trace:=function(i)
     local f;
 
     if IsBound(mults[i]) then 
       return mults[i][2];
     fi;
-    f:=gens[genpos[1][i]]*LambdaOrbMultLocal(genpos[2][i]);
+    f:=gens[genpos[1][i]]*trace(genpos[2][i]);
     mults[i]:=[inv(i, f), f];
     return f;
   end;
 
   for i in scc do 
-    LambdaOrbMultLocal(i);  
+    trace(i);  
   od;
   return o!.mults;
 end);
@@ -1144,18 +1149,23 @@ end);
 
 InstallGlobalFunction(RhoOrbMults,
 function(o, m)
-  local scc, gens, mults, genpos, inv, RhoOrbMultLocal, i;
+  local scc, gens, mults, genpos, inv, trace, i;
 
-  scc:=OrbSCC(o)[m];
+  scc:=OrbSCC(o);
 
-  if IsBound(o!.mults) then
-    if IsBound(o!.mults[scc[1]]) then
+  if IsBound(o!.hasmults) then
+    if o!.hasmults[m] then 
       return o!.mults;
     fi;
-  else
-    o!.mults:=EmptyPlist(Length(o));
+  else 
+    if not IsBound(o!.mults) then 
+      o!.mults:=EmptyPlist(Length(o));
+    fi;
+    o!.hasmults:=BlistList([1..Length(scc)], []);
   fi;
 
+  o!.hasmults[m]:=true;
+  scc:=OrbSCC(o)[m];
   gens:=o!.gens;
   mults:=o!.mults;
   
@@ -1166,19 +1176,19 @@ function(o, m)
   genpos:=SchreierTreeOfSCC(o, m);
   inv:=f-> RhoInverse(o!.semi)(o[scc[1]], f);
 
-  RhoOrbMultLocal:=function(i)
+  trace:=function(i)
     local f;
 
     if IsBound(mults[i]) then 
       return mults[i][1];
     fi;
-    f:=gens[genpos[1][i]]*RhoOrbMultLocal(genpos[2][i]);
+    f:=gens[genpos[1][i]]*trace(genpos[2][i]);
     mults[i]:=[f, inv(f)];
     return f;
   end;
 
   for i in scc do 
-    RhoOrbMultLocal(i);  
+    trace(i);  
   od;
   return o!.mults;
 end);
