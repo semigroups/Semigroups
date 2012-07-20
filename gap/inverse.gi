@@ -120,7 +120,8 @@ function(f, s)
   fi;
 
   #JDM really One?
-  return SiftGroupElement(schutz, LambdaPerm(s)(One(g), g))=();
+  #return SiftGroupElement(schutz, LambdaPerm(s)(One(g), g)).isone;
+  return SiftedPermutation(schutz, LambdaPerm(s)(One(g), g))=(); 
 end);
 
 # new for 1.0! - DClassReps - "for an acting semigroup with inversion"

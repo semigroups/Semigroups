@@ -241,8 +241,8 @@ function(f, s)
     # check if f already corresponds to an element of reps[val]
     lambdaperm:=LambdaPerm(s);
     for n in [1..repslens[val]] do 
-      #if SiftedPermutation(schutz, lambdaperm(reps[val][n], g))=() then
-      if SiftGroupElement(schutz, lambdaperm(reps[val][n], g)).isone then 
+      if SiftedPermutation(schutz, lambdaperm(reps[val][n], g))=() then
+      #if SiftGroupElement(schutz, lambdaperm(reps[val][n], g)).isone then 
         return true;
       fi;
     od;
@@ -274,8 +274,8 @@ function(f, s)
         if found<>false then 
           reps:=data!.reps; repslens:=data!.repslens;
           for m in [n+1..repslens[val]] do 
-            #if SiftedPermutation(schutz, lambdaperm(reps[val][m], g))=() then 
-            if SiftGroupElement(schutz, lambdaperm(reps[val][m], g)).isone then 
+            if SiftedPermutation(schutz, lambdaperm(reps[val][m], g))=() then 
+            #if SiftGroupElement(schutz, lambdaperm(reps[val][m], g)).isone then 
               return true;
             fi;
           od;
@@ -465,8 +465,8 @@ function(data, limit, lookfunc)
             old:=false; 
             for n in [1..repslens[val]] do 
               #p:=lambdaperm(reps[val][n], y);
-              #if SiftedPermutation(schutz, p)=() then 
-              if SiftGroupElement(schutz,lambdaperm(reps[val][n],y)).isone then
+              if SiftedPermutation(schutz, p)=() then 
+              #if SiftGroupElement(schutz,lambdaperm(reps[val][n],y)).isone then
                 old:=true;
                 graph[i][j]:=repslookup[val][n]; 
                 break;
@@ -889,8 +889,8 @@ function(o, m)
   elif Size(g)=1 then
     o!.schutzstab[m]:=false;
   else
-    #o!.schutzstab[m]:=StabChainImmutable(g);
-    o!.schutzstab[m]:=StabilizerChain(g);
+    o!.schutzstab[m]:=StabChainImmutable(g);
+    #o!.schutzstab[m]:=StabilizerChain(g);
   fi;
 
   return g;
@@ -1046,8 +1046,8 @@ function(data, x, n)
   else
     lambdaperm:=LambdaPerm(s);
     for n in [1..repslens[val]] do 
-      #if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=() then 
-      if SiftGroupElement(schutz, lambdaperm(reps[val][n], y)).isone then
+      if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=() then 
+      #if SiftGroupElement(schutz, lambdaperm(reps[val][n], y)).isone then
         return repslookup[val][n];
       fi;
     od;
@@ -1274,8 +1274,8 @@ function(o, m, bound)
   elif Size(g)=1 then 
     o!.schutzstab[m]:=false;
   else
-    #o!.schutzstab[m]:=StabChainImmutable(g);
-    o!.schutzstab[m]:=StabilizerChain(g);
+    o!.schutzstab[m]:=StabChainImmutable(g);
+    #o!.schutzstab[m]:=StabilizerChain(g);
   fi;
 
   return g;
