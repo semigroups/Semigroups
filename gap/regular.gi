@@ -149,7 +149,7 @@ function(f, s)
   fi;
 
   rep:=RectifyRho(rho_o, LambdaOrbRep(lambda_o, m));
-  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
+  return SiftGroupElement(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
 # new for 1.0! - \in - "for acting elt and D-class of regular acting semigp"
@@ -207,7 +207,7 @@ function(f, d)
     return false;
   fi;
 
-  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
+  return SiftGroupElement(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
 # new for 1.0! - DClassReps - "for a regular acting semigroup"
@@ -1502,7 +1502,8 @@ end);
 
 InstallMethod(RhoOrbStabChain, "for a regular D-class",
 [IsRegularDClass and IsActingSemigroupGreensClass],
-d-> StabChainImmutable(SchutzenbergerGroup(d)));
+#d-> StabChainImmutable(SchutzenbergerGroup(d)));
+d-> StabilizerChain(SchutzenbergerGroup(d)));
 
 #SSS
 

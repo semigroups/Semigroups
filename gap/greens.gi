@@ -16,7 +16,8 @@
 InstallMethod(RhoOrbStabChain, "for an L-class of an acting semi",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  return StabChainImmutable(SchutzenbergerGroup(l));
+  #return StabChainImmutable(SchutzenbergerGroup(l));
+  return StabilizerChain(SchutzenbergerGroup(l));
 end);
 
 # new for 1.0! - RhoCosets - "for a D-class of an acting semigp"
@@ -123,7 +124,8 @@ function(d)
     schutz:=Intersection(lambda_schutz, rho_schutz);
   fi;
 
-  SetRhoOrbStabChain(d, StabChainImmutable(rho_schutz));
+  #SetRhoOrbStabChain(d, StabChainImmutable(rho_schutz));
+  SetRhoOrbStabChain(d, StabilizerChain(rho_schutz));
   SetRhoCosets(d, RightTransversal(rho_schutz, schutz));
   return schutz;
 end);
@@ -300,7 +302,7 @@ function(f, d)
 
   if schutz<>false then 
     for x in cosets do 
-      if SiftedPermutation(schutz, g/x)=() then 
+      if SiftGroupElement(schutz, g/x)=() then 
         return true;
       fi;
     od;
@@ -391,7 +393,7 @@ function(f, l)
     return false;
   fi;
   
-  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
+  return SiftGroupElement(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
 # new for 1.0! - \in - "for acting elt and R-class of acting semigp"
@@ -447,7 +449,7 @@ function(f, r)
     return false;
   fi;
 
-  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
+  return SiftGroupElement(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
 #AAA
@@ -688,7 +690,7 @@ function(d)
         j:=PositionCanonical(cosets, g);
       else
         for j in [1..Length(cosets)] do
-          if SiftedPermutation(schutz, g*cosets[j])=() then 
+          if SiftGroupElement(schutz, g*cosets[j])=() then 
             break;
           else
             j:=fail;
@@ -3096,7 +3098,7 @@ function(s)
             n:=0; j:=0;
             repeat 
               n:=n+1;
-              if SiftedPermutation(schutz[m], lambdaperm(reps[val][n], f))=()
+              if SiftGroupElement(schutz[m], lambdaperm(reps[val][n], f))=()
                then  
                 j:=repslookup[val][n];
               fi;
