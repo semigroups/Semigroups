@@ -40,25 +40,30 @@ end);
 # element has its RhoValue in the first position of its scc.
 
 InstallGlobalFunction(RectifyRho,
-function(o, f)
+function(s, o, f)
   local l, m;
 
-  o:=Enumerate(o, infinity);
-  l:=Position(o, RhoFunc(o!.semi)(f));
+  if not IsClosed(o) then 
+    o:=Enumerate(o, infinity);
+  fi;
+
+  l:=Position(o, RhoFunc(s)(f));
   m:=OrbSCCLookup(o)[l];
 
-  if l<>OrbSCC(o)[m][1] then
+  if l<>o!.scc[m][1] then
     f:=RhoOrbMult(o, m, l)[2]*f;
   fi;
   return f;
 end);
 
 InstallGlobalFunction(RectifyLambda,
-function(o, f)
+function(s, o, f)
   local l, m;
 
-  o:=Enumerate(o, infinity);
-  l:=Position(o, LambdaFunc(o!.semi)(f));
+  if not IsClosed(o) then 
+    o:=Enumerate(o, infinity);
+  fi;
+  l:=Position(o, LambdaFunc(s)(f));
   m:=OrbSCCLookup(o)[l];
 
   if l<>OrbSCC(o)[m][1] then

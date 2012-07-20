@@ -142,7 +142,7 @@ function(f, s)
     return false;
   fi;
 
-  rep:=RectifyRho(rho_o, LambdaOrbRep(lambda_o, m));
+  rep:=RectifyRho(s, rho_o, LambdaOrbRep(lambda_o, m));
   return SiftGroupElement(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
@@ -366,7 +366,7 @@ function(s)
   
   for i in [2..Length(scc)] do 
     out[i-1]:=CallFuncList(CreateDClass, 
-     [s, i, o, RectifyRho(rho_o, LambdaOrbRep(o,i)), fail]);
+     [s, i, o, RectifyRho(s, rho_o, LambdaOrbRep(o,i)), fail]);
   od;
   return out;
 end);
@@ -977,7 +977,7 @@ local iter, scc;
         
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)); 
         o:=GradedRhoOrb(s, o[i], true);
-        return [s, 1, o, RectifyRho(o, f), false];
+        return [s, 1, o, RectifyRho(s, o, f), false];
       end,
 
       ShallowCopy:=iter-> rec(i:=1)));
@@ -1020,7 +1020,7 @@ local iter, scc;
  
         # f ok here? JDM
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][i])); 
-        return [s, m, RhoOrb(s), RectifyRho(RhoOrb(s), f), false];
+        return [s, m, RhoOrb(s), RectifyRho(s, RhoOrb(s), f), false];
       end,
 
       ShallowCopy:=iter-> rec(m:=1, i:=0,
@@ -1075,7 +1075,7 @@ local iter, scc;
         
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)); 
         o:=GradedLambdaOrb(s, o[i], true);
-        return [s, 1, o, RectifyLambda(o, f), false];
+        return [s, 1, o, RectifyLambda(s, o, f), false];
       end,
 
       ShallowCopy:=iter-> rec(i:=1)));
@@ -1118,7 +1118,7 @@ local iter, scc;
  
         # f ok here? JDM
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][i])); 
-        return [s, m, LambdaOrb(s), RectifyLambda(LambdaOrb(s), f), false];
+        return [s, m, LambdaOrb(s), RectifyLambda(s, LambdaOrb(s), f), false];
       end,
 
       ShallowCopy:=iter-> rec(m:=1, i:=0,
@@ -1179,7 +1179,7 @@ function(s)
   n:=0;
 
   for m in [2..len] do
-    f:=RectifyRho(rho_o, LambdaOrbRep(lambda_o, m));
+    f:=RectifyRho(s, rho_o, LambdaOrbRep(lambda_o, m));
     mults:=LambdaOrbMults(lambda_o, m);
     for j in scc[m] do
       n:=n+1;
@@ -1208,7 +1208,7 @@ function(s)
   n:=0;
 
   for m in [2..len] do
-    f:=RectifyLambda(lambda_o, RhoOrbRep(rho_o, m));
+    f:=RectifyLambda(s, lambda_o, RhoOrbRep(rho_o, m));
     mults:=RhoOrbMults(rho_o, m);
     for j in scc[m] do
       n:=n+1;
