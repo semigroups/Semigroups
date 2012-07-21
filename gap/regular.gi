@@ -757,6 +757,90 @@ function(s)
   return out;
 end);
 
+# new for 1.0! - HClassReps - "for a regular D-class of an acting semigroup"
+##############################################################################
+  
+# different method for inverse
+ 
+InstallOtherMethod(HClassReps, "for a regular D-class of an acting semigroup",
+[IsRegularDClass and IsActingSemigroupGreensClass],
+function(d)
+  local o, m, lambda_scc, lambda_mults, rho_scc, rho_mults, f, out, k, g, i, j;
+  
+  o:=LambdaOrb(d); 
+  m:=LambdaOrbSCCIndex(d);
+  lambda_scc:=OrbSCC(o)[m];
+  lambda_mults:=LambdaOrbMults(o, m);
+
+  o:=RhoOrb(d);
+  m:=RhoOrbSCCIndex(d);
+  rho_scc:=OrbSCC(o)[m];
+  rho_mults:=RhoOrbMults(o, m);
+
+  f:=Representative(d);
+  
+  out:=EmptyPlist(Length(lambda_scc)*Length(rho_scc));
+  k:=0;
+  
+  for i in lambda_scc do
+    g:=f*lambda_mults[i][1];
+    for j in rho_scc do 
+      k:=k+1;
+      out[k]:=rho_mults[j][1]*g;
+    od;
+  od;
+  return out;
+end);
+
+# new for 1.0! - HClassReps - "for a regular L-class of an acting semigroup"
+##############################################################################
+  
+# different method for inverse
+  
+InstallOtherMethod(HClassReps, "for a regular  L-class of an acting semigroup",
+[IsRegularLClass and IsActingSemigroupGreensClass],
+function(l)
+  local o, m, scc, mults, f, out, k, i;
+  
+  o:=RhoOrb(l); 
+  m:=RhoOrbSCCIndex(l);
+  scc:=OrbSCC(o)[m];
+  mults:=RhoOrbMults(o, m);
+  f:=Representative(l);
+
+  out:=EmptyPlist(Length(scc));
+  k:=0;
+  
+  for i in scc do
+    k:=k+1;
+    out[k]:=mults[i][1]*f;
+  od;
+  return out;
+end);
+
+# same method for inverse
+
+InstallOtherMethod(HClassReps, "for a regular R-class of an acting semigroup",
+[IsRegularRClass and IsActingSemigroupGreensClass],
+function(l)
+  local o, m, scc, mults, f, out, k, i;
+  
+  o:=LambdaOrb(l); 
+  m:=LambdaOrbSCCIndex(l);
+  scc:=OrbSCC(o)[m];
+  mults:=LambdaOrbMults(o, m);
+  f:=Representative(l);
+  
+  out:=EmptyPlist(Length(scc));
+  k:=0;
+  
+  for i in scc do
+    k:=k+1;
+    out[k]:=f*mults[i][1];
+  od;
+  return out;
+end);
+
 #III
 
 # new for 1.0! - IteratorOfDClassData - "for regular acting semigroup"
@@ -1199,6 +1283,32 @@ function(s)
   return out;
 end);
 
+# new for 1.0! - LClassReps - "for a regular D-class of acting semigroup 
+###############################################################################
+
+# same method for inverse
+
+InstallOtherMethod(LClassReps, "for a regular D-class of acting semigroup",
+[IsRegularDClass and IsActingSemigroupGreensClass],
+function(d)
+  local o, m, mults, scc, f, out, k, j;
+
+  o:=LambdaOrb(d);
+  m:=LambdaOrbSCCIndex(d);
+  mults:=LambdaOrbMults(o, m);
+  scc:=LambdaOrbSCC(d);
+  f:=Representative(d);
+
+  out:=EmptyPlist(Length(scc));
+
+  k:=0;
+  for j in scc do
+    k:=k+1;
+    out[k]:=f*mults[j][1];
+  od;
+  return out;
+end);
+
 # new for 1.0! - RClassReps - "for regular acting semigroup 
 ###############################################################################
 
@@ -1368,8 +1478,7 @@ end);
 # new for 1.0! - NrRClasses - "for a D-class of regular acting semigroup"
 ############################################################################
 
-# same method for inverse semigroups (although there could be one if we
-# have to introduce IsInverseActingSemigroupGreensClass).
+# different method for inverse semigroups
 
 InstallOtherMethod(NrRClasses, "for a D-class of regular acting semigroup",
 [IsActingSemigroupGreensClass and IsRegularDClass],

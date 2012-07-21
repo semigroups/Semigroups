@@ -1792,10 +1792,8 @@ InstallOtherMethod(GreensRClassOfElementNC, "for an acting semigp and elt",
 function(s, f)
   local pos, r;
  
-  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) and not
-   (HasIsRegularSemigroup(s) and IsRegularSemigroup(s)) then 
+  if HasSemigroupData(s) and IsClosed(SemigroupData(s)) then 
     pos:=Position(SemigroupData(s), f);
-  
     if pos<>fail then 
       return CallFuncList(CreateRClass, SemigroupData(s)[pos]);
     fi;  
@@ -1824,7 +1822,7 @@ GreensDClassOfElement);
 # mod for 1.0! - GroupHClass - "for a D-class of an acting semigroup"
 ############################################################################
 
-# same method for regular/inverse.
+# same method for regular, different method for inverse.
 
 InstallOtherMethod(GroupHClass, "for a D-class of an acting semigp.",
 [IsGreensDClass and IsActingSemigroupGreensClass],
@@ -1836,10 +1834,6 @@ function(d)
   fi;
   
   s:=ParentSemigroup(d);
-
-  if IsActingSemigroupWithInverseOp(s) then 
-    return GreensHClassOfElementNC(d, Representative(d));
-  fi;
 
   rho:=RhoFunc(s)(Representative(d));
   o:=LambdaOrb(d);
@@ -1868,7 +1862,7 @@ InstallMethod(GroupHClassOfGreensDClass, "for D-class",
 # new for 1.0! - Idempotents - "for a D-class of an acting semigp."
 #############################################################################
 
-# same method for regular/inverse
+# same method for regular, different method for inverse
 
 InstallOtherMethod(Idempotents, "for a D-class of an acting semigp.",
 [IsGreensDClass and IsActingSemigroupGreensClass],
@@ -1887,24 +1881,19 @@ function(d)
   lambda_o:=LambdaOrb(d); 
   lambda_scc:=LambdaOrbSCC(d);
 
-  if IsActingSemigroupWithInverseOp(s) then 
-    nr:=Length(lambda_scc);
-    out:=List(lambda_scc, x-> creator(lambda_o[x], lambda_o[x]));
-  else
-    tester:=IdempotentLambdaRhoTester(s);
-    rho_o:=RhoOrb(d);
-    rho_scc:=RhoOrbSCC(d);
-    for i in lambda_scc do
-      i:=lambda_o[i];
-      for j in rho_scc do 
-        j:=rho_o[j];
-        if tester(i, j) then
-          nr:=nr+1;
-          out[nr]:=creator(i, j);
-        fi;
-      od;
+  tester:=IdempotentLambdaRhoTester(s);
+  rho_o:=RhoOrb(d);
+  rho_scc:=RhoOrbSCC(d);
+  for i in lambda_scc do
+    i:=lambda_o[i];
+    for j in rho_scc do 
+      j:=rho_o[j];
+      if tester(i, j) then
+        nr:=nr+1;
+        out[nr]:=creator(i, j);
+      fi;
     od;
-  fi;
+  od;
 
   if not HasNrIdempotents(d) then 
     SetNrIdempotents(d, nr);   
@@ -1934,7 +1923,7 @@ end);
 # mod for 1.0! - Idempotents - "for an L-class of an acting semigp"
 #############################################################################
 
-# same method for regular/inverse
+# same method for regular, different method for inverse
 
 InstallOtherMethod(Idempotents, "for an L-class of an acting semigp.",
 [IsGreensLClass and IsActingSemigroupGreensClass],
@@ -1949,8 +1938,6 @@ function(l)
 
   if Rank(Representative(l))=Degree(s) then
     return [One(s)];
-  elif IsActingSemigroupWithInverseOp(s) then 
-    return [RightOne(Representative(l))];
   fi;
 
   out:=[]; 
@@ -1980,7 +1967,7 @@ end);
 # mod for 1.0! - Idempotents - "for an R-class of an acting semigp"
 #############################################################################
 
-# same method for regular/inverse
+# same method for regular, different method for inverse
 
 InstallOtherMethod(Idempotents, "for an R-class of an acting semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
@@ -1995,8 +1982,6 @@ function(r)
 
   if Rank(Representative(r))=Degree(s) then
     return [One(s)];
-  elif IsActingSemigroupWithInverseOp(s) then 
-    return [LeftOne(Representative(r))];
   fi;
 
   
@@ -2029,24 +2014,14 @@ end);
 # mod for 1.0! - Idempotents - "for an acting semigroup" 
 #############################################################################
 
-# same method for regular/inverse
+# same method for regular, different method for inverse
 
 InstallOtherMethod(Idempotents, "for an acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local lambda_o, creator, r, l, out, nr, tester, rho_o, scc, gens, rhofunc, lookup, rep, rho, j, i, k;
 
-  if IsActingSemigroupWithInverseOp(s) then 
-    lambda_o:=Enumerate(LambdaOrb(s), infinity);
-    creator:=IdempotentLambdaRhoCreator(s);
-    r:=Length(lambda_o);
-    out:=EmptyPlist(r-l);
-
-    for i in [2..r] do
-      out[i-1]:=creator(lambda_o[i], lambda_o[i]);
-    od;
-    return out;
-  elif IsRegularSemigroup(s) then 
+  if IsRegularSemigroup(s) then 
 
     if HasNrIdempotents(s) then 
       out:=EmptyPlist(NrIdempotents(s));
@@ -2758,12 +2733,12 @@ end);
 # new for 1.0! - LClassReps - "for an acting semigroup D-class"
 #############################################################################
 
-# same method for regular/inverse
+# different method for regular/inverse
 
 InstallOtherMethod(LClassReps, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local o, m, mults, scc, f, out, k, cosets, g, j, i;
+  local o, m, mults, scc, f, cosets, out, k, g, i, j;
   
   o:=LambdaOrb(d); 
   m:=LambdaOrbSCCIndex(d);
@@ -2771,27 +2746,17 @@ function(d)
   scc:=LambdaOrbSCC(d);
   f:=Representative(d);
  
-  if IsRegularDClass(d) then 
-    out:=EmptyPlist(Length(scc));
+  cosets:=LambdaCosets(d);
+  out:=EmptyPlist(Length(scc)*Length(cosets));
 
-    k:=0;
+  k:=0;
+  for i in cosets do
+    g:=f*i;
     for j in scc do
       k:=k+1;
-      out[k]:=f*mults[j][1];
+      out[k]:=g*mults[j][1];
     od;
-  else
-    cosets:=LambdaCosets(d);
-    out:=EmptyPlist(Length(scc)*Length(cosets));
-
-    k:=0;
-    for i in cosets do
-      g:=f*i;
-      for j in scc do
-        k:=k+1;
-        out[k]:=g*mults[j][1];
-      od;
-    od;
-  fi;
+  od;
   return out;
 end);
 
@@ -2808,9 +2773,7 @@ function(d)
   local s, nr, tester, rho_o, rho_scc, lambda_o, lambda_scc, i, j;
   
   s:=ParentSemigroup(d);
-  if IsActingSemigroupWithInverseOp(s) then 
-    return NrLClasses(d);
-  elif Rank(Representative(d))=Degree(s) then
+  if Rank(Representative(d))=Degree(s) then
     return 1;
   fi;
   
@@ -2852,7 +2815,7 @@ end);
 # new for 1.0! - NrIdempotents - "for an L-class of an acting semigp."
 #############################################################################
 
-# same method for regular/inverse
+# same method for regular, different method for inverse
 
 InstallOtherMethod(NrIdempotents, "for an L-class of an acting semigp.",
 [IsGreensLClass and IsActingSemigroupGreensClass],
@@ -2866,9 +2829,7 @@ function(l)
   s:=ParentSemigroup(l);     
 
   # check if we already know this...
-  if IsActingSemigroupWithInverseOp(s) then 
-    return 1;
-  elif HasSemigroupDataIndex(l) and not (HasIsRegularRClass(l) and
+  if HasSemigroupDataIndex(l) and not (HasIsRegularLClass(l) and
    IsRegularLClass(l)) then
     data:=SemigroupData(s);
     if data!.repslens[data!.orblookup1[SemigroupDataIndex(l)]]>1 then
@@ -2900,7 +2861,7 @@ end);
 # new for 1.0! - NrIdempotents - "for an R-class of an acting semigp."
 #############################################################################
 
-# same method for regular/inverse
+# same method for regular, different method inverse
 
 InstallOtherMethod(NrIdempotents, "for an R-class of an acting semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
@@ -2914,9 +2875,7 @@ function(r)
   s:=ParentSemigroup(r);     
 
   # check if we already know this...
-  if IsActingSemigroupWithInverseOp(s) then 
-    return 1;
-  elif HasSemigroupDataIndex(r) and not (HasIsRegularRClass(r) and
+  if HasSemigroupDataIndex(r) and not (HasIsRegularRClass(r) and
    IsRegularRClass(r)) then
     data:=SemigroupData(s);
     if data!.repslens[data!.orblookup1[SemigroupDataIndex(r)]]>1 then
@@ -3046,9 +3005,6 @@ end);
 InstallOtherMethod(NrLClasses, "for a D-class of an acting semigroup",       
 [IsActingSemigroupGreensClass and IsGreensDClass],
 function(d)
-  if IsActingSemigroupWithInverseOp(ParentSemigroup(d)) then 
-    return NrRClasses(d);
-  fi;
   return Length(LambdaCosets(d))*Length(LambdaOrbSCC(d));
 end);
 
@@ -3553,12 +3509,12 @@ end);
 # new for 1.0! - HClassReps - "for an L-class of an acting semigroup"
 ##############################################################################
 
-# same method for regular/inverse (maybe another method for inverse later)
+# different method for regular/inverse 
 
 InstallOtherMethod(HClassReps, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  local o, m, scc, mults, f, out, k, cosets, i, j;
+  local o, m, scc, mults, f, cosets, out, k, i, j;
 
   o:=RhoOrb(l); 
   m:=RhoOrbSCCIndex(l);
@@ -3566,39 +3522,29 @@ function(l)
   mults:=RhoOrbMults(o, m);
   f:=Representative(l); 
  
-  if IsRegularLClass(l) then 
-    out:=EmptyPlist(Length(scc));
-    k:=0;
+  cosets:=RhoCosets(DClassOfLClass(l));
+  out:=EmptyPlist(Length(scc)*Length(cosets));
+  k:=0;
 
-    for i in scc do 
+  for i in scc do 
+    i:=mults[i][1]*f;
+    for j in cosets do 
       k:=k+1;
-      out[k]:=mults[i][1]*f;
+      out[k]:=i*j;
     od;
-  else 
-    cosets:=RhoCosets(DClassOfLClass(l));
-    out:=EmptyPlist(Length(scc)*Length(cosets));
-    k:=0;
-
-    for i in scc do 
-      i:=mults[i][1]*f;
-      for j in cosets do 
-        k:=k+1;
-        out[k]:=i*j;
-      od;
-    od;
-  fi;
+  od;
   return out;
 end);
 
 # new for 1.0! - HClassReps - "for an R-class of an acting semigroup"
 ##############################################################################
 
-# same method for regular/inverse
+# different method for regular/inverse
 
 InstallOtherMethod(HClassReps, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local o, m, scc, mults, f, out, k, cosets, i, j;
+  local o, m, scc, mults, f, cosets, out, k, i, j;
 
   o:=LambdaOrb(r); 
   m:=LambdaOrbSCCIndex(r);
@@ -3606,35 +3552,26 @@ function(r)
   mults:=LambdaOrbMults(o, m);
   f:=Representative(r);
  
-  if IsRegularRClass(r) then 
-    out:=EmptyPlist(Length(scc));
-    k:=0;
-    
-    for i in scc do
+  cosets:=LambdaCosets(DClassOfRClass(r));
+  out:=EmptyPlist(Length(scc)*Length(cosets));
+  k:=0;
+
+  for i in cosets do 
+    i:=f*i;
+    for j in scc do 
       k:=k+1;
-      out[k]:=f*mults[i][1];
+      out[k]:=i*mults[j][1];
     od;
-  else 
-    cosets:=LambdaCosets(DClassOfRClass(r));
-    out:=EmptyPlist(Length(scc)*Length(cosets));
-    k:=0;
-  
-    for i in cosets do 
-      i:=f*i;
-      for j in scc do 
-        k:=k+1;
-        out[k]:=i*mults[j][1];
-      od;
-    od;
-  fi;
+  od;
   return out;
 end);
 
 # mod for 1.0! - HClassReps - "for an D-class of an acting semigroup"
 ############################################################################
 
-# same method for regular/inverse
-# JDM could do a different method if needed
+# different method for regular/inverse
+
+# JDM this method could be better...
 
 InstallOtherMethod(HClassReps, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
