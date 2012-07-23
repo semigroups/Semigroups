@@ -1990,6 +1990,7 @@ function(l)
   o:=RhoOrb(l); 
   m:=RhoOrbSCCIndex(l);
   scc:=OrbSCC(o)[m];
+
   j:=0;
   tester:=IdempotentLambdaRhoTester(s);
   creator:=IdempotentLambdaRhoCreator(s);
@@ -3503,7 +3504,7 @@ r-> Size(SchutzenbergerGroup(r))*Length(LambdaOrbSCC(r)));
 #############################################################################
 # Algorithm C. 
 
-# same method for inverse/regular
+# same method for regular, different method of inverse
 
 InstallOtherMethod(Size, "for an L-class of an acting semigp.",
 [IsGreensLClass and IsActingSemigroupGreensClass],

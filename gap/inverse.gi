@@ -573,6 +573,12 @@ InstallOtherMethod(Size, "for an inverse op D-class",
 [IsInverseOpDClass and IsActingSemigroupGreensClass],
 d-> Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))^2);
 
+# new for 1.0! - Size - "for an inverse op L-class"
+##############################################################################
+
+InstallOtherMethod(Size, "for an inverse op L-class",
+[IsInverseOpLClass and IsActingSemigroupGreensClass],
+l-> Size(SchutzenbergerGroup(l))*Length(LambdaOrbSCC(l));
 
 #HHH
 
