@@ -439,6 +439,45 @@ function(s)
   return out;
 end);
 
+# new for 1.0! - GreensHClasses - "for D-class of regular acting semigroup"
+##############################################################################
+
+# different method for inverse
+
+InstallOtherMethod(GreensHClasses, "for D-class of regular acting semigroup",
+[IsRegularDClass and IsActingSemigroupGreensClass],
+function(d)
+  local lambda_o, lambda_m, lambda_scc, lambda_mults, rho_o, rho_m, rho_scc,
+  rho_mults, f, nc, s, out, k, g, i, j;
+  
+  lambda_o:=LambdaOrb(d); 
+  lambda_m:=LambdaOrbSCCIndex(d);
+  lambda_scc:=OrbSCC(lambda_o)[lambda_m];
+  lambda_mults:=LambdaOrbMults(lambda_o, lambda_m);
+
+  rho_o:=RhoOrb(d);
+  rho_m:=RhoOrbSCCIndex(d);
+  rho_scc:=OrbSCC(rho_o)[rho_m];
+  rho_mults:=RhoOrbMults(rho_o, rho_m);
+
+  f:=Representative(d);
+  nc:=IsGreensClassNC(d);
+  s:=ParentSemigroup(d);
+ 
+  out:=EmptyPlist(Length(lambda_scc)*Length(rho_scc));
+  k:=0;
+  
+  for i in lambda_scc do
+    g:=f*lambda_mults[i][1];
+    for j in rho_scc do 
+      k:=k+1;
+      out[k]:=CreateHClass(s, rho_mults[j][1]*g, lambda_o, lambda_m, rho_o,
+       rho_m, nc);
+    od;
+  od;
+  return out;
+end);
+
 # new for 1.0! - GreensHClasses - "for L-class of regular acting semigroup"
 ##############################################################################
 

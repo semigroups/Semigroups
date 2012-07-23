@@ -709,11 +709,12 @@ function(d)
 
       schutz:=LambdaOrbStabChain(lo, lm);
       cosets:=RhoCosets(d);
+      # p = a^-1*b where a in cosets and b in lschutz
       p:=LambdaPerm(s)(rep, g);
-     
-      if schutz=true then
+      
+      if schutz=true then # a=() and so p=b
         j:=1;
-      elif schutz=false then 
+      elif schutz=false then # b=() and so p=a^-1 in cosets
         j:=PositionCanonical(cosets, p^-1);
       else
         for j in [1..Length(cosets)] do
@@ -730,7 +731,7 @@ function(d)
         return fail;
       fi;
 
-      #JDM better to avoid the following line (which is essential)
+      #JDM better to avoid the Position in the next line (which is essential)
       r:=(Position(rscc[rm], rl)-1)*Length(cosets)+j-1;
       return enum!.m*r+Length(lschutz)*(Position(lscc[lm], ll)-1)+
       Position(lschutz, cosets[j]*p);
