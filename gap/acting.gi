@@ -704,7 +704,7 @@ end);
 InstallMethod(LambdaOrb, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
-  return Orb(s, [1..65536], LambdaAct(s),
+  return Orb(GeneratorsOfSemigroup(s), [1..65536], LambdaAct(s),
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
         storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
         scc_reps:=[One(Generators(s))], semi:=s));
@@ -1094,7 +1094,7 @@ function(s)
   # But it seems to be so fast to calculate the 
   # in most cases that there is no point. 
 
-  return Orb(s, [1..65536], RhoAct(s),
+  return Orb(GeneratorsOfSemigroup(s), [1..65536], RhoAct(s),
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
         storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
         scc_reps:=[One(Generators(s))], semi:=s));
@@ -1298,11 +1298,11 @@ InstallMethod(SemigroupData, "for an acting semigroup",
 function(s)
   local gens, one, data;
  
-  if IsMonoid(s) then 
-    gens:=GeneratorsOfMonoid(s);
-  else
+  #if IsMonoid(s) then 
+  #  gens:=GeneratorsOfMonoid(s);
+  #else
     gens:=GeneratorsOfSemigroup(s);
-  fi;
+  #fi;
 
   one:=One(gens);
 

@@ -996,7 +996,7 @@ gap> r:=RClass(s, f);
 gap> Size(r);
 30683520
 gap> iter:=Iterator(r);
-<iterator>
+<iterator of R-class>
 gap> for i in [1..100000] do NextIterator(iter); od;
 gap> gens:=[  Transformation( [ 3, 12, 14, 4, 11, 18, 17, 2, 2, 9, 5, 15, 2, 18, 
 > 17, 8, 20, 10, 19, 12 ] ),
