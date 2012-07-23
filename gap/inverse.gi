@@ -119,10 +119,70 @@ function(f, s)
     return false;
   fi;
 
-  #JDM really One?
+  #JDM really One? certainly not! See \in in regular.gi
   #return SiftGroupElement(schutz, LambdaPerm(s)(One(g), g)).isone;
   return SiftedPermutation(schutz, LambdaPerm(s)(One(g), g))=(); 
 end);
+
+# new for 1.0! - \in - "for acting elt and inverse op L-class of acting semigp"
+#############################################################################
+
+InstallMethod(\in, "for acting elt and inverse op L-class of acting semigp.",
+[IsActingElt, IsInverseOpLClass and IsActingSemigroupGreensClass],
+function(f, l)
+  local rep, s, m, o, i, schutz, g, p;
+
+  rep:=Representative(l);
+  s:=ParentSemigroup(l);
+
+  #JDM degree causes problems for partial perms below...
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) #or Degree(f) <> Degree(rep)
+   or Rank(f) <> Rank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
+    Info(InfoCitrus, 1, "degree, rank, or lambda value not equal to those of",
+    " any of the L-class elements,");
+    return false;
+  fi;
+
+  m:=LambdaOrbSCCIndex(l);
+  o:=LambdaOrb(l);
+ 
+  if not IsClosed(o) then
+    Enumerate(o, infinity);
+  fi;
+
+  i:=Position(o, RhoFunc(s)(f));
+
+  if i = fail or OrbSCCLookup(o)[i]<>m then
+    return false;
+  fi;
+
+  schutz:=LambdaOrbStabChain(o, m);
+
+  if schutz=true then
+    Info(InfoCitrus, 3, "Schutz. group of L-class is symmetric group");
+    return true;
+  fi;
+
+  if i<>OrbSCC(o, m)[1] then  
+    g:=LambdaOrbMult(o, m, i)[1]*f;
+  else
+    g:=f;
+  fi;
+
+  if g=rep then
+    Info(InfoCitrus, 3, "element with rectified rho value equals ",
+    "L-class representative");
+    return true;
+  elif schutz=false then
+    Info(InfoCitrus, 3, "Schutz. group of L-class is trivial");
+    return false;
+  fi;
+
+  #return SiftGroupElement(schutz, LambdaPerm(s)(rep, g)).isone;
+  return SiftedPermutation(schutz,  LambdaPerm(s)(rep, g))=();
+end);
+
+#DDD
 
 # new for 1.0! - DClassReps - "for an acting semigroup with inversion"
 ##############################################################################
@@ -143,32 +203,6 @@ function(s)
   od;
   return out;
 end);
-
-# new for 1.0! - Size - "for an acting semigroup with inversion"
-##############################################################################
-
-InstallOtherMethod(Size, "for an acting semigroup with inversion",
-[IsActingSemigroupWithInverseOp],
-function(s)
-  local o, scc, r, nr, m;
-
-  o:=LambdaOrb(s);   
-  scc:=OrbSCC(o);
-  r:=Length(scc); 
-  nr:=0;
-
-  for m in [2..r] do 
-    nr:=nr+Length(scc[m])^2*Size(LambdaOrbSchutzGp(o, m));
-  od;
-  return nr;
-end);
-
-# new for 1.0! - Size - "for an inverse op D-class"
-##############################################################################
-
-InstallOtherMethod(Size, "for an inverse op D-class",
-[IsInverseOpDClass and IsActingSemigroupGreensClass],
-d-> Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))^2);
 
 #GGG
 
@@ -361,6 +395,42 @@ function(s)
   g:=Random(LambdaOrbSchutzGp(o, m));
   return o!.mults[k][1]*g*o!.mults[l][1];
 end);
+
+#SSS
+
+# new for 1.0! - SchutzenbergerGroup - for an acting semigroup with inverse op
+##############################################################################
+
+InstallOtherMethod(SchutzenbergerGroup, "for an inverse op L-class",
+[IsInverseOpLClass and IsActingSemigroupGreensClass],
+l-> LambdaOrbSchutzGp(LambdaOrb(l), LambdaOrbSCCIndex(l))); 
+
+# new for 1.0! - Size - "for an acting semigroup with inversion"
+##############################################################################
+
+InstallOtherMethod(Size, "for an acting semigroup with inversion",
+[IsActingSemigroupWithInverseOp],
+function(s)
+  local o, scc, r, nr, m;
+
+  o:=LambdaOrb(s);   
+  scc:=OrbSCC(o);
+  r:=Length(scc); 
+  nr:=0;
+
+  for m in [2..r] do 
+    nr:=nr+Length(scc[m])^2*Size(LambdaOrbSchutzGp(o, m));
+  od;
+  return nr;
+end);
+
+# new for 1.0! - Size - "for an inverse op D-class"
+##############################################################################
+
+InstallOtherMethod(Size, "for an inverse op D-class",
+[IsInverseOpDClass and IsActingSemigroupGreensClass],
+d-> Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))^2);
+
 
 #HHH
 

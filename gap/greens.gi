@@ -13,6 +13,8 @@
 # new for 1.0! - RhoOrbStabChain - "for an L-class of an acting semi"
 ##############################################################################
 
+# same method for regular, not required for inverse. 
+
 InstallMethod(RhoOrbStabChain, "for an L-class of an acting semi",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
@@ -184,7 +186,7 @@ end);
 # new for 1.0! - SchutzenbergerGroup - "for an L-class of an acting semigp."
 #############################################################################
 
-# same method for regular/inverse
+# same method for regular, different method for inverse
 
 InstallOtherMethod(SchutzenbergerGroup, "for an L-class of an acting semigp.",
 [IsGreensLClass and IsActingSemigroupGreensClass],
@@ -345,7 +347,7 @@ end);
 #############################################################################
 #JDM this method differs from the one in 0.99. 
 
-# same method for regular/inverse 
+# same method for regular, different method for inverse 
 
 InstallMethod(\in, "for acting elt and L-class of acting semigp.",
 [IsActingElt, IsGreensLClass and IsActingSemigroupGreensClass],
