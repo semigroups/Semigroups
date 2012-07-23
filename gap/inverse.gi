@@ -106,11 +106,11 @@ function(f, s)
   scc:=OrbSCC(o)[m];
   g:=f;
   if lambda_l<>scc[1] then 
-    g:=g*RhoOrbMults(o, m)[lambda_l][1];
+    g:=g*RhoOrbMult(o, m, lambda_l)[1];
   fi;
 
   if rho_l<>scc[1] then 
-    g:=RhoOrbMults(o, m)[rho_l][2]*g;
+    g:=RhoOrbMult(o, m, rho_l)[2]*g;
   fi;
 
   if IsIdempotent(g) then 

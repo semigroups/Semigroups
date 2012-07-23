@@ -227,7 +227,7 @@ function(s)
     l:=Position(rho_o, rhofunc(f));
 
     if l<>scc[lookup[l]][1] then 
-      f:=RhoOrbMults(rho_o, lookup[l])[l][2]*f;
+      f:=RhoOrbMult(rho_o, lookup[l], l)[2]*f;
     fi;
     out[m-1]:=f;
   od;
@@ -579,7 +579,7 @@ function(s)
     f:=LambdaOrbRep(lambda_o, lambda_m);
     rho_l:=Position(rho_o, rhofunc(f));
     rho_m:=lookup[rho_l];
-    f:=RhoOrbMults(rho_o, rho_m)[rho_l][2]*f;
+    f:=RhoOrbMult(rho_o, rho_m, rho_l)[2]*f;
     mults:=LambdaOrbMults(lambda_o, lambda_m);
     for j in lambda_scc[lambda_m] do
       n:=n+1;
@@ -1389,10 +1389,6 @@ function(d)
   mults:=RhoOrbMults(o, m);
   scc:=RhoOrbSCC(d);
   f:=Representative(d);
-
-#  if IsActingSemigroupWithInverseOp(ParentSemigroup(d)) then
-#    return List(LClassReps(d), x-> x^-1);
-#  elif IsRegularDClass(d) then
 
   out:=EmptyPlist(Length(scc));
   k:=0;
