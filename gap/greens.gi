@@ -1146,8 +1146,7 @@ end);
 #############################################################################
 # JDM could this be better/more efficient?!
 
-# same method for regular/inverse
-# JDM could do a different method if needed
+# different method for regular/inverse. 
 
 InstallOtherMethod(GreensHClasses, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
@@ -1320,7 +1319,8 @@ function(s, f)
   
   if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then
     o:=RhoOrb(s);
-    rectify:=RectifyRho(s, o, rectify.rep);
+    rectify:=RectifyRho(s, o, f);
+    f:=rectify.rep;
     m:=rectify.m;
   else
     o:=GradedRhoOrb(s, f, true);
