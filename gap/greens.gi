@@ -263,7 +263,8 @@ function(f, d)
   s:=ParentSemigroup(d);
  
   # much much better performance using f[2]<>rep[2] below
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] then
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] or
+   Degree(f)<>Degree(rep) then
     return false;
   fi;
 
@@ -665,7 +666,6 @@ function(d)
 
       q := QuoInt(n, m);
       pos:= [ q, n - q * m ]+1;
-
       return Enumerator(R[pos[1]])[pos[2]];
     end,
 
@@ -673,7 +673,7 @@ function(d)
 
     NumberElement:=function(enum, f)
       local s, rep, g, lm, lo, lscc, ll, lschutz, rm, ro, rscc, rl, schutz,
-      cosets, j, r; 
+      cosets, j, r, p; 
 
       s:=ParentSemigroup(d);
       rep:=Representative(d);
@@ -693,6 +693,7 @@ function(d)
         f:=f*LambdaOrbMult(lo, lm, ll)[2];
       fi;
       g:=f;
+
       lschutz:=Enumerator(LambdaOrbSchutzGp(lo, lm));
 
       rm:=RhoOrbSCCIndex(d); ro:=RhoOrb(d); rscc:=OrbSCC(ro);
@@ -706,17 +707,16 @@ function(d)
         g:=RhoOrbMults(ro, rm)[rl][2]*f;
       fi;
 
-      schutz:=RhoOrbStabChain(d);
+      schutz:=LambdaOrbStabChain(lo, lm);
       cosets:=RhoCosets(d);
-      g:=LambdaPerm(s)(rep, g);
+      p:=LambdaPerm(s)(rep, g);
      
-      # couldn't the following just be replaced with PositionCanonical?
       if schutz=true or schutz=false then
-        j:=PositionCanonical(cosets, g);
+        j:=PositionCanonical(cosets, p);
       else
         for j in [1..Length(cosets)] do
           #if SiftGroupElement(schutz, g*cosets[j]).isone then 
-          if SiftedPermutation(schutz, g*cosets[j])=() then 
+          if SiftedPermutation(schutz, p/cosets[j])=() then 
             break;
           else
             j:=fail;
@@ -727,12 +727,16 @@ function(d)
       if j=fail then 
         return fail;
       fi;
+      #JDM this doesn't work can't figure out why, or even what it should be
+      #doing!!!!
+
       #JDM better to avoid the following line (which is essential)
       r:=(Position(rscc[rm], rl)-1)*Length(cosets)+j-1;
-      #return enum!.m*r+Position(Enumerator(GreensRClasses(d)[r+1]), f);
-      return enum!.m*r+Length(lschutz)*(Position(lscc[lm], ll)-1)+
-      Position(lschutz, LambdaPerm(s)(RhoOrbMults(ro, rm)[rl][1]*
-       rep/cosets[j], f));
+      Error();
+      return enum!.m*r+Position(Enumerator(GreensRClasses(d)[r+1]), f);
+      #return enum!.m*r+Length(lschutz)*(Position(lscc[lm], ll)-1)+
+      #Position(lschutz, LambdaPerm(s)(RhoOrbMults(ro, rm)[rl][1]*
+      # rep/cosets[j], RhoOrbMults(ro, rm)[rl][1]*g/cosets[j]));
     end,
 
     #######################################################################
