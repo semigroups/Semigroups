@@ -186,8 +186,8 @@ end);
 # new for 1.0! - DClassOfLClass - "for a inverse op L-class acting semigroup"
 #############################################################################
 
-InstallMethod(DClassOfLClass, "for an L-class of an acting semigroup",
-[IsGreensLClass and IsActingSemigroupGreensClass],
+InstallMethod(DClassOfLClass, "for inverse op L-class of an acting semigroup",
+[IsInverseOpLClass and IsActingSemigroupGreensClass],
 function(l)
   local s, o, m, f, d, i;
 
@@ -862,6 +862,13 @@ InstallOtherMethod(NrRClasses, "for an acting semigroup with inverse op",
 
 InstallOtherMethod(NrRClasses, "for inverse op D-class",
 [IsInverseOpDClass and IsActingSemigroupGreensClass], NrLClasses);
+
+# new for 1.0! - NrHClasses - "for an inverse op L-class of acting semigroup"
+############################################################################
+
+InstallOtherMethod(NrHClasses, "for an inverse op L-class of acting semigroup",
+[IsActingSemigroupGreensClass and IsInverseOpLClass],
+l-> Length(LambdaOrbSCC(l)));
 
 # mod for 1.0! - NrHClasses - for an acting semigroup with inverse op
 ##############################################################################

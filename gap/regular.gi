@@ -1421,8 +1421,7 @@ d-> Length(LambdaOrbSCC(d))*Length(RhoOrbSCC(d)));
 # new for 1.0! - NrHClasses - "for a L-class of regular acting semigroup"
 ############################################################################
 
-# same method for inverse semigroups (although there could be one if we
-# have to introduce IsInverseActingSemigroupGreensClass).
+# different method for inverse semigroups 
 
 InstallOtherMethod(NrHClasses, "for a L-class of regular acting semigroup",
 [IsActingSemigroupGreensClass and IsRegularLClass],
