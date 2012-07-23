@@ -186,7 +186,7 @@ end);
 # new for 1.0! - DClassOfLClass - "for a inverse op L-class acting semigroup"
 #############################################################################
 
-InstallMethod(DClassOfLClass, "for inverse op L-class of an acting semigroup",
+InstallOtherMethod(DClassOfLClass, "for inverse op L-class", 
 [IsInverseOpLClass and IsActingSemigroupGreensClass],
 function(l)
   local s, o, m, f, d, i;
@@ -203,7 +203,7 @@ function(l)
   i:=Position(o, LambdaFunc(s)(f));
 
   if i<>OrbSCC(o)[m][1] then
-    SetRepresentative(d, f*LambdaOrbMult(o, m, lambda_l)[2]);
+    SetRepresentative(d, f*LambdaOrbMult(o, m, i)[2]);
   else
     SetRepresentative(d, f);
   fi;
@@ -607,7 +607,7 @@ d-> Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))^2);
 
 InstallOtherMethod(Size, "for an inverse op L-class",
 [IsInverseOpLClass and IsActingSemigroupGreensClass],
-l-> Size(SchutzenbergerGroup(l))*Length(LambdaOrbSCC(l));
+l-> Size(SchutzenbergerGroup(l))*Length(LambdaOrbSCC(l)));
 
 #HHH
 

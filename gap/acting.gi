@@ -1148,7 +1148,7 @@ end);
 
 InstallGlobalFunction(RhoOrbMults,
 function(o, m)
-  local scc, gens, mults, genpos, inv, trace, i;
+  local scc, mults, one, gens, genpos, inv, trace, x, i;
 
   scc:=OrbSCC(o);
 
