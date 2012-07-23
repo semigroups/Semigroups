@@ -242,7 +242,7 @@ end);
 #JDM could write another method if nec.
 
 InstallOtherMethod(Enumerator, "for a D-class of acting semigp.",
-[IsGreensDClass and IsActingSemigroupGreensClass],
+[IsRegularDClass and IsActingSemigroupGreensClass],
 function(d)
     
     return EnumeratorByFunctions(d, rec(
