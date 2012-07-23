@@ -500,7 +500,7 @@ function(d, f)
   i:=Position(o, LambdaFunc(s)(f));
 
   if i<>OrbSCC(o)[m][1] then
-    f:=LambdaOrbMult(o, m, i)[2]*f;
+    f:=LambdaOrbMult(o, m, i)[1]*f;
   fi;
  
   SetRepresentative(l, f);
@@ -509,6 +509,37 @@ function(d, f)
   SetDClassOfLClass(l, d);
   return l;
 end);
+
+# mod for 1.0! - GreensLClassOfElementNC - "for D-class and acting elt"
+#############################################################################
+
+InstallOtherMethod(GreensLClassOfElementNC, "for D-class and acting elt",
+[IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
+function(d, f)
+  local s, l, o, m, i;
+
+  s:=ParentSemigroup(d);
+  l:=Objectify(LClassType(s), rec());
+
+  o:=LambdaOrb(d);
+  m:=LambdaOrbSCCIndex(d);
+  i:=Position(o, LambdaFunc(s)(f));
+  
+  if i<>OrbSCC(o)[m][1] then 
+    f:=LambdaOrbMult(o, m, i)[1]*f;
+  fi;
+  
+  SetParentSemigroup(l, s);
+  SetLambdaOrb(l, o);
+  SetLambdaOrbSCCIndex(l, m);
+  SetRepresentative(l, f);
+  SetEquivalenceClassRelation(l, GreensRRelation(s));
+  SetIsGreensClassNC(l, true);
+  SetDClassOfLClass(l, d);
+  
+  return l;
+end);
+
 
 # new for 0.7! - GreensRClasses - for acting semigroup with inverse op
 ##############################################################################

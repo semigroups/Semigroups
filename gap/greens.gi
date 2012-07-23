@@ -1719,32 +1719,32 @@ end);
 # mod for 1.0! - GreensLClassOfElementNC - "for D-class and acting elt"
 #############################################################################
 
-# same method for regular/inverse.
+# same method for regular, different method for inverse
 
 InstallOtherMethod(GreensLClassOfElementNC, "for D-class and acting elt",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
 function(d, f)
-  local s, l, o, i, m;
+  local s, l, o, m, i;
 
   s:=ParentSemigroup(d);
   l:=Objectify(LClassType(s), rec());
 
-  SetParentSemigroup(l, s);
-  SetRhoOrbSCCIndex(l, RhoOrbSCCIndex(d));
-  
   o:=RhoOrb(d); 
-  SetRhoOrb(l, o);
+  m:=RhoOrbSCCIndex(d);
   i:=Position(o, RhoFunc(s)(f));
-  m:=OrbSCCLookup(o)[i];
 
   if i<>OrbSCC(o)[m][1] then 
     f:=RhoOrbMult(o, m, i)[2]*f;
   fi;
   
+  SetParentSemigroup(l, s);
+  SetRhoOrb(l, o);
+  SetRhoOrbSCCIndex(l, m);
   SetRepresentative(l, f);
   SetEquivalenceClassRelation(l, GreensRRelation(s));
   SetIsGreensClassNC(l, true);
   SetDClassOfLClass(l, d);
+  
   return l;
 end);
 
