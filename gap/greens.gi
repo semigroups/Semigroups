@@ -1465,8 +1465,12 @@ function(l, f)
   SetRhoOrb(h, RhoOrb(l));
   SetRhoOrbSCCIndex(h, RhoOrbSCCIndex(l));
  
-  #JDM why not add if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then .. 
-  o:=GradedLambdaOrb(s, f, IsGreensClassNC(l)<>true);
+  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
+    o:=LambdaOrb(s);
+  else
+    o:=GradedLambdaOrb(s, f, IsGreensClassNC(l)<>true);
+  fi;
+  
   SetLambdaOrb(h, o);
 
   if IsGreensClassNC(l) then 
