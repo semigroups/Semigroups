@@ -711,12 +711,14 @@ function(d)
       cosets:=RhoCosets(d);
       p:=LambdaPerm(s)(rep, g);
      
-      if schutz=true or schutz=false then
-        j:=PositionCanonical(cosets, p);
+      if schutz=true then
+        j:=1;
+      elif schutz=false then 
+        j:=PositionCanonical(cosets, p^-1);
       else
         for j in [1..Length(cosets)] do
           #if SiftGroupElement(schutz, g*cosets[j]).isone then 
-          if SiftedPermutation(schutz, p/cosets[j])=() then 
+          if SiftedPermutation(schutz, cosets[j]*p)=() then 
             break;
           else
             j:=fail;
@@ -727,16 +729,11 @@ function(d)
       if j=fail then 
         return fail;
       fi;
-      #JDM this doesn't work can't figure out why, or even what it should be
-      #doing!!!!
 
       #JDM better to avoid the following line (which is essential)
       r:=(Position(rscc[rm], rl)-1)*Length(cosets)+j-1;
-      Error();
-      return enum!.m*r+Position(Enumerator(GreensRClasses(d)[r+1]), f);
-      #return enum!.m*r+Length(lschutz)*(Position(lscc[lm], ll)-1)+
-      #Position(lschutz, LambdaPerm(s)(RhoOrbMults(ro, rm)[rl][1]*
-      # rep/cosets[j], RhoOrbMults(ro, rm)[rl][1]*g/cosets[j]));
+      return enum!.m*r+Length(lschutz)*(Position(lscc[lm], ll)-1)+
+      Position(lschutz, cosets[j]*p);
     end,
 
     #######################################################################
