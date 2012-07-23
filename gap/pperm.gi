@@ -472,12 +472,6 @@ function(x)
   return SparsePartialPermNC(id, id);
 end);
 
-# new for 0.7! - OneMutable - for a partial perm semigroup
-##############################################################################
-
-InstallOtherMethod(OneMutable, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> SparsePartialPermNC(Points(s), Points(s)));
-
 # new for 0.7! - OnIntegerSetsWithPartialPerm 
 #############################################################################
 
