@@ -475,6 +475,41 @@ function(s, f)
   return l;
 end);
 
+# mod for 1.0! - GreensLClassOfElement - "for inverse op D-class and elt"
+#############################################################################
+
+InstallOtherMethod(GreensLClassOfElement, "for inverse op D-class and elt",
+[IsInverseOpDClass and IsActingSemigroupGreensClass, IsActingElt],
+function(d, f)
+  local s, l, o, i, m;
+   
+  if not f in d then
+    Error("the element does not belong to the D-class,");
+    return;
+  fi;
+ 
+  s:=ParentSemigroup(d);
+  l:=Objectify(LClassType(s), rec());
+  o:=LambdaOrb(d);
+  m:=LambdaOrbSCCIndex(d); 
+
+  SetParentSemigroup(l, s);
+  SetLambdaOrbSCCIndex(l, m);
+  SetLambdaOrb(l, o);
+
+  i:=Position(o, LambdaFunc(s)(f));
+
+  if i<>OrbSCC(o)[m][1] then
+    f:=LambdaOrbMult(o, m, i)[2]*f;
+  fi;
+ 
+  SetRepresentative(l, f);
+  SetEquivalenceClassRelation(l, GreensLRelation(s));
+  SetIsGreensClassNC(l, IsGreensClassNC(d));
+  SetDClassOfLClass(l, d);
+  return l;
+end);
+
 # new for 0.7! - GreensRClasses - for acting semigroup with inverse op
 ##############################################################################
                     

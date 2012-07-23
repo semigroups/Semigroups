@@ -1682,7 +1682,7 @@ end);
 # mod for 1.0! - GreensLClassOfElement - "for D-class of acting semi and elt"
 #############################################################################
 
-# same method for regular/inverse.
+# same method for regular, different method for inverse
 
 InstallOtherMethod(GreensLClassOfElement, "for D-class of acting semi and elt",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
