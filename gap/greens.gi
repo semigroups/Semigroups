@@ -114,8 +114,10 @@ function(d)
    Representative(d));
   rho_schutz:=rho_schutz^p;
 
+  SetRhoOrbStabChain(d, StabChainImmutable(rho_schutz));
+  #SetRhoOrbStabChain(d, StabilizerChain(rho_schutz));
+  
   if lambda_stab=false then 
-    SetRhoOrbStabChain(d, false);
     SetRhoCosets(d, Enumerator(rho_schutz));
     return lambda_schutz;
   elif lambda_stab=true then 
@@ -124,8 +126,6 @@ function(d)
     schutz:=Intersection(lambda_schutz, rho_schutz);
   fi;
 
-  SetRhoOrbStabChain(d, StabChainImmutable(rho_schutz));
-  #SetRhoOrbStabChain(d, StabilizerChain(rho_schutz));
   SetRhoCosets(d, RightTransversal(rho_schutz, schutz));
   return schutz;
 end);
