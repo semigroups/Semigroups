@@ -456,6 +456,25 @@ function(s, f)
   return l;
 end);
 
+# mod for 1.0! - GreensLClassOfElementNC - "for an acting semigp and elt."
+#############################################################################
+
+InstallOtherMethod(GreensLClassOfElementNC, "for an acting semigp and elt",
+[IsInverseOpActingSemigroup, IsActingElt],
+function(s, f)
+  local l;
+
+  l:=Objectify(LClassType(s), rec());
+
+  SetParentSemigroup(l, s);
+  SetLambdaOrbSCCIndex(l, 1);
+  SetLambdaOrb(l, GradedLambdaOrb(s, f, false));
+  SetRepresentative(l, f);
+  SetEquivalenceClassRelation(l, GreensLRelation(s));
+  SetIsGreensClassNC(l, true);
+  return l;
+end);
+
 # new for 0.7! - GreensRClasses - for acting semigroup with inverse op
 ##############################################################################
                     

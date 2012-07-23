@@ -1661,7 +1661,7 @@ end);
 # mod for 1.0! - GreensLClassOfElementNC - "for an acting semigp and elt."
 #############################################################################
 
-# same method for regular/inverse.
+# same method for regular, different method for inverse.
 
 InstallOtherMethod(GreensLClassOfElementNC, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
