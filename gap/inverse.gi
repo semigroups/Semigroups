@@ -514,7 +514,7 @@ end);
 #############################################################################
 
 InstallOtherMethod(GreensLClassOfElementNC, "for D-class and acting elt",
-[IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
+[IsInverseOpDClass and IsActingSemigroupGreensClass, IsActingElt],
 function(d, f)
   local s, l, o, m, i;
 
