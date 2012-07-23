@@ -1886,7 +1886,6 @@ function(d)
   fi;
   
   s:=ParentSemigroup(d);
-
   rho:=RhoFunc(s)(Representative(d));
   o:=LambdaOrb(d);
   scc:=OrbSCC(o)[LambdaOrbSCCIndex(d)];
@@ -2814,6 +2813,8 @@ function(d)
 end);
 
 #NNN
+
+#JDM here!
 
 # new for 1.0! - NrIdempotents - "for a D-class of an acting semigp"
 #############################################################################

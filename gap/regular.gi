@@ -1322,7 +1322,7 @@ end);
 # new for 1.0! - LClassReps - "for a regular D-class of acting semigroup 
 ###############################################################################
 
-# same method for inverse
+# same method for inverse, should be different method JDM!
 
 InstallOtherMethod(LClassReps, "for a regular D-class of acting semigroup",
 [IsRegularDClass and IsActingSemigroupGreensClass],
