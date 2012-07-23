@@ -442,38 +442,35 @@ end);
 # new for 1.0! - GreensHClasses - "for L-class of regular acting semigroup"
 ##############################################################################
 
-# same method for inverse
+# different method for inverse
 
 InstallOtherMethod(GreensHClasses, "for L-class of regular acting semigroup",
 [IsRegularLClass and IsActingSemigroupGreensClass],
 function(l)
-  local o, m, scc, mults, f, out, k, j;
+  local rho_o, rho_m, scc, mults, f, nc, s, lambda_o, lambda_m, out, k, j;
 
-  o:=RhoOrb(l);
-  m:=RhoOrbSCCIndex(l);
- 
-  scc:=OrbSCC(o)[m];
-  mults:=RhoOrbMults(o, m);
+  rho_o:=RhoOrb(l);
+  rho_m:=RhoOrbSCCIndex(l);
+  scc:=OrbSCC(rho_o)[rho_m];
+  mults:=RhoOrbMults(rho_o, rho_m);
+
   f:=Representative(l);
+  nc:=IsGreensClassNC(l);
+  s:=ParentSemigroup(l);
+
+  lambda_o:=GradedLambdaOrb(s, f, nc<>true);
+  lambda_m:=OrbSCCLookup(lambda_o)[lambda_o!.lambda_l];
 
   out:=EmptyPlist(Length(scc));
   k:=0;
  
-  if not IsGreensClassNC(l) then 
-    for j in scc do
-      k:=k+1;
-      out[k]:=GreensHClassOfElementNC(l, mults[j][1]*f);
-      SetLClassOfHClass(out[k], l);
-      ResetFilterObj(out[k], IsGreensClassNC); 
-      #JDM also set schutz gp here!?
-    od;
-  else
-    for j in scc do
-      k:=k+1;
-      out[k]:=GreensHClassOfElementNC(l, mults[j][1]*f);
-      SetLClassOfHClass(out[k], l);
-    od; 
-  fi;
+  for j in scc do
+    k:=k+1;
+    out[k]:=CreateHClass(s, mults[j][1]*f, lambda_o, lambda_m, rho_o, rho_m,
+     nc);
+    SetLClassOfHClass(out[k], l);
+  od;
+  
   return out;
 end);
 
