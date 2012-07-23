@@ -508,7 +508,8 @@ function(arg)
 
   return d; 
 end); 
-# new for 1.0! - CreateDClass - not a user function! 
+
+# new for 1.0! - CreateHClass - not a user function! 
 ############################################################################# 
 # Usage: arg[1] = semigroup; arg[2] = rep; 
 # arg[3] = lambda orb;  arg[4] = lambda orb scc index; 
@@ -525,8 +526,10 @@ function(arg)
   SetRepresentative(h, arg[2]);
   SetLambdaOrb(h, arg[3]);
   SetLambdaOrbSCCIndex(h, arg[4]);
-  SetRhoOrb(h, arg[5]);
-  SetRhoOrbSCCIndex(h, arg[6]);
+  if arg[5]<>fail then 
+    SetRhoOrb(h, arg[5]);
+    SetRhoOrbSCCIndex(h, arg[6]);
+  fi;
   
   SetEquivalenceClassRelation(h, GreensHRelation(arg[1]));
   SetIsGreensClassNC(h, arg[7]);

@@ -331,7 +331,36 @@ function(s)
   od;
   return out;
 end);
-                    
+
+# new for 1.0! - GreensHClasses - "for L-class of regular acting semigroup"
+##############################################################################
+
+InstallOtherMethod(GreensHClasses, "for L-class of regular acting semigroup",
+[IsRegularLClass and IsActingSemigroupGreensClass],
+function(l)
+  local rho_o, rho_m, scc, mults, f, nc, s, lambda_o, lambda_m, out, k, j;
+  
+  o:=LambdaOrb(l);
+  m:=LambdaOrbSCCIndex(l);
+  scc:=OrbSCC(o)[m];
+  mults:=LambdaOrbMults(o, m);
+  
+  f:=Representative(l);
+  nc:=IsGreensClassNC(l);
+  s:=ParentSemigroup(l);
+  
+  out:=EmptyPlist(Length(scc));
+  k:=0;
+  
+  for j in scc do
+    k:=k+1;
+    out[k]:=CreateHClass(s, mults[j][2]*f, o, m, fail, fail, nc);
+    SetLClassOfHClass(out[k], l);
+  od;
+  
+  return out;
+end);
+
 # new for 0.7! - GreensRClasses - for acting semigroup with inverse op
 ##############################################################################
                     
