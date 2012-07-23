@@ -173,7 +173,7 @@ function(h)
     return lambda_schutz^lambda_p;
   fi;
 
-  rho_p:=RhoOrbMults(rho_o, rho_m)[Position(rho_o, RhoFunc(s)(rep))][2];
+  rho_p:=RhoOrbMult(rho_o, rho_m, Position(rho_o, RhoFunc(s)(rep)))[2];
   rho_p:=LambdaConjugator(s)(RhoOrbRep(rho_o, rho_m), rho_p*rep);
 
   if lambda_stab=true then 
@@ -297,7 +297,7 @@ function(f, d)
   fi;
 
   if l<>scc[m][1] then 
-    g:=RhoOrbMults(o, m)[l][2]*g;
+    g:=RhoOrbMult(o, m, l)[2]*g;
   fi;
 
   cosets:=LambdaCosets(d);
@@ -704,7 +704,7 @@ function(d)
       fi;
       
       if rl<>rscc[rm][1] then
-        g:=RhoOrbMults(ro, rm)[rl][2]*f;
+        g:=RhoOrbMult(ro, rm, rl)[2]*f;
       fi;
 
       schutz:=LambdaOrbStabChain(lo, lm);
@@ -1651,7 +1651,7 @@ function(s, f)
   SetRhoOrbSCCIndex(l, m);
   
   if i<>OrbSCC(o)[m][1] then 
-    f:=RhoOrbMults(o, m)[i][2]*f;
+    f:=RhoOrbMult(o, m, i)[2]*f;
   fi;
 
   SetRepresentative(l, f);
@@ -1684,8 +1684,6 @@ end);
 
 # mod for 1.0! - GreensLClassOfElement - "for D-class of acting semi and elt"
 #############################################################################
-# Notes: can't call GreensLClassOfElementNC since we don't have a way to pass
-# IsGreensClassNC(d) to it.
 
 # same method for regular/inverse.
 
@@ -1701,17 +1699,17 @@ function(d, f)
   
   s:=ParentSemigroup(d);
   l:=Objectify(LClassType(s), rec());
-
-  SetParentSemigroup(l, s);
-  SetRhoOrbSCCIndex(l, RhoOrbSCCIndex(d));
-  
   o:=RhoOrb(d); 
+  m:=RhoOrbSCCIndex(d);  
+ 
+  SetParentSemigroup(l, s);
+  SetRhoOrbSCCIndex(l, m);
   SetRhoOrb(l, o);
+
   i:=Position(o, RhoFunc(s)(f));
-  m:=OrbSCCLookup(o)[i];
 
   if i<>OrbSCC(o)[m][1] then 
-    f:=RhoOrbMults(o, m)[i][2]*f;
+    f:=RhoOrbMult(o, m, i)[2]*f;
   fi;
   
   SetRepresentative(l, f);
@@ -1735,7 +1733,7 @@ function(d, f)
   l:=Objectify(LClassType(s), rec());
 
   SetParentSemigroup(l, s);
-  SetRhoOrbSCCIndex(l, LambdaOrbSCCIndex(d));
+  SetRhoOrbSCCIndex(l, RhoOrbSCCIndex(d));
   
   o:=RhoOrb(d); 
   SetRhoOrb(l, o);
@@ -1743,7 +1741,7 @@ function(d, f)
   m:=OrbSCCLookup(o)[i];
 
   if i<>OrbSCC(o)[m][1] then 
-    f:=RhoOrbMults(o, m)[i][2]*f;
+    f:=RhoOrbMult(o, m, i)[2]*f;
   fi;
   
   SetRepresentative(l, f);
@@ -3741,7 +3739,7 @@ function(r)
     m:=OrbSCCLookup(o)[rho_l];
     SetRhoOrbSCCIndex(d, m);
     if rho_l<>OrbSCC(o)[m][1] then 
-      SetRepresentative(d, RhoOrbMults(o, m)[rho_l][2]*f);
+      SetRepresentative(d, RhoOrbMult(o, m, rho_l)[2]*f);
     else
       SetRepresentative(d, f);
     fi;
@@ -3820,7 +3818,7 @@ function(h)
   i:=Position(o, RhoFunc(s)(f));
 
   if i<>OrbSCC(o)[m][1] then 
-    SetRepresentative(l, RhoOrbMults(o, m)[i][2]*f);
+    SetRepresentative(l, RhoOrbMult(o, m, i)[2]*f);
   else
     SetRepresentative(l, f);
   fi;
