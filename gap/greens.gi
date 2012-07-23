@@ -508,6 +508,30 @@ function(arg)
 
   return d; 
 end); 
+# new for 1.0! - CreateDClass - not a user function! 
+############################################################################# 
+# Usage: arg[1] = semigroup; arg[2] = rep; 
+# arg[3] = lambda orb;  arg[4] = lambda orb scc index; 
+# arg[5] = rho orb; arg[6] = rho orb scc index
+# arg[7] = IsGreensClassNC. 
+
+InstallGlobalFunction(CreateHClass, 
+function(arg)
+  local h;
+  
+  h:=Objectify(HClassType(arg[1]), rec());
+  SetParentSemigroup(h, arg[1]);
+
+  SetRepresentative(h, arg[2]);
+  SetLambdaOrb(h, arg[3]);
+  SetLambdaOrbSCCIndex(h, arg[4]);
+  SetRhoOrb(h, arg[5]);
+  SetRhoOrbSCCIndex(h, arg[6]);
+  
+  SetEquivalenceClassRelation(h, GreensHRelation(arg[1]));
+  SetIsGreensClassNC(h, arg[7]);
+  return h;
+end);
 
 # new for 1.0! - CreateDClassNC - not a user function! 
 ############################################################################# 
@@ -1081,16 +1105,23 @@ end);
 InstallOtherMethod(GreensHClasses, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  local o, m, scc, mults, d, cosets, f, out, k, i, j;
+  local rho_o, rho_m, s, scc, mults, d, lambda_o, lambda_m, cosets, f, nc, out, k, i, j;
 
-  o:=RhoOrb(l); 
-  m:=RhoOrbSCCIndex(l);
+  rho_o:=RhoOrb(l); 
+  rho_m:=RhoOrbSCCIndex(l);
+  s:=ParentSemigroup(l);
+
+  scc:=OrbSCC(rho_o)[rho_m];
+  mults:=RhoOrbMults(rho_o, rho_m);
   
-  scc:=OrbSCC(o)[m];
-  mults:=RhoOrbMults(o, m);
   d:=DClassOfLClass(l);
+  lambda_o:=LambdaOrb(d); 
+  lambda_m:=LambdaOrbSCCIndex(d);
+
   cosets:=RhoCosets(d);
-  f:=Representative(l); 
+  f:=Representative(l);
+  nc:=IsGreensClassNC(l);
+
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
 
@@ -1098,9 +1129,9 @@ function(l)
     i:=mults[i][1]*f;
     for j in cosets do 
       k:=k+1;
-      out[k]:=GreensHClassOfElementNC(d, i*j);
+      out[k]:=CreateHClass(s, i*j, lambda_o, lambda_m, rho_o, rho_m, nc);
       SetLClassOfHClass(out[k], l);
-      #JDM also set schutz gp here?
+      SetDClassOfHClass(out[k], d);
     od;
   od;
   return out;

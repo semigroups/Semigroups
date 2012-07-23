@@ -297,8 +297,6 @@ end);
 # new for 1.0! - GreensHClasses - for an acting semigroup with inverse op
 ############################################################################
 
-#JDM RhoOrb of h is not defined here, maybe it should be!?
-
 InstallOtherMethod(GreensHClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)
