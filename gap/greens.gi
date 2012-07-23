@@ -870,7 +870,7 @@ end);
 # mod for 1.0! - Enumerator - "for L-class of an acting semigroup"
 ##############################################################################
 
-# same method for inverse/regular
+# same method for regular, different method for inverse
 
 InstallMethod(Enumerator, "for L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
@@ -918,9 +918,8 @@ function(l)
       rep:=Representative(l);
       
       if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-       #JDM degree causes problems for partial perms
-       #Degree(f) <> Degree(rep) or 
-       Rank(f) <> Rank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then 
+       Degree(f) <> Degree(rep) or Rank(f) <> Rank(rep) or 
+       LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then 
         return fail;
       fi;
       

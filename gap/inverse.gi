@@ -135,8 +135,7 @@ function(f, l)
   rep:=Representative(l);
   s:=ParentSemigroup(l);
 
-  #JDM degree causes problems for partial perms below...
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) #or Degree(f) <> Degree(rep)
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or Degree(f) <> Degree(rep)
    or Rank(f) <> Rank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
     Info(InfoCitrus, 1, "degree, rank, or lambda value not equal to those of",
     " any of the L-class elements,");
@@ -202,6 +201,95 @@ function(s)
     out[m-1]:=RightOne(f);
   od;
   return out;
+end);
+
+#EEE
+
+# mod for 1.0! - Enumerator - "for L-class of an inverse op acting semigroup"
+##############################################################################
+
+InstallMethod(Enumerator, "for L-class of an acting semigroup",
+[IsInverseOpLClass and IsActingSemigroupGreensClass],
+function(l)
+  local o, m, mults, scc;
+
+  o:=LambdaOrb(l); 
+  m:=LambdaOrbSCCIndex(l);
+  mults:=LambdaOrbMults(o, m);
+  scc:=OrbSCC(o)[m];
+
+  return EnumeratorByFunctions(l, rec(
+
+    schutz:=Enumerator(SchutzenbergerGroup(l)),
+
+    len:=Size(SchutzenbergerGroup(l)),
+
+    #########################################################################
+
+    ElementNumber:=function(enum, pos)
+      local n, m, q;
+
+      if pos>Length(enum) then 
+        return fail;
+      fi;
+
+      if pos<=Length(enum!.schutz) then 
+        return Representative(l)*enum!.schutz[pos];
+      fi;
+
+      n:=pos-1; m:=enum!.len;
+      
+      q:=QuoInt(n, m); 
+      pos:=[ q, n - q * m]+1;
+     
+     return mults[scc[pos[1]]][2]*enum[pos[2]];
+    end,
+
+    #########################################################################
+    
+    NumberElement:=function(enum, f)
+      local s, rep, o, m, i, g, j;
+
+      s:=ParentSemigroup(l);
+      rep:=Representative(l);
+      
+      if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
+       Degree(f) <> Degree(rep) or Rank(f) <> Rank(rep) or 
+       LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then 
+        return fail;
+      fi;
+      
+      if f=rep then 
+        return 1;
+      fi;
+
+      o:=RhoOrb(l); m:=RhoOrbSCCIndex(l);
+      i:=Position(o, RhoFunc(s)(f));
+
+      if i = fail or OrbSCCLookup(o)[i]<>m then 
+        return fail;
+      fi;
+     
+      j:=Position(enum!.schutz, LambdaPerm(s)(rep, mults[i][1]*f));
+
+      if j=fail then 
+        return fail;
+      fi;
+      return enum!.len*(Position(scc, i)-1)+j;
+    end,
+
+    #########################################################################
+
+    Membership:=function(elm, enum)
+      return elm in l;
+    end,
+
+    Length:=enum-> Size(l),
+
+    PrintObj:=function(enum)
+      Print("<enumerator of L-class>");
+      return;
+    end));
 end);
 
 #GGG
