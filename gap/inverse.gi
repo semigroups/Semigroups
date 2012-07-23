@@ -332,13 +332,13 @@ function(s)
   return out;
 end);
 
-# new for 1.0! - GreensHClasses - "for L-class of regular acting semigroup"
+# new for 1.0! - GreensHClasses - "for inverse op L-class of acting semigroup"
 ##############################################################################
 
-InstallOtherMethod(GreensHClasses, "for L-class of regular acting semigroup",
-[IsRegularLClass and IsActingSemigroupGreensClass],
+InstallOtherMethod(GreensHClasses, "for inverse op L-class of acting semigroup",
+[IsInverseOpLClass and IsActingSemigroupGreensClass],
 function(l)
-  local rho_o, rho_m, scc, mults, f, nc, s, lambda_o, lambda_m, out, k, j;
+  local o, m, scc, mults, f, nc, s, out, k, j;
   
   o:=LambdaOrb(l);
   m:=LambdaOrbSCCIndex(l);
