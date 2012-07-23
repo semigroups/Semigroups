@@ -806,8 +806,6 @@ function(o, m, i)
   return o!.mults[i];
 end);
 
-
-
 # new for 1.0! - LambdaOrbRep - "for an orbit and pos int"
 #############################################################################
 
@@ -1108,7 +1106,7 @@ end);
 
 InstallGlobalFunction(RhoOrbMult,
 function(o, m, i)
-  local mults, one, scc, gens, genpos, inv, RhoOrbMultLocal, x;
+  local mults, one, scc, gens, genpos, inv, trace, x;
 
   if IsBound(o!.mults) then
     if IsBound(o!.mults[i]) then
@@ -1129,18 +1127,18 @@ function(o, m, i)
   genpos:=SchreierTreeOfSCC(o, m);
   inv:=f-> RhoInverse(o!.semi)(o[scc[1]], f);
   
-  RhoOrbMultLocal:=function(i)
+  trace:=function(i)
     local f;
 
     if IsBound(mults[i]) then 
       return mults[i][1];
     fi;
-    f:=gens[genpos[1][i]]*RhoOrbMultLocal(genpos[2][i]);
+    f:=gens[genpos[1][i]]*trace(genpos[2][i]);
     mults[i]:=[f, inv(f)];
     return f;
   end;
 
-  RhoOrbMultLocal(i);
+  trace(i);
   return o!.mults[i];
 end);
 
@@ -1160,7 +1158,12 @@ function(o, m)
     fi;
   else 
     if not IsBound(o!.mults) then 
-      o!.mults:=EmptyPlist(Length(o));
+      mults:=EmptyPlist(Length(o));
+      one:=[One(o!.gens), One(o!.gens)];
+      for x in OrbSCC(o) do 
+        mults[x[1]]:=one;
+      od;
+      o!.mults:=mults;
     fi;
     o!.hasmults:=BlistList([1..Length(scc)], []);
   fi;
