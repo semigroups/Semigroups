@@ -163,7 +163,7 @@ function(f, l)
     return true;
   fi;
 
-  if i<>OrbSCC(o, m)[1] then  
+  if i<>OrbSCC(o)[m][1] then  
     g:=LambdaOrbMult(o, m, i)[1]*f;
   else
     g:=f;

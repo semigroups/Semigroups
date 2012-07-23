@@ -357,8 +357,7 @@ function(f, l)
   rep:=Representative(l); 
   s:=ParentSemigroup(l);
 
-  #JDM degree causes problems for partial perms below...
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) #or Degree(f) <> Degree(rep)
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or Degree(f) <> Degree(rep)
    or Rank(f) <> Rank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
     Info(InfoCitrus, 1, "degree, rank, or lambda value not equal to those of",
     " any of the L-class elements,");
@@ -385,7 +384,11 @@ function(f, l)
     return true;
   fi;
 
-  g:=RhoOrbMults(o, m)[i][2]*f;
+  if i<>OrbSCC(o)[m][1] then 
+    g:=RhoOrbMult(o, m, i)[2]*f;
+  else 
+    g:=f;
+  fi;
 
   if g=rep then
     Info(InfoCitrus, 3, "element with rectified rho value equals ",
