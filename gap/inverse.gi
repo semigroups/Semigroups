@@ -449,7 +449,7 @@ function(s, f)
 
   SetLambdaOrb(l, o);
   SetLambdaOrbSCCIndex(l, m);
-  SetRepresentative(l, rep);
+  SetRepresentative(l, f);
   SetEquivalenceClassRelation(l, GreensLRelation(s));
   SetIsGreensClassNC(l, false);
 
@@ -460,7 +460,7 @@ end);
 #############################################################################
 
 InstallOtherMethod(GreensLClassOfElementNC, "for an acting semigp and elt",
-[IsInverseOpActingSemigroup, IsActingElt],
+[IsActingSemigroupWithInverseOp, IsActingElt],
 function(s, f)
   local l;
 

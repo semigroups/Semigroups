@@ -1755,7 +1755,7 @@ end);
 InstallOtherMethod(GreensRClassOfElement, "for D-class and acting elt",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
 function(d, f)
-  local s, r;
+  local s, r, o, m, i;
     
   if not f in d then
     Error("the element does not belong to the D-class,");
