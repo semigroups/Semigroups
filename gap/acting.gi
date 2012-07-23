@@ -715,7 +715,7 @@ end);
 
 InstallGlobalFunction(LambdaOrbMults,
 function(o, m)
-  local scc, gens, mults, genpos, inv, trace, i;
+  local scc, mults, one, gens, genpos, inv, trace, x, i;
 
   scc:=OrbSCC(o);
 
@@ -770,7 +770,7 @@ end);
 
 InstallGlobalFunction(LambdaOrbMult,
 function(o, m, i)
-  local mults, one, scc, gens, genpos, inv, LambdaOrbMultLocal, x;
+  local mults, one, scc, gens, genpos, inv, trace, x;
 
   if IsBound(o!.mults) then
     if IsBound(o!.mults[i]) then
@@ -791,18 +791,18 @@ function(o, m, i)
   genpos:=ReverseSchreierTreeOfSCC(o, m);
   inv:=function(i, f) return LambdaInverse(o!.semi)(o[i], f); end;
 
-  LambdaOrbMultLocal:=function(i)
+  trace:=function(i)
     local f;
 
     if IsBound(mults[i]) then 
       return mults[i][2];
     fi;
-    f:=gens[genpos[1][i]]*LambdaOrbMultLocal(genpos[2][i]);
+    f:=gens[genpos[1][i]]*trace(genpos[2][i]);
     mults[i]:=[inv(i, f), f];
     return f;
   end;
 
-  LambdaOrbMultLocal(i);
+  trace(i);
   return o!.mults[i];
 end);
 
