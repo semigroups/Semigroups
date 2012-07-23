@@ -1626,12 +1626,12 @@ end);
 # mod for 1.0! - GreensLClassOfElement - "for an acting semigp and elt."
 #############################################################################
 
-# same method for regular/inverse.
+# same method for regular, different method for inverse.
 
 InstallOtherMethod(GreensLClassOfElement, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
-  local l, o, i, m, scc;
+  local l, o, rectify;
 
   if not f in s then
     Error("the element does not belong to the semigroup,");
@@ -1641,20 +1641,17 @@ function(s, f)
   l:=Objectify(LClassType(s), rec());
   SetParentSemigroup(l, s);
   
-  #JDM why not add if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then .. 
-  o:=GradedRhoOrb(s, f, true);
-  SetRhoOrb(l, o);
-  
-  i:=Position(o, RhoFunc(s)(f));
-  m:=OrbSCCLookup(o)[i];
-  
-  SetRhoOrbSCCIndex(l, m);
-  
-  if i<>OrbSCC(o)[m][1] then 
-    f:=RhoOrbMult(o, m, i)[2]*f;
+  if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then 
+    o:=RhoOrb(s);
+  else
+    o:=GradedRhoOrb(s, f, true);
   fi;
-
-  SetRepresentative(l, f);
+  
+  rectify:=RectifyRho(s, o, f);
+  
+  SetRhoOrb(l, o);
+  SetRhoOrbSCCIndex(l, rectify.m);
+  SetRepresentative(l, rectify.rep);
   SetEquivalenceClassRelation(l, GreensLRelation(s));
   SetIsGreensClassNC(l, false);
 

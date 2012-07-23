@@ -417,6 +417,45 @@ function(l, f)
   return h;
 end);
 
+# mod for 1.0! - GreensLClassOfElement - "for acting semigp inverse op and elt."
+#############################################################################
+
+InstallOtherMethod(GreensLClassOfElement, 
+"for acting semigp with inverse op and elt",
+[IsActingSemigroupWithInverseOp, IsActingElt],
+function(s, f)
+  local l, o, i, m;
+
+  if not f in s then
+    Error("the element does not belong to the semigroup,");
+    return;
+  fi;
+
+  l:=Objectify(LClassType(s), rec());
+  SetParentSemigroup(l, s);
+
+  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then
+    o:=LambdaOrb(s);
+  else
+    o:=GradedLambdaOrb(s, f, true);
+  fi;
+
+  i:=Position(o, LambdaFunc(s)(f));
+  m:=OrbSCCLookup(o)[i];
+
+  if i<>OrbSCC(o)[m][1] then 
+    f:=LambdaOrbMult(o, m, i)[1]*f;
+  fi;
+
+  SetLambdaOrb(l, o);
+  SetLambdaOrbSCCIndex(l, m);
+  SetRepresentative(l, rep);
+  SetEquivalenceClassRelation(l, GreensLRelation(s));
+  SetIsGreensClassNC(l, false);
+
+  return l;
+end);
+
 # new for 0.7! - GreensRClasses - for acting semigroup with inverse op
 ##############################################################################
                     
