@@ -3669,10 +3669,10 @@ function(arg)
   return;
 end);
 
-# new for 1.0! - DClassOfLClass - "for a D-class of an acting semigroup"
+# new for 1.0! - DClassOfLClass - "for a L-class of an acting semigroup"
 #############################################################################
 
-# same method for regular/inverse
+# same method for regular, different method for inverse
 
 # only for L-classes not created during GreensLClasses! 
 

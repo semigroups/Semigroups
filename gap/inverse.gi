@@ -183,6 +183,35 @@ end);
 
 #DDD
 
+# new for 1.0! - DClassOfLClass - "for a inverse op L-class acting semigroup"
+#############################################################################
+
+InstallMethod(DClassOfLClass, "for an L-class of an acting semigroup",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+function(l)
+  local s, o, m, f, d, i;
+
+  s:=ParentSemigroup(l);
+  o:=LambdaOrb(l); 
+  m:=LambdaOrbSCCIndex(l);
+  f:=Representative(l);
+
+  d:=Objectify(DClassType(s), rec());
+  SetParentSemigroup(d, s);
+  SetLambdaOrb(d, o);
+  SetLambdaOrbSCCIndex(d, m);
+  i:=Position(o, LambdaFunc(s)(f));
+
+  if i<>OrbSCC(o)[m][1] then
+    SetRepresentative(d, f*LambdaOrbMult(o, m, lambda_l)[2]);
+  else
+    SetRepresentative(d, f);
+  fi;
+
+  SetIsGreensClassNC(d, IsGreensClassNC(l));
+  return d;
+end);
+
 # new for 1.0! - DClassReps - "for an acting semigroup with inversion"
 ##############################################################################
 
