@@ -361,6 +361,33 @@ function(l)
   return out;
 end);
 
+# new for 1.0! - GreensHClassOfElement - "for inverse op L-class and elt."
+############################################################################
+
+InstallOtherMethod(GreensHClassOfElement, "for L-class and elt",
+[IsActingSemigroupGreensClass and IsInverseOpLClass, IsActingElt],
+function(l, f)
+  local s, h;
+  
+  if not f in l then
+    Error("the element does not belong to the Green's class,");
+    return;
+  fi;
+  
+  s:=ParentSemigroup(l);
+  h:=Objectify(HClassType(s), rec());
+  
+  SetParentSemigroup(h, s);
+  SetLambdaOrb(h, LambdaOrb(l));
+  SetLambdaOrbSCCIndex(h, LambdaOrbSCCIndex(l));
+  SetRepresentative(h, f);
+  SetEquivalenceClassRelation(h, GreensHRelation(s));
+  SetIsGreensClassNC(h, IsGreensClassNC(l));
+  SetLClassOfHClass(h, l);
+  
+  return h;
+end);
+
 # new for 0.7! - GreensRClasses - for acting semigroup with inverse op
 ##############################################################################
                     

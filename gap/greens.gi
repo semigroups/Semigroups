@@ -1484,12 +1484,12 @@ end);
 # new for 1.0! - GreensHClassOfElement - "for L-class and elt."
 ############################################################################
 
-# same method for regular/inverse.
+# same method for regular, different method for inverse.
 
 InstallOtherMethod(GreensHClassOfElement, "for L-class and elt",
 [IsActingSemigroupGreensClass and IsGreensLClass, IsActingElt],
 function(l, f)
-  local s, h, o;
+  local s, h, o, i;
 
   if not f in l then
     Error("the element does not belong to the Green's class,");
@@ -1505,8 +1505,10 @@ function(l, f)
  
   if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
     o:=LambdaOrb(s);
+    i:=Position(o, LambdaFunc(s)(f));
   else
     o:=GradedLambdaOrb(s, f, IsGreensClassNC(l)<>true);
+    i:=o!.lambda_l;
   fi;
   
   SetLambdaOrb(h, o);
@@ -1514,7 +1516,7 @@ function(l, f)
   if IsGreensClassNC(l) then 
     SetLambdaOrbSCCIndex(h, 1);
   else
-    SetLambdaOrbSCCIndex(h, OrbSCCLookup(o)[Position(o, LambdaFunc(s)(f))]);
+    SetLambdaOrbSCCIndex(h, OrbSCCLookup(o)[i]);
   fi;
   
   SetRepresentative(h, f);
