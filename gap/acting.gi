@@ -725,7 +725,12 @@ function(o, m)
     fi;
   else 
     if not IsBound(o!.mults) then 
-      o!.mults:=EmptyPlist(Length(o));
+      mults:=EmptyPlist(Length(o));
+      one:=[One(o!.gens), One(o!.gens)];
+      for x in OrbSCC(o) do 
+        mults[x[1]]:=one;
+      od;
+      o!.mults:=mults;
     fi;
     o!.hasmults:=BlistList([1..Length(scc)], []);
   fi;
