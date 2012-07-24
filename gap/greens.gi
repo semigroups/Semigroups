@@ -1761,8 +1761,8 @@ function(d, f)
   
   s:=ParentSemigroup(d);
   r:=Objectify(RClassType(s), rec());
-  o:=LambdaOrb(r);
-  m:=LambdaOrbSCCIndex(r);
+  o:=LambdaOrb(d);
+  m:=LambdaOrbSCCIndex(d);
   i:=Position(o, LambdaFunc(s)(f));
  
   if i<>OrbSCC(o)[m] then 

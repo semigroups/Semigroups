@@ -785,7 +785,7 @@ gap> IsRegularSemigroup(s);
 false
 gap> f:=PartialPerm([ 3, 4, 7 ], [ 4, 7, 8 ]);;
 gap> d:=DClass(s, f);
-{[ 3, 4, 7 ] -> [ 4, 7, 8 ]}
+{[ 1, 3, 6 ] -> [ 7, 4, 8 ]}
 gap> Size(d);
 282
 gap> NrRClasses(d);
@@ -803,7 +803,7 @@ gap> AsList(last2);
 gap> SchutzenbergerGroup(d);
 Group(())
 gap> RhoOrbStabChain(d);
-<stabilizer chain record, Base [ 8, 4 ], Orbit length 3, Size: 6>
+<stabilizer chain record, Base [ 8, 7 ], Orbit length 3, Size: 6>
 gap> SemigroupDataSCC(d);
 fail
 gap> Position(DClasses(s), d);
@@ -905,7 +905,7 @@ gap> for d in DClasses(s) do
 gap> gens:=[ PartialPermNC( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 5, 8, 10 ], [ 7, 1, 4, 3, 2, 6, 5 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 6, 7, 8, 10 ], [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) ];;
-gap> s:=Semigroup(gens);
+gap> s:=Semigroup(gens);;
 gap> f:=PartialPerm([ 2, 4 ], [ 6, 5 ]);;
 gap> d:=DClassNC(s, f);
 {[ 2, 4 ] -> [ 6, 5 ]}
@@ -961,7 +961,7 @@ gap> GreensHClasses(d);;
 gap> NrHClasses(d);
 2036
 gap> GreensLClasses(d);
-[ {<partial perm on 68 pts>} ]
+[ {[ 8, 57 ] -> [ 63, 87 ]} ]
 
 #
 gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
@@ -1069,7 +1069,7 @@ gap> gens:= [ PartialPermNC( [ 1, 2, 3, 4 ], [ 5, 7, 1, 6 ] ),
 > PartialPermNC( [ 1, 2, 3, 5 ], [ 5, 2, 7, 3 ] ),
 > PartialPermNC( [ 1, 2, 3, 6, 7 ], [ 1, 3, 4, 7, 5 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 5, 7 ], [ 3, 2, 4, 6, 1, 5 ] ) ];;
-gap> s:=Semigroup(gens);
+gap> s:=Semigroup(gens);;
 gap> Size(s);
 840
 gap> NrDClasses(s);
@@ -1080,11 +1080,11 @@ gap> gens:=[ PartialPermNC( [ 1, 2, 3, 4 ], [ 5, 7, 1, 6 ] ),
 > PartialPermNC( [ 1, 2, 3, 5 ], [ 5, 2, 7, 3 ] ),
 > PartialPermNC( [ 1, 2, 3, 6, 7 ], [ 1, 3, 4, 7, 5 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 5, 7 ], [ 3, 2, 4, 6, 1, 5 ] ) ];;
-gap> s:=Semigroup(gens);
+gap> s:=Semigroup(gens);;
 gap> Size(s);
-56
+840
 gap> NrDClasses(s);
-28
+176
 gap> List(DClasses(s), RClasses);
 [ [ {[ 1, 2, 4 ] -> [ 4, 6, 3 ]} ], [ {[ 1 .. 4 ] -> [ 4, 1, 2, 6 ]} ], 
   [ {[ 1, 2, 3, 5 ] -> [ 4, 6, 5, 2 ]} ], 
@@ -1178,7 +1178,6 @@ gap> ForAll(Elements(h), x-> x in d);
 true
 gap> IsGreensClassNC(h);
 false
-
 gap> gens:=[ PartialPermNC( [ 1, 2, 4 ], [ 4, 5, 6 ] ),
 > PartialPermNC( [ 1, 2, 5 ], [ 2, 1, 3 ] ),
 > PartialPermNC( [ 1, 2, 4, 6 ], [ 2, 4, 3, 5 ] ),
@@ -1199,7 +1198,6 @@ gap> h=d;
 true
 gap> d=h;
 true
-
 
 #
 gap> gens:=
@@ -1233,7 +1231,7 @@ gap> gens:=
 >   36, 25, 61, 83, 38, 41, 93, 2, 39, 87, 85, 17, 92, 97, 43, 30, 5, 13, 94, 
 >   44, 80, 54, 99, 81, 31, 7, 68, 11, 100, 72, 14, 9, 91, 32, 64, 60, 8, 23 
 >  ] ) ];;
-gap> s:=Semigroup(gens);
+gap> s:=Semigroup(gens);;
 gap> f:=PartialPerm([ 2, 63 ], [ 28, 89 ]);;
 gap> d:=DClassNC(s, f);
 {[ 2, 63 ] -> [ 28, 89 ]}
@@ -1308,7 +1306,7 @@ gap> List(reps, x-> DClass(s, x));
   {Transformation( [ 2, 4, 2, 4 ] )}, {Transformation( [ 2, 4, 4, 4 ] )}, 
   {Transformation( [ 2, 2, 4, 2 ] )} ]
 gap> d:=DClass(s, Transformation( [ 1, 2, 4, 4 ] ));
-{Transformation( [ 1, 2, 4, 4 ] )}
+{Transformation( [ 1, 4, 1, 2 ] )}
 gap> f:=Transformation( [ 1, 2, 4, 4 ] );
 Transformation( [ 1, 2, 4, 4 ] )
 gap> o:=LambdaOrb(s);
@@ -1642,6 +1640,7 @@ true
 gap> Set(Idempotents(s))=Set(e);
 true
 
+#
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 3, 4, 5, 6 ], [ 7, 10, 8, 6, 4, 2 ] ),
 >  PartialPermNC( [ 1, 2, 3, 4, 5, 9 ], [ 6, 8, 3, 10, 4, 2 ] ),
@@ -1699,7 +1698,6 @@ gap> ForAll(LClassReps(d), x-> x in dd);
 true
 
 #
-
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
 > [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 1 ] ),
@@ -1711,7 +1709,7 @@ gap> Size(s);
 12398231
 gap> NrRClasses(s);
 639
-gap> f:=PartialPerm([ 3, 9 ], [ 5, 4 ]);
+gap> f:=PartialPerm([ 3, 9 ], [ 5, 4 ]);;
 gap> d:=DClass(s, f);
 {[ 3, 9 ] -> [ 7, 6 ]}
 gap> Position(LambdaOrb(d), RanSetPP(Representative(d)));
@@ -1817,6 +1815,7 @@ gap> Size(d);
 gap> Size(last3);
 7
 
+#
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 3, 5, 6, 7, 12 ], [ 11, 10, 3, 4, 6, 2, 8 ] ),
 >  PartialPermNC( [ 1, 2, 4, 5, 6, 8, 9, 10, 11 ], 
@@ -1837,6 +1836,7 @@ gap> Sum(last);
 gap> NrHClasses(s);
 223
 
+#
 gap> gens:=
 > [ PartialPermNC( [ 1, 2, 3, 4, 9, 10, 11 ], [ 4, 1, 7, 12, 3, 9, 6 ] ),
 > PartialPermNC( [ 1, 3, 4, 5, 7, 8, 11, 12 ], [ 4, 11, 2, 7, 9, 8, 1, 6 ] ) ];;
@@ -1914,6 +1914,7 @@ gap> HClassReps(d);
 gap> Set(last)=Elements(d);
 true
 
+#
 gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
 > Transformation([1,2,4,3,5,6,7,8,9,10]),
 > Transformation([1,2,3,4,5,6,10,9,8,7]),
