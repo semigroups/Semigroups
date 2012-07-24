@@ -49,6 +49,8 @@ DeclareGlobalFunction("LambdaOrbStabChain");
 DeclareAttribute("RhoOrbStabChain", IsActingSemigroupGreensClass);
 
 DeclareGlobalFunction("RectifyLambda");
+DeclareGlobalFunction("RhoPos");
+DeclareGlobalFunction("LambdaPos");
 DeclareGlobalFunction("RectifyRho");
 DeclareGlobalFunction("RectifyInverseRho");
 DeclareAttribute("ParentSemigroup", IsObject);

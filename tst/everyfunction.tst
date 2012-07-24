@@ -311,11 +311,30 @@ gap> g:=f;
 [ 6, 9 ] -> [ 12, 6 ]
 gap> 
 gap>   m:=LambdaOrbSCCIndex(d); o:=LambdaOrb(d); scc:=OrbSCC(o);
-1
-<closed orbit, 1 points with Schreier tree with log with grading>
-[ [ 1 ] ]
+54
+<closed orbit, 184 points with Schreier tree with log>
+[ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ 8 ], [ 9 ], [ 10 ], 
+  [ 11 ], [ 12 ], 
+  [ 13, 49, 56, 62, 64, 66, 74, 80, 82, 83, 84, 85, 87, 96, 99, 101, 107, 
+      108, 110, 125, 133, 134, 135, 137, 145, 146, 147, 152, 154, 159, 168, 
+      171, 175 ], [ 14 ], [ 15 ], [ 16 ], [ 17 ], [ 18 ], [ 19 ], 
+  [ 20, 43, 44, 46, 47, 50, 61, 63, 69, 78, 86 ], [ 21 ], [ 22 ], [ 23 ], 
+  [ 24 ], [ 25 ], [ 26 ], [ 27 ], [ 28 ], [ 29 ], [ 30 ], [ 31 ], [ 32 ], 
+  [ 33 ], [ 34 ], [ 35 ], [ 36 ], [ 37 ], [ 38 ], [ 39 ], [ 40 ], [ 41 ], 
+  [ 42 ], [ 45 ], [ 48 ], [ 51 ], [ 52 ], [ 53, 121, 127, 164, 177 ], [ 54 ], 
+  [ 55 ], [ 57 ], [ 58 ], [ 59 ], [ 60 ], [ 65 ], [ 67 ], [ 68 ], [ 70 ], 
+  [ 71 ], [ 72 ], [ 73 ], [ 75 ], [ 76 ], [ 77 ], [ 79 ], [ 81 ], [ 88 ], 
+  [ 89 ], [ 90 ], [ 91 ], [ 92, 142, 150, 173, 179 ], [ 93, 112, 144 ], 
+  [ 94 ], [ 95 ], [ 97 ], [ 98 ], [ 100 ], [ 102 ], [ 103 ], [ 104 ], 
+  [ 105 ], [ 106 ], [ 109 ], [ 111 ], [ 113 ], [ 114 ], [ 115 ], [ 116 ], 
+  [ 117 ], [ 118 ], [ 119 ], [ 120 ], [ 122 ], [ 123 ], [ 124 ], [ 126 ], 
+  [ 128 ], [ 129 ], [ 130 ], [ 131 ], [ 132 ], [ 136 ], [ 138 ], [ 139 ], 
+  [ 140 ], [ 141 ], [ 143 ], [ 148 ], [ 149 ], [ 151 ], [ 153 ], [ 155 ], 
+  [ 156 ], [ 157 ], [ 158 ], [ 160 ], [ 161 ], [ 162 ], [ 163 ], [ 165 ], 
+  [ 166 ], [ 167 ], [ 169 ], [ 170 ], [ 172 ], [ 174 ], [ 176 ], [ 178 ], 
+  [ 180 ], [ 181 ], [ 182 ], [ 183 ], [ 184 ] ]
 gap> l:=Position(o, LambdaFunc(s)(g));
-1
+65
 gap>  l = fail or OrbSCCLookup(o)[l]<>m ;
 false
 gap>  l<>scc[m][1];
@@ -344,8 +363,8 @@ gap> g:=LambdaPerm(s)(rep, g);
 gap> schutz<>false;
 true
 gap> o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
-<closed orbit, 1 points with Schreier tree with log with grading>
-1
+<closed orbit, 184 points with Schreier tree with log>
+54
 gap> lambda_schutz:=LambdaOrbSchutzGp(o, m);
 Group(())
 gap>   lambda_stab:=LambdaOrbStabChain(o, m);
@@ -2495,7 +2514,7 @@ gap> s:=Semigroup(gens);
 gap> l:=LClass(s, f);
 {[ 3, 9 ] -> [ 5, 4 ]}
 gap> d:=DClassOfLClass(l);
-{[ 3, 9 ] -> [ 5, 4 ]}
+{[ 3, 9 ] -> [ 7, 6 ]}
 gap> NrIdempotents(d);
 45
 gap> s:=Semigroup(gens);

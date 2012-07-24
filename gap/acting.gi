@@ -14,6 +14,30 @@
 
 ##############################################################################
 
+InstallGlobalFunction(RhoPos, 
+function(o)
+  local i;
+  if not IsBound(o!.rho_l) then 
+    return fail;
+  fi;
+
+  i:=o!.rho_l;
+  Unbind(o!.rho_l);
+  return i;
+end);
+
+InstallGlobalFunction(LambdaPos, 
+function(o)
+  local i;
+  if not IsBound(o!.lambda_l) then 
+    return fail;
+  fi;
+
+  i:=o!.lambda_l;
+  Unbind(o!.lambda_l);
+  return i;
+end);
+
 # new for 1.0! - GradedLambdaHT
 ###############################################################################
 
@@ -618,7 +642,8 @@ function(s, f, opt)
         scc_reps:=[f]));
 
   SetIsGradedLambdaOrb(o, true);
-
+  o!.lambda_l:=1;
+  
   if opt then # store o
     j:=LambdaRank(s)(LambdaFunc(s)(f))+1;
     # the +1 is essential as the rank can be 0
@@ -628,7 +653,6 @@ function(s, f, opt)
     for l in [1..Length(o)] do
       HTAdd(onlygradesdata, o[l], [j,k,l]);
     od;
-    o!.lambda_l:=1;
     o!.val:=[j,k,1]; 
     graded!.lens[j]:=k;
   fi;
@@ -683,7 +707,8 @@ function(s, f, opt)
         scc_reps:=[f]));
 
   SetIsGradedRhoOrb(o, true);
-
+  o!.rho_l:=1; 
+  
   if opt then # store o
     j:=RhoRank(s)(RhoFunc(s)(f))+1;
     # the +1 is essential as the rank can be 0
@@ -695,7 +720,6 @@ function(s, f, opt)
     od;
     
     # store the position of RhoFunc(s)(f) in o 
-    o!.rho_l:=1; 
     graded!.lens[j]:=k;
   fi;
 

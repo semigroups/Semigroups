@@ -493,14 +493,14 @@ end);
 
 # use the NC version for already rectified reps.
 
-# standardised. 
+# standardised, don't think this will be useful.. 
 
 InstallGlobalFunction(CreateDClass,
 function(arg)
   local i, rectify;
   if arg[8] then  
-    if IsBound(o!.lambda_l) then 
-      i:=o!.lambda_l;
+    if IsBound(arg[3]!.lambda_l) then 
+      i:=arg[3]!.lambda_l;
     else
       i:=fail;
     fi;
@@ -511,8 +511,8 @@ function(arg)
   fi;
 
   if arg[9] then 
-    if IsBound(o!.rho_l) then 
-      i:=o!.rho_l;
+    if IsBound(arg[5]!.rho_l) then 
+      i:=arg[5]!.rho_l;
     else
       i:=fail;
     fi;
@@ -548,7 +548,7 @@ function(arg)
   SetLambdaOrbSCCIndex(d, arg[2]);
   SetLambdaOrb(d, arg[3]);
   SetRhoOrbSCCIndex(d, arg[4]);
-  SetRhoOrbS(d, arg[5]);
+  SetRhoOrb(d, arg[5]);
   SetRepresentative(d, arg[6]);
   SetIsGreensClassNC(d, arg[7]);
   SetEquivalenceClassRelation(d, GreensDRelation(arg[1])); 
@@ -601,14 +601,7 @@ end);
 InstallGlobalFunction(CreateLClass,
 function(s, m, o, rep, nc)
   local l, i, rectify;
-  
-  if IsBound(o!.rho_l) then 
-    i:=o!.rho_l;
-  else
-    i:=fail;
-  fi;
-  rectify:=RectifyRho(s, o, rep, i, m);
-
+  rectify:=RectifyRho(s, o, rep, RhoPos(o), m);
   return CreateLClassNC(s, rectify.m, o, rectify.rep, nc);
 end);
 
@@ -1369,7 +1362,7 @@ function(s, f)
     m:=rectify.m;
   else
     o:=GradedRhoOrb(s, f, true);
-    l:=o!.rho_l; #Position(o, RhoFunc(s)(f));
+    l:=RhoPos(o);#Position(o, RhoFunc(s)(f));
     m:=OrbSCCLookup(o)[l];
 
     if l<>OrbSCC(o)[m][1] then 
@@ -1436,7 +1429,7 @@ function(s, f)
   #JDM why not add if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then .. 
   o:=GradedRhoOrb(s, f, true);
   SetRhoOrb(h, o);
-  SetRhoOrbSCCIndex(h, OrbSCCLookup(o)[o!.rho_l]);
+  SetRhoOrbSCCIndex(h, OrbSCCLookup(o)[RhoPos(o)]);
 
   SetRepresentative(h, f);
   SetEquivalenceClassRelation(h, GreensHRelation(s));
@@ -1536,7 +1529,7 @@ end);
 InstallOtherMethod(GreensHClassOfElement, "for L-class and elt",
 [IsActingSemigroupGreensClass and IsGreensLClass, IsActingElt],
 function(l, f)
-  local s, o, i, h;
+  local s, nc, o, i, h;
 
   if not f in l then
     Error("the element does not belong to the Green's class,");
@@ -1544,17 +1537,18 @@ function(l, f)
   fi;
 
   s:=ParentSemigroup(l);
- 
+  nc:=IsGreensClassNC(l);
+
   if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
     o:=LambdaOrb(s);
     i:=Position(o, LambdaFunc(s)(f));
   else
-    o:=GradedLambdaOrb(s, f, IsGreensClassNC(l)<>true);
-    i:=o!.lambda_l;
+    o:=GradedLambdaOrb(s, f, nc<>true);
+    i:=LambdaPos(o);
   fi;
 
   h:=CreateHClass(s, OrbSCCLookup(o)[i], o, RhoOrbSCCIndex(l), RhoOrb(l), f,
-   IsGreensClassNC(l));
+   nc);
   SetLClassOfHClass(h, l);
 
   return h;
@@ -1571,8 +1565,8 @@ function(l, f)
   local h;
  
   h:=CreateHClass(ParentSemigroup(l), 1, 
-   GradedLambdaOrb(ParentAttr(l), f, false), RhoOrbSCCIndex(l), RhoOrb(l), f,
-    true);
+   GradedLambdaOrb(ParentSemigroup(l), f, false), RhoOrbSCCIndex(l), RhoOrb(l),
+    f, true);
   SetLClassOfHClass(h, l);
 
   return h;
@@ -1699,7 +1693,7 @@ function(d, f)
     return;
   fi;
  
-  # use non-NC so taht rho value of f is rectified
+  # use non-NC so that rho value of f is rectified
   l:=CreateLClass(ParentSemigroup(d), RhoOrbSCCIndex(d), RhoOrb(d), f,
    IsGreensClassNC(d));
 
@@ -3685,7 +3679,7 @@ end);
 InstallMethod(DClassOfLClass, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  local s, f, d, o, lambda_l, m;
+  local s, f, nc, o, i, m;
 
   s:=ParentSemigroup(l); 
   f:=Representative(l);
@@ -3695,11 +3689,11 @@ function(l)
     o:=LambdaOrb(s);
     i:=Position(o, LambdaFunc(s)(f));
   else
-    o:=GradedLambdaOrb(s, f, IsGreensClassNC(l)<>true);
-    i:=o!.lambda_l;#position of LambdaFunc(s)(f) in o 
+    o:=GradedLambdaOrb(s, f, nc<>true);
+    i:=LambdaPos(o);
   fi;
 
-  if IsGreensClassNC(l) then 
+  if nc then 
     m:=1;
   else
     m:=OrbSCCLookup(o)[i];
@@ -3744,6 +3738,7 @@ function(r)
     else
       SetRepresentative(d, f);
     fi;
+    Unbind(o!.rho_l);
   fi;
 
   SetIsGreensClassNC(d, IsGreensClassNC(r)); 
