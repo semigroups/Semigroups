@@ -1461,7 +1461,7 @@ gap> s:=Monoid(gens);;
 gap> GreensDClasses(s);;
 gap> f:=Transformation( [ 8, 5, 10, 5, 8, 5, 5, 5, 5, 10 ] );;
 gap> d:=DClass(s, f);
-{Transformation( [ 3, 4, 9, 4, 3, 4, 4, 4, 4, 9 ] )}
+{Transformation( [ 3, 9, 3, 4, 9, 3, 4, 3, 4, 3 ] )}
 gap> f:=Transformation( [ 6, 4, 5, 6, 4, 4, 6, 6, 4, 5 ] );;
 gap> h:=GreensHClassOfElement(d, f);
 {Transformation( [ 6, 4, 5, 6, 4, 4, 6, 6, 4, 5 ] )}
@@ -1475,7 +1475,7 @@ gap> Elements(h)=Elements(hh);
 true
 gap> f:=Transformation( [ 4, 8, 8, 8, 4, 4, 8, 4, 4, 8 ] );;
 gap> d:=DClass(s, f);
-{Transformation( [ 3, 4, 4, 4, 3, 3, 4, 3, 3, 4 ] )}
+{Transformation( [ 3, 4, 3, 4, 4, 3, 4, 3, 4, 3 ] )}
 gap> f:=Transformation( [ 4, 3, 3, 4, 3, 3, 3, 3, 4, 4 ] );;
 gap> h:=HClass(d,f);
 {Transformation( [ 4, 3, 3, 4, 3, 3, 3, 3, 4, 4 ] )}
