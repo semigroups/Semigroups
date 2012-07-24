@@ -471,7 +471,7 @@ function(d)
     g:=f*lambda_mults[i][1];
     for j in rho_scc do 
       k:=k+1;
-      out[k]:=CreateHClass(s, lambda_o, lambda_m, rho_o, rho_m, 
+      out[k]:=CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o, 
        rho_mults[j][1]*g, nc);
     od;
   od;
@@ -505,7 +505,7 @@ function(l)
  
   for j in scc do
     k:=k+1;
-    out[k]:=CreateHClass(s, lambda_o, lambda_m, rho_o, rho_m,
+    out[k]:=CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o,
      mults[j][1]*f, nc);
     SetLClassOfHClass(out[k], l);
   od;

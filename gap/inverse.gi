@@ -383,7 +383,7 @@ function(l)
   
   for j in scc do
     k:=k+1;
-    out[k]:=CreateHClass(s, o, m, fail, fail, mults[j][2]*f, nc);
+    out[k]:=CreateHClass(s, m, o, fail, fail, mults[j][2]*f, nc);
     SetLClassOfHClass(out[k], l);
   od;
   
