@@ -1517,7 +1517,7 @@ end);
 InstallOtherMethod(GreensHClassOfElement, "for L-class and elt",
 [IsActingSemigroupGreensClass and IsGreensLClass, IsActingElt],
 function(l, f)
-  local s, h, o, i;
+  local s, o, i, h;
 
   if not f in l then
     Error("the element does not belong to the Green's class,");
@@ -1525,11 +1525,6 @@ function(l, f)
   fi;
 
   s:=ParentSemigroup(l);
-  h:=Objectify(HClassType(s), rec());
-  SetParentSemigroup(h, s);
-
-  SetRhoOrb(h, RhoOrb(l));
-  SetRhoOrbSCCIndex(h, RhoOrbSCCIndex(l));
  
   if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
     o:=LambdaOrb(s);
@@ -1538,18 +1533,9 @@ function(l, f)
     o:=GradedLambdaOrb(s, f, IsGreensClassNC(l)<>true);
     i:=o!.lambda_l;
   fi;
-  
-  SetLambdaOrb(h, o);
 
-  if IsGreensClassNC(l) then 
-    SetLambdaOrbSCCIndex(h, 1);
-  else
-    SetLambdaOrbSCCIndex(h, OrbSCCLookup(o)[i]);
-  fi;
-  
-  SetRepresentative(h, f);
-  SetEquivalenceClassRelation(h, GreensHRelation(s));
-  SetIsGreensClassNC(h, IsGreensClassNC(l));
+  h:=CreateHClass(s, OrbSCCLookup(o)[i], o, RhoOrbSCCIndex(l), RhoOrb(l), f,
+   IsGreensClassNC(l));
   SetLClassOfHClass(h, l);
 
   return h;
