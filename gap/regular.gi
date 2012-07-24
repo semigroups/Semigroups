@@ -554,42 +554,32 @@ end);
 # new for 0.7! - GreensLClasses - for regular acting semigroup
 ##############################################################################
 
-# same method for inverse
+# different method for inverse
 
 InstallOtherMethod(GreensLClasses, "for a regular acting semigroup", 
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local rho_o, rho_scc, lambda_o, lambda_scc, len, lookup, rhofunc, out, type, lrel, l, n, f, rho_l, rho_m, mults, lambda_m, j;
+  local rho_o, lambda_o, lambda_scc, len, out, n, rectify, m, f, mults, lambda_m, j;
   
   rho_o:=RhoOrb(s);
-  rho_scc:=OrbSCC(rho_o);
   lambda_o:=LambdaOrb(s);
   lambda_scc:=OrbSCC(lambda_o);
 
   len:=Length(lambda_scc);
-  lookup:=OrbSCCLookup(rho_o);
-  rhofunc:=RhoFunc(s);
 
   out:=EmptyPlist(NrLClasses(s));
-  type:=LClassType(s);
-  lrel:=GreensLRelation(s);
   n:=0;
 
   for lambda_m in [2..len] do
-    f:=LambdaOrbRep(lambda_o, lambda_m);
-    rho_l:=Position(rho_o, rhofunc(f));
-    rho_m:=lookup[rho_l];
-    f:=RhoOrbMult(rho_o, rho_m, rho_l)[2]*f;
+    rectify:=RectifyRho(s, rho_o, LambdaOrbRep(lambda_o, lambda_m));
+    m:=rectify.m; 
+    f:=rectify.rep;
     mults:=LambdaOrbMults(lambda_o, lambda_m);
     for j in lambda_scc[lambda_m] do
       n:=n+1;
-      out[n]:=Objectify(type, rec());
-      SetParentSemigroup(out[n], s);
-      SetRhoOrb(out[n], rho_o);
-      SetRhoOrbSCCIndex(out[n], rho_m);
-      SetRepresentative(out[n], f*mults[j][1]);
-      SetEquivalenceClassRelation(out[n], lrel);
-      SetIsGreensClassNC(out[n], false);
+      # use NC here to avoid running RectifyRho repeatedly in this loop
+      # maybe expand this to not use CreateLClassNC JDM?
+      out[n]:=CreateLClassNC(s, m, rho_o, f*mults[j][1], false);
     od;
   od;
   return out;

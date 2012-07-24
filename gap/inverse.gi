@@ -181,6 +181,33 @@ function(f, l)
   return SiftedPermutation(schutz,  LambdaPerm(s)(rep, g))=();
 end);
 
+#CCC
+
+# mod for 1.0! - CreateInverseOpLClassNC - not a user function!
+#############################################################################
+# Usage: arg[1] = semigroup;  arg[2] = lambda orb scc index; 
+# arg[3] = lambda orb;  arg[4] = rep;
+# arg[5] = IsGreensClassNC. 
+
+# NC indicates that the representative is assumed to be in the correct form,
+# i.e. RhoFunc(s)(arg[2]) is in the first place of the scc of the lambda orb. 
+
+# used and standardised. 
+
+InstallGlobalFunction(CreateInverseOpLClassNC,
+function(s, m, o, rep, nc)
+  local l;
+
+  l:=Objectify(LClassType(s), rec());
+  SetParentSemigroup(l, s);
+  SetRepresentative(l, rep);
+  SetLambdaOrb(l, o);
+  SetLambdaOrbSCCIndex(l, m);
+  SetEquivalenceClassRelation(l, GreensLRelation(s));
+  SetIsGreensClassNC(l, nc);
+  return l;
+end);
+
 #DDD
 
 # new for 1.0! - DClassOfLClass - "for a inverse op L-class acting semigroup"
@@ -387,6 +414,31 @@ function(l)
     SetLClassOfHClass(out[k], l);
   od;
   
+  return out;
+end);
+
+# new for 0.7! - GreensLClasses - for acting semigroup with inverse op
+##############################################################################
+    
+InstallOtherMethod(GreensLClasses, "for acting semigroup with inverse op",
+[IsActingSemigroupWithInverseOp],
+function(s)
+  
+  o:=LambdaOrb(s);
+  scc:=OrbSCC(o);
+  len:=Length(scc);
+  out:=EmptyPlist(NrLClasses(s));
+  n:=0;
+  creator:=IdempotentLambdaRhoCreator(s);  
+
+  for m in [2..len] do
+    f:=creator(o[scc[m][1]], o[scc[m][1]]);
+    mults:=LambdaOrbMults(o, m);
+    for j in scc[m] do
+      n:=n+1;
+      out[n]:=CreateInverseOpLClassNC(s, m, o, f*mults[j][1], false);
+    od;
+  od;
   return out;
 end);
 

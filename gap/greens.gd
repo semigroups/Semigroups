@@ -58,6 +58,7 @@ DeclareGlobalFunction("CreateHClass");
 DeclareGlobalFunction("CreateHClassNC");
 DeclareGlobalFunction("CreateLClass");
 DeclareGlobalFunction("CreateLClassNC");
+DeclareGlobalFunction("CreateInverseOpLClassNC");
 DeclareGlobalFunction("CreateRClass");
 DeclareGlobalFunction("CreateRClassNC");
 
