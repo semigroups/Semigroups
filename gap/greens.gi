@@ -558,7 +558,7 @@ end);
 
 InstallGlobalFunction(CreateLClass,
 function(s, m, o, rep, nc)
-  local l, i, rectify;
+  local rectify;
   rectify:=RectifyRho(s, o, rep, RhoPos(o), m);
   return CreateLClassNC(s, rectify.m, o, rectify.rep, nc);
 end);
@@ -596,28 +596,20 @@ end);
 # only use for R-classes created from SemigroupData. 
 
 InstallGlobalFunction(CreateRClass,
-function(arg)
-  local r;
-  
-  r:=Objectify(RClassType(arg[1]), rec());
-
-  SetParentSemigroup(r, arg[1]);
-  SetLambdaOrbSCCIndex(r, arg[2]);
-  SetLambdaOrb(r, arg[3]);
-  SetRepresentative(r, arg[4]);
-  SetSemigroupDataIndex(r, arg[5]);
-
-  SetEquivalenceClassRelation(r, GreensRRelation(arg[1]));
-  SetIsGreensClassNC(r, false);
-  return r;
+function(s, m, o, rep, nc)
+  rectify:=RectifyLambda(s, o, rep, LambdaPos(o), m);
+  return CreateRClassNC(s, rectify.m, o, rectify.rep, nc);
 end);
 
-# mod for 1.0! - CreateRClass - not a user function!
+# mod for 1.0! - CreateRClassNC - not a user function!
 #############################################################################
 # Usage: arg[1] = semigroup; arg[2] = lambda orb scc index;
 # arg[3] = lambda orb; arg[4] = rep; arg[5] = IsRClassNC.
 
-# only use for R-classes created from SemigroupData. 
+# NC indicates that the representative is assumed to be in the correct form,
+# i.e. RhoFunc(s)(arg[2]) is in the first place of the scc of the rho orb. 
+
+# used and standardised. 
 
 InstallGlobalFunction(CreateRClassNC,
 function(arg)
@@ -629,9 +621,9 @@ function(arg)
   SetLambdaOrbSCCIndex(r, arg[2]);
   SetLambdaOrb(r, arg[3]);
   SetRepresentative(r, arg[4]);
-
   SetEquivalenceClassRelation(r, GreensRRelation(arg[1]));
   SetIsGreensClassNC(r, arg[5]);
+  
   return r;
 end);
 
@@ -1279,15 +1271,18 @@ end);
 InstallMethod(GreensRClasses, "for an acting semigroup",
 [IsActingSemigroup], 
 function(s)
-  local data, orbit, r, out, i;
+  local data, orbit, out, i;
 
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   
   orbit:=data!.orbit;
   out:=EmptyPlist(Length(orbit));
 
-  for i in [2..Length(orbit)] do 
-    out[i-1]:=CallFuncList(CreateRClass, orbit[i]);
+  for i in [2..Length(orbit)] do
+    data:=orbit[i];
+    Add(data, false); #IsGreensClassNC
+    out[i-1]:=CallFuncList(CreateRClassNC, data);
+    SetSemigroupDataIndex(out[i-1], data[5]);
   od;
   return out;
 end);
@@ -1754,15 +1749,17 @@ end);
 InstallOtherMethod(GreensRClassOfElement, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
-  local pos;
+  local data, r;
 
   if not f in s then
     Error("the element does not belong to the semigroup,");
     return;
   fi;
-
-  pos:=Position(SemigroupData(s), f);
-  return CallFuncList(CreateRClass, SemigroupData(s)[pos]);
+  data:=SemigroupData(s)[Position(data, f)];
+  Add(data, false); #IsGreensClassNC
+  r:=CallFuncList(CreateRClassNC, data);
+  SetSemigroupDataIndex(r, data[5]);
+  return r;
 end);
 
 # mod for 1.0! - GreensRClassOfElementNC - "for an acting semigp and elt."
@@ -1777,8 +1774,11 @@ function(s, f)
  
   if HasSemigroupData(s) and IsClosed(SemigroupData(s)) then 
     pos:=Position(SemigroupData(s), f);
-    if pos<>fail then 
-      return CallFuncList(CreateRClass, SemigroupData(s)[pos]);
+    if pos<>fail then
+      pos:=SemigroupData(s)[pos];
+      Add(pos, false); #IsGreensClassNC
+      r:=CallFuncList(CreateRClassNC, pos);
+      SetSemigroupDataIndex(r, pos[5]);
     fi;  
   fi;
   
