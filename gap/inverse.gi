@@ -616,17 +616,16 @@ end);
 InstallOtherMethod(GreensLClasses, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)
-  local o, scc, len, out, n, creator, f, mults, m, j;
+  local o, scc, len, out, n, f, mults, m, j;
   
   o:=LambdaOrb(s);
   scc:=OrbSCC(o);
   len:=Length(scc);
   out:=EmptyPlist(NrLClasses(s));
   n:=0;
-  creator:=IdempotentLambdaRhoCreator(s);  
 
   for m in [2..len] do
-    f:=creator(o[scc[m][1]], o[scc[m][1]]);
+    f:=RightOne(LambdaOrbRep(o, m));
     mults:=LambdaOrbMults(o, m);
     for j in scc[m] do
       n:=n+1;
