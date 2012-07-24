@@ -698,37 +698,11 @@ function(s)
   return out;
 end);
 
-# new for 1.0! - RClassReps - for acting semigroup with inverse op
-##############################################################################
-                    
-InstallOtherMethod(RClassReps, "for acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp],
-function(s)         
-  local o, scc, nr, out, n, f, mults, m, j;
-                    
-  o:=LambdaOrb(s);
-  scc:=OrbSCC(o);   
-  
-  nr:=Length(scc);
-  out:=EmptyPlist(Length(o));
-  n:=0;             
-                    
-  for m in [2..nr] do
-    f:=RightOne(LambdaOrbRep(o, m));
-    mults:=LambdaOrbMults(o, m);
-    for j in scc[m] do
-      n:=n+1;       
-      out[n]:=mults[j][1]*f;
-    od;             
-  od;
-  return out;
-end);
-
-# new for 1.0! - LClassReps - for an acting semigroup with inverse op
+# new for 1.0! - RClassReps - for an acting semigroup with inverse op
 ##############################################################################
 
-InstallOtherMethod(LClassReps, "for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp], s-> List(RClassReps(s), x-> x^-1));
+InstallOtherMethod(RClassReps, "for an acting semigroup with inverse op",
+[IsActingSemigroupWithInverseOp], s-> List(LClassReps(s), x-> x^-1));
 
 # new for 1.0! - RClassReps - for D-class of acting semigroup with inverse op
 ##############################################################################
@@ -736,9 +710,6 @@ InstallOtherMethod(LClassReps, "for an acting semigroup with inverse op",
 InstallOtherMethod(RClassReps, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpDClass],
 d-> List(LClassReps(d), x-> x^-1));
-
-#JDM the above should be the actual method and LClassReps should have the above
-#method.
 
 # new for 0.7! - Random - "for an acting semigroup with inverse op"
 #############################################################################

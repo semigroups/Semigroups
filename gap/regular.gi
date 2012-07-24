@@ -1272,9 +1272,9 @@ CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
 # new for 1.0! - LClassReps - "for regular acting semigroup 
 ###############################################################################
 
-# not that the rho values of these reps are not rectified!
+# note that the rho values of these reps are not rectified!
 
-# different method for inverse
+# same method for inverse
 
 InstallOtherMethod(LClassReps, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -1302,7 +1302,7 @@ end);
 # new for 1.0! - LClassReps - "for a regular D-class of acting semigroup 
 ###############################################################################
 
-# same method for inverse, should be different method JDM!
+# same method for inverse
 
 InstallOtherMethod(LClassReps, "for a regular D-class of acting semigroup",
 [IsRegularDClass and IsActingSemigroupGreensClass],
