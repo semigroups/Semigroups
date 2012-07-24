@@ -1247,6 +1247,7 @@ function(d)
       #use NC since f has rho value in first place of scc
       #JDM maybe don't use CreateLClassNC here, and rather expand!
       out[k]:=CreateLClassNC(s, m, o, g*mults[i][1], nc);
+      SetDClassOfLClass(out[k], d);
     od;
   od;
 

@@ -443,6 +443,37 @@ function(s)
   return out;
 end);
 
+# new for 1.0! - GreensLClasses - for inverse op D-class of acting semigroup
+##############################################################################
+
+InstallOtherMethod(GreensLClasses, "for inverse op D-class of acting semigroup",
+[IsActingSemigroupGreensClass and IsInverseOpDClass],
+function(d)
+  local s, m, o, f, nc, out, k, mults, scc, i;
+  
+  s:=ParentSemigroup(d);
+  m:=LambdaOrbSCCIndex(d);
+  o:=LambdaOrb(d);
+  f:=Representative(d);
+  nc:=IsGreensClassNC(d);
+  
+  out:=EmptyPlist(Length(scc));
+  k:=0;
+  mults:=LambdaOrbMults(LambdaOrb(d), LambdaOrbSCCIndex(d));
+  scc:=LambdaOrbSCC(d);
+  
+  for i in scc do
+    k:=k+1;
+    #use NC since f has rho value in first place of scc
+    #JDM maybe don't use CreateLClassNC here, and rather expand!
+    out[k]:=CreateInverseOpLClassNC(s, m, o, f*mults[i][1], nc);
+    SetDClassOfLClass(out[k], d);
+  od;
+
+  return out;
+end);
+
+
 # new for 1.0! - GreensHClassOfElement - "for inverse op L-class and elt."
 ############################################################################
 

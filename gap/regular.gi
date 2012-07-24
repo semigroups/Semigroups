@@ -588,37 +588,30 @@ end);
 # new for 0.7! - GreensLClasses - for regular D-class ofacting semigroup
 ##############################################################################
 
-# same method for inverse.
+# different method for inverse.
 
 InstallOtherMethod(GreensLClasses, "for regular D-class of acting semigroup", 
 [IsActingSemigroupGreensClass and IsRegularDClass],
 function(d)
-  local mults, scc, f, s, o, m, lrel, nc, out, k, l, i;
-
-  mults:=LambdaOrbMults(LambdaOrb(d), LambdaOrbSCCIndex(d));
-  scc:=LambdaOrbSCC(d);
+  local f, s, o, m, nc, out, k, mults, scc, i;
+  
   f:=Representative(d);
-
   s:=ParentSemigroup(d);
   o:=RhoOrb(d);
   m:=RhoOrbSCCIndex(d);
-  lrel:=GreensLRelation(s);
   nc:=IsGreensClassNC(d);
-  out:=EmptyPlist(Length(scc));
 
+  out:=EmptyPlist(Length(scc));
   k:=0;
+  mults:=LambdaOrbMults(LambdaOrb(d), LambdaOrbSCCIndex(d));
+  scc:=LambdaOrbSCC(d);
+  
   for i in scc do
     k:=k+1;
-    l:=Objectify(LClassType(s), rec());
-
-    SetParentSemigroup(l, s);
-    SetRhoOrbSCCIndex(l, m);
-    SetRhoOrb(l, o);
-    SetRepresentative(l, f*mults[i][1]);
-    SetEquivalenceClassRelation(l, lrel);
-    SetIsGreensClassNC(l, nc);
+    #use NC since f has rho value in first place of scc
+    #JDM maybe don't use CreateLClassNC here, and rather expand!
+    out[k]:=CreateLClassNC(s, m, o, f*mults[i][1], nc);
     SetDClassOfLClass(l, d);
-    out[k]:=l;
   od;
 
   return out;
