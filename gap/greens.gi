@@ -579,7 +579,7 @@ end);
 
 InstallGlobalFunction(CreateLClass,
 function(s, m, o, rep, nc)
-  local l;
+  local l, rectify;
 
   l:=Objectify(LClassType(s), rec());
   rectify:=RectifyRho(s, o, rep, fail, m);
@@ -588,7 +588,7 @@ function(s, m, o, rep, nc)
   SetRhoOrbSCCIndex(l, rectify.m);
   SetRepresentative(l, rectify.rep);
   SetRhoOrb(l, o);
-  SetEquivalenceClassRelation(l, GreensLRelation(arg[1]));
+  SetEquivalenceClassRelation(l, GreensLRelation(s));
   SetIsGreensClassNC(l, nc); 
 
   return l;
@@ -606,16 +606,16 @@ end);
 # used and standardised. 
 
 InstallGlobalFunction(CreateLClassNC,
-function(arg)
+function(s, m, o, rep, nc)
   local l;
 
-  l:=Objectify(LClassType(arg[1]), rec());
-  SetParentSemigroup(l, arg[1]);
-  SetRepresentative(l, arg[4]);
-  SetRhoOrb(l, arg[3]);
-  SetRhoOrbSCCIndex(l, arg[2]);
-  SetEquivalenceClassRelation(l, GreensLRelation(arg[1]));
-  SetIsGreensClassNC(l, arg[5]); 
+  l:=Objectify(LClassType(s), rec());
+  SetParentSemigroup(l, s);
+  SetRepresentative(l, rep);
+  SetRhoOrb(l, o);
+  SetRhoOrbSCCIndex(l, m);
+  SetEquivalenceClassRelation(l, GreensLRelation(s));
+  SetIsGreensClassNC(l, nc); 
   return l;
 end);
 
@@ -1688,7 +1688,7 @@ end);
 InstallOtherMethod(GreensLClassOfElement, "for D-class of acting semi and elt",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
 function(d, f)
-  local s, l, o, i, m;
+  local s, o, m, l;
     
   if not f in d then
     Error("the element does not belong to the D-class,");
@@ -1696,23 +1696,11 @@ function(d, f)
   fi;
   
   s:=ParentSemigroup(d);
-  l:=Objectify(LClassType(s), rec());
   o:=RhoOrb(d); 
   m:=RhoOrbSCCIndex(d);  
  
-  SetParentSemigroup(l, s);
-  SetRhoOrbSCCIndex(l, m);
-  SetRhoOrb(l, o);
+  l:=CreateLClass(s, m, o, f, IsGreensClassNC(d));
 
-  i:=Position(o, RhoFunc(s)(f));
-
-  if i<>OrbSCC(o)[m][1] then 
-    f:=RhoOrbMult(o, m, i)[2]*f;
-  fi;
-  
-  SetRepresentative(l, f);
-  SetEquivalenceClassRelation(l, GreensLRelation(s));
-  SetIsGreensClassNC(l, IsGreensClassNC(d));
   SetDClassOfLClass(l, d);
   return l;
 end);
@@ -1725,27 +1713,15 @@ end);
 InstallOtherMethod(GreensLClassOfElementNC, "for D-class and acting elt",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
 function(d, f)
-  local s, l, o, m, i;
+  local s, o, m, l;
 
   s:=ParentSemigroup(d);
-  l:=Objectify(LClassType(s), rec());
-
   o:=RhoOrb(d); 
   m:=RhoOrbSCCIndex(d);
-  i:=Position(o, RhoFunc(s)(f));
+  
+  l:=CreateLClass(s, m, o, f, true);
 
-  if i<>OrbSCC(o)[m][1] then 
-    f:=RhoOrbMult(o, m, i)[2]*f;
-  fi;
-  
-  SetParentSemigroup(l, s);
-  SetRhoOrb(l, o);
-  SetRhoOrbSCCIndex(l, m);
-  SetRepresentative(l, f);
-  SetEquivalenceClassRelation(l, GreensRRelation(s));
-  SetIsGreensClassNC(l, true);
   SetDClassOfLClass(l, d);
-  
   return l;
 end);
 

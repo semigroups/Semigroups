@@ -56,7 +56,7 @@ function(arg)
     l:=arg[4];
   fi;
 
-  if not IsBound(arg[5]) then 
+  if not IsBound(arg[5]) or arg[5]=fail then 
     m:=OrbSCCLookup(arg[2])[l];
   else
     m:=arg[5];
@@ -83,7 +83,7 @@ function(arg)
     l:=arg[4];
   fi;
 
-  if not IsBound(arg[5]) then 
+  if not IsBound(arg[5]) or arg[5]=fail then 
     m:=OrbSCCLookup(arg[2])[l];
   else
     m:=arg[5];
