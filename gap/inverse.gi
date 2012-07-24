@@ -236,6 +236,31 @@ end);
 
 #CCC
 
+# mod for 1.0! - CreateInverseOpDClassNC - not a user function!
+#############################################################################
+# Usage: arg[1] = semigroup;  arg[2] = lambda orb scc index; 
+# arg[3] = lambda orb;  arg[4] = rep;
+# arg[5] = IsGreensClassNC. 
+
+# NC indicates that the representative is assumed to be in the correct form,
+# i.e. RhoFunc(s)(arg[2]) is in the first place of the scc of the lambda orb. 
+
+# used and standardised. 
+
+InstallGlobalFunction(CreateInverseOpDClassNC,
+function(s, m, o, rep, nc)
+  local d;
+
+  d:=Objectify(DClassType(s), rec());
+  SetParentSemigroup(d, s);
+  SetRepresentative(d, rep);
+  SetLambdaOrb(d, o);
+  SetLambdaOrbSCCIndex(d, m);
+  SetEquivalenceClassRelation(d, GreensDRelation(s));
+  SetIsGreensClassNC(d, nc);
+  return l;
+end);
+
 # mod for 1.0! - CreateInverseOpLClassNC - not a user function!
 #############################################################################
 # Usage: arg[1] = semigroup;  arg[2] = lambda orb scc index; 
@@ -273,18 +298,10 @@ end);
 
 InstallGlobalFunction(CreateInverseOpLClass,
 function(s, m, o, rep, nc)
-  local l, rectify;
+  local rectify;
 
-  l:=Objectify(LClassType(s), rec());
-  rectify:=RectifyInverseRho(s, o, rep, fail, m);
-
-  SetParentSemigroup(l, s);
-  SetLambdaOrbSCCIndex(l, rectify.m);
-  SetLambdaOrb(l, o);
-  SetRepresentative(l, rectify.rep);
-  SetEquivalenceClassRelation(l, GreensLRelation(s));
-  SetIsGreensClassNC(l, nc);
-  return l;
+  rectify:=RectifyInverseRho(s, o, rep, LambdaPos(o), m);
+  return CreateInverseOpLClassNC(s, rectify.m, o, rectify.rep, nc);
 end);
 
 #DDD
@@ -663,6 +680,33 @@ function(d)
   od;
 
   return out;
+end);
+
+# new for 1.0! - GreensDClassOfElement - "for acting semi with inv op and elt."
+############################################################################
+
+InstallOtherMethod(GreensDClassOfElement, 
+"for acting semi with inv op and elt",
+[IsActingSemigroupWithInverseOp, IsActingElt],
+function(s, f)
+
+  if not f in s then 
+    Error("the element does not belong to the semigroup,");
+    return;
+  fi;
+
+  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
+    o:=LambdaOrb(s);
+    i:=Position(o, RhoFunc(s)(f)); #DomPP easier to find :)
+  else
+    o:=GradedLambdaOrb(s, f, true);
+    i:=LambdaPos(o);
+  fi;
+  
+  m:=OrbSCCLookup(o)[i];
+  rep:=RightOne(LambdaOrbRep(o, m));
+
+  return CreateInverseOpDClassNC(s, m, o, rep, false); 
 end);
 
 # new for 1.0! - GreensHClassOfElement - "for inverse op L-class and elt."
