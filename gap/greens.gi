@@ -578,10 +578,16 @@ end);
 
 InstallGlobalFunction(CreateLClass,
 function(s, m, o, rep, nc)
-  local l, rectify;
+  local l, i, rectify;
 
   l:=Objectify(LClassType(s), rec());
-  rectify:=RectifyRho(s, o, rep, fail, m);
+  
+  if IsBound(o!.rho_l) then 
+    i:=o!.rho_l;
+  else
+    i:=fail;
+  fi;
+  rectify:=RectifyRho(s, o, rep, i, m);
 
   SetParentSemigroup(l, s);
   SetRhoOrbSCCIndex(l, rectify.m);
@@ -1646,6 +1652,8 @@ function(s, f)
     o:=GradedRhoOrb(s, f, true);
   fi;
   # use non-NC so that rho value of f is rectified. 
+  # not that if o is graded orb, then Position(o, RhoFunc(s)(f)) is 
+  # passed to CreateLClass and hence RectifyRho in o!.rho_l.
   return CreateLClass(s, fail, o, f, false);
 end);
 
