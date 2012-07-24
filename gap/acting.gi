@@ -39,35 +39,58 @@ end);
 # returns the element <f> premultiplied by RhoOrbMult so that the resulting 
 # element has its RhoValue in the first position of its scc.
 
+# s, o, f, l, m
+
 InstallGlobalFunction(RectifyRho,
-function(s, o, f)
-  local l, m;
+function(arg)
+  local f, l, m;
 
-  if not IsClosed(o) then 
-    o:=Enumerate(o, infinity);
+  if not IsClosed(arg[2]) then 
+    Enumerate(arg[2], infinity);
   fi;
 
-  l:=Position(o, RhoFunc(s)(f));
-  m:=OrbSCCLookup(o)[l];
-
-  if l<>o!.scc[m][1] then
-    f:=RhoOrbMult(o, m, l)[2]*f;
+  f:=arg[3];
+  if not IsBound(arg[4]) or arg[4]=fail then 
+    l:=Position(arg[2], RhoFunc(arg[1])(f));
+  else
+    l:=arg[4];
   fi;
-  return rec(rep:=f, m:=m, l:=l);
+
+  if not IsBound(arg[5]) then 
+    m:=OrbSCCLookup(arg[2])[l];
+  else
+    m:=arg[5];
+  fi;
+
+  if l<>OrbSCC(arg[2])[m][1] then
+    f:=RhoOrbMult(arg[2], m, l)[2]*f;
+  fi;
+  return rec(l:=l, m:=m, rep:=f);
 end);
 
 InstallGlobalFunction(RectifyLambda,
-function(s, o, f)
-  local l, m;
+function(arg)
+  local f, l, m;
 
-  if not IsClosed(o) then 
-    o:=Enumerate(o, infinity);
+  if not IsClosed(arg[2]) then 
+    Enumerate(arg[2], infinity);
   fi;
-  l:=Position(o, LambdaFunc(s)(f));
-  m:=OrbSCCLookup(o)[l];
 
-  if l<>OrbSCC(o)[m][1] then
-    f:=f*LambdaOrbMult(o, m, l)[2];
+  f:=arg[3];
+  if not IsBound(arg[4]) or arg[4]=fail then 
+    l:=Position(arg[2], LambdaFunc(arg[1])(f));
+  else
+    l:=arg[4];
+  fi;
+
+  if not IsBound(arg[5]) then 
+    m:=OrbSCCLookup(arg[2])[l];
+  else
+    m:=arg[5];
+  fi;
+
+  if l<>OrbSCC(arg[2])[m][1] then
+    f:=f*LambdaOrbMult(arg[2], m, l)[2];
   fi;
   return rec(l:=l, m:=m, rep:=f);
 end);

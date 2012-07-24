@@ -471,8 +471,8 @@ function(d)
     g:=f*lambda_mults[i][1];
     for j in rho_scc do 
       k:=k+1;
-      out[k]:=CreateHClass(s, rho_mults[j][1]*g, lambda_o, lambda_m, rho_o,
-       rho_m, nc);
+      out[k]:=CreateHClass(s, lambda_o, lambda_m, rho_o, rho_m, 
+       rho_mults[j][1]*g, nc);
     od;
   od;
   return out;
@@ -505,8 +505,8 @@ function(l)
  
   for j in scc do
     k:=k+1;
-    out[k]:=CreateHClass(s, mults[j][1]*f, lambda_o, lambda_m, rho_o, rho_m,
-     nc);
+    out[k]:=CreateHClass(s, lambda_o, lambda_m, rho_o, rho_m,
+     mults[j][1]*f, nc);
     SetLClassOfHClass(out[k], l);
   od;
   
@@ -1276,7 +1276,7 @@ s-> IteratorByIterator(IteratorOfLClassData(s), x-> x[4],
 InstallMethod(IteratorOfLClasses, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
 s-> IteratorByIterator(IteratorOfLClassData(s), x->
-CallFuncList(CreateLClass, x), [IsIteratorOfLClasses]));
+CallFuncList(CreateLClassNC, x), [IsIteratorOfLClasses]));
 
 # new for 0.7! - IteratorOfRClasses - "for regular acting semigroup 
 ###############################################################################
