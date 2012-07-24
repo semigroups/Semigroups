@@ -508,6 +508,78 @@ function(arg)
   return d; 
 end); 
 
+# mod for 1.0! - CreateDClass - not a user function!
+#############################################################################
+# Usage: arg[1] = semigroup; 
+# arg[2] = lambda orb scc index;
+# arg[3] = lambda orb; 
+# arg[4] = rho orb scc index;
+# arg[5] = rho orb
+# arg[6] = rep; 
+# arg[7] = IsGreensClassNc
+
+# use the NC version for already rectified reps.
+
+# standardised. 
+
+InstallGlobalFunction(CreateDClass,
+function(arg)
+  local i, rectify;
+  
+  if IsBound(o!.lambda_l) then 
+    i:=o!.lambda_l;
+  else
+    i:=fail;
+  fi;
+
+  rectify:=RectifyLambda(arg[1], arg[3], arg[6], i, arg[2]);
+  arg[2]:=rectify.m;
+  arg[6]:=rectify.rep;
+
+  if IsBound(o!.rho_l) then 
+    i:=o!.rho_l;
+  else
+    i:=fail;
+  fi;
+  rectify:=RectifyRho(arg[1], arg[5], arg[6], i, arg[4]);
+  arg[4]:=rectify.m;
+  arg[6]:=rectify.rep;
+
+  return CallFuncList(CreateDClassNC, arg);
+end);
+
+# new for 1.0! - CreateDClassNC - not a user function! 
+############################################################################# 
+# Usage: arg[1] = semigroup; 
+# arg[2] = lambda orb scc index;
+# arg[3] = lambda orb; 
+# arg[4] = rho orb scc index;
+# arg[5] = rho orb
+# arg[6] = rep; 
+# arg[7] = IsGreensClassNc
+
+# NC indicates that the representative is assumed to be in the correct form,
+# i.e. RhoFunc(s)(arg[2]) is in the first place of the scc of the rho orb. 
+
+# standardised.
+
+InstallGlobalFunction(CreateDClassNC,  
+function(arg) 
+  local d;
+ 
+  d:=Objectify(DClassType(arg[1]), rec()); 
+          
+  SetParentSemigroup(d, arg[1]);
+  SetLambdaOrbSCCIndex(d, arg[2]);
+  SetLambdaOrb(d, arg[3]);
+  SetRhoOrbSCCIndex(d, arg[4]);
+  SetRhoOrbS(d, arg[5]);
+  SetRepresentative(d, arg[6]);
+  SetIsGreensClassNC(d, arg[7]);
+  SetEquivalenceClassRelation(d, GreensDRelation(arg[1])); 
+  return d; 
+end); 
+
 # new for 1.0! - CreateHClass - not a user function! 
 ############################################################################# 
 # Usage: arg[1] = semigroup; 
@@ -540,31 +612,6 @@ function(arg)
   return h;
 end);
 
-# new for 1.0! - CreateDClassNC - not a user function! 
-############################################################################# 
-# Usage: arg[1] = semigroup; arg[2] = lambda orb scc index;
-# arg[3] = lambda orb; arg[4] = rep; 
-# arg[5] = IsGreensClassNc
-
-InstallGlobalFunction(CreateDClassNC,  
-function(arg) 
-  local d, rep, o, l, m;
- 
-  d:=Objectify(DClassType(arg[1]), rec()); 
-          
-  SetParentSemigroup(d, arg[1]);
-  SetLambdaOrb(d, arg[3]);
-  SetLambdaOrbSCCIndex(d, arg[2]);
-  SetRepresentative(d, RectifyLambda(arg[1], arg[3], arg[4]).rep);
-  
-  SetRhoOrb(d, GradedLambdaOrb(arg[1], arg[4], false));
-  SetRhoOrbSCCIndex(d, 1);
- 
-  SetEquivalenceClassRelation(d, GreensDRelation(arg[1])); 
-  SetIsGreensClassNC(d, arg[5]);
-
-  return d; 
-end); 
 
 # mod for 1.0! - CreateLClass - not a user function!
 #############################################################################
@@ -579,8 +626,6 @@ end);
 InstallGlobalFunction(CreateLClass,
 function(s, m, o, rep, nc)
   local l, i, rectify;
-
-  l:=Objectify(LClassType(s), rec());
   
   if IsBound(o!.rho_l) then 
     i:=o!.rho_l;
@@ -589,14 +634,7 @@ function(s, m, o, rep, nc)
   fi;
   rectify:=RectifyRho(s, o, rep, i, m);
 
-  SetParentSemigroup(l, s);
-  SetRhoOrbSCCIndex(l, rectify.m);
-  SetRepresentative(l, rectify.rep);
-  SetRhoOrb(l, o);
-  SetEquivalenceClassRelation(l, GreensLRelation(s));
-  SetIsGreensClassNC(l, nc); 
-
-  return l;
+  return CreateLClassNC(s, rectify.m, o, rectify.rep, nc);
 end);
 
 # mod for 1.0! - CreateLClassNC - not a user function!
