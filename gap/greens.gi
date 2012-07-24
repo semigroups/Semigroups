@@ -336,8 +336,7 @@ function(f, h)
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] or
    RhoFunc(s)(f) <> RhoFunc(s)(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep)
-   # degree causes problems here again JDM
-   then 
+   or Degree(rep)<>Degree(f) then 
     return false;
   fi;
 
@@ -418,8 +417,7 @@ function(f, r)
   rep:=Representative(r); 
   s:=ParentSemigroup(r);
 
-  #JDM degree causes problems for partial perms below...
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) #or Degree(f) <> Degree(rep)
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or Degree(f) <> Degree(rep)
    or Rank(f) <> Rank(rep) or RhoFunc(s)(f) <> RhoFunc(s)(rep) then
     Info(InfoCitrus, 1, "degree, rank, or rho value not equal to those of",
     " any of the R-class elements,");
@@ -855,9 +853,8 @@ function(r)
       rep:=Representative(r);
       
       if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-       #JDM degree causes problems for partial perms
-       #Degree(f) <> Degree(rep) or 
-       Rank(f) <> Rank(rep) or RhoFunc(s)(f) <> RhoFunc(s)(rep) then 
+       Degree(f) <> Degree(rep) or Rank(f) <> Rank(rep) or 
+       RhoFunc(s)(f) <> RhoFunc(s)(rep) then 
         return fail;
       fi;
       
@@ -2134,8 +2131,6 @@ InstallOtherMethod(IsActingSemigroup, "for a Green's class",
 InstallOtherMethod(IsActingSemigroupWithInverseOp, "for a Green's class",
 [IsGreensClass], ReturnFalse);
 
-# JDM move to acting.gi
-
 InstallOtherMethod(IsActingSemigroupWithInverseOp, "for an acting semigroup",
 [IsActingSemigroup], ReturnFalse);
 
@@ -2813,8 +2808,6 @@ function(d)
 end);
 
 #NNN
-
-#JDM here!
 
 # new for 1.0! - NrIdempotents - "for a D-class of an acting semigp"
 #############################################################################
@@ -3741,7 +3734,7 @@ function(r)
   SetRhoOrb(d, o);
 
   if IsGreensClassNC(r) then 
-    SetLambdaOrbSCCIndex(d, 1);
+    SetRhoOrbSCCIndex(d, 1);
     SetRepresentative(d, f);
   else
     rho_l:=o!.rho_l; #position of RhoFunc(s)(f) in o 
