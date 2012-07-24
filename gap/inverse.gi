@@ -220,7 +220,7 @@ end);
 
 InstallGlobalFunction(CreateInverseOpLClass,
 function(s, m, o, rep, nc)
-  local l;
+  local l, rectify;
 
   l:=Objectify(LClassType(s), rec());
   rectify:=RectifyInverseRho(s, o, rep, fail, m);
@@ -513,7 +513,7 @@ function(l, f)
   fi;
   
   h:=CreateHClass(ParentSemigroup(l), LambdaOrbSCCIndex(l), LambdaOrb(l), fail,
-   fail, f, IsGreensClassNC(l))
+   fail, f, IsGreensClassNC(l));
   SetLClassOfHClass(h, l);
   
   return h;
@@ -528,7 +528,7 @@ function(l, f)
   local h;
   
   h:=CreateHClass(ParentSemigroup(l), LambdaOrbSCCIndex(l), LambdaOrb(l), fail,
-   fail, f, true)
+   fail, f, true);
   SetLClassOfHClass(h, l);
   
   return h;
@@ -969,7 +969,7 @@ InstallMethod(IteratorOfLClasses, "for acting semigroup with inverse op",
 s-> IteratorByIterator(IteratorOfRClassData(s), 
 function(x)
   x[4]:=x[4]^-1;
-  return CallFuncList(CreateInverseOpLClass, x)
+  return CallFuncList(CreateInverseOpLClass, x);
 end, [IsIteratorOfLClasses]));
 
 #NNN

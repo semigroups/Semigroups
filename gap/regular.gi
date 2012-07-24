@@ -611,7 +611,7 @@ function(d)
     #use NC since f has rho value in first place of scc
     #JDM maybe don't use CreateLClassNC here, and rather expand!
     out[k]:=CreateLClassNC(s, m, o, f*mults[i][1], nc);
-    SetDClassOfLClass(l, d);
+    SetDClassOfLClass(out[k], d);
   od;
 
   return out;
@@ -1087,7 +1087,7 @@ local iter, scc;
         fi;
 
         iter!.i:=i; 
-        f:=LambdaOrbRep(o, m); 
+        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i));
         return [s, fail, GradedRhoOrb(s, f, true), f, false];
       end,
 

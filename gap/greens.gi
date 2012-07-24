@@ -1557,8 +1557,9 @@ InstallOtherMethod(GreensHClassOfElementNC, "for an L-class and elt",
 function(l, f)
   local h;
  
-  h:=CreateHClass(ParentSemigroup(l), 1, GradedLambdaOrb(s, f, false), 
-   RhoOrbSCCIndex(l), RhoOrb(l), f, true);
+  h:=CreateHClass(ParentSemigroup(l), 1, 
+   GradedLambdaOrb(ParentAttr(l), f, false), RhoOrbSCCIndex(l), RhoOrb(l), f,
+    true);
   SetLClassOfHClass(h, l);
 
   return h;
