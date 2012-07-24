@@ -1054,8 +1054,7 @@ end);
 # new for 1.0! - GreensHClasses - "for an R-class of an acting semigroup"
 ##############################################################################
 
-# JDM change other GreensHClasses etc to do the same as this one w.r.t.
-# IsGreensClassNC
+#JDm this should be updated!
 
 # different method for regular/inverse
 
@@ -1283,44 +1282,31 @@ end);
 InstallOtherMethod(GreensDClassOfElement, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
-  local d, o, rectify, m, l;
+  local lambda_o, rectify, lambda_m, rep, rho_o, i, rho_m;
 
   if not f in s then
     Error("the element does not belong to the semigroup,");
     return;
   fi;
 
-  d:=Objectify(DClassType(s), rec());
-  SetParentSemigroup(d, s);
-
-  o:=LambdaOrb(s);
-  rectify:=RectifyLambda(s, o, f);
-  SetLambdaOrb(d, o);
-  SetLambdaOrbSCCIndex(d, rectify.m); 
-  f:=rectify.rep;   
+  lambda_o:=LambdaOrb(s);
+  rectify:=RectifyLambda(s, lambda_o, f);
+  lambda_m:=rectify.m;
+  rep:=rectify.rep;   
   
   if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then
-    o:=RhoOrb(s);
-    rectify:=RectifyRho(s, o, f);
-    f:=rectify.rep;
-    m:=rectify.m;
+    rho_o:=RhoOrb(s);
+    i:=fail
   else
-    o:=GradedRhoOrb(s, f, true);
-    l:=RhoPos(o);#Position(o, RhoFunc(s)(f));
-    m:=OrbSCCLookup(o)[l];
-
-    if l<>OrbSCC(o)[m][1] then 
-      f:=RhoOrbMult(o, m, l)[2]*f;
-    fi;
+    rho_o:=GradedRhoOrb(s, f, true);
+    i:=RhoPos(rho_o);#Position(o, RhoFunc(s)(f));
   fi;
 
-  SetRhoOrb(d, o);
-  SetRhoOrbSCCIndex(d, m);
+  rectify:=RectifyRho(s, rho_o, rep, i);
+  rep:=rectify.rep;
+  rho_m:=rectify.m;
 
-  SetRepresentative(d, f);
-  SetEquivalenceClassRelation(d, GreensDRelation(s));
-  SetIsGreensClassNC(d, false);
-  return d;
+  return CreateDClassNC(s, lambda_m, lambda_o, rho_m, rho_o, rep, false);
 end);
 
 # mod for 1.0! - GreensDClassOfElementNC - "for an acting semigp and elt."
