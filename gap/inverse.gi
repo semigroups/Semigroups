@@ -986,9 +986,11 @@ s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4]^-1,
 
 InstallMethod(IteratorOfLClasses, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
-s-> IteratorByIterator(IteratorOfRClassData(s), x->
-CallFuncList(CreateLClassNC, x), [IsIteratorOfLClasses]));
-#JDM this is not correct!!
+s-> IteratorByIterator(IteratorOfRClassData(s), 
+function(x)
+  x[4]:=x[4]^-1;
+  return CallFuncList(CreateInverseOpLClass, x)
+end, [IsIteratorOfLClasses]));
 
 #NNN
 

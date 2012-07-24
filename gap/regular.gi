@@ -1048,7 +1048,7 @@ end);
 # new for 0.7! - IteratorOfLClassData - "for a regular acting semigroup
 ###############################################################################
 
-# no method required for inverse
+# no method required for inverse (use IteratorOfRClassData instead)
 
 InstallMethod(IteratorOfLClassData, "for regular acting semigp",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -1087,10 +1087,8 @@ local iter, scc;
         fi;
 
         iter!.i:=i; 
-        
-        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)); 
-        o:=GradedRhoOrb(s, o[i], true);
-        return [s, 1, o, RectifyRho(s, o, f), false];
+        f:=LambdaOrbRep(o, m); 
+        return [s, fail, GradedRhoOrb(s, f, true), f, false];
       end,
 
       ShallowCopy:=iter-> rec(i:=1)));
@@ -1131,9 +1129,7 @@ local iter, scc;
 
         iter!.i:=i; iter!.m:=m;
  
-        # f ok here? JDM
-        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][i])); 
-        return [s, m, RhoOrb(s), RectifyRho(s, RhoOrb(s), f), false];
+        return [s, fail, RhoOrb(s), LambdaOrbRep(o, m), false];
       end,
 
       ShallowCopy:=iter-> rec(m:=1, i:=0,
@@ -1142,6 +1138,26 @@ local iter, scc;
   
   return iter;
 end);
+
+# new for 0.7! - IteratorOfLClassReps - "for a regular acting semigroup"
+###############################################################################
+
+# different method for inverse
+
+InstallMethod(IteratorOfLClassReps, "for a regular acting semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup],
+s-> IteratorByIterator(IteratorOfLClassData(s), x-> x[4],
+[IsIteratorOfLClassReps]));
+
+# new for 0.7! - IteratorOfLClasses - "for a part perm inverse semigroup"
+###############################################################################
+
+# different method for inverse
+
+InstallMethod(IteratorOfLClasses, "for a part perm inverse semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup],
+s-> IteratorByIterator(IteratorOfLClassData(s), x->
+CallFuncList(CreateLClass, x), [IsIteratorOfLClasses]));
 
 # new for 0.7! - IteratorOfRClassData - "for a regular acting semigroup
 ###############################################################################
@@ -1240,26 +1256,6 @@ local iter, scc;
   
   return iter;
 end);
-
-# new for 0.7! - IteratorOfLClassReps - "for a part perm inverse semigroup"
-###############################################################################
-
-# different method for inverse
-
-InstallMethod(IteratorOfLClassReps, "for a part perm inverse semigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup],
-s-> IteratorByIterator(IteratorOfLClassData(s), x-> x[4],
-[IsIteratorOfLClassReps]));
-
-# new for 0.7! - IteratorOfLClasses - "for a part perm inverse semigroup"
-###############################################################################
-
-# different method for inverse
-
-InstallMethod(IteratorOfLClasses, "for a part perm inverse semigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup],
-s-> IteratorByIterator(IteratorOfLClassData(s), x->
-CallFuncList(CreateLClassNC, x), [IsIteratorOfLClasses]));
 
 # new for 0.7! - IteratorOfRClasses - "for regular acting semigroup 
 ###############################################################################
