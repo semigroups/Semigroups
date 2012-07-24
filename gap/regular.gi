@@ -241,7 +241,7 @@ end);
 
 #JDM could write another method if nec.
 
-InstallOtherMethod(Enumerator, "for a D-class of acting semigp.",
+InstallOtherMethod(Enumerator, "for a regular D-class of acting semigp.",
 [IsRegularDClass and IsActingSemigroupGreensClass],
 function(d)
     

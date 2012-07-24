@@ -124,6 +124,59 @@ function(f, s)
   return SiftedPermutation(schutz, LambdaPerm(s)(One(g), g))=(); 
 end);
 
+# new for 1.0! - \in - for inverse op D-class 
+#############################################################################
+
+InstallMethod(\in, "for inverse op D-class",
+[IsPartialPerm , IsInverseOpGreensDClass and IsActingSemigroupGreensClass],
+function(f, d)
+  local rep, o, m, lookup, rho_l, lambda_l, schutz, scc, g;
+  
+  rep:=Representative(r);
+
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] or
+   Degree(f)<>Degree(rep) then
+    return false;
+  fi;
+
+  o:=LambdaOrb(d);
+  m:=LambdaOrbSCCIndex(d);
+  lookup:=OrbSCCLookup(o);
+
+  rho_l:=Position(o, RhoFunc(s)(f)); 
+  lambda_l:=Position(o, LambdaFunc(s)(f));
+  
+  if rho_l=fail or lambda_l=fail or lookup[rho_l]<>m or lookup[lambda_l]<>m
+   then 
+    return false;
+  fi;
+
+  schutz:=LambdaOrbStabChain(o, m); 
+
+  if schutz=true then 
+    return true;
+  fi;
+
+  scc:=OrbSCC(o)[m];
+  g:=f;
+
+  if rho_l<>scc[1] then 
+    g:=LambdaOrbMult(o, m, rho_l)[1]*g;
+  fi;
+  
+  if lambda_l<>scc[1] then 
+    g:=g*LambdaOrbMult(o, m, lambda_l);
+  fi; 
+
+  if g=rep then 
+    return true;
+  elif schutz=false then 
+    return false;
+  fi;
+
+  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=(); 
+end);
+
 # new for 1.0! - \in - "for acting elt and inverse op L-class of acting semigp"
 #############################################################################
 
@@ -286,6 +339,98 @@ function(s)
 end);
 
 #EEE
+
+InstallMethod(Enumerator, "for D-class of part perm inv semigroup",
+[IsGreensDClass and IsGreensClassOfInverseSemigroup and
+IsGreensClassOfPartPermSemigroup],
+function(d)
+
+  return EnumeratorByFunctions(d, rec(
+
+    schutz:=Enumerator(SchutzenbergerGroup(d)),
+
+    #########################################################################
+
+    ElementNumber:=function(enum, pos)
+      local scc, n, m, r, q, q2, mults;
+      if pos>Length(enum) then 
+        return fail;
+      fi;
+
+      if pos<=Length(enum!.schutz) then 
+        return enum!.schutz[pos]*Representative(d);
+      fi;
+
+      scc:=LambdaOrbSCC(d);
+      mults:=LambdaOrbMults(LambdaOrb(d), LambdaOrbSCCIndex(d));
+
+      n:=pos-1; m:=Length(enum!.schutz); r:=Length(scc);
+      q:=QuoInt(n, m); q2:=QuoInt(q, r);
+      pos:=[ n-q*m, q2, q  - q2 * r ]+1;
+      return mults[scc[pos[2]]]*enum[pos[1]]/mults[scc[pos[3]]];
+    end,
+
+    #########################################################################
+    
+    NumberElement:=function(enum, f)
+      local rep, o, m, k, l, j, scc;
+      
+      rep:=Representative(d);
+      
+      if Rank(f)<>Rank(rep) or Degree(f)<>Degree(rep) then 
+        return fail;
+      fi;
+      
+      if f=rep then 
+        return 1;
+      fi;
+
+      o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
+      lookup:=OrbSCCLookup(o);
+
+      i:=Position(o, RhoFunc(s)(f)); 
+      if i=fail or not lookup[i]<>m then 
+        return fail;
+      fi;
+
+      j:=Position(o, LambdaFunc(s)(f));
+      if j=fail or not lookup[j]<>m then 
+        return fail;
+      fi;
+
+      scc:=OrbSCC(o)[m]; g:=f;
+      
+      if i<>scc[1] then 
+        g:=LambdaOrbMult(o, m, i)[1]*g;
+      fi;
+      
+      if j<>scc[1] then 
+        g:=g*LambdaOrbMult(o, m, j)[2];
+      fi;
+
+      k:=Position(enum!.schutz, LambdaPerm(s)(rep, g));
+      if j=fail then 
+        return fail;
+      fi;
+
+      return Length(enum!.schutz)*((Position(scc, i)-1)*Length(scc)
+      +(Position(scc, j)-1))+k;
+    end,
+
+    #########################################################################
+
+    Membership:=function(elm, enum)
+      return elm in d;
+    end,
+
+    Length:=enum-> Size(d),
+
+    PrintObj:=function(enum)
+      Print("<enumerator of D-class>");
+      return;
+    end));
+end);
+
 
 # mod for 1.0! - Enumerator - "for L-class of an inverse op acting semigroup"
 ##############################################################################

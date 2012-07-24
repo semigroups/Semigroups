@@ -479,50 +479,6 @@ end);
 
 #CCC
 
-# mod for 1.0! - CreateDClass - not a user function!
-#############################################################################
-# Usage: arg[1] = semigroup; 
-# arg[2] = lambda orb scc index;
-# arg[3] = lambda orb; 
-# arg[4] = rho orb scc index;
-# arg[5] = rho orb
-# arg[6] = rep; 
-# arg[7] = IsGreensClassNc
-# arg[8] = rectify lambda?
-# arg[9] = rectify rho?
-
-# use the NC version for already rectified reps.
-
-# standardised, don't think this will be useful.. 
-
-InstallGlobalFunction(CreateDClass,
-function(arg)
-  local i, rectify;
-  if arg[8] then  
-    if IsBound(arg[3]!.lambda_l) then 
-      i:=arg[3]!.lambda_l;
-    else
-      i:=fail;
-    fi;
-
-    rectify:=RectifyLambda(arg[1], arg[3], arg[6], i, arg[2]);
-    arg[2]:=rectify.m;
-    arg[6]:=rectify.rep;
-  fi;
-
-  if arg[9] then 
-    if IsBound(arg[5]!.rho_l) then 
-      i:=arg[5]!.rho_l;
-    else
-      i:=fail;
-    fi;
-    rectify:=RectifyRho(arg[1], arg[5], arg[6], i, arg[4]);
-    arg[4]:=rectify.m;
-    arg[6]:=rectify.rep;
-  fi;
-  return CallFuncList(CreateDClassNC, arg);
-end);
-
 # new for 1.0! - CreateDClassNC - not a user function! 
 ############################################################################# 
 # Usage: arg[1] = semigroup; 
