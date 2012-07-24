@@ -1152,6 +1152,8 @@ CallFuncList(CreateLClass, x), [IsIteratorOfLClasses]));
 
 # different method for inverse
 
+#JDM this should be updated, like IteratorOfLClassData
+
 InstallMethod(IteratorOfRClassData, "for regular acting semigp",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)

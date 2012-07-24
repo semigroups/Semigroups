@@ -866,9 +866,10 @@ function(r)
       if l = fail or OrbSCCLookup(o)[l]<>m then 
         return fail;
       fi;
-     
-      g:=f*mults[l][2];
-
+      g:=f;
+      if l<>OrbSCC(o)[m][1] then  
+        g:=g*mults[l][2];
+      fi;
       j:=Position(enum!.schutz, LambdaPerm(s)(rep, g));
 
       if j=fail then 
@@ -1227,7 +1228,7 @@ end);
 InstallMethod(GreensRClasses, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass], 
 function(d)
-  local mults, scc, cosets, f, s, o, m, rrel, nc, out, k, g, r, i, j;
+  local mults, scc, cosets, f, s, o, m, nc, out, k, g, i, j;
  
   mults:=RhoOrbMults(RhoOrb(d), RhoOrbSCCIndex(d));
   scc:=RhoOrbSCC(d);
@@ -1237,26 +1238,16 @@ function(d)
   s:=ParentSemigroup(d);
   o:=LambdaOrb(d);
   m:=LambdaOrbSCCIndex(d);
-  rrel:=GreensRRelation(s);    
   nc:=IsGreensClassNC(d); 
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
-
   k:=0;
   for i in scc do
     g:=mults[i][1]*f;
     for j in cosets do
       k:=k+1;
-      r:=Objectify(RClassType(s), rec());
-
-      SetParentSemigroup(r, s);
-      SetLambdaOrbSCCIndex(r, m);
-      SetLambdaOrb(r, o);
-      SetRepresentative(r, g/j);
-      SetEquivalenceClassRelation(r, rrel);
-      SetIsGreensClassNC(r, nc);
-      SetDClassOfRClass(r, d);
-      out[k]:=r;
+      out[k]:=CreateRClassNC(s, m, o, g/j, nc);
+      SetDClassOfRClass(out[k], d);
     od;
   od;
 
