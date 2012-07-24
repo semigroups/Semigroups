@@ -479,35 +479,6 @@ end);
 
 #CCC
 
-# new for 1.0! - CreateDClass - not a user function! 
-############################################################################# 
-# Usage: arg[1] = semigroup; arg[2] = lambda orb scc index;
-# arg[3] = lambda orb; arg[4] = rep; arg[5] = position in SemigroupData of rep.
-
-# not used anywhere!
-
-InstallGlobalFunction(CreateDClass,  
-function(arg) 
-  local d, rectify;
- 
-  d:=Objectify(DClassType(arg[1]), rec()); 
-          
-  SetParentSemigroup(d, arg[1]);
-  SetLambdaOrb(d, arg[3]);
-  SetLambdaOrbSCCIndex(d, arg[2]);
-  SetSemigroupDataIndex(d, arg[5]);
-
-  rectify:=RectifyRho(arg[1], RhoOrb(arg[1]), arg[4]);
-  
-  SetRepresentative(d, rectify.rep);
-  SetRhoOrb(d, RhoOrb(arg[1]));
-  SetRhoOrbSCCIndex(d, rectify.m);
-  SetEquivalenceClassRelation(d, GreensDRelation(arg[1])); 
-  SetIsGreensClassNC(d, false);
-
-  return d; 
-end); 
-
 # mod for 1.0! - CreateDClass - not a user function!
 #############################################################################
 # Usage: arg[1] = semigroup; 
@@ -517,6 +488,8 @@ end);
 # arg[5] = rho orb
 # arg[6] = rep; 
 # arg[7] = IsGreensClassNc
+# arg[8] = rectify lambda?
+# arg[9] = rectify rho?
 
 # use the NC version for already rectified reps.
 
@@ -525,26 +498,28 @@ end);
 InstallGlobalFunction(CreateDClass,
 function(arg)
   local i, rectify;
-  
-  if IsBound(o!.lambda_l) then 
-    i:=o!.lambda_l;
-  else
-    i:=fail;
+  if arg[8] then  
+    if IsBound(o!.lambda_l) then 
+      i:=o!.lambda_l;
+    else
+      i:=fail;
+    fi;
+
+    rectify:=RectifyLambda(arg[1], arg[3], arg[6], i, arg[2]);
+    arg[2]:=rectify.m;
+    arg[6]:=rectify.rep;
   fi;
 
-  rectify:=RectifyLambda(arg[1], arg[3], arg[6], i, arg[2]);
-  arg[2]:=rectify.m;
-  arg[6]:=rectify.rep;
-
-  if IsBound(o!.rho_l) then 
-    i:=o!.rho_l;
-  else
-    i:=fail;
+  if arg[9] then 
+    if IsBound(o!.rho_l) then 
+      i:=o!.rho_l;
+    else
+      i:=fail;
+    fi;
+    rectify:=RectifyRho(arg[1], arg[5], arg[6], i, arg[4]);
+    arg[4]:=rectify.m;
+    arg[6]:=rectify.rep;
   fi;
-  rectify:=RectifyRho(arg[1], arg[5], arg[6], i, arg[4]);
-  arg[4]:=rectify.m;
-  arg[6]:=rectify.rep;
-
   return CallFuncList(CreateDClassNC, arg);
 end);
 
@@ -3683,6 +3658,30 @@ end);
 # only for L-classes not created during GreensLClasses! Those created via
 # GreensLClasses should already know DClassOfLClass
 
+#JDM maybe the old method was clearer ...
+
+#InstallMethod(DClassOfLClass, "for an L-class of an acting semigroup",
+#[IsGreensLClass and IsActingSemigroupGreensClass],
+#function(l)
+#  local s, f, d, o, lambda_l, m;
+
+#  s:=ParentSemigroup(l);
+#  m:=fail;
+#  nc:=IsGreensClassNC(l); 
+
+#  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) and not nc then 
+#    o:=LambdaOrb(s);
+#  else
+#    o:=GradedLambdaOrb(s, f, nc<>true);
+#    if nc then 
+#      m:=1;
+#    fi;
+#  fi; 
+#
+#  return CreateDClass(ParentSemigroup(l), m, o, RhoOrbSCCIndex(l), RhoOrb(l),
+#   Representative(l), nc, nc<>true, false);
+#end);
+
 InstallMethod(DClassOfLClass, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
@@ -3690,37 +3689,32 @@ function(l)
 
   s:=ParentSemigroup(l); 
   f:=Representative(l);
-  d:=Objectify(DClassType(s), rec());
+  nc:=IsGreensClassNC(l);
 
-  SetParentSemigroup(d, s);
-  SetRhoOrbSCCIndex(d, RhoOrbSCCIndex(l));
-  SetRhoOrb(d, RhoOrb(l));
-  
-  o:=GradedLambdaOrb(s, f, IsGreensClassNC(l)<>true);
-  SetLambdaOrb(d, o);
+  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) and not nc then 
+    o:=LambdaOrb(s);
+    i:=Position(o, LambdaFunc(s)(f));
+  else
+    o:=GradedLambdaOrb(s, f, IsGreensClassNC(l)<>true);
+    i:=o!.lambda_l;#position of LambdaFunc(s)(f) in o 
+  fi;
 
   if IsGreensClassNC(l) then 
-    SetLambdaOrbSCCIndex(d, 1);
-    SetRepresentative(d, f);
+    m:=1;
   else
-    lambda_l:=o!.lambda_l; #position of LambdaFunc(s)(f) in o 
-    m:=OrbSCCLookup(o)[lambda_l];
-    SetLambdaOrbSCCIndex(d, m);
-    if lambda_l<>OrbSCC(o)[m][1] then 
-      SetRepresentative(d, f*LambdaOrbMult(o, m, lambda_l)[2]);
-    else
-      SetRepresentative(d, f);
+    m:=OrbSCCLookup(o)[i];
+    if i<>OrbSCC(o)[m][1] then 
+      f:=f*LambdaOrbMult(o, m, i)[2];
     fi;
   fi;
 
-  SetIsGreensClassNC(d, IsGreensClassNC(l)); 
-  return d;
+  return CreateDClassNC(s, m, o, RhoOrbSCCIndex(l), RhoOrb(l), f, nc);
 end);
 
 # new for 1.0! - DClassOfRClass - "for a R-class of an acting semigroup"
 #############################################################################
 
-# same method for regular/inverse
+# same method for regular, should be a different method for inverse JDM
 
 InstallMethod(DClassOfRClass, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
