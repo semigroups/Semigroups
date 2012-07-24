@@ -574,31 +574,17 @@ end);
 InstallOtherMethod(GreensLClassOfElement, "for inverse op D-class and elt",
 [IsInverseOpDClass and IsActingSemigroupGreensClass, IsActingElt],
 function(d, f)
-  local s, l, o, i, m;
-   
+  local l;
+
   if not f in d then
     Error("the element does not belong to the D-class,");
     return;
   fi;
- 
-  s:=ParentSemigroup(d);
-  l:=Objectify(LClassType(s), rec());
-  o:=LambdaOrb(d);
-  m:=LambdaOrbSCCIndex(d); 
 
-  SetParentSemigroup(l, s);
-  SetLambdaOrbSCCIndex(l, m);
-  SetLambdaOrb(l, o);
+  # use non-NC so that rho value of f is rectified
+  l:=CreateInverseOpLClass(ParentSemigroup(d), LambdaOrbSCCIndex(d),
+   LambdaOrb(d), f, IsGreensClassNC(d));
 
-  i:=Position(o, LambdaFunc(s)(f));
-
-  if i<>OrbSCC(o)[m][1] then
-    f:=LambdaOrbMult(o, m, i)[1]*f;
-  fi;
- 
-  SetRepresentative(l, f);
-  SetEquivalenceClassRelation(l, GreensLRelation(s));
-  SetIsGreensClassNC(l, IsGreensClassNC(d));
   SetDClassOfLClass(l, d);
   return l;
 end);
@@ -609,30 +595,14 @@ end);
 InstallOtherMethod(GreensLClassOfElementNC, "for D-class and acting elt",
 [IsInverseOpDClass and IsActingSemigroupGreensClass, IsActingElt],
 function(d, f)
-  local s, l, o, m, i;
+  local l;
 
-  s:=ParentSemigroup(d);
-  l:=Objectify(LClassType(s), rec());
-
-  o:=LambdaOrb(d);
-  m:=LambdaOrbSCCIndex(d);
-  i:=Position(o, LambdaFunc(s)(f));
-  
-  if i<>OrbSCC(o)[m][1] then 
-    f:=LambdaOrbMult(o, m, i)[1]*f;
-  fi;
-  
-  SetParentSemigroup(l, s);
-  SetLambdaOrb(l, o);
-  SetLambdaOrbSCCIndex(l, m);
-  SetRepresentative(l, f);
-  SetEquivalenceClassRelation(l, GreensRRelation(s));
-  SetIsGreensClassNC(l, true);
+  # use non-NC so taht rho value of f is rectified
+  l:=CreateInverseOpLClass(ParentSemigroup(d), LambdaOrb(d),
+   LambdaOrbSCCIndex(d), f, true);
   SetDClassOfLClass(l, d);
-  
   return l;
 end);
-
 
 # new for 0.7! - GreensRClasses - for acting semigroup with inverse op
 ##############################################################################
