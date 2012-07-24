@@ -1277,7 +1277,7 @@ end);
 # mod for 1.0! - GreensDClassOfElement - "for an acting semigp and elt."
 #############################################################################
 
-# same method for regular, should be a different method for inverse
+# same method for regular, different method for inverse
 
 InstallOtherMethod(GreensDClassOfElement, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
@@ -1317,21 +1317,8 @@ end);
 InstallOtherMethod(GreensDClassOfElementNC, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
-  local d;
-
-  d:=Objectify(DClassType(s), rec());
-  SetParentSemigroup(d, s);
-
-  SetLambdaOrb(d, GradedLambdaOrb(s, f, false));
-  SetLambdaOrbSCCIndex(d, 1);
- 
-  SetRhoOrb(d, GradedRhoOrb(s, f, false));
-  SetRhoOrbSCCIndex(d, 1);
-
-  SetRepresentative(d, f);
-  SetEquivalenceClassRelation(d, GreensDRelation(s));
-  SetIsGreensClassNC(d, true);
-  return d;
+  return CreateDClassNC(s, 1, GradedLambdaOrb(s, f, false), 
+   1, GradedRhoOrb(s, f, false), f, true);
 end);
 
 # mod for 1.0! - GreensHClassOfElement - "for an acting semigp and elt."
