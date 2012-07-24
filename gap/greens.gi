@@ -1422,7 +1422,7 @@ function(d, f)
   fi;
 
   h:=CreateHClass(s, LambdaOrbSCCIndex(d), LambdaOrb(d), RhoOrbSCCIndex(d),
-   RhoOrb(d), f, IsGreensClassNC);
+   RhoOrb(d), f, IsGreensClassNC(d));
   SetDClassOfHClass(h, d);
   
   return h;
@@ -1436,21 +1436,11 @@ end);
 InstallOtherMethod(GreensHClassOfElementNC, "for a D-class and elt",
 [IsActingSemigroupGreensClass and IsGreensDClass, IsActingElt],
 function(d, f)
-  local s, h;
+  local h;
  
-  s:=ParentSemigroup(d);
-  h:=Objectify(HClassType(s), rec());
-  SetParentSemigroup(h, s);
-
-  SetLambdaOrb(h, LambdaOrb(d));
-  SetLambdaOrbSCCIndex(h, LambdaOrbSCCIndex(d));
-  SetRhoOrb(h, RhoOrb(d));
-  SetRhoOrbSCCIndex(h, RhoOrbSCCIndex(d));
-  
-  SetRepresentative(h, f);
-  SetEquivalenceClassRelation(h, GreensHRelation(s));
+  h:=CreateHClass(s, LambdaOrbSCCIndex(d), LambdaOrb(d), RhoOrbSCCIndex(d),
+   RhoOrb(d), f, true);
   SetDClassOfHClass(h, d);
-  SetIsGreensClassNC(h, true);
 
   return h;
 end);
