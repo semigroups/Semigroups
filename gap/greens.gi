@@ -1671,27 +1671,12 @@ end);
 InstallOtherMethod(GreensRClassOfElementNC, "for D-class and acting elt",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
 function(d, f)
-  local s, r, o, m, i;
+  local r;
 
-  s:=ParentSemigroup(d);
-  r:=Objectify(RClassType(s), rec());
-
-  o:=LambdaOrb(d); 
-  m:=LambdaOrbSCCIndex(d);
-  i:=Position(o, LambdaFunc(s)(f));
-
-  if i<>OrbSCC(o)[m][1] then 
-    f:=f*LambdaOrbMult(o, m, i)[2];
-  fi;
-  
-  SetParentSemigroup(r, s);
-  SetLambdaOrb(r, o);
-  SetLambdaOrbSCCIndex(r, m);
-  SetRepresentative(r, f);
-  SetEquivalenceClassRelation(r, GreensRRelation(s));
-  SetIsGreensClassNC(r, true);
+  r:=CreateRClass(ParentSemigroup(d), LambdaOrbSCCIndex(d), LambdaOrb(d), f,
+   true);
   SetDClassOfRClass(r, d);
-  
+        
   return r;
 end);
 
