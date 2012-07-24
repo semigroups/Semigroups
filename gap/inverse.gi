@@ -423,6 +423,7 @@ end);
 InstallOtherMethod(GreensLClasses, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)
+  local o, scc, len, out, n, creator, f, mults, m, j;
   
   o:=LambdaOrb(s);
   scc:=OrbSCC(o);
