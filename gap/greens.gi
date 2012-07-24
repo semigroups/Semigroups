@@ -3060,8 +3060,8 @@ end);
 
 # different method for regular/inverse
 
-#JDM could do better not to create the D-classes. Maybe not, we must store the
-#schutz gp of the D-class somewhere and so it might as well be the D-class.
+# could do better not to create the D-classes. Maybe not, we must store the
+# schutz gp of the D-class somewhere and so it might as well be the D-class.
 
 InstallMethod(NrLClasses, "for an acting semigroup",
 [IsActingSemigroup], s-> Sum(List(GreensDClasses(s), NrLClasses)));
@@ -3712,7 +3712,7 @@ function(l)
   return d;
 end);
 
-# new for 1.0! - DClassOfRClass - "for a D-class of an acting semigroup"
+# new for 1.0! - DClassOfRClass - "for a R-class of an acting semigroup"
 #############################################################################
 
 # same method for regular/inverse
