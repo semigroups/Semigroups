@@ -1272,24 +1272,25 @@ CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
 # new for 1.0! - LClassReps - "for regular acting semigroup 
 ###############################################################################
 
-# same method for inverse
+# not that the rho values of these reps are not rectified!
+
+# different method for inverse
 
 InstallOtherMethod(LClassReps, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local rho_o, lambda_o, scc, len, out, n, f, mults, m, j;
+  local o, scc, len, out, n, f, mults, m, j;
   
-  rho_o:=RhoOrb(s);
-  lambda_o:=LambdaOrb(s);
-  scc:=OrbSCC(lambda_o);
+  o:=LambdaOrb(s);
+  scc:=OrbSCC(o);
 
   len:=Length(scc);
   out:=EmptyPlist(NrLClasses(s));
   n:=0;
 
   for m in [2..len] do
-    f:=RectifyRho(s, rho_o, LambdaOrbRep(lambda_o, m));
-    mults:=LambdaOrbMults(lambda_o, m);
+    f:=LambdaOrbRep(o, m);
+    mults:=LambdaOrbMults(o, m);
     for j in scc[m] do
       n:=n+1;
       out[n]:=f*mults[j][1];
