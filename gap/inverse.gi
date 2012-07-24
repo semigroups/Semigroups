@@ -959,7 +959,10 @@ InstallOtherMethod(HClassReps, "for an acting semigroup with inverse op",
 function(s)
   local o, scc, len, out, n, mults, f, m, j, k;
   
-  o:=Enumerate(LambdaOrb(s), infinity);
+  o:=LambdaOrb(s);
+  if not IsClosed(o) then 
+    Enumerate(o, infinity);
+  fi;
   scc:=OrbSCC(o);
   len:=Length(scc);
   

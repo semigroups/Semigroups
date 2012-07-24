@@ -1741,7 +1741,7 @@ InstallOtherMethod(GroupHClass, "for a D-class of an acting semigp.",
 function(d)
   local s, rho, o, scc, tester, i;
 
-  if not IsRegularDClass(d) then 
+  if HasIsRegularDClass(d) and not IsRegularDClass(d) then 
     return fail;
   fi;
   
@@ -1753,11 +1753,17 @@ function(d)
 
   for i in scc do 
     if tester(o[i], rho) then 
+      if not HasIsRegularDClass(d) then 
+        SetIsRegularDClass(d, true);
+      fi;
       return GreensHClassOfElementNC(d, 
        IdempotentLambdaRhoCreator(s)(o[i], rho));
     fi;
   od;
-  return;
+
+  if not HasIsRegularDClass(d) then 
+    SetIsRegularDClass(d, false);
+  return fail;
 end);
 
 # mod for 0.7! - GroupHClassOfGreensDClass - "for D-class"
@@ -2245,8 +2251,8 @@ end);
 # mod for 1.0! - Iterator - "for an acting semigroup"
 #############################################################################
 
-# same method for regular/inverse (the previous inverse method used D-classes
-# instead of R-classes).
+# same method for regular/inverse 
+# (the previous inverse method used D-classes instead of R-classes).
 
 InstallMethod(Iterator, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -3333,7 +3339,7 @@ end);
 # new for 1.0! - Size - "for a D-class of an acting semigp."
 #############################################################################
 
-# same method for inverse/regular.
+# different method for inverse/regular.
 
 InstallOtherMethod(Size, "for a D-class of an acting semigp.",
 [IsGreensDClass and IsActingSemigroupGreensClass],
