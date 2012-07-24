@@ -856,8 +856,7 @@ end);
 
 # the first part of this could really be a method for IteratorOfGradedLambdaOrbs
 
-# same method for inverse
-# there could be a different method for inverse
+# JDM there should be a different method for inverse
 
 InstallMethod(IteratorOfDClassData, "for regular acting semigp",
 [IsActingSemigroup and IsRegularSemigroup],

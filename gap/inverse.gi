@@ -128,11 +128,12 @@ end);
 #############################################################################
 
 InstallMethod(\in, "for inverse op D-class",
-[IsPartialPerm , IsInverseOpGreensDClass and IsActingSemigroupGreensClass],
+[IsPartialPerm , IsInverseOpClass and IsActingSemigroupGreensClass],
 function(f, d)
-  local rep, o, m, lookup, rho_l, lambda_l, schutz, scc, g;
+  local rep, s, o, m, lookup, rho_l, lambda_l, schutz, scc, g;
   
-  rep:=Representative(r);
+  rep:=Representative(d);
+  s:=ParentSemigroup(d);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] or
    Degree(f)<>Degree(rep) then
@@ -365,8 +366,8 @@ function(d)
     #########################################################################
     
     NumberElement:=function(enum, f)
-      local rep, o, m, k, l, j, scc;
-      
+      local rep, o, m, lookup, s, i, j, scc, g, k;
+
       rep:=Representative(d);
       
       if Rank(f)<>Rank(rep) or Degree(f)<>Degree(rep) then 
@@ -379,6 +380,7 @@ function(d)
 
       o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
       lookup:=OrbSCCLookup(o);
+      s:=ParentSemigroup(d);
 
       i:=Position(o, RhoFunc(s)(f)); 
       if i=fail or not lookup[i]<>m then 
@@ -664,6 +666,7 @@ InstallOtherMethod(GreensDClassOfElement,
 "for acting semi with inv op and elt",
 [IsActingSemigroupWithInverseOp, IsActingElt],
 function(s, f)
+  local o, i, m, rep;
 
   if not f in s then 
     Error("the element does not belong to the semigroup,");
@@ -700,7 +703,7 @@ end);
 ############################################################################
 
 InstallOtherMethod(GreensHClassOfElement, "for L-class and elt",
-[IsActingSemigroupGreensClass and IsInverseOpGreensClass, IsActingElt],
+[IsActingSemigroupGreensClass and IsInverseOpClass, IsActingElt],
 function(x, f)
   local h;
   

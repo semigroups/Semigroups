@@ -597,6 +597,7 @@ end);
 
 InstallGlobalFunction(CreateRClass,
 function(s, m, o, rep, nc)
+  local rectify;
   rectify:=RectifyLambda(s, o, rep, LambdaPos(o), m);
   return CreateRClassNC(s, rectify.m, o, rectify.rep, nc);
 end);
@@ -1296,7 +1297,7 @@ function(s, f)
   
   if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then
     rho_o:=RhoOrb(s);
-    i:=fail
+    i:=fail;
   else
     rho_o:=GradedRhoOrb(s, f, true);
     i:=RhoPos(rho_o);#Position(o, RhoFunc(s)(f));
@@ -1394,8 +1395,8 @@ function(d, f)
     return;
   fi;
 
-  h:=CreateHClass(s, LambdaOrbSCCIndex(d), LambdaOrb(d), RhoOrbSCCIndex(d),
-   RhoOrb(d), f, IsGreensClassNC(d));
+  h:=CreateHClass(ParentSemigroup(d), LambdaOrbSCCIndex(d), LambdaOrb(d),
+   RhoOrbSCCIndex(d), RhoOrb(d), f, IsGreensClassNC(d));
   SetDClassOfHClass(h, d);
   
   return h;
@@ -1411,8 +1412,8 @@ InstallOtherMethod(GreensHClassOfElementNC, "for a D-class and elt",
 function(d, f)
   local h;
  
-  h:=CreateHClass(s, LambdaOrbSCCIndex(d), LambdaOrb(d), RhoOrbSCCIndex(d),
-   RhoOrb(d), f, true);
+  h:=CreateHClass(ParentSemigroup(d), LambdaOrbSCCIndex(d), LambdaOrb(d),
+   RhoOrbSCCIndex(d), RhoOrb(d), f, true);
   SetDClassOfHClass(h, d);
 
   return h;
@@ -1736,6 +1737,7 @@ function(d)
 
   if not HasIsRegularDClass(d) then 
     SetIsRegularDClass(d, false);
+  fi;
   return fail;
 end);
 
