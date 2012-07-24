@@ -95,6 +95,33 @@ function(arg)
   return rec(l:=l, m:=m, rep:=f);
 end);
 
+InstallGlobalFunction(RectifyInverseRho,
+function(arg)
+  local f, l, m;
+
+  if not IsClosed(arg[2]) then 
+    Enumerate(arg[2], infinity);
+  fi;
+
+  f:=arg[3];
+  if not IsBound(arg[4]) or arg[4]=fail then 
+    l:=Position(arg[2], LambdaFunc(arg[1])(f));
+  else
+    l:=arg[4];
+  fi;
+
+  if not IsBound(arg[5]) or arg[5]=fail then 
+    m:=OrbSCCLookup(arg[2])[l];
+  else
+    m:=arg[5];
+  fi;
+
+  if l<>OrbSCC(arg[2])[m][1] then
+    f:=LambdaOrbMult(arg[2], m, l)[1]*f;
+  fi;
+  return rec(l:=l, m:=m, rep:=f);
+end);
+
 # new for 1.0! - LambdaRhoHT
 ###############################################################################
 

@@ -50,6 +50,7 @@ DeclareAttribute("RhoOrbStabChain", IsActingSemigroupGreensClass);
 
 DeclareGlobalFunction("RectifyLambda");
 DeclareGlobalFunction("RectifyRho");
+DeclareGlobalFunction("RectifyInverseRho");
 DeclareAttribute("ParentSemigroup", IsObject);
 
 # ForwardOrbitOfImage/Kernel/ShortOrb

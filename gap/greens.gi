@@ -1544,25 +1544,15 @@ end);
 # mod for 1.0! - GreensHClassOfElementNC - "for an L-class and elt."
 #############################################################################
 
-# same method for regular/inverse.
+# same method for regular, different method for inverse
 
 InstallOtherMethod(GreensHClassOfElementNC, "for an L-class and elt",
 [IsActingSemigroupGreensClass and IsGreensLClass, IsActingElt],
 function(l, f)
-  local s, h, o;
-  
-  s:=ParentSemigroup(l);
-  h:=Objectify(HClassType(s), rec());
-  SetParentSemigroup(h, s);
-
-  SetRhoOrb(h, RhoOrb(l));
-  SetRhoOrbSCCIndex(h, RhoOrbSCCIndex(l));
-  SetLambdaOrb(h, GradedLambdaOrb(s, f, false));
-  SetLambdaOrbSCCIndex(h, 1);
-  
-  SetRepresentative(h, f);
-  SetEquivalenceClassRelation(h, GreensHRelation(s));
-  SetIsGreensClassNC(h, true);
+  local h;
+ 
+  h:=CreateHClass(ParentSemigroup(l), 1, GradedLambdaOrb(s, f, false), 
+   RhoOrbSCCIndex(l), RhoOrb(l), f, true);
   SetLClassOfHClass(h, l);
 
   return h;
