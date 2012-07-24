@@ -511,15 +511,14 @@ end);
 # new for 1.0! - CreateHClass - not a user function! 
 ############################################################################# 
 # Usage: arg[1] = semigroup; 
-# arg[2] = lambda orb;  arg[3] = lambda orb scc index; 
-# arg[4] = rho orb; arg[5] = rho orb scc index;
+# arg[2] = lambda orb scc index;  arg[3] = lambda orb; 
+# arg[4] = rho orb scc index; arg[5] = rho orb;
 # arg[6] = rep;
 # arg[7] = IsGreensClassNC. 
 
 # NC version not required since H-class reps are not rectified.
 
 #used and standardized
-
 
 InstallGlobalFunction(CreateHClass, 
 function(arg)
@@ -528,14 +527,14 @@ function(arg)
   h:=Objectify(HClassType(arg[1]), rec());
   SetParentSemigroup(h, arg[1]);
 
-  SetRepresentative(h, arg[2]);
+  SetLambdaOrbSCCIndex(h, arg[2]);
   SetLambdaOrb(h, arg[3]);
-  SetLambdaOrbSCCIndex(h, arg[4]);
-  if arg[5]<>fail then 
+  if arg[4]<>fail then 
+    SetRhoOrbSCCIndex(h, arg[4]);
     SetRhoOrb(h, arg[5]);
-    SetRhoOrbSCCIndex(h, arg[6]);
   fi;
   
+  SetRepresentative(h, arg[6]);
   SetEquivalenceClassRelation(h, GreensHRelation(arg[1]));
   SetIsGreensClassNC(h, arg[7]);
   return h;
@@ -1168,7 +1167,7 @@ function(l)
     i:=mults[i][1]*f;
     for j in cosets do 
       k:=k+1;
-      out[k]:=CreateHClass(s, lambda_o, lambda_m, rho_o, rho_m, i*j, nc);
+      out[k]:=CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o, i*j, nc);
       SetLClassOfHClass(out[k], l);
       SetDClassOfHClass(out[k], d);
     od;
@@ -1236,13 +1235,15 @@ function(d)
   s:=ParentSemigroup(d);
   o:=RhoOrb(d);
   m:=RhoOrbSCCIndex(d);
-  out:=EmptyPlist(Length(scc)*Length(cosets));
+  nc:=IsGreensClassNC(d);
 
+  out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
   for j in cosets do
     g:=f*j;
     for i in scc do
       k:=k+1;
+      #use NC since f has rho value in first place of scc
       out[k]:=CreateLClassNC(s, m, o, g*mults[i][1], nc);
     od;
   od;
@@ -1653,7 +1654,7 @@ end);
 InstallOtherMethod(GreensLClassOfElement, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
-  local l, o, rectify;
+  local o;
 
   if not f in s then
     Error("the element does not belong to the semigroup,");
@@ -1665,7 +1666,7 @@ function(s, f)
   else
     o:=GradedRhoOrb(s, f, true);
   fi;
-  
+  # use non-NC so that rho value of f is rectified. 
   return CreateLClass(s, fail, o, f, false);
 end);
 
@@ -1677,6 +1678,8 @@ end);
 InstallOtherMethod(GreensLClassOfElementNC, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
+  # use NC since rho value of f has to be in first place of GradedRhoOrb
+  # with false as final arg
   return CreateLClassNC(s, 1, GradedRhoOrb(s, f, false), f, true);
 end);
 
@@ -1688,18 +1691,16 @@ end);
 InstallOtherMethod(GreensLClassOfElement, "for D-class of acting semi and elt",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
 function(d, f)
-  local s, o, m, l;
+  local l;
     
   if not f in d then
     Error("the element does not belong to the D-class,");
     return;
   fi;
-  
-  s:=ParentSemigroup(d);
-  o:=RhoOrb(d); 
-  m:=RhoOrbSCCIndex(d);  
  
-  l:=CreateLClass(s, m, o, f, IsGreensClassNC(d));
+  # use non-NC so taht rho value of f is rectified
+  l:=CreateLClass(ParentSemigroup(d), RhoOrbSCCIndex(d), RhoOrb(d), f,
+   IsGreensClassNC(d));
 
   SetDClassOfLClass(l, d);
   return l;
@@ -1713,14 +1714,10 @@ end);
 InstallOtherMethod(GreensLClassOfElementNC, "for D-class and acting elt",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
 function(d, f)
-  local s, o, m, l;
+  local l;
 
-  s:=ParentSemigroup(d);
-  o:=RhoOrb(d); 
-  m:=RhoOrbSCCIndex(d);
-  
-  l:=CreateLClass(s, m, o, f, true);
-
+  # use non-NC so taht rho value of f is rectified
+  l:=CreateLClass(ParentSemigroup(d), RhoOrb(d), RhoOrbSCCIndex(d), f, true);
   SetDClassOfLClass(l, d);
   return l;
 end);
@@ -3784,16 +3781,9 @@ end);
 
 InstallMethod(LClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
-function(h)
-  local s, m, o;
-
-  s:=ParentSemigroup(h);
-  m:=RhoOrbSCCIndex(h);
-  o:=RhoOrb(h);
-
-  return CreateLClassNC(s, m, o, 
-   RectifyRho(s, o, Representative(h), fail, m).rep, IsGreensClassNC(h));
-end);
+# use non-NC so taht rho value of f is rectified
+h-> CreateLClass(ParentSemigroup(h), RhoOrbSCCIndex(h), RhoOrb(h),
+ Representative(h), IsGreensClassNC(h)));
 
 # new for 1.0! - RClassOfHClass - "for a H-class of an acting semigroup"
 #############################################################################
