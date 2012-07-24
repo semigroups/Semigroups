@@ -1167,6 +1167,7 @@ function(l)
     i:=mults[i][1]*f;
     for j in cosets do 
       k:=k+1;
+      # JDM maybe a bad idea to use CreateHClass here, perhaps expand?
       out[k]:=CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o, i*j, nc);
       SetLClassOfHClass(out[k], l);
       SetDClassOfHClass(out[k], d);
