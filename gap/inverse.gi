@@ -236,31 +236,6 @@ end);
 
 #CCC
 
-# mod for 1.0! - CreateInverseOpDClassNC - not a user function!
-#############################################################################
-# Usage: arg[1] = semigroup;  arg[2] = lambda orb scc index; 
-# arg[3] = lambda orb;  arg[4] = rep;
-# arg[5] = IsGreensClassNC. 
-
-# NC indicates that the representative is assumed to be in the correct form,
-# i.e. RhoFunc(s)(arg[2]) is in the first place of the scc of the lambda orb. 
-
-# used and standardised. 
-
-InstallGlobalFunction(CreateInverseOpDClassNC,
-function(s, m, o, rep, nc)
-  local d;
-
-  d:=Objectify(DClassType(s), rec());
-  SetParentSemigroup(d, s);
-  SetRepresentative(d, rep);
-  SetLambdaOrb(d, o);
-  SetLambdaOrbSCCIndex(d, m);
-  SetEquivalenceClassRelation(d, GreensDRelation(s));
-  SetIsGreensClassNC(d, nc);
-  return l;
-end);
-
 # mod for 1.0! - CreateInverseOpLClassNC - not a user function!
 #############################################################################
 # Usage: arg[1] = semigroup;  arg[2] = lambda orb scc index; 
@@ -706,8 +681,20 @@ function(s, f)
   m:=OrbSCCLookup(o)[i];
   rep:=RightOne(LambdaOrbRep(o, m));
 
-  return CreateInverseOpDClassNC(s, m, o, rep, false); 
+  return CreateDClassNC(s, m, o, fail, fail, rep, false); 
 end);
+
+# new for 1.0! - GreensDClassOfElementNC - "for acting semi  inv op and elt
+############################################################################
+
+InstallOtherMethod(GreensDClassOfElementNC, 
+"for an acting semigp with inverse op and elt",
+[IsActingSemigroupWithInverseOp, IsActingElt],
+function(s, f)
+  return CreateDClassNC(s, 1, GradedLambdaOrb(s, f, false), 
+   fail, fail, f, true);
+end);
+
 
 # new for 1.0! - GreensHClassOfElement - "for inverse op L-class and elt."
 ############################################################################
