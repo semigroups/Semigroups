@@ -1458,11 +1458,7 @@ r-> Length(LambdaOrbSCC(r)));
 
 InstallMethod(NrLClasses, "for a regular acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup and IsRegularSemigroup],
-function(s)
-  local o;
-  o:=Enumerate(LambdaOrb(s), infinity);
-  return Length(o)-1;
-end);
+s-> Length(Enumerate(LambdaOrb(s), infinity))-1);
 
 # new for 1.0! - NrLClasses - "for a D-class of regular acting semigroup"
 ############################################################################
@@ -1480,11 +1476,7 @@ d-> Length(LambdaOrbSCC(d)));
 
 InstallMethod(NrRClasses, "for a regular acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup and IsRegularSemigroup],
-function(s)
-  local o;
-  o:=Enumerate(RhoOrb(s), infinity);
-  return Length(o)-1;
-end);
+s-> Length(Enumerate(RhoOrb(s), infinity))-1);
 
 # new for 1.0! - NrRClasses - "for a D-class of regular acting semigroup"
 ############################################################################

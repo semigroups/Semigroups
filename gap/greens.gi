@@ -3633,7 +3633,8 @@ end);
 
 # same method for regular, different method for inverse
 
-# only for L-classes not created during GreensLClasses! 
+# only for L-classes not created during GreensLClasses! Those created via
+# GreensLClasses should already know DClassOfLClass
 
 InstallMethod(DClassOfLClass, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
