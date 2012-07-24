@@ -1431,7 +1431,7 @@ end);
 # mod for 1.0! - GreensHClassOfElementNC - "for D-class and elt."
 #############################################################################
 
-# same method for regular/inverse.
+# same method for regular, different method for inverse.
 
 InstallOtherMethod(GreensHClassOfElementNC, "for a D-class and elt",
 [IsActingSemigroupGreensClass and IsGreensDClass, IsActingElt],
@@ -1649,29 +1649,15 @@ end);
 InstallOtherMethod(GreensRClassOfElement, "for D-class and acting elt",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
 function(d, f)
-  local s, r, o, m, i;
+  local r;
     
   if not f in d then
     Error("the element does not belong to the D-class,");
     return;
   fi;
-  
-  s:=ParentSemigroup(d);
-  r:=Objectify(RClassType(s), rec());
-  o:=LambdaOrb(d);
-  m:=LambdaOrbSCCIndex(d);
-  i:=Position(o, LambdaFunc(s)(f));
  
-  if i<>OrbSCC(o)[m] then 
-    f:=f*LambdaOrbMult(o, m, i)[2];
-  fi;
-
-  SetParentSemigroup(r, s);
-  SetLambdaOrb(r, o);
-  SetLambdaOrbSCCIndex(r, m);
-  SetRepresentative(r, f);
-  SetEquivalenceClassRelation(r, GreensRRelation(s));
-  SetIsGreensClassNC(r, IsGreensClassNC(d));
+  r:=CreateRClass(ParentSemigroup(d), LambdaOrbSCCIndex(d), LambdaOrb(d), f,
+   IsGreensClassNC(d));
   SetDClassOfRClass(r, d);
 
   return r;
