@@ -423,6 +423,7 @@ function(s)
       f:=f*lambda_mults[j][1];
       for k in rho_scc[rho_m] do
         n:=n+1;
+        # JDM maybe a bad idea to use CreateHClass here, perhaps expand?
         out[n]:=CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o,
          rho_mults[k][1]*f, false);
       od;
@@ -478,7 +479,8 @@ end);
 InstallOtherMethod(GreensHClasses, "for L-class of regular acting semigroup",
 [IsRegularLClass and IsActingSemigroupGreensClass],
 function(l)
-  local rho_o, rho_m, scc, mults, f, nc, s, lambda_o, lambda_m, out, k, j;
+  local rho_o, rho_m, scc, mults, f, nc, s, lambda_o, lambda_l, lambda_m, out,
+  k, j;
 
   rho_o:=RhoOrb(l);
   rho_m:=RhoOrbSCCIndex(l);
@@ -489,8 +491,14 @@ function(l)
   nc:=IsGreensClassNC(l);
   s:=ParentSemigroup(l);
 
-  lambda_o:=GradedLambdaOrb(s, f, nc<>true);
-  lambda_m:=OrbSCCLookup(lambda_o)[lambda_o!.lambda_l];
+  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
+    lambda_o:=LambdaOrb(s);
+    lambda_l:=Position(lambda_o, LambdaFunc(s)(f));
+  else
+    lambda_o:=GradedLambdaOrb(s, f, nc<>true);
+    lambda_l:=lambda_o!.lambda_l;
+  fi;
+  lambda_m:=OrbSCCLookup(lambda_o)[lambda_l];
 
   out:=EmptyPlist(Length(scc));
   k:=0;
