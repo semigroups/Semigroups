@@ -1414,26 +1414,16 @@ end);
 InstallOtherMethod(GreensHClassOfElement, "for D-class and elt",
 [IsActingSemigroupGreensClass and IsGreensDClass, IsActingElt],
 function(d, f)
-  local s, h;
+  local h;
 
   if not f in d then
     Error("the element does not belong to the Green's class,");
     return;
   fi;
 
-  s:=ParentSemigroup(d);
-  h:=Objectify(HClassType(s), rec());
-  SetParentSemigroup(h, s);
-
-  SetLambdaOrb(h, LambdaOrb(d));
-  SetLambdaOrbSCCIndex(h, LambdaOrbSCCIndex(d));
-  SetRhoOrb(h, RhoOrb(d));
-  SetRhoOrbSCCIndex(h, RhoOrbSCCIndex(d));
-  
-  SetRepresentative(h, f);
-  SetEquivalenceClassRelation(h, GreensHRelation(s));
+  h:=CreateHClass(s, LambdaOrbSCCIndex(d), LambdaOrb(d), RhoOrbSCCIndex(d),
+   RhoOrb(d), f, IsGreensClassNC);
   SetDClassOfHClass(h, d);
-  SetIsGreensClassNC(h, IsGreensClassNC(d));
   
   return h;
 end);
