@@ -1719,15 +1719,7 @@ function(s, f)
     fi;  
   fi;
   
-  r:=Objectify(RClassType(s), rec());
-
-  SetParentSemigroup(r, s);
-  SetLambdaOrbSCCIndex(r, 1);
-  SetLambdaOrb(r, GradedLambdaOrb(s, f, false));
-  SetRepresentative(r, f);
-  SetEquivalenceClassRelation(r, GreensRRelation(s));
-  SetIsGreensClassNC(r, true);
-  return r;
+  return CreateRClassNC(s, 1, GradedLambdaOrb(s, f, false), f, true);
 end);
 
 # mod for 1.0! - GreensJClassOfElement - for an acting semi and elt."
