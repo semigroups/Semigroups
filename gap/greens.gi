@@ -1274,15 +1274,12 @@ function(s)
   local data, orbit, out, i;
 
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
-  
   orbit:=data!.orbit;
   out:=EmptyPlist(Length(orbit));
 
   for i in [2..Length(orbit)] do
-    data:=orbit[i];
-    Add(data, false); #IsGreensClassNC
-    out[i-1]:=CallFuncList(CreateRClassNC, data);
-    SetSemigroupDataIndex(out[i-1], data[5]);
+    out[i-1]:=CallFuncList(CreateRClassNC, orbit[i]);
+    SetSemigroupDataIndex(out[i-1], orbit[i][6]);
   od;
   return out;
 end);
@@ -1756,9 +1753,8 @@ function(s, f)
     return;
   fi;
   data:=SemigroupData(s)[Position(data, f)];
-  Add(data, false); #IsGreensClassNC
   r:=CallFuncList(CreateRClassNC, data);
-  SetSemigroupDataIndex(r, data[5]);
+  SetSemigroupDataIndex(r, data[6]);
   return r;
 end);
 
@@ -1776,9 +1772,8 @@ function(s, f)
     pos:=Position(SemigroupData(s), f);
     if pos<>fail then
       pos:=SemigroupData(s)[pos];
-      Add(pos, false); #IsGreensClassNC
       r:=CallFuncList(CreateRClassNC, pos);
-      SetSemigroupDataIndex(r, pos[5]);
+      SetSemigroupDataIndex(r, pos[6]);
     fi;  
   fi;
   
@@ -2429,7 +2424,7 @@ function(s)
       until x=fail or ForAll(X, d-> not x[4] in d);
       
       if x<>fail then 
-        d:=DClassOfRClass(CallFuncList(CreateRClass, x));
+        d:=DClassOfRClass(CallFuncList(CreateRClassNC, x));
         Add(X, d);
         iter!.next_value:=d;
         return false;
@@ -2658,7 +2653,7 @@ s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4],
 InstallMethod(IteratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],
 s-> IteratorByIterator(IteratorOfRClassData(s), x->
-CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
+CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
 
 #LLL
 

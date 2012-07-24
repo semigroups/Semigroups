@@ -502,7 +502,7 @@ function(data, limit, lookfunc)
       val:=HTValue(lambdarhoht, rhoy);
 
       # this is what we keep if it is new
-      # x:=[s, m, o, y, nr+1, val];
+      # x:=[s, m, o, y, false, nr+1];
 
       if val=fail then  #new rho value, and hence new R-rep
         lenreps:=lenreps+1;
@@ -513,12 +513,12 @@ function(data, limit, lookfunc)
         orblookup1[nr]:=lenreps;
         orblookup2[nr]:=1;
         repslens[lenreps]:=1;
-        x:=[s, m, o, y, nr];
+        x:=[s, m, o, y, false, nr];
         # semigroup, lambda orb data, lambda orb, rep, index in orbit,
         # position of reps with equal lambda-rho value
 
       else              # old rho value
-        x:=[s, m, o, y, nr+1];
+        x:=[s, m, o, y, false, nr+1];
         
         # JDM expand!
         schutz:=LambdaOrbStabChain(o, m);
