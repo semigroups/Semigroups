@@ -352,7 +352,7 @@ end);
 # new for 1.0! - GreensDClasses - for regular acting semi
 ############################################################################
 
-# same method for inverse.
+# different method for inverse.
 
 InstallOtherMethod(GreensDClasses, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
@@ -369,21 +369,9 @@ function(s)
   drel:=GreensDRelation(s);
 
   for m in [2..len] do 
-    d:=Objectify(type, rec());
-    
-    SetParentSemigroup(d, s);
-    SetLambdaOrbSCCIndex(d, m);
-    SetLambdaOrb(d, lambda_o);
-
     rectify:=RectifyRho(s, rho_o, LambdaOrbRep(lambda_o, m));
-   
-    SetRepresentative(d, rectify.rep);
-    SetRhoOrb(d, rho_o);
-    SetRhoOrbSCCIndex(d, rectify.m);
-    SetEquivalenceClassRelation(d, drel);
-    SetIsGreensClassNC(d, false);
-
-    out[m-1]:=d;
+    out[m-1]:=CreateDClassNC(s, m, lambda_o, rectify.m, rho_o, rectify.rep,
+     false);
   od;
   return out;
 end);

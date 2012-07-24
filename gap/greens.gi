@@ -503,8 +503,10 @@ function(arg)
   SetParentSemigroup(d, arg[1]);
   SetLambdaOrbSCCIndex(d, arg[2]);
   SetLambdaOrb(d, arg[3]);
-  SetRhoOrbSCCIndex(d, arg[4]);
-  SetRhoOrb(d, arg[5]);
+  if arg[4]<>fail then # for inverse op
+    SetRhoOrbSCCIndex(d, arg[4]);
+    SetRhoOrb(d, arg[5]);
+  fi;
   SetRepresentative(d, arg[6]);
   SetIsGreensClassNC(d, arg[7]);
   SetEquivalenceClassRelation(d, GreensDRelation(arg[1])); 
@@ -1016,6 +1018,9 @@ end);
 # mod for 1.0! - GreensDClasses - "for an acting semigroup"
 ##############################################################################
 
+# JDM this could be written in a more compact way but it is not for performance
+# reasons. 
+
 # different method for regular/inverse
 
 InstallMethod(GreensDClasses, "for an acting semigroup",
@@ -1033,13 +1038,13 @@ function(s)
 
   for i in [2..Length(scc)] do 
     arg:=data[scc[i][1]];
-    d:=Objectify(type, rec()); 
-     
+    d:=Objectify(type, rec());     
     SetParentSemigroup(d, s);
     SetLambdaOrbSCCIndex(d, arg[2]);
     SetLambdaOrb(d, arg[3]);
     SetSemigroupDataIndex(d, arg[5]);
 
+    #JDM expand!
     rectify:=RectifyRho(arg[1], o, arg[4]);
     
     SetRepresentative(d, rectify.rep);

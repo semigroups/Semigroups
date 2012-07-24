@@ -521,6 +521,28 @@ end);
 
 #GGG
 
+# new for 0.7! - GreensDClasses - for an acting semigp with inverse op
+##############################################################################
+
+InstallOtherMethod(GreensDClasses, "for an acting semigroup with inverse op",
+[IsActingSemigroupWithInverseOp],
+function(s)
+  local o, scc, out, i, f, m;
+
+  o:=LambdaOrb(s); 
+  scc:=OrbSCC(o); 
+  out:=EmptyPlist(Length(scc)); 
+
+  i:=0;
+  for m in [2..Length(scc)] do 
+    i:=i+1;
+    f:=RightOne(LambdaOrbRep(o, m));
+    out[i]:=CreateDClassNC(s, m, o, fail, fail, f, false);
+  od;
+  return out;
+end);
+
+
 # new for 1.0! - GreensHClasses - for an acting semigroup with inverse op
 ############################################################################
 
