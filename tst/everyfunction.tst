@@ -475,7 +475,7 @@ gap> IsGreensClassNC(h);
 true
 gap> f:=PartialPermNC([ 2, 8, 9 ], [ 8, 10, 5 ]);;
 gap> l:=LClass(s, f);
-{[ 2, 8, 9 ] -> [ 8, 10, 5 ]}
+{[ 4, 7, 8 ] -> [ 8, 10, 5 ]}
 gap> h:=HClassNC(l, f);
 {[ 2, 8, 9 ] -> [ 8, 10, 5 ]}
 gap> ForAll(h, x-> x in s);
@@ -635,8 +635,7 @@ gap> s:=Semigroup(gens);
 gap> List(LClasses(s), IsRegularLClass);
 [ false, false, false, false, true, true, false, false, false, false, true, 
   true, false, false, false, true, true, true, true, true ]
-gap> Number(last, x-> x=true)
-> ;
+gap> Number(last, x-> x=true);
 9
 gap> GroupOfUnits(s);
 fail
@@ -661,16 +660,16 @@ false
 gap> NrHClasses(l);
 4
 gap> l:=LClass(s, f);
-{[ 2, 3 ] -> [ 2, 4 ]}
+{[ 1, 2 ] -> [ 4, 2 ]}
 gap> HClassReps(l);
-[ [ 2, 3 ] -> [ 2, 4 ], [ 2, 3 ] -> [ 4, 2 ], [ 1, 2 ] -> [ 2, 4 ], 
-  [ 1, 2 ] -> [ 4, 2 ] ]
+[ [ 1, 2 ] -> [ 4, 2 ], [ 1, 2 ] -> [ 2, 4 ], [ 2, 3 ] -> [ 2, 4 ], 
+  [ 2, 3 ] -> [ 4, 2 ] ]
 gap> IsRegularLClass(l);
 false
 gap> ForAll(HClassReps(l), x-> x in l);
 true
 gap> d:=DClassOfLClass(l);
-{[ 2, 3 ] -> [ 2, 4 ]}
+{[ 1, 2 ] -> [ 4, 2 ]}
 gap> Size(d);
 4
 gap> Size(l);
