@@ -1501,7 +1501,7 @@ end);
 # mod for 1.0! - GreensHClassOfElementNC - "for an R-class and elt."
 #############################################################################
 
-# same method for regular/inverse.
+# same method for regular, different method for inverse.
 
 InstallOtherMethod(GreensHClassOfElementNC, "for an R-class and elt",
 [IsActingSemigroupGreensClass and IsGreensRClass, IsActingElt],
@@ -2761,6 +2761,9 @@ function(r)
 
   for i in scc do
     if tester(o[i], rho) then
+      if not HasIsRegularRClass(r) then 
+        SetIsRegularRClass(r, true);
+      fi;
       nr:=nr+1;
     fi;
   od;
