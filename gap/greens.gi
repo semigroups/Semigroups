@@ -3594,7 +3594,7 @@ end);
 
 InstallMethod(LClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
-# use non-NC so taht rho value of f is rectified
+# use non-NC so that rho value of f is rectified
 h-> CreateLClass(ParentSemigroup(h), RhoOrbSCCIndex(h), RhoOrb(h),
  Representative(h), IsGreensClassNC(h)));
 
@@ -3605,32 +3605,8 @@ h-> CreateLClass(ParentSemigroup(h), RhoOrbSCCIndex(h), RhoOrb(h),
 
 InstallMethod(RClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
-function(h)
-  local s, f, o, m, r, l;
-
-  s:=ParentSemigroup(h); 
-  f:=Representative(h);
-  o:=LambdaOrb(h);
-  m:=LambdaOrbSCCIndex(h);
-
-  r:=Objectify(RClassType(s), rec());
-
-  SetParentSemigroup(r, s);
-  SetLambdaOrbSCCIndex(r, m);
-  SetLambdaOrb(r, o);
-  
-  l:=Position(o, LambdaFunc(s)(f));
-
-  if l<>OrbSCC(o)[m][1] then 
-    SetRepresentative(r, f*LambdaOrbMult(o, m, l)[2]);
-  else
-    SetRepresentative(r, f);
-  fi;
-
-  SetEquivalenceClassRelation(r, GreensRRelation(s));
-  SetIsGreensClassNC(r, IsGreensClassNC(h)); 
-  return r;
-end);
+h-> CreateRClass(ParentSemigroup(h), LambdaOrbSCCIndex(h), LambdaOrb(h),
+ Representative(h), IsGreensClassNC(h)));
 
 # mod for 1.0! - DClassReps - "for an acting semigroup"
 #############################################################################
