@@ -1781,7 +1781,7 @@ function(h)
 
   s:=ParentSemigroup(h);
   f:=Representative(h);
-  return IdempotentLambdaRhoCreator(LambdaFunc(s)(f), RhoFunc(s)(f));
+  return IdempotentLambdaRhoCreator(s)(LambdaFunc(s)(f), RhoFunc(s)(f));
 end);
 
 # mod for 1.0! - Idempotents - "for an L-class of an acting semigp"
