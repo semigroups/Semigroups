@@ -18,8 +18,8 @@
 # new for 1.0! - DClassType - "for acting semigroup with inverse op"
 ############################################################################
 
-InstallOtherMethod(DClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
+InstallOtherMethod(DClassType, "for acting semigroup with inverse op",
+[IsActingSemigroupWithInverseOp and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensDClass
@@ -29,8 +29,8 @@ end);
 # new for 1.0! - HClassType - "for acting semigroup with inverse op"
 ############################################################################
 
-InstallOtherMethod(HClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
+InstallOtherMethod(HClassType, "for acting semigroup with inverse op",
+[IsActingSemigroupWithInverseOp and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensHClass
@@ -40,8 +40,8 @@ end);
 # new for 1.0! - LClassType - "for acting semigroup with inverse op"
 ############################################################################
 
-InstallOtherMethod(LClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
+InstallOtherMethod(LClassType, "for acting semigroup with inverse op",
+[IsActingSemigroupWithInverseOp and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensLClass
@@ -51,8 +51,8 @@ end);
 # new for 1.0! - RClassType - "for acting semigroup with inverse op"
 ############################################################################
 
-InstallOtherMethod(RClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
+InstallOtherMethod(RClassType, "for acting semigroup with inverse op",
+[IsActingSemigroupWithInverseOp and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensRClass
