@@ -591,7 +591,7 @@ end);
 # mod for 1.0! - CreateRClass - not a user function!
 #############################################################################
 # Usage: arg[1] = semigroup; arg[2] = lambda orb scc index;
-# arg[3] = lambda orb; arg[4] = rep; arg[5] = position in SemigroupData of rep.
+# arg[3] = lambda orb; arg[4] = rep; arg[5] = Green's class NC
 
 # only use for R-classes created from SemigroupData. 
 
@@ -606,6 +606,7 @@ end);
 #############################################################################
 # Usage: arg[1] = semigroup; arg[2] = lambda orb scc index;
 # arg[3] = lambda orb; arg[4] = rep; arg[5] = IsRClassNC.
+# arg[6] = semigroup data index (optional).
 
 # NC indicates that the representative is assumed to be in the correct form,
 # i.e. RhoFunc(s)(arg[2]) is in the first place of the scc of the rho orb. 
@@ -624,7 +625,10 @@ function(arg)
   SetRepresentative(r, arg[4]);
   SetEquivalenceClassRelation(r, GreensRRelation(arg[1]));
   SetIsGreensClassNC(r, arg[5]);
-  
+  if IsBound(arg[6]) then 
+    SetSemigroupDataIndex(r, arg[6]);
+  fi;
+
   return r;
 end);
 
@@ -1270,7 +1274,6 @@ function(s)
 
   for i in [2..Length(orbit)] do
     out[i-1]:=CallFuncList(CreateRClassNC, orbit[i]);
-    SetSemigroupDataIndex(out[i-1], orbit[i][6]);
   od;
   return out;
 end);
@@ -1650,7 +1653,6 @@ function(d, f)
   r:=CreateRClass(ParentSemigroup(d), LambdaOrbSCCIndex(d), LambdaOrb(d), f,
    true);
   SetDClassOfRClass(r, d);
-        
   return r;
 end);
 
@@ -1662,17 +1664,13 @@ end);
 InstallOtherMethod(GreensRClassOfElement, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
-  local data, r;
 
   if not f in s then
     Error("the element does not belong to the semigroup,");
     return;
   fi;
-  data:=SemigroupData(s);
-  data:=data[Position(data, f)];
-  r:=CallFuncList(CreateRClassNC, data);
-  SetSemigroupDataIndex(r, data[6]);
-  return r;
+  return CallFuncList(CreateRClassNC, 
+   SemigroupData(s)[Position(SemigroupData(s), f)]);
 end);
 
 # mod for 1.0! - GreensRClassOfElementNC - "for an acting semigp and elt."
@@ -1688,9 +1686,7 @@ function(s, f)
   if HasSemigroupData(s) and IsClosed(SemigroupData(s)) then 
     pos:=Position(SemigroupData(s), f);
     if pos<>fail then
-      pos:=SemigroupData(s)[pos];
-      r:=CallFuncList(CreateRClassNC, pos);
-      SetSemigroupDataIndex(r, pos[6]);
+      return CallFuncList(CreateRClassNC, SemigroupData(s)[pos]);
     fi;  
   fi;
   
