@@ -931,9 +931,10 @@ end);
                     
 InstallOtherMethod(GreensRClasses, "for inverse op D-class",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
-function(s)         
-  local o, scc, len, out, i, f, mults, m, j;
-                    
+function(d)         
+  local s, o, m, f, scc, mults, out, i, j;
+  
+  s:=ParentSemigroup(d);
   o:=LambdaOrb(d);
   m:=LambdaOrbSCCIndex(d);
   f:=Representative(d);
