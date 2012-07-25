@@ -1973,6 +1973,17 @@ function(h)
   return IdempotentLambdaRhoTester(s)(LambdaFunc(s)(f), RhoFunc(s)(f));
 end);
 
+InstallOtherMethod(OneMutable, "for a H-class of an acting semigroup",
+[IsGreensHClass and IsActingSemigroupGreensClass], 
+function(h)
+
+  if not IsGroupHClass(h) then
+    Error("the H-class is not a group,");
+    return;        
+  fi;
+  return One(Representative(h));
+end);
+
 InstallOtherMethod(IsRegularHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 h-> IsRegularRClass(RClassOfHClass(h)));
@@ -2006,7 +2017,7 @@ function(h)
     g:=ClosureGroup(g, AsPermutation(f));
   od;
 
-  return MappingByFunction(h, g, AsPermutation, x-> Idempotents(h)[1]*x);
+  return MappingByFunction(h, g, AsPermutation, x-> One(h)*x);
 end);
 
 # new for 1.0! - IsRegularDClass - "for an D-class of an acting semi"
