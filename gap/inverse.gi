@@ -805,6 +805,34 @@ function(s, f)
    fail, fail, f, true);
 end);
 
+# new for 1.0! - GreensHClassOfElement - "for acting semigp inverse op and elt."
+#############################################################################
+
+InstallOtherMethod(GreensHClassOfElement, 
+"for an acting semigp with inverse op and elt",
+[IsActingSemigroupWithInverseOp, IsActingElt],
+function(s, f)
+
+  if not f in s then
+    Error("the element does not belong to the semigroup,");
+    return;
+  fi;
+
+  o:=LambdaOrb(s);
+  m:=OrbSCCLookup(o)[Position(o, LambdaFunc(s)(f))];
+
+  return CreateHClass(s, m, o, fail, fail, f, false);
+end);
+
+# new for 1.0! - GreensHClassOfElementNC - "for acting semigp inverse op & elt."
+#############################################################################
+
+InstallOtherMethod(GreensHClassOfElementNC, "for an acting semigp and elt",
+[IsActingSemigroupWithInverseOp, IsActingElt],
+function(s, f)
+  return CreateHClass(s, 1, GradedLambdaOrb(s, f, false),
+   fail, fail, f, true);
+end);
 
 # new for 1.0! - GreensHClassOfElement - "for inverse op class and elt."
 ############################################################################

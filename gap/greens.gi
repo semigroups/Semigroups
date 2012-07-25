@@ -1328,7 +1328,7 @@ end);
 # mod for 1.0! - GreensHClassOfElement - "for an acting semigp and elt."
 #############################################################################
 
-# same method for regular/inverse.
+# same method for regular, different method for inverse
 
 InstallOtherMethod(GreensHClassOfElement, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
@@ -1339,7 +1339,6 @@ function(s, f)
     Error("the element does not belong to the semigroup,");
     return;
   fi;
-
   
   lambda_o:=LambdaOrb(s);
   lambda_m:=OrbSCCLookup(lambda_o)[Position(lambda_o, LambdaFunc(s)(f))];
@@ -1360,7 +1359,7 @@ end);
 # mod for 1.0! - GreensHClassOfElementNC - "for an acting semigp and elt."
 #############################################################################
 
-# same method for regular/inverse.
+# same method for regular, different method for inverse
 
 InstallOtherMethod(GreensHClassOfElementNC, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
