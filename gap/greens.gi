@@ -18,8 +18,16 @@
 InstallMethod(RhoOrbStabChain, "for an L-class of an acting semi",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  #return StabilizerChain(SchutzenbergerGroup(l));
-  return StabChainImmutable(SchutzenbergerGroup(l));
+  local g;
+
+  g:=SchutzenbergerGroup(l);
+
+  if IsTrivial(g) then 
+    return false;
+  elif IsNaturalSymmetricGroup(g) then 
+    return true; 
+  fi;
+  return StabChainImmutable(g);
 end);
 
 # new for 1.0! - RhoCosets - "for a D-class of an acting semigp"
