@@ -856,7 +856,7 @@ end);
 
 # the first part of this could really be a method for IteratorOfGradedLambdaOrbs
 
-# JDM there should be a different method for inverse
+# same method for inverse
 
 InstallMethod(IteratorOfDClassData, "for regular acting semigp",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -946,7 +946,12 @@ local iter;
         
         f:=LambdaOrbRep(iter!.o, m)*
          LambdaOrbMult(iter!.o, m, iter!.o!.lambda_l)[2]; 
-        iter!.next_value:=[s, m, iter!.o, f, false];
+         if IsActingSemigroupWithInverseOp(s) then 
+           iter!.next_value:=[s, m, iter!.o, fail, fail, f, false];
+         else
+           iter!.next_value:=[s, m, iter!.o, 1, GradedRhoOrb(s, f, false), f, 
+            false];
+         fi;
         return false;
       end,
 
@@ -993,7 +998,11 @@ local iter;
  
         # f ok here? JDM
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][1])); 
-        return [s, m, LambdaOrb(s), f, false];
+        if IsActingSemigroupWithInverseOp(s) then 
+          return [s, m, LambdaOrb(s), fail, fail, f, false];
+        else
+          return [s, m, LambdaOrb(s), 1, GradedLambdaOrb(s, f, false), false];
+        fi;
       end,
 
       #JDM fill this in!
@@ -1013,7 +1022,7 @@ function(s)
   if HasDClassReps(s) then
     return IteratorList(DClassReps(s));
   fi;
-  return IteratorByIterator(IteratorOfDClassData(s), x-> x[4],
+  return IteratorByIterator(IteratorOfDClassData(s), x-> x[6],
    [IsIteratorOfDClassReps]);
 end);
 
