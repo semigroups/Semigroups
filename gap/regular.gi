@@ -501,6 +501,7 @@ end);
 InstallOtherMethod(GreensHClasses, "for R-class of regular acting semigroup",
 [IsRegularRClass and IsActingSemigroupGreensClass],
 function(r)
+  local lambda_o, lambda_m, scc, mults, f, nc, s, rho_o, rho_l, rho_m, out, k, j;
 
   lambda_o:=LambdaOrb(r);
   lambda_m:=LambdaOrbSCCIndex(r);
@@ -527,7 +528,7 @@ function(r)
     k:=k+1;
     out[k]:=CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o,
      f*mults[j][1], nc);
-    SetLClassOfHClass(out[k], l);
+    SetLClassOfHClass(out[k], r);
   od;
   
   return out;

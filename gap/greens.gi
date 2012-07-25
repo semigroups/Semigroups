@@ -1506,6 +1506,7 @@ end);
 InstallOtherMethod(GreensHClassOfElementNC, "for an R-class and elt",
 [IsActingSemigroupGreensClass and IsGreensRClass, IsActingElt],
 function(r, f)
+  local h;
   
   h:=CreateHClass(ParentSemigroup(r), LambdaOrbSCCIndex(r), LambdaOrb(r), 
    1, GradedRhoOrb(ParentSemigroup(r), f, false), f, true);
