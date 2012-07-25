@@ -651,7 +651,7 @@ end);
 InstallMethod(GreensRClasses, "for a regular D-class of acting semigroup",
 [IsActingSemigroupGreensClass and IsRegularDClass],
 function(d)
-  local mults, scc, f, s, o, m, rrel, nc, out, k, r, i;
+  local mults, scc, f, s, o, m, nc, out, k, i;
 
   mults:=RhoOrbMults(RhoOrb(d), RhoOrbSCCIndex(d));
   scc:=RhoOrbSCC(d);
@@ -660,7 +660,6 @@ function(d)
   s:=ParentSemigroup(d);
   o:=LambdaOrb(d);
   m:=LambdaOrbSCCIndex(d);
-  rrel:=GreensRRelation(s);   
   nc:=IsGreensClassNC(d);
 
   out:=EmptyPlist(Length(scc));
@@ -668,16 +667,7 @@ function(d)
   k:=0;
   for i in scc do
     k:=k+1;
-    r:=Objectify(RClassType(s), rec());
-
-    SetParentSemigroup(r, s);
-    SetLambdaOrbSCCIndex(r, m);
-    SetLambdaOrb(r, o);
-    SetRepresentative(r, mults[i][1]*f);
-    SetEquivalenceClassRelation(r, rrel);
-    SetIsGreensClassNC(r, nc);
-    SetDClassOfRClass(r, d);
-    out[k]:=r;
+    out[k]:=CreateRClassNC(s, m, o, mults[i][1]*f, nc);
   od;
 
   return out;
