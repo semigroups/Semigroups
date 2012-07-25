@@ -1781,7 +1781,7 @@ function(h)
 
   s:=ParentSemigroup(h);
   f:=Representative(h);
-  return IdempotentLambdaRhoCreator(s)(LambdaFunc(s)(f), RhoFunc(s)(f));
+  return [IdempotentLambdaRhoCreator(s)(LambdaFunc(s)(f), RhoFunc(s)(f))];
 end);
 
 # mod for 1.0! - Idempotents - "for an L-class of an acting semigp"
@@ -1981,7 +1981,7 @@ function(h)
     Error("the H-class is not a group,");
     return;        
   fi;
-  return One(Representative(h));
+  return Idempotents(h)[1];
 end);
 
 InstallOtherMethod(IsRegularHClass, "for an H-class of an acting semigroup",
@@ -2011,13 +2011,8 @@ function(h)
     return;
   fi;
 
-  g:=Group(());
-
-  for f in Enumerator(h) do
-    g:=ClosureGroup(g, AsPermutation(f));
-  od;
-
-  return MappingByFunction(h, g, AsPermutation, x-> One(h)*x);
+  return MappingByFunction(h, SchutzenbergerGroup(h), 
+   AsPermutation, x-> One(h)*x);
 end);
 
 # new for 1.0! - IsRegularDClass - "for an D-class of an acting semi"

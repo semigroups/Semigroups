@@ -13,20 +13,20 @@
 # new for 1.0! - DClassType - "for a regular acting semigroup"
 ############################################################################
 
-# same method for inverse semigroups
+# different method for inverse semigroups
 
 InstallOtherMethod(DClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsRegularDClass and IsGreensDClass 
-         IsActingSemigroupGreensClass);
+         and IsActingSemigroupGreensClass);
 end);
 
 # new for 1.0! - HClassType - "for a regular acting semigroup"
 ############################################################################
 
-# same method for inverse semigroups
+# different method for inverse semigroups
 
 InstallOtherMethod(HClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
@@ -39,7 +39,7 @@ end);
 # new for 1.0! - LClassType - "for a regular acting semigroup"
 ############################################################################
 
-# same method for inverse semigroups
+# different method for inverse semigroups
 
 InstallOtherMethod(LClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
@@ -52,7 +52,7 @@ end);
 # new for 1.0! - RClassType - "for a regular acting semigroup"
 ############################################################################
 
-# same method for inverse semigroups
+# different method for inverse semigroups
 
 InstallOtherMethod(RClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
