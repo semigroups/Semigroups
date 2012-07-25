@@ -638,7 +638,7 @@ end);
 # new for 1.0! - GreensRClasses - "for a regular D-class of acting semigroup"
 ##############################################################################
 
-# same method for inverse
+# different method for inverse
 
 InstallMethod(GreensRClasses, "for a regular D-class of acting semigroup",
 [IsActingSemigroupGreensClass and IsRegularDClass],

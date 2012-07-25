@@ -926,6 +926,31 @@ function(s)
   return out;
 end);
 
+# new for 0.7! - GreensRClasses - for inverse op D-class of acting semigroup
+##############################################################################
+                    
+InstallOtherMethod(GreensRClasses, "for inverse op D-class",
+[IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
+function(s)         
+  local o, scc, len, out, i, f, mults, m, j;
+                    
+  o:=LambdaOrb(d);
+  m:=LambdaOrbSCCIndex(d);
+  f:=Representative(d);
+  
+  scc:=OrbSCC(o)[m];   
+  mults:=LambdaOrbMults(o, LambdaOrbSCCIndex(d));
+  out:=EmptyPlist(Length(o));
+  i:=0;             
+  
+  for j in scc do
+    i:=i+1;    
+    out[i]:=CreateRClassNC(s, m, o, mults[j][1]*f, false);
+  od;             
+
+  return out;
+end);
+
 # mod for 1.0! - GroupHClass - "for an inverse op D-class"
 #############################################################################
 
