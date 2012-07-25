@@ -607,7 +607,7 @@ end);
 InstallOtherMethod(GreensRClasses, "for a regular acting semigroup", 
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local rho_o, rho_scc, lambda_o, lambda_scc, len, lookup, lambdafunc, out, type, rrel, l, n, f, lambda_l, lambda_m, mults, rho_m, j;
+  local rho_o, rho_scc, lambda_o, lambda_scc, len, lookup, lambdafunc, out, n, f, lambda_l, lambda_m, mults, rho_m, j;
   
   rho_o:=RhoOrb(s);
   rho_scc:=OrbSCC(rho_o);
@@ -619,8 +619,6 @@ function(s)
   lambdafunc:=LambdaFunc(s);
 
   out:=EmptyPlist(NrRClasses(s));
-  type:=RClassType(s);
-  rrel:=GreensRRelation(s);
   n:=0;
 
   for rho_m in [2..len] do
@@ -631,13 +629,7 @@ function(s)
     mults:=RhoOrbMults(rho_o, rho_m);
     for j in rho_scc[rho_m] do
       n:=n+1;
-      out[n]:=Objectify(type, rec());
-      SetParentSemigroup(out[n], s);
-      SetLambdaOrb(out[n], lambda_o);
-      SetLambdaOrbSCCIndex(out[n], lambda_m);
-      SetRepresentative(out[n], mults[j][1]*f);
-      SetEquivalenceClassRelation(out[n], rrel);
-      SetIsGreensClassNC(out[n], false);
+      out[n]:=CreateRClassNC(s, lambda_m, lambda_o, mults[j][1]*f, false);
     od;
   od;
   return out;
