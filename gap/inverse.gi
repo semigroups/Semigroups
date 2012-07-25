@@ -1216,7 +1216,7 @@ local iter, scc;
         iter!.i:=i; 
         #JDM is f correct here? Not canonical rep?
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)); 
-        return [s, 1, GradedLambdaOrb(s, o[i], true), f, false];
+        return [s, fail, GradedLambdaOrb(s, o[i], true), f, false];
       end,
 
       ShallowCopy:=iter-> rec(i:=1)));
