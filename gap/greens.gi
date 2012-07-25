@@ -1332,29 +1332,28 @@ end);
 InstallOtherMethod(GreensHClassOfElement, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
-  local h, o;
+  local lambda_o, lambda_m, rho_o, i, rho_m;
 
   if not f in s then
     Error("the element does not belong to the semigroup,");
     return;
   fi;
 
-  h:=Objectify(HClassType(s), rec());
-  SetParentSemigroup(h, s);
+  
+  lambda_o:=LambdaOrb(s);
+  lambda_m:=OrbSCCLookup(lambda_o)[Position(lambda_o, LambdaFunc(s)(f))];
 
-  o:=LambdaOrb(s);
-  SetLambdaOrb(h, o);
-  SetLambdaOrbSCCIndex(h, OrbSCCLookup(o)[Position(o, LambdaFunc(s)(f))]); 
+  if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then
+    rho_o:=RhoOrb(s);
+    i:=Position(rho_o, RhoFunc(s)(f));
+  else
+    rho_o:=GradedRhoOrb(s, f, true);
+    i:=RhoPos(rho_o);#Position(o, RhoFunc(s)(f));
+  fi;
 
-  #JDM why not add if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then .. 
-  o:=GradedRhoOrb(s, f, true);
-  SetRhoOrb(h, o);
-  SetRhoOrbSCCIndex(h, OrbSCCLookup(o)[RhoPos(o)]);
+  rho_m:=OrbSCCLookup(rho_o)[i];     
 
-  SetRepresentative(h, f);
-  SetEquivalenceClassRelation(h, GreensHRelation(s));
-  SetIsGreensClassNC(h, false);
-  return h;
+  return CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o, f, false);
 end);
 
 # mod for 1.0! - GreensHClassOfElementNC - "for an acting semigp and elt."
