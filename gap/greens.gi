@@ -3583,36 +3583,30 @@ end);
 InstallMethod(DClassOfRClass, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local s, f, d, o, rho_l, m;
+  local s, f, nc, o, i, m;
 
   s:=ParentSemigroup(r); 
   f:=Representative(r);
-  d:=Objectify(DClassType(s), rec());
+  nc:=IsGreensClassNC(r);
 
-  SetParentSemigroup(d, s);
-  SetLambdaOrbSCCIndex(d, LambdaOrbSCCIndex(r));
-  SetLambdaOrb(d, LambdaOrb(r));
-  
-  o:=GradedRhoOrb(s, f, IsGreensClassNC(r)<>true);
-  SetRhoOrb(d, o);
-
-  if IsGreensClassNC(r) then 
-    SetRhoOrbSCCIndex(d, 1);
-    SetRepresentative(d, f);
+  if HasRhoOrb(s) and IsClosed(RhoOrb(s)) and not nc then 
+    o:=RhoOrb(s);
+    i:=Position(o, RhoFunc(s)(f));
   else
-    rho_l:=o!.rho_l; #position of RhoFunc(s)(f) in o 
-    m:=OrbSCCLookup(o)[rho_l];
-    SetRhoOrbSCCIndex(d, m);
-    if rho_l<>OrbSCC(o)[m][1] then 
-      SetRepresentative(d, RhoOrbMult(o, m, rho_l)[2]*f);
-    else
-      SetRepresentative(d, f);
-    fi;
-    Unbind(o!.rho_l);
+    o:=GradedRhoOrb(s, f, nc<>true);
+    i:=RhoPos(o);
   fi;
 
-  SetIsGreensClassNC(d, IsGreensClassNC(r)); 
-  return d;
+  if nc then 
+    m:=1;
+  else
+    m:=OrbSCCLookup(o)[i];
+    if i<>OrbSCC(o)[m][1] then 
+      f:=RhoOrbMult(o, m, i)[2]*f;
+    fi;
+  fi;
+
+  return CreateDClassNC(s, LambdaOrbSCCIndex(r), LambdaOrb(r), m, o, f, nc);
 end);
 
 # new for 1.0! - DClassOfHClass - "for a H-class of an acting semigroup"
