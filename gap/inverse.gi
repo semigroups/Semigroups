@@ -361,6 +361,14 @@ function(h)
   return CreateDClassNC(s, m, o, fail, fail, f, IsGreensClassNC(h));
 end);
 
+# new for 1.0! - LClassOfHClass - "for inverse op H-class
+##############################################################################
+
+InstallMethod(LClassOfHClass, "for an inverse op H-class",
+[IsInverseOpClass and IsGreensHClass and IsActingSemigroupGreensClass],
+# use non-NC so that rho value of f is rectified
+h-> CreateInverseOpLClass(ParentSemigroup(h), LambdaOrbSCCIndex(h),
+LambdaOrb(h), Representative(h), IsGreensClassNC(h)));
 
 # new for 1.0! - DClassReps - "for an acting semigroup with inversion"
 ##############################################################################

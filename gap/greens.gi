@@ -3590,7 +3590,7 @@ end);
 # new for 1.0! - LClassOfHClass - "for a H-class of an acting semigroup"
 #############################################################################
 
-# same method for regular, should be different method for inverse JDM
+# same method for regular, different method for inverse
 
 InstallMethod(LClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
@@ -3601,7 +3601,7 @@ h-> CreateLClass(ParentSemigroup(h), RhoOrbSCCIndex(h), RhoOrb(h),
 # new for 1.0! - RClassOfHClass - "for a H-class of an acting semigroup"
 #############################################################################
 
-# no new method required for regular/inverse semigroups. 
+# same method for regular/inverse semigroups. 
 
 InstallMethod(RClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
