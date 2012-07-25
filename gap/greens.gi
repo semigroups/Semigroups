@@ -1702,8 +1702,8 @@ function(d)
       if not HasIsRegularDClass(d) then 
         SetIsRegularDClass(d, true);
       fi;
-      return GreensHClassOfElementNC(d, 
-       IdempotentLambdaRhoCreator(s)(o[i], rho));
+      return CreateHClass(s, LambdaOrbSCCIndex(d), o, RhoOrbSCCIndex(d),
+       RhoOrb(d), IdempotentLambdaRhoCreator(s)(o[i], rho), IsGreensClassNC(d));
     fi;
   od;
 
@@ -3600,7 +3600,6 @@ end);
 
 # new for 1.0! - LClassOfHClass - "for a H-class of an acting semigroup"
 #############################################################################
-
 # same method for regular, different method for inverse
 
 InstallMethod(LClassOfHClass, "for an H-class of an acting semigroup",
