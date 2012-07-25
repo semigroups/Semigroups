@@ -471,12 +471,12 @@ function(l)
   nc:=IsGreensClassNC(l);
   s:=ParentSemigroup(l);
 
-  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
+  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) and not nc then 
     lambda_o:=LambdaOrb(s);
     lambda_l:=Position(lambda_o, LambdaFunc(s)(f));
   else
     lambda_o:=GradedLambdaOrb(s, f, nc<>true);
-    lambda_l:=lambda_o!.lambda_l;
+    lambda_l:=LambdaPos(lambda_o);
   fi;
   lambda_m:=OrbSCCLookup(lambda_o)[lambda_l];
 
@@ -496,38 +496,40 @@ end);
 # new for 1.0! - GreensHClasses - "for R-class of regular acting semigroup"
 ##############################################################################
 
-# same method for inverse
+# different method for inverse
 
 InstallOtherMethod(GreensHClasses, "for R-class of regular acting semigroup",
 [IsRegularRClass and IsActingSemigroupGreensClass],
 function(r)
-  local o, m, scc, mults, f, out, k, j;
 
-  o:=LambdaOrb(r);
-  m:=LambdaOrbSCCIndex(r);
- 
-  scc:=OrbSCC(o)[m];
-  mults:=LambdaOrbMults(o, m);
+  lambda_o:=LambdaOrb(r);
+  lambda_m:=LambdaOrbSCCIndex(r);
+  scc:=OrbSCC(lambda_o)[lambda_m];
+  mults:=LambdaOrbMults(lambda_o, lambda_m);
+
   f:=Representative(r);
+  nc:=IsGreensClassNC(r);
+  s:=ParentSemigroup(r);
+
+  if HasRhoOrb(s) and IsClosed(RhoOrb(s)) and not nc then 
+    rho_o:=RhoOrb(s);
+    rho_l:=Position(rho_o, RhoFunc(s)(f));
+  else
+    rho_o:=GradedRhoOrb(s, f, nc<>true);
+    rho_l:=RhoPos(rho_o);
+  fi;
+  rho_m:=OrbSCCLookup(rho_o)[rho_l];
 
   out:=EmptyPlist(Length(scc));
   k:=0;
  
-  if not IsGreensClassNC(r) then 
-    for j in scc do
-      k:=k+1;
-      out[k]:=GreensHClassOfElementNC(r, f*mults[j][1]);
-      SetRClassOfHClass(out[k], r);
-      ResetFilterObj(out[k], IsGreensClassNC); 
-      #JDM also set schutz gp here!?
-    od;
-  else
-    for j in scc do
-      k:=k+1;
-      out[k]:=GreensHClassOfElementNC(r, f*mults[j][1]);
-      SetRClassOfHClass(out[k], r);
-    od; 
-  fi;
+  for j in scc do
+    k:=k+1;
+    out[k]:=CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o,
+     f*mults[j][1], nc);
+    SetLClassOfHClass(out[k], l);
+  od;
+  
   return out;
 end);
 

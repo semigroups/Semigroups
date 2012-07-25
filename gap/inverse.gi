@@ -655,6 +655,36 @@ function(l)
   return out;
 end);
 
+# new for 1.0! - GreensHClasses - "for inverse op R-class of acting semigroup"
+##############################################################################
+
+InstallOtherMethod(GreensHClasses, "for inverse op R-class of acting semigroup",
+[IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
+function(r)
+  local o, m, scc, mults, f, nc, s, out, k, j;
+  
+  o:=LambdaOrb(r);
+  m:=LambdaOrbSCCIndex(r);
+  scc:=OrbSCC(o)[m];
+  mults:=LambdaOrbMults(o, m);
+  
+  f:=Representative(r);
+  nc:=IsGreensClassNC(r);
+  s:=ParentSemigroup(r);
+  
+  out:=EmptyPlist(Length(scc));
+  k:=0;
+  
+  for j in scc do
+    k:=k+1;
+    out[k]:=CreateHClass(s, m, o, fail, fail, f*mults[j][1], nc);
+    SetRClassOfHClass(out[k], r);
+  od;
+  
+  return out;
+end);
+
+
 # new for 0.7! - GreensLClasses - for acting semigroup with inverse op
 ##############################################################################
     
