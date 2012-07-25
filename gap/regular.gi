@@ -1565,7 +1565,19 @@ end);
 
 InstallMethod(RhoOrbStabChain, "for a regular D-class",
 [IsRegularDClass and IsActingSemigroupGreensClass],
-d-> StabChainImmutable(SchutzenbergerGroup(d)));
+function(d)
+  local g;
+
+  g:=SchutzenbergerGroup(d);
+
+  if IsTrivial(g) then 
+    return false;
+  elif IsNaturalSymmetricGroup(g) then 
+    return true;
+  fi;
+
+  return StabChainImmutable(g);
+end);
 
 #SSS
 

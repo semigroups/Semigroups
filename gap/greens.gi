@@ -125,7 +125,6 @@ function(d)
   rho_schutz:=rho_schutz^p;
 
   SetRhoOrbStabChain(d, StabChainImmutable(rho_schutz));
-  #SetRhoOrbStabChain(d, StabilizerChain(rho_schutz));
   
   if lambda_stab=false then 
     SetRhoCosets(d, Enumerator(rho_schutz));
