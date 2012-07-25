@@ -3661,6 +3661,8 @@ end);
 
 # separate methods for both regular and inverse semigroups.
 
+# Note that these are not rectified!
+
 InstallMethod(DClassReps, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
@@ -3683,7 +3685,7 @@ end);
 # use (if nothing much is known) IteratorOfRClasses or if everything is know
 # just use RClasses.
 
-# no method for regular/inverse semigroup just yet
+# no method for regular/inverse semigroup just yet, JDM
 
 InstallMethod(EnumeratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 

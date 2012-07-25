@@ -207,29 +207,21 @@ end);
 # new for 1.0! - DClassReps - "for a regular acting semigroup"
 ##############################################################################
 
+# same method for inverse.
+
+# Note that these are not rectified!
+
 InstallOtherMethod(DClassReps, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
-  local lambda_o, r, i, out, rho_o, scc, lookup, rhofunc, f, l, m;
+  local o, r, out, m;
 
-  lambda_o:=LambdaOrb(s);
-  r:=Length(OrbSCC(lambda_o));
-  
+  o:=LambdaOrb(s);
+  r:=Length(OrbSCC(o));
   out:=EmptyPlist(r);
-  
-  rho_o:=RhoOrb(s);
-  scc:=OrbSCC(rho_o);
-  lookup:=OrbSCCLookup(rho_o);
-  rhofunc:=RhoFunc(s);
 
   for m in [2..r] do 
-    f:=LambdaOrbRep(lambda_o, m);
-    l:=Position(rho_o, rhofunc(f));
-
-    if l<>scc[lookup[l]][1] then 
-      f:=RhoOrbMult(rho_o, lookup[l], l)[2]*f;
-    fi;
-    out[m-1]:=f;
+    out[m-1]:=LambdaOrbRep(o, m);
   od;
   return out;
 end);
