@@ -1364,21 +1364,8 @@ end);
 InstallOtherMethod(GreensHClassOfElementNC, "for an acting semigp and elt",
 [IsActingSemigroup, IsActingElt],
 function(s, f)
-  local h;
-
-  h:=Objectify(HClassType(s), rec());
-  SetParentSemigroup(h, s);
-
-  SetLambdaOrb(h, GradedLambdaOrb(s, f, false));
-  SetLambdaOrbSCCIndex(h, 1);
- 
-  SetRhoOrb(h, GradedRhoOrb(s, f, false));
-  SetRhoOrbSCCIndex(h, 1);
-
-  SetRepresentative(h, f);
-  SetEquivalenceClassRelation(h, GreensHRelation(s));
-  SetIsGreensClassNC(h, true);
-  return h;
+  return CreateHClass(s, 1, GradedLambdaOrb(s, f, false), 
+   1, GradedRhoOrb(s, f, false), f, true);
 end);
 
 # new for 1.0! - GreensHClassOfElement - "for D-class and elt."
