@@ -135,7 +135,7 @@ end);
 # new for 1.0! - SchutzenbergerGroup - "for a H-class of an acting semigroup"
 #############################################################################
 
-# same method for regular/inverse
+# different method for regular/inverse
 
 InstallMethod(SchutzenbergerGroup, "for a H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],

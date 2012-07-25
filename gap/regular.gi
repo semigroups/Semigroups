@@ -20,7 +20,7 @@ InstallOtherMethod(DClassType, "for a regular acting semigroup",
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsRegularDClass and IsGreensDClass 
-         and IsActingSemigroupGreensClass);
+         IsActingSemigroupGreensClass);
 end);
 
 # new for 1.0! - HClassType - "for a regular acting semigroup"
@@ -32,8 +32,8 @@ InstallOtherMethod(HClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsGreensHClass and
-         IsActingSemigroupGreensClass);
+         IsEquivalenceClassDefaultRep and IsRegularHClass and IsGreensHClass 
+         and IsActingSemigroupGreensClass);
 end);
 
 # new for 1.0! - LClassType - "for a regular acting semigroup"
@@ -1566,7 +1566,6 @@ end);
 InstallMethod(RhoOrbStabChain, "for a regular D-class",
 [IsRegularDClass and IsActingSemigroupGreensClass],
 d-> StabChainImmutable(SchutzenbergerGroup(d)));
-#d-> StabilizerChain(SchutzenbergerGroup(d)));
 
 #SSS
 
@@ -1578,6 +1577,15 @@ d-> StabChainImmutable(SchutzenbergerGroup(d)));
 InstallMethod(SchutzenbergerGroup, "for D-class of regular acting semigroup",
 [IsRegularDClass and IsActingSemigroupGreensClass],
 d-> LambdaOrbSchutzGp(LambdaOrb(d), LambdaOrbSCCIndex(d)));
+
+# new for 1.0! - SchutzenbergerGroup - "for H-class of regular acting semigroup"
+#############################################################################
+
+# same method for inverse
+
+InstallMethod(SchutzenbergerGroup, "for H-class of regular acting semigroup",
+[IsActingSemigroupGreensClass and IsRegularHClass],
+h-> LambdaOrbSchutzGp(LambdaOrb(h), LambdaOrbSCCIndex(h)));
 
 # new for 1.0! - Size - "for a regular acting semigroup"
 ############################################################################
