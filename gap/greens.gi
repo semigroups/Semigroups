@@ -1973,6 +1973,10 @@ function(h)
   return IdempotentLambdaRhoTester(s)(LambdaFunc(s)(f), RhoFunc(s)(f));
 end);
 
+InstallOtherMethod(IsRegularHClass, "for an H-class of an acting semigroup",
+[IsGreensHClass and IsActingSemigroupGreensClass],
+h-> IsRegularRClass(RClassOfHClass(h)));
+
 # mod for 1.0! - IsGroupHClass - "for an acting semi Green's class"
 ############################################################################
 
