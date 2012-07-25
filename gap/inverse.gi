@@ -812,6 +812,7 @@ InstallOtherMethod(GreensHClassOfElement,
 "for an acting semigp with inverse op and elt",
 [IsActingSemigroupWithInverseOp, IsActingElt],
 function(s, f)
+  local o, m;
 
   if not f in s then
     Error("the element does not belong to the semigroup,");
@@ -1011,7 +1012,8 @@ end);
 
 InstallOtherMethod(GroupHClass, "for an inverse op D-class",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], 
-d-> GreensHClassOfElementNC(d, Representative(d)));
+d-> CreateHClass(ParentSemigroup(d), LambdaOrbSCCIndex(d), LambdaOrb(d), fail, 
+fail, Representative(d), IsGreensClassNC(d)));
 
 #III
 

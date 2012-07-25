@@ -1371,7 +1371,7 @@ end);
 # new for 1.0! - GreensHClassOfElement - "for D-class and elt."
 ############################################################################
 
-# same method for regular/inverse.
+# same method for regular, different method for inverse
 
 InstallOtherMethod(GreensHClassOfElement, "for D-class and elt",
 [IsActingSemigroupGreensClass and IsGreensDClass, IsActingElt],
