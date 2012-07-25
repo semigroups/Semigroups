@@ -905,29 +905,21 @@ end);
 InstallOtherMethod(GreensRClasses, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)         
-  local l, o, scc, out, type, rrel, i, f, mults, r, m, j;
+  local o, scc, len, out, i, f, mults, m, j;
                     
   o:=LambdaOrb(s);
   scc:=OrbSCC(o);   
+  len:=Length(scc);
   out:=EmptyPlist(Length(o));
-  type:=RClassType(s);
-  rrel:=GreensRRelation(s);
 
   i:=0;             
                     
-  for m in [2..Length(scc)] do
+  for m in [2..len] do
     f:=RightOne(LambdaOrbRep(o, m));
     mults:=LambdaOrbMults(o, m);
     for j in scc[m] do
-      i:=i+1;       
-      r:=Objectify(type, rec());
-      SetParentSemigroup(r, s);
-      SetLambdaOrbSCCIndex(r, m);
-      SetLambdaOrb(r, o);
-      SetRepresentative(r, mults[j][1]*f);
-      SetEquivalenceClassRelation(r, rrel);
-      SetIsGreensClassNC(r, false);
-      out[i]:=r;
+      i:=i+1;    
+      out[i]:=CreateRClassNC(s, m, o, mults[j][1]*f, false);
     od;             
   od;
 
