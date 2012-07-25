@@ -3517,34 +3517,10 @@ end);
 # new for 1.0! - DClassOfLClass - "for a L-class of an acting semigroup"
 #############################################################################
 
-# same method for regular, different method for inverse
+# same method for regular/inverse
 
 # only for L-classes not created during GreensLClasses! Those created via
 # GreensLClasses should already know DClassOfLClass
-
-#JDM maybe the old method was clearer ...
-
-#InstallMethod(DClassOfLClass, "for an L-class of an acting semigroup",
-#[IsGreensLClass and IsActingSemigroupGreensClass],
-#function(l)
-#  local s, f, d, o, lambda_l, m;
-
-#  s:=ParentSemigroup(l);
-#  m:=fail;
-#  nc:=IsGreensClassNC(l); 
-
-#  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) and not nc then 
-#    o:=LambdaOrb(s);
-#  else
-#    o:=GradedLambdaOrb(s, f, nc<>true);
-#    if nc then 
-#      m:=1;
-#    fi;
-#  fi; 
-#
-#  return CreateDClass(ParentSemigroup(l), m, o, RhoOrbSCCIndex(l), RhoOrb(l),
-#   Representative(l), nc, nc<>true, false);
-#end);
 
 InstallMethod(DClassOfLClass, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
@@ -3571,14 +3547,17 @@ function(l)
       f:=f*LambdaOrbMult(o, m, i)[2];
     fi;
   fi;
-
+  #JDM is this a good idea? or should I give a separate method 
+  if HasIsInverseOpClass(l) and IsInverseOpClass(l) then 
+    return CreateDClassNC(s, m, o, fail, fail, f, nc);
+  fi;
   return CreateDClassNC(s, m, o, RhoOrbSCCIndex(l), RhoOrb(l), f, nc);
 end);
 
 # new for 1.0! - DClassOfRClass - "for a R-class of an acting semigroup"
 #############################################################################
 
-# same method for regular, should be a different method for inverse JDM
+# same method for regular, different method for inverse.
 
 InstallMethod(DClassOfRClass, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
@@ -3617,41 +3596,18 @@ end);
 InstallMethod(DClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
-  local s, f, d, o, m, l;
-
-  s:=ParentSemigroup(h); 
-  f:=Representative(h);
-  d:=Objectify(DClassType(s), rec());
-  SetParentSemigroup(d, s);
+  local s, lambda_o, lambda_m, rho_o, rho_m, rectify;
   
-  o:=LambdaOrb(h);
-  m:=LambdaOrbSCCIndex(h);
-  
-  SetLambdaOrbSCCIndex(d, m);
-  SetLambdaOrb(d, o);
-  
-  l:=Position(o, LambdaFunc(s)(f));
+  s:=ParentSemigroup(h);
+  lambda_o:=LambdaOrb(h);
+  lambda_m:=LambdaOrbSCCIndex(h);
+  rho_o:=RhoOrb(h);
+  rho_m:=RhoOrbSCCIndex(h);
 
-  if l<>OrbSCC(o)[m][1] then 
-    f:=f*LambdaOrbMult(o, m, l)[2];
-  fi;
+  rectify:=RectifyRho(s, rho_o, Representative(h), fail, rho_m);
+  rectify:=RectifyLambda(s, lambda_o, rectify.rep, fail, lambda_m);
 
-  o:=RhoOrb(h);
-  m:=RhoOrbSCCIndex(h);
-
-  SetRhoOrbSCCIndex(d, m);
-  SetRhoOrb(d, o);
-  
-  l:=Position(o, RhoFunc(s)(f));
-
-  if l<>OrbSCC(o)[m][1] then 
-    f:=RhoOrbMult(o, m, l)[2]*f;
-  fi;
-
-  SetRepresentative(d, f);
-  SetEquivalenceClassRelation(d, GreensDRelation(s));
-  SetIsGreensClassNC(d, IsGreensClassNC(h)); 
-  return d;
+  return CreateDClassNC(s, lambda_m, lambda_o, rho_m, rho_o, rectify.rep, IsGreensClassNC(h));
 end);
 
 # new for 1.0! - LClassOfHClass - "for a H-class of an acting semigroup"

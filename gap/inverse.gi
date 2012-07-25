@@ -15,6 +15,11 @@
 ## Methods for inverse acting semigroups consisting of acting elements with a
 ## ^-1 operator. 
 
+
+
+InstallMethod(IsInverseOpClass, "for a Green's class",
+[IsActingSemigroupGreensClass], ReturnFalse);
+
 # new for 1.0! - DClassType - "for acting semigroup with inverse op"
 ############################################################################
 
@@ -326,33 +331,25 @@ end);
 
 #DDD
 
-# new for 1.0! - DClassOfLClass - "for a inverse op L-class acting semigroup"
+# new for 1.0! - DClassOfRClass - "for a inverse op R-class acting semigroup"
 #############################################################################
 
-InstallOtherMethod(DClassOfLClass, "for inverse op L-class", 
-[IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
-function(l)
+InstallOtherMethod(DClassOfRClass, "for inverse op R-class", 
+[IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
+function(r)
   local s, o, m, f, d, i;
 
-  s:=ParentSemigroup(l);
-  o:=LambdaOrb(l); 
-  m:=LambdaOrbSCCIndex(l);
-  f:=Representative(l);
-
-  d:=Objectify(DClassType(s), rec());
-  SetParentSemigroup(d, s);
-  SetLambdaOrb(d, o);
-  SetLambdaOrbSCCIndex(d, m);
+  s:=ParentSemigroup(r);
+  o:=LambdaOrb(r); 
+  m:=LambdaOrbSCCIndex(r);
+  f:=Representative(r);
+  
   i:=Position(o, LambdaFunc(s)(f));
-
+  
   if i<>OrbSCC(o)[m][1] then
-    SetRepresentative(d, f*LambdaOrbMult(o, m, i)[2]);
-  else
-    SetRepresentative(d, f);
+    f:=f*LambdaOrbMult(o, m, i)[2];
   fi;
-
-  SetIsGreensClassNC(d, IsGreensClassNC(l));
-  return d;
+  return CreateDClassNC(s, m, o, fail, fail, f, IsGreensClassNC(r));
 end);
 
 # new for 1.0! - DClassReps - "for an acting semigroup with inversion"
