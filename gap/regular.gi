@@ -1127,8 +1127,6 @@ CallFuncList(CreateLClass, x), [IsIteratorOfLClasses]));
 
 # different method for inverse
 
-#JDM this should be updated, like IteratorOfLClassData
-
 InstallMethod(IteratorOfRClassData, "for regular acting semigp",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
@@ -1166,10 +1164,8 @@ local iter, scc;
         fi;
 
         iter!.i:=i; 
-        
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)); 
-        o:=GradedLambdaOrb(s, o[i], true);
-        return [s, 1, o, RectifyLambda(s, o, f), false];
+        return [s, fail, GradedLambdaOrb(s, f, true), f, false]; 
       end,
 
       ShallowCopy:=iter-> rec(i:=1)));
@@ -1210,9 +1206,7 @@ local iter, scc;
 
         iter!.i:=i; iter!.m:=m;
  
-        # f ok here? JDM
-        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][i])); 
-        return [s, m, LambdaOrb(s), RectifyLambda(s, LambdaOrb(s), f), false];
+        return [s, fail, LambdaOrb(s), RhoOrbRep(o, m), false];
       end,
 
       ShallowCopy:=iter-> rec(m:=1, i:=0,
