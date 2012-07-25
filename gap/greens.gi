@@ -3632,7 +3632,6 @@ function(h)
   return r;
 end);
 
-
 # mod for 1.0! - DClassReps - "for an acting semigroup"
 #############################################################################
 

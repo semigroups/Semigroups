@@ -1224,7 +1224,7 @@ end);
 InstallMethod(IteratorOfRClasses, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 s-> IteratorByIterator(IteratorOfRClassData(s), x->
-CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
+CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
 
 #LLL
 
@@ -1289,6 +1289,8 @@ end);
 
 # different method for inverse
 
+# note that these are not rectified!!
+
 InstallOtherMethod(RClassReps, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
@@ -1303,7 +1305,7 @@ function(s)
   n:=0;
 
   for m in [2..len] do
-    f:=RectifyLambda(s, lambda_o, RhoOrbRep(rho_o, m));
+    f:=RhoOrbRep(rho_o, m);
     mults:=RhoOrbMults(rho_o, m);
     for j in scc[m] do
       n:=n+1;
@@ -1313,7 +1315,7 @@ function(s)
   return out;
 end);
 
-# new for 1.0! - RClassReps - "for regular acting semigroup 
+# new for 1.0! - RClassReps - "for regular D-class of acting semigroup 
 ###############################################################################
 
 # different method for inverse
