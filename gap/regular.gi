@@ -673,29 +673,20 @@ end);
 InstallOtherMethod(GreensRClassOfElement, "for regular acting semi and elt",
 [IsRegularSemigroup and IsActingSemigroup, IsActingElt],
 function(s, f)
-  local r, o, rectify;
+  local o;
 
   if not f in s then 
     Error("the element does not belong to the semigroup,");
     return;
   fi;
-
-  r:=Objectify(RClassType(s), rec());
-  SetParentSemigroup(r, s);
-  SetEquivalenceClassRelation(r, GreensRRelation(s));
-  SetIsGreensClassNC(r, false);
-
-  if IsClosed(LambdaOrb(s)) then 
+  
+  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
     o:=LambdaOrb(s);
   else
     o:=GradedLambdaOrb(s, f, true);
   fi;
 
-  rectify:=RectifyLambda(s, o, f); 
-  SetLambdaOrb(r, o);
-  SetLambdaOrbSCCIndex(r, rectify.m);
-  SetRepresentative(r, rectify.rep);
-  return r;
+  return CreateRClass(s, fail, o, f, false); 
 end);
 
 #HHH
