@@ -1036,7 +1036,7 @@ function(s)
     SetParentSemigroup(d, s);
     SetLambdaOrbSCCIndex(d, arg[2]);
     SetLambdaOrb(d, arg[3]);
-    SetSemigroupDataIndex(d, arg[5]);
+    SetSemigroupDataIndex(d, arg[6]);
 
     #JDM expand!
     rectify:=RectifyRho(arg[1], o, arg[4]);
@@ -1668,7 +1668,8 @@ function(s, f)
     Error("the element does not belong to the semigroup,");
     return;
   fi;
-  data:=SemigroupData(s)[Position(data, f)];
+  data:=SemigroupData(s);
+  data:=data[Position(data, f)];
   r:=CallFuncList(CreateRClassNC, data);
   SetSemigroupDataIndex(r, data[6]);
   return r;
