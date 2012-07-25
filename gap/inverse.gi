@@ -358,7 +358,7 @@ function(h)
   o:=LambdaOrb(h); 
   m:=LambdaOrbSCCIndex(h);
   f:=RectifyLambda(s, o, Representative(h), fail, m).rep;
-  return CreateDClassNC(s, m, o, fail, fail, f, IsGreensClassNC(r));
+  return CreateDClassNC(s, m, o, fail, fail, f, IsGreensClassNC(h));
 end);
 
 

@@ -593,8 +593,6 @@ end);
 # Usage: arg[1] = semigroup; arg[2] = lambda orb scc index;
 # arg[3] = lambda orb; arg[4] = rep; arg[5] = Green's class NC
 
-# only use for R-classes created from SemigroupData. 
-
 InstallGlobalFunction(CreateRClass,
 function(s, m, o, rep, nc)
   local rectify;
@@ -1059,49 +1057,43 @@ end);
 # new for 1.0! - GreensHClasses - "for an R-class of an acting semigroup"
 ##############################################################################
 
-#JDm this should be updated!
-
 # different method for regular/inverse
 
 InstallOtherMethod(GreensHClasses, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local o, m, scc, mults, d, cosets, f, out, k, i, j;
+  local lambda_o, lambda_m, s, scc, mults, d, rho_o, rho_m, cosets, f, nc, out, k, i, j;
 
-  o:=LambdaOrb(r); 
-  m:=LambdaOrbSCCIndex(r);
+  lambda_o:=LambdaOrb(r); 
+  lambda_m:=LambdaOrbSCCIndex(r);
+  s:=ParentSemigroup(r);
+
+  scc:=OrbSCC(lambda_o)[lambda_m];
+  mults:=LambdaOrbMults(lambda_o, lambda_m);
   
-  scc:=OrbSCC(o)[m];
-  mults:=LambdaOrbMults(o, m);
   d:=DClassOfRClass(r);
+  rho_o:=RhoOrb(d); 
+  rho_m:=RhoOrbSCCIndex(d);
+
   cosets:=LambdaCosets(d);
   f:=Representative(r);
+  nc:=IsGreensClassNC(r);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
- 
-  if not IsGreensClassNC(r) then 
-    for i in cosets do 
-      i:=f*i;
-      for j in scc do 
-        k:=k+1; 
-        out[k]:=GreensHClassOfElementNC(d, i*mults[j][1]);
-        SetRClassOfHClass(out[k], r);
-        ResetFilterObj(out[k], IsGreensClassNC);
-        #JDM also set schutz gp here!
-      od;
+
+  for i in cosets do 
+    i:=f*i;
+    for j in scc do 
+      k:=k+1;
+      # JDM maybe a bad idea to use CreateHClass here, perhaps expand?
+      out[k]:=CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o, 
+       i*mults[j][1], nc);
+      SetRClassOfHClass(out[k], r);
+      SetDClassOfHClass(out[k], d);
+      #JDM also set schutz gp here!
     od;
-  else
-    for i in cosets do 
-      i:=f*i;
-      for j in scc do 
-        k:=k+1; 
-        out[k]:=GreensHClassOfElementNC(d, i*mults[j][1]);
-        SetRClassOfHClass(out[k], r);
-        #JDM also set schutz gp here!
-      od;
-    od;
-  fi;
+  od;
   return out;
 end);
 
@@ -1481,7 +1473,7 @@ end);
 InstallOtherMethod(GreensHClassOfElement, "for R-class and elt",
 [IsActingSemigroupGreensClass and IsGreensRClass, IsActingElt],
 function(r, f)
-  local s, h, o;
+  local s, nc, o, i, h;
 
   if not f in r then
     Error("the element does not belong to the Green's class,");
@@ -1489,26 +1481,19 @@ function(r, f)
   fi;
 
   s:=ParentSemigroup(r);
-  h:=Objectify(HClassType(s), rec());
-  SetParentSemigroup(h, s);
+  nc:=IsGreensClassNC(r);
 
-  SetLambdaOrb(h, LambdaOrb(r));
-  SetLambdaOrbSCCIndex(h, LambdaOrbSCCIndex(r));
- 
-  #JDM why not add if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then .. 
-  o:=GradedRhoOrb(s, f, IsGreensClassNC(r)<>true);
-  SetRhoOrb(h, o);
-
-  if IsGreensClassNC(r) then 
-    SetRhoOrbSCCIndex(h, 1);
+  if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then 
+    o:=RhoOrb(s);
+    i:=Position(o, RhoFunc(s)(f));
   else
-    SetRhoOrbSCCIndex(h, OrbSCCLookup(o)[Position(o, RhoFunc(s)(f))]);
+    o:=GradedRhoOrb(s, f, nc<>true);
+    i:=RhoPos(o);
   fi;
-  
-  SetRepresentative(h, f);
-  SetEquivalenceClassRelation(h, GreensHRelation(s));
+
+  h:=CreateHClass(s, LambdaOrbSCCIndex(r), LambdaOrb(r), OrbSCCLookup(o)[i], 
+   o, f, nc);
   SetRClassOfHClass(h, r);
-  SetIsGreensClassNC(h, IsGreensClassNC(r));
 
   return h;
 end);
