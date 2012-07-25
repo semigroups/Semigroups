@@ -750,10 +750,10 @@ function(s, f)
 end);
 
 
-# new for 1.0! - GreensHClassOfElement - "for inverse op L-class and elt."
+# new for 1.0! - GreensHClassOfElement - "for inverse op class and elt."
 ############################################################################
 
-InstallOtherMethod(GreensHClassOfElement, "for L-class and elt",
+InstallOtherMethod(GreensHClassOfElement, "for inverse op class and elt",
 [IsActingSemigroupGreensClass and IsInverseOpClass, IsActingElt],
 function(x, f)
   local h;
@@ -780,14 +780,21 @@ end);
 # new for 1.0! - GreensHClassOfElementNC - "for inverse op L-class and elt."
 ############################################################################
 
-InstallOtherMethod(GreensHClassOfElementNC, "for L-class and elt",
+InstallOtherMethod(GreensHClassOfElementNC, "for inverse op class and elt",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensLClass, IsActingElt],
-function(l, f)
+function(x, f)
   local h;
   
-  h:=CreateHClass(ParentSemigroup(l), LambdaOrbSCCIndex(l), LambdaOrb(l), fail,
+  h:=CreateHClass(ParentSemigroup(x), LambdaOrbSCCIndex(x), LambdaOrb(x), fail,
    fail, f, true);
-  SetLClassOfHClass(h, l);
+
+  if IsGreensLClass(x) then 
+    SetLClassOfHClass(h, x);
+  elif IsGreensRClass(x) then 
+    SetRClassOfHClass(h, x);
+  elif IsGreensDClass(x) then 
+    SetDClassOfHClass(h, x);
+  fi;
   
   return h;
 end);
