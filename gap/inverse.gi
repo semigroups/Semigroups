@@ -12,8 +12,52 @@
 
 # the first three functions should be updated!
 
-# methods for inverse acting semigroups consisting of acting elements with a
-# ^-1 operator. 
+## Methods for inverse acting semigroups consisting of acting elements with a
+## ^-1 operator. 
+
+# new for 1.0! - DClassType - "for acting semigroup with inverse op"
+############################################################################
+
+InstallOtherMethod(DClassType, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensDClass
+         and IsActingSemigroupGreensClass);
+end);
+
+# new for 1.0! - HClassType - "for acting semigroup with inverse op"
+############################################################################
+
+InstallOtherMethod(HClassType, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensHClass
+         and IsActingSemigroupGreensClass);
+end);
+
+# new for 1.0! - LClassType - "for acting semigroup with inverse op"
+############################################################################
+
+InstallOtherMethod(LClassType, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensLClass
+         and IsActingSemigroupGreensClass);
+end);
+
+# new for 1.0! - RClassType - "for acting semigroup with inverse op"
+############################################################################
+
+InstallOtherMethod(RClassType, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s)
+  return NewType( FamilyObj( s ), IsEquivalenceClass and
+         IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensRClass
+         and IsActingSemigroupGreensClass);
+end);
 
 # new for 1.0! - \in - "for an acting semigroup with inversion and elt"
 ##############################################################################

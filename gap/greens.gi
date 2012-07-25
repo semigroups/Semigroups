@@ -2295,6 +2295,8 @@ end);
 # new for 1.0! - IteratorOfDClasses - "for an acting semigroup"
 #############################################################################
 
+#JDM this should be improved at some point
+
 # different method for regular/inverse
 
 InstallMethod(IteratorOfDClasses, "for an acting semigroup",
