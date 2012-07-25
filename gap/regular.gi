@@ -793,6 +793,9 @@ function(l)
   return out;
 end);
 
+# new for 1.0! - HClassReps - "for a regular R-class of an acting semigroup"
+##############################################################################
+
 # same method for inverse
 
 InstallOtherMethod(HClassReps, "for a regular R-class of an acting semigroup",
@@ -1388,8 +1391,7 @@ end);
 # new for 1.0! - NrHClasses - "for a D-class of regular acting semigroup"
 ############################################################################
 
-# same method for inverse semigroups (although there could be one if we
-# have to introduce IsInverseActingSemigroupGreensClass).
+# different method for inverse.
 
 InstallOtherMethod(NrHClasses, "for a D-class of regular acting semigroup",
 [IsActingSemigroupGreensClass and IsRegularDClass],

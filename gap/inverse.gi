@@ -1405,6 +1405,13 @@ InstallOtherMethod(NrRClasses, "for an acting semigroup with inverse op",
 InstallOtherMethod(NrRClasses, "for inverse op D-class",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], NrLClasses);
 
+# new for 1.0! - NrHClasses - "for an inverse op D-class of acting semigroup"
+############################################################################
+
+InstallOtherMethod(NrHClasses, "for an inverse op D-class of acting semigroup",
+[IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
+l-> Length(LambdaOrbSCC(l))^2);
+
 # new for 1.0! - NrHClasses - "for an inverse op L-class of acting semigroup"
 ############################################################################
 

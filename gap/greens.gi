@@ -2352,6 +2352,8 @@ end);
 #############################################################################
 # JDM could use IteratorOfRClasses here instead, not sure which is better...
 
+# JDM should be different method for regular/inverse
+
 InstallMethod(IteratorOfHClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
@@ -2488,7 +2490,8 @@ s-> IteratorByIterator(IteratorOfDClasses(s), Representative,
 # new for 1.0! - IteratorOfHClassReps - "for an acting semigroup"
 #############################################################################
 
-#?? method for regular/inverse
+#JDM should be a different  method for regular/inverse using
+#IteratorOfHClassData (not yet written);
 
 InstallMethod(IteratorOfHClassReps, "for an acting semigroup",
 [IsActingSemigroup],
