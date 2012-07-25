@@ -3591,7 +3591,7 @@ end);
 # new for 1.0! - DClassOfHClass - "for a H-class of an acting semigroup"
 #############################################################################
 
-# no new method required for regular/inverse semigroups. 
+# same method for regular, different method for inverse semigroups. 
 
 InstallMethod(DClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],

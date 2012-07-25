@@ -337,20 +337,30 @@ end);
 InstallOtherMethod(DClassOfRClass, "for inverse op R-class", 
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local s, o, m, f, d, i;
+  local s, o, m, f;
 
   s:=ParentSemigroup(r);
   o:=LambdaOrb(r); 
   m:=LambdaOrbSCCIndex(r);
-  f:=Representative(r);
-  
-  i:=Position(o, LambdaFunc(s)(f));
-  
-  if i<>OrbSCC(o)[m][1] then
-    f:=f*LambdaOrbMult(o, m, i)[2];
-  fi;
+  f:=RectifyLambda(s, o, Representative(r), fail, m).rep;
   return CreateDClassNC(s, m, o, fail, fail, f, IsGreensClassNC(r));
 end);
+
+# new for 1.0! - DClassOfHClass - "for a inverse op H-class acting semigroup"
+#############################################################################
+
+InstallOtherMethod(DClassOfHClass, "for inverse op H-class", 
+[IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
+function(h)
+  local s, o, m, f;
+
+  s:=ParentSemigroup(h);
+  o:=LambdaOrb(h); 
+  m:=LambdaOrbSCCIndex(h);
+  f:=RectifyLambda(s, o, Representative(h), fail, m).rep;
+  return CreateDClassNC(s, m, o, fail, fail, f, IsGreensClassNC(r));
+end);
+
 
 # new for 1.0! - DClassReps - "for an acting semigroup with inversion"
 ##############################################################################
