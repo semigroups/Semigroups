@@ -147,7 +147,8 @@ end);
 InstallMethod(SchutzenbergerGroup, "for a H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
-  local lambda_o, lambda_m, lambda_schutz, lambda_stab, rho_o, rho_m, rho_schutz, rho_stab, rep, s, lambda_p, rho_p;
+  local lambda_o, lambda_m, lambda_schutz, lambda_stab, rho_o, rho_m,
+  rho_schutz, rho_stab, rep, s, lambda_p, rho_p;
  
   lambda_o:=LambdaOrb(h); lambda_m:=LambdaOrbSCCIndex(h);
   lambda_schutz:=LambdaOrbSchutzGp(lambda_o, lambda_m); 
@@ -1966,6 +1967,11 @@ function(h)
   return IdempotentLambdaRhoTester(s)(LambdaFunc(s)(f), RhoFunc(s)(f));
 end);
 
+# new for 1.0! - OneMutable - "for an H-class of an acting semigp."
+############################################################################
+
+# same method for regular/inverse
+
 InstallOtherMethod(OneMutable, "for a H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass], 
 function(h)
@@ -1976,6 +1982,11 @@ function(h)
   fi;
   return Idempotents(h)[1];
 end);
+
+# new for 1.0! - IsRegularHClass - "for an H-class of an acting semigp."
+############################################################################
+
+# same method for regular/inverse
 
 InstallOtherMethod(IsRegularHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],

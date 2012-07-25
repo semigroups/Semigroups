@@ -602,32 +602,23 @@ end);
 InstallOtherMethod(GreensHClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)
-  local lambda_o, lambda_scc, len, out, type, hrel, n, lambda_mults, f, h, lambda_m, j, k;
+  local o, scc, len, out, n, mults, f, m, j, k;
   
-  lambda_o:=Enumerate(LambdaOrb(s), infinity);
-  lambda_scc:=OrbSCC(lambda_o);
-  len:=Length(lambda_scc);
+  o:=LambdaOrb(s);
+  scc:=OrbSCC(o);
+  len:=Length(scc);
   
   out:=EmptyPlist(NrHClasses(s));
-  type:=HClassType(s);
-  hrel:=GreensHRelation(s);
   n:=0; 
     
-  for lambda_m in [2..len] do
-    lambda_mults:=LambdaOrbMults(lambda_o, lambda_m);
-    f:=RightOne(LambdaOrbRep(lambda_o, lambda_m));
-    for j in lambda_scc[lambda_m] do
-      f:=f*lambda_mults[j][1];
-      for k in lambda_scc[lambda_m] do
+  for m in [2..len] do
+    mults:=LambdaOrbMults(o, m);
+    f:=RightOne(LambdaOrbRep(o, m));
+    for j in scc[m] do
+      f:=f*mults[j][1];
+      for k in scc[m] do
         n:=n+1;
-        h:=Objectify(type, rec());
-        SetParentSemigroup(h, s);
-        SetLambdaOrb(h, lambda_o);
-        SetLambdaOrbSCCIndex(h, lambda_m);
-        SetRepresentative(h, lambda_mults[k][1]*f);
-        SetEquivalenceClassRelation(h, hrel);
-        SetIsGreensClassNC(h, false);
-        out[n]:=h;
+        out[n]:=CreateHClass(s, m, o, fail, fail, mults[k][2]*f, false);
       od;
     od;
   od;
