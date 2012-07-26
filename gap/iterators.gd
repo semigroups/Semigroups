@@ -1,4 +1,7 @@
 
 
 
+DeclareGlobalFunction("IteratorByIterOfIter");
+
+
 

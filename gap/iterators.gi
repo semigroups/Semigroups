@@ -14,13 +14,16 @@
 #############################################################################
 
 InstallGlobalFunction(IteratorByIterOfIter,
-function(old_iter, components, isnew, convert, filts)
+function(s, old_iter, convert, filts)
   local iter, filt;
 
   iter:=IteratorByFunctions(rec(
+   
+    s:=s,
+
+    iter:=old_iter,
     
-    iter:=old_iter;
-    iterofiter:=fail;
+    iterofiter:=fail,
 
     IsDoneIterator:=iter-> IsDoneIterator(iter!.iter) and 
      IsDoneIterator(iter!.iterofiter), 
@@ -33,22 +36,14 @@ function(old_iter, components, isnew, convert, filts)
       fi;
       
       if iter!.iterofiter=fail or IsDoneIterator(iter!.iterofiter) then 
-        iterofiter:=Iterator(NextIterator(iter!.iter));
+        iter!.iterofiter:=Iterator(convert((NextIterator(iter!.iter))));
       fi;
       
-      repeat
-        next:=NextIterator(iterofiter);
-      until isnew(iter, next);
-      iter!.iterofiter:=iterofiter;
-      return convert(iter, next);
+      return NextIterator(iter!.iterofiter);
     end,
 
     ShallowCopy:=iter -> rec(iter:=old_iter, iterorfiter:=fail)));
   
-  for name in components do 
-    iter!.name:=component.name;
-  od;
-
   for filt in filts do
     SetFilterObj(iter, filt);
   od;
@@ -59,24 +54,29 @@ end);
 #############################################################################
 
 InstallGlobalFunction(IteratorByIterator,
-function(old_iter, convert, filts)
+function(arg)
   local iter, filt;
-  iter:=IteratorByFunctions(rec(
-    data:=old_iter,
-    IsDoneIterator:=iter-> IsDoneIterator(iter!.data),
-    NextIterator:=function(iter)
-      local x;
-      x:=NextIterator(iter!.data);
-      if x=fail then
-        return fail;
-      fi;
-      return convert(x);
-    end,
-    ShallowCopy:=iter-> rec(data:=ShallowCopy(old_iter))));
-  for filt in filts do
-    SetFilterObj(iter, filt);
-  od;
-  return iter;
+  
+  if Length(arg)=3 then 
+    iter:=IteratorByFunctions(rec(
+      data:=arg[1], 
+      IsDoneIterator:=iter-> IsDoneIterator(iter!.data),
+      NextIterator:=function(iter)
+        local x;
+        x:=NextIterator(iter!.data);
+        if x=fail then
+          return fail;
+        fi;
+        return arg[2](x);
+      end,
+      ShallowCopy:=iter-> rec(data:=ShallowCopy(old_iter))));
+    for filt in arg[3] do
+      SetFilterObj(iter, filt);
+    od;
+    return iter;
+  fi;
+
+
 end);
 
 # new for 0.7! - ListByIterator - "for an iterator and pos int"
@@ -98,6 +98,28 @@ function(iter, len)
 end);
 
 # everything else...
+
+# mod for 1.0! - Iterator - "for an acting semigroup"
+#############################################################################
+# Notes: the previous inverse method used D-classes instead of R-classes.
+
+# same method for regular/inverse 
+
+InstallMethod(Iterator, "for an acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local iter;
+
+  if HasAsSSortedList(s) then 
+    iter:=IteratorList(AsSSortedList(s));
+    SetIsIteratorOfSemigroup(iter, true);
+    return iter;
+  fi;
+
+  return IteratorByIterOfIter(s, IteratorOfRClasses(s), x-> x,
+   [IsIteratorOfSemigroup]);
+end);
+
 
 # new for 1.0! - Iterator - "for an R-class of an acting semi"
 #############################################################################
@@ -154,26 +176,115 @@ function(r)
     return iter;
 end);
 
-# mod for 1.0! - Iterator - "for an acting semigroup"
+# new for 1.0! - IteratorOfDClasses - "for an acting semigroup"
 #############################################################################
-# Notes: the previous inverse method used D-classes instead of R-classes.
 
-# same method for regular/inverse 
+#JDM this should be improved at some point
 
-InstallMethod(Iterator, "for an acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+# different method for regular/inverse
+
+InstallMethod(IteratorOfDClasses, "for an acting semigroup",
+[IsActingSemigroup],
 function(s)
   local iter;
+  
+  if IsClosed(SemigroupData(s)) then 
+    iter:=IteratorList(GreensDClasses(s));
+    SetIsIteratorOfDClasses(iter, true);
+    return iter;
+  fi;
+return;
+  #return IteratorByIterOfIter(IteratorOfRClassData(s), rec(classes:=[]), 
+  # function(iter, x) 
+  #   return x=fail or ForAll(iter!.classes, d-> not x[4] in d);
+  # end, 
+  # function(iter, x) 
+  #  d:=DClassOfRClass(CallFuncList(CreateRClassNC, x)) 
+  #  Add(iter!.classes, d);
+  #  return d;
+  #end, IsIteratorOfDClasses);
+end);
 
-  if HasAsSSortedList(s) then 
-    iter:=IteratorList(AsSSortedList(s));
-    SetIsIteratorOfSemigroup(iter, true);
+# new for 1.0! - IteratorOfHClasses - "for an acting semigroup"
+#############################################################################
+# JDM could use IteratorOfRClasses here instead, not sure which is better...
+
+# JDM should be different method for regular/inverse
+
+InstallMethod(IteratorOfHClasses, "for an acting semigroup",
+[IsActingSemigroup],
+function(s)
+  local iter;
+  
+  if HasGreensHClasses(s) then 
+    iter:=IteratorList(GreensHClasses(s));
+    SetIsIteratorOfHClasses(iter, true);
     return iter;
   fi;
 
-  return IteratorByIterator(IteratorOfRClasses(s), rec(), 
-   function(iter, x) return true; end, function(iter, x) return x; end, 
-    IsIteratorOfSemigroup);
+  return IteratorByIterOfIter(s, IteratorOfDClasses(s), GreensHClasses, 
+   [IsIteratorOfHClasses]);
+end);
+
+# new for 1.0! - IteratorOfLClasses - "for an acting semigroup"
+#############################################################################
+
+# different method for regular/inverse
+
+InstallMethod(IteratorOfLClasses, "for an acting semigroup",
+[IsActingSemigroup],
+function(s)
+  local iter;
+  
+  if HasGreensLClasses(s) then 
+    iter:=IteratorList(GreensLClasses(s));
+    SetIsIteratorOfHClasses(iter, true);
+  fi;
+  
+  return IteratorByIterOfIter(s, IteratorOfDClasses(s), GreensLClasses, 
+  [IsIteratorOfLClasses]);
+end);
+
+# new for 1.0! - IteratorOfRClasses - "for an acting semigroup"
+#############################################################################
+
+# different method for regular/inverse
+
+InstallMethod(IteratorOfRClasses, "for an acting semigroup",
+[IsActingSemigroup],
+s-> IteratorByIterator(IteratorOfRClassData(s), x->
+CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
+
+# new for 1.0! - IteratorOfRClassData - "for an acting semigroup"
+#############################################################################
+
+#different method for regular/inverse
+
+InstallMethod(IteratorOfRClassData, "for an acting semigroup",
+[IsActingSemigroup],
+function(s)
+
+  return IteratorByFunctions( rec( 
+    
+    i:=1,
+
+    IsDoneIterator:=iter-> IsClosed(SemigroupData(s)) and 
+     iter!.i>=Length(SemigroupData(s)),
+
+    NextIterator:=function(iter)
+      local data;
+
+      iter!.i:=iter!.i+1;
+      
+      data:=Enumerate(SemigroupData(s), iter!.i, ReturnFalse);
+
+      if iter!.i>Length(data!.orbit) then 
+        return fail;
+      fi;
+      return data[iter!.i];
+    end,
+    
+    ShallowCopy:=iter-> rec(i:=1)));
 end);
 
 # new for 0.5! - Iterator - "for a full transformation semigroup"
@@ -217,239 +328,6 @@ InstallOtherMethod(Iterator, "for a trivial acting semigp",
 function(s)
   return TrivialIterator(Generators(s)[1]);
 end);
-
-# new for 1.0! - IteratorOfDClasses - "for an acting semigroup"
-#############################################################################
-
-#JDM this should be improved at some point
-
-# different method for regular/inverse
-
-InstallMethod(IteratorOfDClasses, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-  local iter;
-  
-  if IsClosed(SemigroupData(s)) then 
-    iter:=IteratorList(GreensDClasses(s));
-    SetIsIteratorOfDClasses(iter, true);
-    return iter;
-  fi;
-
-  return IteratorByIterOfIter(IteratorOfRClassData(s), rec(classes:=[]), 
-   function(iter, x) 
-     return x=fail or ForAll(iter!.classes, d-> not x[4] in d);
-   end, 
-   function(iter, x) 
-    d:=DClassOfRClass(CallFuncList(CreateRClassNC, x)) 
-    Add(iter!.classes, d);
-    return d;
-  end, IsIteratorOfDClasses);
-end);
-
-#    last_called_by_is_done:=false,
-#
-#    next_value:=fail,
-#
-#    IsDoneIterator:=function(iter)
-#      
-#      if iter!.last_called_by_is_done then 
-#        return iter!.next_value=fail;
-#      fi;
-#      
-#      iter!.last_called_by_is_done:=true;
-#      
-#      iter!.next_value:=fail;
-#       
-#     
-#    
-#        iter!.next_value:=d;
-#
-#    NextIterator:=function(iter)
-#      if not iter!.last_called_by_is_done then 
-#        IsDoneIterator(iter);
-#      fi;
-#      iter!.last_called_by_is_done:=false;
-#      return iter!.next_value;
-#    end,
-#    
-#    ShallowCopy:=iter-> rec(classes:=[], R:=IteratorOfRClassData(s),
-#     last_called_by_is_done:=false, next_value:=fail)));
-#  SetIsIteratorOfDClasses(iter, true);
-#  return iter;
-#end);
-
-# new for 1.0! - IteratorOfHClasses - "for an acting semigroup"
-#############################################################################
-# JDM could use IteratorOfRClasses here instead, not sure which is better...
-
-# JDM should be different method for regular/inverse
-
-InstallMethod(IteratorOfHClasses, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-  local iter;
-  
-  if HasGreensHClasses(s) then 
-    iter:=IteratorList(GreensHClasses(s));
-  else
-    iter:=IteratorByFunctions( rec( 
-
-      i:=0,
-
-      D:=IteratorOfDClasses(s),
-
-      H:=[],
-
-      last_called_by_is_done:=false,
-
-      next_value:=fail,
-
-      IsDoneIterator:=function(iter)
-        
-        if iter!.last_called_by_is_done then 
-          return iter!.next_value=fail;
-        fi;
-        
-        iter!.last_called_by_is_done:=true;
-        iter!.next_value:=fail;
-        iter!.i:=iter!.i+1;
-
-        if iter!.i>Length(iter!.H) and not IsDoneIterator(iter!.D) then 
-          iter!.i:=1;
-          iter!.H:=GreensHClasses(NextIterator(iter!.D));
-        fi;
-        
-        if iter!.i<=Length(iter!.H) then 
-          iter!.next_value:=iter!.H[iter!.i];
-          return false;
-        fi;
-          
-        return true;
-      end,
-
-      NextIterator:=function(iter)
-        if not iter!.last_called_by_is_done then 
-          IsDoneIterator(iter);
-        fi;
-        iter!.last_called_by_is_done:=false;
-        return iter!.next_value;
-      end,
-      
-      ShallowCopy:=iter-> rec(i:=0, D:=IteratorOfDClasses(s),
-       H:=[], last_called_by_is_done:=false, next_value:=fail)));
-  fi;
-
-  SetIsIteratorOfHClasses(iter, true);
-  return iter;
-end);
-
-# new for 1.0! - IteratorOfLClasses - "for an acting semigroup"
-#############################################################################
-
-# different method for regular/inverse
-
-InstallMethod(IteratorOfLClasses, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-  local iter;
-  
-  if HasGreensLClasses(s) then 
-    iter:=IteratorList(GreensLClasses(s));
-  else
-    iter:=IteratorByFunctions( rec( 
-
-      i:=0,
-
-      D:=IteratorOfDClasses(s),
-
-      L:=[],
-
-      last_called_by_is_done:=false,
-
-      next_value:=fail,
-
-      IsDoneIterator:=function(iter)
-        
-        if iter!.last_called_by_is_done then 
-          return iter!.next_value=fail;
-        fi;
-        
-        iter!.last_called_by_is_done:=true;
-        iter!.next_value:=fail;
-        iter!.i:=iter!.i+1;
-
-        if iter!.i>Length(iter!.L) and not IsDoneIterator(iter!.D) then 
-          iter!.i:=1;
-          iter!.L:=GreensLClasses(NextIterator(iter!.D));
-        fi;
-        
-        if iter!.i<=Length(iter!.L) then 
-          iter!.next_value:=iter!.L[iter!.i];
-          return false;
-        fi;
-          
-        return true;
-      end,
-
-      NextIterator:=function(iter)
-        if not iter!.last_called_by_is_done then 
-          IsDoneIterator(iter);
-        fi;
-        iter!.last_called_by_is_done:=false;
-        return iter!.next_value;
-      end,
-      
-      ShallowCopy:=iter-> rec(i:=0, D:=IteratorOfDClasses(s),
-       L:=[], last_called_by_is_done:=false, next_value:=fail)));
-  fi;
-
-  SetIsIteratorOfLClasses(iter, true);
-  return iter;
-end);
-
-# new for 1.0! - IteratorOfRClassData - "for an acting semigroup"
-#############################################################################
-
-#different method for regular/inverse
-
-InstallMethod(IteratorOfRClassData, "for an acting semigroup",
-[IsActingSemigroup],
-function(s)
-
-  return IteratorByFunctions( rec( 
-    
-    i:=1,
-
-    IsDoneIterator:=iter-> IsClosed(SemigroupData(s)) and 
-     iter!.i>=Length(SemigroupData(s)),
-
-    NextIterator:=function(iter)
-      local data;
-
-      iter!.i:=iter!.i+1;
-      
-      data:=Enumerate(SemigroupData(s), iter!.i, ReturnFalse);
-
-      if iter!.i>Length(data!.orbit) then 
-        return fail;
-      fi;
-      return data[iter!.i];
-    end,
-    
-    ShallowCopy:=iter-> rec(i:=1)));
-end);
-
-
-# new for 1.0! - IteratorOfRClasses - "for an acting semigroup"
-#############################################################################
-
-# different method for regular/inverse
-
-InstallMethod(IteratorOfRClasses, "for an acting semigroup",
-[IsActingSemigroup],
-s-> IteratorByIterator(IteratorOfRClassData(s), x->
-CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
 
 # new for 1.0! - IteratorOfDClassReps - "for an acting semigroup"
 #############################################################################
