@@ -14,10 +14,11 @@
 #############################################################################
 
 InstallGlobalFunction(IteratorByIterOfIter,
-function(old_iter, isnew, filts)
+function(old_iter, components, isnew, convert, filts)
   local iter, filt;
 
   iter:=IteratorByFunctions(rec(
+    
     iter:=old_iter;
     iterofiter:=fail;
 
@@ -37,12 +38,16 @@ function(old_iter, isnew, filts)
       
       repeat
         next:=NextIterator(iterofiter);
-      until isnew(next);
+      until isnew(iter, next);
       iter!.iterofiter:=iterofiter;
-      return next;
+      return convert(iter, next);
     end,
 
     ShallowCopy:=iter -> rec(iter:=old_iter, iterorfiter:=fail)));
+  
+  for name in components do 
+    iter!.name:=component.name;
+  od;
 
   for filt in filts do
     SetFilterObj(iter, filt);
@@ -166,8 +171,9 @@ function(s)
     return iter;
   fi;
 
-  return IteratorByIterOfIter(IteratorOfRClasses(s), ReturnTrue,
-   IsIteratorOfSemigroup);
+  return IteratorByIterator(IteratorOfRClasses(s), rec(), 
+   function(iter, x) return true; end, function(iter, x) return x; end, 
+    IsIteratorOfSemigroup);
 end);
 
 # new for 0.5! - Iterator - "for a full transformation semigroup"
@@ -230,55 +236,48 @@ function(s)
     return iter;
   fi;
 
-  iter:=IteratorByFunctions( rec( 
-
-    classes:=[],
-
-    R:=IteratorOfRClassData(s),
-
-    last_called_by_is_done:=false,
-
-    next_value:=fail,
-
-    IsDoneIterator:=function(iter)
-      local R, X, x, d; 
-      if iter!.last_called_by_is_done then 
-        return iter!.next_value=fail;
-      fi;
-      
-      iter!.last_called_by_is_done:=true;
-      
-      iter!.next_value:=fail;
-       
-      R:=iter!.R; X:=iter!.classes;
-      
-      repeat 
-        x:=NextIterator(R);
-        #JDM is there a better method?
-      until x=fail or ForAll(X, d-> not x[4] in d);
-      
-      if x<>fail then 
-        d:=DClassOfRClass(CallFuncList(CreateRClassNC, x));
-        Add(X, d);
-        iter!.next_value:=d;
-        return false;
-      fi;
-      return true;
-    end,
-
-    NextIterator:=function(iter)
-      if not iter!.last_called_by_is_done then 
-        IsDoneIterator(iter);
-      fi;
-      iter!.last_called_by_is_done:=false;
-      return iter!.next_value;
-    end,
-    
-    ShallowCopy:=iter-> rec(classes:=[], R:=IteratorOfRClassData(s),
-     last_called_by_is_done:=false, next_value:=fail)));
-  SetIsIteratorOfDClasses(iter, true);
-  return iter;
+  return IteratorByIterOfIter(IteratorOfRClassData(s), rec(classes:=[]), 
+   function(iter, x) 
+     return x=fail or ForAll(iter!.classes, d-> not x[4] in d);
+   end, 
+   function(iter, x) 
+    d:=DClassOfRClass(CallFuncList(CreateRClassNC, x)) 
+    Add(iter!.classes, d);
+    return d;
+  end, IsIteratorOfDClasses);
 end);
+
+#    last_called_by_is_done:=false,
+#
+#    next_value:=fail,
+#
+#    IsDoneIterator:=function(iter)
+#      
+#      if iter!.last_called_by_is_done then 
+#        return iter!.next_value=fail;
+#      fi;
+#      
+#      iter!.last_called_by_is_done:=true;
+#      
+#      iter!.next_value:=fail;
+#       
+#     
+#    
+#        iter!.next_value:=d;
+#
+#    NextIterator:=function(iter)
+#      if not iter!.last_called_by_is_done then 
+#        IsDoneIterator(iter);
+#      fi;
+#      iter!.last_called_by_is_done:=false;
+#      return iter!.next_value;
+#    end,
+#    
+#    ShallowCopy:=iter-> rec(classes:=[], R:=IteratorOfRClassData(s),
+#     last_called_by_is_done:=false, next_value:=fail)));
+#  SetIsIteratorOfDClasses(iter, true);
+#  return iter;
+#end);
 
 # new for 1.0! - IteratorOfHClasses - "for an acting semigroup"
 #############################################################################
