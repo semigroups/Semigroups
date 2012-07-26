@@ -10,6 +10,45 @@
 
 #technical...
 
+# new for 1.0! - IteratorByIteratorOfIterator
+#############################################################################
+
+InstallGlobalFunction(IteratorByIterOfIter,
+function(old_iter, isnew, filts)
+
+  iter:=IteratorByFunctions(rec(
+    iter:=old_iter;
+    iterofiter:=fail;
+
+    IsDoneIterator:=iter-> IsDoneIterator(iter!.iter) and 
+     IsDoneIterator(iter!.iterofiter), 
+
+    NextIterator:=function(iter)
+      local iterofiter, next;
+
+      if IsDoneIterator(iter) then 
+        return fail;
+      fi;
+      
+      if iter!.iterofiter=fail or IsDoneIterator(iter!.iterofiter) then 
+        iterofiter:=Iterator(NextIterator(iter!.iter));
+      fi;
+      
+      repeat
+        next:=NextIterator(iterofiter);
+      until isnew(next);
+      iter!.iterofiter:=iterofiter;
+      return next;
+    end,
+
+    ShallowCopy:=iter -> rec(iter:=old_iter, iterorfiter:=fail)));
+
+  for filt in filts do
+    SetFilterObj(iter, filt);
+  od;
+  return iter;
+end);
+
 # new for 0.7! - IteratorByIterator - "for an iterator and function"
 #############################################################################
 
@@ -602,4 +641,4 @@ function(iter)
   return;
 end);
 
-
+#EOF

@@ -8,42 +8,6 @@
 #############################################################################
 ##
 
-# universal
-#############################################################################
-#############################################################################
-
-# new for 1.0! - \= - "for Green's class and Green's class of acting semigp"
-#############################################################################
-
-InstallMethod(\=, "for Green's class and class of acting semigp",
-[IsActingSemigroupGreensClass, IsActingSemigroupGreensClass],
-function(x, y)
-  if (IsGreensRClass(x) and IsGreensRClass(y)) or
-   (IsGreensLClass(x) and IsGreensLClass(y)) or
-   (IsGreensDClass(x) and IsGreensDClass(y)) or
-   (IsGreensHClass(x) and IsGreensHClass(y)) then
-    return ParentSemigroup(x)=ParentSemigroup(y) and Representative(x) in y;
-  fi;
-  return ParentSemigroup(x)=ParentSemigroup(y) and Representative(x) in y and
-   Size(x)=Size(y);
-end);
-
-# new for 1.0! - \< - "for Green's class and Green's class of acting semigp"
-#############################################################################
-
-InstallMethod(\<, "for Green's class and class of acting semigp",
-[IsActingSemigroupGreensClass, IsActingSemigroupGreensClass],
-function(x, y)
-  if (IsGreensRClass(x) and IsGreensRClass(y)) or
-   (IsGreensLClass(x) and IsGreensLClass(y)) or
-   (IsGreensDClass(x) and IsGreensDClass(y)) or
-   (IsGreensHClass(x) and IsGreensHClass(y)) then
-    return ParentSemigroup(x)=ParentSemigroup(y) and Representative(x) <
-     Representative(y) and (not Representative(x) in y);
-  fi;
-  return fail;
-end);
-
 # acting...
 #############################################################################
 #############################################################################
@@ -140,7 +104,7 @@ function(d)
   return OrbSCC(data)[OrbSCCLookup(data)[SemigroupDataIndex(d)]];
 end);
 
-# everything else
+# main 
 ##############################################################################
 ##############################################################################
 
@@ -1815,6 +1779,7 @@ d-> Length(RhoCosets(d))*Length(RhoOrbSCC(d)));
 
 InstallGlobalFunction(NrIdempotents@, 
 function(x, value, scc, o, onright)
+  local s, data, nr, tester, i;
 
   if HasIsRegularClass(x) and not IsRegularClass(x) then 
     return 0;
@@ -1826,7 +1791,7 @@ function(x, value, scc, o, onright)
   if HasSemigroupDataIndex(x) and not (HasIsRegularClass(x) and
    IsRegularClass(x)) then
     data:=SemigroupData(s);
-    if data!.repslens[data!.orblookup1[SemigroupDataIndex(l)]]>1 then
+    if data!.repslens[data!.orblookup1[SemigroupDataIndex(x)]]>1 then
       return 0;
     fi;
   fi;
@@ -2257,6 +2222,38 @@ h-> StructureDescription(Range(IsomorphismPermGroup(h))));
 # technical
 ##############################################################################
 ##############################################################################
+
+# new for 1.0! - \= - "for Green's class and Green's class of acting semigp"
+#############################################################################
+
+InstallMethod(\=, "for Green's class and class of acting semigp",
+[IsActingSemigroupGreensClass, IsActingSemigroupGreensClass],
+function(x, y)
+  if (IsGreensRClass(x) and IsGreensRClass(y)) or
+   (IsGreensLClass(x) and IsGreensLClass(y)) or
+   (IsGreensDClass(x) and IsGreensDClass(y)) or
+   (IsGreensHClass(x) and IsGreensHClass(y)) then
+    return ParentSemigroup(x)=ParentSemigroup(y) and Representative(x) in y;
+  fi;
+  return ParentSemigroup(x)=ParentSemigroup(y) and Representative(x) in y and
+   Size(x)=Size(y);
+end);
+
+# new for 1.0! - \< - "for Green's class and Green's class of acting semigp"
+#############################################################################
+
+InstallMethod(\<, "for Green's class and class of acting semigp",
+[IsActingSemigroupGreensClass, IsActingSemigroupGreensClass],
+function(x, y)
+  if (IsGreensRClass(x) and IsGreensRClass(y)) or
+   (IsGreensLClass(x) and IsGreensLClass(y)) or
+   (IsGreensDClass(x) and IsGreensDClass(y)) or
+   (IsGreensHClass(x) and IsGreensHClass(y)) then
+    return ParentSemigroup(x)=ParentSemigroup(y) and Representative(x) <
+     Representative(y) and (not Representative(x) in y);
+  fi;
+  return fail;
+end);
 
 # new for 1.0! - CreateDClassNC - not a user function! 
 ############################################################################# 
