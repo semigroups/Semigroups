@@ -18,7 +18,7 @@
 #############################################################################
 
 InstallMethod(RhoOrbStabChain, "for a regular D-class",
-[IsRegularDClass and IsActingSemigroupGreensClass],
+[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local g;
 
@@ -42,7 +42,7 @@ InstallOtherMethod(DClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsRegularDClass and IsGreensDClass 
+         IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensDClass 
          and IsActingSemigroupGreensClass);
 end);
 
@@ -55,7 +55,7 @@ InstallOtherMethod(HClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsRegularHClass and IsGreensHClass 
+         IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensHClass 
          and IsActingSemigroupGreensClass);
 end);
 
@@ -68,7 +68,7 @@ InstallOtherMethod(LClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsRegularLClass and IsGreensLClass and
+         IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensLClass and
          IsActingSemigroupGreensClass);
 end);
 
@@ -81,7 +81,7 @@ InstallOtherMethod(RClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsRegularRClass and IsGreensRClass and
+         IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensRClass and
          IsActingSemigroupGreensClass);
 end);
 
@@ -174,7 +174,7 @@ end);
 #JDM revise this if revising \in for elt and D-class in greens.gi
 
 InstallMethod(\in, "for acting elt and regular D-class of acting semigp.",
-[IsActingElt, IsRegularDClass and IsActingSemigroupGreensClass],
+[IsActingElt, IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(f, d)
   local rep, s, g, m, o, scc, l, schutz;
 
@@ -257,7 +257,7 @@ end);
 #JDM could write another method if nec.
 
 InstallOtherMethod(Enumerator, "for a regular D-class of acting semigp.",
-[IsRegularDClass and IsActingSemigroupGreensClass],
+[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
     
     return EnumeratorByFunctions(d, rec(
@@ -441,7 +441,7 @@ end);
 # different method for inverse
 
 InstallOtherMethod(GreensHClasses, "for D-class of regular acting semigroup",
-[IsRegularDClass and IsActingSemigroupGreensClass],
+[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local lambda_o, lambda_m, lambda_scc, lambda_mults, rho_o, rho_m, rho_scc,
   rho_mults, f, nc, s, out, k, g, i, j;
@@ -480,7 +480,7 @@ end);
 # different method for inverse
 
 InstallOtherMethod(GreensHClasses, "for L-class of regular acting semigroup",
-[IsRegularLClass and IsActingSemigroupGreensClass],
+[IsRegularClass and IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
   local rho_o, rho_m, scc, mults, f, nc, s, lambda_o, lambda_l, lambda_m, out,
   k, j;
@@ -522,7 +522,7 @@ end);
 # different method for inverse
 
 InstallOtherMethod(GreensHClasses, "for R-class of regular acting semigroup",
-[IsRegularRClass and IsActingSemigroupGreensClass],
+[IsRegularClass and IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
   local lambda_o, lambda_m, scc, mults, f, nc, s, rho_o, rho_l, rho_m, out, k, j;
 
@@ -597,7 +597,7 @@ end);
 # different method for inverse.
 
 InstallOtherMethod(GreensLClasses, "for regular D-class of acting semigroup", 
-[IsActingSemigroupGreensClass and IsRegularDClass],
+[IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 function(d)
   local f, s, o, m, nc, out, k, mults, scc, i;
   
@@ -665,7 +665,7 @@ end);
 # different method for inverse
 
 InstallMethod(GreensRClasses, "for a regular D-class of acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularDClass],
+[IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 function(d)
   local mults, scc, f, s, o, m, nc, out, k, i;
 
@@ -761,7 +761,7 @@ end);
 # different method for inverse
  
 InstallOtherMethod(HClassReps, "for a regular D-class of an acting semigroup",
-[IsRegularDClass and IsActingSemigroupGreensClass],
+[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local o, m, lambda_scc, lambda_mults, rho_scc, rho_mults, f, out, k, g, i, j;
   
@@ -796,7 +796,7 @@ end);
 # different method for inverse
   
 InstallOtherMethod(HClassReps, "for a regular  L-class of an acting semigroup",
-[IsRegularLClass and IsActingSemigroupGreensClass],
+[IsRegularClass and IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
   local o, m, scc, mults, f, out, k, i;
   
@@ -822,7 +822,7 @@ end);
 # same method for inverse
 
 InstallOtherMethod(HClassReps, "for a regular R-class of an acting semigroup",
-[IsRegularRClass and IsActingSemigroupGreensClass],
+[IsRegularClass and IsGreensRClass and IsActingSemigroupGreensClass],
 function(l)
   local o, m, scc, mults, f, out, k, i;
   
@@ -1291,7 +1291,7 @@ end);
 # same method for inverse
 
 InstallOtherMethod(LClassReps, "for a regular D-class of acting semigroup",
-[IsRegularDClass and IsActingSemigroupGreensClass],
+[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local o, m, mults, scc, f, out, k, j;
 
@@ -1348,7 +1348,7 @@ end);
 # different method for inverse
 
 InstallOtherMethod(RClassReps, "for a D-class of an acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularDClass],
+[IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 function(d)
   local o, m, mults, scc, f, out, k, i;
 
@@ -1417,7 +1417,7 @@ end);
 # different method for inverse.
 
 InstallOtherMethod(NrHClasses, "for a D-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularDClass],
+[IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 d-> Length(LambdaOrbSCC(d))*Length(RhoOrbSCC(d)));
 
 # new for 1.0! - NrHClasses - "for a L-class of regular acting semigroup"
@@ -1426,7 +1426,7 @@ d-> Length(LambdaOrbSCC(d))*Length(RhoOrbSCC(d)));
 # different method for inverse semigroups 
 
 InstallOtherMethod(NrHClasses, "for a L-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularLClass],
+[IsActingSemigroupGreensClass and IsRegularClass and IsGreensLClass],
 l-> Length(RhoOrbSCC(l)));
 
 # new for 1.0! - NrHClasses - "for a R-class of regular acting semigroup"
@@ -1435,7 +1435,7 @@ l-> Length(RhoOrbSCC(l)));
 # same method for inverse semigroups 
 
 InstallOtherMethod(NrHClasses, "for a R-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularRClass],
+[IsActingSemigroupGreensClass and IsRegularClass and IsGreensRClass],
 r-> Length(LambdaOrbSCC(r)));
 
 # new for 1.0! - NrLClasses - "for a regular acting semigroup"
@@ -1453,7 +1453,7 @@ s-> Length(Enumerate(LambdaOrb(s), infinity))-1);
 # same method for inverse semigroups
 
 InstallOtherMethod(NrLClasses, "for a D-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularDClass],
+[IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 d-> Length(LambdaOrbSCC(d)));
 
 # new for 1.0! - NrRClasses - "for a regular acting semigroup"
@@ -1471,7 +1471,7 @@ s-> Length(Enumerate(RhoOrb(s), infinity))-1);
 # different method for inverse semigroups
 
 InstallOtherMethod(NrRClasses, "for a D-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularDClass],
+[IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 d-> Length(RhoOrbSCC(d)));
 
 # new for 1.0! - NrIdempotents - for a regular acting semigroup
@@ -1593,7 +1593,7 @@ end);
 # same method for inverse
 
 InstallMethod(SchutzenbergerGroup, "for D-class of regular acting semigroup",
-[IsRegularDClass and IsActingSemigroupGreensClass],
+[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 d-> LambdaOrbSchutzGp(LambdaOrb(d), LambdaOrbSCCIndex(d)));
 
 # new for 1.0! - SchutzenbergerGroup - "for H-class of regular acting semigroup"
@@ -1602,7 +1602,7 @@ d-> LambdaOrbSchutzGp(LambdaOrb(d), LambdaOrbSCCIndex(d)));
 # same method for inverse
 
 InstallMethod(SchutzenbergerGroup, "for H-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularHClass],
+[IsActingSemigroupGreensClass and IsRegularClass and IsGreensHClass],
 h-> LambdaOrbSchutzGp(LambdaOrb(h), LambdaOrbSCCIndex(h)));
 
 # new for 1.0! - Size - "for a regular acting semigroup"
@@ -1638,7 +1638,7 @@ end);
 #############################################################################
 
 InstallOtherMethod(Size, "for a regular D-class of an acting semigp.",
-[IsRegularDClass and IsActingSemigroupGreensClass],
+[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   return Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))
    *Length(RhoOrbSCC(d));

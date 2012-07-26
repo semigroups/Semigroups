@@ -29,6 +29,7 @@ ReadPackage("citrus/gap/pperm.gd");
 ReadPackage("citrus/gap/binary.gd");
 
 ReadPackage("citrus/gap/semigroups.gd");
+ReadPackage("citrus/gap/iterators.gd");
 
 ReadPackage("citrus/gap/greens.gd");
 ReadPackage("citrus/gap/acting.gd");

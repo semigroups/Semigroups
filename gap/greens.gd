@@ -83,9 +83,8 @@ DeclareOperation("GreensRClassOfElementNC", [IsSemigroup]);
 DeclareProperty("IsGreensClassOfTransSemigp", IsGreensClass);
 
 DeclareGlobalFunction("IsRegularClass@");
-DeclareProperty("IsRegularLClass", IsGreensClass); 
-DeclareProperty("IsRegularRClass", IsGreensClass);
-DeclareProperty("IsRegularHClass", IsGreensClass);
+DeclareProperty("IsRegularClass", IsGreensClass);
+InstallTrueMethod(IsRegularClass, IsRegularDClass);
 DeclareProperty("IsInverseOpClass", IsGreensClass); 
 
 DeclareOperation("IteratorOfDClasses", [IsSemigroup]);
@@ -104,6 +103,7 @@ DeclareOperation("IteratorOfHClassData", [IsSemigroup]);
 DeclareOperation("IteratorOfLClassData", [IsSemigroup]);
 
 DeclareGlobalFunction("Idempotents@");
+DeclareGlobalFunction("NrIdempotents@");
 DeclareAttribute("NrIdempotents", IsSemigroup);
 
 DeclareAttribute("NrDClasses", IsSemigroup); 
