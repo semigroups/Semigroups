@@ -24,7 +24,8 @@ function(l)
 
   if IsTrivial(g) then 
     return false;
-  elif IsNaturalSymmetricGroup(g) then 
+  elif IsNaturalSymmetricGroup(g) and
+   NrMovedPoints(g)=Rank(Representative(l)) then 
     return true; 
   fi;
   return StabChainImmutable(g);

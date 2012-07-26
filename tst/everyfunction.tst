@@ -34,14 +34,14 @@ gap> f:=Transformation( [ 8, 1, 5, 5, 8, 3, 7, 8 ] );;
 gap> l:=LClassNC(s, f);
 {Transformation( [ 8, 1, 5, 5, 8, 3, 7, 8 ] )}
 gap> RhoOrbStabChain(l);
-<stabilizer chain record, Base [ 1, 5, 3, 7 ], Orbit length 5, Size: 120>
+true
 gap> Size(l);
 4560
 gap> RhoOrbSCC(l);
 [ 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 
   23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39 ]
 gap> SchutzenbergerGroup(l);
-Group([ (1,5,7), (1,8,7), (1,5,7,3) ])
+Sym( [ 1, 3, 5, 7, 8 ] )
 gap> ForAll(l, x-> x in l);
 true
 gap> d:=DClass(s, f);
@@ -435,7 +435,7 @@ gap> h:=GreensHClassOfElement(l, g);
 gap> Size(h);
 1
 gap> SchutzenbergerGroup(l);
-Group([ (2,7), (1,7) ])
+Sym( [ 1, 2, 7 ] )
 gap> IsRegularLClass(l);
 false
 gap> IsGreensClassNC(h);
