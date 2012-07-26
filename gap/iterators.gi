@@ -85,9 +85,9 @@ function(arg)
 
   iter.baseiter:=arg[1]; 
   
+  iter.ShallowCopy:=iter-> rec(baseiter:=arg[1]);
+  
   iter.IsDoneIterator:=iter-> IsDoneIterator(iter!.baseiter);
-
-  iter.ShallowCopy:=ReturnFail;
 
   # get NextIterator
   if Length(arg)=3 then 
@@ -414,7 +414,7 @@ function(s)
     return iter;
   fi;
 
-  IteratorByIterator(IteratorOfRClassData(s), x->
+  return IteratorByIterator(IteratorOfRClassData(s), x->
    CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]);
 end);
 

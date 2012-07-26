@@ -1394,10 +1394,8 @@ function(x, value, scc, o, onright)
   if not HasIsRegularClass(x) then 
     SetIsRegularClass(x, j<>0);
   fi;
-  
-  if not HasNrIdempotents(x) then 
-    SetNrIdempotents(x, j);   
-  fi;
+ 
+  # can't set NrIdempotents here since we sometimes input a D-class here. 
 
   ShrinkAllocationPlist(out);
   return out;
@@ -1508,7 +1506,7 @@ RhoOrbSCC(l), RhoOrb(l), false));
 InstallOtherMethod(Idempotents, "for an R-class of an acting semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 r-> Idempotents@(r, RhoFunc(ParentSemigroup(r))(Representative(r)),
-LambdaOrbSCC(r), LambdaOrb(r), false));
+LambdaOrbSCC(r), LambdaOrb(r), true));
 
 # mod for 1.0! - IsGroupHClass - "for an H-class of an acting semigp."
 ############################################################################
@@ -1834,7 +1832,11 @@ InstallOtherMethod(NrIdempotents, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local nr, rho_o, rho_scc, lambda_o, lambda_scc, i;
-  
+ 
+  if HasIdempotents(d) then 
+    return Length(Idempotents(d));
+  fi;
+
   rho_o:=RhoOrb(d);
   rho_scc:=RhoOrbSCC(d);
   lambda_o:=LambdaOrb(d);

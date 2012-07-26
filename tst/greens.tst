@@ -931,7 +931,7 @@ gap> gens:=[Transformation( [ 10, 8, 7, 4, 1, 4, 10, 10, 7, 2 ] ),
 gap> s:=Monoid(gens);;
 gap> f:=Transformation( [ 1, 1, 10, 8, 8, 8, 1, 1, 10, 8 ] );;
 gap> r:=RClass(s, f);;
-gap> IsRegularRClass(r);
+gap> IsRegularClass(r);
 true
 gap> Idempotents(r);
 [ Transformation( [ 2, 2, 3, 10, 10, 10, 2, 2, 3, 10 ] ), 
@@ -947,19 +947,19 @@ gap> f:=Transformation( [ 5, 9, 8, 8, 8, 8, 5, 5, 8, 5 ] );;
 gap> r:=RClass(s, f);;
 gap> NrIdempotents(r);
 6
-gap> IsRegularRClass(r);
+gap> IsRegularClass(r);
 true
 gap> f:=Transformation( [ 8, 9, 3, 3, 3, 3, 8, 8, 3, 10 ] );;
 gap> r:=RClass(s, f);; 
 gap> Idempotents(r);;
-gap> IsRegularRClass(r);
+gap> IsRegularClass(r);
 true
 gap> gens:=[Transformation([2,3,4,5,1,8,7,6,2,7]), 
 > Transformation( [ 3, 8, 7, 4, 1, 4, 3, 3, 7, 2 ] )];;
 gap> s:=Monoid(gens);;
 gap> f:=Transformation( [ 3, 8, 7, 4, 1, 4, 3, 3, 7, 2 ] );;
 gap> r:=RClass(s, f);;
-gap> IsRegularRClass(r);
+gap> IsRegularClass(r);
 false
 gap> Idempotents(r);
 [  ]
@@ -1167,7 +1167,7 @@ gap> GreensRClasses(s)=out;
 true
 gap> iter:=IteratorOfRClasses(s);
 <iterator of R-classes>
-gap> for i in [1..1000] do NextIterator(iter); od;
+gap> for i in [1..500] do NextIterator(iter); od;
 gap> s:=Semigroup(gens);;
 gap> iter:=IteratorOfRClasses(s);;
 gap> for i in [1..1000] do NextIterator(iter); od;
@@ -1176,7 +1176,7 @@ gap> iter:=ShallowCopy(iter);
 gap> out:=[];
 [  ]
 gap> for i in iter do Add(out, i); od;            
-gap> out=GreensRClasses(s);
+gap> Set(out)=Set(GreensRClasses(s));
 true
 gap> gens:=[ Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
 >   Transformation( [ 1, 6, 3, 4, 7, 2, 5, 8 ] ),
