@@ -1173,8 +1173,7 @@ gap> iter:=IteratorOfRClasses(s);;
 gap> for i in [1..1000] do NextIterator(iter); od;
 gap> iter:=ShallowCopy(iter);
 <iterator>
-gap> out:=[];
-[  ]
+gap> out:=[];;
 gap> for i in iter do Add(out, i); od;            
 gap> Set(out)=Set(GreensRClasses(s));
 true

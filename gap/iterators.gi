@@ -85,7 +85,7 @@ function(arg)
 
   iter.baseiter:=arg[1]; 
   
-  iter.ShallowCopy:=iter-> rec(baseiter:=arg[1]);
+  iter.ShallowCopy:=iter-> rec(baseiter:=ShallowCopy(arg[1]));
   
   iter.IsDoneIterator:=iter-> IsDoneIterator(iter!.baseiter);
 
