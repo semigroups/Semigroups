@@ -1117,15 +1117,15 @@ gap> ShallowCopy(iter2);
 gap> iter:=last;                                
 <iterator>
 gap> NextIterator(iter);
-{Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] )}
+{Transformation( [ 5, 2, 5, 8, 8, 4, 2, 5, 5 ] )}
 gap> NextIterator(iter);
-{Transformation( [ 8, 2, 5, 5, 4, 5, 5, 2, 8 ] )}
+{Transformation( [ 2, 8, 8, 8, 8, 8, 5, 8, 8 ] )}
 gap> NextIterator(iter);
-{Transformation( [ 4, 4, 5, 4, 4, 2, 4, 4, 8 ] )}
+{Transformation( [ 2, 8, 8, 8, 8, 8, 8, 8, 5 ] )}
 gap> NextIterator(iter);
-{Transformation( [ 4, 8, 8, 5, 2, 5, 5, 5, 2 ] )}
+{Transformation( [ 2, 5, 8, 8, 8, 8, 8, 8, 8 ] )}
 gap> NextIterator(iter);
-{Transformation( [ 5, 5, 8, 8, 5, 5, 2, 4, 2 ] )}
+{Transformation( [ 8, 8, 5, 5, 2, 2, 2, 5, 2 ] )}
 gap> iter3:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> out:=[];
