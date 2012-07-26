@@ -206,6 +206,64 @@ function(h)
    Representative(h)*x, [IsIteratorOfHClassElements]);
 end);
 
+# new for 1.0! - Iterator - "for an L-class of an acting semi"
+#############################################################################
+
+# same method for regular, there should be a different method for inverseJDM!?
+
+InstallMethod(Iterator, "for an L-class of an acting semigp",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+function(l)
+  local o, m, mults, iter, scc;
+
+  if HasAsSSortedList(l) then 
+    iter:=IteratorList(AsSSortedList(l));
+    SetIsIteratorOfLClassElements(iter, true);
+    return iter;
+  fi;
+
+  o:=RhoOrb(l); 
+  m:=RhoOrbSCCIndex(l);
+  mults:=RhoOrbMults(o, m);
+  scc:=OrbSCC(o)[m];
+
+  iter:=IteratorByFunctions(rec(
+
+    #schutz:=List(SchutzenbergerGroup(r), x-> Representative(r)*x), 
+    schutz:=Enumerator(SchutzenbergerGroup(l)),
+    at:=[0,1],
+    m:=Length(scc),
+    n:=Size(SchutzenbergerGroup(l)), 
+
+    IsDoneIterator:=iter-> iter!.at[1]=iter!.m and iter!.at[2]=iter!.n,
+
+    NextIterator:=function(iter)
+      local at;
+
+      at:=iter!.at;
+      
+      if at[1]=iter!.m and at[2]=iter!.n then 
+        return fail;
+      fi;
+
+      if at[1]<iter!.m then
+        at[1]:=at[1]+1;
+      else
+        at[1]:=1; at[2]:=at[2]+1;
+      fi;
+     
+      return mults[scc[at[1]]][1]*Representative(l)*iter!.schutz[at[2]];
+    end,
+    
+    ShallowCopy:=iter -> rec(schutz:=iter!.schutz, at:=[0,1], 
+     m:=iter!.m, n:=iter!.n)));
+  fi;
+  
+  SetIsIteratorOfLClassElements(iter, true);
+  return iter;
+end);
+
+
 # new for 1.0! - Iterator - "for an R-class of an acting semi"
 #############################################################################
 
@@ -220,45 +278,48 @@ function(r)
 
   if HasAsSSortedList(r) then 
     iter:=IteratorList(AsSSortedList(r));
-  else
-    o:=LambdaOrb(r); 
-    m:=LambdaOrbSCCIndex(r);
-    mults:=LambdaOrbMults(o, m);
-    scc:=OrbSCC(o)[m];
-
-    iter:=IteratorByFunctions(rec(
-
-      #schutz:=List(SchutzenbergerGroup(r), x-> Representative(r)*x), 
-      schutz:=Enumerator(SchutzenbergerGroup(r)),
-      at:=[0,1],
-      m:=Length(scc),
-      n:=Size(SchutzenbergerGroup(r)), 
-
-      IsDoneIterator:=iter-> iter!.at[1]=iter!.m and iter!.at[2]=iter!.n,
-
-      NextIterator:=function(iter)
-        local at;
-
-        at:=iter!.at;
-        
-        if at[1]=iter!.m and at[2]=iter!.n then 
-          return fail;
-        fi;
-
-        if at[1]<iter!.m then
-          at[1]:=at[1]+1;
-        else
-          at[1]:=1; at[2]:=at[2]+1;
-        fi;
-       
-        return Representative(r)*iter!.schutz[at[2]]*mults[scc[at[1]]][1];
-      end,
-      
-      ShallowCopy:=iter -> rec(schutz:=iter!.schutz, at:=[0,1], 
-       m:=iter!.m, n:=iter!.n)));
-    fi;
-    
     SetIsIteratorOfRClassElements(iter, true);
+    return iter;
+  fi;
+
+  o:=LambdaOrb(r); 
+  m:=LambdaOrbSCCIndex(r);
+  mults:=LambdaOrbMults(o, m);
+  scc:=OrbSCC(o)[m];
+
+  iter:=IteratorByFunctions(rec(
+
+    #schutz:=List(SchutzenbergerGroup(r), x-> Representative(r)*x), 
+    schutz:=Enumerator(SchutzenbergerGroup(r)),
+    at:=[0,1],
+    m:=Length(scc),
+    n:=Size(SchutzenbergerGroup(r)), 
+
+    IsDoneIterator:=iter-> iter!.at[1]=iter!.m and iter!.at[2]=iter!.n,
+
+    NextIterator:=function(iter)
+      local at;
+
+      at:=iter!.at;
+      
+      if at[1]=iter!.m and at[2]=iter!.n then 
+        return fail;
+      fi;
+
+      if at[1]<iter!.m then
+        at[1]:=at[1]+1;
+      else
+        at[1]:=1; at[2]:=at[2]+1;
+      fi;
+     
+      return Representative(r)*iter!.schutz[at[2]]*mults[scc[at[1]]][1];
+    end,
+    
+    ShallowCopy:=iter -> rec(schutz:=iter!.schutz, at:=[0,1], 
+     m:=iter!.m, n:=iter!.n)));
+  fi;
+  
+  SetIsIteratorOfRClassElements(iter, true);
     return iter;
 end);
 
