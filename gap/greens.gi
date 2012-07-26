@@ -1663,6 +1663,55 @@ InstallMethod(GroupHClassOfGreensDClass, "for D-class",
 
 #III
 
+# new for 1.0! - Idempotents@ - "class, lambda/rho value, scc, o, onright"
+#############################################################################
+
+InstallGlobalFunction(Idempotents@, 
+function(x, value, scc, o, onright)
+
+  if not HasIsRegularClass(x) and not IsRegularClass(x) then 
+    return [];
+  fi;
+  
+  s:=ParentSemigroup(x);
+
+  if Rank(Representative(x))=Degree(s) then
+    return [One(s)];
+  fi;
+
+  out:=EmptyPlist(Length(scc)); 
+  j:=0;
+  tester:=IdempotentLambdaRhoTester(s);
+  creator:=IdempotentLambdaRhoCreator(s);
+
+  if onright then 
+    for i in scc do
+      if tester(o[i], value) then
+        j:=j+1;
+        out[j]:=creator(o[i], value);
+      fi;
+    od;
+  else
+    for i in scc do
+      if tester(value, o[i]) then
+        j:=j+1;
+        out[j]:=creator(value, o[i]);
+      fi;
+    od;
+  fi;
+
+  if not HasIsRegularClass(x) then 
+    SetIsRegularClass(x, j<>0);
+  fi;
+  
+  if not HasNrIdempotents(x) then 
+    SetNrIdempotents(x, j);   
+  fi;
+
+  ShrinkAllocationPlist(out);
+  return out;
+end);
+
 # mod for 1.0! - Idempotents - "for an acting semigroup" 
 #############################################################################
 
@@ -1675,11 +1724,7 @@ function(s)
 
   if IsRegularSemigroup(s) then 
 
-    if HasNrIdempotents(s) then 
-      out:=EmptyPlist(NrIdempotents(s));
-    else
-      out:=[];
-    fi;
+    out:=[];
     
     nr:=0;
     tester:=IdempotentLambdaRhoTester(s);
