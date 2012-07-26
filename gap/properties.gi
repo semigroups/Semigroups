@@ -693,6 +693,10 @@ function(s)
   return true;
 end);
 
+InstallOtherMethod(IsInverseSemigroup, "for a semigroup of partial perms",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+s-> ForAll(Generators(s), x-> x^-1 in s));
+
 #IIILLL
 
 # new for 0.2! - IsLeftSimple - "for a transformation semigroup"
