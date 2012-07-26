@@ -164,6 +164,48 @@ function(s)
    [IsIteratorOfSemigroup]);
 end);
 
+# new for 1.0! - Iterator - "for a D-class of an acting semigroup"
+#############################################################################
+
+# same method for regular/inverse
+
+InstallMethod(Iterator, "for a D-class of an acting semigroup", 
+[IsGreensDClass and IsActingSemigroupGreensClass], 
+function(d)
+  local iter, s;
+  
+  if HasAsSSortedList(d) then 
+    iter:=IteratorList(AsSSortedList(d));
+    SetIsIteratorOfDClassElements(iter, true);
+    return iter;
+  fi;
+
+  s:=ParentSemigroup(d);
+  return IteratorByIterOfIter(s, Iterator(GreensRClasses(d)), x-> x,
+   [IsIteratorOfDClassElements]);
+end);
+
+# new for 1.0! - Iterator - "for a H-class of an acting semigroup"
+#############################################################################
+
+# same method for regular/inverse
+
+InstallMethod(Iterator, "for a H-class of an acting semigroup", 
+[IsGreensHClass and IsActingSemigroupGreensClass], 
+function(h)
+  local iter, s;
+  
+  if HasAsSSortedList(h) then 
+    iter:=IteratorList(AsSSortedList(h));
+    SetIsIteratorOfDClassElements(iter, true);
+    return iter;
+  fi;
+
+  s:=ParentSemigroup(h);
+  return IteratorByIterator(Iterator(SchutzenbergerGroup(h)), x->
+   Representative(h)*x, [IsIteratorOfHClassElements]);
+end);
+
 # new for 1.0! - Iterator - "for an R-class of an acting semi"
 #############################################################################
 
@@ -186,7 +228,8 @@ function(r)
 
     iter:=IteratorByFunctions(rec(
 
-      schutz:=List(SchutzenbergerGroup(r), x-> Representative(r)*x), 
+      #schutz:=List(SchutzenbergerGroup(r), x-> Representative(r)*x), 
+      schutz:=Enumerator(SchutzenbergerGroup(r)),
       at:=[0,1],
       m:=Length(scc),
       n:=Size(SchutzenbergerGroup(r)), 
@@ -208,7 +251,7 @@ function(r)
           at[1]:=1; at[2]:=at[2]+1;
         fi;
        
-        return iter!.schutz[at[2]]*mults[scc[at[1]]][1];
+        return Representative(r)*iter!.schutz[at[2]]*mults[scc[at[1]]][1];
       end,
       
       ShallowCopy:=iter -> rec(schutz:=iter!.schutz, at:=[0,1], 

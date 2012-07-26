@@ -1001,7 +1001,7 @@ function(d)
   
   for j in scc do
     i:=i+1;    
-    out[i]:=CreateRClassNC(s, m, o, mults[j][1]*f, false);
+    out[i]:=CreateRClassNC(s, m, o, mults[j][2]*f, false);
   od;             
 
   return out;

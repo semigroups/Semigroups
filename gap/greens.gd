@@ -93,6 +93,7 @@ DeclareGlobalFunction("IsRegularClass@");
 DeclareProperty("IsRegularClass", IsGreensClass);
 InstallTrueMethod(IsRegularClass, IsRegularDClass);
 DeclareProperty("IsInverseOpClass", IsGreensClass); 
+InstallTrueMethod(IsRegularClass, IsInverseOpClass);
 
 DeclareGlobalFunction("Idempotents@");
 DeclareGlobalFunction("NrIdempotents@");
