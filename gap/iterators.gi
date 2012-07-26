@@ -15,6 +15,7 @@
 
 InstallGlobalFunction(IteratorByIterOfIter,
 function(old_iter, isnew, filts)
+  local iter, filt;
 
   iter:=IteratorByFunctions(rec(
     iter:=old_iter;
@@ -161,34 +162,12 @@ function(s)
 
   if HasAsSSortedList(s) then 
     iter:=IteratorList(AsSSortedList(s));
-  else
-    iter:= IteratorByFunctions( rec(
-
-      R:=IteratorOfRClasses(s),
-
-      r:=fail, s:=s,
-
-      NextIterator:=function(iter)
-
-        if IsDoneIterator(iter) then
-          return fail;
-        fi;
-
-        if iter!.r=fail or IsDoneIterator(iter!.r) then
-          iter!.r:=Iterator(NextIterator(iter!.R));
-        fi;
-
-        return NextIterator(iter!.r);
-      end,
-
-      IsDoneIterator:= iter -> IsDoneIterator(iter!.R) and
-       IsDoneIterator(iter!.r),
-
-      ShallowCopy:= iter -> rec(R:=IteratorOfRClasses(s), r:=fail)));
+    SetIsIteratorOfSemigroup(iter, true);
+    return iter;
   fi;
 
-  SetIsIteratorOfSemigroup(iter, true);
-  return iter;
+  return IteratorByIterOfIter(IteratorOfRClasses(s), ReturnTrue,
+   IsIteratorOfSemigroup);
 end);
 
 # new for 0.5! - Iterator - "for a full transformation semigroup"
