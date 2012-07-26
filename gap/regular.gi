@@ -10,6 +10,29 @@
 
 ## Methods for Green's classes of regular acting semigroups
 
+# acting...
+#############################################################################
+#############################################################################
+
+# new for 1.0! - RhoOrbStabChain - "for a regular D-class "
+#############################################################################
+
+InstallMethod(RhoOrbStabChain, "for a regular D-class",
+[IsRegularDClass and IsActingSemigroupGreensClass],
+function(d)
+  local g;
+
+  g:=SchutzenbergerGroup(d);
+
+  if IsTrivial(g) then 
+    return false;
+  elif IsNaturalSymmetricGroup(g) then 
+    return true;
+  fi;
+
+  return StabChainImmutable(g);
+end);
+
 # new for 1.0! - DClassType - "for a regular acting semigroup"
 ############################################################################
 
@@ -1560,25 +1583,6 @@ function(s)
   return RhoOrbMult(rho_o, rho_m, j)[1]*f*
    Random(LambdaOrbSchutzGp(lambda_o, m))*
     LambdaOrbMult(lambda_o, m, i)[1];
-end);
-
-# new for 1.0! - RhoOrbStabChain - "for a regular D-class "
-#############################################################################
-
-InstallMethod(RhoOrbStabChain, "for a regular D-class",
-[IsRegularDClass and IsActingSemigroupGreensClass],
-function(d)
-  local g;
-
-  g:=SchutzenbergerGroup(d);
-
-  if IsTrivial(g) then 
-    return false;
-  elif IsNaturalSymmetricGroup(g) then 
-    return true;
-  fi;
-
-  return StabChainImmutable(g);
 end);
 
 #SSS

@@ -82,6 +82,7 @@ DeclareOperation("GreensRClassOfElementNC", [IsSemigroup]);
 
 DeclareProperty("IsGreensClassOfTransSemigp", IsGreensClass);
 
+DeclareGlobalFunction("IsRegularClass@");
 DeclareProperty("IsRegularLClass", IsGreensClass); 
 DeclareProperty("IsRegularRClass", IsGreensClass);
 DeclareProperty("IsRegularHClass", IsGreensClass);
