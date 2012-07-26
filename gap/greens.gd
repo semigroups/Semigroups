@@ -103,6 +103,7 @@ DeclareOperation("IteratorOfDClassData", [IsSemigroup]);
 DeclareOperation("IteratorOfHClassData", [IsSemigroup]);
 DeclareOperation("IteratorOfLClassData", [IsSemigroup]);
 
+DeclareGlobalFunction("Idempotents@");
 DeclareAttribute("NrIdempotents", IsSemigroup);
 
 DeclareAttribute("NrDClasses", IsSemigroup); 

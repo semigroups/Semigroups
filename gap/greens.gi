@@ -1750,7 +1750,7 @@ function(s)
     od;
 
     if not HasNrIdempotents(s) then 
-      SetNrIdempotents(s, j);
+      SetNrIdempotents(s, nr);
     fi;
     return out;
   fi;
@@ -1769,9 +1769,10 @@ function(d)
   local out, lambda_o, lambda_scc, rho_o, rho_scc, i;
 
   out:=[];
-  
-  lambda_o:=LambdaOrb(d); lambda_scc:=LambdaOrbSCC(d);
-  rho_o:=RhoOrb(d); rho_scc:=RhoOrbSCC(d);
+  lambda_o:=LambdaOrb(d); 
+  lambda_scc:=LambdaOrbSCC(d);
+  rho_o:=RhoOrb(d); 
+  rho_scc:=RhoOrbSCC(d);
   
   for i in lambda_scc do
     Append(out, Idempotents@(d, lambda_o[i], rho_scc, rho_o, false));
@@ -1936,7 +1937,8 @@ LambdaOrbSCC(r), LambdaOrb(r), true));
 
 # new for 1.0! - Iterator - "for an R-class of an acting semi"
 #############################################################################
-# this method makes Iterator of a semigroup much better!!
+
+# Notes: this method makes Iterator of a semigroup much better!!
 
 # same method for regular/inverse
 
@@ -1988,24 +1990,11 @@ function(r)
     return iter;
 end);
 
-# mod for 1.0! - Iterator - "for a trivial acting semigroup"
-#############################################################################
-# Notes: required until Enumerator for a trans. semigp does not call iterator. 
-# This works but is maybe not the best!
-
-# same method for regular/inverse
-
-InstallOtherMethod(Iterator, "for a trivial acting semigp", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
-function(s)
-  return TrivialIterator(Generators(s)[1]);
-end);
-
 # mod for 1.0! - Iterator - "for an acting semigroup"
 #############################################################################
+# Notes: the previous inverse method used D-classes instead of R-classes.
 
 # same method for regular/inverse 
-# (the previous inverse method used D-classes instead of R-classes).
 
 InstallMethod(Iterator, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -2071,6 +2060,19 @@ function(s)
 
   SetIsIteratorOfSemigroup(iter, true);
   return iter;
+end);
+
+# mod for 1.0! - Iterator - "for a trivial acting semigroup"
+#############################################################################
+# Notes: required until Enumerator for a trans. semigp does not call iterator. 
+# This works but is maybe not the best!
+
+# same method for regular/inverse
+
+InstallOtherMethod(Iterator, "for a trivial acting semigp", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
+function(s)
+  return TrivialIterator(Generators(s)[1]);
 end);
 
 # new for 1.0! - IteratorOfDClasses - "for an acting semigroup"
@@ -2270,37 +2272,6 @@ function(s)
   return iter;
 end);
 
-# new for 1.0! - IteratorOfDClassReps - "for an acting semigroup"
-#############################################################################
-
-# different method for regular/inverse
-
-InstallMethod(IteratorOfDClassReps, "for an acting semigroup",
-[IsActingSemigroup],
-s-> IteratorByIterator(IteratorOfDClasses(s), Representative,
-[IsIteratorOfDClassReps]));
-
-# new for 1.0! - IteratorOfHClassReps - "for an acting semigroup"
-#############################################################################
-
-#JDM should be a different  method for regular/inverse using
-#IteratorOfHClassData (not yet written);
-
-InstallMethod(IteratorOfHClassReps, "for an acting semigroup",
-[IsActingSemigroup],
-s-> IteratorByIterator(IteratorOfHClasses(s), Representative,
-[IsIteratorOfHClassReps]));
-
-# new for 1.0! - IteratorOfLClassReps - "for an acting semigroup"
-#############################################################################
-
-# different method for regular/inverse
-
-InstallMethod(IteratorOfLClassReps, "for an acting semigroup",
-[IsActingSemigroup],
-s-> IteratorByIterator(IteratorOfLClasses(s), Representative,
-[IsIteratorOfLClassReps]));
-
 # new for 1.0! - IteratorOfRClassData - "for an acting semigroup"
 #############################################################################
 
@@ -2333,15 +2304,6 @@ function(s)
     ShallowCopy:=iter-> rec(i:=1)));
 end);
 
-# new for 1.0! - IteratorOfRClassReps - "for an acting semigroup"
-#############################################################################
-
-# same method for inverse/regular.
-
-InstallMethod(IteratorOfRClassReps, "for an acting semigroup",
-[IsActingSemigroup],
-s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4],
-[IsIteratorOfRClassReps]));
 
 # new for 1.0! - IteratorOfRClasses - "for an acting semigroup"
 #############################################################################
@@ -2352,6 +2314,47 @@ InstallMethod(IteratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],
 s-> IteratorByIterator(IteratorOfRClassData(s), x->
 CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
+
+# new for 1.0! - IteratorOfDClassReps - "for an acting semigroup"
+#############################################################################
+
+# different method for regular/inverse
+
+InstallMethod(IteratorOfDClassReps, "for an acting semigroup",
+[IsActingSemigroup],
+s-> IteratorByIterator(IteratorOfDClasses(s), Representative,
+[IsIteratorOfDClassReps]));
+
+# new for 1.0! - IteratorOfHClassReps - "for an acting semigroup"
+#############################################################################
+
+#JDM should be a different  method for regular/inverse using
+#IteratorOfHClassData (not yet written);
+
+InstallMethod(IteratorOfHClassReps, "for an acting semigroup",
+[IsActingSemigroup],
+s-> IteratorByIterator(IteratorOfHClasses(s), Representative,
+[IsIteratorOfHClassReps]));
+
+# new for 1.0! - IteratorOfLClassReps - "for an acting semigroup"
+#############################################################################
+
+# different method for regular/inverse
+
+InstallMethod(IteratorOfLClassReps, "for an acting semigroup",
+[IsActingSemigroup],
+s-> IteratorByIterator(IteratorOfLClasses(s), Representative,
+[IsIteratorOfLClassReps]));
+
+# new for 1.0! - IteratorOfRClassReps - "for an acting semigroup"
+#############################################################################
+
+# same method for inverse/regular.
+
+InstallMethod(IteratorOfRClassReps, "for an acting semigroup",
+[IsActingSemigroup],
+s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4],
+[IsIteratorOfRClassReps]));
 
 #LLL
 
