@@ -1714,6 +1714,7 @@ end);
 
 # mod for 1.0! - Idempotents - "for an acting semigroup" 
 #############################################################################
+# Notes: this could be more compacted but it is not for performance reasons.
 
 # same method for regular, different method for inverse
 
@@ -1725,7 +1726,6 @@ function(s)
   if IsRegularSemigroup(s) then 
 
     out:=[];
-    
     nr:=0;
     tester:=IdempotentLambdaRhoTester(s);
     creator:=IdempotentLambdaRhoCreator(s);
@@ -1740,6 +1740,7 @@ function(s)
       rep:=EvaluateWord(gens, TraceSchreierTreeForward(lambda_o, i));
       rho:=rhofunc(rep);
       j:=lookup[Position(rho_o, rho)];
+
       for k in scc[j] do
         if tester(lambda_o[i], rho_o[k]) then
           nr:=nr+1;
@@ -1765,37 +1766,16 @@ end);
 InstallOtherMethod(Idempotents, "for a D-class of an acting semigp.",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local s, out, nr, tester, creator, rho_o, rho_scc, lambda_o, lambda_scc, i, j;
+  local out, lambda_o, lambda_scc, rho_o, rho_scc, i;
 
-  s:=ParentSemigroup(d);
-
-  if Rank(Representative(d))=Degree(s) then
-    return [One(s)];
-  fi;
-
-  out:=[]; nr:=0;
-  creator:=IdempotentLambdaRhoCreator(s);
+  out:=[];
   
-  lambda_o:=LambdaOrb(d); 
-  lambda_scc:=LambdaOrbSCC(d);
-
-  tester:=IdempotentLambdaRhoTester(s);
-  rho_o:=RhoOrb(d);
-  rho_scc:=RhoOrbSCC(d);
+  lambda_o:=LambdaOrb(d); lambda_scc:=LambdaOrbSCC(d);
+  rho_o:=RhoOrb(d); rho_scc:=RhoOrbSCC(d);
+  
   for i in lambda_scc do
-    i:=lambda_o[i];
-    for j in rho_scc do 
-      j:=rho_o[j];
-      if tester(i, j) then
-        nr:=nr+1;
-        out[nr]:=creator(i, j);
-      fi;
-    od;
+    Append(out, Idempotents@(d, lambda_o[i], rho_scc, rho_o, false));
   od;
-
-  if not HasNrIdempotents(d) then 
-    SetNrIdempotents(d, nr);   
-  fi;
   return out;
 end);
 
@@ -1825,43 +1805,8 @@ end);
 
 InstallOtherMethod(Idempotents, "for an L-class of an acting semigp.",
 [IsGreensLClass and IsActingSemigroupGreensClass],
-function(l)
-  local s, out, lambda, o, m, scc, j, tester, creator, i;
-
-  if not IsRegularLClass(l) then
-    return [];
-  fi;
-  
-  s:=ParentSemigroup(l);
-
-  if Rank(Representative(l))=Degree(s) then
-    return [One(s)];
-  fi;
-
-  out:=[]; 
-  
-  lambda:=LambdaFunc(s)(Representative(l));
-  o:=RhoOrb(l); 
-  m:=RhoOrbSCCIndex(l);
-  scc:=OrbSCC(o)[m];
-
-  j:=0;
-  tester:=IdempotentLambdaRhoTester(s);
-  creator:=IdempotentLambdaRhoCreator(s);
-
-  for i in scc do
-    if tester(lambda, o[i]) then
-      j:=j+1;
-      out[j]:=creator(lambda, o[i]);
-    fi;
-  od;
-
-  if not HasNrIdempotents(l) then 
-    SetNrIdempotents(l, j);   
-  fi;
-
-  return out;
-end);
+l-> Idempotents@(l, LambdaFunc(s)(Representative(l)), RhoOrbSCC(l), RhoOrb(l),
+false));
 
 # mod for 1.0! - Idempotents - "for an R-class of an acting semigp"
 #############################################################################
@@ -1870,45 +1815,8 @@ end);
 
 InstallOtherMethod(Idempotents, "for an R-class of an acting semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
-function(r)
-  local s, out, rho, o, m, scc, j, tester, creator, i;
-
-  if not IsRegularRClass(r) then
-    return [];
-  fi;
-  
-  s:=ParentSemigroup(r);
-
-  if Rank(Representative(r))=Degree(s) then
-    return [One(s)];
-  fi;
-
-  
-  rho:=RhoFunc(s)(Representative(r));
-  o:=LambdaOrb(r); 
-  m:=LambdaOrbSCCIndex(r);
-  scc:=OrbSCC(o)[m];
-
-  out:=EmptyPlist(Length(scc)); 
-
-  j:=0;
-  tester:=IdempotentLambdaRhoTester(s);
-  creator:=IdempotentLambdaRhoCreator(s);
-
-  for i in scc do
-    if tester(o[i], rho) then
-      j:=j+1;
-      out[j]:=creator(o[i], rho);
-    fi;
-  od;
-
-  if not HasNrIdempotents(r) then 
-    SetNrIdempotents(r, j);   
-  fi;
-
-  ShrinkAllocationPlist(out);
-  return out;
-end);
+r-> Idempotents@(r, RhoFunc(s)(Representative(r)), LambdaOrbSCC(r), RhoOrb(r),
+false));
 
 # mod for 1.0! - IsGroupHClass - "for an H-class of an acting semigp."
 ############################################################################
