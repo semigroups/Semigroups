@@ -301,6 +301,7 @@ end);
 InstallMethod(IteratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
+  local iter;
 
   if HasGreensRClasses(s) then 
     iter:=IteratorList(GreensRClasses(s));
@@ -309,7 +310,7 @@ function(s)
   fi;
 
   IteratorByIterator(IteratorOfRClassData(s), x->
-   CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
+   CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]);
 end);
 
 # new for 1.0! - IteratorOfRClassData - "for an acting semigroup"

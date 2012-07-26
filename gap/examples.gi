@@ -340,6 +340,8 @@ if Citrus_C then
 
     if n=0 then
       return InverseSemigroup(PartialPermNC([]));
+    elif n=1 then 
+      return InverseSemigroup(PartialPermNC([2,1]), PartialPerm([1]));;
     fi;
 
     return InverseSemigroup(List(GeneratorsOfGroup(SymmetricGroup(n)), x->
