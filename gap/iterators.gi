@@ -210,6 +210,9 @@ end);
 #############################################################################
 
 # same method for regular, there should be a different method for inverseJDM!?
+# the inverse method will be almost identical to the R-class method, hence we
+# should extract the relevant bits from both the L and R method and make a new
+# function like in NrIdempotents@ for example. JDM
 
 InstallMethod(Iterator, "for an L-class of an acting semigp",
 [IsGreensLClass and IsActingSemigroupGreensClass],
@@ -257,7 +260,6 @@ function(l)
     
     ShallowCopy:=iter -> rec(schutz:=iter!.schutz, at:=[0,1], 
      m:=iter!.m, n:=iter!.n)));
-  fi;
   
   SetIsIteratorOfLClassElements(iter, true);
   return iter;
@@ -317,7 +319,6 @@ function(r)
     
     ShallowCopy:=iter -> rec(schutz:=iter!.schutz, at:=[0,1], 
      m:=iter!.m, n:=iter!.n)));
-  fi;
   
   SetIsIteratorOfRClassElements(iter, true);
     return iter;
