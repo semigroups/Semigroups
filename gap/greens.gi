@@ -123,8 +123,8 @@ function(f, d)
   s:=ParentSemigroup(d);
  
   # much much better performance using f[2]<>rep[2] below
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] or
-   Degree(f)<>Degree(rep) then
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] 
+    or Degree(f)<>Degree(rep) then
     return false;
   fi;
 
