@@ -1497,8 +1497,8 @@ end);
 
 InstallOtherMethod(Idempotents, "for an L-class of an acting semigp.",
 [IsGreensLClass and IsActingSemigroupGreensClass],
-l-> Idempotents@(l, LambdaFunc(ParentSemigroup(l))(Representative(l)), RhoOrbSCC(l), RhoOrb(l),
-false));
+l-> Idempotents@(l, LambdaFunc(ParentSemigroup(l))(Representative(l)),
+RhoOrbSCC(l), RhoOrb(l), false));
 
 # mod for 1.0! - Idempotents - "for an R-class of an acting semigp"
 #############################################################################
@@ -1507,8 +1507,8 @@ false));
 
 InstallOtherMethod(Idempotents, "for an R-class of an acting semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
-r-> Idempotents@(r, RhoFunc(ParentSemigroup(r))(Representative(r)), LambdaOrbSCC(r), RhoOrb(r),
-false));
+r-> Idempotents@(r, RhoFunc(ParentSemigroup(r))(Representative(r)),
+LambdaOrbSCC(r), LambdaOrb(r), false));
 
 # mod for 1.0! - IsGroupHClass - "for an H-class of an acting semigp."
 ############################################################################
@@ -2616,12 +2616,14 @@ function(s);
          IsActingSemigroupGreensClass);
 end);
 
-
 # same method for regular/inverse
 
 InstallOtherMethod(GreensJClassOfElement, "for acting semigroup and elt.",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsActingElt], 
 GreensDClassOfElement);
+
+InstallMethod(IsRegularDClass, "for a D-class of acting semigroup",
+[IsActingSemigroupGreensClass and IsGreensDClass], IsRegularClass);
 
 InstallOtherMethod(IsActingSemigroup, "for a Green's class",
 [IsGreensClass], ReturnFalse);
