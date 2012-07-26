@@ -23,15 +23,6 @@ if not IsBound(Generators) then
   DeclareAttribute("Generators", IsSemigroup);
 fi;
 
-DeclareGlobalFunction("HClass");
-DeclareGlobalFunction("HClassNC");
-DeclareGlobalFunction("IteratorByIterator");
-DeclareGlobalFunction("LClass");
-DeclareGlobalFunction("LClassNC");
-DeclareGlobalFunction("ListByIterator");
-DeclareGlobalFunction("RClass");
-DeclareGlobalFunction("RClassNC");
-
 DeclareGlobalFunction("ReadCitrus");
 DeclareGlobalFunction("ReadCitrusLine");
 DeclareGlobalFunction("ReadCitrusLinePP");

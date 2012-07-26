@@ -52,6 +52,13 @@ DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
 
 #old
 
+DeclareGlobalFunction("HClass");
+DeclareGlobalFunction("HClassNC");
+DeclareGlobalFunction("LClass");
+DeclareGlobalFunction("LClassNC");
+DeclareGlobalFunction("RClass");
+DeclareGlobalFunction("RClassNC");
+
 DeclareGlobalFunction("CreateDClass");
 DeclareGlobalFunction("CreateDClassNC");
 DeclareGlobalFunction("CreateHClass");
@@ -87,21 +94,6 @@ DeclareProperty("IsRegularClass", IsGreensClass);
 InstallTrueMethod(IsRegularClass, IsRegularDClass);
 DeclareProperty("IsInverseOpClass", IsGreensClass); 
 
-DeclareOperation("IteratorOfDClasses", [IsSemigroup]);
-DeclareOperation("IteratorOfHClasses", [IsSemigroup]);
-DeclareOperation("IteratorOfLClasses", [IsSemigroup]); 
-DeclareOperation("IteratorOfRClasses", [IsSemigroup]);
-
-DeclareOperation("IteratorOfDClassReps", [IsSemigroup]); 
-DeclareOperation("IteratorOfLClassReps", [IsSemigroup]); 
-DeclareOperation("IteratorOfHClassReps", [IsSemigroup]); 
-DeclareOperation("IteratorOfRClassReps", [IsSemigroup]);
-
-DeclareOperation("IteratorOfRClassData", [IsSemigroup]);
-DeclareOperation("IteratorOfDClassData", [IsSemigroup]);
-DeclareOperation("IteratorOfHClassData", [IsSemigroup]);
-DeclareOperation("IteratorOfLClassData", [IsSemigroup]);
-
 DeclareGlobalFunction("Idempotents@");
 DeclareGlobalFunction("NrIdempotents@");
 DeclareAttribute("NrIdempotents", IsSemigroup);
@@ -124,21 +116,5 @@ DeclareSynonymAttr("RClasses", GreensRClasses);
 
 DeclareAttribute("GroupHClass", IsGreensDClass and
  IsGreensClassOfTransSemigp);
-
-DeclareProperty("IsIteratorOfRClassReps", IsIterator);
-DeclareProperty("IsIteratorOfLClassReps", IsIterator);
-DeclareProperty("IsIteratorOfDClassReps", IsIterator);
-DeclareProperty("IsIteratorOfHClassReps", IsIterator);
-
-DeclareProperty("IsIteratorOfRClasses", IsIterator);
-DeclareProperty("IsIteratorOfLClasses", IsIterator);
-DeclareProperty("IsIteratorOfDClasses", IsIterator);
-DeclareProperty("IsIteratorOfHClasses", IsIterator);
-
-DeclareProperty("IsIteratorOfSemigroup", IsIterator);
-DeclareProperty("IsIteratorOfRClassElements", IsIterator);
-DeclareProperty("IsIteratorOfLClassElements", IsIterator);
-DeclareProperty("IsIteratorOfDClassElements", IsIterator);
-DeclareProperty("IsIteratorOfHClassElements", IsIterator);
 
 #EOF

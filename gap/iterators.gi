@@ -10,7 +10,7 @@
 
 #technical...
 
-# new for 1.0! - IteratorByIteratorOfIterator
+# new for 1.0! - IteratorByIterOfIter
 #############################################################################
 
 InstallGlobalFunction(IteratorByIterOfIter,
@@ -50,33 +50,77 @@ function(s, old_iter, convert, filts)
   return iter;
 end);
 
-# new for 0.7! - IteratorByIterator - "for an iterator and function"
+# new for 0.7! - IteratorByIterator - baseiter, convert, filts, isnew, opts
 #############################################################################
 
 InstallGlobalFunction(IteratorByIterator,
 function(arg)
-  local iter, filt;
-  
-  if Length(arg)=3 then 
-    iter:=IteratorByFunctions(rec(
-      data:=arg[1], 
-      IsDoneIterator:=iter-> IsDoneIterator(iter!.data),
-      NextIterator:=function(iter)
-        local x;
-        x:=NextIterator(iter!.data);
-        if x=fail then
-          return fail;
-        fi;
-        return arg[2](x);
-      end,
-      ShallowCopy:=iter-> rec(data:=ShallowCopy(old_iter))));
-    for filt in arg[3] do
-      SetFilterObj(iter, filt);
-    od;
-    return iter;
+  local iter, filt, convert, isnew;
+ 
+  # process incoming functions 
+  if NumberArgumentsFunction(arg[2])=1 then 
+    convert:=function(iter, x) 
+      return arg[2](x);
+    end;
+  else
+    convert:=arg[2];
   fi;
 
+  if IsBound(arg[4]) then 
+    if NumberArgumentsFunction(arg[4])=1 then 
+      isnew:=function(iter, x)
+        return arg[4](x);
+      end;
+    else
+      isnew:=arg[4];
+    fi;
+  fi;
 
+  # prepare iterator rec()
+  if IsBound(arg[5]) then 
+    iter:=arg[5];
+  else
+    iter:=rec();
+  fi;
+
+  iter.baseiter:=arg[1]; 
+  
+  iter.IsDoneIterator:=iter-> IsDoneIterator(iter!.baseiter);
+
+  iter.ShallowCopy:=ReturnFail;
+
+  # get NextIterator
+  if Length(arg)=3 then 
+    iter.NextIterator:=function(iter)
+      local x;
+      x:=NextIterator(iter!.baseiter);
+      if x=fail then
+        return fail;
+      fi;
+      return convert(iter, x);
+    end;
+  else
+    iter.NextIterator:=function(iter)
+      local baseiter, x;
+      baseiter:=iter!.baseiter;
+      repeat 
+        x:=NextIterator(baseiter);
+      until IsDoneIterator(baseiter) or isnew(iter, x);
+    
+      if IsDoneIterator(baseiter) then 
+        return fail;
+      fi;
+      return convert(iter, x);
+    end;
+  fi;
+
+  iter:=IteratorByFunctions(iter); 
+
+  for filt in arg[3] do #filters
+    SetFilterObj(iter, filt);
+  od;
+
+  return iter;
 end);
 
 # new for 0.7! - ListByIterator - "for an iterator and pos int"
@@ -119,7 +163,6 @@ function(s)
   return IteratorByIterOfIter(s, IteratorOfRClasses(s), x-> x,
    [IsIteratorOfSemigroup]);
 end);
-
 
 # new for 1.0! - Iterator - "for an R-class of an acting semi"
 #############################################################################
@@ -193,16 +236,20 @@ function(s)
     SetIsIteratorOfDClasses(iter, true);
     return iter;
   fi;
-return;
-  #return IteratorByIterOfIter(IteratorOfRClassData(s), rec(classes:=[]), 
-  # function(iter, x) 
-  #   return x=fail or ForAll(iter!.classes, d-> not x[4] in d);
-  # end, 
-  # function(iter, x) 
-  #  d:=DClassOfRClass(CallFuncList(CreateRClassNC, x)) 
-  #  Add(iter!.classes, d);
-  #  return d;
-  #end, IsIteratorOfDClasses);
+  
+  return IteratorByIterator(
+    IteratorOfRClassData(s),  # baseiter
+    function(iter, x)         # convert
+      local d;
+      d:=DClassOfRClass(CallFuncList(CreateRClassNC, x));
+      Add(iter!.classes, d);
+      return d;
+    end,
+    [IsIteratorOfDClasses], 
+    function(iter, x)         #isnew
+      return x=fail or ForAll(iter!.classes, d-> not x[4] in d);
+     end,
+    rec(classes:=[]));        #iter
 end);
 
 # new for 1.0! - IteratorOfHClasses - "for an acting semigroup"
@@ -239,6 +286,7 @@ function(s)
   if HasGreensLClasses(s) then 
     iter:=IteratorList(GreensLClasses(s));
     SetIsIteratorOfHClasses(iter, true);
+    return iter;
   fi;
   
   return IteratorByIterOfIter(s, IteratorOfDClasses(s), GreensLClasses, 
@@ -252,8 +300,17 @@ end);
 
 InstallMethod(IteratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],
-s-> IteratorByIterator(IteratorOfRClassData(s), x->
-CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
+function(s)
+
+  if HasGreensRClasses(s) then 
+    iter:=IteratorList(GreensRClasses(s));
+    SetIsIteratorOfRClasses(iter, true);
+    return iter;
+  fi;
+
+  IteratorByIterator(IteratorOfRClassData(s), x->
+   CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]));
+end);
 
 # new for 1.0! - IteratorOfRClassData - "for an acting semigroup"
 #############################################################################
