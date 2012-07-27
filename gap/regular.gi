@@ -797,18 +797,18 @@ end);
 InstallOtherMethod(GreensLClasses, "for regular D-class of acting semigroup", 
 [IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 function(d)
-  local f, s, o, m, nc, out, k, mults, scc, i;
+  local f, s, o, m, nc, scc, mults, out, k, i;
   
   f:=Representative(d);
   s:=ParentSemigroup(d);
   o:=RhoOrb(d);
   m:=RhoOrbSCCIndex(d);
   nc:=IsGreensClassNC(d);
-
+  scc:=LambdaOrbSCC(d);
+  mults:=LambdaOrbMults(LambdaOrb(d), LambdaOrbSCCIndex(d));
+  
   out:=EmptyPlist(Length(scc));
   k:=0;
-  mults:=LambdaOrbMults(LambdaOrb(d), LambdaOrbSCCIndex(d));
-  scc:=LambdaOrbSCC(d);
   
   for i in scc do
     k:=k+1;

@@ -892,6 +892,12 @@ function(m,n)
   return Monoid(Set(List([1..m], x-> RandomTransformation(n))));
 end);
 
+InstallGlobalFunction(RegularSemigroup, 
+function(arg)
+  Add(arg, rec(regular:=true));
+  return CallFuncList(Semigroup, arg);
+end);
+
 #SSS
 
 # new for 0.5! - Semigroup

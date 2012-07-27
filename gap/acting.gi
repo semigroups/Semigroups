@@ -12,6 +12,8 @@
 # Notes                                                                      #
 ##############################################################################
 
+InstallOtherMethod(IsActingSemigroup, "for an object", [IsObject], ReturnFalse);
+
 ##############################################################################
 
 InstallGlobalFunction(RhoPos, 

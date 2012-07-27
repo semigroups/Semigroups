@@ -37,6 +37,8 @@ DeclareOperation("RandomInverseMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomTransformationMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomTransformationSemigroup", [IsPosInt, IsPosInt]);
 
+DeclareGlobalFunction("RegularSemigroup");
+
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
 
 #EOF
