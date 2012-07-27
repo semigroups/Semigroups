@@ -755,14 +755,6 @@ end);
 
 #III
 
-# new for 1.0! - InitSemigroupData - "for acting semi, data, and element"
-#############################################################################
-
-InstallGlobalFunction(InitSemigroupData, 
-function(s, data, x)
-
-end);
-
 # new for 1.0! - IsBound - for graded lambda orbs and pos int
 ##############################################################################
 
@@ -780,10 +772,17 @@ end);
 InstallMethod(LambdaOrb, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
-  return Orb(GeneratorsOfSemigroup(s), [1..65536], LambdaAct(s),
-        rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
-        storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
-        scc_reps:=[One(Generators(s))], semi:=s));
+  local opts, semi, name;
+
+  opts:= rec(schreier:=true, orbitgraph:=true,
+          storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
+          scc_reps:=[One(Generators(s))], semi:=s);
+  
+  for name in RecNames(LambdaOrbOpts(s)) do 
+    opts.(name):=LambdaOrbOpts(s).(name);
+  od;
+
+  return Orb(GeneratorsOfSemigroup(s), LambdaDomain(s), LambdaAct(s), opts);
 end);
 
 # new for 1.0! - LambdaOrbMults - "for a lambda orb and scc index"

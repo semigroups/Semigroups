@@ -68,7 +68,6 @@ DeclareProperty("IsGradedLambdaOrbs", IsOrbit);
 DeclareProperty("IsGradedRhoOrbs", IsOrbit);
 
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
-DeclareGlobalFunction("InitSemigroupData");
 DeclareCategory("IsSemigroupData", IsRecord);
 
 # INVERSE SEMIGROUPS
@@ -78,19 +77,5 @@ IsInverseSemigroup);
 DeclareCategory("IsInverseActingElt", IsMultiplicativeElementWithOne and
 IsAssociativeElement);
 DeclareCategoryCollections("IsInverseActingElt");
-
-# IMPLICATIONS
-
-InstallTrueMethod(IsActingSemigroup, IsTransformationSemigroup);
-InstallTrueMethod(IsActingSemigroup, IsPartialPermSemigroup);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsPartialPermSemigroup and
-IsInverseSemigroup);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsPartialPermSemigroup and IsRegularSemigroup);
-InstallTrueMethod(IsActingElt, IsTransformation);
-InstallTrueMethod(IsActingElt, IsPartialPerm);
-InstallTrueMethod(IsInverseActingElt, IsPartialPerm);
-
-InstallTrueMethod(IsActingSemigroupGreensClass, IsGreensClassOfTransSemigp);
-InstallTrueMethod(IsActingSemigroupGreensClass, IsGreensClassOfPartPermSemigroup);
 
 #EOF

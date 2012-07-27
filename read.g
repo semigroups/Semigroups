@@ -11,6 +11,7 @@
 ReadPackage("citrus/gap/transform.gi");
 if IsBound(CITRUSC) then ReadPackage("citrus/gap/pperm.gi"); fi;
 ReadPackage("citrus/gap/binary.gi");
+ReadPackage("citrus/gap/matrix.gi");
 
 ReadPackage("citrus/gap/acting.gi");
 ReadPackage("citrus/gap/setup.gi");

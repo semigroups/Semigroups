@@ -46,7 +46,6 @@ function(d,q)
   g[d][d]:=Z(q)*0;
 
   S:=Monoid(Concatenation(GeneratorsOfGroup(GL(d,q)), [g]));
-  SetIsMatrixSemigroup(S, true);
   SetIsFullMatrixSemigroup(S, true);
   SetIsGeneralLinearSemigroup(S, true);
   SetIsRegularSemigroup(S, true);

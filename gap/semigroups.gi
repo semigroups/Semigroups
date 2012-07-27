@@ -819,6 +819,12 @@ end);
 
 #RRR
 
+InstallMethod(RandomMatrixSemigroup, "for a ring and pos int",
+[IsRing, IsPosInt, IsPosInt], 
+function(R, m, n)
+  return Semigroup(List([1..m], x-> RandomMat(n, n, R)));
+end);
+
 # new for 1.0! - RandomBinaryRelationSemigroup - "for pos int and pos int"
 #############################################################################
 

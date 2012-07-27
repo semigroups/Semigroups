@@ -27,6 +27,7 @@ fi;
 ReadPackage("citrus/gap/transform.gd");
 ReadPackage("citrus/gap/pperm.gd");
 ReadPackage("citrus/gap/binary.gd");
+ReadPackage("citrus/gap/matrix.gd");
 
 ReadPackage("citrus/gap/semigroups.gd");
 ReadPackage("citrus/gap/enums.gd");

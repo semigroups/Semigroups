@@ -12,6 +12,17 @@
 # Setup - install the basic things required for specific acting semigroups    #
 ###############################################################################
 
+# new for 1.0! - LambdaOrbOpts 
+
+InstallMethod(LambdaOrbOpts, "for a transformation semigroup",
+[IsTransformationSemigroup], s-> rec(forflatplainlists:=true));
+
+InstallMethod(LambdaOrbOpts, "for a partial perm semigroup",
+[IsPartialPermSemigroup], s-> rec(forflatplainlists:=true));
+
+InstallMethod(LambdaOrbOpts, "for a matrix semigroup",
+[IsMatrixSemigroup], s-> rec());
+
 # new for 1.0 - LambdaAct and RhoAct
 ###############################################################################
 
@@ -39,6 +50,9 @@ if IsBound(OnIntegerSetsWithPP) then
   #s-> OnIntegerSetsWithPP);
 fi;
 
+InstallMethod(LambdaAct, "for a matrix semigroup", 
+[IsMatrixSemigroup], x-> OnRight);
+
 # new for 1.0! - LambdaDegree
 ###############################################################################
 
@@ -49,10 +63,13 @@ InstallMethod(LambdaDegree, "for an acting semigroup",
 ###############################################################################
 
 InstallMethod(LambdaDomain, "for a transformation semi",
-[IsTransformationSemigroup], s-> [1..Degree(s)]*1);
+[IsTransformationSemigroup], s-> [1..Degree(s)+1]*1);
 
 InstallMethod(LambdaDomain, "for a partial perm semi",
-[IsPartialPermSemigroup], Points);
+[IsPartialPermSemigroup], s-> [1..65536]);
+
+InstallMethod(LambdaDomain, "for a matrix semigroup",
+[IsMatrixSemigroup], s-> BaseDomain(Representative(s))^Length(Representative(s)));
 
 InstallMethod(RhoDomain, "for a transformation semi",
 [IsTransformationSemigroup], s-> [1..Degree(s)]*1);
@@ -63,13 +80,26 @@ InstallMethod(RhoDomain, "for a partial perm semi",
 # new for 1.0! - LambdaFunc
 ###############################################################################
 
-InstallMethod(LambdaFunc, "for a trans semi",
+InstallMethod(LambdaFunc, "for a transformation semigroup",
 [IsTransformationSemigroup], x-> RanSetT);
 
 if IsBound(RanSetPP) then
-  InstallMethod(LambdaFunc, "for a partial perm",
+  InstallMethod(LambdaFunc, "for a partial perm semigroup",
     [IsPartialPermSemigroup], x-> RanSetPP);
 fi;
+
+InstallMethod(LambdaFunc, "for a matrix semigroup",
+[IsMatrixSemigroup], x-> function(mat)
+  return VectorSpace(DefaultFieldOfMatrix(mat), SemiEchelonMat(mat).vectors);
+end);
+
+InstallMethod(RhoFunc, "for a matrix semigroup",
+[IsMatrixSemigroup], x-> 
+function(mat)
+local t;
+  t:=TransposedMat(mat);
+  return VectorSpace(DefaultFieldOfMatrix(t), SemiEchelonMat(t).vectors);
+end);
 
 # new for 1.0! - LambdaInverse
 ###############################################################################
@@ -150,6 +180,8 @@ if IsBound(DomPP) and IsBound(RanPP) then
     return MappingPermListList(DomPP(h), RanPP(h)); 
   end);
 fi;
+
+
 
 # new for 1.0! - LambdaConjugator
 ###############################################################################

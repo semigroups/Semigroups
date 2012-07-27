@@ -12,6 +12,8 @@
 DeclareAttribute("RhoAct", IsActingSemigroup);
 DeclareAttribute("LambdaAct", IsActingSemigroup);
 
+DeclareAttribute("LambdaOrbOpts", IsActingSemigroup);
+
 # grading for use in GradedLambdaOrb/GradedRhoOrb
 DeclareAttribute("LambdaRank", IsActingSemigroup);
 DeclareAttribute("RhoRank", IsActingSemigroup);
@@ -32,4 +34,23 @@ DeclareAttribute("RhoDomain", IsActingSemigroup);
 
 DeclareAttribute("IdempotentLambdaRhoTester", IsActingSemigroup);
 DeclareAttribute("IdempotentLambdaRhoCreator", IsActingSemigroup);
+
+InstallTrueMethod(IsActingSemigroup, IsTransformationSemigroup);
+InstallTrueMethod(IsActingSemigroup, IsPartialPermSemigroup);
+InstallTrueMethod(IsActingSemigroup, IsMatrixSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsPartialPermSemigroup and
+IsInverseSemigroup);
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsPartialPermSemigroup and
+IsRegularSemigroup);
+
+InstallTrueMethod(IsActingEltCollection, IsRingElementCollCollColl);
+
+InstallTrueMethod(IsActingElt, IsTransformation);
+InstallTrueMethod(IsActingElt, IsPartialPerm);
+InstallTrueMethod(IsActingElt, IsMatrix);
+
+InstallTrueMethod(IsInverseActingElt, IsPartialPerm);
+
+InstallTrueMethod(IsActingSemigroupGreensClass, IsGreensClassOfTransSemigp);
+InstallTrueMethod(IsActingSemigroupGreensClass,                                 IsGreensClassOfPartPermSemigroup);
 

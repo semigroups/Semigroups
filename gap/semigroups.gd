@@ -26,11 +26,12 @@ IsPartialPermCollection, IsRecord]);
 DeclareOperation("InverseSemigroupByGeneratorsNC", [IsPartialPermCollection, 
 IsPartialPermCollection, IsRecord]);
 
-DeclareSynonymAttr("IsPartialPermSemigroup", IsSemigroup and
+DeclareSynonym("IsPartialPermSemigroup", IsSemigroup and
 IsPartialPermCollection);
 DeclareProperty("IsPartialPermMonoid", IsPartialPermSemigroup);
 
 DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);
+DeclareOperation("RandomMatrixSemigroup", [IsRing, IsPosInt, IsPosInt]);
 DeclareOperation("RandomBlockGroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomInverseSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomInverseMonoid", [IsPosInt, IsPosInt]);

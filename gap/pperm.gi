@@ -136,7 +136,6 @@ function(p, dom)
   return fail;
 end);
 
-
 # new for 0.7! - AsPermutation - "for a partial perm"
 ###########################################################################
 
