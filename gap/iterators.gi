@@ -390,7 +390,7 @@ function(s)
   
   if HasGreensLClasses(s) then 
     iter:=IteratorList(GreensLClasses(s));
-    SetIsIteratorOfHClasses(iter, true);
+    SetIsIteratorOfLClasses(iter, true);
     return iter;
   fi;
   

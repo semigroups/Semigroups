@@ -47,7 +47,7 @@ true
 gap> d:=DClass(s, f);
 {Transformation( [ 8, 1, 5, 5, 8, 3, 7, 8 ] )}
 gap> iter:=Iterator(d);
-<iterator>
+<iterator of D-class>
 gap> for i in iter do od;
 
 #
@@ -287,7 +287,7 @@ gap> HClasses(l);
   {[ 4, 11 ] -> [ 6, 12 ]}, {[ 4, 6 ] -> [ 12, 6 ]}, {[ 4, 6 ] -> [ 6, 12 ]} ]
 gap> IsDuplicateFreeList(last);
 true
-gap> IsRegularLClass(l);
+gap> IsRegularClass(l);
 false
 gap> H:=HClasses(l);;
 gap> ForAll(H, x-> Representative(x) in l);
@@ -436,7 +436,7 @@ gap> Size(h);
 1
 gap> SchutzenbergerGroup(l);
 Sym( [ 1, 2, 7 ] )
-gap> IsRegularLClass(l);
+gap> IsRegularClass(l);
 false
 gap> IsGreensClassNC(h);
 true
@@ -627,13 +627,13 @@ gap> ForAll(Idempotents(l), x-> x in s);
 true
 gap> ForAll(l, x-> x in s);
 true
-gap> IsRegularLClass(l);
+gap> IsRegularClass(l);
 true
 gap> s:=Monoid(gens);
 <monoid with 4 generators>
 gap> l:=LClass(s, f);
 {Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] )}
-gap> IsRegularLClass(l);
+gap> IsRegularClass(l);
 false
 gap> Size(l);
 1
@@ -641,7 +641,7 @@ gap> f:= Transformation( [ 1, 2, 2, 1, 2, 6, 6, 1 ] );
 Transformation( [ 1, 2, 2, 1, 2, 6, 6, 1 ] )
 gap> l:=LClass(s, f);
 {Transformation( [ 1, 2, 2, 1, 2, 6, 6, 1 ] )}
-gap> IsRegularLClass(l);
+gap> IsRegularClass(l);
 true
 
 #
@@ -651,7 +651,7 @@ gap> gens:=[ PartialPermNC( [ 1, 2, 3 ], [ 1, 4, 3 ] ),
 >  PartialPermNC( [ 1, 2, 4 ], [ 1, 4, 3 ] ) ];;
 gap> s:=Semigroup(gens);
 <semigroup with 4 generators>
-gap> List(LClasses(s), IsRegularLClass);
+gap> List(LClasses(s), IsRegularClass);
 [ false, false, false, false, true, true, false, false, false, false, true, 
   true, false, false, false, true, true, true, true, true ]
 gap> Number(last, x-> x=true);
@@ -674,7 +674,7 @@ gap> l:=LClassNC(s, f);
 gap> HClassReps(l);
 [ [ 2, 3 ] -> [ 2, 4 ], [ 2, 3 ] -> [ 4, 2 ], [ 1, 2 ] -> [ 2, 4 ], 
   [ 1, 2 ] -> [ 4, 2 ] ]
-gap> IsRegularLClass(l);
+gap> IsRegularClass(l);
 false
 gap> NrHClasses(l);
 4
@@ -683,7 +683,7 @@ gap> l:=LClass(s, f);
 gap> HClassReps(l);
 [ [ 1, 2 ] -> [ 4, 2 ], [ 1, 2 ] -> [ 2, 4 ], [ 2, 3 ] -> [ 2, 4 ], 
   [ 2, 3 ] -> [ 4, 2 ] ]
-gap> IsRegularLClass(l);
+gap> IsRegularClass(l);
 false
 gap> ForAll(HClassReps(l), x-> x in l);
 true
@@ -726,7 +726,7 @@ gap> gens:=[ Transformation( [ 1, 5, 6, 2, 5, 2, 1 ] ),
 gap> s:=Semigroup(gens);;
 gap> l:=LClasses(s)[1154];
 {Transformation( [ 7, 2, 2, 3, 6, 1, 2 ] )}
-gap> IsRegularLClass(l);
+gap> IsRegularClass(l);
 false
 gap> d:=DClassOfLClass(l);
 {Transformation( [ 7, 2, 2, 3, 6, 1, 2 ] )}
@@ -2241,7 +2241,7 @@ gap> SchutzenbergerGroup(d);
 Group([ (6,26) ])
 gap> IsRegularDClass(d);
 true
-gap> IsRegularRClass(r);
+gap> IsRegularClass(r);
 true
 gap> ForAll(r, x-> x in r);
 true
@@ -3026,7 +3026,7 @@ gap> Size(h);
 24
 gap> ForAll(h, x-> x in r);
 true
-gap> IsRegularRClass(r);
+gap> IsRegularClass(r);
 true
 gap> IsRegularSemigroup(s);
 false
@@ -3067,7 +3067,7 @@ gap> ForAll(Idempotents(r), x-> x in d);
 true
 gap> ForAll(r, x-> x in d);
 true
-gap> Number(GreensRClasses(s), IsRegularRClass);
+gap> Number(GreensRClasses(s), IsRegularClass);
 21
 gap> NrRegularDClasses(s);
 2
@@ -3086,7 +3086,7 @@ gap> Size(s);
 998
 gap> r:=RClass(s, f);
 {Transformation( [ 4, 4, 3, 1, 5, 3, 3, 8 ] )}
-gap> IsRegularRClass(r);
+gap> IsRegularClass(r);
 true
 gap> Idempotents(r);
 [ Transformation( [ 1, 1, 3, 4, 5, 3, 3, 8 ] ) ]
