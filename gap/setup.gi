@@ -183,6 +183,7 @@ fi;
 
 
 
+
 # new for 1.0! - LambdaConjugator
 ###############################################################################
 # returns a permutation mapping LambdaFunc(s)(f) to LambdaFunc(s)(g) so that 
