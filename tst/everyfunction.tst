@@ -7,7 +7,6 @@
 ###
 ##############################################################################
 ###
-
 gap> START_TEST("Citrus package: everyfunction.tst"); 
 gap> LoadPackage("citrus", false);;
 
@@ -3369,21 +3368,21 @@ gap> gens:=[ Transformation( [ 8, 7, 6, 5, 4, 3, 2, 1 ] ),
 >   Transformation( [ 5, 6, 5, 4, 5, 4, 3, 2 ] ),
 >   Transformation( [ 5, 6, 7, 8, 7, 6, 5, 4 ] ) ];;
 gap> s:=Semigroup(gens);;
-gap> f:=Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] );
+gap> f:=Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] );;
 gap> h:=HClass(s, f);
 {Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )}
 gap> ForAll(h, x-> x in h);
 true
 gap> h:=HClassNC(s, f);
-{<transformation on 50 pts with rank 50>}
+{Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )}
 gap> Enumerator(h);
 <enumerator of H-class>
 gap> h:=HClassNC(s, f);
-{<transformation on 50 pts with rank 50>}
+{Transformation( [ 5, 6, 5, 4, 5, 4, 5, 4 ] )}
 gap> SchutzenbergerGroup(h);
-<permutation group of size 
-30414093201713378043612608166064768844377641568960512000000000000 with 
-2 generators>
+Group([ (4,6) ])
+
+#
 gap> s:=FullTransformationSemigroup(7);
 <monoid with 3 generators>
 gap> Factorial(7);
@@ -3405,12 +3404,12 @@ true
 gap> ForAll([1..Length(enum)], x-> Position(enum, enum[x])=x);
 true
 gap> Idempotents(h);
-Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] )
+[ Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] ) ]
 gap> f:=Transformation( [ 3, 2, 4, 5, 6, 1, 1 ] );;
 gap> h:=HClassNC(s, f);
 {Transformation( [ 3, 2, 4, 5, 6, 1, 1 ] )}
 gap> Idempotents(h);
-Transformation( [ 1, 2, 3, 4, 5, 6, 6 ] )
+[ Transformation( [ 1, 2, 3, 4, 5, 6, 6 ] ) ]
 gap> IsGroupHClass(h);
 true
 gap> h:=HClass(s, Transformation( [ 5, 1, 3, 3, 5, 5, 3 ] ));;
@@ -3441,7 +3440,7 @@ gap> gens:=
 >  PartialPermNC( [ 1, 2, 3, 4, 6 ], [ 3, 6, 4, 5, 1 ] ),
 >  PartialPermNC( [ 1, 2, 3, 5, 6 ], [ 4, 3, 5, 1, 6 ] ),
 >  PartialPermNC( [ 1, 2, 4, 5, 6 ], [ 2, 3, 1, 5, 6 ] ) ];;
-gap> s:=Semigroup(gens);
+gap> s:=Semigroup(gens);;
 gap> Size(s);
 7960
 gap> f:=PartialPermNC([ 1, 2, 5, 6 ], [ 5, 3, 6, 4 ]);;
@@ -3502,6 +3501,7 @@ true
 gap> h:=HClass(l, f);
 {[ 1 .. 3 ] -> [ 6, 3, 1 ]}
 
+#
 gap> gens:=[ Transformation( [ 6, 7, 1, 2, 3, 4, 5 ] ),
 >   Transformation( [ 7, 6, 5, 4, 3, 2, 1 ] ),
 >   Transformation( [ 4, 5, 6, 7, 1, 2, 3 ] ),
@@ -3511,15 +3511,14 @@ gap> gens:=[ Transformation( [ 6, 7, 1, 2, 3, 4, 5 ] ),
 >   Transformation( [ 1, 7, 1, 1, 1, 1, 2 ] ),
 >   Transformation( [ 5, 6, 6, 5, 4, 4, 5 ] ) ];;
 gap> s:=Semigroup(gens);;
-<semigroup with 8 generators>
-gap> First(HClasses(s), IsRegularHClass);
+gap> First(HClasses(s), IsRegularClass);
 {Transformation( [ 6, 7, 1, 2, 3, 4, 5 ] )}
 gap> iter:=IteratorOfHClasses(s);
 <iterator of H-classes>
-gap> repeat h:=NextIterator(iter); until IsRegularHClass(h);
+gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
 {Transformation( [ 6, 7, 1, 2, 3, 4, 5 ] )}
-gap> repeat h:=NextIterator(iter); until IsRegularHClass(h);
+gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
 {Transformation( [ 5, 6, 6, 5, 4, 3, 4 ] )}
 gap> IsGroupHClass(h);
@@ -3529,7 +3528,7 @@ MappingByFunction( {Transformation( [ 5, 6, 6, 5, 4, 3, 4 ] )}, Group(
 [ (3,6)(4,5) ]), <Operation "AsPermutation">, function( x ) ... end )
 gap> SchutzenbergerGroup(h);
 Group([ (3,6)(4,5) ])
-gap> repeat h:=NextIterator(iter); until IsRegularHClass(h);
+gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
 {Transformation( [ 3, 2, 2, 3, 4, 5, 4 ] )}
 gap> IsGroupHClass(h);
@@ -3550,21 +3549,12 @@ MappingByFunction( Group([ (3,6)(4,5) ]), {Transformation(
 [ 4, 3, 3, 4, 5, 6, 5 
  ] )}, function( x ) ... end, <Operation "AsPermutation"> )
 gap> ForAll(h, x-> (x^iso)^inv=x);
-false
+true
 gap> First(h, x-> (x^iso)^inv<>x);
-Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )
-gap> x^iso;
-Error, Variable: 'x' must have a value
-not in any function at line 114 of *stdin*
-gap> x:=last;
-Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )
-gap> x^iso;
-()
-gap> ()^inv;
-Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] )
+fail
 gap> One(h);
-Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] )
-gap> repeat h:=NextIterator(iter); until IsRegularHClass(h);
+Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )
+gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
 {Transformation( [ 3, 4, 4, 3, 2, 1, 2 ] )}
 gap> IsGroupHClass(h);
@@ -3580,17 +3570,7 @@ MappingByFunction( Group([ (3,6)(4,5) ]), {Transformation(
 [ 4, 3, 3, 4, 5, 6, 5 
  ] )}, function( x ) ... end, <Operation "AsPermutation"> )
 gap> ForAll(h, x-> (x^iso)^inv=x);
-false
-gap> First(h, x-> (x^iso)^inv<>x);
-Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )
-gap> x:=last;
-Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )
-gap> x^iso;
-()
-gap> ()^inv;
-Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] )
-gap> One(h);
-Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] )
+true
 
 #
 gap> gens:=
@@ -3619,7 +3599,7 @@ gap> Size(s);
 3941
 gap> iter:=IteratorOfHClasses(s);
 <iterator of H-classes>
-gap> repeat h:=NextIterator(iter); until IsRegularHClass(h);
+gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
 {[ 1 .. 3 ] -> [ 1, 5, 3 ]}
 gap> IsGroupHClass(h);
@@ -3639,10 +3619,11 @@ false
 gap> h:=GroupHClass(DClass(h));
 {<identity on [ 1 .. 3 ]>}
 gap> Idempotents(h);
-<identity on [ 1 .. 3 ]>
+[ <identity on [ 1 .. 3 ]> ]
 gap> h:=GroupHClass(DClass(h));
 {<identity on [ 1 .. 3 ]>}
 gap> One(h);
+<identity on [ 1 .. 3 ]>
 gap> s:=Semigroup(Generators(s));;
 gap> iter:=IteratorOfHClasses(s);
 <iterator of H-classes>
@@ -3655,8 +3636,7 @@ gap> IsGroupHClass(h);
 false
 gap> h:=GroupHClass(DClass(h));
 {<identity on [ 1 .. 3 ]>}
-gap> s:=Semigroup(Generators(s));
-<semigroup with 20 generators>
+gap> s:=Semigroup(Generators(s));;
 gap> f:=PartialPerm([]);;
 gap> h:=HClass(s, f);
 {<empty mapping>}
@@ -3673,7 +3653,7 @@ gap> IsGroupHClass(h);
 false
 
 #
-gap> gap> gens:=[ Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
+gap> gens:=[ Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
 >   Transformation( [ 1, 6, 3, 4, 7, 2, 5, 8 ] ),
 >   Transformation( [ 2, 1, 6, 7, 8, 3, 4, 5 ] ),
 >   Transformation( [ 3, 2, 3, 6, 1, 6, 1, 2 ] ),
@@ -3682,6 +3662,7 @@ gap> s:=Semigroup(gens);;
 gap> Size(s);
 5304
 
+#
 gap> gens:=[ Transformation( [ 2, 1, 8, 7, 6, 5, 4, 3 ] ),
 >   Transformation( [ 2, 8, 4, 6, 3, 5, 1, 7 ] ),
 >   Transformation( [ 8, 7, 2, 1, 4, 3, 6, 5 ] ),
@@ -3716,8 +3697,8 @@ gap> KnownPropertiesOfObject(h);
   "IsActingSemigroupGreensClass", "IsGreensClassNC" ]
 gap> KnownAttributesOfObject(h);
 [ "Representative", "OneImmutable", "EquivalenceClassRelation", 
-  "Idempotents", "DClassOfHClass", "LambdaOrbSCCIndex", "RhoOrbSCCIndex", 
-  "LambdaOrb", "RhoOrb", "ParentSemigroup" ]
+  "Idempotents", "LambdaOrbSCCIndex", "RhoOrbSCCIndex", "LambdaOrb", 
+  "RhoOrb", "ParentSemigroup" ]
 gap> iso:=IsomorphismPermGroup(h);; inv:=InverseGeneralMapping(iso);;
 gap> ForAll(h, x-> (x^iso)^inv=x);
 true
@@ -3728,94 +3709,6 @@ gap> Size(h);
 gap> h:=HClass(s, Transformation( [ 6, 8, 4, 2, 3, 4, 4, 2 ] ));;
 gap> NrIdempotents(h);
 0
-
-#
-gap> gens:=[ Transformation( [ 1, 3, 2 ] ), Transformation( [ 2, 1, 3 ] ),
->   Transformation( [ 3, 2, 1 ] ), Transformation( [ 1, 3, 1 ] ) ];;
-gap> s:=Semigroup(gens);;
-gap> Size(s);
-27
-gap> List(HClasses(s), NrIdempotents);
-[ 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1 ]
-gap> Sum(last);
-10
-gap> NrIdempotents(s);
-10
-gap> h;
-{<identity on [ 1 .. 5 ]>}
-gap> StructureDescription(h);
-"S5"
-gap> LClassOfHClass(h);
-{<identity on [ 1 .. 5 ]>}
-gap> ForAll(h, x-> x in last);
-false
-gap> l:=LClassOfHClass(h);
-{<identity on [ 1 .. 5 ]>}
-gap> ForAll(h, x-> x in l);
-false
-gap> h;
-{<identity on [ 1 .. 5 ]>}
-gap> First(h, x-> not x in l);
-[ 1 .. 5 ] -> [ 5, 3, 2, 1, 4 ]
-gap> h;
-{<identity on [ 1 .. 5 ]>}
-gap> l;
-{<identity on [ 1 .. 5 ]>}
-gap> IsGreensLClass(l);
-true
-gap> IsGreensHClass(h);
-true
-gap> f:=First(h, x-> not x in l);
-fail
-gap> f in l;
-true
-gap> rep:=Representative(l);
-<identity on [ 1 .. 5 ]>
-gap>   s:=ParentSemigroup(l);
-<semigroup with 20 generators>
-gap>  ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or Degree(f) <> Degree(rep)
->    or Rank(f) <> Rank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) ;
-false
-gap>  m:=RhoOrbSCCIndex(l);
-3
-gap>   o:=RhoOrb(l);
-<closed orbit, 254 points with Schreier tree with log>
-gap> not IsClosed(o);
-false
-gap> i:=Position(o, RhoFunc(s)(f));
-4
-gap> i = fail or OrbSCCLookup(o)[i]<>m;
-false
-gap> schutz:=RhoOrbStabChain(l);
-true
-gap> f;
-[ 1 .. 5 ] -> [ 5, 3, 2, 1, 4 ]
-gap> i<>OrbSCC(o)[m][1];
-false
-gap>  g:=f;
-[ 1 .. 5 ] -> [ 5, 3, 2, 1, 4 ]
-gap> g=rep;
-false
-gap> schutz=false;
-false
-gap> LambdaPerm(s)(rep, g);
-(1,5,4)(2,3)
-gap> SiftedPermutation(schutz,  LambdaPerm(s)(rep, g));
-(1,5,4)(2,3)
-gap> schutz;
-true
-gap> SchutzenbergerGroup(l);
-Group([ (1,3)(2,6), (1,4,3,2) ])
-gap> f;
-[ 1 .. 5 ] -> [ 5, 3, 2, 1, 4 ]
-gap> h;
-{<identity on [ 1 .. 5 ]>}
-gap> l:=LClassOfHClass(h);
-{<identity on [ 1 .. 5 ]>}
-gap> h:=GroupHClass(DClass(h));
-{<identity on [ 1 .. 5 ]>}
-gap> l:=LClassOfHClass(h);
-{<identity on [ 1 .. 5 ]>}
 
 #
 gap> gens:=
@@ -3859,8 +3752,8 @@ gap> h:=GroupHClass(DClass(h));
 {<identity on [ 1, 2, 3, 5, 6 ]>}
 gap> l:=LClassOfHClass(h);
 {<identity on [ 1, 2, 3, 5, 6 ]>}
-gap> SchutzenbergerGroup(l);
-Group([ (3,6,5,4), (1,5,6,4,3), (1,4,5)(3,6) ])
+gap> StructureDescription(SchutzenbergerGroup(l));
+"S5"
 gap> f:=PartialPermNC([ 1, 2, 3, 5, 6 ], [ 3, 4, 1, 6, 5 ]);;
 gap> h:=HClass(s, f);
 {[ 1, 2, 3, 5, 6 ] -> [ 3, 4, 1, 6, 5 ]}
@@ -3873,9 +3766,9 @@ Group([ (1,6,3), (1,2,5)(3,6) ])
 gap> l:=LClassOfHClass(h);
 {<identity on [ 1, 2, 3, 5, 6 ]>}
 gap> IsGreensClassNC(l);
-true
-gap> SchutzenbergerGroup(l);
-Group([ (3,6,5,4), (1,4,5)(3,6) ])
+false
+gap> Size(SchutzenbergerGroup(l));
+120
 gap> h:=GroupHClass(DClass(h));
 {<identity on [ 1, 2, 3, 5, 6 ]>}
 gap> h:=HClass(s, f);
@@ -3889,7 +3782,7 @@ false
 gap> h:=GroupHClass(d);
 {<identity on [ 1, 2, 3, 5, 6 ]>}
 gap> IsGreensClassNC(h);
-true
+false
 gap> h:=HClass(s, f);
 {[ 1, 2, 3, 5, 6 ] -> [ 3, 4, 1, 6, 5 ]}
 gap> d:=DClass(h);
@@ -3902,8 +3795,8 @@ gap> l:=LClassOfHClass(h);
 {<identity on [ 1, 2, 3, 5, 6 ]>}
 gap> IsGreensClassNC(l);
 false
-gap> SchutzenbergerGroup(l);
-Group([ (1,5,6,2), (1,5)(2,6,3) ])
+gap> MovedPoints(SchutzenbergerGroup(l));
+[ 1, 2, 3, 5, 6 ]
 gap> ForAll(h, x-> x in l);
 true
 gap> Number(l, x-> x in h);
@@ -3944,7 +3837,7 @@ gap> s:=Semigroup(gens);;
 gap> f:=Transformation( [ 4, 4, 1, 2, 1, 2 ] );;
 gap> h:=HClassNC(s, f);
 {Transformation( [ 4, 4, 1, 2, 1, 2 ] )}
-gap> IsRegularHClass(h);
+gap> IsRegularClass(h);
 true
 gap> IsGroupHClass(h);
 false
@@ -3963,7 +3856,7 @@ gap> l;
 gap> RhoOrbStabChain(l);
 true
 gap> g:=SchutzenbergerGroup(l);
-Group([ (1,5,6,2), (1,5)(2,6,3) ])
+Sym( [ 1, 2, 3, 5, 6 ] )
 gap> IsSymmetricGroup(g);
 true
 gap> IsNaturalSymmetricGroup(g);
@@ -4013,7 +3906,7 @@ gap> SchutzenbergerGroup(r);
 Group([ (2,5), (2,9,5) ])
 gap> ForAll(r, x-> x in r);
 true
-gap> f:=Transformation( [ 8, 8, 8, 8, 8, 8, 7, 7, 8, 8 ] )
+gap> f:=Transformation( [ 8, 8, 8, 8, 8, 8, 7, 7, 8, 8 ] );;
 gap> r:=RClass(s, f);
 {Transformation( [ 9, 9, 9, 9, 9, 9, 1, 1, 9, 9 ] )}
 gap> Size(r);
@@ -4035,7 +3928,7 @@ gap> ForAll(enum, x-> enum[Position(enum, x)]=x);
 true
 gap> ForAll([1..Length(enum)], x-> Position(enum, enum[x])=x);
 true
-  gap> NrHClasses(r);
+gap> NrHClasses(r);
 83
 gap> GreensHClasses(r);
 [ {Transformation( [ 9, 1, 8, 2, 1, 8, 9, 9, 9, 8 ] )}, 
@@ -4134,14 +4027,13 @@ true
 gap> Semigroup(gens);;
 gap> r:=GreensRClassOfElement(s, f);
 {Transformation( [ 9, 9, 9, 9, 9, 9, 1, 1, 9, 9 ] )}
-gap> f:=Transformation( [ 9, 9, 5, 9, 5, 9, 5, 5, 5, 5 ] )
+gap> f:=Transformation( [ 9, 9, 5, 9, 5, 9, 5, 5, 5, 5 ] );;
 gap> r:=GreensRClassOfElement(s, f);
 {Transformation( [ 1, 1, 9, 1, 9, 1, 9, 9, 9, 9 ] )}
 gap> Size(r);
 86
 gap> NrHClasses(r);
 43
-gap> GreensHClasses(r);
 gap> s:=Semigroup(gens);;
 gap> r:=GreensRClassOfElement(s, f);
 {Transformation( [ 1, 1, 9, 1, 9, 1, 9, 9, 9, 9 ] )}
@@ -4242,15 +4134,7 @@ gap> gens:=
 >  PartialPermNC( [ 1, 2, 3, 4, 5, 7, 9 ], [ 7, 6, 2, 8, 4, 5, 3 ] ),
 >  PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
 > [ 8, 7, 4, 3, 10, 9, 5, 6, 1, 2 ] ) ];;
-ap> s:=Semigroup(gens);;
-gap> f:=(1,8,6,9)(2,7,5,10)(3,4);;
-gap> gens:=Concatenation(Generators(s), [AsPartialPerm(f)]);
-[ [ 1, 2, 3, 5, 9, 10 ] -> [ 5, 10, 7, 8, 9, 1 ], 
-  [ 1, 2, 3, 4, 5, 6, 9 ] -> [ 9, 3, 1, 4, 2, 5, 6 ], 
-  [ 1, 2, 3, 4, 5, 7, 9 ] -> [ 7, 6, 2, 8, 4, 5, 3 ], 
-  [ 1 .. 10 ] -> [ 8, 7, 4, 3, 10, 9, 5, 6, 1, 2 ] ]
-gap> s:=Semigroup(gens);
-<semigroup with 4 generators>
+gap> s:=Semigroup(gens);;
 gap> Size(s);
 1422787
 gap> f:=PartialPerm([ 1, 4, 7, 9, 10 ], [ 5, 10, 9, 8, 7 ]);;
@@ -4279,7 +4163,7 @@ gap> Size(h);
 24
 gap> ForAll(h, x-> x in r);
 true
-gap> IsRegularRClass(r);
+gap> IsRegularClass(r);
 true
 gap> IsRegularSemigroup(s);
 false
@@ -4290,6 +4174,7 @@ gap> Idempotents(r);
 gap> ForAll(last, x-> x in r);
 true
 
+#
 gap> gens:=[ Transformation( [ 1, 3, 7, 9, 1, 12, 13, 1, 15, 9, 1, 18, 1, 1,
 >  13, 1, 1, 21, 1, 1, 1, 1, 1, 25, 26, 1 ] ),
 >  Transformation( [ 1, 5, 1, 5, 11, 1, 1, 14, 1, 16, 17, 1, 1, 19, 1, 11, 1,
@@ -4319,11 +4204,12 @@ gap> ForAll(Idempotents(r), x-> x in d);
 true
 gap> ForAll(r, x-> x in d);
 true
-gap> Number(GreensRClasses(s), IsRegularRClass);
+gap> Number(GreensRClasses(s), IsRegularClass);
 21
 gap> NrRegularDClasses(s);
 2
 
+#
 gap> gens:=[ Transformation( [ 1, 2, 3, 5, 4, 6, 7, 8 ] ),
 >   Transformation( [ 4, 4, 3, 1, 5, 6, 3, 8 ] ),
 >   Transformation( [ 3, 6, 1, 7, 3, 4, 8, 3 ] ),
@@ -4337,7 +4223,7 @@ gap> Size(s);
 998
 gap> r:=RClass(s, f);
 {Transformation( [ 4, 4, 3, 1, 5, 3, 3, 8 ] )}
-gap> IsRegularRClass(r);
+gap> IsRegularClass(r);
 true
 gap> Idempotents(r);
 [ Transformation( [ 1, 1, 3, 4, 5, 3, 3, 8 ] ) ]
@@ -4389,57 +4275,120 @@ gap> Sum(last);
 53
 gap> NrIdempotents(s);
 53
-
-{[ 1, 3, 5, 6 ] -> [ 6, 2, 5, 1 ]}
 gap> r:=RClassOfHClass(h);
-{[ 1, 3, 5, 6 ] -> [ 6, 2, 5, 1 ]}
+{[ 1, 3, 9, 10 ] -> [ 4, 5, 3, 7 ]}
 gap> HClassReps(r);
-[ [ 1, 3, 5, 6 ] -> [ 6, 2, 5, 1 ] ]
-gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
-gap> repeat r:=NextIterator(iter); until Size(r)>1000;
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `Size' on 1 arguments called from
-Size( r ) called from
-<function "unknown">( <arguments> )
- called from read-eval loop at line 227 of *stdin*
-you can 'quit;' to quit to outer loop, or
-you can 'return;' to continue
-brk> r;
-fail
-brk> quit;
+[ [ 1, 3, 9, 10 ] -> [ 4, 5, 3, 7 ], [ 1, 3, 9, 10 ] -> [ 8, 2, 5, 4 ], 
+  [ 1, 3, 9, 10 ] -> [ 3, 10, 4, 5 ], [ 1, 3, 9, 10 ] -> [ 10, 5, 1, 8 ], 
+  [ 1, 3, 9, 10 ] -> [ 3, 2, 9, 5 ], [ 1, 3, 9, 10 ] -> [ 5, 1, 4, 3 ], 
+  [ 1, 3, 9, 10 ] -> [ 6, 2, 5, 8 ], [ 1, 3, 9, 10 ] -> [ 5, 7, 9, 1 ], 
+  [ 1, 3, 9, 10 ] -> [ 1, 4, 9, 6 ], [ 1, 3, 9, 10 ] -> [ 7, 5, 10, 8 ], 
+  [ 1, 3, 9, 10 ] -> [ 5, 4, 2, 3 ], [ 1, 3, 9, 10 ] -> [ 9, 1, 7, 8 ], 
+  [ 1, 3, 9, 10 ] -> [ 6, 7, 10, 3 ], [ 1, 3, 9, 10 ] -> [ 4, 2, 3, 10 ], 
+  [ 1, 3, 9, 10 ] -> [ 2, 10, 8, 6 ], [ 1, 3, 9, 10 ] -> [ 10, 7, 9, 8 ], 
+  [ 1, 3, 9, 10 ] -> [ 1, 3, 6, 2 ], [ 1, 3, 9, 10 ] -> [ 6, 3, 4, 2 ], 
+  [ 1, 3, 9, 10 ] -> [ 4, 7, 1, 10 ], [ 1, 3, 9, 10 ] -> [ 2, 9, 4, 1 ], 
+  [ 1, 3, 9, 10 ] -> [ 7, 4, 8, 2 ], [ 1, 3, 9, 10 ] -> [ 8, 4, 3, 10 ], 
+  [ 1, 3, 9, 10 ] -> [ 9, 7, 10, 6 ], [ 1, 3, 9, 10 ] -> [ 9, 4, 6, 5 ], 
+  [ 1, 3, 9, 10 ] -> [ 8, 3, 1, 9 ], [ 1, 3, 9, 10 ] -> [ 6, 4, 5, 2 ], 
+  [ 1, 3, 9, 10 ] -> [ 5, 10, 2, 6 ], [ 1, 3, 9, 10 ] -> [ 10, 9, 5, 7 ], 
+  [ 1, 3, 9, 10 ] -> [ 2, 4, 3, 1 ], [ 1, 3, 9, 10 ] -> [ 4, 6, 8, 2 ], 
+  [ 1, 3, 9, 10 ] -> [ 7, 3, 10, 4 ], [ 1, 3, 9, 10 ] -> [ 1, 8, 5, 6 ], 
+  [ 1, 3, 9, 10 ] -> [ 7, 8, 4, 6 ], [ 1, 3, 9, 10 ] -> [ 9, 5, 2, 4 ], 
+  [ 1, 3, 9, 10 ] -> [ 3, 7, 4, 2 ], [ 1, 3, 9, 10 ] -> [ 7, 2, 6, 9 ], 
+  [ 1, 3, 9, 10 ] -> [ 2, 5, 1, 6 ], [ 1, 3, 9, 10 ] -> [ 9, 1, 5, 3 ], 
+  [ 1, 3, 9, 10 ] -> [ 8, 4, 9, 7 ], [ 1, 3, 9, 10 ] -> [ 7, 9, 3, 4 ], 
+  [ 1, 3, 9, 10 ] -> [ 3, 5, 8, 2 ], [ 1, 3, 9, 10 ] -> [ 4, 3, 9, 6 ], 
+  [ 1, 3, 9, 10 ] -> [ 6, 3, 8, 7 ], [ 1, 3, 9, 10 ] -> [ 7, 1, 3, 8 ], 
+  [ 1, 3, 9, 10 ] -> [ 5, 3, 6, 7 ], [ 1, 3, 9, 10 ] -> [ 1, 5, 2, 9 ], 
+  <identity on [ 1, 3, 9, 10 ]>, [ 1, 3, 9, 10 ] -> [ 6, 4, 8, 1 ], 
+  [ 1, 3, 9, 10 ] -> [ 3, 7, 10, 9 ], [ 1, 3, 9, 10 ] -> [ 1, 6, 5, 4 ], 
+  [ 1, 3, 9, 10 ] -> [ 10, 2, 7, 9 ], [ 1, 3, 9, 10 ] -> [ 2, 1, 10, 5 ], 
+  [ 1, 3, 9, 10 ] -> [ 8, 7, 3, 2 ], [ 1, 3, 9, 10 ] -> [ 2, 5, 8, 7 ], 
+  [ 1, 3, 9, 10 ] -> [ 3, 4, 1, 9 ], [ 1, 3, 9, 10 ] -> [ 3, 8, 7, 4 ], 
+  [ 1, 3, 9, 10 ] -> [ 3, 9, 6, 7 ], [ 1, 3, 9, 10 ] -> [ 8, 6, 10, 9 ], 
+  [ 1, 3, 9, 10 ] -> [ 5, 6, 3, 9 ], [ 1, 3, 9, 10 ] -> [ 10, 7, 5, 1 ], 
+  [ 1, 3, 9, 10 ] -> [ 3, 4, 6, 8 ], [ 1, 3, 9, 10 ] -> [ 1, 10, 7, 3 ], 
+  [ 1, 3, 9, 10 ] -> [ 6, 9, 2, 1 ], [ 1, 3, 9, 10 ] -> [ 1, 8, 10, 4 ], 
+  [ 1, 3, 9, 10 ] -> [ 6, 3, 1, 5 ], [ 1, 3, 9, 10 ] -> [ 4, 10, 6, 7 ], 
+  [ 1, 3, 9, 10 ] -> [ 4, 5, 2, 1 ], [ 1, 3, 9, 10 ] -> [ 6, 5, 4, 7 ], 
+  [ 1, 3, 9, 10 ] -> [ 5, 8, 4, 6 ], [ 1, 3, 9, 10 ] -> [ 10, 4, 9, 5 ], 
+  [ 1, 3, 9, 10 ] -> [ 9, 2, 3, 6 ], [ 1, 3, 9, 10 ] -> [ 6, 4, 7, 3 ], 
+  [ 1, 3, 9, 10 ] -> [ 8, 10, 7, 1 ], [ 1, 3, 9, 10 ] -> [ 8, 4, 1, 2 ], 
+  [ 1, 3, 9, 10 ] -> [ 9, 3, 6, 8 ], [ 1, 3, 9, 10 ] -> [ 8, 9, 10, 3 ], 
+  [ 1, 3, 9, 10 ] -> [ 2, 7, 5, 1 ], [ 1, 3, 9, 10 ] -> [ 7, 8, 2, 10 ], 
+  [ 1, 3, 9, 10 ] -> [ 4, 5, 3, 8 ], [ 1, 3, 9, 10 ] -> [ 7, 10, 6, 5 ], 
+  [ 1, 3, 9, 10 ] -> [ 4, 9, 6, 2 ], [ 1, 3, 9, 10 ] -> [ 4, 3, 8, 1 ], 
+  [ 1, 3, 9, 10 ] -> [ 4, 6, 5, 3 ], [ 1, 3, 9, 10 ] -> [ 4, 1, 9, 5 ], 
+  [ 1, 3, 9, 10 ] -> [ 8, 6, 2, 3 ], [ 1, 3, 9, 10 ] -> [ 10, 9, 4, 1 ], 
+  [ 1, 3, 9, 10 ] -> [ 2, 5, 10, 8 ], [ 1, 3, 9, 10 ] -> [ 9, 4, 8, 10 ], 
+  [ 1, 3, 9, 10 ] -> [ 2, 7, 4, 6 ], [ 1, 3, 9, 10 ] -> [ 7, 3, 5, 8 ], 
+  [ 1, 3, 9, 10 ] -> [ 4, 2, 3, 9 ], [ 1, 3, 9, 10 ] -> [ 8, 3, 7, 10 ], 
+  [ 1, 3, 9, 10 ] -> [ 6, 1, 2, 4 ], [ 1, 3, 9, 10 ] -> [ 8, 3, 2, 4 ], 
+  [ 1, 3, 9, 10 ] -> [ 9, 10, 3, 5 ], [ 1, 3, 9, 10 ] -> [ 10, 6, 3, 9 ], 
+  [ 1, 3, 9, 10 ] -> [ 2, 3, 1, 10 ], [ 1, 3, 9, 10 ] -> [ 1, 7, 4, 9 ], 
+  [ 1, 3, 9, 10 ] -> [ 9, 3, 5, 4 ], [ 1, 3, 9, 10 ] -> [ 2, 5, 7, 3 ], 
+  [ 1, 3, 9, 10 ] -> [ 5, 6, 7, 2 ], [ 1, 3, 9, 10 ] -> [ 3, 10, 4, 6 ], 
+  [ 1, 3, 9, 10 ] -> [ 5, 2, 9, 10 ], [ 1, 3, 9, 10 ] -> [ 3, 7, 1, 9 ], 
+  [ 1, 3, 9, 10 ] -> [ 10, 3, 4, 9 ], [ 1, 3, 9, 10 ] -> [ 3, 8, 1, 10 ], 
+  [ 1, 3, 9, 10 ] -> [ 6, 9, 7, 4 ], [ 1, 3, 9, 10 ] -> [ 2, 1, 3, 8 ], 
+  [ 1, 3, 9, 10 ] -> [ 7, 10, 2, 6 ], [ 1, 3, 9, 10 ] -> [ 7, 5, 3, 9 ], 
+  [ 1, 3, 9, 10 ] -> [ 5, 4, 10, 6 ], [ 1, 3, 9, 10 ] -> [ 2, 9, 1, 3 ], 
+  [ 1, 3, 9, 10 ] -> [ 4, 3, 1, 6 ], [ 1, 3, 9, 10 ] -> [ 3, 7, 4, 1 ], 
+  [ 1, 3, 9, 10 ] -> [ 9, 8, 7, 3 ], [ 1, 3, 9, 10 ] -> [ 1, 2, 4, 10 ], 
+  [ 1, 3, 9, 10 ] -> [ 8, 5, 3, 1 ], [ 1, 3, 9, 10 ] -> [ 1, 4, 10, 3 ], 
+  [ 1, 3, 9, 10 ] -> [ 7, 10, 5, 4 ], [ 1, 3, 9, 10 ] -> [ 8, 10, 9, 1 ], 
+  [ 1, 3, 9, 10 ] -> [ 10, 7, 1, 2 ], [ 1, 3, 9, 10 ] -> [ 4, 8, 1, 5 ], 
+  [ 1, 3, 9, 10 ] -> [ 5, 2, 7, 9 ], [ 1, 3, 9, 10 ] -> [ 7, 2, 6, 3 ], 
+  [ 1, 3, 9, 10 ] -> [ 5, 10, 4, 1 ], [ 1, 3, 9, 10 ] -> [ 10, 3, 2, 9 ], 
+  [ 1, 3, 9, 10 ] -> [ 3, 6, 9, 1 ], [ 1, 3, 9, 10 ] -> [ 7, 1, 8, 4 ], 
+  [ 1, 3, 9, 10 ] -> [ 3, 4, 9, 8 ], [ 1, 3, 9, 10 ] -> [ 6, 10, 4, 8 ], 
+  [ 1, 3, 9, 10 ] -> [ 5, 2, 10, 3 ], [ 1, 3, 9, 10 ] -> [ 6, 2, 1, 8 ], 
+  [ 1, 3, 9, 10 ] -> [ 3, 6, 8, 10 ], [ 1, 3, 9, 10 ] -> [ 5, 7, 9, 4 ], 
+  [ 1, 3, 9, 10 ] -> [ 5, 1, 3, 2 ], [ 1, 3, 9, 10 ] -> [ 10, 2, 3, 8 ], 
+  [ 1, 3, 9, 10 ] -> [ 1, 7, 10, 9 ], [ 1, 3, 9, 10 ] -> [ 2, 4, 7, 1 ], 
+  [ 1, 3, 9, 10 ] -> [ 1, 5, 6, 9 ], [ 1, 3, 9, 10 ] -> [ 4, 9, 1, 8 ], 
+  [ 1, 3, 9, 10 ] -> [ 5, 8, 6, 3 ], [ 1, 3, 9, 10 ] -> [ 10, 7, 2, 4 ], 
+  [ 1, 3, 9, 10 ] -> [ 9, 7, 8, 6 ], [ 1, 3, 9, 10 ] -> [ 10, 5, 1, 3 ], 
+  [ 1, 3, 9, 10 ] -> [ 5, 1, 7, 8 ], [ 1, 3, 9, 10 ] -> [ 8, 4, 10, 7 ], 
+  [ 1, 3, 9, 10 ] -> [ 8, 5, 2, 1 ], [ 1, 3, 9, 10 ] -> [ 9, 2, 5, 6 ], 
+  [ 1, 3, 9, 10 ] -> [ 3, 1, 8, 6 ], [ 1, 3, 9, 10 ] -> [ 10, 6, 9, 4 ], 
+  [ 1, 3, 9, 10 ] -> [ 2, 10, 8, 4 ], [ 1, 3, 9, 10 ] -> [ 10, 8, 5, 6 ], 
+  [ 1, 3, 9, 10 ] -> [ 6, 3, 2, 5 ], [ 1, 3, 9, 10 ] -> [ 6, 10, 7, 8 ], 
+  [ 1, 3, 9, 10 ] -> [ 4, 8, 6, 9 ], [ 1, 3, 9, 10 ] -> [ 2, 6, 10, 9 ], 
+  [ 1, 3, 9, 10 ] -> [ 7, 9, 4, 10 ], [ 1, 3, 9, 10 ] -> [ 7, 9, 2, 1 ] ]
 gap> iter:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> repeat r:=NextIterator(iter); until Size(r)>1;
 gap> r;
-{[ 1 .. 3 ] -> [ 2 .. 4 ]}
+{[ 1, 2, 5 ] -> [ 5, 1, 2 ]}
 gap> Size(r);
-114
+120
 gap> HClassReps(r);
-[ [ 1 .. 3 ] -> [ 2 .. 4 ], [ 1 .. 3 ] -> [ 1, 3, 6 ], 
-  [ 1 .. 3 ] -> [ 1, 2, 6 ], [ 1 .. 3 ] -> [ 2, 4 .. 6 ], 
-  [ 1 .. 3 ] -> [ 3, 6, 2 ], [ 1 .. 3 ] -> [ 5, 2, 3 ], 
-  [ 1 .. 3 ] -> [ 3, 5, 1 ], [ 1 .. 3 ] -> [ 5, 1, 2 ], 
-  [ 1 .. 3 ] -> [ 2, 1, 4 ], [ 1 .. 3 ] -> [ 3 .. 5 ], 
-  [ 1 .. 3 ] -> [ 2, 6, 5 ], [ 1 .. 3 ] -> [ 4, 3, 6 ], 
-  [ 1 .. 3 ] -> [ 1, 3, 4 ], <identity on [ 1 .. 3 ]>, 
-  [ 1 .. 3 ] -> [ 4, 6, 1 ], [ 1 .. 3 ] -> [ 1, 5, 4 ], 
-  [ 1 .. 3 ] -> [ 5, 1, 6 ], [ 1 .. 3 ] -> [ 6, 5, 3 ], 
-  [ 1 .. 3 ] -> [ 4, 5, 2 ] ]
-gap> Forall(last, x-> x in r);
+[ [ 1, 2, 5 ] -> [ 5, 1, 2 ], [ 1, 2, 5 ] -> [ 3, 6, 5 ], 
+  [ 1, 2, 5 ] -> [ 1, 4, 2 ], [ 1, 2, 5 ] -> [ 4, 2, 5 ], 
+  [ 1, 2, 5 ] -> [ 4, 3, 5 ], [ 1, 2, 5 ] -> [ 1, 6, 4 ], 
+  [ 1, 2, 5 ] -> [ 7, 2, 3 ], [ 1, 2, 5 ] -> [ 1, 5, 4 ], 
+  [ 1, 2, 5 ] -> [ 1, 6, 2 ], [ 1, 2, 5 ] -> [ 7, 6, 2 ], 
+  [ 1, 2, 5 ] -> [ 7, 2, 5 ], [ 1, 2, 5 ] -> [ 6, 2, 3 ], 
+  [ 1, 2, 5 ] -> [ 2, 1, 7 ], [ 1, 2, 5 ] -> [ 3, 2, 5 ], 
+  [ 1, 2, 5 ] -> [ 7, 3, 6 ], [ 1, 2, 5 ] -> [ 6, 5, 1 ], 
+  [ 1, 2, 5 ] -> [ 6, 5, 7 ], [ 1, 2, 5 ] -> [ 7, 5, 1 ], 
+  [ 1, 2, 5 ] -> [ 2, 5, 6 ], [ 1, 2, 5 ] -> [ 6, 4 .. 2 ] ]
+gap> ForAll(last, x-> x in r);
 true
 gap> r;
-{[ 1 .. 3 ] -> [ 2 .. 4 ]}
+{[ 1, 2, 5 ] -> [ 5, 1, 2 ]}
 gap> Size(DClass(r));
-2166
+2400
 gap> d:=DClass(r);
-{[ 1 .. 3 ] -> [ 2 .. 4 ]}
+{[ 1, 2, 5 ] -> [ 5, 1, 2 ]}
 gap> ForAll(r, x-> x in d);
 true
 gap> Number(d, x-> x in r);
-114
+120
 gap> Size(r);
-114
+120
 gap> ForAll(HClassReps(r), x-> x in d);
 true
 gap> ForAll(HClassReps(r), x-> x in HClassReps(d));
@@ -4750,5 +4699,3 @@ gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
 #
 gap> Unbind(gens); Unbind(s); Unbind(f); Unbind(r); Unbind(l); Unbind(iter);
 gap> STOP_TEST( "Citrus package: everyfunction.tst", 0);
-
-
