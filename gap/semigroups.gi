@@ -42,8 +42,6 @@ if Citrus_C then
         return;
       fi;
 
-      arg[3].schreier:=false;
-
       if not IsBound(arg[3].small) then
         arg[3].small:=CitrusOptionsRec.small;
       fi;
@@ -136,8 +134,8 @@ fi;
 InstallGlobalFunction(ClosureSemigroup,
 function(arg)
 
-  if not IsTransformationSemigroup(arg[1]) or not 
-   (IsTransformationCollection(arg[2]) or IsTransformation(arg[2])) then 
+  if not IsActingSemigroup(arg[1]) or not 
+   (IsActingEltCollection(arg[2]) or IsActingElt(arg[2])) then 
     Error("Usage: arg. must be a trans. semigroup and transformation or ", 
     "collection of transformations,");
     return;
@@ -148,18 +146,15 @@ function(arg)
       Error("Usage: the third argument must be a record,");
       return;
     fi;
-    if IsBound(arg[3].schreier) then  
-      arg[3].schreier:=false;
-    fi;
   else
     arg[3]:=arg[1]!.opts;
   fi;
 
   arg[3].small:=false;
 
-  if IsTransformationSemigroup(arg[2]) then 
+  if IsActingSemigroup(arg[2]) then 
     arg[2]:=Generators(arg[2]);
-  elif IsTransformation(arg[2]) then 
+  elif IsActingElt(arg[2]) then 
     arg[2]:=[arg[2]];
   fi;
 
@@ -192,10 +187,6 @@ function(s, coll, opts)
   else
     t:=Semigroup(s, coll, opts);
   fi;
-
-  #if not HasOrbitsOfImages(s) or opts.schreier then 
-    return t;
-  #fi;
 
   #no schreier###############################################################
   
@@ -383,13 +374,13 @@ function ( arg )
     return MonoidByGenerators( arg[1] );
   elif Length( arg ) = 2 and IsList( arg[1] )  then
     return MonoidByGenerators( arg[1], arg[2] );
-  elif IsTransformation(arg[1]) or IsTransformationCollection(arg[1]) then 
+  elif IsActingElt(arg[1]) or IsActingEltCollection(arg[1]) then 
     out:=[];
     for i in [1..Length(arg)] do 
-      if IsTransformation(arg[i]) then 
+      if IsActingElt(arg[i]) then 
         out[i]:=[arg[i]];
-      elif IsTransformationCollection(arg[i]) then 
-        if IsTransformationSemigroup(arg[i]) then
+      elif IsActingEltCollection(arg[i]) then 
+        if IsActingSemigroup(arg[i]) then
           out[i]:=Generators(arg[i]);
         else
           out[i]:=arg[i];
@@ -410,11 +401,11 @@ function ( arg )
   fi;
 end);
 
-# new for 0.6! - MagmaByGenerators -  "for a trans. collection"
+# new for 0.6! - MagmaByGenerators -  "for acting element collection"
 ##############################################################################
 
-InstallOtherMethod(MagmaByGenerators, "(Citrus) for a trans. collection",
-[IsTransformationCollection],
+InstallOtherMethod(MagmaByGenerators, "for an acting element collection",
+[IsActingEltCollection],
 function(gens)
   local M;
    
@@ -426,25 +417,25 @@ function(gens)
 end);
 
 
-# mod for 0.6! - MonoidByGenerators -  "for a trans. collection"
+# mod for 0.6! - MonoidByGenerators -  for an acting elt collection 
 ##############################################################################
 
-InstallOtherMethod(MonoidByGenerators, "(Citrus) for a trans. collection",
-[IsTransformationCollection],
+InstallOtherMethod(MonoidByGenerators, "for an acting elt collection",
+[IsActingEltCollection],
 function(gens)
   return MonoidByGenerators(gens, CitrusOptionsRec);
 end);
 
-# mod for 0.6! - MonoidByGenerators -  "for a trans. coll. and record"
+# mod for 0.6! - MonoidByGenerators -  for an acting elt collection and rec
 ##############################################################################
 
-InstallOtherMethod(MonoidByGenerators, "(Citrus) for a trans. coll. and record",
-[IsTransformationCollection, IsRecord],
+InstallOtherMethod(MonoidByGenerators, "for an acting elt collection and rec",
+[IsActingEltCollection, IsRecord],
 function(gens, opts)
   local n, i, closure_opts, s, f;
-  
-  if not IsBound(opts.schreier) then 
-    opts.schreier:=CitrusOptionsRec.schreier;
+ 
+  if not IsBound(opts.regular) then 
+    opts.regular:=CitrusOptionsRec.regular;
   fi;
 
   if not IsBound(opts.small) then 
@@ -476,8 +467,7 @@ function(gens, opts)
     fi;
 
     i:=0;
-    closure_opts:=rec(schreier:=opts.schreier, small:=false, 
-     hashlen:=opts.hashlen);
+    closure_opts:=rec(small:=false, hashlen:=opts.hashlen);
     s:=Monoid(gens[1], closure_opts);
 
     if InfoLevel(InfoCitrus)>1 then
@@ -488,9 +478,6 @@ function(gens, opts)
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
         " generators so far");
-        if not opts.schreier then 
-          #Print(", for \t", Size(OrbitsOfImages(s)), " elements\r");
-        fi;
       od;
       Print("\n");
     else
@@ -641,10 +628,6 @@ if IsBound(DomPP) and IsBound(RanSetPP) then
   function(coll, opts)
     local n, one, f, gens;
     
-    if not IsBound(opts.schreier) then
-      opts.schreier:=CitrusOptionsRec.schreier;
-    fi;
-
     if not IsBound(opts.small) then
       opts.small:=CitrusOptionsRec.small;
     fi;
@@ -686,10 +669,6 @@ if IsBound(DomPP) and IsBound(RanSetPP) then
   [IsPartialPermCollection, IsRecord],
   function(coll, opts)
     local n, f, gens;
-
-    if not IsBound(opts.schreier) then
-      opts.schreier:=CitrusOptionsRec.schreier;
-    fi;
 
     if not IsBound(opts.small) then
       opts.small:=CitrusOptionsRec.small;
@@ -737,8 +716,7 @@ if IsBound(DomPP) then
       coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));;
       Sort(coll, function(x, y) return Rank(x)>Rank(y); end);;
       
-      closure_opts:=rec(schreier:=opts.schreier, small:=false,
-           hashlen:=opts.hashlen);
+      closure_opts:=rec(small:=false, hashlen:=opts.hashlen);
       s:=InverseMonoid(coll[1], closure_opts);
       
       for f in coll do
@@ -773,8 +751,7 @@ function(gens, coll, opts)
     coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));;
     Sort(coll, function(x, y) return x[2]>y[2]; end);;
     
-    closure_opts:=rec(schreier:=opts.schreier, small:=false,
-         hashlen:=opts.hashlen);
+    closure_opts:=rec(small:=false, hashlen:=opts.hashlen);
     s:=InverseSemigroup(coll[1], closure_opts);
     
     for f in coll do
@@ -930,13 +907,13 @@ function ( arg )
     return SemigroupByGenerators( [ arg[1] ] );
   elif Length( arg ) = 1 and IsList( arg[1] ) and 0 < Length( arg[1] )  then
     return SemigroupByGenerators( arg[1] );
-  elif IsTransformation(arg[1]) or IsTransformationCollection(arg[1]) then 
+  elif IsActingElt(arg[1]) or IsActingEltCollection(arg[1]) then 
     out:=[];
     for i in [1..Length(arg)] do 
-      if IsTransformation(arg[i]) then 
+      if IsActingElt(arg[i]) then 
         out[i]:=[arg[i]];
-      elif IsTransformationCollection(arg[i]) then 
-        if IsTransformationSemigroup(arg[i]) then
+      elif IsActingEltCollection(arg[i]) then 
+        if IsActingSemigroup(arg[i]) then
           out[i]:=Generators(arg[i]);
         else
           out[i]:=arg[i];
@@ -974,8 +951,8 @@ InstallOtherMethod(SemigroupByGenerators, "(Citrus) for trans coll and record",
 function(gens, opts)
   local n, i, closure_opts, s, f;
 
-  if not IsBound(opts.schreier) then 
-    opts.schreier:=CitrusOptionsRec.schreier;
+  if not IsBound(opts.regular) then 
+    opts.regular:=CitrusOptionsRec.regular;
   fi;
 
   if not IsBound(opts.small) then 
@@ -1006,8 +983,7 @@ function(gens, opts)
     fi;
 
     i:=0;
-    closure_opts:=rec(schreier:=opts.schreier, small:=false,
-     hashlen:=opts.hashlen);
+    closure_opts:=rec(small:=false, hashlen:=opts.hashlen);
     s:=Semigroup(gens[1], closure_opts);
 
     if InfoLevel(InfoCitrus)>1 then
@@ -1018,9 +994,6 @@ function(gens, opts)
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
         " generators so far");
-        if not opts.schreier then
-          #Print(", for \t", Size(OrbitsOfImages(s)), " elements\r");
-        fi;
       od;
       Print("\n");
     else
@@ -1035,7 +1008,11 @@ function(gens, opts)
 
   s:=Objectify( NewType( FamilyObj( gens ), 
    IsSemigroup and IsAttributeStoringRep ), rec(opts:=opts));
-
+  
+  if opts.regular then 
+    SetIsRegularSemigroup(s, true);
+  fi;
+  
   SetGeneratorsOfMagma( s, AsList( gens ) );
   return s;
 end);
@@ -1044,7 +1021,7 @@ end);
 ################################################################################
 
 InstallMethod(SubsemigroupByProperty, "for a trans. semi. and func",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsFunction], 
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction], 
 function(S, func)
   local limit, n;
 
@@ -1063,7 +1040,7 @@ end);
 ################################################################################
 
 InstallOtherMethod(SubsemigroupByProperty, "for a trans. semi., func, rec",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsPosInt], 
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsPosInt], 
 function(S, func, limit)
   local iter, T, f;
  

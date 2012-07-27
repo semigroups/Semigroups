@@ -49,6 +49,7 @@ function(d,q)
   SetIsMatrixSemigroup(S, true);
   SetIsFullMatrixSemigroup(S, true);
   SetIsGeneralLinearSemigroup(S, true);
+  SetIsRegularSemigroup(S, true);
 
   return S;
 end);
@@ -217,7 +218,7 @@ fi;
 InstallMethod(OrderEndomorphisms, "for a pos int",
 [IsPosInt],
 function(n)
-  local gens, i;
+  local gens, s, i;
 
   gens:=EmptyPlist(n);
   gens[1]:=Transformation(Concatenation([1], [1..n-1]));
@@ -228,7 +229,9 @@ function(n)
     gens[i+1]:=TransformationNC(gens[i+1]);
   od; 
 
-  return Monoid(gens);
+  s:=Monoid(gens);
+  SetIsRegularSemigroup(s, true);
+  return s;
 end);
 
 #PPP
@@ -239,14 +242,16 @@ end);
 InstallMethod(PartialTransformationSemigroup, "for a pos int", 
 [IsPosInt],
 function(n)
-  local a, b, c, d;
+  local a, b, c, d, s;
 
   a:= [1..n+1];  a[1]:= 2;  a[2]:= 1;
   b:= [0..n];  b[1]:= n;  b[n+1]:= n+1;
   c:= [1..n+1];  c[1]:= n+1;
   d:= [1..n+1];  d[1]:= 2;
 
-  return Monoid(List([a, b, c, d], TransformationNC));
+  s:=Monoid(List([a, b, c, d], TransformationNC));
+  SetIsRegularSemigroup(s, true);
+  return s;
 end);
 
 # new for 0.7! - POI - "for a pos int"
@@ -327,6 +332,7 @@ function(n)
   x:=TransformationNC(img);
   S:=FullTransformationSemigroup(n);
   T:=SubsemigroupNC(S, Idempotents(GreensDClassOfElementNC(S, x)));
+  SetIsRegularSemigroup(T, true);
   return T;
 end);
 

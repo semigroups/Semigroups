@@ -29,7 +29,7 @@ function(d)
   if IsTrivial(g) then 
     return false;
   elif IsNaturalSymmetricGroup(g) and
-     NrMovedPoints(g)=Rank(Representative(l)) then 
+     NrMovedPoints(g)=Rank(Representative(d)) then 
     return true;
   fi;
 
