@@ -15,8 +15,6 @@
 ## Methods for inverse acting semigroups consisting of acting elements with a
 ## ^-1 operator. 
 
-
-
 InstallMethod(IsInverseOpClass, "for a Green's class",
 [IsActingSemigroupGreensClass], ReturnFalse);
 
