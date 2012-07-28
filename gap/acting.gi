@@ -47,7 +47,7 @@ InstallMethod(GradedLambdaHT, "for an acting semi",
 [IsActingSemigroup],
 function(s)
 return HTCreate(LambdaFunc(s)(GeneratorsOfSemigroup(s)[1]),
- rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S));
+ rec(forflatplainlists:=true, treehashsize:=s!.opts.hashlen.S));
 end);
 
 # new for 1.0! - GradedRhoHT 
@@ -57,7 +57,7 @@ InstallMethod(GradedRhoHT, "for an acting semi",
 [IsActingSemigroup],
 function(s)
 return HTCreate(RhoFunc(s)(GeneratorsOfSemigroup(s)[1]),
- rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S));
+ rec(forflatplainlists:=true, treehashsize:=s!.opts.hashlen.S));
 end);
 
 # new for 1.0! - RectifyRho - "for a rho orb and an acting element"
@@ -158,7 +158,7 @@ function(s)
   x:=GeneratorsOfSemigroup(s)[1]; 
   return HTCreate(Concatenation([1], RhoFunc(s)(x)),
   rec(forflatplainlists:=true,
-     hashlen:=s!.opts.hashlen.S));
+     treehashsize:=s!.opts.hashlen.S));
 end);
 
 ############################################################################### 
@@ -420,7 +420,7 @@ InstallOtherMethod(Enumerate,
 "for an acting semi data, limit, and func",
 [IsSemigroupData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr, i, graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, schreierpos, schreiergen, schreiermult, s, gens, nrgens, genstoapply, lambda, lambdaht, lambdaact, lambdaperm, lambdamult, rank, rho, lambdarhoht, o, scc, r, lookup, x, lamx, pos, m, mults, y, rhoy, val, schutz, tmp, old, p, graded, gradedlens, hashlen, gradingfunc, rankx, schutzstab, j, n;
+  local looking, ht, orb, nr, i, graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact, lambdaperm, rho, lambdarhoht, o, oht, scc, r, lookup, x, lamx, pos, m, y, rhoy, val, schutz, tmp, old, j, n;
 
   if IsClosed(data) then 
     return data;
@@ -473,6 +473,7 @@ function(data, limit, lookfunc)
   lambdarhoht:=LambdaRhoHT(s);
 
   o:=LambdaOrb(s);
+  oht:=o!.ht;
   Enumerate(o, infinity);
   scc:=OrbSCC(o); r:=Length(scc);
   lookup:=o!.scc_lookup;
@@ -484,8 +485,9 @@ function(data, limit, lookfunc)
       x:=gens[j]*orb[i][4];
       
       lamx:=lambda(x);
-      pos:=Position(o, lamx);
-      
+      #pos:=Position(o, lamx);
+      pos:=HTValue_TreeHash_C(oht, lamx); 
+
       #find the scc
       m:=lookup[pos];
 
@@ -501,14 +503,14 @@ function(data, limit, lookfunc)
 
       rhoy:=[m];
       Append(rhoy, rho(y));
-      val:=HTValue(lambdarhoht, rhoy);
+      val:=HTValue_TreeHash_C(lambdarhoht, rhoy);
 
       # this is what we keep if it is new
       # x:=[s, m, o, y, false, nr+1];
 
       if val=fail then  #new rho value, and hence new R-rep
         lenreps:=lenreps+1;
-        HTAdd(lambdarhoht, rhoy, lenreps);
+        HTAdd_TreeHash_C(lambdarhoht, rhoy, lenreps);
         nr:=nr+1;
         reps[lenreps]:=[y];
         repslookup[lenreps]:=[nr];
@@ -532,7 +534,7 @@ function(data, limit, lookfunc)
           continue;
         else
           if schutz=false then # schutz gp is trivial
-            tmp:=HTValue(ht, y);
+            tmp:=HTValue_TreeHash_C(ht, y);
             if tmp<>fail then 
               graph[i][j]:=tmp;
               continue;
@@ -564,7 +566,7 @@ function(data, limit, lookfunc)
       schreiergen[nr]:=j; # by multiplying by gens[j]
       schreiermult[nr]:=pos; # and ends up in position <pos> of 
                              # its lambda orb
-      HTAdd(ht, y, nr);
+      HTAdd_TreeHash_C(ht, y, nr);
       graph[nr]:=EmptyPlist(nrgens);
       graph[i][j]:= nr;
       
@@ -633,7 +635,7 @@ function(s, f, opt)
       rec(
         semi:=s,
         forflatplainlists:=true, #JDM probably don't want to assume this..
-        hashlen:=CitrusOptionsRec.hashlen.M,
+        treehashsize:=CitrusOptionsRec.hashlen.M,
         schreier:=true,
         gradingfunc:=gradingfunc,
         orbitgraph:=true,
@@ -698,7 +700,7 @@ function(s, f, opt)
       rec(
         semi:=s,
         forflatplainlists:=true, #JDM probably don't want to assume this..
-        hashlen:=CitrusOptionsRec.hashlen.M,
+        treehashsize:=CitrusOptionsRec.hashlen.M,
         schreier:=true,
         gradingfunc:=gradingfunc,
         orbitgraph:=true,
@@ -775,7 +777,7 @@ function(s)
   local opts, semi, name;
 
   opts:= rec(schreier:=true, orbitgraph:=true,
-          storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
+          storenumbers:=true, log:=true, treehashsize:=CitrusOptionsRec.hashlen.M,
           scc_reps:=[One(Generators(s))], semi:=s);
   
   for name in RecNames(LambdaOrbOpts(s)) do 
@@ -1171,7 +1173,7 @@ function(s)
 
   return Orb(GeneratorsOfSemigroup(s), [1..65536], RhoAct(s),
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
-        storenumbers:=true, log:=true, hashlen:=CitrusOptionsRec.hashlen.M,
+        storenumbers:=true, log:=true, treehashsize:=CitrusOptionsRec.hashlen.M,
         scc_reps:=[One(Generators(s))], semi:=s));
 end);
 
@@ -1381,7 +1383,7 @@ function(s)
 
   one:=One(gens);
 
-  data:=rec( gens:=gens, ht:=HTCreate(one, rec(hashlen:=s!.opts.hashlen.L)),
+  data:=rec( gens:=gens, ht:=HTCreate(one, rec(treehashsize:=s!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[],
      lenreps:=0, orbit:=[[,,,one]], repslens:=[], 
