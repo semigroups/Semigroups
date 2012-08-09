@@ -662,9 +662,9 @@ gap> NextIterator(iter);
   </Returns>
 
   <Description>   
-  Returns an iterator of the Green's classes in the semigroup of transformations or partial permutations
-  <A>S</A>.  See <Ref Sect="Iterators" BookName="ref"/> for more information on
-  iterators.<P/>
+  Returns an iterator of the Green's classes in the semigroup of
+  transformations or partial permutations <A>S</A>.  See <Ref Sect="Iterators"
+    BookName="ref"/> for more information on iterators.<P/>
 
   This function is useful if you are, for example, looking for an &R;-class of
   a semigroup with a particular property but do not necessarily want to compute

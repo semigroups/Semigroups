@@ -6,7 +6,7 @@
 #
 CC=cc
 
-COMPILEOPTIONS="-O3 -fomit-frame-pointer"
+COMPILEOPTIONS="-march=corei7 -Ofast -fomit-frame-pointer"
 #COMPILEOPTIONS="-O3 -g -fomit-frame-pointer"
 #COMPILEOPTIONS="-O0 -g -Wall"
 # Some experiments:

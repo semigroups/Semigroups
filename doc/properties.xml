@@ -797,9 +797,9 @@ true</Example>
 
     <Mark>Transformation semigroups</Mark>
     <Item>
-      If <A>obj</A> is a transformation semigroup satisfying <Ref
+      If <A>S</A> is a transformation semigroup satisfying <Ref
       Prop="IsMonoidAsSemigroup"/>, then this function returns an isomorphism
-      from <A>obj</A> to a transformation monoid. <P/>
+      from <A>S</A> to a transformation monoid. <P/>
     </Item>
   </List>
 
@@ -876,29 +876,29 @@ gap> Size(s); Size(t);
       </Item>
     </List>
     <Example>
-gap> s:=InverseSemigroup( 
+gap> S:=InverseSemigroup( 
 > PartialPermNC( [ 1, 2, 3, 4, 5 ], [ 4, 2, 3, 1, 5 ] ),
 > PartialPermNC( [ 1, 2, 4, 5 ], [ 3, 1, 4, 2 ] ) );;
-gap> IsMonoid(s); 
+gap> IsMonoid(S); 
 false
-gap> IsMonoidAsSemigroup(s);
+gap> IsMonoidAsSemigroup(S);
 true
-gap> iso:=IsomorphismPartialPermMonoid(s);
+gap> iso:=IsomorphismPartialPermMonoid(S);
 MappingByFunction( &lt;inverse semigroup with 
 2 generators>, &lt;inverse monoid with 
 2 generators>, function( x ) ... end, function( x ) ... end )
-gap> Size(s);
+gap> Size(S);
 508
 gap> Size(Range(iso));
 508
-gap> g:=Group((1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8));;
-gap> IsomorphismPartialPermSemigroup(g);
+gap> G:=Group((1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8));;
+gap> IsomorphismPartialPermSemigroup(G);
 MappingByFunction( Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8),
   (1,4)(2,6)(3,7)(5,8) ]), &lt;inverse semigroup with
 3 generators>, function( p ) ... end, function( f ) ... end )
-gap> s:=Semigroup(Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ), 
+gap> S:=Semigroup(Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ), 
 > Transformation( [ 3, 6, 5, 7, 2, 1, 7 ] ) );;
-gap> iso:=IsomorphismPartialPermMonoid(s);
+gap> iso:=IsomorphismPartialPermMonoid(S);
 MappingByFunction( &lt;inverse monoid with 2 generators>, &lt;inverse monoid with 
 2 generators>, function( f ) ... end, function( x ) ... end )
 gap> MovedPoints(Range(iso));
@@ -931,9 +931,9 @@ MappingByFunction( &lt;semigroup with 2 generators>, Group([ (5,6,8), (2,3,8,4)
  ]), &lt;Operation "AsPermutation">, function( x ) ... end )
 gap> StructureDescription(Range(IsomorphismPermGroup(S)));
 "S6"
-gap> s:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
+gap> S:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
 &lt;inverse semigroup with 2 generators>
-gap> IsomorphismPermGroup(s);
+gap> IsomorphismPermGroup(S);
 MappingByFunction( &lt;inverse semigroup with 2 generators>, Group(
 [ (1,2,3,4), (1,2) ]), &lt;Operation "AsPermutation">, function( x ) ... end )</Example>
   </Description>
