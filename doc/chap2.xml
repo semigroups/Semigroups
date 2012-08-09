@@ -15,7 +15,8 @@
   <Ref Chap="Transformations" BookName="ref"/>.<P/>
   
   <!--General introduction to partial perms such as that in Howie's book,
-  including rank, domain, range, idempotent. JDM-->
+  including rank, domain, range, idempotent. Same for transformations and
+  things like CanonicalTransSameKernel. JDM-->
 
   <Section><Heading>Creating transformations</Heading>
     In this section we describe the functions available in &Citrus; for
@@ -226,8 +227,10 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
   <Section Label="Changing representation">
     <Heading>Changing representations</Heading>
     It is possible to change the representation of certain transformations and
-    partial permutations using the functions described in this section.  
-    <#Include Label="AsPermOfKerImg">
+    partial permutations using the functions described in this section. For
+    example, transformations which are mathematically permutations can be
+    converted into permutations in &GAP; using the function <Ref
+      Oper="AsPermutation"/>. 
     <#Include Label="AsPermutation">
     <#Include Label="AsPartialPerm">
     <#Include Label="AsTransformation">

@@ -19,20 +19,27 @@
       Partial permutations can be created in two ways: by giving the domain
       and the range, or the dense range list. <P/>
 
-      The partial permutation defined by a domain <A>dom</A> and range
-      <A>ran</A>, where <A>dom</A> is a set of positive integers and
-      <A>ran</A> is a duplicate free list of positive integers, maps
-      <A>dom</A><C>[i]</C> to <A>ran</A><C>[i]</C>. For example,
-      the partial permutation mapping <M>1</M> and <M>5</M> to <M>20</M> and
-      <M>2</M> can be created using: 
-      <Log>PartialPermNC([1,5],[20,2]); </Log> <P/>
-
-      The partial permutation defined by a dense range list <A>list</A>, maps
-      the positive integer <C>i</C> to <A>list</A><C>[i]</C> if
-      <A>list</A><C>[i]&lt;&gt;>0</C> and is undefined at <C>i</C> if 
-      <A>list</A><C>[i]=0</C>.  For example, the partial permutation mapping
-      <M>1</M> and <M>5</M> to <M>20</M> and <M>2</M> can be created
-      using: <Log>PartialPermNC([20,0,0,0,2]);</Log><P/>
+      <List>
+        <Mark>Domain and range</Mark>
+        <Item>
+          The partial permutation defined by a domain <A>dom</A> and range
+          <A>ran</A>, where <A>dom</A> is a set of positive integers and
+          <A>ran</A> is a duplicate free list of positive integers, maps
+          <A>dom</A><C>[i]</C> to <A>ran</A><C>[i]</C>. For example,
+          the partial permutation mapping <M>1</M> and <M>5</M> to <M>20</M> and
+          <M>2</M> can be created using: 
+          <Log>PartialPermNC([1,5],[20,2]); </Log><Br/>
+        </Item>
+        <Mark>Dense range list</Mark>
+        <Item>
+          The partial permutation defined by a dense range list <A>list</A>,
+          maps the positive integer <C>i</C> to <A>list</A><C>[i]</C> if
+          <A>list</A><C>[i]&lt;>0</C> and is undefined at <C>i</C> if
+          <A>list</A><C>[i]=0</C>.  For example, the partial permutation
+          mapping <M>1</M> and <M>5</M> to <M>20</M> and <M>2</M> can be
+          created using: <Log>PartialPermNC([20,0,0,0,2]);</Log><P/>
+        </Item>
+      </List>
 
       Regardless of which of these two methods are used to create a partial
       permutation in &GAP; the internal representation is the same. <P/>
@@ -477,9 +484,9 @@ gap> RankOfPartialPerm(f);
         <Mark>For permutations:</Mark>
         <Item><C>AsPartialPerm</C> and <C>AsPartialPermNC</C> return the 
           partial permutation that equals <A>f</A> on the set of positive
-          integers <A>set</A> and is undefined elsewhere. 
+          integers <A>set</A> and that is undefined elsewhere. 
           If the optional second argument <A>set</A> is not specfied, then
-          <C>MovedPoints(f)</C> is used; see <Ref Attr="MovedPoints"
+          <C>MovedPoints(<A>f</A>)</C> is used; see <Ref Attr="MovedPoints"
             BookName="ref"/>.<P/>
           
           If the optional second argument <A>set</A> is specified, then 
@@ -501,10 +508,13 @@ gap> RankOfPartialPerm(f);
           <C>Degree(<A>f</A>)^<A>f</A>=Degree(<A>f</A>)</C>
           and <A>f</A> is injective except on those <C>i</C> such that
           <C>i^<A>f</A>=Degree(f)</C>, then <C>AsPartialPerm</C> returns
-          the corresponding partial permutation.<P/>
+          the partial permutation obtained by restricting <A>f</A> to those
+          <C>i</C> such that <C>i^<A>f</A>&lt;>Degree(f)</C>.<P/>
           <C>AsPartialPerm</C> first
           verifies that <A>f</A> has the required form, whereas
-          <C>AsPartialPermNC</C> does not. There is currently no method for
+          <C>AsPartialPermNC</C> does not. <P/>
+           
+          JDM: There is currently no method for
           <C>AsPartialPerm</C> or <C>AsPartialPermNC</C> with two arguments. 
         </Item>
       </List>
