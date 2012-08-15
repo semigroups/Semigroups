@@ -6,11 +6,76 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsDataObjectRep and IsActingElt));
 
 
-# new for 0.7! - \^ - "for a pos int and bipartition" 
+# new for 1.0! - \^ - "for a pos int and bipartition" 
 ############################################################################# 
 
 InstallMethod(\^, "for a pos int and bipartition",
 [IsPosInt, IsBipartition], OnPointsBP);
+
+# new for 1.0! - \^ - "for a pos int and bipartition" 
+############################################################################# 
+
+InstallOtherMethod(POW, "for a set of pos ints and bipartition",
+[IsListOrCollection, IsBipartition], 
+function(set, f) 
+  return Set(Concatenation(List(set, x-> OnPointsBP(x,f))));
+end);
+
+# new for 0.7! - \^ - "for a bipartition and neg int"
+#############################################################################
+
+InstallMethod(\^, "for a bipartition and neg int",
+[IsBipartition, IsNegInt],
+function(f, r)
+  local foo;
+
+  foo:=function(i) 
+    if i=f[1] then 
+      return i;
+    fi;
+
+    return i mod f[1];
+  end;
+
+  if r=-1 then
+    return BipartitionNC(Set(List(ExtRepBipartition(f), x-> List(x, y-> foo(y+4)))));
+  fi;
+  return (f^-1)^-r;
+end);
+
+# new for 1.0! - AsBipartition - "for a permutation and pos int"
+############################################################################
+
+InstallMethod(AsBipartition, "for a permutation and pos int",
+[IsPerm, IsPosInt],
+function(f, n)
+  return BipartitionByIntRep(Concatenation([2*n, n], [1..n], OnTuples([1..n], f^-1)));
+end);
+
+# new for 1.0! - AsBipartition - "for a partial perm and pos int"
+############################################################################
+
+InstallOtherMethod(AsBipartition, "for a partial perm and pos int",
+[IsPartialPerm, IsPosInt],
+function(f, n)
+  local out, g, r, i;
+
+  out:=[2*n];
+  g:=f^-1;
+  r:=n;
+
+  for i in [1..n] do 
+    out[i+2]:=i;
+    if g[6+i]<>0 then 
+      out[n+i+2]:=i^g;
+    else 
+      r:=r+1;
+      out[n+i+2]:=r;
+    fi;
+  od;
+  out[2]:=r;
+  return BipartitionByIntRep(out); 
+end);
 
 # new for 1.0! - DegreeOfBipartition - "for a bipartition"
 ############################################################################
@@ -28,6 +93,30 @@ InstallOtherMethod(ELM_LIST, "for a bipartition and a pos int",
 #############################################################################
 
 InternalRepOfBipartition:=f-> List([1..f[1]+2], i-> f[i]);
+
+# new for 1.0! - IsomorphismTransformationSemigroup - "for a bipartition semi"
+###########################################################################
+
+InstallOtherMethod(IsomorphismTransformationSemigroup,
+"for a bipartiton semigroup",
+[IsBipartitionSemigroup],
+function(s)
+  local n, pts, o, t, pos, i;
+
+  n:=DegreeOfBipartition(Generators(s)[1]);
+  pts:=EmptyPlist(2^(n/2));
+
+  for i in [1..n/2] do
+    o:=Orb(s, [i], OnPoints); #JDM multiseed orb
+    Enumerate(o);
+    pts:=Union(pts, AsList(o));
+  od;
+  ShrinkAllocationPlist(pts);
+  t:=Semigroup(TransformationActionNC(s, pts, OnPoints));
+  pos:=List([1..n], x-> Position(pts, [x]));
+
+  return MappingByFunction(s, t, x-> TransformationActionNC(x, pts, OnPoints));
+end);
 
 # new for 1.0! - PrintObj - "for a bipartition"
 #############################################################################
@@ -48,6 +137,20 @@ function(q)
     Add(p[q[i+2]],i);
   od;
   return p;
+end);
+
+# new for 0.7! - PrintObj - "for a bipartition semigroup"
+################################################################################
+
+InstallMethod(ViewObj, "for a bipartition semigroup",
+[IsBipartitionSemigroup],
+function(s)
+  Print("<bipartition semigroup with ", Length(Generators(s)), " generators");
+  if HasSize(s) then
+    Print(", ", Size(s), " elements");
+  fi;
+  Print(">");
+  return;
 end);
 
 InstallMethod(\*, "for a bipartition and bipartition",
