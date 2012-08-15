@@ -21,7 +21,7 @@ function(set, f)
   return Set(Concatenation(List(set, x-> OnPointsBP(x,f))));
 end);
 
-# new for 0.7! - \^ - "for a bipartition and neg int"
+# new for 1.0! - \^ - "for a bipartition and neg int"
 #############################################################################
 
 InstallMethod(\^, "for a bipartition and neg int",
@@ -38,9 +38,28 @@ function(f, r)
   end;
 
   if r=-1 then
-    return BipartitionNC(Set(List(ExtRepBipartition(f), x-> List(x, y-> foo(y+4)))));
+    return BipartitionNC(Set(List(ExtRepBipartition(f), x-> Set(List(x, y->
+    foo(y+f[1]/2))))));
   fi;
   return (f^-1)^-r;
+end);
+
+# new for 1.0! - \< - "for a bipartition and bipartition"
+############################################################################
+
+InstallMethod(\<, "for a bipartition and bipartition", 
+[IsBipartition, IsBipartition],
+function(f,g)
+  return ExtRepBipartition(f)<ExtRepBipartition(g);
+end);
+
+# new for 1.0! - \= - "for a bipartition and bipartition"
+############################################################################
+
+InstallMethod(\=, "for a bipartition and bipartition", 
+[IsBipartition, IsBipartition],
+function(f,g)
+  return f[1]=g[1] and ForAll([1..f[1]+2], x-> f[x]=g[x]);
 end);
 
 # new for 1.0! - AsBipartition - "for a permutation and pos int"
@@ -49,7 +68,8 @@ end);
 InstallMethod(AsBipartition, "for a permutation and pos int",
 [IsPerm, IsPosInt],
 function(f, n)
-  return BipartitionByIntRep(Concatenation([2*n, n], [1..n], OnTuples([1..n], f^-1)));
+  return BipartitionByIntRep(Concatenation([2*n, n], [1..n], 
+   OnTuples([1..n], f^-1)));
 end);
 
 # new for 1.0! - AsBipartition - "for a partial perm and pos int"
@@ -66,7 +86,7 @@ function(f, n)
 
   for i in [1..n] do 
     out[i+2]:=i;
-    if g[6+i]<>0 then 
+    if i^g<>fail then 
       out[n+i+2]:=i^g;
     else 
       r:=r+1;
@@ -75,6 +95,35 @@ function(f, n)
   od;
   out[2]:=r;
   return BipartitionByIntRep(out); 
+end);
+
+# new for 1.0! - AsBipartition - "for a transformation"
+############################################################################
+
+InstallOtherMethod(AsBipartition, "for a transformation",
+[IsTransformation],
+function(f)
+  local n, r, ker, out, g, i;
+
+  n:=f[1];
+  r:=f[2];
+  ker:=KerT(f); 
+  out:=Concatenation([2*n, n], ker);
+  g:=List([1..f[1]], x-> 0);
+
+  for i in RanSetT(f) do 
+    g[f[i+4]]:=i;
+  od;
+
+  for i in [1..n] do 
+    if g[i]<>0 then 
+      out[n+i+2]:=ker[g[i]];
+    else 
+      r:=r+1;
+      out[n+i+2]:=r;
+    fi;
+  od;
+  return BipartitionByIntRep(out);
 end);
 
 # new for 1.0! - DegreeOfBipartition - "for a bipartition"

@@ -253,6 +253,25 @@ function(n)
   return s;
 end);
 
+# new for 1.0! - PartitionMonoid - "for a pos int"
+################################################################################
+
+InstallMethod(PartitionMonoid, "for a pos int",
+[IsPosInt], 
+function(n)
+  local gens, g, s;
+
+  gens:=List(GeneratorsOfSemigroup(SymmetricInverseSemigroup(n)), 
+  x-> AsBipartition(x, n));
+  g:=AsBipartition(TransformationNC(Concatenation([1..n-1], [n-1])));
+  Add(gens, g);
+  Add(gens, g^-1);
+
+  s:=Semigroup(gens);
+  SetIsRegularSemigroup(s, true);
+  return s;
+end);
+
 # new for 0.7! - POI - "for a pos int"
 ################################################################################
 

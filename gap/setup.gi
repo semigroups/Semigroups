@@ -103,6 +103,7 @@ end);
 
 # new for 1.0! - LambdaInverse
 ###############################################################################
+#JDM c methods!
 
 InstallMethod(LambdaInverse, "for a transformation semigroup",
 [IsTransformationSemigroup], s-> 

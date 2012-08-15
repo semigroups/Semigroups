@@ -1579,8 +1579,8 @@ Obj FuncOnPointsBP(Obj self, Obj i, Obj f)
     Obj out;
     
     j=INT_INTOBJ(i);
-    deg=ELM_PT(f, 1);
-    if(j>deg/2) return Fail;
+    deg=ELM_PT(f, 1)/2;
+    if(j>deg) return Fail;
     j=ELM_PT(f, 2+j);
     out=NEW_PLIST(T_PLIST_CYC, deg);
     r=0;
