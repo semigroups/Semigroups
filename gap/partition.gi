@@ -1,50 +1,64 @@
-# A partition of 2n is stored in the following way:
-# One plain list l, the first 2n entries say, in which part each of the
-# numbers 1..2n lies, l[2*n+1] is the number of parts. Parts are
-# numbered from 1 to 2*n+1 and the parts (sets of numbers) are
-# numbered in lexicographically ascending order.
-#
-# Example: If n=3, then the partition [[1,3,4],[2,6],[5]] of [1..6]
-#          would be stored as:
-#          [1,2,1,1,3,2, 3]
-#          since part [1,3,4] is the first part, part [2,6] is the
-#          second part, and part [5] is the third part, there are
-#          altogether three parts.
-#
-# The external representation is just a set of sets whose union is
-# [1..2*n].
 
-PartitionExtRep := function(p)
-  local i,j,n2,q;
-  p := Set(p,Set);     # Sort all parts and the outer list
-  n2 := Sum(p,Length);
-  q := EmptyPlist(n2+1);
-  for i in [1..Length(p)] do
-    for j in [1..Length(p[i])] do
-      q[p[i][j]] := i;
-    od;
-  od;
-  q[n2+1] := Length(p);
-  return q;
-end;
+BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
+ IsBipartition, CanEasilySortElements, CanEasilySortElements));
 
-ExtRepPartition := function(q)
+BindGlobal("BipartitionType", NewType(BipartitionFamily,
+ IsBipartition and IsDataObjectRep and IsActingElt));
+
+
+# new for 0.7! - \^ - "for a pos int and bipartition" 
+############################################################################# 
+
+InstallMethod(\^, "for a pos int and bipartition",
+[IsPosInt, IsBipartition], OnPointsBP);
+
+# new for 1.0! - DegreeOfBipartition - "for a bipartition"
+############################################################################
+
+InstallMethod(DegreeOfBipartition, "for a bipartition",
+[IsBipartition], x-> x[1]);
+
+# new for 1.0! - ELM_LIST - "for a bipartition and pos int"
+############################################################################
+
+InstallOtherMethod(ELM_LIST, "for a bipartition and a pos int",
+[IsBipartition, IsPosInt], ELM_LIST_BP);
+
+# new for 1.0! - InternalRepOfBipartition - "for a bipartition"
+#############################################################################
+
+InternalRepOfBipartition:=f-> List([1..f[1]+2], i-> f[i]);
+
+# new for 1.0! - PrintObj - "for a bipartition"
+#############################################################################
+
+InstallMethod(PrintObj, "for a bipartition",
+[IsBipartition],
+function(f)
+  Print("<bipartition: ", ExtRepBipartition(f), " >");
+  return;
+end);
+
+InstallGlobalFunction(ExtRepBipartition,
+function(q)
   local i,n2,p;
-  n2 := Length(q)-1;
-  p := List([1..q[n2+1]],i->[]);
+  n2 := q[1];
+  p := List([1..q[2]],i->[]);
   for i in [1..n2] do
-    Add(p[q[i]],i);
+    Add(p[q[i+2]],i);
   od;
   return p;
-end;
+end);
 
-PartitionComposition := function(a,b)
+InstallMethod(\*, "for a bipartition and bipartition",
+[IsBipartition, IsBipartition], 
+function(a,b)
   # This composes two partitions of [1..n] in internal rep
   local c,fuse,fuseit,i,n,next,p1,p2,tab3,x,y;
-  n := (Length(a)-1)/2;
-  Assert(1,n = (Length(b)-1)/2);
-  p1 := a[2*n+1];
-  p2 := b[2*n+1];
+  n := a[1]/2;
+  Assert(1,n = b[1]/2);
+  p1 := a[2];
+  p2 := b[2];
   fuse := [1..p1+p2];
   # From now on i in partition a is in part number a[i]
   #         and j in partition b is in part number b[j]+p2
@@ -57,8 +71,8 @@ PartitionComposition := function(a,b)
             end;
   for i in [1..n] do
       # we want to fuse the parts of i+n in a and i in b:
-      x := fuseit(a[i+n]);
-      y := fuseit(b[i]+p1);
+      x := fuseit(a[i+n+2]);
+      y := fuseit(b[i+2]+p1);
       if x <> y then
           #Print("Fusing parts ",x," and ",y,"\n");
           if x < y then
@@ -74,7 +88,7 @@ PartitionComposition := function(a,b)
   c := EmptyPlist(2*n+1);
   next := 1;
   for i in [1..n] do
-      x := fuseit(a[i]);
+      x := fuseit(a[i+2]);
       if tab3[x] = 0 then
           tab3[x] := next;
           next := next + 1;
@@ -82,24 +96,25 @@ PartitionComposition := function(a,b)
       Add(c,tab3[x]);
   od;
   for i in [n+1..2*n] do
-      x := fuseit(b[i]+p1);
+      x := fuseit(b[i+2]+p1);
       if tab3[x] = 0 then
           tab3[x] := next;
           next := next + 1;
       fi;
       Add(c,tab3[x]);
   od;
-  Add(c,next-1);
-  return c;
-end;
+  #Add(c,next-1);
+  return BipartitionByIntRep(Concatenation([2*n, next-1], c));
+# return Concatenation([2*n, next-1], c);
+end);
  
 Do := function(n)
     local eee,ppp,qqq;
     ppp := PartitionsSet([1..2*n]);
-    qqq := List(ppp,PartitionExtRep);
-    eee := Filtered(qqq,x->x=PartitionComposition(x,x));
-    Print("n=",n," partitions=",Length(ppp)," idempots=",Length(eee),"\n");
-    return [n,Length(ppp),Length(eee)];
+    #qqq := List(ppp,PartitionExtRep);
+    #eee := Filtered(qqq,x->x=PartitionComposition(x,x));
+    #Print("n=",n," partitions=",Length(ppp)," idempots=",Length(eee),"\n");
+    #return [n,Length(ppp),Length(eee)];
 end;
 
 MakePartitions := function(n,f)
@@ -143,7 +158,7 @@ DoCount := function(n)
     counteri := 0;
     Tester := function(x) 
       counterp := counterp + 1;
-      if x = PartitionComposition(x,x) then
+      if x = x*x then
         counteri := counteri + 1; 
       fi; 
     end;

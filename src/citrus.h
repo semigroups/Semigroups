@@ -10,6 +10,7 @@ Obj FuncLARGEST_MOVED_POINT_PERM(Obj self, Obj perm);
 /* import the type from GAP */
 Obj PartialPermType;
 Obj TransformationType;
+Obj BipartitionType;
 
 /* define the type for entries in part. perm */
 typedef UInt2 pttype;
@@ -52,6 +53,16 @@ static inline Obj NEW_T(Int len)
 
     f = NewBag(T_DATOBJ, sizeof(pttype)*(len)+sizeof(UInt));
     TYPE_DATOBJ(f) = TransformationType;
+    return f;
+}
+
+/* create a new bipartition */
+static inline Obj NEW_BP(Int len)
+{
+    Obj f;
+
+    f = NewBag(T_DATOBJ, sizeof(pttype)*(len)+sizeof(UInt));
+    TYPE_DATOBJ(f) = BipartitionType;
     return f;
 }
 

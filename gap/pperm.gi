@@ -551,7 +551,7 @@ function(f)
   fi;
   dom:=DomPP(f); ran:=RanPP(f);
 
-  if Rank(f)>2 then # JDM printing of [2,4] is [2, 4..4]!
+  if Rank(f)>3 then # JDM printing of [2,4] is [2, 4..4]!
     if IsRange(dom) then 
       ConvertToRangeRep(dom);
     fi;

@@ -656,13 +656,11 @@ Obj FuncNrMovedPointsPP(Obj self, Obj f)
 /* largest moved points */
 Obj FuncLargestMovedPointPP(Obj self, Obj f)
 { pttype deg, rank, i;
-  Int m;
 
   deg=ELM_PT(f, 1);
   if(deg==0) return INTOBJ_INT(0);
   
   rank=ELM_PT(f, 2);
-  m=0;
 
   for(i=6+deg+rank;i>=7+deg;i--)
   {
@@ -674,13 +672,11 @@ Obj FuncLargestMovedPointPP(Obj self, Obj f)
 /* smallest moved points */
 Obj FuncSmallestMovedPointPP(Obj self, Obj f)
 { pttype deg, rank, i;
-  Int m;
 
   deg=ELM_PT(f, 1);
   if(deg==0) return INTOBJ_INT(0);
   
   rank=ELM_PT(f, 2);
-  m=0;
 
   for(i=7+deg;i<=6+deg+rank;i++)
   {
@@ -1505,6 +1501,101 @@ Obj FuncEqT(Obj self, Obj f, Obj g)
   return True;
 }
 
+/******************************************************************************
+* A bipartition of 2n is stored in the following way:
+* One plain list l, the first 2 entries are the degree (total number of
+* points) and rank (number of classes) and the remaining 2n entries say, in
+* which part each of the
+* numbers 1..2n lies. Parts are
+* numbered from 1 to 2*n and the parts (sets of numbers) are
+* numbered in lexicographically ascending order.
+*
+* Example: If n=3, then the bipartition [[1,3,4],[2,6],[5]] of [1..6]
+*          would be stored as:
+*          [6,3, 1,2,1,1,3,2]
+*          since part [1,3,4] is the first part, part [2,6] is the
+*          second part, and part [5] is the third part, there are
+*          altogether three parts.*
+******************************************************************************/
+
+/*******************************************************************************
+** Macros for bipartitions specifically
+*******************************************************************************/
+
+/* length of trans internal rep */
+static inline Int LEN_BP(Obj f)
+{
+  return ELM_PT(f,1)+2;
+}
+
+/* from MN's PartitionExtRep */
+
+Obj FuncBipartitionNC(Obj self, Obj partition)
+{ pttype rank, deg, i, j; 
+  Obj f, class;
+
+  rank=LEN_LIST(partition);
+  deg=0;
+
+  for(i=1;i<=rank;i++) deg=deg+LEN_LIST(ELM_LIST(partition, i));
+  
+  f=NEW_BP(deg+2);
+  SET_ELM_PT(f, 1, deg);
+  SET_ELM_PT(f, 2, rank);
+
+  for(i=1;i<=rank;i++){
+    class=ELM_LIST(partition, i);
+    for(j=1;j<=LEN_LIST(class);j++){
+      SET_ELM_PT(f, (pttype) INT_INTOBJ(ELM_LIST(class, j))+2, i);
+    }
+  }
+
+  return f;
+}
+
+/* method for f[i] */
+Obj FuncELM_LIST_BP( Obj self, Obj f, Obj i)
+{ 
+  if(INT_INTOBJ(i)>LEN_BP(f)) return Fail;
+  return INTOBJ_INT(ELM_PT(f, INT_INTOBJ(i)));
+}
+
+Obj FuncBipartitionByIntRep(Obj self, Obj x)
+{ pttype deg; 
+  Int i;
+  Obj f;
+
+  deg=(pttype) INT_INTOBJ(ELM_LIST(x, 1));
+  f=NEW_BP(deg+2);
+  SET_ELM_PT(f, 1, deg);
+
+  for(i=2;i<=deg+2;i++) SET_ELM_PT(f, i, (pttype) INT_INTOBJ(ELM_LIST(x, i)));
+  return f;
+}
+
+/* i^f */ 
+Obj FuncOnPointsBP(Obj self, Obj i, Obj f)
+{   pttype j, deg, r, k;
+    Obj out;
+    
+    j=INT_INTOBJ(i);
+    deg=ELM_PT(f, 1);
+    if(j>deg/2) return Fail;
+    j=ELM_PT(f, 2+j);
+    out=NEW_PLIST(T_PLIST_CYC, deg);
+    r=0;
+
+    for(k=3;k<=deg+2;k++){
+      if(ELM_PT(f, k)==j){
+        r++;
+        SET_ELM_PLIST(out, r, INTOBJ_INT(k-2));
+      }
+    }
+
+    SET_LEN_PLIST(out, (Int) r);
+    return out;
+}
+
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
 /******************************************************************************
@@ -1682,6 +1773,25 @@ static StructGVarFunc GVarFuncs [] = {
      FuncEqT,
     "pkg/citrus/src/citrus.c:FuncEqT" },
 
+  /* bipartitions start here */
+
+  { "BipartitionNC", 1, "partition",
+    FuncBipartitionNC, 
+    "pkg/citrus/src/citrus.c:FuncBipartitionNC" },
+
+  { "ELM_LIST_BP", 2, "f,i",
+    FuncELM_LIST_BP,
+    "pkg/citrus/src/citrus.c:ELM_LIST_BP" },
+  
+  { "BipartitionByIntRep", 1, "x",
+    FuncBipartitionByIntRep,
+    "pkg/citrus/src/citrus.c:FuncBipartitionByIntRep" },
+
+  { "OnPointsBP", 2, "i,f",
+    FuncOnPointsBP,
+    "pkg/citrus/src/citrus.c:FuncOnPointsBP" },
+
+
   { 0 }
 
 };
@@ -1696,6 +1806,8 @@ static Int InitKernel ( StructInitInfo *module )
 
     ImportGVarFromLibrary( "PartialPermType", &PartialPermType );
     ImportGVarFromLibrary( "TransformationType", &TransformationType );
+    ImportGVarFromLibrary( "BipartitionType", &BipartitionType );
+
     /* return success                                                      */
     return 0;
 }

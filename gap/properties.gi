@@ -1203,6 +1203,11 @@ end);
 # new for 0.7! - IsomorphismTransformationSemigroup - "for a matrix semigroup"
 ###########################################################################
 
+#JDM this should be improved: inverse of the function is missing, and a similar
+#approach as used in the method for IsomorphismTransformationSemigroup for a
+#semigroup of binary relations should be used to reduce the number of points
+#acted on. 
+
 InstallOtherMethod(IsomorphismTransformationSemigroup, "for a matrix semigroup",
 [IsMatrixSemigroup], 
 function(S)        
