@@ -1073,15 +1073,18 @@ end);
 
 # new for 0.5! - IsomorphismTransformationSemigroup - "for a perm group"
 #############################################################################
+#JDM this won't work!!
 
 InstallOtherMethod(IsomorphismTransformationSemigroup, "for a perm group",
 [IsPermGroup], 
 function(g)
   local n, p, iso;
 
-  n:=NrMovedPoints(g);
-  p:=MappingPermListList(MovedPoints(g), [1..n]);
-  iso:=x-> AsTransformation(x^p, n);
+  n:=NrMovedPoints(g); 
+  if not n=0 then 
+    p:=MappingPermListList(MovedPoints(g), [1..n]);
+    iso:=x-> AsTransformation(x^p, n);;
+  fi;
 
   return MappingByFunction(g, Semigroup(List(GeneratorsOfGroup(g), iso)), iso);
 end);
@@ -1572,23 +1575,27 @@ InstallMethod(IsUnitRegularSemigroup, "for a trans semigroup",
 function(s)
   local g, lookfunc, data;
 
+  if not IsRegularSemigroup(s) then 
+    return false;
+  fi;
+
   g:=GroupOfUnits(s);
   
-  if g=fail then 
+  if g=fail or (IsTrivial(g) and not IsTrivial(s)) then 
     return false;
   fi;
 
   g:=Range(IsomorphismPermGroup(g));
 
   lookfunc:=function(o, x) 
-    local oo;
-    oo:=Orb(g, RanSetT(x[4]), OnSets, rec( 
+    local orb;
+    orb:=Orb(g, LambdaFunc(s)(x[4]), OnSets, rec( 
       forflatplainlists:=true, 
-      hashlen:=s!.opts.hashlen.S,
+      treehashsize:=s!.opts.hashlen.S,
       lookingfor:=function(o, y) 
-        return IsInjectiveTransOnList(RanT(x[4]), y); end));
-    Enumerate(oo);
-    return PositionOfFound(oo)=false;
+        return IdempotentLambdaRhoTester(y, RhoFunc(s)(x[4])); end));
+    Enumerate(orb);
+    return PositionOfFound(orb)=false;
   end;
 
   data:=Enumerate(SemigroupData(s), infinity, lookfunc);

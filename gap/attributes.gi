@@ -44,7 +44,7 @@ function(s)
     return fail;
   fi;
 
-  r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
+  r:=GreensHClassOfElementNC(s, MultiplicativeNeutralElement(s));
   m:=Size(r); g:=Group(AsPermutation(Random(r)));
 
   while Size(g)<m do
