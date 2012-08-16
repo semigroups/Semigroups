@@ -431,6 +431,7 @@ function(data, limit, lookfunc)
   else
     looking:=false;
   fi;
+  data!.looking:=looking;
 
   ht:=data!.ht;
   orb:=data!.orbit;   # the so far found R-reps data 
@@ -762,6 +763,15 @@ end);
 
 InstallMethod(IsBound\[\], "for graded lambda orbs and pos int",
 [IsGradedLambdaOrbs, IsPosInt], 
+function(o, j)
+  return IsBound(o!.orbits[j]);
+end);
+
+# new for 1.0! - IsBound - for graded rho orbs and pos int
+##############################################################################
+
+InstallMethod(IsBound\[\], "for graded rho orbs and pos int",
+[IsGradedRhoOrbs, IsPosInt], 
 function(o, j)
   return IsBound(o!.orbits[j]);
 end);
@@ -1132,6 +1142,19 @@ function(data, x, n)
     od;
   fi; 
   return fail;
+end);
+
+# new for 1.0! - PositionOfFound - "for semigroup data"
+##############################################################################
+
+InstallOtherMethod( PositionOfFound,"for semigroup data",
+[IsSemigroupData],
+function( data )
+  if not(data!.looking) then
+    Error("not looking for anything,");
+    return fail;
+  fi;
+  return data!.found;
 end);
 
 # new for 1.0! - PrintObj - "for graded lambda orbs"

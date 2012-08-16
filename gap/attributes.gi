@@ -176,6 +176,116 @@ function(d)
   return hom;
 end);
 
+# new for 1.0! - InversesOfSemigroupElement - "for acting semigroup and elt"
+#############################################################################
+
+InstallMethod(InversesOfSemigroupElement, "for acting semigroup and elt",
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsActingElt],
+function(s, f)
+
+  if f in s then
+    return InversesOfSemigroupElementNC(s, f);
+  fi;
+
+  return fail;
+end);
+
+# mod for 1.0! - InversesOfSemigroupElementNC - "for acting semigroup and elt"
+#############################################################################
+
+InstallMethod(InversesOfSemigroupElementNC, 
+"for an acting semigroup and acting elt",
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsActingElt],
+function(s, f)
+  local regular, rank_f, lambda, rhorank, tester, j, o, rhos, grades, rho_f, lambdarank, creator, inv, out, k, g, rho, i, x;
+
+  regular:=IsRegularSemigroup(s);
+
+  if not (regular or IsRegularSemigroupElementNC(s, f)) then
+    return [];
+  fi;
+
+  rank_f:=Rank(f); 
+  lambda:=LambdaFunc(s)(f);
+  rhorank:=RhoRank(s);
+  tester:=IdempotentLambdaRhoTester(s);
+  j:=0;
+
+  # can't use GradedRhoOrb here since there may be inverses not D-related to f
+  # JDM is this really true?
+  if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then 
+    o:=RhoOrb(s);
+    rhos:=EmptyPlist(Length(o));
+    for rho in o do
+      if rhorank(rho)=rank_f and tester(lambda, rho) then
+        j:=j+1;
+        rhos[j]:=rho;
+      fi;
+    od;
+  else
+    o:=Orb(s, [1..65536], RhoAct(s),
+      rec(  forflatplainlists:=true, #JDM probably don't want to assume this..
+            treehashsize:=CitrusOptionsRec.hashlen.M,
+            gradingfunc:=function(o, x) return rhorank(x); end,
+            onlygrades:=function(x, y) return x>=rank_f; end,
+            onlygradesdata:=fail));
+    Enumerate(o, infinity);
+    grades:=Grades(o);
+    rhos:=EmptyPlist(Length(o));
+    for i in [2..Length(o)] do 
+      if grades[i]=rank_f and tester(lambda, o[i]) then 
+        j:=j+1;
+        rhos[j]:=o[i];
+      fi;
+    od;
+  fi;
+  ShrinkAllocationPlist(rhos);
+  
+  rho_f:=RhoFunc(s)(f);
+  lambdarank:=LambdaRank(s);
+  creator:=IdempotentLambdaRhoCreator(s);
+  inv:=LambdaInverse(s);
+  
+  out:=[]; k:=0; 
+ 
+  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
+    o:=LambdaOrb(s);
+    for x in o do
+      if lambdarank(x)=rank_f and tester(x, rho_f) then
+        for rho in rhos do
+          g:=creator(lambda, rho)*inv(x, f);
+          if regular or g in s then
+            k:=k+1; 
+            out[k]:=g;
+          fi;
+        od;
+      fi;
+    od;
+  else
+    o:=Orb(s, [1..65536], LambdaAct(s),
+      rec(  forflatplainlists:=true, #JDM probably don't want to assume this..
+            treehashsize:=CitrusOptionsRec.hashlen.M,
+            gradingfunc:=function(o, x) return lambdarank(x); end,
+            onlygrades:=function(x, y) return x>=rank_f; end,
+            onlygradesdata:=fail));
+    Enumerate(o, infinity);
+    grades:=Grades(o);
+    for x in o do
+      if grades[i]=rank_f and tester(x, rho_f) then
+        for rho in rhos do
+          g:=creator(lambda, rho)*inv(x, f);
+          if regular or g in s then
+            k:=k+1; 
+            out[k]:=g;
+          fi;
+        od;
+      fi;
+    od;
+  fi; 
+ 
+  return out;
+end);
+
 #MMM
 
 # new for 1.0! - MultiplicativeNeutralElement - "for an acting semigroup"

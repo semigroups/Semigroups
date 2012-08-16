@@ -29,6 +29,33 @@ function ( gens, w )
     return res;
 end);
 
+# new for 1.0! - LookForInOrb - "for an orbit and a function"
+#############################################################################
+
+InstallGlobalFunction(LookForInOrb, "for an orbit and a function",
+function(o, func, onlynew)
+  local pos, i;
+ 
+  if not onlynew then 
+    for i in [1..Length(o)] do 
+      if func(o, o[i]) then 
+        return i;
+      fi;
+    od;
+  fi;
+
+  o!.looking:=true;
+  o!.lookingfor:=func;
+  o!.lookfunc:=o!.lookingfor;
+  Enumerate(o);
+  pos:=PositionOfFound(o);
+  o!.found:=false;
+  o!.looking:=false;
+  Unbind(o!.lookingfor);
+  Unbind(o!.lookfunc);
+  return pos;
+end);
+
 # new for 0.1! - OnKernelsAntiAction - for a trans img list and same 
 ###########################################################################
 

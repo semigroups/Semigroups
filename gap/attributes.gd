@@ -14,6 +14,11 @@ DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigp", IsSemigroup);
 DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 
+DeclareOperation("InversesOfSemigroupElement", [IsActingSemigroup and
+HasGeneratorsOfSemigroup, IsActingElt]);
+DeclareOperation("InversesOfSemigroupElementNC", [IsActingSemigroup and
+HasGeneratorsOfSemigroup, IsActingElt]);
+
 DeclareOperation("IsomorphismPartialPermMonoid", [IsPermGroup]);
 DeclareOperation("IsomorphismPartialPermSemigroup", [IsPermGroup]);
 DeclareOperation("IsomorphismTransformationMonoid", [IsSemigroup]);

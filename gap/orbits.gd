@@ -8,6 +8,7 @@
 #############################################################################
 ##
 
+DeclareGlobalFunction("LookForInOrb");
 DeclareGlobalFunction("OnKernelsAntiAction");
 DeclareGlobalFunction("OrbSCC");
 DeclareGlobalFunction("OrbSCCLookup");

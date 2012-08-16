@@ -1370,6 +1370,52 @@ function(s)
   return data!.found=false;
 end);
 
+# new for 1.0! - IsRegularSemigroupElement - "for acting semigroup and elt"
+###########################################################################
+
+InstallMethod(IsRegularSemigroupElement, 
+"for an acting semigroup and acting element",
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsActingElt], 
+function(s, f)                                  
+  local o, lookingfor;
+  
+  if not f in s then 
+    Info(InfoCitrus, 2, "the element does not belong to the semigroup,");
+    return fail;
+  fi;
+  
+  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then
+    Info(InfoCitrus, 2, "the semigroup is regular,");
+    return true;
+  fi;
+  
+  o:=GradedLambdaOrb(s, f, true);
+        
+  lookingfor:=function(o, x)
+    return IdempotentLambdaRhoTester(s)(x, RhoFunc(s)(f));
+  end;
+  
+  return LookForInOrb(o, lookingfor, false)<>false;
+end);
+
+# new for 1.0! - IsRegularSemigroupElementNC - "for acting semigroup and elt"
+###########################################################################
+
+InstallMethod(IsRegularSemigroupElementNC, 
+"for an acting semigroup and acting element",
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsActingElt], 
+function(s, f)                                  
+  local o, lookingfor;
+  
+  o:=GradedLambdaOrb(s, f, false);
+        
+  lookingfor:=function(o, x)
+    return IdempotentLambdaRhoTester(s)(x, RhoFunc(s)(f));
+  end;
+  
+  return LookForInOrb(o, lookingfor, false)<>false;
+end);
+
 # new for 0.2! - IsRightSimple - "for a transformation semigroup"
 ###########################################################################
 
@@ -1536,11 +1582,11 @@ function(s)
 
   lookfunc:=function(o, x) 
     local oo;
-    oo:=Orb(g, RanSetT(x), OnSets, rec( 
+    oo:=Orb(g, RanSetT(x[4]), OnSets, rec( 
       forflatplainlists:=true, 
       hashlen:=s!.opts.hashlen.S,
       lookingfor:=function(o, y) 
-        return IsInjectiveTransOnList(RanT(x), y); end));
+        return IsInjectiveTransOnList(RanT(x[4]), y); end));
     Enumerate(oo);
     return PositionOfFound(oo)=false;
   end;

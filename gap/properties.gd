@@ -35,6 +35,7 @@ DeclareProperty("IsMonogenicSemigroup", IsSemigroup);
 DeclareProperty("IsMonoidAsSemigroup", IsSemigroup); 
 DeclareProperty("IsOrthodoxSemigroup", IsSemigroup);
 DeclareProperty("IsRectangularBand", IsSemigroup); 
+DeclareOperation("IsRegularSemigroupElementNC", [IsSemigroup, IsMultiplicativeElement and IsAssociativeElement]);
 DeclareProperty("IsRightSimple", IsSemigroup);
 DeclareProperty("IsRightZeroSemigroup", IsSemigroup); 
 DeclareProperty("IsSemiband", IsSemigroup); 

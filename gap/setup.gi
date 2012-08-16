@@ -63,10 +63,10 @@ InstallMethod(LambdaDegree, "for an acting semigroup",
 ###############################################################################
 
 InstallMethod(LambdaDomain, "for a transformation semi",
-[IsTransformationSemigroup], s-> [1..Degree(s)+1]*1);
+[IsTransformationSemigroup], s-> [1..65536]*1);
 
 InstallMethod(LambdaDomain, "for a partial perm semi",
-[IsPartialPermSemigroup], s-> [1..65536]);
+[IsPartialPermSemigroup], s-> [1..65536]*1);
 
 InstallMethod(LambdaDomain, "for a matrix semigroup",
 [IsMatrixSemigroup], s-> BaseDomain(Representative(s))^Length(Representative(s)));
