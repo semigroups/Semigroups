@@ -8,6 +8,9 @@
 #############################################################################
 ##
 
+
+DeclareGlobalFunction("SemigroupActionHomomorphism");
+
 DeclareAttribute("AntiIsomorphismTransformationSemigroup",
  IsSemigroup);
 DeclareOperation("EmbeddingNC", [IsSemigroup, IsSemigroup]);

@@ -14,6 +14,7 @@ DeclareCategoryCollections("IsPartialPerm");
 
 DeclareGlobalFunction("PartialPermNC");
 DeclareGlobalFunction("PartialPerm");
+
 DeclareOperation("AsPartialPerm", [IsObject]);
 DeclareOperation("AsPartialPermNC", [IsObject]);
 DeclareGlobalFunction("CITRUS_HashFunctionForPP");
@@ -29,6 +30,11 @@ DeclareGlobalFunction("InternalRepOfPartialPerm");
 DeclareOperation("NaturalLeqPartialPerm", [IsPartialPerm, IsPartialPerm]);
 DeclareOperation("OnIntegerSetsWithPartialPerm", [IsCyclotomicCollection, IsPartialPerm]);
 DeclareOperation("OnIntegerTuplesWithPartialPerm", [IsCyclotomicCollection, IsPartialPerm]);
+
+DeclareGlobalFunction("PartialPermOp");
+DeclareGlobalFunction("PartialPermAction");
+DeclareGlobalFunction("PartialPermActionHomomorphism");
+
 DeclareGlobalFunction("PrettyPrintPP");
 DeclareGlobalFunction("RandomPartialPerm");
 DeclareOperation("RangeOfPartialPerm", [IsPartialPerm]);

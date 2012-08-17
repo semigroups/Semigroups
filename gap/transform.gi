@@ -193,10 +193,32 @@ end);
 # new for 0.7! - TransformationActionNC - "for mult elt, list, function"
 ###############################################################################
 
-InstallMethod(TransformationActionNC, "for mult elt, list, function",
+# based on PermutationOp in oprt.gi
+
+InstallOtherMethod(TransformationOp, "for an obj and list",
+[IsObject, IsList], 
+function(obj, list) 
+  return TransformationOp(obj, list, OnPoints);
+end);
+
+InstallMethod(TransformationOp, "for mult elt, list, function",
 [IsObject, IsList, IsFunction],
-function(f, dom, act)
-  local n, out, i;
+function(f, D, act)
+
+  perm:=();
+  if IsPlistRep(D) and Length(D)>2 and CanEasilySortElements(D[1]) then 
+    if not IsSSortedList(D) then 
+      D:=ShallowCopy(D);
+      perm:=Sortex(D);
+      D:=Immutable(D);
+      SetIsSSortedList(D, true);
+    fi;
+  fi;
+
+
+
+
+
 
   n:=Size(dom);
   out:=EmptyPlist(n);

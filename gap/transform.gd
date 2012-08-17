@@ -11,7 +11,10 @@
 # new 
 
 DeclareGlobalFunction("InternalRepOfTransformation");
-DeclareOperation("TransformationActionNC", [IsObject, IsList, IsFunction]);
+DeclareOperation("TransformationOp", [IsObject, IsList, IsFunction]);
+DeclareGlobalFunction("TransformationAction");
+DeclareGlobalFunction("TransformationActionNC");
+DeclareGlobalFunction("TransformationActionHomomorphism");
 
 # old
 
