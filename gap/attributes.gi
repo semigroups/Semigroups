@@ -30,6 +30,60 @@ local  en, gens, mapfun;
   return MagmaHomomorphismByFunctionNC( s, Semigroup( gens ), mapfun );
 end);
 
+#EEE
+
+# new for 1.0! - Embedding - "for a perm group and acting semigroup"
+###########################################################################
+
+InstallMethod(ActionPartialPermHomomorphism, 
+"for a perm group and a set",
+[IsPermGroup, ],
+function(g, s)
+  local emb;
+
+  emb:=EmbeddingNC(g, s);
+  if IsSubsemigroup(s, Range(emb)) then 
+    return emb;
+  fi;
+  Error("it is not currently possible to find an embedding,");
+  return;
+end);
+
+# new for 1.0! - EmbeddingNC - "for a perm group and a semigroup"
+###########################################################################
+
+InstallMethod(EmbeddingNC, "for a perm group and an acting semigroup",
+[IsPermGroup, IsActingSemigroup],
+function(g, s)
+  local convert, creator, one, t, emb, conj;
+ 
+  if IsTransformationSemigroup(s) then 
+    convert:=x-> AsTransformation(x, Degree(s));
+  elif IsPartialPermSemigroup(s) then 
+    convert:=x-> AsPartialPerm(x, Points(s));
+    # JDM this won't work in general if Points(s) is not the correct set to act
+    # on.
+  fi;
+
+  if IsMonoid(s) then 
+    creator:=Monoid;
+  else
+    creator:=Semigroup;
+  fi;
+
+  if NrMovedPoints(g)<=Degree(s) then 
+    conj:=MappingPermListList(MovedPoints(g), [1..NrMovedPoints(g)]);
+    emb:=x-> convert(x^conj);
+    t:=creator(List(GeneratorsOfGroup(g), emb));
+  else
+    Error("the number of moved points of the group is greater than the ",
+    "degree of the semigroup");
+    return;
+  fi;
+
+  return MappingByFunction(g, t, emb, AsPermutation); 
+end);
+
 #GGG
 
 # mod for 1.0! - GroupOfUnits - "for an acting semigroup"
@@ -38,35 +92,29 @@ end);
 InstallMethod(GroupOfUnits, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local r, m, g, iso, u;
+  local r, m, g, emb, u;
 
   if not IsMonoidAsSemigroup(s) then
     return fail;
   fi;
 
-  r:=GreensHClassOfElementNC(s, MultiplicativeNeutralElement(s));
+  r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
   m:=Size(r); g:=Group(AsPermutation(Random(r)));
 
   while Size(g)<m do
     g:=ClosureGroup(g, AsPermutation(Random(r)));
   od;
-
-  if IsTransformationSemigroup(s) then
-    iso:=IsomorphismTransformationSemigroup(g);
-  elif IsPartialPermSemigroup(s) then
-    Error("not yet implemented");
-  else
-    Error("usage: a semigroup of transformations or partial perms,");
-    return;
-  fi;
-
-  u:=Range(iso);
-  SetIsomorphismPermGroup(u, InverseGeneralMapping(iso));
+  
+  emb:=EmbeddingNC(g, s);
+  u:=Range(emb);
+  SetIsomorphismPermGroup(u, InverseGeneralMapping(emb));
   SetIsGroupAsSemigroup(u, true);
   UseIsomorphismRelation(u, g);
 
   return u;
 end);
+
+#III
 
 # mod for 0.7! - IdempotentGeneratedSubsemigp - "for a semi"
 ###########################################################################
@@ -284,6 +332,34 @@ function(s, f)
   fi; 
  
   return out;
+end);
+
+# mod for 1.0! - IsomorphismTransformationSemigroup - "for a perm group"
+#############################################################################
+    
+InstallOtherMethod(IsomorphismTransformationSemigroup, "for a perm group",
+[IsPermGroup], g-> IsomorphismTransformationSemigroup(g, NrMovedPoints(g)));
+
+# mod for 1.0! - IsomorphismTransformationSemigroup
+#############################################################################
+
+InstallOtherMethod(IsomorphismTransformationSemigroup,
+"for a perm group and pos int",
+[IsPermGroup, IsPosInt], 
+function(g, n)
+  local conj, iso, s;
+
+  if n<NrMovedPoints(g) then 
+    Error("the number of moved points of the perm group exceeds the",
+    " second argument,");
+    return;
+  fi;
+  
+  conj:=MappingPermListList(MovedPoints(g), [1..NrMovedPoints(g)]);
+  iso:=x-> AsTransformationNC(x^conj, n);
+  s:=Semigroup(List(GeneratorsOfGroup(g), iso));
+
+  return MappingByFunction(g, s, iso, AsPermutation);
 end);
 
 #MMM

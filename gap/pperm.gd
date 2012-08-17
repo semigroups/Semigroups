@@ -20,6 +20,9 @@ DeclareGlobalFunction("CITRUS_HashFunctionForPP");
 DeclareOperation("DegreeOfPartialPerm", [IsPartialPerm]);
 DeclareGlobalFunction("DenseRangeList");
 DeclareOperation("DomainOfPartialPerm", [IsPartialPerm]);
+DeclareAttribute("DomainOfPartialPermCollection", [IsPartialPermCollection]);
+DeclareAttribute("RangeOfPartialPermCollection", [IsPartialPermCollection]);
+
 DeclareOperation("FixedPointsOfPartialPerm", [IsPartialPerm]);
 DeclareGlobalFunction("IndexPeriodOfPartialPerm");
 DeclareGlobalFunction("InternalRepOfPartialPerm");

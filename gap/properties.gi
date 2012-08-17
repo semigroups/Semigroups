@@ -1071,24 +1071,6 @@ function(d)
   return hom;
 end);
 
-# new for 0.5! - IsomorphismTransformationSemigroup - "for a perm group"
-#############################################################################
-#JDM this won't work!!
-
-InstallOtherMethod(IsomorphismTransformationSemigroup, "for a perm group",
-[IsPermGroup], 
-function(g)
-  local n, p, iso;
-
-  n:=NrMovedPoints(g); 
-  if not n=0 then 
-    p:=MappingPermListList(MovedPoints(g), [1..n]);
-    iso:=x-> AsTransformation(x^p, n);;
-  fi;
-
-  return MappingByFunction(g, Semigroup(List(GeneratorsOfGroup(g), iso)), iso);
-end);
-
 # new for 0.7! - IsomorphismTransformationSemigroup - "for partial perm semi"
 ##############################################################################
 
@@ -1567,13 +1549,13 @@ end);
 
 #IIIUUU
 
-# new for 1.0! - IsUnitRegularSemigroup - "for a trans semigroup"
+# new for 1.0! - IsUnitRegularSemigroup - "for an acting semigroup"
 ###########################################################################
 
-InstallMethod(IsUnitRegularSemigroup, "for a trans semigroup",
-[IsTransformationSemigroup], 
+InstallMethod(IsUnitRegularSemigroup, "for an acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local g, lookfunc, data;
+  local g, perm_g, o, scc, graded, tester, gens, rhofunc, rho, m, j;
 
   if not IsRegularSemigroup(s) then 
     return false;
@@ -1581,25 +1563,39 @@ function(s)
 
   g:=GroupOfUnits(s);
   
-  if g=fail or (IsTrivial(g) and not IsTrivial(s)) then 
+  if g=fail then 
     return false;
+  #elif IsTrivial(g) then #JDM is this any better than the below?
+  #  return IsBand(s);
   fi;
 
-  g:=Range(IsomorphismPermGroup(g));
+  perm_g:=Range(IsomorphismPermGroup(g));
+  o:=LambdaOrb(s);
+  scc:=OrbSCC(o);
+  graded:=GradedLambdaOrbs(g);
+  tester:=IdempotentLambdaRhoTester(s);
+  gens:=o!.gens;
+  rhofunc:=RhoFunc(s);
 
-  lookfunc:=function(o, x) 
-    local orb;
-    orb:=Orb(g, LambdaFunc(s)(x[4]), OnSets, rec( 
-      forflatplainlists:=true, 
-      treehashsize:=s!.opts.hashlen.S,
-      lookingfor:=function(o, y) 
-        return IdempotentLambdaRhoTester(y, RhoFunc(s)(x[4])); end));
-    Enumerate(orb);
-    return PositionOfFound(orb)=false;
-  end;
-
-  data:=Enumerate(SemigroupData(s), infinity, lookfunc);
-  return PositionOfFound(data)<>false; 
+  for m in [2..Length(scc)] do
+    if not IsSubgroup(Action(Stabilizer(perm_g, o[scc[m][1]], OnSets),
+     o[scc[m][1]]), Action(LambdaOrbSchutzGp(o, m), o[scc[m][1]])) then 
+      Error("1");
+      return false;
+    elif Length(scc[m])>1 then 
+      rho:=rhofunc(EvaluateWord(gens, TraceSchreierTreeForward(o, scc[m][1])));
+      for j in scc[m] do 
+        if not o[j] in graded then 
+          if not ForAny(GradedLambdaOrb(g, o[j], true), x-> tester(x, rho))
+           then 
+            Error("2");
+            return false;
+          fi;
+        fi;
+      od;
+    fi;
+  od;
+  return true;
 end);
 
 #IIIZZZ

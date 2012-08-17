@@ -32,8 +32,6 @@ DeclareOperation("InversesOfTransformation", [IsTransformationSemigroup,
 DeclareGlobalFunction("AsPermOfKerImg");
 DeclareOperation("IsRegularTransformation", [IsTransformationSemigroup,
  IsTransformation]);
-DeclareOperation("IsSubsemigroup", [IsTransformationSemigroup, 
- IsTransformationSemigroup]);
 DeclareOperation("RandomIdempotent", [IsCyclotomicCollColl]);
 DeclareOperation("RandomIdempotentNC", [IsCyclotomicCollColl]);
 DeclareOperation("RandomTransformationNC", [IsCyclotomicCollection, 

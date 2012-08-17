@@ -769,11 +769,11 @@ function(gens, coll, opts)
   return s;
 end);
 
-# new for 0.7! - IsSubsemigroup - "for partial perm semi and same"
+# mod for 1.0! - IsSubsemigroup - "for an acting semigroup and acting semigroup"
 ################################################################################
 
-InstallOtherMethod(IsSubsemigroup, "for partial perm semi and same",
-[IsPartialPermSemigroup, IsPartialPermSemigroup],
+InstallOtherMethod(IsSubsemigroup, "for acting semigroup and acting semigroup",
+[IsActingSemigroup, IsActingSemigroup],
 function(s, t)
   return ForAll(GeneratorsOfSemigroup(t), x-> x in s);
 end);
@@ -781,7 +781,8 @@ end);
 # new for 0.7! - IsSubsemigroup - "for partial perm semi and inv semigroup"
 ################################################################################
  
-InstallOtherMethod(IsSubsemigroup, "for a partial perm semi and inv. semi",
+InstallOtherMethod(IsSubsemigroup, 
+"for a partial perm semi and inverse  semigroup of partial perms",
 [IsPartialPermSemigroup, IsPartialPermSemigroup and IsInverseSemigroup],
 function(s, t)
   return ForAll(Generators(t), x-> x in s);
@@ -1105,42 +1106,44 @@ function(S, func, limit)
   return T;
 end);
 
-# new for 0.7! - ViewObj - "for an inverse monoid"
+# new for 1.0! - ViewObj - "for a partial perm semigroup"
 ################################################################################
 
-InstallMethod(ViewObj, "for an inverse monoid",
-[IsInverseMonoid], 
+InstallMethod(ViewObj, "for a partial perm semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  Print("<inverse monoid with ", Length(Generators(s)));
-  if Length(Generators(s))=1 then  
-    Print(" generator");
+  
+  if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
+    Print("<inverse ");
+  elif HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
+    Print("<regular ");
   else
-    Print(" generators");
+    Print("<");
   fi;
-  if HasSize(s) then 
-    Print(", ", Size(s), " elements");
+  
+  if IsPartialPermSemigroup(s) then 
+    Print("partial perm ");
+  elif IsTransformationSemigroup(s) then 
+    Print("transformation ");
+  elif IsBipartitionSemigroup(s) then 
+    Print("bipartition ");
+  fi;
+  
+  if IsMonoid(s) then 
+    Print("monoid ");
+  else 
+    Print("semigroup ");
+  fi;
+
+  Print("with ", Length(Generators(s)));
+
+
+  Print(" generator");
+
+  if Length(Generators(s))>1 then 
+    Print("s");
   fi;
   Print(">");
-  return;
-end);
-
-# new for 0.7! - ViewObj - "for an inverse semigroup"
-################################################################################
-
-InstallMethod(ViewObj, "for an inverse semigroup",
-[IsInverseSemigroup], 
-function(s)
-  Print("<inverse semigroup with ", Length(Generators(s)));
-  if Length(Generators(s))=1 then  
-    Print(" generator");
-  else
-    Print(" generators");
-  fi;
-  if HasSize(s) then 
-    Print(", ", Size(s), " elements");
-  fi;
-  Print(">");
-  return;
 end);
 
 #EOF

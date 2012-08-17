@@ -30,12 +30,13 @@ ReadPackage("citrus/gap/partition.gd");
 ReadPackage("citrus/gap/binary.gd");
 ReadPackage("citrus/gap/matrix.gd");
 
+ReadPackage("citrus/gap/greens.gd");
+ReadPackage("citrus/gap/acting.gd");
+
 ReadPackage("citrus/gap/semigroups.gd");
 ReadPackage("citrus/gap/enums.gd");
 ReadPackage("citrus/gap/iterators.gd");
 
-ReadPackage("citrus/gap/greens.gd");
-ReadPackage("citrus/gap/acting.gd");
 ReadPackage("citrus/gap/setup.gd");
 ReadPackage("citrus/gap/regular.gd");
 ReadPackage("citrus/gap/inverse.gd");

@@ -30,6 +30,8 @@ DeclareSynonym("IsPartialPermSemigroup", IsSemigroup and
 IsPartialPermCollection);
 DeclareProperty("IsPartialPermMonoid", IsPartialPermSemigroup);
 
+DeclareOperation("IsSubsemigroup", [IsActingSemigroup, IsActingSemigroup]);
+
 DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomMatrixSemigroup", [IsRing, IsPosInt, IsPosInt]);
 DeclareOperation("RandomBlockGroup", [IsPosInt, IsPosInt]);
@@ -41,5 +43,6 @@ DeclareOperation("RandomTransformationSemigroup", [IsPosInt, IsPosInt]);
 DeclareGlobalFunction("RegularSemigroup");
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
+
 
 #EOF

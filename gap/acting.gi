@@ -177,7 +177,7 @@ end);
 ##############################################################################
 
 InstallMethod(\in, "for rho value of acting semi elt and graded rho orbs",
-[IsObject, IsGradedLambdaOrbs],
+[IsObject, IsGradedRhoOrbs],
 function(rho, o)
   return not HTValue(GradedRhoHT(o!.semi), rho)=fail;
 end);
@@ -607,11 +607,17 @@ end);
 
 InstallGlobalFunction(GradedLambdaOrb,
 function(s, f, opt)
-  local graded, pos, gradingfunc, onlygrades, onlygradesdata, o, j, k, l;
+  local lambda, graded, pos, gradingfunc, onlygrades, onlygradesdata, o, j, k, l;
+
+  if IsActingElt(f) then 
+    lambda:=LambdaFunc(s)(f);
+  else
+    lambda:=f;
+  fi;
 
   if opt then   #global
     graded:=GradedLambdaOrbs(s);
-    pos:=HTValue(GradedLambdaHT(s), LambdaFunc(s)(f));
+    pos:=HTValue(GradedLambdaHT(s), lambda);
   
     if pos<>fail then 
       graded[pos[1]][pos[2]]!.lambda_l:=pos[3];
@@ -620,19 +626,19 @@ function(s, f, opt)
     
     gradingfunc := function(o,x) return [LambdaRank(s)(x), x]; end;
     onlygrades:=function(x, data_ht)
-      return x[1]=LambdaRank(s)(LambdaFunc(s)(f))
+      return x[1]=LambdaRank(s)(lambda)
        and HTValue(data_ht, x[2])=fail; 
     end;
     onlygradesdata:=GradedLambdaHT(s);
   else          #local
     gradingfunc:=function(o,x) return LambdaRank(s)(x); end;
     onlygrades:=function(x,data_ht) 
-      return x=LambdaRank(s)(LambdaFunc(s)(f));
+      return x=LambdaRank(s)(lambda);
     end;
     onlygradesdata:=fail;
   fi;  
  
-  o:=Orb(s, LambdaFunc(s)(f), LambdaAct(s),
+  o:=Orb(s, lambda, LambdaAct(s),
       rec(
         semi:=s,
         forflatplainlists:=true, #JDM probably don't want to assume this..
@@ -644,13 +650,14 @@ function(s, f, opt)
         onlygradesdata:=onlygradesdata,
         storenumbers:=true,
         log:=true,
-        scc_reps:=[f]));
+        scc_reps:=[f])); # note that this component shouldn't be used if f is a
+                         # lambda value and not an acting elt.
 
   SetIsGradedLambdaOrb(o, true);
   o!.lambda_l:=1;
   
   if opt then # store o
-    j:=LambdaRank(s)(LambdaFunc(s)(f))+1;
+    j:=LambdaRank(s)(lambda)+1;
     # the +1 is essential as the rank can be 0
     k:=graded!.lens[j]+1;
     graded[j][k]:=o;
@@ -738,10 +745,12 @@ end);
 InstallMethod(GradedLambdaOrbs, "for an acting semigroup", 
 [IsActingSemigroup],
 function(s)
-  
-  return Objectify(NewType(FamilyObj(s), IsGradedLambdaOrbs), rec(
-    orbits:=List([1..LambdaDegree(s)+1], x-> []), 
-    lens:=[1..LambdaDegree(s)+1]*0, semi:=s));
+  local fam;
+ 
+  fam:=CollectionsFamily(FamilyObj(LambdaFunc(s)(Representative(s))));
+  return Objectify(NewType(fam, IsGradedLambdaOrbs), 
+   rec( orbits:=List([1..Degree(s)+1], x-> []), lens:=[1..Degree(s)+1]*0, 
+    semi:=s));
 end);
 
 # new for 1.0! - GradedRhoOrbs - "for an acting semigroup" 

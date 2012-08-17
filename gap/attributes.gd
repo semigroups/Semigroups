@@ -10,6 +10,7 @@
 
 DeclareAttribute("AntiIsomorphismTransformationSemigroup",
  IsSemigroup);
+DeclareOperation("EmbeddingNC", [IsSemigroup, IsSemigroup]);
 DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigp", IsSemigroup);
 DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
