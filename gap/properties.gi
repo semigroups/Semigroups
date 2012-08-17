@@ -939,7 +939,7 @@ if Citrus_C then
     iso:=function(f)
       local dom, ran;
     
-      dom:=OnSets([1..Degree(s)], InversesOfTransformationNC(s, f)[1]);
+      dom:=OnSets([1..Degree(s)], InversesOfSemigroupElementNC(s, f)[1]);
       ran:=List(dom, i-> i^f);
       return PartialPermNC(dom, ran);
     end;
@@ -971,7 +971,7 @@ if Citrus_C then
     iso:=function(f)
       local dom, ran;
   
-      dom:=OnSets([1..Degree(s)], InversesOfTransformationNC(s, f)[1]);
+      dom:=OnSets([1..Degree(s)], InversesOfSemigroupElementNC(s, f)[1]);
       ran:=List(dom, i-> i^f);
       return PartialPermNC(dom, ran);
     end;
@@ -1079,12 +1079,13 @@ InstallOtherMethod(IsomorphismTransformationSemigroup, "for partial perm semi",
 function(s)
   local n, gens1, m, gens2, iso, u, i;
  
-  if Points(s)=[] then # semigroup consisting of the empty set
+  if DomainOfPartialPermCollection(s)=[] then 
+    # semigroup consisting of the empty set
     return MappingByFunction(s, Semigroup(Transformation([1])), 
     x-> Transformation([1]), x-> PartialPermNC([]));
   fi;
 
-  n:=Maximum(Points(s))+1;
+  n:=Maximum(DegreeOfPartialPermCollection(s))+1;
   gens1:=GeneratorsOfSemigroup(s); 
   m:=Length(gens1);
   gens2:=EmptyPlist(m);
@@ -1182,7 +1183,7 @@ function(s)
   fi;
 
   return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
-   AsPermutation, x-> AsPartialPerm(x, Points(s)));
+   AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
 end);
 
 # new for 0.7! - IsomorphismTransformationSemigroup - "for a matrix semigroup"
@@ -1268,7 +1269,8 @@ if IsBound(DomPP) then
   InstallMethod(IsPartialPermMonoid, "for a partial perm semigroup",
   [IsPartialPermSemigroup],
   function(s)
-    return ForAny(GeneratorsOfInverseSemigroup(s), x-> DomPP(x)=Points(s));
+    return ForAny(GeneratorsOfSemigroup(s), x->       
+     DomPP(x)=DomainOfPartialPermCollection(s));
   end);
 fi;
 
@@ -1825,10 +1827,11 @@ if IsBound(OnIntegerSetsWithPP) then
       bound:=Sum([1..max], x-> Binomial(n, x));
     fi;
 
-    o:=Orb(gens, Points(s), OnIntegerSetsWithPP, rec( schreier:=true,
-     gradingfunc:=function(o, x) return Length(x); end,
-      onlygrades:=[0..max],
-       lookingfor:=function(o, x) return Length(x)=0; end));
+    o:=Orb(gens, DomainOfPartialPermCollection(s), OnIntegerSetsWithPP, 
+      rec( schreier:=true,
+           gradingfunc:=function(o, x) return Length(x); end,
+           onlygrades:=[0..max],
+           lookingfor:=function(o, x) return Length(x)=0; end));
     
     Enumerate(o, bound);
 

@@ -90,7 +90,7 @@ if IsBound(DomPP) and IsBound(RanSetPP) then
 
     o:=LongOrb(s);
     
-    if not IsSubset(o[1], Points(coll)) then #the original LongOrb seed is wrong
+    if not IsSubset(o[1], DomainOfPartialPermCollection(coll)) then #the original LongOrb seed is wrong
       return InverseSemigroup(Concatenation(Generators(s), coll), opts);
     fi;
 
@@ -729,7 +729,8 @@ if IsBound(DomPP) then
 
     s:=Objectify( NewType (FamilyObj( gens ), IsMagmaWithOne and
      IsInverseSemigroup and IsAttributeStoringRep), rec(opts:=opts));
-    SetPoints(s, Union(List(gens, DomPP)));
+    SetDomainOfPartialPermCollection(s, Union(List(gens, DomPP)));
+    SetRangeOfPartialPermCollection(s, DomainOfPartialPermCollection(s));
     SetGeneratorsOfMagmaWithOne(s, gens);
     SetGeneratorsOfInverseSemigroup(s, Concatenation([One(s)], coll));
     SetGeneratorsOfInverseMonoid(s, coll);

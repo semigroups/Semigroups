@@ -25,13 +25,7 @@ DeclareOperation("DegreeOfTransformationCollection", [IsTransformationCollection
 DeclareGlobalFunction("Idempotent");
 DeclareGlobalFunction("IdempotentNC");
 DeclareGlobalFunction("IndexPeriodOfTransformation");
-DeclareOperation("InversesOfTransformationNC", [IsTransformationSemigroup,  
- IsTransformation]);
-DeclareOperation("InversesOfTransformation", [IsTransformationSemigroup,
- IsTransformation]);
 DeclareGlobalFunction("AsPermOfKerImg");
-DeclareOperation("IsRegularTransformation", [IsTransformationSemigroup,
- IsTransformation]);
 DeclareOperation("RandomIdempotent", [IsCyclotomicCollColl]);
 DeclareOperation("RandomIdempotentNC", [IsCyclotomicCollColl]);
 DeclareOperation("RandomTransformationNC", [IsCyclotomicCollection, 

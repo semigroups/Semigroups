@@ -60,7 +60,7 @@ function(g, s)
   if IsTransformationSemigroup(s) then 
     convert:=x-> AsTransformation(x, Degree(s));
   elif IsPartialPermSemigroup(s) then 
-    convert:=x-> AsPartialPerm(x, Points(s));
+    convert:=x-> AsPartialPerm(x, DomainOfPartialPermCollection(s));
     # JDM this won't work in general if Points(s) is not the correct set to act
     # on.
   fi;

@@ -256,17 +256,11 @@ InstallOtherMethod(Degree, "for a partial perm",
 InstallMethod(DegreeOfPartialPerm, "for a partial perm", [IsPartialPerm], 
 f-> f[2]);
 
-# new for 0.7! - Degree - "for a partial perm semigroup"
-#############################################################################
-
-InstallOtherMethod(Degree, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> Length(Points(s)));
-
-# new for 0.7! - Degree - "for a partial perm collection"
+# mod for 1.0! - Degree - "for a partial perm collection"
 #############################################################################
 
 InstallOtherMethod(Degree, "for a partial perm collection",
-[IsPartialPermCollection], s-> Length(Points(s)));
+[IsPartialPermCollection], s-> Length(DomainOfPartialPermCollection(s)));
 
 # new for 0.7! - DenseRangeList - "for a partial perm"
 #############################################################################
@@ -518,35 +512,19 @@ function(arg)
   return; 
 end); 
 
-# new for 0.7! - Points - "for a partial perm semigroup"
-##############################################################################
-
-InstallOtherMethod(Points, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> Union(List(GeneratorsOfSemigroup(s), x->          Union(DomPP(x), RanSetPP(x)))));
-
-# new for 0.7! - Points - "for a partial perm inverse semigroup"
-##############################################################################
-
-InstallMethod(Points, "for a partial perm inverse semigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup], s->
-Union(List(GeneratorsOfSemigroup(s), DomPP)));
-
-# new for 0.7! - Points - "for a partial perm collection"
-##############################################################################
-
-InstallOtherMethod(Points, "for a partial perm coll",
-[IsPartialPermCollection], coll-> Union(List(coll, x-> Union(DomPP(x),          RanSetPP(x)))));
+# new for 1.0! - DomainOfPartialPermCollection - "for a partial perm coll"
+#############################################################################
 
 InstallMethod(DomainOfPartialPermCollection, "for a partial perm coll",
 [IsPartialPermCollection], coll-> Union(List(coll, DomPP)));
-
-InstallMethod(RangeOfPartialPermCollection, "for a partial perm coll",
-[IsPartialPermCollection], coll-> Union(List(coll, RanPP)));
 
 InstallMethod(DomainOfPartialPermCollection, 
 "for a part perm semigroup",
 [IsPartialPermSemigroup], 
 s-> DomainOfPartialPermCollection(GeneratorsOfSemigroup(s)));
+
+InstallMethod(RangeOfPartialPermCollection, "for a partial perm coll",
+[IsPartialPermCollection], coll-> Union(List(coll, RanPP)));
 
 InstallMethod(RangeOfPartialPermCollection, 
 "for a part perm semigroup",

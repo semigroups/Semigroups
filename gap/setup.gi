@@ -75,7 +75,7 @@ InstallMethod(RhoDomain, "for a transformation semi",
 [IsTransformationSemigroup], s-> [1..Degree(s)]*1);
 
 InstallMethod(RhoDomain, "for a partial perm semi",
-[IsPartialPermSemigroup], Points);
+[IsPartialPermSemigroup], DomainOfPartialPermCollection);
 
 # new for 1.0! - LambdaFunc
 ###############################################################################

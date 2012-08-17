@@ -13,9 +13,6 @@
 DeclareAttribute("NaturalPartialOrder", IsPartialPermSemigroup and
 IsInverseSemigroup);
 
-DeclareAttribute("Points", IsPartialPermSemigroup);
-DeclareSynonymAttr("DomainOfPartialPermSemigroup", Points);
-
 DeclareGlobalFunction("IsJoinIrreducible");
 
 #old
