@@ -32,23 +32,6 @@ end);
 
 #EEE
 
-# new for 1.0! - Embedding - "for a perm group and acting semigroup"
-###########################################################################
-
-InstallMethod(ActionPartialPermHomomorphism, 
-"for a perm group and a set",
-[IsPermGroup, ],
-function(g, s)
-  local emb;
-
-  emb:=EmbeddingNC(g, s);
-  if IsSubsemigroup(s, Range(emb)) then 
-    return emb;
-  fi;
-  Error("it is not currently possible to find an embedding,");
-  return;
-end);
-
 # new for 1.0! - EmbeddingNC - "for a perm group and a semigroup"
 ###########################################################################
 

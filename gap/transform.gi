@@ -184,28 +184,24 @@ BindGlobal("Transformation", function(list)
   local n;
   n:=Length(list);
   if ForAny([1..n], i-> not list[i] in [1..n]) then 
-    Error("usage: a list of positive integers not greater than the length of the list");
+    Error("usage: a list of positive integers not greater than the length of the list,");
     return;
   fi;
   return TransformationNC(list);
 end);
 
-# new for 0.7! - TransformationActionNC - "for mult elt, list, function"
+# new for 1.0! - TransformationOp - "for object, list, function"
 ###############################################################################
 
 # based on PermutationOp in oprt.gi
 
-InstallOtherMethod(TransformationOp, "for an obj and list",
-[IsObject, IsList], 
-function(obj, list) 
-  return TransformationOp(obj, list, OnPoints);
-end);
-
-InstallMethod(TransformationOp, "for mult elt, list, function",
+InstallMethod(TransformationOp, "for object, list, function",
 [IsObject, IsList, IsFunction],
 function(f, D, act)
+  local perm, out, new, i, pnt;
 
   perm:=();
+
   if IsPlistRep(D) and Length(D)>2 and CanEasilySortElements(D[1]) then 
     if not IsSSortedList(D) then 
       D:=ShallowCopy(D);
@@ -215,28 +211,119 @@ function(f, D, act)
     fi;
   fi;
 
+  out:=EmptyPlist(Length(D));
+  i:=0;
 
-
-
-
-
-  n:=Size(dom);
-  out:=EmptyPlist(n);
-
-  for i in [1..n] do
-    out[i]:=Position(dom, act(dom[i], f));
+  for pnt in D do 
+    new:=PositionCanonical(D, act(pnt, f));
+    if new=fail then 
+      return fail;
+    fi;
+    i:=i+1;
+    out[i]:=new;
   od;
 
-  return Transformation(out);
+  out:=Transformation(out);
+  
+  if not IsOne(perm) then 
+    out:=out^(perm^-1);
+  fi;
+
+  return out;
 end);
 
-# new for 0.7! - TransformationActionNC - "for semigroup, list, function"
+InstallOtherMethod(TransformationOp, "for an obj and list",
+[IsObject, IsList], 
+function(obj, list) 
+  return TransformationOp(obj, list, OnPoints);
+end);
+
+InstallOtherMethod(TransformationOp, "for an obj and list",
+[IsObject, IsDomain], 
+function(obj, D) 
+  return TransformationOp(obj, Enumerator(D), OnPoints);
+end);
+
+InstallOtherMethod(TransformationOp, "for an obj and list",
+[IsObject, IsDomain, IsFunction], 
+function(obj, D, func) 
+  return TransformationOp(obj, Enumerator(D), func);
+end);
+
+# new for 1.0! - TransformationOpNC - "for object, list, function"
 ###############################################################################
 
-InstallOtherMethod(TransformationActionNC, "for a semigroup, list, function",
-[IsSemigroup, IsList, IsFunction],
-function(s, dom, act)
-  return List(Generators(s), f-> TransformationActionNC(f, dom, act));
+# based on PermutationOp in oprt.gi
+
+# same as the above except no check that PositionCanonical is not fail and no
+# check that the output is a transformation.
+
+InstallMethod(TransformationOpNC, "for object, list, function",
+[IsObject, IsList, IsFunction],
+function(f, D, act)
+  local perm, out, i, pnt;
+
+  perm:=();
+
+  if IsPlistRep(D) and Length(D)>2 and CanEasilySortElements(D[1]) then 
+    if not IsSSortedList(D) then 
+      D:=ShallowCopy(D);
+      perm:=Sortex(D);
+      D:=Immutable(D);
+      SetIsSSortedList(D, true);
+    fi;
+  fi;
+
+  out:=EmptyPlist(Length(D));
+  i:=0;
+  for pnt in D do 
+    i:=i+1;
+    out[i]:=PositionCanonical(D, act(pnt, f));
+  od;
+
+  out:=TransformationNC(out);
+
+  if not IsOne(perm) then 
+    out:=out^(perm^-1);
+  fi;
+
+  return out;
+end);
+
+InstallOtherMethod(TransformationOpNC, "for object, domain, function",
+[IsObject, IsList],
+function(f, D)
+  return TransformationOpNC(f, Enumerator(D), OnPoints);
+end);
+
+InstallOtherMethod(TransformationOpNC, "for object, domain, function",
+[IsObject, IsDomain],
+function(f, D)
+  return TransformationOpNC(f, Enumerator(D), OnPoints);
+end);
+
+InstallOtherMethod(TransformationOpNC, "for object, domain, function",
+[IsObject, IsDomain, IsFunction],
+function(f, D, act)
+  return TransformationOpNC(f, Enumerator(D), act);
+end);
+
+# new for 1.0! - TransformationActionNC - "for semigroup, list, function"
+###############################################################################
+# JDM expand!!
+
+InstallGlobalFunction(TransformationActionNC, 
+function(arg)
+  if (IsDomain(arg[2]) or IsList(arg[2])) and IsFunction(arg[3]) then 
+    if IsMonoid(arg[1]) then 
+      return Monoid(Generators(arg[1]), f-> 
+       TransformationOpNC(f, arg[2], arg[3]));
+    elif IsSemigroup(arg[1]) then 
+      return Semigroup(Generators(arg[1]), f-> 
+       TransformationOpNC(f, arg[2], arg[3]));
+    fi;
+  fi;
+  return fail;
 end);
 
 ############################################################################# 

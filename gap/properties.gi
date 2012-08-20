@@ -560,24 +560,26 @@ InstallOtherMethod(IsRTrivial, "for D-class of a part. perm. semigp.",
 InstallOtherMethod(IsGroupAsSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local gens, ker, img, f;
+  local gens, lambdafunc, lambda, rhofunc, rho, tester, lambda_f, rho_f, f;
 
   gens:=GeneratorsOfSemigroup(s); #not GeneratorsOfMonoid!
 
-  if ForAll(gens, f-> RankOfTransformation(f)=
-   DegreeOfTransformationSemigroup(s)) then
-    Info(InfoCitrus, 2, "all generators have rank equal to the degree of the",
-     " semigroup");
+  if IsTransformationSemigroup(s) and 
+   ForAll(gens, f->RankOfTransformation(f)= DegreeOfTransformationSemigroup(s))
+    then
     return true;
   fi;
 
-  ker:=CanonicalTransSameKernel(gens[1]);
-  img:=ImageSetOfTransformation(gens[1]);
+  lambdafunc:=LambdaFunc(s);
+  lambda:=lambdafunc(gens[1]);
+  rhofunc:=RhoFunc(s);
+  rho:=rhofunc(gens[1]);
+  tester:=IdempotentLambdaRhoTester(s);
 
   for f in gens do 
-    if not (IsInjectiveTransOnList(f, ImageSetOfTransformation(f)) and
-     ImageSetOfTransformation(f)=img and 
-      CanonicalTransSameKernel(f)=ker) then 
+    lambda_f:=lambdafunc(f);
+    rho_f:=rhofunc(f);
+    if lambda_f<>lambda or rho_f<>rho or not tester(lambda_f, rho_f) then 
       return false;
     fi;
   od;
@@ -1557,7 +1559,7 @@ end);
 InstallMethod(IsUnitRegularSemigroup, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local g, perm_g, o, scc, graded, tester, gens, rhofunc, rho, m, j;
+  local g, perm_g, o, scc, graded, tester, gens, rhofunc, dom, rho, m, j;
 
   if not IsRegularSemigroup(s) then 
     return false;
@@ -1580,9 +1582,9 @@ function(s)
   rhofunc:=RhoFunc(s);
 
   for m in [2..Length(scc)] do
-    if not IsSubgroup(Action(Stabilizer(perm_g, o[scc[m][1]], OnSets),
-     o[scc[m][1]]), Action(LambdaOrbSchutzGp(o, m), o[scc[m][1]])) then 
-      Error("1");
+    dom:=Union(Orbits(perm_g, o[scc[m][1]], OnPoints));
+    if not IsSubgroup(Action(perm_g, dom), Action(LambdaOrbSchutzGp(o, m),
+     o[scc[m][1]])) then 
       return false;
     elif Length(scc[m])>1 then 
       rho:=rhofunc(EvaluateWord(gens, TraceSchreierTreeForward(o, scc[m][1])));
@@ -1590,7 +1592,6 @@ function(s)
         if not o[j] in graded then 
           if not ForAny(GradedLambdaOrb(g, o[j], true), x-> tester(x, rho))
            then 
-            Error("2");
             return false;
           fi;
         fi;

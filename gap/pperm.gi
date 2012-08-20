@@ -262,6 +262,10 @@ f-> f[2]);
 InstallOtherMethod(Degree, "for a partial perm collection",
 [IsPartialPermCollection], s-> Length(DomainOfPartialPermCollection(s)));
 
+InstallOtherMethod(DegreeOfPartialPermCollection, 
+"for a partial perm collection",
+[IsPartialPermCollection], s-> Length(DomainOfPartialPermCollection(s)));
+
 # new for 0.7! - DenseRangeList - "for a partial perm"
 #############################################################################
 
@@ -334,18 +338,15 @@ InstallMethod(FixedPointsOfPartialPerm, "for a partial perm",
 
 #III
 
-# new for 0.7! - IndexPeriodOfPartialPerm - "for a partial perm"
+# mod for 1.0! - IndexPeriodOfPartialPerm - "for a partial perm"
 ############################################################################# 
 # JDM this could avoid multiplying just by considering the orbits of points
 # under f as in PrettyPrint.
 
-InstallGlobalFunction(IndexPeriodOfPartialPerm, 
+InstallMethod(IndexPeriodOfPartialPerm, "for a partial perm",
+[IsPartialPerm], 
 function(f)
   local i, g;
-  if not IsPartialPerm(f) then 
-    Error("usage: a partial permutation,");
-    return;
-  fi;
 
   i:=1; g:=f;
   
@@ -478,6 +479,15 @@ InstallMethod(OnIntegerTuplesWithPartialPerm, "for set of pos ints and p perm",
 [IsCyclotomicCollection, IsPartialPerm], OnIntegerTuplesWithPP);
 
 #PPP
+
+# new for 1.0! - PartialPermActionHomomorphism - "for a perm group and set"
+###########################################################################
+
+InstallGlobalFunction(PartialPermActionHomomorphism,
+function(g, s)
+
+  return;
+end);
 
 # new for 0.7! - PartialPermNC
 ############################################################################# 
