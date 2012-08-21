@@ -3,7 +3,6 @@ const char * Revision_citrus_c =
    "$Id: citrus.c,v$";
 
 #include "citrus.h"
-#include "src/trans.h"
 
 /*******************************************************************************
 **
