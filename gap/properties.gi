@@ -554,18 +554,18 @@ end);
 InstallOtherMethod(IsRTrivial, "for D-class of a part. perm. semigp.",
 [IsGreensDClass and IsGreensClassOfPartPermSemigroup], IsLTrivial);
 
-# new for 0.1! - IsGroupAsSemigroup - "for a transformation semigroup"
+# new for 1.0! - IsGroupAsSemigroup - "for an acting semigroup"
 ###########################################################################
  
-InstallOtherMethod(IsGroupAsSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallOtherMethod(IsGroupAsSemigroup, "for an acting semigroup", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, lambdafunc, lambda, rhofunc, rho, tester, lambda_f, rho_f, f;
 
   gens:=GeneratorsOfSemigroup(s); #not GeneratorsOfMonoid!
 
   if IsTransformationSemigroup(s) and 
-   ForAll(gens, f->RankOfTransformation(f)= DegreeOfTransformationSemigroup(s))
+   ForAll(gens, f->RankOfTransformation(f)=DegreeOfTransformationSemigroup(s))
     then
     return true;
   fi;
@@ -586,24 +586,6 @@ function(s)
 
   return true;
 end);
-
-# new for 0.7! - IsGroupAsSemigroup - "for a partial perm semigroup"
-###########################################################################
-
-if IsBound(DomPP) and IsBound(RanSetPP) then 
-  InstallOtherMethod(IsGroupAsSemigroup, "for a partial perm semigroup", 
-  [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
-  function(s)
-    local gens, dom, ran;
-
-    gens:=Generators(s); 
-    dom:=DomPP(gens[1]); ran:=RanSetPP(gens[1]);
-    if not dom=ran then 
-      return false;
-    fi;
-    return ForAll(gens, x-> DomPP(x)=dom and RanSetPP(x)=ran);
-  end);
-fi;
 
 #IIIIII
 

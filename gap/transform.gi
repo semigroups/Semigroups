@@ -349,35 +349,20 @@ end);
 
 #AAA
 
-# new for 0.1! - AsPermutation - "for a permutation"
-############################################################################
-# Notes: just in case!
-
-InstallMethod(AsPermutation, "for a permutation", [IsPerm], p -> p);
-
 # mod for 1.0! - AsPermutation - "for a transformation"
 ###########################################################################
 #JDM this could use the method below, and that should have some more checks!
 
 InstallMethod(AsPermutation, "for a transformation", 
-[IsTransformation], 
-f-> AsPermutation(f, RanSetT(f)));
+[IsTransformation], f-> Permutation(f, RanSetT(f)));
 
 # mod for 1.0! - AsPermutation - "for a transformation and set"
 ###########################################################################
 
-InstallOtherMethod(AsPermutation, "for a transformation and a set", 
+InstallOtherMethod(AsPermutation, "for a transformation and a list", 
 [IsTransformation, IsList], 
 function(f, list)
-  local a;
-
-  a:=RanT(f){list};
-  
-  if not Set(a)=Set(list) then 
-    return fail;
-  fi;
-
-  return MappingPermListList(list, a);
+  return Permutation(f, list);
 end);
 
 # new for 0.1! - ConstantTransformation - "for degree and value"
@@ -481,25 +466,6 @@ InstallOtherMethod(OneMutable, "for a transformation coll",
 
 InstallOtherMethod(OneMutable, "for a full transformation semigroup", 
 [IsFullTransformationSemigroup], s->TransformationNC([1.. Degree(s)]*1));
-
-#PPP
-
-# new for 0.1! - PrintObj - "for a transformation semigroup"
-###########################################################################
-
-InstallMethod(PrintObj, "for a transformation semigroup (citrus pkg)", 
-[IsTransformationSemigroup], 
-function(s)
-
-  Print( "<semigroup with " );
-  if HasSize(s)  then
-    Print(Size(s), " elts, " );
-  fi;
-
-  Print(Length(Generators(s)), " gens>" );
-
-  return;
-end);
 
 #RRR
 
