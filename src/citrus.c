@@ -3,7 +3,6 @@ const char * Revision_citrus_c =
    "$Id: citrus.c,v$";
 
 #include "citrus.h"
-#include "src/trans.h"
 
 /*******************************************************************************
 **
@@ -116,7 +115,7 @@ Obj FuncSparsePartialPermNC( Obj self, Obj dom, Obj ran )
     
     deg=INT_INTOBJ(ELM_LIST(dom,rank));
    
-    TOO_MANY_PTS_ERROR_PP_PP(rank>65535||deg>65535);
+    TOO_MANY_PTS_ERROR_PP(rank>65535||deg>65535);
 
     f=NEW_PP(6+deg+3*rank);
 
