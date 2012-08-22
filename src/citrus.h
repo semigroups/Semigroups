@@ -1,7 +1,6 @@
 
 #include <stdlib.h>
 #include "src/compiled.h" 
-#include "src/permutat.h"
 
 /* import the type from GAP */
 Obj PartialPermType;

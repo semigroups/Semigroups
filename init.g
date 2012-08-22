@@ -8,13 +8,6 @@
 #############################################################################
 ##
 
-MakeReadWriteGlobal("TransformationNC");
-UnbindGlobal("TransformationNC");
-MakeReadWriteGlobal("Transformation");
-UnbindGlobal("Transformation");
-MakeReadWriteGlobal("PermLeftQuoTransformationNC");
-UnbindGlobal("PermLeftQuoTransformationNC");
-
 if (not IsBound(CITRUSC)) and ("citrus" in SHOW_STAT()) then
   LoadStaticModule("citrus");
 fi;
@@ -24,7 +17,6 @@ if (not IsBound(CITRUSC)) and
     "citrus.so"));
 fi;
 
-ReadPackage("citrus/gap/transform.gd");
 ReadPackage("citrus/gap/pperm.gd");
 ReadPackage("citrus/gap/partition.gd");
 ReadPackage("citrus/gap/binary.gd");

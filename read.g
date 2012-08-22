@@ -8,7 +8,6 @@
 #############################################################################
 ##
 
-ReadPackage("citrus/gap/transform.gi");
 if IsBound(CITRUSC) then ReadPackage("citrus/gap/pperm.gi"); fi;
 ReadPackage("citrus/gap/partition.gi");
 ReadPackage("citrus/gap/binary.gi");

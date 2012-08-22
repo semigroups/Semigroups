@@ -770,6 +770,8 @@ function(gens, coll, opts)
   return s;
 end);
 
+# move this to the library too!
+
 # mod for 1.0! - IsSubsemigroup - "for an acting semigroup and acting semigroup"
 ################################################################################
 
