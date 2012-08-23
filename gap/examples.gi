@@ -261,11 +261,10 @@ InstallMethod(PartitionMonoid, "for a pos int",
 function(n)
   local gens, g, s;
 
-  gens:=List(GeneratorsOfSemigroup(SymmetricInverseSemigroup(n)), 
-  x-> AsBipartition(x, n));
-  g:=AsBipartition(TransformationNC(Concatenation([1..n-1], [n-1])));
-  Add(gens, g);
-  Add(gens, g^-1);
+  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
+  Add(gens, AsBipartition(PartialPermNC([2..n], [2..n]), n));
+  Add(gens, BipartitionNC(Concatenation([[1,2,n+1, n+2]], 
+   List([3..n], x-> [x, x+n]))));
 
   s:=Semigroup(gens);
   SetIsRegularSemigroup(s, true);

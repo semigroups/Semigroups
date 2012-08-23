@@ -132,6 +132,12 @@ end);
 InstallMethod(DegreeOfBipartition, "for a bipartition",
 [IsBipartition], x-> x[1]);
 
+# new for 1.0! - RankOfBipartition - "for a bipartition"
+############################################################################
+
+InstallMethod(RankOfBipartition, "for a bipartition",
+[IsBipartition], x-> x[2]);
+
 # new for 1.0! - ELM_LIST - "for a bipartition and pos int"
 ############################################################################
 
@@ -173,7 +179,34 @@ end);
 InstallMethod(PrintObj, "for a bipartition",
 [IsBipartition],
 function(f)
-  Print("<bipartition: ", ExtRepBipartition(f), " >");
+  local ext, n, i, j;
+  
+  Print("<bipartition: [ ");
+  ext:=ExtRepBipartition(f);
+  n:=DegreeOfBipartition(f)/2;
+  for i in [1..RankOfBipartition(f)] do 
+
+    Print("[ ");
+    for j in [1..Length(ext[i])-1] do 
+      if ext[i][j]>n then 
+        Print(ext[i][j]-n, "', ");
+      else
+        Print(ext[i][j], ", ");
+      fi;
+    od;
+    if ext[i][Length(ext[i])]>n then 
+      Print(ext[i][Length(ext[i])]-n, "' ");
+    else
+      Print(ext[i][Length(ext[i])], " ");
+    fi;
+    if i=RankOfBipartition(f) then 
+      Print("] ");
+    else
+      Print("], ");
+    fi;
+  od;
+  
+  Print(">");
   return;
 end);
 
