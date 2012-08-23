@@ -8,8 +8,7 @@
 ##############################################################################
 ###
 
-DeclareCategory("IsActingElt", IsMultiplicativeElementWithOne and
-IsAssociativeElement);
+DeclareSynonym("IsActingElt", IsAssociativeElementWithNaturalAction);
 DeclareCategoryCollections("IsActingElt");
 DeclareProperty("IsActingSemigroup", IsSemigroup and IsActingEltCollection);
 

@@ -1109,12 +1109,13 @@ function(S, func, limit)
   return T;
 end);
 
-# new for 1.0! - ViewObj - "for a partial perm semigroup"
+# new for 1.0! - ViewObj - "for an acting semigroup"
 ################################################################################
 
-InstallMethod(ViewObj, "for a partial perm semigroup",
+InstallMethod(ViewObj, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
+  local n;
   
   if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
     Print("<inverse ");
@@ -1130,12 +1131,19 @@ function(s)
     Print("transformation ");
   elif IsBipartitionSemigroup(s) then 
     Print("bipartition ");
+  elif IsMatrixSemigroup(s) then 
+    Print("matrix ");
   fi;
   
   if IsMonoid(s) then 
     Print("monoid ");
   else 
     Print("semigroup ");
+  fi;
+
+  if IsMatrixSemigroup(s) then
+    n:=Length(GeneratorsOfSemigroup(s)[1][1]);
+    Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]), " ");
   fi;
 
   Print("with ", Length(Generators(s)));

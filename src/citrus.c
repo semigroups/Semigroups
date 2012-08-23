@@ -2,7 +2,12 @@
 const char * Revision_citrus_c =
    "$Id: citrus.c,v$";
 
-#include "citrus.h"
+#include <stdlib.h>
+#include "src/compiled.h"
+
+/* import the type from GAP */
+Obj PartialPermType;
+Obj BipartitionType;
 
 /*******************************************************************************
 **
