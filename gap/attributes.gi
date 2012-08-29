@@ -8,6 +8,25 @@
 #############################################################################
 ##
 
+# Note about the difference between One and MultiplicativeNeutralElement 
+# (the same goes for Zero and MultplicativeZero):
+#
+# One(s) returns One(Representative(s)) if it belongs to s, so that 
+# One(s)=Transformation([1..DegreeOfTransformationSemigroup(s)]) if s is a
+# transformation semigroup and it returns fail otherwise, or it returns 
+# PartialPerm([1..DegreeOfPartialPermSemigroup]) if this belongs to s. 
+#
+# MultiplicativeNeutralElement on the other hand returns the element of s that
+# acts as the identity, note that this can be equal to One(s) but it can also
+# not be equal t One(s). 
+#
+# A semigroup satisfies IsMonoidAsSemigroup(s) if
+# MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
+# fail but IsMonoidAsSemigroup is still true. 
+
+# Note that a semigroup satisfies IsTransformationMonoid or IsPartialPermMonoid
+# only if One(s)<>fail. 
+
 #AAA
 
 # new for 0.5! - AntiIsomorphismTransformationSemigroup - "for a trans. semi."
@@ -30,10 +49,14 @@ local  en, gens, mapfun;
   return MagmaHomomorphismByFunctionNC( s, Semigroup( gens ), mapfun );
 end);
 
+
+
 #EEE
 
 # new for 1.0! - EmbeddingNC - "for a perm group and a semigroup"
 ###########################################################################
+
+#JDM incomplete
 
 InstallMethod(EmbeddingNC, "for a perm group and an acting semigroup",
 [IsPermGroup, IsActingSemigroup],
@@ -41,7 +64,7 @@ function(g, s)
   local convert, creator, one, t, emb, conj;
  
   if IsTransformationSemigroup(s) then 
-    convert:=x-> AsTransformation(x, Degree(s));
+    convert:=x-> AsTransformation(x, LambdaDegree(s));
   elif IsPartialPermSemigroup(s) then 
     convert:=x-> AsPartialPerm(x, DomainOfPartialPermCollection(s));
     # JDM this won't work in general if Points(s) is not the correct set to act
@@ -54,7 +77,7 @@ function(g, s)
     creator:=Semigroup;
   fi;
 
-  if NrMovedPoints(g)<=Degree(s) then 
+  if NrMovedPoints(g)<=LambdaDegree(s) then 
     conj:=MappingPermListList(MovedPoints(g), [1..NrMovedPoints(g)]);
     emb:=x-> convert(x^conj);
     t:=creator(List(GeneratorsOfGroup(g), emb));
@@ -228,7 +251,8 @@ InstallMethod(InversesOfSemigroupElementNC,
 "for an acting semigroup and acting elt",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsActingElt],
 function(s, f)
-  local regular, rank_f, lambda, rhorank, tester, j, o, rhos, grades, rho_f, lambdarank, creator, inv, out, k, g, rho, i, x;
+  local regular, rank_f, lambda, rhorank, tester, j, o, rhos, grades, rho_f,
+   lambdarank, creator, inv, out, k, g, rho, i, x;
 
   regular:=IsRegularSemigroup(s);
 
@@ -236,7 +260,7 @@ function(s, f)
     return [];
   fi;
 
-  rank_f:=Rank(f); 
+  rank_f:=LambdaRank(s)(f); 
   lambda:=LambdaFunc(s)(f);
   rhorank:=RhoRank(s);
   tester:=IdempotentLambdaRhoTester(s);
@@ -353,16 +377,16 @@ end);
 InstallOtherMethod(MultiplicativeNeutralElement, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local gens, n, f, r;
+  local gens, rank, n, f, r;
 
   gens:=Generators(s);
-  n:=Maximum(List(gens, Rank));
+  n:=Maximum(List(gens, ActionRank));
 
-  if n=Degree(s) then
+  if n=LambdaDegree(s) then
     return One(s);
   fi;
 
-  f:=First(gens, f-> Rank(f)=n);
+  f:=First(gens, f-> rank(f)=n);
 
   r:=GreensRClassOfElementNC(s, f); #NC? JDM 
 

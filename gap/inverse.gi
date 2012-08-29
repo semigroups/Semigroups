@@ -82,7 +82,7 @@ function(f, s)
   dom:=RhoDomain(s);
 
   if dom=[] then 
-    return Degree(f)=0;
+    return ActionDegree(f)=0;
   # any way of using points here? JDM
   fi;
 
@@ -183,7 +183,7 @@ function(f, d)
   s:=ParentSemigroup(d);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] or
-   Degree(f)<>Degree(rep) then
+   ActionDegree(f)<>ActionDegree(rep) then
     return false;
   fi;
 
@@ -236,8 +236,8 @@ function(f, l)
   rep:=Representative(l);
   s:=ParentSemigroup(l);
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or Degree(f) <> Degree(rep)
-   or Rank(f) <> Rank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or ActionDegree(f) <> ActionDegree(rep)
+   or ActionRank(f) <> ActionRank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
     Info(InfoCitrus, 1, "degree, rank, or lambda value not equal to those of",
     " any of the L-class elements,");
     return false;
@@ -427,7 +427,7 @@ function(d)
 
       rep:=Representative(d);
       
-      if Rank(f)<>Rank(rep) or Degree(f)<>Degree(rep) then 
+      if ActionRank(f)<>ActionRank(rep) or ActionDegree(f)<>ActionDegree(rep) then 
         return fail;
       fi;
       
@@ -532,8 +532,8 @@ function(l)
       rep:=Representative(l);
       
       if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-       Degree(f) <> Degree(rep) or Rank(f) <> Rank(rep) or 
-       LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then 
+       ActionDegree(f) <> ActionDegree(rep) or ActionRank(f) <> ActionRank(rep)
+       or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then 
         return fail;
       fi;
       

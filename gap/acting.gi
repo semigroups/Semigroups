@@ -216,14 +216,14 @@ function(f, s)
   #fi;
 
   if not (IsMonoid(s) and IsOne(f)) and 
-   Rank(f) > MaximumList(List(Generators(s), Rank)) then
+   ActionRank(f) > MaximumList(List(Generators(s), ActionRank)) then
     Info(InfoCitrus, 2, "element has larger rank than any element of ",
      "semigroup.");
     return false;
   fi;
 
   if HasMinimalIdeal(s) and 
-   Rank(f) < Rank(Representative(MinimalIdeal(s))) then
+   ActionRank(f) < ActionRank(Representative(MinimalIdeal(s))) then
     Info(InfoCitrus, 2, "element has smaller rank than any element of ",
      "semigroup.");
     return false;
@@ -749,8 +749,8 @@ function(s)
  
   fam:=CollectionsFamily(FamilyObj(LambdaFunc(s)(Representative(s))));
   return Objectify(NewType(fam, IsGradedLambdaOrbs), 
-   rec( orbits:=List([1..Degree(s)+1], x-> []), lens:=[1..Degree(s)+1]*0, 
-    semi:=s));
+   rec( orbits:=List([1..LambdaDegree(s)+1], x-> []), 
+     lens:=[1..LambdaDegree(s)+1]*0, semi:=s));
 end);
 
 # new for 1.0! - GradedRhoOrbs - "for an acting semigroup" 

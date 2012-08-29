@@ -244,12 +244,6 @@ end);
 
 #DDD
 
-# new for 0.7! - Degree - "for a partial perm"
-#############################################################################
-
-InstallOtherMethod(Degree, "for a partial perm",
-[IsPartialPerm], f-> f[2]);
-
 # new for 0.7! - DegreeOfPartialPerm - "for a partial perm"
 #############################################################################
 
@@ -259,12 +253,14 @@ f-> f[2]);
 # mod for 1.0! - Degree - "for a partial perm collection"
 #############################################################################
 
-InstallOtherMethod(Degree, "for a partial perm collection",
-[IsPartialPermCollection], s-> Length(DomainOfPartialPermCollection(s)));
-
-InstallOtherMethod(DegreeOfPartialPermCollection, 
+InstallMethod(DegreeOfPartialPermCollection, 
 "for a partial perm collection",
 [IsPartialPermCollection], s-> Length(DomainOfPartialPermCollection(s)));
+
+InstallMethod(DegreeOfPartialPermSemigroup, 
+"for a partial perm semigroup",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+s-> DegreeOfPartialPermCollection(GeneratorsOfSemigroup(s)));
 
 # new for 0.7! - DenseRangeList - "for a partial perm"
 #############################################################################
@@ -313,6 +309,17 @@ end);
 
 InstallMethod(DomainOfPartialPerm, "for a partial perm",
 [IsPartialPerm], DomPP);
+
+# new for 1.0! - DomainOfPartialPermCollection - "for a partial perm coll"
+#############################################################################
+
+InstallMethod(DomainOfPartialPermCollection, "for a partial perm coll",
+[IsPartialPermCollection], coll-> Union(List(coll, DomPP)));
+
+InstallMethod(DomainOfPartialPermCollection, 
+"for a part perm semigroup",
+[IsPartialPermSemigroup], 
+s-> DomainOfPartialPermCollection(GeneratorsOfSemigroup(s)));
 
 #EEE
 
@@ -386,7 +393,7 @@ InstallOtherMethod(LargestMovedPoint, "for a partial perm",
 ###########################################################################
 
 InstallOtherMethod(LargestMovedPoint, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> MaximumList(List(Generators(s), LargestMovedPointPP)));
+[IsPartialPermSemigroup], s-> MaximumList(List(GeneratorsOfSemigroup(s), LargestMovedPointPP)));
 
 #new for 0.7! - LargestMovedPoint - "for a partial perm collection"
 ###########################################################################
@@ -462,8 +469,21 @@ InstallOtherMethod(OneMutable, "for a partial perm coll",
 [IsPartialPermCollection], 
 function(x)
   local id;
-  id:=Union(List(x, f-> Union(DomPP(f), RanSetPP(f))));
+  id:=Union(DomainOfPartialPermCollection(x), RangeOfPartialPermCollection(x));
   return SparsePartialPermNC(id, id);
+end);
+
+# new for 1.0! - OneMutable - for a partial perm semigroup
+
+InstallOtherMethod(OneMutable, "for a partial perm semigroup",
+[IsPartialPermSemigroup], 
+function(s)
+  local  one;
+  one := One(GeneratorsOfSemigroup(s));
+  if one in s then
+    return one;
+  fi;
+  return fail;
 end);
 
 # new for 0.7! - OnIntegerSetsWithPartialPerm 
@@ -522,25 +542,6 @@ function(arg)
   return; 
 end); 
 
-# new for 1.0! - DomainOfPartialPermCollection - "for a partial perm coll"
-#############################################################################
-
-InstallMethod(DomainOfPartialPermCollection, "for a partial perm coll",
-[IsPartialPermCollection], coll-> Union(List(coll, DomPP)));
-
-InstallMethod(DomainOfPartialPermCollection, 
-"for a part perm semigroup",
-[IsPartialPermSemigroup], 
-s-> DomainOfPartialPermCollection(GeneratorsOfSemigroup(s)));
-
-InstallMethod(RangeOfPartialPermCollection, "for a partial perm coll",
-[IsPartialPermCollection], coll-> Union(List(coll, RanPP)));
-
-InstallMethod(RangeOfPartialPermCollection, 
-"for a part perm semigroup",
-[IsPartialPermSemigroup],
-s-> RangeOfPartialPermCollection(GeneratorsOfSemigroup(s)));
-
 # new for 0.7! - PrintObj - "for a partial perm"
 #############################################################################
 
@@ -555,7 +556,7 @@ function(f)
   fi;
   dom:=DomPP(f); ran:=RanPP(f);
 
-  if Rank(f)>3 then # JDM printing of [2,4] is [2, 4..4]!
+  if ActionRank(f)>3 then # JDM printing of [2,4] is [2, 4..4]!
     if IsRange(dom) then 
       ConvertToRangeRep(dom);
     fi;
@@ -563,7 +564,7 @@ function(f)
       ConvertToRangeRep(ran);
     fi;
   fi;
-  if Rank(f)<20 then 
+  if ActionRank(f)<20 then 
       
     if dom=ran then 
       Print("<identity on ", dom, ">");
@@ -572,7 +573,7 @@ function(f)
     Print(dom, " -> ", ran);
     return;
   fi;
-  Print("<partial perm on ", Rank(f), " pts>");
+  Print("<partial perm on ", ActionRank(f), " pts>");
   return;
 end);
 
@@ -660,6 +661,14 @@ end);
 InstallMethod(RangeOfPartialPerm, "for a partial perm",
 [IsPartialPerm], RanPP);
 
+InstallMethod(RangeOfPartialPermCollection, "for a partial perm coll",
+[IsPartialPermCollection], coll-> Union(List(coll, RanPP)));
+
+InstallMethod(RangeOfPartialPermCollection, 
+"for a part perm semigroup",
+[IsPartialPermSemigroup],
+s-> RangeOfPartialPermCollection(GeneratorsOfSemigroup(s)));
+
 # new for 0.7! - RangeSetOfPartialPerm - "for a partial perm"
 ############################################################################
 
@@ -670,12 +679,6 @@ InstallMethod(RangeSetOfPartialPerm, "for a partial perm",
 ############################################################################
 
 InstallMethod(RankOfPartialPerm, "for a partial perm",
-[IsPartialPerm], f-> f[2]);
-
-# new for 0.7 - Rank - "for a partial perm."
-#############################################################################
-
-InstallOtherMethod(Rank, "for a partial perm",
 [IsPartialPerm], f-> f[2]);
 
 # new for 0.7! - RestrictedPartialPerm - "for a partial perm"

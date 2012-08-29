@@ -158,7 +158,7 @@ function(arg)
     arg[2]:=[arg[2]];
   fi;
 
-  if not Degree(arg[1])=Degree(arg[2][1]) then 
+  if not LambdaDegree(arg[1])=LambdaDegree(arg[2][1]) then 
     Error("Usage: degrees of transformations must equal degree of semigroup,");
     return;
   fi;
@@ -191,11 +191,11 @@ function(s, coll, opts)
   #no schreier###############################################################
   
   #old_data:=OrbitsOfImages(s);
-  n:=Degree(t);
+  n:=LambdaDegree(t);
   
   # set up orbits of images of t
 
-  max_rank:=Maximum(List(coll, Rank)); 
+  max_rank:=Maximum(List(coll, ActionRank)); 
   gens:=List(Generators(t), x-> x![1]);
   orbits:=EmptyPlist(n); 
   lens:=[1..n]*0;
@@ -458,11 +458,11 @@ function(gens, opts)
     gens:=ShallowCopy(gens);
     gens:=SSortedList(gens); #remove duplicates 
     gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
-    Sort(gens, function(x, y) return Rank(x)>Rank(y); end);;
+    Sort(gens, function(x, y) return ActionRank(x)>ActionRank(y); end);;
 
     n:=Length(gens[1]![1]);
 
-    if gens[1]![1]=[1..n] and Rank(gens[2])=n then #remove id
+    if gens[1]![1]=[1..n] and ActionRank(gens[2])=n then #remove id
       Remove(gens, 1);
     fi;
 
@@ -714,7 +714,7 @@ if IsBound(DomPP) then
     if opts.small and Length(gens)>1 then 
       coll:=SSortedList(ShallowCopy(coll));
       coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));;
-      Sort(coll, function(x, y) return Rank(x)>Rank(y); end);;
+      Sort(coll, function(x, y) return ActionRank(x)>ActionRank(y); end);;
       
       closure_opts:=rec(small:=false, hashlen:=opts.hashlen);
       s:=InverseMonoid(coll[1], closure_opts);
@@ -789,6 +789,15 @@ InstallOtherMethod(IsSubsemigroup,
 [IsPartialPermSemigroup, IsPartialPermSemigroup and IsInverseSemigroup],
 function(s, t)
   return ForAll(Generators(t), x-> x in s);
+end);
+
+## new for 0.2! - IsSubset - "for acting semi and acting elt coll"
+###########################################################################
+
+InstallOtherMethod(IsSubset, "for trans. semi. and trans. coll",
+[IsActingSemigroup, IsActingEltCollection],
+function(s, coll)
+  return ForAll(coll, x-> x in s);
 end);
 
 #PPP 
@@ -990,11 +999,11 @@ function(gens, opts)
     gens:=ShallowCopy(gens);
     gens:=SSortedList(gens); #remove duplicates 
     gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
-    Sort(gens, function(x, y) return Rank(x)>Rank(y); end);;
+    Sort(gens, function(x, y) return ActionRank(x)>ActionRank(y); end);;
 
     n:=Length(gens[1]![1]);
 
-    if gens[1]![1]=[1..n] and Rank(gens[2])=n then #remove id
+    if gens[1]![1]=[1..n] and ActionRank(gens[2])=n then #remove id
       Remove(gens, 1);
     fi;
 
@@ -1044,7 +1053,7 @@ function(S, func)
   if HasSize(S) then 
     limit:=Size(S);
   else
-    n:=Degree(S);
+    n:=LambdaDegree(S);
     limit:=n^n;
   fi;
 
@@ -1141,7 +1150,11 @@ function(s)
     Print("semigroup ");
   fi;
 
-  if IsMatrixSemigroup(s) then
+  if IsTransformationSemigroup(s) then 
+    Print("of degree ", DegreeOfTransformationSemigroup(s), " ");
+  elif IsPartialPermSemigroup(s) then 
+    Print("of degree ", DegreeOfPartialPermSemigroup(s), " ");
+  elif IsMatrixSemigroup(s) then
     n:=Length(GeneratorsOfSemigroup(s)[1][1]);
     Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]), " ");
   fi;

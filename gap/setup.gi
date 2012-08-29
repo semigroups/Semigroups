@@ -12,6 +12,18 @@
 # Setup - install the basic things required for specific acting semigroups    #
 ###############################################################################
 
+InstallMethod(ActionDegree, "for a transformation",
+[IsTransformation], x-> x[2]);
+
+InstallMethod(ActionDegree, "for a partial perm",
+[IsPartialPerm], x-> x[2]);
+
+InstallMethod(ActionRank, "for a transformation",
+[IsTransformation], x-> x[2]);
+
+InstallMethod(ActionRank, "for a partial perm",
+[IsPartialPerm], x-> x[2]);
+
 # new for 1.0! - LambdaOrbOpts 
 
 InstallMethod(LambdaOrbOpts, "for a transformation semigroup",
@@ -113,7 +125,7 @@ InstallMethod(LambdaInverse, "for a transformation semigroup",
     out:=List([1..f[1]], x-> 1);
     
     for i in im do 
-      out[f[i+4]]:=i;
+      out[f[i+2]]:=i;
     od;
 
     return TransformationNC(out);

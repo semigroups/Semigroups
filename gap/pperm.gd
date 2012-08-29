@@ -17,6 +17,9 @@ DeclareGlobalFunction("CITRUS_HashFunctionForPP");
 DeclareCategory("IsPartialPerm", IsMultiplicativeElementWithOne and
  IsAssociativeElement); 
 DeclareCategoryCollections("IsPartialPerm");
+DeclareSynonym("IsPartialPermSemigroup", IsSemigroup and
+IsPartialPermCollection);
+DeclareProperty("IsPartialPermMonoid", IsPartialPermSemigroup);
 
 DeclareGlobalFunction("PartialPerm");
 DeclareGlobalFunction("PartialPermNC");
@@ -24,7 +27,8 @@ DeclareOperation("AsPartialPerm", [IsObject]);
 DeclareOperation("AsPartialPermNC", [IsObject]);
 
 DeclareAttribute("DegreeOfPartialPerm", IsPartialPerm);
-DeclareAttribute("DegreeOfPartialPermCollection", IsPartialPerm);
+DeclareAttribute("DegreeOfPartialPermCollection", IsPartialPermCollection);
+DeclareAttribute("DegreeOfPartialPermSemigroup", IsPartialPermSemigroup);
 DeclareAttribute("DomainOfPartialPerm", IsPartialPerm);
 DeclareAttribute("DomainOfPartialPermCollection", IsPartialPermCollection);
 DeclareAttribute("FixedPointsOfPartialPerm", IsPartialPerm);

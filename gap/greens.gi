@@ -81,7 +81,7 @@ function(l)
   if IsTrivial(g) then 
     return false;
   elif IsNaturalSymmetricGroup(g) and
-   NrMovedPoints(g)=Rank(Representative(l)) then 
+   NrMovedPoints(g)=ActionRank(Representative(l)) then 
     return true; 
   fi;
   return StabChainImmutable(g);
@@ -124,7 +124,7 @@ function(f, d)
  
   # much much better performance using f[2]<>rep[2] below
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] 
-    or Degree(f)<>Degree(rep) then
+    or ActionDegree(f)<>ActionDegree(rep) then
     return false;
   fi;
 
@@ -196,7 +196,7 @@ function(f, h)
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] or
    RhoFunc(s)(f) <> RhoFunc(s)(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep)
-   or Degree(rep)<>Degree(f) then 
+   or ActionDegree(rep)<>ActionDegree(f) then 
     return false;
   fi;
 
@@ -217,8 +217,8 @@ function(f, l)
   rep:=Representative(l); 
   s:=ParentSemigroup(l);
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or Degree(f) <> Degree(rep)
-   or Rank(f) <> Rank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or ActionDegree(f) <> ActionDegree(rep)
+   or ActionRank(f) <> ActionRank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
     Info(InfoCitrus, 1, "degree, rank, or lambda value not equal to those of",
     " any of the L-class elements,");
     return false;
@@ -277,8 +277,8 @@ function(f, r)
   rep:=Representative(r); 
   s:=ParentSemigroup(r);
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or Degree(f) <> Degree(rep)
-   or Rank(f) <> Rank(rep) or RhoFunc(s)(f) <> RhoFunc(s)(rep) then
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or ActionDegree(f) <> ActionDegree(rep)
+   or ActionRank(f) <> ActionRank(rep) or RhoFunc(s)(f) <> RhoFunc(s)(rep) then
     Info(InfoCitrus, 1, "degree, rank, or rho value not equal to those of",
     " any of the R-class elements,");
     return false;
@@ -1366,7 +1366,7 @@ function(x, value, scc, o, onright)
   
   s:=ParentSemigroup(x);
 
-  if Rank(Representative(x))=Degree(s) then
+  if ActionRank(Representative(x))=LambdaDegree(s) then
     return [One(s)];
   fi;
 
@@ -1562,7 +1562,7 @@ function(x, value, scc, o, onright)
   fi; 
   
   # is x the group of units...
-  if Rank(Representative(x))=Degree(s) then
+  if ActionRank(Representative(x))=LambdaDegree(s) then
     return true;
   fi;   
  
@@ -1795,7 +1795,7 @@ function(x, value, scc, o, onright)
   fi;
 
   # is r the group of units...
-  if Rank(Representative(x))=Degree(s) then
+  if ActionRank(Representative(x))=LambdaDegree(s) then
     return 1;
   fi;
 
@@ -2021,7 +2021,7 @@ function(s)
   
   if not IsClosed(data) then
     gens:=GeneratorsOfSemigroup(s);
-    n:=Degree(s);
+    n:=LambdaDegree(s);
     i:=Random([1..2*Length(gens)]);
     w:=List([1..i], x-> Random([1..Length(gens)]));
     return EvaluateWord(gens, w);

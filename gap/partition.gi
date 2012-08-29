@@ -224,17 +224,6 @@ end);
 # new for 0.7! - PrintObj - "for a bipartition semigroup"
 ################################################################################
 
-InstallMethod(ViewObj, "for a bipartition semigroup",
-[IsBipartitionSemigroup],
-function(s)
-  Print("<bipartition semigroup with ", Length(Generators(s)), " generators");
-  if HasSize(s) then
-    Print(", ", Size(s), " elements");
-  fi;
-  Print(">");
-  return;
-end);
-
 InstallMethod(\*, "for a bipartition and bipartition",
 [IsBipartition, IsBipartition], 
 function(a,b)

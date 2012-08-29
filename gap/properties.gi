@@ -44,7 +44,7 @@ function(coll)
   
   gens:=Set(ShallowCopy(coll)); j:=Length(gens);
   coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));
-  Sort(coll, function(x, y) return Rank(x)>Rank(y); end);
+  Sort(coll, function(x, y) return ActionRank(x)>ActionRank(y); end);
   
   out:=EmptyPlist(Length(coll));
   redund:=EmptyPlist(Length(coll));
@@ -87,7 +87,7 @@ function(coll)
   
   gens:=Set(ShallowCopy(coll)); j:=Length(gens);
   coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));
-  Sort(coll, function(x, y) return Rank(x)>Rank(y); end);
+  Sort(coll, function(x, y) return ActionRank(x)>ActionRank(y); end);
   
   out:=EmptyPlist(Length(coll));
   redund:=EmptyPlist(Length(coll));
@@ -132,7 +132,7 @@ function(s)
     return true;
   fi;
 
-  iter:=IteratorOfRClassData(s); n:=Degree(s);
+  iter:=IteratorOfRClassData(s); n:=LambdaDegree(s);
   ht:=HTCreate([1..n], rec(hashlen:=s!.opts!.hashlen!.S));
   ht_o:=HTCreate([1,1,1,1], rec(hashlen:=s!.opts!.hashlen!.S));
   reg:=[]; i:=0; 
@@ -605,7 +605,7 @@ function(s)
     return true;
   fi;
 
-  r:=List(gens, Rank); 
+  r:=List(gens, ActionRank); 
   i:=Concatenation(List([Maximum(r),Maximum(r)-1..Minimum(r)], i-> 
    Idempotents(s, i)));
   t:=Semigroup(i);
@@ -649,7 +649,7 @@ function(s)
     return IsCliffordSemigroup(s);
   fi;
 
-#  n:=Degree(s); imgs:=ImagesOfTransSemigroup(s); Enumerate(imgs, 2^n);
+#  n:=LambdaDegree(s); imgs:=ImagesOfTransSemigroup(s); Enumerate(imgs, 2^n);
 #  kers:=KernelsOfTransSemigroup(s); Enumerate(kers, Length(imgs));
 
   if not (IsClosed(kers) and Length(kers)=Length(imgs)) then 
@@ -923,14 +923,14 @@ if Citrus_C then
     iso:=function(f)
       local dom, ran;
     
-      dom:=OnSets([1..Degree(s)], InversesOfSemigroupElementNC(s, f)[1]);
+      dom:=OnSets([1..LambdaDegree(s)], InversesOfSemigroupElementNC(s, f)[1]);
       ran:=List(dom, i-> i^f);
       return PartialPermNC(dom, ran);
     end;
 
     return MappingByFunction(s, 
      InverseMonoid(List(GeneratorsOfSemigroup(s), iso)), iso, 
-      x-> AsTransformationNC(x, Degree(s)));
+      x-> AsTransformationNC(x, LambdaDegree(s)));
   end);
 else
   InstallOtherMethod(IsomorphismPartialPermMonoid, "for a trans semi",
@@ -955,14 +955,14 @@ if Citrus_C then
     iso:=function(f)
       local dom, ran;
   
-      dom:=OnSets([1..Degree(s)], InversesOfSemigroupElementNC(s, f)[1]);
+      dom:=OnSets([1..LambdaDegree(s)], InversesOfSemigroupElementNC(s, f)[1]);
       ran:=List(dom, i-> i^f);
       return PartialPermNC(dom, ran);
     end;
 
     return MappingByFunction(s, 
      InverseSemigroup(List(GeneratorsOfSemigroup(s), iso)), iso, 
-      x-> AsTransformationNC(x, Degree(s)));
+      x-> AsTransformationNC(x, LambdaDegree(s)));
   end);
 else
   InstallOtherMethod(IsomorphismPartialPermSemigroup, "for a trans semi",
@@ -1151,7 +1151,7 @@ function(s)
   fi;
 
   return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
-   AsPermutation, x-> AsTransformation(x, Degree(s)));
+   AsPermutation, x-> AsTransformation(x, LambdaDegree(s)));
 end);
 
 # new for 0.7! - IsomorphismPermGroup - "for a partial perm semigroup"
@@ -1246,15 +1246,20 @@ end);
 
 #IIIPPP
 
-# new for 0.7! - IsPartialPermMonoid - "for a partial perm semigroup"
+# mod for 1.0! - IsPartialPermMonoid - "for a partial perm semigroup"
 ###########################################################################
 
 if IsBound(DomPP) then 
   InstallMethod(IsPartialPermMonoid, "for a partial perm semigroup",
   [IsPartialPermSemigroup],
   function(s)
-    return ForAny(GeneratorsOfSemigroup(s), x->       
-     DomPP(x)=DomainOfPartialPermCollection(s));
+    if ForAny(GeneratorsOfSemigroup(s), x->       
+     DomPP(x)=DomainOfPartialPermCollection(s)) then 
+      SetGeneratorsOfMonoid(s, GeneratorsOfSemigroup(s));
+      SetFilterObj(s, IsMonoid);
+      return true;
+    fi;
+    return false;
   end);
 fi;
 
@@ -1300,7 +1305,7 @@ function(s)
   fi;
 
   tester:=IdempotentLambdaRhoTester(s);
-  n:=Degree(s);
+  n:=LambdaDegree(s);
   rhofunc:=RhoFunc(s);
 
   # look for s not being regular
@@ -1669,7 +1674,7 @@ InstallOtherMethod(IsZeroSimpleSemigroup, "for a transformation semigroup",
 function(s)
   local n, gens, o, lookingfor, r, i, z, ker, iter;
     
-  n:=Degree(s); gens:=GeneratorsOfSemigroup(s);
+  n:=LambdaDegree(s); gens:=GeneratorsOfSemigroup(s);
 
   #orbit of images, looking for more than two ranks.
   o:=Orb(gens, [1..n], OnSets, rec(schreier:=true,
@@ -1757,9 +1762,9 @@ InstallMethod(MinimalIdeal, "for a transformation semigroup",
 function(s)
   local n, gens, max, o, i, bound, f;
 
-  n:=Degree(s);
+  n:=LambdaDegree(s);
   gens:=Generators(s);
-  max:=Maximum(List(gens, Degree));
+  max:=Maximum(List(gens, ActionDegree));
 
   if max=n then 
     bound:=2^n;
@@ -1800,9 +1805,9 @@ if IsBound(OnIntegerSetsWithPP) then
   function(s)
     local n, gens, max, bound, o, i, f, I;
 
-    n:=Degree(s);
+    n:=LambdaDegree(s);
     gens:=Generators(s);
-    max:=Maximum(List(gens, Degree));
+    max:=Maximum(List(gens, ActionDegree));
 
     if max=n then
       bound:=2^n;
@@ -1841,7 +1846,7 @@ InstallMethod(NrElementsOfRank, "for a transformation semigroup",
 function(s, m)
   local iter, tot, r;
   
-  if m > Degree(s) then 
+  if m > LambdaDegree(s) then 
     return 0;
   elif m > MaximumList(List(Generators(s), Rank)) then 
     return 0;
@@ -1868,7 +1873,7 @@ InstallOtherMethod(NrElementsOfRank, "for a partial perm semigroup",
 function(s, m)
   local iter, tot, d;
   
-  if m > Degree(s) then
+  if m > LambdaDegree(s) then
     return 0;
   elif m > MaximumList(List(Generators(s), Rank)) then
     return 0;

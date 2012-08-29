@@ -181,7 +181,7 @@ function(h)
       s:=ParentSemigroup(h);
       rep:=Representative(h);
 
-      if Rank(f) <> Rank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) or
+      if ActionRank(f) <> ActionRank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) or
        RhoFunc(s)(f) <> RhoFunc(s)(rep) then
         return fail;
       fi;
@@ -255,7 +255,7 @@ function(l)
       rep:=Representative(l);
       
       if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-       Degree(f) <> Degree(rep) or Rank(f) <> Rank(rep) or 
+       ActionDegree(f) <> ActionDegree(rep) or ActionRank(f) <> ActionRank(rep) or 
        LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then 
         return fail;
       fi;
@@ -344,8 +344,8 @@ function(r)
       rep:=Representative(r);
       
       if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-       Degree(f) <> Degree(rep) or Rank(f) <> Rank(rep) or 
-       RhoFunc(s)(f) <> RhoFunc(s)(rep) then 
+       ActionDegree(f) <> ActionDegree(rep) or ActionRank(f) <> ActionRank(rep)
+       or RhoFunc(s)(f) <> RhoFunc(s)(rep) then 
         return fail;
       fi;
       

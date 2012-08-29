@@ -26,10 +26,6 @@ IsPartialPermCollection, IsRecord]);
 DeclareOperation("InverseSemigroupByGeneratorsNC", [IsPartialPermCollection, 
 IsPartialPermCollection, IsRecord]);
 
-DeclareSynonym("IsPartialPermSemigroup", IsSemigroup and
-IsPartialPermCollection);
-DeclareProperty("IsPartialPermMonoid", IsPartialPermSemigroup);
-
 DeclareOperation("IsSubsemigroup", [IsActingSemigroup, IsActingSemigroup]);
 
 DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);

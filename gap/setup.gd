@@ -8,6 +8,11 @@
 ##############################################################################
 ###
 
+
+# Rank and degree
+DeclareAttribute("ActionDegree", IsActingElt);
+DeclareAttribute("ActionRank", IsActingElt);
+
 # action for use in LambdaOrb etc..
 DeclareAttribute("RhoAct", IsActingSemigroup);
 DeclareAttribute("LambdaAct", IsActingSemigroup);

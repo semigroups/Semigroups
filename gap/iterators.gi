@@ -466,14 +466,14 @@ function(s)
 
     s:=s,
 
-    tups:=IteratorOfTuples([1..Degree(s)], Degree(s)),
+    tups:=IteratorOfTuples([1..LambdaDegree(s)], LambdaDegree(s)),
 
     NextIterator:=iter-> TransformationNC(NextIterator(iter!.tups)),
   
     IsDoneIterator:=iter -> IsDoneIterator(iter!.tups),
     
-    ShallowCopy:= iter -> rec(tups:=IteratorOfTuples([1..Degree(s)],
-    Degree(s)))));
+    ShallowCopy:= iter -> rec(tups:=IteratorOfTuples([1..LambdaDegree(s)],
+    LambdaDegree(s)))));
 
   SetIsIteratorOfSemigroup(iter, true);
   return iter;
