@@ -625,13 +625,13 @@ InstallOtherMethod(IsIdempotentGenerated, "for an inverse semigroup",
 
 InstallOtherMethod(IsInverseMonoid, "for a trans semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-s-> IsMonoidAsSemigroup(s) and IsInverseSemigroup(s));
+s-> IsMonoid(s) and IsInverseSemigroup(s));
 
 # new for 0.7! - IsInverseMonoid - "for a partial perm semigroup"
 ###########################################################################
 
 InstallOtherMethod(IsInverseMonoid, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> IsMonoidAsSemigroup(s) and IsInverseSemigroup(s));
+[IsPartialPermSemigroup], s-> IsMonoid(s) and IsInverseSemigroup(s));
 
 # new for 0.1! - IsInverseSemigroup - "for a transformation semigroup"
 ###########################################################################
@@ -848,7 +848,7 @@ end);
 
 InstallOtherMethod(IsMonoidAsSemigroup, "for a semigroup",
 [IsSemigroup and HasGeneratorsOfSemigroup], 
- x-> not MultiplicativeNeutralElement(x)=fail);
+ x-> not IsMonoid(x) and MultiplicativeNeutralElement(x)<>fail);
 
 # new for 0.7! - IsomorphismPartialPermMonoid - "for a perm group"
 #############################################################################
