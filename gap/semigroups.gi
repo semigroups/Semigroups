@@ -1122,7 +1122,7 @@ end);
 ################################################################################
 
 InstallMethod(ViewObj, "for an acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+[IsSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local n;
   
@@ -1157,6 +1157,8 @@ function(s)
   elif IsMatrixSemigroup(s) then
     n:=Length(GeneratorsOfSemigroup(s)[1][1]);
     Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]), " ");
+  elif IsBipartitionSemigroup(s) then 
+    Print("of degree ", DegreeOfBipartitionSemigroup(s)/2, " "); 
   fi;
 
   Print("with ", Length(Generators(s)));

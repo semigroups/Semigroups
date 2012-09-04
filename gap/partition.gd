@@ -10,5 +10,6 @@ IsBipartitionCollection);
 
 DeclareOperation("AsBipartition", [IsPerm, IsPosInt]);
 DeclareOperation("DegreeOfBipartition", [IsBipartition]);
+DeclareOperation("DegreeOfBipartitionSemigroup", [IsBipartitionSemigroup]);
 DeclareGlobalFunction("ExtRepBipartition");
 DeclareOperation("RankOfBipartition", [IsBipartition]);

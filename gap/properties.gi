@@ -1206,10 +1206,9 @@ function(s)
     pts:=Union(pts, AsList(o));
   od;
   ShrinkAllocationPlist(pts);
-  t:=Semigroup(TransformationActionNC(s, pts, OnPoints));
-  pos:=List([1..n], x-> Position(pts, [x]));
+  t:=Semigroup(List(Generators(s), x-> TransformationOpNC(x, pts, OnPoints)));
   
-  return MappingByFunction(s, t, x-> TransformationActionNC(x, pts, OnPoints),
+  return MappingByFunction(s, t, x-> TransformationOpNC(x, pts, OnPoints),
   x-> BinaryRelationOnPoints(List([1..n], i-> pts[pos[i]^x])));
 end);
 

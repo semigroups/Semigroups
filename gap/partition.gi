@@ -132,6 +132,13 @@ end);
 InstallMethod(DegreeOfBipartition, "for a bipartition",
 [IsBipartition], x-> x[1]);
 
+# new for 1.0! - DegreeOfBipartition - "for a bipartition"
+############################################################################
+
+InstallMethod(DegreeOfBipartitionSemigroup, "for a bipartition semigroup",
+[IsBipartitionSemigroup and HasGeneratorsOfSemigroup], x->
+GeneratorsOfSemigroup(x)[1][1]);
+
 # new for 1.0! - RankOfBipartition - "for a bipartition"
 ############################################################################
 
@@ -233,7 +240,7 @@ function(a,b)
   Assert(1,n = b[1]/2);
   p1 := a[2];
   p2 := b[2];
-  fuse := [1..p1+p2];
+  fuse := [1..p1+p2]; Error("");
   # From now on i in partition a is in part number a[i]
   #         and j in partition b is in part number b[j]+p2
   # The fusion tab always maintains fuse[i] <= i and the fuse function
