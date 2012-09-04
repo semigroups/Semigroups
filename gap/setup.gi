@@ -13,13 +13,19 @@
 ###############################################################################
 
 InstallMethod(ActionDegree, "for a transformation",
-[IsTransformation], x-> x[2]);
+[IsTransformation], x-> x[1]);
+
+#InstallMethod(ActionDegree, "for a bipartition",
+#[IsBipartition], x-> x[1]/2);
 
 InstallMethod(ActionDegree, "for a partial perm",
 [IsPartialPerm], x-> x[2]);
 
 InstallMethod(ActionRank, "for a transformation",
 [IsTransformation], x-> x[2]);
+
+InstallMethod(ActionRank, "for a bipartition",
+[IsBipartition], x-> x[2]);
 
 InstallMethod(ActionRank, "for a partial perm",
 [IsPartialPerm], x-> x[2]);
@@ -32,8 +38,8 @@ InstallMethod(LambdaOrbOpts, "for a transformation semigroup",
 InstallMethod(LambdaOrbOpts, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> rec(forflatplainlists:=true));
 
-InstallMethod(LambdaOrbOpts, "for a matrix semigroup",
-[IsMatrixSemigroup], s-> rec());
+InstallMethod(LambdaOrbOpts, "for a partial perm semigroup",
+[IsBipartitionSemigroup], s-> rec(forflatplainlists:=true));
 
 # new for 1.0 - LambdaAct and RhoAct
 ###############################################################################
@@ -62,9 +68,6 @@ if IsBound(OnIntegerSetsWithPP) then
   #s-> OnIntegerSetsWithPP);
 fi;
 
-InstallMethod(LambdaAct, "for a matrix semigroup", 
-[IsMatrixSemigroup], x-> OnRight);
-
 # new for 1.0! - LambdaDegree
 ###############################################################################
 
@@ -79,9 +82,6 @@ InstallMethod(LambdaDomain, "for a transformation semi",
 
 InstallMethod(LambdaDomain, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> [1..65536]*1);
-
-InstallMethod(LambdaDomain, "for a matrix semigroup",
-[IsMatrixSemigroup], s-> BaseDomain(Representative(s))^Length(Representative(s)));
 
 InstallMethod(RhoDomain, "for a transformation semi",
 [IsTransformationSemigroup], s-> [1..Degree(s)]*1);
@@ -99,19 +99,6 @@ if IsBound(RanSetPP) then
   InstallMethod(LambdaFunc, "for a partial perm semigroup",
     [IsPartialPermSemigroup], x-> RanSetPP);
 fi;
-
-InstallMethod(LambdaFunc, "for a matrix semigroup",
-[IsMatrixSemigroup], x-> function(mat)
-  return VectorSpace(DefaultFieldOfMatrix(mat), SemiEchelonMat(mat).vectors);
-end);
-
-InstallMethod(RhoFunc, "for a matrix semigroup",
-[IsMatrixSemigroup], x-> 
-function(mat)
-local t;
-  t:=TransposedMat(mat);
-  return VectorSpace(DefaultFieldOfMatrix(t), SemiEchelonMat(t).vectors);
-end);
 
 # new for 1.0! - LambdaInverse
 ###############################################################################
@@ -194,8 +181,20 @@ if IsBound(DomPP) and IsBound(RanPP) then
   end);
 fi;
 
+#JDM c method for this!
 
+InstallMethod(LambdaPerm, "for a bipartition semigroup",
+[IsBipartitionSemigroup], s-> 
+  function(a, b)
+    local n, p, i;
 
+    n:=a[1]/2; #degree
+    p:=[1..a[2]]; #rank
+    for i in [1..n] do 
+      p[a[n+i+1]]:=b[n+i+1];
+    od;
+    return PermList(p);
+  end);
 
 # new for 1.0! - LambdaConjugator
 ###############################################################################

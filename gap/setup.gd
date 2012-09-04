@@ -42,7 +42,8 @@ DeclareAttribute("IdempotentLambdaRhoCreator", IsActingSemigroup);
 
 InstallTrueMethod(IsActingSemigroup, IsTransformationSemigroup);
 InstallTrueMethod(IsActingSemigroup, IsPartialPermSemigroup);
-InstallTrueMethod(IsActingSemigroup, IsMatrixSemigroup);
+InstallTrueMethod(IsActingSemigroup, IsBipartitionSemigroup);
+
 InstallTrueMethod(IsActingSemigroupWithInverseOp, IsPartialPermSemigroup and
 IsInverseSemigroup);
 InstallTrueMethod(IsActingSemigroupWithInverseOp, IsPartialPermSemigroup and
@@ -52,7 +53,7 @@ InstallTrueMethod(IsActingEltCollection, IsRingElementCollCollColl);
 
 InstallTrueMethod(IsActingElt, IsTransformation);
 InstallTrueMethod(IsActingElt, IsPartialPerm);
-InstallTrueMethod(IsActingElt, IsMatrix);
+InstallTrueMethod(IsActingElt, IsBipartition);
 
 InstallTrueMethod(IsInverseActingElt, IsPartialPerm);
 

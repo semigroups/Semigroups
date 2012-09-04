@@ -135,9 +135,25 @@ InstallMethod(DegreeOfBipartition, "for a bipartition",
 # new for 1.0! - DegreeOfBipartition - "for a bipartition"
 ############################################################################
 
+InstallMethod(DegreeOfBipartitionCollection, "for a bipartition collection",
+[IsBipartitionCollection], 
+function(coll)
+
+  if IsBipartitionSemigroup(coll) then 
+    return DegreeOfBipartitionSemigroup(coll);
+  elif not ForAll(coll, x-> x[1]=coll[1][1]) then 
+    Error("usage: collection of bipartitions of equal degree,");
+    return;
+  fi;
+  return coll[1][1];
+end);
+
+# new for 1.0! - DegreeOfBipartition - "for a bipartition"
+############################################################################
+
 InstallMethod(DegreeOfBipartitionSemigroup, "for a bipartition semigroup",
-[IsBipartitionSemigroup and HasGeneratorsOfSemigroup], x->
-GeneratorsOfSemigroup(x)[1][1]);
+[IsBipartitionSemigroup], 
+ s-> Representative(s)[1]);
 
 # new for 1.0! - RankOfBipartition - "for a bipartition"
 ############################################################################
@@ -240,7 +256,7 @@ function(a,b)
   Assert(1,n = b[1]/2);
   p1 := a[2];
   p2 := b[2];
-  fuse := [1..p1+p2]; Error("");
+  fuse := [1..p1+p2]; 
   # From now on i in partition a is in part number a[i]
   #         and j in partition b is in part number b[j]+p2
   # The fusion tab always maintains fuse[i] <= i and the fuse function
@@ -288,7 +304,74 @@ function(a,b)
   return BipartitionByIntRep(Concatenation([2*n, next-1], c));
 # return Concatenation([2*n, next-1], c);
 end);
- 
+
+# part should be of the form [4,1,2,3,3,4,4,1,0,1,0]
+# [rank,partition in internal rep, signing]
+# Length of partition must =f[1]!!!
+
+
+InstallMethod(OnRightSignedPartitionWithBipartition, 
+[IsList, IsBipartition],
+function(a, b)
+  local n, p1, p2, fuse, mark, fuseit, x, y, tab3, c, j, next, i;
+
+  n:=b[1]/2; # length of partition!!
+  p1:=a[1]; #number of classes in a
+  p2:=b[2]; #number of classes in b
+
+  fuse:=[1..p1+p2];
+  mark:=[1..p1+p2]*0;
+  fuseit := function(i) 
+              while fuse[i] < i do i := fuse[i]; od; 
+              return i; 
+            end;
+  for i in [1..n] do
+    x := fuseit(a[i+1]);
+    y := fuseit(b[i+2]+p1);
+    if x <> y then
+      if x < y then
+        fuse[y] := x;
+        if a[n+a[i+1]+1]=1 then mark[x]:=1; fi;
+      else
+        fuse[x] := y;
+        if a[n+a[i+1]+1]=1 then mark[y]:=1; fi;
+      fi;
+    fi;
+  od;
+  tab3:=0*[1..p1+p2];
+  c:=[];
+  j:=1;
+  next:=1;
+  for i in [n+1..2*n] do
+    x := fuseit(b[i+2]+p1);
+    if tab3[x] = 0 then
+      tab3[x] := next;
+      next := next + 1;
+    fi;
+    j:=j+1;
+    c[j]:=tab3[x];
+    c[n+1+tab3[x]]:=mark[x];
+  od;
+  c[1]:=next-1;
+  return c;
+end);
+
+InstallMethod(OneMutable, "for a bipartition",
+[IsBipartition],
+function(a)
+  local n;
+  n:=DegreeOfBipartition(a);
+  return BipartitionNC(List([1..n], x-> [x,x+n]));
+end);
+
+InstallOtherMethod(OneMutable, "for a bipartition coll",
+[IsBipartitionCollection],
+function(coll)
+  local n;
+  n:=DegreeOfBipartitionCollection(coll);
+  return BipartitionNC(List([1..n], x-> [x, x+ n]));
+end);
+
 Do := function(n)
     local eee,ppp,qqq;
     ppp := PartitionsSet([1..2*n]);

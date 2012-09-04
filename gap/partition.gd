@@ -4,12 +4,18 @@ DeclareCategory("IsBipartition", IsMultiplicativeElementWithOne and
  IsAssociativeElement);
 DeclareCategoryCollections("IsBipartition");
 
-DeclareSynonymAttr("IsBipartitionSemigroup", IsSemigroup and
+DeclareSynonym("IsBipartitionSemigroup", IsSemigroup and
 IsBipartitionCollection);
 
-
 DeclareOperation("AsBipartition", [IsPerm, IsPosInt]);
-DeclareOperation("DegreeOfBipartition", [IsBipartition]);
-DeclareOperation("DegreeOfBipartitionSemigroup", [IsBipartitionSemigroup]);
+DeclareAttribute("DegreeOfBipartition", IsBipartition);
+DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
+DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
+
 DeclareGlobalFunction("ExtRepBipartition");
+DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
+DeclareOperation("OnRightSignedPartitionWithBipartition", [IsList,
+IsBipartition]);
+DeclareOperation("OnLeftSignedPartitionWithBipartition", [IsList,
+IsBipartition]);
 DeclareOperation("RankOfBipartition", [IsBipartition]);
