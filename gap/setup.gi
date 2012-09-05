@@ -15,8 +15,8 @@
 InstallMethod(ActionDegree, "for a transformation",
 [IsTransformation], x-> x[1]);
 
-#InstallMethod(ActionDegree, "for a bipartition",
-#[IsBipartition], x-> x[1]/2);
+InstallMethod(ActionDegree, "for a bipartition",
+[IsBipartition], x-> x[1]/2);
 
 InstallMethod(ActionDegree, "for a partial perm",
 [IsPartialPerm], x-> x[2]);
@@ -49,6 +49,12 @@ InstallMethod(LambdaAct, "for a transformation semi",
 
 InstallMethod(RhoAct, "for a transformation semi",
 [IsTransformationSemigroup], x-> OnKerT);
+
+InstallMethod(LambdaAct, "for a bipartition semigroup",
+[IsBipartitionSemigroup], x-> OnRightSignedPartitionWithBipartition);
+
+InstallMethod(RhoAct, "for a bipartition semigroup",
+[IsBipartitionSemigroup], x-> OnLeftSignedPartitionWithBipartition);
 
 if IsBound(OnIntegerSetsWithPP) then 
   InstallMethod(LambdaAct, "for a partial perm semi",
@@ -83,6 +89,9 @@ InstallMethod(LambdaDomain, "for a transformation semi",
 InstallMethod(LambdaDomain, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> [1..65536]*1);
 
+InstallMethod(LambdaDomain, "for a bipartition semi",
+[IsBipartitionSemigroup], s-> [65536]);
+
 InstallMethod(RhoDomain, "for a transformation semi",
 [IsTransformationSemigroup], s-> [1..Degree(s)]*1);
 
@@ -94,6 +103,9 @@ InstallMethod(RhoDomain, "for a partial perm semi",
 
 InstallMethod(LambdaFunc, "for a transformation semigroup",
 [IsTransformationSemigroup], x-> RanSetT);
+
+InstallMethod(LambdaFunc, "for a bipartition semigroup",
+[IsBipartitionSemigroup], x-> RightSignedPartition);
 
 if IsBound(RanSetPP) then
   InstallMethod(LambdaFunc, "for a partial perm semigroup",
@@ -121,6 +133,12 @@ InstallMethod(LambdaInverse, "for a transformation semigroup",
 InstallMethod(LambdaInverse, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> 
 function(ran, f)
+  return f^-1;
+end);
+
+InstallMethod(LambdaInverse, "for a bipartition",
+[IsBipartitionSemigroup], s-> 
+function(x, f)
   return f^-1;
 end);
 
@@ -191,7 +209,7 @@ InstallMethod(LambdaPerm, "for a bipartition semigroup",
     n:=a[1]/2; #degree
     p:=[1..a[2]]; #rank
     for i in [1..n] do 
-      p[a[n+i+1]]:=b[n+i+1];
+      p[a[n+i+2]]:=b[n+i+2];
     od;
     return PermList(p);
   end);
@@ -229,6 +247,9 @@ InstallMethod(RhoRank, "for a transformation semigroup",
 InstallMethod(LambdaRank, "for a semigroup of partial perms", 
 [IsPartialPermSemigroup], x-> Length);
 
+InstallMethod(LambdaRank, "for a bipartition semigroup",
+[IsBipartitionSemigroup], x-> y-> Number(y{[y[1]+2..Length(y)]}, x-> x=1));
+
 InstallMethod(RhoRank, "for a semigroup of partial perms", 
 [IsPartialPermSemigroup], x-> Length);
 
@@ -237,6 +258,9 @@ InstallMethod(RhoRank, "for a semigroup of partial perms",
 
 InstallMethod(RhoFunc, "for a trans semi",
 [IsTransformationSemigroup], x-> KerT);
+
+InstallMethod(RhoFunc, "for a bipartition semigroup",
+[IsBipartitionSemigroup], x-> LeftSignedPartition);
 
 if IsBound(DomPP) then
   InstallMethod(RhoFunc, "for a partial perm semi",

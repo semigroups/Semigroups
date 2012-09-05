@@ -309,6 +309,61 @@ end);
 # [rank,partition in internal rep, signing]
 # Length of partition must =f[1]!!!
 
+InstallMethod(RightSignedPartition, 
+[IsBipartition],
+function(a)
+  local n, mark, next, tab, out, j, x, i;
+ 
+  n:=a[1]/2;
+  mark:=[1..a[2]]*0;
+
+  for i in [3..n+2] do 
+    mark[a[i]]:=1;
+  od;
+
+  next:=1;
+  tab:=[1..a[2]]*0;
+  out:=[];
+  j:=1;
+  for i in [n+3..2*n+2] do 
+    x:=a[i];
+    if tab[x]=0 then 
+      tab[x]:=next;
+      next:=next+1;
+    fi;
+    j:=j+1;
+    out[j]:=tab[x];
+    out[1+n+tab[x]]:=mark[a[i]];
+  od;
+  out[1]:=next-1;
+  return out;
+end);
+
+InstallMethod(LeftSignedPartition, "for a bipartition",
+[IsBipartition],
+function(a)
+  local n, out, max, i;
+ 
+  n:=a[1]/2;
+  out:=[];
+  max:=1;
+  for i in [3..n+2] do 
+    out[i-1]:=a[i];
+    if a[i]>max then 
+      max:=a[i];
+    fi;
+  od;
+  for i in [1..max] do 
+    out[n+1+i]:=0;
+  od;
+  for i in [n+3..2*n+2] do 
+    if a[i]<=max then 
+      out[1+n+a[i]]:=1;
+    fi;
+  od;
+  out[1]:=max;
+  return out;
+end);
 
 InstallMethod(OnRightSignedPartitionWithBipartition, 
 [IsList, IsBipartition],
@@ -317,6 +372,9 @@ function(a, b)
 
   n:=b[1]/2; # length of partition!!
   p1:=a[1]; #number of classes in a
+  if p1>n then 
+    return RightSignedPartition(b);
+  fi;
   p2:=b[2]; #number of classes in b
 
   fuse:=[1..p1+p2];
@@ -360,7 +418,7 @@ InstallMethod(OneMutable, "for a bipartition",
 [IsBipartition],
 function(a)
   local n;
-  n:=DegreeOfBipartition(a);
+  n:=DegreeOfBipartition(a)/2;
   return BipartitionNC(List([1..n], x-> [x,x+n]));
 end);
 
@@ -368,7 +426,7 @@ InstallOtherMethod(OneMutable, "for a bipartition coll",
 [IsBipartitionCollection],
 function(coll)
   local n;
-  n:=DegreeOfBipartitionCollection(coll);
+  n:=DegreeOfBipartitionCollection(coll)/2;
   return BipartitionNC(List([1..n], x-> [x, x+ n]));
 end);
 

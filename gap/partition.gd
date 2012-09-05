@@ -11,7 +11,8 @@ DeclareOperation("AsBipartition", [IsPerm, IsPosInt]);
 DeclareAttribute("DegreeOfBipartition", IsBipartition);
 DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
 DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
-
+DeclareAttribute("RightSignedPartition", IsBipartition);
+DeclareAttribute("LeftSignedPartition", IsBipartition);
 DeclareGlobalFunction("ExtRepBipartition");
 DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
 DeclareOperation("OnRightSignedPartitionWithBipartition", [IsList,

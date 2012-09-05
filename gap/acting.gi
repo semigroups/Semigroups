@@ -562,6 +562,7 @@ function(data, limit, lookfunc)
           orblookup2[nr]:=repslens[val];
         fi;
       fi;
+      #Error();
       orb[nr]:=x;
       schreierpos[nr]:=i; # orb[nr] is obtained from orb[i]
       schreiergen[nr]:=j; # by multiplying by gens[j]
@@ -1415,7 +1416,8 @@ function(s)
 
   one:=One(gens);
 
-  data:=rec( gens:=gens, ht:=HTCreate(one, rec(treehashsize:=s!.opts.hashlen.L)),
+  data:=rec( gens:=gens, 
+     ht:=HTCreate(one, rec(treehashsize:=s!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[],
      lenreps:=0, orbit:=[[,,,one]], repslens:=[], 
