@@ -414,6 +414,56 @@ function(a, b)
   return c;
 end);
 
+InstallMethod(OnLeftSignedPartitionWithBipartition, 
+[IsList, IsBipartition],
+function(a, b)
+  local n, p1, p2, fuse, mark, fuseit, x, y, tab3, c, j, next, i;
+
+  n:=b[1]/2; # length of partition!!
+  p1:=a[1]; #number of classes in a
+  if p1>n then 
+    return LeftSignedPartition(b);
+  fi;
+  p2:=b[2]; #number of classes in b
+
+  fuse:=[1..p1+p2];
+  mark:=[1..p1+p2]*0;
+  fuseit := function(i) 
+              while fuse[i] < i do i := fuse[i]; od; 
+              return i; 
+            end;
+  for i in [1..n] do
+    x := fuseit(b[n+i+2]);
+    y := fuseit(a[i+1]+p2);
+    if x <> y then
+      if x < y then
+        fuse[y] := x;
+        if a[n+a[i+1]+1]=1 then mark[x]:=1; fi;
+      else
+        fuse[x] := y;
+        if a[n+a[i+1]+1]=1 then mark[y]:=1; fi;
+      fi;
+    fi;
+  od;
+  tab3:=0*[1..p1+p2];
+  c:=[];
+  j:=1;
+  next:=1;
+  for i in [1..n] do
+    x := fuseit(b[i+2]);
+    if tab3[x] = 0 then
+      tab3[x] := next;
+      next := next + 1;
+    fi;
+    j:=j+1;
+    c[j]:=tab3[x];
+    c[n+1+tab3[x]]:=mark[x];
+  od;
+  c[1]:=next-1;
+  return c;
+end);
+
+
 InstallMethod(OneMutable, "for a bipartition",
 [IsBipartition],
 function(a)

@@ -93,10 +93,13 @@ InstallMethod(LambdaDomain, "for a bipartition semi",
 [IsBipartitionSemigroup], s-> [65536]);
 
 InstallMethod(RhoDomain, "for a transformation semi",
-[IsTransformationSemigroup], s-> [1..Degree(s)]*1);
+[IsTransformationSemigroup], s-> [1..65536]*1);
 
 InstallMethod(RhoDomain, "for a partial perm semi",
-[IsPartialPermSemigroup], DomainOfPartialPermCollection);
+[IsPartialPermSemigroup], s-> [1..65536]*1);
+
+InstallMethod(RhoDomain, "for a bipartition semi",
+[IsBipartitionSemigroup], s-> [65536]);
 
 # new for 1.0! - LambdaFunc
 ###############################################################################
@@ -220,6 +223,8 @@ InstallMethod(LambdaPerm, "for a bipartition semigroup",
 # gf^-1(i)=p(i) when RhoFunc(s)(f)=RhoFunc(s)(g)!!
 
 #JDM c method for both of these...
+# this is really a generalised LambdaPerm, so maybe it should be combined with 
+# LambdaPerm?
 
 InstallMethod(LambdaConjugator, "for a transformation semi",
 [IsActingSemigroup], s-> 

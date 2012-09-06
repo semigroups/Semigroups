@@ -797,7 +797,8 @@ function(s)
   local opts, semi, name;
 
   opts:= rec(schreier:=true, orbitgraph:=true,
-          storenumbers:=true, log:=true, treehashsize:=CitrusOptionsRec.hashlen.M,
+          storenumbers:=true, log:=true, 
+          treehashsize:=CitrusOptionsRec.hashlen.M,
           scc_reps:=[One(Generators(s))], semi:=s);
   
   for name in RecNames(LambdaOrbOpts(s)) do 
@@ -1204,7 +1205,7 @@ function(s)
   # But it seems to be so fast to calculate the 
   # in most cases that there is no point. 
 
-  return Orb(GeneratorsOfSemigroup(s), [1..65536], RhoAct(s),
+  return Orb(GeneratorsOfSemigroup(s), RhoDomain(s), RhoAct(s),
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
         storenumbers:=true, log:=true, treehashsize:=CitrusOptionsRec.hashlen.M,
         scc_reps:=[One(Generators(s))], semi:=s));
