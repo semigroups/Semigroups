@@ -271,6 +271,16 @@ function(n)
   return s;
 end);
 
+InstallMethod(DualSymmetricInverseSemigroup, "for a pos int",
+[IsPosInt], 
+function(n)
+  local gens;
+  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
+  Add(gens, BipartitionNC(Concatenation([[1,2,3+n], [1+n,2+n,3]], 
+   List([4..n], x-> [x, x+n]))));
+  return Semigroup(gens);
+end);
+
 # new for 0.7! - POI - "for a pos int"
 ################################################################################
 

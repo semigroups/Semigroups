@@ -1133,8 +1133,8 @@ end);
 # new for 1.0! - ViewObj - "for an acting semigroup"
 ################################################################################
 
-InstallMethod(ViewObj, "for an acting semigroup",
-[IsSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(ViewObj, "for a semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup], 999,
 function(s)
   local n;
   

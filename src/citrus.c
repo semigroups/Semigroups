@@ -1145,6 +1145,24 @@ Obj FuncELM_LIST_BP( Obj self, Obj f, Obj i)
   return INTOBJ_INT(ELM_UInt2(f, INT_INTOBJ(i)));
 }
 
+/* method for f{list} */
+Obj FuncELMS_LIST_BP(Obj self, Obj f, Obj list)
+{   Int len, i;
+    Obj out;
+    
+    len = LEN_LIST(list);
+    if(len>LEN_BP(f)) len = LEN_BP(f);
+    out = NEW_PLIST(T_PLIST_CYC, len);
+    SET_LEN_PLIST(out, len);
+    
+    for(i=1;i<=len;i++){
+      SET_ELM_PLIST(out,i,  
+        INTOBJ_INT(ELM_UInt2(f, INT_INTOBJ(ELM_LIST(list, i)))));
+    }
+
+    return out;
+}
+
 /* i^f */ 
 Obj FuncOnPointsBP(Obj self, Obj i, Obj f)
 {   UInt2 j, deg, r, k;
@@ -1296,6 +1314,10 @@ static StructGVarFunc GVarFuncs [] = {
   { "ELM_LIST_BP", 2, "f,i",
     FuncELM_LIST_BP,
     "pkg/citrus/src/citrus.c:ELM_LIST_BP" },
+  
+  { "ELMS_LIST_BP", 2, "f,list",
+    FuncELMS_LIST_BP,
+    "pkg/citrus/src/citrus.c:ELMS_LIST_BP" },
   
   { "OnPointsBP", 2, "i,f",
     FuncOnPointsBP,

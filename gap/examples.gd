@@ -8,6 +8,7 @@
 ############################################################################# 
 ##
 
+DeclareOperation("DualSymmetricInverseSemigroup", [IsPosInt]);
 DeclareOperation("FullBinaryRelationSemigroup", [IsPosInt]);
 DeclareSynonymAttr("B", FullBinaryRelationSemigroup);
 DeclareOperation("FullMatrixSemigroup", [IsPosInt, IsPosInt]);

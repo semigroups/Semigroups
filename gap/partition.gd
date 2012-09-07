@@ -17,9 +17,7 @@ DeclareAttribute("RightSignedPartition", IsBipartition);
 DeclareAttribute("LeftSignedPartition", IsBipartition);
 DeclareGlobalFunction("ExtRepBipartition");
 DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
-DeclareOperation("OnRightSignedPartitionWithBipartition", [IsList,
-IsBipartition]);
-DeclareOperation("OnLeftSignedPartitionWithBipartition", [IsList,
-IsBipartition]);
+DeclareOperation("OnRightSignedPartition", [IsList, IsBipartition]);
+DeclareOperation("OnLeftSignedPartition", [IsList, IsBipartition]);
 DeclareOperation("RandomBipartition", [IsPosInt]);
 DeclareOperation("RankOfBipartition", [IsBipartition]);

@@ -92,14 +92,15 @@ function(f, n)
 
   g:=f^-1;
   r:=n;
+  out:=EmptyPlist(2*n);
 
   for i in [1..n] do 
-    out[i+2]:=i;
+    out[i]:=i;
     if i^g<>fail then 
-      out[n+i+2]:=i^g;
+      out[n+i]:=i^g;
     else 
       r:=r+1;
-      out[n+i+2]:=r;
+      out[n+i]:=r;
     fi;
   od;
   return BipartitionByIntRepNC(out); 
@@ -116,19 +117,19 @@ function(f)
   n:=f[1];
   r:=f[2];
   ker:=KerT(f); 
-  out:=Concatenation(ker);
+  out:=ShallowCopy(ker);
   g:=List([1..f[1]], x-> 0);
 
   for i in RanSetT(f) do 
-    g[f[i+4]]:=i;
+    g[f[i+2]]:=i;
   od;
 
   for i in [1..n] do 
     if g[i]<>0 then 
-      out[n+i+2]:=ker[g[i]];
+      out[n+i]:=ker[g[i]];
     else 
       r:=r+1;
-      out[n+i+2]:=r;
+      out[n+i]:=r;
     fi;
   od;
   return BipartitionByIntRepNC(out);
@@ -163,17 +164,64 @@ InstallMethod(DegreeOfBipartitionSemigroup, "for a bipartition semigroup",
 [IsBipartitionSemigroup], 
  s-> Representative(s)[1]);
 
+InstallMethod(Display, "for a bipartition",
+[IsBipartition], function(f)
+  Print("BipartitionNC( ", ExtRepBipartition(f), " )");
+  return;
+end);
+
+InstallMethod(Display, "for a bipartition collection",
+[IsBipartitionCollection],
+function(coll) 
+  local i;
+
+  Print("[ ");
+  for i in [1..Length(coll)] do 
+    if not i=1 then Print(" "); fi;
+    Display(coll[i]);
+    if not i=Length(coll) then 
+      Print(",\n");
+    else
+      Print(" ]\n");
+    fi;
+  od;
+  return;
+end);
+
 # new for 1.0! - RankOfBipartition - "for a bipartition"
 ############################################################################
 
 InstallMethod(RankOfBipartition, "for a bipartition",
-[IsBipartition], x-> x[2]);
+[IsBipartition], 
+function(x)
+  local n, m, seen, rank, i;
+
+  n:=x[1]/2;
+
+m:=MaximumList(x{[3..n+2]}); # max on the left
+  seen:=BlistList([1..5], []); 
+  rank:=0;
+
+  for i in [1..n] do 
+    if x[n+2+i]<=m and not seen[x[n+2+i]] then 
+      seen[x[n+2+i]]:=true;
+      rank:=rank+1;
+    fi;
+  od;
+  return rank;
+end);
 
 # new for 1.0! - ELM_LIST - "for a bipartition and pos int"
 ############################################################################
 
 InstallOtherMethod(ELM_LIST, "for a bipartition and a pos int",
 [IsBipartition, IsPosInt], ELM_LIST_BP);
+
+# new for 1.0! - ELM_LIST - "for a bipartition and pos int"
+############################################################################
+
+InstallOtherMethod(ELMS_LIST, "for a bipartition and a pos int",
+[IsBipartition, IsDenseList and IsSmallList], ELMS_LIST_BP);
 
 # new for 1.0! - InternalRepOfBipartition - "for a bipartition"
 #############################################################################
@@ -212,10 +260,10 @@ InstallMethod(PrintObj, "for a bipartition",
 function(f)
   local ext, n, i, j;
   
-  Print("<bipartition: [ ");
+  Print("<bipartition: ");
   ext:=ExtRepBipartition(f);
   n:=DegreeOfBipartition(f)/2;
-  for i in [1..RankOfBipartition(f)] do 
+  for i in [1..f[2]] do 
 
     Print("[ ");
     for j in [1..Length(ext[i])-1] do 
@@ -230,7 +278,7 @@ function(f)
     else
       Print(ext[i][Length(ext[i])], " ");
     fi;
-    if i=RankOfBipartition(f) then 
+    if i=f[2] then 
       Print("] ");
     else
       Print("], ");
@@ -254,6 +302,18 @@ end);
 
 # new for 0.7! - PrintObj - "for a bipartition semigroup"
 ################################################################################
+
+InstallMethod(\*, "for a bipartition and a perm",
+[IsBipartition, IsPerm],
+function(f,g)
+  return f*AsBipartition(g, DegreeOfBipartition(f)/2);
+end);
+
+InstallMethod(\*, "for a perm and a bipartition",
+[IsPerm, IsBipartition],
+function(f,g)
+  return AsBipartition(f, DegreeOfBipartition(g)/2)*g;
+end);
 
 InstallMethod(\*, "for a bipartition and bipartition",
 [IsBipartition, IsBipartition], 
@@ -373,7 +433,7 @@ function(a)
   return out;
 end);
 
-InstallMethod(OnRightSignedPartitionWithBipartition, 
+InstallMethod(OnRightSignedPartition, 
 [IsList, IsBipartition],
 function(a, b)
   local n, p1, p2, fuse, mark, fuseit, x, y, tab3, c, j, next, i;
@@ -387,6 +447,11 @@ function(a, b)
 
   fuse:=[1..p1+p2];
   mark:=[1..p1+p2]*0;
+
+  for i in [1..p1] do 
+    mark[i]:=a[i+n+1];
+  od;
+
   fuseit := function(i) 
               while fuse[i] < i do i := fuse[i]; od; 
               return i; 
@@ -397,10 +462,10 @@ function(a, b)
     if x <> y then
       if x < y then
         fuse[y] := x;
-        if a[n+a[i+1]+1]=1 then mark[x]:=1; fi;
+        if mark[y]=1 then mark[x]:=1; fi;
       else
         fuse[x] := y;
-        if a[n+a[i+1]+1]=1 then mark[y]:=1; fi;
+        if mark[x]=1 then mark[y]:=1; fi;
       fi;
     fi;
   od;
@@ -422,7 +487,7 @@ function(a, b)
   return c;
 end);
 
-InstallMethod(OnLeftSignedPartitionWithBipartition, 
+InstallMethod(OnLeftSignedPartition, 
 [IsList, IsBipartition],
 function(a, b)
   local n, p1, p2, fuse, mark, fuseit, x, y, tab3, c, j, next, i;

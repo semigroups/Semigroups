@@ -285,7 +285,7 @@ end);
 # new for 0.7! - Display - "for a partial perm coll"
 #############################################################################
 
-InstallMethod(Display, "for a partial perm",
+InstallMethod(Display, "for a partial perm collection",
 [IsPartialPermCollection],
 function(coll)
   local i;

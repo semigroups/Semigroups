@@ -51,10 +51,10 @@ InstallMethod(RhoAct, "for a transformation semi",
 [IsTransformationSemigroup], x-> OnKerT);
 
 InstallMethod(LambdaAct, "for a bipartition semigroup",
-[IsBipartitionSemigroup], x-> OnRightSignedPartitionWithBipartition);
+[IsBipartitionSemigroup], x-> OnRightSignedPartition);
 
 InstallMethod(RhoAct, "for a bipartition semigroup",
-[IsBipartitionSemigroup], x-> OnLeftSignedPartitionWithBipartition);
+[IsBipartitionSemigroup], x-> OnLeftSignedPartition);
 
 if IsBound(OnIntegerSetsWithPP) then 
   InstallMethod(LambdaAct, "for a partial perm semi",
