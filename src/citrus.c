@@ -1095,7 +1095,7 @@ static inline Int LEN_BP(Obj f)
 
 /* from MN's PartitionExtRep */
 
-Obj FuncBipartitionNC(Obj self, Obj partition)
+Obj FuncBipartitionByPartitionNC(Obj self, Obj partition)
 { UInt2 rank, deg, i, j; 
   Obj f, class;
 
@@ -1118,24 +1118,31 @@ Obj FuncBipartitionNC(Obj self, Obj partition)
   return f;
 }
 
+Obj FuncBipartitionByIntRepNC(Obj self, Obj list)
+{ UInt2 rank, deg, i, j; 
+  Obj f;
+
+  rank=0;
+  deg=LEN_LIST(list);
+
+  f=NEW_UInt2(deg+2, BipartitionType);
+  SET_ELM_UInt2(f, 1, deg);
+
+  for(i=1;i<=deg;i++){
+    j=INT_INTOBJ(ELM_LIST(list, i));
+    SET_ELM_UInt2(f, i+2, (UInt2) j);
+    if(j>rank) rank=j;
+  }
+
+  SET_ELM_UInt2(f, 2, rank);
+  return f;
+}
+
 /* method for f[i] */
 Obj FuncELM_LIST_BP( Obj self, Obj f, Obj i)
 { 
   if(INT_INTOBJ(i)>LEN_BP(f)) return Fail;
   return INTOBJ_INT(ELM_UInt2(f, INT_INTOBJ(i)));
-}
-
-Obj FuncBipartitionByIntRep(Obj self, Obj x)
-{ UInt2 deg; 
-  Int i;
-  Obj f;
-
-  deg=(UInt2) INT_INTOBJ(ELM_LIST(x, 1));
-  f=NEW_UInt2(deg+2, BipartitionType);
-  SET_ELM_UInt2(f, 1, deg);
-
-  for(i=2;i<=deg+2;i++) SET_ELM_UInt2(f, i, (UInt2) INT_INTOBJ(ELM_LIST(x, i)));
-  return f;
 }
 
 /* i^f */ 
@@ -1278,18 +1285,18 @@ static StructGVarFunc GVarFuncs [] = {
 
   /* bipartitions start here */
 
-  { "BipartitionNC", 1, "partition",
-    FuncBipartitionNC, 
-    "pkg/citrus/src/citrus.c:FuncBipartitionNC" },
+  { "BipartitionByPartitionNC", 1, "partition",
+    FuncBipartitionByPartitionNC, 
+    "pkg/citrus/src/citrus.c:FuncBipartitionByPartitionNC" },
+
+  { "BipartitionByIntRepNC", 1, "list",
+    FuncBipartitionByIntRepNC, 
+    "pkg/citrus/src/citrus.c:FuncBipartitionByIntRepNC" },
 
   { "ELM_LIST_BP", 2, "f,i",
     FuncELM_LIST_BP,
     "pkg/citrus/src/citrus.c:ELM_LIST_BP" },
   
-  { "BipartitionByIntRep", 1, "x",
-    FuncBipartitionByIntRep,
-    "pkg/citrus/src/citrus.c:FuncBipartitionByIntRep" },
-
   { "OnPointsBP", 2, "i,f",
     FuncOnPointsBP,
     "pkg/citrus/src/citrus.c:FuncOnPointsBP" },

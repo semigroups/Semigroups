@@ -4,6 +4,8 @@ DeclareCategory("IsBipartition", IsMultiplicativeElementWithOne and
  IsAssociativeElement);
 DeclareCategoryCollections("IsBipartition");
 
+DeclareGlobalFunction("BipartitionNC");
+
 DeclareSynonym("IsBipartitionSemigroup", IsSemigroup and
 IsBipartitionCollection);
 
@@ -19,4 +21,5 @@ DeclareOperation("OnRightSignedPartitionWithBipartition", [IsList,
 IsBipartition]);
 DeclareOperation("OnLeftSignedPartitionWithBipartition", [IsList,
 IsBipartition]);
+DeclareOperation("RandomBipartition", [IsPosInt]);
 DeclareOperation("RankOfBipartition", [IsBipartition]);

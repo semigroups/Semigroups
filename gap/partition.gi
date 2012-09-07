@@ -5,7 +5,18 @@ BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
 BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsDataObjectRep and IsActingElt));
 
-
+InstallGlobalFunction(BipartitionNC, 
+function(arg)
+  if IsList(arg[1][1]) then 
+    return BipartitionByPartitionNC(arg[1]);
+  elif ForAll(arg[1], IsPosInt) then 
+    return BipartitionByIntRepNC(arg[1]);
+  fi;
+  Error("usage: the argument should be a partition or the ",
+  "internal rep of a partition");
+  return;
+end);
+    
 # new for 1.0! - \^ - "for a pos int and bipartition" 
 ############################################################################# 
 
@@ -68,8 +79,7 @@ end);
 InstallMethod(AsBipartition, "for a permutation and pos int",
 [IsPerm, IsPosInt],
 function(f, n)
-  return BipartitionByIntRep(Concatenation([2*n, n], [1..n], 
-   OnTuples([1..n], f^-1)));
+  return BipartitionByIntRepNC(Concatenation([1..n], OnTuples([1..n], f^-1)));
 end);
 
 # new for 1.0! - AsBipartition - "for a partial perm and pos int"
@@ -80,7 +90,6 @@ InstallOtherMethod(AsBipartition, "for a partial perm and pos int",
 function(f, n)
   local out, g, r, i;
 
-  out:=[2*n];
   g:=f^-1;
   r:=n;
 
@@ -93,8 +102,7 @@ function(f, n)
       out[n+i+2]:=r;
     fi;
   od;
-  out[2]:=r;
-  return BipartitionByIntRep(out); 
+  return BipartitionByIntRepNC(out); 
 end);
 
 # new for 1.0! - AsBipartition - "for a transformation"
@@ -108,7 +116,7 @@ function(f)
   n:=f[1];
   r:=f[2];
   ker:=KerT(f); 
-  out:=Concatenation([2*n, n], ker);
+  out:=Concatenation(ker);
   g:=List([1..f[1]], x-> 0);
 
   for i in RanSetT(f) do 
@@ -123,7 +131,7 @@ function(f)
       out[n+i+2]:=r;
     fi;
   od;
-  return BipartitionByIntRep(out);
+  return BipartitionByIntRepNC(out);
 end);
 
 # new for 1.0! - DegreeOfBipartition - "for a bipartition"
@@ -301,7 +309,7 @@ function(a,b)
       Add(c,tab3[x]);
   od;
   #Add(c,next-1);
-  return BipartitionByIntRep(Concatenation([2*n, next-1], c));
+  return BipartitionByIntRepNC(c);
 # return Concatenation([2*n, next-1], c);
 end);
 
@@ -463,7 +471,6 @@ function(a, b)
   return c;
 end);
 
-
 InstallMethod(OneMutable, "for a bipartition",
 [IsBipartition],
 function(a)
@@ -480,38 +487,25 @@ function(coll)
   return BipartitionNC(List([1..n], x-> [x, x+ n]));
 end);
 
-Do := function(n)
-    local eee,ppp,qqq;
-    ppp := PartitionsSet([1..2*n]);
-    #qqq := List(ppp,PartitionExtRep);
-    #eee := Filtered(qqq,x->x=PartitionComposition(x,x));
-    #Print("n=",n," partitions=",Length(ppp)," idempots=",Length(eee),"\n");
-    #return [n,Length(ppp),Length(eee)];
-end;
+InstallMethod(RandomBipartition, "for a pos int",
+[IsPosInt],
+function(n)
+  local out, m, vals, j, i;
 
-MakePartitions := function(n,f)
-  # This makes all partitions of 2*n in internal format and
-  # calls f on them.
-  local Recurse,i,v;
+  out:=EmptyPlist(2*n);
+  m:=1;
+  vals:=[1];
 
-  Recurse := function(n,depth,v,nrparts,f)
-    local i;
-    if depth > 2*n then
-        v[2*n+1] := nrparts;
-        f(v);
-        return;
+  for i in [1..2*n] do 
+    j:=Random(vals);
+    if j=m then 
+      m:=m+1;
+      Add(vals, m);
     fi;
-    for i in [1..nrparts] do
-        v[depth] := i;
-        Recurse(n,depth+1,v,nrparts,f);
-    od;
-    v[depth] := nrparts+1;
-    Recurse(n,depth+1,v,nrparts+1,f);
-  end;
-
-  v := EmptyPlist(2*n+1);
-  Recurse(n,1,v,0,f);
-end;
+    out[i]:=j;
+  od;
+  return BipartitionByIntRepNC(out);
+end);
 
 
 # Results:
@@ -523,18 +517,4 @@ end;
 # n=5 partitions=115975 idempots=25826
 # n=6 partitions=4213597 idempots=541254, 33 seconds
 # n=7 partitions=190899322 idempots=13479500, 1591 seconds
-
-DoCount := function(n)
-    local counteri,counterp,Tester;
-    counterp := 0;
-    counteri := 0;
-    Tester := function(x) 
-      counterp := counterp + 1;
-      if x = x*x then
-        counteri := counteri + 1; 
-      fi; 
-    end;
-    MakePartitions(n,Tester);
-    return [n,counterp,counteri];
-end;
 

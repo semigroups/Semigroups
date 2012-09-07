@@ -182,6 +182,13 @@ InstallMethod(RhoInverse, "for a partial perm semi",
     return f^-1;
   end);
 
+InstallMethod(RhoInverse, "for a bipartition",
+[IsBipartitionSemigroup], s-> 
+  function(x, f)
+    return f^-1;
+  end);
+
+
 # new for 1.0! - LambdaPerm
 ###############################################################################
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with

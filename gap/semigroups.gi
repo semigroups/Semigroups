@@ -832,6 +832,18 @@ end);
 
 #RRR
 
+InstallMethod(RandomBipartitionSemigroup, "for a pos int and pos int",
+[IsPosInt, IsPosInt],
+function(m, n)
+  return Semigroup(List([1..m], x-> RandomBipartition(n)));
+end);
+
+InstallMethod(RandomBipartitionMonoid, "for a pos int and pos int",
+[IsPosInt, IsPosInt],
+function(m, n)
+  return Monoid(List([1..m], x-> RandomBipartition(n)));
+end);
+
 InstallMethod(RandomMatrixSemigroup, "for a ring and pos int",
 [IsRing, IsPosInt, IsPosInt], 
 function(R, m, n)
