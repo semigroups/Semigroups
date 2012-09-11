@@ -23,6 +23,7 @@ HasGeneratorsOfSemigroup, IsActingElt]);
 DeclareOperation("InversesOfSemigroupElementNC", [IsActingSemigroup and
 HasGeneratorsOfSemigroup, IsActingElt]);
 
+DeclareOperation("IsomorphismBipartitionSemigroup", [IsSemigroup]);
 DeclareOperation("IsomorphismPartialPermMonoid", [IsPermGroup]);
 DeclareOperation("IsomorphismPartialPermSemigroup", [IsPermGroup]);
 DeclareOperation("IsomorphismTransformationMonoid", [IsSemigroup]);

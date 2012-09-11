@@ -1186,6 +1186,31 @@ Obj FuncOnPointsBP(Obj self, Obj i, Obj f)
     return out;
 }
 
+/* equality test for bipartitions */
+Obj FuncEqBP (Obj self, Obj f, Obj g)
+{ UInt2 n=ELM_UInt2(f, 1);
+  UInt2 i;
+
+  if(n!=ELM_UInt2(g,1)) return False;
+  if(n==1) return True;
+
+  /* search for a difference */
+  for(i=2;i<=n+2;i++) if(ELM_UInt2(f,i)!=ELM_UInt2(g,i)) return False;
+  return True;
+}
+
+/* less than or equal */
+Obj FuncLeqBP(Obj self, Obj f, Obj g)
+{ UInt2 i, j, k;
+
+  for(i=1;i<=ELM_UInt2(f,1)+2;i++){
+    j=ELM_UInt2(f,i);
+    k=ELM_UInt2(g,i);
+    if(j!=k) return (j<k?True:False);
+  }
+  return False;
+}
+
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
 
 /******************************************************************************

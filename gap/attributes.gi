@@ -49,8 +49,6 @@ local  en, gens, mapfun;
   return MagmaHomomorphismByFunctionNC( s, Semigroup( gens ), mapfun );
 end);
 
-
-
 #EEE
 
 # new for 1.0! - EmbeddingNC - "for a perm group and a semigroup"
@@ -339,6 +337,18 @@ function(s, f)
   fi; 
  
   return out;
+end);
+
+#JDM expand so that this is really an isomorphism and that the range knows some
+#of the properties that the domain does. 
+
+InstallMethod(IsomorphismBipartitionSemigroup, 
+"for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  
+  return MappingByFunction(s, Semigroup(List(GeneratorsOfSemigroup(s),     
+   AsBipartition)), AsBipartition, AsTransformation);
 end);
 
 # mod for 1.0! - IsomorphismTransformationSemigroup - "for a perm group"

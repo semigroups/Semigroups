@@ -70,7 +70,7 @@ end);
 InstallMethod(\=, "for a bipartition and bipartition", 
 [IsBipartition, IsBipartition],
 function(f,g)
-  return f[1]=g[1] and ForAll([1..f[1]+2], x-> f[x]=g[x]);
+  return ForAll([1..f[1]+2], x-> f[x]=g[x]);
 end);
 
 # new for 1.0! - AsBipartition - "for a permutation and pos int"
@@ -114,13 +114,14 @@ InstallOtherMethod(AsBipartition, "for a transformation",
 function(f)
   local n, r, ker, out, g, i;
 
-  n:=f[1];
-  r:=f[2];
+  n:=DegreeOfTransformation(f);
+  r:=RankOfTransformation(f);;
   ker:=KerT(f); 
   out:=ShallowCopy(ker);
-  g:=List([1..f[1]], x-> 0);
+  g:=List([1..n], x-> 0);
 
-  for i in RanSetT(f) do 
+  #inverse of f
+  for i in [1..n] do 
     g[f[i+2]]:=i;
   od;
 
