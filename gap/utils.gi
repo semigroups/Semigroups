@@ -369,7 +369,7 @@ function(arg)
       str:=Concatenation(String(m), n);
     
       for f in s do
-        Append(str, convert(RanT(f), m));
+        Append(str, convert(ImageListOfTransformation(f), m));
       od;
 
       AppendTo( output, str, "\n" );

@@ -155,7 +155,7 @@ function(s)
         
       if reg[val]=false then #old kernel
         #o:=ImageOrbitFromData(s, data); scc:=ImageOrbitSCCFromData(s, data);
-        reg[val]:=ForAny(scc, j-> IsInjectiveTransOnList(ker, o[j]));
+        reg[val]:=ForAny(scc, j-> IsInjectiveListTrans(o[j], ker));
       fi;
     fi;
   until IsDoneIterator(iter);
@@ -217,7 +217,7 @@ function(s)
     #scc:=KernelOrbitSCCFromData(s, d[2]);
     reg:=false;
     for i in scc do 
-      if IsInjectiveTransOnList(o[i], f) then 
+      if IsInjectiveListTrans(o[i], f) then 
         if reg then 
           Info(InfoCitrus, 2, "at least one L-class contains more than 1",
           " idempotent");
@@ -270,7 +270,7 @@ function(s)
 
   gens:=Generators(s);
 
-  idem:=List(gens, x->IdempotentNC(CanonicalTransSameKernel(x), 
+  idem:=List(gens, x->Idempotent(CanonicalTransSameKernel(x), 
    ImageSetOfTransformation(x)));
 
   for f in gens do
@@ -355,7 +355,7 @@ function(s)
   for f in gens do
     o:=Orb(gens, ImageSetOfTransformation(f), OnSets, 
      rec(lookingfor:=function(o, x) 
-     return not IsInjectiveTransOnList(f, x); end));
+     return not IsInjectiveListTrans(x, f); end));
     Enumerate(o);
     if not PositionOfFound(o)=false then 
       Info(InfoCitrus, 2, "at least one H-class is not a subgroup");
@@ -930,7 +930,7 @@ if Citrus_C then
 
     return MappingByFunction(s, 
      InverseMonoid(List(GeneratorsOfSemigroup(s), iso)), iso, 
-      x-> AsTransformationNC(x, LambdaDegree(s)));
+      x-> AsTransformation(x, LambdaDegree(s)));
   end);
 else
   InstallOtherMethod(IsomorphismPartialPermMonoid, "for a trans semi",
@@ -962,7 +962,7 @@ if Citrus_C then
 
     return MappingByFunction(s, 
      InverseSemigroup(List(GeneratorsOfSemigroup(s), iso)), iso, 
-      x-> AsTransformationNC(x, LambdaDegree(s)));
+      x-> AsTransformation(x, LambdaDegree(s)));
   end);
 else
   InstallOtherMethod(IsomorphismPartialPermSemigroup, "for a trans semi",
@@ -1075,10 +1075,10 @@ function(s)
   gens2:=EmptyPlist(m);
 
   for i in [1..m] do 
-    gens2[i]:=AsTransformationNC(gens1[i], n);
+    gens2[i]:=AsTransformation(gens1[i], n);
   od;
 
-  return MappingByFunction(s, Semigroup(gens2), x-> AsTransformationNC(x, n),
+  return MappingByFunction(s, Semigroup(gens2), x-> AsTransformation(x, n),
    AsPartialPermNC);
 end);
 
@@ -1101,10 +1101,10 @@ function(s)
   gens2:=EmptyPlist(m);
 
   for i in [1..m] do 
-    gens2[i]:=AsTransformationNC(gens1[i], n);
+    gens2[i]:=AsTransformation(gens1[i], n);
   od;
 
-  return MappingByFunction(s, Monoid(gens2), x-> AsTransformationNC(x, n),
+  return MappingByFunction(s, Monoid(gens2), x-> AsTransformation(x, n),
    AsPartialPermNC);
 end);
 
@@ -1480,7 +1480,7 @@ function(s)
     r:=RankOfTransformation(f);
     o:=Orb(gens, ImageSetOfTransformation(f), OnSets, 
         rec(lookingfor:=function(o, x) return Length(x)<r or not
-         IsInjectiveTransOnList(f, x); end));
+         IsInjectiveListTrans(x, f); end));
     Enumerate(o);
     if IsPosInt(PositionOfFound(o)) then 
       return false;

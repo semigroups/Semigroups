@@ -146,7 +146,7 @@ function(s, x)
   word:=TraceSchreierTreeOfSCCForward(o, m, l);
   v:=EvaluateWord(gens, word);
 
-  y:=x*MappingPermListList(OnIntegerTuplesWithT(o[scc[m][1]], v),
+  y:=x*MappingPermListList(OnTuples(o[scc[m][1]], v),
    o[scc[m][1]]); 
 
   # LambdaMult(o[scc[m][1]], v)^-1

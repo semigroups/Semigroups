@@ -373,7 +373,7 @@ function(g, n)
   fi;
   
   conj:=MappingPermListList(MovedPoints(g), [1..NrMovedPoints(g)]);
-  iso:=x-> AsTransformationNC(x^conj, n);
+  iso:=x-> AsTransformation(x^conj, n);
   s:=Semigroup(List(GeneratorsOfGroup(g), iso));
 
   return MappingByFunction(g, s, iso, AsPermutation);

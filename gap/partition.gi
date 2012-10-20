@@ -116,7 +116,7 @@ function(f)
 
   n:=DegreeOfTransformation(f);
   r:=RankOfTransformation(f);;
-  ker:=KerT(f); 
+  ker:=FlatKernelOfTransformation(f); 
   out:=ShallowCopy(ker);
   g:=List([1..n], x-> 0);
 
