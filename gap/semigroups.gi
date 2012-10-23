@@ -1154,6 +1154,8 @@ function(s)
     Print("bipartition ");
   elif IsMatrixSemigroup(s) then 
     Print("matrix ");
+  elif IsBinaryRelationSemigroup(s) then 
+    Print("binary relation ");
   fi;
   
   if IsMonoid(s) then 
@@ -1171,11 +1173,11 @@ function(s)
     Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]), " ");
   elif IsBipartitionSemigroup(s) then 
     Print("of degree ", DegreeOfBipartitionSemigroup(s)/2, " "); 
+  elif IsBinaryRelationSemigroup(s) then 
+    Print("of degree ", Length(Successors(Generators(s)[1])), " ");
   fi;
 
   Print("with ", Length(Generators(s)));
-
-
   Print(" generator");
 
   if Length(Generators(s))>1 then 
