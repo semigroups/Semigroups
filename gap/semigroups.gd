@@ -29,6 +29,7 @@ IsPartialPermCollection, IsRecord]);
 DeclareOperation("IsSubsemigroup", [IsActingSemigroup, IsActingSemigroup]);
 
 DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);
+DeclareOperation("RandomBinaryRelationMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomMatrixSemigroup", [IsRing, IsPosInt, IsPosInt]);
 DeclareOperation("RandomBlockGroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomInverseSemigroup", [IsPosInt, IsPosInt]);

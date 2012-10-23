@@ -19,7 +19,7 @@
 
 SetPackageInfo( rec(
 PackageName := "Semigroups",
-Subtitle := "Computing with Semigroups of Transformations and Partial Permutations",
+Subtitle := "Methods for Semigroups",
 Version := "1.0",
 Date := "06/07/2012",
 ArchiveURL := 
@@ -32,7 +32,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "jdm3@st-and.ac.uk",
-    WWWHome       := "http://tinyurl.com/jdmitchell",
+    WWWHome       := "",
     PostalAddress := Concatenation( [
                        "Mathematical Institute,",
                        " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,", 
@@ -74,7 +74,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",  
   SixFile   := "doc/manual.six",
-  LongTitle := "Semigroups - Computing with semigruops",
+  LongTitle := "Semigroups - Methods for semigroups",
   Autoload  := true
 ),
 

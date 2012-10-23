@@ -850,6 +850,19 @@ function(R, m, n)
   return Semigroup(List([1..m], x-> RandomMat(n, n, R)));
 end);
 
+# new for 1.0! - RandomBinaryRelationMonoid - "for pos int and pos int"
+#############################################################################
+
+InstallMethod(RandomBinaryRelationMonoid, "for pos int and pos int",
+[IsPosInt, IsPosInt],
+function(m,n)
+  local s;
+
+  s:=Monoid(List([1..m], x-> RandomBinaryRelationOnPoints(n)));
+  SetIsBinaryRelationSemigroup(s, true); 
+  return s;
+end);
+
 # new for 1.0! - RandomBinaryRelationSemigroup - "for pos int and pos int"
 #############################################################################
 
