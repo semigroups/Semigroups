@@ -11,7 +11,6 @@ function(s, t)
   #JDM something about monoids....
   if IsMonoid(s) then 
 
-
     m:=DegreeOfTransformationSemigroup(s);
   
     dom:=[1..m+DegreeOfTransformationSemigroup(t)]*1;
