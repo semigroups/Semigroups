@@ -24,7 +24,7 @@ end);
 # new for 0.7! - ClosureInverseSemigroup - "for an inverse semi"
 #############################################################################
 
-if Citrus_C then 
+if Semigroups_C then 
   InstallGlobalFunction(ClosureInverseSemigroup,
   function(arg)
     local n;
@@ -43,11 +43,11 @@ if Citrus_C then
       fi;
 
       if not IsBound(arg[3].small) then
-        arg[3].small:=CitrusOptionsRec.small;
+        arg[3].small:=SemigroupsOptionsRec.small;
       fi;
 
       if not IsBound(arg[3].hashlen) then
-        arg[3].hashlen:=CitrusOptionsRec.hashlen;
+        arg[3].hashlen:=SemigroupsOptionsRec.hashlen;
       elif IsPosInt(arg[3].hashlen) then
         n:=arg[3].hashlen;
         arg[3].hashlen:=rec(S:=NextPrimeInt(Int(n/100)),
@@ -71,7 +71,7 @@ if Citrus_C then
   end);
 else 
   InstallGlobalFunction(ClosureInverseSemigroup, 
-  function(arg) return CitrusIsNotCompiled(); end);
+  function(arg) return SemigroupsIsNotCompiled(); end);
 fi;
 
 # new for 0.7! - ClosureInverseSemigroupNC - "for an inverse semi"
@@ -83,7 +83,7 @@ if IsBound(DomPP) and IsBound(RanSetPP) then
     local t, coll_copy, o, f;
    
     if coll=[] then
-      Info(InfoCitrus, 2, "All the elements in the collection belong to the ",
+      Info(InfoSemigroups, 2, "All the elements in the collection belong to the ",
       " semigroup,");
       return s;
     fi;
@@ -125,7 +125,7 @@ if IsBound(DomPP) and IsBound(RanSetPP) then
   end);
 else 
   InstallGlobalFunction(ClosureInverseSemigroupNC, 
-  function(s, coll, opts) return CitrusIsNotCompiled(); end);
+  function(s, coll, opts) return SemigroupsIsNotCompiled(); end);
 fi;
 
 # mod for 0.6! - ClosureSemigroup - "for a trans. semi. and trans. coll."
@@ -177,7 +177,7 @@ function(s, coll, opts)
   local t, old_data, n, max_rank, orbits, lens, data_ht, data, data_len, images, old_lens, old_orbits, gens, ht, o, r, j, scc, reps, out, old_reps, old_data_list, old_reps_len, old_o, new_data, d, g, m, z, i, k, val, y;
  
   if coll=[] then 
-    Info(InfoCitrus, 2, "All the elements in the collection belong to the ",
+    Info(InfoSemigroups, 2, "All the elements in the collection belong to the ",
     " semigroup,");
     return s;
   fi;
@@ -410,7 +410,7 @@ function(gens)
   local M;
    
   M:=Objectify( NewType( FamilyObj( gens ), 
-   IsMagma and IsAttributeStoringRep ), rec(opts:=CitrusOptionsRec));
+   IsMagma and IsAttributeStoringRep ), rec(opts:=SemigroupsOptionsRec));
 
   SetGeneratorsOfMagma( M, AsList( gens ) );
   return M;
@@ -423,7 +423,7 @@ end);
 InstallOtherMethod(MonoidByGenerators, "for an acting elt collection",
 [IsActingEltCollection],
 function(gens)
-  return MonoidByGenerators(gens, CitrusOptionsRec);
+  return MonoidByGenerators(gens, SemigroupsOptionsRec);
 end);
 
 # mod for 0.6! - MonoidByGenerators -  for an acting elt collection and rec
@@ -435,15 +435,15 @@ function(gens, opts)
   local n, i, closure_opts, s, f;
  
   if not IsBound(opts.regular) then 
-    opts.regular:=CitrusOptionsRec.regular;
+    opts.regular:=SemigroupsOptionsRec.regular;
   fi;
 
   if not IsBound(opts.small) then 
-    opts.small:=CitrusOptionsRec.small;
+    opts.small:=SemigroupsOptionsRec.small;
   fi;
   
   if not IsBound(opts.hashlen) then
-    opts.hashlen:=CitrusOptionsRec.hashlen;
+    opts.hashlen:=SemigroupsOptionsRec.hashlen;
   elif IsPosInt(opts.hashlen) then  
     n:=opts.hashlen; 
     opts.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)), 
@@ -470,7 +470,7 @@ function(gens, opts)
     closure_opts:=rec(small:=false, hashlen:=opts.hashlen);
     s:=Monoid(gens[1], closure_opts);
 
-    if InfoLevel(InfoCitrus)>1 then
+    if InfoLevel(InfoSemigroups)>1 then
       n:=Length(gens);
       for i in [1..n] do
         if not gens[i] in s then 
@@ -502,7 +502,7 @@ end);
 # new for 0.7! - InverseMonoid
 ##############################################################################
 
-if Citrus_C then 
+if Semigroups_C then 
   InstallGlobalFunction(InverseMonoid,
   function( arg )
     local out, i;
@@ -534,13 +534,13 @@ if Citrus_C then
   end);
 else 
   InstallGlobalFunction(InverseMonoid, 
-  function(arg) return CitrusIsNotCompiled(); end);
+  function(arg) return SemigroupsIsNotCompiled(); end);
 fi;
 
 # new for 0.7! - InverseSemigroup
 ##############################################################################
 
-if Citrus_C then 
+if Semigroups_C then 
   InstallGlobalFunction(InverseSemigroup,
   function( arg )
     local out, i;
@@ -572,7 +572,7 @@ if Citrus_C then
   end);
 else 
   InstallGlobalFunction(InverseSemigroup, 
-  function(arg) return CitrusIsNotCompiled(); end);
+  function(arg) return SemigroupsIsNotCompiled(); end);
 fi;
 
 # new for 0.7! - InverseMonoidByGenerators
@@ -592,7 +592,7 @@ if IsBound(DomPP) and IsBound(RanSetPP) then
       fi;
     od;
   
-    return InverseMonoidByGeneratorsNC(gens, coll, CitrusOptionsRec);
+    return InverseMonoidByGeneratorsNC(gens, coll, SemigroupsOptionsRec);
   end);
 fi;
 
@@ -613,7 +613,7 @@ if IsBound(DomPP) and IsBound(RanSetPP) then
       fi;
     od;
 
-    return InverseSemigroupByGeneratorsNC(gens, coll, CitrusOptionsRec);
+    return InverseSemigroupByGeneratorsNC(gens, coll, SemigroupsOptionsRec);
   end);
 fi;
 
@@ -629,11 +629,11 @@ if IsBound(DomPP) and IsBound(RanSetPP) then
     local n, one, f, gens;
     
     if not IsBound(opts.small) then
-      opts.small:=CitrusOptionsRec.small;
+      opts.small:=SemigroupsOptionsRec.small;
     fi;
 
     if not IsBound(opts.hashlen) then
-      opts.hashlen:=CitrusOptionsRec.hashlen;
+      opts.hashlen:=SemigroupsOptionsRec.hashlen;
     elif IsPosInt(opts.hashlen) then
       n:=opts.hashlen;
       opts.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)),
@@ -671,11 +671,11 @@ if IsBound(DomPP) and IsBound(RanSetPP) then
     local n, f, gens;
 
     if not IsBound(opts.small) then
-      opts.small:=CitrusOptionsRec.small;
+      opts.small:=SemigroupsOptionsRec.small;
     fi;
 
     if not IsBound(opts.hashlen) then
-      opts.hashlen:=CitrusOptionsRec.hashlen;
+      opts.hashlen:=SemigroupsOptionsRec.hashlen;
     elif IsPosInt(opts.hashlen) then
       n:=opts.hashlen;
       opts.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)),
@@ -866,7 +866,7 @@ end);
 # new for 1.0! - RandomBlockGroup - for a pos int and pos int
 #############################################################################
 
-if Citrus_C then 
+if Semigroups_C then 
   InstallMethod(RandomBlockGroup, "for pos int and pos int",
   [IsPosInt, IsPosInt],
   function(m,n)
@@ -874,13 +874,13 @@ if Citrus_C then
   end);
 else
   InstallMethod(RandomBlockGroup, "for pos int and pos int",
-  [IsPosInt, IsPosInt], CitrusIsNotCompiled);
+  [IsPosInt, IsPosInt], SemigroupsIsNotCompiled);
 fi;
 
 # new for 0.7! - RandomInverseMonoid - for a pos int and pos int
 #############################################################################
 
-if Citrus_C then 
+if Semigroups_C then 
   InstallMethod(RandomInverseMonoid, "for pos int and pos int",
   [IsPosInt, IsPosInt],
   function(m,n)
@@ -888,13 +888,13 @@ if Citrus_C then
   end);
 else
   InstallMethod(RandomInverseMonoid, "for pos int and pos int",
-  [IsPosInt, IsPosInt], CitrusIsNotCompiled);
+  [IsPosInt, IsPosInt], SemigroupsIsNotCompiled);
 fi;
 
 # new for 0.7! - RandomInverseSemigp - for a pos int and pos int
 #############################################################################
 
-if Citrus_C then 
+if Semigroups_C then 
   InstallMethod(RandomInverseSemigroup, "for pos int and pos int",
   [IsPosInt, IsPosInt],
   function(m,n)
@@ -902,7 +902,7 @@ if Citrus_C then
   end);
 else
   InstallMethod(RandomInverseSemigroup, "for pos int and pos int",
-  [IsPosInt, IsPosInt], CitrusIsNotCompiled);
+  [IsPosInt, IsPosInt], SemigroupsIsNotCompiled);
 fi;
 
 # mod for 0.8! - RandomTransformationSemigroup 
@@ -977,27 +977,27 @@ end);
 InstallOtherMethod(SemigroupByGenerators, "for an acting elt collection",
 [IsActingEltCollection],
 function(gens)
-   return SemigroupByGenerators(gens, CitrusOptionsRec);
+   return SemigroupByGenerators(gens, SemigroupsOptionsRec);
 end);
 
 # mod for 0.6! - SemigroupByGenerators -  "for a trans. coll. and record"
 ##############################################################################
 
-InstallOtherMethod(SemigroupByGenerators, "(Citrus) for trans coll and record",
+InstallOtherMethod(SemigroupByGenerators, "(Semigroups) for trans coll and record",
 [IsActingEltCollection, IsRecord],
 function(gens, opts)
   local n, i, closure_opts, s, f;
 
   if not IsBound(opts.regular) then 
-    opts.regular:=CitrusOptionsRec.regular;
+    opts.regular:=SemigroupsOptionsRec.regular;
   fi;
 
   if not IsBound(opts.small) then 
-    opts.small:=CitrusOptionsRec.small;
+    opts.small:=SemigroupsOptionsRec.small;
   fi;
 
   if not IsBound(opts.hashlen) then
-    opts.hashlen:=CitrusOptionsRec.hashlen;
+    opts.hashlen:=SemigroupsOptionsRec.hashlen;
   elif IsPosInt(opts.hashlen) then 
     n:=opts.hashlen;
     opts.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)),
@@ -1023,7 +1023,7 @@ function(gens, opts)
     closure_opts:=rec(small:=false, hashlen:=opts.hashlen);
     s:=Semigroup(gens[1], closure_opts);
 
-    if InfoLevel(InfoCitrus)>1 then
+    if InfoLevel(InfoSemigroups)>1 then
       n:=Length(gens);
       for i in [1..n] do
         if not gens[i] in s then

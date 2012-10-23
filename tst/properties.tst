@@ -8,19 +8,19 @@
 #############################################################################
 ##
 
-#ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"properties.tst"));
-gap> START_TEST("Citrus package: properties.tst");
-gap> LoadPackage("citrus", false);;
+#ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"properties.tst"));
+gap> START_TEST("Semigroups package: properties.tst");
+gap> LoadPackage("semigroups", false);;
 
 #
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
 gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrus, 0);
+gap> SetInfoLevel(InfoSemigroups, 0);
 
 #
-gap> file:=Concatenation(CitrusDir(), "/examples/misc.citrus.gz");;
-gap> semis:=List([1..22], i-> Semigroup(ReadCitrus(file, i)));;
+gap> file:=Concatenation(SemigroupsDir(), "/examples/misc.semigroups.gz");;
+gap> semis:=List([1..22], i-> Semigroup(ReadSemigroups(file, i)));;
 gap> List([1..15], i-> IsCompletelyRegularSemigroup(semis[i]));   
 [ false, true, false, false, false, true, true, true, true, true, false, 
   false, false, false, true ]
@@ -965,8 +965,8 @@ gap> IsAdequateSemigroup(s);
 false
 
 #
-gap> file:=Concatenation(CitrusDir(), "/examples/graph8c.citrus.gz");;
-gap> ReadCitrus(file, 1303);;
+gap> file:=Concatenation(SemigroupsDir(), "/examples/graph8c.semigroups.gz");;
+gap> ReadSemigroups(file, 1303);;
 gap> s:=Semigroup(last);;
 gap> t:=IdempotentGeneratedSubsemigp(s);;
 gap> Size(t);
@@ -991,8 +991,8 @@ gap> Size(t);
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
+gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
 
 #
 gap> Unbind(semis); Unbind(file); Unbind(s); Unbind(d); 
@@ -1000,4 +1000,4 @@ gap> Unbind(g); Unbind(gens); Unbind(t); Unbind(i); Unbind(f);
 gap> Unbind(g); Unbind(rms);
 
 #
-gap> STOP_TEST( "Citrus package: properties.tst", 10000);
+gap> STOP_TEST( "Semigroups package: properties.tst", 10000);

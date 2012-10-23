@@ -8,16 +8,16 @@
 #############################################################################
 ##
 
-# ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"transform.tst"));
+# ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"transform.tst"));
 # around 2.3s.
-gap> START_TEST("CitrusPackage: transform.tst");
-gap> LoadPackage("citrus", false);;
+gap> START_TEST("SemigroupsPackage: transform.tst");
+gap> LoadPackage("semigroups", false);;
 
 #
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
 gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrus, 0);
+gap> SetInfoLevel(InfoSemigroups, 0);
 
 #
 gap> gens:=[ Transformation( [ 2, 3, 2, 4, 3 ] ), 
@@ -286,8 +286,8 @@ true
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
+gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
 
 #
-gap> STOP_TEST( "Citrus package: transform.tst", 10000);
+gap> STOP_TEST( "Semigroups package: transform.tst", 10000);

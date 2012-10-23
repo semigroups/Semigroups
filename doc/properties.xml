@@ -23,8 +23,8 @@
       See also <Ref Oper="IsomorphismTransformationSemigroup" BookName="ref"/>. 
 
       <Example>
-gap> file:=Concatenation(CitrusDir(), "/examples/selfcomp.citrus.gz");;
-gap> S:=Semigroup(ReadCitrus(file, 34));;
+gap> file:=Concatenation(SemigroupsDir(), "/examples/selfcomp.semigroups.gz");;
+gap> S:=Semigroup(ReadSemigroups(file, 34));;
 gap> Size(S);
 1016
 gap> AntiIsomorphismTransformationSemigroup(S); 
@@ -91,8 +91,8 @@ fail</Example>
       
       See also <Ref Attr="Idempotents"/> and <Ref Attr="SmallGeneratingSet"/>.
 <Example>
-gap> file:=Concatenation(CitrusDir(), "/examples/graph8c.citrus.gz");;
-gap> S:=Semigroup(ReadCitrus(file, 13));;
+gap> file:=Concatenation(SemigroupsDir(), "/examples/graph8c.semigroups.gz");;
+gap> S:=Semigroup(ReadSemigroups(file, 13));;
 gap> IdempotentGeneratedSubsemigp(S);
 &lt;monoid with 20 generators>
 gap> S:=SymmetricInverseSemigp(5);
@@ -1266,7 +1266,7 @@ false</Example>
 
     Currently, <C>MinimalIdeal</C> returns a semigroup with as
     many generators as elements. There are plans to improve this in future
-    versions of &Citrus;. <P/>
+    versions of &Semigroups;. <P/>
 
     Note that <C>MinimalIdeal</C> is significantly faster than finding the
     &D;-class with minimum rank representative (which is also

@@ -8,14 +8,14 @@
 #############################################################################
 
 
-gap> START_TEST("Citrus package: examples.tst");
-gap> LoadPackage("citrus", false);;
+gap> START_TEST("Semigroups package: examples.tst");
+gap> LoadPackage("semigroups", false);;
 
 #
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
 gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrus, 0);
+gap> SetInfoLevel(InfoSemigroups, 0);
 
 #
 gap> 
@@ -1361,7 +1361,7 @@ gap> IsZeroSemigroup(s);
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
+gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
 gap> Unbind(s);; Unbind(gens);;
-gap> STOP_TEST("Citrus package: examples.tst", 0);
+gap> STOP_TEST("Semigroups package: examples.tst", 0);

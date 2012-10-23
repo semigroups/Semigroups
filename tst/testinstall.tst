@@ -8,16 +8,16 @@
 #############################################################################
 ##
 
-# ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"testinstall.tst"));
+# ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"testinstall.tst"));
 
-gap> START_TEST("Citrus package: testinstall.tst");
-gap> LoadPackage( "citrus", false );;
+gap> START_TEST("Semigroups package: testinstall.tst");
+gap> LoadPackage( "semigroups", false );;
 
 # Set info levels
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
 gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrus, 0);
+gap> SetInfoLevel(InfoSemigroups, 0);
 
 # 
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
@@ -167,7 +167,7 @@ gap> t:=ClosureSemigroup(s, [Transformation( [ 4, 4, 3, 1, 5, 6, 3, 8 ] )]);
 gap> Size(t)=Size(Semigroup(Generators(t)));
 true
 
-#gap> s:=Semigroup(ReadCitrus("pkg/citrus/examples/graph9c.citrus.gz", 100013));;
+#gap> s:=Semigroup(ReadSemigroups("pkg/semigroups/examples/graph9c.semigroups.gz", 100013));;
 gap> s:=Semigroup([ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ), 
 >  Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 8 ] ), 
 >  Transformation( [ 7, 2, 8, 4, 5, 6, 1, 9, 8 ] ), 
@@ -276,6 +276,6 @@ gap> IsomorphismGroups(g, h);
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
-gap> STOP_TEST( "Citrus package: testinstall.tst", 10000);
+gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
+gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
+gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);

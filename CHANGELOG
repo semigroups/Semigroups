@@ -21,7 +21,7 @@
             another minor release. Specific changes were: removed the
             declaration of SmallGeneratingSet for IsSemigroup since it appears
             not to be used and caused a warning to be shown when rcwa was
-            loaded after Citrus. Added a new abstract to the PackageInfo.g
+            loaded after Semigroups. Added a new abstract to the PackageInfo.g
             file, and the documentation, and updated the webpages, in
             particular so that the html version of the manual is linked to that
             on the GAP webpage and the links to other manuals work. 
@@ -34,7 +34,7 @@
 
 0.7 -> 0.8 
             minor changes due to incompatibility with Smallsemi 0.6.4 which 
-            caused some test files to fail when Nilmat was loaded after Citrus.
+            caused some test files to fail when Nilmat was loaded after Semigroups.
             The clashes and the failed test were caused by various properties
             being declared for IsTransformationSemigroup rather than
             IsSemigroup. 
@@ -61,8 +61,8 @@
 0.5 -> 0.6 
             fixed a bug relating to the creation of transformation semigroups 
             using MagmaByGenerators. Also added the global variable 
-            CitrusOptionsRec containing the default values of the options used 
-            by Citrus when creating a semigroup. 
+            SemigroupsOptionsRec containing the default values of the options used 
+            by Semigroups when creating a semigroup. 
 
 0.4 -> 0.5
             major changes are: the documentation has been further revised,
@@ -70,7 +70,7 @@
             options have been introduced, several functions have had the word
             `Greens' removed from their names to reduce the length, the
             operation ClosureSemigroup has been introduced, the functions
-            ReadCitrus and WriteCitrus for reading and writing transformations
+            ReadSemigroups and WriteSemigroups for reading and writing transformations
             to a file have been introduced, several catalogues of examples of
             transformation semigroups are now included in the examples
             directory, methods for creating a Green's class inside another
@@ -114,11 +114,11 @@
     
             fixed bugs in IndexPeriodOfTransformation (it returned incorrect
             results) and AsPermutation. Also reduce hash table lengths so that 
-            Citrus uses less memory. Fixed bug that triggered an infinite
+            Semigroups uses less memory. Fixed bug that triggered an infinite
             loop when trying to find elements of a trivial trans. semigroup.  
 
-            added the functions CitrusDefaultMem, CitrusHiMem, CitrusLoMem,
-            CitrusVeryLoMem, IsBrandtSemigroup, IsLeftSimple,
+            added the functions SemigroupsDefaultMem, SemigroupsHiMem, SemigroupsLoMem,
+            SemigroupsVeryLoMem, IsBrandtSemigroup, IsLeftSimple,
             IsMonogenicSemigroup, IsRightSimple, IsZeroRectangularBand,
             IsZeroSimpleSemigroup. 
 

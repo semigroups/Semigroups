@@ -8,16 +8,16 @@
 #############################################################################
 ##
 
-# ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"closure.tst"));
+# ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"closure.tst"));
 
-gap> START_TEST("Citrus package: closure.tst");
-gap> LoadPackage("citrus", false);;
+gap> START_TEST("Semigroups package: closure.tst");
+gap> LoadPackage("semigroups", false);;
 
 #
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
 gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrus, 0);
+gap> SetInfoLevel(InfoSemigroups, 0);
 
 #
 gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ), 
@@ -40,8 +40,8 @@ gap> GroupOfUnits(s);
 <monoid with 1 generator>
 
 #
-gap> file:=Concatenation(CitrusDir(), "/examples/syntactic.citrus.gz");;
-gap> gens:=ReadCitrus(file, 299);;
+gap> file:=Concatenation(SemigroupsDir(), "/examples/syntactic.semigroups.gz");;
+gap> gens:=ReadSemigroups(file, 299);;
 gap> s:=Semigroup(gens[1]);;
 gap> for i in [2..Length(gens)] do 
 > s:=ClosureSemigroup(s, gens[i]);
@@ -64,8 +64,8 @@ gap> NrLClasses(t);
 353
 
 #
-gap> file:=Concatenation(CitrusDir(), "/examples/syntactic.citrus.gz");;
-gap> gens:=ReadCitrus(file, 299);;
+gap> file:=Concatenation(SemigroupsDir(), "/examples/syntactic.semigroups.gz");;
+gap> gens:=ReadSemigroups(file, 299);;
 gap> s:=Semigroup(gens[1], rec(schreier:=false));;
 gap> for i in [2..Length(gens)] do 
 > s:=ClosureSemigroup(s, gens[i]);
@@ -88,8 +88,8 @@ gap> NrLClasses(t);
 353
 
 #
-gap> file:=Concatenation(CitrusDir(), "/examples/path.citrus.gz");;
-gap> gens:=ReadCitrus(file, 10);;
+gap> file:=Concatenation(SemigroupsDir(), "/examples/path.semigroups.gz");;
+gap> gens:=ReadSemigroups(file, 10);;
 gap> s:=Semigroup(gens[1]);;         
 gap> for i in [2..Length(gens)] do
 > s:=ClosureSemigroup(s, gens[i]);
@@ -112,8 +112,8 @@ gap> NrRClasses(t); NrLClasses(t); NrDClasses(t); NrIdempotents(t);
 423
 
 #
-gap> file:=Concatenation(CitrusDir(), "/examples/path.citrus.gz");;
-gap> gens:=ReadCitrus(file, 10);;
+gap> file:=Concatenation(SemigroupsDir(), "/examples/path.semigroups.gz");;
+gap> gens:=ReadSemigroups(file, 10);;
 gap> s:=Semigroup(gens[1]);;        
 gap> s:=ClosureSemigroup(s, gens[2], rec(schreier:=false));;
 gap> for i in [2..Length(gens)] do
@@ -252,7 +252,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
+gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
 gap> Unbind(s);; Unbind(t);; Unbind(i);; Unbind(gens);;
-gap> STOP_TEST( "Citrus package: closure.tst", 10000);
+gap> STOP_TEST( "Semigroups package: closure.tst", 10000);

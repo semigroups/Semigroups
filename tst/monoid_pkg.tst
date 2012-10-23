@@ -7,18 +7,18 @@
 #
 #############################################################################
 ##
-#ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"monoid_pkg.tst"));
+#ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"monoid_pkg.tst"));
 # approx. 9s
 # a concatenation of relevant tests from the monoid/tst. 
 # Miscellaneous
-gap> START_TEST("Citrus package: monoid_pkg.tst");
-gap> LoadPackage("citrus", false);;
+gap> START_TEST("Semigroups package: monoid_pkg.tst");
+gap> LoadPackage("semigroups", false);;
 
 #
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
 gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrus, 0);
+gap> SetInfoLevel(InfoSemigroups, 0);
 
 #
 gap> g:=CyclicGroup(3);;
@@ -1515,8 +1515,8 @@ gap> Unbind(semis); Unbind(S); Unbind(m);
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
+gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
 
 #
-gap> STOP_TEST( "Citrus package: monoid_pkg.tst", 10000);
+gap> STOP_TEST( "Semigroups package: monoid_pkg.tst", 10000);

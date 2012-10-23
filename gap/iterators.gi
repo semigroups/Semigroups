@@ -460,7 +460,7 @@ InstallMethod(Iterator, "for a full transformation semigroup",
 function(s)
   local iter;
   
-  Info(InfoCitrus, 4, "Iterator: for a full trans. semigroup");
+  Info(InfoSemigroups, 4, "Iterator: for a full trans. semigroup");
 
   iter:= IteratorByFunctions( rec(
 

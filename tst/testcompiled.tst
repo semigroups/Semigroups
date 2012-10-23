@@ -8,20 +8,20 @@
 #############################################################################
 ##
 
-# ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),
+# ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),
 # "testcompiled.tst"));
-gap> START_TEST("Citrus package: testcompiled.tst");
-gap> LoadPackage( "citrus", false );;
+gap> START_TEST("Semigroups package: testcompiled.tst");
+gap> LoadPackage( "semigroups", false );;
 
 #
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
 gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrus, 0);
+gap> SetInfoLevel(InfoSemigroups, 0);
 
 #
-gap> file:=Concatenation(CitrusDir(), "/examples/munn.citrus.gz");;
-gap>  ReadCitrus(file, 1376);
+gap> file:=Concatenation(SemigroupsDir(), "/examples/munn.semigroups.gz");;
+gap>  ReadSemigroups(file, 1376);
 [ <identity on [ 1 .. 9 ]>, <identity on [ 1, 2, 3, 4, 5, 6, 7, 9 ]>, 
   <identity on [ 1, 2, 3, 4, 5, 6, 9 ]>, <identity on [ 1, 2, 3, 4, 5, 9 ]>, 
   <identity on [ 1, 2, 3, 4, 9 ]>, <identity on [ 1, 2, 3, 9 ]>, 
@@ -118,6 +118,6 @@ gap> Perform( s, function(pp) PrettyPrintPP(pp); Print("\n"); end );
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
-gap> STOP_TEST( "Citrus package: testcompiled.tst", 10000);
+gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
+gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
+gap> STOP_TEST( "Semigroups package: testcompiled.tst", 10000);

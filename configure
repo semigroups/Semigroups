@@ -1,5 +1,5 @@
 #!/bin/sh
-# configure script for the citrus package, adapted from Max Neunhoeffer's
+# configure script for the semigroups package, adapted from Max Neunhoeffer's
 # script for orb.
 # usage: ./configure GAPPATH
 # this script creates a "Makefile" from "Makefile.in"

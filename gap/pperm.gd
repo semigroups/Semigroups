@@ -11,7 +11,7 @@
 # internal use only
 DeclareGlobalFunction("DenseRangeList");
 DeclareGlobalFunction("InternalRepOfPartialPerm");
-DeclareGlobalFunction("CITRUS_HashFunctionForPP");
+DeclareGlobalFunction("SEMIGROUPS_HashFunctionForPP");
 
 # everything else
 DeclareCategory("IsPartialPerm", IsMultiplicativeElementWithOne and

@@ -17,11 +17,11 @@ syntax: glob
 *.toc
 *.six
 *.synctex.gz
-citrus.tex
-citrus_dev.tex
+semigroups.tex
+semigroups_dev.tex
 Makefile
 bin/*
 Transitions*
 *.g6
 *.gz
-*.citrus
+*.semigroups

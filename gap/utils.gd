@@ -8,14 +8,14 @@
 #############################################################################
 ##
 
-DeclareGlobalFunction("CitrusDir");
-DeclareGlobalFunction("CitrusMakeDoc");
-DeclareGlobalFunction("CitrusMathJaxLocal");
-DeclareGlobalFunction("CitrusMathJaxDefault");
-DeclareGlobalFunction("CitrusTestAll");
-DeclareGlobalFunction("CitrusTestInstall");
-DeclareGlobalFunction("CitrusTestManualExamples");
-DeclareGlobalFunction("CitrusReadTestManualExamples");
+DeclareGlobalFunction("SemigroupsDir");
+DeclareGlobalFunction("SemigroupsMakeDoc");
+DeclareGlobalFunction("SemigroupsMathJaxLocal");
+DeclareGlobalFunction("SemigroupsMathJaxDefault");
+DeclareGlobalFunction("SemigroupsTestAll");
+DeclareGlobalFunction("SemigroupsTestInstall");
+DeclareGlobalFunction("SemigroupsTestManualExamples");
+DeclareGlobalFunction("SemigroupsReadTestManualExamples");
 DeclareGlobalFunction("DClass");
 DeclareGlobalFunction("DClassNC");
 
@@ -23,10 +23,10 @@ if not IsBound(Generators) then
   DeclareAttribute("Generators", IsSemigroup);
 fi;
 
-DeclareGlobalFunction("ReadCitrus");
-DeclareGlobalFunction("ReadCitrusLine");
-DeclareGlobalFunction("ReadCitrusLinePP");
-DeclareGlobalFunction("WriteCitrus");
+DeclareGlobalFunction("ReadSemigroups");
+DeclareGlobalFunction("ReadSemigroupsLine");
+DeclareGlobalFunction("ReadSemigroupsLinePP");
+DeclareGlobalFunction("WriteSemigroups");
 
-DeclareGlobalFunction("CitrusIsNotCompiled");
+DeclareGlobalFunction("SemigroupsIsNotCompiled");
 

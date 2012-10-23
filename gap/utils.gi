@@ -8,43 +8,43 @@
 #############################################################################
 ##
 
-# this file contains utilies for use with the Citrus package. 
+# this file contains utilies for use with the Semigroups package. 
 
-# new for 0.5! - CitrusDir - for no arg.
+# new for 0.5! - SemigroupsDir - for no arg.
 #############################################################################
 
-InstallGlobalFunction(CitrusDir, 
+InstallGlobalFunction(SemigroupsDir, 
 function()
-  return PackageInfo("citrus")[1]!.InstallationPath;
+  return PackageInfo("semigroups")[1]!.InstallationPath;
 end);
 
-# new for 0.7 - CitrusIsNotCompiled - for no arg
+# new for 0.7 - SemigroupsIsNotCompiled - for no arg
 #############################################################################
 
-InstallGlobalFunction(CitrusIsNotCompiled, 
+InstallGlobalFunction(SemigroupsIsNotCompiled, 
 function(arg)
-  Info(InfoWarning, 1, "Citrus is not compiled and consequently this",  
+  Info(InfoWarning, 1, "Semigroups is not compiled and consequently this",  
   " function is unavailable.");
   return fail;
 end);
 
-# mod for 0.7! - CitrusMakeDoc - "for no argument"
+# mod for 0.7! - SemigroupsMakeDoc - "for no argument"
 #############################################################################
 
-InstallGlobalFunction(CitrusMakeDoc, 
+InstallGlobalFunction(SemigroupsMakeDoc, 
 function()
-  MakeGAPDocDoc(Concatenation(PackageInfo("citrus")[1]!.
-   InstallationPath, "/doc"), "citrus.xml", 
+  MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.
+   InstallationPath, "/doc"), "semigroups.xml", 
    ["utils.xml", "greens.xml", "inverse.xml", "orbits.xml", "properties.xml",
    "semigroups.xml", "transform.xml", "pperm.xml", "../PackageInfo.g"],
-   "citrus", "MathJax", "../../..");;
+   "semigroups", "MathJax", "../../..");;
   return;
 end);
 
-# new for 0.4! - CitrusMathJaxDefault - "for no argument"
+# new for 0.4! - SemigroupsMathJaxDefault - "for no argument"
 #############################################################################
 
-InstallGlobalFunction(CitrusMathJaxDefault, 
+InstallGlobalFunction(SemigroupsMathJaxDefault, 
 function()
 GAPDoc2HTMLProcs.Head1MathJax:=Concatenation(
 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<!DOCTYPE html PUBLIC",
@@ -55,14 +55,14 @@ GAPDoc2HTMLProcs.Head1MathJax:=Concatenation(
 " type=\"text/javascript\"\n",
 "src=\"http://cdn.mathjax.org/mathjax/latest/MathJax",
 ".js?config=TeX-AMS-MML_HTMLorMML\">\n</script>\n<title>GAP (");
-Info(InfoCitrus, 1, "don't forget to run CitrusMakeDoc()");
+Info(InfoSemigroups, 1, "don't forget to run SemigroupsMakeDoc()");
 return;
 end);
 
-# new for 0.4! - CitrusMathJaxLocal - "for a path to the MathJax folder"
+# new for 0.4! - SemigroupsMathJaxLocal - "for a path to the MathJax folder"
 #############################################################################
 
-InstallGlobalFunction(CitrusMathJaxLocal, 
+InstallGlobalFunction(SemigroupsMathJaxLocal, 
 function(arg)
   local path;
 
@@ -80,29 +80,29 @@ function(arg)
   "xml:lang=\"en\"\ >\n<head>\n<script type=\"text/javascript\"",
   "\n src=\"", path, "/MathJax/MathJax.js?config=default",
   "\">\n</script>\n<title>GAP\ (");
-  Info(InfoCitrus, 1, "don't forget to run CitrusMakeDoc()");
+  Info(InfoSemigroups, 1, "don't forget to run SemigroupsMakeDoc()");
   return;
 end);
 
-# mod for 0.7! - CitrusTestAll - "for no argument"
+# mod for 0.7! - SemigroupsTestAll - "for no argument"
 #############################################################################
 
-InstallGlobalFunction(CitrusTestAll, 
+InstallGlobalFunction(SemigroupsTestAll, 
 function()
   local dir_str, tst, dir, str, x;
   
   Print(
-  "Reading all .tst files in the directory citrus/tst/...\n\n"); 
-  dir_str:=Concatenation(PackageInfo("citrus")[1]!.InstallationPath,"/tst");
+  "Reading all .tst files in the directory semigroups/tst/...\n\n"); 
+  dir_str:=Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,"/tst");
   tst:=DirectoryContents(dir_str);
   dir:=Directory(dir_str);
   for x in tst do
     str:=SplitString(x, ".");
     if Length(str)>=2 and str[2]="tst" then
-      if not Citrus_C and str[1] in ["inverse", "pperm", "semigroups", 
+      if not Semigroups_C and str[1] in ["inverse", "pperm", "semigroups", 
          "testcompiled"]
         then 
-        Print("not reading ", dir_str, "/", x, "\n(Citrus is not compiled)\n");
+        Print("not reading ", dir_str, "/", x, "\n(Semigroups is not compiled)\n");
       else
         Print("reading ", dir_str,"/", x, " ...\n");
         Test(Filename(dir, x));
@@ -113,62 +113,62 @@ function()
   return;
 end);
 
-# new for 0.1! - CitrusTestInstall - "for no argument"
+# new for 0.1! - SemigroupsTestInstall - "for no argument"
 #############################################################################
 
-InstallGlobalFunction(CitrusTestInstall, 
+InstallGlobalFunction(SemigroupsTestInstall, 
 function()
-  Test(Filename(DirectoriesPackageLibrary("citrus","tst"),
+  Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
    "testinstall.tst"));;
-  if Citrus_C then 
-    Test(Filename(DirectoriesPackageLibrary("citrus","tst"),
+  if Semigroups_C then 
+    Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
        "testcompiled.tst"));;
   fi;
   return;
 end);
 
-# new for 0.1! - CitrusTestManualExamples - "for no argument"
+# new for 0.1! - SemigroupsTestManualExamples - "for no argument"
 #############################################################################
 
-InstallGlobalFunction(CitrusTestManualExamples,
+InstallGlobalFunction(SemigroupsTestManualExamples,
 function()
-  local InfoLevelInfoWarning, InfoLevelInfoCitrus;
+  local InfoLevelInfoWarning, InfoLevelInfoSemigroups;
   
-  if not Citrus_C then 
-    Print("Citrus is not compiled and so this will produce many many errors.\n");
+  if not Semigroups_C then 
+    Print("Semigroups is not compiled and so this will produce many many errors.\n");
     return fail;
   fi;
 
   SizeScreen([80]); 
   InfoLevelInfoWarning:=InfoLevel(InfoWarning);
-  InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);
+  InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);
   SetInfoLevel(InfoWarning, 0);
-  SetInfoLevel(InfoCitrus, 0);
+  SetInfoLevel(InfoSemigroups, 0);
 
-  TestManualExamples(Concatenation(PackageInfo("citrus")[1]!.
-     InstallationPath, "/doc"), "citrus.xml", 
+  TestManualExamples(Concatenation(PackageInfo("semigroups")[1]!.
+     InstallationPath, "/doc"), "semigroups.xml", 
      ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "inverse.xml",
      "semigroups.xml", "transform.xml", "pperm.xml", "../PackageInfo.g"]);
   
   SetInfoLevel(InfoWarning, InfoLevelInfoWarning);
-  SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);
-  Unbind(InfoLevelInfoCitrus); Unbind(InfoLevelInfoWarning);
+  SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);
+  Unbind(InfoLevelInfoSemigroups); Unbind(InfoLevelInfoWarning);
   return;
 end);
 
-# new for 0.5! - CitrusReadTestManualExamples - "for no argument" 
+# new for 0.5! - SemigroupsReadTestManualExamples - "for no argument" 
 #############################################################################
 
-InstallGlobalFunction(CitrusReadTestManualExamples, 
+InstallGlobalFunction(SemigroupsReadTestManualExamples, 
 function()
   local ex, tst, i;
 
-  if not Citrus_C then 
-    Print("Citrus is not compiled and so this will produce many many errors.");
+  if not Semigroups_C then 
+    Print("Semigroups is not compiled and so this will produce many many errors.");
     return fail;
   fi;
   
-  ex:=ManualExamples("~/citrus/doc/", "citrus.xml",  [ "utils.xml",
+  ex:=ManualExamples("~/semigroups/doc/", "semigroups.xml",  [ "utils.xml",
   "greens.xml", "orbits.xml", "properties.xml", "pperm.xml", "inverse.xml",
   "semigroups.xml",  "transform.xml", "../PackageInfo.g" ], "Single" );;
 
@@ -176,24 +176,24 @@ function()
     Print("*** Example ", i, " ***\n");
     tst:=ReadTestExamplesString(ex[i]);
   od;
-  if IsBoundGlobal("CitrusManualExamples") then 
-    MakeReadWriteGlobal("CitrusManualExamples");
-    UnbindGlobal("CitrusManualExamples");
+  if IsBoundGlobal("SemigroupsManualExamples") then 
+    MakeReadWriteGlobal("SemigroupsManualExamples");
+    UnbindGlobal("SemigroupsManualExamples");
   fi;
 
-  BindGlobal("CitrusManualExamples", ex);
+  BindGlobal("SemigroupsManualExamples", ex);
   Print("the manual examples are in the global variable",
-  " CitrusManualExamples\n");
+  " SemigroupsManualExamples\n");
 
   return;
 end);
 
 #III
 
-# new for 0.5! - ReadCitrus - "for a string and optional pos. int."
+# new for 0.5! - ReadSemigroups - "for a string and optional pos. int."
 #############################################################################
 
-InstallGlobalFunction(ReadCitrus, 
+InstallGlobalFunction(ReadSemigroups, 
 function(arg)
   local file, i, line;
  
@@ -224,7 +224,7 @@ function(arg)
         Error(arg[1], " only has ", i-1, " lines,"); 
         return;
       else
-        return ReadCitrusLine(Chomp(line));
+        return ReadSemigroupsLine(Chomp(line));
       fi;
     else
       IO_Close(file);
@@ -235,13 +235,13 @@ function(arg)
   
   line:=IO_ReadLines(file);
   IO_Close(file);
-  return List(line, x-> ReadCitrusLine(Chomp(x)));
+  return List(line, x-> ReadSemigroupsLine(Chomp(x)));
 end);
 
-# mod for 0.7! - ReadCitrusLine - "for a string"
+# mod for 0.7! - ReadSemigroupsLine - "for a string"
 #############################################################################
 
-InstallGlobalFunction(ReadCitrusLine, 
+InstallGlobalFunction(ReadSemigroupsLine, 
 function(line)
   local m, n, r, dom, out, f, i, k, deg, rank, j;
   
@@ -261,14 +261,14 @@ function(line)
     od;
     return out;
   elif line[1]='p' then # partial perms
-    return ReadCitrusLinePP(line);
+    return ReadSemigroupsLinePP(line);
   fi;
 end);
 
 #############################################################################
 
 if IsBound(FullPartialPermNC) then 
-  InstallGlobalFunction(ReadCitrusLinePP, 
+  InstallGlobalFunction(ReadSemigroupsLinePP, 
   function(line)
     local r, i, k, out, m, deg, rank, f, j;
     
@@ -290,17 +290,17 @@ if IsBound(FullPartialPermNC) then
     return out;
   end);
 else
-  InstallGlobalFunction(ReadCitrusLinePP, ReturnFail);
+  InstallGlobalFunction(ReadSemigroupsLinePP, ReturnFail);
 fi;
 
-# mod for 0.7! - WriteCitrus - "for a string and trans. coll."
+# mod for 0.7! - WriteSemigroups - "for a string and trans. coll."
 #############################################################################
 
 # Usage: filename as a string and trans. coll. 
 
 # Returns: nothing. 
 
-InstallGlobalFunction(WriteCitrus, 
+InstallGlobalFunction(WriteSemigroups, 
 function(arg)
   local trans, gens, convert, output, n, m, str, int, j, i, s, f;
   

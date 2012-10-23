@@ -522,7 +522,7 @@ gap> Idempotents(s, 0);
 
   This property is required so that a Green's class knows that it belongs to 
   a transformation semigroup, so that the methods defined in the
-  &Citrus; are used in preference to those in the library.
+  &Semigroups; are used in preference to those in the library.
   <Example>
 gap> S:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ), 
 > Transformation( [ 2, 3, 1, 5, 4, 1 ] ));;
@@ -638,8 +638,8 @@ gap> NextIterator(iter);
 Transformation( [ 5, 5, 4, 5, 1 ] )
 gap> iter;
 &lt;iterator of R-class reps, 10 candidates, 20 elements, 2 R-classes>
-gap> file:=Concatenation(CitrusDir(), "/examples/inverse.citrus.gz");;
-gap> s:=InverseSemigroup(ReadCitrus(file, 8));
+gap> file:=Concatenation(SemigroupsDir(), "/examples/inverse.semigroups.gz");;
+gap> s:=InverseSemigroup(ReadSemigroups(file, 8));
 &lt;inverse semigroup with 2 generators>
 gap> NrMovedPoints(s);
 983
@@ -1018,7 +1018,7 @@ gap> List(DClasses(S), SchutzenbergerGroup);
     </Returns>
     <Description>
       If <A>iter</A> satisfies <Ref Prop="IsIterator" BookName="ref"/> and
-      <C>IsCitrusPkgIterator</C>, then <C>UnderlyingSemigroupOfIterator</C> 
+      <C>IsSemigroupsPkgIterator</C>, then <C>UnderlyingSemigroupOfIterator</C> 
       returns <A>iter!.s</A>, which is set during the creation of the 
       iterator.  
     </Description>

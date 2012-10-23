@@ -8,7 +8,7 @@ gap> IsRegularSemigroup(s);
 true
 gap> 8^8-Factorial(8);
 16736896
-gap> ReadCitrus("pkg/citrus/examples/cycle.citrus.gz");;
+gap> ReadSemigroups("pkg/semigroups/examples/cycle.semigroups.gz");;
 gap> x:=last;;
 gap> Length(x);
 19

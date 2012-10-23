@@ -1,6 +1,6 @@
 <Chapter Label="green"><Heading>Determining the structure of a semigroup</Heading>
 
-  In this chapter we describe the functions in &Citrus; for determining the
+  In this chapter we describe the functions in &Semigroups; for determining the
   structure of a semigroup of transformations or partial permutations, in
   particular for computing Green's classes and related properties of 
   semigroups. 
@@ -9,7 +9,7 @@
     generators</Heading>
     In some cases it is possible to express the elements of a transformation
     semigroup as a word in the generators. This section describes how to
-    accomplish this in &Citrus;. <P/>
+    accomplish this in &Semigroups;. <P/>
 
     Note that at present it is not possible to factorize elements in a
     semigroup of partial permutations.
@@ -49,7 +49,7 @@
   <Section><Heading>Further attributes of semigroups</Heading>
     In this section we describe the attributes <Ref Sect="Attributes"
       BookName="ref"/> of arbitrary semigroups of transformations or partial
-    permutations  that can be found using &Citrus;. <P/>
+    permutations  that can be found using &Semigroups;. <P/>
 
     In addition to those functions described in this section, the operation
     <Ref Oper="Degree" Label="for a transformation coll"/> is
@@ -86,7 +86,7 @@
     In this section we describe several properties 
     <Ref Sect="Properties" BookName="ref"/> of an
     arbitrary semigroup of transformations or partial permutations 
-    that can be determined using &Citrus;.
+    that can be determined using &Semigroups;.
     <#Include Label="IsBand">
     <#Include Label="IsBlockGroup">
     <#Include Label="IsBrandtSemigroup">

@@ -8,48 +8,48 @@
 #############################################################################
 ##
 
-if (not IsBound(CITRUSC)) and ("citrus" in SHOW_STAT()) then
-  LoadStaticModule("citrus");
+if (not IsBound(SEMIGROUPSC)) and ("semigroups" in SHOW_STAT()) then
+  LoadStaticModule("semigroups");
 fi;
-if (not IsBound(CITRUSC)) and
-   (Filename(DirectoriesPackagePrograms("citrus"), "citrus.so") <> fail) then
-  LoadDynamicModule(Filename(DirectoriesPackagePrograms("citrus"), 
-    "citrus.so"));
+if (not IsBound(SEMIGROUPSC)) and
+   (Filename(DirectoriesPackagePrograms("semigroups"), "semigroups.so") <> fail) then
+  LoadDynamicModule(Filename(DirectoriesPackagePrograms("semigroups"), 
+    "semigroups.so"));
 fi;
 
-ReadPackage("citrus/gap/pperm.gd");
-ReadPackage("citrus/gap/partition.gd");
-ReadPackage("citrus/gap/binary.gd");
-ReadPackage("citrus/gap/matrix.gd");
+ReadPackage("semigroups/gap/pperm.gd");
+ReadPackage("semigroups/gap/partition.gd");
+ReadPackage("semigroups/gap/binary.gd");
+ReadPackage("semigroups/gap/matrix.gd");
 
-ReadPackage("citrus/gap/greens.gd");
-ReadPackage("citrus/gap/acting.gd");
+ReadPackage("semigroups/gap/greens.gd");
+ReadPackage("semigroups/gap/acting.gd");
 
-ReadPackage("citrus/gap/semigroups.gd");
-ReadPackage("citrus/gap/enums.gd");
-ReadPackage("citrus/gap/iterators.gd");
+ReadPackage("semigroups/gap/semigroups.gd");
+ReadPackage("semigroups/gap/enums.gd");
+ReadPackage("semigroups/gap/iterators.gd");
 
-ReadPackage("citrus/gap/setup.gd");
-ReadPackage("citrus/gap/regular.gd");
-ReadPackage("citrus/gap/inverse.gd");
+ReadPackage("semigroups/gap/setup.gd");
+ReadPackage("semigroups/gap/regular.gd");
+ReadPackage("semigroups/gap/inverse.gd");
 
-ReadPackage("citrus/gap/attributes.gd");
-ReadPackage("citrus/gap/properties.gd");
-ReadPackage("citrus/gap/orbits.gd");
+ReadPackage("semigroups/gap/attributes.gd");
+ReadPackage("semigroups/gap/properties.gd");
+ReadPackage("semigroups/gap/orbits.gd");
 
-ReadPackage("citrus/gap/slp.gd");
+ReadPackage("semigroups/gap/slp.gd");
 
-ReadPackage("citrus/gap/examples.gd");
-ReadPackage("citrus/gap/utils.gd");
-ReadPackage("citrus/gap/options.g");
+ReadPackage("semigroups/gap/examples.gd");
+ReadPackage("semigroups/gap/utils.gd");
+ReadPackage("semigroups/gap/options.g");
 
-DeclareInfoClass("InfoCitrus");;
+DeclareInfoClass("InfoSemigroups");;
 
-if not IsBound(CITRUSC) then 
-  Info(InfoWarning, 1, "Citrus: the Citrus package binary is not available,",
+if not IsBound(SEMIGROUPSC) then 
+  Info(InfoWarning, 1, "Semigroups: the Semigroups package binary is not available,",
   " and so the");
-  Info(InfoWarning, 1, "Citrus: functions in Citrus for partial permutations",
+  Info(InfoWarning, 1, "Semigroups: functions in Semigroups for partial permutations",
   " are not available.");
 fi;
 
-BindGlobal("Citrus_C", IsBound(CITRUSC));
+BindGlobal("Semigroups_C", IsBound(SEMIGROUPSC));

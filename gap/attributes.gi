@@ -278,7 +278,7 @@ function(s, f)
   else
     o:=Orb(s, [1..65536], RhoAct(s),
       rec(  forflatplainlists:=true, #JDM probably don't want to assume this..
-            treehashsize:=CitrusOptionsRec.hashlen.M,
+            treehashsize:=SemigroupsOptionsRec.hashlen.M,
             gradingfunc:=function(o, x) return rhorank(x); end,
             onlygrades:=function(x, y) return x>=rank_f; end,
             onlygradesdata:=fail));
@@ -317,7 +317,7 @@ function(s, f)
   else
     o:=Orb(s, [1..65536], LambdaAct(s),
       rec(  forflatplainlists:=true, #JDM probably don't want to assume this..
-            treehashsize:=CitrusOptionsRec.hashlen.M,
+            treehashsize:=SemigroupsOptionsRec.hashlen.M,
             gradingfunc:=function(o, x) return lambdarank(x); end,
             onlygrades:=function(x, y) return x>=rank_f; end,
             onlygradesdata:=fail));
@@ -401,9 +401,9 @@ function(s)
   r:=GreensRClassOfElementNC(s, f); #NC? JDM 
 
   if not NrIdempotents(r)=1 then
-    Info(InfoCitrus, 2, "the number of idempotents in the R-class of the",
+    Info(InfoSemigroups, 2, "the number of idempotents in the R-class of the",
     " first maximum rank");
-    Info(InfoCitrus, 2, " generator is not 1");
+    Info(InfoSemigroups, 2, " generator is not 1");
     return fail;
   fi;
 
@@ -413,9 +413,9 @@ function(s)
     return f;
   fi;
 
-  Info(InfoCitrus, 2, "the unique idempotent in the R-class of the first",
+  Info(InfoSemigroups, 2, "the unique idempotent in the R-class of the first",
   " maximum rank");
-  Info(InfoCitrus, 2, " generator is not the identity");
+  Info(InfoSemigroups, 2, " generator is not the identity");
   return fail;
 end);
 

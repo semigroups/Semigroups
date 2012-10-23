@@ -1,9 +1,9 @@
-  <Chapter Label="citrus">
-  <Heading>The &Citrus; package</Heading>
-  <Index Key="Citrus">&Citrus; package overview</Index>	
+  <Chapter Label="semigroups">
+  <Heading>The &Semigroups; package</Heading>
+  <Index Key="Semigroups">&Semigroups; package overview</Index>	
     
-    This is the manual for the &Citrus; package version &VERSION; for computing
-    with semigroups of transformations and partial permutations. &Citrus;
+    This is the manual for the &Semigroups; package version &VERSION; for computing
+    with semigroups of transformations and partial permutations. &Semigroups;
     &VERSION; is an updated and expanded version of the <URL Text="Monoid
       package for GAP 3"> http://schmidt.nuigalway.ie/monoid/index.html</URL>
     by Goetz Pfeiffer, Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc and
@@ -11,20 +11,20 @@
       http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html</URL> by
     J.  D. Mitchell.<P/>
 
-    Some of the theory behind the algorithms in &Citrus; is described in 
+    Some of the theory behind the algorithms in &Semigroups; is described in 
     <Cite Key="pfeiffer1"/> and described in <Cite Key="pfeiffer2"/>.  Another
     reference is <Cite Key="lallement"/>.<P/> 
     
     The functionality of &Monoid; 3.1.4 for &GAP; 4 has been split between the
-    &GAP; 4.5 packages &Citrus; and &Comatose;.
+    &GAP; 4.5 packages &Semigroups; and &Comatose;.
 
-    &Citrus; &VERSION; retains all the functionality of the original &Monoid;
+    &Semigroups; &VERSION; retains all the functionality of the original &Monoid;
     package for &GAP; 3; and many of those functions from &Monoid; 3.1.4 not
     involved in the computation of automorphism groups of semigroups. The
     &Comatose; package retains those functions from &Monoid;
     3.1.4 used to compute automorphism groups of transformation semigroups. <P/>
 
-    &noindent; &Citrus; &VERSION; contains more efficient methods than those
+    &noindent; &Semigroups; &VERSION; contains more efficient methods than those
     available in the &GAP; library (and in many cases more efficient than any
     other software) for creating semigroups of transformations and partial
     permutations, calculating their Green's classes, size, elements, group of
@@ -39,26 +39,26 @@
     period or the least idempotent power; see Chapter <Ref
       Chap="Transformations and partial permutations"/>.  A large catalogue of
     examples is provided; see Sections <Ref Sect="Examples"/> and <Ref
-      Sect="Catalogues"/>.  &Citrus; also provides abbreviated names for many
+      Sect="Catalogues"/>.  &Semigroups; also provides abbreviated names for many
     of the commonly used &GAP; library functions related to semigroups, and
     functions to read and write large collections of transformations or partial
-    permutations to a file; see <Ref Func="ReadCitrus"/> and <Ref
-      Func="WriteCitrus"/>. <P/>
+    permutations to a file; see <Ref Func="ReadSemigroups"/> and <Ref
+      Func="WriteSemigroups"/>. <P/>
 
-    &noindent; The &Citrus; package is written in C and &GAP; code and 
+    &noindent; The &Semigroups; package is written in C and &GAP; code and 
     requires the &Orb; and &IO; packages. The &Orb; package is used to
     efficiently compute orbits in semigroups of transformations and partial
-    permutations, and these methods underpin many of the features of &Citrus;.
+    permutations, and these methods underpin many of the features of &Semigroups;.
     The &IO; package is used to read and write transformations and partial
     permutations to a file.
     The &Grape; package is used in the function <Ref Oper="MunnSemigroup"/> but
-    nowhere else in &Citrus;. If &Grape; is not fully installed, then &Citrus;
+    nowhere else in &Semigroups;. If &Grape; is not fully installed, then &Semigroups;
     can be used as normal with the except that the operation <Ref
       Oper="MunnSemigroup"/> does not work.  <P/>
     
-    &Citrus; is still under development, and so some features may not function
+    &Semigroups; is still under development, and so some features may not function
     as expected. At the present time, I do not know of any errors or serious
-    issues with &Citrus;.  If you find a bug or an issue with the package, then
+    issues with &Semigroups;.  If you find a bug or an issue with the package, then
     please let me know by emailing me the details at:
     <Email>jdm3@st-and.ac.uk</Email>.<P/>
 
@@ -67,10 +67,10 @@
     <Ref Sect="Green's Relations" BookName="ref"/>.
 
   <Section Label="install">
-    <Heading>Installing &Citrus;</Heading>
+    <Heading>Installing &Semigroups;</Heading>
 
     In this section we give a brief description of how to start using
-    &Citrus;. If you have any problems getting &Citrus; working, then you could
+    &Semigroups;. If you have any problems getting &Semigroups; working, then you could
     try emailing me at <Email>jdm3@st-and.ac.uk</Email>. <P/>
 
     It is assumed that you have a working copy of &GAP; with version number 
@@ -80,7 +80,7 @@
     <URL>http://www.gap-system.org</URL><P/>
 
     &noindent; The following is a summary of the steps that should lead to a
-    successful installation of &Citrus;:
+    successful installation of &Semigroups;:
 
     <List>
     
@@ -89,7 +89,7 @@
       &vspace;<P/>&noindent; 
       <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
       </URL><P/>
-      &noindent; Note that &Orb; and &Citrus; both perform better if &Orb;
+      &noindent; Note that &Orb; and &Semigroups; both perform better if &Orb;
       is compiled. 
       </Item>
 
@@ -106,14 +106,14 @@
         details go to:&vspace;<P/>&noindent;
         <URL>http://www.maths.qmul.ac.uk/~leonard/grape/</URL><P/>
          If
-    &Grape; is not fully installed, then &Citrus; can be used as normal with the
+    &Grape; is not fully installed, then &Semigroups; can be used as normal with the
     except that the operation <Ref Oper="MunnSemigroup"/> does not work.
 
       </Item>
 
       <Item> download the package archive <F>&ARCHIVENAME;.tar.gz</F> from
       &vspace;<P/>&noindent;&vspace;
-      <URL>http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html
+      <URL>http://www-history.mcs.st-and.ac.uk/~jamesm/semigroups/index.html
       </URL>
       </Item>
     
@@ -126,11 +126,11 @@
       <C>&ARCHIVENAME;</C> into the <C>pkg</C> directory.  
       </Item>
 
-      <Item> to use the functions in &Citrus; for partial permutations and
+      <Item> to use the functions in &Semigroups; for partial permutations and
         inverse semigroups, you must compile the C part of the package 
         (in the "pkg" directory) by doing:
         <Listing>
-<![CDATA[cd citrus
+<![CDATA[cd semigroups
 ./configure
 make]]></Listing>
     Further information about this step can be found in Section <Ref Sect="Compiling"/>. 
@@ -138,17 +138,17 @@ make]]></Listing>
 
     <Item> start &GAP; in the usual way.</Item>
   
-    <Item> type <C>LoadPackage("citrus");</C></Item>
+    <Item> type <C>LoadPackage("semigroups");</C></Item>
     
-    <Item> compile the documentation by using <Ref Func="CitrusMakeDoc"/>
+    <Item> compile the documentation by using <Ref Func="SemigroupsMakeDoc"/>
     </Item>
 
   </List>
 
-    <E><B>Please note that</B> &Citrus; can only be used to compute with
+    <E><B>Please note that</B> &Semigroups; can only be used to compute with
       semigroups of partial permutations if it has been compiled.  </E><P/>
 
-    Below is an example of an installation of &Citrus; in a Unix environment
+    Below is an example of an installation of &Semigroups; in a Unix environment
     where <C>home</C>  should be substituted with the main &GAP; directory
     (the one containing the folders <C>bin</C>, <C>lib</C>, and so on) in your
     installation of &GAP;.<P/>
@@ -161,7 +161,7 @@ make]]></Listing>
 
 [ ... ]
 
-gap> LoadPackage("citrus");
+gap> LoadPackage("semigroups");
 ----------------------------------------------------------------------
 Loading  orb &ORBVERS; (orb - Methods to enumerate orbits)
 by Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),
@@ -169,14 +169,14 @@ by Juergen Mueller (http://www.math.rwth-aachen.de/~Juergen.Mueller),
    Felix Noeske (http://www.math.rwth-aachen.de/~Felix.Noeske).
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
-Loading  Citrus &VERSION; (Citrus - ComputIng wiTh semigRUopS)
+Loading  Semigroups &VERSION; (Semigroups - ComputIng wiTh semigRUopS)
 by J. D. Mitchell (http://tinyurl.com/jdmitchell).
 ----------------------------------------------------------------------
 true
 gap></Log>
 
     Presuming that the above steps can be completed successfully you will be 
-    running the &Citrus; package!<P/>
+    running the &Semigroups; package!<P/>
 
     If you want to check that the package is working correctly, you
     should run some of the tests described in Section <Ref Sect="testing"/>.<P/>
@@ -184,17 +184,17 @@ gap></Log>
   </Section>
 
   <Section Label="Compiling">
-    <Heading>Compiling the kernel component of &Citrus;</Heading>
-As of version 0.7, the &Citrus; package has a &GAP; kernel component in C which
+    <Heading>Compiling the kernel component of &Semigroups;</Heading>
+As of version 0.7, the &Semigroups; package has a &GAP; kernel component in C which
 should be compiled. This component contains low-level functions relating to
 partial permutations and it is not possible to use these features or any
-related features in &Citrus; without compiling the package. It is possible to
-run &Citrus; without compiling it, but &Citrus; is limited to computing with
+related features in &Semigroups; without compiling the package. It is possible to
+run &Semigroups; without compiling it, but &Semigroups; is limited to computing with
 transformation semigroups in this case.<P/>
 
 To compile the GAP kernel component in the 'pkg' directory do:
 <Listing>
-<![CDATA[cd citrus
+<![CDATA[cd semigroups
 ./configure
 make]]></Listing><P/>
 
@@ -216,66 +216,66 @@ or 64-bit mode correctly!
 </Section>
 <Section Label="doc"><Heading>Compiling the documentation</Heading>
 
-  To compile the documentation use <Ref Func="CitrusMakeDoc"/>. If you want
+  To compile the documentation use <Ref Func="SemigroupsMakeDoc"/>. If you want
   to use the help system, it is essential that you compile the documentation. 
 
-  <#Include Label="CitrusMakeDoc">
+  <#Include Label="SemigroupsMakeDoc">
 
   </Section>
     
   <Section Label="testing"><Heading>Testing the installation</Heading>
     
-    In this section we describe how to test that &Citrus; is working as
-    intended.  To test that &Citrus; is installed correctly use 
-    <Ref Func="CitrusTestInstall"/> or for more extensive tests use 
-    <Ref Func="CitrusTestAll"/>. Please note that it will take a few seconds for
-    <Ref Func="CitrusTestInstall"/> to finish and it will take no more than 1
-    minute for <Ref Func="CitrusTestAll"/> to finish.<P/>
+    In this section we describe how to test that &Semigroups; is working as
+    intended.  To test that &Semigroups; is installed correctly use 
+    <Ref Func="SemigroupsTestInstall"/> or for more extensive tests use 
+    <Ref Func="SemigroupsTestAll"/>. Please note that it will take a few seconds for
+    <Ref Func="SemigroupsTestInstall"/> to finish and it will take no more than 1
+    minute for <Ref Func="SemigroupsTestAll"/> to finish.<P/>
 
-    Note that after calling <Ref Func="CitrusTestAll"/>, 
-    <Ref Func="CitrusTestAll"/>, or <Ref Func="CitrusTestManualExamples"/>, the
+    Note that after calling <Ref Func="SemigroupsTestAll"/>, 
+    <Ref Func="SemigroupsTestAll"/>, or <Ref Func="SemigroupsTestManualExamples"/>, the
     message <C>gzip: stdout: Broken pipe</C> might be displayed (several
     times). While this is unfortunate, it is not an error and should simply be
     ignored.  We hope to resolve this issue in the future.
 
     If something goes wrong, then please review the instructions in Section
-    <Ref Sect="install"/> and ensure that &Citrus; has been properly
+    <Ref Sect="install"/> and ensure that &Semigroups; has been properly
     installed.  If you continue having problems, please email me at
     <Email>jdm3@st-and.ac.uk</Email>.
 
-    <#Include Label="CitrusTestAll">
-    <#Include Label="CitrusTestInstall">
-    <#Include Label="CitrusTestManualExamples">
+    <#Include Label="SemigroupsTestAll">
+    <#Include Label="SemigroupsTestInstall">
+    <#Include Label="SemigroupsTestManualExamples">
 
   </Section>
 
   <Section><Heading>More information during a computation</Heading>
     
-    <#Include Label="InfoCitrus">
+    <#Include Label="InfoSemigroups">
 
   </Section>
 
     <Section><Heading>Reading and writing transformations and partial
       permutations to a file</Heading>
-    The functions <Ref Func="ReadCitrus"/> and <Ref Func="WriteCitrus"/> can be
+    The functions <Ref Func="ReadSemigroups"/> and <Ref Func="WriteSemigroups"/> can be
     used to read or write transformations or partial permutations to a file. 
-    <#Include Label="CitrusDir">
-    <#Include Label="ReadCitrus">
-    <#Include Label="WriteCitrus">
+    <#Include Label="SemigroupsDir">
+    <#Include Label="ReadSemigroups">
+    <#Include Label="WriteSemigroups">
   </Section>
 
-  <Section><Heading>What does &Citrus; do best?</Heading>
+  <Section><Heading>What does &Semigroups; do best?</Heading>
 
     Due to inherent difficulties with computing Green's &L;-, &D;-, and
     &H;-classes in transformation semigroups, the methods used to compute with
-    Green's &R;-classes are the most efficient in &Citrus;.  Thus, if you are
+    Green's &R;-classes are the most efficient in &Semigroups;.  Thus, if you are
     computing with a transformation semigroup, wherever
     possible it is advisable to use the commands relating to Green's
     &R;-classes rather than those relating to Green's &L;-, &D;-, or
     &H;-classes. No such difficulties are present when computing with
     semigroups of partial permutations. <P/>
     
-    The methods in &Citrus; allow the computation of individual Green's
+    The methods in &Semigroups; allow the computation of individual Green's
     classes without the need to compute all the elements of the underlying
     semigroup; see <Ref Oper="GreensRClassOfElementNC"/>.  It is also possible
     to compute all the &R;-classes, the number of elements and test membership
@@ -290,13 +290,13 @@ or 64-bit mode correctly!
 
   <Section><Heading>New methods for existing functions</Heading>
     In this section we list the functions from the &GAP; library (those
-    available when &Citrus; is not loaded) which have new methods in &Citrus;.
+    available when &Semigroups; is not loaded) which have new methods in &Semigroups;.
     Some of these new methods apply to a wider class of objects than the
     existing methods. Where this is the case, we give references to both the
-    &Citrus; documentation and the &GAP; manual; otherwise we may only give
+    &Semigroups; documentation and the &GAP; manual; otherwise we may only give
     references to the &GAP; manual.<P/>
 
-    &Citrus; contains special methods for the following &GAP; functions where 
+    &Semigroups; contains special methods for the following &GAP; functions where 
     the argument is an arbitrary Green's class of a semigroup of
     transformations or partial permutations
     (specifically a Green's class satisfying 
@@ -356,7 +356,7 @@ or 64-bit mode correctly!
     <P/>
 
     In addition to those functions mentioned above that can be applied to
-    arbitrary Green's classes, &Citrus; contains special methods for the
+    arbitrary Green's classes, &Semigroups; contains special methods for the
     following &GAP; functions:
 
     <List>
@@ -374,7 +374,7 @@ or 64-bit mode correctly!
     (for a permutation group).</Item>
     </List> <P/>
 
-    &Citrus; contains functions synonymous to some of the commands mentioned in
+    &Semigroups; contains functions synonymous to some of the commands mentioned in
     this section but, for the sake of convenience with abbreviated names; for
     further details see below.
   </Section>

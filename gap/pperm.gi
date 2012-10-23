@@ -223,10 +223,10 @@ end);
 #
 #CCC
 
-# new for 1.0! - CITRUS_HashFunctionForPP - for a partial perm and data
+# new for 1.0! - SEMIGROUPS_HashFunctionForPP - for a partial perm and data
 #############################################################################
 
-InstallGlobalFunction( CITRUS_HashFunctionForPP, 
+InstallGlobalFunction( SEMIGROUPS_HashFunctionForPP, 
 function(f, data)
   local l;
   l:=f[1]+2*f[2]+6;
@@ -239,7 +239,7 @@ end);
 InstallMethod( ChooseHashFunction, "for a partial perm",
 [IsPartialPerm, IsInt],
 function(f, hashlen)
-  return rec( func:=CITRUS_HashFunctionForPP, data:=hashlen);
+  return rec( func:=SEMIGROUPS_HashFunctionForPP, data:=hashlen);
 end);
 
 #DDD

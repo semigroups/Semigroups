@@ -8,13 +8,13 @@
 ############################################################################# 
 ##
 
-# new for 0.6! - CitrusOptionsRec - global variable
+# new for 0.6! - SemigroupsOptionsRec - global variable
 
-BindGlobal("CitrusOptionsRec", 
+BindGlobal("SemigroupsOptionsRec", 
   rec(  small:=false,
         hashlen:=rec(S:=251, M:=6257, L:=25013),
         regular:=false
       ));
 
-MakeReadWriteGlobal("CitrusOptionsRec");
+MakeReadWriteGlobal("SemigroupsOptionsRec");
 

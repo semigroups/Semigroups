@@ -7,14 +7,14 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Citrus package: data.tst");
-gap> LoadPackage("citrus", false);;
+gap> START_TEST("Semigroups package: data.tst");
+gap> LoadPackage("semigroups", false);;
 
 #
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
 gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrus, 0);
+gap> SetInfoLevel(InfoSemigroups, 0);
 
 #
 gap> s:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ), 
@@ -81,9 +81,9 @@ gap> AsList(last);
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
+gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
 
 #
 gap> Unbind(gens); Unbind(s); Unbind(f); Unbind(r); Unbind(iter); 
-gap> STOP_TEST( "Citrus package: data.tst", 0);
+gap> STOP_TEST( "Semigroups package: data.tst", 0);

@@ -1,5 +1,5 @@
 <TitlePage>
-  <Title>&Citrus;</Title>
+  <Title>&Semigroups;</Title>
   <Subtitle>Computing with Semigroups of Transformations and Partial
     Permutations</Subtitle>
   <Version>Version &VERSION;</Version>
@@ -11,7 +11,7 @@
 
   <Copyright>&copyright; &COPYRIGHTYEARS; by J. D. Mitchell.<P/>
 
-    &Citrus; is free software; you can redistribute it and/or modify it under
+    &Semigroups; is free software; you can redistribute it and/or modify it under
     the terms of the <URL Text="GNU General Public License">
     http://www.fsf.org/licenses/gpl.html</URL> as published by the Free Software
     Foundation; either version 2 of the License, or (at your option) any later
@@ -20,8 +20,8 @@
   </Copyright>
 
   <Abstract>
-     The &Citrus; package is a &GAP; package for computing with semigroups of
-     transformations and partial permutations. Citrus contains more efficient
+     The &Semigroups; package is a &GAP; package for computing with semigroups of
+     transformations and partial permutations. Semigroups contains more efficient
      methods than those available in the GAP library (and in many cases more
      efficient than any other software) for creating semigroups of
      transformations and partial permutations, calculating their

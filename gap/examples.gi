@@ -284,7 +284,7 @@ end);
 # new for 0.7! - POI - "for a pos int"
 ################################################################################
 
-if Citrus_C then 
+if Semigroups_C then 
   InstallMethod(POI, "for a pos int",
   [IsPosInt],
   function(n)
@@ -301,13 +301,13 @@ if Citrus_C then
   end);
 else
   InstallMethod(POI, "for a pos int",
-  [IsPosInt], CitrusIsNotCompiled);
+  [IsPosInt], SemigroupsIsNotCompiled);
 fi;
 
 # new for 0.7! - POPI - "for a pos int"
 ################################################################################
 
-if Citrus_C then 
+if Semigroups_C then 
   InstallMethod(POPI, "for a pos int",
   [IsPosInt],
   function(n)
@@ -316,7 +316,7 @@ if Citrus_C then
   end);
 else 
   InstallMethod(POPI, "for a pos int",
-  [IsPosInt], CitrusIsNotCompiled);
+  [IsPosInt], SemigroupsIsNotCompiled);
 fi;
 
 # new for 0.7! - PowerSemigroup - "for a group"
@@ -366,7 +366,7 @@ end);
 # new for 0.7! - SymmetricInverseSemigroup - "for a pos int"
 ################################################################################
 
-if Citrus_C then 
+if Semigroups_C then 
   InstallMethod(SymmetricInverseSemigroup, "for a pos int",
   [IsPosInt],
   function(n)
@@ -384,7 +384,7 @@ if Citrus_C then
   end);
 else
   InstallMethod(SymmetricInverseSemigroup, "for a pos int",
-  [IsPosInt], CitrusIsNotCompiled);
+  [IsPosInt], SemigroupsIsNotCompiled);
 fi;
 
 #VVV

@@ -13,17 +13,17 @@
 ##  <!ENTITY ORBVERS "4.2">
 ##  <!ENTITY IOVERS "4.1">
 ##  <!ENTITY GRAPEVERS "4.5">
-##  <!ENTITY ARCHIVENAME "citrus-1.0">
+##  <!ENTITY ARCHIVENAME "semigroups-1.0">
 ##  <!ENTITY COPYRIGHTYEARS "2011-12">
 ##  <#/GAPDoc>
 
 SetPackageInfo( rec(
-PackageName := "Citrus",
+PackageName := "Semigroups",
 Subtitle := "Computing with Semigroups of Transformations and Partial Permutations",
 Version := "1.0",
 Date := "06/07/2012",
 ArchiveURL := 
-          "https://bitbucket.org/zen154115/citrus/downloads/citrus-1.0",
+          "https://bitbucket.org/zen154115/semigroups/downloads/semigroups-1.0",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -44,14 +44,14 @@ Persons := [
 Status := "deposited",
 
 README_URL := 
-  "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/README",
+  "http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups/README",
 PackageInfoURL := 
-  "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/PackageInfo.g",
+  "http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups/PackageInfo.g",
 
 AbstractHTML := Concatenation( 
-  "The Citrus package is a ",
+  "The Semigroups package is a ",
   "GAP  package for computing with semigroups ",
-  "of transformations and partial permutations. Citrus contains more ",
+  "of transformations and partial permutations. Semigroups contains more ",
   "efficient methods than those available in the GAP library (and in many ",
   "cases more efficient than any other software) for creating semigroups of ",
   "transformations and partial permutations, calculating their Green's ",
@@ -66,15 +66,15 @@ AbstractHTML := Concatenation(
   "and generators for the endomorphism monoids of the non-abelian groups with ",
   "order at most 64."),
 
-PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus",
+PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups",
                
 PackageDoc := rec(
-  BookName  := "Citrus",
+  BookName  := "Semigroups",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",  
   SixFile   := "doc/manual.six",
-  LongTitle := "Citrus - Computing with semigruops",
+  LongTitle := "Semigroups - Computing with semigruops",
   Autoload  := true
 ),
 

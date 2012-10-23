@@ -7,12 +7,12 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Citrus package: inverse.tst");
-gap> LoadPackage("citrus", false);;
+gap> START_TEST("Semigroups package: inverse.tst");
+gap> LoadPackage("semigroups", false);;
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
 gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrus, 0);
+gap> SetInfoLevel(InfoSemigroups, 0);
 
 #
 gap> gens:=[PartialPermNC( [ 1, 2, 4 ], [ 1, 5, 2 ] ),
@@ -257,8 +257,8 @@ gap> Size(DClass(h))=Size(RClass(h))^2/2;
 true
 
 #
-gap> file:=Concatenation(CitrusDir(), "/examples/graph7c.citrus.gz");;
-gap> s:=Semigroup(ReadCitrus(file, 600));
+gap> file:=Concatenation(SemigroupsDir(), "/examples/graph7c.semigroups.gz");;
+gap> s:=Semigroup(ReadSemigroups(file, 600));
 <semigroup with 2 generators>
 gap> iso:=IsomorphismPartialPermSemigroup(s);;
 gap> inv:=InverseGeneralMapping(iso);;
@@ -871,8 +871,8 @@ gap> List(DClasses(S), SchutzenbergerGroup);
 [ Group(()), Group(()), Group(()), Group(()), Group([ (2,5) ]), Group(()) ]
 
 #
-gap> file:=Concatenation(CitrusDir(), "/examples/munn.citrus.gz");;
-gap> ReadCitrus(file, 1078);;
+gap> file:=Concatenation(SemigroupsDir(), "/examples/munn.semigroups.gz");;
+gap> ReadSemigroups(file, 1078);;
 gap> s:=InverseSemigroup(last);
 <inverse semigroup with 6 generators>
 gap> Size(s);
@@ -907,8 +907,8 @@ gap> Size(s);
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
+gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
 
 #
-gap> STOP_TEST("Citrus package: inverse.tst", 10000);
+gap> STOP_TEST("Semigroups package: inverse.tst", 10000);

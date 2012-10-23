@@ -219,7 +219,7 @@ function(f, l)
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or ActionDegree(f) <> ActionDegree(rep)
    or ActionRank(f) <> ActionRank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
-    Info(InfoCitrus, 1, "degree, rank, or lambda value not equal to those of",
+    Info(InfoSemigroups, 1, "degree, rank, or lambda value not equal to those of",
     " any of the L-class elements,");
     return false;
   fi;
@@ -240,7 +240,7 @@ function(f, l)
   schutz:=RhoOrbStabChain(l);
 
   if schutz=true then
-    Info(InfoCitrus, 3, "Schutz. group of L-class is symmetric group");
+    Info(InfoSemigroups, 3, "Schutz. group of L-class is symmetric group");
     return true;
   fi;
 
@@ -251,11 +251,11 @@ function(f, l)
   fi;
 
   if g=rep then
-    Info(InfoCitrus, 3, "element with rectified rho value equals ",
+    Info(InfoSemigroups, 3, "element with rectified rho value equals ",
     "L-class representative");
     return true;
   elif schutz=false then
-    Info(InfoCitrus, 3, "Schutz. group of L-class is trivial");
+    Info(InfoSemigroups, 3, "Schutz. group of L-class is trivial");
     return false;
   fi;
   
@@ -279,7 +279,7 @@ function(f, r)
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or ActionDegree(f) <> ActionDegree(rep)
    or ActionRank(f) <> ActionRank(rep) or RhoFunc(s)(f) <> RhoFunc(s)(rep) then
-    Info(InfoCitrus, 1, "degree, rank, or rho value not equal to those of",
+    Info(InfoSemigroups, 1, "degree, rank, or rho value not equal to those of",
     " any of the R-class elements,");
     return false;
   fi;
@@ -300,7 +300,7 @@ function(f, r)
   schutz:=LambdaOrbStabChain(o, m);
 
   if schutz=true then
-    Info(InfoCitrus, 3, "Schutz. group of R-class is symmetric group");
+    Info(InfoSemigroups, 3, "Schutz. group of R-class is symmetric group");
     return true;
   fi;
 
@@ -311,11 +311,11 @@ function(f, r)
   fi;
 
   if g=rep then
-    Info(InfoCitrus, 3, "element with rectified lambda value equals ",
+    Info(InfoSemigroups, 3, "element with rectified lambda value equals ",
     "R-class representative");
     return true;
   elif schutz=false then
-    Info(InfoCitrus, 3, "Schutz. group of R-class is trivial");
+    Info(InfoSemigroups, 3, "Schutz. group of R-class is trivial");
     return false;
   fi;
 

@@ -1,6 +1,6 @@
 
-const char * Revision_citrus_c =
-   "$Id: citrus.c,v$";
+const char * Revision_semigroups_c =
+   "$Id: semigroups.c,v$";
 
 #include <stdlib.h>
 #include "src/compiled.h"
@@ -1220,133 +1220,133 @@ static StructGVarFunc GVarFuncs [] = {
 
   { "ELM_LIST_PP", 2, "f,i",
     FuncELM_LIST_PP,
-    "pkg/citrus/src/citrus.c:ELM_LIST_PP" },
+    "pkg/semigroups/src/semigroups.c:ELM_LIST_PP" },
   
   { "ELMS_LIST_PP", 2, "f,list",
     FuncELMS_LIST_PP,
-    "pkg/citrus/src/citrus.c:ELMS_LIST_PP" },
+    "pkg/semigroups/src/semigroups.c:ELMS_LIST_PP" },
 
   { "FullPartialPermNC", 1, "rep",
     FuncFullPartialPermNC,
-    "pkg/citrus/src/citrus.c:FuncFullPartialPermNC" },
+    "pkg/semigroups/src/semigroups.c:FuncFullPartialPermNC" },
 
   { "SparsePartialPermNC", 2, "dom,ran",
     FuncSparsePartialPermNC,
-    "pkg/citrus/src/citrus.c:FuncSparsePartialPermNC" },
+    "pkg/semigroups/src/semigroups.c:FuncSparsePartialPermNC" },
 
   { "DensePartialPermNC", 1, "img",
     FuncDensePartialPermNC,
-    "pkg/citrus/src/citrus.c:FuncDensePartialPermNC" },
+    "pkg/semigroups/src/semigroups.c:FuncDensePartialPermNC" },
  
   { "ProdPP", 2, "f,g",
     FuncProdPP,
-    "pkg/citrus/src/citrus.c:FuncProdPP" },
+    "pkg/semigroups/src/semigroups.c:FuncProdPP" },
 
   { "DomPP", 1, "f",
     FuncDomPP,
-    "pkg/citrus/src/citrus.c:FuncDomPP" },
+    "pkg/semigroups/src/semigroups.c:FuncDomPP" },
 
   { "RanPP", 1, "f",
     FuncRanPP,
-    "pkg/citrus/src/citrus.c:FuncRanPP" },
+    "pkg/semigroups/src/semigroups.c:FuncRanPP" },
 
   { "RanSetPP", 1, "f",
     FuncRanSetPP,
-    "pkg/citrus/src/citrus.c:FuncRanSetPP" },
+    "pkg/semigroups/src/semigroups.c:FuncRanSetPP" },
 
   { "InvPP", 1, "f",
     FuncInvPP,
-    "pkg/citrus/src/citrus.c:FuncInvPP" },
+    "pkg/semigroups/src/semigroups.c:FuncInvPP" },
 
   { "OnIntegerTuplesWithPP", 2, "tup,f",
     FuncOnIntegerTuplesWithPP,
-    "pkg/citrus/src/citrus.c:FuncOnIntegerTuplesWithPP" },
+    "pkg/semigroups/src/semigroups.c:FuncOnIntegerTuplesWithPP" },
   
   { "OnIntegerSetsWithPP", 2, "set,f",
     FuncOnIntegerSetsWithPP,
-    "pkg/citrus/src/citrus.c:FuncOnIntegerSetsWithPP" },
+    "pkg/semigroups/src/semigroups.c:FuncOnIntegerSetsWithPP" },
   
   { "EqPP", 2, "f,g",
     FuncEqPP,
-    "pkg/citrus/src/citrus.c:FuncEqPP" },
+    "pkg/semigroups/src/semigroups.c:FuncEqPP" },
 
   { "LeftOne", 1, "f",
     FuncLeftOne,
-    "pkg/citrus/src/citrus.c:FuncLeftOne" },
+    "pkg/semigroups/src/semigroups.c:FuncLeftOne" },
 
   { "RightOne", 1, "f",
     FuncRightOne,
-    "pkg/citrus/src/citrus.c:FuncRightOne" },
+    "pkg/semigroups/src/semigroups.c:FuncRightOne" },
 
   { "FixedPointsPP", 1, "f",
     FuncFixedPointsPP,
-    "pkg/citrus/src/citrus.c:FuncFixedPointsPP" },
+    "pkg/semigroups/src/semigroups.c:FuncFixedPointsPP" },
 
   { "MovedPointsPP", 1, "f",
     FuncMovedPointsPP,
-    "pkg/citrus/src/citrus.c:FuncMovedPointsPP" },
+    "pkg/semigroups/src/semigroups.c:FuncMovedPointsPP" },
 
   { "NrMovedPointsPP", 1, "f",
     FuncNrMovedPointsPP,
-    "pkg/citrus/src/citrus.c:FuncNrMovedPointsPP" },
+    "pkg/semigroups/src/semigroups.c:FuncNrMovedPointsPP" },
 
   { "LargestMovedPointPP", 1, "f",
     FuncLargestMovedPointPP,
-    "pkg/citrus/src/citrus.c:FuncLargestMovedPointPP" },
+    "pkg/semigroups/src/semigroups.c:FuncLargestMovedPointPP" },
 
   { "SmallestMovedPointPP", 1, "f",
     FuncSmallestMovedPointPP,
-    "pkg/citrus/src/citrus.c:FuncSmallestMovedPointPP" },
+    "pkg/semigroups/src/semigroups.c:FuncSmallestMovedPointPP" },
 
   { "LeqPP", 2, "f, g",
     FuncLeqPP,
-    "pkg/citrus/src/citrus.c:FuncLeqPP" },
+    "pkg/semigroups/src/semigroups.c:FuncLeqPP" },
 
   { "RestrictedPP", 2, "f, set", 
     FuncRestrictedPP, 
-    "pkg/citrus/src/citrus.c:FuncRestrictedPP" },
+    "pkg/semigroups/src/semigroups.c:FuncRestrictedPP" },
 
   { "NaturalLeqPP", 2, "f, g", 
     FuncNaturalLeqPP,
-    "pkg/citrus/src/citrus.c:FuncNaturalLeqPP" },
+    "pkg/semigroups/src/semigroups.c:FuncNaturalLeqPP" },
 
   { "QuoPP", 2, "f, g", 
     FuncQuoPP,
-    "pkg/citrus/src/citrus.c:FuncQuoPP" },
+    "pkg/semigroups/src/semigroups.c:FuncQuoPP" },
 
   { "ProdPPPerm", 2, "f, p",
     FuncProdPPPerm, 
-    "pkg/citrus/src/citrus.c:FuncProdPPPerm" },
+    "pkg/semigroups/src/semigroups.c:FuncProdPPPerm" },
 
   { "ProdPermPP", 2, "p, f",
     FuncProdPermPP, 
-    "pkg/citrus/src/citrus.c:FuncProdPermPP" },
+    "pkg/semigroups/src/semigroups.c:FuncProdPermPP" },
 
   { "OnPointsPP", 2, "i, f",
     FuncOnPointsPP, 
-    "pkg/citrus/src/citrus.c:FuncOnPointsPP" },
+    "pkg/semigroups/src/semigroups.c:FuncOnPointsPP" },
 
   /* bipartitions start here */
 
   { "BipartitionByPartitionNC", 1, "partition",
     FuncBipartitionByPartitionNC, 
-    "pkg/citrus/src/citrus.c:FuncBipartitionByPartitionNC" },
+    "pkg/semigroups/src/semigroups.c:FuncBipartitionByPartitionNC" },
 
   { "BipartitionByIntRepNC", 1, "list",
     FuncBipartitionByIntRepNC, 
-    "pkg/citrus/src/citrus.c:FuncBipartitionByIntRepNC" },
+    "pkg/semigroups/src/semigroups.c:FuncBipartitionByIntRepNC" },
 
   { "ELM_LIST_BP", 2, "f,i",
     FuncELM_LIST_BP,
-    "pkg/citrus/src/citrus.c:ELM_LIST_BP" },
+    "pkg/semigroups/src/semigroups.c:ELM_LIST_BP" },
   
   { "ELMS_LIST_BP", 2, "f,list",
     FuncELMS_LIST_BP,
-    "pkg/citrus/src/citrus.c:ELMS_LIST_BP" },
+    "pkg/semigroups/src/semigroups.c:ELMS_LIST_BP" },
   
   { "OnPointsBP", 2, "i,f",
     FuncOnPointsBP,
-    "pkg/citrus/src/citrus.c:FuncOnPointsBP" },
+    "pkg/semigroups/src/semigroups.c:FuncOnPointsBP" },
 
   { 0 }
 
@@ -1384,7 +1384,7 @@ static Int InitLibrary ( StructInitInfo *module )
     }
 
     tmp = NEW_PREC(0);
-    gvar = GVarName("CITRUSC"); AssGVar( gvar, tmp ); MakeReadOnlyGVar(gvar);
+    gvar = GVarName("SEMIGROUPSC"); AssGVar( gvar, tmp ); MakeReadOnlyGVar(gvar);
 
     /* return success                                                      */
     return 0;
@@ -1394,12 +1394,12 @@ static Int InitLibrary ( StructInitInfo *module )
 *F  InitInfopl()  . . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-#ifdef CITRUSSTATIC
+#ifdef SEMIGROUPSSTATIC
  /* type        = */ MODULE_STATIC,
 #else
  /* type        = */ MODULE_DYNAMIC,
 #endif
- /* name        = */ "citrus",
+ /* name        = */ "semigroups",
  /* revision_c  = */ 0,
  /* revision_h  = */ 0,
  /* version     = */ 0,
@@ -1412,17 +1412,17 @@ static StructInitInfo module = {
  /* postRestore = */ 0
 };
 
-#ifndef CITRUSSTATIC
+#ifndef SEMIGROUPSSTATIC
 StructInitInfo * Init__Dynamic ( void )
 {
-  module.revision_c = Revision_citrus_c;
+  module.revision_c = Revision_semigroups_c;
   return &module;
 }
 #endif
 
-StructInitInfo * Init__citrus ( void )
+StructInitInfo * Init__semigroups ( void )
 {
-  module.revision_c = Revision_citrus_c;
+  module.revision_c = Revision_semigroups_c;
   return &module;
 }
 

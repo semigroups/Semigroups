@@ -2,13 +2,13 @@
 +                                                                           +
 +   Copyright (C) 2011-12                              James D. Mitchell    +
 +                                                                           +
-+   'Citrus' is free software: you can redistribute it and/or modify        +
++   'Semigroups' is free software: you can redistribute it and/or modify        +
 +   it under the terms of the GNU General Public License as published by    +
 +   the Free Software Foundation, either version 2 of the license, or       +
 +   (at your option) any later version. For details see the FSF's own site  +
 +   http://www.gnu.org/licenses/gpl.html                                    +
 +                                                                           +
-+   'Citrus' is distributed in the hope that it will be useful,             +
++   'Semigroups' is distributed in the hope that it will be useful,             +
 +   but WITHOUT ANY WARRANTY; without even the implied warranty of          +
 +   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           +
 +   GNU General Public License for more details.                            +
@@ -26,26 +26,26 @@
                                        GAP 4.5
                                        =======
                                                package
-                                                       'Citrus'.
+                                                       'Semigroups'.
                                                        ===========
   
-Getting Citrus
+Getting Semigroups
 --------------
 
 To get the latest version of this GAP 4.5 package download the archive file 
 
-    citrus-x.x.tar.gz
+    semigroups-x.x.tar.gz
 
 from 
 
-    http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html 
+    http://www-history.mcs.st-and.ac.uk/~jamesm/semigroups/index.html 
 
 and inside the 'pkg' subdirectory of your GAP 4 installation unpack
-citrus-x.x.tar.gz using:
+semigroups-x.x.tar.gz using:
 
-    gunzip citrus-x.x.tar.gz; tar xvf citrus-x.x.tar
+    gunzip semigroups-x.x.tar.gz; tar xvf semigroups-x.x.tar
 
-This will create a subdirectory 'citrus-x.x'.
+This will create a subdirectory 'semigroups-x.x'.
 
 Installation
 ------------
@@ -57,14 +57,14 @@ install it can be obtained from the main GAP webpage
   http://www.gap-system.org
   
 The  following  is  a  summary of the steps that should lead to a successful
-installation of Citrus:
+installation of Semigroups:
 
  *   download  and  install the Orb package version 4.2 or higher. For more
      details go to:
 
   http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
 
-     Note that Orb and Citrus both perform better if Orb is compiled.
+     Note that Orb and Semigroups both perform better if Orb is compiled.
 
  *   download and install the IO package version 4.1 or higher. For more
      details go to:
@@ -80,24 +80,24 @@ installation of Citrus:
      This step is optional: please consult the section 'The Grape package'
      below for more details. 
 
- *   download the package archive citrus-x.x.tar.gz from
+ *   download the package archive semigroups-x.x.tar.gz from
 
-     http://www-history.mcs.st-and.ac.uk/~jamesm/citrus/index.html
+     http://www-history.mcs.st-and.ac.uk/~jamesm/semigroups/index.html
 
- *   unzip  and  untar  the file citrus-x.x.tar.gz using
+ *   unzip  and  untar  the file semigroups-x.x.tar.gz using
  
-        gunzip citrus-x.x.tar.gz; tar xvf citrus-x.x.tar
+        gunzip semigroups-x.x.tar.gz; tar xvf semigroups-x.x.tar
     
-     this  should  create a directory called citrus-x.x.
+     this  should  create a directory called semigroups-x.x.
 
  *   locate  the  'pkg'  directory  of your GAP directory, which contains the
-     directories lib, doc and so on. Move the directory citrus-x.x into the
+     directories lib, doc and so on. Move the directory semigroups-x.x into the
      pkg directory (if it is not there already).
 
- *   compile the GAP kernel component of Citrus by doing (in the 'pkg'
+ *   compile the GAP kernel component of Semigroups by doing (in the 'pkg'
      directory):
       
-        cd citrus-x.x 
+        cd semigroups-x.x 
         ./configure
         make
      
@@ -106,25 +106,25 @@ installation of Citrus:
  
  *   start GAP in the usual way.
 
- *   type LoadPackage("citrus");
+ *   type LoadPackage("semigroups");
 
  *   compile the documentation by typing 
  
-        CitrusMakeDoc();
+        SemigroupsMakeDoc();
 
 Compiling the kernel component
 ------------------------------
 
-As of version 0.7, the Citrus package has a GAP kernel component in C which
+As of version 0.7, the Semigroups package has a GAP kernel component in C which
 should be compiled. This component contains low-level functions relating to
 partial permutations and it is not possible to use these features or any
-related features in Citrus without compiling the package. It is possible to run
-Citrus without compiling it, but Citrus is limited to computing with
+related features in Semigroups without compiling the package. It is possible to run
+Semigroups without compiling it, but Semigroups is limited to computing with
 transformation semigroups in this case. 
 
 To compile the GAP kernel component in the 'pkg' directory do:
 
-    cd citrus-x.x
+    cd semigroups-x.x
     ./configure
     make
 
@@ -148,8 +148,8 @@ The Grape Package
 -----------------
 
 The Grape package is required for the function MunnSemigroup to work and so
-Grape is a suggested package for Citrus. If Grape is not fully installed,
-then Citrus can be used as normal with the exception that the function
+Grape is a suggested package for Semigroups. If Grape is not fully installed,
+then Semigroups can be used as normal with the exception that the function
 MunnSemigroup does not work. 
 
 Further Information

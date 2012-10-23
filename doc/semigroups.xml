@@ -114,7 +114,7 @@ gap> S:=InverseSemigroup(SmallGeneratingSet(S));
       <C>q^(d^2)</C> elements. <P/>
 
       <B>Please note:</B> there are currently no special methods for computing
-      with matrix semigroups in &Citrus; and so it might be advisable to use
+      with matrix semigroups in &Semigroups; and so it might be advisable to use
       <Ref Oper="IsomorphismTransformationSemigroup"/>.
 
       <Example>
@@ -373,7 +373,7 @@ gap> Size(S);
       reference manual. Please consult <Ref Func="Monoid" BookName="ref"/> and
       <Ref Func="Semigroup" BookName="ref"/> for further details.<P/> 
 
-      As an example of how the syntax provided by &Citrus; can be convenient:
+      As an example of how the syntax provided by &Semigroups; can be convenient:
       <C>U:=Semigroup(S, f, Idempotents(T));</C>, in the example below, returns
       the same value as: <C>U:=Semigroup(Concatenation(Generators(S), [f],
       Idempotents(T)));</C>.
@@ -412,7 +412,7 @@ gap> NrRClasses(U);
       containing the values of the options for the inverse semigroup being
       created, as described in Section <Ref Sect="opts"/>.<P/>
 
-      As an example of how the syntax provided by &Citrus; can be convenient:
+      As an example of how the syntax provided by &Semigroups; can be convenient:
       <C>U:=Semigroup(S, f, Idempotents(T));</C>, in the example below, returns
       the same value as: <C>U:=Semigroup(Concatenation(Generators(S), [f],
         Idempotents(T)));</C>.

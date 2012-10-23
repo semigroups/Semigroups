@@ -6,7 +6,7 @@
   <M>\{1,\ldots, n\}</M> where <M>n</M> is a positive integer. 
   In this chapter, we describe functions for creating and determining
   fundamental properties of transformations and partial permutations.
-  Semigroups in the &Citrus; package are semigroups of transformations and
+  Semigroups in the &Semigroups; package are semigroups of transformations and
   partial permutations, and so we describe how to create and manipulate these
   objects first.<P/>
   
@@ -19,7 +19,7 @@
   things like CanonicalTransSameKernel. JDM-->
 
   <Section><Heading>Creating transformations</Heading>
-    In this section we describe the functions available in &Citrus; for
+    In this section we describe the functions available in &Semigroups; for
     creating transformations.  The following functions from the &GAP; reference
     manual are particularly relevant to this section:
 
@@ -44,14 +44,14 @@
   </Section>
   
   <Section><Heading>Creating partial permutations</Heading>
-    In this section we describe the functions available in &Citrus; for
+    In this section we describe the functions available in &Semigroups; for
     creating partial permutations.  In addition to the functions described in
     this section, partial permutations can also be created from permutations
     and certain transformations;  see Section 
     <Ref Sect="Changing representation"/>. <P/>
 
     <E>Please note that the functions for partial permutations and inverse
-      semigroups are only available if you have compiled &Citrus;.</E> 
+      semigroups are only available if you have compiled &Semigroups;.</E> 
 
     <#Include Label="PartialPerm">
     <#Include Label="RestrictedPartialPerm">
@@ -90,10 +90,10 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
   
   <Section><Heading>Properties of transformations</Heading>
     In this section we describe the functions available in
-    &Citrus; for finding various properties of 
+    &Semigroups; for finding various properties of 
     transformations. <P/>
 
-    In addition to those functions described below, &Citrus; 
+    In addition to those functions described below, &Semigroups; 
     also contains a special method for
    <Ref Attr="RankOfTransformation" BookName="ref"/>. 
 
@@ -108,7 +108,7 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
   </Section>
    
   <Section><Heading>Properties of partial permutations</Heading>
-    In this section we describe the functions available in &Citrus; for
+    In this section we describe the functions available in &Semigroups; for
     finding various properties of partial permutations. 
     <P/>
 
@@ -148,7 +148,7 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
      <Item>
        <Index Key="*"><C>*</C> (for transformations)</Index>
        returns the composition of the transformations <A>f</A> and <A>g</A>.
-       &Citrus; contains more efficient methods than the &GAP;
+       &Semigroups; contains more efficient methods than the &GAP;
     library for <Ref Oper="\*" BookName="ref"/> when <A>f</A> and <A>g</A> are
     transformations or permutations (and at least one of <A>f</A> and <A>g</A>
     is a transformation).
@@ -238,7 +238,7 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
 
   <Section><Heading>Actions</Heading>
     The following actions of transformations and partial permutations are used
-    by &Citrus; in the computation of Green's relations and to test if an
+    by &Semigroups; in the computation of Green's relations and to test if an
     arbitrary transformation semigroup has a particular property;  see 
     Chapter <Ref Chap="green"/> and <Ref Sect="Basic
       Actions" BookName="ref"/>.  <P/>

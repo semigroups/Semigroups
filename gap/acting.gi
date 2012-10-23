@@ -211,20 +211,20 @@ function(f, s)
 
   #JDM this doesn't work for semigroups of partial perms...
   #if Degree(f)<>Degree(s) then 
-  #  Info(InfoCitrus, 2, "element and semigroup have different degrees.");
+  #  Info(InfoSemigroups, 2, "element and semigroup have different degrees.");
   #  return false;       
   #fi;
 
   if not (IsMonoid(s) and IsOne(f)) and 
    ActionRank(f) > MaximumList(List(Generators(s), ActionRank)) then
-    Info(InfoCitrus, 2, "element has larger rank than any element of ",
+    Info(InfoSemigroups, 2, "element has larger rank than any element of ",
      "semigroup.");
     return false;
   fi;
 
   if HasMinimalIdeal(s) and 
    ActionRank(f) < ActionRank(Representative(MinimalIdeal(s))) then
-    Info(InfoCitrus, 2, "element has smaller rank than any element of ",
+    Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
      "semigroup.");
     return false;
   fi;  
@@ -643,7 +643,7 @@ function(s, f, opt)
       rec(
         semi:=s,
         forflatplainlists:=true, #JDM probably don't want to assume this..
-        treehashsize:=CitrusOptionsRec.hashlen.M,
+        treehashsize:=SemigroupsOptionsRec.hashlen.M,
         schreier:=true,
         gradingfunc:=gradingfunc,
         orbitgraph:=true,
@@ -709,7 +709,7 @@ function(s, f, opt)
       rec(
         semi:=s,
         forflatplainlists:=true, #JDM probably don't want to assume this..
-        treehashsize:=CitrusOptionsRec.hashlen.M,
+        treehashsize:=SemigroupsOptionsRec.hashlen.M,
         schreier:=true,
         gradingfunc:=gradingfunc,
         orbitgraph:=true,
@@ -798,7 +798,7 @@ function(s)
 
   opts:= rec(schreier:=true, orbitgraph:=true,
           storenumbers:=true, log:=true, 
-          treehashsize:=CitrusOptionsRec.hashlen.M,
+          treehashsize:=SemigroupsOptionsRec.hashlen.M,
           scc_reps:=[One(Generators(s))], semi:=s);
   
   for name in RecNames(LambdaOrbOpts(s)) do 
@@ -1207,7 +1207,7 @@ function(s)
 
   return Orb(GeneratorsOfSemigroup(s), RhoDomain(s), RhoAct(s),
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
-        storenumbers:=true, log:=true, treehashsize:=CitrusOptionsRec.hashlen.M,
+        storenumbers:=true, log:=true, treehashsize:=SemigroupsOptionsRec.hashlen.M,
         scc_reps:=[One(Generators(s))], semi:=s));
 end);
 

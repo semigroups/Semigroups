@@ -52,7 +52,7 @@ function(coll)
 
   repeat 
     i:=i+1; f:=coll[i];
-    if InfoLevel(InfoCitrus)>=3 then 
+    if InfoLevel(InfoSemigroups)>=3 then 
       Print("at \t", i, " of \t", Length(coll), " with \t", Length(redund), 
       " redundant, \t", Length(out), " non-redundant\r");
     fi;
@@ -66,7 +66,7 @@ function(coll)
     fi;
   until Length(redund)+Length(out)=j;
 
-  if InfoLevel(InfoCitrus)>1 then 
+  if InfoLevel(InfoSemigroups)>1 then 
     Print("\n");
   fi;
   return out;
@@ -95,7 +95,7 @@ function(coll)
 
   repeat 
     i:=i+1; f:=coll[i];
-    if InfoLevel(InfoCitrus)>=3 then 
+    if InfoLevel(InfoSemigroups)>=3 then 
       Print("at \t", i, " of \t", Length(coll), " with \t", Length(redund), 
       " redundant, \t", Length(out), " non-redundant\r");
     fi;
@@ -109,7 +109,7 @@ function(coll)
     fi;
   until Length(redund)+Length(out)=j;
 
-  if InfoLevel(InfoCitrus)>1 then 
+  if InfoLevel(InfoSemigroups)>1 then 
     Print("\n");
   fi;
   return out;
@@ -128,7 +128,7 @@ function(s)
   Info(InfoWarning, 1, "this will sometimes return a false positive.");
 
   if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
-    Info(InfoCitrus, 2, "semigroup is regular");
+    Info(InfoSemigroups, 2, "semigroup is regular");
     return true;
   fi;
 
@@ -192,11 +192,11 @@ function(s)
   local iter, i, f, o, scc, reg, d;
 
   if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
-    Info(InfoCitrus, 2, "inverse semigroup");
+    Info(InfoSemigroups, 2, "inverse semigroup");
     return true;
   elif (HasIsRegularSemigroup(s) and IsRegularSemigroup(s)) and
    (HasIsInverseSemigroup(s) and not IsInverseSemigroup(s)) then 
-    Info(InfoCitrus, 2, "regular but non-inverse semigroup");
+    Info(InfoSemigroups, 2, "regular but non-inverse semigroup");
     return false;
   fi;
 
@@ -206,7 +206,7 @@ function(s)
     #i:=NrIdempotentsRClassFromData(s, d[1]);
     if i>1 then #this could be better
     # we only need to find 2 transversals to return false.
-      Info(InfoCitrus, 2, "at least one R-class contains more than 1", 
+      Info(InfoSemigroups, 2, "at least one R-class contains more than 1", 
       " idempotent");
       return false;
     fi;
@@ -219,7 +219,7 @@ function(s)
     for i in scc do 
       if IsInjectiveListTrans(o[i], f) then 
         if reg then 
-          Info(InfoCitrus, 2, "at least one L-class contains more than 1",
+          Info(InfoSemigroups, 2, "at least one L-class contains more than 1",
           " idempotent");
           return false;
         fi;
@@ -253,18 +253,18 @@ function(s)
   local gens, idem, f, g;
 
   if HasIsInverseSemigroup(s) and not IsInverseSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is not inverse");
+    Info(InfoSemigroups, 2, "the semigroup is not inverse");
     return false;
   elif not IsCompletelyRegularSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is not completely regular");
+    Info(InfoSemigroups, 2, "the semigroup is not completely regular");
     return false;
   elif IsGroupAsSemigroup(s) then
-    Info(InfoCitrus, 2, "the semigroup is a group");
+    Info(InfoSemigroups, 2, "the semigroup is a group");
     return true;
   fi;
 
   if not IsRegularSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is not regular");
+    Info(InfoSemigroups, 2, "the semigroup is not regular");
     return false;
   fi;
 
@@ -276,8 +276,8 @@ function(s)
   for f in gens do
     for g in idem do
       if not f*g=g*f then 
-        Info(InfoCitrus, 2, "the idempotents are not central");
-        Info(InfoCitrus, 2, f, " and ", g, "do not commute");
+        Info(InfoSemigroups, 2, "the idempotents are not central");
+        Info(InfoSemigroups, 2, f, " and ", g, "do not commute");
         return false;
       fi;
     od;
@@ -305,7 +305,7 @@ function(s)
   for i in [1..n] do
     for j in [i+1..n] do
       if not gens[i]*gens[j]=gens[j]*gens[i] then 
-        Info(InfoCitrus, 2, "generators ", i, " and ",  j, " do not commute");
+        Info(InfoSemigroups, 2, "generators ", i, " and ",  j, " do not commute");
         return false;
       fi;
     od;
@@ -328,7 +328,7 @@ function(s)
   for i in [1..n] do
     for j in [i+1..n] do
       if not gens[i]*gens[j]=gens[j]*gens[i] then 
-        Info(InfoCitrus, 2, "generators ", i, " and ",  j, " do not commute");
+        Info(InfoSemigroups, 2, "generators ", i, " and ",  j, " do not commute");
         return false;
       fi;
     od;
@@ -346,7 +346,7 @@ function(s)
   local gens, o, f;
 
   if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
-    Info(InfoCitrus, 2, "semigroup is not regular");
+    Info(InfoSemigroups, 2, "semigroup is not regular");
     return false;
   fi;
 
@@ -358,7 +358,7 @@ function(s)
      return not IsInjectiveListTrans(x, f); end));
     Enumerate(o);
     if not PositionOfFound(o)=false then 
-      Info(InfoCitrus, 2, "at least one H-class is not a subgroup");
+      Info(InfoSemigroups, 2, "at least one H-class is not a subgroup");
       return false;
     fi;
   od;
@@ -429,7 +429,7 @@ function(s)
     i:=i+1;
     #g:=DClassSchutzGpFromData(s, NextIterator(iter)[2]);
     if Size(g)>1 then 
-      Info(InfoCitrus, 2, "the D-class with index ", i, " is not H-trivial");
+      Info(InfoSemigroups, 2, "the D-class with index ", i, " is not H-trivial");
       return false;
     fi;
   until IsDoneIterator(iter);
@@ -475,7 +475,7 @@ function(s)
     i:=i+1;
     #if not (Size(KernelOrbitSchutzGpFromData(s, d[2]))=1 and 
     # Length(KernelOrbitSCCFromData(s, d[2]))=1) then
-      Info(InfoCitrus, 2, "the D-class with index ", i, " is not L-trivial");
+      Info(InfoSemigroups, 2, "the D-class with index ", i, " is not L-trivial");
       return false;
     #fi;
   od;
@@ -513,7 +513,7 @@ function(s)
       i:=i+1;
    #   if not (Size(ImageOrbitSchutzGpFromData(s, d!.data[1]))=1 and 
    #    Length(ImageOrbitSCCFromData(s, d!.data[1]))=1) then
-        Info(InfoCitrus, 2, "the D-class with index ", i, " is not R-trivial");
+        Info(InfoSemigroups, 2, "the D-class with index ", i, " is not R-trivial");
         return false;
     #  fi;
     od;
@@ -530,7 +530,7 @@ function(s)
     i:=i+1;
    # if not (Size(ImageOrbitSchutzGpFromData(s, d))=1 and 
    #  Length(ImageOrbitSCCFromData(s, d))=1) then 
-      Info(InfoCitrus, 2, "the R-class with index ", i, " is not trivial");
+      Info(InfoSemigroups, 2, "the R-class with index ", i, " is not trivial");
       return false;
     #fi;
   od;
@@ -601,7 +601,7 @@ function(s)
   gens:=Generators(s);
 
   if ForAll(gens, IsIdempotent) then 
-    Info(InfoCitrus, 2, "all the generators are idempotents");
+    Info(InfoSemigroups, 2, "all the generators are idempotents");
     return true;
   fi;
 
@@ -642,10 +642,10 @@ function(s)
   local n, imgs, kers, iter, D, d;
 
   if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is not regular");
+    Info(InfoSemigroups, 2, "the semigroup is not regular");
     return false;
   elif IsCompletelyRegularSemigroup(s) then
-    Info(InfoCitrus, 2, "the semigroup is completely regular");
+    Info(InfoSemigroups, 2, "the semigroup is completely regular");
     return IsCliffordSemigroup(s);
   fi;
 
@@ -653,7 +653,7 @@ function(s)
 #  kers:=KernelsOfTransSemigroup(s); Enumerate(kers, Length(imgs));
 
   if not (IsClosed(kers) and Length(kers)=Length(imgs)) then 
-    Info(InfoCitrus, 2, "the numbers of kernels and images are not equal");
+    Info(InfoSemigroups, 2, "the numbers of kernels and images are not equal");
     return false;
   fi;
 
@@ -668,7 +668,7 @@ function(s)
       d:=d[1];
     fi;
    # if not NrIdempotentsRClassFromData(s, d)=1 then 
-      Info(InfoCitrus, 2, "at least one R-class contains more than 1", 
+      Info(InfoSemigroups, 2, "at least one R-class contains more than 1", 
       " idempotent");
       return false;
    # fi;
@@ -692,7 +692,7 @@ function(s)
   local iter;
   
   if IsLeftZeroSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is a left zero semigroup");
+    Info(InfoSemigroups, 2, "the semigroup is a left zero semigroup");
     return true;
   elif HasNrLClasses(s) then 
     return NrLClasses(s)=1;
@@ -738,7 +738,7 @@ function(s)
   gens:=ShallowCopy(GeneratorsOfSemigroup(s)); m:=Length(gens);
 
   if m=1 then
-    Info(InfoCitrus, 2, "the semigroup only has one generator");
+    Info(InfoSemigroups, 2, "the semigroup only has one generator");
     return true;
   fi;
   
@@ -746,31 +746,31 @@ function(s)
   gens:=Permuted(gens, p); m:=Length(gens);
 
   if m=1 then 
-    Info(InfoCitrus, 2, "the semigroup only has one generator and there are",
+    Info(InfoSemigroups, 2, "the semigroup only has one generator and there are",
     " repeated generators");
     return true;
   fi;
   
   I:=MinimalIdeal(s);
   if not IsGroupAsSemigroup(I) then
-    Info(InfoCitrus, 2, "the minimal ideal is not a group.");
+    Info(InfoSemigroups, 2, "the minimal ideal is not a group.");
     return false;
   elif not IsCyclic(Range(IsomorphismPermGroup(I))) then 
-    Info(InfoCitrus, 2, "the minimal ideal is a non-cyclic group.");
+    Info(InfoSemigroups, 2, "the minimal ideal is a non-cyclic group.");
     return false;
   fi;
 
   for i in [1..m] do 
     f:=gens[i];
     if ForAll(gens, x-> x in Semigroup(f)) then
-      Info(InfoCitrus, 2, "the semigroup is generated by generator ", i^(p^-1));
+      Info(InfoSemigroups, 2, "the semigroup is generated by generator ", i^(p^-1));
       SetMinimalGeneratingSet(s, [f]);
       return true;
     fi;
   od;
-  Info(InfoCitrus, 2, "at least one generator does not belong to the", 
+  Info(InfoSemigroups, 2, "at least one generator does not belong to the", 
    " semigroup generated by any");
-  Info(InfoCitrus, 2, "other generator.");
+  Info(InfoSemigroups, 2, "other generator.");
   return false;
 end);
 
@@ -810,7 +810,7 @@ function(s)
   gens:=ShallowCopy(Generators(s)); m:=Length(gens);
 
   if m=1 then
-    Info(InfoCitrus, 2, "the semigroup only has one generator");
+    Info(InfoSemigroups, 2, "the semigroup only has one generator");
     return true;
   fi;
   
@@ -818,28 +818,28 @@ function(s)
   gens:=Permuted(gens, p); m:=Length(gens);
 
   if m=1 then 
-    Info(InfoCitrus, 2, "the semigroup only has one generator and there are",
+    Info(InfoSemigroups, 2, "the semigroup only has one generator and there are",
     " repeated generators");
     return true;
   fi;
   
   I:=MinimalIdeal(s);
   if not IsCyclic(Range(IsomorphismPermGroup(I))) then 
-    Info(InfoCitrus, 2, "the minimal ideal is a non-cyclic group.");
+    Info(InfoSemigroups, 2, "the minimal ideal is a non-cyclic group.");
     return false;
   fi;
 
   for i in [1..m] do 
     f:=gens[i];
     if ForAll(gens, x-> x in InverseSemigroup(f)) then
-      Info(InfoCitrus, 2, "the semigroup is generated by generator ", i^(p^-1));
+      Info(InfoSemigroups, 2, "the semigroup is generated by generator ", i^(p^-1));
       SetMinimalGeneratingSet(s, [f]);
       return true;
     fi;
   od;
-  Info(InfoCitrus, 2, "at least one generator does not belong to the", 
+  Info(InfoSemigroups, 2, "at least one generator does not belong to the", 
    " semigroup generated by any");
-  Info(InfoCitrus, 2, "other generator.");
+  Info(InfoSemigroups, 2, "other generator.");
   return false;
 end);
 
@@ -853,7 +853,7 @@ InstallOtherMethod(IsMonoidAsSemigroup, "for a semigroup",
 # new for 0.7! - IsomorphismPartialPermMonoid - "for a perm group"
 #############################################################################
 
-if Citrus_C then 
+if Semigroups_C then 
   InstallMethod(IsomorphismPartialPermMonoid, "for a perm group",
   [IsPermGroup],
   function(g)
@@ -865,13 +865,13 @@ if Citrus_C then
   end);
 else
   InstallMethod(IsomorphismPartialPermMonoid, "for a perm group",
-  [IsPermGroup], CitrusIsNotCompiled);
+  [IsPermGroup], SemigroupsIsNotCompiled);
 fi;
 
 # new for 0.7! - IsomorphismPartialPermSemigroup - "for a perm group"
 #############################################################################
 
-if Citrus_C then 
+if Semigroups_C then 
   InstallMethod(IsomorphismPartialPermSemigroup, "for a perm group",
   [IsPermGroup],
   function(g)
@@ -883,13 +883,13 @@ if Citrus_C then
   end);
 else
   InstallMethod(IsomorphismPartialPermSemigroup, "for a perm group",
-  [IsPermGroup], CitrusIsNotCompiled);
+  [IsPermGroup], SemigroupsIsNotCompiled);
 fi;
 
 # new for 0.7! - IsomorphismPartialPermSemigroup - "for trans semi"
 #############################################################################
 
-if Citrus_C then 
+if Semigroups_C then 
   InstallOtherMethod(IsomorphismPartialPermMonoid, "for a part perm semi",
   [IsPartialPermSemigroup],
   function(s)
@@ -909,7 +909,7 @@ fi;
 # new for 0.7! - IsomorphismPartialPermSemigroup - "for trans semi"
 #############################################################################
 
-if Citrus_C then 
+if Semigroups_C then 
   InstallOtherMethod(IsomorphismPartialPermMonoid, "for a trans semi",
   [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
   function(s)
@@ -935,13 +935,13 @@ if Citrus_C then
 else
   InstallOtherMethod(IsomorphismPartialPermMonoid, "for a trans semi",
   [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-  CitrusIsNotCompiled);
+  SemigroupsIsNotCompiled);
 fi;
 
 # new for 0.7! - IsomorphismPartialPermSemigroup - "for trans semi"
 #############################################################################
 
-if Citrus_C then 
+if Semigroups_C then 
   InstallOtherMethod(IsomorphismPartialPermSemigroup, "for a trans semi",
   [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
   function(s)
@@ -967,7 +967,7 @@ if Citrus_C then
 else
   InstallOtherMethod(IsomorphismPartialPermSemigroup, "for a trans semi",
   [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-  CitrusIsNotCompiled);
+  SemigroupsIsNotCompiled);
 fi;
 
 # new for 0.7! - IsomorphismReesMatrixSemigroup - "for a simple inverse semi"
@@ -1224,7 +1224,7 @@ function(s)
   local e, m, i, j;
 
   if not IsRegularSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is not regular");
+    Info(InfoSemigroups, 2, "the semigroup is not regular");
     return false;
   fi;
 
@@ -1233,7 +1233,7 @@ function(s)
   for i in [1..m] do
     for j in [1..m] do
       if not (e[i]*e[j])^2=e[i]*e[j] then 
-        Info(InfoCitrus, 2, "the product of idempotents ", i," and ", j, 
+        Info(InfoSemigroups, 2, "the product of idempotents ", i," and ", j, 
         " is not an idempotent");
         return false;
       fi;
@@ -1272,7 +1272,7 @@ InstallOtherMethod(IsRectangularBand, "for a transformation semigroup",
 function(s)
 
   if not IsSimpleSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is not simple");
+    Info(InfoSemigroups, 2, "the semigroup is not simple");
     return false;
   elif HasIsBand(s) then
     return IsBand(s);
@@ -1293,10 +1293,10 @@ function(s)
   local tester, n, rhofunc, lookfunc, data, i;
 
 #  if IsSimpleSemigroup(s) then 
-#    Info(InfoCitrus, 2, "the semigroup is simple");
+#    Info(InfoSemigroups, 2, "the semigroup is simple");
 #    return true;
 #  elif IsCompletelyRegularSemigroup(s) then 
-#    Info(InfoCitrus, 2, "the semigroup is completely regular");
+#    Info(InfoSemigroups, 2, "the semigroup is completely regular");
 #    return true;
   
   if HasGreensDClasses(s) then 
@@ -1355,12 +1355,12 @@ function(s, f)
   local o, lookingfor;
   
   if not f in s then 
-    Info(InfoCitrus, 2, "the element does not belong to the semigroup,");
+    Info(InfoSemigroups, 2, "the element does not belong to the semigroup,");
     return fail;
   fi;
   
   if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then
-    Info(InfoCitrus, 2, "the semigroup is regular,");
+    Info(InfoSemigroups, 2, "the semigroup is regular,");
     return true;
   fi;
   
@@ -1400,7 +1400,7 @@ function(s)
   local iter;
 
   if IsRightZeroSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is a right zero semigroup");
+    Info(InfoSemigroups, 2, "the semigroup is a right zero semigroup");
     return true;
   elif HasNrRClasses(s) then 
     return NrRClasses(s)=1;
@@ -1464,11 +1464,11 @@ function(s)
   local gens, r, o, f;
 
   if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is not regular");
+    Info(InfoSemigroups, 2, "the semigroup is not regular");
     return false;
   elif HasIsCompletelyRegularSemigroup(s) and not 
    IsCompletelyRegularSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is not completely regular");
+    Info(InfoSemigroups, 2, "the semigroup is not completely regular");
     return false;
   elif HasNrDClasses(s) then
     return NrDClasses(s)=1;
@@ -1511,10 +1511,10 @@ function(s)
 
   Enumerate(o);
   if IsPosInt(PositionOfFound(o)) then 
-    Info(InfoCitrus, 2, "the product of the generators: ",
+    Info(InfoSemigroups, 2, "the product of the generators: ",
     TraceSchreierTreeForward(o, PositionOfFound(o)));
 
-    Info(InfoCitrus, 2, "is a constant function with value ", 
+    Info(InfoSemigroups, 2, "is a constant function with value ", 
      o[PositionOfFound(o)][1]);
     return true;
   fi;
@@ -1600,7 +1600,7 @@ function(s)
   zero:=MultiplicativeZero(s);
 
   if zero=fail then 
-    Info(InfoCitrus, 2, "the semigroup does not have a zero");
+    Info(InfoSemigroups, 2, "the semigroup does not have a zero");
     return false;
   fi;
 
@@ -1608,7 +1608,7 @@ function(s)
     return ForAll(GreensHClasses(s), IsGroupHClass);
   fi;
 
-  Info(InfoCitrus, 2, "the semigroup has more than two H-classes");
+  Info(InfoSemigroups, 2, "the semigroup has more than two H-classes");
   return false;
 end);
 
@@ -1620,7 +1620,7 @@ InstallMethod(IsZeroRectangularBand, "for a semigroup",
 function(s)
 
   if not IsZeroSimpleSemigroup(s) then 
-    Info(InfoCitrus, 2, "the semigroup is not 0-simple");
+    Info(InfoSemigroups, 2, "the semigroup is not 0-simple");
     return false;
   elif HasIsBand(s) then
     return IsBand(s);
@@ -1641,7 +1641,7 @@ function(s)
   gens:=GeneratorsOfSemigroup(s);
 
   if z=fail then
-    Info(InfoCitrus, 2, "the semigroup does not have a zero");
+    Info(InfoSemigroups, 2, "the semigroup does not have a zero");
     return false;
   fi;
 
@@ -1649,7 +1649,7 @@ function(s)
   for i in [1..m] do
     for j in [1..m] do 
       if not gens[i]*gens[j]=z then 
-        Info(InfoCitrus, 2, "the product of generators ", i, " and ", j,
+        Info(InfoSemigroups, 2, "the product of generators ", i, " and ", j,
         " is not the multiplicative zero \n", z);
         return false;
       fi;
@@ -1699,7 +1699,7 @@ function(s)
   Enumerate(o);
 
   if IsPosInt(PositionOfFound(o)) or Length(o!.ranks)=1 then # 3 or 1 ranks
-    Info(InfoCitrus, 2, "elements of the semigroup have either 1 or >2", 
+    Info(InfoSemigroups, 2, "elements of the semigroup have either 1 or >2", 
     " different ranks.");
     return false;
   fi;
@@ -1726,7 +1726,7 @@ function(s)
 
     SetMultiplicativeZero(s, z);
   elif MultiplicativeZero(s)=fail then 
-    Info(InfoCitrus, 2, "no multiplicative zero.");
+    Info(InfoSemigroups, 2, "no multiplicative zero.");
     return false;
   else
     z:=MultiplicativeZero(s);
@@ -1741,7 +1741,7 @@ function(s)
     return true;
   fi;
 
-  Info(InfoCitrus, 2, "more than two D-classes.");  
+  Info(InfoSemigroups, 2, "more than two D-classes.");  
   return false;
 end);
 

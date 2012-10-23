@@ -8,20 +8,20 @@
 #############################################################################
 ##
 
-# ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"greens.tst"));
+# ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"greens.tst"));
 # takes approx. 1 minute to run currently!
-gap> START_TEST("Citrus package: greens.tst");
-gap> LoadPackage("citrus", false);;
+gap> START_TEST("Semigroups package: greens.tst");
+gap> LoadPackage("semigroups", false);;
 
 #
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
 gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrus, 0);
+gap> SetInfoLevel(InfoSemigroups, 0);
 
 #
-gap> file:=Concatenation(CitrusDir(), "/examples/misc.citrus.gz");;
-gap> gens:=ReadCitrus(file){[25..124]};;
+gap> file:=Concatenation(SemigroupsDir(), "/examples/misc.semigroups.gz");;
+gap> gens:=ReadSemigroups(file){[25..124]};;
 gap> out:=[];;
 gap> for x in gens do                            
 > s:=Semigroup(x);
@@ -1576,8 +1576,8 @@ gap> HClassReps(L);
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
+gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
 
 #
 gap> Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
@@ -1588,4 +1588,4 @@ gap> Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
 > Unbind(ll); Unbind(hh); Unbind(dd); Unbind(g); Unbind(enum); Unbind(j);
 > Unbind(iter2); Unbind(iter1); Unbind(iter3); Unbind(r3); Unbind(elts);
 > Unbind(R); Unbind(x); Unbind(i);;
-gap> STOP_TEST( "Citrus package: greens.tst", 10000);
+gap> STOP_TEST( "Semigroups package: greens.tst", 10000);

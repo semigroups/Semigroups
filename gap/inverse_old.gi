@@ -50,7 +50,7 @@ function(d)
       rep:=Representative(d);
       
       if f[2]<>rep[2] then 
-        Info(InfoCitrus, 1, "rank not equal to those of",
+        Info(InfoSemigroups, 1, "rank not equal to those of",
           " any of the D-class elements,");
         return fail;
       fi;
@@ -63,14 +63,14 @@ function(d)
       
       k:=Position(o, DomPP(f)); 
       if k=fail or not OrbSCCTruthTable(o)[m][k] then 
-        Info(InfoCitrus, 1, "domain not equal to that of any",
+        Info(InfoSemigroups, 1, "domain not equal to that of any",
         " D-class element,");
         return fail;
       fi;
 
       l:=Position(o, RanSetPP(f));
       if l=fail or not OrbSCCTruthTable(o)[m][l] then
-        Info(InfoCitrus, 1, "range not equal to that of any",
+        Info(InfoSemigroups, 1, "range not equal to that of any",
         " D-class element,");
         return fail;
       fi;

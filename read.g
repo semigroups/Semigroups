@@ -8,27 +8,27 @@
 #############################################################################
 ##
 
-if IsBound(CITRUSC) then ReadPackage("citrus/gap/pperm.gi"); fi;
-ReadPackage("citrus/gap/partition.gi");
-ReadPackage("citrus/gap/binary.gi");
-ReadPackage("citrus/gap/matrix.gi");
+if IsBound(SEMIGROUPSC) then ReadPackage("semigroups/gap/pperm.gi"); fi;
+ReadPackage("semigroups/gap/partition.gi");
+ReadPackage("semigroups/gap/binary.gi");
+ReadPackage("semigroups/gap/matrix.gi");
 
-ReadPackage("citrus/gap/acting.gi");
-ReadPackage("citrus/gap/setup.gi");
+ReadPackage("semigroups/gap/acting.gi");
+ReadPackage("semigroups/gap/setup.gi");
 
-ReadPackage("citrus/gap/semigroups.gi");
-ReadPackage("citrus/gap/greens.gi");
-ReadPackage("citrus/gap/slp.gi");
-ReadPackage("citrus/gap/regular.gi");
-if IsBound(CITRUSC) then ReadPackage("citrus/gap/inverse.gi"); fi;
-ReadPackage("citrus/gap/enums.gi");
-ReadPackage("citrus/gap/iterators.gi");
-ReadPackage("citrus/gap/properties.gi");
-ReadPackage("citrus/gap/attributes.gi");
-ReadPackage("citrus/gap/orbits.gi");
+ReadPackage("semigroups/gap/semigroups.gi");
+ReadPackage("semigroups/gap/greens.gi");
+ReadPackage("semigroups/gap/slp.gi");
+ReadPackage("semigroups/gap/regular.gi");
+if IsBound(SEMIGROUPSC) then ReadPackage("semigroups/gap/inverse.gi"); fi;
+ReadPackage("semigroups/gap/enums.gi");
+ReadPackage("semigroups/gap/iterators.gi");
+ReadPackage("semigroups/gap/properties.gi");
+ReadPackage("semigroups/gap/attributes.gi");
+ReadPackage("semigroups/gap/orbits.gi");
 
-ReadPackage("citrus/gap/examples.gi");
+ReadPackage("semigroups/gap/examples.gi");
 
-ReadPackage("citrus/gap/utils.gi");
+ReadPackage("semigroups/gap/utils.gi");
 
 

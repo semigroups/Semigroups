@@ -9,15 +9,15 @@
 ##
 
 #
-# ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"semigroups.tst")); 
-gap> START_TEST("Citrus package: semigroups.tst");
-gap> LoadPackage("citrus", false);;
+# ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"semigroups.tst")); 
+gap> START_TEST("Semigroups package: semigroups.tst");
+gap> LoadPackage("semigroups", false);;
 
 #
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
 gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrus, 0);
+gap> SetInfoLevel(InfoSemigroups, 0);
 
 #
 gap> gens:=[ PartialPermNC( [ 1, 2, 3, 4, 6, 7, 10 ], [ 5, 3, 4, 1, 9, 6, 8 ] ),
@@ -225,9 +225,9 @@ gap> Size(Range(iso));
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
+gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
 gap> Unbind(s);; Unbind(gens);;
 
 #
-gap> STOP_TEST( "Citrus package: semigroups.tst", 10000);
+gap> STOP_TEST( "Semigroups package: semigroups.tst", 10000);
