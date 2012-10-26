@@ -13,7 +13,7 @@
 ###############################################################################
 
 InstallMethod(ActionDegree, "for a transformation",
-[IsTransformation], DegreeOfTransformation);
+[IsTransformation], x-> DegreeOfTransformation);
 
 InstallMethod(ActionDegree, "for a bipartition",
 [IsBipartition], x-> x[1]/2);

@@ -5,6 +5,24 @@ const char * Revision_semigroups_c =
 #include <stdlib.h>
 #include "src/compiled.h"
 
+Obj HTAdd_TreeHash_C(Obj self, Obj ht, Obj x, Obj k);
+
+Obj FuncPIN(Obj self, Obj gens, Obj ht, Obj limit){
+  Int  k, i;
+  Obj  x, elts;
+  
+  k=LEN_PLIST(gens);
+  elts=NEW_PLIST(T_PLIST, INT_INTOBJ(limit));
+  
+  for(i=1;i<=k+1;i++){ 
+    x=ELM_PLIST(gens, i);
+    HTAdd_TreeHash_C(self, ht, x, INTOBJ_INT(k));
+    SET_ELM_PLIST(elts, i, x);
+  }
+
+  return ht;
+}
+
 /* import the type from GAP */
 Obj PartialPermType;
 Obj BipartitionType;
@@ -1217,6 +1235,10 @@ Obj FuncLeqBP(Obj self, Obj f, Obj g)
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs [] = {
+
+  { "PIN", 2, "gens, ht, limit",
+    FuncPIN,
+    "pkg/semigroups/src/semigroups.c:FuncPIN" },
 
   { "ELM_LIST_PP", 2, "f,i",
     FuncELM_LIST_PP,
