@@ -74,7 +74,7 @@ InstallOtherMethod(\/, "for a partial perm and partial perm",
 ###########################################################################
 
 InstallMethod(AsPartialPerm, "for a transformation", 
-[IsTransformation and IsTransformationRep],
+[IsTransformation],
 function(f)
   local img, n;
   img:=f![1];
@@ -92,7 +92,7 @@ function(f)
 end);
 
 InstallMethod(AsPartialPermNC, "for a transformation", 
-[IsTransformation and IsTransformationRep],
+[IsTransformation],
 function(f)
   local img, n;
   img:=f![1];
