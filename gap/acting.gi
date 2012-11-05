@@ -484,7 +484,6 @@ function(data, limit, lookfunc)
     
     for j in genstoapply do #JDM
       x:=gens[j]*orb[i][4];
-      
       lamx:=lambda(x);
       #pos:=Position(o, lamx);
       pos:=HTValue_TreeHash_C(oht, lamx); 
@@ -562,7 +561,6 @@ function(data, limit, lookfunc)
           orblookup2[nr]:=repslens[val];
         fi;
       fi;
-      #Error();
       orb[nr]:=x;
       schreierpos[nr]:=i; # orb[nr] is obtained from orb[i]
       schreiergen[nr]:=j; # by multiplying by gens[j]

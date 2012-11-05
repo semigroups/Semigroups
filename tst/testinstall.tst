@@ -41,7 +41,7 @@ gap> f:=Transformation( [ 1, 1, 3, 1 ] );;
 gap> f in s;
 true
 gap> t:=Semigroup(gens{[1..3]});
-<semigroup with 3 generators>
+<transformation semigroup of degree 4 with 3 generators>
 gap> ForAll(t, x-> x in s);
 true
 gap> Size(t);
@@ -82,24 +82,24 @@ gap> AsList(s);
 [ Transformation( [ 4, 4, 4, 4 ] ) ]
 
 # Issue 3
-gap> f:=Transformation( [ 7, 5, 3, 2, 6, 7, 10, 8, 8, 3 ] );;
-gap> AsPermutation(f, [1,2]);
-fail
+#gap> f:=Transformation( [ 7, 5, 3, 2, 6, 7, 10, 8, 8, 3 ] );;
+#gap> Permutation(f, [1,2], OnPoints);
+#fail
 gap> s:=Semigroup(Transformation( [ 3, 5, 5, 5, 3 ] ), 
 > Transformation( [ 5, 5, 2, 1, 5 ] ));;
 gap> f:=Transformation( [ 3, 3, 5, 3, 3 ] );;
-gap> IsRegularTransformation(s, f);
+gap> IsRegularSemigroupElement(s, f);
 true
 gap> f:=Transformation( [ 5, 5, 5, 5, 5 ] );;
-gap> IsRegularTransformation(s, f);
+gap> IsRegularSemigroupElement(s, f);
 true
 gap> f:=Transformation( [ 3, 5, 5, 5, 3 ] );;
-gap> IsRegularTransformation(s, f);
+gap> IsRegularSemigroupElement(s, f);
 true
 gap> IsRegularSemigroup(s);
 false
 gap> f:=Transformation( [ 5, 5, 2, 1, 5 ] );;
-gap> IsRegularTransformation(s, f);
+gap> IsRegularSemigroupElement(s, f);
 false
 
 # Issue 9
@@ -148,10 +148,10 @@ true
 gap> ForAll(Concatenation(List(GreensDClasses(s), RClassReps)), 
 > x-> x in s);
 true
-gap> ForAll([1..NrRClasses(s)], i->
-> EvaluateWord(Generators(s), TraceRClassRepsTree(s, i))=
-> RClassReps(s)[i]);
-true
+#gap> ForAll([1..NrRClasses(s)], i->
+#> EvaluateWord(Generators(s), TraceRClassRepsTree(s, i))=
+#> RClassReps(s)[i]);
+#true
 
 #
 gap> gens:=[ Transformation( [ 1, 2, 3, 5, 4, 6, 7, 8 ] ),

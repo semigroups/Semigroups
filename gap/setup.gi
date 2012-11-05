@@ -165,7 +165,7 @@ InstallMethod(RhoInverse, "for a transformation semi",
     local g, n, m, lookup, i, j;
   
     g:=ker{IMAGE_TRANS(f)};
-    n:=f[1]; 
+    n:=DegreeOfTransformation(f); 
     m:=MaximumList(ker);
     lookup:=EmptyPlist(n);
     
@@ -273,7 +273,7 @@ InstallMethod(RhoRank, "for a semigroup of partial perms",
 ###############################################################################
 
 InstallMethod(RhoFunc, "for a trans semi",
-[IsTransformationSemigroup], x-> KERNEL_TRANS);
+[IsTransformationSemigroup], x-> FLAT_KERNEL_TRANS);
 
 InstallMethod(RhoFunc, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> LeftSignedPartition);
