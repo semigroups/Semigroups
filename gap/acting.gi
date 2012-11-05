@@ -420,7 +420,7 @@ InstallOtherMethod(Enumerate,
 "for an acting semi data, limit, and func",
 [IsSemigroupData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr, i, graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact, lambdaperm, rho, lambdarhoht, o, oht, scc, r, lookup, x, lamx, pos, m, y, rhoy, val, schutz, tmp, old, j, n;
+  local looking, ht, orb, nr, i, graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact, lambdaperm, rho, lambdarhoht, o, oht, scc, r, lookup, htvalue, htadd, x, lamx, pos, m, y, rhoy, val, schutz, tmp, old, j, n;
 
   if IsClosed(data) then 
     return data;
@@ -478,7 +478,15 @@ function(data, limit, lookfunc)
   Enumerate(o, infinity);
   scc:=OrbSCC(o); r:=Length(scc);
   lookup:=o!.scc_lookup;
-  
+ 
+  if IsBound(HTAdd_TreeHash_C) then 
+    htadd:=HTAdd_TreeHash_C;
+    htvalue:=HTValue_TreeHash_C;
+  else
+    htadd:=HTAdd;
+    htvalue:=HTValue;
+  fi;
+
   while nr<=limit and i<nr do 
     i:=i+1;
     
@@ -486,7 +494,7 @@ function(data, limit, lookfunc)
       x:=gens[j]*orb[i][4];
       lamx:=lambda(x);
       #pos:=Position(o, lamx);
-      pos:=HTValue_TreeHash_C(oht, lamx); 
+      pos:=htvalue(oht, lamx); 
 
       #find the scc
       m:=lookup[pos];
@@ -503,14 +511,14 @@ function(data, limit, lookfunc)
 
       rhoy:=[m];
       Append(rhoy, rho(y));
-      val:=HTValue_TreeHash_C(lambdarhoht, rhoy);
+      val:=htvalue(lambdarhoht, rhoy);
 
       # this is what we keep if it is new
       # x:=[s, m, o, y, false, nr+1];
 
       if val=fail then  #new rho value, and hence new R-rep
         lenreps:=lenreps+1;
-        HTAdd_TreeHash_C(lambdarhoht, rhoy, lenreps);
+        htadd(lambdarhoht, rhoy, lenreps);
         nr:=nr+1;
         reps[lenreps]:=[y];
         repslookup[lenreps]:=[nr];
@@ -534,7 +542,7 @@ function(data, limit, lookfunc)
           continue;
         else
           if schutz=false then # schutz gp is trivial
-            tmp:=HTValue_TreeHash_C(ht, y);
+            tmp:=htvalue(ht, y);
             if tmp<>fail then 
               graph[i][j]:=tmp;
               continue;
@@ -566,7 +574,7 @@ function(data, limit, lookfunc)
       schreiergen[nr]:=j; # by multiplying by gens[j]
       schreiermult[nr]:=pos; # and ends up in position <pos> of 
                              # its lambda orb
-      HTAdd_TreeHash_C(ht, y, nr);
+      htadd(ht, y, nr);
       graph[nr]:=EmptyPlist(nrgens);
       graph[i][j]:= nr;
       
