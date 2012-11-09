@@ -33,6 +33,41 @@ Obj BipartitionType;
 ** Internal functions
 *******************************************************************************/
 
+
+/* create a new transformation */
+static inline Obj NEW_UInt2(Int len, Obj type)
+{
+    Obj f;
+
+    f = NewBag(T_DATOBJ, sizeof(UInt2)*(len)+sizeof(UInt));
+    TYPE_DATOBJ(f) = type;
+    return f;
+}
+
+/* retrieve entry pos of internal rep of partial trans f */
+static inline UInt2 ELM_UInt2(Obj f, Int pos)
+{
+    UInt2 *data = (UInt2 *) (ADDR_OBJ(f) + 1);
+    return data[pos-1];
+}
+
+/* define entry pos of internal rep of partial trans f to be nr */
+static inline void SET_ELM_UInt2(Obj f, Int pos, UInt2 nr)
+{
+    UInt2 *data = (UInt2 *) (ADDR_OBJ(f) + 1);
+    data[pos-1] = nr;
+}
+
+/* create a new empty plist */
+static inline Obj NEW_EMPTY_PLIST()
+{ Obj out;
+  out = NEW_PLIST(T_PLIST_EMPTY, 0);
+  SET_LEN_PLIST(out, 0);
+  return out;
+}
+
+
+
 /* create a new empty partial trans */
 
 static inline Obj NEW_EMPTY_PP()
