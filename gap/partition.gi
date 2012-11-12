@@ -3,7 +3,7 @@ BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
  IsBipartition, CanEasilySortElements, CanEasilySortElements));
 
 BindGlobal("BipartitionType", NewType(BipartitionFamily,
- IsBipartition and IsDataObjectRep and IsActingElt));
+ IsBipartition and IsDataObjectRep and IsAssociativeElement));
 
 InstallGlobalFunction(BipartitionNC, 
 function(arg)

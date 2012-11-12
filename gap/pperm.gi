@@ -12,7 +12,7 @@ BindGlobal("PartialPermFamily", NewFamily("PartialPermFamily",
  IsPartialPerm, CanEasilySortElements, CanEasilySortElements));
 
 BindGlobal("PartialPermType", NewType(PartialPermFamily,
- IsPartialPerm and IsDataObjectRep and IsActingElt));
+ IsPartialPerm and IsDataObjectRep and IsAssociativeElement));
 
 # new for 0.7! - \^ - "for a partial perm and neg int"
 #############################################################################

@@ -187,7 +187,7 @@ end);
 # expand?
 
 InstallMethod(\in, "for acting semi elt and semigroup data",
-[IsActingElt, IsSemigroupData],
+[IsAssociativeElement, IsSemigroupData],
 function(f, data)
   return not Position(data, f)=fail;
 end);
@@ -196,7 +196,7 @@ end);
 ##############################################################################
 
 InstallMethod(\in, "for an acting elt and acting semigroup",
-[IsActingElt, IsActingSemigroup], 
+[IsAssociativeElement, IsActingSemigroup], 
 function(f, s)
   local data, len, ht, val, lambda, o, l, lookfunc, m, scc, lambdarho, schutz, g, reps, repslens, lambdaperm, n, max, found;
   
@@ -616,7 +616,7 @@ InstallGlobalFunction(GradedLambdaOrb,
 function(s, f, opt)
   local lambda, graded, pos, gradingfunc, onlygrades, onlygradesdata, o, j, k, l;
 
-  if IsActingElt(f) then 
+  if IsAssociativeElement(f) then 
     lambda:=LambdaFunc(s)(f);
   else
     lambda:=f;

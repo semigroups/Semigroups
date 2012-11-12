@@ -113,7 +113,7 @@ end);
 #JDm rough!
 
 InstallMethod(SemigroupEltSLP, "for an acting semigroup and acting elt",
-[IsActingSemigroup, IsActingElt],
+[IsActingSemigroup, IsAssociativeElement],
 function(s, x)
   local data, nr, gens, zip, o, m, scc, l, word, v, y, p, slp;
 

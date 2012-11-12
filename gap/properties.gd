@@ -46,8 +46,6 @@ DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsZeroSemigroup", IsSemigroup); 
-DeclareGlobalFunction("ReesMatrixSemigroupElementNC");
-DeclareGlobalFunction("ReesZeroMatrixSemigroupElementNC");
 
 InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);

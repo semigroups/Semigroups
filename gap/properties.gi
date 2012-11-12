@@ -1042,9 +1042,9 @@ function(d)
 
   inv:=function(x)
     local i, a, j;
-    i:=RowIndexOfReesMatrixSemigroupElement(x);
+    i:=RowOfReesMatrixSemigroupElement(x);
     a:=UnderlyingElementOfReesMatrixSemigroupElement(x);
-    j:=ColumnIndexOfReesMatrixSemigroupElement(x);
+    j:=ColumnOfReesMatrixSemigroupElement(x);
     return rreps[i]*a*lreps[j];
   end;
 
@@ -1350,7 +1350,7 @@ end);
 
 InstallMethod(IsRegularSemigroupElement, 
 "for an acting semigroup and acting element",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsActingElt], 
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement], 
 function(s, f)                                  
   local o, lookingfor;
   
@@ -1378,7 +1378,7 @@ end);
 
 InstallMethod(IsRegularSemigroupElementNC, 
 "for an acting semigroup and acting element",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsActingElt], 
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement], 
 function(s, f)                                  
   local o, lookingfor;
   
@@ -1922,41 +1922,6 @@ end);
 InstallMethod(PrincipalFactor, "for a D-class", 
 [IsGreensDClass], 
 d-> Range(InjectionPrincipalFactor(d)));
-
-#RRR
-
-# new for 0.7! - ReesMatrixSemigroupElementNC
-#############################################################################
-
-InstallGlobalFunction(ReesMatrixSemigroupElementNC,
-function(rms, i, g, j)
-  local elt;
-  elt := Objectify(FamilyObj(rms)!.wholeSemigroup!.eType, rec());
-  SetUnderlyingElementOfReesMatrixSemigroupElement(elt, g);
-  SetColumnIndexOfReesMatrixSemigroupElement(elt, j);
-  SetRowIndexOfReesMatrixSemigroupElement(elt, i);
-  return elt;
-end);
-
-# new for 0.7! - ReesZeroMatrixSemigroupElementNC
-#############################################################################
-
-InstallGlobalFunction(ReesZeroMatrixSemigroupElementNC,
-function(rms, i, g, j)
-  local elt;
-
-  if g=MultiplicativeZero(UnderlyingSemigroupOfReesZeroMatrixSemigroup(rms))
-   then
-    return MultiplicativeZero(rms);
-  fi;
-
-  elt := Objectify(FamilyObj(rms)!.wholeSemigroup!.eType, rec());
-  SetReesZeroMatrixSemigroupElementIsZero(elt, false);
-  SetUnderlyingElementOfReesZeroMatrixSemigroupElement(elt, g);
-  SetColumnIndexOfReesZeroMatrixSemigroupElement(elt, j);
-  SetRowIndexOfReesZeroMatrixSemigroupElement(elt, i);
-  return elt;
-end);
 
 #SSS
 

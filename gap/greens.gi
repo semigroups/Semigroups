@@ -115,7 +115,7 @@ end);
 # different method for regular/inverse 
 
 InstallMethod(\in, "for acting elt and D-class of acting semigp.",
-[IsActingElt, IsGreensDClass and IsActingSemigroupGreensClass],
+[IsAssociativeElement, IsGreensDClass and IsActingSemigroupGreensClass],
 function(f, d)
   local rep, s, g, m, o, scc, l, schutz, cosets, x;
   
@@ -187,7 +187,7 @@ end);
 # same method for regular/inverse 
 
 InstallOtherMethod(\in, "for elt and acting semigroup H-class",
-[IsActingElt, IsGreensHClass and IsActingSemigroupGreensClass],
+[IsAssociativeElement, IsGreensHClass and IsActingSemigroupGreensClass],
 function(f, h)
   local s, rep;
 
@@ -210,7 +210,7 @@ end);
 # same method for regular, different method for inverse 
 
 InstallMethod(\in, "for acting elt and L-class of acting semigp.",
-[IsActingElt, IsGreensLClass and IsActingSemigroupGreensClass],
+[IsAssociativeElement, IsGreensLClass and IsActingSemigroupGreensClass],
 function(f, l)
   local rep, s, m, o, i, schutz, g, p;
 
@@ -270,7 +270,7 @@ end);
 # same method for regular/inverse 
 
 InstallMethod(\in, "for acting elt and R-class of acting semigp.",
-[IsActingElt, IsGreensRClass and IsActingSemigroupGreensClass],
+[IsAssociativeElement, IsGreensRClass and IsActingSemigroupGreensClass],
 function(f, r)
   local rep, s, m, o, l, schutz, g;
 
@@ -724,7 +724,7 @@ end);
 # same method for regular, different method for inverse
 
 InstallOtherMethod(GreensDClassOfElement, "for an acting semigp and elt",
-[IsActingSemigroup, IsActingElt],
+[IsActingSemigroup, IsAssociativeElement],
 function(s, f)
   local lambda_o, rectify, lambda_m, rep, rho_o, i;
 
@@ -758,7 +758,7 @@ end);
 # same method for regular, different method for inverse
 
 InstallOtherMethod(GreensDClassOfElementNC, "for an acting semigp and elt",
-[IsActingSemigroup, IsActingElt],
+[IsActingSemigroup, IsAssociativeElement],
 function(s, f)
   return CreateDClassNC(s, 1, GradedLambdaOrb(s, f, false), 
    1, GradedRhoOrb(s, f, false), f, true);
@@ -770,7 +770,7 @@ end);
 # same method for regular, different method for inverse
 
 InstallOtherMethod(GreensHClassOfElement, "for an acting semigp and elt",
-[IsActingSemigroup, IsActingElt],
+[IsActingSemigroup, IsAssociativeElement],
 function(s, f)
   local lambda_o, lambda_m, rho_o, i, rho_m;
 
@@ -801,7 +801,7 @@ end);
 # same method for regular, different method for inverse
 
 InstallOtherMethod(GreensHClassOfElementNC, "for an acting semigp and elt",
-[IsActingSemigroup, IsActingElt],
+[IsActingSemigroup, IsAssociativeElement],
 function(s, f)
   return CreateHClass(s, 1, GradedLambdaOrb(s, f, false), 
    1, GradedRhoOrb(s, f, false), f, true);
@@ -813,7 +813,7 @@ end);
 # same method for regular, different method for inverse
 
 InstallOtherMethod(GreensHClassOfElement, "for D-class and elt",
-[IsActingSemigroupGreensClass and IsGreensDClass, IsActingElt],
+[IsActingSemigroupGreensClass and IsGreensDClass, IsAssociativeElement],
 function(d, f)
   local h;
 
@@ -835,7 +835,7 @@ end);
 # same method for regular, different method for inverse.
 
 InstallOtherMethod(GreensHClassOfElementNC, "for a D-class and elt",
-[IsActingSemigroupGreensClass and IsGreensDClass, IsActingElt],
+[IsActingSemigroupGreensClass and IsGreensDClass, IsAssociativeElement],
 function(d, f)
   local h;
  
@@ -852,7 +852,7 @@ end);
 # same method for regular, different method for inverse.
 
 InstallOtherMethod(GreensHClassOfElement, "for L-class and elt",
-[IsActingSemigroupGreensClass and IsGreensLClass, IsActingElt],
+[IsActingSemigroupGreensClass and IsGreensLClass, IsAssociativeElement],
 function(l, f)
   local s, nc, o, i, h;
 
@@ -885,7 +885,7 @@ end);
 # same method for regular, different method for inverse
 
 InstallOtherMethod(GreensHClassOfElementNC, "for an L-class and elt",
-[IsActingSemigroupGreensClass and IsGreensLClass, IsActingElt],
+[IsActingSemigroupGreensClass and IsGreensLClass, IsAssociativeElement],
 function(l, f)
   local h;
  
@@ -903,7 +903,7 @@ end);
 # same method for regular, different method for inverse.
 
 InstallOtherMethod(GreensHClassOfElement, "for R-class and elt",
-[IsActingSemigroupGreensClass and IsGreensRClass, IsActingElt],
+[IsActingSemigroupGreensClass and IsGreensRClass, IsAssociativeElement],
 function(r, f)
   local s, nc, o, i, h;
 
@@ -936,7 +936,7 @@ end);
 # same method for regular, different method for inverse.
 
 InstallOtherMethod(GreensHClassOfElementNC, "for an R-class and elt",
-[IsActingSemigroupGreensClass and IsGreensRClass, IsActingElt],
+[IsActingSemigroupGreensClass and IsGreensRClass, IsAssociativeElement],
 function(r, f)
   local h;
   
@@ -953,7 +953,7 @@ end);
 # same method for regular, different method for inverse.
 
 InstallOtherMethod(GreensLClassOfElement, "for an acting semigp and elt",
-[IsActingSemigroup, IsActingElt],
+[IsActingSemigroup, IsAssociativeElement],
 function(s, f)
   local o;
 
@@ -979,7 +979,7 @@ end);
 # same method for regular, different method for inverse.
 
 InstallOtherMethod(GreensLClassOfElementNC, "for an acting semigp and elt",
-[IsActingSemigroup, IsActingElt],
+[IsActingSemigroup, IsAssociativeElement],
 function(s, f)
   # use NC since rho value of f has to be in first place of GradedRhoOrb
   # with false as final arg
@@ -992,7 +992,7 @@ end);
 # same method for regular, different method for inverse
 
 InstallOtherMethod(GreensLClassOfElement, "for D-class of acting semi and elt",
-[IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
+[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(d, f)
   local l;
     
@@ -1015,7 +1015,7 @@ end);
 # same method for regular, different method for inverse
 
 InstallOtherMethod(GreensLClassOfElementNC, "for D-class and acting elt",
-[IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
+[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(d, f)
   local l;
 
@@ -1031,7 +1031,7 @@ end);
 # different method for regular/inverse.
 
 InstallOtherMethod(GreensRClassOfElement, "for an acting semigp and elt",
-[IsActingSemigroup, IsActingElt],
+[IsActingSemigroup, IsAssociativeElement],
 function(s, f)
 
   if not f in s then
@@ -1048,7 +1048,7 @@ end);
 # same method for regular/inverse.
 
 InstallOtherMethod(GreensRClassOfElementNC, "for an acting semigp and elt",
-[IsActingSemigroup, IsActingElt],
+[IsActingSemigroup, IsAssociativeElement],
 function(s, f)
   local pos, r;
  
@@ -1068,7 +1068,7 @@ end);
 # same method for regular/inverse.
 
 InstallOtherMethod(GreensRClassOfElement, "for D-class and acting elt",
-[IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
+[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(d, f)
   local r;
     
@@ -1090,7 +1090,7 @@ end);
 # same method for regular/inverse.
 
 InstallOtherMethod(GreensRClassOfElementNC, "for D-class and acting elt",
-[IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
+[IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(d, f)
   local r;
 
@@ -2444,7 +2444,7 @@ end);
 InstallGlobalFunction(DClass,
 function(arg)
 
-  if Length(arg)=2 and IsActingSemigroup(arg[1]) and IsActingElt(arg[2]) then
+  if Length(arg)=2 and IsActingSemigroup(arg[1]) and IsAssociativeElement(arg[2]) then
     return GreensDClassOfElement(arg[1], arg[2]);
   elif Length(arg)=1 and IsGreensRClass(arg[1]) then
     return DClassOfRClass(arg[1]);
@@ -2464,7 +2464,7 @@ end);
 InstallGlobalFunction(DClassNC,
 function(arg)
 
-  if Length(arg)=2 and IsActingSemigroup(arg[1]) and IsActingElt(arg[2]) then
+  if Length(arg)=2 and IsActingSemigroup(arg[1]) and IsAssociativeElement(arg[2]) then
     return GreensDClassOfElementNC(arg[1], arg[2]);
   fi;
 
@@ -2479,7 +2479,7 @@ InstallGlobalFunction(HClass,
 function(arg)
 
   if Length(arg)=2 and (IsGreensClass(arg[1]) or IsActingSemigroup(arg[1])) and
-   IsActingElt(arg[2]) then 
+   IsAssociativeElement(arg[2]) then 
     return GreensHClassOfElement(arg[1], arg[2]);
   fi;
 
@@ -2494,7 +2494,7 @@ InstallGlobalFunction(HClassNC,
 function(arg)
 
   if Length(arg)=2 and (IsGreensClass(arg[1]) or IsActingSemigroup(arg[1])) and
-   IsActingElt(arg[2]) then 
+   IsAssociativeElement(arg[2]) then 
     return GreensHClassOfElementNC(arg[1], arg[2]);
   fi;
 
@@ -2509,7 +2509,7 @@ InstallGlobalFunction(LClass,
 function(arg)
 
   if Length(arg)=2 and (IsActingSemigroup(arg[1]) or IsGreensDClass(arg[1]))
-   and IsActingElt(arg[2]) then  
+   and IsAssociativeElement(arg[2]) then  
     return GreensLClassOfElement(arg[1], arg[2]);
   elif Length(arg)=1 and IsGreensHClass(arg[1]) then
     return LClassOfHClass(arg[1]);
@@ -2526,7 +2526,7 @@ InstallGlobalFunction(LClassNC,
 function(arg)
 
   if Length(arg)=2 and (IsActingSemigroup(arg[1]) or IsGreensDClass(arg[1]))
-   and IsActingElt(arg[2]) then  
+   and IsAssociativeElement(arg[2]) then  
     return GreensLClassOfElementNC(arg[1], arg[2]);
   fi;
 
@@ -2541,7 +2541,7 @@ InstallGlobalFunction(RClass,
 function(arg)
 
   if Length(arg)=2 and (IsActingSemigroup(arg[1]) or IsGreensDClass(arg[1]))
-   and IsActingElt(arg[2]) then 
+   and IsAssociativeElement(arg[2]) then 
     return GreensRClassOfElement(arg[1], arg[2]);
   elif Length(arg)=1 and IsGreensHClass(arg[1]) then
     return RClassOfHClass(arg[1]);
@@ -2558,7 +2558,7 @@ InstallGlobalFunction(RClassNC,
 function(arg)
 
   if Length(arg)=2 and (IsActingSemigroup(arg[1]) or IsGreensDClass(arg[1]))
-   and IsActingElt(arg[2]) then 
+   and IsAssociativeElement(arg[2]) then 
     return GreensRClassOfElementNC(arg[1], arg[2]);
   fi;
   
@@ -2621,7 +2621,7 @@ end);
 # same method for regular/inverse
 
 InstallOtherMethod(GreensJClassOfElement, "for acting semigroup and elt.",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsActingElt], 
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement], 
 GreensDClassOfElement);
 
 InstallMethod(IsRegularDClass, "for a D-class of acting semigroup",

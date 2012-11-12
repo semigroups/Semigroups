@@ -8,9 +8,7 @@
 ##############################################################################
 ###
 
-DeclareSynonym("IsActingElt", IsAssociativeElementWithNaturalAction);
-DeclareCategoryCollections("IsActingElt");
-DeclareProperty("IsActingSemigroup", IsSemigroup and IsActingEltCollection);
+DeclareProperty("IsActingSemigroup", IsSemigroup);
 
 # hash table of all lambda values found so far, HTValue of LambdaHT points
 # to where the graded orbit is in GradedLambdaOrbs

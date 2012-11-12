@@ -229,7 +229,7 @@ end);
 #############################################################################
 
 InstallMethod(\in, "for acting elt and inverse op L-class of acting semigp.",
-[IsActingElt, IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
+[IsAssociativeElement, IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
 function(f, l)
   local rep, s, m, o, i, schutz, g, p;
 
@@ -769,7 +769,7 @@ end);
 
 InstallOtherMethod(GreensDClassOfElement, 
 "for acting semi with inv op and elt",
-[IsActingSemigroupWithInverseOp, IsActingElt],
+[IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
   local o, i, m, rep;
 
@@ -797,7 +797,7 @@ end);
 
 InstallOtherMethod(GreensDClassOfElementNC, 
 "for an acting semigp with inverse op and elt",
-[IsActingSemigroupWithInverseOp, IsActingElt],
+[IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
   return CreateDClassNC(s, 1, GradedLambdaOrb(s, f, false), 
    fail, fail, f, true);
@@ -808,7 +808,7 @@ end);
 
 InstallOtherMethod(GreensHClassOfElement, 
 "for an acting semigp with inverse op and elt",
-[IsActingSemigroupWithInverseOp, IsActingElt],
+[IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
   local o, m;
 
@@ -827,7 +827,7 @@ end);
 #############################################################################
 
 InstallOtherMethod(GreensHClassOfElementNC, "for an acting semigp and elt",
-[IsActingSemigroupWithInverseOp, IsActingElt],
+[IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
   return CreateHClass(s, 1, GradedLambdaOrb(s, f, false),
    fail, fail, f, true);
@@ -837,7 +837,7 @@ end);
 ############################################################################
 
 InstallOtherMethod(GreensHClassOfElement, "for inverse op class and elt",
-[IsActingSemigroupGreensClass and IsInverseOpClass, IsActingElt],
+[IsActingSemigroupGreensClass and IsInverseOpClass, IsAssociativeElement],
 function(x, f)
   local h;
   
@@ -864,7 +864,7 @@ end);
 ############################################################################
 
 InstallOtherMethod(GreensHClassOfElementNC, "for inverse op class and elt",
-[IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensLClass, IsActingElt],
+[IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensLClass, IsAssociativeElement],
 function(x, f)
   local h;
   
@@ -887,7 +887,7 @@ end);
 
 InstallOtherMethod(GreensLClassOfElement, 
 "for acting semigp with inverse op and elt",
-[IsActingSemigroupWithInverseOp, IsActingElt],
+[IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
   local o;
 
@@ -909,7 +909,7 @@ end);
 #############################################################################
 
 InstallOtherMethod(GreensLClassOfElementNC, "for an acting semigp and elt",
-[IsActingSemigroupWithInverseOp, IsActingElt],
+[IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
   # use NC since rho value of f has to be in first place of GradedRhoOrb
   # with false as final arg
@@ -920,7 +920,7 @@ end);
 #############################################################################
 
 InstallOtherMethod(GreensLClassOfElement, "for inverse op D-class and elt",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
+[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(d, f)
   local l;
 
@@ -941,7 +941,7 @@ end);
 #############################################################################
 
 InstallOtherMethod(GreensLClassOfElementNC, "for D-class and acting elt",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsActingElt],
+[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(d, f)
   local l;
 

@@ -214,10 +214,9 @@ function(d)
 
   inv:=function(x)
     local i, a, j;
-    i:=RowIndexOfReesZeroMatrixSemigroupElement(x);
-    a:=Images(InverseGeneralMapping(inj),
-     UnderlyingElementOfReesZeroMatrixSemigroupElement(x))[1];
-    j:=ColumnIndexOfReesZeroMatrixSemigroupElement(x);
+    i:=RowOfRMSElement(x);
+    a:=Images(InverseGeneralMapping(inj), UnderlyingEltRMSElt(x))[1];
+    j:=ColumnOfRMSElement(x);
     return rreps[i]*a*lreps[j];
   end;
 
@@ -232,7 +231,7 @@ end);
 #############################################################################
 
 InstallMethod(InversesOfSemigroupElement, "for acting semigroup and elt",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsActingElt],
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(s, f)
 
   if f in s then
@@ -247,7 +246,7 @@ end);
 
 InstallMethod(InversesOfSemigroupElementNC, 
 "for an acting semigroup and acting elt",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsActingElt],
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(s, f)
   local regular, rank_f, lambda, rhorank, tester, j, o, rhos, grades, rho_f,
    lambdarank, creator, inv, out, k, g, rho, i, x;

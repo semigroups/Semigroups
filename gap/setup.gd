@@ -10,8 +10,8 @@
 
 
 # Rank and degree
-DeclareAttribute("ActionDegree", IsActingElt);
-DeclareAttribute("ActionRank", IsActingElt);
+DeclareAttribute("ActionDegree", IsAssociativeElement);
+DeclareAttribute("ActionRank", IsAssociativeElement);
 
 # action for use in LambdaOrb etc..
 DeclareAttribute("RhoAct", IsActingSemigroup);
@@ -48,14 +48,6 @@ InstallTrueMethod(IsActingSemigroupWithInverseOp, IsPartialPermSemigroup and
 IsInverseSemigroup);
 InstallTrueMethod(IsActingSemigroupWithInverseOp, IsPartialPermSemigroup and
 IsRegularSemigroup);
-
-InstallTrueMethod(IsActingEltCollection, IsRingElementCollCollColl);
-
-InstallTrueMethod(IsActingElt, IsTransformation);
-InstallTrueMethod(IsActingElt, IsPartialPerm);
-InstallTrueMethod(IsActingElt, IsBipartition);
-
-InstallTrueMethod(IsInverseActingElt, IsPartialPerm);
 
 InstallTrueMethod(IsActingSemigroupGreensClass, IsGreensClassOfTransSemigp);
 InstallTrueMethod(IsActingSemigroupGreensClass,                                 IsGreensClassOfPartPermSemigroup);

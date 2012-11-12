@@ -9,6 +9,6 @@
 ###
 
 DeclareGlobalFunction("LambdaOrbSLP");
-DeclareOperation("SemigroupEltSLP", [IsActingSemigroup, IsActingElt]);
+DeclareOperation("SemigroupEltSLP", [IsActingSemigroup, IsAssociativeElement]);
 DeclareGlobalFunction("TraceRClassRepsTree");
 

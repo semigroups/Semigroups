@@ -46,7 +46,7 @@ end);
 # different method for inverse
 
 InstallMethod(\in, "for an acting elt and regular acting semigroup",
-[IsActingElt, IsActingSemigroup and IsRegularSemigroup], 
+[IsAssociativeElement, IsActingSemigroup and IsRegularSemigroup], 
 function(f, s)
   local lambda_o, rho_o, lambda, rho, lambda_l, rho_l, m, schutz, scc, g, rep;
 
@@ -129,7 +129,7 @@ end);
 #JDM revise this if revising \in for elt and D-class in greens.gi
 
 InstallMethod(\in, "for acting elt and regular D-class of acting semigp.",
-[IsActingElt, IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
+[IsAssociativeElement, IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(f, d)
   local rep, s, g, m, o, scc, l, schutz;
 
@@ -893,7 +893,7 @@ end);
 # same method for inverse.
 
 InstallOtherMethod(GreensRClassOfElement, "for regular acting semi and elt",
-[IsRegularSemigroup and IsActingSemigroup, IsActingElt],
+[IsRegularSemigroup and IsActingSemigroup, IsAssociativeElement],
 function(s, f)
   local o;
 

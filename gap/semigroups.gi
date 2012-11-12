@@ -135,7 +135,7 @@ InstallGlobalFunction(ClosureSemigroup,
 function(arg)
 
   if not IsActingSemigroup(arg[1]) or not 
-   (IsActingEltCollection(arg[2]) or IsActingElt(arg[2])) then 
+   (IsAssociativeElementCollection(arg[2]) or IsAssociativeElement(arg[2])) then 
     Error("Usage: arg. must be a trans. semigroup and transformation or ", 
     "collection of transformations,");
     return;
@@ -154,7 +154,7 @@ function(arg)
 
   if IsActingSemigroup(arg[2]) then 
     arg[2]:=Generators(arg[2]);
-  elif IsActingElt(arg[2]) then 
+  elif IsAssociativeElement(arg[2]) then 
     arg[2]:=[arg[2]];
   fi;
 
@@ -374,12 +374,12 @@ function ( arg )
     return MonoidByGenerators( arg[1] );
   elif Length( arg ) = 2 and IsList( arg[1] )  then
     return MonoidByGenerators( arg[1], arg[2] );
-  elif IsActingElt(arg[1]) or IsActingEltCollection(arg[1]) then 
+  elif IsAssociativeElement(arg[1]) or IsAssociativeElementCollection(arg[1]) then 
     out:=[];
     for i in [1..Length(arg)] do 
-      if IsActingElt(arg[i]) then 
+      if IsAssociativeElement(arg[i]) then 
         out[i]:=[arg[i]];
-      elif IsActingEltCollection(arg[i]) then 
+      elif IsAssociativeElementCollection(arg[i]) then 
         if IsActingSemigroup(arg[i]) then
           out[i]:=Generators(arg[i]);
         else
@@ -405,7 +405,7 @@ end);
 ##############################################################################
 
 InstallOtherMethod(MagmaByGenerators, "for an acting element collection",
-[IsActingEltCollection],
+[IsAssociativeElementCollection],
 function(gens)
   local M;
    
@@ -421,7 +421,7 @@ end);
 ##############################################################################
 
 InstallOtherMethod(MonoidByGenerators, "for an acting elt collection",
-[IsActingEltCollection],
+[IsAssociativeElementCollection],
 function(gens)
   return MonoidByGenerators(gens, SemigroupsOptionsRec);
 end);
@@ -430,7 +430,7 @@ end);
 ##############################################################################
 
 InstallOtherMethod(MonoidByGenerators, "for an acting elt collection and rec",
-[IsActingEltCollection, IsRecord],
+[IsAssociativeElementCollection, IsRecord],
 function(gens, opts)
   local n, i, closure_opts, s, f;
  
@@ -494,6 +494,7 @@ function(gens, opts)
    IsMonoid and IsAttributeStoringRep ), rec(opts:=opts));
 
   SetGeneratorsOfMagmaWithOne( s, AsList( gens ) );
+  SetIsActingSemigroup(s, true);
   return s;
 end);
 
@@ -734,6 +735,7 @@ if IsBound(DomPP) then
     SetGeneratorsOfMagmaWithOne(s, gens);
     SetGeneratorsOfInverseSemigroup(s, Concatenation([One(s)], coll));
     SetGeneratorsOfInverseMonoid(s, coll);
+    SetIsActingSemigroup(s, true);
     return s;
   end);
 fi;
@@ -767,6 +769,7 @@ function(gens, coll, opts)
   and IsAttributeStoringRep), rec(opts:=opts));
   SetGeneratorsOfMagma(s, gens);
   SetGeneratorsOfInverseSemigroup(s, coll);
+  SetIsActingSemigroup(s, true);
   return s;
 end);
 
@@ -795,7 +798,7 @@ end);
 ###########################################################################
 
 InstallOtherMethod(IsSubset, "for trans. semi. and trans. coll",
-[IsActingSemigroup, IsActingEltCollection],
+[IsActingSemigroup, IsAssociativeElementCollection],
 function(s, coll)
   return ForAll(coll, x-> x in s);
 end);
@@ -957,12 +960,12 @@ function ( arg )
     return SemigroupByGenerators( [ arg[1] ] );
   elif Length( arg ) = 1 and IsList( arg[1] ) and 0 < Length( arg[1] )  then
     return SemigroupByGenerators( arg[1] );
-  elif IsActingElt(arg[1]) or IsActingEltCollection(arg[1]) then 
+  elif IsAssociativeElement(arg[1]) or IsAssociativeElementCollection(arg[1]) then 
     out:=[];
     for i in [1..Length(arg)] do 
-      if IsActingElt(arg[i]) then 
+      if IsAssociativeElement(arg[i]) then 
         out[i]:=[arg[i]];
-      elif IsActingEltCollection(arg[i]) then 
+      elif IsAssociativeElementCollection(arg[i]) then 
         if IsActingSemigroup(arg[i]) then
           out[i]:=Generators(arg[i]);
         else
@@ -988,7 +991,7 @@ end);
 ##############################################################################
 
 InstallOtherMethod(SemigroupByGenerators, "for an acting elt collection",
-[IsActingEltCollection],
+[IsAssociativeElementCollection],
 function(gens)
    return SemigroupByGenerators(gens, SemigroupsOptionsRec);
 end);
@@ -997,7 +1000,7 @@ end);
 ##############################################################################
 
 InstallOtherMethod(SemigroupByGenerators, "(Semigroups) for trans coll and record",
-[IsActingEltCollection, IsRecord],
+[IsAssociativeElementCollection, IsRecord],
 function(gens, opts)
   local n, i, closure_opts, s, f;
 
@@ -1064,6 +1067,7 @@ function(gens, opts)
   fi;
   
   SetGeneratorsOfMagma( s, AsList( gens ) );
+  SetIsActingSemigroup(s, true);
   return s;
 end);
 
