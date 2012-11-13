@@ -1213,7 +1213,8 @@ function(s)
 
   return Orb(GeneratorsOfSemigroup(s), RhoDomain(s), RhoAct(s),
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
-        storenumbers:=true, log:=true, treehashsize:=SemigroupsOptionsRec.hashlen.M,
+        storenumbers:=true, log:=true,
+        treehashsize:=SemigroupsOptionsRec.hashlen.M,
         scc_reps:=[One(Generators(s))], semi:=s));
 end);
 
