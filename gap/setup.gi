@@ -257,17 +257,20 @@ fi;
 InstallMethod(LambdaRank, "for a transformation semigroup", 
 [IsTransformationSemigroup], x-> Length);
 
-InstallMethod(RhoRank, "for a transformation semigroup", 
-[IsTransformationSemigroup], x-> MaximumList);
-
 InstallMethod(LambdaRank, "for a semigroup of partial perms", 
 [IsPartialPermSemigroup], x-> Length);
 
 InstallMethod(LambdaRank, "for a bipartition semigroup",
-[IsBipartitionSemigroup], x-> y-> Number(y{[y[1]+2..2*y[1]+2]}, x-> x=1));
+[IsBipartitionSemigroup], x-> y-> Number(y{[y[1]+2..2*y[1]+1]}, x-> x=1));
+
+InstallMethod(RhoRank, "for a transformation semigroup", 
+[IsTransformationSemigroup], x-> MaximumList);
 
 InstallMethod(RhoRank, "for a semigroup of partial perms", 
 [IsPartialPermSemigroup], x-> Length);
+
+InstallMethod(RhoRank, "for a bipartition semigroup",
+[IsBipartitionSemigroup], x-> y-> Number(y{[y[1]+2..2*y[1]+1]}, x-> x=1));
 
 # new for 1.0! - RhoFunc
 ###############################################################################
