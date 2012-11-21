@@ -1141,18 +1141,20 @@ end);
 # new for 0.1! - IsomorphismPermGroup - "for a transformation semigroup"
 #############################################################################
 
-InstallOtherMethod(IsomorphismPermGroup, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
+# moved to library
 
-  if not IsGroupAsSemigroup(s)  then
-    Error( "Usage: trans. semigroup satisfying IsGroupAsSemigroup,");
-    return; 
-  fi;
-
-  return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
-   AsPermutation, x-> AsTransformation(x, LambdaDegree(s)));
-end);
+#InstallOtherMethod(IsomorphismPermGroup, "for a transformation semigroup", 
+#[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+#function(s)
+# 
+#   if not IsGroupAsSemigroup(s)  then
+#     Error( "Usage: trans. semigroup satisfying IsGroupAsSemigroup,");
+#     return; 
+#   fi;
+# 
+#   return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
+#    AsPermutation, x-> AsTransformation(x, LambdaDegree(s)));
+# end);
 
 # new for 0.7! - IsomorphismPermGroup - "for a partial perm semigroup"
 #############################################################################
