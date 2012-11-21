@@ -208,14 +208,14 @@ function(d)
     fi;
     j:=Position(OrbSCC(o)[OrbSCCLookup(o)[j]], j);
 
-    return ReesZeroMatrixSemigroupElementNC(rms, j,
+    return RMSElementNC(rms, j,
       AsPermutation(inv_r[j]*f*inv_l[i])^inj, i);
   end;
 
   inv:=function(x)
     local i, a, j;
     i:=RowOfRMSElement(x);
-    a:=Images(InverseGeneralMapping(inj), UnderlyingEltRMSElt(x))[1];
+    a:=Images(InverseGeneralMapping(inj), UnderlyingElement(x))[1];
     j:=ColumnOfRMSElement(x);
     return rreps[i]*a*lreps[j];
   end;

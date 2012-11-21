@@ -1035,7 +1035,7 @@ function(d)
     fi;
     j:=Position(OrbSCC(o)[OrbSCCLookup(o)[j]], j);
 
-    return ReesMatrixSemigroupElementNC(rms, j,
+    return RMSElementNC(rms, j,
       AsPermutation(rreps[j])^-1*AsPermutation(f)*
       AsPermutation(lreps[i])^-1, i);
   end;
