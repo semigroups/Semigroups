@@ -9,11 +9,12 @@
 ##
 
 <#GAPDoc Label="AsPermutation">
-  <ManSection>
+<ManSection>
+<!-- JDM remove transformations --> 
     <Oper Name="AsPermutation" Arg="f  [, set]"/>
     <Returns>A permutation.</Returns>
     <Description>
-      If the transformation or partial permutation <A>f</A> is a permutation of
+      If the partial permutation <A>f</A> is a permutation of
       the set of positive integers <A>set</A>, then <C>AsPermutation</C>
       returns this permutation;  see <Ref Func="Permutation"
         BookName="ref"/>.<P/>
