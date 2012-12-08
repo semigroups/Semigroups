@@ -270,8 +270,8 @@ function(s)
 
   gens:=Generators(s);
 
-  idem:=List(gens, x->Idempotent(CanonicalTransSameKernel(x), 
-   ImageSetOfTransformation(x)));
+  idem:=List(gens, x->TRANS_IMG_KER_NC(ImageSetOfTransformation(x),
+   CanonicalTransSameKernel(x)));
 
   for f in gens do
     for g in idem do
