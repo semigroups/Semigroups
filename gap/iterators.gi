@@ -460,20 +460,21 @@ InstallMethod(Iterator, "for a full transformation semigroup",
 function(s)
   local iter;
   
-  Info(InfoSemigroups, 4, "Iterator: for a full trans. semigroup");
-
   iter:= IteratorByFunctions( rec(
 
     s:=s,
 
-    tups:=IteratorOfTuples([1..LambdaDegree(s)], LambdaDegree(s)),
+    tups:=IteratorOfTuples([1..DegreeOfTransformationSemigroup(s)],
+     DegreeOfTransformationSemigroup(s)),
 
     NextIterator:=iter-> TransformationNC(NextIterator(iter!.tups)),
   
     IsDoneIterator:=iter -> IsDoneIterator(iter!.tups),
     
-    ShallowCopy:= iter -> rec(tups:=IteratorOfTuples([1..LambdaDegree(s)],
-    LambdaDegree(s)))));
+    ShallowCopy:= iter -> rec(tups:=
+  
+    IteratorOfTuples([1..DegreeOfTransformationSemigroup(s)],
+     DegreeOfTransformationSemigroup(s)))));
 
   SetIsIteratorOfSemigroup(iter, true);
   return iter;
@@ -647,7 +648,7 @@ end);
 InstallMethod(PrintObj, [IsIteratorOfSemigroup],
 function(iter)
   if IsFullTransformationSemigroup(iter!.s) then
-    Print("<iterator of full trans. semigroup>");
+    Print("<iterator of full transformation semigroup>");
   elif IsTransformationSemigroup(iter!.s) then
     Print("<iterator of transformation semigroup>");
   elif IsPartialPermSemigroup(iter!.s) and IsInverseSemigroup(iter!.s) then
