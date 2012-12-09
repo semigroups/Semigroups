@@ -122,7 +122,7 @@ fi;
 #JDM change all of these so that they do not take two args 
 InstallMethod(LambdaInverse, "for a transformation semigroup",
 [IsTransformationSemigroup], s-> function(img, f) 
-return WEAK_INV_TRANS(f);
+return INV_TRANS(f);
 end);
 
 #  function(im, f)
