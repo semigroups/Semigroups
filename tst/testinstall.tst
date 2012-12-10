@@ -165,6 +165,10 @@ gap> l:=LClass(d, f);
 {Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )}
 gap> ll:=LClass(s, f);
 {Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )}
+gap> List(HClassReps(ll), x-> x in ll);
+[ true, true, true, true ]
+#the problem in the above is in line 2076 of greens.gi where the rho schutz gp
+#of the D-class is conjugated to the wrong thing. 
 gap> l=ll;
 true
 gap> ll<l;
