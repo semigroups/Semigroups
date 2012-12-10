@@ -195,9 +195,11 @@ function(f, h)
   s:=ParentSemigroup(h);
   rep:=Representative(h);
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] or
-   RhoFunc(s)(f) <> RhoFunc(s)(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep)
-   or ActionDegree(rep)<>ActionDegree(f) then 
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
+    ActionRank(f) <> ActionRank(rep) or
+    RhoFunc(s)(f) <> RhoFunc(s)(rep) or 
+    LambdaFunc(s)(f) <> LambdaFunc(s)(rep) or
+    ActionDegree(rep)<>ActionDegree(f) then 
     return false;
   fi;
 
@@ -218,8 +220,9 @@ function(f, l)
   rep:=Representative(l); 
   s:=ParentSemigroup(l);
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or ActionDegree(f) <> ActionDegree(rep)
-   or ActionRank(f) <> ActionRank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or ActionDegree(f) <>
+    ActionDegree(rep) or ActionRank(f) <> ActionRank(rep) or LambdaFunc(s)(f)
+    <> LambdaFunc(s)(rep) then
     Info(InfoSemigroups, 1, "degree, rank, or lambda value not equal to those of",
     " any of the L-class elements,");
     return false;

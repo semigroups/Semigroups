@@ -849,7 +849,7 @@ function(o, m)
   fi; 
  
   genpos:=ReverseSchreierTreeOfSCC(o, m);
-  inv:=function(f) return LambdaInverse(o!.semi)(f); end;
+  inv:=function(im, f) return LambdaInverse(o!.semi)(im, f); end;
 
   trace:=function(i)
     local f;
@@ -858,7 +858,7 @@ function(o, m)
       return mults[i][2];
     fi;
     f:=gens[genpos[1][i]]*trace(genpos[2][i]);
-    mults[i]:=[inv(f), f];
+    mults[i]:=[inv(o[i], f), f];
     return f;
   end;
 
@@ -893,7 +893,7 @@ function(o, m, i)
   mults:=o!.mults;
   gens:=o!.gens;
   genpos:=ReverseSchreierTreeOfSCC(o, m);
-  inv:=function(f) return LambdaInverse(o!.semi)(f); end;
+  inv:=function(im, f) return LambdaInverse(o!.semi)(im, f); end;
 
   trace:=function(i)
     local f;
@@ -902,7 +902,7 @@ function(o, m, i)
       return mults[i][2];
     fi;
     f:=gens[genpos[1][i]]*trace(genpos[2][i]);
-    mults[i]:=[inv(f), f];
+    mults[i]:=[inv(o[i], f), f];
     return f;
   end;
 

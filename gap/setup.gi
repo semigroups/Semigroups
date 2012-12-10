@@ -119,19 +119,18 @@ fi;
 ###############################################################################
 
 InstallMethod(LambdaInverse, "for a transformation semigroup",
-[IsTransformationSemigroup], s-> INV_TRANS);
+[IsTransformationSemigroup], s->
+  function(im, f)
+    local out, i;
 
-#  function(im, f)
-#    local i, j, n, k, out;
-#
-#    out:=List([1..f[1]], x-> 1);
-#    
-#    for i in im do 
-#      out[i^f]:=i;
-#    od;
-#
-#    return TransformationNC(out);
-#  end);
+   out:=List([1..DegreeOfTransformation(f)], x-> im[1]);
+
+   for i in im do 
+      out[i^f]:=i;
+    od;
+
+    return TransformationNC(out);
+  end);
 
 InstallMethod(LambdaInverse, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> InvPP); 
