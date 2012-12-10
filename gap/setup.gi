@@ -117,13 +117,9 @@ fi;
 
 # new for 1.0! - LambdaInverse
 ###############################################################################
-#JDM c methods!
 
-#JDM change all of these so that they do not take two args 
 InstallMethod(LambdaInverse, "for a transformation semigroup",
-[IsTransformationSemigroup], s-> function(img, f) 
-return INV_TRANS(f);
-end);
+[IsTransformationSemigroup], s-> INV_TRANS);
 
 #  function(im, f)
 #    local i, j, n, k, out;
@@ -138,16 +134,11 @@ end);
 #  end);
 
 InstallMethod(LambdaInverse, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> 
-function(ran, f)
-  return f^-1;
-end);
+[IsPartialPermSemigroup], s-> InvPP); 
 
+#JDM c methods!
 InstallMethod(LambdaInverse, "for a bipartition",
-[IsBipartitionSemigroup], s-> 
-function(x, f)
-  return f^-1;
-end);
+[IsBipartitionSemigroup], s-> f-> f^-1);
 
 # new for 1.0! - RhoInverse 
 ###############################################################################

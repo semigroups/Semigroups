@@ -305,7 +305,7 @@ function(s, f)
     for x in o do
       if lambdarank(x)=rank_f and tester(x, rho_f) then
         for rho in rhos do
-          g:=creator(lambda, rho)*inv(x, f);
+          g:=creator(lambda, rho)*inv(f);
           if regular or g in s then
             k:=k+1; 
             out[k]:=g;
