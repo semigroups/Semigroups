@@ -1315,7 +1315,7 @@ function(s)
     fi;
     
     # data corresponds to the group of units...
-    if x[4][2]=n then 
+    if ActionRank(x[4])=n then 
       return false;
     fi;
     

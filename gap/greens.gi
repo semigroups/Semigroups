@@ -122,9 +122,10 @@ function(f, d)
   rep:=Representative(d); 
   s:=ParentSemigroup(d);
  
-  # much much better performance using f[2]<>rep[2] below
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] 
-    or ActionDegree(f)<>ActionDegree(rep) then
+  # ActionRank method selection causes slowdown here.
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
+    ActionRank(f) <> ActionRank(rep) or
+    ActionDegree(f)<>ActionDegree(rep) then
     return false;
   fi;
 

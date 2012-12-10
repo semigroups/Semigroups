@@ -127,7 +127,7 @@ InstallMethod(LambdaInverse, "for a transformation semigroup",
 #    out:=List([1..f[1]], x-> 1);
 #    
 #    for i in im do 
-#      out[f[i+2]]:=i;
+#      out[i^f]:=i;
 #    od;
 #
 #    return TransformationNC(out);
