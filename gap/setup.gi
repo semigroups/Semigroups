@@ -230,8 +230,8 @@ InstallMethod(LambdaPerm, "for a bipartition semigroup",
 InstallMethod(LambdaConjugator, "for a transformation semi",
 [IsTransformationSemigroup], s-> 
   function(f, g)
-#    return MappingPermListList(IMAGE_TRANS(f), FLAT_KERNEL_TRANS(f))* MappingPermListList(FLAT_KERNEL_TRANS(g), IMAGE_TRANS(g));
-     return MappingPermListList(IMAGE_TRANS(f), IMAGE_TRANS(g));
+    #return MappingPermListList(IMAGE_TRANS(f), FLAT_KERNEL_TRANS(f))* MappingPermListList(FLAT_KERNEL_TRANS(g), IMAGE_TRANS(g));
+    return MappingPermListList(IMAGE_TRANS(f), IMAGE_TRANS(g));
   end);
 
 if IsBound(RanPP) then 

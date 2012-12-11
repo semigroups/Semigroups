@@ -36,6 +36,31 @@ function(d)
   return RhoCosets(d);
 end);
 
+# note that the RhoCosets of the D-class containing an L-class are not the same
+# as the RhoCosets of the D-class. The RhoCosets of a D-class correspond to the
+# lambda value of the rep of the D-class (which is in the first place of its 
+# scc) and the rep of the D-class but the RhoCosets of the L-class should 
+# correspond to the lambda value of the rep of the L-class which is not nec in 
+# the first place of its scc.
+
+InstallMethod(RhoCosets, "for a L-class of an acting semigp",
+[IsGreensLClass and IsActingSemigroupGreensClass],
+function(l)
+  local d, o, pos, m, mult, p;
+  
+  d:=DClassOfLClass(l);
+  o:=LambdaOrb(d);
+  #JDM can we improve the next line? Isn't this know already when l is created?
+  pos:=Position(o, LambdaFunc(ParentSemigroup(l))(Representative(l)));
+  m:=LambdaOrbSCCIndex(d);
+  if pos<>OrbSCC(o)[m][1] then
+    mult:=LambdaOrbMult(o, m, pos);
+    p:=LambdaPerm(ParentSemigroup(l))(Representative(l)*mult[2], Representative(d));
+    return List(RhoCosets(d), x-> (mult[2]*x^p*mult[1]));
+  fi;
+  return RhoCosets(d);
+end);
+
 # new for 1.0! - LambdaOrbSCC - "for Green's class of an acting semigroup"
 ############################################################################
 
@@ -220,10 +245,12 @@ function(f, l)
   rep:=Representative(l); 
   s:=ParentSemigroup(l);
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or ActionDegree(f) <>
-    ActionDegree(rep) or ActionRank(f) <> ActionRank(rep) or LambdaFunc(s)(f)
-    <> LambdaFunc(s)(rep) then
-    Info(InfoSemigroups, 1, "degree, rank, or lambda value not equal to those of",
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
+    ActionDegree(f) <> ActionDegree(rep) or 
+    ActionRank(f) <> ActionRank(rep) or 
+    LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
+    Info(InfoSemigroups, 1, 
+    "degree, rank, or lambda value not equal to those of",
     " any of the L-class elements,");
     return false;
   fi;
@@ -551,7 +578,7 @@ function(l)
   lambda_o:=LambdaOrb(d); 
   lambda_m:=LambdaOrbSCCIndex(d);
 
-  cosets:=RhoCosets(d);
+  cosets:=RhoCosets(l);
   f:=Representative(l);
   nc:=IsGreensClassNC(l);
 
@@ -1182,7 +1209,7 @@ end);
 InstallOtherMethod(HClassReps, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  local o, m, scc, mults, f, cosets, out, k, i, j;
+  local o, m, scc, mults, f, d, cosets, pos, g, out, k, i, j;
 
   o:=RhoOrb(l); 
   m:=RhoOrbSCCIndex(l);
@@ -1190,7 +1217,11 @@ function(l)
   mults:=RhoOrbMults(o, m);
   f:=Representative(l); 
  
-  cosets:=RhoCosets(DClassOfLClass(l));
+  cosets:=RhoCosets(l); 
+  #these are the rho cosets of the D-class containing l rectified so that they
+  #correspond to the lambda value of f and not the lambda value of the rep of
+  #the D-class. 
+
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
 
@@ -1777,7 +1808,6 @@ InstallOtherMethod(NrRClasses, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass],
 d-> Length(RhoCosets(d))*Length(RhoOrbSCC(d)));
 
-
 # new for 1.0! - NrIdempotents@ - not a user function 
 #############################################################################
 
@@ -2075,16 +2105,8 @@ function(d)
     return rho_schutz;
   fi;
  
-  if LambdaFunc(ParentSemigroup(d))(RhoOrbRep(o,m))
-   <>LambdaFunc(ParentSemigroup(d))(Representative(d)) then 
-    #JDM not sure that something isn't missing here. If the group element
-    #corresponding to RhoOrbRep(o, m) and  Representative(d) are not 
-    #equal then this could return the wrong answer.
-    #In particular, this ought to work without the if statement here, but it
-    #does not.
-    p:=LambdaConjugator(ParentSemigroup(d))(RhoOrbRep(o, m), Representative(d));
-    rho_schutz:=rho_schutz^p;
-  fi;
+  p:=LambdaConjugator(ParentSemigroup(d))(RhoOrbRep(o, m), Representative(d));
+  rho_schutz:=rho_schutz^p;
 
   SetRhoOrbStabChain(d, StabChainImmutable(rho_schutz));
   
