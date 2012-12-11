@@ -1151,10 +1151,16 @@ end);
 ################################################################################
 
 InstallMethod(ViewObj, "for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 999,
+[IsSemigroup and HasGeneratorsOfSemigroup], 10,
 function(s)
   local n;
-  
+ 
+  if not (IsPartialPermSemigroup(s) or IsTransformationSemigroup(s) or 
+    IsBipartitionSemigroup(s) or IsMatrixSemigroup(s) or
+    IsBinaryRelationSemigroup(s)) then 
+    TryNextMethod();
+  fi;
+
   if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
     Print("<inverse ");
   elif HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 

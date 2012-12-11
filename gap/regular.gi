@@ -29,7 +29,7 @@ function(d)
   if IsTrivial(g) then 
     return false;
   elif IsNaturalSymmetricGroup(g) and
-     NrMovedPoints(g)=Rank(Representative(d)) then 
+     NrMovedPoints(g)=ActionRank(Representative(d)) then 
     return true;
   fi;
 
@@ -137,7 +137,8 @@ function(f, d)
   s:=ParentSemigroup(d);
 
   # much much better performance using f[2]<>rep[2] below
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] then
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
+    or ActionRank(f) <> ActionRank(rep) then
     return false;
   fi;
 
@@ -498,7 +499,7 @@ function(d)
       
       rep:=Representative(d);
 
-      if f[2]<>rep[2] then
+      if ActionRank(f)<>ActionRank(rep) then
         return fail;
       fi;
 
