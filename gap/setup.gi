@@ -134,11 +134,11 @@ InstallMethod(LambdaInverse, "for a transformation semigroup",
 #  end);
 
 InstallMethod(LambdaInverse, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> InvPP); 
+[IsPartialPermSemigroup], s-> function(im, f) return InvPP(f); end); 
 
 #JDM c methods!
 InstallMethod(LambdaInverse, "for a bipartition",
-[IsBipartitionSemigroup], s-> f-> f^-1);
+[IsBipartitionSemigroup], s-> function(im, f) return f^-1; end);
 
 # new for 1.0! - RhoInverse 
 ###############################################################################

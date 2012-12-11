@@ -175,15 +175,17 @@ end);
 #############################################################################
 
 InstallMethod(\in, "for inverse op D-class",
-[IsPartialPerm , IsInverseOpClass and IsActingSemigroupGreensClass],
+[IsPartialPerm , IsInverseOpClass and IsGreensDClass and
+IsActingSemigroupGreensClass],
 function(f, d)
   local rep, s, o, m, lookup, rho_l, lambda_l, schutz, scc, g;
   
   rep:=Representative(d);
   s:=ParentSemigroup(d);
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] or
-   ActionDegree(f)<>ActionDegree(rep) then
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
+   ActionRank(f) <> ActionRank(rep) or
+    ActionDegree(f)<>ActionDegree(rep) then
     return false;
   fi;
 
@@ -265,6 +267,65 @@ function(f, l)
 
   if i<>OrbSCC(o)[m][1] then  
     g:=LambdaOrbMult(o, m, i)[1]*f;
+  else
+    g:=f;
+  fi;
+
+  if g=rep then
+    Info(InfoSemigroups, 3, "element with rectified rho value equals ",
+    "L-class representative");
+    return true;
+  elif schutz=false then
+    Info(InfoSemigroups, 3, "Schutz. group of L-class is trivial");
+    return false;
+  fi;
+
+  #return SiftGroupElement(schutz, LambdaPerm(s)(rep, g)).isone;
+  return SiftedPermutation(schutz,  LambdaPerm(s)(rep, g))=();
+end);
+
+#
+
+InstallMethod(\in, "for acting elt and inverse op R-class of acting semigp.",
+[IsAssociativeElement, IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
+function(f, r)
+  local rep, s, m, o, i, schutz, g, p;
+
+  rep:=Representative(r);
+  s:=ParentSemigroup(r);
+
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
+   ActionDegree(f) <> ActionDegree(rep) or 
+   ActionRank(f) <> ActionRank(rep) or 
+   RhoFunc(s)(f) <> RhoFunc(s)(rep) then
+    Info(InfoSemigroups, 1, 
+    "degree, rank, or lambda value not equal to those of",
+    " any of the L-class elements,");
+    return false;
+  fi;
+
+  m:=LambdaOrbSCCIndex(r);
+  o:=LambdaOrb(r);
+ 
+  if not IsClosed(o) then
+    Enumerate(o, infinity);
+  fi;
+
+  i:=Position(o, LambdaFunc(s)(f));
+
+  if i = fail or OrbSCCLookup(o)[i]<>m then
+    return false;
+  fi;
+
+  schutz:=LambdaOrbStabChain(o, m);
+
+  if schutz=true then
+    Info(InfoSemigroups, 3, "Schutz. group of L-class is symmetric group");
+    return true;
+  fi;
+
+  if i<>OrbSCC(o)[m][1] then  
+    g:=f*LambdaOrbMult(o, m, i)[2];
   else
     g:=f;
   fi;
@@ -972,7 +1033,7 @@ function(s)
     mults:=LambdaOrbMults(o, m);
     for j in scc[m] do
       i:=i+1;    
-      out[i]:=CreateRClassNC(s, m, o, mults[j][1]*f, false);
+      out[i]:=CreateRClassNC(s, m, o, mults[j][2]*f, false);
     od;             
   od;
 
