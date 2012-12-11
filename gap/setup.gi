@@ -224,13 +224,14 @@ InstallMethod(LambdaPerm, "for a bipartition semigroup",
 # returns a permutation mapping LambdaFunc(s)(f) to LambdaFunc(s)(g) so that 
 # gf^-1(i)=p(i) when RhoFunc(s)(f)=RhoFunc(s)(g)!!
 
-# the above comment is incorrect and should be updated. The below function is
-# seemingly correct and required. 
+#JDM: I'm not certain this is correct. See the comments in greens.gi in 
+#SchutzenbergerGroup of a D-class. 
 
 InstallMethod(LambdaConjugator, "for a transformation semi",
 [IsTransformationSemigroup], s-> 
-  function(f, g) 
-    return MappingPermListList(IMAGE_TRANS(f), FLAT_KERNEL_TRANS(f))* MappingPermListList(FLAT_KERNEL_TRANS(g), IMAGE_TRANS(g));
+  function(f, g)
+#    return MappingPermListList(IMAGE_TRANS(f), FLAT_KERNEL_TRANS(f))* MappingPermListList(FLAT_KERNEL_TRANS(g), IMAGE_TRANS(g));
+     return MappingPermListList(IMAGE_TRANS(f), IMAGE_TRANS(g));
   end);
 
 if IsBound(RanPP) then 
@@ -294,7 +295,7 @@ InstallMethod(IdempotentLambdaRhoTester, "for a partial perm semigp",
 #JDM we should update/replace IdempotentNC.
 
 InstallMethod(IdempotentLambdaRhoCreator, "for a trans semigp",
-[IsTransformationSemigroup], s-> TRANS_IMG_KER_NC);
+[IsTransformationSemigroup], s-> IDEM_IMG_KER_NC);
 
 # new for 1.0! - IdempotentLambdaRhoCreator - "for a partial perm semigp"
 ##############################################################################

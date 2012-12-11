@@ -281,8 +281,10 @@ function(f, r)
   rep:=Representative(r); 
   s:=ParentSemigroup(r);
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or ActionDegree(f) <> ActionDegree(rep)
-   or ActionRank(f) <> ActionRank(rep) or RhoFunc(s)(f) <> RhoFunc(s)(rep) then
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
+    ActionDegree(f) <> ActionDegree(rep) or 
+    ActionRank(f) <> ActionRank(rep) or 
+    RhoFunc(s)(f) <> RhoFunc(s)(rep) then
     Info(InfoSemigroups, 1, "degree, rank, or rho value not equal to those of",
     " any of the R-class elements,");
     return false;
@@ -1370,7 +1372,7 @@ function(x, value, scc, o, onright)
   
   s:=ParentSemigroup(x);
 
-  if ActionRank(Representative(x))=LambdaDegree(s) then
+  if ActionRank(Representative(x))=ActionDegree(Representative(x)) then
     return [One(s)];
   fi;
 
@@ -2072,9 +2074,14 @@ function(d)
     SetRhoCosets(d, RightTransversal(rho_schutz, rho_schutz));
     return rho_schutz;
   fi;
-  
+ 
   if LambdaFunc(ParentSemigroup(d))(RhoOrbRep(o,m))
    <>LambdaFunc(ParentSemigroup(d))(Representative(d)) then 
+    #JDM not sure that something isn't missing here. If the group element
+    #corresponding to RhoOrbRep(o, m) and  Representative(d) are not 
+    #equal then this could return the wrong answer.
+    #In particular, this ought to work without the if statement here, but it
+    #does not.
     p:=LambdaConjugator(ParentSemigroup(d))(RhoOrbRep(o, m), Representative(d));
     rho_schutz:=rho_schutz^p;
   fi;
