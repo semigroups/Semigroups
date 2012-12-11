@@ -2072,10 +2072,12 @@ function(d)
     SetRhoCosets(d, RightTransversal(rho_schutz, rho_schutz));
     return rho_schutz;
   fi;
-
-  p:=LambdaConjugator(ParentSemigroup(d))(RhoOrbRep(o, m),
-   Representative(d));
-  rho_schutz:=rho_schutz^p;
+  
+  if LambdaFunc(ParentSemigroup(d))(RhoOrbRep(o,m))
+   <>LambdaFunc(ParentSemigroup(d))(Representative(d)) then 
+    p:=LambdaConjugator(ParentSemigroup(d))(RhoOrbRep(o, m), Representative(d));
+    rho_schutz:=rho_schutz^p;
+  fi;
 
   SetRhoOrbStabChain(d, StabChainImmutable(rho_schutz));
   
@@ -2125,6 +2127,7 @@ function(h)
   
   lambda_p:=LambdaOrbMult(lambda_o, lambda_m, Position(lambda_o,
    LambdaFunc(s)(rep)))[2];
+   #LambdaConjugator seems to be used for two different things here!
   lambda_p:=LambdaConjugator(s)(rep*lambda_p, rep);
  
   if rho_stab=true then 
@@ -2274,7 +2277,7 @@ end);
 
 # NC indicates that the representative is assumed to be in the correct form,
 # i.e. RhoFunc(s)(arg[6]) is in the first place of the scc of the rho orb, and
-# same for LambdaFunc(s)(arg[6]);
+# same for LambdaFunc(s)(arg[6]).
 
 # arg[4] and arg[5] should be fail if we are creating the D-class of an acting
 # semigroup with inverse op.

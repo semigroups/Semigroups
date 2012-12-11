@@ -117,6 +117,7 @@ fi;
 
 # new for 1.0! - LambdaInverse
 ###############################################################################
+# i^f -> i for all i in im 
 
 InstallMethod(LambdaInverse, "for a transformation semigroup",
 [IsTransformationSemigroup], s->
@@ -223,14 +224,13 @@ InstallMethod(LambdaPerm, "for a bipartition semigroup",
 # returns a permutation mapping LambdaFunc(s)(f) to LambdaFunc(s)(g) so that 
 # gf^-1(i)=p(i) when RhoFunc(s)(f)=RhoFunc(s)(g)!!
 
-#JDM c method for both of these...
-# this is really a generalised LambdaPerm, so maybe it should be combined with 
-# LambdaPerm?
+# the above comment is incorrect and should be updated. The below function is
+# seemingly correct and required. 
 
 InstallMethod(LambdaConjugator, "for a transformation semi",
 [IsTransformationSemigroup], s-> 
   function(f, g) 
-    return MappingPermListList(IMAGE_TRANS(f), IMAGE_TRANS(g));
+    return MappingPermListList(IMAGE_TRANS(f), FLAT_KERNEL_TRANS(f))* MappingPermListList(FLAT_KERNEL_TRANS(g), IMAGE_TRANS(g));
   end);
 
 if IsBound(RanPP) then 

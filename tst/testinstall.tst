@@ -128,7 +128,7 @@ gap> gens:=[ Transformation( [ 1, 2, 3, 5, 4, 6, 7, 8 ] ),
 >   Transformation( [ 3, 6, 1, 7, 3, 4, 8, 3 ] ),
 >   Transformation( [ 1, 2, 3, 4, 5, 3, 7, 8 ] ),
 >   Transformation( [ 1, 2, 3, 4, 1, 6, 7, 8 ] ),
-   Transformation( [ 8, 8, 3, 4, 5, 7, 6, 1 ] ) ];;
+>   Transformation( [ 8, 8, 3, 4, 5, 7, 6, 1 ] ) ];;
 gap> s:=Monoid(gens);
 <transformation monoid of degree 8 with 6 generators>
 gap> t:=ClosureSemigroup(s, [Transformation( [ 4, 4, 3, 1, 5, 6, 3, 8 ] )]);
@@ -167,8 +167,6 @@ gap> ll:=LClass(s, f);
 {Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )}
 gap> List(HClassReps(ll), x-> x in ll);
 [ true, true, true, true ]
-#the problem in the above is in line 2076 of greens.gi where the rho schutz gp
-#of the D-class is conjugated to the wrong thing. 
 gap> l=ll;
 true
 gap> ll<l;
@@ -194,9 +192,9 @@ gap> HClassReps(l);
   Transformation( [ 7, 7, 4, 2, 1, 8, 8, 5, 9 ] ) ]
 gap> HClassReps(ll);
 [ Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] ), 
-  Transformation( [ 1, 5, 4, 2, 7, 5, 5, 9, 8 ] ), 
+  Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5, 9 ] ), 
   Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] ), 
-  Transformation( [ 7, 7, 4, 2, 1, 5, 5, 9, 8 ] ) ]
+  Transformation( [ 7, 7, 4, 2, 1, 8, 8, 5, 9 ] ) ]
 gap> Idempotents(l);    
 [  ]
 gap> Idempotents(ll);
@@ -214,16 +212,17 @@ Group([ (5,9), (1,7) ])
 
 # IsomorphismTransformationSemigroup/Monoid
 gap> IsomorphismTransformationSemigroup(g);
-MappingByFunction( Group([ (5,9), (1,7) ]), <semigroup with 
-2 generators>, function( x ) ... end )
+MappingByFunction( Group(
+[ (5,9), (1,7) ]), <transformation semigroup of degree 4 with 
+2 generators>, function( x ) ... end, <Operation "AsPermutation"> )
 gap> s:=Range(last);
-<semigroup with 2 generators>
+<transformation semigroup of degree 4 with 2 generators>
 gap> IsGroupAsSemigroup(s);
 true
 gap> Generators(s);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1, 4 ] ) ]
 gap> t:=Range(IsomorphismTransformationMonoid(g));
-<monoid with 2 generators>
+<transformation monoid of degree 4 with 2 generators>
 gap> Generators(t);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1, 4 ] ) ]
 gap> h:=Range(IsomorphismPermGroup(t));
