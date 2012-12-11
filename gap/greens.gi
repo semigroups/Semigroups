@@ -55,7 +55,9 @@ function(l)
   m:=LambdaOrbSCCIndex(d);
   if pos<>OrbSCC(o)[m][1] then
     mult:=LambdaOrbMult(o, m, pos);
-    p:=LambdaPerm(ParentSemigroup(l))(Representative(l)*mult[2], Representative(d));
+    #the following step is necessary in case p is not in the schutz gp of d 
+    p:=LambdaPerm(ParentSemigroup(l))(Representative(l)*mult[2],
+     Representative(d));
     return List(RhoCosets(d), x-> (mult[2]*x^p*mult[1]));
   fi;
   return RhoCosets(d);
@@ -2104,7 +2106,7 @@ function(d)
     SetRhoCosets(d, RightTransversal(rho_schutz, rho_schutz));
     return rho_schutz;
   fi;
- 
+
   p:=LambdaConjugator(ParentSemigroup(d))(RhoOrbRep(o, m), Representative(d));
   rho_schutz:=rho_schutz^p;
 
@@ -2186,9 +2188,7 @@ function(l)
   o:=RhoOrb(l); m:=RhoOrbSCCIndex(l);
   
   if not IsGreensClassNC(l) then 
-    #JDM maybe no need to do this if we know how l is created from a D-class
-    p:=LambdaConjugator(ParentSemigroup(l))(RhoOrbRep(o, m),
-     Representative(l));
+    p:=LambdaConjugator(ParentSemigroup(l))(RhoOrbRep(o, m), Representative(l));
     return RhoOrbSchutzGp(o, m, infinity)^p;
   fi;
   return RhoOrbSchutzGp(o, m, infinity); 
