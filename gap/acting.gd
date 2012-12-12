@@ -71,8 +71,5 @@ DeclareCategory("IsSemigroupData", IsRecord);
 
 DeclareProperty("IsActingSemigroupWithInverseOp", IsActingSemigroup and
 IsInverseSemigroup);
-DeclareCategory("IsInverseActingElt", IsMultiplicativeElementWithOne and
-IsAssociativeElement);
-DeclareCategoryCollections("IsInverseActingElt");
 
 #EOF

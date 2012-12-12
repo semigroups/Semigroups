@@ -1069,7 +1069,7 @@ function(s)
     x-> Transformation([1]), x-> PartialPermNC([]));
   fi;
 
-  n:=Maximum(DegreeOfPartialPermCollection(s))+1;
+  n:=DegreeOfPartialPermCollection(s)+1;
   gens1:=GeneratorsOfSemigroup(s); 
   m:=Length(gens1);
   gens2:=EmptyPlist(m);

@@ -261,17 +261,14 @@ InstallMethod(RhoRank, "for a bipartition semigroup",
 InstallMethod(RhoFunc, "for a trans semi",
 [IsTransformationSemigroup], x-> FLAT_KERNEL_TRANS);
 
+InstallMethod(RhoFunc, "for a partial perm semi",
+[IsPartialPermSemigroup], x-> DomPP);
+
 InstallMethod(RhoFunc, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> LeftSignedPartition);
 
-if IsBound(DomPP) then
-  InstallMethod(RhoFunc, "for a partial perm semi",
-   [IsPartialPermSemigroup], x-> DomPP);
-fi;
-
 # new for 1.0! - IdempotentLambdaRhoTester - "for a trans semigp"
 ##############################################################################
-#JDM this should be revised.
 
 InstallMethod(IdempotentLambdaRhoTester, "for a trans semigp", 
 [IsTransformationSemigroup], s-> IS_INJECTIVE_LIST_TRANS);

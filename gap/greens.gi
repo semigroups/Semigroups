@@ -2355,8 +2355,6 @@ function(s, m, o, rep, nc)
   return CreateRClassNC(s, rectify.m, o, rectify.rep, nc);
 end);
 
-# mod for 1.0! - CreateRClassNC - not a user function!
-#############################################################################
 # Usage: 
 # arg[1] = semigroup; 
 # arg[2] = lambda orb scc index;
@@ -2366,7 +2364,8 @@ end);
 # arg[6] = semigroup data index (optional).
 
 # NC indicates that the representative is assumed to be in the correct form,
-# i.e. RhoFunc(s)(arg[2]) is in the first place of the scc of the rho orb. 
+# i.e. LambdaFunc(s)(arg[2]) is in the first place of the scc of the lambda
+# orb. 
 
 # same method for regular/inverse
 

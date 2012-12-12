@@ -172,26 +172,24 @@ end);
 #  return MappingPermListList(set, OnTuples(set, f));
 #end);
 
-# new for 0.7! - AsTransformationNC - "for a partial perm and pos int"
-###########################################################################
-# Notes: n is the total degree!
+# n is the total degree!
 
-#InstallOtherMethod(AsTransformationNC, "for a partial perm and deg",
-#[IsPartialPerm , IsPosInt],
-#function(f, n)
-#  local g, i;
-#
-#  g:=ListWithIdenticalEntries(n,n);
-#  for i in [7..6+f[1]] do
-#    if f[i]=0 then
-#      g[i-6]:=n;
-#    else
-#      g[i-6]:=f[i];
-#    fi;
-#  od;
-#
-#  return TransformationNC(g);
-#end);
+InstallOtherMethod(AsTransformation, 
+"for a partial perm and degree",
+[IsPartialPerm, IsPosInt],
+function(f, n)
+  local out, i;
+  if not n>f[6] then 
+    Error("usage: the 2nd arg should be larger than the largest point moved,");
+    return;
+  fi;
+  out:=ListWithIdenticalEntries(n,n);
+  for i in DomainOfPartialPerm(f) do
+    out[i]:=i^f;
+  od;
+
+  return TransformationNC(out);
+end);
 
 # new for 0.7! - AsTransformationNC - "for a partial perm"
 ###########################################################################
@@ -208,20 +206,8 @@ end);
 #InstallOtherMethod(AsTransformation, "for a partial perm",
 #[IsPartialPerm], AsTransformationNC);
 #
-## new for 0.7! - AsTransformationNC - "for a partial perm"
-############################################################################
-#
-#InstallOtherMethod(AsTransformation, "for a partial perm and deg",
-#[IsPartialPerm, IsPosInt],
-#function(f, n)
-#  if not n>f[6] then 
-#    Error("2nd argument should be larger than the largest point moved");
-#    return;
-#  fi;
-#  return AsTransformationNC(f, n);
-#end);
-#
-#CCC
+
+
 
 # new for 1.0! - SEMIGROUPS_HashFunctionForPP - for a partial perm and data
 #############################################################################

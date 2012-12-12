@@ -62,11 +62,11 @@ function(s)
          and IsActingSemigroupGreensClass);
 end);
 
-# new for 1.0! - \in - "for an acting semigroup with inversion and elt"
-##############################################################################
+#
 
-InstallMethod(\in, "for inverse acting elt and acting semigroup with inversion",
-[IsInverseActingElt, IsActingSemigroupWithInverseOp],
+InstallMethod(\in, 
+"for inverse acting elt and acting semigroup with inversion",
+[IsAssociativeElement, IsActingSemigroupWithInverseOp],
 function(f, s)
   local dom, o, rho, rho_l, lambda_l, lambda, m, schutz, scc, g;
   
@@ -83,7 +83,7 @@ function(f, s)
 
   if dom=[] then 
     return ActionDegree(f)=0;
-  # any way of using points here? JDM
+    # any way of using points here? JDM
   fi;
 
   o:=RhoOrb(s);
@@ -1290,8 +1290,7 @@ function(l)
   return out;
 end);
 
-# new for 0.7! - IteratorOfRClassData - "for acting semigroup with inverse op
-###############################################################################
+#
 
 InstallMethod(IteratorOfRClassData, "for acting semigp with inverse op",
 [IsActingSemigroupWithInverseOp], 
@@ -1341,7 +1340,7 @@ local iter, scc;
 
     iter:=IteratorByFunctions( rec(
                  
-      m:=1, 
+      m:=2, 
      
       i:=0,      
 

@@ -14,7 +14,7 @@
 
 InstallOtherMethod(IsActingSemigroup, "for an object", [IsObject], ReturnFalse);
 
-##############################################################################
+#
 
 InstallGlobalFunction(RhoPos, 
 function(o)
@@ -94,6 +94,8 @@ function(arg)
   return rec(l:=l, m:=m, rep:=f);
 end);
 
+#
+
 InstallGlobalFunction(RectifyLambda,
 function(arg)
   local f, l, m;
@@ -120,6 +122,8 @@ function(arg)
   fi;
   return rec(l:=l, m:=m, rep:=f);
 end);
+
+#
 
 InstallGlobalFunction(RectifyInverseRho,
 function(arg)

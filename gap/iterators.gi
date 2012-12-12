@@ -398,9 +398,6 @@ function(s)
   [IsIteratorOfLClasses]);
 end);
 
-# new for 1.0! - IteratorOfRClasses - "for an acting semigroup"
-#############################################################################
-
 # different method for regular/inverse
 
 InstallMethod(IteratorOfRClasses, "for an acting semigroup",
