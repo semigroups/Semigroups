@@ -1312,9 +1312,6 @@ InstallMethod(IteratorOfLClasses, "for a part perm inverse semigroup",
 s-> IteratorByIterator(IteratorOfLClassData(s), x->
 CallFuncList(CreateLClass, x), [IsIteratorOfLClasses]));
 
-# new for 0.7! - IteratorOfRClasses - "for regular acting semigroup 
-###############################################################################
-
 # same method for inverse
 
 InstallMethod(IteratorOfRClasses, "for regular acting semigroup",
