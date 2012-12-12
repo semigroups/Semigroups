@@ -12,20 +12,6 @@
 # Setup - install the basic things required for specific acting semigroups    #
 ###############################################################################
 
-# the dummy seed pt for lambda orb (declared in trans.g in gap/lib)
-
-InstallMethod(ViewObj, "for dummy orb seed",
-[IsDummyOrbSeed],
-function(x)
-   Print("<dummy orb seed>");
-end);
-
-InstallMethod(PrintObj, "for dummy orb seed",
-[IsDummyOrbSeed],
-function(x)
-   Print("<dummy orb seed>");
-end);
-
 # the number of points in the action
 
 InstallOtherMethod(ActionDegree, "for an acting semigroup",
