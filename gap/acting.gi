@@ -756,8 +756,8 @@ function(s)
  
   fam:=CollectionsFamily(FamilyObj(LambdaFunc(s)(Representative(s))));
   return Objectify(NewType(fam, IsGradedLambdaOrbs), 
-   rec( orbits:=List([1..LambdaDegree(s)+1], x-> []), 
-     lens:=[1..LambdaDegree(s)+1]*0, semi:=s));
+   rec( orbits:=List([1..ActionDegree(s)+1], x-> []), 
+     lens:=[1..ActionDegree(s)+1]*0, semi:=s));
 end);
 
 # new for 1.0! - GradedRhoOrbs - "for an acting semigroup" 
@@ -768,8 +768,8 @@ InstallMethod(GradedRhoOrbs, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
   return Objectify(NewType(FamilyObj(s), IsGradedRhoOrbs), rec(
-    orbits:=List([1..LambdaDegree(s)+1], x-> []), 
-    lens:=[1..LambdaDegree(s)+1]*0, semi:=s));
+    orbits:=List([1..ActionDegree(s)+1], x-> []), 
+    lens:=[1..ActionDegree(s)+1]*0, semi:=s));
 end);
 
 #III

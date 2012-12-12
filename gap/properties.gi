@@ -132,7 +132,7 @@ function(s)
     return true;
   fi;
 
-  iter:=IteratorOfRClassData(s); n:=LambdaDegree(s);
+  iter:=IteratorOfRClassData(s); n:=ActionDegree(s);
   ht:=HTCreate([1..n], rec(hashlen:=s!.opts!.hashlen!.S));
   ht_o:=HTCreate([1,1,1,1], rec(hashlen:=s!.opts!.hashlen!.S));
   reg:=[]; i:=0; 
@@ -923,14 +923,14 @@ if Semigroups_C then
     iso:=function(f)
       local dom, ran;
     
-      dom:=OnSets([1..LambdaDegree(s)], InversesOfSemigroupElementNC(s, f)[1]);
+      dom:=OnSets([1..ActionDegree(s)], InversesOfSemigroupElementNC(s, f)[1]);
       ran:=List(dom, i-> i^f);
       return PartialPermNC(dom, ran);
     end;
 
     return MappingByFunction(s, 
      InverseMonoid(List(GeneratorsOfSemigroup(s), iso)), iso, 
-      x-> AsTransformation(x, LambdaDegree(s)));
+      x-> AsTransformation(x, ActionDegree(s)));
   end);
 else
   InstallOtherMethod(IsomorphismPartialPermMonoid, "for a trans semi",
@@ -955,14 +955,14 @@ if Semigroups_C then
     iso:=function(f)
       local dom, ran;
   
-      dom:=OnSets([1..LambdaDegree(s)], InversesOfSemigroupElementNC(s, f)[1]);
+      dom:=OnSets([1..ActionDegree(s)], InversesOfSemigroupElementNC(s, f)[1]);
       ran:=List(dom, i-> i^f);
       return PartialPermNC(dom, ran);
     end;
 
     return MappingByFunction(s, 
      InverseSemigroup(List(GeneratorsOfSemigroup(s), iso)), iso, 
-      x-> AsTransformation(x, LambdaDegree(s)));
+      x-> AsTransformation(x, ActionDegree(s)));
   end);
 else
   InstallOtherMethod(IsomorphismPartialPermSemigroup, "for a trans semi",
@@ -1151,7 +1151,7 @@ function(s)
    fi;
  
    return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
-    AsPermutation, x-> AsTransformation(x, LambdaDegree(s)));
+    AsPermutation, x-> AsTransformation(x, ActionDegree(s)));
  end);
 
 # new for 0.7! - IsomorphismPermGroup - "for a partial perm semigroup"
@@ -1304,7 +1304,6 @@ function(s)
   fi;
 
   tester:=IdempotentLambdaRhoTester(s);
-  n:=LambdaDegree(s);
   rhofunc:=RhoFunc(s);
 
   # look for s not being regular
@@ -1673,7 +1672,7 @@ InstallOtherMethod(IsZeroSimpleSemigroup, "for a transformation semigroup",
 function(s)
   local n, gens, o, lookingfor, r, i, z, ker, iter;
     
-  n:=LambdaDegree(s); gens:=GeneratorsOfSemigroup(s);
+  n:=ActionDegree(s); gens:=GeneratorsOfSemigroup(s);
 
   #orbit of images, looking for more than two ranks.
   o:=Orb(gens, [1..n], OnSets, rec(schreier:=true,
@@ -1761,7 +1760,7 @@ InstallMethod(MinimalIdeal, "for a transformation semigroup",
 function(s)
   local n, gens, max, o, i, bound, f;
 
-  n:=LambdaDegree(s);
+  n:=ActionDegree(s);
   gens:=Generators(s);
   max:=Maximum(List(gens, ActionDegree));
 
@@ -1804,7 +1803,7 @@ if IsBound(OnIntegerSetsWithPP) then
   function(s)
     local n, gens, max, bound, o, i, f, I;
 
-    n:=LambdaDegree(s);
+    n:=ActionDegree(s);
     gens:=Generators(s);
     max:=Maximum(List(gens, ActionDegree));
 
@@ -1845,7 +1844,7 @@ InstallMethod(NrElementsOfRank, "for a transformation semigroup",
 function(s, m)
   local iter, tot, r;
   
-  if m > LambdaDegree(s) then 
+  if m > ActionDegree(s) then 
     return 0;
   elif m > MaximumList(List(Generators(s), Rank)) then 
     return 0;
@@ -1872,7 +1871,7 @@ InstallOtherMethod(NrElementsOfRank, "for a partial perm semigroup",
 function(s, m)
   local iter, tot, d;
   
-  if m > LambdaDegree(s) then
+  if m > ActionDegree(s) then
     return 0;
   elif m > MaximumList(List(Generators(s), Rank)) then
     return 0;

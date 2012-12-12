@@ -158,7 +158,7 @@ function(arg)
     arg[2]:=[arg[2]];
   fi;
 
-  if not LambdaDegree(arg[1])=LambdaDegree(arg[2][1]) then 
+  if not ActionDegree(arg[1])=ActionDegree(arg[2][1]) then 
     Error("Usage: degrees of transformations must equal degree of semigroup,");
     return;
   fi;
@@ -191,7 +191,7 @@ function(s, coll, opts)
   #no schreier###############################################################
   
   #old_data:=OrbitsOfImages(s);
-  n:=LambdaDegree(t);
+  #n:=LambdaDegree(t);
   
   # set up orbits of images of t
 
@@ -1082,7 +1082,7 @@ function(S, func)
   if HasSize(S) then 
     limit:=Size(S);
   else
-    n:=LambdaDegree(S);
+    n:=ActionDegree(S);
     limit:=n^n;
   fi;
 

@@ -62,7 +62,7 @@ function(g, s)
   local convert, creator, one, t, emb, conj;
  
   if IsTransformationSemigroup(s) then 
-    convert:=x-> AsTransformation(x, LambdaDegree(s));
+    convert:=x-> AsTransformation(x, ActionDegree(s));
   elif IsPartialPermSemigroup(s) then 
     convert:=x-> AsPartialPerm(x, DomainOfPartialPermCollection(s));
     # JDM this won't work in general if Points(s) is not the correct set to act
@@ -75,7 +75,7 @@ function(g, s)
     creator:=Semigroup;
   fi;
 
-  if NrMovedPoints(g)<=LambdaDegree(s) then 
+  if NrMovedPoints(g)<=ActionDegree(s) then 
     conj:=MappingPermListList(MovedPoints(g), [1..NrMovedPoints(g)]);
     emb:=x-> convert(x^conj);
     t:=creator(List(GeneratorsOfGroup(g), emb));
@@ -391,7 +391,7 @@ function(s)
   gens:=Generators(s);
   n:=Maximum(List(gens, ActionRank));
 
-  if n=LambdaDegree(s) then
+  if n=ActionDegree(s) then
     return One(s);
   fi;
 

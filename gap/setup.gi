@@ -12,25 +12,48 @@
 # Setup - install the basic things required for specific acting semigroups    #
 ###############################################################################
 
+# the dummy seed pt for lambda orb (declared in trans.g in gap/lib)
+
+InstallMethod(ViewObj, "for dummy orb seed",
+[IsDummyOrbSeed],
+function(x)
+   Print("<dummy orb seed>");
+end);
+
+InstallMethod(PrintObj, "for dummy orb seed",
+[IsDummyOrbSeed],
+function(x)
+   Print("<dummy orb seed>");
+end);
+
+# the number of points in the action
+
+InstallOtherMethod(ActionDegree, "for an acting semigroup",
+[IsActingSemigroup], s-> ActionDegree(Representative(s)));
+
+#
+
 InstallMethod(ActionDegree, "for a transformation",
 [IsTransformation], x-> DegreeOfTransformation);
-
-InstallMethod(ActionDegree, "for a bipartition",
-[IsBipartition], x-> x[1]/2);
 
 InstallMethod(ActionDegree, "for a partial perm",
 [IsPartialPerm], x-> x[2]);
 
+InstallMethod(ActionDegree, "for a bipartition",
+[IsBipartition], x-> x[1]/2);
+
+# the number of points in the range of the action
+
 InstallMethod(ActionRank, "for a transformation",
 [IsTransformation], RankOfTransformation);
-
-InstallMethod(ActionRank, "for a bipartition",
-[IsBipartition], x-> x[2]);
 
 InstallMethod(ActionRank, "for a partial perm",
 [IsPartialPerm], x-> x[2]);
 
-# new for 1.0! - LambdaOrbOpts 
+InstallMethod(ActionRank, "for a bipartition",
+[IsBipartition], x-> x[2]);
+
+# options passed to LambdaOrb(s) when it is created
 
 InstallMethod(LambdaOrbOpts, "for a transformation semigroup",
 [IsTransformationSemigroup], s-> rec(forflatplainlists:=true));
@@ -41,8 +64,7 @@ InstallMethod(LambdaOrbOpts, "for a partial perm semigroup",
 InstallMethod(LambdaOrbOpts, "for a partial perm semigroup",
 [IsBipartitionSemigroup], s-> rec(forflatplainlists:=true));
 
-# new for 1.0 - LambdaAct and RhoAct
-###############################################################################
+# the lambda and rho acts
 
 InstallMethod(LambdaAct, "for a transformation semi",
 [IsTransformationSemigroup], x-> OnSets);
@@ -50,38 +72,27 @@ InstallMethod(LambdaAct, "for a transformation semi",
 InstallMethod(RhoAct, "for a transformation semi",
 [IsTransformationSemigroup], x-> ON_KERNEL_ANTI_ACTION);
 
+#
+
+InstallMethod(LambdaAct, "for a partial perm semi",
+[IsPartialPermSemigroup], x-> OnIntegerSetsWithPP);
+
+# JDM new c method for this!
+InstallMethod(RhoAct, "for a partial perm semi",
+[IsPartialPermSemigroup], s->       
+  function(set, f) 
+    return OnIntegerSetsWithPP(set, f^-1);
+  end);
+
+#
+
 InstallMethod(LambdaAct, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> OnRightSignedPartition);
 
 InstallMethod(RhoAct, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> OnLeftSignedPartition);
 
-if IsBound(OnIntegerSetsWithPP) then 
-  InstallMethod(LambdaAct, "for a partial perm semi",
-  [IsPartialPermSemigroup], x-> OnIntegerSetsWithPP);
-  
-  InstallMethod(RhoAct, "for a partial perm semi",
-  [IsPartialPermSemigroup], 
-  function(s)
-    return 
-      function(set, f) 
-        return OnIntegerSetsWithPP(set, f^-1);
-      end;
-  end);
-  
-  #InstallMethod(RhoAct, "for an inverse semigp of partial perms",
-  #[IsInverseSemigroup and IsPartialPermSemigroup],
-  #s-> OnIntegerSetsWithPP);
-fi;
-
-# new for 1.0! - LambdaDegree
-###############################################################################
-
-InstallMethod(LambdaDegree, "for an acting semigroup", 
-[IsActingSemigroup], s-> Length(LambdaDomain(s)));
-
-# new for 1.0! - LambdaDomain
-###############################################################################
+# the seed or dummy start point for LambdaOrb
 
 InstallMethod(LambdaDomain, "for a transformation semi",
 [IsTransformationSemigroup], s-> [1..65536]*1);
@@ -91,6 +102,8 @@ InstallMethod(LambdaDomain, "for a partial perm semi",
 
 InstallMethod(LambdaDomain, "for a bipartition semi",
 [IsBipartitionSemigroup], s-> [65536]);
+
+# the seed or dummy start point for RhoOrb
 
 InstallMethod(RhoDomain, "for a transformation semi",
 [IsTransformationSemigroup], s-> [1..65536]*1);
