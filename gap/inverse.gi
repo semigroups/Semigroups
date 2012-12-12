@@ -1329,7 +1329,7 @@ local iter, scc;
 
         iter!.i:=i; 
         #JDM is f correct here? Not canonical rep?
-        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)); 
+        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1; 
         return [s, fail, GradedLambdaOrb(s, o[i], true), f, false];
       end,
 
@@ -1372,7 +1372,7 @@ local iter, scc;
         iter!.i:=i; iter!.m:=m;
  
         # f ok here? JDM
-        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][i])); 
+        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][i]))^-1; 
         return [s, m, LambdaOrb(s), f, false];
       end,
 

@@ -8,9 +8,8 @@
 #############################################################################
 ##
 
-# mod for 1.0! - Enumerator - "for an acting semigroup"
-#############################################################################
-# Notes: this is not an enumerator as I could not get an enumerator to perform 
+# Notes: 
+# this is not an enumerator as I could not get an enumerator to perform 
 # well here. 
 
 # same method for regular/inverse
