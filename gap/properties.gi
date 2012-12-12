@@ -1284,8 +1284,7 @@ end);
 InstallOtherMethod(IsRectangularBand, "for an inverse semigroup",
 [IsInverseSemigroup], s-> IsHTrivial(s) and IsSimpleSemigroup(s));
 
-# mod for 1.0! - IsRegularSemigroup - "for an acting semigroup"
-###########################################################################
+#
 
 InstallOtherMethod(IsRegularSemigroup, "for an acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -1314,7 +1313,7 @@ function(s)
     fi;
     
     # data corresponds to the group of units...
-    if ActionRank(x[4])=n then 
+    if ActionRank(x[4])=ActionDegree(x[4]) then 
       return false;
     fi;
     

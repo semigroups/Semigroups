@@ -20,7 +20,7 @@ InstallOtherMethod(ActionDegree, "for an acting semigroup",
 #
 
 InstallMethod(ActionDegree, "for a transformation",
-[IsTransformation], x-> DegreeOfTransformation);
+[IsTransformation], DegreeOfTransformation);
 
 InstallMethod(ActionDegree, "for a partial perm",
 [IsPartialPerm], x-> x[2]);
