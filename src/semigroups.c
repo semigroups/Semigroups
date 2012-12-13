@@ -497,6 +497,12 @@ Obj FuncOnIntegerSetsWithPP (Obj self, Obj set, Obj f)
 
   deg=ELM_UInt2(f,1);
   n=LEN_LIST(set);
+
+  /* JDM maybe the next line conflicts with the usual usage of OnSets !? */
+  if(INT_INTOBJ(ELM_LIST(set, n))>deg){
+    return FuncRanSetPP(self, f);
+  }
+
   if(n==0||deg==0) return NEW_EMPTY_PLIST();
 
   out = NEW_PLIST(T_PLIST_CYC, n);

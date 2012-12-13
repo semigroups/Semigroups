@@ -167,6 +167,8 @@ gap> ll:=LClass(s, f);
 {Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] )}
 gap> List(HClassReps(ll), x-> x in ll);
 [ true, true, true, true ]
+gap> List(HClassReps(l), x-> x in l);
+[ true, true, true, true ]
 gap> l=ll;
 true
 gap> ll<l;

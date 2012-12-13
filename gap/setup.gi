@@ -84,10 +84,10 @@ InstallMethod(RhoAct, "for a bipartition semigroup",
 # the seed or dummy start point for LambdaOrb
 
 InstallMethod(LambdaDomain, "for a transformation semi",
-[IsTransformationSemigroup], s-> [1..65536]*1);
+[IsTransformationSemigroup], s-> [65536]);
 
 InstallMethod(LambdaDomain, "for a partial perm semi",
-[IsPartialPermSemigroup], s-> [1..65536]*1);
+[IsPartialPermSemigroup], s-> [65536]);
 
 InstallMethod(LambdaDomain, "for a bipartition semi",
 [IsBipartitionSemigroup], s-> [65536]);
@@ -95,10 +95,10 @@ InstallMethod(LambdaDomain, "for a bipartition semi",
 # the seed or dummy start point for RhoOrb
 
 InstallMethod(RhoDomain, "for a transformation semi",
-[IsTransformationSemigroup], s-> [1..65536]*1);
+[IsTransformationSemigroup], s->[65536]);
 
 InstallMethod(RhoDomain, "for a partial perm semi",
-[IsPartialPermSemigroup], s-> [1..65536]*1);
+[IsPartialPermSemigroup], s-> [65536]);
 
 InstallMethod(RhoDomain, "for a bipartition semi",
 [IsBipartitionSemigroup], s-> [65536]);
