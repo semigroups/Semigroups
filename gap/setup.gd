@@ -34,11 +34,11 @@ DeclareAttribute("LambdaInverse", IsActingSemigroup);
 DeclareAttribute("LambdaPerm", IsActingSemigroup);
 DeclareAttribute("LambdaConjugator", IsActingSemigroup);
 
-DeclareAttribute("LambdaDomain", IsActingSemigroup);
-DeclareAttribute("RhoDomain", IsActingSemigroup);
+DeclareAttribute("LambdaOrbSeed", IsActingSemigroup);
+DeclareAttribute("RhoOrbSeed", IsActingSemigroup);
 
-DeclareAttribute("IdempotentLambdaRhoTester", IsActingSemigroup);
-DeclareAttribute("IdempotentLambdaRhoCreator", IsActingSemigroup);
+DeclareAttribute("IdempotentTester", IsActingSemigroup);
+DeclareAttribute("IdempotentCreator", IsActingSemigroup);
 
 InstallTrueMethod(IsActingSemigroup, IsTransformationSemigroup);
 InstallTrueMethod(IsActingSemigroup, IsPartialPermSemigroup);

@@ -1435,7 +1435,7 @@ function(s)
   i, k;
 
   nr:=0;
-  tester:=IdempotentLambdaRhoTester(s);
+  tester:=IdempotentTester(s);
   rho_o:=RhoOrb(s);
   scc:=OrbSCC(rho_o); 
   lambda_o:=LambdaOrb(s);

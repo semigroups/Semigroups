@@ -260,7 +260,7 @@ function(s, f)
   rank_f:=LambdaRank(s)(f); 
   lambda:=LambdaFunc(s)(f);
   rhorank:=RhoRank(s);
-  tester:=IdempotentLambdaRhoTester(s);
+  tester:=IdempotentTester(s);
   j:=0;
 
   # can't use GradedRhoOrb here since there may be inverses not D-related to f
@@ -275,7 +275,7 @@ function(s, f)
       fi;
     od;
   else
-    o:=Orb(s, [1..65536], RhoAct(s),
+    o:=Orb(s, [65536], RhoAct(s),
       rec(  forflatplainlists:=true, #JDM probably don't want to assume this..
             treehashsize:=SemigroupsOptionsRec.hashlen.M,
             gradingfunc:=function(o, x) return rhorank(x); end,
@@ -295,7 +295,7 @@ function(s, f)
   
   rho_f:=RhoFunc(s)(f);
   lambdarank:=LambdaRank(s);
-  creator:=IdempotentLambdaRhoCreator(s);
+  creator:=IdempotentCreator(s);
   inv:=LambdaInverse(s);
   
   out:=[]; k:=0; 

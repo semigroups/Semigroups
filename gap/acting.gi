@@ -815,7 +815,7 @@ function(s)
     opts.(name):=LambdaOrbOpts(s).(name);
   od;
 
-  return Orb(GeneratorsOfSemigroup(s), LambdaDomain(s), LambdaAct(s), opts);
+  return Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), opts);
 end);
 
 # new for 1.0! - LambdaOrbMults - "for a lambda orb and scc index"
@@ -1214,7 +1214,7 @@ function(s)
   # But it seems to be so fast to calculate the 
   # in most cases that there is no point. 
 
-  return Orb(GeneratorsOfSemigroup(s), RhoDomain(s), RhoAct(s),
+  return Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s),
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
         storenumbers:=true, log:=true,
         treehashsize:=SemigroupsOptionsRec.hashlen.M,

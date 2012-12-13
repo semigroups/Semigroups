@@ -83,28 +83,27 @@ InstallMethod(RhoAct, "for a bipartition semigroup",
 
 # the seed or dummy start point for LambdaOrb
 
-InstallMethod(LambdaDomain, "for a transformation semi",
+InstallMethod(LambdaOrbSeed, "for a transformation semi",
 [IsTransformationSemigroup], s-> [65536]);
 
-InstallMethod(LambdaDomain, "for a partial perm semi",
+InstallMethod(LambdaOrbSeed, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> [65536]);
 
-InstallMethod(LambdaDomain, "for a bipartition semi",
+InstallMethod(LambdaOrbSeed, "for a bipartition semi",
 [IsBipartitionSemigroup], s-> [65536]);
 
 # the seed or dummy start point for RhoOrb
 
-InstallMethod(RhoDomain, "for a transformation semi",
+InstallMethod(RhoOrbSeed, "for a transformation semi",
 [IsTransformationSemigroup], s->[65536]);
 
-InstallMethod(RhoDomain, "for a partial perm semi",
+InstallMethod(RhoOrbSeed, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> [65536]);
 
-InstallMethod(RhoDomain, "for a bipartition semi",
+InstallMethod(RhoOrbSeed, "for a bipartition semi",
 [IsBipartitionSemigroup], s-> [65536]);
 
-# new for 1.0! - LambdaFunc
-###############################################################################
+# the function calculating the lambda or rho value of an element
 
 InstallMethod(LambdaFunc, "for a transformation semigroup",
 [IsTransformationSemigroup], x-> IMAGE_SET_TRANS);
@@ -112,45 +111,33 @@ InstallMethod(LambdaFunc, "for a transformation semigroup",
 InstallMethod(LambdaFunc, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> RightSignedPartition);
 
-if IsBound(RanSetPP) then
-  InstallMethod(LambdaFunc, "for a partial perm semigroup",
-    [IsPartialPermSemigroup], x-> RanSetPP);
-fi;
+InstallMethod(LambdaFunc, "for a partial perm semigroup",
+[IsPartialPermSemigroup], x-> RanSetPP);
 
-# new for 1.0! - LambdaInverse
-###############################################################################
-# i^f -> i for all i in im 
+InstallMethod(RhoFunc, "for a trans semi",
+[IsTransformationSemigroup], x-> FLAT_KERNEL_TRANS);
+
+InstallMethod(RhoFunc, "for a partial perm semi",
+[IsPartialPermSemigroup], x-> DomPP);
+
+InstallMethod(RhoFunc, "for a bipartition semigroup",
+[IsBipartitionSemigroup], x-> LeftSignedPartition);
+
+# returns an element acting mapping something to im as the inverse of f would.
+# maps i^f to i for all i in im...
 
 InstallMethod(LambdaInverse, "for a transformation semigroup",
 [IsTransformationSemigroup], s-> INV_LIST_TRANS);
-#  function(im, f)
-#    local out, i;
-#
-#   out:=List([1..DegreeOfTransformation(f)], x-> im[1]);
-#
-#   for i in im do 
-#      out[i^f]:=i;
-#    od;
-#
-#    return TransformationNC(out);
-#  end);
 
 InstallMethod(LambdaInverse, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> function(im, f) return InvPP(f); end); 
 
-#JDM c methods!
+#JDM c method
 InstallMethod(LambdaInverse, "for a bipartition",
 [IsBipartitionSemigroup], s-> function(im, f) return f^-1; end);
 
-# new for 1.0! - RhoInverse 
-###############################################################################
-#JDM c method for this!
-
 # returns an acting semigroup element acting like the inverse of f on 
 # the specified rho value. 
-
-#JDM this could be better since where ever we use it we also know what f is
-#mapping onto ker!
 
 InstallMethod(RhoInverse, "for a transformation semi",
 [IsTransformationSemigroup], s-> 
@@ -185,9 +172,6 @@ InstallMethod(RhoInverse, "for a bipartition",
     return f^-1;
   end);
 
-
-# new for 1.0! - LambdaPerm
-###############################################################################
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
 # equal LambdaFunc and RhoFunc. This is required to check if one of the two
 # elements belongs to the schutz gp of a lambda orb.
@@ -221,14 +205,13 @@ InstallMethod(LambdaPerm, "for a bipartition semigroup",
     return PermList(p);
   end);
 
-# new for 1.0! - LambdaConjugator
-###############################################################################
 # returns a permutation mapping LambdaFunc(s)(f) to LambdaFunc(s)(g) so that 
 # gf^-1(i)=p(i) when RhoFunc(s)(f)=RhoFunc(s)(g)!!
 
 InstallMethod(LambdaConjugator, "for a transformation semigroup",
 [IsTransformationSemigroup], s-> TRANS_IMG_CONJ);
 
+# c method
 if IsBound(RanPP) then 
   InstallMethod(LambdaConjugator, "for a partial perm semi",
   [IsPartialPermSemigroup], s-> 
@@ -237,8 +220,7 @@ if IsBound(RanPP) then
     end);
 fi;
 
-# new for 1.0! - LambdaRank and RhoRank
-###############################################################################
+# the function used to calculate the rank of lambda or rho value
 
 InstallMethod(LambdaRank, "for a transformation semigroup", 
 [IsTransformationSemigroup], x-> Length);
@@ -258,41 +240,29 @@ InstallMethod(RhoRank, "for a semigroup of partial perms",
 InstallMethod(RhoRank, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> y-> Number(y{[y[1]+2..2*y[1]+1]}, x-> x=1));
 
-# new for 1.0! - RhoFunc
-###############################################################################
+# the function used to test if there is an idempotent with the specified 
+# lambda and rho values.
 
-InstallMethod(RhoFunc, "for a trans semi",
-[IsTransformationSemigroup], x-> FLAT_KERNEL_TRANS);
-
-InstallMethod(RhoFunc, "for a partial perm semi",
-[IsPartialPermSemigroup], x-> DomPP);
-
-InstallMethod(RhoFunc, "for a bipartition semigroup",
-[IsBipartitionSemigroup], x-> LeftSignedPartition);
-
-# new for 1.0! - IdempotentLambdaRhoTester - "for a trans semigp"
-##############################################################################
-
-InstallMethod(IdempotentLambdaRhoTester, "for a trans semigp", 
+InstallMethod(IdempotentTester, "for a trans semigp", 
 [IsTransformationSemigroup], s-> IS_INJECTIVE_LIST_TRANS);
 
-# new for 1.0! - IdempotentLambdaRhoTester - "for a partial perm semigp"
+# new for 1.0! - IdempotentTester - "for a partial perm semigp"
 ##############################################################################
 
-InstallMethod(IdempotentLambdaRhoTester, "for a partial perm semigp", 
+InstallMethod(IdempotentTester, "for a partial perm semigp", 
 [IsPartialPermSemigroup], s-> EQ);
 
-# new for 1.0! - IdempotentLambdaRhoCreator - "for a trans semigp"
+# new for 1.0! - IdempotentCreator - "for a trans semigp"
 ##############################################################################
 #JDM we should update/replace IdempotentNC.
 
-InstallMethod(IdempotentLambdaRhoCreator, "for a trans semigp",
+InstallMethod(IdempotentCreator, "for a trans semigp",
 [IsTransformationSemigroup], s-> IDEM_IMG_KER_NC);
 
-# new for 1.0! - IdempotentLambdaRhoCreator - "for a partial perm semigp"
+# new for 1.0! - IdempotentCreator - "for a partial perm semigp"
 ##############################################################################
 
-InstallMethod(IdempotentLambdaRhoCreator, "for a partial perm semigp",
+InstallMethod(IdempotentCreator, "for a partial perm semigp",
 [IsPartialPermSemigroup], s-> PartialPermNC);
 
 #EOF

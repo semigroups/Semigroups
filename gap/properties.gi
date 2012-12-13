@@ -574,7 +574,7 @@ function(s)
   lambda:=lambdafunc(gens[1]);
   rhofunc:=RhoFunc(s);
   rho:=rhofunc(gens[1]);
-  tester:=IdempotentLambdaRhoTester(s);
+  tester:=IdempotentTester(s);
 
   for f in gens do 
     lambda_f:=lambdafunc(f);
@@ -1302,7 +1302,7 @@ function(s)
     return ForAll(GreensDClasses(s), IsRegularDClass);
   fi;
 
-  tester:=IdempotentLambdaRhoTester(s);
+  tester:=IdempotentTester(s);
   rhofunc:=RhoFunc(s);
 
   # look for s not being regular
@@ -1365,7 +1365,7 @@ function(s, f)
   o:=GradedLambdaOrb(s, f, true);
         
   lookingfor:=function(o, x)
-    return IdempotentLambdaRhoTester(s)(x, RhoFunc(s)(f));
+    return IdempotentTester(s)(x, RhoFunc(s)(f));
   end;
   
   return LookForInOrb(o, lookingfor, false)<>false;
@@ -1383,7 +1383,7 @@ function(s, f)
   o:=GradedLambdaOrb(s, f, false);
         
   lookingfor:=function(o, x)
-    return IdempotentLambdaRhoTester(s)(x, RhoFunc(s)(f));
+    return IdempotentTester(s)(x, RhoFunc(s)(f));
   end;
   
   return LookForInOrb(o, lookingfor, false)<>false;
@@ -1561,7 +1561,7 @@ function(s)
   o:=LambdaOrb(s);
   scc:=OrbSCC(o);
   graded:=GradedLambdaOrbs(g);
-  tester:=IdempotentLambdaRhoTester(s);
+  tester:=IdempotentTester(s);
   gens:=o!.gens;
   rhofunc:=RhoFunc(s);
 

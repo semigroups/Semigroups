@@ -1067,7 +1067,7 @@ InstallOtherMethod(Idempotents, "for an inverse op D-class",
 function(d)
   local creator, o;
 
-  creator:=IdempotentLambdaRhoCreator(ParentSemigroup(d));
+  creator:=IdempotentCreator(ParentSemigroup(d));
   o:=LambdaOrb(d);
   return List(LambdaOrbSCC(d), x-> creator(o[x], o[x]));
 end);
@@ -1099,7 +1099,7 @@ function(s)
     Enumerate(o, infinity);
   fi;
 
-  creator:=IdempotentLambdaRhoCreator(s);
+  creator:=IdempotentCreator(s);
   r:=Length(o);
   out:=EmptyPlist(r-1);
 

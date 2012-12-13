@@ -1068,7 +1068,7 @@ function(d)
   rho:=RhoFunc(s)(Representative(d));
   o:=LambdaOrb(d);
   scc:=OrbSCC(o)[LambdaOrbSCCIndex(d)];
-  tester:=IdempotentLambdaRhoTester(s);
+  tester:=IdempotentTester(s);
 
   for i in scc do 
     if tester(o[i], rho) then 
@@ -1076,7 +1076,7 @@ function(d)
         SetIsRegularClass(d, true);
       fi;
       return CreateHClass(s, LambdaOrbSCCIndex(d), o, RhoOrbSCCIndex(d),
-       RhoOrb(d), IdempotentLambdaRhoCreator(s)(o[i], rho), IsGreensClassNC(d));
+       RhoOrb(d), IdempotentCreator(s)(o[i], rho), IsGreensClassNC(d));
     fi;
   od;
 
@@ -1326,8 +1326,8 @@ function(x, value, scc, o, onright)
 
   out:=EmptyPlist(Length(scc)); 
   j:=0;
-  tester:=IdempotentLambdaRhoTester(s);
-  creator:=IdempotentLambdaRhoCreator(s);
+  tester:=IdempotentTester(s);
+  creator:=IdempotentCreator(s);
 
   if onright then 
     for i in scc do
@@ -1370,8 +1370,8 @@ function(s)
 
     out:=[];
     nr:=0;
-    tester:=IdempotentLambdaRhoTester(s);
-    creator:=IdempotentLambdaRhoCreator(s);
+    tester:=IdempotentTester(s);
+    creator:=IdempotentCreator(s);
     rho_o:=RhoOrb(s);
     scc:=OrbSCC(rho_o);
     lambda_o:=LambdaOrb(s);
@@ -1439,7 +1439,7 @@ function(h)
 
   s:=ParentSemigroup(h);
   f:=Representative(h);
-  return [IdempotentLambdaRhoCreator(s)(LambdaFunc(s)(f), RhoFunc(s)(f))];
+  return [IdempotentCreator(s)(LambdaFunc(s)(f), RhoFunc(s)(f))];
 end);
 
 # mod for 1.0! - Idempotents - "for an L-class of an acting semigp"
@@ -1473,7 +1473,7 @@ function(h)
   local s, f;
   s:=ParentSemigroup(h);
   f:=Representative(h);
-  return IdempotentLambdaRhoTester(s)(LambdaFunc(s)(f), RhoFunc(s)(f));
+  return IdempotentTester(s)(LambdaFunc(s)(f), RhoFunc(s)(f));
 end);
 
 # mod for 1.0! - IsomorphismPermGroup - "for H-class of an acting semi"
@@ -1520,7 +1520,7 @@ function(x, value, scc, o, onright)
     return true;
   fi;   
  
-  tester:=IdempotentLambdaRhoTester(s);
+  tester:=IdempotentTester(s);
   
   if onright then 
     for i in scc do
@@ -1621,7 +1621,7 @@ function(s)
   datascc:=OrbSCC(data);
   
   rhofunc:=RhoFunc(s);
-  tester:=IdempotentLambdaRhoTester(s);
+  tester:=IdempotentTester(s);
   nr:=0;
 
   for i in [2..Length(datascc)] do
@@ -1753,7 +1753,7 @@ function(x, value, scc, o, onright)
   fi;
 
   nr:=0;
-  tester:=IdempotentLambdaRhoTester(s);
+  tester:=IdempotentTester(s);
 
   if onright then 
     for i in scc do
@@ -1859,7 +1859,7 @@ function(s)
   repslens:=data!.repslens;
 
   rhofunc:=RhoFunc(s);
-  tester:=IdempotentLambdaRhoTester(s);
+  tester:=IdempotentTester(s);
 
   nr:=0;
   for i in [1..lenreps] do 
