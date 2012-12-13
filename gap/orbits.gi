@@ -29,10 +29,10 @@ function ( gens, w )
     return res;
 end);
 
-# new for 1.0! - LookForInOrb - "for an orbit and a function"
-#############################################################################
+#
 
-InstallGlobalFunction(LookForInOrb, "for an orbit and a function",
+InstallGlobalFunction(LookForInOrb, 
+"for an orbit, a function, and boolean",
 function(o, func, onlynew)
   local pos, i;
  

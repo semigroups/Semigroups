@@ -34,9 +34,10 @@ function(s, old_iter, convert, filts)
       if IsDoneIterator(iter) then 
         return fail;
       fi;
-      
+     
+
       if iter!.iterofiter=fail or IsDoneIterator(iter!.iterofiter) then 
-        iter!.iterofiter:=Iterator(convert((NextIterator(iter!.iter))));
+        iter!.iterofiter:=Iterator(convert(NextIterator(iter!.iter)));
       fi;
       
       return NextIterator(iter!.iterofiter);
@@ -50,8 +51,7 @@ function(s, old_iter, convert, filts)
   return iter;
 end);
 
-# new for 0.7! - IteratorByIterator - baseiter, convert, filts, isnew, opts
-#############################################################################
+#
 
 InstallGlobalFunction(IteratorByIterator,
 function(arg)

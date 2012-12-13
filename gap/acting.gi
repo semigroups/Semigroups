@@ -135,7 +135,7 @@ function(arg)
 
   f:=arg[3];
   if not IsBound(arg[4]) or arg[4]=fail then 
-    l:=Position(arg[2], LambdaFunc(arg[1])(f));
+    l:=Position(arg[2], RhoFunc(arg[1])(f));
   else
     l:=arg[4];
   fi;
@@ -930,8 +930,7 @@ function(o, m)
   return o!.scc_reps[m];
 end);
 
-# new for 1.0! - LambdaOrbSchutzGp - "for a lambda orb and scc index"
-##############################################################################
+#
 
 InstallGlobalFunction(LambdaOrbSchutzGp, 
 function(o, m)

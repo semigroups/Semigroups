@@ -10,7 +10,7 @@
 
 # Notes: everything here uses LambdaSomething, so don't use RhoAnything
 
-# the first three functions should be updated!
+# the first three main functions should be updated!
 
 ## Methods for inverse acting semigroups consisting of acting elements with a
 ## ^-1 operator. 
@@ -18,8 +18,7 @@
 InstallMethod(IsInverseOpClass, "for a Green's class",
 [IsActingSemigroupGreensClass], ReturnFalse);
 
-# new for 1.0! - DClassType - "for acting semigroup with inverse op"
-############################################################################
+#
 
 InstallOtherMethod(DClassType, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp and IsActingSemigroup],
@@ -29,8 +28,7 @@ function(s)
          and IsActingSemigroupGreensClass);
 end);
 
-# new for 1.0! - HClassType - "for acting semigroup with inverse op"
-############################################################################
+#
 
 InstallOtherMethod(HClassType, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp and IsActingSemigroup],
@@ -40,8 +38,7 @@ function(s)
          and IsActingSemigroupGreensClass);
 end);
 
-# new for 1.0! - LClassType - "for acting semigroup with inverse op"
-############################################################################
+#
 
 InstallOtherMethod(LClassType, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp and IsActingSemigroup],
@@ -51,8 +48,7 @@ function(s)
          and IsActingSemigroupGreensClass);
 end);
 
-# new for 1.0! - RClassType - "for acting semigroup with inverse op"
-############################################################################
+#
 
 InstallOtherMethod(RClassType, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp and IsActingSemigroup],
@@ -68,107 +64,94 @@ InstallMethod(\in,
 "for inverse acting elt and acting semigroup with inversion",
 [IsAssociativeElement, IsActingSemigroupWithInverseOp],
 function(f, s)
-  local dom, o, rho, rho_l, lambda_l, lambda, m, schutz, scc, g;
+  local dom, o, lambda, lambda_l, rho, rho_l, lookingfor, m, schutz, scc, g,
+  rep, n;
   
   if not ElementsFamily(FamilyObj(s))=FamilyObj(f) then 
     Error("the element and semigroup are not of the same type,");
     return;
   fi;
 
-  if HasAsSSortedList(s) then 
-    return f in AsSSortedList(s); 
-  fi;
+  #if HasAsSSortedList(s) then 
+  #  return f in AsSSortedList(s); 
+  #fi;
 
-  dom:=RhoDomain(s);
-
-  if dom=[] then 
+  if ActionDegree(s)=0 then 
     return ActionDegree(f)=0;
-    # any way of using points here? JDM
   fi;
 
-  o:=RhoOrb(s);
+  o:=LambdaOrb(s);
+  lambda:=LambdaFunc(s)(f);
+  lambda_l:=Position(o, lambda);
+  
+  if IsClosed(o) and lambda_l=fail then
+    return false;
+  fi;
+  
   rho:=RhoFunc(s)(f);
-
-  if IsClosed(o) then
-    rho_l:=Position(o, rho);
-    if rho_l=fail or (rho_l=1 and not IsMonoidAsSemigroup(s)) then
-      return false;
-    fi;
-    lambda_l:=Position(o, LambdaFunc(s)(f));
-    if lambda_l=fail then
-      return false;
-    fi;
-  else
-
-    rho_l:=Position(o, rho);
-    if rho_l=fail then
-      o!.looking:=true; o!.lookingfor:=function(o, x) return x=rho; end;
-      o!.lookfunc:=o!.lookingfor;
-      Enumerate(o);
-      rho_l:=PositionOfFound(o);
-      o!.found:=false; o!.looking:=false;
-      Unbind(o!.lookingfor); Unbind(o!.lookfunc);
-
-      if rho_l=false then
-        return false;
-      fi;
-    fi;
-
-    if rho=[] then
-      return true;
-    elif rho_l=1 and not IsMonoidAsSemigroup(s) then
-      return false;
-    fi;
-
-    lambda:=LambdaFunc(s)(f);
-    
-    if IsClosed(o) then
-      lambda_l:=Position(o, lambda);
-      if lambda_l=fail then
-        return false;
-      fi;
-    else 
-      o:=GradedRhoOrb(s, f, false);
-      Enumerate(o, infinity);
-      rho_l:=1;
-      lambda_l:=Position(o, lambda);
-      if lambda_l=fail then
-        return false;
-      fi;
-    fi;
-  fi;
-
-  m:=OrbSCCLookup(o)[rho_l];
-
-  if OrbSCCLookup(o)[lambda_l]<>m then
+  rho_l:=Position(o, rho);
+  
+  if IsClosed(o) and rho_l=fail then
     return false;
   fi;
 
-  schutz:=RhoOrbStabChain(o, m);
+  if lambda_l=fail then
+    lookingfor:=function(o, x) return x=lambda; end;
+    lambda_l:=LookForInOrb(o, lookingfor, true);
+    
+    if lambda_l=false then
+      return false;
+    fi;
+  fi;
+
+  if rho_l=fail then 
+    rho_l:=Position(o, rho);
+    if rho_l=fail and IsClosed(o) then 
+      return false;
+    fi;
+  fi;
+ 
+  if not IsClosed(o) then 
+    o:=GradedLambdaOrb(s, f, false);
+    Enumerate(o, infinity);
+    rho_l:=Position(o, rho);
+    if rho_l=fail then 
+      return false;
+    fi;
+    lambda_l:=1;
+  fi;
+
+  m:=OrbSCCLookup(o)[lambda_l];
+
+  if OrbSCCLookup(o)[rho_l]<>m then
+    return false;
+  fi;
+
+  schutz:=LambdaOrbStabChain(o, m);
 
   if schutz=true then
     return true;
   fi;
 
-  scc:=OrbSCC(o)[m];
-  g:=f;
+  scc:=OrbSCC(o)[m]; g:=f;
+
   if lambda_l<>scc[1] then 
-    g:=g*RhoOrbMult(o, m, lambda_l)[1];
+    g:=g*LambdaOrbMult(o, m, lambda_l)[2];
   fi;
 
   if rho_l<>scc[1] then 
-    g:=RhoOrbMult(o, m, rho_l)[2]*g;
+    g:=LambdaOrbMult(o, m, rho_l)[1]*g;
   fi;
 
   if IsIdempotent(g) then 
+    #JDM c method for IsIdempotent required.
     return true;
   elif schutz=false then
     return false;
   fi;
-
-  #JDM really One? certainly not! See \in in regular.gi
-  #return SiftGroupElement(schutz, LambdaPerm(s)(One(g), g)).isone;
-  return SiftedPermutation(schutz, LambdaPerm(s)(One(g), g))=(); 
+  # the D-class (?) rep corresponding to lambda_o and scc.
+  rep:=RectifyInverseRho(s, o, LambdaOrbRep(o, m)).rep;
+  return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=(); 
 end);
 
 # new for 1.0! - \in - for inverse op D-class 
@@ -1302,35 +1285,46 @@ local iter, scc;
 
       i:=1,
 
-      IsDoneIterator:=iter-> IsClosed(LambdaOrb(s)) and 
-       iter!.i>=Length(LambdaOrb(s)),
+      next_value:=fail,
 
-      NextIterator:=function(iter)
-        local i, o, r, f;
-        
-        o:=LambdaOrb(s); i:=iter!.i;
+      last_called_by_is_done:=false,
 
-        if IsClosed(o) and i>=Length(o) then 
-          return fail;  
+      IsDoneIterator:=function(iter)
+        local o, i, f;
+        if iter!.last_called_by_is_done then 
+          return iter!.next_value=fail;
         fi;
+
+        iter!.last_called_by_is_done:=true;
+        iter!.next_value:=fail;
+
+        o:=LambdaOrb(s); i:=iter!.i;
         
+        if IsClosed(o) and i>=Length(o) then 
+          return true;
+        fi;
+
         i:=i+1;
         
         if i>Length(o) then 
-          if not IsClosed(o) then 
-            Enumerate(o, i);
-            if i>Length(o) then 
-              return fail;
-            fi;
-          else 
-            return fail;
+          Enumerate(o, i); 
+          if i>Length(o) then 
+            return true;
           fi;
         fi;
 
         iter!.i:=i; 
-        #JDM is f correct here? Not canonical rep?
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1; 
-        return [s, fail, GradedLambdaOrb(s, o[i], true), f, false];
+        iter!.next_value:=[s, fail, GradedLambdaOrb(s, f, true), f, false];
+        return false;
+      end,
+
+      NextIterator:=function(iter)
+        if not iter!.last_called_by_is_done then 
+          IsDoneIterator(iter);
+        fi;
+        iter!.last_called_by_is_done:=false;
+        return iter!.next_value;
       end,
 
       ShallowCopy:=iter-> rec(i:=1)));
@@ -1371,7 +1365,6 @@ local iter, scc;
 
         iter!.i:=i; iter!.m:=m;
  
-        # f ok here? JDM
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][i]))^-1; 
         return [s, m, LambdaOrb(s), f, false];
       end,

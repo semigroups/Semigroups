@@ -17,6 +17,9 @@
 InstallOtherMethod(ActionDegree, "for an acting semigroup",
 [IsActingSemigroup], s-> ActionDegree(Representative(s)));
 
+InstallOtherMethod(ActionDegree, "for a partial perm semigroup",
+[IsPartialPermSemigroup], s-> DegreeOfPartialPermCollection(s));
+
 #
 
 InstallMethod(ActionDegree, "for a transformation",

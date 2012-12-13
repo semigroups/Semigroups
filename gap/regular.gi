@@ -40,9 +40,6 @@ end);
 ##############################################################################
 ##############################################################################
 
-# new for 1.0! - \in - "for a regular acting semigroup and elt"
-##############################################################################
-
 # different method for inverse
 
 InstallMethod(\in, "for an acting elt and regular acting semigroup",
@@ -119,7 +116,7 @@ function(f, s)
     return false;
   fi;
 
-  rep:=RectifyRho(s, rho_o, LambdaOrbRep(lambda_o, m));
+  rep:=RectifyRho(s, rho_o, LambdaOrbRep(lambda_o, m)).rep;
   #return SiftGroupElement(schutz, LambdaPerm(s)(rep, g)).isone;
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
 end);
@@ -1090,6 +1087,7 @@ local iter, scc;
 
       i:=1,
 
+      #JDM this won't work! Change as per IteratorOfRClassData in inverse.gi
       IsDoneIterator:=iter-> IsClosed(LambdaOrb(s)) and 
        iter!.i>=Length(LambdaOrb(s)),
 
