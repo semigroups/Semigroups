@@ -872,9 +872,7 @@ function(o, m)
   return o!.mults;
 end);
 
-# new for 1.0! - LambdaOrbMult - "for a lambda orb, scc index, and index"
-##############################################################################
-# f takes o[scc[1]] to o[i] and inv(o[i], f) takes o[i] to o[scc[1]]
+# f takes o[i] to o[scc[1]] and inv(o[i], f) takes o[scc[1]] to o[i]
 
 InstallGlobalFunction(LambdaOrbMult,
 function(o, m, i)
@@ -1223,7 +1221,7 @@ end);
 
 # new for 1.0! - RhoOrbMult - "for a rho orb and index"
 ##############################################################################
-# f takes o[scc[1]] to o[i] and inv(o[i], f) takes o[i] to o[scc[1]]
+# f takes o[scc[1]] to o[i] and inv(o[scc[1]],f) takes o[i] to o[scc[1]]
 
 InstallGlobalFunction(RhoOrbMult,
 function(o, m, i)

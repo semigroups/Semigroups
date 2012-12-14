@@ -275,7 +275,7 @@ function(s, f)
       fi;
     od;
   else
-    o:=Orb(s, [65536], RhoAct(s),
+    o:=Orb(s, RhoOrbSeed(s), RhoAct(s),
       rec(  forflatplainlists:=true, #JDM probably don't want to assume this..
             treehashsize:=SemigroupsOptionsRec.hashlen.M,
             gradingfunc:=function(o, x) return rhorank(x); end,
@@ -314,7 +314,7 @@ function(s, f)
       fi;
     od;
   else
-    o:=Orb(s, [1..65536], LambdaAct(s),
+    o:=Orb(s, LambdaOrbSeed(s), LambdaAct(s),
       rec(  forflatplainlists:=true, #JDM probably don't want to assume this..
             treehashsize:=SemigroupsOptionsRec.hashlen.M,
             gradingfunc:=function(o, x) return lambdarank(x); end,
