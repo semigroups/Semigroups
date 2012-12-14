@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+
+DeclareGlobalFunction("EnumeratePosition");
 DeclareGlobalFunction("LookForInOrb");
 DeclareGlobalFunction("OnKernelsAntiAction");
 DeclareGlobalFunction("OrbSCC");

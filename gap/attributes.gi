@@ -425,15 +425,12 @@ end);
 InstallOtherMethod(MultiplicativeNeutralElement, "for a partial perm semi",
 [IsPartialPermSemigroup], One);
 
-# new for 0.1! - MultiplicativeZero - "for an acting semigroup"
-###########################################################################
+#
 
 InstallOtherMethod(MultiplicativeZero, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local o, min, rank, pos, f, m, i, j;
-
-  o:=LambdaOrb(s);
+  local min, o, rank, i, pos, f, m, rank_i, min_found, n;
   
   if IsPartialPermSemigroup(s) then 
     min:=0;
@@ -441,43 +438,46 @@ function(s)
     min:=1;
   fi;
 
+  o:=LambdaOrb(s);
   rank:=LambdaRank(s);
   
+  #is there an element in s with minimum possible rank
   if not IsClosed(o) then 
-    o!.looking:=true; o!.lookingfor:=function(o, x) return rank(x)=min; end;
-    o!.lookfunc:=o!.lookingfor;
-    Enumerate(o);
-    pos:=PositionOfFound(o);
-    o!.found:=false; o!.looking:=false;
-    Unbind(o!.lookingfor); Unbind(o!.lookfunc); 
-    if pos<>false then
+    if IsPartialPermSemigroup(s) or IsTransformationSemigroup(s) then 
+      i:=0;
+      repeat 
+       i:=i+1;
+       pos:=EnumeratePosition(o, [i], false);
+      until pos<>fail or i=ActionDegree(s);
+    else
+      pos:=LookForInOrb(o, function(o, x) return rank(x)=min; end, 1);
+    fi;
+    if pos<>fail then
       f:=EvaluateWord(GeneratorsOfSemigroup(s), 
        TraceSchreierTreeForward(o, pos));
     fi;
   fi;
 
+  # lambda orb is closed, find an element with minimum rank
   if not IsBound(f) then 
-    m:=rank(o[1]);
-    pos:=1;
-    i:=0;
+    m:=rank(o[2]); pos:=1; i:=0;
 
-    while m>min and i<Length(o) do 
+    while min_found>min and i<Length(o) do 
       i:=i+1;
-      j:=rank(o[i]);
-      if j<m then 
-        m:=j;
+      rank_i:=rank(o[i]);
+      if rank_i<min_found then 
+        min_found:=rank_i;
         pos:=i;
       fi;
     od;
     f:=EvaluateWord(GeneratorsOfSemigroup(s), TraceSchreierTreeForward(o, pos));
   fi;
 
-  if f^2=f and Size(GreensRClassOfElementNC(s, f))=1 then
+  if IsIdempotent(f) and Size(GreensRClassOfElementNC(s, f))=1 then
     return f;
   fi;
 
   return fail;
 end);
 
-
-
+#EOF

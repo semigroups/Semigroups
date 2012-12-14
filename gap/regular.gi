@@ -57,45 +57,21 @@ function(f, s)
   fi;
 
   lambda_o:=LambdaOrb(s);
-  rho_o:=RhoOrb(s);
   lambda:=LambdaFunc(s)(f);
-  rho:=RhoFunc(s)(f); 
-  lambda_l:=Position(lambda_o, lambda);
-  rho_l:=Position(rho_o, rho);
+  lambda_l:=EnumeratePosition(lambda_o, lambda, 1);
+  
+  if lambda_l=fail then 
+    return false;
+  fi;
 
-  if (IsClosed(lambda_o) and lambda_l=fail) or 
-   (IsClosed(rho_o) and rho_l=fail) then
+  rho_o:=RhoOrb(s);
+  rho:=RhoFunc(s)(f); 
+  rho_l:=EnumeratePosition(rho_o, rho);
+
+  if rho_l=fail then 
     return false;
   fi;
   
-  if lambda_l=fail then
-    lambda_o!.looking:=true; 
-    lambda_o!.lookingfor:=function(o, x) return x=lambda; end;
-    lambda_o!.lookfunc:=lambda_o!.lookingfor;
-    Enumerate(lambda_o);
-    lambda_l:=PositionOfFound(lambda_o);
-    lambda_o!.found:=false; lambda_o!.looking:=false;
-    Unbind(lambda_o!.lookingfor); Unbind(lambda_o!.lookfunc);
-
-    if lambda_l=false then
-      return false;
-    fi;
-  fi;
-
-  if rho_l=fail then
-    rho_o!.looking:=true; 
-    rho_o!.lookingfor:=function(o, x) return x=rho; end;
-    rho_o!.lookfunc:=rho_o!.lookingfor;
-    Enumerate(rho_o);
-    rho_l:=PositionOfFound(rho_o);
-    rho_o!.found:=false; rho_o!.looking:=false;
-    Unbind(rho_o!.lookingfor); Unbind(rho_o!.lookfunc);
-
-    if rho_l=false then
-      return false;
-    fi;
-  fi;
-
   m:=OrbSCCLookup(lambda_o)[lambda_l];
   schutz:=LambdaOrbStabChain(lambda_o, m);
 
@@ -117,7 +93,6 @@ function(f, s)
   fi;
 
   rep:=RectifyRho(s, rho_o, LambdaOrbRep(lambda_o, m)).rep;
-  #return SiftGroupElement(schutz, LambdaPerm(s)(rep, g)).isone;
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
