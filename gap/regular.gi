@@ -904,11 +904,7 @@ local iter;
     if Length(LambdaOrb(s))=1 then 
       Enumerate(LambdaOrb(s), 2);
     fi;
-    iter:=IteratorByFunctions( rec(
-
-      last_called_by_is_done:=false,
-
-      next_value:=fail,
+    iter:=IteratorByNextIterator( rec(
 
       seen:=HTCreate([1,1],
        rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S)),
@@ -917,15 +913,8 @@ local iter;
 
       m:=0,
 
-      IsDoneIterator:=function(iter)
-        local m, seen, lambda_o, new, val, f, i;  
-
-        if iter!.last_called_by_is_done then 
-          return iter!.next_value=fail;
-        fi;
-
-        iter!.last_called_by_is_done:=true;
-        iter!.next_value:=fail;
+      NextIterator:=function(iter)
+        local m, seen, lambda_o, new, val, f, i, look;  
 
         m:=iter!.m;
         
@@ -947,18 +936,12 @@ local iter;
 
           # look for new lambda value
           if new=false then  
-            lambda_o!.looking:=true;
-            lambda_o!.lookingfor:=
-              function(o, x) 
-                local val;
-                val:=Position(GradedLambdaOrbs(s), x);
-                return val=fail or HTValue(seen, val{[1,2]})=fail; 
-              end;
-            lambda_o!.lookfunc:=lambda_o!.lookingfor;
-            Enumerate(lambda_o);
-            new:=PositionOfFound(lambda_o);
-            lambda_o!.found:=false; lambda_o!.looking:=false;
-            Unbind(lambda_o!.lookingfor); Unbind(lambda_o!.lookfunc);
+            lookfunc:=function(o, x) 
+              local val;
+              val:=Position(GradedLambdaOrbs(s), x);
+              return val=fail or HTValue(seen, val{[1,2]})=fail; 
+            end;
+            new:=LookForInOrb(lambda_o, lookfunc, true);
           fi;
 
           if new=false then 
@@ -1146,7 +1129,10 @@ end);
 
 # different method for inverse
 
-InstallMethod(IteratorOfRClassData, "for regular acting semigp",
+# this method should be updated, it won't work see IteratorOfRClassData in
+# inverse.gi
+
+InstallMethod(IteratorOfRClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
 local iter, scc;

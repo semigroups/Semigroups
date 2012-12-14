@@ -13,8 +13,19 @@
 # NextIterator in opts must return fail if it is finished. 
 
 InstallGlobalFunction(IteratorByNextIterator, 
-function(opts)
+function(record)
   local iter, comp, shallow;
+
+  if not ( IsRecord( record ) and IsBound( record.NextIterator )
+                              and IsBound( record.ShallowCopy ) ) then 
+    Error("<record> must be a record with components `NextIterator'\n",
+    "and `ShallowCopy'");
+  elif IsRecord (record ) and ( IsBound(record.last_called_by_is_done) 
+                          or IsBound(record.next_value) 
+                          or IsBound(record.IsDoneIterator) ) then
+    Error("<record> must be a record with no components named\n",
+    "`last_called_by_is_done', `next_value', or `IsDoneIterator'");
+  fi;
 
   iter:=rec( last_called_by_is_done:=false,
     
@@ -25,7 +36,7 @@ function(opts)
         return iter!.next_value=fail;
       fi;
       iter!.last_called_by_is_done:=true;
-      iter!.next_value:=opts!.NextIterator(iter);
+      iter!.next_value:=record!.NextIterator(iter);
       if iter!.next_value=fail then 
         return true;
       fi;
@@ -40,21 +51,14 @@ function(opts)
       return iter!.next_value;
     end);
 
-  for comp in RecNames(opts) do 
+  for comp in RecNames(record) do 
     if comp="ShallowCopy" then 
-      shallow:=ShallowCopy(opts.(comp)(0));
+      shallow:=record.ShallowCopy(iter);
       shallow.last_called_by_is_done:=false;
       shallow.next_value:=fail;
-      iter.(comp):= iter-> shallow;
-    elif comp in ["last_called_by_is_done", "next_value"] then 
-      Error("usage: the components of the record must not be named",
-      " last_called_by_is_done or next_value,");
-      return;
-    elif comp="IsDoneIterator" then 
-      Error("usage: the component IsDoneIterator will be ignored, type return", 
-      " to continue,");
+      iter.ShallowCopy:= iter-> shallow;
     elif comp<>"NextIterator" then 
-      iter.(comp):=opts.(comp);
+      iter.(comp):=record.(comp);
     fi;
   od;
   return IteratorByFunctions(iter);

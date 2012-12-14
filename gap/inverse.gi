@@ -82,33 +82,17 @@ function(f, s)
 
   o:=LambdaOrb(s);
   lambda:=LambdaFunc(s)(f);
-  lambda_l:=Position(o, lambda);
+  lambda_l:=EnumeratePosition(o, lambda);
   
-  if IsClosed(o) and lambda_l=fail then
+  if lambda_l=fail then
     return false;
   fi;
   
   rho:=RhoFunc(s)(f);
-  rho_l:=Position(o, rho);
+  rho_l:=EnumeratePosition(o, rho);
   
-  if IsClosed(o) and rho_l=fail then
+  if rho_l=fail then
     return false;
-  fi;
-
-  if lambda_l=fail then
-    lookingfor:=function(o, x) return x=lambda; end;
-    lambda_l:=LookForInOrb(o, lookingfor, true);
-    
-    if lambda_l=false then
-      return false;
-    fi;
-  fi;
-
-  if rho_l=fail then 
-    rho_l:=Position(o, rho);
-    if rho_l=fail and IsClosed(o) then 
-      return false;
-    fi;
   fi;
  
   if not IsClosed(o) then 
