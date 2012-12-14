@@ -914,7 +914,7 @@ local iter;
       m:=0,
 
       NextIterator:=function(iter)
-        local m, seen, lambda_o, new, val, f, i, look;  
+        local m, seen, lambda_o, new, val, f, i, lookfunc;  
 
         m:=iter!.m;
         
