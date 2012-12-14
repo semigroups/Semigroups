@@ -1361,14 +1361,18 @@ function(s, f)
     Info(InfoSemigroups, 2, "the semigroup is regular,");
     return true;
   fi;
-  
-  o:=GradedLambdaOrb(s, f, true);
+ 
+  if IsClosed(LambdaOrb(s)) then 
+    o:=LambdaOrb(s);
+  else
+    o:=GradedLambdaOrb(s, f, true);
+  fi;
         
   lookingfor:=function(o, x)
     return IdempotentTester(s)(x, RhoFunc(s)(f));
   end;
   
-  return LookForInOrb(o, lookingfor, false)<>false;
+  return LookForInOrb(o, lookingfor, 1)<>false;
 end);
 
 # new for 1.0! - IsRegularSemigroupElementNC - "for acting semigroup and elt"
@@ -1379,14 +1383,14 @@ InstallMethod(IsRegularSemigroupElementNC,
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement], 
 function(s, f)                                  
   local o, lookingfor;
-  
+ 
   o:=GradedLambdaOrb(s, f, false);
         
   lookingfor:=function(o, x)
     return IdempotentTester(s)(x, RhoFunc(s)(f));
   end;
   
-  return LookForInOrb(o, lookingfor, false)<>false;
+  return LookForInOrb(o, lookingfor, 1)<>false;
 end);
 
 # new for 0.2! - IsRightSimple - "for a transformation semigroup"

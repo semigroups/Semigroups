@@ -31,17 +31,53 @@ end);
 
 #
 
+InstallGlobalFunction(EnumeratePosition, 
+"for an orbit, value, and boolean",
+function(o, val, onlynew)
+  local pos;
+  
+  if not onlynew then 
+    pos:=Position(o, val);
+    if pos<>fail or IsClosed(o) then 
+      return pos;
+    fi;
+  fi;
+ 
+  if IsClosed(o) then 
+    return fail;
+  fi;
+  o!.looking:=true;
+  o!.lookingfor:=function(o, x) return x=val; end;
+  o!.lookfunc:=o!.lookingfor;
+  Enumerate(o);
+  pos:=PositionOfFound(o);
+  o!.found:=false;
+  o!.looking:=false;
+  Unbind(o!.lookingfor);
+  Unbind(o!.lookfunc);
+  if pos<>false then 
+    return pos;
+  fi;
+  return fail;
+end);
+
+#
+
 InstallGlobalFunction(LookForInOrb, 
-"for an orbit, a function, and boolean",
-function(o, func, onlynew)
+"for an orbit, a function, and positive integer",
+function(o, func, start)
   local pos, i;
  
-  if not onlynew then 
-    for i in [1..Length(o)] do 
+  if start<Length(o) then 
+    for i in [start..Length(o)] do 
       if func(o, o[i]) then 
         return i;
       fi;
     od;
+  fi;
+
+  if IsClosed(o) then 
+    return false;
   fi;
 
   o!.looking:=true;
@@ -56,17 +92,7 @@ function(o, func, onlynew)
   return pos;
 end);
 
-# new for 0.1! - OnKernelsAntiAction - for a trans img list and same 
-###########################################################################
 
-InstallGlobalFunction(OnKernelsAntiAction, 
-[IsList, IsTransformation],
-function(ker, f)
-  return CanonicalTransSameKernel(ker{f![1]});  
-end);
-
-# mod for 1.0! - OrbSCC - "for an orbit"
-#############################################################################
 
 InstallGlobalFunction(OrbSCC,
 function(o)
@@ -93,8 +119,6 @@ function(o)
     od;
   fi;
 
-  #o!.truth:=List([1..r], i-> BlistList([1..Length(o)], scc[i]));
-  
   return scc;
 end); 
 

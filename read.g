@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-if IsBound(SEMIGROUPSC) then ReadPackage("semigroups/gap/pperm.gi"); fi;
+ReadPackage("semigroups/gap/pperm.gi");
 ReadPackage("semigroups/gap/partition.gi");
 ReadPackage("semigroups/gap/binary.gi");
 ReadPackage("semigroups/gap/matrix.gi");
@@ -20,7 +20,7 @@ ReadPackage("semigroups/gap/semigroups.gi");
 ReadPackage("semigroups/gap/greens.gi");
 ReadPackage("semigroups/gap/slp.gi");
 ReadPackage("semigroups/gap/regular.gi");
-if IsBound(SEMIGROUPSC) then ReadPackage("semigroups/gap/inverse.gi"); fi;
+ReadPackage("semigroups/gap/inverse.gi");
 ReadPackage("semigroups/gap/enums.gi");
 ReadPackage("semigroups/gap/iterators.gi");
 ReadPackage("semigroups/gap/properties.gi");

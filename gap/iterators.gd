@@ -1,6 +1,7 @@
 
 
 
+DeclareGlobalFunction("IteratorByNextIterator");
 DeclareGlobalFunction("IteratorByIterOfIter");
 DeclareGlobalFunction("IteratorByIterator");
 DeclareGlobalFunction("ListByIterator");

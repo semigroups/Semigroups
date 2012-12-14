@@ -155,26 +155,26 @@ InstallMethod(LambdaInverse, "for a bipartition",
 # if g=RhoInverse(X, f) and f^X=Y (this is a left action), then g^Y=X and g
 # acts on the left like the inverse of g on Y. 
 
-InstallMethod(RhoInverse, "for a transformation semigroup",
-[IsTransformationSemigroup], s-> 
-  function(x, f)
-    local g, n, m, lookup, i, j;
-  
-    g:=x{IMAGE_TRANS(f)};
-    n:=DegreeOfTransformation(f); 
-    m:=MaximumList(x);
-    lookup:=EmptyPlist(n);
-    
-    i:=0; j:=0;
-    repeat 
-      i:=i+1;
-      if not IsBound(lookup[g[i]]) then 
-        lookup[g[i]]:=i;
-        j:=j+1;
-      fi;
-    until j=m;
-    return TransformationNC(List([1..n], i-> lookup[x[i]]));
-  end);
+InstallMethod(RhoInverse, "for a transformation semi",
+[IsTransformationSemigroup], s-> INV_KER_TRANS);
+#  function(ker, f)
+#    local g, n, m, lookup, i, j;
+#  
+#    g:=ker{IMAGE_TRANS(f)};
+#    n:=DegreeOfTransformation(f); 
+#    m:=MaximumList(ker);
+#    lookup:=EmptyPlist(n);
+#    
+#    i:=0; j:=0;
+#    repeat 
+#      i:=i+1;
+#      if not IsBound(lookup[g[i]]) then 
+#        lookup[g[i]]:=i;
+#        j:=j+1;
+#      fi;
+#    until j=m;
+#    return TransformationNC(List([1..n], i-> lookup[ker[i]]));
+#  end);
 
 InstallMethod(RhoInverse, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> 

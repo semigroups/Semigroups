@@ -10,8 +10,57 @@
 
 #technical...
 
-# new for 1.0! - IteratorByIterOfIter
-#############################################################################
+# NextIterator in opts must return fail if it is finished. 
+
+InstallGlobalFunction(IteratorByNextIterator, 
+function(opts)
+  local iter, comp, shallow;
+
+  iter:=rec( last_called_by_is_done:=false,
+    
+    next_value:=fail,
+
+    IsDoneIterator:=function(iter)
+      if iter!.last_called_by_is_done then 
+        return iter!.next_value=fail;
+      fi;
+      iter!.last_called_by_is_done:=true;
+      iter!.next_value:=opts!.NextIterator(iter);
+      if iter!.next_value=fail then 
+        return true;
+      fi;
+      return false;
+    end,
+
+    NextIterator:=function(iter) 
+      if not iter!.last_called_by_is_done then 
+        IsDoneIterator(iter);
+      fi;
+      iter!.last_called_by_is_done:=false;
+      return iter!.next_value;
+    end);
+
+  for comp in RecNames(opts) do 
+    if comp="ShallowCopy" then 
+      shallow:=ShallowCopy(opts.(comp)(0));
+      shallow.last_called_by_is_done:=false;
+      shallow.next_value:=fail;
+      iter.(comp):= iter-> shallow;
+    elif comp in ["last_called_by_is_done", "next_value"] then 
+      Error("usage: the components of the record must not be named",
+      " last_called_by_is_done or next_value,");
+      return;
+    elif comp="IsDoneIterator" then 
+      Error("usage: the component IsDoneIterator will be ignored, type return", 
+      " to continue,");
+    elif comp<>"NextIterator" then 
+      iter.(comp):=opts.(comp);
+    fi;
+  od;
+  return IteratorByFunctions(iter);
+end);
+
+#
 
 InstallGlobalFunction(IteratorByIterOfIter,
 function(s, old_iter, convert, filts)
@@ -34,7 +83,6 @@ function(s, old_iter, convert, filts)
       if IsDoneIterator(iter) then 
         return fail;
       fi;
-     
 
       if iter!.iterofiter=fail or IsDoneIterator(iter!.iterofiter) then 
         iter!.iterofiter:=Iterator(convert(NextIterator(iter!.iter)));
