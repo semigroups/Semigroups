@@ -10,9 +10,6 @@
 
 #technical...
 
-# new for 1.0! - IteratorByIterOfIter
-#############################################################################
-
 InstallGlobalFunction(IteratorByIterOfIter,
 function(s, old_iter, convert, filts)
   local iter, filt;
