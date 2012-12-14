@@ -1279,29 +1279,20 @@ InstallMethod(IteratorOfRClassData, "for acting semigp with inverse op",
 [IsActingSemigroupWithInverseOp], 
 function(s)
 local iter, scc;
+  
   if not IsClosed(LambdaOrb(s)) then 
     
-    iter:=IteratorByFunctions( rec(
+    iter:=IteratorByNextIterator( rec(
 
       i:=1,
 
-      next_value:=fail,
-
-      last_called_by_is_done:=false,
-
-      IsDoneIterator:=function(iter)
+      NextIterator:=function(iter)
         local o, i, f;
-        if iter!.last_called_by_is_done then 
-          return iter!.next_value=fail;
-        fi;
-
-        iter!.last_called_by_is_done:=true;
-        iter!.next_value:=fail;
 
         o:=LambdaOrb(s); i:=iter!.i;
         
         if IsClosed(o) and i>=Length(o) then 
-          return true;
+          return fail;
         fi;
 
         i:=i+1;
@@ -1309,22 +1300,13 @@ local iter, scc;
         if i>Length(o) then 
           Enumerate(o, i); 
           if i>Length(o) then 
-            return true;
+            return fail;
           fi;
         fi;
 
         iter!.i:=i; 
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1; 
-        iter!.next_value:=[s, fail, GradedLambdaOrb(s, f, true), f, false];
-        return false;
-      end,
-
-      NextIterator:=function(iter)
-        if not iter!.last_called_by_is_done then 
-          IsDoneIterator(iter);
-        fi;
-        iter!.last_called_by_is_done:=false;
-        return iter!.next_value;
+        return [s, fail, GradedLambdaOrb(s, f, true), f, false];
       end,
 
       ShallowCopy:=iter-> rec(i:=1)));
