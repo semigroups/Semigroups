@@ -128,18 +128,16 @@ function(f, s)
   fi;
 
   if IsIdempotent(g) then 
-    #JDM c method for IsIdempotent required.
     return true;
   elif schutz=false then
     return false;
   fi;
-  # the D-class (?) rep corresponding to lambda_o and scc.
+  # the D-class rep corresponding to lambda_o and scc.
   rep:=RectifyInverseRho(s, o, LambdaOrbRep(o, m)).rep;
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=(); 
 end);
 
-# new for 1.0! - \in - for inverse op D-class 
-#############################################################################
+#
 
 InstallMethod(\in, "for inverse op D-class",
 [IsPartialPerm , IsInverseOpClass and IsGreensDClass and
@@ -150,9 +148,9 @@ function(f, d)
   rep:=Representative(d);
   s:=ParentSemigroup(d);
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-   ActionRank(f) <> ActionRank(rep) or
-    ActionDegree(f)<>ActionDegree(rep) then
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
+    or ActionRank(f) <> ActionRank(rep) 
+    or ActionDegree(f)<>ActionDegree(rep) then
     return false;
   fi;
 
@@ -182,7 +180,7 @@ function(f, d)
   fi;
   
   if lambda_l<>scc[1] then 
-    g:=g*LambdaOrbMult(o, m, lambda_l);
+    g:=g*LambdaOrbMult(o, m, lambda_l)[2];
   fi; 
 
   if g=rep then 
@@ -205,22 +203,20 @@ function(f, l)
   rep:=Representative(l);
   s:=ParentSemigroup(l);
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or ActionDegree(f) <> ActionDegree(rep)
-   or ActionRank(f) <> ActionRank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
-    Info(InfoSemigroups, 1, "degree, rank, or lambda value not equal to those of",
-    " any of the L-class elements,");
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
+    or ActionDegree(f) <> ActionDegree(rep)  
+    or ActionRank(f) <> ActionRank(rep) 
+    or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
+    Info(InfoSemigroups, 1, "degree, rank, or lambda value not equal to",
+     " those of  any of the L-class elements,");
     return false;
   fi;
 
   m:=LambdaOrbSCCIndex(l);
   o:=LambdaOrb(l);
- 
-  if not IsClosed(o) then
-    Enumerate(o, infinity);
-  fi;
+  #o is closed since we know LambdaOrbSCCIndex
 
   i:=Position(o, RhoFunc(s)(f));
-
   if i = fail or OrbSCCLookup(o)[i]<>m then
     return false;
   fi;
@@ -273,10 +269,7 @@ function(f, r)
 
   m:=LambdaOrbSCCIndex(r);
   o:=LambdaOrb(r);
- 
-  if not IsClosed(o) then
-    Enumerate(o, infinity);
-  fi;
+  #o is closed since we know LambdaOrbSCCIndex
 
   i:=Position(o, LambdaFunc(s)(f));
 
@@ -287,7 +280,7 @@ function(f, r)
   schutz:=LambdaOrbStabChain(o, m);
 
   if schutz=true then
-    Info(InfoSemigroups, 3, "Schutz. group of L-class is symmetric group");
+    Info(InfoSemigroups, 3, "Schutz. group of R-class is symmetric group");
     return true;
   fi;
 
@@ -298,11 +291,11 @@ function(f, r)
   fi;
 
   if g=rep then
-    Info(InfoSemigroups, 3, "element with rectified rho value equals ",
-    "L-class representative");
+    Info(InfoSemigroups, 3, "element with rectified lambda value equals ",
+    "R-class representative");
     return true;
   elif schutz=false then
-    Info(InfoSemigroups, 3, "Schutz. group of L-class is trivial");
+    Info(InfoSemigroups, 3, "Schutz. group of R-class is trivial");
     return false;
   fi;
 

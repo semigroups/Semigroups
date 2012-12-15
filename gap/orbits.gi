@@ -68,7 +68,7 @@ InstallGlobalFunction(LookForInOrb,
 function(o, func, start)
   local pos, i;
  
-  if start<Length(o) then 
+  if start<=Length(o) then 
     for i in [start..Length(o)] do 
       if func(o, o[i]) then 
         return i;

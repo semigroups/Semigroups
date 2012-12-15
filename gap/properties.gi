@@ -1372,7 +1372,7 @@ function(s, f)
     return IdempotentTester(s)(x, RhoFunc(s)(f));
   end;
   
-  return LookForInOrb(o, lookingfor, 1)<>false;
+  return LookForInOrb(o, lookingfor, 2)<>false;
 end);
 
 # new for 1.0! - IsRegularSemigroupElementNC - "for acting semigroup and elt"
@@ -1390,7 +1390,7 @@ function(s, f)
     return IdempotentTester(s)(x, RhoFunc(s)(f));
   end;
   
-  return LookForInOrb(o, lookingfor, 1)<>false;
+  return LookForInOrb(o, lookingfor, 2)<>false;
 end);
 
 # new for 0.2! - IsRightSimple - "for a transformation semigroup"

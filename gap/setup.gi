@@ -234,7 +234,10 @@ end);
 # lambda and rho values.
 
 InstallMethod(IdempotentTester, "for a trans semigp", 
-[IsTransformationSemigroup], s-> IS_INJECTIVE_LIST_TRANS);
+[IsTransformationSemigroup], s-> 
+function(img, ker)
+  return IS_INJECTIVE_LIST_TRANS(img, ker) and Length(img)=MaximumList(ker);
+end);
 
 InstallMethod(IdempotentTester, "for a partial perm semigp", 
 [IsPartialPermSemigroup], s-> EQ);

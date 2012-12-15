@@ -941,7 +941,7 @@ local iter;
               val:=Position(GradedLambdaOrbs(s), x);
               return val=fail or HTValue(seen, val{[1,2]})=fail; 
             end;
-            new:=LookForInOrb(lambda_o, lookfunc, true);
+            new:=LookForInOrb(lambda_o, lookfunc, Length(lambda_o)+1);
           fi;
 
           if new=false then 
