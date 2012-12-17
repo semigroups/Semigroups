@@ -14,9 +14,6 @@
 #############################################################################
 #############################################################################
 
-# new for 1.0! - RhoOrbStabChain - "for a regular D-class "
-#############################################################################
-
 # not required for inverse.
 
 InstallMethod(RhoOrbStabChain, "for a regular D-class",
@@ -45,7 +42,7 @@ end);
 InstallMethod(\in, "for an acting elt and regular acting semigroup",
 [IsAssociativeElement, IsActingSemigroup and IsRegularSemigroup], 
 function(f, s)
-  local lambda_o, rho_o, lambda, rho, lambda_l, rho_l, m, schutz, scc, g, rep;
+  local lambda_o, lambda_l, rho_o, m, schutz, g, rep;
 
   if not ElementsFamily(FamilyObj(s))=FamilyObj(f) then 
     Error("the element and semigroup are not of the same type,");
@@ -57,18 +54,15 @@ function(f, s)
   fi;
 
   lambda_o:=LambdaOrb(s);
-  lambda:=LambdaFunc(s)(f);
-  lambda_l:=EnumeratePosition(lambda_o, lambda, 1);
+  lambda_l:=EnumeratePosition(lambda_o, LambdaFunc(s)(f), 1);
   
   if lambda_l=fail then 
     return false;
   fi;
 
   rho_o:=RhoOrb(s);
-  rho:=RhoFunc(s)(f); 
-  rho_l:=EnumeratePosition(rho_o, rho);
 
-  if rho_l=fail then 
+  if EnumeratePosition(rho_o, RhoFunc(s)(f))=fail then 
     return false;
   fi;
   
@@ -79,12 +73,13 @@ function(f, s)
     return true;
   fi;
 
-  scc:=OrbSCC(lambda_o)[m];
   g:=f;
   
-  if lambda_l<>scc[1] then 
+  if lambda_l<>OrbSCC(lambda_o)[m][1] then 
     g:=g*LambdaOrbMult(lambda_o, m, lambda_l)[2];
   fi;
+
+  #JDM don't we need to rectify rho of g also? 
 
   if IsIdempotent(g) then 
     return true;
