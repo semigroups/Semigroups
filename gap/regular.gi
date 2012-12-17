@@ -42,7 +42,7 @@ end);
 InstallMethod(\in, "for an acting elt and regular acting semigroup",
 [IsAssociativeElement, IsActingSemigroup and IsRegularSemigroup], 
 function(f, s)
-  local lambda_o, lambda_l, rho_o, m, schutz, g, rep;
+  local lambda_o, lambda_l, rho_o, rho_l, m, schutz, g, n, rep;
 
   if not ElementsFamily(FamilyObj(s))=FamilyObj(f) then 
     Error("the element and semigroup are not of the same type,");
@@ -61,7 +61,7 @@ function(f, s)
   fi;
 
   rho_o:=RhoOrb(s);
-  rho_l:=EnumeratePosition(rho_o, RhoFunc(s)(f));
+  rho_l:=EnumeratePosition(rho_o, RhoFunc(s)(f), false);
   
   if rho_l=fail then 
     return false;
