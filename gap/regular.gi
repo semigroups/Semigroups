@@ -54,7 +54,7 @@ function(f, s)
   fi;
 
   lambda_o:=LambdaOrb(s);
-  lambda_l:=EnumeratePosition(lambda_o, LambdaFunc(s)(f), 1);
+  lambda_l:=EnumeratePosition(lambda_o, LambdaFunc(s)(f), false);
   
   if lambda_l=fail then 
     return false;
@@ -62,7 +62,7 @@ function(f, s)
 
   rho_o:=RhoOrb(s);
 
-  if EnumeratePosition(rho_o, RhoFunc(s)(f))=fail then 
+  if EnumeratePosition(rho_o, RhoFunc(s)(f), false)=fail then 
     return false;
   fi;
   

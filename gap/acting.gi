@@ -248,7 +248,7 @@ function(f, s)
 
   # look for lambda!
   o:=LambdaOrb(s);
-  l:=EnumeratePosition(o, lambda);
+  l:=EnumeratePosition(o, lambda, false);
     
   if l=fail then 
     return false;
