@@ -499,7 +499,7 @@ Obj FuncOnIntegerSetsWithPP (Obj self, Obj set, Obj f)
   n=LEN_LIST(set);
 
   /* JDM maybe the next line conflicts with the usual usage of OnSets !? */
-  if(INT_INTOBJ(ELM_LIST(set, n))>deg){
+  if(INT_INTOBJ(ELM_LIST(set, n))>65535){
     return FuncRanSetPP(self, f);
   }
 
