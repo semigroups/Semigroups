@@ -906,6 +906,7 @@ local iter;
     fi;
     iter:=IteratorByNextIterator( rec(
 
+      # better to use a blist here...
       seen:=HTCreate([1,1],
        rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S)),
       
