@@ -945,7 +945,7 @@ local iter;
           fi;
 
           if new=false then 
-            return true;
+            return fail;
           fi;
           
           val:=Position(GradedLambdaOrbs(s), lambda_o[new]);
@@ -966,24 +966,14 @@ local iter;
         f:=LambdaOrbRep(iter!.o, m)*
          LambdaOrbMult(iter!.o, m, iter!.o!.lambda_l)[2]; 
          if IsActingSemigroupWithInverseOp(s) then 
-           iter!.next_value:=[s, m, iter!.o, fail, fail, f, false];
+           return [s, m, iter!.o, fail, fail, f, false];
          else
-           iter!.next_value:=[s, m, iter!.o, 1, GradedRhoOrb(s, f, false), f, 
-            false];
+           return [s, m, iter!.o, 1, GradedRhoOrb(s, f, false), f, false];
          fi;
-        return false;
+        return fail;
       end,
 
-      NextIterator:=function(iter)
-        if not iter!.last_called_by_is_done then
-          IsDoneIterator(iter);
-        fi;
-        iter!.last_called_by_is_done:=false;
-        return iter!.next_value;
-      end,
-
-      ShallowCopy:=iter-> rec( last_called_by_is_done:=false,
-      next_value:=fail,
+      ShallowCopy:=iter-> rec(
       seen:=HTCreate([1,1],
        rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S)),
       o:=GradedLambdaOrb(s, LambdaOrb(s)!.gens[1], true),
@@ -1029,6 +1019,7 @@ local iter;
   fi;
   return iter;
 end);
+
 # new for 0.7! - IteratorOfLClassData - "for a regular acting semigroup
 ###############################################################################
 

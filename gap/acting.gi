@@ -248,14 +248,7 @@ function(f, s)
 
   # look for lambda!
   o:=LambdaOrb(s);
- 
-  # JDM this is a disadvantage of the approach of enumerating the entire
-  # LambdaOrb when applied to a single \in test.
-  if not IsClosed(o) then 
-    Enumerate(o, infinity);
-  fi;
-  
-  l:=Position(o, lambda);
+  l:=EnumeratePosition(o, lambda);
     
   if l=fail then 
     return false;
@@ -270,12 +263,12 @@ function(f, s)
   Append(lambdarho, RhoFunc(s)(f));
   val:=HTValue(LambdaRhoHT(s), lambdarho);
 
-  lookfunc:=function(data, x) 
-    return Concatenation([x[2]], RhoFunc(s)(x[4]))=lambdarho;
-  end;
-  
   # if lambdarho is not already known, then look for it
   if val=fail then 
+    lookfunc:=function(data, x) 
+      return Concatenation([x[2]], RhoFunc(s)(x[4]))=lambdarho;
+    end;
+  
     data:=Enumerate(data, infinity, lookfunc);
     val:=data!.found; # position in data!.orbit 
 
@@ -355,7 +348,6 @@ function(f, s)
           reps:=data!.reps; repslens:=data!.repslens;
           for m in [n+1..repslens[val]] do 
             if SiftedPermutation(schutz, lambdaperm(reps[val][m], g))=() then 
-            #if SiftGroupElement(schutz, lambdaperm(reps[val][m], g)).isone then 
               return true;
             fi;
           od;
@@ -367,10 +359,6 @@ function(f, s)
 
   return false;
 end);
-
-#AAA
-
-#EEE
 
 # new for 1.0! - ELM_LIST - for graded lambda orbs 
 ##############################################################################
