@@ -61,8 +61,9 @@ function(f, s)
   fi;
 
   rho_o:=RhoOrb(s);
-
-  if EnumeratePosition(rho_o, RhoFunc(s)(f))=fail then 
+  rho_l:=EnumeratePosition(rho_o, RhoFunc(s)(f));
+  
+  if rho_l=fail then 
     return false;
   fi;
   
@@ -79,7 +80,11 @@ function(f, s)
     g:=g*LambdaOrbMult(lambda_o, m, lambda_l)[2];
   fi;
 
-  #JDM don't we need to rectify rho of g also? 
+  n:=OrbSCCLookup(rho_o)[rho_l]; 
+  
+  if rho_l<>n then 
+    g:=RhoOrbMult(rho_o, n, rho_l)[2]*g;
+  fi;
 
   if IsIdempotent(g) then 
     return true;
