@@ -54,7 +54,7 @@ function(f, s)
   fi;
 
   lambda_o:=LambdaOrb(s);
-  lambda_l:=EnumeratePosition(lambda_o, LambdaFunc(s)(f), 1);
+  lambda_l:=EnumeratePosition(lambda_o, LambdaFunc(s)(f), false);
   
   if lambda_l=fail then 
     return false;
@@ -884,141 +884,62 @@ function(s, f)
   return CreateRClass(s, fail, o, f, false); 
 end);
 
-#III
-
-# new for 1.0! - IteratorOfDClassData - "for regular acting semigroup"
-###############################################################################
-# JDM review this...
-
-# the first part of this could really be a method for IteratorOfGradedLambdaOrbs
-
 # same method for inverse
 
 InstallMethod(IteratorOfDClassData, "for regular acting semigp",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-local iter;
+local record;
 
   if not IsClosed(LambdaOrb(s)) then 
-    #JDM next 3 lines still necessary?
-    if Length(LambdaOrb(s))=1 then 
-      Enumerate(LambdaOrb(s), 2);
-    fi;
-    iter:=IteratorByNextIterator( rec(
-
-      # better to use a blist here...
-      seen:=HTCreate([1,1],
-       rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S)),
+    record:=rec(m:=fail, graded:=IteratorOfGradedLambdaOrbs(s));
+    record.NextIterator:=function(iter)
+      local l, f; 
       
-      o:=GradedLambdaOrb(s, LambdaOrb(s)!.gens[1], true),
-
-      m:=0,
-
-      NextIterator:=function(iter)
-        local m, seen, lambda_o, new, val, f, i, lookfunc;  
-
-        m:=iter!.m;
-        
-        if m=Length(OrbSCC(iter!.o)) then 
-          m:=1;
-          seen:=iter!.seen;
-          # look for a new lambda value
-          lambda_o:=LambdaOrb(s);
-
-          # check existing lambda values
-          new:=false;
-          for i in [2..Length(lambda_o)] do 
-            val:=Position(GradedLambdaOrbs(s), lambda_o[i]);
-            if val=fail or HTValue(seen, val{[1,2]})=fail then          
-              new:=i;
-              break;
-            fi;
-          od;
-
-          # look for new lambda value
-          if new=false then  
-            lookfunc:=function(o, x) 
-              local val;
-              val:=Position(GradedLambdaOrbs(s), x);
-              return val=fail or HTValue(seen, val{[1,2]})=fail; 
-            end;
-            new:=LookForInOrb(lambda_o, lookfunc, Length(lambda_o)+1);
-          fi;
-
-          if new=false then 
-            return fail;
-          fi;
-          
-          val:=Position(GradedLambdaOrbs(s), lambda_o[new]);
-          if val<>fail then 
-            iter!.o:=GradedLambdaOrbs(s)[val[1]][val[2]];
-            HTAdd(seen, val{[1,2]}, true);
-          else
-            iter!.o:=GradedLambdaOrb(s,
-             EvaluateWord(lambda_o!.gens, TraceSchreierTreeForward(lambda_o,
-             new)), true);
-            HTAdd(seen, iter!.o!.val{[1,2]}, true);
-          fi;
-        else
-          m:=m+1;
+      if iter!.m=fail or iter!.m=Length(OrbSCC(iter!.o)) then 
+        iter!.m:=1; l:=1;
+        iter!.o:=NextIterator(iter!.graded);
+        if iter!.o=fail then 
+          return fail;
         fi;
-        iter!.m:=m; 
-        
-        f:=LambdaOrbRep(iter!.o, m)*
-         LambdaOrbMult(iter!.o, m, iter!.o!.lambda_l)[2]; 
-         if IsActingSemigroupWithInverseOp(s) then 
-           return [s, m, iter!.o, fail, fail, f, false];
-         else
-           return [s, m, iter!.o, 1, GradedRhoOrb(s, f, false), f, false];
-         fi;
-        return fail;
-      end,
+      else
+        iter!.m:=iter!.m+1; l:=OrbSCC(iter!.o)[iter!.m][1];
+      fi;
 
-      ShallowCopy:=iter-> rec(
-      seen:=HTCreate([1,1],
-       rec(forflatplainlists:=true, hashlen:=s!.opts.hashlen.S)),
-      o:=GradedLambdaOrb(s, LambdaOrb(s)!.gens[1], true),
-      m:=0)));
+      f:=LambdaOrbRep(iter!.o, iter!.m)*LambdaOrbMult(iter!.o, iter!.m, l)[2]; 
+      if IsActingSemigroupWithInverseOp(s) then 
+        return [s, iter!.m, iter!.o, fail, fail, f, false];
+      fi;
+      return [s, iter!.m, iter!.o, 1, GradedRhoOrb(s, f, false), f, false];
+    end;
 
-    HTAdd(iter!.seen, iter!.o!.val{[1,2]}, true);
-  else ####
-
-    iter:=IteratorByFunctions( rec(
-                 
-      m:=1, 
-     
-      i:=0,      
-
-      scc_limit:=Length(OrbSCC(LambdaOrb(s))),
-
-      IsDoneIterator:=iter-> iter!.m=iter!.scc_limit,
-
-      NextIterator:=function(iter)
-        local m, o, f, scc; 
-        m:=iter!.m; 
-
-        if m=iter!.scc_limit then
-          return fail; 
-        fi;
-
-        o:=LambdaOrb(s); scc:=OrbSCC(o);
-
-        m:=m+1;
-        iter!.m:=m;
- 
-        # f ok here? JDM
-        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][1])); 
-        if IsActingSemigroupWithInverseOp(s) then 
-          return [s, m, LambdaOrb(s), fail, fail, f, false];
-        else
-          return [s, m, LambdaOrb(s), 1, GradedLambdaOrb(s, f, false), false];
-        fi;
-      end,
-
-      #JDM fill this in!
-      ShallowCopy:=iter-> rec()));
+    record.ShallowCopy:=iter-> rec(m:=fail, 
+      graded:=IteratorOfGradedLambdaOrbs(s));
+    return IteratorByNextIterator(record);
   fi;
-  return iter;
+  record:=rec(m:=1);
+                 
+  record.IsDoneIterator:=iter-> iter!.m=Length(OrbSCC(LambdaOrb(s)));
+
+  record.NextIterator:=function(iter)
+    local o, l, f;
+    o:=LambdaOrb(s);
+    if iter!.m=Length(OrbSCC(o)) then
+      return fail; 
+    fi;
+
+    iter!.m:=iter!.m+1;
+    l:=OrbSCC(o)[iter!.m][1];
+
+    f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, l)); 
+    if IsActingSemigroupWithInverseOp(s) then 
+      return [s, iter!.m, o, fail, fail, f, false];
+    fi;
+    return [s, iter!.m, o, 1, GradedLambdaOrb(s, f, false), false];
+  end;
+
+  record.ShallowCopy:=iter-> rec(m:=1);
+  return IteratorByFunctions(record);
 end);
 
 # new for 0.7! - IteratorOfLClassData - "for a regular acting semigroup

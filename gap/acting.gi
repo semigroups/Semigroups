@@ -248,7 +248,7 @@ function(f, s)
 
   # look for lambda!
   o:=LambdaOrb(s);
-  l:=EnumeratePosition(o, lambda);
+  l:=EnumeratePosition(o, lambda, false);
     
   if l=fail then 
     return false;
@@ -1481,6 +1481,59 @@ function(data)
   Print("<semigroup data: ", Length(data!.orbit), " reps, ",
   Length(data!.reps), " lambda-rho values>");
   return;
+end);
+
+# 
+
+InstallGlobalFunction(IteratorOfGradedLambdaOrbs, 
+function(s)
+  local record;
+ 
+  Enumerate(LambdaOrb(s), 2);
+
+  record:=rec(seen:=[], l:=2); 
+
+  record.NextIterator:=function(iter)
+    local seen, pos, val, o, lambda_o;
+
+    seen:=iter!.seen;
+    lambda_o:=LambdaOrb(s); 
+    pos:=LookForInOrb(lambda_o, 
+      function(o, x) 
+        local val;
+        val:=Position(GradedLambdaOrbs(s), x);
+        return val=fail 
+          or not IsBound(seen[val[1]]) 
+          or (IsBound(seen[val[1]]) and not IsBound(seen[val[1]][val[2]]));
+      end, iter!.l);
+
+    if pos=false then
+      return fail;
+    fi;
+
+    #where to start looking in lambda_o next time
+    iter!.l:=pos+1;
+
+    val:=Position(GradedLambdaOrbs(s), lambda_o[pos]);
+    if val<>fail then # previously calculated graded orbit
+      o:=GradedLambdaOrbs(s)[val[1]][val[2]];
+    else # new graded orbit
+      o:=GradedLambdaOrb(s, 
+          EvaluateWord(lambda_o!.gens, 
+          TraceSchreierTreeForward(lambda_o, pos)), true);
+      val:=o!.val;
+    fi;
+
+    if not IsBound(seen[val[1]]) then 
+        seen[val[1]]:=[];
+    fi;
+    seen[val[1]][val[2]]:=true;
+    return o;
+  end;
+
+  record.ShallowCopy:=iter-> rec(seen:=[], l:=2);
+
+  return IteratorByNextIterator(record);
 end);
 
 #EOF
