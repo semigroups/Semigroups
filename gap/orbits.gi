@@ -80,6 +80,8 @@ function(o, func, start)
     return false;
   fi;
 
+  #Enumerate(o, Length(o)+1);
+  
   o!.looking:=true;
   o!.lookingfor:=func;
   o!.lookfunc:=o!.lookingfor;
@@ -92,7 +94,7 @@ function(o, func, start)
   return pos;
 end);
 
-
+#
 
 InstallGlobalFunction(OrbSCC,
 function(o)

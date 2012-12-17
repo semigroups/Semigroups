@@ -60,6 +60,7 @@ DeclareProperty("IsGradedRhoOrb", IsOrbit);
 
 # list of short orbits <=> OrbitsOfImages
 DeclareAttribute("GradedLambdaOrbs", IsActingSemigroup, "mutable");
+DeclareGlobalFunction("IteratorOfGradedLambdaOrbs");
 DeclareAttribute("GradedRhoOrbs", IsActingSemigroup, "mutable");
 DeclareProperty("IsGradedLambdaOrbs", IsOrbit);
 DeclareProperty("IsGradedRhoOrbs", IsOrbit);
