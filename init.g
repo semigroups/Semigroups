@@ -22,6 +22,8 @@ ReadPackage("semigroups/gap/partition.gd");
 ReadPackage("semigroups/gap/binary.gd");
 ReadPackage("semigroups/gap/matrix.gd");
 
+ReadPackage("semigroups/gap/setup.gd");
+
 ReadPackage("semigroups/gap/greens.gd");
 ReadPackage("semigroups/gap/acting.gd");
 
@@ -29,7 +31,6 @@ ReadPackage("semigroups/gap/semigroups.gd");
 ReadPackage("semigroups/gap/enums.gd");
 ReadPackage("semigroups/gap/iterators.gd");
 
-ReadPackage("semigroups/gap/setup.gd");
 ReadPackage("semigroups/gap/regular.gd");
 ReadPackage("semigroups/gap/inverse.gd");
 

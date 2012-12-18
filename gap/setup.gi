@@ -12,6 +12,11 @@
 # Setup - install the basic things required for specific acting semigroups    #
 ###############################################################################
 
+#
+
+InstallMethod(IsActingSemigroupGreensClass, "for a Green's class",
+[IsGreensClass], x-> IsActingSemigroup(ParentSemigroup(x)));
+
 # the number of points in the action
 
 InstallOtherMethod(ActionDegree, "for an acting semigroup",

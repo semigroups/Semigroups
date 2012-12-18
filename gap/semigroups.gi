@@ -18,49 +18,33 @@ end);
 
 #
 
-InstallGlobalFunction(ClosureInverseSemigroup,
-function(arg)
+InstallOtherMethod(ClosureInverseSemigroup, 
+"for acting semigroup with inverse op and an associative element coll",
+[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
+function(s, coll) 
+  return ClosureInverseSemigroup(s, coll, s!.opts);
+end);
+
+#
+
+InstallMethod(ClosureInverseSemigroup, 
+"for an acting semigroup with inverse op, ass. elt. coll, and record",
+[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection, IsRecord],
+function(s, coll, record)
   local n;
   
-  if not (IsPartialPermSemigroup(arg[1]) and IsInverseSemigroup(arg[1])) or
-    not (IsPartialPermCollection(arg[2]) or IsPartialPerm(arg[2])) then 
-    Error("Usage: arg. must be a inverse semigroup of partial perms and ",
-    "and a partial perm or collection of partial perms,");
+  if not IsActingElementWithInverseOpCollection(coll) then 
+    Error("usage: the second argument should be a collection of acting",
+    " elements with an inverse op,");
     return;
   fi;
 
-  if Length(arg)=3 then 
-    if not IsRecord(arg[3]) then 
-      Error("Usage: the third argument must be a record,");
-      return;
-    fi;
-
-    if not IsBound(arg[3].small) then
-      arg[3].small:=SemigroupsOptionsRec.small;
-    fi;
-
-    if not IsBound(arg[3].hashlen) then
-      arg[3].hashlen:=SemigroupsOptionsRec.hashlen;
-    elif IsPosInt(arg[3].hashlen) then
-      n:=arg[3].hashlen;
-      arg[3].hashlen:=rec(S:=NextPrimeInt(Int(n/100)),
-       M:=NextPrimeInt(Int(n/4)), L:=NextPrimeInt(n));
-    elif not IsRecord(arg[3].hashlen) then
-      Error("the component hashlen should be a positive integer or a record,");
-      return;
-    fi;
-  else
-    arg[3]:=arg[1]!.opts;
+  if IsSemigroup(coll) then 
+    coll:=GeneratorsOfSemigroup(coll);
   fi;
 
-  if IsSemigroup(arg[2]) then 
-    arg[2]:=GeneratorsOfSemigroup(arg[2]);
-  elif IsPartialPerm(arg[2]) then 
-    arg[2]:=[arg[2]];
-  fi;
-
-  return ClosureInverseSemigroupNC(arg[1], Filtered(arg[2], x-> 
-   not x in arg[1]), arg[3]);
+  return ClosureInverseSemigroupNC(s, Filtered(coll, x-> not x in s),
+   SemigroupOptions(record));
 end);
 
 #
@@ -112,22 +96,22 @@ function(s, coll, opts)
   return t;
 end);
 
-# mod for 0.6! - ClosureSemigroup - "for a trans. semi. and trans. coll."
-#############################################################################
+#
 
 InstallGlobalFunction(ClosureSemigroup,
 function(arg)
 
-  if not IsActingSemigroup(arg[1]) or not 
-   (IsAssociativeElementCollection(arg[2]) or IsAssociativeElement(arg[2])) then 
-    Error("Usage: arg. must be a trans. semigroup and transformation or ", 
-    "collection of transformations,");
+  if not ( IsActingSemigroup(arg[1]) 
+      or IsActingElementCollection(arg[2]) 
+      or IsAssociativeElement(arg[2])) then 
+    Error("usage: the first argument should be an acting semigroup and the\n",
+    "second argument an element or collection of elements,");
     return;
   fi;
 
   if Length(arg)=3 then 
     if not IsRecord(arg[3]) then 
-      Error("Usage: the third argument must be a record,");
+      Error("usage: the third argument must be a record,");
       return;
     fi;
   else
@@ -344,13 +328,14 @@ function ( arg )
     return MonoidByGenerators( arg[1] );
   elif Length( arg ) = 2 and IsList( arg[1] )  then
     return MonoidByGenerators( arg[1], arg[2] );
-  elif IsAssociativeElement(arg[1]) or IsAssociativeElementCollection(arg[1]) then 
+  elif IsAssociativeElement(arg[1]) or IsAssociativeElementCollection(arg[1])
+   then 
     out:=[];
     for i in [1..Length(arg)] do 
       if IsAssociativeElement(arg[i]) then 
         out[i]:=[arg[i]];
       elif IsAssociativeElementCollection(arg[i]) then 
-        if IsActingSemigroup(arg[i]) then
+        if IsSemigroup(arg[i]) then
           out[i]:=Generators(arg[i]);
         else
           out[i]:=arg[i];
@@ -371,14 +356,13 @@ function ( arg )
   fi;
 end);
 
-# new for 0.6! - MagmaByGenerators -  "for acting element collection"
-##############################################################################
+#
 
-InstallOtherMethod(MagmaByGenerators, "for an acting element collection",
+InstallMethod(MagmaByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection],
 function(gens)
   local M;
-   
+  
   M:=Objectify( NewType( FamilyObj( gens ), 
    IsMagma and IsAttributeStoringRep ), rec(opts:=SemigroupsOptionsRec));
 
@@ -386,11 +370,9 @@ function(gens)
   return M;
 end);
 
+#
 
-# mod for 0.6! - MonoidByGenerators -  for an acting elt collection 
-##############################################################################
-
-InstallOtherMethod(MonoidByGenerators, "for an acting elt collection",
+InstallOtherMethod(MonoidByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection],
 function(gens)
   return MonoidByGenerators(gens, SemigroupsOptionsRec);
@@ -403,11 +385,19 @@ InstallOtherMethod(MonoidByGenerators, "for an acting elt collection and rec",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, opts)
   local n, i, closure_opts, s, f;
- 
+
+  if not IsActingElementCollection(gens) then 
+    TryNextMethod();
+  fi;
+
   if not IsBound(opts.regular) then 
     opts.regular:=SemigroupsOptionsRec.regular;
   fi;
-
+  
+  if not IsBound(opts.acting) and IsActingElementCollection(gens) then 
+    opts.acting:=SemigroupsOptionsRec.acting;
+  fi;
+ 
   if not IsBound(opts.small) then 
     opts.small:=SemigroupsOptionsRec.small;
   fi;
@@ -459,6 +449,14 @@ function(gens, opts)
     fi;
     return s;
   fi;    
+
+  if opts.regular then 
+    SetIsRegularSemigroup(s, true);
+  fi;
+
+  if IsBound(opts.acting) and opts.acting then 
+    SetIsActingSemigroup(s, true);
+  fi;
 
   s:=Objectify( NewType( FamilyObj( gens ), 
    IsMonoid and IsAttributeStoringRep ), rec(opts:=opts));
@@ -768,7 +766,7 @@ end);
 ###########################################################################
 
 InstallOtherMethod(IsSubset, "for trans. semi. and trans. coll",
-[IsActingSemigroup, IsAssociativeElementCollection],
+[IsActingSemigroup, IsActingElementCollection],
 function(s, coll)
   return ForAll(coll, x-> x in s);
 end);
@@ -936,7 +934,7 @@ function ( arg )
       if IsAssociativeElement(arg[i]) then 
         out[i]:=[arg[i]];
       elif IsAssociativeElementCollection(arg[i]) then 
-        if IsActingSemigroup(arg[i]) then
+        if IsSemigroup(arg[i]) then
           out[i]:=Generators(arg[i]);
         else
           out[i]:=arg[i];
@@ -957,11 +955,10 @@ function ( arg )
   fi;
 end);
 
-# mod for 0.6! - SemigroupByGenerators -  "for a trans. collection"
-##############################################################################
+#
 
 InstallOtherMethod(SemigroupByGenerators, "for an acting elt collection",
-[IsAssociativeElementCollection],
+[IsActingElementCollection],
 function(gens)
    return SemigroupByGenerators(gens, SemigroupsOptionsRec);
 end);
@@ -970,7 +967,7 @@ end);
 
 InstallOtherMethod(SemigroupByGenerators, 
 "for an associative element collection and record (Semigroups package)",
-[IsAssociativeElementCollection, IsRecord],
+[IsActingElementCollection, IsRecord],
 function(gens, opts)
   local n, i, closure_opts, s, f;
 
@@ -1041,7 +1038,7 @@ function(gens, opts)
     SetIsRegularSemigroup(s, true);
   fi;
  
-  if opts.acting then 
+  if IsBound(opts.acting) and opts.acting then 
     SetIsActingSemigroup(s, true);
   fi;
 

@@ -8,47 +8,73 @@
 ##############################################################################
 ###
 
+DeclareProperty("IsActingSemigroup", IsSemigroup);
+DeclareProperty("IsActingSemigroupWithInverseOp", IsSemigroup);
+DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
 
-# Rank and degree
+#
+
+DeclareOperation("IsActingElementCollection", [IsAssociativeElementCollection]);
+
+InstallMethod(IsActingElementCollection, 
+"for an associative element collection",
+[IsAssociativeElementCollection], 
+function(x) 
+  return IsTransformationCollection(x) or IsPartialPermCollection(x) or
+  IsBipartitionCollection(x);
+end);
+
+#
+
+DeclareOperation("IsActingElementWithInverseOpCollection",
+[IsAssociativeElementCollection]);
+
+InstallMethod(IsActingElementWithInverseOpCollection, 
+"for an associative element collection", 
+[IsAssociativeElementCollection], 
+function(x) 
+  return IsPartialPermCollection(x) or IsBipartitionCollection(x);
+end);
+
+#
+
 DeclareAttribute("ActionDegree", IsAssociativeElement);
 DeclareAttribute("ActionRank", IsAssociativeElement);
 
-# action for use in LambdaOrb etc..
-DeclareAttribute("RhoAct", IsActingSemigroup);
-DeclareAttribute("LambdaAct", IsActingSemigroup);
+#
 
-DeclareAttribute("LambdaOrbOpts", IsActingSemigroup);
+DeclareAttribute("RhoAct", IsSemigroup);
+DeclareAttribute("LambdaAct", IsSemigroup);
 
-# grading for use in GradedLambdaOrb/GradedRhoOrb
-DeclareAttribute("LambdaRank", IsActingSemigroup);
-DeclareAttribute("RhoRank", IsActingSemigroup);
-DeclareAttribute("LambdaDegree", IsActingSemigroup);
-DeclareAttribute("RhoDegree", IsActingSemigroup);
+#
 
-# the actual functions lambda and rho
-DeclareAttribute("LambdaFunc", IsActingSemigroup);
-DeclareAttribute("RhoFunc", IsActingSemigroup);
+DeclareAttribute("LambdaOrbOpts", IsSemigroup);
 
-DeclareAttribute("RhoInverse", IsActingSemigroup);
-DeclareAttribute("LambdaInverse", IsActingSemigroup);
-DeclareAttribute("LambdaPerm", IsActingSemigroup);
-DeclareAttribute("LambdaConjugator", IsActingSemigroup);
+#
 
-DeclareAttribute("LambdaOrbSeed", IsActingSemigroup);
-DeclareAttribute("RhoOrbSeed", IsActingSemigroup);
+DeclareAttribute("LambdaRank", IsSemigroup);
+DeclareAttribute("RhoRank", IsSemigroup);
 
-DeclareAttribute("IdempotentTester", IsActingSemigroup);
-DeclareAttribute("IdempotentCreator", IsActingSemigroup);
+#
 
-InstallTrueMethod(IsActingSemigroup, IsTransformationSemigroup);
-InstallTrueMethod(IsActingSemigroup, IsPartialPermSemigroup);
-InstallTrueMethod(IsActingSemigroup, IsBipartitionSemigroup);
+DeclareAttribute("LambdaFunc", IsSemigroup);
+DeclareAttribute("RhoFunc", IsSemigroup);
 
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsPartialPermSemigroup and
-IsInverseSemigroup);
-InstallTrueMethod(IsActingSemigroupWithInverseOp, IsPartialPermSemigroup and
-IsRegularSemigroup);
+#
 
-InstallTrueMethod(IsActingSemigroupGreensClass, IsGreensClassOfTransSemigp);
-InstallTrueMethod(IsActingSemigroupGreensClass,                                 IsGreensClassOfPartPermSemigroup);
+DeclareAttribute("RhoInverse", IsSemigroup);
+DeclareAttribute("LambdaInverse", IsSemigroup);
+DeclareAttribute("LambdaPerm", IsSemigroup);
+DeclareAttribute("LambdaConjugator", IsSemigroup);
 
+#
+
+DeclareAttribute("LambdaOrbSeed", IsSemigroup);
+DeclareAttribute("RhoOrbSeed", IsSemigroup);
+
+#
+
+DeclareAttribute("IdempotentTester", IsSemigroup);
+DeclareAttribute("IdempotentCreator", IsSemigroup);
+
+#

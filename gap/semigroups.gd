@@ -8,7 +8,8 @@
 ############################################################################# 
 ##
 
-DeclareGlobalFunction("ClosureInverseSemigroup");
+DeclareOperation("ClosureInverseSemigroup", [ IsActingSemigroupWithInverseOp,
+IsAssociativeElementCollection, IsRecord]);
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
 DeclareGlobalFunction("ClosureSemigroup");
 DeclareGlobalFunction("ClosureSemigroupNC");
