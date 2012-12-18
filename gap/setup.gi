@@ -251,4 +251,7 @@ InstallMethod(IdempotentCreator, "for a trans semigp",
 InstallMethod(IdempotentCreator, "for a partial perm semigp",
 [IsPartialPermSemigroup], s-> PartialPermNC);
 
+# GroupElementAction will be \* for transformation and partial perm semigroups 
+# and something else for semigroups of bipartitions.
+
 #EOF

@@ -8,9 +8,6 @@
 ############################################################################# 
 ##
 
-# new for 1.0! - \= - "for an acting semigp and acting semigp"
-#############################################################################
-
 InstallMethod(\=, "for an acting semigp and acting semigp",
 [IsActingSemigroup and HasGeneratorsOfSemigroup,
 IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -19,114 +16,101 @@ function(s, t)
    ForAll(Generators(t), x-> x in s);
 end);
 
-#CCC
+#
 
-# new for 0.7! - ClosureInverseSemigroup - "for an inverse semi"
-#############################################################################
+InstallGlobalFunction(ClosureInverseSemigroup,
+function(arg)
+  local n;
+  
+  if not (IsPartialPermSemigroup(arg[1]) and IsInverseSemigroup(arg[1])) or
+    not (IsPartialPermCollection(arg[2]) or IsPartialPerm(arg[2])) then 
+    Error("Usage: arg. must be a inverse semigroup of partial perms and ",
+    "and a partial perm or collection of partial perms,");
+    return;
+  fi;
 
-if Semigroups_C then 
-  InstallGlobalFunction(ClosureInverseSemigroup,
-  function(arg)
-    local n;
-    
-    if not (IsPartialPermSemigroup(arg[1]) and IsInverseSemigroup(arg[1])) or
-      not (IsPartialPermCollection(arg[2]) or IsPartialPerm(arg[2])) then 
-      Error("Usage: arg. must be a inverse semigroup of partial perms and ",
-      "and a partial perm or collection of partial perms,");
+  if Length(arg)=3 then 
+    if not IsRecord(arg[3]) then 
+      Error("Usage: the third argument must be a record,");
       return;
     fi;
 
-    if Length(arg)=3 then 
-      if not IsRecord(arg[3]) then 
-        Error("Usage: the third argument must be a record,");
-        return;
-      fi;
-
-      if not IsBound(arg[3].small) then
-        arg[3].small:=SemigroupsOptionsRec.small;
-      fi;
-
-      if not IsBound(arg[3].hashlen) then
-        arg[3].hashlen:=SemigroupsOptionsRec.hashlen;
-      elif IsPosInt(arg[3].hashlen) then
-        n:=arg[3].hashlen;
-        arg[3].hashlen:=rec(S:=NextPrimeInt(Int(n/100)),
-         M:=NextPrimeInt(Int(n/4)), L:=NextPrimeInt(n));
-      elif not IsRecord(arg[3].hashlen) then
-        Error("the component hashlen should be a positive integer or a record,");
-        return;
-      fi;
-    else
-      arg[3]:=arg[1]!.opts;
+    if not IsBound(arg[3].small) then
+      arg[3].small:=SemigroupsOptionsRec.small;
     fi;
 
-    if IsSemigroup(arg[2]) then 
-      arg[2]:=GeneratorsOfSemigroup(arg[2]);
-    elif IsPartialPerm(arg[2]) then 
-      arg[2]:=[arg[2]];
+    if not IsBound(arg[3].hashlen) then
+      arg[3].hashlen:=SemigroupsOptionsRec.hashlen;
+    elif IsPosInt(arg[3].hashlen) then
+      n:=arg[3].hashlen;
+      arg[3].hashlen:=rec(S:=NextPrimeInt(Int(n/100)),
+       M:=NextPrimeInt(Int(n/4)), L:=NextPrimeInt(n));
+    elif not IsRecord(arg[3].hashlen) then
+      Error("the component hashlen should be a positive integer or a record,");
+      return;
     fi;
+  else
+    arg[3]:=arg[1]!.opts;
+  fi;
 
-    return ClosureInverseSemigroupNC(arg[1], Filtered(arg[2], x-> 
-     not x in arg[1]), arg[3]);
-  end);
-else 
-  InstallGlobalFunction(ClosureInverseSemigroup, 
-  function(arg) return SemigroupsIsNotCompiled(); end);
-fi;
+  if IsSemigroup(arg[2]) then 
+    arg[2]:=GeneratorsOfSemigroup(arg[2]);
+  elif IsPartialPerm(arg[2]) then 
+    arg[2]:=[arg[2]];
+  fi;
 
-# new for 0.7! - ClosureInverseSemigroupNC - "for an inverse semi"
-#############################################################################
+  return ClosureInverseSemigroupNC(arg[1], Filtered(arg[2], x-> 
+   not x in arg[1]), arg[3]);
+end);
 
-if IsBound(DomPP) and IsBound(RanSetPP) then 
-  InstallGlobalFunction(ClosureInverseSemigroupNC,
-  function(s, coll, opts)
-    local t, coll_copy, o, f;
-   
-    if coll=[] then
-      Info(InfoSemigroups, 2, "All the elements in the collection belong to the ",
-      " semigroup,");
-      return s;
+#
+
+InstallGlobalFunction(ClosureInverseSemigroupNC,
+function(s, coll, opts)
+  local t, coll_copy, o, f;
+ 
+  if coll=[] then
+    Info(InfoSemigroups, 2, "All the elements in the collection belong to the ",
+    " semigroup,");
+    return s;
+  fi;
+
+  o:=LongOrb(s);
+  
+  if not IsSubset(o[1], DomainOfPartialPermCollection(coll)) then 
+    #the original LongOrb seed is wrong
+    return InverseSemigroup(Concatenation(Generators(s), coll), opts);
+  fi;
+
+  coll_copy:=ShallowCopy(coll);
+  for f in coll do
+    if not DomPP(f)=RanSetPP(f) then 
+      Add(coll_copy, f^-1);
     fi;
+  od;  
+  
+  o:=StructuralCopy(o);
+  AddGeneratorsToOrbit(o, coll_copy);
 
-    o:=LongOrb(s);
-    
-    if not IsSubset(o[1], DomainOfPartialPermCollection(coll)) then #the original LongOrb seed is wrong
-      return InverseSemigroup(Concatenation(Generators(s), coll), opts);
-    fi;
+  t:=InverseSemigroupByGeneratorsNC(o!.gens, 
+   Concatenation(Generators(s), coll), opts);
 
-    coll_copy:=ShallowCopy(coll);
-    for f in coll do
-      if not DomPP(f)=RanSetPP(f) then 
-        Add(coll_copy, f^-1);
-      fi;
-    od;  
-    
-    o:=StructuralCopy(o);
-    AddGeneratorsToOrbit(o, coll_copy);
-
-    t:=InverseSemigroupByGeneratorsNC(o!.gens, 
-     Concatenation(Generators(s), coll), opts);
-
-    if IsBound(o!.scc) then 
-      Unbind(o!.scc); Unbind(o!.truth); Unbind(o!.trees); Unbind(o!.scc_lookup);
-    fi;
-    
-    if IsBound(o!.mults) then 
-      Unbind(o!.mults); 
-    fi;
-    
-    if IsBound(o!.schutz) then 
-      Unbind(o!.schutz);
-    fi;
-    
-    o!.finished:=false;
-    SetLongOrb(t, o);
-    return t;
-  end);
-else 
-  InstallGlobalFunction(ClosureInverseSemigroupNC, 
-  function(s, coll, opts) return SemigroupsIsNotCompiled(); end);
-fi;
+  if IsBound(o!.scc) then 
+    Unbind(o!.scc); Unbind(o!.truth); Unbind(o!.trees); Unbind(o!.scc_lookup);
+  fi;
+  
+  if IsBound(o!.mults) then 
+    Unbind(o!.mults); 
+  fi;
+  
+  if IsBound(o!.schutz) then 
+    Unbind(o!.schutz);
+  fi;
+  
+  o!.finished:=false;
+  SetLongOrb(t, o);
+  return t;
+end);
 
 # mod for 0.6! - ClosureSemigroup - "for a trans. semi. and trans. coll."
 #############################################################################
@@ -323,18 +307,18 @@ function(s, coll, opts)
   return t;
 end);
 
-#DDD
-
-#GGG
-
-# new for 0.1! - Generators - "for a semigroup or monoid"
-############################################################################
-# Notes: returns the monoid generators of a monoid, and the semigroup 
-# generators of a semigroup. 
+#
 
 InstallOtherMethod(Generators, "for a semigroup or monoid",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(s)
+
+  if IsInverseSemigroup(s) then 
+    if IsMonoid(s) then 
+      return GeneratorsOfInverseMonoid(s);
+    fi;
+    return GeneratorsOfInverseSemigroup(s);
+  fi;
 
   if IsMonoid(s) then
     return GeneratorsOfMonoid(s);
@@ -342,20 +326,6 @@ function(s)
 
   return GeneratorsOfSemigroup(s);
 end);
-
-# new for 0.7! - Generators - "for an inverse semigroup"
-############################################################################
-
-InstallOtherMethod(Generators, "for an inverse semigroup",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(s)
-  if IsMonoid(s) then
-    return GeneratorsOfInverseMonoid(s);
-  fi;
-  return GeneratorsOfInverseSemigroup(s);
-end);
-
-#MMM
 
 # new for 0.5! - Monoid 
 ##############################################################################
@@ -996,10 +966,10 @@ function(gens)
    return SemigroupByGenerators(gens, SemigroupsOptionsRec);
 end);
 
-# mod for 0.6! - SemigroupByGenerators -  "for a trans. coll. and record"
-##############################################################################
+#
 
-InstallOtherMethod(SemigroupByGenerators, "(Semigroups) for trans coll and record",
+InstallOtherMethod(SemigroupByGenerators, 
+"for an associative element collection and record (Semigroups package)",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, opts)
   local n, i, closure_opts, s, f;
@@ -1008,6 +978,10 @@ function(gens, opts)
     opts.regular:=SemigroupsOptionsRec.regular;
   fi;
 
+  if not IsBound(opts.acting) and IsActingElementCollection(gens) then 
+    opts.acting:=SemigroupsOptionsRec.acting;
+  fi;
+  
   if not IsBound(opts.small) then 
     opts.small:=SemigroupsOptionsRec.small;
   fi;
@@ -1029,9 +1003,10 @@ function(gens, opts)
     gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
     Sort(gens, function(x, y) return ActionRank(x)>ActionRank(y); end);;
 
-    n:=Length(gens[1]![1]);
+    n:=ActionDegree(gens);
 
-    if gens[1]![1]=[1..n] and ActionRank(gens[2])=n then #remove id
+    #remove the identity
+    if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2])=n then
       Remove(gens, 1);
     fi;
 
@@ -1065,9 +1040,12 @@ function(gens, opts)
   if opts.regular then 
     SetIsRegularSemigroup(s, true);
   fi;
-  
+ 
+  if opts.acting then 
+    SetIsActingSemigroup(s, true);
+  fi;
+
   SetGeneratorsOfMagma( s, AsList( gens ) );
-  SetIsActingSemigroup(s, true);
   return s;
 end);
 
