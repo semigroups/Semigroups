@@ -1483,7 +1483,7 @@ function(data)
   return;
 end);
 
-# 
+# Maybe move to iterators...
 
 InstallGlobalFunction(IteratorOfGradedLambdaOrbs, 
 function(s)
