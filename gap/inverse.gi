@@ -1135,7 +1135,7 @@ l-> LambdaOrbSchutzGp(LambdaOrb(l), LambdaOrbSCCIndex(l)));
 ##############################################################################
 
 InstallOtherMethod(Size, "for an acting semigroup with inversion",
-[IsActingSemigroupWithInverseOp],
+[IsActingSemigroupWithInverseOp], 10, 
 function(s)
   local o, scc, r, nr, m;
 

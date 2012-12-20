@@ -599,7 +599,7 @@ function(gens, coll, opts)
   SetGeneratorsOfMagmaWithOne(s, gens);
   SetGeneratorsOfInverseSemigroup(s, Concatenation([One(s)], coll));
   SetGeneratorsOfInverseMonoid(s, coll);
-  SetIsActingSemigroup(s, true);
+  SetIsActingSemigroupWithInverseOp(s, true);
   return s;
 end);
 
@@ -631,7 +631,7 @@ function(gens, coll, opts)
   and IsAttributeStoringRep), rec(opts:=opts));
   SetGeneratorsOfMagma(s, gens);
   SetGeneratorsOfInverseSemigroup(s, coll);
-  SetIsActingSemigroup(s, true);
+  SetIsActingSemigroupWithInverseOp(s, true);
   return s;
 end);
 

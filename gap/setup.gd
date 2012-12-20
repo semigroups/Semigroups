@@ -9,8 +9,10 @@
 ###
 
 DeclareProperty("IsActingSemigroup", IsSemigroup);
-DeclareProperty("IsActingSemigroupWithInverseOp", IsSemigroup);
+DeclareProperty("IsActingSemigroupWithInverseOp", IsActingSemigroup);
 DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
+InstallTrueMethod(IsActingSemigroup, IsActingSemigroupWithInverseOp);
+
 
 #
 
