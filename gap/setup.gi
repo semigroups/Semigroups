@@ -19,11 +19,13 @@ InstallMethod(IsActingSemigroupGreensClass, "for a Green's class",
 
 # the number of points in the action
 
-InstallOtherMethod(ActionDegree, "for an acting semigroup",
-[IsActingSemigroup], s-> ActionDegree(Representative(s)));
+InstallOtherMethod(ActionDegree, 
+"for associative element with action collection",
+[IsAssociativeElementWithActionCollection], 
+s-> ActionDegree(Representative(s)));
 
-InstallOtherMethod(ActionDegree, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> DegreeOfPartialPermCollection(s));
+InstallOtherMethod(ActionDegree, "for a partial perm collection",
+[IsPartialPermCollection], s-> DegreeOfPartialPermCollection(s));
 
 #
 

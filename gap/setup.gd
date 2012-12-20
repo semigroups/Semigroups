@@ -14,30 +14,6 @@ DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
 
 #
 
-DeclareOperation("IsActingElementCollection", [IsAssociativeElementCollection]);
-
-InstallMethod(IsActingElementCollection, 
-"for an associative element collection",
-[IsAssociativeElementCollection], 
-function(x) 
-  return IsTransformationCollection(x) or IsPartialPermCollection(x) or
-  IsBipartitionCollection(x);
-end);
-
-#
-
-DeclareOperation("IsActingElementWithInverseOpCollection",
-[IsAssociativeElementCollection]);
-
-InstallMethod(IsActingElementWithInverseOpCollection, 
-"for an associative element collection", 
-[IsAssociativeElementCollection], 
-function(x) 
-  return IsPartialPermCollection(x) or IsBipartitionCollection(x);
-end);
-
-#
-
 DeclareAttribute("ActionDegree", IsAssociativeElement);
 DeclareAttribute("ActionRank", IsAssociativeElement);
 

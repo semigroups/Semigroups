@@ -9,9 +9,10 @@
 ##
 
 DeclareOperation("ClosureInverseSemigroup", [ IsActingSemigroupWithInverseOp,
-IsAssociativeElementCollection, IsRecord]);
+IsAssociativeElementWithActionCollection, IsRecord]);
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
-DeclareGlobalFunction("ClosureSemigroup");
+DeclareOperation("ClosureSemigroup", [IsActingSemigroup, 
+IsAssociativeElementWithActionCollection, IsRecord]);
 DeclareGlobalFunction("ClosureSemigroupNC");
 
 DeclareAttribute("GeneratorsOfInverseMonoid", IsInverseSemigroup);
