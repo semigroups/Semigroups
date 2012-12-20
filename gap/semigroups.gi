@@ -10,6 +10,8 @@
 
 # basic things
 
+# JDM move to lib
+
 InstallMethod(ViewObj, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], 10,
 function(s)
@@ -89,10 +91,12 @@ function(s)
   return GeneratorsOfSemigroup(s);
 end);
 
-#
+# move to lib JDM
 
-InstallOtherMethod(IsSubsemigroup, "for acting semigroup and acting semigroup",
-[IsActingSemigroup, IsActingSemigroup],
+InstallOtherMethod(IsSubsemigroup, 
+"for semigroup with generators and semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup, 
+IsSemigroup and HasGeneratorsOfSemigroup],
 function(s, t)
   return ForAll(GeneratorsOfSemigroup(t), x-> x in s);
 end);
@@ -106,22 +110,24 @@ function(s, t)
   return ForAll(Generators(t), x-> x in s);
 end);
 
-#
+# JDM move to lib
 
-InstallOtherMethod(IsSubset, "for trans. semi. and trans. coll",
-[IsActingSemigroup, IsAssociativeElementWithActionCollection],
+InstallOtherMethod(IsSubset, 
+"for semigroup and associative element collection",
+[IsSemigroup, IsAssociativeElementCollection],
 function(s, coll)
   return ForAll(coll, x-> x in s);
 end);
 
-#
+# JDM move to lib
 
-InstallMethod(\=, "for an acting semigp and acting semigp",
-[IsActingSemigroup and HasGeneratorsOfSemigroup,
-IsActingSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(\=, 
+"for semigroup with generators and semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup,
+ IsSemigroup and HasGeneratorsOfSemigroup],
 function(s, t)
-  return ForAll(Generators(s), x-> x in t) and
-   ForAll(Generators(t), x-> x in s);
+  return ForAll(GeneratorsOfSemigroup(s), x-> x in t) and
+   ForAll(GeneratorsOfSemigroup(t), x-> x in s);
 end);
 
 # creating semigroups, monoids, inverse semigroups, etc
@@ -139,7 +145,7 @@ function(gens)
   return M;
 end);
 
-#
+# JDM move to lib
 
 MakeReadWriteGlobal("Semigroup");
 UnbindGlobal("Semigroup");
@@ -189,7 +195,7 @@ end);
 #
 
 InstallOtherMethod(SemigroupByGenerators, 
-"for an associative element collection and record (Semigroups package)",
+"for an associative element with action collection and record",
 [IsAssociativeElementWithActionCollection, IsRecord],
 function(gens, opts)
   local n, i, closure_opts, s, f;
@@ -269,8 +275,7 @@ function(gens, opts)
   return s;
 end);
 
-
-#
+# JDM move to lib
 
 MakeReadWriteGlobal("Monoid");
 UnbindGlobal("Monoid");
@@ -386,7 +391,8 @@ function(gens, record)
   return s;
 end);
 
-#
+# maybe move to lib JDM (problem is that so far pperms are the only elements
+# that can be used to produce inverse semigroups)
 
 InstallGlobalFunction(InverseMonoid,
 function( arg )
@@ -639,7 +645,8 @@ end);
 
 #
 
-InstallMethod(SubsemigroupByProperty, "for a trans. semi. and func",
+InstallMethod(SubsemigroupByProperty, 
+"for an acting semigroup with generators and function",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction], 
 function(S, func)
   local limit, n;
@@ -648,7 +655,7 @@ function(S, func)
     limit:=Size(S);
   else
     n:=ActionDegree(S);
-    limit:=n^n;
+    limit:=n^n; #JDM this line wrong in general!!
   fi;
 
   return SubsemigroupByProperty(S, func, limit);
@@ -656,7 +663,8 @@ end);
 
 #
 
-InstallOtherMethod(SubsemigroupByProperty, "for a trans. semi., func, rec",
+InstallOtherMethod(SubsemigroupByProperty, 
+"for an acting semigroup with generators, function, and positive integer",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsPosInt], 
 function(S, func, limit)
   local iter, T, f;
@@ -673,9 +681,10 @@ function(S, func, limit)
   return T;
 end);
 
-#
+#JDM generalise
 
-InstallMethod(SubsemigroupByProperty, "for a part perm semi. and func",
+InstallMethod(SubsemigroupByProperty, 
+"for an inverse semigroup of partial perms and function",
 [IsPartialPermSemigroup and IsInverseSemigroup, IsFunction], 
 function(S, func)
   local limit, n;
@@ -690,7 +699,7 @@ function(S, func)
   return SubsemigroupByProperty(S, func, limit);
 end);
 
-#
+#JDM generalise
 
 InstallOtherMethod(SubsemigroupByProperty, "for a part perm semi, func, rec",
 [IsPartialPermSemigroup and IsInverseSemigroup, IsFunction, IsPosInt], 
