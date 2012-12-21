@@ -8,7 +8,9 @@
 #############################################################################
 ##
 
-DeclareOperation("IrredundantGeneratingSubset", [IsTransformationCollection]);
+DeclareOperation("IrredundantGeneratingSubset",
+[IsAssociativeElementWithActionCollection]);
+
 DeclareProperty("IsAbundantSemigroup", IsSemigroup);
 DeclareProperty("IsAdequateSemigroup", IsSemigroup);
 DeclareProperty("IsBand", IsSemigroup); 

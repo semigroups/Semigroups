@@ -3,7 +3,7 @@ BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
  IsBipartition, CanEasilySortElements, CanEasilySortElements));
 
 BindGlobal("BipartitionType", NewType(BipartitionFamily,
- IsBipartition and IsDataObjectRep and IsAssociativeElement));
+ IsBipartition and IsDataObjectRep and IsAssociativeElementWithAction));
 
 InstallGlobalFunction(BipartitionNC, 
 function(arg)
@@ -122,7 +122,7 @@ function(f)
 
   #inverse of f
   for i in [1..n] do 
-    g[f[i+2]]:=i;
+    g[i^f]:=i;
   od;
 
   for i in [1..n] do 

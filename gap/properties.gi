@@ -27,19 +27,16 @@
 
 # a better method for MinimalIdeal of a simple semigroup.
 
-#III
-
-# new for 0.1! - IrredundantGeneratingSubset - "for a tranformation coll."
-###########################################################################
 # Notes: this does not work all that well, use SmallGeneratingSet first. 
 
-InstallMethod(IrredundantGeneratingSubset, "for a transformation collection", 
-[IsTransformationCollection],
+InstallMethod(IrredundantGeneratingSubset, 
+"for an associative element with action collection", 
+[IsAssociativeElementWithActionCollection],
 function(coll)
   local gens, j, out, i, redund, f;
   
-  if IsTransformationSemigroup(coll) then 
-    coll:=ShallowCopy(Generators(coll));
+  if IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll) then 
+    coll:=ShallowCopy(GeneratorsOfSemigroup(coll));
   fi;
   
   gens:=Set(ShallowCopy(coll)); j:=Length(gens);
@@ -72,122 +69,72 @@ function(coll)
   return out;
 end);
 
-# new for 0.7! - IrredundantGeneratingSubset - "for a partial perm coll."
-###########################################################################
-# Notes: this does not work all that well, use SmallGeneratingSet first. 
+#
 
-InstallOtherMethod(IrredundantGeneratingSubset, "for a partial perm collection", 
-[IsPartialPermCollection],
-function(coll)
-  local gens, j, out, i, redund, f;
-  
-  if IsPartialPermSemigroup(coll) then 
-    coll:=ShallowCopy(Generators(coll));
-  fi;
-  
-  gens:=Set(ShallowCopy(coll)); j:=Length(gens);
-  coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));
-  Sort(coll, function(x, y) return ActionRank(x)>ActionRank(y); end);
-  
-  out:=EmptyPlist(Length(coll));
-  redund:=EmptyPlist(Length(coll));
-  i:=0;
+#InstallMethod(IsAbundantSemigroup, "for a trans. semigroup",
+#[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+#function(s)
+#  local iter, n, ht, ht_o, reg, i, data, f, ker, val, o, scc;
+#
+#  Info(InfoWarning, 1, "this will sometimes return a false positive.");
+#
+#  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
+#    Info(InfoSemigroups, 2, "semigroup is regular");
+#    return true;
+#  fi;
+#
+#  iter:=IteratorOfRClassData(s); n:=ActionDegree(s);
+#  ht:=HTCreate([1..n], rec(hashlen:=s!.opts!.hashlen!.S));
+#  ht_o:=HTCreate([1,1,1,1], rec(hashlen:=s!.opts!.hashlen!.S));
+#  reg:=[]; i:=0; 
+#
+#  repeat
+#    repeat #JDM this should become an method for IteratorOfRStarClasses
+#           # and IsAbundantRClass...
+#      data:=NextIterator(iter);
+#    until HTValue(ht_o, data{[1,2,4,5]})=fail or IsDoneIterator(iter); 
+#    if not IsDoneIterator(iter) then 
+#      HTAdd(ht_o, data{[1,2,4,5]}, true);
+#
+#      #f:=RClassRepFromData(s, data); ker:=CanonicalTransSameKernel(f);
+#      val:=HTValue(ht, ker);
+#
+#      if val=fail then #new kernel
+#        i:=i+1; HTAdd(ht, ker, i);
+#        val:=i; reg[val]:=false;
+#      fi;
+#        
+#      if reg[val]=false then #old kernel
+#        #o:=ImageOrbitFromData(s, data); scc:=ImageOrbitSCCFromData(s, data);
+#        reg[val]:=ForAny(scc, j-> IsInjectiveListTrans(o[j], ker));
+#      fi;
+#    fi;
+#  until IsDoneIterator(iter);
+#
+#  return ForAll(reg, x-> x);
+#end);
 
-  repeat 
-    i:=i+1; f:=coll[i];
-    if InfoLevel(InfoSemigroups)>=3 then 
-      Print("at \t", i, " of \t", Length(coll), " with \t", Length(redund), 
-      " redundant, \t", Length(out), " non-redundant\r");
-    fi;
-
-    if not f in redund and not f in out then 
-      if f in InverseSemigroup(Difference(gens, [f])) then 
-        AddSet(redund, f); gens:=Difference(gens, [f]);
-      else
-        AddSet(out, f);
-      fi;
-    fi;
-  until Length(redund)+Length(out)=j;
-
-  if InfoLevel(InfoSemigroups)>1 then 
-    Print("\n");
-  fi;
-  return out;
-end);
-
-#IIIAAA
-
-# new for 0.4! - IsAbundantSemigroup - "for a trans. semigroup"
-###########################################################################
-
-InstallMethod(IsAbundantSemigroup, "for a trans. semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local iter, n, ht, ht_o, reg, i, data, f, ker, val, o, scc;
-
-  Info(InfoWarning, 1, "this will sometimes return a false positive.");
-
-  if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
-    Info(InfoSemigroups, 2, "semigroup is regular");
-    return true;
-  fi;
-
-  iter:=IteratorOfRClassData(s); n:=ActionDegree(s);
-  ht:=HTCreate([1..n], rec(hashlen:=s!.opts!.hashlen!.S));
-  ht_o:=HTCreate([1,1,1,1], rec(hashlen:=s!.opts!.hashlen!.S));
-  reg:=[]; i:=0; 
-
-  repeat
-    repeat #JDM this should become an method for IteratorOfRStarClasses
-           # and IsAbundantRClass...
-      data:=NextIterator(iter);
-    until HTValue(ht_o, data{[1,2,4,5]})=fail or IsDoneIterator(iter); 
-    if not IsDoneIterator(iter) then 
-      HTAdd(ht_o, data{[1,2,4,5]}, true);
-
-      #f:=RClassRepFromData(s, data); ker:=CanonicalTransSameKernel(f);
-      val:=HTValue(ht, ker);
-
-      if val=fail then #new kernel
-        i:=i+1; HTAdd(ht, ker, i);
-        val:=i; reg[val]:=false;
-      fi;
-        
-      if reg[val]=false then #old kernel
-        #o:=ImageOrbitFromData(s, data); scc:=ImageOrbitSCCFromData(s, data);
-        reg[val]:=ForAny(scc, j-> IsInjectiveListTrans(o[j], ker));
-      fi;
-    fi;
-  until IsDoneIterator(iter);
-
-  return ForAll(reg, x-> x);
-end);
-
-# new for 0.4! - IsAdequateSemigroup - "for a trans. semigroup"
-###########################################################################
-
-InstallMethod(IsAdequateSemigroup, "for a trans. semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+InstallMethod(IsAdequateSemigroup, 
+"for acting semigroup with generators", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup], 
 s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
 
-#IIIBBB
+#
 
-# mod for 0.1! - IsBand - "for a transformation semigroup"
-###########################################################################
-
-InstallOtherMethod(IsBand, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], s-> 
+InstallMethod(IsBand, "for an acting semigroup with generators", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup], s-> 
  IsCompletelyRegularSemigroup(s) and IsHTrivial(s));
 
-InstallOtherMethod(IsBand, "for an inverse semigroup", 
+#
+
+InstallMethod(IsBand, "for an inverse semigroup", 
 [IsInverseSemigroup], IsSemilatticeAsSemigroup);
-#JDM remove other!
 
-# new for 0.1! - IsBlockGroup - "for a transformation semigroup"
-#############################################################################
+#
 
-InstallMethod(IsBlockGroup, "for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+InstallMethod(IsBlockGroup, 
+"for an acting semigroup with generators",
+[IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local iter, i, f, o, scc, reg, d;
 
@@ -231,24 +178,23 @@ function(s)
   return true;
 end);
 
-# new for 0.2! - IsBrandtSemigroup - "for a transformation semigroup"
-#############################################################################
+#
 
-InstallOtherMethod(IsBrandtSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsBrandtSemigroup, 
+"for an acting semigroup with generators", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 s-> IsZeroSimpleSemigroup(s) and IsInverseSemigroup(s));
 
-InstallOtherMethod(IsBrandtSemigroup, "for an inverse semigroup", 
+#
+
+InstallMethod(IsBrandtSemigroup, "for an inverse semigroup", 
 [IsInverseSemigroup], IsZeroSimpleSemigroup);
-#JDM remove other!
 
-#IIICCC
+#
 
-# new for 0.1! - IsCliffordSemigroup - "for a transformation semigroup"
-###########################################################################
-
-InstallOtherMethod(IsCliffordSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+InstallOtherMethod(IsCliffordSemigroup, 
+"for an acting semigroup with generators", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local gens, idem, f, g;
 
@@ -270,8 +216,7 @@ function(s)
 
   gens:=Generators(s);
 
-  idem:=List(gens, x->TRANS_IMG_KER_NC(ImageSetOfTransformation(x),
-   CanonicalTransSameKernel(x)));
+  idem:=List(gens, x->IdempotentCreator(LambdaFunc(s)(x), RhoFunc(s)(x)));
 
   for f in gens do
     for g in idem do
@@ -286,26 +231,28 @@ function(s)
   return true;
 end);
 
-InstallOtherMethod(IsCliffordSemigroup, "for an inverse semigroup", 
-[IsInverseSemigroup and IsPartialPermSemigroup], 
-s-> ForAll(OrbSCC(LongOrb(s)), x-> Length(x)=1));
-#JDM remove other!
+#
 
-# new for 0.1! - IsCommutativeSemigroup - "for a transformation semigroup"
-###########################################################################
+InstallOtherMethod(IsCliffordSemigroup, 
+"for an inverse acting semigroup with generators", 
+[IsInverseSemigroup and IsActingSemigroup and HasGeneratorsOfSemigroup], 
+s-> ForAll(OrbSCC(LambdaOrb(s)), x-> Length(x)=1));
 
-InstallOtherMethod(IsCommutativeSemigroup, "for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+#
+
+InstallOtherMethod(IsCommutativeSemigroup, "for a semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, n, i, j; 
 
-  gens:=Generators(s);
+  gens:=GeneratorsOfSemigroup(s);
   n:=Length(gens);
 
   for i in [1..n] do
     for j in [i+1..n] do
       if not gens[i]*gens[j]=gens[j]*gens[i] then 
-        Info(InfoSemigroups, 2, "generators ", i, " and ",  j, " do not commute");
+        Info(InfoSemigroups, 2, "generators ", i, " and ",  j, 
+         " do not commute");
         return false;
       fi;
     od;
@@ -314,50 +261,26 @@ function(s)
   return true;
 end);
 
-# new for 0.1! - IsCommutativeSemigroup - "for a partial perm semigroup"
-###########################################################################
+#
 
-InstallOtherMethod(IsCommutativeSemigroup, "for a partial perm semigroup",
-[IsPartialPermSemigroup],
+InstallOtherMethod(IsCompletelyRegularSemigroup, 
+"for an acting semigroup with generators", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local gens, n, i, j; 
-
-  gens:=Generators(s);
-  n:=Length(gens);
-
-  for i in [1..n] do
-    for j in [i+1..n] do
-      if not gens[i]*gens[j]=gens[j]*gens[i] then 
-        Info(InfoSemigroups, 2, "generators ", i, " and ",  j, " do not commute");
-        return false;
-      fi;
-    od;
-  od;
-
-  return true;
-end);
-
-# new for 0.1! - IsCompletelyRegularSemigroup - "for a trans. semigp."
-###########################################################################
-
-InstallOtherMethod(IsCompletelyRegularSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local gens, o, f;
+  local pos, f, n;
 
   if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
     Info(InfoSemigroups, 2, "semigroup is not regular");
     return false;
   fi;
 
-  gens:=Generators(s);
-
-  for f in gens do
-    o:=Orb(gens, ImageSetOfTransformation(f), OnSets, 
-     rec(lookingfor:=function(o, x) 
-     return not IsInjectiveListTrans(x, f); end));
-    Enumerate(o);
-    if not PositionOfFound(o)=false then 
+  for f in Generators(s) do
+    pos:=LookForInOrb(LambdaOrb(s), function(o, x) 
+      return LambdaRank(s)(LambdaAct(s)(x, f))<>LambdaRank(s)(x); end, 2);
+    # for transformations we could use IsInjectiveListTrans instead
+    # and the performance would be better!
+    
+    if pos<>false then 
       Info(InfoSemigroups, 2, "at least one H-class is not a subgroup");
       return false;
     fi;
@@ -366,18 +289,19 @@ function(s)
   return true;
 end);
 
+#
+
 InstallOtherMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsCliffordSemigroup);
-# JDM remove other!
 
-# new for 0.1! - IsCompletelySimpleSemigroup - "for a trans. semigroup"
-###########################################################################
 # Notes: this test required to avoid conflict with Smallsemi, DeclareSynonymAttr
 # causes problems. 
 
-InstallOtherMethod(IsCompletelySimpleSemigroup, "for a semi.",
+InstallOtherMethod(IsCompletelySimpleSemigroup, "for a semigroup",
 [IsSemigroup and HasGeneratorsOfSemigroup], 
  x-> IsSimpleSemigroup(x) and IsFinite(x));
+
+#JDM here!
 
 #IIIFFF
 

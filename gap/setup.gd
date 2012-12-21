@@ -54,4 +54,4 @@ DeclareAttribute("RhoOrbSeed", IsSemigroup);
 DeclareAttribute("IdempotentTester", IsSemigroup);
 DeclareAttribute("IdempotentCreator", IsSemigroup);
 
-#
+#EOF

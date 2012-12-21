@@ -1,7 +1,7 @@
 
 
 DeclareCategory("IsBipartition", IsMultiplicativeElementWithOne and
- IsAssociativeElement);
+ IsAssociativeElementWithAction);
 DeclareCategoryCollections("IsBipartition");
 
 DeclareGlobalFunction("BipartitionNC");
