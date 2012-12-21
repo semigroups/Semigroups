@@ -45,7 +45,7 @@ true
 gap> ForAll(s, x-> x in s);
 true
 gap> t:=InverseSemigroup(Generators(s){[1..3]});
-<inverse semigroup with 3 generators>
+<inverse partial perm semigroup of degree 4 with 3 generators>
 gap> ForAll(t, x-> x in s);
 true
 gap> Size(t);
@@ -112,9 +112,9 @@ gap> s:=InverseMonoid( PartialPerm( [1,3,2] ), PartialPerm([1]) );;
 gap> [ Size( s ), Size( AsSet( s ) ) ];
 [ 3, 3 ]
 gap> Perform( s, function(pp) PrettyPrintPP(pp); Print("\n"); end );
+(1)
 (1)(2)(3)
 (1)(2,3)
-(1)
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;

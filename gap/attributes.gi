@@ -135,15 +135,10 @@ s-> InverseSemigroup(Idempotents(s), rec(small:=true)));
 #############################################################################
 
 InstallMethod(InjectionPrincipalFactor, "for a D-class",
-[IsGreensDClass],
+[IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local g, rep, rreps, lreps, mat, inj, zero, bound_r, bound_l, inv_l, inv_r,
   f, rms, iso, inv, hom, i, j;
-
-  if not IsActingSemigroupGreensClass(d) then
-    Error("usage: a D-class of an acting semigroup,"); 
-    return;
-  fi;
 
   if not IsRegularDClass(d) then
     Error("not yet implemented,");
@@ -195,14 +190,16 @@ function(d)
   iso:=function(f)
     local o, i, j;
     o:=LambdaOrb(d);
-    i:=Position(o, LambdaFunc(ParentAttr(d))(f));
+    i:=Position(o, LambdaFunc(ParentSemigroup(d))(f));
 
     if i=fail then
       return fail;
     fi;
     i:=Position(OrbSCC(o)[OrbSCCLookup(o)[i]], i);
-    o:=RhoOrb(d);
-    j:=Position(o, RhoFunc(ParentAttr(d))(f));
+    if not IsInverseOpClass(d) then 
+      o:=RhoOrb(d);
+    fi;
+    j:=Position(o, RhoFunc(ParentSemigroup(d))(f));
     if j=fail then
       return fail;
     fi;
@@ -215,8 +212,76 @@ function(d)
   inv:=function(x)
     local i, a, j;
     i:=RowOfRMSElement(x);
-    a:=Images(InverseGeneralMapping(inj), UnderlyingElement(x))[1];
+    a:=Images(InverseGeneralMapping(inj), UnderlyingElementOfRMSElement(x))[1];
     j:=ColumnOfRMSElement(x);
+    return rreps[i]*a*lreps[j];
+  end;
+
+  hom:=MappingByFunction(d, rms, iso, inv);
+  SetIsInjective(hom, true);
+  SetIsTotal(hom, true);
+
+  return hom;
+end);
+
+#
+
+InstallOtherMethod(IsomorphismReesMatrixSemigroup, "for D-class",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  local g, rep, rreps, lreps, mat, rms, iso, inv, hom, i, j;
+
+  if not IsRegularDClass(d) or not NrIdempotents(d)=NrHClasses(d) then
+    Error("every H-class of the D-class should be a group,",
+    " try InjectionPrincipalFactor instead,");
+    return;
+  fi;
+
+  g:=GroupHClass(d);
+
+  rep:=Representative(g); 
+  g:=Range(IsomorphismPermGroup(g));
+
+  rreps:=HClassReps(LClass(d, rep)); 
+  lreps:=HClassReps(RClass(d, rep));
+  mat:=[];
+  
+  for i in [1..Length(lreps)] do 
+    mat[i]:=[];
+    for j in [1..Length(rreps)] do 
+      mat[i][j]:=AsPermutation(lreps[i]*rreps[j]);
+    od;
+  od;
+
+  rms:=ReesMatrixSemigroup(g, mat);
+  
+  iso:=function(f)
+    local o, i, j;
+    o:=LambdaOrb(d);
+    i:=Position(o, LambdaFunc(ParentSemigroup(d))(f));
+    if i=fail then 
+      return fail;
+    fi;
+    i:=Position(OrbSCC(o)[OrbSCCLookup(o)[i]], i);
+    if not IsInverseOpClass(d) then 
+      o:=RhoOrb(d);
+    fi;
+    j:=Position(o, RhoFunc(ParentSemigroup(d))(f)); 
+    if j=fail then 
+      return fail;
+    fi;
+    j:=Position(OrbSCC(o)[OrbSCCLookup(o)[j]], j);
+
+    return RMSElementNC(rms, j,
+      AsPermutation(rreps[j])^-1*AsPermutation(f)*
+      AsPermutation(lreps[i])^-1, i);
+  end;
+
+  inv:=function(x)
+    local i, a, j;
+    i:=RowOfReesMatrixSemigroupElement(x);
+    a:=UnderlyingElementOfReesMatrixSemigroupElement(x);
+    j:=ColumnOfReesMatrixSemigroupElement(x);
     return rreps[i]*a*lreps[j];
   end;
 
@@ -432,36 +497,29 @@ InstallOtherMethod(MultiplicativeZero, "for an acting semigroup",
 function(s)
   local min, o, rank, i, pos, f, m, rank_i, min_found, n;
   
-  if IsPartialPermSemigroup(s) then 
-    min:=0;
-  elif IsTransformationSemigroup(s) then 
-    min:=1;
-  fi;
-
+  min:=MinActionRank(s);
   o:=LambdaOrb(s);
   rank:=LambdaRank(s);
   
   #is there an element in s with minimum possible rank
-  if not IsClosed(o) then 
-    if IsPartialPermSemigroup(s) or IsTransformationSemigroup(s) then 
-      i:=0;
-      repeat 
-       i:=i+1;
-       pos:=EnumeratePosition(o, [i], false);
-      until pos<>fail or i=ActionDegree(s);
-    else
-      pos:=LookForInOrb(o, function(o, x) return rank(x)=min; end, 1);
-    fi;
-    if pos<>fail then
-      f:=EvaluateWord(GeneratorsOfSemigroup(s), 
-       TraceSchreierTreeForward(o, pos));
-    fi;
+  if IsPartialPermSemigroup(s) or IsTransformationSemigroup(s) then 
+    i:=0;
+    repeat 
+     i:=i+1;
+     pos:=EnumeratePosition(o, [i], false);
+    until pos<>fail or i=ActionDegree(s);
+  else
+    pos:=LookForInOrb(o, function(o, x) return rank(x)=min; end, 2);
+  fi;
+  if pos<>fail then
+    f:=EvaluateWord(GeneratorsOfSemigroup(s), 
+     TraceSchreierTreeForward(o, pos));
   fi;
 
   # lambda orb is closed, find an element with minimum rank
   if not IsBound(f) then 
-    m:=rank(o[2]); pos:=1; i:=0;
-
+    min_found:=rank(o[2]); pos:=1; i:=0; 
+    
     while min_found>min and i<Length(o) do 
       i:=i+1;
       rank_i:=rank(o[i]);

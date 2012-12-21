@@ -2597,11 +2597,7 @@ InstallOtherMethod(IsGreensHClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 
 InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
-[IsGreensClass], x-> IsTransformationSemigroup(ParentAttr(x)));
-
-InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
-[IsActingSemigroupGreensClass], x->
-IsTransformationSemigroup(ParentSemigroup(x)));
+[IsGreensClass], x-> IsTransformationSemigroup(ParentSemigroup(x)));
 
 InstallOtherMethod(IsGroupHClass, "for an acting semi Green's class",
 [IsActingSemigroupGreensClass], ReturnFalse);

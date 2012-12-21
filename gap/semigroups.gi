@@ -198,30 +198,9 @@ InstallOtherMethod(SemigroupByGenerators,
 "for an associative element with action collection and record",
 [IsAssociativeElementWithActionCollection, IsRecord],
 function(gens, opts)
-  local n, i, closure_opts, s, f;
+  local n, M, L, i, closure_opts, s, filts, f;
 
-  if not IsBound(opts.regular) then 
-    opts.regular:=SemigroupsOptionsRec.regular;
-  fi;
-
-  if not IsBound(opts.acting) then 
-    opts.acting:=SemigroupsOptionsRec.acting;
-  fi;
-  
-  if not IsBound(opts.small) then 
-    opts.small:=SemigroupsOptionsRec.small;
-  fi;
-
-  if not IsBound(opts.hashlen) then
-    opts.hashlen:=SemigroupsOptionsRec.hashlen;
-  elif IsPosInt(opts.hashlen) then 
-    n:=opts.hashlen;
-    opts.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)),
-     L:=NextPrimeInt(n));
-  elif not IsRecord(opts.hashlen) then 
-    Error("the component hashlen should be a positive integer or a record,");
-    return;
-  fi;
+  opts:=SemigroupOptions(opts);
 
   if opts.small and Length(gens)>1 then 
     gens:=ShallowCopy(gens);
@@ -260,17 +239,18 @@ function(gens, opts)
     return s;
   fi;
 
-  s:=Objectify( NewType( FamilyObj( gens ), 
-   IsSemigroup and IsAttributeStoringRep ), rec(opts:=opts));
+  filts:=IsSemigroup and IsAttributeStoringRep;
+
+  if opts.acting then 
+    filts:=filts and IsActingSemigroup;
+  fi;
+
+  s:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=opts));
   
   if opts.regular then 
     SetIsRegularSemigroup(s, true);
   fi;
  
-  if opts.acting then 
-    SetIsActingSemigroup(s, true);
-  fi;
-
   SetGeneratorsOfMagma( s, AsList( gens ) );
   return s;
 end);
@@ -334,7 +314,7 @@ InstallOtherMethod(MonoidByGenerators,
 "for an asssociative element with action collection and record",
 [IsAssociativeElementWithActionCollection, IsRecord],
 function(gens, record)
-  local n, i, closure_opts, s, f;
+  local n, i, closure_opts, s, filts, f;
   
   record:=SemigroupOptions(record);
 
@@ -375,19 +355,19 @@ function(gens, record)
     return s;
   fi;    
 
-  s:=Objectify( NewType( FamilyObj( gens ), 
-   IsMonoid and IsAttributeStoringRep ), rec(opts:=record));
+  filts:=IsMonoid and IsAttributeStoringRep;
+
+  if record.acting then 
+    filts:=filts and IsActingSemigroup;
+  fi;
+
+  s:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=record));
 
   if record.regular then 
     SetIsRegularSemigroup(s, true);
   fi;
 
-  if record.acting then 
-    SetIsActingSemigroup(s, true);
-  fi;
-
   SetGeneratorsOfMagmaWithOne( s, AsList( gens ) );
-  SetIsActingSemigroup(s, true);
   return s;
 end);
 
@@ -574,7 +554,7 @@ InstallMethod(InverseMonoidByGeneratorsNC,
 "for partial perm coll, partial perm coll, and record",
 [IsPartialPermCollection, IsPartialPermCollection, IsRecord],
 function(gens, coll, opts)
-  local i, closure_opts, s, f;
+  local closure_opts, s, filts, f;
 
   if opts.small and Length(gens)>1 then 
     coll:=SSortedList(ShallowCopy(coll));
@@ -592,14 +572,18 @@ function(gens, coll, opts)
     return s;
   fi;
 
-  s:=Objectify( NewType (FamilyObj( gens ), IsMagmaWithOne and
-   IsInverseSemigroup and IsAttributeStoringRep), rec(opts:=opts));
+  filts:=IsMagmaWithOne and IsInverseSemigroup and IsAttributeStoringRep;
+  if opts.acting then 
+    filts:=filts and IsActingSemigroupWithInverseOp;
+  fi;
+
+  s:=Objectify( NewType (FamilyObj( gens ), filts), rec(opts:=opts));
+
   SetDomainOfPartialPermCollection(s, Union(List(gens, DomPP)));
   SetRangeOfPartialPermCollection(s, DomainOfPartialPermCollection(s));
   SetGeneratorsOfMagmaWithOne(s, gens);
   SetGeneratorsOfInverseSemigroup(s, Concatenation([One(s)], coll));
   SetGeneratorsOfInverseMonoid(s, coll);
-  SetIsActingSemigroupWithInverseOp(s, true);
   return s;
 end);
 
@@ -609,7 +593,7 @@ InstallMethod(InverseSemigroupByGeneratorsNC,
 "for partial perm coll, partial perm coll, and record",
 [IsPartialPermCollection, IsPartialPermCollection, IsRecord],
 function(gens, coll, opts)
-  local i, closure_opts, s, f;
+  local closure_opts, s, filts, f;
 
   if opts.small and Length(gens)>1 then 
     coll:=SSortedList(ShallowCopy(coll));
@@ -626,12 +610,16 @@ function(gens, coll, opts)
     od;
     return s;
   fi;
+  
+  filts:=IsMagma and IsInverseSemigroup and IsAttributeStoringRep;
+  if opts.acting then 
+    filts:=filts and IsActingSemigroupWithInverseOp;
+  fi;
 
-  s:=Objectify( NewType (FamilyObj( gens ), IsMagma and IsInverseSemigroup
-  and IsAttributeStoringRep), rec(opts:=opts));
+  s:=Objectify( NewType (FamilyObj( gens ), filts), rec(opts:=opts));
+
   SetGeneratorsOfMagma(s, gens);
   SetGeneratorsOfInverseSemigroup(s, coll);
-  SetIsActingSemigroupWithInverseOp(s, true);
   return s;
 end);
 

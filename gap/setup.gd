@@ -8,16 +8,15 @@
 ##############################################################################
 ###
 
-DeclareProperty("IsActingSemigroup", IsSemigroup);
-DeclareProperty("IsActingSemigroupWithInverseOp", IsActingSemigroup);
+DeclareCategory("IsActingSemigroup", IsSemigroup);
+DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup and IsInverseSemigroup);
 DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
-InstallTrueMethod(IsActingSemigroup, IsActingSemigroupWithInverseOp);
-
 
 #
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);
 DeclareAttribute("ActionRank", IsAssociativeElement);
+DeclareAttribute("MinActionRank", IsSemigroup);
 
 #
 

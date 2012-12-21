@@ -49,6 +49,17 @@ InstallMethod(ActionRank, "for a partial perm",
 InstallMethod(ActionRank, "for a bipartition",
 [IsBipartition], x-> x[2]);
 
+# the minimum possible rank of an element
+
+InstallMethod(MinActionRank, "for a transformation semigroup",
+[IsTransformationSemigroup], x-> 1);
+
+InstallMethod(MinActionRank, "for a transformation semigroup",
+[IsPartialPermSemigroup], x-> 0);
+
+InstallMethod(MinActionRank, "for a transformation semigroup",
+[IsBipartitionSemigroup], x-> 0);
+
 # options passed to LambdaOrb(s) when it is created
 
 InstallMethod(LambdaOrbOpts, "for a transformation semigroup",
