@@ -347,8 +347,8 @@ function(gens, record)
     Sort(gens, function(x, y) return ActionRank(x)>ActionRank(y); end);;
 
     n:=ActionDegree(gens);
-
-    if gens[1]![1]=[1..n] and ActionRank(gens[2])=n then #remove id
+    if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2])=n then
+      #remove id
       Remove(gens, 1);
     fi;
 
@@ -751,18 +751,16 @@ function(s, coll, opts)
     return s;
   fi;
   
-  if IsTransformationMonoid(s) then 
+  if IsMonoid(s) then 
     t:=Monoid(s, coll, opts);
   else
     t:=Semigroup(s, coll, opts);
   fi;
 
-  #no schreier###############################################################
+  old_data:=SemigroupData(s);
+  n:=ActionDegree(t);
   
-  #old_data:=OrbitsOfImages(s);
-  #n:=LambdaDegree(t);
-  
-  # set up orbits of images of t
+  # set up data of t
 
   max_rank:=Maximum(List(coll, ActionRank)); 
   gens:=List(Generators(t), x-> x![1]);
