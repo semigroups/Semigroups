@@ -662,13 +662,7 @@ function(s, coll, opts)
     return s;
   fi;
 
-  coll_copy:=ShallowCopy(coll);
-  for f in coll do
-    if not LambdaFunc(s)(f)=RhoFunc(s)(f) then 
-      Add(coll_copy, f^-1);
-    fi;
-  od;  
-  
+  coll_copy:=GeneratorsOfSemigroup(coll);
   o:=StructuralCopy(LambdaOrb(s));
   AddGeneratorsToOrbit(o, coll_copy);
 
