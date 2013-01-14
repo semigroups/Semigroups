@@ -14,8 +14,11 @@ DeclareGlobalFunction("InternalRepOfPartialPerm");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionForPP");
 
 # everything else
+DeclareCategory("IsAssociativeElementWithSemigroupInverse", IsAssociativeElement);
+DeclareCategoryCollections("IsAssociativeElementWithSemigroupInverse");
 DeclareCategory("IsPartialPerm", IsMultiplicativeElementWithOne and
- IsAssociativeElementWithAction); 
+ IsAssociativeElementWithAction and IsAssociativeElementWithSemigroupInverse); 
+
 DeclareCategoryCollections("IsPartialPerm");
 DeclareSynonym("IsPartialPermSemigroup", IsSemigroup and
 IsPartialPermCollection);

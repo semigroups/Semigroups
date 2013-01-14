@@ -251,13 +251,13 @@ end);
 # the function used to test if there is an idempotent with the specified 
 # lambda and rho values.
 
-InstallMethod(IdempotentTester, "for a trans semigp", 
+InstallMethod(IdempotentTester, "for a transformation semigroup", 
 [IsTransformationSemigroup], s-> 
 function(img, ker)
   return IS_INJECTIVE_LIST_TRANS(img, ker) and Length(img)=MaximumList(ker);
 end);
 
-InstallMethod(IdempotentTester, "for a partial perm semigp", 
+InstallMethod(IdempotentTester, "for a partial perm semigroup", 
 [IsPartialPermSemigroup], s-> EQ);
 
 # the function used to create an idempotent with the specified lambda and rho
@@ -271,5 +271,26 @@ InstallMethod(IdempotentCreator, "for a partial perm semigp",
 
 # GroupElementAction will be \* for transformation and partial perm semigroups 
 # and something else for semigroups of bipartitions.
+
+# IsInSubgroupOfSemigroup returns <true> if the element <f> is an element of 
+# a subgroup of any semigroup containing it.
+
+InstallMethod(IsInSubgroupOfSemigroup, "for a transformation",
+[IsTransformation],
+function(f) 
+  return IdempotentTester(IMAGE_SET_TRANS(f), FLAT_KERNEL_TRANS(f));
+end);
+
+InstallMethod(IsInSubgroupOfSemigroup, "for a partial perm",
+[IsPartialPerm],
+function(f) 
+  return DomPP(f)=RanSetPP(f);
+end);
+
+InstallMethod(IsInSubgroupOfSemigroup, "for a bipartition",
+[IsBipartition],
+function(f) 
+  return RightSignedPartition(f)=LeftSignedPartition(f);
+end);
 
 #EOF

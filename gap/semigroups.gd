@@ -21,12 +21,22 @@ DeclareAttribute("GeneratorsOfInverseSemigroup", IsInverseSemigroup);
 DeclareGlobalFunction("InverseMonoid");
 DeclareGlobalFunction("InverseSemigroup");
 
-DeclareOperation("InverseMonoidByGenerators", [IsPartialPermCollection]);
-DeclareOperation("InverseSemigroupByGenerators", [IsPartialPermCollection]);
-DeclareOperation("InverseMonoidByGeneratorsNC", [IsPartialPermCollection, 
-IsPartialPermCollection, IsRecord]);
-DeclareOperation("InverseSemigroupByGeneratorsNC", [IsPartialPermCollection, 
-IsPartialPermCollection, IsRecord]);
+DeclareOperation("InverseMonoidByGenerators",
+[IsAssociativeElementWithActionCollection and
+IsAssociativeElementWithSemigroupInverseCollection]);
+DeclareOperation("InverseSemigroupByGenerators",
+[IsAssociativeElementWithActionCollection and
+IsAssociativeElementWithSemigroupInverseCollection]);
+DeclareOperation("InverseMonoidByGeneratorsNC", 
+[IsAssociativeElementWithActionCollection and
+IsAssociativeElementWithSemigroupInverseCollection, IsAssociativeElementWithActionCollection and
+IsAssociativeElementWithSemigroupInverseCollection,
+IsRecord]);
+DeclareOperation("InverseSemigroupByGeneratorsNC", 
+[IsAssociativeElementWithActionCollection and
+IsAssociativeElementWithSemigroupInverseCollection, IsAssociativeElementWithActionCollection and
+IsAssociativeElementWithSemigroupInverseCollection,
+IsRecord]);
 
 DeclareOperation("IsSubsemigroup", [IsActingSemigroup, IsActingSemigroup]);
 
@@ -44,6 +54,7 @@ DeclareOperation("RandomBipartitionMonoid", [IsPosInt, IsPosInt]);
 DeclareGlobalFunction("RegularSemigroup");
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
-
+DeclareOperation("InverseSubsemigroupByProperty", 
+[IsSemigroup, IsFunction]);
 
 #EOF

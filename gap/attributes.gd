@@ -15,7 +15,7 @@ DeclareAttribute("AntiIsomorphismTransformationSemigroup",
  IsSemigroup);
 DeclareOperation("EmbeddingNC", [IsSemigroup, IsSemigroup]);
 DeclareAttribute("GroupOfUnits", IsSemigroup);
-DeclareAttribute("IdempotentGeneratedSubsemigp", IsSemigroup);
+DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
 DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 
 DeclareOperation("InversesOfSemigroupElement", [IsActingSemigroup and

@@ -118,17 +118,17 @@ function(s)
   return u;
 end);
 
-#III
+#
 
-# mod for 0.7! - IdempotentGeneratedSubsemigp - "for a semi"
-###########################################################################
-
-InstallMethod(IdempotentGeneratedSubsemigp, "for a semigroup",
-[IsSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IdempotentGeneratedSubsemigroup, "for an acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 s-> Semigroup(Idempotents(s), rec(small:=true)));
 
-InstallMethod(IdempotentGeneratedSubsemigp, "for a semigroup",
-[IsInverseSemigroup and IsPartialPermSemigroup],
+#
+
+InstallMethod(IdempotentGeneratedSubsemigroup, 
+"for an acting semigroup with inverses",
+[IsActingSemigroupWithInverseOp],
 s-> InverseSemigroup(Idempotents(s), rec(small:=true)));
 
 # new for 0.7! - InjectionPrincipalFactor - "for a D-class"
