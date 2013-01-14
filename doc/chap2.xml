@@ -31,16 +31,11 @@
       <Ref Func="IdentityTransformation" BookName="ref"/>, 
     </Item>  
     <Item>
-      <Ref Func="RandomTransformation" BookName="ref"/>,
-    </Item>
-    <Item>
       <Ref Func="AsTransformation" BookName="ref"/>.
     </Item>
     </List>   
-    <#Include Label="ConstantTransformation"/> 	
     <#Include Label="Idempotent">
     <#Include Label="RandomIdempotent">
-    <#Include Label="RandomTransformation">
   </Section>
   
   <Section><Heading>Creating partial permutations</Heading>
@@ -97,14 +92,9 @@ PartialPermNC( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) ]</Log>
     also contains a special method for
    <Ref Attr="RankOfTransformation" BookName="ref"/>. 
 
-    <#Include Label="CanonicalTransSameKernel">
-    <#Include Label="IndexPeriodOfTransformation">
     <#Include Label="InversesOfTransformation">
     <#Include Label="IsInjectiveTransOnList">
     <#Include Label="IsRegularTransformation">
-    <#Include Label="DegreeOfTransformation">
-    <#Include Label="RankOfTransformation">
-    <#Include Label="SmallestIdempotentPowerT">
   </Section>
    
   <Section><Heading>Properties of partial permutations</Heading>
