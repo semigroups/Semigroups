@@ -293,4 +293,17 @@ function(f)
   return RightSignedPartition(f)=LeftSignedPartition(f);
 end);
 
+# IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only
+# if it is only possible to multiply elements of the type in the semigroup with
+# the equal degrees.
+
+InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
+IsTransformationSemigroup);
+
+InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
+"for a partial perm semigroup", [IsPartialPermSemigroup], ReturnFalse);
+
+InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
+IsBipartitionSemigroup);
+
 #EOF

@@ -191,7 +191,7 @@ end);
 # expand?
 
 InstallMethod(\in, "for acting semi elt and semigroup data",
-[IsAssociativeElement, IsSemigroupData],
+[IsAssociativeElementWithAction, IsSemigroupData],
 function(f, data)
   return not Position(data, f)=fail;
 end);
@@ -200,7 +200,7 @@ end);
 ##############################################################################
 
 InstallMethod(\in, "for an acting elt and acting semigroup",
-[IsAssociativeElement, IsActingSemigroup], 
+[IsAssociativeElementWithAction, IsActingSemigroup], 
 function(f, s)
   local data, len, ht, val, lambda, o, l, lookfunc, m, scc, lambdarho, schutz, g, reps, repslens, lambdaperm, n, max, found;
   
@@ -425,7 +425,7 @@ function(data, limit, lookfunc)
   fi;
   data!.looking:=looking;
 
-  ht:=data!.ht;
+  ht:=data!.ht;       # so far found R-reps
   orb:=data!.orbit;   # the so far found R-reps data 
   nr:=Length(orb);
   i:=data!.pos;       # points in orb in position at most i have descendants
@@ -608,7 +608,7 @@ InstallGlobalFunction(GradedLambdaOrb,
 function(s, f, opt)
   local lambda, graded, pos, gradingfunc, onlygrades, onlygradesdata, o, j, k, l;
 
-  if IsAssociativeElement(f) then 
+  if IsAssociativeElementWithAction(f) then 
     lambda:=LambdaFunc(s)(f);
   else
     lambda:=f;

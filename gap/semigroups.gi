@@ -653,7 +653,7 @@ end);
 #
 
 InstallGlobalFunction(ClosureInverseSemigroupNC,
-function(s, coll, opts)
+function(s, coll, record)
   local t, coll_copy, o, f;
  
   if coll=[] then
@@ -667,10 +667,11 @@ function(s, coll, opts)
   AddGeneratorsToOrbit(o, coll_copy);
 
   t:=InverseSemigroupByGeneratorsNC(o!.gens, 
-   Concatenation(Generators(s), coll), opts);
+   Concatenation(Generators(s), coll), record);
 
   #JDM is the following enough?!
 
+  #remove everything related to strongly connected components
   if IsBound(o!.scc) then 
     Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
   fi;
@@ -721,6 +722,11 @@ InstallMethod(ClosureSemigroup,
 "for an acting semigroup, associative element with action coll, and record",
 [IsActingSemigroup, IsAssociativeElementWithActionCollection, IsRecord],
 function(s, coll, record)
+  
+  if not ElementsFamily(FamilyObj(s))=FamilyObj(Representative(coll)) then 
+    Error("the semigroup and collection of elements are not of the same type,");
+    return;
+  fi;
 
   record.small:=false;
 
@@ -728,7 +734,8 @@ function(s, coll, record)
     coll:=Generators(coll);
   fi;
 
-  if ActionDegree(s)<>ActionDegree(Representative(coll)) then 
+  if IsActingSemigroupWithFixedDegreeMultiplication(s) and
+    ActionDegree(s)<>ActionDegree(Representative(coll)) then 
     Error("usage: the degree of the semigroup and collection must be equal,");
     return;
   fi;
@@ -756,135 +763,44 @@ function(s, coll, opts)
   else
     t:=Semigroup(s, coll, opts);
   fi;
-
-  old_data:=SemigroupData(s);
-  n:=ActionDegree(t);
   
-  # set up data of t
+  if not HasSemigroupData(s) and not HasLambdaOrb(s) then 
+    return t;
+  fi;
 
-  max_rank:=Maximum(List(coll, ActionRank)); 
-  gens:=List(Generators(t), x-> x![1]);
-  orbits:=EmptyPlist(n); 
-  lens:=[1..n]*0;
-  data_ht:=HTCreate([1,1,1,1,1,1], rec(forflatplainlists:=true,
-   hashlen:=old_data!.data_ht!.len));
-  data:=EmptyPlist(Length(old_data!.data)); 
-  data_len:=0;
-  images:=HTCreate(SSortedList(gens[1]), rec(forflatplainlists:=true,
-   hashlen:=old_data!.images!.len));
-  old_lens:=old_data!.lens; old_orbits:=old_data!.orbits;
+  # set up lambda orb for t
+  o:=ShallowCopy(LambdaOrb(s));
+  AddGeneratorsToOrbit(o, coll);
+  
+  if not (IsClosed(o) and Length(o)=Length(LambdaOrb(s))) then 
+    #unbind everything related to strongly connected components
+    if IsBound(o!.scc) then
+      Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
+    fi;
+ 
+    if IsBound(o!.mults) then
+      Unbind(o!.mults);
+    fi;
+ 
+    if IsBound(o!.schutz) then
+      Unbind(o!.schutz);
+    fi;
+  fi; 
+
 
   # initialize R-class reps orbit
+   
+  data:=SemigroupData(t);
+  old_data:=SemigroupData(s);
+  max_rank:=MaximumList(List(coll, ActionRank)); 
   
-  ht:=StructuralCopy(old_data!.ht); o:=ht!.o; 
-  r:=Length(o);
+  # process orbits of large rank
+
+  # JDM follow Enumerate in acting.gi for the r-reps known for s 
+  # except if we have rank > max_rank, then just install the old values
+  # also don't take products, don't look for anything, 
   
-  for i in [1..Length(coll)] do 
-    j:=HTAdd(ht, coll[i]![1], r+i);
-    o[r+i]:=ht!.els[j];
-  od;
-  
-  # process orbits of large images
- 
-  for j in [n, n-1..max_rank+1] do
-    if old_lens[j]>0 then
-      lens[j]:=old_lens[j];
-      orbits[j]:=EmptyPlist(lens[j]);
-      for k in [1..lens[j]] do
-        o:=StructuralCopy(old_orbits[j][k]);
-        o!.onlygradesdata:=images;
-        AddGeneratorsToOrbit(o, coll);
-        scc:=o!.scc; reps:=o!.reps;
 
-        for m in [1..Length(scc)] do
-          for val in [1..Length(reps[m])] do
-            for n in [1..Length(reps[m][val])] do
-              data_len:=data_len+1;
-              out:=[j, k, scc[m][1], m, val, n];
-              HTAdd(data_ht, out, data_len);
-              data[data_len]:=out;
-            od;
-          od;
-        od;  
-        for i in o do 
-          HTAdd(images, i, k);
-        od;  
-        orbits[j][k]:=o;
-      od;
-    fi;
-  od;
-
-  # process orbits of small images
-
-  old_reps:=EmptyPlist(Length(old_data!.data));
-  old_data_list:=EmptyPlist(Length(old_data!.data));
-  old_reps_len:=0;
-
-  for j in [max_rank, max_rank-1..1] do 
-    if old_lens[j]>0 then 
-      orbits[j]:=[];
-      for k in [1..old_lens[j]] do
-        old_o:=old_orbits[j][k];
-        if HTValue(images, old_o[1])=fail then 
-          lens[j]:=lens[j]+1;
-          o:=StructuralCopy(old_o);
-          o!.onlygradesdata:=images;
-          AddGeneratorsToOrbit(o, coll);
-          Unbind(o!.scc); Unbind(o!.rev);
-
-          r:=Length(OrbSCC(o));
-
-          o!.trees:=EmptyPlist(r);
-          o!.reverse:=EmptyPlist(r);
-          o!.reps:=List([1..r], x-> []);
-          o!.kernels_ht:=[];
-          o!.perms:=EmptyPlist(Length(o));
-          o!.schutz:=EmptyPlist(r);
-          o!.nr_idempotents:=List([1..r], m-> []);  
-          for i in o do 
-            HTAdd(images, i, lens[j]);
-          od;
-          orbits[j][lens[j]]:=o;
-        fi;
-        Append(old_reps, Concatenation(Concatenation(old_o!.reps)));
-      od;
-    fi;
-  od;
-
-  # set orbits of images of t
-
-  #new_data:= Objectify(NewType(FamilyObj(t), IsOrbitsOfImages), 
-  # rec(finished:=false, orbits:=orbits, lens:=lens, images:=images,
-  #  at:=old_data!.at, gens:=gens, ht:=ht, data_ht:=data_ht, data:=data));
-
-  #SetOrbitsOfImages(t, new_data); 
- 
-  # process old R-reps 
-
-  for i in [1..Length(old_reps)] do 
-    #j:=InOrbitsOfImages(old_reps[i], false, 
-    # [fail, fail, fail, fail, fail, 0, fail], orbits, images);
-    #if not j[1] then
-    #  AddToOrbitsOfImages(t, old_reps[i], j[2], new_data, false);
-    #fi;
-  od;
-  
-  # install new pts in the orbit
-  
-  coll:=List(coll, x-> x![1]); n:=Length(Generators(s)); 
-
-  for i in [1..Length(data)] do 
-    d:=data[i];
-    g:=orbits[d[1]][d[2]]!.reps[d[4]][d[5]][d[6]];
-    m:=Length(coll); j:=Length(ht!.o);
-    for y in [1..m] do 
-      z:=g{coll[y]};
-      if HTValue(ht, z)=fail then
-        j:=j+1; z:=HTAdd(ht, z, j); ht!.o[j]:=ht!.els[z];
-      fi;
-    od;
-  od;
-  
   # process kernel orbits here too!
 
   return t;
