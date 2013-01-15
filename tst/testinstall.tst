@@ -132,7 +132,7 @@ gap> gens:=[ Transformation( [ 1, 2, 3, 5, 4, 6, 7, 8 ] ),
 gap> s:=Monoid(gens);
 <transformation monoid of degree 8 with 6 generators>
 gap> t:=ClosureSemigroup(s, [Transformation( [ 4, 4, 3, 1, 5, 6, 3, 8 ] )]);
-<monoid with 6 generators>
+<transformation monoid of degree 8 with 6 generators>
 gap> Size(t)=Size(Semigroup(Generators(t)));
 true
 

@@ -412,7 +412,7 @@ InstallOtherMethod(Enumerate,
 "for an acting semi data, limit, and func",
 [IsSemigroupData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr, i, graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact, lambdaperm, rho, lambdarhoht, o, oht, scc, r, lookup, htvalue, htadd, x, lamx, pos, m, y, rhoy, val, schutz, tmp, old, j, n;
+  local looking, ht, orb, nr, i, graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact, lambdaperm, rho, lambdarhoht, o, oht, scc, r, lookup, htadd, htvalue, x, lamx, pos, m, y, rhoy, val, schutz, tmp, old, j, n;
 
   if IsClosed(data) then 
     return data;
@@ -446,6 +446,8 @@ function(data, limit, lookfunc)
   repslens:=data!.repslens;     # Length(reps[i])=repslens[i] 
   lenreps:=data!.lenreps;       # lenreps=Length(reps)
 
+  stopper:=data!.stopper;       # stop at this place in the orbit
+
   # schreier
 
   schreierpos:=data!.schreierpos;
@@ -455,7 +457,7 @@ function(data, limit, lookfunc)
   # generators
   gens:=data!.gens; 
   nrgens:=Length(gens); 
-  genstoapply:=[1..nrgens];
+  genstoapply:=data!.genstoapply;
   
   # lambda/rho
   s:=ParentSemigroup(data);
@@ -479,7 +481,7 @@ function(data, limit, lookfunc)
     htvalue:=HTValue;
   fi;
 
-  while nr<=limit and i<nr do 
+  while nr<=limit and i<nr and i<>stopper do 
     i:=i+1;
     
     for j in genstoapply do #JDM
@@ -543,7 +545,6 @@ function(data, limit, lookfunc)
             old:=false; 
             for n in [1..repslens[val]] do 
               if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=() then 
-              #if SiftGroupElement(schutz,lambdaperm(reps[val][n],y)).isone then
                 old:=true;
                 graph[i][j]:=repslookup[val][n]; 
                 break;
@@ -1413,12 +1414,13 @@ function(s)
 
   one:=One(gens);
 
-  data:=rec( gens:=gens, 
+  data:=rec(gens:=gens, 
      ht:=HTCreate(one, rec(treehashsize:=s!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[],
      lenreps:=0, orbit:=[[,,,one]], repslens:=[], 
-     schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail]);
+     schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail],
+     genstoapply:=[1..Length(gens)], stopper:=false);
   
   Objectify(NewType(FamilyObj(s), IsSemigroupData and IsAttributeStoringRep),
    data);

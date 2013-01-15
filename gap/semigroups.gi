@@ -748,9 +748,10 @@ end);
 
 InstallGlobalFunction(ClosureSemigroupNC,
 function(s, coll, opts)
+  local t, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, i, graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, lambdarhoht, old_o, old_scc, o, oht, scc, r, lookup, old_to_new, htadd, htvalue, j, k, x, pos, m, y, rhoy, val, schutz, tmp, old, n;
  
   if coll=[] then 
-    Info(InfoSemigroups, 2, "All the elements in the collection belong to the ",
+    Info(InfoSemigroups, 2, "all the elements in the collection belong to the ",
     " semigroup,");
     return s;
   fi;
@@ -766,13 +767,13 @@ function(s, coll, opts)
   if not HasSemigroupData(s) and not HasLambdaOrb(s) then 
     return t;
   fi;
+
   # get new and old R-rep orbit data
   new_data:=SemigroupData(t);
   old_data:=SemigroupData(s);
   max_rank:=MaximumList(List(coll, ActionRank)); 
 
-  new_ht:=new_data!.ht;       
-  old_ht:=old_data!.ht;      
+  ht:=new_data!.ht;       
   # so far found R-reps
   
   new_orb:=new_data!.orbit;   
@@ -782,36 +783,29 @@ function(s, coll, opts)
   new_nr:=Length(new_orb);
   old_nr:=Length(old_orb);
   i:=new_data!.pos;   
-  old_i:=old_data!.pos;
   # points in orb in position at most i have descendants
   
   graph:=new_data!.graph; 
   # orbit graph of orbit of R-classes under left mult 
   
-  new_reps:=new_data!.reps;   
-  old_reps:=old_data!.reps;
+  reps:=new_data!.reps;   
   # reps grouped by equal lambda and rho value 
   # HTValue(lambdarhoht, Concatenation(lambda(x), rho(x))
   
-  new_repslookup:=new_data!.repslookup; 
-  old_repslookup:=old_data!.repslookup; 
+  repslookup:=new_data!.repslookup; 
   # Position(orb, reps[i][j])=repslookup[i][j] = HTValue(ht, reps[i][j])
  
-  new_orblookup1:=new_data!.orblookup1; 
-  old_orblookup1:=old_data!.orblookup1; 
+  orblookup1:=new_data!.orblookup1; 
   # orblookup1[i] position in reps containing orb[i][4] (the R-rep)
   
-  new_orblookup2:=new_data!.orblookup2;
-  old_orblookup2:=old_data!.orblookup2;
+  orblookup2:=new_data!.orblookup2;
   # orblookup2[i] position in reps[orblookup1[i]] 
   # containing orb[i][4] (the R-rep)
 
-  new_repslens:=new_data!.repslens;
-  old_repslens:=old_data!.repslens;     
+  repslens:=new_data!.repslens;
   # Length(reps[i])=repslens[i] 
 
-  new_lenreps:=new_data!.lenreps;       
-  old_lenreps:=new_data!.lenreps;     
+  lenreps:=new_data!.lenreps;       
   # lenreps=Length(reps)
   
   # schreier
@@ -826,7 +820,6 @@ function(s, coll, opts)
   gens:=new_data!.gens;
   nr_new_gens:=Length(gens);
   nr_old_gens:=Length(old_data!.gens);
-  genstoapply:=[nr_old_gens+1..nr_new_gens];
 
   # lambda/rho
   lambda:=LambdaFunc(s);
@@ -837,12 +830,12 @@ function(s, coll, opts)
 
   # set up lambda orb for t
   old_o:=LambdaOrb(s);
-  old_scc:=OrbSCC(old_o);
-  o:=ShallowCopy(old_o);
+  old_scc:=OrbSCC(old_o); #this could be removed if JDM1 is resolved
+  o:=StructuralCopy(old_o);
   AddGeneratorsToOrbit(o, coll);
   Enumerate(o, infinity);
   
-  if Length(o)<>Length(LambdaOrb(s))) then # o has new points
+  if Length(o)<>Length(LambdaOrb(s)) then # o has new points
     #unbind everything related to strongly connected components
     Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
     Unbind(o!.mults); Unbind(o!.schutz);
@@ -854,7 +847,7 @@ function(s, coll, opts)
   
   # look up for old_to_new[i]:=Position(new_orb, old_orb[i]);
   # i.e. position of old R-rep in new_orb
-  old_to_new:=EmptyPlist(Length(old_nr));
+  old_to_new:=EmptyPlist(old_nr);
  
   if IsBound(HTAdd_TreeHash_C) then
     htadd:=HTAdd_TreeHash_C;
@@ -872,13 +865,13 @@ function(s, coll, opts)
     
     x:=old_orb[i][4];
     pos:=old_schreiermult[i];
-    #JDM remove the following 3 lines by storing pos always in schreiermult and
+    #JDM1 remove the following 3 lines by storing pos always in schreiermult and
     #updating TraceSchreierTreeForward in slp.gi
     if pos=fail then
       pos:=old_scc[old_orb[i][2]][1];
     fi;
 
-    m:=new_lookup[pos];
+    m:=lookup[pos];
 
     if ActionRank(x)>max_rank then 
       y:=x;
@@ -897,14 +890,14 @@ function(s, coll, opts)
       val:=htvalue(lambdarhoht, rhoy);
 
       if val=fail then #new rho value, and hence new R-rep
-        new_lenreps:=new_lenreps+1;
+        lenreps:=lenreps+1;
         htadd(lambdarhoht, rhoy, lenreps);
         new_nr:=new_nr+1;
-        new_reps[new_lenreps]:=[y];
-        new_repslookup[new_lenreps]:=[nr];
-        new_orblookup1[new_nr]:=new_lenreps;
-        new_orblookup2[new_nr]:=1;
-        new_repslens[new_lenreps]:=1;
+        reps[lenreps]:=[y];
+        repslookup[lenreps]:=[new_nr];
+        orblookup1[new_nr]:=lenreps;
+        orblookup2[new_nr]:=1;
+        repslens[lenreps]:=1;
         x:=[t, m, o, y, false, new_nr];
       else              # old rho value
         x:=[t, m, o, y, false, new_nr+1];
@@ -913,12 +906,12 @@ function(s, coll, opts)
 
 
         if schutz=true then # schutz gp is symmetric group
-          graph[j][k]:=new_repslookup[val][1];
-          old_to_new[i]:=new_repslookup[val][1];
+          graph[j][k]:=repslookup[val][1];
+          old_to_new[i]:=repslookup[val][1];
           continue;
         else
           if schutz=false then # schutz gp is trivial
-            tmp:=htvalue(new_ht, y);
+            tmp:=htvalue(ht, y);
             if tmp<>fail then
               graph[j][k]:=tmp;
               old_to_new[i]:=tmp;
@@ -926,12 +919,12 @@ function(s, coll, opts)
             fi;
           else # schutz gp neither trivial nor symmetric group
             old:=false;
-            for n in [1..new_repslens[val]] do
-              if SiftedPermutation(schutz, lambdaperm(new_reps[val][n], y))=()
+            for n in [1..repslens[val]] do
+              if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=()
                 then
                 old:=true;
-                graph[j][k]:=new_repslookup[val][n];
-                old_to_new[i]:=new_repslookup[val][n];
+                graph[j][k]:=repslookup[val][n];
+                old_to_new[i]:=repslookup[val][n];
                 break;
               fi;
             od;
@@ -940,27 +933,36 @@ function(s, coll, opts)
             fi;
           fi;
           new_nr:=new_nr+1;
-          new_repslens[val]:=new_repslens[val]+1;
-          new_reps[val][new_repslens[val]]:=y;
-          new_repslookup[val][new_repslens[val]]:=new_nr;
-          new_orblookup1[new_nr]:=val;
-          new_orblookup2[new_nr]:=new_repslens[val];
+          repslens[val]:=repslens[val]+1;
+          reps[val][repslens[val]]:=y;
+          repslookup[val][repslens[val]]:=new_nr;
+          orblookup1[new_nr]:=val;
+          orblookup2[new_nr]:=repslens[val];
         fi;
       fi;
     fi;
     new_orb[new_nr]:=x;
-    new_schreierpos[new_nr]:=j; # orb[nr] is obtained from orb[i]
-    new_schreiergen[new_nr]:=k; # by multiplying by gens[j]
-    new_schreiermult[nr]:=pos;  # and ends up in position <pos> of 
-                                # its lambda orb
-    htadd(new_ht, y, new_nr);
-    graph[new_nr]:=EmptyPlist(nrgens);
+    new_schreierpos[new_nr]:=j;     # orb[nr] is obtained from orb[i]
+    new_schreiergen[new_nr]:=k;     # by multiplying by gens[j]
+    new_schreiermult[new_nr]:=pos;  # and ends up in position <pos> of 
+                                    # its lambda orb
+    htadd(ht, y, new_nr);
+    graph[new_nr]:=EmptyPlist(nr_new_gens);
     graph[j][k]:=new_nr;
     old_to_new[i]:=new_nr;
   od;
 
   # apply new generators to old R-reps
+  new_data!.genstoapply:=[nr_old_gens+1..nr_new_gens];
+  new_data!.pos:=1;
+  new_data!.stopper:=old_to_new[old_data!.pos];
+  
+  Enumerate(new_data, infinity, ReturnFalse);
 
+  new_data!.pos:=old_to_new[old_data!.pos];
+  new_data!.stopper:=false;
+  new_data!.genstoapply:=[1..nr_new_gens];
+  
   return t;
 end);
 
