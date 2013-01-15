@@ -746,62 +746,220 @@ end);
 
 # coll should consist of elements not in s
 
-#JDM this needs to be reworked. 
-
 InstallGlobalFunction(ClosureSemigroupNC,
 function(s, coll, opts)
-  local t, old_data, n, max_rank, orbits, lens, data_ht, data, data_len, images, old_lens, old_orbits, gens, ht, o, r, j, scc, reps, out, old_reps, old_data_list, old_reps_len, old_o, new_data, d, g, m, z, i, k, val, y;
  
   if coll=[] then 
     Info(InfoSemigroups, 2, "All the elements in the collection belong to the ",
     " semigroup,");
     return s;
   fi;
-  
+ 
+  # init the semigroup or monoid
   if IsMonoid(s) then 
     t:=Monoid(s, coll, opts);
   else
     t:=Semigroup(s, coll, opts);
   fi;
   
+  # if nothing is known about s, then return t
   if not HasSemigroupData(s) and not HasLambdaOrb(s) then 
     return t;
   fi;
-
-  # set up lambda orb for t
-  o:=ShallowCopy(LambdaOrb(s));
-  AddGeneratorsToOrbit(o, coll);
-  
-  if not (IsClosed(o) and Length(o)=Length(LambdaOrb(s))) then 
-    #unbind everything related to strongly connected components
-    if IsBound(o!.scc) then
-      Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
-    fi;
- 
-    if IsBound(o!.mults) then
-      Unbind(o!.mults);
-    fi;
- 
-    if IsBound(o!.schutz) then
-      Unbind(o!.schutz);
-    fi;
-  fi; 
-
-
-  # initialize R-class reps orbit
-   
-  data:=SemigroupData(t);
+  # get new and old R-rep orbit data
+  new_data:=SemigroupData(t);
   old_data:=SemigroupData(s);
   max_rank:=MaximumList(List(coll, ActionRank)); 
-  
-  # process orbits of large rank
 
-  # JDM follow Enumerate in acting.gi for the r-reps known for s 
-  # except if we have rank > max_rank, then just install the old values
-  # also don't take products, don't look for anything, 
+  new_ht:=new_data!.ht;       
+  old_ht:=old_data!.ht;      
+  # so far found R-reps
   
+  new_orb:=new_data!.orbit;   
+  old_orb:=old_data!.orbit;   
+  # the so far found R-reps data 
+  
+  new_nr:=Length(new_orb);
+  old_nr:=Length(old_orb);
+  i:=new_data!.pos;   
+  old_i:=old_data!.pos;
+  # points in orb in position at most i have descendants
+  
+  graph:=new_data!.graph; 
+  # orbit graph of orbit of R-classes under left mult 
+  
+  new_reps:=new_data!.reps;   
+  old_reps:=old_data!.reps;
+  # reps grouped by equal lambda and rho value 
+  # HTValue(lambdarhoht, Concatenation(lambda(x), rho(x))
+  
+  new_repslookup:=new_data!.repslookup; 
+  old_repslookup:=old_data!.repslookup; 
+  # Position(orb, reps[i][j])=repslookup[i][j] = HTValue(ht, reps[i][j])
+ 
+  new_orblookup1:=new_data!.orblookup1; 
+  old_orblookup1:=old_data!.orblookup1; 
+  # orblookup1[i] position in reps containing orb[i][4] (the R-rep)
+  
+  new_orblookup2:=new_data!.orblookup2;
+  old_orblookup2:=old_data!.orblookup2;
+  # orblookup2[i] position in reps[orblookup1[i]] 
+  # containing orb[i][4] (the R-rep)
 
-  # process kernel orbits here too!
+  new_repslens:=new_data!.repslens;
+  old_repslens:=old_data!.repslens;     
+  # Length(reps[i])=repslens[i] 
+
+  new_lenreps:=new_data!.lenreps;       
+  old_lenreps:=new_data!.lenreps;     
+  # lenreps=Length(reps)
+  
+  # schreier
+  new_schreierpos:=new_data!.schreierpos;
+  old_schreierpos:=old_data!.schreierpos;
+  new_schreiergen:=new_data!.schreiergen;
+  old_schreiergen:=old_data!.schreiergen;
+  new_schreiermult:=new_data!.schreiermult;
+  old_schreiermult:=old_data!.schreiermult;
+
+  # generators
+  gens:=new_data!.gens;
+  nr_new_gens:=Length(gens);
+  nr_old_gens:=Length(old_data!.gens);
+  genstoapply:=[nr_old_gens+1..nr_new_gens];
+
+  # lambda/rho
+  lambda:=LambdaFunc(s);
+  lambdaact:=LambdaAct(s);
+  lambdaperm:=LambdaPerm(s);
+  rho:=RhoFunc(s);
+  lambdarhoht:=LambdaRhoHT(t);
+
+  # set up lambda orb for t
+  old_o:=LambdaOrb(s);
+  old_scc:=OrbSCC(old_o);
+  o:=ShallowCopy(old_o);
+  AddGeneratorsToOrbit(o, coll);
+  Enumerate(o, infinity);
+  
+  if Length(o)<>Length(LambdaOrb(s))) then # o has new points
+    #unbind everything related to strongly connected components
+    Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
+    Unbind(o!.mults); Unbind(o!.schutz);
+  fi; 
+ 
+  oht:=o!.ht;
+  scc:=OrbSCC(o); r:=Length(scc);
+  lookup:=o!.scc_lookup; 
+  
+  # look up for old_to_new[i]:=Position(new_orb, old_orb[i]);
+  # i.e. position of old R-rep in new_orb
+  old_to_new:=EmptyPlist(Length(old_nr));
+ 
+  if IsBound(HTAdd_TreeHash_C) then
+    htadd:=HTAdd_TreeHash_C;
+    htvalue:=HTValue_TreeHash_C;
+  else
+    htadd:=HTAdd;
+    htvalue:=HTValue;
+  fi;
+ 
+  # install old R-class reps in new_orb
+  while new_nr<=old_nr and i<new_nr do
+    i:=i+1;
+    j:=old_to_new[old_schreierpos[i]];
+    k:=old_schreiergen[i];
+    
+    x:=old_orb[i][4];
+    pos:=old_schreiermult[i];
+    #JDM remove the following 3 lines by storing pos always in schreiermult and
+    #updating TraceSchreierTreeForward in slp.gi
+    if pos=fail then
+      pos:=old_scc[old_orb[i][2]][1];
+    fi;
+
+    m:=new_lookup[pos];
+
+    if ActionRank(x)>max_rank then 
+      y:=x;
+      new_nr:=new_nr+1;
+      x:=[t, m, o, y, false, new_nr];
+    else
+      if pos<>scc[m][1] then 
+        y:=x*LambdaOrbMult(o, m, pos)[2];
+      else
+        y:=x;
+        pos:=fail;
+      fi;
+      
+      rhoy:=[m];
+      Append(rhoy, rho(y));
+      val:=htvalue(lambdarhoht, rhoy);
+
+      if val=fail then #new rho value, and hence new R-rep
+        new_lenreps:=new_lenreps+1;
+        htadd(lambdarhoht, rhoy, lenreps);
+        new_nr:=new_nr+1;
+        new_reps[new_lenreps]:=[y];
+        new_repslookup[new_lenreps]:=[nr];
+        new_orblookup1[new_nr]:=new_lenreps;
+        new_orblookup2[new_nr]:=1;
+        new_repslens[new_lenreps]:=1;
+        x:=[t, m, o, y, false, new_nr];
+      else              # old rho value
+        x:=[t, m, o, y, false, new_nr+1];
+        #check membership in schutz gp via stab chain
+        schutz:=LambdaOrbStabChain(o, m);
+
+
+        if schutz=true then # schutz gp is symmetric group
+          graph[j][k]:=new_repslookup[val][1];
+          old_to_new[i]:=new_repslookup[val][1];
+          continue;
+        else
+          if schutz=false then # schutz gp is trivial
+            tmp:=htvalue(new_ht, y);
+            if tmp<>fail then
+              graph[j][k]:=tmp;
+              old_to_new[i]:=tmp;
+              continue;
+            fi;
+          else # schutz gp neither trivial nor symmetric group
+            old:=false;
+            for n in [1..new_repslens[val]] do
+              if SiftedPermutation(schutz, lambdaperm(new_reps[val][n], y))=()
+                then
+                old:=true;
+                graph[j][k]:=new_repslookup[val][n];
+                old_to_new[i]:=new_repslookup[val][n];
+                break;
+              fi;
+            od;
+            if old then
+              continue;
+            fi;
+          fi;
+          new_nr:=new_nr+1;
+          new_repslens[val]:=new_repslens[val]+1;
+          new_reps[val][new_repslens[val]]:=y;
+          new_repslookup[val][new_repslens[val]]:=new_nr;
+          new_orblookup1[new_nr]:=val;
+          new_orblookup2[new_nr]:=new_repslens[val];
+        fi;
+      fi;
+    fi;
+    new_orb[new_nr]:=x;
+    new_schreierpos[new_nr]:=j; # orb[nr] is obtained from orb[i]
+    new_schreiergen[new_nr]:=k; # by multiplying by gens[j]
+    new_schreiermult[nr]:=pos;  # and ends up in position <pos> of 
+                                # its lambda orb
+    htadd(new_ht, y, new_nr);
+    graph[new_nr]:=EmptyPlist(nrgens);
+    graph[j][k]:=new_nr;
+    old_to_new[i]:=new_nr;
+  od;
+
+  # apply new generators to old R-reps
 
   return t;
 end);
