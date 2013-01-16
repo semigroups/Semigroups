@@ -204,7 +204,7 @@ InstallMethod(\in, "for an acting elt and acting semigroup",
 function(f, s)
   local data, len, ht, val, lambda, o, l, lookfunc, m, scc, lambdarho, schutz, g, reps, repslens, lambdaperm, n, max, found;
   
-  if not ElementsFamily(FamilyObj(s))=FamilyObj(f) then 
+  if ElementsFamily(FamilyObj(s))<>FamilyObj(f) then 
     Error("the element and semigroup are not of the same type,");
     return;
   fi;
@@ -213,11 +213,10 @@ function(f, s)
     return f in AsSSortedList(s); 
   fi;
 
-  #JDM this doesn't work for semigroups of partial perms...
-  #if Degree(f)<>Degree(s) then 
-  #  Info(InfoSemigroups, 2, "element and semigroup have different degrees.");
-  #  return false;       
-  #fi;
+  if IsActingSemigroupWithFixedDegreeMultiplication(s) 
+    and ActionDegree(f)<>ActionDegree(s) then 
+    return false;       
+  fi;
 
   if not (IsMonoid(s) and IsOne(f)) and 
    ActionRank(f) > MaximumList(List(Generators(s), ActionRank)) then
@@ -263,11 +262,15 @@ function(f, s)
   Append(lambdarho, RhoFunc(s)(f));
   val:=HTValue(LambdaRhoHT(s), lambdarho);
 
+  lookfunc:=function(data, x) 
+    return Concatenation([x[2]], RhoFunc(s)(x[4]))=lambdarho;
+  end;
+  
   # if lambdarho is not already known, then look for it
   if val=fail then 
-    lookfunc:=function(data, x) 
-      return Concatenation([x[2]], RhoFunc(s)(x[4]))=lambdarho;
-    end;
+    if IsClosed(data) then 
+      return false;
+    fi;
   
     data:=Enumerate(data, infinity, lookfunc);
     val:=data!.found; # position in data!.orbit 
@@ -277,8 +280,7 @@ function(f, s)
       return false;
     fi;
     val:=data!.orblookup1[val]; 
-    # the index of the list of reps with same
-    # lambdarho value as f. 
+    # the index of the list of reps with same lambdarho value as f. 
     # = HTValue(LambdaRhoHT(s), lambdarho);
   fi;
 
@@ -291,7 +293,6 @@ function(f, s)
 
   # make sure lambda of f is in the first place of its scc
   if l<>scc[m][1] then 
-    #g:=f*LambdaOrbMults(o, m)[l][2];
     g:=f*LambdaOrbMult(o, m, l)[2];
   else
     g:=f;
@@ -315,19 +316,21 @@ function(f, s)
     lambdaperm:=LambdaPerm(s);
     for n in [1..repslens[val]] do 
       if SiftedPermutation(schutz, lambdaperm(reps[val][n], g))=() then
-      #if SiftGroupElement(schutz, lambdaperm(reps[val][n], g)).isone then 
         return true;
       fi;
     od;
   fi; 
-  
+ 
+  if IsClosed(data) then 
+    return false;
+  fi;
+
   # enumerate until we find f or the number of elts in reps[val] exceeds max
   max:=Factorial(LambdaRank(s)(lambda))/Size(LambdaOrbSchutzGp(o, m));
 
   if repslens[val]<max then 
     if schutz=false then 
       repeat 
-
         # look for more R-reps with same lambda-rho value
         data:=Enumerate(data, infinity, lookfunc);
         found:=data!.found;
@@ -414,15 +417,20 @@ InstallOtherMethod(Enumerate,
 function(data, limit, lookfunc)
   local looking, ht, orb, nr, i, graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact, lambdaperm, rho, lambdarhoht, o, oht, scc, r, lookup, htadd, htvalue, x, lamx, pos, m, y, rhoy, val, schutz, tmp, old, j, n;
 
-  if IsClosed(data) then 
-    return data;
-  fi;
  
  if lookfunc<>ReturnFalse then 
     looking:=true;
   else
     looking:=false;
   fi;
+  
+  if IsClosed(data) then 
+    if looking then 
+      data!.found:=false;
+    fi;
+    return data;
+  fi;
+  
   data!.looking:=looking;
 
   ht:=data!.ht;       # so far found R-reps
@@ -469,7 +477,6 @@ function(data, limit, lookfunc)
 
   o:=LambdaOrb(s);
   oht:=o!.ht;
-  Enumerate(o, infinity);
   scc:=OrbSCC(o); r:=Length(scc);
   lookup:=o!.scc_lookup;
  
@@ -494,13 +501,10 @@ function(data, limit, lookfunc)
       m:=lookup[pos];
 
       #put lambda x in the first position in its scc
-      if not pos=scc[m][1] then 
-        
-        #JDM expand!
+      if pos<>scc[m][1] then 
         y:=x*LambdaOrbMult(o, m, pos)[2];
       else
         y:=x;
-        pos:=fail;
       fi;
 
       rhoy:=[m];

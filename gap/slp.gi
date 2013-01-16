@@ -207,12 +207,14 @@ function(data, pos)
 
   while pos > 1 do
     Add(word, schreiergen[pos]);
-    if schreiermult[pos]<>fail then # a multiplier was applied!
-      o:=orb[pos][3];               # the lambda orb
-      m:=orb[pos][2];            # the scc
-      Append(word2,
-       Reversed(TraceSchreierTreeOfSCCBack(o, m, schreiermult[pos])));
-    fi;
+    #if schreiermult[pos]<>fail then # a multiplier was applied!
+    #  o:=orb[pos][3];               # the lambda orb
+    #  m:=orb[pos][2];               # the scc
+    #  Append(word2,
+    #   Reversed(TraceSchreierTreeOfSCCBack(o, m, schreiermult[pos])));
+    #fi;
+    Append(word2, Reversed(TraceSchreierTreeOfSCCBack(orb[pos][3], orb[pos][2],
+     schreiermult[pos])));
     pos:=schreierpos[pos];
   od;
 

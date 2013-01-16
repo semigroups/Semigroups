@@ -90,15 +90,12 @@ end);
 
 #GGG
 
-# mod for 1.0! - GroupOfUnits - "for an acting semigroup"
-###########################################################################
-
 InstallMethod(GroupOfUnits, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local r, m, g, emb, u;
 
-  if not IsMonoidAsSemigroup(s) then
+  if MultiplicativeNeutralElement(s)=fail then
     return fail;
   fi;
 
