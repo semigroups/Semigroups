@@ -748,7 +748,7 @@ end);
 
 InstallGlobalFunction(ClosureSemigroupNC,
 function(s, coll, opts)
-  local t, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, graph, old_graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, lambdarhoht, old_o, o, oht, scc, r, lookup, old_to_new, htadd, htvalue, i, j, k, x, pos, m, rank, y, rhoy, val, schutz, tmp, old, n;
+  local t, old_o, o, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, graph, old_graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, lambdarhoht, oht, scc, old_scc, lookup, old_lookup, old_to_new, htadd, htvalue, i, x, pos, m, rank, y, rhoy, val, schutz, tmp, old, j, n;
  
   if coll=[] then 
     Info(InfoSemigroups, 2, "all the elements in the collection belong to the ",
@@ -846,8 +846,10 @@ function(s, coll, opts)
   lambdarhoht:=LambdaRhoHT(t);
 
   oht:=o!.ht;
-  scc:=OrbSCC(o); r:=Length(scc);
+  scc:=OrbSCC(o);
+  old_scc:=OrbSCC(old_o);
   lookup:=o!.scc_lookup; 
+  old_lookup:=old_o!.scc_lookup;
   
   # look up for old_to_new[i]:=Position(new_orb, old_orb[i]);
   # i.e. position of old R-rep in new_orb
@@ -874,10 +876,14 @@ function(s, coll, opts)
     m:=lookup[pos];
     rank:=ActionRank(x);
     
-    if rank<=max_rank and pos<>scc[m][1] then 
+    if rank>max_rank or scc[m][1]=old_scc[old_lookup[pos]][1] then 
+      y:=x;
+    elif pos=old_scc[old_lookup[pos]][1] then 
       y:=x*LambdaOrbMult(o, m, pos)[2];
     else
-      y:=x;
+      # x has rectified lambda value but pos refers to the unrectified value
+      y:=x*LambdaOrbMult(old_o, old_lookup[pos], pos)[1]
+       *LambdaOrbMult(o, m, pos)[2];
     fi;
     
     rhoy:=[m];
@@ -955,7 +961,7 @@ function(s, coll, opts)
   new_data!.genstoapply:=[nr_old_gens+1..nr_new_gens];
   new_data!.pos:=1;
   new_data!.stopper:=old_to_new[old_data!.pos];
-
+  new_data!.lenreps:=lenreps;
   Enumerate(new_data, infinity, ReturnFalse);
 
   new_data!.pos:=old_to_new[old_data!.pos];

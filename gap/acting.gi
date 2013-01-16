@@ -415,8 +415,7 @@ InstallOtherMethod(Enumerate,
 "for an acting semi data, limit, and func",
 [IsSemigroupData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr, i, graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact, lambdaperm, rho, lambdarhoht, o, oht, scc, r, lookup, htadd, htvalue, x, lamx, pos, m, y, rhoy, val, schutz, tmp, old, j, n;
-
+  local looking, ht, orb, nr, i, graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact, lambdaperm, rho, lambdarhoht, o, oht, scc, lookup, htadd, htvalue, x, lamx, pos, m, y, rhoy, val, schutz, tmp, old, j, n;
  
  if lookfunc<>ReturnFalse then 
     looking:=true;
@@ -477,7 +476,7 @@ function(data, limit, lookfunc)
 
   o:=LambdaOrb(s);
   oht:=o!.ht;
-  scc:=OrbSCC(o); r:=Length(scc);
+  scc:=OrbSCC(o); 
   lookup:=o!.scc_lookup;
  
   if IsBound(HTAdd_TreeHash_C) then 
@@ -1394,7 +1393,6 @@ function(o, m, bound)
     o!.schutzstab[m]:=false;
   else
     o!.schutzstab[m]:=StabChainImmutable(g);
-    #o!.schutzstab[m]:=StabilizerChain(g);
   fi;
 
   return g;
@@ -1410,12 +1408,7 @@ InstallMethod(SemigroupData, "for an acting semigroup",
 function(s)
   local gens, one, data;
  
-  #if IsMonoid(s) then 
-  #  gens:=GeneratorsOfMonoid(s);
-  #else
-    gens:=GeneratorsOfSemigroup(s);
-  #fi;
-
+  gens:=GeneratorsOfSemigroup(s);
   one:=One(gens);
 
   data:=rec(gens:=gens, 
