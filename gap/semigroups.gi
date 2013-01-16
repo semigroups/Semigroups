@@ -782,7 +782,6 @@ function(s, coll, opts)
   
   new_nr:=Length(new_orb);
   old_nr:=Length(old_orb);
-  i:=new_data!.pos;   
   # points in orb in position at most i have descendants
   
   graph:=new_data!.graph; 
@@ -847,8 +846,11 @@ function(s, coll, opts)
   
   # look up for old_to_new[i]:=Position(new_orb, old_orb[i]);
   # i.e. position of old R-rep in new_orb
+  
   old_to_new:=EmptyPlist(old_nr);
- 
+  old_to_new[1]:=1;
+  old_to_new[2]:=2;
+
   if IsBound(HTAdd_TreeHash_C) then
     htadd:=HTAdd_TreeHash_C;
     htvalue:=HTValue_TreeHash_C;
@@ -857,8 +859,10 @@ function(s, coll, opts)
     htvalue:=HTValue;
   fi;
  
+  i:=1;   
+  
   # install old R-class reps in new_orb
-  while new_nr<=old_nr and i<new_nr do
+  while new_nr<=old_nr and i<old_nr do
     i:=i+1;
     j:=old_to_new[old_schreierpos[i]];
     k:=old_schreiergen[i];
