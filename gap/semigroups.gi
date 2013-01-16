@@ -779,7 +779,8 @@ function(s, coll, opts)
   Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
   Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse); 
   Unbind(o!.rev); Unbind(o!.truth);
-  
+  SetLambdaOrb(t, o); 
+
   if not HasSemigroupData(s) or Length(SemigroupData(s))=1 then 
     return t;
   fi;
