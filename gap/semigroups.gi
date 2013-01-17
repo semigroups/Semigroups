@@ -778,7 +778,10 @@ function(s, coll, opts)
   # might
   Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
   Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse); 
-  Unbind(o!.rev); Unbind(o!.truth);
+  Unbind(o!.rev); Unbind(o!.truth); Unbind(o!.semi); 
+  Unbind(o!.schutzstab); Unbind(o!.slp); Unbind(o!.scc_reps);
+
+  o!.semi:=t;
   SetLambdaOrb(t, o); 
 
   if not HasSemigroupData(s) or Length(SemigroupData(s))=1 then 
@@ -803,7 +806,7 @@ function(s, coll, opts)
   
   graph:=new_data!.graph; 
   old_graph:=old_data!.graph;
-  graph[1]:=old_graph[1];
+  graph[1]:=ShallowCopy(old_graph[1]);
   # orbit graph of orbit of R-classes under left mult 
   
   reps:=new_data!.reps;   
@@ -871,7 +874,6 @@ function(s, coll, opts)
   # install old R-class reps in new_orb
   while new_nr<=old_nr and i<old_nr do
     i:=i+1;
-    
     x:=old_orb[i][4];
     pos:=old_schreiermult[i];
     m:=lookup[pos];
@@ -939,7 +941,7 @@ function(s, coll, opts)
       fi;
     fi;
     new_orb[new_nr]:=x;
-    graph[new_nr]:=old_graph[i];
+    graph[new_nr]:=ShallowCopy(old_graph[i]);
     new_schreierpos[new_nr]:=old_to_new[old_schreierpos[i]];
     # orb[nr] is obtained from orb[i]
     new_schreiergen[new_nr]:=old_schreiergen[i];     

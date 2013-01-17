@@ -115,7 +115,7 @@ function(o)
   o!.scc:=scc;
   o!.scc_lookup:=ListWithIdenticalEntries(Length(o), 1);
 
-  if Length(scc)>1 then
+  if r>1 then
     for i in [2..r] do
       o!.scc_lookup{scc[i]}:=ListWithIdenticalEntries(Length(scc[i]), i);
     od;

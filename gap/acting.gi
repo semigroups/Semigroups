@@ -489,7 +489,6 @@ function(data, limit, lookfunc)
 
   while nr<=limit and i<nr and i<>stopper do 
     i:=i+1;
-    
     for j in genstoapply do #JDM
       x:=gens[j]*orb[i][4];
       lamx:=lambda(x);
@@ -509,7 +508,7 @@ function(data, limit, lookfunc)
       rhoy:=[m];
       Append(rhoy, rho(y));
       val:=htvalue(lambdarhoht, rhoy);
-
+      if y=Transformation([1,4,4,4]) then Error(); fi;
       # this is what we keep if it is new
       # x:=[s, m, o, y, false, nr+1];
 
