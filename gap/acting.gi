@@ -504,7 +504,7 @@ function(data, limit, lookfunc)
       else
         y:=x;
       fi;
-
+      
       rhoy:=[m];
       Append(rhoy, rho(y));
       val:=htvalue(lambdarhoht, rhoy);

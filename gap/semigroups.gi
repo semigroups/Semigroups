@@ -903,7 +903,7 @@ function(s, coll, opts)
       y:=x*LambdaOrbMult(old_o, old_lookup[pos], pos)[1]
        *LambdaOrbMult(o, m, pos)[2];
     fi;
-    
+   
     rhoy:=[m];
     Append(rhoy, rho(y));
     val:=htvalue(lambdarhoht, rhoy);
@@ -977,7 +977,7 @@ function(s, coll, opts)
 
   # apply new generators to old R-reps
   new_data!.genstoapply:=[nr_old_gens+1..nr_new_gens];
-  new_data!.pos:=1;
+  new_data!.pos:=0;
   new_data!.stopper:=old_to_new[old_data!.pos];
   new_data!.lenreps:=lenreps;
   Enumerate(new_data, infinity, ReturnFalse);

@@ -23,7 +23,8 @@ gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
 >  Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ), 
 >  Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ), 
 >  Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] ) ];;
-gap> s:=Monoid(gens[1]);;
+gap> s:=Monoid(gens[1]);; Size(s);
+5
 gap> for i in [2..4] do 
 > s:=ClosureSemigroup(s, gens[i]); Size(s);
 > od;
@@ -41,9 +42,9 @@ gap> GroupOfUnits(s);
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/syntactic.semigroups.gz");;
 gap> gens:=ReadSemigroups(file, 299);;
-gap> s:=Semigroup(gens[1]);;
+gap> s:=Semigroup(gens[1]);; 
 gap> for i in [2..Length(gens)] do 
-> s:=ClosureSemigroup(s, gens[i]);
+> s:=ClosureSemigroup(s, gens[i]); 
 > od;
 gap> s;
 <transformation semigroup of degree 126 with 6 generators>
@@ -65,12 +66,13 @@ gap> NrLClasses(t);
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/syntactic.semigroups.gz");;
 gap> gens:=ReadSemigroups(file, 299);;
-gap> s:=Semigroup(gens[1], rec(schreier:=false));;
+gap> s:=Semigroup(gens[1]);; Size(s);
+30
 gap> for i in [2..Length(gens)] do 
-> s:=ClosureSemigroup(s, gens[i]);
+> s:=ClosureSemigroup(s, gens[i]); Size(s);
 > od;
 gap> s;
-<transformation semigroup of degree 126 with 6 generators>
+<transformation semigroup of size 15853, degree 126 with 6 generators>
 gap> Size(s);
 15853
 gap> Size(Semigroup(Generators(s)));
@@ -91,10 +93,10 @@ gap> file:=Concatenation(SemigroupsDir(), "/examples/path.semigroups.gz");;
 gap> gens:=ReadSemigroups(file, 10);;
 gap> s:=Semigroup(gens[1]);;         
 gap> for i in [2..Length(gens)] do
-> s:=ClosureSemigroup(s, gens[i]);
+> s:=ClosureSemigroup(s, gens[i]); Size(s);
 > od;
 gap> s;
-<transformation semigroup of degree 11 with 11 generators>
+<transformation semigroup of size 6996, degree 11 with 11 generators>
 gap> Size(s);
 6996
 gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
@@ -116,10 +118,10 @@ gap> gens:=ReadSemigroups(file, 10);;
 gap> s:=Semigroup(gens[1]);;        
 gap> s:=ClosureSemigroup(s, gens[2], rec(schreier:=false));;
 gap> for i in [2..Length(gens)] do
-> s:=ClosureSemigroup(s, gens[i]);
+> s:=ClosureSemigroup(s, gens[i]); Size(s);
 > od;
 gap> s;
-<transformation semigroup of degree 11 with 11 generators>
+<transformation semigroup of size 6996, degree 11 with 11 generators>
 gap> Size(s);
 6996
 gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
@@ -177,10 +179,10 @@ gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 gap> s:=Monoid(gens[3]);
 <transformation monoid of degree 4 with 1 generator>
 gap> for i in [1..Length(gens)] do
-> s:=ClosureSemigroup(s, gens[i]);
+> s:=ClosureSemigroup(s, gens[i]); Size(s);
 > od;
 gap> s;
-<transformation monoid of degree 4 with 4 generators>
+<transformation monoid of size 62, degree 4 with 4 generators>
 gap> Size(s);
 62
 gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
@@ -197,10 +199,10 @@ gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 gap> s:=Monoid(gens[3]);
 <transformation monoid of degree 4 with 1 generator>
 gap> for i in [1..Length(gens)] do
-> s:=ClosureSemigroup(s, gens[i]);
+> s:=ClosureSemigroup(s, gens[i]); Size(s);
 > od;
 gap> s;
-<transformation monoid of degree 4 with 4 generators>
+<transformation monoid of size 62, degree 4 with 4 generators>
 gap> Size(s);
 62
 gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
