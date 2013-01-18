@@ -508,7 +508,6 @@ function(data, limit, lookfunc)
       rhoy:=[m];
       Append(rhoy, rho(y));
       val:=htvalue(lambdarhoht, rhoy);
-      if y=Transformation([1,4,4,4]) then Error(); fi;
       # this is what we keep if it is new
       # x:=[s, m, o, y, false, nr+1];
 

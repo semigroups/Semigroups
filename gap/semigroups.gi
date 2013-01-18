@@ -23,10 +23,16 @@ function(s)
     TryNextMethod();
   fi;
 
-  if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
+  if IsGroupAsSemigroup(s) then 
+    Print("<");
+  elif HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
     Print("<inverse ");
-  elif HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then 
-    Print("<regular ");
+  elif HasIsRegularSemigroup(s) then 
+    if IsRegularSemigroup(s) then 
+      Print("<regular ");
+    else
+      Print("<non-regular ");
+    fi;
   else
     Print("<");
   fi;
@@ -43,23 +49,30 @@ function(s)
     Print("binary relation ");
   fi;
   
-  if IsMonoid(s) then 
+  if IsGroupAsSemigroup(s) then 
+    Print("group ");
+  elif IsMonoid(s) then 
     Print("monoid ");
   else 
     Print("semigroup ");
   fi;
 
+  Print("of ");
+  if HasSize(s) then 
+    Print("size ", Size(s), ", ");
+  fi;
+
   if IsTransformationSemigroup(s) then 
-    Print("of degree ", DegreeOfTransformationSemigroup(s), " ");
+    Print("degree ", DegreeOfTransformationSemigroup(s), " ");
   elif IsPartialPermSemigroup(s) then 
-    Print("of degree ", DegreeOfPartialPermSemigroup(s), " ");
+    Print("degree ", DegreeOfPartialPermSemigroup(s), " ");
   elif IsMatrixSemigroup(s) then
     n:=Length(GeneratorsOfSemigroup(s)[1][1]);
     Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]), " ");
   elif IsBipartitionSemigroup(s) then 
-    Print("of degree ", DegreeOfBipartitionSemigroup(s)/2, " "); 
+    Print("degree ", DegreeOfBipartitionSemigroup(s)/2, " "); 
   elif IsBinaryRelationSemigroup(s) then 
-    Print("of degree ", Length(Successors(Generators(s)[1])), " ");
+    Print("degree ", Length(Successors(Generators(s)[1])), " ");
   fi;
 
   Print("with ", Length(Generators(s)));
@@ -669,7 +682,8 @@ function(s, coll, record)
   t:=InverseSemigroupByGeneratorsNC(o!.gens, 
    Concatenation(Generators(s), coll), record);
 
-  #JDM is the following enough?!
+  #JDM is the following enough?! This is not anywhere near enough see
+  #ClosureSemigroupNC below!!
 
   #remove everything related to strongly connected components
   if IsBound(o!.scc) then 
@@ -778,13 +792,14 @@ function(s, coll, opts)
   # might
   Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
   Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse); 
-  Unbind(o!.rev); Unbind(o!.truth); Unbind(o!.semi); 
-  Unbind(o!.schutzstab); Unbind(o!.slp); Unbind(o!.scc_reps);
-
+  Unbind(o!.rev); Unbind(o!.truth); Unbind(o!.schutzstab); Unbind(o!.slp); 
+  
   o!.semi:=t;
-  SetLambdaOrb(t, o); 
+  o!.scc_reps:=[One(Generators(t))];
 
-  if not HasSemigroupData(s) or Length(SemigroupData(s))=1 then 
+  SetLambdaOrb(t, o); 
+  
+  if not HasSemigroupData(s) or SemigroupData(s)!.pos=0 then 
     return t;
   fi;
   
@@ -808,7 +823,7 @@ function(s, coll, opts)
   old_graph:=old_data!.graph;
   graph[1]:=ShallowCopy(old_graph[1]);
   # orbit graph of orbit of R-classes under left mult 
-  
+
   reps:=new_data!.reps;   
   # reps grouped by equal lambda and rho value 
   # HTValue(lambdarhoht, Concatenation(lambda(x), rho(x))
@@ -951,12 +966,12 @@ function(s, coll, opts)
     htadd(ht, y, new_nr);
     old_to_new[i]:=new_nr;
   od;
-
+  
   # process the orbit graph
 
-  for i in graph do 
-    for j in i do 
-      j:=old_to_new[j];
+  for i in [1..new_nr] do 
+    for j in [1..Length(graph[i])] do 
+      graph[i][j]:=old_to_new[graph[i][j]];
     od;
   od;
 
