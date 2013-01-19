@@ -18,16 +18,6 @@ function()
   return PackageInfo("semigroups")[1]!.InstallationPath;
 end);
 
-# new for 0.7 - SemigroupsIsNotCompiled - for no arg
-#############################################################################
-
-InstallGlobalFunction(SemigroupsIsNotCompiled, 
-function(arg)
-  Info(InfoWarning, 1, "Semigroups is not compiled and consequently this",  
-  " function is unavailable.");
-  return fail;
-end);
-
 # mod for 0.7! - SemigroupsMakeDoc - "for no argument"
 #############################################################################
 
@@ -99,14 +89,14 @@ function()
   for x in tst do
     str:=SplitString(x, ".");
     if Length(str)>=2 and str[2]="tst" then
-      if not Semigroups_C and str[1] in ["inverse", "pperm", "semigroups", 
-         "testcompiled"]
-        then 
-        Print("not reading ", dir_str, "/", x, "\n(Semigroups is not compiled)\n");
-      else
+      #if not Semigroups_C and str[1] in ["inverse", "pperm", "semigroups", 
+      #   "testcompiled"]
+      #  then 
+      #  Print("not reading ", dir_str, "/", x, "\n(Semigroups is not compiled)\n");
+      #else
         Print("reading ", dir_str,"/", x, " ...\n");
         Test(Filename(dir, x));
-      fi;
+      #fi;
       Print("\n");
     fi;
   od;  
@@ -120,10 +110,10 @@ InstallGlobalFunction(SemigroupsTestInstall,
 function()
   Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
    "testinstall.tst"));;
-  if Semigroups_C then 
+  #if Semigroups_C then 
     Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
        "testcompiled.tst"));;
-  fi;
+  #fi;
   return;
 end);
 
@@ -134,10 +124,10 @@ InstallGlobalFunction(SemigroupsTestManualExamples,
 function()
   local InfoLevelInfoWarning, InfoLevelInfoSemigroups;
   
-  if not Semigroups_C then 
-    Print("Semigroups is not compiled and so this will produce many many errors.\n");
-    return fail;
-  fi;
+  #if not Semigroups_C then 
+   # Print("Semigroups is not compiled and so this will produce many many errors.\n");
+   # return fail;
+  #fi;
 
   SizeScreen([80]); 
   InfoLevelInfoWarning:=InfoLevel(InfoWarning);
@@ -163,10 +153,10 @@ InstallGlobalFunction(SemigroupsReadTestManualExamples,
 function()
   local ex, tst, i;
 
-  if not Semigroups_C then 
-    Print("Semigroups is not compiled and so this will produce many many errors.");
-    return fail;
-  fi;
+  #if not Semigroups_C then 
+  #  Print("Semigroups is not compiled and so this will produce many many errors.");
+  #  return fail;
+  #fi;
   
   ex:=ManualExamples("~/semigroups/doc/", "semigroups.xml",  [ "utils.xml",
   "greens.xml", "orbits.xml", "properties.xml", "pperm.xml", "inverse.xml",

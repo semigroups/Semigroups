@@ -8,16 +8,9 @@
 ############################################################################# 
 ##
 
-#FFF
+#
 
-# new for 1.0! - FullBinaryRelationSemigroup - "for a pos int"
-###############################################################################
-
-
-# new for 1.0! - RegularBinaryRelationSemigroup - "for a pos int"
-###############################################################################
-
-InstallMethod(RegularBinaryRelationSemigroup, "for a pos int",
+InstallMethod(RegularBinaryRelationSemigroup, "for a positive integer",
 [IsPosInt],
 function(n) 
   local gens, s;
@@ -32,8 +25,7 @@ function(n)
   return s;
 end);
 
-# new for 0.7! - FullMatrixSemigroup - "for a pos int and pos int"
-################################################################################
+#
 
 InstallMethod(FullMatrixSemigroup, "for pos int and pos int",  
 [IsPosInt, IsPosInt],
@@ -53,36 +45,24 @@ function(d,q)
   return S;
 end);
 
-#GGG
-
-# new for 0.7! - GeneralLinearSemigroup - "for a pos int and pos int"
-################################################################################
+#
 
 InstallMethod(GeneralLinearSemigroup, "for 2 pos ints", 
 [IsPosInt, IsPosInt], FullMatrixSemigroup);
 
-#III
-
-# new for 0.7! - IsFullMatrixSemigroup - "for a pos int and pos int"
-################################################################################
+#
 
 InstallMethod(IsFullMatrixSemigroup, "for a semigroup", 
 [IsSemigroup], ReturnFalse);
 
-# new for 0.7! - IsGeneralLinearSemigroup - "for a pos int and pos int"
-################################################################################
+#
 
 InstallOtherMethod(IsGeneralLinearSemigroup, "for a semigroup",
 [IsSemigroup], ReturnFalse);
 
-#MMM
+# undocumented, from the semigroupe manual... JDM is this right?
 
-# new for 0.7! - MonoidOfMultiplicationByN - "for a pos int"
-################################################################################
-# undoc
-# from the semigroupe manual... JDM is this right?
-
-InstallMethod(MonoidOfMultiplicationByN, "for a pos int",
+InstallMethod(MonoidOfMultiplicationByN, "for a positive integer",
 [IsPosInt],
 function(n)
   local out, i;
@@ -96,8 +76,7 @@ function(n)
   return Monoid(Transformation(out{[1..n]}),Transformation(out{[n+1..2*n]}));
 end);
 
-# new for 0.7! - MunnSemigroup - "for a semilattice as a semigroup"
-################################################################################
+#
 
 if Filename(DirectoriesPackagePrograms("grape"),"dreadnautB") = fail then
   InstallMethod(MunnSemigroup, "for a semilattice", 
@@ -209,12 +188,9 @@ else
   end);
 fi;
 
-#OOO
+#
 
-# new for 0.7! - O - "for a pos int"
-################################################################################
-
-InstallMethod(OrderEndomorphisms, "for a pos int",
+InstallMethod(OrderEndomorphisms, "for a positive integer",
 [IsPosInt],
 function(n)
   local gens, s, i;
@@ -233,12 +209,9 @@ function(n)
   return s;
 end);
 
-#PPP
+#
 
-# new for 1.0! - PartialTransformationSemigroup - "for a pos int"
-################################################################################
-
-InstallMethod(PartialTransformationSemigroup, "for a pos int", 
+InstallMethod(PartialTransformationSemigroup, "for a positive integer", 
 [IsPosInt],
 function(n)
   local a, b, c, d, s;
@@ -253,10 +226,9 @@ function(n)
   return s;
 end);
 
-# new for 1.0! - PartitionMonoid - "for a pos int"
-################################################################################
+#
 
-InstallMethod(PartitionMonoid, "for a pos int",
+InstallMethod(PartitionMonoid, "for a positive integer",
 [IsPosInt], 
 function(n)
   local gens, g, s;
@@ -271,7 +243,9 @@ function(n)
   return s;
 end);
 
-InstallMethod(DualSymmetricInverseSemigroup, "for a pos int",
+#
+
+InstallMethod(DualSymmetricInverseSemigroup, "for a positive integer",
 [IsPosInt], 
 function(n)
   local gens;
@@ -281,47 +255,33 @@ function(n)
   return Semigroup(gens);
 end);
 
-# new for 0.7! - POI - "for a pos int"
-################################################################################
+#
 
-if Semigroups_C then 
-  InstallMethod(POI, "for a pos int",
-  [IsPosInt],
-  function(n)
-    local out, i;
+InstallMethod(POI, "for a positive integer",
+[IsPosInt],
+function(n)
+  local out, i;
 
-    out:=EmptyPlist(n);
-    out[1]:=PartialPermNC([0..n-1]);
-    for i in [0..n-2] do 
-      out[i+2]:=[1..n];
-      out[i+2][(n-i)-1]:=n-i; out[i+2][n-i]:=0;
-      out[i+2]:=PartialPermNC(out[i+2]);
-    od;
-    return InverseMonoid(out); 
-  end);
-else
-  InstallMethod(POI, "for a pos int",
-  [IsPosInt], SemigroupsIsNotCompiled);
-fi;
+  out:=EmptyPlist(n);
+  out[1]:=PartialPermNC([0..n-1]);
+  for i in [0..n-2] do 
+    out[i+2]:=[1..n];
+    out[i+2][(n-i)-1]:=n-i; out[i+2][n-i]:=0;
+    out[i+2]:=PartialPermNC(out[i+2]);
+  od;
+  return InverseMonoid(out); 
+end);
 
-# new for 0.7! - POPI - "for a pos int"
-################################################################################
+#
 
-if Semigroups_C then 
-  InstallMethod(POPI, "for a pos int",
-  [IsPosInt],
-  function(n)
-    return InverseMonoid(PartialPermNC(Concatenation([2..n],[1])), 
+InstallMethod(POPI, "for a positive integer",
+[IsPosInt],
+function(n)
+  return InverseMonoid(PartialPermNC(Concatenation([2..n],[1])), 
      PartialPermNC(Concatenation([1..n-2],[n])));
-  end);
-else 
-  InstallMethod(POPI, "for a pos int",
-  [IsPosInt], SemigroupsIsNotCompiled);
-fi;
+end);
 
-# new for 0.7! - PowerSemigroup - "for a group"
-################################################################################
-# undoc
+#
 
 InstallMethod(PowerSemigroup, "for a group",
 [IsGroup],
@@ -346,12 +306,9 @@ function(g)
   return s;
 end);
 
-#SSS
+#
 
-# new for 0.7! - SingularSemigp - "for a pos int"
-################################################################################
-
-InstallMethod(SingularSemigroup, "for a pos int",
+InstallMethod(SingularSemigroup, "for a positive integer",
 [IsPosInt],
 function(n)
   local img, x, S, T;
@@ -363,43 +320,24 @@ function(n)
   return T;
 end);
 
-# new for 0.7! - SymmetricInverseSemigroup - "for a pos int"
-################################################################################
+#
 
-if Semigroups_C then 
-  InstallMethod(SymmetricInverseSemigroup, "for a pos int",
-  [IsPosInt],
-  function(n)
+InstallMethod(SymmetricInverseSemigroup, "for a positive integer",
+[IsPosInt],
+function(n)
 
-    if n=0 then
-      return InverseSemigroup(PartialPermNC([]));
-    elif n=1 then 
-      return InverseSemigroup(PartialPermNC([1]), PartialPermNC([]));
-    elif n=2 then 
-      return InverseSemigroup(PartialPermNC([2,1]), PartialPermNC([1]));;
-    fi;
+  if n=0 then
+    return InverseSemigroup(PartialPermNC([]));
+  elif n=1 then 
+    return InverseSemigroup(PartialPermNC([1]), PartialPermNC([]));
+  elif n=2 then 
+    return InverseSemigroup(PartialPermNC([2,1]), PartialPermNC([1]));;
+  fi;
 
-    return InverseSemigroup(List(GeneratorsOfGroup(SymmetricGroup(n)), x->
-     PartialPermNC(ListPerm(x, n))), PartialPermNC([0..n-1]*1));
-  end);
-else
-  InstallMethod(SymmetricInverseSemigroup, "for a pos int",
-  [IsPosInt], SemigroupsIsNotCompiled);
-fi;
+  return InverseSemigroup(List(GeneratorsOfGroup(SymmetricGroup(n)), x->
+   PartialPermNC(ListPerm(x, n))), PartialPermNC([0..n-1]*1));
+end);
 
-#VVV
-
-# new for 0.7! - ViewObj - "for full matrix semigroup"
-################################################################################
-
-InstallMethod(ViewObj, "for full matrix semigroup",
-[IsFullMatrixSemigroup], 10,
-function( obj )        
-  local n;
-  n:=Length(GeneratorsOfMonoid(obj)[1][1]);
-  Print( "<full matrix semigroup ",n, "x", n, " over ",
-   BaseDomain(GeneratorsOfMonoid(obj)[1][1]), ">");         
-  return;
-end); 
+#
 
 #EOF

@@ -50,6 +50,8 @@ DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
 
 #old
 
+DeclareGlobalFunction("DClass");
+DeclareGlobalFunction("DClassNC");
 DeclareGlobalFunction("HClass");
 DeclareGlobalFunction("HClassNC");
 DeclareGlobalFunction("LClass");

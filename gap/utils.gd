@@ -16,8 +16,6 @@ DeclareGlobalFunction("SemigroupsTestAll");
 DeclareGlobalFunction("SemigroupsTestInstall");
 DeclareGlobalFunction("SemigroupsTestManualExamples");
 DeclareGlobalFunction("SemigroupsReadTestManualExamples");
-DeclareGlobalFunction("DClass");
-DeclareGlobalFunction("DClassNC");
 
 if not IsBound(Generators) then 
   DeclareAttribute("Generators", IsSemigroup);
@@ -27,6 +25,4 @@ DeclareGlobalFunction("ReadSemigroups");
 DeclareGlobalFunction("ReadSemigroupsLine");
 DeclareGlobalFunction("ReadSemigroupsLinePP");
 DeclareGlobalFunction("WriteSemigroups");
-
-DeclareGlobalFunction("SemigroupsIsNotCompiled");
 

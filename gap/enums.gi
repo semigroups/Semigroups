@@ -32,9 +32,6 @@ function(s)
   return Immutable(out);
 end);
 
-# mod for 1.0! - Enumerator - "for a D-class of acting semigp."
-#############################################################################
-
 # different method for inverse/regular
 
 InstallOtherMethod(Enumerator, "for a D-class of acting semigp.",
@@ -49,8 +46,6 @@ function(d)
     m:=Length(LambdaOrbSCC(d))*Size(LambdaOrbSchutzGp(LambdaOrb(d),
      LambdaOrbSCCIndex(d))),
     # size of any R-class in d.
-
-    #######################################################################
 
     ElementNumber:=function(enum, pos)
     local q, n, m, R;
@@ -150,9 +145,6 @@ function(d)
   end));
 end);
 
-# mod for 1.0! - Enumerator - "for H-class of acting semigp."
-#############################################################################
-
 # same method for inverse/regular
 
 InstallOtherMethod(Enumerator, "for H-class of acting semigp.",
@@ -163,8 +155,6 @@ function(h)
 
     schutz:=Enumerator(SchutzenbergerGroup(h)),
 
-    #########################################################################
-
     ElementNumber:=function(enum, pos)
       if pos>Length(enum) then
         return fail;
@@ -173,22 +163,19 @@ function(h)
       return Representative(h)*enum!.schutz[pos];
     end,
 
-    #########################################################################
-
     NumberElement:=function(enum, f)
       local s, rep;
       s:=ParentSemigroup(h);
       rep:=Representative(h);
 
-      if ActionRank(f) <> ActionRank(rep) or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) or
-       RhoFunc(s)(f) <> RhoFunc(s)(rep) then
+      if ActionRank(f) <> ActionRank(rep) 
+        or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) 
+        or RhoFunc(s)(f) <> RhoFunc(s)(rep) then
         return fail;
       fi;
 
       return Position(enum!.schutz, LambdaPerm(s)(rep, f));
     end,
-
-    ###########################################################################
 
     Membership:=function(elm, enum)
       return elm in h; #the H-class itself!
@@ -202,9 +189,6 @@ function(h)
 
   end));
 end);
-
-# mod for 1.0! - Enumerator - "for L-class of an acting semigroup"
-##############################################################################
 
 # same method for regular, different method for inverse
 
@@ -223,8 +207,6 @@ function(l)
     schutz:=Enumerator(SchutzenbergerGroup(l)),
 
     len:=Size(SchutzenbergerGroup(l)),
-
-    #########################################################################
 
     ElementNumber:=function(enum, pos)
       local n, m, q;
@@ -245,17 +227,16 @@ function(l)
      return mults[scc[pos[1]]][1]*enum[pos[2]];
     end,
 
-    #########################################################################
-    
     NumberElement:=function(enum, f)
       local s, rep, o, m, i, g, j;
 
       s:=ParentSemigroup(l);
       rep:=Representative(l);
       
-      if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-       ActionDegree(f) <> ActionDegree(rep) or ActionRank(f) <> ActionRank(rep) or 
-       LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then 
+      if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
+        or ActionDegree(f) <> ActionDegree(rep) 
+        or ActionRank(f) <> ActionRank(rep) 
+        or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then 
         return fail;
       fi;
       
@@ -278,8 +259,6 @@ function(l)
       return enum!.len*(Position(scc, i)-1)+j;
     end,
 
-    #########################################################################
-
     Membership:=function(elm, enum)
       return elm in l;
     end,
@@ -291,9 +270,6 @@ function(l)
       return;
     end));
 end);
-
-# mod for 1.0! - Enumerator - "for R-class of an acting semigroup"
-##############################################################################
 
 # same method for regular/inverse
 
@@ -312,8 +288,6 @@ function(r)
     schutz:=Enumerator(SchutzenbergerGroup(r)),
 
     len:=Size(SchutzenbergerGroup(r)),
-
-    #########################################################################
 
     ElementNumber:=function(enum, pos)
       local n, m, q;
@@ -334,8 +308,6 @@ function(r)
      return enum[pos[2]]*mults[scc[pos[1]]][1];
     end,
 
-    #########################################################################
-    
     NumberElement:=function(enum, f)
       local s, rep, o, m, l, g, j;
 
@@ -370,8 +342,6 @@ function(r)
       return enum!.len*(Position(scc, l)-1)+j;
     end,
 
-    #########################################################################
-
     Membership:=function(elm, enum)
       return elm in r;
     end,
@@ -384,8 +354,6 @@ function(r)
     end));
 end);
 
-# mod for 1.0! - EnumeratorOfRClasses - "for an acting semigroup"
-#############################################################################
 # Notes: the only purpose for this is the method for NumberElement.  Otherwise
 # use (if nothing much is known) IteratorOfRClasses or if everything is know
 # just use RClasses.

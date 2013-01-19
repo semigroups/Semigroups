@@ -46,11 +46,3 @@ ReadPackage("semigroups/gap/options.g");
 
 DeclareInfoClass("InfoSemigroups");;
 
-if not IsBound(SEMIGROUPSC) then 
-  Info(InfoWarning, 1, "Semigroups: the Semigroups package binary is not available,",
-  " and so the");
-  Info(InfoWarning, 1, "Semigroups: functions in Semigroups for partial permutations",
-  " are not available.");
-fi;
-
-BindGlobal("Semigroups_C", IsBound(SEMIGROUPSC));

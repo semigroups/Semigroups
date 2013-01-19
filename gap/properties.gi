@@ -774,128 +774,95 @@ InstallOtherMethod(IsMonoidAsSemigroup, "for a semigroup",
 [IsSemigroup and HasGeneratorsOfSemigroup], 
  x-> not IsMonoid(x) and MultiplicativeNeutralElement(x)<>fail);
 
-# new for 0.7! - IsomorphismPartialPermMonoid - "for a perm group"
-#############################################################################
+#
 
-if Semigroups_C then 
-  InstallMethod(IsomorphismPartialPermMonoid, "for a perm group",
-  [IsPermGroup],
-  function(g)
-    local dom;
+InstallMethod(IsomorphismPartialPermMonoid, "for a perm group",
+[IsPermGroup],
+function(g)
+  local dom;
 
-    dom:=MovedPoints(g);
-    return MappingByFunction(g, InverseMonoid(List(GeneratorsOfGroup(g), p-> 
-     AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
-  end);
-else
-  InstallMethod(IsomorphismPartialPermMonoid, "for a perm group",
-  [IsPermGroup], SemigroupsIsNotCompiled);
-fi;
+  dom:=MovedPoints(g);
+  return MappingByFunction(g, InverseMonoid(List(GeneratorsOfGroup(g), p-> 
+   AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
+end);
 
-# new for 0.7! - IsomorphismPartialPermSemigroup - "for a perm group"
-#############################################################################
 
-if Semigroups_C then 
-  InstallMethod(IsomorphismPartialPermSemigroup, "for a perm group",
-  [IsPermGroup],
-  function(g)
-    local dom;
+InstallMethod(IsomorphismPartialPermSemigroup, "for a perm group",
+[IsPermGroup],
+function(g)
+  local dom;
 
-    dom:=MovedPoints(g);
-    return MappingByFunction(g, InverseSemigroup(List(GeneratorsOfGroup(g), p-> 
-     AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
-  end);
-else
-  InstallMethod(IsomorphismPartialPermSemigroup, "for a perm group",
-  [IsPermGroup], SemigroupsIsNotCompiled);
-fi;
+  dom:=MovedPoints(g);
+  return MappingByFunction(g, InverseSemigroup(List(GeneratorsOfGroup(g), p-> 
+   AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
+end);
 
-# new for 0.7! - IsomorphismPartialPermSemigroup - "for trans semi"
-#############################################################################
+#
 
-if Semigroups_C then 
-  InstallOtherMethod(IsomorphismPartialPermMonoid, "for a part perm semi",
-  [IsPartialPermSemigroup],
-  function(s)
+InstallOtherMethod(IsomorphismPartialPermMonoid, "for a part perm semi",
+[IsPartialPermSemigroup],
+function(s)
 
-    if IsMonoid(s) then 
-      return MappingByFunction(s, s, x-> x, x-> x);
-    elif not IsMonoidAsSemigroup(s) then 
-      Error("usage, partial perm. semigroup satisfying IsMonoidAsSemigroup,");
-      return;
-    fi;
+  if IsMonoid(s) then 
+    return MappingByFunction(s, s, x-> x, x-> x);
+  elif not IsMonoidAsSemigroup(s) then 
+    Error("usage, partial perm. semigroup satisfying IsMonoidAsSemigroup,");
+    return;
+  fi;
 
-    return MappingByFunction(s, 
-     InverseMonoid(Difference(Generators(s), [One(s)])), x-> x, x-> x); 
-  end);
-fi;
+  return MappingByFunction(s, 
+   InverseMonoid(Difference(Generators(s), [One(s)])), x-> x, x-> x); 
+end);
 
-# new for 0.7! - IsomorphismPartialPermSemigroup - "for trans semi"
-#############################################################################
+#
 
-if Semigroups_C then 
-  InstallOtherMethod(IsomorphismPartialPermMonoid, "for a trans semi",
-  [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-  function(s)
-    local iso;
+InstallOtherMethod(IsomorphismPartialPermMonoid, "for a trans semi",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local iso;
 
-    if not IsInverseMonoid(s) then 
-      Error("usage: the argument should be an inverse monoid,");
-      return;
-    fi;
-    
-    iso:=function(f)
-      local dom, ran;
-    
-      dom:=OnSets([1..ActionDegree(s)], InversesOfSemigroupElementNC(s, f)[1]);
-      ran:=List(dom, i-> i^f);
-      return PartialPermNC(dom, ran);
-    end;
-
-    return MappingByFunction(s, 
-     InverseMonoid(List(GeneratorsOfSemigroup(s), iso)), iso, 
-      x-> AsTransformation(x, ActionDegree(s)));
-  end);
-else
-  InstallOtherMethod(IsomorphismPartialPermMonoid, "for a trans semi",
-  [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-  SemigroupsIsNotCompiled);
-fi;
-
-# new for 0.7! - IsomorphismPartialPermSemigroup - "for trans semi"
-#############################################################################
-
-if Semigroups_C then 
-  InstallOtherMethod(IsomorphismPartialPermSemigroup, "for a trans semi",
-  [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-  function(s)
-    local iso;
-
-    if not IsInverseSemigroup(s) then 
-      Error("usage: the argument should be an inverse semigroup,");
-      return;
-    fi;
+  if not IsInverseMonoid(s) then 
+    Error("usage: the argument should be an inverse monoid,");
+    return;
+  fi;
   
-    iso:=function(f)
-      local dom, ran;
-  
-      dom:=OnSets([1..ActionDegree(s)], InversesOfSemigroupElementNC(s, f)[1]);
-      ran:=List(dom, i-> i^f);
-      return PartialPermNC(dom, ran);
-    end;
+  iso:=function(f)
+    local dom, ran;
+    
+    dom:=OnSets([1..ActionDegree(s)], InversesOfSemigroupElementNC(s, f)[1]);
+    ran:=List(dom, i-> i^f);
+    return PartialPermNC(dom, ran);
+  end;
 
-    return MappingByFunction(s, 
-     InverseSemigroup(List(GeneratorsOfSemigroup(s), iso)), iso, 
-      x-> AsTransformation(x, ActionDegree(s)));
-  end);
-else
-  InstallOtherMethod(IsomorphismPartialPermSemigroup, "for a trans semi",
-  [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-  SemigroupsIsNotCompiled);
-fi;
+  return MappingByFunction(s, 
+   InverseMonoid(List(GeneratorsOfSemigroup(s), iso)), iso, 
+    x-> AsTransformation(x, ActionDegree(s)));
+end);
 
-# new for 0.7! - IsomorphismReesMatrixSemigroup - "for a simple inverse semi"
-#############################################################################
+InstallOtherMethod(IsomorphismPartialPermSemigroup, "for a trans semi",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local iso;
+
+  if not IsInverseSemigroup(s) then 
+    Error("usage: the argument should be an inverse semigroup,");
+    return;
+  fi;
+
+  iso:=function(f)
+    local dom, ran;
+
+    dom:=OnSets([1..ActionDegree(s)], InversesOfSemigroupElementNC(s, f)[1]);
+    ran:=List(dom, i-> i^f);
+    return PartialPermNC(dom, ran);
+  end;
+
+  return MappingByFunction(s, 
+   InverseSemigroup(List(GeneratorsOfSemigroup(s), iso)), iso, 
+    x-> AsTransformation(x, ActionDegree(s)));
+end);
+
+#
 
 InstallOtherMethod(IsomorphismReesMatrixSemigroup, "for a simple inverse semi",
 [IsPartialPermSemigroup and IsInverseSemigroup and IsSimpleSemigroup],
@@ -903,9 +870,7 @@ function(s)
   return IsomorphismReesMatrixSemigroup(DClass(s, Representative(s)));
 end);
 
-
-# new for 0.7! - IsomorphismTransformationSemigroup - "for partial perm semi"
-##############################################################################
+#
 
 InstallOtherMethod(IsomorphismTransformationSemigroup, "for partial perm semi",
 [IsPartialPermSemigroup],

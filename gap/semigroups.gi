@@ -10,7 +10,7 @@
 
 # basic things
 
-# JDM move to lib
+# add IsFullTransformationSemigroup, IsFullMatrixSemigroup
 
 InstallMethod(ViewObj, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], 10,
@@ -23,7 +23,10 @@ function(s)
     TryNextMethod();
   fi;
 
-  if IsGroupAsSemigroup(s) then 
+
+  if IsFullTransformationSemigroup(s) or IsMatrixSemigroup(s) then 
+    Print("<full ");
+  elif IsGroupAsSemigroup(s) then 
     Print("<");
   elif HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
     Print("<inverse ");
@@ -123,27 +126,7 @@ function(coll)
   return gens;
 end);
 
-# move to lib JDM
-
-InstallOtherMethod(IsSubsemigroup, 
-"for semigroup with generators and semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup, 
-IsSemigroup and HasGeneratorsOfSemigroup],
-function(s, t)
-  return ForAll(GeneratorsOfSemigroup(t), x-> x in s);
-end);
-
-#
-
-InstallOtherMethod(IsSubsemigroup, 
-"for semigroup with generators and inverse semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup, 
-IsInverseSemigroup and GeneratorsOfSemigroup],
-function(s, t)
-  return ForAll(GeneratorsOfInverseSemigroup(t), x-> x in s);
-end);
-
-# JDM move to lib
+# move to lib JDM move to lib
 
 InstallOtherMethod(IsSubset, 
 "for semigroup and associative element collection",
@@ -682,23 +665,15 @@ function(s, coll, record)
   t:=InverseSemigroupByGeneratorsNC(o!.gens, 
    Concatenation(Generators(s), coll), record);
 
-  #JDM is the following enough?! This is not anywhere near enough see
-  #ClosureSemigroupNC below!!
-
   #remove everything related to strongly connected components
-  if IsBound(o!.scc) then 
-    Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
-  fi;
+ Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
+   Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse);
+     Unbind(o!.rev); Unbind(o!.truth); Unbind(o!.schutzstab); Unbind(o!.slp);
+
+       o!.semi:=t;
+         o!.scc_reps:=[One(Generators(t))];
+
   
-  if IsBound(o!.mults) then 
-    Unbind(o!.mults); 
-  fi;
-  
-  if IsBound(o!.schutz) then 
-    Unbind(o!.schutz);
-  fi;
-  
-  o!.finished:=false;
   SetLambdaOrb(t, o);
   return t;
 end);
