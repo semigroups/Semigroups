@@ -175,17 +175,21 @@ function(arg)
   return iter;
 end);
 
-# new for 0.7! - ListByIterator - "for an iterator and pos int"
-#############################################################################
+# iterator [, length of iterator]
 
-InstallGlobalFunction(ListByIterator,
-function(iter, len)
+InstallGlobalFunction(ListIterator,
+function(arg)
   local out, i, x;
+  
+  if IsBound(arg[2]) then 
+    out:=EmptyPlist(arg[2]);
+  else
+    out:=[];
+  fi;
 
-  out:=EmptyPlist(len);
   i:=0;
 
-  for x in iter do
+  for x in arg[1] do
     i:=i+1;
     out[i]:=x;
   od;
@@ -376,9 +380,6 @@ function(r)
     return iter;
 end);
 
-# new for 1.0! - IteratorOfDClasses - "for an acting semigroup"
-#############################################################################
-
 #JDM this should be improved at some point
 
 # different method for regular/inverse
@@ -467,10 +468,9 @@ function(s)
    CallFuncList(CreateRClassNC, x), [IsIteratorOfRClasses]);
 end);
 
-# new for 1.0! - IteratorOfRClassData - "for an acting semigroup"
-#############################################################################
-
 #different method for regular/inverse
+
+# JDM this won't work change as per in inverse.gi
 
 InstallMethod(IteratorOfRClassData, "for an acting semigroup",
 [IsActingSemigroup],

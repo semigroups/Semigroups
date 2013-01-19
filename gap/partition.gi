@@ -247,10 +247,10 @@ function(s)
     pts:=Union(pts, AsList(o));
   od;
   ShrinkAllocationPlist(pts);
-  t:=Semigroup(TransformationActionNC(s, pts, OnPoints));
+  t:=Semigroup(TransformationOp(s, pts, OnPoints));
   pos:=List([1..n], x-> Position(pts, [x]));
 
-  return MappingByFunction(s, t, x-> TransformationActionNC(x, pts, OnPoints));
+  return MappingByFunction(s, t, x-> TransformationOp(x, pts, OnPoints));
 end);
 
 # new for 1.0! - PrintObj - "for a bipartition"

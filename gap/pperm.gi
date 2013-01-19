@@ -737,4 +737,148 @@ function(coll)
   return min;
 end);
 
+#
+
+InstallMethod(IsomorphismPartialPermMonoid, "for a perm group",
+[IsPermGroup],
+function(g)
+  local dom;
+
+  dom:=MovedPoints(g);
+  return MappingByFunction(g, InverseMonoid(List(GeneratorsOfGroup(g), p-> 
+   AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
+end);
+
+#
+
+InstallMethod(IsomorphismPartialPermSemigroup, "for a perm group",
+[IsPermGroup],
+function(g)
+  local dom;
+
+  dom:=MovedPoints(g);
+  return MappingByFunction(g, InverseSemigroup(List(GeneratorsOfGroup(g), p-> 
+   AsPartialPerm(p, dom))), p-> AsPartialPerm(p, dom), f-> AsPermutation(f));
+end);
+
+#
+
+InstallOtherMethod(IsomorphismPartialPermMonoid, "for a part perm semi",
+[IsPartialPermSemigroup],
+function(s)
+
+  if IsMonoid(s) then 
+    return MappingByFunction(s, s, x-> x, x-> x);
+  elif not IsMonoidAsSemigroup(s) then 
+    Error("usage, partial perm. semigroup satisfying IsMonoidAsSemigroup,");
+    return;
+  fi;
+
+  return MappingByFunction(s, 
+   InverseMonoid(Difference(Generators(s), [One(s)])), x-> x, x-> x); 
+end);
+
+#
+
+InstallOtherMethod(IsomorphismPartialPermMonoid, "for a trans semi",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local iso;
+
+  if not IsInverseMonoid(s) then 
+    Error("usage: the argument should be an inverse monoid,");
+    return;
+  fi;
+  
+  iso:=function(f)
+    local dom, ran;
+    
+    dom:=OnSets([1..ActionDegree(s)], InversesOfSemigroupElementNC(s, f)[1]);
+    ran:=List(dom, i-> i^f);
+    return PartialPermNC(dom, ran);
+  end;
+
+  return MappingByFunction(s, 
+   InverseMonoid(List(GeneratorsOfSemigroup(s), iso)), iso, 
+    x-> AsTransformation(x, ActionDegree(s)));
+end);
+
+#
+
+InstallOtherMethod(IsomorphismPartialPermSemigroup, "for a trans semi",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local iso;
+
+  if not IsInverseSemigroup(s) then 
+    Error("usage: the argument should be an inverse semigroup,");
+    return;
+  fi;
+
+  iso:=function(f)
+    local dom, ran;
+
+    dom:=OnSets([1..ActionDegree(s)], InversesOfSemigroupElementNC(s, f)[1]);
+    ran:=List(dom, i-> i^f);
+    return PartialPermNC(dom, ran);
+  end;
+
+  return MappingByFunction(s, 
+   InverseSemigroup(List(GeneratorsOfSemigroup(s), iso)), iso, 
+    x-> AsTransformation(x, ActionDegree(s)));
+end);
+
+#
+
+InstallOtherMethod(IsomorphismTransformationSemigroup, "for partial perm semi",
+[IsPartialPermSemigroup],
+function(s)
+  local n, gens1, m, gens2, iso, u, i;
+ 
+  if DomainOfPartialPermCollection(s)=[] then 
+    # semigroup consisting of the empty set
+    return MappingByFunction(s, Semigroup(Transformation([1])), 
+    x-> Transformation([1]), x-> PartialPermNC([]));
+  fi;
+
+  n:=DegreeOfPartialPermCollection(s)+1;
+  gens1:=GeneratorsOfSemigroup(s); 
+  m:=Length(gens1);
+  gens2:=EmptyPlist(m);
+
+  for i in [1..m] do 
+    gens2[i]:=AsTransformation(gens1[i], n);
+  od;
+
+  return MappingByFunction(s, Semigroup(gens2), x-> AsTransformation(x, n),
+   AsPartialPermNC);
+end);
+
+#
+
+InstallOtherMethod(IsomorphismTransformationMonoid, "for partial perm semi",
+[IsPartialPermSemigroup],
+function(s)
+  local n, gens1, m, gens2, iso, u, i;
+  
+  if not IsMonoidAsSemigroup(s) then 
+    Error("the argument should be a monoid,");
+    return;
+  fi;
+
+  n:=LargestMovedPoint(s)+1;
+  gens1:=GeneratorsOfMonoid(s); 
+  m:=Length(gens1);
+  gens2:=EmptyPlist(m);
+
+  for i in [1..m] do 
+    gens2[i]:=AsTransformation(gens1[i], n);
+  od;
+
+  return MappingByFunction(s, Monoid(gens2), x-> AsTransformation(x, n),
+   AsPartialPermNC);
+end);
+
+
+
 #EOF

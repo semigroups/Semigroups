@@ -10,8 +10,6 @@
 
 # basic things
 
-# add IsFullTransformationSemigroup, IsFullMatrixSemigroup
-
 InstallMethod(ViewObj, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], 10,
 function(s)
@@ -58,8 +56,16 @@ function(s)
   else 
     Print("semigroup ");
   fi;
-
-  Print("of ");
+  
+  if IsMatrixSemigroup(s) then
+    n:=Length(GeneratorsOfSemigroup(s)[1][1]);
+    Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]), " ");
+    if HasSize(s) then 
+      Print("of ");
+    fi;
+  else 
+    Print("of ");
+  fi;
   if HasSize(s) then 
     Print("size ", Size(s), ", ");
   fi;
@@ -68,9 +74,6 @@ function(s)
     Print("degree ", DegreeOfTransformationSemigroup(s), " ");
   elif IsPartialPermSemigroup(s) then 
     Print("degree ", DegreeOfPartialPermSemigroup(s), " ");
-  elif IsMatrixSemigroup(s) then
-    n:=Length(GeneratorsOfSemigroup(s)[1][1]);
-    Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]), " ");
   elif IsBipartitionSemigroup(s) then 
     Print("degree ", DegreeOfBipartitionSemigroup(s)/2, " "); 
   elif IsBinaryRelationSemigroup(s) then 

@@ -291,13 +291,13 @@ function(g)
   act:=function(A, B) return Union(List(A, x-> x*B)); end;
   dom:=Combinations(Elements(g));
   Sort(dom, function(x,y) return Length(x)<Length(y); end);
-  gens:=[TransformationActionNC(dom[1], dom, act)];
+  gens:=[TransformationOp(dom[1], dom, act)];
   s:=Semigroup(gens);
   i:=2;
 
   while Size(s)<2^Size(g) do  
     i:=i+1;
-    f:=TransformationActionNC(dom[i], dom, act);
+    f:=TransformationOp(dom[i], dom, act);
     if not f in s then 
       Add(gens, f);
       s:=Semigroup(gens);

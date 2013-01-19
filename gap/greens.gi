@@ -1495,8 +1495,7 @@ function(h)
    AsPermutation, x-> One(h)*x);
 end);
 
-# new for 1.0! - IsRegularClass@ - "class, value, scc, o"
-#############################################################################
+#
 
 InstallGlobalFunction(IsRegularClass@, 
 function(x, value, scc, o, onright)
@@ -1725,8 +1724,7 @@ InstallOtherMethod(NrRClasses, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass],
 d-> Length(RhoCosets(d))*Length(RhoOrbSCC(d)));
 
-# new for 1.0! - NrIdempotents@ - not a user function 
-#############################################################################
+#
 
 InstallGlobalFunction(NrIdempotents@, 
 function(x, value, scc, o, onright)

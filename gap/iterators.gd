@@ -4,7 +4,7 @@
 DeclareGlobalFunction("IteratorByNextIterator");
 DeclareGlobalFunction("IteratorByIterOfIter");
 DeclareGlobalFunction("IteratorByIterator");
-DeclareGlobalFunction("ListByIterator");
+DeclareGlobalFunction("ListIterator");
 
 DeclareOperation("IteratorOfDClasses", [IsSemigroup]);
 DeclareOperation("IteratorOfHClasses", [IsSemigroup]);
