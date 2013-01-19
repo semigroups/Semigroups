@@ -23,8 +23,7 @@ function(s)
     TryNextMethod();
   fi;
 
-
-  if IsFullTransformationSemigroup(s) or IsMatrixSemigroup(s) then 
+  if IsFullTransformationSemigroup(s) or IsFullMatrixSemigroup(s) then 
     Print("<full ");
   elif IsGroupAsSemigroup(s) then 
     Print("<");
