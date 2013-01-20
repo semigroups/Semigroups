@@ -283,15 +283,15 @@ end);
 InstallMethod(IsHTrivial, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local iter;
+  local iter, d;
 
   iter:=IteratorOfDClasses(s);
   
-  repeat 
-    if not IsTrivial(SchutzenbergerGroup(NextIterator(iter))) then 
+  for d in iter do  
+    if not IsTrivial(SchutzenbergerGroup(d)) then 
       return false;
     fi;
-  until IsDoneIterator(iter);
+  od
   return true;
 end);
 
@@ -313,31 +313,29 @@ d-> NrHClasses(d)=Size(d));
 
 #
 
-InstallMethod(IsLTrivial, "for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsLTrivial, "for an acting semigroup with generators",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local iter, i, d;
 
-  iter:=IteratorOfDClassData(s); 
-  i:=0;
-
-  #JDM here it would be useful to pass OrbitsOfKernels(s)!.orbits to 
-  # KernelOrbitSchutzGpFromData...
+  iter:=IteratorOfDClasses(s); 
 
   for d in iter do 
-    i:=i+1;
-    #if not (Size(KernelOrbitSchutzGpFromData(s, d[2]))=1 and 
-    # Length(KernelOrbitSCCFromData(s, d[2]))=1) then
-      Info(InfoSemigroups, 2, "the D-class with index ", i, " is not L-trivial");
+    if not IsTrivial(SchutzenbergerGroup(d)) then 
       return false;
-    #fi;
+    fi;
+    o:=RhoOrb(d);
+    Enumerate(o, 2);
+    if not Length(o)=1 then 
+      return false;
+    fi;
   od;
 
   return true;
 end);
 
-#
 
+#JDM herehere
 InstallMethod(IsLTrivial, "for an inverse semigroup", 
 [IsInverseSemigroup and IsPartialPermSemigroup],
 s-> ForAll(OrbSCC(LongOrb(s)), x-> Length(x)=1) and IsHTrivial(s));
