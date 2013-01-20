@@ -1304,12 +1304,7 @@ function(d)
   return out;
 end);
 
-
-#III
-
-# new for 1.0! - Idempotents@ - "class, lambda/rho value, scc, o, onright"
-#############################################################################
-
+#
 InstallGlobalFunction(Idempotents@, 
 function(x, value, scc, o, onright)
   local s, out, j, tester, creator, i;
@@ -1320,7 +1315,8 @@ function(x, value, scc, o, onright)
   
   s:=ParentSemigroup(x);
 
-  if ActionRank(Representative(x))=ActionDegree(Representative(x)) then
+  if IsActingSemigroupWithFixedDegreeMultiplication(s) and 
+   ActionRank(Representative(x))=ActionDegree(Representative(x)) then
     return [One(s)];
   fi;
 
@@ -1515,7 +1511,8 @@ function(x, value, scc, o, onright)
   fi; 
   
   # is x the group of units...
-  if ActionRank(Representative(x))=ActionDegree(Representative(x)) then
+  if IsActingSemigroupWithFixedDegreeMultiplication(s) and 
+    ActionRank(Representative(x))=ActionDegree(Representative(x)) then
     return true;
   fi;   
  
