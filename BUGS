@@ -1,0 +1,34 @@
+- Idempotents not working for partial perm semigroups.
+
+- IsBlockGroup not working for partial perm semigroups.
+
+- something messed up with IsRegularDClass etc for partial perm semigroups
+
+  gap> s:=RandomBlockGroup(10,10);
+  <partial perm semigroup of degree 10 with 10 generators>
+  gap> IsBlockGroup(s);                       
+  Error, 1 called from
+  <function "unknown">( <arguments> )
+   called from read-eval loop at line 67 of *stdin*
+  you can 'quit;' to quit to outer loop, or
+  you can 'return;' to continue
+  brk> d;
+  {[ 3, 4, 9 ] -> [ 3, 7, 5 ]}
+  brk> IsRegularDClass(d);
+  true
+  brk> NrRClasses(d);
+  1
+  brk> NrLClasses(d);
+  486
+  brk> x:=Representative(d);
+  Syntax error: warning: unbound global variable in *errin* line 5
+  x:=Representative(d);
+    ^
+  [ 3, 4, 9 ] -> [ 3, 7, 5 ]
+  brk> x^-1 in d;
+  false
+  brk> 
+
+Seems the problem is with NrLClasses(d) with RhoCosets or RhoOrbSCC to blame. 
+
+

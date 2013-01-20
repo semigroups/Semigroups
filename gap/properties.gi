@@ -111,9 +111,11 @@ function(s)
     
   for d in iter do
     if NrRClasses(d)<>NrLClasses(d) then 
+      Error("1");
       return false;
     elif IsRegularDClass(d) 
       and ForAny(RClasses(d), x-> NrIdempotents(x)>1) then 
+      Error("2");
       return false;
     fi;
   od;
