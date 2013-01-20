@@ -304,6 +304,16 @@ gap> s:=Semigroup(gens);;
 gap> IsBlockGroup(s);
 false
 
+# 
+gap> gens:=
+> [ PartialPermNC( [ 1, 2, 3 ], [ 4, 1, 3 ] ),
+>  PartialPermNC( [ 1, 2, 4 ], [ 1, 3, 2 ] ),
+>  PartialPermNC( [ 1, 2, 4 ], [ 4, 1, 2 ] ),
+>  PartialPermNC( [ 1, 2, 3, 4 ], [ 1, 2, 3, 4 ] ) ]
+gap> s:=Semigroup(gens);;
+gap> IsBlockGroup(s);
+true
+
 #
 gap> gens:=[ Transformation( [ 4, 6, 5, 2, 1, 3 ] ),
 >   Transformation( [ 6, 3, 2, 5, 4, 1 ] ),

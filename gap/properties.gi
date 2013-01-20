@@ -79,13 +79,13 @@ InstallMethod(IsAdequateSemigroup,
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
 
-#
+# not used in Display
 
 InstallMethod(IsBand, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], s-> 
  IsCompletelyRegularSemigroup(s) and IsHTrivial(s));
 
-#
+# not used in Display
 
 InstallMethod(IsBand, "for an inverse semigroup", 
 [IsInverseSemigroup], IsSemilatticeAsSemigroup);
@@ -157,7 +157,7 @@ function(s)
 
   gens:=Generators(s);
 
-  idem:=List(gens, x->IdempotentCreator(LambdaFunc(s)(x), RhoFunc(s)(x)));
+  idem:=List(gens, x-> IdempotentCreator(s)(LambdaFunc(s)(x), RhoFunc(s)(x)));
 
   for f in gens do
     for g in idem do
@@ -208,16 +208,24 @@ InstallOtherMethod(IsCompletelyRegularSemigroup,
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local pos, f, n;
+  local opts, o, pos, name, f, n;
 
   if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
     Info(InfoSemigroups, 2, "semigroup is not regular");
     return false;
   fi;
 
+  opts:=rec(treehashsize:=s!.opts.hashlen.M);
+  
+  for name in RecNames(LambdaOrbOpts(s)) do
+    opts.(name):=LambdaOrbOpts(s).(name);
+  od; 
+
   for f in Generators(s) do
-    pos:=LookForInOrb(LambdaOrb(s), function(o, x) 
-      return LambdaRank(s)(LambdaAct(s)(x, f))<>LambdaRank(s)(x); end, 2);
+    
+    o:=Orb(s, LambdaFunc(s)(f), LambdaAct(s), opts);
+    pos:=LookForInOrb(o, function(o, x) 
+      return LambdaRank(s)(LambdaAct(s)(x, f))<>LambdaRank(s)(x); end, 1);
     # for transformations we could use IsInjectiveListTrans instead
     # and the performance would be better!
     

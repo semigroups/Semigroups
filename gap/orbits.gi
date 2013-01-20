@@ -80,7 +80,7 @@ function(o, func, start)
     return false;
   fi;
 
-  #Enumerate(o, Length(o)+1);
+  Enumerate(o, Length(o)+1);
   
   o!.looking:=true;
   o!.lookingfor:=func;

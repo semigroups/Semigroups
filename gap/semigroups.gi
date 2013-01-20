@@ -10,10 +10,16 @@
 
 # basic things
 
+# 4 parts to the display: property, type, name, attributes.
+# property: simple
+# type:     transformation
+# name:     monoid
+
+
 InstallMethod(ViewObj, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], 10,
 function(s)
-  local n;
+  local type, name, property, n;
  
   if not (IsPartialPermSemigroup(s) or IsTransformationSemigroup(s) or 
     IsBipartitionSemigroup(s) or IsMatrixSemigroup(s) or
@@ -21,53 +27,65 @@ function(s)
     TryNextMethod();
   fi;
 
-  if IsFullTransformationSemigroup(s) or IsFullMatrixSemigroup(s) then 
-    Print("<full ");
-  elif IsGroupAsSemigroup(s) then 
-    Print("<");
+  # type
+  if IsPartialPermSemigroup(s) then 
+    type:="partial perm ";
+  elif IsTransformationSemigroup(s) then 
+    type:="transformation ";
+  elif IsBipartitionSemigroup(s) then 
+    type:="bipartition ";
+  elif IsMatrixSemigroup(s) then 
+    type:="matrix ";
+  elif IsBinaryRelationSemigroup(s) then 
+    type:="binary relation ";
+  fi;
+ 
+  # name
+  if HasIsGroupAsSemigroup(s) and IsGroupAsSemigroup(s) then 
+    name:="group ";
+  #elif HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then
+  #  name:="inverse semigroup ";
+  #elif HasIsBlockGroup(s) and IsBlockGroup(s) then
+  #  name:="block group ";
+  elif IsMonoid(s) then 
+    name:="monoid ";
+  else 
+    name:="semigroup ";
+  fi;
+  
+  # properties
+  property:="";
+ 
+  if HasIsCommutativeSemigroup(s) and IsCommutativeSemigroup(s) then 
+    Append(property, "commutative ");
+  fi;
+
+  if HasIsGroupAsSemigroup(s) and IsGroupAsSemigroup(s) then 
+  elif HasIsCliffordSemigroup(s) and IsCliffordSemigroup(s) then
+    Append(property, "Clifford ");
   elif HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
-    Print("<inverse ");
+    Append(property, "inverse ");
   elif HasIsRegularSemigroup(s) then 
     if IsRegularSemigroup(s) then 
-      Print("<regular ");
+      Append(property, "regular ");
     else
-      Print("<non-regular ");
+      Append(property, "non-regular ");
     fi;
-  else
-    Print("<");
+  elif HasIsAdequateSemigroup(s) and IsAdequateSemigroup(s) then
+    Append(property, "adequate ");
   fi;
-  
-  if IsPartialPermSemigroup(s) then 
-    Print("partial perm ");
-  elif IsTransformationSemigroup(s) then 
-    Print("transformation ");
-  elif IsBipartitionSemigroup(s) then 
-    Print("bipartition ");
-  elif IsMatrixSemigroup(s) then 
-    Print("matrix ");
-  elif IsBinaryRelationSemigroup(s) then 
-    Print("binary relation ");
-  fi;
-  
-  if IsGroupAsSemigroup(s) then 
-    Print("group ");
-  elif IsMonoid(s) then 
-    Print("monoid ");
-  else 
-    Print("semigroup ");
-  fi;
-  
+
+  Print("<", property, type, name);
+
   if IsMatrixSemigroup(s) then
     n:=Length(GeneratorsOfSemigroup(s)[1][1]);
     Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]), " ");
-    if HasSize(s) then 
-      Print("of ");
-    fi;
-  else 
-    Print("of ");
   fi;
+  
   if HasSize(s) then 
-    Print("size ", Size(s), ", ");
+    Print("of size ", Size(s), ", ");
+  else
+    Print("of ");
   fi;
 
   if IsTransformationSemigroup(s) then 
