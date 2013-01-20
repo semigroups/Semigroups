@@ -10,7 +10,7 @@
 
 #technical...
 
-# NextIterator in opts must return fail if it is finished. 
+# NextIterator in opts must return fail if the iterator is finished. 
 
 InstallGlobalFunction(IteratorByNextIterator, 
 function(record)
@@ -159,7 +159,7 @@ function(arg)
         x:=NextIterator(baseiter);
       until IsDoneIterator(baseiter) or isnew(iter, x);
     
-      if IsDoneIterator(baseiter) then 
+      if x=fail then 
         return fail;
       fi;
       return convert(iter, x);
@@ -321,10 +321,6 @@ function(l)
   return iter;
 end);
 
-
-# new for 1.0! - Iterator - "for an R-class of an acting semi"
-#############################################################################
-
 # Notes: this method makes Iterator of a semigroup much better!!
 
 # same method for regular/inverse
@@ -470,18 +466,13 @@ end);
 
 #different method for regular/inverse
 
-# JDM this won't work change as per in inverse.gi
-
 InstallMethod(IteratorOfRClassData, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
 
-  return IteratorByFunctions( rec( 
+  return IteratorByNextIterator( rec( 
     
     i:=1,
-
-    IsDoneIterator:=iter-> IsClosed(SemigroupData(s)) and 
-     iter!.i>=Length(SemigroupData(s)),
 
     NextIterator:=function(iter)
       local data;

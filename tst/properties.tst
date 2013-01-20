@@ -302,7 +302,7 @@ gap> gens:=[ Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ),
 >   Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> IsBlockGroup(s);
-true
+false
 
 #
 gap> gens:=[ Transformation( [ 4, 6, 5, 2, 1, 3 ] ),

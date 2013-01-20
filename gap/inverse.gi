@@ -1358,7 +1358,7 @@ end, [IsIteratorOfLClasses]));
 
 # new for 0.7! - NaturalPartialOrder - "for an inverse semigroup"
 ##############################################################################
-# C function for me!
+# C function for me! JDM
 
 InstallMethod(NaturalPartialOrder, "for an inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
