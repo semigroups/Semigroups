@@ -64,7 +64,13 @@ function(s)
   elif HasIsCliffordSemigroup(s) and IsCliffordSemigroup(s) then
     Append(property, "Clifford ");
   elif HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
+    if HasIsFactorisableSemigroup(s) and IsFactorisableSemigroup(s) then 
+      Append(property, "factorisable ");
+    fi;
     Append(property, "inverse ");
+  elif HasIsCompletelyRegularSemigroup(s) and IsCompletelyRegularSemigroup(s)
+   then 
+    Append(property, "completely regular ");
   elif HasIsRegularSemigroup(s) then 
     if IsRegularSemigroup(s) then 
       Append(property, "regular ");
@@ -82,11 +88,11 @@ function(s)
     Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]), " ");
   fi;
   
-  if HasSize(s) then 
-    Print("of size ", Size(s), ", ");
-  else
+  #if HasSize(s) then 
+  #  Print("of size ", Size(s), ", ");
+  #else
     Print("of ");
-  fi;
+  #fi;
 
   if IsTransformationSemigroup(s) then 
     Print("degree ", DegreeOfTransformationSemigroup(s), " ");

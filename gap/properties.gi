@@ -280,18 +280,15 @@ end);
 
 #
 
-InstallMethod(IsHTrivial, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+InstallMethod(IsHTrivial, "for an acting semigroup with generators", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local iter, i, g;
+  local iter;
 
-  iter:=IteratorOfDClassData(s);
-  i:=0; 
+  iter:=IteratorOfDClasses(s);
+  
   repeat 
-    i:=i+1;
-    #g:=DClassSchutzGpFromData(s, NextIterator(iter)[2]);
-    if Size(g)>1 then 
-      Info(InfoSemigroups, 2, "the D-class with index ", i, " is not H-trivial");
+    if not IsTrivial(SchutzenbergerGroup(NextIterator(iter))) then 
       return false;
     fi;
   until IsDoneIterator(iter);
@@ -300,24 +297,19 @@ end);
 
 #
 
-InstallMethod(IsHTrivial, "for a partial perm inv semigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup],
-function(s)
-  EnumerateInverseSemiData(s);
-  return ForAll(LongOrb(s)!.schutz, x-> IsTrivial(x[2]));
-end);
+#InstallMethod(IsHTrivial, "for a partial perm inv semigroup",
+#[IsPartialPermSemigroup and IsInverseSemigroup],
+#function(s)
+#  EnumerateInverseSemiData(s);
+#  return ForAll(LongOrb(s)!.schutz, x-> IsTrivial(x[2]));
+#end);
 
 #
 
-InstallOtherMethod(IsHTrivial, "for a D-class of a trans. semigp", 
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-  d-> NrHClasses(d)=Size(d));
-
-#
-
-InstallOtherMethod(IsHTrivial, "for a D-class of a part perm semigp",
-[IsGreensDClass and IsGreensClassOfPartPermSemigroup],
-  d-> NrHClasses(d)=Size(d));
+InstallOtherMethod(IsHTrivial, 
+"for a D-class of an acting semigroup", 
+[IsGreensDClass and IsActingSemigroupGreensClass], 
+d-> NrHClasses(d)=Size(d));
 
 #
 
