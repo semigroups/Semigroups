@@ -291,18 +291,9 @@ function(s)
     if not IsTrivial(SchutzenbergerGroup(d)) then 
       return false;
     fi;
-  od
+  od;
   return true;
 end);
-
-#
-
-#InstallMethod(IsHTrivial, "for a partial perm inv semigroup",
-#[IsPartialPermSemigroup and IsInverseSemigroup],
-#function(s)
-#  EnumerateInverseSemiData(s);
-#  return ForAll(LongOrb(s)!.schutz, x-> IsTrivial(x[2]));
-#end);
 
 #
 
@@ -316,7 +307,7 @@ d-> NrHClasses(d)=Size(d));
 InstallMethod(IsLTrivial, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local iter, i, d;
+  local iter, o, d;
 
   iter:=IteratorOfDClasses(s); 
 
@@ -324,9 +315,7 @@ function(s)
     if not IsTrivial(SchutzenbergerGroup(d)) then 
       return false;
     fi;
-    o:=RhoOrb(d);
-    Enumerate(o, 2);
-    if not Length(o)=1 then 
+    if Length(RhoOrbSCC(d))<>1 then 
       return false;
     fi;
   od;
@@ -334,81 +323,51 @@ function(s)
   return true;
 end);
 
+#
 
-#JDM herehere
-InstallMethod(IsLTrivial, "for an inverse semigroup", 
-[IsInverseSemigroup and IsPartialPermSemigroup],
-s-> ForAll(OrbSCC(LongOrb(s)), x-> Length(x)=1) and IsHTrivial(s));
+InstallOtherMethod(IsLTrivial, "for a D-class of an acting semigroup", 
+[IsGreensDClass and IsActingSemigroupGreensClass], d-> NrLClasses(d)=Size(d));
 
 #
 
-InstallOtherMethod(IsLTrivial, "for a D-class of a trans. semigp", 
-[IsGreensDClass and IsGreensClassOfTransSemigp], 
-  d-> NrLClasses(d)=Size(d));
+InstallOtherMethod(IsRTrivial, "for D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass], 
+d-> NrRClasses(d)=Size(d));
 
 #
 
-InstallOtherMethod(IsLTrivial, "for a D-class of a part perm semigp", 
-[IsGreensDClass and IsGreensClassOfPartPermSemigroup], 
-  d-> NrLClasses(d)=Size(d));
+InstallMethod(IsRTrivial, "for an inverse semigroup", 
+[IsInverseSemigroup], IsLTrivial);
 
 #
 
-InstallMethod(IsRTrivial, "for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsRTrivial, "for an acting semigroup with generators",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local i, iter, r, d;
-  i:=0;
+  local iter, x;
 
-  #if OrbitsOfKernels(s)!.finished then 
-    iter:=IteratorOfDClasses(s);
-    for d in iter do 
-      i:=i+1;
-   #   if not (Size(ImageOrbitSchutzGpFromData(s, d!.data[1]))=1 and 
-   #    Length(ImageOrbitSCCFromData(s, d!.data[1]))=1) then
-        Info(InfoSemigroups, 2, "the D-class with index ", i, " is not R-trivial");
+  if IsClosed(SemigroupData(s)) and IsClosed(RhoOrb(s)) then 
+    for x in GreensDClasses(s) do 
+      if (not IsTrivial(SchutzenbergerGroup(x))) or Length(LambdaOrbSCC(x))>1 
+       then
         return false;
-    #  fi;
+      fi;
     od;
 	
     return true;
-  #fi;
+  fi;
 
-  #iter:=IteratorOfRClassData(s); 
-
-  #JDM here it would be useful to pass OrbitsOfImages(s)!.orbits to 
-  # RClassSchutzGpFromData...
-
-  for d in iter do
-    i:=i+1;
-   # if not (Size(ImageOrbitSchutzGpFromData(s, d))=1 and 
-   #  Length(ImageOrbitSCCFromData(s, d))=1) then 
-      Info(InfoSemigroups, 2, "the R-class with index ", i, " is not trivial");
+  iter:=IteratorOfRClasses(s); 
+  
+  for x in iter do
+    if (not IsTrivial(SchutzenbergerGroup(s, x))) or
+     Length(LambdaOrbSCC(x))>1 then 
       return false;
-    #fi;
+    fi;
   od;
 
   return true;
 end);
-
-#
-
-InstallMethod(IsRTrivial, "for an inverse semigroup",
-[IsInverseSemigroup and IsPartialPermSemigroup], IsLTrivial);
-
-#
-
-InstallOtherMethod(IsRTrivial, "for D-class of a trans. semigp.",
-[IsGreensDClass and IsGreensClassOfTransSemigp],
-function(d)
-  #JDM maybe better if we had an enumerator of R-classes of d...
-  return NrRClasses(d)=Size(d);
-end);
-
-#
-
-InstallOtherMethod(IsRTrivial, "for D-class of a part. perm. semigp.",
-[IsGreensDClass and IsGreensClassOfPartPermSemigroup], IsLTrivial);
 
 #
 
@@ -419,9 +378,8 @@ function(s)
 
   gens:=GeneratorsOfSemigroup(s); #not GeneratorsOfMonoid!
 
-  if IsTransformationSemigroup(s) and 
-   ForAll(gens, f->RankOfTransformation(f)=DegreeOfTransformationSemigroup(s))
-    then
+  if IsActingSemigroupWithFixedDegreeMultiplication(s) and 
+   ForAll(gens, f->ActionRank(f)=ActionDegree(f)) then
     return true;
   fi;
 
@@ -442,12 +400,13 @@ function(s)
   return true;
 end);
 
-# Notes: should use ClosureSemigroup. JDM
+# JDM this is not working
 
-InstallOtherMethod(IsIdempotentGenerated, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+InstallOtherMethod(IsIdempotentGenerated, 
+"for an acting semigroup with generators", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s) 
-  local gens, r, i, t;
+  local gens, ranks, i, t;
  
   gens:=Generators(s);
 
@@ -456,12 +415,15 @@ function(s)
     return true;
   fi;
 
-  r:=List(gens, ActionRank); 
-  i:=Concatenation(List([Maximum(r),Maximum(r)-1..Minimum(r)], i-> 
-   Idempotents(s, i)));
-  t:=Semigroup(i);
-  # this is not the idempotent generated subsemigroup!
+  ranks:=List(gens, ActionRank); 
+  i:=Maximum(ranks);
+  t:=Semigroup(Idempotents(s, i), rec(small:=true));
+  repeat
+    i:=i-1;
+    t:=ClosureSemigroup(t, Idempotents(s, i));
+  until i=Minimum(ranks);
 
+  # this is not the idempotent generated subsemigroup!
   return ForAll(gens, f-> f in t);
 end);
 
@@ -472,21 +434,17 @@ InstallOtherMethod(IsIdempotentGenerated, "for an inverse semigroup",
 
 #
 
-InstallOtherMethod(IsInverseMonoid, "for a trans semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallOtherMethod(IsInverseMonoid, "for an acting semigroup with generators",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 s-> IsMonoid(s) and IsInverseSemigroup(s));
 
 #
 
-InstallOtherMethod(IsInverseMonoid, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> IsMonoid(s) and IsInverseSemigroup(s));
-
-#
-
-InstallOtherMethod(IsInverseSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallOtherMethod(IsInverseSemigroup,
+"for an acting semigroup with generators", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local n, imgs, kers, iter, D, d;
+  local n, lambda, rho, iter, x;
 
   if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
     Info(InfoSemigroups, 2, "the semigroup is not regular");
@@ -496,29 +454,25 @@ function(s)
     return IsCliffordSemigroup(s);
   fi;
 
-#  n:=LambdaDegree(s); imgs:=ImagesOfTransSemigroup(s); Enumerate(imgs, 2^n);
-#  kers:=KernelsOfTransSemigroup(s); Enumerate(kers, Length(imgs));
+  n:=ActionDegree(s); 
+  lambda:=LambdaOrb(s); Enumerate(lambda, 2^n+1);
+  rho:=RhoOrb(s); Enumerate(rho, Length(lambda));
 
-  if not (IsClosed(kers) and Length(kers)=Length(imgs)) then 
-    Info(InfoSemigroups, 2, "the numbers of kernels and images are not equal");
+  if not (IsClosed(rho) and Length(rho)>=Length(lambda)) then 
+    Info(InfoSemigroups, 2, "the number of lambda and rho values is not equal");
     return false;
   fi;
-
-  #if OrbitsOfKernels(s)!.finished then 
-  #  iter:=IteratorOfDClassData(s); D:=true;
-  #else 
-  #  iter:=IteratorOfRClassData(s); D:=false;
-  #fi;
-    
-  for d in iter do
-    if D then 
-      d:=d[1];
-    fi;
-   # if not NrIdempotentsRClassFromData(s, d)=1 then 
-      Info(InfoSemigroups, 2, "at least one R-class contains more than 1", 
-      " idempotent");
+  
+  if HasGreensDClasses(s) then 
+    iter:=GreensDClasses(s);
+  else
+    iter:=IteratorOfRClasses(s);
+  fi;
+  
+  for x in iter do
+    if not IsRegularClass(x) or NrIdempotents(x)>1 then 
       return false;
-   # fi;
+    fi;
   od;
 
   return true;
@@ -526,14 +480,15 @@ end);
 
 #
 
-InstallOtherMethod(IsInverseSemigroup, "for a semigroup of partial perms",
+InstallOtherMethod(IsInverseSemigroup, 
+"for a semigroup of partial perms with generators",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
 s-> ForAll(Generators(s), x-> x^-1 in s));
 
 #
 
-InstallOtherMethod(IsLeftSimple, "for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallOtherMethod(IsLeftSimple, "for an acting semigroup with generators",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local iter;
   
@@ -544,7 +499,8 @@ function(s)
     return NrLClasses(s)=1;
   fi;
   
-  iter:=IteratorOfLClassData(s); NextIterator(iter);
+  iter:=IteratorOfLClasses(s); 
+  NextIterator(iter);
   return IsDoneIterator(iter);
 end);
 
@@ -555,18 +511,23 @@ InstallMethod(IsLeftSimple, "for an inverse semigroup",
 
 #
 
-InstallOtherMethod(IsLeftZeroSemigroup, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+InstallOtherMethod(IsLeftZeroSemigroup, 
+"for an acting semigroup with generators", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local gens, imgs;
+  local gens, lambda, val, x;
 
   gens:=Generators(s);
-  imgs:=Set(List(gens, ImageSetOfTransformation));
+  lambda:=LambdaFunc(s);
+  val:=lambda(gens[1]);
+  
+  for x in gens do 
+    if not lambda(x)=val then 
+      return false;
+    fi;
+  od;
 
-  if Size(imgs)=1 and ForAll(gens, IsIdempotent) then
-    return true;
-  fi;
-  return false;
+  return ForAll(gens, IsIdempotent);
 end);
 
 #
@@ -574,7 +535,7 @@ end);
 InstallOtherMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
-#
+# JDM here!
 
 InstallOtherMethod(IsMonogenicSemigroup, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
