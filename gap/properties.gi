@@ -1087,4 +1087,26 @@ function(s)
   return IsDoneIterator(iter);
 end);
 
+#
+
+InstallMethod(IsFullTransformationSemigroup, 
+"for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+function(s)
+return ForAll(GeneratorsOfSemigroup(
+ FullTransformationSemigroup(DegreeOfTransformationSemigroup(s))),
+  x-> x in s);
+end);
+
+#
+
+InstallMethod(IsSymmetricInverseSemigroup, 
+"for a partial perm semigroup with generators",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup], 
+function(s)
+return ForAll(GeneratorsOfSemigroup(
+ SymmetricInverseSemigroup(DegreeOfPartialPermSemigroup(s))),
+  x-> x in s);
+end);
+  
 #EOF

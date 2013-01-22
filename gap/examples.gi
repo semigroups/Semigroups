@@ -47,6 +47,22 @@ end);
 
 #
 
+InstallMethod(ViewObj, "for a full matrix semigroup",
+[IsFullMatrixSemigroup and HasGeneratorsOfSemigroup], 4,
+function(s) 
+  local n;
+
+  Print("<full matrix semigroup ");
+  n:=Length(GeneratorsOfSemigroup(s)[1][1]);
+  Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]));
+  if HasSize(s) then 
+    Print("of size ", Size(s));
+  fi;
+  Print(">");
+end);
+
+#
+
 InstallMethod(GeneralLinearSemigroup, "for 2 pos ints", 
 [IsPosInt, IsPosInt], FullMatrixSemigroup);
 
@@ -325,22 +341,41 @@ end);
 InstallMethod(SymmetricInverseSemigroup, "for a positive integer",
 [IsInt],
 function(n)
+  local s;
 
   if n<0 then 
     Error("usage: the argument should be a non-negative integer,");
     return;
   elif n=0 then
-    return InverseSemigroup(PartialPermNC([]));
+    s:=InverseSemigroup(PartialPermNC([]));
   elif n=1 then 
-    return InverseSemigroup(PartialPermNC([1]), PartialPermNC([]));
+    s:=InverseSemigroup(PartialPermNC([1]), PartialPermNC([]));
   elif n=2 then 
-    return InverseSemigroup(PartialPermNC([2,1]), PartialPermNC([1]));;
+    s:=InverseSemigroup(PartialPermNC([2,1]), PartialPermNC([1]));;
+  else
+    s:=InverseSemigroup(List(GeneratorsOfGroup(SymmetricGroup(n)), x->
+     PartialPermNC(ListPerm(x, n))), PartialPermNC([0..n-1]*1)); 
   fi;
 
-  return InverseSemigroup(List(GeneratorsOfGroup(SymmetricGroup(n)), x->
-   PartialPermNC(ListPerm(x, n))), PartialPermNC([0..n-1]*1));
+  SetIsSymmetricInverseSemigroup(s, true);
+  return s;
 end);
 
 #
+
+InstallMethod(ViewObj, "for a symmetric inverse semigroup",
+[IsSymmetricInverseSemigroup],
+function(s)
+  Print("<symmetric inverse semigroup of ");
+  if HasSize(s) then 
+    Print("size ", Size(s), ", ");
+  fi;
+  Print("degree ", DegreeOfPartialPermSemigroup(s), " with ",
+   Length(GeneratorsOfInverseSemigroup(s)), " generator");
+  if Length(GeneratorsOfInverseSemigroup(s))>1 then 
+    Print("s");
+  fi;
+  Print(">");
+end);
 
 #EOF

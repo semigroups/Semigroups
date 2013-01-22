@@ -30,7 +30,14 @@ gap> AsList(LambdaOrb(r)){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]};
 [ [ 1, 2, 3, 4, 5 ], [ 1, 2, 4, 5, 6 ], [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ] ]
 gap> LambdaOrbMults(LambdaOrb(r),
 > LambdaOrbSCCIndex(r)){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]};
-[ (), (1,2,3,6)(4,5), (3,5)(4,6), (1,2)(3,4,5,6) ]
+[ [ Transformation( [ 1, 2, 3, 4, 5, 6 ] ), 
+      Transformation( [ 1, 2, 3, 4, 5, 6 ] ) ], 
+  [ Transformation( [ 6, 1, 2, 5, 4, 1 ] ), 
+      Transformation( [ 2, 3, 1, 5, 4, 1 ] ) ], 
+  [ Transformation( [ 1, 2, 5, 6, 3, 1 ] ), 
+      Transformation( [ 1, 2, 5, 6, 3, 4 ] ) ], 
+  [ Transformation( [ 2, 1, 6, 3, 4, 1 ] ), 
+      Transformation( [ 2, 1, 4, 5, 6, 3 ] ) ] ]
 
 #
 gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ),
@@ -45,8 +52,20 @@ gap> AsList(LambdaOrb(r){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]});
 [ [ 2, 3 ], [ 4, 6 ], [ 2, 6 ], [ 1, 4 ], [ 1, 6 ], [ 2, 4 ], [ 3, 6 ] ]
 gap> LambdaOrbMults(LambdaOrb(r),
 > LambdaOrbSCCIndex(r)){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]};
-[ (), (2,4)(3,5,6), (2,3,4,5,6), (1,2)(3,4), (1,2)(3,4,5,6), (2,3,4), 
-  (2,4,5,6) ]
+[ [ Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] ), 
+      Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] ) ], 
+  [ Transformation( [ 4, 4, 6, 4, 4, 4, 4 ] ), 
+      Transformation( [ 6, 3, 3, 2, 3, 3, 3 ] ) ], 
+  [ Transformation( [ 2, 6, 2, 2, 2, 2, 2 ] ), 
+      Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ) ], 
+  [ Transformation( [ 1, 1, 4, 1, 1, 1, 1 ] ), 
+      Transformation( [ 2, 3, 3, 3, 3, 3, 3 ] ) ], 
+  [ Transformation( [ 1, 1, 6, 1, 1, 1, 1 ] ), 
+      Transformation( [ 2, 3, 3, 3, 3, 3, 3 ] ) ], 
+  [ Transformation( [ 2, 4, 2, 2, 2, 2, 2 ] ), 
+      Transformation( [ 6, 3, 3, 2, 3, 3, 3 ] ) ], 
+  [ Transformation( [ 3, 6, 3, 3, 3, 3, 3 ] ), 
+      Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ) ] ]
 
 #
 gap> gens:=[Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] ),
@@ -75,9 +94,8 @@ gap> RhoOrb(S);
 gap> Enumerate(last);
 <closed orbit, 9 points with Schreier tree with log>
 gap> AsList(last);
-[ [ 1, 2, 3, 4 ], [ 1, 2, 3, 1 ], [ 1, 1, 2, 3 ], [ 1, 2, 2, 1 ], 
-  [ 1, 1, 2, 2 ], [ 1, 2, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 1, 1 ], 
-  [ 1, 1, 2, 1 ] ]
+[ [ 65536 ], [ 1, 2, 3, 1 ], [ 1, 1, 2, 3 ], [ 1, 2, 2, 1 ], [ 1, 1, 2, 2 ], 
+  [ 1, 2, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 1, 1 ], [ 1, 1, 2, 1 ] ]
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
