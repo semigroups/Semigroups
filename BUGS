@@ -1,11 +1,3 @@
-* 
-gap> s:=SymmetricInverseSemigroup(1);  
-<inverse partial perm semigroup of degree 1 with 2 generators>
-gap> IsTrivial(s);         
-true
-gap> MultiplicativeZero(s);
-<identity on [ 1 ]>
-
 *
 gap> s:=Semigroup(Transformation([3,3,2,6,2,4,4,6]),
 > Transformation([3,3,2,6,2,4,4,6]));;

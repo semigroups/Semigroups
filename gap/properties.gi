@@ -944,9 +944,9 @@ InstallMethod(IsTrivial, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
   local gens;
-  gens:=Generators(s);
-  return (Length(gens)>1 and not ForAny(gens, x-> gens[1]<>x)) or 
-   IsIdempotent(gens[1]);
+  gens:=GeneratorsOfSemigroup(s);
+  return Length(gens)>1 and not (ForAny(gens, x-> gens[1]<>x) or 
+   IsIdempotent(gens[1]));
 end); 
 
 # not used in ViewObj

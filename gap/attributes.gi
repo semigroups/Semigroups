@@ -533,12 +533,14 @@ function(s)
   rank:=LambdaRank(s);
   
   #is there an element in s with minimum possible rank
-  if IsPartialPermSemigroup(s) or IsTransformationSemigroup(s) then 
+  if IsTransformationSemigroup(s) then 
     i:=0;
     repeat 
-     i:=i+1;
-     pos:=EnumeratePosition(o, [i], false);
+      i:=i+1;
+      pos:=EnumeratePosition(o, [i], false);
     until pos<>fail or i=ActionDegree(s);
+  elif IsPartialPermSemigroup(s) then 
+    pos:=EnumeratePosition(o, [], false);
   else
     pos:=LookForInOrb(o, function(o, x) return rank(x)=min; end, 2);
   fi;
