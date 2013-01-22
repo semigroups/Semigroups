@@ -600,9 +600,6 @@ end);
 
 #GGG
 
-# new for 1.0! - GradedLambdaOrb - "for an acting semigroup and elt"
-##############################################################################
-
 # if GradedLambdaOrb(s, f, true) is called, then the returned orbit o has 
 # the position in o of lambda val of f stored in o!.data.
 

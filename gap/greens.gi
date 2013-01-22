@@ -1351,8 +1351,6 @@ function(x, value, scc, o, onright)
   return out;
 end);
 
-# mod for 1.0! - Idempotents - "for an acting semigroup" 
-#############################################################################
 # Notes: this could be more compacted but it is not for performance reasons.
 
 # same method for regular, different method for inverse
@@ -1371,6 +1369,7 @@ function(s)
     rho_o:=RhoOrb(s);
     scc:=OrbSCC(rho_o);
     lambda_o:=LambdaOrb(s);
+    Enumerate(lambda_o, infinity);
     gens:=lambda_o!.gens;
     rhofunc:=RhoFunc(s);
     lookup:=OrbSCCLookup(rho_o);

@@ -68,6 +68,8 @@ function(s)
       Append(property, "factorisable ");
     fi;
     Append(property, "inverse ");
+  elif HasIsSimpleSemigroup(s) and IsSimpleSemigroup(s) then 
+    Append(property, "simple ");
   elif HasIsCompletelyRegularSemigroup(s) and IsCompletelyRegularSemigroup(s)
    then 
     Append(property, "completely regular ");
@@ -119,14 +121,11 @@ InstallOtherMethod(Generators, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(s)
 
-  if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
-    if IsMonoid(s) then 
-      return GeneratorsOfInverseMonoid(s);
-    fi;
+  if HasGeneratorsOfInverseMonoid(s) then 
+    return GeneratorsOfInverseMonoid(s);
+  elif HasGeneratorsOfInverseSemigroup(s) then 
     return GeneratorsOfInverseSemigroup(s);
-  fi;
-
-  if IsMonoid(s) then
+  elif IsMonoid(s) then
     return GeneratorsOfMonoid(s);
   fi;
 

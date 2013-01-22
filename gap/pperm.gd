@@ -22,7 +22,6 @@ DeclareCategory("IsPartialPerm", IsMultiplicativeElementWithOne and
 DeclareCategoryCollections("IsPartialPerm");
 DeclareSynonym("IsPartialPermSemigroup", IsSemigroup and
 IsPartialPermCollection);
-DeclareProperty("IsPartialPermMonoid", IsPartialPermSemigroup);
 
 DeclareGlobalFunction("PartialPerm");
 DeclareGlobalFunction("PartialPermNC");

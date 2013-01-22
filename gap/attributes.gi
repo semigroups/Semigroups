@@ -475,15 +475,12 @@ function(g, n)
   return MappingByFunction(g, s, iso, AsPermutation);
 end);
 
-#MMM
-
-# new for 1.0! - MultiplicativeNeutralElement - "for an acting semigroup"
-###########################################################################
+#
 
 InstallOtherMethod(MultiplicativeNeutralElement, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local gens, rank, n, f, r;
+  local gens, n, rank, lambda, f, r;
 
   gens:=Generators(s);
   n:=Maximum(List(gens, ActionRank));
@@ -492,7 +489,9 @@ function(s)
     return One(s);
   fi;
 
-  f:=First(gens, f-> rank(f)=n);
+  rank:=LambdaRank(s);
+  lambda:=LambdaFunc(s);
+  f:=First(gens, f-> rank(lambda(f))=n);
 
   r:=GreensRClassOfElementNC(s, f); #NC? JDM 
 
@@ -550,7 +549,7 @@ function(s)
 
   # lambda orb is closed, find an element with minimum rank
   if not IsBound(f) then 
-    min_found:=rank(o[2]); pos:=1; i:=0; 
+    min_found:=rank(o[2]); pos:=2; i:=1; 
     
     while min_found>min and i<Length(o) do 
       i:=i+1;
@@ -629,7 +628,8 @@ end);
 
 # to attributes
 
-InstallOtherMethod(IsomorphismTransformationSemigroup, "for semigp of bin rels",
+InstallOtherMethod(IsomorphismTransformationSemigroup, 
+"for semigroup of binary relations",
 [IsBinaryRelationSemigroup], 
 function(s)        
   local n, pts, o, t, pos, i;
@@ -643,6 +643,7 @@ function(s)
     pts:=Union(pts, AsList(o));
   od;
   ShrinkAllocationPlist(pts);
+  pos:=List([1..n], x-> Position(pts, [x]));
   t:=Semigroup(List(Generators(s), x-> TransformationOpNC(x, pts, OnPoints)));
   
   return MappingByFunction(s, t, x-> TransformationOpNC(x, pts, OnPoints),

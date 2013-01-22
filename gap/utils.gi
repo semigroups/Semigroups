@@ -255,33 +255,29 @@ function(line)
   fi;
 end);
 
-#############################################################################
+#
 
-if IsBound(FullPartialPermNC) then 
-  InstallGlobalFunction(ReadSemigroupsLinePP, 
-  function(line)
-    local r, i, k, out, m, deg, rank, f, j;
-    
-    r:=Length(line)-1; i:=2; k:=0; out:=[];
+InstallGlobalFunction(ReadSemigroupsLinePP, 
+function(line)
+  local r, i, k, out, m, deg, rank, f, j;
+  
+  r:=Length(line)-1; i:=2; k:=0; out:=[];
 
-    while i<Length(line) do
-      k:=k+1;
-      m:=Int([line[i]]);                                      # blocksize
-      deg:=Int(NormalizedWhitespace(line{[i+1..m+i]}));       # max domain
-      rank:=Int(NormalizedWhitespace(line{[m+i+1..2*m+i]}));  # rank
-      f:=line{[i+1..i+m*(deg+3*rank+6)]};
-      out[k]:=EmptyPlist(deg+3*rank+6);
-      for j in [1..deg+3*rank+6] do 
-        Add(out[k], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
-      od;
-      out[k]:=FullPartialPermNC(out[k]);
-      i:=i+m*(deg+3*rank+6)+1;
+  while i<Length(line) do
+    k:=k+1;
+    m:=Int([line[i]]);                                      # blocksize
+    deg:=Int(NormalizedWhitespace(line{[i+1..m+i]}));       # max domain
+    rank:=Int(NormalizedWhitespace(line{[m+i+1..2*m+i]}));  # rank
+    f:=line{[i+1..i+m*(deg+3*rank+6)]};
+    out[k]:=EmptyPlist(deg+3*rank+6);
+    for j in [1..deg+3*rank+6] do 
+      Add(out[k], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
     od;
-    return out;
-  end);
-else
-  InstallGlobalFunction(ReadSemigroupsLinePP, ReturnFail);
-fi;
+    out[k]:=FullPartialPermNC(out[k]);
+    i:=i+m*(deg+3*rank+6)+1;
+  od;
+  return out;
+end);
 
 # mod for 0.7! - WriteSemigroups - "for a string and trans. coll."
 #############################################################################

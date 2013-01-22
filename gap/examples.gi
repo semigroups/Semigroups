@@ -323,10 +323,13 @@ end);
 #
 
 InstallMethod(SymmetricInverseSemigroup, "for a positive integer",
-[IsPosInt],
+[IsInt],
 function(n)
 
-  if n=0 then
+  if n<0 then 
+    Error("usage: the argument should be a non-negative integer,");
+    return;
+  elif n=0 then
     return InverseSemigroup(PartialPermNC([]));
   elif n=1 then 
     return InverseSemigroup(PartialPermNC([1]), PartialPermNC([]));

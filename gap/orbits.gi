@@ -68,6 +68,12 @@ InstallGlobalFunction(LookForInOrb,
 function(o, func, start)
   local pos, i;
  
+  # not including this line means that when considering LambdaOrb(s) 
+  # the first point is considered which it shouldn't be. Whatever is broken
+  # when this line is not included should be fixed as at present this is not
+  # consistent. JDM
+  Enumerate(o, Length(o)+1);
+  
   if start<=Length(o) then 
     for i in [start..Length(o)] do 
       if func(o, o[i]) then 
@@ -79,8 +85,6 @@ function(o, func, start)
   if IsClosed(o) then 
     return false;
   fi;
-
-  Enumerate(o, Length(o)+1);
   
   o!.looking:=true;
   o!.lookingfor:=func;

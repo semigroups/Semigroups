@@ -105,7 +105,7 @@ gap> s:=Semigroup(Transformation([1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]),
 > Transformation([1,2,3,4,4,4,4,4,4,4,4,12,13,14,15,16,4,4,4,4,4]),
 > Transformation([1..21]*1));; 
 gap> IsLTrivial(s);
-false
+true
 
 #
 gap> gens:=[Transformation([1,2,1,3,3]), Transformation([2,2,3,5,5])];;
@@ -137,8 +137,6 @@ gap> IsRTrivial(d);
 true
 gap> Size(d);
 1
-gap> IsRTrivial(d);   
-true
 gap> repeat d:=NextIterator(iter); until IsDoneIterator(iter) or 
 > not IsLTrivial(d) and IsRTrivial(d);
 gap> d;;
@@ -157,8 +155,7 @@ false
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 >   Transformation( [ 4, 2, 1, 5, 5 ] ),
 >   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
-gap> s:=Semigroup(gens);
-<semigroup with 3 generators>
+gap> s:=Semigroup(gens);;
 gap> IsRTrivial(s);
 false
 
@@ -265,44 +262,6 @@ gap> IsInverseSemigroup(s);
 true
 
 #
-gap> gens:=[ Transformation( [ 1, 2, 4, 3, 6, 5 ] ), 
-> Transformation( [ 1, 2, 3, 4, 5, 6 ] ), Transformation( [ 6, 4, 3, 2, 5, 3 ] ), 
-> Transformation( [ 5, 3, 4, 2, 2, 1 ] ),
->   Transformation( [ 2, 4, 6, 4, 5, 3 ] ), Transformation( [ 4, 2, 4, 3, 6, 5 ] ),
->   Transformation( [ 2, 4, 4, 3, 6, 5 ] ), Transformation( [ 5, 6, 4, 4, 3, 2 ] ),
->   Transformation( [ 2, 2, 3, 4, 5, 6 ] ), Transformation( [ 3, 4, 2, 2, 2, 1 ] ),
->   Transformation( [ 1, 2, 4, 2, 3, 3 ] ), Transformation( [ 1, 2, 3, 4, 3, 2 ] ),
->   Transformation( [ 6, 4, 2, 3, 2, 3 ] ), Transformation( [ 6, 4, 2, 2, 1, 1 ] ),
->   Transformation( [ 6, 4, 2, 3, 4, 4 ] ), Transformation( [ 5, 3, 3, 2, 4, 2 ] ) ];;
-gap> s:=Semigroup(gens);;
-gap> RedundantGenerator(s, gens);
-Transformation( [ 1, 2, 3, 4, 5, 6 ] )
-gap> gens:=Difference(gens, [last]);;
-gap> RedundantGenerator(s, gens);
-Transformation( [ 3, 4, 2, 2, 2, 1 ] )
-gap> gens:=Difference(gens, [last]);;
-gap> RedundantGenerator(s, gens);
-fail
-
-#
-gap> gens:=[ Transformation( [ 5, 1, 4, 6, 2, 3 ] ),
-> Transformation( [ 1, 2, 3, 4, 5, 6 ] ),
-> Transformation( [ 4, 6, 3, 4, 2, 5 ] ),
-> Transformation( [ 5, 4, 6, 3, 1, 3 ] ),
-> Transformation( [ 2, 2, 6, 5, 4, 3 ] ),
-> Transformation( [ 3, 5, 5, 1, 2, 4 ] ),
-> Transformation( [ 6, 5, 1, 3, 3, 4 ] ),
-> Transformation( [ 1, 3, 4, 3, 2, 1 ] ) ];;
-gap> RedundantGenerator(gens);
-Transformation( [ 1, 2, 3, 4, 5, 6 ] )
-gap> gens:=Difference(gens, [last]);;
-gap> RedundantGenerator(gens);
-Transformation( [ 4, 6, 3, 4, 2, 5 ] )
-gap> gens:=Difference(gens, [last]);;
-gap> RedundantGenerator(gens);
-fail
-
-#
 gap> gens:=[ Transformation( [ 1, 2, 2 ] ), Transformation( [ 1, 2, 1 ] ), 
 >   Transformation( [ 2, 2, 3 ] ), Transformation( [ 3, 2, 3 ] ), 
 >   Transformation( [ 1, 3, 3 ] ), Transformation( [ 1, 1, 3 ] ) ]
@@ -310,29 +269,6 @@ gap> gens:=[ Transformation( [ 1, 2, 2 ] ), Transformation( [ 1, 2, 1 ] ),
 gap> s:=Semigroup(gens);;
 gap> IsIdempotentGenerated(s);
 true
-
-#
-gap> RedundantGenerator(s, gens);
-Transformation( [ 1, 2, 2 ] )
-gap> gens:=Difference(gens, [last]);                                       
-[ Transformation( [ 1, 1, 3 ] ), Transformation( [ 1, 2, 1 ] ), 
-  Transformation( [ 1, 3, 3 ] ), Transformation( [ 2, 2, 3 ] ), 
-  Transformation( [ 3, 2, 3 ] ) ]
-gap> RedundantGenerator(s, gens);
-Transformation( [ 1, 1, 3 ] )
-gap> gens:=Difference(gens, [last]);
-[ Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 3, 3 ] ), 
-  Transformation( [ 2, 2, 3 ] ), Transformation( [ 3, 2, 3 ] ) ]
-gap> RedundantGenerator(s, gens);
-Transformation( [ 3, 2, 3 ] )
-gap> gens:=Difference(gens, [last]);
-[ Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 3, 3 ] ), 
-  Transformation( [ 2, 2, 3 ] ) ]
-gap> RedundantGenerator(s, gens);
-fail
-gap> Size(Semigroup(gens)); 3^3-6;
-21
-21
 
 #
 gap> gens:=[Transformation( [ 2, 6, 1, 8, 5, 3, 8, 8 ] ),
@@ -349,13 +285,7 @@ gap> gens:=[Transformation([2,3,4,5,6,7,8,9,1]),
 > Transformation([4,2,3,4,5,6,7,8,9])];;
 gap> s:=Semigroup(gens);;
 gap> i:=MinimalIdeal(s);;
-gap> gens:=Generators(i);;
-gap> repeat
-> f:=RedundantGenerator(gens); if not f=fail then 
-> gens:=Difference(gens, [f]);
-> fi;
-> until f=fail;
-gap> i:=Semigroup(gens);;
+gap> i:=Semigroup(Generators(i), rec(small:=true));;
 gap> IsLeftZeroSemigroup(i);
 false
 gap> IsSimpleSemigroup(i);
@@ -374,9 +304,7 @@ gap> s:=Monoid(gens);;
 gap> s:=Semigroup(GeneratorsOfSemigroup(s));;
 gap> IsMonoidAsSemigroup(s);
 true
-gap> IsomorphismTransformationMonoid(s);
-MappingByFunction( <semigroup with 5 generators>, <monoid with 
-4 generators>, function( x ) ... end, function( x ) ... end )
+gap> IsomorphismTransformationMonoid(s);;
 gap> i:=MinimalIdeal(s);;
 gap> Size(i);
 4
@@ -398,9 +326,7 @@ gap> t:=Range(IsomorphismTransformationSemigroup(g));;
 gap> IsMonoidAsSemigroup(t);
 true
 gap> t:=Range(IsomorphismTransformationMonoid(t));;
-gap> IsomorphismPermGroup(t);
-MappingByFunction( <monoid with 3 generators>, <permutation group with 
-3 generators>, <Operation "AsPermutation">, function( x ) ... end )
+gap> IsomorphismPermGroup(t);;
 
 #
 gap> gens:=[Transformation([4,4,4,1,1,6,7,8,9,10,11,1]),
@@ -610,8 +536,6 @@ false
 #
 gap> gens:=List(Tuples([1,2], 4), x-> TransformationNC(Concatenation([1,1], x)));;
 gap> s:=Semigroup(gens);;
-gap> RedundantGenerator(s, gens);
-Transformation( [ 1, 1, 1, 1, 1, 1 ] )
 gap> IsZeroSemigroup(s);
 true
 
@@ -646,106 +570,106 @@ gap> s:=Semigroup(last);;
 gap> MultiplicativeNeutralElement(s);
 Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] )
 
+##
+#gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
+#>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
+#>   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
+#>   Transformation( [ 4, 3, 4, 5, 6, 4, 1, 2 ] ),
+#>   Transformation( [ 5, 4, 8, 8, 5, 6, 1, 5 ] ),
+#>   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
+#>   Transformation( [ 7, 1, 2, 2, 2, 7, 4, 5 ] ),
+#>   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
+#gap> s:=Semigroup(gens);;
+##gap> IsAbundantSemigroup(s);
+##false
 #
-gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
->   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
->   Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
->   Transformation( [ 4, 3, 4, 5, 6, 4, 1, 2 ] ),
->   Transformation( [ 5, 4, 8, 8, 5, 6, 1, 5 ] ),
->   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
->   Transformation( [ 7, 1, 2, 2, 2, 7, 4, 5 ] ),
->   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
-gap> s:=Semigroup(gens);;
-gap> IsAbundantSemigroup(s);
-false
-
+##
+#gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
+#>   Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ),
+#>   Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ),
+#>   Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] ) ];;
+#gap> s:=Monoid(gens);;
+##gap> IsAbundantSemigroup(s);
+##false
 #
-gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
->   Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ),
->   Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ),
->   Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] ) ];;
-gap> s:=Monoid(gens);;
-gap> IsAbundantSemigroup(s);
-false
-
+##
+#gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
+#>   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
+#>   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
+#>   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
+#gap> s:=Semigroup(gens);;
+##gap> IsAbundantSemigroup(s);
+##false
 #
-gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
->   Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
->   Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ),
->   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
-gap> s:=Semigroup(gens);;
-gap> IsAbundantSemigroup(s);
-false
-
+##
+#gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
+#>   Transformation( [ 4, 2, 1, 5, 5 ] ),
+#>   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
+#gap> s:=Semigroup(gens);;
+#gap> IsAbundantSemigroup(s);
+#true
 #
-gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
->   Transformation( [ 4, 2, 1, 5, 5 ] ),
->   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
-gap> s:=Semigroup(gens);;
-gap> IsAbundantSemigroup(s);
-true
-
+##
+#gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
+#> Transformation( [ 2, 4, 1, 2 ] ),
+#> Transformation( [ 3, 1, 1, 3 ] ),
+#> Transformation( [ 3, 3, 4, 1 ] ) ];;
+#gap> s:=Monoid(gens);;
+#gap> IsAbundantSemigroup(s);
+#false
 #
-gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
-> Transformation( [ 2, 4, 1, 2 ] ),
-> Transformation( [ 3, 1, 1, 3 ] ),
-> Transformation( [ 3, 3, 4, 1 ] ) ];;
-gap> s:=Monoid(gens);;
-gap> IsAbundantSemigroup(s);
-false
-
+##
+#gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
+#>  Transformation( [ 1, 4, 1, 2 ] ),
+#>  Transformation( [ 2, 4, 1, 1 ] ),
+#>  Transformation( [ 3, 4, 2, 2 ] ) ];;
+#gap> s:=Semigroup(gens);;
+#gap> IsAbundantSemigroup(s);
+#true
+#gap> IsRegularSemigroup(s);
+#false
 #
-gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
->  Transformation( [ 1, 4, 1, 2 ] ),
->  Transformation( [ 2, 4, 1, 1 ] ),
->  Transformation( [ 3, 4, 2, 2 ] ) ];;
-gap> s:=Semigroup(gens);;
-gap> IsAbundantSemigroup(s);
-true
-gap> IsRegularSemigroup(s);
-false
-
+##
+#gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
+#>  Transformation( [ 1, 4, 1, 2 ] ),
+#>  Transformation( [ 3, 4, 2, 2 ] ),
+#>  Transformation( [ 4, 1, 2, 1 ] ) ];;
+#gap> s:=Monoid(gens);;
+#gap> IsAbundantSemigroup(s);
+#true
+#gap> IsRegularSemigroup(s);
+#false
 #
-gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
->  Transformation( [ 1, 4, 1, 2 ] ),
->  Transformation( [ 3, 4, 2, 2 ] ),
->  Transformation( [ 4, 1, 2, 1 ] ) ];;
-gap> s:=Monoid(gens);;
-gap> IsAbundantSemigroup(s);
-true
-gap> IsRegularSemigroup(s);
-false
-
+##
+#gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
+#> Transformation([1,2,4,3,5,6,7,8,9,10]),
+#> Transformation([1,2,3,4,5,6,10,9,8,7]),
+#> Transformation([9,1,4,3,6,9,3,4,3,9])];;
+#gap> s:=Monoid(gens);;
+#gap> IsAbundantSemigroup(s);
+#true
+#gap> IsRegularSemigroup(s);
+#false
 #
-gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
-> Transformation([1,2,4,3,5,6,7,8,9,10]),
-> Transformation([1,2,3,4,5,6,10,9,8,7]),
-> Transformation([9,1,4,3,6,9,3,4,3,9])];;
-gap> s:=Monoid(gens);;
-gap> IsAbundantSemigroup(s);
-true
-gap> IsRegularSemigroup(s);
-false
-
+##
+#gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
+#> Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
+#gap> s:=Monoid(gens);;
+#gap> IsAdequateSemigroup(s);
+#false
+#gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
+#> Transformation([1,2,4,3,5,6,7,8,9,10]),
+#> Transformation([1,2,3,4,5,6,10,9,8,7]),
+#> Transformation([9,1,4,3,6,9,3,4,3,9])];;
+#gap> s:=Monoid(gens);;
+#gap> IsAdequateSemigroup(s);
+#false
 #
-gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
-> Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
-gap> s:=Monoid(gens);;
-gap> IsAdequateSemigroup(s);
-false
-gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
-> Transformation([1,2,4,3,5,6,7,8,9,10]),
-> Transformation([1,2,3,4,5,6,10,9,8,7]),
-> Transformation([9,1,4,3,6,9,3,4,3,9])];;
-gap> s:=Monoid(gens);;
-gap> IsAdequateSemigroup(s);
-false
-
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/graph8c.semigroups.gz");;
 gap> ReadSemigroups(file, 1303);;
 gap> s:=Semigroup(last);;
-gap> t:=IdempotentGeneratedSubsemigp(s);;
+gap> t:=IdempotentGeneratedSubsemigroup(s);;
 gap> Size(t);
 105
 
@@ -762,6 +686,8 @@ gap> inv:=InverseGeneralMapping(iso);; t:=Range(iso);;
 gap> ForAll(s, x-> (x^iso)^inv=x);
 true
 gap> ForAll(t, x-> (x^inv)^iso=x);
+true
+gap> RespectsMultiplication(iso);
 true
 gap> Size(t);
 180
