@@ -1,22 +1,32 @@
-- Idempotents not working for partial perm semigroups.
-
--  
-
-gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
-> Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
-gap> s:=Monoid(gens);; 
-gap> t:=Semigroup(Idempotents(s));;
-gap> Filtered(s, IsIdempotent);;
-gap> Size(s);
-20168
-gap> Length(ListIterator(Iterator(s)));
-20169
-
-- 
+* 
 gap> s:=SymmetricInverseSemigroup(1);  
 <inverse partial perm semigroup of degree 1 with 2 generators>
 gap> IsTrivial(s);         
 true
 gap> MultiplicativeZero(s);
 <identity on [ 1 ]>
+
+*
+gap> s:=Semigroup(Transformation([3,3,2,6,2,4,4,6]),
+> Transformation([3,3,2,6,2,4,4,6]));;
+gap> s;
+<transformation semigroup of degree 8 with 2 generators>
+gap> IsSimpleSemigroup(s);
+true
+gap> s;
+<simple transformation semigroup of degree 8 with 2 generators>
+gap> Size(s);
+2
+gap> Elements(s);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `[]' on 2 arguments called from
+OrbSCCLookup( arg[2] ) called from
+RectifyLambda( s, o, rep, LambdaPos( o ), m ) called from
+CallFuncList( CreateRClass, x ) called from
+arg[2]( x ) called from
+convert( iter, x ) called from
+...  at line 7 of *stdin*
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk> 
 

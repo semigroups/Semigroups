@@ -34,18 +34,12 @@ gap> IsSimpleSemigroup(s);
 true
 
 #
-gap> g1:=Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] );;
-gap> g2:=Transformation( [ 2, 3, 4, 5, 6, 8, 7, 1, 2, 2 ] );;
 gap> s:=Semigroup(Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ),
 > Transformation( [ 2, 3, 4, 5, 6, 8, 7, 1, 2, 2 ] ));;
 gap> IsSimpleSemigroup(s);
 true
 
 #
-gap> g1:=Transformation([2,1,1,2,1]);;
-gap> g2:=Transformation([3,4,3,4,4]);;
-gap> g3:=Transformation([3,4,3,4,3]);;
-gap> g4:=Transformation([4,3,3,4,4]);;
 gap> s:=Semigroup(Transformation([2,1,1,2,1]), Transformation([3,4,3,4,4]), 
 > Transformation([3,4,3,4,3]), Transformation([4,3,3,4,4]));;
 gap> IsCompletelySimpleSemigroup(s);

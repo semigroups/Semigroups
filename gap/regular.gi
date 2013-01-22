@@ -954,13 +954,9 @@ local iter, scc;
 
   if not IsClosed(LambdaOrb(s)) then 
     
-    iter:=IteratorByFunctions( rec(
+    iter:=IteratorByNextIterator( rec(
 
       i:=1,
-
-      #JDM this won't work! Change as per IteratorOfRClassData in inverse.gi
-      IsDoneIterator:=iter-> IsClosed(LambdaOrb(s)) and 
-       iter!.i>=Length(LambdaOrb(s)),
 
       NextIterator:=function(iter)
         local i, o, r, f;
@@ -1037,13 +1033,7 @@ local iter, scc;
   return iter;
 end);
 
-# new for 0.7! - IteratorOfRClassData - "for a regular acting semigroup
-###############################################################################
-
 # different method for inverse
-
-# this method should be updated, it won't work see IteratorOfRClassData in
-# inverse.gi
 
 InstallMethod(IteratorOfRClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -1052,12 +1042,9 @@ local iter, scc;
 
   if not IsClosed(RhoOrb(s)) then 
     
-    iter:=IteratorByFunctions( rec(
+    iter:=IteratorByNextIterator( rec(
 
       i:=1,
-
-      IsDoneIterator:=iter-> IsClosed(RhoOrb(s)) and 
-       iter!.i>=Length(RhoOrb(s)),
 
       NextIterator:=function(iter)
         local i, o, r, f;
@@ -1095,7 +1082,7 @@ local iter, scc;
                  
       m:=1, 
      
-      i:=0,      
+      i:=1,      
 
       scc_limit:=Length(scc),
 
