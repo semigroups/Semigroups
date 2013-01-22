@@ -2,12 +2,12 @@
 
 -  
 
-  gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
-  > Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
-  gap> s:=Monoid(gens);; 
-  gap> t:=Semigroup(Idempotents(s));;
-  gap> Filtered(s, IsIdempotent);;
-  gap> Size(s);
-  20168
-  gap> Length(ListIterator(Iterator(s)));
-  20169
+gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
+> Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
+gap> s:=Monoid(gens);; 
+gap> t:=Semigroup(Idempotents(s));;
+gap> Filtered(s, IsIdempotent);;
+gap> Size(s);
+20168
+gap> Length(ListIterator(Iterator(s)));
+20169

@@ -43,24 +43,38 @@ function(s)
   # name
   if HasIsGroupAsSemigroup(s) and IsGroupAsSemigroup(s) then 
     name:="group ";
-  #elif HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then
-  #  name:="inverse semigroup ";
-  #elif HasIsBlockGroup(s) and IsBlockGroup(s) then
-  #  name:="block group ";
+  elif HasIsZeroGroup(s) and IsZeroGroup(s) then 
+    name:="0-group";
   elif IsMonoid(s) then 
     name:="monoid ";
   else 
     name:="semigroup ";
   fi;
   
-  # properties
+  #properties
   property:="";
- 
-  if HasIsCommutativeSemigroup(s) and IsCommutativeSemigroup(s) then 
-    Append(property, "commutative ");
+
+  if HasIsTrivial(s) and IsTrivial(s) then 
+    Append(property, "trivial ");
+  else 
+    if HasIsCommutativeSemigroup(s) and IsCommutativeSemigroup(s) then 
+      Append(property, "commutative ");
+    fi;
+
+    if (HasIsHTrivial(s) and IsHTrivial(s)) 
+      and not (HasIsBrandtSemigroup(s) and IsBrandtSemigroup(s)) then 
+      Append(property, "aperiodic ");
+    fi;
+
   fi;
 
-  if HasIsGroupAsSemigroup(s) and IsGroupAsSemigroup(s) then 
+  if HasIsTrivial(s) and IsTrivial(s) then 
+  elif HasIsGroupAsSemigroup(s) and IsGroupAsSemigroup(s) then 
+  elif HasIsZeroGroup(s) and IsZeroGroup(s) then 
+  elif HasIsBrandtSemigroup(s) and IsBrandtSemigroup(s) then 
+    Append(property, "Brandt ");
+  elif HasIsZeroSimpleSemigroup(s) and IsZeroSimpleSemigroup(s) then 
+    Append(property, "0-simple ");
   elif HasIsCliffordSemigroup(s) and IsCliffordSemigroup(s) then
     Append(property, "Clifford ");
   elif HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
@@ -68,11 +82,21 @@ function(s)
       Append(property, "factorisable ");
     fi;
     Append(property, "inverse ");
+  elif HasIsLeftZeroSemigroup(s) and IsLeftZeroSemigroup(s) then 
+    Append(property, "left zero ");
+  elif HasIsRightZeroSemigroup(s) and IsRightZeroSemigroup(s) then 
+    Append(property, "right zero ");
+  elif HasIsLeftSimple(s) and IsLeftSimple(s) then 
+    Append(property, "left simple ");
+  elif HasIsRightSimple(s) and IsRightSimple(s) then 
+    Append(property, "right simple ");
   elif HasIsSimpleSemigroup(s) and IsSimpleSemigroup(s) then 
     Append(property, "simple ");
-  elif HasIsCompletelyRegularSemigroup(s) and IsCompletelyRegularSemigroup(s)
-   then 
-    Append(property, "completely regular ");
+  #elif HasIsCompletelyRegularSemigroup(s) and IsCompletelyRegularSemigroup(s)
+  # then 
+  #  Append(property, "completely regular ");
+  elif HasIsOrthodoxSemigroup(s) and IsOrthodoxSemigroup(s) then 
+    Append(property, "orthodox ");
   elif HasIsRegularSemigroup(s) then 
     if IsRegularSemigroup(s) then 
       Append(property, "regular ");
@@ -90,11 +114,11 @@ function(s)
     Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]), " ");
   fi;
   
-  #if HasSize(s) then 
-  #  Print("of size ", Size(s), ", ");
-  #else
+  if HasSize(s) then 
+    Print("of size ", Size(s), ", ");
+  else
     Print("of ");
-  #fi;
+  fi;
 
   if IsTransformationSemigroup(s) then 
     Print("degree ", DegreeOfTransformationSemigroup(s), " ");
