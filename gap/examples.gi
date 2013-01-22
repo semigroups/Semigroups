@@ -378,4 +378,21 @@ function(s)
   Print(">");
 end);
 
+#
+
+InstallMethod(ViewObj, "for a full transformation semigroup",
+[IsFullTransformationSemigroup and HasGeneratorsOfSemigroup], 1,
+function(s)
+  Print("<full transformation semigroup of ");
+  if HasSize(s) then 
+    Print("size ", Size(s), ", ");
+  fi;
+  Print("degree ", DegreeOfTransformationSemigroup(s), " with ",
+   Length(GeneratorsOfSemigroup(s)), " generator");
+  if Length(GeneratorsOfSemigroup(s))>1 then 
+    Print("s");
+  fi;
+  Print(">");
+end);
+
 #EOF

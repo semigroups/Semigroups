@@ -499,7 +499,7 @@ function(s)
     return NrLClasses(s)=1;
   fi;
   
-  iter:=IteratorOfLClasses(s); 
+  iter:=IteratorOfLClassReps(s); 
   NextIterator(iter);
   return IsDoneIterator(iter);
 end);
@@ -1081,7 +1081,7 @@ function(s)
   if IsClosed(SemigroupData(s)) then 
     return NrDClasses(s)=2;
   fi;
-  iter:=IteratorOfDClasses(s);
+  iter:=IteratorOfDClassReps(s);
   NextIterator(iter);
   NextIterator(iter);
   return IsDoneIterator(iter);
@@ -1093,9 +1093,15 @@ InstallMethod(IsFullTransformationSemigroup,
 "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-return ForAll(GeneratorsOfSemigroup(
- FullTransformationSemigroup(DegreeOfTransformationSemigroup(s))),
-  x-> x in s);
+  if ForAll(GeneratorsOfSemigroup(
+   FullTransformationSemigroup(DegreeOfTransformationSemigroup(s))),
+    x-> x in s) then 
+    if not HasIsRegularSemigroup(s) then
+      SetIsRegularSemigroup(s);
+    fi;
+    return true;
+  fi;
+  return false;
 end);
 
 #
@@ -1104,9 +1110,15 @@ InstallMethod(IsSymmetricInverseSemigroup,
 "for a partial perm semigroup with generators",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-return ForAll(GeneratorsOfSemigroup(
- SymmetricInverseSemigroup(DegreeOfPartialPermSemigroup(s))),
-  x-> x in s);
+  if ForAll(GeneratorsOfSemigroup(
+   SymmetricInverseSemigroup(DegreeOfPartialPermSemigroup(s))),
+    x-> x in s) then 
+    if not HasGeneratorsOfInverseSemigroup(s) then 
+      SetGeneratorsOfInverseSemigroup(s, GeneratorsOfSemigroup(s));
+    fi;
+    return true;
+  fi;
+  return false;
 end);
   
 #EOF
