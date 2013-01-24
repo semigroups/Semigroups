@@ -17,7 +17,7 @@
 
 
 InstallMethod(ViewObj, "for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 3,
+[IsSemigroup and HasGeneratorsOfSemigroup], 10,
 function(s)
   local type, name, property, n;
  
@@ -117,17 +117,17 @@ function(s)
   if HasSize(s) then 
     Print("of size ", Size(s), ", ");
   elif not IsMatrixSemigroup(s) then 
-    Print("of degree ");
+    Print("of ");
   fi;
 
   if IsTransformationSemigroup(s) then 
-    Print(DegreeOfTransformationSemigroup(s), " ");
+    Print("degree ", DegreeOfTransformationSemigroup(s), " ");
   elif IsPartialPermSemigroup(s) then 
-    Print(DegreeOfPartialPermSemigroup(s), " ");
+    Print("degree ", DegreeOfPartialPermSemigroup(s), " ");
   elif IsBipartitionSemigroup(s) then 
-    Print(DegreeOfBipartitionSemigroup(s)/2, " "); 
+    Print("degree ", DegreeOfBipartitionSemigroup(s)/2, " "); 
   elif IsBinaryRelationSemigroup(s) then 
-    Print(Length(Successors(Generators(s)[1])), " ");
+    Print("degree ", Length(Successors(Generators(s)[1])), " ");
   fi;
 
   Print("with ", Length(Generators(s)));

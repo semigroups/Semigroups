@@ -24,30 +24,58 @@
 # MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
 # fail but IsMonoidAsSemigroup is still true. 
 
-# Note that a semigroup satisfies IsTransformationMonoid or IsPartialPermMonoid
-# only if One(s)<>fail. 
+# Note that a semigroup satisfies IsTransformationMonoid only if One(s)<>fail. 
+
+# JDM this should be undocumented until fixed
 
 #
 
-InstallMethod(AntiIsomorphismTransformationSemigroup, 
-"for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
-function ( s )
-local  en, gens, mapfun;
+InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
 
-  en := EnumeratorSorted( s );
-  mapfun := function ( a )
-  return
-  Transformation( Concatenation( List( [ 1 .. Length( en ) ], function ( i )
-  return Position( en, a* en[i]); end ), [ Position( en, a ) ] ) );
-  end;
-  gens := List( GeneratorsOfSemigroup( s ), function ( x )
-  return mapfun( x );
-  end );
-  return MagmaHomomorphismByFunctionNC( s, Semigroup( gens ), mapfun );
+  if not IsMonoidAsSemigroup(s) then 
+    Error( "Usage: the argument must be a transformation semigroup ",
+    "satisfying IsMonoidAsSemigroup," );
+    return;
+  fi;
+
+  return MappingByFunction(s, Monoid(Difference(Generators(s),
+  [TransformationNC([1..DegreeOfTransformationSemigroup(s)])])), x-> x, x-> x);
 end);
 
-#JDM incomplete
+#
+
+InstallOtherMethod(IsomorphismPermGroup, "for a transformation semigroup", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+ 
+   if not IsGroupAsSemigroup(s)  then
+     Error( "Usage: trans. semigroup satisfying IsGroupAsSemigroup,");
+     return; 
+   fi;
+ 
+   return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
+    AsPermutation, x-> AsTransformation(x, ActionDegree(s)));
+ end);
+
+#
+
+InstallOtherMethod(IsomorphismPermGroup, 
+"for an acting semigroup with generators", 
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  if not IsGroupAsSemigroup(s)  then
+    Error( "the semigroup is not a group,");
+    return; 
+  fi;
+#JDM not sure how to do this ...
+  return MagmaIsomorphismByFunctionNC(s, 
+   Group(List(Generators(s), AsPermutation), 
+   AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
+end);
+
+#
 
 InstallMethod(EmbeddingNC, "for a perm group and an acting semigroup",
 [IsPermGroup, IsActingSemigroup],
@@ -55,7 +83,7 @@ function(g, s)
   local convert, creator, one, t, emb, conj;
  
   if IsTransformationSemigroup(s) then 
-    convert:=x-> AsTransformation(x, ActionDegree(s));
+    convert:=x-> AsTransformation(x, DegreeOfTransformationSemigroup(s));
   elif IsPartialPermSemigroup(s) then 
     convert:=x-> AsPartialPerm(x, DomainOfPartialPermCollection(s));
     # JDM this won't work in general if Points(s) is not the correct set to act
@@ -81,9 +109,10 @@ function(g, s)
   return MappingByFunction(g, t, emb, AsPermutation); 
 end);
 
-#GGG
+#
 
-InstallMethod(GroupOfUnits, "for an acting semigroup",
+InstallMethod(GroupOfUnits, 
+"for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local r, m, g, emb, u;
@@ -93,9 +122,9 @@ function(s)
   fi;
 
   r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
-  m:=Size(r); g:=Group(AsPermutation(Random(r)));
+  g:=Group(AsPermutation(Random(r)));
 
-  while Size(g)<m do
+  while Size(g)<Size(r) do
     g:=ClosureGroup(g, AsPermutation(Random(r)));
   od;
   
@@ -110,21 +139,14 @@ end);
 
 #
 
-InstallMethod(IdempotentGeneratedSubsemigroup, "for an acting semigroup",
+InstallMethod(IdempotentGeneratedSubsemigroup, 
+"for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 s-> Semigroup(Idempotents(s), rec(small:=true)));
 
 #
 
-InstallMethod(IdempotentGeneratedSubsemigroup, 
-"for an acting semigroup with inverses",
-[IsActingSemigroupWithInverseOp],
-s-> InverseSemigroup(Idempotents(s), rec(small:=true)));
-
-# new for 0.7! - InjectionPrincipalFactor - "for a D-class"
-#############################################################################
-
-InstallMethod(InjectionPrincipalFactor, "for a D-class",
+InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local g, rep, rreps, lreps, mat, inj, zero, bound_r, bound_l, inv_l, inv_r,
@@ -258,7 +280,18 @@ end);
 
 #
 
-InstallOtherMethod(IsomorphismReesMatrixSemigroup, "for D-class",
+InstallOtherMethod(IsomorphismReesMatrixSemigroup, 
+"for a simple semigroup with generators",
+[IsSimpleSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  return IsomorphismReesMatrixSemigroup(DClass(s, Representative(s)));
+end);
+
+
+#
+
+InstallOtherMethod(IsomorphismReesMatrixSemigroup, 
+"for D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local g, rep, rreps, lreps, mat, rms, iso, inv, hom, i, j;
@@ -324,10 +357,10 @@ function(d)
   return hom;
 end);
 
-# new for 1.0! - InversesOfSemigroupElement - "for acting semigroup and elt"
-#############################################################################
+#
 
-InstallMethod(InversesOfSemigroupElement, "for acting semigroup and elt",
+InstallMethod(InversesOfSemigroupElement, 
+"for acting semigroup with generators and associative element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(s, f)
 
@@ -338,8 +371,7 @@ function(s, f)
   return fail;
 end);
 
-# mod for 1.0! - InversesOfSemigroupElementNC - "for acting semigroup and elt"
-#############################################################################
+#
 
 InstallMethod(InversesOfSemigroupElementNC, 
 "for an acting semigroup and acting elt",
@@ -433,46 +465,6 @@ function(s, f)
   fi; 
  
   return out;
-end);
-
-#JDM expand so that this is really an isomorphism and that the range knows some
-#of the properties that the domain does. 
-
-InstallMethod(IsomorphismBipartitionSemigroup, 
-"for a transformation semigroup with generators",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  
-  return MappingByFunction(s, Semigroup(List(GeneratorsOfSemigroup(s),     
-   AsBipartition)), AsBipartition, AsTransformation);
-end);
-
-# mod for 1.0! - IsomorphismTransformationSemigroup - "for a perm group"
-#############################################################################
-    
-InstallOtherMethod(IsomorphismTransformationSemigroup, "for a perm group",
-[IsPermGroup], g-> IsomorphismTransformationSemigroup(g, NrMovedPoints(g)));
-
-# mod for 1.0! - IsomorphismTransformationSemigroup
-#############################################################################
-
-InstallOtherMethod(IsomorphismTransformationSemigroup,
-"for a perm group and pos int",
-[IsPermGroup, IsPosInt], 
-function(g, n)
-  local conj, iso, s;
-
-  if n<NrMovedPoints(g) then 
-    Error("the number of moved points of the perm group exceeds the",
-    " second argument,");
-    return;
-  fi;
-  
-  conj:=MappingPermListList(MovedPoints(g), [1..NrMovedPoints(g)]);
-  iso:=x-> AsTransformation(x^conj, n);
-  s:=Semigroup(List(GeneratorsOfGroup(g), iso));
-
-  return MappingByFunction(g, s, iso, AsPermutation);
 end);
 
 #
@@ -573,102 +565,6 @@ end);
 
 #
 
-InstallOtherMethod(IsomorphismReesMatrixSemigroup, "for a simple inverse semi",
-[IsPartialPermSemigroup and IsInverseSemigroup and IsSimpleSemigroup],
-function(s)
-  return IsomorphismReesMatrixSemigroup(DClass(s, Representative(s)));
-end);
-
-#
-
-InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-
-  if not IsMonoidAsSemigroup(s) then 
-    Error( "Usage: trans. semigroup satisfying IsMonoidAsSemigroup," );
-    return;
-  fi;
-
-  return MappingByFunction(s, Monoid(Difference(Generators(s),
-  [TransformationNC([1..DegreeOfTransformationSemigroup(s)])])), x-> x, x-> x);
-end);
-
-#
-
-InstallOtherMethod(IsomorphismPermGroup, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
- 
-   if not IsGroupAsSemigroup(s)  then
-     Error( "Usage: trans. semigroup satisfying IsGroupAsSemigroup,");
-     return; 
-   fi;
- 
-   return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
-    AsPermutation, x-> AsTransformation(x, ActionDegree(s)));
- end);
-
-# to attributes
-
-#JDM this should be improved: inverse of the function is missing, and a similar
-#approach as used in the method for IsomorphismTransformationSemigroup for a
-#semigroup of binary relations should be used to reduce the number of points
-#acted on. 
-
-InstallOtherMethod(IsomorphismTransformationSemigroup, "for a matrix semigroup",
-[IsMatrixSemigroup], 
-function(S)        
-  local n, F, T;
-  n:=Length(GeneratorsOfSemigroup(S)[1][1]);
-  F:=BaseDomain(GeneratorsOfSemigroup(S)[1]);        
-  T:=Semigroup(List(GeneratorsOfSemigroup(S), x-> 
-   TransformationOp(x, Elements(F^n), OnRight)));        
-  return MappingByFunction(S, T,
-   x-> TransformationOp(x, Elements(F^Size(F)), OnRight));
-end);
-
-# to attributes
-
-InstallOtherMethod(IsomorphismTransformationSemigroup, 
-"for semigroup of binary relations",
-[IsBinaryRelationSemigroup], 
-function(s)        
-  local n, pts, o, t, pos, i;
-
-  n:=DegreeOfBinaryRelation(Generators(s)[1]);
-  pts:=EmptyPlist(2^n);
-
-  for i in [1..n] do 
-    o:=Orb(s, [i], OnPoints); #JDM multiseed orb
-    Enumerate(o);
-    pts:=Union(pts, AsList(o));
-  od;
-  ShrinkAllocationPlist(pts);
-  pos:=List([1..n], x-> Position(pts, [x]));
-  t:=Semigroup(List(Generators(s), x-> TransformationOpNC(x, pts, OnPoints)));
-  
-  return MappingByFunction(s, t, x-> TransformationOpNC(x, pts, OnPoints),
-  x-> BinaryRelationOnPoints(List([1..n], i-> pts[pos[i]^x])));
-end);
-
-#
-
-InstallOtherMethod(IsomorphismPermGroup, "for a partial perm semigroup", 
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-
-  if not IsGroupAsSemigroup(s)  then
-    Error( "Usage: partial perm. semigroup satisfying IsGroupAsSemigroup,");
-    return; 
-  fi;
-
-  return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
-   AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
-end);
-
-#
-
 InstallMethod(MinimalIdeal, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
@@ -745,86 +641,123 @@ function(s)
   return I;
 end);
 
-#PPP
+#
 
-# new for 0.5! - PosetOfIdempotents - "for a transformation semigroup"
-#############################################################################
-
-InstallMethod(PosetOfIdempotents, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], ReturnFail);
-
-# new for 0.7! - PrimitiveIdempotents - "for an inverse semigroup"
-#############################################################################
-
-InstallMethod(PrimitiveIdempotents, "for an inverse semigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup],
+InstallMethod(PrimitiveIdempotents, 
+"for an acting semigroup with inverse op and generators",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
 function(s)
   local zero, rank;
-  zero:=MultiplicativeZero(s);
-  if zero=fail then 
-    rank:=zero[2];
+  
+  if MultiplicativeZero(s)=fail then 
+    r:=Set(List(OrbSCC(LambdaOrb(s)), 
+     x-> LambdaRank(s)(LambdaOrb(s)[x[1]])))[1];
   else
-    rank:=Set(List(OrbSCC(LongOrb(s)), x-> Length(LongOrb(s)[x[1]])))[2];
+    r:=Set(List(OrbSCC(LambdaOrb(s)), 
+     x-> LambdaRank(s)(LambdaOrb(s)[x[1]])))[2];
   fi;
 
-  return Idempotents(s, rank);
+  return Idempotents(s, r);
 end);
 
-# new for 0.7! - PrincipalFactor - "for a D-class"
-#############################################################################
+#
 
 InstallMethod(PrincipalFactor, "for a D-class", 
 [IsGreensDClass], 
 d-> Range(InjectionPrincipalFactor(d)));
 
-#SSS
+#
 
-# fix for 0.5! - SmallGeneratingSet - "for a trans. semi."
-#############################################################################
+InstallOtherMethod(SmallGeneratingSet, 
+"for an acting semigroup with generators", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+s -> Generators(Semigroup(Generators(s), rec(small:=true))));
 
-InstallOtherMethod(SmallGeneratingSet, "for a trans. semi.", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-s -> Generators(Semigroup(Generators(s), rec(small:=true, schreier:=false))));
+#
 
-# new for 0.7! - SmallGeneratingSet - "for an inverse semi"
-#############################################################################
+InstallOtherMethod(SmallGeneratingSet, 
+"for an acting semigroup with inverse op and generators", 
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+s -> Generators(InverseSemigroup(Generators(s), rec(small:=true))));
 
-InstallOtherMethod(SmallGeneratingSet, "for a trans. semi.", 
-[IsPartialPermSemigroup and IsInverseSemigroup],
-s -> Generators(InverseSemigroup(Generators(s), rec(small:=true, 
- schreier:=false))));
+#
 
-# new for 0.2! - StructureDescription - "for a Brandt trans. semigroup"
-############################################################################
-
-InstallOtherMethod(StructureDescription, "for a Brandt trans. semigroup",
-[IsTransformationSemigroup and IsBrandtSemigroup],
+InstallOtherMethod(StructureDescription, "for an acting Brandt semigroup",
+[IsActingSemigroup and IsBrandtSemigroup],
 function(s)
-  local iter, d;
+  local x, d;
   
-  iter:=IteratorOfDClasses(s);
-  repeat 
-    d:=NextIterator(iter);
-  until Size(d)>1;
+  x:=First(Generators(s), x-> x<>MultiplicativeZero(s));
+  d:=GreensDClassOfElementNC(s, x);
   
   return Concatenation("B(", StructureDescription(GroupHClass(d)), ", ",
   String(NrRClasses(d)), ")");
 end);
 
-# new for 0.7! - StructureDescription - "for a trans. semi. as group"
-############################################################################
+#
 
-InstallOtherMethod(StructureDescription, "for a group as semigroup",
-[IsTransformationSemigroup and IsGroupAsSemigroup],
+InstallOtherMethod(StructureDescription, 
+"for an acting group as semigroup",
+[IsActingSemigroup and IsGroupAsSemigroup],
 s-> StructureDescription(Range(IsomorphismPermGroup(s))));
 
-# new for 0.7! - StructureDescription - "for a part. perm. semi. as group""
-############################################################################
+# some things to move...
 
-InstallOtherMethod(StructureDescription, "for a group as semigroup",
-[IsPartialPermSemigroup and IsGroupAsSemigroup],
-s-> StructureDescription(Range(IsomorphismPermGroup(s))));
+# JDM expand so that this is really an isomorphism and that the range knows some
+# of the properties that the domain does. 
+# Also move this to partition.g*
 
+InstallMethod(IsomorphismBipartitionSemigroup, 
+"for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  
+  return MappingByFunction(s, Semigroup(List(GeneratorsOfSemigroup(s),     
+   AsBipartition)), AsBipartition, AsTransformation);
+end);
+
+# to binary.gi 
+
+InstallOtherMethod(IsomorphismTransformationSemigroup, 
+"for semigroup of binary relations",
+[IsBinaryRelationSemigroup], 
+function(s)        
+  local n, pts, o, t, pos, i;
+
+  n:=DegreeOfBinaryRelation(Generators(s)[1]);
+  pts:=EmptyPlist(2^n);
+
+  for i in [1..n] do 
+    o:=Orb(s, [i], OnPoints); #JDM multiseed orb
+    Enumerate(o);
+    pts:=Union(pts, AsList(o));
+  od;
+  ShrinkAllocationPlist(pts);
+  pos:=List([1..n], x-> Position(pts, [x]));
+  t:=Semigroup(List(Generators(s), x-> TransformationOpNC(x, pts, OnPoints)));
+  
+  return MappingByFunction(s, t, x-> TransformationOpNC(x, pts, OnPoints),
+  x-> BinaryRelationOnPoints(List([1..n], i-> pts[pos[i]^x])));
+end);
+
+#JDM this should be improved: inverse of the function is missing, and a similar
+#approach as used in the method for IsomorphismTransformationSemigroup for a
+#semigroup of binary relations should be used to reduce the number of points
+#acted on. 
+
+# to matrix.gi
+
+InstallOtherMethod(IsomorphismTransformationSemigroup, "for a matrix semigroup",
+[IsMatrixSemigroup], 
+function(S)        
+  local n, F, T;
+  n:=Length(GeneratorsOfSemigroup(S)[1][1]);
+  F:=BaseDomain(GeneratorsOfSemigroup(S)[1]);        
+  T:=Semigroup(List(GeneratorsOfSemigroup(S), x-> 
+   TransformationOp(x, Elements(F^n), OnRight)));        
+  return MappingByFunction(S, T,
+   x-> TransformationOp(x, Elements(F^Size(F)), OnRight));
+end);
 
 
 #EOF

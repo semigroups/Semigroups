@@ -11,8 +11,6 @@
 
 DeclareGlobalFunction("SemigroupActionHomomorphism");
 
-DeclareAttribute("AntiIsomorphismTransformationSemigroup",
- IsSemigroup);
 DeclareOperation("EmbeddingNC", [IsSemigroup, IsSemigroup]);
 DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
