@@ -671,7 +671,7 @@ InstallMethod(RankOfPartialPerm, "for a partial perm",
 ############################################################################
 
 InstallMethod(RestrictedPartialPerm, "for a part perm and set",
-[IsPartialPerm, IsList and IsCyclotomicCollection], 
+[IsPartialPerm, IsList], 
 function(f, set)
   if not IsSet(set) or not ForAll(set, IsPosInt) then 
     return fail;
@@ -683,7 +683,7 @@ end);
 ############################################################################
 
 InstallMethod(RestrictedPartialPermNC, "for a part perm and set",
-[IsPartialPerm, IsList and IsCyclotomicCollection], RestrictedPP);
+[IsPartialPerm, IsList], RestrictedPP);
 
 #SSS
 
