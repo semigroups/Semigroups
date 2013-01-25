@@ -735,7 +735,7 @@ function(s)
 # move to pperm.gi, trans.gi, and bipartition.gi
 
 InstallOtherMethod(IsomorphismPermGroup, 
-"for an acting semigroup with generators", 
+"for a partial perm semigroup with generators", 
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   if not IsGroupAsSemigroup(s)  then
@@ -743,10 +743,8 @@ function(s)
     return; 
   fi;
   return MagmaIsomorphismByFunctionsNC(s, 
-   Group(List(Generators(s), AsPermutation), 
-   AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s))));
+   Group(List(Generators(s), AsPermutation)), 
+   AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
 end);
-
-
 
 #EOF
