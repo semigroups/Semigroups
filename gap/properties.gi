@@ -399,14 +399,14 @@ function(s)
   return true;
 end);
 
-# JDM this is not working
 # not used in ViewObj
+# IteratorOfIdempotents would be good here.
 
 InstallOtherMethod(IsIdempotentGenerated, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s) 
-  local gens, ranks, i, t;
+  local gens, t, min, new;
  
   gens:=Generators(s);
 
@@ -414,14 +414,17 @@ function(s)
     Info(InfoSemigroups, 2, "all the generators are idempotents");
     return true;
   fi;
-
-  ranks:=List(gens, ActionRank); 
-  i:=Maximum(ranks);
-  t:=Semigroup(Idempotents(s, i), rec(small:=true));
-  repeat
-    i:=i-1;
-    t:=ClosureSemigroup(t, Idempotents(s, i));
-  until i=Minimum(ranks);
+  
+  if HasIdempotentGeneratedSubsemigroup(s) then 
+    t:=IdempotentGeneratedSubsemigroup(s);
+  else
+    min:=MinimumList(List(gens, ActionRank));
+    new:=Filtered(Idempotents(s), x-> ActionRank(x)>=min);
+    if new=[] then 
+      return false;
+    fi;
+    t:=Semigroup(new, rec(small:=true));
+  fi;
 
   # this is not the idempotent generated subsemigroup!
   return ForAll(gens, f-> f in t);

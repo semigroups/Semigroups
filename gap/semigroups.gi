@@ -292,7 +292,7 @@ function(gens, opts)
           s:=ClosureSemigroupNC(s, [gens[i]], closure_opts);
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
-        " generators so far");
+        " generators so far\n");
       od;
       Print("\n");
     else
@@ -793,7 +793,8 @@ function(s, coll, opts)
     " semigroup,");
     return s;
   fi;
- 
+  
+
   # init the semigroup or monoid
   if IsMonoid(s) then 
     t:=Monoid(s, coll, opts);
@@ -907,7 +908,7 @@ function(s, coll, opts)
     htadd:=HTAdd;
     htvalue:=HTValue;
   fi;
- 
+
   i:=1;   
   
   # install old R-class reps in new_orb

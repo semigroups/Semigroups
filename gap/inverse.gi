@@ -409,7 +409,7 @@ function(s)
   return out;
 end);
 
-#EEE
+# JDM why is IsGreensClassOfPartPermSemigroup still used here!?
 
 InstallMethod(Enumerator, "for D-class of part perm inv semigroup",
 [IsGreensDClass and IsGreensClassOfInverseSemigroup and
