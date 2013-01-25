@@ -947,7 +947,7 @@ end);
 #
 
 InstallMethod(IsJoinIrreducible, 
-"for an inverse semigroup of partial permutations and one of its partial perms",
+"for an inverse semigroup of partial perms and a partial perm",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
 function(S, x)
 

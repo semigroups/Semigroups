@@ -1119,7 +1119,7 @@ function(s)
   m:=OrbSCCLookup(o)[k];
   l:=Random(OrbSCC(o)[m]);
   g:=Random(LambdaOrbSchutzGp(o, m));
-  return o!.mults[k][1]*g*o!.mults[l][1];
+  return LambdaOrbMult(o, m, k)[1]*g*LambdaOrbMult(o, m, l)[1];
 end);
 
 #SSS
