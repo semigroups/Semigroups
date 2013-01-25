@@ -39,6 +39,10 @@ IsAssociativeElementWithSemigroupInverseCollection,
 IsRecord]);
 
 DeclareOperation("IsSubsemigroup", [IsActingSemigroup, IsActingSemigroup]);
+DeclareGlobalFunction("InverseSubsemigroup");
+DeclareGlobalFunction("InverseSubsemigroupNC");
+DeclareGlobalFunction("InverseSubmonoid");
+DeclareGlobalFunction("InverseSubmonoidNC");
 
 DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBinaryRelationMonoid", [IsPosInt, IsPosInt]);

@@ -1014,17 +1014,7 @@ function(s, coll, opts)
   return t;
 end);
 
-#miscellaneous
-
-InstallGlobalFunction(RegularSemigroup, 
-function(arg)
-  if not IsRecord(arg[Length(arg)]) then 
-    Add(arg, rec(regular:=true));
-  else
-    arg[Length(arg)].regular:=true;
-  fi;
-  return CallFuncList(Semigroup, arg);
-end);
+#subsemigroups
 
 # <limit> is the max size of the subsemigroup.
 
@@ -1052,7 +1042,7 @@ function(S, func, limit)
       T:=ClosureSemigroup(T, f);
     fi;
   od;
-
+  SetParent(T, S);
   return T;
 end);
 
@@ -1082,7 +1072,7 @@ function(S, func, limit)
       T:=ClosureInverseSemigroup(T, f);
     fi;
   od;
-
+  SetParent(T, S);
   return T;
 end);
 
@@ -1102,6 +1092,74 @@ InstallOtherMethod(InverseSubsemigroupByProperty,
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction], 
 function(S, func)
   return InverseSubsemigroupByProperty(S, func, Size(S));
+end);
+
+# JDM also InverseSubmonoidNC..
+
+InstallGlobalFunction(InverseSubsemigroupNC, 
+"for an acting semigroup with inverse op & generators and element coll",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, 
+IsAssociativeElementWithSemigroupInverseCollection],
+function(s, gens)
+  t:=InverseSemigroup(gens);
+  SetParent(t, s);
+  return t;
+end);
+
+#
+
+InstallGlobalFunction(InverseSubsemigroup, 
+"for an acting semigroup with inverse op & generators and element coll",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, 
+IsAssociativeElementWithSemigroupInverseCollection],
+function(s, gens)
+  if ForAll(gens, x-> x in s) then 
+    return InverseSubsemigroupNC(s, gens);
+  fi;
+  Error("the specified elements do not belong to the first argument,");
+  return;
+end);
+
+#
+
+InstallGlobalFunction(InverseSubmonoidNC, 
+"for an acting semigroup with inverse op & generators and element coll",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, 
+IsAssociativeElementWithSemigroupInverseCollection],
+function(s, gens)
+  t:=InverseMonoid(gens);
+  SetParent(t, s);
+  return t;
+end);
+
+#
+
+InstallGlobalFunction(InverseSubmonoid, 
+"for an acting semigroup with inverse op & generators and element coll",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, 
+IsAssociativeElementWithSemigroupInverseCollection],
+function(s, gens)
+  if IsMonoid(s) and ForAll(gens, x-> x in s) then 
+    if DegreeOfPartialPermCollection(gens)<DegreeOfPartialPermSemigroup(s) then 
+      Append(gens, One(s));
+    fi;
+    return InverseSubmonoidNC(s, gens);
+  fi;
+  Error("the specified elements do not belong to the first argument,");
+  return;
+end);
+
+
+#miscellaneous
+
+InstallGlobalFunction(RegularSemigroup, 
+function(arg)
+  if not IsRecord(arg[Length(arg)]) then 
+    Add(arg, rec(regular:=true));
+  else
+    arg[Length(arg)].regular:=true;
+  fi;
+  return CallFuncList(Semigroup, arg);
 end);
 
 
