@@ -539,7 +539,7 @@ function(s)
     od;
   fi;
 
-  f:=EvaluateWord(gens, TraceSchreierTreeForward(o, i));
+  f:=EvaluateWord(Generators(s), TraceSchreierTreeForward(o, i));
   i:=Semigroup(Elements(GreensDClassOfElementNC(s, f)), rec(small:=true));
 
   SetIsSimpleSemigroup(i, true);
@@ -589,7 +589,7 @@ InstallMethod(PrimitiveIdempotents,
 "for an acting semigroup with inverse op and generators",
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
 function(s)
-  local zero, rank;
+  local r;
   
   if MultiplicativeZero(s)=fail then 
     r:=Set(List(OrbSCC(LambdaOrb(s)), 
