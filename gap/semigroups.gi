@@ -1096,11 +1096,12 @@ end);
 
 # JDM also InverseSubmonoidNC..
 
-InstallGlobalFunction(InverseSubsemigroupNC, 
-"for an acting semigroup with inverse op & generators and element coll",
+InstallMethod(InverseSubsemigroupNC, 
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, 
 IsAssociativeElementWithSemigroupInverseCollection],
 function(s, gens)
+  local t;
+
   t:=InverseSemigroup(gens);
   SetParent(t, s);
   return t;
@@ -1108,7 +1109,7 @@ end);
 
 #
 
-InstallGlobalFunction(InverseSubsemigroup, 
+InstallMethod(InverseSubsemigroup, 
 "for an acting semigroup with inverse op & generators and element coll",
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, 
 IsAssociativeElementWithSemigroupInverseCollection],
@@ -1122,11 +1123,13 @@ end);
 
 #
 
-InstallGlobalFunction(InverseSubmonoidNC, 
+InstallMethod(InverseSubmonoidNC, 
 "for an acting semigroup with inverse op & generators and element coll",
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, 
 IsAssociativeElementWithSemigroupInverseCollection],
 function(s, gens)
+  local t;
+
   t:=InverseMonoid(gens);
   SetParent(t, s);
   return t;
@@ -1134,7 +1137,7 @@ end);
 
 #
 
-InstallGlobalFunction(InverseSubmonoid, 
+InstallMethod(InverseSubmonoid, 
 "for an acting semigroup with inverse op & generators and element coll",
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, 
 IsAssociativeElementWithSemigroupInverseCollection],
