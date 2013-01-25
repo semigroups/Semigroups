@@ -528,7 +528,7 @@ function(s)
   pos:=LookForInOrb(LambdaOrb(s), 
    function(o, x) return rank(x)=MinActionRank(s); end, 2);
 
-  if not pos then 
+  if pos=false then 
     min:=rank(o[2]); pos:=2; len:=Length(o);
 
     for i in [3..len] do 
@@ -539,7 +539,7 @@ function(s)
     od;
   fi;
 
-  f:=EvaluateWord(Generators(s), TraceSchreierTreeForward(o, i));
+  f:=EvaluateWord(Generators(s), TraceSchreierTreeForward(o, pos));
   i:=Semigroup(Elements(GreensDClassOfElementNC(s, f)), rec(small:=true));
 
   SetIsSimpleSemigroup(i, true);
