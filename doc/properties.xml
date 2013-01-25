@@ -1617,27 +1617,63 @@ true
     A majorantly closed subset of <A>S</A>
   </Returns>
   <Description>
-    <C>IsMajorantlyClosedInverseSubsemigroup</C> returns the subset of 
+    <C>MajorantClosure</C> returns the majorantly closed subset of 
     the inverse semigroup <A>S</A>
-    containing only elements of <A>S</A> that are greater than or equal to
-    elements of the subset <A>T<A>.
-            majorantly closed in <A>S</A>. See <Ref Func="IsMajorantlyClosed"/>.
-          </Description>
-        </ManSection>
-        <Example>
-          gap> S:=SymmetricInverseSemigp(2);
-          &lt;inverse semigroup with 2 generators>
-          gap> T:=[Elements(S)[2]];
-          &lt;identity on [ 1 ]>
-          gap> IsMajorantlyClosedInverseSubsemigroup(S,T);
-          false
-          gap> U:=[Elements(S)[2],Elements(S)[6],Elements(S)[7]];
-          [ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 2,
-          1 ] ]
-          gap> IsMajorantlyClosedInverseSubsemigroup(S,U);
-          false
-          gap> IsMajorantlyClosedInverseSubsemigroup(S,S);
-          true
+    containing all elements of <A>S</A> that are greater than or equal to
+    elements of the subset <A>T</A>.
+    See <Ref Func="IsMajorantlyClosed"/>.
+  </Description>
+</ManSection>
+<Example>
+gap> S:=SymmetricInverseSemigp(2);
+&lt;inverse semigroup with 2 generators>
+gap> T:=[PartialPermNC([0,0,0,4])];
+[ &lt;identity on [ 4 ]> ]
+gap> U:=MajorantClosure(S,T);
+[ &lt;identity on [ 4 ]> ]
+gap> V:=[Elements(S)[2]];
+&lt;identity on [ 1 ]>
+gap> W:=MajorantClosure(S,V);
+[ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]> ]
+</Example>
+<#/GAPDoc>
+
+
+<#GAPDoc Label="SameMinorantsSubgroup">
+<ManSection>
+<Func Name="SameMinorantsSubgroup" Arg="h"/>
+  <Returns>
+    A subset of the group H-class <A>h</A>
+  </Returns>
+  <Description>
+    <C>SameMinorantsSubgroup</C> returns the subset of elements of the 
+    group H-class 
+    <A>h</A> that have the same strict minorants as the identity in <A>h</A>
+    within the semigroup containing <A>h</A>.
+  </Description>
+</ManSection>
+<Example>
+gap> S:=SymmetricInverseSemigp(3);
+&lt;inverse semigroup with 2 generators>
+gap> h:=GroupHClass(GreensDClasses(S)[1]);
+{&lt;identity on [ 1 .. 3 ]>}
+gap> Elements(h);
+[ &lt;identity on [ 1 .. 3 ]>, [ 1 .. 3 ] -> [ 1, 3, 2 ], 
+  [ 1 .. 3 ] -> [ 2, 1, 3 ], [ 1 .. 3 ] -> [ 2, 3, 1 ], 
+  [ 1 .. 3 ] -> [ 3, 1, 2 ], [ 1 .. 3 ] -> [ 3, 2 .. 1 ] ]
+gap> SameMinorantsSubgroup(h);
+[ &lt;identity on [ 1 .. 3 ]> ]
+gap> T:=InverseSemigroup(PartialPermNC([1,2,4,3]),PartialPermNC([1]),PartialPermNC([0,2]));
+&lt;inverse semigroup with 3 generators>
+gap> Elements(T);
+[ &lt;empty mapping>, &lt;identity on [ 1 ]>, &lt;identity on [ 2 ]>, 
+  &lt;identity on [ 1 .. 4 ]>, [ 1 .. 4 ] -> [ 1, 2, 4, 3 ] ]
+gap> f:=GroupHClass(GreensDClasses(T)[1]);
+{&lt;identity on [ 1 .. 4 ]>}
+gap> Elements(f);
+[ &lt;identity on [ 1 .. 4 ]>, [ 1 .. 4 ] -> [ 1, 2, 4, 3 ] ]
+gap> SameMinorantsSubgroup(f);
+[ &lt;identity on [ 1 .. 4 ]>, [ 1 .. 4 ] -> [ 1, 2, 4, 3 ] ]
 </Example>
 <#/GAPDoc>
 

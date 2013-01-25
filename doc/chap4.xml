@@ -82,7 +82,9 @@
     <#Include Label="WagnerPrestonRepresentation">
     <#Include Label="ReverseNaturalPartialOrder">
     <#Include Label="IsMajorantlyClosed">
-
+    <#Include Label="IsMajorantlyClosedInverseSubsemigroup">
+    <#Include Label="MajorantClosure">
+  
   </Section>
   
   <Section><Heading>Further properties of semigroups</Heading>
