@@ -1099,27 +1099,19 @@ InstallOtherMethod(RClassReps, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
 d-> List(LClassReps(d), x-> x^-1));
 
-# new for 0.7! - Random - "for an acting semigroup with inverse op"
-#############################################################################
+# can't use LambdaOrb and LambdaOrbMult(s) here since if l=scc[m][1], then 
+# LambdaOrbMult(o, m, l)[1] or [2]=One(o!.gens) which is not necessarily in the
+# semigroup
 
 InstallMethod(Random, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)
-  local o, gens, i, w, k, m, l, g;
-
-  o:=LambdaOrb(s);
-
-  if not IsClosed(o) then
-    gens:=GeneratorsOfSemigroup(s);    
-    i:=Random([1..Int(Length(gens)/2)]);
-    w:=List([1..i], x-> Random([1..Length(gens)]));
-    return EvaluateWord(gens, w);
-  fi;
-  k:=Random([1..Length(o)]);
-  m:=OrbSCCLookup(o)[k];
-  l:=Random(OrbSCC(o)[m]);
-  g:=Random(LambdaOrbSchutzGp(o, m));
-  return o!.mults[k][1]*g*o!.mults[l][1];
+  local gens, i, w;
+    
+  gens:=GeneratorsOfSemigroup(s);    
+  i:=Random([1..Int(Length(gens)/2)]);
+  w:=List([1..i], x-> Random([1..Length(gens)]));
+  return EvaluateWord(gens, w);
 end);
 
 #SSS
