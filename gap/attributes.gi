@@ -748,6 +748,44 @@ function(s)
    AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s))));
 end);
 
+#
+
+InstallMethod(HasTrivialSe, 
+"for a group H-class of an inverse semigroup of partial perms",
+[IsGreensHClass],
+function(h)
+
+	local e, F, f, i;
+	
+	if not IsGroupHClass(h) then 
+		Error("usage: the argument should be a group H-class,"); 
+		return;
+	fi;
+
+	e:=Representative(h);
+	F:=[];
+	
+	# Find the minorants of e
+	for f in Idempotents(ParentAttr(h)) do
+		if NaturalLeqPP(f, e) and f<>e then
+			Add(F, f);
+    fi;
+	od;
+
+	h:=Elements(h);
+
+	# Check which elements of He share the same minorants as e	
+	for i in [2..Length(h)] do
+		if ForAll(F, f-> NaturalLeqPP(f, h[i])) then 
+    	return false;
+    fi;
+	od;
+
+	return true;
+
+end);
+
+#
 
 InstallMethod(SmallerDegreePartialPermRep, 
 "for an inverse semigroup of partial permutations",

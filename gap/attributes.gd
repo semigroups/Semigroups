@@ -37,3 +37,4 @@ DeclareAttribute("SmallerDegreePartialPermRep", IsInverseSemigroup);
 DeclareAttribute("VagnerPrestonRepresentation", IsInverseSemigroup);
 DeclareAttribute("ReverseNaturalPartialOrder", IsInverseSemigroup);
 DeclareAttribute("JoinIrreducibleDClasses", IsInverseSemigroup);
+DeclareAttribute("HasTrivialSe", IsGreensHClass);
