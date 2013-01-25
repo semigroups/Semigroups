@@ -162,7 +162,7 @@ function(s)
   x:=GeneratorsOfSemigroup(s)[1]; 
   return HTCreate(Concatenation([1], RhoFunc(s)(x)),
   rec(forflatplainlists:=true,
-     treehashsize:=s!.opts.hashlen.S));
+     treehashsize:=s!.opts.hashlen.M));
 end);
 
 ############################################################################### 

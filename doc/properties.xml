@@ -1499,5 +1499,147 @@ gap> PrimitiveIdempotents(S);
 </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="WagnerPrestonRepresentation">
+<ManSection>
+  <Func Name="WagnerPrestonPresentation" Arg="S"/>
+  <Returns>
+    An inverse semigroup of partial permutations.
+  </Returns>
+  <Description>
+    <C>WagnerPrestonRepresentation</C> returns the inverse semigroup of 
+    partial permutations using the algorithm in the Wagner Preston
+    Representation Theorem on the inverse semigroup of partial permutations,
+    <A>S</A>.
+  </Description>
+</ManSection>
+<Example>
+gap> S:=SymmetricInverseSemigp(2);
+  &lt;inverse semigroup with 2 generators>
+gap> Elements(S);
+  [ &lt;empty mapping>, &lt;identity on [ 1 ]>, [ 1 ] -> [ 2 ], [ 2 ] -> [ 1 ],
+  &lt;identity on [ 2 ]>, &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 2, 1 ] ]
+gap> T:=WagnerPrestonRepresentation(S);
+  &lt;inverse semigroup with 2 generators>
+gap> Elements(T);
+  [ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2, 4 ]>, 
+  [ 1, 2, 4 ] -> [ 1, 3 .. 5 ], [ 1, 3 .. 5 ] -> [ 1, 2, 4 ], 
+  &lt;identity on [ 1, 3 .. 5 ]>, &lt;identity on [ 1 .. 7 ]>, 
+  [ 1 .. 7 ] -> [ 1, 3, 2, 5, 4, 7, 6 ] ]
+</Example>          
+<#/GAPDoc>
+
+<#GAPDoc Label="ReverseNaturalPartialOrder">
+<ManSection>
+<Func Name="ReverseNaturalPartialOrder" Arg="S"/>
+<Returns>The reverse of the natural partial order on an inverse
+  semigroup.</Returns>
+<Description>
+  <C>ReverseNaturalPartialOrder</C> returns the reverse natural partial 
+  order on the inverse
+  semigroup of partial permutations <A>S</A> as a list of sets of positive
+  integers where entry <C>i</C> in <C>ReverseNaturalPartialOrder(<A>S</A>)
+  </C> is the set of positions in <C>Elements(<A>S</A>)</C> of elements
+  strictly greater than <C>Elements(<A>S</A>)[i]</C>. See also 
+  <Ref Func="NaturalPartialOrder"/>.<P/>
+  </Description>
+</ManSection>
+<Example>
+gap> S:=SymmetricInverseSemigp(2);
+&lt;inverse semigroup with 2 generators>
+gap> Size(S);
+7
+gap> ReverseNaturalPartialOrder(S);
+[ [ 2, 3, 4, 5, 6, 7 ], [ 6 ], [ 7 ], [ 7 ], [ 6 ], [  ], [  ] ]
+</Example>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsMajorantlyClosed">
+<ManSection>
+<Attr Name="IsMajorantlyClosed" Arg="S, T"/>
+<Returns>
+  <K>true</K> or <K>false</K>.
+</Returns>
+<Description>
+  <C>IsMajorantlyClosed</C> determines whether the subset <A>T</A> of the
+  inverse semigroup <A>S</A> is majorantly closed in <A>S</A>. We say 
+  <A>T</A> is majorantly closed in <A>S</A> if it contains all
+  elements of <A>S</A> that are greater than any given element of 
+  <A>T</A>.
+</Description>
+</ManSection>
+<Example>
+gap> S:=SymmetricInverseSemigp(2);
+&lt;inverse semigroup with 2 generators>
+gap> T:=[Elements(S)[2]];
+&lt;identity on [ 1 ]>
+gap> IsMajorantlyClosed(S,T);
+false
+gap> U:=[Elements(S)[2],Elements(S)[6]];
+[&lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]> ]
+gap> IsMajorantlyClosed(S,U);           
+true
+</Example>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsMajorantlyClosedInverseSubsemigroup">
+<ManSection>
+<Attr Name="IsMajorantlyClosedInverseSubsemigroup" Arg="S,T"/>
+<Returns>
+  <K>true</K> or <K>false</K>
+</Returns>
+<Description>
+  <C>IsMajorantlyClosedInverseSubsemigroup</C> determines whether a subset
+  <A>T</A> of an inverse semigroup <A>S</A> is both an inverse semigroup and is
+  majorantly closed in <A>S</A>. See <Ref Func="IsMajorantlyClosed"/>.
+</Description>
+</ManSection>
+<Example>
+gap> S:=SymmetricInverseSemigp(2);
+&lt;inverse semigroup with 2 generators>
+gap> T:=[Elements(S)[2]];
+&lt;identity on [ 1 ]>
+gap> IsMajorantlyClosedInverseSubsemigroup(S,T);
+false
+gap> U:=[Elements(S)[2],Elements(S)[6],Elements(S)[7]];
+[ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 2, 1 ] ]
+gap> IsMajorantlyClosedInverseSubsemigroup(S,U);
+false
+gap> IsMajorantlyClosedInverseSubsemigroup(S,S);
+true
+</Example>
+<#/GAPDoc>
+
+
+<#GAPDoc Label="MajorantClosure">
+<ManSection>
+<Func Name="MajorantClosure" Arg="S,T"/>
+  <Returns>
+    A majorantly closed subset of <A>S</A>
+  </Returns>
+  <Description>
+    <C>IsMajorantlyClosedInverseSubsemigroup</C> returns the subset of 
+    the inverse semigroup <A>S</A>
+    containing only elements of <A>S</A> that are greater than or equal to
+    elements of the subset <A>T<A>.
+            majorantly closed in <A>S</A>. See <Ref Func="IsMajorantlyClosed"/>.
+          </Description>
+        </ManSection>
+        <Example>
+          gap> S:=SymmetricInverseSemigp(2);
+          &lt;inverse semigroup with 2 generators>
+          gap> T:=[Elements(S)[2]];
+          &lt;identity on [ 1 ]>
+          gap> IsMajorantlyClosedInverseSubsemigroup(S,T);
+          false
+          gap> U:=[Elements(S)[2],Elements(S)[6],Elements(S)[7]];
+          [ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 2,
+          1 ] ]
+          gap> IsMajorantlyClosedInverseSubsemigroup(S,U);
+          false
+          gap> IsMajorantlyClosedInverseSubsemigroup(S,S);
+          true
+</Example>
+<#/GAPDoc>
+
 
 #EOF

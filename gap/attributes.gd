@@ -42,3 +42,5 @@ DeclareOperation("IsMajorantlyClosed", [IsInverseSemigroup and IsPartialPermSemi
 DeclareOperation("IsMajorantlyClosedNC", [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection]);
 DeclareOperation("MajorantClosure", [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection]);
 DeclareOperation("MajorantClosureNC", [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection]);
+
+DeclareOperation("IsJoinIrreducible", [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm]);

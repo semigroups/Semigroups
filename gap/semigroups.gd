@@ -39,6 +39,18 @@ IsAssociativeElementWithSemigroupInverseCollection,
 IsRecord]);
 
 DeclareOperation("IsSubsemigroup", [IsActingSemigroup, IsActingSemigroup]);
+DeclareOperation("InverseSubsemigroup",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup,
+IsAssociativeElementWithSemigroupInverseCollection]);
+DeclareOperation("InverseSubsemigroupNC",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup,
+IsAssociativeElementWithSemigroupInverseCollection]);
+DeclareOperation("InverseSubmonoid",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup,
+IsAssociativeElementWithSemigroupInverseCollection]);
+DeclareOperation("InverseSubmonoidNC",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup,
+IsAssociativeElementWithSemigroupInverseCollection]);
 
 DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBinaryRelationMonoid", [IsPosInt, IsPosInt]);

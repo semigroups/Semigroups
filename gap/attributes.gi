@@ -528,7 +528,7 @@ function(s)
   pos:=LookForInOrb(LambdaOrb(s), 
    function(o, x) return rank(x)=MinActionRank(s); end, 2);
 
-  if not pos then 
+  if pos=false then 
     min:=rank(o[2]); pos:=2; len:=Length(o);
 
     for i in [3..len] do 
@@ -539,7 +539,7 @@ function(s)
     od;
   fi;
 
-  f:=EvaluateWord(Generators(s), TraceSchreierTreeForward(o, i));
+  f:=EvaluateWord(Generators(s), TraceSchreierTreeForward(o, pos));
   i:=Semigroup(Elements(GreensDClassOfElementNC(s, f)), rec(small:=true));
 
   SetIsSimpleSemigroup(i, true);
@@ -736,7 +736,7 @@ function(s)
 # move to pperm.gi, trans.gi, and bipartition.gi
 
 InstallOtherMethod(IsomorphismPermGroup, 
-"for an acting semigroup with generators", 
+"for a partial perm semigroup with generators", 
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   if not IsGroupAsSemigroup(s)  then
@@ -744,12 +744,40 @@ function(s)
     return; 
   fi;
   return MagmaIsomorphismByFunctionsNC(s, 
-   Group(List(Generators(s), AsPermutation), 
-   AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s))));
+   Group(List(Generators(s), AsPermutation)), 
+   AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
 end);
 
 
 ### Start of Summer School Stuff ###
+
+
+InstallMethod(VagnerPrestonRepresentation, 
+"for an inverse semigroup of partial permutations",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(S)
+
+  local gens, elts, out, dom, ran, x;
+
+  gens:=Generators(S);
+  elts:=Elements(S);
+  out:=EmptyPlist(Length(gens));
+  
+  for x in gens do
+
+    dom:=Set(elts*(x^-1));
+    ran:=List(dom, y-> y*x);
+
+    Add(out, PartialPermNC(List(dom, y-> Position(elts, y)), List(ran, y->
+    Position(elts, y))));
+    
+  od;
+
+  return InverseSemigroup(out);
+
+end);
+
+#
 
 InstallMethod(SameMinorantsSubgroup, 
 "for a group H-class of an inverse semigroup of partial perms",
@@ -918,28 +946,60 @@ end);
 
 #
 
-InstallMethod(VagnerPrestonRepresentation, 
-"for an inverse semigroup of partial permutations",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(S)
+InstallMethod(IsJoinIrreducible, 
+"for an inverse semigroup of partial permutations and one of its partial perms",
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
+function(S, x)
 
-  local gens, elts, out, dom, ran, x;
+  local elts, i, j, k, y, singleline, minorants, minorantpoints;
 
-  gens:=Generators(S);
-  elts:=Elements(S);
-  out:=EmptyPlist(Length(gens));
-  
-  for x in gens do
+  if IsMultiplicativeZero(S,x) then return false; fi;
 
-    dom:=Set(elts*(x^-1));
-    ran:=List(dom, y-> y*x);
-
-    Add(out, PartialPermNC(List(dom, y-> Position(elts, y)), List(ran, y->
-    Position(elts, y))));
+  y:=x*x^(-1);
     
+  elts:=Set(Idempotents(S));;
+  i:=Position(elts, y);
+  k:=0;
+  singleline:=true;
+
+  for j in [i-1,i-2 .. 1] do
+    if NaturalLeqPP(elts[j], elts[i]) then
+      k:=j;
+      break;
+    fi;
+  od;
+  
+  if k = 0 then return true; fi;
+
+  for j in [1..(k-1)] do 
+    if NaturalLeqPP(elts[j], elts[i]) and not NaturalLeqPP(elts[j], elts[k]) then 
+      singleline:=false; 
+      break;
+    fi;
   od;
 
-  return InverseSemigroup(out);
+  if singleline then return true; fi;
+
+  if Size(HClass(S, y)) = 1 then return false; fi;
+		
+  minorants:=[];  
+  for j in [1..k] do 
+    if NaturalLeqPP(elts[j], elts[i]) then 
+      Add(minorants, elts[j]); 
+    fi;
+  od;
+    
+  minorantpoints:=Union(List(minorants, f -> DomPP(f)));
+  if DomPP(y) = minorantpoints then return false; fi;
+
+  # Check if any other element in Hy has equal minorants
+  for j in HClass(S, y) do
+    if not j = y and ForAll(minorants, m -> NaturalLeqPP(m, j)) then
+      return true;
+    fi; 
+  od;
+  
+  return false;
 
 end);
 
@@ -1044,7 +1104,7 @@ function(S)
 
     # If Se is trivial, we have a special simpler case    
     if trivialse then
-      orbits:=[[Degree(He)+1]];
+      orbits:=[[ActionDegree(He)+1]];
       HeCosetReps:=[Representative(e)];
       Fei:=He;
     else 
@@ -1117,7 +1177,7 @@ function(S)
   out:=InverseSemigroup(List(newgens, x->PartialPermNC(x)));
 
   # Check whether work has actually been done
-  if NrMovedPoints(out) > NrMovedPoints(S) or (NrMovedPoints(out) = NrMovedPoints(S) and Degree(out) >= Degree(S)) then
+  if NrMovedPoints(out) > NrMovedPoints(S) or (NrMovedPoints(out) = NrMovedPoints(S) and ActionDegree(out) >= ActionDegree(S)) then
     return S;
   else
     return out;

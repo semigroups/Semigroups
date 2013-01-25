@@ -2593,6 +2593,12 @@ InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
 [IsGreensClass], x-> IsTransformationSemigroup(ParentSemigroup(x)));
 
+InstallMethod(IsGreensClassOfPartPermSemigroup, "for a Green's class",
+[IsGreensClass], x-> IsPartialPermSemigroup(ParentSemigroup(x)));
+
+InstallMethod(IsGreensClassOfInverseSemigroup, "for a Green's class",
+[IsGreensClass], x-> IsInverseSemigroup(ParentSemigroup(x)));
+
 InstallOtherMethod(IsGroupHClass, "for an acting semi Green's class",
 [IsActingSemigroupGreensClass], ReturnFalse);
 
