@@ -1678,4 +1678,93 @@ gap> SameMinorantsSubgroup(f);
 <#/GAPDoc>
 
 
-#EOF
+<#GAPDoc Label="IsJoinIrreducible">
+<ManSection>
+<Attr Name="IsJoinIrreducible" Arg="S,x"/>
+  <Returns>
+    <K>true</K> or <K>false</K>
+  </Returns>
+  <Description>
+    <C>IsJoinIrreducible</C> determines whether an element <A>x</A> of an 
+    inverse semigroup <A>S</A> is join irreducible.
+    An element <A>x</A> is join irreducible when it is not the least upper 
+    bound (with
+    respect to the natural partial order) of any subset of <A>S</A> 
+    not containing <A>x</A>.
+  </Description>
+</ManSection>
+<Example>
+gap> S:=SymmetricInverseSemigp(3);
+&lt;inverse semigroup with 2 generators>
+gap> x:=PartialPermNC([1,2,3]);
+&lt;identity on [ 1 .. 3 ]>
+gap> IsJoinIrreducible(S,x);
+false
+gap> T:=InverseSemigroup(PartialPermNC([1,2,4,3]),PartialPermNC([1]),PartialPermNC([0,2]));
+&lt;inverse semigroup with 3 generators>
+gap> y:=PartialPermNC([1,2,3,4]);
+&lt;identity on [ 1 .. 4 ]>
+gap> IsJoinIrreducible(T,y);
+true
+</Example>
+<#/GAPDoc>
+
+
+<#GAPDoc Label="JoinIrreducibleDClasses">
+<ManSection>
+<Attr Name="IsJoinIrreducibleDClasses" Arg="S"/>
+  <Returns>
+    A list of D-Classes
+  </Returns>
+  <Description>
+    <C>JoinIrreducileDClasses</C> returns a list of join irreducible
+    D-classes of the inverse semigroup <A>S</A>.  A join irreducible
+    D-class is a D-class containing only join irreducible elements.
+    If a D-class contains one join irreducible element, all elements in the
+    D-class are join irreducible.  
+  </Description>
+</ManSection>
+<Example>
+gap> S:=SymmetricInverseSemigp(3);
+&lt;inverse semigroup with 2 generators>
+gap> JoinIrreducibleDClasses(S);
+[ {&lt;identity on [ 1 ]>} ]
+gap> T:=InverseSemigroup(PartialPermNC([1,2,4,3]),PartialPermNC([1]),PartialPermNC([0,2]));
+&lt;inverse semigroup with 3 generators>
+gap> JoinIrreducibleDClasses(T);
+[ {&lt;identity on [ 1 .. 4 ]>}, {&lt;identity on [ 1 ]>}, {&lt;identity on 
+[ 2 ]>} ]
+</Example>
+<#/GAPDoc>
+
+
+
+<#GAPDoc Label="RightCosetsOfInverseSemigroup">
+<ManSection>
+<Func Name="RightCosetsOfInverseSemigroup" Arg="S,T"/>
+  <Returns>
+    A list of lists.
+  </Returns>
+  <Description>
+    <C>RightCosetsISgp</C> returns a list of right (inverse semigroup
+    thoeretic) cosets of the majorantly
+    closed inverse subsemigroup <A>T</A> in the inverse semigroup <A>S</A>.
+  </Description>
+</ManSection>
+<Example>
+gap> S:=SymmetricInverseSemigp(3);
+&lt;inverse semigroup with 2 generators>
+gap> T:=InverseSemigroup(MajorantClosure(S,[PartialPermNC([1])]));
+&lt;inverse semigroup with 7 generators>
+gap> IsMajorantlyClosed(S,T);
+true
+gap> RC:=RightCosetsISgp(S,T);                           
+[ [ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 1, 3 ],
+[ 1, 3 ] -> [ 1, 2 ], &lt;identity on [ 1, 3 ]>, &lt;identity on [ 1 .. 3 ]>,
+[ 1 .. 3 ] -> [ 1, 3, 2 ] ], [ [ 1 ] -> [ 3 ], [ 1, 2 ] -> [ 3, 1 ], [ 1, 2 ]
+-> [ 3, 2 ], [ 1, 3 ] -> [ 3, 1 ], [ 1, 3 ] -> [ 3, 2 ], 
+      [ 1 .. 3 ] -> [ 3, 1, 2 ], [ 1 .. 3 ] -> [ 3, 2 .. 1 ] ], [ [ 1 ] -> [ 2 ], [ 1, 2 ] -> [ 2, 1 ], [ 1, 2 ] -> [ 2, 3 ], [ 1, 3 ] -> [ 2, 1 ], 
+      [ 1, 3 ] -> [ 2, 3 ], [ 1 .. 3 ] -> [ 2, 1, 3 ], [ 1 .. 3 ] -> [ 2, 3, 1 ] ] ]
+</Example>
+<#/GAPDoc>
+

@@ -84,7 +84,10 @@
     <#Include Label="IsMajorantlyClosed">
     <#Include Label="IsMajorantlyClosedInverseSubsemigroup">
     <#Include Label="MajorantClosure">
-  
+    <#Include Label="SameMinorantsSubgroup">
+    <#Include Label="IsJoinIrreducible">
+    <#Include Label="JoinIrreducibleDClasses">
+    <#Include Label="RightCosetsOfInverseSemigroup">
   </Section>
   
   <Section><Heading>Further properties of semigroups</Heading>
