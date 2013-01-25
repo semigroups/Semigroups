@@ -82,7 +82,6 @@
     <#Include Label="WagnerPrestonRepresentation">
     <#Include Label="ReverseNaturalPartialOrder">
     <#Include Label="IsMajorantlyClosed">
-    <#Include Label="IsMajorantlyClosedInverseSubsemigroup">
     <#Include Label="MajorantClosure">
     <#Include Label="SameMinorantsSubgroup">
     <#Include Label="IsJoinIrreducible">

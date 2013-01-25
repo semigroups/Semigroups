@@ -1581,34 +1581,6 @@ true
 </Example>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsMajorantlyClosedInverseSubsemigroup">
-<ManSection>
-<Oper Name="IsMajorantlyClosedInverseSubsemigroup" Arg="S,T"/>
-<Returns>
-  <K>true</K> or <K>false</K>
-</Returns>
-<Description>
-  <C>IsMajorantlyClosedInverseSubsemigroup</C> determines whether a subset
-  <A>T</A> of an inverse semigroup <A>S</A> is both an inverse semigroup and is
-  majorantly closed in <A>S</A>. See <Ref Func="IsMajorantlyClosed"/>.
-</Description>
-</ManSection>
-<Example>
-gap> S:=SymmetricInverseSemigp(2);
-&lt;inverse semigroup with 2 generators>
-gap> T:=[Elements(S)[2]];
-&lt;identity on [ 1 ]>
-gap> IsMajorantlyClosedInverseSubsemigroup(S,T);
-false
-gap> U:=[Elements(S)[2],Elements(S)[6],Elements(S)[7]];
-[ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 2, 1 ] ]
-gap> IsMajorantlyClosedInverseSubsemigroup(S,U);
-false
-gap> IsMajorantlyClosedInverseSubsemigroup(S,S);
-true
-</Example>
-<#/GAPDoc>
-
 
 <#GAPDoc Label="MajorantClosure">
 <ManSection>
