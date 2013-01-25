@@ -1,7 +1,6 @@
 
-momorphism of a group H Class (i.e. inverse semigroup He) into an inverse semigroup(group) with the same minorants of e, acting faithfully on Se. ###
-### Function returns a 'mapping', haven't told gap this is a homomorphism. ###
-
+##A Homomorphism of a group H Class (i.e. inverse semigroup He) into an inverse semigroup(group) with the same minorants of e, acting faithfully on Se. ###
+### Function returns a homomorphism ###
 SameMinorantHomomorphismOfGroupHClass:=function(H)
   local e, F, N, Y, Yc, S, f;
 
@@ -25,12 +24,12 @@ SameMinorantHomomorphismOfGroupHClass:=function(H)
   N:=DomPP(e);
   Y:=Union(List(F, f->DomainOfPartialPerm(f)));
   Y:=Set(Y);
-  Yc:=SetDifference(N,Y)
+  Yc:=Difference(N,Y);
 
   H:=Elements(H);
   S:=InverseSemigroup(H);
 
-  return MagmaHomomorphismByFunctionsNC(S,
+  return MagmaHomomorphismByFunctionNC(S,
    SymmetricInverseSemigroup(DegreeOfPartialPermSemigroup(S)),
    x -> RestrictedPartialPermNC(x,Yc)); 
 end;
