@@ -759,5 +759,237 @@ function(S)
    x-> TransformationOp(x, Elements(F^Size(F)), OnRight));
 end);
 
+#
+
+InstallMethod(SmallerDegreePartialPermRep, 
+"for an inverse semigroup of partial permutations",
+[IsInverseSemigroup],
+function(S)
+
+  local out, D, e, h, i, j, k, m, lookup, box, subbox,
+        Fei, He, Se, sigma, sigmainv, FeiSigma, HeSigma, rho, rhoinv, HeSigmaRho,
+        oldgens, newgens, gen, offset,
+        orbits, cosets, HeCosetReps, HeCosetRepsSigma, AllCosetReps, rep, numcosets, CosetsInHe, trivialse;
+        
+  out:=[];
+  oldgens:=Generators(S);
+  newgens:=[];
+  for i in [1..Length(oldgens)] do newgens[i]:=[]; od;
+  
+  D:=JoinIrreducibleDClasses(S);
+
+  for e in D do
+				
+    ##### Calculate He as a small permutation group #####
+    He:=GroupHClass(e);
+    trivialse:=HasTrivialSe(He);
+    He:=InverseSemigroup(Elements(He), rec(small:=true));
+
+    sigma:=IsomorphismPermGroup(He);
+    sigmainv:=InverseGeneralMapping(sigma);
+    HeSigma:=Range(sigma);
+
+    rho:=SmallerDegreePermutationRepresentation(HeSigma);
+    rhoinv:=InverseGeneralMapping(rho);
+    HeSigmaRho:=Range(rho);   	
+
+    # If Se is trivial, we have a special simpler case    
+    if trivialse then
+      orbits:=[[Degree(He)+1]];
+      HeCosetReps:=[Representative(e)];
+      Fei:=He;
+    else 
+      orbits:=Orbits(HeSigmaRho);
+    fi;
+
+    for i in orbits do
+    
+      if not trivialse then
+
+        # Generate Fei
+        FeiSigma:=ImagesSet(rhoinv, Stabiliser(HeSigmaRho, i[1]));
+        Fei:=ImagesSet(sigmainv, FeiSigma);
+
+        # Generate reps for the cosets of Fei in He
+        HeCosetRepsSigma:=RightTransversal(HeSigma, FeiSigma);
+        HeCosetReps:=[];
+        for j in [1..Size(HeCosetRepsSigma)] do
+      	  Add(HeCosetReps, HeCosetRepsSigma[j]^sigmainv);
+        od;
+      
+      fi; 
+
+      # Generate reps for the HClasses in the RClass of e
+      h:=HClassReps( RClassNC(e, Representative(e)) );
+      CosetsInHe:=Length(HeCosetReps);
+      numcosets:=Size(h)*CosetsInHe;
+      
+      # Generate reps for ALL the cosets that the generator will act on      
+      j:=0;
+      AllCosetReps:=[];
+      lookup:=EmptyPlist(Length(e!.o));
+      for k in [1..Size(h)] do
+        lookup[Position(e!.o, RanSetPP(h[k]))]:= k;
+        for m in [1..Length(HeCosetReps)] do
+          j:=j+1;
+          AllCosetReps[j]:=HeCosetReps[m]*h[k];
+        od;
+      od;
+			
+      # Loop over the old generators of S to find action on cosets
+      for j in [1..Length(oldgens)] do
+
+        gen:=oldgens[j];
+        offset:=Length(newgens[j]);
+
+        # Loop over cosets to calculate image of each under gen
+        for k in [1..numcosets] do
+
+          rep:=AllCosetReps[k]*gen;
+
+          # Will the new generator will be defined at this point?
+          if not rep*rep^(-1) in Fei then
+            Add(newgens[j], 0);
+          else
+            box:=lookup[Position(e!.o, RanSetPP(rep))];
+            if trivialse then
+              subbox:=1;
+            else
+              subbox:=PositionCanonical(HeCosetRepsSigma, (rep*h[box]^(-1))^sigma);
+            fi;
+            Add(newgens[j], (box-1)*CosetsInHe+subbox+offset);  
+          fi;
+
+        od;									        
+      od; 
+    od;        
+  od;
+
+  out:=InverseSemigroup(List(newgens, x->PartialPermNC(x)));
+
+  # Check whether work has actually been done
+  if NrMovedPoints(out) > NrMovedPoints(S) or (NrMovedPoints(out) = NrMovedPoints(S) and Degree(out) >= Degree(S)) then
+    return S;
+  else
+    return out;
+  fi;
+
+end);
+
+#
+
+InstallMethod(VagnerPrestonRepresentation, 
+"for an inverse semigroup of partial permutations",
+[IsInverseSemigroup],
+function(S)
+
+  local gens, elts, out, dom, ran, x;
+
+  gens:=Generators(S);
+  elts:=Elements(S);
+  out:=EmptyPlist(Length(gens));
+  
+  for x in gens do
+
+    dom:=Set(elts*(x^-1));
+    ran:=List(dom, y-> y*x);
+
+    Add(out, PartialPermNC(List(dom, y-> Position(elts, y)), List(ran, y->
+    Position(elts, y))));
+    
+  od;
+
+  return InverseSemigroup(out);
+
+end);
+
+#
+
+InstallMethod(ReverseNaturalPartialOrder, 
+"for an inverse semigroup of partial permutations",
+[IsInverseSemigroup],
+function(S)
+
+  local elts, n, out, i, j;
+
+  elts:=Elements(S);
+  n:=Length(elts);
+  out:=List([1..n], x-> EmptyPlist(n));
+  for i in [1..n-1] do
+    for j in [i+1..n] do
+      if NaturalLeqPP(elts[i], elts[j]) then
+        AddSet(out[i], j);
+      fi;
+    od;
+  od;
+  Perform(out, ShrinkAllocationPlist);
+  return out;
+
+end);
+
+#
+
+InstallMethod(JoinIrreducibleDClasses, 
+"for an inverse semigroup of partial permutations",
+[IsInverseSemigroup],
+function(S)
+
+  local elts, i, j, k, y, singleline, minorants, minorantpoints, D, out, d;
+  
+  D:=DClasses(S);
+  elts:=Set(Idempotents(S));;
+  out:=[];
+
+  for d in D do
+  
+    y:=Representative(d);
+    
+    if IsMultiplicativeZero(S,y) then continue; fi;
+    
+    i:=Position(elts, y);
+    k:=0;
+    singleline:=true;
+
+    for j in [i-1,i-2 .. 1] do
+      if NaturalLeqPP(elts[j], elts[i]) then
+        k:=j;
+        break;
+      fi;
+    od;
+  
+    if k = 0 then Add(out,d); continue; fi;
+
+    for j in [1..(k-1)] do 
+      if NaturalLeqPP(elts[j], elts[i]) and not NaturalLeqPP(elts[j], elts[k]) then 
+        singleline:=false; 
+        break;
+      fi;
+    od;
+
+    if singleline then Add(out,d); continue; fi;
+
+    if Size(HClass(S, y)) = 1 then continue; fi;
+		
+    minorants:=[];  
+    for j in [1..k] do 
+      if NaturalLeqPP(elts[j], elts[i]) then 
+        Add(minorants, elts[j]); 
+      fi;
+    od;
+    
+    minorantpoints:=Union(List(minorants, f -> DomPP(f)));
+    if DomPP(y) = minorantpoints then continue; fi;
+
+    for j in HClass(S, y) do
+      if not j = y and ForAll(minorants, m -> NaturalLeqPP(m, j)) then
+        Add(out,d); break;
+      fi; 
+    od;
+  
+  od;
+
+  return out;
+
+end);
 
 #EOF

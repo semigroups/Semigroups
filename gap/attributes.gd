@@ -33,3 +33,7 @@ DeclareAttribute("PosetOfIdempotents", IsSemigroup);
 DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
 DeclareAttribute("PrincipalFactor", IsGreensDClass);
 
+DeclareAttribute("SmallerDegreePartialPermRep", IsInverseSemigroup);
+DeclareAttribute("VagnerPrestonRepresentation", IsInverseSemigroup);
+DeclareAttribute("ReverseNaturalPartialOrder", IsInverseSemigroup);
+DeclareAttribute("JoinIrreducibleDClasses", IsInverseSemigroup);

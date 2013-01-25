@@ -13,7 +13,7 @@
 DeclareAttribute("NaturalPartialOrder", IsPartialPermSemigroup and
 IsInverseSemigroup);
 
-DeclareGlobalFunction("IsJoinIrreducible");
+#DeclareGlobalFunction("IsJoinIrreducible");
 
 #old
 
