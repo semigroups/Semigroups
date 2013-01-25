@@ -751,40 +751,104 @@ end);
 
 ### Start of Summer School Stuff ###
 
-InstallMethod(HasTrivialSe, 
+InstallMethod(SameMinorantsSubgroup, 
 "for a group H-class of an inverse semigroup of partial perms",
 [IsGroupHClass],
-function(H)
+function(h)
 
-  local e, F, f, h, i;
+	local e, F, f, out, i;
 	
-  e:=Representative(H);
-  F:=[];
+	if not IsGroupHClass(h) then 
+		Error("usage: the argument should be a group H-class,"); 
+		return;
+	fi;
+
+	e:=Representative(h);
+	F:=[];
 	
-  # Find the minorants of e
-	for f in Idempotents(ParentSemigroup(H)) do
+	# Find the minorants of e
+	for f in Idempotents(ParentSemigroup(h)) do
 		if NaturalLeqPP(f, e) and f<>e then
 			Add(F, f);
     fi;
 	od;
 
-	h:=Elements(H);
+	h:=Elements(h);
+	out:=[e];
 
 	# Check which elements of He share the same minorants as e	
 	for i in [2..Length(h)] do
 		if ForAll(F, f-> NaturalLeqPP(f, h[i])) then 
-    	return false;
+    	Add(out, h[i]);
     fi;
 	od;
 
-	return true;
+	return out;
+
+end);
+
+#
+
+InstallMethod(IsMajorantlyClosed, 
+"for an inverse subsemigroup of partial permutations and an inverse subsemigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermSemigroup and IsInverseSemigroup],
+function(S, T)
+
+  return IsMajorantlyClosed(S, Elements(T));
+
+end);
+
+#
+
+InstallMethod(IsMajorantlyClosed, 
+"for an inverse subsemigroup of partial permutations and a subset",
+[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermCollection],
+function(S, T)
+
+	local t;
+
+  if not IsSubset(S,T) then
+    Error("The second argument should be a subset of the first");
+  else
+    return IsMajorantlyClosedNC(S,T);
+  fi;
+	
+	return;
+
+end);
+
+#
+
+InstallMethod(IsMajorantlyClosedNC, 
+"for an inverse subsemigroup of partial permutations and a subset",
+[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermCollection],
+function(S, T)
+
+  local t, iter, u, i;
+
+	if Size(S) = Size(T) then
+		return true;
+	fi;
+	
+  i:=0;
+  for t in T do
+    iter:=Iterator(S);
+    for u in iter do
+      i:=i+1;
+      if NaturalLeqPP(t, u) and not u in T then
+        return false;
+      fi;
+    od;
+  od;
+
+  return true;
 
 end);
 
 #
 
 InstallMethod(MajorantClosure, 
-"for an inverse subsemigroup of pps and an inverse subsemigroup of partial permutations",
+"for an inverse subsemigroup of partial permutations and an inverse subsemigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermSemigroup and IsInverseSemigroup],
 function(S, T)
 
@@ -795,14 +859,14 @@ end);
 #
 
 InstallMethod(MajorantClosure, 
-"for a subset of an inverse subsemigroup of partial perms",
+"for an inverse subsemigroup of partial permutations and a subset",
 [IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermCollection],
 function(S, T)
 
 	local t;
 
   if not IsSubset(S,T) then
-    Error("The second argument should be a subsemigroup of the first");
+    Error("The second argument should be a subset of the first");
   else
     return MajorantClosureNC(S,T);
   fi;
@@ -814,7 +878,7 @@ end);
 #
 
 InstallMethod(MajorantClosureNC, 
-"for a subset of an inverse subsemigroup of partial perms",
+"for an inverse subsemigroup of partial permutations and a subset",
 [IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermCollection],
 function(S, T)
 
@@ -850,123 +914,6 @@ function(S, T)
 	
  return out;
  
-end);
-
-#
-
-InstallMethod(SmallerDegreePartialPermRep, 
-"for an inverse semigroup of partial permutations",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(S)
-
-  local out, D, e, h, i, j, k, m, lookup, box, subbox,
-        Fei, He, Se, sigma, sigmainv, FeiSigma, HeSigma, rho, rhoinv, HeSigmaRho,
-        oldgens, newgens, gen, offset,
-        orbits, cosets, HeCosetReps, HeCosetRepsSigma, AllCosetReps, rep, numcosets, CosetsInHe, trivialse;
-        
-  out:=[];
-  oldgens:=Generators(S);
-  newgens:=[];
-  for i in [1..Length(oldgens)] do newgens[i]:=[]; od;
-  
-  D:=JoinIrreducibleDClasses(S);
-
-  for e in D do
-				
-    ##### Calculate He as a small permutation group #####
-    He:=GroupHClass(e);
-    trivialse:=HasTrivialSe(He);
-    He:=InverseSemigroup(Elements(He), rec(small:=true));
-
-    sigma:=IsomorphismPermGroup(He);
-    sigmainv:=InverseGeneralMapping(sigma);
-    HeSigma:=Range(sigma);
-
-    rho:=SmallerDegreePermutationRepresentation(HeSigma);
-    rhoinv:=InverseGeneralMapping(rho);
-    HeSigmaRho:=Range(rho);   	
-
-    # If Se is trivial, we have a special simpler case    
-    if trivialse then
-      orbits:=[[Degree(He)+1]];
-      HeCosetReps:=[Representative(e)];
-      Fei:=He;
-    else 
-      orbits:=Orbits(HeSigmaRho);
-    fi;
-
-    for i in orbits do
-    
-      if not trivialse then
-
-        # Generate Fei
-        FeiSigma:=ImagesSet(rhoinv, Stabiliser(HeSigmaRho, i[1]));
-        Fei:=ImagesSet(sigmainv, FeiSigma);
-
-        # Generate reps for the cosets of Fei in He
-        HeCosetRepsSigma:=RightTransversal(HeSigma, FeiSigma);
-        HeCosetReps:=[];
-        for j in [1..Size(HeCosetRepsSigma)] do
-      	  Add(HeCosetReps, HeCosetRepsSigma[j]^sigmainv);
-        od;
-      
-      fi; 
-
-      # Generate reps for the HClasses in the RClass of e
-      h:=HClassReps( RClassNC(e, Representative(e)) );
-      CosetsInHe:=Length(HeCosetReps);
-      numcosets:=Size(h)*CosetsInHe;
-      
-      # Generate reps for ALL the cosets that the generator will act on      
-      j:=0;
-      AllCosetReps:=[];
-      lookup:=EmptyPlist(Length(e!.o));
-      for k in [1..Size(h)] do
-        lookup[Position(e!.o, RanSetPP(h[k]))]:= k;
-        for m in [1..Length(HeCosetReps)] do
-          j:=j+1;
-          AllCosetReps[j]:=HeCosetReps[m]*h[k];
-        od;
-      od;
-			
-      # Loop over the old generators of S to find action on cosets
-      for j in [1..Length(oldgens)] do
-
-        gen:=oldgens[j];
-        offset:=Length(newgens[j]);
-
-        # Loop over cosets to calculate image of each under gen
-        for k in [1..numcosets] do
-
-          rep:=AllCosetReps[k]*gen;
-
-          # Will the new generator will be defined at this point?
-          if not rep*rep^(-1) in Fei then
-            Add(newgens[j], 0);
-          else
-            box:=lookup[Position(e!.o, RanSetPP(rep))];
-            if trivialse then
-              subbox:=1;
-            else
-              subbox:=PositionCanonical(HeCosetRepsSigma, (rep*h[box]^(-1))^sigma);
-            fi;
-            Add(newgens[j], (box-1)*CosetsInHe+subbox+offset);  
-          fi;
-
-        od;									        
-      od; 
-    od;        
-  od;
-
-  out:=InverseSemigroup(List(newgens, x->PartialPermNC(x)));
-
-  # Check whether work has actually been done
-  if NrMovedPoints(out) > NrMovedPoints(S) or (NrMovedPoints(out) = NrMovedPoints(S) and Degree(out) >= Degree(S)) then
-    return S;
-  else
-    return out;
-  fi;
-
 end);
 
 #
@@ -1058,6 +1005,123 @@ function(S)
   od;
 
   return out;
+
+end);
+
+#
+
+InstallMethod(SmallerDegreePartialPermRep, 
+"for an inverse semigroup of partial permutations",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(S)
+
+  local out, D, e, h, i, j, k, m, lookup, box, subbox,
+        Fei, He, Se, sigma, sigmainv, FeiSigma, HeSigma, rho, rhoinv, HeSigmaRho,
+        oldgens, newgens, gen, offset,
+        orbits, cosets, HeCosetReps, HeCosetRepsSigma, AllCosetReps, rep, numcosets, CosetsInHe, trivialse;
+        
+  out:=[];
+  oldgens:=Generators(S);
+  newgens:=[];
+  for i in [1..Length(oldgens)] do newgens[i]:=[]; od;
+  
+  D:=JoinIrreducibleDClasses(S);
+
+  for e in D do
+				
+    ##### Calculate He as a small permutation group #####
+    He:=GroupHClass(e);
+    trivialse:=Length(SameMinorantsSubgroup(He))=1;
+    He:=InverseSemigroup(Elements(He), rec(small:=true));
+
+    sigma:=IsomorphismPermGroup(He);
+    sigmainv:=InverseGeneralMapping(sigma);
+    HeSigma:=Range(sigma);
+
+    rho:=SmallerDegreePermutationRepresentation(HeSigma);
+    rhoinv:=InverseGeneralMapping(rho);
+    HeSigmaRho:=Range(rho);   	
+
+    # If Se is trivial, we have a special simpler case    
+    if trivialse then
+      orbits:=[[Degree(He)+1]];
+      HeCosetReps:=[Representative(e)];
+      Fei:=He;
+    else 
+      orbits:=Orbits(HeSigmaRho);
+    fi;
+
+    for i in orbits do
+    
+      if not trivialse then
+
+        # Generate Fei
+        FeiSigma:=ImagesSet(rhoinv, Stabiliser(HeSigmaRho, i[1]));
+        Fei:=ImagesSet(sigmainv, FeiSigma);
+
+        # Generate reps for the cosets of Fei in He
+        HeCosetRepsSigma:=RightTransversal(HeSigma, FeiSigma);
+        HeCosetReps:=[];
+        for j in [1..Size(HeCosetRepsSigma)] do
+      	  Add(HeCosetReps, HeCosetRepsSigma[j]^sigmainv);
+        od;
+      
+      fi; 
+
+      # Generate reps for the HClasses in the RClass of e
+      h:=HClassReps( RClassNC(e, Representative(e)) );
+      CosetsInHe:=Length(HeCosetReps);
+      numcosets:=Size(h)*CosetsInHe;
+      
+      # Generate reps for ALL the cosets that the generator will act on      
+      j:=0;
+      AllCosetReps:=[];
+      lookup:=EmptyPlist(Length(e!.o));
+      for k in [1..Size(h)] do
+        lookup[Position(e!.o, RanSetPP(h[k]))]:= k;
+        for m in [1..Length(HeCosetReps)] do
+          j:=j+1;
+          AllCosetReps[j]:=HeCosetReps[m]*h[k];
+        od;
+      od;
+			
+      # Loop over the old generators of S to find action on cosets
+      for j in [1..Length(oldgens)] do
+
+        gen:=oldgens[j];
+        offset:=Length(newgens[j]);
+
+        # Loop over cosets to calculate image of each under gen
+        for k in [1..numcosets] do
+
+          rep:=AllCosetReps[k]*gen;
+
+          # Will the new generator will be defined at this point?
+          if not rep*rep^(-1) in Fei then
+            Add(newgens[j], 0);
+          else
+            box:=lookup[Position(e!.o, RanSetPP(rep))];
+            if trivialse then
+              subbox:=1;
+            else
+              subbox:=PositionCanonical(HeCosetRepsSigma, (rep*h[box]^(-1))^sigma);
+            fi;
+            Add(newgens[j], (box-1)*CosetsInHe+subbox+offset);  
+          fi;
+
+        od;									        
+      od; 
+    od;        
+  od;
+
+  out:=InverseSemigroup(List(newgens, x->PartialPermNC(x)));
+
+  # Check whether work has actually been done
+  if NrMovedPoints(out) > NrMovedPoints(S) or (NrMovedPoints(out) = NrMovedPoints(S) and Degree(out) >= Degree(S)) then
+    return S;
+  else
+    return out;
+  fi;
 
 end);
 

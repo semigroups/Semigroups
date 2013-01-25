@@ -33,11 +33,12 @@ DeclareAttribute("PosetOfIdempotents", IsSemigroup);
 DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
 DeclareAttribute("PrincipalFactor", IsGreensDClass);
 
-DeclareAttribute("HasTrivialSe", IsGroupHClass);
 DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass);
 DeclareAttribute("SmallerDegreePartialPermRep", IsInverseSemigroup);
 DeclareAttribute("VagnerPrestonRepresentation", IsInverseSemigroup);
 DeclareAttribute("JoinIrreducibleDClasses", IsInverseSemigroup);
 
+DeclareOperation("IsMajorantlyClosed", [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection]);
+DeclareOperation("IsMajorantlyClosedNC", [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection]);
 DeclareOperation("MajorantClosure", [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection]);
 DeclareOperation("MajorantClosureNC", [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection]);

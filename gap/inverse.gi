@@ -1471,6 +1471,8 @@ function(s)
   return out; 
 end);
 
+#
+
 InstallMethod(ReverseNaturalPartialOrder, "for an inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
 function(s)
