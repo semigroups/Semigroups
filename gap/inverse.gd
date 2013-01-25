@@ -12,6 +12,10 @@
 
 DeclareAttribute("NaturalPartialOrder", IsPartialPermSemigroup and
 IsInverseSemigroup);
+DeclareAttribute("ReverseNaturalPartialOrder", IsPartialPermSemigroup and
+IsInverseSemigroup);
+
+
 
 #DeclareGlobalFunction("IsJoinIrreducible");
 

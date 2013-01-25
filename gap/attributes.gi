@@ -748,31 +748,27 @@ function(s)
    AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s))));
 end);
 
-#
+
+### Start of Summer School Stuff ###
 
 InstallMethod(HasTrivialSe, 
 "for a group H-class of an inverse semigroup of partial perms",
-[IsGreensHClass],
-function(h)
+[IsGroupHClass],
+function(H)
 
-	local e, F, f, i;
+  local e, F, f, h, i;
 	
-	if not IsGroupHClass(h) then 
-		Error("usage: the argument should be a group H-class,"); 
-		return;
-	fi;
-
-	e:=Representative(h);
-	F:=[];
+  e:=Representative(H);
+  F:=[];
 	
-	# Find the minorants of e
-	for f in Idempotents(ParentAttr(h)) do
+  # Find the minorants of e
+	for f in Idempotents(ParentSemigroup(H)) do
 		if NaturalLeqPP(f, e) and f<>e then
 			Add(F, f);
     fi;
 	od;
 
-	h:=Elements(h);
+	h:=Elements(H);
 
 	# Check which elements of He share the same minorants as e	
 	for i in [2..Length(h)] do
@@ -787,9 +783,80 @@ end);
 
 #
 
+InstallMethod(MajorantClosure, 
+"for an inverse subsemigroup of pps and an inverse subsemigroup of partial permutations",
+[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermSemigroup and IsInverseSemigroup],
+function(S, T)
+
+  return MajorantClosure(S, Elements(T));;
+
+end);
+
+#
+
+InstallMethod(MajorantClosure, 
+"for a subset of an inverse subsemigroup of partial perms",
+[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermCollection],
+function(S, T)
+
+	local t;
+
+  if not IsSubset(S,T) then
+    Error("The second argument should be a subsemigroup of the first");
+  else
+    return MajorantClosureNC(S,T);
+  fi;
+	
+	return;
+
+end);
+
+#
+
+InstallMethod(MajorantClosureNC, 
+"for a subset of an inverse subsemigroup of partial perms",
+[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermCollection],
+function(S, T)
+
+	local elts, n, out, t, i, val, ht, k;
+	
+	elts:=Elements(S);
+	n:=Length(elts);
+	out:=EmptyPlist(n);
+	ht:=HTCreate(T[1]);
+	k:=0;
+	
+	for t in T do
+		HTAdd(ht, t, true);
+  	Add(out, t);
+  	k:=k+1;
+ 	od;
+
+	for t in out do
+		for i in [1..n] do
+			if NaturalLeqPP(t, elts[i]) then
+				val:=HTValue(ht, elts[i]);
+				if val=fail then
+					k:=k+1;
+					Add(out, elts[i]);
+					HTAdd(ht, elts[i], true);
+					if k=Size(S) then
+						return out;
+					fi;
+				fi;
+			fi;
+		od;
+	od;
+	
+ return out;
+ 
+end);
+
+#
+
 InstallMethod(SmallerDegreePartialPermRep, 
 "for an inverse semigroup of partial permutations",
-[IsInverseSemigroup],
+[IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
 
   local out, D, e, h, i, j, k, m, lookup, box, subbox,
@@ -906,7 +973,7 @@ end);
 
 InstallMethod(VagnerPrestonRepresentation, 
 "for an inverse semigroup of partial permutations",
-[IsInverseSemigroup],
+[IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
 
   local gens, elts, out, dom, ran, x;
@@ -931,33 +998,9 @@ end);
 
 #
 
-InstallMethod(ReverseNaturalPartialOrder, 
-"for an inverse semigroup of partial permutations",
-[IsInverseSemigroup],
-function(S)
-
-  local elts, n, out, i, j;
-
-  elts:=Elements(S);
-  n:=Length(elts);
-  out:=List([1..n], x-> EmptyPlist(n));
-  for i in [1..n-1] do
-    for j in [i+1..n] do
-      if NaturalLeqPP(elts[i], elts[j]) then
-        AddSet(out[i], j);
-      fi;
-    od;
-  od;
-  Perform(out, ShrinkAllocationPlist);
-  return out;
-
-end);
-
-#
-
 InstallMethod(JoinIrreducibleDClasses, 
 "for an inverse semigroup of partial permutations",
-[IsInverseSemigroup],
+[IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
 
   local elts, i, j, k, y, singleline, minorants, minorantpoints, D, out, d;
@@ -1017,5 +1060,6 @@ function(S)
   return out;
 
 end);
+
 
 #EOF
