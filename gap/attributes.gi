@@ -28,55 +28,6 @@
 
 # JDM this should be undocumented until fixed
 
-#
-
-InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-
-  if not IsMonoidAsSemigroup(s) then 
-    Error( "Usage: the argument must be a transformation semigroup ",
-    "satisfying IsMonoidAsSemigroup," );
-    return;
-  fi;
-
-  return MappingByFunction(s, Monoid(Difference(Generators(s),
-  [TransformationNC([1..DegreeOfTransformationSemigroup(s)])])), x-> x, x-> x);
-end);
-
-#
-
-InstallOtherMethod(IsomorphismPermGroup, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
- 
-   if not IsGroupAsSemigroup(s)  then
-     Error( "Usage: trans. semigroup satisfying IsGroupAsSemigroup,");
-     return; 
-   fi;
- 
-   return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
-    AsPermutation, x-> AsTransformation(x, ActionDegree(s)));
- end);
-
-#
-
-InstallOtherMethod(IsomorphismPermGroup, 
-"for an acting semigroup with generators", 
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  if not IsGroupAsSemigroup(s)  then
-    Error( "the semigroup is not a group,");
-    return; 
-  fi;
-#JDM not sure how to do this ...
-  return MagmaIsomorphismByFunctionNC(s, 
-   Group(List(Generators(s), AsPermutation), 
-   AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
-end);
-
-#
-
 InstallMethod(EmbeddingNC, "for a perm group and an acting semigroup",
 [IsPermGroup, IsActingSemigroup],
 function(g, s)
@@ -122,11 +73,12 @@ function(s)
   fi;
 
   r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
-  g:=Group(AsPermutation(Random(r)));
+  g:=SchutzenbergerGroup(r);
+  #Group(AsPermutation(Random(r)));
 
-  while Size(g)<Size(r) do
-    g:=ClosureGroup(g, AsPermutation(Random(r)));
-  od;
+  #while Size(g)<Size(r) do
+  # g:=ClosureGroup(g, AsPermutation(Random(r)));
+  #od;
   
   emb:=EmbeddingNC(g, s);
   u:=Range(emb);
@@ -563,45 +515,35 @@ function(s)
   return fail;
 end);
 
-#
+#JDM better if this returned an actual semigroup ideal!!
 
 InstallMethod(MinimalIdeal, "for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local n, gens, max, o, i, bound, f;
+  local rank, o, pos, min, len, m, f, i, n;
 
-  n:=ActionDegree(s);
-  gens:=Generators(s);
-  max:=Maximum(List(gens, ActionDegree));
+  rank:=LambdaRank(s);
+  o:=LambdaOrb(s);
+  
+  pos:=LookForInOrb(LambdaOrb(s), 
+   function(o, x) return rank(x)=MinActionRank(s); end, 2);
 
-  if max=n then 
-    bound:=2^n;
-  else
-    bound:=Sum([1..max], x-> Binomial(n, x));
-  fi;
+  if not pos then 
+    min:=rank(o[2]); pos:=2; len:=Length(o);
 
-  o:=Orb(gens, [1..n], OnSets, rec( schreier:=true,
-   gradingfunc:=function(o, x) return Length(x); end,
-    onlygrades:=[1..max],
-     lookingfor:=function(o, x) return Length(x)=1; end));
-   
-  Enumerate(o, bound);
-
-  if IsPosInt(PositionOfFound(o)) then 
-    i:=PositionOfFound(o);
-  else
-    i:=Position(Grades(o), Minimum(Grades(o))); 
+    for i in [3..len] do 
+      m:=rank(o[i]);
+      if m<min then
+        pos:=i; min:=m;
+      fi;
+    od;
   fi;
 
   f:=EvaluateWord(gens, TraceSchreierTreeForward(o, i));
-  i:=Semigroup(Elements(GreensDClassOfElementNC(s, f)));
+  i:=Semigroup(Elements(GreensDClassOfElementNC(s, f)), rec(small:=true));
 
-  #i:=SemigroupIdealByGenerators(s, [f]);
   SetIsSimpleSemigroup(i, true);
-  #SetIsMinimalIdeal(i, true);
-  #SetUnderlyingDClassOfMinIdeal(i, GreensDClassOfElement(s, f));
-  #return i;
-  return i;#JDM temp. 
+  return i; 
 end);
 
 #
@@ -758,6 +700,53 @@ function(S)
   return MappingByFunction(S, T,
    x-> TransformationOp(x, Elements(F^Size(F)), OnRight));
 end);
+
+#
+
+InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+
+  if not IsMonoidAsSemigroup(s) then 
+    Error( "Usage: the argument must be a transformation semigroup ",
+    "satisfying IsMonoidAsSemigroup," );
+    return;
+  fi;
+
+  return MappingByFunction(s, Monoid(Difference(Generators(s),
+  [TransformationNC([1..DegreeOfTransformationSemigroup(s)])])), x-> x, x-> x);
+end);
+
+#
+
+InstallOtherMethod(IsomorphismPermGroup, "for a transformation semigroup", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+ 
+   if not IsGroupAsSemigroup(s)  then
+     Error( "Usage: trans. semigroup satisfying IsGroupAsSemigroup,");
+     return; 
+   fi;
+ 
+   return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
+    AsPermutation, x-> AsTransformation(x, ActionDegree(s)));
+ end);
+
+# move to pperm.gi, trans.gi, and bipartition.gi
+
+InstallOtherMethod(IsomorphismPermGroup, 
+"for an acting semigroup with generators", 
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  if not IsGroupAsSemigroup(s)  then
+    Error( "the semigroup is not a group,");
+    return; 
+  fi;
+  return MagmaIsomorphismByFunctionsNC(s, 
+   Group(List(Generators(s), AsPermutation), 
+   AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s))));
+end);
+
 
 
 #EOF
