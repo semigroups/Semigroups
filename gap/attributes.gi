@@ -946,6 +946,58 @@ end);
 
 #
 
+InstallMethod(RightCosetsOfInverseSemigroup, 
+"for an inverse semigroup of partial permutations and an inverse subsemigroup",
+[IsInverseSemigroup and IsPartialPermSemigroup, IsInverseSemigroup and IsPartialPermSemigroup],
+function(S, T)
+
+  local s, t, dupe, idem, elts, rep, usedreps, coset, out;
+  
+  if not IsSubset(S,T) then
+    Error("The second argument should be a subsemigroup of the first");
+    return;
+  fi;
+
+  elts:=Elements(T);
+  idem:=Representative(MinimalIdeal(T));
+  usedreps:=[];
+  out:=[];
+  
+  for s in RClass(S, idem) do
+    
+    # Check if Ts is a duplicate coset
+    dupe:=false;    
+    for rep in [1..Length(usedreps)] do
+      if s*usedreps[rep]^-1 in elts then
+        dupe:=true;
+        break;
+      fi;
+    od;
+    	  	
+    if dupe then continue; fi;	
+    	
+    Add(usedreps, s);
+    	
+    coset:=[];
+    for t in elts do
+      Add(coset, t*s);
+    od;
+    coset:=Set(coset);
+
+    # Generate the majorant closure of Ts to create the coset
+
+    coset:=MajorantClosure(S, coset);
+      
+    Add(out, coset);
+
+  od;
+
+  return out;
+
+end);
+
+#
+
 InstallMethod(IsJoinIrreducible, 
 "for an inverse semigroup of partial permutations and one of its partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
