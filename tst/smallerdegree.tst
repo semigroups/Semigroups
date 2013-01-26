@@ -83,7 +83,6 @@ gap> ActionDegree(Image(F));
 19
 
 # Example made complicated by right regular representation of Sym(5). Genuine minimum degree of V is 7.
-
 gap> S:=SymmetricGroup(5);
 Sym( [ 1 .. 5 ] )
 gap> rho:=ActionHomomorphism(S,S);
