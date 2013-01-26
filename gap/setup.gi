@@ -68,7 +68,16 @@ InstallMethod(LambdaOrbOpts, "for a transformation semigroup",
 InstallMethod(LambdaOrbOpts, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> rec(forflatplainlists:=true));
 
-InstallMethod(LambdaOrbOpts, "for a partial perm semigroup",
+InstallMethod(LambdaOrbOpts, "for a bipartition semigroup",
+[IsBipartitionSemigroup], s-> rec(forflatplainlists:=true));
+
+InstallMethod(RhoOrbOpts, "for a transformation semigroup",
+[IsTransformationSemigroup], s-> rec(forflatplainlists:=true));
+
+InstallMethod(RhoOrbOpts, "for a partial perm semigroup",
+[IsPartialPermSemigroup], s-> rec(forflatplainlists:=true));
+
+InstallMethod(RhoOrbOpts, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s-> rec(forflatplainlists:=true));
 
 # the lambda and rho acts

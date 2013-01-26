@@ -20,6 +20,7 @@ DeclareAttribute("RhoAct", IsSemigroup);
 DeclareAttribute("LambdaAct", IsSemigroup);
 
 DeclareAttribute("LambdaOrbOpts", IsSemigroup);
+DeclareAttribute("RhoOrbOpts", IsSemigroup);
 
 DeclareAttribute("LambdaRank", IsSemigroup);
 DeclareAttribute("RhoRank", IsSemigroup);
