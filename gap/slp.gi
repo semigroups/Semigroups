@@ -67,8 +67,6 @@ SiftShorterSLP:=function(g, x)
   return SLPOfElm(y);
 end;
 
-# new for 1.0! - LambdaOrbSLP - "for a lambda orb and scc index"
-##############################################################################
 # returns an slp for the generators of LambdaOrbSchutzGp(o, m) in the
 # generators of the semigroup.
 
@@ -105,14 +103,109 @@ function(o, m)
   return StraightLineProgram([slp_lines], r);
 end);
 
-# new for 1.0! - SemigroupEltSLP - "for an acting semigroup and acting elt"
-##############################################################################
 #JDM we don't correct for the group elt,
 #and so the answer is out by a multiple of a group elt.
 
+# an element <x> of an inverse semigroup <s> is given as the product <abc>,
+# where: 
+#
+# • <a> is an element of the H-class containing the representative of the
+#   R-class <R> containing <x>, which is equal to: 
+#   TraceSchreierTreeOfSCCBack(o, m, k)
+#   *TraceSchreierTreeOfSCCForward(o, m, l)
+#   *TraceSchreierTreeForward(o, scc[m][1])
+#   where l=Position(o, RhoFunc(s)(rep)), k=Position(o, RhoFunc(s)(x)),
+#   rep=TraceSchreierTreeForward(o, scc[m][1])
+#
+# • <b> is the element of the Schutz group of <R> corresponding to <xc^-1>
+#   i.e. b=LambdaPerm(s)(rep,a)^-1*LambdaPerm(s)(rep, xc^-1) where
+#   rep=x*LambdaOrbMult(o, m, Position(o, LambdaFunc(s)(x)))[2]
+# 
+# • <c> is TraceSchreierTreeOfSCCForward(o, m, l); (i.e. that takes
+#  o[scc[m][1]] to o[l]), where l=Position(o, LambdaFunc(s)(x))
+
+InstallMethod(SemigroupElementSLP, 
+"for an acting semigroup with inverse op & gens, and associative element",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfInverseSemigroup,
+IsAssociativeElement],
+function(s, x)
+  local zip, o, scc, gens, lookup, k, m, word_a, tmp, rep, l, a, slp, word_c, c;
+
+  if not x in s then 
+    Error("the element does not belong to the semigroup,");
+    return;
+  fi;
+  
+  #
+
+  zip:=function(list)
+    local len, out, i;
+
+    len:=Length(list);
+    out:=EmptyPlist(2*len);
+    for i in [1..len] do
+      out[2*i-1]:=list[i];
+      out[2*i]:=1;
+    od;
+    return out;
+  end;
+
+  #
+ 
+  o:=LambdaOrb(s);
+  scc:=OrbSCC(o);
+  gens:=o!.gens;
+  lookup:=OrbSCCLookup(o);
+  
+  # find <a>
+  k:=Position(o, RhoFunc(s)(x));
+  m:=lookup[k];
+  word_a:=TraceSchreierTreeOfSCCBack(o, m, k);
+  tmp:=TraceSchreierTreeForward(o, scc[m][1]);
+  rep:=EvaluateWord(gens, tmp);
+  l:=Position(o, RhoFunc(s)(rep));
+  Append(word_a, TraceSchreierTreeOfSCCForward(o, m, l));
+  Append(word_a, tmp);
+  a:=EvaluateWord(gens, word_a);
+
+  slp:=StraightLineProgram([zip(word_a)], Length(gens));
+
+  # find <c>
+  l:=Position(o, LambdaFunc(s)(x));
+  word_c:=TraceSchreierTreeOfSCCForward(o, m, l);
+  c:=EvaluateWord(gens, word_c);
+
+  # find <b>
+  rep:=x*LambdaOrbMult(o, m, l)[2]; #the rep of the R-class of <x>
+  tmp:=LambdaPerm(s)(rep, a);
+
+  if tmp<>() then
+    # slp for schutz gp generators in terms of semigp generators
+    slp:=ProductOfStraightLinePrograms(slp, 
+     CompositionOfStraightLinePrograms(
+      SiftShorterSLP(LambdaOrbSchutzGp(o, m), tmp), LambdaOrbSLP(o, m)));
+  fi;
+
+  tmp:=LambdaPerm(s)(rep, x*c^-1);
+  if tmp<>() then 
+    slp:=ProductOfStraightLinePrograms(slp, 
+     CompositionOfStraightLinePrograms(
+     SiftShorterSLP(LambdaOrbSchutzGp(o, m), tmp), LambdaOrbSLP(o, m)));
+  fi;
+
+  #compose slp with <c>
+
+  if not word_c=[] then 
+    slp:=ProductOfStraightLinePrograms(slp, 
+      StraightLineProgram([zip(word_c)], Length(gens)));
+  fi;
+
+  return slp;
+end);
+
 #JDm rough!
 
-InstallMethod(SemigroupEltSLP, "for an acting semigroup and acting elt",
+InstallMethod(SemigroupElementSLP, "for an acting semigroup and acting elt",
 [IsActingSemigroup, IsAssociativeElement],
 function(s, x)
   local data, nr, gens, zip, o, m, scc, l, word, v, y, p, slp;
@@ -146,6 +239,7 @@ function(s, x)
   word:=TraceSchreierTreeOfSCCForward(o, m, l);
   v:=EvaluateWord(gens, word);
 
+  #JDM this line should be changed
   y:=x*MappingPermListList(OnTuples(o[scc[m][1]], v),
    o[scc[m][1]]); 
 
@@ -177,6 +271,7 @@ function(s, x)
   fi;
   return slp;
 end);
+
 
 #TTT
 
