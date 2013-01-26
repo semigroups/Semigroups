@@ -82,7 +82,12 @@
     <#Include Label="WagnerPrestonRepresentation">
     <#Include Label="ReverseNaturalPartialOrder">
     <#Include Label="IsMajorantlyClosed">
-
+    <#Include Label="MajorantClosure">
+    <#Include Label="SameMinorantsSubgroup">
+    <#Include Label="IsJoinIrreducible">
+    <#Include Label="JoinIrreducibleDClasses">
+    <#Include Label="RightCosetsOfInverseSemigroup">
+    <#Include Label="SmallerDegreePartialPermRep">
   </Section>
   
   <Section><Heading>Further properties of semigroups</Heading>
