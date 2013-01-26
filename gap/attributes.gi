@@ -1155,9 +1155,7 @@ function(S)
     ##### Calculate He as a small permutation group #####
     He:=GroupHClass(e);
     trivialse:=Length(SameMinorantsSubgroup(He))=1;
-    # Uncomment out this line when issue 18 is fixed
-    #He:=InverseSemigroup(Elements(He), rec(small:=true));
-    He:=InverseSemigroup(Elements(He));
+    He:=InverseSemigroup(Elements(He), rec(small:=true));
 
     sigma:=IsomorphismPermGroup(He);
     sigmainv:=InverseGeneralMapping(sigma);
