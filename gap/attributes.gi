@@ -1122,15 +1122,16 @@ end);
 
 #
 
-InstallMethod(SmallerDegreePartialPermRep, 
+InstallMethod(SmallerDegreePartialPermRepresentation, 
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
 
-  local out, D, e, h, i, j, k, m, lookup, box, subbox,
+  local out, D, T, e, h, i, j, k, m, lookup, box, subbox,
         Fei, He, Se, sigma, sigmainv, FeiSigma, HeSigma, rho, rhoinv, HeSigmaRho,
         oldgens, newgens, gen, offset,
-        orbits, cosets, HeCosetReps, HeCosetRepsSigma, AllCosetReps, rep, numcosets, CosetsInHe, trivialse;
+        orbits, cosets, HeCosetReps, HeCosetRepsSigma, AllCosetReps, rep, numcosets, CosetsInHe, trivialse,
+        SmallerDegreeElementMap;
         
   out:=[];
   oldgens:=Generators(S);
@@ -1225,23 +1226,42 @@ function(S)
       od; 
     od;        
   od;
+  
+  SmallerDegreeElementMap:=function(S, oldgens, newgens, elt)
 
-  #out:=InverseSemigroup(List(newgens, x->PartialPermNC(x)));
+    local decomp, newelt, i;
+    
+    decomp:=SemigroupElementSLP(S, elt);
+    newelt:=newgens[decomp[1]];
+    for i in [2..Length(decomp)] do
+      newelt:=newelt*newgens[decomp[i]];
+    od; 
+
+    return newelt;
+
+  end;
   
   newgens:=List(newgens, x->PartialPermNC(x));
+  T:=InverseSemigroup(newgens);
   
-  return [oldgens, newgens];
-
-  # Check whether work has actually been done
-  #if NrMovedPoints(out) > NrMovedPoints(S) or (NrMovedPoints(out) = NrMovedPoints(S) and ActionDegree(out) >= ActionDegree(S)) then
-  #  return S;
-  #else
-  #  return out;
-  #fi;
+	#Check whether work has actually been done
+  if NrMovedPoints(T) > NrMovedPoints(S) or (NrMovedPoints(T) = NrMovedPoints(S) and ActionDegree(T) >= ActionDegree(S)) then
+    
+    return MagmaIsomorphismByFunctionsNC(S, S, x -> x, x -> x);
+    
+  else
+    
+    return MagmaIsomorphismByFunctionsNC(
+      S,
+      T,
+      x -> SmallerDegreeElementMap(S, oldgens, newgens, x),
+      x -> SmallerDegreeElementMap(T, newgens, oldgens, x)
+    );
+    
+  fi;
   
-  SemigroupEltSLP(s, elt);
-
 end);
 
+#
 
 #EOF
