@@ -82,6 +82,50 @@ gap> ActionDegree(f);
 gap> ActionDegree(Image(F));
 19
 
+# Example made complicated by right regular representation of Sym(5). Genuine minimum degree of V is 7.
+
+gap> S:=SymmetricGroup(5);
+Sym( [ 1 .. 5 ] )
+gap> rho:=ActionHomomorphism(S,S);
+<action homomorphism>
+gap> T:=Image(rho);
+<permutation group with 2 generators>
+gap> 
+gap> H1:=[];
+[  ]
+gap> H2:=[];
+[  ]
+gap> for x in Elements(T) do
+>   L:=[];
+>   for y in [1..120] do
+>     Add(L,y^x);
+>   od;
+>   g:=PartialPerm(L);
+>   Add(H2,g);
+>   Add(L,121);
+>   Add(L,122);
+>   f:=PartialPerm(L);
+>   Add(H1,f);
+> 
+> od;
+gap> 
+gap> J:=[1..120];
+[ 1 .. 120 ]
+gap> Add(J,122);
+gap> Add(J,121);
+gap> h:=PartialPerm(J);
+<partial perm on 122 pts>
+gap> 
+gap> V:=InverseSemigroup(H1,H2,h);
+<inverse partial perm semigroup of degree 122 with 241 generators>
+gap> SmallerDegreePartialPermRepresentation(V);
+MappingByFunction( <inverse partial perm semigroup of degree 122 with 
+241 generators>, <inverse partial perm semigroup of degree 22 with 
+241 generators>, function( x ) ... end, function( x ) ... end )
+gap> time;
+6627
+
+
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
