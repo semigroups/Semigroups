@@ -84,7 +84,7 @@ function(o, m)
   slp:=o!.slp[m];
   nr:=Length(slp);
   slp_lines:=EmptyPlist(nr);
-  r:=Length(Generators(o!.semi));
+  r:=Length(o!.gens);
 
   if nr<>0 then
     graph:=OrbitGraph(o);
@@ -108,7 +108,7 @@ end);
 
 # an element <x> of an inverse semigroup <s> is given as the product <abc>,
 # where: 
-#
+
 # • <a> is an element of the H-class containing the representative of the
 #   R-class <R> containing <x>, which is equal to: 
 #   TraceSchreierTreeOfSCCBack(o, m, k)
@@ -116,11 +116,11 @@ end);
 #   *TraceSchreierTreeForward(o, scc[m][1])
 #   where l=Position(o, RhoFunc(s)(rep)), k=Position(o, RhoFunc(s)(x)),
 #   rep=TraceSchreierTreeForward(o, scc[m][1])
-#
+
 # • <b> is the element of the Schutz group of <R> corresponding to <xc^-1>
 #   i.e. b=LambdaPerm(s)(rep,a)^-1*LambdaPerm(s)(rep, xc^-1) where
 #   rep=x*LambdaOrbMult(o, m, Position(o, LambdaFunc(s)(x)))[2]
-# 
+
 # • <c> is TraceSchreierTreeOfSCCForward(o, m, l); (i.e. that takes
 #  o[scc[m][1]] to o[l]), where l=Position(o, LambdaFunc(s)(x))
 
@@ -177,7 +177,7 @@ function(s, x)
 
   # find <b>
   rep:=x*LambdaOrbMult(o, m, l)[2]; #the rep of the R-class of <x>
-  tmp:=LambdaPerm(s)(rep, a);
+  tmp:=LambdaPerm(s)(rep, a)^-1;
 
   if tmp<>() then
     # slp for schutz gp generators in terms of semigp generators
@@ -217,7 +217,7 @@ function(s, x)
   
   data:=SemigroupData(s);
   nr:=Position(data, x);
-  gens:=Generators(s);
+  gens:=GeneratorsOfSemigroup(s);
 
   zip:=function(list)
     local len, out, i;
