@@ -1499,32 +1499,28 @@ gap> PrimitiveIdempotents(S);
 </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="WagnerPrestonRepresentation">
+<#GAPDoc Label="VagnerPrestonRepresentation">
 <ManSection>
-  <Func Name="WagnerPrestonPresentation" Arg="S"/>
+  <Func Name="VagnerPrestonPresentation" Arg="S"/>
   <Returns>
     An inverse semigroup of partial permutations.
   </Returns>
   <Description>
-    <C>WagnerPrestonRepresentation</C> returns the inverse semigroup of 
-    partial permutations using the algorithm in the Wagner Preston
+    <C>VagnerPrestonRepresentation</C> returns the inverse semigroup of 
+    partial permutations using the algorithm in the Vagner Preston
     Representation Theorem on the inverse semigroup of partial permutations,
     <A>S</A>.
   </Description>
 </ManSection>
 <Example>
-gap> S:=SymmetricInverseSemigp(2);
-  &lt;inverse semigroup with 2 generators>
+gap> S:=SymmetricInverseSemigroup(2);
+  &lt;inverse partial perm semigroup of degree 2 with 2 generators>
 gap> Elements(S);
-  [ &lt;empty mapping>, &lt;identity on [ 1 ]>, [ 1 ] -> [ 2 ], [ 2 ] -> [ 1 ],
-  &lt;identity on [ 2 ]>, &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 2, 1 ] ]
-gap> T:=WagnerPrestonRepresentation(S);
-  &lt;inverse semigroup with 2 generators>
+  [ &lt;empty mapping>, &lt;identity on [ 1 ]>, [ 1 ] -> [ 2 ], [ 2 ] -> [ 1 ], &lt;identity on [ 2 ]>, &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 2, 1 ] ]
+gap> T:=VagnerPrestonRepresentation(S);
+  &lt;inverse partial perm semigroup of degree 7 with 2 generators>
 gap> Elements(T);
-  [ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2, 4 ]>, 
-  [ 1, 2, 4 ] -> [ 1, 3 .. 5 ], [ 1, 3 .. 5 ] -> [ 1, 2, 4 ], 
-  &lt;identity on [ 1, 3 .. 5 ]>, &lt;identity on [ 1 .. 7 ]>, 
-  [ 1 .. 7 ] -> [ 1, 3, 2, 5, 4, 7, 6 ] ]
+  [ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2, 4 ]>, [ 1, 2, 4 ] -> [ 1, 3, 5 ], [ 1, 3, 5 ] -> [ 1, 2, 4 ], &lt;identity on [ 1, 3, 5 ]>, &lt;identity on [ 1 .. 7 ]>, [ 1 .. 7 ] -> [ 1, 3, 2, 5, 4, 7, 6 ] ]
 </Example>          
 <#/GAPDoc>
 
@@ -1544,8 +1540,8 @@ gap> Elements(T);
   </Description>
 </ManSection>
 <Example>
-gap> S:=SymmetricInverseSemigp(2);
-&lt;inverse semigroup with 2 generators>
+gap> S:=SymmetricInverseSemigroup(2);
+&lt;inverse partial perm semigroup of degree 2 with 2 generators>
 gap> Size(S);
 7
 gap> ReverseNaturalPartialOrder(S);
@@ -1568,19 +1564,46 @@ gap> ReverseNaturalPartialOrder(S);
 </Description>
 </ManSection>
 <Example>
-gap> S:=SymmetricInverseSemigp(2);
-&lt;inverse semigroup with 2 generators>
+gap> S:=SymmetricInverseSemigroup(2);
+&lt;inverse partial perm semigroup of degree 2 with 2 generators>
 gap> T:=[Elements(S)[2]];
-&lt;identity on [ 1 ]>
+[ &lt;identity on [ 1 ]> ]
 gap> IsMajorantlyClosed(S,T);
 false
 gap> U:=[Elements(S)[2],Elements(S)[6]];
-[&lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]> ]
+[ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]> ]
 gap> IsMajorantlyClosed(S,U);           
 true
 </Example>
 <#/GAPDoc>
 
+<#GAPDoc Label="IsMajorantlyClosedInverseSubsemigroup">
+<ManSection>
+<Attr Name="IsMajorantlyClosedInverseSubsemigroup" Arg="S,T"/>
+<Returns>
+  <K>true</K> or <K>false</K>
+</Returns>
+<Description>
+  <C>IsMajorantlyClosedInverseSubsemigroup</C> determines whether a subset
+  <A>T</A> of an inverse semigroup <A>S</A> is both an inverse semigroup and is
+  majorantly closed in <A>S</A>. See <Ref Func="IsMajorantlyClosed"/>.
+</Description>
+</ManSection>
+<Example>
+gap> S:=SymmetricInverseSemigroup(2);
+&lt;inverse partial perm semigroup of degree 2 with 2 generators>
+gap> T:=[Elements(S)[2]];
+[&lt;identity on [ 1 ]> ]
+gap> IsMajorantlyClosedInverseSubsemigroup(S,T);
+false
+gap> U:=[Elements(S)[2],Elements(S)[6],Elements(S)[7]];
+[ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 2, 1 ] ]
+gap> IsMajorantlyClosedInverseSubsemigroup(S,U);
+false
+gap> IsMajorantlyClosedInverseSubsemigroup(S,S);
+true
+</Example>
+<#/GAPDoc>
 
 <#GAPDoc Label="MajorantClosure">
 <ManSection>
@@ -1597,16 +1620,12 @@ true
   </Description>
 </ManSection>
 <Example>
-gap> S:=SymmetricInverseSemigp(2);
-&lt;inverse semigroup with 2 generators>
-gap> T:=[PartialPermNC([0,0,0,4])];
-[ &lt;identity on [ 4 ]> ]
+gap> S:=SymmetricInverseSemigroup(4);
+&lt;inverse partial perm semigroup of degree 4 with 3 generators>
+gap> T:=[PartialPermNC([1,0,3,0])];
+[ &lt;identity on [ 1, 3 ]> ]
 gap> U:=MajorantClosure(S,T);
-[ &lt;identity on [ 4 ]> ]
-gap> V:=[Elements(S)[2]];
-&lt;identity on [ 1 ]>
-gap> W:=MajorantClosure(S,V);
-[ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]> ]
+[ &lt;identity on [ 1, 3 ]>, &lt;identity on [ 1, 2, 3]>, [ 1, 2, 3 ] -> [ 1, 4, 3 ], [ 1, 3, 4] -> [ 1, 3, 2 ], &lt;identity on [ 1, 3, 4]>, &lt;identity on [ 1 .. 4 ]>, [ 1 .. 4 ] -> [ 1, 4, 3, 2] ]
 </Example>
 <#/GAPDoc>
 
@@ -1625,21 +1644,18 @@ gap> W:=MajorantClosure(S,V);
   </Description>
 </ManSection>
 <Example>
-gap> S:=SymmetricInverseSemigp(3);
-&lt;inverse semigroup with 2 generators>
+gap> S:=SymmetricInverseSemigroup(3);
+&lt;inverse partial perm semigroup of degree 3 with 3 generators>
 gap> h:=GroupHClass(GreensDClasses(S)[1]);
-{&lt;identity on [ 1 .. 3 ]>}
+{&lt;identity on [ 1, 2, 3 ]>}
 gap> Elements(h);
-[ &lt;identity on [ 1 .. 3 ]>, [ 1 .. 3 ] -> [ 1, 3, 2 ], 
-  [ 1 .. 3 ] -> [ 2, 1, 3 ], [ 1 .. 3 ] -> [ 2, 3, 1 ], 
-  [ 1 .. 3 ] -> [ 3, 1, 2 ], [ 1 .. 3 ] -> [ 3, 2 .. 1 ] ]
+[ &lt;identity on [ 1, 2, 3 ]>, [ 1, 2, 3 ] -> [ 1, 3, 2 ], [ 1, 2, 3 ] -> [ 2, 1, 3 ], [ 1, 2, 3 ] -> [ 2, 3, 1 ], [ 1, 2, 3 ] -> [ 3, 1, 2 ], [ 1, 2, 3 ] -> [ 3, 2, 1 ] ]
 gap> SameMinorantsSubgroup(h);
-[ &lt;identity on [ 1 .. 3 ]> ]
+[ &lt;identity on [ 1, 2, 3 ]> ]
 gap> T:=InverseSemigroup(PartialPermNC([1,2,4,3]),PartialPermNC([1]),PartialPermNC([0,2]));
-&lt;inverse semigroup with 3 generators>
+&lt;inverse partial perm semigroup of degree 4 with 3 generators>
 gap> Elements(T);
-[ &lt;empty mapping>, &lt;identity on [ 1 ]>, &lt;identity on [ 2 ]>, 
-  &lt;identity on [ 1 .. 4 ]>, [ 1 .. 4 ] -> [ 1, 2, 4, 3 ] ]
+[ &lt;empty mapping>, &lt;identity on [ 1 ]>, &lt;identity on [ 2 ]>, &lt;identity on [ 1 .. 4 ]>, [ 1 .. 4 ] -> [ 1, 2, 4, 3 ] ]
 gap> f:=GroupHClass(GreensDClasses(T)[1]);
 {&lt;identity on [ 1 .. 4 ]>}
 gap> Elements(f);
@@ -1666,14 +1682,14 @@ gap> SameMinorantsSubgroup(f);
   </Description>
 </ManSection>
 <Example>
-gap> S:=SymmetricInverseSemigp(3);
-&lt;inverse semigroup with 2 generators>
+gap> S:=SymmetricInverseSemigroup(3);
+&lt;inverse partial perm semigroup of degree 3 with 3 generators>
 gap> x:=PartialPermNC([1,2,3]);
-&lt;identity on [ 1 .. 3 ]>
+&lt;identity on [ 1, 2, 3 ]>
 gap> IsJoinIrreducible(S,x);
 false
 gap> T:=InverseSemigroup(PartialPermNC([1,2,4,3]),PartialPermNC([1]),PartialPermNC([0,2]));
-&lt;inverse semigroup with 3 generators>
+&lt;inverse partial perm semigroup of degree 4 with 3 generators>
 gap> y:=PartialPermNC([1,2,3,4]);
 &lt;identity on [ 1 .. 4 ]>
 gap> IsJoinIrreducible(T,y);
@@ -1697,15 +1713,14 @@ true
   </Description>
 </ManSection>
 <Example>
-gap> S:=SymmetricInverseSemigp(3);
-&lt;inverse semigroup with 2 generators>
+gap> S:=SymmetricInverseSemigroup(3);
+&lt;inverse partial perm semigroup of degree 3 with 3 generators>
 gap> JoinIrreducibleDClasses(S);
 [ {&lt;identity on [ 1 ]>} ]
 gap> T:=InverseSemigroup(PartialPermNC([1,2,4,3]),PartialPermNC([1]),PartialPermNC([0,2]));
-&lt;inverse semigroup with 3 generators>
+&lt;inverse partial perm semigroup of degree 4 with 3 generators>
 gap> JoinIrreducibleDClasses(T);
-[ {&lt;identity on [ 1 .. 4 ]>}, {&lt;identity on [ 1 ]>}, {&lt;identity on 
-[ 2 ]>} ]
+[ {&lt;identity on [ 1 .. 4 ]>}, {&lt;identity on [ 1 ]>}, {&lt;identity on [ 2 ]>} ]
 </Example>
 <#/GAPDoc>
 
@@ -1724,19 +1739,14 @@ gap> JoinIrreducibleDClasses(T);
   </Description>
 </ManSection>
 <Example>
-gap> S:=SymmetricInverseSemigp(3);
-&lt;inverse semigroup with 2 generators>
+gap> S:=SymmetricInverseSemigroup(3);
+&lt;inverse partial perm semigroup of degree 3 with 3 generators>
 gap> T:=InverseSemigroup(MajorantClosure(S,[PartialPermNC([1])]));
-&lt;inverse semigroup with 7 generators>
+&lt;inverse partial perm semigroup of degree 3 with 8 generators>
 gap> IsMajorantlyClosed(S,T);
 true
 gap> RC:=RightCosetsISgp(S,T);                           
-[ [ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 1, 3 ],
-[ 1, 3 ] -> [ 1, 2 ], &lt;identity on [ 1, 3 ]>, &lt;identity on [ 1 .. 3 ]>,
-[ 1 .. 3 ] -> [ 1, 3, 2 ] ], [ [ 1 ] -> [ 3 ], [ 1, 2 ] -> [ 3, 1 ], [ 1, 2 ]
--> [ 3, 2 ], [ 1, 3 ] -> [ 3, 1 ], [ 1, 3 ] -> [ 3, 2 ], 
-      [ 1 .. 3 ] -> [ 3, 1, 2 ], [ 1 .. 3 ] -> [ 3, 2 .. 1 ] ], [ [ 1 ] -> [ 2 ], [ 1, 2 ] -> [ 2, 1 ], [ 1, 2 ] -> [ 2, 3 ], [ 1, 3 ] -> [ 2, 1 ], 
-      [ 1, 3 ] -> [ 2, 3 ], [ 1 .. 3 ] -> [ 2, 1, 3 ], [ 1 .. 3 ] -> [ 2, 3, 1 ] ] ]
+[ [ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 1, 3 ], [ 1, 3 ] -> [ 1, 2 ], &lt;identity on [ 1, 3 ]>, &lt;identity on [ 1, 2, 3 ]>, [ 1, 2, 3 ] -> [ 1, 3, 2 ] ], [ [ 1 ] -> [ 3 ], [ 1, 2 ] -> [ 3, 1 ], [ 1, 2 ] -> [ 3, 2 ], [ 1, 3 ] -> [ 3, 1 ], [ 1, 3 ] -> [ 3, 2 ], [ 1, 2, 3 ] -> [ 3, 1, 2 ], [ 1, 2, 3 ] -> [ 3, 2, 1 ] ], [ [ 1 ] -> [ 2 ], [ 1, 2 ] -> [ 2, 1 ], [ 1, 2 ] -> [ 2, 3 ], [ 1, 3 ] -> [ 2, 1 ], [ 1, 3 ] -> [ 2, 3 ], [ 1, 2, 3 ] -> [ 2, 1, 3 ], [ 1, 2, 3 ] -> [ 2, 3, 1 ] ] ]
 </Example>
 <#/GAPDoc>
 
@@ -1754,11 +1764,11 @@ gap> RC:=RightCosetsISgp(S,T);
 </ManSection>
 <Example>
 gap> S:=InverseSemigroup(PartialPermNC([2,1,4,3,6,5,8,7]));
-&lt;inverse semigroup with 1 generator>
+&lt;inverse partial perm semigroup of degree 8 with 1 generator>
 gap> Elements(S);                                          
 [ &lt;identity on [ 1 .. 8 ]>, [ 1 .. 8 ] -> [ 2, 1, 4, 3, 6, 5, 8, 7 ] ]
 gap> T:=SmallerDegreePartialPermRep(S);                    
-&lt;inverse semigroup with 1 generator>
+&lt;inverse partial perm semigroup of degree 2 with 1 generator>
 gap> Elements(T);                                          
 [ &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 2, 1 ] ]
 </Example>
