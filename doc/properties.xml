@@ -1499,9 +1499,10 @@ gap> PrimitiveIdempotents(S);
 </ManSection>
 <#/GAPDoc>
 
+
 <#GAPDoc Label="VagnerPrestonRepresentation">
 <ManSection>
-  <Func Name="VagnerPrestonPresentation" Arg="S"/>
+  <Func Name="VagnerPrestonRepresentation" Arg="S"/>
   <Returns>
     An inverse semigroup of partial permutations.
   </Returns>
@@ -1509,7 +1510,7 @@ gap> PrimitiveIdempotents(S);
     <C>VagnerPrestonRepresentation</C> returns the inverse semigroup of 
     partial permutations using the algorithm in the Vagner Preston
     Representation Theorem on the inverse semigroup of partial permutations,
-    <A>S</A>.
+    <A>S</A>. 
   </Description>
 </ManSection>
 <Example>
@@ -1750,14 +1751,14 @@ gap> RC:=RightCosetsISgp(S,T);
 </Example>
 <#/GAPDoc>
 
-<#GAPDoc Label="SmallerDegreePartialPermRep">
+<#GAPDoc Label="SmallerDegreePartialPermRepresentation">
 <ManSection>
-<Func Name="SmallerDegreePartialPermRep" Arg="S"/>
+<Func Name="SmallerDegreePartialPermRepresentation" Arg="S"/>
   <Returns>
-    An inverse semigroup.
+    An isomorphic mapping.
   </Returns>
   <Description>   
-    <C>SmallerDegreePartialPermRep</C> returns an inverse semigroup
+    <C>SmallerDegreePartialPermRepresentation</C> returns a mapping
     isomorphic to <A>S</A>
     represented on fewer or equal number of points to <A>S</A>. 
   </Description>
@@ -1767,13 +1768,10 @@ gap> S:=InverseSemigroup(PartialPermNC([2,1,4,3,6,5,8,7]));
 &lt;inverse partial perm semigroup of degree 8 with 1 generator>
 gap> Elements(S);                                          
 [ &lt;identity on [ 1 .. 8 ]>, [ 1 .. 8 ] -> [ 2, 1, 4, 3, 6, 5, 8, 7 ] ]
-gap> T:=SmallerDegreePartialPermRep(S);                    
-&lt;inverse partial perm semigroup of degree 2 with 1 generator>
+gap> T:=SmallerDegreePartialPermRepresentation(S);                    
+MappingByFunction( &lt;inverse partial perm semigroup of size 2, degree 8 with 1 generator>, &lt;inverse partial perm semigroup of degree 2 with 1 generator>, function( x ) ... end, function( x ) ... end )
 gap> Elements(T);                                          
 [ &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 2, 1 ] ]
 </Example>
 <#/GAPDoc>
-
-
-
 #EOF

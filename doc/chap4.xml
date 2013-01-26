@@ -87,7 +87,7 @@
     <#Include Label="IsJoinIrreducible">
     <#Include Label="JoinIrreducibleDClasses">
     <#Include Label="RightCosetsOfInverseSemigroup">
-    <#Include Label="SmallerDegreePartialPermRep">
+    <#Include Label="SmallerDegreePartialPermRepresentation">
   </Section>
   
   <Section><Heading>Further properties of semigroups</Heading>
