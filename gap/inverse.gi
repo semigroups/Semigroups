@@ -1099,13 +1099,10 @@ InstallOtherMethod(RClassReps, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
 d-> List(LClassReps(d), x-> x^-1));
 
-#
-
 InstallMethod(Random, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)
   local gens, i, w;
-
   gens:=GeneratorsOfSemigroup(s);    
   i:=Random([1..Int(Length(gens)/2)]);
   w:=List([1..i], x-> Random([1..Length(gens)]));
