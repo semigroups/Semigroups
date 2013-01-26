@@ -15,7 +15,7 @@ gap> SetInfoLevel(InfoCitrus, 0);
 # Example *was* returning G of size 820, not 821
 gap> g:=RandomInverseSemigroup(1,1000);
 <inverse semigroup with 1 generator>
-gap> G:=SmallerDegreePartialPermRep(g);
+gap> G:=SmallerDegreePartialPermRepresentation(g);
 <inverse semigroup with 1 generator>
 gap> g=G;
 false
@@ -23,17 +23,17 @@ gap> Size(g);
 821
 gap> Size(G);
 821
-gap> Degree(g);
+gap> ActionDegree(g);
 1000
 gap> NrMovedPoints(g);
 840
-gap> Degree(G);
+gap> ActionDegree(G);
 16
 
 # Another random example
 gap> g:=RandomInverseSemigroup(3,20);
 <inverse semigroup with 3 generators>
-gap> G:=SmallerDegreePartialPermRep(g);;
+gap> G:=SmallerDegreePartialPermRepresentation(g);;
 gap> g=G;
 true
 gap> Size(g);
@@ -44,18 +44,18 @@ gap> NrMovedPoints(g);
 # Another random example
 gap> g:=RandomInverseSemigroup(2,50);
 <inverse semigroup with 2 generators>
-gap> G:=SmallerDegreePartialPermRep(g);;
+gap> G:=SmallerDegreePartialPermRepresentation(g);;
 gap> g=G;
 false
 gap> Size(g);
 1141653
 gap> Size(G);
 1141653
-gap> Degree(g);
+gap> ActionDegree(g);
 50
 gap> NrMovedPoints(g);
 47
-gap> Degree(G);
+gap> ActionDegree(G);
 47
 
 # Standard WagnerPreston example
@@ -70,7 +70,7 @@ gap> NrMovedPoints(I5);
 1545
 gap> Size(I5);
 1546
-gap> I5:=SmallerDegreePartialPermRep(I5);;
+gap> I5:=SmallerDegreePartialPermRepresentation(I5);;
 gap> NrMovedPoints(I5);
 5
 gap> Size(I5);
@@ -81,7 +81,7 @@ gap> f1:=PartialPermNC([2,1,4,5,3]);;
 gap> f2:=PartialPermNC([2,1]);;
 gap> f:=InverseSemigroup(f1,f2);
 <inverse semigroup with 2 generators>
-gap> F:=SmallerDegreePartialPermRep(f);;
+gap> F:=SmallerDegreePartialPermRepresentation(f);;
 gap> f=F;
 true
 gap> NrMovedPoints(f);
@@ -94,7 +94,7 @@ gap> f1:=PartialPermNC([2,1,0,0,4]);;
 gap> f2:=PartialPermNC([1,2,3,5]);;
 gap> f:=InverseSemigroup(f1,f2);
 <inverse semigroup with 2 generators>
-gap> F:=SmallerDegreePartialPermRep(f);;
+gap> F:=SmallerDegreePartialPermRepresentation(f);;
 gap> NrMovedPoints(f);
 4
 gap> NrMovedPoints(F);
@@ -109,7 +109,7 @@ gap> f1:=PartialPermNC([2,1,4,5,3,7,6,9,10,8]);;
 gap> f2:=PartialPermNC([2,1,0,0,0,7,6]);;
 gap> f:=InverseSemigroup(f1,f2);
 <inverse semigroup with 2 generators>
-gap> F:=SmallerDegreePartialPermRep(f);;
+gap> F:=SmallerDegreePartialPermRepresentation(f);;
 gap> NrMovedPoints(f);
 10
 gap> NrMovedPoints(F);
@@ -124,14 +124,14 @@ gap> f1:=PartialPermNC([ 1, 2, 3, 4, 5, 6, 10, 11, 15, 16, 17, 18 ], [ 7, 5, 11,
 gap> f2:=PartialPermNC([ 1, 2, 3, 6, 8, 10, 12, 15, 16, 17, 18, 19 ], [ 2, 4, 14, 3, 17, 7, 9, 16, 15, 10, 11, 1 ]);;
 gap> f:=InverseSemigroup(f1,f2);
 <inverse semigroup with 2 generators>
-gap> F:=SmallerDegreePartialPermRep(f);;
+gap> F:=SmallerDegreePartialPermRepresentation(f);;
 gap> NrMovedPoints(f);
 19
 gap> NrMovedPoints(F);
 19
-gap> Degree(f);
+gap> ActionDegree(f);
 20
-gap> Degree(F);
+gap> ActionDegree(F);
 19
 
 # Copied from Citrus

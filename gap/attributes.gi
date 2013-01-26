@@ -1236,22 +1236,24 @@ function(S)
     od;        
   od;
   
-  SmallerDegreeElementMap:=function(S, oldgens, newgens, elt)
+  SmallerDegreeElementMap:=function(S, gens, elt)
 
-    local decomp, newelt, i;
-    
-    decomp:=SemigroupElementSLP(S, elt);
-    newelt:=newgens[decomp[1]];
-    for i in [2..Length(decomp)] do
-      newelt:=newelt*newgens[decomp[i]];
-    od; 
+    local newelt;
+
+    newelt:=
+    ResultOfStraightLineProgram(
+      SemigroupElementSLP(S, elt),
+      gens
+    );
 
     return newelt;
 
   end;
   
-  newgens:=List(newgens, x->PartialPermNC(x));
+  newgens:=List(newgens, x->PartialPermNC(x));  
   T:=InverseSemigroup(newgens);
+  oldgens:=GeneratorsOfSemigroup(S);
+  newgens:=GeneratorsOfSemigroup(T);
   
 	#Check whether work has actually been done
   if NrMovedPoints(T) > NrMovedPoints(S) or (NrMovedPoints(T) = NrMovedPoints(S) and ActionDegree(T) >= ActionDegree(S)) then
@@ -1263,8 +1265,8 @@ function(S)
     return MagmaIsomorphismByFunctionsNC(
       S,
       T,
-      x -> SmallerDegreeElementMap(S, oldgens, newgens, x),
-      x -> SmallerDegreeElementMap(T, newgens, oldgens, x)
+      x -> SmallerDegreeElementMap(S, newgens, x),
+      x -> SmallerDegreeElementMap(T, oldgens, x)
     );
     
   fi;
