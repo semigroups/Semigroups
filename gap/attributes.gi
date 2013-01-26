@@ -794,11 +794,6 @@ InstallMethod(SameMinorantsSubgroup,
 function(h)
 
 	local e, F, f, out, i;
-	
-	if not IsGroupHClass(h) then 
-		Error("usage: the argument should be a group H-class,"); 
-		return;
-	fi;
 
 	e:=Representative(h);
 	F:=[];
@@ -966,6 +961,9 @@ function(S, T)
     Error("The second argument should be a subsemigroup of the first");
     return;
   fi;
+  if not IsMajorantlyClosed(S,T) then
+  	Error("The second argument should be majorantly closed.");
+  fi;
 
   elts:=Elements(T);
   idem:=Representative(MinimalIdeal(T));
@@ -1014,9 +1012,12 @@ function(S, x)
 
   local elts, i, j, k, y, singleline, minorants, minorantpoints;
 
+  if not x in S then
+		Error("The second argument should be a partial permutation within the first argument");
+  fi;
   if IsMultiplicativeZero(S,x) then return false; fi;
 
-  y:=x*x^(-1);
+  y:=LeftOne(x);
     
   elts:=Set(Idempotents(S));;
   i:=Position(elts, y);
