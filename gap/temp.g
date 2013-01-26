@@ -54,10 +54,9 @@ SmallerDegreePartialPermRepLong:= function(S)
   for e in D do
                                 
     ##### Calculate He as a small permutation group #####       
-        H:=GroupHClass(e);
-    trivialse:=HasTrivialSe(H);
-    He:=InverseSemigroup(Elements(H), rec(small:=true));
-        
+    H:=GroupHClass(e);
+    trivialse:=Length(SameMinorantsSubgroup(H))=1;
+    He:=InverseSemigroup(Elements(H), rec(small:=true));    
         
     # If Se is trivial, we have a special simpler case    
     if trivialse then
@@ -67,7 +66,7 @@ SmallerDegreePartialPermRepLong:= function(S)
     else 
         # Approximate the minimal degree of Se in He (by phi & rho)
                 phi:=SameMinorantHomomorphismOfGroupHClass(H);
-                HePhi:=Range(phi);     
+                HePhi:=Image(phi);     
 
                 psi:=IsomorphismPermGroup(HePhi);
                 HePhiPsi:=Range(psi);
@@ -112,9 +111,9 @@ SmallerDegreePartialPermRepLong:= function(S)
       # Generate reps for ALL the cosets that the generator will act on      
       j:=0;
       AllCosetReps:=[];
-      lookup:=EmptyPlist(Length(e!.o));
+      lookup:=EmptyPlist(Length(LambdaOrb(e)));
       for k in [1..Size(h)] do
-        lookup[Position(e!.o, RanSetPP(h[k]))]:= k;
+        lookup[Position(LambdaOrb(e), RanSetPP(h[k]))]:= k;
         for m in [1..Length(HeCosetReps)] do
           j:=j+1;
           AllCosetReps[j]:=HeCosetReps[m]*h[k];
@@ -136,7 +135,7 @@ SmallerDegreePartialPermRepLong:= function(S)
           if not rep*rep^(-1) in Fei then
             Add(newgens[j], 0);
           else
-            box:=lookup[Position(e!.o, RanSetPP(rep))];
+            box:=lookup[Position(LambdaOrb(e), RanSetPP(rep))];
             if trivialse then
               subbox:=1;
             else
@@ -153,7 +152,7 @@ SmallerDegreePartialPermRepLong:= function(S)
   out:=InverseSemigroup(List(newgens, x->PartialPermNC(x)));
 
   # Check whether work has actually been done
-  if NrMovedPoints(out) > NrMovedPoints(S) or (NrMovedPoints(out) = NrMovedPoints(S) and Degree(out) >= Degree(S)) then
+  if NrMovedPoints(out) > NrMovedPoints(S) or (NrMovedPoints(out) = NrMovedPoints(S) and ActionDegree(out) >= ActionDegree(S)) then
     return S;
   else
     return out;
