@@ -1226,14 +1226,20 @@ function(S)
     od;        
   od;
 
-  out:=InverseSemigroup(List(newgens, x->PartialPermNC(x)));
+  #out:=InverseSemigroup(List(newgens, x->PartialPermNC(x)));
+  
+  newgens:=List(newgens, x->PartialPermNC(x));
+  
+  return [oldgens, newgens];
 
   # Check whether work has actually been done
-  if NrMovedPoints(out) > NrMovedPoints(S) or (NrMovedPoints(out) = NrMovedPoints(S) and ActionDegree(out) >= ActionDegree(S)) then
-    return S;
-  else
-    return out;
-  fi;
+  #if NrMovedPoints(out) > NrMovedPoints(S) or (NrMovedPoints(out) = NrMovedPoints(S) and ActionDegree(out) >= ActionDegree(S)) then
+  #  return S;
+  #else
+  #  return out;
+  #fi;
+  
+  SemigroupEltSLP(s, elt);
 
 end);
 
