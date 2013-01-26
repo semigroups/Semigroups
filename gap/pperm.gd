@@ -43,10 +43,8 @@ DeclareAttribute("RankOfPartialPerm", IsPartialPerm);
 DeclareOperation("NaturalLeqPartialPerm", [IsPartialPerm, IsPartialPerm]);
 DeclareOperation("OnIntegerSetsWithPartialPerm", [IsCyclotomicCollection, IsPartialPerm]);
 DeclareOperation("OnIntegerTuplesWithPartialPerm", [IsCyclotomicCollection, IsPartialPerm]);
-DeclareOperation("RestrictedPartialPermNC", [IsPartialPerm, IsList and
-IsCyclotomicCollection]);
-DeclareOperation("RestrictedPartialPerm", [IsPartialPerm, IsList and
-IsCyclotomicCollection]);
+DeclareOperation("RestrictedPartialPermNC", [IsPartialPerm, IsList]);
+DeclareOperation("RestrictedPartialPerm", [IsPartialPerm, IsList]);
 
 DeclareGlobalFunction("PartialPermOp");
 DeclareGlobalFunction("PartialPermAction");

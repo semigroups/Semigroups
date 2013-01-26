@@ -323,14 +323,13 @@ function(s, f)
   return fail;
 end);
 
-#
+#JDM check this works...
 
 InstallMethod(InversesOfSemigroupElementNC, 
 "for an acting semigroup and acting elt",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(s, f)
-  local regular, rank_f, lambda, rhorank, tester, j, o, rhos, grades, rho_f,
-   lambdarank, creator, inv, out, k, g, rho, i, x;
+  local regular, rank_f, lambda, rhorank, tester, j, o, rhos, opts, grades, rho_f, lambdarank, creator, inv, out, k, g, rho, name, i, x;
 
   regular:=IsRegularSemigroup(s);
 
@@ -356,13 +355,19 @@ function(s, f)
       fi;
     od;
   else
-    o:=Orb(s, RhoOrbSeed(s), RhoAct(s),
-      rec(  forflatplainlists:=true, #JDM probably don't want to assume this..
-            treehashsize:=SemigroupsOptionsRec.hashlen.M,
-            gradingfunc:=function(o, x) return rhorank(x); end,
-            onlygrades:=function(x, y) return x>=rank_f; end,
-            onlygradesdata:=fail));
+      
+    opts:=rec(  treehashsize:=s!.opts.hashlen.M, 
+                gradingfunc:=function(o, x) return rhorank(x); end,
+                onlygrades:=function(x, y) return x>=rank_f; end,
+                onlygradesdata:=fail ); #shouldn't this be fail
+    
+    for name in RecNames(LambdaOrbOpts(s)) do
+      opts.(name):=LambdaOrbOpts(s).(name);
+    od;
+
+    o:=Orb(s, RhoOrbSeed(s), RhoAct(s), opts);
     Enumerate(o, infinity);
+    
     grades:=Grades(o);
     rhos:=EmptyPlist(Length(o));
     for i in [2..Length(o)] do 
@@ -395,14 +400,18 @@ function(s, f)
       fi;
     od;
   else
-    o:=Orb(s, LambdaOrbSeed(s), LambdaAct(s),
-      rec(  forflatplainlists:=true, #JDM probably don't want to assume this..
-            treehashsize:=SemigroupsOptionsRec.hashlen.M,
-            gradingfunc:=function(o, x) return lambdarank(x); end,
-            onlygrades:=function(x, y) return x>=rank_f; end,
-            onlygradesdata:=fail));
-    Enumerate(o, infinity);
+     opts:=rec(  treehashsize:=s!.opts.hashlen.M, 
+                gradingfunc:=function(o, x) return lambdarank(x); end,
+                onlygrades:=function(x, y) return x>=rank_f; end,
+                onlygradesdata:=fail ); #shouldn't this be fail
+    
+    for name in RecNames(LambdaOrbOpts(s)) do
+      opts.(name):=LambdaOrbOpts(s).(name);
+    od;
+
+    o:=Orb(s, LambdaOrbSeed(s), LambdaAct(s), opts);
     grades:=Grades(o);
+    
     for x in o do
       if grades[i]=rank_f and tester(x, rho_f) then
         for rho in rhos do
@@ -517,7 +526,7 @@ end);
 
 #JDM better if this returned an actual semigroup ideal!!
 
-InstallMethod(MinimalIdeal, "for a transformation semigroup", 
+InstallMethod(MinimalIdeal, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local rank, o, pos, min, len, m, f, i, n;
@@ -1227,22 +1236,24 @@ function(S)
     od;        
   od;
   
-  SmallerDegreeElementMap:=function(S, oldgens, newgens, elt)
+  SmallerDegreeElementMap:=function(S, gens, elt)
 
-    local decomp, newelt, i;
-    
-    decomp:=SemigroupElementSLP(S, elt);
-    newelt:=newgens[decomp[1]];
-    for i in [2..Length(decomp)] do
-      newelt:=newelt*newgens[decomp[i]];
-    od; 
+    local newelt;
+
+    newelt:=
+    ResultOfStraightLineProgram(
+      SemigroupElementSLP(S, elt),
+      gens
+    );
 
     return newelt;
 
   end;
   
-  newgens:=List(newgens, x->PartialPermNC(x));
+  newgens:=List(newgens, x->PartialPermNC(x));  
   T:=InverseSemigroup(newgens);
+  oldgens:=GeneratorsOfSemigroup(S);
+  newgens:=GeneratorsOfSemigroup(T);
   
 	#Check whether work has actually been done
   if NrMovedPoints(T) > NrMovedPoints(S) or (NrMovedPoints(T) = NrMovedPoints(S) and ActionDegree(T) >= ActionDegree(S)) then
@@ -1254,8 +1265,8 @@ function(S)
     return MagmaIsomorphismByFunctionsNC(
       S,
       T,
-      x -> SmallerDegreeElementMap(S, oldgens, newgens, x),
-      x -> SmallerDegreeElementMap(T, newgens, oldgens, x)
+      x -> SmallerDegreeElementMap(S, newgens, x),
+      x -> SmallerDegreeElementMap(T, oldgens, x)
     );
     
   fi;
