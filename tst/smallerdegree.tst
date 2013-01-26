@@ -119,7 +119,7 @@ gap> V:=InverseSemigroup(H1,H2,h);
 <inverse partial perm semigroup of degree 122 with 241 generators>
 gap> SmallerDegreePartialPermRepresentation(V);
 MappingByFunction( <inverse partial perm semigroup of degree 122 with 
-241 generators>, <inverse partial perm semigroup of degree 22 with 
+241 generators>, <inverse partial perm semigroup of degree 17 with 
 241 generators>, function( x ) ... end, function( x ) ... end )
 
 #gap> time;
