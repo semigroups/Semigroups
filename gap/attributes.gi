@@ -323,14 +323,13 @@ function(s, f)
   return fail;
 end);
 
-#
+#JDM check this works...
 
 InstallMethod(InversesOfSemigroupElementNC, 
 "for an acting semigroup and acting elt",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(s, f)
-  local regular, rank_f, lambda, rhorank, tester, j, o, rhos, grades, rho_f,
-   lambdarank, creator, inv, out, k, g, rho, i, x;
+  local regular, rank_f, lambda, rhorank, tester, j, o, rhos, opts, grades, rho_f, lambdarank, creator, inv, out, k, g, rho, name, i, x;
 
   regular:=IsRegularSemigroup(s);
 
@@ -356,13 +355,19 @@ function(s, f)
       fi;
     od;
   else
-    o:=Orb(s, RhoOrbSeed(s), RhoAct(s),
-      rec(  forflatplainlists:=true, #JDM probably don't want to assume this..
-            treehashsize:=SemigroupsOptionsRec.hashlen.M,
-            gradingfunc:=function(o, x) return rhorank(x); end,
-            onlygrades:=function(x, y) return x>=rank_f; end,
-            onlygradesdata:=fail));
+      
+    opts:=rec(  treehashsize:=s!.opts.hashlen.M, 
+                gradingfunc:=function(o, x) return rhorank(x); end,
+                onlygrades:=function(x, y) return x>=rank_f; end,
+                onlygradesdata:=fail ); #shouldn't this be fail
+    
+    for name in RecNames(LambdaOrbOpts(s)) do
+      opts.(name):=LambdaOrbOpts(s).(name);
+    od;
+
+    o:=Orb(s, RhoOrbSeed(s), RhoAct(s), opts);
     Enumerate(o, infinity);
+    
     grades:=Grades(o);
     rhos:=EmptyPlist(Length(o));
     for i in [2..Length(o)] do 
@@ -395,14 +400,18 @@ function(s, f)
       fi;
     od;
   else
-    o:=Orb(s, LambdaOrbSeed(s), LambdaAct(s),
-      rec(  forflatplainlists:=true, #JDM probably don't want to assume this..
-            treehashsize:=SemigroupsOptionsRec.hashlen.M,
-            gradingfunc:=function(o, x) return lambdarank(x); end,
-            onlygrades:=function(x, y) return x>=rank_f; end,
-            onlygradesdata:=fail));
-    Enumerate(o, infinity);
+     opts:=rec(  treehashsize:=s!.opts.hashlen.M, 
+                gradingfunc:=function(o, x) return lambdarank(x); end,
+                onlygrades:=function(x, y) return x>=rank_f; end,
+                onlygradesdata:=fail ); #shouldn't this be fail
+    
+    for name in RecNames(LambdaOrbOpts(s)) do
+      opts.(name):=LambdaOrbOpts(s).(name);
+    od;
+
+    o:=Orb(s, LambdaOrbSeed(s), LambdaAct(s), opts);
     grades:=Grades(o);
+    
     for x in o do
       if grades[i]=rank_f and tester(x, rho_f) then
         for rho in rhos do
@@ -517,7 +526,7 @@ end);
 
 #JDM better if this returned an actual semigroup ideal!!
 
-InstallMethod(MinimalIdeal, "for a transformation semigroup", 
+InstallMethod(MinimalIdeal, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local rank, o, pos, min, len, m, f, i, n;
@@ -1122,15 +1131,16 @@ end);
 
 #
 
-InstallMethod(SmallerDegreePartialPermRep, 
+InstallMethod(SmallerDegreePartialPermRepresentation, 
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
 
-  local out, D, e, h, i, j, k, m, lookup, box, subbox,
+  local out, D, T, e, h, i, j, k, m, lookup, box, subbox,
         Fei, He, Se, sigma, sigmainv, FeiSigma, HeSigma, rho, rhoinv, HeSigmaRho,
         oldgens, newgens, gen, offset,
-        orbits, cosets, HeCosetReps, HeCosetRepsSigma, AllCosetReps, rep, numcosets, CosetsInHe, trivialse;
+        orbits, cosets, HeCosetReps, HeCosetRepsSigma, AllCosetReps, rep, numcosets, CosetsInHe, trivialse,
+        SmallerDegreeElementMap;
         
   out:=[];
   oldgens:=Generators(S);
@@ -1225,23 +1235,44 @@ function(S)
       od; 
     od;        
   od;
-
-  #out:=InverseSemigroup(List(newgens, x->PartialPermNC(x)));
   
-  newgens:=List(newgens, x->PartialPermNC(x));
-  
-  return [oldgens, newgens];
+  SmallerDegreeElementMap:=function(S, gens, elt)
 
-  # Check whether work has actually been done
-  #if NrMovedPoints(out) > NrMovedPoints(S) or (NrMovedPoints(out) = NrMovedPoints(S) and ActionDegree(out) >= ActionDegree(S)) then
-  #  return S;
-  #else
-  #  return out;
-  #fi;
-  
-  SemigroupEltSLP(s, elt);
+    local newelt;
 
+    newelt:=
+    ResultOfStraightLineProgram(
+      SemigroupElementSLP(S, elt),
+      gens
+    );
+
+    return newelt;
+
+  end;
+  
+  newgens:=List(newgens, x->PartialPermNC(x));  
+  T:=InverseSemigroup(newgens);
+  oldgens:=GeneratorsOfSemigroup(S);
+  newgens:=GeneratorsOfSemigroup(T);
+  
+	#Check whether work has actually been done
+  if NrMovedPoints(T) > NrMovedPoints(S) or (NrMovedPoints(T) = NrMovedPoints(S) and ActionDegree(T) >= ActionDegree(S)) then
+    
+    return MagmaIsomorphismByFunctionsNC(S, S, x -> x, x -> x);
+    
+  else
+    
+    return MagmaIsomorphismByFunctionsNC(
+      S,
+      T,
+      x -> SmallerDegreeElementMap(S, newgens, x),
+      x -> SmallerDegreeElementMap(T, oldgens, x)
+    );
+    
+  fi;
+  
 end);
 
+#
 
 #EOF
