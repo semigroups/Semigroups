@@ -4,7 +4,7 @@
 #
 #############################################################################
 
-gap> START_TEST("Smaller: smallerdegree.tst");
+gap> START_TEST("Semigroups package: smallerdegree.tst");
 gap> LoadPackage("semigroups", false);;
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
 gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
@@ -122,9 +122,9 @@ gap> SmallerDegreePartialPermRepresentation(V);
 MappingByFunction( <inverse partial perm semigroup of degree 122 with 
 241 generators>, <inverse partial perm semigroup of degree 22 with 
 241 generators>, function( x ) ... end, function( x ) ... end )
-gap> time;
-6627
 
+#gap> time;
+#6627
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
