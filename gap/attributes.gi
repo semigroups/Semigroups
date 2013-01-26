@@ -1154,7 +1154,9 @@ function(S)
     ##### Calculate He as a small permutation group #####
     He:=GroupHClass(e);
     trivialse:=Length(SameMinorantsSubgroup(He))=1;
-    He:=InverseSemigroup(Elements(He), rec(small:=true));
+    # Uncomment out this line when issue 18 is fixed
+    #He:=InverseSemigroup(Elements(He), rec(small:=true));
+    He:=InverseSemigroup(Elements(He));
 
     sigma:=IsomorphismPermGroup(He);
     sigmainv:=InverseGeneralMapping(sigma);
@@ -1235,21 +1237,7 @@ function(S)
       od; 
     od;        
   od;
-  
-  SmallerDegreeElementMap:=function(S, gens, elt)
-
-    local newelt;
-
-    newelt:=
-    ResultOfStraightLineProgram(
-      SemigroupElementSLP(S, elt),
-      gens
-    );
-
-    return newelt;
-
-  end;
-  
+    
   newgens:=List(newgens, x->PartialPermNC(x));  
   T:=InverseSemigroup(newgens);
   oldgens:=GeneratorsOfSemigroup(S);
@@ -1265,8 +1253,8 @@ function(S)
     return MagmaIsomorphismByFunctionsNC(
       S,
       T,
-      x -> SmallerDegreeElementMap(S, newgens, x),
-      x -> SmallerDegreeElementMap(T, oldgens, x)
+      x -> ResultOfStraightLineProgram(SemigroupElementSLP(S, x), newgens),
+      x -> ResultOfStraightLineProgram(SemigroupElementSLP(T, x), oldgens)
     );
     
   fi;
