@@ -79,7 +79,7 @@
     <#Include Label="SmallGeneratingSet"> 
     <#Include Label="GradedImagesOfTransSemigroup">
     <#Include Label="ImagesOfTransSemigroup">
-    <#Include Label="WagnerPrestonRepresentation">
+    <#Include Label="VagnerPrestonRepresentation">
     <#Include Label="ReverseNaturalPartialOrder">
     <#Include Label="IsMajorantlyClosed">
     <#Include Label="MajorantClosure">
