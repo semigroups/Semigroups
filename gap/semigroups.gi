@@ -15,7 +15,6 @@
 # type:     transformation
 # name:     monoid
 
-
 InstallMethod(ViewObj, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], 10,
 function(s)
@@ -688,7 +687,7 @@ function(gens, coll, record)
     
     closure_opts:=rec(small:=false, hashlen:=record.hashlen);
     s:=InverseSemigroup(coll[1], closure_opts);
-    
+    Error(); 
     for f in coll do
       if not f in s then 
         s:=ClosureInverseSemigroupNC(s, [f], closure_opts);
@@ -778,13 +777,12 @@ function(s, coll, record)
    Concatenation(Generators(s), coll), record);
 
   #remove everything related to strongly connected components
- Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
-   Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse);
-     Unbind(o!.rev); Unbind(o!.truth); Unbind(o!.schutzstab); Unbind(o!.slp);
+  Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
+  Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse);
+  Unbind(o!.rev); Unbind(o!.truth); Unbind(o!.schutzstab); Unbind(o!.slp);
 
-       o!.semi:=t;
-         o!.scc_reps:=[One(Generators(t))];
-
+  o!.semi:=t;
+  o!.scc_reps:=[One(Generators(t))];
   
   SetLambdaOrb(t, o);
   return t;

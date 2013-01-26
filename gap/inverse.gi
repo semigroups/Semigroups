@@ -94,17 +94,9 @@ function(f, s)
   if rho_l=fail then
     return false;
   fi;
- 
-  if not IsClosed(o) then 
-    o:=GradedLambdaOrb(s, f, false);
-    Enumerate(o, infinity);
-    rho_l:=Position(o, rho);
-    if rho_l=fail then 
-      return false;
-    fi;
-    lambda_l:=1;
-  fi;
 
+  # must use LambdaOrb(s) and not a graded lambda orb as LambdaOrbRep(o, m) when
+  # o is graded, is just f and hence \in will always return true!!
   m:=OrbSCCLookup(o)[lambda_l];
 
   if OrbSCCLookup(o)[rho_l]<>m then

@@ -635,7 +635,9 @@ function(s, f, opt)
     end;
     onlygradesdata:=fail;
   fi;  
- 
+
+  #JDM properly use LambdaOrbOpts here
+
   o:=Orb(s, lambda, LambdaAct(s),
       rec(
         semi:=s,
