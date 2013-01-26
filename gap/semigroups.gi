@@ -687,7 +687,6 @@ function(gens, coll, record)
     
     closure_opts:=rec(small:=false, hashlen:=record.hashlen);
     s:=InverseSemigroup(coll[1], closure_opts);
-    Error(); 
     for f in coll do
       if not f in s then 
         s:=ClosureInverseSemigroupNC(s, [f], closure_opts);
