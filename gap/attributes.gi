@@ -1188,9 +1188,9 @@ function(S)
       # Generate reps for ALL the cosets that the generator will act on      
       j:=0;
       AllCosetReps:=[];
-      lookup:=EmptyPlist(Length(e!.o));
+      lookup:=EmptyPlist(Length(LambdaOrb(e)));
       for k in [1..Size(h)] do
-        lookup[Position(e!.o, RanSetPP(h[k]))]:= k;
+        lookup[Position(LambdaOrb(e), RanSetPP(h[k]))]:= k;
         for m in [1..Length(HeCosetReps)] do
           j:=j+1;
           AllCosetReps[j]:=HeCosetReps[m]*h[k];
@@ -1212,7 +1212,7 @@ function(S)
           if not rep*rep^(-1) in Fei then
             Add(newgens[j], 0);
           else
-            box:=lookup[Position(e!.o, RanSetPP(rep))];
+            box:=lookup[Position(LambdaOrb(e), RanSetPP(rep))];
             if trivialse then
               subbox:=1;
             else
