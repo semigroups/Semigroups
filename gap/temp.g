@@ -39,91 +39,91 @@ end;
 ############ A modification of earlier function which is more successful in returning smaller and sometimes minimal degrees #################
 ### Needs optimised in terms of speed. Hopefully no big bugs left. ###
 
-SmallerDegreePartialPermRepLong:= function(S)
 
-  local out, D, e, h, i, j, k, m, lookup, box, subbox,
-        H, Fei, He, Se, sigma, HeSigma, FeiSigma, sigmainv, phi, HePhi, psi, HePhiPsi, rho, HePhiPsiRho, phipsirhoinv,
+  local out, D, T, e, h, i, j, k, m, lookup, box, subbox,
+        Fei, He, Se, sigma, sigmainv, FeiSigma, HeSigma, rho, rhoinv,           HeSigmaRho, psi, HePhiPsi, HePhiPsiRho, phipsirhoinv,
         oldgens, newgens, gen, offset,
-        orbits, cosets, HeCosetReps, HeCosetRepsSigma, AllCosetReps, rep, numcosets, CosetsInHe, trivialse;
-        
+        orbits, cosets, HeCosetReps, HeCosetRepsSigma, AllCosetReps, rep,       numcosets, CosetsInHe, trivialse,
+        SmallerDegreeElementMap;
+
   out:=[];
   oldgens:=Generators(S);
   newgens:=[];
   for i in [1..Length(oldgens)] do newgens[i]:=[]; od;
-  
+
   D:=JoinIrreducibleDClasses(S);
 
   for e in D do
-                                
-    ##### Calculate He as a small permutation group #####       
-        H:=GroupHClass(e);
-    trivialse:=HasTrivialSe(H);
-    He:=InverseSemigroup(Elements(H), rec(small:=true));
-        
-        
+
+    ##### Calculate He as a small permutation group #####
+    H:=GroupHClass(e);
+    trivialse:=Length(SameMinorantsSubgroup(He))=1;
+    # Uncomment out this line when issue 18 is fixed
+    #He:=InverseSemigroup(Elements(H), rec(small:=true));
+    He:=InverseSemigroup(Elements(H));
+
     # If Se is trivial, we have a special simpler case    
     if trivialse then
-      orbits:=[[1]];
+      orbits:=[[ActionDegree(He)+1]];
       HeCosetReps:=[Representative(e)];
       Fei:=He;
-    else 
-        # Approximate the minimal degree of Se in He (by phi & rho)
-                phi:=SameMinorantHomomorphismOfGroupHClass(H);
-                #In the following Image is different from Range!
-                HePhi:=Image(phi);     
+    else
+      # Approximate the minimal degree of Se in He
+      phi:=SameMinorantHomomorphismOfGroupHClass(H);
+      #In the following Image is different from Range!
+      HePhi:=Image(phi);
+      #Image not an inverse semigroup
+      HePhi:=InverseSemigroup(HePhi);
 
-                psi:=IsomorphismPermGroup(HePhi);
-                HePhiPsi:=Range(psi);
-                
-                rho:=SmallerDegreePermutationRepresentation(HePhiPsi);
-                HePhiPsiRho:=Range(rho);     
+      psi:=IsomorphismPermGroup(HePhi);
+      HePhiPsi:=Range(psi);
 
-                phipsirhoinv:=InverseGeneralMapping(phi*psi*rho);
+:=SmallerDegreePermutationRepresentation(HePhiPsi);
+      HePhiPsiRho:=Range(rho);
 
-                orbits:=Orbits(HePhiPsiRho);
+      phipsirhoinv:=InverseGeneralMapping(phi*psi*rho);
 
-        fi;
+      orbits:=Orbits(HePhiPsiRho);
+
+    fi;
 
     for i in orbits do
-    
-      if not trivialse then
 
+      if not trivialse then
         # Generate Fei
-        Fei:=ImagesSet(phipsirhoinv, Stabiliser(HePhiPsiRho,i[1]));
-                
+        Fei:=ImagesSet(phipsirhoinv, Stabiliser(HePhiPsiRho, i[1]));
+
         # Generate reps for the cosets of Fei in He
-                sigma:=IsomorphismPermGroup(He);
-                sigmainv:=InverseGeneralMapping(sigma);
-                HeSigma:=Range(sigma);
+        sigma:=IsomorphismPermGroup(He);
+        sigmainv:=InverseGeneralMapping(sigma);
+        HeSigma:=Range(sigma);
         FeiSigma:=ImagesSet(sigma, Fei);
-                # Turn FeiSigma into a group to avoid RightTransversal failures. This method can perhaps be improved
-                FeiSigma:=Group(FeiSigma);
-                
+
         HeCosetRepsSigma:=RightTransversal(HeSigma, FeiSigma);
         HeCosetReps:=[];
         for j in [1..Size(HeCosetRepsSigma)] do
           Add(HeCosetReps, HeCosetRepsSigma[j]^sigmainv);
         od;
-      
-      fi; 
+
+      fi;
 
       # Generate reps for the HClasses in the RClass of e
       h:=HClassReps( RClassNC(e, Representative(e)) );
       CosetsInHe:=Length(HeCosetReps);
       numcosets:=Size(h)*CosetsInHe;
-      
+
       # Generate reps for ALL the cosets that the generator will act on      
       j:=0;
       AllCosetReps:=[];
-      lookup:=EmptyPlist(Length(e!.o));
+      lookup:=EmptyPlist(Length(LambdaOrb(e)));
       for k in [1..Size(h)] do
-        lookup[Position(e!.o, RanSetPP(h[k]))]:= k;
+        lookup[Position(LambdaOrb(e), RanSetPP(h[k]))]:= k;
         for m in [1..Length(HeCosetReps)] do
           j:=j+1;
           AllCosetReps[j]:=HeCosetReps[m]*h[k];
         od;
       od;
-                        
+
       # Loop over the old generators of S to find action on cosets
       for j in [1..Length(oldgens)] do
 
@@ -139,27 +139,40 @@ SmallerDegreePartialPermRepLong:= function(S)
           if not rep*rep^(-1) in Fei then
             Add(newgens[j], 0);
           else
-            box:=lookup[Position(e!.o, RanSetPP(rep))];
+            box:=lookup[Position(LambdaOrb(e), RanSetPP(rep))];
             if trivialse then
               subbox:=1;
             else
-              subbox:=PositionCanonical(HeCosetRepsSigma, (rep*h[box]^(-1))^sigma);
+              subbox:=PositionCanonical(HeCosetRepsSigma, (rep*h[box]^(-        1))^sigma);
             fi;
-            Add(newgens[j], (box-1)*CosetsInHe+subbox+offset);  
+            Add(newgens[j], (box-1)*CosetsInHe+subbox+offset);
           fi;
-
-        od;                                                                             
-      od; 
-    od;        
+od;
+      od;
+    od;
   od;
 
-  out:=InverseSemigroup(List(newgens, x->PartialPermNC(x)));
+  newgens:=List(newgens, x->PartialPermNC(x));
+  T:=InverseSemigroup(newgens);
+  oldgens:=GeneratorsOfSemigroup(S);
+  newgens:=GeneratorsOfSemigroup(T);
 
-  # Check whether work has actually been done
-  if NrMovedPoints(out) > NrMovedPoints(S) or (NrMovedPoints(out) = NrMovedPoints(S) and Degree(out) >= Degree(S)) then
-    return S;
+        #Check whether work has actually been done
+  if NrMovedPoints(T) > NrMovedPoints(S) or (NrMovedPoints(T) =                 NrMovedPoints(S) and ActionDegree(T) >= ActionDegree(S)) then
+
+    return MagmaIsomorphismByFunctionsNC(S, S, x -> x, x -> x);
+
   else
-    return out;
+
+    return MagmaIsomorphismByFunctionsNC(
+      S,
+      T,
+      x -> ResultOfStraightLineProgram(SemigroupElementSLP(S, x), newgens),
+      x -> ResultOfStraightLineProgram(SemigroupElementSLP(T, x), oldgens)
+    );
+
   fi;
 
 end;
+
+
