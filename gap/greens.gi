@@ -1058,7 +1058,7 @@ end);
 InstallOtherMethod(GroupHClass, "for a D-class of an acting semigp.",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local s, rho, o, scc, tester, i;
+  local s, rho, o, scc, tester, h, i;
 
   if HasIsRegularClass(d) and not IsRegularClass(d) then 
     return fail;
@@ -1075,8 +1075,10 @@ function(d)
       if not HasIsRegularClass(d) then 
         SetIsRegularClass(d, true);
       fi;
-      return CreateHClass(s, LambdaOrbSCCIndex(d), o, RhoOrbSCCIndex(d),
+      h:=CreateHClass(s, LambdaOrbSCCIndex(d), o, RhoOrbSCCIndex(d),
        RhoOrb(d), IdempotentCreator(s)(o[i], rho), IsGreensClassNC(d));
+      SetIsGroupHClass(h, true);
+      return h;
     fi;
   od;
 
