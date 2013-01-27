@@ -1508,16 +1508,16 @@ gap> PrimitiveIdempotents(S);
   </Returns>
   <Description>
     <C>VagnerPrestonRepresentation</C> returns an isomorphism from the inverse
-    semigroup <A>S</A> to the inverse semigroup <C>T</C> of 
-    partial permutations of degree equal to the size of <A>S</A>, which is
-    obtained using the Vagner-Preston Representation Theorem. <P/>
+    semigroup <A>S</A> to the inverse semigroup of 
+    partial permutations <C>T</C> of degree equal to the size of <A>S</A>,
+    which is obtained using the Vagner-Preston Representation Theorem. <P/>
 
     More precisely, if <M>f:S\to T</M> is the isomorphism returned by
     <C>VagnerPrestonRepresentation(<A>S</A>)</C> and <M>x</M> is in <A>S</A>,
     then <M>f(x)</M> is the partial permutation with domain <M>Sx^{-1}</M> and
     range <M>Sx^{-1}x</M> defined by <M>f(x): sx^{-1}\mapsto sx^{-1}x</M>. <P/> 
 
-    In many cases, it is possible to find smaller degree representations than
+    In many cases, it is possible to find a smaller degree representation than
     that provided by <C>VagnerPrestonRepresentation</C> using 
     <Ref Attr="IsomorphismPartialPermSemigroup"/> or 
     <Ref Attr="SmallerDegreePartialPermRepresentation"/>.
