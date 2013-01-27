@@ -757,33 +757,40 @@ function(s)
    AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
 end);
 
-
 ### Start of Summer School Stuff ###
 
+#InstallMethod(SemigroupIsomorphismByImages, 
+#"for an acting semigroup, semigroup, and list of images of generators",
+#[IsActingSemigroup and HasGeneratorsOfSemigroup, IsSemigroup, IsList],
+#end);
 
 InstallMethod(VagnerPrestonRepresentation, 
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
+  local gens, elts, out, iso, T, inv, i;
 
-  local gens, elts, out, dom, ran, x;
-
-  gens:=Generators(S);
+  gens:=GeneratorsOfInverseSemigroup(S);
   elts:=Elements(S);
   out:=EmptyPlist(Length(gens));
-  
-  for x in gens do
-
+ 
+  iso:=function(x)
+    local dom;
     dom:=Set(elts*(x^-1));
-    ran:=List(dom, y-> y*x);
-
-    Add(out, PartialPermNC(List(dom, y-> Position(elts, y)), List(ran, y->
-    Position(elts, y))));
-    
+    return PartialPermNC(List(dom, y-> Position(elts, y)), 
+     List(List(dom, y-> y*x), y-> Position(elts, y)));
+  end;
+  
+  for i in [1..Length(gens)] do
+    out[i]:=iso(gens[i]);
   od;
 
-  return InverseSemigroup(out);
+  T:=InverseSemigroup(out);
 
+  inv:=x-> ResultOfStraightLineProgram(SemigroupElementSLP(T, x),
+     GeneratorsOfSemigroup(S));
+
+  return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
 
 #
