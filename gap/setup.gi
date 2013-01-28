@@ -46,6 +46,7 @@ InstallMethod(ActionRank, "for a transformation",
 InstallMethod(ActionRank, "for a partial perm",
 [IsPartialPerm], x-> x[2]);
 
+#JDM this is not correct, it should be LambdaRank(s)(LeftSignedPartition(x))
 InstallMethod(ActionRank, "for a bipartition",
 [IsBipartition], x-> x[2]);
 
@@ -54,10 +55,10 @@ InstallMethod(ActionRank, "for a bipartition",
 InstallMethod(MinActionRank, "for a transformation semigroup",
 [IsTransformationSemigroup], x-> 1);
 
-InstallMethod(MinActionRank, "for a transformation semigroup",
+InstallMethod(MinActionRank, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x-> 0);
 
-InstallMethod(MinActionRank, "for a transformation semigroup",
+InstallMethod(MinActionRank, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> 0);
 
 # options passed to LambdaOrb(s) when it is created
@@ -184,24 +185,6 @@ InstallMethod(LambdaInverse, "for a bipartition",
 
 InstallMethod(RhoInverse, "for a transformation semi",
 [IsTransformationSemigroup], s-> INV_KER_TRANS);
-#  function(ker, f)
-#    local g, n, m, lookup, i, j;
-#  
-#    g:=ker{IMAGE_TRANS(f)};
-#    n:=DegreeOfTransformation(f); 
-#    m:=MaximumList(ker);
-#    lookup:=EmptyPlist(n);
-#    
-#    i:=0; j:=0;
-#    repeat 
-#      i:=i+1;
-#      if not IsBound(lookup[g[i]]) then 
-#        lookup[g[i]]:=i;
-#        j:=j+1;
-#      fi;
-#    until j=m;
-#    return TransformationNC(List([1..n], i-> lookup[ker[i]]));
-#  end);
 
 InstallMethod(RhoInverse, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> 
