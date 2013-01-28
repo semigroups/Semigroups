@@ -131,11 +131,11 @@ InstallMethod(RhoOrbSeed, "for a bipartition semi",
 InstallMethod(LambdaFunc, "for a transformation semigroup",
 [IsTransformationSemigroup], x-> IMAGE_SET_TRANS);
 
-InstallMethod(LambdaFunc, "for a bipartition semigroup",
-[IsBipartitionSemigroup], x-> RightSignedPartition);
-
 InstallMethod(LambdaFunc, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x-> RanSetPP);
+
+InstallMethod(LambdaFunc, "for a bipartition semigroup",
+[IsBipartitionSemigroup], x-> RightSignedPartition);
 
 InstallMethod(RhoFunc, "for a trans semi",
 [IsTransformationSemigroup], x-> FLAT_KERNEL_TRANS);
