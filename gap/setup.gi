@@ -46,9 +46,8 @@ InstallMethod(ActionRank, "for a transformation",
 InstallMethod(ActionRank, "for a partial perm",
 [IsPartialPerm], x-> x[2]);
 
-#JDM this is not correct, it should be LambdaRank(s)(LeftSignedPartition(x))
 InstallMethod(ActionRank, "for a bipartition",
-[IsBipartition], x-> x[2]);
+[IsBipartition], x-> LambdaRank(s)(LeftSignedPartition(x)));
 
 # the minimum possible rank of an element
 
@@ -238,6 +237,12 @@ InstallMethod(LambdaConjugator, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> 
 function(f, g)
   return MappingPermListList(RanPP(f), RanPP(g));
+end);
+
+InstallMethod(LambdaConjugator, "for a bipartition semigroup",
+[IsBipartitionSemigroup], s-> 
+function(f, g)
+
 end);
 
 # the function used to test if there is an idempotent with the specified 
