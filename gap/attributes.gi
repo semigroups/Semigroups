@@ -1186,7 +1186,7 @@ function(S)
       if not trivialse then
 
         # Generate Fei
-        FeiSigma:=ImagesSet(rhoinv, Stabiliser(HeSigmaRho, i[1]));
+        FeiSigma:=ImagesSet(rhoinv, Stabilizer(HeSigmaRho, i[1]));
         Fei:=ImagesSet(sigmainv, FeiSigma);
 
         # Generate reps for the cosets of Fei in He
