@@ -759,11 +759,6 @@ end);
 
 ### Start of Summer School Stuff ###
 
-#InstallMethod(SemigroupIsomorphismByImages, 
-#"for an acting semigroup, semigroup, and list of images of generators",
-#[IsActingSemigroup and HasGeneratorsOfSemigroup, IsSemigroup, IsList],
-#end);
-
 InstallMethod(VagnerPrestonRepresentation, 
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
@@ -799,31 +794,29 @@ InstallMethod(SameMinorantsSubgroup,
 "for a group H-class of an inverse semigroup of partial perms",
 [IsGroupHClass],
 function(h)
+  local e, F, out, f, i;
 
-	local e, F, f, out, i;
 
-	e:=Representative(h);
-	F:=[];
-	
-	# Find the minorants of e
-	for f in Idempotents(ParentSemigroup(h)) do
-		if NaturalLeqPP(f, e) and f<>e then
-			Add(F, f);
+  e:=Representative(h);
+  F:=[];
+
+  # Find the minorants of e
+  for f in Idempotents(ParentSemigroup(h)) do
+    if NaturalLeqPP(f, e) and f<>e then
+      Add(F, f);
     fi;
-	od;
+  od;
 
-	h:=Elements(h);
-	out:=[e];
+  h:=Elements(h);
+  out:=[e];
 
-	# Check which elements of He share the same minorants as e	
-	for i in [2..Length(h)] do
-		if ForAll(F, f-> NaturalLeqPP(f, h[i])) then 
-    	Add(out, h[i]);
+  # Check which elements of He share the same minorants as e	
+  for i in [2..Length(h)] do
+    if ForAll(F, f-> NaturalLeqPP(f, h[i])) then 
+      Add(out, h[i]);
     fi;
-	od;
-
-	return out;
-
+  od;
+  return out;
 end);
 
 #
