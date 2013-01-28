@@ -759,68 +759,10 @@ end);
 
 ### Start of Summer School Stuff ###
 
-InstallMethod(SemigroupHomomorphismByImagesNC, 
-"for an acting semigroup, semigroup, and list of images of generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsSemigroup, IsList],
-function(s, t, list)
-  
-  if Length(list)<>Length(GeneratorsOfSemigroup(s)) then 
-    Error("the 3rd argument should have length equal to the number of ",   
-      "generators of the 1st argument,");
-    return;
-  fi;
-
-  return MagmaHomorphismByFunctionNC(s, t, x->
-   ResultOfStraightLineProgram(SemigroupElementSLP(s, x), list));
-end);
-
-#
-
-InstallMethod(SemigroupIsomomorphismByFuncNC, 
-"for an acting semigroup, semigroup, list, function",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsSemigroup, IsList, IsFunction],
-function(s, t, list, inv)
-  
-  if Length(list)<>Length(GeneratorsOfSemigroup(s)) then 
-    Error("the 3rd argument should have length equal to the number of ",
-     "generators of the 1st argument,");
-   return;
-  fi;
-
-  return MagmaIsomorphismByFunctionsNC(s, t, x->
-  ResultOfStraightLineProgram(SemigroupElementSLP(s, x), list), inv);
-end); 
-
-#
-
-InstallMethod(SemigroupIsomomorphismByFuncNC, 
-"for semigroup, for acting semigroup with generators, function, list",
-[IsSemigroup, IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction,
-IsList],
-function(s, t, iso)
-  
-  if Length(list)<>Length(GeneratorsOfSemigroup(s)) then 
-    Error("the 4th argument should have length equal to the number of ",
-     "generators of the 1st argument,");
-   return;
-  fi;
-
-  return MagmaIsomorphismByFunctionsNC(s, t, iso, x->
-   ResultOfStraightLineProgram(SemigroupElementSLP(t, x),
-    GeneratorsOfSemigroup(s)));
-end);
-
-#
-
-InstallMethod(SemigroupIsomomorphismByImagesNC, 
-"for acting semigroup with generators, same, list",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, 
-IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsList],
-
-end);
-
-
-
+#InstallMethod(SemigroupIsomorphismByImages, 
+#"for an acting semigroup, semigroup, and list of images of generators",
+#[IsActingSemigroup and HasGeneratorsOfSemigroup, IsSemigroup, IsList],
+#end);
 
 InstallMethod(VagnerPrestonRepresentation, 
 "for an inverse semigroup of partial permutations",
