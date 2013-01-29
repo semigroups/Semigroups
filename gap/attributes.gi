@@ -788,6 +788,56 @@ function(S)
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
 
+#C method? JDM
+
+InstallMethod(Minorants, 
+"for an inverse semigroup of partial permutation and an element",
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
+function(s, f)
+  local out, elts, i, j, k;
+  
+  if not f in s then 
+    Error("the second argument is not an element of the first,");
+    return;
+  fi;
+
+  if HasNaturalPartialOrder(s) then 
+    elts:=Elements(s);
+    i:=Position(elts, f);
+    return elts{NaturalPartialOrder(s)[i]};
+  fi;
+
+  if IsIdempotent(f) then 
+    out:=EmptyPlist(NrIdempotents(s));
+    elts:=SSortedList(Idempotents(s));
+  else 
+    out:=EmptyPlist(Size(s));
+    elts:=Elements(s);
+  fi;
+
+  i:=Position(elts, f);
+  j:=0; 
+
+  for k in [1..i] do 
+    if NaturalLeqPP(elts[k], f) and f<>elts[k] then 
+      j:=j+1;
+      out[j]:=elts[k];
+    fi;
+  od;
+  ShrinkAllocationPlist(out);
+  return out;
+end);
+
+#JDM c method, don't document until generalised
+
+InstallGlobalFunction(SupremumIdempotentsNC, 
+function(coll)
+  local dom;
+
+  dom:=DomainOfPartialPermCollection(coll);
+  return PartialPermNC(dom, dom);
+end);
+
 #
 
 InstallMethod(SameMinorantsSubgroup, 
@@ -795,7 +845,6 @@ InstallMethod(SameMinorantsSubgroup,
 [IsGroupHClass],
 function(h)
   local e, F, out, f, i;
-
 
   e:=Representative(h);
   F:=[];
@@ -1136,17 +1185,11 @@ InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-
-  local out, D, T, e, h, i, j, k, m, lookup, box, subbox,
-        Fei, He, Se, sigma, sigmainv, FeiSigma, HeSigma, rho, rhoinv, HeSigmaRho,
-        oldgens, newgens, gen, offset,
-        orbits, cosets, HeCosetReps, HeCosetRepsSigma, AllCosetReps, rep, numcosets, CosetsInHe, trivialse,
-        SmallerDegreeElementMap;
+  local out, oldgens, newgens, D, He, sup, trivialse, sigma, sigmainv, HeSigma, rho, rhoinv, HeSigmaRho, orbits, HeCosetReps, Fei, FeiSigma, HeCosetRepsSigma, h, CosetsInHe, numcosets, j, AllCosetReps, lookup, gen, offset, rep, box, subbox, T, i, e, k, m;
         
   out:=[];
   oldgens:=Generators(S);
-  newgens:=[];
-  for i in [1..Length(oldgens)] do newgens[i]:=[]; od;
+  newgens:=List(oldgens, x-> []);
   
   D:=JoinIrreducibleDClasses(S);
 
@@ -1154,7 +1197,8 @@ function(S)
 				
     ##### Calculate He as a small permutation group #####
     He:=GroupHClass(e);
-    trivialse:=Length(SameMinorantsSubgroup(He))=1;
+    sup:=SupremumIdempotentsNC(Minorants(S, e));
+    trivialse:=not ForAny(He, x-> NaturalLeqPP(sup,x) and x<>e);
     He:=InverseSemigroup(Elements(He), rec(small:=true));
 
     sigma:=IsomorphismPermGroup(He);

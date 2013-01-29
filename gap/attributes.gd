@@ -38,6 +38,10 @@ DeclareAttribute("SmallerDegreePartialPermRepresentation", IsInverseSemigroup);
 DeclareAttribute("VagnerPrestonRepresentation", IsInverseSemigroup);
 DeclareAttribute("JoinIrreducibleDClasses", IsInverseSemigroup);
 
+DeclareOperation("Minorants", [IsInverseSemigroup and IsPartialPermSemigroup,
+IsPartialPerm]);
+DeclareGlobalFunction("SupremumIdempotentsNC");
+
 DeclareOperation("IsMajorantlyClosed", [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection]);
 DeclareOperation("IsMajorantlyClosedNC", [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection]);
 DeclareOperation("MajorantClosure", [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection]);
