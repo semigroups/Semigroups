@@ -818,7 +818,7 @@ function(s, f)
   i:=Position(elts, f);
   j:=0; 
 
-  for k in [1..i] do 
+  for k in [1..i-1] do 
     if NaturalLeqPP(elts[k], f) and f<>elts[k] then 
       j:=j+1;
       out[j]:=elts[k];
@@ -1185,7 +1185,7 @@ InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-  local out, oldgens, newgens, D, He, sup, trivialse, sigma, sigmainv, HeSigma, rho, rhoinv, HeSigmaRho, orbits, HeCosetReps, Fei, FeiSigma, HeCosetRepsSigma, h, CosetsInHe, numcosets, j, AllCosetReps, lookup, gen, offset, rep, box, subbox, T, i, e, k, m;
+  local out, oldgens, newgens, D, He, sup, trivialse, sigma, sigmainv, rho, rhoinv, orbits, HeCosetReps, Fei, FeiSigma, HeCosetRepsSigma, HeCosets, h, CosetsInHe, numcosets, j, AllCosetReps, lookup, gen, offset, rep, box, subbox, T, e, i, k, m;
         
   out:=[];
   oldgens:=Generators(S);
@@ -1197,17 +1197,16 @@ function(S)
 				
     ##### Calculate He as a small permutation group #####
     He:=GroupHClass(e);
-    sup:=SupremumIdempotentsNC(Minorants(S, e));
-    trivialse:=not ForAny(He, x-> NaturalLeqPP(sup,x) and x<>e);
-    He:=InverseSemigroup(Elements(He), rec(small:=true));
-
-    sigma:=IsomorphismPermGroup(He);
+    sup:=SupremumIdempotentsNC(Minorants(S, Representative(He)));
+    trivialse:=not ForAny(He, x-> 
+     NaturalLeqPP(sup,x) and x<>Representative(He));
+    
+    sigma:=ActionHomomorphism(SchutzenbergerGroup(He),
+     Difference(DomPP(Representative(He)), DomPP(sup)));
     sigmainv:=InverseGeneralMapping(sigma);
-    HeSigma:=Range(sigma);
 
-    rho:=SmallerDegreePermutationRepresentation(HeSigma);
+    rho:=SmallerDegreePermutationRepresentation(Image(sigma));
     rhoinv:=InverseGeneralMapping(rho);
-    HeSigmaRho:=Range(rho);   	
 
     # If Se is trivial, we have a special simpler case    
     if trivialse then
@@ -1215,24 +1214,18 @@ function(S)
       HeCosetReps:=[Representative(e)];
       Fei:=He;
     else 
-      orbits:=Orbits(HeSigmaRho);
+      orbits:=Orbits(Range(rho));
     fi;
 
     for i in orbits do
-    
       if not trivialse then
-
         # Generate Fei
-        FeiSigma:=ImagesSet(rhoinv, Stabilizer(HeSigmaRho, i[1]));
+        FeiSigma:=ImagesSet(rhoinv, Stabilizer(Range(rho), i[1]));
         Fei:=ImagesSet(sigmainv, FeiSigma);
 
         # Generate reps for the cosets of Fei in He
-        HeCosetRepsSigma:=RightTransversal(HeSigma, FeiSigma);
-        HeCosetReps:=[];
-        for j in [1..Size(HeCosetRepsSigma)] do
-      	  Add(HeCosetReps, HeCosetRepsSigma[j]^sigmainv);
-        od;
-      
+        HeCosetRepsSigma:=RightTransversal(Image(sigma), FeiSigma);
+        HeCosets:=ImagesSet(sigmainv, HeCosetRepsSigma);
       fi; 
 
       # Generate reps for the HClasses in the RClass of e
