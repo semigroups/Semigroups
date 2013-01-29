@@ -1789,4 +1789,34 @@ gap> Elements(T);
 [ &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 2, 1 ] ]
 </Example>
 <#/GAPDoc>
+
+<#GAPDoc Label="Minorants">
+<ManSection>
+<Func Name="Minorants" Arg="S,f"/>
+	<Returns>
+	  A set of partial permutations.
+	</Returns>
+	<Description>
+		<C>Minorants</C> takes an element <A>f</A> from an inverse 
+		semigroup <A>S</A> and returns a set of the minorants of <A>f</A> in <A>S</A>.
+		A minorant of <A>f</A> is a partial permutation which is strictly less than <A>f</A>
+		in the natural partial order of <A>S</A>. See <Ref Oper="NaturalPartialOrder"/>.
+	</Description>
+</ManSection>
+<Example>
+gap> s:=SymmetricInverseSemigroup(3);
+&lt;inverse partial perm semigroup of degree 3 with 3 generators>
+gap> f:=Elements(s)[16];
+[ 1, 2 ] -> [ 3, 2 ]
+gap> Minorants(s,f);
+[ &lt;empty mapping>, [ 1 ] -> [ 3 ], &lt;identity on [ 2 ]> ]
+gap> f:=PartialPermNC( [3,2,4,0] );
+[ 1, 2, 3 ] -> [ 3, 2, 4 ]
+gap> S:=InverseSemigroup(f);
+&lt;inverse partial perm semigroup of degree 4 with 1 generator>
+gap> Minorants(S,f);
+[ &lt;identity on [ 2 ]>, [ 1, 2 ] -> [ 3, 2 ], [ 2, 3 ] -> [ 2, 4 ] ]
+</Example>
+<#/GAPDoc>
+
 #EOF
