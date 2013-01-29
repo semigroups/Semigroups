@@ -1574,10 +1574,10 @@ gap> ReverseNaturalPartialOrder(S);
 </Returns>
 <Description>
   <C>IsMajorantlyClosed</C> determines whether the subset <A>T</A> of the
-  inverse semigroup <A>S</A> is majorantly closed in <A>S</A>. We say 
-  <A>T</A> is majorantly closed in <A>S</A> if it contains all
-  elements of <A>S</A> that are greater than any given element of 
-  <A>T</A>.
+  inverse semigroup <A>S</A> is majorantly closed in <A>S</A>.<P/> We say 
+  that <A>T</A> is majorantly closed in <A>S</A> if it contains all elements
+  of <A>S</A> which are greater than or equal to any element of <A>T</A>.<P/>
+  Note that <A>T</A> can be a subset of <A>S</A> or an inverse subsemigroup of <A>S</A>.
 </Description>
 </ManSection>
 <Example>
@@ -1594,34 +1594,6 @@ true
 </Example>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsMajorantlyClosedInverseSubsemigroup">
-<ManSection>
-<Attr Name="IsMajorantlyClosedInverseSubsemigroup" Arg="S,T"/>
-<Returns>
-  <K>true</K> or <K>false</K>
-</Returns>
-<Description>
-  <C>IsMajorantlyClosedInverseSubsemigroup</C> determines whether a subset
-  <A>T</A> of an inverse semigroup <A>S</A> is both an inverse semigroup and is
-  majorantly closed in <A>S</A>. See <Ref Func="IsMajorantlyClosed"/>.
-</Description>
-</ManSection>
-<Example>
-gap> S:=SymmetricInverseSemigroup(2);
-&lt;inverse partial perm semigroup of degree 2 with 2 generators>
-gap> T:=[Elements(S)[2]];
-[&lt;identity on [ 1 ]> ]
-gap> IsMajorantlyClosedInverseSubsemigroup(S,T);
-false
-gap> U:=[Elements(S)[2],Elements(S)[6],Elements(S)[7]];
-[ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 2, 1 ] ]
-gap> IsMajorantlyClosedInverseSubsemigroup(S,U);
-false
-gap> IsMajorantlyClosedInverseSubsemigroup(S,S);
-true
-</Example>
-<#/GAPDoc>
-
 <#GAPDoc Label="MajorantClosure">
 <ManSection>
 <Func Name="MajorantClosure" Arg="S,T"/>
@@ -1630,8 +1602,9 @@ true
   </Returns>
   <Description>
     <C>MajorantClosure</C> returns a majorantly closed subset of <A>S</A>. 
-    All of these elements are greater than or equal to elements of the subset <A>T</A>.
-    See <Ref Func="IsMajorantlyClosed"/>.
+    The result contains all elements of <A>S</A> which are greater than or
+    equal to any element of <A>T</A>. See <Ref Func="IsMajorantlyClosed"/>.<P/>
+    Note that <A>T</A> can be a subset of <A>S</A> or an inverse subsemigroup of <A>S</A>.
   </Description>
 </ManSection>
 <Example>
@@ -1793,7 +1766,7 @@ gap> Elements(T);
 
 <#GAPDoc Label="Minorants">
 <ManSection>
-<Func Name="Minorants" Arg="S,f"/>
+<Oper Name="Minorants" Arg="S,f"/>
 	<Returns>
 	  A set of partial permutations.
 	</Returns>
