@@ -375,7 +375,7 @@ function(a,b)
 end);
 
 # part should be of the form [4,1,2,3,3,4,4,1,0,1,0]
-# [rank,partition in internal rep, signing]
+# [# classes,partition in internal rep, signing]
 # Length of partition must =f[1]!!!
 
 InstallMethod(RightSignedPartition, 

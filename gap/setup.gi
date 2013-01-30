@@ -47,17 +47,22 @@ InstallMethod(ActionRank, "for a partial perm",
 [IsPartialPerm], x-> x[2]);
 
 InstallMethod(ActionRank, "for a bipartition",
-[IsBipartition], x-> x[2]);
+[IsBipartition], function(x)
+  local y;
+
+  y:=LeftSignedPartition(x);
+  return Number(y{[y[1]+2..2*y[1]+1]}, x-> x=1);
+end);
 
 # the minimum possible rank of an element
 
 InstallMethod(MinActionRank, "for a transformation semigroup",
 [IsTransformationSemigroup], x-> 1);
 
-InstallMethod(MinActionRank, "for a transformation semigroup",
+InstallMethod(MinActionRank, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x-> 0);
 
-InstallMethod(MinActionRank, "for a transformation semigroup",
+InstallMethod(MinActionRank, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> 0);
 
 # options passed to LambdaOrb(s) when it is created
@@ -184,24 +189,6 @@ InstallMethod(LambdaInverse, "for a bipartition",
 
 InstallMethod(RhoInverse, "for a transformation semi",
 [IsTransformationSemigroup], s-> INV_KER_TRANS);
-#  function(ker, f)
-#    local g, n, m, lookup, i, j;
-#  
-#    g:=ker{IMAGE_TRANS(f)};
-#    n:=DegreeOfTransformation(f); 
-#    m:=MaximumList(ker);
-#    lookup:=EmptyPlist(n);
-#    
-#    i:=0; j:=0;
-#    repeat 
-#      i:=i+1;
-#      if not IsBound(lookup[g[i]]) then 
-#        lookup[g[i]]:=i;
-#        j:=j+1;
-#      fi;
-#    until j=m;
-#    return TransformationNC(List([1..n], i-> lookup[ker[i]]));
-#  end);
 
 InstallMethod(RhoInverse, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> 
@@ -255,6 +242,12 @@ InstallMethod(LambdaConjugator, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> 
 function(f, g)
   return MappingPermListList(RanPP(f), RanPP(g));
+end);
+
+InstallMethod(LambdaConjugator, "for a bipartition semigroup",
+[IsBipartitionSemigroup], s-> 
+function(f, g)
+
 end);
 
 # the function used to test if there is an idempotent with the specified 

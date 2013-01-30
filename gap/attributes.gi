@@ -834,6 +834,12 @@ InstallGlobalFunction(SupremumIdempotentsNC,
 function(coll)
   local dom;
 
+  if IsList(coll) and IsEmpty(coll) then 
+    return PartialPermNC([]);
+  fi;
+  if not IsPartialPermCollection(coll) then 
+    Error("the argument should be a collection of partial perms,");
+  fi;
   dom:=DomainOfPartialPermCollection(coll);
   return PartialPermNC(dom, dom);
 end);
@@ -1120,63 +1126,61 @@ InstallMethod(JoinIrreducibleDClasses,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-
-  local elts, i, j, k, y, singleline, minorants, minorantpoints, D, out, d;
+  local D, elts, out, rep, i, k, minorants, stop, d, j, p;
   
-  D:=DClasses(S);
+  D:=GreensDClasses(S);
   elts:=Set(Idempotents(S));;
-  out:=[];
+  out:=EmptyPlist(Length(D));
 
   for d in D do
   
-    y:=Representative(d);
+    rep:=Representative(d);
     
-    if IsMultiplicativeZero(S,y) then continue; fi;
+    if IsMultiplicativeZero(S, rep) then 
+      continue; 
+    fi;
     
-    i:=Position(elts, y);
-    k:=0;
-    singleline:=true;
+    i:=Position(elts, rep);
+    k:=First([i-1,i-2 .. 1], j-> NaturalLeqPP(elts[j], rep));
 
-    for j in [i-1,i-2 .. 1] do
-      if NaturalLeqPP(elts[j], elts[i]) then
-        k:=j;
+    if k=fail then 
+      Add(out, d);
+      continue; 
+    fi;
+
+    minorants:=ShallowCopy(DomPP(elts[k]));
+    stop:=false;
+
+    for j in [1..k-1] do 
+      if NaturalLeqPP(elts[j], rep) then 
+        if not NaturalLeqPP(elts[j], elts[k]) then 
+          stop:=true;
+          Add(out, d);
+          break;
+        else
+          minorants:=Union(minorants, DomPP(elts[j]));
+        fi;
+      fi;
+    od;
+
+    if stop or IsTrivial(SchutzenbergerGroup(d)) then 
+      continue;
+    fi;
+
+    if DomPP(rep)=minorants then 
+      # rep=sup(minorants) but rep not in minorants
+      continue; 
+    fi;
+
+    for p in SchutzenbergerGroup(d) do
+      if p<>() and ForAll(MovedPoints(p), x -> not x in minorants) then 
+        Add(out, d); 
         break;
-      fi;
-    od;
-  
-    if k = 0 then Add(out,d); continue; fi;
-
-    for j in [1..(k-1)] do 
-      if NaturalLeqPP(elts[j], elts[i]) and not NaturalLeqPP(elts[j], elts[k]) then 
-        singleline:=false; 
-        break;
-      fi;
-    od;
-
-    if singleline then Add(out,d); continue; fi;
-
-    if Size(HClass(S, y)) = 1 then continue; fi;
-		
-    minorants:=[];  
-    for j in [1..k] do 
-      if NaturalLeqPP(elts[j], elts[i]) then 
-        Add(minorants, elts[j]); 
-      fi;
-    od;
-    
-    minorantpoints:=Union(List(minorants, f -> DomPP(f)));
-    if DomPP(y) = minorantpoints then continue; fi;
-
-    for j in HClass(S, y) do
-      if not j = y and ForAll(minorants, m -> NaturalLeqPP(m, j)) then
-        Add(out,d); break;
       fi; 
     od;
-  
   od;
 
   return out;
-
 end);
 
 #
@@ -1185,7 +1189,7 @@ InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-  local out, oldgens, newgens, D, He, sup, trivialse, sigma, sigmainv, rho, rhoinv, orbits, HeCosetReps, Fei, FeiSigma, HeCosetRepsSigma, HeCosets, h, CosetsInHe, numcosets, j, AllCosetReps, lookup, gen, offset, rep, box, subbox, T, e, i, k, m;
+  local out, oldgens, newgens, D, He, sup, trivialse, sigma, sigmainv, rho, rhoinv, orbits, HeCosetReps, Fei, FeiSigma, HeCosetRepsSigma, HeCosetsReps, h, CosetsInHe, numcosets, j, AllCosetReps, lookup, gen, offset, rep, box, subbox, T, e, i, k, m;
         
   out:=[];
   oldgens:=Generators(S);
@@ -1225,7 +1229,7 @@ function(S)
 
         # Generate reps for the cosets of Fei in He
         HeCosetRepsSigma:=RightTransversal(Image(sigma), FeiSigma);
-        HeCosets:=ImagesSet(sigmainv, HeCosetRepsSigma);
+        HeCosetsReps:=ImagesSet(sigmainv, HeCosetRepsSigma);
       fi; 
 
       # Generate reps for the HClasses in the RClass of e
