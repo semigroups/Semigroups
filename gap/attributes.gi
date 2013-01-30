@@ -1126,24 +1126,26 @@ InstallMethod(JoinIrreducibleDClasses,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-  local D, elts, out, rep, i, k, minorants, stop, d, j, p;
+  local D, elts, out, seen_zero, rep, i, k, minorants, stop, d, j, p;
   
   D:=GreensDClasses(S);
   elts:=Set(Idempotents(S));;
   out:=EmptyPlist(Length(D));
+  seen_zero:=false;
 
   for d in D do
   
     rep:=Representative(d);
     
-    if IsMultiplicativeZero(S, rep) then 
+    if seen_zero or IsMultiplicativeZero(S, rep) then 
+      seen_zero:=true;
       continue; 
     fi;
     
     i:=Position(elts, rep);
     k:=First([i-1,i-2 .. 1], j-> NaturalLeqPP(elts[j], rep));
 
-    if k=fail then 
+    if k=fail then # d is the minimal non-trivial D-class
       Add(out, d);
       continue; 
     fi;
@@ -1154,6 +1156,7 @@ function(S)
     for j in [1..k-1] do 
       if NaturalLeqPP(elts[j], rep) then 
         if not NaturalLeqPP(elts[j], elts[k]) then 
+          # rep is the lub of {elts[j], elts[k]}, not quite 
           stop:=true;
           Add(out, d);
           break;
@@ -1168,7 +1171,7 @@ function(S)
     fi;
 
     if DomPP(rep)=minorants then 
-      # rep=sup(minorants) but rep not in minorants
+      # rep=lub(minorants) but rep not in minorants
       continue; 
     fi;
 
@@ -1268,7 +1271,8 @@ function(S)
             if trivialse then
               subbox:=1;
             else
-              subbox:=PositionCanonical(HeCosetRepsSigma, (rep*h[box]^(-1))^sigma);
+              subbox:=PositionCanonical(HeCosetRepsSigma,
+              (rep*h[box]^(-1))^sigma);
             fi;
             Add(newgens[j], (box-1)*CosetsInHe+subbox+offset);  
           fi;
