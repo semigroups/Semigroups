@@ -1207,55 +1207,50 @@ function(S)
   
   D:=JoinIrreducibleDClasses(S);
 
-  for e in D do
-				
-    ##### Calculate He as a small permutation group #####
-    He:=GroupHClass(e);
-    sup:=SupremumIdempotentsNC(Minorants(S, Representative(He)));
-    trivialse:=not ForAny(He, x-> 
-     NaturalLeqPP(sup,x) and x<>Representative(He));
-    
-    sigma:=ActionHomomorphism(SchutzenbergerGroup(He),
-     Difference(DomPP(Representative(He)), DomPP(sup)));
-    sigmainv:=InverseGeneralMapping(sigma);
+  for d in D do
 
-    rho:=SmallerDegreePermutationRepresentation(Image(sigma));
+    e:=Representative(d);
+    ##### Calculate He as a small permutation group #####
+    He:=GroupHClass(d);
+    schutz:=SchutzenbergerGroup(d);
+    sup:=SupremumIdempotentsNC(Minorants(S, e));
+    trivialse:=not ForAny(He, x-> NaturalLeqPP(sup, x) and x<>e);
+    
+    psi:=ActionHomomorphism(schutz, Difference(DomPP(e), DomPP(sup)));
+    psiinv:=InverseGeneralMapping(psi);
+
+    rho:=SmallerDegreePermutationRepresentation(Image(psi));
     rhoinv:=InverseGeneralMapping(rho);
 
     # If Se is trivial, we have a special simpler case    
     if trivialse then
       orbits:=[[ActionDegree(He)+1]];
-      HeCosetReps:=[Representative(e)];
-      Fei:=He;
+      cosets:=[Representative(e)];
+      stab:=schtuz;
     else 
-      orbits:=Orbits(Range(rho));
+      orbits:=Orbits(Image(rho));
     fi;
 
     for i in orbits do
       if not trivialse then
-        # Generate Fei
-        FeiSigma:=ImagesSet(rhoinv, Stabilizer(Range(rho), i[1]));
-        Fei:=ImagesSet(sigmainv, FeiSigma);
-
-        # Generate reps for the cosets of Fei in He
-        HeCosetRepsSigma:=RightTransversal(Image(sigma), FeiSigma);
-        HeCosetsReps:=ImagesSet(sigmainv, HeCosetRepsSigma);
+        stab:=ImagesSet(psiinv, ImagesSet(rhoinv, 
+         Stabilizer(Image(rho), i[1])));
+        cosets:=RightTransversal(schutz, stab);
       fi; 
 
       # Generate reps for the HClasses in the RClass of e
-      h:=HClassReps( RClassNC(e, Representative(e)) );
-      CosetsInHe:=Length(HeCosetReps);
-      numcosets:=Size(h)*CosetsInHe;
+      h:=HClassReps( RClassNC(d, e) );
+      nrcosets:=Size(h)*Length(cosets);
       
       # Generate reps for ALL the cosets that the generator will act on      
       j:=0;
-      AllCosetReps:=[];
-      lookup:=EmptyPlist(Length(LambdaOrb(e)));
+      reps:=[];
+      lookup:=EmptyPlist(Length(LambdaOrb(d)));
       for k in [1..Size(h)] do
-        lookup[Position(LambdaOrb(e), RanSetPP(h[k]))]:= k;
-        for m in [1..Length(HeCosetReps)] do
+        lookup[Position(LambdaOrb(d), RanSetPP(h[k]))]:= k;
+        for m in [1..Length(cosets)] do
           j:=j+1;
-          AllCosetReps[j]:=HeCosetReps[m]*h[k];
+          reps[j]:=cosets[m]*h[k];
         od;
       od;
 			
@@ -1266,12 +1261,11 @@ function(S)
         offset:=Length(newgens[j]);
 
         # Loop over cosets to calculate image of each under gen
-        for k in [1..numcosets] do
-
-          rep:=AllCosetReps[k]*gen;
+        for k in [1..nrcosets] do
+          rep:=reps[k]*gen;
 
           # Will the new generator will be defined at this point?
-          if not rep*rep^(-1) in Fei then
+          if not AsPermutation(rep*rep^(-1)) in stab then
             Add(newgens[j], 0);
           else
             box:=lookup[Position(LambdaOrb(e), RanSetPP(rep))];
@@ -1283,8 +1277,6 @@ function(S)
             fi;
             Add(newgens[j], (box-1)*CosetsInHe+subbox+offset);  
           fi;
-
-        od;									        
       od; 
     od;        
   od;
