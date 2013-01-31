@@ -1134,12 +1134,9 @@ function(S)
   seen_zero:=false;
 
   for d in D do
-    if Representative(d)=PartialPermNC([4,8],[4,8]) then 
-      Error();
-    fi;
     rep:=Representative(d);
     
-    if seen_zero or IsMultiplicativeZero(S, rep) then 
+    if not seen_zero and IsMultiplicativeZero(S, rep) then 
       seen_zero:=true;
       continue; 
     fi;
