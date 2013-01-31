@@ -1155,12 +1155,14 @@ function(S)
 
     for j in [1..k-1] do 
       if NaturalLeqPP(elts[j], rep) then 
-        if not NaturalLeqPP(elts[j], elts[k]) then 
+        if singleline and not NaturalLeqPP(elts[j], elts[k]) then 
           # rep is the lub of {elts[j], elts[k]}, not quite 
           singleline:=false;
-          break;
+          if IsTrivial(SchutzenbergerGroup(d)) then 
+            break;
+          fi;
         else
-          minorants:=Union(minorants, DomPP(elts[j]));
+          minorants:=Union2(minorants, DomPP(elts[j]));
         fi;
       fi;
     od;
