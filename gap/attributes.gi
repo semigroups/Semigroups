@@ -1158,7 +1158,6 @@ function(S)
         if not NaturalLeqPP(elts[j], elts[k]) then 
           # rep is the lub of {elts[j], elts[k]}, not quite 
           singleline:=false;
-          Add(out, d);
           break;
         else
           minorants:=Union(minorants, DomPP(elts[j]));
