@@ -1162,7 +1162,7 @@ function(S)
             break;
           fi;
         else
-          minorants:=Union2(minorants, DomPP(elts[j]));
+          Add(minorants, j);
         fi;
       fi;
     od;
@@ -1173,6 +1173,8 @@ function(S)
     elif IsTrivial(SchutzenbergerGroup(d)) then 
       continue;
     fi;
+
+    minorants:=Union(List(minorants, j-> DomPP(elts[j])));
 
     if DomPP(rep)=minorants then 
       # rep=lub(minorants) but rep not in minorants
