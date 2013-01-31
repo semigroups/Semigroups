@@ -761,10 +761,10 @@ function(d)
   f:=Representative(d);
   nc:=IsGreensClassNC(d);
   
+  scc:=LambdaOrbSCC(d);
   out:=EmptyPlist(Length(scc));
   k:=0;
   mults:=LambdaOrbMults(LambdaOrb(d), LambdaOrbSCCIndex(d));
-  scc:=LambdaOrbSCC(d);
   
   for i in scc do
     k:=k+1;

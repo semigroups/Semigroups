@@ -1126,7 +1126,7 @@ InstallMethod(JoinIrreducibleDClasses,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-  local D, elts, out, seen_zero, rep, i, k, minorants, stop, d, j, p;
+  local D, elts, out, seen_zero, rep, i, k, minorants, singleline, d, j, p;
   
   D:=GreensDClasses(S);
   elts:=Set(Idempotents(S));;
@@ -1151,13 +1151,13 @@ function(S)
     fi;
 
     minorants:=ShallowCopy(DomPP(elts[k]));
-    stop:=false;
+    singleline:=true;
 
     for j in [1..k-1] do 
       if NaturalLeqPP(elts[j], rep) then 
         if not NaturalLeqPP(elts[j], elts[k]) then 
           # rep is the lub of {elts[j], elts[k]}, not quite 
-          stop:=true;
+          singleline:=false;
           Add(out, d);
           break;
         else
@@ -1166,7 +1166,7 @@ function(S)
       fi;
     od;
 
-    if stop or IsTrivial(SchutzenbergerGroup(d)) then 
+    if singleline or IsTrivial(SchutzenbergerGroup(d)) then 
       continue;
     fi;
 
@@ -1177,6 +1177,8 @@ function(S)
 
     for p in SchutzenbergerGroup(d) do
       if p<>() and ForAll(MovedPoints(p), x -> not x in minorants) then 
+        # rep*p<>rep and rep, rep*p>lub(minorants) and rep||rep*p and 
+        # hence neither rep*p nor rep is of any set.
         Add(out, d); 
         break;
       fi; 
