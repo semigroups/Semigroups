@@ -1165,7 +1165,10 @@ function(S)
       fi;
     od;
 
-    if singleline or IsTrivial(SchutzenbergerGroup(d)) then 
+    if singleline then
+      Add(out, d);
+      continue;
+    elif IsTrivial(SchutzenbergerGroup(d)) then 
       continue;
     fi;
 
