@@ -1134,7 +1134,9 @@ function(S)
   seen_zero:=false;
 
   for d in D do
-  
+    if Representative(d)=PartialPermNC([4,8],[4,8]) then 
+      Error();
+    fi;
     rep:=Representative(d);
     
     if seen_zero or IsMultiplicativeZero(S, rep) then 
@@ -1150,7 +1152,7 @@ function(S)
       continue; 
     fi;
 
-    minorants:=ShallowCopy(DomPP(elts[k]));
+    minorants:=[k];
     singleline:=true;
 
     for j in [1..k-1] do 
