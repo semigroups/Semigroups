@@ -1264,7 +1264,7 @@ function(S)
               subbox:=1;
             else
               subbox:=PositionCanonical(cosets,
-              (rep*h[box]^(-1))^psi);
+              ((rep*h[box]^(-1)))^sigma);
             fi;
             Add(newgens[j], (box-1)*Length(cosets)+subbox+offset);  
           fi;
