@@ -26,7 +26,7 @@ MappingByFunction( <inverse partial perm semigroup of size 5, degree 4 with
 3 generators>, <inverse partial perm semigroup of degree 5 with 
 3 generators>, function( x ) ... end, function( x ) ... end )
 gap> inv:=InverseGeneralMapping(VPR);
-MappingByFunction( <inverse partial perm semigroup of size 5, degree 5 with 
+MappingByFunction( <inverse partial perm semigroup of degree 5 with 
 3 generators>, <inverse partial perm semigroup of size 5, degree 4 with 
 3 generators>, function( x ) ... end, function( x ) ... end )
 gap> ForAll(f,x->(x^VPR)^inv=x);
@@ -75,7 +75,7 @@ gap> Size(f);
 gap> Size(Image(F));
 15
 
-# Example where Rhiannon's function returns a better result
+# Example where Rhiannon's function returns a better result (confirmed)
 gap> f1:=PartialPermNC([2,1,4,5,3,7,6,9,10,8]);;
 gap> f2:=PartialPermNC([2,1,0,0,0,7,6]);;
 gap> f:=InverseSemigroup(f1,f2);;
@@ -83,7 +83,7 @@ gap> F:=SmallerDegreePartialPermRepresentation(f);;
 gap> NrMovedPoints(f);
 10
 gap> NrMovedPoints(Image(F));
-7
+5
 gap> Size(f);
 8
 gap> Size(Image(F));
@@ -140,12 +140,13 @@ gap> V:=InverseSemigroup(H1,H2,h);
 <inverse partial perm semigroup of degree 122 with 241 generators>
 gap> SmallerDegreePartialPermRepresentation(V);
 MappingByFunction( <inverse partial perm semigroup of degree 122 with 
-241 generators>, <inverse partial perm semigroup of degree 17 with 
+241 generators>, <inverse partial perm semigroup of degree 12 with 
 241 generators>, function( x ) ... end, function( x ) ... end )
 
+#Note that the above example is much better with Rhiannon's modifications
 #gap> time;
 #6627
-
+#
 gap> f1:=PartialPermNC([ 1, 3, 4, 5, 7 ] ,[ 1, 5, 3, 8, 4 ]);;
 gap> f2:=PartialPermNC([ 1, 2, 3, 4, 5, 6 ] ,[ 6, 7, 1, 4, 3, 2 ]);;
 gap> f3:=PartialPermNC([ 1, 2, 3, 4, 5, 8 ] ,[ 5, 6, 3, 8, 4, 7 ]);;
@@ -155,9 +156,12 @@ gap> s:=InverseSemigroup(f1,f2,f3,f4,f5);;
 gap> t:=Elements(s)[75000];
 [ 4, 5, 7, 8 ] -> [ 5, 4, 1, 6 ]
 gap> Minorants(s,t);       
-[ <empty mapping>, [ 4 ] -> [ 5 ], [ 5 ] -> [ 4 ], [ 7 ] -> [ 1 ], [ 8 ] -> [ 6 ], [ 4, 5 ] -> [ 5, 4 ], 
-  [ 4, 7 ] -> [ 5, 1 ], [ 4, 8 ] -> [ 5, 6 ], [ 5, 7 ] -> [ 4, 1 ], [ 5, 8 ] -> [ 4, 6 ], [ 7, 8 ] -> [ 1, 6 ], 
-  [ 4, 5, 7 ] -> [ 5, 4, 1 ], [ 4, 5, 8 ] -> [ 5, 4, 6 ], [ 4, 7, 8 ] -> [ 5, 1, 6 ], [ 5, 7, 8 ] -> [ 4, 1, 6 ] ]
+[ <empty mapping>, [ 4 ] -> [ 5 ], [ 5 ] -> [ 4 ], [ 7 ] -> [ 1 ], 
+  [ 8 ] -> [ 6 ], [ 4, 5 ] -> [ 5, 4 ], [ 4, 7 ] -> [ 5, 1 ], 
+  [ 4, 8 ] -> [ 5, 6 ], [ 5, 7 ] -> [ 4, 1 ], [ 5, 8 ] -> [ 4, 6 ], 
+  [ 7, 8 ] -> [ 1, 6 ], [ 4, 5, 7 ] -> [ 5, 4, 1 ], 
+  [ 4, 5, 8 ] -> [ 5, 4, 6 ], [ 4, 7, 8 ] -> [ 5, 1, 6 ], 
+  [ 5, 7, 8 ] -> [ 4, 1, 6 ] ]
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
