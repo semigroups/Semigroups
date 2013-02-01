@@ -1246,6 +1246,8 @@ function(S)
       for j in [1..Length(oldgens)] do
     
         gen:=oldgens[j];
+        # offset is needed as a variable as newgens[j] changes in the k-loop ahead
+        offset:=Length(newgens[j]);
 
         # Loop over cosets to calculate the image of each coset under the generator
         for k in [1..nrcosets] do
@@ -1264,9 +1266,7 @@ function(S)
               subbox:=PositionCanonical(cosets,
               (rep*h[box]^(-1))^psi);
             fi;
-            if (box-1)*Length(cosets)+subbox+Length(newgens[j]) = 14 then
-            fi;
-            Add(newgens[j], (box-1)*Length(cosets)+subbox+Length(newgens[j]));  
+            Add(newgens[j], (box-1)*Length(cosets)+subbox+offset);  
           fi;
         od;
       od; 
