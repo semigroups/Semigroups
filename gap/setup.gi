@@ -47,7 +47,12 @@ InstallMethod(ActionRank, "for a partial perm",
 [IsPartialPerm], x-> x[2]);
 
 InstallMethod(ActionRank, "for a bipartition",
-[IsBipartition], x-> LambdaRank(s)(LeftSignedPartition(x)));
+[IsBipartition], function(x)
+  local y;
+
+  y:=LeftSignedPartition(x);
+  return Number(y{[y[1]+2..2*y[1]+1]}, x-> x=1);
+end);
 
 # the minimum possible rank of an element
 
