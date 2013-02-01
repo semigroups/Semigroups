@@ -853,19 +853,10 @@ function(h)
   local e, F, out, f, i;
 
   e:=Representative(h);
-  F:=[];
-
-  # Find the minorants of e
-  for f in Idempotents(ParentSemigroup(h)) do
-    if NaturalLeqPP(f, e) and f<>e then
-      Add(F, f);
-    fi;
-  od;
-
+  F:=Minorants(ParentSemigroup(h), e);
   h:=Elements(h);
   out:=[e];
 
-  # Check which elements of He share the same minorants as e	
   for i in [2..Length(h)] do
     if ForAll(F, f-> NaturalLeqPP(f, h[i])) then 
       Add(out, h[i]);
@@ -938,9 +929,7 @@ InstallMethod(MajorantClosure,
 "for an inverse subsemigroup of partial permutations and an inverse subsemigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermSemigroup and IsInverseSemigroup],
 function(S, T)
-
   return MajorantClosure(S, Elements(T));;
-
 end);
 
 #
@@ -949,7 +938,6 @@ InstallMethod(MajorantClosure,
 "for an inverse subsemigroup of partial permutations and a subset",
 [IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermCollection],
 function(S, T)
-
 	local t;
 
   if not IsSubset(S,T) then
@@ -959,7 +947,6 @@ function(S, T)
   fi;
 	
 	return;
-
 end);
 
 #
@@ -1048,14 +1035,12 @@ function(S, T)
 
     # Generate the majorant closure of Ts to create the coset
 
-    coset:=MajorantClosure(S, coset);
-      
+    coset:=MajorantClosure(S, coset);      
     Add(out, coset);
 
   od;
 
   return out;
-
 end);
 
 #
@@ -1065,20 +1050,20 @@ InstallMethod(IsJoinIrreducible,
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
 function(S, x)
 
-  local elts, i, j, k, y, singleline, minorants, minorantpoints;
+  local elts, i, j, k, y, singleline, sup;
 
   if not x in S then
-		Error("The second argument should be a partial permutation within the first argument");
+    Error("The second argument should be a partial permutation within the first argument");
   fi;
   if IsMultiplicativeZero(S,x) then return false; fi;
 
-  y:=LeftOne(x);
-    
+  y:=LeftOne(x);    
   elts:=Set(Idempotents(S));;
   i:=Position(elts, y);
   k:=0;
   singleline:=true;
 
+  # Find an element smaller than y, k
   for j in [i-1,i-2 .. 1] do
     if NaturalLeqPP(elts[j], elts[i]) then
       k:=j;
@@ -1086,8 +1071,10 @@ function(S, x)
     fi;
   od;
   
+  # If there is no smaller element k: true
   if k = 0 then return true; fi;
 
+  # Look for other elements smaller than y which are not smaller than k
   for j in [1..(k-1)] do 
     if NaturalLeqPP(elts[j], elts[i]) and not NaturalLeqPP(elts[j], elts[k]) then 
       singleline:=false; 
@@ -1098,23 +1085,13 @@ function(S, x)
   if singleline then return true; fi;
 
   if Size(HClass(S, y)) = 1 then return false; fi;
-		
-  minorants:=[];  
-  for j in [1..k] do 
-    if NaturalLeqPP(elts[j], elts[i]) then 
-      Add(minorants, elts[j]); 
-    fi;
-  od;
-    
-  minorantpoints:=Union(List(minorants, f -> DomPP(f)));
-  if DomPP(y) = minorantpoints then return false; fi;
 
-  # Check if any other element in Hy has equal minorants
-  for j in HClass(S, y) do
-    if not j = y and ForAll(minorants, m -> NaturalLeqPP(m, j)) then
-      return true;
-    fi; 
-  od;
+  sup:=SupremumIdempotentsNC(Minorants(S, y));
+  if y = sup then return false; fi;
+
+  if ForAny(HClass(S, y), x-> NaturalLeqPP(sup,x) and x<>y) then
+    return true;
+  fi;
   
   return false;
 
@@ -1126,6 +1103,7 @@ InstallMethod(JoinIrreducibleDClasses,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
+
   local D, elts, out, seen_zero, rep, i, k, minorants, singleline, d, j, p;
   
   D:=GreensDClasses(S);
@@ -1199,19 +1177,24 @@ InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-  local out, oldgens, newgens, D, He, sup, trivialse, sigma, sigmainv, rho, rhoinv, orbits, HeCosetReps, Fei, FeiSigma, HeCosetRepsSigma, HeCosetsReps, h, CosetsInHe, numcosets, j, AllCosetReps, lookup, gen, offset, rep, box, subbox, T, e, i, k, m;
-        
-  out:=[];
+
+  local out, oldgens, newgens, D, He, sup, trivialse, sigma, sigmainv, rho, rhoinv, orbits, HeCosetReps, Fei, FeiSigma, HeCosetRepsSigma, HeCosetsReps, h, CosetsInHe, numcosets, j, reps, lookup, gen, offset, rep, box, subbox, T, d, e, i, k, m, schutz, psi, psiinv, nrcosets, cosets, stab, stabpp;
+          
   oldgens:=Generators(S);
-  newgens:=List(oldgens, x-> []);
-  
+  newgens:=List(oldgens, x-> []);  
   D:=JoinIrreducibleDClasses(S);
 
   for d in D do
 
     e:=Representative(d);
-    ##### Calculate He as a small permutation group #####
+    ##### He is a group H-Class in our join-irreducible D-Class #####
+    ##### Psi: homomorphism from Schutzenberger Group corresponding to He, to a permutation group
+    ##### Rho: isomorphism to a smaller degree perm group
     He:=GroupHClass(d);
+    
+    sigma:=IsomorphismPermGroup(He);
+    sigmainv:=InverseGeneralMapping(sigma);
+    
     schutz:=SchutzenbergerGroup(d);
     sup:=SupremumIdempotentsNC(Minorants(S, e));
     trivialse:=not ForAny(He, x-> NaturalLeqPP(sup, x) and x<>e);
@@ -1222,27 +1205,31 @@ function(S)
     rho:=SmallerDegreePermutationRepresentation(Image(psi));
     rhoinv:=InverseGeneralMapping(rho);
 
-    # If Se is trivial, we have a special simpler case    
+    ##### Se is the subgroup of He whose elements have the same minorants as the identity of He #####
     if trivialse then
       orbits:=[[ActionDegree(He)+1]];
-      cosets:=[Representative(e)];
-      stab:=schtuz;
+      cosets:=[e];
+      stab:=schutz;
+      stabpp:=He;
     else 
       orbits:=Orbits(Image(rho));
     fi;
 
     for i in orbits do
+
       if not trivialse then
         stab:=ImagesSet(psiinv, ImagesSet(rhoinv, 
          Stabilizer(Image(rho), i[1])));
         cosets:=RightTransversal(schutz, stab);
+        stabpp:=ImagesSet(sigmainv, stab);
       fi; 
 
-      # Generate reps for the HClasses in the RClass of e
+      ##### Generate representatives for all the H-Classes in the R-Class of He
       h:=HClassReps( RClassNC(d, e) );
       nrcosets:=Size(h)*Length(cosets);
       
-      # Generate reps for ALL the cosets that the generator will act on      
+      ##### Generate representatives for ALL the cosets that the generator will act on  
+      ##### Divide every H-Class in the R-Class into 'cosets' like stab in He
       j:=0;
       reps:=[];
       lookup:=EmptyPlist(Length(LambdaOrb(d)));
@@ -1253,51 +1240,52 @@ function(S)
           reps[j]:=cosets[m]*h[k];
         od;
       od;
-			
-      # Loop over the old generators of S to find action on cosets
+      ShrinkAllocationPlist(lookup);
+
+      ##### Loop over each old generator of S to calculate its action on the cosets
       for j in [1..Length(oldgens)] do
-
+    
         gen:=oldgens[j];
-        offset:=Length(newgens[j]);
 
-        # Loop over cosets to calculate image of each under gen
+        # Loop over cosets to calculate the image of each coset under the generator
         for k in [1..nrcosets] do
           rep:=reps[k]*gen;
-
           # Will the new generator will be defined at this point?
-          if not AsPermutation(rep*rep^(-1)) in stab then
+          #### CHANGE - the follow commented out line will produce FALSE every time,
+          #### since AsPermutation(rep*rep^(-1)) = the identity, and stab is a group
+          #if not AsPermutation(rep*rep^(-1)) in stab then
+          if not rep*rep^(-1) in stabpp then
             Add(newgens[j], 0);
           else
-            box:=lookup[Position(LambdaOrb(e), RanSetPP(rep))];
+            box:=lookup[Position(LambdaOrb(d), RanSetPP(rep))];
             if trivialse then
               subbox:=1;
             else
-              subbox:=PositionCanonical(HeCosetRepsSigma,
-              (rep*h[box]^(-1))^sigma);
+              subbox:=PositionCanonical(cosets,
+              (rep*h[box]^(-1))^psi);
             fi;
-            Add(newgens[j], (box-1)*CosetsInHe+subbox+offset);  
+            if (box-1)*Length(cosets)+subbox+Length(newgens[j]) = 14 then
+            fi;
+            Add(newgens[j], (box-1)*Length(cosets)+subbox+Length(newgens[j]));  
           fi;
+        od;
       od; 
     od;        
   od;
-    
-  newgens:=List(newgens, x->PartialPermNC(x));  
-  T:=InverseSemigroup(newgens);
-  oldgens:=GeneratorsOfSemigroup(S);
-  newgens:=GeneratorsOfSemigroup(T);
-  
-	#Check whether work has actually been done
+
+
+  T:=InverseSemigroup(List(newgens, x->PartialPermNC(x)));
+
+  # Return identity mapping if nothing has been accomplished; else the result.
   if NrMovedPoints(T) > NrMovedPoints(S) or (NrMovedPoints(T) = NrMovedPoints(S) and ActionDegree(T) >= ActionDegree(S)) then
-    
-    return MagmaIsomorphismByFunctionsNC(S, S, x -> x, x -> x);
-    
+
+    return IdentityMapping(S);
+
   else
     
-    return MagmaIsomorphismByFunctionsNC(
-      S,
-      T,
-      x -> ResultOfStraightLineProgram(SemigroupElementSLP(S, x), newgens),
-      x -> ResultOfStraightLineProgram(SemigroupElementSLP(T, x), oldgens)
+    return MagmaIsomorphismByFunctionsNC(S, T,
+      x -> ResultOfStraightLineProgram(SemigroupElementSLP(S, x), GeneratorsOfSemigroup(T)),
+      x -> ResultOfStraightLineProgram(SemigroupElementSLP(T, x), GeneratorsOfSemigroup(S))
     );
     
   fi;
