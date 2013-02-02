@@ -51,7 +51,7 @@ InstallMethod(ActionRank, "for a bipartition",
   local y;
 
   y:=LeftSignedPartition(x);
-  return Number(y{[Length(y)-y[1]..Length(y)]}, x-> x=1);
+  return Number(y{[Length(y)-y[1]+1..Length(y)]}, x-> x=1);
 end);
 
 # the minimum possible rank of an element
@@ -280,6 +280,47 @@ InstallMethod(IdempotentCreator, "for a trans semigp",
 
 InstallMethod(IdempotentCreator, "for a partial perm semigp",
 [IsPartialPermSemigroup], s-> PartialPermNC);
+
+InstallMethod(IdempotentCreator, "for a bipartition semigroup",
+[IsBipartitionSemigroup], s->
+function(left, right)
+  local deg, out, lookup_left, lookup_right, r, convert, m, j, i, k;
+
+  deg:=Length(left)-left[1]-1;
+  out:=left{[2..deg+1]};
+  lookup_left:=left{[deg+2..Length(left)]};
+  lookup_right:=right{[deg+2..Length(right)]};
+
+  r:=left[1]; # index of new classes
+  convert:=List([1..right[1]], ReturnFalse);
+  m:=0;
+
+  for i in [1..deg] do 
+    j:=right[i+1];
+    if convert[j]=false then 
+      if lookup_right[j]=1 then 
+        #m:=m+1;
+        #while lookup_left[m]<>1 do 
+        #  m:=m+1;
+        #od;
+        
+        # want the first class in <left> containing an element of the class of
+        # <i> in <right> and signed by 1
+        k:=i+1;
+        while right[k]<>j or lookup_left[left[k]]<>1 do
+          k:=k+1;
+        od;
+        convert[j]:=left[k];
+      else
+        r:=r+1;
+        convert[j]:=r;
+      fi;
+    fi;
+    Add(out, convert[j]);
+  od; 
+  return BipartitionNC(out);
+#  return out;
+end);
 
 # GroupElementAction will be \* for transformation and partial perm semigroups 
 # and something else for semigroups of bipartitions.

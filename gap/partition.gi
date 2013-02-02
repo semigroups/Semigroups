@@ -1,9 +1,20 @@
+#############################################################################
+###
+##W  partition.gi
+##Y  Copyright (C) 2011-13                                James D. Mitchell
+###
+###  Licensing information can be found in the README file of this package.
+###
+##############################################################################
+###
 
 BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
  IsBipartition, CanEasilySortElements, CanEasilySortElements));
 
 BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsDataObjectRep and IsAssociativeElementWithAction));
+
+#
 
 InstallGlobalFunction(BipartitionNC, 
 function(arg)
