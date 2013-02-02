@@ -51,7 +51,7 @@ InstallMethod(ActionRank, "for a bipartition",
   local y;
 
   y:=LeftSignedPartition(x);
-  return Number(y{[y[1]+2..2*y[1]+1]}, x-> x=1);
+  return Number(y{[Length(y)-y[1]..Length(y)]}, x-> x=1);
 end);
 
 # the minimum possible rank of an element
@@ -244,10 +244,20 @@ function(f, g)
   return MappingPermListList(RanPP(f), RanPP(g));
 end);
 
+# this method is identical to the method for LambdaPerm, I'm not sure it does
+# the correct thing.
+
 InstallMethod(LambdaConjugator, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s-> 
-function(f, g)
+function(a, b)
+   local n, p, i;
 
+   n:=a[1]/2; #degree
+   p:=[1..a[2]]; #rank
+   for i in [1..n] do 
+     p[a[n+i+2]]:=b[n+i+2];
+   od;
+   return PermList(p);
 end);
 
 # the function used to test if there is an idempotent with the specified 
