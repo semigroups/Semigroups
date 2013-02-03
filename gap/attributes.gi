@@ -329,7 +329,7 @@ InstallMethod(InversesOfSemigroupElementNC,
 "for an acting semigroup and acting elt",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(s, f)
-  local regular, rank_f, lambda, rhorank, tester, j, o, rhos, opts, grades, rho_f, lambdarank, creator, inv, out, k, g, rho, name, i, x;
+  local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades, rho_f, lambdarank, creator, inv, out, k, g, rho, name, i, x;
 
   regular:=IsRegularSemigroup(s);
 
@@ -337,8 +337,8 @@ function(s, f)
     return [];
   fi;
 
-  rank_f:=LambdaRank(s)(f); 
   lambda:=LambdaFunc(s)(f);
+  rank:=ActionRank(f); 
   rhorank:=RhoRank(s);
   tester:=IdempotentTester(s);
   j:=0;
@@ -349,7 +349,7 @@ function(s, f)
     o:=RhoOrb(s);
     rhos:=EmptyPlist(Length(o));
     for rho in o do
-      if rhorank(rho)=rank_f and tester(lambda, rho) then
+      if rhorank(rho)=rank and tester(lambda, rho) then
         j:=j+1;
         rhos[j]:=rho;
       fi;
@@ -358,7 +358,7 @@ function(s, f)
       
     opts:=rec(  treehashsize:=s!.opts.hashlen.M, 
                 gradingfunc:=function(o, x) return rhorank(x); end,
-                onlygrades:=function(x, y) return x>=rank_f; end,
+                onlygrades:=function(x, y) return x>=rank; end,
                 onlygradesdata:=fail ); #shouldn't this be fail
     
     for name in RecNames(LambdaOrbOpts(s)) do
@@ -371,7 +371,7 @@ function(s, f)
     grades:=Grades(o);
     rhos:=EmptyPlist(Length(o));
     for i in [2..Length(o)] do 
-      if grades[i]=rank_f and tester(lambda, o[i]) then 
+      if grades[i]=rank and tester(lambda, o[i]) then 
         j:=j+1;
         rhos[j]:=o[i];
       fi;
@@ -389,9 +389,9 @@ function(s, f)
   if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
     o:=LambdaOrb(s);
     for x in o do
-      if lambdarank(x)=rank_f and tester(x, rho_f) then
+      if lambdarank(x)=rank and tester(x, rho_f) then
         for rho in rhos do
-          g:=creator(lambda, rho)*inv(f);
+          g:=creator(lambda, rho)*inv(x, f);
           if regular or g in s then
             k:=k+1; 
             out[k]:=g;
@@ -402,7 +402,7 @@ function(s, f)
   else
      opts:=rec(  treehashsize:=s!.opts.hashlen.M, 
                 gradingfunc:=function(o, x) return lambdarank(x); end,
-                onlygrades:=function(x, y) return x>=rank_f; end,
+                onlygrades:=function(x, y) return x>=rank; end,
                 onlygradesdata:=fail ); #shouldn't this be fail
     
     for name in RecNames(LambdaOrbOpts(s)) do
@@ -413,7 +413,7 @@ function(s, f)
     grades:=Grades(o);
     
     for x in o do
-      if grades[i]=rank_f and tester(x, rho_f) then
+      if grades[i]=rank and tester(x, rho_f) then
         for rho in rhos do
           g:=creator(lambda, rho)*inv(x, f);
           if regular or g in s then
