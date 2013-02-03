@@ -114,7 +114,10 @@ function(s)
   fi;
   
   if HasSize(s) then 
-    Print("of size ", Size(s), ", ");
+    if SizeScreen()[1]-Length(property)-Length(type)-Length(name)-40
+      > Length(String(Size(s))) then 
+      Print("of size ", Size(s), ", ");
+    fi;
   elif not IsMatrixSemigroup(s) then 
     Print("of ");
   fi;
