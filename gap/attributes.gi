@@ -1209,7 +1209,7 @@ function(S)
     if trivialse then
       orbits:=[[ActionDegree(He)+1]];
       cosets:=[e];
-      stab:=schutz;
+      #stab:=schutz;
       stabpp:=He;
     else 
       orbits:=Orbits(Image(rho));
@@ -1263,8 +1263,9 @@ function(S)
             if trivialse then
               subbox:=1;
             else
+              ## Below, could be ^sigma instead of AsPermutation
               subbox:=PositionCanonical(cosets,
-              ((rep*h[box]^(-1)))^sigma);
+               AsPermutation((rep*h[box]^(-1))));
             fi;
             Add(newgens[j], (box-1)*Length(cosets)+subbox+offset);  
           fi;
