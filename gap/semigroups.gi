@@ -242,6 +242,13 @@ end);
 
 # move to lib JDM move to lib
 
+InstallOtherMethod(IsSubsemigroup, 
+"for semigroup and semigroup with generators",
+[IsSemigroup, IsSemigroup and HasGeneratorsOfSemigroup],
+function(s, t)
+  return ForAll(GeneratorsOfSemigroup(t), x-> x in s);
+end);
+
 InstallOtherMethod(IsSubset, 
 "for semigroup and associative element collection",
 [IsSemigroup, IsAssociativeElementCollection],
@@ -797,6 +804,15 @@ InstallOtherMethod(ClosureSemigroup,
 [IsActingSemigroup, IsAssociativeElementWithActionCollection],
 function(s, coll)
   return ClosureSemigroup(s, coll, s!.opts);
+end);
+
+#
+
+InstallOtherMethod(ClosureSemigroup, 
+"for an acting semigroup and associative element with action coll",
+[IsActingSemigroup, IsList and IsEmpty],
+function(s, coll)
+  return s;
 end);
 
 #
