@@ -272,6 +272,10 @@ end);
 InstallMethod(IdempotentTester, "for a partial perm semigroup", 
 [IsPartialPermSemigroup], s-> EQ);
 
+#JDM IdempotentTester for bipartition semigroup: fuseit, then check if signed
+#classes have different values (ie fuseit is injective on the indices of the
+#classes which are connected or signed)
+
 # the function used to create an idempotent with the specified lambda and rho
 # values. 
 
