@@ -243,26 +243,29 @@ InternalRepOfBipartition:=f-> List([1..f[1]+2], i-> f[i]);
 # new for 1.0! - IsomorphismTransformationSemigroup - "for a bipartition semi"
 ###########################################################################
 
-InstallOtherMethod(IsomorphismTransformationSemigroup,
-"for a bipartiton semigroup",
-[IsBipartitionSemigroup],
-function(s)
-  local n, pts, o, t, pos, i;
+#JDM this does not currently work!
 
-  n:=DegreeOfBipartition(Generators(s)[1]);
-  pts:=EmptyPlist(2^(n/2));
-
-  for i in [1..n/2] do
-    o:=Orb(s, [i], OnPoints); #JDM multiseed orb
-    Enumerate(o);
-    pts:=Union(pts, AsList(o));
-  od;
-  ShrinkAllocationPlist(pts);
-  t:=Semigroup(TransformationOp(s, pts, OnPoints));
-  pos:=List([1..n], x-> Position(pts, [x]));
-
-  return MappingByFunction(s, t, x-> TransformationOp(x, pts, OnPoints));
-end);
+# InstallOtherMethod(IsomorphismTransformationSemigroup,
+# "for a bipartiton semigroup",
+# [IsBipartitionSemigroup],
+# function(s)
+#   local n, pts, o, t, pos, i;
+# 
+#   n:=DegreeOfBipartition(Generators(s)[1]);
+#   pts:=EmptyPlist(2^(n/2));
+# 
+#   for i in [1..n/2] do
+#     o:=Orb(s, [i], OnPoints); #JDM multiseed orb
+#     Enumerate(o);
+#     pts:=Union(pts, AsList(o));
+#   od;
+#   ShrinkAllocationPlist(pts);
+#   t:=Semigroup(List(GeneratorsOfSemigroup(s), 
+#    x-> TransformationOp(x, pts, OnPoints)));
+#   pos:=List([1..n], x-> Position(pts, [x]));
+# 
+#   return MappingByFunction(s, t, x-> TransformationOp(x, pts, OnPoints));
+# end);
 
 # new for 1.0! - PrintObj - "for a bipartition"
 #############################################################################

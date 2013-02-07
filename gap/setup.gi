@@ -272,9 +272,70 @@ end);
 InstallMethod(IdempotentTester, "for a partial perm semigroup", 
 [IsPartialPermSemigroup], s-> EQ);
 
-#JDM IdempotentTester for bipartition semigroup: fuseit, then check if signed
-#classes have different values (ie fuseit is injective on the indices of the
-#classes which are connected or signed)
+# currently returns false negatives, but apparently not false positives
+
+InstallMethod(IdempotentTester, "for a bipartition semigroup",
+[IsBipartitionSemigroup], s-> 
+function(left, right)
+  local n, nr_left, nr_right, fuse, conn, fuseit, x, y, seen, i;
+
+  n:=Length(left)-left[1]-1;
+  nr_left:=left[1];
+  nr_right:=right[1];
+  
+  fuse:=[1..nr_left+nr_right];
+  conn:=Concatenation(left{[2+n..Length(left)]}, right{[2+n..Length(right)]});
+
+  fuseit:=function(i)
+    while fuse[i]<i do 
+      i:=fuse[i];
+    od;
+    return i;
+  end;
+
+  for i in [1..n] do 
+    x:=fuseit(left[i+1]);
+    y:=fuseit(right[i+1]+nr_left);
+    if x<>y then 
+      if x<y then 
+        fuse[y]:=x;
+      else
+        fuse[x]:=y;
+        if left[left[i+1]+n+1]=1 then 
+          conn[y]:=1;
+        fi;
+      fi;
+    fi;
+  od;
+  
+  #there must be a better way than this!
+  for i in [1..nr_left] do 
+    if left[n+1+i]=1 then   
+      conn[fuseit(i)]:=1;
+    fi;
+  od;
+
+  seen:=[1..nr_left]*0;
+  for i in [1..nr_right] do 
+    if right[i+n+1]=1 then 
+      i:=fuseit(i+nr_left);
+      if seen[i]=1 or conn[i]=0 then 
+        return false;
+      else
+        seen[i]:=1;
+      fi;
+    fi;
+  od;
+  return true;
+end);
+
+foo:=function(f)
+  return tester(LeftSignedPartition(f), RightSignedPartition(f));
+end;
+
+foo2:=function(f)
+  return tester2(ImageSetOfTransformation(f), FlatKernelOfTransformation(f));
+end;
 
 # the function used to create an idempotent with the specified lambda and rho
 # values. 
