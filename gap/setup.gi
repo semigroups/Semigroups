@@ -301,14 +301,10 @@ function(left, right)
         fuse[y]:=x;
       else
         fuse[x]:=y;
-        if left[left[i+1]+n+1]=1 then 
-          conn[y]:=1;
-        fi;
       fi;
     fi;
   od;
   
-  #there must be a better way than this!
   for i in [1..nr_left] do 
     if left[n+1+i]=1 then   
       conn[fuseit(i)]:=1;
@@ -329,13 +325,13 @@ function(left, right)
   return true;
 end);
 
-foo:=function(f)
-  return tester(LeftSignedPartition(f), RightSignedPartition(f));
-end;
-
-foo2:=function(f)
-  return tester2(ImageSetOfTransformation(f), FlatKernelOfTransformation(f));
-end;
+#foo:=function(f)
+#  return tester(LeftSignedPartition(f), RightSignedPartition(f));
+#end;
+#
+#foo2:=function(f)
+#  return tester2(ImageSetOfTransformation(f), FlatKernelOfTransformation(f));
+#end;
 
 # the function used to create an idempotent with the specified lambda and rho
 # values. 
@@ -349,43 +345,56 @@ InstallMethod(IdempotentCreator, "for a partial perm semigp",
 InstallMethod(IdempotentCreator, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s->
 function(left, right)
-  local deg, out, lookup_left, lookup_right, r, convert, m, j, i, k;
+  local n, nr_left, nr_right, fuse, fuseit, x, y, c, tab, next, i;
+  
+  n:=Length(left)-left[1]-1;
+  nr_left:=left[1];
+  nr_right:=right[1];
+  
+  fuse:=[1..nr_left+nr_right];
 
-  deg:=Length(left)-left[1]-1;
-  out:=left{[2..deg+1]};
-  lookup_left:=left{[deg+2..Length(left)]};
-  lookup_right:=right{[deg+2..Length(right)]};
+  fuseit:=function(i)
+    while fuse[i]<i do 
+      i:=fuse[i];
+    od;
+    return i;
+  end;
 
-  r:=left[1]; # index of new classes
-  convert:=List([1..right[1]], ReturnFalse);
-  m:=0;
-
-  for i in [1..deg] do 
-    j:=right[i+1];
-    if convert[j]=false then 
-      if lookup_right[j]=1 then 
-        #m:=m+1;
-        #while lookup_left[m]<>1 do 
-        #  m:=m+1;
-        #od;
-        
-        # want the first class in <left> containing an element of the class of
-        # <i> in <right> and signed by 1
-        k:=i+1;
-        while right[k]<>j or lookup_left[left[k]]<>1 do
-          k:=k+1;
-        od;
-        convert[j]:=left[k];
+  for i in [1..n] do 
+    x:=fuseit(left[i+1]);
+    y:=fuseit(right[i+1]+nr_left);
+    if x<>y then 
+      if x<y then 
+        fuse[y]:=x;
       else
-        r:=r+1;
-        convert[j]:=r;
+        fuse[x]:=y;
       fi;
     fi;
-    Add(out, convert[j]);
-  od; 
-  return BipartitionNC(out);
-#  return out;
+  od;
+  
+  c := left{[2..n+1]};
+  next := nr_left+1;
+  tab:=[1..nr_right]*0;
+
+  for i in [1..n] do
+    if right[right[i+1]+n+1]=0 then 
+      if tab[right[i+1]]=0 then 
+        tab[right[i+1]]:=next;
+        next:=next+1;
+      fi;
+      Add(c, tab[right[i+1]]); 
+    else
+      x := fuseit(right[i+1]+nr_left);
+      x:=First([1..nr_left], i-> fuseit(i)=x and left[i+n+1]=1);
+      Add(c, x);
+    fi;
+  od;
+  return BipartitionByIntRepNC(c);
 end);
+
+foo:=function(f)
+  return creator(LeftSignedPartition(f), RightSignedPartition(f));
+end;
 
 # GroupElementAction will be \* for transformation and partial perm semigroups 
 # and something else for semigroups of bipartitions.

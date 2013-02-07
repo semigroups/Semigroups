@@ -365,7 +365,7 @@ function(a,b)
   # We can now put together the resulting partition, we take 1..n from a
   # and n+1..2*n and look at the fusion, in which part they are.
   tab3 := 0*[1..p1+p2];    # A table for the old part numbers
-  c := EmptyPlist(2*n+1);
+  c := EmptyPlist(2*n);
   next := 1;
   for i in [1..n] do
       x := fuseit(a[i+2]);
