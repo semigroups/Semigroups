@@ -43,4 +43,6 @@ DeclareOperation("IsInSubgroupOfSemigroup", [IsAssociativeElementWithAction]);
 DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
 IsSemigroup);
 
+DeclareAttribute("GroupElementAction", IsSemigroup);
+
 #EOF

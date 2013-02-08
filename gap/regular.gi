@@ -1284,9 +1284,6 @@ InstallOtherMethod(NrRClasses, "for a D-class of regular acting semigroup",
 [IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 d-> Length(RhoOrbSCC(d)));
 
-# new for 1.0! - NrIdempotents - for a regular acting semigroup
-############################################################################
-
 # different method for inverse
 
 InstallOtherMethod(NrIdempotents, "for a regular acting semigroup",
@@ -1300,12 +1297,13 @@ function(s)
   rho_o:=RhoOrb(s);
   scc:=OrbSCC(rho_o); 
   lambda_o:=LambdaOrb(s);
+  Enumerate(lambda_o, infinity);
   gens:=lambda_o!.gens;
   rhofunc:=RhoFunc(s);
   lookup:=OrbSCCLookup(rho_o);
 
-  for i in [1..Length(lambda_o)] do
-    rep:=EvaluateWord(TraceSchreierTreeForward(lambda_o, i), gens);
+  for i in [2..Length(lambda_o)] do
+    rep:=EvaluateWord(gens, TraceSchreierTreeForward(lambda_o, i));
     rho:=rhofunc(rep);
     j:=lookup[Position(rho_o, rho)];
     for k in scc[j] do

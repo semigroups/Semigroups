@@ -284,7 +284,7 @@ function(left, right)
   nr_right:=right[1];
   
   fuse:=[1..nr_left+nr_right];
-  conn:=Concatenation(left{[2+n..Length(left)]}, right{[2+n..Length(right)]});
+  conn:=left{[2+n..Length(left)]};
 
   fuseit:=function(i)
     while fuse[i]<i do 
@@ -336,7 +336,7 @@ end);
 # the function used to create an idempotent with the specified lambda and rho
 # values. 
 
-InstallMethod(IdempotentCreator, "for a trans semigp",
+InstallMethod(IdempotentCreator, "for a transformation semigroup",
 [IsTransformationSemigroup], s-> IDEM_IMG_KER_NC);
 
 InstallMethod(IdempotentCreator, "for a partial perm semigp",
@@ -392,12 +392,22 @@ function(left, right)
   return BipartitionByIntRepNC(c);
 end);
 
-foo:=function(f)
-  return creator(LeftSignedPartition(f), RightSignedPartition(f));
-end;
+#foo:=function(f)
+#  return creator(LeftSignedPartition(f), RightSignedPartition(f));
+#end;
 
 # GroupElementAction will be \* for transformation and partial perm semigroups 
 # and something else for semigroups of bipartitions.
+
+InstallMethod(GroupElementAction, 
+"for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+s-> PROD);
+
+InstallMethod(GroupElementAction, 
+"for a partial perm semigroup with generators",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+s-> PROD);
 
 # IsInSubgroupOfSemigroup returns <true> if the element <f> is an element of 
 # a subgroup of any semigroup containing it.
