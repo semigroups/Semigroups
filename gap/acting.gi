@@ -492,7 +492,6 @@ function(data, limit, lookfunc)
     for j in genstoapply do #JDM
       x:=gens[j]*orb[i][4];
       lamx:=lambda(x);
-      #pos:=Position(o, lamx);
       pos:=htvalue(oht, lamx); 
 
       #find the scc
