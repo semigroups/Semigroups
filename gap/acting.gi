@@ -1444,8 +1444,15 @@ function(data)
   return i; 
 end);
 
-# new for 1.0! - Size - "for an acting semigroup"
-##############################################################################
+#
+
+InstallMethod(Size, "for a monogenic transformation semigroup",
+[IsTransformationSemigroup and IsMonogenicSemigroup],
+function(s)
+return Sum(IndexPeriodOfTransformation(GeneratorsOfSemigroup(s)[1]))-1;
+end);
+
+#
 
 InstallMethod(Size, "for an acting semigroup",
 [IsActingSemigroup], 

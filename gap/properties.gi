@@ -917,14 +917,13 @@ InstallMethod(IsSimpleSemigroup, "for an inverse semigroup",
 
 # not used in ViewObj
 
-InstallMethod(IsSynchronizingSemigroup, "for a trans. semi.", 
+InstallMethod(IsSynchronizingSemigroup, 
+"for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local n, o;
+  local o;
 
-  n:=DegreeOfTransformationSemigroup(s);
-
-  o:=Orb(s, [1..n], OnSets, 
+  o:=Orb(s, [1..DegreeOfTransformationSemigroup(s)], OnSets, 
         rec(schreier:=true, 
         lookingfor:=function(o, x) return Length(x)=1; end));
 
