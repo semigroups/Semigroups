@@ -900,8 +900,7 @@ function(o, m, i)
   return o!.mults[i];
 end);
 
-# new for 1.0! - LambdaOrbRep - "for an orbit and pos int"
-#############################################################################
+# JDM this is really slow (due to EvaluateWord) for large degree 
 
 InstallGlobalFunction(LambdaOrbRep,
 function(o, m)
@@ -910,7 +909,6 @@ function(o, m)
   if IsBound(o!.scc_reps[m]) then
     return o!.scc_reps[m];
   fi;
-
   w:=TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
   o!.scc_reps[m]:=o!.scc_reps[1]*EvaluateWord(o!.gens, w);
   return o!.scc_reps[m];
