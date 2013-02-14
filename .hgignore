@@ -1,4 +1,6 @@
 syntax: glob
+*.orig
+*.DS_Store
 *.swp
 *.aux
 *.log
