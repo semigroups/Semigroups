@@ -399,8 +399,7 @@ function(data)
   return Enumerate(data, infinity, ReturnFalse);
 end);
 
-# new for 1.0! - Enumerate - for an acting semigroup data and limit
-##############################################################################
+#
 
 InstallOtherMethod(Enumerate, "for an acting semi data and limit", 
 [IsSemigroupData, IsCyclotomic],
@@ -408,8 +407,7 @@ function(data, limit)
   return Enumerate(data, limit, ReturnFalse);
 end);
 
-# new for 1.0! - Enumerate - for an acting semigroup data, limit, func
-##############################################################################
+#
 
 InstallOtherMethod(Enumerate, 
 "for an acting semi data, limit, and func",
@@ -488,6 +486,7 @@ function(data, limit, lookfunc)
   fi;
 
   while nr<=limit and i<nr and i<>stopper do 
+    
     i:=i+1;
     for j in genstoapply do #JDM
       x:=gens[j]*orb[i][4];
@@ -503,9 +502,8 @@ function(data, limit, lookfunc)
       else
         y:=x;
       fi;
-      
       rhoy:=[m];
-      Append(rhoy, rho(y));
+      Append(rhoy, rho(y));;
       val:=htvalue(lambdarhoht, rhoy);
       # this is what we keep if it is new
       # x:=[s, m, o, y, false, nr+1];
@@ -562,6 +560,8 @@ function(data, limit, lookfunc)
           orblookup2[nr]:=repslens[val];
         fi;
       fi;
+      # add reporting here!!
+      #Print("found ", nr, "             R-class reps\r");
       orb[nr]:=x;
       schreierpos[nr]:=i; # orb[nr] is obtained from orb[i]
       schreiergen[nr]:=j; # by multiplying by gens[j]
@@ -594,10 +594,6 @@ function(data, limit, lookfunc)
   fi;
   return data;
 end);
-
-#FFF
-
-#GGG
 
 # if GradedLambdaOrb(s, f, true) is called, then the returned orbit o has 
 # the position in o of lambda val of f stored in o!.data.
