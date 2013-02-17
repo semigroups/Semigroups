@@ -113,7 +113,7 @@ function(s)
     Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]), " ");
   fi;
   
-  if HasSize(s) then 
+  if HasSize(s) and Size(s)<2^64 then 
     if SizeScreen()[1]-Length(property)-Length(type)-Length(name)-40
       > Length(String(Size(s))) then 
       Print("of size ", Size(s), ", ");
