@@ -152,15 +152,12 @@ function(arg)
   return rec(l:=l, m:=m, rep:=f);
 end);
 
-# new for 1.0! - LambdaRhoHT
-###############################################################################
+#
 
 InstallMethod(LambdaRhoHT, "for an acting semi",
 [IsActingSemigroup],
-function(s)
-  local x;
-  x:=GeneratorsOfSemigroup(s)[1]; 
-  return HTCreate(Concatenation([1], RhoFunc(s)(x)),
+function(s) 
+  return HTCreate(Concatenation([1], RhoFunc(s)(Representative(s))),
   rec(forflatplainlists:=true,
      treehashsize:=s!.opts.hashlen.M));
 end);
@@ -390,8 +387,7 @@ function(o, nr)
   return o!.orbit[nr];
 end);
 
-# new for 1.0! - Enumerate - for an acting semigroup data
-##############################################################################
+#
 
 InstallOtherMethod(Enumerate, "for an acting semigroup data", 
 [IsSemigroupData],
@@ -780,13 +776,10 @@ function(o, j)
   return IsBound(o!.orbits[j]);
 end);
 
-#LLL
+#
 
-# new for 1.0! - LambdaOrb - "for an acting semigroup"
-##############################################################################
-
-InstallMethod(LambdaOrb, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(LambdaOrb, "for an acting semigroup with generators",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local opts, semi, name;
 
@@ -801,6 +794,24 @@ function(s)
 
   return Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), opts);
 end);
+
+InstallMethod(LambdaOrb, "for an acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal],
+function(s)
+  local opts, semi, name;
+
+  opts:= rec(schreier:=true, orbitgraph:=true,
+          storenumbers:=true, log:=true, 
+          treehashsize:=SemigroupsOptionsRec.hashlen.M,
+          scc_reps:=[One(GeneratorsOfMagmaIdeal(s))], semi:=s);
+  
+  for name in RecNames(LambdaOrbOpts(s)) do 
+    opts.(name):=LambdaOrbOpts(s).(name);
+  od;
+
+  return Orb(GeneratorsOfSemigroup(Parent(s)), LambdaOrbSeed(s), LambdaAct(s), opts);
+end);
+
 
 # new for 1.0! - LambdaOrbMults - "for a lambda orb and scc index"
 ##############################################################################
@@ -1390,11 +1401,8 @@ end);
 
 #SSS
 
-# new for 1.0! - SemigroupData - "for an acting semigroup"
-##############################################################################
-
 InstallMethod(SemigroupData, "for an acting semigroup",
-[IsActingSemigroup],
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, one, data;
  

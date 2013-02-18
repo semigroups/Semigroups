@@ -393,6 +393,23 @@ function(gens, opts)
   return s;
 end);
 
+InstallMethod( SemigroupIdealByGenerators,
+"for an acting semigroup and  collection of its elements",
+[IsActingSemigroup, IsAssociativeElementWithActionCollection],
+function( M, gens )
+local S;
+
+    S:= Objectify( NewType( FamilyObj( gens ), IsMagmaIdeal and
+     IsAttributeStoringRep and IsActingSemigroup ), 
+     rec(opts:=SemigroupOptions(rec())));
+
+    SetGeneratorsOfMagmaIdeal( S, AsList( gens ) );
+    SetIsSemigroupIdeal(S, true);
+    SetParent(S, M);
+
+    return S;
+end );
+
 # JDM move to lib
 
 MakeReadWriteGlobal("Monoid");

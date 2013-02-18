@@ -1593,15 +1593,10 @@ function(h)
   return Idempotents(h)[1];
 end);
 
-#NNN
-
-# mod for 1.0! - NrDClasses - "for an acting semigroup"
-#############################################################################
-
 # different method for regular/inverse
 
 InstallMethod(NrDClasses, "for an acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+[IsActingSemigroup],
 s-> Length(OrbSCC(SemigroupData(s)))-1);
 
 # mod for 1.0! - NrRegularDClasses - "for an acting semigroup"
@@ -1699,13 +1694,10 @@ function(d)
   return Length(LambdaCosets(d))*Length(LambdaOrbSCC(d));
 end);
 
-# mod for 1.0! - NrRClasses - "for an acting semigroup"
-#############################################################################
-
 # different method for regular/inverse
 
 InstallMethod(NrRClasses, "for an acting semigroup",       
-[IsActingSemigroup and HasGeneratorsOfSemigroup],        
+[IsActingSemigroup],        
 function(s)
   local data;
   
