@@ -269,7 +269,7 @@ function(s)
 
   for f in Generators(s) do 
     if not f in G then 
-      if not ForAny(enum, g-> NaturalLeqPP(f, g^iso)) then 
+      if not ForAny(enum, g-> NaturalLeqPartialPerm(f, g^iso)) then 
         return false;
       fi;
     fi;

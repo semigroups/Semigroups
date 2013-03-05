@@ -10,16 +10,12 @@
 
 # this file contains utilies for use with the Semigroups package. 
 
-# new for 0.5! - SemigroupsDir - for no arg.
-#############################################################################
-
 InstallGlobalFunction(SemigroupsDir, 
 function()
   return PackageInfo("semigroups")[1]!.InstallationPath;
 end);
 
-# mod for 0.7! - SemigroupsMakeDoc - "for no argument"
-#############################################################################
+#
 
 InstallGlobalFunction(SemigroupsMakeDoc, 
 function()
@@ -31,8 +27,7 @@ function()
   return;
 end);
 
-# new for 0.4! - SemigroupsMathJaxDefault - "for no argument"
-#############################################################################
+#
 
 InstallGlobalFunction(SemigroupsMathJaxDefault, 
 function()
@@ -49,8 +44,7 @@ Info(InfoSemigroups, 1, "don't forget to run SemigroupsMakeDoc()");
 return;
 end);
 
-# new for 0.4! - SemigroupsMathJaxLocal - "for a path to the MathJax folder"
-#############################################################################
+#
 
 InstallGlobalFunction(SemigroupsMathJaxLocal, 
 function(arg)
@@ -74,8 +68,7 @@ function(arg)
   return;
 end);
 
-# mod for 0.7! - SemigroupsTestAll - "for no argument"
-#############################################################################
+#
 
 InstallGlobalFunction(SemigroupsTestAll, 
 function()
@@ -103,8 +96,7 @@ function()
   return;
 end);
 
-# new for 0.1! - SemigroupsTestInstall - "for no argument"
-#############################################################################
+#
 
 InstallGlobalFunction(SemigroupsTestInstall, 
 function()
@@ -117,8 +109,7 @@ function()
   return;
 end);
 
-# new for 0.1! - SemigroupsTestManualExamples - "for no argument"
-#############################################################################
+#
 
 InstallGlobalFunction(SemigroupsTestManualExamples,
 function()
@@ -146,8 +137,7 @@ function()
   return;
 end);
 
-# new for 0.5! - SemigroupsReadTestManualExamples - "for no argument" 
-#############################################################################
+#
 
 InstallGlobalFunction(SemigroupsReadTestManualExamples, 
 function()
@@ -178,10 +168,7 @@ function()
   return;
 end);
 
-#III
-
-# new for 0.5! - ReadSemigroups - "for a string and optional pos. int."
-#############################################################################
+#
 
 InstallGlobalFunction(ReadSemigroups, 
 function(arg)
@@ -228,8 +215,7 @@ function(arg)
   return List(line, x-> ReadSemigroupsLine(Chomp(x)));
 end);
 
-# mod for 0.7! - ReadSemigroupsLine - "for a string"
-#############################################################################
+#
 
 InstallGlobalFunction(ReadSemigroupsLine, 
 function(line)
@@ -273,14 +259,11 @@ function(line)
     for j in [1..deg+3*rank+6] do 
       Add(out[k], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
     od;
-    out[k]:=FullPartialPermNC(out[k]);
+    out[k]:=DensePartialPermNC(out[k]);
     i:=i+m*(deg+3*rank+6)+1;
   od;
   return out;
 end);
-
-# mod for 0.7! - WriteSemigroups - "for a string and trans. coll."
-#############################################################################
 
 # Usage: filename as a string and trans. coll. 
 
@@ -364,7 +347,7 @@ function(arg)
     for s in gens do 
       str:="p";
       for f in s do 
-        int:=InternalRepOfPartialPerm(f);
+        int:=OnTuples([1..DegreeOfPartialPerm(f)], f);
         j:=Length(String(int[6]));
         Append(str, Concatenation(String(j), convert(int, j)));
         if Length(int)<> 6+int[1]+3*int[2] then 

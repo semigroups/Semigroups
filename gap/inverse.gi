@@ -395,8 +395,8 @@ function(s)
   
   for m in [2..r] do 
     f:=RhoOrbRep(o, m);
-# JDM method for RightOne of inverse acting element required.
-    out[m-1]:=RightOne(f);
+# JDM method for RightOneOfSemigroupElement of inverse acting element required.
+    out[m-1]:=RightOneOfSemigroupElement(f);
   od;
   return out;
 end);
@@ -600,7 +600,7 @@ function(s)
   i:=0;
   for m in [2..Length(scc)] do 
     i:=i+1;
-    f:=RightOne(LambdaOrbRep(o, m));
+    f:=RightOneOfSemigroupElement(LambdaOrbRep(o, m));
     out[i]:=CreateDClassNC(s, m, o, fail, fail, f, false);
   od;
   return out;
@@ -624,7 +624,7 @@ function(s)
     
   for m in [2..len] do
     mults:=LambdaOrbMults(o, m);
-    f:=RightOne(LambdaOrbRep(o, m));
+    f:=RightOneOfSemigroupElement(LambdaOrbRep(o, m));
     for j in scc[m] do
       f:=f*mults[j][1];
       for k in scc[m] do
@@ -737,7 +737,7 @@ function(s)
   n:=0;
 
   for m in [2..len] do
-    f:=RightOne(LambdaOrbRep(o, m));
+    f:=RightOneOfSemigroupElement(LambdaOrbRep(o, m));
     mults:=LambdaOrbMults(o, m);
     for j in scc[m] do
       n:=n+1;
@@ -800,7 +800,7 @@ function(s, f)
   fi;
   
   m:=OrbSCCLookup(o)[i];
-  rep:=RightOne(LambdaOrbRep(o, m));
+  rep:=RightOneOfSemigroupElement(LambdaOrbRep(o, m));
 
   return CreateDClassNC(s, m, o, fail, fail, rep, false); 
 end);
@@ -981,7 +981,7 @@ function(s)
   i:=0;             
                     
   for m in [2..len] do
-    f:=RightOne(LambdaOrbRep(o, m));
+    f:=RightOneOfSemigroupElement(LambdaOrbRep(o, m));
     mults:=LambdaOrbMults(o, m);
     for j in scc[m] do
       i:=i+1;    
@@ -1046,14 +1046,14 @@ end);
 
 InstallOtherMethod(Idempotents, "for an inverse op L-class",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass], 
-l-> [RightOne(Representative(l))]);
+l-> [RightOneOfSemigroupElement(Representative(l))]);
 
 # new for 1.0! - Idempotents - for R-class of acting semigroup with inverse op
 ###############################################################################
 
 InstallOtherMethod(Idempotents, "for an inverse op R-class",
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass], 
-r-> [LeftOne(Representative(r))]);
+r-> [LeftOneOfSemigroupElement(Representative(r))]);
 
 # new for 1.0! - Idempotents - for acting semigroup with inverse op
 ###############################################################################
@@ -1170,7 +1170,7 @@ function(s)
     
   for m in [2..len] do
     mults:=LambdaOrbMults(o, m);
-    f:=RightOne(LambdaOrbRep(o, m));
+    f:=RightOneOfSemigroupElement(LambdaOrbRep(o, m));
     for j in scc[m] do
       f:=f*mults[j][1];
       for k in scc[m] do
@@ -1353,7 +1353,7 @@ function(s)
   out:=List([1..n], x-> EmptyPlist(n));
   for i in [n, n-1..1] do
     for j in [i-1,i-2 ..1] do
-      if NaturalLeqPP(elts[j], elts[i]) then
+      if NaturalLeqPartialPerm(elts[j], elts[i]) then
         AddSet(out[i], j);
       fi;
     od;

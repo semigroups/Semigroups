@@ -94,13 +94,13 @@ InstallMethod(RhoAct, "for a transformation semi",
 [IsTransformationSemigroup], x-> ON_KERNEL_ANTI_ACTION);
 
 InstallMethod(LambdaAct, "for a partial perm semi",
-[IsPartialPermSemigroup], x-> OnIntegerSetsWithPP);
+[IsPartialPermSemigroup], x-> OnSets);
 
 # JDM new c method for this!
 InstallMethod(RhoAct, "for a partial perm semi",
 [IsPartialPermSemigroup], s->       
   function(set, f) 
-    return OnIntegerSetsWithPP(set, f^-1);
+    return OnSets(set, f^-1);
   end);
 
 InstallMethod(LambdaAct, "for a bipartition semigroup",
@@ -137,7 +137,7 @@ InstallMethod(LambdaFunc, "for a transformation semigroup",
 [IsTransformationSemigroup], x-> IMAGE_SET_TRANS);
 
 InstallMethod(LambdaFunc, "for a partial perm semigroup",
-[IsPartialPermSemigroup], x-> RanSetPP);
+[IsPartialPermSemigroup], x-> IMAGE_SET_PPERM);
 
 InstallMethod(LambdaFunc, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> RightSignedPartition);
@@ -146,7 +146,7 @@ InstallMethod(RhoFunc, "for a trans semi",
 [IsTransformationSemigroup], x-> FLAT_KERNEL_TRANS);
 
 InstallMethod(RhoFunc, "for a partial perm semi",
-[IsPartialPermSemigroup], x-> DomPP);
+[IsPartialPermSemigroup], x-> DOMAIN_PPERM);
 
 InstallMethod(RhoFunc, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> LeftSignedPartition);
@@ -178,7 +178,7 @@ InstallMethod(LambdaInverse, "for a transformation semigroup",
 [IsTransformationSemigroup], s-> INV_LIST_TRANS);
 
 InstallMethod(LambdaInverse, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> function(x, f) return InvPP(f); end); 
+[IsPartialPermSemigroup], s-> function(x, f) return f^-1; end); 
 
 #JDM c method
 InstallMethod(LambdaInverse, "for a bipartition",
@@ -214,7 +214,7 @@ InstallMethod(LambdaPerm, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> function(f,g)
   local h;
   h:=f^-1*g;
-  return MappingPermListList(DomPP(h), RanPP(h)); 
+  return MappingPermListList(DOMAIN_PPERM(h), IMAGE_SET_PPERM(h)); 
 end);
 
 #JDM c method for this!
@@ -241,7 +241,7 @@ InstallMethod(LambdaConjugator, "for a transformation semigroup",
 InstallMethod(LambdaConjugator, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> 
 function(f, g)
-  return MappingPermListList(RanPP(f), RanPP(g));
+  return MappingPermListList(IMAGE_PPERM(f), IMAGE_PPERM(g));
 end);
 
 # this method is identical to the method for LambdaPerm, I'm not sure it does
@@ -421,7 +421,7 @@ end);
 InstallMethod(IsInSubgroupOfSemigroup, "for a partial perm",
 [IsPartialPerm],
 function(f) 
-  return DomPP(f)=RanSetPP(f);
+  return DOMAIN_PPERM(f)=IMAGE_SET_PPERM(f);
 end);
 
 InstallMethod(IsInSubgroupOfSemigroup, "for a bipartition",
