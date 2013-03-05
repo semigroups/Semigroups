@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-ReadPackage("semigroups/gap/pperm.gi");
+#ReadPackage("semigroups/gap/pperm.gi");
 ReadPackage("semigroups/gap/partition.gi");
 ReadPackage("semigroups/gap/binary.gi");
 ReadPackage("semigroups/gap/matrix.gi");

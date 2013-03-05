@@ -58,39 +58,6 @@ static inline void SET_ELM_UInt2(Obj f, Int pos, UInt2 nr)
     data[pos-1] = nr;
 }
 
-/* create a new empty plist */
-static inline Obj NEW_EMPTY_PLIST()
-{ Obj out;
-  out = NEW_PLIST(T_PLIST_EMPTY, 0);
-  SET_LEN_PLIST(out, 0);
-  return out;
-}
-
-
-
-/* create a new empty partial trans */
-
-static inline Obj NEW_EMPTY_PP()
-{ UInt2 i;
-  Obj f;
-  f = NewBag(T_DATOBJ, sizeof(UInt2)*8+sizeof(UInt));
-  TYPE_DATOBJ(f) = PartialPermType;
-  for(i=1;i<=8;i++)
-    SET_ELM_UInt2(f, i, (UInt2) 0);
-  return f;
-}
-
-/* error if 65535 points are exceeded */
-static inline Int TOO_MANY_PTS_ERROR_PP(int cond)
-{
-  if(cond)
-  {
-    ErrorQuit("usage: can only create partial perms on at most 65535 pts,",
-      0L, 0L);
-  }
-  return 0L;
-}
- 
 /* error if 65535 points are exceeded */
 static inline Int TOO_MANY_PTS_ERROR_BP(int cond)
 {
@@ -111,15 +78,8 @@ int cmp (const void *a, const void *b)
  return (int) (aa-bb);
 }
 
-/* length of the partial perm internal rep */
-static inline Int LEN_PP(Obj f)
-{
-  return (ELM_UInt2(f,1)==0?7:ELM_UInt2(f,1)+3*ELM_UInt2(f,2)+6);
-}
-
-/* set the range set of a partial perm */
-static inline void SET_RANSET_PP(Obj f, UInt2 deg, UInt2 rank)
-{   
+/* set the Aange set of a partial perm */
+static inline void SET_RANSET_PP(Obj f, UInt2 deg, UInt2 rank){   
   UInt2 i;
  
   for(i=1;i<=rank;i++)
@@ -133,192 +93,6 @@ static inline void SET_RANSET_PP(Obj f, UInt2 deg, UInt2 rank)
 ** GAP functions for partial permutations
 *******************************************************************************/
 
-/* method for f[i] */
-Obj FuncELM_LIST_PP( Obj self, Obj f, Obj i)
-{ 
-  if(INT_INTOBJ(i)>LEN_PP(f)) return Fail;
-  return INTOBJ_INT(ELM_UInt2(f, INT_INTOBJ(i)));
-}
-
-/* method for f{list} */
-Obj FuncELMS_LIST_PP(Obj self, Obj f, Obj list)
-{   Int len, i;
-    Obj out;
-    
-    len = LEN_LIST(list);
-    if(len>LEN_PP(f)) len = LEN_PP(f);
-    out = NEW_PLIST(T_PLIST_CYC, len);
-    SET_LEN_PLIST(out, len);
-    
-    for(i=1;i<=len;i++){
-      SET_ELM_PLIST(out,i,  
-        INTOBJ_INT(ELM_UInt2(f, INT_INTOBJ(ELM_LIST(list, i)))));
-    }
-
-    return out;
-}
-
-/* create partial perm from full representation */
-Obj FuncFullPartialPermNC( Obj self, Obj rep )
-{   Int len, i;
-    Obj f;
-
-    len=LEN_PLIST(rep);
-    f=NEW_UInt2(len, PartialPermType);
-    for(i=1;i<=len;i++)
-    { 
-      SET_ELM_UInt2(f,i,(UInt2) INT_INTOBJ(ELM_PLIST(rep, i)));
-    }
-  
-    return f;
-}
-
-/* create partial perm from sparse representation */
-Obj FuncSparsePartialPermNC( Obj self, Obj dom, Obj ran )
-{   Int rank, deg, j, k, max_ran, min_ran;
-    UInt2 i;
-    Obj f;
-
-    rank=LEN_LIST(dom);
-
-    if(rank==0) return NEW_EMPTY_PP();
-    
-    deg=INT_INTOBJ(ELM_LIST(dom,rank));
-   
-    TOO_MANY_PTS_ERROR_PP(rank>65535||deg>65535);
-
-    f=NEW_UInt2(6+deg+3*rank, PartialPermType);
-
-    SET_ELM_UInt2(f, 1, (UInt2) deg);
-    SET_ELM_UInt2(f, 2, (UInt2) rank);
-
-    max_ran=0; 
-    min_ran=65535; 
-
-    /* find dense img list, max_ran, min_ran */
-    for(i=1;i<=rank;i++){
-      j=INT_INTOBJ(ELM_LIST(dom, i));
-      SET_ELM_UInt2(f, 6+deg+i, (UInt2) j);
-      
-      k=INT_INTOBJ(ELM_LIST(ran, i));
-      SET_ELM_UInt2(f, 6+deg+rank+i, (UInt2) k);
-      SET_ELM_UInt2(f, j+6, (UInt2) k);
-
-      if(k>max_ran) max_ran=k;
-      if(k<min_ran) min_ran=k;
-    }
-
-    TOO_MANY_PTS_ERROR_PP(max_ran>65535);
-
-    SET_ELM_UInt2(f,3,(UInt2) min_ran);
-    SET_ELM_UInt2(f,4,(UInt2) max_ran);
-
-    /* set min */
-    j=INT_INTOBJ(ELM_LIST(dom,1));
-    SET_ELM_UInt2(f,5,min_ran<j?(UInt2) min_ran:(UInt2) j);
-    
-    /* set max */
-    SET_ELM_UInt2(f,6,max_ran>deg?(UInt2) max_ran:(UInt2) deg);
-    return f;
-}
-
-/* create dense partial perm */
-Obj FuncDensePartialPermNC( Obj self, Obj img )
-{ 
-    Obj f, buf;
-    Int deg, i, max_ran, min_ran, rank, j, k;
-    Int ran[512];
-
-    if(LEN_LIST(img)==0) return NEW_EMPTY_PP();
-    
-    /* remove trailing zeros */
-    deg = 0;
-    for(i=LEN_LIST(img);1<=i;i--)
-    {
-      if(INT_INTOBJ(ELM_LIST(img, i))!=0) 
-      {
-        deg = i;
-        break;
-      }
-    }
-
-    TOO_MANY_PTS_ERROR_PP(deg>65535);
-
-    if(deg==0) return NEW_EMPTY_PP();
-    
-    f = NEW_UInt2(3*deg+6, PartialPermType); /* the output*/
-    SET_ELM_UInt2(f, 1, (UInt2) deg);
-    
-    max_ran=0; 
-    min_ran=65535; 
-    rank=0;
-    i=0;
-
-    /* find dom, rank, max_ran, min_ran */
-    while(i<deg&&rank<512)
-    {
-      i++;
-      j = INT_INTOBJ(ELM_LIST(img, i));
-      SET_ELM_UInt2(f, i+6, (UInt2) j);
-      if(j!=0)
-      {
-        rank++;
-        SET_ELM_UInt2(f, deg+rank+6, (UInt2) i); /* dom*/
-        ran[rank]=j;
-        if(j>max_ran) max_ran=j;
-        if(j<min_ran) min_ran=j;
-      }
-    }
-   
-    if(i<deg){
-      buf=NEW_UInt2(65023, PartialPermType); /* internal only */
-      /* carry on */
-      for(k=i+1;k<=deg;k++)
-      {
-        j = INT_INTOBJ(ELM_LIST(img, k));
-        SET_ELM_UInt2(f, k+6, (UInt2) j);
-        if(j!=0)
-        {
-          rank++;
-          SET_ELM_UInt2(f, deg+rank+6, (UInt2) k); /* dom*/
-          SET_ELM_UInt2(buf, rank, (UInt2) j);
-          if(j>max_ran) max_ran=j;
-          if(j<min_ran) min_ran=j;
-        }
-      }
-    }else{
-       buf=INTOBJ_INT(0); 
-    }
-
-    TOO_MANY_PTS_ERROR_PP(max_ran>65535);
-
-    SET_ELM_UInt2(f,2,(UInt2) rank);
-    SET_ELM_UInt2(f,3,(UInt2) min_ran);
-    SET_ELM_UInt2(f,4,(UInt2) max_ran);
-
-    /* set range */
-    for(i=1;i<=(rank<513?rank:512);i++)
-    {
-      SET_ELM_UInt2(f,deg+rank+6+i,(UInt2) ran[i]);
-    }
-      
-    for(i=513;i<=rank;i++) 
-    {      
-      SET_ELM_UInt2(f,deg+rank+6+i,ELM_UInt2(buf,i)); 
-    }   
-
-    /* set min */
-    j=ELM_UInt2(f,deg+7); /* min. dom. */
-    SET_ELM_UInt2(f,5,min_ran<j?(UInt2) min_ran:j);
-
-    /* set max */
-    SET_ELM_UInt2(f,6,max_ran>deg?(UInt2) max_ran:(UInt2) deg); 
-    
-    ResizeBag(f, sizeof(UInt2)*(LEN_PP(f))+sizeof(UInt));
-    return f;
-}
-
-/* product of partial permutations */
 Obj FuncProdPP( Obj self, Obj f, Obj g )
 {   UInt2 deg_f, deg_g, deg, rank_f, i, r, max_ran, min_ran, rank, j, k, l;
     Obj fg;
@@ -391,62 +165,6 @@ Obj FuncProdPP( Obj self, Obj f, Obj g )
     return fg;
 }
 
-/* domain of partial permutation */
-Obj FuncDomPP (Obj self, Obj f )
-{ UInt2 deg, rank, i;
-  Obj out;
-
-  deg=ELM_UInt2(f, 1);
-  if(deg==0) return NEW_EMPTY_PLIST();
-  rank=ELM_UInt2(f, 2);
-  out=NEW_PLIST(T_PLIST_CYC,rank);
-  SET_LEN_PLIST(out,(Int) rank);
-  for(i=1;i<=rank;i++)
-  {
-    SET_ELM_PLIST(out,i,INTOBJ_INT(ELM_UInt2(f,6+deg+i)));
-  }
-  return out;
-}
-
-/* range of partial permutation */
-Obj FuncRanPP (Obj self, Obj f )
-{ UInt2 deg, rank, i;
-  Obj out;
-
-  deg=ELM_UInt2(f, 1);
-  if(deg==0) return NEW_EMPTY_PLIST();
-  rank=ELM_UInt2(f, 2);
-  out=NEW_PLIST(T_PLIST_CYC,rank);
-  SET_LEN_PLIST(out,(Int) rank);
-  for(i=1;i<=rank;i++)
-  {
-    SET_ELM_PLIST(out,i,INTOBJ_INT(ELM_UInt2(f,6+deg+rank+i)));
-  }
-  return out;
-}
-
-/* range set of partial permutation */
-Obj FuncRanSetPP ( Obj self, Obj f )
-{ UInt2 deg, rank, i;
-  Obj out;
-
-  deg=ELM_UInt2(f, 1);
-  
-  if(deg==0) return NEW_EMPTY_PLIST();
-
-  rank=ELM_UInt2(f, 2);
-
-  if(ELM_UInt2(f, 7+deg+2*rank)==0) SET_RANSET_PP(f, deg, rank);
-
-  out = NEW_PLIST(T_PLIST_CYC,rank);
-  SET_LEN_PLIST(out,(Int) rank);
-  for(i=1;i<=rank;i++)
-  {
-    SET_ELM_PLIST(out,i, INTOBJ_INT(ELM_UInt2(f,2*rank+deg+6+i)));
-  }
-  return out;
-}
-
 /* inverse of a partial permutation */
 Obj FuncInvPP ( Obj self, Obj f )
 {
@@ -457,8 +175,6 @@ Obj FuncInvPP ( Obj self, Obj f )
   if(deg_f==0) return NEW_EMPTY_PP();
 
   rank=ELM_UInt2(f,2);
-
-  /* check if f knows Set(Ran(f)) if not set it */
   if(ELM_UInt2(f,7+deg_f+2*rank)==0) SET_RANSET_PP(f,deg_f,rank);
    
   deg_f_inv=ELM_UInt2(f,4); /* max ran(f) */
@@ -787,74 +503,6 @@ Obj FuncLeqPP(Obj self, Obj f, Obj g)
 
   return False;
 }
-
-/* restricted partial perm */
-Obj FuncRestrictedPP(Obj self, Obj f, Obj set)
-{ UInt2 deg_f, deg_g, min_ran, max_ran, rank, k;
-  Int n, i, j, r; 
-  Obj g;
-  Int ran[LEN_LIST(set)];
-
-  deg_f=ELM_UInt2(f, 1);
-  n=LEN_LIST(set);
-  if(n==0||deg_f==0) return NEW_EMPTY_PP();
-
-  /* find degree of restricted part perm */
-  deg_g=0;
-  for(i=n;1<=i;i--)
-  {
-    j=INT_INTOBJ(ELM_LIST(set, i));
-    if(j<=deg_f&&ELM_UInt2(f, j+6)!=0)
-    {
-      deg_g=(UInt2) j;
-      r=i;
-      break;
-    }
-  }
-
-  if(deg_g==0) return NEW_EMPTY_PP();
-
-  g=NEW_UInt2(3*deg_g+6, PartialPermType);
-  SET_ELM_UInt2(g,1,deg_g);
-
-  max_ran=0;
-  min_ran=ELM_UInt2(f,4);
-  rank=0;
-
-  for(i=1;i<=r;i++)
-  {
-    j = INT_INTOBJ(ELM_LIST(set, i));
-    k = ELM_UInt2(f, 6+j);
-    if(k!=0)
-    {
-      rank++;
-      SET_ELM_UInt2(g, 6+j, k); /* dense img list */
-      SET_ELM_UInt2(g, 6+deg_g+rank, (UInt2) j); /* dom */
-      ran[rank]=k;
-      if(k>max_ran) max_ran=k;
-      if(k<min_ran) min_ran=k;
-    }
-  }
-  
-  SET_ELM_UInt2(g,2,rank);
-  SET_ELM_UInt2(g,3,min_ran);
-  SET_ELM_UInt2(g,4,max_ran); 
-
-  /* set range */
-  for(i=1;i<=rank;i++){
-    SET_ELM_UInt2(g,deg_g+rank+6+i,ran[i]);
-  }
-
-  /* set min */
-  j=ELM_UInt2(g,deg_g+7); /* min. dom. */
-  SET_ELM_UInt2(g,5,min_ran<j?min_ran:j);
-   
-  /* set max */
-  SET_ELM_UInt2(g,6,max_ran>deg_g?max_ran:deg_g); 
-
-  ResizeBag(g, sizeof(UInt2)*(LEN_PP(g))+sizeof(UInt));
-  return g;
-} 
 
 /* less than or equal in natural partial order */
 Obj FuncNaturalLeqPP(Obj self, Obj f, Obj g)
