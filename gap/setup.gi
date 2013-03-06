@@ -209,13 +209,8 @@ InstallMethod(RhoInverse, "for a bipartition",
 InstallMethod(LambdaPerm, "for a transformation semi",
 [IsTransformationSemigroup], s-> PERM_LEFT_QUO_TRANS_NC);
 
-#JDM c method for this!
 InstallMethod(LambdaPerm, "for a partial perm semi",
-[IsPartialPermSemigroup], s-> function(f,g)
-  local h;
-  h:=f^-1*g;
-  return MappingPermListList(DOMAIN_PPERM(h), IMAGE_SET_PPERM(h)); 
-end);
+[IsPartialPermSemigroup], s-> PERM_LEFT_QUO_PPERM_NC);
 
 #JDM c method for this!
 InstallMethod(LambdaPerm, "for a bipartition semigroup",
