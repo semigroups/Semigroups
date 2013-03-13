@@ -624,7 +624,7 @@ function(s)
     bound:=Sum([1..max], x-> Binomial(n, x));
   fi;
 
-  o:=Orb(gens, DomainOfPartialPermCollection(s), OnIntegerSetsWithPP, 
+  o:=Orb(gens, DomainOfPartialPermCollection(s), OnSets, 
     rec( schreier:=true,
          gradingfunc:=function(o, x) return Length(x); end,
          onlygrades:=[0..max],

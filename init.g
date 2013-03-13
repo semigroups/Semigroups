@@ -17,7 +17,7 @@ if (not IsBound(SEMIGROUPSC)) and
     "semigroups.so"));
 fi;
 
-ReadPackage("semigroups/gap/pperm.gd");
+#ReadPackage("semigroups/gap/pperm.gd");
 ReadPackage("semigroups/gap/partition.gd");
 ReadPackage("semigroups/gap/binary.gd");
 ReadPackage("semigroups/gap/matrix.gd");
