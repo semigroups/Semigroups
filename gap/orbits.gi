@@ -8,12 +8,7 @@
 #############################################################################
 ##
 
-# - this file is alphabetized, keep it that way!
-
-#CCC
-
-# new for 1.0! - EvaluateWord - "for partial perm coll and list pos ints"
-#############################################################################
+#
 
 InstallOtherMethod(EvaluateWord, "for partial perm coll and list pos ints", 
 [IsPartialPermCollection, IsList],

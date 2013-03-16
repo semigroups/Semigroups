@@ -115,7 +115,7 @@ InstallMethod(LambdaOrbSeed, "for a transformation semi",
 [IsTransformationSemigroup], s-> [0]);
 
 InstallMethod(LambdaOrbSeed, "for a partial perm semi",
-[IsPartialPermSemigroup], s-> [65536]);
+[IsPartialPermSemigroup], s-> [0]);
 
 InstallMethod(LambdaOrbSeed, "for a bipartition semi",
 [IsBipartitionSemigroup], s-> [65536]);
@@ -126,7 +126,7 @@ InstallMethod(RhoOrbSeed, "for a transformation semi",
 [IsTransformationSemigroup], s->[0]);
 
 InstallMethod(RhoOrbSeed, "for a partial perm semi",
-[IsPartialPermSemigroup], s-> [65536]);
+[IsPartialPermSemigroup], s-> [0]);
 
 InstallMethod(RhoOrbSeed, "for a bipartition semi",
 [IsBipartitionSemigroup], s-> [65536]);
