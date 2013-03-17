@@ -94,7 +94,7 @@ InstallMethod(RhoAct, "for a transformation semi",
 [IsTransformationSemigroup], x-> ON_KERNEL_ANTI_ACTION);
 
 InstallMethod(LambdaAct, "for a partial perm semi",
-[IsPartialPermSemigroup], x-> OnSets);
+[IsPartialPermSemigroup], x-> OnPosIntSetsPartialPerm);
 
 # JDM new c method for this!
 InstallMethod(RhoAct, "for a partial perm semi",

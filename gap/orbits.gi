@@ -8,6 +8,124 @@
 #############################################################################
 ##
 
+InstallMethod( Enumerate, 
+"for a hash orbit and a limit", 
+[IsOrbit and IsHashOrbitRep and IsLambdaOrb, IsCyclotomic],
+function( o, limit )
+  local orb, i, nr, looking, lookfunc, stopper, storenumbers, op, gens, ht, genstoapply, schreier, schreiergen, schreierpos, log, logind, logpos, depth, depthmarks, grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph, nrgens, reverse, suc, yy, pos, grade, rep, j;
+
+  # Set a few local variables for faster access:
+  orb := o!.orbit;
+  i := o!.pos;  # we go on here
+  nr := Length(orb);
+
+  # We copy a few things to local variables to speed up access:
+  looking := o!.looking;
+  if looking then lookfunc := o!.lookfunc; fi;
+  stopper := o!.stopper;
+  storenumbers := o!.storenumbers;
+  op := o!.op;
+  gens := o!.gens;
+  ht := o!.ht;
+  genstoapply := o!.genstoapply;
+  schreier := o!.schreier;
+  schreiergen := o!.schreiergen;
+  schreierpos := o!.schreierpos;
+  
+  log := o!.log;
+  logind := o!.logind;
+  logpos := o!.logpos;
+  depth := o!.depth;
+  depthmarks := o!.depthmarks;
+  
+  grades := o!.grades;
+  gradingfunc := o!.gradingfunc;
+  onlygrades := o!.onlygrades;
+  onlygradesdata := o!.onlygradesdata;
+  orbitgraph := o!.orbitgraph;
+  nrgens:=Length(gens);
+
+  #if not IsBound(o!.rev) then 
+  #  o!.rev:=[];
+  #fi;
+  #reverse:=o!.rev;
+
+  # Maybe we are looking for something and it is the start point:
+  while nr <= limit and i <= nr and i <> stopper do
+    if i >= depthmarks[depth+1] then
+      depth := depth + 1;
+      depthmarks[depth+1] := nr+1;
+    fi;
+
+    logind[i] := logpos; suc := false;
+
+    # Now apply generators:
+    for j in genstoapply do
+      yy := op(orb[i],gens[j]);
+      pos := HTValue_TreeHash_C(ht,yy);
+      if gradingfunc <> false then
+        grade := gradingfunc(o,yy);
+        if onlygrades <> false and 
+          not(onlygrades(grade,onlygradesdata)) then
+          pos := false;
+        fi;
+      fi;     
+
+      if pos = fail then
+        nr := nr + 1;
+        orb[nr] := yy;
+        if grades <> false then
+          grades[nr] := grade;
+        fi;
+
+        HTAdd_TreeHash_C(ht,yy,nr);
+          
+        orbitgraph[nr] := EmptyPlist(nrgens);
+        orbitgraph[i][j] := nr;
+        #reverse[nr]:=List([1..nrgens], x-> []);
+        #Add(reverse[nr][j], i);
+
+        # Handle Schreier tree:
+        schreiergen[nr] := j;
+        schreierpos[nr] := i;
+                
+        suc := true;
+        log[logpos] := j;
+        log[logpos+1] := nr;
+        logpos := logpos+2;
+        o!.logpos := logpos;   # write back to preserve
+                
+        # Are we looking for something?
+        if looking then
+          if lookfunc(o,yy) then
+            o!.pos := i;
+            o!.found := nr;
+            o!.depth := depth;
+            return o;
+          fi;
+        fi;
+      elif pos <> false then    # false if point was rejected by grade
+        orbitgraph[i][j]:=pos;
+        #Add(reverse[pos][j], i);
+      fi;
+    od;    
+    # Now close the log for this point:
+    if suc then
+      log[logpos-2] := -log[logpos-2];
+    else
+      logind[i] := 0;
+    fi;
+    i := i + 1;
+  od;
+  o!.pos := i;
+  o!.depth := depth;
+  if i > nr then
+    SetFilterObj(o,IsClosed); 
+    o!.orbind := [1..nr];
+  fi;
+  return o;
+end );
+
 #
 
 InstallOtherMethod(EvaluateWord, "for partial perm coll and list pos ints", 
@@ -103,7 +221,7 @@ function(o)
     return o!.scc;
   fi;
 
-  if not IsClosed(o) then #JDM good idea?
+  if not IsClosed(o) then 
     Enumerate(o, infinity);
   fi;
 
@@ -123,8 +241,7 @@ function(o)
   return scc;
 end); 
 
-# new for 0.4! - OrbSCCLookup - "for an orbit"
-#############################################################################
+#
 
 InstallGlobalFunction(OrbSCCLookup, 
 function(o)
@@ -153,14 +270,11 @@ function(o)
   return o!.truth;
 end);
 
-#RRR
-
-# new for 0.4! - ReverseSchreierTreeOfSCC - "for an orbit and pos. int."
-###########################################################################
+#
 
 InstallGlobalFunction(ReverseSchreierTreeOfSCC,
 function(o, i)
-  local r, graph, rev, scc, gen, pos, seen, t, oo, j, k, l, m;
+  local r, nrgens, graph, nrgraph, rev, scc, gen, pos, seen, lookup, oo, j, nroo, nrscc, k, l, m, len;
 
   r:=Length(OrbSCC(o));
 
@@ -177,13 +291,16 @@ function(o, i)
     return o!.reverse[i];
   fi;
 
+  nrgens:=Length(o!.gens);
+  
   if not IsBound(o!.rev) then
-    graph:=OrbitGraph(o);
 
-    rev:=List([1..Length(graph)], x-> List([1..Length(o!.gens)], x-> []));
- 
-    for j in [1..Length(graph)] do
-      for k in [1..Length(graph[j])] do
+    graph:=OrbitGraph(o);
+    nrgraph:=Length(graph);
+    rev:=List([1..nrgraph], x-> List([1..nrgens], x-> []));
+
+    for j in [1..nrgraph] do
+      for k in [1..nrgens] do
         if IsBound(graph[j][k]) then
           Add(rev[graph[j][k]][k], j);
           #starting at position j and applying gens[k] we obtain graph[j][k];
@@ -195,8 +312,6 @@ function(o, i)
   fi;
 
   scc:=o!.scc[i]; rev:=o!.rev;
-  #gen:=ListWithIdenticalEntries(Length(o), fail);
-  #pos:=ListWithIdenticalEntries(Length(o), fail);
   gen:=EmptyPlist(Length(o));
   pos:=EmptyPlist(Length(o));
 
@@ -204,23 +319,24 @@ function(o, i)
 
   seen:=BlistList([1..Length(o)], [scc[1]]);
  
-  #JDM remove use of truth table here!
-  t:=OrbSCCTruthTable(o)[i]; 
+  lookup:=OrbSCCLookup(o);
   oo:=EmptyPlist(Length(scc));
-  oo[1]:=scc[1]; j:=0;
+  oo[1]:=scc[1]; j:=0; nroo:=1;
+  nrscc:=Length(scc);
 
-  while Length(oo)<Length(scc) do
+  while nroo<nrscc do
     j:=j+1;
     k:=oo[j];
     l:=0;
-    while l< Length(rev[k]) and Length(oo)<Length(scc) do
+    while l<nrgens and nroo<nrscc do
       l:=l+1;
       m:=0;
-      while m< Length(rev[k][l]) and Length(oo)<Length(scc) do
+      len:=Length(rev[k][l]);
+      while m<len and nroo<nrscc do
         m:=m+1;
-        if not seen[rev[k][l][m]] and t[rev[k][l][m]] then
-          Add(oo, rev[k][l][m]); seen[rev[k][l][m]]:=true;
-          gen[rev[k][l][m]]:=l; pos[rev[k][l][m]]:=k;
+        if not seen[rev[k][l][m]] and lookup[rev[k][l][m]]=i then
+          Add(oo, rev[k][l][m]); nroo:=nroo+1;
+          seen[rev[k][l][m]]:=true; gen[rev[k][l][m]]:=l; pos[rev[k][l][m]]:=k;
         fi;
       od;
     od;
@@ -230,16 +346,11 @@ function(o, i)
   return [gen, pos];
 end);
 
-#TTT
-
-#SSS
-
-# new for 0.4! - SchreierTreeOfSCC - "for an orbit and pos. int."
-###########################################################################
+#
 
 InstallGlobalFunction(SchreierTreeOfSCC,
 function(o, i)
-  local scc, len, gen, pos, seen, t, oo, m, graph, j, k, l, len_k;
+  local scc, len, gen, pos, seen, lookup, oo, m, graph, j, k, l, len_k;
 
   if not IsBound(o!.scc) then 
     OrbSCC(o);
@@ -267,8 +378,9 @@ function(o, i)
   gen[scc[1]]:=fail; pos[scc[1]]:=fail;
 
   seen:=BlistList([1..len], [scc[1]]);
-#JDM remove the use of truth table here
-  t:=OrbSCCTruthTable(o)[i];
+  #JDM remove the use of truth table here
+  #t:=OrbSCCTruthTable(o)[i];
+  lookup:=OrbSCCLookup(o);
   oo:=[scc[1]]; m:=1;
   graph:=OrbitGraph(o);
   j:=0;
@@ -278,7 +390,8 @@ function(o, i)
     j:=j+1; k:=oo[j]; l:=0; len_k:=Length(graph[k]);
     while l<len_k and m<len do
       l:=l+1;
-      if IsBound(graph[k][l]) and not seen[graph[k][l]] and t[graph[k][l]] then
+      if IsBound(graph[k][l]) and not seen[graph[k][l]] 
+       and lookup[graph[k][l]]=i then
         m:=m+1;
         oo[m]:=graph[k][l]; seen[graph[k][l]]:=true;
         gen[graph[k][l]]:=l; pos[graph[k][l]]:=k;
@@ -290,8 +403,6 @@ function(o, i)
   return [gen, pos];
 end);
 
-# mod for 0.4! - TraceSchreierTreeOfSCCBack - "for an orb, pos int, pos int"
-#############################################################################
 # Usage: o = orbit of images; i = index of scc; j = element of scc[i].
 
 # Notes: returns a word in the generators that takes o[j] to o!.scc[i][1]  
@@ -300,8 +411,13 @@ end);
 InstallGlobalFunction(TraceSchreierTreeOfSCCBack,
 function(o, i, j)
   local tree, scc, word;
-
-  tree:=ReverseSchreierTreeOfSCC(o, i);
+  
+  if not IsInvLambdaOrb(o) then 
+    tree:=ReverseSchreierTreeOfSCC(o, i);
+  else 
+    tree:=SchreierTreeOfSCC(o, i);
+  fi;
+  
   scc:=OrbSCC(o)[i];
 
   word := [];
@@ -312,8 +428,6 @@ function(o, i, j)
   return word;
 end);
 
-# mod for 0.4! - TraceSchreierTreeOfSCCForward - "for an orb, pos int, pos int"
-#############################################################################
 # Usage: o = orbit of images; i = index of scc; j = element of scc[i].
 
 # Notes: returns a word in the generators that takes o!.scc[i][1] to o[j] 

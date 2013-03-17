@@ -781,8 +781,9 @@ end);
 InstallMethod(LambdaOrb, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local opts, semi, name;
+  local opts, semi, o, name;
 
+  #JDM can remove some components here if new enumerate is successful
   opts:= rec(schreier:=true, orbitgraph:=true,
           storenumbers:=true, log:=true, 
           treehashsize:=SemigroupsOptionsRec.hashlen.M,
@@ -792,7 +793,12 @@ function(s)
     opts.(name):=LambdaOrbOpts(s).(name);
   od;
 
-  return Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), opts);
+  o:=Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), opts);
+  SetFilterObj(o, IsLambdaOrb);
+  if IsActingSemigroupWithInverseOp(s) then 
+    SetFilterObj(o, IsInvLambdaOrb);
+  fi;
+  return o;
 end);
 
 InstallMethod(LambdaOrb, "for an acting semigroup ideal",
@@ -812,9 +818,7 @@ function(s)
   return Orb(GeneratorsOfSemigroup(Parent(s)), LambdaOrbSeed(s), LambdaAct(s), opts);
 end);
 
-
-# new for 1.0! - LambdaOrbMults - "for a lambda orb and scc index"
-##############################################################################
+#
 
 InstallGlobalFunction(LambdaOrbMults,
 function(o, m)
@@ -889,19 +893,34 @@ function(o, m, i)
   scc:=OrbSCC(o)[m];
   mults:=o!.mults;
   gens:=o!.gens;
-  genpos:=ReverseSchreierTreeOfSCC(o, m);
-  inv:=function(im, f) return LambdaInverse(o!.semi)(im, f); end;
+  if not IsInvLambdaOrb(o) then 
+    genpos:=ReverseSchreierTreeOfSCC(o, m);
+    inv:=function(im, f) return LambdaInverse(o!.semi)(im, f); end;
 
-  trace:=function(i)
-    local f;
+    trace:=function(i)
+      local f;
 
-    if IsBound(mults[i]) then 
-      return mults[i][2];
-    fi;
-    f:=gens[genpos[1][i]]*trace(genpos[2][i]);
-    mults[i]:=[inv(o[i], f), f];
-    return f;
-  end;
+      if IsBound(mults[i]) then 
+        return mults[i][2];
+      fi;
+      f:=gens[genpos[1][i]]*trace(genpos[2][i]);
+      mults[i]:=[inv(o[i], f), f];
+      return f;
+    end;
+  else
+    genpos:=SchreierTreeOfSCC(o, m);
+
+    trace:=function(i)
+      local f;
+
+      if IsBound(mults[i]) then 
+        return mults[i][2];
+      fi;
+      f:=INV(gens[genpos[1][i]])*trace(genpos[2][i]);
+      mults[i]:=[INV(f), f];
+      return f;
+    end;
+  fi;
 
   trace(i);
   return o!.mults[i];
@@ -925,7 +944,8 @@ end);
 
 InstallGlobalFunction(LambdaOrbSchutzGp, 
 function(o, m)
-  local s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, slp, lenslp, len, bound, g, is_sym, f, h, k, l;
+  local s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, slp, lenslp,
+  len, bound, g, is_sym, f, h, k, l;
   
   if IsBound(o!.schutz) then 
     if IsBound(o!.schutz[m]) then 
@@ -960,10 +980,8 @@ function(o, m)
   for k in scc do
     for l in [1..nrgens] do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
-        # JDM maybe keep TraceSchreierTreeOfSCCForward(o, m, k) in o?
-        f:=lambdaperm(rep, rep*EvaluateWord(gens,
-         TraceSchreierTreeOfSCCForward(o, m, k))
-          *gens[l]*LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
+        f:=lambdaperm(rep, rep*LambdaOrbMult(o, m, k)[1]*gens[l]
+          *LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
         h:=ClosureGroup(g, f);
         if Size(h)>Size(g) then 
           g:=h; 
@@ -990,7 +1008,6 @@ function(o, m)
     o!.schutzstab[m]:=false;
   else
     o!.schutzstab[m]:=StabChainImmutable(g);
-    #o!.schutzstab[m]:=StabilizerChain(g);
   fi;
 
   return g;
@@ -1063,10 +1080,7 @@ end);
 InstallOtherMethod(Length, "for semigroup data of acting semigroup",
 [IsSemigroupData], x-> Length(x!.orbit));
 
-#OOO
-
-# new for 1.0! - OrbitGraphAsSets - for semigroup data of acting semigroup
-##############################################################################
+#
 
 InstallOtherMethod(OrbitGraphAsSets, "for semigroup data of acting semigroup",  
 [IsSemigroupData], 99,

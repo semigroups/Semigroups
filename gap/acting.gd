@@ -29,8 +29,9 @@ DeclareAttribute("LambdaRhoLookup", IsGreensDClass and
 # long orbits <=> LongOrb
 DeclareAttribute("LambdaOrb", IsActingSemigroup, "mutable");
 DeclareAttribute("RhoOrb", IsActingSemigroup, "mutable");
-DeclareProperty("IsLambdaOrb", IsOrbit);
-DeclareProperty("IsRhoOrb", IsOrbit);
+DeclareFilter("IsLambdaOrb", IsOrbit);
+DeclareFilter("IsInvLambdaOrb", IsLambdaOrb);
+DeclareFilter("IsRhoOrb", IsOrbit);
 
 DeclareGlobalFunction("LambdaOrbMults");
 DeclareGlobalFunction("LambdaOrbMult");
