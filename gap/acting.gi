@@ -1074,8 +1074,7 @@ function(d)
   return out;
 end);
 
-# new for 1.0! - Length - for semigroup data of acting semigroup
-##############################################################################
+#
 
 InstallOtherMethod(Length, "for semigroup data of acting semigroup",
 [IsSemigroupData], x-> Length(x!.orbit));

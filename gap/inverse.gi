@@ -583,10 +583,7 @@ function(l)
     end));
 end);
 
-#GGG
-
-# new for 0.7! - GreensDClasses - for an acting semigp with inverse op
-##############################################################################
+#
 
 InstallOtherMethod(GreensDClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
