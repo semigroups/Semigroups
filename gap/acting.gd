@@ -65,6 +65,7 @@ DeclareProperty("IsGradedLambdaOrbs", IsOrbit);
 DeclareProperty("IsGradedRhoOrbs", IsOrbit);
 
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
+DeclareGlobalFunction("SizeOfSemigroupData");
 DeclareCategory("IsSemigroupData", IsRecord);
 
 #EOF
