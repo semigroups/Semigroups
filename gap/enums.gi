@@ -69,7 +69,7 @@ function(d)
       local s, rep, g, lm, lo, lscc, ll, lschutz, rm, ro, rscc, rl, schutz,
       cosets, j, r, p; 
 
-      s:=ParentSemigroup(d);
+      s:=Parent(d);
       rep:=Representative(d);
 
       if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] then
@@ -165,7 +165,7 @@ function(h)
 
     NumberElement:=function(enum, f)
       local s, rep;
-      s:=ParentSemigroup(h);
+      s:=Parent(h);
       rep:=Representative(h);
 
       if ActionRank(f) <> ActionRank(rep) 
@@ -230,7 +230,7 @@ function(l)
     NumberElement:=function(enum, f)
       local s, rep, o, m, i, g, j;
 
-      s:=ParentSemigroup(l);
+      s:=Parent(l);
       rep:=Representative(l);
       
       if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
@@ -311,7 +311,7 @@ function(r)
     NumberElement:=function(enum, f)
       local s, rep, o, m, l, g, j;
 
-      s:=ParentSemigroup(r);
+      s:=Parent(r);
       rep:=Representative(r);
       
       if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 

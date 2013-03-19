@@ -236,7 +236,7 @@ function(d)
     return iter;
   fi;
 
-  s:=ParentSemigroup(d);
+  s:=Parent(d);
   return IteratorByIterOfIter(s, Iterator(GreensRClasses(d)), x-> x,
    [IsIteratorOfDClassElements]);
 end);
@@ -257,7 +257,7 @@ function(h)
     return iter;
   fi;
 
-  s:=ParentSemigroup(h);
+  s:=Parent(h);
   return IteratorByIterator(Iterator(SchutzenbergerGroup(h)), x->
    Representative(h)*x, [IsIteratorOfHClassElements]);
 end);

@@ -15,7 +15,7 @@
 #
 
 InstallMethod(IsActingSemigroupGreensClass, "for a Green's class",
-[IsGreensClass], x-> IsActingSemigroup(ParentSemigroup(x)));
+[IsGreensClass], x-> IsActingSemigroup(Parent(x)));
 
 # the number of points in the action
 

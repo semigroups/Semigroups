@@ -138,7 +138,7 @@ function(f, d)
   local rep, s, o, m, lookup, rho_l, lambda_l, schutz, scc, g;
   
   rep:=Representative(d);
-  s:=ParentSemigroup(d);
+  s:=Parent(d);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
     or ActionRank(f) <> ActionRank(rep) 
@@ -193,7 +193,7 @@ function(f, l)
   local rep, s, m, o, i, schutz, g, p;
 
   rep:=Representative(l);
-  s:=ParentSemigroup(l);
+  s:=Parent(l);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
     or ActionDegree(f) <> ActionDegree(rep)  
@@ -247,7 +247,7 @@ function(f, r)
   local rep, s, m, o, i, schutz, g, p;
 
   rep:=Representative(r);
-  s:=ParentSemigroup(r);
+  s:=Parent(r);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
    ActionDegree(f) <> ActionDegree(rep) or 
@@ -313,7 +313,7 @@ function(s, m, o, rep, nc)
   local l;
 
   l:=Objectify(LClassType(s), rec());
-  SetParentSemigroup(l, s);
+  SetParent(l, s);
   SetRepresentative(l, rep);
   SetLambdaOrb(l, o);
   SetLambdaOrbSCCIndex(l, m);
@@ -350,7 +350,7 @@ InstallOtherMethod(DClassOfRClass, "for inverse op R-class",
 function(r)
   local s, o, m, f;
 
-  s:=ParentSemigroup(r);
+  s:=Parent(r);
   o:=LambdaOrb(r); 
   m:=LambdaOrbSCCIndex(r);
   f:=RectifyLambda(s, o, Representative(r), fail, m).rep;
@@ -365,7 +365,7 @@ InstallOtherMethod(DClassOfHClass, "for inverse op H-class",
 function(h)
   local s, o, m, f;
 
-  s:=ParentSemigroup(h);
+  s:=Parent(h);
   o:=LambdaOrb(h); 
   m:=LambdaOrbSCCIndex(h);
   f:=RectifyLambda(s, o, Representative(h), fail, m).rep;
@@ -378,7 +378,7 @@ end);
 InstallMethod(LClassOfHClass, "for an inverse op H-class",
 [IsInverseOpClass and IsGreensHClass and IsActingSemigroupGreensClass],
 # use non-NC so that rho value of f is rectified
-h-> CreateInverseOpLClass(ParentSemigroup(h), LambdaOrbSCCIndex(h),
+h-> CreateInverseOpLClass(Parent(h), LambdaOrbSCCIndex(h),
 LambdaOrb(h), Representative(h), IsGreensClassNC(h)));
 
 # new for 1.0! - DClassReps - "for an acting semigroup with inversion"
@@ -450,7 +450,7 @@ function(d)
 
       o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
       lookup:=OrbSCCLookup(o);
-      s:=ParentSemigroup(d);
+      s:=Parent(d);
 
       i:=Position(o, RhoFunc(s)(f)); 
       if i=fail or not lookup[i]<>m then 
@@ -541,7 +541,7 @@ function(l)
     NumberElement:=function(enum, f)
       local s, rep, o, m, i, g, j;
 
-      s:=ParentSemigroup(l);
+      s:=Parent(l);
       rep:=Representative(l);
       
       if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
@@ -641,7 +641,7 @@ InstallOtherMethod(GreensHClasses, "for inverse op D-class",
 function(d)
   local s, o, m, f, scc, mults, out, n, g, j, k;
  
-  s:=ParentSemigroup(d);
+  s:=Parent(d);
   o:=LambdaOrb(d);
   m:=LambdaOrbSCCIndex(d); 
   f:=Representative(d);
@@ -676,7 +676,7 @@ function(l)
   
   f:=Representative(l);
   nc:=IsGreensClassNC(l);
-  s:=ParentSemigroup(l);
+  s:=Parent(l);
   
   out:=EmptyPlist(Length(scc));
   k:=0;
@@ -705,7 +705,7 @@ function(r)
   
   f:=Representative(r);
   nc:=IsGreensClassNC(r);
-  s:=ParentSemigroup(r);
+  s:=Parent(r);
   
   out:=EmptyPlist(Length(scc));
   k:=0;
@@ -752,7 +752,7 @@ InstallOtherMethod(GreensLClasses, "for inverse op D-class of acting semigroup",
 function(d)
   local s, m, o, f, nc, out, k, mults, scc, i;
   
-  s:=ParentSemigroup(d);
+  s:=Parent(d);
   m:=LambdaOrbSCCIndex(d);
   o:=LambdaOrb(d);
   f:=Representative(d);
@@ -856,7 +856,7 @@ function(x, f)
     return;
   fi;
   
-  h:=CreateHClass(ParentSemigroup(x), LambdaOrbSCCIndex(x), LambdaOrb(x), fail,
+  h:=CreateHClass(Parent(x), LambdaOrbSCCIndex(x), LambdaOrb(x), fail,
    fail, f, IsGreensClassNC(x));
   
   if IsGreensLClass(x) then 
@@ -878,7 +878,7 @@ InstallOtherMethod(GreensHClassOfElementNC, "for inverse op class and elt",
 function(x, f)
   local h;
   
-  h:=CreateHClass(ParentSemigroup(x), LambdaOrbSCCIndex(x), LambdaOrb(x), fail,
+  h:=CreateHClass(Parent(x), LambdaOrbSCCIndex(x), LambdaOrb(x), fail,
    fail, f, true);
 
   if IsGreensLClass(x) then 
@@ -940,7 +940,7 @@ function(d, f)
   fi;
 
   # use non-NC so that rho value of f is rectified
-  l:=CreateInverseOpLClass(ParentSemigroup(d), LambdaOrbSCCIndex(d),
+  l:=CreateInverseOpLClass(Parent(d), LambdaOrbSCCIndex(d),
    LambdaOrb(d), f, IsGreensClassNC(d));
 
   SetDClassOfLClass(l, d);
@@ -956,7 +956,7 @@ function(d, f)
   local l;
 
   # use non-NC so taht rho value of f is rectified
-  l:=CreateInverseOpLClass(ParentSemigroup(d), LambdaOrb(d),
+  l:=CreateInverseOpLClass(Parent(d), LambdaOrb(d),
    LambdaOrbSCCIndex(d), f, true);
   SetDClassOfLClass(l, d);
   return l;
@@ -997,7 +997,7 @@ InstallOtherMethod(GreensRClasses, "for inverse op D-class",
 function(d)         
   local s, o, m, f, scc, mults, out, i, j;
   
-  s:=ParentSemigroup(d);
+  s:=Parent(d);
   o:=LambdaOrb(d);
   m:=LambdaOrbSCCIndex(d);
   f:=Representative(d);
@@ -1020,7 +1020,7 @@ end);
 
 InstallOtherMethod(GroupHClass, "for an inverse op D-class",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], 
-d-> CreateHClass(ParentSemigroup(d), LambdaOrbSCCIndex(d), LambdaOrb(d), fail, 
+d-> CreateHClass(Parent(d), LambdaOrbSCCIndex(d), LambdaOrb(d), fail, 
 fail, Representative(d), IsGreensClassNC(d)));
 
 #III
@@ -1033,7 +1033,7 @@ InstallOtherMethod(Idempotents, "for an inverse op D-class",
 function(d)
   local creator, o;
 
-  creator:=IdempotentCreator(ParentSemigroup(d));
+  creator:=IdempotentCreator(Parent(d));
   o:=LambdaOrb(d);
   return List(LambdaOrbSCC(d), x-> creator(o[x], o[x]));
 end);

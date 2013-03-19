@@ -139,6 +139,6 @@ function(I)
   Objectify(NewType(FamilyObj(I), IsSemigroupData and IsAttributeStoringRep),
    data);
 
-  SetParentSemigroup(data, I);
+  SetParent(data, I);
   return data;
 end);

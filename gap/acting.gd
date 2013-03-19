@@ -49,7 +49,6 @@ DeclareGlobalFunction("RhoPos");
 DeclareGlobalFunction("LambdaPos");
 DeclareGlobalFunction("RectifyRho");
 DeclareGlobalFunction("RectifyInverseRho");
-DeclareAttribute("ParentSemigroup", IsObject);
 
 # ForwardOrbitOfImage/Kernel/ShortOrb
 DeclareGlobalFunction("GradedLambdaOrb");

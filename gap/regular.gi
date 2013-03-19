@@ -106,7 +106,7 @@ function(f, d)
   local rep, s, g, m, o, scc, l, schutz;
 
   rep:=Representative(d);
-  s:=ParentSemigroup(d);
+  s:=Parent(d);
 
   # much much better performance using f[2]<>rep[2] below
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
@@ -479,7 +479,7 @@ function(d)
         return 1;
       fi;
 
-      s:=ParentSemigroup(d);
+      s:=Parent(d);
       
       o:=RhoOrb(d); m:=RhoOrbSCCIndex(d);
       x:=Position(o, RhoFunc(s)(f));
@@ -629,7 +629,7 @@ function(d)
 
   f:=Representative(d);
   nc:=IsGreensClassNC(d);
-  s:=ParentSemigroup(d);
+  s:=Parent(d);
  
   out:=EmptyPlist(Length(lambda_scc)*Length(rho_scc));
   k:=0;
@@ -663,7 +663,7 @@ function(l)
 
   f:=Representative(l);
   nc:=IsGreensClassNC(l);
-  s:=ParentSemigroup(l);
+  s:=Parent(l);
 
   if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) and not nc then 
     lambda_o:=LambdaOrb(s);
@@ -704,7 +704,7 @@ function(r)
 
   f:=Representative(r);
   nc:=IsGreensClassNC(r);
-  s:=ParentSemigroup(r);
+  s:=Parent(r);
 
   if HasRhoOrb(s) and IsClosed(RhoOrb(s)) and not nc then 
     rho_o:=RhoOrb(s);
@@ -773,7 +773,7 @@ function(d)
   local f, s, o, m, nc, scc, mults, out, k, i;
   
   f:=Representative(d);
-  s:=ParentSemigroup(d);
+  s:=Parent(d);
   o:=RhoOrb(d);
   m:=RhoOrbSCCIndex(d);
   nc:=IsGreensClassNC(d);
@@ -844,7 +844,7 @@ function(d)
   scc:=RhoOrbSCC(d);
   f:=Representative(d);
 
-  s:=ParentSemigroup(d);
+  s:=Parent(d);
   o:=LambdaOrb(d);
   m:=LambdaOrbSCCIndex(d);
   nc:=IsGreensClassNC(d);

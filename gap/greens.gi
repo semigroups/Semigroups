@@ -45,12 +45,12 @@ function(l)
   d:=DClassOfLClass(l);
   o:=LambdaOrb(d);
   #JDM can we improve the next line? Isn't this know already when l is created?
-  pos:=Position(o, LambdaFunc(ParentSemigroup(l))(Representative(l)));
+  pos:=Position(o, LambdaFunc(Parent(l))(Representative(l)));
   m:=LambdaOrbSCCIndex(d);
   if pos<>OrbSCC(o)[m][1] then
     mult:=LambdaOrbMult(o, m, pos);
     #the following step is necessary in case p is not in the schutz gp of d 
-    p:=LambdaPerm(ParentSemigroup(l))(Representative(l)*mult[2],
+    p:=LambdaPerm(Parent(l))(Representative(l)*mult[2],
      Representative(d));
     return List(RhoCosets(d), x-> (mult[2]*x^p*mult[1]));
   fi;
@@ -105,7 +105,7 @@ function(d)
   if not HasSemigroupDataIndex(d) then 
     return fail;
   fi;
-  data:=SemigroupData(ParentSemigroup(d));
+  data:=SemigroupData(Parent(d));
 
   # scc of R-reps corresponding to d 
   return OrbSCC(data)[OrbSCCLookup(data)[SemigroupDataIndex(d)]];
@@ -123,7 +123,7 @@ function(f, d)
   local rep, s, g, m, o, scc, l, schutz, cosets, x;
   
   rep:=Representative(d); 
-  s:=ParentSemigroup(d);
+  s:=Parent(d);
  
   # ActionRank method selection causes slowdown here.
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
@@ -192,7 +192,7 @@ InstallOtherMethod(\in, "for elt and acting semigroup H-class",
 function(f, h)
   local s, rep;
 
-  s:=ParentSemigroup(h);
+  s:=Parent(h);
   rep:=Representative(h);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
@@ -216,7 +216,7 @@ function(f, l)
   local rep, s, m, o, i, schutz, g, p;
 
   rep:=Representative(l); 
-  s:=ParentSemigroup(l);
+  s:=Parent(l);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
     ActionDegree(f) <> ActionDegree(rep) or 
@@ -276,7 +276,7 @@ function(f, r)
   local rep, s, m, o, l, schutz, g;
 
   rep:=Representative(r); 
-  s:=ParentSemigroup(r);
+  s:=Parent(r);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
     ActionDegree(f) <> ActionDegree(rep) or 
@@ -346,7 +346,7 @@ InstallMethod(DClassOfLClass, "for an L-class of an acting semigroup",
 function(l)
   local s, f, nc, o, i, m;
 
-  s:=ParentSemigroup(l); 
+  s:=Parent(l); 
   f:=Representative(l);
   nc:=IsGreensClassNC(l);
 
@@ -380,7 +380,7 @@ InstallMethod(DClassOfRClass, "for an R-class of an acting semigroup",
 function(r)
   local s, f, nc, o, i, m;
 
-  s:=ParentSemigroup(r); 
+  s:=Parent(r); 
   f:=Representative(r);
   nc:=IsGreensClassNC(r);
 
@@ -411,7 +411,7 @@ InstallMethod(DClassOfHClass, "for an H-class of an acting semigroup",
 function(h)
   local s, lambda_o, lambda_m, rho_o, rho_m, rectify;
   
-  s:=ParentSemigroup(h);
+  s:=Parent(h);
   lambda_o:=LambdaOrb(h);
   lambda_m:=LambdaOrbSCCIndex(h);
   rho_o:=RhoOrb(h);
@@ -428,14 +428,14 @@ end);
 InstallMethod(LClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 # use non-NC so that rho value of f is rectified
-h-> CreateLClass(ParentSemigroup(h), RhoOrbSCCIndex(h), RhoOrb(h),
+h-> CreateLClass(Parent(h), RhoOrbSCCIndex(h), RhoOrb(h),
  Representative(h), IsGreensClassNC(h)));
 
 # same method for regular/inverse semigroups. 
 
 InstallMethod(RClassOfHClass, "for an H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
-h-> CreateRClass(ParentSemigroup(h), LambdaOrbSCCIndex(h), LambdaOrb(h),
+h-> CreateRClass(Parent(h), LambdaOrbSCCIndex(h), LambdaOrb(h),
  Representative(h), IsGreensClassNC(h)));
 
 # Notes: this could be written in a more compact way but it is not for
@@ -459,7 +459,7 @@ function(s)
   for i in [2..Length(scc)] do 
     arg:=data[scc[i][1]];
     d:=Objectify(type, rec());     
-    SetParentSemigroup(d, s);
+    SetParent(d, s);
     SetLambdaOrbSCCIndex(d, arg[2]);
     SetLambdaOrb(d, arg[3]);
     SetSemigroupDataIndex(d, arg[6]);
@@ -507,7 +507,7 @@ function(l)
 
   rho_o:=RhoOrb(l); 
   rho_m:=RhoOrbSCCIndex(l);
-  s:=ParentSemigroup(l);
+  s:=Parent(l);
 
   scc:=OrbSCC(rho_o)[rho_m];
   mults:=RhoOrbMults(rho_o, rho_m);
@@ -546,7 +546,7 @@ function(r)
 
   lambda_o:=LambdaOrb(r); 
   lambda_m:=LambdaOrbSCCIndex(r);
-  s:=ParentSemigroup(r);
+  s:=Parent(r);
 
   scc:=OrbSCC(lambda_o)[lambda_m];
   mults:=LambdaOrbMults(lambda_o, lambda_m);
@@ -605,7 +605,7 @@ function(d)
   cosets:=LambdaCosets(d);
   f:=Representative(d);
  
-  s:=ParentSemigroup(d);
+  s:=Parent(d);
   o:=RhoOrb(d);
   m:=RhoOrbSCCIndex(d);
   nc:=IsGreensClassNC(d);
@@ -655,7 +655,7 @@ function(d)
   cosets:=RhoCosets(d);
   f:=Representative(d);
  
-  s:=ParentSemigroup(d);
+  s:=Parent(d);
   o:=LambdaOrb(d);
   m:=LambdaOrbSCCIndex(d);
   nc:=IsGreensClassNC(d); 
@@ -772,7 +772,7 @@ function(d, f)
     return;
   fi;
 
-  h:=CreateHClass(ParentSemigroup(d), LambdaOrbSCCIndex(d), LambdaOrb(d),
+  h:=CreateHClass(Parent(d), LambdaOrbSCCIndex(d), LambdaOrb(d),
    RhoOrbSCCIndex(d), RhoOrb(d), f, IsGreensClassNC(d));
   SetDClassOfHClass(h, d);
   
@@ -789,7 +789,7 @@ InstallOtherMethod(GreensHClassOfElementNC, "for a D-class and elt",
 function(d, f)
   local h;
  
-  h:=CreateHClass(ParentSemigroup(d), LambdaOrbSCCIndex(d), LambdaOrb(d),
+  h:=CreateHClass(Parent(d), LambdaOrbSCCIndex(d), LambdaOrb(d),
    RhoOrbSCCIndex(d), RhoOrb(d), f, true);
   SetDClassOfHClass(h, d);
 
@@ -811,7 +811,7 @@ function(l, f)
     return;
   fi;
 
-  s:=ParentSemigroup(l);
+  s:=Parent(l);
   nc:=IsGreensClassNC(l);
 
   if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
@@ -839,8 +839,8 @@ InstallOtherMethod(GreensHClassOfElementNC, "for an L-class and elt",
 function(l, f)
   local h;
  
-  h:=CreateHClass(ParentSemigroup(l), 
-   1, GradedLambdaOrb(ParentSemigroup(l), f, false), 
+  h:=CreateHClass(Parent(l), 
+   1, GradedLambdaOrb(Parent(l), f, false), 
    RhoOrbSCCIndex(l), RhoOrb(l), f, true);
   SetLClassOfHClass(h, l);
 
@@ -862,7 +862,7 @@ function(r, f)
     return;
   fi;
 
-  s:=ParentSemigroup(r);
+  s:=Parent(r);
   nc:=IsGreensClassNC(r);
 
   if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then 
@@ -890,8 +890,8 @@ InstallOtherMethod(GreensHClassOfElementNC, "for an R-class and elt",
 function(r, f)
   local h;
   
-  h:=CreateHClass(ParentSemigroup(r), LambdaOrbSCCIndex(r), LambdaOrb(r), 
-   1, GradedRhoOrb(ParentSemigroup(r), f, false), f, true);
+  h:=CreateHClass(Parent(r), LambdaOrbSCCIndex(r), LambdaOrb(r), 
+   1, GradedRhoOrb(Parent(r), f, false), f, true);
   SetRClassOfHClass(h, r);
 
   return h;
@@ -952,7 +952,7 @@ function(d, f)
   fi;
  
   # use non-NC so that rho value of f is rectified
-  l:=CreateLClass(ParentSemigroup(d), RhoOrbSCCIndex(d), RhoOrb(d), f,
+  l:=CreateLClass(Parent(d), RhoOrbSCCIndex(d), RhoOrb(d), f,
    IsGreensClassNC(d));
 
   SetDClassOfLClass(l, d);
@@ -970,7 +970,7 @@ function(d, f)
   local l;
 
   # use non-NC so taht rho value of f is rectified
-  l:=CreateLClass(ParentSemigroup(d), RhoOrb(d), RhoOrbSCCIndex(d), f, true);
+  l:=CreateLClass(Parent(d), RhoOrb(d), RhoOrbSCCIndex(d), f, true);
   SetDClassOfLClass(l, d);
   return l;
 end);
@@ -1027,7 +1027,7 @@ function(d, f)
     return;
   fi;
  
-  r:=CreateRClass(ParentSemigroup(d), LambdaOrbSCCIndex(d), LambdaOrb(d), f,
+  r:=CreateRClass(Parent(d), LambdaOrbSCCIndex(d), LambdaOrb(d), f,
    IsGreensClassNC(d));
   SetDClassOfRClass(r, d);
 
@@ -1044,7 +1044,7 @@ InstallOtherMethod(GreensRClassOfElementNC, "for D-class and acting elt",
 function(d, f)
   local r;
 
-  r:=CreateRClass(ParentSemigroup(d), LambdaOrbSCCIndex(d), LambdaOrb(d), f,
+  r:=CreateRClass(Parent(d), LambdaOrbSCCIndex(d), LambdaOrb(d), f,
    true);
   SetDClassOfRClass(r, d);
   return r;
@@ -1064,7 +1064,7 @@ function(d)
     return fail;
   fi;
   
-  s:=ParentSemigroup(d);
+  s:=Parent(d);
   rho:=RhoFunc(s)(Representative(d));
   o:=LambdaOrb(d);
   scc:=OrbSCC(o)[LambdaOrbSCCIndex(d)];
@@ -1315,7 +1315,7 @@ function(x, value, scc, o, onright)
     return [];
   fi;
   
-  s:=ParentSemigroup(x);
+  s:=Parent(x);
 
   if IsActingSemigroupWithFixedDegreeMultiplication(s) and 
    ActionRank(Representative(x))=ActionDegree(Representative(x)) then
@@ -1434,7 +1434,7 @@ function(h)
     return [];
   fi;
 
-  s:=ParentSemigroup(h);
+  s:=Parent(h);
   f:=Representative(h);
   return [IdempotentCreator(s)(LambdaFunc(s)(f), RhoFunc(s)(f))];
 end);
@@ -1446,7 +1446,7 @@ end);
 
 InstallOtherMethod(Idempotents, "for an L-class of an acting semigp.",
 [IsGreensLClass and IsActingSemigroupGreensClass],
-l-> Idempotents@(l, LambdaFunc(ParentSemigroup(l))(Representative(l)),
+l-> Idempotents@(l, LambdaFunc(Parent(l))(Representative(l)),
 RhoOrbSCC(l), RhoOrb(l), false));
 
 # mod for 1.0! - Idempotents - "for an R-class of an acting semigp"
@@ -1456,7 +1456,7 @@ RhoOrbSCC(l), RhoOrb(l), false));
 
 InstallOtherMethod(Idempotents, "for an R-class of an acting semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
-r-> Idempotents@(r, RhoFunc(ParentSemigroup(r))(Representative(r)),
+r-> Idempotents@(r, RhoFunc(Parent(r))(Representative(r)),
 LambdaOrbSCC(r), LambdaOrb(r), true));
 
 # mod for 1.0! - IsGroupHClass - "for an H-class of an acting semigp."
@@ -1468,7 +1468,7 @@ InstallOtherMethod(IsGroupHClass, "for an H-class of an acting semigp.",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
   local s, f;
-  s:=ParentSemigroup(h);
+  s:=Parent(h);
   f:=Representative(h);
   return IdempotentTester(s)(LambdaFunc(s)(f), RhoFunc(s)(f));
 end);
@@ -1502,7 +1502,7 @@ function(x, value, scc, o, onright)
     return NrIdempotents(x)<>0;
   fi;
 
-  s:=ParentSemigroup(x);
+  s:=Parent(x);
   
   if HasSemigroupDataIndex(x) then
     data:=SemigroupData(s);
@@ -1543,7 +1543,7 @@ end);
 
 InstallMethod(IsRegularClass, "for an D-class of an acting semigp",
 [IsGreensDClass and IsActingSemigroupGreensClass],
-d-> IsRegularClass@(d, RhoFunc(ParentSemigroup(d))(Representative(d)),
+d-> IsRegularClass@(d, RhoFunc(Parent(d))(Representative(d)),
 LambdaOrbSCC(d), LambdaOrb(d), true));
 
 # new for 1.0! - IsRegularClass - "for an H-class of an acting semigp."
@@ -1562,7 +1562,7 @@ h-> IsRegularClass(RClassOfHClass(h)));
 
 InstallMethod(IsRegularClass, "for an L-class of an acting semigp",
 [IsGreensLClass and IsActingSemigroupGreensClass],
-l-> IsRegularClass@(l, LambdaFunc(ParentSemigroup(l))(Representative(l)),
+l-> IsRegularClass@(l, LambdaFunc(Parent(l))(Representative(l)),
 RhoOrbSCC(l), RhoOrb(l), false));
 
 # new for 1.0! - IsRegularClass - "for an R-class of an acting semi"
@@ -1572,7 +1572,7 @@ RhoOrbSCC(l), RhoOrb(l), false));
 
 InstallMethod(IsRegularClass, "for an R-class of an acting semigp",
 [IsGreensRClass and IsActingSemigroupGreensClass],
-r-> IsRegularClass@(r, RhoFunc(ParentSemigroup(r))(Representative(r)),
+r-> IsRegularClass@(r, RhoFunc(Parent(r))(Representative(r)),
 LambdaOrbSCC(r), LambdaOrb(r), true));
 
 #OOO
@@ -1724,7 +1724,7 @@ function(x, value, scc, o, onright)
     return 0;
   fi;
 
-  s:=ParentSemigroup(x);     
+  s:=Parent(x);     
 
   # check if we already know this...
   if HasSemigroupDataIndex(x) and not (HasIsRegularClass(x) and
@@ -1812,7 +1812,7 @@ end);
 
 InstallOtherMethod(NrIdempotents, "for an L-class of an acting semigp.",
 [IsGreensLClass and IsActingSemigroupGreensClass],
-l-> NrIdempotents@(l, LambdaFunc(ParentSemigroup(l))(Representative(l)),
+l-> NrIdempotents@(l, LambdaFunc(Parent(l))(Representative(l)),
 RhoOrbSCC(l), RhoOrb(l), false));
 
 # new for 1.0! - NrIdempotents - "for an R-class of an acting semigp."
@@ -1822,7 +1822,7 @@ RhoOrbSCC(l), RhoOrb(l), false));
 
 InstallOtherMethod(NrIdempotents, "for an R-class of an acting semigp.",
 [IsGreensRClass and IsActingSemigroupGreensClass],
-r-> NrIdempotents@(r, RhoFunc(ParentSemigroup(r))(Representative(r)), LambdaOrbSCC(r), LambdaOrb(r), true));
+r-> NrIdempotents@(r, RhoFunc(Parent(r))(Representative(r)), LambdaOrbSCC(r), LambdaOrb(r), true));
 
 # new for 0.1! - NrIdempotents - "for an acting semigroup"
 #############################################################################
@@ -2010,7 +2010,7 @@ function(d)
     return rho_schutz;
   fi;
 
-  p:=LambdaConjugator(ParentSemigroup(d))(RhoOrbRep(o, m), Representative(d));
+  p:=LambdaConjugator(Parent(d))(RhoOrbRep(o, m), Representative(d));
   rho_schutz:=rho_schutz^p;
 
   SetRhoOrbStabChain(d, StabChainImmutable(rho_schutz));
@@ -2041,7 +2041,7 @@ function(h)
  
   lambda_o:=LambdaOrb(h); lambda_m:=LambdaOrbSCCIndex(h);
   lambda_schutz:=LambdaOrbSchutzGp(lambda_o, lambda_m); 
-  s:=ParentSemigroup(h);
+  s:=Parent(h);
   
  lambda_stab:=LambdaOrbStabChain(lambda_o, lambda_m);
   
@@ -2091,7 +2091,7 @@ function(l)
   o:=RhoOrb(l); m:=RhoOrbSCCIndex(l);
   
   if not IsGreensClassNC(l) then 
-    p:=LambdaConjugator(ParentSemigroup(l))(RhoOrbRep(o, m), Representative(l));
+    p:=LambdaConjugator(Parent(l))(RhoOrbRep(o, m), Representative(l));
     return RhoOrbSchutzGp(o, m, infinity)^p;
   fi;
   return RhoOrbSchutzGp(o, m, infinity); 
@@ -2174,9 +2174,9 @@ function(x, y)
    (IsGreensLClass(x) and IsGreensLClass(y)) or
    (IsGreensDClass(x) and IsGreensDClass(y)) or
    (IsGreensHClass(x) and IsGreensHClass(y)) then
-    return ParentSemigroup(x)=ParentSemigroup(y) and Representative(x) in y;
+    return Parent(x)=Parent(y) and Representative(x) in y;
   fi;
-  return ParentSemigroup(x)=ParentSemigroup(y) and Representative(x) in y and
+  return Parent(x)=Parent(y) and Representative(x) in y and
    Size(x)=Size(y);
 end);
 
@@ -2190,7 +2190,7 @@ function(x, y)
    (IsGreensLClass(x) and IsGreensLClass(y)) or
    (IsGreensDClass(x) and IsGreensDClass(y)) or
    (IsGreensHClass(x) and IsGreensHClass(y)) then
-    return ParentSemigroup(x)=ParentSemigroup(y) and Representative(x) <
+    return Parent(x)=Parent(y) and Representative(x) <
      Representative(y) and (not Representative(x) in y);
   fi;
   return fail;
@@ -2224,7 +2224,7 @@ function(arg)
  
   d:=Objectify(DClassType(arg[1]), rec()); 
           
-  SetParentSemigroup(d, arg[1]);
+  SetParent(d, arg[1]);
   SetLambdaOrbSCCIndex(d, arg[2]);
   SetLambdaOrb(d, arg[3]);
   if arg[4]<>fail then # for inverse op
@@ -2260,7 +2260,7 @@ function(arg)
   local h;
   
   h:=Objectify(HClassType(arg[1]), rec());
-  SetParentSemigroup(h, arg[1]);
+  SetParent(h, arg[1]);
 
   SetLambdaOrbSCCIndex(h, arg[2]);
   SetLambdaOrb(h, arg[3]);
@@ -2314,7 +2314,7 @@ function(s, m, o, rep, nc)
   local l;
 
   l:=Objectify(LClassType(s), rec());
-  SetParentSemigroup(l, s);
+  SetParent(l, s);
   SetRepresentative(l, rep);
   SetRhoOrb(l, o);
   SetRhoOrbSCCIndex(l, m);
@@ -2363,7 +2363,7 @@ function(arg)
   
   r:=Objectify(RClassType(arg[1]), rec());
 
-  SetParentSemigroup(r, arg[1]);
+  SetParent(r, arg[1]);
   SetLambdaOrbSCCIndex(r, arg[2]);
   SetLambdaOrb(r, arg[3]);
   SetRepresentative(r, arg[4]);
@@ -2585,13 +2585,13 @@ InstallOtherMethod(IsGreensHClass, "for an object", [IsObject], ReturnFalse);
 InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 
 InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
-[IsGreensClass], x-> IsTransformationSemigroup(ParentSemigroup(x)));
+[IsGreensClass], x-> IsTransformationSemigroup(Parent(x)));
 
 InstallMethod(IsGreensClassOfPartPermSemigroup, "for a Green's class",
-[IsGreensClass], x-> IsPartialPermSemigroup(ParentSemigroup(x)));
+[IsGreensClass], x-> IsPartialPermSemigroup(Parent(x)));
 
 InstallMethod(IsGreensClassOfInverseSemigroup, "for a Green's class",
-[IsGreensClass], x-> IsInverseSemigroup(ParentSemigroup(x)));
+[IsGreensClass], x-> IsInverseSemigroup(Parent(x)));
 
 InstallOtherMethod(IsGroupHClass, "for an acting semi Green's class",
 [IsActingSemigroupGreensClass], ReturnFalse);

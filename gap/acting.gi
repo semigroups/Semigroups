@@ -461,7 +461,7 @@ function(data, limit, lookfunc)
   genstoapply:=data!.genstoapply;
   
   # lambda/rho
-  s:=ParentSemigroup(data);
+  s:=Parent(data);
   lambda:=LambdaFunc(s);
   lambdaact:=LambdaAct(s);  
   lambdaperm:=LambdaPerm(s);
@@ -1054,7 +1054,7 @@ InstallMethod(LambdaRhoLookup, "for a D-class of an acting semigroup",
 function(d)
   local data, orb_scc, orblookup1, orblookup2, out, i;
 
-  data:=SemigroupData(ParentSemigroup(d));
+  data:=SemigroupData(Parent(d));
   
   # scc of R-reps corresponding to d 
   orb_scc:=SemigroupDataSCC(d);
@@ -1123,7 +1123,7 @@ function(data, x, n)
     return val;
   fi;
 
-  s:=ParentSemigroup(data);
+  s:=Parent(data);
   o:=LambdaOrb(s);
 
   if not IsClosed(o) then 
@@ -1433,7 +1433,7 @@ function(s)
   Objectify(NewType(FamilyObj(s), IsSemigroupData and IsAttributeStoringRep),
    data);
   
-  SetParentSemigroup(data, s);
+  SetParent(data, s);
   return data;
 end);
 

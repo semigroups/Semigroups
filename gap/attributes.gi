@@ -206,7 +206,7 @@ function(d)
   iso:=function(f)
     local o, i, j;
     o:=LambdaOrb(d);
-    i:=Position(o, LambdaFunc(ParentSemigroup(d))(f));
+    i:=Position(o, LambdaFunc(Parent(d))(f));
 
     if i=fail then
       return fail;
@@ -215,7 +215,7 @@ function(d)
     if not IsInverseOpClass(d) then 
       o:=RhoOrb(d);
     fi;
-    j:=Position(o, RhoFunc(ParentSemigroup(d))(f));
+    j:=Position(o, RhoFunc(Parent(d))(f));
     if j=fail then
       return fail;
     fi;
@@ -327,7 +327,7 @@ function(d)
   iso:=function(f)
     local o, i, j;
     o:=LambdaOrb(d);
-    i:=Position(o, LambdaFunc(ParentSemigroup(d))(f));
+    i:=Position(o, LambdaFunc(Parent(d))(f));
     if i=fail then 
       return fail;
     fi;
@@ -335,7 +335,7 @@ function(d)
     if not IsInverseOpClass(d) then 
       o:=RhoOrb(d);
     fi;
-    j:=Position(o, RhoFunc(ParentSemigroup(d))(f)); 
+    j:=Position(o, RhoFunc(Parent(d))(f)); 
     if j=fail then 
       return fail;
     fi;
