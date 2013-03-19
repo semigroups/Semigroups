@@ -1412,7 +1412,7 @@ function(o, m, bound)
   return g;
 end);
 
-#SSS
+#
 
 InstallMethod(SemigroupData, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -1437,11 +1437,9 @@ function(s)
   return data;
 end);
 
-# new for 1.0! - Size - "for an acting semigroup data"
-##############################################################################
+#
 
-InstallOtherMethod(Size, "for semigroup data",
-[IsSemigroupData],
+InstallGlobalFunction(SizeOfSemigroupData,
 function(data)
   local reps, nr, repslookup, orbit, i, j;
    
