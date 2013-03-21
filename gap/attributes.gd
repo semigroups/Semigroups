@@ -23,9 +23,6 @@ DeclareOperation("InversesOfSemigroupElementNC", [IsActingSemigroup and
 HasGeneratorsOfSemigroup, IsAssociativeElement]);
 
 DeclareOperation("IsomorphismBipartitionSemigroup", [IsSemigroup]);
-DeclareOperation("IsomorphismPartialPermMonoid", [IsPermGroup]);
-DeclareOperation("IsomorphismPartialPermSemigroup", [IsPermGroup]);
-#DeclareOperation("IsomorphismTransformationMonoid", [IsSemigroup]);
 
 DeclareAttribute("MinimalIdeal", IsSemigroup);
 DeclareOperation("NrElementsOfRank", [IsSemigroup and

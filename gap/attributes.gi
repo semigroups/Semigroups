@@ -30,6 +30,7 @@
 # returns a list of points in the domain of the action of the semigroup 
 # from which every other point in the domain can be reached by applying
 # elements of the semigroup.
+
 InstallMethod(ActionRepresentatives, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(s)
@@ -795,17 +796,56 @@ function(s)
 
 # move to pperm.gi, trans.gi, and bipartition.gi
 
-InstallOtherMethod(IsomorphismPermGroup, 
-"for a partial perm semigroup with generators", 
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsomorphismPartialPermMonoid, 
+"for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  if not IsGroupAsSemigroup(s)  then
-    Error( "the semigroup is not a group,");
-    return; 
+  local iso;
+
+  if not IsInverseMonoid(s) then 
+    Error("usage: the argument should be an inverse monoid,");
+    return;
   fi;
-  return MagmaIsomorphismByFunctionsNC(s, 
-   Group(List(Generators(s), AsPermutation)), 
-   AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
+  
+  iso:=function(f)
+    local dom, img;
+    
+    dom:=ImageSetOfTransformation(InversesOfSemigroupElementNC(s, f)[1]);
+    img:=List(dom, i-> i^f);
+    return PartialPermNC(dom, img);
+  end;
+
+  return MappingByFunction(s, 
+   InverseMonoid(List(GeneratorsOfSemigroup(s), iso)), iso, 
+    x-> AsTransformation(x, DegreeOfTransformationSemigroup(s)));
 end);
+
+#
+
+InstallOtherMethod(IsomorphismPartialPermSemigroup, 
+"for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local iso;
+
+  if not IsInverseSemigroup(s) then 
+    Error("usage: the argument should be an inverse semigroup,");
+    return;
+  fi;
+
+  iso:=function(f)
+    local dom, img;
+
+    dom:=ImageSetOfTransformation(InversesOfSemigroupElementNC(s, f)[1]);
+    img:=List(dom, i-> i^f);
+    return PartialPermNC(dom, img);
+  end;
+
+  return MappingByFunction(s, 
+   InverseSemigroup(List(GeneratorsOfSemigroup(s), iso)), iso, 
+    x-> AsTransformation(x, DegreeOfTransformationSemigroup(s)));
+end);
+
+
 
 #EOF

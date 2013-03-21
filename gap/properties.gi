@@ -1093,38 +1093,4 @@ function(s)
   return IsDoneIterator(iter);
 end);
 
-#
-
-InstallMethod(IsFullTransformationSemigroup, 
-"for a transformation semigroup with generators",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  if ForAll(GeneratorsOfSemigroup(
-   FullTransformationSemigroup(DegreeOfTransformationSemigroup(s))),
-    x-> x in s) then 
-    if not HasIsRegularSemigroup(s) then
-      SetIsRegularSemigroup(s);
-    fi;
-    return true;
-  fi;
-  return false;
-end);
-
-#
-
-InstallMethod(IsSymmetricInverseSemigroup, 
-"for a partial perm semigroup with generators",
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  if ForAll(GeneratorsOfSemigroup(
-   SymmetricInverseSemigroup(DegreeOfPartialPermSemigroup(s))),
-    x-> x in s) then 
-    if not HasGeneratorsOfInverseSemigroup(s) then 
-      SetGeneratorsOfInverseSemigroup(s, GeneratorsOfSemigroup(s));
-    fi;
-    return true;
-  fi;
-  return false;
-end);
-  
 #EOF

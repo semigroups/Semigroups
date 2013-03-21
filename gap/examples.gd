@@ -26,4 +26,3 @@ DeclareOperation("PowerSemigroup", [IsGroup]);
 DeclareOperation("RegularBinaryRelationSemigroup", [IsPosInt]);
 DeclareSynonymAttr("RB", RegularBinaryRelationSemigroup);
 DeclareOperation("SingularSemigroup", [IsPosInt]);
-DeclareOperation("SymmetricInverseSemigroup", [IsInt]);
