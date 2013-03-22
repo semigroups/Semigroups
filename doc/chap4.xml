@@ -72,7 +72,6 @@
     <#Include Label="IrredundantGeneratingSubset">
     <#Include Label="MinimalIdeal">
     <#Include Label="MultiplicativeZero">
-    <#Include Label="NaturalPartialOrder">
     <#Include Label="NrElementsOfRank">
     <#Include Label="PrimitiveIdempotents">
     <#Include Label="Random">
@@ -105,7 +104,6 @@
     <#Include Label="IsMonogenicSemigroup">
     <#Include Label="IsMonogenicInverseSemigroup">
     <#Include Label="IsMonoidAsSemigroup">
-    <#Include Label="IsPartialPermSemigroup">
     <#Include Label="IsOrthodoxSemigroup">
     <#Include Label="IsRectangularBand">
     <#Include Label="IsRegularSemigroup">
@@ -121,8 +119,6 @@
   </Section>
 
   <Section><Heading>Changing the representation of a semigroup</Heading>
-    <#Include Label="AntiIsomorphismTransformationSemigroup">
-    <#Include Label="IsomorphismPartialPermSemigroup">
     <#Include Label="IsomorphismPermGroup">
     <#Include Label="IsomorphismTransformationMonoid">
   </Section>

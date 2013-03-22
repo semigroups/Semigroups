@@ -1335,32 +1335,7 @@ function(x)
   return CallFuncList(CreateInverseOpLClass, x);
 end, [IsIteratorOfLClasses]));
 
-#NNN
-
-# new for 0.7! - NaturalPartialOrder - "for an inverse semigroup"
-##############################################################################
-# C function for me! JDM
-
-InstallMethod(NaturalPartialOrder, "for an inverse semigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup],
-function(s)
-  local elts, n, out, i, j;
-
-  elts:=Elements(s);  n:=Length(elts);
-  out:=List([1..n], x-> EmptyPlist(n));
-  for i in [n, n-1..1] do
-    for j in [i-1,i-2 ..1] do
-      if NaturalLeqPartialPerm(elts[j], elts[i]) then
-        AddSet(out[i], j);
-      fi;
-    od;
-  od;
-  Perform(out, ShrinkAllocationPlist);
-  return out;
-end);
-
-# new for 1.0! - NrIdempotents - for an acting semigroup with inverse op
-##############################################################################
+#
 
 InstallOtherMethod(NrIdempotents, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp], 

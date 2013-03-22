@@ -2,22 +2,19 @@
 <Chapter Label="create"><Heading>Creating semigroups and monoids</Heading> 
   In this chapter we describe the various ways that semigroups and monoids can
   be created in &Semigroups;, the options that are available at the time of
-  creation, and describe some standard examples availabl in &Semigroups;. <P/>
+  creation, and describe some standard examples available in &Semigroups;. <P/>
   
-  Any transformation semigroup created before &Semigroups; has been loaded must be
-  recreated after &Semigroups; is loaded so that the options record (described in
-  Section <Ref Sect="opts"/>) is defined. Almost all of the functions and
-  methods provided by &Semigroups;, including those methods for existing &GAP;
-  library functions, will return an error when applied to a transformation
-  semigroup created before &Semigroups; is loaded. 
+  Any transformation semigroup created before &Semigroups; has been loaded must
+  be recreated after &Semigroups; is loaded so that the options record
+  (described in Section <Ref Sect="opts"/>) is defined. Almost all of the
+  functions and methods provided by &Semigroups;, including those methods for
+  existing &GAP; library functions, will return an error when applied to a transformation semigroup created before &Semigroups; is loaded. 
 
  <Section><Heading>Semigroups defined by a generating set</Heading> 
 
     In this section we give details of how to create semigroups and monoids from
     a set of generators. Much of what is described here is syntactic sugar. 
 
-    <#Include Label="InverseMonoid">
-    <#Include Label="InverseMonoidByGenerators">
     <#Include Label="Monoid">
     <#Include Label="MonoidByGenerators">
     <#Include Label="RandomInverseMonoid"> 
@@ -51,52 +48,45 @@
       <Mark><C>hashlen</C></Mark>
       <Item>
       this component should be a positive integer, which roughly specifies the
-      lengths of the hash tables used internally by &Semigroups;.  &Semigroups; uses
-      hash tables in several fundamental methods.  The lengths of these tables
-      are a compromise between performance and memory usage; larger tables
-      provide better performance for large computations but use more memory.
-      Note that it is unlikely that you will need to specify this option unless
-      you find that &GAP; runs out of memory unexpectedly or that the
-      performance of &Semigroups; is poorer than expected. If you find that &GAP;
-      runs out of memory unexpectedly, or you plan to do a large number of
-      computations with relatively small semigroups (say with tens of thousands
-      of elements), then you might consider setting <C>hashlen</C> to be less
-      than the default value of <C>25013</C> for each of these semigroups.  If
-      you find that the performance of &Semigroups; is unexpectedly poor, or you
-      plan to do a computation with a very large semigroup (say, more than 10
-      million elements), then you might consider setting <C>hashlen</C> to be
-      greater than the default value of <C>25013</C>. <P/>
+      lengths of the hash tables used internally by &Semigroups;.  &Semigroups;
+      uses hash tables in several fundamental methods.  The lengths of these
+      tables are a compromise between performance and memory usage; larger
+      tables provide better performance for large computations but use more
+      memory.  Note that it is unlikely that you will need to specify this
+      option unless you find that &GAP; runs out of memory unexpectedly or that
+      the performance of &Semigroups; is poorer than expected. If you find that
+      &GAP; runs out of memory unexpectedly, or you plan to do a large number
+      of computations with relatively small semigroups (say with tens of
+      thousands of elements), then you might consider setting <C>hashlen</C> to
+      be less than the default value of <C>25013</C> for each of these
+      semigroups.  If you find that the performance of &Semigroups; is
+      unexpectedly poor, or you plan to do a computation with a very large
+      semigroup (say, more than 10 million elements), then you might consider
+      setting <C>hashlen</C> to be greater than the default value of
+      <C>25013</C>. <P/>
 
       You might find it useful to set the info level of the info class
       <C>InfoOrb</C> to 2 or higher since this will indicate when hash tables
       used by &Semigroups; are being grown; see <Ref Oper="SetInfoLevel"
       BookName="ref"/>.
       </Item>
-
-      <Mark><C>schreier</C></Mark>
-      <Item>
-      if this component is set to <K>true</K>, then &Semigroups; will keep track of
-      various pieces of information so that it is possible to factorize
-      elements of <A>S</A> using <Ref Meth="Factorization"/>.  This will cause
-      a slight decrease in performance and an increase in memory usage.  If
-      this component is set to <K>false</K>, then it will not be possible to
-      factorize the elements of <A>S</A> using <Ref Meth="Factorization"/>.
-      The default value for this component is <K>true</K>.  </Item>
       
       <Mark><C>small</C></Mark> <Item>if this component is set to <K>true</K>,
-      then &Semigroups; will compute a small subset of <A>gens</A> that generates
-      <A>S</A> at the time that <A>S</A> is created. This will increase the
-      amount of time required to create <A>S</A> substantially, but may
-      decrease the amount of time required for subsequent calculations with
-      <A>S</A>. If this component is set to <K>false</K>, then &Semigroups; will
-      return the semigroup generated by <A>gens</A> without modifying
-      <A>gens</A>. The default value for this component is <K>false</K>.
-      </Item> </List>
+        then &Semigroups; will compute a small subset of <A>gens</A> that
+        generates <A>S</A> at the time that <A>S</A> is created. This will
+        increase the amount of time required to create <A>S</A> substantially,
+        but may decrease the amount of time required for subsequent
+        calculations with <A>S</A>. If this component is set to <K>false</K>,
+        then &Semigroups; will return the semigroup generated by <A>gens</A>
+        without modifying <A>gens</A>. The default value for this component is
+        <K>false</K>.
+    </Item> 
+</List>
   
       The default values of the options described above are stored in a global
-      variable named <Ref Var="SemigroupsOptionsRec"/>. If you want to change the
-      default values of these options for a single &GAP; session, then you can
-      simply redefine the value in &GAP;. For example, to change the option
+      variable named <Ref Var="SemigroupsOptionsRec"/>. If you want to change
+      the default values of these options for a single &GAP; session, then you
+      can simply redefine the value in &GAP;. For example, to change the option
       <C>small</C> from the default value of <A>false</A> use:
 
     <Log>gap> SemigroupsOptionsRec.small:=true;
@@ -124,7 +114,6 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
     <#Include Label="MunnSemigroup">
     <#Include Label="OPOIPOPI">
     <#Include Label="SingularSemigroup">
-    <#Include Label="SymmetricInverseSemigroup">
     <#Include Label="RegularBinaryRelationSemigroup">
   </Section>
 

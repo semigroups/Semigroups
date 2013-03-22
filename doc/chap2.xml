@@ -1,25 +1,6 @@
 <Chapter Label="Transformations and partial permutations"><Heading>Transformations and partial permutations
 </Heading>
   
-   
-      performance than <C><A>f</A> * <A>g^-1</A></C>. 
-      </Item>
-    </List> 
-   
-    <#Include Label="NaturalLeqPartialPerm"/>
-  </Section>
- 
-  <Section Label="Changing representation">
-    <Heading>Changing representations</Heading>
-    It is possible to change the representation of certain transformations and
-    partial permutations using the functions described in this section. For
-    example, transformations which are mathematically permutations can be
-    converted into permutations in &GAP; using the function <Ref
-      Oper="AsPermutation"/>. 
-    <#Include Label="AsPermutation">
-    <#Include Label="AsPartialPerm">
-    <#Include Label="AsTransformation">
-  </Section>
 
   <Section><Heading>Actions</Heading>
     The following actions of transformations and partial permutations are used

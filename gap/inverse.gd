@@ -10,9 +10,6 @@
 
 ## functions and methods for inverse semigroups of partial permutations
 
-DeclareAttribute("NaturalPartialOrder", IsPartialPermSemigroup and
-IsInverseSemigroup);
-
 DeclareGlobalFunction("IsJoinIrreducible");
 
 #old
