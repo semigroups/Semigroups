@@ -1450,23 +1450,3 @@ function(s)
   return out; 
 end);
 
-#
-
-InstallMethod(ReverseNaturalPartialOrder, "for an inverse semigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup],
-function(s)
-  local elts, n, out, i, j;
-
-  elts:=Elements(s);
-  n:=Length(elts);
-  out:=List([1..n], x-> EmptyPlist(n));
-  for i in [1..n-1] do
-    for j in [i+1..n] do
-      if NaturalLeqPP(elts[i], elts[j]) then
-        AddSet(out[i], j);
-      fi;
-    od;
-  od;
-  Perform(out, ShrinkAllocationPlist);
-  return out;
-end);
