@@ -180,7 +180,9 @@ InstallMethod(LambdaInverse, "for a transformation semigroup",
 InstallMethod(LambdaInverse, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> function(x, f) return f^-1; end); 
 
-#JDM c method
+#JDM c method this is not correct!
+# do the example of PartitionMonoid(3); then the lambdaorbmult(o,3,4)[1] does
+# not move the point o[3] to o[4]. 
 InstallMethod(LambdaInverse, "for a bipartition",
 [IsBipartitionSemigroup], s-> function(x, f) return f^-1; end);
 

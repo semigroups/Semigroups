@@ -893,13 +893,13 @@ function(o, m, i)
   scc:=OrbSCC(o)[m];
   mults:=o!.mults;
   gens:=o!.gens;
-  if not IsInvLambdaOrb(o) then 
+  if not IsInvLambdaOrb(o) then
+#JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
     genpos:=ReverseSchreierTreeOfSCC(o, m);
     inv:=function(im, f) return LambdaInverse(o!.semi)(im, f); end;
 
     trace:=function(i)
       local f;
-
       if IsBound(mults[i]) then 
         return mults[i][2];
       fi;

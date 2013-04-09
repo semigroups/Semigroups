@@ -310,6 +310,7 @@ function(o, i)
 
     o!.rev:=rev;
   fi;
+  #rev[i][j][k]:=l implies that o[l]^gens[j]=o[i]
 
   scc:=o!.scc[i]; rev:=o!.rev;
   gen:=EmptyPlist(Length(o));

@@ -107,7 +107,7 @@ function(f, n)
 
   for i in [1..n] do 
     out[i]:=i;
-    if i^g<>fail then 
+    if i^g<>0 then 
       out[n+i]:=i^g;
     else 
       r:=r+1;
