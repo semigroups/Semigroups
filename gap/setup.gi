@@ -218,12 +218,14 @@ InstallMethod(LambdaPerm, "for a partial perm semi",
 InstallMethod(LambdaPerm, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s-> 
   function(a, b)
-    local n, p, i;
-
+    local n, p, aa, bb, i;
     n:=a[1]/2; #degree
-    p:=[1..a[2]]; #rank
+    p:=[1..n]; #nr classes
+    aa:=a{[n+3..2*n+2]};
+    bb:=b{[n+3..2*n+2]};
+    #return MappingPermListList(aa,bb);
     for i in [1..n] do 
-      p[a[n+i+2]]:=b[n+i+2];
+      p[Position(aa,aa[i])]:=Position(bb, aa[i]);
     od;
     return PermList(p);
   end);

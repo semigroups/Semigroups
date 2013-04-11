@@ -486,6 +486,7 @@ function(data, limit, lookfunc)
     i:=i+1;
     for j in genstoapply do #JDM
       x:=gens[j]*orb[i][4];
+      #if x=ff then Error(); fi;
       lamx:=lambda(x);
       pos:=htvalue(oht, lamx); 
 
@@ -976,7 +977,7 @@ function(o, m)
   fi;
 
   g:=Group(()); is_sym:=false;
-  
+
   for k in scc do
     for l in [1..nrgens] do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then

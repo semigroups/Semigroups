@@ -27,8 +27,8 @@ DegreeOfSignedPartition:=x-> Length(x)-NrClassesSignedPartition(x)-1;
 
 InstallGlobalFunction(INV_SIGNED_PART_BIPART, 
 function(signed, f)
-  local n, p1, p2, fuse, fuseit, x, y, tab3, c, next, i;
-  
+  local n, p1, p2, fuse, fuseit, x, y, x1, lookup, j, out, next, seen, i;
+
   n := DegreeOfBipartition(f)/2;
   Assert(1,n = DegreeOfSignedPartition(signed));
   p1 := NrClassesSignedPartition(signed);
@@ -54,26 +54,35 @@ function(signed, f)
     fi;
   od;
 
-  tab3 := 0*[1..p1+p2];   
-  c := EmptyPlist(2*n);
-  next := 1;
-  for i in [1..n] do
-      x := fuseit(signed[i+1]);
-      if tab3[x] = 0 then
-          tab3[x] := next;
-          next := next + 1;
-      fi;
-      Add(c,tab3[x]);
+  x1:=OnRightSignedPartition(signed, f);
+  lookup:=[1..p1+p2]*0;
+
+  for i in [1..n] do 
+    j:=fuseit(f[2+n+i]+p1);
+    j:=First([1..p1], i-> signed[n+1+i]=1 and fuseit(i)=j);
+    if x1[n+1+x1[i+1]]=1 and lookup[j]=0 then 
+      lookup[j]:=x1[i+1];
+    fi;
   od;
-  for i in [n+1..2*n] do
-      x := fuseit(f[i+2]+p1);
-      if tab3[x] = 0 then
-          tab3[x] := next;
-          next := next + 1;
+  out:=x1{[2..n+1]};
+  next:=NrClassesSignedPartition(x1)+1;
+  seen:=[1..p1]*0;
+  for i in [1..n] do 
+    if signed[n+1+signed[i+1]]=0 then 
+      if seen[signed[i+1]]<>0 then 
+        Add(out, seen[signed[i+1]]);
+      else
+        seen[signed[i+1]]:=next;
+        next:=next+1;
+        Add(out, seen[signed[i+1]]);
       fi;
-      Add(c,tab3[x]);
-  od;
-  return BipartitionByIntRepNC(c)^-1;
+    else 
+      Add(out, lookup[signed[i+1]]); 
+    fi;
+    if 0 in out then Error(); fi;
+  od;  
+
+  return BipartitionByIntRepNC(out);
 end);
 
 #
