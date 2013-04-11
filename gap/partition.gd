@@ -20,4 +20,6 @@ DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
 DeclareOperation("OnRightSignedPartition", [IsList, IsBipartition]);
 DeclareOperation("OnLeftSignedPartition", [IsList, IsBipartition]);
 DeclareOperation("RandomBipartition", [IsPosInt]);
-DeclareOperation("RankOfBipartition", [IsBipartition]);
+DeclareOperation("RankOfBipartition", [IsBipartition]) ;
+
+DeclareGlobalFunction("INV_SIGNED_PART_BIPART");

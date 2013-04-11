@@ -16,6 +16,68 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
 
 #
 
+InternalRepOfBipartition:=f-> List([1..f[1]+2], i-> f[i]);
+
+NrClassesSignedPartition:=x-> x[1];
+NrClassesBipartition:=x-> x[2];
+
+DegreeOfSignedPartition:=x-> Length(x)-NrClassesSignedPartition(x)-1;
+
+#
+
+InstallGlobalFunction(INV_SIGNED_PART_BIPART, 
+function(signed, f)
+  local n, p1, p2, fuse, fuseit, x, y, tab3, c, next, i;
+  
+  n := DegreeOfBipartition(f)/2;
+  Assert(1,n = DegreeOfSignedPartition(signed));
+  p1 := NrClassesSignedPartition(signed);
+  p2 := NrClassesBipartition(f);
+  fuse := [1..p1+p2]; 
+  
+  fuseit := function(i) 
+    while fuse[i] < i do 
+      i := fuse[i]; 
+    od; 
+    return i; 
+  end;
+
+  for i in [1..n] do
+    x := fuseit(signed[i+1]);
+    y := fuseit(f[i+2]+p1);
+    if x <> y then
+      if x < y then
+        fuse[y] := x;
+      else
+        fuse[x] := y;
+      fi;
+    fi;
+  od;
+
+  tab3 := 0*[1..p1+p2];   
+  c := EmptyPlist(2*n);
+  next := 1;
+  for i in [1..n] do
+      x := fuseit(signed[i+1]);
+      if tab3[x] = 0 then
+          tab3[x] := next;
+          next := next + 1;
+      fi;
+      Add(c,tab3[x]);
+  od;
+  for i in [n+1..2*n] do
+      x := fuseit(f[i+2]+p1);
+      if tab3[x] = 0 then
+          tab3[x] := next;
+          next := next + 1;
+      fi;
+      Add(c,tab3[x]);
+  od;
+  return BipartitionByIntRepNC(c)^-1;
+end);
+
+#
+
 InstallGlobalFunction(BipartitionNC, 
 function(arg)
   if IsList(arg[1][1]) then 
@@ -28,14 +90,12 @@ function(arg)
   return;
 end);
     
-# new for 1.0! - \^ - "for a pos int and bipartition" 
-############################################################################# 
+#
 
 InstallMethod(\^, "for a pos int and bipartition",
 [IsPosInt, IsBipartition], OnPointsBP);
 
-# new for 1.0! - \^ - "for a pos int and bipartition" 
-############################################################################# 
+#
 
 InstallOtherMethod(POW, "for a set of pos ints and bipartition",
 [IsListOrCollection, IsBipartition], 
@@ -43,8 +103,7 @@ function(set, f)
   return Set(Concatenation(List(set, x-> OnPointsBP(x,f))));
 end);
 
-# new for 1.0! - \^ - "for a bipartition and neg int"
-#############################################################################
+#
 
 InstallMethod(\^, "for a bipartition and neg int",
 [IsBipartition, IsNegInt],
@@ -66,8 +125,7 @@ function(f, r)
   return (f^-1)^-r;
 end);
 
-# new for 1.0! - \< - "for a bipartition and bipartition"
-############################################################################
+#
 
 InstallMethod(\<, "for a bipartition and bipartition", 
 [IsBipartition, IsBipartition],
@@ -75,8 +133,7 @@ function(f,g)
   return ExtRepBipartition(f)<ExtRepBipartition(g);
 end);
 
-# new for 1.0! - \= - "for a bipartition and bipartition"
-############################################################################
+#
 
 InstallMethod(\=, "for a bipartition and bipartition", 
 [IsBipartition, IsBipartition],
@@ -84,8 +141,7 @@ function(f,g)
   return ForAll([1..f[1]+2], x-> f[x]=g[x]);
 end);
 
-# new for 1.0! - AsBipartition - "for a permutation and pos int"
-############################################################################
+#
 
 InstallMethod(AsBipartition, "for a permutation and pos int",
 [IsPerm, IsPosInt],
@@ -93,8 +149,7 @@ function(f, n)
   return BipartitionByIntRepNC(Concatenation([1..n], OnTuples([1..n], f^-1)));
 end);
 
-# new for 1.0! - AsBipartition - "for a partial perm and pos int"
-############################################################################
+#
 
 InstallOtherMethod(AsBipartition, "for a partial perm and pos int",
 [IsPartialPerm, IsPosInt],
@@ -117,8 +172,7 @@ function(f, n)
   return BipartitionByIntRepNC(out); 
 end);
 
-# new for 1.0! - AsBipartition - "for a transformation"
-############################################################################
+#
 
 InstallOtherMethod(AsBipartition, "for a transformation",
 [IsTransformation],
@@ -147,14 +201,12 @@ function(f)
   return BipartitionByIntRepNC(out);
 end);
 
-# new for 1.0! - DegreeOfBipartition - "for a bipartition"
-############################################################################
+#
 
 InstallMethod(DegreeOfBipartition, "for a bipartition",
 [IsBipartition], x-> x[1]);
 
-# new for 1.0! - DegreeOfBipartition - "for a bipartition"
-############################################################################
+#
 
 InstallMethod(DegreeOfBipartitionCollection, "for a bipartition collection",
 [IsBipartitionCollection], 
@@ -169,8 +221,7 @@ function(coll)
   return coll[1][1];
 end);
 
-# new for 1.0! - DegreeOfBipartition - "for a bipartition"
-############################################################################
+#
 
 InstallMethod(DegreeOfBipartitionSemigroup, "for a bipartition semigroup",
 [IsBipartitionSemigroup], 
@@ -200,8 +251,7 @@ function(coll)
   return;
 end);
 
-# new for 1.0! - RankOfBipartition - "for a bipartition"
-############################################################################
+#
 
 InstallMethod(RankOfBipartition, "for a bipartition",
 [IsBipartition], 
@@ -223,25 +273,18 @@ m:=MaximumList(x{[3..n+2]}); # max on the left
   return rank;
 end);
 
-# new for 1.0! - ELM_LIST - "for a bipartition and pos int"
-############################################################################
+#
 
 InstallOtherMethod(ELM_LIST, "for a bipartition and a pos int",
 [IsBipartition, IsPosInt], ELM_LIST_BP);
 
-# new for 1.0! - ELM_LIST - "for a bipartition and pos int"
-############################################################################
+#
 
 InstallOtherMethod(ELMS_LIST, "for a bipartition and a pos int",
 [IsBipartition, IsDenseList and IsSmallList], ELMS_LIST_BP);
 
-# new for 1.0! - InternalRepOfBipartition - "for a bipartition"
-#############################################################################
 
-InternalRepOfBipartition:=f-> List([1..f[1]+2], i-> f[i]);
-
-# new for 1.0! - IsomorphismTransformationSemigroup - "for a bipartition semi"
-###########################################################################
+#
 
 #JDM this does not currently work!
 
@@ -267,8 +310,7 @@ InternalRepOfBipartition:=f-> List([1..f[1]+2], i-> f[i]);
 #   return MappingByFunction(s, t, x-> TransformationOp(x, pts, OnPoints));
 # end);
 
-# new for 1.0! - PrintObj - "for a bipartition"
-#############################################################################
+#
 
 InstallMethod(PrintObj, "for a bipartition",
 [IsBipartition],
@@ -304,6 +346,8 @@ function(f)
   return;
 end);
 
+#
+
 InstallGlobalFunction(ExtRepBipartition,
 function(q)
   local i,n2,p;
@@ -315,8 +359,7 @@ function(q)
   return p;
 end);
 
-# new for 0.7! - PrintObj - "for a bipartition semigroup"
-################################################################################
+#
 
 InstallMethod(\*, "for a bipartition and a perm",
 [IsBipartition, IsPerm],
@@ -324,11 +367,15 @@ function(f,g)
   return f*AsBipartition(g, DegreeOfBipartition(f)/2);
 end);
 
+#
+
 InstallMethod(\*, "for a perm and a bipartition",
 [IsPerm, IsBipartition],
 function(f,g)
   return AsBipartition(f, DegreeOfBipartition(g)/2)*g;
 end);
+
+#
 
 InstallMethod(\*, "for a bipartition and bipartition",
 [IsBipartition, IsBipartition], 

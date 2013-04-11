@@ -33,7 +33,7 @@ InstallMethod(ActionDegree, "for a transformation",
 [IsTransformation], DegreeOfTransformation);
 
 InstallMethod(ActionDegree, "for a partial perm",
-[IsPartialPerm], x-> x[2]);
+[IsPartialPerm], RankOfPartialPerm);
 
 InstallMethod(ActionDegree, "for a bipartition",
 [IsBipartition], x-> x[1]/2);
@@ -44,7 +44,7 @@ InstallMethod(ActionRank, "for a transformation",
 [IsTransformation], RankOfTransformation);
 
 InstallMethod(ActionRank, "for a partial perm",
-[IsPartialPerm], x-> x[2]);
+[IsPartialPerm], RankOfPartialPerm);
 
 InstallMethod(ActionRank, "for a bipartition",
 [IsBipartition], function(x)
@@ -184,7 +184,7 @@ InstallMethod(LambdaInverse, "for a partial perm semigroup",
 # do the example of PartitionMonoid(3); then the lambdaorbmult(o,3,4)[1] does
 # not move the point o[3] to o[4]. 
 InstallMethod(LambdaInverse, "for a bipartition",
-[IsBipartitionSemigroup], s-> function(x, f) return f^-1; end);
+[IsBipartitionSemigroup], s-> INV_SIGNED_PART_BIPART);
 
 # if g=RhoInverse(X, f) and f^X=Y (this is a left action), then g^Y=X and g
 # acts on the left like the inverse of g on Y. 
