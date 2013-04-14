@@ -17,8 +17,6 @@ DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
 DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 
-DeclareOperation("InversesOfSemigroupElement", [IsActingSemigroup and
-HasGeneratorsOfSemigroup, IsAssociativeElement]);
 DeclareOperation("InversesOfSemigroupElementNC", [IsActingSemigroup and
 HasGeneratorsOfSemigroup, IsAssociativeElement]);
 
