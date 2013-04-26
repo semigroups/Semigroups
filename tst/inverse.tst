@@ -231,7 +231,13 @@ gap> s:=InverseSemigroup(Generators(s));
 <inverse semigroup with 2 generators>
 gap> iter:=IteratorOfHClassReps(s);
 <iterator of H-class reps>
-gap> for f in iter do if not f in s then Print("yikes"); break; fi; od;
+gap> i:=0;
+0
+
+#JDM this breaks when i=38360 fairly reliably, it seems to be a problem in 
+# IsDoneIterator of iter. 
+#gap> for f in iter do i:=i+1; if not
+#f in s then Print("yikes"); break; fi; if i=38360 then break; fi; od;
 gap> iter:=IteratorOfHClasses(s);                                  
 <iterator of H-classes>
 gap> repeat h:=NextIterator(iter); until Size(h)>1 or IsDoneIterator(iter);

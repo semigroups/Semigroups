@@ -543,8 +543,7 @@ InstallMethod(IteratorOfDClassReps, "for an acting semigroup",
 s-> IteratorByIterator(IteratorOfDClasses(s), Representative,
 [IsIteratorOfDClassReps]));
 
-# new for 1.0! - IteratorOfHClassReps - "for an acting semigroup"
-#############################################################################
+#
 
 #JDM should be a different  method for regular/inverse using
 #IteratorOfHClassData (not yet written);

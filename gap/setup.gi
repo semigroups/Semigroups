@@ -25,7 +25,7 @@ InstallOtherMethod(ActionDegree,
 s-> ActionDegree(Representative(s)));
 
 InstallOtherMethod(ActionDegree, "for a partial perm collection",
-[IsPartialPermCollection], s-> DegreeOfPartialPermCollection(s));
+[IsPartialPermCollection], DegreeOfPartialPermCollection);
 
 #
 
