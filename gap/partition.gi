@@ -25,6 +25,99 @@ DegreeOfSignedPartition:=x-> Length(x)-NrClassesSignedPartition(x)-1;
 
 #
 
+TikzBipartition:=function(f)
+  local str, ext, n, up, down, min, i, block, j;
+  
+  str:="\\documentclass{minimal}\n";
+  Append(str, "\\usepackage{tikz}\n");
+  Append(str, "\\begin{document}\n");
+  Append(str, "\\newcommand{\\stline}[2]{\\draw (#1,2)--(#2,0);}\n");
+  Append(str, "\\begin{tikzpicture}\n");
+
+  ext:=ExtRepBipartition(f);
+  n:=DegreeOfBipartition(f)/2;
+ 
+  # vertices and their labels
+  for i in [1..n] do 
+    Append(str, "\\fill (");
+    Append(str, ViewString(i-1)); Append(str, ",2)circle(.125);\n");
+    
+    Append(str, "\\draw("); Append(str, ViewString(i-1.1));
+    Append(str, ", 2.2) node [above] {{ $"); Append(str, ViewString(i));
+    Append(str, "$}};"); Append(str, "\n");
+    
+    Append(str, "\\fill (" ); 
+    Append(str, ViewString(i-1)); Append(str, ",0)circle(.125);\n");
+  
+    Append(str, "\\draw("); Append(str, ViewString(i-1));
+    Append(str, ", -0.2) node [below] {{ $"); Append(str, ViewString(i));
+    Append(str, "'$}};"); Append(str, "\n");
+  od;
+
+  # draw the lines
+  for block in ext do
+    up:=[]; down:=[];
+    for i in [2..Length(block)] do
+      if block[i-1]<=n and block[i]<=n then
+        AddSet(up, block[i-1]);
+        AddSet(up, block[i]);
+        Append(str, "\\draw (");
+        Append(str, ViewString(block[i-1]-1));
+        Append(str, ",2) .. controls (");
+        Append(str, ViewString(block[i-1]-1));
+        Append(str, ",");
+        Append(str, ViewString(Float(1.5-(1/(2*n))*(block[i]-block[i-1]))));
+        Append(str, ") and (");
+        Append(str, ViewString(block[i]-1));
+        Append(str, ",");
+        Append(str, ViewString(Float(1.5-(1/(2*n))*(block[i]-block[i-1]))));
+        Append(str, ") .. (");
+        Append(str, ViewString(block[i]-1));
+        Append(str, ",2);\n");
+      elif block[i-1]>n and block[i]>n then 
+        AddSet(down, block[i-1]-n);
+        AddSet(down, block[i]-n);
+        Append(str, "\\draw (");
+        Append(str, ViewString(block[i-1]-1-n));
+        Append(str, ",0) .. controls (");
+        Append(str, ViewString(block[i-1]-1-n));
+        Append(str, ",");
+        Append(str, ViewString(Float(0.5+(1/(2*n))*(block[i]-block[i-1]))));
+        Append(str, ") and (");
+        Append(str, ViewString(block[i]-1-n));
+        Append(str, ",");
+        Append(str, ViewString(Float(0.5+(1/(2*n))*(block[i]-block[i-1]))));
+        Append(str, ") .. (");
+        Append(str, ViewString(block[i]-1-n));
+        Append(str, ",0);\n");
+      elif block[i-1]<=n and block[i]>n then
+        AddSet(down, block[i]-n); AddSet(up, block[i-1]);
+      elif block[i-1]>n and block[i]<=n then
+        AddSet(down, block[i-1]-n); AddSet(up, block[i]);
+      fi;
+    od;
+    if Length(up)<>0 and Length(down)<>0 then 
+      min:=[n];
+      for i in up do 
+        for j in down do 
+          if AbsInt(i-j)<min[1] then 
+            min[1]:=AbsInt(i-j); min[2]:=i; min[3]:=j;
+          fi;
+        od;
+      od;
+      Append(str, "\\stline{"); Append(str, ViewString(min[2]-1));
+      Append(str, "}{");
+      Append(str, ViewString(min[3]-1)); Append(str, "}\n");
+    fi;
+  od;
+
+  Append(str, "\\end{tikzpicture}\n");
+  Append(str, "\\end{document}");
+  return str;
+end;
+
+#
+
 InstallGlobalFunction(INV_SIGNED_PART_BIPART, 
 function(signed, f)
   local n, p1, p2, fuse, fuseit, x, y, x1, lookup, j, out, next, seen, i;
