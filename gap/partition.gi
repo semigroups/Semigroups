@@ -31,7 +31,6 @@ TikzBipartition:=function(f)
   str:="\\documentclass{minimal}\n";
   Append(str, "\\usepackage{tikz}\n");
   Append(str, "\\begin{document}\n");
-  Append(str, "\\newcommand{\\stline}[2]{\\draw (#1,2)--(#2,0);}\n");
   Append(str, "\\begin{tikzpicture}\n");
 
   ext:=ExtRepBipartition(f);
@@ -105,9 +104,9 @@ TikzBipartition:=function(f)
           fi;
         od;
       od;
-      Append(str, "\\stline{"); Append(str, ViewString(min[2]-1));
-      Append(str, "}{");
-      Append(str, ViewString(min[3]-1)); Append(str, "}\n");
+      Append(str, "\\draw ("); Append(str, ViewString(min[2]-1));
+      Append(str, ",2)--(");
+      Append(str, ViewString(min[3]-1)); Append(str, ",0);\n");
     fi;
   od;
 
