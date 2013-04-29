@@ -9,7 +9,6 @@
 ##
 
 # ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"testinstall.tst"));
-
 gap> START_TEST("Semigroups package: testinstall.tst");
 gap> LoadPackage( "semigroups", false );;
 
@@ -18,6 +17,13 @@ gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
 gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
 gap> SetInfoLevel(InfoWarning, 0);;
 gap> SetInfoLevel(InfoSemigroups, 0);
+gap> display:=UserPreference("PartialPermDisplayLimit");;
+gap> notationpp:=UserPreference("NotationForPartialPerms");;
+gap> notationt:=UserPreference("NotationForTransformations");;
+gap> SetUserPreference("PartialPermDisplayLimit", 100);;
+gap> SetUserPreference("TransformationDisplayLimit", 100);;
+gap> SetUserPreference("NotationForPartialPerms", "component");;
+gap> SetUserPreference("NotationForTransformations", "input");;
 
 # 
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
@@ -189,14 +195,14 @@ gap> NrHClasses(l); NrHClasses(ll);
 4
 gap> HClassReps(l);
 [ Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] ), 
-  Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5, 9 ] ), 
+  Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5 ] ), 
   Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] ), 
-  Transformation( [ 7, 7, 4, 2, 1, 8, 8, 5, 9 ] ) ]
+  Transformation( [ 7, 7, 4, 2, 1, 8, 8, 5 ] ) ]
 gap> HClassReps(ll);
 [ Transformation( [ 1, 8, 4, 2, 7, 8, 8, 9, 5 ] ), 
-  Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5, 9 ] ), 
+  Transformation( [ 1, 8, 4, 2, 7, 8, 8, 5 ] ), 
   Transformation( [ 7, 7, 4, 2, 1, 8, 8, 9, 5 ] ), 
-  Transformation( [ 7, 7, 4, 2, 1, 8, 8, 5, 9 ] ) ]
+  Transformation( [ 7, 7, 4, 2, 1, 8, 8, 5 ] ) ]
 gap> Idempotents(l);    
 [  ]
 gap> Idempotents(ll);
@@ -214,19 +220,19 @@ Group([ (5,9), (1,7) ])
 
 # IsomorphismTransformationSemigroup/Monoid
 gap> IsomorphismTransformationSemigroup(g);
-MappingByFunction( Group(
-[ (5,9), (1,7) ]), <transformation semigroup of degree 4 with 
-2 generators>, function( x ) ... end, <Operation "AsPermutation"> )
+MappingByFunction( Group([ (5,9), (1,7) ]), <transformation semigroup 
+ of size 4, of degree 4 with 2 generators>
+ , function( x ) ... end, function( x ) ... end )
 gap> s:=Range(last);
-<transformation semigroup of degree 4 with 2 generators>
+<transformation semigroup of size 4, of degree 4 with 2 generators>
 gap> IsGroupAsSemigroup(s);
 true
 gap> Generators(s);
-[ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1, 4 ] ) ]
+[ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
 gap> t:=Range(IsomorphismTransformationMonoid(g));
-<transformation monoid of degree 4 with 2 generators>
+<transformation monoid of size 4, of degree 4 with 2 generators>
 gap> Generators(t);
-[ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1, 4 ] ) ]
+[ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
 gap> h:=Range(IsomorphismPermGroup(t));
 Group([ (2,4), (1,3) ])
 gap> IsomorphismGroups(g, h);
@@ -258,8 +264,10 @@ gap> InversesOfSemigroupElement(FullTransformationSemigroup(12),f);
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 10, 3, 12, 2 ] ), 
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 9, 3, 12, 2 ] ), 
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 8, 3, 12, 2 ] ) ]
-
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
+gap> SetUserPreference("PartialPermDisplayLimit", display);;
+gap> SetUserPreference("NotationForPartialPerm", notationpp);;
+gap> SetUserPreference("NotationForTransformations", notationt);;
 gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);

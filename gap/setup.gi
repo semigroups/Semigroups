@@ -25,7 +25,7 @@ InstallOtherMethod(ActionDegree,
 s-> ActionDegree(Representative(s)));
 
 InstallOtherMethod(ActionDegree, "for a partial perm collection",
-[IsPartialPermCollection], s-> DegreeOfPartialPermCollection(s));
+[IsPartialPermCollection], DegreeOfPartialPermCollection);
 
 #
 
@@ -88,7 +88,7 @@ InstallMethod(RhoOrbOpts, "for a bipartition semigroup",
 # the lambda and rho acts
 
 InstallMethod(LambdaAct, "for a transformation semi",
-[IsTransformationSemigroup], x-> OnSets);
+[IsTransformationSemigroup], x-> OnPosIntSetsTrans);
 
 InstallMethod(RhoAct, "for a transformation semi",
 [IsTransformationSemigroup], x-> ON_KERNEL_ANTI_ACTION);
