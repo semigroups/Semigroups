@@ -58,7 +58,7 @@ InstallOtherMethod(SemigroupByGenerators,
 "for an associative element with action collection and record",
 [IsAssociativeElementWithActionCollection, IsRecord],
 function(gens, opts)
-  local deg, n, i, closure_opts, s, filts, f;
+  local deg, n, i, closure_opts, s, filts, pos, f;
 
   opts:=SemigroupOptions(opts);
   gens:=ShallowCopy(gens);
@@ -69,6 +69,7 @@ function(gens, opts)
     Apply(gens, x-> AsTransformation(x, deg));
   fi;
 
+  # try to find a smaller generating set
   if opts.small and Length(gens)>1 then 
     gens:=SSortedList(gens); #remove duplicates 
     gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
@@ -118,6 +119,18 @@ function(gens, opts)
   fi;
  
   SetGeneratorsOfMagma( s, AsList( gens ) );
+
+  if IsMultiplicativeElementWithOneCollection(gens) 
+   and CanEasilyCompareElements(gens) then
+    pos:=Position(gens, One(gens));
+    if pos<>fail then 
+      SetFilterObj(s, IsMonoid);
+      gens:=ShallowCopy(gens);
+      Remove(gens, pos);
+      SetGeneratorsOfMonoid(s, gens);
+    fi;
+  fi; 
+
   return s;
 end);
 

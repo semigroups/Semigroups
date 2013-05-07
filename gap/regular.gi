@@ -96,8 +96,6 @@ function(f, s)
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
-# new for 1.0! - \in - "for acting elt and regular D-class of acting semigp"
-#############################################################################
 #JDM revise this if revising \in for elt and D-class in greens.gi
 
 InstallMethod(\in, "for acting elt and regular D-class of acting semigp.",
@@ -794,9 +792,6 @@ function(d)
   return out;
 end);
 
-# new for 0.7! - GreensRClasses - for regular acting semigroup
-##############################################################################
-
 # different method for inverse 
 
 InstallOtherMethod(GreensRClasses, "for a regular acting semigroup", 
@@ -941,9 +936,6 @@ local record;
   record.ShallowCopy:=iter-> rec(m:=1);
   return IteratorByFunctions(record);
 end);
-
-# new for 0.7! - IteratorOfLClassData - "for a regular acting semigroup
-###############################################################################
 
 # no method required for inverse (use IteratorOfRClassData instead)
 
@@ -1151,8 +1143,7 @@ function(s)
    CallFuncList(CreateDClassNC, x), [IsIteratorOfDClasses]);
 end);
 
-# new for 0.7! - IteratorOfLClassReps - "for a regular acting semigroup"
-###############################################################################
+#
 
 # different method for inverse
 
@@ -1160,9 +1151,6 @@ InstallMethod(IteratorOfLClassReps, "for a regular acting semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
 s-> IteratorByIterator(IteratorOfLClassData(s), x-> x[4],
 [IsIteratorOfLClassReps]));
-
-# new for 0.7! - IteratorOfLClasses - "for a part perm inverse semigroup"
-###############################################################################
 
 # different method for inverse
 
@@ -1178,11 +1166,6 @@ InstallMethod(IteratorOfRClasses, "for regular acting semigroup",
 s-> IteratorByIterator(IteratorOfRClassData(s), x->
 CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
 
-#NNN
-
-# new for 1.0! - NrDClasses - "for a regular acting semigroup"
-############################################################################
-
 # same method for inverse semigroups
 
 InstallMethod(NrDClasses, "for a regular acting semigroup",
@@ -1192,9 +1175,6 @@ function(s)
   o:=Enumerate(LambdaOrb(s), infinity);
   return Length(OrbSCC(o))-1;
 end);
-
-# new for 1.0! - NrHClasses - "for a regular acting semigroup"
-############################################################################
 
 # different method for inverse semigroups
 

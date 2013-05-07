@@ -412,7 +412,7 @@ function(s, f)
     opts:=rec(  treehashsize:=s!.opts.hashlen.M, 
                 gradingfunc:=function(o, x) return rhorank(x); end,
                 onlygrades:=function(x, y) return x>=rank; end,
-                onlygradesdata:=fail ); #shouldn't this be fail
+                onlygradesdata:=fail );
     
     for name in RecNames(LambdaOrbOpts(s)) do
       opts.(name):=LambdaOrbOpts(s).(name);
@@ -463,12 +463,13 @@ function(s, f)
     od;
 
     o:=Orb(s, LambdaOrbSeed(s), LambdaAct(s), opts);
+    Enumerate(o);
     grades:=Grades(o);
     
-    for x in o do
-      if grades[i]=rank and tester(x, rho_f) then
+    for i in [2..Length(o)] do 
+      if grades[i]=rank and tester(o[i], rho_f) then
         for rho in rhos do
-          g:=creator(lambda, rho)*inv(x, f);
+          g:=creator(lambda, rho)*inv(o[i], f);
           if regular or g in s then
             k:=k+1; 
             out[k]:=g;
@@ -751,17 +752,19 @@ end);
 
 # to matrix.gi
 
-InstallOtherMethod(IsomorphismTransformationSemigroup, "for a matrix semigroup",
-[IsMatrixSemigroup], 
-function(S)        
-  local n, F, T;
-  n:=Length(GeneratorsOfSemigroup(S)[1][1]);
-  F:=BaseDomain(GeneratorsOfSemigroup(S)[1]);        
-  T:=Semigroup(List(GeneratorsOfSemigroup(S), x-> 
-   TransformationOp(x, Elements(F^n), OnRight)));        
-  return MappingByFunction(S, T,
-   x-> TransformationOp(x, Elements(F^Size(F)), OnRight));
-end);
+#JDM apparently BaseDomain is not in GAPdev so this doesn't work.
+
+#InstallOtherMethod(IsomorphismTransformationSemigroup, "for a matrix semigroup",
+#[IsMatrixSemigroup], 
+#function(S)        
+#  local n, F, T;
+#  n:=Length(GeneratorsOfSemigroup(S)[1][1]);
+#  F:=BaseDomain(GeneratorsOfSemigroup(S)[1]);        
+#  T:=Semigroup(List(GeneratorsOfSemigroup(S), x-> 
+#   TransformationOp(x, Elements(F^n), OnRight)));        
+#  return MappingByFunction(S, T,
+#   x-> TransformationOp(x, Elements(F^Size(F)), OnRight));
+#end);
 
 #
 

@@ -99,7 +99,7 @@ end);
 InstallGlobalFunction(RectifyLambda,
 function(arg)
   local f, l, m;
-
+  
   if not IsClosed(arg[2]) then 
     Enumerate(arg[2], infinity);
   fi;
@@ -110,7 +110,6 @@ function(arg)
   else
     l:=arg[4];
   fi;
-
   if not IsBound(arg[5]) or arg[5]=fail then 
     m:=OrbSCCLookup(arg[2])[l];
   else

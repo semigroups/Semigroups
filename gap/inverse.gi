@@ -947,8 +947,7 @@ function(d, f)
   return l;
 end);
 
-# mod for 1.0! - GreensLClassOfElementNC - "for D-class and acting elt"
-#############################################################################
+#
 
 InstallOtherMethod(GreensLClassOfElementNC, "for D-class and acting elt",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
@@ -962,8 +961,7 @@ function(d, f)
   return l;
 end);
 
-# new for 0.7! - GreensRClasses - for acting semigroup with inverse op
-##############################################################################
+#
                     
 InstallOtherMethod(GreensRClasses, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
@@ -989,8 +987,7 @@ function(s)
   return out;
 end);
 
-# new for 0.7! - GreensRClasses - for inverse op D-class of acting semigroup
-##############################################################################
+#
                     
 InstallOtherMethod(GreensRClasses, "for inverse op D-class",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
@@ -1103,17 +1100,13 @@ function(s)
   return EvaluateWord(gens, w);
 end);
 
-#SSS
-
-# new for 1.0! - SchutzenbergerGroup - for an acting semigroup with inverse op
-##############################################################################
+#
 
 InstallOtherMethod(SchutzenbergerGroup, "for an inverse op L-class",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
 l-> LambdaOrbSchutzGp(LambdaOrb(l), LambdaOrbSCCIndex(l))); 
 
-# new for 1.0! - Size - "for an acting semigroup with inversion"
-##############################################################################
+#
 
 InstallOtherMethod(Size, "for an acting semigroup with inversion",
 [IsActingSemigroupWithInverseOp], 10, 
@@ -1131,24 +1124,19 @@ function(s)
   return nr;
 end);
 
-# new for 1.0! - Size - "for an inverse op D-class"
-##############################################################################
+#
 
 InstallOtherMethod(Size, "for an inverse op D-class",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
 d-> Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))^2);
 
-# new for 1.0! - Size - "for an inverse op L-class"
-##############################################################################
+#
 
 InstallOtherMethod(Size, "for an inverse op L-class",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
 l-> Size(SchutzenbergerGroup(l))*Length(LambdaOrbSCC(l)));
 
-#HHH
-
-# new for 1.0! - HClassReps - for an acting semigroup with inverse op
-############################################################################
+#
 
 InstallOtherMethod(HClassReps, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
@@ -1303,8 +1291,7 @@ local iter, scc;
           i:=1; m:=m+1;
         fi;
 
-        iter!.i:=i; iter!.m:=m;
- 
+        iter!.i:=i; iter!.m:=m; 
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][i]))^-1; 
         return [s, m, LambdaOrb(s), f, false];
       end,
@@ -1316,8 +1303,7 @@ local iter, scc;
   return iter;
 end);
 
-# new for 0.7! - IteratorOfLClassReps - "for acting semigroup with inverse op"
-###############################################################################
+#
 
 InstallMethod(IteratorOfLClassReps, "for acting semigp with inverse op",
 [IsActingSemigroupWithInverseOp],
