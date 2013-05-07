@@ -102,10 +102,6 @@ InstallGlobalFunction(SemigroupsTestInstall,
 function()
   Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
    "testinstall.tst"));;
-  #if Semigroups_C then 
-    Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
-       "testcompiled.tst"));;
-  #fi;
   return;
 end);
 
