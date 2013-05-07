@@ -183,6 +183,10 @@ function(arg)
       file:=IO_FilteredFile([["gzip", ["-dcq"]]], arg[1]);
     else  
       file:=IO_File(arg[1]);
+      if file=fail then 
+        file:=IO_FilteredFile([["gzip", ["-dcq"]]], 
+         Concatenation(arg[1], ".gz"));
+      fi;
     fi;
   fi;
 
@@ -253,14 +257,13 @@ function(line)
     k:=k+1;
     m:=Int([line[i]]);                                      # blocksize
     deg:=Int(NormalizedWhitespace(line{[i+1..m+i]}));       # max domain
-    rank:=Int(NormalizedWhitespace(line{[m+i+1..2*m+i]}));  # rank
-    f:=line{[i+1..i+m*deg]};
+    f:=line{[m+i+1..i+m*(deg+1)]};
     out[k]:=EmptyPlist(deg);
     for j in [1..deg] do 
       Add(out[k], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
     od;
     out[k]:=DensePartialPermNC(out[k]);
-    i:=i+m*deg+1;
+    i:=i+m*(deg+1)+1;
   od;
   return out;
 end);
@@ -271,11 +274,11 @@ end);
 
 InstallGlobalFunction(WriteSemigroups, 
 function(arg)
-  local trans, gens, append, output, n, nrdigits, str, i, attin, s, f;
+  local trans, gens, append, gzip, str, deg, nrdigits, out, i, s, f;
   
-  if not Length(arg)=2 then 
+  if not (Length(arg)=3 or Length(arg)=2) then
     Error("Usage: filename as string and trans, trans coll, partial perm or",
-    " partial perm coll,");
+    " partial perm coll, and a boolean,");
     return;
   fi;
 
@@ -292,6 +295,11 @@ function(arg)
   else
     Error("Usage: second arg must be trans or part perm semi, coll, or list",
     " of same,");
+    return;
+  fi;
+
+  if Length(arg)=3 and not IsBool(arg[3]) then 
+    Error("usage: the third argument must be <true> or <false>,");
     return;
   fi;
 
@@ -327,39 +335,61 @@ function(arg)
 
   #####
 
-  output := OutputTextFile( arg[1], true );
-  SetPrintFormattingStatus(output, false);
-
+  #by default or by if arg[3]=true append the result to arg[1]
+  
+  gzip:=SplitString(arg[1], '.');
+  gzip:=[JoinStringsWithSeparator(gzip{[1..Length(gzip)-1]}, "."),
+   gzip[Length(gzip)]];
+  if Length(arg)=2 or arg[3] then 
+    if Length(gzip)>1 and gzip[2]="gz" then 
+      str:=StringFile(gzip[1]);
+    else 
+      str:=StringFile(arg[1]);
+    fi;
+  else
+    str:=StringFile(arg[1]);
+  fi;
+  
+  if str=fail then 
+    str:="";
+  fi;
+  
   if IsTransformationCollection(gens[1]) then 
     for s in gens do 
-      n:=String(DegreeOfTransformationCollection(s));
-      nrdigits:=Length(n);
-      str:=Concatenation(String(nrdigits), n);
-    
       for f in s do
+        deg:=String(DegreeOfTransformation(f));
+        nrdigits:=Length(deg);
+        Append(str, String(nrdigits));
+        Append(str, deg);
         for i in [1..DegreeOfTransformation(f)] do 
           append(str, i^f, nrdigits);
         od;
       od;
-
-      AppendTo( output, str, "\n" );
+      Append(str, "\n" );
     od;
   elif IsPartialPermCollection(gens[1]) then 
     for s in gens do 
-      str:="p";
+      Append(str, "p");
       for f in s do 
-        nrdigits:=Length(String(DegreeOfPartialPerm(f)));
+        deg:=String(DegreeOfPartialPerm(f));
+        nrdigits:=Length(String(Maximum(
+         DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f))));
         Append(str, String(nrdigits));
+        append(str, deg, nrdigits);
         for i in [1..DegreeOfPartialPerm(f)] do 
           append(str, i^f, nrdigits);
         od;
       od;
-      AppendTo(output, str, "\n");
+      Append(str, "\n");
     od;
   fi;
-
-  CloseStream(output);
-  return;
+  
+  if Length(gzip)>1 and gzip[2]="gz" then 
+    out:=FileString(gzip[1], str);
+    Exec("gzip -fq9 ", gzip[1]);
+    return out;
+  fi;
+  return FileString(arg[1], str);
 end);
 
 #EOF
