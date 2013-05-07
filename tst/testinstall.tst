@@ -47,7 +47,7 @@ gap> f:=Transformation( [ 1, 1, 3, 1 ] );;
 gap> f in s;
 true
 gap> t:=Semigroup(gens{[1..3]});
-<transformation semigroup of degree 4 with 3 generators>
+<transformation semigroup on 4 pts with 3 generators>
 gap> ForAll(t, x-> x in s);
 true
 gap> Size(t);
@@ -136,9 +136,9 @@ gap> gens:=[ Transformation( [ 1, 2, 3, 5, 4, 6, 7, 8 ] ),
 >   Transformation( [ 1, 2, 3, 4, 1, 6, 7, 8 ] ),
 >   Transformation( [ 8, 8, 3, 4, 5, 7, 6, 1 ] ) ];;
 gap> s:=Monoid(gens);
-<transformation monoid of degree 8 with 6 generators>
+<transformation monoid on 8 pts with 6 generators>
 gap> t:=ClosureSemigroup(s, [Transformation( [ 4, 4, 3, 1, 5, 6, 3, 8 ] )]);
-<transformation monoid of degree 8 with 6 generators>
+<transformation monoid on 8 pts with 6 generators>
 gap> Size(t)=Size(Semigroup(Generators(t)));
 true
 
@@ -221,16 +221,16 @@ Group([ (5,9), (1,7) ])
 # IsomorphismTransformationSemigroup/Monoid
 gap> IsomorphismTransformationSemigroup(g);
 MappingByFunction( Group([ (5,9), (1,7) ]), <transformation semigroup 
- of size 4, of degree 4 with 2 generators>
+ of size 4, on 4 pts with 2 generators>
  , function( x ) ... end, function( x ) ... end )
 gap> s:=Range(last);
-<transformation semigroup of size 4, of degree 4 with 2 generators>
+<transformation semigroup of size 4, on 4 pts with 2 generators>
 gap> IsGroupAsSemigroup(s);
 true
 gap> Generators(s);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
 gap> t:=Range(IsomorphismTransformationMonoid(g));
-<transformation monoid of size 4, of degree 4 with 2 generators>
+<transformation monoid of size 4, on 4 pts with 2 generators>
 gap> Generators(t);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
 gap> h:=Range(IsomorphismPermGroup(t));
