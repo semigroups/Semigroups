@@ -254,13 +254,13 @@ function(line)
     m:=Int([line[i]]);                                      # blocksize
     deg:=Int(NormalizedWhitespace(line{[i+1..m+i]}));       # max domain
     rank:=Int(NormalizedWhitespace(line{[m+i+1..2*m+i]}));  # rank
-    f:=line{[i+1..i+m*(deg+3*rank+6)]};
-    out[k]:=EmptyPlist(deg+3*rank+6);
-    for j in [1..deg+3*rank+6] do 
+    f:=line{[i+1..i+m*deg]};
+    out[k]:=EmptyPlist(deg);
+    for j in [1..deg] do 
       Add(out[k], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
     od;
     out[k]:=DensePartialPermNC(out[k]);
-    i:=i+m*(deg+3*rank+6)+1;
+    i:=i+m*deg+1;
   od;
   return out;
 end);
@@ -271,7 +271,7 @@ end);
 
 InstallGlobalFunction(WriteSemigroups, 
 function(arg)
-  local trans, gens, convert, output, n, m, str, int, j, i, s, f;
+  local trans, gens, append, output, n, nrdigits, str, i, attin, s, f;
   
   if not Length(arg)=2 then 
     Error("Usage: filename as string and trans, trans coll, partial perm or",
@@ -314,31 +314,32 @@ function(arg)
  
   #####
 
-  convert:=function(list, m)
-    local str, i;
+  append:=function(str, pt, m)
+    local i, j;
     
-    str:="";
-    for i in list do 
-      i:=String(i);
-      Append(str, Concatenation([ListWithIdenticalEntries(m-Length(i), ' ')],
-      [i]));
+    i:=String(pt);
+    for j in [1..m-Length(i)] do 
+      Append(str, " ");
     od;
-
-    return Concatenation(str);
+    Append(str, i);
+    return str;
   end;
 
   #####
 
   output := OutputTextFile( arg[1], true );
   SetPrintFormattingStatus(output, false);
+
   if IsTransformationCollection(gens[1]) then 
     for s in gens do 
       n:=String(DegreeOfTransformationCollection(s));
-      m:=Length(n);
-      str:=Concatenation(String(m), n);
+      nrdigits:=Length(n);
+      str:=Concatenation(String(nrdigits), n);
     
       for f in s do
-        Append(str, convert(ImageListOfTransformation(f), m));
+        for i in [1..DegreeOfTransformation(f)] do 
+          append(str, i^f, nrdigits);
+        od;
       od;
 
       AppendTo( output, str, "\n" );
@@ -347,14 +348,12 @@ function(arg)
     for s in gens do 
       str:="p";
       for f in s do 
-        int:=OnTuples([1..DegreeOfPartialPerm(f)], f);
-        j:=Length(String(int[6]));
-        Append(str, Concatenation(String(j), convert(int, j)));
-        if Length(int)<> 6+int[1]+3*int[2] then 
-          Append(str, Concatenation([ListWithIdenticalEntries(j*int[2], ' ')]));
-        fi;
+        nrdigits:=Length(String(DegreeOfPartialPerm(f)));
+        Append(str, String(nrdigits));
+        for i in [1..DegreeOfPartialPerm(f)] do 
+          append(str, i^f, nrdigits);
+        od;
       od;
-      #Print(str, "\n");
       AppendTo(output, str, "\n");
     od;
   fi;

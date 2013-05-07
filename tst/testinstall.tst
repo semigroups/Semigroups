@@ -270,4 +270,5 @@ gap> SetUserPreference("PartialPermDisplayLimit", display);;
 gap> SetUserPreference("NotationForPartialPerm", notationpp);;
 gap> SetUserPreference("NotationForTransformations", notationt);;
 gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
+gap> Unbind(notationt);; Unbind(notationpp);;
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);
