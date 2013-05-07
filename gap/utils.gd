@@ -23,6 +23,5 @@ fi;
 
 DeclareGlobalFunction("ReadSemigroups");
 DeclareGlobalFunction("ReadSemigroupsLine");
-DeclareGlobalFunction("ReadSemigroupsLinePP");
 DeclareGlobalFunction("WriteSemigroups");
 

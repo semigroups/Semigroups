@@ -223,48 +223,27 @@ end);
 
 InstallGlobalFunction(ReadSemigroupsLine, 
 function(line)
-  local m, n, r, dom, out, f, i, k, deg, rank, j;
+  local i, k, out, m, deg, f, j;
   
-  if not line[1]='p' then         # transformations
-    m:=Int([line[1]]);            # block size <10
-    n:=Int(line{[2..m+1]});       # degree
-    r:=(Length(line)-(m+1))/(m*n);# number of generators 
-    dom:=[m+2..m*n+m+1]; out:=EmptyPlist(r);
-
-    for i in [1..r] do
-      out[i]:=EmptyPlist(n); 
-      f:=line{dom+m*(i-1)*n};
-      for j in [1..n] do 
-        Add(out[i], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
-      od;
-      out[i]:=TransformationNC(out[i]);
-    od;
-    return out;
-  elif line[1]='p' then # partial perms
-    return ReadSemigroupsLinePP(line);
-  fi;
-end);
-
-#
-
-InstallGlobalFunction(ReadSemigroupsLinePP, 
-function(line)
-  local r, i, k, out, m, deg, rank, f, j;
-  
-  r:=Length(line)-1; i:=2; k:=0; out:=[];
+  i:=2; k:=0; out:=[];
 
   while i<Length(line) do
-    k:=k+1;
     m:=Int([line[i]]);                                      # blocksize
     deg:=Int(NormalizedWhitespace(line{[i+1..m+i]}));       # max domain
     f:=line{[m+i+1..i+m*(deg+1)]};
+    k:=k+1;
     out[k]:=EmptyPlist(deg);
     for j in [1..deg] do 
       Add(out[k], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
     od;
-    out[k]:=DensePartialPermNC(out[k]);
     i:=i+m*(deg+1)+1;
   od;
+  
+  if line[1]='t' then         # transformations
+    Apply(out, TransformationNC); 
+  elif line[1]='p' then # partial perms
+    Apply(out, DensePartialPermNC);
+  fi;
   return out;
 end);
 
@@ -355,7 +334,8 @@ function(arg)
   fi;
   
   if IsTransformationCollection(gens[1]) then 
-    for s in gens do 
+    for s in gens do
+      Append(str, "t");
       for f in s do
         deg:=String(DegreeOfTransformation(f));
         nrdigits:=Length(deg);
