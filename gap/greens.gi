@@ -8,6 +8,34 @@
 #############################################################################
 ##
 
+InstallMethod(EquivalenceClassOfElement, 
+"for Green's R-relation and associative element", 
+[IsGreensRRelation, IsAssociativeElement],
+function(R, x)
+  return GreensRClassOfElement(UnderlyingDomainOfBinaryRelation(R), x);
+end);
+
+InstallMethod(EquivalenceClassOfElement, 
+"for Green's L-relation and associative element", 
+[IsGreensLRelation, IsAssociativeElement],
+function(L, x)
+  return GreensLClassOfElement(UnderlyingDomainOfBinaryRelation(L), x);
+end);
+
+InstallMethod(EquivalenceClassOfElement, 
+"for Green's D-relation and associative element", 
+[IsGreensDRelation, IsAssociativeElement],
+function(D, x)
+  return GreensDClassOfElement(UnderlyingDomainOfBinaryRelation(D), x);
+end);
+
+InstallMethod(EquivalenceClassOfElement, 
+"for Green's H-relation and associative element", 
+[IsGreensHRelation, IsAssociativeElement],
+function(H, x)
+  return GreensHClassOfElement(UnderlyingDomainOfBinaryRelation(H), x);
+end);
+
 # acting...
 
 # not required for regular/inverse
@@ -1813,15 +1841,13 @@ function(s)
   return rep*g*LambdaOrbMult(o, m, i)[1];
 end);
 
-#SSS
-
 # different method for regular/inverse
 
 InstallMethod(SchutzenbergerGroup, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local o, m, lambda_schutz, lambda_stab, rho_schutz, rho_stab, schutz, p;
-  
+  Error();  
   o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
   lambda_schutz:=LambdaOrbSchutzGp(o, m); 
   lambda_stab:=LambdaOrbStabChain(o, m);
