@@ -1847,7 +1847,7 @@ InstallMethod(SchutzenbergerGroup, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local o, m, lambda_schutz, lambda_stab, rho_schutz, rho_stab, schutz, p;
-  Error();  
+  
   o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
   lambda_schutz:=LambdaOrbSchutzGp(o, m); 
   lambda_stab:=LambdaOrbStabChain(o, m);
