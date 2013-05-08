@@ -162,17 +162,13 @@ end);
 ############################################################################### 
 ###############################################################################
 
-# new for 1.0! - \in - for lambda value of acting semi elt & graded lamda orbs
-##############################################################################
-
 InstallMethod(\in, "for lambda value of acting semi elt and graded lambda orbs",
 [IsObject, IsGradedLambdaOrbs],
 function(lamf, o)
   return not HTValue(GradedLambdaHT(o!.semi), lamf)=fail;
 end);
 
-# new for 1.0! - \in - for rho value of acting semi elt & graded rho orbs
-##############################################################################
+#
 
 InstallMethod(\in, "for rho value of acting semi elt and graded rho orbs",
 [IsObject, IsGradedRhoOrbs],
@@ -180,8 +176,7 @@ function(rho, o)
   return not HTValue(GradedRhoHT(o!.semi), rho)=fail;
 end);
 
-# new for 1.0! - \in - for acting semi elt and semigroup data
-##############################################################################
+#
 # expand?
 
 InstallMethod(\in, "for acting semi elt and semigroup data",
@@ -190,8 +185,7 @@ function(f, data)
   return not Position(data, f)=fail;
 end);
 
-# new for 1.0! - \in - for an acting elt and acting semigroup
-##############################################################################
+#
 
 InstallMethod(\in, "for an acting elt and acting semigroup",
 [IsAssociativeElementWithAction, IsActingSemigroup], 

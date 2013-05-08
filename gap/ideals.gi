@@ -1,6 +1,45 @@
 
 #
 
+InstallMethod(SemigroupIdealByGenerators,
+"for an acting semigroup and collection of its elements", 
+IsIdenticalObj, 
+[IsActingSemigroup, IsAssociativeElementWithActionCollection],
+function( M, gens )
+local S;
+    
+    S:= Objectify( NewType( FamilyObj( gens ), IsMagmaIdeal and
+     IsAttributeStoringRep and IsActingSemigroup ),
+     rec(opts:=SemigroupOptions(rec())));
+    
+    SetGeneratorsOfMagmaIdeal( S, AsList( gens ) );
+    SetIsSemigroupIdeal(S, true);
+    SetParent(S, M);
+
+    return S;
+end );
+
+# JDM move to lib
+
+InstallMethod(\=, "for semigroup ideals", 
+[IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal, 
+ IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
+function(I, J)
+  
+  if Parent(I)=Parent(J) then 
+    return ForAll(GeneratorsOfMagmaIdeal(I), x-> x in J) and
+    ForAll(GeneratorsOfMagmaIdeal(J), x-> x in I);
+  elif HasGeneratorsOfSemigroup(I) and HasGeneratorsOfSemigroup(J) then 
+    return ForAll(GeneratorsOfSemigroup(I), x-> x in J) and
+     ForAll(GeneratorsOfSemigroup(J), x-> x in I); 
+  else
+    return AsSSortedList(I)=AsSSortedList(J);
+  fi;
+
+end);
+
+#
+
 InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsActingSemigroup);
 
 #

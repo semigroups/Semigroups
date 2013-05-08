@@ -199,14 +199,12 @@ end);
 
 # everything else...
 
-# mod for 1.0! - Iterator - "for an acting semigroup"
-#############################################################################
 # Notes: the previous inverse method used D-classes instead of R-classes.
 
 # same method for regular/inverse 
 
 InstallMethod(Iterator, "for an acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+[IsActingSemigroup], 5, #to beat the method for semigroup ideals
 function(s)
   local iter;
 

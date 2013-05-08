@@ -10,19 +10,23 @@
 
 # basic things
 
-InstallOtherMethod(Generators, "for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(Generators, "for a semigroup with generators",
+[IsSemigroup],
 function(s)
 
-  if HasGeneratorsOfInverseMonoid(s) then 
+  if HasGeneratorsOfMagmaIdeal(s) then 
+    return GeneratorsOfMagmaIdeal(s);
+  elif HasGeneratorsOfInverseMonoid(s) then 
     return GeneratorsOfInverseMonoid(s);
   elif HasGeneratorsOfInverseSemigroup(s) then 
     return GeneratorsOfInverseSemigroup(s);
-  elif IsMonoid(s) then
+  elif HasGeneratorsOfMonoid(s) then
     return GeneratorsOfMonoid(s);
+  elif HasGeneratorsOfSemigroup(s) then 
+    return GeneratorsOfSemigroup(s);
   fi;
 
-  return GeneratorsOfSemigroup(s);
+  return fail;
 end);
 
 #
@@ -170,25 +174,6 @@ function(gens, opts)
 
   return s;
 end);
-
-#
-
-InstallMethod( SemigroupIdealByGenerators,
-"for an acting semigroup and  collection of its elements",
-[IsActingSemigroup, IsAssociativeElementWithActionCollection],
-function( M, gens )
-local S;
-
-    S:= Objectify( NewType( FamilyObj( gens ), IsMagmaIdeal and
-     IsAttributeStoringRep and IsActingSemigroup ), 
-     rec(opts:=SemigroupOptions(rec())));
-
-    SetGeneratorsOfMagmaIdeal( S, AsList( gens ) );
-    SetIsSemigroupIdeal(S, true);
-    SetParent(S, M);
-
-    return S;
-end );
 
 #
 

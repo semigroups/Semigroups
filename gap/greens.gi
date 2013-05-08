@@ -2158,8 +2158,7 @@ h-> StructureDescription(Range(IsomorphismPermGroup(h))));
 ##############################################################################
 ##############################################################################
 
-# new for 1.0! - \= - "for Green's class and Green's class of acting semigp"
-#############################################################################
+#
 
 InstallMethod(\=, "for Green's class and class of acting semigp",
 [IsActingSemigroupGreensClass, IsActingSemigroupGreensClass],
@@ -2174,8 +2173,7 @@ function(x, y)
    Size(x)=Size(y);
 end);
 
-# new for 1.0! - \< - "for Green's class and Green's class of acting semigp"
-#############################################################################
+#
 
 InstallMethod(\<, "for Green's class and class of acting semigp",
 [IsActingSemigroupGreensClass, IsActingSemigroupGreensClass],
@@ -2537,13 +2535,10 @@ function(s);
          IsActingSemigroupGreensClass);
 end);
 
-# new for 1.0! - RClassType - "for an acting semigroup"
-############################################################################
-
 # different method for regular/inverse
 
 InstallMethod(RClassType, "for an acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+[IsActingSemigroup],
 function(s);
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsGreensRClass and

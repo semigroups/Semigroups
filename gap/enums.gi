@@ -15,7 +15,7 @@
 # same method for regular/inverse
 
 InstallMethod(Enumerator, "for an acting semigroup", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup], 
+[IsActingSemigroup], 5, #to beat the method for semigroup ideals
 function(s)
   local out, iter, j, i;
 
