@@ -116,7 +116,7 @@ gap> NrRClasses(t); NrLClasses(t); NrDClasses(t); NrIdempotents(t);
 gap> file:=Concatenation(SemigroupsDir(), "/examples/path.semigroups.gz");;
 gap> gens:=ReadSemigroups(file, 10);;
 gap> s:=Semigroup(gens[1]);;        
-gap> s:=ClosureSemigroup(s, gens[2], rec(schreier:=false));;
+gap> s:=ClosureSemigroup(s, gens[2]);;
 gap> for i in [2..Length(gens)] do
 > s:=ClosureSemigroup(s, gens[i]); Size(s);
 > od;
@@ -158,7 +158,7 @@ gap> GroupOfUnits(s);
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 >   Transformation( [ 4, 2, 1, 5, 5 ] ),
 >   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
-gap> s:=Monoid(gens[1], gens[2], rec(schreier:=false));
+gap> s:=Monoid(gens[1], gens[2]);
 <transformation monoid on 5 pts with 2 generators>
 gap> s:=ClosureSemigroup(s, gens[3]);
 <transformation monoid on 5 pts with 3 generators>
