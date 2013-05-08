@@ -9,8 +9,6 @@
 ##
 
 # acting...
-#############################################################################
-#############################################################################
 
 # not required for regular/inverse
 
@@ -2028,8 +2026,7 @@ function(d)
   return schutz;
 end);
 
-# new for 1.0! - SchutzenbergerGroup - "for a H-class of an acting semigroup"
-#############################################################################
+#
 
 # different method for regular/inverse
 
@@ -2077,9 +2074,6 @@ function(h)
 
   return Intersection(lambda_schutz^lambda_p, rho_schutz^rho_p);
 end);
-
-# new for 1.0! - SchutzenbergerGroup - "for an L-class of an acting semigp."
-#############################################################################
 
 # same method for regular, different method for inverse
 

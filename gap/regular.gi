@@ -1368,28 +1368,24 @@ function(s)
     LambdaOrbMult(lambda_o, m, i)[1];
 end);
 
-#SSS
-
-# new for 1.0! - SchutzenbergerGroup - "for D-class of regular acting semigroup"
-#############################################################################
-
 # same method for inverse
 
 InstallMethod(SchutzenbergerGroup, "for D-class of regular acting semigroup",
 [IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 d-> LambdaOrbSchutzGp(LambdaOrb(d), LambdaOrbSCCIndex(d)));
 
-# new for 1.0! - SchutzenbergerGroup - "for H-class of regular acting semigroup"
-#############################################################################
-
 # same method for inverse
 
 InstallMethod(SchutzenbergerGroup, "for H-class of regular acting semigroup",
 [IsActingSemigroupGreensClass and IsRegularClass and IsGreensHClass],
-h-> LambdaOrbSchutzGp(LambdaOrb(h), LambdaOrbSCCIndex(h)));
+function(h)
+  local o, rep, s, p;
 
-# new for 1.0! - Size - "for a regular acting semigroup"
-############################################################################
+  o:=LambdaOrb(h); rep:=Representative(h); s:=Parent(h);
+  p:=LambdaConjugator(s)(RectifyLambda(s, o, rep).rep, rep);
+
+  return LambdaOrbSchutzGp(o, LambdaOrbSCCIndex(h))^p;
+end); 
 
 # different method for inverse semigroups
 
@@ -1417,8 +1413,7 @@ function(s)
   return nr;
 end);
 
-# new for 1.0! - Size - "for a regular D-class of acting semigroup"
-#############################################################################
+#
 
 InstallOtherMethod(Size, "for a regular D-class of an acting semigp.",
 [IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],

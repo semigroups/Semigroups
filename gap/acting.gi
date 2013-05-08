@@ -60,8 +60,6 @@ return HTCreate(RhoFunc(s)(GeneratorsOfSemigroup(s)[1]),
  rec(forflatplainlists:=true, treehashsize:=s!.opts.hashlen.S));
 end);
 
-# new for 1.0! - RectifyRho - "for a rho orb and an acting element"
-##############################################################################
 # returns the element <f> premultiplied by RhoOrbMult so that the resulting 
 # element has its RhoValue in the first position of its scc.
 
