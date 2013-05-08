@@ -196,7 +196,7 @@ function(arg)
       repeat  
         i:=i+1; line:=IO_ReadLine(file);
       until i=arg[2] or line="";
-      IO_Close(file); 
+      IO_Close(file);
       if line="" then
         Error(arg[1], " only has ", i-1, " lines,"); 
         return;
@@ -204,7 +204,6 @@ function(arg)
         return ReadSemigroupsLine(Chomp(line));
       fi;
     else
-      IO_Close(file);
       Error("the second argument should be a positive integer,");
       return;
     fi;
