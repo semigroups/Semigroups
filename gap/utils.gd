@@ -9,6 +9,8 @@
 ##
 
 DeclareGlobalFunction("SemigroupsDir");
+DeclareGlobalFunction("SemigroupsStartTest");
+DeclareGlobalFunction("SemigroupsStopTest");
 DeclareGlobalFunction("SemigroupsMakeDoc");
 DeclareGlobalFunction("SemigroupsMathJaxLocal");
 DeclareGlobalFunction("SemigroupsMathJaxDefault");

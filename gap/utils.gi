@@ -10,6 +10,61 @@
 
 # this file contains utilies for use with the Semigroups package. 
 
+BindGlobal("SemigroupsTestRec",
+  rec());
+
+MakeReadWriteGlobal("SemigroupsTestRec");
+
+InstallGlobalFunction(SemigroupsStartTest, 
+function()
+  local record;
+
+  record:=SemigroupsTestRec;  
+  
+  record.InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
+  record.InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
+  
+  record.PartialPermDisplayLimit:=UserPreference("PartialPermDisplayLimit");;
+  record.TransformationDisplayLimit
+   :=UserPreference("TransformationDisplayLimit");;
+  record.NotationForPartialPerms:=UserPreference("NotationForPartialPerms");;
+  record.NotationForTransformations:=
+   UserPreference("NotationForTransformations");;
+  
+  SetInfoLevel(InfoWarning, 0);;
+  SetInfoLevel(InfoSemigroups, 0);
+  
+  SetUserPreference("PartialPermDisplayLimit", 100);;
+  SetUserPreference("TransformationDisplayLimit", 100);;
+  SetUserPreference("NotationForPartialPerms", "component");;
+  SetUserPreference("NotationForTransformations", "input");;
+  return; 
+end);
+
+#
+
+InstallGlobalFunction(SemigroupsStopTest, 
+function()
+  local record;
+
+  record:=SemigroupsTestRec;  
+  
+  SetInfoLevel(InfoWarning, record.InfoLevelInfoWarning);;
+  SetInfoLevel(InfoSemigroups, record.InfoLevelInfoSemigroups);
+  
+  SetUserPreference("PartialPermDisplayLimit", 
+   record.PartialPermDisplayLimit);
+  SetUserPreference("TransformationDisplayLimit", 
+   record.TransformationDisplayLimit);
+  SetUserPreference("NotationForPartialPerms", 
+   record.NotationForPartialPerms);
+  SetUserPreference("NotationForTransformations",
+   record.NotationForTransformations);
+  return;
+end);
+
+#
+
 InstallGlobalFunction(SemigroupsDir, 
 function()
   return PackageInfo("semigroups")[1]!.InstallationPath;

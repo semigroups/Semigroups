@@ -12,18 +12,8 @@
 gap> START_TEST("Semigroups package: testinstall.tst");
 gap> LoadPackage( "semigroups", false );;
 
-# Set info levels
-gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
-gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoSemigroups, 0);
-gap> display:=UserPreference("PartialPermDisplayLimit");;
-gap> notationpp:=UserPreference("NotationForPartialPerms");;
-gap> notationt:=UserPreference("NotationForTransformations");;
-gap> SetUserPreference("PartialPermDisplayLimit", 100);;
-gap> SetUserPreference("TransformationDisplayLimit", 100);;
-gap> SetUserPreference("NotationForPartialPerms", "component");;
-gap> SetUserPreference("NotationForTransformations", "input");;
+# Set info levels and user preferences
+gap> SemigroupsStartTest();
 
 # 
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
@@ -366,11 +356,5 @@ gap> Elements(s);
   (1)(2,3) ]
 
 #
-gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
-gap> SetUserPreference("PartialPermDisplayLimit", display);;
-gap> SetUserPreference("NotationForPartialPerm", notationpp);;
-gap> SetUserPreference("NotationForTransformations", notationt);;
-gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
-gap> Unbind(notationt);; Unbind(notationpp);;
+gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);
