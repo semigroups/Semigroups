@@ -560,15 +560,12 @@ function(s)
   return out;
 end);
 
-# new for 1.0! - GreensHClasses - for regular acting semi
-############################################################################
-
 # different method for inverse.
 
 InstallOtherMethod(GreensHClasses, "for a regular acting semigroup", 
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local lambda_o, lambda_scc, rho_o, rho_scc, len, lookup, rhofunc, out, type, hrel, n, lambda_mults, f, rho_l, rho_m, rho_mults, lambda_m, j, k;
+  local lambda_o, lambda_scc, rho_o, rho_scc, len, lookup, rhofunc, out, type, n, lambda_mults, f, rho_l, rho_m, rho_mults, g, lambda_m, j, k;
 
   lambda_o:=Enumerate(LambdaOrb(s), infinity);
   lambda_scc:=OrbSCC(lambda_o);
@@ -581,7 +578,6 @@ function(s)
 
   out:=EmptyPlist(NrHClasses(s));
   type:=HClassType(s);
-  hrel:=GreensHRelation(s);
   n:=0;
 
   for lambda_m in [2..len] do
@@ -590,22 +586,21 @@ function(s)
     rho_l:=Position(rho_o, rhofunc(f));
     rho_m:=lookup[rho_l];
     rho_mults:=RhoOrbMults(rho_o, rho_m);
-    f:=rho_mults[rho_l][2]*f;
+    g:=rho_mults[rho_l][2]*f;
     for j in lambda_scc[lambda_m] do
-      f:=f*lambda_mults[j][1];
+      f:=g*lambda_mults[j][1];
       for k in rho_scc[rho_m] do
         n:=n+1;
-        # JDM maybe a bad idea to use CreateHClass here, perhaps expand?
         out[n]:=CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o,
          rho_mults[k][1]*f, false);
+      
       od;
     od;
   od;
   return out;
 end);
 
-# new for 1.0! - GreensHClasses - "for D-class of regular acting semigroup"
-##############################################################################
+# 
 
 # different method for inverse
 

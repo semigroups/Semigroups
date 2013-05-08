@@ -1225,8 +1225,6 @@ function(s)
         scc_reps:=[One(Generators(s))], semi:=s));
 end);
 
-# new for 1.0! - RhoOrbMult - "for a rho orb and index"
-##############################################################################
 # f takes o[scc[1]] to o[i] and inv(o[scc[1]],f) takes o[i] to o[scc[1]]
 
 InstallGlobalFunction(RhoOrbMult,
