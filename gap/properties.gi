@@ -110,7 +110,6 @@ function(s)
   for d in iter do
     if IsRegularDClass(d) and (ForAny(RClasses(d), x-> NrIdempotents(x)>1) or 
       NrRClasses(d)<>NrLClasses(d)) then
-      Error();
       return false;
     fi;
   od;
