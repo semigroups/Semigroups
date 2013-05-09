@@ -72,7 +72,8 @@ function(d)
       s:=Parent(d);
       rep:=Representative(d);
 
-      if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or f[2] <> rep[2] then
+      if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
+        or ActionRank(f) <> ActionRank(rep) then
         return fail;
       fi;
 

@@ -100,7 +100,7 @@ InstallMethod(LambdaAct, "for a partial perm semi",
 InstallMethod(RhoAct, "for a partial perm semi",
 [IsPartialPermSemigroup], s->       
   function(set, f) 
-    return OnSets(set, f^-1);
+    return OnPosIntSetsPartialPerm(set, f^-1);
   end);
 
 InstallMethod(LambdaAct, "for a bipartition semigroup",
