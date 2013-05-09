@@ -1406,7 +1406,6 @@ end);
 InstallOtherMethod(IsomorphismPermGroup, "for H-class of an acting semi",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
-  local g, f;
 
   if not IsGroupHClass(h) then
     Error("the H-class is not a group,");
@@ -1414,7 +1413,7 @@ function(h)
   fi;
 
   return MappingByFunction(h, SchutzenbergerGroup(h), 
-   AsPermutation, x-> One(h)*x);
+   AsPermutation, x-> MultiplicativeNeutralElement(h)*x);
 end);
 
 #
@@ -1492,7 +1491,8 @@ LambdaOrbSCC(r), LambdaOrb(r), true));
 
 # same method for regular/inverse
 
-InstallOtherMethod(OneMutable, "for a H-class of an acting semigroup",
+InstallMethod(MultiplicativeNeutralElement, 
+"for a H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass], 
 function(h)
 

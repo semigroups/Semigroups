@@ -31,6 +31,8 @@
 
 #new
 
+DeclareAttribute("MultiplicativeNeutralElement", IsGreensHClass);
+
 DeclareProperty("IsGreensClassOfPartPermSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassNC", IsActingSemigroupGreensClass);
