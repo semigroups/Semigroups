@@ -2480,7 +2480,7 @@ gap> NrRClasses(s);
 gap> f:=PartialPerm([ 3, 9 ], [ 5, 4 ]);;
 gap> d:=DClass(s, f);
 {[ 3, 9 ] -> [ 7, 6 ]}
-gap> Position(LambdaOrb(d), RanSetPP(Representative(d)));
+gap> Position(LambdaOrb(d), ImageSetOfPartialPerm(Representative(d)));
 7
 gap> OrbSCC(RhoOrb(d))[RhoOrbSCCIndex(d)];
 [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 

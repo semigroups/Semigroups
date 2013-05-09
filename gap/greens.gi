@@ -1622,7 +1622,8 @@ function(x, value, scc, o, onright)
   fi;
 
   # is r the group of units...
-  if ActionRank(Representative(x))=ActionDegree(Representative(x)) then
+  if IsActingSemigroupWithFixedDegreeMultiplication(s) and
+   ActionRank(Representative(x))=ActionDegree(Representative(x)) then
     return 1;
   fi;
 
