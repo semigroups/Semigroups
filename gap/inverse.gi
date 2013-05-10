@@ -345,7 +345,7 @@ end);
 #
 
 InstallOtherMethod(DClassOfHClass, "for inverse op H-class", 
-[IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
+[IsInverseOpClass and IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
   local s, o, m, f;
 
