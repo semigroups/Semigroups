@@ -132,8 +132,8 @@ end);
 #
 
 InstallMethod(\in, "for inverse op D-class",
-[IsPartialPerm , IsInverseOpClass and IsGreensDClass and
-IsActingSemigroupGreensClass],
+[IsAssociativeElementWithUniqueSemigroupInverse, 
+IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(f, d)
   local rep, s, o, m, lookup, rho_l, lambda_l, schutz, scc, g;
   
@@ -590,7 +590,7 @@ end);
 InstallOtherMethod(GreensHClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)
-  local o, scc, len, out, n, mults, f, m, j, k;
+  local o, scc, len, out, n, mults, g, f, m, j, k;
   
   o:=LambdaOrb(s);
   scc:=OrbSCC(o);
@@ -601,9 +601,9 @@ function(s)
     
   for m in [2..len] do
     mults:=LambdaOrbMults(o, m);
-    f:=RightOne(LambdaOrbRep(o, m));
+    g:=RightOne(LambdaOrbRep(o, m));
     for j in scc[m] do
-      f:=f*mults[j][1];
+      f:=g*mults[j][1];
       for k in scc[m] do
         n:=n+1;
         out[n]:=CreateHClass(s, m, o, fail, fail, mults[k][2]*f, false);

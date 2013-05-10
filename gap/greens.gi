@@ -522,7 +522,6 @@ function(d)
   return Concatenation(List(GreensRClasses(d), GreensHClasses));
 end);
 
-
 # different method for regular/inverse
 
 InstallOtherMethod(GreensHClasses, "for an L-class of an acting semigroup",

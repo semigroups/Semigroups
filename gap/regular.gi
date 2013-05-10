@@ -834,7 +834,10 @@ local record;
       fi;
 
       f:=LambdaOrbRep(iter!.o, iter!.m)*LambdaOrbMult(iter!.o, iter!.m, l)[2]; 
-      if IsActingSemigroupWithInverseOp(s) then 
+      if IsActingSemigroupWithInverseOp(s) then
+        # D-class reps must have rectified lambda and rho value
+        f:=
+         LambdaOrbMult(iter!.o, iter!.m, Position(iter!.o, RhoFunc(s)(f)))[1]*f;
         return [s, iter!.m, iter!.o, fail, fail, f, false];
       fi;
       return [s, iter!.m, iter!.o, 1, GradedRhoOrb(s, f, false), f, false];
