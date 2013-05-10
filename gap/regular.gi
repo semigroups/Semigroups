@@ -78,17 +78,22 @@ function(f, s)
 
   n:=OrbSCCLookup(rho_o)[rho_l]; 
   
-  if rho_l<>n then 
+  if rho_l<>OrbSCC(rho_o)[n][1] then 
     g:=RhoOrbMult(rho_o, n, rho_l)[2]*g;
   fi;
 
   if IsIdempotent(g) then 
     return true;
+  fi;
+
+  rep:=RectifyRho(s, rho_o, LambdaOrbRep(lambda_o, m)).rep;
+ 
+  if rep=g then 
+    return true;
   elif schutz=false then
     return false;
   fi;
 
-  rep:=RectifyRho(s, rho_o, LambdaOrbRep(lambda_o, m)).rep;
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
 end);
 

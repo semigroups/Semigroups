@@ -235,6 +235,55 @@ gap> iter:=IteratorOfHClassReps(s);
 gap> i:=0;
 0
 
+#JDM this breaks when i=38360 fairly reliably, it seems to be a problem in 
+# IsDoneIterator of iter. 
+#gap> for f in iter do i:=i+1; if not
+#f in s then Print("yikes"); break; fi; if i=38360 then break; fi; od;
+gap> iter:=IteratorOfHClasses(s);                                  
+<iterator of H-classes>
+gap> repeat h:=NextIterator(iter); until Size(h)>1 or IsDoneIterator(iter);
+gap> h;
+{PartialPerm( [ 8, 20 ], [ 8, 20 ] )}
+gap> Size(h);
+2
+gap> Size(DClass(h));
+40328
+gap> RClass(h);
+{PartialPerm( [ 8, 20 ], [ 8, 20 ] )}
+gap> Size(last);
+284
+gap> 284^2;
+80656
+gap> d:=DClass(h);
+{PartialPerm( [ 8, 20 ], [ 8, 20 ] )}
+gap> IsGreensDClass(d);
+true
+gap> d;
+{PartialPerm( [ 8, 20 ], [ 8, 20 ] )}
+gap> Size(DClass(h))=Size(RClass(h))^2/2;
+true
+
+#
+gap> file:=Concatenation(SemigroupsDir(), "/examples/graph7c.semigroups.gz");;
+gap> s:=Semigroup(ReadSemigroups(file, 600));
+<transformation semigroup on 7 pts with 2 generators>
+gap> iso:=IsomorphismPartialPermSemigroup(s);;
+gap> inv:=InverseGeneralMapping(iso);;
+gap> f:=Transformation( [ 1, 7, 3, 4, 5, 6, 7 ] );;
+gap> f^iso;
+<identity partial perm on [ 1, 3, 4, 5, 6, 7 ]>
+gap> (f^iso)^inv;
+Transformation( [ 1, 7, 3, 4, 5, 6, 7 ] )
+gap> ForAll(s, f-> (f^iso)^inv=f);
+true
+
+#
+gap> s:=Semigroup( Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ), 
+> Transformation( [ 3, 6, 5, 7, 2, 1, 7 ] ) );;
+gap> iso:=IsomorphismPartialPermSemigroup(s);;
+gap> inv:=InverseGeneralMapping(iso);;
+gap> f:=Transformation( [ 7, 1, 7, 7, 7, 7, 7 ] );;
+
 #
 gap> SemigroupsStopTest();
 
