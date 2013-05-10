@@ -8,10 +8,8 @@
 #############################################################################
 ##
 
-
 DeclareGlobalFunction("SemigroupActionHomomorphism");
 
-DeclareAttribute("ActionRepresentatives", IsSemigroup);
 DeclareOperation("EmbeddingNC", [IsSemigroup, IsSemigroup]);
 DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
