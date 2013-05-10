@@ -16,6 +16,12 @@ gap> LoadPackage( "semigroups", false );;
 gap> SemigroupsStartTest();
 
 #
+gap> s:=SingularSemigroup(6);
+<regular transformation semigroup on 6 pts with 30 generators>
+gap> Size(s);
+45936
+
+#
 gap> s:=Semigroup(IdentityTransformation());;
 gap> LambdaOrb(s);
 <open orbit, 1 points with Schreier tree with log>
