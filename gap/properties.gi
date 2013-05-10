@@ -425,7 +425,7 @@ function(s)
     t:=Semigroup(new, rec(small:=true));
   fi;
 
-  # this is not the idempotent generated subsemigroup!
+  # this is not always the idempotent generated subsemigroup!
   return ForAll(gens, f-> f in t);
 end);
 

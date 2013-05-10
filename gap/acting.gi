@@ -779,7 +779,7 @@ function(s)
   opts:= rec(schreier:=true, orbitgraph:=true,
           storenumbers:=true, log:=true, 
           treehashsize:=SemigroupsOptionsRec.hashlen.M,
-          scc_reps:=[One(Generators(s))], semi:=s);
+          scc_reps:=[One(GeneratorsOfSemigroup(s))], semi:=s);
   
   for name in RecNames(LambdaOrbOpts(s)) do 
     opts.(name):=LambdaOrbOpts(s).(name);
@@ -1214,7 +1214,7 @@ function(s)
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
         storenumbers:=true, log:=true,
         treehashsize:=SemigroupsOptionsRec.hashlen.M,
-        scc_reps:=[One(Generators(s))], semi:=s));
+        scc_reps:=[One(GeneratorsOfSemigroup(s))], semi:=s));
 end);
 
 # f takes o[scc[1]] to o[i] and inv(o[scc[1]],f) takes o[i] to o[scc[1]]
