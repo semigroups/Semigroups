@@ -11,8 +11,6 @@
 ## Methods for Green's classes of regular acting semigroups
 
 # acting...
-#############################################################################
-#############################################################################
 
 # not required for inverse.
 
@@ -34,8 +32,6 @@ function(d)
 end);
 
 # main... 
-##############################################################################
-##############################################################################
 
 # different method for inverse
 
@@ -153,11 +149,6 @@ function(f, d)
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
-#DDD
-
-# new for 1.0! - DClassReps - "for a regular acting semigroup"
-##############################################################################
-
 # same method for inverse.
 
 # Note that these are not rectified!
@@ -176,9 +167,6 @@ function(s)
   od;
   return out;
 end);
-
-# new for 1.0! - HClassReps - for regular acting semi
-############################################################################
 
 # different method for inverse.
 
@@ -217,9 +205,6 @@ function(s)
   return out;
 end);
 
-# new for 1.0! - HClassReps - "for a regular D-class of an acting semigroup"
-##############################################################################
-  
 # different method for inverse
  
 InstallOtherMethod(HClassReps, "for a regular D-class of an acting semigroup",
@@ -252,9 +237,6 @@ function(d)
   return out;
 end);
 
-# new for 1.0! - HClassReps - "for a regular L-class of an acting semigroup"
-##############################################################################
-  
 # different method for inverse
   
 InstallOtherMethod(HClassReps, "for a regular  L-class of an acting semigroup",
@@ -278,9 +260,6 @@ function(l)
   return out;
 end);
 
-# new for 1.0! - HClassReps - "for a regular R-class of an acting semigroup"
-##############################################################################
-
 # same method for inverse
 
 InstallOtherMethod(HClassReps, "for a regular R-class of an acting semigroup",
@@ -303,9 +282,6 @@ function(l)
   od;
   return out;
 end);
-
-# new for 1.0! - LClassReps - "for regular acting semigroup 
-###############################################################################
 
 # note that the rho values of these reps are not rectified!
 
@@ -334,9 +310,6 @@ function(s)
   return out;
 end);
 
-# new for 1.0! - LClassReps - "for a regular D-class of acting semigroup 
-###############################################################################
-
 # same method for inverse
 
 InstallOtherMethod(LClassReps, "for a regular D-class of acting semigroup",
@@ -359,9 +332,6 @@ function(d)
   od;
   return out;
 end);
-
-# new for 1.0! - RClassReps - "for regular acting semigroup 
-###############################################################################
 
 # different method for inverse
 
@@ -391,9 +361,6 @@ function(s)
   return out;
 end);
 
-# new for 1.0! - RClassReps - "for regular D-class of acting semigroup 
-###############################################################################
-
 # different method for inverse
 
 InstallOtherMethod(RClassReps, "for a D-class of an acting semigroup",
@@ -415,11 +382,6 @@ function(d)
   od;
   return out;
 end);
-
-#EEE
-
-# mod for 1.0! - Enumerator - "for D-class of regular acting semigp."
-#############################################################################
 
 # different method for inverse
 
@@ -531,11 +493,6 @@ function(d)
   end));
 end);
 
-#GGG
-
-# new for 1.0! - GreensDClasses - for regular acting semi
-############################################################################
-
 # different method for inverse.
 
 InstallOtherMethod(GreensDClasses, "for a regular acting semigroup",
@@ -600,8 +557,6 @@ function(s)
   return out;
 end);
 
-# 
-
 # different method for inverse
 
 InstallOtherMethod(GreensHClasses, "for D-class of regular acting semigroup",
@@ -637,9 +592,6 @@ function(d)
   od;
   return out;
 end);
-
-# new for 1.0! - GreensHClasses - "for L-class of regular acting semigroup"
-##############################################################################
 
 # different method for inverse
 
@@ -680,9 +632,6 @@ function(l)
   return out;
 end);
 
-# new for 1.0! - GreensHClasses - "for R-class of regular acting semigroup"
-##############################################################################
-
 # different method for inverse
 
 InstallOtherMethod(GreensHClasses, "for R-class of regular acting semigroup",
@@ -721,9 +670,6 @@ function(r)
   return out;
 end);
 
-# new for 0.7! - GreensLClasses - for regular acting semigroup
-##############################################################################
-
 # different method for inverse
 
 InstallOtherMethod(GreensLClasses, "for a regular acting semigroup", 
@@ -754,9 +700,6 @@ function(s)
   od;
   return out;
 end);
-
-# new for 0.7! - GreensLClasses - for regular D-class ofacting semigroup
-##############################################################################
 
 # different method for inverse.
 
@@ -820,9 +763,6 @@ function(s)
   return out;
 end);
 
-# new for 1.0! - GreensRClasses - "for a regular D-class of acting semigroup"
-##############################################################################
-
 # different method for inverse
 
 InstallMethod(GreensRClasses, "for a regular D-class of acting semigroup",
@@ -849,9 +789,6 @@ function(d)
 
   return out;
 end);
-
-# new for 1.0! - GreensRClassOfElement - for regular acting semi and elt"
-############################################################################
 
 # same method for inverse.
 
@@ -1108,9 +1045,6 @@ local iter, scc;
   return iter;
 end);
 
-# new for 0.7! - IteratorOfDClassReps - "for a regular acting semigroup"
-###############################################################################
-
 # same method for inverse
 
 InstallMethod(IteratorOfDClassReps, "for a regular acting semigroup",
@@ -1123,9 +1057,6 @@ function(s)
    [IsIteratorOfDClassReps]);
 end);
 
-# new for 0.7! - IteratorOfDClasses - "for a regular acting semigroup"
-###############################################################################
-
 # same method for inverse
 
 InstallMethod(IteratorOfDClasses, "for a regular acting semigroup",
@@ -1137,8 +1068,6 @@ function(s)
   return IteratorByIterator(IteratorOfDClassData(s), x->
    CallFuncList(CreateDClassNC, x), [IsIteratorOfDClasses]);
 end);
-
-#
 
 # different method for inverse
 
@@ -1196,17 +1125,11 @@ function(s)
   return nr;
 end);
 
-# new for 1.0! - NrHClasses - "for a D-class of regular acting semigroup"
-############################################################################
-
 # different method for inverse.
 
 InstallOtherMethod(NrHClasses, "for a D-class of regular acting semigroup",
 [IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 d-> Length(LambdaOrbSCC(d))*Length(RhoOrbSCC(d)));
-
-# new for 1.0! - NrHClasses - "for a L-class of regular acting semigroup"
-############################################################################
 
 # different method for inverse semigroups 
 
@@ -1214,17 +1137,11 @@ InstallOtherMethod(NrHClasses, "for a L-class of regular acting semigroup",
 [IsActingSemigroupGreensClass and IsRegularClass and IsGreensLClass],
 l-> Length(RhoOrbSCC(l)));
 
-# new for 1.0! - NrHClasses - "for a R-class of regular acting semigroup"
-############################################################################
-
 # same method for inverse semigroups 
 
 InstallOtherMethod(NrHClasses, "for a R-class of regular acting semigroup",
 [IsActingSemigroupGreensClass and IsRegularClass and IsGreensRClass],
 r-> Length(LambdaOrbSCC(r)));
-
-# new for 1.0! - NrLClasses - "for a regular acting semigroup"
-############################################################################
 
 # same method for inverse semigroups
 
@@ -1232,26 +1149,17 @@ InstallMethod(NrLClasses, "for a regular acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup and IsRegularSemigroup],
 s-> Length(Enumerate(LambdaOrb(s), infinity))-1);
 
-# new for 1.0! - NrLClasses - "for a D-class of regular acting semigroup"
-############################################################################
-
 # same method for inverse semigroups
 
 InstallOtherMethod(NrLClasses, "for a D-class of regular acting semigroup",
 [IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
 d-> Length(LambdaOrbSCC(d)));
 
-# new for 1.0! - NrRClasses - "for a regular acting semigroup"
-############################################################################
-
 # different method for inverse semigroups
 
 InstallMethod(NrRClasses, "for a regular acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup and IsRegularSemigroup],
 s-> Length(Enumerate(RhoOrb(s), infinity))-1);
-
-# new for 1.0! - NrRClasses - "for a D-class of regular acting semigroup"
-############################################################################
 
 # different method for inverse semigroups
 
@@ -1291,19 +1199,11 @@ function(s)
   return nr;
 end);
 
-# new for 1.0! - NrRegularDClasses - "for a regular acting semigroup"
-############################################################################
-
 # same method for inverse semigroups
 
 InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup and IsRegularSemigroup],
 NrDClasses);
-
-#PPP
-
-# new for 1.0! - PartialOrderOfDClasses - "for a regular acting semigroup" 
-############################################################################## 
 
 # different method for inverse
 
@@ -1334,11 +1234,6 @@ function(s)
   Perform(out, ShrinkAllocationPlist);
   return out;
 end);
-
-#RRR
-
-# new for 1.0! - Random - "for a regular acting semigroup"
-#############################################################################
 
 # different method for inverse
 
@@ -1423,11 +1318,6 @@ function(d)
 end);
 
 # technical...
-#############################################################################
-#############################################################################
-
-# new for 1.0! - DClassType - "for a regular acting semigroup"
-############################################################################
 
 # different method for inverse semigroups
 
@@ -1439,9 +1329,6 @@ function(s)
          and IsActingSemigroupGreensClass);
 end);
 
-# new for 1.0! - HClassType - "for a regular acting semigroup"
-############################################################################
-
 # different method for inverse semigroups
 
 InstallOtherMethod(HClassType, "for a regular acting semigroup",
@@ -1452,9 +1339,6 @@ function(s)
          and IsActingSemigroupGreensClass);
 end);
 
-# new for 1.0! - LClassType - "for a regular acting semigroup"
-############################################################################
-
 # different method for inverse semigroups
 
 InstallOtherMethod(LClassType, "for a regular acting semigroup",
@@ -1464,9 +1348,6 @@ function(s)
          IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensLClass and
          IsActingSemigroupGreensClass);
 end);
-
-# new for 1.0! - RClassType - "for a regular acting semigroup"
-############################################################################
 
 # different method for inverse semigroups
 
