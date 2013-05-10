@@ -184,8 +184,7 @@ function(f, d)
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=(); 
 end);
 
-# new for 1.0! - \in - "for acting elt and inverse op L-class of acting semigp"
-#############################################################################
+#
 
 InstallMethod(\in, "for acting elt and inverse op L-class of acting semigp.",
 [IsAssociativeElement, IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
@@ -295,18 +294,13 @@ function(f, r)
   return SiftedPermutation(schutz,  LambdaPerm(s)(rep, g))=();
 end);
 
-#CCC
-
-# mod for 1.0! - CreateInverseOpLClassNC - not a user function!
-#############################################################################
+#
 # Usage: arg[1] = semigroup;  arg[2] = lambda orb scc index; 
 # arg[3] = lambda orb;  arg[4] = rep;
 # arg[5] = IsGreensClassNC. 
 
 # NC indicates that the representative is assumed to be in the correct form,
 # i.e. RhoFunc(s)(arg[2]) is in the first place of the scc of the lambda orb. 
-
-# used and standardised. 
 
 InstallGlobalFunction(CreateInverseOpLClassNC,
 function(s, m, o, rep, nc)
@@ -322,15 +316,8 @@ function(s, m, o, rep, nc)
   return l;
 end);
 
-# mod for 1.0! - CreateInverseOpLClass - not a user function!
-#############################################################################
-# Usage: arg[1] = semigroup;  arg[2] = lambda orb scc index; 
-# arg[3] = lambda orb;  arg[4] = rep;
-# arg[5] = IsGreensClassNC. 
-
+#
 # use the NC version for already rectified reps.
-
-# used and standardised. 
 
 InstallGlobalFunction(CreateInverseOpLClass,
 function(s, m, o, rep, nc)
@@ -340,10 +327,8 @@ function(s, m, o, rep, nc)
   return CreateInverseOpLClassNC(s, rectify.m, o, rectify.rep, nc);
 end);
 
-#DDD
 
-# new for 1.0! - DClassOfRClass - "for a inverse op R-class acting semigroup"
-#############################################################################
+#
 
 InstallOtherMethod(DClassOfRClass, "for inverse op R-class", 
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
@@ -357,8 +342,7 @@ function(r)
   return CreateDClassNC(s, m, o, fail, fail, f, IsGreensClassNC(r));
 end);
 
-# new for 1.0! - DClassOfHClass - "for a inverse op H-class acting semigroup"
-#############################################################################
+#
 
 InstallOtherMethod(DClassOfHClass, "for inverse op H-class", 
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
@@ -372,8 +356,7 @@ function(h)
   return CreateDClassNC(s, m, o, fail, fail, f, IsGreensClassNC(h));
 end);
 
-# new for 1.0! - LClassOfHClass - "for inverse op H-class
-##############################################################################
+#
 
 InstallMethod(LClassOfHClass, "for an inverse op H-class",
 [IsInverseOpClass and IsGreensHClass and IsActingSemigroupGreensClass],
@@ -381,8 +364,7 @@ InstallMethod(LClassOfHClass, "for an inverse op H-class",
 h-> CreateInverseOpLClass(Parent(h), LambdaOrbSCCIndex(h),
 LambdaOrb(h), Representative(h), IsGreensClassNC(h)));
 
-# new for 1.0! - DClassReps - "for an acting semigroup with inversion"
-##############################################################################
+#
 
 InstallOtherMethod(DClassReps, "for an acting semigroup with inversion",
 [IsActingSemigroupWithInverseOp],
@@ -496,8 +478,7 @@ function(d)
 end);
 
 
-# mod for 1.0! - Enumerator - "for L-class of an inverse op acting semigroup"
-##############################################################################
+#
 
 InstallMethod(Enumerator, "for L-class of an acting semigroup",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
@@ -604,8 +585,7 @@ function(s)
 end);
 
 
-# new for 1.0! - GreensHClasses - for an acting semigroup with inverse op
-############################################################################
+#
 
 InstallOtherMethod(GreensHClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
@@ -633,8 +613,7 @@ function(s)
   return out;
 end);
 
-# new for 1.0! - GreensHClasses - for inverse op  D-class
-############################################################################
+#
 
 InstallOtherMethod(GreensHClasses, "for inverse op D-class",
 [IsActingSemigroupGreensClass and IsGreensDClass and IsInverseOpClass],
@@ -661,8 +640,7 @@ function(d)
   return out;
 end);
 
-# new for 1.0! - GreensHClasses - "for inverse op L-class of acting semigroup"
-##############################################################################
+#
 
 InstallOtherMethod(GreensHClasses, "for inverse op L-class of acting semigroup",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
@@ -690,8 +668,7 @@ function(l)
   return out;
 end);
 
-# new for 1.0! - GreensHClasses - "for inverse op R-class of acting semigroup"
-##############################################################################
+#
 
 InstallOtherMethod(GreensHClasses, "for inverse op R-class of acting semigroup",
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
@@ -719,8 +696,7 @@ function(r)
   return out;
 end);
 
-# new for 0.7! - GreensLClasses - for acting semigroup with inverse op
-##############################################################################
+#
     
 InstallOtherMethod(GreensLClasses, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
@@ -744,8 +720,7 @@ function(s)
   return out;
 end);
 
-# new for 1.0! - GreensLClasses - for inverse op D-class of acting semigroup
-##############################################################################
+#
 
 InstallOtherMethod(GreensLClasses, "for inverse op D-class of acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
@@ -774,8 +749,7 @@ function(d)
   return out;
 end);
 
-# new for 1.0! - GreensDClassOfElement - "for acting semi with inv op and elt."
-############################################################################
+#
 
 InstallOtherMethod(GreensDClassOfElement, 
 "for acting semi with inv op and elt",
@@ -802,8 +776,7 @@ function(s, f)
   return CreateDClassNC(s, m, o, fail, fail, rep, false); 
 end);
 
-# new for 1.0! - GreensDClassOfElementNC - "for acting semi  inv op and elt
-############################################################################
+#
 
 InstallOtherMethod(GreensDClassOfElementNC, 
 "for an acting semigp with inverse op and elt",
@@ -813,8 +786,7 @@ function(s, f)
    fail, fail, f, true);
 end);
 
-# new for 1.0! - GreensHClassOfElement - "for acting semigp inverse op and elt."
-#############################################################################
+#
 
 InstallOtherMethod(GreensHClassOfElement, 
 "for an acting semigp with inverse op and elt",
@@ -833,8 +805,7 @@ function(s, f)
   return CreateHClass(s, m, o, fail, fail, f, false);
 end);
 
-# new for 1.0! - GreensHClassOfElementNC - "for acting semigp inverse op & elt."
-#############################################################################
+#
 
 InstallOtherMethod(GreensHClassOfElementNC, "for an acting semigp and elt",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
@@ -843,8 +814,7 @@ function(s, f)
    fail, fail, f, true);
 end);
 
-# new for 1.0! - GreensHClassOfElement - "for inverse op class and elt."
-############################################################################
+#
 
 InstallOtherMethod(GreensHClassOfElement, "for inverse op class and elt",
 [IsActingSemigroupGreensClass and IsInverseOpClass, IsAssociativeElement],
@@ -870,8 +840,7 @@ function(x, f)
   return h;
 end);
 
-# new for 1.0! - GreensHClassOfElementNC - "for inverse op L-class and elt."
-############################################################################
+#
 
 InstallOtherMethod(GreensHClassOfElementNC, "for inverse op class and elt",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensLClass, IsAssociativeElement],
@@ -892,8 +861,7 @@ function(x, f)
   return h;
 end);
 
-# mod for 1.0! - GreensLClassOfElement - "for acting semigp inverse op and elt."
-#############################################################################
+#
 
 InstallOtherMethod(GreensLClassOfElement, 
 "for acting semigp with inverse op and elt",
@@ -915,8 +883,7 @@ function(s, f)
   return CreateInverseOpLClass(s, fail, o, f, false);
 end);
 
-# mod for 1.0! - GreensLClassOfElementNC - "for an acting semigp and elt."
-#############################################################################
+#
 
 InstallOtherMethod(GreensLClassOfElementNC, "for an acting semigp and elt",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
@@ -926,8 +893,7 @@ function(s, f)
   return CreateInverseOpLClassNC(s, 1, GradedLambdaOrb(s, f, false), f, true);
 end);
 
-# mod for 1.0! - GreensLClassOfElement - "for inverse op D-class and elt"
-#############################################################################
+#
 
 InstallOtherMethod(GreensLClassOfElement, "for inverse op D-class and elt",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
@@ -1012,18 +978,14 @@ function(d)
   return out;
 end);
 
-# mod for 1.0! - GroupHClass - "for an inverse op D-class"
-#############################################################################
+#
 
 InstallOtherMethod(GroupHClass, "for an inverse op D-class",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], 
 d-> CreateHClass(Parent(d), LambdaOrbSCCIndex(d), LambdaOrb(d), fail, 
 fail, Representative(d), IsGreensClassNC(d)));
 
-#III
-
-# new for 1.0! - Idempotents - for D-class of acting semigroup with inverse op
-###############################################################################
+#
 
 InstallOtherMethod(Idempotents, "for an inverse op D-class",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], 
@@ -1035,22 +997,19 @@ function(d)
   return List(LambdaOrbSCC(d), x-> creator(o[x], o[x]));
 end);
 
-# new for 1.0! - Idempotents - for L-class of acting semigroup with inverse op
-###############################################################################
+#
 
 InstallOtherMethod(Idempotents, "for an inverse op L-class",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass], 
 l-> [RightOne(Representative(l))]);
 
-# new for 1.0! - Idempotents - for R-class of acting semigroup with inverse op
-###############################################################################
+#
 
 InstallOtherMethod(Idempotents, "for an inverse op R-class",
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass], 
 r-> [LeftOne(Representative(r))]);
 
-# new for 1.0! - Idempotents - for acting semigroup with inverse op
-###############################################################################
+#
 
 InstallOtherMethod(Idempotents, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp], 
@@ -1072,14 +1031,12 @@ function(s)
   return out;
 end);
 
-# new for 1.0! - RClassReps - for an acting semigroup with inverse op
-##############################################################################
+#
 
 InstallOtherMethod(RClassReps, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp], s-> List(LClassReps(s), x-> x^-1));
 
-# new for 1.0! - RClassReps - for D-class of acting semigroup with inverse op
-##############################################################################
+#
 
 InstallOtherMethod(RClassReps, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
@@ -1167,8 +1124,7 @@ function(s)
   return out;
 end);
 
-# new for 1.0! - HClassReps - "for a inverse op D-class of an acting semigroup"
-##############################################################################
+#
 
 InstallOtherMethod(HClassReps, "for a inverse op D-class of acting semigroup",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
@@ -1195,8 +1151,7 @@ function(d)
   return out;
 end);
 
-# new for 1.0! - HClassReps - "for an inverse op L-class"
-##############################################################################
+#
 
 InstallOtherMethod(HClassReps, "for an inverse op L-class",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
@@ -1310,8 +1265,7 @@ InstallMethod(IteratorOfLClassReps, "for acting semigp with inverse op",
 s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4]^-1,
 [IsIteratorOfLClassReps]));
 
-# new for 0.7! - IteratorOfLClasses - "for acting semigroup with inverse op" 
-###############################################################################
+#
 
 InstallMethod(IteratorOfLClasses, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
@@ -1327,52 +1281,44 @@ InstallOtherMethod(NrIdempotents, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp], 
 s-> Length(Enumerate(LambdaOrb(s), infinity))-1);     
 
-# new for 1.0! - NrIdempotents - for an inverse op D-class
-##############################################################################
+#
 
 InstallOtherMethod(NrIdempotents, "for an inverse op D-class",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], NrLClasses);   
 
-# new for 1.0! - NrIdempotents - for an inverse op L-class
-##############################################################################
+#
 
 InstallOtherMethod(NrIdempotents, "for an inverse op L-class",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass], l-> 1);   
 
-# new for 1.0! - NrIdempotents - for an inverse op R-class
-##############################################################################
+#
 
 InstallOtherMethod(NrIdempotents, "for an inverse op R-class",
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass], r-> 1);   
 
-# mod for 1.0! - NrRClasses - for an acting semigroup with inverse op
-##############################################################################
+#
 
 InstallOtherMethod(NrRClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp], NrLClasses);
 
-# mod for 1.0! - NrRClasses - for inverse op D-class 
-##############################################################################
+#
 
 InstallOtherMethod(NrRClasses, "for inverse op D-class",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], NrLClasses);
 
-# new for 1.0! - NrHClasses - "for an inverse op D-class of acting semigroup"
-############################################################################
+#
 
 InstallOtherMethod(NrHClasses, "for an inverse op D-class of acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
 l-> Length(LambdaOrbSCC(l))^2);
 
-# new for 1.0! - NrHClasses - "for an inverse op L-class of acting semigroup"
-############################################################################
+#
 
 InstallOtherMethod(NrHClasses, "for an inverse op L-class of acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensLClass],
 l-> Length(LambdaOrbSCC(l)));
 
-# mod for 1.0! - NrHClasses - for an acting semigroup with inverse op
-##############################################################################
+#
 
 InstallOtherMethod(NrHClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
@@ -1384,8 +1330,7 @@ function(s)
   return Sum(List(scc, m-> Length(m)^2))-1;
 end);
 
-# new for 0.7! - PartialOrderOfDClasses - "for acting semigp with inverse op
-############################################################################## 
+#
  
 InstallMethod(PartialOrderOfDClasses, "for acting semigp with inverse op",
 [IsActingSemigroupWithInverseOp],      
