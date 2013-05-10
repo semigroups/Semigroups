@@ -40,8 +40,7 @@ function(o)
   return i;
 end);
 
-# new for 1.0! - GradedLambdaHT
-###############################################################################
+#
 
 InstallMethod(GradedLambdaHT, "for an acting semi",
 [IsActingSemigroup],
@@ -50,8 +49,7 @@ return HTCreate(LambdaFunc(s)(GeneratorsOfSemigroup(s)[1]),
  rec(forflatplainlists:=true, treehashsize:=s!.opts.hashlen.S));
 end);
 
-# new for 1.0! - GradedRhoHT 
-###############################################################################
+#
 
 InstallMethod(GradedRhoHT, "for an acting semi",
 [IsActingSemigroup],
@@ -351,8 +349,7 @@ function(f, s)
   return false;
 end);
 
-# new for 1.0! - ELM_LIST - for graded lambda orbs 
-##############################################################################
+#
 
 InstallOtherMethod(ELM_LIST, "for graded lambda orbs, and pos int",
 [IsGradedLambdaOrbs, IsPosInt], 
@@ -360,8 +357,7 @@ function(o, j)
   return o!.orbits[j];
 end);
 
-# new for 1.0! - ELM_LIST - for graded rho orbs 
-##############################################################################
+#
 
 InstallOtherMethod(ELM_LIST, "for graded rho orbs, and pos int",
 [IsGradedRhoOrbs, IsPosInt], 
@@ -369,8 +365,7 @@ function(o, j)
   return o!.orbits[j];
 end);
 
-# new for 1.0! - ELM_LIST - for graded lambda orbs 
-##############################################################################
+#
 
 InstallOtherMethod(ELM_LIST, "for acting semigp data, and pos int",
 [IsSemigroupData, IsPosInt], 
@@ -655,8 +650,7 @@ function(s, f, opt)
   return o;
 end);
 
-# new for 1.0! - GradedRhoOrb - "for an acting semigroup and elt"
-##############################################################################
+#
 
 InstallGlobalFunction(GradedRhoOrb,
 function(s, f, opt)
@@ -721,8 +715,6 @@ function(s, f, opt)
   return o;
 end);
 
-# new for 1.0! - GradedLambdaOrbs - "for an acting semigroup" 
-##############################################################################
 # stores so far calculated GradedLambdaOrbs
 
 InstallMethod(GradedLambdaOrbs, "for an acting semigroup", 
@@ -736,8 +728,7 @@ function(s)
      lens:=[1..ActionDegree(s)+1]*0, semi:=s));
 end);
 
-# new for 1.0! - GradedRhoOrbs - "for an acting semigroup" 
-##############################################################################
+#
 # stores so far calculated GradedRhoOrbs
 
 InstallMethod(GradedRhoOrbs, "for an acting semigroup", 
@@ -750,8 +741,7 @@ end);
 
 #III
 
-# new for 1.0! - IsBound - for graded lambda orbs and pos int
-##############################################################################
+#
 
 InstallMethod(IsBound\[\], "for graded lambda orbs and pos int",
 [IsGradedLambdaOrbs, IsPosInt], 
@@ -759,8 +749,7 @@ function(o, j)
   return IsBound(o!.orbits[j]);
 end);
 
-# new for 1.0! - IsBound - for graded rho orbs and pos int
-##############################################################################
+#
 
 InstallMethod(IsBound\[\], "for graded rho orbs and pos int",
 [IsGradedRhoOrbs, IsPosInt], 
@@ -1005,8 +994,7 @@ function(o, m)
   return g;
 end);
 
-# new for 1.0! - RhoOrbStabChain - "for a rho orb and scc index"
-##############################################################################
+#
 
 InstallOtherMethod(RhoOrbStabChain, "for a rho orb and scc index",
 [IsOrbit, IsPosInt],
@@ -1022,8 +1010,7 @@ function(o, m)
   return o!.schutzstab[m];
 end);
 
-# new for 1.0! - LambdaOrbStabChain - "for a lambda orb and scc index"
-##############################################################################
+#
 
 InstallGlobalFunction(LambdaOrbStabChain, 
 function(o, m)
@@ -1038,8 +1025,7 @@ function(o, m)
   return o!.schutzstab[m];
 end);
 
-# new for 1.0! - LambdaRhoLookup - "for a D-class of an acting semigroup"
-##############################################################################
+#
 
 InstallMethod(LambdaRhoLookup, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass], 
@@ -1079,10 +1065,7 @@ function(data)
   return List(data!.graph, Set);
 end);
 
-#PPP
-
-# new for 1.0! - Position - "for graded lambda orbs and lambda value"
-##############################################################################
+#
 
 InstallOtherMethod(Position, "for graded lambda orbs and lambda value",
 [IsGradedLambdaOrbs, IsObject, IsZeroCyc],
@@ -1090,8 +1073,7 @@ function(o, lamf, n)
   return HTValue(GradedLambdaHT(o!.semi), lamf);
 end);
 
-# new for 1.0! - Position - "for graded rho orbs and rho value"
-##############################################################################
+#
 
 InstallOtherMethod(Position, "for graded rho orbs and rho value",
 [IsGradedRhoOrbs, IsObject, IsZeroCyc],
@@ -1099,8 +1081,6 @@ function(o, rho, n)
   return HTValue(GradedRhoHT(o!.semi), rho);
 end);
 
-# new for 1.0! - Position - "for acting semigroup data and acting elt"
-##############################################################################
 # returns the index of the representative of the R-class containing x in the
 # parent of data. 
 
@@ -1160,8 +1140,7 @@ function(data, x, n)
   return fail;
 end);
 
-# new for 1.0! - PositionOfFound - "for semigroup data"
-##############################################################################
+#
 
 InstallOtherMethod( PositionOfFound,"for semigroup data",
 [IsSemigroupData],
@@ -1173,8 +1152,7 @@ function( data )
   return data!.found;
 end);
 
-# new for 1.0! - PrintObj - "for graded lambda orbs"
-##############################################################################
+#
 
 InstallMethod(PrintObj, [IsGradedLambdaOrbs],
 function(o)
@@ -1184,8 +1162,7 @@ function(o)
   return;
 end);
 
-# new for 1.0! - PrintObj - "for graded rho orbs"
-##############################################################################
+#
 
 InstallMethod(PrintObj, [IsGradedRhoOrbs],
 function(o)
@@ -1195,10 +1172,7 @@ function(o)
   return;
 end);
 
-#RRR
-
-# new for 1.0! - RhoOrb - "for an acting semigroup"
-##############################################################################
+#
 
 InstallMethod(RhoOrb, "for an acting semigroup",
 [IsActingSemigroup],
@@ -1257,8 +1231,6 @@ function(o, m, i)
   return o!.mults[i];
 end);
 
-# new for 1.0! - RhoOrbMults - "for a rho orb and index"
-##############################################################################
 # f takes o[scc[1]] to o[i] and inv(o[i], f) takes o[i] to o[scc[1]]
 
 InstallGlobalFunction(RhoOrbMults,
@@ -1312,8 +1284,7 @@ function(o, m)
   return o!.mults;
 end);
 
-# new for 1.0! - RhoOrbRep - "for a rho orb and scc index"
-##############################################################################
+#
 
 InstallGlobalFunction(RhoOrbRep, 
 function(o, m)
@@ -1328,8 +1299,6 @@ function(o, m)
   return o!.scc_reps[m];
 end);
 
-# new for 1.0! - RhoOrbSchutzGp - "for a rho orb, scc index, and bound"
-##############################################################################
 # JDM could use IsRegular here to speed up?
 
 InstallGlobalFunction(RhoOrbSchutzGp, 
@@ -1476,10 +1445,7 @@ function(s)
   return i; 
 end);
 
-#VVV
-
-# new for 1.0! - ViewObj - "for semigroup data"
-##############################################################################
+#
 
 InstallMethod(ViewObj, [IsSemigroupData], 999,
 function(data)
