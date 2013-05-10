@@ -847,6 +847,7 @@ local record;
       graded:=IteratorOfGradedLambdaOrbs(s));
     return IteratorByNextIterator(record);
   fi;
+
   record:=rec(m:=1);
                  
   record.IsDoneIterator:=iter-> iter!.m=Length(OrbSCC(LambdaOrb(s)));
@@ -863,6 +864,8 @@ local record;
 
     f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, l)); 
     if IsActingSemigroupWithInverseOp(s) then 
+      # D-class reps must have rectified lambda and rho value
+      f:=LambdaOrbMult(o, iter!.m, Position(o, RhoFunc(s)(f)))[1]*f;
       return [s, iter!.m, o, fail, fail, f, false];
     fi;
     return [s, iter!.m, o, 1, GradedLambdaOrb(s, f, false), false];
