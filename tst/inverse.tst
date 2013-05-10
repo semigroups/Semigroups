@@ -9,10 +9,9 @@
 ##
 gap> START_TEST("Semigroups package: inverse.tst");
 gap> LoadPackage("semigroups", false);;
-gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
-gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoSemigroups, 0);
+
+# 
+gap> SemigroupsStartTest();
 
 #
 gap> gens:=[PartialPermNC( [ 1, 2, 4 ], [ 1, 5, 2 ] ),
@@ -45,7 +44,7 @@ gap> RClassReps(s);
   [ 3, 4 ] -> [ 5, 1 ], [ 2, 5 ] -> [ 1, 5 ], [ 1, 2 ] -> [ 1, 5 ], 
   <identity on [ 2 ]>, [ 5 ] -> [ 2 ], [ 1 ] -> [ 2 ], [ 3 ] -> [ 2 ], 
   [ 4 ] -> [ 2 ], <empty mapping> ]
-gap> List(last, DomPP);
+gap> List(last, DomainOfPartialPerm);
 [ [ 1, 2, 3, 4, 5 ], [ 1, 2, 5 ], [ 2, 3, 5 ], [ 2, 4, 5 ], [ 1, 2, 3 ], 
   [ 1, 3, 4 ], [ 1, 4, 5 ], [ 1, 2, 4 ], [ 1, 3, 5 ], [ 2, 3, 4 ], 
   [ 3, 4, 5 ], [ 1, 2, 4, 5 ], [ 2, 3, 4, 5 ], [ 1, 2, 3, 4 ], 
@@ -891,9 +890,9 @@ gap> IsIsometryPP:=function(f)
 > local n, i, j, k, l;
 >  n:=f[2];
 >  for i in [1..n-1] do
->    k:=DomPP(f)[i];
+>    k:=DomainOfPartialPerm(f)[i];
 >    for j in [i+1..n] do
->      l:=DomPP(f)[j];
+>      l:=DomainOfPartialPerm(f)[j];
 >      if not AbsInt(k^f-l^f)=AbsInt(k-l) then
 >        return false;
 >      fi;
@@ -912,9 +911,7 @@ gap> Size(s);
 686
 
 #
-gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
-gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
+gap> SemigroupsStopTest();
 
 #
 gap> STOP_TEST("Semigroups package: inverse.tst", 10000);

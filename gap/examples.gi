@@ -327,9 +327,9 @@ end);
 InstallMethod(SingularSemigroup, "for a positive integer",
 [IsPosInt],
 function(n)
-  local img, x, S, T;
-  img:=Concatenation([1..n-1], [n-1]);
-  x:=TransformationNC(img);
+  local x, S, T;
+  
+  x:=TransformationNC(Concatenation([1..n-1], [n-1]));
   S:=FullTransformationSemigroup(n);
   T:=SubsemigroupNC(S, Idempotents(GreensDClassOfElementNC(S, x)));
   SetIsRegularSemigroup(T, true);
