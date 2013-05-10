@@ -8,6 +8,10 @@
 #############################################################################
 ##
 
+# Notes:
+# - D-class reps must have rectified lambda and rho value
+#
+
 InstallMethod(EquivalenceClassOfElement, 
 "for Green's R-relation and associative element", 
 [IsGreensRRelation, IsAssociativeElement],
