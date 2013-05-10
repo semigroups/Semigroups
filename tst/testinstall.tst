@@ -15,6 +15,13 @@ gap> LoadPackage( "semigroups", false );;
 # Set info levels and user preferences
 gap> SemigroupsStartTest();
 
+#
+gap> s:=Semigroup(IdentityTransformation());;
+gap> LambdaOrb(s);
+<open orbit, 1 points with Schreier tree with log>
+gap> Enumerate(last);
+<closed orbit, 2 points with Schreier tree with log>
+
 # 
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 1, 4, 1, 2 ] ),
