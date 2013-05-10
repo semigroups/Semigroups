@@ -8,10 +8,6 @@
 ##############################################################################
 ###
 
-##############################################################################
-# Notes                                                                      #
-##############################################################################
-
 InstallOtherMethod(IsActingSemigroup, "for an object", [IsObject], ReturnFalse);
 
 #
@@ -157,8 +153,7 @@ function(s)
      treehashsize:=s!.opts.hashlen.M));
 end);
 
-############################################################################### 
-###############################################################################
+#
 
 InstallMethod(\in, "for lambda value of acting semi elt and graded lambda orbs",
 [IsObject, IsGradedLambdaOrbs],
@@ -174,7 +169,6 @@ function(rho, o)
   return not HTValue(GradedRhoHT(o!.semi), rho)=fail;
 end);
 
-#
 # expand?
 
 InstallMethod(\in, "for acting semi elt and semigroup data",
@@ -728,7 +722,6 @@ function(s)
      lens:=[1..ActionDegree(s)+1]*0, semi:=s));
 end);
 
-#
 # stores so far calculated GradedRhoOrbs
 
 InstallMethod(GradedRhoOrbs, "for an acting semigroup", 
@@ -738,8 +731,6 @@ function(s)
     orbits:=List([1..ActionDegree(s)+1], x-> []), 
     lens:=[1..ActionDegree(s)+1]*0, semi:=s));
 end);
-
-#III
 
 #
 

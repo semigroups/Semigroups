@@ -254,8 +254,7 @@ function(o)
   return o!.scc_lookup;
 end);
 
-# mod for 1.0! - OrbSCCTruthTable - "for an orbit"
-#############################################################################
+#
 
 InstallGlobalFunction(OrbSCCTruthTable, 
 function(o)

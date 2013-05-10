@@ -10,7 +10,7 @@ local S;
     
     S:= Objectify( NewType( FamilyObj( gens ), IsMagmaIdeal and
      IsAttributeStoringRep and IsActingSemigroup ),
-     rec(opts:=SemigroupOptions(rec())));
+     rec(opts:=SemigroupsOptionsRec));
     
     SetGeneratorsOfMagmaIdeal( S, AsList( gens ) );
     SetIsSemigroupIdeal(S, true);

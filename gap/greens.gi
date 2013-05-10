@@ -2001,10 +2001,6 @@ InstallOtherMethod(StructureDescription, "for group H-class of acting semi",
 h-> StructureDescription(Range(IsomorphismPermGroup(h))));
 
 # technical
-##############################################################################
-##############################################################################
-
-#
 
 InstallMethod(\=, "for Green's class and class of acting semigp",
 [IsActingSemigroupGreensClass, IsActingSemigroupGreensClass],

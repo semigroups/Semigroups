@@ -218,9 +218,6 @@ function(s)
    [IsIteratorOfSemigroup]);
 end);
 
-# new for 1.0! - Iterator - "for a D-class of an acting semigroup"
-#############################################################################
-
 # same method for regular/inverse
 
 InstallMethod(Iterator, "for a D-class of an acting semigroup", 
@@ -239,9 +236,6 @@ function(d)
    [IsIteratorOfDClassElements]);
 end);
 
-# new for 1.0! - Iterator - "for a H-class of an acting semigroup"
-#############################################################################
-
 # same method for regular/inverse
 
 InstallMethod(Iterator, "for a H-class of an acting semigroup", 
@@ -259,9 +253,6 @@ function(h)
   return IteratorByIterator(Iterator(SchutzenbergerGroup(h)), x->
    Representative(h)*x, [IsIteratorOfHClassElements]);
 end);
-
-# new for 1.0! - Iterator - "for an L-class of an acting semi"
-#############################################################################
 
 # same method for regular, there should be a different method for inverseJDM!?
 # the inverse method will be almost identical to the R-class method, hence we
@@ -404,10 +395,7 @@ function(s)
     rec(classes:=[]));        #iter
 end);
 
-# new for 1.0! - IteratorOfHClasses - "for an acting semigroup"
-#############################################################################
 # JDM could use IteratorOfRClasses here instead, not sure which is better...
-
 # JDM should be different method for regular/inverse
 
 InstallMethod(IteratorOfHClasses, "for an acting semigroup",
@@ -424,9 +412,6 @@ function(s)
   return IteratorByIterOfIter(s, IteratorOfDClasses(s), GreensHClasses, 
    [IsIteratorOfHClasses]);
 end);
-
-# new for 1.0! - IteratorOfLClasses - "for an acting semigroup"
-#############################################################################
 
 # different method for regular/inverse
 
@@ -488,9 +473,6 @@ function(s)
     ShallowCopy:=iter-> rec(i:=1)));
 end);
 
-# new for 0.5! - Iterator - "for a full transformation semigroup"
-#############################################################################
-
 # no method required for inverse/regular
 
 InstallMethod(Iterator, "for a full transformation semigroup",
@@ -518,8 +500,6 @@ function(s)
   return iter;
 end);
 
-# mod for 1.0! - Iterator - "for a trivial acting semigroup"
-#############################################################################
 # Notes: required until Enumerator for a trans. semigp does not call iterator. 
 # This works but is maybe not the best!
 
@@ -531,17 +511,12 @@ function(s)
   return TrivialIterator(Generators(s)[1]);
 end);
 
-# new for 1.0! - IteratorOfDClassReps - "for an acting semigroup"
-#############################################################################
-
 # different method for regular/inverse
 
 InstallMethod(IteratorOfDClassReps, "for an acting semigroup",
 [IsActingSemigroup],
 s-> IteratorByIterator(IteratorOfDClasses(s), Representative,
 [IsIteratorOfDClassReps]));
-
-#
 
 #JDM should be a different  method for regular/inverse using
 #IteratorOfHClassData (not yet written);
@@ -551,18 +526,12 @@ InstallMethod(IteratorOfHClassReps, "for an acting semigroup",
 s-> IteratorByIterator(IteratorOfHClasses(s), Representative,
 [IsIteratorOfHClassReps]));
 
-# new for 1.0! - IteratorOfLClassReps - "for an acting semigroup"
-#############################################################################
-
 # different method for regular/inverse
 
 InstallMethod(IteratorOfLClassReps, "for an acting semigroup",
 [IsActingSemigroup],
 s-> IteratorByIterator(IteratorOfLClasses(s), Representative,
 [IsIteratorOfLClassReps]));
-
-# new for 1.0! - IteratorOfRClassReps - "for an acting semigroup"
-#############################################################################
 
 # same method for inverse/regular.
 
@@ -571,8 +540,7 @@ InstallMethod(IteratorOfRClassReps, "for an acting semigroup",
 s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4],
 [IsIteratorOfRClassReps]));
 
-# new for 0.7! - PrintObj - for IsIteratorOfDClassElements
-############################################################################
+#
    
 InstallMethod(PrintObj, [IsIteratorOfDClassElements],
 function(iter)
@@ -580,8 +548,7 @@ function(iter)
   return;
 end);
 
-# new for 0.7! - PrintObj - IsIteratorOfHClassElements
-############################################################################
+#
 
 InstallMethod(PrintObj, [IsIteratorOfHClassElements],
 function(iter)
@@ -589,8 +556,7 @@ function(iter)
   return;
 end);
 
-# new for 0.7! - PrintObj - IsIteratorOfLClassElements
-############################################################################
+#
 
 InstallMethod(PrintObj, [IsIteratorOfLClassElements],
 function(iter)
@@ -598,8 +564,7 @@ function(iter)
   return;
 end);
 
-# new for 0.1! - PrintObj - for IsIteratorOfRClassElements
-############################################################################
+#
 
 InstallMethod(PrintObj, [IsIteratorOfRClassElements],
 function(iter)
@@ -607,8 +572,7 @@ function(iter)
   return;
 end);
 
-# mod for 1.0! - PrintObj - for IsIteratorOfDClassReps
-############################################################################
+#
 
 InstallMethod(PrintObj, [IsIteratorOfDClassReps],
 function(iter)
@@ -616,8 +580,7 @@ function(iter)
   return;
 end);
 
-# mod for 1.0! - PrintObj - for IsIteratorOfHClassReps
-############################################################################
+#
 
 InstallMethod(PrintObj, [IsIteratorOfHClassReps],
 function(iter)
@@ -625,8 +588,7 @@ function(iter)
   return;
 end);
 
-# new for 0.1! - PrintObj - for IsIteratorOfLClassReps
-############################################################################
+#
 
 InstallMethod(PrintObj, [IsIteratorOfLClassReps], 
 function(iter)
@@ -634,8 +596,7 @@ function(iter)
   return;
 end);
 
-# mod for 1.0! - PrintObj - IsIteratorOfRClassReps
-############################################################################
+#
 
 InstallMethod(PrintObj, [IsIteratorOfRClassReps],
 function(iter)
@@ -643,8 +604,7 @@ function(iter)
   return;
 end);
 
-# new for 0.1! - PrintObj - "for iterator of D-classes"
-############################################################################
+#
 
 InstallMethod(PrintObj, [IsIteratorOfDClasses], 
 function(iter)
@@ -652,8 +612,7 @@ function(iter)
   return;
 end);
 
-# new for 0.1! - PrintObj - "for iterator of H-classes"
-############################################################################
+#
 
 InstallMethod(PrintObj, [IsIteratorOfHClasses], 
 function(iter)
@@ -661,8 +620,7 @@ function(iter)
   return;
 end);
  
-# new for 0.1! - PrintObj - for IsIteratorOfLClasses
-############################################################################
+#
 
 InstallMethod(PrintObj, [IsIteratorOfLClasses],
 function(iter)
@@ -670,8 +628,7 @@ function(iter)
   return;
 end);
 
-# new for 0.1! - PrintObj - for IsIteratorOfRClasses
-############################################################################
+#
 
 InstallMethod(PrintObj, [IsIteratorOfRClasses],
 function(iter)
@@ -679,8 +636,7 @@ function(iter)
   return;
 end); 
 
-# mod for 0.8! - PrintObj - for IsIteratorOfSemigroup
-############################################################################
+#
 
 InstallMethod(PrintObj, [IsIteratorOfSemigroup],
 function(iter)

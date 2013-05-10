@@ -289,7 +289,7 @@ function(line)
     i:=i+m*(deg+1)+1;
   od;
   
-  if line[1]='t' then         # transformations
+  if line[1]='t' then   # transformations
     Apply(out, TransformationNC); 
   elif line[1]='p' then # partial perms
     Apply(out, DensePartialPermNC);

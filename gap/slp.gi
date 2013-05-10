@@ -275,8 +275,6 @@ end);
 
 #TTT
 
-# new for 1.0! - TraceSchreierTreeForward - "for semi data and pos int"
-##############################################################################
 # returns a word in the generators of the parent of <data> equal to the R-class
 # representative store in <data!.orbit[pos]>.
 
