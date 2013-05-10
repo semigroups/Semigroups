@@ -1889,8 +1889,6 @@ function(d)
   return schutz;
 end);
 
-#
-
 # different method for regular/inverse
 
 InstallMethod(SchutzenbergerGroup, "for a H-class of an acting semigroup",
