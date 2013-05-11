@@ -899,7 +899,7 @@ function(s)
   for f in gens do
     o:=Orb(s, LambdaFunc(s)(f), LambdaAct(s), opts);
     pos:=LookForInOrb(o, function(o, x)
-      return LambdaRank(s)(x)<rank 
+      return LambdaRank(s)(x)<>rank 
        or LambdaRank(s)(LambdaAct(s)(x, f))<>LambdaRank(s)(x); end, 1);
     if pos<>false then 
       return false;
