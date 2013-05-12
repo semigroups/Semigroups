@@ -16,6 +16,12 @@ gap> LoadPackage( "semigroups", false );;
 gap> SemigroupsStartTest();
 
 #
+gap> s:=Semigroup(Transformation([1,1,1]), Transformation([3,1,2]));
+<transformation semigroup on 3 pts with 2 generators>
+gap> IsSimpleSemigroup(s);
+false
+
+#
 gap> s:=SingularSemigroup(6);
 <regular transformation semigroup on 6 pts with 30 generators>
 gap> Size(s);

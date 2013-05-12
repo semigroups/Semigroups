@@ -875,7 +875,7 @@ s-> ForAll(GeneratorsOfInverseSemigroup(s), IsIdempotent));
 InstallMethod(IsSimpleSemigroup, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local opts, gens, o, rank, pos, name, f, n;
+  local gens, lambdafunc, lambdarank, rank, opts, o, pos, name, f, n;
 
   if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
     Info(InfoSemigroups, 2, "the semigroup is not regular");
@@ -888,19 +888,26 @@ function(s)
     return NrDClasses(s)=1;
   fi;
 
+  gens:=GeneratorsOfSemigroup(s); #not GeneratorsOfMonoid!
+  lambdafunc:=LambdaFunc(s);
+  lambdarank:=LambdaRank(s);
+  rank:=lambdarank(lambdafunc(gens[1]));
+  
+  if not ForAll([2..Length(gens)], i-> lambdarank(lambdafunc(gens[i]))=rank)
+   then 
+    return false;
+  fi;
+
   opts:=rec(treehashsize:=s!.opts.hashlen.M);
   
   for name in RecNames(LambdaOrbOpts(s)) do
     opts.(name):=LambdaOrbOpts(s).(name);
   od; 
 
-  gens:=GeneratorsOfSemigroup(s); #not GeneratorsOfMonoid!
-  rank:=LambdaRank(s)(LambdaFunc(s)(gens[1]));
   for f in gens do
     o:=Orb(s, LambdaFunc(s)(f), LambdaAct(s), opts);
-    pos:=LookForInOrb(o, function(o, x)
-      return LambdaRank(s)(x)<>rank 
-       or LambdaRank(s)(LambdaAct(s)(x, f))<>LambdaRank(s)(x); end, 1);
+    pos:=LookForInOrb(o, function(o, x) return LambdaRank(s)(x)<rank; end, 1);
+      #or LambdaRank(s)(LambdaAct(s)(x, f))<>LambdaRank(s)(x); end, 1);
     if pos<>false then 
       return false;
     fi;
