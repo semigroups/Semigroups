@@ -365,7 +365,7 @@ function(o, i)
   fi;
 
   if i=1 then
-    o!.trees[i]:=[o!.schreiergen, o!.schreierpos];
+    o!.trees[i]:=[o!.schreiergen, o!.schreierpos];#JDM remove this line
     return o!.trees[i];
   fi;
 

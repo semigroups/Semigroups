@@ -753,12 +753,20 @@ end);
 InstallMethod(LambdaOrb, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local opts, semi, o, name;
+  local treehashsize, opts, semi, o, name;
+  
+  #JDM I should be able to set the values here!
+  #this is a hack!!
+  if IsBound(s!.opts.treehashsize) then 
+    treehashsize:=s!.opts.treehashsize;
+  else 
+    treehashsize:=SemigroupsOptionsRec.hashlen.M;
+  fi;
 
   #JDM can remove some components here if new enumerate is successful
   opts:= rec(schreier:=true, orbitgraph:=true,
           storenumbers:=true, log:=true, 
-          treehashsize:=SemigroupsOptionsRec.hashlen.M,
+          treehashsize:=treehashsize,
           scc_reps:=[One(GeneratorsOfSemigroup(s))], semi:=s);
   
   for name in RecNames(LambdaOrbOpts(s)) do 
