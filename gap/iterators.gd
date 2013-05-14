@@ -1,6 +1,6 @@
 
 
-
+DeclareGlobalFunction("IteratorByOrbFunc");
 DeclareGlobalFunction("IteratorOfPairs");
 DeclareGlobalFunction("IteratorByNextIterator");
 DeclareGlobalFunction("IteratorByIterOfIter");

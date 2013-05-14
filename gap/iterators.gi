@@ -10,6 +10,59 @@
 
 #technical...
 
+#
+
+InstallGlobalFunction(IteratorByOrbFunc, 
+function(o, func)
+  local func2, record, iter;
+
+  if not IsOrbit(o) then 
+    Error("<o> must be an orbit,");
+    return;
+  elif not IsFunction(func) then 
+    Error("<func> must be a function,");
+    return;
+  fi;
+  
+  # change 1 arg <func> to 2 arg 
+  if NumberArgumentsFunction(func)=1 then 
+    func2:=function(iter, x)
+      return func(x);
+    end;
+  else 
+    func2:=func;
+  fi;
+
+  record:=rec();
+  record.pos:=1;
+
+  record.NextIterator:=function(iter)
+    local pos, f;
+
+    pos:=iter!.pos;
+
+    if IsClosed(o) and pos>=Length(o) then
+      return fail;
+    fi;
+
+    pos:=pos+1;
+
+    if pos>Length(o) then
+      Enumerate(o, pos);
+      if pos>Length(o) then
+        return fail;
+      fi;
+    fi;
+
+    iter!.pos:=pos;
+    return func2(iter, pos);
+  end;
+
+  record.ShallowCopy:=rec(pos:=1);
+
+ return IteratorByNextIterator( record );
+end);
+
 # returns pairs of the form [coords1[i], coords2[i][j]] 
 
 InstallGlobalFunction(IteratorOfPairs, 

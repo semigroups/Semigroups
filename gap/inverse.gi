@@ -1181,45 +1181,22 @@ InstallMethod(IteratorOfRClassData, "for acting semigp with inverse op",
 function(s)
   local iter, o, lookup;
   
-  if not IsClosed(LambdaOrb(s)) then 
-    
-    iter:=IteratorByNextIterator( rec(
-
-      i:=1,
-
-      NextIterator:=function(iter)
-        local o, i, f;
-
-        o:=LambdaOrb(s); i:=iter!.i;
-        
-        if IsClosed(o) and i>=Length(o) then 
-          return fail;
-        fi;
-
-        i:=i+1;
-        
-        if i>Length(o) then 
-          Enumerate(o, i); 
-          if i>Length(o) then 
-            return fail;
-          fi;
-        fi;
-
-        iter!.i:=i; 
-        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1; 
-        return [s, fail, GradedLambdaOrb(s, f, true), f, false];
-      end,
-
-      ShallowCopy:=iter-> rec(i:=1)));
-  else ####
-    o:=LambdaOrb(s);
+  o:=LambdaOrb(s); 
+  if not IsClosed(o) then 
+    func:=function(iter, i) 
+      local f;
+      f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
+      return [s, fail, GradedLambdaOrb(s, f, true), f, true]; 
+    end;
+    iter:=IteratorByOrbFunc(o, func);
+  else 
     lookup:=OrbSCCLookup(o);
-    iter:=IteratorByIterator(IteratorList([2..Length(o)]),
-      function(iter, i)
-        local f; 
-        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
-        return [s, lookup[i], o, f, false];
-      end);
+    func:=function(iter, i)
+      local f; 
+      f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
+      return [s, lookup[i], o, f, false];     
+    end;
+    iter:=IteratorByIterator(IteratorList([2..Length(o)]), func);
   fi;
   
   return iter;
