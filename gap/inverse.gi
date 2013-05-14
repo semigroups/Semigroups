@@ -1176,7 +1176,7 @@ end);
 
 #
 
-InstallMethod(IteratorOfRClassData, "for acting semigp with inverse op",
+InstallMethod(IteratorOfRClassData, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp], 
 function(s)
   local iter, o, lookup;
@@ -1184,18 +1184,30 @@ function(s)
   o:=LambdaOrb(s); 
   if not IsClosed(o) then 
     func:=function(iter, i) 
-      local f;
-      f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
-      return [s, fail, GradedLambdaOrb(s, f, true), f, true]; 
+      local rep;
+      rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
+      # <rep> has rho val corresponding to <i> and lambda val in position 1 of
+      # GradedLambdaOrb(s, rep, false), if we use <true> as the last arg, then
+      # this is no longer the case, and this is more complicated here.
+      
+      return [s, 1, GradedLambdaOrb(s, rep, false), rep, true]; 
     end;
-    iter:=IteratorByOrbFunc(o, func);
+    iter:=IteratorByOrbFunc(o, func, 2);
   else 
     lookup:=OrbSCCLookup(o);
+    
     func:=function(iter, i)
-      local f; 
-      f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
-      return [s, lookup[i], o, f, false];     
+      local rep, mult; 
+      
+      # <rep> has rho val corresponding to <i> 
+      rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
+     
+      # rectify the lambda value of <rep>
+      rep:=rep*LambdaOrbMult(o, lookup[i], Position(o, LambdaFunc(s)(rep)));
+      
+      return [s, lookup[i], o, rep, false];     
     end;
+    
     iter:=IteratorByIterator(IteratorList([2..Length(o)]), func);
   fi;
   

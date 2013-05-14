@@ -975,45 +975,24 @@ InstallMethod(IteratorOfRClassData, "for regular acting semigroup",
 function(s)
 local iter, scc;
 
-  if not IsClosed(RhoOrb(s)) then 
-    
-    iter:=IteratorByNextIterator( rec(
-
-      i:=1,
-
-      NextIterator:=function(iter)
-        local i, o, r, f;
-        
-        o:=RhoOrb(s); i:=iter!.i;
-
-        if IsClosed(o) and i>=Length(o) then 
-          return fail;  
-        fi;
-        
-        i:=i+1;
-        
-        if i>Length(o) then 
-          if not IsClosed(o) then 
-            Enumerate(o, i);
-            if i>Length(o) then 
-              return fail;
-            fi;
-          else 
-            return fail;
-          fi;
-        fi;
-
-        iter!.i:=i; 
+  o:=RhoOrb(s);
+  if not IsClosed(o) then 
         f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)); 
         return [s, fail, GradedLambdaOrb(s, f, true), f, false]; 
       end,
 
       ShallowCopy:=iter-> rec(i:=1)));
-  else ####
+  else 
 
     scc:=OrbSCC(RhoOrb(s));
+    func:=function(iter, i)
+      local rep;
+      rep:=RhoOrbRep(o, m);
+      # rep has lambda val in position 1 of GradedLambdaOrb(s, rep, false)
+      return [s, fail, GradedLambdaOrb(s, rep, false), rep, false];
 
-    iter:=IteratorByFunctions( rec(
+    iter:=IteratorByIterator(IteratorList([2..Length(o)], func);
+    IteratorByFunctions( rec(
                  
       m:=1, 
      

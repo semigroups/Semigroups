@@ -10,10 +10,13 @@
 
 #technical...
 
-#
+# returns func(iter, pos) once at least position <pos> of the orbit <o> is
+# known, the starting value for <pos> is <start>. The idea is that this returns
+# something that depends on position <pos> of <o> being known but does not
+# depend on the entire orbit being known.
 
 InstallGlobalFunction(IteratorByOrbFunc, 
-function(o, func)
+function(o, func, start)
   local func2, record, iter;
 
   if not IsOrbit(o) then 
@@ -34,7 +37,7 @@ function(o, func)
   fi;
 
   record:=rec();
-  record.pos:=1;
+  record.pos:=start-1;
 
   record.NextIterator:=function(iter)
     local pos, f;
