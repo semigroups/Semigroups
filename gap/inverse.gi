@@ -1179,7 +1179,7 @@ end);
 InstallMethod(IteratorOfRClassData, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp], 
 function(s)
-  local iter, o, lookup;
+  local o, func, iter, lookup;
   
   o:=LambdaOrb(s); 
   if not IsClosed(o) then 
@@ -1188,7 +1188,7 @@ function(s)
       rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
       # <rep> has rho val corresponding to <i> and lambda val in position 1 of
       # GradedLambdaOrb(s, rep, false), if we use <true> as the last arg, then
-      # this is no longer the case, and this is more complicated here.
+      # this is no longer the case, and this is would be more complicated.
       
       return [s, 1, GradedLambdaOrb(s, rep, false), rep, true]; 
     end;
@@ -1197,7 +1197,7 @@ function(s)
     lookup:=OrbSCCLookup(o);
     
     func:=function(iter, i)
-      local rep, mult; 
+      local rep; 
       
       # <rep> has rho val corresponding to <i> 
       rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;

@@ -973,63 +973,26 @@ end);
 InstallMethod(IteratorOfRClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-local iter, scc;
+  local o, func, iter;
 
   o:=RhoOrb(s);
+  func:=function(iter, i)
+    local rep;
+
+    # <rep> has rho val corresponding to <i>  
+    rep:=EvaluateWord(o!.gens, Reversed(TraceSchreierTreeForward(o, i)));
+    
+    # <rep> has lambda val in position 1 of GradedLambdaOrb(s, rep, false).
+    # We don't rectify the lambda val of <rep> in <o> since we require to
+    # enumerate LambdaOrb(s) to do this, if we use GradedLambdaOrb(s, rep,
+    # true) then this get more complicated.
+    return [s, 1, GradedLambdaOrb(s, rep, false), rep, true];
+  end;
+
   if not IsClosed(o) then 
-        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)); 
-        return [s, fail, GradedLambdaOrb(s, f, true), f, false]; 
-      end,
-
-      ShallowCopy:=iter-> rec(i:=1)));
+    iter:=IteratorByOrbFunc(o, func, 2);
   else 
-
-    scc:=OrbSCC(RhoOrb(s));
-    func:=function(iter, i)
-      local rep;
-      rep:=RhoOrbRep(o, m);
-      # rep has lambda val in position 1 of GradedLambdaOrb(s, rep, false)
-      return [s, fail, GradedLambdaOrb(s, rep, false), rep, false];
-
-    iter:=IteratorByIterator(IteratorList([2..Length(o)], func);
-    IteratorByFunctions( rec(
-                 
-      m:=1, 
-     
-      i:=1,      
-
-      scc_limit:=Length(scc),
-
-      i_limit:=Length(scc[Length(scc)]),
-
-      IsDoneIterator:=iter-> iter!.m=iter!.scc_limit and 
-       iter!.i=iter!.i_limit,
-
-      NextIterator:=function(iter)
-        local i, o, m, scc, f, r, mults;
-        
-        i:=iter!.i; 
-        m:=iter!.m; 
-
-        if m=iter!.scc_limit and i=iter!.i_limit then
-          return fail; 
-        fi;
-
-        o:=RhoOrb(s); scc:=OrbSCC(o);
-
-        if i<Length(scc[m]) then 
-          i:=i+1;
-        else
-          i:=1; m:=m+1;
-        fi;
-
-        iter!.i:=i; iter!.m:=m;
- 
-        return [s, fail, LambdaOrb(s), RhoOrbRep(o, m), false];
-      end,
-
-      ShallowCopy:=iter-> rec(m:=1, i:=0,
-      scc_limit:=iter!.scc_limit, i_limit:=iter!.i_limit)));
+    return IteratorByIterator(IteratorList([2..Length(o)]), func);
   fi;
   
   return iter;

@@ -14,6 +14,10 @@
 
 # same method for regular/inverse
 
+#JDM this should be improved, using Iterator for a regular or inverse
+#semigroup, invokes IteratorOfRClassData which repeatedly recomputes the graded
+#lambda orbs of the R-class reps.
+
 InstallMethod(Enumerator, "for an acting semigroup", 
 [IsActingSemigroup], 5, #to beat the method for semigroup ideals
 function(s)
@@ -21,7 +25,7 @@ function(s)
 
   out:=EmptyPlist(Size(s)); 
 
-  iter:=Iterator(s);
+  iter:=Iterator(s); 
   j:=0;
 
   for i in iter do 
