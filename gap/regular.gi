@@ -885,84 +885,27 @@ end);
 InstallMethod(IteratorOfLClassData, "for regular acting semigp",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-local iter, scc;
+  local o, func, iter;
 
-  if not IsClosed(LambdaOrb(s)) then 
+  o:=LambdaOrb(s);
+
+  func:=function(iter, i)
+    local rep;
+
+    # <rep> has lambda val corresponding to <i>  
+    rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i));
     
-    iter:=IteratorByNextIterator( rec(
+    # <rep> has rho val in position 1 of GradedRhoOrb(s, rep, false).
+    # We don't rectify the rho val of <rep> in <o> since we require to
+    # enumerate RhoOrb(s) to do this, if we use GradedRhoOrb(s, rep,
+    # true) then this get more complicated.
+    return [s, 1, GradedRhoOrb(s, rep, false), rep, true];
+  end;
 
-      i:=1,
-
-      NextIterator:=function(iter)
-        local i, o, r, f;
-        
-        o:=LambdaOrb(s); i:=iter!.i;
-
-        if IsClosed(o) and i>=Length(o) then 
-          return fail;  
-        fi;
-        
-        i:=i+1;
-        
-        if i>Length(o) then 
-          if not IsClosed(o) then 
-            Enumerate(o, i);
-            if i>Length(o) then 
-              return fail;
-            fi;
-          else 
-            return fail;
-          fi;
-        fi;
-
-        iter!.i:=i; 
-        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i));
-        return [s, fail, GradedRhoOrb(s, f, true), f, false];
-      end,
-
-      ShallowCopy:=iter-> rec(i:=1)));
-  else ####
-
-    scc:=OrbSCC(LambdaOrb(s));
-
-    iter:=IteratorByFunctions( rec(
-                 
-      m:=1, 
-     
-      i:=0,      
-
-      scc_limit:=Length(scc),
-
-      i_limit:=Length(scc[Length(scc)]),
-
-      IsDoneIterator:=iter-> iter!.m=iter!.scc_limit and 
-       iter!.i=iter!.i_limit,
-
-      NextIterator:=function(iter)
-        local i, o, m, scc, f, r, mults;
-        
-        i:=iter!.i; 
-        m:=iter!.m; 
-
-        if m=iter!.scc_limit and i=iter!.i_limit then
-          return fail; 
-        fi;
-
-        o:=LambdaOrb(s); scc:=OrbSCC(o);
-
-        if i<Length(scc[m]) then 
-          i:=i+1;
-        else
-          i:=1; m:=m+1;
-        fi;
-
-        iter!.i:=i; iter!.m:=m;
- 
-        return [s, fail, RhoOrb(s), LambdaOrbRep(o, m), false];
-      end,
-
-      ShallowCopy:=iter-> rec(m:=1, i:=0,
-      scc_limit:=iter!.scc_limit, i_limit:=iter!.i_limit)));
+  if not IsClosed(o) then 
+    iter:=IteratorByOrbFunc(o, func, 2);
+  else 
+    return IteratorByIterator(IteratorList([2..Length(o)]), func);
   fi;
   
   return iter;
@@ -976,6 +919,7 @@ function(s)
   local o, func, iter;
 
   o:=RhoOrb(s);
+  
   func:=function(iter, i)
     local rep;
 
