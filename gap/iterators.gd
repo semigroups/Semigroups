@@ -1,6 +1,7 @@
 
 
 
+DeclareGlobalFunction("IteratorOfPairs");
 DeclareGlobalFunction("IteratorByNextIterator");
 DeclareGlobalFunction("IteratorByIterOfIter");
 DeclareGlobalFunction("IteratorByIterator");

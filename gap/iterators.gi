@@ -10,6 +10,57 @@
 
 #technical...
 
+# returns pairs of the form [coords1[i], coords2[i][j]] 
+
+InstallGlobalFunction(IteratorOfPairs, 
+function(coords1, coords2)
+  local record;
+  
+  if not (IsDenseList(coords1) and IsDenseList(coords2) 
+    and Length(coords2)=Length(coords1)) then 
+    Error("<coords1> and <coords2> must be dense lists of equal length,");
+  elif not ForAll(coords2, IsDenseList) then 
+    Error("<coords2> must be a list of dense lists,");
+  fi;
+
+  record:=rec();
+  
+  record.i:=1; # 1st coord
+  record.j:=0; # 2nd coord
+  record.coords1:=coords1;
+  record.coords2:=coords2;
+
+  record.IsDoneIterator:=function(iter)
+    return iter!.i=Length(iter!.coords1) 
+     and iter!.j=Length(iter!.coords2[Length(iter!.coords2)]);
+  end;
+  
+  record.NextIterator:=function(iter)
+    local i, j;
+
+    if IsDoneIterator(iter) then 
+      return fail;
+    fi;
+
+    i:=iter!.i; j:=iter!.j; 
+
+    if j<Length(iter!.coords2[i]) then
+      j:=j+1;
+    else
+      i:=i+1; j:=1;
+    fi;
+
+    iter!.i:=i; iter!.j:=j;
+    return [iter!.coords1[i], iter!.coords2[i][j]];
+  end; 
+
+  record.ShallowCopy:=function(iter)
+    return rec(i:=1, j:=1, coords1:=iter!.coords1, coords2:=iter!.coords2);
+  end;
+
+  return IteratorByFunctions(record);
+end);
+
 # NextIterator in opts must return fail if the iterator is finished. 
 
 InstallGlobalFunction(IteratorByNextIterator, 
@@ -64,17 +115,23 @@ function(record)
   return IteratorByFunctions(iter);
 end);
 
-#
+# <baseiter> should be an iterator where NextIterator(baseiter) has a method for
+# Iterator. More specifically, if iter:=Iterator(x) where <x> 
+# is a returned value of convert(NextIterator(baseiter)), then NextIterator of
+# IteratorByIterOfIter returns NextIterator(iter) until
+# IsDoneIterator(iter) then iter is replaced by
+# Iterator(convert(NextIterator(baseiter)))
+# until IsDoneIterator(baseiter), where <convert> is a function. 
 
 InstallGlobalFunction(IteratorByIterOfIter,
-function(s, old_iter, convert, filts)
+function(s, baseiter, convert, filts)
   local iter, filt;
 
   iter:=IteratorByFunctions(rec(
    
     s:=s,
 
-    iter:=old_iter,
+    iter:=baseiter,
     
     iterofiter:=fail,
 
@@ -82,7 +139,7 @@ function(s, old_iter, convert, filts)
      IsDoneIterator(iter!.iterofiter), 
 
     NextIterator:=function(iter)
-      local iterofiter, next;
+      local iterofiter, next, source;
 
       if IsDoneIterator(iter) then 
         return fail;
@@ -95,7 +152,7 @@ function(s, old_iter, convert, filts)
       return NextIterator(iter!.iterofiter);
     end,
 
-    ShallowCopy:=iter -> rec(iter:=old_iter, iterorfiter:=fail)));
+    ShallowCopy:=iter -> rec(iter:=baseiter, iterorfiter:=fail)));
   
   for filt in filts do
     SetFilterObj(iter, filt);
@@ -103,7 +160,7 @@ function(s, old_iter, convert, filts)
   return iter;
 end);
 
-#
+# for: baseiter, convert[, list of filts, isnew, record]
 
 InstallGlobalFunction(IteratorByIterator,
 function(arg)
@@ -116,6 +173,10 @@ function(arg)
     end;
   else
     convert:=arg[2];
+  fi;
+
+  if not IsBound(arg[3]) then 
+    arg[3]:=[];
   fi;
 
   if IsBound(arg[4]) then 

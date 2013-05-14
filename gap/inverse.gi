@@ -1179,7 +1179,7 @@ end);
 InstallMethod(IteratorOfRClassData, "for acting semigp with inverse op",
 [IsActingSemigroupWithInverseOp], 
 function(s)
-local iter, scc;
+  local iter, o, lookup;
   
   if not IsClosed(LambdaOrb(s)) then 
     
@@ -1212,47 +1212,14 @@ local iter, scc;
 
       ShallowCopy:=iter-> rec(i:=1)));
   else ####
-
-    scc:=OrbSCC(LambdaOrb(s));
-
-    iter:=IteratorByFunctions( rec(
-                 
-      m:=2, 
-     
-      i:=0,      
-
-      scc_limit:=Length(scc),
-
-      i_limit:=Length(scc[Length(scc)]),
-
-      IsDoneIterator:=iter-> iter!.m=iter!.scc_limit and 
-       iter!.i=iter!.i_limit,
-
-      NextIterator:=function(iter)
-        local i, o, m, scc, f, r, mults;
-        
-        i:=iter!.i; 
-        m:=iter!.m; 
-
-        if m=iter!.scc_limit and i=iter!.i_limit then
-          return fail; 
-        fi;
-
-        o:=LambdaOrb(s); scc:=OrbSCC(o);
-
-        if i<Length(scc[m]) then 
-          i:=i+1;
-        else
-          i:=1; m:=m+1;
-        fi;
-
-        iter!.i:=i; iter!.m:=m; 
-        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][i]))^-1; 
-        return [s, m, LambdaOrb(s), f, false];
-      end,
-
-      ShallowCopy:=iter-> rec(m:=1, i:=0,
-      scc_limit:=iter!.scc_limit, i_limit:=iter!.i_limit)));
+    o:=LambdaOrb(s);
+    lookup:=OrbSCCLookup(o);
+    iter:=IteratorByIterator(IteratorList([2..Length(o)]),
+      function(iter, i)
+        local f; 
+        f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
+        return [s, lookup[i], o, f, false];
+      end);
   fi;
   
   return iter;
