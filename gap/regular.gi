@@ -99,7 +99,7 @@ end);
 
 #JDM revise this if revising \in for elt and D-class in greens.gi
 
-InstallMethod(\in, "for acting elt and regular D-class of acting semigp.",
+InstallMethod(\in, "for acting elt and regular D-class of acting semigroup.",
 [IsAssociativeElement, IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(f, d)
   local rep, s, g, m, o, scc, l, schutz;
@@ -390,7 +390,7 @@ end);
 
 # different method for inverse
 
-InstallOtherMethod(Enumerator, "for a regular D-class of acting semigp.",
+InstallOtherMethod(Enumerator, "for a regular D-class of acting semigroup.",
 [IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
     
@@ -816,14 +816,13 @@ function(s, f)
   return CreateRClass(s, fail, o, f, false); 
 end);
 
-# same method for inverse
+# different method for inverse, not yet implemented JDM
 
-InstallMethod(IteratorOfDClassData, "for regular acting semigp",
+InstallMethod(IteratorOfDClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-local record;
-
-  if not IsClosed(LambdaOrb(s)) then 
+  o:=LambdaOrb(s);
+  if not IsClosed(o) then 
     record:=rec(m:=fail, graded:=IteratorOfGradedLambdaOrbs(s));
     record.NextIterator:=function(iter)
       local l, f; 
@@ -851,38 +850,28 @@ local record;
     record.ShallowCopy:=iter-> rec(m:=fail, 
       graded:=IteratorOfGradedLambdaOrbs(s));
     return IteratorByNextIterator(record);
-  fi;
+  else
+    scc:=OrbSCC(o);
 
-  record:=rec(m:=1);
-                 
-  record.IsDoneIterator:=iter-> iter!.m=Length(OrbSCC(LambdaOrb(s)));
+    func:=function(iter, m)
+      local rep;
+      # rep has rectified lambda val and rho val.
+      rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][1])); 
+      return [s, m, o, 1, GradedRhoOrb(s, rep, false), rep, false];
+    end;
 
-  record.NextIterator:=function(iter)
-    local o, l, f;
-    o:=LambdaOrb(s);
-    if iter!.m=Length(OrbSCC(o)) then
-      return fail; 
-    fi;
 
-    iter!.m:=iter!.m+1;
-    l:=OrbSCC(o)[iter!.m][1];
-
-    f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, l)); 
-    if IsActingSemigroupWithInverseOp(s) then 
-      # D-class reps must have rectified lambda and rho value
-      f:=LambdaOrbMult(o, iter!.m, Position(o, RhoFunc(s)(f)))[1]*f;
-      return [s, iter!.m, o, fail, fail, f, false];
-    fi;
-    return [s, iter!.m, o, 1, GradedLambdaOrb(s, f, false), false];
-  end;
-
-  record.ShallowCopy:=iter-> rec(m:=1);
-  return IteratorByFunctions(record);
+      if IsActingSemigroupWithInverseOp(s) then 
+        # D-class reps must have rectified lambda and rho value
+        f:=LambdaOrbMult(o, iter!.m, Position(o, RhoFunc(s)(f)))[1]*f;
+        return [s, iter!.m, o, fail, fail, f, false];
+      fi;
+  iter:=IteratorByIterator(IteratorList([2..Length(scc]), func);
 end);
 
 # no method required for inverse (use IteratorOfRClassData instead)
 
-InstallMethod(IteratorOfLClassData, "for regular acting semigp",
+InstallMethod(IteratorOfLClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
   local o, func, iter;
@@ -934,6 +923,7 @@ function(s)
   end;
 
   if not IsClosed(o) then 
+    # JDM should we use IteratorOfGradedRhoOrbs here instead?? 
     iter:=IteratorByOrbFunc(o, func, 2);
   else 
     return IteratorByIterator(IteratorList([2..Length(o)]), func);
@@ -1104,7 +1094,7 @@ NrDClasses);
 
 # different method for inverse
 
-InstallMethod(PartialOrderOfDClasses, "for a regular acting semigp",
+InstallMethod(PartialOrderOfDClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
   local d, n, out, o, gens, lookup, lambdafunc, i, x, f;
@@ -1207,7 +1197,7 @@ end);
 
 #
 
-InstallOtherMethod(Size, "for a regular D-class of an acting semigp.",
+InstallOtherMethod(Size, "for a regular D-class of an acting semigroup.",
 [IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   return Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))
