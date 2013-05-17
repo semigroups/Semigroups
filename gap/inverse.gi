@@ -1203,7 +1203,7 @@ function(s)
       rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
      
       # rectify the lambda value of <rep>
-      rep:=rep*LambdaOrbMult(o, lookup[i], Position(o, LambdaFunc(s)(rep)));
+      rep:=rep*LambdaOrbMult(o, lookup[i], Position(o, LambdaFunc(s)(rep)))[2];
       
       return [s, lookup[i], o, rep, false];     
     end;

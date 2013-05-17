@@ -91,7 +91,6 @@ end);
 InstallGlobalFunction(RectifyLambda,
 function(arg)
   local f, l, m;
-  
   if not IsClosed(arg[2]) then 
     Enumerate(arg[2], infinity);
   fi;

@@ -546,7 +546,7 @@ function(s)
   [IsIteratorOfLClasses]);
 end);
 
-# different method for regular/inverse
+# same method for regular/inverse
 
 InstallMethod(IteratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],

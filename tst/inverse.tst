@@ -285,8 +285,31 @@ gap> inv:=InverseGeneralMapping(iso);;
 gap> f:=Transformation( [ 7, 1, 7, 7, 7, 7, 7 ] );;
 gap> f^iso;
 [ 2, 7 ] -> [ 1, 7 ]
-gap> ForAll(s, f-> (f^iso)^inv=f);
+gap> (f^iso)^inv=f;
 true
+gap> f:=Random(s);;
+gap> (f^iso)^inv=f;
+true
+gap> f:=Random(s);;
+gap> (f^iso)^inv=f;
+true
+gap> f:=Random(s);;
+gap> (f^iso)^inv=f;
+true
+gap> f:=Random(s);;
+gap> (f^iso)^inv=f;
+true
+gap> f:=Random(s);;
+gap> (f^iso)^inv=f;
+true
+gap> f:=Random(s);;
+gap> (f^iso)^inv=f;
+true
+
+# this is too slow, it used to work better! but the method was incorrect in
+# generalJDM
+#gap> ForAll(s, f-> (f^iso)^inv=f);
+#true
 gap> Size(Range(iso));
 631
 gap> ForAll(s, f-> f^iso in Range(iso));

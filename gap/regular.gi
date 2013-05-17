@@ -826,23 +826,23 @@ function(s)
   if not IsClosed(LambdaOrb(s)) then 
     record:=rec(m:=fail, graded:=IteratorOfGradedLambdaOrbs(s));
     record.NextIterator:=function(iter)
-      local l, rep, m, o; 
+      local l, rep, m; 
       
-      m:=iter!.m; o:=iter!.o;
-      if m=fail or m=Length(OrbSCC(o)) then 
+      m:=iter!.m; 
+      if m=fail or m=Length(OrbSCC(iter!.o)) then 
         m:=1; l:=1;
-        o:=NextIterator(iter!.graded);
-        if o=fail then 
+        iter!.o:=NextIterator(iter!.graded);
+        if iter!.o=fail then 
           return fail;
         fi;
       else
-        m:=m+1; l:=OrbSCC(o)[m][1];
+        m:=m+1; l:=OrbSCC(iter!.o)[m][1];
       fi;
       iter!.m:=m;
         
       # rep has rectified lambda val and rho val.
-      rep:=LambdaOrbRep(o, m)*LambdaOrbMult(o, m, l)[2]; 
-      return [s, m, o, 1, GradedRhoOrb(s, rep, false), rep, false];
+      rep:=LambdaOrbRep(iter!.o, m)*LambdaOrbMult(iter!.o, m, l)[2]; 
+      return [s, m, iter!.o, 1, GradedRhoOrb(s, rep, false), rep, false];
     end;
 
     record.ShallowCopy:=iter-> rec(m:=fail, 
@@ -974,14 +974,7 @@ s-> IteratorByIterator(IteratorOfLClassData(s), x-> x[4],
 InstallMethod(IteratorOfLClasses, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
 s-> IteratorByIterator(IteratorOfLClassData(s), x->
-CallFuncList(CreateLClass, x), [IsIteratorOfLClasses]));
-
-# same method for inverse
-
-InstallMethod(IteratorOfRClasses, "for regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
-s-> IteratorByIterator(IteratorOfRClassData(s), x->
-CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
+CallFuncList(CreateLClassNC, x), [IsIteratorOfLClasses]));
 
 # same method for inverse semigroups
 
