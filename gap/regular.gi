@@ -816,8 +816,7 @@ function(s, f)
   return CreateRClass(s, fail, o, f, false); 
 end);
 
-# different method for inverse, not yet implemented JDM
-
+# different method for inverse
 InstallMethod(IteratorOfDClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
@@ -862,20 +861,6 @@ function(s)
     return IteratorByIterator(IteratorList([2..Length(scc)]), func);
   fi;
 end);
-
-#      if IsActingSemigroupWithInverseOp(s) then
-#        # D-class reps must have rectified lambda and rho value
-#        f:=
-#         LambdaOrbMult(iter!.o, iter!.m, Position(iter!.o, RhoFunc(s)(f)))[1]*f;
-#        return [s, iter!.m, iter!.o, fail, fail, f, false];
-#      fi;
-#
-#      if IsActingSemigroupWithInverseOp(s) then 
-#        # D-class reps must have rectified lambda and rho value
-#        f:=LambdaOrbMult(o, iter!.m, Position(o, RhoFunc(s)(f)))[1]*f;
-#        return [s, iter!.m, o, fail, fail, f, false];
-#      fi;
-# no method required for inverse (use IteratorOfRClassData instead)
 
 InstallMethod(IteratorOfLClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],

@@ -635,6 +635,7 @@ function(d)
     for k in scc[m] do
       n:=n+1;
       out[n]:=CreateHClass(s, m, o, fail, fail, mults[k][2]*g, false);
+      SetDClassOfHClass(out[n], d);
     od;
   od;
   return out;
@@ -1173,6 +1174,56 @@ function(l)
   od;
   return out;
 end);
+
+#
+
+InstallMethod(IteratorOfDClassData, "for regular acting semigroup", 
+[IsActingSemigroup and IsRegularSemigroup], 
+function(s) 
+  local record, o, scc, func, iter, f; 
+ 
+  if not IsClosed(LambdaOrb(s)) then  
+    record:=rec(m:=fail, graded:=IteratorOfGradedLambdaOrbs(s)); 
+    record.NextIterator:=function(iter) 
+      local l, rep, m;  
+       
+      m:=iter!.m;  
+      if m=fail or m=Length(OrbSCC(iter!.o)) then  
+        m:=1; l:=1; 
+        iter!.o:=NextIterator(iter!.graded); 
+        if iter!.o=fail then  
+          return fail; 
+        fi; 
+      else 
+        m:=m+1; l:=OrbSCC(iter!.o)[m][1]; 
+      fi; 
+      iter!.m:=m; 
+         
+      # rep has rectified lambda val and rho val. 
+      rep:=LambdaOrbRep(iter!.o, m)*LambdaOrbMult(iter!.o, m, l)[2];  
+      rep:=LambdaOrbMult(iter!.o, m, Position(iter!.o, RhoFunc(s)(rep)))[1]*rep;
+
+      return [s, m, iter!.o, fail, fail, rep, false]; 
+    end; 
+ 
+    record.ShallowCopy:=iter-> rec(m:=fail,  
+      graded:=IteratorOfGradedLambdaOrbs(s)); 
+    return IteratorByNextIterator(record); 
+  else 
+    o:=LambdaOrb(s); 
+    scc:=OrbSCC(o); 
+ 
+    func:=function(iter, m) 
+      local rep; 
+      # rep has rectified lambda val and rho val. 
+      rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][1]));  
+      rep:=LambdaOrbMult(iter!.o, m, Position(iter!.o, RhoFunc(s)(rep)))[1]*rep;
+      return [s, m, iter!.o, fail, fail, rep, false]; 
+    end; 
+     
+    return IteratorByIterator(IteratorList([2..Length(scc)]), func); 
+  fi; 
+end); 
 
 #
 
