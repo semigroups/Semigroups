@@ -506,7 +506,6 @@ gap> s:=POI(13);
 <inverse partial perm monoid on 13 pts with 13 generators>
 gap> D:=DClassNC(s, f);
 {PartialPerm( [ 1, 2, 3, 4, 7, 8, 9, 10 ], [ 2, 3, 4, 5, 6, 8, 10, 11 ] )}
-[ 2, 7 ] -> [ 1, 7 ]
 gap> LClassNC(s, f)=LClass(D, f);
 true
 gap> LClass(s, f)=LClassNC(D, f);

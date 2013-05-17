@@ -784,7 +784,7 @@ InstallOtherMethod(GreensDClassOfElementNC,
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
   return CreateDClassNC(s, 1, GradedLambdaOrb(s, f, false), 
-   fail, fail, f, true);
+   fail, fail, RightOne(f), true);
 end);
 
 #
