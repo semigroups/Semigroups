@@ -391,7 +391,6 @@ function(s, f)
     for i in [2..Length(o)] do
       if lambdarank(o[i])=rank and tester(o[i], rho_f) then
         for rho in rhos do
-          Error();
           g:=creator(lambda, rho)*inv(o[i], f);
           if regular or g in s then
             k:=k+1; 
