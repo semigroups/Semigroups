@@ -388,10 +388,11 @@ function(s, f)
  
   if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
     o:=LambdaOrb(s);
-    for x in o do
-      if lambdarank(x)=rank and tester(x, rho_f) then
+    for i in [2..Length(o)] do
+      if lambdarank(o[i])=rank and tester(o[i], rho_f) then
         for rho in rhos do
-          g:=creator(lambda, rho)*inv(x, f);
+          Error();
+          g:=creator(lambda, rho)*inv(o[i], f);
           if regular or g in s then
             k:=k+1; 
             out[k]:=g;

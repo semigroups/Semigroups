@@ -821,36 +821,35 @@ end);
 InstallMethod(IteratorOfDClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  o:=LambdaOrb(s);
-  if not IsClosed(o) then 
+  local record, o, scc, func, iter, f;
+
+  if not IsClosed(LambdaOrb(s)) then 
     record:=rec(m:=fail, graded:=IteratorOfGradedLambdaOrbs(s));
     record.NextIterator:=function(iter)
-      local l, f; 
+      local l, rep, m, o; 
       
-      if iter!.m=fail or iter!.m=Length(OrbSCC(iter!.o)) then 
-        iter!.m:=1; l:=1;
-        iter!.o:=NextIterator(iter!.graded);
-        if iter!.o=fail then 
+      m:=iter!.m; o:=iter!.o;
+      if m=fail or m=Length(OrbSCC(o)) then 
+        m:=1; l:=1;
+        o:=NextIterator(iter!.graded);
+        if o=fail then 
           return fail;
         fi;
       else
-        iter!.m:=iter!.m+1; l:=OrbSCC(iter!.o)[iter!.m][1];
+        m:=m+1; l:=OrbSCC(o)[m][1];
       fi;
-
-      f:=LambdaOrbRep(iter!.o, iter!.m)*LambdaOrbMult(iter!.o, iter!.m, l)[2]; 
-      if IsActingSemigroupWithInverseOp(s) then
-        # D-class reps must have rectified lambda and rho value
-        f:=
-         LambdaOrbMult(iter!.o, iter!.m, Position(iter!.o, RhoFunc(s)(f)))[1]*f;
-        return [s, iter!.m, iter!.o, fail, fail, f, false];
-      fi;
-      return [s, iter!.m, iter!.o, 1, GradedRhoOrb(s, f, false), f, false];
+      iter!.m:=m;
+        
+      # rep has rectified lambda val and rho val.
+      rep:=LambdaOrbRep(o, m)*LambdaOrbMult(o, m, l)[2]; 
+      return [s, m, o, 1, GradedRhoOrb(s, rep, false), rep, false];
     end;
 
     record.ShallowCopy:=iter-> rec(m:=fail, 
       graded:=IteratorOfGradedLambdaOrbs(s));
     return IteratorByNextIterator(record);
   else
+    o:=LambdaOrb(s);
     scc:=OrbSCC(o);
 
     func:=function(iter, m)
@@ -859,16 +858,23 @@ function(s)
       rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][1])); 
       return [s, m, o, 1, GradedRhoOrb(s, rep, false), rep, false];
     end;
-
-
-      if IsActingSemigroupWithInverseOp(s) then 
-        # D-class reps must have rectified lambda and rho value
-        f:=LambdaOrbMult(o, iter!.m, Position(o, RhoFunc(s)(f)))[1]*f;
-        return [s, iter!.m, o, fail, fail, f, false];
-      fi;
-  iter:=IteratorByIterator(IteratorList([2..Length(scc]), func);
+    
+    return IteratorByIterator(IteratorList([2..Length(scc)]), func);
+  fi;
 end);
 
+#      if IsActingSemigroupWithInverseOp(s) then
+#        # D-class reps must have rectified lambda and rho value
+#        f:=
+#         LambdaOrbMult(iter!.o, iter!.m, Position(iter!.o, RhoFunc(s)(f)))[1]*f;
+#        return [s, iter!.m, iter!.o, fail, fail, f, false];
+#      fi;
+#
+#      if IsActingSemigroupWithInverseOp(s) then 
+#        # D-class reps must have rectified lambda and rho value
+#        f:=LambdaOrbMult(o, iter!.m, Position(o, RhoFunc(s)(f)))[1]*f;
+#        return [s, iter!.m, o, fail, fail, f, false];
+#      fi;
 # no method required for inverse (use IteratorOfRClassData instead)
 
 InstallMethod(IteratorOfLClassData, "for regular acting semigroup",
