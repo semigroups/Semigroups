@@ -889,9 +889,10 @@ end);
 InstallOtherMethod(GreensLClassOfElementNC, "for an acting semigp and elt",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
-  # use NC since rho value of f has to be in first place of GradedRhoOrb
-  # with false as final arg
-  return CreateInverseOpLClassNC(s, 1, GradedLambdaOrb(s, f, false), f, true);
+  # lambda value of f has to be in first place of GradedLambdaOrb
+  # with false as final arg, use non-NC version since rho value of f should be
+  # in first place. 
+  return CreateInverseOpLClass(s, 1, GradedLambdaOrb(s, f, false), f, true);
 end);
 
 #
