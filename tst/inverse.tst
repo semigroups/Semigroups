@@ -284,7 +284,7 @@ gap> iso:=IsomorphismPartialPermSemigroup(s);;
 gap> inv:=InverseGeneralMapping(iso);;
 gap> f:=Transformation( [ 7, 1, 7, 7, 7, 7, 7 ] );;
 gap> f^iso;
-[ 2, 7 ] -> [ 1, 7 ]
+[2,1](7)
 gap> (f^iso)^inv=f;
 true
 gap> f:=Random(s);;
@@ -321,85 +321,115 @@ gap> Size(s);
 gap> s:=InverseSemigroup( PartialPermNC( [ 1, 2, 3 ], [ 2, 4, 1 ] ),
 > PartialPermNC( [ 1, 3, 4 ], [ 3, 4, 1 ] ) );;
 gap> GreensDClasses(s);
-[ {<identity on [ 1, 2, 4 ]>}, {<identity on [ 1, 3, 4 ]>}, 
-  {<identity on [ 2, 4 ]>}, {<identity on [ 4 ]>}, {<empty mapping>} ]
+[ {PartialPerm( [ 1, 2, 4 ], [ 1, 2, 4 ] )}, 
+  {PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 2, 4 ] )}, {PartialPerm( [ 4 ], [ 4 ] )}, 
+  {PartialPerm( [  ], [  ] )} ]
 gap> GreensHClasses(s);
-[ {<identity on [ 1, 2, 4 ]>}, {[ 1, 2, 4 ] -> [ 3, 1, 2 ]}, 
-  {[ 1 .. 3 ] -> [ 2, 4, 1 ]}, {<identity on [ 1 .. 3 ]>}, 
-  {<identity on [ 1, 3, 4 ]>}, {<identity on [ 2, 4 ]>}, 
-  {[ 2, 4 ] -> [ 3, 1 ]}, {[ 2, 4 ] -> [ 1, 2 ]}, {[ 2, 4 ] -> [ 3, 2 ]}, 
-  {[ 2, 4 ] -> [ 4, 3 ]}, {[ 2, 4 ] -> [ 1, 4 ]}, {[ 1, 3 ] -> [ 4, 2 ]}, 
-  {<identity on [ 1, 3 ]>}, {[ 1, 3 ] -> [ 2, 1 ]}, {[ 1, 3 ] -> [ 2, 3 ]}, 
-  {[ 1, 3 ] -> [ 3, 4 ]}, {[ 1, 3 ] -> [ 4, 1 ]}, {[ 1, 2 ] -> [ 2, 4 ]}, 
-  {[ 1, 2 ] -> [ 3, 1 ]}, {<identity on [ 1, 2 ]>}, {[ 1, 2 ] -> [ 3, 2 ]}, 
-  {[ 1, 2 ] -> [ 4, 3 ]}, {[ 1, 2 ] -> [ 1, 4 ]}, {[ 2, 3 ] -> [ 4, 2 ]}, 
-  {[ 2, 3 ] -> [ 1, 3 ]}, {[ 2, 3 ] -> [ 2, 1 ]}, {<identity on [ 2, 3 ]>}, 
-  {[ 2, 3 ] -> [ 3, 4 ]}, {[ 2, 3 ] -> [ 4, 1 ]}, {[ 3, 4 ] -> [ 4, 2 ]}, 
-  {[ 3, 4 ] -> [ 1, 3 ]}, {[ 3, 4 ] -> [ 2, 1 ]}, {[ 3, 4 ] -> [ 2, 3 ]}, 
-  {<identity on [ 3, 4 ]>}, {[ 3, 4 ] -> [ 4, 1 ]}, {[ 1, 4 ] -> [ 2, 4 ]}, 
-  {[ 1, 4 ] -> [ 3, 1 ]}, {[ 1, 4 ] -> [ 1, 2 ]}, {[ 1, 4 ] -> [ 3, 2 ]}, 
-  {[ 1, 4 ] -> [ 4, 3 ]}, {<identity on [ 1, 4 ]>}, {<identity on [ 4 ]>}, 
-  {[ 4 ] -> [ 1 ]}, {[ 4 ] -> [ 3 ]}, {[ 4 ] -> [ 2 ]}, {[ 1 ] -> [ 4 ]}, 
-  {<identity on [ 1 ]>}, {[ 1 ] -> [ 3 ]}, {[ 1 ] -> [ 2 ]}, {[ 3 ] -> [ 4 ]},
-  {[ 3 ] -> [ 1 ]}, {<identity on [ 3 ]>}, {[ 3 ] -> [ 2 ]}, {[ 2 ] -> [ 4 ]},
-  {[ 2 ] -> [ 1 ]}, {[ 2 ] -> [ 3 ]}, {<identity on [ 2 ]>}, 
-  {<empty mapping>} ]
+[ {PartialPerm( [ 1, 2, 4 ], [ 1, 2, 4 ] )}, 
+  {PartialPerm( [ 1, 2, 3 ], [ 2, 4, 1 ] )}, 
+  {PartialPerm( [ 1, 2, 4 ], [ 3, 1, 2 ] )}, 
+  {PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}, 
+  {PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 2, 4 ] )}, {PartialPerm( [ 1, 3 ], [ 4, 2 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 2, 4 ] )}, {PartialPerm( [ 2, 3 ], [ 4, 2 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 4, 2 ] )}, {PartialPerm( [ 1, 4 ], [ 2, 4 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 3, 1 ] )}, {PartialPerm( [ 1, 3 ], [ 1, 3 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 3, 1 ] )}, {PartialPerm( [ 2, 3 ], [ 1, 3 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 1, 3 ] )}, {PartialPerm( [ 1, 4 ], [ 3, 1 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 1, 2 ] )}, {PartialPerm( [ 1, 3 ], [ 2, 1 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 1, 2 ] )}, {PartialPerm( [ 2, 3 ], [ 2, 1 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 2, 1 ] )}, {PartialPerm( [ 1, 4 ], [ 1, 2 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 3, 2 ] )}, {PartialPerm( [ 1, 3 ], [ 2, 3 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 3, 2 ] )}, {PartialPerm( [ 2, 3 ], [ 2, 3 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 2, 3 ] )}, {PartialPerm( [ 1, 4 ], [ 3, 2 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 4, 3 ] )}, {PartialPerm( [ 1, 3 ], [ 3, 4 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 4, 3 ] )}, {PartialPerm( [ 2, 3 ], [ 3, 4 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 3, 4 ] )}, {PartialPerm( [ 1, 4 ], [ 4, 3 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 1, 4 ] )}, {PartialPerm( [ 1, 3 ], [ 4, 1 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 1, 4 ] )}, {PartialPerm( [ 2, 3 ], [ 4, 1 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 4, 1 ] )}, {PartialPerm( [ 1, 4 ], [ 1, 4 ] )}, 
+  {PartialPerm( [ 4 ], [ 4 ] )}, {PartialPerm( [ 1 ], [ 4 ] )}, 
+  {PartialPerm( [ 3 ], [ 4 ] )}, {PartialPerm( [ 2 ], [ 4 ] )}, 
+  {PartialPerm( [ 4 ], [ 1 ] )}, {PartialPerm( [ 1 ], [ 1 ] )}, 
+  {PartialPerm( [ 3 ], [ 1 ] )}, {PartialPerm( [ 2 ], [ 1 ] )}, 
+  {PartialPerm( [ 4 ], [ 3 ] )}, {PartialPerm( [ 1 ], [ 3 ] )}, 
+  {PartialPerm( [ 3 ], [ 3 ] )}, {PartialPerm( [ 2 ], [ 3 ] )}, 
+  {PartialPerm( [ 4 ], [ 2 ] )}, {PartialPerm( [ 1 ], [ 2 ] )}, 
+  {PartialPerm( [ 3 ], [ 2 ] )}, {PartialPerm( [ 2 ], [ 2 ] )}, 
+  {PartialPerm( [  ], [  ] )} ]
 gap> IsDuplicateFree(last);
 true
 gap> GreensLClasses(s);
-[ {<identity on [ 1, 2, 4 ]>}, {[ 1, 2, 4 ] -> [ 3, 1, 2 ]}, 
-  {<identity on [ 1, 3, 4 ]>}, {<identity on [ 2, 4 ]>}, 
-  {[ 2, 4 ] -> [ 3, 1 ]}, {[ 2, 4 ] -> [ 1, 2 ]}, {[ 2, 4 ] -> [ 3, 2 ]}, 
-  {[ 2, 4 ] -> [ 4, 3 ]}, {[ 2, 4 ] -> [ 1, 4 ]}, {<identity on [ 4 ]>}, 
-  {[ 4 ] -> [ 1 ]}, {[ 4 ] -> [ 3 ]}, {[ 4 ] -> [ 2 ]}, {<empty mapping>} ]
+[ {PartialPerm( [ 1, 2, 4 ], [ 1, 2, 4 ] )}, 
+  {PartialPerm( [ 1, 2, 4 ], [ 3, 1, 2 ] )}, 
+  {PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 2, 4 ] )}, {PartialPerm( [ 2, 4 ], [ 3, 1 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 1, 2 ] )}, {PartialPerm( [ 2, 4 ], [ 3, 2 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 4, 3 ] )}, {PartialPerm( [ 2, 4 ], [ 1, 4 ] )}, 
+  {PartialPerm( [ 4 ], [ 4 ] )}, {PartialPerm( [ 4 ], [ 1 ] )}, 
+  {PartialPerm( [ 4 ], [ 3 ] )}, {PartialPerm( [ 4 ], [ 2 ] )}, 
+  {PartialPerm( [  ], [  ] )} ]
 gap> GreensRClasses(s);
-[ {<identity on [ 1, 2, 4 ]>}, {[ 1 .. 3 ] -> [ 2, 4, 1 ]}, 
-  {<identity on [ 1, 3, 4 ]>}, {<identity on [ 2, 4 ]>}, 
-  {[ 1, 3 ] -> [ 4, 2 ]}, {[ 1, 2 ] -> [ 2, 4 ]}, {[ 2, 3 ] -> [ 4, 2 ]}, 
-  {[ 3, 4 ] -> [ 4, 2 ]}, {[ 1, 4 ] -> [ 2, 4 ]}, {<identity on [ 4 ]>}, 
-  {[ 1 ] -> [ 4 ]}, {[ 3 ] -> [ 4 ]}, {[ 2 ] -> [ 4 ]}, {<empty mapping>} ]
+[ {PartialPerm( [ 1, 2, 4 ], [ 1, 2, 4 ] )}, 
+  {PartialPerm( [ 1, 2, 3 ], [ 2, 4, 1 ] )}, 
+  {PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 2, 4 ] )}, {PartialPerm( [ 1, 3 ], [ 4, 2 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 2, 4 ] )}, {PartialPerm( [ 2, 3 ], [ 4, 2 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 4, 2 ] )}, {PartialPerm( [ 1, 4 ], [ 2, 4 ] )}, 
+  {PartialPerm( [ 4 ], [ 4 ] )}, {PartialPerm( [ 1 ], [ 4 ] )}, 
+  {PartialPerm( [ 3 ], [ 4 ] )}, {PartialPerm( [ 2 ], [ 4 ] )}, 
+  {PartialPerm( [  ], [  ] )} ]
 gap> D:=GreensDClasses(s)[2];
-{<identity on [ 1, 3, 4 ]>}
+{PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] )}
 gap> GreensLClasses(D);
-[ {<identity on [ 1, 3, 4 ]>} ]
+[ {PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] )} ]
 gap> GreensRClasses(D);
-[ {<identity on [ 1, 3, 4 ]>} ]
+[ {PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] )} ]
 gap> GreensHClasses(D);
-[ {<identity on [ 1, 3, 4 ]>} ]
+[ {PartialPerm( [ 1, 3, 4 ], [ 1, 3, 4 ] )} ]
 gap> D:=GreensDClasses(s)[3];
-{<identity on [ 2, 4 ]>}
+{PartialPerm( [ 2, 4 ], [ 2, 4 ] )}
 gap> GreensLClasses(D);
-[ {<identity on [ 2, 4 ]>}, {[ 2, 4 ] -> [ 3, 1 ]}, {[ 2, 4 ] -> [ 1, 2 ]}, 
-  {[ 2, 4 ] -> [ 3, 2 ]}, {[ 2, 4 ] -> [ 4, 3 ]}, {[ 2, 4 ] -> [ 1, 4 ]} ]
+[ {PartialPerm( [ 2, 4 ], [ 2, 4 ] )}, {PartialPerm( [ 2, 4 ], [ 3, 1 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 1, 2 ] )}, {PartialPerm( [ 2, 4 ], [ 3, 2 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 4, 3 ] )}, {PartialPerm( [ 2, 4 ], [ 1, 4 ] )} ]
 gap> GreensRClasses(D);
-[ {<identity on [ 2, 4 ]>}, {[ 1, 3 ] -> [ 4, 2 ]}, {[ 1, 2 ] -> [ 2, 4 ]}, 
-  {[ 2, 3 ] -> [ 4, 2 ]}, {[ 3, 4 ] -> [ 4, 2 ]}, {[ 1, 4 ] -> [ 2, 4 ]} ]
+[ {PartialPerm( [ 2, 4 ], [ 2, 4 ] )}, {PartialPerm( [ 1, 3 ], [ 4, 2 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 2, 4 ] )}, {PartialPerm( [ 2, 3 ], [ 4, 2 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 4, 2 ] )}, {PartialPerm( [ 1, 4 ], [ 2, 4 ] )} ]
 gap> GreensHClasses(D);
-[ {<identity on [ 2, 4 ]>}, {[ 2, 4 ] -> [ 3, 1 ]}, {[ 2, 4 ] -> [ 1, 2 ]}, 
-  {[ 2, 4 ] -> [ 3, 2 ]}, {[ 2, 4 ] -> [ 4, 3 ]}, {[ 2, 4 ] -> [ 1, 4 ]}, 
-  {[ 1, 3 ] -> [ 4, 2 ]}, {<identity on [ 1, 3 ]>}, {[ 1, 3 ] -> [ 2, 1 ]}, 
-  {[ 1, 3 ] -> [ 2, 3 ]}, {[ 1, 3 ] -> [ 3, 4 ]}, {[ 1, 3 ] -> [ 4, 1 ]}, 
-  {[ 1, 2 ] -> [ 2, 4 ]}, {[ 1, 2 ] -> [ 3, 1 ]}, {<identity on [ 1, 2 ]>}, 
-  {[ 1, 2 ] -> [ 3, 2 ]}, {[ 1, 2 ] -> [ 4, 3 ]}, {[ 1, 2 ] -> [ 1, 4 ]}, 
-  {[ 2, 3 ] -> [ 4, 2 ]}, {[ 2, 3 ] -> [ 1, 3 ]}, {[ 2, 3 ] -> [ 2, 1 ]}, 
-  {<identity on [ 2, 3 ]>}, {[ 2, 3 ] -> [ 3, 4 ]}, {[ 2, 3 ] -> [ 4, 1 ]}, 
-  {[ 3, 4 ] -> [ 4, 2 ]}, {[ 3, 4 ] -> [ 1, 3 ]}, {[ 3, 4 ] -> [ 2, 1 ]}, 
-  {[ 3, 4 ] -> [ 2, 3 ]}, {<identity on [ 3, 4 ]>}, {[ 3, 4 ] -> [ 4, 1 ]}, 
-  {[ 1, 4 ] -> [ 2, 4 ]}, {[ 1, 4 ] -> [ 3, 1 ]}, {[ 1, 4 ] -> [ 1, 2 ]}, 
-  {[ 1, 4 ] -> [ 3, 2 ]}, {[ 1, 4 ] -> [ 4, 3 ]}, {<identity on [ 1, 4 ]>} ]
+[ {PartialPerm( [ 2, 4 ], [ 2, 4 ] )}, {PartialPerm( [ 1, 3 ], [ 4, 2 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 2, 4 ] )}, {PartialPerm( [ 2, 3 ], [ 4, 2 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 4, 2 ] )}, {PartialPerm( [ 1, 4 ], [ 2, 4 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 3, 1 ] )}, {PartialPerm( [ 1, 3 ], [ 1, 3 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 3, 1 ] )}, {PartialPerm( [ 2, 3 ], [ 1, 3 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 1, 3 ] )}, {PartialPerm( [ 1, 4 ], [ 3, 1 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 1, 2 ] )}, {PartialPerm( [ 1, 3 ], [ 2, 1 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 1, 2 ] )}, {PartialPerm( [ 2, 3 ], [ 2, 1 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 2, 1 ] )}, {PartialPerm( [ 1, 4 ], [ 1, 2 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 3, 2 ] )}, {PartialPerm( [ 1, 3 ], [ 2, 3 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 3, 2 ] )}, {PartialPerm( [ 2, 3 ], [ 2, 3 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 2, 3 ] )}, {PartialPerm( [ 1, 4 ], [ 3, 2 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 4, 3 ] )}, {PartialPerm( [ 1, 3 ], [ 3, 4 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 4, 3 ] )}, {PartialPerm( [ 2, 3 ], [ 3, 4 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 3, 4 ] )}, {PartialPerm( [ 1, 4 ], [ 4, 3 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 1, 4 ] )}, {PartialPerm( [ 1, 3 ], [ 4, 1 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 1, 4 ] )}, {PartialPerm( [ 2, 3 ], [ 4, 1 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 4, 1 ] )}, {PartialPerm( [ 1, 4 ], [ 1, 4 ] )} ]
 gap> h:=last[9];;
 gap> L:=LClass(D, Representative(h));
-{[ 2, 4 ] -> [ 1, 2 ]}
+{PartialPerm( [ 2, 4 ], [ 3, 1 ] )}
 gap> Position(HClasses(L), h);
-2
+3
 gap> DClassOfLClass(L)=D;
 true
 gap> LClassOfHClass(h)=L;
 true
 gap> R:=RClassOfHClass(h);
-{[ 1, 3 ] -> [ 4, 2 ]}
+{PartialPerm( [ 1, 2 ], [ 2, 4 ] )}
 gap> Position(HClasses(R), h);
-3
+2
 gap> DClassOfRClass(R)=D;
 true
 
@@ -409,19 +439,19 @@ gap> s:=InverseSemigroup(
 > PartialPermNC( [ 1, 2, 3, 4, 6 ], [ 3, 6, 4, 5, 1 ] ) );;
 gap> f:=PartialPermNC([ 1, 4, 6 ], [ 6, 3, 1 ]);;
 gap> D:=DClass(s, f);
-{<identity on [ 1, 4, 6 ]>}
+{PartialPerm( [ 1, 3, 6 ], [ 1, 3, 6 ] )}
 gap> LClass(s, f)=LClass(D, f);
 true
 gap> RClass(s, f)=RClass(D, f);
 true
 gap> R:=RClass(s, f);             
-{<identity on [ 1, 4, 6 ]>}
+{PartialPerm( [ 1, 4, 6 ], [ 6, 3, 1 ] )}
 gap> HClass(s, f)=HClass(R, f);
 true
 gap> HClass(D, f)=HClass(R, f);
 true
 gap> L:=LClass(s, f);                
-{[ 1, 4, 6 ] -> [ 6, 3, 1 ]}
+{PartialPerm( [ 1, 3, 6 ], [ 1, 3, 6 ] )}
 gap> HClass(D, f)=HClass(L, f);
 true
 gap> HClass(s, f)=HClass(L, f);
@@ -430,49 +460,53 @@ gap>
 
 #
 gap> s:=POI(10);
-<inverse monoid with 10 generators>
+<inverse partial perm monoid on 10 pts with 10 generators>
 gap> f:=PartialPermNC([ 2, 4, 5, 7 ], [ 2, 3, 5, 7 ]);;
 gap> l:=LClassNC(s, f);
-{[ 2, 4, 5, 7 ] -> [ 2, 3, 5, 7 ]}
+{PartialPerm( [ 2, 4, 5, 7 ], [ 2, 3, 5, 7 ] )}
 gap> l:=LClass(s,f);
-{[ 2, 4, 5, 7 ] -> [ 2, 3, 5, 7 ]}
+{PartialPerm( [ 1, 2, 3, 4 ], [ 2, 3, 5, 7 ] )}
 gap> s:=POI(15);
-<inverse monoid with 15 generators>
+<inverse partial perm monoid on 15 pts with 15 generators>
 gap> f:=PartialPermNC( [ 1, 3, 5, 8, 9, 10, 12, 13, 14 ],
 > [ 2, 3, 4, 7, 9, 11, 12, 13, 15 ] ) ;;
 gap> l:=LClass(s,f);
-{[ 1, 3, 5, 8, 9, 10, 12, 13, 14 ] -> [ 2, 3, 4, 7, 9, 11, 12, 13, 15 ]}
+{PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ], [ 2, 3, 4, 7, 9, 11, 12, 13, 15 ]
+ )}
 gap> l:=LClassNC(s,f);
-{[ 1, 3, 5, 8, 9, 10, 12, 13, 14 ] -> [ 2, 3, 4, 7, 9, 11, 12, 13, 15 ]}
+{PartialPerm( [ 1, 3, 5, 8, 9, 10, 12, 13, 14 ], 
+ [ 2, 3, 4, 7, 9, 11, 12, 13, 15 ] )}
 gap> s:=POI(15);;
 gap> l:=LClassNC(s,f);
-{[ 1, 3, 5, 8, 9, 10, 12, 13, 14 ] -> [ 2, 3, 4, 7, 9, 11, 12, 13, 15 ]}
+{PartialPerm( [ 1, 3, 5, 8, 9, 10, 12, 13, 14 ], 
+ [ 2, 3, 4, 7, 9, 11, 12, 13, 15 ] )}
 gap> l=LClass(s,f);
 true
 gap> f:=PartialPermNC([ 1, 2, 4, 7, 8, 11, 12 ], [ 1, 2, 6, 7, 9, 10, 11 ]);;
 gap> l:=LClass(POI(12), f);
-{[ 1, 2, 4, 7, 8, 11, 12 ] -> [ 1, 2, 6, 7, 9, 10, 11 ]}
+{PartialPerm( [ 1, 2, 3, 4, 5, 6, 7 ], [ 1, 2, 6, 7, 9, 10, 11 ] )}
 gap> f:=PartialPermNC( [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13 ],
 > [ 1, 2, 3, 4, 5, 7, 8, 9, 10, 12, 13 ] );;
 gap> l:=LClass(POI(13), f);
-{[ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13 ] -> [ 1, 2, 3, 4, 5, 7, 8, 9, 10, 12, 
-  13 ]}
+{PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ], 
+ [ 1, 2, 3, 4, 5, 7, 8, 9, 10, 12, 13 ] )}
 gap> f:=PartialPermNC([ 1, 2, 3, 4, 7, 8, 9, 10 ], 
 > [ 2, 3, 4, 5, 6, 8, 10, 11 ]);;
 gap> l:=LClass(POI(13), f);
-{[ 1, 2, 3, 4, 7, 8, 9, 10 ] -> [ 2, 3, 4, 5, 6, 8, 10, 11 ]}
+{PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8 ], [ 2, 3, 4, 5, 6, 8, 10, 11 ] )}
 gap> LClassNC(POI(13), f);
-{[ 1, 2, 3, 4, 7, 8, 9, 10 ] -> [ 2, 3, 4, 5, 6, 8, 10, 11 ]}
+{PartialPerm( [ 1, 2, 3, 4, 7, 8, 9, 10 ], [ 2, 3, 4, 5, 6, 8, 10, 11 ] )}
 gap> RClassNC(POI(13), f);
-{<identity on [ 1, 2, 3, 4, 7, 8, 9, 10 ]>}
+{PartialPerm( [ 1, 2, 3, 4, 7, 8, 9, 10 ], [ 2, 3, 4, 5, 6, 8, 10, 11 ] )}
 gap> HClassNC(POI(13), f);       
-{[ 1, 2, 3, 4, 7, 8, 9, 10 ] -> [ 2, 3, 4, 5, 6, 8, 10, 11 ]}
+{PartialPerm( [ 1, 2, 3, 4, 7, 8, 9, 10 ], [ 2, 3, 4, 5, 6, 8, 10, 11 ] )}
 gap> DClassNC(POI(13), f);
-{<identity on [ 1, 2, 3, 4, 7, 8, 9, 10 ]>}
+{PartialPerm( [ 1, 2, 3, 4, 7, 8, 9, 10 ], [ 2, 3, 4, 5, 6, 8, 10, 11 ] )}
 gap> s:=POI(13);
-<inverse monoid with 13 generators>
+<inverse partial perm monoid on 13 pts with 13 generators>
 gap> D:=DClassNC(s, f);
-{<identity on [ 1, 2, 3, 4, 7, 8, 9, 10 ]>}
+{PartialPerm( [ 1, 2, 3, 4, 7, 8, 9, 10 ], [ 2, 3, 4, 5, 6, 8, 10, 11 ] )}
+[ 2, 7 ] -> [ 1, 7 ]
 gap> LClassNC(s, f)=LClass(D, f);
 true
 gap> LClass(s, f)=LClassNC(D, f);

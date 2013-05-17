@@ -733,6 +733,7 @@ function(d)
   o:=LambdaOrb(d);
   f:=Representative(d);
   nc:=IsGreensClassNC(d);
+  scc:=OrbSCC(o)[m];
   
   out:=EmptyPlist(Length(scc));
   k:=0;
@@ -742,7 +743,6 @@ function(d)
   for i in scc do
     k:=k+1;
     #use NC since f has rho value in first place of scc
-    #JDM maybe don't use CreateLClassNC here, and rather expand!
     out[k]:=CreateInverseOpLClassNC(s, m, o, f*mults[i][1], nc);
     SetDClassOfLClass(out[k], d);
   od;
@@ -1217,8 +1217,8 @@ function(s)
       local rep; 
       # rep has rectified lambda val and rho val. 
       rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][1]));  
-      rep:=LambdaOrbMult(iter!.o, m, Position(iter!.o, RhoFunc(s)(rep)))[1]*rep;
-      return [s, m, iter!.o, fail, fail, rep, false]; 
+      rep:=LambdaOrbMult(o, m, Position(o, RhoFunc(s)(rep)))[1]*rep;
+      return [s, m, o, fail, fail, rep, false]; 
     end; 
      
     return IteratorByIterator(IteratorList([2..Length(scc)]), func); 
