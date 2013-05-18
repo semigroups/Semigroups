@@ -364,7 +364,7 @@ function(arg)
 
   #####
 
-  #by default or by if arg[3]=true append the result to arg[1]
+  #by default or if arg[3]=true append the result to arg[1]
   
   gzip:=SplitString(arg[1], '.');
   gzip:=[JoinStringsWithSeparator(gzip{[1..Length(gzip)-1]}, "."),
