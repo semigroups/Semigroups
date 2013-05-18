@@ -1064,6 +1064,32 @@ function(s)
   return out;
 end);
 
+#could do better if LambdaOrb is unknown JDM
+
+InstallOtherMethod(Idempotents, 
+"for acting semigroup with inverse op and positive integer",
+[IsActingSemigroupWithInverseOp, IsPosInt], 
+function(s, n)
+  local o, creator, r, out, rank, len, i;
+
+  o:=LambdaOrb(s);
+  if not IsClosed(o) then      
+    Enumerate(o, infinity);
+  fi;
+
+  creator:=IdempotentCreator(s);
+  r:=Length(o);
+  out:=EmptyPlist(r-1);
+  rank:=LambdaRank(s);
+
+  for i in [2..r] do
+    if rank(o[i])=n then 
+      len:=len+1;
+      out[len]:=creator(o[i], o[i]);
+    fi;
+  od;
+  return out;
+end);
 #
 
 InstallOtherMethod(RClassReps, "for an acting semigroup with inverse op",

@@ -803,7 +803,7 @@ gap> Idempotents(r);
 #
 gap> s:=RandomInverseSemigroup(2,10);
 <inverse semigroup with 2 generators>
-gap> ForAll(RClasses(s), IsRegularRClass);
+gap> ForAll(RClasses(s), IsRegularClass);
 true
 
 #
