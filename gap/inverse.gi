@@ -15,6 +15,54 @@
 ## Methods for inverse acting semigroups consisting of acting elements with a
 ## ^-1 operator. 
 
+# change f so that its rho value is in the first position of its scc. 
+
+InstallGlobalFunction(RectifyInverseRho,
+function(s, o, f)
+  local l, m;
+
+  if not IsClosed(o) then     
+    Enumerate(o, infinity);
+  fi;
+
+  l:=Position(o, RhoFunc(s)(f));
+  m:=OrbSCCLookup(o)[l];
+
+  if l<>OrbSCC(o)[m][1] then
+    f:=LambdaOrbMult(o, m, l)[1]*f;
+  fi;
+  return f;
+end);
+
+# Usage: s = semigroup;  m = lambda orb scc index; o = lambda orb;  
+# rep = L-class rep; nc = IsGreensClassNC. 
+# NC indicates that RhoFunc(s)(rep) is in the first place of the scc of the
+# lambda orb. 
+
+InstallGlobalFunction(CreateInverseOpLClassNC,
+function(s, m, o, rep, nc)
+  local l;
+
+  l:=Objectify(LClassType(s), rec());
+  SetParent(l, s);
+  SetRepresentative(l, rep);
+  SetLambdaOrb(l, o);
+  SetLambdaOrbSCCIndex(l, m);
+  SetEquivalenceClassRelation(l, GreensLRelation(s));
+  SetIsGreensClassNC(l, nc);
+  return l;
+end);
+
+# use the NC version for already rectified reps.
+# only use this when <m> is known!
+
+InstallGlobalFunction(CreateInverseOpLClass,
+function(s, m, o, rep, nc)
+  return CreateInverseOpLClassNC(s, m, o, RectifyInverseRho(s, o, rep), nc);
+end);
+
+#
+
 InstallMethod(IsInverseOpClass, "for a Green's class",
 [IsActingSemigroupGreensClass], ReturnFalse);
 
@@ -124,8 +172,9 @@ function(f, s)
   elif schutz=false then
     return false;
   fi;
+  
   # the D-class rep corresponding to lambda_o and scc.
-  rep:=RectifyInverseRho(s, o, LambdaOrbRep(o, m)).rep;
+  rep:=RectifyInverseRho(s, o, LambdaOrbRep(o, m));
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=(); 
 end);
 
@@ -295,37 +344,7 @@ function(f, r)
 end);
 
 #
-# Usage: arg[1] = semigroup;  arg[2] = lambda orb scc index; 
-# arg[3] = lambda orb;  arg[4] = rep;
-# arg[5] = IsGreensClassNC. 
 
-# NC indicates that the representative is assumed to be in the correct form,
-# i.e. RhoFunc(s)(arg[2]) is in the first place of the scc of the lambda orb. 
-
-InstallGlobalFunction(CreateInverseOpLClassNC,
-function(s, m, o, rep, nc)
-  local l;
-
-  l:=Objectify(LClassType(s), rec());
-  SetParent(l, s);
-  SetRepresentative(l, rep);
-  SetLambdaOrb(l, o);
-  SetLambdaOrbSCCIndex(l, m);
-  SetEquivalenceClassRelation(l, GreensLRelation(s));
-  SetIsGreensClassNC(l, nc);
-  return l;
-end);
-
-#
-# use the NC version for already rectified reps.
-
-InstallGlobalFunction(CreateInverseOpLClass,
-function(s, m, o, rep, nc)
-  local rectify;
-
-  rectify:=RectifyInverseRho(s, o, rep, LambdaPos(o), m);
-  return CreateInverseOpLClassNC(s, rectify.m, o, rectify.rep, nc);
-end);
 
 
 #
@@ -868,7 +887,7 @@ InstallOtherMethod(GreensLClassOfElement,
 "for acting semigp with inverse op and elt",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
-  local o;
+  local o, l, m;
 
   if not f in s then
     Error("the element does not belong to the semigroup,");
@@ -881,7 +900,14 @@ function(s, f)
     o:=GradedLambdaOrb(s, f, true);
   fi;
 
-  return CreateInverseOpLClass(s, fail, o, f, false);
+  l:=Position(o, RhoFunc(s)(f));
+  m:=OrbSCCLookup(o)[l];
+  
+  if l<>OrbSCC(o)[m][1] then 
+    f:=LambdaOrbMult(o, m, l)[1]*f;
+  fi;
+
+  return CreateInverseOpLClassNC(s, m, o, f, false);
 end);
 
 #
@@ -923,8 +949,8 @@ function(d, f)
   local l;
 
   # use non-NC so taht rho value of f is rectified
-  l:=CreateInverseOpLClass(Parent(d), LambdaOrb(d),
-   LambdaOrbSCCIndex(d), f, true);
+  l:=CreateInverseOpLClass(Parent(d), LambdaOrbSCCIndex(d), LambdaOrb(d), 
+   f, true);
   SetDClassOfLClass(l, d);
   return l;
 end);
@@ -984,8 +1010,13 @@ end);
 
 InstallOtherMethod(GroupHClass, "for an inverse op D-class",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], 
-d-> CreateHClass(Parent(d), LambdaOrbSCCIndex(d), LambdaOrb(d), fail, 
-fail, Representative(d), IsGreensClassNC(d)));
+function(d)
+  local h;
+  h:=CreateHClass(Parent(d), LambdaOrbSCCIndex(d), LambdaOrb(d), fail, 
+    fail, Representative(d), IsGreensClassNC(d));
+  SetIsGroupHClass(h, true);
+  return h;
+end);
 
 #
 
