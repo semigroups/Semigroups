@@ -61,7 +61,7 @@ function(o, func, start)
     return func2(iter, pos);
   end;
 
-  record.ShallowCopy:=rec(pos:=1);
+  record.ShallowCopy:=iter-> rec(pos:=1);
 
  return IteratorByNextIterator( record );
 end);
@@ -122,7 +122,6 @@ end);
 InstallGlobalFunction(IteratorByNextIterator, 
 function(record)
   local iter, comp, shallow;
-
   if not ( IsRecord( record ) and IsBound( record.NextIterator )
                               and IsBound( record.ShallowCopy ) ) then 
     Error("<record> must be a record with components `NextIterator'\n",
@@ -547,7 +546,7 @@ function(s)
   [IsIteratorOfLClasses]);
 end);
 
-# different method for regular/inverse
+# same method for regular/inverse
 
 InstallMethod(IteratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],

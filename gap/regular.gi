@@ -816,8 +816,7 @@ function(s, f)
   return CreateRClass(s, fail, o, f, false); 
 end);
 
-# different method for inverse, not yet implemented JDM
-
+# different method for inverse
 InstallMethod(IteratorOfDClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
@@ -826,23 +825,23 @@ function(s)
   if not IsClosed(LambdaOrb(s)) then 
     record:=rec(m:=fail, graded:=IteratorOfGradedLambdaOrbs(s));
     record.NextIterator:=function(iter)
-      local l, rep, m, o; 
+      local l, rep, m; 
       
-      m:=iter!.m; o:=iter!.o;
-      if m=fail or m=Length(OrbSCC(o)) then 
+      m:=iter!.m; 
+      if m=fail or m=Length(OrbSCC(iter!.o)) then 
         m:=1; l:=1;
-        o:=NextIterator(iter!.graded);
-        if o=fail then 
+        iter!.o:=NextIterator(iter!.graded);
+        if iter!.o=fail then 
           return fail;
         fi;
       else
-        m:=m+1; l:=OrbSCC(o)[m][1];
+        m:=m+1; l:=OrbSCC(iter!.o)[m][1];
       fi;
       iter!.m:=m;
         
       # rep has rectified lambda val and rho val.
-      rep:=LambdaOrbRep(o, m)*LambdaOrbMult(o, m, l)[2]; 
-      return [s, m, o, 1, GradedRhoOrb(s, rep, false), rep, false];
+      rep:=LambdaOrbRep(iter!.o, m)*LambdaOrbMult(iter!.o, m, l)[2]; 
+      return [s, m, iter!.o, 1, GradedRhoOrb(s, rep, false), rep, false];
     end;
 
     record.ShallowCopy:=iter-> rec(m:=fail, 
@@ -862,20 +861,6 @@ function(s)
     return IteratorByIterator(IteratorList([2..Length(scc)]), func);
   fi;
 end);
-
-#      if IsActingSemigroupWithInverseOp(s) then
-#        # D-class reps must have rectified lambda and rho value
-#        f:=
-#         LambdaOrbMult(iter!.o, iter!.m, Position(iter!.o, RhoFunc(s)(f)))[1]*f;
-#        return [s, iter!.m, iter!.o, fail, fail, f, false];
-#      fi;
-#
-#      if IsActingSemigroupWithInverseOp(s) then 
-#        # D-class reps must have rectified lambda and rho value
-#        f:=LambdaOrbMult(o, iter!.m, Position(o, RhoFunc(s)(f)))[1]*f;
-#        return [s, iter!.m, o, fail, fail, f, false];
-#      fi;
-# no method required for inverse (use IteratorOfRClassData instead)
 
 InstallMethod(IteratorOfLClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -974,14 +959,7 @@ s-> IteratorByIterator(IteratorOfLClassData(s), x-> x[4],
 InstallMethod(IteratorOfLClasses, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
 s-> IteratorByIterator(IteratorOfLClassData(s), x->
-CallFuncList(CreateLClass, x), [IsIteratorOfLClasses]));
-
-# same method for inverse
-
-InstallMethod(IteratorOfRClasses, "for regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
-s-> IteratorByIterator(IteratorOfRClassData(s), x->
-CallFuncList(CreateRClass, x), [IsIteratorOfRClasses]));
+CallFuncList(CreateLClassNC, x), [IsIteratorOfLClasses]));
 
 # same method for inverse semigroups
 
