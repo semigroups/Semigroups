@@ -804,15 +804,20 @@ InstallMethod(IsRegularSemigroupElementNC,
 "for an acting semigroup and acting element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement], 
 function(s, f)                                  
-  local o, lookingfor;
+  local o, scc, rho, tester, i;
  
   o:=GradedLambdaOrb(s, f, false);
         
-  lookingfor:=function(o, x)
-    return IdempotentTester(s)(x, RhoFunc(s)(f));
-  end;
-  
-  return LookForInOrb(o, lookingfor, 2)<>false;
+  scc:=OrbSCC(o)[OrbSCCLookup(o)[Position(o, LambdaFunc(s)(f))]];
+  rho:=RhoFunc(s)(f);
+  tester:=IdempotentTester(s);
+
+  for i in scc do 
+    if tester(o[i], rho) then
+      return true;
+    fi;
+  od;
+  return false;
 end);
 
 #
