@@ -305,7 +305,6 @@ function(gens, record)
   fi;
   
   SetGeneratorsOfInverseSemigroup(s, AsList(gens));
-  GeneratorsOfSemigroup(s);
   return s;
 end);
 
@@ -344,7 +343,6 @@ function(gens, record)
   s:=Objectify( NewType (FamilyObj( gens ), filts), rec(opts:=record));
 
   SetGeneratorsOfInverseSemigroup(s, gens);
-  GeneratorsOfSemigroup(s);
   return s;
 end);
 
@@ -408,7 +406,13 @@ function(s, coll, record)
     return s;
   fi;
 
-  coll_copy:=GeneratorsOfSemigroup(coll);
+  coll_copy:=Set(ShallowCopy(coll));
+  for f in coll do
+    if not f^-1 in coll then
+      Add(coll_copy, f^-1);
+    fi;
+  od;
+
   o:=StructuralCopy(LambdaOrb(s));
   AddGeneratorsToOrbit(o, coll_copy);
 
