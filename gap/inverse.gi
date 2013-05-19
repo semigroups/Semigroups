@@ -1241,8 +1241,8 @@ end);
 
 #
 
-InstallMethod(IteratorOfDClassData, "for regular acting semigroup", 
-[IsActingSemigroup and IsRegularSemigroup], 
+InstallMethod(IteratorOfDClassData, "for inverse acting semigroup", 
+[IsActingSemigroupWithInverseOp and IsRegularSemigroup], 
 function(s) 
   local record, o, scc, func, iter, f; 
  

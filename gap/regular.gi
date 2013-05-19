@@ -817,6 +817,7 @@ function(s, f)
 end);
 
 # different method for inverse
+
 InstallMethod(IteratorOfDClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
@@ -828,6 +829,11 @@ function(s)
       local l, rep, m; 
       
       m:=iter!.m; 
+      
+      if IsBound(iter!.o) and iter!.o=fail then 
+        return fail;
+      fi;
+
       if m=fail or m=Length(OrbSCC(iter!.o)) then 
         m:=1; l:=1;
         iter!.o:=NextIterator(iter!.graded);
