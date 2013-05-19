@@ -20,10 +20,10 @@ function(o, func, start)
   local func2, record, iter;
 
   if not IsOrbit(o) then 
-    Error("<o> must be an orbit,");
+    Error("usage: <o> must be an orbit,");
     return;
   elif not IsFunction(func) then 
-    Error("<func> must be a function,");
+    Error("usage: <func> must be a function,");
     return;
   fi;
   
@@ -71,15 +71,18 @@ end);
 InstallGlobalFunction(IteratorByNextIterator, 
 function(record)
   local iter, comp, shallow;
+  
   if not ( IsRecord( record ) and IsBound( record.NextIterator )
                               and IsBound( record.ShallowCopy ) ) then 
-    Error("<record> must be a record with components `NextIterator'\n",
-    "and `ShallowCopy'");
+    Error("usage: <record> must be a record with components `NextIterator'\n",
+    "and `ShallowCopy',");
+    return;
   elif IsRecord (record ) and ( IsBound(record.last_called_by_is_done) 
                           or IsBound(record.next_value) 
                           or IsBound(record.IsDoneIterator) ) then
-    Error("<record> must be a record with no components named\n",
-    "`last_called_by_is_done', `next_value', or `IsDoneIterator'");
+    Error("usage: <record> must be a record with no components named\n",
+    "`last_called_by_is_done', `next_value', or `IsDoneIterator',");
+    return;
   fi;
 
   iter:=rec( last_called_by_is_done:=false,
@@ -128,39 +131,58 @@ end);
 # until IsDoneIterator(baseiter), where <convert> is a function. 
 
 InstallGlobalFunction(IteratorByIterOfIters,
-function(s, baseiter, convert, filts)
+function(record, baseiter, convert, filts)
   local iter, filt;
-
-  iter:=IteratorByFunctions(rec(
-   
-    s:=s,
-
-    iter:=baseiter,
-    
-    iterofiter:=fail,
-
-    IsDoneIterator:=iter-> IsDoneIterator(iter!.iter) and 
-     IsDoneIterator(iter!.iterofiter), 
-
-    NextIterator:=function(iter)
-      local iterofiter, next, source;
-
-      if IsDoneIterator(iter) then 
-        return fail;
-      fi;
-
-      if iter!.iterofiter=fail or IsDoneIterator(iter!.iterofiter) then 
-        iter!.iterofiter:=Iterator(convert(NextIterator(iter!.iter)));
-      fi;
-      
-      return NextIterator(iter!.iterofiter);
-    end,
-
-    ShallowCopy:=iter -> rec(iter:=baseiter, iterorfiter:=fail)));
   
+  if not IsRecord(record) or IsBound(record.baseiter) 
+    or IsBound(record.iterofiters) or IsBound(record.IsDoneIterator) 
+    or IsBound(record.NextIterator) or IsBound(record.ShallowCopy) then 
+    Error("usage: <record> must be a record with no components named:\n", 
+    "`baseiter', `iterofiters', `IsDoneIterator', `NextIterator', or\n", 
+    "`ShallowCopy'");
+    return;
+  elif not IsIterator(baseiter) then 
+    Error("usage: <baseiter> must be an iterator,");
+    return;
+  elif not IsFunction(convert) then 
+    Error("usage: <convert> must be a function,");
+    return;
+  elif not (IsList(filts) and ForAll(filts, IsFilter)) then 
+    Error("usage: <filts> must be a list of filters,");
+    return;
+  fi;
+  
+  record.baseiter:=baseiter;
+  record.iterofiters:=Iterator(convert(NextIterator(baseiter)));
+
+  #
+  record.IsDoneIterator:=function(iter)
+    return IsDoneIterator(iter!.baseiter) and IsDoneIterator(iter!.iterofiters);
+  end;
+  
+  #
+  record.NextIterator:=function(iter)
+
+    if IsDoneIterator(iter) then 
+      return fail;
+    fi;
+
+    if IsDoneIterator(iter!.iterofiters) then 
+      iter!.iterofiters:=Iterator(convert(NextIterator(iter!.baseiter)));
+    fi;
+    
+    return NextIterator(iter!.iterofiters);
+  end;
+  
+  #
+  record.ShallowCopy:=iter -> rec(baseiter:=baseiter, iterorfiters:=fail);
+
+  iter:=IteratorByFunctions(record);
+
   for filt in filts do
     SetFilterObj(iter, filt);
   od;
+  
   return iter;
 end);
 
@@ -247,6 +269,10 @@ function(arg)
   local out, i, x;
   
   if IsBound(arg[2]) then 
+    if not IsPosInt(arg[2]) then 
+      Error("usage: the second argument must be a positive integer,");
+      return;
+    fi;
     out:=EmptyPlist(arg[2]);
   else
     out:=[];
@@ -262,7 +288,7 @@ function(arg)
   return out;
 end);
 
-# everything else...
+# for general acting semigroups...
 
 # Notes: the previous inverse method used D-classes instead of R-classes.
 
@@ -276,11 +302,12 @@ function(s)
   if HasAsSSortedList(s) then 
     iter:=IteratorList(AsSSortedList(s));
     SetIsIteratorOfSemigroup(iter, true);
-    return iter;
+  else 
+    iter:=IteratorByIterOfIters(rec(parent:=s), IteratorOfRClasses(s), IdFunc, 
+     [IsIteratorOfSemigroup]);
   fi;
-
-  return IteratorByIterOfIters(s, IteratorOfRClasses(s), x-> x,
-   [IsIteratorOfSemigroup]);
+  SetParent(iter, s);
+  return iter;
 end);
 
 # same method for regular/inverse
@@ -296,9 +323,8 @@ function(d)
     return iter;
   fi;
 
-  s:=Parent(d);
-  return IteratorByIterOfIters(s, Iterator(GreensRClasses(d)), x-> x,
-   [IsIteratorOfDClassElements]);
+  return IteratorByIterOfIters(rec(parent:=Parent(d)),
+  Iterator(GreensRClasses(d)), IdFunc, [IsIteratorOfDClassElements]);
 end);
 
 # same method for regular/inverse
@@ -323,6 +349,8 @@ end);
 # the inverse method will be almost identical to the R-class method, hence we
 # should extract the relevant bits from both the L and R method and make a new
 # function like in NrIdempotents@ for example. JDM
+
+#JDM can't we use IteratorByIterator on an IteratorOfCartesianProduct here?
 
 InstallMethod(Iterator, "for an L-class of an acting semigp",
 [IsGreensLClass and IsActingSemigroupGreensClass],
@@ -378,6 +406,8 @@ end);
 # Notes: this method makes Iterator of a semigroup much better!!
 
 # same method for regular/inverse
+
+#JDM can't we use IteratorByIterator on an IteratorOfCartesianProduct here?
 
 InstallMethod(Iterator, "for an R-class of an acting semigp",
 [IsGreensRClass and IsActingSemigroupGreensClass],
@@ -474,8 +504,8 @@ function(s)
     return iter;
   fi;
 
-  return IteratorByIterOfIters(s, IteratorOfDClasses(s), GreensHClasses, 
-   [IsIteratorOfHClasses]);
+  return IteratorByIterOfIters(rec(parent:=s), IteratorOfDClasses(s),
+  GreensHClasses, [IsIteratorOfHClasses]);
 end);
 
 # different method for regular/inverse
@@ -491,8 +521,8 @@ function(s)
     return iter;
   fi;
   
-  return IteratorByIterOfIters(s, IteratorOfDClasses(s), GreensLClasses, 
-  [IsIteratorOfLClasses]);
+  return IteratorByIterOfIters(rec(parent:=s), IteratorOfDClasses(s),
+  GreensLClasses, [IsIteratorOfLClasses]);
 end);
 
 # same method for regular/inverse
@@ -547,7 +577,7 @@ function(s)
   
   iter:= IteratorByFunctions( rec(
 
-    s:=s,
+    parent:=s,
 
     tups:=IteratorOfTuples([1..DegreeOfTransformationSemigroup(s)],
      DegreeOfTransformationSemigroup(s)),
@@ -605,6 +635,8 @@ InstallMethod(IteratorOfRClassReps, "for an acting semigroup",
 s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4],
 [IsIteratorOfRClassReps]));
 
+# for regular acting semigroups...
+
 # different method for inverse
 
 InstallMethod(IteratorOfDClassData, "for regular acting semigroup",
@@ -656,6 +688,8 @@ function(s)
     return IteratorByIterator(IteratorList([2..Length(scc)]), func);
   fi;
 end);
+
+#
 
 InstallMethod(IteratorOfLClassData, "for regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -755,17 +789,19 @@ InstallMethod(IteratorOfLClasses, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
 s-> IteratorByIterator(IteratorOfLClassData(s), x->
 CallFuncList(CreateLClassNC, x), [IsIteratorOfLClasses]));
-#
+
+#for inverse acting semigroups...
 
 InstallMethod(IteratorOfDClassData, "for inverse acting semigroup", 
 [IsActingSemigroupWithInverseOp and IsRegularSemigroup], 
 function(s) 
-  local record, o, scc, func, iter, f; 
+  local graded, record, o, scc, func;
  
-  if not IsClosed(LambdaOrb(s)) then  
-    record:=rec(m:=fail, graded:=IteratorOfGradedLambdaOrbs(s)); 
+  if not IsClosed(LambdaOrb(s)) then 
+    graded:=IteratorOfGradedLambdaOrbs(s);
+    record:=rec(m:=0, graded:=graded, o:=NextIterator(graded)); 
     record.NextIterator:=function(iter) 
-      local l, rep, m;  
+      local l, o, m;  
        
       m:=iter!.m;  
       if iter!.o=fail then 
@@ -783,9 +819,9 @@ function(s)
       o:=iter!.o;  
 
       # rep has rectified lambda val and rho val. 
-      rep:=RightOne(EvaluateWord(o!.gens, TraceSchreierTreeForward(o, l)));
-
-      return [s, m, iter!.o, fail, fail, rep, false]; 
+      # don't use trace schreier tree forward since often l=1 and so 
+      # this returns the identity partial perm
+      return [s, m, o, fail, fail, RightOne(LambdaOrbRep(o, m)), false]; 
     end; 
  
     record.ShallowCopy:=iter-> rec(m:=fail,  
@@ -865,7 +901,7 @@ function(x)
   return CallFuncList(CreateInverseOpLClass, x);
 end, [IsIteratorOfLClasses]));
 
-#
+# Printing...
    
 InstallMethod(PrintObj, [IsIteratorOfDClassElements],
 function(iter)
@@ -963,20 +999,9 @@ end);
 
 #
 
-InstallMethod(PrintObj, [IsIteratorOfSemigroup],
+InstallMethod(ViewString, [IsIteratorOfSemigroup],
 function(iter)
-  if IsFullTransformationSemigroup(iter!.s) then
-    Print("<iterator of full transformation semigroup>");
-  elif IsTransformationSemigroup(iter!.s) then
-    Print("<iterator of transformation semigroup>");
-  elif IsPartialPermSemigroup(iter!.s) and IsInverseSemigroup(iter!.s) then
-    Print("<iterator of inverse semigroup>");
-  elif IsPartialPermSemigroup(iter!.s) then 
-    Print("<iterator of semigroup of partial perms>");
-  elif IsSymmetricInverseSemigroup(iter!.s) then 
-    Print("<iterator of symmetric inverse semigroup>");
-  fi;
-  return;
+  return Concatenation("<iterator of ", ViewString(iter!.parent), ">");
 end);
 
 #EOF

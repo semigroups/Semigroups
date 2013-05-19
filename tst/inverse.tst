@@ -897,7 +897,7 @@ gap> NextIterator(iter);
 gap> NextIterator(iter);
 <identity partial perm on [ 11, 12, 13 ]>
 gap> NextIterator(iter);
-(2,20)(10)
+<identity partial perm on [ 2, 10, 20 ]>
 gap> NextIterator(iter);
 <identity partial perm on [ 3, 4, 6, 13 ]>
 gap> NextIterator(iter);

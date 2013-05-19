@@ -965,12 +965,12 @@ gap> gens:=[ Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ),
 >   Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> Iterator(s);
-<iterator of transformation semigroup>
+<iterator of <transformation semigroup on 7 pts with 2 generators>>
 gap> iter:=last;
-<iterator of transformation semigroup>
+<iterator of <transformation semigroup on 7 pts with 2 generators>>
 gap> for i in [1..10000] do NextIterator(iter); od;
 gap> iter:=Iterator(s);
-<iterator of transformation semigroup>
+<iterator of <transformation semigroup on 7 pts with 2 generators>>
 gap> j:=0; for i in iter do j:=j+1; od;
 0
 gap> j;
@@ -1374,7 +1374,7 @@ gap> HClassReps(r);
 #
 gap> t:=FullTransformationSemigroup(5);;
 gap> iter:=Iterator(t);
-<iterator of full transformation semigroup>
+<iterator of <full transformation semigroup on 5 pts>>
 gap> for i in iter do od;
 gap> IsDoneIterator(iter);
 true
