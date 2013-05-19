@@ -122,12 +122,12 @@ end);
 # <baseiter> should be an iterator where NextIterator(baseiter) has a method for
 # Iterator. More specifically, if iter:=Iterator(x) where <x> 
 # is a returned value of convert(NextIterator(baseiter)), then NextIterator of
-# IteratorByIterOfIter returns NextIterator(iter) until
+# IteratorByIterOfIters returns NextIterator(iter) until
 # IsDoneIterator(iter) then iter is replaced by
 # Iterator(convert(NextIterator(baseiter)))
 # until IsDoneIterator(baseiter), where <convert> is a function. 
 
-InstallGlobalFunction(IteratorByIterOfIter,
+InstallGlobalFunction(IteratorByIterOfIters,
 function(s, baseiter, convert, filts)
   local iter, filt;
 
@@ -279,7 +279,7 @@ function(s)
     return iter;
   fi;
 
-  return IteratorByIterOfIter(s, IteratorOfRClasses(s), x-> x,
+  return IteratorByIterOfIters(s, IteratorOfRClasses(s), x-> x,
    [IsIteratorOfSemigroup]);
 end);
 
@@ -297,7 +297,7 @@ function(d)
   fi;
 
   s:=Parent(d);
-  return IteratorByIterOfIter(s, Iterator(GreensRClasses(d)), x-> x,
+  return IteratorByIterOfIters(s, Iterator(GreensRClasses(d)), x-> x,
    [IsIteratorOfDClassElements]);
 end);
 
@@ -474,7 +474,7 @@ function(s)
     return iter;
   fi;
 
-  return IteratorByIterOfIter(s, IteratorOfDClasses(s), GreensHClasses, 
+  return IteratorByIterOfIters(s, IteratorOfDClasses(s), GreensHClasses, 
    [IsIteratorOfHClasses]);
 end);
 
@@ -491,7 +491,7 @@ function(s)
     return iter;
   fi;
   
-  return IteratorByIterOfIter(s, IteratorOfDClasses(s), GreensLClasses, 
+  return IteratorByIterOfIters(s, IteratorOfDClasses(s), GreensLClasses, 
   [IsIteratorOfLClasses]);
 end);
 

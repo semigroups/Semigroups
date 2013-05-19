@@ -12,7 +12,7 @@
 # constructors for iterators
 DeclareGlobalFunction("IteratorByOrbFunc");
 DeclareGlobalFunction("IteratorByNextIterator");
-DeclareGlobalFunction("IteratorByIterOfIter");
+DeclareGlobalFunction("IteratorByIterOfIters");
 DeclareGlobalFunction("IteratorByIterator");
 DeclareGlobalFunction("ListIterator");
 
