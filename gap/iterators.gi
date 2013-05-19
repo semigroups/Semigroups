@@ -345,17 +345,12 @@ function(h)
    Representative(h)*x, [IsIteratorOfHClassElements]);
 end);
 
-# same method for regular, there should be a different method for inverseJDM!?
-# the inverse method will be almost identical to the R-class method, hence we
-# should extract the relevant bits from both the L and R method and make a new
-# function like in NrIdempotents@ for example. JDM
+# same method for regular, there should be a different method for inverse JDM!?
 
-#JDM can't we use IteratorByIterator on an IteratorOfCartesianProduct here?
-
-InstallMethod(Iterator, "for an L-class of an acting semigp",
+InstallMethod(Iterator, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  local o, m, mults, iter, scc;
+  local iter, baseiter, convert;
 
   if HasAsSSortedList(l) then 
     iter:=IteratorList(AsSSortedList(l));
@@ -363,56 +358,25 @@ function(l)
     return iter;
   fi;
 
-  o:=RhoOrb(l); 
-  m:=RhoOrbSCCIndex(l);
-  mults:=RhoOrbMults(o, m);
-  scc:=OrbSCC(o)[m];
-
-  iter:=IteratorByFunctions(rec(
-
-    #schutz:=List(SchutzenbergerGroup(r), x-> Representative(r)*x), 
-    schutz:=Enumerator(SchutzenbergerGroup(l)),
-    at:=[0,1],
-    m:=Length(scc),
-    n:=Size(SchutzenbergerGroup(l)), 
-
-    IsDoneIterator:=iter-> iter!.at[1]=iter!.m and iter!.at[2]=iter!.n,
-
-    NextIterator:=function(iter)
-      local at;
-
-      at:=iter!.at;
-      
-      if at[1]=iter!.m and at[2]=iter!.n then 
-        return fail;
-      fi;
-
-      if at[1]<iter!.m then
-        at[1]:=at[1]+1;
-      else
-        at[1]:=1; at[2]:=at[2]+1;
-      fi;
-     
-      return mults[scc[at[1]]][1]*Representative(l)*iter!.schutz[at[2]];
-    end,
-    
-    ShallowCopy:=iter -> rec(schutz:=iter!.schutz, at:=[0,1], 
-     m:=iter!.m, n:=iter!.n)));
+  baseiter:=IteratorOfCartesianProduct(OrbSCC(RhoOrb(l))[RhoOrbSCCIndex(l)],
+   Enumerator(SchutzenbergerGroup(l)));
   
-  SetIsIteratorOfLClassElements(iter, true);
-  return iter;
+  convert:=function(x)
+    return RhoOrbMults(RhoOrb(l), RhoOrbSCCIndex(l))[x[1]][1]
+     *Representative(l)*x[2];
+  end;
+
+  return IteratorByIterator(baseiter, convert, [IsIteratorOfLClassElements]);
 end);
 
 # Notes: this method makes Iterator of a semigroup much better!!
 
 # same method for regular/inverse
 
-#JDM can't we use IteratorByIterator on an IteratorOfCartesianProduct here?
-
-InstallMethod(Iterator, "for an R-class of an acting semigp",
+InstallMethod(Iterator, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local o, m, mults, iter, scc;
+  local iter, baseiter, convert;
 
   if HasAsSSortedList(r) then 
     iter:=IteratorList(AsSSortedList(r));
@@ -420,44 +384,16 @@ function(r)
     return iter;
   fi;
 
-  o:=LambdaOrb(r); 
-  m:=LambdaOrbSCCIndex(r);
-  mults:=LambdaOrbMults(o, m);
-  scc:=OrbSCC(o)[m];
-
-  iter:=IteratorByFunctions(rec(
-
-    #schutz:=List(SchutzenbergerGroup(r), x-> Representative(r)*x), 
-    schutz:=Enumerator(SchutzenbergerGroup(r)),
-    at:=[0,1],
-    m:=Length(scc),
-    n:=Size(SchutzenbergerGroup(r)), 
-
-    IsDoneIterator:=iter-> iter!.at[1]=iter!.m and iter!.at[2]=iter!.n,
-
-    NextIterator:=function(iter)
-      local at;
-
-      at:=iter!.at;
-      
-      if at[1]=iter!.m and at[2]=iter!.n then 
-        return fail;
-      fi;
-
-      if at[1]<iter!.m then
-        at[1]:=at[1]+1;
-      else
-        at[1]:=1; at[2]:=at[2]+1;
-      fi;
-     
-      return Representative(r)*iter!.schutz[at[2]]*mults[scc[at[1]]][1];
-    end,
-    
-    ShallowCopy:=iter -> rec(schutz:=iter!.schutz, at:=[0,1], 
-     m:=iter!.m, n:=iter!.n)));
+  baseiter:=IteratorOfCartesianProduct(
+    Enumerator(SchutzenbergerGroup(r)),
+     OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)] );
   
-  SetIsIteratorOfRClassElements(iter, true);
-    return iter;
+  convert:=function(x)
+    return Representative(r)*x[1]*LambdaOrbMults(LambdaOrb(r),
+     LambdaOrbSCCIndex(r))[x[1]][1];
+  end;
+
+  return IteratorByIterator(baseiter, convert, [IsIteratorOfRClassElements]);
 end);
 
 #JDM this should be improved at some point
@@ -595,12 +531,12 @@ function(s)
   return iter;
 end);
 
-# Notes: required until Enumerator for a trans. semigp does not call iterator. 
+# Notes: required until Enumerator for a trans. semigroup does not call iterator. 
 # This works but is maybe not the best!
 
 # same method for regular/inverse
 
-InstallMethod(Iterator, "for a trivial acting semigp", 
+InstallMethod(Iterator, "for a trivial acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
 function(s)
   return TrivialIterator(Generators(s)[1]);
@@ -886,7 +822,7 @@ end);
 
 #
 
-InstallMethod(IteratorOfLClassReps, "for acting semigp with inverse op",
+InstallMethod(IteratorOfLClassReps, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4]^-1,
 [IsIteratorOfLClassReps]));

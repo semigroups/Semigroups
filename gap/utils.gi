@@ -143,7 +143,7 @@ function()
       #  Print("not reading ", dir_str, "/", x, "\n(Semigroups is not compiled)\n");
       #else
         Print("reading ", dir_str,"/", x, " ...\n");
-        Test(Filename(dir, x));
+        Test(Filename(dir, x), rec(showProgress:=true));
       #fi;
       Print("\n");
     fi;
