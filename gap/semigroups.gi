@@ -322,7 +322,7 @@ function(gens, record)
   if record.small and Length(gens)>1 then 
     gens:=SSortedList(ShallowCopy(gens));
     gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
-    Sort(gens, function(x, y) return x[2]>y[2]; end);;
+    Sort(gens, function(x, y) return ActionRank(x)>ActionRank(y); end);;
     
     closure_opts:=rec(small:=false, hashlen:=record.hashlen);
     s:=InverseSemigroup(gens[1], closure_opts);
