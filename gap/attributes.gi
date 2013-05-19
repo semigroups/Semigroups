@@ -671,8 +671,9 @@ end);
 # to binary.gi 
 
 InstallOtherMethod(IsomorphismTransformationSemigroup, 
-"for semigroup of binary relations",
-[IsBinaryRelationSemigroup], 
+"for semigroup of binary relations with generators", 
+[IsBinaryRelationSemigroup and HasGeneratorsOfSemigroup], 2, 
+#to beat the method for a semigroups of general mappings
 function(s)        
   local n, pts, o, t, pos, i;
 
