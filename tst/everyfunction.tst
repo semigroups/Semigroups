@@ -3350,7 +3350,7 @@ gap> for i in [1..23] do NextIterator(iter); od;
 gap> IsDoneIterator(iter);
 false
 gap> NextIterator(iter);
-Transformation( [ 4, 4, 3, 8, 1, 3, 3, 5 ] )
+Transformation( [ 5, 5, 3, 8, 4, 3, 3, 1 ] )
 gap> IsDoneIterator(iter);
 true
 gap> Transformation( [ 4, 4, 3, 8, 1, 3, 3, 5 ] ) in r;
@@ -4474,7 +4474,7 @@ gap> for i in [1..23] do NextIterator(iter); od;
 gap> IsDoneIterator(iter);
 false
 gap> NextIterator(iter);
-Transformation( [ 4, 4, 3, 8, 1, 3, 3, 5 ] )
+Transformation( [ 5, 5, 3, 8, 4, 3, 3, 1 ] )
 gap> IsDoneIterator(iter);
 true
 gap> Transformation( [ 4, 4, 3, 8, 1, 3, 3, 5 ] ) in r;

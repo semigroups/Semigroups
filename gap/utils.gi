@@ -140,10 +140,11 @@ function()
       #if not Semigroups_C and str[1] in ["inverse", "pperm", "semigroups", 
       #   "testcompiled"]
       #  then 
-      #  Print("not reading ", dir_str, "/", x, "\n(Semigroups is not compiled)\n");
+      #  Print("not reading ", dir_str, "/", x, "\n(Semigroups is not
+      #  compiled)\n");
       #else
         Print("reading ", dir_str,"/", x, " ...\n");
-        Test(Filename(dir, x), rec(showProgress:=true));
+        Test(Filename(dir, x));
       #fi;
       Print("\n");
     fi;

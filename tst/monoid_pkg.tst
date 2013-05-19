@@ -45,8 +45,8 @@ gap> List(s, x-> InversesOfSemigroupElement(s, x));
   [ Transformation( [ 1, 7, 3, 1, 5, 5, 7, 3 ] ) ], 
   [ Transformation( [ 1, 5, 7, 1, 3, 3, 5, 7 ] ) ], 
   [ Transformation( [ 1, 8, 5, 4, 7, 2, 3, 6 ] ) ], 
-  [ IdentityTransformation() ], 
   [ Transformation( [ 1, 6, 7, 4, 3, 8, 5, 2 ] ) ], 
+  [ IdentityTransformation() ], 
   [ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] ) ] ]
 gap> IsMonoidAsSemigroup(s);
 true

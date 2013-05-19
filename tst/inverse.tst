@@ -1002,13 +1002,16 @@ gap> IsIsometryPP:=function(f)
 >  od;
 >  return true;
 > end;;
-gap> s:=SubsemigroupByProperty(SymmetricInverseSemigroup(5), IsIsometryPP);;
+gap> s:=InverseSubsemigroupByProperty(SymmetricInverseSemigroup(5),
+> IsIsometryPP);;
 gap> Size(s);
 142
-gap> s:=SubsemigroupByProperty(SymmetricInverseSemigroup(6), IsIsometryPP);;
+gap> s:=InverseSubsemigroupByProperty(SymmetricInverseSemigroup(6),
+> IsIsometryPP);;
 gap> Size(s);
 319
-gap> s:=SubsemigroupByProperty(SymmetricInverseSemigroup(7), IsIsometryPP);;
+gap> s:=InverseSubsemigroupByProperty(SymmetricInverseSemigroup(7),
+> IsIsometryPP);;
 gap> Size(s);
 686
 
