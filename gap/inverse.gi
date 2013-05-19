@@ -345,10 +345,6 @@ end);
 
 #
 
-
-
-#
-
 InstallOtherMethod(DClassOfRClass, "for inverse op R-class", 
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
@@ -400,187 +396,6 @@ function(s)
     out[m-1]:=RightOne(f);
   od;
   return out;
-end);
-
-# JDM why is IsGreensClassOfPartPermSemigroup still used here!?
-
-InstallMethod(Enumerator, "for D-class of part perm inv semigroup",
-[IsGreensDClass and IsGreensClassOfInverseSemigroup and
-IsGreensClassOfPartPermSemigroup],
-function(d)
-
-  return EnumeratorByFunctions(d, rec(
-
-    schutz:=Enumerator(SchutzenbergerGroup(d)),
-
-    #########################################################################
-
-    ElementNumber:=function(enum, pos)
-      local scc, n, m, r, q, q2, mults;
-      if pos>Length(enum) then 
-        return fail;
-      fi;
-
-      if pos<=Length(enum!.schutz) then 
-        return enum!.schutz[pos]*Representative(d);
-      fi;
-
-      scc:=LambdaOrbSCC(d);
-      mults:=LambdaOrbMults(LambdaOrb(d), LambdaOrbSCCIndex(d));
-
-      n:=pos-1; m:=Length(enum!.schutz); r:=Length(scc);
-      q:=QuoInt(n, m); q2:=QuoInt(q, r);
-      pos:=[ n-q*m, q2, q  - q2 * r ]+1;
-      return mults[scc[pos[2]]]*enum[pos[1]]/mults[scc[pos[3]]];
-    end,
-
-    #########################################################################
-    
-    NumberElement:=function(enum, f)
-      local rep, o, m, lookup, s, i, j, scc, g, k;
-
-      rep:=Representative(d);
-      
-      if ActionRank(f)<>ActionRank(rep) or ActionDegree(f)<>ActionDegree(rep) then 
-        return fail;
-      fi;
-      
-      if f=rep then 
-        return 1;
-      fi;
-
-      o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
-      lookup:=OrbSCCLookup(o);
-      s:=Parent(d);
-
-      i:=Position(o, RhoFunc(s)(f)); 
-      if i=fail or not lookup[i]<>m then 
-        return fail;
-      fi;
-
-      j:=Position(o, LambdaFunc(s)(f));
-      if j=fail or not lookup[j]<>m then 
-        return fail;
-      fi;
-
-      scc:=OrbSCC(o)[m]; g:=f;
-      
-      if i<>scc[1] then 
-        g:=LambdaOrbMult(o, m, i)[1]*g;
-      fi;
-      
-      if j<>scc[1] then 
-        g:=g*LambdaOrbMult(o, m, j)[2];
-      fi;
-
-      k:=Position(enum!.schutz, LambdaPerm(s)(rep, g));
-      if j=fail then 
-        return fail;
-      fi;
-
-      return Length(enum!.schutz)*((Position(scc, i)-1)*Length(scc)
-      +(Position(scc, j)-1))+k;
-    end,
-
-    #########################################################################
-
-    Membership:=function(elm, enum)
-      return elm in d;
-    end,
-
-    Length:=enum-> Size(d),
-
-    PrintObj:=function(enum)
-      Print("<enumerator of D-class>");
-      return;
-    end));
-end);
-
-
-#
-
-InstallMethod(Enumerator, "for L-class of an acting semigroup",
-[IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
-function(l)
-  local o, m, mults, scc;
-
-  o:=LambdaOrb(l); 
-  m:=LambdaOrbSCCIndex(l);
-  mults:=LambdaOrbMults(o, m);
-  scc:=OrbSCC(o)[m];
-
-  return EnumeratorByFunctions(l, rec(
-
-    schutz:=Enumerator(SchutzenbergerGroup(l)),
-
-    len:=Size(SchutzenbergerGroup(l)),
-
-    #########################################################################
-
-    ElementNumber:=function(enum, pos)
-      local n, m, q;
-
-      if pos>Length(enum) then 
-        return fail;
-      fi;
-
-      if pos<=Length(enum!.schutz) then 
-        return Representative(l)*enum!.schutz[pos];
-      fi;
-
-      n:=pos-1; m:=enum!.len;
-      
-      q:=QuoInt(n, m); 
-      pos:=[ q, n - q * m]+1;
-     
-     return mults[scc[pos[1]]][2]*enum[pos[2]];
-    end,
-
-    #########################################################################
-    
-    NumberElement:=function(enum, f)
-      local s, rep, o, m, i, g, j;
-
-      s:=Parent(l);
-      rep:=Representative(l);
-      
-      if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-       ActionDegree(f) <> ActionDegree(rep) or ActionRank(f) <> ActionRank(rep)
-       or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then 
-        return fail;
-      fi;
-      
-      if f=rep then 
-        return 1;
-      fi;
-
-      o:=RhoOrb(l); m:=RhoOrbSCCIndex(l);
-      i:=Position(o, RhoFunc(s)(f));
-
-      if i = fail or OrbSCCLookup(o)[i]<>m then 
-        return fail;
-      fi;
-     
-      j:=Position(enum!.schutz, LambdaPerm(s)(rep, mults[i][1]*f));
-
-      if j=fail then 
-        return fail;
-      fi;
-      return enum!.len*(Position(scc, i)-1)+j;
-    end,
-
-    #########################################################################
-
-    Membership:=function(elm, enum)
-      return elm in l;
-    end,
-
-    Length:=enum-> Size(l),
-
-    PrintObj:=function(enum)
-      Print("<enumerator of L-class>");
-      return;
-    end));
 end);
 
 #
@@ -1257,7 +1072,9 @@ function(s)
       local l, rep, m;  
        
       m:=iter!.m;  
-      if m=fail or m=Length(OrbSCC(iter!.o)) then  
+      if iter!.o=fail then 
+        return fail;
+      elif m=fail or m=Length(OrbSCC(iter!.o)) then  
         m:=1; l:=1; 
         iter!.o:=NextIterator(iter!.graded); 
         if iter!.o=fail then  
@@ -1267,10 +1084,10 @@ function(s)
         m:=m+1; l:=OrbSCC(iter!.o)[m][1]; 
       fi; 
       iter!.m:=m; 
-         
+      o:=iter!.o;  
+
       # rep has rectified lambda val and rho val. 
-      rep:=LambdaOrbRep(iter!.o, m)*LambdaOrbMult(iter!.o, m, l)[2];  
-      rep:=LambdaOrbMult(iter!.o, m, Position(iter!.o, RhoFunc(s)(rep)))[1]*rep;
+      rep:=RightOne(EvaluateWord(o!.gens, TraceSchreierTreeForward(o, l)));
 
       return [s, m, iter!.o, fail, fail, rep, false]; 
     end; 
@@ -1285,8 +1102,9 @@ function(s)
     func:=function(iter, m) 
       local rep; 
       # rep has rectified lambda val and rho val. 
-      rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][1]));  
-      rep:=LambdaOrbMult(o, m, Position(o, RhoFunc(s)(rep)))[1]*rep;
+      rep:=RightOne(EvaluateWord(o!.gens, 
+       TraceSchreierTreeForward(o, scc[m][1]));  
+      
       return [s, m, o, fail, fail, rep, false]; 
     end; 
      
