@@ -1067,7 +1067,7 @@ end);
 #could do better if LambdaOrb is unknown JDM
 
 InstallOtherMethod(Idempotents, 
-"for acting semigroup with inverse op and positive integer",
+"for acting semigroup with inverse op and non-negative integer",
 [IsActingSemigroupWithInverseOp, IsInt], 
 function(s, n)
   local o, creator, r, out, rank, len, i;
@@ -1075,6 +1075,10 @@ function(s, n)
   if n<0 then 
     Error("usage: <n> must be a non-negative integer,");
     return;
+  fi;
+
+  if HasIdempotents(s) then 
+    return Filtered(Idempotents(s), x-> ActionRank(x)=n);
   fi;
 
   o:=LambdaOrb(s);
@@ -1096,6 +1100,7 @@ function(s, n)
   od;
   return out;
 end);
+
 #
 
 InstallOtherMethod(RClassReps, "for an acting semigroup with inverse op",

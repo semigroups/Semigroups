@@ -1253,6 +1253,7 @@ function(d)
 end);
 
 #
+
 InstallGlobalFunction(Idempotents@, 
 function(x, value, scc, o, onright)
   local s, out, j, tester, creator, i;
@@ -1342,6 +1343,54 @@ function(s)
   fi;
 
   return Concatenation(List(GreensRClasses(s), Idempotents));
+end);
+
+# same method for regular, different method for inverse
+
+InstallOtherMethod(Idempotents, 
+"for an acting semigroup and a positive integer", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsInt],
+function(s, n)
+  local out, nr, tester, creator, rho_o, scc, lambda_o, gens, rhofunc, lookup, rank, rep, rho, j, i, k;
+
+  if n<0 then 
+    Error("usage: <n> must be a non-negative integer,");
+    return;
+  fi;
+
+  if HasIdempotents(s) or not IsRegularSemigroup(s) then
+    return Filtered(Idempotents(s), x-> ActionRank(x)=n);
+  else
+
+    out:=[];
+    nr:=0;
+    tester:=IdempotentTester(s);
+    creator:=IdempotentCreator(s);
+    rho_o:=RhoOrb(s);
+    scc:=OrbSCC(rho_o);
+    lambda_o:=LambdaOrb(s);
+    Enumerate(lambda_o, infinity);
+    gens:=lambda_o!.gens;
+    rhofunc:=RhoFunc(s);
+    lookup:=OrbSCCLookup(rho_o);
+    rank:=RhoRank(s);
+
+    for i in [2..Length(lambda_o)] do
+      rep:=EvaluateWord(gens, TraceSchreierTreeForward(lambda_o, i));
+      rho:=rhofunc(rep);
+      j:=lookup[Position(rho_o, rho)];
+      if rank(rho_o[scc[j][1]])=n then  
+        for k in scc[j] do
+          if tester(lambda_o[i], rho_o[k]) then
+            nr:=nr+1;
+            out[nr]:=creator(lambda_o[i], rho_o[k]);
+          fi;
+        od;
+      fi;
+    od;
+
+    return out;
+  fi;
 end);
 
 # same method for regular, different method for inverse
