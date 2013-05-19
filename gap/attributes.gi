@@ -549,14 +549,14 @@ function(s)
     od;
   fi;
 
-  f:=EvaluateWord(Generators(s), TraceSchreierTreeForward(o, pos));
+  f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, pos));
   i:=Semigroup(Elements(GreensDClassOfElementNC(s, f)), rec(small:=true));
 
   SetIsSimpleSemigroup(i, true);
   return i; 
 end);
 
-#
+#JDM should be redone for inverse acting semigroups
 
 InstallMethod(MinimalIdeal, "for a partial perm semi",
 [IsPartialPermSemigroup],

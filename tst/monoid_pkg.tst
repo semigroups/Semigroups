@@ -15,10 +15,7 @@ gap> START_TEST("Semigroups package: monoid_pkg.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
-gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoSemigroups, 0);
+gap> SemigroupsStartTest();
 
 #
 gap> g:=CyclicGroup(3);;
@@ -42,7 +39,7 @@ gap> ForAll(s, x-> x in s);
 true
 gap> MultiplicativeNeutralElement(s);
 Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8 ] )
-gap> List(s, x-> InversesOfTransformation(s, x)); 
+gap> List(s, x-> InversesOfSemigroupElement(s, x)); 
 [ [ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8 ] ) ], 
   [ Transformation( [ 1, 8, 5, 4, 7, 2, 3, 6 ] ) ], 
   [ Transformation( [ 1, 6, 7, 4, 3, 8, 5, 2 ] ) ], 
@@ -70,8 +67,8 @@ gap> IsCliffordSemigroup(s);
 true
 
 #
-gap> a:=IdempotentNC([ 1, 2, 1, 1, 2, 3, 4, 5 ], [3,5,6,7,8])*(3,5);;
-gap> b:=IdempotentNC([ 1, 2, 1, 1, 2, 3, 4, 5 ], [3,5,6,7,8])*(3,6,7,8);;
+gap> a:=Idempotent([ 1, 2, 1, 1, 2, 3, 4, 5 ], [3,5,6,7,8])*(3,5);;
+gap> b:=Idempotent([ 1, 2, 1, 1, 2, 3, 4, 5 ], [3,5,6,7,8])*(3,6,7,8);;
 gap> s:=Semigroup(a,b);;
 gap> IsGroupAsSemigroup(s);
 true
@@ -155,7 +152,7 @@ gap> gens:=[ Transformation( [ 4, 5, 7, 1, 8, 6, 1, 7 ] ),
 >  Transformation( [ 5, 7, 4, 4, 1, 4, 4, 4 ] ), 
 >  Transformation( [ 7, 1, 4, 3, 6, 1, 3, 7 ] ) ];;
 gap> m:=Semigroup(gens);;
-gap> o:=ImagesOfTransSemigroup(m);; Enumerate(o);;
+gap> o:=LambdaOrb(m);; Enumerate(o);;
 gap> AsSet(o);
 [ [ 1 ], [ 1 .. 8 ], [ 1, 3 ], [ 1, 3, 4 ], [ 1, 3, 4, 6, 7 ], 
   [ 1, 3, 4, 7 ], [ 1, 3, 6 ], [ 1, 3, 6, 7 ], [ 1, 3, 7 ], [ 1, 4 ], 
@@ -176,7 +173,7 @@ gap> gens:=[ Transformation( [ 1, 5, 2, 2, 3, 5, 2 ] ),
 >  Transformation( [ 7, 3, 6, 5, 2, 4, 1 ] ), 
 >  Transformation( [ 7, 5, 3, 2, 5, 5, 6 ] ) ];;
 gap> m:=Monoid(gens);;
-gap> o:=ImagesOfTransSemigroup(m);; Enumerate(o);; AsSet(o);
+gap> o:=LambdaOrb(m);; Enumerate(o);; AsSet(o);
 [ [ 1, 2 ], [ 1, 2, 3 ], [ 1, 2, 3, 4, 5 ], [ 1 .. 7 ], [ 1, 2, 3, 4, 6 ], 
   [ 1, 2, 3, 5 ], [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 6 ], [ 1, 2, 4 ], 
   [ 1, 2, 4, 5 ], [ 1, 2, 4, 5, 6 ], [ 1, 2, 5 ], [ 1, 2, 6 ], [ 1, 3 ], 
@@ -193,7 +190,7 @@ gap> o:=ImagesOfTransSemigroup(m);; Enumerate(o);; AsSet(o);
   [ 3, 7 ], [ 4 ], [ 4, 5 ], [ 4, 5, 6 ], [ 4, 5, 6, 7 ], [ 4, 5, 7 ], 
   [ 4, 6 ], [ 4, 6, 7 ], [ 4, 7 ], [ 5 ], [ 5, 6 ], [ 5, 6, 7 ], [ 5, 7 ], 
   [ 6 ], [ 6, 7 ] ]
-gap> Length(Enumerate(KernelsOfTransSemigroup(m)));
+gap> Length(Enumerate(RhoOrb(m)));
 206
 gap> gens:=[ [ Transformation( [ 3, 4, 4, 3, 1, 1, 5 ] ) ], 
 > [ Transformation( [ 1, 1, 4, 3 ] ), Transformation( [ 2, 2, 2, 2 ] ), 
@@ -884,11 +881,11 @@ gap> S:=Semigroup(gens);;
 gap> f:=Transformation( [ 2, 4, 2, 5, 3 ] );;
 gap> r:=RClass(S, f);
 {Transformation( [ 5, 2, 5, 3, 1 ] )}
-gap> ImageOrbit(r);
+gap> LambdaOrb(r);
 <closed orbit, 2 images with size 4, 1 components, 2 kernels, 2 reps>
 gap> AsList(last);
 [ [ 1, 2, 3, 5 ], [ 2, 3, 4, 5 ] ]
-gap> ImageOrbitPerms(r){ImageOrbitSCC(r)};
+gap> LambdaOrbMults(LambdaOrb(r), LambdaOrbSCCIndex(r))[LambdaOrbSCCIndex(r)];
 [ (), (1,4)(2,3) ]
 gap> SchutzenbergerGroup(r);
 Group([ (1,3,2,5) ])
@@ -909,21 +906,21 @@ gap> SchutzenbergerGroup(GreensHClassOfElement(S, f));
 Group([ (4,5) ])
 gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
 > Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ]);;
-gap> AsList(Enumerate(ImagesOfTransSemigroup(S, 6)));
+gap> AsList(Enumerate(LambdaOrb(S, 6)));
 [ [ 1 .. 6 ] ]
-gap> AsList(Enumerate(ImagesOfTransSemigroup(S, 5)));
+gap> AsList(Enumerate(LambdaOrb(S, 5)));
 [ [ 1 .. 6 ] ]
-gap> AsSet(Enumerate(ImagesOfTransSemigroup(S, 4)));
+gap> AsSet(Enumerate(LambdaOrb(S, 4)));
 [ [ 1 .. 6 ], [ 1, 2, 5, 6 ] ]
-gap> AsSet(Enumerate(ImagesOfTransSemigroup(S, 3)));
+gap> AsSet(Enumerate(LambdaOrb(S, 3)));
 [ [ 1 .. 6 ], [ 1, 2, 5, 6 ], [ 1, 4, 6 ], [ 2, 5, 6 ] ]
-gap> AsSet(Enumerate(ImagesOfTransSemigroup(S, 2)));
+gap> AsSet(Enumerate(LambdaOrb(S, 2)));
 [ [ 1 .. 6 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2, 5 ], [ 2, 5, 6 ], 
   [ 2, 6 ], [ 4, 6 ] ]
-gap> AsSet(Enumerate(ImagesOfTransSemigroup(S, 1)));
+gap> AsSet(Enumerate(LambdaOrb(S, 1)));
 [ [ 1 ], [ 1 .. 6 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], 
   [ 2, 5, 6 ], [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
-gap> AsSet(Enumerate(ImagesOfTransSemigroup(S)));
+gap> AsSet(Enumerate(LambdaOrb(S)));
 [ [ 1 ], [ 1 .. 6 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], 
   [ 2, 5, 6 ], [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
 gap> S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
@@ -943,18 +940,18 @@ gap> Idempotents(S);
   Transformation( [ 1, 2, 3, 4 ] ) ]
 gap> S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
 > Transformation( [ 3, 3, 4, 1 ] ) ]);;
-gap> AsSet(Enumerate(KernelsOfTransSemigroup(S)));   
+gap> AsSet(Enumerate(RhoOrb(S)));   
 [ [ 1, 1, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 2, 1 ], [ 1, 1, 2, 2 ], 
   [ 1, 1, 2, 3 ], [ 1, 2, 1, 1 ], [ 1, 2, 2, 1 ], [ 1, 2, 3, 1 ], [ 1 .. 4 ] ]
-gap> AsSet(Enumerate(KernelsOfTransSemigroup(S,1)));
+gap> AsSet(Enumerate(RhoOrb(S,1)));
 [ [ 1, 1, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 2, 1 ], [ 1, 1, 2, 2 ], 
   [ 1, 1, 2, 3 ], [ 1, 2, 1, 1 ], [ 1, 2, 2, 1 ], [ 1, 2, 3, 1 ], [ 1 .. 4 ] ]
-gap> AsSet(Enumerate(KernelsOfTransSemigroup(S,2)));
+gap> AsSet(Enumerate(RhoOrb(S,2)));
 [ [ 1, 1, 1, 2 ], [ 1, 1, 2, 1 ], [ 1, 1, 2, 2 ], [ 1, 1, 2, 3 ], 
   [ 1, 2, 1, 1 ], [ 1, 2, 2, 1 ], [ 1, 2, 3, 1 ], [ 1 .. 4 ] ]
-gap> AsSet(Enumerate(KernelsOfTransSemigroup(S,3)));
+gap> AsSet(Enumerate(RhoOrb(S,3)));
 [ [ 1, 1, 2, 3 ], [ 1, 2, 3, 1 ], [ 1 .. 4 ] ]
-gap> AsSet(Enumerate(KernelsOfTransSemigroup(S,4)));  
+gap> AsSet(Enumerate(RhoOrb(S,4)));  
 [ [ 1 .. 4 ] ]
 
 # from install_no_grape.tst
@@ -969,11 +966,10 @@ gap> NrRClasses(s);
 gap> f:=Transformation( [ 3, 3, 3, 3, 3, 2, 3 ] );;
 gap> r:=RClass(s, f);
 {Transformation( [ 3, 3, 3, 3, 3, 2, 3 ] )}
-gap> ImageOrbit(r);
+gap> LambdaOrb(r);
 <closed orbit, 7 images with size 2, 1 components, 9 kernels, 9 reps>
-gap> AsSet(ImageOrbit(r));
+gap> AsSet(LambdaOrb(r));
 [ [ 1, 4 ], [ 1, 6 ], [ 2, 3 ], [ 2, 4 ], [ 2, 6 ], [ 3, 6 ], [ 4, 6 ] ]
-gap> ImageOrbitPerms(r);;
 gap> SchutzenbergerGroup(r);
 Group([ (2,3) ])
 gap> Number(GreensDClasses(s), IsRegularDClass);
@@ -1091,7 +1087,7 @@ gap> o:=Orb(s, [1,2,3,4], OnSets);
 gap> 
 gap> Enumerate(o);
 <closed orbit, 351 points>
-gap> StrongOrbitsInForwardOrbit(o);
+gap> List(OrbSCC(o), x-> o{x});
 [ [ [ 9 ], [ 4 ], [ 5 ], [ 6 ], [ 3 ], [ 8 ], [ 10 ], [ 1 ], [ 2 ], [ 7 ] ], 
   [ [ 4, 6 ], [ 2, 6 ], [ 2, 10 ], [ 4, 8 ], [ 6, 10 ], [ 4, 9 ], [ 5, 8 ], 
       [ 1, 8 ], [ 4, 10 ], [ 7, 8 ], [ 6, 8 ], [ 5, 9 ], [ 4, 5 ], [ 1, 7 ], 
@@ -1514,9 +1510,7 @@ Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
 gap> Unbind(semis); Unbind(S); Unbind(m);
 
 #
-gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
-gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
+gap> SemigroupsStopTest();
 
 #
 gap> STOP_TEST( "Semigroups package: monoid_pkg.tst", 10000);

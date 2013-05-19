@@ -875,8 +875,8 @@ InstallOtherMethod(IsSemilatticeAsSemigroup,
 
 InstallOtherMethod(IsSemilatticeAsSemigroup, 
 "for an inverse semigroup with generators",
-[IsInverseSemigroup and HasGeneratorsOfInverseSemigroup], 
-s-> ForAll(GeneratorsOfInverseSemigroup(s), IsIdempotent));
+[IsInverseSemigroup and HasGeneratorsOfSemigroup], 
+s-> ForAll(GeneratorsOfSemigroup(s), IsIdempotent));
 
 #
 
