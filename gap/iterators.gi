@@ -390,7 +390,7 @@ function(r)
   
   convert:=function(x)
     return Representative(r)*x[1]*LambdaOrbMults(LambdaOrb(r),
-     LambdaOrbSCCIndex(r))[x[1]][1];
+     LambdaOrbSCCIndex(r))[x[2]][1];
   end;
 
   return IteratorByIterator(baseiter, convert, [IsIteratorOfRClassElements]);
