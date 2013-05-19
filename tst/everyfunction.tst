@@ -3376,7 +3376,7 @@ gap> r:=RClass(s, f);
 gap> NrIdempotents(r);
 0
 gap> Sum(List(RClasses(s), NrIdempotents));
-181
+53
 gap> NrIdempotents(s);
 53
 gap> gens:=[ Transformation( [ 1, 2, 4, 3, 6, 5 ] ), 
@@ -3777,9 +3777,9 @@ gap> IsGroupHClass(h);
 true
 gap> iso:=IsomorphismPermGroup(h);; inv:=InverseGeneralMapping(iso);;
 gap> ForAll(h, x-> (x^iso)^inv=x);
-false
+true
 gap> First(h, x-> (x^iso)^inv<>x);
-Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )
+fail
 gap> One(h);
 IdentityTransformation()
 gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
@@ -3798,7 +3798,7 @@ MappingByFunction( Group([ (3,6)
 (4,5) ]), {Transformation( [ 4, 3, 3, 4, 5, 6, 5 ]
  )}, function( x ) ... end, <Attribute "AsPermutation"> )
 gap> ForAll(h, x-> (x^iso)^inv=x);
-false
+true
 
 #
 gap> gens:=
@@ -3929,7 +3929,7 @@ gap> KnownAttributesOfObject(h);
   "LambdaOrbSCCIndex", "RhoOrbSCCIndex", "LambdaOrb", "RhoOrb" ]
 gap> iso:=IsomorphismPermGroup(h);; inv:=InverseGeneralMapping(iso);;
 gap> ForAll(h, x-> (x^iso)^inv=x);
-false
+true
 gap> ForAll(Image(iso), x-> (x^inv)^iso=x);
 true
 gap> Size(h);
@@ -4502,7 +4502,7 @@ gap> NrIdempotents(r);
 0
 gap> List(RClasses(s), NrIdempotents);;
 gap> Sum(last);
-181
+53
 gap> NrIdempotents(s);
 53
 gap> r:=RClassOfHClass(h);
