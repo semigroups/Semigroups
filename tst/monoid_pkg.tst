@@ -67,8 +67,8 @@ gap> IsCliffordSemigroup(s);
 true
 
 #
-gap> a:=Idempotent([ 1, 2, 1, 1, 2, 3, 4, 5 ], [3,5,6,7,8])*(3,5);;
-gap> b:=Idempotent([ 1, 2, 1, 1, 2, 3, 4, 5 ], [3,5,6,7,8])*(3,6,7,8);;
+gap> a:=Idempotent([3,5,6,7,8], [ 1, 2, 1, 1, 2, 3, 4, 5 ])*(3,5);;
+gap> b:=a*(3,5)*(3,6,7,8);;
 gap> s:=Semigroup(a,b);;
 gap> IsGroupAsSemigroup(s);
 true
@@ -906,20 +906,6 @@ gap> SchutzenbergerGroup(GreensHClassOfElement(S, f));
 Group([ (4,5) ])
 gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
 > Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ]);;
-gap> AsList(Enumerate(LambdaOrb(S, 6)));
-[ [ 1 .. 6 ] ]
-gap> AsList(Enumerate(LambdaOrb(S, 5)));
-[ [ 1 .. 6 ] ]
-gap> AsSet(Enumerate(LambdaOrb(S, 4)));
-[ [ 1 .. 6 ], [ 1, 2, 5, 6 ] ]
-gap> AsSet(Enumerate(LambdaOrb(S, 3)));
-[ [ 1 .. 6 ], [ 1, 2, 5, 6 ], [ 1, 4, 6 ], [ 2, 5, 6 ] ]
-gap> AsSet(Enumerate(LambdaOrb(S, 2)));
-[ [ 1 .. 6 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2, 5 ], [ 2, 5, 6 ], 
-  [ 2, 6 ], [ 4, 6 ] ]
-gap> AsSet(Enumerate(LambdaOrb(S, 1)));
-[ [ 1 ], [ 1 .. 6 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], 
-  [ 2, 5, 6 ], [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
 gap> AsSet(Enumerate(LambdaOrb(S)));
 [ [ 1 ], [ 1 .. 6 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], 
   [ 2, 5, 6 ], [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
@@ -943,16 +929,6 @@ gap> S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
 gap> AsSet(Enumerate(RhoOrb(S)));   
 [ [ 1, 1, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 2, 1 ], [ 1, 1, 2, 2 ], 
   [ 1, 1, 2, 3 ], [ 1, 2, 1, 1 ], [ 1, 2, 2, 1 ], [ 1, 2, 3, 1 ], [ 1 .. 4 ] ]
-gap> AsSet(Enumerate(RhoOrb(S,1)));
-[ [ 1, 1, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 2, 1 ], [ 1, 1, 2, 2 ], 
-  [ 1, 1, 2, 3 ], [ 1, 2, 1, 1 ], [ 1, 2, 2, 1 ], [ 1, 2, 3, 1 ], [ 1 .. 4 ] ]
-gap> AsSet(Enumerate(RhoOrb(S,2)));
-[ [ 1, 1, 1, 2 ], [ 1, 1, 2, 1 ], [ 1, 1, 2, 2 ], [ 1, 1, 2, 3 ], 
-  [ 1, 2, 1, 1 ], [ 1, 2, 2, 1 ], [ 1, 2, 3, 1 ], [ 1 .. 4 ] ]
-gap> AsSet(Enumerate(RhoOrb(S,3)));
-[ [ 1, 1, 2, 3 ], [ 1, 2, 3, 1 ], [ 1 .. 4 ] ]
-gap> AsSet(Enumerate(RhoOrb(S,4)));  
-[ [ 1 .. 4 ] ]
 
 # from install_no_grape.tst
 gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ),
