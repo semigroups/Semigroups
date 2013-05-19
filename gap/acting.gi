@@ -1021,7 +1021,7 @@ function(d)
   return out;
 end);
 
-#
+# JDM this is stored as an attribute, unfortunately..
 
 InstallOtherMethod(Length, "for semigroup data of acting semigroup",
 [IsSemigroupData], x-> Length(x!.orbit));

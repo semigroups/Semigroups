@@ -1886,7 +1886,7 @@ function(s)
     return EvaluateWord(gens, w);
   fi;
 
-  n:=Random([2..Length(data)]);
+  n:=Random([2..Length(data!.orbit)]);
   m:=data[n][2]; o:=data[n][3]; rep:=data[n][4];
 
   g:=Random(LambdaOrbSchutzGp(o, m));
