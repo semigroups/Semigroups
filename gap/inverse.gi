@@ -1068,9 +1068,14 @@ end);
 
 InstallOtherMethod(Idempotents, 
 "for acting semigroup with inverse op and positive integer",
-[IsActingSemigroupWithInverseOp, IsPosInt], 
+[IsActingSemigroupWithInverseOp, IsInt], 
 function(s, n)
   local o, creator, r, out, rank, len, i;
+
+  if n<0 then 
+    Error("usage: <n> must be a non-negative integer,");
+    return;
+  fi;
 
   o:=LambdaOrb(s);
   if not IsClosed(o) then      
@@ -1081,6 +1086,7 @@ function(s, n)
   r:=Length(o);
   out:=EmptyPlist(r-1);
   rank:=LambdaRank(s);
+  len:=0;
 
   for i in [2..r] do
     if rank(o[i])=n then 

@@ -766,15 +766,15 @@ gap> s:=InverseSemigroup( [ PartialPermNC( [ 1, 2, 3, 5 ], [ 2, 1, 6, 3 ] ),
 > PartialPermNC( [ 1, 2, 3, 6 ], [ 3, 5, 2, 6 ] ) ]);;
 gap> f:=PartialPermNC([ 1 .. 3 ], [ 6, 3, 1 ]);;
 gap> d:=DClassNC(s, f);
-{<identity on [ 1 .. 3 ]>}
+{PartialPerm( [ 1, 3, 6 ], [ 1, 3, 6 ] )}
 gap> GroupHClass(d);
-{<identity on [ 1 .. 3 ]>}
+{PartialPerm( [ 1, 3, 6 ], [ 1, 3, 6 ] )}
 gap> StructureDescription(last);
 "1"
 gap> ForAny(DClasses(s), x-> not IsTrivial(GroupHClass(x)));
 true
 gap> First(DClasses(s), x-> not IsTrivial(GroupHClass(x)));
-{<identity on [ 1, 2 ]>}
+{PartialPerm( [ 1, 2 ], [ 1, 2 ] )}
 gap> StructureDescription(GroupHClass(last));
 "C2"
 
@@ -783,26 +783,28 @@ gap> s:=InverseSemigroup(
 > [ PartialPermNC( [ 1, 2, 3, 4, 5, 7 ], [ 10, 6, 3, 4, 9, 1 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8 ], [ 6, 10, 7, 4, 8, 2, 9, 1 ] ) ]);;
 gap> Idempotents(s, 1);
-[ <identity on [ 4 ]> ]
+[ <identity partial perm on [ 4 ]> ]
 gap> Idempotents(s, 0);
 [  ]
 gap> PartialPermNC([]) in s; 
 false
 gap> Idempotents(s, 2);
-[ <identity on [ 3, 4 ]>, <identity on [ 4, 7 ]>, <identity on [ 2, 4 ]>, 
-  <identity on [ 4, 10 ]>, <identity on [ 1, 4 ]>, <identity on [ 4, 9 ]>, 
-  <identity on [ 4, 8 ]>, <identity on [ 4, 6 ]>, <identity on [ 4, 5 ]> ]
+[ <identity partial perm on [ 3, 4 ]>, <identity partial perm on [ 4, 7 ]>, 
+  <identity partial perm on [ 2, 4 ]>, <identity partial perm on [ 4, 10 ]>, 
+  <identity partial perm on [ 1, 4 ]>, <identity partial perm on [ 4, 9 ]>, 
+  <identity partial perm on [ 4, 8 ]>, <identity partial perm on [ 4, 6 ]>, 
+  <identity partial perm on [ 4, 5 ]> ]
 gap> Idempotents(s, 10);
 [  ]
 gap> f:=PartialPermNC( [ 2, 4, 9, 10 ], [ 7, 4, 3, 2 ] );;
 gap> r:=RClassNC(s, f);
-{[ 2, 4, 9, 10 ] -> [ 6, 4, 7, 2 ]}
+{PartialPerm( [ 2, 4, 9, 10 ], [ 7, 4, 3, 2 ] )}
 gap> Idempotents(r);
-[ <identity on [ 2, 4, 9, 10 ]> ]
+[ <identity partial perm on [ 2, 4, 9, 10 ]> ]
 
 #
 gap> s:=RandomInverseSemigroup(2,10);
-<inverse semigroup with 2 generators>
+<inverse partial perm semigroup on 10 pts with 2 generators>
 gap> ForAll(RClasses(s), IsRegularClass);
 true
 
@@ -815,108 +817,108 @@ gap> s:=InverseSemigroup(
 gap> iter:=IteratorOfDClassReps(s);
 <iterator of D-class reps>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 4, 5, 6, 8, 11, 12, 13, 14, 18, 19, 20 ]>
+<identity partial perm on [ 1, 3, 4, 5, 6, 8, 11, 12, 13, 14, 18, 19, 20 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 4, 5, 6, 7, 9, 12, 14, 15, 16, 17, 18, 19 ]>
+<identity partial perm on [ 1, 3, 4, 5, 6, 7, 9, 12, 14, 15, 16, 17, 18, 19 ]>
 gap> NextIterator(iter);
-<identity on [ 3, 5, 6, 11, 12, 13, 18, 20 ]>
+<identity partial perm on [ 3, 5, 6, 11, 12, 13, 18, 20 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 4, 6, 7, 14, 15, 16 ]>
+<identity partial perm on [ 1, 3, 4, 6, 7, 14, 15, 16 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 2, 4, 6, 9, 10, 11, 15, 20 ]>
+<identity partial perm on [ 1, 2, 4, 6, 9, 10, 11, 15, 20 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 6, 8, 11, 14, 18, 20 ]>
+<identity partial perm on [ 1, 3, 6, 8, 11, 14, 18, 20 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 4, 7, 9, 12, 15, 16, 17, 19 ]>
+<identity partial perm on [ 1, 3, 4, 7, 9, 12, 15, 16, 17, 19 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 4, 5, 9, 12, 14, 18, 19 ]>
+<identity partial perm on [ 1, 3, 4, 5, 9, 12, 14, 18, 19 ]>
 gap> NextIterator(iter);
-<identity on [ 11, 12, 13, 18 ]>
+<identity partial perm on [ 11, 12, 13, 18 ]>
 gap> NextIterator(iter);
-<identity on [ 4, 6, 7, 14, 15, 16 ]>
+<identity partial perm on [ 4, 6, 7, 14, 15, 16 ]>
 gap> NextIterator(iter);
-<identity on [ 2, 4, 10, 15, 20 ]>
+<identity partial perm on [ 2, 4, 10, 15, 20 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 6, 8, 11, 18, 20 ]>
+<identity partial perm on [ 1, 3, 6, 8, 11, 18, 20 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 4, 9, 12, 17 ]>
+<identity partial perm on [ 1, 3, 4, 9, 12, 17 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 2, 4, 9, 15 ]>
+<identity partial perm on [ 1, 2, 4, 9, 15 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 4, 6, 11, 13, 14, 19 ]>
+<identity partial perm on [ 1, 3, 4, 6, 11, 13, 14, 19 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 6, 7, 18, 20 ]>
+<identity partial perm on [ 1, 6, 7, 18, 20 ]>
 gap> NextIterator(iter);
-<identity on [ 5, 6, 11, 13, 18, 20 ]>
+<identity partial perm on [ 5, 6, 11, 13, 18, 20 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 4, 6, 14, 15 ]>
+<identity partial perm on [ 1, 4, 6, 14, 15 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 2, 4, 11, 20 ]>
+<identity partial perm on [ 1, 2, 4, 11, 20 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 6, 8, 14, 18 ]>
+<identity partial perm on [ 1, 3, 6, 8, 14, 18 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 9, 12, 16, 17, 19 ]>
+<identity partial perm on [ 1, 3, 9, 12, 16, 17, 19 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 5, 12, 18, 19 ]>
+<identity partial perm on [ 1, 3, 5, 12, 18, 19 ]>
 gap> NextIterator(iter);
-<identity on [ 3, 6, 14, 18, 20 ]>
+<identity partial perm on [ 3, 6, 14, 18, 20 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 7, 15, 16, 19 ]>
+<identity partial perm on [ 1, 3, 7, 15, 16, 19 ]>
 gap> NextIterator(iter);
-<identity on [ 12, 13 ]>
+<identity partial perm on [ 12, 13 ]>
 gap> NextIterator(iter);
-<identity on [ 14 .. 16 ]>
+<identity partial perm on [ 14, 15, 16 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 8, 11, 20 ]>
+<identity partial perm on [ 1, 3, 8, 11, 20 ]>
 gap> NextIterator(iter);
-<identity on [ 3, 4, 9, 12, 17 ]>
+<identity partial perm on [ 3, 4, 9, 12, 17 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 2, 9 ]>
+<identity partial perm on [ 1, 2, 9 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 4, 19 ]>
+<identity partial perm on [ 1, 3, 4, 19 ]>
 gap> NextIterator(iter);
-<identity on [ 5, 6, 11, 13, 18 ]>
+<identity partial perm on [ 5, 6, 11, 13, 18 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 2, 4, 20 ]>
+<identity partial perm on [ 1, 2, 4, 20 ]>
 gap> NextIterator(iter);
-<identity on [ 3, 6, 14, 18 ]>
+<identity partial perm on [ 3, 6, 14, 18 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 3, 16, 19 ]>
+<identity partial perm on [ 1, 3, 16, 19 ]>
 gap> NextIterator(iter);
-<identity on [ 2, 4, 13, 15 ]>
+<identity partial perm on [ 2, 4, 13, 15 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 6, 7, 18 ]>
+<identity partial perm on [ 1, 6, 7, 18 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 2, 6, 10, 15, 20 ]>
+<identity partial perm on [ 1, 2, 6, 10, 15, 20 ]>
 gap> NextIterator(iter);
-<identity on [ 3, 6, 11, 12, 13, 18, 20 ]>
+<identity partial perm on [ 3, 6, 11, 12, 13, 18, 20 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 11, 18, 20 ]>
+<identity partial perm on [ 1, 11, 18, 20 ]>
 gap> NextIterator(iter);
-<identity on [ 11 .. 13 ]>
+<identity partial perm on [ 11, 12, 13 ]>
 gap> NextIterator(iter);
-<identity on [ 2, 10, 20 ]>
+(2,20)(10)
 gap> NextIterator(iter);
-<identity on [ 3, 4, 6, 13 ]>
+<identity partial perm on [ 3, 4, 6, 13 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 4, 15 ]>
+<identity partial perm on [ 1, 4, 15 ]>
 gap> NextIterator(iter);
-<identity on [ 6, 14, 18 ]>
+<identity partial perm on [ 6, 14, 18 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 16, 17, 19 ]>
+<identity partial perm on [ 1, 16, 17, 19 ]>
 gap> NextIterator(iter);
-<identity on [ 1, 7, 15, 16 ]>
+<identity partial perm on [ 1, 7, 15, 16 ]>
 gap> s:=RandomInverseSemigroup(2,20);
-<inverse semigroup with 2 generators>
+<inverse partial perm semigroup on 20 pts with 2 generators>
 gap> iter:=IteratorOfDClassReps(s);
 <iterator of D-class reps>
 gap> s:=RandomInverseSemigroup(2,100);
-<inverse semigroup with 2 generators>
+<inverse partial perm semigroup on 97 pts with 2 generators>
 gap> iter:=IteratorOfLClassReps(s);
 <iterator of L-class reps>
 gap> for i in [1..10000] do NextIterator(iter); od;
 gap> s:=RandomInverseSemigroup(2,10);        
-<inverse semigroup with 2 generators>
+<inverse partial perm semigroup on 10 pts with 2 generators>
 gap> iter:=IteratorOfLClassReps(s);
 <iterator of L-class reps>
 gap> for i in iter do od;
@@ -929,7 +931,7 @@ gap> for i in iter do od;
 
 #
 gap> s:=RandomInverseSemigroup(100,100);
-<inverse semigroup with 100 generators>
+<inverse partial perm semigroup on 100 pts with 100 generators>
 gap> iter:=IteratorOfRClasses(s);       
 <iterator of R-classes>
 gap> for i in [1..100] do NextIterator(iter); od;
@@ -948,11 +950,11 @@ gap> d:=DClassNC(s, f);;
 gap> NrIdempotents(d);
 13
 gap> l:=LClass(d, f);
-{[ 2, 3, 7, 9, 10 ] -> [ 7, 2, 1, 5, 3 ]}
+{PartialPerm( [ 1, 2, 3, 5, 7 ], [ 1, 2, 3, 5, 7 ] )}
 gap> NrIdempotents(l);
 1
 gap> DClass(l);
-{<identity on [ 2, 3, 7, 9, 10 ]>}
+{PartialPerm( [ 1, 2, 3, 5, 7 ], [ 1, 2, 3, 5, 7 ] )}
 gap> last=d;
 true
 gap> NrIdempotents(last2);
@@ -979,7 +981,7 @@ gap> List(DClasses(S), SchutzenbergerGroup);
 gap> file:=Concatenation(SemigroupsDir(), "/examples/munn.semigroups.gz");;
 gap> ReadSemigroups(file, 1078);;
 gap> s:=InverseSemigroup(last);
-<inverse semigroup with 6 generators>
+<inverse partial perm semigroup on 9 pts with 6 generators>
 gap> Size(s);
 12
 gap> IsDTrivial(s);
@@ -988,7 +990,7 @@ false
 #
 gap> IsIsometryPP:=function(f)
 > local n, i, j, k, l;
->  n:=f[2];
+>  n:=RankOfPartialPerm(f);
 >  for i in [1..n-1] do
 >    k:=DomainOfPartialPerm(f)[i];
 >    for j in [i+1..n] do

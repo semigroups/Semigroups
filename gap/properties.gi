@@ -321,6 +321,14 @@ function(s)
   return true;
 end);
 
+#
+
+InstallMethod(IsLTrivial, "for an inverse acting semigroup with generators",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+function(s)
+  return ForAll(OrbSCC(LambdaOrb(s)), x-> Length(x)=1);
+end);
+
 # not used in ViewObj
 
 InstallOtherMethod(IsLTrivial, "for a D-class of an acting semigroup", 
