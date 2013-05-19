@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  iterators.gi
-#Y  Copyright (C) 2011-12                                James D. Mitchell
+#Y  Copyright (C) 2013                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -64,57 +64,6 @@ function(o, func, start)
   record.ShallowCopy:=iter-> rec(pos:=1);
 
  return IteratorByNextIterator( record );
-end);
-
-# returns pairs of the form [coords1[i], coords2[i][j]] 
-
-InstallGlobalFunction(IteratorOfPairs, 
-function(coords1, coords2)
-  local record;
-  
-  if not (IsDenseList(coords1) and IsDenseList(coords2) 
-    and Length(coords2)=Length(coords1)) then 
-    Error("<coords1> and <coords2> must be dense lists of equal length,");
-  elif not ForAll(coords2, IsDenseList) then 
-    Error("<coords2> must be a list of dense lists,");
-  fi;
-
-  record:=rec();
-  
-  record.i:=1; # 1st coord
-  record.j:=0; # 2nd coord
-  record.coords1:=coords1;
-  record.coords2:=coords2;
-
-  record.IsDoneIterator:=function(iter)
-    return iter!.i=Length(iter!.coords1) 
-     and iter!.j=Length(iter!.coords2[Length(iter!.coords2)]);
-  end;
-  
-  record.NextIterator:=function(iter)
-    local i, j;
-
-    if IsDoneIterator(iter) then 
-      return fail;
-    fi;
-
-    i:=iter!.i; j:=iter!.j; 
-
-    if j<Length(iter!.coords2[i]) then
-      j:=j+1;
-    else
-      i:=i+1; j:=1;
-    fi;
-
-    iter!.i:=i; iter!.j:=j;
-    return [iter!.coords1[i], iter!.coords2[i][j]];
-  end; 
-
-  record.ShallowCopy:=function(iter)
-    return rec(i:=1, j:=1, coords1:=iter!.coords1, coords2:=iter!.coords2);
-  end;
-
-  return IteratorByFunctions(record);
 end);
 
 # NextIterator in opts must return fail if the iterator is finished. 
@@ -621,7 +570,7 @@ end);
 
 # same method for regular/inverse
 
-InstallOtherMethod(Iterator, "for a trivial acting semigp", 
+InstallMethod(Iterator, "for a trivial acting semigp", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
 function(s)
   return TrivialIterator(Generators(s)[1]);
@@ -655,6 +604,266 @@ InstallMethod(IteratorOfRClassReps, "for an acting semigroup",
 [IsActingSemigroup],
 s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4],
 [IsIteratorOfRClassReps]));
+
+# different method for inverse
+
+InstallMethod(IteratorOfDClassData, "for regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  local record, o, scc, func, iter, f;
+
+  if not IsClosed(LambdaOrb(s)) then 
+    record:=rec(m:=fail, graded:=IteratorOfGradedLambdaOrbs(s));
+    record.NextIterator:=function(iter)
+      local l, rep, m; 
+      
+      m:=iter!.m; 
+      
+      if IsBound(iter!.o) and iter!.o=fail then 
+        return fail;
+      fi;
+
+      if m=fail or m=Length(OrbSCC(iter!.o)) then 
+        m:=1; l:=1;
+        iter!.o:=NextIterator(iter!.graded);
+        if iter!.o=fail then 
+          return fail;
+        fi;
+      else
+        m:=m+1; l:=OrbSCC(iter!.o)[m][1];
+      fi;
+      iter!.m:=m;
+        
+      # rep has rectified lambda val and rho val.
+      rep:=LambdaOrbRep(iter!.o, m)*LambdaOrbMult(iter!.o, m, l)[2]; 
+      return [s, m, iter!.o, 1, GradedRhoOrb(s, rep, false), rep, false];
+    end;
+
+    record.ShallowCopy:=iter-> rec(m:=fail, 
+      graded:=IteratorOfGradedLambdaOrbs(s));
+    return IteratorByNextIterator(record);
+  else
+    o:=LambdaOrb(s);
+    scc:=OrbSCC(o);
+
+    func:=function(iter, m)
+      local rep;
+      # rep has rectified lambda val and rho val.
+      rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][1])); 
+      return [s, m, o, 1, GradedRhoOrb(s, rep, false), rep, false];
+    end;
+    
+    return IteratorByIterator(IteratorList([2..Length(scc)]), func);
+  fi;
+end);
+
+InstallMethod(IteratorOfLClassData, "for regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  local o, func, iter;
+
+  o:=LambdaOrb(s);
+
+  func:=function(iter, i)
+    local rep;
+
+    # <rep> has lambda val corresponding to <i>  
+    rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i));
+    
+    # <rep> has rho val in position 1 of GradedRhoOrb(s, rep, false).
+    # We don't rectify the rho val of <rep> in <o> since we require to
+    # enumerate RhoOrb(s) to do this, if we use GradedRhoOrb(s, rep,
+    # true) then this get more complicated.
+    return [s, 1, GradedRhoOrb(s, rep, false), rep, true];
+  end;
+
+  if not IsClosed(o) then 
+    iter:=IteratorByOrbFunc(o, func, 2);
+  else 
+    return IteratorByIterator(IteratorList([2..Length(o)]), func);
+  fi;
+  
+  return iter;
+end);
+
+# different method for inverse
+
+InstallMethod(IteratorOfRClassData, "for regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  local o, func, iter;
+
+  o:=RhoOrb(s);
+  
+  func:=function(iter, i)
+    local rep;
+
+    # <rep> has rho val corresponding to <i>  
+    rep:=EvaluateWord(o!.gens, Reversed(TraceSchreierTreeForward(o, i)));
+    
+    # <rep> has lambda val in position 1 of GradedLambdaOrb(s, rep, false).
+    # We don't rectify the lambda val of <rep> in <o> since we require to
+    # enumerate LambdaOrb(s) to do this, if we use GradedLambdaOrb(s, rep,
+    # true) then this get more complicated.
+    return [s, 1, GradedLambdaOrb(s, rep, false), rep, true];
+  end;
+
+  if not IsClosed(o) then 
+    # JDM should we use IteratorOfGradedRhoOrbs here instead?? 
+    iter:=IteratorByOrbFunc(o, func, 2);
+  else 
+    return IteratorByIterator(IteratorList([2..Length(o)]), func);
+  fi;
+  
+  return iter;
+end);
+
+# same method for inverse
+
+InstallMethod(IteratorOfDClassReps, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  if HasDClassReps(s) then
+    return IteratorList(DClassReps(s));
+  fi;
+  return IteratorByIterator(IteratorOfDClassData(s), x-> x[6],
+   [IsIteratorOfDClassReps]);
+end);
+
+# same method for inverse
+
+InstallMethod(IteratorOfDClasses, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
+function(s)
+  if HasGreensDClasses(s) then
+    return IteratorList(GreensDClasses(s));
+  fi;
+  return IteratorByIterator(IteratorOfDClassData(s), x->
+   CallFuncList(CreateDClassNC, x), [IsIteratorOfDClasses]);
+end);
+
+# different method for inverse
+
+InstallMethod(IteratorOfLClassReps, "for a regular acting semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup],
+s-> IteratorByIterator(IteratorOfLClassData(s), x-> x[4],
+[IsIteratorOfLClassReps]));
+
+# different method for inverse
+
+InstallMethod(IteratorOfLClasses, "for a part perm inverse semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup],
+s-> IteratorByIterator(IteratorOfLClassData(s), x->
+CallFuncList(CreateLClassNC, x), [IsIteratorOfLClasses]));
+#
+
+InstallMethod(IteratorOfDClassData, "for inverse acting semigroup", 
+[IsActingSemigroupWithInverseOp and IsRegularSemigroup], 
+function(s) 
+  local record, o, scc, func, iter, f; 
+ 
+  if not IsClosed(LambdaOrb(s)) then  
+    record:=rec(m:=fail, graded:=IteratorOfGradedLambdaOrbs(s)); 
+    record.NextIterator:=function(iter) 
+      local l, rep, m;  
+       
+      m:=iter!.m;  
+      if iter!.o=fail then 
+        return fail;
+      elif m=fail or m=Length(OrbSCC(iter!.o)) then  
+        m:=1; l:=1; 
+        iter!.o:=NextIterator(iter!.graded); 
+        if iter!.o=fail then  
+          return fail; 
+        fi; 
+      else 
+        m:=m+1; l:=OrbSCC(iter!.o)[m][1]; 
+      fi; 
+      iter!.m:=m; 
+      o:=iter!.o;  
+
+      # rep has rectified lambda val and rho val. 
+      rep:=RightOne(EvaluateWord(o!.gens, TraceSchreierTreeForward(o, l)));
+
+      return [s, m, iter!.o, fail, fail, rep, false]; 
+    end; 
+ 
+    record.ShallowCopy:=iter-> rec(m:=fail,  
+      graded:=IteratorOfGradedLambdaOrbs(s)); 
+    return IteratorByNextIterator(record); 
+  else 
+    o:=LambdaOrb(s); 
+    scc:=OrbSCC(o); 
+ 
+    func:=function(iter, m) 
+      local rep; 
+      # rep has rectified lambda val and rho val. 
+      rep:=RightOne(EvaluateWord(o!.gens, 
+       TraceSchreierTreeForward(o, scc[m][1])));  
+      
+      return [s, m, o, fail, fail, rep, false]; 
+    end; 
+     
+    return IteratorByIterator(IteratorList([2..Length(scc)]), func); 
+  fi; 
+end); 
+
+#
+
+InstallMethod(IteratorOfRClassData, "for acting semigroup with inverse op",
+[IsActingSemigroupWithInverseOp], 
+function(s)
+  local o, func, iter, lookup;
+  
+  o:=LambdaOrb(s); 
+  if not IsClosed(o) then 
+    func:=function(iter, i) 
+      local rep;
+      rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
+      # <rep> has rho val corresponding to <i> and lambda val in position 1 of
+      # GradedLambdaOrb(s, rep, false), if we use <true> as the last arg, then
+      # this is no longer the case, and this is would be more complicated.
+      
+      return [s, 1, GradedLambdaOrb(s, rep, false), rep, true]; 
+    end;
+    iter:=IteratorByOrbFunc(o, func, 2);
+  else 
+    lookup:=OrbSCCLookup(o);
+    
+    func:=function(iter, i)
+      local rep; 
+      
+      # <rep> has rho val corresponding to <i> 
+      rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
+     
+      # rectify the lambda value of <rep>
+      rep:=rep*LambdaOrbMult(o, lookup[i], Position(o, LambdaFunc(s)(rep)))[2];
+      
+      return [s, lookup[i], o, rep, false];     
+    end;
+    
+    iter:=IteratorByIterator(IteratorList([2..Length(o)]), func);
+  fi;
+  
+  return iter;
+end);
+
+#
+
+InstallMethod(IteratorOfLClassReps, "for acting semigp with inverse op",
+[IsActingSemigroupWithInverseOp],
+s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4]^-1,
+[IsIteratorOfLClassReps]));
+
+#
+
+InstallMethod(IteratorOfLClasses, "for acting semigroup with inverse op",
+[IsActingSemigroupWithInverseOp],
+s-> IteratorByIterator(IteratorOfRClassData(s), 
+function(x)
+  x[4]:=x[4]^-1;
+  return CallFuncList(CreateInverseOpLClass, x);
+end, [IsIteratorOfLClasses]));
 
 #
    
