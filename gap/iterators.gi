@@ -10,67 +10,68 @@
 
 # to lib...
 
-InstallGlobalFunction(IteratorOfArrangements, 
-function(list, len)
-  local record;
-  
-  if not (IsList(list) and ForAll(list, IsPosInt)) then 
-    Error("usage: <list> must be a list of positive integers,");
-    return;
-  elif not (IsInt(len) and len>=0) then
-    Error("usage: <len> must be a non-negative integer,");
-    return;
-  elif len>Length(list) then 
-    Error("usage: <len> must be no greater than the length of <list>,");
-  fi;
-
-  record:=rec(list:=list, len:=len, next:=Concatenation([1..len-1], [len-1]));
-  
-
-  record.ShallowCopy:=iter-> rec(list:=list, len:=len, 
-   next:=Concatenation([1..len-1], [len-1]));
-
-  record.NextIterator:=function(iter)
-    local increment, succ, list, i, j;
-    
-    increment:=function(iter, succ, pos)
-      local i;
-      succ[pos]:=succ[pos]+1;
-      for i in [1..pos-1] do 
-        while succ[pos]=succ[i] and succ[pos]<=Length(iter!.list) do
-          succ[pos]:=succ[pos]+1;
-        od;
-      od; 
-      return succ;
-    end;
-    
-    succ:=iter!.next; list:=iter!.list;
-    
-    if succ=fail then     # we already finished
-      return fail;
-    elif succ=[Length(list),Length(list)-1..len+1] then 
-      return fail;
-    else
-      for i in [len,len-1..1] do  
-        succ:=increment(iter, succ, i);
-        if succ[i]<=Length(list) then 
-          break;
-        fi;
-      od;
-      
-      for j in [i+1..len] do 
-        succ[j]:=0;
-        succ:=increment(iter, succ, j);
-      od;
-
-      iter!.next:=succ;
-    fi;
-
-    return succ;
-  end;
-
- return IteratorByNextIterator(record);
-end);
+#JDM this is not currently working...
+#InstallGlobalFunction(IteratorOfArrangements, 
+#function(list, len)
+#  local record;
+#  
+#  if not (IsList(list) and ForAll(list, IsPosInt)) then 
+#    Error("usage: <list> must be a list of positive integers,");
+#    return;
+#  elif not (IsInt(len) and len>=0) then
+#    Error("usage: <len> must be a non-negative integer,");
+#    return;
+#  elif len>Length(list) then 
+#    Error("usage: <len> must be no greater than the length of <list>,");
+#  fi;
+#
+#  record:=rec(list:=list, len:=len, next:=Concatenation([1..len-1], [len-1]));
+#  
+#
+#  record.ShallowCopy:=iter-> rec(list:=list, len:=len, 
+#   next:=Concatenation([1..len-1], [len-1]));
+#
+#  record.NextIterator:=function(iter)
+#    local increment, succ, list, i, j;
+#    
+#    increment:=function(iter, succ, pos)
+#      local i;
+#      succ[pos]:=succ[pos]+1;
+#      for i in [1..pos-1] do 
+#        while succ[pos]=succ[i] and succ[pos]<=Length(iter!.list) do
+#          succ[pos]:=succ[pos]+1;
+#        od;
+#      od; 
+#      return succ;
+#    end;
+#    
+#    succ:=iter!.next; list:=iter!.list;
+#    
+#    if succ=fail then     # we already finished
+#      return fail;
+#    elif succ=[Length(list),Length(list)-1..len+1] then 
+#      return fail;
+#    else
+#      for i in [len,len-1..1] do  
+#        succ:=increment(iter, succ, i);
+#        if succ[i]<=Length(list) then 
+#          break;
+#        fi;
+#      od;
+#      
+#      for j in [i+1..len] do 
+#        succ[j]:=0;
+#        succ:=increment(iter, succ, j);
+#      od;
+#
+#      iter!.next:=succ;
+#    fi;
+#
+#    return succ;
+#  end;
+#
+# return IteratorByNextIterator(record);
+#end);
 
 
 #technical...
@@ -595,57 +596,57 @@ function(s)
   return iter;
 end);
 
+#JDM waiting for IteratorOfArrangements to work...
+
+#InstallMethod(Iterator, "for a symmetric inverse semigroup",
+#[IsPartialPermSemigroup and IsSymmetricInverseSemigroup 
+#and HasGeneratorsOfSemigroup], 
+#function(s)
+#  local deg, record, dom, iter_imgs, img, iter;
+# 
+#  deg:=DegreeOfPartialPermSemigroup(s);
 #
-
-InstallMethod(Iterator, "for a symmetric inverse semigroup",
-[IsPartialPermSemigroup and IsSymmetricInverseSemigroup 
-and HasGeneratorsOfSemigroup], 
-function(s)
-  local deg, record, dom, iter_imgs, img, iter;
- 
-  deg:=DegreeOfPartialPermSemigroup(s);
-
-  record:=rec(parent:=s);
-
-  record.iter_doms:=IteratorOfCombinations([1..deg]);
-    
-  record.dom:=NextIterator(record.iter_doms);
-    
-  record.iter_imgs:=IteratorOfArrangements([1..deg], 0);
-    
-  record.img:=NextIterator(record.iter_imgs);
-
-  record.NextIterator:=function(iter)
-    local out;
-    out:=PartialPermNC(iter!.dom, iter!.img);
-    
-    if IsDoneIterator(iter!.iter_imgs) then 
-      if IsDoneIterator(iter!.iter_doms) then 
-        return fail;
-      fi;
-      iter!.dom:=NextIterator(iter!.iter_doms);
-      iter!.iter_imgs:=IteratorOfArrangements([1..deg], Length(iter!.dom));
-    fi;
-  
-    iter!.img:=NextIterator(record.iter_imgs);
-    return out;
-  end;
-
-  record.IsDoneIterator:=function(iter)
-    return IsDoneIterator(iter!.iter_imgs) and IsDoneIterator(iter!.iter_doms);
-  end;
-    
-  record.ShallowCopy:= iter -> rec( parent:=s,
-    iter_doms:=IteratorOfCombinations([1..deg]),
-    dom:=NextIterator(record.iter_doms),
-    iter_imgs:=IteratorOfArrangements([1..deg], 0),
-    img:=NextIterator(record.iter_imgs));
-    
-  iter:=IteratorByFunctions(record);  
-
-  SetIsIteratorOfSemigroup(iter, true);
-  return iter;
-end);
+#  record:=rec(parent:=s);
+#
+#  record.iter_doms:=IteratorOfCombinations([1..deg]);
+#    
+#  record.dom:=NextIterator(record.iter_doms);
+#    
+#  record.iter_imgs:=IteratorOfArrangements([1..deg], 0);
+#    
+#  record.img:=NextIterator(record.iter_imgs);
+#
+#  record.NextIterator:=function(iter)
+#    local out;
+#    out:=PartialPermNC(iter!.dom, iter!.img);
+#    
+#    if IsDoneIterator(iter!.iter_imgs) then 
+#      if IsDoneIterator(iter!.iter_doms) then 
+#        return fail;
+#      fi;
+#      iter!.dom:=NextIterator(iter!.iter_doms);
+#      iter!.iter_imgs:=IteratorOfArrangements([1..deg], Length(iter!.dom));
+#    fi;
+#  
+#    iter!.img:=NextIterator(record.iter_imgs);
+#    return out;
+#  end;
+#
+#  record.IsDoneIterator:=function(iter)
+#    return IsDoneIterator(iter!.iter_imgs) and IsDoneIterator(iter!.iter_doms);
+#  end;
+#    
+#  record.ShallowCopy:= iter -> rec( parent:=s,
+#    iter_doms:=IteratorOfCombinations([1..deg]),
+#    dom:=NextIterator(record.iter_doms),
+#    iter_imgs:=IteratorOfArrangements([1..deg], 0),
+#    img:=NextIterator(record.iter_imgs));
+#    
+#  iter:=IteratorByFunctions(record);  
+#
+#  SetIsIteratorOfSemigroup(iter, true);
+#  return iter;
+#end);
 
 # Notes: required until Enumerator for a trans. semigroup does not call iterator. 
 # This works but is maybe not the best!
