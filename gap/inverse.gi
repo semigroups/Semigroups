@@ -392,7 +392,6 @@ function(s)
   
   for m in [2..r] do 
     f:=RhoOrbRep(o, m);
-# JDM method for RightOne of inverse acting element required.
     out[m-1]:=RightOne(f);
   od;
   return out;
