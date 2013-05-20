@@ -946,7 +946,17 @@ end);
 
 InstallOtherMethod(SchutzenbergerGroup, "for an inverse op L-class",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
-l-> LambdaOrbSchutzGp(LambdaOrb(l), LambdaOrbSCCIndex(l))); 
+function(l)
+  local o, m, p;
+
+  o:=LambdaOrb(l); m:=LambdaOrbSCCIndex(l);
+
+  if not IsGreensClassNC(l) then
+    p:=LambdaConjugator(Parent(l))(LambdaOrbRep(o, m), Representative(l));
+    return LambdaOrbSchutzGp(o, m)^p;
+  fi;
+  return LambdaOrbSchutzGp(o, m);
+end);
 
 #
 

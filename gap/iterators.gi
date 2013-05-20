@@ -728,6 +728,7 @@ CallFuncList(CreateLClassNC, x), [IsIteratorOfLClasses]));
 
 #for inverse acting semigroups...
 
+
 InstallMethod(IteratorOfDClassData, "for inverse acting semigroup", 
 [IsActingSemigroupWithInverseOp and IsRegularSemigroup], 
 function(s) 
@@ -837,6 +838,32 @@ function(x)
   return CallFuncList(CreateInverseOpLClass, x);
 end, [IsIteratorOfLClasses]));
 
+#
+
+InstallMethod(Iterator, "for an L-class of an inverse acting semigroup",
+[IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
+function(l)
+  local iter, baseiter, convert;
+
+  if HasAsSSortedList(l) then 
+    iter:=IteratorList(AsSSortedList(l));
+    SetIsIteratorOfLClassElements(iter, true);
+    return iter;
+  fi;
+
+  baseiter:=IteratorOfCartesianProduct(
+    OrbSCC(LambdaOrb(l))[LambdaOrbSCCIndex(l)],
+    Enumerator(SchutzenbergerGroup(l)) );
+  
+  convert:=function(x)
+    return LambdaOrbMults(LambdaOrb(l), LambdaOrbSCCIndex(l))[x[1]][2]
+     *Representative(l)*x[2];
+  end;
+
+  return IteratorByIterator(baseiter, convert, [IsIteratorOfLClassElements]);
+end);
+
+#
 # Printing...
    
 InstallMethod(PrintObj, [IsIteratorOfDClassElements],
