@@ -1,16 +1,21 @@
+############################################################################
+##
+#W  setup.gi
+#Y  Copyright (C) 2011-12                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
 #############################################################################
-###
-##W  setup.gi
-##Y  Copyright (C) 2011-12                                James D. Mitchell
-###
-###  Licensing information can be found in the README file of this package.
-###
-##############################################################################
-###
+##
 
 ###############################################################################
 # Setup - install the basic things required for specific acting semigroups    #
 ###############################################################################
+
+InstallTrueMethod(IsActingSemigroup, IsActingSemigroupWithInverseOp);
+
+InstallMethod(IsActingSemigroup, "for an associative element collection",
+[IsAssociativeElementCollection], ReturnFalse);
 
 #
 

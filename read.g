@@ -13,8 +13,8 @@ ReadPackage("semigroups/gap/partition.gi");
 ReadPackage("semigroups/gap/binary.gi");
 ReadPackage("semigroups/gap/matrix.gi");
 
-ReadPackage("semigroups/gap/acting.gi");
 ReadPackage("semigroups/gap/setup.gi");
+ReadPackage("semigroups/gap/acting.gi");
 
 ReadPackage("semigroups/gap/semigroups.gi");
 ReadPackage("semigroups/gap/greens.gi");

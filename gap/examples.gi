@@ -71,10 +71,7 @@ InstallMethod(GeneralLinearSemigroup, "for 2 pos ints",
 InstallMethod(IsFullMatrixSemigroup, "for a semigroup", 
 [IsSemigroup], ReturnFalse);
 
-#
-
-InstallOtherMethod(IsGeneralLinearSemigroup, "for a semigroup",
-[IsSemigroup], ReturnFalse);
+#JDM method for IsFullMatrixSemigroup for a matrix semigroup
 
 # undocumented, from the semigroupe manual... JDM is this right?
 

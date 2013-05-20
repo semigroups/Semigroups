@@ -2418,6 +2418,17 @@ GreensDClassOfElement);
 InstallMethod(IsRegularDClass, "for a D-class of acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass], IsRegularClass);
 
+InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
+[IsGreensClass], x-> IsTransformationSemigroup(Parent(x)));
+
+InstallMethod(IsGreensClassOfPartPermSemigroup, "for a Green's class",
+[IsGreensClass], x-> IsPartialPermSemigroup(Parent(x)));
+
+InstallMethod(IsGreensClassOfInverseSemigroup, "for a Green's class",
+[IsGreensClass], x-> IsInverseSemigroup(Parent(x)));
+
+#JDM are the following really required?
+
 InstallOtherMethod(IsActingSemigroup, "for a Green's class",
 [IsGreensClass], ReturnFalse);
 
@@ -2437,16 +2448,6 @@ InstallOtherMethod(IsGreensHClass, "for an object", [IsObject], ReturnFalse);
 
 InstallOtherMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
 
-InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
-[IsGreensClass], x-> IsTransformationSemigroup(Parent(x)));
-
-InstallMethod(IsGreensClassOfPartPermSemigroup, "for a Green's class",
-[IsGreensClass], x-> IsPartialPermSemigroup(Parent(x)));
-
-InstallMethod(IsGreensClassOfInverseSemigroup, "for a Green's class",
-[IsGreensClass], x-> IsInverseSemigroup(Parent(x)));
-
 InstallOtherMethod(IsGroupHClass, "for an acting semi Green's class",
 [IsActingSemigroupGreensClass], ReturnFalse);
-
 #EOF
