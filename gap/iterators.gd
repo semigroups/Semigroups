@@ -9,7 +9,7 @@
 ##
 
 
-DeclareGlobalFunction("IteratorOfArrangements");
+#DeclareGlobalFunction("IteratorOfArrangements");
 
 # constructors for iterators
 DeclareGlobalFunction("IteratorByOrbFunc");
