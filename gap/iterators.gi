@@ -10,6 +10,28 @@
 
 # to lib...
 
+NumberArrangement:=function(arr, n)
+  local bool, out, nr, k, i, j;
+  
+  bool:=BlistList([1..n], []);
+  
+  nr:=Factorial(n)/NrArrangements([1..n], Length(arr));
+  out:=(arr[1]-1)*Factorial(n-1)/nr;
+  bool[arr[1]]:=true;
+
+  for i in [2..Length(arr)] do 
+    k:=0;
+    for j in [1..arr[i]-1] do 
+      if not bool[j] then 
+        k:=k+1;
+      fi;
+    od;
+    bool[arr[i]]:=true;
+    out:=out+(Factorial(n-i)*k)/nr;
+  od;
+  return out+1;
+end;
+
 #JDM this is not currently working...
 #InstallGlobalFunction(IteratorOfArrangements, 
 #function(list, len)
