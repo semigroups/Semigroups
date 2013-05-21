@@ -19,12 +19,12 @@ x-> IsActingSemigroup(Parent(x)));
 
 # the number of points in the action
 
-InstallOtherMethod(ActionDegree, 
+InstallMethod(ActionDegree, 
 "for associative element with action collection",
 [IsAssociativeElementWithActionCollection], 
 s-> ActionDegree(Representative(s)));
 
-InstallOtherMethod(ActionDegree, "for a partial perm collection",
+InstallMethod(ActionDegree, "for a partial perm collection",
 [IsPartialPermCollection], DegreeOfPartialPermCollection);
 
 #

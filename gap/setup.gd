@@ -13,6 +13,7 @@ DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
 DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);
+DeclareAttribute("ActionDegree", IsAssociativeElementWithActionCollection);
 DeclareAttribute("ActionRank", IsAssociativeElement);
 DeclareAttribute("MinActionRank", IsSemigroup);
 
