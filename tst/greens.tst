@@ -355,7 +355,7 @@ gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
 gap> M:=Semigroup(a,b);;
 gap> GreensLClassOfElement(M,a);
 {Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
-gap> IsGreensClassOfTransSemigp(last);
+gap> IsTransformationSemigroupGreensClass(last);
 true
 gap> f:=FreeSemigroup(3);;
 gap> a:=f.1;; b:=f.2;; c:=f.3;; 
@@ -366,7 +366,7 @@ gap> Size(s);
 3
 gap> GreensLClassOfElement(s,a);
 {s1}
-gap> IsGreensClassOfTransSemigp(last);
+gap> IsTransformationSemigroupGreensClass(last);
 false
 gap> gens:=[ Transformation( [ 2, 2, 5, 2, 3 ] ), 
 > Transformation( [ 2, 5, 3, 5, 3 ] ) ];;
@@ -1221,7 +1221,7 @@ gap> s:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ),
 gap> f:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
 gap> GreensLClassOfElement(s, f);
 {Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
-gap> IsGreensClassOfTransSemigp(last);
+gap> IsTransformationSemigroupGreensClass(last);
 true
 gap> s:=Semigroup(Transformation( [ 4, 4, 3, 5, 3 ] ),
 > Transformation( [ 5, 1, 1, 4, 1 ] ),
