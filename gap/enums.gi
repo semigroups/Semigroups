@@ -12,6 +12,10 @@ InstallGlobalFunction(NumberArrangement,
 function(arr, n)
   local bool, m, mult, factor, out, k, i, j;
   
+  if IsEmpty(arr) then 
+    return 1;
+  fi;
+
   bool:=BlistList([1..n], []);
   m:=Length(arr);
 
@@ -36,7 +40,12 @@ end);
 InstallGlobalFunction(ArrangementNumber, 
 function(r, m, n)
   local bool, mult, factor, q, out, j, k, i;
-
+  if m=0 then 
+    return [];
+  fi;
+  if m=1 then 
+    return [r];
+  fi;
   bool:=BlistList([1..n], []);
   r:=r-1;
   mult:=Product([n-m+1..n-1]); 
@@ -64,6 +73,78 @@ function(r, m, n)
   until k=q[2]+1;
   out[m]:=j;
   return out;
+end);
+
+#JDM use these for enumerator of symmetric inverse semigroup
+# using EnumeratorByEnumerator
+
+InstallGlobalFunction(EnumeratorByEnumerator, 
+function(domain, baseenum, convert_out, convert_in, filts)
+  local record, enum, filt;
+  
+  record:=rec(baseenum:=baseenum, convert_out:=convert_out, 
+   convert_in:=convert_in);
+
+  record.NumberElement:=function(enum, elt)
+    return Position(enum!.baseenum, enum!.convert_in(elt));
+  end;
+
+  record.ElementNumber:=function(enum, nr)
+    return enum!.convert_out(enum!.baseenum[nr]);
+  end;
+  
+  record.Length:=enum-> Length(enum!.baseenum);
+  
+  if IsEnumeratorByFunctions(baseenum) then 
+    
+    if IsBound(baseenum!.Membership) then 
+      record.Membership:=function(enum, elt)
+        return enum!.convert_in(elt) in enum!.baseenum;
+      end;
+    fi; 
+
+    if IsBound(baseenum!.IsBound\[\]) then 
+      record.IsBound\[\]:=function(enum, nr)
+        return IsBound(enum!.baseenum[nr]);
+      end;
+    fi;
+  
+  fi;
+
+  enum:=EnumeratorByFunctions(domain, record);
+
+  for filt in filts do #filters
+    SetFilterObj(enum, filt);
+  od; 
+  return enum;
+end);
+
+InstallGlobalFunction(EnumeratorOfArrangements, 
+function(m, n)
+  local convert_out, convert_in, fam;
+
+  if not IsPosInt(n) then
+    Error("usage: <n> must be a positive integer,");
+    return;
+  elif not (IsInt(m) and m>=0) then
+    Error("usage: <m> must be a non-negative integer,");
+    return;
+  elif m>n then
+    Error("usage: <m> must be no greater than <n>,");
+  fi;
+
+  convert_out:=function(x)
+    return ArrangementNumber(x, m, n);
+  end;
+
+  convert_in:=function(x)
+    return NumberArrangement(x, n);
+  end;
+
+  fam:=CollectionsFamily(FamilyObj(ArrangementNumber(1, m, n)));
+  
+  return EnumeratorByEnumerator(fam, 
+   Enumerator([1..NrArrangements([1..n], m)]), convert_out, convert_in, []);
 end);
 
 # Notes: 

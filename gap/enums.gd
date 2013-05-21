@@ -10,4 +10,6 @@
 
 DeclareGlobalFunction("NumberArrangement");
 DeclareGlobalFunction("ArrangementNumber");
+DeclareGlobalFunction("EnumeratorByEnumerator");
+DeclareGlobalFunction("EnumeratorOfArrangements");
 
