@@ -205,22 +205,18 @@ InstallMethod(IsCompletelyRegularSemigroup,
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local opts, o, pos, name, f, n;
+  local record, o, pos, f, n;
 
   if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
     Info(InfoSemigroups, 2, "semigroup is not regular");
     return false;
   fi;
 
-  opts:=rec(treehashsize:=s!.opts.hashlen.M);
-  
-  for name in RecNames(LambdaOrbOpts(s)) do
-    opts.(name):=LambdaOrbOpts(s).(name);
-  od; 
+  record:=ShallowCopy(LambdaOrbOpts(s));
+  record.treehashsize:=s!.opts.hashlen.M;
 
   for f in GeneratorsOfSemigroup(s) do
-    
-    o:=Orb(s, LambdaFunc(s)(f), LambdaAct(s), opts);
+    o:=Orb(s, LambdaFunc(s)(f), LambdaAct(s), record);
     pos:=LookForInOrb(o, function(o, x) 
       return LambdaRank(s)(LambdaAct(s)(x, f))<>LambdaRank(s)(x); end, 1);
     # for transformations we could use IsInjectiveListTrans instead
