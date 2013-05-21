@@ -849,27 +849,27 @@ end);
 
 #
 
-InstallMethod(RandomBinaryRelationMonoid, "for pos int and pos int",
-[IsPosInt, IsPosInt],
-function(m,n)
-  local s;
+#InstallMethod(RandomBinaryRelationMonoid, "for pos int and pos int",
+#[IsPosInt, IsPosInt],
+#function(m,n)
+#  local s;
 
-  s:=Monoid(List([1..m], x-> RandomBinaryRelationOnPoints(n)));
-  SetIsBinaryRelationSemigroup(s, true); 
-  return s;
-end);
+#  s:=Monoid(List([1..m], x-> RandomBinaryRelationOnPoints(n)));
+#  SetIsBinaryRelationSemigroup(s, true); 
+#  return s;
+#end);
 
 #
 
-InstallMethod(RandomBinaryRelationSemigroup, "for pos int and pos int",
-[IsPosInt, IsPosInt],
-function(m,n)
-  local s;
+#InstallMethod(RandomBinaryRelationSemigroup, "for pos int and pos int",
+#[IsPosInt, IsPosInt],
+#function(m,n)
+#  local s;
 
-  s:=Semigroup(List([1..m], x-> RandomBinaryRelationOnPoints(n)));
-  SetIsBinaryRelationSemigroup(s, true);
-  return s;
-end);
+#  s:=Semigroup(List([1..m], x-> RandomBinaryRelationOnPoints(n)));
+#  SetIsBinaryRelationSemigroup(s, true);
+#  return s;
+#end);
 
 InstallMethod(RandomBlockGroup, "for pos int and pos int",
 [IsPosInt, IsPosInt],

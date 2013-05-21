@@ -177,7 +177,7 @@ end);
 
 # different method for inverse/regular
 
-InstallOtherMethod(Enumerator, "for a D-class of acting semigp.",
+InstallMethod(Enumerator, "for a D-class of acting semigp.",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
     
@@ -291,7 +291,7 @@ end);
 
 # same method for inverse/regular
 
-InstallOtherMethod(Enumerator, "for H-class of acting semigp.",
+InstallMethod(Enumerator, "for H-class of acting semigp.",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
 

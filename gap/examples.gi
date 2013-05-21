@@ -21,7 +21,7 @@ function(n)
           Concatenation(List([1..n-1], x-> [x]), [[]]) ] ;
   
   s:=Semigroup(List(gens, BinaryRelationByListOfImagesNC));
-  SetIsBinaryRelationCollection(s, true);
+  #SetIsBinaryRelationCollection(s, true);
   return s;
 end);
 
