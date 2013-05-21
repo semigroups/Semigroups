@@ -124,8 +124,8 @@ function(d)
   SetIsSingleValued(inj, true);
   g:=Range(inj);
   zero:=MultiplicativeZero(g);
-  bound_r:=List([1..Length(rreps)], ReturnFalse);
-  bound_l:=List([1..Length(lreps)], ReturnFalse);
+  bound_r:=BlistList([1..Length(rreps)], []);
+  bound_l:=BlistList([1..Length(lreps)], []);
   inv_l:=EmptyPlist(Length(lreps));
   inv_r:=EmptyPlist(Length(rreps));
 
