@@ -63,10 +63,19 @@ DeclareOperation("HClass", [IsGreensClass, IsAssociativeElement]);
 DeclareOperation("HClassNC", [IsActingSemigroup, IsAssociativeElement]);
 DeclareOperation("HClassNC", [IsGreensClass, IsAssociativeElement]);
 
-DeclareOperation("LClass");
-DeclareOperation("LClassNC");
-DeclareOperation("RClass");
-DeclareOperation("RClassNC");
+DeclareOperation("LClass", [IsActingSemigroup, IsAssociativeElement]);
+DeclareOperation("LClass", [IsGreensDClass, IsAssociativeElement]);
+DeclareOperation("LClass", [IsGreensHClass]);
+DeclareOperation("LClassNC", [IsActingSemigroup, IsAssociativeElement]);
+DeclareOperation("LClassNC", [IsGreensDClass, IsAssociativeElement]);
+DeclareOperation("LClassNC", [IsGreensHClass]);
+
+DeclareOperation("RClass", [IsActingSemigroup, IsAssociativeElement]);
+DeclareOperation("RClass", [IsGreensDClass, IsAssociativeElement]);
+DeclareOperation("RClass", [IsGreensHClass]);
+DeclareOperation("RClassNC", [IsActingSemigroup, IsAssociativeElement]);
+DeclareOperation("RClassNC", [IsGreensDClass, IsAssociativeElement]);
+DeclareOperation("RClassNC", [IsGreensHClass]);
 
 DeclareGlobalFunction("CreateDClass");
 DeclareGlobalFunction("CreateDClassNC");
