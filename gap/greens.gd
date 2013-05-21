@@ -33,7 +33,8 @@
 
 DeclareAttribute("MultiplicativeNeutralElement", IsGreensHClass);
 
-DeclareProperty("IsGreensClassOfPartPermSemigroup", IsGreensClass);
+DeclareProperty("IsPartialPermSemigroupGreensClass", IsGreensClass);
+DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
 DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassNC", IsActingSemigroupGreensClass);
 
@@ -157,7 +158,6 @@ DeclareGlobalFunction("Idempotents@");
 DeclareGlobalFunction("NrIdempotents@");
 
 #to move...
-DeclareProperty("IsGreensClassOfTransSemigp", IsGreensClass);
 DeclareOperation("EnumeratorOfRClasses", [IsSemigroup]);
 
 #EOF

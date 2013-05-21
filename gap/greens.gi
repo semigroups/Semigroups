@@ -2306,13 +2306,10 @@ GreensDClassOfElement);
 InstallMethod(IsRegularDClass, "for a D-class of acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass], IsRegularClass);
 
-InstallMethod(IsGreensClassOfTransSemigp, "for a Green's class",
+InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x-> IsTransformationSemigroup(Parent(x)));
 
-InstallMethod(IsGreensClassOfPartPermSemigroup, "for a Green's class",
+InstallMethod(IsPartialPermSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x-> IsPartialPermSemigroup(Parent(x)));
-
-InstallMethod(IsGreensClassOfInverseSemigroup, "for a Green's class",
-[IsGreensClass], x-> IsInverseSemigroup(Parent(x)));
 
 #EOF

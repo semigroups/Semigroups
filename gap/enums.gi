@@ -536,8 +536,7 @@ end);
 # JDM why is IsGreensClassOfPartPermSemigroup still used here!?
 
 InstallMethod(Enumerator, "for D-class of part perm inv semigroup",
-[IsGreensDClass and IsGreensClassOfInverseSemigroup and
-IsGreensClassOfPartPermSemigroup],
+[IsGreensDClass and IsInverseOpClass and IsActingSemigroupGreensClass],
 function(d)
 
   return EnumeratorByFunctions(d, rec(
