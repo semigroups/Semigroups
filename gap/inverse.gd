@@ -12,17 +12,3 @@
 
 DeclareGlobalFunction("IsJoinIrreducible");
 
-#old
-
-DeclareGlobalFunction("CreateOrbSCCMultipliers");
-DeclareGlobalFunction("CreateOrbSCCMultipliersNC");
-DeclareGlobalFunction("CreateOrbSCCSchutzGp");
-DeclareGlobalFunction("CreateOrbSCCSchutzGpNC");
-DeclareGlobalFunction("EnumerateInverseSemiData");
-DeclareAttribute("LongOrb", IsPartialPermSemigroup and IsInverseSemigroup,
- "mutable");
-DeclareAttribute("OrbMultipliers", IsGreensClass);
-DeclareAttribute("OrbSCCStabChain", IsGreensClass);
-DeclareGlobalFunction("ShortOrb");
-
-
