@@ -152,7 +152,6 @@ DeclareAttribute("LClassType", IsSemigroup);
 DeclareAttribute("RClassType", IsSemigroup);
 
 #technical...
-
 DeclareGlobalFunction("IsRegularClass@");
 DeclareGlobalFunction("Idempotents@");
 DeclareGlobalFunction("NrIdempotents@");
