@@ -14,13 +14,6 @@
 
 InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
 
-#InstallMethod(IsActingSemigroup, "for an associative element collection",
-#[IsAssociativeElementCollection], ReturnFalse);
-
-#InstallMethod(IsActingSemigroupWithInverseOp, 
-#"for an associative element collection",
-#[IsActingSemigroup], ReturnFalse);
-
 #
 
 InstallImmediateMethod(IsActingSemigroupGreensClass, IsGreensClass, 0, 
