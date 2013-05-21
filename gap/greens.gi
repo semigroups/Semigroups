@@ -2251,35 +2251,17 @@ end);
 
 #
 
-InstallGlobalFunction(DClass,
-function(arg)
+InstallMethod(DClassNC, "for an acting semigroup and associative element", 
+[IsActingSemigroup, IsAssociativeElement], GreensDClassOfElementNC);
 
-  if Length(arg)=2 and IsActingSemigroup(arg[1]) and IsAssociativeElement(arg[2]) then
-    return GreensDClassOfElement(arg[1], arg[2]);
-  elif Length(arg)=1 and IsGreensRClass(arg[1]) then
-    return DClassOfRClass(arg[1]);
-  elif Length(arg)=1 and IsGreensLClass(arg[1]) then
-    return DClassOfLClass(arg[1]);
-  elif Length(arg)=1 and IsGreensHClass(arg[1]) then
-    return DClassOfHClass(arg[1]);
-  fi;
+InstallMethod(DClass, "for an acting semigroup and associative element",
+[IsActingSemigroup, IsAssociativeElement], GreensDClassOfElement);
 
-  Error("usage: for acting semigroup and acting elt, or a Green's class,");
-  return;
-end);
+InstallMethod(DClass, "for an R-class", [IsGreensRClass], DClassOfRClass);
 
-#
+InstallMethod(DClass, "for an L-class", [IsGreensLClass], DClassOfLClass);
 
-InstallGlobalFunction(DClassNC,
-function(arg)
-
-  if Length(arg)=2 and IsActingSemigroup(arg[1]) and IsAssociativeElement(arg[2]) then
-    return GreensDClassOfElementNC(arg[1], arg[2]);
-  fi;
-
-  Error("usage: acting semigroup and acting elt,");
-  return;
-end);
+InstallMethod(DClass, "for an H-class", [IsGreensHClass], DClassOfHClass);
 
 #
 

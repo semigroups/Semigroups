@@ -52,14 +52,18 @@ DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
 
 #old
 
-DeclareGlobalFunction("DClass");
-DeclareGlobalFunction("DClassNC");
-DeclareGlobalFunction("HClass");
-DeclareGlobalFunction("HClassNC");
-DeclareGlobalFunction("LClass");
-DeclareGlobalFunction("LClassNC");
-DeclareGlobalFunction("RClass");
-DeclareGlobalFunction("RClassNC");
+DeclareOperation("DClass", [IsActingSemigroup, IsAssociativeElement]);
+DeclareOperation("DClass", [IsGreensRClass]);
+DeclareOperation("DClass", [IsGreensLClass]);
+DeclareOperation("DClass", [IsGreensHClass]);
+DeclareOperation("DClassNC", [IsActingSemigroup, IsAssociativeElement]);
+
+DeclareOperation("HClass");
+DeclareOperation("HClassNC");
+DeclareOperation("LClass");
+DeclareOperation("LClassNC");
+DeclareOperation("RClass");
+DeclareOperation("RClassNC");
 
 DeclareGlobalFunction("CreateDClass");
 DeclareGlobalFunction("CreateDClassNC");
