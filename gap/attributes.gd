@@ -19,6 +19,8 @@ DeclareOperation("InversesOfSemigroupElementNC", [IsActingSemigroup and
 HasGeneratorsOfSemigroup, IsAssociativeElement]);
 
 DeclareOperation("IsomorphismBipartitionSemigroup", [IsSemigroup]);
+DeclareAttribute("IsomorphismReesMatrixSemigroup", IsGreensDClass);
+DeclareAttribute("IsomorphismPermGroup", IsSemigroup);
 
 DeclareAttribute("MinimalIdeal", IsSemigroup);
 DeclareOperation("NrElementsOfRank", [IsSemigroup and
@@ -26,4 +28,7 @@ HasGeneratorsOfSemigroup, IsPosInt]);
 DeclareAttribute("PosetOfIdempotents", IsSemigroup);
 DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
 DeclareAttribute("PrincipalFactor", IsGreensDClass);
-
+DeclareAttribute("MultiplicativeZero", IsActingSemigroup);
+DeclareAttribute("SmallGeneratingSet", IsActingSemigroup);
+DeclareAttribute("StructureDescription", IsBrandtSemigroup);
+DeclareAttribute("StructureDescription", IsGroupAsSemigroup);

@@ -232,7 +232,7 @@ end);
 
 #
 
-InstallOtherMethod(IsomorphismReesMatrixSemigroup, 
+InstallMethod(IsomorphismReesMatrixSemigroup, 
 "for a simple semigroup with generators",
 [IsSimpleSemigroup and HasGeneratorsOfSemigroup],
 function(s)
@@ -242,7 +242,7 @@ end);
 
 #
 
-InstallOtherMethod(IsomorphismReesMatrixSemigroup, 
+InstallMethod(IsomorphismReesMatrixSemigroup, 
 "for D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
@@ -431,7 +431,7 @@ end);
 
 #
 
-InstallOtherMethod(MultiplicativeNeutralElement, "for an acting semigroup",
+InstallMethod(MultiplicativeNeutralElement, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, n, rank, lambda, f, r;
@@ -472,12 +472,12 @@ end);
 # partial permutations has to coincide with the One. This is not the case for
 # transformation semigroups
 
-InstallOtherMethod(MultiplicativeNeutralElement, "for a partial perm semi",
+InstallMethod(MultiplicativeNeutralElement, "for a partial perm semi",
 [IsPartialPermSemigroup], One);
 
 #
 
-InstallOtherMethod(MultiplicativeZero, "for an acting semigroup",
+InstallMethod(MultiplicativeZero, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local min, o, rank, i, pos, f, m, rank_i, min_found, n;
@@ -620,21 +620,21 @@ d-> Range(InjectionPrincipalFactor(d)));
 
 #
 
-InstallOtherMethod(SmallGeneratingSet, 
+InstallMethod(SmallGeneratingSet, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 s -> Generators(Semigroup(Generators(s), rec(small:=true))));
 
 #
 
-InstallOtherMethod(SmallGeneratingSet, 
+InstallMethod(SmallGeneratingSet, 
 "for an acting semigroup with inverse op and generators", 
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
 s -> Generators(InverseSemigroup(Generators(s), rec(small:=true))));
 
 #
 
-InstallOtherMethod(StructureDescription, "for an acting Brandt semigroup",
+InstallMethod(StructureDescription, "for an acting Brandt semigroup",
 [IsActingSemigroup and IsBrandtSemigroup],
 function(s)
   local x, d;
@@ -648,7 +648,7 @@ end);
 
 #
 
-InstallOtherMethod(StructureDescription, 
+InstallMethod(StructureDescription, 
 "for an acting group as semigroup",
 [IsActingSemigroup and IsGroupAsSemigroup],
 s-> StructureDescription(Range(IsomorphismPermGroup(s))));
@@ -670,7 +670,7 @@ end);
 
 # to binary.gi 
 
-InstallOtherMethod(IsomorphismTransformationSemigroup, 
+InstallMethod(IsomorphismTransformationSemigroup, 
 "for semigroup of binary relations with generators", 
 [IsBinaryRelationSemigroup and HasGeneratorsOfSemigroup], 2, 
 #to beat the method for a semigroups of general mappings
@@ -732,7 +732,7 @@ end);
 
 #
 
-InstallOtherMethod(IsomorphismPermGroup, "for a transformation semigroup", 
+InstallMethod(IsomorphismPermGroup, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
  
@@ -743,6 +743,6 @@ function(s)
  
    return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
     AsPermutation, x-> AsTransformation(x, ActionDegree(s)));
- end);
+end);
 
 #EOF
