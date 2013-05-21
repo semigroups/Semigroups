@@ -397,7 +397,7 @@ function(l)
     fi;
   fi;
   #JDM is this a good idea? or should I give a separate method 
-  if HasIsInverseOpClass(l) and IsInverseOpClass(l) then 
+  if IsInverseOpClass(l) then 
     return CreateDClassNC(s, m, o, fail, fail, f, nc);
   fi;
   return CreateDClassNC(s, m, o, RhoOrbSCCIndex(l), RhoOrb(l), f, nc);

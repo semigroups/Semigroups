@@ -92,7 +92,7 @@ DeclareAttribute("StructureDescription", IsGreensHClass and IsGroupHClass);
 
 DeclareProperty("IsRegularClass", IsGreensClass);
 InstallTrueMethod(IsRegularClass, IsRegularDClass);
-DeclareProperty("IsInverseOpClass", IsGreensClass); 
+DeclareCategory("IsInverseOpClass", IsGreensClass); 
 InstallTrueMethod(IsRegularClass, IsInverseOpClass);
 
 DeclareAttribute("PartialOrderOfDClasses", IsSemigroup);

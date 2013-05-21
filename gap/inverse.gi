@@ -63,11 +63,6 @@ end);
 
 #
 
-InstallMethod(IsInverseOpClass, "for a Green's class",
-[IsActingSemigroupGreensClass], ReturnFalse);
-
-#
-
 InstallOtherMethod(DClassType, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp and IsActingSemigroup],
 function(s)
