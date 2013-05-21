@@ -39,6 +39,7 @@ end);
 InstallMethod(GradedLambdaHT, "for an acting semi",
 [IsActingSemigroup],
 function(s)
+#opts here too JDM
 return HTCreate(LambdaFunc(s)(GeneratorsOfSemigroup(s)[1]),
  rec(forflatplainlists:=true, treehashsize:=s!.opts.hashlen.S));
 end);
@@ -48,6 +49,7 @@ end);
 InstallMethod(GradedRhoHT, "for an acting semi",
 [IsActingSemigroup],
 function(s)
+#opts here too JDM
 return HTCreate(RhoFunc(s)(GeneratorsOfSemigroup(s)[1]),
  rec(forflatplainlists:=true, treehashsize:=s!.opts.hashlen.S));
 end);
@@ -126,7 +128,7 @@ end);
 InstallMethod(\in, "for lambda value of acting semi elt and graded lambda orbs",
 [IsObject, IsGradedLambdaOrbs],
 function(lamf, o)
-  return not HTValue(GradedLambdaHT(o!.semi), lamf)=fail;
+  return not HTValue(GradedLambdaHT(o!.parent), lamf)=fail;
 end);
 
 #
@@ -134,7 +136,7 @@ end);
 InstallMethod(\in, "for rho value of acting semi elt and graded rho orbs",
 [IsObject, IsGradedRhoOrbs],
 function(rho, o)
-  return not HTValue(GradedRhoHT(o!.semi), rho)=fail;
+  return not HTValue(GradedRhoHT(o!.parent), rho)=fail;
 end);
 
 # expand?
@@ -541,17 +543,24 @@ function(data, limit, lookfunc)
 end);
 
 # if GradedLambdaOrb(s, f, true) is called, then the returned orbit o has 
-# the position in o of lambda val of f stored in o!.data.
+# the position in o of lambda val of f stored in o!.lambda_l.
 
 InstallGlobalFunction(GradedLambdaOrb,
 function(s, f, opt)
-  local lambda, graded, pos, gradingfunc, onlygrades, onlygradesdata, o, j, k, l;
+  local lambda, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, o, j, k, l;
 
-  if IsAssociativeElementWithAction(f) then 
-    lambda:=LambdaFunc(s)(f);
-  else
-    lambda:=f;
+  if not IsActingSemigroup(s) then 
+    Error("usage: <s> must be an acting semigroup,");
+    return;
+  elif not IsAssociativeElementWithAction(f) then 
+    Error("usage: <f> must be an associative element with action,");
+    return;
+  elif not IsBool(opt) then 
+    Error("usage: <opt> must be a boolean,");
+    return;
   fi;
+
+  lambda:=LambdaFunc(s)(f);
 
   if opt then   #global
     graded:=GradedLambdaOrbs(s);
@@ -576,23 +585,15 @@ function(s, f, opt)
     onlygradesdata:=fail;
   fi;  
 
-  #JDM properly use LambdaOrbOpts here
+  record:=ShallowCopy(LambdaOrbOpts(s));
+  
+  record.parent:=s;               record.treehashsize:=s!.opts.hashlen.M;
+  record.schreier:=true;          record.orbitgraph:=true;
+  record.storenumbers:=true;      record.log:=true;
+  record.onlygrades:=onlygrades;  record.gradingfunc:=gradingfunc;
+  record.scc_reps:=[f];           record.onlygradesdata:=onlygradesdata; 
 
-  o:=Orb(s, lambda, LambdaAct(s),
-      rec(
-        semi:=s,
-        forflatplainlists:=true, #JDM probably don't want to assume this..
-        treehashsize:=SemigroupsOptionsRec.hashlen.M,
-        schreier:=true,
-        gradingfunc:=gradingfunc,
-        orbitgraph:=true,
-        onlygrades:=onlygrades,
-        onlygradesdata:=onlygradesdata,
-        storenumbers:=true,
-        log:=true,
-        scc_reps:=[f])); # note that this component shouldn't be used if f is a
-                         # lambda value and not an acting elt.
-
+  o:=Orb(s, lambda, LambdaAct(s), record);
   SetIsGradedLambdaOrb(o, true);
   o!.lambda_l:=1;
   
@@ -616,46 +617,56 @@ end);
 
 InstallGlobalFunction(GradedRhoOrb,
 function(s, f, opt)
-  local graded, pos, gradingfunc, onlygrades, onlygradesdata, o, j, k, l;
+  local rho, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, o, j, k, l;
 
+  if not IsActingSemigroup(s) then 
+    Error("usage: <s> must be an acting semigroup,");
+    return;
+  elif not IsAssociativeElementWithAction(f) then 
+    Error("usage: <f> must be an associative element with action,");
+    return;
+  elif not IsBool(opt) then 
+    Error("usage: <opt> must be a boolean,");
+    return;
+  fi;
+ 
+  rho:=RhoFunc(s)(f);
+  
   if opt then   #global
     graded:=GradedRhoOrbs(s);
-    pos:=HTValue(GradedRhoHT(s), RhoFunc(s)(f));
+    pos:=HTValue(GradedRhoHT(s), rho);
   
     if pos<>fail then 
-      
       # store the position of RhoFunc(s)(f) in o 
       graded[pos[1]][pos[2]]!.rho_l:=pos[3];
       return graded[pos[1]][pos[2]];
     fi;
     
     gradingfunc := function(o,x) return [RhoRank(s)(x), x]; end;
+    
     onlygrades:=function(x, data_ht)
-      return x[1]=RhoRank(s)(RhoFunc(s)(f))
+      return x[1]=RhoRank(s)(rho)
        and HTValue(data_ht, x[2])=fail; 
     end;
+    
     onlygradesdata:=GradedRhoHT(s);
   else          #local
     gradingfunc:=function(o,x) return RhoRank(s)(x); end;
-    onlygrades:=function(x,data_ht) 
+    onlygrades:=function(x, data_ht) 
       return x=RhoRank(s)(RhoFunc(s)(f));
     end;
     onlygradesdata:=fail;
   fi;  
- 
-  o:=Orb(s, RhoFunc(s)(f), RhoAct(s),
-      rec(
-        semi:=s,
-        forflatplainlists:=true, #JDM probably don't want to assume this..
-        treehashsize:=SemigroupsOptionsRec.hashlen.M,
-        schreier:=true,
-        gradingfunc:=gradingfunc,
-        orbitgraph:=true,
-        onlygrades:=onlygrades,
-        onlygradesdata:=onlygradesdata,
-        storenumbers:=true,
-        log:=true,
-        scc_reps:=[f]));
+
+  record:=ShallowCopy(RhoOrbOpts(s));
+  
+  record.parent:=s;               record.treehashsize:=s!.opts.hashlen.M;
+  record.schreier:=true;          record.orbitgraph:=true;
+  record.storenumbers:=true;      record.log:=true;
+  record.onlygrades:=onlygrades;  record.gradingfunc:=gradingfunc;
+  record.scc_reps:=[f];           record.onlygradesdata:=onlygradesdata;
+
+  o:=Orb(s, rho, RhoAct(s), record);
 
   SetIsGradedRhoOrb(o, true);
   o!.rho_l:=1; 
@@ -687,7 +698,7 @@ function(s)
   fam:=CollectionsFamily(FamilyObj(LambdaFunc(s)(Representative(s))));
   return Objectify(NewType(fam, IsGradedLambdaOrbs), 
    rec( orbits:=List([1..ActionDegree(s)+1], x-> []), 
-     lens:=[1..ActionDegree(s)+1]*0, semi:=s));
+     lens:=[1..ActionDegree(s)+1]*0, parent:=s));
 end);
 
 # stores so far calculated GradedRhoOrbs
@@ -697,7 +708,7 @@ InstallMethod(GradedRhoOrbs, "for an acting semigroup",
 function(s)
   return Objectify(NewType(FamilyObj(s), IsGradedRhoOrbs), rec(
     orbits:=List([1..ActionDegree(s)+1], x-> []), 
-    lens:=[1..ActionDegree(s)+1]*0, semi:=s));
+    lens:=[1..ActionDegree(s)+1]*0, parent:=s));
 end);
 
 #
@@ -735,7 +746,7 @@ function(s)
   opts:= rec(schreier:=true, orbitgraph:=true,
           storenumbers:=true, log:=true, 
           treehashsize:=treehashsize,
-          scc_reps:=[One(GeneratorsOfSemigroup(s))], semi:=s);
+          scc_reps:=[One(GeneratorsOfSemigroup(s))], parent:=s);
   
   for name in RecNames(LambdaOrbOpts(s)) do 
     opts.(name):=LambdaOrbOpts(s).(name);
@@ -757,7 +768,7 @@ function(s)
   opts:= rec(schreier:=true, orbitgraph:=true,
           storenumbers:=true, log:=true, 
           treehashsize:=SemigroupsOptionsRec.hashlen.M,
-          scc_reps:=[One(GeneratorsOfMagmaIdeal(s))], semi:=s);
+          scc_reps:=[One(GeneratorsOfMagmaIdeal(s))], parent:=s);
   
   for name in RecNames(LambdaOrbOpts(s)) do 
     opts.(name):=LambdaOrbOpts(s).(name);
@@ -800,7 +811,7 @@ function(o, m)
   fi; 
  
   genpos:=ReverseSchreierTreeOfSCC(o, m);
-  inv:=function(im, f) return LambdaInverse(o!.semi)(im, f); end;
+  inv:=function(im, f) return LambdaInverse(o!.parent)(im, f); end;
 
   trace:=function(i)
     local f;
@@ -844,7 +855,7 @@ function(o, m, i)
   if not IsInvLambdaOrb(o) then
 #JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
     genpos:=ReverseSchreierTreeOfSCC(o, m);
-    inv:=function(im, f) return LambdaInverse(o!.semi)(im, f); end;
+    inv:=function(im, f) return LambdaInverse(o!.parent)(im, f); end;
 
     trace:=function(i)
       local f;
@@ -905,7 +916,7 @@ function(o, m)
     o!.slp:=EmptyPlist(Length(OrbSCC(o)));
   fi;
 
-  s:=o!.semi;
+  s:=o!.parent;
   gens:=o!.gens; 
   nrgens:=Length(gens);
   scc:=OrbSCC(o)[m];      
@@ -1037,7 +1048,7 @@ end);
 InstallMethod(Position, "for graded lambda orbs and lambda value",
 [IsGradedLambdaOrbs, IsObject, IsZeroCyc],
 function(o, lamf, n)
-  return HTValue(GradedLambdaHT(o!.semi), lamf);
+  return HTValue(GradedLambdaHT(o!.parent), lamf);
 end);
 
 #
@@ -1045,7 +1056,7 @@ end);
 InstallMethod(Position, "for graded rho orbs and rho value",
 [IsGradedRhoOrbs, IsObject, IsZeroCyc],
 function(o, rho, n)
-  return HTValue(GradedRhoHT(o!.semi), rho);
+  return HTValue(GradedRhoHT(o!.parent), rho);
 end);
 
 # returns the index of the representative of the R-class containing x in the
@@ -1155,7 +1166,7 @@ function(s)
         rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
         storenumbers:=true, log:=true,
         treehashsize:=SemigroupsOptionsRec.hashlen.M,
-        scc_reps:=[One(GeneratorsOfSemigroup(s))], semi:=s));
+        scc_reps:=[One(GeneratorsOfSemigroup(s))], parent:=s));
 end);
 
 # f takes o[scc[1]] to o[i] and inv(o[scc[1]],f) takes o[i] to o[scc[1]]
@@ -1181,7 +1192,7 @@ function(o, m, i)
   mults:=o!.mults;
   gens:=o!.gens;
   genpos:=SchreierTreeOfSCC(o, m);
-  inv:=f-> RhoInverse(o!.semi)(o[scc[1]], f);
+  inv:=f-> RhoInverse(o!.parent)(o[scc[1]], f);
   
   trace:=function(i)
     local f;
@@ -1232,7 +1243,7 @@ function(o, m)
   fi; 
 
   genpos:=SchreierTreeOfSCC(o, m);
-  inv:=f-> RhoInverse(o!.semi)(o[scc[1]], f);
+  inv:=f-> RhoInverse(o!.parent)(o[scc[1]], f);
 
   trace:=function(i)
     local f;
@@ -1289,7 +1300,7 @@ function(o, m, bound)
     return g;
   fi;
 
-  s:=o!.semi;
+  s:=o!.parent;
   gens:=o!.gens;
   nrgens:=Length(gens);
   scc:=OrbSCC(o)[m];

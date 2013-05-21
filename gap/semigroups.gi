@@ -425,7 +425,7 @@ function(s, coll, record)
   Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse);
   Unbind(o!.rev); Unbind(o!.truth); Unbind(o!.schutzstab); Unbind(o!.slp);
 
-  o!.semi:=t;
+  o!.parent:=t;
   o!.scc_reps:=[One(Generators(t))];
   
   SetLambdaOrb(t, o);
@@ -533,7 +533,7 @@ function(s, coll, opts)
   Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse); 
   Unbind(o!.rev); Unbind(o!.truth); Unbind(o!.schutzstab); Unbind(o!.slp); 
   
-  o!.semi:=t;
+  o!.parent:=t;
   o!.scc_reps:=[One(Generators(t))];
 
   SetLambdaOrb(t, o); 
