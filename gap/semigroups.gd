@@ -1,7 +1,7 @@
 ############################################################################# 
 ## 
 #W  semigroups.gd
-#Y  Copyright (C) 2011-12                                 James D. Mitchell
+#Y  Copyright (C) 2013                                    James D. Mitchell
 ## 
 ##  Licensing information can be found in the README file of this package. 
 ## 
@@ -42,7 +42,6 @@ DeclareOperation("ClosureSemigroup",
 DeclareOperation("ClosureSemigroup",
 [IsActingSemigroup, IsAssociativeElementWithAction, IsRecord]);
 DeclareOperation("ClosureSemigroup", [IsActingSemigroup, IsList and IsEmpty]); #JDM remove me!
-
 DeclareGlobalFunction("ClosureSemigroupNC");
 
 DeclareAttribute("Generators", IsSemigroup);
@@ -55,6 +54,8 @@ DeclareOperation("RandomInverseSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomInverseMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomTransformationMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomTransformationSemigroup", [IsPosInt, IsPosInt]);
+DeclareSynonym("RandomPartialPermSemigroup", RandomBlockGroup);
+
 #DeclareOperation("RandomBipartitionSemigroup", [IsPosInt, IsPosInt]);
 #DeclareOperation("RandomBipartitionMonoid", [IsPosInt, IsPosInt]);
 
