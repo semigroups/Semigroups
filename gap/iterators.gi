@@ -10,7 +10,7 @@
 
 # to lib...
 
-NumberArrangement:=function(arr, n)
+NumberArrangementOld:=function(arr, n)
   local bool, out, nr, k, i, j;
   
   bool:=BlistList([1..n], []);
@@ -20,6 +20,7 @@ NumberArrangement:=function(arr, n)
   bool[arr[1]]:=true;
 
   for i in [2..Length(arr)] do 
+    Print("i=", i, "\n");
     k:=0;
     for j in [1..arr[i]-1] do 
       if not bool[j] then 
@@ -27,9 +28,68 @@ NumberArrangement:=function(arr, n)
       fi;
     od;
     bool[arr[i]]:=true;
+    Print(Factorial(n-i)/nr, "\n"); 
     out:=out+(Factorial(n-i)*k)/nr;
   od;
   return out+1;
+end;
+
+
+
+NumberArrangement:=function(arr, n)
+  local bool, m, mult, factor, out, k, i, j;
+  
+  bool:=BlistList([1..n], []);
+  m:=Length(arr);
+
+  bool[arr[1]]:=true;
+  mult:=Product([n-m+1..n-1]);
+  factor:=n;
+  out:=(arr[1]-1)*mult;
+
+  for i in [2..m] do 
+    k:=0;
+    for j in [1..arr[i]-1] do 
+      if not bool[j] then k:=k+1; fi;
+    od;
+    bool[arr[i]]:=true;
+    factor:=factor-1;
+    mult:=mult/factor;
+    out:=out+k*mult;
+  od;
+  return out+1;
+end;
+
+ArrangementNumber:=function(r, m, n)
+  local bool, mult, factor, q, out, j, k, i;
+
+  bool:=BlistList([1..n], []);
+  r:=r-1;
+  mult:=Product([n-m+1..n-1]); 
+  factor:=n; 
+  q:=QuotientRemainder(r,mult);
+  out:=[q[1]+1];
+  bool[q[1]+1]:=true;
+  
+  for i in [2..m-1] do  
+    factor:=factor-1;
+    mult:=mult/factor;
+    q:=QuotientRemainder(q[2], mult);
+    j:=0; k:=0; 
+    repeat 
+      j:=j+1;
+      if not bool[j] then k:=k+1; fi;
+    until k=q[1]+1;
+    bool[j]:=true;
+    out[i]:=j;
+  od;
+  j:=0; k:=0;
+  repeat
+    j:=j+1;
+    if not bool[j] then k:=k+1; fi;
+  until k=q[2]+1;
+  out[m]:=j;
+  return out;
 end;
 
 #JDM this is not currently working...
