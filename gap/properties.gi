@@ -231,7 +231,7 @@ function(s)
   return true;
 end);
 
-# not used in ViewObj
+#
 
 InstallMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsCliffordSemigroup);
@@ -295,7 +295,7 @@ InstallMethod(IsHTrivial,
 [IsGreensDClass and IsActingSemigroupGreensClass], 
 d-> NrHClasses(d)=Size(d));
 
-# not used in ViewObj
+#
 
 InstallMethod(IsLTrivial, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -324,23 +324,23 @@ function(s)
   return ForAll(OrbSCC(LambdaOrb(s)), x-> Length(x)=1);
 end);
 
-# not used in ViewObj
+#
 
 InstallMethod(IsLTrivial, "for a D-class of an acting semigroup", 
 [IsGreensDClass and IsActingSemigroupGreensClass], d-> NrLClasses(d)=Size(d));
 
-# not used in ViewObj
+#
 
 InstallMethod(IsRTrivial, "for D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass], 
 d-> NrRClasses(d)=Size(d));
 
-# not used in ViewObj
+#
 
 InstallMethod(IsRTrivial, "for an inverse semigroup", 
 [IsInverseSemigroup], IsLTrivial);
 
-# not used in ViewObj
+#
 
 InstallMethod(IsRTrivial, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -401,7 +401,7 @@ function(s)
   return true;
 end);
 
-# not used in ViewObj
+#
 # IteratorOfIdempotents would be good here.
 
 InstallMethod(IsIdempotentGenerated, 
@@ -432,7 +432,7 @@ function(s)
   return ForAll(gens, f-> f in t);
 end);
 
-# not used in ViewObj
+#
 
 InstallMethod(IsIdempotentGenerated, "for an inverse semigroup",
 [IsInverseSemigroup], IsSemilatticeAsSemigroup);
@@ -534,7 +534,17 @@ end);
 InstallMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
-# not used in ViewObj
+#
+
+InstallImmediateMethod(IsMonogenicSemigroup, IsSemigroup and HasGeneratorsOfSemigroup, 0, 
+function(s) 
+  if Length(GeneratorsOfSemigroup(s))=1 then 
+    return true;
+  fi;
+  TryNextMethod();
+end);
+
+#
 
 InstallMethod(IsMonogenicSemigroup, 
 "for an acting semigroup with generators", 
@@ -578,7 +588,7 @@ function(s)
   return false;
 end);
 
-# not used in ViewObj
+#
 
 InstallMethod(IsMonogenicInverseSemigroup, 
 "for an acting semigroup with generators", 
@@ -590,7 +600,7 @@ function(s)
   return IsMonogenicInverseSemigroup(Range(IsomorphismPartialPermSemigroup(s)));
 end);
  
-# not used in ViewObj
+#
 
 InstallMethod(IsMonogenicInverseSemigroup, 
 "for an acting semigroup with inverse op and generators", 
@@ -635,7 +645,7 @@ function(s)
   return false;
 end);
 
-# not used in ViewObj
+#
 
 InstallMethod(IsMonoidAsSemigroup, "for a semigroup",
 [IsSemigroup and HasGeneratorsOfSemigroup], 
@@ -670,7 +680,7 @@ function(s)
   return true;
 end);
 
-# not used in ViewObj
+#
 
 InstallMethod(IsRectangularBand, 
 "for an acting semigroup with generators", 
@@ -687,7 +697,7 @@ function(s)
   return IsHTrivial(s);
 end);
 
-# not used in ViewObj
+#
 
 InstallMethod(IsRectangularBand, "for an inverse semigroup",
 [IsInverseSemigroup], s-> IsHTrivial(s) and IsSimpleSemigroup(s));
@@ -858,19 +868,19 @@ end);
 InstallMethod(IsRightZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
-# not used in ViewObj
+#
 
 InstallMethod(IsSemiband, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], IsIdempotentGenerated);
 
-# not used in ViewObj
+#
 
 InstallMethod(IsSemilatticeAsSemigroup, 
 "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
  s-> IsCommutativeSemigroup(s) and IsBand(s));
 
-# not used in ViewObj
+#
 
 InstallMethod(IsSemilatticeAsSemigroup, 
 "for an inverse semigroup with generators",
@@ -928,7 +938,7 @@ end);
 InstallMethod(IsSimpleSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsGroupAsSemigroup);
 
-# not used in ViewObj
+#
 
 InstallMethod(IsSynchronizingSemigroup, 
 "for a transformation semigroup", 
@@ -968,7 +978,7 @@ function(s)
     or (Length(gens)=1));
 end); 
 
-# not used in ViewObj
+#
 
 InstallMethod(IsUnitRegularSemigroup, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
@@ -1034,7 +1044,7 @@ function(s)
   return false;
 end);
 
-# not used in ViewObj
+#
 
 InstallMethod(IsZeroRectangularBand, 
 "for an acting semigroup with generators", 
