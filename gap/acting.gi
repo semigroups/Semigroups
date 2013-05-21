@@ -313,7 +313,7 @@ end);
 
 #
 
-InstallOtherMethod(ELM_LIST, "for graded lambda orbs, and pos int",
+InstallMethod(ELM_LIST, "for graded lambda orbs, and pos int",
 [IsGradedLambdaOrbs, IsPosInt], 
 function(o, j)
   return o!.orbits[j];
@@ -321,7 +321,7 @@ end);
 
 #
 
-InstallOtherMethod(ELM_LIST, "for graded rho orbs, and pos int",
+InstallMethod(ELM_LIST, "for graded rho orbs, and pos int",
 [IsGradedRhoOrbs, IsPosInt], 
 function(o, j)
   return o!.orbits[j];
@@ -329,7 +329,7 @@ end);
 
 #
 
-InstallOtherMethod(ELM_LIST, "for acting semigp data, and pos int",
+InstallMethod(ELM_LIST, "for acting semigp data, and pos int",
 [IsSemigroupData, IsPosInt], 
 function(o, nr)
   return o!.orbit[nr];
@@ -337,7 +337,7 @@ end);
 
 #
 
-InstallOtherMethod(Enumerate, "for an acting semigroup data", 
+InstallMethod(Enumerate, "for an acting semigroup data", 
 [IsSemigroupData],
 function(data)
   return Enumerate(data, infinity, ReturnFalse);
@@ -345,7 +345,7 @@ end);
 
 #
 
-InstallOtherMethod(Enumerate, "for an acting semi data and limit", 
+InstallMethod(Enumerate, "for an acting semi data and limit", 
 [IsSemigroupData, IsCyclotomic],
 function(data, limit)
   return Enumerate(data, limit, ReturnFalse);
@@ -353,7 +353,7 @@ end);
 
 #
 
-InstallOtherMethod(Enumerate, 
+InstallMethod(Enumerate, 
 "for an acting semi data, limit, and func",
 [IsSemigroupData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
@@ -963,7 +963,7 @@ end);
 
 #
 
-InstallOtherMethod(RhoOrbStabChain, "for a rho orb and scc index",
+InstallMethod(RhoOrbStabChain, "for a rho orb and scc index",
 [IsOrbit, IsPosInt],
 function(o, m)
   
@@ -1021,12 +1021,12 @@ end);
 
 # JDM this is stored as an attribute, unfortunately..
 
-InstallOtherMethod(Length, "for semigroup data of acting semigroup",
+InstallMethod(Length, "for semigroup data of acting semigroup",
 [IsSemigroupData], x-> Length(x!.orbit));
 
 #
 
-InstallOtherMethod(OrbitGraphAsSets, "for semigroup data of acting semigroup",  
+InstallMethod(OrbitGraphAsSets, "for semigroup data of acting semigroup",  
 [IsSemigroupData], 99,
 function(data)
   return List(data!.graph, Set);
@@ -1034,7 +1034,7 @@ end);
 
 #
 
-InstallOtherMethod(Position, "for graded lambda orbs and lambda value",
+InstallMethod(Position, "for graded lambda orbs and lambda value",
 [IsGradedLambdaOrbs, IsObject, IsZeroCyc],
 function(o, lamf, n)
   return HTValue(GradedLambdaHT(o!.semi), lamf);
@@ -1042,7 +1042,7 @@ end);
 
 #
 
-InstallOtherMethod(Position, "for graded rho orbs and rho value",
+InstallMethod(Position, "for graded rho orbs and rho value",
 [IsGradedRhoOrbs, IsObject, IsZeroCyc],
 function(o, rho, n)
   return HTValue(GradedRhoHT(o!.semi), rho);
@@ -1051,7 +1051,7 @@ end);
 # returns the index of the representative of the R-class containing x in the
 # parent of data. 
 
-InstallOtherMethod(Position, "for acting semigroup data and acting elt",
+InstallMethod(Position, "for acting semigroup data and acting elt",
 [IsSemigroupData, IsObject, IsZeroCyc], 100,
 function(data, x, n)
   local val, s, o, l, m, scc, schutz, repslookup, y, reps, repslens, lambdaperm;
@@ -1109,7 +1109,7 @@ end);
 
 #
 
-InstallOtherMethod( PositionOfFound,"for semigroup data",
+InstallMethod(PositionOfFound,"for semigroup data",
 [IsSemigroupData],
 function( data )
   if not(data!.looking) then

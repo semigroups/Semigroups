@@ -43,6 +43,7 @@ DeclareGlobalFunction("RhoOrbRep");
 DeclareGlobalFunction("RhoOrbSchutzGp");
 DeclareGlobalFunction("LambdaOrbStabChain");
 DeclareAttribute("RhoOrbStabChain", IsActingSemigroupGreensClass);
+DeclareOperation("RhoOrbStabChain", [IsOrbit, IsPosInt]);
 
 DeclareGlobalFunction("RectifyLambda");
 DeclareGlobalFunction("RhoPos");
@@ -65,6 +66,12 @@ DeclareProperty("IsGradedRhoOrbs", IsOrbit);
 
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
 DeclareGlobalFunction("SizeOfSemigroupData");
-DeclareCategory("IsSemigroupData", IsRecord);
+DeclareCategory("IsSemigroupData", IsList);
+
+DeclareOperation("Enumerate", [IsSemigroupData]);
+DeclareOperation("Enumerate", [IsSemigroupData, IsCyclotomic]);
+DeclareOperation("Enumerate", [IsSemigroupData, IsCyclotomic, IsFunction]);
+DeclareOperation("OrbitGraphAsSets", [IsSemigroupData]);
+DeclareOperation("PositionOfFound", [IsSemigroupData]);
 
 #EOF
