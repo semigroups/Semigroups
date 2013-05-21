@@ -659,14 +659,14 @@ s-> StructureDescription(Range(IsomorphismPermGroup(s))));
 # of the properties that the domain does. 
 # Also move this to partition.g*
 
-InstallMethod(IsomorphismBipartitionSemigroup, 
-"for a transformation semigroup with generators",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
+#InstallMethod(IsomorphismBipartitionSemigroup, 
+#"for a transformation semigroup with generators",
+#[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+#function(s)
   
-  return MappingByFunction(s, Semigroup(List(GeneratorsOfSemigroup(s),     
-   AsBipartition)), AsBipartition, AsTransformation);
-end);
+#  return MappingByFunction(s, Semigroup(List(GeneratorsOfSemigroup(s),     
+#   AsBipartition)), AsBipartition, AsTransformation);
+#end);
 
 #
 
