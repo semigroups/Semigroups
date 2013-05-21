@@ -63,7 +63,7 @@ end);
 
 #
 
-InstallOtherMethod(DClassType, "for acting semigroup with inverse op",
+InstallMethod(DClassType, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
@@ -73,7 +73,7 @@ end);
 
 #
 
-InstallOtherMethod(HClassType, "for acting semigroup with inverse op",
+InstallMethod(HClassType, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
@@ -83,7 +83,7 @@ end);
 
 #
 
-InstallOtherMethod(LClassType, "for acting semigroup with inverse op",
+InstallMethod(LClassType, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
@@ -93,7 +93,7 @@ end);
 
 #
 
-InstallOtherMethod(RClassType, "for acting semigroup with inverse op",
+InstallMethod(RClassType, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp and IsActingSemigroup],
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
@@ -340,7 +340,7 @@ end);
 
 #
 
-InstallOtherMethod(DClassOfRClass, "for inverse op R-class", 
+InstallMethod(DClassOfRClass, "for inverse op R-class", 
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
   local s, o, m, f;
@@ -354,7 +354,7 @@ end);
 
 #
 
-InstallOtherMethod(DClassOfHClass, "for inverse op H-class", 
+InstallMethod(DClassOfHClass, "for inverse op H-class", 
 [IsInverseOpClass and IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
   local s, o, m, f;
@@ -376,7 +376,7 @@ LambdaOrb(h), Representative(h), IsGreensClassNC(h)));
 
 #
 
-InstallOtherMethod(DClassReps, "for an acting semigroup with inversion",
+InstallMethod(DClassReps, "for an acting semigroup with inversion",
 [IsActingSemigroupWithInverseOp],
 function(s)            
   local o, r, out, f, m;
@@ -394,7 +394,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensDClasses, "for an acting semigroup with inverse op",
+InstallMethod(GreensDClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)
   local o, scc, out, i, f, m;
@@ -415,7 +415,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensHClasses, "for an acting semigroup with inverse op",
+InstallMethod(GreensHClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)
   local o, scc, len, out, n, mults, g, f, m, j, k;
@@ -443,7 +443,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensHClasses, "for inverse op D-class",
+InstallMethod(GreensHClasses, "for inverse op D-class",
 [IsActingSemigroupGreensClass and IsGreensDClass and IsInverseOpClass],
 function(d)
   local s, o, m, f, scc, mults, out, n, g, j, k;
@@ -471,7 +471,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensHClasses, "for inverse op L-class of acting semigroup",
+InstallMethod(GreensHClasses, "for inverse op L-class of acting semigroup",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
   local o, m, scc, mults, f, nc, s, out, k, j;
@@ -499,7 +499,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensHClasses, "for inverse op R-class of acting semigroup",
+InstallMethod(GreensHClasses, "for inverse op R-class of acting semigroup",
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
   local o, m, scc, mults, f, nc, s, out, k, j;
@@ -527,7 +527,7 @@ end);
 
 #
     
-InstallOtherMethod(GreensLClasses, "for acting semigroup with inverse op",
+InstallMethod(GreensLClasses, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)
   local o, scc, len, out, n, f, mults, m, j;
@@ -551,7 +551,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensLClasses, "for inverse op D-class of acting semigroup",
+InstallMethod(GreensLClasses, "for inverse op D-class of acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
 function(d)
   local s, m, o, f, nc, out, k, mults, scc, i;
@@ -580,7 +580,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensDClassOfElement, 
+InstallMethod(GreensDClassOfElement, 
 "for acting semi with inv op and elt",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
@@ -607,7 +607,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensDClassOfElementNC, 
+InstallMethod(GreensDClassOfElementNC, 
 "for an acting semigp with inverse op and elt",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
@@ -617,7 +617,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensHClassOfElement, 
+InstallMethod(GreensHClassOfElement, 
 "for an acting semigp with inverse op and elt",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
@@ -636,7 +636,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensHClassOfElementNC, "for an acting semigp and elt",
+InstallMethod(GreensHClassOfElementNC, "for an acting semigp and elt",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
   return CreateHClass(s, 1, GradedLambdaOrb(s, f, false),
@@ -645,7 +645,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensHClassOfElement, "for inverse op class and elt",
+InstallMethod(GreensHClassOfElement, "for inverse op class and elt",
 [IsActingSemigroupGreensClass and IsInverseOpClass, IsAssociativeElement],
 function(x, f)
   local h;
@@ -671,7 +671,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensHClassOfElementNC, "for inverse op class and elt",
+InstallMethod(GreensHClassOfElementNC, "for inverse op class and elt",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensLClass, IsAssociativeElement],
 function(x, f)
   local h;
@@ -692,7 +692,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensLClassOfElement, 
+InstallMethod(GreensLClassOfElement, 
 "for acting semigp with inverse op and elt",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
@@ -721,7 +721,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensLClassOfElementNC, "for an acting semigp and elt",
+InstallMethod(GreensLClassOfElementNC, "for an acting semigp and elt",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
   # lambda value of f has to be in first place of GradedLambdaOrb
@@ -732,7 +732,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensLClassOfElement, "for inverse op D-class and elt",
+InstallMethod(GreensLClassOfElement, "for inverse op D-class and elt",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(d, f)
   local l;
@@ -752,7 +752,7 @@ end);
 
 #
 
-InstallOtherMethod(GreensLClassOfElementNC, "for D-class and acting elt",
+InstallMethod(GreensLClassOfElementNC, "for D-class and acting elt",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(d, f)
   local l;
@@ -766,7 +766,7 @@ end);
 
 #
                     
-InstallOtherMethod(GreensRClasses, "for acting semigroup with inverse op",
+InstallMethod(GreensRClasses, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)         
   local o, scc, len, out, i, f, mults, m, j;
@@ -792,7 +792,7 @@ end);
 
 #
                     
-InstallOtherMethod(GreensRClasses, "for inverse op D-class",
+InstallMethod(GreensRClasses, "for inverse op D-class",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
 function(d)         
   local s, o, m, f, scc, mults, out, i, j;
@@ -817,7 +817,7 @@ end);
 
 #
 
-InstallOtherMethod(GroupHClass, "for an inverse op D-class",
+InstallMethod(GroupHClass, "for an inverse op D-class",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], 
 function(d)
   local h;
@@ -829,7 +829,7 @@ end);
 
 #
 
-InstallOtherMethod(Idempotents, "for an inverse op D-class",
+InstallMethod(Idempotents, "for an inverse op D-class",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], 
 function(d)
   local creator, o;
@@ -841,19 +841,19 @@ end);
 
 #
 
-InstallOtherMethod(Idempotents, "for an inverse op L-class",
+InstallMethod(Idempotents, "for an inverse op L-class",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass], 
 l-> [RightOne(Representative(l))]);
 
 #
 
-InstallOtherMethod(Idempotents, "for an inverse op R-class",
+InstallMethod(Idempotents, "for an inverse op R-class",
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass], 
 r-> [LeftOne(Representative(r))]);
 
 #
 
-InstallOtherMethod(Idempotents, "for acting semigroup with inverse op",
+InstallMethod(Idempotents, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp], 
 function(s)
   local o, creator, r, out, i;
@@ -875,7 +875,7 @@ end);
 
 #could do better if LambdaOrb is unknown JDM
 
-InstallOtherMethod(Idempotents, 
+InstallMethod(Idempotents, 
 "for acting semigroup with inverse op and non-negative integer",
 [IsActingSemigroupWithInverseOp, IsInt], 
 function(s, n)
@@ -912,12 +912,12 @@ end);
 
 #
 
-InstallOtherMethod(RClassReps, "for an acting semigroup with inverse op",
+InstallMethod(RClassReps, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp], s-> List(LClassReps(s), x-> x^-1));
 
 #
 
-InstallOtherMethod(RClassReps, "for a D-class of an acting semigroup",
+InstallMethod(RClassReps, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
 d-> List(LClassReps(d), x-> x^-1));
 
@@ -938,7 +938,7 @@ end);
 
 #
 
-InstallOtherMethod(SchutzenbergerGroup, "for an inverse op L-class",
+InstallMethod(SchutzenbergerGroup, "for an inverse op L-class",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
   local o, m, p;
@@ -954,7 +954,7 @@ end);
 
 #
 
-InstallOtherMethod(Size, "for an acting semigroup with inversion",
+InstallMethod(Size, "for an acting semigroup with inversion",
 [IsActingSemigroupWithInverseOp], 10, 
 function(s)
   local o, scc, r, nr, m;
@@ -972,19 +972,19 @@ end);
 
 #
 
-InstallOtherMethod(Size, "for an inverse op D-class",
+InstallMethod(Size, "for an inverse op D-class",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
 d-> Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))^2);
 
 #
 
-InstallOtherMethod(Size, "for an inverse op L-class",
+InstallMethod(Size, "for an inverse op L-class",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
 l-> Size(SchutzenbergerGroup(l))*Length(LambdaOrbSCC(l)));
 
 #
 
-InstallOtherMethod(HClassReps, "for an acting semigroup with inverse op",
+InstallMethod(HClassReps, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)
   local o, scc, len, out, n, mults, f, m, j, k;
@@ -1015,7 +1015,7 @@ end);
 
 #
 
-InstallOtherMethod(HClassReps, "for a inverse op D-class of acting semigroup",
+InstallMethod(HClassReps, "for a inverse op D-class of acting semigroup",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local o, m, scc, mults, f, out, k, g, i, j;
@@ -1042,7 +1042,7 @@ end);
 
 #
 
-InstallOtherMethod(HClassReps, "for an inverse op L-class",
+InstallMethod(HClassReps, "for an inverse op L-class",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
   local o, m, scc, mults, f, out, k, i;
@@ -1065,50 +1065,50 @@ end);
 
 #
 
-InstallOtherMethod(NrIdempotents, "for an acting semigroup with inverse op",
+InstallMethod(NrIdempotents, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp], 
 s-> Length(Enumerate(LambdaOrb(s), infinity))-1);     
 
 #
 
-InstallOtherMethod(NrIdempotents, "for an inverse op D-class",
+InstallMethod(NrIdempotents, "for an inverse op D-class",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], NrLClasses);   
 
 #
 
-InstallOtherMethod(NrIdempotents, "for an inverse op L-class",
+InstallMethod(NrIdempotents, "for an inverse op L-class",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass], l-> 1);   
 
 #
 
-InstallOtherMethod(NrIdempotents, "for an inverse op R-class",
+InstallMethod(NrIdempotents, "for an inverse op R-class",
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass], r-> 1);   
 
 #
 
-InstallOtherMethod(NrRClasses, "for an acting semigroup with inverse op",
+InstallMethod(NrRClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp], NrLClasses);
 
 #
 
-InstallOtherMethod(NrRClasses, "for inverse op D-class",
+InstallMethod(NrRClasses, "for inverse op D-class",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass], NrLClasses);
 
 #
 
-InstallOtherMethod(NrHClasses, "for an inverse op D-class of acting semigroup",
+InstallMethod(NrHClasses, "for an inverse op D-class of acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
 l-> Length(LambdaOrbSCC(l))^2);
 
 #
 
-InstallOtherMethod(NrHClasses, "for an inverse op L-class of acting semigroup",
+InstallMethod(NrHClasses, "for an inverse op L-class of acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensLClass],
 l-> Length(LambdaOrbSCC(l)));
 
 #
 
-InstallOtherMethod(NrHClasses, "for an acting semigroup with inverse op",
+InstallMethod(NrHClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)
   local o, scc;
