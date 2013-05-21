@@ -780,19 +780,18 @@ end);
 # different method for inverse
 
 InstallMethod(IteratorOfLClassReps, "for a regular acting semigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup],
+[IsActingSemigroup and IsRegularSemigroup],
 s-> IteratorByIterator(IteratorOfLClassData(s), x-> x[4],
 [IsIteratorOfLClassReps]));
 
 # different method for inverse
 
-InstallMethod(IteratorOfLClasses, "for a part perm inverse semigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup],
+InstallMethod(IteratorOfLClasses, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup],
 s-> IteratorByIterator(IteratorOfLClassData(s), x->
 CallFuncList(CreateLClassNC, x), [IsIteratorOfLClasses]));
 
 #for inverse acting semigroups...
-
 
 InstallMethod(IteratorOfDClassData, "for inverse acting semigroup", 
 [IsActingSemigroupWithInverseOp and IsRegularSemigroup], 
