@@ -76,7 +76,7 @@ InstallMethod(MagmaByGenerators,
 
 #
 
-InstallOtherMethod(SemigroupByGenerators, 
+InstallMethod(SemigroupByGenerators, 
 "for an associative element with action collection",
 [IsAssociativeElementWithActionCollection],
 function(gens)
@@ -85,7 +85,7 @@ end);
 
 #
 
-InstallOtherMethod(SemigroupByGenerators, 
+InstallMethod(SemigroupByGenerators, 
 "for an associative element with action collection and record",
 [IsAssociativeElementWithActionCollection, IsRecord],
 function(gens, opts)
@@ -167,7 +167,7 @@ end);
 
 #
 
-InstallOtherMethod(MonoidByGenerators, 
+InstallMethod(MonoidByGenerators, 
 "for an associative element collection",
 [IsAssociativeElementWithActionCollection],
 function(gens)
@@ -176,7 +176,7 @@ end);
 
 #
 
-InstallOtherMethod(MonoidByGenerators, 
+InstallMethod(MonoidByGenerators, 
 "for an asssociative element with action collection and record",
 [IsAssociativeElementWithActionCollection, IsRecord],
 function(gens, record)
@@ -264,7 +264,7 @@ end);
 
 #
 
-InstallOtherMethod(InverseMonoidByGenerators, 
+InstallMethod(InverseMonoidByGenerators, 
 "for associative element with semigroup inverse and action coll, and record",  
 [IsAssociativeElementWithUniqueSemigroupInverseCollection and
 IsAssociativeElementWithActionCollection, IsRecord],
@@ -310,7 +310,7 @@ end);
 
 #
 
-InstallOtherMethod(InverseSemigroupByGenerators, 
+InstallMethod(InverseSemigroupByGenerators, 
 "for partial perm coll, partial perm coll, and record",
 [IsAssociativeElementWithUniqueSemigroupInverseCollection and
 IsAssociativeElementWithActionCollection, IsRecord],
@@ -348,7 +348,7 @@ end);
 
 # closure
 
-InstallOtherMethod(ClosureInverseSemigroup, 
+InstallMethod(ClosureInverseSemigroup, 
 "for acting semigroup with inverse op and an associative element coll",
 [IsActingSemigroupWithInverseOp, IsAssociativeElementWithActionCollection],
 function(s, coll) 
@@ -357,7 +357,7 @@ end);
 
 #
 
-InstallOtherMethod(ClosureInverseSemigroup, 
+InstallMethod(ClosureInverseSemigroup, 
 "for acting semigroup with inverse op and an associative element coll",
 [IsActingSemigroupWithInverseOp, IsAssociativeElementWithAction],
 function(s, f) 
@@ -366,7 +366,7 @@ end);
 
 #
 
-InstallOtherMethod(ClosureInverseSemigroup, 
+InstallMethod(ClosureInverseSemigroup, 
 "for acting semigroup with inverse op and an associative element coll",
 [IsActingSemigroupWithInverseOp, IsAssociativeElementWithAction, IsRecord],
 function(s, f, record) 
@@ -434,7 +434,7 @@ end);
 
 #
 
-InstallOtherMethod(ClosureSemigroup, 
+InstallMethod(ClosureSemigroup, 
 "for an acting semigroup and associative element with action coll",
 [IsActingSemigroup, IsAssociativeElementWithActionCollection],
 function(s, coll)
@@ -443,7 +443,7 @@ end);
 
 #
 
-InstallOtherMethod(ClosureSemigroup, 
+InstallMethod(ClosureSemigroup, 
 "for an acting semigroup and associative element with action coll",
 [IsActingSemigroup, IsList and IsEmpty],
 function(s, coll)
@@ -452,7 +452,7 @@ end);
 
 #
 
-InstallOtherMethod(ClosureSemigroup, 
+InstallMethod(ClosureSemigroup, 
 "for an acting semigroup and associative element with action",
 [IsActingSemigroup, IsAssociativeElementWithAction],
 function(s, f)
@@ -461,7 +461,7 @@ end);
 
 #
 
-InstallOtherMethod(ClosureSemigroup, 
+InstallMethod(ClosureSemigroup, 
 "for an acting semigroup and associative element with action",
 [IsActingSemigroup, IsAssociativeElementWithAction, IsRecord],
 function(s, f, record)
@@ -732,7 +732,7 @@ end);
 
 # <limit> is the max size of the subsemigroup.
 
-InstallOtherMethod(SubsemigroupByProperty, 
+InstallMethod(SubsemigroupByProperty, 
 "for an acting semigroup with generators, function, and positive integer",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsPosInt], 
 function(S, func, limit)
@@ -762,7 +762,7 @@ end);
 
 # <limit> is the max size of the subsemigroup.
 
-InstallOtherMethod(InverseSubsemigroupByProperty, 
+InstallMethod(InverseSubsemigroupByProperty, 
 "for acting semigroup with inverse op & generators, function, positive integer",
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction, IsPosInt], 
 function(S, func, limit)
@@ -801,7 +801,7 @@ end);
 
 #
 
-InstallOtherMethod(InverseSubsemigroupByProperty, 
+InstallMethod(InverseSubsemigroupByProperty, 
 "for acting semigroup with inverse op & generators and function",
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction], 
 function(S, func)
@@ -820,8 +820,6 @@ function(arg)
   fi;
   return CallFuncList(Semigroup, arg);
 end);
-
-
 
 #random
 

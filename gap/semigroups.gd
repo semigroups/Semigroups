@@ -8,11 +8,41 @@
 ############################################################################# 
 ##
 
-DeclareOperation("ClosureInverseSemigroup", [ IsActingSemigroupWithInverseOp,
+
+DeclareOperation("SemigroupByGenerators",
+[IsAssociativeElementWithActionCollection, IsRecord]);
+
+DeclareOperation("MonoidByGenerators",
+[IsAssociativeElementWithActionCollection, IsRecord]);
+
+DeclareOperation("InverseMonoidByGenerators",
+[IsAssociativeElementWithUniqueSemigroupInverseCollection and
 IsAssociativeElementWithActionCollection, IsRecord]);
+
+DeclareOperation("InverseSemigroupByGenerators",
+[IsAssociativeElementWithUniqueSemigroupInverseCollection and
+IsAssociativeElementWithActionCollection, IsRecord]);
+
+DeclareOperation("ClosureInverseSemigroup", [IsActingSemigroupWithInverseOp,
+IsAssociativeElementWithActionCollection, IsRecord]);
+DeclareOperation("ClosureInverseSemigroup",
+[IsActingSemigroupWithInverseOp, IsAssociativeElementWithActionCollection]);
+DeclareOperation("ClosureInverseSemigroup", 
+[IsActingSemigroupWithInverseOp, IsAssociativeElementWithAction]);
+DeclareOperation("ClosureInverseSemigroup",
+[IsActingSemigroupWithInverseOp, IsAssociativeElementWithAction, IsRecord]);
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
-DeclareOperation("ClosureSemigroup", [IsActingSemigroup, 
-IsAssociativeElementWithActionCollection, IsRecord]);
+
+DeclareOperation("ClosureSemigroup", 
+[IsActingSemigroup, IsAssociativeElementWithActionCollection, IsRecord]);
+DeclareOperation("ClosureSemigroup", 
+[IsActingSemigroup, IsAssociativeElementWithActionCollection]);
+DeclareOperation("ClosureSemigroup",
+[IsActingSemigroup, IsAssociativeElementWithAction]);
+DeclareOperation("ClosureSemigroup",
+[IsActingSemigroup, IsAssociativeElementWithAction, IsRecord]);
+DeclareOperation("ClosureSemigroup", [IsActingSemigroup, IsList and IsEmpty]); #JDM remove me!
+
 DeclareGlobalFunction("ClosureSemigroupNC");
 
 DeclareAttribute("Generators", IsSemigroup);
@@ -25,13 +55,18 @@ DeclareOperation("RandomInverseSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomInverseMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomTransformationMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomTransformationSemigroup", [IsPosInt, IsPosInt]);
-DeclareOperation("RandomBipartitionSemigroup", [IsPosInt, IsPosInt]);
-DeclareOperation("RandomBipartitionMonoid", [IsPosInt, IsPosInt]);
+#DeclareOperation("RandomBipartitionSemigroup", [IsPosInt, IsPosInt]);
+#DeclareOperation("RandomBipartitionMonoid", [IsPosInt, IsPosInt]);
 
 DeclareGlobalFunction("RegularSemigroup");
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
+DeclareOperation("SubsemigroupByProperty", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsPosInt]);
+
 DeclareOperation("InverseSubsemigroupByProperty", 
 [IsSemigroup, IsFunction]);
+DeclareOperation("InverseSubsemigroupByProperty", 
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction,       IsPosInt]);
 
 #EOF
