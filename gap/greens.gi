@@ -2252,10 +2252,10 @@ end);
 #
 
 InstallMethod(DClass, "for an R-class", [IsGreensRClass], DClassOfRClass);
-
 InstallMethod(DClass, "for an L-class", [IsGreensLClass], DClassOfLClass);
-
 InstallMethod(DClass, "for an H-class", [IsGreensHClass], DClassOfHClass);
+InstallMethod(LClass, "for an H-class", [IsGreensHClass], LClassOfHClass);
+InstallMethod(RClass, "for an H-class", [IsGreensHClass], RClassOfHClass);
 
 # different method for regular/inverse
 
