@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-
+DeclareOperation("EvaluateWord", [IsPartialPermCollection, IsList]);
 DeclareGlobalFunction("EnumeratePosition");
 DeclareGlobalFunction("LookForInOrb");
 DeclareGlobalFunction("OrbSCC");

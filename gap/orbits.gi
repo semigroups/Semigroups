@@ -128,7 +128,7 @@ end );
 
 #
 
-InstallOtherMethod(EvaluateWord, "for partial perm coll and list pos ints", 
+InstallMethod(EvaluateWord, "for partial perm coll and list pos ints", 
 [IsPartialPermCollection, IsList],
 function ( gens, w )
     local  i, res, pts;
