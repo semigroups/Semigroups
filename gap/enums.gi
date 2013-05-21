@@ -8,76 +8,6 @@
 #############################################################################
 ##
 
-InstallGlobalFunction(NumberArrangement, 
-function(arr, n)
-  local bool, m, mult, factor, out, k, i, j;
-  
-  if IsEmpty(arr) then 
-    return 1;
-  fi;
-
-  bool:=BlistList([1..n], []);
-  m:=Length(arr);
-
-  bool[arr[1]]:=true;
-  mult:=Product([n-m+1..n-1]);
-  factor:=n;
-  out:=(arr[1]-1)*mult;
-
-  for i in [2..m] do 
-    k:=0;
-    for j in [1..arr[i]-1] do 
-      if not bool[j] then k:=k+1; fi;
-    od;
-    bool[arr[i]]:=true;
-    factor:=factor-1;
-    mult:=mult/factor;
-    out:=out+k*mult;
-  od;
-  return out+1;
-end);
-
-InstallGlobalFunction(ArrangementNumber, 
-function(r, m, n)
-  local bool, mult, factor, q, out, j, k, i;
-  if m=0 then 
-    return [];
-  fi;
-  if m=1 then 
-    return [r];
-  fi;
-  bool:=BlistList([1..n], []);
-  r:=r-1;
-  mult:=Product([n-m+1..n-1]); 
-  factor:=n; 
-  q:=QuotientRemainder(r,mult);
-  out:=[q[1]+1];
-  bool[q[1]+1]:=true;
-  
-  for i in [2..m-1] do  
-    factor:=factor-1;
-    mult:=mult/factor;
-    q:=QuotientRemainder(q[2], mult);
-    j:=0; k:=0; 
-    repeat 
-      j:=j+1;
-      if not bool[j] then k:=k+1; fi;
-    until k=q[1]+1;
-    bool[j]:=true;
-    out[i]:=j;
-  od;
-  j:=0; k:=0;
-  repeat
-    j:=j+1;
-    if not bool[j] then k:=k+1; fi;
-  until k=q[2]+1;
-  out[m]:=j;
-  return out;
-end);
-
-#JDM use these for enumerator of symmetric inverse semigroup
-# using EnumeratorByEnumerator
-
 InstallGlobalFunction(EnumeratorByEnumerator, 
 function(domain, baseenum, convert_out, convert_in, filts)
   local record, enum, filt;
@@ -119,6 +49,169 @@ function(domain, baseenum, convert_out, convert_in, filts)
   return enum;
 end);
 
+#
+
+InstallGlobalFunction(EnumeratorByEnumOfEnums,
+function(domain, record, baseenum, convert, filts)
+
+  record.baseenum:=baseenum;
+  record.enumofenums:=EmptyPlist(Length(baseenum));
+  
+  if not IsBound(record.Length) then #maybe a better way is in record.Length...
+    record.Length:=function(enum)
+      local tot, enumofenums, baseenum, i;
+      tot:=0;  
+      enumofenums:=enum!.enumofenums;
+      baseenum:=enum!.baseenum;
+      for i in [1..Length(baseenum)] do 
+        if not IsBound(enumofenums[i]) then 
+          enumofenums[i]:=Enumerator(baseenum[i]);
+        fi;
+        tot:=tot+Length(enumofenums[i]);
+      od;
+      return tot;
+    end;
+  fi;
+  #
+  record.ElementNumber:=function(enum, pos)
+    local enumofenums, baseenum, i;
+    
+    enumofenums:=enum!.enumofenums;
+    baseenum:=enum!.baseenum;
+
+    i:=1; 
+    if not IsBound(enumofenums[1]) then 
+      enumofenums[1]:=Enumerator(baseenum[1]);
+    fi;
+
+    while pos>Length(enumofenums[i]) do 
+      pos:=pos-Length(enumofenums[i]);
+      i:=i+1;
+      if not IsBound(enumofenums[i]) then 
+        enumofenums[i]:=Enumerator(baseenum[i]);
+      fi;
+    od;
+    return enumofenums[i][pos];
+  end;
+  #
+  record.NumberElement:=function(enum, elt)
+    local baseenum, enumofenums, basepos, pos, i;
+    
+    baseenum:=enum!.baseenum;
+    enumofenums:=enum!.enumofenums;
+
+    basepos:=Position(baseenum, convert(enum, elt));
+    if not IsBound(enumofenums[basepos]) then 
+      enumofenums[basepos]:=Enumerator(baseenum[basepos]);
+    fi;
+    pos:=Position(enumofenums[basepos], elt);
+    for i in [1..basepos-1] do
+      if not IsBound(enumofenums[i]) then 
+        enumofenums[i]:=Enumerator(baseenum[i]);
+      fi;
+      pos:=pos+Length(enumofenums[i]);
+    od;
+    return pos;
+  end;
+  return EnumeratorByFunctions(domain, record);
+end);
+
+#
+
+InstallMethod(Enumerator, "for an acting semigroup", 
+[IsActingSemigroup], 5, #to beat the method for semigroup ideals
+function(s)
+  local record, convert;
+
+  record:=rec();
+  record.Length:=x-> Size(s);
+  record.Membership:=function(x, enum)
+    return x in enum!.parent;
+  end;
+  record.parent:=s;
+
+  convert:=function(enum, x)
+    return GreensRClassOfElement(enum!.parent, x);
+  end;
+
+  return EnumeratorByEnumOfEnums(s, record, EnumeratorOfRClasses(s), convert,
+  []);
+end);
+
+#JDM use these for enumerator of symmetric inverse semigroup
+# using EnumeratorByEnumerator
+
+InstallGlobalFunction(NumberArrangement, 
+function(arr, n)
+  local bool, m, mult, factor, out, k, i, j;
+  
+  if IsEmpty(arr) then 
+    return 1;
+  fi;
+
+  bool:=BlistList([1..n], []);
+  m:=Length(arr);
+
+  bool[arr[1]]:=true;
+  mult:=Product([n-m+1..n-1]);
+  factor:=n;
+  out:=(arr[1]-1)*mult;
+
+  for i in [2..m] do 
+    k:=0;
+    for j in [1..arr[i]-1] do 
+      if not bool[j] then k:=k+1; fi;
+    od;
+    bool[arr[i]]:=true;
+    factor:=factor-1;
+    mult:=mult/factor;
+    out:=out+k*mult;
+  od;
+  return out+1;
+end);
+
+#
+
+InstallGlobalFunction(ArrangementNumber, 
+function(r, m, n)
+  local bool, mult, factor, q, out, j, k, i;
+  if m=0 then 
+    return [];
+  fi;
+  if m=1 then 
+    return [r];
+  fi;
+  bool:=BlistList([1..n], []);
+  r:=r-1;
+  mult:=Product([n-m+1..n-1]); 
+  factor:=n; 
+  q:=QuotientRemainder(r,mult);
+  out:=[q[1]+1];
+  bool[q[1]+1]:=true;
+  
+  for i in [2..m-1] do  
+    factor:=factor-1;
+    mult:=mult/factor;
+    q:=QuotientRemainder(q[2], mult);
+    j:=0; k:=0; 
+    repeat 
+      j:=j+1;
+      if not bool[j] then k:=k+1; fi;
+    until k=q[1]+1;
+    bool[j]:=true;
+    out[i]:=j;
+  od;
+  j:=0; k:=0;
+  repeat
+    j:=j+1;
+    if not bool[j] then k:=k+1; fi;
+  until k=q[2]+1;
+  out[m]:=j;
+  return out;
+end);
+
+#
+
 InstallGlobalFunction(EnumeratorOfArrangements, 
 function(m, n)
   local convert_out, convert_in, fam;
@@ -157,22 +250,10 @@ end);
 #semigroup, invokes IteratorOfRClassData which repeatedly recomputes the graded
 #lambda orbs of the R-class reps.
 
-InstallMethod(Enumerator, "for an acting semigroup", 
+InstallMethod(EnumeratorSorted, "for an acting semigroup", 
 [IsActingSemigroup], 5, #to beat the method for semigroup ideals
 function(s)
-  local out, iter, j, i;
-
-  out:=EmptyPlist(Size(s)); 
-
-  iter:=Iterator(s); 
-  j:=0;
-
-  for i in iter do 
-    j:=j+1;
-    out[j]:=i;
-  od;
-
-  return Immutable(out);
+  return Immutable(SSortedList(ListIterator(Iterator(s), Size(s))));
 end);
 
 # different method for inverse/regular

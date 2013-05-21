@@ -8,8 +8,10 @@
 #############################################################################
 ##
 
+DeclareGlobalFunction("EnumeratorByEnumOfEnums");
+DeclareGlobalFunction("EnumeratorByEnumerator");
+
 DeclareGlobalFunction("NumberArrangement");
 DeclareGlobalFunction("ArrangementNumber");
-DeclareGlobalFunction("EnumeratorByEnumerator");
 DeclareGlobalFunction("EnumeratorOfArrangements");
 
