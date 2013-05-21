@@ -10,7 +10,7 @@
 
 DeclareProperty("IsActingSemigroup", IsSemigroup);
 DeclareProperty("IsActingSemigroup", IsAssociativeElementCollection);
-DeclareProperty("IsActingSemigroupWithInverseOp", IsActingSemigroup and IsInverseSemigroup);
+DeclareProperty("IsActingSemigroupWithInverseOp", IsActingSemigroup);
 DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);
