@@ -2315,27 +2315,4 @@ InstallMethod(IsGreensClassOfPartPermSemigroup, "for a Green's class",
 InstallMethod(IsGreensClassOfInverseSemigroup, "for a Green's class",
 [IsGreensClass], x-> IsInverseSemigroup(Parent(x)));
 
-#JDM are the following really required?
-
-#InstallMethod(IsActingSemigroup, "for a Green's class",
-#[IsGreensClass], ReturnFalse);
-#
-#InstallMethod(IsActingSemigroupWithInverseOp, "for a Green's class",
-#[IsGreensClass], ReturnFalse);
-#
-#InstallMethod(IsActingSemigroupWithInverseOp, "for an acting semigroup",
-#[IsActingSemigroup], ReturnFalse);
-#
-#InstallMethod(IsGreensClass, "for an object", [IsObject], ReturnFalse);
-#
-#InstallMethod(IsGreensRClass, "for an object", [IsObject], ReturnFalse);
-#
-#InstallMethod(IsGreensLClass, "for an object", [IsObject], ReturnFalse);
-#
-#InstallMethod(IsGreensHClass, "for an object", [IsObject], ReturnFalse);
-#
-#InstallMethod(IsGreensDClass, "for an object", [IsObject], ReturnFalse);
-#
-#InstallMethod(IsGroupHClass, "for an acting semi Green's class",
-#[IsActingSemigroupGreensClass], ReturnFalse);
 #EOF
