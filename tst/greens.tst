@@ -1249,7 +1249,7 @@ gap> r:=GreensRClassOfElement(s, f);
 gap> elts:=Elements(r);;
 gap> for i in elts do if not i in d then Print("Error 1");fi; od;
 gap> rr:=GreensRClassOfElement(s, Transformation([1,1,1,2,3,4,5,6]));
-{Transformation( [ 1, 1, 1, 3, 4, 5, 6, 7 ] )}
+{Transformation( [ 1, 1, 1, 2, 3, 4, 5, 6 ] )}
 gap> elts:=Elements(rr);; d:=DClassOfRClass(rr);;
 gap> for i in elts do if not i in d then Print("Error 2");  fi; od;
 gap> Sum(List(GreensDClasses(s), Size)); 8^8;
