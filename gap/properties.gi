@@ -1,4 +1,3 @@
-
 #############################################################################
 ##
 #W  properties.gi
@@ -130,7 +129,7 @@ InstallMethod(IsBrandtSemigroup, "for an inverse semigroup",
 
 #
 
-InstallOtherMethod(IsCliffordSemigroup, 
+InstallMethod(IsCliffordSemigroup, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
@@ -172,14 +171,14 @@ end);
 
 #
 
-InstallOtherMethod(IsCliffordSemigroup, 
+InstallMethod(IsCliffordSemigroup, 
 "for an inverse acting semigroup with generators", 
 [IsInverseSemigroup and IsActingSemigroup and HasGeneratorsOfSemigroup], 
 s-> ForAll(OrbSCC(LambdaOrb(s)), x-> Length(x)=1));
 
 #
 
-InstallOtherMethod(IsCommutativeSemigroup, "for a semigroup with generators",
+InstallMethod(IsCommutativeSemigroup, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, n, i, j; 
@@ -202,7 +201,7 @@ end);
 
 # not used in Display
 
-InstallOtherMethod(IsCompletelyRegularSemigroup, 
+InstallMethod(IsCompletelyRegularSemigroup, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
@@ -238,13 +237,13 @@ end);
 
 # not used in ViewObj
 
-InstallOtherMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
+InstallMethod(IsCompletelyRegularSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsCliffordSemigroup);
 
 # Notes: this test required to avoid conflict with Smallsemi, DeclareSynonymAttr
 # causes problems. 
 
-InstallOtherMethod(IsCompletelySimpleSemigroup, "for a semigroup",
+InstallMethod(IsCompletelySimpleSemigroup, "for a semigroup",
 [IsSemigroup and HasGeneratorsOfSemigroup], 
  x-> IsSimpleSemigroup(x) and IsFinite(x));
 
@@ -295,7 +294,7 @@ end);
 
 #
 
-InstallOtherMethod(IsHTrivial, 
+InstallMethod(IsHTrivial, 
 "for a D-class of an acting semigroup", 
 [IsGreensDClass and IsActingSemigroupGreensClass], 
 d-> NrHClasses(d)=Size(d));
@@ -331,12 +330,12 @@ end);
 
 # not used in ViewObj
 
-InstallOtherMethod(IsLTrivial, "for a D-class of an acting semigroup", 
+InstallMethod(IsLTrivial, "for a D-class of an acting semigroup", 
 [IsGreensDClass and IsActingSemigroupGreensClass], d-> NrLClasses(d)=Size(d));
 
 # not used in ViewObj
 
-InstallOtherMethod(IsRTrivial, "for D-class of an acting semigroup",
+InstallMethod(IsRTrivial, "for D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass], 
 d-> NrRClasses(d)=Size(d));
 
@@ -377,7 +376,7 @@ end);
 
 #
 
-InstallOtherMethod(IsGroupAsSemigroup, "for an acting semigroup", 
+InstallMethod(IsGroupAsSemigroup, "for an acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, lambdafunc, lambda, rhofunc, rho, tester, lambda_f, rho_f, f;
@@ -409,7 +408,7 @@ end);
 # not used in ViewObj
 # IteratorOfIdempotents would be good here.
 
-InstallOtherMethod(IsIdempotentGenerated, 
+InstallMethod(IsIdempotentGenerated, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s) 
@@ -439,18 +438,12 @@ end);
 
 # not used in ViewObj
 
-InstallOtherMethod(IsIdempotentGenerated, "for an inverse semigroup",
+InstallMethod(IsIdempotentGenerated, "for an inverse semigroup",
 [IsInverseSemigroup], IsSemilatticeAsSemigroup);
 
 #
 
-InstallOtherMethod(IsInverseMonoid, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
-s-> IsMonoid(s) and IsInverseSemigroup(s));
-
-#
-
-InstallOtherMethod(IsInverseSemigroup,
+InstallMethod(IsInverseSemigroup,
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
@@ -490,14 +483,14 @@ end);
 
 #
 
-InstallOtherMethod(IsInverseSemigroup, 
+InstallMethod(IsInverseSemigroup, 
 "for a semigroup of partial perms with generators",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
 s-> ForAll(Generators(s), x-> x^-1 in s));
 
 #
 
-InstallOtherMethod(IsLeftSimple, "for an acting semigroup with generators",
+InstallMethod(IsLeftSimple, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local iter;
@@ -521,7 +514,7 @@ InstallMethod(IsLeftSimple, "for an inverse semigroup",
 
 #
 
-InstallOtherMethod(IsLeftZeroSemigroup, 
+InstallMethod(IsLeftZeroSemigroup, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
@@ -542,12 +535,12 @@ end);
 
 #
 
-InstallOtherMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
+InstallMethod(IsLeftZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
 # not used in ViewObj
 
-InstallOtherMethod(IsMonogenicSemigroup, 
+InstallMethod(IsMonogenicSemigroup, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
@@ -648,13 +641,13 @@ end);
 
 # not used in ViewObj
 
-InstallOtherMethod(IsMonoidAsSemigroup, "for a semigroup",
+InstallMethod(IsMonoidAsSemigroup, "for a semigroup",
 [IsSemigroup and HasGeneratorsOfSemigroup], 
  x-> not IsMonoid(x) and MultiplicativeNeutralElement(x)<>fail);
 
 # Notes: is there a better method? JDM
 
-InstallOtherMethod(IsOrthodoxSemigroup, 
+InstallMethod(IsOrthodoxSemigroup, 
 "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
@@ -683,7 +676,7 @@ end);
 
 # not used in ViewObj
 
-InstallOtherMethod(IsRectangularBand, 
+InstallMethod(IsRectangularBand, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
@@ -700,12 +693,12 @@ end);
 
 # not used in ViewObj
 
-InstallOtherMethod(IsRectangularBand, "for an inverse semigroup",
+InstallMethod(IsRectangularBand, "for an inverse semigroup",
 [IsInverseSemigroup], s-> IsHTrivial(s) and IsSimpleSemigroup(s));
 
 #
 
-InstallOtherMethod(IsRegularSemigroup, "for an acting semigroup", 
+InstallMethod(IsRegularSemigroup, "for an acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local tester, n, rhofunc, lookfunc, data, i;
@@ -846,7 +839,7 @@ InstallMethod(IsRightSimple, "for an inverse semigroup",
 
 #
 
-InstallOtherMethod(IsRightZeroSemigroup, 
+InstallMethod(IsRightZeroSemigroup, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
@@ -866,24 +859,24 @@ end);
 
 #
 
-InstallOtherMethod(IsRightZeroSemigroup, "for an inverse semigroup",
+InstallMethod(IsRightZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
 # not used in ViewObj
 
-InstallOtherMethod(IsSemiband, "for a semigroup with generators",
+InstallMethod(IsSemiband, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], IsIdempotentGenerated);
 
 # not used in ViewObj
 
-InstallOtherMethod(IsSemilatticeAsSemigroup, 
+InstallMethod(IsSemilatticeAsSemigroup, 
 "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
  s-> IsCommutativeSemigroup(s) and IsBand(s));
 
 # not used in ViewObj
 
-InstallOtherMethod(IsSemilatticeAsSemigroup, 
+InstallMethod(IsSemilatticeAsSemigroup, 
 "for an inverse semigroup with generators",
 [IsInverseSemigroup and HasGeneratorsOfSemigroup], 
 s-> ForAll(GeneratorsOfSemigroup(s), IsIdempotent));
@@ -1028,7 +1021,7 @@ end);
 
 #
 
-InstallOtherMethod(IsZeroGroup, "for an acting semigroup with generators",
+InstallMethod(IsZeroGroup, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
 
@@ -1064,7 +1057,7 @@ end);
 
 #
 
-InstallOtherMethod(IsZeroSemigroup, 
+InstallMethod(IsZeroSemigroup, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
@@ -1094,12 +1087,12 @@ end);
 
 #
 
-InstallOtherMethod(IsZeroSemigroup, "for an inverse semigroup",
+InstallMethod(IsZeroSemigroup, "for an inverse semigroup",
 [IsInverseSemigroup], IsTrivial);
 
 #
 
-InstallOtherMethod(IsZeroSimpleSemigroup, 
+InstallMethod(IsZeroSimpleSemigroup, 
 "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)

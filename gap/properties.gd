@@ -21,8 +21,12 @@ DeclareProperty("IsCommutativeSemigroup", IsSemigroup);
 DeclareProperty("IsCompletelyRegularSemigroup", IsSemigroup); 
 DeclareProperty("IsCompletelySimpleSemigroup", IsSemigroup); 
 DeclareProperty("IsRTrivial", IsSemigroup);
+DeclareProperty("IsRTrivial", IsGreensDClass);
 DeclareProperty("IsLTrivial", IsSemigroup);
+DeclareProperty("IsLTrivial", IsGreensDClass);
 DeclareProperty("IsHTrivial", IsSemigroup);
+DeclareProperty("IsHTrivial", IsGreensDClass);
+
 DeclareSynonymAttr("IsDTrivial", IsRTrivial and IsLTrivial);
 DeclareSynonymAttr("IsAperiodicSemigroup", IsHTrivial);
 DeclareSynonymAttr("IsCombinatorialSemigroup", IsHTrivial);
