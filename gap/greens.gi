@@ -2265,22 +2265,22 @@ InstallMethod(DClass, "for an H-class", [IsGreensHClass], DClassOfHClass);
 
 #
 
-InstallGlobalFunction(HClass,
-function(arg)
+InstallMethod(HClassNC, "for an acting semigroup and associative element", 
+[IsActingSemigroup, IsAssociativeElement], GreensHClassOfElementNC);
 
-  if Length(arg)=2 and (IsGreensClass(arg[1]) or IsActingSemigroup(arg[1])) and
-   IsAssociativeElement(arg[2]) then 
-    return GreensHClassOfElement(arg[1], arg[2]);
-  fi;
+InstallMethod(HClass, "for an acting semigroup and associative element",
+[IsActingSemigroup, IsAssociativeElement], GreensHClassOfElement);
 
-  Error("usage: acting semigroup or Green's class, and acting element,");
-  return;
-end);
+InstallMethod(HClassNC, "for a Green's class and associative element", 
+[IsGreensClass, IsAssociativeElement], GreensHClassOfElementNC);
+
+InstallMethod(HClass, "for a Green's class and associative element",
+[IsGreensClass, IsAssociativeElement], GreensHClassOfElement);
 
 #
 
 InstallGlobalFunction(HClassNC,
-function(arg)
+unction(arg)
 
   if Length(arg)=2 and (IsGreensClass(arg[1]) or IsActingSemigroup(arg[1])) and
    IsAssociativeElement(arg[2]) then 

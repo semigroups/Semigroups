@@ -58,8 +58,11 @@ DeclareOperation("DClass", [IsGreensLClass]);
 DeclareOperation("DClass", [IsGreensHClass]);
 DeclareOperation("DClassNC", [IsActingSemigroup, IsAssociativeElement]);
 
-DeclareOperation("HClass");
-DeclareOperation("HClassNC");
+DeclareOperation("HClass", [IsActingSemigroup, IsAssociativeElement]);
+DeclareOperation("HClass", [IsGreensClass, IsAssociativeElement]);
+DeclareOperation("HClassNC", [IsActingSemigroup, IsAssociativeElement]);
+DeclareOperation("HClassNC", [IsGreensClass, IsAssociativeElement]);
+
 DeclareOperation("LClass");
 DeclareOperation("LClassNC");
 DeclareOperation("RClass");
