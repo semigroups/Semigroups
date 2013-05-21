@@ -157,7 +157,4 @@ DeclareGlobalFunction("IsRegularClass@");
 DeclareGlobalFunction("Idempotents@");
 DeclareGlobalFunction("NrIdempotents@");
 
-#to move...
-DeclareOperation("EnumeratorOfRClasses", [IsSemigroup]);
-
 #EOF
