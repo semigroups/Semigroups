@@ -39,9 +39,11 @@ end);
 InstallMethod(GradedLambdaHT, "for an acting semi",
 [IsActingSemigroup],
 function(s)
-#opts here too JDM
-return HTCreate(LambdaFunc(s)(GeneratorsOfSemigroup(s)[1]),
- rec(forflatplainlists:=true, treehashsize:=s!.opts.hashlen.S));
+  local record;
+
+  record:=ShallowCopy(LambdaOrbOpts(s));
+  record.treehashsize:=s!.opts.hashlen.S;
+  return HTCreate(LambdaFunc(s)(Representative(s)), record);
 end);
 
 #
@@ -49,9 +51,11 @@ end);
 InstallMethod(GradedRhoHT, "for an acting semi",
 [IsActingSemigroup],
 function(s)
-#opts here too JDM
-return HTCreate(RhoFunc(s)(GeneratorsOfSemigroup(s)[1]),
- rec(forflatplainlists:=true, treehashsize:=s!.opts.hashlen.S));
+  local record;
+
+  record:=ShallowCopy(RhoOrbOpts(s));
+  record.treehashsize:=s!.opts.hashlen.S;
+  return HTCreate(RhoFunc(s)(Representative(s)), record);
 end);
 
 # returns the element <f> premultiplied by RhoOrbMult so that the resulting 
