@@ -736,27 +736,16 @@ end);
 InstallMethod(LambdaOrb, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local treehashsize, opts, semi, o, name;
+  local record, o;
   
-  #JDM I should be able to set the values here!
-  #this is a hack!!
-  if IsBound(s!.opts.treehashsize) then 
-    treehashsize:=s!.opts.treehashsize;
-  else 
-    treehashsize:=SemigroupsOptionsRec.hashlen.M;
-  fi;
+  record:=ShallowCopy(LambdaOrbOpts(s));
+  record.schreier:=true;        record.orbitgraph:=true;
+  record.storenumbers:=true;    record.log:=true;
+  record.parent:=s;             record.treehashsize:=s!.opts.hashlen.M;
+  record.scc_reps:=[One(GeneratorsOfSemigroup(s))];
 
-  #JDM can remove some components here if new enumerate is successful
-  opts:= rec(schreier:=true, orbitgraph:=true,
-          storenumbers:=true, log:=true, 
-          treehashsize:=treehashsize,
-          scc_reps:=[One(GeneratorsOfSemigroup(s))], parent:=s);
+  o:=Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), record);
   
-  for name in RecNames(LambdaOrbOpts(s)) do 
-    opts.(name):=LambdaOrbOpts(s).(name);
-  od;
-
-  o:=Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), opts);
   SetFilterObj(o, IsLambdaOrb);
   if IsActingSemigroupWithInverseOp(s) then 
     SetFilterObj(o, IsInvLambdaOrb);
@@ -764,21 +753,21 @@ function(s)
   return o;
 end);
 
+#
+
 InstallMethod(LambdaOrb, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
 function(s)
-  local opts, semi, name;
+  local record, o;
 
-  opts:= rec(schreier:=true, orbitgraph:=true,
-          storenumbers:=true, log:=true, 
-          treehashsize:=SemigroupsOptionsRec.hashlen.M,
-          scc_reps:=[One(GeneratorsOfMagmaIdeal(s))], parent:=s);
-  
-  for name in RecNames(LambdaOrbOpts(s)) do 
-    opts.(name):=LambdaOrbOpts(s).(name);
-  od;
+  record:=ShallowCopy(LambdaOrbOpts(s));
+  record.schreier:=true;        record.orbitgraph:=true;
+  record.storenumbers:=true;    record.log:=true;
+  record.parent:=s;             record.treehashsize:=s!.opts.hashlen.M;
+  record.scc_reps:=[One(GeneratorsOfMagmaIdeal(s))];
 
-  return Orb(GeneratorsOfSemigroup(Parent(s)), LambdaOrbSeed(s), LambdaAct(s), opts);
+  o:=Orb(GeneratorsOfSemigroup(Parent(s)), LambdaOrbSeed(s), LambdaAct(s),
+   record);
 end);
 
 #
@@ -1159,18 +1148,26 @@ end);
 InstallMethod(RhoOrb, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
-  local x;
-
+  local record, o;
+  
   # it might be better in the case of having IsClosed(SemigroupData)
   # to just fake the orbit below (we have all the info already).
   # But it seems to be so fast to calculate the 
   # in most cases that there is no point. 
 
-  return Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s),
-        rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
-        storenumbers:=true, log:=true,
-        treehashsize:=SemigroupsOptionsRec.hashlen.M,
-        scc_reps:=[One(GeneratorsOfSemigroup(s))], parent:=s));
+  record:=ShallowCopy(RhoOrbOpts(s));
+  record.schreier:=true;        record.orbitgraph:=true;
+  record.storenumbers:=true;    record.log:=true;
+  record.parent:=s;             record.treehashsize:=s!.opts.hashlen.M;
+  record.scc_reps:=[One(GeneratorsOfSemigroup(s))];
+
+  o:=Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s), record);
+  
+  SetFilterObj(o, IsRhoOrb);
+  if IsActingSemigroupWithInverseOp(s) then
+    SetFilterObj(o, IsInvRhoOrb);
+  fi;
+  return o;
 end);
 
 # f takes o[scc[1]] to o[i] and inv(o[scc[1]],f) takes o[i] to o[scc[1]]
