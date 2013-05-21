@@ -8,9 +8,8 @@
 ##############################################################################
 ###
 
-DeclareProperty("IsActingSemigroup", IsSemigroup);
-DeclareProperty("IsActingSemigroup", IsAssociativeElementCollection);
-DeclareProperty("IsActingSemigroupWithInverseOp", IsActingSemigroup);
+DeclareCategory("IsActingSemigroup", IsSemigroup);
+DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
 DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);

@@ -12,15 +12,14 @@
 # Setup - install the basic things required for specific acting semigroups    #
 ###############################################################################
 
-InstallTrueMethod(IsActingSemigroup, IsActingSemigroupWithInverseOp);
 InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
 
-InstallMethod(IsActingSemigroup, "for an associative element collection",
-[IsAssociativeElementCollection], ReturnFalse);
+#InstallMethod(IsActingSemigroup, "for an associative element collection",
+#[IsAssociativeElementCollection], ReturnFalse);
 
-InstallMethod(IsActingSemigroupWithInverseOp, 
-"for an associative element collection",
-[IsActingSemigroup], ReturnFalse);
+#InstallMethod(IsActingSemigroupWithInverseOp, 
+#"for an associative element collection",
+#[IsActingSemigroup], ReturnFalse);
 
 #
 
