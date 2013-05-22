@@ -605,35 +605,39 @@ InstallMethod(StructureDescription,
 [IsActingSemigroup and IsGroupAsSemigroup],
 s-> StructureDescription(Range(IsomorphismPermGroup(s))));
 
-# some things to move...
-
-# JDM expand so that this is really an isomorphism and that the range knows some
-# of the properties that the domain does. 
-# Also move this to partition.g*
-
-#InstallMethod(IsomorphismBipartitionSemigroup, 
-#"for a transformation semigroup with generators",
-#[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-#function(s)
-  
-#  return MappingByFunction(s, Semigroup(List(GeneratorsOfSemigroup(s),     
-#   AsBipartition)), AsBipartition, AsTransformation);
-#end);
-
 #
 
 InstallMethod(IsomorphismTransformationMonoid, "for a transformation semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
+  local id, dom, gens, inv;
 
-  if not IsMonoidAsSemigroup(s) then 
-    Error( "Usage: the argument must be a transformation semigroup ",
-    "satisfying IsMonoidAsSemigroup," );
-    return;
+  if IsMonoid(s) then 
+    return MappingByFunction(s, s, IdFunc, IdFunc);
   fi;
 
-  return MappingByFunction(s, Monoid(Difference(Generators(s),
-  [TransformationNC([1..DegreeOfTransformationSemigroup(s)])])), x-> x, x-> x);
+  if MultiplicativeNeutralElement(s)=fail then 
+    Error( "usage: <s> must have a multiplicative neutral element,");
+    return;
+  fi;
+  
+  id:=MultiplicativeNeutralElement(s);
+  dom:=ImageSetOfTransformation(id);
+  
+  gens:=List(Generators(s), x-> TransformationOp(x, dom));
+
+  inv:=function(f)
+    local out, i;
+
+    out:=[1..DegreeOfTransformationSemigroup(s)];
+    for i in [1..Length(dom)] do 
+      out[dom[i]]:=dom[i^f];
+    od;
+    return id*Transformation(out);
+  end;
+
+  return MappingByFunction(s, Monoid(gens), f-> TransformationOp(f, dom), 
+   inv);
 end);
 
 #

@@ -16,6 +16,21 @@ gap> LoadPackage( "semigroups", false );;
 gap> SemigroupsStartTest();
 
 #
+gap> s:=Semigroup(Transformation( [ 2, 3, 4, 1, 1, 1 ] ));;
+gap> IsMonoidAsSemigroup(s);
+true
+gap> IsMonoid(s);
+false
+gap> iso:=IsomorphismTransformationMonoid(s);
+MappingByFunction( <commutative transformation semigroup 
+ on 6 pts with 1 generator>, <commutative transformation monoid 
+ on 4 pts with 1 generator>, function( f ) ... end, function( f ) ... end )
+gap> RespectsMultiplication(iso);
+true
+gap> ForAll(s, x-> (x^iso)^InverseGeneralMapping(iso)=x);
+true
+
+#
 gap> s:=Semigroup(Transformation([1,1,1]), Transformation([3,1,2]));
 <transformation semigroup on 3 pts with 2 generators>
 gap> IsSimpleSemigroup(s);
