@@ -1,110 +1,4 @@
-#############################################################################
-##
-#W  inverse.gi
-#Y  Copyright (C) 2011-12                                James D. Mitchell
-##
-##  Licensing information can be found in the README file of this package.
-##
-#############################################################################
-##
 
-#EEE
-
-# new for 0.7! - Enumerator - "for D-class of part perm inverse semigroup"
-##############################################################################
-
-InstallMethod(Enumerator, "for D-class of part perm inv semigroup",
-[IsGreensDClass and IsGreensClassOfInverseSemigroup and
-IsGreensClassOfPartPermSemigroup],
-function(d)
-
-  return EnumeratorByFunctions(d, rec(
-
-    schutz:=Enumerator(SchutzenbergerGroup(d)),
-
-    #########################################################################
-
-    ElementNumber:=function(enum, pos)
-      local scc, n, m, r, q, q2, mults;
-      if pos>Length(enum) then 
-        return fail;
-      fi;
-
-      if pos<=Length(enum!.schutz) then 
-        return enum!.schutz[pos]*Representative(d);
-      fi;
-
-      scc:=OrbSCC(d!.o)[d!.data[1]];
-      n:=pos-1; m:=Length(enum!.schutz); r:=Length(scc);
-      q:=QuoInt(n, m); q2:=QuoInt(q, r);
-      pos:=[ n-q*m, q2, q  - q2 * r ]+1;
-      mults:=OrbMultipliers(d);
-      return mults[scc[pos[2]]]*enum[pos[1]]/mults[scc[pos[3]]];
-    end,
-
-    #########################################################################
-    
-    NumberElement:=function(enum, f)
-      local rep, o, m, k, l, j, scc;
-      
-      rep:=Representative(d);
-      
-      if f[2]<>rep[2] then 
-        Info(InfoSemigroups, 1, "rank not equal to those of",
-          " any of the D-class elements,");
-        return fail;
-      fi;
-      
-      if f=rep then 
-        return 1;
-      fi;
-
-      o:=d!.o; m:=d!.data[1];
-      
-      k:=Position(o, DomPP(f)); 
-      if k=fail or not OrbSCCTruthTable(o)[m][k] then 
-        Info(InfoSemigroups, 1, "domain not equal to that of any",
-        " D-class element,");
-        return fail;
-      fi;
-
-      l:=Position(o, RanSetPP(f));
-      if l=fail or not OrbSCCTruthTable(o)[m][l] then
-        Info(InfoSemigroups, 1, "range not equal to that of any",
-        " D-class element,");
-        return fail;
-      fi;
-
-      m:=o!.mults[k]^-1*f*o!.mults[l]; #LQuoPP
-      j:=Position(enum!.schutz, MappingPermListList(DomPP(m), RanPP(m)));
-
-      if j=fail then 
-        return fail;
-      fi;
-      scc:=OrbSCC(d!.o)[d!.data[1]];
-
-      return Length(enum!.schutz)*((Position(scc, k)-1)*Length(scc)
-      +(Position(scc, l)-1))+j;
-    end,
-
-    #########################################################################
-
-    Membership:=function(elm, enum)
-      return elm in d;
-    end,
-
-    Length:=enum-> Size(d),
-
-    PrintObj:=function(enum)
-      Print("<enumerator of D-class>");
-      return;
-    end));
-end);
-
-#HHH
-
-# new for 0.7! - HClassReps - for an D-class of inv semi of partial perms
-############################################################################
 
 InstallOtherMethod(HClassReps, "for an D-class of inv semi of partial perms",
 [IsGreensDClass and IsGreensClassOfInverseSemigroup and
@@ -127,8 +21,6 @@ function(d)
   return out;
 end);
 
-# new for 0.7! - HClassReps - for an L-class of inv semi of partial perms
-############################################################################
 
 InstallOtherMethod(HClassReps, "for an L-class of inv semi of partial perms",
 [IsGreensLClass and IsGreensClassOfInverseSemigroup and
@@ -149,8 +41,6 @@ function(l)
   return out;
 end);
 
-# new for 0.7! - HClassReps - for an R-class of inv semi of partial perms
-############################################################################
 
 InstallOtherMethod(HClassReps, "for an R-class of inv semi of partial perms",
 [IsGreensRClass and IsGreensClassOfInverseSemigroup and
@@ -170,9 +60,6 @@ function(r)
   od;
   return out;
 end);
-
-# new for 0.7! - Iterator - "for D-class of inv semigroup"
-##############################################################################
 
 InstallMethod(Iterator, "for D-class of inv semigroup",
 [IsGreensDClass and IsGreensClassOfInverseSemigroup
@@ -223,9 +110,6 @@ function(d)
   return iter;
 end);
 
-# new for 0.7! - Iterator - "for H-class of inv semigroup"
-##############################################################################
-
 InstallMethod(Iterator, "for H-class of inv semigroup",
 [IsGreensHClass and IsGreensClassOfInverseSemigroup
 and IsGreensClassOfPartPermSemigroup],
@@ -264,9 +148,6 @@ function(h)
   SetIsIteratorOfHClassElements(iter, true);
   return iter;
 end);
-
-# new for 0.7! - Iterator - "for L-class of inv semigroup"
-##############################################################################
 
 InstallMethod(Iterator, "for L-class of inv semigroup",
 [IsGreensLClass and IsGreensClassOfInverseSemigroup
@@ -313,8 +194,6 @@ function(d)
   return iter;
 end);
 
-# new for 0.7! - IteratorOfHClassData - "for part perm inverse semigroup""
-###############################################################################
 # JDM this should have a method like IteratorOfRClassData and
 # IteratorOfLClassData since the scc:=OrbSCC line makes this work not so
 # well!
@@ -373,9 +252,6 @@ function(s)
     scc_limit:=iter!.scc_limit, at_limit:=iter!.at_limit)));
 end);
 
-# new for 0.7! - IteratorOfHClassReps - "for a part perm inverse semigroup"
-###############################################################################
-
 InstallMethod(IteratorOfHClassReps, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
 function(s)
@@ -386,8 +262,6 @@ function(s)
    [IsIteratorOfHClassReps]);
 end);
 
-# new for 0.7! - IteratorOfHClasses - "for a part perm inverse semigroup"
-###############################################################################
 
 InstallMethod(IteratorOfHClasses, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup],
@@ -398,11 +272,6 @@ function(s)
   return IteratorByIterator(IteratorOfHClassData(s), x->
    CallFuncList(CreateHClass, x), [IsIteratorOfHClasses]);
 end);
-
-#LLL
-
-# new for 0.7! - LClassOfHClass - "for an H-class of an inverse semigrp"
-#############################################################################
 
 InstallMethod(LClassOfHClass, "for an H-class of an inverse semigroup",
 [IsGreensHClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
@@ -416,8 +285,6 @@ function(h)
    mults[data[2]]^-1*Representative(h));
 end);
 
-# new for 0.7! - LClassReps - for an inv semi of part perms
-##############################################################################
 
 InstallOtherMethod(LClassReps, "for an inv semi of part perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
@@ -447,9 +314,6 @@ function(s)
   return out;
 end);
 
-# new for 0.7! - LClassReps - for D-class of part perm inv semi
-##############################################################################
-
 InstallOtherMethod(LClassReps, "for D-class of part perm inv semi",
 [IsGreensDClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
 function(d)
@@ -468,8 +332,6 @@ function(d)
   return out;
 end);
 
-# new for 0.7! - LClassType - "for a partial perm inverse semigroup"
-############################################################################
 
 InstallOtherMethod(LClassType, "for a partial perm inverse semigroup",
 [IsInverseSemigroup and IsPartialPermSemigroup],
@@ -480,10 +342,6 @@ function(s);
          IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup);
 end);
 
-#RRR
-
-# new for 0.7! - RClassOfHClass - "for an H-class of an inverse semigrp"
-#############################################################################
 
 InstallMethod(RClassOfHClass, "for an H-class of an inverse semigroup",
 [IsGreensHClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
@@ -497,19 +355,11 @@ function(h)
    Representative(h)*mults[data[3]]);
 end);
 
-#SSS
-
-# new for 0.7! - Size - for an D-class of an inverse semigroup
-##############################################################################
-
 InstallMethod(Size, "for an D-class of an inverse semigroup",
 [IsGreensDClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
 function(d)
   return Length(OrbSCC(d!.o)[d!.data[1]])^2*Size(SchutzenbergerGroup(d));
 end);
-
-# new for 0.7! - Size - for an H-class of an inverse semigroup
-##############################################################################
 
 InstallMethod(Size, "for an H-class of an inverse semigroup",
 [IsGreensHClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
@@ -517,17 +367,11 @@ function(h)
   return Size(SchutzenbergerGroup(h));
 end);
 
-# new for 0.7! - Size - for an L-class of an inverse semigroup
-##############################################################################
-
 InstallMethod(Size, "for an L-class of an inverse semigroup",
 [IsGreensLClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
 function(l)
   return Length(OrbSCC(l!.o)[l!.data[1]])*Size(SchutzenbergerGroup(l));
 end);
-
-# new for 0.7! - Size - for an R-class of an inverse semigroup
-##############################################################################
 
 InstallMethod(Size, "for an R-class of an inverse semigroup",
 [IsGreensRClass and IsGreensClassOfPartPermSemigroup and IsGreensClassOfInverseSemigroup],
@@ -535,18 +379,12 @@ function(r)
   return Length(OrbSCC(r!.o)[r!.data[1]])*Size(SchutzenbergerGroup(r));
 end);
 
-# new for 0.7! - Size - for an inverse semigroup of partial perms
-##############################################################################
-
 InstallMethod(Size, "for an inverse semigp of partial perms",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(s)
   EnumerateInverseSemiData(s);
   return Size(s);
 end); 
-
-# new for 0.7! - StructureDescription - for a group H-class of inv semi
-##############################################################################
 
 InstallOtherMethod(StructureDescription, "for group H-class of inv semi",
 [IsGroupHClass and IsGreensClassOfPartPermSemigroup], 
