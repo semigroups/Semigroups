@@ -541,7 +541,7 @@ function(r)
     r:=enum!.parent;
     rep:=Representative(r);
     return rep*tuple[1]*LambdaOrbMult(LambdaOrb(r), 
-     LambdaOrbSCCIndex(r), tuple[1])[1];
+     LambdaOrbSCCIndex(r), tuple[2])[1];
   end;
   #
   convert_in:=function(enum, elt)
@@ -558,9 +558,9 @@ function(r)
       return fail;
     fi;
     
-    f:=LambdaOrbMult(LambdaOrb(r), LambdaOrbSCCIndex(r), i)[2]*elt;
+    f:=elt*LambdaOrbMult(LambdaOrb(r), LambdaOrbSCCIndex(r), i)[2];
     
-    return [i, LambdaPerm(s)(Representative(r), f)];
+    return [LambdaPerm(s)(Representative(r), f), i];
   end;
   #
   scc:=OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)];
@@ -569,8 +569,6 @@ function(r)
    EnumeratorOfCartesianProduct(SchutzenbergerGroup(r), scc), 
    convert_out, convert_in, [], record);
 end);
-
-# different method for inverse
 
 #JDM use these for enumerator of symmetric inverse semigroup
 # using EnumeratorByEnumerator
