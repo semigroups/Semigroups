@@ -337,7 +337,7 @@ function(s)
    end,
 
    PrintObj:=function(enum)
-     Print( "<enumerator of R-classes>");
+     Print( "<enumerator of R-classes of ", ViewString(s), ">");
      return;
    end));
 end);  
@@ -394,6 +394,10 @@ function(d)
   record.Membership:=function(elt, enum)
     return elt in d;
   end;
+  record.PrintObj:=function(enum)
+    Print("<enumerator of D-class>");
+  end;
+
   #
   convert_out:=function(enum, tuple)
     local d, rep;
@@ -447,6 +451,10 @@ function(d)
   Enumerate(LambdaOrb(d), infinity);
 
   record:=rec(parent:=d);
+  record.PrintObj:=function(enum)
+    Print("<enumerator of D-class>");
+  end;
+
   #
   convert_out:=function(enum, tuple)
     local d, rep;
@@ -549,6 +557,9 @@ function(l)
   record.Membership:=function(elm, enum)
     return elm in l;
   end;
+  record.PrintObj:=function(enum) 
+    Print("<enumerator of L-class>");
+  end;
 
   record.Length:=enum-> Size(l);
   #
@@ -602,7 +613,10 @@ function(l)
   record.Membership:=function(elm, enum)
     return elm in l;
   end;
-
+  record.PrintObj:=function(enum) 
+    Print("<enumerator of L-class>");
+  end;
+  
   record.Length:=enum-> Size(l);
   #
   convert_out:=function(enum, tuple)
@@ -654,6 +668,9 @@ function(r)
   record:=rec(parent:=r);
   record.Membership:=function(elm, enum)
     return elm in r;
+  end;
+  record.PrintObj:=function(enum) 
+    Print("<enumerator of R-class>");
   end;
 
   record.Length:=enum-> Size(r);
