@@ -334,7 +334,7 @@ function(s)
   return iter;
 end);
 
-# same method for regular/inverse
+# different method for regular/inverse
 
 InstallMethod(Iterator, "for a D-class of an acting semigroup", 
 [IsGreensDClass and IsActingSemigroupGreensClass], 
@@ -349,6 +349,57 @@ function(d)
 
   return IteratorByIterOfIters(rec(parent:=Parent(d)),
   Iterator(GreensRClasses(d)), IdFunc, [IsIteratorOfDClassElements]);
+end);
+
+# different method for inverse
+
+InstallMethod(Iterator, "for a regular D-class of an acting semigroup",
+[IsGreensDClass and IsRegularClass and IsActingSemigroupGreensClass],
+function(d)
+  local iter, baseiter, convert;
+
+  if HasAsSSortedList(d) then 
+    iter:=IteratorList(AsSSortedList(d));
+    SetIsIteratorOfDClassElements(iter, true);
+    return iter;
+  fi;
+
+  baseiter:=IteratorOfCartesianProduct(OrbSCC(RhoOrb(d))[RhoOrbSCCIndex(d)],
+   SchutzenbergerGroup(d), OrbSCC(LambdaOrb(d)[LambdaOrbSCCIndex(d)]));
+  
+  convert:=function(x)
+    return RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), x[1])[1]
+     *Representative(d)*x[2]
+     *LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), x[3])[1];
+  end;
+
+  return IteratorByIterator(baseiter, convert, [IsIteratorOfDClassElements]);
+end);
+
+#JDM again this method is redundant if we introduce RhoOrb for inverse
+#semigroups
+
+InstallMethod(Iterator, "for a D-class of an inverse acting semigroup",
+[IsGreensDClass and IsInverseOpClass and IsActingSemigroupGreensClass],
+function(d)
+  local iter, baseiter, convert;
+
+  if HasAsSSortedList(d) then 
+    iter:=IteratorList(AsSSortedList(d));
+    SetIsIteratorOfDClassElements(iter, true);
+    return iter;
+  fi;
+
+  scc:=OrbSCC(LambdaOrb(d)[LambdaOrbSCCIndex(d)]);
+  baseiter:=IteratorOfCartesianProduct(scc, SchutzenbergerGroup(d), scc)
+  
+  convert:=function(x)
+    return LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), x[1])[2]
+     *Representative(d)*x[2]
+     *LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), x[3])[1];
+  end;
+
+  return IteratorByIterator(baseiter, convert, [IsIteratorOfDClassElements]);
 end);
 
 # same method for regular/inverse
@@ -386,7 +437,7 @@ function(l)
    Enumerator(SchutzenbergerGroup(l)));
   
   convert:=function(x)
-    return RhoOrbMults(RhoOrb(l), RhoOrbSCCIndex(l))[x[1]][1]
+    return RhoOrbMult(RhoOrb(l), RhoOrbSCCIndex(l), x[1])[1]
      *Representative(l)*x[2];
   end;
 
@@ -413,8 +464,8 @@ function(r)
      OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)] );
   
   convert:=function(x)
-    return Representative(r)*x[1]*LambdaOrbMults(LambdaOrb(r),
-     LambdaOrbSCCIndex(r))[x[2]][1];
+    return Representative(r)*x[1]*LambdaOrbMult(LambdaOrb(r),
+     LambdaOrbSCCIndex(r), x[2])[1];
   end;
 
   return IteratorByIterator(baseiter, convert, [IsIteratorOfRClassElements]);
@@ -920,7 +971,7 @@ function(l)
     Enumerator(SchutzenbergerGroup(l)) );
   
   convert:=function(x)
-    return LambdaOrbMults(LambdaOrb(l), LambdaOrbSCCIndex(l))[x[1]][2]
+    return LambdaOrbMult(LambdaOrb(l), LambdaOrbSCCIndex(l), x[1])[2]
      *Representative(l)*x[2];
   end;
 
