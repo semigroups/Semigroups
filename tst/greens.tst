@@ -743,11 +743,11 @@ gap> enum:=Enumerator(r);
 gap> enum[1];
 Transformation( [ 8, 4, 1, 1, 1, 8, 5, 6 ] )
 gap> enum[2];                                  
-Transformation( [ 6, 5, 8, 8, 8, 6, 1, 4 ] )
+Transformation( [ 4, 2, 7, 7, 7, 4, 1, 6 ] )
 gap> enum[43];
-Transformation( [ 5, 1, 6, 6, 6, 5, 4 ] )
+Transformation( [ 3, 5, 7, 7, 7, 3, 1, 2 ] )
 gap> enum[1368];
-Transformation( [ 6, 3, 2, 2, 2, 6, 5 ] )
+Transformation( [ 8, 2, 5, 5, 5, 8, 7, 1 ] )
 gap> Position(enum, last);
 1368
 gap> ForAll([1..2640], x-> Position(enum, enum[x])=x);
@@ -803,7 +803,7 @@ gap> enum:=Enumerator(r);
 gap> enum[1];
 Transformation( [ 2, 2, 6, 4, 1, 6, 3, 2 ] )
 gap> enum[1000];
-Transformation( [ 5, 5, 4, 7, 8, 4, 1, 5 ] )
+Transformation( [ 2, 2, 4, 1, 6, 4, 7, 2 ] )
 gap> Position(enum, last);
 1000
 gap> ForAll([1..2640], x-> Position(enum, enum[x])=x);
