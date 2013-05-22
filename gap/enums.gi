@@ -237,7 +237,7 @@ function(s)
     Length:=enum -> NrRClasses(s),
 
     PrintObj:=function(enum)
-      Print( "<enumerator of R-classes>");
+      Print( "<enumerator of R-classes of ", ViewString(s), ">");
       return;
     end));
 
@@ -281,6 +281,10 @@ function(s)
     m:=OrbSCCLookup(o)[nr+1];
     return CreateRClass(s, m, LambdaOrb(s), 
      RhoOrbMult(o, m, nr+1)[1]*RhoOrbRep(o, m), false);
+   end,
+   PrintObj:=function(enum)
+     Print( "<enumerator of R-classes of ", ViewString(s), ">");
+     return;
    end));
 end);   
 
@@ -322,6 +326,11 @@ function(s)
     m:=OrbSCCLookup(o)[nr+1];
     return CreateRClassNC(s, m, LambdaOrb(s), 
      LambdaOrbMult(o, m, nr+1)[2]*RightOne(LambdaOrbRep(o, m)), false);
+   end,
+
+   PrintObj:=function(enum)
+     Print( "<enumerator of R-classes of ", ViewString(s), ">");
+     return;
    end));
 end);  
 
