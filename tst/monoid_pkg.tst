@@ -1485,7 +1485,7 @@ gap> gens:=[ Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ),
 gap> S:=Semigroup(gens);;
 gap> MultiplicativeZero(S);
 Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
-gap> #Unbind(semis); Unbind(S); Unbind(m);
+gap> Unbind(semis); Unbind(S); Unbind(m);
 
 #
 gap> SemigroupsStopTest();
