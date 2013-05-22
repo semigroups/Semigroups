@@ -361,17 +361,22 @@ end);
 InstallMethod(Enumerator, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local convert;
+  local record, convert;
   
   if HasAsSSortedList(d) then 
     return AsSSortedList(d);
   fi;
+  record:=rec(parent:=d);
+  
+  record.PrintObj:=function(enum)
+    Print("<enumerator of D-class>");
+  end;
   
   convert:=function(enum, elt)
     return GreensRClassOfElement(enum!.parent, elt);
   end;
 
-  return EnumeratorByEnumOfEnums(d, rec(parent:=d), GreensRClasses(d), convert,
+  return EnumeratorByEnumOfEnums(d, record, GreensRClasses(d), convert,
    []);
 end);
 

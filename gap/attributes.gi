@@ -28,8 +28,9 @@
 
 # JDM this should be undocumented until fixed
 
-InstallMethod(EmbeddingNC, "for a perm group and an acting semigroup",
-[IsPermGroup, IsActingSemigroup],
+InstallMethod(EmbeddingNC, 
+"for a perm group and a group H-class of an acting semigroup",
+[IsPermGroup, IsGroupHClass],
 function(g, s)
   local convert, creator, one, t, emb, conj;
  
@@ -74,11 +75,6 @@ function(s)
 
   r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
   g:=SchutzenbergerGroup(r);
-  #Group(AsPermutation(Random(r)));
-
-  #while Size(g)<Size(r) do
-  # g:=ClosureGroup(g, AsPermutation(Random(r)));
-  #od;
   
   emb:=EmbeddingNC(g, s);
   u:=Range(emb);
