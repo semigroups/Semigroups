@@ -331,15 +331,23 @@ function(gens, record)
   fi;
 
   s:=Objectify( NewType (FamilyObj( gens ), filts), rec(opts:=record));
-
-  SetGeneratorsOfInverseMonoid(s, AsList(gens));
   
   one:=One(gens); 
-  if not one in gens then 
+  SetOne(s, gens);
+  pos:=Position(gens, one);
+
+  if pos<>fail then 
+    SetGeneratorsOfInverseSemigroup(s, gens);
+    gens:=ShallowCopy(gens);
+    Remove(gens, pos);
+    SetGeneratorsOfInverseMonoid(s, gens);
+  else
+    SetGeneratorsOfInverseMonoid(s, gens);
+    gens:=ShallowCopy(gens);
     Add(gens, one);
+    SetGeneratorsOfInverseSemigroup(s, gens);
   fi;
-  
-  SetGeneratorsOfInverseSemigroup(s, AsList(gens));
+
   return s;
 end);
 
