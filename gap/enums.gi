@@ -329,7 +329,8 @@ function(d)
     convert_out, convert_in, [], record);
 end);
 
-#
+#this method is unnecesary if we write a method for RhoOrb of a inverse op
+#D-classJDM
 
 InstallMethod(Enumerator, "for a D-class of an inverse acting semigroup",
 [IsGreensDClass and IsInverseOpClass and IsActingSemigroupGreensClass],
@@ -464,6 +465,56 @@ function(l)
   end;
   #
   scc:=OrbSCC(RhoOrb(l))[RhoOrbSCCIndex(l)];
+
+  return EnumeratorByEnumerator(l, 
+   EnumeratorOfCartesianProduct(scc, SchutzenbergerGroup(l)), 
+   convert_out, convert_in, [], record);
+end);
+
+#this method is unnecesary if we write a method for RhoOrb of a inverse op
+#L-classJDM
+
+InstallMethod(Enumerator, "for L-class of an inverse op acting semigroup",
+[IsGreensLClass and IsInverseOpClass and IsActingSemigroupGreensClass],
+function(l)
+  local record, convert_out, convert_in, scc;
+
+  record:=rec(parent:=l);
+  record.Membership:=function(elm, enum)
+    return elm in l;
+  end;
+
+  record.Length:=enum-> Size(l);
+  #
+  convert_out:=function(enum, tuple)
+    local l, rep;
+    if tuple=fail then return fail; fi;
+    l:=enum!.parent;
+    rep:=Representative(l);
+    return LambdaOrbMult(LambdaOrb(l), LambdaOrbSCCIndex(l), tuple[1])[2]
+     *rep*tuple[2];
+  end;
+  #
+  convert_in:=function(enum, elt)
+    local l, s, i, f;
+    l:=enum!.parent;
+    s:=Parent(l); 
+   
+    if LambdaFunc(s)(elt)<>LambdaFunc(s)(Representative(l)) then 
+      return fail;
+    fi;
+    
+    i:=Position(LambdaOrb(l), RhoFunc(s)(elt));
+    if OrbSCCLookup(LambdaOrb(l))[i]<>LambdaOrbSCCIndex(l) then 
+      return fail;
+    fi;
+    
+    f:=LambdaOrbMult(LambdaOrb(l), LambdaOrbSCCIndex(l), i)[1]*elt;
+    
+    return [i, LambdaPerm(s)(Representative(l), f)];
+  end;
+  #
+  scc:=OrbSCC(LambdaOrb(l))[LambdaOrbSCCIndex(l)];
 
   return EnumeratorByEnumerator(l, 
    EnumeratorOfCartesianProduct(scc, SchutzenbergerGroup(l)), 
