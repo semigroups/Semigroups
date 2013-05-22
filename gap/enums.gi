@@ -570,87 +570,6 @@ function(r)
    convert_out, convert_in, [], record);
 end);
 
-InstallMethod(Enumerator, "for R-class of an acting semigroup",
-[IsGreensRClass and IsActingSemigroupGreensClass],
-function(r)
-  local o, m, mults, scc;
-
-  o:=LambdaOrb(r); 
-  m:=LambdaOrbSCCIndex(r);
-  mults:=LambdaOrbMults(o, m);
-  scc:=OrbSCC(o)[m];
-
-  return EnumeratorByFunctions(r, rec(
-
-    schutz:=Enumerator(SchutzenbergerGroup(r)),
-
-    len:=Size(SchutzenbergerGroup(r)),
-
-    ElementNumber:=function(enum, pos)
-      local n, m, q;
-
-      if pos>Length(enum) then 
-        return fail;
-      fi;
-
-      if pos<=Length(enum!.schutz) then 
-        return Representative(r)*enum!.schutz[pos];
-      fi;
-
-      n:=pos-1; m:=enum!.len;
-      
-      q:=QuoInt(n, m); 
-      pos:=[ q, n - q * m]+1;
-     
-     return enum[pos[2]]*mults[scc[pos[1]]][1];
-    end,
-
-    NumberElement:=function(enum, f)
-      local s, rep, o, m, l, g, j;
-
-      s:=Parent(r);
-      rep:=Representative(r);
-      
-      if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-       ActionDegree(f) <> ActionDegree(rep) or ActionRank(f) <> ActionRank(rep)
-       or RhoFunc(s)(f) <> RhoFunc(s)(rep) then 
-        return fail;
-      fi;
-      
-      if f=rep then 
-        return 1;
-      fi;
-
-      o:=LambdaOrb(r); m:=LambdaOrbSCCIndex(r);
-      l:=Position(o, LambdaFunc(s)(f));
-
-      if l = fail or OrbSCCLookup(o)[l]<>m then 
-        return fail;
-      fi;
-      g:=f;
-      if l<>OrbSCC(o)[m][1] then  
-        g:=g*mults[l][2];
-      fi;
-      j:=Position(enum!.schutz, LambdaPerm(s)(rep, g));
-
-      if j=fail then 
-        return fail;
-      fi;
-      return enum!.len*(Position(scc, l)-1)+j;
-    end,
-
-    Membership:=function(elm, enum)
-      return elm in r;
-    end,
-
-    Length:=enum-> Size(r),
-
-    PrintObj:=function(enum)
-      Print("<enumerator of R-class>");
-      return;
-    end));
-end);
-
 # different method for inverse
 
 #JDM use these for enumerator of symmetric inverse semigroup
@@ -755,4 +674,5 @@ function(m, n)
    Enumerator([1..NrArrangements([1..n], m)]), convert_out, convert_in, [],
     rec());
 end);
+
 #EOF
