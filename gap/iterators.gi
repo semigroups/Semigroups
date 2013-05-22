@@ -365,7 +365,7 @@ function(d)
   fi;
 
   baseiter:=IteratorOfCartesianProduct(OrbSCC(RhoOrb(d))[RhoOrbSCCIndex(d)],
-   SchutzenbergerGroup(d), OrbSCC(LambdaOrb(d)[LambdaOrbSCCIndex(d)]));
+   SchutzenbergerGroup(d), OrbSCC(LambdaOrb(d))[LambdaOrbSCCIndex(d)]);
   
   convert:=function(x)
     return RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), x[1])[1]
@@ -382,7 +382,7 @@ end);
 InstallMethod(Iterator, "for a D-class of an inverse acting semigroup",
 [IsGreensDClass and IsInverseOpClass and IsActingSemigroupGreensClass],
 function(d)
-  local iter, baseiter, convert;
+  local iter, scc, baseiter, convert;
 
   if HasAsSSortedList(d) then 
     iter:=IteratorList(AsSSortedList(d));
@@ -390,8 +390,8 @@ function(d)
     return iter;
   fi;
 
-  scc:=OrbSCC(LambdaOrb(d)[LambdaOrbSCCIndex(d)]);
-  baseiter:=IteratorOfCartesianProduct(scc, SchutzenbergerGroup(d), scc)
+  scc:=OrbSCC(LambdaOrb(d))[LambdaOrbSCCIndex(d)];
+  baseiter:=IteratorOfCartesianProduct(scc, SchutzenbergerGroup(d), scc);
   
   convert:=function(x)
     return LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), x[1])[2]

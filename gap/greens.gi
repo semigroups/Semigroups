@@ -2045,7 +2045,7 @@ l-> Size(SchutzenbergerGroup(l))*Length(RhoOrbSCC(l)));
 
 #same method for inverse/regular
 
-InstallMethod(StructureDescription, "for group H-class of acting semi",
+InstallMethod(StructureDescription, "for group H-class of acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass and IsGroupHClass],
 h-> StructureDescription(Range(IsomorphismPermGroup(h))));
 
