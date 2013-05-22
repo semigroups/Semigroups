@@ -29,7 +29,7 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
   elif not (IsRecord(record) and IsMutable(record) and not
   IsBound(record.baseenum) and not IsBound(record.convert_out) and not
   IsBound(record.convert_in) and not IsBound(record.NumberElement) and not
-  IsBound(record.ElementNumber) then 
+  IsBound(record.ElementNumber)) then 
     Error("usage: <record> must be a mutable record with no components ",
     " named:\n`baseenum', `convert_out', `convert_in', `ElementNumber',",
     " or `NumberElement',");
@@ -313,7 +313,7 @@ function(d)
     k:=Position(LambdaOrb(d), RhoFunc(s)(elt));
     l:=Position(LambdaOrb(d), LambdaFunc(s)(elt));
     
-    f:=LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), k)[2]*elt
+    f:=LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), k)[1]*elt
      *LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), l)[2];
     
     return [k, LambdaPerm(s)(Representative(d), f), l];
