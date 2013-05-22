@@ -147,10 +147,12 @@ function(obj, record, baseenum, convert, filts)
     enumofenums:=enum!.enumofenums;
 
     basepos:=Position(baseenum, convert(enum, elt));
+    if basepos=fail then return fail; fi;
     if not IsBound(enumofenums[basepos]) then 
       enumofenums[basepos]:=Enumerator(baseenum[basepos]);
     fi;
     pos:=Position(enumofenums[basepos], elt);
+    if pos=fail then return fail; fi;
     for i in [1..basepos-1] do
       if not IsBound(enumofenums[i]) then 
         enumofenums[i]:=Enumerator(baseenum[i]);
@@ -239,6 +241,27 @@ function(s)
   return Immutable(SSortedList(ListIterator(Iterator(s), Size(s))));
 end);
 
+# different method for regular/inverse
+
+# this could be better at the cost of being much more complicated...
+
+InstallMethod(Enumerator, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(d)
+  local convert;
+  
+  if HasAsSSortedList(d) then 
+    return AsSSortedList(d);
+  fi;
+  
+  convert:=function(enum, elt)
+    return GreensRClassOfElement(enum!.parent, elt);
+  end;
+
+  return EnumeratorByEnumOfEnums(d, rec(parent:=d), GreensRClasses(d), convert,
+   []);
+end);
+
 # different method for inverse
 
 InstallMethod(Enumerator, "for a regular D-class of an acting semigroup",
@@ -325,122 +348,6 @@ function(d)
     EnumeratorOfCartesianProduct(lambda_scc, SchutzenbergerGroup(d),
      lambda_scc), convert_out, convert_in, [], record);
 end);
-#      # p = a^-1*b where a in cosets and b in lschutz
-#      p:=LambdaPerm(s)(rep, g);
-#      
-#      if schutz=true then # a=() and so p=b
-#        j:=1;
-#      elif schutz=false then # b=() and so p=a^-1 in cosets
-#        j:=PositionCanonical(cosets, p^-1);
-#      else
-#        for j in [1..Length(cosets)] do
-#         #if SiftGroupElement(schutz, g*cosets[j]).isone then 
-#    
-#
-#    return EnumeratorByFunctions(d, rec(
-#
-#    m:=Length(LambdaOrbSCC(d))*Size(LambdaOrbSchutzGp(LambdaOrb(d),
-#     LambdaOrbSCCIndex(d))),
-#    # size of any R-class in d.
-#
-#    ElementNumber:=function(enum, pos)
-#    local q, n, m, R;
-#
-#      if pos>Length(enum) then
-#        return fail;
-#      fi;
-#
-#      R:=GreensRClasses(d);
-#      n:=pos-1;
-#      m:=enum!.m;
-#
-#      q := QuoInt(n, m);
-#      pos:= [ q, n - q * m ]+1;
-#      return Enumerator(R[pos[1]])[pos[2]];
-#    end,
-#
-#    #######################################################################
-#
-#    NumberElement:=function(enum, f)
-#      local s, rep, g, lm, lo, lscc, ll, lschutz, rm, ro, rscc, rl, schutz,
-#      cosets, j, r, p; 
-#
-#      s:=Parent(d);
-#      rep:=Representative(d);
-#
-#      if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
-#        or ActionRank(f) <> ActionRank(rep) then
-#        return fail;
-#      fi;
-#
-#      lm:=LambdaOrbSCCIndex(d); lo:=LambdaOrb(d); lscc:=OrbSCC(lo);
-#      ll:=Position(lo, LambdaFunc(s)(f));
-#
-#      if ll = fail or OrbSCCLookup(lo)[ll]<>lm then
-#        return fail;
-#      fi;
-#     
-#      if ll<>lscc[lm][1] then
-#        f:=f*LambdaOrbMult(lo, lm, ll)[2];
-#      fi;
-#      g:=f;
-#
-#      lschutz:=Enumerator(LambdaOrbSchutzGp(lo, lm));
-#
-#      rm:=RhoOrbSCCIndex(d); ro:=RhoOrb(d); rscc:=OrbSCC(ro);
-#      rl:=Position(ro, RhoFunc(s)(g));
-#
-#      if rl = fail or OrbSCCLookup(ro)[rl]<>rm then
-#        return fail;
-#      fi;
-#      
-#      if rl<>rscc[rm][1] then
-#        g:=RhoOrbMult(ro, rm, rl)[2]*f;
-#      fi;
-#
-#      schutz:=LambdaOrbStabChain(lo, lm);
-#      cosets:=RhoCosets(d);
-#      # p = a^-1*b where a in cosets and b in lschutz
-#      p:=LambdaPerm(s)(rep, g);
-#      
-#      if schutz=true then # a=() and so p=b
-#        j:=1;
-#      elif schutz=false then # b=() and so p=a^-1 in cosets
-#        j:=PositionCanonical(cosets, p^-1);
-#      else
-#        for j in [1..Length(cosets)] do
-#          #if SiftGroupElement(schutz, g*cosets[j]).isone then 
-#          if SiftedPermutation(schutz, cosets[j]*p)=() then 
-#            break;
-#          else
-#            j:=fail;
-#          fi;
-#        od;
-#      fi;
-#      
-#      if j=fail then 
-#        return fail;
-#      fi;
-#
-#      #JDM better to avoid the Position in the next line (which is essential)
-#      r:=(Position(rscc[rm], rl)-1)*Length(cosets)+j-1;
-#      return enum!.m*r+Length(lschutz)*(Position(lscc[lm], ll)-1)+
-#      Position(lschutz, cosets[j]*p);
-#    end,
-#
-#    #######################################################################
-#    
-#    Membership:=function(elm, enum)
-#      return elm in d;
-#    end,
-#
-#    Length:=enum -> Size(d),
-#
-#    PrintObj:=function(enum)
-#      Print( "<enumerator of D-class>");
-#    return;
-#  end));
-#end);
 
 # same method for inverse/regular
 
