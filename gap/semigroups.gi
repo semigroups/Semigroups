@@ -304,7 +304,7 @@ InstallMethod(InverseMonoidByGenerators,
 [IsAssociativeElementWithUniqueSemigroupInverseCollection and
 IsAssociativeElementWithActionCollection, IsRecord],
 function(gens, record)
-  local closure_opts, s, filts, one, f;
+  local closure_opts, s, filts, one, pos, f;
 
   record:=SemigroupOptions(record);
 
@@ -333,7 +333,7 @@ function(gens, record)
   s:=Objectify( NewType (FamilyObj( gens ), filts), rec(opts:=record));
   
   one:=One(gens); 
-  SetOne(s, gens);
+  SetOne(s, one);
   pos:=Position(gens, one);
 
   if pos<>fail then 
