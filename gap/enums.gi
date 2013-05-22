@@ -189,11 +189,17 @@ end);
 # same method for regular/inverse, note that at present EnumeratorOfRClasses
 # does not work for regular or inverse semigrous JDM
 
+# also this has really awful performance
+
 InstallMethod(Enumerator, "for an acting semigroup", 
 [IsActingSemigroup], 5, #to beat the method for semigroup ideals
 function(s)
   local record, convert;
-
+  
+  if HasAsSSortedList(s) then 
+    return AsSSortedList(s);
+  fi;
+  
   record:=rec();
   record.Length:=x-> Size(s);
   record.Membership:=function(x, enum)
@@ -214,6 +220,8 @@ end);
 # just use RClasses.
 
 # different method for regular/inverse
+
+# JDM the performance of this also sucks
 
 InstallMethod(EnumeratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
@@ -329,7 +337,7 @@ function(s)
    end,
 
    PrintObj:=function(enum)
-     Print( "<enumerator of R-classes of ", ViewString(s), ">");
+     Print( "<enumerator of R-classes>");
      return;
    end));
 end);  
@@ -373,6 +381,10 @@ InstallMethod(Enumerator, "for a regular D-class of an acting semigroup",
 [IsGreensDClass and IsRegularClass and IsActingSemigroupGreensClass],
 function(d)
   local record, convert_out, convert_in, rho_scc, lambda_scc;
+   
+  if HasAsSSortedList(d) then 
+    return AsSSortedList(d);
+  fi;
   
   Enumerate(LambdaOrb(d), infinity);
   Enumerate(RhoOrb(d), infinity);
@@ -428,6 +440,10 @@ InstallMethod(Enumerator, "for a D-class of an inverse acting semigroup",
 function(d)
   local record, convert_out, convert_in, lambda_scc;
   
+  if HasAsSSortedList(d) then 
+    return AsSSortedList(d);
+  fi;
+  
   Enumerate(LambdaOrb(d), infinity);
 
   record:=rec(parent:=d);
@@ -475,6 +491,10 @@ InstallMethod(Enumerator, "for H-class of acting semigp.",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
 
+  if HasAsSSortedList(h) then 
+    return AsSSortedList(h);
+  fi;
+  
   return EnumeratorByFunctions(h, rec(
 
     schutz:=Enumerator(SchutzenbergerGroup(h)),
@@ -520,7 +540,11 @@ InstallMethod(Enumerator, "for L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
   local record, convert_out, convert_in, scc;
-
+  
+  if HasAsSSortedList(l) then 
+    return AsSSortedList(l);
+  fi;
+  
   record:=rec(parent:=l);
   record.Membership:=function(elm, enum)
     return elm in l;
@@ -570,6 +594,10 @@ InstallMethod(Enumerator, "for L-class of an inverse op acting semigroup",
 function(l)
   local record, convert_out, convert_in, scc;
 
+  if HasAsSSortedList(l) then 
+    return AsSSortedList(l);
+  fi;
+  
   record:=rec(parent:=l);
   record.Membership:=function(elm, enum)
     return elm in l;
@@ -619,6 +647,10 @@ InstallMethod(Enumerator, "for R-class of an acting semigroup",
 function(r)
   local record, convert_out, convert_in, scc;
 
+  if HasAsSSortedList(r) then 
+    return AsSSortedList(r);
+  fi;
+  
   record:=rec(parent:=r);
   record.Membership:=function(elm, enum)
     return elm in r;
