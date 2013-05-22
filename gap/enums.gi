@@ -10,6 +10,10 @@
 
 # technical...
 
+# <convert_in> must return <fail> if it is not possible to convert
+# <convert_out> must check if its argument is <fail> and if it is, then it
+# should return <fail>
+
 InstallGlobalFunction(EnumeratorByEnumerator, 
 function(obj, baseenum, convert_out, convert_in, filts, record)
   local enum, filt;
@@ -42,6 +46,11 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
   
   #
   record.NumberElement:=function(enum, elt)
+    local converted;
+    converted:=enum!.convert_in(enum, elt);
+    if converted=fail then 
+      return fail;
+    fi;
     return Position(enum!.baseenum, enum!.convert_in(enum, elt));
   end;
   #
@@ -57,6 +66,11 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
     
     if IsBound(baseenum!.Membership) then 
       record.Membership:=function(enum, elt)
+        local converted; 
+        converted:=enum!.convert_in(enum, elt);
+        if converted=fail then 
+          return false;
+        fi;
         return enum!.convert_in(enum, elt) in enum!.baseenum;
       end;
     fi; 
@@ -280,6 +294,7 @@ function(d)
   #
   convert_out:=function(enum, tuple)
     local d, rep;
+    if tuple=fail then return fail; fi;
     d:=enum!.parent; rep:=Representative(d);
     return RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), tuple[1])[1]*rep*tuple[2]
      *LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
@@ -290,10 +305,16 @@ function(d)
     
     d:=enum!.parent;
     s:=Parent(d); 
-    
+     
     k:=Position(RhoOrb(d), RhoFunc(s)(elt));
+    if OrbSCCLookup(RhoOrb(d))[k]<>RhoOrbSCCIndex(d) then 
+      return fail;
+    fi;
     l:=Position(LambdaOrb(d), LambdaFunc(s)(elt));
-    
+    if OrbSCCLookup(LambdaOrb(d))[l]<>LambdaOrbSCCIndex(d) then 
+      return fail;
+    fi;
+
     f:=RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), k)[2]*elt
      *LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), l)[2];
     
@@ -321,6 +342,7 @@ function(d)
   #
   convert_out:=function(enum, tuple)
     local d, rep;
+    if tuple=fail then return fail; fi;
     d:=enum!.parent; rep:=Representative(d);
     return LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[1])[2]
      *rep*tuple[2]
@@ -334,7 +356,13 @@ function(d)
     s:=Parent(d); 
     
     k:=Position(LambdaOrb(d), RhoFunc(s)(elt));
+    if OrbSCCLookup(LambdaOrb(d))[k]<>LambdaOrbSCCIndex(d) then 
+      return fail;
+    fi;
     l:=Position(LambdaOrb(d), LambdaFunc(s)(elt));
+    if OrbSCCLookup(LambdaOrb(d))[l]<>LambdaOrbSCCIndex(d) then 
+      return fail;
+    fi;
     
     f:=LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), k)[1]*elt
      *LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), l)[2];
@@ -399,80 +427,47 @@ end);
 InstallMethod(Enumerator, "for L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  local o, m, mults, scc;
+  local record, convert_out, convert_in, scc;
 
-  o:=RhoOrb(l); 
-  m:=RhoOrbSCCIndex(l);
-  mults:=RhoOrbMults(o, m);
-  scc:=OrbSCC(o)[m];
+  record:=rec(parent:=l);
+  record.Membership:=function(elm, enum)
+    return elm in l;
+  end;
 
-  return EnumeratorByFunctions(l, rec(
+  record.Length:=enum-> Size(l);
+  #
+  convert_out:=function(enum, tuple)
+    local l, rep;
+    if tuple=fail then return fail; fi;
+    l:=enum!.parent;
+    rep:=Representative(l);
+    return RhoOrbMult(RhoOrb(l), RhoOrbSCCIndex(l), tuple[1])[1]*rep*tuple[2];
+  end;
+  #
+  convert_in:=function(enum, elt)
+    local l, s, i, f;
+    l:=enum!.parent;
+    s:=Parent(l); 
+   
+    if LambdaFunc(s)(elt)<>LambdaFunc(s)(Representative(l)) then 
+      return fail;
+    fi;
+    
+    i:=Position(RhoOrb(l), RhoFunc(s)(elt));
+    if OrbSCCLookup(RhoOrb(l))[i]<>RhoOrbSCCIndex(l) then 
+      return fail;
+    fi;
+    
+    f:=RhoOrbMult(RhoOrb(l), RhoOrbSCCIndex(l), i)[2]*elt;
+    
+    return [i, LambdaPerm(s)(Representative(l), f)];
+  end;
+  #
+  scc:=OrbSCC(RhoOrb(l))[RhoOrbSCCIndex(l)];
 
-    schutz:=Enumerator(SchutzenbergerGroup(l)),
-
-    len:=Size(SchutzenbergerGroup(l)),
-
-    ElementNumber:=function(enum, pos)
-      local n, m, q;
-
-      if pos>Length(enum) then 
-        return fail;
-      fi;
-
-      if pos<=Length(enum!.schutz) then 
-        return Representative(l)*enum!.schutz[pos];
-      fi;
-
-      n:=pos-1; m:=enum!.len;
-      
-      q:=QuoInt(n, m); 
-      pos:=[ q, n - q * m]+1;
-     
-     return mults[scc[pos[1]]][1]*enum[pos[2]];
-    end,
-
-    NumberElement:=function(enum, f)
-      local s, rep, o, m, i, g, j;
-
-      s:=Parent(l);
-      rep:=Representative(l);
-      
-      if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
-        or ActionDegree(f) <> ActionDegree(rep) 
-        or ActionRank(f) <> ActionRank(rep) 
-        or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then 
-        return fail;
-      fi;
-      
-      if f=rep then 
-        return 1;
-      fi;
-
-      o:=RhoOrb(l); m:=RhoOrbSCCIndex(l);
-      i:=Position(o, RhoFunc(s)(f));
-
-      if i = fail or OrbSCCLookup(o)[i]<>m then 
-        return fail;
-      fi;
-     
-      j:=Position(enum!.schutz, LambdaPerm(s)(rep, mults[i][2]*f));
-
-      if j=fail then 
-        return fail;
-      fi;
-      return enum!.len*(Position(scc, i)-1)+j;
-    end,
-
-    Membership:=function(elm, enum)
-      return elm in l;
-    end,
-
-    Length:=enum-> Size(l),
-
-    PrintObj:=function(enum)
-      Print("<enumerator of L-class>");
-      return;
-    end));
+  return EnumeratorByEnumerator(l, 
+   EnumeratorOfCartesianProduct(scc, SchutzenbergerGroup(l)), 
+   convert_out, convert_in, [], record);
 end);
 
 # same method for regular/inverse
