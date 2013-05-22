@@ -1,8 +1,5 @@
 
 
-# JDM this should have a method like IteratorOfRClassData and
-# IteratorOfLClassData since the scc:=OrbSCC line makes this work not so
-# well!
 
 InstallMethod(IteratorOfHClassData, "for a part perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], 
