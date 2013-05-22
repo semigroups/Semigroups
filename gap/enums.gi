@@ -249,7 +249,7 @@ end);
 InstallMethod(EnumeratorOfRClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local o, Membership, NumberElement, ElementNumber;
+  local o;
 
   o:=RhoOrb(s);
   Enumerate(o, infinity);
@@ -283,6 +283,47 @@ function(s)
      RhoOrbMult(o, m, nr+1)[1]*RhoOrbRep(o, m), false);
    end));
 end);   
+
+# JDM again this method might not nec. if inverse op semigroups have RhoOrb
+# method
+
+InstallMethod(EnumeratorOfRClasses, "for an inverse op acting semigroup",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup], 
+function(s)
+  local o;
+
+  o:=LambdaOrb(s);
+  Enumerate(o, infinity);
+
+  return EnumeratorByFunctions(s, rec(
+    
+    parent:=s,
+
+    Length:=enum-> NrRClasses(enum!.parent), 
+    
+    Membership:=function(r, enum)
+      return Representative(r) in enum!.parent;
+    end,
+
+    NumberElement:=function(enum, r)
+      local pos; 
+      pos:=Position(LambdaOrb(enum!.parent),
+       RhoFunc(enum!.parent)(Representative(r)));
+      if pos=fail then 
+        return fail;
+      fi;
+      return pos-1;  
+    end,
+
+   ElementNumber:=function(enum, nr)
+    local s, o, m;
+    s:=enum!.parent;
+    o:=LambdaOrb(s);
+    m:=OrbSCCLookup(o)[nr+1];
+    return CreateRClassNC(s, m, LambdaOrb(s), 
+     LambdaOrbMult(o, m, nr+1)[2]*RightOne(LambdaOrbRep(o, m)), false);
+   end));
+end);  
 
 # same method for regular/inverse
 
