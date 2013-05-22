@@ -526,6 +526,53 @@ end);
 InstallMethod(Enumerator, "for R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
+  local record, convert_out, convert_in, scc;
+
+  record:=rec(parent:=r);
+  record.Membership:=function(elm, enum)
+    return elm in r;
+  end;
+
+  record.Length:=enum-> Size(r);
+  #
+  convert_out:=function(enum, tuple)
+    local r, rep;
+    if tuple=fail then return fail; fi;
+    r:=enum!.parent;
+    rep:=Representative(r);
+    return rep*tuple[1]*LambdaOrbMult(LambdaOrb(r), 
+     LambdaOrbSCCIndex(r), tuple[1])[1];
+  end;
+  #
+  convert_in:=function(enum, elt)
+    local r, s, i, f;
+    r:=enum!.parent;
+    s:=Parent(r); 
+   
+    if RhoFunc(s)(elt)<>RhoFunc(s)(Representative(r)) then 
+      return fail;
+    fi;
+    
+    i:=Position(LambdaOrb(r), LambdaFunc(s)(elt));
+    if OrbSCCLookup(LambdaOrb(r))[i]<>LambdaOrbSCCIndex(r) then 
+      return fail;
+    fi;
+    
+    f:=LambdaOrbMult(LambdaOrb(r), LambdaOrbSCCIndex(r), i)[2]*elt;
+    
+    return [i, LambdaPerm(s)(Representative(r), f)];
+  end;
+  #
+  scc:=OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)];
+
+  return EnumeratorByEnumerator(r, 
+   EnumeratorOfCartesianProduct(SchutzenbergerGroup(r), scc), 
+   convert_out, convert_in, [], record);
+end);
+
+InstallMethod(Enumerator, "for R-class of an acting semigroup",
+[IsGreensRClass and IsActingSemigroupGreensClass],
+function(r)
   local o, m, mults, scc;
 
   o:=LambdaOrb(r); 
