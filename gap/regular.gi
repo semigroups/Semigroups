@@ -345,9 +345,8 @@ end);
 InstallMethod(RClassReps, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(s)
-  local lambda_o, rho_o, scc, len, out, n, f, mults, m, j;
+  local rho_o, scc, len, out, n, f, mults, m, j;
   
-  lambda_o:=LambdaOrb(s);
   rho_o:=RhoOrb(s);
   scc:=OrbSCC(rho_o);
 

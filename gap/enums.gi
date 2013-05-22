@@ -12,7 +12,8 @@
 
 # <convert_in> must return <fail> if it is not possible to convert
 # <convert_out> must check if its argument is <fail> and if it is, then it
-# should return <fail>
+# should return <fail>, <convert_out> should have two arguments <enum> and <nr>
+# where <nr> refers to the position in <baseenum>.
 
 InstallGlobalFunction(EnumeratorByEnumerator, 
 function(obj, baseenum, convert_out, convert_in, filts, record)
@@ -51,7 +52,7 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
     if converted=fail then 
       return fail;
     fi;
-    return Position(enum!.baseenum, enum!.convert_in(enum, elt));
+    return Position(enum!.baseenum, converted);
   end;
   #
   record.ElementNumber:=function(enum, nr)
@@ -212,7 +213,7 @@ end);
 # use (if nothing much is known) IteratorOfRClasses or if everything is know
 # just use RClasses.
 
-# no method for regular/inverse semigroup just yet, JDM
+# different method for regular/inverse
 
 InstallMethod(EnumeratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
@@ -242,6 +243,46 @@ function(s)
 
   return enum;
 end);
+
+# different method for inverse
+
+InstallMethod(EnumeratorOfRClasses, "for a regular acting semigroup",
+[IsActingSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup], 
+function(s)
+  local o, Membership, NumberElement, ElementNumber;
+
+  o:=RhoOrb(s);
+  Enumerate(o, infinity);
+
+  return EnumeratorByFunctions(s, rec(
+    
+    parent:=s,
+
+    Length:=enum-> NrRClasses(enum!.parent), 
+    
+    Membership:=function(r, enum)
+      return Representative(r) in enum!.parent;
+    end,
+
+    NumberElement:=function(enum, r)
+      local pos; 
+      pos:=Position(RhoOrb(enum!.parent),
+       RhoFunc(enum!.parent)(Representative(r)));
+      if pos=fail then 
+        return fail;
+      fi;
+      return pos-1;  
+    end,
+
+   ElementNumber:=function(enum, nr)
+    local s, o, m;
+    s:=enum!.parent;
+    o:=RhoOrb(s);
+    m:=OrbSCCLookup(o)[nr+1];
+    return CreateRClass(s, m, LambdaOrb(s), 
+     RhoOrbMult(o, m, nr+1)[1]*RhoOrbRep(o, m), false);
+   end));
+end);   
 
 # same method for regular/inverse
 
