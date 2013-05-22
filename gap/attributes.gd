@@ -10,7 +10,7 @@
 
 DeclareGlobalFunction("SemigroupActionHomomorphism");
 
-DeclareOperation("EmbeddingNC", [IsSemigroup, IsSemigroup]);
+DeclareOperation("EmbeddingNC", [IsSemigroup, IsGreensHClass]);
 DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
 DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);

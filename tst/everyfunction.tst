@@ -3543,13 +3543,15 @@ gap> Number(HClassReps(d), x-> x in r);
 gap> NrHClasses(r);
 6
 gap> enum:=EnumeratorOfRClasses(s);
-<enumerator of R-classes>
+<enumerator of R-classes of <non-regular transformation monoid of size 7008, 
+ on 6 pts with 18 generators>>
 gap> enum[1];
 {Transformation( [ 6, 4, 3, 2, 5, 1 ] )}
 gap> s:=Semigroup(gens);
 <transformation monoid on 6 pts with 18 generators>
 gap> enum:=EnumeratorOfRClasses(s);
-<enumerator of R-classes>
+<enumerator of R-classes of <transformation monoid on 6 pts with 18 generators
+  >>
 gap> enum[1];
 {Transformation( [ 6, 4, 3, 2, 5, 1 ] )}
 gap> enum[2];
@@ -4760,12 +4762,14 @@ gap> Number(HClassReps(d), x-> x in r);
 gap> NrHClasses(r);
 6
 gap> enum:=EnumeratorOfRClasses(s);
-<enumerator of R-classes>
+<enumerator of R-classes of <non-regular transformation monoid of size 7008, 
+ on 6 pts with 18 generators>>
 gap> enum[1];
 {Transformation( [ 6, 4, 3, 2, 5, 1 ] )}
 gap> s:=Semigroup(gens);;
 gap> enum:=EnumeratorOfRClasses(s);
-<enumerator of R-classes>
+<enumerator of R-classes of <transformation monoid on 6 pts with 18 generators
+  >>
 gap> enum[1];
 {Transformation( [ 6, 4, 3, 2, 5, 1 ] )}
 gap> enum[2];
