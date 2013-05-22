@@ -8,9 +8,11 @@
 #############################################################################
 ##
 
+# technical...
+
 InstallGlobalFunction(EnumeratorByEnumerator, 
-function(obj, baseenum, convert_out, convert_in, filts)
-  local record, enum, filt;
+function(obj, baseenum, convert_out, convert_in, filts, record)
+  local enum, filt;
   
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then 
     Error("usage: <obj> must be a domain or a collections family,");
@@ -24,17 +26,27 @@ function(obj, baseenum, convert_out, convert_in, filts)
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then 
     Error("usage: <filts> must be a list of filters,");
     return;
+  elif not (IsRecord(record) and IsMutable(record) and not
+  IsBound(record.baseenum) and not IsBound(record.convert_out) and not
+  IsBound(record.convert_in) and not IsBound(record.NumberElement) and not
+  IsBound(record.ElementNumber) and not IsBound(record.Length)) then 
+    Error("usage: <record> must be a mutable record with no components ",
+    " named:\n`baseenum', `convert_out', `convert_in', `ElementNumber',",
+    " or `NumberElement',");
+    return;
   fi;
   
-  record:=rec(baseenum:=baseenum, convert_out:=convert_out, 
-   convert_in:=convert_in);
+  record.baseenum:=baseenum;
+  record.convert_out:=convert_out;
+  record.convert_in:=convert_in;
+  
   #
   record.NumberElement:=function(enum, elt)
-    return Position(enum!.baseenum, enum!.convert_in(elt));
+    return Position(enum!.baseenum, enum!.convert_in(enum, elt));
   end;
   #
   record.ElementNumber:=function(enum, nr)
-    return enum!.convert_out(enum!.baseenum[nr]);
+    return enum!.convert_out(enum, enum!.baseenum[nr]);
   end;
   #
   record.Length:=enum-> Length(enum!.baseenum);
@@ -43,7 +55,7 @@ function(obj, baseenum, convert_out, convert_in, filts)
     
     if IsBound(baseenum!.Membership) then 
       record.Membership:=function(enum, elt)
-        return enum!.convert_in(elt) in enum!.baseenum;
+        return enum!.convert_in(enum, elt) in enum!.baseenum;
       end;
     fi; 
 
@@ -119,7 +131,7 @@ function(obj, record, baseenum, convert, filts)
     while pos>Length(enumofenums[i]) do 
       pos:=pos-Length(enumofenums[i]);
       i:=i+1;
-      if not IsBound(enumofenums[i]) then 
+     if not IsBound(enumofenums[i]) then 
         enumofenums[i]:=Enumerator(baseenum[i]);
       fi;
     od;
@@ -153,110 +165,10 @@ function(obj, record, baseenum, convert, filts)
   return enum;
 end);
 
+# the actual methods used...
 
-#JDM use these for enumerator of symmetric inverse semigroup
-# using EnumeratorByEnumerator
-
-InstallGlobalFunction(NumberArrangement, 
-function(arr, n)
-  local bool, m, mult, factor, out, k, i, j;
-  
-  if IsEmpty(arr) then 
-    return 1;
-  fi;
-
-  bool:=BlistList([1..n], []);
-  m:=Length(arr);
-
-  bool[arr[1]]:=true;
-  mult:=Product([n-m+1..n-1]);
-  factor:=n;
-  out:=(arr[1]-1)*mult;
-
-  for i in [2..m] do 
-    k:=0;
-    for j in [1..arr[i]-1] do 
-      if not bool[j] then k:=k+1; fi;
-    od;
-    bool[arr[i]]:=true;
-    factor:=factor-1;
-    mult:=mult/factor;
-    out:=out+k*mult;
-  od;
-  return out+1;
-end);
-
-#
-
-InstallGlobalFunction(ArrangementNumber, 
-function(r, m, n)
-  local bool, mult, factor, q, out, j, k, i;
-  if m=0 then 
-    return [];
-  fi;
-  if m=1 then 
-    return [r];
-  fi;
-  bool:=BlistList([1..n], []);
-  r:=r-1;
-  mult:=Product([n-m+1..n-1]); 
-  factor:=n; 
-  q:=QuotientRemainder(r,mult);
-  out:=[q[1]+1];
-  bool[q[1]+1]:=true;
-  
-  for i in [2..m-1] do  
-    factor:=factor-1;
-    mult:=mult/factor;
-    q:=QuotientRemainder(q[2], mult);
-    j:=0; k:=0; 
-    repeat 
-      j:=j+1;
-      if not bool[j] then k:=k+1; fi;
-    until k=q[1]+1;
-    bool[j]:=true;
-    out[i]:=j;
-  od;
-  j:=0; k:=0;
-  repeat
-    j:=j+1;
-    if not bool[j] then k:=k+1; fi;
-  until k=q[2]+1;
-  out[m]:=j;
-  return out;
-end);
-
-#
-
-InstallGlobalFunction(EnumeratorOfArrangements, 
-function(m, n)
-  local convert_out, convert_in, fam;
-
-  if not IsPosInt(n) then
-    Error("usage: <n> must be a positive integer,");
-    return;
-  elif not (IsInt(m) and m>=0) then
-    Error("usage: <m> must be a non-negative integer,");
-    return;
-  elif m>n then
-    Error("usage: <m> must be no greater than <n>,");
-  fi;
-
-  convert_out:=function(x)
-    return ArrangementNumber(x, m, n);
-  end;
-
-  convert_in:=function(x)
-    return NumberArrangement(x, n);
-  end;
-
-  fam:=CollectionsFamily(FamilyObj(ArrangementNumber(1, m, n)));
-  
-  return EnumeratorByEnumerator(fam, 
-   Enumerator([1..NrArrangements([1..n], m)]), convert_out, convert_in, []);
-end);
-
-#
+# same method for regular/inverse, note that at present EnumeratorOfRClasses
+# does not work for regular or inverse semigrous JDM
 
 InstallMethod(Enumerator, "for an acting semigroup", 
 [IsActingSemigroup], 5, #to beat the method for semigroup ideals
@@ -274,8 +186,43 @@ function(s)
     return GreensRClassOfElement(enum!.parent, x);
   end;
 
-  return EnumeratorByEnumOfEnums(s, record, EnumeratorOfRClasses(s), convert,
-  []);
+  return EnumeratorByEnumOfEnums(s, record, EnumeratorOfRClasses(s), 
+   convert, []);
+end);
+
+# Notes: the only purpose for this is the method for NumberElement.  Otherwise
+# use (if nothing much is known) IteratorOfRClasses or if everything is know
+# just use RClasses.
+
+# no method for regular/inverse semigroup just yet, JDM
+
+InstallMethod(EnumeratorOfRClasses, "for an acting semigroup",
+[IsActingSemigroup and HasGeneratorsOfSemigroup], 
+function(s)
+  local enum;
+
+  return EnumeratorByFunctions(s, rec(
+    
+    ElementNumber:=function(enum, pos)
+      return GreensRClasses(s)[pos];
+    end,
+
+    NumberElement:=function(enum, r)
+      return Position(SemigroupData(s), Representative(r))-1;
+    end,
+
+    Membership:=function(r, enum)
+      return Position(enum, r)<>fail;
+    end,
+    
+    Length:=enum -> NrRClasses(s),
+
+    PrintObj:=function(enum)
+      Print( "<enumerator of R-classes>");
+      return;
+    end));
+
+  return enum;
 end);
 
 # same method for regular/inverse
@@ -290,119 +237,164 @@ function(s)
   return Immutable(SSortedList(ListIterator(Iterator(s), Size(s))));
 end);
 
-# different method for inverse/regular
+# different method for inverse
 
 InstallMethod(Enumerator, "for a D-class of acting semigp.",
-[IsGreensDClass and IsActingSemigroupGreensClass],
+[IsGreensDClass and IsRegularClass and IsActingSemigroupGreensClass],
 function(d)
+  local record, convert_out, convert_in, rho_scc, lambda_scc;
+  
+  Enumerate(LambdaOrb(d), infinity);
+  Enumerate(RhoOrb(d), infinity);
+
+  record:=rec(parent:=d);
+  #
+  convert_out:=function(enum, tuple)
+    local d, rep;
+    d:=enum!.parent; rep:=Representative(d);
+    return RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), tuple[1])[1]*rep*tuple[2]
+     *LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
+  end;
+  #
+  convert_in:=function(enum, elt)
+    local d, s, k, l, f;
     
-    Enumerate(LambdaOrb(d), infinity);
-    Enumerate(RhoOrb(d), infinity);
-
-    return EnumeratorByFunctions(d, rec(
-
-    m:=Length(LambdaOrbSCC(d))*Size(LambdaOrbSchutzGp(LambdaOrb(d),
-     LambdaOrbSCCIndex(d))),
-    # size of any R-class in d.
-
-    ElementNumber:=function(enum, pos)
-    local q, n, m, R;
-
-      if pos>Length(enum) then
-        return fail;
-      fi;
-
-      R:=GreensRClasses(d);
-      n:=pos-1;
-      m:=enum!.m;
-
-      q := QuoInt(n, m);
-      pos:= [ q, n - q * m ]+1;
-      return Enumerator(R[pos[1]])[pos[2]];
-    end,
-
-    #######################################################################
-
-    NumberElement:=function(enum, f)
-      local s, rep, g, lm, lo, lscc, ll, lschutz, rm, ro, rscc, rl, schutz,
-      cosets, j, r, p; 
-
-      s:=Parent(d);
-      rep:=Representative(d);
-
-      if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
-        or ActionRank(f) <> ActionRank(rep) then
-        return fail;
-      fi;
-
-      lm:=LambdaOrbSCCIndex(d); lo:=LambdaOrb(d); lscc:=OrbSCC(lo);
-      ll:=Position(lo, LambdaFunc(s)(f));
-
-      if ll = fail or OrbSCCLookup(lo)[ll]<>lm then
-        return fail;
-      fi;
-     
-      if ll<>lscc[lm][1] then
-        f:=f*LambdaOrbMult(lo, lm, ll)[2];
-      fi;
-      g:=f;
-
-      lschutz:=Enumerator(LambdaOrbSchutzGp(lo, lm));
-
-      rm:=RhoOrbSCCIndex(d); ro:=RhoOrb(d); rscc:=OrbSCC(ro);
-      rl:=Position(ro, RhoFunc(s)(g));
-
-      if rl = fail or OrbSCCLookup(ro)[rl]<>rm then
-        return fail;
-      fi;
-      
-      if rl<>rscc[rm][1] then
-        g:=RhoOrbMult(ro, rm, rl)[2]*f;
-      fi;
-
-      schutz:=LambdaOrbStabChain(lo, lm);
-      cosets:=RhoCosets(d);
-      # p = a^-1*b where a in cosets and b in lschutz
-      p:=LambdaPerm(s)(rep, g);
-      
-      if schutz=true then # a=() and so p=b
-        j:=1;
-      elif schutz=false then # b=() and so p=a^-1 in cosets
-        j:=PositionCanonical(cosets, p^-1);
-      else
-        for j in [1..Length(cosets)] do
-          #if SiftGroupElement(schutz, g*cosets[j]).isone then 
-          if SiftedPermutation(schutz, cosets[j]*p)=() then 
-            break;
-          else
-            j:=fail;
-          fi;
-        od;
-      fi;
-      
-      if j=fail then 
-        return fail;
-      fi;
-
-      #JDM better to avoid the Position in the next line (which is essential)
-      r:=(Position(rscc[rm], rl)-1)*Length(cosets)+j-1;
-      return enum!.m*r+Length(lschutz)*(Position(lscc[lm], ll)-1)+
-      Position(lschutz, cosets[j]*p);
-    end,
-
-    #######################################################################
+    d:=enum!.parent;
+    s:=Parent(d); 
     
-    Membership:=function(elm, enum)
-      return elm in d;
-    end,
+    k:=Position(RhoOrb(d), RhoFunc(s)(elt));
+    l:=Position(LambdaOrb(d), LambdaFunc(s)(elt));
+    
+    f:=RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), k)[2]*elt
+     *LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), l)[2];
+    
+    return [k, LambdaPerm(s)(Representative(d), f), l];
+  end;
+  # 
+  rho_scc:=OrbSCC(RhoOrb(d))[RhoOrbSCCIndex(d)];
+  lambda_scc:=OrbSCC(LambdaOrb(d))[LambdaOrbSCCIndex(d)];
 
-    Length:=enum -> Size(d),
-
-    PrintObj:=function(enum)
-      Print( "<enumerator of D-class>");
-    return;
-  end));
+  return EnumeratorByEnumerator(d, 
+    EnumeratorOfCartesianProduct(rho_scc, SchutzenbergerGroup(d), lambda_scc),
+    convert_out, convert_in, [], record);
 end);
+
+#      # p = a^-1*b where a in cosets and b in lschutz
+#      p:=LambdaPerm(s)(rep, g);
+#      
+#      if schutz=true then # a=() and so p=b
+#        j:=1;
+#      elif schutz=false then # b=() and so p=a^-1 in cosets
+#        j:=PositionCanonical(cosets, p^-1);
+#      else
+#        for j in [1..Length(cosets)] do
+#         #if SiftGroupElement(schutz, g*cosets[j]).isone then 
+#    
+#
+#    return EnumeratorByFunctions(d, rec(
+#
+#    m:=Length(LambdaOrbSCC(d))*Size(LambdaOrbSchutzGp(LambdaOrb(d),
+#     LambdaOrbSCCIndex(d))),
+#    # size of any R-class in d.
+#
+#    ElementNumber:=function(enum, pos)
+#    local q, n, m, R;
+#
+#      if pos>Length(enum) then
+#        return fail;
+#      fi;
+#
+#      R:=GreensRClasses(d);
+#      n:=pos-1;
+#      m:=enum!.m;
+#
+#      q := QuoInt(n, m);
+#      pos:= [ q, n - q * m ]+1;
+#      return Enumerator(R[pos[1]])[pos[2]];
+#    end,
+#
+#    #######################################################################
+#
+#    NumberElement:=function(enum, f)
+#      local s, rep, g, lm, lo, lscc, ll, lschutz, rm, ro, rscc, rl, schutz,
+#      cosets, j, r, p; 
+#
+#      s:=Parent(d);
+#      rep:=Representative(d);
+#
+#      if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
+#        or ActionRank(f) <> ActionRank(rep) then
+#        return fail;
+#      fi;
+#
+#      lm:=LambdaOrbSCCIndex(d); lo:=LambdaOrb(d); lscc:=OrbSCC(lo);
+#      ll:=Position(lo, LambdaFunc(s)(f));
+#
+#      if ll = fail or OrbSCCLookup(lo)[ll]<>lm then
+#        return fail;
+#      fi;
+#     
+#      if ll<>lscc[lm][1] then
+#        f:=f*LambdaOrbMult(lo, lm, ll)[2];
+#      fi;
+#      g:=f;
+#
+#      lschutz:=Enumerator(LambdaOrbSchutzGp(lo, lm));
+#
+#      rm:=RhoOrbSCCIndex(d); ro:=RhoOrb(d); rscc:=OrbSCC(ro);
+#      rl:=Position(ro, RhoFunc(s)(g));
+#
+#      if rl = fail or OrbSCCLookup(ro)[rl]<>rm then
+#        return fail;
+#      fi;
+#      
+#      if rl<>rscc[rm][1] then
+#        g:=RhoOrbMult(ro, rm, rl)[2]*f;
+#      fi;
+#
+#      schutz:=LambdaOrbStabChain(lo, lm);
+#      cosets:=RhoCosets(d);
+#      # p = a^-1*b where a in cosets and b in lschutz
+#      p:=LambdaPerm(s)(rep, g);
+#      
+#      if schutz=true then # a=() and so p=b
+#        j:=1;
+#      elif schutz=false then # b=() and so p=a^-1 in cosets
+#        j:=PositionCanonical(cosets, p^-1);
+#      else
+#        for j in [1..Length(cosets)] do
+#          #if SiftGroupElement(schutz, g*cosets[j]).isone then 
+#          if SiftedPermutation(schutz, cosets[j]*p)=() then 
+#            break;
+#          else
+#            j:=fail;
+#          fi;
+#        od;
+#      fi;
+#      
+#      if j=fail then 
+#        return fail;
+#      fi;
+#
+#      #JDM better to avoid the Position in the next line (which is essential)
+#      r:=(Position(rscc[rm], rl)-1)*Length(cosets)+j-1;
+#      return enum!.m*r+Length(lschutz)*(Position(lscc[lm], ll)-1)+
+#      Position(lschutz, cosets[j]*p);
+#    end,
+#
+#    #######################################################################
+#    
+#    Membership:=function(elm, enum)
+#      return elm in d;
+#    end,
+#
+#    Length:=enum -> Size(d),
+#
+#    PrintObj:=function(enum)
+#      Print( "<enumerator of D-class>");
+#    return;
+#  end));
+#end);
 
 # same method for inverse/regular
 
@@ -613,41 +605,6 @@ function(r)
     end));
 end);
 
-# Notes: the only purpose for this is the method for NumberElement.  Otherwise
-# use (if nothing much is known) IteratorOfRClasses or if everything is know
-# just use RClasses.
-
-# no method for regular/inverse semigroup just yet, JDM
-
-InstallMethod(EnumeratorOfRClasses, "for an acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  local enum;
-
-  return EnumeratorByFunctions(s, rec(
-    
-    ElementNumber:=function(enum, pos)
-      return GreensRClasses(s)[pos];
-    end,
-
-    NumberElement:=function(enum, r)
-      return Position(SemigroupData(s), Representative(r))-1;
-    end,
-
-    Membership:=function(r, enum)
-      return Position(enum, r)<>fail;
-    end,
-    
-    Length:=enum -> NrRClasses(s),
-
-    PrintObj:=function(enum)
-      Print( "<enumerator of R-classes>");
-      return;
-    end));
-
-  return enum;
-end);
-
 # JDM why is IsGreensClassOfPartPermSemigroup still used here!?
 
 InstallMethod(Enumerator, "for D-class of part perm inv semigroup",
@@ -830,112 +787,214 @@ end);
 
 # different method for inverse
 
-InstallMethod(Enumerator, "for a regular D-class of acting semigroup.",
-[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
-function(d)
-    
-    return EnumeratorByFunctions(d, rec(
+#InstallMethod(Enumerator, "for a regular D-class of acting semigroup.",
+#[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
+#function(d)
+#    
+#    return EnumeratorByFunctions(d, rec(
+#
+#    schutz:=Enumerator(SchutzenbergerGroup(d)),
+#
+#    #######################################################################
+#
+#    ElementNumber:=function(enum, pos)
+#      local l_scc, r_scc, i, j, k, x, y, z, lmults, rmults;
+#      if pos>Length(enum) then
+#        return fail;
+#      fi;
+#
+#      if pos<=Length(enum!.schutz) then 
+#        return Representative(d)*enum!.schutz[pos];
+#      fi;
+#
+#      l_scc:=LambdaOrbSCC(d);
+#      r_scc:=RhoOrbSCC(d);
+#
+#      pos:=pos-1; 
+#      
+#      i:=Length(enum!.schutz); 
+#      j:=Length(l_scc);
+#      k:=Length(r_scc);
+#
+#      x:=QuoInt(pos, i*j); 
+#      y:=QuoInt(pos-x*i*j, i);
+#      z:=pos-x*i*j-y*i;
+#
+#      lmults:=LambdaOrbMults(LambdaOrb(d), LambdaOrbSCCIndex(d));
+#      rmults:=RhoOrbMults(RhoOrb(d), RhoOrbSCCIndex(d));
+#      
+#      return rmults[r_scc[x+1]][1]*enum[z+1]*lmults[l_scc[y+1]][1];
+#    end,
+#
+#    #######################################################################
+#
+#    NumberElement:=function(enum, f)
+#      local rep, s, o, m, x, y, z, i, j, k, g; 
+#      
+#      rep:=Representative(d);
+#
+#      if ActionRank(f)<>ActionRank(rep) then
+#        return fail;
+#      fi;
+#
+#      if f=rep then
+#        return 1;
+#      fi;
+#
+#      s:=Parent(d);
+#      
+#      o:=RhoOrb(d); m:=RhoOrbSCCIndex(d);
+#      x:=Position(o, RhoFunc(s)(f));
+#
+#      if x=fail or OrbSCCLookup(o)[x]<>m then
+#        return fail;
+#      fi;
+#
+#      g:=f;
+#      
+#      if x<>OrbSCC(o)[m][1] then 
+#        g:=RhoOrbMult(o, m, x)[2]*g;
+#      fi;
+#      
+#      o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
+#      y:=Position(o, LambdaFunc(s)(g));
+#
+#      if y=fail or OrbSCCLookup(o)[y]<>m then
+#        return fail;
+#      fi;
+#
+#      if y<>OrbSCC(o)[m][1] then 
+#        g:=g*LambdaOrbMult(o, m, y)[2];
+#      fi;
+#   
+#      z:=Position(enum!.schutz, LambdaPerm(s)(rep, g));
+#
+#      if z=fail then
+#        return fail;
+#      fi;
+#      
+#      i:=Length(enum!.schutz); 
+#      j:=Length(LambdaOrbSCC(d));
+#      k:=Length(RhoOrbSCC(d));
+#
+#      return i*j*(Position(RhoOrbSCC(d), x)-1)+(Position(LambdaOrbSCC(d),
+#      y)-1)*i+z;
+#    end,
+#
+#    #######################################################################
+#
+#    Membership:=function(elm, enum)
+#      return elm in d;
+#    end,
+#
+#    Length:=enum -> Size(d),
+#
+#    PrintObj:=function(enum)
+#      Print( "<enumerator of D-class>");
+#    return;
+#  end));
+#end);
 
-    schutz:=Enumerator(SchutzenbergerGroup(d)),
+#JDM use these for enumerator of symmetric inverse semigroup
+# using EnumeratorByEnumerator
 
-    #######################################################################
+InstallGlobalFunction(NumberArrangement, 
+function(arr, n)
+  local bool, m, mult, factor, out, k, i, j;
+  
+  if IsEmpty(arr) then 
+    return 1;
+  fi;
 
-    ElementNumber:=function(enum, pos)
-      local l_scc, r_scc, i, j, k, x, y, z, lmults, rmults;
-      if pos>Length(enum) then
-        return fail;
-      fi;
+  bool:=BlistList([1..n], []);
+  m:=Length(arr);
 
-      if pos<=Length(enum!.schutz) then 
-        return Representative(d)*enum!.schutz[pos];
-      fi;
+  bool[arr[1]]:=true;
+  mult:=Product([n-m+1..n-1]);
+  factor:=n;
+  out:=(arr[1]-1)*mult;
 
-      l_scc:=LambdaOrbSCC(d);
-      r_scc:=RhoOrbSCC(d);
-
-      pos:=pos-1; 
-      
-      i:=Length(enum!.schutz); 
-      j:=Length(l_scc);
-      k:=Length(r_scc);
-
-      x:=QuoInt(pos, i*j); 
-      y:=QuoInt(pos-x*i*j, i);
-      z:=pos-x*i*j-y*i;
-
-      lmults:=LambdaOrbMults(LambdaOrb(d), LambdaOrbSCCIndex(d));
-      rmults:=RhoOrbMults(RhoOrb(d), RhoOrbSCCIndex(d));
-      
-      return rmults[r_scc[x+1]][1]*enum[z+1]*lmults[l_scc[y+1]][1];
-    end,
-
-    #######################################################################
-
-    NumberElement:=function(enum, f)
-      local rep, s, o, m, x, y, z, i, j, k, g; 
-      
-      rep:=Representative(d);
-
-      if ActionRank(f)<>ActionRank(rep) then
-        return fail;
-      fi;
-
-      if f=rep then
-        return 1;
-      fi;
-
-      s:=Parent(d);
-      
-      o:=RhoOrb(d); m:=RhoOrbSCCIndex(d);
-      x:=Position(o, RhoFunc(s)(f));
-
-      if x=fail or OrbSCCLookup(o)[x]<>m then
-        return fail;
-      fi;
-
-      g:=f;
-      
-      if x<>OrbSCC(o)[m][1] then 
-        g:=RhoOrbMult(o, m, x)[2]*g;
-      fi;
-      
-      o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
-      y:=Position(o, LambdaFunc(s)(g));
-
-      if y=fail or OrbSCCLookup(o)[y]<>m then
-        return fail;
-      fi;
-
-      if y<>OrbSCC(o)[m][1] then 
-        g:=g*LambdaOrbMult(o, m, y)[2];
-      fi;
-   
-      z:=Position(enum!.schutz, LambdaPerm(s)(rep, g));
-
-      if z=fail then
-        return fail;
-      fi;
-      
-      i:=Length(enum!.schutz); 
-      j:=Length(LambdaOrbSCC(d));
-      k:=Length(RhoOrbSCC(d));
-
-      return i*j*(Position(RhoOrbSCC(d), x)-1)+(Position(LambdaOrbSCC(d),
-      y)-1)*i+z;
-    end,
-
-    #######################################################################
-
-    Membership:=function(elm, enum)
-      return elm in d;
-    end,
-
-    Length:=enum -> Size(d),
-
-    PrintObj:=function(enum)
-      Print( "<enumerator of D-class>");
-    return;
-  end));
+  for i in [2..m] do 
+    k:=0;
+    for j in [1..arr[i]-1] do 
+      if not bool[j] then k:=k+1; fi;
+    od;
+    bool[arr[i]]:=true;
+    factor:=factor-1;
+    mult:=mult/factor;
+    out:=out+k*mult;
+  od;
+  return out+1;
 end);
 
+#
+
+InstallGlobalFunction(ArrangementNumber, 
+function(r, m, n)
+  local bool, mult, factor, q, out, j, k, i;
+  if m=0 then 
+    return [];
+  fi;
+  if m=1 then 
+    return [r];
+  fi;
+  bool:=BlistList([1..n], []);
+  r:=r-1;
+  mult:=Product([n-m+1..n-1]); 
+  factor:=n; 
+  q:=QuotientRemainder(r,mult);
+  out:=[q[1]+1];
+  bool[q[1]+1]:=true;
+  
+  for i in [2..m-1] do  
+    factor:=factor-1;
+    mult:=mult/factor;
+    q:=QuotientRemainder(q[2], mult);
+    j:=0; k:=0; 
+    repeat 
+      j:=j+1;
+      if not bool[j] then k:=k+1; fi;
+    until k=q[1]+1;
+    bool[j]:=true;
+    out[i]:=j;
+  od;
+  j:=0; k:=0;
+  repeat
+    j:=j+1;
+    if not bool[j] then k:=k+1; fi;
+  until k=q[2]+1;
+  out[m]:=j;
+  return out;
+end);
+
+#
+
+InstallGlobalFunction(EnumeratorOfArrangements, 
+function(m, n)
+  local convert_out, convert_in, fam;
+
+  if not IsPosInt(n) then
+    Error("usage: <n> must be a positive integer,");
+    return;
+  elif not (IsInt(m) and m>=0) then
+    Error("usage: <m> must be a non-negative integer,");
+    return;
+  elif m>n then
+    Error("usage: <m> must be no greater than <n>,");
+  fi;
+
+  convert_out:=function(enum, x)
+    return ArrangementNumber(x, m, n);
+  end;
+
+  convert_in:=function(enum, x)
+    return NumberArrangement(x, n);
+  end;
+
+  fam:=CollectionsFamily(FamilyObj(ArrangementNumber(1, m, n)));
+  
+  return EnumeratorByEnumerator(fam, 
+   Enumerator([1..NrArrangements([1..n], m)]), convert_out, convert_in, [],
+    rec());
+end);
 #EOF
