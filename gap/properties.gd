@@ -8,6 +8,9 @@
 #############################################################################
 ##
 
+DeclareSynonym("IsMatrixSemigroup", IsSemigroup and IsRingElementCollCollColl);
+DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
+
 DeclareOperation("IrredundantGeneratingSubset",
 [IsAssociativeElementWithActionCollection]);
 

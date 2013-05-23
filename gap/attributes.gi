@@ -649,6 +649,22 @@ end);
 
 #
 
+InstallMethod(IsomorphismTransformationSemigroup, 
+"for a matrix semigroup",
+[IsMatrixSemigroup], 
+function(S)        
+  local n, F, T;
+  n:=Length(GeneratorsOfSemigroup(S)[1][1]);
+  F:=BaseDomain(GeneratorsOfSemigroup(S)[1]);        
+  T:=Semigroup(List(GeneratorsOfSemigroup(S), x-> 
+   TransformationOp(x, Elements(F^n), OnRight)));        
+  return MappingByFunction(S, T,
+   x-> TransformationOp(x, Elements(F^Size(F)), OnRight));
+end);
+
+
+#
+
 InstallMethod(IsomorphismPermGroup, "for a transformation semigroup", 
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
