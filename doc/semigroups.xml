@@ -32,7 +32,7 @@ gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
 gap> S:=Monoid(gens[1], rec(schreier:=false));;
 gap> for i in [2..4] do S:=ClosureSemigroup(S, gens[i]); od;
 gap> S;
-&lt;monoid with 4 generators>
+&lt;transformation monoid on 8 pts with 4 generators>
 gap> Size(S);
 233606</Example>
     </Description>
@@ -64,14 +64,14 @@ gap> f:=PartialPermNC(
 > [ 1, 2, 3, 4, 5, 7, 8, 10, 11, 13, 18, 19, 20 ],
 > [ 5, 1, 7, 3, 10, 2, 12, 14, 11, 16, 6, 9, 15 ]);;
 gap> S:=ClosureInverseSemigroup(S, f);
-&lt;inverse semigroup with 3 generators>
+&lt;inverse partial perm semigroup on 19 pts with 4 generators>
 gap> Size(S);
-9726
+9744
 gap> T:=Idempotents(SymmetricInverseSemigroup(10));;
 gap> S:=ClosureInverseSemigroup(S, T);
-&lt;inverse semigroup with 858 generators>
+&lt;inverse partial perm semigroup on 19 pts with 854 generators>
 gap> S:=InverseSemigroup(SmallGeneratingSet(S));
-&lt;inverse semigroup with 14 generators></Example>
+&lt;inverse partial perm semigroup on 19 pts with 14 generators></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -428,9 +428,10 @@ gap> Size(S);
       permutations with degree at most <A>n</A>  with <A>m</A> generators.
       <Example>
 gap> S:=RandomInverseSemigroup(10,10);                                
-&lt;inverse semigroup with 10 generators>
+&lt;inverse partial perm semigroup on 10 pts with 10 generators>
 gap> S:=RandomInverseMonoid(10,10);   
-&lt;inverse monoid with 10 generators></Example>
+&lt;inverse partial perm monoid on 10 pts with 10 generators>
+</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -444,10 +445,10 @@ gap> S:=RandomInverseMonoid(10,10);
       Returns a random transformation monoid or semigroup of degree <A>n</A> 
       with <A>m</A> generators.
       <Example>
-gap&gt; S:=RandomTransformationMonoid(5,5);
-&lt;monoid with 5 generators&gt;
-gap&gt; S:=RandomTransformationSemigroup(5,5);
-&lt;semigroup with 5 generators&gt;</Example>
+gap> S:=RandomTransformationMonoid(5,5);
+&lt;transformation monoid on 5 pts with 5 generators>
+gap> S:=RandomTransformationSemigroup(5,5);
+&lt;transformation semigroup on 5 pts with 5 generators></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

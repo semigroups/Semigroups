@@ -229,11 +229,10 @@ gap> GeneratorsOfSemigroup(S);
 <Example>
 gap> file:=Concatenation(SemigroupsDir(), "/examples/graph7c.semigroups.gz");;
 gap> ReadSemigroups(file, 453);
-[ Transformation( [ 1, 2, 2, 4, 5, 6, 7 ] ), 
-  Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] ), 
+  [ Transformation( [ 1, 2, 2 ] ), IdentityTransformation(), 
   Transformation( [ 1, 2, 3, 4, 5, 7, 7 ] ), 
   Transformation( [ 1, 3, 2, 4, 7, 6, 7 ] ), 
-  Transformation( [ 4, 2, 1, 1, 6, 5, 7 ] ), 
+  Transformation( [ 4, 2, 1, 1, 6, 5 ] ), 
   Transformation( [ 4, 3, 2, 1, 6, 7, 7 ] ), 
   Transformation( [ 4, 4, 5, 7, 6, 1, 1 ] ), 
   Transformation( [ 7, 6, 6, 1, 2, 4, 4 ] ), 

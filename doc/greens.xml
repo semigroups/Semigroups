@@ -37,7 +37,7 @@ gap> IsGreensLessThanOrEqual(A,B);
 true
 gap> IsGreensLessThanOrEqual(B,A);
 false
-gap> s:=SymmetricInverseSemigp(4);;
+gap> s:=SymmetricInverseSemigroup(4);;
 gap> A:=GreensJClassOfElement(s, PartialPermNC([ 1 .. 3 ], [ 1, 3, 4 ]) );
 {&lt;identity on [ 1 .. 3 ]>}
 gap> B:=GreensJClassOfElement(s, PartialPermNC([ 1, 2 ], [ 3, 1 ]) );

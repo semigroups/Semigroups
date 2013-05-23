@@ -123,7 +123,7 @@ true</Log>
     <Example>
 gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), 
 > rec(hashlen:=100003, small:=false));
-&lt;semigroup with 1 generator></Example>
+&lt;commutative transformation semigroup on 4 pts with 1 generator></Example>
 
     <#Include Label="SemigroupsOptionsRec">
 
