@@ -163,60 +163,23 @@ end);
 
 #
 
-InstallGlobalFunction(SemigroupsTestManualExamples,
+InstallGlobalFunction(SemigroupsTestManualExamples, 
 function()
-  local InfoLevelInfoWarning, InfoLevelInfoSemigroups;
-  
-  #if not Semigroups_C then 
-   # Print("Semigroups is not compiled and so this will produce many many errors.\n");
-   # return fail;
-  #fi;
-
-  SizeScreen([80]); 
-  InfoLevelInfoWarning:=InfoLevel(InfoWarning);
-  InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);
-  SetInfoLevel(InfoWarning, 0);
-  SetInfoLevel(InfoSemigroups, 0);
-
-  TestManualExamples(Concatenation(PackageInfo("semigroups")[1]!.
-     InstallationPath, "/doc"), "semigroups.xml", 
-     ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "inverse.xml",
-     "semigroups.xml", "transform.xml", "pperm.xml", "../PackageInfo.g"]);
-  
-  SetInfoLevel(InfoWarning, InfoLevelInfoWarning);
-  SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);
-  Unbind(InfoLevelInfoSemigroups); Unbind(InfoLevelInfoWarning);
-  return;
-end);
-
-#
-
-InstallGlobalFunction(SemigroupsReadTestManualExamples, 
-function()
-  local ex, tst, i;
+  local ex;
 
   #if not Semigroups_C then 
-  #  Print("Semigroups is not compiled and so this will produce many many errors.");
+  #  Print("Semigroups is not compiled and so this will produce many many
+  #  errors.");
   #  return fail;
   #fi;
   
-  ex:=ManualExamples("~/semigroups/doc/", "semigroups.xml",  [ "utils.xml",
-  "greens.xml", "orbits.xml", "properties.xml", "pperm.xml", "inverse.xml",
+  ex:=ExtractExamples("~/semigroups/doc/", "main.xml",  [ "utils.xml",
+  "greens.xml", "orbits.xml", "properties.xml", "pperm.xml",
   "semigroups.xml",  "transform.xml", "../PackageInfo.g" ], "Single" );;
-
-  for i in [1..Length(ex)] do 
-    Print("*** Example ", i, " ***\n");
-    tst:=ReadTestExamplesString(ex[i]);
-  od;
-  if IsBoundGlobal("SemigroupsManualExamples") then 
-    MakeReadWriteGlobal("SemigroupsManualExamples");
-    UnbindGlobal("SemigroupsManualExamples");
-  fi;
-
-  BindGlobal("SemigroupsManualExamples", ex);
-  Print("the manual examples are in the global variable",
-  " SemigroupsManualExamples\n");
-
+  
+  SemigroupsStartTest();
+  RunExamples(ex);
+  SemigroupsStopTest();
   return;
 end);
 
