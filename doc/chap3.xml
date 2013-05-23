@@ -56,8 +56,6 @@
     <#Include Label="\&lt;">
     <#Include Label="InjectionPrincipalFactor">
     <#Include Label="PrincipalFactor">
-    <#Include Label="IsGreensClassOfTransSemigp">
-    <#Include Label="IsGreensClassOfPartialPermSemigp">
     <#Include Label="IsRegularXClass">
     <#Include Label="NrRegularDClasses">
     <#Include Label="NrXClasses">
@@ -82,9 +80,6 @@
     <#Include Label="PrimitiveIdempotents">
     <#Include Label="Random">
     <#Include Label="SmallGeneratingSet"> 
-    <#Include Label="WagnerPrestonRepresentation">
-    <#Include Label="ReverseNaturalPartialOrder">
-    <#Include Label="IsMajorantlyClosed">
 
   </Section>
   

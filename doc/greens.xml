@@ -17,8 +17,7 @@
       <A>right-expr</A> if they belong to the same
       semigroup and the representative of <A>left-expr</A> is less than the
       representative of <A>right-expr</A> under <C>&lt;</C>; see also 
-      <Ref Attr="Representative" BookName="ref"/>, and Sections <Ref
-        Sect="OperatorsT"/> and <Ref Sect="OperatorsPP"/>.<P/>
+      <Ref Attr="Representative" BookName="ref"/>.<P/>
       
       Please note that this is not the usual order on the Green's classes of a
       semigroup as defined in <Ref Sect="Green's Relations" BookName="ref"/>.
@@ -528,7 +527,7 @@ gap> Idempotents(s, 0);
       <Ref Attr="GroupHClassOfGreensDClass" BookName="ref"/>,
       <Ref Oper="GroupHClass"/>, <Ref Oper="NrIdempotents"/>, 
       <Ref Oper="Idempotents"/>, and 
-      <Ref Oper="IsRegularTransformation"/>.
+      <Ref Oper="IsRegularSemigroupElement" BookName="ref"/>.
       <P/>
 
       The function <C>IsRegularDClass</C> produces the same output as the 
@@ -560,7 +559,7 @@ gap> R:=GreensRClassOfElement(S, f);;
 gap> IsRegularRClass(R);
 false
 gap> g:=Transformation( [ 4, 4, 4, 4 ] );;
-gap> IsRegularTransformation(S, g);
+gap> IsRegularSemigroupElement(S, g);
 true
 gap> IsRegularLClass(LClass(S, g));
 true

@@ -120,11 +120,11 @@
         </Item>
         <Mark>Inverse semigroup</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 
-          <Ref Attr="GeneratorsOfInverseSemigroup"/>.
+          <Ref Attr="GeneratorsOfInverseSemigroup" BookName="ref"/>.
         </Item>
         <Mark>Inverse monoid</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 
-          <Ref Attr="GeneratorsOfInverseMonoid"/>.
+          <Ref Attr="GeneratorsOfInverseMonoid" BookName="ref"/>.
         </Item>
       </List>
 <Example>gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
