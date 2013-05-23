@@ -40,13 +40,13 @@
      <Description>
        This global variable is a record whose components contain the default
        values of certain options for transformation semigroups created after
-       &Semigroups; has been loaded. A description of these options is given above 
-       in Section <Ref Sect="opts"/>. <P/>
+       &Semigroups; has been loaded. A description of these options is given
+       above in Section <Ref Sect="opts"/>. <P/>
 
        The value of <C>SemigroupsOptionsRec</C> is defined in the file
        <C>semigroups/gap/options.g</C> as: 
-       <Log>rec( schreier:=true, small:=false,
-         hashlen:=rec(S:=251, M:=6257, L:=25013));</Log>
+       <Log>rec( acting := true, hashlen := rec( L := 25013, M := 6257, S :=
+         251 ), regular := false, small := false )</Log>
      </Description> 
    </ManSection>
 <#/GAPDoc>
