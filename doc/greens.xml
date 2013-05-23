@@ -512,28 +512,6 @@ gap> Idempotents(s, 0);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsGreensClassOfTransSemigp">
-  <ManSection><Prop Name="IsGreensClassOfTransSemigp" Arg="obj"/>
-  <Returns><K>true</K> or <K>false</K>.</Returns>
-  <Description>
-  <C>IsGreensClassOfTransSemigp</C> return <K>true</K> if the object <A>obj</A>
-  is a Green's class of a transformation semigroup and <K>false</K> if it is
-  not. <P/>
-
-  This property is required so that a Green's class knows that it belongs to 
-  a transformation semigroup, so that the methods defined in the
-  &Semigroups; are used in preference to those in the library.
-  <Example>
-gap> S:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ), 
-> Transformation( [ 2, 3, 1, 5, 4, 1 ] ));;
-gap> L:=GreensLClassOfElement(S, GeneratorsOfSemigroup(S)[1]);
-{Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
-gap> IsGreensClassOfTransSemigp(L);
-true</Example>
-  </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="IsRegularXClass">
   <ManSection><Heading>IsRegularXClass</Heading>
     <Prop Name="IsRegularDClass" Arg="class"/>

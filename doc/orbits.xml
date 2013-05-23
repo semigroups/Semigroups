@@ -301,14 +301,16 @@ gap> Position(o, last);
     been set to <K>true</K> during the creation of the orbit, <A>m</A> must be
     the number of a strongly connected component of <A>orb</A>, and <C>nr</C>
     must be the number of a point in  the  <A>m</A>th strongly connect
-    component of <A>orb</A>. This operation traces the result of <Ref
+    component of <A>orb</A>. <P/>
+    
+    This operation traces the result of <Ref
     Func="ReverseSchreierTreeOfSCC"/> and with arguments <A>orb</A> and
     <A>m</A> and returns a word in the generators that maps the point with
     number <A>nr</A> to the first point in the <A>m</A>th strongly connected
     component of <A>orb</A>.  Here, a word is a list of integers, where
     positive integers are numbers of  generators.
 
-    See also <Ref Func="OrbSCC"/>, <Ref Func="EvaluateWord"/>, 
+    See also <Ref Func="OrbSCC"/>, 
     <Ref Func="ReverseSchreierTreeOfSCC"/>, 
     <Ref Func="SchreierTreeOfSCC"/>, and 
     <Ref Func="TraceSchreierTreeOfSCCForward"/>.
@@ -341,14 +343,16 @@ gap> TraceSchreierTreeOfSCCBack(o, 4, 8);
     been set to <K>true</K> during the creation of the orbit, <A>m</A> must be
     the number of a strongly connected component of <A>orb</A>, and <C>nr</C>
     must be the number of a point in  the  <A>m</A>th strongly connect
-    component of <A>orb</A>. This operation traces the result of <Ref
+    component of <A>orb</A>. <P/>
+    
+    This operation traces the result of <Ref
     Func="SchreierTreeOfSCC"/> and with arguments <A>orb</A> and <A>m</A> and
     returns a word in the generators that maps the first point in the
     <A>m</A>th strongly connected component of <A>orb</A> to the point with
     number <A>nr</A>.  Here, a word is a list of integers, where positive
     integers are numbers of  generators.
 
-    See also <Ref Func="OrbSCC"/>, <Ref Func="EvaluateWord"/>, 
+    See also <Ref Func="OrbSCC"/>, 
     <Ref Func="ReverseSchreierTreeOfSCC"/>, 
     <Ref Func="SchreierTreeOfSCC"/>, and 
     <Ref Func="TraceSchreierTreeOfSCCBack"/>.
