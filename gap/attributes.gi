@@ -60,6 +60,13 @@ s-> Semigroup(Idempotents(s), rec(small:=true)));
 
 #
 
+InstallMethod(IdempotentGeneratedSubsemigroup, 
+"for an inverse op acting semigroup with generators",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+s-> InverseSemigroup(Idempotents(s), rec(small:=true)));
+
+#
+
 InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
