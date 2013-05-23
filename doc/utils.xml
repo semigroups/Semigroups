@@ -199,7 +199,7 @@ gap> GeneratorsOfSemigroup(S);
       permutations to a file that uses a relatively small amount of disk space.
       The resulting file can be further compressed using <C>gzip</C>.<P/>
       
-      <A>list</A> should be a list of: transformations of equal degree, partial
+      <A>list</A> should be a list of: transformations, partial
       permutations, a semigroup of transformations or partial permutations, or
       a list of lists of transformations, partial permutations, or semigroups
       of transformations or partial permutations; and <A>filename</A> should be

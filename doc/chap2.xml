@@ -1,18 +1,5 @@
-<Chapter Label="Transformations and partial permutations"><Heading>Transformations and partial permutations
-</Heading>
-  
-
-  <Section><Heading>Actions</Heading>
-    The following actions of transformations and partial permutations are used
-    by &Semigroups; in the computation of Green's relations and to test if an
-    arbitrary transformation semigroup has a particular property;  see 
-    Chapter <Ref Chap="green"/> and <Ref Sect="Basic
-      Actions" BookName="ref"/>.  <P/>
-    
-    <#Include Label="OnKernelsAntiAction"> 
-    <#Include Label="OnIntegerSetsWithPartialPerm"> 
-    <#Include Label="TransformationActionNC">
-  </Section>
+<Chapter Label="Transformations and partial permutations">
+  <Heading>Orbits</Heading>
   <Section><Heading>Orbits</Heading>
     The following functions supplement the &Orb; package by providing methods
     for computations related to the strongly connected components of an

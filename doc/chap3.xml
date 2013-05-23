@@ -4,19 +4,14 @@
   be created in &Semigroups;, the options that are available at the time of
   creation, and describe some standard examples available in &Semigroups;. <P/>
   
-  Any transformation semigroup created before &Semigroups; has been loaded must
+  Any semigroup created before &Semigroups; has been loaded must
   be recreated after &Semigroups; is loaded so that the options record
   (described in Section <Ref Sect="opts"/>) is defined. Almost all of the
   functions and methods provided by &Semigroups;, including those methods for
-  existing &GAP; library functions, will return an error when applied to a transformation semigroup created before &Semigroups; is loaded. 
+  existing &GAP; library functions, will return an error when applied to a
+  semigroup created before &Semigroups; is loaded. 
 
  <Section><Heading>Semigroups defined by a generating set</Heading> 
-
-    In this section we give details of how to create semigroups and monoids from
-    a set of generators. Much of what is described here is syntactic sugar. 
-
-    <#Include Label="Monoid">
-    <#Include Label="MonoidByGenerators">
     <#Include Label="RandomInverseMonoid"> 
     <#Include Label="RandomTransformationMonoid"> 
   </Section> 

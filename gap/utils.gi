@@ -75,7 +75,7 @@ end);
 InstallGlobalFunction(SemigroupsMakeDoc, 
 function()
   MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.
-   InstallationPath, "/doc"), "citrus.xml", 
+   InstallationPath, "/doc"), "main.xml", 
    ["utils.xml", "greens.xml", "inverse.xml", "orbits.xml", "properties.xml",
    "semigroups.xml", "transform.xml", "pperm.xml", "../PackageInfo.g"],
    "semigroups", "MathJax", "../../..");;

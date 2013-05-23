@@ -5,7 +5,7 @@
   particular for computing Green's classes and related properties of 
   semigroups. 
   
-  <Section><Heading>Expressing semigroup elements as words in
+  <!--  <Section><Heading>Expressing semigroup elements as words in
     generators</Heading>
     In some cases it is possible to express the elements of a transformation
     semigroup as a word in the generators. This section describes how to
@@ -16,7 +16,7 @@
 
     <#Include Label="EvaluateWord">
     <#Include Label="Factorization">
-  </Section>
+  </Section>-->
 
   <Section><Heading>Creating Green's classes</Heading>
     <#Include Label="XClassOfYClass">
@@ -51,24 +51,11 @@
       BookName="ref"/> of arbitrary semigroups of transformations or partial
     permutations  that can be found using &Semigroups;. <P/>
 
-    In addition to those functions described in this section, the operation
-    <Ref Oper="Degree" Label="for a transformation coll"/> is
-    also relevant for transformation semigroups; and the following operations
-    are also relevant to semigroups of partial permutations:
-    <Ref Oper="MovedPoints" Label="for a partial perm coll"/>, 
-    <Ref Oper="NrMovedPoints" Label="for a partial perm coll"/>, 
-    <Ref Oper="LargestMovedPoint" Label="for a partial perm coll"/>, 
-    <Ref Oper="SmallestMovedPoint" Label="for a partial perm coll"/>, 
-    <Ref Oper="Degree" Label="for a partial perm coll"/>.<P/>
-    
-    <#Include Label="DomainOfPartialPermSemigroup">
-    <#Include Label="GeneratorsOfInverseSemigroup">
-    <#Include Label="GeneratorsOfInverseMonoid">
     <#Include Label="Generators">
     <#Include Label="GroupOfUnits">
     <#Include Label="Idempotents">
     <#Include Label="NrIdempotents">
-    <#Include Label="IdempotentGeneratedSubsemigp">
+    <#Include Label="IdempotentGeneratedSubsemigroup">
     <#Include Label="IrredundantGeneratingSubset">
     <#Include Label="MinimalIdeal">
     <#Include Label="MultiplicativeZero">
@@ -76,8 +63,6 @@
     <#Include Label="PrimitiveIdempotents">
     <#Include Label="Random">
     <#Include Label="SmallGeneratingSet"> 
-    <#Include Label="GradedImagesOfTransSemigroup">
-    <#Include Label="ImagesOfTransSemigroup">
     <#Include Label="WagnerPrestonRepresentation">
     <#Include Label="ReverseNaturalPartialOrder">
     <#Include Label="IsMajorantlyClosed">
