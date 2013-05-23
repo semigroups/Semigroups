@@ -8,7 +8,11 @@
 #############################################################################
 ##
 
-ShorterSLPStabChain:=function(g)
+
+
+InstallMethod(ShorterSLPStabChain, "for a perm group",
+[IsPermGroup],
+function(g)
   local S, l, SS, h, o, SSS, stab, short;
 
   S:=StabilizerChain(g);
@@ -31,9 +35,13 @@ ShorterSLPStabChain:=function(g)
   Enumerate(o);
   Add(l,o); 
   return l;
-end;
+end);
 
-SiftShorterSLP:=function(g, x)
+#
+
+InstallMethod(SiftShorterSLP, "for a perm group and perm",
+[IsPermGroup, IsPerm],
+function(g, x)
   local l, i, fakegens, realgens, y, z, o, pos, word;
 
   l:=ShorterSLPStabChain(g);
@@ -65,7 +73,7 @@ SiftShorterSLP:=function(g, x)
   OnRight)*y;      
 
   return SLPOfElm(y);
-end;
+end);
 
 # returns an slp for the generators of LambdaOrbSchutzGp(o, m) in the
 # generators of the semigroup.
@@ -271,9 +279,6 @@ function(s, x)
   fi;
   return slp;
 end);
-
-
-#TTT
 
 # returns a word in the generators of the parent of <data> equal to the R-class
 # representative store in <data!.orbit[pos]>.

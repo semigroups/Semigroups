@@ -11,5 +11,7 @@
 DeclareGlobalFunction("LambdaOrbSLP");
 DeclareOperation("SemigroupElementSLP", [IsActingSemigroup,
 IsAssociativeElement]);
-DeclareGlobalFunction("TraceRClassRepsTree");
+
+DeclareOperation("ShorterSLPStabChain", [IsPermGroup]);
+DeclareOperation("SiftShorterSLP", [IsPermGroup, IsPerm]);
 
