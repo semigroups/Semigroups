@@ -144,7 +144,7 @@ true</Example>
 gap> S:=InverseSemigroup(
 > PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 10 ], [ 4, 6, 7, 3, 8, 2, 9, 5 ] ),
 > PartialPermNC( [ 1, 2, 7, 9 ], [ 5, 6, 4, 3 ] ) );
-&lt;inverse semigroup with 2 generators>
+&lt;inverse partial perm semigroup on 10 pts with 2 generators>
 gap> T:=InverseSemigroup(Idempotents(S), rec(small:=true));;
 gap> M:=MunnSemigroup(T);;
 gap> NrIdempotents(M);
@@ -241,13 +241,13 @@ gap> NrIdempotents(S);
 </List>
       <Example>
 gap> S:=POPI(10);                                            
-&lt;inverse monoid with 2 generators>
+&lt;inverse partial perm monoid on 10 pts with 2 generators>
 gap> Size(S);
 923781
 gap> 1+5*Binomial(20, 10);
 923781
 gap> S:=POI(10);
-&lt;inverse monoid with 10 generators>
+&lt;inverse partial perm monoid on 10 pts with 10 generators>
 gap> Size(S);
 184756
 gap> Binomial(20,10);
@@ -255,10 +255,8 @@ gap> Binomial(20,10);
 gap> IsSubsemigroup(POPI(10), POI(10));
 true
 gap> S:=OrderEndomorphisms(5);
-&lt;monoid with 5 generators>
+&lt;regular transformation monoid on 5 pts with 5 generators>
 gap> IsIdempotentGenerated(S);
-true
-gap> IsRegularSemigroup(S);
 true
 gap> Size(S)=Binomial(2*5-1, 5-1);
 true</Example>
@@ -279,7 +277,7 @@ true</Example>
 
         <Example>
 gap> S:=SingularSemigroup(5);
-&lt;semigroup with 20 generators>
+&lt;regular transformation semigroup on 5 pts with 20 generators>
 gap> Size(S);
 3005</Example>
       </Description>
