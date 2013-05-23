@@ -10,18 +10,18 @@
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "1.0">
-##  <!ENTITY ORBVERS "4.2">
+##  <!ENTITY ORBVERS "4.6">
 ##  <!ENTITY IOVERS "4.1">
 ##  <!ENTITY GRAPEVERS "4.5">
 ##  <!ENTITY ARCHIVENAME "semigroups-1.0">
-##  <!ENTITY COPYRIGHTYEARS "2011-12">
+##  <!ENTITY COPYRIGHTYEARS "2013">
 ##  <#/GAPDoc>
 
 SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "Methods for Semigroups",
 Version := "1.0",
-Date := "06/07/2012",
+Date := "06/2012",
 ArchiveURL := 
           "https://bitbucket.org/zen154115/semigroups/downloads/semigroups-1.0",
 ArchiveFormats := ".tar.gz",
@@ -80,7 +80,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.5.4",
-  NeededOtherPackages := [["orb", ">=4.2"], ["io", ">=4.1"], 
+  NeededOtherPackages := [["orb", ">=4.6"], ["io", ">=4.2"], 
   ["genss", ">=1.5"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"]], 
   ExternalConditions := []),
