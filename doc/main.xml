@@ -40,7 +40,6 @@
 
 <Body>
 <#Include SYSTEM="chap1.xml">
-<#Include SYSTEM "chap2.xml">
 <#Include SYSTEM "chap3.xml">
 <#Include SYSTEM "chap4.xml">
 </Body>

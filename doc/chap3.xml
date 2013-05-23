@@ -195,5 +195,24 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ), rec(schreier:=true,
       </Item>
     </List>
   </Section>
+  <Section>
+  <Heading>Strongly connected components of orbits</Heading>
+    The following functions supplement the &Orb; package by providing methods
+    for computations related to the strongly connected components of an
+    orbit of a semigroup. <P/>
+
+    Please note that if any of the functions in this section is applied to an
+    open orbit, then the orbit is enumerated before anything else. It is not
+    possible to calculate the strongly connected components of an orbit of a
+    semigroup acting on a set until the entire orbit has been found.
+
+    <#Include Label="OrbSCC">
+    <#Include Label="OrbSCCLookup">
+    <#Include Label="OrbSCCTruthTable">
+    <#Include Label="ReverseSchreierTreeOfSCC">
+    <#Include Label="SchreierTreeOfSCC">
+    <#Include Label="TraceSchreierTreeOfSCCBack">
+    <#Include Label="TraceSchreierTreeOfSCCForward">
+  </Section>
 </Chapter>
 
