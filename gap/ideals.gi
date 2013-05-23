@@ -10,6 +10,14 @@
 
 #
 
+InstallMethod(MagmaIdealByGenerators,
+"for an acting semigroup and collection of its elements", 
+IsIdenticalObj, 
+[IsActingSemigroup, IsAssociativeElementWithActionCollection],
+SemigroupIdealByGenerators);
+
+#
+
 InstallMethod(SemigroupIdealByGenerators,
 "for an acting semigroup and collection of its elements", 
 IsIdenticalObj, 
