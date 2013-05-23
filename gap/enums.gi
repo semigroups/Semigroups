@@ -156,12 +156,13 @@ function(obj, record, baseenum, convert, filts)
   end;
   #
   record.NumberElement:=function(enum, elt)
-    local baseenum, enumofenums, basepos, pos, i;
+    local baseenum, enumofenums, conv, basepos, pos, i;
     
     baseenum:=enum!.baseenum;
     enumofenums:=enum!.enumofenums;
-
-    basepos:=Position(baseenum, convert(enum, elt));
+    conv:=convert(enum, elt); 
+    if conv=fail then return fail; fi;
+    basepos:=Position(baseenum, conv);
     if basepos=fail then return fail; fi;
     if not IsBound(enumofenums[basepos]) then 
       enumofenums[basepos]:=Enumerator(baseenum[basepos]);
@@ -208,7 +209,10 @@ function(s)
   record.parent:=s;
 
   convert:=function(enum, x)
-    return GreensRClassOfElement(enum!.parent, x);
+    if x in enum!.parent then 
+      return GreensRClassOfElementNC(enum!.parent, x);
+    fi;
+    return fail;
   end;
 
   return EnumeratorByEnumOfEnums(s, record, EnumeratorOfRClasses(s), 

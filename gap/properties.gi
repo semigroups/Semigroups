@@ -973,9 +973,7 @@ function(s)
     return true;
   fi;
   gens:=GeneratorsOfSemigroup(s);
-  return IsIdempotent(gens[1]) 
-   and ((Length(gens)>1 and ForAll(gens, x-> gens[1]=x)) 
-    or (Length(gens)=1));
+  return ForAll(gens, x-> gens[1]=x) and IsIdempotent(gens[1]);
 end); 
 
 #
