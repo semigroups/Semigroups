@@ -224,7 +224,7 @@ end);
 # JDM the performance of this also sucks
 
 InstallMethod(EnumeratorOfRClasses, "for an acting semigroup",
-[IsActingSemigroup and HasGeneratorsOfSemigroup], 
+[IsActingSemigroup], 
 function(s)
   local enum;
 
@@ -255,7 +255,7 @@ end);
 # different method for inverse
 
 InstallMethod(EnumeratorOfRClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup], 
+[IsActingSemigroup and IsRegularSemigroup], 
 function(s)
   local o;
 
@@ -300,7 +300,7 @@ end);
 # method
 
 InstallMethod(EnumeratorOfRClasses, "for an inverse op acting semigroup",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup], 
+[IsActingSemigroupWithInverseOp], 
 function(s)
   local o;
 
