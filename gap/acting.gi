@@ -440,7 +440,6 @@ function(data, limit, lookfunc)
     i:=i+1;
     for j in genstoapply do #JDM
       x:=gens[j]*orb[i][4];
-      #if x=ff then Error(); fi;
       lamx:=lambda(x);
       pos:=htvalue(oht, lamx); 
 
@@ -474,7 +473,6 @@ function(data, limit, lookfunc)
 
       else              # old rho value
         x:=[s, m, o, y, false, nr+1];
-        Error();        
         # JDM expand!
         schutz:=LambdaOrbStabChain(o, m);
         
