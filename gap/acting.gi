@@ -474,7 +474,7 @@ function(data, limit, lookfunc)
 
       else              # old rho value
         x:=[s, m, o, y, false, nr+1];
-        
+        Error();        
         # JDM expand!
         schutz:=LambdaOrbStabChain(o, m);
         
@@ -764,8 +764,13 @@ function(s)
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
   record.parent:=s;             record.treehashsize:=s!.opts.hashlen.M;
-  record.scc_reps:=[One(GeneratorsOfMagmaIdeal(s))];
-
+  record.scc_reps:=[One(GeneratorsOfSemigroup(Parent(s)))];
+  #JDM the seeds here should be different
+  #this currently gives the entire LambdaOrb of the parent of the ideal, which
+  #is more than required. We really want a function analogous to SemigroupData
+  #for an ideal, which installs the first values (lambda values of the
+  #generators of the ideal). Then scc_reps can be changed back to 
+  #One(GeneratorsOfMagmaIdeal(..)).
   o:=Orb(GeneratorsOfSemigroup(Parent(s)), LambdaOrbSeed(s), LambdaAct(s),
    record);
   SetFilterObj(o, IsLambdaOrb);
