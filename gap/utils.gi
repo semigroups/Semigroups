@@ -163,6 +163,15 @@ end);
 
 #
 
+SemigroupsManualExamples:=function()
+return 
+  ExtractExamples("~/semigroups/doc/", "main.xml",  [ "utils.xml",
+  "greens.xml", "orbits.xml", "properties.xml",
+  "semigroups.xml",  "transform.xml", "../PackageInfo.g" ], "Single" );
+end;
+
+#
+
 InstallGlobalFunction(SemigroupsTestManualExamples, 
 function()
   local ex;
