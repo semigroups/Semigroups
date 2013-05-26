@@ -39,14 +39,14 @@ gap> Size(S);
 5304
 gap> StructureDescription(GroupOfUnits(S));
 "C2 x S4"
-gap> S:=InverseSemigroup( PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
+gap> S:=InverseSemigroup( PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
 > [ 2, 4, 5, 3, 6, 7, 10, 9, 8, 1 ] ),
-> PartialPermNC( [ 1, 2, 3, 4, 5, 6, 7, 8, 10 ], 
+> PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 10 ], 
 > [ 8, 2, 3, 1, 4, 5, 10, 6, 9 ] ) );;
 gap> StructureDescription(GroupOfUnits(S));
 "C8"
-gap> S:=InverseSemigroup( PartialPermNC( [ 1, 3, 4 ], [ 4, 3, 5 ] ),
-> PartialPermNC( [ 1, 2, 3, 5 ], [ 3, 1, 5, 2 ] ) );;
+gap> S:=InverseSemigroup( PartialPerm( [ 1, 3, 4 ], [ 4, 3, 5 ] ),
+> PartialPerm( [ 1, 2, 3, 5 ], [ 3, 1, 5, 2 ] ) );;
 gap> GroupOfUnits(S);
 fail</Example>
     </Description>
@@ -124,10 +124,10 @@ gap> IdempotentGeneratedSubsemigroup(S);
     
     <Example>
     gap> S:=InverseSemigroup(
-    > PartialPermNC( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ),
-    > PartialPermNC( [ 1, 2, 3, 4, 6, 7, 8, 10 ], 
+    > PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ),
+    > PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 10 ], 
     > [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
-    gap> f:=PartialPermNC([ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ]);;
+    gap> f:=PartialPerm([ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ]);;
     gap> d:=GreensDClassOfElement(S, f);
     {PartialPerm( [ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ] )}
     gap> InjectionPrincipalFactor(d);
@@ -273,8 +273,8 @@ gap> S:=Semigroup(gens);;
 gap> IsBand(S);
 true
 gap> S:=InverseSemigroup(
-> PartialPermNC( [ 1, 2, 3, 4, 8, 9 ], [ 5, 8, 7, 6, 9, 1 ] ),
-> PartialPermNC( [ 1, 3, 4, 7, 8, 9, 10 ], [ 2, 3, 8, 7, 10, 6, 1 ] ) );;
+> PartialPerm( [ 1, 2, 3, 4, 8, 9 ], [ 5, 8, 7, 6, 9, 1 ] ),
+> PartialPerm( [ 1, 3, 4, 7, 8, 9, 10 ], [ 2, 3, 8, 7, 10, 6, 1 ] ) );;
 gap> IsBand(S);
 false
 gap> IsBand(IdempotentGeneratedSubsemigroup(S));
@@ -382,8 +382,8 @@ true
 gap> IsCommutative(S);
 true
 gap> S:=InverseSemigroup(
->  PartialPermNC( [ 1, 2, 3, 4, 5, 6 ], [ 2, 5, 1, 3, 9, 6 ] ),
->  PartialPermNC( [ 1, 2, 3, 4, 6, 8 ], [ 8, 5, 7, 6, 2, 1 ] ) );;
+>  PartialPerm( [ 1, 2, 3, 4, 5, 6 ], [ 2, 5, 1, 3, 9, 6 ] ),
+>  PartialPerm( [ 1, 2, 3, 4, 6, 8 ], [ 8, 5, 7, 6, 2, 1 ] ) );;
 gap> IsCommutativeSemigroup(S);
 false</Example>
     </Description>
@@ -477,8 +477,8 @@ false</Example>
     each of its generators is the restriction of some element in the group of
     units. 
     <Example>
-gap> S:=InverseSemigroup( PartialPermNC( [ 1, 2, 4 ], [ 3, 1, 4 ] ),
-> PartialPermNC( [ 1, 2, 3, 5 ], [ 4, 1, 5, 2 ] ) );;
+gap> S:=InverseSemigroup( PartialPerm( [ 1, 2, 4 ], [ 3, 1, 4 ] ),
+> PartialPerm( [ 1, 2, 3, 5 ], [ 4, 1, 5, 2 ] ) );;
 gap> IsFactorisableSemigroup(S);
 false
 gap> IsFactorisableSemigroup(SymmetricInverseSemigroup(5)); 
@@ -691,7 +691,7 @@ true</Example>
        Prop="IsMonogenicSemigroup"/> and <Ref
        Attr="IndexPeriodOfTransformation" BookName="ref"/>.
 <Example>
-gap> f:=PartialPermNC( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] );;
+gap> f:=PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] );;
 gap> S:=InverseSemigroup(f, f^2, f^3);;
 gap> IsMonogenicSemigroup(S);
 false
@@ -800,9 +800,9 @@ false</Example>
   gap> IsTransformationMonoid(M);
   true
   gap> s:=InverseMonoid(
-  >  PartialPermNC( [ 1, 2, 3 ], [ 4, 2, 3 ] ),
-  >  PartialPermNC( [ 1, 2, 4 ], [ 1, 3, 2 ] ),
-  >  PartialPermNC( [ 1, 2, 4 ], [ 4, 1, 2 ] ) );;
+  >  PartialPerm( [ 1, 2, 3 ], [ 4, 2, 3 ] ),
+  >  PartialPerm( [ 1, 2, 4 ], [ 1, 3, 2 ] ),
+  >  PartialPerm( [ 1, 2, 4 ], [ 4, 1, 2 ] ) );;
   gap> t:=Range(IsomorphismTransformationMonoid(s));
   &lt;transformation monoid on 5 pts with 6 generators>
   gap> Size(s); Size(t);
@@ -1232,9 +1232,9 @@ false</Example>
       > Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ));;
       gap> MultiplicativeZero(S);
       fail
-      gap> S:=InverseSemigroup( PartialPermNC( [ 1, 3, 4 ], [ 5, 3, 1 ] ),
-      > PartialPermNC( [ 1, 2, 3, 4 ], [ 4, 3, 1, 2 ] ),
-      > PartialPermNC( [ 1, 3, 4, 5 ], [ 2, 4, 5, 3 ] ) );;
+      gap> S:=InverseSemigroup( PartialPerm( [ 1, 3, 4 ], [ 5, 3, 1 ] ),
+      > PartialPerm( [ 1, 2, 3, 4 ], [ 4, 3, 1, 2 ] ),
+      > PartialPerm( [ 1, 3, 4, 5 ], [ 2, 4, 5, 3 ] ) );;
       gap> MultiplicativeZero(S);
       &lt;empty partial perm>
 &lt;empty mapping></Example> 
@@ -1295,9 +1295,9 @@ gap> SmallGeneratingSet(S);
     idempotents in the inverse semigroup of partial permutations <A>S</A>. 
     <Example>
     gap> S:= InverseMonoid(
-    > PartialPermNC( [ 1 ], [ 4 ] ),
-    > PartialPermNC( [ 1, 2, 3 ], [ 2, 1, 3 ] ),
-    > PartialPermNC( [ 1, 2, 3 ], [ 3, 1, 2 ] ) );;
+    > PartialPerm( [ 1 ], [ 4 ] ),
+    > PartialPerm( [ 1, 2, 3 ], [ 2, 1, 3 ] ),
+    > PartialPerm( [ 1, 2, 3 ], [ 3, 1, 2 ] ) );;
     gap> MultiplicativeZero(S);
     &lt;empty partial perm>
     gap> PrimitiveIdempotents(S);
