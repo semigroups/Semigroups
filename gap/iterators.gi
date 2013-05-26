@@ -270,10 +270,10 @@ function(arg)
         x:=NextIterator(baseiter);
       until IsDoneIterator(baseiter) or isnew(iter, x);
     
-      if x=fail then 
-        return fail;
+      if x<>fail and isnew(iter, x) then 
+        return convert(iter, x);
       fi;
-      return convert(iter, x);
+      return fail;
     end;
   fi;
 
