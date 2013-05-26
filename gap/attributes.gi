@@ -27,8 +27,8 @@
 # Note that a semigroup satisfies IsTransformationMonoid only if One(s)<>fail. 
 
 InstallMethod(GroupOfUnits, 
-"for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
+"for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local r, g, deg, u;
 
@@ -38,12 +38,40 @@ function(s)
 
   r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
   g:=SchutzenbergerGroup(r);
-  
-  deg:=ActionDegree(s); 
+  deg:=DegreeOfTransformationSemigroup(s);   
+ 
   u:=Monoid(List(GeneratorsOfGroup(g), x-> AsTransformation(x, deg)));
   
   SetIsomorphismPermGroup(u, MappingByFunction(u, g, AsPermutation, 
    x-> AsTransformation(x, deg)));
+   
+  SetIsGroupAsSemigroup(u, true);
+  UseIsomorphismRelation(u, g);
+
+  return u;
+end);
+
+#
+
+InstallMethod(GroupOfUnits, 
+"for a partial perm semigroup with generators",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local r, g, deg, u;
+
+  if MultiplicativeNeutralElement(s)=fail then
+    return fail;
+  fi;
+
+  r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
+  g:=SchutzenbergerGroup(r);
+  deg:=Maximum(DegreeOfPartialPermSemigroup(s),
+   CodegreeOfPartialPermSemigroup(s));   
+ 
+  u:=Monoid(List(GeneratorsOfGroup(g), x-> AsPartialPerm(x, deg)));
+  
+  SetIsomorphismPermGroup(u, MappingByFunction(u, g, AsPermutation, 
+   x-> AsPartialPerm(x, deg)));
    
   SetIsGroupAsSemigroup(u, true);
   UseIsomorphismRelation(u, g);
