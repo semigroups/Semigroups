@@ -17,6 +17,7 @@ DeclareGlobalFunction("SemigroupsMathJaxDefault");
 DeclareGlobalFunction("SemigroupsTestAll");
 DeclareGlobalFunction("SemigroupsTestInstall");
 DeclareGlobalFunction("SemigroupsTestManualExamples");
+DeclareGlobalFunction("SemigroupsManualExamples");
 
 DeclareGlobalFunction("ReadSemigroups");
 DeclareGlobalFunction("ReadSemigroupsLine");

@@ -163,12 +163,13 @@ end);
 
 #
 
-SemigroupsManualExamples:=function()
+InstallGlobalFunction(SemigroupsManualExamples,
+function()
 return 
   ExtractExamples("~/semigroups/doc/", "main.xml",  [ "utils.xml",
   "greens.xml", "orbits.xml", "properties.xml",
   "semigroups.xml",  "transform.xml", "../PackageInfo.g" ], "Single" );
-end;
+end);
 
 #
 
@@ -182,10 +183,7 @@ function()
   #  return fail;
   #fi;
   
-  ex:=ExtractExamples("~/semigroups/doc/", "main.xml",  [ "utils.xml",
-  "greens.xml", "orbits.xml", "properties.xml", "pperm.xml",
-  "semigroups.xml",  "transform.xml", "../PackageInfo.g" ], "Single" );;
-  
+  ex:=SemigroupsManualExamples(); 
   SemigroupsStartTest();
   RunExamples(ex);
   SemigroupsStopTest();
