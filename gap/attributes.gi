@@ -39,7 +39,7 @@ function(s)
   r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
   g:=SchutzenbergerGroup(r);
   
-  deg:=DegreeOfTransformationSemigroup(s); 
+  deg:=ActionDegree(s); 
   u:=Monoid(List(GeneratorsOfGroup(g), x-> AsTransformation(x, deg)));
   
   SetIsomorphismPermGroup(u, MappingByFunction(u, g, AsPermutation, 
