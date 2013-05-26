@@ -10,13 +10,9 @@ gap> START_TEST("Semigroups package: examples.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
-gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoSemigroups, 0);
+gap> SemigroupsStartTest();
 
 #
-gap> 
 gap> gens:=[Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 > Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ),
 > Transformation( [ 4, 1, 8, 3, 5, 7, 3, 5 ] ),
@@ -721,9 +717,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-<identity transformation>
+IdentityTransformation()
 gap> One(s);
-<identity transformation>
+IdentityTransformation()
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 8
@@ -1013,7 +1009,7 @@ gap> NrIdempotents(s);
 gap> NrRegularDClasses(s);
 4
 gap> MultiplicativeZero(s);
-<transformation: 8,8,8,8,8,8,8>
+Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8 ] )
 gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
@@ -1088,7 +1084,7 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-<transformation: 1,2,2>
+Transformation( [ 1, 2, 2 ] )
 gap> One(s);
 fail
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
@@ -1159,7 +1155,7 @@ gap> NrIdempotents(s);
 gap> NrRegularDClasses(s);
 3
 gap> MultiplicativeZero(s);
-<transformation: 2,2,2,2,2>
+Transformation( [ 2, 2, 2, 2, 2 ] )
 gap> MultiplicativeNeutralElement(s);
 fail
 gap> One(s);
@@ -1597,11 +1593,11 @@ gap> NrIdempotents(s);
 gap> NrRegularDClasses(s);
 6
 gap> MultiplicativeZero(s);
-<transformation: 8,8,8,8,5,8,8>
+Transformation( [ 8, 8, 8, 8, 5, 8, 8, 8 ] )
 gap> MultiplicativeNeutralElement(s);
-<identity transformation>
+IdentityTransformation()
 gap> One(s);
-<identity transformation>
+IdentityTransformation()
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 1
@@ -1670,11 +1666,11 @@ gap> NrIdempotents(s);
 gap> NrRegularDClasses(s);
 7
 gap> MultiplicativeZero(s);
-<transformation: 8,8,8,8,8,8,8>
+Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8 ] )
 gap> MultiplicativeNeutralElement(s);
-<identity transformation>
+IdentityTransformation()
 gap> One(s);
-<identity transformation>
+IdentityTransformation()
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 1
@@ -1746,9 +1742,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-<identity transformation>
+IdentityTransformation()
 gap> One(s);
-<identity transformation>
+IdentityTransformation()
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 720
@@ -1825,11 +1821,12 @@ gap> NrIdempotents(s);
 gap> NrRegularDClasses(s);
 5
 gap> MultiplicativeZero(s);
-<transformation: 1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4>
+Transformation( [ 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+  4 ] )
 gap> MultiplicativeNeutralElement(s);
-<identity transformation>
+IdentityTransformation()
 gap> One(s);
-<identity transformation>
+IdentityTransformation()
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 1
@@ -1916,9 +1913,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-<identity transformation>
+IdentityTransformation()
 gap> One(s);
-<identity transformation>
+IdentityTransformation()
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 24
@@ -2222,9 +2219,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-<identity transformation>
+IdentityTransformation()
 gap> One(s);
-<identity transformation>
+IdentityTransformation()
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 7
@@ -2297,9 +2294,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-<identity transformation>
+IdentityTransformation()
 gap> One(s);
-<identity transformation>
+IdentityTransformation()
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 9
@@ -2349,8 +2346,5 @@ gap> IsZeroSemigroup(s);
 false
 
 #
-gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
-gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
-gap> Unbind(s);; Unbind(gens);;
+gap> SemigroupsStopTest();
 gap> STOP_TEST("Semigroups package: examples.tst", 0);
