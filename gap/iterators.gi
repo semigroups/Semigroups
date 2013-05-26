@@ -250,10 +250,10 @@ function(arg)
   
   iter.ShallowCopy:=iter-> rec(baseiter:=ShallowCopy(arg[1]));
   
-  iter.IsDoneIterator:=iter-> IsDoneIterator(iter!.baseiter);
 
   # get NextIterator
   if Length(arg)=3 then 
+    iter.IsDoneIterator:=iter-> IsDoneIterator(iter!.baseiter);
     iter.NextIterator:=function(iter)
       local x;
       x:=NextIterator(iter!.baseiter);
@@ -262,6 +262,7 @@ function(arg)
       fi;
       return convert(iter, x);
     end;
+    iter:=IteratorByFunctions(iter);
   else
     iter.NextIterator:=function(iter)
       local baseiter, x;
@@ -275,9 +276,8 @@ function(arg)
       fi;
       return fail;
     end;
+    iter:=IteratorByNextIterator(iter);
   fi;
-
-  iter:=IteratorByFunctions(iter); 
 
   for filt in arg[3] do #filters
     SetFilterObj(iter, filt);
