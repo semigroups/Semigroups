@@ -127,10 +127,11 @@
           <Ref Attr="GeneratorsOfInverseMonoid" BookName="ref"/>.
         </Item>
       </List>
-<Example>gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
+<Example>
+gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
 > Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
 gap> GeneratorsOfSemigroup(M);
-[ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ), 
+[ IdentityTransformation(), 
   Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
 gap> GeneratorsOfMonoid(M);

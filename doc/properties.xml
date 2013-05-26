@@ -68,11 +68,11 @@ fail</Example>
 gap> file:=Concatenation(SemigroupsDir(), "/examples/graph8c.semigroups.gz");;
 gap> S:=Semigroup(ReadSemigroups(file, 13));;
 gap> IdempotentGeneratedSubsemigroup(S);
-&lt;monoid with 20 generators>
-gap> S:=SymmetricInverseSemigp(5);
-&lt;inverse semigroup with 3 generators>
+&lt;transformation monoid on 8 pts with 18 generators>
+gap> S:=SymmetricInverseSemigroup(5);
+&lt;symmetric inverse semigroup on 5 pts>
 gap> IdempotentGeneratedSubsemigroup(S);
-&lt;inverse semigroup with 6 generators></Example>
+&lt;inverse partial perm semigroup on 5 pts with 6 generators></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -123,24 +123,31 @@ gap> IdempotentGeneratedSubsemigroup(S);
     See also <Ref Attr="PrincipalFactor"/>.
     
     <Example>
-gap> S:=InverseSemigroup(
-> PartialPermNC( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ),
-> PartialPermNC( [ 1, 2, 3, 4, 6, 7, 8, 10 ], 
-> [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
-gap> f:=PartialPermNC([ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ]);;
-gap> d:=GreensDClassOfElement(S, f);
-{&lt;identity on [ 1, 2, 5, 6, 7, 9 ]>}
-gap> InjectionPrincipalFactor(d);
-MappingByFunction( {&lt;identity on [ 1, 2, 5, 6, 7, 9 
- ]>}, Rees Zero Matrix Semigroup over &lt;zero group with 
-2 generators>, function( f ) ... end, function( x ) ... end )
-gap> rms:=Range(last);
-Rees Zero Matrix Semigroup over &lt;zero group with 2 generators>
-gap> SandwichMatrixOfReesZeroMatrixSemigroup(rms);
-[ [ (), 0, 0 ], [ 0, (), 0 ], [ 0, 0, () ] ]
-gap> Size(rms);
-10
-gap> Size(d);
+    gap> S:=InverseSemigroup(
+    > PartialPermNC( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ),
+    > PartialPermNC( [ 1, 2, 3, 4, 6, 7, 8, 10 ], 
+    > [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
+    gap> f:=PartialPermNC([ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ]);;
+    gap> d:=GreensDClassOfElement(S, f);
+    {PartialPerm( [ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ] )}
+    gap> InjectionPrincipalFactor(d);
+    MappingByFunction( {PartialPerm( [ 1, 2, 5, 6, 7, 9 ], 
+     [ 1, 2, 5, 6, 7, 9 ] )}, &lt;Rees 0-matrix semigroup 3x
+     3 over &lt;Group(()) with 0 adjoined>>
+     , function( f ) ... end, function( x ) ... end )
+    gap> rms:=Range(last);
+    &lt;Rees 0-matrix semigroup 3x3 over &lt;Group(()) with 0 adjoined>>
+    gap> MatrixOfReesZeroMatrixSemigroup(rms);
+    [ [ &lt;group with 0 adjoined elt: ()>, &lt;group with 0 adjoined elt: 0>, 
+          &lt;group with 0 adjoined elt: 0> ], 
+      [ &lt;group with 0 adjoined elt: 0>, &lt;group with 0 adjoined elt: ()>, 
+          &lt;group with 0 adjoined elt: 0> ], 
+      [ &lt;group with 0 adjoined elt: 0>, &lt;group with 0 adjoined elt: 0>, 
+          &lt;group with 0 adjoined elt: ()> ] ]
+    gap> Size(rms);
+    10
+    gap> Size(d);
+    9
 9</Example>
   </Description>
 </ManSection>
@@ -474,7 +481,7 @@ gap> S:=InverseSemigroup( PartialPermNC( [ 1, 2, 4 ], [ 3, 1, 4 ] ),
 > PartialPermNC( [ 1, 2, 3, 5 ], [ 4, 1, 5, 2 ] ) );;
 gap> IsFactorisableSemigroup(S);
 false
-gap> IsFactorisableSemigroup(SymmetricInverseSemigp(5)); 
+gap> IsFactorisableSemigroup(SymmetricInverseSemigroup(5)); 
 true</Example>
   </Description>
 </ManSection>
@@ -489,15 +496,16 @@ true</Example>
       is actually a group, then <C>IsGroupAsSemigroup</C> returns <K>true</K>.
       If it is not a group, then <K>false</K> is returned.
       <Example>
-gap> gens:=[ Transformation( [ 2, 4, 5, 3, 7, 8, 6, 9, 1 ] ), 
->  Transformation( [ 3, 5, 6, 7, 8, 1, 9, 2, 4 ] ) ];;
-gap> S:=Semigroup(gens);;
-gap> IsGroupAsSemigroup(S);
-true
-gap> G:=SymmetricGroup(5);;
-gap> S:=Range(IsomorphismPartialPermSemigroup(G));
-&lt;inverse semigroup with 2 generators>
-gap> IsGroupAsSemigroup(S);
+      gap> gens:=[ Transformation( [ 2, 4, 5, 3, 7, 8, 6, 9, 1 ] ), 
+      >  Transformation( [ 3, 5, 6, 7, 8, 1, 9, 2, 4 ] ) ];;
+      gap> S:=Semigroup(gens);;
+      gap> IsGroupAsSemigroup(S);
+      true
+      gap> G:=SymmetricGroup(5);;
+      gap> S:=Range(IsomorphismPartialPermSemigroup(G));
+      &lt;inverse partial perm semigroup on 5 pts with 2 generators>
+      gap> IsGroupAsSemigroup(S);
+      true
 true</Example>
     </Description>
   </ManSection>
@@ -522,9 +530,10 @@ true</Example>
       in this context. 
 
       <Example>
-gap> S:=SingularSemigroup(4);
-&lt;semigroup with 12 generators>
-gap> IsIdempotentGenerated(S);
+      gap> S:=SingularSemigroup(4);
+      &lt;regular transformation semigroup on 4 pts with 12 generators>
+      gap> IsIdempotentGenerated(S);
+      true
 true</Example>
     </Description>
   </ManSection>
@@ -724,7 +733,7 @@ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 9 ] )
 gap> S:=Monoid(Transformation( [ 8, 2, 8, 9, 10, 6, 2, 8, 7, 8 ] ),
 > Transformation( [ 9, 2, 6, 3, 6, 4, 5, 5, 3, 2 ] ));;
 gap> IsMonoidAsSemigroup(S);
-true</Example>
+false</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -780,24 +789,25 @@ true</Example>
   </List>
 
   <Example>
-gap> S:=Semigroup( Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
-> Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
-gap> IsTransformationMonoid(S);
-false
-gap> IsMonoidAsSemigroup(S);
-true
-gap> M:=Range(IsomorphismTransformationMonoid(S));
-&lt;monoid with 2 generators>
-gap> IsTransformationMonoid(M);
-true
-gap> s:=InverseMonoid(
->  PartialPermNC( [ 1, 2, 3 ], [ 4, 2, 3 ] ),
->  PartialPermNC( [ 1, 2, 4 ], [ 1, 3, 2 ] ),
->  PartialPermNC( [ 1, 2, 4 ], [ 4, 1, 2 ] ) );;
-gap> t:=Range(IsomorphismTransformationMonoid(s));
-&lt;monoid with 5 generators>
-gap> Size(s); Size(t);
-117
+  gap> S:=Semigroup( Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
+  > Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
+  gap> IsTransformationMonoid(S);
+  false
+  gap> IsMonoidAsSemigroup(S);
+  true
+  gap> M:=Range(IsomorphismTransformationMonoid(S));
+  &lt;transformation monoid on 8 pts with 2 generators>
+  gap> IsTransformationMonoid(M);
+  true
+  gap> s:=InverseMonoid(
+  >  PartialPermNC( [ 1, 2, 3 ], [ 4, 2, 3 ] ),
+  >  PartialPermNC( [ 1, 2, 4 ], [ 1, 3, 2 ] ),
+  >  PartialPermNC( [ 1, 2, 4 ], [ 4, 1, 2 ] ) );;
+  gap> t:=Range(IsomorphismTransformationMonoid(s));
+  &lt;transformation monoid on 5 pts with 6 generators>
+  gap> Size(s); Size(t);
+  117
+  117
 117</Example>
     </Description>
 </ManSection>
@@ -823,15 +833,17 @@ gap> S:=Semigroup( Transformation( [ 2, 2, 3, 4, 6, 8, 5, 5 ] ),
 gap> IsGroupAsSemigroup(S);
 true
 gap> IsomorphismPermGroup(S); 
-MappingByFunction( &lt;semigroup with 2 generators>, Group([ (5,6,8), (2,3,8,4) 
- ]), &lt;Operation "AsPermutation">, function( x ) ... end )
+MappingByFunction( &lt;transformation group on 8 pts with 2 generators>
+ , Group([ (5,6,8), (2,3,8,
+4) ]), &lt;Attribute "AsPermutation">, function( x ) ... end )
 gap> StructureDescription(Range(IsomorphismPermGroup(S)));
 "S6"
 gap> S:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
-&lt;inverse semigroup with 2 generators>
+&lt;inverse partial perm semigroup on 4 pts with 2 generators>
 gap> IsomorphismPermGroup(S);
-MappingByFunction( &lt;inverse semigroup with 2 generators>, Group(
-[ (1,2,3,4), (1,2) ]), &lt;Operation "AsPermutation">, function( x ) ... end )</Example>
+MappingByFunction( &lt;inverse partial perm semigroup on 4 pts
+ with 2 generators>, Group([ (1,2,3,4), (1,
+2) ]), &lt;Attribute "AsPermutation">, function( x ) ... end )</Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -955,15 +967,16 @@ true</Example>
       <E>semilattice</E> if it is commutative and every element is an 
       idempotent. The idempotents of an inverse semigroup form a semilattice. 
       <Example>
-gap> S:=Semigroup(Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ), 
-> Transformation( [ 3, 6, 5, 7, 2, 1, 7 ] ) );;                    
-gap> Size(S);
-631
-gap> IsInverseSemigroup(S);
-true
-gap> A:=Semigroup(Idempotents(S)); 
-&lt;semigroup with 32 generators>
-gap> IsSemilatticeAsSemigroup(A);
+      gap> S:=Semigroup(Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ), 
+      > Transformation( [ 3, 6, 5, 7, 2, 1, 7 ] ) );;                    
+      gap> Size(S);
+      631
+      gap> IsInverseSemigroup(S);
+      true
+      gap> A:=Semigroup(Idempotents(S)); 
+      &lt;transformation semigroup on 7 pts with 32 generators>
+      gap> IsSemilatticeAsSemigroup(A);
+      true
 true</Example>
     </Description>
   </ManSection>
@@ -1008,15 +1021,16 @@ true</Example>
       constant transformation. 
       See also <Ref Oper="ConstantTransformation" BookName="ref"/>. 
       <Example>
-gap> S:=Semigroup( Transformation( [ 1, 1, 8, 7, 6, 6, 4, 1, 8, 9 ] ), 
->  Transformation( [ 5, 8, 7, 6, 10, 8, 7, 6, 9, 7 ] ) );;
-gap> IsSynchronizingSemigroup(S);
-true
-gap> S:=Semigroup( Transformation( [ 3, 8, 1, 1, 9, 9, 8, 7, 9, 6 ] ), 
->  Transformation( [ 7, 6, 8, 7, 5, 6, 8, 7, 8, 9 ] ) );;
-gap> IsSynchronizingSemigroup(S);
-false
-gap> Representative(MinimalIdeal(S));
+      gap> S:=Semigroup( Transformation( [ 1, 1, 8, 7, 6, 6, 4, 1, 8, 9 ] ), 
+      >  Transformation( [ 5, 8, 7, 6, 10, 8, 7, 6, 9, 7 ] ) );;
+      gap> IsSynchronizingSemigroup(S);
+      true
+      gap> S:=Semigroup( Transformation( [ 3, 8, 1, 1, 9, 9, 8, 7, 9, 6 ] ), 
+      >  Transformation( [ 7, 6, 8, 7, 5, 6, 8, 7, 8, 9 ] ) );;
+      gap> IsSynchronizingSemigroup(S);
+      false
+      gap> Representative(MinimalIdeal(S));
+      Transformation( [ 8, 7, 7, 8, 7, 7, 7, 8, 7, 8 ] )
 Transformation( [ 7, 7, 8, 7, 7, 7, 8, 7, 8, 7 ] )</Example>
     </Description>
   </ManSection>
@@ -1172,24 +1186,25 @@ false</Example>
     <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>. 
     
     <Example>
-gap> S:=Semigroup( Transformation( [ 3, 4, 1, 3, 6, 3, 4, 6, 10, 1 ] ), 
-> Transformation( [ 8, 2, 3, 8, 4, 1, 3, 4, 9, 7 ] ));;
-gap> MinimalIdeal(S);
-&lt;semigroup with 5 generators>
-gap> Elements(MinimalIdeal(S));
-[ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ), 
-  Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] ), 
-  Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] ), 
-  Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ] ), 
-  Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] ) ]
-gap> f:=Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] );;
-gap> D:=DClass(S, f);
-{Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] )}
-gap> ForAll(GreensDClasses(S), x-> IsGreensLessThanOrEqual(D, x));
-true
-gap> S:=POI(10);                  
-&lt;inverse monoid with 10 generators>
-gap> MinimalIdeal(S);
+    gap> S:=Semigroup( Transformation( [ 3, 4, 1, 3, 6, 3, 4, 6, 10, 1 ] ), 
+    > Transformation( [ 8, 2, 3, 8, 4, 1, 3, 4, 9, 7 ] ));;
+    gap> MinimalIdeal(S);
+    &lt;simple transformation semigroup on 10 pts with 5 generators>
+    gap> Elements(MinimalIdeal(S));
+    [ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ), 
+      Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] ), 
+      Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] ), 
+      Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ] ), 
+      Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] ) ]
+    gap> f:=Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] );;
+    gap> D:=DClass(S, f);
+    {Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] )}
+    gap> ForAll(GreensDClasses(S), x-> IsGreensLessThanOrEqual(D, x));
+    true
+    gap> S:=POI(10);                  
+    &lt;inverse partial perm monoid on 10 pts with 10 generators>
+    gap> MinimalIdeal(S);
+    &lt;partial perm group on 0 pts with 1 generator>
 &lt;inverse semigroup with 1 generator></Example>
     </Description>
   </ManSection>
@@ -1207,61 +1222,23 @@ gap> MinimalIdeal(S);
       <K>fail</K> if it does not. 
       See also <Ref Attr="MultiplicativeZero" BookName="ref"/>.
       <Example>
-gap> S:=Semigroup( Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ), 
-> Transformation( [ 1, 6, 3, 6, 2, 1, 6 ] ));;
-gap> MultiplicativeZero(S);
-Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
-gap> S:=Semigroup(Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
-> Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ), 
-> Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ), 
-> Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ));;
-gap> MultiplicativeZero(S);
-fail
-gap> S:=InverseSemigroup( PartialPermNC( [ 1, 3, 4 ], [ 5, 3, 1 ] ),
-> PartialPermNC( [ 1, 2, 3, 4 ], [ 4, 3, 1, 2 ] ),
-> PartialPermNC( [ 1, 3, 4, 5 ], [ 2, 4, 5, 3 ] ) );;
-gap> MultiplicativeZero(S);
+      gap> S:=Semigroup( Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ), 
+      > Transformation( [ 1, 6, 3, 6, 2, 1, 6 ] ));;
+      gap> MultiplicativeZero(S);
+      Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
+      gap> S:=Semigroup(Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
+      > Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ), 
+      > Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ), 
+      > Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ));;
+      gap> MultiplicativeZero(S);
+      fail
+      gap> S:=InverseSemigroup( PartialPermNC( [ 1, 3, 4 ], [ 5, 3, 1 ] ),
+      > PartialPermNC( [ 1, 2, 3, 4 ], [ 4, 3, 1, 2 ] ),
+      > PartialPermNC( [ 1, 3, 4, 5 ], [ 2, 4, 5, 3 ] ) );;
+      gap> MultiplicativeZero(S);
+      &lt;empty partial perm>
 &lt;empty mapping></Example> 
     </Description>
-  </ManSection>
-<#/GAPDoc>
-
-</ManSection>
-<#GAPDoc Label="NrElementsOfRank">
-  <ManSection>
-    <Attr Name="NrElementsOfRank" Arg="S, n"/>
-    <Returns>the number of elements of a given rank. </Returns>
-    <Description><C>NrElementsOfRank</C> returns the number of elements of the
-    semigroup <A>S</A> of partial permutations or transformations with rank
-    <A>n</A>; see 
-    <Ref Func="RankOfPartialPerm" BookName="ref"/> and
-    <Ref Attr="RankOfTransformation" BookName="ref"/>.
-
-    <Example>
-gap> S:=Semigroup( Transformation( [ 1, 3, 4, 1, 3 ] ), 
-> Transformation( [ 2, 4, 1, 5, 5 ] ), 
-> Transformation( [ 2, 5, 3, 5, 3 ] ), 
-> Transformation( [ 4, 1, 2, 2, 1 ] ), 
->  Transformation( [ 5, 5, 1, 1, 3 ] ) );;
-gap> NrElementsOfRank(S, 10);
-0
-gap> Size(S);
-602
-gap> List([1..5], x-> NrElementsOfRank(S, x));
-[ 5, 260, 336, 1, 0 ]
-gap> Sum(last);
-602
-gap> T:=FullTransformationSemigroup(5);;
-gap> List([1..5], x-> NrElementsOfRank(T, x));
-[ 5, 300, 1500, 1200, 120 ]
-gap> Sum(last);
-3125
-gap> S:=SymmetricInverseSemigp(5);;
-gap> NrElementsOfRank(S, 4);
-600
-gap> Binomial(5,4)^2*Factorial(4);
-600</Example>
-  </Description>
   </ManSection>
 <#/GAPDoc>
 
@@ -1317,14 +1294,15 @@ gap> SmallGeneratingSet(S);
     on <A>S</A>. <C>PrimitiveIdempotents</C> returns the list of primitive
     idempotents in the inverse semigroup of partial permutations <A>S</A>. 
     <Example>
-gap> S:= InverseMonoid(
-> PartialPermNC( [ 1 ], [ 4 ] ),
-> PartialPermNC( [ 1, 2, 3 ], [ 2, 1, 3 ] ),
-> PartialPermNC( [ 1, 2, 3 ], [ 3, 1, 2 ] ) );;
-gap> MultiplicativeZero(S);
-&lt;empty mapping>
-gap> PrimitiveIdempotents(S);
-[ &lt;identity on [ 4 ]>, &lt;identity on [ 1 ]>, &lt;identity on [ 2 ]>, 
+    gap> S:= InverseMonoid(
+    > PartialPermNC( [ 1 ], [ 4 ] ),
+    > PartialPermNC( [ 1, 2, 3 ], [ 2, 1, 3 ] ),
+    > PartialPermNC( [ 1, 2, 3 ], [ 3, 1, 2 ] ) );;
+    gap> MultiplicativeZero(S);
+    &lt;empty partial perm>
+    gap> PrimitiveIdempotents(S);
+    [ &lt;identity partial perm on [ 4 ]>, &lt;identity partial perm on [ 1 ]>, 
+      &lt;identity partial perm on [ 2 ]>, &lt;identity partial perm on [ 3 ]> ]
   &lt;identity on [ 3 ]> ]</Example>
   </Description>
 </ManSection>
@@ -1356,7 +1334,7 @@ gap> PrimitiveIdempotents(S);
   </Description>
 </ManSection>
 <Example>
-gap> S:=SymmetricInverseSemigp(2);
+gap> S:=SymmetricInverseSemigroup(2);
   &lt;inverse semigroup with 2 generators>
 gap> Elements(S);
   [ &lt;empty mapping>, &lt;identity on [ 1 ]>, [ 1 ] -> [ 2 ], [ 2 ] -> [ 1 ],
@@ -1386,7 +1364,7 @@ gap> Elements(T);
 </Description>
 </ManSection>
 <Example>
-gap> S:=SymmetricInverseSemigp(2);
+gap> S:=SymmetricInverseSemigroup(2);
 &lt;inverse semigroup with 2 generators>
 gap> T:=[Elements(S)[2]];
 &lt;identity on [ 1 ]>
@@ -1412,7 +1390,7 @@ true
 </Description>
 </ManSection>
 <Example>
-gap> S:=SymmetricInverseSemigp(2);
+gap> S:=SymmetricInverseSemigroup(2);
 &lt;inverse semigroup with 2 generators>
 gap> T:=[Elements(S)[2]];
 &lt;identity on [ 1 ]>
@@ -1443,7 +1421,7 @@ true
           </Description>
         </ManSection>
         <Example>
-          gap> S:=SymmetricInverseSemigp(2);
+          gap> S:=SymmetricInverseSemigroup(2);
           &lt;inverse semigroup with 2 generators>
           gap> T:=[Elements(S)[2]];
           &lt;identity on [ 1 ]>

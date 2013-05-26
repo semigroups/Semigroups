@@ -8,128 +8,6 @@
 #############################################################################
 ##
 
-<#GAPDoc Label="GradedImagesOfTransSemigroup">
-  <ManSection><Heading>Graded images and kernels</Heading>
-  <Attr Name="GradedImagesOfTransSemigroup" Arg="S"/>
-  <Attr Name="GradedKernelsOfTransSemigroup" Arg="S"/>
-  <Returns>A list of images or kernels.</Returns>
-  <Description>
-  <C>GradedImagesOfTransSemigroup</C> returns a list where the <C>i</C>th 
-  entry is a list of all the images of transformations in the
-  transformation semigroup <A>S</A> with size 
-  <C>i</C>.  
-  <P/>
-  
-  <C>GradedKernelsOfTransSemigroup</C> returns a list where the <C>i</C>th 
-  entry is a list of the values of <Ref Func="CanonicalTransSameKernel"/> for
-  all transformations in <A>S</A> with rank <C>i</C>.
-  <P/>
-
-  See also <Ref Attr="ImagesOfTransSemigroup"/> and 
-  <Ref Attr="KernelsOfTransSemigroup"/>.
-  <Example>
-gap> S:=Semigroup(Transformation( [ 1, 5, 1, 1, 1 ] ), 
-> Transformation( [ 4, 4, 5, 2, 2 ] ));;
-gap> GradedImagesOfTransSemigroup(S);
-[ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], 
-  [  ], [  ] ]
-gap> GradedKernelsOfTransSemigroup(S);
-[ [ [ 1, 1, 1, 1, 1 ] ], [ [ 1, 2, 1, 1, 1 ], [ 1, 1, 1, 2, 2 ] ], 
-  [ [ 1, 1, 2, 3, 3 ] ], [  ], [  ] ]</Example> 
-  </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="ImagesOfTransSemigroup">
-  <ManSection><Heading>Images and kernels</Heading>
-  <Attr Name="ImagesOfTransSemigroup" Arg="S[, n]"/>
-  <Attr Name="KernelsOfTransSemigroup" Arg="S[, n]"/>
-  <Returns>An orbit.</Returns>
-  <Description>
-  The argument <A>S</A> should be a transformation semigroup and the optional
-  second argument <A>n</A> should be a positive integer not greater than the
-  degree of <A>S</A>.  <C>ImagesOfTransSemigroup</C> returns the  <Ref
-    Func="Orb" BookName="orb"/> object: 
-  <Log>Orb(S, [1..Degree(S)], OnSets);</Log> which contains the image sets of
-  all the transformations belonging to <A>S</A>.  <P/>
-  
-  <C>KernelsOfTransSemigroup</C> returns the <Ref Func="Orb" BookName="orb"/>
-  object: <Log>Orb(S, [1,..Degree(S)], OnKernelsAntiAction);</Log> <P/> If the
-  optional second argument <A>n</A> (a positive integer) is present, then only
-  the images or kernels of size at least <A>n</A> are found.<P/>
- 
-  Note that the image/kernel <C>[1..Degree(S)]</C> always occurs in both orbits
-  even if there is no element of <A>S</A> with image/kernel equal to
-  <C>[1..Degree(S)]</C>.<P/>
-
-  See also <Ref Func="GradedImagesOfTransSemigroup"/>,
-  <Ref Func="GradedKernelsOfTransSemigroup"/>,
-  <Ref Func="OnKernelsAntiAction"/>, and 
-  <Ref Func="CanonicalTransSameKernel"/>
-  <Example>
-gap>  S:=Semigroup( Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
-> Transformation( [ 6, 5, 1, 6, 2, 2 ] ) );;
-gap> o:=ImagesOfTransSemigroup(S, 6); Enumerate(o); AsList(o);
-&lt;open orbit, 1 points with Schreier tree with grading>
-&lt;closed orbit, 1 points with Schreier tree with grading>
-[ [ 1 .. 6 ] ]
-gap> o:=ImagesOfTransSemigroup(S, 5); Enumerate(o); AsList(o);
-&lt;open orbit, 1 points with Schreier tree with grading>
-&lt;closed orbit, 1 points with Schreier tree with grading>
-[ [ 1 .. 6 ] ]
-gap> o:=ImagesOfTransSemigroup(S, 4); Enumerate(o); AsList(o);
-&lt;open orbit, 1 points with Schreier tree with grading>
-&lt;closed orbit, 2 points with Schreier tree with grading>
-[ [ 1 .. 6 ], [ 1, 2, 5, 6 ] ]
-gap> o:=ImagesOfTransSemigroup(S, 3); Enumerate(o); AsList(o);
-&lt;open orbit, 1 points with Schreier tree with grading>
-&lt;closed orbit, 4 points with Schreier tree with grading>
-[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 5, 6 ] ]
-gap> o:=ImagesOfTransSemigroup(S, 2); Enumerate(o); AsList(o);
-&lt;open orbit, 1 points with Schreier tree with grading>
-&lt;closed orbit, 8 points with Schreier tree with grading>
-[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 6 ], [ 2, 5, 6 ], [ 1, 4 ],
-  [ 2, 5 ], [ 4, 6 ] ]
-gap> o:=ImagesOfTransSemigroup(S, 1); Enumerate(o); AsList(o);
-&lt;open orbit, 1 points with Schreier tree with grading>
-&lt;closed orbit, 13 points with Schreier tree with grading>
-[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 6 ], [ 2, 5, 6 ], [ 1, 4 ],
-  [ 2, 5 ], [ 4, 6 ], [ 6 ], [ 1 ], [ 2 ], [ 4 ], [ 5 ] ]
-gap> o:=ImagesOfTransSemigroup(S); Enumerate(o); AsList(o);
-&lt;open orbit, 1 points with Schreier tree>
-&lt;closed orbit, 13 points with Schreier tree>
-[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 6 ], [ 2, 5, 6 ], [ 1, 4 ],
-  [ 2, 5 ], [ 4, 6 ], [ 6 ], [ 1 ], [ 2 ], [ 4 ], [ 5 ] ]</Example>
-  </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="OnKernelsAntiAction">
-  <ManSection> 
-    <Func Name="OnKernelsAntiAction" Arg="ker, f"/>
-    <Returns>
-      A list of positive integers. 
-    </Returns>
-    <Description>
-    The argument <A>ker</A> should equal <C>CanonicalTransSameKernel(g);</C>
-    for some transformation <C>g</C> with degree equal to the degree of the
-    transformation <A>f</A>. 
-
-    <C>OnKernelsAntiAction</C> returns <C>CanonicalTransSameKernel(f*g)</C>.
-    See also <Ref Func="CanonicalTransSameKernel"/>.
-
-    <Example>
-gap> f:=Transformation( [ 3, 6, 9, 2, 4, 2, 2, 2, 8, 2 ] );;
-gap> g:=Transformation( [ 7, 1, 4, 3, 2, 7, 7, 6, 6, 5 ] );;
-gap> ker:=CanonicalTransSameKernel(f);
-[ 1, 2, 3, 4, 5, 4, 4, 4, 6, 4 ]
-gap> OnKernelsAntiAction(ker, g);
-[ 1, 2, 1, 3, 4, 1, 1, 1, 1, 5 ]
-gap> CanonicalTransSameKernel(g*f);
-[ 1, 2, 1, 3, 4, 1, 1, 1, 1, 5 ]</Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
 
 <#GAPDoc Label="OrbSCC">
   <ManSection>
@@ -170,15 +48,16 @@ gap> OrbSCC(o);
       
 <Example>
 gap> S:=FullTransformationSemigroup(4);;
-gap> o:=ImagesOfTransSemigroup(S);;
+gap> o:=LambdaOrb(S);;
 gap> OrbSCC(o);
-[ [ 1 ], [ 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10, 11 ], [ 12, 13, 14, 15 ] ]
+[ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], 
+  [ 13, 14, 15, 16 ] ]
 gap> OrbSCCLookup(o);
-[ 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4 ]
+[ 1, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5 ]
 gap> OrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7]; 
 1
-2
-3</Example>
+3
+4</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -199,17 +78,21 @@ gap> OrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7];
 
 <Example>
 gap> S:=FullTransformationSemigroup(4);;
-gap> o:=ImagesOfTransSemigroup(S);;
+gap> o:=LambdaOrb(S);;
 gap> OrbSCC(o);
-[ [ 1 ], [ 2, 3, 4, 5 ], [ 6, 7, 8, 9, 10, 11 ], [ 12, 13, 14, 15 ] ]
+[ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], 
+  [ 13, 14, 15, 16 ] ]
 gap> OrbSCCTruthTable(o);
-[ [ true, false, false, false, false, false, false, false, false, false, 
-      false, false, false, false, false ], 
-  [ false, true, true, true, true, false, false, false, false, false, false, 
-      false, false, false, false ], 
-  [ false, false, false, false, false, true, true, true, true, true, true, 
-      false, false, false, false ], 
-  [ false, false, false, false, false, false, false, false, false, false, 
+[ [ true, false, false, false, false, false, false, false, false, 
+      false, false, false, false, false, false, false ], 
+  [ false, true, false, false, false, false, false, false, false, 
+      false, false, false, false, false, false, false ], 
+  [ false, false, true, true, true, true, false, false, false, false, 
+      false, false, false, false, false, false ], 
+  [ false, false, false, false, false, false, true, true, true, true, 
+      true, true, false, false, false, false ], 
+  [ false, false, false, false, false, false, false, false, false, 
+      false, false, false, true, true, true, true ] ]
       false, true, true, true, true ] ]</Example>
     </Description>
   </ManSection>
@@ -241,11 +124,9 @@ gap> o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;
 gap> OrbSCC(o);
 [ [ 1 ], [ 2 ], [ 3, 5, 6, 7, 11 ], [ 4 ], [ 8 ], [ 9 ], [ 10, 12 ] ]
 gap> ReverseSchreierTreeOfSCC(o, 3);
-[ [ fail, fail, fail, fail, 2, 1, 2, fail, fail, fail, 1, fail ], 
-  [ fail, fail, fail, fail, 3, 5, 3, fail, fail, fail, 7, fail ] ]
+[ [ ,, fail,, 2, 1, 2,,,, 1 ], [ ,, fail,, 3, 5, 3,,,, 7 ] ]
 gap> ReverseSchreierTreeOfSCC(o, 7);
-[ [ fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, 3 ], 
-  [ fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, 10 ] ]
+[ [ ,,,,,,,,, fail,, 3 ], [ ,,,,,,,,, fail,, 10 ] ]
 gap> OnSets(o[11], Generators(S)[1]);
 [ 1, 4 ]
 gap> Position(o, last);
@@ -280,11 +161,9 @@ gap> o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;
 gap> OrbSCC(o);
 [ [ 1 ], [ 2 ], [ 3, 5, 6, 7, 11 ], [ 4 ], [ 8 ], [ 9 ], [ 10, 12 ] ]
 gap> SchreierTreeOfSCC(o, 3);
-[ [ fail, fail, fail, fail, 1, 3, 1, fail, fail, fail, 2, fail ], 
-  [ fail, fail, fail, fail, 7, 5, 3, fail, fail, fail, 6, fail ] ]
+[ [ ,, fail,, 1, 3, 1,,,, 2 ], [ ,, fail,, 7, 5, 3,,,, 6 ] ]
 gap> SchreierTreeOfSCC(o, 7);
-[ [ fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, 1 ], 
-  [ fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, fail, 10 ] ]
+[ [ ,,,,,,,,, fail,, 1 ], [ ,,,,,,,,, fail,, 10 ] ]
 gap> OnSets(o[6], Generators(S)[2]);
 [ 3, 5 ]
 gap> Position(o, last);
@@ -317,19 +196,19 @@ gap> Position(o, last);
     <Ref Func="SchreierTreeOfSCC"/>, and 
     <Ref Func="TraceSchreierTreeOfSCCForward"/>.
     <Example>
-gap> S:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), 
-> Transformation( [ 2, 4, 1, 2 ] ),
-> Transformation( [ 3, 1, 1, 3 ] ), 
-> Transformation( [ 3, 3, 4, 1 ] ) );;
-gap> o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;
-gap> OrbSCC(o);
-[ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]
-gap> ReverseSchreierTreeOfSCC(o, 4);               
-[ [ fail, fail, fail, fail, 4, 1, 1, 3, fail, fail, fail, fail ], 
-  [ fail, fail, fail, fail, 4, 4, 4, 4, fail, fail, fail, fail ] ]
-gap> TraceSchreierTreeOfSCCBack(o, 4, 7);
-[ 1 ]
-gap> TraceSchreierTreeOfSCCBack(o, 4, 8);
+    gap> S:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), 
+    > Transformation( [ 2, 4, 1, 2 ] ),
+    > Transformation( [ 3, 1, 1, 3 ] ), 
+    > Transformation( [ 3, 3, 4, 1 ] ) );;
+    gap> o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;
+    gap> OrbSCC(o);
+    [ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]
+    gap> ReverseSchreierTreeOfSCC(o, 4);               
+    [ [ ,,, fail, 4, 1, 1, 3 ], [ ,,, fail, 4, 4, 4, 4 ] ]
+    gap> TraceSchreierTreeOfSCCBack(o, 4, 7);
+    [ 1 ]
+    gap> TraceSchreierTreeOfSCCBack(o, 4, 8);
+    [ 3 ]
 [ 3 ]</Example>
     </Description>
   </ManSection>
@@ -359,19 +238,19 @@ gap> TraceSchreierTreeOfSCCBack(o, 4, 8);
     <Ref Func="SchreierTreeOfSCC"/>, and 
     <Ref Func="TraceSchreierTreeOfSCCBack"/>.
     <Example>
-gap> S:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), 
-> Transformation( [ 2, 4, 1, 2 ] ),
-> Transformation( [ 3, 1, 1, 3 ] ), 
-> Transformation( [ 3, 3, 4, 1 ] ) );;
-gap> o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;
-gap> OrbSCC(o);
-[ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]
-gap> SchreierTreeOfSCC(o, 4);
-[ [ fail, fail, fail, fail, 1, 2, 2, 4, fail, fail, fail, fail ], 
-  [ fail, fail, fail, fail, 4, 4, 6, 4, fail, fail, fail, fail ] ]
-gap> TraceSchreierTreeOfSCCForward(o, 4, 8);
-[ 4 ]
-gap> TraceSchreierTreeOfSCCForward(o, 4, 7);
+    gap> S:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), 
+    > Transformation( [ 2, 4, 1, 2 ] ),
+    > Transformation( [ 3, 1, 1, 3 ] ), 
+    > Transformation( [ 3, 3, 4, 1 ] ) );;
+    gap> o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;
+    gap> OrbSCC(o);
+    [ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]
+    gap> SchreierTreeOfSCC(o, 4);
+    [ [ ,,, fail, 1, 2, 2, 4 ], [ ,,, fail, 4, 4, 6, 4 ] ]
+    gap> TraceSchreierTreeOfSCCForward(o, 4, 8);
+    [ 4 ]
+    gap> TraceSchreierTreeOfSCCForward(o, 4, 7);
+    [ 2, 2 ]
 [ 2, 2 ]</Example>
     </Description>
   </ManSection>

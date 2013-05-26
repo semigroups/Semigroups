@@ -56,7 +56,7 @@
     <#Include Label="\&lt;">
     <#Include Label="InjectionPrincipalFactor">
     <#Include Label="PrincipalFactor">
-    <#Include Label="IsRegularXClass">
+    <#Include Label="IsRegularClass">
     <#Include Label="NrRegularDClasses">
     <#Include Label="NrXClasses">
     <#Include Label="PartialOrderOfDClasses">
@@ -76,7 +76,6 @@
     <#Include Label="IrredundantGeneratingSubset">
     <#Include Label="MinimalIdeal">
     <#Include Label="MultiplicativeZero">
-    <#Include Label="NrElementsOfRank">
     <#Include Label="PrimitiveIdempotents">
     <#Include Label="Random">
     <#Include Label="SmallGeneratingSet"> 
