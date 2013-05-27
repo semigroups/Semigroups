@@ -20,7 +20,7 @@ HasGeneratorsOfSemigroup, IsAssociativeElement]);
 
 DeclareOperation("IsomorphismBipartitionSemigroup", [IsSemigroup]);
 DeclareAttribute("IsomorphismReesMatrixSemigroup", IsGreensDClass);
-DeclareAttribute("IsomorphismPermGroup", IsSemigroup);
+DeclareAttribute("IsomorphismPermGroup", IsTransformationSemigroup);
 
 DeclareAttribute("MinimalIdeal", IsSemigroup);
 DeclareOperation("NrElementsOfRank", [IsSemigroup and
