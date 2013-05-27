@@ -135,9 +135,9 @@ function ( gens, w )
     if Length( w ) = 0  then
         return One(gens);
     fi;
-    res := gens[w[1]];
+    res := gens[AbsInt(w[1])]^SignInt(w[1]);
     for i  in [ 2 .. Length( w ) ]  do
-        res := res * gens[w[i]];
+        res := res * gens[AbsInt(w[i])]^SignInt(w[1]);
     od;
     return res;
 end);

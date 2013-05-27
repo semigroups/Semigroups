@@ -1,4 +1,23 @@
-
+- gap> f:=Transformation([2,1,3]);
+<transformation: 2,1>
+gap> g:=Group(f);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `Length' on 1 arguments called from
+Length( Generators( s ) ) called from
+ViewString( G ) called from
+SHELL( GetBottomLVars(  ), false, false, 3, true, prompt, function (  )
+      if IsBound( OnGAPPromptHook) and IsFunction( OnGAPPromptHook )  then
+          OnGAPPromptHook(  );
+      else
+          return;
+      fi;
+      return;
+  end, "*stdin*", "*stdout*", true ); called from
+<function "SESSION">( <arguments> )
+ called from read-eval loop at line 2 of *stdin*
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk> §
 
 
 - gap> s:=SymmetricInverseSemigroup(4);;

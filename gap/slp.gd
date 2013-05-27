@@ -8,6 +8,11 @@
 ##############################################################################
 ###
 
+DeclareGlobalFunction("LambdaOrbWords");
+DeclareGlobalFunction("LambdaOrbSchutzSchreier");
+DeclareOperation("Factorization", [IsLambdaOrb, IsPosInt, IsPerm]);
+DeclareOperation("Factorization", [IsActingSemigroup, IsAssociativeElement]);
+
 DeclareGlobalFunction("LambdaOrbSLP");
 DeclareOperation("SemigroupElementSLP", [IsActingSemigroup,
 IsAssociativeElement]);
