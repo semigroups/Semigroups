@@ -84,18 +84,18 @@ InstallMethod(IsAdequateSemigroup,
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 s-> IsAbundantSemigroup(s) and IsBlockGroup(s));
 
-# not used in Display
+#
 
 InstallMethod(IsBand, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], s-> 
  IsCompletelyRegularSemigroup(s) and IsHTrivial(s));
 
-# not used in Display
+#
 
 InstallMethod(IsBand, "for an inverse semigroup", 
 [IsInverseSemigroup], IsSemilatticeAsSemigroup);
 
-# not used in Display
+#
 
 InstallMethod(IsBlockGroup, 
 "for an acting semigroup with generators",
@@ -207,7 +207,7 @@ function(s)
   return true;
 end);
 
-# not used in Display
+#
 
 InstallMethod(IsCompletelyRegularSemigroup, 
 "for an acting semigroup with generators", 
