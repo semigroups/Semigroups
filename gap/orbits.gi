@@ -137,7 +137,7 @@ function ( gens, w )
     fi;
     res := gens[AbsInt(w[1])]^SignInt(w[1]);
     for i  in [ 2 .. Length( w ) ]  do
-        res := res * gens[AbsInt(w[i])]^SignInt(w[1]);
+        res := res * gens[AbsInt(w[i])]^SignInt(w[i]);
     od;
     return res;
 end);
@@ -410,12 +410,14 @@ end);
 
 InstallGlobalFunction(TraceSchreierTreeOfSCCBack,
 function(o, i, j)
-  local tree, scc, word;
+  local tree, mult, scc, word;
   
   if not IsInvLambdaOrb(o) then 
     tree:=ReverseSchreierTreeOfSCC(o, i);
+    mult:=1;
   else 
     tree:=SchreierTreeOfSCC(o, i);
+    mult:=-1;
   fi;
   
   scc:=OrbSCC(o)[i];
@@ -425,7 +427,8 @@ function(o, i, j)
     Add(word, tree[1][j]);
     j := tree[2][j];
   od;
-  return word;
+  
+  return word*mult;
 end);
 
 # Usage: o = orbit of images; i = index of scc; j = element of scc[i].
