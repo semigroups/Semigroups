@@ -79,8 +79,8 @@ gap> S:=Semigroup(gens);;
 gap> GroupHClass(GreensDClassOfElement(S, Elements(S)[1]));
 {Transformation( [ 2, 2, 2, 2, 2 ] )}
 gap> IsomorphismPermGroup(last);
-MappingByFunction( {Transformation( [ 2, 2, 2, 2, 2 ]
- )}, Group(()), <Attribute "AsPermutation">, function( x ) ... end )
+MappingByFunction( {Transformation( [ 2, 2, 2, 2, 2 ] )
+ }, Group(()), <Attribute "AsPermutation">, function( x ) ... end )
 
 #
 gap> gens:=[ Transformation( [ 4, 4, 8, 8, 8, 8, 4, 8 ] ),
@@ -460,8 +460,9 @@ gap> idem:=Set(Concatenation(List(GreensRClasses(m), Idempotents)));
   Transformation( [ 1, 1, 3, 1, 1, 1 ] ), 
   Transformation( [ 1, 1, 3, 3, 1, 1, 1 ] ), 
   Transformation( [ 1, 1, 3, 3, 1, 1, 3 ] ), 
-  Transformation( [ 1, 1, 3, 3, 1, 1 ] ), Transformation( [ 1, 1, 3, 6, 6, 6 ]
-    ), Transformation( [ 1, 1, 4, 4, 1, 1, 1 ] ), 
+  Transformation( [ 1, 1, 3, 3, 1, 1 ] ), 
+  Transformation( [ 1, 1, 3, 6, 6, 6 ] ), 
+  Transformation( [ 1, 1, 4, 4, 1, 1, 1 ] ), 
   Transformation( [ 1, 1, 4, 4, 1, 1, 4 ] ), 
   Transformation( [ 1, 1, 7, 1, 1, 1, 7 ] ), 
   Transformation( [ 1, 1, 7, 7, 1, 1, 7 ] ), 
@@ -532,10 +533,12 @@ gap> idem:=Set(Concatenation(List(GreensRClasses(m), Idempotents)));
   Transformation( [ 6, 6, 4, 4, 6, 6, 6 ] ), 
   Transformation( [ 6, 6, 6, 4, 6, 6, 6 ] ), 
   Transformation( [ 6, 6, 6, 6, 6, 6, 6 ] ), 
-  Transformation( [ 6, 6, 6, 6, 6, 6 ] ), Transformation( [ 6, 6, 7, 6, 6, 6 ]
-    ), Transformation( [ 6, 6, 7, 7, 6, 6 ] ), 
-  Transformation( [ 6, 7, 3, 3, 6, 6 ] ), Transformation( [ 6, 7, 6, 6, 6, 6 ]
-    ), Transformation( [ 6, 7, 7, 7, 6, 6 ] ), 
+  Transformation( [ 6, 6, 6, 6, 6, 6 ] ), 
+  Transformation( [ 6, 6, 7, 6, 6, 6 ] ), 
+  Transformation( [ 6, 6, 7, 7, 6, 6 ] ), 
+  Transformation( [ 6, 7, 3, 3, 6, 6 ] ), 
+  Transformation( [ 6, 7, 6, 6, 6, 6 ] ), 
+  Transformation( [ 6, 7, 7, 7, 6, 6 ] ), 
   Transformation( [ 6, 7, 7, 7, 7, 6, 7 ] ), 
   Transformation( [ 7, 2, 7, 7, 7, 7, 7 ] ), 
   Transformation( [ 7, 7, 3, 3, 7, 7, 7 ] ), 

@@ -243,12 +243,15 @@ false
 gap> s:=FullTransformationSemigroup(6);;
 gap> f:=Transformation( [ 2, 1, 3, 4, 5, 1 ] );;
 gap> InversesOfSemigroupElement(s, f);
-[ Transformation( [ 2, 1, 3, 4, 5, 2 ] ), Transformation( [ 2, 1, 3, 4, 5, 5 ]
-    ), Transformation( [ 2, 1, 3, 4, 5, 1 ] ), 
-  Transformation( [ 2, 1, 3, 4, 5, 4 ] ), Transformation( [ 2, 1, 3, 4, 5, 3 ]
-    ), Transformation( [ 6, 1, 3, 4, 5, 6 ] ), 
-  Transformation( [ 6, 1, 3, 4, 5, 5 ] ), Transformation( [ 6, 1, 3, 4, 5, 1 ]
-    ), Transformation( [ 6, 1, 3, 4, 5, 4 ] ), 
+[ Transformation( [ 2, 1, 3, 4, 5, 2 ] ), 
+  Transformation( [ 2, 1, 3, 4, 5, 5 ] ), 
+  Transformation( [ 2, 1, 3, 4, 5, 1 ] ), 
+  Transformation( [ 2, 1, 3, 4, 5, 4 ] ), 
+  Transformation( [ 2, 1, 3, 4, 5, 3 ] ), 
+  Transformation( [ 6, 1, 3, 4, 5, 6 ] ), 
+  Transformation( [ 6, 1, 3, 4, 5, 5 ] ), 
+  Transformation( [ 6, 1, 3, 4, 5, 1 ] ), 
+  Transformation( [ 6, 1, 3, 4, 5, 4 ] ), 
   Transformation( [ 6, 1, 3, 4, 5, 3 ] ) ]
 gap> ForAll(last, g-> f*g*f=f and g*f*g=g);
 true

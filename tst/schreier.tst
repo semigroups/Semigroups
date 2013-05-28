@@ -103,6 +103,43 @@ gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
 true
 
 #
+gap> gens:=[ PartialPerm( [ 1, 2 ], [ 3, 1 ] ), 
+> PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ), 
+> PartialPerm( [ 1, 2, 3 ], [ 2, 4, 1 ] ), 
+> PartialPerm( [ 1, 3, 4 ], [ 3, 4, 1 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
+> Factorization(s,f))=f);
+true
+
+#
+gap> gens:=[ PartialPerm( [ 1, 2, 4, 5 ], [ 2, 6, 1, 4 ] ), 
+>  PartialPerm( [ 1, 2, 5 ], [ 4, 3, 6 ] ), 
+>  PartialPerm( [ 1, 3, 4, 5 ], [ 5, 1, 6, 4 ] ), 
+>  PartialPerm( [ 1, 3, 4, 5 ], [ 5, 2, 6, 1 ] ) ];;
+gap> s:=InverseSemigroup(gens);;
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
+> Factorization(s,f))=f);
+true
+
+# test a regular semigroup
+gap> s:=OrderEndomorphisms(7);;
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
+> Factorization(s,f))=f);
+true
+
+# test a regular semigroup that only learns this after creation
+gap> s:=SingularSemigroup(5);
+<regular transformation semigroup on 5 pts with 20 generators>
+gap> s:=Semigroup(Generators(s));
+<transformation semigroup on 5 pts with 20 generators>
+gap> IsRegularSemigroup(s);
+true
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s), 
+> Factorization(s,f))=f);
+true
+
+#
 gap> SemigroupsStopTest();
 
 #
