@@ -433,7 +433,7 @@ function(s)
     if new=[] then 
       return false;
     fi;
-    t:=Semigroup(new, rec(small:=true));
+    t:=Semigroup(new);
   fi;
 
   # this is not always the idempotent generated subsemigroup!
