@@ -683,7 +683,7 @@ InstallMethod(IsomorphismTransformationSemigroup,
 function(S)        
   local n, F, T;
   n:=Length(GeneratorsOfSemigroup(S)[1][1]);
-  F:=BaseDomain(GeneratorsOfSemigroup(S)[1]);        
+  F:=FieldOfMatrixList(GeneratorsOfSemigroup(S));        
   T:=Semigroup(List(GeneratorsOfSemigroup(S), x-> 
    TransformationOp(x, Elements(F^n), OnRight)));        
   return MappingByFunction(S, T,
