@@ -26,7 +26,6 @@
 
 # a better method for MinimalIdeal of a simple semigroup.
 
-
 InstallMethod(OneMutable, "for ring element coll coll coll",
 [IsRingElementCollCollColl], x-> One(Representative(x)));
 

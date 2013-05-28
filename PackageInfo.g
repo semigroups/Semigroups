@@ -32,7 +32,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "jdm3@st-and.ac.uk",
-    WWWHome       := "",
+    WWWHome       := "tinyurl.com/jdmitchell",
     PostalAddress := Concatenation( [
                        "Mathematical Institute,",
                        " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,", 
