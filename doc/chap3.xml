@@ -5,7 +5,7 @@
   particular for computing Green's classes and related properties of 
   semigroups. 
   
-  <!-- <Section><Heading>Expressing semigroup elements as words in
+  <Section><Heading>Expressing semigroup elements as words in
     generators</Heading>
     In some cases it is possible to express the elements of a transformation
     semigroup as a word in the generators. This section describes how to
@@ -15,7 +15,7 @@
     semigroup of partial permutations.
     <#Include Label="EvaluateWord">
     <#Include Label="Factorization">
-  </Section>-->
+  </Section>
 
   <Section>
   <Heading>Strongly connected components of orbits</Heading>

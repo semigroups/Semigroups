@@ -125,17 +125,16 @@ Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] )</Example>
   <Meth Name="Factorization" Arg="S, f"/>
     <Returns>A word in the generators.</Returns>
       <Description> 
-        If <A>S</A> is a transformation semigroup and <A>f</A> is a
-        transformation belonging to <A>S</A>, then <C>Factorization</C> returns
+        If <A>S</A> is a transformation or partial perm semigroup and <A>f</A>
+        is an element of <A>S</A>, then <C>Factorization</C> returns
         a word in the generators of <A>S</A> that is equal to <A>f</A>. Here, a
         word is a list of positive integers where <C>i</C> corresponds to
         <C>GeneratorsOfSemigroups(S)[i]</C>. More specifically,
-        <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, f))=f;</Log> <P/>
+      <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, f))=f;</Log>
+      <P/>
 
         Note that <C>Factorization</C> does not return a word of minimum
-        length. An empty list is evaluated to the identity transformation with
-        degree equal to the degree of <A>S</A> regardless of whether this
-        transformation is an element of <A>S</A> or not.<P/> 
+        length.<P/> 
 
         See also <Ref Func="EvaluateWord"/> and 
         <Ref Func="GeneratorsOfSemigroup" BookName="ref"/>.
