@@ -775,56 +775,55 @@ true</Example>
   <Ref Func="IteratorOfRClassReps"/>.
   
   <Example>
-  gap> gens:=[ Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
-  >   Transformation( [ 1, 6, 3, 4, 7, 2, 5, 8 ] ),
-  >   Transformation( [ 2, 1, 6, 7, 8, 3, 4, 5 ] ),
-  >   Transformation( [ 3, 2, 3, 6, 1, 6, 1, 2 ] ),
-  >   Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] ) ];;
-  gap> S:=Semigroup(gens);;
-  gap> f:=Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] );;
-  gap> R:=RClass(S, f);
-  {Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
-  gap> NrHClasses(R);
-  12
-  gap> D:=DClass(R);
-  {Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
-  gap> NrHClasses(D);
-  72
-  gap> L:=LClass(S, f);
-  {Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] )}
-  gap> NrHClasses(L);
-  6
-  gap> NrHClasses(S);
-  1555
-  gap> gens:=[ Transformation( [ 4, 6, 5, 2, 1, 3 ] ),
-  >   Transformation( [ 6, 3, 2, 5, 4, 1 ] ),
-  >   Transformation( [ 1, 2, 4, 3, 5, 6 ] ),
-  >   Transformation( [ 3, 5, 6, 1, 2, 3 ] ),
-  >   Transformation( [ 5, 3, 6, 6, 6, 2 ] ),
-  >   Transformation( [ 2, 3, 2, 6, 4, 6 ] ),
-  >   Transformation( [ 2, 1, 2, 2, 2, 4 ] ),
-  >   Transformation( [ 4, 4, 1, 2, 1, 2 ] ) ];;
-  gap> S:=Semigroup(gens);;
-  gap> NrRClasses(S);
-  150
-  gap> Size(S);
-  6342
-  gap> f:=Transformation( [ 1, 3, 3, 1, 3, 5 ] );;
-  gap> D:=DClass(S, f);
-  {Transformation( [ 2, 1, 1, 2, 1, 4 ] )}
-  gap> NrRClasses(D);
-  87
-  gap> s:=SymmetricInverseSemigroup(10);;
-  gap> NrDClasses(s); NrRClasses(s); NrHClasses(s); NrLClasses(s);
-  11
-  1024
-  184756
-  1024
-  gap> s:=POPI(10);;
-  gap> NrDClasses(s);
-  11
-  gap> NrRClasses(s);
-  1024
+gap> gens:=[ Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
+>   Transformation( [ 1, 6, 3, 4, 7, 2, 5, 8 ] ),
+>   Transformation( [ 2, 1, 6, 7, 8, 3, 4, 5 ] ),
+>   Transformation( [ 3, 2, 3, 6, 1, 6, 1, 2 ] ),
+>   Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] ) ];;
+gap> S:=Semigroup(gens);;
+gap> f:=Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] );;
+gap> R:=RClass(S, f);
+{Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
+gap> NrHClasses(R);
+12
+gap> D:=DClass(R);
+{Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
+gap> NrHClasses(D);
+72
+gap> L:=LClass(S, f);
+{Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] )}
+gap> NrHClasses(L);
+6
+gap> NrHClasses(S);
+1555
+gap> gens:=[ Transformation( [ 4, 6, 5, 2, 1, 3 ] ),
+>   Transformation( [ 6, 3, 2, 5, 4, 1 ] ),
+>   Transformation( [ 1, 2, 4, 3, 5, 6 ] ),
+>   Transformation( [ 3, 5, 6, 1, 2, 3 ] ),
+>   Transformation( [ 5, 3, 6, 6, 6, 2 ] ),
+>   Transformation( [ 2, 3, 2, 6, 4, 6 ] ),
+>   Transformation( [ 2, 1, 2, 2, 2, 4 ] ),
+>   Transformation( [ 4, 4, 1, 2, 1, 2 ] ) ];;
+gap> S:=Semigroup(gens);;
+gap> NrRClasses(S);
+150
+gap> Size(S);
+6342
+gap> f:=Transformation( [ 1, 3, 3, 1, 3, 5 ] );;
+gap> D:=DClass(S, f);
+{Transformation( [ 2, 1, 1, 2, 1, 4 ] )}
+gap> NrRClasses(D);
+87
+gap> s:=SymmetricInverseSemigroup(10);;
+gap> NrDClasses(s); NrRClasses(s); NrHClasses(s); NrLClasses(s);
+11
+1024
+184756
+1024
+gap> s:=POPI(10);;
+gap> NrDClasses(s);
+11
+gap> NrRClasses(s);
 1024</Example>
   </Description>
   </ManSection>

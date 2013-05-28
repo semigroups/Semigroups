@@ -35,7 +35,9 @@ InstallMethod(ViewString, "for a group of transformations",
 [IsTransformationSemigroup and IsGroupAsSemigroup],
 function(s)
   local str, nrgens;
-
+  if IsGroup(s) then 
+    TryNextMethod();
+  fi;
   str:="\><";
   if HasIsTrivial(s) and IsTrivial(s) then
     Append(str, "\>trivial\< ");
