@@ -13,22 +13,14 @@ gap> START_TEST("Semigroups package: schreier.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
-gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoSemigroups, 0);
-
-#
-gap> TestTraceRClassRepsTree:=s-> ForAll([1..NrRClasses(s)], i->
-> EvaluateWord(Generators(s), TraceRClassRepsTree(s, i))=
-> RClassReps(s)[i]);;
+gap> SemigroupsStartTest();
 
 #
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 > Transformation( [ 4, 2, 1, 5, 5 ] ),
 > Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
 > s:=Semigroup(gens);;
-gap> TestTraceRClassRepsTree(s); 
+gap> ForAll(s, f-> EvaluateWord(gens, Factorization(s,f))=f);
 true
 
 #
@@ -37,7 +29,8 @@ gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 > Transformation( [ 3, 1, 1, 3 ] ),
 > Transformation( [ 3, 3, 4, 1 ] ) ];;
 > s:=Monoid(gens);;
-gap> TestTraceRClassRepsTree(s); 
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s), 
+> Factorization(s,f))=f);
 true
 
 #
@@ -46,7 +39,7 @@ gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 > Transformation( [ 2, 4, 1, 1 ] ),
 > Transformation( [ 3, 4, 2, 2 ] ) ];;
 > s:=Semigroup(gens);;
-gap> TestTraceRClassRepsTree(s);     
+gap> ForAll(s, f-> EvaluateWord(gens, Factorization(s,f))=f);
 true
 
 #
@@ -55,7 +48,8 @@ gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 > Transformation( [ 3, 4, 2, 2 ] ),
 > Transformation( [ 4, 1, 2, 1 ] ) ];;
 > s:=Monoid(gens);;
-gap> TestTraceRClassRepsTree(s);
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
+> Factorization(s,f))=f);
 true
 
 #
@@ -85,7 +79,8 @@ gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 > Transformation( [ 3, 1, 1, 3 ] ),
 > Transformation( [ 3, 3, 4, 1 ] ) ];;
 gap> s:=Monoid(gens);;
-gap> ForAll(s, f-> EvaluateWord(gens, Factorization(s,f))=f);
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
+> Factorization(s,f))=f);
 true
 
 #
@@ -103,13 +98,12 @@ gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 > Transformation( [ 3, 4, 2, 2 ] ),
 > Transformation( [ 4, 1, 2, 1 ] ) ];;
 gap> s:=Monoid(gens);;
-gap> ForAll(s, f-> EvaluateWord(gens, Factorization(s,f))=f);
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
+> Factorization(s,f))=f);
 true
 
 #
-gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
-gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
+gap> SemigroupsStopTest();
 
 #
 gap> STOP_TEST("Semigroups package: schreier.tst", 10000);
