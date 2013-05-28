@@ -176,6 +176,68 @@ function(s, f)
   return word1;
 end);
 
+#
+
+InstallMethod(Factorization, 
+"for an acting semigroup with inverse op with generators and element", 
+[IsActingSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup,
+IsAssociativeElement], 
+function(s, f)
+  local o, gens, l, m, scc, word1, k, rep, p, word2;
+  
+  # a semigroup that was not created regular already knows how to factorize its
+  # elements
+  if HasSemigroupData(s) and IsClosed(SemigroupData(s)) then 
+    TryNextMethod();
+  fi;
+
+  if not f in s then 
+    Error("usage: <f> is not an element of the semigroup <s>,");
+    return;
+  fi;
+ 
+  o:=RhoOrb(s); Enumerate(o);
+  gens:=o!.gens;
+  l:=Position(o, RhoFunc(s)(f));
+
+  # find the R-class rep 
+  word1:=TraceSchreierTreeBack(o, l);    #rho value is ok
+  #trace back to get forward since this is a left orbit
+  rep:=EvaluateWord(gens, word1);        #but lambda value is wrong
+ 
+  o:=LambdaOrb(s); Enumerate(o);
+  l:=Position(o, LambdaFunc(s)(f));
+  m:=OrbSCCLookup(o)[l];
+  scc:=OrbSCC(o)[m];
+  
+  k:=Position(o, LambdaFunc(s)(rep));
+  word2:=TraceSchreierTreeOfSCCBack(o, m, k);
+  rep:=rep*EvaluateWord(gens, word2); #the R-class rep of the R-class of <f>
+  Append(word1, word2);               #and this word equals <rep>
+
+  #compensate for the action of the multipliers
+  if l<>scc[1] then 
+    p:=LambdaPerm(s)(rep, f*LambdaOrbMult(o, m, l)[2]);
+    word2:=TraceSchreierTreeOfSCCForward(o, m, l);
+    p:=p*LambdaPerm(s)(
+     rep*EvaluateWord(gens, word2)*LambdaOrbMult(o, m, l)[2], rep); 
+  else 
+    p:=LambdaPerm(s)(rep, f);
+    word2:=[];
+  fi;
+
+  if IsOne(p) then 
+    Append(word1, word2);
+    return word1;
+  fi;
+  
+  # factorize the group element <p> over the generators of <s>
+  Append(word1, Factorization(o, m, p));
+  Append(word1, word2);
+
+  return word1;
+end);
+
 # returns a word in the generators of the parent of <data> equal to the R-class
 # representative store in <data!.orbit[pos]>.
 
@@ -183,7 +245,7 @@ end);
 # reps are obtained from earlier reps by left multiplication but the orbit
 # multipliers correspond to right multiplication.
 
-InstallOtherMethod(TraceSchreierTreeForward, "for semigp data and pos int",
+InstallMethod(TraceSchreierTreeForward, "for semigp data and pos int",
 [IsSemigroupData, IsPosInt], 100,
 function(data, pos)
   local word, word2, schreiergen, schreierpos, schreiermult, orb, o, m;

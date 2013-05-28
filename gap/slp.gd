@@ -12,6 +12,7 @@ DeclareGlobalFunction("LambdaOrbWords");
 DeclareGlobalFunction("LambdaOrbSchutzSchreier");
 DeclareOperation("Factorization", [IsLambdaOrb, IsPosInt, IsPerm]);
 DeclareOperation("Factorization", [IsActingSemigroup, IsAssociativeElement]);
+DeclareOperation("TraceSchreierTreeForward", [IsSemigroupData, IsPosInt]);
 
 DeclareGlobalFunction("LambdaOrbSLP");
 DeclareOperation("SemigroupElementSLP", [IsActingSemigroup,
