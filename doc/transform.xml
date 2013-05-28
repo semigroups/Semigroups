@@ -258,7 +258,7 @@ true</Example>
       A transformation <A>f</A> is <E>regular</E> in a transformation semigroup
       <A>S</A> if it lies inside a regular &D;-class; see <Ref
       Attr="IsRegularDClass" BookName="ref"/> or <Ref
-      Attr="IsRegularDClass"/>.  Equivalently <A>f</A> is regular if the orbit
+      Attr="IsRegularClass"/>.  Equivalently <A>f</A> is regular if the orbit
       of the image of <A>f</A> containing a transversal of the kernel of
       <A>f</A>; see <Ref Oper="Transformation" BookName="ref"/> and <Ref
       Attr="ImageSetOfTransformation" BookName="ref"/>.

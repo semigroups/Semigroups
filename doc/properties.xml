@@ -917,7 +917,7 @@ true</Example>
       if and only if it is an inverse semigroup.<P/>
 
       See also <Ref Prop="IsRegularDClass" BookName="ref"/>,
-      <Ref Func="IsRegularDClass"/>,   
+      <Ref Func="IsRegularClass"/>,   
       and <Ref Func="IsRegularSemigroupElement" BookName="ref"/>.
       
       <Example>
