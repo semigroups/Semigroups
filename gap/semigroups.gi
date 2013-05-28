@@ -660,7 +660,7 @@ function(s, coll, opts)
   old_to_new:=EmptyPlist(old_nr);
   old_to_new[1]:=1;
 
-  if IsBound(HTAdd_TreeHash_C) then
+  if IsBoundGlobal("ORBC") then
     htadd:=HTAdd_TreeHash_C;
     htvalue:=HTValue_TreeHash_C;
   else

@@ -12,7 +12,7 @@ InstallMethod( Enumerate,
 "for a hash orbit and a limit", 
 [IsOrbit and IsHashOrbitRep and IsLambdaOrb, IsCyclotomic],
 function( o, limit )
-  local orb, i, nr, looking, lookfunc, stopper, storenumbers, op, gens, ht, genstoapply, schreier, schreiergen, schreierpos, log, logind, logpos, depth, depthmarks, grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph, nrgens, reverse, suc, yy, pos, grade, rep, j;
+  local orb, i, nr, looking, lookfunc, stopper, storenumbers, op, gens, ht, genstoapply, schreier, schreiergen, schreierpos, log, logind, logpos, depth, depthmarks, grades, gradingfunc, onlygrades, onlygradesdata, orbitgraph, nrgens, htadd, htvalue, suc, yy, pos, grade, j;
 
   # Set a few local variables for faster access:
   orb := o!.orbit;
@@ -44,11 +44,14 @@ function( o, limit )
   onlygradesdata := o!.onlygradesdata;
   orbitgraph := o!.orbitgraph;
   nrgens:=Length(gens);
-
-  #if not IsBound(o!.rev) then 
-  #  o!.rev:=[];
-  #fi;
-  #reverse:=o!.rev;
+  
+  if IsBoundGlobal("ORBC") then 
+    htadd:=HTAdd_TreeHash_C;
+    htvalue:=HTValue_TreeHash_C;
+  else
+    htadd:=HTAdd;
+    htvalue:=HTValue;
+  fi;
 
   # Maybe we are looking for something and it is the start point:
   while nr <= limit and i <= nr and i <> stopper do
@@ -62,7 +65,7 @@ function( o, limit )
     # Now apply generators:
     for j in genstoapply do
       yy := op(orb[i],gens[j]);
-      pos := HTValue_TreeHash_C(ht,yy);
+      pos := htvalue(ht,yy);
       if gradingfunc <> false then
         grade := gradingfunc(o,yy);
         if onlygrades <> false and 
@@ -78,7 +81,7 @@ function( o, limit )
           grades[nr] := grade;
         fi;
 
-        HTAdd_TreeHash_C(ht,yy,nr);
+        htadd(ht,yy,nr);
           
         orbitgraph[nr] := EmptyPlist(nrgens);
         orbitgraph[i][j] := nr;

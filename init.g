@@ -1,29 +1,19 @@
 #############################################################################
 ##
 #W  init.g
-#Y  Copyright (C) 2011-12                                James D. Mitchell
+#Y  Copyright (C) 2013                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-if (not IsBound(SEMIGROUPSC)) and ("semigroups" in SHOW_STAT()) then
-  LoadStaticModule("semigroups");
+if not IsBound(ORBC) then 
+  BindGlobal("HTAdd_TreeHash_C", fail);
+  BindGlobal("HTValue_TreeHash_C", fail);
 fi;
-if (not IsBound(SEMIGROUPSC)) and
-   (Filename(DirectoriesPackagePrograms("semigroups"), "semigroups.so") <> fail) then
-  LoadDynamicModule(Filename(DirectoriesPackagePrograms("semigroups"), 
-    "semigroups.so"));
-fi;
-
-#ReadPackage("semigroups/gap/pperm.gd");
-ReadPackage("semigroups/gap/partition.gd");
-ReadPackage("semigroups/gap/binary.gd");
-ReadPackage("semigroups/gap/matrix.gd");
 
 ReadPackage("semigroups/gap/setup.gd");
-
 ReadPackage("semigroups/gap/greens.gd");
 ReadPackage("semigroups/gap/acting.gd");
 

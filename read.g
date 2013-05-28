@@ -1,17 +1,12 @@
 #############################################################################
 ##
 #W  read.g
-#Y  Copyright (C) 2011-12                                James D. Mitchell
+#Y  Copyright (C) 2013                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-
-#ReadPackage("semigroups/gap/pperm.gi");
-ReadPackage("semigroups/gap/partition.gi");
-ReadPackage("semigroups/gap/binary.gi");
-ReadPackage("semigroups/gap/matrix.gi");
 
 ReadPackage("semigroups/gap/setup.gi");
 ReadPackage("semigroups/gap/acting.gi");
