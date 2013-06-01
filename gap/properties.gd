@@ -50,6 +50,8 @@ DeclareProperty("IsSemiband", IsSemigroup);
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
 DeclareProperty("IsSemilatticeAsSemigroup", IsSemigroup); 
 DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
+DeclareProperty("IsSynchronizingTransformationCollection",
+IsTransformationCollection);
 DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsZeroSemigroup", IsSemigroup); 

@@ -972,6 +972,22 @@ end);
 
 #
 
+InstallMethod(IsSynchronizingTransformationCollection, 
+"for a transformation collection", 
+[IsTransformationCollection],
+function(coll)
+  local o;
+
+  o:=Orb(coll, [1..DegreeOfTransformationCollection(coll)], 
+    OnPosIntSetsTrans, rec( lookingfor:=function(o, x) return Length(x)=1;
+    end));
+
+  Enumerate(o);
+  return PositionOfFound(o)<>false;
+end);
+
+#
+
 InstallMethod(IsTrivial, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
