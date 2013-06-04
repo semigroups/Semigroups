@@ -195,7 +195,7 @@ gap> idem:=Set(Concatenation(List(GreensLClasses(m), Idempotents)));
   Transformation( [ 6, 7, 6, 7, 7, 6, 7 ] ), 
   Transformation( [ 7, 2, 2, 7, 2, 2, 7 ] ), 
   Transformation( [ 7, 2, 2, 7, 5, 5, 7 ] ), 
-  Transformation( [ 7, 2, 2, 7, 6, 6 ] ), 
+  Transformation( [ 7, 2, 2, 7, 6, 6, 7 ] ), 
   Transformation( [ 7, 2, 2, 7, 7, 2, 7 ] ), 
   Transformation( [ 7, 2, 2, 7, 7, 7, 7 ] ), 
   Transformation( [ 7, 2, 7, 7, 2, 7, 7 ] ), 
@@ -206,7 +206,7 @@ gap> idem:=Set(Concatenation(List(GreensLClasses(m), Idempotents)));
   Transformation( [ 7, 3, 3, 7, 7, 7, 7 ] ), 
   Transformation( [ 7, 5, 5, 7, 5, 5, 7 ] ), 
   Transformation( [ 7, 5, 7, 7, 5, 7, 7 ] ), 
-  Transformation( [ 7, 6, 6, 7, 6, 6 ] ), 
+  Transformation( [ 7, 6, 6, 7, 6, 6, 7 ] ), 
   Transformation( [ 7, 6, 6, 7, 7, 6, 7 ] ), 
   Transformation( [ 7, 7, 3, 3, 7, 7, 7 ] ), 
   Transformation( [ 7, 7, 4, 4, 7, 7, 7 ] ), 
@@ -215,7 +215,7 @@ gap> idem:=Set(Concatenation(List(GreensLClasses(m), Idempotents)));
   Transformation( [ 7, 7, 7, 6, 7, 6, 7 ] ), 
   Transformation( [ 7, 7, 7, 7, 5, 5, 7 ] ), 
   Transformation( [ 7, 7, 7, 7, 5, 7, 7 ] ), 
-  Transformation( [ 7, 7, 7, 7, 6, 6 ] ), 
+  Transformation( [ 7, 7, 7, 7, 6, 6, 7 ] ), 
   Transformation( [ 7, 7, 7, 7, 7, 6, 7 ] ), 
   Transformation( [ 7, 7, 7, 7, 7, 7, 7 ] ) ]
 gap> idem=Set(Idempotents(m));
@@ -965,12 +965,12 @@ gap> gens:=[ Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ),
 >   Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> Iterator(s);
-<iterator of <transformation semigroup on 7 pts with 2 generators>>
+<iterator of <transformation semigroup on 8 pts with 2 generators>>
 gap> iter:=last;
-<iterator of <transformation semigroup on 7 pts with 2 generators>>
+<iterator of <transformation semigroup on 8 pts with 2 generators>>
 gap> for i in [1..10000] do NextIterator(iter); od;
 gap> iter:=Iterator(s);
-<iterator of <transformation semigroup on 7 pts with 2 generators>>
+<iterator of <transformation semigroup on 8 pts with 2 generators>>
 gap> j:=0; for i in iter do j:=j+1; od;
 0
 gap> j;
@@ -1336,26 +1336,26 @@ gap> gens:=[ Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ),
 gap> s:=Semigroup(gens);;
 gap> f:=Transformation( [ 4, 8, 8, 7, 6, 2, 5, 8 ] );;
 gap> r:=GreensRClassOfElement(s, f);
-{Transformation( [ 6, 8, 8, 7, 4, 2, 5 ] )}
+{Transformation( [ 6, 8, 8, 7, 4, 2, 5, 8 ] )}
 gap> d:=DClassOfRClass(r);
-{Transformation( [ 6, 8, 8, 7, 4, 2, 5 ] )}
+{Transformation( [ 6, 8, 8, 7, 4, 2, 5, 8 ] )}
 gap> gens:=[ Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ), 
 >  Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> f:=Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] );;
 gap> r:=GreensRClassOfElement(s, f);
-{Transformation( [ 3, 6, 8, 5, 7, 4, 2 ] )}
+{Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] )}
 gap> d:=DClassOfRClass(r);
-{Transformation( [ 3, 6, 8, 5, 7, 4, 2 ] )}
+{Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] )}
 gap> R:=GreensRClasses(d);
-[ {Transformation( [ 3, 6, 8, 5, 7, 4, 2 ] )}, 
+[ {Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] )}, 
   {Transformation( [ 7, 6, 8, 5, 3, 4, 2, 8 ] )}, 
   {Transformation( [ 7, 4, 2, 8, 3, 5, 6, 8 ] )}, 
   {Transformation( [ 3, 4, 2, 8, 7, 5, 6, 8 ] )}, 
   {Transformation( [ 3, 5, 6, 2, 7, 8, 4, 8 ] )}, 
   {Transformation( [ 7, 5, 6, 2, 3, 8, 4, 8 ] )}, 
   {Transformation( [ 7, 8, 4, 6, 3, 2, 5, 8 ] )}, 
-  {Transformation( [ 3, 8, 4, 6, 7, 2, 5 ] )}, 
+  {Transformation( [ 3, 8, 4, 6, 7, 2, 5, 8 ] )}, 
   {Transformation( [ 3, 2, 5, 4, 7, 6, 8, 8 ] )}, 
   {Transformation( [ 7, 2, 5, 4, 3, 6, 8, 8 ] )} ]
 gap> r:=R[10];;

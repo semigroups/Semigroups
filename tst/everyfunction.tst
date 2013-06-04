@@ -150,11 +150,11 @@ gap> GreensHClasses(l);
 [ {Transformation( [ 5, 2, 7, 2, 7, 2, 5 ] )}, 
   {Transformation( [ 2, 8, 7, 5, 5, 7, 2, 2 ] )}, 
   {Transformation( [ 7, 7, 5, 2, 7, 2, 7 ] )}, 
-  {Transformation( [ 8, 8, 7, 5, 5, 7, 2 ] )}, 
+  {Transformation( [ 8, 8, 7, 5, 5, 7, 2, 8 ] )}, 
   {Transformation( [ 8, 2, 7, 2, 2, 5, 8, 7 ] )}, 
   {Transformation( [ 7, 8, 5, 7, 7, 7, 7, 2 ] )}, 
   {Transformation( [ 5, 7, 7, 7, 7, 2, 5 ] )}, 
-  {Transformation( [ 7, 5, 2, 8, 5, 7, 7 ] )}, 
+  {Transformation( [ 7, 5, 2, 8, 5, 7, 7, 8 ] )}, 
   {Transformation( [ 7, 2, 5, 8, 5, 8, 7, 8 ] )}, 
   {Transformation( [ 2, 7, 7, 8, 8, 2, 2, 5 ] )}, 
   {Transformation( [ 7, 2, 8, 2, 2, 5, 7, 7 ] )}, 
@@ -163,7 +163,7 @@ gap> GreensHClasses(l);
   {Transformation( [ 7, 7, 5, 7, 7, 2, 7 ] )}, 
   {Transformation( [ 5, 8, 2, 7, 7, 5, 5, 7 ] )}, 
   {Transformation( [ 2, 5, 7, 5, 5, 7, 2 ] )}, 
-  {Transformation( [ 2, 8, 5, 7, 7, 5, 2 ] )}, 
+  {Transformation( [ 2, 8, 5, 7, 7, 5, 2, 8 ] )}, 
   {Transformation( [ 7, 5, 7, 2, 2, 8, 7, 2 ] )}, 
   {Transformation( [ 7, 8, 2, 7, 8, 2, 7, 5 ] )}, 
   {Transformation( [ 2, 7, 8, 7, 7, 2, 2, 5 ] )}, 
@@ -213,12 +213,12 @@ gap> GreensHClasses(l);
   {Transformation( [ 8, 5, 2, 7, 7, 7, 8, 8 ] )}, 
   {Transformation( [ 2, 7, 7, 8, 7, 8, 2, 5 ] )}, 
   {Transformation( [ 5, 2, 8, 7, 7, 5, 5, 5 ] )}, 
-  {Transformation( [ 2, 5, 7, 8, 8, 7, 2 ] )}, 
+  {Transformation( [ 2, 5, 7, 8, 8, 7, 2, 8 ] )}, 
   {Transformation( [ 8, 7, 5, 2, 7, 5, 8, 5 ] )}, 
   {Transformation( [ 5, 8, 7, 2, 2, 8, 5, 7 ] )}, 
   {Transformation( [ 8, 7, 7, 5, 5, 2, 8, 8 ] )}, 
   {Transformation( [ 7, 2, 5, 8, 2, 8, 7, 7 ] )}, 
-  {Transformation( [ 7, 5, 8, 7, 5, 2, 7 ] )} ]
+  {Transformation( [ 7, 5, 8, 7, 5, 2, 7, 8 ] )} ]
 gap> Length(last);
 72
 
@@ -1001,7 +1001,7 @@ gap> List(GreensDClasses(s), LClasses);
   [ {Transformation( [ 2, 4, 1, 2 ] )} ], 
   [ {Transformation( [ 3, 1, 1, 3 ] )}, {Transformation( [ 1, 4, 4, 1 ] )}, 
       {Transformation( [ 2, 1, 1, 2 ] )}, {Transformation( [ 2, 4, 4, 2 ] )}, 
-      {Transformation( [ 4, 3, 3 ] )} ], 
+      {Transformation( [ 4, 3, 3, 4 ] )} ], 
   [ {Transformation( [ 3, 3, 4, 1 ] )} ], 
   [ {Transformation( [ 1, 1, 1, 1 ] )}, {Transformation( [ 2, 2, 2, 2 ] )}, 
       {Transformation( [ 3, 3, 3, 3 ] )}, {Transformation( [ 4, 4, 4, 4 ] )} 
@@ -1017,7 +1017,7 @@ gap> l:=Concatenation(List(GreensDClasses(s), LClasses));
   {Transformation( [ 4, 1, 3, 4 ] )}, {Transformation( [ 3, 4, 1, 3 ] )}, 
   {Transformation( [ 2, 4, 1, 2 ] )}, {Transformation( [ 3, 1, 1, 3 ] )}, 
   {Transformation( [ 1, 4, 4, 1 ] )}, {Transformation( [ 2, 1, 1, 2 ] )}, 
-  {Transformation( [ 2, 4, 4, 2 ] )}, {Transformation( [ 4, 3, 3 ] )}, 
+  {Transformation( [ 2, 4, 4, 2 ] )}, {Transformation( [ 4, 3, 3, 4 ] )}, 
   {Transformation( [ 3, 3, 4, 1 ] )}, {Transformation( [ 1, 1, 1, 1 ] )}, 
   {Transformation( [ 2, 2, 2, 2 ] )}, {Transformation( [ 3, 3, 3, 3 ] )}, 
   {Transformation( [ 4, 4, 4, 4 ] )} ]
@@ -1047,7 +1047,7 @@ gap> List(last, Elements);
       Transformation( [ 4, 4, 2, 4 ] ), Transformation( [ 4, 4, 4, 2 ] ) ], 
   [ Transformation( [ 3, 3, 3 ] ), Transformation( [ 3, 3, 4, 3 ] ), 
       Transformation( [ 3, 3, 4, 4 ] ), Transformation( [ 3, 4, 3, 3 ] ), 
-      Transformation( [ 3, 4, 4, 3 ] ), Transformation( [ 4, 3, 3 ] ), 
+      Transformation( [ 3, 4, 4, 3 ] ), Transformation( [ 4, 3, 3, 4 ] ), 
       Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 3, 3 ] ), 
       Transformation( [ 4, 4, 3, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ], 
   [ Transformation( [ 1, 1 ] ), Transformation( [ 3, 3, 4, 1 ] ), 
@@ -1079,7 +1079,7 @@ gap> Union(last);
   Transformation( [ 3, 4, 3, 3 ] ), Transformation( [ 3, 4, 4, 3 ] ), 
   Transformation( [ 4, 1, 1, 4 ] ), Transformation( [ 4, 1, 3, 4 ] ), 
   Transformation( [ 4, 1, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ), 
-  Transformation( [ 4, 2, 4, 4 ] ), Transformation( [ 4, 3, 3 ] ), 
+  Transformation( [ 4, 2, 4, 4 ] ), Transformation( [ 4, 3, 3, 4 ] ), 
   Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 1, 1 ] ), 
   Transformation( [ 4, 4, 1, 3 ] ), Transformation( [ 4, 4, 1, 4 ] ), 
   Transformation( [ 4, 4, 2, 2 ] ), Transformation( [ 4, 4, 2, 4 ] ), 
@@ -2622,7 +2622,7 @@ gap> List(DClasses(s), Idempotents);
       Transformation( [ 7, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
       Transformation( [ 5, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
       Transformation( [ 10, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
-      Transformation( [ 11, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
+      Transformation( [ 11, 2, 4, 4, 5, 6, 7, 6, 10, 10, 11 ] ), 
       Transformation( [ 4, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ) ] ]
 gap> Concatenation(last);
 [ IdentityTransformation(), 
@@ -2633,7 +2633,7 @@ gap> Concatenation(last);
   Transformation( [ 7, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
   Transformation( [ 5, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
   Transformation( [ 10, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
-  Transformation( [ 11, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
+  Transformation( [ 11, 2, 4, 4, 5, 6, 7, 6, 10, 10, 11 ] ), 
   Transformation( [ 4, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ) ]
 gap> e:=last;
 [ IdentityTransformation(), 
@@ -2644,7 +2644,7 @@ gap> e:=last;
   Transformation( [ 7, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
   Transformation( [ 5, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
   Transformation( [ 10, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
-  Transformation( [ 11, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
+  Transformation( [ 11, 2, 4, 4, 5, 6, 7, 6, 10, 10, 11 ] ), 
   Transformation( [ 4, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ) ]
 gap> IsDuplicateFree(e);
 true
@@ -3095,7 +3095,7 @@ gap> GreensHClasses(r);
   {Transformation( [ 9, 4, 1, 2, 4, 1, 9, 9, 9, 1 ] )}, 
   {Transformation( [ 2, 9, 10, 1, 9, 10, 2, 2, 2, 10 ] )}, 
   {Transformation( [ 2, 5, 8, 7, 5, 8, 2, 2, 2, 8 ] )}, 
-  {Transformation( [ 9, 5, 10, 4, 5, 10, 9, 9, 9 ] )}, 
+  {Transformation( [ 9, 5, 10, 4, 5, 10, 9, 9, 9, 10 ] )}, 
   {Transformation( [ 1, 4, 5, 7, 4, 5, 1, 1, 1, 5 ] )}, 
   {Transformation( [ 8, 1, 7, 3, 1, 7, 8, 8, 8, 7 ] )}, 
   {Transformation( [ 5, 3, 1, 2, 3, 1, 5, 5, 5, 1 ] )}, 
@@ -3104,7 +3104,7 @@ gap> GreensHClasses(r);
   {Transformation( [ 9, 10, 2, 5, 10, 2, 9, 9, 9, 2 ] )}, 
   {Transformation( [ 2, 1, 9, 6, 1, 9, 2, 2, 2, 9 ] )}, 
   {Transformation( [ 7, 1, 2, 8, 1, 2, 7, 7, 7, 2 ] )}, 
-  {Transformation( [ 9, 2, 10, 4, 2, 10, 9, 9, 9 ] )}, 
+  {Transformation( [ 9, 2, 10, 4, 2, 10, 9, 9, 9, 10 ] )}, 
   {Transformation( [ 9, 10, 6, 5, 10, 6, 9, 9, 9, 6 ] )}, 
   {Transformation( [ 3, 1, 7, 4, 1, 7, 3, 3, 3, 7 ] )}, 
   {Transformation( [ 4, 10, 9, 6, 10, 9, 4, 4, 4, 9 ] )}, 
@@ -4219,7 +4219,7 @@ gap> GreensHClasses(r);
   {Transformation( [ 9, 4, 1, 2, 4, 1, 9, 9, 9, 1 ] )}, 
   {Transformation( [ 2, 9, 10, 1, 9, 10, 2, 2, 2, 10 ] )}, 
   {Transformation( [ 2, 5, 8, 7, 5, 8, 2, 2, 2, 8 ] )}, 
-  {Transformation( [ 9, 5, 10, 4, 5, 10, 9, 9, 9 ] )}, 
+  {Transformation( [ 9, 5, 10, 4, 5, 10, 9, 9, 9, 10 ] )}, 
   {Transformation( [ 1, 4, 5, 7, 4, 5, 1, 1, 1, 5 ] )}, 
   {Transformation( [ 8, 1, 7, 3, 1, 7, 8, 8, 8, 7 ] )}, 
   {Transformation( [ 5, 3, 1, 2, 3, 1, 5, 5, 5, 1 ] )}, 
@@ -4228,7 +4228,7 @@ gap> GreensHClasses(r);
   {Transformation( [ 9, 10, 2, 5, 10, 2, 9, 9, 9, 2 ] )}, 
   {Transformation( [ 2, 1, 9, 6, 1, 9, 2, 2, 2, 9 ] )}, 
   {Transformation( [ 7, 1, 2, 8, 1, 2, 7, 7, 7, 2 ] )}, 
-  {Transformation( [ 9, 2, 10, 4, 2, 10, 9, 9, 9 ] )}, 
+  {Transformation( [ 9, 2, 10, 4, 2, 10, 9, 9, 9, 10 ] )}, 
   {Transformation( [ 9, 10, 6, 5, 10, 6, 9, 9, 9, 6 ] )}, 
   {Transformation( [ 3, 1, 7, 4, 1, 7, 3, 3, 3, 7 ] )}, 
   {Transformation( [ 4, 10, 9, 6, 10, 9, 4, 4, 4, 9 ] )}, 
