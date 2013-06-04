@@ -34,7 +34,6 @@ DeclareSynonymAttr("IsDTrivial", IsRTrivial and IsLTrivial);
 DeclareSynonymAttr("IsAperiodicSemigroup", IsHTrivial);
 DeclareSynonymAttr("IsCombinatorialSemigroup", IsHTrivial);
 DeclareProperty("IsFactorisableSemigroup", IsSemigroup);
-DeclareProperty("IsGroupAsSemigroup", IsSemigroup);
 DeclareProperty("IsIdempotentGenerated", IsSemigroup); 
 DeclareProperty("IsLeftSimple", IsSemigroup);
 DeclareProperty("IsLeftZeroSemigroup", IsSemigroup); 
