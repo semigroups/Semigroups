@@ -166,7 +166,8 @@ end);
 InstallGlobalFunction(SemigroupsManualExamples,
 function()
 return 
-  ExtractExamples("~/semigroups/doc/", "main.xml",  [ "utils.xml",
+  ExtractExamples(DirectoriesPackageLibrary("semigroups","doc"), 
+  "main.xml",  [ "utils.xml",
   "greens.xml", "orbits.xml", "properties.xml",
   "semigroups.xml",  "transform.xml", "../PackageInfo.g" ], "Single" );
 end);
