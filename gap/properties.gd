@@ -16,13 +16,7 @@ DeclareOperation("IrredundantGeneratingSubset",
 
 DeclareProperty("IsAbundantSemigroup", IsSemigroup);
 DeclareProperty("IsAdequateSemigroup", IsSemigroup);
-DeclareProperty("IsBand", IsSemigroup); 
 DeclareProperty("IsBlockGroup", IsSemigroup);
-DeclareProperty("IsBrandtSemigroup", IsSemigroup); 
-DeclareProperty("IsCliffordSemigroup", IsSemigroup);
-DeclareProperty("IsCommutativeSemigroup", IsSemigroup);
-DeclareProperty("IsCompletelyRegularSemigroup", IsSemigroup); 
-DeclareProperty("IsCompletelySimpleSemigroup", IsSemigroup); 
 DeclareProperty("IsRTrivial", IsSemigroup);
 DeclareProperty("IsRTrivial", IsGreensDClass);
 DeclareProperty("IsLTrivial", IsSemigroup);
@@ -34,26 +28,16 @@ DeclareSynonymAttr("IsDTrivial", IsRTrivial and IsLTrivial);
 DeclareSynonymAttr("IsAperiodicSemigroup", IsHTrivial);
 DeclareSynonymAttr("IsCombinatorialSemigroup", IsHTrivial);
 DeclareProperty("IsFactorisableSemigroup", IsSemigroup);
-DeclareProperty("IsIdempotentGenerated", IsSemigroup); 
 DeclareProperty("IsLeftSimple", IsSemigroup);
-DeclareProperty("IsLeftZeroSemigroup", IsSemigroup); 
 DeclareProperty("IsMonogenicInverseSemigroup", IsSemigroup);
-DeclareProperty("IsMonogenicSemigroup", IsSemigroup); 
-DeclareProperty("IsMonoidAsSemigroup", IsSemigroup); 
-DeclareProperty("IsOrthodoxSemigroup", IsSemigroup);
-DeclareProperty("IsRectangularBand", IsSemigroup); 
 DeclareOperation("IsRegularSemigroupElementNC", [IsSemigroup, IsMultiplicativeElement and IsAssociativeElement]);
 DeclareProperty("IsRightSimple", IsSemigroup);
-DeclareProperty("IsRightZeroSemigroup", IsSemigroup); 
-DeclareProperty("IsSemiband", IsSemigroup); 
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
-DeclareProperty("IsSemilatticeAsSemigroup", IsSemigroup); 
 DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
 DeclareProperty("IsSynchronizingTransformationCollection",
 IsTransformationCollection);
 DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
-DeclareProperty("IsZeroSemigroup", IsSemigroup); 
 
 InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
