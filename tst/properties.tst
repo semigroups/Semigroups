@@ -486,7 +486,7 @@ true
 gap> gens:=[ Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ),
 >   Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] ) ];
 [ Transformation( [ 5, 6, 7, 3, 1, 4, 2 ] ), 
-  Transformation( [ 3, 6, 8, 5, 7, 4, 2 ] ) ]
+  Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] ) ]
 gap> s:=Semigroup(Idempotents(Monoid(gens)));;
 gap> Size(s);
 94
