@@ -269,7 +269,7 @@ function(line)
   return out;
 end);
 
-# Usage: filename as a string and trans. coll. 
+# usage: filename as a string and trans. coll. 
 
 # Returns: nothing. 
 
@@ -278,8 +278,8 @@ function(arg)
   local trans, gens, append, gzip, str, deg, nrdigits, out, i, s, f;
   
   if not (Length(arg)=3 or Length(arg)=2) then
-    Error("Usage: filename as string and trans, trans coll, partial perm or",
-    " partial perm coll, and a boolean,");
+    Error("usage: filename as string and a transformation, transformation ",
+    "collection, partial perm or partial perm collection, and a boolean,");
     return;
   fi;
 
@@ -290,17 +290,18 @@ function(arg)
 
   if IsTransformationCollection(arg[2]) or IsPartialPermCollection(arg[2]) then 
     trans:=[arg[2]];
-  elif IsTransformationCollection(arg[2][1]) or
-   IsPartialPermCollection(arg[2][1]) then 
+  elif IsList(arg[2]) and IsBound(arg[2][1]) and
+  (IsTransformationCollection(arg[2][1]) or IsPartialPermCollection(arg[2][1]))
+   then 
     trans:=arg[2];
   else
-    Error("Usage: second arg must be trans or part perm semi, coll, or list",
-    " of same,");
+    Error("usage: the 2nd argument must be transformation or partial perm ",
+    "semigroup or collection, or a list of such semigroups or collections,");
     return;
   fi;
 
   if Length(arg)=3 and not IsBool(arg[3]) then 
-    Error("usage: the third argument must be <true> or <false>,");
+    Error("usage: the 3rd argument must be <true> or <false>,");
     return;
   fi;
 
