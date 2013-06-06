@@ -363,7 +363,7 @@ gap>  schutz:=RhoOrbStabChain(d);
 gap> l<>scc[m][1];
 false
 gap> cosets:=LambdaCosets(d);
-[ () ]
+<enumerator of perm group>
 gap> LambdaOrbStabChain(LambdaOrb(d), LambdaOrbSCCIndex(d));
 false
 gap> g:=LambdaPerm(s)(rep, g);
@@ -858,7 +858,7 @@ gap> SemigroupDataSCC(d);
   3708, 3765, 3766, 3767, 3831, 3850, 3891, 3910, 3916, 3925, 4040, 4041, 
   4042, 4043, 4044, 4573, 4703, 4807, 5517 ]
 gap> LambdaCosets(d);
-[ () ]
+<enumerator of perm group>
 gap> LambdaOrbSCC(d);
 [ 49 ]
 gap> RhoOrbSCC(d);
