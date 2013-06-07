@@ -1,955 +1,167 @@
 ############################################################################# 
 ## 
 #W  semigroups.gi 
-#Y  Copyright (C) 2011-12                                 James D. Mitchell
+#Y  Copyright (C) 2013                                    James D. Mitchell
 ## 
 ##  Licensing information can be found in the README file of this package. 
 ## 
 ############################################################################# 
 ##
 
-#CCC
+# basic things
 
-# new for 0.7! - ClosureInverseSemigroup - "for an inverse semi"
-#############################################################################
+InstallMethod(Generators, "for a semigroup with generators",
+[IsSemigroup],
+function(s)
 
-if Citrus_C then 
-  InstallGlobalFunction(ClosureInverseSemigroup,
-  function(arg)
-    local n;
-    
-    if not (IsPartialPermSemigroup(arg[1]) and IsInverseSemigroup(arg[1])) or
-      not (IsPartialPermCollection(arg[2]) or IsPartialPerm(arg[2])) then 
-      Error("Usage: arg. must be a inverse semigroup of partial perms and ",
-      "and a partial perm or collection of partial perms,");
-      return;
-    fi;
-
-    if Length(arg)=3 then 
-      if not IsRecord(arg[3]) then 
-        Error("Usage: the third argument must be a record,");
-        return;
-      fi;
-
-      arg[3].schreier:=false;
-
-      if not IsBound(arg[3].small) then
-        arg[3].small:=CitrusOptionsRec.small;
-      fi;
-
-      if not IsBound(arg[3].hashlen) then
-        arg[3].hashlen:=CitrusOptionsRec.hashlen;
-      elif IsPosInt(arg[3].hashlen) then
-        n:=arg[3].hashlen;
-        arg[3].hashlen:=rec(S:=NextPrimeInt(Int(n/100)),
-         M:=NextPrimeInt(Int(n/4)), L:=NextPrimeInt(n));
-      elif not IsRecord(arg[3].hashlen) then
-        Error("the component hashlen should be a positive integer or a record,");
-        return;
-      fi;
-    else
-      arg[3]:=arg[1]!.opts;
-    fi;
-
-    if IsSemigroup(arg[2]) then 
-      arg[2]:=GeneratorsOfSemigroup(arg[2]);
-    elif IsPartialPerm(arg[2]) then 
-      arg[2]:=[arg[2]];
-    fi;
-
-    return ClosureInverseSemigroupNC(arg[1], Filtered(arg[2], x-> 
-     not x in arg[1]), arg[3]);
-  end);
-else 
-  InstallGlobalFunction(ClosureInverseSemigroup, 
-  function(arg) return CitrusIsNotCompiled(); end);
-fi;
-
-# new for 0.7! - ClosureInverseSemigroupNC - "for an inverse semi"
-#############################################################################
-
-if IsBound(DomPP) and IsBound(RanSetPP) then 
-  InstallGlobalFunction(ClosureInverseSemigroupNC,
-  function(s, coll, opts)
-    local t, coll_copy, o, f;
-   
-    if coll=[] then
-      Info(InfoCitrus, 2, "All the elements in the collection belong to the ",
-      " semigroup,");
-      return s;
-    fi;
-
-    o:=LongOrb(s);
-    
-    if not IsSubset(o[1], Points(coll)) then #the original LongOrb seed is wrong
-      return InverseSemigroup(Concatenation(Generators(s), coll), opts);
-    fi;
-
-    coll_copy:=ShallowCopy(coll);
-    for f in coll do
-      if not DomPP(f)=RanSetPP(f) then 
-        Add(coll_copy, f^-1);
-      fi;
-    od;  
-    
-    o:=StructuralCopy(o);
-    AddGeneratorsToOrbit(o, coll_copy);
-
-    t:=InverseSemigroupByGeneratorsNC(o!.gens, 
-     Concatenation(Generators(s), coll), opts);
-
-    if IsBound(o!.scc) then 
-      Unbind(o!.scc); Unbind(o!.truth); Unbind(o!.trees); Unbind(o!.scc_lookup);
-    fi;
-    
-    if IsBound(o!.mults) then 
-      Unbind(o!.mults); 
-    fi;
-    
-    if IsBound(o!.schutz) then 
-      Unbind(o!.schutz);
-    fi;
-    
-    o!.finished:=false;
-    SetLongOrb(t, o);
-    return t;
-  end);
-else 
-  InstallGlobalFunction(ClosureInverseSemigroupNC, 
-  function(s, coll, opts) return CitrusIsNotCompiled(); end);
-fi;
-
-# mod for 0.6! - ClosureSemigroup - "for a trans. semi. and trans. coll."
-#############################################################################
-
-InstallGlobalFunction(ClosureSemigroup,
-function(arg)
-
-  if not IsTransformationSemigroup(arg[1]) or not 
-   (IsTransformationCollection(arg[2]) or IsTransformation(arg[2])) then 
-    Error("Usage: arg. must be a trans. semigroup and transformation or ", 
-    "collection of transformations,");
-    return;
+  if HasGeneratorsOfMagmaIdeal(s) then 
+    return GeneratorsOfMagmaIdeal(s);
+  elif HasGeneratorsOfInverseMonoid(s) then 
+    return GeneratorsOfInverseMonoid(s);
+  elif HasGeneratorsOfInverseSemigroup(s) then 
+    return GeneratorsOfInverseSemigroup(s);
+  elif HasGeneratorsOfMonoid(s) then
+    return GeneratorsOfMonoid(s);
+  elif HasGeneratorsOfSemigroup(s) then 
+    return GeneratorsOfSemigroup(s);
   fi;
 
-  if Length(arg)=3 then 
-    if not IsRecord(arg[3]) then 
-      Error("Usage: the third argument must be a record,");
-      return;
-    fi;
-    if IsBound(arg[3].schreier) then  
-      arg[3].schreier:=false;
-    fi;
-  else
-    arg[3]:=arg[1]!.opts;
-  fi;
-
-  arg[3].small:=false;
-
-  if IsTransformationSemigroup(arg[2]) then 
-    arg[2]:=Generators(arg[2]);
-  elif IsTransformation(arg[2]) then 
-    arg[2]:=[arg[2]];
-  fi;
-
-  if not Degree(arg[1])=Degree(arg[2][1]) then 
-    Error("Usage: degrees of transformations must equal degree of semigroup,");
-    return;
-  fi;
-
-  return ClosureSemigroupNC(arg[1], Filtered(arg[2], x-> not x in arg[1]), 
-   arg[3]);
+  return fail;
 end);
 
-# new for 0.5! - ClosureSemigroupNC - "for a trans. semi. and trans. coll."
-#############################################################################
-# Usage: s = a transformation semigroup; coll = a list of transformations not
-# belonging to s but with degree equal to that of s.  
+#
 
-InstallGlobalFunction(ClosureSemigroupNC,
-function(s, coll, opts)
-  local t, old_data, n, max_rank, orbits, lens, data_ht, data, data_len, images, old_lens, old_orbits, gens, ht, o, r, j, scc, reps, out, old_reps, old_data_list, old_reps_len, old_o, new_data, d, g, m, z, i, k, val, y;
- 
-  if coll=[] then 
-    Info(InfoCitrus, 2, "All the elements in the collection belong to the ",
-    " semigroup,");
-    return s;
+InstallMethod(ViewString, "for a group of transformations",
+[IsTransformationSemigroup and IsGroupAsSemigroup],
+function(s)
+  local str, nrgens;
+  if IsGroup(s) then 
+    TryNextMethod();
   fi;
+  str:="\><";
+  if HasIsTrivial(s) and IsTrivial(s) then
+    Append(str, "\>trivial\< ");
+  fi;
+
+  Append(str, "\>transformation\< \>group\< ");
+  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) and Size(s)<2^64 then
+    Append(str, "\>of size\> ");
+    Append(str, String(Size(s)));
+    Append(str, ",\<\< ");
+  fi;
+
+  nrgens:=Length(Generators(s));
   
-  if IsTransformationMonoid(s) then 
-    t:=Monoid(s, coll, opts);
+  Append(str, "\>on \>");
+  Append(str, ViewString(NormalizedDegreeOfTransformationSemigroup(s)));
+  Append(str, "\< pts with\> ");
+  Append(str, ViewString(nrgens));
+  Append(str, "\< generator");
+
+  if nrgens>1 or nrgens=0 then
+    Append(str, "s\<");
   else
-    t:=Semigroup(s, coll, opts);
+    Append(str, "\<");
   fi;
+  Append(str, ">\<");
 
-  if not HasOrbitsOfImages(s) or opts.schreier then 
-    return t;
-  fi;
-
-  #no schreier###############################################################
-  
-  old_data:=OrbitsOfImages(s);
-  n:=Degree(t);
-  
-  # set up orbits of images of t
-
-  max_rank:=Maximum(List(coll, Rank)); 
-  gens:=List(Generators(t), x-> x![1]);
-  orbits:=EmptyPlist(n); 
-  lens:=[1..n]*0;
-  data_ht:=HTCreate([1,1,1,1,1,1], rec(forflatplainlists:=true,
-   hashlen:=old_data!.data_ht!.len));
-  data:=EmptyPlist(Length(old_data!.data)); 
-  data_len:=0;
-  images:=HTCreate(SSortedList(gens[1]), rec(forflatplainlists:=true,
-   hashlen:=old_data!.images!.len));
-  old_lens:=old_data!.lens; old_orbits:=old_data!.orbits;
-
-  # initialize R-class reps orbit
-  
-  ht:=StructuralCopy(old_data!.ht); o:=ht!.o; 
-  r:=Length(o);
-  
-  for i in [1..Length(coll)] do 
-    j:=HTAdd(ht, coll[i]![1], r+i);
-    o[r+i]:=ht!.els[j];
-  od;
-  
-  # process orbits of large images
- 
-  for j in [n, n-1..max_rank+1] do
-    if old_lens[j]>0 then
-      lens[j]:=old_lens[j];
-      orbits[j]:=EmptyPlist(lens[j]);
-      for k in [1..lens[j]] do
-        o:=StructuralCopy(old_orbits[j][k]);
-        o!.onlygradesdata:=images;
-        AddGeneratorsToOrbit(o, coll);
-        scc:=o!.scc; reps:=o!.reps;
-
-        for m in [1..Length(scc)] do
-          for val in [1..Length(reps[m])] do
-            for n in [1..Length(reps[m][val])] do
-              data_len:=data_len+1;
-              out:=[j, k, scc[m][1], m, val, n];
-              HTAdd(data_ht, out, data_len);
-              data[data_len]:=out;
-            od;
-          od;
-        od;  
-        for i in o do 
-          HTAdd(images, i, k);
-        od;  
-        orbits[j][k]:=o;
-      od;
-    fi;
-  od;
-
-  # process orbits of small images
-
-  old_reps:=EmptyPlist(Length(old_data!.data));
-  old_data_list:=EmptyPlist(Length(old_data!.data));
-  old_reps_len:=0;
-
-  for j in [max_rank, max_rank-1..1] do 
-    if old_lens[j]>0 then 
-      orbits[j]:=[];
-      for k in [1..old_lens[j]] do
-        old_o:=old_orbits[j][k];
-        if HTValue(images, old_o[1])=fail then 
-          lens[j]:=lens[j]+1;
-          o:=StructuralCopy(old_o);
-          o!.onlygradesdata:=images;
-          AddGeneratorsToOrbit(o, coll);
-          Unbind(o!.scc); Unbind(o!.rev);
-
-          r:=Length(OrbSCC(o));
-
-          o!.trees:=EmptyPlist(r);
-          o!.reverse:=EmptyPlist(r);
-          o!.reps:=List([1..r], x-> []);
-          o!.kernels_ht:=[];
-          o!.perms:=EmptyPlist(Length(o));
-          o!.schutz:=EmptyPlist(r);
-          o!.nr_idempotents:=List([1..r], m-> []);  
-          for i in o do 
-            HTAdd(images, i, lens[j]);
-          od;
-          orbits[j][lens[j]]:=o;
-        fi;
-        Append(old_reps, Concatenation(Concatenation(old_o!.reps)));
-      od;
-    fi;
-  od;
-
-  # set orbits of images of t
-
-  new_data:= Objectify(NewType(FamilyObj(t), IsOrbitsOfImages), 
-   rec(finished:=false, orbits:=orbits, lens:=lens, images:=images,
-    at:=old_data!.at, gens:=gens, ht:=ht, data_ht:=data_ht, data:=data));
-
-  SetOrbitsOfImages(t, new_data); 
- 
-  # process old R-reps 
-
-  for i in [1..Length(old_reps)] do 
-    j:=InOrbitsOfImages(old_reps[i], false, 
-     [fail, fail, fail, fail, fail, 0, fail], orbits, images);
-    if not j[1] then
-      AddToOrbitsOfImages(t, old_reps[i], j[2], new_data, false);
-    fi;
-  od;
-  
-  # install new pts in the orbit
-  
-  coll:=List(coll, x-> x![1]); n:=Length(Generators(s)); 
-
-  for i in [1..Length(data)] do 
-    d:=data[i];
-    g:=orbits[d[1]][d[2]]!.reps[d[4]][d[5]][d[6]];
-    m:=Length(coll); j:=Length(ht!.o);
-    for y in [1..m] do 
-      z:=g{coll[y]};
-      if HTValue(ht, z)=fail then
-        j:=j+1; z:=HTAdd(ht, z, j); ht!.o[j]:=ht!.els[z];
-      fi;
-    od;
-  od;
-  
-  # process kernel orbits here too!
-
-  return t;
+  return str;
 end);
 
-#MMM
+#
 
-# new for 0.5! - Monoid 
-##############################################################################
+InstallMethod(ViewString, "for a group of partial perms",
+[IsPartialPermSemigroup and IsGroupAsSemigroup],
+function(s)
+  local str, nrgens;
 
-MakeReadWriteGlobal("Monoid");
-UnbindGlobal("Monoid");
-
-BindGlobal("Monoid", 
-function ( arg )
-  local out, i;
-  if Length( arg ) = 1 and IsMatrix( arg[1] )  then
-    return MonoidByGenerators( [ arg[1] ] );
-  elif Length( arg ) = 2 and IsMatrix( arg[1] )  then
-    return MonoidByGenerators( arg );
-  elif Length( arg ) = 1 and IsList( arg[1] ) and 0 < Length( arg[1] )  then
-    return MonoidByGenerators( arg[1] );
-  elif Length( arg ) = 2 and IsList( arg[1] )  then
-    return MonoidByGenerators( arg[1], arg[2] );
-  elif IsTransformation(arg[1]) or IsTransformationCollection(arg[1]) then 
-    out:=[];
-    for i in [1..Length(arg)] do 
-      if IsTransformation(arg[i]) then 
-        out[i]:=[arg[i]];
-      elif IsTransformationCollection(arg[i]) then 
-        if IsTransformationSemigroup(arg[i]) then
-          out[i]:=Generators(arg[i]);
-        else
-          out[i]:=arg[i];
-        fi;
-      elif i=Length(arg) and IsRecord(arg[i]) then 
-        return MonoidByGenerators(Concatenation(out), arg[i]);
-      else
-        Error( "Usage: Monoid(<gen>,...), Monoid(<gens>), Monoid(<D>)," );
-        return;
-      fi;
-    od;
-    return MonoidByGenerators(Concatenation(out));
-  elif 0 < Length( arg )  then
-    return MonoidByGenerators( arg );
-  else
-    Error( "Usage: Monoid(<gen>,...), Monoid(<gens>), Monoid(<D>)," );
-    return;
+  str:="\><";
+  if HasIsTrivial(s) and IsTrivial(s) then
+    Append(str, "\>trivial\< ");
   fi;
+
+  Append(str, "\>partial perm\< \>group\< ");
+  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) and Size(s)<2^64 then
+    Append(str, "\>of size\> ");
+    Append(str, String(Size(s)));
+    Append(str, ",\<\< ");
+  fi;
+
+  nrgens:=Length(Generators(s));
+  
+  Append(str, "\>on \>");
+  Append(str, ViewString(RankOfPartialPermSemigroup(s)));
+  Append(str, "\< pts with\> ");
+  Append(str, ViewString(nrgens));
+  Append(str, "\< generator");
+
+  if nrgens>1 or nrgens=0 then
+    Append(str, "s\<");
+  else
+    Append(str, "\<");
+  fi;
+  Append(str, ">\<");
+
+  return str;
 end);
 
-# new for 0.6! - MagmaByGenerators -  "for a trans. collection"
-##############################################################################
+# creating semigroups, monoids, inverse semigroups, etc
 
-InstallOtherMethod(MagmaByGenerators, "(Citrus) for a trans. collection",
-[IsTransformationCollection],
+InstallMethod(MagmaByGenerators, 
+"for an associative element with action collection",
+[IsAssociativeElementWithActionCollection], SemigroupByGenerators);
+
+#
+
+InstallMethod(SemigroupByGenerators, 
+"for an associative element with action collection",
+[IsAssociativeElementWithActionCollection],
 function(gens)
-  local M;
-   
-  M:=Objectify( NewType( FamilyObj( gens ), 
-   IsMagma and IsAttributeStoringRep ), rec(opts:=CitrusOptionsRec));
-
-  SetGeneratorsOfMagma( M, AsList( gens ) );
-  return M;
+   return SemigroupByGenerators(gens, SemigroupsOptionsRec);
 end);
 
+#
 
-# mod for 0.6! - MonoidByGenerators -  "for a trans. collection"
-##############################################################################
-
-InstallOtherMethod(MonoidByGenerators, "(Citrus) for a trans. collection",
-[IsTransformationCollection],
-function(gens)
-  return MonoidByGenerators(gens, CitrusOptionsRec);
-end);
-
-# mod for 0.6! - MonoidByGenerators -  "for a trans. coll. and record"
-##############################################################################
-
-InstallOtherMethod(MonoidByGenerators, "(Citrus) for a trans. coll. and record",
-[IsTransformationCollection, IsRecord],
+InstallMethod(SemigroupByGenerators, 
+"for an associative element with action collection and record",
+[IsAssociativeElementWithActionCollection, IsRecord],
 function(gens, opts)
-  local n, i, closure_opts, s, f;
+  local deg, n, i, closure_opts, s, filts, pos, f;
+
+  opts:=SemigroupOptions(opts);
+  gens:=ShallowCopy(gens);
   
-  if not IsBound(opts.schreier) then 
-    opts.schreier:=CitrusOptionsRec.schreier;
+  # all generators must have equal degree!
+  if Length(gens)>1 and IsTransformationCollection(gens) then
+    deg:=DegreeOfTransformationCollection(gens);
+    Apply(gens, x-> AsTransformation(x, deg));
   fi;
 
-  if not IsBound(opts.small) then 
-    opts.small:=CitrusOptionsRec.small;
-  fi;
-  
-  if not IsBound(opts.hashlen) then
-    opts.hashlen:=CitrusOptionsRec.hashlen;
-  elif IsPosInt(opts.hashlen) then  
-    n:=opts.hashlen; 
-    opts.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)), 
-     L:=NextPrimeInt(n));
-  elif not IsRecord(opts.hashlen) then 
-    Error("the component hashlen should be a positive integer or a record,");
-    return;
-  fi;
-
-  if opts.small and Length(gens)>1 then #small gen. set
-    
-    gens:=ShallowCopy(gens);
+  # try to find a smaller generating set
+  if opts.small and Length(gens)>1 then 
     gens:=SSortedList(gens); #remove duplicates 
     gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
-    Sort(gens, function(x, y) return Rank(x)>Rank(y); end);;
+    Sort(gens, function(x, y) return ActionRank(x)>ActionRank(y); end);;
 
-    n:=Length(gens[1]![1]);
+    n:=ActionDegree(gens);
 
-    if gens[1]![1]=[1..n] and Rank(gens[2])=n then #remove id
+    #remove the identity
+    if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2])=n then
       Remove(gens, 1);
     fi;
 
     i:=0;
-    closure_opts:=rec(schreier:=opts.schreier, small:=false, 
-     hashlen:=opts.hashlen);
-    s:=Monoid(gens[1], closure_opts);
-
-    if InfoLevel(InfoCitrus)>1 then
-      n:=Length(gens);
-      for i in [1..n] do
-        if not gens[i] in s then 
-          s:=ClosureSemigroupNC(s, [gens[i]], closure_opts);
-        fi;
-        Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
-        " generators so far");
-        if not opts.schreier then 
-          Print(", for \t", Size(OrbitsOfImages(s)), " elements\r");
-        fi;
-      od;
-      Print("\n");
-    else
-      for f in gens do
-        if not f in s then 
-          s:=ClosureSemigroupNC(s, [f], closure_opts);
-        fi;
-      od;
-    fi;
-    return s;
-  fi;    
-
-  s:=Objectify( NewType( FamilyObj( gens ), 
-   IsMonoid and IsAttributeStoringRep ), rec(opts:=opts));
-
-  SetGeneratorsOfMagmaWithOne( s, AsList( gens ) );
-  return s;
-end);
-
-#III
-
-# new for 0.7! - InverseMonoid
-##############################################################################
-
-if Citrus_C then 
-  InstallGlobalFunction(InverseMonoid,
-  function( arg )
-    local out, i;
-
-    if IsPartialPerm(arg[1]) or IsPartialPermCollection(arg[1]) then 
-      out:=[]; 
-      for i in [1..Length(arg)] do 
-        if IsPartialPerm(arg[i]) then 
-          out[i]:=[arg[i]];
-        elif IsPartialPermCollection(arg[i]) then 
-          if IsPartialPermSemigroup(arg[i]) then
-            out[i]:=Generators(arg[i]);
-          else
-            out[i]:=arg[i];
-          fi;
-        elif i=Length(arg) and IsRecord(arg[i]) then 
-          return InverseMonoidByGenerators(Concatenation(out), arg[i]);
-        else
-          Error( "usage: InverseMonoid(<gen>,...), InverseMonoid(<gens>),"
-          ,  "InverseMonoid(<D>)," );
-          return;
-        fi;
-      od;
-      return InverseMonoidByGenerators(Concatenation(out));
-    fi;
-    Error( "usage: InverseMonoid(<gen>,...),InverseMonoid(<gens>),",
-     "InverseMonoid(<D>),");
-    return;
-  end);
-else 
-  InstallGlobalFunction(InverseMonoid, 
-  function(arg) return CitrusIsNotCompiled(); end);
-fi;
-
-# new for 0.7! - InverseSemigroup
-##############################################################################
-
-if Citrus_C then 
-  InstallGlobalFunction(InverseSemigroup,
-  function( arg )
-    local out, i;
-
-    if IsPartialPerm(arg[1]) or IsPartialPermCollection(arg[1]) then 
-      out:=[]; 
-      for i in [1..Length(arg)] do 
-        if IsPartialPerm(arg[i]) then 
-          out[i]:=[arg[i]];
-        elif IsPartialPermCollection(arg[i]) then 
-          if IsPartialPermSemigroup(arg[i]) then
-            out[i]:=Generators(arg[i]);
-          else
-            out[i]:=arg[i];
-          fi;
-        elif i=Length(arg) and IsRecord(arg[i]) then 
-          return InverseSemigroupByGenerators(Concatenation(out), arg[i]);
-        else
-          Error( "usage: InverseSemigroup(<gen>,...), InverseSemigroup(<gens>),"
-          ,  "InverseSemigroup(<D>)," );
-          return;
-        fi;
-      od;
-      return InverseSemigroupByGenerators(Concatenation(out));
-    fi;
-    Error( "usage: InverseSemigroup(<gen>,...),InverseSemigroup(<gens>),",
-     "InverseSemigroup(<D>),");
-    return;
-  end);
-else 
-  InstallGlobalFunction(InverseSemigroup, 
-  function(arg) return CitrusIsNotCompiled(); end);
-fi;
-
-# new for 0.7! - InverseMonoidByGenerators
-################################################################################
-
-if IsBound(DomPP) and IsBound(RanSetPP) then 
-  InstallMethod(InverseMonoidByGenerators, "for partial perm coll", 
-  [IsPartialPermCollection],
-  function(coll)
-    local one, gens, f;
-  
-    gens:=ShallowCopy(coll);
-
-    for f in coll do
-      if not DomPP(f)=RanSetPP(f) then 
-        Add(gens, f^-1);
-      fi;
-    od;
-  
-    return InverseMonoidByGeneratorsNC(gens, coll, CitrusOptionsRec);
-  end);
-fi;
-
-# new for 0.7! - InverseSemigroupByGenerators
-################################################################################
-
-if IsBound(DomPP) and IsBound(RanSetPP) then 
-  InstallMethod(InverseSemigroupByGenerators, "for partial perm coll", 
-  [IsPartialPermCollection],
-  function(coll)
-    local gens, f;
-
-    gens:=ShallowCopy(coll);
-    
-    for f in coll do
-      if not DomPP(f)=RanSetPP(f) then 
-        Add(gens, f^-1);
-      fi;
-    od;
-
-    return InverseSemigroupByGeneratorsNC(gens, coll, CitrusOptionsRec);
-  end);
-fi;
-
-# new for 0.7! - InverseMonoidByGenerators - "for partial perm coll and
-# record"
-################################################################################
-
-if IsBound(DomPP) and IsBound(RanSetPP) then 
-  InstallOtherMethod(InverseMonoidByGenerators, 
-  "for partial perm coll and record",
-  [IsPartialPermCollection, IsRecord],
-  function(coll, opts)
-    local n, one, f, gens;
-    
-    if not IsBound(opts.schreier) then
-      opts.schreier:=CitrusOptionsRec.schreier;
-    fi;
-
-    if not IsBound(opts.small) then
-      opts.small:=CitrusOptionsRec.small;
-    fi;
-
-    if not IsBound(opts.hashlen) then
-      opts.hashlen:=CitrusOptionsRec.hashlen;
-    elif IsPosInt(opts.hashlen) then
-      n:=opts.hashlen;
-      opts.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)),
-       L:=NextPrimeInt(n));
-    elif not IsRecord(opts.hashlen) then
-      Error("the component hashlen should be a positive integer or a record,");
-      return;
-    fi;
-
-    if not opts.small then
-      gens:=ShallowCopy(coll);
-        
-      for f in coll do
-        if not DomPP(f)=RanSetPP(f) then
-          Add(gens, f^-1); 
-        fi;
-      od;
-    else
-      gens:=coll;
-    fi;
-
-    return InverseMonoidByGeneratorsNC(gens, coll, opts);
-  end);
-fi;
-
-# new for 0.7! - InverseSemigroupByGenerators - "for partial perm coll and
-# record"
-################################################################################
-
-if IsBound(DomPP) and IsBound(RanSetPP) then 
-  InstallOtherMethod(InverseSemigroupByGenerators, 
-  "for partial perm coll and record",
-  [IsPartialPermCollection, IsRecord],
-  function(coll, opts)
-    local n, f, gens;
-
-    if not IsBound(opts.schreier) then
-      opts.schreier:=CitrusOptionsRec.schreier;
-    fi;
-
-    if not IsBound(opts.small) then
-      opts.small:=CitrusOptionsRec.small;
-    fi;
-
-    if not IsBound(opts.hashlen) then
-      opts.hashlen:=CitrusOptionsRec.hashlen;
-    elif IsPosInt(opts.hashlen) then
-      n:=opts.hashlen;
-      opts.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)),
-       L:=NextPrimeInt(n));
-    elif not IsRecord(opts.hashlen) then
-      Error("the component hashlen should be a positive integer or a record,");
-      return;
-    fi;
-
-    if not opts.small then
-      gens:=ShallowCopy(coll);
-        
-      for f in coll do
-        if not DomPP(f)=RanSetPP(f) then
-          Add(gens, f^-1);
-        fi;
-      od;
-    else
-      gens:=coll;
-    fi;
-
-    return InverseSemigroupByGeneratorsNC(gens, coll, opts);
-  end);
-fi;
-
-# new for 0.7! - InverseMonoidByGeneratorsNC
-################################################################################
-
-if IsBound(DomPP) then 
-  InstallMethod(InverseMonoidByGeneratorsNC, 
-  "for partial perm coll, partial perm coll, and record",
-  [IsPartialPermCollection, IsPartialPermCollection, IsRecord],
-  function(gens, coll, opts)
-    local i, closure_opts, s, f;
-
-    if opts.small and Length(gens)>1 then 
-      coll:=SSortedList(ShallowCopy(coll));
-      coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));;
-      Sort(coll, function(x, y) return Rank(x)>Rank(y); end);;
-      
-      closure_opts:=rec(schreier:=opts.schreier, small:=false,
-           hashlen:=opts.hashlen);
-      s:=InverseMonoid(coll[1], closure_opts);
-      
-      for f in coll do
-        if not f in s then 
-          s:=ClosureInverseSemigroupNC(s, [f], closure_opts);
-        fi;
-      od;
-      return s;
-    fi;
-
-    s:=Objectify( NewType (FamilyObj( gens ), IsMagmaWithOne and
-     IsInverseSemigroup and IsAttributeStoringRep), rec(opts:=opts));
-    SetPoints(s, Union(List(gens, DomPP)));
-    SetGeneratorsOfMagmaWithOne(s, gens);
-    SetGeneratorsOfInverseSemigroup(s, Concatenation([One(s)], coll));
-    SetGeneratorsOfInverseMonoid(s, coll);
-    return s;
-  end);
-fi;
-
-# new for 0.7! - InverseSemigroupByGeneratorsNC
-################################################################################
-
-InstallMethod(InverseSemigroupByGeneratorsNC, 
-"for partial perm coll, partial perm coll, and record",
-[IsPartialPermCollection, IsPartialPermCollection, IsRecord],
-function(gens, coll, opts)
-  local i, closure_opts, s, f;
-
-  if opts.small and Length(gens)>1 then 
-    coll:=SSortedList(ShallowCopy(coll));
-    coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));;
-    Sort(coll, function(x, y) return x[2]>y[2]; end);;
-    
-    closure_opts:=rec(schreier:=opts.schreier, small:=false,
-         hashlen:=opts.hashlen);
-    s:=InverseSemigroup(coll[1], closure_opts);
-    
-    for f in coll do
-      if not f in s then 
-        s:=ClosureInverseSemigroupNC(s, [f], closure_opts);
-      fi;
-    od;
-    return s;
-  fi;
-
-  s:=Objectify( NewType (FamilyObj( gens ), IsMagma and IsInverseSemigroup
-  and IsAttributeStoringRep), rec(opts:=opts));
-  SetGeneratorsOfMagma(s, gens);
-  SetGeneratorsOfInverseSemigroup(s, coll);
-  return s;
-end);
-
-# new for 0.7! - IsSubsemigroup - "for partial perm semi and same"
-################################################################################
-
-InstallOtherMethod(IsSubsemigroup, "for partial perm semi and same",
-[IsPartialPermSemigroup, IsPartialPermSemigroup],
-function(s, t)
-  return ForAll(GeneratorsOfSemigroup(t), x-> x in s);
-end);
-
-# new for 0.7! - IsSubsemigroup - "for partial perm semi and inv semigroup"
-################################################################################
- 
-InstallOtherMethod(IsSubsemigroup, "for a partial perm semi and inv. semi",
-[IsPartialPermSemigroup, IsPartialPermSemigroup and IsInverseSemigroup],
-function(s, t)
-  return ForAll(Generators(t), x-> x in s);
-end);
-
-#PPP 
-
-# new for 0.7! - PrintObj - "for an inverse monoid"
-################################################################################
-
-InstallMethod(PrintObj, "for an inverse monoid",
-[IsInverseMonoid], 
-function(s)
-  Print("<inverse monoid with ", Length(Generators(s)), " generators");
-  if HasSize(s) then 
-    Print(", ", Size(s), " elements");
-  fi;
-  Print(">");
-  return;
-end);
-
-# new for 0.7! - PrintObj - "for an inverse semigroup"
-################################################################################
-
-InstallMethod(PrintObj, "for an inverse semigroup",
-[IsInverseSemigroup], 
-function(s)
-  Print("<inverse semigroup with ", Length(Generators(s)), " generators");
-  if HasSize(s) then 
-    Print(", ", Size(s), " elements");
-  fi;
-  Print(">");
-  return;
-end);
-#RRR
-
-# new for 0.7! - RandomInverseMonoid - for a pos int and pos int
-#############################################################################
-
-if Citrus_C then 
-  InstallMethod(RandomInverseMonoid, "for pos int and pos int",
-  [IsPosInt, IsPosInt],
-  function(m,n)
-    return InverseMonoid(Set(List([1..m], x-> RandomPartialPerm(n))));
-  end);
-else
-  InstallMethod(RandomInverseMonoid, "for pos int and pos int",
-  [IsPosInt, IsPosInt], CitrusIsNotCompiled);
-fi;
-
-# new for 0.7! - RandomInverseSemigp - for a pos int and pos int
-#############################################################################
-
-if Citrus_C then 
-  InstallMethod(RandomInverseSemigroup, "for pos int and pos int",
-  [IsPosInt, IsPosInt],
-  function(m,n)
-    return InverseSemigroup(Set(List([1..m], x-> RandomPartialPerm(n))));
-  end);
-else
-  InstallMethod(RandomInverseSemigroup, "for pos int and pos int",
-  [IsPosInt, IsPosInt], CitrusIsNotCompiled);
-fi;
-
-# mod for 0.8! - RandomTransformationSemigroup 
-#############################################################################
-
-InstallMethod(RandomTransformationSemigroup, "for pos int and pos int",
-[IsPosInt, IsPosInt], 
-function(m,n)
-  return Semigroup(Set(List([1..m], x-> RandomTransformation(n))));
-end);
-
-# mod for 0.8! - RandomTransformationSemigroup 
-###########################################################################
-
-InstallMethod(RandomTransformationMonoid, "for a pos int and pos int",
-[IsPosInt, IsPosInt], 
-function(m,n)
-  return Monoid(Set(List([1..m], x-> RandomTransformation(n))));
-end);
-
-#SSS
-
-# new for 0.5! - Semigroup
-##############################################################################
-
-MakeReadWriteGlobal("Semigroup");
-UnbindGlobal("Semigroup");
-
-BindGlobal("Semigroup", 
-function ( arg )
-  local out, i;
-  if Length( arg ) = 1 and IsMatrix( arg[1] )  then
-    return SemigroupByGenerators( [ arg[1] ] );
-  elif Length( arg ) = 1 and IsList( arg[1] ) and 0 < Length( arg[1] )  then
-    return SemigroupByGenerators( arg[1] );
-  elif IsTransformation(arg[1]) or IsTransformationCollection(arg[1]) then 
-    out:=[];
-    for i in [1..Length(arg)] do 
-      if IsTransformation(arg[i]) then 
-        out[i]:=[arg[i]];
-      elif IsTransformationCollection(arg[i]) then 
-        if IsTransformationSemigroup(arg[i]) then
-          out[i]:=Generators(arg[i]);
-        else
-          out[i]:=arg[i];
-        fi;
-      elif i=Length(arg) and IsRecord(arg[i]) then 
-        return SemigroupByGenerators(Concatenation(out), arg[i]);
-      else
-        Error( "Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>)," );
-        return;
-      fi;
-    od;
-    return SemigroupByGenerators(Concatenation(out));
-  elif 0 < Length( arg )  then
-    return SemigroupByGenerators( arg );
-  else
-    Error( "Usage: Semigroup(<gen>,...),Semigroup(<gens>),Semigroup(<D>),");
-    return;
-  fi;
-end);
-
-# mod for 0.6! - SemigroupByGenerators -  "for a trans. collection"
-##############################################################################
-
-InstallOtherMethod(SemigroupByGenerators, "(Citrus) for a trans. collection",
-[IsTransformationCollection],
-function(gens)
-   return SemigroupByGenerators(gens, CitrusOptionsRec);
-end);
-
-# mod for 0.6! - SemigroupByGenerators -  "for a trans. coll. and record"
-##############################################################################
-
-InstallOtherMethod(SemigroupByGenerators, "(Citrus) for trans coll and record",
-[IsTransformationCollection, IsRecord],
-function(gens, opts)
-  local n, i, closure_opts, s, f;
-
-  if not IsBound(opts.schreier) then 
-    opts.schreier:=CitrusOptionsRec.schreier;
-  fi;
-
-  if not IsBound(opts.small) then 
-    opts.small:=CitrusOptionsRec.small;
-  fi;
-
-  if not IsBound(opts.hashlen) then
-    opts.hashlen:=CitrusOptionsRec.hashlen;
-  elif IsPosInt(opts.hashlen) then 
-    n:=opts.hashlen;
-    opts.hashlen:=rec(S:=NextPrimeInt(Int(n/100)), M:=NextPrimeInt(Int(n/4)),
-     L:=NextPrimeInt(n));
-  elif not IsRecord(opts.hashlen) then 
-    Error("the component hashlen should be a positive integer or a record,");
-    return;
-  fi;
-
-  if opts.small and Length(gens)>1 then 
-    gens:=ShallowCopy(gens);
-    gens:=SSortedList(gens); #remove duplicates 
-    gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
-    Sort(gens, function(x, y) return Rank(x)>Rank(y); end);;
-
-    n:=Length(gens[1]![1]);
-
-    if gens[1]![1]=[1..n] and Rank(gens[2])=n then #remove id
-      Remove(gens, 1);
-    fi;
-
-    i:=0;
-    closure_opts:=rec(schreier:=opts.schreier, small:=false,
-     hashlen:=opts.hashlen);
+    closure_opts:=rec(small:=false, hashlen:=opts.hashlen);
     s:=Semigroup(gens[1], closure_opts);
 
-    if InfoLevel(InfoCitrus)>1 then
+    if InfoLevel(InfoSemigroups)>1 then
       n:=Length(gens);
       for i in [1..n] do
         if not gens[i] in s then
           s:=ClosureSemigroupNC(s, [gens[i]], closure_opts);
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
-        " generators so far");
-        if not opts.schreier then
-          Print(", for \t", Size(OrbitsOfImages(s)), " elements\r");
-        fi;
+        " generators so far\n");
       od;
       Print("\n");
     else
@@ -962,125 +174,766 @@ function(gens, opts)
     return s;
   fi;
 
-  s:=Objectify( NewType( FamilyObj( gens ), 
-   IsSemigroup and IsAttributeStoringRep ), rec(opts:=opts));
+  filts:=IsSemigroup and IsAttributeStoringRep;
 
+  if opts.acting then 
+    filts:=filts and IsActingSemigroup;
+  fi;
+
+  s:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=opts));
+  
+  if opts.regular then 
+    SetIsRegularSemigroup(s, true);
+  fi;
+ 
   SetGeneratorsOfMagma( s, AsList( gens ) );
+
+  if IsMultiplicativeElementWithOneCollection(gens) 
+   and CanEasilyCompareElements(gens) then
+    pos:=Position(gens, One(gens));
+    if pos<>fail then 
+      SetFilterObj(s, IsMonoid);
+      gens:=ShallowCopy(gens);
+      Remove(gens, pos);
+      SetGeneratorsOfMonoid(s, gens);
+    fi;
+  fi; 
+
   return s;
 end);
 
-# new for 0.8! - SubsemigroupByProperty - "for a trans. semi. and func"
-################################################################################
+#
 
-InstallMethod(SubsemigroupByProperty, "for a trans. semi. and func",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsFunction], 
-function(S, func)
-  local limit, n;
-
-  if HasSize(S) then 
-    limit:=Size(S);
-  else
-    n:=Degree(S);
-    limit:=n^n;
-  fi;
-
-  return SubsemigroupByProperty(S, func, limit);
+InstallMethod(MonoidByGenerators, 
+"for an associative element collection",
+[IsAssociativeElementWithActionCollection],
+function(gens)
+  return MonoidByGenerators(gens, SemigroupsOptionsRec);
 end);
 
+#
 
-# new for 0.8! - SubsemigroupByProperty - "for a trans. semi., func, rec"
-################################################################################
+InstallMethod(MonoidByGenerators, 
+"for an asssociative element with action collection and record",
+[IsAssociativeElementWithActionCollection, IsRecord],
+function(gens, record)
+  local deg, n, i, closure_opts, s, filts, f;
+  
+  record:=SemigroupOptions(record);
+  gens:=ShallowCopy(gens);
 
-InstallOtherMethod(SubsemigroupByProperty, "for a trans. semi., func, rec",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsPosInt], 
+  # all generators must have equal degree!
+  if IsTransformationCollection(gens) then
+    deg:=DegreeOfTransformationCollection(gens);
+    Apply(gens, x-> AsTransformation(x, deg));
+  fi;
+  
+  if record.small and Length(gens)>1 then #small gen. set
+    gens:=SSortedList(gens); #remove duplicates 
+    gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
+    Sort(gens, function(x, y) return ActionRank(x)>ActionRank(y); end);;
+
+    n:=ActionDegree(gens);
+    if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2])=n then
+      #remove id
+      Remove(gens, 1);
+    fi;
+
+    i:=0;
+    closure_opts:=rec(small:=false, hashlen:=record.hashlen);
+    s:=Monoid(gens[1], closure_opts);
+
+    if InfoLevel(InfoSemigroups)>1 then
+      n:=Length(gens);
+      for i in [1..n] do
+        if not gens[i] in s then 
+          s:=ClosureSemigroupNC(s, [gens[i]], closure_opts);
+        fi;
+        Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
+        " generators so far");
+      od;
+      Print("\n");
+    else
+      for f in gens do
+        if not f in s then 
+          s:=ClosureSemigroupNC(s, [f], closure_opts);
+        fi;
+      od;
+    fi;
+    return s;
+  fi;    
+
+  filts:=IsMonoid and IsAttributeStoringRep;
+
+  if record.acting then 
+    filts:=filts and IsActingSemigroup;
+  fi;
+
+  s:=Objectify( NewType( FamilyObj( gens ), filts ), rec(opts:=record));
+
+  if record.regular then 
+    SetIsRegularSemigroup(s, true);
+  fi;
+
+  SetGeneratorsOfMagmaWithOne( s, gens );
+  return s;
+end);
+
+#
+
+InstallMethod(InverseMonoidByGenerators, 
+"for associative element with semigroup inverse and action collection", 
+[IsAssociativeElementWithUniqueSemigroupInverseCollection and
+IsAssociativeElementWithActionCollection],
+function(gens)
+  return InverseMonoidByGenerators(gens, SemigroupsOptionsRec);
+end);
+
+#
+
+InstallMethod(InverseSemigroupByGenerators, 
+"for associative element with semigroup inverse and action collection", 
+[IsAssociativeElementWithUniqueSemigroupInverseCollection and
+IsAssociativeElementWithActionCollection],
+function(gens)
+  return InverseSemigroupByGenerators(gens, SemigroupsOptionsRec);
+end);
+
+#
+
+InstallMethod(InverseMonoidByGenerators, 
+"for associative element with semigroup inverse and action coll, and record",  
+[IsAssociativeElementWithUniqueSemigroupInverseCollection and
+IsAssociativeElementWithActionCollection, IsRecord],
+function(gens, record)
+  local closure_opts, s, filts, one, pos, f;
+
+  record:=SemigroupOptions(record);
+
+  if record.small and Length(gens)>1 then 
+    gens:=SSortedList(ShallowCopy(gens));
+    gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
+    Sort(gens, function(x, y) return ActionRank(x)>ActionRank(y); end);;
+    
+    closure_opts:=rec(small:=false, hashlen:=record.hashlen);
+    s:=InverseMonoid(gens[1], closure_opts);
+    
+    for f in gens do
+      if not f in s then 
+        s:=ClosureInverseSemigroupNC(s, [f], closure_opts);
+      fi;
+    od;
+    return s;
+  fi;
+
+  filts:=IsMagmaWithOne and IsInverseSemigroup and IsAttributeStoringRep;
+  
+  if record.acting then 
+    filts:=filts and IsActingSemigroupWithInverseOp;
+  fi;
+
+  s:=Objectify( NewType (FamilyObj( gens ), filts), rec(opts:=record));
+  
+  one:=One(gens); 
+  SetOne(s, one);
+  pos:=Position(gens, one);
+
+  if pos<>fail then 
+    SetGeneratorsOfInverseSemigroup(s, gens);
+    gens:=ShallowCopy(gens);
+    Remove(gens, pos);
+    SetGeneratorsOfInverseMonoid(s, gens);
+  else
+    SetGeneratorsOfInverseMonoid(s, gens);
+    gens:=ShallowCopy(gens);
+    Add(gens, one);
+    SetGeneratorsOfInverseSemigroup(s, gens);
+  fi;
+
+  return s;
+end);
+
+#
+
+InstallMethod(InverseSemigroupByGenerators, 
+"for partial perm coll, partial perm coll, and record",
+[IsAssociativeElementWithUniqueSemigroupInverseCollection and
+IsAssociativeElementWithActionCollection, IsRecord],
+function(gens, record)
+  local closure_opts, s, filts, f;
+
+  record:=SemigroupOptions(record);
+  
+  if record.small and Length(gens)>1 then 
+    gens:=SSortedList(ShallowCopy(gens));
+    gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
+    Sort(gens, function(x, y) return ActionRank(x)>ActionRank(y); end);;
+    
+    closure_opts:=rec(small:=false, hashlen:=record.hashlen);
+    s:=InverseSemigroup(gens[1], closure_opts);
+    for f in gens do
+      if not f in s then 
+        s:=ClosureInverseSemigroupNC(s, [f], closure_opts);
+      fi;
+    od;
+    return s;
+  fi;
+  
+  filts:=IsMagma and IsInverseSemigroup and IsAttributeStoringRep;
+  
+  if record.acting then 
+    filts:=filts and IsActingSemigroupWithInverseOp;
+  fi;
+
+  s:=Objectify( NewType (FamilyObj( gens ), filts), rec(opts:=record));
+
+  SetGeneratorsOfInverseSemigroup(s, gens);
+  return s;
+end);
+
+# closure
+
+InstallMethod(ClosureInverseSemigroup, 
+"for acting semigroup with inverse op and an associative element coll",
+[IsActingSemigroupWithInverseOp, IsAssociativeElementWithActionCollection],
+function(s, coll) 
+  return ClosureInverseSemigroup(s, coll, s!.opts);
+end);
+
+#
+
+InstallMethod(ClosureInverseSemigroup, 
+"for acting semigroup with inverse op and an associative element coll",
+[IsActingSemigroupWithInverseOp, IsAssociativeElementWithAction],
+function(s, f) 
+  return ClosureInverseSemigroup(s, [f], s!.opts);
+end);
+
+#
+
+InstallMethod(ClosureInverseSemigroup, 
+"for acting semigroup with inverse op and an associative element coll",
+[IsActingSemigroupWithInverseOp, IsAssociativeElementWithAction, IsRecord],
+function(s, f, record) 
+  return ClosureInverseSemigroup(s, [f], record);
+end);
+
+#
+
+InstallMethod(ClosureInverseSemigroup, 
+"for an acting semigroup with inverse op, ass. elt. coll, and record",
+[IsActingSemigroupWithInverseOp, IsAssociativeElementWithActionCollection, IsRecord],
+function(s, coll, record)
+  local n;
+
+  if not ElementsFamily(FamilyObj(s))=FamilyObj(Representative(coll)) then 
+    Error("the semigroup and collection of elements are not of the same type,");
+    return;
+  fi;
+
+  if IsSemigroup(coll) then 
+    coll:=GeneratorsOfSemigroup(coll);
+  fi;
+
+  return ClosureInverseSemigroupNC(s, Filtered(coll, x-> not x in s),
+   SemigroupOptions(record));
+end);
+
+#
+
+InstallGlobalFunction(ClosureInverseSemigroupNC,
+function(s, coll, record)
+  local t, coll_copy, o, f;
+ 
+  if coll=[] then
+    Info(InfoSemigroups, 2, "the elements in the collection belong to the ",
+    " semigroup,");
+    return s;
+  fi;
+
+  coll_copy:=Set(ShallowCopy(coll));
+  for f in coll do
+    if not f^-1 in coll then
+      Add(coll_copy, f^-1);
+    fi;
+  od;
+
+  o:=StructuralCopy(LambdaOrb(s));
+  AddGeneratorsToOrbit(o, coll_copy);
+
+  #should be a case split here for semigroups and monoids JDM
+  t:=InverseSemigroupByGenerators(
+   Concatenation(GeneratorsOfInverseSemigroup(s), coll), record);
+
+  #remove everything related to strongly connected components
+  Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
+  Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse);
+  Unbind(o!.rev); Unbind(o!.truth); Unbind(o!.schutzstab); Unbind(o!.slp);
+
+  o!.parent:=t;
+  o!.scc_reps:=[One(Generators(t))];
+  
+  SetLambdaOrb(t, o);
+  return t;
+end);
+
+#
+
+InstallMethod(ClosureSemigroup, 
+"for an acting semigroup and associative element with action coll",
+[IsActingSemigroup, IsAssociativeElementWithActionCollection],
+function(s, coll)
+  return ClosureSemigroup(s, coll, s!.opts);
+end);
+
+#
+
+InstallMethod(ClosureSemigroup, 
+"for an acting semigroup and associative element with action coll",
+[IsActingSemigroup, IsList and IsEmpty],
+function(s, coll)
+  return s;
+end);
+
+#
+
+InstallMethod(ClosureSemigroup, 
+"for an acting semigroup and associative element with action",
+[IsActingSemigroup, IsAssociativeElementWithAction],
+function(s, f)
+  return ClosureSemigroup(s, [f], s!.opts);
+end);
+
+#
+
+InstallMethod(ClosureSemigroup, 
+"for an acting semigroup and associative element with action",
+[IsActingSemigroup, IsAssociativeElementWithAction, IsRecord],
+function(s, f, record)
+  return ClosureSemigroup(s, [f], SemigroupOptions(record));
+end);
+
+#
+
+InstallMethod(ClosureSemigroup, 
+"for an acting semigroup, associative element with action coll, and record",
+[IsActingSemigroup, IsAssociativeElementWithActionCollection, IsRecord],
+function(s, coll, record)
+  
+  if not ElementsFamily(FamilyObj(s))=FamilyObj(Representative(coll)) then 
+    Error("the semigroup and collection of elements are not of the same type,");
+    return;
+  fi;
+
+  record.small:=false;
+
+  if IsActingSemigroup(coll) then 
+    coll:=Generators(coll);
+  fi;
+
+  if IsActingSemigroupWithFixedDegreeMultiplication(s) and
+    ActionDegree(s)<>ActionDegree(Representative(coll)) then 
+    Error("usage: the degree of the semigroup and collection must be equal,");
+    return;
+  fi;
+
+  return ClosureSemigroupNC(s, Filtered(coll, x-> not x in s),
+   SemigroupOptions(record));
+end);
+
+# coll should consist of elements not in s
+
+InstallGlobalFunction(ClosureSemigroupNC,
+function(s, coll, opts)
+  local t, old_o, o, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, graph, old_graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, lambdarhoht, oht, scc, old_scc, lookup, old_lookup, old_to_new, htadd, htvalue, i, x, pos, m, rank, y, rhoy, val, schutz, tmp, old, j, n;
+ 
+  if coll=[] then 
+    Info(InfoSemigroups, 2, "all the elements in the collection belong to the ",
+    " semigroup,");
+    return s;
+  fi;
+  
+
+  # init the semigroup or monoid
+  if IsMonoid(s) then 
+    t:=Monoid(s, coll, opts);
+  else
+    t:=Semigroup(s, coll, opts);
+  fi;
+  
+  # if nothing is known about s, then return t
+  if not HasLambdaOrb(s) then 
+    return t;
+  fi;
+  
+  # set up lambda orb for t
+  old_o:=LambdaOrb(s);
+  o:=StructuralCopy(old_o);
+  AddGeneratorsToOrbit(o, coll);
+
+  # unbind everything related to strongly connected components, since 
+  # even if the orbit length doesn't change the strongly connected components
+  # might
+  Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
+  Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse); 
+  Unbind(o!.rev); Unbind(o!.truth); Unbind(o!.schutzstab); Unbind(o!.slp); 
+  
+  o!.parent:=t;
+  o!.scc_reps:=[One(Generators(t))];
+
+  SetLambdaOrb(t, o); 
+  
+  if not HasSemigroupData(s) or SemigroupData(s)!.pos=0 then 
+    return t;
+  fi;
+  
+  # get new and old R-rep orbit data
+  new_data:=SemigroupData(t);
+  old_data:=SemigroupData(s);
+  max_rank:=MaximumList(List(coll, ActionRank)); 
+
+  ht:=new_data!.ht;       
+  # so far found R-reps
+  
+  new_orb:=new_data!.orbit;   
+  old_orb:=old_data!.orbit;   
+  # the so far found R-reps data 
+  
+  new_nr:=Length(new_orb);
+  old_nr:=Length(old_orb);
+  # points in orb in position at most i have descendants
+  
+  graph:=new_data!.graph; 
+  old_graph:=old_data!.graph;
+  graph[1]:=ShallowCopy(old_graph[1]);
+  # orbit graph of orbit of R-classes under left mult 
+
+  reps:=new_data!.reps;   
+  # reps grouped by equal lambda and rho value 
+  # HTValue(lambdarhoht, Concatenation(lambda(x), rho(x))
+  
+  repslookup:=new_data!.repslookup; 
+  # Position(orb, reps[i][j])=repslookup[i][j] = HTValue(ht, reps[i][j])
+ 
+  orblookup1:=new_data!.orblookup1; 
+  # orblookup1[i] position in reps containing orb[i][4] (the R-rep)
+  
+  orblookup2:=new_data!.orblookup2;
+  # orblookup2[i] position in reps[orblookup1[i]] 
+  # containing orb[i][4] (the R-rep)
+
+  repslens:=new_data!.repslens;
+  # Length(reps[i])=repslens[i] 
+
+  lenreps:=new_data!.lenreps;       
+  # lenreps=Length(reps)
+  
+  # schreier
+  new_schreierpos:=new_data!.schreierpos;
+  old_schreierpos:=old_data!.schreierpos;
+  new_schreiergen:=new_data!.schreiergen;
+  old_schreiergen:=old_data!.schreiergen;
+  new_schreiermult:=new_data!.schreiermult;
+  old_schreiermult:=old_data!.schreiermult;
+
+  # generators
+  gens:=new_data!.gens;
+  nr_new_gens:=Length(gens);
+  nr_old_gens:=Length(old_data!.gens);
+
+  # lambda/rho
+  lambda:=LambdaFunc(s);
+  lambdaact:=LambdaAct(s);
+  lambdaperm:=LambdaPerm(s);
+  rho:=RhoFunc(s);
+  lambdarhoht:=LambdaRhoHT(t);
+
+  oht:=o!.ht;
+  scc:=OrbSCC(o);
+  old_scc:=OrbSCC(old_o);
+  lookup:=o!.scc_lookup; 
+  old_lookup:=old_o!.scc_lookup;
+  
+  # look up for old_to_new[i]:=Position(new_orb, old_orb[i]);
+  # i.e. position of old R-rep in new_orb
+  
+  old_to_new:=EmptyPlist(old_nr);
+  old_to_new[1]:=1;
+
+  if IsBoundGlobal("ORBC") then
+    htadd:=HTAdd_TreeHash_C;
+    htvalue:=HTValue_TreeHash_C;
+  else
+    htadd:=HTAdd;
+    htvalue:=HTValue;
+  fi;
+
+  i:=1;   
+  
+  # install old R-class reps in new_orb
+  while new_nr<=old_nr and i<old_nr do
+    i:=i+1;
+    x:=old_orb[i][4];
+    pos:=old_schreiermult[i];
+    m:=lookup[pos];
+    rank:=ActionRank(x);
+    
+    if rank>max_rank or scc[m][1]=old_scc[old_lookup[pos]][1] then 
+      y:=x;
+    elif pos=old_scc[old_lookup[pos]][1] then 
+      y:=x*LambdaOrbMult(o, m, pos)[2];
+    else
+      # x has rectified lambda value but pos refers to the unrectified value
+      y:=x*LambdaOrbMult(old_o, old_lookup[pos], pos)[1]
+       *LambdaOrbMult(o, m, pos)[2];
+    fi;
+   
+    rhoy:=[m];
+    Append(rhoy, rho(y));
+    val:=htvalue(lambdarhoht, rhoy);
+
+    if val=fail or rank>max_rank then #new rho value, and hence new R-rep
+      lenreps:=lenreps+1;
+      htadd(lambdarhoht, rhoy, lenreps);
+      new_nr:=new_nr+1;
+      reps[lenreps]:=[y];
+      repslookup[lenreps]:=[new_nr];
+      orblookup1[new_nr]:=lenreps;
+      orblookup2[new_nr]:=1;
+      repslens[lenreps]:=1;
+      x:=[t, m, o, y, false, new_nr];
+    else              # old rho value
+      x:=[t, m, o, y, false, new_nr+1];
+      #check membership in schutz gp via stab chain
+      schutz:=LambdaOrbStabChain(o, m);
+
+      if schutz=true then # schutz gp is symmetric group
+        old_to_new[i]:=repslookup[val][1];
+        continue;
+      else
+        if schutz=false then # schutz gp is trivial
+          tmp:=htvalue(ht, y);
+          if tmp<>fail then
+            old_to_new[i]:=tmp;
+            continue;
+          fi;
+        else # schutz gp neither trivial nor symmetric group
+          old:=false;
+          for n in [1..repslens[val]] do
+            if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=()
+              then
+              old:=true;
+              old_to_new[i]:=repslookup[val][n];
+              break;
+            fi;
+          od;
+          if old then
+            continue;
+          fi;
+        fi;
+        new_nr:=new_nr+1;
+        repslens[val]:=repslens[val]+1;
+        reps[val][repslens[val]]:=y;
+        repslookup[val][repslens[val]]:=new_nr;
+        orblookup1[new_nr]:=val;
+        orblookup2[new_nr]:=repslens[val];
+      fi;
+    fi;
+    new_orb[new_nr]:=x;
+    graph[new_nr]:=ShallowCopy(old_graph[i]);
+    new_schreierpos[new_nr]:=old_to_new[old_schreierpos[i]];
+    # orb[nr] is obtained from orb[i]
+    new_schreiergen[new_nr]:=old_schreiergen[i];     
+    # by multiplying by gens[j]
+    new_schreiermult[new_nr]:=pos;  # and ends up in position <pos> of 
+                                    # its lambda orb
+    htadd(ht, y, new_nr);
+    old_to_new[i]:=new_nr;
+  od;
+  
+  # process the orbit graph
+
+  for i in [1..new_nr] do 
+    for j in [1..Length(graph[i])] do 
+      graph[i][j]:=old_to_new[graph[i][j]];
+    od;
+  od;
+
+  # apply new generators to old R-reps
+  new_data!.genstoapply:=[nr_old_gens+1..nr_new_gens];
+  new_data!.pos:=0;
+  new_data!.stopper:=old_to_new[old_data!.pos];
+  new_data!.lenreps:=lenreps;
+  Enumerate(new_data, infinity, ReturnFalse);
+
+  new_data!.pos:=old_to_new[old_data!.pos];
+  new_data!.stopper:=false;
+  new_data!.genstoapply:=[1..nr_new_gens];
+  
+  return t;
+end);
+
+#subsemigroups
+
+# <limit> is the max size of the subsemigroup.
+
+InstallMethod(SubsemigroupByProperty, 
+"for an acting semigroup with generators, function, and positive integer",
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsPosInt], 
 function(S, func, limit)
   local iter, T, f;
  
   iter:=Iterator(S);
-  T:=Semigroup(NextIterator(iter));
+  
+  repeat 
+    f:=NextIterator(iter);
+  until func(f) or IsDoneIterator(iter);
+  
+  if not func(f) then 
+    return fail; # JDM should really return the empty semigroup
+  fi;
+
+  T:=Semigroup(f);
+
   while Size(T)<limit and not IsDoneIterator(iter) do 
     f:=NextIterator(iter);
     if func(f) then 
       T:=ClosureSemigroup(T, f);
     fi;
   od;
-
+  SetParent(T, S);
   return T;
 end);
 
-# new for 0.8! - SubsemigroupByProperty - "for a part perm semi. and func"
-################################################################################
+# <limit> is the max size of the subsemigroup.
 
-InstallMethod(SubsemigroupByProperty, "for a part perm semi. and func",
-[IsPartialPermSemigroup and IsInverseSemigroup, IsFunction], 
-function(S, func)
-  local limit, n;
-
-  if HasSize(S) then 
-    limit:=Size(S);
-  else
-    n:=NrMovedPoints(S);
-    limit:=Sum(List([0..n], r-> Binomial(n,r)^2*Factorial(r)));
-  fi;
-
-  return SubsemigroupByProperty(S, func, limit);
-end);
-
-# new for 0.8! - SubsemigroupByProperty - "for a part perm semi., func, rec"
-################################################################################
-
-InstallOtherMethod(SubsemigroupByProperty, "for a part perm semi, func, rec",
-[IsPartialPermSemigroup and IsInverseSemigroup, IsFunction, IsPosInt], 
+InstallMethod(InverseSubsemigroupByProperty, 
+"for acting semigroup with inverse op & generators, function, positive integer",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction, IsPosInt], 
 function(S, func, limit)
   local iter, T, f;
-  
+ 
   iter:=Iterator(S);
-  T:=InverseSemigroup(NextIterator(iter));
+  
+  repeat 
+    f:=NextIterator(iter);
+  until func(f) or IsDoneIterator(iter);
+  
+  if not func(f) then 
+    return fail; # JDM should really return the empty semigroup
+  fi;
+
+  T:=InverseSemigroup(f);
+
   while Size(T)<limit and not IsDoneIterator(iter) do 
     f:=NextIterator(iter);
     if func(f) then 
       T:=ClosureInverseSemigroup(T, f);
     fi;
   od;
+  SetParent(T, S);
   return T;
 end);
 
-# new for 0.7! - ViewObj - "for an inverse monoid"
-################################################################################
+#
 
-InstallMethod(ViewObj, "for an inverse monoid",
-[IsInverseMonoid], 
-function(s)
-  Print("<inverse monoid with ", Length(Generators(s)));
-  if Length(Generators(s))=1 then  
-    Print(" generator");
-  else
-    Print(" generators");
-  fi;
-  if HasSize(s) then 
-    Print(", ", Size(s), " elements");
-  fi;
-  Print(">");
-  return;
+InstallMethod(SubsemigroupByProperty, 
+"for an acting semigroup with generators and function",
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction], 
+function(S, func)
+  return SubsemigroupByProperty(S, func, Size(S));
 end);
 
-# new for 0.7! - ViewObj - "for an inverse semigroup"
-################################################################################
+#
 
-InstallMethod(ViewObj, "for an inverse semigroup",
-[IsInverseSemigroup], 
-function(s)
-  Print("<inverse semigroup with ", Length(Generators(s)));
-  if Length(Generators(s))=1 then  
-    Print(" generator");
+InstallMethod(InverseSubsemigroupByProperty, 
+"for acting semigroup with inverse op & generators and function",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction], 
+function(S, func)
+  return InverseSubsemigroupByProperty(S, func, Size(S));
+end);
+
+
+#miscellaneous
+
+InstallGlobalFunction(RegularSemigroup, 
+function(arg)
+  if not IsRecord(arg[Length(arg)]) then 
+    Add(arg, rec(regular:=true));
   else
-    Print(" generators");
+    arg[Length(arg)].regular:=true;
   fi;
-  if HasSize(s) then 
-    Print(", ", Size(s), " elements");
-  fi;
-  Print(">");
-  return;
+  return CallFuncList(Semigroup, arg);
+end);
+
+#random
+
+InstallMethod(RandomMatrixSemigroup, "for a ring and pos int",
+[IsRing, IsPosInt, IsPosInt], 
+function(R, m, n)
+  return Semigroup(List([1..m], x-> RandomMat(n, n, R)));
+end);
+
+#
+
+#InstallMethod(RandomBinaryRelationMonoid, "for pos int and pos int",
+#[IsPosInt, IsPosInt],
+#function(m,n)
+#  local s;
+
+#  s:=Monoid(List([1..m], x-> RandomBinaryRelationOnPoints(n)));
+#  SetIsBinaryRelationSemigroup(s, true); 
+#  return s;
+#end);
+
+#
+
+#InstallMethod(RandomBinaryRelationSemigroup, "for pos int and pos int",
+#[IsPosInt, IsPosInt],
+#function(m,n)
+#  local s;
+
+#  s:=Semigroup(List([1..m], x-> RandomBinaryRelationOnPoints(n)));
+#  SetIsBinaryRelationSemigroup(s, true);
+#  return s;
+#end);
+
+InstallMethod(RandomBlockGroup, "for pos int and pos int",
+[IsPosInt, IsPosInt],
+function(m,n)
+  return Semigroup(Set(List([1..m], x-> RandomPartialPerm(n))));
+end);
+
+#
+
+InstallMethod(RandomInverseMonoid, "for pos int and pos int",
+[IsPosInt, IsPosInt],
+function(m,n)
+  return InverseMonoid(Set(List([1..m], x-> RandomPartialPerm(n))));
+end);
+
+#
+
+InstallMethod(RandomInverseSemigroup, "for pos int and pos int",
+[IsPosInt, IsPosInt],
+function(m,n)
+  return InverseSemigroup(Set(List([1..m], x-> RandomPartialPerm(n))));
+end);
+
+#
+
+InstallMethod(RandomTransformationSemigroup, "for pos int and pos int",
+[IsPosInt, IsPosInt], 
+function(m,n)
+  return Semigroup(Set(List([1..m], x-> RandomTransformation(n))));
+end);
+
+#
+
+InstallMethod(RandomTransformationMonoid, "for a pos int and pos int",
+[IsPosInt, IsPosInt], 
+function(m,n)
+  return Monoid(Set(List([1..m], x-> RandomTransformation(n))));
 end);
 
 #EOF

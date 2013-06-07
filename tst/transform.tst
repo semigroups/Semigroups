@@ -8,23 +8,20 @@
 #############################################################################
 ##
 
-# ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"transform.tst"));
+# ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"transform.tst"));
 # around 2.3s.
-gap> START_TEST("CitrusPackage: transform.tst");
-gap> LoadPackage("citrus", false);;
+gap> START_TEST("Semigroups Package: transform.tst");
+gap> LoadPackage("semigroups", false);;
 
 #
-gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
-gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrus, 0);
+gap> SemigroupsStartTest();
 
 #
 gap> gens:=[ Transformation( [ 2, 3, 2, 4, 3 ] ), 
 > Transformation( [ 4, 5, 2, 2, 4 ] ), 
 > Transformation( [ 4, 3, 2, 1, 4 ] ), Transformation( [ 5, 5, 1, 3, 1 ] ) ];;
 gap> S:=Semigroup(gens);;
-gap> List(Elements(S), x-> IsRegularTransformation(S, x));
+gap> List(Elements(S), x-> IsRegularSemigroupElement(S, x));
 [ true, true, true, true, true, true, true, true, true, true, true, true, 
   true, true, true, true, true, false, true, true, true, true, true, true, 
   true, true, false, true, true, true, true, true, true, true, true, true, 
@@ -66,7 +63,7 @@ gap> gens:=[ Transformation( [ 3, 4, 4, 2, 5, 4 ] ),
 > Transformation( [ 1, 3, 6, 2, 1, 5 ] ), Transformation( [ 3, 6, 2, 6, 5, 4 ] ), 
 > Transformation( [ 3, 2, 6, 6, 1, 1 ] ) ];;
 gap> S:=Semigroup(gens);;
-gap> Collected(List(Elements(S), x-> IsRegularTransformation(S, x)));  
+gap> Collected(List(Elements(S), x-> IsRegularSemigroupElement(S, x)));  
 [ [ true, 21786 ] ]
 gap> gens:=[ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 2, 4, 2, 4 ] ),
 > Transformation( [ 2, 3, 2, 3 ] ), Transformation( [ 4, 1, 4, 3 ] ),
@@ -75,28 +72,28 @@ gap> gens:=[ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 2, 4, 2, 4 ] ),
 > Transformation( [ 2, 2, 1, 3 ] ), Transformation( [ 1, 2, 2, 3 ] ), 
 > Transformation( [ 2, 4, 3, 2 ] ), Transformation( [ 2, 3, 3, 3 ] ) ];;
 gap> S:=Monoid(gens);;
-gap> Collected(List(Elements(S), x-> IsRegularTransformation(S, x)));
+gap> Collected(List(Elements(S), x-> IsRegularSemigroupElement(S, x)));
 [ [ true, 179 ] ]
-gap> IdempotentNC([1,1,2,2,3,3,4,4], [1,3,6,8]);  
+gap> Idempotent([1,3,6,8], [1,1,2,2,3,3,4,4]);  
 Transformation( [ 1, 1, 3, 3, 6, 6, 8, 8 ] )
-gap> IdempotentNC([1,2,1,2,1,1,2], [1,7]);
+gap> Idempotent([1,7], [1,2,1,2,1,1,2]);
 Transformation( [ 1, 7, 1, 7, 1, 1, 7 ] )
-gap> Idempotent([1,1,2,2,3,3,4,4], [1,3,6,8]);  
+gap> Idempotent([1,3,6,8], [1,1,2,2,3,3,4,4]);  
 Transformation( [ 1, 1, 3, 3, 6, 6, 8, 8 ] )
-gap> Idempotent([1,2,1,2,1,1,2], [1,7]);
+gap> Idempotent([1,7], [1,2,1,2,1,1,2]);
 Transformation( [ 1, 7, 1, 7, 1, 1, 7 ] )
-gap> filt:=Filtered(Elements(FullTransformationSemigroup(5)), x-> 
+gap> filt:=Filtered(FullTransformationSemigroup(5), x-> 
 > RankOfTransformation(x^2)=RankOfTransformation(x));;
 gap> Length(filt);
 1305
 gap> filt:=Filtered(Elements(FullTransformationSemigroup(3)), 
 > x-> RankOfTransformation(x^2)=RankOfTransformation(x));
-[ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1, 3 ] ), 
+[ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1 ] ), 
   Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 2 ] ), 
-  Transformation( [ 1, 2, 3 ] ), Transformation( [ 1, 3, 2 ] ), 
+  IdentityTransformation(), Transformation( [ 1, 3, 2 ] ), 
   Transformation( [ 1, 3, 3 ] ), Transformation( [ 2, 1, 1 ] ), 
-  Transformation( [ 2, 1, 2 ] ), Transformation( [ 2, 1, 3 ] ), 
-  Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 2, 3 ] ), 
+  Transformation( [ 2, 1, 2 ] ), Transformation( [ 2, 1 ] ), 
+  Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 2 ] ), 
   Transformation( [ 2, 3, 1 ] ), Transformation( [ 2, 3, 2 ] ), 
   Transformation( [ 3, 1, 1 ] ), Transformation( [ 3, 1, 2 ] ), 
   Transformation( [ 3, 2, 1 ] ), Transformation( [ 3, 2, 3 ] ), 
@@ -107,7 +104,7 @@ gap> Length(filt);
 gap> perms:=List(filt, AsPermutation);
 [ (), (), (), (), (), (2,3), (), (1,2), (1,2), (1,2), (), (), (1,2,3), (2,3), 
   (1,3), (1,3,2), (1,3), (), (1,3), (2,3), () ]
-gap> ker:=List(filt, CanonicalTransSameKernel);
+gap> ker:=List(filt, FlatKernelOfTransformation);
 [ [ 1, 1, 1 ], [ 1, 1, 2 ], [ 1, 2, 1 ], [ 1, 2, 2 ], [ 1, 2, 3 ], 
   [ 1, 2, 3 ], [ 1, 2, 2 ], [ 1, 2, 2 ], [ 1, 2, 1 ], [ 1, 2, 3 ], 
   [ 1, 1, 1 ], [ 1, 1, 2 ], [ 1, 2, 3 ], [ 1, 2, 1 ], [ 1, 2, 2 ], 
@@ -117,13 +114,13 @@ gap> im:=List(filt, ImageSetOfTransformation);
 [ [ 1 ], [ 1, 3 ], [ 1, 2 ], [ 1, 2 ], [ 1, 2, 3 ], [ 1, 2, 3 ], [ 1, 3 ], 
   [ 1, 2 ], [ 1, 2 ], [ 1, 2, 3 ], [ 2 ], [ 2, 3 ], [ 1, 2, 3 ], [ 2, 3 ], 
   [ 1, 3 ], [ 1, 2, 3 ], [ 1, 2, 3 ], [ 2, 3 ], [ 1, 3 ], [ 2, 3 ], [ 3 ] ]
-gap> List([1..21], i-> Idempotent(ker[i], im[i])*perms[i]);         
-[ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1, 3 ] ), 
+gap> List([1..21], i-> Idempotent(im[i], ker[i])*perms[i]);         
+[ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1 ] ), 
   Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 2 ] ), 
-  Transformation( [ 1, 2, 3 ] ), Transformation( [ 1, 3, 2 ] ), 
+  IdentityTransformation(), Transformation( [ 1, 3, 2 ] ), 
   Transformation( [ 1, 3, 3 ] ), Transformation( [ 2, 1, 1 ] ), 
-  Transformation( [ 2, 1, 2 ] ), Transformation( [ 2, 1, 3 ] ), 
-  Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 2, 3 ] ), 
+  Transformation( [ 2, 1, 2 ] ), Transformation( [ 2, 1 ] ), 
+  Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 2 ] ), 
   Transformation( [ 2, 3, 1 ] ), Transformation( [ 2, 3, 2 ] ), 
   Transformation( [ 3, 1, 1 ] ), Transformation( [ 3, 1, 2 ] ), 
   Transformation( [ 3, 2, 1 ] ), Transformation( [ 3, 2, 3 ] ), 
@@ -136,7 +133,7 @@ gap> g2:=Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] );;
 gap> s:=Monoid(g1,g2);;
 gap> d:=GreensDClasses(s);;
 gap> h:=GroupHClassOfGreensDClass(d[3]);
-{Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )}
+{Transformation( [ 4, 2, 2, 4, 5, 6, 7, 7, 7 ] )}
 gap> perm:=IsomorphismPermGroup(h);;
 gap> Size(Range(perm))=Size(h);
 true
@@ -147,7 +144,7 @@ gap> dc:=GreensDClasses(m18)[2];;
 gap> RankOfTransformation(Representative(dc));
 7
 gap> hc:=GroupHClassOfGreensDClass(dc);
-{Transformation( [ 2, 1, 4, 5, 6, 7, 3, 2, 1 ] )}
+{Transformation( [ 1, 2, 3, 4, 5, 6, 7, 1, 2 ] )}
 gap> iso:=IsomorphismPermGroup(hc);;
 gap> s:=Semigroup(Elements(hc));;
 gap> Size(s);
@@ -160,33 +157,33 @@ gap> g2:=Transformation([5,1,7,8,7,5,8,1]);;
 gap> m6:=Semigroup(g1,g2);;
 gap> dc:=GreensDClasses(m6);;
 gap> hc:=GroupHClassOfGreensDClass(dc[1]);
-{Transformation( [ 3, 3, 2, 6, 2, 4, 4, 6 ] )}
+{Transformation( [ 2, 2, 3, 4, 3, 6, 6, 4 ] )}
 gap> s:=Semigroup(Elements(hc));;
 gap> iso:=IsomorphismPermGroup(s);;
 gap> g1:=Transformation([2,2,4,4,5,6]);;
 gap> g2:=Transformation([5,3,4,4,6,6]);;
 gap> m1:=Monoid(g1,g2);;
-gap> IsRegularTransformation(m1, g1);
+gap> IsRegularSemigroupElement(m1, g1);
 true
-gap> IsRegularTransformation(m1, g2);
+gap> IsRegularSemigroupElement(m1, g2);
 false
-gap> IsRegularTransformation(FullTransformationSemigroup(6), g2);
+gap> IsRegularSemigroupElement(FullTransformationSemigroup(6), g2);
 true
-gap> ker:=CanonicalTransSameKernel(g2*g1);
+gap> ker:=FlatKernelOfTransformation(g2*g1);
 [ 1, 2, 2, 2, 3, 3 ]
 gap> im:=ImageListOfTransformation(g2);
 [ 5, 3, 4, 4, 6, 6 ]
-gap> IsInjectiveTransOnList(ker, im);
+gap> IsInjectiveListTrans(im, ker);
 false
-gap> Idempotent(ker, [1,2,5]);
+gap> Idempotent([1,2,5], ker);
 Transformation( [ 1, 2, 2, 2, 5, 5 ] )
-gap> IdempotentNC([1,1,1,2,2,3,3], [1,5,6]);
+gap> Idempotent([1,5,6], [1,1,1,2,2,3,3]);
 Transformation( [ 1, 1, 1, 5, 5, 6, 6 ] )
 gap> t:=Transformation([1,2,9,9,9,8,8,8,4]);;
 gap> AsPermutation(t);
 (4,9)
 gap> t*last;
-Transformation( [ 1, 2, 4, 4, 4, 8, 8, 8, 9 ] )
+Transformation( [ 1, 2, 4, 4, 4, 8, 8, 8 ] )
 gap> AsPermutation(last);
 ()
 gap> x:=Transformation( [ 3, 4, 4, 6, 1, 3, 3, 7, 1 ] );;
@@ -204,16 +201,16 @@ gap> s:=Semigroup([ Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] ),
 > Transformation( [ 5, 7, 8, 8, 7, 5, 9, 1, 9 ] ), 
 > Transformation( [ 7, 6, 2, 8, 4, 7, 5, 8, 3 ] ) ]);;
 gap> f:=Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] );;
-gap> InversesOfTransformationNC(s, f);
+gap> InversesOfSemigroupElement(s, f);
 [  ]
-gap> IsRegularTransformation(s, f);
+gap> IsRegularSemigroupElement(s, f);
 false
 gap> f:=Transformation( [ 1, 9, 7, 5, 5, 1, 9, 5, 1 ] );;
-gap> inv:=InversesOfTransformation(s, f);
+gap> inv:=InversesOfSemigroupElement(s, f);
 [ Transformation( [ 1, 5, 1, 2, 5, 1, 3, 2, 2 ] ), 
   Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ), 
   Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ) ]
-gap> IsRegularTransformation(s, f);
+gap> IsRegularSemigroupElement(s, f);
 true
 gap> ForAll(inv, g-> f*g*f=f and g*f*g=g);
 true
@@ -224,9 +221,9 @@ gap> gens:=[ Transformation( [ 3, 6, 4, 2, 4, 5 ] ),
 > Transformation( [ 5, 2, 4, 4, 6, 5 ] ), Transformation( [ 4, 6, 3, 5, 6, 6 ] ), 
 > Transformation( [ 4, 6, 3, 3, 1, 2 ] ), Transformation( [ 1, 6, 4, 4, 5, 4 ]) ];;
 gap> s:=Semigroup(gens);;
-gap> Number(GreensRClasses(s), IsRegularRClass);
+gap> Number(GreensRClasses(s), IsRegularClass);
 98
-gap> Number(RClassReps(s), x-> IsRegularTransformation(s, x));
+gap> Number(RClassReps(s), x-> IsRegularSemigroupElement(s, x));
 98
 gap> Size(s);
 8175
@@ -245,7 +242,7 @@ gap> ForAny([1..11], i-> f^(2*i)=f^i);
 false
 gap> s:=FullTransformationSemigroup(6);;
 gap> f:=Transformation( [ 2, 1, 3, 4, 5, 1 ] );;
-gap> InversesOfTransformation(s, f);
+gap> InversesOfSemigroupElement(s, f);
 [ Transformation( [ 2, 1, 3, 4, 5, 2 ] ), 
   Transformation( [ 2, 1, 3, 4, 5, 5 ] ), 
   Transformation( [ 2, 1, 3, 4, 5, 1 ] ), 
@@ -267,27 +264,25 @@ gap> gens:=[ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 2, 4, 2, 4 ] ),
 gap> s:=Monoid(gens);;
 gap> f:=Transformation( [ 3, 1, 1, 3 ] );;
 gap> d:=DClass(s, f);
-{Transformation( [ 4, 2, 2, 4 ] )}
+{Transformation( [ 2, 4, 4, 2 ] )}
 gap> Size(s);;
 gap> Size(d);
 84
 gap> f in d;
 true
 gap> List(GreensDClasses(s), Size);
-[ 84, 1, 4, 90 ]
+[ 1, 4, 84, 90 ]
 gap> MultiplicativeZero(s);
 fail
 gap> MinimalIdeal(s);
-<semigroup with 4 generators>
+<simple transformation semigroup on 4 pts with 4 generators>
 gap> Size(last);
 4
 gap> IsRightZeroSemigroup(last2);
 true
 
 #
-gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+gap> SemigroupsStopTest();
 
 #
-gap> STOP_TEST( "Citrus package: transform.tst", 10000);
+gap> STOP_TEST( "Semigroups package: transform.tst", 10000);

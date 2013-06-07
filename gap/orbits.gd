@@ -8,32 +8,14 @@
 #############################################################################
 ##
 
-
-DeclareGlobalFunction("CitrusEvalWord");
-DeclareAttribute("GradedImagesOfTransSemigroup", IsTransformationSemigroup); 
-DeclareAttribute("GradedKernelsOfTransSemigroup", IsTransformationSemigroup);
-
-DeclareGlobalFunction("HashFunctionForBlist");
-DeclareGlobalFunction("HashTableForImages");
-DeclareGlobalFunction("HashTableForKernels");
-
-DeclareAttribute("ImagesOfTransSemigroup", IsTransformationSemigroup, 
- "mutable");
-DeclareAttribute("ImagesOfTransSemigroupAsBlists", IsTransformationSemigroup,
-"mutable");
-DeclareAttribute("KernelsOfTransSemigroup", IsTransformationSemigroup, 
- "mutable");
-
-DeclareGlobalFunction("OnBlist");
-DeclareGlobalFunction("OnKernelsAntiAction");
+DeclareOperation("EvaluateWord", [IsPartialPermCollection, IsList]);
+DeclareGlobalFunction("EnumeratePosition");
+DeclareGlobalFunction("LookForInOrb");
 DeclareGlobalFunction("OrbSCC");
 DeclareGlobalFunction("OrbSCCLookup");
 DeclareGlobalFunction("OrbSCCTruthTable");
 DeclareGlobalFunction("ReverseSchreierTreeOfSCC");
 DeclareGlobalFunction("SchreierTreeOfSCC");
-DeclareAttribute("SchutzGps", IsTransformationSemigroup);
-DeclareOperation("TransformationActionNC", [IsObject, IsList, IsFunction]);
-DeclareAttribute("CitrusSkeleton", IsTransformationSemigroup);
-DeclareGlobalFunction("StrongOrbitsInForwardOrbit");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCForward");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCBack");
+

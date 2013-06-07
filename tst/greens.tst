@@ -8,20 +8,17 @@
 #############################################################################
 ##
 
-# ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"greens.tst"));
+# ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"greens.tst"));
 # takes approx. 1 minute to run currently!
-gap> START_TEST("Citrus package: greens.tst");
-gap> LoadPackage("citrus", false);;
+gap> START_TEST("Semigroups package: greens.tst");
+gap> LoadPackage("semigroups", false);;
 
 #
-gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
-gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrus, 0);
+gap> SemigroupsStartTest();
 
 #
-gap> file:=Concatenation(CitrusDir(), "/examples/misc.citrus.gz");;
-gap> gens:=ReadCitrus(file){[25..124]};;
+gap> file:=Concatenation(SemigroupsDir(), "/examples/misc.semigroups.gz");;
+gap> gens:=ReadSemigroups(file){[25..124]};;
 gap> out:=[];;
 gap> for x in gens do                            
 > s:=Semigroup(x);
@@ -58,7 +55,7 @@ gap> H:=GreensHClasses(m);;
 gap> I:=Concatenation(List(GreensRClasses(m), GreensHClasses));;
 gap> ForAll(H, x-> Number(I, y-> Representative(x) in y)=1);
 true
-gap> Set(Concatenation(List(GreensRClasses(m), GreensHClasses)))=
+gap> Set(Concatenation(List(GreensDClasses(m), GreensHClasses)))=
 > Set(GreensHClasses(m));
 true
 gap> m:=Semigroup(gens[74]);;
@@ -231,7 +228,7 @@ gap> r2:=First(dr, x-> x=r);;
 gap> DClassOfLClass(r2)=d;
 true
 gap> m:=Semigroup(GeneratorsOfSemigroup(m));
-<semigroup with 2 generators>
+<transformation semigroup on 7 pts with 2 generators>
 gap>  r:=GreensLClassOfElement(m, Transformation( [ 3, 3, 3, 3, 3, 3, 5 ] ));
 {Transformation( [ 3, 3, 3, 3, 3, 3, 5 ] )}
 gap> d:=DClassOfLClass(r);;
@@ -290,7 +287,7 @@ gap> out; out2; out3;
   [ 1, 1 ], [ 4, 14 ], [ 5, 62 ], [ 6, 11 ], [ 5, 26 ], [ 5, 15 ], [ 1, 2 ], 
   [ 3, 8 ], [ 1, 3 ], [ 1, 3 ], [ 6, 6 ], [ 4, 19 ], [ 3, 4 ], [ 3, 5 ], 
   [ 4, 6 ], [ 3, 13 ] ]
-[ [ 0, 0, 1 ], [ 1, 4 ], [ 1, 2 ], [ 7, 1, 30, 5 ], [ 1, 4, 4 ], 
+[ [ 0, 0, 1 ], [ 1, 4 ], [ 2, 1 ], [ 7, 1, 30, 5 ], [ 1, 4, 4 ], 
   [ 0, 167, 11, 1, 1, 168, 6, 0, 0 ], [ 0, 1 ], [ 2, 42, 197, 169, 6 ], 
   [ 2, 0, 58, 18, 0, 5 ], [ 0, 1 ], 
   [ 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 159, 0, 8, 46, 0, 0, 0, 0, 5, 0, 0, 0, 
@@ -305,17 +302,17 @@ gap> out; out2; out3;
       0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-      0, 0, 0, 0, 0 ], [ 2, 1, 2, 3, 0 ], [ 1, 12, 24, 4 ], 
+      0, 0, 0, 0, 0 ], [ 2, 1, 2, 3, 0 ], [ 12, 1, 24, 4 ], 
   [ 1, 0, 0, 0, 1, 34, 0, 7 ], [ 0, 1 ], [ 1, 0, 3 ], [ 0, 1 ], 
   [ 0, 0, 9, 0, 36, 5 ], [ 1, 0, 17, 0, 50, 1, 5 ], [ 1, 0, 7, 1, 63, 7 ], 
   [ 1, 0, 8, 4 ], [ 2, 0, 0, 13, 69, 0, 0, 0, 0, 7, 0, 0, 0, 0, 1, 0, 0, 0, 0 
      ], [ 0, 0, 4, 0, 0, 1, 2, 0 ], [ 17, 4, 4 ], 
-  [ 93, 0, 20, 0, 6, 0, 0, 1, 2, 0, 0, 0, 0 ], [ 1, 10, 24, 4 ], 
+  [ 93, 0, 20, 0, 6, 0, 0, 1, 2, 0, 0, 0, 0 ], [ 10, 1, 24, 4 ], 
   [ 0, 0, 0, 0, 105, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 199, 7, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1 ], [ 0, 1 ], 
   [ 0, 1, 0, 13, 0, 0, 0, 0, 0, 48, 0, 0, 0, 5 ], [ 20, 1, 51, 5 ], 
   [ 0, 0, 3, 0, 0, 1, 2 ], [ 3, 0, 1, 3 ], [ 0, 1, 0, 0, 3, 0, 0, 1, 0, 2, 0 ]
-    , [ 2, 27, 82, 7 ], [ 1, 9, 24, 4 ], [ 0, 0, 1, 3, 38, 0, 5 ], 
+    , [ 2, 27, 82, 7 ], [ 9, 1, 24, 4 ], [ 0, 0, 1, 3, 38, 0, 5 ], 
   [ 6, 24, 4 ], [ 0, 1 ], [ 47, 1, 121, 6 ], [ 1, 0, 5, 4 ], 
   [ 14, 0, 1, 0, 42, 0, 5 ], [ 1, 0, 8, 1, 0, 3 ], 
   [ 80, 0, 0, 0, 6, 6, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 1, 1, 6, 3 ], 
@@ -330,7 +327,7 @@ gap> out; out2; out3;
       0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 111, 0, 12, 0, 7, 0, 0 ], 
   [ 0, 1, 0, 0, 0, 9, 0, 0, 0, 0, 258, 0, 0, 1, 0, 889, 0, 0, 0, 0, 430, 0, 
       0, 0, 0, 7, 0, 0, 0, 0, 0, 0 ], [ 20, 0, 1, 4 ], 
-  [ 1, 324, 0, 12, 231, 6, 0 ], 
+  [ 324, 0, 12, 1, 231, 6, 0 ], 
   [ 0, 143, 0, 0, 1, 163, 0, 3, 0, 0, 6, 0, 0, 0, 0 ], [ 3, 1, 1, 24, 4 ], 
   [ 0, 5, 0, 0, 0, 140, 277, 0, 1, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
   [ 0, 0, 0, 23, 0, 0, 5 ], [ 1, 0, 4, 0, 4 ], [ 1 ], 
@@ -341,7 +338,7 @@ gap> out; out2; out3;
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
   [ 2, 0, 0, 38, 434, 0, 0, 1, 390, 0, 7 ], 
   [ 0, 0, 40, 0, 5, 0, 0, 0, 0, 0, 114, 9, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 
-      0, 0, 0 ], [ 1, 32, 0, 2, 0, 65, 6, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1 ], 
+      0, 0, 0 ], [ 32, 0, 1, 2, 0, 65, 6, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1 ], 
   [ 0, 0, 16, 0, 0, 74, 0, 6 ], [ 0, 0, 1 ], [ 0, 0, 1 ], 
   [ 4, 1, 1, 114, 65, 6 ], 
   [ 0, 0, 1, 0, 40, 0, 0, 0, 200, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0 ], 
@@ -358,7 +355,7 @@ gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
 gap> M:=Semigroup(a,b);;
 gap> GreensLClassOfElement(M,a);
 {Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
-gap> IsGreensClassOfTransSemigp(last);
+gap> IsTransformationSemigroupGreensClass(last);
 true
 gap> f:=FreeSemigroup(3);;
 gap> a:=f.1;; b:=f.2;; c:=f.3;; 
@@ -369,7 +366,7 @@ gap> Size(s);
 3
 gap> GreensLClassOfElement(s,a);
 {s1}
-gap> IsGreensClassOfTransSemigp(last);
+gap> IsTransformationSemigroupGreensClass(last);
 false
 gap> gens:=[ Transformation( [ 2, 2, 5, 2, 3 ] ), 
 > Transformation( [ 2, 5, 3, 5, 3 ] ) ];;
@@ -387,11 +384,11 @@ gap> C:=GreensLClassOfElement(S, gens[1]*gens[2]*gens[1]);
 {Transformation( [ 5, 3, 5, 4, 3 ] )}
 gap> Representative(C);
 Transformation( [ 5, 3, 5, 4, 3 ] )
-gap> AsList(KernelOrbit(C));
+gap> AsList(RhoOrb(C));
 [ [ 1, 2, 1, 3, 2 ] ]
-gap> KernelOrbitRels(C){KernelOrbitSCC(C)};
-[ [ Transformation( [ 1, 2, 3, 4, 5 ] ), Transformation( [ 1, 2, 1, 4, 2 ] ) 
-     ] ]
+gap> RhoOrbMults(RhoOrb(C),
+> RhoOrbSCCIndex(C)){OrbSCC(RhoOrb(C))[RhoOrbSCCIndex(C)]};
+[ [ IdentityTransformation(), IdentityTransformation() ] ]
 gap> SchutzenbergerGroup(C);
 Group([ (3,5,4), (3,5) ])
 gap> gens:=[ Transformation( [ 1, 2, 1, 2, 1 ] ), 
@@ -409,10 +406,6 @@ gap> Transformation( [ 4, 1, 6, 5, 2, 2 ] ) in rc;
 true
 gap> Representative(rc);
 Transformation( [ 3, 2, 5, 4, 1, 1 ] )
-gap> AsList(ImageOrbit(rc));
-[ [ 1, 2, 3, 4, 5 ], [ 1, 2, 4, 5, 6 ], [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ] ]
-gap> ImageOrbitPerms(rc){ImageOrbitSCC(rc)};
-[ (), (1,2,3,6)(4,5), (3,5)(4,6), (1,2)(3,4,5,6) ]
 gap> SchutzenbergerGroup(rc);
 Group([ (1,3,5), (1,2,3)(4,5) ])
 gap> gens:=[ Transformation( [ 4, 1, 5, 2, 4 ] ), 
@@ -420,87 +413,26 @@ gap> gens:=[ Transformation( [ 4, 1, 5, 2, 4 ] ),
 gap> S:=Semigroup(gens);;
 gap> f:=Transformation( [ 5, 5, 3, 3, 3 ] );;
 gap> GreensDClassOfElement(S, f);
-{Transformation( [ 2, 2, 4, 4, 4 ] )}
+{Transformation( [ 4, 4, 5, 5, 5 ] )}
 gap> gens:=[ Transformation( [ 4, 4, 3, 5, 3 ] ), 
 > Transformation( [ 5, 1, 1, 4, 1 ] ), 
 > Transformation( [ 5, 5, 4, 4, 5 ] ) ];;
 gap> S:=Semigroup(gens);;
 gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
 gap> SchutzenbergerGroup(GreensDClassOfElement(S, f));
-Sym( [ 4 .. 5 ] )
+Group([ (4,5) ])
 gap> SchutzenbergerGroup(GreensRClassOfElement(S, f));
 Group([ (4,5) ])
 gap> SchutzenbergerGroup(GreensLClassOfElement(S, f));
 Group([ (4,5) ])
 gap> SchutzenbergerGroup(GreensHClassOfElement(S, f));
 Group([ (4,5) ])
-gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
-> Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ]);;
-gap> ImagesOfTransSemigroup(S, 6);
-<open orbit, 1 points with Schreier tree with grading>
-gap> Enumerate(last);
-<closed orbit, 1 points with Schreier tree with grading>
-gap> ImagesOfTransSemigroup(S, 5);
-<open orbit, 1 points with Schreier tree with grading>
-gap> Enumerate(last);
-<closed orbit, 1 points with Schreier tree with grading>
-gap> ImagesOfTransSemigroup(S, 4);
-<open orbit, 1 points with Schreier tree with grading>
-gap> Enumerate(last);
-<closed orbit, 2 points with Schreier tree with grading>
-gap> AsList(last);
-[ [ 1 .. 6 ], [ 1, 2, 5, 6 ] ]
-gap> ImagesOfTransSemigroup(S, 3);
-<open orbit, 1 points with Schreier tree with grading>
-gap> Enumerate(last);
-<closed orbit, 4 points with Schreier tree with grading>
-gap> AsList(last);
-[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 5, 6 ] ]
-gap> ImagesOfTransSemigroup(S, 2);
-<open orbit, 1 points with Schreier tree with grading>
-gap> Enumerate(last);
-<closed orbit, 8 points with Schreier tree with grading>
-gap> AsList(last);
-[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 6 ], [ 2, 5, 6 ], [ 1, 4 ], 
-  [ 2, 5 ], [ 4, 6 ] ]
-gap> ImagesOfTransSemigroup(S, 1);
-<open orbit, 1 points with Schreier tree with grading>
-gap> Enumerate(last);
-<closed orbit, 13 points with Schreier tree with grading>
-gap> AsList(last);
-[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 6 ], [ 2, 5, 6 ], [ 1, 4 ], 
-  [ 2, 5 ], [ 4, 6 ], [ 6 ], [ 1 ], [ 2 ], [ 4 ], [ 5 ] ]
-gap> ImagesOfTransSemigroup(S);
-<open orbit, 1 points with Schreier tree>
-gap> Enumerate(last);
-<closed orbit, 13 points with Schreier tree>
-gap> AsList(last);
-[ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 6 ], [ 2, 5, 6 ], [ 1, 4 ], 
-  [ 2, 5 ], [ 4, 6 ], [ 6 ], [ 1 ], [ 2 ], [ 4 ], [ 5 ] ]
 gap> S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
 > Transformation( [ 3, 3, 1, 1 ] ) ]);;
-gap> Idempotents(S, 1);
-[  ]
-gap> Idempotents(S, 2);                        
-[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
-  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
-gap> Idempotents(S, 3);                        
-[  ]
-gap> Idempotents(S, 4);                        
-[ Transformation( [ 1, 2, 3, 4 ] ) ]
 gap> Idempotents(S);
-[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
-  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 4, 2, 2, 4 ] ), 
-  Transformation( [ 1, 2, 3, 4 ] ) ]
-gap> S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
-> Transformation( [ 3, 3, 4, 1 ] ) ]);;
-gap> KernelsOfTransSemigroup(S); 
-<open orbit, 1 points with Schreier tree>
-gap> Enumerate(last);
-<closed orbit, 9 points with Schreier tree>
-gap> AsList(last);
-[ [ 1 .. 4 ], [ 1, 2, 3, 1 ], [ 1, 1, 2, 3 ], [ 1, 2, 2, 1 ], [ 1, 1, 2, 2 ], 
-  [ 1, 2, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 1, 1 ], [ 1, 1, 2, 1 ] ]
+[ IdentityTransformation(), Transformation( [ 1, 1, 3, 3 ] ), 
+  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
+  Transformation( [ 4, 2, 2, 4 ] ) ]
 gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ), 
 >   Transformation( [ 6, 6, 4, 4, 2, 1, 4 ] ) ];;
 gap> S:=Semigroup(gens);;
@@ -509,11 +441,6 @@ gap> Length(GreensRClasses(S));
 gap> r:=GreensRClasses(S)[10];;
 gap> Representative(r);
 Transformation( [ 3, 3, 3, 3, 3, 2, 3 ] )
-gap> AsList(ImageOrbit(r));
-[ [ 2, 3 ], [ 4, 6 ], [ 2, 6 ], [ 1, 4 ], [ 1, 6 ], [ 2, 4 ], [ 3, 6 ] ]
-gap> ImageOrbitPerms(r){ImageOrbitSCC(r)};
-[ (), (2,4)(3,5,6), (2,3,4,5,6), (1,2)(3,4), (1,2)(3,4,5,6), (2,3,4), 
-  (2,4,5,6) ]
 gap> SchutzenbergerGroup(r);
 Group([ (2,3) ])
 gap> Number(GreensDClasses(S), IsRegularDClass);
@@ -550,7 +477,7 @@ gap> f:=Transformation(
 gap> f in s;
 false
 gap> GreensRClassOfElement(s, f);
-Error, the transformation is not an element of the semigroup,
+Error, the element does not belong to the semigroup,
 gap> f:=Transformation( [ 1, 33, 49, 57, 61, 63, 1, 59, 53, 51, 55, 39, 41, 35,
 > 37, 45, 43, 47, 11, 15, 17, 3, 13, 7, 5, 9, 23, 25, 19, 21, 29, 27, 31, 3, 19,
 > 27, 31, 33, 29, 21, 23, 25, 5, 9, 11, 7, 13, 15, 17, 35, 43, 47, 49, 45, 37, 
@@ -599,8 +526,6 @@ gap> gens:=[ Transformation( [ 5, 1, 4, 6, 2, 3 ] ),
 > Transformation( [ 6, 5, 1, 3, 3, 4 ] ), 
 > Transformation( [ 1, 3, 4, 3, 2, 1 ] ) ];;
 gap> s:=Semigroup(gens);;
-gap> ExpandOrbitsOfImages(s);
-true
 gap> Size(s);
 43779
 gap> NrRClasses(s);
@@ -617,7 +542,7 @@ gap> r:=NextIterator(iter);
 gap> r:=NextIterator(iter);
 {Transformation( [ 3, 5, 5, 2, 6, 4 ] )}
 gap> r:=NextIterator(iter);
-{Transformation( [ 3, 2, 5, 4, 4, 6 ] )}
+{Transformation( [ 3, 2, 5, 4, 4 ] )}
 gap> r:=NextIterator(iter);
 {Transformation( [ 1, 3, 4, 3, 2, 1 ] )}
 gap> d:=DClassOfRClass(r);
@@ -625,17 +550,17 @@ gap> d:=DClassOfRClass(r);
 gap> Size(d);
 23400
 gap> Position(GreensDClasses(s), d);
-1
+3
 gap> List(GreensRClasses(s), x-> Position(GreensDClasses(s), 
 > DClassOfRClass(x)));
-[ 2, 3, 3, 3, 3, 3, 1, 1, 1, 1, 4, 3, 1, 1, 1, 3, 1, 4, 3, 1, 1, 1, 4, 3, 1, 
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 4, 4, 1, 1, 4, 1, 4, 4, 4, 4, 4, 4, 4, 
-  4, 4, 4, 5, 3, 1, 1, 1, 1, 1, 4, 4, 5, 1, 1, 4, 1, 1, 4, 4, 3, 1, 1, 4, 4, 
-  4, 4, 4, 4, 1, 1, 4, 4, 4, 1, 1, 1, 4, 4, 4, 4, 4, 3, 1, 1, 4, 1, 4, 4, 1, 
-  1, 4, 4, 1, 4, 1, 4, 4, 4, 4, 1, 4, 4, 4, 4, 1, 4, 4, 4, 4, 1, 4, 4, 4, 5, 
-  1, 4, 4, 4, 4, 4, 4, 1, 4, 4, 5, 4, 4, 4, 4, 5, 5, 5, 5, 4, 5, 5, 5, 4, 5, 
-  5, 5, 4, 1, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 1, 4, 1, 1, 4, 5, 5, 5, 1, 
-  4, 1, 5, 5, 1, 1, 4, 5, 1, 1, 4, 5, 1, 4, 4, 5, 4, 4, 5, 5, 5, 6, 4, 4, 4 ]
+[ 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 2, 3, 3, 3, 2, 3, 4, 2, 3, 3, 3, 4, 2, 3, 
+  3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 4, 4, 3, 3, 4, 3, 4, 4, 4, 4, 4, 4, 4, 
+  4, 4, 4, 5, 2, 3, 3, 3, 3, 3, 4, 4, 5, 3, 3, 4, 3, 3, 4, 4, 2, 3, 3, 4, 4, 
+  4, 4, 4, 4, 3, 3, 4, 4, 4, 3, 3, 3, 4, 4, 4, 4, 4, 2, 3, 3, 4, 3, 4, 4, 3, 
+  3, 4, 4, 3, 4, 3, 4, 4, 4, 4, 3, 4, 4, 4, 4, 3, 4, 4, 4, 4, 3, 4, 4, 4, 5, 
+  3, 4, 4, 4, 4, 4, 4, 3, 4, 4, 5, 4, 4, 4, 4, 5, 5, 5, 5, 4, 5, 5, 5, 4, 5, 
+  5, 5, 4, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 3, 4, 3, 3, 4, 5, 5, 5, 3, 
+  4, 3, 5, 5, 3, 3, 4, 5, 3, 3, 4, 5, 3, 4, 4, 5, 4, 4, 5, 5, 5, 6, 4, 4, 4 ]
 gap> gens:=[ Transformation( [ 1, 2, 6, 4, 7, 5, 7 ] ),
 >  Transformation( [ 2, 1, 6, 4, 5, 6, 7 ] ),
 >  Transformation( [ 1, 7, 4, 6, 3, 2, 6 ] ),
@@ -659,7 +584,9 @@ gap> gens:=[ Transformation( [ 1, 2, 6, 4, 7, 5, 7 ] ),
 >  Transformation( [ 7, 3, 3, 5, 1, 7, 4 ] ),
 >  Transformation( [ 1, 6, 6, 3, 3, 7, 1 ] ) ];;
 gap> s:=Semigroup(gens);
-<semigroup with 22 generators>
+<transformation semigroup on 7 pts with 22 generators>
+gap> Size(s);
+677391
 gap> f:=Transformation( [ 1, 5, 3, 2, 7, 6, 7 ] );;
 gap> f in s;
 true
@@ -676,13 +603,11 @@ gap> reps:=RClassReps(d);
   Transformation( [ 4, 5, 6, 7, 1, 6, 2 ] ) ]
 gap> List(reps, x-> Position(GreensRClasses(s), GreensRClassOfElement(s, x)));
 [ 1, 3, 6, 13, 5, 7, 16, 2 ]
-gap> Size(s);
-677391
 gap> r:=GreensRClasses(s)[63];;
 gap> Idempotents(r);
 [ Transformation( [ 1, 7, 3, 4, 5, 7, 7 ] ), 
-  Transformation( [ 1, 6, 3, 4, 5, 6, 6 ] ), 
-  Transformation( [ 1, 2, 3, 4, 5, 2, 2 ] ) ]
+  Transformation( [ 1, 2, 3, 4, 5, 2, 2 ] ), 
+  Transformation( [ 1, 6, 3, 4, 5, 6, 6 ] ) ]
 gap> last[2] in r;
 true
 gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
@@ -694,7 +619,6 @@ gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >  Transformation( [ 7, 1, 2, 2, 2, 7, 4, 5 ] ), 
 >  Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
 gap> s:=Semigroup(gens{[1..4]});;
-gap> ExpandOrbitsOfImages(s);;
 gap> gens[5] in s;
 false
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ), 
@@ -719,7 +643,7 @@ gap> r:=RClass(s, f);;
 gap> l:=LClass(s, f);
 {Transformation( [ 7, 6, 5, 4, 3, 2, 1 ] )}
 gap> h:=HClass(s,f);
-{Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] )}
+{Transformation( [ 7, 6, 5, 4, 3, 2, 1 ] )}
 gap> d:=DClass(s,f);
 {Transformation( [ 7, 6, 5, 4, 3, 2, 1 ] )}
 gap> r=l; r=h; l=r; h=r; d=r; r=d; r=r;
@@ -819,11 +743,11 @@ gap> enum:=Enumerator(r);
 gap> enum[1];
 Transformation( [ 8, 4, 1, 1, 1, 8, 5, 6 ] )
 gap> enum[2];                                  
-Transformation( [ 6, 5, 8, 8, 8, 6, 1, 4 ] )
+Transformation( [ 4, 2, 7, 7, 7, 4, 1, 6 ] )
 gap> enum[43];
-Transformation( [ 5, 1, 6, 6, 6, 5, 4, 8 ] )
+Transformation( [ 3, 5, 7, 7, 7, 3, 1, 2 ] )
 gap> enum[1368];
-Transformation( [ 4, 1, 5, 5, 5, 4, 8, 7 ] )
+Transformation( [ 8, 2, 5, 5, 5, 8, 7, 1 ] )
 gap> Position(enum, last);
 1368
 gap> ForAll([1..2640], x-> Position(enum, enum[x])=x);
@@ -836,9 +760,9 @@ true
 gap> ForAll(AsSSortedList(r), x-> x in r);
 true
 gap> s:=Semigroup(gens);
-<semigroup with 8 generators>
+<transformation semigroup on 8 pts with 8 generators>
 gap> r:=RClass(s, Transformation( [ 3, 5, 2, 2, 3, 5, 2, 3 ] ));
-{Transformation( [ 5, 2, 3, 3, 5, 2, 3, 5 ] )}
+{Transformation( [ 5, 8, 1, 1, 5, 8, 1, 5 ] )}
 gap> enum:=Enumerator(r);;
 gap> ForAll([1..Length(enum)], x-> Position(enum, enum[x])=x);
 true
@@ -869,7 +793,7 @@ gap> ForAll(rr, x->  Position(enum, x)=fail);
 true
 gap> f:=Transformation( [ 2, 2, 6, 4, 1, 6, 3, 2 ] );;
 gap> s:=Semigroup(gens);
-<semigroup with 8 generators>
+<transformation semigroup on 8 pts with 8 generators>
 gap> r:=GreensRClassOfElementNC(s, f);
 {Transformation( [ 2, 2, 6, 4, 1, 6, 3, 2 ] )}
 gap> Size(r);
@@ -879,7 +803,7 @@ gap> enum:=Enumerator(r);
 gap> enum[1];
 Transformation( [ 2, 2, 6, 4, 1, 6, 3, 2 ] )
 gap> enum[1000];
-Transformation( [ 5, 5, 4, 7, 8, 4, 1, 5 ] )
+Transformation( [ 2, 2, 4, 1, 6, 4, 7, 2 ] )
 gap> Position(enum, last);
 1000
 gap> ForAll([1..2640], x-> Position(enum, enum[x])=x);
@@ -951,8 +875,6 @@ gap> s:=Semigroup([
 >  Transformation( [ 5, 6, 10, 11, 10, 4, 10, 12, 5, 7, 4, 10 ] ), 
 >  Transformation( [ 6, 8, 12, 5, 4, 8, 10, 7, 4, 1, 10, 11 ] ) ]);;
 gap> f:=Transformation( [ 4, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 8 ] );;
-gap> ForwardOrbitOfImage(s, f![1]);
-<closed orbit, 40 images with size 2, 1 components, 1 kernels, 1 reps>
 gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ), 
 >   Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1, 7 ] ), 
 >   Transformation( [ 3, 8, 1, 9, 9, 4, 10, 5, 10, 6 ] ), 
@@ -970,93 +892,70 @@ gap> r:=RClass(s, f);
 gap> Size(last);
 702
 gap> Idempotents(r);
-[ Transformation( [ 9, 9, 3, 4, 3, 4, 9, 4, 9, 9 ] ), 
-  Transformation( [ 10, 10, 3, 4, 3, 4, 10, 4, 10, 10 ] ), 
-  Transformation( [ 2, 2, 5, 6, 5, 6, 2, 6, 2, 2 ] ), 
-  Transformation( [ 7, 7, 3, 4, 3, 4, 7, 4, 7, 7 ] ), 
-  Transformation( [ 2, 2, 3, 6, 3, 6, 2, 6, 2, 2 ] ), 
-  Transformation( [ 1, 1, 3, 4, 3, 4, 1, 4, 1, 1 ] ), 
-  Transformation( [ 1, 1, 5, 6, 5, 6, 1, 6, 1, 1 ] ), 
-  Transformation( [ 9, 9, 5, 4, 5, 4, 9, 4, 9, 9 ] ), 
-  Transformation( [ 2, 2, 3, 8, 3, 8, 2, 8, 2, 2 ] ), 
-  Transformation( [ 1, 1, 5, 4, 5, 4, 1, 4, 1, 1 ] ), 
-  Transformation( [ 9, 9, 5, 6, 5, 6, 9, 6, 9, 9 ] ), 
-  Transformation( [ 10, 10, 3, 8, 3, 8, 10, 8, 10, 10 ] ), 
-  Transformation( [ 1, 1, 3, 8, 3, 8, 1, 8, 1, 1 ] ), 
-  Transformation( [ 2, 2, 5, 4, 5, 4, 2, 4, 2, 2 ] ), 
-  Transformation( [ 10, 10, 3, 6, 3, 6, 10, 6, 10, 10 ] ), 
-  Transformation( [ 7, 7, 5, 8, 5, 8, 7, 8, 7, 7 ] ), 
-  Transformation( [ 7, 7, 3, 6, 3, 6, 7, 6, 7, 7 ] ), 
+[ Transformation( [ 2, 2, 5, 6, 5, 6, 2, 6, 2, 2 ] ), 
+  Transformation( [ 9, 9, 3, 4, 3, 4, 9, 4, 9, 9 ] ), 
   Transformation( [ 2, 2, 5, 8, 5, 8, 2, 8, 2, 2 ] ), 
-  Transformation( [ 2, 2, 3, 4, 3, 4, 2, 4, 2, 2 ] ), 
-  Transformation( [ 9, 9, 3, 6, 3, 6, 9, 6, 9, 9 ] ), 
-  Transformation( [ 9, 9, 5, 8, 5, 8, 9, 8, 9, 9 ] ), 
-  Transformation( [ 10, 10, 5, 8, 5, 8, 10, 8, 10, 10 ] ), 
+  Transformation( [ 10, 10, 3, 6, 3, 6, 10, 6, 10, 10 ] ), 
   Transformation( [ 7, 7, 5, 6, 5, 6, 7, 6, 7, 7 ] ), 
-  Transformation( [ 10, 10, 5, 6, 5, 6, 10, 6, 10, 10 ] ), 
   Transformation( [ 7, 7, 3, 8, 3, 8, 7, 8, 7, 7 ] ), 
+  Transformation( [ 9, 9, 5, 8, 5, 8, 9, 8, 9, 9 ] ), 
+  Transformation( [ 9, 9, 5, 6, 5, 6, 9, 6, 9, 9 ] ), 
+  Transformation( [ 1, 1, 5, 6, 5, 6, 1, 6, 1, 1 ] ), 
+  Transformation( [ 2, 2, 3, 8, 3, 8, 2, 8, 2, 2 ] ), 
+  Transformation( [ 1, 1, 3, 4, 3, 4, 1, 4, 1, 1 ] ), 
   Transformation( [ 9, 9, 3, 8, 3, 8, 9, 8, 9, 9 ] ), 
+  Transformation( [ 7, 7, 5, 8, 5, 8, 7, 8, 7, 7 ] ), 
+  Transformation( [ 9, 9, 5, 4, 5, 4, 9, 4, 9, 9 ] ), 
+  Transformation( [ 1, 1, 3, 8, 3, 8, 1, 8, 1, 1 ] ), 
+  Transformation( [ 9, 9, 3, 6, 3, 6, 9, 6, 9, 9 ] ), 
+  Transformation( [ 10, 10, 3, 4, 3, 4, 10, 4, 10, 10 ] ), 
+  Transformation( [ 2, 2, 3, 4, 3, 4, 2, 4, 2, 2 ] ), 
+  Transformation( [ 10, 10, 5, 6, 5, 6, 10, 6, 10, 10 ] ), 
+  Transformation( [ 2, 2, 3, 6, 3, 6, 2, 6, 2, 2 ] ), 
+  Transformation( [ 2, 2, 5, 4, 5, 4, 2, 4, 2, 2 ] ), 
+  Transformation( [ 10, 10, 5, 8, 5, 8, 10, 8, 10, 10 ] ), 
+  Transformation( [ 7, 7, 3, 4, 3, 4, 7, 4, 7, 7 ] ), 
+  Transformation( [ 1, 1, 5, 4, 5, 4, 1, 4, 1, 1 ] ), 
   Transformation( [ 7, 7, 5, 4, 5, 4, 7, 4, 7, 7 ] ), 
-  Transformation( [ 1, 1, 5, 8, 5, 8, 1, 8, 1, 1 ] ), 
   Transformation( [ 1, 1, 3, 6, 3, 6, 1, 6, 1, 1 ] ), 
-  Transformation( [ 10, 10, 5, 4, 5, 4, 10, 4, 10, 10 ] ) ]
-gap> gens:=[Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] ),
-> Transformation( [ 5, 1, 4, 1, 4, 4, 7, 8 ] )];;
-gap> s:=Monoid(gens);;
-gap> f:=Transformation( [ 8, 8, 1, 5, 8, 5, 8, 8 ] );;
-gap> PreInOrbitsOfImages(s, f, false);
-[ false, [ 3, fail, fail, fail, fail, 0, fail ] ]
-gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
-gap> NextIterator(iter);;
-gap> NextIterator(iter);
-{Transformation( [ 8, 7, 5, 3, 1, 3, 8, 8 ] )}
-gap> PreInOrbitsOfImages(s, f, true);
-[ false, [ 3, fail, fail, fail, fail, 0, fail ] ]
-gap> NextIterator(iter);
-{Transformation( [ 5, 1, 4, 1, 4, 4, 7, 8 ] )}
-gap> PreInOrbitsOfImages(s, f, false);
-[ false, [ 3, fail, fail, fail, fail, 0, fail ] ]
-gap> NextIterator(iter);
-{Transformation( [ 8, 8, 1, 5, 8, 5, 8, 8 ] )}
-gap> PreInOrbitsOfImages(s, f, true);
-[ true, [ 3, 1, 1, 1, 1, 1, [ 8, 8, 1, 5, 8, 5, 8, 8 ], () ] ]
+  Transformation( [ 1, 1, 5, 8, 5, 8, 1, 8, 1, 1 ] ), 
+  Transformation( [ 7, 7, 3, 6, 3, 6, 7, 6, 7, 7 ] ), 
+  Transformation( [ 10, 10, 5, 4, 5, 4, 10, 4, 10, 10 ] ), 
+  Transformation( [ 10, 10, 3, 8, 3, 8, 10, 8, 10, 10 ] ) ]
 gap> gens:=[Transformation( [ 10, 8, 7, 4, 1, 4, 10, 10, 7, 2 ] ),
 > Transformation( [ 5, 2, 5, 5, 9, 10, 8, 3, 8, 10 ] )];;
 gap> s:=Monoid(gens);;
 gap> f:=Transformation( [ 1, 1, 10, 8, 8, 8, 1, 1, 10, 8 ] );;
 gap> r:=RClass(s, f);;
-gap> IsRegularRClass(r);
+gap> IsRegularClass(r);
 true
 gap> Idempotents(r);
 [ Transformation( [ 2, 2, 3, 10, 10, 10, 2, 2, 3, 10 ] ), 
   Transformation( [ 2, 2, 9, 10, 10, 10, 2, 2, 9, 10 ] ), 
   Transformation( [ 2, 2, 3, 5, 5, 5, 2, 2, 3, 5 ] ), 
+  Transformation( [ 8, 8, 3, 5, 5, 5, 8, 8, 3, 5 ] ), 
   Transformation( [ 8, 8, 3, 10, 10, 10, 8, 8, 3, 10 ] ), 
   Transformation( [ 2, 2, 9, 5, 5, 5, 2, 2, 9, 5 ] ), 
-  Transformation( [ 8, 8, 3, 5, 5, 5, 8, 8, 3, 5 ] ), 
-  Transformation( [ 8, 8, 9, 10, 10, 10, 8, 8, 9, 10 ] ), 
-  Transformation( [ 8, 8, 9, 5, 5, 5, 8, 8, 9, 5 ] ) ]
+  Transformation( [ 8, 8, 9, 5, 5, 5, 8, 8, 9, 5 ] ), 
+  Transformation( [ 8, 8, 9, 10, 10, 10, 8, 8, 9, 10 ] ) ]
 gap> h:=HClass(s, f);;
-gap> IsRegularRClass(h);
-false
 gap> f:=Transformation( [ 5, 9, 8, 8, 8, 8, 5, 5, 8, 5 ] );;
 gap> r:=RClass(s, f);;
 gap> NrIdempotents(r);
 6
-gap> IsRegularRClass(r);
+gap> IsRegularClass(r);
 true
 gap> f:=Transformation( [ 8, 9, 3, 3, 3, 3, 8, 8, 3, 10 ] );;
 gap> r:=RClass(s, f);; 
 gap> Idempotents(r);;
-gap> IsRegularRClass(r);
+gap> IsRegularClass(r);
 true
 gap> gens:=[Transformation([2,3,4,5,1,8,7,6,2,7]), 
 > Transformation( [ 3, 8, 7, 4, 1, 4, 3, 3, 7, 2 ] )];;
 gap> s:=Monoid(gens);;
 gap> f:=Transformation( [ 3, 8, 7, 4, 1, 4, 3, 3, 7, 2 ] );;
 gap> r:=RClass(s, f);;
-gap> IsRegularRClass(r);
+gap> IsRegularClass(r);
 false
 gap> Idempotents(r);
 [  ]
@@ -1066,12 +965,12 @@ gap> gens:=[ Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ),
 >   Transformation( [ 3, 6, 8, 5, 7, 4, 2, 8 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> Iterator(s);
-<iterator of transformation semigroup>
+<iterator of <transformation semigroup on 8 pts with 2 generators>>
 gap> iter:=last;
-<iterator of transformation semigroup>
+<iterator of <transformation semigroup on 8 pts with 2 generators>>
 gap> for i in [1..10000] do NextIterator(iter); od;
 gap> iter:=Iterator(s);
-<iterator of transformation semigroup>
+<iterator of <transformation semigroup on 8 pts with 2 generators>>
 gap> j:=0; for i in iter do j:=j+1; od;
 0
 gap> j;
@@ -1084,14 +983,14 @@ gap> gens:=[
 >       28, 40, 32, 45, 45, 32, 49, 25, 18, 50, 45, 36, 2, 35, 10, 1, 13, 6, 
 >       20, 5, 4, 45, 45, 24, 45, 43, 4, 28, 21, 5, 31, 13, 49, 28, 20 ] ) ];;
 gap> s:=Semigroup(gens);
-<semigroup with 2 generators>
+<transformation semigroup on 50 pts with 2 generators>
 gap> f:=Transformation( [ 39, 6, 6, 17, 25, 17, 39, 28, 28, 5, 6, 17, 4, 25, 32,
 > 25, 32, 6, 4, 6, 28, 28, 32, 17, 17, 5, 17, 39, 17, 32, 5, 25, 6, 32, 39,
 > 25, 28, 6, 25, 39, 17, 17, 17, 28, 17, 6, 6, 6, 17, 39 ] );;
 gap> r:=RClass(s, f);
-{Transformation( [ 6, 32, 32, 28, 25, 28, 6, 17, 17, 5, 32, 28, 4, 25, 39, 
-  25, 39, 32, 4, 32, 17, 17, 39, 28, 28, 5, 28, 6, 28, 39, 5, 25, 32, 39, 6, 
-  25, 17, 32, 25, 6, 28, 28, 28, 17, 28, 32, 32, 32, 28, 6 ] )}
+{Transformation( [ 32, 20, 20, 45, 17, 45, 32, 50, 50, 40, 20, 45, 5, 17, 13,
+  17, 13, 20, 5, 20, 50, 50, 13, 45, 45, 40, 45, 32, 45, 13, 40, 17, 20, 13,
+  32, 17, 50, 20, 17, 32, 45, 45, 45, 50, 45, 20, 20, 20, 45, 32 ] )}
 gap> Size(r);
 30683520
 gap> iter:=Iterator(r);
@@ -1105,7 +1004,7 @@ gap> s:=Semigroup(gens);;
 gap> f:=Transformation( [ 12, 14, 3, 11, 4, 18, 12, 14, 12, 14, 12, 18, 18, 3,
 > 18, 3, 18, 14, 18, 2 ] );;
 gap> r:=RClass(s, f);
-{Transformation( [ 18, 2, 3, 4, 11, 12, 18, 2, 18, 2, 18, 12, 12, 3, 12, 3, 
+{Transformation( [ 18, 2, 3, 4, 11, 12, 18, 2, 18, 2, 18, 12, 12, 3, 12, 3,
   12, 2, 12, 14 ] )}
 gap> NrHClasses(r);
 177
@@ -1124,34 +1023,13 @@ gap> gens:=[ Transformation( [ 2, 6, 1, 7, 5, 3, 4 ] ),
 >   Transformation( [ 5, 1, 6, 1, 1, 5, 1 ] ),
 >   Transformation( [ 3, 5, 2, 3, 2, 2, 3 ] ) ];;
 gap> s:=Semigroup(gens);;
-gap> ExpandOrbitsOfImages(s);;
+gap> Size(s);
+21343
 gap> f:=Transformation( [ 7, 3, 7, 7, 7, 7, 3 ] );;
 gap> r:=RClass(s, f);
-{Transformation( [ 2, 4, 2, 2, 2, 2, 4 ] )}
+{Transformation( [ 5, 2, 5, 5, 5, 5, 2 ] )}
 gap> NrHClasses(r);
 21
-gap> HClassRepsData(r);
-[ [ [ 2, 1, 1, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 2, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 3, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 4, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 5, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 6, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 7, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 8, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 9, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 10, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 11, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 12, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 13, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 14, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 15, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 16, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 17, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 18, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 19, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 20, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ], 
-  [ [ 2, 1, 21, 1, 37, 1 ], [ 2, 1, 1, 1, 1, 1 ], (), fail ] ]
 gap> gens:=[ Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] ),
 >   Transformation( [ 3, 6, 9, 7, 1, 4, 5, 8, 2 ] ),
 >   Transformation( [ 8, 2, 5, 5, 4, 5, 5, 2, 8 ] ),
@@ -1178,7 +1056,7 @@ gap> NextIterator(iter);
 gap> iter:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> NextIterator(iter);;
-gap> last!.rep in s;
+gap> Representative(last) in s;
 true
 gap> Size(s);
 82953
@@ -1197,7 +1075,7 @@ gap> for i in [1..10] do NextIterator(iter); od;
 gap> iter2:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> NextIterator(iter);
-{Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )}
+{Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ] )}
 gap> NextIterator(iter);
 {Transformation( [ 8, 5, 5, 5, 5, 5, 5, 5, 5 ] )}
 gap> NextIterator(iter);
@@ -1222,8 +1100,7 @@ gap> IsDoneIterator(iter2);
 false
 gap> IsDoneIterator(iter3);
 false
-gap> ExpandOrbitsOfKernels(s);
-true
+gap> GreensDClasses(s);;
 gap> for i in [1..100] do
 > r2:=NextIterator(iter2); r3:=NextIterator(iter3);
 > if not r2=r3 then
@@ -1239,15 +1116,15 @@ gap> ShallowCopy(iter2);
 gap> iter:=last;                                
 <iterator>
 gap> NextIterator(iter);
-{Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] )}
+{Transformation( [ 5, 2, 5, 8, 8, 4, 2, 5, 5 ] )}
 gap> NextIterator(iter);
-{Transformation( [ 8, 2, 5, 5, 4, 5, 5, 2, 8 ] )}
+{Transformation( [ 2, 8, 8, 8, 8, 8, 5, 8, 8 ] )}
 gap> NextIterator(iter);
-{Transformation( [ 4, 4, 5, 4, 4, 2, 4, 4, 8 ] )}
+{Transformation( [ 2, 8, 8, 8, 8, 8, 8, 8, 5 ] )}
 gap> NextIterator(iter);
-{Transformation( [ 4, 8, 8, 5, 2, 5, 5, 5, 2 ] )}
+{Transformation( [ 2, 5, 8, 8, 8, 8, 8, 8, 8 ] )}
 gap> NextIterator(iter);
-{Transformation( [ 5, 5, 8, 8, 5, 5, 2, 4, 2 ] )}
+{Transformation( [ 8, 8, 5, 5, 2, 2, 2, 5, 2 ] )}
 gap> iter3:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> out:=[];
@@ -1258,7 +1135,7 @@ gap> Length(out);
 gap> NrRClasses(s);
 503
 gap> s:=Semigroup(gens);
-<semigroup with 5 generators>
+<transformation semigroup on 9 pts with 5 generators>
 gap> iter1:=IteratorOfRClasses(s);
 <iterator of R-classes>
 gap> for i in iter1 do  
@@ -1272,19 +1149,16 @@ gap> for i in iter1 do
 > Error("Problems with IteratorOfRClasses 3");
 > fi;
 > od;
-gap> s:=Semigroup(gens);
-<semigroup with 5 generators>
+gap> s:=Semigroup(gens);;
 gap> GreensRClasses(s)=out;
 true
-gap> s:=Semigroup(gens);
-<semigroup with 5 generators>
+gap> s:=Semigroup(gens);;
 gap> f:=Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8 ] );;
 gap> r:=RClass(s, f);
-{Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )}
+{Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ] )}
 gap> GreensRClasses(s)=out;
 true
-gap> s:=Semigroup(gens);
-<semigroup with 5 generators>
+gap> s:=Semigroup(gens);;
 gap> f:=Transformation( [ 6, 6, 6, 4, 6, 4, 4, 4, 6 ] );;
 gap> f in s;
 true
@@ -1292,18 +1166,15 @@ gap> GreensRClasses(s)=out;
 true
 gap> iter:=IteratorOfRClasses(s);
 <iterator of R-classes>
-gap> for i in [1..1000] do NextIterator(iter); od;
-gap> s:=Semigroup(gens);
-<semigroup with 5 generators>
-gap> iter:=IteratorOfRClasses(s);
-<iterator of R-classes>
+gap> for i in [1..500] do NextIterator(iter); od;
+gap> s:=Semigroup(gens);;
+gap> iter:=IteratorOfRClasses(s);;
 gap> for i in [1..1000] do NextIterator(iter); od;
 gap> iter:=ShallowCopy(iter);
 <iterator>
-gap> out:=[];
-[  ]
+gap> out:=[];;
 gap> for i in iter do Add(out, i); od;            
-gap> out=GreensRClasses(s);
+gap> Set(out)=Set(GreensRClasses(s));
 true
 gap> gens:=[ Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
 >   Transformation( [ 1, 6, 3, 4, 7, 2, 5, 8 ] ),
@@ -1311,7 +1182,7 @@ gap> gens:=[ Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
 >   Transformation( [ 3, 2, 3, 6, 1, 6, 1, 2 ] ),
 >   Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] ) ];;
 gap> s:=Semigroup(gens);
-<semigroup with 5 generators>
+<transformation semigroup on 8 pts with 5 generators>
 gap> f:=Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] );;
 gap> r:=RClass(s, f);
 {Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
@@ -1322,7 +1193,7 @@ gap> d:=DClass(r);
 gap> NrHClasses(d);
 72
 gap> l:=LClass(s, f);
-{Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] )}
+{Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] )}
 gap> NrHClasses(l);
 6
 gap> NrHClasses(s);
@@ -1350,14 +1221,14 @@ gap> s:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ),
 gap> f:=Transformation( [ 2, 1, 4, 5, 6, 3 ] );;
 gap> GreensLClassOfElement(s, f);
 {Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
-gap> IsGreensClassOfTransSemigp(last);
+gap> IsTransformationSemigroupGreensClass(last);
 true
 gap> s:=Semigroup(Transformation( [ 4, 4, 3, 5, 3 ] ),
 > Transformation( [ 5, 1, 1, 4, 1 ] ),
 > Transformation( [ 5, 5, 4, 4, 5 ] ));;
 gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
 gap> SchutzenbergerGroup(DClass(s, f));
-Sym( [ 4 .. 5 ] )
+Group([ (4,5) ])
 gap> SchutzenbergerGroup(RClass(s, f));
 Group([ (4,5) ])
 gap> SchutzenbergerGroup(LClass(s, f));
@@ -1366,8 +1237,8 @@ gap> SchutzenbergerGroup(HClass(s, f));
 Group([ (4,5) ])
 gap> s:=FullTransformationSemigroup(8);;
 gap> f:=Transformation([1,1,2,3,4,5,6,7]);;
-gap> ExpandOrbitsOfImages(s);
-true
+gap> Size(s);
+16777216
 gap> iter:=IteratorOfDClasses(s);
 <iterator of D-classes>
 gap> d:=NextIterator(iter);;
@@ -1378,30 +1249,28 @@ gap> r:=GreensRClassOfElement(s, f);
 gap> elts:=Elements(r);;
 gap> for i in elts do if not i in d then Print("Error 1");fi; od;
 gap> rr:=GreensRClassOfElement(s, Transformation([1,1,1,2,3,4,5,6]));
-{Transformation( [ 1, 1, 1, 3, 4, 5, 6, 7 ] )}
+{Transformation( [ 1, 1, 1, 2, 3, 4, 5, 6 ] )}
 gap> elts:=Elements(rr);; d:=DClassOfRClass(rr);;
 gap> for i in elts do if not i in d then Print("Error 2");  fi; od;
 gap> Sum(List(GreensDClasses(s), Size)); 8^8;
 16777216
 16777216
 gap> iter:=IteratorOfDClassReps(s);
-<iterator of D-class reps, 4140 candidates, 16777216 elements, 8 D-classes>
-gap> for i in [1..15] do NextIterator(iter); od;
+<iterator of D-class reps>
+gap> for i in [1..8] do NextIterator(iter); od;
+gap> IsDoneIterator(iter);
+true
 gap> iter2:=IteratorOfRClassReps(s);
-<iterator of R-class reps, 8207 candidates, 16777216 elements, 4140 R-classes>
+<iterator of R-class reps>
 gap> for i in [1..500] do NextIterator(iter2); od;
-gap> NextIterator(iter!.data!.r);
-[ 8, 1, 1, 1, 1, 1 ]
 gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 > Transformation( [ 1, 4, 1, 2 ] ),
 >  Transformation( [ 3, 4, 2, 2 ] ),
 >   Transformation( [ 4, 1, 2, 1 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> iter:=IteratorOfDClassReps(s);
-<iterator of D-class reps, 0 candidates, 0 elements, 0 D-classes>
+<iterator of D-class reps>
 gap> for i in [1..15] do NextIterator(iter); od;
-gap> NextIterator(iter!.data!.r);
-fail
 gap> s:=Semigroup(gens);;
 gap> iter1:=IteratorOfRClassReps(s);;
 gap> iter2:=IteratorOfRClassReps(s);;
@@ -1409,8 +1278,8 @@ gap> NextIterator(iter1); NextIterator(iter2);
 Transformation( [ 1, 3, 2, 3 ] )
 Transformation( [ 1, 3, 2, 3 ] )
 gap> NextIterator(iter1); NextIterator(iter2);
-Transformation( [ 3, 2, 3, 4 ] )
-Transformation( [ 3, 2, 3, 4 ] )
+Transformation( [ 1, 4, 1, 2 ] )
+Transformation( [ 1, 4, 1, 2 ] )
 gap> s:=FullTransformationSemigroup(10);;
 gap> f:=Transformation( [ 8, 10, 8, 5, 6, 10, 7, 2, 9, 9 ] );;
 gap> d:=GreensDClassOfElementNC(s, f);; #1s with NC check efficiency here! 
@@ -1490,22 +1359,22 @@ gap> R:=GreensRClasses(d);
   {Transformation( [ 3, 2, 5, 4, 7, 6, 8, 8 ] )}, 
   {Transformation( [ 7, 2, 5, 4, 3, 6, 8, 8 ] )} ]
 gap> r:=R[10];;
-gap> HClassRepsData(r);
-[ [ [ 7, 1, 1, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (), fail ], 
-  [ [ 7, 1, 1, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (2,3,6,7,4), fail ], 
-  [ [ 7, 1, 1, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (2,6,4,3,7), fail ], 
-  [ [ 7, 1, 1, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (2,7,3,4,6), fail ], 
-  [ [ 7, 1, 1, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (2,4,7,6,3), fail ], 
-  [ [ 7, 1, 2, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (), fail ], 
-  [ [ 7, 1, 2, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (2,3,6,7,4), fail ], 
-  [ [ 7, 1, 2, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (2,6,4,3,7), fail ], 
-  [ [ 7, 1, 2, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (2,7,3,4,6), fail ], 
-  [ [ 7, 1, 2, 1, 5, 2 ], [ 7, 1, 5, 1, 1, 1 ], (2,4,7,6,3), fail ] ]
+gap> HClassReps(r);
+[ Transformation( [ 7, 2, 5, 4, 3, 6, 8, 8 ] ), 
+  Transformation( [ 3, 7, 1, 6, 4, 2, 8, 8 ] ), 
+  Transformation( [ 4, 3, 5, 2, 6, 7, 8, 8 ] ), 
+  Transformation( [ 6, 4, 1, 7, 2, 3, 8, 8 ] ), 
+  Transformation( [ 2, 6, 5, 3, 7, 4, 8, 8 ] ), 
+  Transformation( [ 7, 2, 1, 4, 3, 6, 8, 8 ] ), 
+  Transformation( [ 3, 7, 5, 6, 4, 2, 8, 8 ] ), 
+  Transformation( [ 4, 3, 1, 2, 6, 7, 8, 8 ] ), 
+  Transformation( [ 6, 4, 5, 7, 2, 3, 8, 8 ] ), 
+  Transformation( [ 2, 6, 1, 3, 7, 4, 8, 8 ] ) ]
 
 #
 gap> t:=FullTransformationSemigroup(5);;
 gap> iter:=Iterator(t);
-<iterator of full trans. semigroup>
+<iterator of <full transformation semigroup on 5 pts>>
 gap> for i in iter do od;
 gap> IsDoneIterator(iter);
 true
@@ -1520,7 +1389,7 @@ Transformation( [ 1, 1, 1, 1, 3 ] )
 gap> NextIterator(iter);
 Transformation( [ 1, 1, 1, 1, 4 ] )
 gap> NextIterator(iter);
-Transformation( [ 1, 1, 1, 1, 5 ] )
+Transformation( [ 1, 1, 1, 1 ] )
 gap> NextIterator(iter);
 Transformation( [ 1, 1, 1, 2, 1 ] )
 gap> IsDoneIterator(iter);
@@ -1541,12 +1410,12 @@ gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 gap> s:=Semigroup(gens);;
 gap> f:=Transformation( [ 3, 2, 5, 3, 5, 3, 3, 3 ] );;
 gap> d:=DClass(s, f);
-{Transformation( [ 3, 2, 5, 3, 5, 3, 3, 3 ] )}
+{Transformation( [ 8, 1, 5, 8, 5, 8, 8, 8 ] )}
 gap> f:=Transformation( [ 6, 4, 8, 8, 8, 4, 6, 4 ] );;
 gap> l:=LClass(d, f);
-{Transformation( [ 4, 6, 8, 4, 8, 4, 4, 4 ] )}
+{Transformation( [ 6, 8, 4, 6, 4, 6, 6, 6 ] )}
 gap> ll:=LClass(s, f);
-{Transformation( [ 4, 6, 8, 4, 8, 4, 4, 4 ] )}
+{Transformation( [ 6, 8, 4, 6, 4, 6, 6, 6 ] )}
 gap> l=ll;
 true
 gap> ll=l;
@@ -1587,16 +1456,15 @@ gap> gens:=[Transformation([2,1,4,5,3,7,8,9,10,6]),
 > Transformation([1,2,3,4,5,6,10,9,8,7]),
 > Transformation([9,1,4,3,6,9,3,4,3,9])];;
 gap> s:=Monoid(gens);;
-gap> ExpandOrbitsOfKernels(s);
-true
+gap> GreensDClasses(s);;
 gap> f:=Transformation( [ 8, 5, 10, 5, 8, 5, 5, 5, 5, 10 ] );;
 gap> d:=DClass(s, f);
 {Transformation( [ 3, 9, 3, 4, 9, 3, 4, 3, 4, 3 ] )}
 gap> f:=Transformation( [ 6, 4, 5, 6, 4, 4, 6, 6, 4, 5 ] );;
 gap> h:=GreensHClassOfElement(d, f);
-{Transformation( [ 6, 5, 4, 6, 5, 5, 6, 6, 5, 4 ] )}
+{Transformation( [ 6, 4, 5, 6, 4, 4, 6, 6, 4, 5 ] )}
 gap> hh:=HClass(s, f);
-{Transformation( [ 6, 5, 4, 6, 5, 5, 6, 6, 5, 4 ] )}
+{Transformation( [ 6, 4, 5, 6, 4, 4, 6, 6, 4, 5 ] )}
 gap> hh=h;
 true
 gap> h=hh;
@@ -1605,7 +1473,7 @@ gap> Elements(h)=Elements(hh);
 true
 gap> f:=Transformation( [ 4, 8, 8, 8, 4, 4, 8, 4, 4, 8 ] );;
 gap> d:=DClass(s, f);
-{Transformation( [ 4, 3, 4, 3, 3, 4, 3, 4, 3, 4 ] )}
+{Transformation( [ 3, 4, 3, 4, 4, 3, 4, 3, 4, 3 ] )}
 gap> f:=Transformation( [ 4, 3, 3, 4, 3, 3, 3, 3, 4, 4 ] );;
 gap> h:=HClass(d,f);
 {Transformation( [ 4, 3, 3, 4, 3, 3, 3, 3, 4, 4 ] )}
@@ -1621,26 +1489,26 @@ true
 gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ),
 > Transformation( [ 4, 3, 1, 2 ] ));;
 gap> GreensDClasses(S);
-[ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )}, 
+[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 4, 3, 1, 2 ] )}, 
   {Transformation( [ 4, 4, 4, 4 ] )} ]
 gap> GreensHClasses(S);
-[ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )}, 
-  {Transformation( [ 1, 2, 2, 2 ] )}, {Transformation( [ 4, 4, 4, 4 ] )}, 
+[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 1, 2, 2, 2 ] )}, 
+  {Transformation( [ 4, 4, 3, 4 ] )}, {Transformation( [ 2, 2, 1, 2 ] )}, 
+  {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 2, 1, 2, 2 ] )}, 
+  {Transformation( [ 4, 4, 4, 3 ] )}, {Transformation( [ 2, 2, 2, 1 ] )}, 
+  {Transformation( [ 4, 3, 1, 2 ] )}, {Transformation( [ 4, 4, 4, 4 ] )}, 
   {Transformation( [ 2, 2, 2, 2 ] )}, {Transformation( [ 3, 3, 3, 3 ] )}, 
-  {Transformation( [ 1, 1, 1, 1 ] )}, {Transformation( [ 4, 4, 3, 4 ] )}, 
-  {Transformation( [ 2, 2, 1, 2 ] )}, {Transformation( [ 4, 3, 4, 4 ] )}, 
-  {Transformation( [ 2, 1, 2, 2 ] )}, {Transformation( [ 4, 4, 4, 3 ] )}, 
-  {Transformation( [ 2, 2, 2, 1 ] )} ]
+  {Transformation( [ 1, 1, 1, 1 ] )} ]
 gap> GreensLClasses(S);
-[ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )}, 
-  {Transformation( [ 1, 2, 2, 2 ] )}, {Transformation( [ 4, 4, 4, 4 ] )}, 
+[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 1, 2, 2, 2 ] )}, 
+  {Transformation( [ 4, 3, 1, 2 ] )}, {Transformation( [ 4, 4, 4, 4 ] )}, 
   {Transformation( [ 2, 2, 2, 2 ] )}, {Transformation( [ 3, 3, 3, 3 ] )}, 
   {Transformation( [ 1, 1, 1, 1 ] )} ]
 gap> GreensRClasses(S);
-[ {Transformation( [ 1, 2, 3, 4 ] )}, {Transformation( [ 3, 4, 4, 4 ] )}, 
+[ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 4, 3, 1, 2 ] )}, 
   {Transformation( [ 4, 4, 4, 4 ] )}, {Transformation( [ 4, 4, 3, 4 ] )}, 
   {Transformation( [ 4, 3, 4, 4 ] )}, {Transformation( [ 4, 4, 4, 3 ] )} ]
-gap> D:=GreensDClasses(S)[2];
+gap> D:=GreensDClasses(S)[1];
 {Transformation( [ 3, 4, 4, 4 ] )}
 gap> GreensLClasses(D);
 [ {Transformation( [ 3, 4, 4, 4 ] )}, {Transformation( [ 1, 2, 2, 2 ] )} ]
@@ -1666,26 +1534,26 @@ gap> GreensHClasses(L);
 gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ),
 > Transformation( [ 4, 3, 1, 2 ] ));;
 gap> DClassReps(S);
-[ Transformation( [ 1, 2, 3, 4 ] ), Transformation( [ 3, 4, 4, 4 ] ), 
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 3, 1, 2 ] ), 
   Transformation( [ 4, 4, 4, 4 ] ) ]
 gap> HClassReps(S);
-[ Transformation( [ 1, 2, 3, 4 ] ), Transformation( [ 3, 4, 4, 4 ] ), 
-  Transformation( [ 1, 2, 2, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ), 
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ), 
+  Transformation( [ 4, 3, 1, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ), 
   Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ), 
   Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 4, 4, 3, 4 ] ), 
   Transformation( [ 2, 2, 1, 2 ] ), Transformation( [ 4, 3, 4, 4 ] ), 
   Transformation( [ 2, 1, 2, 2 ] ), Transformation( [ 4, 4, 4, 3 ] ), 
   Transformation( [ 2, 2, 2, 1 ] ) ]
 gap> LClassReps(S);
-[ Transformation( [ 1, 2, 3, 4 ] ), Transformation( [ 3, 4, 4, 4 ] ), 
-  Transformation( [ 1, 2, 2, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ), 
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ), 
+  Transformation( [ 4, 3, 1, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ), 
   Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ), 
   Transformation( [ 1, 1, 1, 1 ] ) ]
 gap> RClassReps(S);
-[ Transformation( [ 1, 2, 3, 4 ] ), Transformation( [ 3, 4, 4, 4 ] ), 
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 3, 1, 2 ] ), 
   Transformation( [ 4, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ), 
   Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
-gap> D:=GreensDClasses(S)[2];
+gap> D:=GreensDClasses(S)[1];
 {Transformation( [ 3, 4, 4, 4 ] )}
 gap> LClassReps(D);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ) ]
@@ -1706,12 +1574,7 @@ gap> HClassReps(L);
   Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
 
 #
-gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
-
-#
-gap> Unbind(tmptmptmp); Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
+gap> Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
 > Unbind(H); Unbind(I); Unbind(r); Unbind(d); Unbind(dr); Unbind(r2);
 > Unbind(out2); Unbind(out3); Unbind(a); Unbind(b); Unbind(M);
 > Unbind(f); Unbind(c); Unbind(gens); Unbind(S); Unbind(C); Unbind(rc);
@@ -1719,4 +1582,7 @@ gap> Unbind(tmptmptmp); Unbind(out); Unbind(s); Unbind(m); Unbind(idem);
 > Unbind(ll); Unbind(hh); Unbind(dd); Unbind(g); Unbind(enum); Unbind(j);
 > Unbind(iter2); Unbind(iter1); Unbind(iter3); Unbind(r3); Unbind(elts);
 > Unbind(R); Unbind(x); Unbind(i);;
-gap> STOP_TEST( "Citrus package: greens.tst", 10000);
+
+#
+gap> SemigroupsStopTest();
+gap> STOP_TEST( "Semigroups package: greens.tst", 10000);

@@ -1,17 +1,31 @@
 ############################################################################# 
 ## 
 #W  examples.gi
-#Y  Copyright (C) 2011-12                                 James D. Mitchell
+#Y  Copyright (C) 2013                                    James D. Mitchell
 ## 
 ##  Licensing information can be found in the README file of this package. 
 ## 
 ############################################################################# 
 ##
 
-#FFF
+#
 
-# new for 0.7! - FullMatrixSemigroup - "for a pos int and pos int"
-################################################################################
+InstallMethod(RegularBinaryRelationSemigroup, "for a positive integer",
+[IsPosInt],
+function(n) 
+  local gens, s;
+
+  gens:=[ Concatenation(List([2..n], x-> [x]),[[1]]), 
+          Concatenation([[2],[1]], List([3..n], x-> [x])),
+          Concatenation(List([1..n-1], x-> [x]), [[1,n]]),
+          Concatenation(List([1..n-1], x-> [x]), [[]]) ] ;
+  
+  s:=Semigroup(List(gens, BinaryRelationByListOfImagesNC));
+  #SetIsBinaryRelationCollection(s, true);
+  return s;
+end);
+
+#
 
 InstallMethod(FullMatrixSemigroup, "for pos int and pos int",  
 [IsPosInt, IsPosInt],
@@ -24,43 +38,44 @@ function(d,q)
   g[d][d]:=Z(q)*0;
 
   S:=Monoid(Concatenation(GeneratorsOfGroup(GL(d,q)), [g]));
-  SetIsMatrixSemigroup(S, true);
   SetIsFullMatrixSemigroup(S, true);
   SetIsGeneralLinearSemigroup(S, true);
+  SetIsRegularSemigroup(S, true);
 
   return S;
 end);
 
-#GGG
+#
 
-# new for 0.7! - GeneralLinearSemigroup - "for a pos int and pos int"
-################################################################################
+InstallMethod(ViewObj, "for a full matrix semigroup",
+[IsFullMatrixSemigroup and HasGeneratorsOfSemigroup], 4,
+function(s) 
+  local n;
+
+  Print("<full matrix semigroup ");
+  n:=Length(GeneratorsOfSemigroup(s)[1][1]);
+  Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]));
+  if HasSize(s) then 
+    Print("of size ", Size(s));
+  fi;
+  Print(">");
+end);
+
+#
 
 InstallMethod(GeneralLinearSemigroup, "for 2 pos ints", 
 [IsPosInt, IsPosInt], FullMatrixSemigroup);
 
-#III
-
-# new for 0.7! - IsFullMatrixSemigroup - "for a pos int and pos int"
-################################################################################
+#
 
 InstallMethod(IsFullMatrixSemigroup, "for a semigroup", 
 [IsSemigroup], ReturnFalse);
 
-# new for 0.7! - IsGeneralLinearSemigroup - "for a pos int and pos int"
-################################################################################
+#JDM method for IsFullMatrixSemigroup for a matrix semigroup
 
-InstallOtherMethod(IsGeneralLinearSemigroup, "for a semigroup",
-[IsSemigroup], ReturnFalse);
+# undocumented, from the semigroupe manual... JDM is this right?
 
-#MMM
-
-# new for 0.7! - MonoidOfMultiplicationByN - "for a pos int"
-################################################################################
-# undoc
-# from the semigroupe manual... JDM is this right?
-
-InstallMethod(MonoidOfMultiplicationByN, "for a pos int",
+InstallMethod(MonoidOfMultiplicationByN, "for a positive integer",
 [IsPosInt],
 function(n)
   local out, i;
@@ -74,8 +89,7 @@ function(n)
   return Monoid(Transformation(out{[1..n]}),Transformation(out{[n+1..2*n]}));
 end);
 
-# new for 0.7! - MunnSemigroup - "for a semilattice as a semigroup"
-################################################################################
+#
 
 if Filename(DirectoriesPackagePrograms("grape"),"dreadnautB") = fail then
   InstallMethod(MunnSemigroup, "for a semilattice", 
@@ -187,15 +201,12 @@ else
   end);
 fi;
 
-#OOO
+#
 
-# new for 0.7! - O - "for a pos int"
-################################################################################
-
-InstallMethod(OrderEndomorphisms, "for a pos int",
+InstallMethod(OrderEndomorphisms, "for a positive integer",
 [IsPosInt],
 function(n)
-  local gens, i;
+  local gens, s, i;
 
   gens:=EmptyPlist(n);
   gens[1]:=Transformation(Concatenation([1], [1..n-1]));
@@ -206,52 +217,84 @@ function(n)
     gens[i+1]:=TransformationNC(gens[i+1]);
   od; 
 
-  return Monoid(gens);
+  s:=Monoid(gens);
+  SetIsRegularSemigroup(s, true);
+  return s;
 end);
 
-#PPP
+#
 
-# new for 0.7! - POI - "for a pos int"
-################################################################################
+InstallMethod(PartialTransformationSemigroup, "for a positive integer", 
+[IsPosInt],
+function(n)
+  local a, b, c, d, s;
 
-if Citrus_C then 
-  InstallMethod(POI, "for a pos int",
-  [IsPosInt],
-  function(n)
-    local out, i;
+  a:= [1..n+1];  a[1]:= 2;  a[2]:= 1;
+  b:= [0..n];  b[1]:= n;  b[n+1]:= n+1;
+  c:= [1..n+1];  c[1]:= n+1;
+  d:= [1..n+1];  d[1]:= 2;
 
-    out:=EmptyPlist(n);
-    out[1]:=PartialPermNC([0..n-1]);
-    for i in [0..n-2] do 
-      out[i+2]:=[1..n];
-      out[i+2][(n-i)-1]:=n-i; out[i+2][n-i]:=0;
-      out[i+2]:=PartialPermNC(out[i+2]);
-    od;
-    return InverseMonoid(out); 
-  end);
-else
-  InstallMethod(POI, "for a pos int",
-  [IsPosInt], CitrusIsNotCompiled);
-fi;
+  s:=Monoid(List([a, b, c, d], TransformationNC));
+  SetIsRegularSemigroup(s, true);
+  return s;
+end);
 
-# new for 0.7! - POPI - "for a pos int"
-################################################################################
+#
 
-if Citrus_C then 
-  InstallMethod(POPI, "for a pos int",
-  [IsPosInt],
-  function(n)
-    return InverseMonoid(PartialPermNC(Concatenation([2..n],[1])), 
+#InstallMethod(PartitionMonoid, "for a positive integer",
+#[IsPosInt], 
+#function(n)
+#  local gens, g, s;
+#
+#  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
+#  Add(gens, AsBipartition(PartialPermNC([2..n], [2..n]), n));
+#  Add(gens, BipartitionNC(Concatenation([[1,2,n+1, n+2]], 
+#   List([3..n], x-> [x, x+n]))));
+#
+#  s:=Semigroup(gens);
+#  SetIsRegularSemigroup(s, true);
+#  return s;
+#end);
+#
+##
+#
+#InstallMethod(DualSymmetricInverseSemigroup, "for a positive integer",
+#[IsPosInt], 
+#function(n)
+#  local gens;
+#  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
+#  Add(gens, BipartitionNC(Concatenation([[1,2,3+n], [1+n,2+n,3]], 
+#   List([4..n], x-> [x, x+n]))));
+#  return Semigroup(gens);
+#end);
+#
+#
+
+InstallMethod(POI, "for a positive integer",
+[IsPosInt],
+function(n)
+  local out, i;
+
+  out:=EmptyPlist(n);
+  out[1]:=PartialPermNC([0..n-1]);
+  for i in [0..n-2] do 
+    out[i+2]:=[1..n];
+    out[i+2][(n-i)-1]:=n-i; out[i+2][n-i]:=0;
+    out[i+2]:=PartialPermNC(out[i+2]);
+  od;
+  return InverseMonoid(out); 
+end);
+
+#
+
+InstallMethod(POPI, "for a positive integer",
+[IsPosInt],
+function(n)
+  return InverseMonoid(PartialPermNC(Concatenation([2..n],[1])), 
      PartialPermNC(Concatenation([1..n-2],[n])));
-  end);
-else 
-  InstallMethod(POPI, "for a pos int",
-  [IsPosInt], CitrusIsNotCompiled);
-fi;
+end);
 
-# new for 0.7! - PowerSemigroup - "for a group"
-################################################################################
-# undoc
+#
 
 InstallMethod(PowerSemigroup, "for a group",
 [IsGroup],
@@ -261,13 +304,13 @@ function(g)
   act:=function(A, B) return Union(List(A, x-> x*B)); end;
   dom:=Combinations(Elements(g));
   Sort(dom, function(x,y) return Length(x)<Length(y); end);
-  gens:=[TransformationActionNC(dom[1], dom, act)];
+  gens:=[TransformationOp(dom[1], dom, act)];
   s:=Semigroup(gens);
   i:=2;
 
   while Size(s)<2^Size(g) do  
     i:=i+1;
-    f:=TransformationActionNC(dom[i], dom, act);
+    f:=TransformationOp(dom[i], dom, act);
     if not f in s then 
       Add(gens, f);
       s:=Semigroup(gens);
@@ -276,59 +319,18 @@ function(g)
   return s;
 end);
 
-#SSS
+#
 
-# new for 0.7! - SingularSemigp - "for a pos int"
-################################################################################
-
-InstallMethod(SingularSemigroup, "for a pos int",
+InstallMethod(SingularSemigroup, "for a positive integer",
 [IsPosInt],
 function(n)
-  local img, x, S, T;
-  img:=Concatenation([1..n-1], [n-1]);
-  x:=TransformationNC(img);
+  local x, S, T;
+  
+  x:=TransformationNC(Concatenation([1..n-1], [n-1]));
   S:=FullTransformationSemigroup(n);
   T:=SubsemigroupNC(S, Idempotents(GreensDClassOfElementNC(S, x)));
+  SetIsRegularSemigroup(T, true);
   return T;
 end);
-
-# new for 0.7! - SymmetricInverseSemigp - "for a pos int"
-################################################################################
-
-if Citrus_C then 
-  InstallMethod(SymmetricInverseSemigp, "for a pos int",
-  [IsPosInt],
-  function(n)
-
-    if n=0 then
-      return InverseSemigroup(PartialPermNC([]));
-    elif n=1 then 
-      return InverseSemigroup(PartialPermNC([1]), PartialPermNC([]));
-    elif n=2 then 
-      return InverseSemigroup(PartialPermNC([2,1]), PartialPermNC([1]));
-    fi;
-
-    return InverseSemigroup(List(GeneratorsOfGroup(SymmetricGroup(n)), x->
-     PartialPermNC(ListPerm(x, n))), PartialPermNC([0..n-1]*1));
-  end);
-else
-  InstallMethod(SymmetricInverseSemigp, "for a pos int",
-  [IsPosInt], CitrusIsNotCompiled);
-fi;
-
-#VVV
-
-# new for 0.7! - ViewObj - "for full matrix semigroup"
-################################################################################
-
-InstallMethod(ViewObj, "for full matrix semigroup",
-[IsFullMatrixSemigroup], 10,
-function( obj )        
-  local n;
-  n:=Length(GeneratorsOfMonoid(obj)[1][1]);
-  Print( "<full matrix semigroup ",n, "x", n, " over ",
-   BaseDomain(GeneratorsOfMonoid(obj)[1][1]), ">");         
-  return;
-end); 
 
 #EOF

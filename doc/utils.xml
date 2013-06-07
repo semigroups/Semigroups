@@ -8,88 +8,88 @@
 #############################################################################
 ##
 
-<#GAPDoc Label="CitrusDir">
+<#GAPDoc Label="SemigroupsDir">
   <ManSection>
-    <Func Name="CitrusDir" Arg=""/>
+    <Func Name="SemigroupsDir" Arg=""/>
     <Returns>A string.</Returns>    
     <Description>
-      This function returns the absolute path to the &Citrus; package directory
+      This function returns the absolute path to the &Semigroups; package directory
       as a string. The same result can be obtained typing:
 
-      <Log>PackageInfo("citrus")[1]!.InstallationPath;</Log>
+      <Log>PackageInfo("semigroups")[1]!.InstallationPath;</Log>
 
       at the &GAP; prompt. 
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="CitrusMakeDoc">
+<#GAPDoc Label="SemigroupsMakeDoc">
   <ManSection>
-    <Func Name="CitrusMakeDoc" Arg=""/>
+    <Func Name="SemigroupsMakeDoc" Arg=""/>
     <Returns>Nothing.</Returns>    
     <Description>
       This function should be called with no argument to compile the 
-      &Citrus; documentation. 
+      &Semigroups; documentation. 
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="CitrusOptionsRec">
+<#GAPDoc Label="SemigroupsOptionsRec">
   <ManSection>    
-     <Var Name="CitrusOptionsRec"/>    
+     <Var Name="SemigroupsOptionsRec"/>    
      <Description>
        This global variable is a record whose components contain the default
        values of certain options for transformation semigroups created after
-       &Citrus; has been loaded. A description of these options is given above 
-       in Section <Ref Sect="opts"/>. <P/>
+       &Semigroups; has been loaded. A description of these options is given
+       above in Section <Ref Sect="opts"/>. <P/>
 
-       The value of <C>CitrusOptionsRec</C> is defined in the file
-       <C>citrus/gap/options.g</C> as: 
-       <Log>rec( schreier:=true, small:=false,
-         hashlen:=rec(S:=251, M:=6257, L:=25013));</Log>
+       The value of <C>SemigroupsOptionsRec</C> is defined in the file
+       <C>semigroups/gap/options.g</C> as: 
+       <Log>rec( acting := true, hashlen := rec( L := 25013, M := 6257, S :=
+         251 ), regular := false, small := false )</Log>
      </Description> 
    </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="CitrusTestAll">
+<#GAPDoc Label="SemigroupsTestAll">
   <ManSection>
-    <Func Name="CitrusTestAll" Arg=""/>
+    <Func Name="SemigroupsTestAll" Arg=""/>
     <Returns>Nothing.</Returns> 
     <Description>
       This function should be called with no argument to comprehensively
-      test that &Citrus; is working correctly. These tests
+      test that &Semigroups; is working correctly. These tests
       should take no more than a few minutes to complete. 
-      To quickly test that &Citrus; is installed correctly
-      use <Ref Func="CitrusTestInstall"/>. 
+      To quickly test that &Semigroups; is installed correctly
+      use <Ref Func="SemigroupsTestInstall"/>. 
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="CitrusTestManualExamples">
+<#GAPDoc Label="SemigroupsTestManualExamples">
   <ManSection>
-    <Func Name="CitrusTestManualExamples" Arg=""/>
+    <Func Name="SemigroupsTestManualExamples" Arg=""/>
     <Returns>Nothing.</Returns> 
     <Description>
       This function should be called with no argument to test the examples in
-      the &Citrus; manual. These tests should take no more than a few minutes
+      the &Semigroups; manual. These tests should take no more than a few minutes
       to complete.
-      To more comprehensively test that &Citrus; is installed
-      correctly use <Ref Func="CitrusTestAll"/>. See also <Ref
-      Func="CitrusTestInstall"/>.
+      To more comprehensively test that &Semigroups; is installed
+      correctly use <Ref Func="SemigroupsTestAll"/>. See also <Ref
+      Func="SemigroupsTestInstall"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="CitrusTestInstall">
+<#GAPDoc Label="SemigroupsTestInstall">
   <ManSection>
-    <Func Name="CitrusTestInstall" Arg=""/>
+    <Func Name="SemigroupsTestInstall" Arg=""/>
     <Returns>Nothing.</Returns> 
     <Description>
       This function should be called with no argument to test your installation
-      of &Citrus; is working correctly. These tests should take no more than a
+      of &Semigroups; is working correctly. These tests should take no more than a
       fraction of a second to complete. 
-      To more comprehensively test that &Citrus; is
-      installed correctly use <Ref Func="CitrusTestAll"/>. 
+      To more comprehensively test that &Semigroups; is
+      installed correctly use <Ref Func="SemigroupsTestAll"/>. 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -120,17 +120,18 @@
         </Item>
         <Mark>Inverse semigroup</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 
-          <Ref Attr="GeneratorsOfInverseSemigroup"/>.
+          <Ref Attr="GeneratorsOfInverseSemigroup" BookName="ref"/>.
         </Item>
         <Mark>Inverse monoid</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 
-          <Ref Attr="GeneratorsOfInverseMonoid"/>.
+          <Ref Attr="GeneratorsOfInverseMonoid" BookName="ref"/>.
         </Item>
       </List>
-<Example>gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
+<Example>
+gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
 > Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
 gap> GeneratorsOfSemigroup(M);
-[ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ), 
+[ IdentityTransformation(), 
   Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
 gap> GeneratorsOfMonoid(M);
@@ -150,11 +151,11 @@ gap> GeneratorsOfSemigroup(S);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="InfoCitrus">
+<#GAPDoc Label="InfoSemigroups">
   <ManSection>
-    <InfoClass Name="InfoCitrus"/>
+    <InfoClass Name="InfoSemigroups"/>
     <Description>
-    <C>InfoCitrus</C> is the info class of the &Citrus; package. 
+    <C>InfoSemigroups</C> is the info class of the &Semigroups; package. 
     The info level is initially set to 0 and no info messages are displayed. 
     We recommend that you set the level to 1 so that basic info messages
     are displayed. To increase the amount of information displayed during a
@@ -166,47 +167,47 @@ gap> GeneratorsOfSemigroup(S);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="ReadCitrus">
+<#GAPDoc Label="ReadSemigroups">
   <ManSection> 
-    <Func Name="ReadCitrus" Arg="filename[, nr]"/>
+    <Func Name="ReadSemigroups" Arg="filename[, nr]"/>
     <Returns>A list of: transformations, partial permutations, lists of
       partial permutations or lists of transformations.
     </Returns>
     <Description>
-      If <A>filename</A> is a file created using <Ref Func="WriteCitrus"/>,
-      then <C>ReadCitrus</C> returns the contents of this file as a list of
+      If <A>filename</A> is a file created using <Ref Func="WriteSemigroups"/>,
+      then <C>ReadSemigroups</C> returns the contents of this file as a list of
       lists of transformations and partial permutations. If the optional second
-      argument <A>nr</A> is present, then <C>ReadCitrus</C> returns the
+      argument <A>nr</A> is present, then <C>ReadSemigroups</C> returns the
       transformations or partial permutations stored in the <A>nr</A>th line of
       <A>filename</A>. <P/>
       
       Note that if the file <A>filename</A> is gzipped, then the message
       <C>gzip: stdout: Broken pipe</C> might be displayed when
-      <C>ReadCitrus</C> is used. While this is unfortunate, it not an error
-      that affect the output of <C>ReadCitrus</C>. We hope to resolve this
+      <C>ReadSemigroups</C> is used. While this is unfortunate, it not an error
+      that affect the output of <C>ReadSemigroups</C>. We hope to resolve this
       issue in the future.
 
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="WriteCitrus">
+<#GAPDoc Label="WriteSemigroups">
   <ManSection> 
-    <Func Name="WriteCitrus" Arg="filename, list"/>
+    <Func Name="WriteSemigroups" Arg="filename, list"/>
     <Returns>Nothing.</Returns>
     <Description>
       This function provides a method for writing transformations and partial
       permutations to a file that uses a relatively small amount of disk space.
       The resulting file can be further compressed using <C>gzip</C>.<P/>
       
-      <A>list</A> should be a list of: transformations of equal degree, partial
+      <A>list</A> should be a list of: transformations, partial
       permutations, a semigroup of transformations or partial permutations, or
       a list of lists of transformations, partial permutations, or semigroups
       of transformations or partial permutations; and <A>filename</A> should be
       a string containing the name of a file where the entries in
       <A>list</A> will be written. <P/>
 
-      <C>WriteCitrus</C> appends a line to the file <A>filename</A>
+      <C>WriteSemigroups</C> appends a line to the file <A>filename</A>
       for every entry in <A>list</A>. If any element of
       <A>list</A> is a semigroup, then the generators of that
       semigroup are written to <A>filename</A>. <P/>
@@ -224,16 +225,15 @@ gap> GeneratorsOfSemigroup(S);
       <Log>
 210 2 2 6 7 2 6 9 9 1 1 5 3 8 1 9 9 410 510 6</Log>
      
-      The file <A>filename</A> can be read using <Ref Func="ReadCitrus"/>.
+      The file <A>filename</A> can be read using <Ref Func="ReadSemigroups"/>.
       <P/>
 <Example>
-gap> file:=Concatenation(CitrusDir(), "/examples/graph7c.citrus.gz");;
-gap> ReadCitrus(file, 453);
-[ Transformation( [ 1, 2, 2, 4, 5, 6, 7 ] ), 
-  Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] ), 
+gap> file:=Concatenation(SemigroupsDir(), "/examples/graph7c.semigroups.gz");;
+gap> ReadSemigroups(file, 453);
+[ Transformation( [ 1, 2, 2 ] ), IdentityTransformation(), 
   Transformation( [ 1, 2, 3, 4, 5, 7, 7 ] ), 
   Transformation( [ 1, 3, 2, 4, 7, 6, 7 ] ), 
-  Transformation( [ 4, 2, 1, 1, 6, 5, 7 ] ), 
+  Transformation( [ 4, 2, 1, 1, 6, 5 ] ), 
   Transformation( [ 4, 3, 2, 1, 6, 7, 7 ] ), 
   Transformation( [ 4, 4, 5, 7, 6, 1, 1 ] ), 
   Transformation( [ 7, 6, 6, 1, 2, 4, 4 ] ), 

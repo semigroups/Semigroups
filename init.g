@@ -1,41 +1,38 @@
 #############################################################################
 ##
 #W  init.g
-#Y  Copyright (C) 2011-12                                James D. Mitchell
+#Y  Copyright (C) 2013                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-
-if (not IsBound(CITRUSC)) and ("citrus" in SHOW_STAT()) then
-  LoadStaticModule("citrus");
-fi;
-if (not IsBound(CITRUSC)) and
-   (Filename(DirectoriesPackagePrograms("citrus"), "citrus.so") <> fail) then
-  LoadDynamicModule(Filename(DirectoriesPackagePrograms("citrus"), 
-    "citrus.so"));
+if not IsBound(ORBC) then 
+  BindGlobal("HTAdd_TreeHash_C", fail);
+  BindGlobal("HTValue_TreeHash_C", fail);
 fi;
 
-ReadPackage("citrus/gap/utils.gd");
-ReadPackage("citrus/gap/orbits.gd");
-ReadPackage("citrus/gap/greens.gd");
-ReadPackage("citrus/gap/transform.gd");
-ReadPackage("citrus/gap/pperm.gd");
-ReadPackage("citrus/gap/properties.gd");
-ReadPackage("citrus/gap/inverse.gd");
-ReadPackage("citrus/gap/semigroups.gd");
-ReadPackage("citrus/gap/examples.gd");
-ReadPackage("citrus/gap/options.g");
+ReadPackage("semigroups/gap/setup.gd");
+ReadPackage("semigroups/gap/greens.gd");
+ReadPackage("semigroups/gap/acting.gd");
 
-DeclareInfoClass("InfoCitrus");;
+ReadPackage("semigroups/gap/semigroups.gd");
+ReadPackage("semigroups/gap/enums.gd");
+ReadPackage("semigroups/gap/iterators.gd");
 
-if not IsBound(CITRUSC) then 
-  Info(InfoWarning, 1, "Citrus: the Citrus package binary is not available,",
-  " and so the");
-  Info(InfoWarning, 1, "Citrus: functions in Citrus for partial permutations",
-  " are not available.");
-fi;
+ReadPackage("semigroups/gap/regular.gd");
+ReadPackage("semigroups/gap/inverse.gd");
 
-BindGlobal("Citrus_C", IsBound(CITRUSC));
+ReadPackage("semigroups/gap/properties.gd");
+ReadPackage("semigroups/gap/attributes.gd");
+ReadPackage("semigroups/gap/orbits.gd");
+
+ReadPackage("semigroups/gap/slp.gd");
+
+ReadPackage("semigroups/gap/examples.gd");
+ReadPackage("semigroups/gap/utils.gd");
+ReadPackage("semigroups/gap/options.g");
+
+DeclareInfoClass("InfoSemigroups");;
+

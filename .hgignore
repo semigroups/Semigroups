@@ -1,5 +1,7 @@
 syntax: glob
+*.orig
 *.DS_Store
+*.swp
 *.aux
 *.log
 *.out
@@ -8,7 +10,6 @@ syntax: glob
 *.top
 *.pdf
 *.tui
-*.swp
 *.txt
 *.html
 *.brf
@@ -18,15 +19,14 @@ syntax: glob
 *.pnr
 *.toc
 *.six
-*.orig
 *.synctex.gz
-citrus.tex
-citrus_dev.tex
+semigroups.tex
+semigroups_dev.tex
 Makefile
 bin/*
 Transitions*
-*.swo
 *.g6
 *.gz
-*.citrus
+*.semigroups
+citrus.tex
 *.tex

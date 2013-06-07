@@ -9,26 +9,18 @@
 ##
 
 #
-gap> START_TEST("Citrus package: schreier.tst");
-gap> LoadPackage("citrus", false);;
+gap> START_TEST("Semigroups package: schreier.tst");
+gap> LoadPackage("semigroups", false);;
 
 #
-gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
-gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrus, 0);
-
-#
-gap> TestTraceRClassRepsTree:=s-> ForAll([1..NrRClasses(s)], i->
-> EvaluateWord(Generators(s), TraceRClassRepsTree(s, i))=
-> RClassReps(s)[i]);;
+gap> SemigroupsStartTest();
 
 #
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
 > Transformation( [ 4, 2, 1, 5, 5 ] ),
 > Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
 > s:=Semigroup(gens);;
-gap> TestTraceRClassRepsTree(s); 
+gap> ForAll(s, f-> EvaluateWord(gens, Factorization(s,f))=f);
 true
 
 #
@@ -37,7 +29,8 @@ gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 > Transformation( [ 3, 1, 1, 3 ] ),
 > Transformation( [ 3, 3, 4, 1 ] ) ];;
 > s:=Monoid(gens);;
-gap> TestTraceRClassRepsTree(s); 
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s), 
+> Factorization(s,f))=f);
 true
 
 #
@@ -46,7 +39,7 @@ gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 > Transformation( [ 2, 4, 1, 1 ] ),
 > Transformation( [ 3, 4, 2, 2 ] ) ];;
 > s:=Semigroup(gens);;
-gap> TestTraceRClassRepsTree(s);     
+gap> ForAll(s, f-> EvaluateWord(gens, Factorization(s,f))=f);
 true
 
 #
@@ -55,7 +48,8 @@ gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 > Transformation( [ 3, 4, 2, 2 ] ),
 > Transformation( [ 4, 1, 2, 1 ] ) ];;
 > s:=Monoid(gens);;
-gap> TestTraceRClassRepsTree(s);
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
+> Factorization(s,f))=f);
 true
 
 #
@@ -85,7 +79,8 @@ gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 > Transformation( [ 3, 1, 1, 3 ] ),
 > Transformation( [ 3, 3, 4, 1 ] ) ];;
 gap> s:=Monoid(gens);;
-gap> ForAll(s, f-> EvaluateWord(gens, Factorization(s,f))=f);
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
+> Factorization(s,f))=f);
 true
 
 #
@@ -103,13 +98,49 @@ gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 > Transformation( [ 3, 4, 2, 2 ] ),
 > Transformation( [ 4, 1, 2, 1 ] ) ];;
 gap> s:=Monoid(gens);;
-gap> ForAll(s, f-> EvaluateWord(gens, Factorization(s,f))=f);
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
+> Factorization(s,f))=f);
 true
 
 #
-gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+gap> gens:=[ PartialPerm( [ 1, 2 ], [ 3, 1 ] ), 
+> PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ), 
+> PartialPerm( [ 1, 2, 3 ], [ 2, 4, 1 ] ), 
+> PartialPerm( [ 1, 3, 4 ], [ 3, 4, 1 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
+> Factorization(s,f))=f);
+true
 
 #
-gap> STOP_TEST("Citrus package: schreier.tst", 10000);
+gap> gens:=[ PartialPerm( [ 1, 2, 4, 5 ], [ 2, 6, 1, 4 ] ), 
+>  PartialPerm( [ 1, 2, 5 ], [ 4, 3, 6 ] ), 
+>  PartialPerm( [ 1, 3, 4, 5 ], [ 5, 1, 6, 4 ] ), 
+>  PartialPerm( [ 1, 3, 4, 5 ], [ 5, 2, 6, 1 ] ) ];;
+gap> s:=InverseSemigroup(gens);;
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
+> Factorization(s,f))=f);
+true
+
+# test a regular semigroup
+gap> s:=OrderEndomorphisms(7);;
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
+> Factorization(s,f))=f);
+true
+
+# test a regular semigroup that only learns this after creation
+gap> s:=SingularSemigroup(5);
+<regular transformation semigroup on 5 pts with 20 generators>
+gap> s:=Semigroup(Generators(s));
+<transformation semigroup on 5 pts with 20 generators>
+gap> IsRegularSemigroup(s);
+true
+gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s), 
+> Factorization(s,f))=f);
+true
+
+#
+gap> SemigroupsStopTest();
+
+#
+gap> STOP_TEST("Semigroups package: schreier.tst", 10000);

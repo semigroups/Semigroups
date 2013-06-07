@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  PackageInfo.g
-#Y  Copyright (C) 2011-12                                James D. Mitchell
+#Y  Copyright (C) 2011-13                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -9,21 +9,21 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "0.999">
-##  <!ENTITY ORBVERS "4.2">
+##  <!ENTITY VERSION "1.0">
+##  <!ENTITY ORBVERS "4.6">
+##  <!ENTITY GENSSVERS "1.5">
 ##  <!ENTITY IOVERS "4.1">
 ##  <!ENTITY GRAPEVERS "4.5">
-##  <!ENTITY ARCHIVENAME "citrus-0.999">
-##  <!ENTITY COPYRIGHTYEARS "2011-12">
+##  <!ENTITY ARCHIVENAME "semigroups-1.0">
+##  <!ENTITY COPYRIGHTYEARS "2011-13">
 ##  <#/GAPDoc>
 
 SetPackageInfo( rec(
-PackageName := "Citrus",
-Subtitle := "Computing with Semigroups of Transformations and Partial Permutations",
-Version := "0.999",
-Date := "06/07/2012",
-ArchiveURL := 
-          "https://bitbucket.org/zen154115/citrus/downloads/citrus-0.999",
+PackageName := "Semigroups",
+Subtitle := "Methods for Semigroups",
+Version := "1.0",
+Date := "07/06/2013",
+ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-1.0",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -32,7 +32,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "jdm3@st-and.ac.uk",
-    WWWHome       := "http://tinyurl.com/jdmitchell",
+    WWWHome       := "tinyurl.com/jdmitchell",
     PostalAddress := Concatenation( [
                        "Mathematical Institute,",
                        " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,", 
@@ -44,14 +44,14 @@ Persons := [
 Status := "deposited",
 
 README_URL := 
-  "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/README",
+  "http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups/README",
 PackageInfoURL := 
-  "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus/PackageInfo.g",
+  "http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups/PackageInfo.g",
 
 AbstractHTML := Concatenation( 
-  "The Citrus package is a ",
+  "The Semigroups package is a ",
   "GAP  package for computing with semigroups ",
-  "of transformations and partial permutations. Citrus contains more ",
+  "of transformations and partial permutations. Semigroups contains more ",
   "efficient methods than those available in the GAP library (and in many ",
   "cases more efficient than any other software) for creating semigroups of ",
   "transformations and partial permutations, calculating their Green's ",
@@ -66,21 +66,22 @@ AbstractHTML := Concatenation(
   "and generators for the endomorphism monoids of the non-abelian groups with ",
   "order at most 64."),
 
-PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus",
+PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus.php",
                
 PackageDoc := rec(
-  BookName  := "Citrus",
+  BookName  := "Semigroups",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",  
   SixFile   := "doc/manual.six",
-  LongTitle := "Citrus - Computing with semigruops",
+  LongTitle := "Semigroups - Methods for semigroups",
   Autoload  := true
 ),
 
 Dependencies := rec(
-  GAP := ">=4.5.4",
-  NeededOtherPackages := [["orb", ">=4.2"], ["io", ">=4.1"]],
+  GAP := ">=4.7",
+  NeededOtherPackages := [["orb", ">=4.6"], ["io", ">=4.2"], 
+  ["genss", ">=1.5"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"]], 
   ExternalConditions := []),
   AvailabilityTest := ReturnTrue, 

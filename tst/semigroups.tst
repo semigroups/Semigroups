@@ -9,15 +9,15 @@
 ##
 
 #
-# ReadTest(Filename(DirectoriesPackageLibrary("citrus","tst"),"semigroups.tst")); 
-gap> START_TEST("Citrus package: semigroups.tst");
-gap> LoadPackage("citrus", false);;
+# ReadTest(Filename(DirectoriesPackageLibrary("semigroups","tst"),"semigroups.tst")); 
+gap> START_TEST("Semigroups package: semigroups.tst");
+gap> LoadPackage("semigroups", false);;
 
 #
 gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoCitrus:=InfoLevel(InfoCitrus);;
+gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
 gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoCitrus, 0);
+gap> SetInfoLevel(InfoSemigroups, 0);
 
 #
 gap> gens:=[ PartialPermNC( [ 1, 2, 3, 4, 6, 7, 10 ], [ 5, 3, 4, 1, 9, 6, 8 ] ),
@@ -122,20 +122,20 @@ gap> gens:=[ PartialPermNC( [ 1, 2, 3, 4, 6, 7, 10 ], [ 5, 3, 4, 1, 9, 6, 8 ] ),
 > PartialPermNC( [ 1, 2, 5, 8, 9, 10 ], [ 7, 1, 3, 10, 5, 8 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 5, 6, 9 ], [ 1, 3, 5, 4, 9, 6, 7 ] ) ];;
 gap> s:=InverseSemigroup(gens);      
-<inverse semigroup with 100 generators>
+<inverse partial perm semigroup on 10 pts with 100 generators>
 gap> Size(s);
 89616897
 gap> s:=InverseSemigroup(gens[1]);
-<inverse semigroup with 1 generator>
+<inverse partial perm semigroup on 10 pts with 1 generator>
 gap> for i in [2..100] do 
 > s:=ClosureInverseSemigroup(s, gens[i]);
 > od;
 gap> s;
-<inverse semigroup with 54 generators>
+<inverse partial perm semigroup on 10 pts with 54 generators>
 gap> Size(s);
 89616897
 gap> s:=InverseMonoid(gens);
-<inverse monoid with 100 generators>
+<inverse partial perm monoid on 10 pts with 100 generators>
 gap> Size(s);
 89616898
 gap> IsSubsemigroup(s, InverseSemigroup(s, rec(small:=true)));
@@ -145,11 +145,11 @@ gap> for i in [2..100] do
 > s:=ClosureInverseSemigroup(s, gens[i]);
 > od;
 gap> s;
-<inverse semigroup with 54 generators>
+<inverse partial perm semigroup on 10 pts with 55 generators>
 gap> Size(s);
-89616897
+89616898
 gap> NrDClasses(s);
-14
+15
 gap> s:=InverseSemigroup(gens, rec(small:=true));;
 gap> NrDClasses(s);
 14
@@ -158,39 +158,34 @@ gap> NrDClasses(s);
 gap> s:=InverseMonoid(PartialPermNC( [ 1, 2, 3, 5 ], [ 5, 6, 8, 2 ] ),
 > PartialPermNC( [ 1, 2, 3, 5, 9, 10 ], [ 7, 2, 1, 5, 9, 4 ] ) );;
 gap> Generators(s);
-[ [ 1, 2, 3, 5 ] -> [ 5, 6, 8, 2 ], 
-  [ 1, 2, 3, 5, 9, 10 ] -> [ 7, 2, 1, 5, 9, 4 ] ]
+[ [1,5,2,6][3,8], [3,1,7][10,4](2)(5)(9) ]
 gap> GeneratorsOfInverseSemigroup(s);
-[ <identity on [ 1 .. 10 ]>, [ 1, 2, 3, 5 ] -> [ 5, 6, 8, 2 ], 
-  [ 1, 2, 3, 5, 9, 10 ] -> [ 7, 2, 1, 5, 9, 4 ] ]
+[ [1,5,2,6][3,8], [3,1,7][10,4](2)(5)(9), 
+  <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]> ]
 gap> GeneratorsOfInverseMonoid(s);   
-[ [ 1, 2, 3, 5 ] -> [ 5, 6, 8, 2 ], 
-  [ 1, 2, 3, 5, 9, 10 ] -> [ 7, 2, 1, 5, 9, 4 ] ]
+[ [1,5,2,6][3,8], [3,1,7][10,4](2)(5)(9) ]
 gap> GeneratorsOfSemigroup(s);
-[ <identity on [ 1 .. 10 ]>, [ 1, 2, 3, 5 ] -> [ 5, 6, 8, 2 ], 
-  [ 1, 2, 3, 5, 9, 10 ] -> [ 7, 2, 1, 5, 9, 4 ], 
-  [ 2, 5, 6, 8 ] -> [ 5, 1, 2, 3 ], 
-  [ 1, 2, 4, 5, 7, 9 ] -> [ 3, 2, 10, 5, 1, 9 ] ]
+[ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]>, 
+  [1,5,2,6][3,8], [3,1,7][10,4](2)(5)(9), [6,2,5,1][8,3], 
+  [4,10][7,1,3](2)(5)(9) ]
 gap> GeneratorsOfMonoid(s);   
-[ [ 1, 2, 3, 5 ] -> [ 5, 6, 8, 2 ], 
-  [ 1, 2, 3, 5, 9, 10 ] -> [ 7, 2, 1, 5, 9, 4 ], 
-  [ 2, 5, 6, 8 ] -> [ 5, 1, 2, 3 ], 
-  [ 1, 2, 4, 5, 7, 9 ] -> [ 3, 2, 10, 5, 1, 9 ] ]
+[ [1,5,2,6][3,8], [3,1,7][10,4](2)(5)(9), [6,2,5,1][8,3], 
+  [4,10][7,1,3](2)(5)(9) ]
 
 #
 gap> g:=DihedralGroup(8);;
 gap> g:=Range(IsomorphismPermGroup(g));;
 gap> iso:=IsomorphismPartialPermSemigroup(g);
-MappingByFunction( Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), 
-  (1,4)(2,6)(3,7)(5,8) ]), <inverse semigroup with 
-3 generators>, function( p ) ... end, function( f ) ... end )
+MappingByFunction( Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)
+(2,6)(3,7)(5,8) ]), <inverse partial perm semigroup on 8 pts
+ with 3 generators>, function( p ) ... end, function( f ) ... end )
 gap> inv:=InverseGeneralMapping(iso);
-MappingByFunction( <inverse semigroup with 3 generators>, Group(
-[ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8) 
- ]), function( f ) ... end, function( p ) ... end )
+MappingByFunction( <inverse partial perm semigroup on 8 pts
+ with 3 generators>, Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)
+(2,6)(3,7)(5,8) ]), function( f ) ... end, function( p ) ... end )
 gap> f:=(1,5)(2,3)(4,8)(6,7);;
 gap> f^iso;
-[ 1 .. 8 ] -> [ 5, 3, 2, 8, 1, 7, 6, 4 ]
+(1,5)(2,3)(4,8)(6,7)
 gap> (f^iso)^inv;
 (1,5)(2,3)(4,8)(6,7)
 gap> ForAll(g, f-> (f^iso)^inv=f);
@@ -200,22 +195,25 @@ gap> Size(Range(iso));
 
 #
 gap> s:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
-<inverse semigroup with 2 generators>
+<inverse partial perm semigroup on 4 pts with 2 generators>
 gap> IsomorphismPermGroup(s);
-MappingByFunction( <inverse semigroup with 2 generators>, Group(
-[ (1,2,3,4), (1,2) ]), <Operation "AsPermutation">, function( x ) ... end )
+MappingByFunction( <inverse partial perm semigroup on 4 pts
+ with 2 generators>, Group([ (1,2,3,4), (1,
+2) ]), <Attribute "AsPermutation">, function( x ) ... end )
 gap> iso:=last;
-MappingByFunction( <inverse semigroup with 2 generators>, Group(
-[ (1,2,3,4), (1,2) ]), <Operation "AsPermutation">, function( x ) ... end )
+MappingByFunction( <inverse partial perm semigroup on 4 pts
+ with 2 generators>, Group([ (1,2,3,4), (1,
+2) ]), <Attribute "AsPermutation">, function( x ) ... end )
 gap> inv:=InverseGeneralMapping(iso);
-MappingByFunction( Group([ (1,2,3,4), (1,2) ]), <inverse semigroup with 
-2 generators>, function( x ) ... end, <Operation "AsPermutation"> )
+MappingByFunction( Group([ (1,2,3,4), (1,
+2) ]), <inverse partial perm semigroup on 4 pts
+ with 2 generators>, function( x ) ... end, <Attribute "AsPermutation"> )
 gap> f:=Random(s);
-[ 1 .. 4 ] -> [ 2, 1, 3, 4 ]
+(1,2)(3)(4)
 gap> f^iso;       
 (1,2)
 gap> (f^iso)^inv; 
-[ 1 .. 4 ] -> [ 2, 1, 3, 4 ]
+(1,2)(3)(4)
 gap> ForAll(s, f-> (f^iso)^inv=f);
 true
 gap> Size(s);
@@ -225,9 +223,9 @@ gap> Size(Range(iso));
 
 #
 gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoCitrus, InfoLevelInfoCitrus);;
-gap> Unbind(InfoLevelInfoCitrus);; Unbind(InfoLevelInfoWarning);;
+gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
+gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
 gap> Unbind(s);; Unbind(gens);;
 
 #
-gap> STOP_TEST( "Citrus package: semigroups.tst", 10000);
+gap> STOP_TEST( "Semigroups package: semigroups.tst", 10000);
