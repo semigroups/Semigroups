@@ -82,7 +82,7 @@
     successful installation of &Semigroups;:
     <List>
       <Item> download and install the &GENSS; package version 
-      1.5 or higher. For more details go to:
+      &GENSSVERS; or higher. For more details go to:
       &vspace;<P/>&noindent; 
       <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html
       </URL><P/>

@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  PackageInfo.g
-#Y  Copyright (C) 2011-12                                James D. Mitchell
+#Y  Copyright (C) 2011-13                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -11,19 +11,19 @@
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "1.0">
 ##  <!ENTITY ORBVERS "4.6">
+##  <!ENTITY GENSSVERS "1.5">
 ##  <!ENTITY IOVERS "4.1">
 ##  <!ENTITY GRAPEVERS "4.5">
 ##  <!ENTITY ARCHIVENAME "semigroups-1.0">
-##  <!ENTITY COPYRIGHTYEARS "2013">
+##  <!ENTITY COPYRIGHTYEARS "2011-13">
 ##  <#/GAPDoc>
 
 SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "Methods for Semigroups",
 Version := "1.0",
-Date := "06/2012",
-ArchiveURL := 
-          "https://bitbucket.org/zen154115/semigroups/downloads/semigroups-1.0",
+Date := "07/06/2013",
+ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-1.0",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -66,7 +66,7 @@ AbstractHTML := Concatenation(
   "and generators for the endomorphism monoids of the non-abelian groups with ",
   "order at most 64."),
 
-PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups",
+PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/citrus.php",
                
 PackageDoc := rec(
   BookName  := "Semigroups",
