@@ -308,20 +308,18 @@ function(arg)
   gens:=EmptyPlist(Length(trans));
 
   for i in [1..Length(trans)] do 
-    if IsTransformationSemigroup(trans[i]) or
-     IsPartialPermSemigroup(trans[i]) then 
-      if HasMinimalGeneratingSet(trans[i]) then
-        gens[i]:=MinimalGeneratingSet(trans[i]);
-      elif HasSmallGeneratingSet(trans[i]) then 
-        gens[i]:=SmallGeneratingSet(trans[i]);
-      else
-        gens[i]:=Generators(trans[i]);
-      fi;
+    if IsTransformationSemigroup(trans[i]) 
+      or IsPartialPermSemigroup(trans[i]) then 
+      gens[i]:=GeneratorsOfSemigroup(trans[i]);
+      # we could use a smaller generating set (i.e. GeneratorsOfMonoid,
+      # GeneratorsOfInverseSemigroup etc) but we have no way of knowing which
+      # generators we wrote, so better always use GeneratorsOfSemigroup
     else
       gens:=trans;
     fi;
   od;
- 
+
+  
   #####
 
   append:=function(str, pt, m)
