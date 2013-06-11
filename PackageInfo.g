@@ -44,9 +44,9 @@ Persons := [
 Status := "deposited",
 
 README_URL := 
-  "http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups/README",
+  "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/README",
 PackageInfoURL := 
-  "http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups/PackageInfo.g",
+  "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/PackageInfo.g",
 
 AbstractHTML := Concatenation( 
   "The Semigroups package is a ",
@@ -66,7 +66,7 @@ AbstractHTML := Concatenation(
   "and generators for the endomorphism monoids of the non-abelian groups with ",
   "order at most 64."),
 
-PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups.php",
+PackageWWWHome := "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php",
                
 PackageDoc := rec(
   BookName  := "Semigroups",
