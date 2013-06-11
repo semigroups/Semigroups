@@ -38,7 +38,7 @@ To get the latest version of this GAP 4.5 package download the archive file
 
 from 
 
-    http://www-history.mcs.st-and.ac.uk/~jamesm/semigroups/index.html 
+    http://www-history.mcs.st-and.ac.uk/~jamesm/semigroups.php
 
 and inside the 'pkg' subdirectory of your GAP 4 installation unpack
 semigroups-x.x.tar.gz using:
