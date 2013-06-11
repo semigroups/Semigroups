@@ -59,24 +59,24 @@ install it can be obtained from the main GAP webpage
 The  following  is  a  summary of the steps that should lead to a successful
 installation of Semigroups:
 
- *   download  and  install the Orb package version 4.2 or higher. For more
+ 1.  download  and  install the Orb package version 4.2 or higher. For more
      details go to:
 
   http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
 
      Note that Orb and Semigroups both perform better if Orb is compiled.
 
- *   download  and  install the genss package version 1.5 or higher. For more
+ 2.  download  and  install the genss package version 1.5 or higher. For more
      details go to:
 
   http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html
 
- *   download and install the IO package version 4.1 or higher. For more
+ 3.  download and install the IO package version 4.1 or higher. For more
      details go to:
 
   http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html
 
- *   if you want to be able to calculate the Munn semigroup of a semilattice,
+ 4.  if you want to be able to calculate the Munn semigroup of a semilattice,
      then download and fully install (i.e. compile it) the Grape package
      version 4.5 or higher.  For more details go to:
 
@@ -85,25 +85,25 @@ installation of Semigroups:
      This step is optional: please consult the section 'The Grape package'
      below for more details. 
 
- *   download the package archive semigroups-x.x.tar.gz from
+ 5.  download the package archive semigroups-x.x.tar.gz from
 
-     http://www-history.mcs.st-and.ac.uk/~jamesm/citrus.php
+     http://www-history.mcs.st-and.ac.uk/~jamesm/semigroups.php
 
- *   unzip  and  untar  the file semigroups-x.x.tar.gz using
+ 6.  unzip  and  untar  the file semigroups-x.x.tar.gz using
  
         gunzip semigroups-x.x.tar.gz; tar xvf semigroups-x.x.tar
     
      this  should  create a directory called semigroups-x.x.
 
- *   locate  the  'pkg'  directory  of your GAP directory, which contains the
+ 7.  locate  the  'pkg'  directory  of your GAP directory, which contains the
      directories lib, doc and so on. Move the directory semigroups-x.x into the
      pkg directory (if it is not there already).
 
- *   start GAP in the usual way.
+ 8.  start GAP in the usual way.
 
- *   type LoadPackage("semigroups");
+ 9.  type LoadPackage("semigroups");
 
- *   compile the documentation by typing 
+ 10. compile the documentation by typing 
  
         SemigroupsMakeDoc();
 
