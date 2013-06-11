@@ -52,8 +52,8 @@
     permutations to a file.
     The &Grape; package is used in the function <Ref Oper="MunnSemigroup"/> but
     nowhere else in &Semigroups;. If &Grape; is not fully installed, then
-    &Semigroups; can be used as normal with the except that the operation <Ref
-      Oper="MunnSemigroup"/> does not work.  <P/>
+    &Semigroups; can be used as normal with the exception that the operation
+    <Ref Oper="MunnSemigroup"/> does not work.  <P/>
     
     &Semigroups; is still under development, and so some features may not
     function as expected. At the present time, I do not know of any errors or
