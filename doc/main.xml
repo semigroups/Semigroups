@@ -2,8 +2,6 @@
    [ <!ENTITY Semigroups "<Package>Semigroups</Package>">
    <!ENTITY Smallsemi "<Alt Not='Text'><URL
    Text='Smallsemi'>http://www-history.mcs.st-and.ac.uk/~jamesm/smallsemi.php</URL></Alt><Alt Only='Text'><Package>Smallsemi</Package></Alt>">
-   <!ENTITY Citrus "<Alt Not='Text'><URL
-   Text='Citrus'>http://www-history.mcs.st-and.ac.uk/~jamesm/citrus.php</URL></Alt><Alt Only='Text'><Package>Citrus</Package></Alt>">
    <!ENTITY Grape "<Alt Not='Text'><URL
    Text='Grape'>http://www.maths.qmul.ac.uk/~leonard/grape/</URL></Alt><Alt
    Only='Text'><Package>Grape</Package></Alt>">

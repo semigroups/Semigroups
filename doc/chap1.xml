@@ -10,7 +10,7 @@
     Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc and
     the <URL Text="Monoid package for GAP 4">
       http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html</URL> by
-    J.  D. Mitchell, and the &Citrus; package by J. D. Mitchell.<P/>
+    J.  D. Mitchell.<P/>
 
     Some of the theory behind the algorithms in &Semigroups; is described in 
     <Cite Key="pfeiffer1"/> and described in <Cite Key="pfeiffer2"/>.  Another
@@ -20,7 +20,7 @@
     &GAP; 4.5 packages &Semigroups; and &Comatose;.
 
     &Semigroups; &VERSION; retains all the functionality of the original
-    &Monoid; and &Citrus; packages for &GAP; 3; and many of those functions
+    &Monoid; for &GAP; 3; and many of those functions
     from &Monoid; 3.1.4 not involved in the computation of automorphism groups
     of semigroups. The &Comatose; package retains those functions from &Monoid;
     3.1.4 used to compute automorphism groups of transformation semigroups. <P/>
