@@ -8,6 +8,12 @@
 #############################################################################
 
 
+1.0 -> 1.1  
+            A minor release to fix some technical issues in PackageInfo.g, the
+            declarations of IsGreens.Class, and a minor change in the output in
+            one test in everyfunction.tst which was consequence of the
+            declarations of IsGreens.Class.
+
 0.9999 -> 1.0
             The package has been renamed from Citrus to Semigroups. The package
             has been completely overhauled, the performance has been improved,
