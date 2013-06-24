@@ -1,4 +1,7 @@
-<Chapter Label="green"><Heading>Determining the structure of a semigroup</Heading>
+<Chapter Label="green">
+  <Heading>
+    Determining the structure of a semigroup
+  </Heading>
 
   In this chapter we describe the functions in &Semigroups; for determining the
   structure of a semigroup of transformations or partial permutations, in

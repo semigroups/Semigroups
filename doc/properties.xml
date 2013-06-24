@@ -1320,6 +1320,7 @@ gap> SmallGeneratingSet(S);
 </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="VagnerPrestonRepresentation">
 <ManSection>
   <Func Name="VagnerPrestonRepresentation" Arg="S"/>
   <Returns>

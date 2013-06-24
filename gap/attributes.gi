@@ -767,7 +767,7 @@ function(s, f)
   j:=0; 
 
   for k in [1..i-1] do 
-    if NaturalLeqPP(elts[k], f) and f<>elts[k] then 
+    if NaturalLeqPartialPerm(elts[k], f) and f<>elts[k] then 
       j:=j+1;
       out[j]:=elts[k];
     fi;
@@ -801,12 +801,12 @@ function(h)
   local e, F, out, f, i;
 
   e:=Representative(h);
-  F:=Minorants(ParentSemigroup(h), e);
+  F:=Minorants(Parent(h), e);
   h:=Elements(h);
   out:=[e];
 
   for i in [2..Length(h)] do
-    if ForAll(F, f-> NaturalLeqPP(f, h[i])) then 
+    if ForAll(F, f-> NaturalLeqPartialPerm(f, h[i])) then 
       Add(out, h[i]);
     fi;
   od;
@@ -861,7 +861,7 @@ function(S, T)
     iter:=Iterator(S);
     for u in iter do
       i:=i+1;
-      if NaturalLeqPP(t, u) and not u in T then
+      if NaturalLeqPartialPerm(t, u) and not u in T then
         return false;
       fi;
     od;
@@ -920,7 +920,7 @@ function(S, T)
 
 	for t in out do
 		for i in [1..n] do
-			if NaturalLeqPP(t, elts[i]) then
+			if NaturalLeqPartialPerm(t, elts[i]) then
 				val:=HTValue(ht, elts[i]);
 				if val=fail then
 					k:=k+1;
@@ -1013,7 +1013,7 @@ function(S, x)
 
   # Find an element smaller than y, k
   for j in [i-1,i-2 .. 1] do
-    if NaturalLeqPP(elts[j], elts[i]) then
+    if NaturalLeqPartialPerm(elts[j], elts[i]) then
       k:=j;
       break;
     fi;
@@ -1024,7 +1024,7 @@ function(S, x)
 
   # Look for other elements smaller than y which are not smaller than k
   for j in [1..(k-1)] do 
-    if NaturalLeqPP(elts[j], elts[i]) and not NaturalLeqPP(elts[j], elts[k]) then 
+    if NaturalLeqPartialPerm(elts[j], elts[i]) and not NaturalLeqPartialPerm(elts[j], elts[k]) then 
       singleline:=false; 
       break;
     fi;
@@ -1037,7 +1037,7 @@ function(S, x)
   sup:=SupremumIdempotentsNC(Minorants(S, y));
   if y = sup then return false; fi;
 
-  if ForAny(HClass(S, y), x-> NaturalLeqPP(sup,x) and x<>y) then
+  if ForAny(HClass(S, y), x-> NaturalLeqPartialPerm(sup,x) and x<>y) then
     return true;
   fi;
   
@@ -1068,7 +1068,7 @@ function(S)
     fi;
     
     i:=Position(elts, rep);
-    k:=First([i-1,i-2 .. 1], j-> NaturalLeqPP(elts[j], rep));
+    k:=First([i-1,i-2 .. 1], j-> NaturalLeqPartialPerm(elts[j], rep));
 
     if k=fail then # d is the minimal non-trivial D-class
       Add(out, d);
@@ -1079,8 +1079,8 @@ function(S)
     singleline:=true;
 
     for j in [1..k-1] do 
-      if NaturalLeqPP(elts[j], rep) then 
-        if singleline and not NaturalLeqPP(elts[j], elts[k]) then 
+      if NaturalLeqPartialPerm(elts[j], rep) then 
+        if singleline and not NaturalLeqPartialPerm(elts[j], elts[k]) then 
           # rep is the lub of {elts[j], elts[k]}, not quite 
           singleline:=false;
           if IsTrivial(SchutzenbergerGroup(d)) then 
@@ -1099,9 +1099,9 @@ function(S)
       continue;
     fi;
 
-    minorants:=Union(List(minorants, j-> DomPP(elts[j])));
+    minorants:=Union(List(minorants, j-> DomainOfPartialPerm(elts[j])));
 
-    if DomPP(rep)=minorants then 
+    if DomainOfPartialPerm(rep)=minorants then 
       # rep=lub(minorants) but rep not in minorants
       continue; 
     fi;
@@ -1145,9 +1145,9 @@ function(S)
     
     schutz:=SchutzenbergerGroup(d);
     sup:=SupremumIdempotentsNC(Minorants(S, e));
-    trivialse:=not ForAny(He, x-> NaturalLeqPP(sup, x) and x<>e);
+    trivialse:=not ForAny(He, x-> NaturalLeqPartialPerm(sup, x) and x<>e);
     
-    psi:=ActionHomomorphism(schutz, Difference(DomPP(e), DomPP(sup)));
+    psi:=ActionHomomorphism(schutz, Difference(DomainOfPartialPerm(e), DomainOfPartialPerm(sup)));
     psiinv:=InverseGeneralMapping(psi);
 
     rho:=SmallerDegreePermutationRepresentation(Image(psi));
@@ -1182,7 +1182,7 @@ function(S)
       reps:=[];
       lookup:=EmptyPlist(Length(LambdaOrb(d)));
       for k in [1..Size(h)] do
-        lookup[Position(LambdaOrb(d), RanSetPP(h[k]))]:= k;
+        lookup[Position(LambdaOrb(d), ImageSetOfPartialPerm(h[k]))]:= k;
         for m in [1..Length(cosets)] do
           j:=j+1;
           reps[j]:=cosets[m]*h[k];
@@ -1207,7 +1207,7 @@ function(S)
           if not rep*rep^(-1) in stabpp then
             Add(newgens[j], 0);
           else
-            box:=lookup[Position(LambdaOrb(d), RanSetPP(rep))];
+            box:=lookup[Position(LambdaOrb(d), ImageSetOfPartialPerm(rep))];
             if trivialse then
               subbox:=1;
             else
