@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  PackageInfo.g
-#Y  Copyright (C) 2011-12                                James D. Mitchell
+#Y  Copyright (C) 2011-13                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -9,21 +9,21 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "1.0">
-##  <!ENTITY ORBVERS "4.2">
+##  <!ENTITY VERSION "1.1">
+##  <!ENTITY ORBVERS "4.6">
+##  <!ENTITY GENSSVERS "1.5">
 ##  <!ENTITY IOVERS "4.1">
 ##  <!ENTITY GRAPEVERS "4.5">
-##  <!ENTITY ARCHIVENAME "semigroups-1.0">
-##  <!ENTITY COPYRIGHTYEARS "2011-12">
+##  <!ENTITY ARCHIVENAME "semigroups-1.1">
+##  <!ENTITY COPYRIGHTYEARS "2011-13">
 ##  <#/GAPDoc>
 
 SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "Methods for Semigroups",
-Version := "1.0",
-Date := "06/07/2012",
-ArchiveURL := 
-          "https://bitbucket.org/zen154115/semigroups/downloads/semigroups-1.0",
+Version := "1.1",
+Date := "11/06/2013",
+ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-1.1",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -32,7 +32,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "jdm3@st-and.ac.uk",
-    WWWHome       := "",
+    WWWHome       := "tinyurl.com/jdmitchell",
     PostalAddress := Concatenation( [
                        "Mathematical Institute,",
                        " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,", 
@@ -44,9 +44,9 @@ Persons := [
 Status := "deposited",
 
 README_URL := 
-  "http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups/README",
+  "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/README",
 PackageInfoURL := 
-  "http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups/PackageInfo.g",
+  "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/PackageInfo.g",
 
 AbstractHTML := Concatenation( 
   "The Semigroups package is a ",
@@ -66,7 +66,7 @@ AbstractHTML := Concatenation(
   "and generators for the endomorphism monoids of the non-abelian groups with ",
   "order at most 64."),
 
-PackageWWWHome := "http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups",
+PackageWWWHome := "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php",
                
 PackageDoc := rec(
   BookName  := "Semigroups",
@@ -79,8 +79,8 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.5.4",
-  NeededOtherPackages := [["orb", ">=4.2"], ["io", ">=4.1"], 
+  GAP := ">=4.7",
+  NeededOtherPackages := [["orb", ">=4.6"], ["io", ">=4.2"], 
   ["genss", ">=1.5"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"]], 
   ExternalConditions := []),

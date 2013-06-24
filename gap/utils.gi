@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  utils.gi
-#Y  Copyright (C) 2011-12                                James D. Mitchell
+#Y  Copyright (C) 2013                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -10,29 +10,79 @@
 
 # this file contains utilies for use with the Semigroups package. 
 
-# new for 0.5! - SemigroupsDir - for no arg.
-#############################################################################
+BindGlobal("SemigroupsTestRec",
+  rec());
+
+MakeReadWriteGlobal("SemigroupsTestRec");
+
+InstallGlobalFunction(SemigroupsStartTest, 
+function()
+  local record;
+
+  record:=SemigroupsTestRec;  
+  
+  record.InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
+  record.InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
+  
+  record.PartialPermDisplayLimit:=UserPreference("PartialPermDisplayLimit");;
+  record.TransformationDisplayLimit
+   :=UserPreference("TransformationDisplayLimit");;
+  record.NotationForPartialPerms:=UserPreference("NotationForPartialPerms");;
+  record.NotationForTransformations:=
+   UserPreference("NotationForTransformations");;
+  
+  SetInfoLevel(InfoWarning, 0);;
+  SetInfoLevel(InfoSemigroups, 0);
+  
+  SetUserPreference("PartialPermDisplayLimit", 100);;
+  SetUserPreference("TransformationDisplayLimit", 100);;
+  SetUserPreference("NotationForPartialPerms", "component");;
+  SetUserPreference("NotationForTransformations", "input");;
+  return; 
+end);
+
+#
+
+InstallGlobalFunction(SemigroupsStopTest, 
+function()
+  local record;
+
+  record:=SemigroupsTestRec;  
+  
+  SetInfoLevel(InfoWarning, record.InfoLevelInfoWarning);;
+  SetInfoLevel(InfoSemigroups, record.InfoLevelInfoSemigroups);
+  
+  SetUserPreference("PartialPermDisplayLimit", 
+   record.PartialPermDisplayLimit);
+  SetUserPreference("TransformationDisplayLimit", 
+   record.TransformationDisplayLimit);
+  SetUserPreference("NotationForPartialPerms", 
+   record.NotationForPartialPerms);
+  SetUserPreference("NotationForTransformations",
+   record.NotationForTransformations);
+  return;
+end);
+
+#
 
 InstallGlobalFunction(SemigroupsDir, 
 function()
   return PackageInfo("semigroups")[1]!.InstallationPath;
 end);
 
-# mod for 0.7! - SemigroupsMakeDoc - "for no argument"
-#############################################################################
+#
 
 InstallGlobalFunction(SemigroupsMakeDoc, 
 function()
   MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.
-   InstallationPath, "/doc"), "citrus.xml", 
-   ["utils.xml", "greens.xml", "inverse.xml", "orbits.xml", "properties.xml",
-   "semigroups.xml", "transform.xml", "pperm.xml", "../PackageInfo.g"],
+   InstallationPath, "/doc"), "main.xml", 
+   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
+   "semigroups.xml", "transform.xml", "../PackageInfo.g"],
    "semigroups", "MathJax", "../../..");;
   return;
 end);
 
-# new for 0.4! - SemigroupsMathJaxDefault - "for no argument"
-#############################################################################
+#
 
 InstallGlobalFunction(SemigroupsMathJaxDefault, 
 function()
@@ -49,8 +99,7 @@ Info(InfoSemigroups, 1, "don't forget to run SemigroupsMakeDoc()");
 return;
 end);
 
-# new for 0.4! - SemigroupsMathJaxLocal - "for a path to the MathJax folder"
-#############################################################################
+#
 
 InstallGlobalFunction(SemigroupsMathJaxLocal, 
 function(arg)
@@ -74,8 +123,7 @@ function(arg)
   return;
 end);
 
-# mod for 0.7! - SemigroupsTestAll - "for no argument"
-#############################################################################
+#
 
 InstallGlobalFunction(SemigroupsTestAll, 
 function()
@@ -92,7 +140,8 @@ function()
       #if not Semigroups_C and str[1] in ["inverse", "pperm", "semigroups", 
       #   "testcompiled"]
       #  then 
-      #  Print("not reading ", dir_str, "/", x, "\n(Semigroups is not compiled)\n");
+      #  Print("not reading ", dir_str, "/", x, "\n(Semigroups is not
+      #  compiled)\n");
       #else
         Print("reading ", dir_str,"/", x, " ...\n");
         Test(Filename(dir, x));
@@ -103,85 +152,46 @@ function()
   return;
 end);
 
-# new for 0.1! - SemigroupsTestInstall - "for no argument"
-#############################################################################
+#
 
 InstallGlobalFunction(SemigroupsTestInstall, 
 function()
   Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
    "testinstall.tst"));;
-  #if Semigroups_C then 
-    Test(Filename(DirectoriesPackageLibrary("semigroups","tst"),
-       "testcompiled.tst"));;
-  #fi;
   return;
 end);
 
-# new for 0.1! - SemigroupsTestManualExamples - "for no argument"
-#############################################################################
+#
 
-InstallGlobalFunction(SemigroupsTestManualExamples,
+InstallGlobalFunction(SemigroupsManualExamples,
 function()
-  local InfoLevelInfoWarning, InfoLevelInfoSemigroups;
-  
-  #if not Semigroups_C then 
-   # Print("Semigroups is not compiled and so this will produce many many errors.\n");
-   # return fail;
-  #fi;
-
-  SizeScreen([80]); 
-  InfoLevelInfoWarning:=InfoLevel(InfoWarning);
-  InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);
-  SetInfoLevel(InfoWarning, 0);
-  SetInfoLevel(InfoSemigroups, 0);
-
-  TestManualExamples(Concatenation(PackageInfo("semigroups")[1]!.
-     InstallationPath, "/doc"), "semigroups.xml", 
-     ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "inverse.xml",
-     "semigroups.xml", "transform.xml", "pperm.xml", "../PackageInfo.g"]);
-  
-  SetInfoLevel(InfoWarning, InfoLevelInfoWarning);
-  SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);
-  Unbind(InfoLevelInfoSemigroups); Unbind(InfoLevelInfoWarning);
-  return;
+return 
+  ExtractExamples(DirectoriesPackageLibrary("semigroups","doc"), 
+  "main.xml",  [ "utils.xml",
+  "greens.xml", "orbits.xml", "properties.xml",
+  "semigroups.xml",  "transform.xml", "../PackageInfo.g" ], "Single" );
 end);
 
-# new for 0.5! - SemigroupsReadTestManualExamples - "for no argument" 
-#############################################################################
+#
 
-InstallGlobalFunction(SemigroupsReadTestManualExamples, 
+InstallGlobalFunction(SemigroupsTestManualExamples, 
 function()
-  local ex, tst, i;
+  local ex;
 
   #if not Semigroups_C then 
-  #  Print("Semigroups is not compiled and so this will produce many many errors.");
+  #  Print("Semigroups is not compiled and so this will produce many many
+  #  errors.");
   #  return fail;
   #fi;
   
-  ex:=ManualExamples("~/semigroups/doc/", "semigroups.xml",  [ "utils.xml",
-  "greens.xml", "orbits.xml", "properties.xml", "pperm.xml", "inverse.xml",
-  "semigroups.xml",  "transform.xml", "../PackageInfo.g" ], "Single" );;
-
-  for i in [1..Length(ex)] do 
-    Print("*** Example ", i, " ***\n");
-    tst:=ReadTestExamplesString(ex[i]);
-  od;
-  if IsBoundGlobal("SemigroupsManualExamples") then 
-    MakeReadWriteGlobal("SemigroupsManualExamples");
-    UnbindGlobal("SemigroupsManualExamples");
-  fi;
-
-  BindGlobal("SemigroupsManualExamples", ex);
-  Print("the manual examples are in the global variable",
-  " SemigroupsManualExamples\n");
-
+  ex:=SemigroupsManualExamples(); 
+  SemigroupsStartTest();
+  RunExamples(ex);
+  SemigroupsStopTest();
   return;
 end);
 
-#III
-
-# new for 0.5! - ReadSemigroups - "for a string and optional pos. int."
-#############################################################################
+#
 
 InstallGlobalFunction(ReadSemigroups, 
 function(arg)
@@ -196,6 +206,10 @@ function(arg)
       file:=IO_FilteredFile([["gzip", ["-dcq"]]], arg[1]);
     else  
       file:=IO_File(arg[1]);
+      if file=fail then 
+        file:=IO_FilteredFile([["gzip", ["-dcq"]]], 
+         Concatenation(arg[1], ".gz"));
+      fi;
     fi;
   fi;
 
@@ -209,7 +223,7 @@ function(arg)
       repeat  
         i:=i+1; line:=IO_ReadLine(file);
       until i=arg[2] or line="";
-      IO_Close(file); 
+      IO_Close(file);
       if line="" then
         Error(arg[1], " only has ", i-1, " lines,"); 
         return;
@@ -217,7 +231,6 @@ function(arg)
         return ReadSemigroupsLine(Chomp(line));
       fi;
     else
-      IO_Close(file);
       Error("the second argument should be a positive integer,");
       return;
     fi;
@@ -228,71 +241,45 @@ function(arg)
   return List(line, x-> ReadSemigroupsLine(Chomp(x)));
 end);
 
-# mod for 0.7! - ReadSemigroupsLine - "for a string"
-#############################################################################
+#
 
 InstallGlobalFunction(ReadSemigroupsLine, 
 function(line)
-  local m, n, r, dom, out, f, i, k, deg, rank, j;
+  local i, k, out, m, deg, f, j;
   
-  if not line[1]='p' then         # transformations
-    m:=Int([line[1]]);            # block size <10
-    n:=Int(line{[2..m+1]});       # degree
-    r:=(Length(line)-(m+1))/(m*n);# number of generators 
-    dom:=[m+2..m*n+m+1]; out:=EmptyPlist(r);
-
-    for i in [1..r] do
-      out[i]:=EmptyPlist(n); 
-      f:=line{dom+m*(i-1)*n};
-      for j in [1..n] do 
-        Add(out[i], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
-      od;
-      out[i]:=TransformationNC(out[i]);
-    od;
-    return out;
-  elif line[1]='p' then # partial perms
-    return ReadSemigroupsLinePP(line);
-  fi;
-end);
-
-#
-
-InstallGlobalFunction(ReadSemigroupsLinePP, 
-function(line)
-  local r, i, k, out, m, deg, rank, f, j;
-  
-  r:=Length(line)-1; i:=2; k:=0; out:=[];
+  i:=2; k:=0; out:=[];
 
   while i<Length(line) do
-    k:=k+1;
     m:=Int([line[i]]);                                      # blocksize
     deg:=Int(NormalizedWhitespace(line{[i+1..m+i]}));       # max domain
-    rank:=Int(NormalizedWhitespace(line{[m+i+1..2*m+i]}));  # rank
-    f:=line{[i+1..i+m*(deg+3*rank+6)]};
-    out[k]:=EmptyPlist(deg+3*rank+6);
-    for j in [1..deg+3*rank+6] do 
+    f:=line{[m+i+1..i+m*(deg+1)]};
+    k:=k+1;
+    out[k]:=EmptyPlist(deg);
+    for j in [1..deg] do 
       Add(out[k], Int(NormalizedWhitespace(f{[(j-1)*m+1..j*m]})));
     od;
-    out[k]:=FullPartialPermNC(out[k]);
-    i:=i+m*(deg+3*rank+6)+1;
+    i:=i+m*(deg+1)+1;
   od;
+  
+  if line[1]='t' then   # transformations
+    Apply(out, TransformationNC); 
+  elif line[1]='p' then # partial perms
+    Apply(out, DensePartialPermNC);
+  fi;
   return out;
 end);
 
-# mod for 0.7! - WriteSemigroups - "for a string and trans. coll."
-#############################################################################
-
-# Usage: filename as a string and trans. coll. 
+# usage: filename as a string and trans. coll. 
 
 # Returns: nothing. 
 
 InstallGlobalFunction(WriteSemigroups, 
 function(arg)
-  local trans, gens, convert, output, n, m, str, int, j, i, s, f;
+  local trans, gens, append, gzip, str, deg, nrdigits, out, i, s, f;
   
-  if not Length(arg)=2 then 
-    Error("Usage: filename as string and trans, trans coll, partial perm or",
-    " partial perm coll,");
+  if not (Length(arg)=3 or Length(arg)=2) then
+    Error("usage: filename as string and a transformation, transformation ",
+    "collection, partial perm or partial perm collection, and a boolean,");
     return;
   fi;
 
@@ -303,81 +290,107 @@ function(arg)
 
   if IsTransformationCollection(arg[2]) or IsPartialPermCollection(arg[2]) then 
     trans:=[arg[2]];
-  elif IsTransformationCollection(arg[2][1]) or
-   IsPartialPermCollection(arg[2][1]) then 
+  elif IsList(arg[2]) and IsBound(arg[2][1]) and
+  (IsTransformationCollection(arg[2][1]) or IsPartialPermCollection(arg[2][1]))
+   then 
     trans:=arg[2];
   else
-    Error("Usage: second arg must be trans or part perm semi, coll, or list",
-    " of same,");
+    Error("usage: the 2nd argument must be transformation or partial perm ",
+    "semigroup or collection, or a list of such semigroups or collections,");
+    return;
+  fi;
+
+  if Length(arg)=3 and not IsBool(arg[3]) then 
+    Error("usage: the 3rd argument must be <true> or <false>,");
     return;
   fi;
 
   gens:=EmptyPlist(Length(trans));
 
   for i in [1..Length(trans)] do 
-    if IsTransformationSemigroup(trans[i]) or
-     IsPartialPermSemigroup(trans[i]) then 
-      if HasMinimalGeneratingSet(trans[i]) then
-        gens[i]:=MinimalGeneratingSet(trans[i]);
-      elif HasSmallGeneratingSet(trans[i]) then 
-        gens[i]:=SmallGeneratingSet(trans[i]);
-      else
-        gens[i]:=Generators(trans[i]);
-      fi;
+    if IsTransformationSemigroup(trans[i]) 
+      or IsPartialPermSemigroup(trans[i]) then 
+      gens[i]:=GeneratorsOfSemigroup(trans[i]);
+      # we could use a smaller generating set (i.e. GeneratorsOfMonoid,
+      # GeneratorsOfInverseSemigroup etc) but we have no way of knowing which
+      # generators we wrote, so better always use GeneratorsOfSemigroup
     else
       gens:=trans;
     fi;
   od;
- 
+
+  
   #####
 
-  convert:=function(list, m)
-    local str, i;
+  append:=function(str, pt, m)
+    local i, j;
     
-    str:="";
-    for i in list do 
-      i:=String(i);
-      Append(str, Concatenation([ListWithIdenticalEntries(m-Length(i), ' ')],
-      [i]));
+    i:=String(pt);
+    for j in [1..m-Length(i)] do 
+      Append(str, " ");
     od;
-
-    return Concatenation(str);
+    Append(str, i);
+    return str;
   end;
 
   #####
 
-  output := OutputTextFile( arg[1], true );
-  SetPrintFormattingStatus(output, false);
+  #by default or if arg[3]=true append the result to arg[1]
+  
+  gzip:=SplitString(arg[1], '.');
+  gzip:=[JoinStringsWithSeparator(gzip{[1..Length(gzip)-1]}, "."),
+   gzip[Length(gzip)]];
+  if Length(arg)=2 or arg[3] then 
+    if Length(gzip)>1 and gzip[2]="gz" then 
+      str:=StringFile(gzip[1]);
+    else 
+      str:=StringFile(arg[1]);
+    fi;
+  else
+    str:=StringFile(arg[1]);
+  fi;
+  
+  if str=fail then 
+    str:="";
+  fi;
+  
   if IsTransformationCollection(gens[1]) then 
-    for s in gens do 
-      n:=String(DegreeOfTransformationCollection(s));
-      m:=Length(n);
-      str:=Concatenation(String(m), n);
-    
+    for s in gens do
+      Append(str, "t");
       for f in s do
-        Append(str, convert(ImageListOfTransformation(f), m));
+        deg:=String(DegreeOfTransformation(f));
+        nrdigits:=Length(deg);
+        Append(str, String(nrdigits));
+        Append(str, deg);
+        for i in [1..DegreeOfTransformation(f)] do 
+          append(str, i^f, nrdigits);
+        od;
       od;
-
-      AppendTo( output, str, "\n" );
+      Append(str, "\n" );
     od;
   elif IsPartialPermCollection(gens[1]) then 
     for s in gens do 
-      str:="p";
+      Append(str, "p");
       for f in s do 
-        int:=InternalRepOfPartialPerm(f);
-        j:=Length(String(int[6]));
-        Append(str, Concatenation(String(j), convert(int, j)));
-        if Length(int)<> 6+int[1]+3*int[2] then 
-          Append(str, Concatenation([ListWithIdenticalEntries(j*int[2], ' ')]));
-        fi;
+        deg:=String(DegreeOfPartialPerm(f));
+        nrdigits:=Length(String(Maximum(
+         DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f))));
+        Append(str, String(nrdigits));
+        append(str, deg, nrdigits);
+        for i in [1..DegreeOfPartialPerm(f)] do 
+          append(str, i^f, nrdigits);
+        od;
       od;
-      #Print(str, "\n");
-      AppendTo(output, str, "\n");
+      Append(str, "\n");
     od;
   fi;
-
-  CloseStream(output);
-  return;
+  
+  if Length(gzip)>1 and gzip[2]="gz" then 
+    out:=FileString(gzip[1], str);
+    Exec("gzip -fq9 ", gzip[1]);
+    return out;
+  fi;
+  return FileString(arg[1], str);
 end);
 
 #EOF

@@ -1,128 +1,284 @@
 #############################################################################
 ##
-#W  r.gi
-#Y  Copyright (C) 2011-12                                James D. Mitchell
+#W  slp.gi
+#Y  Copyright (C) 2013                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-ShorterSLPStabChain:=function(g)
-  local S, l, SS, h, o, SSS, stab, short;
+# express generators of LambdaOrbSchutzGp(o, m) as products in generators of
+# semigroup. Note that this is not a true factorization of these generators
+# since they are not created using TraceSchreierTreeOfSCCForward but using the
+# inverse of the element TraceSchreierTreeOfSCCBack. 
 
-  S:=StabilizerChain(g);
-  l:=[];
+InstallGlobalFunction(LambdaOrbWords,
+function(o, m)
+  local slp, nr, graph, i;
 
-  SS:=S; h:=g;
-
-  while SS!.stab<>false do 
-    o:=Orb(h, SS!.orb[1], SS!.orb!.op, rec(schreier:=true));
-    Enumerate(o);
-    Add(l,o);
-    SSS:=SS!.stab;
-    stab:=Group(S!.stronggens{SSS!.layergens});
-    short:=FindShortGeneratorsOfSubgroup(h, stab);
-    Add(l, short);
-    SS:=SSS;
-    h:=Group(short.gens);
-  od;
-  o:=Orb(h, SS!.orb[1], SS!.orb!.op, rec(schreier:=true));
-  Enumerate(o);
-  Add(l,o); 
-  return l;
-end;
-
-SiftShorterSLP:=function(g, x)
-  local l, i, fakegens, realgens, y, z, o, pos, word;
-
-  l:=ShorterSLPStabChain(g);
-
-  i:=1;
-  fakegens:=GeneratorsWithMemory(List(GeneratorsOfGroup(g), x->()));
-  realgens:=GeneratorsOfGroup(g);
-
-  y:=fakegens[1]^0;
-  z:=x;
-
-  while i<Length(l) do
-    o:=l[i];
-    pos:=Position(o, o!.op(o[1],z));
-    word:=TraceSchreierTreeForward(o, pos);
-    y:=ORB_ApplyWord(y^0,word,fakegens,List(fakegens, x-> x^-1), OnRight)*y;
-    z:=ORB_ApplyWord(z, Reversed(word),List(realgens, x-> x^-1),realgens,
-    OnRight);
-    i:=i+1;
-    realgens:=l[i].gens;
-    fakegens:=ResultOfStraightLineProgram(l[i].slp,fakegens);
-    i:=i+1;
+  if IsBound(o!.schutzgens) then 
+    if IsBound(o!.schutzgens[m]) then 
+      return o!.schutzgens[m];
+    fi;
+  else 
+    o!.schutzgens:=EmptyPlist(Length(OrbSCC(o)));
+  fi;
+  slp:=o!.slp[m];
+  nr:=Length(GeneratorsOfGroup(LambdaOrbSchutzGp(o, m)));
+  o!.schutzgens[m]:=EmptyPlist(nr);
+  graph:=OrbitGraph(o);
+  
+  for i in [1..nr] do
+    o!.schutzgens[m][i]:=Concatenation(
+     TraceSchreierTreeOfSCCForward(o, m, slp[i][1]),
+      [slp[i][2]],
+       TraceSchreierTreeOfSCCBack(o, m, graph[slp[i][1]][slp[i][2]]));
   od;
   
-  o:=l[i];
-  pos:=Position(o, o!.op(o[1],z));
-  word:=TraceSchreierTreeForward(o, pos);    
-  y:=ORB_ApplyWord(y^0,word,fakegens,List(fakegens, x-> x^-1),
-  OnRight)*y;      
+  return o!.schutzgens[m];
+end);
 
-  return SLPOfElm(y);
-end;
+# the exhaustive orbit to find min. length factorisation of schutz gp element
+# in terms of the group generators
 
-# returns an slp for the generators of LambdaOrbSchutzGp(o, m) in the
-# generators of the semigroup.
-
-InstallGlobalFunction(LambdaOrbSLP,
+InstallGlobalFunction(LambdaOrbSchutzSchreier,
 function(o, m)
-  local g, slp, nr, r, graph, slp_lines, word, i, j;
+  local g, schreier;
 
-  if IsBound(o!.slp) then
-    if IsBound(o!.slp[m]) and IsStraightLineProgram(o!.slp[m]) then
-      return o!.slp[m];
+  if IsBound(o!.exhaust) then 
+    if IsBound(o!.exhaust[m]) then 
+      return o!.exhaust[m];
     fi;
+  else 
+    o!.exhaust:=EmptyPlist(Length(OrbSCC(o)));
   fi;
 
   g:=LambdaOrbSchutzGp(o, m);
-  slp:=o!.slp[m];
-  nr:=Length(slp);
-  slp_lines:=EmptyPlist(nr);
-  r:=Length(o!.gens);
-
-  if nr<>0 then
-    graph:=OrbitGraph(o);
-    for i in [1..nr] do
-      word:=Concatenation(TraceSchreierTreeOfSCCForward(o, m, slp[i][1]),
-       [slp[i][2]],
-        TraceSchreierTreeOfSCCBack(o, m, graph[slp[i][1]][slp[i][2]]));
-      slp_lines[i]:=[];
-      for j in [1..Length(word)] do
-        slp_lines[i][2*j-1]:=word[j];
-        slp_lines[i][2*j]:=1;
-      od;
-    od;
-  fi;
-
-  return StraightLineProgram([slp_lines], r);
+  o!.exhaust[m]:=Orb(g, One(g), PROD, rec(hashlen:=2*Size(g), schreier:=true));
+  Enumerate(o!.exhaust[m]);
+  return o!.exhaust[m];
 end);
 
-#JDM we don't correct for the group elt,
-#and so the answer is out by a multiple of a group elt.
+# min. length factorisation of schutz gp element
 
-# an element <x> of an inverse semigroup <s> is given as the product <abc>,
-# where: 
+InstallMethod(Factorization, "for a lambda orbit, scc index, and perm",
+[IsLambdaOrb, IsPosInt, IsPerm],
+function(o, m, elt)
+  local schreier, word, words;
 
-# • <a> is an element of the H-class containing the representative of the
-#   R-class <R> containing <x>, which is equal to: 
-#   TraceSchreierTreeOfSCCBack(o, m, k)
-#   *TraceSchreierTreeOfSCCForward(o, m, l)
-#   *TraceSchreierTreeForward(o, scc[m][1])
-#   where l=Position(o, RhoFunc(s)(rep)), k=Position(o, RhoFunc(s)(x)),
-#   rep=TraceSchreierTreeForward(o, scc[m][1])
+  schreier:=LambdaOrbSchutzSchreier(o, m);
+  #express <elt> as a word in the generators of the Schutz gp
+  word:=TraceSchreierTreeForward(schreier, Position(schreier, elt));
+  
+  #<words> gives a pseudo-factorization for the generators of the Schutz gp in
+  #terms of the generators of the semigroup
+  words:=LambdaOrbWords(o, m);
+  
+  #convert group generators to semigroup generators
+  return Concatenation(List(word, i-> words[i]));
+end);
 
-# • <b> is the element of the Schutz group of <R> corresponding to <xc^-1>
-#   i.e. b=LambdaPerm(s)(rep,a)^-1*LambdaPerm(s)(rep, xc^-1) where
-#   rep=x*LambdaOrbMult(o, m, Position(o, LambdaFunc(s)(x)))[2]
+#
 
-# • <c> is TraceSchreierTreeOfSCCForward(o, m, l); (i.e. that takes
-#  o[scc[m][1]] to o[l]), where l=Position(o, LambdaFunc(s)(x))
+InstallMethod(Factorization, 
+"for an acting semigroup with generators and element", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement], 
+function(s, f)
+  local o, gens, l, m, data, pos, rep, word1, p, word2;
+ 
+  if not f in s then 
+    Error("usage: <f> is not an element of the semigroup <s>,");
+    return;
+  fi;
+ 
+  o:=LambdaOrb(s);
+  gens:=o!.gens;
+  l:=Position(o, LambdaFunc(s)(f));
+  m:=OrbSCCLookup(o)[l];
+  data:=SemigroupData(s);
+  pos:=Position(data, f);                     #not <fail> since <f> in <s>
+  rep:=data[pos][4];                          #rep of R-class of <f>
+  word1:=TraceSchreierTreeForward(data, pos); #a word equal to <rep>
+  
+  #compensate for the action of the multipliers
+  if l<>OrbSCC(o)[m][1] then 
+    p:=LambdaPerm(s)(rep, f*LambdaOrbMult(o, m, l)[2]);
+    word2:=TraceSchreierTreeOfSCCForward(o, m, l);
+    p:=p*LambdaPerm(s)(
+     rep*EvaluateWord(gens, word2)*LambdaOrbMult(o, m, l)[2], rep); 
+  else 
+    p:=LambdaPerm(s)(rep, f);
+    word2:=[];
+  fi;
+
+  if IsOne(p) then 
+    Append(word1, word2);
+    return word1;
+  fi;
+  
+  # factorize the group element <p> over the generators of <s>
+  Append(word1, Factorization(o, m, p));
+  Append(word1, word2);
+
+  return word1;
+end);
+
+#
+
+InstallMethod(Factorization, 
+"for an acting semigroup with inverse op with generators and element", 
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsAssociativeElement], 
+function(s, f)
+  local o, gens, l, m, scc, word1, k, rep, p, word2;
+ 
+  if not f in s then 
+    Error("usage: <f> is not an element of the semigroup <s>,");
+    return;
+  fi;
+ 
+  o:=LambdaOrb(s);
+  gens:=o!.gens;
+  l:=Position(o, LambdaFunc(s)(f));
+  m:=OrbSCCLookup(o)[l];
+  scc:=OrbSCC(o)[m];
+
+  # find the R-class rep 
+  word1:=TraceSchreierTreeForward(o, scc[1]); #lambda value is ok
+  #but rho value is wrong
+  k:=Position(o, RhoFunc(s)(EvaluateWord(gens, word1)));
+  word1:=Concatenation(TraceSchreierTreeOfSCCForward(o, m, k), word1);
+  k:=Position(o, RhoFunc(s)(f));
+  # <word> is an R-class rep for the R-class of <f>
+  word1:=Concatenation(TraceSchreierTreeOfSCCBack(o, m, k), word1);
+  rep:=EvaluateWord(gens, word1);
+
+  #compensate for the action of the multipliers
+  if l<>scc[1] then 
+    p:=LambdaPerm(s)(rep, f*LambdaOrbMult(o, m, l)[2]);
+    word2:=TraceSchreierTreeOfSCCForward(o, m, l);
+    p:=p*LambdaPerm(s)(
+     rep*EvaluateWord(gens, word2)*LambdaOrbMult(o, m, l)[2], rep); 
+  else 
+    p:=LambdaPerm(s)(rep, f);
+    word2:=[];
+  fi;
+
+  if IsOne(p) then 
+    Append(word1, word2);
+    return word1;
+  fi;
+  
+  # factorize the group element <p> over the generators of <s>
+  Append(word1, Factorization(o, m, p));
+  Append(word1, word2);
+
+  return word1;
+end);
+
+#
+
+InstallMethod(Factorization, 
+"for an acting semigroup with inverse op with generators and element", 
+[IsActingSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup,
+IsAssociativeElement], 
+function(s, f)
+  local o, gens, l, m, scc, word1, k, rep, p, word2;
+  
+  # a semigroup that was not created regular already knows how to factorize its
+  # elements
+  if HasSemigroupData(s) and IsClosed(SemigroupData(s)) then 
+    TryNextMethod();
+  fi;
+
+  if not f in s then 
+    Error("usage: <f> is not an element of the semigroup <s>,");
+    return;
+  fi;
+ 
+  o:=RhoOrb(s); Enumerate(o);
+  gens:=o!.gens;
+  l:=Position(o, RhoFunc(s)(f));
+
+  # find the R-class rep 
+  word1:=TraceSchreierTreeBack(o, l);    #rho value is ok
+  #trace back to get forward since this is a left orbit
+  rep:=EvaluateWord(gens, word1);        #but lambda value is wrong
+ 
+  o:=LambdaOrb(s); Enumerate(o);
+  l:=Position(o, LambdaFunc(s)(f));
+  m:=OrbSCCLookup(o)[l];
+  scc:=OrbSCC(o)[m];
+  
+  k:=Position(o, LambdaFunc(s)(rep));
+  word2:=TraceSchreierTreeOfSCCBack(o, m, k);
+  rep:=rep*EvaluateWord(gens, word2); #the R-class rep of the R-class of <f>
+  Append(word1, word2);               #and this word equals <rep>
+
+  #compensate for the action of the multipliers
+  if l<>scc[1] then 
+    p:=LambdaPerm(s)(rep, f*LambdaOrbMult(o, m, l)[2]);
+    word2:=TraceSchreierTreeOfSCCForward(o, m, l);
+    p:=p*LambdaPerm(s)(
+     rep*EvaluateWord(gens, word2)*LambdaOrbMult(o, m, l)[2], rep); 
+  else 
+    p:=LambdaPerm(s)(rep, f);
+    word2:=[];
+  fi;
+
+  if IsOne(p) then 
+    Append(word1, word2);
+    return word1;
+  fi;
+  
+  # factorize the group element <p> over the generators of <s>
+  Append(word1, Factorization(o, m, p));
+  Append(word1, word2);
+
+  return word1;
+end);
+
+# returns a word in the generators of the parent of <data> equal to the R-class
+# representative store in <data!.orbit[pos]>.
+
+# Notes: the code is more complicated than you might think since the R-class
+# reps are obtained from earlier reps by left multiplication but the orbit
+# multipliers correspond to right multiplication.
+
+InstallMethod(TraceSchreierTreeForward, "for semigp data and pos int",
+[IsSemigroupData, IsPosInt], 100,
+function(data, pos)
+  local word, word2, schreiergen, schreierpos, schreiermult, orb, o, m;
+  
+  word:=[];  # the word obtained by tracing schreierpos and schreiergen
+             # (left multiplication)
+  word2:=[]; # the word corresponding to multipliers applied (if any)
+             # (right multiplication)
+
+  schreiergen:=data!.schreiergen;
+  schreierpos:=data!.schreierpos;
+  schreiermult:=data!.schreiermult;
+
+  orb:=data!.orbit;
+
+  while pos > 1 do
+    Add(word, schreiergen[pos]);
+    #if schreiermult[pos]<>fail then # a multiplier was applied!
+    #  o:=orb[pos][3];               # the lambda orb
+    #  m:=orb[pos][2];               # the scc
+    #  Append(word2,
+    #   Reversed(TraceSchreierTreeOfSCCBack(o, m, schreiermult[pos])));
+    #fi;
+    Append(word2, Reversed(TraceSchreierTreeOfSCCBack(orb[pos][3], orb[pos][2],
+     schreiermult[pos])));
+    pos:=schreierpos[pos];
+  od;
+
+  Append(word, Reversed(word2));
+  return word;
+end);
+
+#
 
 InstallMethod(SemigroupElementSLP, 
 "for an acting semigroup with inverse op & gens, and associative element",
@@ -273,48 +429,108 @@ function(s, x)
 end);
 
 
-#TTT
+#
 
-# new for 1.0! - TraceSchreierTreeForward - "for semi data and pos int"
-##############################################################################
-# returns a word in the generators of the parent of <data> equal to the R-class
-# representative store in <data!.orbit[pos]>.
+InstallMethod(ShorterSLPStabChain, "for a perm group",
+[IsPermGroup],
+function(g)
+  local S, l, SS, h, o, SSS, stab, short;
 
-# Notes: the code is more complicated than you might think since the R-class
-# reps are obtained from earlier reps by left multiplication but the orbit
-# multipliers correspond to right multiplication.
+  S:=StabilizerChain(g);
+  l:=[];
 
-InstallOtherMethod(TraceSchreierTreeForward, "for semigp data and pos int",
-[IsSemigroupData, IsPosInt], 100,
-function(data, pos)
-  local word, word2, schreiergen, schreierpos, schreiermult, orb, o, m;
-  
-  word:=[];  # the word obtained by tracing schreierpos and schreiergen
-             # (left multiplication)
-  word2:=[]; # the word corresponding to multipliers applied (if any)
-             # (right multiplication)
+  SS:=S; h:=g;
 
-  schreiergen:=data!.schreiergen;
-  schreierpos:=data!.schreierpos;
-  schreiermult:=data!.schreiermult;
-
-  orb:=data!.orbit;
-
-  while pos > 1 do
-    Add(word, schreiergen[pos]);
-    #if schreiermult[pos]<>fail then # a multiplier was applied!
-    #  o:=orb[pos][3];               # the lambda orb
-    #  m:=orb[pos][2];               # the scc
-    #  Append(word2,
-    #   Reversed(TraceSchreierTreeOfSCCBack(o, m, schreiermult[pos])));
-    #fi;
-    Append(word2, Reversed(TraceSchreierTreeOfSCCBack(orb[pos][3], orb[pos][2],
-     schreiermult[pos])));
-    pos:=schreierpos[pos];
+  while SS!.stab<>false do 
+    o:=Orb(h, SS!.orb[1], SS!.orb!.op, rec(schreier:=true));
+    Enumerate(o);
+    Add(l,o);
+    SSS:=SS!.stab;
+    stab:=Group(S!.stronggens{SSS!.layergens});
+    short:=FindShortGeneratorsOfSubgroup(h, stab);
+    Add(l, short);
+    SS:=SSS;
+    h:=Group(short.gens);
   od;
-
-  Append(word, Reversed(word2));
-  return word;
+  o:=Orb(h, SS!.orb[1], SS!.orb!.op, rec(schreier:=true));
+  Enumerate(o);
+  Add(l,o); 
+  return l;
 end);
 
+#
+
+InstallMethod(SiftShorterSLP, "for a perm group and perm",
+[IsPermGroup, IsPerm],
+function(g, x)
+  local l, i, fakegens, realgens, y, z, o, pos, word;
+
+  l:=ShorterSLPStabChain(g);
+
+  i:=1;
+  fakegens:=GeneratorsWithMemory(List(GeneratorsOfGroup(g), x->()));
+  realgens:=GeneratorsOfGroup(g);
+
+  y:=fakegens[1]^0;
+  z:=x;
+
+  while i<Length(l) do
+    o:=l[i];
+    pos:=Position(o, o!.op(o[1],z));
+    word:=TraceSchreierTreeForward(o, pos);
+    y:=ORB_ApplyWord(y^0,word,fakegens,List(fakegens, x-> x^-1), OnRight)*y;
+    z:=ORB_ApplyWord(z, Reversed(word),List(realgens, x-> x^-1),realgens,
+    OnRight);
+    i:=i+1;
+    realgens:=l[i].gens;
+    fakegens:=ResultOfStraightLineProgram(l[i].slp,fakegens);
+    i:=i+1;
+  od;
+  
+  o:=l[i];
+  pos:=Position(o, o!.op(o[1],z));
+  word:=TraceSchreierTreeForward(o, pos);    
+  y:=ORB_ApplyWord(y^0,word,fakegens,List(fakegens, x-> x^-1),
+  OnRight)*y;      
+
+  return SLPOfElm(y);
+end);
+
+# returns an slp for the generators of LambdaOrbSchutzGp(o, m) in the
+# generators of the semigroup.
+
+# JDM 2 methods required (inverse and non-inverse)
+
+InstallGlobalFunction(LambdaOrbSLP,
+function(o, m)
+  local g, slp, nr, r, graph, slp_lines, word, i, j;
+
+  if IsBound(o!.slp) then
+    if IsBound(o!.slp[m]) and IsStraightLineProgram(o!.slp[m]) then
+      return o!.slp[m];
+    fi;
+  fi;
+
+  g:=LambdaOrbSchutzGp(o, m);
+  slp:=o!.slp[m];
+  nr:=Length(slp);
+  slp_lines:=EmptyPlist(nr);
+  r:=Length(o!.gens);
+
+  if nr<>0 then
+    graph:=OrbitGraph(o);
+    for i in [1..nr] do
+      word:=Concatenation(TraceSchreierTreeOfSCCForward(o, m, slp[i][1]),
+       [slp[i][2]],
+        TraceSchreierTreeOfSCCBack(o, m, graph[slp[i][1]][slp[i][2]]));
+      slp_lines[i]:=[];
+      for j in [1..Length(word)] do
+        slp_lines[i][2*j-1]:=word[j];
+        slp_lines[i][2*j]:=1;
+      od;
+    od;
+  fi;
+
+  return StraightLineProgram([slp_lines], r);
+end);
 #EOF

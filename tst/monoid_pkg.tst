@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  monoid_pkg.tst
-#Y  Copyright (C) 2011-12                                James D. Mitchell
+#Y  Copyright (C) 2011-13                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 #
@@ -15,10 +15,7 @@ gap> START_TEST("Semigroups package: monoid_pkg.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
-gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoSemigroups, 0);
+gap> SemigroupsStartTest();
 
 #
 gap> g:=CyclicGroup(3);;
@@ -33,30 +30,30 @@ gap> s:=Semigroup(IrredundantGeneratingSubset(last));;
 gap> NrDClasses(s);
 4
 gap> List(GreensDClasses(s), Size);
-[ 3, 1, 3, 1 ]
+[ 1, 3, 3, 1 ]
 gap> PartialOrderOfDClasses(s);
-[ [ 1, 2, 3 ], [ 2, 4 ], [ 3, 4 ], [ 4 ] ]
+[ [ 1, 4 ], [ 2, 4 ], [ 1, 2, 3 ], [ 4 ] ]
 gap> IsRegularSemigroup(s);
 true
 gap> ForAll(s, x-> x in s);
 true
 gap> MultiplicativeNeutralElement(s);
-Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8 ] )
-gap> List(s, x-> InversesOfTransformation(s, x)); 
-[ [ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8 ] ) ], 
+IdentityTransformation()
+gap> List(s, x-> InversesOfSemigroupElement(s, x)); 
+[ [ Transformation( [ 1, 4, 1, 4, 1, 4, 1, 4 ] ) ], 
+  [ Transformation( [ 1, 3, 5, 1, 7, 7, 3, 5 ] ) ], 
+  [ Transformation( [ 1, 7, 3, 1, 5, 5, 7, 3 ] ) ], 
+  [ Transformation( [ 1, 5, 7, 1, 3, 3, 5, 7 ] ) ], 
   [ Transformation( [ 1, 8, 5, 4, 7, 2, 3, 6 ] ) ], 
   [ Transformation( [ 1, 6, 7, 4, 3, 8, 5, 2 ] ) ], 
-  [ Transformation( [ 1, 4, 1, 4, 1, 4, 1, 4 ] ) ], 
-  [ Transformation( [ 1, 7, 3, 1, 5, 5, 7, 3 ] ) ], 
-  [ Transformation( [ 1, 3, 5, 1, 7, 7, 3, 5 ] ) ], 
-  [ Transformation( [ 1, 5, 7, 1, 3, 3, 5, 7 ] ) ], 
+  [ IdentityTransformation() ], 
   [ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] ) ] ]
 gap> IsMonoidAsSemigroup(s);
 true
 gap> IsGroupAsSemigroup(s);
 false
 gap> i:=MinimalIdeal(s);
-<semigroup with 1 generator>
+<transformation group on 8 pts with 1 generator>
 gap> Size(i);
 1
 gap> MultiplicativeZero(s);
@@ -65,13 +62,13 @@ gap> MultiplicativeZero(s) in i;
 true
 gap> h:=List(GreensDClasses(s), GroupHClass);;
 gap> List(h, x-> StructureDescription(x));
-[ "C3", "1", "C3", "1" ]
+[ "1", "C3", "C3", "1" ]
 gap> IsCliffordSemigroup(s);
 true
 
 #
-gap> a:=IdempotentNC([ 1, 2, 1, 1, 2, 3, 4, 5 ], [3,5,6,7,8])*(3,5);;
-gap> b:=IdempotentNC([ 1, 2, 1, 1, 2, 3, 4, 5 ], [3,5,6,7,8])*(3,6,7,8);;
+gap> a:=Idempotent([3,5,6,7,8], [ 1, 2, 1, 1, 2, 3, 4, 5 ])*(3,5);;
+gap> b:=a*(3,5)*(3,6,7,8);;
 gap> s:=Semigroup(a,b);;
 gap> IsGroupAsSemigroup(s);
 true
@@ -80,10 +77,10 @@ true
 gap> gens:=[Transformation([3,5,3,3,5,6]), Transformation([6,2,4,2,2,6])];;
 gap> S:=Semigroup(gens);;
 gap> GroupHClass(GreensDClassOfElement(S, Elements(S)[1]));
-{Transformation( [ 5, 5, 5, 5, 5, 6 ] )}
+{Transformation( [ 2, 2, 2, 2, 2 ] )}
 gap> IsomorphismPermGroup(last);
-MappingByFunction( {Transformation( [ 5, 5, 5, 5, 5, 6 
- ] )}, Group(()), <Operation "AsPermutation"> )
+MappingByFunction( {Transformation( [ 2, 2, 2, 2, 2 ] )
+ }, Group(()), <Attribute "AsPermutation">, function( x ) ... end )
 
 #
 gap> gens:=[ Transformation( [ 4, 4, 8, 8, 8, 8, 4, 8 ] ),
@@ -155,14 +152,14 @@ gap> gens:=[ Transformation( [ 4, 5, 7, 1, 8, 6, 1, 7 ] ),
 >  Transformation( [ 5, 7, 4, 4, 1, 4, 4, 4 ] ), 
 >  Transformation( [ 7, 1, 4, 3, 6, 1, 3, 7 ] ) ];;
 gap> m:=Semigroup(gens);;
-gap> o:=ImagesOfTransSemigroup(m);; Enumerate(o);;
+gap> o:=LambdaOrb(m);; Enumerate(o);;
 gap> AsSet(o);
-[ [ 1 ], [ 1 .. 8 ], [ 1, 3 ], [ 1, 3, 4 ], [ 1, 3, 4, 6, 7 ], 
-  [ 1, 3, 4, 7 ], [ 1, 3, 6 ], [ 1, 3, 6, 7 ], [ 1, 3, 7 ], [ 1, 4 ], 
-  [ 1, 4, 5 ], [ 1, 4, 5, 6, 7, 8 ], [ 1, 4, 5, 7 ], [ 1, 4, 6 ], 
-  [ 1, 4, 6, 7 ], [ 1, 4, 6, 7, 8 ], [ 1, 4, 7 ], [ 1, 4, 8 ], [ 1, 6 ], 
-  [ 1, 6, 7 ], [ 1, 6, 7, 8 ], [ 1, 6, 8 ], [ 1, 7 ], [ 1, 7, 8 ], [ 1, 8 ], 
-  [ 3 ], [ 3, 4 ], [ 3, 4, 5 ], [ 3, 4, 5, 6, 7, 8 ], [ 3, 4, 5, 7 ], 
+[ [ 0 ], [ 1 ], [ 1, 3 ], [ 1, 3, 4 ], [ 1, 3, 4, 6, 7 ], [ 1, 3, 4, 7 ], 
+  [ 1, 3, 6 ], [ 1, 3, 6, 7 ], [ 1, 3, 7 ], [ 1, 4 ], [ 1, 4, 5 ], 
+  [ 1, 4, 5, 6, 7, 8 ], [ 1, 4, 5, 7 ], [ 1, 4, 6 ], [ 1, 4, 6, 7 ], 
+  [ 1, 4, 6, 7, 8 ], [ 1, 4, 7 ], [ 1, 4, 8 ], [ 1, 6 ], [ 1, 6, 7 ], 
+  [ 1, 6, 7, 8 ], [ 1, 6, 8 ], [ 1, 7 ], [ 1, 7, 8 ], [ 1, 8 ], [ 3 ], 
+  [ 3, 4 ], [ 3, 4, 5 ], [ 3, 4, 5, 6, 7, 8 ], [ 3, 4, 5, 7 ], 
   [ 3, 4, 5, 7, 8 ], [ 3, 4, 5, 8 ], [ 3, 4, 6 ], [ 3, 4, 6, 7 ], 
   [ 3, 4, 6, 7, 8 ], [ 3, 4, 6, 8 ], [ 3, 4, 7 ], [ 3, 4, 7, 8 ], 
   [ 3, 4, 8 ], [ 3, 5 ], [ 3, 5, 7 ], [ 3, 5, 8 ], [ 3, 6 ], [ 3, 6, 7 ], 
@@ -176,25 +173,25 @@ gap> gens:=[ Transformation( [ 1, 5, 2, 2, 3, 5, 2 ] ),
 >  Transformation( [ 7, 3, 6, 5, 2, 4, 1 ] ), 
 >  Transformation( [ 7, 5, 3, 2, 5, 5, 6 ] ) ];;
 gap> m:=Monoid(gens);;
-gap> o:=ImagesOfTransSemigroup(m);; Enumerate(o);; AsSet(o);
-[ [ 1, 2 ], [ 1, 2, 3 ], [ 1, 2, 3, 4, 5 ], [ 1 .. 7 ], [ 1, 2, 3, 4, 6 ], 
-  [ 1, 2, 3, 5 ], [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 6 ], [ 1, 2, 4 ], 
-  [ 1, 2, 4, 5 ], [ 1, 2, 4, 5, 6 ], [ 1, 2, 5 ], [ 1, 2, 6 ], [ 1, 3 ], 
-  [ 1, 3, 4 ], [ 1, 3, 4, 5, 6 ], [ 1, 3, 4, 6 ], [ 1, 3, 5 ], [ 1, 3, 6 ], 
-  [ 1, 4 ], [ 1, 4, 5 ], [ 1, 4, 5, 6 ], [ 1, 4, 6 ], [ 1, 5 ], [ 1, 5, 6 ], 
-  [ 1, 6 ], [ 2 ], [ 2, 3 ], [ 2, 3, 4 ], [ 2, 3, 4, 5 ], [ 2, 3, 4, 5, 7 ], 
-  [ 2, 3, 4, 6 ], [ 2, 3, 4, 6, 7 ], [ 2, 3, 5 ], [ 2, 3, 5, 6 ], 
-  [ 2, 3, 5, 6, 7 ], [ 2, 3, 5, 7 ], [ 2, 3, 6 ], [ 2, 3, 6, 7 ], 
-  [ 2, 3, 7 ], [ 2, 4 ], [ 2, 4, 5 ], [ 2, 4, 5, 6 ], [ 2, 4, 5, 6, 7 ], 
-  [ 2, 4, 5, 7 ], [ 2, 4, 6 ], [ 2, 4, 7 ], [ 2, 5 ], [ 2, 5, 6 ], 
-  [ 2, 5, 7 ], [ 2, 6 ], [ 2, 6, 7 ], [ 2, 7 ], [ 3 ], [ 3, 4 ], [ 3, 4, 5 ], 
-  [ 3, 4, 5, 6 ], [ 3, 4, 5, 6, 7 ], [ 3, 4, 6 ], [ 3, 4, 6, 7 ], 
-  [ 3, 4, 7 ], [ 3, 5 ], [ 3, 5, 6 ], [ 3, 5, 7 ], [ 3, 6 ], [ 3, 6, 7 ], 
-  [ 3, 7 ], [ 4 ], [ 4, 5 ], [ 4, 5, 6 ], [ 4, 5, 6, 7 ], [ 4, 5, 7 ], 
-  [ 4, 6 ], [ 4, 6, 7 ], [ 4, 7 ], [ 5 ], [ 5, 6 ], [ 5, 6, 7 ], [ 5, 7 ], 
-  [ 6 ], [ 6, 7 ] ]
-gap> Length(Enumerate(KernelsOfTransSemigroup(m)));
-206
+gap> o:=LambdaOrb(m);; Enumerate(o);; AsSet(o);
+[ [ 0 ], [ 1, 2 ], [ 1, 2, 3 ], [ 1, 2, 3, 4, 5 ], [ 1, 2, 3, 4, 5, 6, 7 ], 
+  [ 1, 2, 3, 4, 6 ], [ 1, 2, 3, 5 ], [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 6 ], 
+  [ 1, 2, 4 ], [ 1, 2, 4, 5 ], [ 1, 2, 4, 5, 6 ], [ 1, 2, 5 ], [ 1, 2, 6 ], 
+  [ 1, 3 ], [ 1, 3, 4 ], [ 1, 3, 4, 5, 6 ], [ 1, 3, 4, 6 ], [ 1, 3, 5 ], 
+  [ 1, 3, 6 ], [ 1, 4 ], [ 1, 4, 5 ], [ 1, 4, 5, 6 ], [ 1, 4, 6 ], [ 1, 5 ], 
+  [ 1, 5, 6 ], [ 1, 6 ], [ 2 ], [ 2, 3 ], [ 2, 3, 4 ], [ 2, 3, 4, 5 ], 
+  [ 2, 3, 4, 5, 7 ], [ 2, 3, 4, 6 ], [ 2, 3, 4, 6, 7 ], [ 2, 3, 5 ], 
+  [ 2, 3, 5, 6 ], [ 2, 3, 5, 6, 7 ], [ 2, 3, 5, 7 ], [ 2, 3, 6 ], 
+  [ 2, 3, 6, 7 ], [ 2, 3, 7 ], [ 2, 4 ], [ 2, 4, 5 ], [ 2, 4, 5, 6 ], 
+  [ 2, 4, 5, 6, 7 ], [ 2, 4, 5, 7 ], [ 2, 4, 6 ], [ 2, 4, 7 ], [ 2, 5 ], 
+  [ 2, 5, 6 ], [ 2, 5, 7 ], [ 2, 6 ], [ 2, 6, 7 ], [ 2, 7 ], [ 3 ], [ 3, 4 ], 
+  [ 3, 4, 5 ], [ 3, 4, 5, 6 ], [ 3, 4, 5, 6, 7 ], [ 3, 4, 6 ], 
+  [ 3, 4, 6, 7 ], [ 3, 4, 7 ], [ 3, 5 ], [ 3, 5, 6 ], [ 3, 5, 7 ], [ 3, 6 ], 
+  [ 3, 6, 7 ], [ 3, 7 ], [ 4 ], [ 4, 5 ], [ 4, 5, 6 ], [ 4, 5, 6, 7 ], 
+  [ 4, 5, 7 ], [ 4, 6 ], [ 4, 6, 7 ], [ 4, 7 ], [ 5 ], [ 5, 6 ], [ 5, 6, 7 ], 
+  [ 5, 7 ], [ 6 ], [ 6, 7 ] ]
+gap> Length(Enumerate(RhoOrb(m)));
+207
 gap> gens:=[ [ Transformation( [ 3, 4, 4, 3, 1, 1, 5 ] ) ], 
 > [ Transformation( [ 1, 1, 4, 3 ] ), Transformation( [ 2, 2, 2, 2 ] ), 
 > Transformation( [ 3, 3, 1, 4 ] ) ], [ Transformation( [ 4, 4, 2, 3, 3 ]), 
@@ -456,25 +453,25 @@ gap> ForAll(GreensRClasses(m), x-> ForAll(Idempotents(x), y-> y in x));
 true
 gap> idem:=Set(Concatenation(List(GreensRClasses(m), Idempotents)));
 [ Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] ), 
-  Transformation( [ 1, 1, 1, 1, 1, 1, 7 ] ), 
+  Transformation( [ 1, 1, 1, 1, 1, 1 ] ), 
   Transformation( [ 1, 1, 1, 4, 1, 1, 1 ] ), 
   Transformation( [ 1, 1, 3, 1, 1, 1, 1 ] ), 
   Transformation( [ 1, 1, 3, 1, 1, 1, 3 ] ), 
-  Transformation( [ 1, 1, 3, 1, 1, 1, 7 ] ), 
+  Transformation( [ 1, 1, 3, 1, 1, 1 ] ), 
   Transformation( [ 1, 1, 3, 3, 1, 1, 1 ] ), 
   Transformation( [ 1, 1, 3, 3, 1, 1, 3 ] ), 
-  Transformation( [ 1, 1, 3, 3, 1, 1, 7 ] ), 
-  Transformation( [ 1, 1, 3, 6, 6, 6, 7 ] ), 
+  Transformation( [ 1, 1, 3, 3, 1, 1 ] ), 
+  Transformation( [ 1, 1, 3, 6, 6, 6 ] ), 
   Transformation( [ 1, 1, 4, 4, 1, 1, 1 ] ), 
   Transformation( [ 1, 1, 4, 4, 1, 1, 4 ] ), 
   Transformation( [ 1, 1, 7, 1, 1, 1, 7 ] ), 
   Transformation( [ 1, 1, 7, 7, 1, 1, 7 ] ), 
   Transformation( [ 1, 2, 1, 1, 1, 1, 1 ] ), 
   Transformation( [ 1, 2, 1, 1, 1, 1, 2 ] ), 
-  Transformation( [ 1, 2, 1, 1, 1, 1, 7 ] ), 
+  Transformation( [ 1, 2, 1, 1, 1, 1 ] ), 
   Transformation( [ 1, 2, 2, 2, 1, 1, 2 ] ), 
   Transformation( [ 1, 2, 2, 2, 2, 1, 2 ] ), 
-  Transformation( [ 1, 2, 3, 3, 1, 1, 7 ] ), 
+  Transformation( [ 1, 2, 3, 3, 1, 1 ] ), 
   Transformation( [ 1, 2, 7, 7, 1, 1, 7 ] ), 
   Transformation( [ 1, 3, 3, 3, 1, 1, 3 ] ), 
   Transformation( [ 1, 3, 3, 3, 3, 1, 3 ] ), 
@@ -486,11 +483,11 @@ gap> idem:=Set(Concatenation(List(GreensRClasses(m), Idempotents)));
   Transformation( [ 1, 7, 7, 7, 1, 1, 7 ] ), 
   Transformation( [ 1, 7, 7, 7, 7, 1, 7 ] ), 
   Transformation( [ 2, 2, 2, 2, 2, 2, 2 ] ), 
-  Transformation( [ 2, 2, 2, 2, 2, 2, 7 ] ), 
+  Transformation( [ 2, 2, 2, 2, 2, 2 ] ), 
   Transformation( [ 2, 2, 7, 2, 2, 2, 7 ] ), 
   Transformation( [ 2, 2, 7, 7, 2, 2, 7 ] ), 
   Transformation( [ 3, 3, 3, 3, 3, 3, 3 ] ), 
-  Transformation( [ 3, 3, 3, 3, 3, 3, 7 ] ), 
+  Transformation( [ 3, 3, 3, 3, 3, 3 ] ), 
   Transformation( [ 3, 3, 3, 4, 3, 3, 3 ] ), 
   Transformation( [ 3, 7, 3, 3, 3, 3, 7 ] ), 
   Transformation( [ 4, 4, 3, 4, 4, 4, 3 ] ), 
@@ -500,18 +497,18 @@ gap> idem:=Set(Concatenation(List(GreensRClasses(m), Idempotents)));
   Transformation( [ 5, 4, 4, 4, 5, 5, 4 ] ), 
   Transformation( [ 5, 5, 3, 3, 5, 5, 3 ] ), 
   Transformation( [ 5, 5, 3, 3, 5, 5, 5 ] ), 
-  Transformation( [ 5, 5, 3, 3, 5, 5, 7 ] ), 
+  Transformation( [ 5, 5, 3, 3, 5, 5 ] ), 
   Transformation( [ 5, 5, 3, 4, 5, 5, 3 ] ), 
   Transformation( [ 5, 5, 3, 4, 5, 5, 5 ] ), 
-  Transformation( [ 5, 5, 3, 4, 5, 5, 7 ] ), 
+  Transformation( [ 5, 5, 3, 4, 5, 5 ] ), 
   Transformation( [ 5, 5, 3, 5, 5, 5, 3 ] ), 
   Transformation( [ 5, 5, 3, 5, 5, 5, 5 ] ), 
-  Transformation( [ 5, 5, 3, 5, 5, 5, 7 ] ), 
+  Transformation( [ 5, 5, 3, 5, 5, 5 ] ), 
   Transformation( [ 5, 5, 4, 4, 5, 5, 4 ] ), 
   Transformation( [ 5, 5, 4, 4, 5, 5, 5 ] ), 
   Transformation( [ 5, 5, 5, 4, 5, 5, 5 ] ), 
   Transformation( [ 5, 5, 5, 5, 5, 5, 5 ] ), 
-  Transformation( [ 5, 5, 5, 5, 5, 5, 7 ] ), 
+  Transformation( [ 5, 5, 5, 5, 5, 5 ] ), 
   Transformation( [ 5, 5, 7, 5, 5, 5, 7 ] ), 
   Transformation( [ 5, 5, 7, 7, 5, 5, 7 ] ), 
   Transformation( [ 5, 7, 3, 3, 5, 5, 7 ] ), 
@@ -528,15 +525,15 @@ gap> idem:=Set(Concatenation(List(GreensRClasses(m), Idempotents)));
   Transformation( [ 6, 5, 5, 5, 5, 6, 5 ] ), 
   Transformation( [ 6, 6, 3, 3, 6, 6, 3 ] ), 
   Transformation( [ 6, 6, 3, 3, 6, 6, 6 ] ), 
-  Transformation( [ 6, 6, 3, 3, 6, 6, 7 ] ), 
+  Transformation( [ 6, 6, 3, 3, 6, 6 ] ), 
   Transformation( [ 6, 6, 3, 6, 6, 6, 3 ] ), 
   Transformation( [ 6, 6, 3, 6, 6, 6, 6 ] ), 
-  Transformation( [ 6, 6, 3, 6, 6, 6, 7 ] ), 
+  Transformation( [ 6, 6, 3, 6, 6, 6 ] ), 
   Transformation( [ 6, 6, 4, 4, 6, 6, 4 ] ), 
   Transformation( [ 6, 6, 4, 4, 6, 6, 6 ] ), 
   Transformation( [ 6, 6, 6, 4, 6, 6, 6 ] ), 
   Transformation( [ 6, 6, 6, 6, 6, 6, 6 ] ), 
-  Transformation( [ 6, 6, 6, 6, 6, 6, 7 ] ), 
+  Transformation( [ 6, 6, 6, 6, 6, 6 ] ), 
   Transformation( [ 6, 6, 7, 6, 6, 6, 7 ] ), 
   Transformation( [ 6, 6, 7, 7, 6, 6, 7 ] ), 
   Transformation( [ 6, 7, 3, 3, 6, 6, 7 ] ), 
@@ -566,7 +563,7 @@ gap> r2:=First(dr, x-> x=r);;
 gap> DClassOfRClass(r2)=d;
 true
 gap> m:=Semigroup(GeneratorsOfSemigroup(m));
-<semigroup with 3 generators>
+<transformation semigroup on 7 pts with 3 generators>
 gap> r:=GreensRClassOfElement(m, Transformation( [ 2, 1, 2, 2, 1, 2, 1 ] ));;
 gap> d:=DClassOfRClass(r);;
 gap> dr:=GreensRClasses(d);;
@@ -735,7 +732,7 @@ gap> r2:=First(dr, x-> x=r);;
 gap> DClassOfLClass(r2)=d;
 true
 gap> m:=Semigroup(GeneratorsOfSemigroup(m));
-<semigroup with 2 generators>
+<transformation semigroup on 7 pts with 2 generators>
 gap>  r:=GreensLClassOfElement(m, Transformation( [ 3, 3, 3, 3, 3, 3, 5 ] ));
 {Transformation( [ 3, 3, 3, 3, 3, 3, 5 ] )}
 gap> d:=DClassOfLClass(r);;
@@ -758,7 +755,7 @@ gap> List(semis, s-> Number(GreensDClasses(s), IsRegularDClass));
   3, 4, 4, 4, 4, 3, 6, 3, 3, 3, 4, 3, 1, 2, 2, 4, 4, 3, 3, 3, 1, 1, 5, 3, 7, 
   3, 5, 5, 5, 5, 2, 3, 1, 4, 1, 4, 5, 6, 5, 5, 1, 3, 1, 1, 6, 4, 3, 3, 4, 3 ]
 gap> List(semis, s-> List(GreensDClasses(s), x-> Length(Idempotents(x))));
-[ [ 0, 0, 1 ], [ 1, 4 ], [ 1, 2 ], [ 7, 1, 30, 5 ], [ 1, 4, 4 ], 
+[ [ 0, 0, 1 ], [ 1, 4 ], [ 2, 1 ], [ 7, 1, 30, 5 ], [ 1, 4, 4 ], 
   [ 0, 167, 11, 1, 1, 168, 6, 0, 0 ], [ 0, 1 ], [ 2, 42, 197, 169, 6 ], 
   [ 2, 0, 58, 18, 0, 5 ], [ 0, 1 ], 
   [ 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 159, 0, 8, 46, 0, 0, 0, 0, 5, 0, 0, 0, 
@@ -773,17 +770,17 @@ gap> List(semis, s-> List(GreensDClasses(s), x-> Length(Idempotents(x))));
       0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-      0, 0, 0, 0, 0 ], [ 2, 1, 2, 3, 0 ], [ 1, 12, 24, 4 ], 
+      0, 0, 0, 0, 0 ], [ 2, 1, 2, 3, 0 ], [ 12, 1, 24, 4 ], 
   [ 1, 0, 0, 0, 1, 34, 0, 7 ], [ 0, 1 ], [ 1, 0, 3 ], [ 0, 1 ], 
   [ 0, 0, 9, 0, 36, 5 ], [ 1, 0, 17, 0, 50, 1, 5 ], [ 1, 0, 7, 1, 63, 7 ], 
   [ 1, 0, 8, 4 ], [ 2, 0, 0, 13, 69, 0, 0, 0, 0, 7, 0, 0, 0, 0, 1, 0, 0, 0, 0 
      ], [ 0, 0, 4, 0, 0, 1, 2, 0 ], [ 17, 4, 4 ], 
-  [ 93, 0, 20, 0, 6, 0, 0, 1, 2, 0, 0, 0, 0 ], [ 1, 10, 24, 4 ], 
+  [ 93, 0, 20, 0, 6, 0, 0, 1, 2, 0, 0, 0, 0 ], [ 10, 1, 24, 4 ], 
   [ 0, 0, 0, 0, 105, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 199, 7, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1 ], [ 0, 1 ], 
   [ 0, 1, 0, 13, 0, 0, 0, 0, 0, 48, 0, 0, 0, 5 ], [ 20, 1, 51, 5 ], 
   [ 0, 0, 3, 0, 0, 1, 2 ], [ 3, 0, 1, 3 ], [ 0, 1, 0, 0, 3, 0, 0, 1, 0, 2, 0 ]
-    , [ 2, 27, 82, 7 ], [ 1, 9, 24, 4 ], [ 0, 0, 1, 3, 38, 0, 5 ], 
+    , [ 2, 27, 82, 7 ], [ 9, 1, 24, 4 ], [ 0, 0, 1, 3, 38, 0, 5 ], 
   [ 6, 24, 4 ], [ 0, 1 ], [ 47, 1, 121, 6 ], [ 1, 0, 5, 4 ], 
   [ 14, 0, 1, 0, 42, 0, 5 ], [ 1, 0, 8, 1, 0, 3 ], 
   [ 80, 0, 0, 0, 6, 6, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 1, 1, 6, 3 ], 
@@ -795,10 +792,10 @@ gap> List(semis, s-> List(GreensDClasses(s), x-> Length(Idempotents(x))));
   [ 3, 15, 4 ], [ 0, 1 ], [ 1 ], 
   [ 0, 0, 0, 248, 3, 0, 0, 1, 0, 0, 0, 122, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-      0, 0, 0, 0, 0, 0, 0 ], [ 111, 0, 0, 0, 0, 12, 0, 7, 0, 0 ], 
+      0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 111, 0, 12, 0, 7, 0, 0 ], 
   [ 0, 1, 0, 0, 0, 9, 0, 0, 0, 0, 258, 0, 0, 1, 0, 889, 0, 0, 0, 0, 430, 0, 
       0, 0, 0, 7, 0, 0, 0, 0, 0, 0 ], [ 20, 0, 1, 4 ], 
-  [ 1, 324, 0, 12, 231, 6, 0 ], 
+  [ 324, 0, 12, 1, 231, 6, 0 ], 
   [ 0, 143, 0, 0, 1, 163, 0, 3, 0, 0, 6, 0, 0, 0, 0 ], [ 3, 1, 1, 24, 4 ], 
   [ 0, 5, 0, 0, 0, 140, 277, 0, 1, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
   [ 0, 0, 0, 23, 0, 0, 5 ], [ 1, 0, 4, 0, 4 ], [ 1 ], 
@@ -809,7 +806,7 @@ gap> List(semis, s-> List(GreensDClasses(s), x-> Length(Idempotents(x))));
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
   [ 2, 0, 0, 38, 434, 0, 0, 1, 390, 0, 7 ], 
   [ 0, 0, 40, 0, 5, 0, 0, 0, 0, 0, 114, 9, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 
-      0, 0, 0 ], [ 1, 32, 0, 2, 0, 65, 6, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1 ], 
+      0, 0, 0 ], [ 32, 0, 1, 2, 0, 65, 6, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1 ], 
   [ 0, 0, 16, 0, 0, 74, 0, 6 ], [ 0, 0, 1 ], [ 0, 0, 1 ], 
   [ 4, 1, 1, 114, 65, 6 ], 
   [ 0, 0, 1, 0, 40, 0, 0, 0, 200, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0 ], 
@@ -838,7 +835,7 @@ gap> b:=Transformation( [ 2, 3, 1, 5, 4, 1 ] );;
 gap> M:=Semigroup(a,b);;
 gap> GreensLClassOfElement(M,a);
 {Transformation( [ 2, 1, 4, 5, 6, 3 ] )}
-gap> IsGreensClassOfTransSemigp(last);
+gap> IsTransformationSemigroupGreensClass(last);
 true
 gap> f:=FreeSemigroup(3);;
 gap> a:=f.1;; b:=f.2;; c:=f.3;; 
@@ -848,7 +845,7 @@ gap> Size(s);
 3
 gap> GreensLClassOfElement(s,a);
 {s1}
-gap> IsGreensClassOfTransSemigp(last);
+gap> IsTransformationSemigroupGreensClass(last);
 false
 gap> gens:=[ Transformation( [ 2, 2, 5, 2, 3 ] ), 
 > Transformation( [ 2, 5, 3, 5, 3 ] ) ];;
@@ -884,12 +881,15 @@ gap> S:=Semigroup(gens);;
 gap> f:=Transformation( [ 2, 4, 2, 5, 3 ] );;
 gap> r:=RClass(S, f);
 {Transformation( [ 5, 2, 5, 3, 1 ] )}
-gap> ImageOrbit(r);
-<closed orbit, 2 images with size 4, 1 components, 2 kernels, 2 reps>
+gap> LambdaOrb(r);
+<closed orbit, 25 points with Schreier tree with log>
 gap> AsList(last);
-[ [ 1, 2, 3, 5 ], [ 2, 3, 4, 5 ] ]
-gap> ImageOrbitPerms(r){ImageOrbitSCC(r)};
-[ (), (1,4)(2,3) ]
+[ [ 0 ], [ 1, 2, 3, 5 ], [ 1, 2, 3, 4, 5 ], [ 2, 3, 4, 5 ], [ 1, 2, 5 ], 
+  [ 1, 3, 5 ], [ 3, 4, 5 ], [ 1, 2, 3 ], [ 2, 4, 5 ], [ 2, 3, 5 ], 
+  [ 2, 3, 4 ], [ 1, 5 ], [ 2, 5 ], [ 1, 3 ], [ 4, 5 ], [ 3, 5 ], [ 2, 3 ], 
+  [ 2, 4 ], [ 1, 2 ], [ 5 ], [ 3, 4 ], [ 1 ], [ 3 ], [ 4 ], [ 2 ] ]
+gap> LambdaOrbMults(LambdaOrb(r), LambdaOrbSCCIndex(r))[LambdaOrbSCCIndex(r)];
+[ IdentityTransformation(), IdentityTransformation() ]
 gap> SchutzenbergerGroup(r);
 Group([ (1,3,2,5) ])
 gap> gens:=[ Transformation( [ 4, 1, 5, 2, 4 ] ), 
@@ -900,7 +900,7 @@ gap> gens:=[ Transformation( [ 4, 4, 3, 5, 3 ] ),
 gap> S:=Semigroup(gens);;
 gap> f:=Transformation( [ 4, 5, 5, 5, 5 ] );;
 gap> SchutzenbergerGroup(GreensDClassOfElement(S, f));
-Sym( [ 4 .. 5 ] )
+Group([ (4,5) ])
 gap> SchutzenbergerGroup(GreensRClassOfElement(S, f));
 Group([ (4,5) ])
 gap> SchutzenbergerGroup(GreensLClassOfElement(S, f));
@@ -909,53 +909,29 @@ gap> SchutzenbergerGroup(GreensHClassOfElement(S, f));
 Group([ (4,5) ])
 gap>  S:=Semigroup([ Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
 > Transformation( [ 6, 5, 1, 6, 2, 2 ] ) ]);;
-gap> AsList(Enumerate(ImagesOfTransSemigroup(S, 6)));
-[ [ 1 .. 6 ] ]
-gap> AsList(Enumerate(ImagesOfTransSemigroup(S, 5)));
-[ [ 1 .. 6 ] ]
-gap> AsSet(Enumerate(ImagesOfTransSemigroup(S, 4)));
-[ [ 1 .. 6 ], [ 1, 2, 5, 6 ] ]
-gap> AsSet(Enumerate(ImagesOfTransSemigroup(S, 3)));
-[ [ 1 .. 6 ], [ 1, 2, 5, 6 ], [ 1, 4, 6 ], [ 2, 5, 6 ] ]
-gap> AsSet(Enumerate(ImagesOfTransSemigroup(S, 2)));
-[ [ 1 .. 6 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2, 5 ], [ 2, 5, 6 ], 
-  [ 2, 6 ], [ 4, 6 ] ]
-gap> AsSet(Enumerate(ImagesOfTransSemigroup(S, 1)));
-[ [ 1 ], [ 1 .. 6 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], 
-  [ 2, 5, 6 ], [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
-gap> AsSet(Enumerate(ImagesOfTransSemigroup(S)));
-[ [ 1 ], [ 1 .. 6 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], 
+gap> AsSet(Enumerate(LambdaOrb(S)));
+[ [ 0 ], [ 1 ], [ 1, 2, 5, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 2 ], [ 2, 5 ], 
   [ 2, 5, 6 ], [ 2, 6 ], [ 4 ], [ 4, 6 ], [ 5 ], [ 6 ] ]
 gap> S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
 > Transformation( [ 3, 3, 1, 1 ] ) ]);;
 gap> Idempotents(S, 1);
 [  ]
 gap> Idempotents(S, 2);                        
-[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
-  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
+[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
+  Transformation( [ 2, 2, 4, 4 ] ), Transformation( [ 4, 2, 2, 4 ] ) ]
 gap> Idempotents(S, 3);                        
 [  ]
 gap> Idempotents(S, 4);                        
-[ Transformation( [ 1, 2, 3, 4 ] ) ]
+[ IdentityTransformation() ]
 gap> Idempotents(S);
-[ Transformation( [ 1, 1, 3, 3 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
-  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 4, 2, 2, 4 ] ), 
-  Transformation( [ 1, 2, 3, 4 ] ) ]
+[ IdentityTransformation(), Transformation( [ 1, 1, 3, 3 ] ), 
+  Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
+  Transformation( [ 4, 2, 2, 4 ] ) ]
 gap> S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),
 > Transformation( [ 3, 3, 4, 1 ] ) ]);;
-gap> AsSet(Enumerate(KernelsOfTransSemigroup(S)));   
-[ [ 1, 1, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 2, 1 ], [ 1, 1, 2, 2 ], 
-  [ 1, 1, 2, 3 ], [ 1, 2, 1, 1 ], [ 1, 2, 2, 1 ], [ 1, 2, 3, 1 ], [ 1 .. 4 ] ]
-gap> AsSet(Enumerate(KernelsOfTransSemigroup(S,1)));
-[ [ 1, 1, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 2, 1 ], [ 1, 1, 2, 2 ], 
-  [ 1, 1, 2, 3 ], [ 1, 2, 1, 1 ], [ 1, 2, 2, 1 ], [ 1, 2, 3, 1 ], [ 1 .. 4 ] ]
-gap> AsSet(Enumerate(KernelsOfTransSemigroup(S,2)));
-[ [ 1, 1, 1, 2 ], [ 1, 1, 2, 1 ], [ 1, 1, 2, 2 ], [ 1, 1, 2, 3 ], 
-  [ 1, 2, 1, 1 ], [ 1, 2, 2, 1 ], [ 1, 2, 3, 1 ], [ 1 .. 4 ] ]
-gap> AsSet(Enumerate(KernelsOfTransSemigroup(S,3)));
-[ [ 1, 1, 2, 3 ], [ 1, 2, 3, 1 ], [ 1 .. 4 ] ]
-gap> AsSet(Enumerate(KernelsOfTransSemigroup(S,4)));  
-[ [ 1 .. 4 ] ]
+gap> AsSet(Enumerate(RhoOrb(S)));   
+[ [ 0 ], [ 1, 1, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 2, 1 ], [ 1, 1, 2, 2 ], 
+  [ 1, 1, 2, 3 ], [ 1, 2, 1, 1 ], [ 1, 2, 2, 1 ], [ 1, 2, 3, 1 ] ]
 
 # from install_no_grape.tst
 gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ),
@@ -969,17 +945,18 @@ gap> NrRClasses(s);
 gap> f:=Transformation( [ 3, 3, 3, 3, 3, 2, 3 ] );;
 gap> r:=RClass(s, f);
 {Transformation( [ 3, 3, 3, 3, 3, 2, 3 ] )}
-gap> ImageOrbit(r);
-<closed orbit, 7 images with size 2, 1 components, 9 kernels, 9 reps>
-gap> AsSet(ImageOrbit(r));
-[ [ 1, 4 ], [ 1, 6 ], [ 2, 3 ], [ 2, 4 ], [ 2, 6 ], [ 3, 6 ], [ 4, 6 ] ]
-gap> ImageOrbitPerms(r);;
+gap> LambdaOrb(r);
+<closed orbit, 19 points with Schreier tree with log>
+gap> AsSet(LambdaOrb(r));
+[ [ 0 ], [ 1 ], [ 1, 2, 4, 6 ], [ 1, 4 ], [ 1, 4, 6 ], [ 1, 6 ], [ 2 ], 
+  [ 2, 3 ], [ 2, 3, 4, 6 ], [ 2, 3, 4, 6, 7 ], [ 2, 3, 6 ], [ 2, 4 ], 
+  [ 2, 4, 6 ], [ 2, 6 ], [ 3 ], [ 3, 6 ], [ 4 ], [ 4, 6 ], [ 6 ] ]
 gap> SchutzenbergerGroup(r);
 Group([ (2,3) ])
 gap> Number(GreensDClasses(s), IsRegularDClass);
 3
 gap> s:=Semigroup(gens);
-<semigroup with 2 generators>
+<transformation semigroup on 7 pts with 2 generators>
 gap> NrRegularDClasses(s);
 3
 
@@ -1091,84 +1068,84 @@ gap> o:=Orb(s, [1,2,3,4], OnSets);
 gap> 
 gap> Enumerate(o);
 <closed orbit, 351 points>
-gap> StrongOrbitsInForwardOrbit(o);
-[ [ [ 9 ], [ 4 ], [ 5 ], [ 6 ], [ 3 ], [ 8 ], [ 10 ], [ 1 ], [ 2 ], [ 7 ] ], 
-  [ [ 4, 6 ], [ 2, 6 ], [ 2, 10 ], [ 4, 8 ], [ 6, 10 ], [ 4, 9 ], [ 5, 8 ], 
-      [ 1, 8 ], [ 4, 10 ], [ 7, 8 ], [ 6, 8 ], [ 5, 9 ], [ 4, 5 ], [ 1, 7 ], 
-      [ 8, 10 ], [ 1, 4 ], [ 8, 9 ], [ 1, 9 ], [ 3, 5 ], [ 1, 6 ], [ 3, 4 ], 
-      [ 2, 8 ], [ 3, 6 ], [ 2, 4 ], [ 2, 9 ], [ 4, 7 ], [ 3, 8 ], [ 1, 3 ], 
-      [ 1, 2 ], [ 2, 3 ], [ 3, 7 ], [ 2, 5 ], [ 1, 10 ], [ 3, 10 ], [ 6, 7 ], 
-      [ 7, 10 ], [ 3, 9 ], [ 6, 9 ], [ 9, 10 ], [ 7, 9 ], [ 1, 5 ], [ 5, 7 ], 
-      [ 5, 6 ], [ 2, 7 ], [ 5, 10 ] ], 
-  [ [ 2, 4, 5 ], [ 6, 8, 10 ], [ 1, 3, 4 ], [ 2, 3, 8 ], [ 1, 4, 6 ], 
-      [ 4, 6, 10 ], [ 2, 6, 8 ], [ 2, 4, 6 ], [ 2, 4, 8 ], [ 1, 8, 9 ], 
-      [ 4, 8, 10 ], [ 5, 8, 9 ], [ 3, 4, 8 ], [ 3, 7, 8 ], [ 1, 6, 9 ], 
-      [ 2, 4, 9 ], [ 8, 9, 10 ], [ 7, 9, 10 ], [ 1, 5, 8 ], [ 3, 6, 8 ], 
-      [ 1, 3, 6 ], [ 2, 5, 9 ], [ 1, 2, 9 ], [ 2, 3, 5 ], [ 1, 6, 10 ], 
-      [ 4, 8, 9 ], [ 4, 7, 8 ], [ 1, 9, 10 ], [ 4, 6, 9 ], [ 4, 9, 10 ], 
-      [ 1, 4, 8 ], [ 7, 8, 10 ], [ 1, 4, 9 ], [ 2, 5, 8 ], [ 2, 9, 10 ], 
-      [ 2, 6, 9 ], [ 4, 7, 9 ], [ 1, 4, 5 ], [ 1, 7, 10 ], [ 1, 2, 7 ], 
-      [ 3, 4, 9 ], [ 1, 2, 6 ], [ 4, 6, 8 ], [ 2, 6, 10 ], [ 2, 8, 9 ], 
-      [ 1, 2, 10 ], [ 1, 2, 4 ], [ 3, 5, 9 ], [ 4, 5, 8 ], [ 5, 6, 10 ], 
-      [ 2, 3, 10 ], [ 3, 7, 10 ], [ 4, 6, 7 ], [ 7, 8, 9 ], [ 5, 6, 8 ], 
-      [ 3, 4, 6 ], [ 1, 6, 8 ], [ 2, 4, 10 ], [ 6, 7, 10 ], [ 2, 4, 7 ], 
-      [ 3, 4, 5 ], [ 1, 3, 7 ], [ 3, 8, 10 ], [ 6, 7, 8 ], [ 6, 8, 9 ], 
-      [ 4, 5, 6 ], [ 3, 5, 10 ], [ 2, 3, 9 ], [ 6, 9, 10 ], [ 4, 5, 7 ], 
-      [ 4, 5, 10 ], [ 2, 5, 10 ], [ 3, 6, 9 ], [ 1, 3, 10 ], [ 1, 2, 8 ], 
-      [ 2, 3, 6 ], [ 1, 2, 5 ], [ 3, 9, 10 ], [ 5, 7, 8 ], [ 5, 9, 10 ], 
-      [ 1, 5, 9 ], [ 1, 4, 10 ], [ 3, 8, 9 ], [ 1, 3, 8 ], [ 1, 2, 3 ], 
-      [ 1, 3, 9 ], [ 3, 5, 8 ], [ 3, 4, 10 ], [ 1, 7, 9 ], [ 1, 5, 6 ], 
-      [ 2, 7, 8 ], [ 3, 4, 7 ], [ 1, 5, 7 ], [ 1, 8, 10 ], [ 4, 7, 10 ], 
-      [ 3, 6, 7 ], [ 1, 4, 7 ], [ 2, 5, 7 ], [ 1, 7, 8 ], [ 2, 3, 7 ], 
-      [ 4, 5, 9 ], [ 5, 6, 9 ], [ 2, 3, 4 ], [ 1, 3, 5 ], [ 6, 7, 9 ], 
-      [ 3, 7, 9 ], [ 1, 6, 7 ], [ 2, 7, 9 ], [ 3, 6, 10 ], [ 2, 6, 7 ], 
-      [ 2, 8, 10 ], [ 2, 5, 6 ], [ 1, 5, 10 ], [ 2, 7, 10 ], [ 3, 5, 6 ], 
-      [ 5, 8, 10 ], [ 3, 5, 7 ], [ 5, 6, 7 ] ], 
-  [ [ 1, 2, 3, 4 ], [ 1, 2, 4, 5 ], [ 2, 3, 4, 8 ], [ 1, 2, 8, 9 ], 
-      [ 2, 3, 5, 6 ], [ 1, 4, 6, 8 ], [ 1, 4, 6, 10 ], [ 4, 6, 8, 9 ], 
-      [ 3, 4, 5, 8 ], [ 1, 3, 4, 5 ], [ 2, 4, 6, 9 ], [ 2, 4, 6, 8 ], 
-      [ 1, 5, 8, 9 ], [ 2, 3, 6, 8 ], [ 1, 2, 5, 9 ], [ 1, 2, 6, 9 ], 
-      [ 2, 3, 4, 5 ], [ 1, 6, 8, 10 ], [ 3, 4, 6, 7 ], [ 3, 7, 8, 9 ], 
-      [ 4, 6, 9, 10 ], [ 4, 5, 7, 8 ], [ 1, 6, 9, 10 ], [ 1, 6, 8, 9 ], 
-      [ 3, 6, 9, 10 ], [ 2, 6, 7, 9 ], [ 2, 4, 5, 8 ], [ 3, 5, 6, 10 ], 
-      [ 1, 2, 3, 10 ], [ 4, 6, 7, 10 ], [ 2, 4, 6, 7 ], [ 4, 8, 9, 10 ], 
-      [ 2, 3, 6, 9 ], [ 1, 2, 4, 8 ], [ 2, 4, 6, 10 ], [ 2, 4, 7, 8 ], 
-      [ 1, 8, 9, 10 ], [ 1, 4, 6, 9 ], [ 3, 5, 9, 10 ], [ 1, 3, 4, 10 ], 
-      [ 2, 5, 8, 9 ], [ 2, 4, 5, 6 ], [ 1, 2, 6, 10 ], [ 2, 4, 7, 10 ], 
-      [ 1, 4, 5, 7 ], [ 2, 4, 5, 7 ], [ 6, 8, 9, 10 ], [ 1, 3, 4, 8 ], 
-      [ 1, 5, 6, 9 ], [ 1, 2, 4, 9 ], [ 1, 2, 4, 6 ], [ 3, 4, 6, 8 ], 
-      [ 1, 3, 5, 6 ], [ 1, 3, 9, 10 ], [ 3, 5, 7, 8 ], [ 1, 3, 4, 7 ], 
-      [ 3, 7, 8, 10 ], [ 2, 6, 8, 9 ], [ 4, 7, 8, 9 ], [ 4, 5, 6, 10 ], 
-      [ 1, 2, 6, 7 ], [ 7, 8, 9, 10 ], [ 1, 3, 7, 8 ], [ 2, 5, 6, 10 ], 
-      [ 3, 4, 6, 9 ], [ 1, 4, 9, 10 ], [ 2, 3, 8, 9 ], [ 3, 4, 7, 8 ], 
-      [ 1, 3, 5, 7 ], [ 2, 5, 6, 9 ], [ 2, 3, 4, 6 ], [ 1, 4, 8, 10 ], 
-      [ 3, 6, 8, 9 ], [ 3, 4, 8, 9 ], [ 1, 5, 6, 10 ], [ 2, 3, 9, 10 ], 
-      [ 1, 4, 8, 9 ], [ 4, 7, 8, 10 ], [ 4, 5, 8, 10 ], [ 1, 7, 8, 10 ], 
-      [ 3, 6, 7, 8 ], [ 2, 5, 9, 10 ], [ 1, 4, 7, 10 ], [ 2, 4, 5, 9 ], 
-      [ 4, 5, 6, 8 ], [ 1, 7, 8, 9 ], [ 3, 5, 6, 8 ], [ 1, 3, 6, 10 ], 
-      [ 1, 2, 6, 8 ], [ 2, 6, 9, 10 ], [ 2, 7, 9, 10 ], [ 4, 7, 9, 10 ], 
-      [ 2, 4, 5, 10 ], [ 2, 3, 5, 10 ], [ 1, 3, 7, 10 ], [ 2, 5, 6, 8 ], 
-      [ 1, 6, 7, 10 ], [ 2, 3, 4, 9 ], [ 1, 3, 5, 10 ], [ 1, 2, 9, 10 ], 
-      [ 2, 3, 5, 7 ], [ 1, 4, 6, 7 ], [ 4, 5, 6, 9 ], [ 1, 4, 7, 9 ], 
-      [ 1, 4, 5, 6 ], [ 1, 7, 9, 10 ], [ 2, 4, 9, 10 ], [ 6, 7, 9, 10 ], 
-      [ 1, 4, 7, 8 ], [ 2, 3, 4, 10 ], [ 1, 2, 5, 8 ], [ 1, 2, 3, 5 ], 
-      [ 2, 4, 8, 9 ], [ 1, 2, 4, 10 ], [ 2, 3, 5, 9 ], [ 4, 6, 8, 10 ], 
-      [ 2, 6, 7, 10 ], [ 4, 6, 7, 8 ], [ 3, 4, 5, 6 ], [ 1, 3, 7, 9 ], 
-      [ 1, 2, 7, 8 ], [ 2, 3, 4, 7 ], [ 1, 2, 5, 6 ], [ 3, 4, 8, 10 ], 
-      [ 2, 4, 8, 10 ], [ 2, 6, 7, 8 ], [ 3, 4, 5, 7 ], [ 1, 4, 5, 10 ], 
-      [ 4, 5, 9, 10 ], [ 1, 6, 7, 9 ], [ 3, 4, 9, 10 ], [ 1, 2, 5, 10 ], 
-      [ 3, 4, 7, 10 ], [ 1, 4, 5, 8 ], [ 5, 6, 9, 10 ], [ 1, 2, 7, 9 ], 
-      [ 2, 3, 5, 8 ], [ 2, 3, 7, 8 ], [ 1, 3, 4, 6 ], [ 1, 3, 5, 9 ], 
-      [ 3, 7, 9, 10 ], [ 4, 6, 7, 9 ], [ 3, 4, 5, 10 ], [ 1, 4, 5, 9 ], 
-      [ 2, 4, 7, 9 ], [ 2, 5, 7, 8 ], [ 3, 4, 6, 10 ], [ 1, 5, 6, 8 ], 
-      [ 3, 4, 5, 9 ], [ 1, 2, 4, 7 ], [ 5, 6, 8, 9 ], [ 1, 5, 7, 8 ], 
-      [ 1, 2, 3, 9 ], [ 1, 3, 8, 9 ], [ 1, 2, 3, 8 ], [ 1, 3, 6, 9 ], 
-      [ 1, 2, 5, 7 ], [ 1, 2, 3, 7 ], [ 1, 3, 4, 9 ], [ 1, 5, 9, 10 ], 
-      [ 5, 6, 8, 10 ], [ 2, 3, 6, 10 ], [ 1, 2, 7, 10 ], [ 1, 3, 5, 8 ], 
-      [ 1, 3, 8, 10 ], [ 2, 6, 8, 10 ], [ 2, 8, 9, 10 ], [ 2, 5, 6, 7 ], 
-      [ 1, 2, 8, 10 ], [ 2, 3, 6, 7 ], [ 3, 4, 7, 9 ], [ 5, 6, 7, 8 ], 
-      [ 1, 5, 8, 10 ], [ 2, 5, 8, 10 ], [ 4, 5, 6, 7 ], [ 3, 5, 6, 7 ], 
-      [ 3, 5, 6, 9 ], [ 4, 5, 8, 9 ] ] ]
+gap> List(OrbSCC(o), x-> o{x});
+[ [ [ 1, 2, 3, 4 ], [ 1, 2, 4, 5 ], [ 1, 6, 8, 10 ], [ 2, 3, 6, 8 ], 
+      [ 1, 2, 8, 9 ], [ 1, 3, 5, 9 ], [ 2, 3, 4, 8 ], [ 1, 4, 6, 10 ], 
+      [ 2, 4, 6, 9 ], [ 3, 5, 9, 10 ], [ 3, 4, 6, 7 ], [ 2, 4, 7, 10 ], 
+      [ 6, 8, 9, 10 ], [ 4, 6, 8, 9 ], [ 2, 3, 6, 9 ], [ 2, 4, 6, 8 ], 
+      [ 1, 4, 6, 8 ], [ 1, 2, 5, 9 ], [ 3, 7, 8, 9 ], [ 2, 3, 5, 6 ], 
+      [ 1, 2, 6, 10 ], [ 1, 6, 8, 9 ], [ 3, 6, 9, 10 ], [ 4, 7, 8, 10 ], 
+      [ 1, 2, 4, 8 ], [ 3, 4, 5, 8 ], [ 1, 4, 6, 9 ], [ 1, 2, 6, 9 ], 
+      [ 1, 3, 4, 10 ], [ 1, 3, 4, 5 ], [ 1, 3, 5, 6 ], [ 3, 4, 7, 8 ], 
+      [ 2, 4, 6, 7 ], [ 3, 4, 8, 9 ], [ 2, 3, 5, 9 ], [ 2, 4, 5, 8 ], 
+      [ 2, 6, 9, 10 ], [ 1, 2, 4, 9 ], [ 4, 8, 9, 10 ], [ 2, 3, 4, 6 ], 
+      [ 1, 5, 8, 9 ], [ 4, 5, 7, 8 ], [ 1, 6, 7, 9 ], [ 1, 4, 5, 7 ], 
+      [ 2, 4, 5, 9 ], [ 1, 4, 9, 10 ], [ 2, 5, 8, 9 ], [ 4, 6, 7, 10 ], 
+      [ 3, 6, 8, 9 ], [ 2, 3, 4, 5 ], [ 1, 3, 4, 8 ], [ 4, 5, 6, 7 ], 
+      [ 2, 7, 9, 10 ], [ 1, 8, 9, 10 ], [ 2, 3, 6, 10 ], [ 4, 5, 6, 8 ], 
+      [ 3, 5, 6, 10 ], [ 4, 7, 8, 9 ], [ 1, 4, 8, 9 ], [ 3, 4, 7, 9 ], 
+      [ 2, 4, 9, 10 ], [ 1, 4, 8, 10 ], [ 3, 4, 6, 8 ], [ 2, 4, 6, 10 ], 
+      [ 4, 6, 9, 10 ], [ 3, 5, 6, 9 ], [ 7, 8, 9, 10 ], [ 1, 4, 7, 10 ], 
+      [ 1, 3, 7, 8 ], [ 1, 2, 5, 10 ], [ 1, 3, 7, 9 ], [ 2, 3, 4, 7 ], 
+      [ 2, 6, 8, 9 ], [ 3, 4, 5, 6 ], [ 1, 6, 9, 10 ], [ 2, 6, 7, 9 ], 
+      [ 1, 2, 3, 10 ], [ 3, 4, 9, 10 ], [ 1, 3, 5, 7 ], [ 4, 5, 8, 10 ], 
+      [ 2, 4, 5, 6 ], [ 1, 5, 6, 10 ], [ 4, 7, 9, 10 ], [ 2, 3, 8, 9 ], 
+      [ 1, 5, 9, 10 ], [ 1, 3, 7, 10 ], [ 1, 2, 4, 6 ], [ 1, 3, 9, 10 ], 
+      [ 2, 4, 5, 10 ], [ 1, 4, 5, 6 ], [ 1, 3, 5, 8 ], [ 1, 2, 4, 10 ], 
+      [ 1, 3, 4, 7 ], [ 2, 4, 5, 7 ], [ 2, 3, 5, 8 ], [ 5, 6, 7, 8 ], 
+      [ 6, 7, 9, 10 ], [ 2, 5, 6, 10 ], [ 1, 2, 5, 8 ], [ 3, 4, 5, 7 ], 
+      [ 4, 5, 9, 10 ], [ 4, 5, 6, 10 ], [ 2, 4, 7, 8 ], [ 1, 5, 6, 9 ], 
+      [ 4, 5, 6, 9 ], [ 1, 7, 8, 10 ], [ 3, 5, 7, 8 ], [ 4, 6, 7, 9 ], 
+      [ 2, 5, 9, 10 ], [ 1, 2, 9, 10 ], [ 1, 4, 7, 8 ], [ 4, 5, 8, 9 ], 
+      [ 1, 2, 6, 8 ], [ 1, 3, 6, 10 ], [ 1, 3, 5, 10 ], [ 1, 2, 3, 5 ], 
+      [ 3, 7, 8, 10 ], [ 3, 4, 5, 10 ], [ 1, 7, 8, 9 ], [ 2, 5, 7, 8 ], 
+      [ 2, 3, 4, 10 ], [ 1, 2, 3, 8 ], [ 3, 5, 6, 7 ], [ 2, 6, 7, 10 ], 
+      [ 3, 7, 9, 10 ], [ 1, 2, 6, 7 ], [ 2, 3, 4, 9 ], [ 1, 4, 5, 10 ], 
+      [ 3, 5, 6, 8 ], [ 5, 6, 9, 10 ], [ 1, 5, 7, 8 ], [ 1, 4, 5, 8 ], 
+      [ 2, 3, 5, 10 ], [ 3, 6, 7, 8 ], [ 4, 6, 8, 10 ], [ 2, 5, 6, 9 ], 
+      [ 2, 4, 8, 9 ], [ 3, 4, 6, 9 ], [ 1, 3, 4, 9 ], [ 1, 5, 8, 10 ], 
+      [ 1, 2, 5, 7 ], [ 1, 2, 3, 7 ], [ 2, 3, 9, 10 ], [ 1, 2, 7, 8 ], 
+      [ 1, 2, 5, 6 ], [ 3, 4, 8, 10 ], [ 2, 4, 7, 9 ], [ 2, 3, 7, 8 ], 
+      [ 1, 2, 3, 9 ], [ 3, 4, 7, 10 ], [ 1, 2, 4, 7 ], [ 1, 3, 8, 10 ], 
+      [ 4, 6, 7, 8 ], [ 1, 6, 7, 10 ], [ 2, 5, 6, 8 ], [ 1, 4, 7, 9 ], 
+      [ 1, 7, 9, 10 ], [ 1, 4, 5, 9 ], [ 3, 4, 6, 10 ], [ 1, 2, 7, 10 ], 
+      [ 5, 6, 8, 10 ], [ 2, 3, 5, 7 ], [ 1, 4, 6, 7 ], [ 2, 5, 8, 10 ], 
+      [ 1, 3, 6, 9 ], [ 1, 3, 8, 9 ], [ 1, 2, 7, 9 ], [ 1, 3, 4, 6 ], 
+      [ 2, 4, 8, 10 ], [ 3, 4, 5, 9 ], [ 2, 6, 8, 10 ], [ 5, 6, 8, 9 ], 
+      [ 1, 5, 6, 8 ], [ 2, 8, 9, 10 ], [ 2, 6, 7, 8 ], [ 2, 5, 6, 7 ], 
+      [ 1, 2, 8, 10 ], [ 2, 3, 6, 7 ] ], 
+  [ [ 2, 3, 8 ], [ 4, 6, 10 ], [ 2, 4, 6 ], [ 1, 4, 6 ], [ 3, 7, 10 ], 
+      [ 2, 4, 5 ], [ 6, 8, 10 ], [ 3, 6, 8 ], [ 1, 8, 9 ], [ 1, 7, 10 ], 
+      [ 1, 3, 4 ], [ 2, 6, 8 ], [ 1, 2, 9 ], [ 1, 3, 6 ], [ 3, 7, 8 ], 
+      [ 1, 4, 5 ], [ 4, 7, 8 ], [ 2, 6, 7 ], [ 4, 8, 9 ], [ 3, 4, 9 ], 
+      [ 2, 3, 5 ], [ 7, 9, 10 ], [ 2, 4, 8 ], [ 2, 6, 10 ], [ 2, 4, 9 ], 
+      [ 4, 6, 8 ], [ 4, 8, 10 ], [ 3, 4, 6 ], [ 1, 5, 8 ], [ 3, 4, 8 ], 
+      [ 4, 6, 9 ], [ 5, 8, 9 ], [ 3, 5, 9 ], [ 8, 9, 10 ], [ 2, 9, 10 ], 
+      [ 1, 4, 8 ], [ 4, 9, 10 ], [ 1, 2, 6 ], [ 1, 6, 9 ], [ 1, 9, 10 ], 
+      [ 4, 6, 7 ], [ 2, 5, 8 ], [ 1, 4, 9 ], [ 2, 8, 9 ], [ 2, 5, 9 ], 
+      [ 1, 2, 4 ], [ 3, 8, 10 ], [ 1, 6, 10 ], [ 3, 5, 10 ], [ 2, 4, 10 ], 
+      [ 1, 8, 10 ], [ 2, 3, 6 ], [ 4, 5, 8 ], [ 4, 7, 9 ], [ 2, 7, 10 ], 
+      [ 1, 6, 8 ], [ 3, 8, 9 ], [ 3, 5, 6 ], [ 6, 9, 10 ], [ 2, 3, 9 ], 
+      [ 1, 2, 10 ], [ 1, 2, 7 ], [ 5, 6, 8 ], [ 2, 6, 9 ], [ 1, 2, 5 ], 
+      [ 1, 5, 9 ], [ 7, 8, 9 ], [ 6, 8, 9 ], [ 3, 9, 10 ], [ 4, 7, 10 ], 
+      [ 1, 3, 9 ], [ 1, 3, 7 ], [ 2, 5, 10 ], [ 5, 9, 10 ], [ 3, 5, 7 ], 
+      [ 4, 5, 10 ], [ 4, 5, 6 ], [ 3, 5, 8 ], [ 1, 4, 10 ], [ 5, 6, 10 ], 
+      [ 1, 5, 10 ], [ 3, 4, 7 ], [ 1, 3, 10 ], [ 1, 7, 8 ], [ 5, 7, 8 ], 
+      [ 3, 4, 5 ], [ 2, 4, 7 ], [ 1, 3, 5 ], [ 6, 7, 8 ], [ 6, 7, 10 ], 
+      [ 3, 6, 9 ], [ 2, 5, 6 ], [ 7, 8, 10 ], [ 2, 3, 4 ], [ 3, 7, 9 ], 
+      [ 1, 5, 6 ], [ 2, 7, 8 ], [ 1, 3, 8 ], [ 5, 6, 7 ], [ 2, 5, 7 ], 
+      [ 1, 2, 8 ], [ 2, 3, 10 ], [ 5, 6, 9 ], [ 6, 7, 9 ], [ 4, 5, 7 ], 
+      [ 4, 5, 9 ], [ 3, 6, 10 ], [ 1, 4, 7 ], [ 2, 8, 10 ], [ 1, 6, 7 ], 
+      [ 1, 2, 3 ], [ 3, 6, 7 ], [ 2, 7, 9 ], [ 2, 3, 7 ], [ 3, 4, 10 ], 
+      [ 1, 5, 7 ], [ 1, 7, 9 ], [ 5, 8, 10 ] ], 
+  [ [ 4, 6 ], [ 6, 10 ], [ 2, 10 ], [ 1, 8 ], [ 2, 6 ], [ 4, 10 ], [ 5, 8 ], 
+      [ 4, 5 ], [ 3, 5 ], [ 7, 9 ], [ 6, 8 ], [ 5, 9 ], [ 1, 9 ], [ 1, 7 ], 
+      [ 7, 8 ], [ 3, 6 ], [ 4, 8 ], [ 4, 9 ], [ 3, 4 ], [ 1, 4 ], [ 4, 7 ], 
+      [ 8, 9 ], [ 8, 10 ], [ 3, 8 ], [ 1, 6 ], [ 2, 7 ], [ 2, 8 ], [ 2, 3 ], 
+      [ 9, 10 ], [ 7, 10 ], [ 2, 4 ], [ 6, 9 ], [ 1, 5 ], [ 2, 9 ], [ 6, 7 ], 
+      [ 3, 9 ], [ 2, 5 ], [ 1, 10 ], [ 1, 2 ], [ 5, 10 ], [ 1, 3 ], [ 5, 6 ], 
+      [ 3, 7 ], [ 3, 10 ], [ 5, 7 ] ], 
+  [ [ 9 ], [ 4 ], [ 5 ], [ 6 ], [ 3 ], [ 10 ], [ 8 ], [ 1 ], [ 2 ], [ 7 ] ] ]
 gap> g1:=Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] );;
 gap> g2:=Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] );;
 gap> m10:=Monoid(g1,g2);;
@@ -1393,13 +1370,13 @@ gap> List(SmallMonoids, IsOrthodoxSemigroup);
 [ false, true, false, false, false, false, true, true, true, false, false, 
   false, false, true, false ]
 gap> s:=SmallMonoids[1];
-<monoid with 2 generators>
+<non-regular transformation monoid on 6 pts with 2 generators>
 gap> IsRegularSemigroup(s);
 false
 gap> IsOrthodoxSemigroup(s);
 false
 gap> t:=Semigroup(Idempotents(s));
-<semigroup with 4 generators>
+<transformation monoid on 6 pts with 3 generators>
 gap> Size(t);
 4
 gap> s:=SmallMonoids[7];;
@@ -1514,9 +1491,7 @@ Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
 gap> Unbind(semis); Unbind(S); Unbind(m);
 
 #
-gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
-gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
+gap> SemigroupsStopTest();
 
 #
 gap> STOP_TEST( "Semigroups package: monoid_pkg.tst", 10000);

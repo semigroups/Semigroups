@@ -1,11 +1,45 @@
 #############################################################################
 ##
 #W  CHANGELOG
-#Y  Copyright (C) 2011-12                                   James D. Mitchell
+#Y  Copyright (C) 2011-13                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
+
+
+1.0 -> 1.1  
+            A minor release to fix some technical issues in PackageInfo.g, the
+            declarations of IsGreens.Class, and a minor change in the output in
+            one test in everyfunction.tst which was consequence of the
+            declarations of IsGreens.Class.
+
+0.9999 -> 1.0
+            The package has been renamed from Citrus to Semigroups. The package
+            has been completely overhauled, the performance has been improved,
+            and the code has been generalized so that in the future the same
+            code can be used to compute with other types of semigroups.  
+
+Under the name Citrus:
+
+0.999 -> 0.9999
+            This is the final release of Citrus (the package will be renamed
+            Semigroups in the next release since the scope of the package has
+            expanded to include more types of semigroups than just those of
+            transformations and partial permutations).
+
+            A minor release fixing several bugs relating to inverse semigroups
+            of partial permutations pointed out by partcipants at the
+            University of St Andrews Research for Undergraduates Summer School
+            in July 2012.  Most notably by Demi Allen, Casey Donoven, Rhiannon
+            Dougall, Robert Hancock, and Wilf Wilson. More specifically,
+            SymmetricInverseSemigroup(n) returned an incorrect answer when n=1
+            or n=2, \in for the empty mapping and an inverse semigroup of
+            partial perms sometimes incorrectly returned false, some harmless
+            compiler warnings were displayed when using more recent versions of
+            gcc, NaturalLeqPP sometimes returned the incorrect value, there was
+            no method for IsInverseSemigroup or IsInverseMonoid for a semigroup
+            of partial perms.
 
 0.99 -> 0.999 
             A minor release fixing several bugs relating to partial

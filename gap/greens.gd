@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  greens.gd
-#Y  Copyright (C) 2011-12                                James D. Mitchell
+#Y  Copyright (C) 2013                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -31,7 +31,10 @@
 
 #new
 
-DeclareProperty("IsGreensClassOfPartPermSemigroup", IsGreensClass);
+DeclareAttribute("MultiplicativeNeutralElement", IsGreensHClass);
+
+DeclareProperty("IsPartialPermSemigroupGreensClass", IsGreensClass);
+DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
 DeclareProperty("IsGreensClassOfInverseSemigroup", IsGreensClass);
 DeclareProperty("IsGreensClassNC", IsActingSemigroupGreensClass);
 
@@ -50,15 +53,89 @@ DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
 
 #old
 
-DeclareGlobalFunction("DClass");
-DeclareGlobalFunction("DClassNC");
-DeclareGlobalFunction("HClass");
-DeclareGlobalFunction("HClassNC");
-DeclareGlobalFunction("LClass");
-DeclareGlobalFunction("LClassNC");
-DeclareGlobalFunction("RClass");
-DeclareGlobalFunction("RClassNC");
+DeclareOperation("GreensDClassOfElementNC", [IsSemigroup,
+IsAssociativeElement]); 
 
+DeclareOperation("GreensHClassOfElementNC", [IsSemigroup,
+IsAssociativeElement]);
+DeclareOperation("GreensHClassOfElementNC", [IsGreensClass,
+IsAssociativeElement]);
+DeclareOperation("GreensHClassOfElement", [IsGreensClass,
+IsAssociativeElement]);
+
+DeclareOperation("GreensLClassOfElement", [IsGreensDClass,
+IsAssociativeElement]);
+DeclareOperation("GreensLClassOfElementNC", [IsSemigroup,
+IsAssociativeElement]); 
+DeclareOperation("GreensLClassOfElementNC", [IsGreensDClass,
+IsAssociativeElement]);
+
+DeclareOperation("GreensRClassOfElement", [IsGreensDClass,
+IsAssociativeElement]);
+DeclareOperation("GreensRClassOfElementNC", [IsSemigroup,
+IsAssociativeElement]); 
+DeclareOperation("GreensRClassOfElementNC", [IsGreensDClass,
+IsAssociativeElement]);
+
+DeclareAttribute("DClassReps", IsSemigroup);
+DeclareAttribute("HClassReps", IsSemigroup);
+DeclareAttribute("HClassReps", IsGreensClass);
+DeclareAttribute("LClassReps", IsSemigroup); 
+DeclareAttribute("LClassReps", IsGreensDClass); 
+DeclareAttribute("RClassReps", IsSemigroup);
+DeclareAttribute("RClassReps", IsGreensDClass);
+
+DeclareAttribute("Idempotents", IsGreensClass);
+DeclareOperation("Idempotents", [IsSemigroup, IsInt]);
+DeclareAttribute("GroupHClass", IsGreensDClass);
+
+DeclareAttribute("StructureDescription", IsGreensHClass and IsGroupHClass);
+
+DeclareProperty("IsRegularClass", IsGreensClass);
+InstallTrueMethod(IsRegularClass, IsRegularDClass);
+DeclareCategory("IsInverseOpClass", IsGreensClass); 
+InstallTrueMethod(IsRegularClass, IsInverseOpClass);
+
+DeclareAttribute("PartialOrderOfDClasses", IsSemigroup);
+DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
+
+# abbreviations...
+
+DeclareSynonym("DClass", GreensDClassOfElement);
+DeclareSynonym("DClassNC", GreensDClassOfElementNC);
+DeclareOperation("DClass", [IsGreensClass]);
+DeclareOperation("DClassNC", [IsGreensClass]);
+
+DeclareSynonym("HClass", GreensHClassOfElement);
+DeclareSynonym("HClassNC", GreensHClassOfElementNC);
+
+DeclareSynonym("LClass", GreensLClassOfElement);
+DeclareSynonym("LClassNC", GreensLClassOfElementNC);
+DeclareOperation("LClass", [IsGreensHClass]);
+
+DeclareSynonym("RClass", GreensRClassOfElement);
+DeclareSynonym("RClassNC", GreensRClassOfElementNC);
+DeclareOperation("RClass", [IsGreensHClass]);
+
+DeclareSynonymAttr("DClasses", GreensDClasses);
+DeclareSynonymAttr("HClasses", GreensHClasses);
+DeclareSynonymAttr("JClasses", GreensJClasses);
+DeclareSynonymAttr("LClasses", GreensLClasses);
+DeclareSynonymAttr("RClasses", GreensRClasses);
+
+DeclareAttribute("NrDClasses", IsSemigroup); 
+DeclareAttribute("NrHClasses", IsSemigroup);
+DeclareAttribute("NrHClasses", IsGreensClass);
+DeclareAttribute("NrLClasses", IsSemigroup);
+DeclareAttribute("NrLClasses", IsGreensDClass);
+DeclareAttribute("NrRClasses", IsSemigroup);
+DeclareAttribute("NrRClasses", IsGreensDClass);
+
+DeclareAttribute("NrRegularDClasses", IsSemigroup); 
+DeclareAttribute("NrIdempotents", IsSemigroup);
+DeclareAttribute("NrIdempotents", IsGreensClass);
+
+# other...
 DeclareGlobalFunction("CreateDClass");
 DeclareGlobalFunction("CreateDClassNC");
 DeclareGlobalFunction("CreateHClass");
@@ -75,47 +152,9 @@ DeclareAttribute("HClassType", IsSemigroup);
 DeclareAttribute("LClassType", IsSemigroup);
 DeclareAttribute("RClassType", IsSemigroup);
 
-DeclareAttribute("DClassReps", IsSemigroup);
-DeclareAttribute("HClassReps", IsSemigroup);
-DeclareAttribute("LClassReps", IsSemigroup); 
-DeclareAttribute("RClassReps", IsSemigroup);
-
-DeclareOperation("EnumeratorOfRClasses", [IsSemigroup]);
-
-DeclareOperation("GreensDClassOfElementNC", [IsSemigroup]); 
-DeclareOperation("GreensHClassOfElementNC", [IsSemigroup]); 
-DeclareOperation("GreensLClassOfElementNC", [IsSemigroup]); 
-DeclareOperation("GreensRClassOfElementNC", [IsSemigroup]);
-
-DeclareProperty("IsGreensClassOfTransSemigp", IsGreensClass);
-
+#technical...
 DeclareGlobalFunction("IsRegularClass@");
-DeclareProperty("IsRegularClass", IsGreensClass);
-InstallTrueMethod(IsRegularClass, IsRegularDClass);
-DeclareProperty("IsInverseOpClass", IsGreensClass); 
-InstallTrueMethod(IsRegularClass, IsInverseOpClass);
-
 DeclareGlobalFunction("Idempotents@");
 DeclareGlobalFunction("NrIdempotents@");
-DeclareAttribute("NrIdempotents", IsSemigroup);
-
-DeclareAttribute("NrDClasses", IsSemigroup); 
-DeclareAttribute("NrHClasses", IsSemigroup);
-DeclareAttribute("NrLClasses", IsSemigroup);
-DeclareAttribute("NrRClasses", IsSemigroup);
-DeclareAttribute("NrRegularDClasses", IsSemigroup); 
-
-DeclareAttribute("PartialOrderOfDClasses", IsSemigroup);
-
-DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
-
-DeclareSynonymAttr("DClasses", GreensDClasses);
-DeclareSynonymAttr("HClasses", GreensHClasses);
-DeclareSynonymAttr("JClasses", GreensJClasses);
-DeclareSynonymAttr("LClasses", GreensLClasses);
-DeclareSynonymAttr("RClasses", GreensRClasses);
-
-DeclareAttribute("GroupHClass", IsGreensDClass and
- IsGreensClassOfTransSemigp);
 
 #EOF

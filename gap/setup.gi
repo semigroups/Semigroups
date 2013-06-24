@@ -1,31 +1,31 @@
+############################################################################
+##
+#W  setup.gi
+#Y  Copyright (C) 2013                                   James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
 #############################################################################
-###
-##W  setup.gi
-##Y  Copyright (C) 2011-12                                James D. Mitchell
-###
-###  Licensing information can be found in the README file of this package.
-###
-##############################################################################
-###
+##
 
 ###############################################################################
 # Setup - install the basic things required for specific acting semigroups    #
 ###############################################################################
 
-#
+InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
 
-InstallMethod(IsActingSemigroupGreensClass, "for a Green's class",
-[IsGreensClass], x-> IsActingSemigroup(ParentSemigroup(x)));
+InstallImmediateMethod(IsActingSemigroupGreensClass, IsGreensClass, 0, 
+x-> IsActingSemigroup(Parent(x)));
 
 # the number of points in the action
 
-InstallOtherMethod(ActionDegree, 
+InstallMethod(ActionDegree, 
 "for associative element with action collection",
 [IsAssociativeElementWithActionCollection], 
 s-> ActionDegree(Representative(s)));
 
-InstallOtherMethod(ActionDegree, "for a partial perm collection",
-[IsPartialPermCollection], s-> DegreeOfPartialPermCollection(s));
+InstallMethod(ActionDegree, "for a partial perm collection",
+[IsPartialPermCollection], DegreeOfPartialPermCollection);
 
 #
 
@@ -33,10 +33,7 @@ InstallMethod(ActionDegree, "for a transformation",
 [IsTransformation], DegreeOfTransformation);
 
 InstallMethod(ActionDegree, "for a partial perm",
-[IsPartialPerm], x-> x[2]);
-
-InstallMethod(ActionDegree, "for a bipartition",
-[IsBipartition], x-> x[1]/2);
+[IsPartialPerm], RankOfPartialPerm);
 
 # the number of points in the range of the action
 
@@ -44,15 +41,7 @@ InstallMethod(ActionRank, "for a transformation",
 [IsTransformation], RankOfTransformation);
 
 InstallMethod(ActionRank, "for a partial perm",
-[IsPartialPerm], x-> x[2]);
-
-InstallMethod(ActionRank, "for a bipartition",
-[IsBipartition], function(x)
-  local y;
-
-  y:=LeftSignedPartition(x);
-  return Number(y{[y[1]+2..2*y[1]+1]}, x-> x=1);
-end);
+[IsPartialPerm], RankOfPartialPerm);
 
 # the minimum possible rank of an element
 
@@ -62,9 +51,6 @@ InstallMethod(MinActionRank, "for a transformation semigroup",
 InstallMethod(MinActionRank, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x-> 0);
 
-InstallMethod(MinActionRank, "for a bipartition semigroup",
-[IsBipartitionSemigroup], x-> 0);
-
 # options passed to LambdaOrb(s) when it is created
 
 InstallMethod(LambdaOrbOpts, "for a transformation semigroup",
@@ -73,63 +59,45 @@ InstallMethod(LambdaOrbOpts, "for a transformation semigroup",
 InstallMethod(LambdaOrbOpts, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> rec(forflatplainlists:=true));
 
-InstallMethod(LambdaOrbOpts, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s-> rec(forflatplainlists:=true));
-
 InstallMethod(RhoOrbOpts, "for a transformation semigroup",
 [IsTransformationSemigroup], s-> rec(forflatplainlists:=true));
 
 InstallMethod(RhoOrbOpts, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> rec(forflatplainlists:=true));
 
-InstallMethod(RhoOrbOpts, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s-> rec(forflatplainlists:=true));
-
 # the lambda and rho acts
 
 InstallMethod(LambdaAct, "for a transformation semi",
-[IsTransformationSemigroup], x-> OnSets);
+[IsTransformationSemigroup], x-> OnPosIntSetsTrans);
 
 InstallMethod(RhoAct, "for a transformation semi",
 [IsTransformationSemigroup], x-> ON_KERNEL_ANTI_ACTION);
 
 InstallMethod(LambdaAct, "for a partial perm semi",
-[IsPartialPermSemigroup], x-> OnIntegerSetsWithPP);
+[IsPartialPermSemigroup], x-> OnPosIntSetsPartialPerm);
 
 # JDM new c method for this!
 InstallMethod(RhoAct, "for a partial perm semi",
 [IsPartialPermSemigroup], s->       
   function(set, f) 
-    return OnIntegerSetsWithPP(set, f^-1);
+    return OnPosIntSetsPartialPerm(set, f^-1);
   end);
-
-InstallMethod(LambdaAct, "for a bipartition semigroup",
-[IsBipartitionSemigroup], x-> OnRightSignedPartition);
-
-InstallMethod(RhoAct, "for a bipartition semigroup",
-[IsBipartitionSemigroup], x-> OnLeftSignedPartition);
 
 # the seed or dummy start point for LambdaOrb
 
 InstallMethod(LambdaOrbSeed, "for a transformation semi",
-[IsTransformationSemigroup], s-> [65536]);
+[IsTransformationSemigroup], s-> [0]);
 
 InstallMethod(LambdaOrbSeed, "for a partial perm semi",
-[IsPartialPermSemigroup], s-> [65536]);
-
-InstallMethod(LambdaOrbSeed, "for a bipartition semi",
-[IsBipartitionSemigroup], s-> [65536]);
+[IsPartialPermSemigroup], s-> [0]);
 
 # the seed or dummy start point for RhoOrb
 
 InstallMethod(RhoOrbSeed, "for a transformation semi",
-[IsTransformationSemigroup], s->[65536]);
+[IsTransformationSemigroup], s->[0]);
 
 InstallMethod(RhoOrbSeed, "for a partial perm semi",
-[IsPartialPermSemigroup], s-> [65536]);
-
-InstallMethod(RhoOrbSeed, "for a bipartition semi",
-[IsBipartitionSemigroup], s-> [65536]);
+[IsPartialPermSemigroup], s-> [0]);
 
 # the function calculating the lambda or rho value of an element
 
@@ -137,19 +105,13 @@ InstallMethod(LambdaFunc, "for a transformation semigroup",
 [IsTransformationSemigroup], x-> IMAGE_SET_TRANS);
 
 InstallMethod(LambdaFunc, "for a partial perm semigroup",
-[IsPartialPermSemigroup], x-> RanSetPP);
-
-InstallMethod(LambdaFunc, "for a bipartition semigroup",
-[IsBipartitionSemigroup], x-> RightSignedPartition);
+[IsPartialPermSemigroup], x-> IMAGE_SET_PPERM);
 
 InstallMethod(RhoFunc, "for a trans semi",
 [IsTransformationSemigroup], x-> FLAT_KERNEL_TRANS);
 
 InstallMethod(RhoFunc, "for a partial perm semi",
-[IsPartialPermSemigroup], x-> DomPP);
-
-InstallMethod(RhoFunc, "for a bipartition semigroup",
-[IsBipartitionSemigroup], x-> LeftSignedPartition);
+[IsPartialPermSemigroup], x-> DOMAIN_PPERM);
 
 # the function used to calculate the rank of lambda or rho value
 
@@ -159,17 +121,11 @@ InstallMethod(LambdaRank, "for a transformation semigroup",
 InstallMethod(LambdaRank, "for a semigroup of partial perms", 
 [IsPartialPermSemigroup], x-> Length);
 
-InstallMethod(LambdaRank, "for a bipartition semigroup",
-[IsBipartitionSemigroup], x-> y-> Number(y{[y[1]+2..2*y[1]+1]}, x-> x=1));
-
 InstallMethod(RhoRank, "for a transformation semigroup", 
 [IsTransformationSemigroup], x-> MaximumList);
 
 InstallMethod(RhoRank, "for a semigroup of partial perms", 
 [IsPartialPermSemigroup], x-> Length);
-
-InstallMethod(RhoRank, "for a bipartition semigroup",
-[IsBipartitionSemigroup], x-> y-> Number(y{[y[1]+2..2*y[1]+1]}, x-> x=1));
 
 # if g=LambdaInverse(X, f) and X^f=Y, then Y^g=X and g acts on the right 
 # like the inverse of f on Y.
@@ -178,11 +134,7 @@ InstallMethod(LambdaInverse, "for a transformation semigroup",
 [IsTransformationSemigroup], s-> INV_LIST_TRANS);
 
 InstallMethod(LambdaInverse, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> function(x, f) return InvPP(f); end); 
-
-#JDM c method
-InstallMethod(LambdaInverse, "for a bipartition",
-[IsBipartitionSemigroup], s-> function(x, f) return f^-1; end);
+[IsPartialPermSemigroup], s-> function(x, f) return f^-1; end); 
 
 # if g=RhoInverse(X, f) and f^X=Y (this is a left action), then g^Y=X and g
 # acts on the left like the inverse of g on Y. 
@@ -196,12 +148,6 @@ InstallMethod(RhoInverse, "for a partial perm semi",
     return f^-1;
   end);
 
-InstallMethod(RhoInverse, "for a bipartition",
-[IsBipartitionSemigroup], s-> 
-  function(x, f)
-    return f^-1;
-  end);
-
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
 # equal LambdaFunc and RhoFunc. This is required to check if one of the two
 # elements belongs to the schutz gp of a lambda orb.
@@ -209,27 +155,8 @@ InstallMethod(RhoInverse, "for a bipartition",
 InstallMethod(LambdaPerm, "for a transformation semi",
 [IsTransformationSemigroup], s-> PERM_LEFT_QUO_TRANS_NC);
 
-#JDM c method for this!
 InstallMethod(LambdaPerm, "for a partial perm semi",
-[IsPartialPermSemigroup], s-> function(f,g)
-  local h;
-  h:=f^-1*g;
-  return MappingPermListList(DomPP(h), RanPP(h)); 
-end);
-
-#JDM c method for this!
-InstallMethod(LambdaPerm, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s-> 
-  function(a, b)
-    local n, p, i;
-
-    n:=a[1]/2; #degree
-    p:=[1..a[2]]; #rank
-    for i in [1..n] do 
-      p[a[n+i+2]]:=b[n+i+2];
-    od;
-    return PermList(p);
-  end);
+[IsPartialPermSemigroup], s-> PERM_LEFT_QUO_PPERM_NC);
 
 # returns a permutation mapping LambdaFunc(s)(f) to LambdaFunc(s)(g) so that 
 # gf^-1(i)=p(i) when RhoFunc(s)(f)=RhoFunc(s)(g)!!
@@ -241,13 +168,7 @@ InstallMethod(LambdaConjugator, "for a transformation semigroup",
 InstallMethod(LambdaConjugator, "for a partial perm semi",
 [IsPartialPermSemigroup], s-> 
 function(f, g)
-  return MappingPermListList(RanPP(f), RanPP(g));
-end);
-
-InstallMethod(LambdaConjugator, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s-> 
-function(f, g)
-
+  return MappingPermListList(IMAGE_PPERM(f), IMAGE_PPERM(g));
 end);
 
 # the function used to test if there is an idempotent with the specified 
@@ -265,7 +186,7 @@ InstallMethod(IdempotentTester, "for a partial perm semigroup",
 # the function used to create an idempotent with the specified lambda and rho
 # values. 
 
-InstallMethod(IdempotentCreator, "for a trans semigp",
+InstallMethod(IdempotentCreator, "for a transformation semigroup",
 [IsTransformationSemigroup], s-> IDEM_IMG_KER_NC);
 
 InstallMethod(IdempotentCreator, "for a partial perm semigp",
@@ -273,6 +194,16 @@ InstallMethod(IdempotentCreator, "for a partial perm semigp",
 
 # GroupElementAction will be \* for transformation and partial perm semigroups 
 # and something else for semigroups of bipartitions.
+
+InstallMethod(GroupElementAction, 
+"for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+s-> PROD);
+
+InstallMethod(GroupElementAction, 
+"for a partial perm semigroup with generators",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+s-> PROD);
 
 # IsInSubgroupOfSemigroup returns <true> if the element <f> is an element of 
 # a subgroup of any semigroup containing it.
@@ -286,26 +217,17 @@ end);
 InstallMethod(IsInSubgroupOfSemigroup, "for a partial perm",
 [IsPartialPerm],
 function(f) 
-  return DomPP(f)=RanSetPP(f);
-end);
-
-InstallMethod(IsInSubgroupOfSemigroup, "for a bipartition",
-[IsBipartition],
-function(f) 
-  return RightSignedPartition(f)=LeftSignedPartition(f);
+  return DOMAIN_PPERM(f)=IMAGE_SET_PPERM(f);
 end);
 
 # IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only
 # if it is only possible to multiply elements of the type in the semigroup with
-# the equal degrees.
+# equal degrees.
 
 InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
 IsTransformationSemigroup);
 
 InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
 "for a partial perm semigroup", [IsPartialPermSemigroup], ReturnFalse);
-
-InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
-IsBipartitionSemigroup);
 
 #EOF

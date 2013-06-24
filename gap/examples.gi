@@ -1,7 +1,7 @@
 ############################################################################# 
 ## 
 #W  examples.gi
-#Y  Copyright (C) 2011-12                                 James D. Mitchell
+#Y  Copyright (C) 2013                                    James D. Mitchell
 ## 
 ##  Licensing information can be found in the README file of this package. 
 ## 
@@ -21,7 +21,7 @@ function(n)
           Concatenation(List([1..n-1], x-> [x]), [[]]) ] ;
   
   s:=Semigroup(List(gens, BinaryRelationByListOfImagesNC));
-  SetIsBinaryRelationCollection(s, true);
+  #SetIsBinaryRelationCollection(s, true);
   return s;
 end);
 
@@ -71,10 +71,7 @@ InstallMethod(GeneralLinearSemigroup, "for 2 pos ints",
 InstallMethod(IsFullMatrixSemigroup, "for a semigroup", 
 [IsSemigroup], ReturnFalse);
 
-#
-
-InstallOtherMethod(IsGeneralLinearSemigroup, "for a semigroup",
-[IsSemigroup], ReturnFalse);
+#JDM method for IsFullMatrixSemigroup for a matrix semigroup
 
 # undocumented, from the semigroupe manual... JDM is this right?
 
@@ -244,33 +241,33 @@ end);
 
 #
 
-InstallMethod(PartitionMonoid, "for a positive integer",
-[IsPosInt], 
-function(n)
-  local gens, g, s;
-
-  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
-  Add(gens, AsBipartition(PartialPermNC([2..n], [2..n]), n));
-  Add(gens, BipartitionNC(Concatenation([[1,2,n+1, n+2]], 
-   List([3..n], x-> [x, x+n]))));
-
-  s:=Semigroup(gens);
-  SetIsRegularSemigroup(s, true);
-  return s;
-end);
-
+#InstallMethod(PartitionMonoid, "for a positive integer",
+#[IsPosInt], 
+#function(n)
+#  local gens, g, s;
 #
-
-InstallMethod(DualSymmetricInverseSemigroup, "for a positive integer",
-[IsPosInt], 
-function(n)
-  local gens;
-  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
-  Add(gens, BipartitionNC(Concatenation([[1,2,3+n], [1+n,2+n,3]], 
-   List([4..n], x-> [x, x+n]))));
-  return Semigroup(gens);
-end);
-
+#  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
+#  Add(gens, AsBipartition(PartialPermNC([2..n], [2..n]), n));
+#  Add(gens, BipartitionNC(Concatenation([[1,2,n+1, n+2]], 
+#   List([3..n], x-> [x, x+n]))));
+#
+#  s:=Semigroup(gens);
+#  SetIsRegularSemigroup(s, true);
+#  return s;
+#end);
+#
+##
+#
+#InstallMethod(DualSymmetricInverseSemigroup, "for a positive integer",
+#[IsPosInt], 
+#function(n)
+#  local gens;
+#  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
+#  Add(gens, BipartitionNC(Concatenation([[1,2,3+n], [1+n,2+n,3]], 
+#   List([4..n], x-> [x, x+n]))));
+#  return Semigroup(gens);
+#end);
+#
 #
 
 InstallMethod(POI, "for a positive integer",
@@ -327,72 +324,13 @@ end);
 InstallMethod(SingularSemigroup, "for a positive integer",
 [IsPosInt],
 function(n)
-  local img, x, S, T;
-  img:=Concatenation([1..n-1], [n-1]);
-  x:=TransformationNC(img);
+  local x, S, T;
+  
+  x:=TransformationNC(Concatenation([1..n-1], [n-1]));
   S:=FullTransformationSemigroup(n);
   T:=SubsemigroupNC(S, Idempotents(GreensDClassOfElementNC(S, x)));
   SetIsRegularSemigroup(T, true);
   return T;
-end);
-
-#
-
-InstallMethod(SymmetricInverseSemigroup, "for a positive integer",
-[IsInt],
-function(n)
-  local s;
-
-  if n<0 then 
-    Error("usage: the argument should be a non-negative integer,");
-    return;
-  elif n=0 then
-    s:=InverseSemigroup(PartialPermNC([]));
-  elif n=1 then 
-    s:=InverseSemigroup(PartialPermNC([1]), PartialPermNC([]));
-  elif n=2 then 
-    s:=InverseSemigroup(PartialPermNC([2,1]), PartialPermNC([1]));;
-  else
-    s:=InverseSemigroup(List(GeneratorsOfGroup(SymmetricGroup(n)), x->
-     PartialPermNC(ListPerm(x, n))), PartialPermNC([0..n-1]*1)); 
-  fi;
-
-  SetIsSymmetricInverseSemigroup(s, true);
-  return s;
-end);
-
-#
-
-InstallMethod(ViewObj, "for a symmetric inverse semigroup",
-[IsSymmetricInverseSemigroup],
-function(s)
-  Print("<symmetric inverse semigroup of ");
-  if HasSize(s) then 
-    Print("size ", Size(s), ", ");
-  fi;
-  Print("degree ", DegreeOfPartialPermSemigroup(s), " with ",
-   Length(GeneratorsOfInverseSemigroup(s)), " generator");
-  if Length(GeneratorsOfInverseSemigroup(s))>1 then 
-    Print("s");
-  fi;
-  Print(">");
-end);
-
-#
-
-InstallMethod(ViewObj, "for a full transformation semigroup",
-[IsFullTransformationSemigroup and HasGeneratorsOfSemigroup], 1,
-function(s)
-  Print("<full transformation semigroup of ");
-  if HasSize(s) then 
-    Print("size ", Size(s), ", ");
-  fi;
-  Print("degree ", DegreeOfTransformationSemigroup(s), " with ",
-   Length(GeneratorsOfSemigroup(s)), " generator");
-  if Length(GeneratorsOfSemigroup(s))>1 then 
-    Print("s");
-  fi;
-  Print(">");
 end);
 
 #EOF

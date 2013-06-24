@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  data.tst
-#Y  Copyright (C) 2011-12                                James D. Mitchell
+#Y  Copyright (C) 2011-13                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -11,10 +11,7 @@ gap> START_TEST("Semigroups package: data.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
-gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
-gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoSemigroups, 0);
+gap> SemigroupsStartTest();
 
 #
 gap> s:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ), 
@@ -30,8 +27,7 @@ gap> AsList(LambdaOrb(r)){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]};
 [ [ 1, 2, 3, 4, 5 ], [ 1, 2, 4, 5, 6 ], [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ] ]
 gap> LambdaOrbMults(LambdaOrb(r),
 > LambdaOrbSCCIndex(r)){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]};
-[ [ Transformation( [ 1, 2, 3, 4, 5, 6 ] ), 
-      Transformation( [ 1, 2, 3, 4, 5, 6 ] ) ], 
+[ [ IdentityTransformation(), IdentityTransformation() ], 
   [ Transformation( [ 6, 1, 2, 5, 4, 1 ] ), 
       Transformation( [ 2, 3, 1, 5, 4, 1 ] ) ], 
   [ Transformation( [ 1, 2, 5, 6, 3, 1 ] ), 
@@ -52,8 +48,7 @@ gap> AsList(LambdaOrb(r){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]});
 [ [ 2, 3 ], [ 4, 6 ], [ 2, 6 ], [ 1, 4 ], [ 1, 6 ], [ 2, 4 ], [ 3, 6 ] ]
 gap> LambdaOrbMults(LambdaOrb(r),
 > LambdaOrbSCCIndex(r)){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]};
-[ [ Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] ), 
-      Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] ) ], 
+[ [ IdentityTransformation(), IdentityTransformation() ], 
   [ Transformation( [ 4, 4, 6, 4, 4, 4, 4 ] ), 
       Transformation( [ 6, 3, 3, 2, 3, 3, 3 ] ) ], 
   [ Transformation( [ 2, 6, 2, 2, 2, 2, 2 ] ), 
@@ -82,7 +77,7 @@ gap> NextIterator(iter);
 gap> f in SemigroupData(s);
 false
 gap> NextIterator(iter);
-{Transformation( [ 5, 1, 4, 1, 4, 4, 7, 8 ] )}
+{Transformation( [ 5, 1, 4, 1, 4, 4 ] )}
 gap> f in SemigroupData(s);
 true
 
@@ -94,13 +89,11 @@ gap> RhoOrb(S);
 gap> Enumerate(last);
 <closed orbit, 9 points with Schreier tree with log>
 gap> AsList(last);
-[ [ 65536 ], [ 1, 2, 3, 1 ], [ 1, 1, 2, 3 ], [ 1, 2, 2, 1 ], [ 1, 1, 2, 2 ], 
+[ [ 0 ], [ 1, 2, 3, 1 ], [ 1, 1, 2, 3 ], [ 1, 2, 2, 1 ], [ 1, 1, 2, 2 ], 
   [ 1, 2, 1, 1 ], [ 1, 1, 1, 2 ], [ 1, 1, 1, 1 ], [ 1, 1, 2, 1 ] ]
 
 #
-gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
-gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
+gap> SemigroupsStopTest();
 
 #
 gap> Unbind(gens); Unbind(s); Unbind(f); Unbind(r); Unbind(iter); 

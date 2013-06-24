@@ -1,4 +1,6 @@
 syntax: glob
+*.orig
+*.DS_Store
 *.swp
 *.aux
 *.log
@@ -26,5 +28,4 @@ Transitions*
 *.g6
 *.gz
 *.semigroups
-citrus.tex
-main.tex
+*.tex

@@ -1,20 +1,15 @@
 #############################################################################
 ##
 #W  read.g
-#Y  Copyright (C) 2011-12                                James D. Mitchell
+#Y  Copyright (C) 2013                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-ReadPackage("semigroups/gap/pperm.gi");
-ReadPackage("semigroups/gap/partition.gi");
-ReadPackage("semigroups/gap/binary.gi");
-ReadPackage("semigroups/gap/matrix.gi");
-
-ReadPackage("semigroups/gap/acting.gi");
 ReadPackage("semigroups/gap/setup.gi");
+ReadPackage("semigroups/gap/acting.gi");
 
 ReadPackage("semigroups/gap/semigroups.gi");
 ReadPackage("semigroups/gap/greens.gi");
@@ -26,6 +21,7 @@ ReadPackage("semigroups/gap/iterators.gi");
 ReadPackage("semigroups/gap/properties.gi");
 ReadPackage("semigroups/gap/attributes.gi");
 ReadPackage("semigroups/gap/orbits.gi");
+ReadPackage("semigroups/gap/ideals.gi");
 
 ReadPackage("semigroups/gap/examples.gi");
 

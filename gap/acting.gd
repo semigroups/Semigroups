@@ -1,7 +1,7 @@
 #############################################################################
 ###
 ##W  acting.gd
-##Y  Copyright (C) 2011-12                                James D. Mitchell
+##Y  Copyright (C) 2013                                   James D. Mitchell
 ###
 ###  Licensing information can be found in the README file of this package.
 ###
@@ -29,8 +29,10 @@ DeclareAttribute("LambdaRhoLookup", IsGreensDClass and
 # long orbits <=> LongOrb
 DeclareAttribute("LambdaOrb", IsActingSemigroup, "mutable");
 DeclareAttribute("RhoOrb", IsActingSemigroup, "mutable");
-DeclareProperty("IsLambdaOrb", IsOrbit);
-DeclareProperty("IsRhoOrb", IsOrbit);
+DeclareFilter("IsLambdaOrb", IsOrbit);
+DeclareFilter("IsInvLambdaOrb", IsLambdaOrb);
+DeclareFilter("IsRhoOrb", IsOrbit);
+DeclareFilter("IsInvRhoOrb", IsRhoOrb);
 
 DeclareGlobalFunction("LambdaOrbMults");
 DeclareGlobalFunction("LambdaOrbMult");
@@ -42,13 +44,13 @@ DeclareGlobalFunction("RhoOrbRep");
 DeclareGlobalFunction("RhoOrbSchutzGp");
 DeclareGlobalFunction("LambdaOrbStabChain");
 DeclareAttribute("RhoOrbStabChain", IsActingSemigroupGreensClass);
+DeclareOperation("RhoOrbStabChain", [IsOrbit, IsPosInt]);
 
 DeclareGlobalFunction("RectifyLambda");
 DeclareGlobalFunction("RhoPos");
 DeclareGlobalFunction("LambdaPos");
 DeclareGlobalFunction("RectifyRho");
 DeclareGlobalFunction("RectifyInverseRho");
-DeclareAttribute("ParentSemigroup", IsObject);
 
 # ForwardOrbitOfImage/Kernel/ShortOrb
 DeclareGlobalFunction("GradedLambdaOrb");
@@ -64,6 +66,13 @@ DeclareProperty("IsGradedLambdaOrbs", IsOrbit);
 DeclareProperty("IsGradedRhoOrbs", IsOrbit);
 
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
-DeclareCategory("IsSemigroupData", IsRecord);
+DeclareGlobalFunction("SizeOfSemigroupData");
+DeclareCategory("IsSemigroupData", IsList);
+
+DeclareOperation("Enumerate", [IsSemigroupData]);
+DeclareOperation("Enumerate", [IsSemigroupData, IsCyclotomic]);
+DeclareOperation("Enumerate", [IsSemigroupData, IsCyclotomic, IsFunction]);
+DeclareOperation("OrbitGraphAsSets", [IsSemigroupData]);
+DeclareOperation("PositionOfFound", [IsSemigroupData]);
 
 #EOF

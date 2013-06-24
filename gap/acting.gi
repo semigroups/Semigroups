@@ -1,18 +1,12 @@
 #############################################################################
 ###
 ##W  acting.gi
-##Y  Copyright (C) 2011-12                                James D. Mitchell
+##Y  Copyright (C) 2013                                   James D. Mitchell
 ###
 ###  Licensing information can be found in the README file of this package.
 ###
 ##############################################################################
 ###
-
-##############################################################################
-# Notes                                                                      #
-##############################################################################
-
-InstallOtherMethod(IsActingSemigroup, "for an object", [IsObject], ReturnFalse);
 
 #
 
@@ -40,28 +34,30 @@ function(o)
   return i;
 end);
 
-# new for 1.0! - GradedLambdaHT
-###############################################################################
+#
 
 InstallMethod(GradedLambdaHT, "for an acting semi",
 [IsActingSemigroup],
 function(s)
-return HTCreate(LambdaFunc(s)(GeneratorsOfSemigroup(s)[1]),
- rec(forflatplainlists:=true, treehashsize:=s!.opts.hashlen.S));
+  local record;
+
+  record:=ShallowCopy(LambdaOrbOpts(s));
+  record.treehashsize:=s!.opts.hashlen.S;
+  return HTCreate(LambdaFunc(s)(Representative(s)), record);
 end);
 
-# new for 1.0! - GradedRhoHT 
-###############################################################################
+#
 
 InstallMethod(GradedRhoHT, "for an acting semi",
 [IsActingSemigroup],
 function(s)
-return HTCreate(RhoFunc(s)(GeneratorsOfSemigroup(s)[1]),
- rec(forflatplainlists:=true, treehashsize:=s!.opts.hashlen.S));
+  local record;
+
+  record:=ShallowCopy(RhoOrbOpts(s));
+  record.treehashsize:=s!.opts.hashlen.S;
+  return HTCreate(RhoFunc(s)(Representative(s)), record);
 end);
 
-# new for 1.0! - RectifyRho - "for a rho orb and an acting element"
-##############################################################################
 # returns the element <f> premultiplied by RhoOrbMult so that the resulting 
 # element has its RhoValue in the first position of its scc.
 
@@ -99,7 +95,6 @@ end);
 InstallGlobalFunction(RectifyLambda,
 function(arg)
   local f, l, m;
-
   if not IsClosed(arg[2]) then 
     Enumerate(arg[2], infinity);
   fi;
@@ -110,7 +105,6 @@ function(arg)
   else
     l:=arg[4];
   fi;
-
   if not IsBound(arg[5]) or arg[5]=fail then 
     m:=OrbSCCLookup(arg[2])[l];
   else
@@ -125,69 +119,30 @@ end);
 
 #
 
-InstallGlobalFunction(RectifyInverseRho,
-function(arg)
-  local f, l, m;
-
-  if not IsClosed(arg[2]) then 
-    Enumerate(arg[2], infinity);
-  fi;
-
-  f:=arg[3];
-  if not IsBound(arg[4]) or arg[4]=fail then 
-    l:=Position(arg[2], RhoFunc(arg[1])(f));
-  else
-    l:=arg[4];
-  fi;
-
-  if not IsBound(arg[5]) or arg[5]=fail then 
-    m:=OrbSCCLookup(arg[2])[l];
-  else
-    m:=arg[5];
-  fi;
-
-  if l<>OrbSCC(arg[2])[m][1] then
-    f:=LambdaOrbMult(arg[2], m, l)[1]*f;
-  fi;
-  return rec(l:=l, m:=m, rep:=f);
-end);
-
-# new for 1.0! - LambdaRhoHT
-###############################################################################
-
 InstallMethod(LambdaRhoHT, "for an acting semi",
 [IsActingSemigroup],
-function(s)
-  local x;
-  x:=GeneratorsOfSemigroup(s)[1]; 
-  return HTCreate(Concatenation([1], RhoFunc(s)(x)),
+function(s) 
+  return HTCreate(Concatenation([1], RhoFunc(s)(Representative(s))),
   rec(forflatplainlists:=true,
      treehashsize:=s!.opts.hashlen.M));
 end);
 
-############################################################################### 
-###############################################################################
-
-# new for 1.0! - \in - for lambda value of acting semi elt & graded lamda orbs
-##############################################################################
+#
 
 InstallMethod(\in, "for lambda value of acting semi elt and graded lambda orbs",
 [IsObject, IsGradedLambdaOrbs],
 function(lamf, o)
-  return not HTValue(GradedLambdaHT(o!.semi), lamf)=fail;
+  return not HTValue(GradedLambdaHT(o!.parent), lamf)=fail;
 end);
 
-# new for 1.0! - \in - for rho value of acting semi elt & graded rho orbs
-##############################################################################
+#
 
 InstallMethod(\in, "for rho value of acting semi elt and graded rho orbs",
 [IsObject, IsGradedRhoOrbs],
 function(rho, o)
-  return not HTValue(GradedRhoHT(o!.semi), rho)=fail;
+  return not HTValue(GradedRhoHT(o!.parent), rho)=fail;
 end);
 
-# new for 1.0! - \in - for acting semi elt and semigroup data
-##############################################################################
 # expand?
 
 InstallMethod(\in, "for acting semi elt and semigroup data",
@@ -196,8 +151,7 @@ function(f, data)
   return not Position(data, f)=fail;
 end);
 
-# new for 1.0! - \in - for an acting elt and acting semigroup
-##############################################################################
+#
 
 InstallMethod(\in, "for an acting elt and acting semigroup",
 [IsAssociativeElementWithAction, IsActingSemigroup], 
@@ -363,55 +317,49 @@ function(f, s)
   return false;
 end);
 
-# new for 1.0! - ELM_LIST - for graded lambda orbs 
-##############################################################################
+#
 
-InstallOtherMethod(ELM_LIST, "for graded lambda orbs, and pos int",
+InstallMethod(ELM_LIST, "for graded lambda orbs, and pos int",
 [IsGradedLambdaOrbs, IsPosInt], 
 function(o, j)
   return o!.orbits[j];
 end);
 
-# new for 1.0! - ELM_LIST - for graded rho orbs 
-##############################################################################
+#
 
-InstallOtherMethod(ELM_LIST, "for graded rho orbs, and pos int",
+InstallMethod(ELM_LIST, "for graded rho orbs, and pos int",
 [IsGradedRhoOrbs, IsPosInt], 
 function(o, j)
   return o!.orbits[j];
 end);
 
-# new for 1.0! - ELM_LIST - for graded lambda orbs 
-##############################################################################
+#
 
-InstallOtherMethod(ELM_LIST, "for acting semigp data, and pos int",
+InstallMethod(ELM_LIST, "for acting semigp data, and pos int",
 [IsSemigroupData, IsPosInt], 
 function(o, nr)
   return o!.orbit[nr];
 end);
 
-# new for 1.0! - Enumerate - for an acting semigroup data
-##############################################################################
+#
 
-InstallOtherMethod(Enumerate, "for an acting semigroup data", 
+InstallMethod(Enumerate, "for an acting semigroup data", 
 [IsSemigroupData],
 function(data)
   return Enumerate(data, infinity, ReturnFalse);
 end);
 
-# new for 1.0! - Enumerate - for an acting semigroup data and limit
-##############################################################################
+#
 
-InstallOtherMethod(Enumerate, "for an acting semi data and limit", 
+InstallMethod(Enumerate, "for an acting semi data and limit", 
 [IsSemigroupData, IsCyclotomic],
 function(data, limit)
   return Enumerate(data, limit, ReturnFalse);
 end);
 
-# new for 1.0! - Enumerate - for an acting semigroup data, limit, func
-##############################################################################
+#
 
-InstallOtherMethod(Enumerate, 
+InstallMethod(Enumerate, 
 "for an acting semi data, limit, and func",
 [IsSemigroupData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
@@ -467,7 +415,7 @@ function(data, limit, lookfunc)
   genstoapply:=data!.genstoapply;
   
   # lambda/rho
-  s:=ParentSemigroup(data);
+  s:=Parent(data);
   lambda:=LambdaFunc(s);
   lambdaact:=LambdaAct(s);  
   lambdaperm:=LambdaPerm(s);
@@ -479,7 +427,7 @@ function(data, limit, lookfunc)
   scc:=OrbSCC(o); 
   lookup:=o!.scc_lookup;
  
-  if IsBound(HTAdd_TreeHash_C) then 
+  if IsBoundGlobal("ORBC") then 
     htadd:=HTAdd_TreeHash_C;
     htvalue:=HTValue_TreeHash_C;
   else
@@ -488,11 +436,11 @@ function(data, limit, lookfunc)
   fi;
 
   while nr<=limit and i<nr and i<>stopper do 
+    
     i:=i+1;
     for j in genstoapply do #JDM
       x:=gens[j]*orb[i][4];
       lamx:=lambda(x);
-      #pos:=Position(o, lamx);
       pos:=htvalue(oht, lamx); 
 
       #find the scc
@@ -504,9 +452,8 @@ function(data, limit, lookfunc)
       else
         y:=x;
       fi;
-      
       rhoy:=[m];
-      Append(rhoy, rho(y));
+      Append(rhoy, rho(y));;
       val:=htvalue(lambdarhoht, rhoy);
       # this is what we keep if it is new
       # x:=[s, m, o, y, false, nr+1];
@@ -526,7 +473,6 @@ function(data, limit, lookfunc)
 
       else              # old rho value
         x:=[s, m, o, y, false, nr+1];
-        
         # JDM expand!
         schutz:=LambdaOrbStabChain(o, m);
         
@@ -563,6 +509,8 @@ function(data, limit, lookfunc)
           orblookup2[nr]:=repslens[val];
         fi;
       fi;
+      # add reporting here!!
+      #Print("found ", nr, "             R-class reps\r");
       orb[nr]:=x;
       schreierpos[nr]:=i; # orb[nr] is obtained from orb[i]
       schreiergen[nr]:=j; # by multiplying by gens[j]
@@ -596,22 +544,25 @@ function(data, limit, lookfunc)
   return data;
 end);
 
-#FFF
-
-#GGG
-
 # if GradedLambdaOrb(s, f, true) is called, then the returned orbit o has 
-# the position in o of lambda val of f stored in o!.data.
+# the position in o of lambda val of f stored in o!.lambda_l.
 
 InstallGlobalFunction(GradedLambdaOrb,
 function(s, f, opt)
-  local lambda, graded, pos, gradingfunc, onlygrades, onlygradesdata, o, j, k, l;
+  local lambda, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, o, j, k, l;
 
-  if IsAssociativeElementWithAction(f) then 
-    lambda:=LambdaFunc(s)(f);
-  else
-    lambda:=f;
+  if not IsActingSemigroup(s) then 
+    Error("usage: <s> must be an acting semigroup,");
+    return;
+  elif not IsAssociativeElementWithAction(f) then 
+    Error("usage: <f> must be an associative element with action,");
+    return;
+  elif not IsBool(opt) then 
+    Error("usage: <opt> must be a boolean,");
+    return;
   fi;
+
+  lambda:=LambdaFunc(s)(f);
 
   if opt then   #global
     graded:=GradedLambdaOrbs(s);
@@ -636,23 +587,15 @@ function(s, f, opt)
     onlygradesdata:=fail;
   fi;  
 
-  #JDM properly use LambdaOrbOpts here
+  record:=ShallowCopy(LambdaOrbOpts(s));
+  
+  record.parent:=s;               record.treehashsize:=s!.opts.hashlen.M;
+  record.schreier:=true;          record.orbitgraph:=true;
+  record.storenumbers:=true;      record.log:=true;
+  record.onlygrades:=onlygrades;  record.gradingfunc:=gradingfunc;
+  record.scc_reps:=[f];           record.onlygradesdata:=onlygradesdata; 
 
-  o:=Orb(s, lambda, LambdaAct(s),
-      rec(
-        semi:=s,
-        forflatplainlists:=true, #JDM probably don't want to assume this..
-        treehashsize:=SemigroupsOptionsRec.hashlen.M,
-        schreier:=true,
-        gradingfunc:=gradingfunc,
-        orbitgraph:=true,
-        onlygrades:=onlygrades,
-        onlygradesdata:=onlygradesdata,
-        storenumbers:=true,
-        log:=true,
-        scc_reps:=[f])); # note that this component shouldn't be used if f is a
-                         # lambda value and not an acting elt.
-
+  o:=Orb(s, lambda, LambdaAct(s), record);
   SetIsGradedLambdaOrb(o, true);
   o!.lambda_l:=1;
   
@@ -672,51 +615,60 @@ function(s, f, opt)
   return o;
 end);
 
-# new for 1.0! - GradedRhoOrb - "for an acting semigroup and elt"
-##############################################################################
+#
 
 InstallGlobalFunction(GradedRhoOrb,
 function(s, f, opt)
-  local graded, pos, gradingfunc, onlygrades, onlygradesdata, o, j, k, l;
+  local rho, graded, pos, gradingfunc, onlygrades, onlygradesdata, record, o, j, k, l;
 
+  if not IsActingSemigroup(s) then 
+    Error("usage: <s> must be an acting semigroup,");
+    return;
+  elif not IsAssociativeElementWithAction(f) then 
+    Error("usage: <f> must be an associative element with action,");
+    return;
+  elif not IsBool(opt) then 
+    Error("usage: <opt> must be a boolean,");
+    return;
+  fi;
+ 
+  rho:=RhoFunc(s)(f);
+  
   if opt then   #global
     graded:=GradedRhoOrbs(s);
-    pos:=HTValue(GradedRhoHT(s), RhoFunc(s)(f));
+    pos:=HTValue(GradedRhoHT(s), rho);
   
     if pos<>fail then 
-      
       # store the position of RhoFunc(s)(f) in o 
       graded[pos[1]][pos[2]]!.rho_l:=pos[3];
       return graded[pos[1]][pos[2]];
     fi;
     
     gradingfunc := function(o,x) return [RhoRank(s)(x), x]; end;
+    
     onlygrades:=function(x, data_ht)
-      return x[1]=RhoRank(s)(RhoFunc(s)(f))
+      return x[1]=RhoRank(s)(rho)
        and HTValue(data_ht, x[2])=fail; 
     end;
+    
     onlygradesdata:=GradedRhoHT(s);
   else          #local
     gradingfunc:=function(o,x) return RhoRank(s)(x); end;
-    onlygrades:=function(x,data_ht) 
+    onlygrades:=function(x, data_ht) 
       return x=RhoRank(s)(RhoFunc(s)(f));
     end;
     onlygradesdata:=fail;
   fi;  
- 
-  o:=Orb(s, RhoFunc(s)(f), RhoAct(s),
-      rec(
-        semi:=s,
-        forflatplainlists:=true, #JDM probably don't want to assume this..
-        treehashsize:=SemigroupsOptionsRec.hashlen.M,
-        schreier:=true,
-        gradingfunc:=gradingfunc,
-        orbitgraph:=true,
-        onlygrades:=onlygrades,
-        onlygradesdata:=onlygradesdata,
-        storenumbers:=true,
-        log:=true,
-        scc_reps:=[f]));
+
+  record:=ShallowCopy(RhoOrbOpts(s));
+  
+  record.parent:=s;               record.treehashsize:=s!.opts.hashlen.M;
+  record.schreier:=true;          record.orbitgraph:=true;
+  record.storenumbers:=true;      record.log:=true;
+  record.onlygrades:=onlygrades;  record.gradingfunc:=gradingfunc;
+  record.scc_reps:=[f];           record.onlygradesdata:=onlygradesdata;
+
+  o:=Orb(s, rho, RhoAct(s), record);
 
   SetIsGradedRhoOrb(o, true);
   o!.rho_l:=1; 
@@ -738,8 +690,6 @@ function(s, f, opt)
   return o;
 end);
 
-# new for 1.0! - GradedLambdaOrbs - "for an acting semigroup" 
-##############################################################################
 # stores so far calculated GradedLambdaOrbs
 
 InstallMethod(GradedLambdaOrbs, "for an acting semigroup", 
@@ -750,11 +700,9 @@ function(s)
   fam:=CollectionsFamily(FamilyObj(LambdaFunc(s)(Representative(s))));
   return Objectify(NewType(fam, IsGradedLambdaOrbs), 
    rec( orbits:=List([1..ActionDegree(s)+1], x-> []), 
-     lens:=[1..ActionDegree(s)+1]*0, semi:=s));
+     lens:=[1..ActionDegree(s)+1]*0, parent:=s));
 end);
 
-# new for 1.0! - GradedRhoOrbs - "for an acting semigroup" 
-##############################################################################
 # stores so far calculated GradedRhoOrbs
 
 InstallMethod(GradedRhoOrbs, "for an acting semigroup", 
@@ -762,13 +710,10 @@ InstallMethod(GradedRhoOrbs, "for an acting semigroup",
 function(s)
   return Objectify(NewType(FamilyObj(s), IsGradedRhoOrbs), rec(
     orbits:=List([1..ActionDegree(s)+1], x-> []), 
-    lens:=[1..ActionDegree(s)+1]*0, semi:=s));
+    lens:=[1..ActionDegree(s)+1]*0, parent:=s));
 end);
 
-#III
-
-# new for 1.0! - IsBound - for graded lambda orbs and pos int
-##############################################################################
+#
 
 InstallMethod(IsBound\[\], "for graded lambda orbs and pos int",
 [IsGradedLambdaOrbs, IsPosInt], 
@@ -776,8 +721,7 @@ function(o, j)
   return IsBound(o!.orbits[j]);
 end);
 
-# new for 1.0! - IsBound - for graded rho orbs and pos int
-##############################################################################
+#
 
 InstallMethod(IsBound\[\], "for graded rho orbs and pos int",
 [IsGradedRhoOrbs, IsPosInt], 
@@ -785,30 +729,56 @@ function(o, j)
   return IsBound(o!.orbits[j]);
 end);
 
-#LLL
+#
 
-# new for 1.0! - LambdaOrb - "for an acting semigroup"
-##############################################################################
-
-InstallMethod(LambdaOrb, "for an acting semigroup",
-[IsActingSemigroup],
+InstallMethod(LambdaOrb, "for an acting semigroup with generators",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local opts, semi, name;
-
-  opts:= rec(schreier:=true, orbitgraph:=true,
-          storenumbers:=true, log:=true, 
-          treehashsize:=SemigroupsOptionsRec.hashlen.M,
-          scc_reps:=[One(Generators(s))], semi:=s);
+  local record, o;
   
-  for name in RecNames(LambdaOrbOpts(s)) do 
-    opts.(name):=LambdaOrbOpts(s).(name);
-  od;
+  record:=ShallowCopy(LambdaOrbOpts(s));
+  record.schreier:=true;        record.orbitgraph:=true;
+  record.storenumbers:=true;    record.log:=true;
+  record.parent:=s;             record.treehashsize:=s!.opts.hashlen.M;
+  record.scc_reps:=[One(GeneratorsOfSemigroup(s))];
 
-  return Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), opts);
+  o:=Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), record);
+  
+  SetFilterObj(o, IsLambdaOrb);
+  if IsActingSemigroupWithInverseOp(s) then 
+    SetFilterObj(o, IsInvLambdaOrb);
+  fi;
+  return o;
 end);
 
-# new for 1.0! - LambdaOrbMults - "for a lambda orb and scc index"
-##############################################################################
+#
+
+InstallMethod(LambdaOrb, "for an acting semigroup ideal",
+[IsActingSemigroup and IsSemigroupIdeal],
+function(s)
+  local record, o;
+
+  record:=ShallowCopy(LambdaOrbOpts(s));
+  record.schreier:=true;        record.orbitgraph:=true;
+  record.storenumbers:=true;    record.log:=true;
+  record.parent:=s;             record.treehashsize:=s!.opts.hashlen.M;
+  record.scc_reps:=[One(GeneratorsOfSemigroup(Parent(s)))];
+  #JDM the seeds here should be different
+  #this currently gives the entire LambdaOrb of the parent of the ideal, which
+  #is more than required. We really want a function analogous to SemigroupData
+  #for an ideal, which installs the first values (lambda values of the
+  #generators of the ideal). Then scc_reps can be changed back to 
+  #One(GeneratorsOfMagmaIdeal(..)).
+  o:=Orb(GeneratorsOfSemigroup(Parent(s)), LambdaOrbSeed(s), LambdaAct(s),
+   record);
+  SetFilterObj(o, IsLambdaOrb);
+  if IsActingSemigroupWithInverseOp(s) then 
+    SetFilterObj(o, IsInvLambdaOrb);
+  fi;
+  return o;
+end);
+
+#
 
 InstallGlobalFunction(LambdaOrbMults,
 function(o, m)
@@ -842,7 +812,7 @@ function(o, m)
   fi; 
  
   genpos:=ReverseSchreierTreeOfSCC(o, m);
-  inv:=function(im, f) return LambdaInverse(o!.semi)(im, f); end;
+  inv:=function(im, f) return LambdaInverse(o!.parent)(im, f); end;
 
   trace:=function(i)
     local f;
@@ -883,26 +853,40 @@ function(o, m, i)
   scc:=OrbSCC(o)[m];
   mults:=o!.mults;
   gens:=o!.gens;
-  genpos:=ReverseSchreierTreeOfSCC(o, m);
-  inv:=function(im, f) return LambdaInverse(o!.semi)(im, f); end;
+  if not IsInvLambdaOrb(o) then
+#JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
+    genpos:=ReverseSchreierTreeOfSCC(o, m);
+    inv:=function(im, f) return LambdaInverse(o!.parent)(im, f); end;
 
-  trace:=function(i)
-    local f;
+    trace:=function(i)
+      local f;
+      if IsBound(mults[i]) then 
+        return mults[i][2];
+      fi;
+      f:=gens[genpos[1][i]]*trace(genpos[2][i]);
+      mults[i]:=[inv(o[i], f), f];
+      return f;
+    end;
+  else
+    genpos:=SchreierTreeOfSCC(o, m);
 
-    if IsBound(mults[i]) then 
-      return mults[i][2];
-    fi;
-    f:=gens[genpos[1][i]]*trace(genpos[2][i]);
-    mults[i]:=[inv(o[i], f), f];
-    return f;
-  end;
+    trace:=function(i)
+      local f;
+
+      if IsBound(mults[i]) then 
+        return mults[i][2];
+      fi;
+      f:=INV(gens[genpos[1][i]])*trace(genpos[2][i]);
+      mults[i]:=[INV(f), f];
+      return f;
+    end;
+  fi;
 
   trace(i);
   return o!.mults[i];
 end);
 
-# new for 1.0! - LambdaOrbRep - "for an orbit and pos int"
-#############################################################################
+# JDM this is really slow (due to EvaluateWord) for large degree 
 
 InstallGlobalFunction(LambdaOrbRep,
 function(o, m)
@@ -911,7 +895,6 @@ function(o, m)
   if IsBound(o!.scc_reps[m]) then
     return o!.scc_reps[m];
   fi;
-
   w:=TraceSchreierTreeForward(o, OrbSCC(o)[m][1]);
   o!.scc_reps[m]:=o!.scc_reps[1]*EvaluateWord(o!.gens, w);
   return o!.scc_reps[m];
@@ -921,7 +904,7 @@ end);
 
 InstallGlobalFunction(LambdaOrbSchutzGp, 
 function(o, m)
-  local s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, slp, lenslp, len, bound, g, is_sym, f, h, k, l;
+  local s, gens, nrgens, scc, lookup, orbitgraph, lambdaperm, rep, slp, lenslp, len, bound, g, is_sym, vor, f, h, k, l;
   
   if IsBound(o!.schutz) then 
     if IsBound(o!.schutz[m]) then 
@@ -933,7 +916,7 @@ function(o, m)
     o!.slp:=EmptyPlist(Length(OrbSCC(o)));
   fi;
 
-  s:=o!.semi;
+  s:=o!.parent;
   gens:=o!.gens; 
   nrgens:=Length(gens);
   scc:=OrbSCC(o)[m];      
@@ -952,14 +935,15 @@ function(o, m)
   fi;
 
   g:=Group(()); is_sym:=false;
-  
+
   for k in scc do
     for l in [1..nrgens] do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
-        # JDM maybe keep TraceSchreierTreeOfSCCForward(o, m, k) in o?
-        f:=lambdaperm(rep, rep*EvaluateWord(gens,
-         TraceSchreierTreeOfSCCForward(o, m, k))
-          *gens[l]*LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
+        vor:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, k));
+        f:=lambdaperm(rep, 
+         rep*vor*gens[l]*LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
+        #f:=lambdaperm(rep, rep*LambdaOrbMult(o, m, k)[1]*gens[l]
+        #  *LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
         h:=ClosureGroup(g, f);
         if Size(h)>Size(g) then 
           g:=h; 
@@ -986,16 +970,14 @@ function(o, m)
     o!.schutzstab[m]:=false;
   else
     o!.schutzstab[m]:=StabChainImmutable(g);
-    #o!.schutzstab[m]:=StabilizerChain(g);
   fi;
 
   return g;
 end);
 
-# new for 1.0! - RhoOrbStabChain - "for a rho orb and scc index"
-##############################################################################
+#
 
-InstallOtherMethod(RhoOrbStabChain, "for a rho orb and scc index",
+InstallMethod(RhoOrbStabChain, "for a rho orb and scc index",
 [IsOrbit, IsPosInt],
 function(o, m)
   
@@ -1009,8 +991,7 @@ function(o, m)
   return o!.schutzstab[m];
 end);
 
-# new for 1.0! - LambdaOrbStabChain - "for a lambda orb and scc index"
-##############################################################################
+#
 
 InstallGlobalFunction(LambdaOrbStabChain, 
 function(o, m)
@@ -1025,15 +1006,14 @@ function(o, m)
   return o!.schutzstab[m];
 end);
 
-# new for 1.0! - LambdaRhoLookup - "for a D-class of an acting semigroup"
-##############################################################################
+#
 
 InstallMethod(LambdaRhoLookup, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass], 
 function(d)
   local data, orb_scc, orblookup1, orblookup2, out, i;
 
-  data:=SemigroupData(ParentSemigroup(d));
+  data:=SemigroupData(Parent(d));
   
   # scc of R-reps corresponding to d 
   orb_scc:=SemigroupDataSCC(d);
@@ -1053,49 +1033,39 @@ function(d)
   return out;
 end);
 
-# new for 1.0! - Length - for semigroup data of acting semigroup
-##############################################################################
+# JDM this is stored as an attribute, unfortunately..
 
-InstallOtherMethod(Length, "for semigroup data of acting semigroup",
+InstallMethod(Length, "for semigroup data of acting semigroup",
 [IsSemigroupData], x-> Length(x!.orbit));
 
-#OOO
+#
 
-# new for 1.0! - OrbitGraphAsSets - for semigroup data of acting semigroup
-##############################################################################
-
-InstallOtherMethod(OrbitGraphAsSets, "for semigroup data of acting semigroup",  
+InstallMethod(OrbitGraphAsSets, "for semigroup data of acting semigroup",  
 [IsSemigroupData], 99,
 function(data)
   return List(data!.graph, Set);
 end);
 
-#PPP
+#
 
-# new for 1.0! - Position - "for graded lambda orbs and lambda value"
-##############################################################################
-
-InstallOtherMethod(Position, "for graded lambda orbs and lambda value",
+InstallMethod(Position, "for graded lambda orbs and lambda value",
 [IsGradedLambdaOrbs, IsObject, IsZeroCyc],
 function(o, lamf, n)
-  return HTValue(GradedLambdaHT(o!.semi), lamf);
+  return HTValue(GradedLambdaHT(o!.parent), lamf);
 end);
 
-# new for 1.0! - Position - "for graded rho orbs and rho value"
-##############################################################################
+#
 
-InstallOtherMethod(Position, "for graded rho orbs and rho value",
+InstallMethod(Position, "for graded rho orbs and rho value",
 [IsGradedRhoOrbs, IsObject, IsZeroCyc],
 function(o, rho, n)
-  return HTValue(GradedRhoHT(o!.semi), rho);
+  return HTValue(GradedRhoHT(o!.parent), rho);
 end);
 
-# new for 1.0! - Position - "for acting semigroup data and acting elt"
-##############################################################################
 # returns the index of the representative of the R-class containing x in the
 # parent of data. 
 
-InstallOtherMethod(Position, "for acting semigroup data and acting elt",
+InstallMethod(Position, "for acting semigroup data and acting elt",
 [IsSemigroupData, IsObject, IsZeroCyc], 100,
 function(data, x, n)
   local val, s, o, l, m, scc, schutz, repslookup, y, reps, repslens, lambdaperm;
@@ -1106,7 +1076,7 @@ function(data, x, n)
     return val;
   fi;
 
-  s:=ParentSemigroup(data);
+  s:=Parent(data);
   o:=LambdaOrb(s);
 
   if not IsClosed(o) then 
@@ -1151,10 +1121,9 @@ function(data, x, n)
   return fail;
 end);
 
-# new for 1.0! - PositionOfFound - "for semigroup data"
-##############################################################################
+#
 
-InstallOtherMethod( PositionOfFound,"for semigroup data",
+InstallMethod(PositionOfFound,"for semigroup data",
 [IsSemigroupData],
 function( data )
   if not(data!.looking) then
@@ -1164,8 +1133,7 @@ function( data )
   return data!.found;
 end);
 
-# new for 1.0! - PrintObj - "for graded lambda orbs"
-##############################################################################
+#
 
 InstallMethod(PrintObj, [IsGradedLambdaOrbs],
 function(o)
@@ -1175,8 +1143,7 @@ function(o)
   return;
 end);
 
-# new for 1.0! - PrintObj - "for graded rho orbs"
-##############################################################################
+#
 
 InstallMethod(PrintObj, [IsGradedRhoOrbs],
 function(o)
@@ -1186,30 +1153,33 @@ function(o)
   return;
 end);
 
-#RRR
-
-# new for 1.0! - RhoOrb - "for an acting semigroup"
-##############################################################################
+#
 
 InstallMethod(RhoOrb, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
-  local x;
-
+  local record, o;
+  
   # it might be better in the case of having IsClosed(SemigroupData)
   # to just fake the orbit below (we have all the info already).
   # But it seems to be so fast to calculate the 
   # in most cases that there is no point. 
 
-  return Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s),
-        rec(forflatplainlists:=true, schreier:=true, orbitgraph:=true,
-        storenumbers:=true, log:=true,
-        treehashsize:=SemigroupsOptionsRec.hashlen.M,
-        scc_reps:=[One(Generators(s))], semi:=s));
+  record:=ShallowCopy(RhoOrbOpts(s));
+  record.schreier:=true;        record.orbitgraph:=true;
+  record.storenumbers:=true;    record.log:=true;
+  record.parent:=s;             record.treehashsize:=s!.opts.hashlen.M;
+  record.scc_reps:=[One(GeneratorsOfSemigroup(s))];
+
+  o:=Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s), record);
+  
+  SetFilterObj(o, IsRhoOrb);
+  if IsActingSemigroupWithInverseOp(s) then
+    SetFilterObj(o, IsInvRhoOrb);
+  fi;
+  return o;
 end);
 
-# new for 1.0! - RhoOrbMult - "for a rho orb and index"
-##############################################################################
 # f takes o[scc[1]] to o[i] and inv(o[scc[1]],f) takes o[i] to o[scc[1]]
 
 InstallGlobalFunction(RhoOrbMult,
@@ -1233,7 +1203,7 @@ function(o, m, i)
   mults:=o!.mults;
   gens:=o!.gens;
   genpos:=SchreierTreeOfSCC(o, m);
-  inv:=f-> RhoInverse(o!.semi)(o[scc[1]], f);
+  inv:=f-> RhoInverse(o!.parent)(o[scc[1]], f);
   
   trace:=function(i)
     local f;
@@ -1250,8 +1220,6 @@ function(o, m, i)
   return o!.mults[i];
 end);
 
-# new for 1.0! - RhoOrbMults - "for a rho orb and index"
-##############################################################################
 # f takes o[scc[1]] to o[i] and inv(o[i], f) takes o[i] to o[scc[1]]
 
 InstallGlobalFunction(RhoOrbMults,
@@ -1286,7 +1254,7 @@ function(o, m)
   fi; 
 
   genpos:=SchreierTreeOfSCC(o, m);
-  inv:=f-> RhoInverse(o!.semi)(o[scc[1]], f);
+  inv:=f-> RhoInverse(o!.parent)(o[scc[1]], f);
 
   trace:=function(i)
     local f;
@@ -1305,8 +1273,7 @@ function(o, m)
   return o!.mults;
 end);
 
-# new for 1.0! - RhoOrbRep - "for a rho orb and scc index"
-##############################################################################
+#
 
 InstallGlobalFunction(RhoOrbRep, 
 function(o, m)
@@ -1321,8 +1288,6 @@ function(o, m)
   return o!.scc_reps[m];
 end);
 
-# new for 1.0! - RhoOrbSchutzGp - "for a rho orb, scc index, and bound"
-##############################################################################
 # JDM could use IsRegular here to speed up?
 
 InstallGlobalFunction(RhoOrbSchutzGp, 
@@ -1346,7 +1311,7 @@ function(o, m, bound)
     return g;
   fi;
 
-  s:=o!.semi;
+  s:=o!.parent;
   gens:=o!.gens;
   nrgens:=Length(gens);
   scc:=OrbSCC(o)[m];
@@ -1395,13 +1360,10 @@ function(o, m, bound)
   return g;
 end);
 
-#SSS
-
-# new for 1.0! - SemigroupData - "for an acting semigroup"
-##############################################################################
+#
 
 InstallMethod(SemigroupData, "for an acting semigroup",
-[IsActingSemigroup],
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, one, data;
  
@@ -1419,15 +1381,13 @@ function(s)
   Objectify(NewType(FamilyObj(s), IsSemigroupData and IsAttributeStoringRep),
    data);
   
-  SetParentSemigroup(data, s);
+  SetParent(data, s);
   return data;
 end);
 
-# new for 1.0! - Size - "for an acting semigroup data"
-##############################################################################
+#
 
-InstallOtherMethod(Size, "for semigroup data",
-[IsSemigroupData],
+InstallGlobalFunction(SizeOfSemigroupData,
 function(data)
   local reps, nr, repslookup, orbit, i, j;
    
@@ -1445,8 +1405,21 @@ function(data)
   return i; 
 end);
 
-# new for 1.0! - Size - "for an acting semigroup"
-##############################################################################
+#
+
+InstallMethod(Size, "for a monogenic transformation semigroup",
+[IsTransformationSemigroup and IsMonogenicSemigroup],
+function(s)
+  local ind;
+  
+  ind:=IndexPeriodOfTransformation(GeneratorsOfSemigroup(s)[1]);
+  if ind[1]>0 then 
+    return Sum(ind)-1;
+  fi;
+  return Sum(ind);
+end);
+
+#
 
 InstallMethod(Size, "for an acting semigroup",
 [IsActingSemigroup], 
@@ -1467,10 +1440,7 @@ function(s)
   return i; 
 end);
 
-#VVV
-
-# new for 1.0! - ViewObj - "for semigroup data"
-##############################################################################
+#
 
 InstallMethod(ViewObj, [IsSemigroupData], 999,
 function(data)

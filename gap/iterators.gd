@@ -1,8 +1,20 @@
+############################################################################
+##
+#W  iterators.gi
+#Y  Copyright (C) 2013                                   James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
 
 
+DeclareGlobalFunction("IteratorOfArrangements");
 
+# constructors for iterators
+DeclareGlobalFunction("IteratorByOrbFunc");
 DeclareGlobalFunction("IteratorByNextIterator");
-DeclareGlobalFunction("IteratorByIterOfIter");
+DeclareGlobalFunction("IteratorByIterOfIters");
 DeclareGlobalFunction("IteratorByIterator");
 DeclareGlobalFunction("ListIterator");
 
@@ -37,6 +49,4 @@ DeclareProperty("IsIteratorOfLClassElements", IsIterator);
 DeclareProperty("IsIteratorOfDClassElements", IsIterator);
 DeclareProperty("IsIteratorOfHClassElements", IsIterator);
 
-
-
-
+#EOF

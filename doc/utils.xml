@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  utils.xml
-#Y  Copyright (C) 2011-12                                James D. Mitchell
+#Y  Copyright (C) 2011-13                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -40,13 +40,13 @@
      <Description>
        This global variable is a record whose components contain the default
        values of certain options for transformation semigroups created after
-       &Semigroups; has been loaded. A description of these options is given above 
-       in Section <Ref Sect="opts"/>. <P/>
+       &Semigroups; has been loaded. A description of these options is given
+       above in Section <Ref Sect="opts"/>. <P/>
 
        The value of <C>SemigroupsOptionsRec</C> is defined in the file
        <C>semigroups/gap/options.g</C> as: 
-       <Log>rec( schreier:=true, small:=false,
-         hashlen:=rec(S:=251, M:=6257, L:=25013));</Log>
+       <Log>rec( acting := true, hashlen := rec( L := 25013, M := 6257, S :=
+         251 ), regular := false, small := false )</Log>
      </Description> 
    </ManSection>
 <#/GAPDoc>
@@ -120,17 +120,18 @@
         </Item>
         <Mark>Inverse semigroup</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 
-          <Ref Attr="GeneratorsOfInverseSemigroup"/>.
+          <Ref Attr="GeneratorsOfInverseSemigroup" BookName="ref"/>.
         </Item>
         <Mark>Inverse monoid</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 
-          <Ref Attr="GeneratorsOfInverseMonoid"/>.
+          <Ref Attr="GeneratorsOfInverseMonoid" BookName="ref"/>.
         </Item>
       </List>
-<Example>gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
+<Example>
+gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
 > Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
 gap> GeneratorsOfSemigroup(M);
-[ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] ), 
+[ IdentityTransformation(), 
   Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
 gap> GeneratorsOfMonoid(M);
@@ -199,7 +200,7 @@ gap> GeneratorsOfSemigroup(S);
       permutations to a file that uses a relatively small amount of disk space.
       The resulting file can be further compressed using <C>gzip</C>.<P/>
       
-      <A>list</A> should be a list of: transformations of equal degree, partial
+      <A>list</A> should be a list of: transformations, partial
       permutations, a semigroup of transformations or partial permutations, or
       a list of lists of transformations, partial permutations, or semigroups
       of transformations or partial permutations; and <A>filename</A> should be
@@ -229,11 +230,10 @@ gap> GeneratorsOfSemigroup(S);
 <Example>
 gap> file:=Concatenation(SemigroupsDir(), "/examples/graph7c.semigroups.gz");;
 gap> ReadSemigroups(file, 453);
-[ Transformation( [ 1, 2, 2, 4, 5, 6, 7 ] ), 
-  Transformation( [ 1, 2, 3, 4, 5, 6, 7 ] ), 
+[ Transformation( [ 1, 2, 2 ] ), IdentityTransformation(), 
   Transformation( [ 1, 2, 3, 4, 5, 7, 7 ] ), 
   Transformation( [ 1, 3, 2, 4, 7, 6, 7 ] ), 
-  Transformation( [ 4, 2, 1, 1, 6, 5, 7 ] ), 
+  Transformation( [ 4, 2, 1, 1, 6, 5 ] ), 
   Transformation( [ 4, 3, 2, 1, 6, 7, 7 ] ), 
   Transformation( [ 4, 4, 5, 7, 6, 1, 1 ] ), 
   Transformation( [ 7, 6, 6, 1, 2, 4, 4 ] ), 

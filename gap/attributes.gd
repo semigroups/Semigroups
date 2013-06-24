@@ -1,30 +1,26 @@
 #############################################################################
 ##
 #W  attributes.gd
-#Y  Copyright (C) 2011-12                                James D. Mitchell
+#Y  Copyright (C) 2013                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-
 DeclareGlobalFunction("SemigroupActionHomomorphism");
 
-DeclareOperation("EmbeddingNC", [IsSemigroup, IsSemigroup]);
+DeclareOperation("EmbeddingNC", [IsSemigroup, IsGreensHClass]);
 DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
 DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 
-DeclareOperation("InversesOfSemigroupElement", [IsActingSemigroup and
-HasGeneratorsOfSemigroup, IsAssociativeElement]);
 DeclareOperation("InversesOfSemigroupElementNC", [IsActingSemigroup and
 HasGeneratorsOfSemigroup, IsAssociativeElement]);
 
 DeclareOperation("IsomorphismBipartitionSemigroup", [IsSemigroup]);
-DeclareOperation("IsomorphismPartialPermMonoid", [IsPermGroup]);
-DeclareOperation("IsomorphismPartialPermSemigroup", [IsPermGroup]);
-#DeclareOperation("IsomorphismTransformationMonoid", [IsSemigroup]);
+DeclareAttribute("IsomorphismReesMatrixSemigroup", IsGreensDClass);
+DeclareAttribute("IsomorphismPermGroup", IsTransformationSemigroup);
 
 DeclareAttribute("MinimalIdeal", IsSemigroup);
 DeclareOperation("NrElementsOfRank", [IsSemigroup and
@@ -48,3 +44,8 @@ DeclareOperation("MajorantClosure", [IsInverseSemigroup and IsPartialPermSemigro
 DeclareOperation("MajorantClosureNC", [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection]);
 DeclareOperation("IsJoinIrreducible", [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm]);
 DeclareOperation("RightCosetsOfInverseSemigroup", [IsInverseSemigroup and IsPartialPermSemigroup, IsInverseSemigroup and IsPartialPermSemigroup]);
+
+DeclareAttribute("MultiplicativeZero", IsActingSemigroup);
+DeclareAttribute("SmallGeneratingSet", IsActingSemigroup);
+DeclareAttribute("StructureDescription", IsBrandtSemigroup);
+DeclareAttribute("StructureDescription", IsGroupAsSemigroup);

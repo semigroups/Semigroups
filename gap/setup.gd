@@ -1,7 +1,7 @@
 #############################################################################
 ###
 ##W  setup.gd
-##Y  Copyright (C) 2011-12                                James D. Mitchell
+##Y  Copyright (C) 2013                                   James D. Mitchell
 ###
 ###  Licensing information can be found in the README file of this package.
 ###
@@ -9,10 +9,11 @@
 ###
 
 DeclareCategory("IsActingSemigroup", IsSemigroup);
-DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup and IsInverseSemigroup);
+DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
 DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);
+DeclareAttribute("ActionDegree", IsAssociativeElementWithActionCollection);
 DeclareAttribute("ActionRank", IsAssociativeElement);
 DeclareAttribute("MinActionRank", IsSemigroup);
 
@@ -42,5 +43,7 @@ DeclareAttribute("IdempotentCreator", IsSemigroup);
 DeclareOperation("IsInSubgroupOfSemigroup", [IsAssociativeElementWithAction]);
 DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
 IsSemigroup);
+
+DeclareAttribute("GroupElementAction", IsSemigroup);
 
 #EOF
