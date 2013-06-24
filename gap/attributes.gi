@@ -783,13 +783,13 @@ function(coll)
   local dom;
 
   if IsList(coll) and IsEmpty(coll) then 
-    return PartialPermNC([]);
+    return PartialPerm([]);
   fi;
   if not IsPartialPermCollection(coll) then 
     Error("the argument should be a collection of partial perms,");
   fi;
   dom:=DomainOfPartialPermCollection(coll);
-  return PartialPermNC(dom, dom);
+  return PartialPerm(dom, dom);
 end);
 
 #
