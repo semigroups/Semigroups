@@ -68,9 +68,9 @@ Under the name Citrus:
 
 0.7 -> 0.8 
             minor changes due to incompatibility with Smallsemi 0.6.4 which 
-            caused some test files to fail when Nilmat was loaded after Semigroups.
-            The clashes and the failed test were caused by various properties
-            being declared for IsTransformationSemigroup rather than
+            caused some test files to fail when Nilmat was loaded after
+            Semigroups.  The clashes and the failed test were caused by various
+            properties being declared for IsTransformationSemigroup rather than
             IsSemigroup. 
 
 0.6 -> 0.7 
