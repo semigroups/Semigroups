@@ -1,34 +1,34 @@
 #############################################################################
-#
-# Test file for St Andrews Pure Maths Summer School 2012
-#
+##
+#W  smallerdegree.tst
+##  Test file for St Andrews Pure Maths Summer School 2012
+##
 #############################################################################
-
+##
 gap> START_TEST("Semigroups package: smallerdegree.tst");
 gap> LoadPackage("semigroups", false);;
-gap> InfoLevelInfoWarning:=InfoLevel(InfoWarning);;
-gap> InfoLevelInfoSemigroups:=InfoLevel(InfoSemigroups);;
-gap> SetInfoLevel(InfoWarning, 0);;
-gap> SetInfoLevel(InfoSemigroups, 0);
+
+# 
+gap> SemigroupsStartTest();
 
 # General Vagner Preston Example
 gap> f1:=PartialPermNC([1,2,4,3]);;
 gap> f2:=PartialPermNC([1]);;
 gap> f3:=PartialPermNC([0,2]);;
 gap> f:=InverseSemigroup(f1,f2,f3);
-<inverse partial perm semigroup of degree 4 with 3 generators>
-gap> NrMovedPoints(f);             
+<inverse partial perm semigroup on 4 pts with 3 generators>
+gap> NrMovedPoints(f);
 2
 gap> Size(f);
 5
 gap> VPR:=VagnerPrestonRepresentation(f);
-MappingByFunction( <inverse partial perm semigroup of size 5, degree 4 with 
-3 generators>, <inverse partial perm semigroup of degree 5 with 
-3 generators>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <inverse partial perm semigroup of size 5, on 4 pts
+ with 3 generators>, <inverse partial perm semigroup on 5 pts
+ with 3 generators>, function( x ) ... end, function( x ) ... end )
 gap> inv:=InverseGeneralMapping(VPR);
-MappingByFunction( <inverse partial perm semigroup of degree 5 with 
-3 generators>, <inverse partial perm semigroup of size 5, degree 4 with 
-3 generators>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( <inverse partial perm semigroup on 5 pts
+ with 3 generators>, <inverse partial perm semigroup of size 5, on 4 pts
+ with 3 generators>, function( x ) ... end, function( x ) ... end )
 gap> ForAll(f,x->(x^VPR)^inv=x);
 true
 
@@ -143,19 +143,16 @@ MappingByFunction( <inverse partial perm semigroup of degree 122 with
 241 generators>, <inverse partial perm semigroup of degree 12 with 
 241 generators>, function( x ) ... end, function( x ) ... end )
 
-#Note that the above example is much better with Rhiannon's modifications
-#gap> time;
-#6627
 #
-gap> f1:=PartialPermNC([ 1, 3, 4, 5, 7 ] ,[ 1, 5, 3, 8, 4 ]);;
+gap> f1:=PartialPermNC([ 1, 3, 4, 5, 7 ], [ 1, 5, 3, 8, 4 ]);;
 gap> f2:=PartialPermNC([ 1, 2, 3, 4, 5, 6 ] ,[ 6, 7, 1, 4, 3, 2 ]);;
 gap> f3:=PartialPermNC([ 1, 2, 3, 4, 5, 8 ] ,[ 5, 6, 3, 8, 4, 7 ]);;
 gap> f4:=PartialPermNC([ 1, 3, 4, 5, 6, 8 ] ,[ 8, 7, 5, 1, 3, 4 ]);;
 gap> f5:=PartialPermNC([ 1, 3, 4, 5, 7, 8 ] ,[ 6, 5, 7, 1, 4, 2 ]);;
 gap> s:=InverseSemigroup(f1,f2,f3,f4,f5);;
-gap> t:=Elements(s)[75000];
-[ 4, 5, 7, 8 ] -> [ 5, 4, 1, 6 ]
-gap> Minorants(s,t);       
+gap> t:=Elements(s)[51624];
+[7,1][8,6](4,5)
+gap> Minorants(s,t);
 [ <empty mapping>, [ 4 ] -> [ 5 ], [ 5 ] -> [ 4 ], [ 7 ] -> [ 1 ], 
   [ 8 ] -> [ 6 ], [ 4, 5 ] -> [ 5, 4 ], [ 4, 7 ] -> [ 5, 1 ], 
   [ 4, 8 ] -> [ 5, 6 ], [ 5, 7 ] -> [ 4, 1 ], [ 5, 8 ] -> [ 4, 6 ], 
@@ -164,7 +161,8 @@ gap> Minorants(s,t);
   [ 5, 7, 8 ] -> [ 4, 1, 6 ] ]
 
 #
-gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
-gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
-gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
+gap> SemigroupsStopTest();
+
+#
 gap> STOP_TEST("Semigroups package: smallerdegree.tst", 10000);
+
