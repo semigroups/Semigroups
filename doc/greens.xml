@@ -622,20 +622,11 @@ true</Example>
   </Returns>
   <Description>
   Returns an iterator of the representatives of the Green's classes contained
-  in the semigroup of transformations or partial permutations <A>S</A>.  See <Ref Sect="Iterators"
-  BookName="ref"/> for more information on iterators.<P/>
+  in the semigroup of transformations or partial permutations <A>S</A>.  See
+  <Ref Sect="Iterators" BookName="ref"/> for more information on iterators.<P/>
 
   See also <Ref Oper="GreensRClasses" BookName="ref"/>, <Ref
   Attr="GreensRClasses"/>, and <Ref Oper="IteratorOfRClasses"/>.<P/>
-
-  In the display of an <C>IteratorOfRClassReps</C>, for a transformation
-  semigroup, the total number of elements
-  in the orbit of the semigroup acting on its &R;-class representatives by
-  multiplication on the left is given (every &R;-class representative occurs in
-  this orbit), the number of elements of the semigroup that have so far been
-  computed is given, and the number of distinct &R;-classes that have been
-  found is given. Note that these numbers depend on the state of the semigroup
-  and not of the iterator.
 
   <Example>
   gap> gens:=[ Transformation( [ 3, 2, 1, 5, 4 ] ), 
