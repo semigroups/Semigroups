@@ -84,7 +84,8 @@
     <#Include Label="SmallGeneratingSet"> 
 
   </Section>
-  
+
+
   <Section><Heading>Further properties of semigroups</Heading>
     In this section we describe several properties 
     <Ref Sect="Properties" BookName="ref"/> of an
@@ -92,18 +93,13 @@
     that can be determined using &Semigroups;.
     <#Include Label="IsBand">
     <#Include Label="IsBlockGroup">
-    <#Include Label="IsBrandtSemigroup">
-    <#Include Label="IsCliffordSemigroup">
     <#Include Label="IsCommutativeSemigroup">
     <#Include Label="IsCompletelyRegularSemigroup">
-    <#Include Label="IsFactorisableSemigroup">
     <#Include Label="IsGroupAsSemigroup">
     <#Include Label="IsIdempotentGenerated">
-    <#Include Label="IsInverseSemigroup">
     <#Include Label="IsLeftSimple">
     <#Include Label="IsLeftZeroSemigroup">
     <#Include Label="IsMonogenicSemigroup">
-    <#Include Label="IsMonogenicInverseSemigroup">
     <#Include Label="IsMonoidAsSemigroup">
     <#Include Label="IsOrthodoxSemigroup">
     <#Include Label="IsRectangularBand">
@@ -119,6 +115,19 @@
     <#Include Label="IsZeroSimpleSemigroup">
   </Section>
 
+  <Section><Heading>Properties and attributes of inverse semigroups</Heading>
+
+    In this section we describe several properties and attributes 
+    <Ref Sect="Properties" BookName="ref"/> of inverse semigroup of
+    transformations or partial permutations that can be determined using
+    &Semigroups;.
+    
+    <#Include Label="IsCliffordSemigroup">
+    <#Include Label="IsBrandtSemigroup">
+    <#Include Label="IsFactorisableSemigroup">
+    <#Include Label="IsMonogenicInverseSemigroup">
+  </Section>
+     
   <Section><Heading>Changing the representation of a semigroup</Heading>
     <#Include Label="IsomorphismPermGroup">
     <#Include Label="IsomorphismTransformationMonoid">
