@@ -445,12 +445,12 @@ function(S)
   for d in D do
 
     e:=Representative(d);
-    ##### He is a group H-Class in our join-irreducible D-Class #####
-    ##### Psi: homomorphism from Schutzenberger Group corresponding to He,
-    #####   to a permutation group
-    ##### Rho: isomorphism to a smaller degree perm group
+    ## He is a group H-Class in our join-irreducible D-Class ##
+    ## Sigma: isomorphism to a perm group (unfortunately necessary)
+    ## Psi: homom from Schutzenberger Group corresponding to He, to a perm group
+    ## Rho: isomorphism to a smaller degree perm group
     He:=GroupHClass(d);
-    
+
     sigma:=IsomorphismPermGroup(He);
     sigmainv:=InverseGeneralMapping(sigma);
     
@@ -459,15 +459,13 @@ function(S)
     trivialse:=not ForAny(He, x-> NaturalLeqPartialPerm(sup, x) and x<>e);
     
     psi:=ActionHomomorphism(
-      schutz, Difference(DomainOfPartialPerm(e), DomainOfPartialPerm(sup))
-    );
+     schutz, Difference(DomainOfPartialPerm(e), DomainOfPartialPerm(sup)));
     psiinv:=InverseGeneralMapping(psi);
 
     rho:=SmallerDegreePermutationRepresentation(Image(psi));
     rhoinv:=InverseGeneralMapping(rho);
 
-    ##### Se is the subgroup of He whose elements have the same minorants as
-    #the identity of He #####
+    ##  Se is the subgroup of He whose elements have the same minorants as e
     if trivialse then
       orbits:=[[ActionDegree(He)+1]];
       cosets:=[e];
@@ -490,9 +488,8 @@ function(S)
       h:=HClassReps( RClassNC(d, e) );
       nrcosets:=Size(h)*Length(cosets);
       
-      ##### Generate representatives for ALL the cosets that the generator will
-      #act on  
-      ##### Divide every H-Class in the R-Class into 'cosets' like stab in He
+      #### Generate representatives for ALL the cosets the generator will act on  
+      #### Divide every H-Class in the R-Class into 'cosets' like stab in He
       j:=0;
       reps:=[];
       lookup:=EmptyPlist(Length(LambdaOrb(d)));
@@ -505,25 +502,16 @@ function(S)
       od;
       ShrinkAllocationPlist(lookup);
 
-      ##### Loop over each old generator of S to calculate its action on the
-      #cosets
+      ##### Loop over old generators of S to calculate its action on the cosets
       for j in [1..Length(oldgens)] do
     
         gen:=oldgens[j];
-        # offset is needed as a variable as newgens[j] changes in the k-loop
-        # ahead
         offset:=Length(newgens[j]);
 
-        # Loop over cosets to calculate the image of each coset under the
-        # generator
+        # Loop over cosets to calculate the image of each under the generator
         for k in [1..nrcosets] do
           rep:=reps[k]*gen;
           # Will the new generator will be defined at this point?
-          #### CHANGE - the follow commented out line will produce FALSE every
-          #time,
-          #### since AsPermutation(rep*rep^(-1)) = the identity, and stab is a
-          #group
-          #if not AsPermutation(rep*rep^(-1)) in stab then
           if not rep*rep^(-1) in stabpp then
             Add(newgens[j], 0);
           else
@@ -533,7 +521,8 @@ function(S)
             else
               ## Below, could be ^sigma instead of AsPermutation
               subbox:=PositionCanonical(cosets,
-               AsPermutation((rep*h[box]^(-1))));
+               AsPermutation((rep*h[box]^(-1)))
+              );
             fi;
             Add(newgens[j], (box-1)*Length(cosets)+subbox+offset);  
           fi;
