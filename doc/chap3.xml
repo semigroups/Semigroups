@@ -126,6 +126,16 @@
     <#Include Label="IsBrandtSemigroup">
     <#Include Label="IsFactorisableSemigroup">
     <#Include Label="IsMonogenicInverseSemigroup">
+    <#Include Label="VagnerPrestonRepresentation">
+    <#Include Label="IsMajorantlyClosed">
+    <#Include Label="MajorantClosure">
+    <#Include Label="SameMinorantsSubgroup">
+    <#Include Label="IsJoinIrreducible">
+    <#Include Label="JoinIrreducibleDClasses">
+    <#Include Label="RightCosetsOfInverseSemigroup">
+    <#Include Label="SmallerDegreePartialPermRepresentation">
+    <#Include Label="Minorants">
+
   </Section>
      
   <Section><Heading>Changing the representation of a semigroup</Heading>
