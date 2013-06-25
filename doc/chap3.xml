@@ -125,16 +125,16 @@
     <#Include Label="IsCliffordSemigroup">
     <#Include Label="IsBrandtSemigroup">
     <#Include Label="IsFactorisableSemigroup">
-    <#Include Label="IsMonogenicInverseSemigroup">
-    <#Include Label="VagnerPrestonRepresentation">
-    <#Include Label="IsMajorantlyClosed">
-    <#Include Label="MajorantClosure">
-    <#Include Label="SameMinorantsSubgroup">
     <#Include Label="IsJoinIrreducible">
+    <#Include Label="IsMajorantlyClosed">
+    <#Include Label="IsMonogenicInverseSemigroup">
     <#Include Label="JoinIrreducibleDClasses">
-    <#Include Label="RightCosetsOfInverseSemigroup">
-    <#Include Label="SmallerDegreePartialPermRepresentation">
+    <#Include Label="MajorantClosure">
     <#Include Label="Minorants">
+    <#Include Label="RightCosetsOfInverseSemigroup">
+    <#Include Label="SameMinorantsSubgroup">
+    <#Include Label="SmallerDegreePartialPermRepresentation">
+    <#Include Label="VagnerPrestonRepresentation">
 
   </Section>
      

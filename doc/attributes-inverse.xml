@@ -31,7 +31,7 @@
 
     In many cases, it is possible to find a smaller degree representation than
     that provided by <C>VagnerPrestonRepresentation</C> using 
-    <Ref Attr="IsomorphismPartialPermSemigroup"/> or 
+    <Ref Oper="IsomorphismPartialPermSemigroup" BookName="ref" /> or 
     <Ref Attr="SmallerDegreePartialPermRepresentation"/>.
   </Description>
 </ManSection>
@@ -260,7 +260,7 @@ gap> Elements(T);
 		<C>Minorants</C> takes an element <A>f</A> from an inverse 
 		semigroup <A>S</A> and returns a set of the minorants of <A>f</A> in <A>S</A>.
 		A minorant of <A>f</A> is a partial permutation which is strictly less than <A>f</A>
-		in the natural partial order of <A>S</A>. See <Ref Oper="NaturalPartialOrder"/>.
+		in the natural partial order of <A>S</A>. See <Ref Attr="NaturalPartialOrder" BookName="ref" />.
 	</Description>
 </ManSection>
 <Example>
