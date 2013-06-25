@@ -432,7 +432,11 @@ InstallMethod(SmallerDegreePartialPermRepresentation,
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
 
-  local out, oldgens, newgens, D, He, sup, trivialse, sigma, sigmainv, rho, rhoinv, orbits, HeCosetReps, Fei, FeiSigma, HeCosetRepsSigma, HeCosetsReps, h, CosetsInHe, numcosets, j, reps, lookup, gen, offset, rep, box, subbox, T, d, e, i, k, m, schutz, psi, psiinv, nrcosets, cosets, stab, stabpp;
+  local out, oldgens, newgens, D, He, sup, trivialse, sigma, sigmainv, rho,
+        rhoinv, orbits, HeCosetReps, Fei, FeiSigma, HeCosetRepsSigma,
+        HeCosetsReps, h, CosetsInHe, numcosets, j, reps, lookup, gen, offset,
+        rep, box, subbox, T, d, e, i, k, m, schutz, psi, psiinv, nrcosets,
+        cosets, stab, stabpp;
           
   oldgens:=Generators(S);
   newgens:=List(oldgens, x-> []);  
@@ -442,8 +446,8 @@ function(S)
 
     e:=Representative(d);
     ##### He is a group H-Class in our join-irreducible D-Class #####
-    ##### Psi: homomorphism from Schutzenberger Group corresponding to He, to a
-    #permutation group
+    ##### Psi: homomorphism from Schutzenberger Group corresponding to He,
+    #####   to a permutation group
     ##### Rho: isomorphism to a smaller degree perm group
     He:=GroupHClass(d);
     
@@ -454,7 +458,9 @@ function(S)
     sup:=SupremumIdempotentsNC(Minorants(S, e));
     trivialse:=not ForAny(He, x-> NaturalLeqPartialPerm(sup, x) and x<>e);
     
-    psi:=ActionHomomorphism(schutz, Difference(DomainOfPartialPerm(e), DomainOfPartialPerm(sup)));
+    psi:=ActionHomomorphism(
+      schutz, Difference(DomainOfPartialPerm(e), DomainOfPartialPerm(sup))
+    );
     psiinv:=InverseGeneralMapping(psi);
 
     rho:=SmallerDegreePermutationRepresentation(Image(psi));
@@ -540,15 +546,19 @@ function(S)
   T:=InverseSemigroup(List(newgens, x->PartialPermNC(x)));
 
   # Return identity mapping if nothing has been accomplished; else the result.
-  if NrMovedPoints(T) > NrMovedPoints(S) or (NrMovedPoints(T) = NrMovedPoints(S) and ActionDegree(T) >= ActionDegree(S)) then
+  if NrMovedPoints(T) > NrMovedPoints(S) or 
+    (NrMovedPoints(T) = NrMovedPoints(S) and ActionDegree(T) >= ActionDegree(S))
+  then
 
     return IdentityMapping(S);
 
   else
     
     return MagmaIsomorphismByFunctionsNC(S, T,
-      x -> ResultOfStraightLineProgram(SemigroupElementSLP(S, x), GeneratorsOfSemigroup(T)),
-      x -> ResultOfStraightLineProgram(SemigroupElementSLP(T, x), GeneratorsOfSemigroup(S))
+      x -> ResultOfStraightLineProgram(
+             SemigroupElementSLP(S, x), GeneratorsOfSemigroup(T)),
+      x -> ResultOfStraightLineProgram(
+           SemigroupElementSLP(T, x), GeneratorsOfSemigroup(S))
     );
     
   fi;
