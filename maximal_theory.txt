@@ -1,0 +1,64 @@
+# Preamble & Observations
+
+#Let S be a finite semigroup. Always assume our generating set is irredundant
+
+# If a D Class is maximal and non-regular, it is a singleton,
+# and throwing it away gives a maximal subsemigroup
+
+# If D(M) is maximal (in the poset of DClasses), it must contain a generator.
+# Then each of the maximal subsemigroups of D(M)* [The principal factor] gives
+# rise to a maximal subsemigroup of S.
+
+# According to the board:
+# If D(M) is not maximal in the D-class poset but does contain  generator(s):
+# Then for a maximal subsemigroup U <= D(M)* we have
+# (S\D(M)) union U is maximal in S
+# iff
+# (S \ D(M)) union U is a semigroup
+
+# It seems, if we're ever throwing away 2 generators,it's not maximal
+# as throwing back one of the generators will not produce the whole thing
+# (we have irredundant genereators).
+
+# Would be good to have algorithm for finding maximal D-classes.
+# Can easily (computation wise) check if, given the D-class of each generator,
+# whether any contain the other.
+
+
+# Algorithm
+
+# 1.  Get D-classes of non-redundant generators:
+#     D1, ... , Dm, and E1, ... , En
+#     Where the D ones are the maximal D-classes in the D-class poset
+#     And the E ones are those which aren't maximal
+#    
+# 2.  For those D-classes Di or Ei with |Di| = 1 = |Ej|,
+#     then clearly S\Di and S\Ej are clearly maximal   
+#     Or if Ej is non-regular, then S\Ej is maximal
+#
+# 3.  For Di, we must have Di regular since Di non-regular => |Di| = 1
+#     If U* <= Di* is a maximal subsemigroup of Di*,
+#     then (S\Di) union U is maximal in S.
+#         
+# 4.  For Ei (by now we have |Ei| > 1, Ei regular)
+#     If Ei contains one generator, check if S\Ei is maximal. If so, then stop.
+#     Otherwise S\Ei is not maximal. (eg: Add back 1 generator)
+#     If U* <= Ei* is a maximal subsemigp, check that (S\Ei) union U is closed
+#       (if it is, then it is maximal; if it is not then it is not maximal)
+        
+     
+# Notes     
+        
+# How to generate an (S\Di) union U:
+# Semigroup( Filtered(Elements(S), x -> not x in Di), U, rec(small:=true) )
+
+# Quick Check:
+# ForAny(Ei\U, x -> x in (S\Ei) union U)
+
+# Could restrict the algorithm technically, so that we compute the 
+# maximal-subsemigroups just related to playing with a particular D-class
+# Big algorithm would just call this on all relevant D-classes
+
+# Because this computation could take a while, would be nice to give feedback
+# as the algorithm is running to the user.
+# Do this by putting Info(InfoSemigroups, "blah");
