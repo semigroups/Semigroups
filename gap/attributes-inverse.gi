@@ -539,7 +539,7 @@ InstallMethod(VagnerPrestonRepresentation,
 function(S)
   local gens, elts, out, iso, T, inv, i;
 
-  gens:=GeneratorsOfInverseSemigroup(S);
+  gens:=GeneratorsOfSemigroup(S);
   elts:=Elements(S);
   out:=EmptyPlist(Length(gens));
  
@@ -555,9 +555,7 @@ function(S)
   od;
 
   T:=InverseSemigroup(out);
-
-  inv:=x-> ResultOfStraightLineProgram(SemigroupElementSLP(T, x),
-     	GeneratorsOfSemigroup(S));
+  inv:=x-> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
 
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
