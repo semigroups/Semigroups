@@ -170,7 +170,8 @@ return
   ExtractExamples(DirectoriesPackageLibrary("semigroups","doc"), 
   "main.xml",  [ "utils.xml",
   "greens.xml", "orbits.xml", "properties.xml",
-  "semigroups.xml",  "transform.xml", "../PackageInfo.g" ], "Single" );
+  "semigroups.xml",  "transform.xml", "attributes-inverse.xml",
+  "../PackageInfo.g" ], "Single" );
 end);
 
 #
