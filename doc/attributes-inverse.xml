@@ -67,7 +67,7 @@ false
 gap> U:=[Elements(S)[2],Elements(S)[6]];
 [ &lt;identity partial perm on [ 1 ]>, &lt;identity partial perm on [ 1, 2 ]
     > ]
-gap> IsMajorantlyClosed(S,U);           
+gap> IsMajorantlyClosed(S,U);
 true
 </Example>
 <#/GAPDoc>
@@ -81,7 +81,7 @@ true
   <Description>
     <C>JoinIrreducibleDClasses</C> returns a list of the join irreducible
     &D;-classes of the inverse semigroup <A>S</A>.<P/>
-    
+
     A join irreducible &D;-class is a &D;-class containing only join irreducible
     elements.
     See <Ref Oper="IsJoinIrreducible"/>.
@@ -132,15 +132,15 @@ gap> U:=MajorantClosure(S,T);
 <#GAPDoc Label="Minorants">
 <ManSection>
 <Oper Name="Minorants" Arg="S,f"/>
-	<Returns>
-	  A set of partial permutations.
-	</Returns>
-	<Description>
-		<C>Minorants</C> takes an element <A>f</A> from an inverse 
-		semigroup <A>S</A> and returns a set of the minorants of <A>f</A> in <A>S</A>.
-		A minorant of <A>f</A> is a partial permutation which is strictly less than <A>f</A>
-		in the natural partial order of <A>S</A>. See <Ref Attr="NaturalPartialOrder" BookName="ref" />.
-	</Description>
+  <Returns>
+    A set of partial permutations.
+  </Returns>
+  <Description>
+    <C>Minorants</C> takes an element <A>f</A> from an inverse 
+    semigroup <A>S</A> and returns a set of the minorants of <A>f</A> in <A>S</A>.
+    A minorant of <A>f</A> is a partial permutation which is strictly less than <A>f</A>
+    in the natural partial order of <A>S</A>. See <Ref Attr="NaturalPartialOrder" BookName="ref" />.
+  </Description>
 </ManSection>
 <Example>
 gap> s:=SymmetricInverseSemigroup(3);
@@ -177,7 +177,7 @@ gap> T:=InverseSemigroup(MajorantClosure(S,[PartialPerm([1])]));
 &lt;inverse partial perm semigroup on 3 pts with 7 generators>
 gap> IsMajorantlyClosed(S,T);
 true
-gap> RC:=RightCosetsOfInverseSemigroup(S,T);                           
+gap> RC:=RightCosetsOfInverseSemigroup(S,T);
 [ [ &lt;identity partial perm on [ 1 ]>, 
       &lt;identity partial perm on [ 1, 2 ]>, [2,3](1), [3,2](1), 
       &lt;identity partial perm on [ 1, 3 ]>, 
@@ -241,10 +241,10 @@ gap> SameMinorantsSubgroup(f);
 <Example>
 gap> S:=InverseSemigroup(PartialPerm([2,1,4,3,6,5,8,7]));
 &lt;commutative inverse partial perm semigroup on 8 pts with 1 generator>
-gap> Elements(S);                                          
+gap> Elements(S);
 [ &lt;identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8 ]>, 
   (1,2)(3,4)(5,6)(7,8) ]
-gap> T:=SmallerDegreePartialPermRepresentation(S);                    
+gap> T:=SmallerDegreePartialPermRepresentation(S);
 MappingByFunction( &lt;commutative inverse partial perm semigroup 
 of size 2, on 8 pts
  with 1 generator>, &lt;commutative inverse partial perm semigroup 
@@ -281,7 +281,7 @@ gap> Elements(R);
   </Description>
 </ManSection>
 <Example>
-gap> S:=SymmetricInverseSemigroup(2);                                 
+gap> S:=SymmetricInverseSemigroup(2);
 &lt;symmetric inverse semigroup on 2 pts>
 gap> Size(S);
 7
@@ -294,7 +294,7 @@ true
 gap> inv:=InverseGeneralMapping(iso);;
 gap> ForAll(S, x-> (x^iso)^inv=x);
 true
-</Example>          
+</Example>
 <#/GAPDoc>
 
 #EOF
