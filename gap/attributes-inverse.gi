@@ -557,7 +557,7 @@ function(S)
   T:=InverseSemigroup(out);
 
   inv:=x-> ResultOfStraightLineProgram(SemigroupElementSLP(T, x),
-     GeneratorsOfSemigroup(S));
+     	GeneratorsOfSemigroup(S));
 
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
