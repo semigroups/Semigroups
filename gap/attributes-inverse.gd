@@ -18,7 +18,8 @@ IsPartialPermSemigroup, IsPartialPermCollection]);
 DeclareOperation("IsMajorantlyClosedNC", [IsInverseSemigroup and
 IsPartialPermSemigroup, IsPartialPermCollection]);
 
-DeclareAttribute("JoinIrreducibleDClasses", IsInverseSemigroup);
+DeclareAttribute("JoinIrreducibleDClasses", IsInverseSemigroup and
+IsPartialPermSemigroup);
 
 DeclareOperation("MajorantClosure", [IsInverseSemigroup and
 IsPartialPermSemigroup, IsPartialPermCollection]);
@@ -31,7 +32,8 @@ DeclareOperation("RightCosetsOfInverseSemigroup", [IsInverseSemigroup and
 IsPartialPermSemigroup, IsInverseSemigroup and IsPartialPermSemigroup]);
 
 DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass);
+DeclareAttribute("SmallerDegreePartialPermRepresentation", IsInverseSemigroup and
+IsPartialPermSemigroup);
 DeclareGlobalFunction("SupremumIdempotentsNC");
-DeclareAttribute("SmallerDegreePartialPermRepresentation", IsInverseSemigroup);
 
-DeclareAttribute("VagnerPrestonRepresentation", IsInverseSemigroup);
+DeclareAttribute("VagnerPrestonRepresentation", IsInverseSemigroup and IsPartialPermSemigroup);

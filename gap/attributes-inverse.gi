@@ -13,117 +13,65 @@
 
 #
 
-InstallMethod(VagnerPrestonRepresentation, 
-"for an inverse semigroup of partial permutations",
-[IsInverseSemigroup and IsPartialPermSemigroup],
-function(S)
-  local gens, elts, out, iso, T, inv, i;
-
-  gens:=GeneratorsOfInverseSemigroup(S);
-  elts:=Elements(S);
-  out:=EmptyPlist(Length(gens));
- 
-  iso:=function(x)
-    local dom;
-    dom:=Set(elts*(x^-1));
-    return PartialPermNC(List(dom, y-> Position(elts, y)), 
-     List(List(dom, y-> y*x), y-> Position(elts, y)));
-  end;
-  
-  for i in [1..Length(gens)] do
-    out[i]:=iso(gens[i]);
-  od;
-
-  T:=InverseSemigroup(out);
-
-  inv:=x-> ResultOfStraightLineProgram(SemigroupElementSLP(T, x),
-     GeneratorsOfSemigroup(S));
-
-  return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
-end);
-
-#C method? JDM
-
-InstallMethod(Minorants, 
-"for an inverse semigroup of partial permutation and an element",
+InstallMethod(IsJoinIrreducible, 
+"for an inverse semigroup of partial perms and a partial perm",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
-function(s, f)
-  local out, elts, i, j, k;
+function(S, x)
+
+  local elts, i, j, k, y, singleline, sup;
+
+  if not x in S then
+    Error("Second argument should be a partial permu within first argument");
+  fi;
+  if IsMultiplicativeZero(S,x) then return false; fi;
+
+  y:=LeftOne(x);    
+  elts:=Set(Idempotents(S));;
+  i:=Position(elts, y);
+  k:=0;
+  singleline:=true;
+
+  # Find an element smaller than y, k
+  for j in [i-1,i-2 .. 1] do
+    if NaturalLeqPartialPerm(elts[j], elts[i]) then
+      k:=j;
+      break;
+    fi;
+  od;
   
-  if not f in s then 
-    Error("the second argument is not an element of the first,");
-    return;
-  fi;
+  # If there is no smaller element k: true
+  if k = 0 then return true; fi;
 
-  if HasNaturalPartialOrder(s) then 
-    elts:=Elements(s);
-    i:=Position(elts, f);
-    return elts{NaturalPartialOrder(s)[i]};
-  fi;
-
-  if IsIdempotent(f) then 
-    out:=EmptyPlist(NrIdempotents(s));
-    elts:=SSortedList(Idempotents(s));
-  else 
-    out:=EmptyPlist(Size(s));
-    elts:=Elements(s);
-  fi;
-
-  i:=Position(elts, f);
-  j:=0; 
-
-  for k in [1..i-1] do 
-    if NaturalLeqPartialPerm(elts[k], f) and f<>elts[k] then 
-      j:=j+1;
-      out[j]:=elts[k];
+  # Look for other elements smaller than y which are not smaller than k
+  for j in [1..(k-1)] do 
+    if  NaturalLeqPartialPerm(elts[j], elts[i]) and
+    not NaturalLeqPartialPerm(elts[j], elts[k]) then 
+      singleline:=false; 
+      break;
     fi;
   od;
-  ShrinkAllocationPlist(out);
-  return out;
-end);
 
-#JDM c method, don't document until generalised
+  if singleline then return true; fi;
 
-InstallGlobalFunction(SupremumIdempotentsNC, 
-function(coll)
-  local dom;
+  if Size(HClass(S, y)) = 1 then return false; fi;
 
-  if IsList(coll) and IsEmpty(coll) then 
-    return PartialPerm([]);
+  sup:=SupremumIdempotentsNC(Minorants(S, y));
+  if y = sup then return false; fi;
+
+  if ForAny(HClass(S, y), x-> NaturalLeqPartialPerm(sup,x) and x<>y) then
+    return true;
   fi;
-  if not IsPartialPermCollection(coll) then 
-    Error("the argument should be a collection of partial perms,");
-  fi;
-  dom:=DomainOfPartialPermCollection(coll);
-  return PartialPerm(dom, dom);
-end);
+  
+  return false;
 
-#
-
-InstallMethod(SameMinorantsSubgroup, 
-"for a group H-class of an inverse semigroup of partial perms",
-[IsGroupHClass],
-function(h)
-  local e, F, out, f, i;
-
-  e:=Representative(h);
-  F:=Minorants(Parent(h), e);
-  h:=Elements(h);
-  out:=[e];
-
-  for i in [2..Length(h)] do
-    if ForAll(F, f-> NaturalLeqPartialPerm(f, h[i])) then 
-      Add(out, h[i]);
-    fi;
-  od;
-  return out;
 end);
 
 #
 
 InstallMethod(IsMajorantlyClosed, 
-"for an inverse subsemigroup of partial permutations and an inverse subsemigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermSemigroup and IsInverseSemigroup],
+"for an inverse subsemigroup of partial perms and an inverse subsemigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup,
+IsPartialPermSemigroup and IsInverseSemigroup],
 function(S, T)
 
   return IsMajorantlyClosed(S, Elements(T));
@@ -174,180 +122,6 @@ function(S, T)
   od;
 
   return true;
-
-end);
-
-#
-
-InstallMethod(MajorantClosure, 
-"for an inverse subsemigroup of partial permutations and an inverse subsemigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermSemigroup and IsInverseSemigroup],
-function(S, T)
-  return MajorantClosure(S, Elements(T));;
-end);
-
-#
-
-InstallMethod(MajorantClosure, 
-"for an inverse subsemigroup of partial permutations and a subset",
-[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermCollection],
-function(S, T)
-	local t;
-
-  if not IsSubset(S,T) then
-    Error("The second argument should be a subset of the first");
-  else
-    return MajorantClosureNC(S,T);
-  fi;
-	
-	return;
-end);
-
-#
-
-InstallMethod(MajorantClosureNC, 
-"for an inverse subsemigroup of partial permutations and a subset",
-[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermCollection],
-function(S, T)
-
-	local elts, n, out, t, i, val, ht, k;
-	
-	elts:=Elements(S);
-	n:=Length(elts);
-	out:=EmptyPlist(n);
-	ht:=HTCreate(T[1]);
-	k:=0;
-	
-	for t in T do
-		HTAdd(ht, t, true);
-  	Add(out, t);
-  	k:=k+1;
- 	od;
-
-	for t in out do
-		for i in [1..n] do
-			if NaturalLeqPartialPerm(t, elts[i]) then
-				val:=HTValue(ht, elts[i]);
-				if val=fail then
-					k:=k+1;
-					Add(out, elts[i]);
-					HTAdd(ht, elts[i], true);
-					if k=Size(S) then
-						return out;
-					fi;
-				fi;
-			fi;
-		od;
-	od;
-	
- return out;
- 
-end);
-
-#
-
-InstallMethod(RightCosetsOfInverseSemigroup, 
-"for an inverse semigroup of partial permutations and an inverse subsemigroup",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsInverseSemigroup and IsPartialPermSemigroup],
-function(S, T)
-
-  local s, t, dupe, idem, elts, rep, usedreps, coset, out;
-  
-  if not IsSubset(S,T) then
-    Error("The second argument should be a subsemigroup of the first");
-    return;
-  fi;
-  if not IsMajorantlyClosed(S,T) then
-  	Error("The second argument should be majorantly closed.");
-  fi;
-
-  elts:=Elements(T);
-  idem:=Representative(MinimalIdeal(T));
-  usedreps:=[];
-  out:=[];
-  
-  for s in RClass(S, idem) do
-    
-    # Check if Ts is a duplicate coset
-    dupe:=false;    
-    for rep in [1..Length(usedreps)] do
-      if s*usedreps[rep]^-1 in elts then
-        dupe:=true;
-        break;
-      fi;
-    od;
-    	  	
-    if dupe then continue; fi;	
-    	
-    Add(usedreps, s);
-    	
-    coset:=[];
-    for t in elts do
-      Add(coset, t*s);
-    od;
-    coset:=Set(coset);
-
-    # Generate the majorant closure of Ts to create the coset
-
-    coset:=MajorantClosure(S, coset);      
-    Add(out, coset);
-
-  od;
-
-  return out;
-end);
-
-#
-
-InstallMethod(IsJoinIrreducible, 
-"for an inverse semigroup of partial perms and a partial perm",
-[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
-function(S, x)
-
-  local elts, i, j, k, y, singleline, sup;
-
-  if not x in S then
-    Error("The second argument should be a partial permutation within the first argument");
-  fi;
-  if IsMultiplicativeZero(S,x) then return false; fi;
-
-  y:=LeftOne(x);    
-  elts:=Set(Idempotents(S));;
-  i:=Position(elts, y);
-  k:=0;
-  singleline:=true;
-
-  # Find an element smaller than y, k
-  for j in [i-1,i-2 .. 1] do
-    if NaturalLeqPartialPerm(elts[j], elts[i]) then
-      k:=j;
-      break;
-    fi;
-  od;
-  
-  # If there is no smaller element k: true
-  if k = 0 then return true; fi;
-
-  # Look for other elements smaller than y which are not smaller than k
-  for j in [1..(k-1)] do 
-    if NaturalLeqPartialPerm(elts[j], elts[i]) and not NaturalLeqPartialPerm(elts[j], elts[k]) then 
-      singleline:=false; 
-      break;
-    fi;
-  od;
-
-  if singleline then return true; fi;
-
-  if Size(HClass(S, y)) = 1 then return false; fi;
-
-  sup:=SupremumIdempotentsNC(Minorants(S, y));
-  if y = sup then return false; fi;
-
-  if ForAny(HClass(S, y), x-> NaturalLeqPartialPerm(sup,x) and x<>y) then
-    return true;
-  fi;
-  
-  return false;
 
 end);
 
@@ -422,6 +196,191 @@ function(S)
     od;
   od;
 
+  return out;
+end);
+
+#
+
+InstallMethod(MajorantClosure, 
+"for an inverse subsemigroup of partial perms and an inverse subsemigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup,
+IsPartialPermSemigroup and IsInverseSemigroup],
+function(S, T)
+  return MajorantClosure(S, Elements(T));;
+end);
+
+#
+
+InstallMethod(MajorantClosure, 
+"for an inverse subsemigroup of partial permutations and a subset",
+[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermCollection],
+function(S, T)
+	local t;
+
+  if not IsSubset(S,T) then
+    Error("The second argument should be a subset of the first");
+  else
+    return MajorantClosureNC(S,T);
+  fi;
+	
+	return;
+end);
+
+#
+
+InstallMethod(MajorantClosureNC, 
+"for an inverse subsemigroup of partial permutations and a subset",
+[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermCollection],
+function(S, T)
+
+	local elts, n, out, t, i, val, ht, k;
+	
+	elts:=Elements(S);
+	n:=Length(elts);
+	out:=EmptyPlist(n);
+	ht:=HTCreate(T[1]);
+	k:=0;
+	
+	for t in T do
+		HTAdd(ht, t, true);
+  	Add(out, t);
+  	k:=k+1;
+ 	od;
+
+	for t in out do
+		for i in [1..n] do
+			if NaturalLeqPartialPerm(t, elts[i]) then
+				val:=HTValue(ht, elts[i]);
+				if val=fail then
+					k:=k+1;
+					Add(out, elts[i]);
+					HTAdd(ht, elts[i], true);
+					if k=Size(S) then
+						return out;
+					fi;
+				fi;
+			fi;
+		od;
+	od;
+	
+ return out;
+ 
+end);
+
+#
+
+#C method? JDM
+
+InstallMethod(Minorants, 
+"for an inverse semigroup of partial permutation and an element",
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
+function(s, f)
+  local out, elts, i, j, k;
+  
+  if not f in s then 
+    Error("the second argument is not an element of the first,");
+    return;
+  fi;
+
+  if HasNaturalPartialOrder(s) then 
+    elts:=Elements(s);
+    i:=Position(elts, f);
+    return elts{NaturalPartialOrder(s)[i]};
+  fi;
+
+  if IsIdempotent(f) then 
+    out:=EmptyPlist(NrIdempotents(s));
+    elts:=SSortedList(Idempotents(s));
+  else 
+    out:=EmptyPlist(Size(s));
+    elts:=Elements(s);
+  fi;
+
+  i:=Position(elts, f);
+  j:=0; 
+
+  for k in [1..i-1] do 
+    if NaturalLeqPartialPerm(elts[k], f) and f<>elts[k] then 
+      j:=j+1;
+      out[j]:=elts[k];
+    fi;
+  od;
+  ShrinkAllocationPlist(out);
+  return out;
+end);
+
+#
+
+InstallMethod(RightCosetsOfInverseSemigroup, 
+"for an inverse semigroup of partial permutations and an inverse subsemigroup",
+[IsInverseSemigroup and IsPartialPermSemigroup,
+IsInverseSemigroup and IsPartialPermSemigroup],
+function(S, T)
+
+  local s, t, dupe, idem, elts, rep, usedreps, coset, out;
+  
+  if not IsSubset(S,T) then
+    Error("The second argument should be a subsemigroup of the first");
+    return;
+  fi;
+  if not IsMajorantlyClosed(S,T) then
+  	Error("The second argument should be majorantly closed.");
+  fi;
+
+  elts:=Elements(T);
+  idem:=Representative(MinimalIdeal(T));
+  usedreps:=[];
+  out:=[];
+  
+  for s in RClass(S, idem) do
+    
+    # Check if Ts is a duplicate coset
+    dupe:=false;    
+    for rep in [1..Length(usedreps)] do
+      if s*usedreps[rep]^-1 in elts then
+        dupe:=true;
+        break;
+      fi;
+    od;
+    	  	
+    if dupe then continue; fi;	
+    	
+    Add(usedreps, s);
+    	
+    coset:=[];
+    for t in elts do
+      Add(coset, t*s);
+    od;
+    coset:=Set(coset);
+
+    # Generate the majorant closure of Ts to create the coset
+
+    coset:=MajorantClosure(S, coset);      
+    Add(out, coset);
+
+  od;
+
+  return out;
+end);
+
+#
+
+InstallMethod(SameMinorantsSubgroup, 
+"for a group H-class of an inverse semigroup of partial perms",
+[IsGroupHClass],
+function(h)
+  local e, F, out, f, i;
+
+  e:=Representative(h);
+  F:=Minorants(Parent(h), e);
+  h:=Elements(h);
+  out:=[e];
+
+  for i in [2..Length(h)] do
+    if ForAll(F, f-> NaturalLeqPartialPerm(f, h[i])) then 
+      Add(out, h[i]);
+    fi;
+  od;
   return out;
 end);
 
@@ -552,6 +511,55 @@ function(S)
     
   fi;
   
+end);
+
+#
+
+#JDM c method, don't document until generalised
+
+InstallGlobalFunction(SupremumIdempotentsNC, 
+function(coll)
+  local dom;
+
+  if IsList(coll) and IsEmpty(coll) then 
+    return PartialPerm([]);
+  fi;
+  if not IsPartialPermCollection(coll) then 
+    Error("the argument should be a collection of partial perms,");
+  fi;
+  dom:=DomainOfPartialPermCollection(coll);
+  return PartialPerm(dom, dom);
+end);
+
+#
+
+InstallMethod(VagnerPrestonRepresentation, 
+"for an inverse semigroup of partial permutations",
+[IsInverseSemigroup and IsPartialPermSemigroup],
+function(S)
+  local gens, elts, out, iso, T, inv, i;
+
+  gens:=GeneratorsOfInverseSemigroup(S);
+  elts:=Elements(S);
+  out:=EmptyPlist(Length(gens));
+ 
+  iso:=function(x)
+    local dom;
+    dom:=Set(elts*(x^-1));
+    return PartialPermNC(List(dom, y-> Position(elts, y)), 
+     List(List(dom, y-> y*x), y-> Position(elts, y)));
+  end;
+  
+  for i in [1..Length(gens)] do
+    out[i]:=iso(gens[i]);
+  od;
+
+  T:=InverseSemigroup(out);
+
+  inv:=x-> ResultOfStraightLineProgram(SemigroupElementSLP(T, x),
+     GeneratorsOfSemigroup(S));
+
+  return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
 
 #
