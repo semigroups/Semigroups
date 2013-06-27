@@ -34,7 +34,8 @@ gap> x:=PartialPerm([1,2,3]);
 &lt;identity partial perm on [ 1, 2, 3 ]>
 gap> IsJoinIrreducible(S,x);
 false
-gap> T:=InverseSemigroup(PartialPerm([1,2,4,3]),PartialPerm([1]),PartialPerm([0,2]));
+gap> a:=PartialPerm([1,2,4,3]);; b:=PartialPerm([1]);; c:=PartialPerm([0,2]);;
+gap> T:=InverseSemigroup(a,b,c);
 &lt;inverse partial perm semigroup on 4 pts with 3 generators>
 gap> y:=PartialPerm([1,2,3,4]);
 &lt;identity partial perm on [ 1, 2, 3, 4 ]>
@@ -92,7 +93,8 @@ gap> S:=SymmetricInverseSemigroup(3);
 &lt;symmetric inverse semigroup on 3 pts>
 gap> JoinIrreducibleDClasses(S);
 [ {PartialPerm( [ 1 ], [ 1 ] )} ]
-gap> T:=InverseSemigroup(PartialPerm([1,2,4,3]),PartialPerm([1]),PartialPerm([0,2]));
+gap> a:=PartialPerm([1,2,4,3]);; b:=PartialPerm([1]);; c:=PartialPerm([0,2]);;
+gap> T:=InverseSemigroup(a,b,c);
 &lt;inverse partial perm semigroup on 4 pts with 3 generators>
 gap> JoinIrreducibleDClasses(T);
 [ {PartialPerm( [ 1, 2, 3, 4 ], [ 1, 2, 3, 4 ] )}, 
@@ -210,7 +212,8 @@ gap> Elements(h);
   (1,2,3), (1,3,2), (1,3)(2) ]
 gap> SameMinorantsSubgroup(h);
 [ &lt;identity partial perm on [ 1, 2, 3 ]> ]
-gap> T:=InverseSemigroup(PartialPerm([1,2,4,3]),PartialPerm([1]),PartialPerm([0,2]));
+gap> a:=PartialPerm([1,2,4,3]);; b:=PartialPerm([1]);; c:=PartialPerm([0,2]);;
+gap> T:=InverseSemigroup(a,b,c);
 &lt;inverse partial perm semigroup on 4 pts with 3 generators>
 gap> Elements(T);
 [ &lt;empty partial perm>, &lt;identity partial perm on [ 1 ]>, 
