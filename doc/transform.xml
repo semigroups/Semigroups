@@ -91,7 +91,7 @@ Transformation( [ 3, 1, 4, 2, 5, 14, 14, 6, 14, 7, 14, 14, 14, 14 ] )</Example>
 <#GAPDoc Label="EvaluateWord">
   <ManSection> 
     <Oper Name="EvaluateWord" Arg="gens, w"/>
-    <Returns>A transformation.</Returns>
+    <Returns>A semigroup element.</Returns>
     <Description> 
       The argument <A>gens</A> should be a list of transformations or partial
       permutations and the

@@ -28,6 +28,7 @@ HasGeneratorsOfSemigroup, IsPosInt]);
 DeclareAttribute("PosetOfIdempotents", IsSemigroup);
 DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
 DeclareAttribute("PrincipalFactor", IsGreensDClass);
+
 DeclareAttribute("MultiplicativeZero", IsActingSemigroup);
 DeclareAttribute("SmallGeneratingSet", IsActingSemigroup);
 DeclareAttribute("StructureDescription", IsBrandtSemigroup);

@@ -7,6 +7,11 @@
 ##
 #############################################################################
 
+1.1 -> 1.2
+            - several new methods for inverse semigroups of partial permutations.
+            - SmallerDegreePartialPermRepresentation, JoinIrreducibleDClasses,
+            - Result of the University of St Andrews Research for
+            Undergraduates Summer School in July 2012.
 
 1.0 -> 1.1  
             A minor release to fix some technical issues in PackageInfo.g, the
@@ -68,9 +73,9 @@ Under the name Citrus:
 
 0.7 -> 0.8 
             minor changes due to incompatibility with Smallsemi 0.6.4 which 
-            caused some test files to fail when Nilmat was loaded after Semigroups.
-            The clashes and the failed test were caused by various properties
-            being declared for IsTransformationSemigroup rather than
+            caused some test files to fail when Nilmat was loaded after
+            Semigroups.  The clashes and the failed test were caused by various
+            properties being declared for IsTransformationSemigroup rather than
             IsSemigroup. 
 
 0.6 -> 0.7 
