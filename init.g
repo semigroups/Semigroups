@@ -13,6 +13,8 @@ if not IsBound(ORBC) then
   BindGlobal("HTValue_TreeHash_C", fail);
 fi;
 
+ReadPackage("semigroups/gap/bipartition.gd");
+
 ReadPackage("semigroups/gap/setup.gd");
 ReadPackage("semigroups/gap/greens.gd");
 ReadPackage("semigroups/gap/acting.gd");

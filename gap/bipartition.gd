@@ -1,4 +1,12 @@
-
+############################################################################
+##
+#W  bipartition.gd
+#Y  Copyright (C) 2011-13                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
 
 DeclareCategory("IsBipartition", IsMultiplicativeElementWithOne and
  IsAssociativeElementWithAction);
@@ -9,17 +17,23 @@ DeclareGlobalFunction("BipartitionNC");
 DeclareSynonym("IsBipartitionSemigroup", IsSemigroup and
 IsBipartitionCollection);
 
-DeclareOperation("AsBipartition", [IsPerm, IsPosInt]);
+DeclareAttribute("NrBlocks", IsBipartition);
+DeclareAttribute("NrKernelClasses", IsBipartition);
 DeclareAttribute("DegreeOfBipartition", IsBipartition);
-DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
-DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
-DeclareAttribute("RightSignedPartition", IsBipartition);
-DeclareAttribute("LeftSignedPartition", IsBipartition);
-DeclareGlobalFunction("ExtRepBipartition");
-DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
-DeclareOperation("OnRightSignedPartition", [IsList, IsBipartition]);
-DeclareOperation("OnLeftSignedPartition", [IsList, IsBipartition]);
-DeclareOperation("RandomBipartition", [IsPosInt]);
-DeclareOperation("RankOfBipartition", [IsBipartition]) ;
+DeclareAttribute("RankOfBipartition", IsBipartition);
+DeclareAttribute("ExtRepBipartition", IsBipartition);
 
-DeclareGlobalFunction("INV_SIGNED_PART_BIPART");
+#old
+
+#DeclareOperation("AsBipartition", [IsPerm, IsPosInt]);
+#DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
+#DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
+#DeclareAttribute("RightSignedPartition", IsBipartition);
+#DeclareAttribute("LeftSignedPartition", IsBipartition);
+#DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
+#DeclareOperation("OnRightSignedPartition", [IsList, IsBipartition]);
+#DeclareOperation("OnLeftSignedPartition", [IsList, IsBipartition]);
+#DeclareOperation("RandomBipartition", [IsPosInt]);
+#DeclareOperation("RankOfBipartition", [IsBipartition]) ;
+#
+#DeclareGlobalFunction("INV_SIGNED_PART_BIPART");

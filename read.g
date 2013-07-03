@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+ReadPackage("semigroups/gap/bipartition.gi");
+
 ReadPackage("semigroups/gap/setup.gi");
 ReadPackage("semigroups/gap/acting.gi");
 
