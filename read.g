@@ -29,3 +29,4 @@ ReadPackage("semigroups/gap/examples.gi");
 ReadPackage("semigroups/gap/utils.gi");
 ReadPackage("semigroups/gap/dot.gi");
 
+ReadPackage("semigroups/gap/freeinverse.gi");
