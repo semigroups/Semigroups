@@ -121,14 +121,12 @@ LeftProjection:=function(f)
     out[i]:=blocks[i];
     if lookup[blocks[i]] then 
       out[i+n]:=blocks[i];
-    else
-      if IsBound(table[blocks[i]]) then 
-        out[i+n]:=table[blocks[i]];
-      else 
-        k:=k+1;
-        table[blocks[i]]:=k;
-        out[i+n]:=k;
-      fi;
+    elif IsBound(table[blocks[i]]) then 
+      out[i+n]:=table[blocks[i]];
+    else 
+      k:=k+1;
+      table[blocks[i]]:=k;
+      out[i+n]:=k;
     fi;
   od;
   out:=Objectify(BipartitionType, rec(blocks:=out));
@@ -181,6 +179,51 @@ InverseOfBipartition:=function(f)
   #SetRankOfBipartition(out, RankOfBipartition(f));
   return out;
 end;  
+
+# linear - 2*degree 
+
+RightProjection:=function(f)
+  local n, blocks, table, out, k, nrker, lookup, i;
+
+  n:=DegreeOfBipartition(f);
+  blocks:=f!.blocks;
+  table:=[];
+  out:=[];
+  k:=0;
+
+  for i in [1..n] do 
+    if IsBound(table[blocks[i+n]]) then 
+      out[i]:=table[blocks[i+n]];
+    else
+      k:=k+1;
+      table[blocks[i+n]]:=k;
+      out[i]:=k;
+    fi;
+  od;
+
+  nrker:=k;
+  table:=[];
+  lookup:=TransverseBlocksLookup(f);
+
+  for i in [1..n] do 
+    if blocks[i+n]<=NrKernelClasses(f) and lookup[blocks[i+n]] then 
+      out[i+n]:=out[i];
+    elif IsBound(table[blocks[i+n]]) then 
+      out[i+n]:=table[blocks[i+n]];
+    else
+      k:=k+1;
+      table[blocks[i+n]]:=k;
+      out[i+n]:=k;
+    fi;
+  od;
+
+  out:=Objectify(BipartitionType, rec(blocks:=out));
+  
+  SetDegreeOfBipartition(out, n);
+  SetNrKernelClasses(out, nrker);
+  SetNrBlocks(out, k);
+  return out;
+end;
 
 #InternalRepOfBipartition:=f-> List([1..f[1]+2], i-> f[i]);
 #
