@@ -1,0 +1,30 @@
+~
+~
+~
+~
+~
+#############################################################################
+##
+#W  freeinverse.xml
+#Y  Copyright (C) 2011-13           
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+
+
+<#GAPDoc Label="FreeInverse" >
+<ManSection>
+    <Func Name = "FreeInverseSemigroup" Arg = "rank[, name]" />
+    <Func Name = "FreeInverseSemigroup" Arg = "name1, name2, ..." />
+    <Func Name = "FreeInverseSemigroup" Arg = "names" />
+    <Returns> A Free Inverse Semigroup. </Returns>
+    <Description>
+
+    </Description>
+
+    <Example>
+
+    </Example>
+  </ManSection>
+<#/GAPDoc>
