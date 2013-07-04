@@ -37,7 +37,7 @@ function(classes)
   out:=Objectify(BipartitionType, rec(blocks:=list)); 
   
   SetDegreeOfBipartition(out, n);
-  SetNrKernelClasses(out, nrker);
+  SetNrLeftBlocks(out, nrker);
   SetExtRepBipartition(out, classes);
   SetNrBlocks(out, Length(classes));
 
@@ -46,11 +46,19 @@ end);
 
 # linear - attribute
 
-TransverseBlocksLookup:=function(f)
+# returns a blist <out> for the Left blocks so that <out[i]> is <true> if
+# and only the <i>th block of <f> is a transverse block.
+
+InstallGlobalFunction(TransverseBlocksLookup,
+function(f)
   local n, k, blocks, out, i;
   
+  if IsBound(f!.lookup) then 
+    return f!.lookup;
+  fi;
+
   n:=DegreeOfBipartition(f);
-  k:=NrKernelClasses(f);
+  k:=NrLeftBlocks(f);
   blocks:=f!.blocks;
   out:=BlistList([1..k], []);
 
@@ -60,10 +68,11 @@ TransverseBlocksLookup:=function(f)
     fi;
   od;
 
+  f!.lookup:=out;
   return out;
-end;
+end);
 
-#
+# return the classes of <f> as a list of lists
 
 InstallMethod(ExtRepBipartition, "for a bipartition",
 [IsBipartition],
@@ -107,11 +116,13 @@ end);
 
 # xx^* - linear - 2*degree - attribute
 
-LeftProjection:=function(f)
+InstallMethod(LeftProjection, "for a bipartition", 
+[IsBipartition],
+function(f)
   local n, k, blocks, lookup, table, out, i;
 
   n:=DegreeOfBipartition(f);
-  k:=NrKernelClasses(f);
+  k:=NrLeftBlocks(f);
   blocks:=f!.blocks;
   lookup:=TransverseBlocksLookup(f);
   table:=[];
@@ -132,15 +143,16 @@ LeftProjection:=function(f)
   out:=Objectify(BipartitionType, rec(blocks:=out));
   
   SetDegreeOfBipartition(out, n);
-  SetNrKernelClasses(out, NrKernelClasses(f));
+  SetNrLeftBlocks(out, NrLeftBlocks(f));
   SetNrBlocks(out, k);
   #SetRankOfBipartition(out, RankOfBipartition(f));
   return out;
-end;
+end);
 
 # linear - 2*degree
 
-InverseOfBipartition:=function(f)
+InstallMethod(InverseOp, "for a bipartition", [IsBipartition],
+function(f)
   local n, blocks, table, out, k, nrker, i;
 
   n:=DegreeOfBipartition(f);
@@ -174,15 +186,17 @@ InverseOfBipartition:=function(f)
   out:=Objectify(BipartitionType, rec(blocks:=out));
   
   SetDegreeOfBipartition(out, Length(blocks)/2);
-  SetNrKernelClasses(out, nrker);
+  SetNrLeftBlocks(out, nrker);
   SetNrBlocks(out, k);
   #SetRankOfBipartition(out, RankOfBipartition(f));
   return out;
-end;  
+end);  
 
 # linear - 2*degree 
 
-RightProjection:=function(f)
+InstallMethod(RightProjection, "for a bipartition",
+[IsBipartition],
+function(f)
   local n, blocks, table, out, k, nrker, lookup, i;
 
   n:=DegreeOfBipartition(f);
@@ -206,7 +220,7 @@ RightProjection:=function(f)
   lookup:=TransverseBlocksLookup(f);
 
   for i in [1..n] do 
-    if blocks[i+n]<=NrKernelClasses(f) and lookup[blocks[i+n]] then 
+    if blocks[i+n]<=NrLeftBlocks(f) and lookup[blocks[i+n]] then 
       out[i+n]:=out[i];
     elif IsBound(table[blocks[i+n]]) then 
       out[i+n]:=table[blocks[i+n]];
@@ -220,10 +234,76 @@ RightProjection:=function(f)
   out:=Objectify(BipartitionType, rec(blocks:=out));
   
   SetDegreeOfBipartition(out, n);
-  SetNrKernelClasses(out, nrker);
+  SetNrLeftBlocks(out, nrker);
   SetNrBlocks(out, k);
   return out;
-end;
+end);
+
+#
+
+InstallMethod(RandomBipartition, "for a pos int",
+[IsPosInt],
+function(n)
+  local out, nrblocks, vals, j, nrkerblocks, i;
+
+  out:=EmptyPlist(2*n);
+  nrblocks:=1;
+  vals:=[1];
+
+  for i in [1..n] do 
+    j:=Random(vals);
+    if j=nrblocks then 
+      nrblocks:=nrblocks+1;
+      Add(vals, nrblocks);
+    fi;
+    out[i]:=j;
+  od;
+
+  nrkerblocks:=nrblocks;
+
+  for i in [1..n] do 
+    j:=Random(vals);
+    if j=nrblocks then 
+      nrblocks:=nrblocks+1;
+      Add(vals, nrblocks);
+    fi;
+    out[i+n]:=j;
+  od;
+
+  out:=Objectify(BipartitionType, rec(blocks:=out));
+  
+  SetDegreeOfBipartition(out, n);
+  SetNrLeftBlocks(out, nrkerblocks);
+  SetNrBlocks(out, nrblocks);
+
+  return out;
+end);
+
+#
+
+InstallMethod(RightBlocks, "for a bipartition", [IsBipartition],
+function(f)
+  local n, blocks, tab, out, nrblocks, i;
+  
+  n:=DegreeOfBipartition(f);
+  blocks:=f!.blocks;
+  tab:=EmptyPlist(2*n);
+  out:=EmptyPlist(n);
+  nrblocks:=0;
+
+  for i in [n+1..2*n] do 
+    if not IsBound(tab[blocks[i]]) then 
+      nrblocks:=nrblocks+1;
+      if blocks[i]>NrLeftBlocks(f) then 
+        tab[blocks[i]]:=-nrblocks;
+      else
+        tab[blocks[i]]:=nrblocks;
+      fi;
+    fi;
+    out[i-n]:=tab[blocks[i]];
+  od;
+  return out;
+end);
 
 #InternalRepOfBipartition:=f-> List([1..f[1]+2], i-> f[i]);
 #
@@ -786,25 +866,6 @@ end;
 #  return BipartitionNC(List([1..n], x-> [x, x+ n]));
 #end);
 #
-#InstallMethod(RandomBipartition, "for a pos int",
-#[IsPosInt],
-#function(n)
-#  local out, m, vals, j, i;
-#
-#  out:=EmptyPlist(2*n);
-#  m:=1;
-#  vals:=[1];
-#
-#  for i in [1..2*n] do 
-#    j:=Random(vals);
-#    if j=m then 
-#      m:=m+1;
-#      Add(vals, m);
-#    fi;
-#    out[i]:=j;
-#  od;
-#  return ipartitionByIntRepNC(out);
-#end);
 
 
 # Results:

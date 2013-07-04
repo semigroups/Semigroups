@@ -13,15 +13,25 @@ DeclareCategory("IsBipartition", IsMultiplicativeElementWithOne and
 DeclareCategoryCollections("IsBipartition");
 
 DeclareGlobalFunction("BipartitionNC");
+DeclareGlobalFunction("TransverseBlocksLookup");
 
 DeclareSynonym("IsBipartitionSemigroup", IsSemigroup and
 IsBipartitionCollection);
 
 DeclareAttribute("NrBlocks", IsBipartition);
-DeclareAttribute("NrKernelClasses", IsBipartition);
+DeclareAttribute("NrLeftBlocks", IsBipartition);
+DeclareAttribute("LeftBlocks", IsBipartition);
+DeclareAttribute("NrRightBlocks", IsBipartition);
+DeclareAttribute("RightBlocks", IsBipartition);
+
 DeclareAttribute("DegreeOfBipartition", IsBipartition);
 DeclareAttribute("RankOfBipartition", IsBipartition);
 DeclareAttribute("ExtRepBipartition", IsBipartition);
+
+DeclareAttribute("LeftProjection", IsBipartition);
+DeclareAttribute("RightProjection", IsBipartition);
+DeclareOperation("InverseOp", [IsBipartition]);
+DeclareOperation("RandomBipartition", [IsPosInt]);
 
 #old
 
@@ -33,7 +43,6 @@ DeclareAttribute("ExtRepBipartition", IsBipartition);
 #DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
 #DeclareOperation("OnRightSignedPartition", [IsList, IsBipartition]);
 #DeclareOperation("OnLeftSignedPartition", [IsList, IsBipartition]);
-#DeclareOperation("RandomBipartition", [IsPosInt]);
 #DeclareOperation("RankOfBipartition", [IsBipartition]) ;
 #
 #DeclareGlobalFunction("INV_SIGNED_PART_BIPART");
