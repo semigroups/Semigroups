@@ -5,7 +5,7 @@
 ##  adjacency list for every vertex]
 ##
 ##  Names:
-##  x = 1, x^-1 = 2, y = 3, y^-1 = 4
+##  x1 = 1, x1^-1 = 2, ... 
 ##
 ##  Example:
 ##  a := [2, 4, 2, [fail, 1, 2, 2], [fail, 1, 1, 4], [2, , , ,], [3, 1 , ,4],
@@ -101,7 +101,9 @@ InstallMethod( Iterator,"for a free inverse semigroup",
 
 ############################################################################
 ##
-## FreeInverseSemigroup( <rank> )
+## FreeInverseSemigroup( <rank>[, names] )
+## FreeInverseSemigroup( name1, name2, ... )
+## FreeInverseSemigroup( names )
 ##
 
 InstallGlobalFunction(FreeInverseSemigroup, 
@@ -131,7 +133,7 @@ function(arg)
                           and ForAll( arg[1], IsString ) then
     names:= arg[1];
   else
-    Error("usage: FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank>, [name])");
+    Error("usage: FreeInverseSemigroup(<name1>,<name2>..) or FreeInverseSemigroup(<rank> [, name])");
   fi;
 
   F := NewFamily( "FreeInverseSemigroupElementsFamily",
@@ -267,20 +269,9 @@ function( S )
   fi;
 end );
 
-
-
-#Elements of Free Inverse Semigroups are represented by [number of generators,
-#, number of vertices, finish vertex, parent list, list of labels (p->c), 
-#adjacency list for every vertex]
-#x = 1, x^-1 = 2, y = 3, y^-1 = 4
-
-#Example
-#a := [2, 4, 2, [fail, 1, 2, 2], [fail, 1, 1, 4], [2, , , ,], [3, 1 , ,4],
-#     [ , 2, , ], [, , 2, ]];
-
 ##############################################################################
 ##
-## Canonical Form 
+## FreeInverseSemiCanonicalForm( s ) 
 ##
 
 InstallGlobalFunction( FreeInverseSemiCanonicalForm,
