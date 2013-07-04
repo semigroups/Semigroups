@@ -111,17 +111,11 @@ function(arg)
   local names, F, type, gens, S, m;
 
   # Get and check the argument list, and construct names if necessary.
-  if Length( arg ) = 1 and arg[1] = infinity then
-    names:= InfiniteListOfNames( "x" );
-  elif Length( arg ) = 2 and arg[1] = infinity then
-    names:= InfiniteListOfNames( arg[2] );
-  elif Length( arg ) = 3 and arg[1] = infinity then
-    names:= InfiniteListOfNames( arg[2], arg[3] );
-  elif Length( arg ) = 1 and IsInt( arg[1] ) and 0 <= arg[1] then
+  if Length( arg ) = 1 and IsInt( arg[1] ) and 0 < arg[1] then
     names:= List( [ 1 .. arg[1] ],
                   i -> Concatenation( "x", String(i) ) );
     MakeImmutable( names );
-  elif Length( arg ) = 2 and IsInt( arg[1] ) and 0 <= arg[1] then
+  elif Length( arg ) = 2 and IsInt( arg[1] ) and 0 < arg[1] then
     names:= List( [ 1 .. arg[1] ],
                   i -> Concatenation( arg[2], String(i) ) );
     MakeImmutable( names );
