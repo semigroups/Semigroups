@@ -288,7 +288,8 @@ function(f)
   n:=DegreeOfBipartition(f);
   blocks:=f!.blocks;
   tab:=EmptyPlist(2*n);
-  out:=EmptyPlist(n);
+  out:=EmptyPlist(n+1);
+  out[1]:=0;
   nrblocks:=0;
 
   for i in [n+1..2*n] do 
@@ -300,9 +301,75 @@ function(f)
         tab[blocks[i]]:=nrblocks;
       fi;
     fi;
-    out[i-n]:=tab[blocks[i]];
+    out[i-n+1]:=tab[blocks[i]];
   od;
+  out[1]:=nrblocks;
   return out;
+end);
+
+#
+
+InstallGlobalFunction(OnRightBlocks, 
+function(blocks, f)
+  local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out, next, i;
+
+  n:=Length(blocks)-blocks[1]-1; # length of partition!!
+  nrblocks:=blocks[1];
+  
+  if nrblocks=0 then   # special case for dummy/seed 
+    return RightBlocks(f);
+  fi;
+
+  nrfblocks:=NrBlocks(f); 
+  fblocks:=f!.blocks;
+  
+  fuse:=[1..nrblocks+nrfblocks];
+  sign:=List([1..nrblocks+nrfblocks], i-> 1);
+
+  for i in [1..nrblocks] do 
+    sign[i]:=blocks[i+n+1];
+  od;
+
+  fuseit := function(i) 
+    while fuse[i] < i do 
+      i := fuse[i]; 
+    od; 
+    return i; 
+  end;
+  
+  for i in [1..n] do
+    x := fuseit(blocks[i+1]);
+    y := fuseit(fblocks[i]+nrblocks);
+    if x <> y then
+      if x < y then
+        fuse[y] := x;
+        if sign[y]=1 then 
+          sign[x]:=1;
+        fi;
+      else
+        fuse[x] := y;
+        if sign[x]=1 then 
+          sign[x]:=1;
+        fi;
+      fi;
+    fi;
+  od;
+
+  tab:=0*fuse;
+  out:=[];
+  next:=0;
+  
+  for i in [n+1..2*n] do
+    x := fuseit(fblocks[i]+nrblocks);
+    if tab[x]=0 then
+      next:=next+1;
+      tab[x]:=next;
+    fi;
+    out[i-n+1]:=tab[x];
+    out[n+1+tab[x]]:=sign[x];
+  od;
+  out[1]:=next;
+  return [out, sign, fuse];
 end);
 
 #InternalRepOfBipartition:=f-> List([1..f[1]+2], i-> f[i]);
@@ -747,59 +814,6 @@ end);
 #  return out;
 #end);
 #
-#InstallMethod(OnRightSignedPartition, 
-#[IsList, IsBipartition],
-#function(a, b)
-#  local n, p1, p2, fuse, mark, fuseit, x, y, tab3, c, j, next, i;
-#
-#  n:=b[1]/2; # length of partition!!
-#  p1:=a[1]; #number of classes in a
-#  if p1>n then 
-#    return RightSignedPartition(b);
-#  fi;
-#  p2:=b[2]; #number of classes in b
-#
-#  fuse:=[1..p1+p2];
-#  mark:=[1..p1+p2]*0;
-#
-#  for i in [1..p1] do 
-#    mark[i]:=a[i+n+1];
-#  od;
-#
-#  fuseit := function(i) 
-#              while fuse[i] < i do i := fuse[i]; od; 
-#              return i; 
-#            end;
-#  for i in [1..n] do
-#    x := fuseit(a[i+1]);
-#    y := fuseit(b[i+2]+p1);
-#    if x <> y then
-#      if x < y then
-#        fuse[y] := x;
-#        if mark[y]=1 then mark[x]:=1; fi;
-#      else
-#        fuse[x] := y;
-#        if mark[x]=1 then mark[y]:=1; fi;
-#      fi;
-#    fi;
-#  od;
-#  tab3:=0*[1..p1+p2];
-#  c:=[];
-#  j:=1;
-#  next:=1;
-#  for i in [n+1..2*n] do
-#    x := fuseit(b[i+2]+p1);
-#    if tab3[x] = 0 then
-#      tab3[x] := next;
-#      next := next + 1;
-#    fi;
-#    j:=j+1;
-#    c[j]:=tab3[x];
-#    c[n+1+tab3[x]]:=mark[x];
-#  od;
-#  c[1]:=next-1;
-#  return c;
-#end);
 #
 #InstallMethod(OnLeftSignedPartition, 
 #[IsList, IsBipartition],

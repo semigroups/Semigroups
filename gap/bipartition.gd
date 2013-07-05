@@ -18,20 +18,21 @@ DeclareGlobalFunction("TransverseBlocksLookup");
 DeclareSynonym("IsBipartitionSemigroup", IsSemigroup and
 IsBipartitionCollection);
 
+DeclareAttribute("DegreeOfBipartition", IsBipartition);
+DeclareAttribute("RankOfBipartition", IsBipartition);
 DeclareAttribute("NrBlocks", IsBipartition);
 DeclareAttribute("NrLeftBlocks", IsBipartition);
 DeclareAttribute("LeftBlocks", IsBipartition);
 DeclareAttribute("NrRightBlocks", IsBipartition);
 DeclareAttribute("RightBlocks", IsBipartition);
-
-DeclareAttribute("DegreeOfBipartition", IsBipartition);
-DeclareAttribute("RankOfBipartition", IsBipartition);
 DeclareAttribute("ExtRepBipartition", IsBipartition);
 
 DeclareAttribute("LeftProjection", IsBipartition);
 DeclareAttribute("RightProjection", IsBipartition);
 DeclareOperation("InverseOp", [IsBipartition]);
 DeclareOperation("RandomBipartition", [IsPosInt]);
+
+DeclareGlobalFunction("OnRightBlocks");
 
 #old
 
