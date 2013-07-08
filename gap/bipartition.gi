@@ -352,7 +352,7 @@ function(blocks, f)
   local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out,
    next, i;
 
-  n:=Length(blocks)-blocks[1]-1; # length of partition!!
+  n:=DegreeOfBlocks(blocks); # length of partition!!
   nrblocks:=blocks[1];
   
   if nrblocks=0 then   # special case for dummy/seed 
@@ -420,7 +420,7 @@ InstallGlobalFunction(OnLeftBlocks,
 function(blocks, f)
   local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out, next, i;
 
-  n:=Length(blocks)-blocks[1]-1;  # length of <blocks>
+  n:=DegreeOfBlocks(blocks);  # length of <blocks>
   nrblocks:=blocks[1];
   
   if nrblocks=0 then 
@@ -488,7 +488,7 @@ InstallGlobalFunction(ExtRepOfBlocks,
 function(blocks)
   local n, sign, out, i;
   
-  n:=Length(blocks)-blocks[1]-1;
+  n:=DegreeOfBlocks(blocks);
   out:=EmptyPlist(n);
   for i in [1..n] do 
     out[i]:=blocks[i+1];
@@ -499,6 +499,8 @@ function(blocks)
     
   return out;
 end);
+
+#
 
 InstallGlobalFunction(BlocksByExtRep,
 function(ext)
@@ -526,6 +528,29 @@ function(ext)
 
   out[1]:=nr;
   return out;
+end);
+
+#
+
+InstallGlobalFunction(RankOfBlocks, 
+function(blocks)
+  local n, rank, i;
+  
+  n:=DegreeOfBlocks(blocks);
+  rank:=0;
+  for i in [1..blocks[1]] do 
+    if blocks[n+1+i]=1 then 
+      rank:=rank+1;
+    fi;
+  od;
+  return rank;
+end);
+
+#
+
+InstallGlobalFunction(DegreeOfBlocks,
+function(blocks)
+  return Length(blocks)-blocks[1]-1;
 end);
 
 #InternalRepOfBipartition:=f-> List([1..f[1]+2], i-> f[i]);

@@ -33,14 +33,11 @@ DeclareOperation("InverseOp", [IsBipartition]);
 DeclareOperation("RandomBipartition", [IsPosInt]);
 
 DeclareGlobalFunction("OnRightBlocks");
-DeclareGlobalFunction("ExtRepOfRightBlocks");
-DeclareGlobalFunction("RightBlocksByExtRep");
-
 DeclareGlobalFunction("OnLeftBlocks");
 DeclareGlobalFunction("ExtRepOfBlocks");
 DeclareGlobalFunction("BlocksByExtRep");
-
-
+DeclareGlobalFunction("RankOfBlocks");
+DeclareGlobalFunction("DegreeOfBlocks");
 
 #old
 
