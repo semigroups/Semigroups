@@ -743,70 +743,6 @@ end);
 #DegreeOfSignedPartition:=x-> Length(x)-NrClassesSignedPartition(x)-1;
 
 #
-
-#InstallGlobalFunction(INV_SIGNED_PART_BIPART, 
-#function(signed, f)
-#  local n, p1, p2, fuse, fuseit, x, y, x1, lookup, j, out, next, seen, i;
-#
-#  n := DegreeOfBipartition(f)/2;
-#  Assert(1,n = DegreeOfSignedPartition(signed));
-#  p1 := NrClassesSignedPartition(signed);
-#  p2 := NrClassesBipartition(f);
-#  fuse := [1..p1+p2]; 
-#  
-#  fuseit := function(i) 
-#    while fuse[i] < i do 
-#      i := fuse[i]; 
-#    od; 
-#    return i; 
-#  end;
-#
-#  for i in [1..n] do
-#    x := fuseit(signed[i+1]);
-#    y := fuseit(f[i+2]+p1);
-#    if x <> y then
-#      if x < y then
-#        fuse[y] := x;
-#      else
-#        fuse[x] := y;
-#      fi;
-#    fi;
-#  od;
-#
-#  x1:=OnRightSignedPartition(signed, f);
-#  lookup:=[1..p1+p2]*0;
-#
-#  for i in [1..n] do 
-#    j:=fuseit(f[2+n+i]+p1);
-#    j:=First([1..p1], i-> signed[n+1+i]=1 and fuseit(i)=j);
-#    if x1[n+1+x1[i+1]]=1 and lookup[j]=0 then 
-#      lookup[j]:=x1[i+1];
-#    fi;
-#  od;
-#  out:=x1{[2..n+1]};
-#  next:=NrClassesSignedPartition(x1)+1;
-#  seen:=[1..p1]*0;
-#  for i in [1..n] do 
-#    if signed[n+1+signed[i+1]]=0 then 
-#      if seen[signed[i+1]]<>0 then 
-#        Add(out, seen[signed[i+1]]);
-#      else
-#        seen[signed[i+1]]:=next;
-#        next:=next+1;
-#        Add(out, seen[signed[i+1]]);
-#      fi;
-#    else 
-#      Add(out, lookup[signed[i+1]]); 
-#    fi;
-#    if 0 in out then Error(); fi;
-#  od;  
-#
-#  return BipartitionByIntRepNC(out);
-#end);
-#
-#    
-##
-#
 #InstallMethod(\^, "for a pos int and bipartition",
 #[IsPosInt, IsBipartition], OnPointsBP);
 #
@@ -817,8 +753,6 @@ end);
 #function(set, f) 
 #  return Set(Concatenation(List(set, x-> OnPointsBP(x,f))));
 #end);
-#
-##
 #
 #InstallMethod(\^, "for a bipartition and neg int",
 #[IsBipartition, IsNegInt],
@@ -839,8 +773,6 @@ end);
 #  fi;
 #  return (f^-1)^-r;
 #end);
-#
-##
 #
 #InstallMethod(\<, "for a bipartition and bipartition", 
 #[IsBipartition, IsBipartition],
