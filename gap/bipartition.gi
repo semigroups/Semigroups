@@ -17,6 +17,97 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
 
 #
 
+InverseRightBlocks:=function(blocks, f)
+  local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, out, junk, next, tab1, nrleft, tab2, i;
+
+  # the start of this is very similar to OnRightBlocks
+
+  n:=DegreeOfBlocks(blocks); # length of partition!!
+  nrblocks:=blocks[1];
+  nrfblocks:=NrBlocks(f); 
+  fblocks:=f!.blocks;
+  
+  fuse:=[1..nrblocks+nrfblocks];
+  sign:=EmptyPlist(nrfblocks+nrblocks);
+
+  for i in [1..nrblocks] do
+    sign[i]:=blocks[n+1+i];
+  od;
+  for i in [nrblocks+1..nrfblocks+nrblocks] do
+    sign[i]:=0;
+  od;
+  
+  fuseit := function(i) 
+    while fuse[i] < i do 
+      i := fuse[i]; 
+    od; 
+    return i; 
+  end;
+  
+  for i in [1..n] do
+    x := fuseit(blocks[i+1]);
+    y := fuseit(fblocks[i]+nrblocks);
+    if x <> y then
+      if x < y then
+        fuse[y] := x;
+        if sign[y]=1 then
+          sign[x]:=1;
+        fi;
+      else
+        fuse[x] := y;
+        if sign[x]=1 then
+          sign[y]:=1;
+        fi;
+      fi;
+    fi;
+  od;
+  
+  out:=[]; junk:=0; next:=0;
+  
+  tab1:=[];
+  for i in [1..n] do 
+    x:=fuseit(fblocks[i+n]+nrblocks);
+    if x>NrLeftBlocks(f) or sign[x]=0 then 
+      if junk=0 then 
+        next:=next+1;
+        junk:=next;
+      fi;
+      out[i]:=junk;
+    else 
+      if not IsBound(tab1[x]) then 
+        next:=next+1;
+        tab1[x]:=next;
+      fi;
+      out[i]:=tab1[x];
+    fi;
+  od;
+  nrleft:=next;
+  
+  tab2:=[];
+  for i in [n+1..2*n] do 
+    x:=blocks[i-n+1];
+    if blocks[n+1+x]=1 then 
+      x:=fuseit(x);
+      out[i]:=tab1[x];
+    else
+      if not IsBound(tab2[x]) then 
+        next:=next+1;
+        tab2[x]:=next;
+      fi;
+      out[i]:=tab2[x];
+    fi;
+  od;
+
+  out:=Objectify(BipartitionType, rec(blocks:=out));
+
+  SetDegreeOfBipartition(out, n);
+  SetNrLeftBlocks(out, nrleft);
+  SetNrBlocks(out, next);
+  return out;
+end;
+
+#
+
 InstallMethod(IdentityBipartition, "for a positive integer",
 [IsPosInt],
 function(n)
