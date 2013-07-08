@@ -311,9 +311,10 @@ end);
 
 InstallGlobalFunction(OnRightBlocks, 
 function(blocks, f)
-  local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out, next, i;
+  local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out,
+   next, i;
 
-  n:=Length(blocks)-blocks[1]-1; # length of partition!!
+  n:=Length(blocks)-2; # length of partition!!
   nrblocks:=blocks[1];
   
   if nrblocks=0 then   # special case for dummy/seed 
@@ -324,10 +325,10 @@ function(blocks, f)
   fblocks:=f!.blocks;
   
   fuse:=[1..nrblocks+nrfblocks];
-  sign:=List([1..nrblocks+nrfblocks], i-> 1);
+  sign:=ShallowCopy(blocks[n+2]);
 
-  for i in [1..nrblocks] do 
-    sign[i]:=blocks[i+n+1];
+  for i in [nrblocks+1..nrfblocks+nrblocks] do 
+    sign[i]:=false;
   od;
 
   fuseit := function(i) 
@@ -342,14 +343,15 @@ function(blocks, f)
     y := fuseit(fblocks[i]+nrblocks);
     if x <> y then
       if x < y then
+        
         fuse[y] := x;
-        if sign[y]=1 then 
-          sign[x]:=1;
+        if sign[y] then 
+          sign[x]:=true;
         fi;
       else
         fuse[x] := y;
-        if sign[x]=1 then 
-          sign[x]:=1;
+        if sign[x] then 
+          sign[y]:=true;
         fi;
       fi;
     fi;
@@ -357,6 +359,7 @@ function(blocks, f)
 
   tab:=0*fuse;
   out:=[];
+  out[n+2]:=[];
   next:=0;
   
   for i in [n+1..2*n] do
@@ -366,10 +369,55 @@ function(blocks, f)
       tab[x]:=next;
     fi;
     out[i-n+1]:=tab[x];
-    out[n+1+tab[x]]:=sign[x];
+    out[n+2][tab[x]]:=sign[x];
   od;
   out[1]:=next;
-  return [out, sign, fuse];
+  return out;
+end);
+
+InstallGlobalFunction(ExtRepOfRightBlocks,
+function(blocks)
+  local n, sign, out, i;
+  
+  n:=Length(blocks)-2;
+  sign:=blocks[n+2];
+  out:=EmptyPlist(n);
+  for i in [1..n] do 
+    out[i]:=blocks[i+1];
+    if not sign[blocks[i+1]] then 
+      out[i]:=out[i]*-1;
+    fi;
+  od;
+    
+  return out;
+end);
+
+InstallGlobalFunction(RightBlocksByExtRep,
+function(ext)
+  local n, tab, out, nr, i;
+  
+  n:=Length(ext);
+  tab:=EmptyPlist(n);
+  out:=EmptyPlist(n+2);
+  out[n+2]:=[];
+  nr:=0;
+  
+  for i in [1..n] do
+    if ext[i]<0 then 
+      out[i+1]:=-1*ext[i];
+      out[n+2][out[i+1]]:=false;
+    else
+      out[i+1]:=ext[i];
+      out[n+2][ext[i]]:=true;
+    fi;
+    if not IsBound(tab[out[i+1]]) then 
+      tab[out[i+1]]:=true;
+      nr:=nr+1;
+    fi;
+  od;
+
+  out[1]:=nr;
+  return out;
 end);
 
 #InternalRepOfBipartition:=f-> List([1..f[1]+2], i-> f[i]);
