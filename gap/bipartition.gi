@@ -294,15 +294,18 @@ function(f)
   n:=DegreeOfBipartition(f);
   blocks:=f!.blocks;
   tab:=EmptyPlist(2*n);
-  out:=EmptyPlist(n+2);
-  out[n+2]:=[];
+  out:=[];
   nrblocks:=0;
 
   for i in [n+1..2*n] do 
     if not IsBound(tab[blocks[i]]) then 
       nrblocks:=nrblocks+1;
       tab[blocks[i]]:=nrblocks;
-      out[n+2][blocks[i]]:=(blocks[i]<=NrLeftBlocks(f));
+      if blocks[i]<=NrLeftBlocks(f) then 
+        out[n+1+nrblocks]:=1; #signed
+      else 
+        out[n+1+nrblocks]:=0; #unsigned
+      fi;
     fi;
     out[i-n+1]:=tab[blocks[i]];
   od;
@@ -328,14 +331,14 @@ function(f)
     out[i+1]:=blocks[i];
     if not tab[blocks[i]] then 
       out[1]:=out[1]+1;
-      out[n+2][blocks[i]]:=false;
+      out[n+1+blocks[i]]:=0;
       tab[blocks[i]]:=true;
     fi;
   od;
   
   for i in [n+1..2*n] do 
     if blocks[i]<=out[1] then #transverse block!
-      out[n+2][blocks[i]]:=true;
+      out[n+1+blocks[i]]:=1;
     fi;
   od;
 
@@ -349,7 +352,7 @@ function(blocks, f)
   local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out,
    next, i;
 
-  n:=Length(blocks)-2; # length of partition!!
+  n:=Length(blocks)-blocks[1]-1; # length of partition!!
   nrblocks:=blocks[1];
   
   if nrblocks=0 then   # special case for dummy/seed 
@@ -360,10 +363,13 @@ function(blocks, f)
   fblocks:=f!.blocks;
   
   fuse:=[1..nrblocks+nrfblocks];
-  sign:=ShallowCopy(blocks[n+2]);
+  sign:=EmptyPlist(nrfblocks+nrblocks);
 
+  for i in [1..nrblocks] do 
+    sign[i]:=blocks[n+1+i];
+  od;
   for i in [nrblocks+1..nrfblocks+nrblocks] do 
-    sign[i]:=false;
+    sign[i]:=0;
   od;
 
   fuseit := function(i) 
@@ -378,15 +384,14 @@ function(blocks, f)
     y := fuseit(fblocks[i]+nrblocks);
     if x <> y then
       if x < y then
-        
         fuse[y] := x;
-        if sign[y] then 
-          sign[x]:=true;
+        if sign[y]=1 then 
+          sign[x]:=1;
         fi;
       else
         fuse[x] := y;
-        if sign[x] then 
-          sign[y]:=true;
+        if sign[x]=1 then 
+          sign[y]:=1;
         fi;
       fi;
     fi;
@@ -394,7 +399,6 @@ function(blocks, f)
 
   tab:=0*fuse;
   out:=[];
-  out[n+2]:=[];
   next:=0;
   
   for i in [n+1..2*n] do
@@ -404,7 +408,7 @@ function(blocks, f)
       tab[x]:=next;
     fi;
     out[i-n+1]:=tab[x];
-    out[n+2][tab[x]]:=sign[x];
+    out[n+1+tab[x]]:=sign[x];
   od;
   out[1]:=next;
   return out;
@@ -416,7 +420,7 @@ InstallGlobalFunction(OnLeftBlocks,
 function(blocks, f)
   local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out, next, i;
 
-  n:=Length(blocks)-2;  # length of <blocks>
+  n:=Length(blocks)-blocks[1]-1;  # length of <blocks>
   nrblocks:=blocks[1];
   
   if nrblocks=0 then 
@@ -427,8 +431,14 @@ function(blocks, f)
   fblocks:=f!.blocks;
   
   fuse:=[1..nrfblocks+nrblocks];
-  sign:=List([1..nrfblocks], x-> false);
-  Append(sign, blocks[n+2]);
+  sign:=EmptyPlist(nrfblocks+nrblocks);
+
+  for i in [1..nrfblocks] do 
+    sign[i]:=0;
+  od;
+  for i in [1..nrblocks] do 
+    sign[i+nrfblocks]:=blocks[n+1+i];
+  od;
 
   fuseit := function(i) 
     while fuse[i] < i do 
@@ -443,13 +453,13 @@ function(blocks, f)
     if x <> y then
       if x < y then
         fuse[y] := x;
-        if sign[y] then 
-          sign[x]:=true; 
+        if sign[y]=1 then 
+          sign[x]:=1; 
         fi;
       else
         fuse[x] := y;
-        if sign[x] then 
-          sign[y]:=true;
+        if sign[x]=1 then 
+          sign[y]:=1;
         fi;
       fi;
     fi;
@@ -457,7 +467,6 @@ function(blocks, f)
 
   tab:=0*fuse;
   out:=[];
-  out[n+2]:=[];
   next:=0;
   
   for i in [1..n] do
@@ -467,7 +476,7 @@ function(blocks, f)
       tab[x] := next;
     fi;
     out[i+1]:=tab[x];
-    out[n+2][tab[x]]:=sign[x];
+    out[n+1+tab[x]]:=sign[x];
   od;
   out[1]:=next;
   return out;
@@ -479,12 +488,11 @@ InstallGlobalFunction(ExtRepOfBlocks,
 function(blocks)
   local n, sign, out, i;
   
-  n:=Length(blocks)-2;
-  sign:=blocks[n+2];
+  n:=Length(blocks)-blocks[1]-1;
   out:=EmptyPlist(n);
   for i in [1..n] do 
     out[i]:=blocks[i+1];
-    if not sign[blocks[i+1]] then 
+    if blocks[n+1+blocks[i+1]]=0 then 
       out[i]:=out[i]*-1;
     fi;
   od;
@@ -505,10 +513,10 @@ function(ext)
   for i in [1..n] do
     if ext[i]<0 then 
       out[i+1]:=-1*ext[i];
-      out[n+2][out[i+1]]:=false;
+      out[n+1+out[i+1]]:=0;
     else
       out[i+1]:=ext[i];
-      out[n+2][ext[i]]:=true;
+      out[n+1+ext[i]]:=1;
     fi;
     if not IsBound(tab[out[i+1]]) then 
       tab[out[i+1]]:=true;
