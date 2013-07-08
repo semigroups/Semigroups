@@ -146,20 +146,25 @@ InstallMethod(RhoFunc, "for a partial perm semigroup",
 InstallMethod(RhoFunc, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> LeftBlocks);
 
-#HERE
 # the function used to calculate the rank of lambda or rho value
 
 InstallMethod(LambdaRank, "for a transformation semigroup", 
 [IsTransformationSemigroup], x-> Length);
 
-InstallMethod(LambdaRank, "for a semigroup of partial perms", 
+InstallMethod(LambdaRank, "for a partial perm semigroup", 
 [IsPartialPermSemigroup], x-> Length);
+
+InstallMethod(LambdaRank, "for a bipartition semigroup", 
+[IsBipartitionSemigroup], x-> RankOfBlocks);
 
 InstallMethod(RhoRank, "for a transformation semigroup", 
 [IsTransformationSemigroup], x-> MaximumList);
 
-InstallMethod(RhoRank, "for a semigroup of partial perms", 
+InstallMethod(RhoRank, "for a partial perm semigroup", 
 [IsPartialPermSemigroup], x-> Length);
+
+InstallMethod(RhoRank, "for a bipartition semigroup", 
+[IsBipartitionSemigroup], x-> RankOfBlocks);
 
 # if g=LambdaInverse(X, f) and X^f=Y, then Y^g=X and g acts on the right 
 # like the inverse of f on Y.

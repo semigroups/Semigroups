@@ -553,6 +553,73 @@ function(blocks)
   return Length(blocks)-blocks[1]-1;
 end);
 
+#
+
+
+InstallMethod(\*, "for a bipartition and bipartition",
+[IsBipartition, IsBipartition], 
+function(a,b)
+  local n, anr, fuse, fuseit, ablocks, bblocks, x, y, tab, cblocks, next, nrleft, c, i;
+  
+  n := DegreeOfBipartition(a);
+  Assert(1,n = DegreeOfBipartition(b));
+  anr := NrBlocks(a);
+  
+  fuse := [1..anr+NrBlocks(b)]; 
+  
+  fuseit := function(i) 
+    while fuse[i] < i do 
+      i := fuse[i]; 
+    od; 
+    return i; 
+  end;
+ 
+  ablocks:=a!.blocks;
+  bblocks:=b!.blocks;
+
+  for i in [1..n] do
+    x := fuseit(ablocks[i+n]);
+    y := fuseit(bblocks[i]+anr);
+    if x <> y then
+      if x < y then
+        fuse[y] := x;
+      else
+        fuse[x] := y;
+      fi;
+    fi;
+  od;
+  
+  tab:=0*fuse;    # A table for the old part numbers
+  cblocks:=EmptyPlist(2*n);
+  next:=0;
+  
+  for i in [1..n] do
+    x := fuseit(ablocks[i]);
+    if tab[x]=0 then
+      next:=next+1;
+      tab[x]:=next;
+    fi;
+    cblocks[i]:=tab[x];
+  od;
+  
+  nrleft:=next;
+
+  for i in [n+1..2*n] do
+    x:=fuseit(bblocks[i]+anr);
+    if tab[x]=0 then
+      next:=next+1;
+      tab[x]:=next;
+    fi;
+    cblocks[i]:=tab[x];
+  od;
+  
+  c:=Objectify(BipartitionType, rec(blocks:=cblocks)); 
+  SetDegreeOfBipartition(c, n);
+  SetNrLeftBlocks(c, nrleft);
+  SetNrBlocks(c, next);
+  return c;
+end);
+
 #InternalRepOfBipartition:=f-> List([1..f[1]+2], i-> f[i]);
 #
 #NrClassesSignedPartition:=x-> x[1];
@@ -877,181 +944,6 @@ end);
 #
 ##
 #
-#InstallMethod(\*, "for a bipartition and bipartition",
-#[IsBipartition, IsBipartition], 
-#function(a,b)
-#  # This composes two partitions of [1..n] in internal rep
-#  local c,fuse,fuseit,i,n,next,p1,p2,tab3,x,y;
-#  n := a[1]/2;
-#  Assert(1,n = b[1]/2);
-#  p1 := a[2];
-#  p2 := b[2];
-#  fuse := [1..p1+p2]; 
-#  # From now on i in partition a is in part number a[i]
-#  #         and j in partition b is in part number b[j]+p2
-#  # The fusion tab always maintains fuse[i] <= i and the fuse function
-#  # is defined to be 
-#  #     # We can now easily fuse parts by changing one number in a table.
-#  fuseit := function(i) 
-#              while fuse[i] < i do i := fuse[i]; od; 
-#              return i; 
-#            end;
-#  for i in [1..n] do
-#      # we want to fuse the parts of i+n in a and i in b:
-#      x := fuseit(a[i+n+2]);
-#      y := fuseit(b[i+2]+p1);
-#      if x <> y then
-#          #Print("Fusing parts ",x," and ",y,"\n");
-#          if x < y then
-#              fuse[y] := x;
-#          else
-#              fuse[x] := y;
-#          fi;
-#      fi;
-#  od;
-#  # We can now put together the resulting partition, we take 1..n from a
-#  # and n+1..2*n and look at the fusion, in which part they are.
-#  tab3 := 0*[1..p1+p2];    # A table for the old part numbers
-#  c := EmptyPlist(2*n);
-#  next := 1;
-#  for i in [1..n] do
-#      x := fuseit(a[i+2]);
-#      if tab3[x] = 0 then
-#          tab3[x] := next;
-#          next := next + 1;
-#      fi;
-#      Add(c,tab3[x]);
-#  od;
-#  for i in [n+1..2*n] do
-#      x := fuseit(b[i+2]+p1);
-#      if tab3[x] = 0 then
-#          tab3[x] := next;
-#          next := next + 1;
-#      fi;
-#      Add(c,tab3[x]);
-#  od;
-#  #Add(c,next-1);
-#  return BipartitionByIntRepNC(c);
-## return Concatenation([2*n, next-1], c);
-#end);
-#
-## part should be of the form [4,1,2,3,3,4,4,1,0,1,0]
-## [# classes,partition in internal rep, signing]
-## Length of partition must =f[1]!!!
-#
-#InstallMethod(RightSignedPartition, 
-#[IsBipartition],
-#function(a)
-#  local n, mark, next, tab, out, j, x, i;
-# 
-#  n:=a[1]/2;
-#  mark:=[1..a[2]]*0;
-#
-#  for i in [3..n+2] do 
-#    mark[a[i]]:=1;
-#  od;
-#
-#  next:=1;
-#  tab:=[1..a[2]]*0;
-#  out:=[];
-#  j:=1;
-#  for i in [n+3..2*n+2] do 
-#    x:=a[i];
-#    if tab[x]=0 then 
-#      tab[x]:=next;
-#      next:=next+1;
-#    fi;
-#    j:=j+1;
-#    out[j]:=tab[x];
-#    out[1+n+tab[x]]:=mark[a[i]];
-#  od;
-#  out[1]:=next-1;
-#  return out;
-#end);
-#
-#InstallMethod(LeftSignedPartition, "for a bipartition",
-#[IsBipartition],
-#function(a)
-#  local n, out, max, i;
-# 
-#  n:=a[1]/2;
-#  out:=[];
-#  max:=1;
-#  for i in [3..n+2] do 
-#    out[i-1]:=a[i];
-#    if a[i]>max then 
-#      max:=a[i];
-#    fi;
-#  od;
-#  for i in [1..max] do 
-#    out[n+1+i]:=0;
-#  od;
-#  for i in [n+3..2*n+2] do 
-#    if a[i]<=max then 
-#      out[1+n+a[i]]:=1;
-#    fi;
-#  od;
-#  out[1]:=max;
-#  return out;
-#end);
-#
-#
-#InstallMethod(OnLeftSignedPartition, 
-#[IsList, IsBipartition],
-#function(a, b)
-#  local n, p1, p2, fuse, mark, fuseit, x, y, tab3, c, j, next, i;
-#
-#  n:=b[1]/2; # length of partition!!
-#  p1:=a[1]; #number of classes in a
-#  if p1>n then 
-#    return LeftSignedPartition(b);
-#  fi;
-#  p2:=b[2]; #number of classes in b
-#
-#  fuse:=[1..p1+p2];
-#  mark:=[1..p1+p2]*0;
-#  fuseit := function(i) 
-#              while fuse[i] < i do i := fuse[i]; od; 
-#              return i; 
-#            end;
-#  for i in [1..n] do
-#    x := fuseit(b[n+i+2]);
-#    y := fuseit(a[i+1]+p2);
-#    if x <> y then
-#      if x < y then
-#        fuse[y] := x;
-#        if a[n+a[i+1]+1]=1 then mark[x]:=1; fi;
-#      else
-#        fuse[x] := y;
-#        if a[n+a[i+1]+1]=1 then mark[y]:=1; fi;
-#      fi;
-#    fi;
-#  od;
-#  tab3:=0*[1..p1+p2];
-#  c:=[];
-#  j:=1;
-#  next:=1;
-#  for i in [1..n] do
-#    x := fuseit(b[i+2]);
-#    if tab3[x] = 0 then
-#      tab3[x] := next;
-#      next := next + 1;
-#    fi;
-#    j:=j+1;
-#    c[j]:=tab3[x];
-#    c[n+1+tab3[x]]:=mark[x];
-#  od;
-#  c[1]:=next-1;
-#  return c;
-#end);
-#
-#InstallMethod(OneMutable, "for a bipartition",
-#[IsBipartition],
-#function(a)
-#  local n;
-#  n:=DegreeOfBipartition(a)/2;
-#  return BipartitionNC(List([1..n], x-> [x,x+n]));
-#end);
 #
 #InstallOtherMethod(OneMutable, "for a bipartition coll",
 #[IsBipartitionCollection],
