@@ -15,6 +15,30 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsComponentObjectRep and IsAttributeStoringRep and
  IsAssociativeElementWithAction));
 
+#
+
+InstallMethod(IdentityBipartition, "for a positive integer",
+[IsPosInt],
+function(n)
+  local blocks, out, i;
+  
+  blocks:=EmptyPlist(2*n);
+  for i in [1..n] do 
+    blocks[i]:=i;
+    blocks[i+n]:=i;
+  od;
+  
+  out:=Objectify(BipartitionType, rec(blocks:=blocks));
+
+  SetDegreeOfBipartition(out, n);
+  SetNrLeftBlocks(out, n);
+  SetNrBlocks(out, n);
+
+  return out;
+end);
+
+#
+
 InstallMethod(RankOfBipartition, "for a bipartition",
 [IsBipartition],
 function(f)
@@ -945,13 +969,6 @@ end);
 ##
 #
 #
-#InstallOtherMethod(OneMutable, "for a bipartition coll",
-#[IsBipartitionCollection],
-#function(coll)
-#  local n;
-#  n:=DegreeOfBipartitionCollection(coll)/2;
-#  return BipartitionNC(List([1..n], x-> [x, x+ n]));
-#end);
 #
 
 

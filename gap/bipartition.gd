@@ -39,6 +39,8 @@ DeclareGlobalFunction("BlocksByExtRep");
 DeclareGlobalFunction("RankOfBlocks");
 DeclareGlobalFunction("DegreeOfBlocks");
 
+DeclareOperation("IdentityBipartition", [IsPosInt]);
+
 #old
 
 #DeclareOperation("AsBipartition", [IsPerm, IsPosInt]);
