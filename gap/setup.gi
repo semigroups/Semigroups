@@ -35,6 +35,9 @@ InstallMethod(ActionDegree, "for a transformation",
 InstallMethod(ActionDegree, "for a partial perm",
 [IsPartialPerm], RankOfPartialPerm);
 
+InstallMethod(ActionDegree, "for a bipartition",
+[IsBipartition], DegreeOfBipartition);
+
 # the number of points in the range of the action
 
 InstallMethod(ActionRank, "for a transformation",
@@ -43,6 +46,9 @@ InstallMethod(ActionRank, "for a transformation",
 InstallMethod(ActionRank, "for a partial perm",
 [IsPartialPerm], RankOfPartialPerm);
 
+InstallMethod(ActionRank, "for a bipartition",
+[IsBipartition], RankOfBipartition);
+
 # the minimum possible rank of an element
 
 InstallMethod(MinActionRank, "for a transformation semigroup",
@@ -50,6 +56,9 @@ InstallMethod(MinActionRank, "for a transformation semigroup",
 
 InstallMethod(MinActionRank, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x-> 0);
+
+InstallMethod(MinActionRank, "for a bipartition semigroup",
+[IsBipartitionSemigroup], x-> 0);
 
 # options passed to LambdaOrb(s) when it is created
 
