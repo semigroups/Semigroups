@@ -15,6 +15,12 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsComponentObjectRep and IsAttributeStoringRep and
  IsAssociativeElementWithAction));
 
+InstallMethod(RankOfBipartition, "for a bipartition",
+[IsBipartition],
+function(f)
+  return Number(TransverseBlocksLookup(f), x-> x=true);
+end);
+
 # c function
 
 InstallGlobalFunction(BipartitionNC, 
@@ -247,14 +253,14 @@ function(n)
   local out, nrblocks, vals, j, nrkerblocks, i;
 
   out:=EmptyPlist(2*n);
-  nrblocks:=1;
+  nrblocks:=0;
   vals:=[1];
 
   for i in [1..n] do 
     j:=Random(vals);
-    if j=nrblocks then 
+    if j=nrblocks+1 then 
       nrblocks:=nrblocks+1;
-      Add(vals, nrblocks);
+      Add(vals, nrblocks+1);
     fi;
     out[i]:=j;
   od;
@@ -263,9 +269,9 @@ function(n)
 
   for i in [1..n] do 
     j:=Random(vals);
-    if j=nrblocks then 
+    if j=nrblocks+1 then 
       nrblocks:=nrblocks+1;
-      Add(vals, nrblocks);
+      Add(vals, nrblocks+1);
     fi;
     out[i+n]:=j;
   od;
@@ -288,22 +294,51 @@ function(f)
   n:=DegreeOfBipartition(f);
   blocks:=f!.blocks;
   tab:=EmptyPlist(2*n);
-  out:=EmptyPlist(n+1);
-  out[1]:=0;
+  out:=EmptyPlist(n+2);
+  out[n+2]:=[];
   nrblocks:=0;
 
   for i in [n+1..2*n] do 
     if not IsBound(tab[blocks[i]]) then 
       nrblocks:=nrblocks+1;
-      if blocks[i]>NrLeftBlocks(f) then 
-        tab[blocks[i]]:=-nrblocks;
-      else
-        tab[blocks[i]]:=nrblocks;
-      fi;
+      tab[blocks[i]]:=nrblocks;
+      out[n+2][blocks[i]]:=(blocks[i]<=NrLeftBlocks(f));
     fi;
     out[i-n+1]:=tab[blocks[i]];
   od;
   out[1]:=nrblocks;
+  return out;
+end);
+
+# could use TransverseBlocksLookup if known here JDM
+
+InstallMethod(LeftBlocks, "for a bipartition", [IsBipartition],
+function(f)
+  local n, blocks, tab, out, nrblocks, i;
+  
+  n:=DegreeOfBipartition(f);
+  blocks:=f!.blocks;
+  tab:=List([1..n], x-> false);
+  out:=EmptyPlist(n+2);
+  out[1]:=0;
+  out[n+2]:=[];
+  nrblocks:=0;
+
+  for i in [1..n] do 
+    out[i+1]:=blocks[i];
+    if not tab[blocks[i]] then 
+      out[1]:=out[1]+1;
+      out[n+2][blocks[i]]:=false;
+      tab[blocks[i]]:=true;
+    fi;
+  od;
+  
+  for i in [n+1..2*n] do 
+    if blocks[i]<=out[1] then #transverse block!
+      out[n+2][blocks[i]]:=true;
+    fi;
+  od;
+
   return out;
 end);
 
@@ -375,7 +410,72 @@ function(blocks, f)
   return out;
 end);
 
-InstallGlobalFunction(ExtRepOfRightBlocks,
+#
+
+InstallGlobalFunction(OnLeftBlocks, 
+function(blocks, f)
+  local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out, next, i;
+
+  n:=Length(blocks)-2;  # length of <blocks>
+  nrblocks:=blocks[1];
+  
+  if nrblocks=0 then 
+    return LeftBlocks(f);
+  fi;
+
+  nrfblocks:=NrBlocks(f);
+  fblocks:=f!.blocks;
+  
+  fuse:=[1..nrfblocks+nrblocks];
+  sign:=List([1..nrfblocks], x-> false);
+  Append(sign, blocks[n+2]);
+
+  fuseit := function(i) 
+    while fuse[i] < i do 
+      i := fuse[i]; 
+    od; 
+    return i; 
+  end;
+  
+  for i in [1..n] do
+    x := fuseit(fblocks[n+i]);
+    y := fuseit(blocks[i+1]+nrfblocks);
+    if x <> y then
+      if x < y then
+        fuse[y] := x;
+        if sign[y] then 
+          sign[x]:=true; 
+        fi;
+      else
+        fuse[x] := y;
+        if sign[x] then 
+          sign[y]:=true;
+        fi;
+      fi;
+    fi;
+  od;
+
+  tab:=0*fuse;
+  out:=[];
+  out[n+2]:=[];
+  next:=0;
+  
+  for i in [1..n] do
+    x := fuseit(fblocks[i]);
+    if tab[x]=0 then
+      next := next + 1;
+      tab[x] := next;
+    fi;
+    out[i+1]:=tab[x];
+    out[n+2][tab[x]]:=sign[x];
+  od;
+  out[1]:=next;
+  return out;
+end);
+
+#
+
+InstallGlobalFunction(ExtRepOfBlocks,
 function(blocks)
   local n, sign, out, i;
   
@@ -392,7 +492,7 @@ function(blocks)
   return out;
 end);
 
-InstallGlobalFunction(RightBlocksByExtRep,
+InstallGlobalFunction(BlocksByExtRep,
 function(ext)
   local n, tab, out, nr, i;
   

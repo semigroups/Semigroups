@@ -36,6 +36,11 @@ DeclareGlobalFunction("OnRightBlocks");
 DeclareGlobalFunction("ExtRepOfRightBlocks");
 DeclareGlobalFunction("RightBlocksByExtRep");
 
+DeclareGlobalFunction("OnLeftBlocks");
+DeclareGlobalFunction("ExtRepOfBlocks");
+DeclareGlobalFunction("BlocksByExtRep");
+
+
 
 #old
 
