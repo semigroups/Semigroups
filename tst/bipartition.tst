@@ -1,7 +1,11 @@
+gap> START_TEST("Semigroups package: bipartition.tst");
+gap> LoadPackage("semigroups", false);;
 
-gap> classes:=[[1,2,3, -2], [4, -5], [5, -7], [6, -3, -4], [7], [-1], [-6]];
-[ [ 1, 2, 3, -2 ], [ 4, -5 ], [ 5, -7 ], [ 6, -3, -4 ], [ 7 ], [ -1 ], [ -6 ] 
- ]
+#
+gap> SemigroupsStartTest();
+
+# BASICS
+gap> classes:=[[1,2,3, -2], [4, -5], [5, -7], [6, -3, -4], [7], [-1], [-6]];;
 gap> f:=BipartitionNC(classes);
 <bipartition: [ 1, 2, 3, -2 ], [ 4, -5 ], [ 5, -7 ], [ 6, -3, -4 ], [ 7 ], 
 [ -1 ], [ -6 ]>
@@ -15,20 +19,14 @@ gap> f:=BipartitionNC([[1,2,-3,-5, -6], [3,-2,-4], [4,7], [5, -7, -8, -9],
 gap> LeftProjection(f);
 <bipartition: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, 7 ], [ 5, -5 ], [ 6 ], 
 [ 8, 9, -8, -9 ], [ -4 ], [ -6 ], [ -7 ]>
-gap> f!.block;
-Error, Record: '<rec>.block' must have an assigned value
-not in any function at line 7 of *stdin*
-you can 'return;' after assigning a value
-brk> quit;    
-gap> f!.blocks;
-[ 1, 1, 2, 3, 4, 5, 3, 6, 6, 6, 2, 1, 2, 1, 1, 4, 4, 4 ]
-gap> RereadPackage("semigroups/gap/bipartition.gi");
-true
-gap> f:=BipartitionNC([[1,2,-3,-5, -6], [3,-2,-4], [4,7], [5, -7, -8, -9],
-> [6], [8,9,-1]]);
-<bipartition: [ 1, 2, -3, -5, -6 ], [ 3, -2, -4 ], [ 4, 7 ], [ 5, -7, -8, -9 
- ], [ 6 ], [ 8, 9, -1 ]>
-gap> LeftProjection(f);
-<bipartition: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, 7 ], [ 5, -5 ], [ 6 ], 
-[ 8, 9, -8, -9 ], [ -4, -7 ], [ -6 ]>
 
+# EMBEDDING into T_n
+gap> l := List([1,2,3,4,5,15,35,1999,64999,65000],i->RandomTransformation(i));;
+gap> ForAll(l,t->t=AsTransformation(AsBipartition(t)));
+true
+
+#
+gap> SemigroupsStopTest();
+
+#
+gap> STOP_TEST( "Semigroups package: bipartition.tst", 0);
