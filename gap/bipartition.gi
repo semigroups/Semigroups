@@ -463,6 +463,45 @@ end);
 
 # c function
 
+InstallGlobalFunction(Bipartition, 
+function(classes)
+  local n, copy, i, j;
+ 
+  if not ForAll(classes, IsList) or not ForAll(classes, IsDuplicateFree) then 
+    Error("<classes> must consist of duplicate-free lists,");
+    return;
+  fi;
+
+  n:=Sum(List(classes, Length))/2;
+  
+  if not Union(classes)=Concatenation(Set(-1*[1..n]), [1..n]) then
+    Error("the union of <classes> must be [-", n, "..-1,1..", n, "],");
+    return;
+  fi;
+
+  copy:=StructuralCopy(classes);
+  
+  for i in [1..Length(copy)] do
+    for j in [1..Length(copy[i])] do 
+      if copy[i][j]<0 then 
+        copy[i][j]:=AbsInt(copy[i][j])+n;
+      fi;
+    od;
+  od;
+  
+  Perform(copy, Sort);
+  Sort(copy);
+
+  for i in [1..Length(copy)] do
+    for j in [1..Length(copy[i])] do 
+      if copy[i][j]>n then 
+        copy[i][j]:=-copy[i][j]+n;
+      fi;
+    od;
+  od;
+  return BipartitionNC(copy);
+end);
+
 InstallGlobalFunction(BipartitionNC, 
 function(classes)
   local list, n, nrker, out, i, j;
