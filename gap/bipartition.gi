@@ -15,6 +15,42 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsComponentObjectRep and IsAttributeStoringRep and
  IsAssociativeElementWithAction));
 
+#
+
+InstallMethod(AsTransformation, "for a bipartition", [IsBipartition],
+function(f)
+
+  if not IsTransBipartition(f) then 
+    Error("<f> does not define a transformation,");
+    return;
+  fi;
+  return AsTransformationNC(f);
+end);
+
+# test me!JDM
+
+InstallMethod(AsTransformationNC, "for a bipartition", [IsBipartition],
+function(f)
+  local n, blocks, nr, im, out, i;
+
+  n:=DegreeOfBipartition(f);
+  blocks:=f!.blocks;
+  nr:=NrLeftBlocks(f);
+  im:=EmptyPlist(n);
+
+  for i in [n+1..2*n] do 
+    if blocks[i]<=nr then 
+      im[blocks[i]]:=i-n;
+    fi;
+  od;
+
+  out:=EmptyPlist(n);
+  for i in [1..n] do 
+    out[i]:=im[blocks[i]];
+  od;
+  return TransformationNC(out);
+end);
+
 # a bipartition is a transformation if and only if the second row is a
 # permutation of [1..n]
 
@@ -157,6 +193,8 @@ function(blocks)
   SetNrBlocks(out, next);
   return out;
 end);
+
+#
 
 InstallMethod(BipartitionByIntRep, "for a list", [IsList],
 function(blocks)
