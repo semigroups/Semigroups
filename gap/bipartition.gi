@@ -15,6 +15,12 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsComponentObjectRep and IsAttributeStoringRep and
  IsAssociativeElementWithAction));
 
+InstallMethod(\=, "for a bipartition and bipartition", 
+[IsBipartition, IsBipartition],
+function(f, g)
+  return f!.blocks=g!.blocks;
+end);
+
 #
 
 InstallMethod(AsTransformation, "for a bipartition", [IsBipartition],
@@ -249,33 +255,15 @@ end);
 
 #
 
-PermRightBlocks:=function(blocks, f)
-
-
-end;
-
-#
-
-InverseRightBlocks:=function(blocks, f)
-  local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, out, junk, next, tab1, nrleft, tab2, i;
-
-  # the start of this is very similar to OnRightBlocks
-
-  n:=DegreeOfBlocks(blocks); # length of partition!!
-  nrblocks:=blocks[1];
-  nrfblocks:=NrBlocks(f); 
+FuseRightBlocks:=function(blocks, f, sign)
+  local n, fblocks, nrblocks, nrfblocks, fuse, fuseit, x, y, i;
+  
+  n:=DegreeOfBlocks(blocks);
   fblocks:=f!.blocks;
-  
-  fuse:=[1..nrblocks+nrfblocks];
-  sign:=EmptyPlist(nrfblocks+nrblocks);
+  nrblocks:=blocks[1];
+  nrfblocks:=NrBlocks(f);
 
-  for i in [1..nrblocks] do
-    sign[i]:=blocks[n+1+i];
-  od;
-  for i in [nrblocks+1..nrfblocks+nrblocks] do
-    sign[i]:=0;
-  od;
-  
+  fuse:=[1..nrblocks+nrfblocks];
   fuseit := function(i) 
     while fuse[i] < i do 
       i := fuse[i]; 
@@ -283,24 +271,90 @@ InverseRightBlocks:=function(blocks, f)
     return i; 
   end;
   
-  for i in [1..n] do
-    x := fuseit(blocks[i+1]);
-    y := fuseit(fblocks[i]+nrblocks);
-    if x <> y then
-      if x < y then
-        fuse[y] := x;
-        if sign[y]=1 then
-          sign[x]:=1;
-        fi;
-      else
-        fuse[x] := y;
-        if sign[x]=1 then
-          sign[y]:=1;
+  if sign then 
+    sign:=EmptyPlist(nrfblocks+nrblocks);
+
+    for i in [1..nrblocks] do
+      sign[i]:=blocks[n+1+i];
+    od;
+    for i in [nrblocks+1..nrfblocks+nrblocks] do
+      sign[i]:=0;
+    od;
+    
+    for i in [1..n] do
+      x := fuseit(blocks[i+1]);
+      y := fuseit(fblocks[i]+nrblocks);
+      if x <> y then
+        if x < y then
+          fuse[y] := x;
+          if sign[y]=1 then
+            sign[x]:=1;
+          fi;
+        else
+          fuse[x] := y;
+          if sign[x]=1 then
+            sign[y]:=1;
+          fi;
         fi;
       fi;
+    od;
+    return [fuseit, sign];
+  else 
+    for i in [1..n] do
+      x := fuseit(blocks[i+1]);
+      y := fuseit(fblocks[i]+nrblocks);
+      if x <> y then
+        if x < y then
+          fuse[y] := x;
+        else
+          fuse[x] := y;
+        fi;
+      fi;
+    od;
+    return fuseit;
+  fi;
+end;
+
+# LambdaPerm
+
+PermRightBlocks:=function(blocks, f)
+  local n, nrblocks, fblocks, fuseit, signed, tab, next, x, i;
+
+  n:=DegreeOfBlocks(blocks); # length of partition!!
+  nrblocks:=blocks[1];
+  fblocks:=f!.blocks;
+
+  fuseit:=FuseRightBlocks(blocks, f, false); 
+  signed:=[]; tab:=[]; next:=0;
+
+  # JDM could stop here after reaching the maximum signed class of <blocks>
+  for i in [n+1..2*n] do 
+    if blocks[n+1+blocks[i-n]]=1 then 
+      Add(signed, blocks[i-n]);
+    fi;
+    x:=fuseit(fblocks[i]+nrblocks);
+    if not IsBound(tab[x]) then 
+      next:=next+1;
+      tab[x]:=next;
     fi;
   od;
   
+  return MappingPermListList(signed, List(signed, i-> tab[fuseit(i)]));
+end;
+
+# LambdaInverse
+
+InverseRightBlocks:=function(blocks, f)
+  local n, nrblocks, fblocks, fusesign, fuse, sign, fuseit, out, junk, next, tab1, x, nrleft, tab2, i;
+
+  n:=DegreeOfBlocks(blocks); # length of partition!!
+  nrblocks:=blocks[1];
+  fblocks:=f!.blocks;
+  
+  fusesign:=FuseRightBlocks(blocks, f, true); 
+  fuseit:=fusesign[1];
+  sign:=fusesign[2];
+
   out:=[]; junk:=0; next:=0;
   
   tab1:=[];
@@ -699,7 +753,7 @@ function(f)
   return out;
 end);
 
-#
+# JDM use FuseRightBlocks here!
 
 InstallGlobalFunction(OnRightBlocks, 
 function(blocks, f)
@@ -1021,11 +1075,6 @@ end);
 #
 ##
 #
-#InstallMethod(\=, "for a bipartition and bipartition", 
-#[IsBipartition, IsBipartition],
-#function(f,g)
-#  return ForAll([1..f[1]+2], x-> f[x]=g[x]);
-#end);
 #
 ##
 #
