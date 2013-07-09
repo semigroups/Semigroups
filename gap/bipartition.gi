@@ -27,7 +27,7 @@ function(f)
   return AsTransformationNC(f);
 end);
 
-# test me!JDM
+# test me! JDM
 
 InstallMethod(AsTransformationNC, "for a bipartition", [IsBipartition],
 function(f)
@@ -246,6 +246,13 @@ function(blocks)
   SetNrBlocks(out, next);
   return out;
 end);
+
+#
+
+PermRightBlocks:=function(blocks, f)
+
+
+end;
 
 #
 
