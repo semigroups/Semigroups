@@ -4,6 +4,9 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SemigroupsStartTest();
 
+#the number of iterations, change here to get faster test
+gap> N := 333;;
+
 # BASICS
 gap> classes:=[[1,2,3, -2], [4, -5], [5, -7], [6, -3, -4], [7], [-1], [-6]];;
 gap> f:=BipartitionNC(classes);
@@ -15,7 +18,7 @@ gap> LeftProjection(f);
 
 # different order of classes
 gap> classes2:=[[-6], [1,2,3, -2], [4, -5], [5, -7], [6, -3, -4], [-1], [7]];;
-gap> f = BipartitionNC(classes2);
+gap> f = Bipartition(classes2);
 true
 gap> f:=BipartitionNC([[1,2,-3,-5, -6], [3,-2,-4], [4,7], [5, -7, -8, -9], 
 > [6], [8,9,-1]]);
@@ -24,6 +27,12 @@ gap> f:=BipartitionNC([[1,2,-3,-5, -6], [3,-2,-4], [4,7], [5, -7, -8, -9],
 gap> LeftProjection(f);
 <bipartition: [ 1, 2, -1, -2 ], [ 3, -3 ], [ 4, 7 ], [ 5, -5 ], [ 6 ], 
 [ 8, 9, -8, -9 ], [ -4, -7 ], [ -6 ]>
+
+# ASSOCIATIVITY
+gap> l := List([1..3*N], i->RandomBipartition(17));;
+gap> triples := List([1..N], i -> [l[i],l[i+1],l[i+2]]);;
+gap> ForAll(triples, x-> ((x[1]*x[2])*x[3]) = (x[1]*(x[2]*x[3])));
+true
 
 # EMBEDDING into T_n
 gap> l := List([1,2,3,4,5,15,35,1999,64999,65000],i->RandomTransformation(i));;
