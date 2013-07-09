@@ -91,6 +91,8 @@ InstallMethod(LambdaAct, "for a partial perm semigroup",
 InstallMethod(LambdaAct, "for a partial perm semigroup",
 [IsBipartitionSemigroup], x-> OnRightBlocks);
 
+#
+
 InstallMethod(RhoAct, "for a transformation semigroup",
 [IsTransformationSemigroup], x-> ON_KERNEL_ANTI_ACTION);
 
@@ -137,6 +139,8 @@ InstallMethod(LambdaFunc, "for a partial perm semigroup",
 InstallMethod(LambdaFunc, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> RightBlocks);
 
+#
+
 InstallMethod(RhoFunc, "for a transformation semigroup",
 [IsTransformationSemigroup], x-> FLAT_KERNEL_TRANS);
 
@@ -157,6 +161,8 @@ InstallMethod(LambdaRank, "for a partial perm semigroup",
 InstallMethod(LambdaRank, "for a bipartition semigroup", 
 [IsBipartitionSemigroup], x-> RankOfBlocks);
 
+#
+
 InstallMethod(RhoRank, "for a transformation semigroup", 
 [IsTransformationSemigroup], x-> MaximumList);
 
@@ -174,6 +180,9 @@ InstallMethod(LambdaInverse, "for a transformation semigroup",
 
 InstallMethod(LambdaInverse, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> function(x, f) return f^-1; end); 
+
+InstallMethod(LambdaInverse, "for a bipartition semigroup",
+[IsBipartitionSemigroup], s-> InverseRightBlocks); 
 
 # if g=RhoInverse(X, f) and f^X=Y (this is a left action), then g^Y=X and g
 # acts on the left like the inverse of g on Y. 
