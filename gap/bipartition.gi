@@ -15,6 +15,88 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsComponentObjectRep and IsAttributeStoringRep and
  IsAssociativeElementWithAction));
 
+BipartitionByIntRepNC:=function(blocks)
+  local n, next, seen, nrleft, out, i;
+
+  n:=Length(blocks)/2;
+  next:=0;
+  seen:=BlistList([1..n], []);
+
+  for i in [1..n] do 
+    if not seen[blocks[i]] then 
+      next:=next+1;
+      seen[blocks[i]]:=true;
+    fi;
+  od;
+  
+  nrleft:=next;
+  for i in [n+1..2*n] do 
+    if not seen[blocks[i]] then 
+      next:=next+1;
+      seen[blocks[i]]:=true;
+    fi;
+  od;
+
+  out:=Objectify(BipartitionType, rec(blocks:=blocks));
+
+  SetDegreeOfBipartition(out, n);
+  SetNrLeftBlocks(out, nrleft);
+  SetNrBlocks(out, next);
+  return out;
+end;
+
+BipartitionByIntRep:=function(blocks)
+  local n, next, seen, nrleft, out, i;
+
+  n:=Length(blocks);
+  if not IsEvenInt(n) then 
+    Error("the length of <blocks> must be an even integer,");
+    return;
+  fi;
+  
+  n:=n/2;
+  if not ForAll(blocks, IsPosInt) or not ForAll(blocks, x-> x<=n) then 
+    Error("the elements of <blocks> must be positive integers less than", 
+     n, ",");
+    return;
+  fi;
+
+  next:=0;
+  seen:=BlistList([1..n], []);
+
+  for i in [1..n] do 
+    if not seen[blocks[i]] then 
+      next:=next+1;
+      if blocks[i]<>next then 
+        Error("<blocks> does not describe a bipartition,");
+        return;
+      fi;
+      seen[blocks[i]]:=true;
+    fi;
+  od;
+  
+  nrleft:=next;
+
+  for i in [n+1..2*n] do 
+    if not seen[blocks[i]] then 
+      next:=next+1;
+      if blocks[i]<>next then 
+        Error("<blocks> does not describe a bipartition,");
+        return;
+      fi;
+      seen[blocks[i]]:=true;
+    fi;
+  od;
+
+  out:=Objectify(BipartitionType, rec(blocks:=blocks));
+
+  SetDegreeOfBipartition(out, n);
+  SetNrLeftBlocks(out, nrleft);
+  SetNrBlocks(out, next);
+  return out;
+end;
+
+
 #
 
 InverseRightBlocks:=function(blocks, f)
