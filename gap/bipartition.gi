@@ -15,6 +15,16 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsComponentObjectRep and IsAttributeStoringRep and
  IsAssociativeElementWithAction));
 
+#
+
+InstallMethod(\<, "for a bipartition and bipartition", 
+[IsBipartition, IsBipartition],
+function(f, g)
+  return f!.blocks<g!.blocks;
+end);
+
+#
+
 InstallMethod(\=, "for a bipartition and bipartition", 
 [IsBipartition, IsBipartition],
 function(f, g)
