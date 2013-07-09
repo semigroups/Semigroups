@@ -13,6 +13,7 @@ DeclareCategory("IsBipartition", IsMultiplicativeElementWithOne and
 DeclareCategoryCollections("IsBipartition");
 
 DeclareGlobalFunction("BipartitionNC");
+DeclareGlobalFunction("Bipartition");
 DeclareGlobalFunction("TransverseBlocksLookup");
 
 DeclareSynonym("IsBipartitionSemigroup", IsSemigroup and

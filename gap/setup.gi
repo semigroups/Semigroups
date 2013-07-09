@@ -206,6 +206,9 @@ InstallMethod(LambdaPerm, "for a transformation semigroup",
 InstallMethod(LambdaPerm, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> PERM_LEFT_QUO_PPERM_NC);
 
+InstallMethod(LambdaPerm, "for a partial perm semigroup",
+[IsBipartitionSemigroup], s-> PermLeftQuoBipartitionNC);
+
 # returns a permutation mapping LambdaFunc(s)(f) to LambdaFunc(s)(g) so that 
 # gf^-1(i)=p(i) when RhoFunc(s)(f)=RhoFunc(s)(g)!!
 

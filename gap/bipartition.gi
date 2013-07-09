@@ -263,7 +263,8 @@ function(blocks)
   return out;
 end);
 
-#
+# fuse <blocks> with <f>. <sign> should be true to keep track of signed and
+# unsigned blocks and false not to keep track.
 
 FuseRightBlocks:=function(blocks, f, sign)
   local n, fblocks, nrblocks, nrfblocks, fuse, fuseit, x, y, i;
@@ -326,6 +327,27 @@ FuseRightBlocks:=function(blocks, f, sign)
 end;
 
 # LambdaPerm
+
+PermLeftQuoBipartitionNC:=function(f,g)
+  local n, nr, fblocks, gblocks, p, i;
+
+  n:=DegreeOfBipartition(f);
+  nr:=NrLeftBlocks(f);
+  fblocks:=f!.blocks;
+  gblocks:=g!.blocks;
+  p:=[1..nr];
+
+  for i in [n+1..2*n] do 
+    if gblocks[i]<=nr then 
+      p[gblocks[i]]:=fblocks[i];
+    fi;
+  od;
+
+  return PermList(p);
+end;
+
+# permutation of indices of signed (connected) blocks of <blocks> under the
+# action of <f> which is assumed to stabilise <blocks>.
 
 PermRightBlocks:=function(blocks, f)
   local n, nrblocks, fblocks, fuseit, signed, tab, next, x, i;
@@ -440,6 +462,45 @@ function(f)
 end);
 
 # c function
+
+InstallGlobalFunction(Bipartition, 
+function(classes)
+  local n, copy, i, j;
+ 
+  if not ForAll(classes, IsList) or not ForAll(classes, IsDuplicateFree) then 
+    Error("<classes> must consist of duplicate-free lists,");
+    return;
+  fi;
+
+  n:=Sum(List(classes, Length))/2;
+  
+  if not Union(classes)=Concatenation(Set(-1*[1..n]), [1..n]) then
+    Error("the union of <classes> must be [-", n, "..-1,1..", n, "],");
+    return;
+  fi;
+
+  copy:=StructuralCopy(classes);
+  
+  for i in [1..Length(copy)] do
+    for j in [1..Length(copy[i])] do 
+      if copy[i][j]<0 then 
+        copy[i][j]:=AbsInt(copy[i][j])+n;
+      fi;
+    od;
+  od;
+  
+  Perform(copy, Sort);
+  Sort(copy);
+
+  for i in [1..Length(copy)] do
+    for j in [1..Length(copy[i])] do 
+      if copy[i][j]>n then 
+        copy[i][j]:=-copy[i][j]+n;
+      fi;
+    od;
+  od;
+  return BipartitionNC(copy);
+end);
 
 InstallGlobalFunction(BipartitionNC, 
 function(classes)
