@@ -15,6 +15,56 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsComponentObjectRep and IsAttributeStoringRep and
  IsAssociativeElementWithAction));
 
+# a bipartition is a transformation if and only if the second row is a
+# permutation of [1..n]
+
+InstallMethod(IsTransBipartition, "for a bipartition",
+[IsBipartition], 
+function(f)
+  local n, blocks, seen, i;
+
+  n:=DegreeOfBipartition(f);
+  blocks:=f!.blocks;
+  seen:=BlistList([1..n], []);
+  for i in [n+1..2*n] do 
+    if blocks[i]>n or seen[blocks[i]] then 
+      return false;
+    fi;
+    seen[blocks[i]]:=true;
+  od;
+
+  return true;
+end);
+
+#
+
+InstallMethod(IsPermBipartition, "for a bipartition",
+[IsBipartition], 
+function(f)
+  local n, blocks, seen, i;
+
+  n:=DegreeOfBipartition(f);
+  blocks:=f!.blocks;
+
+  seen:=BlistList([1..n], []);
+  for i in [1..n] do 
+    if seen[blocks[i]] then 
+      return false;
+    fi;
+    seen[blocks[i]]:=true;
+  od;
+
+  seen:=BlistList([1..n], []);
+  for i in [n+1..2*n] do 
+    if blocks[i]>n or seen[blocks[i]] then 
+      return false;
+    fi;
+    seen[blocks[i]]:=true;
+  od;
+
+  return true;
+end);
+
 #
 
 InstallMethod(AsBipartition, "for a permutation and pos int",
@@ -158,7 +208,6 @@ function(blocks)
   SetNrBlocks(out, next);
   return out;
 end);
-
 
 #
 
