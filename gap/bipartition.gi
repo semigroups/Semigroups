@@ -1038,64 +1038,6 @@ function(a,b)
   return c;
 end);
 
-#InternalRepOfBipartition:=f-> List([1..f[1]+2], i-> f[i]);
-#
-#NrClassesSignedPartition:=x-> x[1];
-#NrClassesBipartition:=x-> x[2];
-#
-#DegreeOfSignedPartition:=x-> Length(x)-NrClassesSignedPartition(x)-1;
-
-#
-#InstallMethod(\^, "for a pos int and bipartition",
-#[IsPosInt, IsBipartition], OnPointsBP);
-#
-##
-#
-#InstallOtherMethod(POW, "for a set of pos ints and bipartition",
-#[IsListOrCollection, IsBipartition], 
-#function(set, f) 
-#  return Set(Concatenation(List(set, x-> OnPointsBP(x,f))));
-#end);
-#
-#InstallMethod(\^, "for a bipartition and neg int",
-#[IsBipartition, IsNegInt],
-#function(f, r)
-#  local foo;
-#
-#  foo:=function(i) 
-#    if i=f[1] then 
-#      return i;
-#    fi;
-#
-#    return i mod f[1];
-#  end;
-#
-#  if r=-1 then
-#    return BipartitionNC(Set(List(ExtRepBipartition(f), x-> Set(List(x, y->
-#    foo(y+f[1]/2))))));
-#  fi;
-#  return (f^-1)^-r;
-#end);
-#
-#InstallMethod(\<, "for a bipartition and bipartition", 
-#[IsBipartition, IsBipartition],
-#function(f,g)
-#  return ExtRepBipartition(f)<ExtRepBipartition(g);
-#end);
-#
-##
-#
-#
-##
-#
-#
-##
-#
-#InstallMethod(DegreeOfBipartition, "for a bipartition",
-#[IsBipartition], x-> x[1]);
-#
-##
-#
 #InstallMethod(DegreeOfBipartitionCollection, "for a bipartition collection",
 #[IsBipartitionCollection], 
 #function(coll)
@@ -1108,8 +1050,6 @@ end);
 #  fi;
 #  return coll[1][1];
 #end);
-#
-##
 #
 #InstallMethod(DegreeOfBipartitionSemigroup, "for a bipartition semigroup",
 #[IsBipartitionSemigroup], 
@@ -1139,41 +1079,6 @@ end);
 #  return;
 #end);
 #
-##
-#
-#InstallMethod(RankOfBipartition, "for a bipartition",
-#[IsBipartition], 
-#function(x)
-#  local n, m, seen, rank, i;
-#
-#  n:=x[1]/2;
-#
-#  m:=MaximumList(x{[3..n+2]}); # max on the left
-#  seen:=BlistList([1..m], []); 
-#  rank:=0;
-#
-#  for i in [1..n] do 
-#    if x[n+2+i]<=m and not seen[x[n+2+i]] then 
-#      seen[x[n+2+i]]:=true;
-#      rank:=rank+1;
-#    fi;
-#  od;
-#  return rank;
-#end);
-#
-##
-#
-#InstallOtherMethod(ELM_LIST, "for a bipartition and a pos int",
-#[IsBipartition, IsPosInt], ELM_LIST_BP);
-#
-##
-#
-#InstallOtherMethod(ELMS_LIST, "for a bipartition and a pos int",
-#[IsBipartition, IsDenseList and IsSmallList], ELMS_LIST_BP);
-#
-#
-##
-#
 ##JDM this does not currently work!
 #
 ## InstallOtherMethod(IsomorphismTransformationSemigroup,
@@ -1198,31 +1103,11 @@ end);
 ##   return MappingByFunction(s, t, x-> TransformationOp(x, pts, OnPoints));
 ## end);
 #
-##
-#
-#
-##
-#
-#InstallGlobalFunction(ExtRepBipartition,
-#function(q)
-#  local i,n2,p;
-#  n2 := q[1];
-#  p := List([1..q[2]],i->[]);
-#  for i in [1..n2] do
-#    Add(p[q[i+2]],i);
-#  od;
-#  return p;
-#end);
-#
-##
-#
 #InstallMethod(\*, "for a bipartition and a perm",
 #[IsBipartition, IsPerm],
 #function(f,g)
 #  return f*AsBipartition(g, DegreeOfBipartition(f)/2);
 #end);
-#
-##
 #
 #InstallMethod(\*, "for a perm and a bipartition",
 #[IsPerm, IsBipartition],
@@ -1230,11 +1115,6 @@ end);
 #  return AsBipartition(f, DegreeOfBipartition(g)/2)*g;
 #end);
 #
-##
-#
-#
-#
-
 
 # Results:
 
