@@ -325,7 +325,8 @@ FuseRightBlocks:=function(blocks, f, sign)
   fi;
 end;
 
-# LambdaPerm
+# permutation of indices of signed (connected) blocks of <blocks> under the
+# action of <f> which is assumed to stabilise <blocks>.
 
 PermRightBlocks:=function(blocks, f)
   local n, nrblocks, fblocks, fuseit, signed, tab, next, x, i;
