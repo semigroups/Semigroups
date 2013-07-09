@@ -346,6 +346,47 @@ PermLeftQuoBipartitionNC:=function(f,g)
   return PermList(p);
 end;
 
+# LambdaConjugator: f and g have equal left blocks (rho value)
+# JDM: this will be better in c...
+
+BipartRightBlocksConj:=function(f, g)
+  local n, fblocks, gblocks, nr, lookup, next, seen, src, dst, i;
+
+  n:=DegreeOfBipartition(f);
+  fblocks:=f!.blocks;     
+  gblocks:=g!.blocks;
+  nr:=NrLeftBlocks(f);
+
+  lookup:=[];
+  next:=0; 
+  seen:=BlistList([1..n], []);
+  for i in [n+1..2*n] do 
+    if not seen[gblocks[i]] then 
+      next:=next+1; 
+      seen[gblocks[i]]:=true;
+      if gblocks[i]<=nr then #connected block
+        lookup[gblocks[i]]:=next;
+      fi;
+    fi;
+  od;
+  
+  src:=[]; dst:=[];
+  next:=0; 
+  seen:=BlistList([1..n], []);
+  for i in [n+1..2*n] do 
+    if not seen[fblocks[i]] then 
+      next:=next+1; 
+      seen[fblocks[i]]:=true;
+      if fblocks[i]<=nr then #connected block
+        Add(src, next);
+        Add(dst, lookup[fblocks[i]]);
+      fi;
+    fi;
+  od; 
+
+  return MappingPermListList(src, dst);
+end;
+
 # permutation of indices of signed (connected) blocks of <blocks> under the
 # action of <f> which is assumed to stabilise <blocks>.
 

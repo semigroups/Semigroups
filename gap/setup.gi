@@ -222,6 +222,9 @@ function(f, g)
   return MappingPermListList(IMAGE_PPERM(f), IMAGE_PPERM(g));
 end);
 
+InstallMethod(LambdaConjugator, "for a bipartition semigroup",
+[IsBipartitionSemigroup], s-> BipartRightBlocksConj);
+
 # the function used to test if there is an idempotent with the specified 
 # lambda and rho values.
 
