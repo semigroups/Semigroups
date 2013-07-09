@@ -40,10 +40,15 @@ DeclareGlobalFunction("RankOfBlocks");
 DeclareGlobalFunction("DegreeOfBlocks");
 
 DeclareOperation("IdentityBipartition", [IsPosInt]);
+DeclareOperation("BipartitionByIntRepNC", [IsList]);
+DeclareOperation("BipartitionByIntRep", [IsList]);
+
+DeclareOperation("AsBipartition", [IsPerm, IsPosInt]);
+DeclareOperation("AsBipartition", [IsTransformation]);
+DeclareOperation("AsBipartition", [IsPartialPerm, IsPosInt]);
 
 #old
 
-#DeclareOperation("AsBipartition", [IsPerm, IsPosInt]);
 #DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
 #DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
 #DeclareAttribute("RightSignedPartition", IsBipartition);

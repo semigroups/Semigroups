@@ -15,12 +15,75 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsComponentObjectRep and IsAttributeStoringRep and
  IsAssociativeElementWithAction));
 
-BipartitionByIntRepNC:=function(blocks)
+#
+
+InstallMethod(AsBipartition, "for a permutation and pos int",
+[IsPerm, IsPosInt],
+function(f, n)
+  return BipartitionByIntRepNC(Concatenation([1..n], ListPerm(f^-1, n)));
+end);
+
+#
+
+InstallMethod(AsBipartition, "for a partial perm and pos int",
+[IsPartialPerm, IsPosInt],
+function(f, n)
+  local out, g, r, i;
+
+  g:=f^-1;
+  r:=n;
+  out:=EmptyPlist(2*n);
+
+  for i in [1..n] do 
+    out[i]:=i;
+    if i^g<>0 then 
+      out[n+i]:=i^g;
+    else 
+      r:=r+1;
+      out[n+i]:=r;
+    fi;
+  od;
+  return BipartitionByIntRepNC(out); 
+end);
+
+#
+
+InstallMethod(AsBipartition, "for a transformation",
+[IsTransformation],
+function(f)
+  local n, r, ker, out, g, i;
+
+  n:=DegreeOfTransformation(f);
+  r:=RankOfTransformation(f);;
+  ker:=FlatKernelOfTransformation(f); 
+  out:=ShallowCopy(ker);
+  g:=List([1..n], x-> 0);
+
+  #inverse of f
+  for i in [1..n] do 
+    g[i^f]:=i;
+  od;
+
+  for i in [1..n] do 
+    if g[i]<>0 then 
+      out[n+i]:=ker[g[i]];
+    else 
+      r:=r+1;
+      out[n+i]:=r;
+    fi;
+  od;
+  return BipartitionByIntRepNC(out);
+end);
+
+#
+
+InstallMethod(BipartitionByIntRepNC, "for a list", [IsList],
+function(blocks)
   local n, next, seen, nrleft, out, i;
 
   n:=Length(blocks)/2;
   next:=0;
-  seen:=BlistList([1..n], []);
+  seen:=BlistList([1..2*n], []);
 
   for i in [1..n] do 
     if not seen[blocks[i]] then 
@@ -43,9 +106,10 @@ BipartitionByIntRepNC:=function(blocks)
   SetNrLeftBlocks(out, nrleft);
   SetNrBlocks(out, next);
   return out;
-end;
+end);
 
-BipartitionByIntRep:=function(blocks)
+InstallMethod(BipartitionByIntRep, "for a list", [IsList],
+function(blocks)
   local n, next, seen, nrleft, out, i;
 
   n:=Length(blocks);
@@ -55,20 +119,19 @@ BipartitionByIntRep:=function(blocks)
   fi;
   
   n:=n/2;
-  if not ForAll(blocks, IsPosInt) or not ForAll(blocks, x-> x<=n) then 
-    Error("the elements of <blocks> must be positive integers less than", 
-     n, ",");
+  if not ForAll(blocks, IsPosInt) then 
+    Error("the elements of <blocks> must be positive integers,");
     return;
   fi;
 
   next:=0;
-  seen:=BlistList([1..n], []);
+  seen:=BlistList([1..2*n], []);
 
   for i in [1..n] do 
     if not seen[blocks[i]] then 
       next:=next+1;
       if blocks[i]<>next then 
-        Error("<blocks> does not describe a bipartition,");
+        Error("expected ", next, " but found ", blocks[i], ",");
         return;
       fi;
       seen[blocks[i]]:=true;
@@ -81,7 +144,7 @@ BipartitionByIntRep:=function(blocks)
     if not seen[blocks[i]] then 
       next:=next+1;
       if blocks[i]<>next then 
-        Error("<blocks> does not describe a bipartition,");
+        Error("expected ", next, " but found ", blocks[i], ",");
         return;
       fi;
       seen[blocks[i]]:=true;
@@ -94,7 +157,7 @@ BipartitionByIntRep:=function(blocks)
   SetNrLeftBlocks(out, nrleft);
   SetNrBlocks(out, next);
   return out;
-end;
+end);
 
 
 #
@@ -872,63 +935,6 @@ end);
 #
 ##
 #
-#InstallMethod(AsBipartition, "for a permutation and pos int",
-#[IsPerm, IsPosInt],
-#function(f, n)
-#  return BipartitionByIntRepNC(Concatenation([1..n], OnTuples([1..n], f^-1)));
-#end);
-#
-##
-#
-#InstallOtherMethod(AsBipartition, "for a partial perm and pos int",
-#[IsPartialPerm, IsPosInt],
-#function(f, n)
-#  local out, g, r, i;
-#
-#  g:=f^-1;
-#  r:=n;
-#  out:=EmptyPlist(2*n);
-#
-#  for i in [1..n] do 
-#    out[i]:=i;
-#    if i^g<>0 then 
-#      out[n+i]:=i^g;
-#    else 
-#      r:=r+1;
-#      out[n+i]:=r;
-#    fi;
-#  od;
-#  return BipartitionByIntRepNC(out); 
-#end);
-#
-##
-#
-#InstallOtherMethod(AsBipartition, "for a transformation",
-#[IsTransformation],
-#function(f)
-#  local n, r, ker, out, g, i;
-#
-#  n:=DegreeOfTransformation(f);
-#  r:=RankOfTransformation(f);;
-#  ker:=FlatKernelOfTransformation(f); 
-#  out:=ShallowCopy(ker);
-#  g:=List([1..n], x-> 0);
-#
-#  #inverse of f
-#  for i in [1..n] do 
-#    g[i^f]:=i;
-#  od;
-#
-#  for i in [1..n] do 
-#    if g[i]<>0 then 
-#      out[n+i]:=ker[g[i]];
-#    else 
-#      r:=r+1;
-#      out[n+i]:=r;
-#    fi;
-#  od;
-#  return BipartitionByIntRepNC(out);
-#end);
 #
 ##
 #
