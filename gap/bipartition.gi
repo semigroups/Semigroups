@@ -263,7 +263,8 @@ function(blocks)
   return out;
 end);
 
-#
+# fuse <blocks> with <f>. <sign> should be true to keep track of signed and
+# unsigned blocks and false not to keep track.
 
 FuseRightBlocks:=function(blocks, f, sign)
   local n, fblocks, nrblocks, nrfblocks, fuse, fuseit, x, y, i;
@@ -323,6 +324,26 @@ FuseRightBlocks:=function(blocks, f, sign)
     od;
     return fuseit;
   fi;
+end;
+
+# LambdaPerm
+
+PermLeftQuoBipartitionNC:=function(f,g)
+  local n, nr, fblocks, gblocks, p, i;
+
+  n:=DegreeOfBipartition(f);
+  nr:=NrLeftBlocks(f);
+  fblocks:=f!.blocks;
+  gblocks:=g!.blocks;
+  p:=[1..nr];
+
+  for i in [n+1..2*n] do 
+    if gblocks[i]<=nr then 
+      p[gblocks[i]]:=fblocks[i];
+    fi;
+  od;
+
+  return PermList(p);
 end;
 
 # permutation of indices of signed (connected) blocks of <blocks> under the
