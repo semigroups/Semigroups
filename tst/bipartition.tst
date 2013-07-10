@@ -54,6 +54,12 @@ gap> e := BlocksIdempotentCreator(l,r);
 gap> IsIdempotent(e);
 true
 
+# JDM is this the right behaviour?
+gap> RightBlocks(e) = l;
+true
+gap> LeftBlocks(e) = r;
+true
+
 #
 gap> SemigroupsStopTest();
 
