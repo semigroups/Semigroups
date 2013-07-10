@@ -131,7 +131,7 @@ function(d)
     for j in [1..Length(rreps)] do
       f:=lreps[i]*rreps[j];
       if f in d then
-        mat[i][j]:=AsPermutation(f);
+        mat[i][j]:=AsPermutation(f); #JDM this doesn't work for partition monoids
         if not bound_r[j] then
           bound_r[j]:=true;
           inv_r[j]:=mat[i][j]^-1*lreps[i];

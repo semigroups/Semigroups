@@ -10,6 +10,12 @@
 
 ## Methods for Green's classes of regular acting semigroups
 
+InstallMethod(RhoCosets, "for a regular class of an acting semigroup", 
+[IsRegularClass and IsActingSemigroupGreensClass], 
+function(x)
+  return [()];
+end);
+
 # acting...
 
 # not required for inverse.

@@ -412,8 +412,9 @@ function(d)
     local d, rep;
     if tuple=fail then return fail; fi;
     d:=enum!.parent; rep:=Representative(d);
-    return RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), tuple[1])[1]*rep*tuple[2]
-     *LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
+    act:=StabiliserAction(Parent(d));
+    return act(RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), tuple[1])[1]*rep,
+     tuple[2])*LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
   end;
   #
   convert_in:=function(enum, elt)
@@ -447,6 +448,8 @@ end);
 
 #this method is unnecesary if we write a method for RhoOrb of a inverse op
 #D-classJDM
+
+#HERE!!
 
 InstallMethod(Enumerator, "for a D-class of an inverse acting semigroup",
 [IsGreensDClass and IsInverseOpClass and IsActingSemigroupGreensClass],
