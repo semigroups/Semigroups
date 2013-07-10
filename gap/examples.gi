@@ -287,8 +287,8 @@ function(n)
   local gens;
 
   gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
-  Add(gens, BipartitionNC(Concatenation([[1,2],[-1,-2]],
-   List([3..n], x-> [x, -x]))));
+  Add(gens, BipartitionNC(Concatenation([[1,2]], 
+   List([3..n], x-> [x, -x]),[[-1,-2]])));
   return Semigroup(gens);
 end);
 

@@ -418,6 +418,8 @@ end;
 
 # LambdaInverse
 
+# require InverseLeftBlocks
+
 InverseRightBlocks:=function(blocks, f)
   local n, nrblocks, fblocks, fusesign, fuse, sign, fuseit, out, junk, next, tab1, x, nrleft, tab2, i;
 
@@ -1282,7 +1284,11 @@ end;
 
 OnRightBlocksPerm:=function(f, p)
   local n, out, blocks, seen, tab1, tab2, next, q, i;
-
+  
+  if IsOne(p) then 
+    return f;
+  fi;
+  
   n:=DegreeOfBipartition(f);
   out:=EmptyPlist(2*n);
   blocks:=f!.blocks;

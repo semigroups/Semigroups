@@ -70,7 +70,7 @@ end);
 InstallMethod(RhoCosets, "for a L-class of an acting semigp",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  local d, o, pos, m, mult, p;
+  local d, o, pos, m, mult, p, act;
   
   d:=DClassOfLClass(l);
   o:=LambdaOrb(d);
@@ -82,7 +82,10 @@ function(l)
     #the following step is necessary in case p is not in the schutz gp of d 
     p:=LambdaPerm(Parent(l))(Representative(l)*mult[2],
      Representative(d));
-    return List(RhoCosets(d), x-> (mult[2]*x^p*mult[1]));
+    act:=StabiliserAction(Parent(l));
+    #JDM the following line always returns elements of the semigroup not
+    #permutations what sense does this make?
+    return List(RhoCosets(d), x-> act(mult[2], x^p)*mult[1]);
   fi;
   return RhoCosets(d);
 end);
@@ -570,8 +573,7 @@ end);
 InstallMethod(GreensHClasses, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local lambda_o, lambda_m, s, scc, mults, d, rho_o, rho_m, cosets, f, nc, out,
-  k, i, j;
+  local lambda_o, lambda_m, s, scc, mults, d, rho_o, rho_m, cosets, f, nc, act, out, k, i, j;
 
   lambda_o:=LambdaOrb(r); 
   lambda_m:=LambdaOrbSCCIndex(r);
@@ -587,12 +589,13 @@ function(r)
   cosets:=LambdaCosets(d);
   f:=Representative(r);
   nc:=IsGreensClassNC(r);
+  act:=StabiliserAction(Parent(r));
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
 
   for i in cosets do 
-    i:=f*i;
+    i:=act(f, i);
     for j in scc do 
       k:=k+1;
       # JDM maybe a bad idea to use CreateHClass here, perhaps expand?
@@ -627,7 +630,7 @@ end);
 InstallMethod(GreensLClasses, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass], 
 function(d)
-  local mults, scc, cosets, f, s, o, m, lrel, nc, out, k, g, l, j, i;
+  local mults, scc, cosets, f, s, o, m, nc, act, out, k, g, j, i;
  
   mults:=LambdaOrbMults(LambdaOrb(d), LambdaOrbSCCIndex(d));
   scc:=LambdaOrbSCC(d);
@@ -638,11 +641,12 @@ function(d)
   o:=RhoOrb(d);
   m:=RhoOrbSCCIndex(d);
   nc:=IsGreensClassNC(d);
+  act:=StabiliserAction(s);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
   for j in cosets do
-    g:=f*j;
+    g:=act(f,j);
     for i in scc do
       k:=k+1;
       #use NC since f has rho value in first place of scc
@@ -1123,7 +1127,7 @@ end);
 InstallMethod(HClassReps, "for an R-class of an acting semigroup",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local o, m, scc, mults, f, cosets, out, k, i, j;
+  local o, m, scc, mults, f, cosets, out, k, act, i, j;
 
   o:=LambdaOrb(r); 
   m:=LambdaOrbSCCIndex(r);
@@ -1135,8 +1139,10 @@ function(r)
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
 
+  act:=StabiliserAction(Parent(r));
+
   for i in cosets do 
-    i:=f*i;
+    i:=act(f, i);
     for j in scc do 
       k:=k+1;
       out[k]:=i*mults[j][1];
@@ -1184,7 +1190,7 @@ end);
 InstallMethod(LClassReps, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local o, m, mults, scc, f, cosets, out, k, g, i, j;
+  local o, m, mults, scc, f, cosets, out, act, k, g, i, j;
   
   o:=LambdaOrb(d); 
   m:=LambdaOrbSCCIndex(d);
@@ -1194,10 +1200,10 @@ function(d)
  
   cosets:=LambdaCosets(d);
   out:=EmptyPlist(Length(scc)*Length(cosets));
-
+  act:=StabiliserAction(Parent(d));
   k:=0;
   for i in cosets do
-    g:=f*i;
+    g:=act(f, i);
     for j in scc do
       k:=k+1;
       out[k]:=g*mults[j][1];
@@ -1229,7 +1235,7 @@ end);
 InstallMethod(RClassReps, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass],
 function(d)
-  local o, m, mults, scc, f, out, k, cosets, g, i, j;
+  local o, m, mults, scc, f, cosets, out, k, act, g, i, j;
 
   o:=RhoOrb(d); 
   m:=RhoOrbSCCIndex(d);
@@ -1241,12 +1247,12 @@ function(d)
   out:=EmptyPlist(Length(scc)*Length(cosets));
   
   k:=0;
-
+  act:=StabiliserAction(Parent(d));
   for i in scc do
     g:=mults[i][1]*f;
     for j in cosets do
       k:=k+1;
-      out[k]:=g*j^-1;
+      out[k]:=act(g, j^-1);
     od;
   od;
   return out;
@@ -1464,8 +1470,8 @@ function(h)
     return;
   fi;
 
-  return MappingByFunction(h, SchutzenbergerGroup(h), 
-   AsPermutation, x-> MultiplicativeNeutralElement(h)*x);
+  return MappingByFunction(h, SchutzenbergerGroup(h), AsPermutation, x->
+    StabiliserAction(Parent(h))(MultiplicativeNeutralElement(h), x));
 end);
 
 #

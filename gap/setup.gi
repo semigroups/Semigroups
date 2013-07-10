@@ -196,6 +196,14 @@ InstallMethod(RhoInverse, "for a partial perm semigroup",
     return f^-1;
   end);
 
+#JDM better method for this!!
+
+InstallMethod(RhoInverse, "for a bipartition semigroup",
+[IsBipartitionSemigroup], s-> 
+  function(rho, f)
+    return Inverse(InverseRightBlocks(rho, Inverse(f)));
+  end);
+
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
 # equal LambdaFunc and RhoFunc. This is required to check if one of the two
 # elements belongs to the schutz gp of a lambda orb.
