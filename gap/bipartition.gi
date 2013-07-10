@@ -1,3 +1,4 @@
+
 ############################################################################
 ##
 #W  bipartition.gi
@@ -433,16 +434,25 @@ InverseRightBlocks:=function(blocks, f)
   tab1:=[];
   for i in [1..n] do 
     x:=fuseit(fblocks[i+n]+nrblocks);
-    if x>NrLeftBlocks(f) or sign[x]=0 then 
+    if fblocks[i+n]>NrLeftBlocks(f) then 
       if junk=0 then 
         next:=next+1;
         junk:=next;
       fi;
       out[i]:=junk;
-    else 
-      if not IsBound(tab1[x]) then 
-        next:=next+1;
-        tab1[x]:=next;
+    else
+      x:=fuseit(fblocks[i+n]+nrblocks);
+      if sign[x]=0 then 
+        if junk=0 then 
+          next:=next+1;
+          junk:=next;
+        fi;
+        out[i]:=junk;
+      else 
+        if not IsBound(tab1[x]) then 
+          next:=next+1;
+          tab1[x]:=next;
+        fi;
       fi;
       out[i]:=tab1[x];
     fi;
@@ -1272,7 +1282,7 @@ end;
 #
 
 OnRightBlocksPerm:=function(f, p)
-  local n, out, blocks, seen, tab1, tab2, next, i;
+  local n, out, blocks, seen, tab1, tab2, next, q, i;
 
   n:=DegreeOfBipartition(f);
   out:=EmptyPlist(2*n);
@@ -1282,11 +1292,11 @@ OnRightBlocksPerm:=function(f, p)
   tab1:=EmptyPlist(2*n);
   tab2:=EmptyPlist(2*n);
   next:=0;
-
+  q:=p^-1;
   for i in [n+1..2*n] do 
     if not IsBound(tab1[blocks[i]]) then 
       next:=next+1;
-      tab1[blocks[i]]:=next^p;
+      tab1[blocks[i]]:=next^q;
       tab2[next]:=blocks[i];
     fi;
   od;
