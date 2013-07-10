@@ -474,6 +474,9 @@ end;
 
 #
 
+InstallOtherMethod(OneMutable, "for a bipartition",
+[IsBipartition], x-> IdentityBipartition(DegreeOfBipartition(x)));
+
 InstallMethod(IdentityBipartition, "for a positive integer",
 [IsPosInt],
 function(n)
@@ -1140,23 +1143,23 @@ function(a,b)
   return c;
 end);
 
-BlocksIdempotentTester:=function(right, left)
-  local n, rightnr, leftnr, fuse, fuseit, sign, x, y, seen, i;
+BlocksIdempotentTester:=function(lambda, rho)
+  local n, lambdanr, rhonr, fuse, fuseit, sign, x, y, seen, i;
 
-  if DegreeOfBlocks(right)<>DegreeOfBlocks(left) then 
-    Error("the degrees of the blocks <right> and <left> must be equal,");
+  if DegreeOfBlocks(lambda)<>DegreeOfBlocks(rho) then 
+    Error("the degrees of the blocks <lambda> and <rho> must be equal,");
     return;
   fi;
 
-  if RankOfBlocks(right)<>RankOfBlocks(left) then 
+  if RankOfBlocks(lambda)<>RankOfBlocks(rho) then 
     return false;
   fi;
 
-  n:=DegreeOfBlocks(right);
-  rightnr:=right[1]; 
-  leftnr:=left[1];
+  n:=DegreeOfBlocks(lambda);
+  lambdanr:=lambda[1]; 
+  rhonr:=rho[1];
 
-  fuse:=[1..rightnr+leftnr];
+  fuse:=[1..lambdanr+rhonr];
   fuseit := function(i) 
     while fuse[i] < i do 
       i := fuse[i]; 
@@ -1164,14 +1167,14 @@ BlocksIdempotentTester:=function(right, left)
     return i; 
   end;
   
-  sign:=[1..rightnr]*0;
-  for i in [rightnr+1..rightnr+leftnr] do #copy the signs from <left>
-    sign[i]:=left[n+1+i-rightnr]; 
+  sign:=[1..lambdanr]*0;
+  for i in [lambdanr+1..lambdanr+rhonr] do #copy the signs from <left>
+    sign[i]:=rho[n+1+i-lambdanr]; 
   od;
   
   for i in [1..n] do
-    x := fuseit(right[i+1]);
-    y := fuseit(left[i+1]+rightnr);
+    x := fuseit(lambda[i+1]);
+    y := fuseit(rho[i+1]+lambdanr);
     if x <> y then
       if x < y then
         fuse[y] := x;
@@ -1184,12 +1187,12 @@ BlocksIdempotentTester:=function(right, left)
     fi;
   od;
 
-  #check if we are injective on signed classes of <right> and that the fused
+  #check if we are injective on signed classes of <lambda> and that the fused
   #blocks are also signed. 
 
-  seen:=BlistList([1..rightnr], []);
-  for i in [1..rightnr] do 
-    if right[n+1+i]=1 then # is block <i> a signed block?
+  seen:=BlistList([1..lambdanr], []);
+  for i in [1..lambdanr] do 
+    if lambda[n+1+i]=1 then # is block <i> a signed block?
       x:=fuseit(i);
       if seen[x] or sign[x]=0 then 
         return false;
@@ -1198,6 +1201,69 @@ BlocksIdempotentTester:=function(right, left)
     fi;
   od;
   return true;
+end;
+
+# assumes that BlocksIdempotentTester returns true!
+
+BlocksIdempotentCreator:=function(lambda, rho)
+  local n, lambdanr, rhonr, fuse, fuseit, x, y, tab1, tab2, out, next, i;
+
+  n:=DegreeOfBlocks(lambda);
+  lambdanr:=lambda[1]; 
+  rhonr:=rho[1];
+
+  fuse:=[1..lambdanr+rhonr];
+  fuseit := function(i) 
+    while fuse[i] < i do 
+      i := fuse[i]; 
+    od; 
+    return i; 
+  end;
+  
+  for i in [1..n] do
+    x := fuseit(lambda[i+1]);
+    y := fuseit(rho[i+1]+lambdanr);
+    if x <> y then
+      if x < y then
+        fuse[y] := x;
+      else
+        fuse[x] := y;
+      fi;
+    fi;
+  od;
+
+  tab1:=EmptyPlist(lambdanr);
+
+  #find new names for the signed blocks of rho
+  for i in [1..rhonr] do 
+    if rho[n+1+i]=1 then 
+      tab1[fuseit(i+lambdanr)]:=i;
+    fi;
+  od;
+  
+  tab2:=EmptyPlist(lambdanr);
+  out:=EmptyPlist(2*n);
+  next:=rho[1];
+  
+  for i in [1..n] do 
+    out[i]:=rho[i+1];
+    if lambda[n+1+lambda[i+1]]=1 then 
+      out[i+n]:=tab1[fuseit(lambda[i+1])];
+    else
+      if not IsBound(tab2[lambda[i+1]]) then 
+        next:=next+1;
+        tab2[lambda[i+1]]:=next;
+      fi;
+      out[i+n]:=tab2[lambda[i+1]];
+    fi;
+  od;
+
+  out:=Objectify(BipartitionType, rec(blocks:=out)); 
+  SetDegreeOfBipartition(out, n);
+  SetRankOfBipartition(out, RankOfBlocks(rho));
+  SetNrLeftBlocks(out, rho[1]);
+  SetNrBlocks(out, next);
+  return out;
 end;
 
 #InstallMethod(DegreeOfBipartitionCollection, "for a bipartition collection",
