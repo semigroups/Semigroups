@@ -433,7 +433,6 @@ InverseRightBlocks:=function(blocks, f)
   
   tab1:=[];
   for i in [1..n] do 
-    x:=fuseit(fblocks[i+n]+nrblocks);
     if fblocks[i+n]>NrLeftBlocks(f) then 
       if junk=0 then 
         next:=next+1;
@@ -453,8 +452,8 @@ InverseRightBlocks:=function(blocks, f)
           next:=next+1;
           tab1[x]:=next;
         fi;
+        out[i]:=tab1[x];
       fi;
-      out[i]:=tab1[x];
     fi;
   od;
   nrleft:=next;
