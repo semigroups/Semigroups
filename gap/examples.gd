@@ -8,6 +8,11 @@
 ############################################################################# 
 ##
 
+DeclareOperation("JonesMonoid", [IsPosInt]);
+DeclareSynonym("TemperleyLiebMonoid", JonesMonoid);
+
+DeclareOperation("BrauerMonoid", [IsPosInt]);
+DeclareOperation("FactorisableDualSymmetricInverseSemigroup", [IsPosInt]);
 DeclareOperation("DualSymmetricInverseSemigroup", [IsPosInt]);
 DeclareOperation("FullBinaryRelationSemigroup", [IsPosInt]);
 DeclareOperation("FullMatrixSemigroup", [IsPosInt, IsPosInt]);
@@ -23,5 +28,5 @@ DeclareOperation("POI", [IsPosInt]);
 DeclareOperation("POPI", [IsPosInt]);
 DeclareOperation("PowerSemigroup", [IsGroup]);
 DeclareOperation("RegularBinaryRelationSemigroup", [IsPosInt]);
-DeclareSynonymAttr("RB", RegularBinaryRelationSemigroup);
+DeclareSynonym("RB", RegularBinaryRelationSemigroup);
 DeclareOperation("SingularSemigroup", [IsPosInt]);

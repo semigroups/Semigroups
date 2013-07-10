@@ -248,8 +248,8 @@ function(n)
 
   gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
   Add(gens, AsBipartition(PartialPermNC([2..n], [2..n]), n));
-  Add(gens, BipartitionNC(Concatenation([[1,2,n+1, n+2]], 
-   List([3..n], x-> [x, x+n]))));
+  Add(gens, BipartitionNC(Concatenation([[1,2,-1, -2]], 
+   List([3..n], x-> [x, -x]))));
 
   s:=Semigroup(gens);
   SetIsRegularSemigroup(s, true);
@@ -263,9 +263,57 @@ InstallMethod(DualSymmetricInverseSemigroup, "for a positive integer",
 function(n)
   local gens;
   gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
-  Add(gens, BipartitionNC(Concatenation([[1,2,3+n], [1+n,2+n,3]], 
-   List([4..n], x-> [x, x+n]))));
+  Add(gens, BipartitionNC(Concatenation([[1,2,-3], [3,-1,-2]],
+   List([4..n], x-> [x, -x]))));
   return Semigroup(gens);
+end);
+
+#
+
+InstallMethod(FactorisableDualSymmetricInverseSemigroup, 
+"for a positive integer", [IsPosInt], 
+function(n)
+  local gens;
+  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
+  Add(gens, BipartitionNC(Concatenation([[1,2,-1,-2]],
+   List([3..n], x-> [x, -x]))));
+  return Semigroup(gens);
+end);
+
+#
+
+InstallMethod(BrauerMonoid, "for a positive integer", [IsPosInt],
+function(n)
+  local gens;
+
+  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
+  Add(gens, BipartitionNC(Concatenation([[1,2],[-1,-2]],
+   List([3..n], x-> [x, -x]))));
+  return Semigroup(gens);
+end);
+
+#
+
+InstallMethod(JonesMonoid, "for a positive integer", [IsPosInt],
+function(n)
+  local gens, next, i, j;
+  
+  gens:=[];
+  for i in [1..n-1] do 
+    next:=[];
+    for j in [1..i-1] do 
+      next[j]:=j;
+      next[n+j]:=j;
+    od;
+    next[i]:=i; next[i+1]:=i;
+    next[i+n]:=n; next[i+n+1]:=n;
+    for j in [i+2..n] do 
+      next[j]:=j-1;
+      next[n+j]:=j-1;
+    od;
+    gens[i]:=BipartitionByIntRep(next);
+  od;
+  return Monoid(gens);
 end);
 
 #
