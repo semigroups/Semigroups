@@ -39,6 +39,56 @@ gap> l := List([1,2,3,4,5,15,35,1999,64999,65000],i->RandomTransformation(i));;
 gap> ForAll(l,t->t=AsTransformation(AsBipartition(t)));
 true
 
+#check BlocksIdempotentTester
+gap> l:=BlocksByExtRep([1,-2,-2,-3,-3,-4,-4,5,6,-7,-7]);
+[ 7, 1, 2, 2, 3, 3, 4, 4, 5, 6, 7, 7, 1, 0, 0, 0, 1, 1, 0 ]
+gap> r:=[-8,-8,-9,-9,10,11,-12,-12,-13,-13,14];
+[ -8, -8, -9, -9, 10, 11, -12, -12, -13, -13, 14 ]
+gap> r:=r-7;
+[ -15, -15, -16, -16, 3, 4, -19, -19, -20, -20, 7 ]
+gap> r:=BlocksByExtRep([-1,-1,-2,-2,3,4,-5,-5,-6,-6,7]);
+[ 7, 1, 1, 2, 2, 3, 4, 5, 5, 6, 6, 7, 0, 0, 1, 1, 0, 0, 1 ]
+gap> BlocksIdempotentTester(l, r);
+true
+gap> l:=BlocksByExtRep([1,-2,1,-3,1,-3,-3,4,4,-3,5,-6,-7,-7]);
+[ 7, 1, 2, 1, 3, 1, 3, 3, 4, 4, 3, 5, 6, 7, 7, 1, 0, 0, 1, 1, 0, 0 ]
+gap> r:=BlocksByExtRep([-1,-2,3,4,-1,-5,-6,-6,-7,-7,-8,3,-8,9]);
+[ 9, 1, 2, 3, 4, 1, 5, 6, 6, 7, 7, 8, 3, 8, 9, 0, 0, 1, 1, 0, 0, 0, 0, 1 ]
+gap> BlocksIdempotentTester(l, r);
+true
+gap> BlocksIdempotentTester(r, l);
+true
+gap> l:=BlocksByExtRep([1,-2,-2,-3,-3,-4,-4,5,6,-7,-7]);      
+[ 7, 1, 2, 2, 3, 3, 4, 4, 5, 6, 7, 7, 1, 0, 0, 0, 1, 1, 0 ]
+gap> r:=BlocksByExtRep([-1,-1,-2,-2,3,4,-5,-5,-6,-6,7]);
+[ 7, 1, 1, 2, 2, 3, 4, 5, 5, 6, 6, 7, 0, 0, 1, 1, 0, 0, 1 ]
+gap> BlocksIdempotentTester(r, l);
+true
+gap> BlocksIdempotentTester(l, r);
+true
+gap> l:=BlocksByExtRep([1,-2,-2,-3,-3,-4,-4,5,6,-7,-7]);
+[ 7, 1, 2, 2, 3, 3, 4, 4, 5, 6, 7, 7, 1, 0, 0, 0, 1, 1, 0 ]
+gap> r:=BlocksByExtRep([-1,-1,-2,-2,3,4,-5,-5,-6,-6,-7]);
+[ 7, 1, 1, 2, 2, 3, 4, 5, 5, 6, 6, 7, 0, 0, 1, 1, 0, 0, 0 ]
+gap> BlocksIdempotentTester(l, r);
+false
+gap> BlocksIdempotentTester(r, l);
+false
+gap> r:=BlocksByExtRep([-1,-2,3,4,-1,-5,-6,-6,-7,-7,-7]);
+[ 7, 1, 2, 3, 4, 1, 5, 6, 6, 7, 7, 7, 0, 0, 1, 1, 0, 0, 0 ]
+gap> r:=BlocksByExtRep([-1,-2,3,4,-1,-5,-6,-6,-7,-7,-7,3,-7,8]);
+[ 8, 1, 2, 3, 4, 1, 5, 6, 6, 7, 7, 7, 3, 7, 8, 0, 0, 1, 1, 0, 0, 0, 1 ]
+gap> l:=BlocksByExtRep([1,-2,1,-3,1,-3,-3,4,4,-3,5,-6,-7,-7]);
+[ 7, 1, 2, 1, 3, 1, 3, 3, 4, 4, 3, 5, 6, 7, 7, 1, 0, 0, 1, 1, 0, 0 ]
+gap> BlocksIdempotentTester(r, l);
+false
+gap> BlocksIdempotentTester(l, r);
+false
+gap> BlocksIdempotentTester(l, l);
+true
+gap> BlocksIdempotentTester(r, r);
+true
+
 #
 gap> SemigroupsStopTest();
 

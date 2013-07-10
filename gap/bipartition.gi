@@ -1140,6 +1140,66 @@ function(a,b)
   return c;
 end);
 
+BlocksIdempotentTester:=function(right, left)
+  local n, rightnr, leftnr, fuse, fuseit, sign, x, y, seen, i;
+
+  if DegreeOfBlocks(right)<>DegreeOfBlocks(left) then 
+    Error("the degrees of the blocks <right> and <left> must be equal,");
+    return;
+  fi;
+
+  if RankOfBlocks(right)<>RankOfBlocks(left) then 
+    return false;
+  fi;
+
+  n:=DegreeOfBlocks(right);
+  rightnr:=right[1]; 
+  leftnr:=left[1];
+
+  fuse:=[1..rightnr+leftnr];
+  fuseit := function(i) 
+    while fuse[i] < i do 
+      i := fuse[i]; 
+    od; 
+    return i; 
+  end;
+  
+  sign:=[1..rightnr]*0;
+  for i in [rightnr+1..rightnr+leftnr] do #copy the signs from <left>
+    sign[i]:=left[n+1+i-rightnr]; 
+  od;
+  
+  for i in [1..n] do
+    x := fuseit(right[i+1]);
+    y := fuseit(left[i+1]+rightnr);
+    if x <> y then
+      if x < y then
+        fuse[y] := x;
+        if sign[y]=1 then
+          sign[x]:=1;
+        fi;
+      else
+        fuse[x] := y;
+      fi;
+    fi;
+  od;
+
+  #check if we are injective on signed classes of <right> and that the fused
+  #blocks are also signed. 
+
+  seen:=BlistList([1..rightnr], []);
+  for i in [1..rightnr] do 
+    if right[n+1+i]=1 then # is block <i> a signed block?
+      x:=fuseit(i);
+      if seen[x] or sign[x]=0 then 
+        return false;
+      fi;
+      seen[x]:=true;
+    fi;
+  od;
+  return true;
+end;
+
 #InstallMethod(DegreeOfBipartitionCollection, "for a bipartition collection",
 #[IsBipartitionCollection], 
 #function(coll)
