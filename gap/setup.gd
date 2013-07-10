@@ -43,6 +43,6 @@ DeclareAttribute("IdempotentCreator", IsSemigroup);
 DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
 IsSemigroup);
 
-DeclareAttribute("GroupElementAction", IsSemigroup);
+DeclareAttribute("StabiliserAction", IsSemigroup);
 
 #EOF
