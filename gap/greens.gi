@@ -1891,7 +1891,7 @@ function(s)
 
   g:=Random(LambdaOrbSchutzGp(o, m));
   i:=Random(OrbSCC(o)[m]);
-  return rep*g*LambdaOrbMult(o, m, i)[1];
+  return StabiliserAction(s)(rep,g)*LambdaOrbMult(o, m, i)[1];
 end);
 
 # different method for regular/inverse
