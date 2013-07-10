@@ -40,7 +40,6 @@ DeclareAttribute("RhoOrbSeed", IsSemigroup);
 DeclareAttribute("IdempotentTester", IsSemigroup);
 DeclareAttribute("IdempotentCreator", IsSemigroup);
 
-DeclareOperation("IsInSubgroupOfSemigroup", [IsAssociativeElementWithAction]);
 DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
 IsSemigroup);
 

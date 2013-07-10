@@ -53,18 +53,8 @@ DeclareProperty("IsTransBipartition", IsBipartition);
 DeclareProperty("IsPermBipartition", IsBipartition);
 DeclareProperty("IsPartialPermBipartition", IsBipartition);
 
-
-
-
 #old
 
 #DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
 #DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
-#DeclareAttribute("RightSignedPartition", IsBipartition);
-#DeclareAttribute("LeftSignedPartition", IsBipartition);
 #DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
-#DeclareOperation("OnRightSignedPartition", [IsList, IsBipartition]);
-#DeclareOperation("OnLeftSignedPartition", [IsList, IsBipartition]);
-#DeclareOperation("RankOfBipartition", [IsBipartition]) ;
-#
-#DeclareGlobalFunction("INV_SIGNED_PART_BIPART");

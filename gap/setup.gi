@@ -252,33 +252,26 @@ InstallMethod(IdempotentCreator, "for a partial perm semigp",
 InstallMethod(IdempotentCreator, "for a bipartition semigroup", 
 [IsBipartitionSemigroup], s-> BlocksIdempotentCreator);
 
-# GroupElementAction will be \* for transformation and partial perm semigroups 
+# the action of elements of the stabiliser of a lambda-value on any element of
+# the semigroup with that lambda-value 
+
+# StabiliserAction will be \* for transformation and partial perm semigroups 
 # and something else for semigroups of bipartitions.
 
-InstallMethod(GroupElementAction, 
+InstallMethod(StabiliserAction, 
 "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 s-> PROD);
 
-InstallMethod(GroupElementAction, 
+InstallMethod(StabiliserAction, 
 "for a partial perm semigroup with generators",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
 s-> PROD);
 
-# IsInSubgroupOfSemigroup returns <true> if the element <f> is an element of 
-# a subgroup of any semigroup containing it.
-
-InstallMethod(IsInSubgroupOfSemigroup, "for a transformation",
-[IsTransformation],
-function(f) 
-  return IdempotentTester(IMAGE_SET_TRANS(f), FLAT_KERNEL_TRANS(f));
-end);
-
-InstallMethod(IsInSubgroupOfSemigroup, "for a partial perm",
-[IsPartialPerm],
-function(f) 
-  return DOMAIN_PPERM(f)=IMAGE_SET_PPERM(f);
-end);
+InstallMethod(StabiliserAction, 
+"for a bipartition semigroup with generators",
+[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+s-> OnRightBlocksPerm);
 
 # IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only
 # if it is only possible to multiply elements of the type in the semigroup with
@@ -286,6 +279,9 @@ end);
 
 InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
 IsTransformationSemigroup);
+
+InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
+IsBipartitionSemigroup);
 
 InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
 "for a partial perm semigroup", [IsPartialPermSemigroup], ReturnFalse);

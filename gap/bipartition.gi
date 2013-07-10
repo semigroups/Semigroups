@@ -1183,6 +1183,9 @@ BlocksIdempotentTester:=function(lambda, rho)
         fi;
       else
         fuse[x] := y;
+        if sign[x]=1 then 
+          sign[y]:=1;
+        fi;
       fi;
     fi;
   od;
@@ -1263,6 +1266,51 @@ BlocksIdempotentCreator:=function(lambda, rho)
   SetRankOfBipartition(out, RankOfBlocks(rho));
   SetNrLeftBlocks(out, rho[1]);
   SetNrBlocks(out, next);
+  return out;
+end;
+
+#
+
+OnRightBlocksPerm:=function(f, p)
+  local n, out, blocks, seen, tab1, tab2, next, i;
+
+  n:=DegreeOfBipartition(f);
+  out:=EmptyPlist(2*n);
+  blocks:=f!.blocks;
+
+  seen:=BlistList([1..n], []);
+  tab1:=EmptyPlist(2*n);
+  tab2:=EmptyPlist(2*n);
+  next:=0;
+
+  for i in [n+1..2*n] do 
+    if not IsBound(tab1[blocks[i]]) then 
+      next:=next+1;
+      tab1[blocks[i]]:=next^p;
+      tab2[next]:=blocks[i];
+    fi;
+  od;
+  
+  for i in [1..n] do 
+    out[i]:=blocks[i];
+    out[i+n]:=tab2[tab1[blocks[i+n]]];
+  od;
+  
+  out:=Objectify(BipartitionType, rec(blocks:=out)); 
+  SetDegreeOfBipartition(out, n);
+  SetNrLeftBlocks(out, NrLeftBlocks(f));
+  SetNrBlocks(out, NrBlocks(f));
+  
+  if HasRankOfBipartition(f) then 
+    SetRankOfBipartition(out, RankOfBipartition(f));
+  fi;
+  if HasLeftBlocks(f) then 
+    SetLeftBlocks(out, LeftBlocks(f));
+  fi;
+  if HasRightBlocks(f) then 
+    SetRightBlocks(out, RightBlocks(f));
+  fi;
+
   return out;
 end;
 
