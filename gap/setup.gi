@@ -237,6 +237,9 @@ end);
 InstallMethod(IdempotentTester, "for a partial perm semigroup", 
 [IsPartialPermSemigroup], s-> EQ);
 
+InstallMethod(IdempotentTester, "for a bipartition semigroup", 
+[IsBipartitionSemigroup], s-> BlocksIdempotentTester);
+
 # the function used to create an idempotent with the specified lambda and rho
 # values. 
 
@@ -245,6 +248,9 @@ InstallMethod(IdempotentCreator, "for a transformation semigroup",
 
 InstallMethod(IdempotentCreator, "for a partial perm semigp",
 [IsPartialPermSemigroup], s-> PartialPermNC);
+
+InstallMethod(IdempotentCreator, "for a bipartition semigroup", 
+[IsBipartitionSemigroup], s-> BlocksIdempotentCreator);
 
 # GroupElementAction will be \* for transformation and partial perm semigroups 
 # and something else for semigroups of bipartitions.
