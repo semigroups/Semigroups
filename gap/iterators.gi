@@ -464,8 +464,9 @@ function(r)
      OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)] );
   
   convert:=function(x)
-    return Representative(r)*x[1]*LambdaOrbMult(LambdaOrb(r),
-     LambdaOrbSCCIndex(r), x[2])[1];
+    return StabiliserAction(Parent(r))(Representative(r),
+     x[1])*LambdaOrbMult(LambdaOrb(r),
+      LambdaOrbSCCIndex(r), x[2])[1];
   end;
 
   return IteratorByIterator(baseiter, convert, [IsIteratorOfRClassElements]);

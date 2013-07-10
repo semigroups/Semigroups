@@ -241,33 +241,33 @@ end);
 
 #
 
-#InstallMethod(PartitionMonoid, "for a positive integer",
-#[IsPosInt], 
-#function(n)
-#  local gens, g, s;
-#
-#  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
-#  Add(gens, AsBipartition(PartialPermNC([2..n], [2..n]), n));
-#  Add(gens, BipartitionNC(Concatenation([[1,2,n+1, n+2]], 
-#   List([3..n], x-> [x, x+n]))));
-#
-#  s:=Semigroup(gens);
-#  SetIsRegularSemigroup(s, true);
-#  return s;
-#end);
-#
+InstallMethod(PartitionMonoid, "for a positive integer",
+[IsPosInt], 
+function(n)
+  local gens, g, s;
+
+  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
+  Add(gens, AsBipartition(PartialPermNC([2..n], [2..n]), n));
+  Add(gens, BipartitionNC(Concatenation([[1,2,n+1, n+2]], 
+   List([3..n], x-> [x, x+n]))));
+
+  s:=Semigroup(gens);
+  SetIsRegularSemigroup(s, true);
+  return s;
+end);
+
 ##
-#
-#InstallMethod(DualSymmetricInverseSemigroup, "for a positive integer",
-#[IsPosInt], 
-#function(n)
-#  local gens;
-#  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
-#  Add(gens, BipartitionNC(Concatenation([[1,2,3+n], [1+n,2+n,3]], 
-#   List([4..n], x-> [x, x+n]))));
-#  return Semigroup(gens);
-#end);
-#
+
+InstallMethod(DualSymmetricInverseSemigroup, "for a positive integer",
+[IsPosInt], 
+function(n)
+  local gens;
+  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
+  Add(gens, BipartitionNC(Concatenation([[1,2,3+n], [1+n,2+n,3]], 
+   List([4..n], x-> [x, x+n]))));
+  return Semigroup(gens);
+end);
+
 #
 
 InstallMethod(POI, "for a positive integer",
