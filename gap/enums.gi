@@ -409,7 +409,7 @@ function(d)
 
   #
   convert_out:=function(enum, tuple)
-    local d, rep;
+    local d, rep, act;
     if tuple=fail then return fail; fi;
     d:=enum!.parent; rep:=Representative(d);
     act:=StabiliserAction(Parent(d));

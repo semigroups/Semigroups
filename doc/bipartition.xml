@@ -83,3 +83,132 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     </Description>
   </ManSection>
 </GAPDoc>
+
+<#GAPDoc Label="InverseRightBlocks">
+  <ManSection>
+    <Func Name="InverseRightBlocks" Arg="blocks, f"/>
+    <Returns>A bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="IdentityBipartition">
+  <ManSection>
+    <Func Name="IdentityBipartition" Arg="n"/>
+    <Returns>The identity bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="RankOfBipartition">
+  <ManSection>
+    <Attr Name="RankOfBipartition" Arg="f"/>
+    <Returns>The rank of a bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="DegreeOfBipartition">
+  <ManSection>
+    <Attr Name="DegreeOfBipartition" Arg="f"/>
+    <Returns>The degree of a bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="Bipartition">
+  <ManSection>
+    <Func Name="Bipartition" Arg="classes"/>
+    <Func Name="BipartitionNC" Arg="classes"/>
+    <Returns>A bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="ExtRepBipartition">
+  <ManSection>
+    <Attr Name="ExtRepBipartition" Arg="f"/>
+    <Returns>A partition of <C>[1..n]</C>.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="LeftProjection">
+  <ManSection>
+    <Attr Name="LeftProjection" Arg="f"/>
+    <Returns>A bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="RightProjection">
+  <ManSection>
+    <Attr Name="RightProjection" Arg="f"/>
+    <Returns>A bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="InverseOp">
+  <ManSection>
+    <Attr Name="InverseOp" Arg="f" Label="for a bipartition"/>
+    <Returns>A bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="RandomBipartition">
+  <ManSection>
+    <Attr Name="RandomBipartition" Arg="f"/>
+    <Returns>A bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="RightBlocks">
+  <ManSection>
+    <Attr Name="RightBlocks" Arg="f"/>
+    <Returns>The right blocks of a bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="LeftBlocks">
+  <ManSection>
+    <Attr Name="LeftBlocks" Arg="f"/>
+    <Returns>The left blocks of a bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="OnRightBlocks">
+  <ManSection>
+    <Func Name="OnRightBlocks" Arg="blocks, f"/>
+    <Returns>The blocks of a bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="OnLeftBlocks">
+  <ManSection>
+    <Func Name="OnLeftBlocks" Arg="blocks, f"/>
+    <Returns>The blocks of a bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+

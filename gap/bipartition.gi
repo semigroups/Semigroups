@@ -427,8 +427,10 @@ end);
 
 #HERE
 
-InverseRightBlocks:=function(blocks, f)
-  local n, nrblocks, fblocks, fusesign, fuse, sign, fuseit, out, junk, next, tab1, x, nrleft, tab2, i;
+InstallGlobalFunction(InverseRightBlocks,
+function(blocks, f)
+  local n, nrblocks, fblocks, fusesign, fuse, sign, fuseit, out, junk, next,
+   tab1, x, nrleft, tab2, i;
 
   n:=DegreeOfBlocks(blocks); # length of partition!!
   nrblocks:=blocks[1];
@@ -488,12 +490,14 @@ InverseRightBlocks:=function(blocks, f)
   SetNrLeftBlocks(out, nrleft);
   SetNrBlocks(out, next);
   return out;
-end;
+end);
 
 #
 
 InstallOtherMethod(OneMutable, "for a bipartition",
 [IsBipartition], x-> IdentityBipartition(DegreeOfBipartition(x)));
+
+#
 
 InstallMethod(IdentityBipartition, "for a positive integer",
 [IsPosInt],
@@ -563,6 +567,8 @@ function(classes)
   od;
   return BipartitionNC(copy);
 end);
+
+#
 
 InstallGlobalFunction(BipartitionNC, 
 function(classes)
