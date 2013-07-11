@@ -1,8 +1,3 @@
-~
-~
-~
-~
-~
 #############################################################################
 ##
 #W  freeinverse.xml
@@ -12,8 +7,7 @@
 ##
 #############################################################################
 
-
-<#GAPDoc Label="FreeInverse" >
+<#GAPDoc Label="FreeInverseSemigroup" >
 <ManSection>
     <Oper Name = "FreeInverseSemigroup" Arg = "rank[, name]" />
     <Oper Name = "FreeInverseSemigroup" Arg = "name1, name2, ..." />
@@ -26,7 +20,6 @@
 
       The internal representation is based on Munn tree diagrams, for
       reference see J. Howie Fundamentals of Semigroup Theory.
-    </Description>
     <Example>
       gap> S := FreeInverseSemigroup(7);
       &lt; free inverse semigroup on the generators [ x1, x2, x3, x4, x5, x6, x7 ]>
@@ -37,19 +30,19 @@
       gap> S := FreeInverseSemigroup(["a", "b", "c"]);
       &lt; free inverse semigroup on the generators [ a, b, c ]>
     </Example>
+    </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label = "FreeInverseSemiCF" >
+<#GAPDoc Label="FreeInverseSemiCanonicalForm">
   <ManSection>
     <Oper Name = "FreeInverseSemiCanonicalForm" Arg = "s"/>
-    <Returns> A Free Inverse Semigroup elemenet. </Returns>
+    <Returns> A free inverse semigroup element. </Returns>
     <Description>
-      For a Free Inverse Semigroup element <C>s</C>,
+      For a free inverse semigroup element <C>s</C>,
       <A>FreeInverseSemiCanonicalForm</A> puts the element into
-      a canonical form. Which is unique up to rearranging 
+      a canonical form, Which is unique up to rearranging 
       idempotents in the product.
-    </Description>
     <Example>
       gap> S := FreeInverseSemigroup(3);
       &lt; free inverse semigroup on the generators [ x1, x2, x3 ]>
@@ -60,5 +53,6 @@
       gap> FreeInverseSemiCanonicalForm(x^3 *y^3);
       "x1x1x1x2x2x2x2^-1x2^-1x2^-1x1^-1x1^-1x1^-1x1x1x1x2x2x2"
     </Example>
+    </Description>
   </ManSection>
 <#/GAPDoc>

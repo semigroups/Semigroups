@@ -10,12 +10,30 @@
 
 <#GAPDoc Label="BipartitionFamily">
   <ManSection>
-    <Var Name="BipartitionFamily" Arg=""/>
-    <Var Name="BipartitionType" Arg=""/>
+    <Fam Name="BipartitionFamily"/>
     <Description>
+      Blah.
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsBipartition">
+  <ManSection>
+    <Filt Name="IsBipartition" Arg='obj' Type='Category'/>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsBipartitionCollection">
+  <ManSection>
+    <Filt Name="IsBipartitionCollection" Arg='obj' Type='Category'/>
+    <Description>
+      Blah.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
 <#GAPDoc Label="AsTransformation">
   <ManSection>
@@ -25,7 +43,7 @@
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="AsBipartition">
   <ManSection>
@@ -34,7 +52,7 @@
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="IsTransBipartition">
   <ManSection>
@@ -43,7 +61,7 @@
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="IsPermBipartition">
   <ManSection>
@@ -52,7 +70,7 @@
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="BipartitionByIntRep">
   <ManSection>
@@ -62,7 +80,7 @@
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="PermLeftQuoBipartitionNC">
   <ManSection>
@@ -71,18 +89,18 @@
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="PermRightBlocks">
   <ManSection>
     <Oper Name="PermRightBlocks" Arg="blocks, f"/>
     <Returns>A permutation.</Returns>
     <Description>
-permutation of indices of signed (connected) blocks of <blocks> under the
- action of <f> which is assumed to stabilise <blocks>.
+permutation of indices of signed (connected) blocks of blocks under the
+ action of f which is assumed to stabilise blocks.
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="InverseRightBlocks">
   <ManSection>
@@ -91,7 +109,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="IdentityBipartition">
   <ManSection>
@@ -100,7 +118,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="RankOfBipartition">
   <ManSection>
@@ -109,7 +127,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="DegreeOfBipartition">
   <ManSection>
@@ -118,7 +136,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="Bipartition">
   <ManSection>
@@ -128,7 +146,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="ExtRepBipartition">
   <ManSection>
@@ -137,7 +155,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="LeftProjection">
   <ManSection>
@@ -146,7 +164,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="RightProjection">
   <ManSection>
@@ -155,7 +173,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="InverseOp">
   <ManSection>
@@ -164,7 +182,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="RandomBipartition">
   <ManSection>
@@ -173,7 +191,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="RightBlocks">
   <ManSection>
@@ -182,7 +200,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="LeftBlocks">
   <ManSection>
@@ -191,7 +209,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="OnRightBlocks">
   <ManSection>
@@ -200,7 +218,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="OnLeftBlocks">
   <ManSection>
@@ -209,7 +227,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="ExtRepOfBlocks">
   <ManSection>
@@ -219,7 +237,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="RankOfBlocks">
   <ManSection>
@@ -228,7 +246,7 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>
 
 <#GAPDoc Label="DegreeOfBlocks">
   <ManSection>
@@ -237,4 +255,4 @@ permutation of indices of signed (connected) blocks of <blocks> under the
     <Description>
     </Description>
   </ManSection>
-</GAPDoc>
+<#/GAPDoc>

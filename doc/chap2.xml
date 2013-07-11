@@ -141,11 +141,11 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ),
     <#Include Label="RegularBinaryRelationSemigroup">
   </Section>
 
-  <Section Label = "FreeInverseSemi ">
+  <Section Label = "FreeInverseSemi">
     <Heading> Free Inverse Semigroup</Heading>
 
-    <#Include Label = "FreeInverse">
-    <#Include Label = "FreeInverseCF">
+    <#Include Label = "FreeInverseSemigroup">
+    <#Include Label = "FreeInverseSemiCanonicalForm">
   </Section>
 
 
