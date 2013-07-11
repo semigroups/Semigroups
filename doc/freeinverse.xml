@@ -9,9 +9,12 @@
 
 <#GAPDoc Label="FreeInverseSemigroup" >
 <ManSection>
-    <Oper Name = "FreeInverseSemigroup" Arg = "rank[, name]" />
-    <Oper Name = "FreeInverseSemigroup" Arg = "name1, name2, ..." />
-    <Oper Name = "FreeInverseSemigroup" Arg = "names" />
+  <Oper Name = "FreeInverseSemigroup" Arg = "rank[, name]" 
+    Label="for a given rank"/>
+    <Oper Name = "FreeInverseSemigroup" Arg = "name1, name2, ..." 
+      Label="for a list of names"/>
+    <Oper Name = "FreeInverseSemigroup" Arg = "names" 
+      Label="for various names"/>
     <Returns> A Free Inverse Semigroup. </Returns>
     <Description>
      Returns a Free Inverse Semigroup on <C>rank</C> generators, where 
