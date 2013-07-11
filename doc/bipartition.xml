@@ -230,3 +230,11 @@ permutation of indices of signed (connected) blocks of <blocks> under the
   </ManSection>
 </GAPDoc>
 
+<#GAPDoc Label="DegreeOfBlocks">
+  <ManSection>
+    <Func Name="RankOfBlocks" Arg="blocks"/>
+    <Returns>A non-negative integer.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>

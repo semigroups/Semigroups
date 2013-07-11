@@ -56,15 +56,17 @@ DeclareProperty("IsPartialPermBipartition", IsBipartition);
 DeclareGlobalFunction("PermLeftQuoBipartitionNC");
 DeclareGlobalFunction("InverseRightBlocks");
 DeclareGlobalFunction("InverseLeftBlocks");
+DeclareGlobalFunction("BlocksIdempotentTester");
+DeclareGlobalFunction("BlocksIdempotentCreator");
 
 #internal...
+DeclareGlobalFunction("OnRightBlocksPerm");
 DeclareGlobalFunction("TransverseBlocksLookup");
 DeclareGlobalFunction("FuseRightBlocks");
 DeclareGlobalFunction("FuseLeftBlocks");
 DeclareGlobalFunction("BipartRightBlocksConj");
 
-#old
 
-#DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
-#DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
-#DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
+DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
+DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
+DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);

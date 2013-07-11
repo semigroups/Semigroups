@@ -1,4 +1,3 @@
-
 ############################################################################
 ##
 #W  bipartition.gi
@@ -1251,7 +1250,8 @@ function(a,b)
   return c;
 end);
 
-BlocksIdempotentTester:=function(lambda, rho)
+InstallGlobalFunction(BlocksIdempotentTester,
+function(lambda, rho)
   local n, lambdanr, rhonr, fuse, fuseit, sign, x, y, seen, i;
 
   if DegreeOfBlocks(lambda)<>DegreeOfBlocks(rho) then 
@@ -1276,7 +1276,7 @@ BlocksIdempotentTester:=function(lambda, rho)
   end;
   
   sign:=[1..lambdanr]*0;
-  for i in [lambdanr+1..lambdanr+rhonr] do #copy the signs from <left>
+  for i in [lambdanr+1..lambdanr+rhonr] do #copy the signs from <rho>
     sign[i]:=rho[n+1+i-lambdanr]; 
   od;
   
@@ -1312,11 +1312,12 @@ BlocksIdempotentTester:=function(lambda, rho)
     fi;
   od;
   return true;
-end;
+end);
 
 # assumes that BlocksIdempotentTester returns true!
 
-BlocksIdempotentCreator:=function(lambda, rho)
+InstallGlobalFunction(BlocksIdempotentCreator,
+function(lambda, rho)
   local n, lambdanr, rhonr, fuse, fuseit, x, y, tab1, tab2, out, next, i;
 
   n:=DegreeOfBlocks(lambda);
@@ -1375,11 +1376,12 @@ BlocksIdempotentCreator:=function(lambda, rho)
   SetNrLeftBlocks(out, rho[1]);
   SetNrBlocks(out, next);
   return out;
-end;
+end);
 
-#
+# StabiliserAction
 
-OnRightBlocksPerm:=function(f, p)
+InstallGlobalFunction(OnRightBlocksPerm,
+function(f, p)
   local n, out, blocks, seen, tab1, tab2, next, q, i;
   
   if IsOne(p) then 
@@ -1424,86 +1426,105 @@ OnRightBlocksPerm:=function(f, p)
   fi;
 
   return out;
-end;
+end);
 
-#InstallMethod(DegreeOfBipartitionCollection, "for a bipartition collection",
-#[IsBipartitionCollection], 
-#function(coll)
-#
-#  if IsBipartitionSemigroup(coll) then 
-#    return DegreeOfBipartitionSemigroup(coll);
-#  elif not ForAll(coll, x-> x[1]=coll[1][1]) then 
-#    Error("usage: collection of bipartitions of equal degree,");
-#    return;
-#  fi;
-#  return coll[1][1];
-#end);
-#
-#InstallMethod(DegreeOfBipartitionSemigroup, "for a bipartition semigroup",
-#[IsBipartitionSemigroup], 
-# s-> Representative(s)[1]);
-#
-#InstallMethod(Display, "for a bipartition",
-#[IsBipartition], function(f)
-#  Print("BipartitionNC( ", ExtRepBipartition(f), " )");
-#  return;
-#end);
-#
-#InstallMethod(Display, "for a bipartition collection",
-#[IsBipartitionCollection],
-#function(coll) 
-#  local i;
-#
-#  Print("[ ");
-#  for i in [1..Length(coll)] do 
-#    if not i=1 then Print(" "); fi;
-#    Display(coll[i]);
-#    if not i=Length(coll) then 
-#      Print(",\n");
-#    else
-#      Print(" ]\n");
-#    fi;
-#  od;
-#  return;
-#end);
-#
-##JDM this does not currently work!
-#
-## InstallOtherMethod(IsomorphismTransformationSemigroup,
-## "for a bipartiton semigroup",
-## [IsBipartitionSemigroup],
-## function(s)
-##   local n, pts, o, t, pos, i;
-## 
-##   n:=DegreeOfBipartition(Generators(s)[1]);
-##   pts:=EmptyPlist(2^(n/2));
-## 
-##   for i in [1..n/2] do
-##     o:=Orb(s, [i], OnPoints); #JDM multiseed orb
-##     Enumerate(o);
-##     pts:=Union(pts, AsList(o));
-##   od;
-##   ShrinkAllocationPlist(pts);
-##   t:=Semigroup(List(GeneratorsOfSemigroup(s), 
-##    x-> TransformationOp(x, pts, OnPoints)));
-##   pos:=List([1..n], x-> Position(pts, [x]));
-## 
-##   return MappingByFunction(s, t, x-> TransformationOp(x, pts, OnPoints));
-## end);
-#
-#InstallMethod(\*, "for a bipartition and a perm",
-#[IsBipartition, IsPerm],
-#function(f,g)
-#  return f*AsBipartition(g, DegreeOfBipartition(f)/2);
-#end);
-#
-#InstallMethod(\*, "for a perm and a bipartition",
-#[IsPerm, IsBipartition],
-#function(f,g)
-#  return AsBipartition(f, DegreeOfBipartition(g)/2)*g;
-#end);
 #
 
+InstallMethod(DegreeOfBipartitionCollection, "for a bipartition collection",
+[IsBipartitionCollection], 
+function(coll)
+  local deg;
+
+  if IsBipartitionSemigroup(coll) then 
+    return DegreeOfBipartitionSemigroup(coll);
+  fi;
+  
+  deg:=DegreeOfBipartition(coll[1]);
+  if not ForAll(coll, x-> DegreeOfBipartition(x)=deg) then 
+    Error("usage: collection of bipartitions of equal degree,");
+    return;
+  fi;
+  
+  return deg;
+end);
+
+
+#
+
+InstallMethod(Print, "for a bipartition",
+[IsBipartition], 
+function(f)
+  Print("BipartitionNC( ", ExtRepBipartition(f), " )");
+  return;
+end);
+
+#
+
+InstallMethod(Print, "for a bipartition collection",
+[IsBipartitionCollection],
+function(coll) 
+  local i;
+
+  Print("[ ");
+  for i in [1..Length(coll)] do 
+    if not i=1 then Print(" "); fi;
+    Print(coll[i]);
+    if not i=Length(coll) then 
+      Print(",\n");
+    else
+      Print(" ]\n");
+    fi;
+  od;
+  return;
+end);
+
+#
+
+InstallMethod(\*, "for a bipartition and a perm",
+[IsBipartition, IsPerm],
+function(f,g)
+  return f*AsBipartition(g, DegreeOfBipartition(f));
+end);
+
+#
+
+InstallMethod(\*, "for a perm and a bipartition",
+[IsPerm, IsBipartition],
+function(f,g)
+  return AsBipartition(f, DegreeOfBipartition(g))*g;
+end);
+
+#
+
+InstallMethod(\*, "for a bipartition and a transformation",
+[IsBipartition, IsTransformation],
+function(f,g)
+  return f*AsBipartition(g, DegreeOfBipartition(f));
+end);
+
+#
+
+InstallMethod(\*, "for a transformation and a bipartition",
+[IsTransformation, IsBipartition],
+function(f,g)
+  return AsBipartition(f, DegreeOfBipartition(g))*g;
+end);
+
+#
+
+InstallMethod(\*, "for a bipartition and a partial perm",
+[IsBipartition, IsPartialPerm],
+function(f,g)
+  return f*AsBipartition(g, DegreeOfBipartition(f));
+end);
+
+#
+
+InstallMethod(\*, "for a partial perm and a bipartition",
+[IsPartialPerm, IsBipartition],
+function(f,g)
+  return AsBipartition(f, DegreeOfBipartition(g))*g;
+end);
 # Results:
 
 # n=1 partitions=2 idempots=2
