@@ -267,7 +267,8 @@ end);
 # fuse <blocks> with <f>. <sign> should be true to keep track of signed and
 # unsigned blocks and false not to keep track.
 
-FuseRightBlocks:=function(blocks, f, sign)
+InstallGlobalFunction(FuseRightBlocks,
+function(blocks, f, sign)
   local n, fblocks, nrblocks, nrfblocks, fuse, fuseit, x, y, i;
   
   n:=DegreeOfBlocks(blocks);
@@ -325,11 +326,12 @@ FuseRightBlocks:=function(blocks, f, sign)
     od;
     return fuseit;
   fi;
-end;
+end);
 
 # LambdaPerm
 
-PermLeftQuoBipartitionNC:=function(f,g)
+InstallGlobalFunction(PermLeftQuoBipartitionNC,
+function(f,g)
   local n, nr, fblocks, gblocks, p, i;
 
   n:=DegreeOfBipartition(f);
@@ -345,12 +347,13 @@ PermLeftQuoBipartitionNC:=function(f,g)
   od;
 
   return PermList(p);
-end;
+end);
 
 # LambdaConjugator: f and g have equal left blocks (rho value)
 # JDM: this will be better in c...
 
-BipartRightBlocksConj:=function(f, g)
+InstallGlobalFunction(BipartRightBlocksConj,
+function(f, g)
   local n, fblocks, gblocks, nr, lookup, next, seen, src, dst, i;
 
   n:=DegreeOfBipartition(f);
@@ -386,12 +389,14 @@ BipartRightBlocksConj:=function(f, g)
   od; 
 
   return MappingPermListList(src, dst);
-end;
+end);
 
 # permutation of indices of signed (connected) blocks of <blocks> under the
 # action of <f> which is assumed to stabilise <blocks>.
 
-PermRightBlocks:=function(blocks, f)
+InstallMethod(PermRightBlocks, "for blocks and bipartition",
+[IsList, IsBipartition],
+function(blocks, f)
   local n, nrblocks, fblocks, fuseit, signed, tab, next, x, i;
 
   n:=DegreeOfBlocks(blocks); # length of partition!!
@@ -414,11 +419,13 @@ PermRightBlocks:=function(blocks, f)
   od;
   
   return MappingPermListList(signed, List(signed, i-> tab[fuseit(i)]));
-end;
+end);
 
 # LambdaInverse
 
 # require InverseLeftBlocks
+
+#HERE
 
 InverseRightBlocks:=function(blocks, f)
   local n, nrblocks, fblocks, fusesign, fuse, sign, fuseit, out, junk, next, tab1, x, nrleft, tab2, i;
