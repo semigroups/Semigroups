@@ -1,0 +1,19 @@
+<Chapter Label="bipartition">
+  <Heading>
+    Bipartitions
+  </Heading>
+
+  PREAMBLE...
+
+  In this chapter we describe the functions in &Semigroups; for creating
+  and manipulating bipartitions. 
+  
+  <Section><Heading>The family and categories of bipartitions</Heading>
+    <#Include Label="IsBipartition">
+    <#Include Label="IsBipartitionCollection">
+    <#Include Label="BipartitionFamily">
+  </Section>
+
+
+</Chapter>
+

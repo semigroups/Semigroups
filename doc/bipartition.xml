@@ -91,26 +91,6 @@
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="PermRightBlocks">
-  <ManSection>
-    <Oper Name="PermRightBlocks" Arg="blocks, f"/>
-    <Returns>A permutation.</Returns>
-    <Description>
-permutation of indices of signed (connected) blocks of blocks under the
- action of f which is assumed to stabilise blocks.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="InverseRightBlocks">
-  <ManSection>
-    <Func Name="InverseRightBlocks" Arg="blocks, f"/>
-    <Returns>A bipartition.</Returns>
-    <Description>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="IdentityBipartition">
   <ManSection>
     <Func Name="IdentityBipartition" Arg="n"/>
@@ -193,66 +173,3 @@ permutation of indices of signed (connected) blocks of blocks under the
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="RightBlocks">
-  <ManSection>
-    <Attr Name="RightBlocks" Arg="f"/>
-    <Returns>The right blocks of a bipartition.</Returns>
-    <Description>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="LeftBlocks">
-  <ManSection>
-    <Attr Name="LeftBlocks" Arg="f"/>
-    <Returns>The left blocks of a bipartition.</Returns>
-    <Description>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="OnRightBlocks">
-  <ManSection>
-    <Func Name="OnRightBlocks" Arg="blocks, f"/>
-    <Returns>The blocks of a bipartition.</Returns>
-    <Description>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="OnLeftBlocks">
-  <ManSection>
-    <Func Name="OnLeftBlocks" Arg="blocks, f"/>
-    <Returns>The blocks of a bipartition.</Returns>
-    <Description>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="ExtRepOfBlocks">
-  <ManSection>
-    <Func Name="ExtRepOfBlocks" Arg="blocks"/>
-    <Func Name="BlocksByExtRep" Arg="list"/>
-    <Returns>A list of integers.</Returns>
-    <Description>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="RankOfBlocks">
-  <ManSection>
-    <Func Name="RankOfBlocks" Arg="blocks"/>
-    <Returns>A non-negative integer.</Returns>
-    <Description>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="DegreeOfBlocks">
-  <ManSection>
-    <Func Name="RankOfBlocks" Arg="blocks"/>
-    <Returns>A non-negative integer.</Returns>
-    <Description>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
