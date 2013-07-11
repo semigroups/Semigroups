@@ -619,11 +619,7 @@ InstallOtherMethod(OneMutable, "for a bipartition",
 
 #
 
-InstallMethod(IdentityBipartition, "for a positive integer",
-InstallOtherMethod(OneMutable, "for a bipartition",
-[IsBipartition], x-> IdentityBipartition(DegreeOfBipartition(x)));
-
-[IsPosInt],
+InstallMethod(IdentityBipartition, "for a positive integer", [IsPosInt],
 function(n)
   local blocks, out, i;
   
