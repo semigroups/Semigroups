@@ -65,7 +65,7 @@
 
 <#GAPDoc Label="IsPermBipartition">
   <ManSection>
-    <Prop Name="IsTransBipartition" Arg="f"/>
+    <Prop Name="IsPermBipartition" Arg="f"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
     </Description>
@@ -103,6 +103,7 @@
 <#GAPDoc Label="RankOfBipartition">
   <ManSection>
     <Attr Name="RankOfBipartition" Arg="f"/>
+    <Attr Name="NrTransverseBlocks" Arg="f"/>
     <Returns>The rank of a bipartition.</Returns>
     <Description>
     </Description>

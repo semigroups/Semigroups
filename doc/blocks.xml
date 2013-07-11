@@ -29,6 +29,15 @@ permutation of indices of signed (connected) blocks of blocks under the
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="InverseLeftBlocks">
+  <ManSection>
+    <Func Name="InverseLeftBlocks" Arg="blocks, f"/>
+    <Returns>A bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="RightBlocks">
   <ManSection>
     <Attr Name="RightBlocks" Arg="f"/>
@@ -68,6 +77,14 @@ permutation of indices of signed (connected) blocks of blocks under the
 <#GAPDoc Label="ExtRepOfBlocks">
   <ManSection>
     <Func Name="ExtRepOfBlocks" Arg="blocks"/>
+    <Returns>A list of integers.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="BlocksByExtRep">
+  <ManSection>
     <Func Name="BlocksByExtRep" Arg="list"/>
     <Returns>A list of integers.</Returns>
     <Description>
@@ -86,10 +103,36 @@ permutation of indices of signed (connected) blocks of blocks under the
 
 <#GAPDoc Label="DegreeOfBlocks">
   <ManSection>
-    <Func Name="RankOfBlocks" Arg="blocks"/>
+    <Func Name="DegreeOfBlocks" Arg="blocks"/>
     <Returns>A non-negative integer.</Returns>
     <Description>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="NrLeftBlocks">
+  <ManSection>
+    <Func Name="NrLeftBlocks" Arg="f"/>
+    <Returns>A non-negative integer.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NrRightBlocks">
+  <ManSection>
+    <Func Name="NrRightBlocks" Arg="f"/>
+    <Returns>A non-negative integer.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NrBlocks">
+  <ManSection>
+    <Func Name="NrBlocks" Arg="f"/>
+    <Returns>A non-negative integer.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
