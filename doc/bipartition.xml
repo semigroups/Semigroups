@@ -211,4 +211,12 @@ permutation of indices of signed (connected) blocks of <blocks> under the
   </ManSection>
 </GAPDoc>
 
+<#GAPDoc Label="ExtRepOfBlocks">
+  <ManSection>
+    <Func Name="OnLeftBlocks" Arg="blocks, f"/>
+    <Returns>The blocks of a bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
 
