@@ -15,6 +15,120 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsComponentObjectRep and IsAttributeStoringRep and
  IsAssociativeElementWithAction));
 
+#operators
+
+InstallMethod(\*, "for a bipartition and bipartition",
+[IsBipartition, IsBipartition], 
+function(a,b)
+  local n, anr, fuse, fuseit, ablocks, bblocks, x, y, tab, cblocks, next, nrleft, c, i;
+  
+  n := DegreeOfBipartition(a);
+  Assert(1,n = DegreeOfBipartition(b));
+  anr := NrBlocks(a);
+  
+  fuse := [1..anr+NrBlocks(b)]; 
+  
+  fuseit := function(i) 
+    while fuse[i] < i do 
+      i := fuse[i]; 
+    od; 
+    return i; 
+  end;
+ 
+  ablocks:=a!.blocks;
+  bblocks:=b!.blocks;
+
+  for i in [1..n] do
+    x := fuseit(ablocks[i+n]);
+    y := fuseit(bblocks[i]+anr);
+    if x <> y then
+      if x < y then
+        fuse[y] := x;
+      else
+        fuse[x] := y;
+      fi;
+    fi;
+  od;
+  
+  tab:=0*fuse;    # A table for the old part numbers
+  cblocks:=EmptyPlist(2*n);
+  next:=0;
+  
+  for i in [1..n] do
+    x := fuseit(ablocks[i]);
+    if tab[x]=0 then
+      next:=next+1;
+      tab[x]:=next;
+    fi;
+    cblocks[i]:=tab[x];
+  od;
+  
+  nrleft:=next;
+
+  for i in [n+1..2*n] do
+    x:=fuseit(bblocks[i]+anr);
+    if tab[x]=0 then
+      next:=next+1;
+      tab[x]:=next;
+    fi;
+    cblocks[i]:=tab[x];
+  od;
+  
+  c:=Objectify(BipartitionType, rec(blocks:=cblocks)); 
+  SetDegreeOfBipartition(c, n);
+  SetNrLeftBlocks(c, nrleft);
+  SetNrBlocks(c, next);
+  return c;
+end);
+
+#
+
+InstallMethod(\*, "for a bipartition and a perm",
+[IsBipartition, IsPerm],
+function(f,g)
+  return f*AsBipartition(g, DegreeOfBipartition(f));
+end);
+
+#
+
+InstallMethod(\*, "for a perm and a bipartition",
+[IsPerm, IsBipartition],
+function(f,g)
+  return AsBipartition(f, DegreeOfBipartition(g))*g;
+end);
+
+#
+
+InstallMethod(\*, "for a bipartition and a transformation",
+[IsBipartition, IsTransformation],
+function(f,g)
+  return f*AsBipartition(g, DegreeOfBipartition(f));
+end);
+
+#
+
+InstallMethod(\*, "for a transformation and a bipartition",
+[IsTransformation, IsBipartition],
+function(f,g)
+  return AsBipartition(f, DegreeOfBipartition(g))*g;
+end);
+
+#
+
+InstallMethod(\*, "for a bipartition and a partial perm",
+[IsBipartition, IsPartialPerm],
+function(f,g)
+  return f*AsBipartition(g, DegreeOfBipartition(f));
+end);
+
+#
+
+InstallMethod(\*, "for a partial perm and a bipartition",
+[IsPartialPerm, IsBipartition],
+function(f,g)
+  return AsBipartition(f, DegreeOfBipartition(g))*g;
+end);
+
 #
 
 InstallMethod(\<, "for a bipartition and bipartition", 
@@ -31,7 +145,28 @@ function(f, g)
   return f!.blocks=g!.blocks;
 end);
 
-#
+# LambdaPerm
+
+InstallGlobalFunction(PermLeftQuoBipartitionNC,
+function(f,g)
+  local n, nr, fblocks, gblocks, p, i;
+
+  n:=DegreeOfBipartition(f);
+  nr:=NrLeftBlocks(f);
+  fblocks:=f!.blocks;
+  gblocks:=g!.blocks;
+  p:=[1..nr];
+
+  for i in [n+1..2*n] do 
+    if gblocks[i]<=nr then 
+      p[gblocks[i]]:=fblocks[i];
+    fi;
+  od;
+
+  return PermList(p);
+end);
+
+# change representations...
 
 InstallMethod(AsTransformation, "for a bipartition", [IsBipartition],
 function(f)
@@ -43,7 +178,7 @@ function(f)
   return AsTransformationNC(f);
 end);
 
-# test me! JDM
+#
 
 InstallMethod(AsTransformationNC, "for a bipartition", [IsBipartition],
 function(f)
@@ -65,56 +200,6 @@ function(f)
     out[i]:=im[blocks[i]];
   od;
   return TransformationNC(out);
-end);
-
-# a bipartition is a transformation if and only if the second row is a
-# permutation of [1..n]
-
-InstallMethod(IsTransBipartition, "for a bipartition",
-[IsBipartition], 
-function(f)
-  local n, blocks, seen, i;
-
-  n:=DegreeOfBipartition(f);
-  blocks:=f!.blocks;
-  seen:=BlistList([1..n], []);
-  for i in [n+1..2*n] do 
-    if blocks[i]>n or seen[blocks[i]] then 
-      return false;
-    fi;
-    seen[blocks[i]]:=true;
-  od;
-
-  return true;
-end);
-
-#
-
-InstallMethod(IsPermBipartition, "for a bipartition",
-[IsBipartition], 
-function(f)
-  local n, blocks, seen, i;
-
-  n:=DegreeOfBipartition(f);
-  blocks:=f!.blocks;
-
-  seen:=BlistList([1..n], []);
-  for i in [1..n] do 
-    if seen[blocks[i]] then 
-      return false;
-    fi;
-    seen[blocks[i]]:=true;
-  od;
-
-  seen:=BlistList([1..n], []);
-  for i in [n+1..2*n] do 
-    if blocks[i]>n or seen[blocks[i]] then 
-      return false;
-    fi;
-    seen[blocks[i]]:=true;
-  od;
-
-  return true;
 end);
 
 #
@@ -177,508 +262,7 @@ function(f)
   return BipartitionByIntRepNC(out);
 end);
 
-#
-
-InstallMethod(BipartitionByIntRepNC, "for a list", [IsList],
-function(blocks)
-  local n, next, seen, nrleft, out, i;
-
-  n:=Length(blocks)/2;
-  next:=0;
-  seen:=BlistList([1..2*n], []);
-
-  for i in [1..n] do 
-    if not seen[blocks[i]] then 
-      next:=next+1;
-      seen[blocks[i]]:=true;
-    fi;
-  od;
-  
-  nrleft:=next;
-  for i in [n+1..2*n] do 
-    if not seen[blocks[i]] then 
-      next:=next+1;
-      seen[blocks[i]]:=true;
-    fi;
-  od;
-
-  out:=Objectify(BipartitionType, rec(blocks:=blocks));
-
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrleft);
-  SetNrBlocks(out, next);
-  return out;
-end);
-
-#
-
-InstallMethod(BipartitionByIntRep, "for a list", [IsList],
-function(blocks)
-  local n, next, seen, nrleft, out, i;
-
-  n:=Length(blocks);
-  if not IsEvenInt(n) then 
-    Error("the length of <blocks> must be an even integer,");
-    return;
-  fi;
-  
-  n:=n/2;
-  if not ForAll(blocks, IsPosInt) then 
-    Error("the elements of <blocks> must be positive integers,");
-    return;
-  fi;
-
-  next:=0;
-  seen:=BlistList([1..2*n], []);
-
-  for i in [1..n] do 
-    if not seen[blocks[i]] then 
-      next:=next+1;
-      if blocks[i]<>next then 
-        Error("expected ", next, " but found ", blocks[i], ",");
-        return;
-      fi;
-      seen[blocks[i]]:=true;
-    fi;
-  od;
-  
-  nrleft:=next;
-
-  for i in [n+1..2*n] do 
-    if not seen[blocks[i]] then 
-      next:=next+1;
-      if blocks[i]<>next then 
-        Error("expected ", next, " but found ", blocks[i], ",");
-        return;
-      fi;
-      seen[blocks[i]]:=true;
-    fi;
-  od;
-
-  out:=Objectify(BipartitionType, rec(blocks:=blocks));
-
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrleft);
-  SetNrBlocks(out, next);
-  return out;
-end);
-
-# fuse <blocks> with <f>. <sign> should be true to keep track of signed and
-# unsigned blocks and false not to keep track.
-
-InstallGlobalFunction(FuseRightBlocks,
-function(blocks, f, sign)
-  local n, fblocks, nrblocks, nrfblocks, fuse, fuseit, x, y, i;
-  
-  n:=DegreeOfBlocks(blocks);
-  fblocks:=f!.blocks;
-  nrblocks:=blocks[1];
-  nrfblocks:=NrBlocks(f);
-
-  fuse:=[1..nrblocks+nrfblocks];
-  fuseit := function(i) 
-    while fuse[i] < i do 
-      i := fuse[i]; 
-    od; 
-    return i; 
-  end;
-  
-  if sign then 
-    sign:=EmptyPlist(nrfblocks+nrblocks);
-
-    for i in [1..nrblocks] do
-      sign[i]:=blocks[n+1+i];
-    od;
-    for i in [nrblocks+1..nrfblocks+nrblocks] do
-      sign[i]:=0;
-    od;
-    
-    for i in [1..n] do
-      x := fuseit(blocks[i+1]);
-      y := fuseit(fblocks[i]+nrblocks);
-      if x <> y then
-        if x < y then
-          fuse[y] := x;
-          if sign[y]=1 then
-            sign[x]:=1;
-          fi;
-        else
-          fuse[x] := y;
-          if sign[x]=1 then
-            sign[y]:=1;
-          fi;
-        fi;
-      fi;
-    od;
-    return [fuseit, sign];
-  else 
-    for i in [1..n] do
-      x := fuseit(blocks[i+1]);
-      y := fuseit(fblocks[i]+nrblocks);
-      if x <> y then
-        if x < y then
-          fuse[y] := x;
-        else
-          fuse[x] := y;
-        fi;
-      fi;
-    od;
-    return fuseit;
-  fi;
-end);
-
-# 
-
-InstallGlobalFunction(FuseLeftBlocks,
-function(blocks, f)
-  local n, fblocks, nrblocks, nrfblocks, fuse, fuseit, x, y, i;
-  
-  n:=DegreeOfBlocks(blocks);
-  fblocks:=f!.blocks;
-  nrblocks:=blocks[1];
-  nrfblocks:=NrBlocks(f);
-
-  fuse:=[1..nrblocks+nrfblocks];
-  fuseit := function(i) 
-    while fuse[i] < i do 
-      i := fuse[i]; 
-    od; 
-    return i; 
-  end;
-
-  for i in [1..n] do
-    x := fuseit(blocks[i+1]);
-    y := fuseit(fblocks[n+i]+nrblocks);
-    if x <> y then
-      if x < y then
-        fuse[y] := x;
-      else
-        fuse[x] := y;
-      fi;
-    fi;
-  od;
-  return fuseit;
-end);
-
-# LambdaPerm
-
-InstallGlobalFunction(PermLeftQuoBipartitionNC,
-function(f,g)
-  local n, nr, fblocks, gblocks, p, i;
-
-  n:=DegreeOfBipartition(f);
-  nr:=NrLeftBlocks(f);
-  fblocks:=f!.blocks;
-  gblocks:=g!.blocks;
-  p:=[1..nr];
-
-  for i in [n+1..2*n] do 
-    if gblocks[i]<=nr then 
-      p[gblocks[i]]:=fblocks[i];
-    fi;
-  od;
-
-  return PermList(p);
-end);
-
-# LambdaConjugator: f and g have equal left blocks (rho value)
-# JDM: this will be better in c...
-
-InstallGlobalFunction(BipartRightBlocksConj,
-function(f, g)
-  local n, fblocks, gblocks, nr, lookup, next, seen, src, dst, i;
-
-  n:=DegreeOfBipartition(f);
-  fblocks:=f!.blocks;     
-  gblocks:=g!.blocks;
-  nr:=NrLeftBlocks(f);
-
-  lookup:=[];
-  next:=0; 
-  seen:=BlistList([1..2*n], []);
-  for i in [n+1..2*n] do 
-    if not seen[gblocks[i]] then 
-      next:=next+1; 
-      seen[gblocks[i]]:=true;
-      if gblocks[i]<=nr then #connected block
-        lookup[gblocks[i]]:=next;
-      fi;
-    fi;
-  od;
-  
-  src:=[]; dst:=[];
-  next:=0; 
-  seen:=BlistList([1..2*n], []);
-  for i in [n+1..2*n] do 
-    if not seen[fblocks[i]] then 
-      next:=next+1; 
-      seen[fblocks[i]]:=true;
-      if fblocks[i]<=nr then #connected block
-        Add(src, next);
-        Add(dst, lookup[fblocks[i]]);
-      fi;
-    fi;
-  od; 
-
-  return MappingPermListList(src, dst);
-end);
-
-# permutation of indices of signed (connected) blocks of <blocks> under the
-# action of <f> which is assumed to stabilise <blocks>.
-
-InstallMethod(PermRightBlocks, "for blocks and bipartition",
-[IsList, IsBipartition],
-function(blocks, f)
-  local n, nrblocks, fblocks, fuseit, signed, tab, next, x, i;
-
-  n:=DegreeOfBlocks(blocks); # length of partition!!
-  nrblocks:=blocks[1];
-  fblocks:=f!.blocks;
-
-  fuseit:=FuseRightBlocks(blocks, f, false); 
-  signed:=[]; tab:=[]; next:=0;
-
-  # JDM could stop here after reaching the maximum signed class of <blocks>
-  for i in [n+1..2*n] do 
-    if blocks[n+1+blocks[i-n]]=1 then 
-      Add(signed, blocks[i-n]);
-    fi;
-    x:=fuseit(fblocks[i]+nrblocks);
-    if not IsBound(tab[x]) then 
-      next:=next+1;
-      tab[x]:=next;
-    fi;
-  od;
-  
-  return MappingPermListList(signed, List(signed, i-> tab[fuseit(i)]));
-end);
-
-# LambdaInverse - fuse <blocks> with the left blocks of <f> keeping track of
-# the signs of the fused classes. 
-# 
-# The left blocks of the output are then:
-# 1) disconnected right blocks of <f> (before fusing)
-# 2) disconnected right blocks of <f> (after fusing) 
-# 3) connected right blocks of <f> (after fusing)
-# both types 1+2 of the disconnected blocks are unioned into one left block of
-# the output with index <junk>. The connected blocks 3 of <f> are given the next
-# available index, if they have not been seen before. The table <tab1> keeps
-# track of which connected right blocks of <f> have been seen before and the
-# corresponding index in the output, i.e. <tab1[x]> is the index in <out> of
-# the fused block with index <x>.
-
-# The right blocks of the output are:
-# 1) disconnected blocks of <blocks>; or
-# 2) connected blocks of <blocks>.
-# The disconnected blocks 1 are given the next available index, if they have
-# not been seen before. The table <tab2> keeps
-# track of which disconnected blocks of <blocks> have been seen before and the
-# corresponding index in the output, i.e. <tab2[x]> is the index in <out> of
-# the disconnected block of <blocks> with index <x>. The connected blocks 2 of
-# <blocks> is given the index <tab1[x]> where <x> is the fused index of the
-# block.
-
-InstallGlobalFunction(InverseRightBlocks,
-function(blocks, f)
-  local n, nrblocks, fblocks, fusesign, fuse, sign, fuseit, out, junk, next,
-   tab1, x, nrleft, tab2, i;
-
-  n:=DegreeOfBlocks(blocks); # length of partition!!
-  nrblocks:=blocks[1];
-  fblocks:=f!.blocks;
-  
-  fusesign:=FuseRightBlocks(blocks, f, true); 
-  fuseit:=fusesign[1];
-  sign:=fusesign[2];
-
-  out:=[]; junk:=0; next:=0;
- 
-  # find the left blocks of the output
-  tab1:=[];
-  for i in [1..n] do 
-    if fblocks[i+n]>NrLeftBlocks(f) then #disconnected before fusing
-      if junk=0 then 
-        next:=next+1;
-        junk:=next;
-      fi;
-      out[i]:=junk;
-    else
-      x:=fuseit(fblocks[i+n]+nrblocks);
-      if sign[x]=0 then #disconnected after fusing
-        if junk=0 then 
-          next:=next+1;
-          junk:=next;
-        fi;
-        out[i]:=junk;
-      else              # connected block
-        if not IsBound(tab1[x]) then 
-          next:=next+1;
-          tab1[x]:=next;
-        fi;
-        out[i]:=tab1[x];
-      fi;
-    fi;
-  od;
-  nrleft:=next;
-  
-  # find the right blocks of the output
-  tab2:=[];
-  for i in [n+1..2*n] do 
-    x:=blocks[i-n+1];
-    if blocks[n+1+x]=1 then 
-      x:=fuseit(x);
-      out[i]:=tab1[x];
-    else
-      if not IsBound(tab2[x]) then 
-        next:=next+1;
-        tab2[x]:=next;
-      fi;
-      out[i]:=tab2[x];
-    fi;
-  od;
-
-  out:=Objectify(BipartitionType, rec(blocks:=out));
-
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrleft);
-  SetNrBlocks(out, next);
-  return out;
-end);
-
-# RhoInverse
-
-InstallGlobalFunction(InverseLeftBlocks,
-function(blocks, f)
-  local n, nrblocks, fblocks, fuseit, out, junk, x, i;
-
-  n:=DegreeOfBlocks(blocks); # length of partition!!
-  nrblocks:=blocks[1];
-  fblocks:=f!.blocks;
-  
-  fuseit:=FuseLeftBlocks(blocks, f); 
-  out:=[];
- 
-  # find the left blocks of the output
-  for i in [1..n] do
-    out[i]:=blocks[i+1];
-    x:=fuseit(fblocks[i]+nrblocks);
-    if x>blocks[1] or blocks[n+1+x]=0 then 
-      out[i+n]:=blocks[1]+1; #junk
-    else
-      out[i+n]:=x;
-    fi;
-  od;    
-
-  out:=Objectify(BipartitionType, rec(blocks:=out));
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, blocks[1]);
-  SetNrBlocks(out, blocks[1]+1);
-  return out;
-end);
-#
-
-InstallOtherMethod(OneMutable, "for a bipartition",
-[IsBipartition], x-> IdentityBipartition(DegreeOfBipartition(x)));
-
-#
-
-InstallMethod(IdentityBipartition, "for a positive integer",
-[IsPosInt],
-function(n)
-  local blocks, out, i;
-  
-  blocks:=EmptyPlist(2*n);
-  for i in [1..n] do 
-    blocks[i]:=i;
-    blocks[i+n]:=i;
-  od;
-  
-  out:=Objectify(BipartitionType, rec(blocks:=blocks));
-
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, n);
-  SetNrBlocks(out, n);
-
-  return out;
-end);
-
-#
-
-InstallMethod(RankOfBipartition, "for a bipartition",
-[IsBipartition],
-function(f)
-  return Number(TransverseBlocksLookup(f), x-> x=true);
-end);
-
-# c function
-
-InstallGlobalFunction(Bipartition, 
-function(classes)
-  local n, copy, i, j;
- 
-  if not ForAll(classes, IsList) or not ForAll(classes, IsDuplicateFree) then 
-    Error("<classes> must consist of duplicate-free lists,");
-    return;
-  fi;
-
-  n:=Sum(List(classes, Length))/2;
-  
-  if not Union(classes)=Concatenation(Set(-1*[1..n]), [1..n]) then
-    Error("the union of <classes> must be [-", n, "..-1,1..", n, "],");
-    return;
-  fi;
-
-  copy:=StructuralCopy(classes);
-  
-  for i in [1..Length(copy)] do
-    for j in [1..Length(copy[i])] do 
-      if copy[i][j]<0 then 
-        copy[i][j]:=AbsInt(copy[i][j])+n;
-      fi;
-    od;
-  od;
-  
-  Perform(copy, Sort);
-  Sort(copy);
-
-  for i in [1..Length(copy)] do
-    for j in [1..Length(copy[i])] do 
-      if copy[i][j]>n then 
-        copy[i][j]:=-copy[i][j]+n;
-      fi;
-    od;
-  od;
-  return BipartitionNC(copy);
-end);
-
-#
-
-InstallGlobalFunction(BipartitionNC, 
-function(classes)
-  local list, n, nrker, out, i, j;
-
-  list:=[];
-  n:=Sum(List(classes, Length))/2;
-
-  for i in [1..Length(classes)] do
-    for j in classes[i] do 
-      if j<0 then 
-        list[AbsInt(j)+n]:=i;
-      else 
-        nrker:=i;
-        list[j]:=i;
-      fi;
-    od;
-  od;
-  out:=Objectify(BipartitionType, rec(blocks:=list)); 
-  
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrker);
-  SetExtRepBipartition(out, classes);
-  SetNrBlocks(out, Length(classes));
-
-  return out;
-end);
+#properties/attributes
 
 # linear - attribute
 
@@ -708,6 +292,14 @@ function(f)
   return out;
 end);
 
+#
+
+InstallMethod(RankOfBipartition, "for a bipartition",
+[IsBipartition],
+function(f)
+  return Number(TransverseBlocksLookup(f), x-> x=true);
+end);
+
 # return the classes of <f> as a list of lists
 
 InstallMethod(ExtRepBipartition, "for a bipartition",
@@ -733,22 +325,57 @@ function(f)
   return ext;
 end);
 
-#JDM proper string method!
+# a bipartition is a transformation if and only if the second row is a
+# permutation of [1..n]
 
-InstallMethod(PrintObj, "for a bipartition",
-[IsBipartition],
+InstallMethod(IsTransBipartition, "for a bipartition",
+[IsBipartition], 
 function(f)
-  local ext, i;
+  local n, blocks, seen, i;
 
-  Print("<bipartition: ");
-  ext:=ExtRepBipartition(f);
-  Print(ext[1]);
-  for i in [2..Length(ext)] do 
-    Print(", ", ext[i]);
+  n:=DegreeOfBipartition(f);
+  blocks:=f!.blocks;
+  seen:=BlistList([1..n], []);
+  for i in [n+1..2*n] do 
+    if blocks[i]>n or seen[blocks[i]] then 
+      return false;
+    fi;
+    seen[blocks[i]]:=true;
   od;
-  Print(">");
-  return;
+
+  return true;
 end);
+
+#
+
+InstallMethod(IsPermBipartition, "for a bipartition",
+[IsBipartition], 
+function(f)
+  local n, blocks, seen, i;
+
+  n:=DegreeOfBipartition(f);
+  blocks:=f!.blocks;
+
+  seen:=BlistList([1..n], []);
+  for i in [1..n] do 
+    if seen[blocks[i]] then 
+      return false;
+    fi;
+    seen[blocks[i]]:=true;
+  od;
+
+  seen:=BlistList([1..n], []);
+  for i in [n+1..2*n] do 
+    if blocks[i]>n or seen[blocks[i]] then 
+      return false;
+    fi;
+    seen[blocks[i]]:=true;
+  od;
+
+  return true;
+end);
+
+# creating
 
 # xx^* - linear - 2*degree - attribute
 
@@ -915,467 +542,234 @@ function(n)
   return out;
 end);
 
-#
+# c function
 
-InstallMethod(RightBlocks, "for a bipartition", [IsBipartition],
-function(f)
-  local n, blocks, tab, out, nrblocks, i;
-  
-  n:=DegreeOfBipartition(f);
-  blocks:=f!.blocks;
-  tab:=EmptyPlist(2*n);
-  out:=[];
-  nrblocks:=0;
-
-  for i in [n+1..2*n] do 
-    if not IsBound(tab[blocks[i]]) then 
-      nrblocks:=nrblocks+1;
-      tab[blocks[i]]:=nrblocks;
-      if blocks[i]<=NrLeftBlocks(f) then 
-        out[n+1+nrblocks]:=1; #signed
-      else 
-        out[n+1+nrblocks]:=0; #unsigned
-      fi;
-    fi;
-    out[i-n+1]:=tab[blocks[i]];
-  od;
-  out[1]:=nrblocks;
-  return out;
-end);
-
-# could use TransverseBlocksLookup if known here JDM
-
-InstallMethod(LeftBlocks, "for a bipartition", [IsBipartition],
-function(f)
-  local n, blocks, tab, out, nrblocks, i;
-  
-  n:=DegreeOfBipartition(f);
-  blocks:=f!.blocks;
-  tab:=List([1..n], x-> false);
-  out:=EmptyPlist(n+2);
-  out[1]:=0;
-  out[n+2]:=[];
-  nrblocks:=0;
-
-  for i in [1..n] do 
-    out[i+1]:=blocks[i];
-    if not tab[blocks[i]] then 
-      out[1]:=out[1]+1;
-      out[n+1+blocks[i]]:=0;
-      tab[blocks[i]]:=true;
-    fi;
-  od;
-  
-  for i in [n+1..2*n] do 
-    if blocks[i]<=out[1] then #transverse block!
-      out[n+1+blocks[i]]:=1;
-    fi;
-  od;
-
-  return out;
-end);
-
-# JDM use FuseRightBlocks here!
-
-InstallGlobalFunction(OnRightBlocks, 
-function(blocks, f)
-  local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out,
-   next, i;
-
-  n:=DegreeOfBlocks(blocks); # length of partition!!
-  nrblocks:=blocks[1];
-  
-  if nrblocks=0 then   # special case for dummy/seed 
-    return RightBlocks(f);
-  fi;
-
-  nrfblocks:=NrBlocks(f); 
-  fblocks:=f!.blocks;
-  
-  fuse:=[1..nrblocks+nrfblocks];
-  sign:=EmptyPlist(nrfblocks+nrblocks);
-
-  for i in [1..nrblocks] do 
-    sign[i]:=blocks[n+1+i];
-  od;
-  for i in [nrblocks+1..nrfblocks+nrblocks] do 
-    sign[i]:=0;
-  od;
-
-  fuseit := function(i) 
-    while fuse[i] < i do 
-      i := fuse[i]; 
-    od; 
-    return i; 
-  end;
-  
-  for i in [1..n] do
-    x := fuseit(blocks[i+1]);
-    y := fuseit(fblocks[i]+nrblocks);
-    if x <> y then
-      if x < y then
-        fuse[y] := x;
-        if sign[y]=1 then 
-          sign[x]:=1;
-        fi;
-      else
-        fuse[x] := y;
-        if sign[x]=1 then 
-          sign[y]:=1;
-        fi;
-      fi;
-    fi;
-  od;
-
-  tab:=0*fuse;
-  out:=[];
-  next:=0;
-  
-  for i in [n+1..2*n] do
-    x := fuseit(fblocks[i]+nrblocks);
-    if tab[x]=0 then
-      next:=next+1;
-      tab[x]:=next;
-    fi;
-    out[i-n+1]:=tab[x];
-    out[n+1+tab[x]]:=sign[x];
-  od;
-  out[1]:=next;
-  return out;
-end);
-
-#
-
-InstallGlobalFunction(OnLeftBlocks, 
-function(blocks, f)
-  local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out, next, i;
-
-  n:=DegreeOfBlocks(blocks);  # length of <blocks>
-  nrblocks:=blocks[1];
-  
-  if nrblocks=0 then 
-    return LeftBlocks(f);
-  fi;
-
-  nrfblocks:=NrBlocks(f);
-  fblocks:=f!.blocks;
-  
-  fuse:=[1..nrfblocks+nrblocks];
-  sign:=EmptyPlist(nrfblocks+nrblocks);
-
-  for i in [1..nrfblocks] do 
-    sign[i]:=0;
-  od;
-  for i in [1..nrblocks] do 
-    sign[i+nrfblocks]:=blocks[n+1+i];
-  od;
-
-  fuseit := function(i) 
-    while fuse[i] < i do 
-      i := fuse[i]; 
-    od; 
-    return i; 
-  end;
-  
-  for i in [1..n] do
-    x := fuseit(fblocks[n+i]);
-    y := fuseit(blocks[i+1]+nrfblocks);
-    if x <> y then
-      if x < y then
-        fuse[y] := x;
-        if sign[y]=1 then 
-          sign[x]:=1; 
-        fi;
-      else
-        fuse[x] := y;
-        if sign[x]=1 then 
-          sign[y]:=1;
-        fi;
-      fi;
-    fi;
-  od;
-
-  tab:=0*fuse;
-  out:=[];
-  next:=0;
-  
-  for i in [1..n] do
-    x := fuseit(fblocks[i]);
-    if tab[x]=0 then
-      next := next + 1;
-      tab[x] := next;
-    fi;
-    out[i+1]:=tab[x];
-    out[n+1+tab[x]]:=sign[x];
-  od;
-  out[1]:=next;
-  return out;
-end);
-
-#
-
-InstallGlobalFunction(ExtRepOfBlocks,
-function(blocks)
-  local n, sign, out, i;
-  
-  n:=DegreeOfBlocks(blocks);
-  out:=EmptyPlist(n);
-  for i in [1..n] do 
-    out[i]:=blocks[i+1];
-    if blocks[n+1+blocks[i+1]]=0 then 
-      out[i]:=out[i]*-1;
-    fi;
-  od;
-    
-  return out;
-end);
-
-#
-
-InstallGlobalFunction(BlocksByExtRep,
-function(ext)
-  local n, tab, out, nr, i;
-  
-  n:=Length(ext);
-  tab:=EmptyPlist(n);
-  out:=EmptyPlist(n+2);
-  out[n+2]:=[];
-  nr:=0;
-  
-  for i in [1..n] do
-    if ext[i]<0 then 
-      out[i+1]:=-1*ext[i];
-      out[n+1+out[i+1]]:=0;
-    else
-      out[i+1]:=ext[i];
-      out[n+1+ext[i]]:=1;
-    fi;
-    if not IsBound(tab[out[i+1]]) then 
-      tab[out[i+1]]:=true;
-      nr:=nr+1;
-    fi;
-  od;
-
-  out[1]:=nr;
-  return out;
-end);
-
-#
-
-InstallGlobalFunction(RankOfBlocks, 
-function(blocks)
-  local n, rank, i;
-  
-  n:=DegreeOfBlocks(blocks);
-  rank:=0;
-  for i in [1..blocks[1]] do 
-    if blocks[n+1+i]=1 then 
-      rank:=rank+1;
-    fi;
-  od;
-  return rank;
-end);
-
-#
-
-InstallGlobalFunction(DegreeOfBlocks,
-function(blocks)
-  return Length(blocks)-blocks[1]-1;
-end);
-
-#
-
-
-InstallMethod(\*, "for a bipartition and bipartition",
-[IsBipartition, IsBipartition], 
-function(a,b)
-  local n, anr, fuse, fuseit, ablocks, bblocks, x, y, tab, cblocks, next, nrleft, c, i;
-  
-  n := DegreeOfBipartition(a);
-  Assert(1,n = DegreeOfBipartition(b));
-  anr := NrBlocks(a);
-  
-  fuse := [1..anr+NrBlocks(b)]; 
-  
-  fuseit := function(i) 
-    while fuse[i] < i do 
-      i := fuse[i]; 
-    od; 
-    return i; 
-  end;
+InstallGlobalFunction(Bipartition, 
+function(classes)
+  local n, copy, i, j;
  
-  ablocks:=a!.blocks;
-  bblocks:=b!.blocks;
+  if not ForAll(classes, IsList) or not ForAll(classes, IsDuplicateFree) then 
+    Error("<classes> must consist of duplicate-free lists,");
+    return;
+  fi;
 
-  for i in [1..n] do
-    x := fuseit(ablocks[i+n]);
-    y := fuseit(bblocks[i]+anr);
-    if x <> y then
-      if x < y then
-        fuse[y] := x;
-      else
-        fuse[x] := y;
+  n:=Sum(List(classes, Length))/2;
+  
+  if not Union(classes)=Concatenation(Set(-1*[1..n]), [1..n]) then
+    Error("the union of <classes> must be [-", n, "..-1,1..", n, "],");
+    return;
+  fi;
+
+  copy:=StructuralCopy(classes);
+  
+  for i in [1..Length(copy)] do
+    for j in [1..Length(copy[i])] do 
+      if copy[i][j]<0 then 
+        copy[i][j]:=AbsInt(copy[i][j])+n;
       fi;
+    od;
+  od;
+  
+  Perform(copy, Sort);
+  Sort(copy);
+
+  for i in [1..Length(copy)] do
+    for j in [1..Length(copy[i])] do 
+      if copy[i][j]>n then 
+        copy[i][j]:=-copy[i][j]+n;
+      fi;
+    od;
+  od;
+  return BipartitionNC(copy);
+end);
+
+#
+
+InstallGlobalFunction(BipartitionNC, 
+function(classes)
+  local list, n, nrker, out, i, j;
+
+  list:=[];
+  n:=Sum(List(classes, Length))/2;
+
+  for i in [1..Length(classes)] do
+    for j in classes[i] do 
+      if j<0 then 
+        list[AbsInt(j)+n]:=i;
+      else 
+        nrker:=i;
+        list[j]:=i;
+      fi;
+    od;
+  od;
+  out:=Objectify(BipartitionType, rec(blocks:=list)); 
+  
+  SetDegreeOfBipartition(out, n);
+  SetNrLeftBlocks(out, nrker);
+  SetExtRepBipartition(out, classes);
+  SetNrBlocks(out, Length(classes));
+
+  return out;
+end);
+
+#
+
+InstallOtherMethod(OneMutable, "for a bipartition",
+[IsBipartition], x-> IdentityBipartition(DegreeOfBipartition(x)));
+
+#
+
+InstallMethod(IdentityBipartition, "for a positive integer",
+InstallOtherMethod(OneMutable, "for a bipartition",
+[IsBipartition], x-> IdentityBipartition(DegreeOfBipartition(x)));
+
+[IsPosInt],
+function(n)
+  local blocks, out, i;
+  
+  blocks:=EmptyPlist(2*n);
+  for i in [1..n] do 
+    blocks[i]:=i;
+    blocks[i+n]:=i;
+  od;
+  
+  out:=Objectify(BipartitionType, rec(blocks:=blocks));
+
+  SetDegreeOfBipartition(out, n);
+  SetNrLeftBlocks(out, n);
+  SetNrBlocks(out, n);
+
+  return out;
+end);
+
+#
+
+InstallMethod(BipartitionByIntRepNC, "for a list", [IsList],
+function(blocks)
+  local n, next, seen, nrleft, out, i;
+
+  n:=Length(blocks)/2;
+  next:=0;
+  seen:=BlistList([1..2*n], []);
+
+  for i in [1..n] do 
+    if not seen[blocks[i]] then 
+      next:=next+1;
+      seen[blocks[i]]:=true;
     fi;
   od;
   
-  tab:=0*fuse;    # A table for the old part numbers
-  cblocks:=EmptyPlist(2*n);
-  next:=0;
-  
-  for i in [1..n] do
-    x := fuseit(ablocks[i]);
-    if tab[x]=0 then
+  nrleft:=next;
+  for i in [n+1..2*n] do 
+    if not seen[blocks[i]] then 
       next:=next+1;
-      tab[x]:=next;
+      seen[blocks[i]]:=true;
     fi;
-    cblocks[i]:=tab[x];
+  od;
+
+  out:=Objectify(BipartitionType, rec(blocks:=blocks));
+
+  SetDegreeOfBipartition(out, n);
+  SetNrLeftBlocks(out, nrleft);
+  SetNrBlocks(out, next);
+  return out;
+end);
+
+#
+
+InstallMethod(BipartitionByIntRep, "for a list", [IsList],
+function(blocks)
+  local n, next, seen, nrleft, out, i;
+
+  n:=Length(blocks);
+  if not IsEvenInt(n) then 
+    Error("the length of <blocks> must be an even integer,");
+    return;
+  fi;
+  
+  n:=n/2;
+  if not ForAll(blocks, IsPosInt) then 
+    Error("the elements of <blocks> must be positive integers,");
+    return;
+  fi;
+
+  next:=0;
+  seen:=BlistList([1..2*n], []);
+
+  for i in [1..n] do 
+    if not seen[blocks[i]] then 
+      next:=next+1;
+      if blocks[i]<>next then 
+        Error("expected ", next, " but found ", blocks[i], ",");
+        return;
+      fi;
+      seen[blocks[i]]:=true;
+    fi;
   od;
   
   nrleft:=next;
 
-  for i in [n+1..2*n] do
-    x:=fuseit(bblocks[i]+anr);
-    if tab[x]=0 then
+  for i in [n+1..2*n] do 
+    if not seen[blocks[i]] then 
       next:=next+1;
-      tab[x]:=next;
-    fi;
-    cblocks[i]:=tab[x];
-  od;
-  
-  c:=Objectify(BipartitionType, rec(blocks:=cblocks)); 
-  SetDegreeOfBipartition(c, n);
-  SetNrLeftBlocks(c, nrleft);
-  SetNrBlocks(c, next);
-  return c;
-end);
-
-InstallGlobalFunction(BlocksIdempotentTester,
-function(lambda, rho)
-  local n, lambdanr, rhonr, fuse, fuseit, sign, x, y, seen, i;
-
-  if DegreeOfBlocks(lambda)<>DegreeOfBlocks(rho) then 
-    Error("the degrees of the blocks <lambda> and <rho> must be equal,");
-    return;
-  fi;
-
-  if RankOfBlocks(lambda)<>RankOfBlocks(rho) then 
-    return false;
-  fi;
-
-  n:=DegreeOfBlocks(lambda);
-  lambdanr:=lambda[1]; 
-  rhonr:=rho[1];
-
-  fuse:=[1..lambdanr+rhonr];
-  fuseit := function(i) 
-    while fuse[i] < i do 
-      i := fuse[i]; 
-    od; 
-    return i; 
-  end;
-  
-  sign:=[1..lambdanr]*0;
-  for i in [lambdanr+1..lambdanr+rhonr] do #copy the signs from <rho>
-    sign[i]:=rho[n+1+i-lambdanr]; 
-  od;
-  
-  for i in [1..n] do
-    x := fuseit(lambda[i+1]);
-    y := fuseit(rho[i+1]+lambdanr);
-    if x <> y then
-      if x < y then
-        fuse[y] := x;
-        if sign[y]=1 then
-          sign[x]:=1;
-        fi;
-      else
-        fuse[x] := y;
-        if sign[x]=1 then 
-          sign[y]:=1;
-        fi;
+      if blocks[i]<>next then 
+        Error("expected ", next, " but found ", blocks[i], ",");
+        return;
       fi;
+      seen[blocks[i]]:=true;
     fi;
   od;
 
-  #check if we are injective on signed classes of <lambda> and that the fused
-  #blocks are also signed. 
+  out:=Objectify(BipartitionType, rec(blocks:=blocks));
 
-  seen:=BlistList([1..lambdanr], []);
-  for i in [1..lambdanr] do 
-    if lambda[n+1+i]=1 then # is block <i> a signed block?
-      x:=fuseit(i);
-      if seen[x] or sign[x]=0 then 
-        return false;
-      fi;
-      seen[x]:=true;
-    fi;
-  od;
-  return true;
-end);
-
-# assumes that BlocksIdempotentTester returns true!
-
-InstallGlobalFunction(BlocksIdempotentCreator,
-function(lambda, rho)
-  local n, lambdanr, rhonr, fuse, fuseit, x, y, tab1, tab2, out, next, i;
-
-  n:=DegreeOfBlocks(lambda);
-  lambdanr:=lambda[1]; 
-  rhonr:=rho[1];
-
-  fuse:=[1..lambdanr+rhonr];
-  fuseit := function(i) 
-    while fuse[i] < i do 
-      i := fuse[i]; 
-    od; 
-    return i; 
-  end;
-  
-  for i in [1..n] do
-    x := fuseit(lambda[i+1]);
-    y := fuseit(rho[i+1]+lambdanr);
-    if x <> y then
-      if x < y then
-        fuse[y] := x;
-      else
-        fuse[x] := y;
-      fi;
-    fi;
-  od;
-
-  tab1:=EmptyPlist(lambdanr);
-
-  #find new names for the signed blocks of rho
-  for i in [1..rhonr] do 
-    if rho[n+1+i]=1 then 
-      tab1[fuseit(i+lambdanr)]:=i;
-    fi;
-  od;
-  
-  tab2:=EmptyPlist(lambdanr);
-  out:=EmptyPlist(2*n);
-  next:=rho[1];
-  
-  for i in [1..n] do 
-    out[i]:=rho[i+1];
-    if lambda[n+1+lambda[i+1]]=1 then 
-      out[i+n]:=tab1[fuseit(lambda[i+1])];
-    else
-      if not IsBound(tab2[lambda[i+1]]) then 
-        next:=next+1;
-        tab2[lambda[i+1]]:=next;
-      fi;
-      out[i+n]:=tab2[lambda[i+1]];
-    fi;
-  od;
-
-  out:=Objectify(BipartitionType, rec(blocks:=out)); 
   SetDegreeOfBipartition(out, n);
-  SetRankOfBipartition(out, RankOfBlocks(rho));
-  SetNrLeftBlocks(out, rho[1]);
+  SetNrLeftBlocks(out, nrleft);
   SetNrBlocks(out, next);
   return out;
+end);
+
+#technical
+
+# LambdaConjugator: f and g have equal left blocks (rho value)
+# JDM: this will be better in c...
+
+InstallGlobalFunction(BipartRightBlocksConj,
+function(f, g)
+  local n, fblocks, gblocks, nr, lookup, next, seen, src, dst, i;
+
+  n:=DegreeOfBipartition(f);
+  fblocks:=f!.blocks;     
+  gblocks:=g!.blocks;
+  nr:=NrLeftBlocks(f);
+
+  lookup:=[];
+  next:=0; 
+  seen:=BlistList([1..2*n], []);
+  for i in [n+1..2*n] do 
+    if not seen[gblocks[i]] then 
+      next:=next+1; 
+      seen[gblocks[i]]:=true;
+      if gblocks[i]<=nr then #connected block
+        lookup[gblocks[i]]:=next;
+      fi;
+    fi;
+  od;
+  
+  src:=[]; dst:=[];
+  next:=0; 
+  seen:=BlistList([1..2*n], []);
+  for i in [n+1..2*n] do 
+    if not seen[fblocks[i]] then 
+      next:=next+1; 
+      seen[fblocks[i]]:=true;
+      if fblocks[i]<=nr then #connected block
+        Add(src, next);
+        Add(dst, lookup[fblocks[i]]);
+      fi;
+    fi;
+  od; 
+
+  return MappingPermListList(src, dst);
 end);
 
 # StabiliserAction
@@ -1428,26 +822,22 @@ function(f, p)
   return out;
 end);
 
-#
+#view/print/display
 
-InstallMethod(DegreeOfBipartitionCollection, "for a bipartition collection",
-[IsBipartitionCollection], 
-function(coll)
-  local deg;
+InstallMethod(ViewObj, "for a bipartition",
+[IsBipartition],
+function(f)
+  local ext, i;
 
-  if IsBipartitionSemigroup(coll) then 
-    return DegreeOfBipartitionSemigroup(coll);
-  fi;
-  
-  deg:=DegreeOfBipartition(coll[1]);
-  if not ForAll(coll, x-> DegreeOfBipartition(x)=deg) then 
-    Error("usage: collection of bipartitions of equal degree,");
-    return;
-  fi;
-  
-  return deg;
+  Print("<bipartition: ");
+  ext:=ExtRepBipartition(f);
+  Print(ext[1]);
+  for i in [2..Length(ext)] do 
+    Print(", ", ext[i]);
+  od;
+  Print(">");
+  return;
 end);
-
 
 #
 
@@ -1478,53 +868,26 @@ function(coll)
   return;
 end);
 
-#
+#collections
 
-InstallMethod(\*, "for a bipartition and a perm",
-[IsBipartition, IsPerm],
-function(f,g)
-  return f*AsBipartition(g, DegreeOfBipartition(f));
+InstallMethod(DegreeOfBipartitionCollection, "for a bipartition collection",
+[IsBipartitionCollection], 
+function(coll)
+  local deg;
+
+  if IsBipartitionSemigroup(coll) then 
+    return DegreeOfBipartitionSemigroup(coll);
+  fi;
+  
+  deg:=DegreeOfBipartition(coll[1]);
+  if not ForAll(coll, x-> DegreeOfBipartition(x)=deg) then 
+    Error("usage: collection of bipartitions of equal degree,");
+    return;
+  fi;
+  
+  return deg;
 end);
 
-#
-
-InstallMethod(\*, "for a perm and a bipartition",
-[IsPerm, IsBipartition],
-function(f,g)
-  return AsBipartition(f, DegreeOfBipartition(g))*g;
-end);
-
-#
-
-InstallMethod(\*, "for a bipartition and a transformation",
-[IsBipartition, IsTransformation],
-function(f,g)
-  return f*AsBipartition(g, DegreeOfBipartition(f));
-end);
-
-#
-
-InstallMethod(\*, "for a transformation and a bipartition",
-[IsTransformation, IsBipartition],
-function(f,g)
-  return AsBipartition(f, DegreeOfBipartition(g))*g;
-end);
-
-#
-
-InstallMethod(\*, "for a bipartition and a partial perm",
-[IsBipartition, IsPartialPerm],
-function(f,g)
-  return f*AsBipartition(g, DegreeOfBipartition(f));
-end);
-
-#
-
-InstallMethod(\*, "for a partial perm and a bipartition",
-[IsPartialPerm, IsBipartition],
-function(f,g)
-  return AsBipartition(f, DegreeOfBipartition(g))*g;
-end);
 # Results:
 
 # n=1 partitions=2 idempots=2
