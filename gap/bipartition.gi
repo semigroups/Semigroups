@@ -396,7 +396,7 @@ function(f, g)
 
   lookup:=[];
   next:=0; 
-  seen:=BlistList([1..n], []);
+  seen:=BlistList([1..2*n], []);
   for i in [n+1..2*n] do 
     if not seen[gblocks[i]] then 
       next:=next+1; 
@@ -409,7 +409,7 @@ function(f, g)
   
   src:=[]; dst:=[];
   next:=0; 
-  seen:=BlistList([1..n], []);
+  seen:=BlistList([1..2*n], []);
   for i in [n+1..2*n] do 
     if not seen[fblocks[i]] then 
       next:=next+1; 
