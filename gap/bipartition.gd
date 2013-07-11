@@ -55,10 +55,12 @@ DeclareProperty("IsPermBipartition", IsBipartition);
 DeclareProperty("IsPartialPermBipartition", IsBipartition);
 DeclareGlobalFunction("PermLeftQuoBipartitionNC");
 DeclareGlobalFunction("InverseRightBlocks");
+DeclareGlobalFunction("InverseLeftBlocks");
 
 #internal...
 DeclareGlobalFunction("TransverseBlocksLookup");
 DeclareGlobalFunction("FuseRightBlocks");
+DeclareGlobalFunction("FuseLeftBlocks");
 DeclareGlobalFunction("BipartRightBlocksConj");
 
 #old

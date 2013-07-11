@@ -328,6 +328,39 @@ function(blocks, f, sign)
   fi;
 end);
 
+# 
+
+InstallGlobalFunction(FuseLeftBlocks,
+function(blocks, f)
+  local n, fblocks, nrblocks, nrfblocks, fuse, fuseit, x, y, i;
+  
+  n:=DegreeOfBlocks(blocks);
+  fblocks:=f!.blocks;
+  nrblocks:=blocks[1];
+  nrfblocks:=NrBlocks(f);
+
+  fuse:=[1..nrblocks+nrfblocks];
+  fuseit := function(i) 
+    while fuse[i] < i do 
+      i := fuse[i]; 
+    od; 
+    return i; 
+  end;
+
+  for i in [1..n] do
+    x := fuseit(blocks[i+1]);
+    y := fuseit(fblocks[n+i]+nrblocks);
+    if x <> y then
+      if x < y then
+        fuse[y] := x;
+      else
+        fuse[x] := y;
+      fi;
+    fi;
+  od;
+  return fuseit;
+end);
+
 # LambdaPerm
 
 InstallGlobalFunction(PermLeftQuoBipartitionNC,
@@ -421,11 +454,30 @@ function(blocks, f)
   return MappingPermListList(signed, List(signed, i-> tab[fuseit(i)]));
 end);
 
-# LambdaInverse
+# LambdaInverse - fuse <blocks> with the left blocks of <f> keeping track of
+# the signs of the fused classes. 
+# 
+# The left blocks of the output are then:
+# 1) disconnected right blocks of <f> (before fusing)
+# 2) disconnected right blocks of <f> (after fusing) 
+# 3) connected right blocks of <f> (after fusing)
+# both types 1+2 of the disconnected blocks are unioned into one left block of
+# the output with index <junk>. The connected blocks 3 of <f> are given the next
+# available index, if they have not been seen before. The table <tab1> keeps
+# track of which connected right blocks of <f> have been seen before and the
+# corresponding index in the output, i.e. <tab1[x]> is the index in <out> of
+# the fused block with index <x>.
 
-# require InverseLeftBlocks
-
-#HERE
+# The right blocks of the output are:
+# 1) disconnected blocks of <blocks>; or
+# 2) connected blocks of <blocks>.
+# The disconnected blocks 1 are given the next available index, if they have
+# not been seen before. The table <tab2> keeps
+# track of which disconnected blocks of <blocks> have been seen before and the
+# corresponding index in the output, i.e. <tab2[x]> is the index in <out> of
+# the disconnected block of <blocks> with index <x>. The connected blocks 2 of
+# <blocks> is given the index <tab1[x]> where <x> is the fused index of the
+# block.
 
 InstallGlobalFunction(InverseRightBlocks,
 function(blocks, f)
@@ -441,10 +493,11 @@ function(blocks, f)
   sign:=fusesign[2];
 
   out:=[]; junk:=0; next:=0;
-  
+ 
+  # find the left blocks of the output
   tab1:=[];
   for i in [1..n] do 
-    if fblocks[i+n]>NrLeftBlocks(f) then 
+    if fblocks[i+n]>NrLeftBlocks(f) then #disconnected before fusing
       if junk=0 then 
         next:=next+1;
         junk:=next;
@@ -452,13 +505,13 @@ function(blocks, f)
       out[i]:=junk;
     else
       x:=fuseit(fblocks[i+n]+nrblocks);
-      if sign[x]=0 then 
+      if sign[x]=0 then #disconnected after fusing
         if junk=0 then 
           next:=next+1;
           junk:=next;
         fi;
         out[i]:=junk;
-      else 
+      else              # connected block
         if not IsBound(tab1[x]) then 
           next:=next+1;
           tab1[x]:=next;
@@ -469,6 +522,7 @@ function(blocks, f)
   od;
   nrleft:=next;
   
+  # find the right blocks of the output
   tab2:=[];
   for i in [n+1..2*n] do 
     x:=blocks[i-n+1];
@@ -492,6 +546,36 @@ function(blocks, f)
   return out;
 end);
 
+# RhoInverse
+
+InstallGlobalFunction(InverseLeftBlocks,
+function(blocks, f)
+  local n, nrblocks, fblocks, fuseit, out, junk, x, i;
+
+  n:=DegreeOfBlocks(blocks); # length of partition!!
+  nrblocks:=blocks[1];
+  fblocks:=f!.blocks;
+  
+  fuseit:=FuseLeftBlocks(blocks, f); 
+  out:=[];
+ 
+  # find the left blocks of the output
+  for i in [1..n] do
+    out[i]:=blocks[i+1];
+    x:=fuseit(fblocks[i]+nrblocks);
+    if x>blocks[1] or blocks[n+1+x]=0 then 
+      out[i+n]:=blocks[1]+1; #junk
+    else
+      out[i+n]:=x;
+    fi;
+  od;    
+
+  out:=Objectify(BipartitionType, rec(blocks:=out));
+  SetDegreeOfBipartition(out, n);
+  SetNrLeftBlocks(out, blocks[1]);
+  SetNrBlocks(out, blocks[1]+1);
+  return out;
+end);
 #
 
 InstallOtherMethod(OneMutable, "for a bipartition",

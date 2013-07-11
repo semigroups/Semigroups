@@ -12,15 +12,12 @@ end;
 
 #
 
-
-#
-
 TikzPicLeftSignedPartition:=function(f)
   local str, ext, n, up, down, min, i, block, j;
   
   str:="\\begin{tikzpicture}\n"; 
   ext:=ExtRepBipartition(f);
-  n:=DegreeOfBipartition(f)/2;
+  n:=DegreeOfBipartition(f);
  
   # draw the lines
   for block in ext do
@@ -160,7 +157,7 @@ TikzPicBipartition:=function(f)
   
   str:="\\begin{tikzpicture}\n"; 
   ext:=ExtRepBipartition(f);
-  n:=DegreeOfBipartition(f)/2;
+  n:=DegreeOfBipartition(f);
  
   # vertices and their labels
   for i in [1..n] do 
