@@ -1,0 +1,85 @@
+#############################################################################
+##
+#W  bipartition.xml
+#Y  Copyright (C) 2011-13                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="BipartitionFamily">
+  <ManSection>
+    <Var Name="BipartitionFamily" Arg=""/>
+    <Var Name="BipartitionType" Arg=""/>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="AsTransformation">
+  <ManSection>
+    <Oper Name="AsTransformation" Arg="f"/>
+    <Oper Name="AsTransformationNC" Arg="f"/>
+    <Returns>A transformation or <K>fail</K>.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="AsBipartition">
+  <ManSection>
+    <Oper Name="AsBipartition" Arg="f"/>
+    <Returns>A bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="IsTransBipartition">
+  <ManSection>
+    <Prop Name="IsTransBipartition" Arg="f"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="IsPermBipartition">
+  <ManSection>
+    <Prop Name="IsTransBipartition" Arg="f"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="BipartitionByIntRep">
+  <ManSection>
+    <Oper Name="BipartitionByIntRep" Arg="list"/>
+    <Oper Name="BipartitionByIntRepNC" Arg="list"/>
+    <Returns>A bipartition.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="PermLeftQuoBipartitionNC">
+  <ManSection>
+    <Func Name="PermLeftQuoBipartitionNC" Arg="f, g"/>
+    <Returns>A permutation.</Returns>
+    <Description>
+    </Description>
+  </ManSection>
+</GAPDoc>
+
+<#GAPDoc Label="PermRightBlocks">
+  <ManSection>
+    <Oper Name="PermRightBlocks" Arg="blocks, f"/>
+    <Returns>A permutation.</Returns>
+    <Description>
+permutation of indices of signed (connected) blocks of <blocks> under the
+ action of <f> which is assumed to stabilise <blocks>.
+    </Description>
+  </ManSection>
+</GAPDoc>
