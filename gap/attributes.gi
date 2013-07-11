@@ -690,7 +690,6 @@ function(S)
    x-> TransformationOp(x, Elements(F^Size(F)), OnRight));
 end);
 
-
 #
 
 InstallMethod(IsomorphismPermGroup, "for a transformation semigroup", 
@@ -705,5 +704,7 @@ function(s)
    return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
     AsPermutation, x-> AsTransformation(x, DegreeOfTransformationSemigroup(s)));
 end);
+
+#
 
 #EOF

@@ -9,12 +9,12 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "1.1">
+##  <!ENTITY VERSION "2.0">
 ##  <!ENTITY ORBVERS "4.6">
 ##  <!ENTITY GENSSVERS "1.5">
 ##  <!ENTITY IOVERS "4.1">
 ##  <!ENTITY GRAPEVERS "4.5">
-##  <!ENTITY ARCHIVENAME "semigroups-1.1">
+##  <!ENTITY ARCHIVENAME "semigroups-2.0">
 ##  <!ENTITY COPYRIGHTYEARS "2011-13">
 ##  <#/GAPDoc>
 
@@ -22,8 +22,8 @@ SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "Methods for Semigroups",
 Version := "2.0",
-Date := "11/06/2013",
-ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-1.1",
+Date := "??",
+ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.0",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -88,5 +88,5 @@ Dependencies := rec(
   Autoload := false,
   TestFile := "tst/testinstall.tst",
   Keywords := ["transformation semigroups", "partial permutations",
-  "inverse semigroups", "Green's relations"]
+  "inverse semigroups", "bipartitions", "Green's relations"]
 ));

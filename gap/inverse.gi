@@ -563,10 +563,10 @@ function(d)
   nc:=IsGreensClassNC(d);
   scc:=OrbSCC(o)[m];
   
+  scc:=LambdaOrbSCC(d);
   out:=EmptyPlist(Length(scc));
   k:=0;
   mults:=LambdaOrbMults(LambdaOrb(d), LambdaOrbSCCIndex(d));
-  scc:=LambdaOrbSCC(d);
   
   for i in scc do
     k:=k+1;
@@ -921,15 +921,10 @@ InstallMethod(RClassReps, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
 d-> List(LClassReps(d), x-> x^-1));
 
-# can't use LambdaOrb and LambdaOrbMult(s) here since if l=scc[m][1], then 
-# LambdaOrbMult(o, m, l)[1] or [2]=One(o!.gens) which is not necessarily in the
-# semigroup
-
 InstallMethod(Random, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 function(s)
   local gens, i, w;
-    
   gens:=GeneratorsOfSemigroup(s);    
   i:=Random([1..Int(Length(gens)/2)]);
   w:=List([1..i], x-> Random([1..Length(gens)]));

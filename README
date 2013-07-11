@@ -23,7 +23,7 @@
                    README
                    ======
                           file for the
-                                       GAP 4.5
+                                       GAP 4.7
                                        =======
                                                package
                                                        'Semigroups'.
@@ -32,7 +32,7 @@
 Getting Semigroups
 ------------------
 
-To get the latest version of this GAP 4.5 package download the archive file 
+To get the latest version of this GAP 4.7 package download the archive file 
 
     semigroups-x.x.tar.gz
 
@@ -50,7 +50,7 @@ This will create a subdirectory 'semigroups-x.x'.
 Installation
 ------------
 
-It is assumed that you have a working copy of GAP with version number 4.5 or
+It is assumed that you have a working copy of GAP with version number 4.7 or
 higher.  The  most  up-to-date  version  of  GAP  and instructions on how to
 install it can be obtained from the main GAP webpage
   
@@ -78,7 +78,7 @@ installation of Semigroups:
 
  4.  if you want to be able to calculate the Munn semigroup of a semilattice,
      then download and fully install (i.e. compile it) the Grape package
-     version 4.5 or higher.  For more details go to:
+     version 4.7 or higher.  For more details go to:
 
      http://www.maths.qmul.ac.uk/~leonard/grape/
 

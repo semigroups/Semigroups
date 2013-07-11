@@ -390,5 +390,25 @@ gap> Elements(s);
   (1)(2,3) ]
 
 #
+gap> S := FreeInverseSemigroup(3);
+<free inverse semigroup on the generators [ x1, x2, x3 ]>
+gap> Size(S);
+infinity
+gap> x := S.1;
+x1
+gap> y := S.2;
+x2
+gap> z := S.3;
+x3
+gap> u := x^5 * y^3 * z;
+x1*x1*x1*x1*x1*x2*x2*x2*x3
+gap> u^-1;
+x3^-1*x2^-1*x2^-1*x2^-1*x1^-1*x1^-1*x1^-1*x1^-1*x1^-1
+gap> x^2 * y = x^2 * y;
+true
+gap> x * x^-1 = y * y^-1;
+false
+
+#
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);
