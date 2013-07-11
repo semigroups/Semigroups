@@ -78,7 +78,7 @@ function()
    InstallationPath, "/doc"), "main.xml", 
    ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
    "semigroups.xml", "transform.xml", "attributes-inverse.xml",
-   "../PackageInfo.g"],
+   "bipartition.xml", "blocks.xml", "../PackageInfo.g"],
    "semigroups", "MathJax", "../../..");;
   return;
 end);
@@ -171,6 +171,7 @@ return
   "main.xml",  [ "utils.xml",
   "greens.xml", "orbits.xml", "properties.xml",
   "semigroups.xml",  "transform.xml", "attributes-inverse.xml",
+  "bipartition.xml", "blocks.xml",
   "../PackageInfo.g" ], "Single" );
 end);
 
