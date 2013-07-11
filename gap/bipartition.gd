@@ -66,7 +66,4 @@ DeclareGlobalFunction("FuseRightBlocks");
 DeclareGlobalFunction("FuseLeftBlocks");
 DeclareGlobalFunction("BipartRightBlocksConj");
 
-
-DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
-DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
 DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);

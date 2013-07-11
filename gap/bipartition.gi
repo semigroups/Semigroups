@@ -1451,7 +1451,7 @@ end);
 
 #
 
-InstallMethod(Print, "for a bipartition",
+InstallMethod(PrintObj, "for a bipartition",
 [IsBipartition], 
 function(f)
   Print("BipartitionNC( ", ExtRepBipartition(f), " )");
@@ -1460,7 +1460,7 @@ end);
 
 #
 
-InstallMethod(Print, "for a bipartition collection",
+InstallMethod(PrintObj, "for a bipartition collection",
 [IsBipartitionCollection],
 function(coll) 
   local i;
