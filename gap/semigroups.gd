@@ -70,4 +70,6 @@ DeclareOperation("InverseSubsemigroupByProperty",
 DeclareOperation("InverseSubsemigroupByProperty", 
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction,       IsPosInt]);
 
+DeclareProperty("IsBinaryRelationSemigroup", IsSemigroup);
+
 #EOF
