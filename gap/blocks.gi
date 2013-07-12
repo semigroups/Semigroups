@@ -522,23 +522,29 @@ end);
 
 InstallGlobalFunction(InverseLeftBlocks,
 function(blocks, f)
-  local n, nrblocks, fblocks, fuseit, out, junk, x, i;
+  local n, nrblocks, fblocks, fuseit, out, tab, x, i;
 
   n:=DegreeOfBlocks(blocks); # length of partition!!
   nrblocks:=blocks[1];
   fblocks:=f!.blocks;
   
   fuseit:=FuseLeftBlocks(blocks, f); 
-  out:=[];
- 
+  out:=[]; tab:=[];
+
+  for i in [1..nrblocks] do 
+    if blocks[n+1+i]=1 then 
+      tab[fuseit(i)]:=i;
+    fi;
+  od;
+
   # find the left blocks of the output
   for i in [1..n] do
     out[i]:=blocks[i+1];
     x:=fuseit(fblocks[i]+nrblocks);
-    if x>blocks[1] or blocks[n+1+x]=0 then 
+    if x>blocks[1] or not IsBound(tab[x]) then 
       out[i+n]:=blocks[1]+1; #junk
     else
-      out[i+n]:=x;
+      out[i+n]:=tab[x];
     fi;
   od;    
 
@@ -548,6 +554,7 @@ function(blocks, f)
   SetNrBlocks(out, blocks[1]+1);
   return out;
 end);
+
 # fuse <blocks> with <f>. <sign> should be true to keep track of signed and
 # unsigned blocks and false not to keep track.
 
