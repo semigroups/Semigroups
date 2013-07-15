@@ -41,6 +41,17 @@
     <Oper Name="AsTransformationNC" Arg="f"/>
     <Returns>A transformation or <K>fail</K>.</Returns>
     <Description>
+      When the argument <A>f</A> is a bipartition, that mathematically defines
+      a transformation, this function returns that transformation. A
+      bipartition <A>f</A> defines a transformation if and only if its right
+      blocks are the image list of a permutation of <C>[1..n]</C> where
+      <C>n</C> is the degere of <A>f</A>. <P/>
+      
+      <C>AsTransformation</C> verifies that its argument defines a
+      transformation and <C>AsTransformationNC</C> does not. See 
+      <Ref Oper="IsTransBipartition"/>. 
+
+
     </Description>
   </ManSection>
 <#/GAPDoc>
