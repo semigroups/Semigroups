@@ -791,7 +791,7 @@ function(f, p)
     if not IsBound(tab1[blocks[i]]) then 
       next:=next+1;
       tab1[blocks[i]]:=next^q;
-      tab2[next]:=blocks[i];
+      tab2[next^q]:=blocks[i];
     fi;
   od;
   
