@@ -864,6 +864,15 @@ function(coll)
   return;
 end);
 
+# required to beat the method for bipartition collections...
+
+InstallMethod(PrintObj, "for an equivalence class of bipartitions",
+[IsBipartitionCollection and IsEquivalenceClass],
+function(c) 
+  Print( "{", Representative( c ), "}" );
+  return;
+end);
+
 #collections
 
 InstallMethod(DegreeOfBipartitionCollection, "for a bipartition collection",
