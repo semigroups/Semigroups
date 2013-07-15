@@ -170,10 +170,9 @@ end);
 
 InstallMethod(AsTransformation, "for a bipartition", [IsBipartition],
 function(f)
-
   if not IsTransBipartition(f) then 
-    Error("<f> does not define a transformation,");
-    return;
+    Info(InfoWarning, 2, "<f> does not define a transformation,");
+    return fail;
   fi;
   return AsTransformationNC(f);
 end);
@@ -791,7 +790,8 @@ function(f, p)
     if not IsBound(tab1[blocks[i]]) then 
       next:=next+1;
       tab1[blocks[i]]:=next^q;
-      tab2[next^q]:=blocks[i];
+      tab2[next^
+      q]:=blocks[i];
     fi;
   od;
   
