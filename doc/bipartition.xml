@@ -50,8 +50,18 @@
       <C>AsTransformation</C> verifies that its argument defines a
       transformation and <C>AsTransformationNC</C> does not. See 
       <Ref Oper="IsTransBipartition"/>. 
-
-
+      <Example>
+gap> f:=Bipartition([ 1, -3 ], [ 2, -2 ], [ 3, 5, 10, -7 ], [ 4, -12 ], 
+> [ 6, 7, -6 ], [ 8, -5 ], [ 9, -11 ], [ 11, 12, -10 ], [ -1 ], [ -4 ], 
+> [ -8 ], [ -9 ]);;
+gap> AsTransformation(f);
+Transformation( [ 3, 2, 7, 12, 7, 6, 6, 5, 11, 7, 10, 10 ] )
+gap> IsTransBipartition(f);
+true
+gap> f:=Bipartition([ 1, 5 ], [ 2, 4, 8, 10 ], [ 3, 6, 7, -1, -2 ], 
+> [ 9, -4, -6, -9 ], [ -3, -5 ], [ -7, -8 ], [ -10 ]);
+gap> AsTransformation(f);
+fail</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -70,6 +80,7 @@
     <Prop Name="IsTransBipartition" Arg="f"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
+      
     </Description>
   </ManSection>
 <#/GAPDoc>
