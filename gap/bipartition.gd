@@ -33,6 +33,8 @@ DeclareOperation("BipartitionByIntRepNC", [IsList]);
 DeclareOperation("BipartitionByIntRep", [IsList]);
 
 DeclareOperation("AsBipartition", [IsPerm, IsPosInt]);
+DeclareOperation("AsBipartition", [IsPerm]);
+DeclareOperation("AsBipartition", [IsTransformation, IsPosInt]);
 DeclareOperation("AsBipartition", [IsTransformation]);
 DeclareOperation("AsBipartition", [IsPartialPerm, IsPosInt]);
 DeclareAttribute("AsTransformationNC", IsBipartition);

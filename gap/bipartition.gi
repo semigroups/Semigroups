@@ -209,6 +209,21 @@ function(f, n)
   return BipartitionByIntRepNC(Concatenation([1..n], ListPerm(f^-1, n)));
 end);
 
+InstallMethod(AsBipartition, "for a permutation", 
+[IsPerm],
+function(f) 
+  return AsBipartition(f, LargestMovedPoint(f));
+end);
+
+#
+
+InstallMethod(AsBipartition, "for a partial perm",
+[IsPartialPerm],
+function(f) 
+  return AsBipartition(f, Maximum(DegreeOfPartialPerm(f),
+   CodegreeOfPartialPerm(f)));
+end);
+
 #
 
 InstallMethod(AsBipartition, "for a partial perm and pos int",
@@ -237,12 +252,26 @@ end);
 InstallMethod(AsBipartition, "for a transformation",
 [IsTransformation],
 function(f)
-  local n, r, ker, out, g, i;
+  return AsBipartition(f, DegreeOfTransformation(f));
+end);
 
-  n:=DegreeOfTransformation(f);
-  r:=RankOfTransformation(f);;
+#
+
+InstallMethod(AsBipartition, "for a transformation and a positive integer",
+[IsTransformation, IsPosInt],
+function(f, n)
+  local r, ker, out, g, i;
+  
+  #verify <f> is a transformation on [1..n]
+  for i in [1..n] do 
+    if i^f>n then 
+      return fail;
+    fi;
+  od;
+  
+  r:=RankOfTransformation(f, n);;
   ker:=FlatKernelOfTransformation(f); 
-  out:=ShallowCopy(ker);
+  out:=EmptyPlist(2*n);
   g:=List([1..n], x-> 0);
 
   #inverse of f
@@ -251,6 +280,7 @@ function(f)
   od;
 
   for i in [1..n] do 
+    out[i]:=ker[i];
     if g[i]<>0 then 
       out[n+i]:=ker[g[i]];
     else 
