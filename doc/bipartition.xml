@@ -21,7 +21,18 @@
   <ManSection>
     <Filt Name="IsBipartition" Arg='obj' Type='Category'/>
     <Description>
-      Blah.
+   Every bipartition in &GAP; belongs to the category
+    <C>IsBipartition</C>. Basic operations for bipartitions are
+    <Ref Attr="RightBlocks"/>,
+    <Ref Attr="LeftBlocks"/>,
+    <Ref Attr="ExtRepOfBipartition"/>,
+    <Ref Attr="LeftProjection"/>,
+    <Ref Attr="RightProjection"/>,
+    <Ref Attr="Inverse"/>, 
+    <Ref Attr="DegreeOfBipartition"/>,
+    <Ref Attr="RankOfBipartition"/>,
+    multiplication of two bipartitions
+    via <K>*</K>. 
     </Description>
   </ManSection>
 <#/GAPDoc>
