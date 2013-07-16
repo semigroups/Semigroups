@@ -316,6 +316,28 @@ function(n)
   return Monoid(gens);
 end);
 
+HamMonoid:=
+function(n)
+  local gens, next, i, j;
+  
+  gens:=[];
+  for i in [1..n-2] do 
+    next:=[];
+    for j in [1..i-1] do 
+      next[j]:=j;
+      next[n+j]:=j;
+    od;
+    next[i]:=i; next[i+1]:=i;  next[i+2]:=i;
+    next[i+n]:=n-1; next[i+n+1]:=n-1; next[i+n+2]:=n-1;
+    for j in [i+3..n] do 
+      next[j]:=j-2;
+      next[n+j]:=j-2;
+    od;
+    gens[i]:=BipartitionByIntRep(next);
+  od;
+  return Semigroup(gens);
+end;
+
 #
 
 InstallMethod(POI, "for a positive integer",
