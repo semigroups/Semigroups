@@ -12,7 +12,7 @@
   <ManSection>
     <Fam Name="BipartitionFamily"/>
     <Description>
-      Blah.
+      The family of all bipartitions is <C>BipartitionFamily</C>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -31,7 +31,7 @@
     <Ref Attr="Inverse"/>, 
     <Ref Attr="DegreeOfBipartition"/>,
     <Ref Attr="RankOfBipartition"/>,
-    multiplication of two bipartitions
+    multiplication of two bipartitions of equal degree is 
     via <K>*</K>. 
     </Description>
   </ManSection>
@@ -41,7 +41,9 @@
   <ManSection>
     <Filt Name="IsBipartitionCollection" Arg='obj' Type='Category'/>
     <Description>
-      Blah.
+       Every collection of bipartitions belongs to the category
+     <C>IsBipartitionCollection</C>. For example, bipartition semigroups
+     belong to <C>IsBipartitionCollection</C>. 
     </Description>
   </ManSection>
 <#/GAPDoc>
