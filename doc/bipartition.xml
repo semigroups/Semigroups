@@ -90,31 +90,31 @@ fail</Example>
   
   There are several possible arguments for <C>AsBipartition</C>:
   <List>
-    <Mark>for permutations</Mark>
+    <Mark>permutations</Mark>
     <Item>
-      If <A>f</A> is a permutation and <A>n</A> is a non-negative integer, then 
+      If <A>f</A> is a permutation and <A>n</A> is a positive integer, then 
       <C>AsBipartition(<A>f</A>, <A>n</A>)</C> returns the bipartition
       on <C>[1..<A>n</A>]</C> with classes <C>[i, i^<A>f</A>]</C>
       for all <C>i=1..n</C>.<P/>
       
-      If no non-negative integer <A>n</A> is specified, then
+      If no positive integer <A>n</A> is specified, then
       the largest moved point of <A>f</A> is used as the value for <A>n</A>; see
       <Ref Func="LargestMovedPoint" Label="for a permutation"/>.
     </Item>
-    <Mark>for transformations</Mark>      
+    <Mark>transformations</Mark>      
     <Item>
-      If <A>f</A> is a transformation and <A>n</A> is a non-negative integer
+      If <A>f</A> is a transformation and <A>n</A> is a positive integer
       such that <A>f</A> is a transformation of <C>[1..<A>n</A>]</C>, then
       <C>AsTransformation</C> returns the bipartition with classes
       <M>(i)f^-1\cup \{i\}</M> for all <C>i</C> in the image of <A>f</A>.
       
-      If the non-negative integer <A>n</A> is not specified, then the
+      If the positive integer <A>n</A> is not specified, then the
       internal degree of <A>f</A> is used as the value for <A>n</A>.
     </Item> 
-    <Mark>for partial permutations</Mark>
+    <Mark>partial permutations</Mark>
     <Item>
       If <A>f</A> is a partial permutation <A>f</A> and <A>n</A> is a
-      non-negative integer, then <C>AsBipartition</C> returns the bipartition 
+      positive integer, then <C>AsBipartition</C> returns the bipartition 
       with classes <C>[i, i^<A>f</A>]</C> for <C>i</C> in <C>[1..<A>n</A>]</C>. 
       Thus the degree of the returned bipartition is the maximum of <A>n</A>
       and the values <C>i^<A>f</A></C> where <C>i</C> in <C>[1..<A>n</A>]</C>.
@@ -123,40 +123,38 @@ fail</Example>
       of the maximum of the largest moved point and the largest image of a
       moved point of <A>f</A> plus <C>1</C> is used.
     </Item>
-    <Mark>for a bipartition</Mark>
+    <Mark>bipartitions</Mark>
     <Item>
       not yet implemented.
     </Item>
   </List>
   <Example>
 gap> f:=Transformation( [ 3, 5, 3, 4, 1, 2 ] );;
-gap> AsTransformation(f, 5);
-Transformation( [ 3, 5, 3, 4, 1 ] )
-gap> AsTransformation(f, 10);
-Transformation( [ 3, 5, 3, 4, 1, 2 ] )
-gap> AsTransformation((1, 3)(2, 4));
-Transformation( [ 3, 4, 1, 2 ] )
-gap> AsTransformation((1, 3)(2, 4), 10);
-Transformation( [ 3, 4, 1, 2 ] )
-gap> f:=PartialPerm( [ 1, 2, 3, 4, 5, 6 ], [ 6, 7, 1, 4, 3, 2 ] );
-[5,3,1,6,2,7](4)
-gap> AsTransformation(f, 11);
-Transformation( [ 6, 7, 1, 4, 3, 2, 11, 11, 11, 11, 11 ] )
-gap> AsPartialPerm(last, DomainOfPartialPerm(f));
-[5,3,1,6,2,7](4)
-gap> AsTransformation(f, 14);
-Transformation( [ 6, 7, 1, 4, 3, 2, 14, 14, 14, 14, 14, 14, 14, 14 ] )
-gap> AsPartialPerm(last, DomainOfPartialPerm(f));
-[5,3,1,6,2,7](4)
-gap> AsTransformation(f);
-Transformation( [ 6, 7, 1, 4, 3, 2, 8, 8 ] )
-gap> AsTransformation(Transformation( [ 1, 1, 2 ] ), 0);
-IdentityTransformation()</Example>
+gap> AsBipartition(f, 5);
+gap> AsBipartition(f,5); 
+&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [ -2 ]>
+gap> AsBipartition(f);  
+&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [ 6, -2 ], 
+[ -6 ]>
+gap> AsBipartition(f,10);
+&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [ 6, -2 ], 
+[ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ], [ -6 ]>
+gap> AsBipartition((1, 3)(2, 4));
+&lt;bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ]>
+gap> AsBipartition((1, 3)(2, 4), 10);
+&lt;bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ], [ 5, -5 ], 
+[ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]>
+gap> f:=PartialPerm( [ 1, 2, 3, 4, 5, 6 ], [ 6, 7, 1, 4, 3, 2 ] );;
+gap> AsBipartition(f, 11);            
+&lt;bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
+[ 6, -2 ], [ 7 ], [ 8 ], [ 9 ], [ 10 ], [ 11 ], [ -5 ], [ -8 ], [ -9 ], 
+[ -10 ], [ -11 ]>
+gap> AsBipartition(f);
+&lt;bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
+[ 6, -2 ], [ 7 ], [ -5 ]>
+gap> AsBipartition(Transformation( [ 1, 1, 2 ] ), 1);
+&lt;bipartition: [ 1, -1 ]></Example>
   </Description>
-  </ManSection>
-
-    <Description>
-    </Description>
   </ManSection>
 <#/GAPDoc>
 
