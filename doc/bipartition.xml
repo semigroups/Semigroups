@@ -163,7 +163,24 @@ gap> AsBipartition(Transformation( [ 1, 1, 2 ] ), 1);
     <Prop Name="IsTransBipartition" Arg="f"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      
+    If the bipartition <A>f</A> defines a transformation, then
+    <C>IsTransBipartition</C> returns <K>true</K>, and if not, then
+    <K>false</K> is returned.<P/>
+
+    A bipartition <A>f</A> defines a transformation if and only if the right
+    blocks of <A>f</A> corresponds to a permutation of <C>[1..n]</C>, where
+    <C>n</C> is the degree of <A>f</A>.
+    <Example>
+gap> f:=Bipartition( [ [ 1, 4, -2 ], [ 2, 5, -6 ], [ 3, -7 ], [ 6, 7, -9 ], 
+> [ 8, 9, -1 ], [ 10, -5 ], [ -3 ], [ -4 ], [ -8 ], [ -10 ] ] );;
+gap> IsTransBipartition(f);
+true
+gap> f:=Bipartition( [ [ 1, 4, -3, -6 ], [ 2, 5, -4, -5 ], [ 3, 6, -1 ], 
+> [ -2 ] ] );;
+gap> IsTransBipartition(f);
+false
+gap> Number(PartitionMonoid(3), IsTransBipartition);
+27</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -173,7 +190,24 @@ gap> AsBipartition(Transformation( [ 1, 1, 2 ] ), 1);
     <Prop Name="IsPermBipartition" Arg="f"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-    </Description>
+    If the bipartition <A>f</A> defines a permutation, then
+    <C>IsPermBipartition</C> returns <K>true</K>, and if not, then
+    <K>false</K> is returned.<P/>
+
+    A bipartition <A>f</A> defines a permutation if and only if the left blocks
+    of <A>f</A> are singletons and the right blocks of <A>f</A> correspond to a
+    permutation of <C>[1..n]</C>, where <C>n</C> is the degree of <A>f</A>.
+  
+  <Example>
+gap> f:=Bipartition( [ [ 1, 4, -1 ], [ 2, -3 ], [ 3, 6, -5 ], 
+> [ 5, -2, -4, -6 ] ] );;
+gap> IsPermBipartition(f);
+false
+gap> f:=Bipartition( [ [ 1, -3 ], [ 2, -4 ], [ 3, -6 ], [ 4, -1 ], [ 5, -5 ], 
+> [ 6, -2 ], [ 7, -8 ], [ 8, -7 ] ] );;
+gap> IsPermBipartition(f);
+true</Example>
+  </Description>
   </ManSection>
 <#/GAPDoc>
 
@@ -183,6 +217,30 @@ gap> AsBipartition(Transformation( [ 1, 1, 2 ] ), 1);
     <Oper Name="BipartitionByIntRepNC" Arg="list"/>
     <Returns>A bipartition.</Returns>
     <Description>
+      It is possible to create a bipartition using from its internal
+      representation. The argument <A>list</A> must be a list of positive
+      integers not greater than <C>n</C>, of length <C>2*n</C>, and where
+      <C>i</C> appears in the list only if <C>i-1</C> occurs earlier in the
+      list. <P/>
+
+      For example, the internal representation of the bipartition with blocks
+      <Log>[ 1, -1 ], [ 2, 3, -2 ], [ -3 ]</Log> has
+      internal representation 
+      <Log>[ 1, 2, 2, 1, 2, 3 ]</Log> 
+      The internal representation indicates that the number <C>1</C> is in
+      class <C>1</C>, the number <C>2</C> is in class <C>2</C>, the number
+      <C>3</C> is in class <C>2</C>, the number <C>-1</C> is
+      in class <C>1</C>, the number <C>-2</C> is in class <C>2</C>, and 
+      <C>-3</C> is in class <C>3</C>.
+      As another example, <C>[ 1, 3, 2, 1 ]</C> is not the internal
+      representation of any bipartition since there is no <C>2</C> before the 
+      <C>3</C> in the second position.<P/>
+
+      In its first form <C>BipartitionByIntRep</C> verifies that the argument
+      <A>list</A> is the internal representation of a bipartition, whereas
+      <C>BipartitionByIntRepNC</C> performs no checks. 
+      <Example>
+      </Example> 
     </Description>
   </ManSection>
 <#/GAPDoc>

@@ -877,7 +877,7 @@ end);
 InstallMethod(PrintObj, "for a bipartition",
 [IsBipartition], 
 function(f)
-  Print("BipartitionNC( ", ExtRepBipartition(f), " )");
+  Print("Bipartition( ", ExtRepBipartition(f), " )");
   return;
 end);
 
