@@ -261,16 +261,19 @@ InstallMethod(AsBipartition, "for a transformation and a positive integer",
 [IsTransformation, IsPosInt],
 function(f, n)
   local r, ker, out, g, i;
-  
-  #verify <f> is a transformation on [1..n]
-  for i in [1..n] do 
-    if i^f>n then 
-      return fail;
-    fi;
-  od;
+
+  if n<DegreeOfTransformation(f) then 
+    #verify <f> is a transformation on [1..n]
+    for i in [1..n] do 
+      if i^f>n then 
+        return fail;
+      fi;
+    od;
+  fi;
   
   r:=RankOfTransformation(f, n);;
-  ker:=FlatKernelOfTransformation(f); 
+  ker:=FlatKernelOfTransformation(f, n); 
+  
   out:=EmptyPlist(2*n);
   g:=List([1..n], x-> 0);
 
@@ -290,6 +293,10 @@ function(f, n)
   od;
   return BipartitionByIntRepNC(out);
 end);
+
+#
+
+InstallMethod(AsBipartition, "for a bipartition", [IsBipartition], IdFunc);
 
 #properties/attributes
 
