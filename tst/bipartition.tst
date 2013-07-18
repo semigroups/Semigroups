@@ -39,6 +39,11 @@ gap> l := List([1,2,3,4,5,15,35,1999,64999,65000],i->RandomTransformation(i));;
 gap> ForAll(l,t->t=AsTransformation(AsBipartition(t)));
 true
 
+#checking IsTransBipartitition
+gap> l := List([1,2,3,4,5,15,35,1999,30101,54321],i->RandomTransformation(i));;
+gap> ForAll(l,t->IsTransBipartition(AsBipartition(t)));
+true
+
 # check big size, identity, multiplication
 gap> bp := RandomBipartition(999999);;bp*One(bp)=bp;One(bp)*bp=bp;
 true
