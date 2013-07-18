@@ -261,7 +261,10 @@ gap> BipartitionByIntRep([ 1 ,2 ,2 ,1 ,3 ,4 ]);
       <C>PermLeftQuoBipartition</C> verifies that <A>f</A> and <A>g</A> have
       equal left and right blocks, and returns an error if they do not.
       <C>PermLeftQuoTransformationNC</C> does no checks.
+      <Example>
 
+
+      </Example>
 
     </Description>
   </ManSection>
@@ -305,9 +308,9 @@ gap> BipartitionByIntRep([ 1 ,2 ,2 ,1 ,3 ,4 ]);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="ExtRepBipartition">
+<#GAPDoc Label="ExtRepOfBipartition">
   <ManSection>
-    <Attr Name="ExtRepBipartition" Arg="f"/>
+    <Attr Name="ExtRepOfBipartition" Arg="f"/>
     <Returns>A partition of <C>[1..n]</C>.</Returns>
     <Description>
     </Description>
