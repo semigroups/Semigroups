@@ -240,16 +240,29 @@ true</Example>
       <A>list</A> is the internal representation of a bipartition, whereas
       <C>BipartitionByIntRepNC</C> performs no checks. 
       <Example>
+gap> BipartitionByIntRep([ 1 ,2 ,2 ,1 ,3 ,4 ]);                         
+&lt;bipartition: [ 1, -1 ], [ 2, 3 ], [ -2 ], [ -3 ]>
       </Example> 
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="PermLeftQuoBipartitionNC">
+<#GAPDoc Label="PermLeftQuoBipartition">
   <ManSection>
+    <Oper Name="PermLeftQuoBipartition" Arg="f, g"/>
     <Func Name="PermLeftQuoBipartitionNC" Arg="f, g"/>
     <Returns>A permutation.</Returns>
     <Description>
+      If <A>f</A> and <A>g</A> are bipartitions with equal left and right
+      blocks, then <C>PermLeftQuoBipartition</C> returns the permutation of the
+      indices of the right blocks of <A>f</A> (and <A>g</A>) induced by 
+      <C>Inverse(<A>f</A>)*<A>g</A></C>. <P/>
+
+      <C>PermLeftQuoBipartition</C> verifies that <A>f</A> and <A>g</A> have
+      equal left and right blocks, and returns an error if they do not.
+      <C>PermLeftQuoTransformationNC</C> does no checks.
+
+
     </Description>
   </ManSection>
 <#/GAPDoc>

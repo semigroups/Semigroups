@@ -47,6 +47,7 @@ DeclareProperty("IsTransBipartition", IsBipartition);
 DeclareProperty("IsPermBipartition", IsBipartition);
 DeclareProperty("IsPartialPermBipartition", IsBipartition);
 DeclareGlobalFunction("PermLeftQuoBipartitionNC");
+DeclareOperation("PermLeftQuoBipartition", [IsBipartition, IsBipartition]);
 
 #internal...
 DeclareGlobalFunction("OnRightBlocksPerm");

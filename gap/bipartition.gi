@@ -166,6 +166,20 @@ function(f,g)
   return PermList(p);
 end);
 
+#
+
+InstallMethod(PermLeftQuoBipartition, "for a bipartition and bipartition",
+[IsBipartition, IsBipartition],
+function(f, g)
+  local n, nr, fblocks, gblocks, p, i;
+
+  if LeftBlocks(f)<>LeftBlocks(g) or RightBlocks(f)<>RightBlocks(g) then 
+    Error("usage: the arguments must have equal left and right blocks,");
+    return;
+  fi;
+  return PermLeftQuoBipartition(f, g);
+end);
+
 # change representations...
 
 InstallMethod(AsTransformation, "for a bipartition", [IsBipartition],

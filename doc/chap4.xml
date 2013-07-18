@@ -52,7 +52,7 @@
     </Item>
    </List> 
    
-   <#Include Label="PermLeftQuoBipartitionNC">
+   <#Include Label="PermLeftQuoBipartition">
    </Section>     
   <Section Label="attributes-bipartitions">
   <Heading>Attributes for bipartitons</Heading>
