@@ -147,8 +147,10 @@ end);
 
 # LambdaPerm
 
+#JDM this is not correct, the indices of the blocks in right blocks should be
+#permuted not the indices in f and g!!
 InstallGlobalFunction(PermLeftQuoBipartitionNC,
-function(f,g)
+function(f, g)
   local n, nr, fblocks, gblocks, p, i;
 
   n:=DegreeOfBipartition(f);
@@ -177,7 +179,7 @@ function(f, g)
     Error("usage: the arguments must have equal left and right blocks,");
     return;
   fi;
-  return PermLeftQuoBipartition(f, g);
+  return PermLeftQuoBipartitionNC(f, g);
 end);
 
 # change representations...
@@ -822,7 +824,6 @@ end);
 
 InstallGlobalFunction(OnRightBlocksPerm,
 function(f, p)
-  local n, out, blocks, seen, tab1, tab2, next, q, i;
   
   if IsOne(p) then 
     return f;
@@ -832,11 +833,11 @@ function(f, p)
   out:=EmptyPlist(2*n);
   blocks:=f!.blocks;
 
-  seen:=BlistList([1..n], []);
   tab1:=EmptyPlist(2*n);
   tab2:=EmptyPlist(2*n);
   next:=0;
   q:=p^-1;
+  
   for i in [n+1..2*n] do 
     if not IsBound(tab1[blocks[i]]) then 
       next:=next+1;
