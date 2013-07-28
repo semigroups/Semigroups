@@ -281,6 +281,10 @@ function(lambda, rho)
     return false;
   fi;
 
+  if RankOfBlocks(lambda)=0 then 
+    return lambda=rho;
+  fi;
+
   n:=DegreeOfBlocks(lambda);
   lambdanr:=lambda[1]; 
   rhonr:=rho[1];
