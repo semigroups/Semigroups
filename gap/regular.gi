@@ -843,7 +843,7 @@ function(s)
           if tester(o[scc[m][i]], o[scc[m][j]]) then
             if nr>printed+10000 then 
               printed:=nr;
-              Print("m=", m, ", i=", i, ", j=", j, " of ", Length(scc[m]), " found ", nr, "\r");
+              Print("m=", m, ", i=", i, ", j=", j, " of ", Length(scc[m]), " found ", nr, "          \r");
             fi;
             nr:=nr+2;
           fi;
