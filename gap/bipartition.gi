@@ -824,6 +824,7 @@ end);
 
 InstallGlobalFunction(OnRightBlocksPerm,
 function(f, p)
+  local n, out, blocks, tab1, tab2, next, q, i;
   
   if IsOne(p) then 
     return f;

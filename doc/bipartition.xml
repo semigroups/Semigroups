@@ -262,10 +262,7 @@ gap> BipartitionByIntRep([ 1 ,2 ,2 ,1 ,3 ,4 ]);
       equal left and right blocks, and returns an error if they do not.
       <C>PermLeftQuoTransformationNC</C> does no checks.
       <Example>
-
-
       </Example>
-
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -275,6 +272,11 @@ gap> BipartitionByIntRep([ 1 ,2 ,2 ,1 ,3 ,4 ]);
     <Func Name="IdentityBipartition" Arg="n"/>
     <Returns>The identity bipartition.</Returns>
     <Description>
+      Returns the identity bipartition with degree <A>n</A>. 
+      <Example>
+gap> IdentityBipartition(10);
+&lt;bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], 
+[ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
