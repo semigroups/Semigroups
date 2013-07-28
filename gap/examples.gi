@@ -246,6 +246,10 @@ InstallMethod(PartitionMonoid, "for a positive integer",
 function(n)
   local gens, g, s;
 
+  if n=1 then 
+    return Semigroup(BipartitionNC([[1,-1]]));
+  fi;
+
   gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
   Add(gens, AsBipartition(PartialPermNC([2..n], [2..n]), n));
   Add(gens, BipartitionNC(Concatenation([[1,2,-1, -2]], 
@@ -307,7 +311,11 @@ end);
 InstallMethod(JonesMonoid, "for a positive integer", [IsPosInt],
 function(n)
   local gens, next, i, j;
-  
+ 
+  if n=1 then 
+    return Semigroup(BipartitionNC([[1,-1]]));
+  fi;
+
   gens:=[];
   for i in [1..n-1] do 
     next:=[];
