@@ -14,6 +14,7 @@ DeclareSynonym("TemperleyLiebMonoid", JonesMonoid);
 DeclareOperation("BrauerMonoid", [IsPosInt]);
 DeclareOperation("FactorisableDualSymmetricInverseSemigroup", [IsPosInt]);
 DeclareOperation("DualSymmetricInverseSemigroup", [IsPosInt]);
+DeclareSynonym("DualSymmetricInverseMonoid", DualSymmetricInverseSemigroup);
 DeclareOperation("FullBinaryRelationSemigroup", [IsPosInt]);
 DeclareOperation("FullMatrixSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
