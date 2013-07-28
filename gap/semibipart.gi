@@ -4,7 +4,7 @@
 #
 
 InstallMethod(ViewString, "for a bipartition semigroup with generators",
-[IsBipartitionSemigroup and HasGeneratorsOfSemigroup], 
+[IsBipartitionSemigroup and HasGeneratorsOfSemigroup], 8, # to trump IsGroup
 function(s)
   local str, nrgens;
   
@@ -17,28 +17,32 @@ function(s)
       Append(str, "\>commutative\< ");
     fi;
   fi;
+  if not IsGroup(s) then 
+    if (HasIsTrivial(s) and IsTrivial(s)) or IsGroup(s) then 
+    elif HasIsZeroSimpleSemigroup(s) and IsZeroSimpleSemigroup(s) then 
+      Append(str, "\>0-simple\< ");
+    elif HasIsSimpleSemigroup(s) and IsSimpleSemigroup(s) then 
+      Append(str, "\>simple\< ");
+    fi;
 
-  if HasIsTrivial(s) and IsTrivial(s) then 
-  elif HasIsZeroSimpleSemigroup(s) and IsZeroSimpleSemigroup(s) then 
-    Append(str, "\>0-simple\< ");
-  elif HasIsSimpleSemigroup(s) and IsSimpleSemigroup(s) then 
-    Append(str, "\>simple\< ");
-  fi;
-
-  if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
-    Append(str, "\>inverse\< ");
-  elif HasIsRegularSemigroup(s) 
-   and not (HasIsSimpleSemigroup(s) and IsSimpleSemigroup(s)) then 
-    if IsRegularSemigroup(s) then 
-      Append(str, "\>regular\< ");
-    else
-      Append(str, "\>non-regular\< ");
+    if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
+      Append(str, "\>inverse\< ");
+    elif HasIsRegularSemigroup(s) 
+     and not (HasIsSimpleSemigroup(s) and IsSimpleSemigroup(s)) then 
+      if IsRegularSemigroup(s) then 
+        Append(str, "\>regular\< ");
+      else
+        Append(str, "\>non-regular\< ");
+      fi;
     fi;
   fi;
   
   Append(str, "\>bipartition\< ");
  
-  if HasIsMonoid(s) and IsMonoid(s) then 
+  if IsGroup(s) then 
+    Append(str, "\>group\< ");
+    nrgens:=Length(GeneratorsOfGroup(s));
+  elif HasIsMonoid(s) and IsMonoid(s) then 
     Append(str, "\>monoid\< ");
     nrgens:=Length(GeneratorsOfMonoid(s));
   else 

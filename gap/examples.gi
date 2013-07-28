@@ -262,9 +262,19 @@ InstallMethod(DualSymmetricInverseSemigroup, "for a positive integer",
 [IsPosInt], 
 function(n)
   local gens;
+  
+  if n=1 then 
+    return Semigroup(BipartitionNC([[1,-1]]));
+  fi;
+  
   gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
-  Add(gens, BipartitionNC(Concatenation([[1,2,-3], [3,-1,-2]],
-   List([4..n], x-> [x, -x]))));
+  
+  if n=2 then 
+    Add(gens, BipartitionNC([[1,2,-1,-2]]));
+  else 
+    Add(gens, BipartitionNC(Concatenation([[1,2,-3], [3,-1,-2]],
+     List([4..n], x-> [x, -x]))));
+  fi;
   return Semigroup(gens);
 end);
 
