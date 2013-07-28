@@ -41,7 +41,7 @@ function(d,q)
   SetIsFullMatrixSemigroup(S, true);
   SetIsGeneralLinearSemigroup(S, true);
   SetIsRegularSemigroup(S, true);
-
+ 
   return S;
 end);
 
@@ -55,9 +55,6 @@ function(s)
   Print("<full matrix semigroup ");
   n:=Length(GeneratorsOfSemigroup(s)[1][1]);
   Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]));
-  if HasSize(s) then 
-    Print("of size ", Size(s));
-  fi;
   Print(">");
 end);
 
