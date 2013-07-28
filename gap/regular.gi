@@ -820,6 +820,57 @@ function(s)
   return nr;
 end);
 
+#
+
+InstallMethod(NrIdempotents, "for a *-regular acting semigroup",
+[IsStarRegularSemigroup and IsActingSemigroup],
+function(s)
+  local nr, tester, o, scc, printed, m, i, j;
+
+  nr:=0;
+  tester:=IdempotentTester(s);
+  o:=LambdaOrb(s);
+  scc:=OrbSCC(o); 
+
+  if InfoLevel(InfoSemigroups)>1 then 
+    printed:=0;
+    for m in [2..Length(scc)] do 
+      for i in [1..Length(scc[m]-1)] do 
+        if tester(o[scc[m][i]], o[scc[m][i]]) then 
+          nr:=nr+1;
+        fi;
+        for j in [i+1..Length(scc[m])] do 
+          if tester(o[scc[m][i]], o[scc[m][j]]) then
+            if nr>printed+10000 then 
+              printed:=nr;
+              Print("m=", m, ", i=", i, ", j=", j, " of ", Length(scc[m]), " found ", nr, "\r");
+            fi;
+            nr:=nr+2;
+          fi;
+        od;
+      od;
+    od;
+    if printed>0 then 
+      Print("\n");
+    fi;
+  else
+    for m in [2..Length(scc)] do 
+      for i in [1..Length(scc[m]-1)] do 
+        if tester(o[scc[m][i]], o[scc[m][i]]) then 
+          nr:=nr+1;
+        fi;
+        for j in [i+1..Length(scc[m])] do 
+          if tester(o[scc[m][i]], o[scc[m][j]]) then
+            nr:=nr+2;
+          fi;
+        od;
+      od;
+    od;
+  fi;
+
+  return nr;
+end);
+
 # same method for inverse semigroups
 
 InstallMethod(NrRegularDClasses, "for a regular acting semigroup",

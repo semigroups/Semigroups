@@ -253,7 +253,7 @@ function(n)
    List([3..n], x-> [x, -x]))));
 
   s:=Semigroup(gens);
-  SetIsRegularSemigroup(s, true);
+  SetIsStarRegularSemigroup(s, true);
   return s;
 end);
 
@@ -295,19 +295,24 @@ end);
 
 InstallMethod(BrauerMonoid, "for a positive integer", [IsPosInt],
 function(n)
-  local gens;
+  local gens, s;
 
+  if n=1 then 
+    return Semigroup(BipartitionNC([[1,-1]]));
+  fi;
   gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
   Add(gens, BipartitionNC(Concatenation([[1,2]], 
    List([3..n], x-> [x, -x]),[[-1,-2]])));
-  return Semigroup(gens);
+  s:=Semigroup(gens);
+  SetIsStarRegularSemigroup(s, true);
+  return s;
 end);
 
 #
 
 InstallMethod(JonesMonoid, "for a positive integer", [IsPosInt],
 function(n)
-  local gens, next, i, j;
+  local gens, next, s, i, j;
  
   if n=1 then 
     return Semigroup(BipartitionNC([[1,-1]]));
@@ -328,8 +333,12 @@ function(n)
     od;
     gens[i]:=BipartitionByIntRep(next);
   od;
-  return Monoid(gens);
+  s:=Monoid(gens);
+  SetIsStarRegularSemigroup(s, true);
+  return s;
 end);
+
+#
 
 HamMonoid:=
 function(n)
