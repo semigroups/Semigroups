@@ -60,7 +60,7 @@
     <#Include Label="IsTransBipartition">
     <#Include Label="IsPermBipartition">
     <#Include Label="DegreeOfBipartition">
-    <#Include Label="ExtRepBipartition">
+    <#Include Label="ExtRepOfBipartition">
     <#Include Label="RankOfBipartition">
     <#Include Label="NrBlocks">
     <#Include Label="NrLeftBlocks">
