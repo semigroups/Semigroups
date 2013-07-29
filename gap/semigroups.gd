@@ -55,9 +55,8 @@ DeclareOperation("RandomInverseMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomTransformationMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomTransformationSemigroup", [IsPosInt, IsPosInt]);
 DeclareSynonym("RandomPartialPermSemigroup", RandomBlockGroup);
-
-#DeclareOperation("RandomBipartitionSemigroup", [IsPosInt, IsPosInt]);
-#DeclareOperation("RandomBipartitionMonoid", [IsPosInt, IsPosInt]);
+DeclareOperation("RandomBipartitionSemigroup", [IsPosInt, IsPosInt]);
+DeclareOperation("RandomBipartitionMonoid", [IsPosInt, IsPosInt]);
 
 DeclareGlobalFunction("RegularSemigroup");
 

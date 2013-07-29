@@ -692,8 +692,8 @@ function(r)
     if tuple=fail then return fail; fi;
     r:=enum!.parent;
     rep:=Representative(r);
-    return rep*tuple[1]*LambdaOrbMult(LambdaOrb(r), 
-     LambdaOrbSCCIndex(r), tuple[2])[1];
+    return StabiliserAction(Parent(r))(rep,tuple[1])
+     *LambdaOrbMult(LambdaOrb(r), LambdaOrbSCCIndex(r), tuple[2])[1];
   end;
   #
   convert_in:=function(enum, elt)

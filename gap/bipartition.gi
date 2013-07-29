@@ -147,21 +147,30 @@ end);
 
 # LambdaPerm
 
-#JDM this is not correct, the indices of the blocks in right blocks should be
-#permuted not the indices in f and g!!
 InstallGlobalFunction(PermLeftQuoBipartitionNC,
 function(f, g)
-  local n, nr, fblocks, gblocks, p, i;
+  local n, nr, fblocks, gblocks, p, tab, nrblocks, i;
 
   n:=DegreeOfBipartition(f);
-  nr:=NrLeftBlocks(f);
   fblocks:=f!.blocks;
   gblocks:=g!.blocks;
-  p:=[1..nr];
+  p:=[1..n];
 
+  #figure out which blocks of f correspond to which blocks of the right blocks
+  #of f 
+  nr:=0;
+  tab:=EmptyPlist(2*n);
+  for i in [n+1..2*n] do 
+    if not IsBound(tab[fblocks[i]]) then 
+      nr:=nr+1;
+      tab[fblocks[i]]:=nr;
+    fi;
+  od;
+
+  nr:=NrLeftBlocks(f);
   for i in [n+1..2*n] do 
     if gblocks[i]<=nr then 
-      p[gblocks[i]]:=fblocks[i];
+      p[tab[gblocks[i]]]:=tab[fblocks[i]];
     fi;
   od;
 

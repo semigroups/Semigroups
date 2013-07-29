@@ -835,7 +835,7 @@ function(s)
   if InfoLevel(InfoSemigroups)>1 then 
     printed:=0;
     for m in [2..Length(scc)] do 
-      for i in [1..Length(scc[m]-1)] do 
+      for i in [1..Length(scc[m])] do 
         if tester(o[scc[m][i]], o[scc[m][i]]) then 
           nr:=nr+1;
         fi;
@@ -855,7 +855,7 @@ function(s)
     fi;
   else
     for m in [2..Length(scc)] do 
-      for i in [1..Length(scc[m]-1)] do 
+      for i in [1..Length(scc[m])] do 
         if tester(o[scc[m][i]], o[scc[m][i]]) then 
           nr:=nr+1;
         fi;

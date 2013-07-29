@@ -26,6 +26,25 @@
 
 # Note that a semigroup satisfies IsTransformationMonoid only if One(s)<>fail. 
 
+InstallMethod(StructureDescriptionSchutzenbergerGroups, 
+"for an acting semigroup", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local o, scc, out, m;
+
+  o:=LambdaOrb(s);
+  scc:=OrbSCC(o);
+  out:=EmptyPlist(Length(scc)-1);
+
+  for m in [2..Length(scc)] do 
+    out[m-1]:=StructureDescription(LambdaOrbSchutzGp(o, m));
+  od;
+
+  return out;
+end);
+
+#
+
 InstallMethod(GroupOfUnits, 
 "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],

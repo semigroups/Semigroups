@@ -936,4 +936,20 @@ function(m,n)
   return Monoid(Set(List([1..m], x-> RandomTransformation(n))));
 end);
 
+#
+
+InstallMethod(RandomBipartitionSemigroup, "for pos int and pos int",
+[IsPosInt, IsPosInt], 
+function(m,n)
+  return Semigroup(Set(List([1..m], x-> RandomBipartition(n))));
+end);
+
+#
+
+InstallMethod(RandomBipartitionMonoid, "for a pos int and pos int",
+[IsPosInt, IsPosInt], 
+function(m,n)
+  return Monoid(Set(List([1..m], x-> RandomBipartition(n))));
+end);
+
 #EOF

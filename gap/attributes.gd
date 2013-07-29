@@ -33,3 +33,4 @@ DeclareAttribute("MultiplicativeZero", IsActingSemigroup);
 DeclareAttribute("SmallGeneratingSet", IsActingSemigroup);
 DeclareAttribute("StructureDescription", IsBrandtSemigroup);
 DeclareAttribute("StructureDescription", IsGroupAsSemigroup);
+DeclareAttribute("StructureDescriptionSchutzenbergerGroups", IsActingSemigroup);

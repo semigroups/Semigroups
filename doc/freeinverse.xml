@@ -15,7 +15,7 @@
       Label="for a list of names"/>
     <Oper Name = "FreeInverseSemigroup" Arg = "names" 
       Label="for various names"/>
-    <Returns> A Free Inverse Semigroup. </Returns>
+    <Returns> A free inverse semigroup.</Returns>
     <Description>
      Returns a Free Inverse Semigroup on <C>rank</C> generators, where 
       <C>rank</C> is a finite positive integer. If <C>rank</C> is not 
@@ -24,37 +24,38 @@
       The internal representation is based on Munn tree diagrams, for
       reference see J. Howie Fundamentals of Semigroup Theory.
     <Example>
-      gap> S := FreeInverseSemigroup(7);
-      &lt; free inverse semigroup on the generators [ x1, x2, x3, x4, x5, x6, x7 ]>
-      gap> S := FreeInverseSemigroup(7,"s");
-      &lt; free inverse semigroup on the generators [ s1, s2, s3, s4, s5, s6, s7 ]>
-      gap> S := FreeInverseSemigroup("a", "b", "c");
-      &lt; free inverse semigroup on the generators [ a, b, c ]>
-      gap> S := FreeInverseSemigroup(["a", "b", "c"]);
-      &lt; free inverse semigroup on the generators [ a, b, c ]>
+gap> S := FreeInverseSemigroup(7);
+&lt; free inverse semigroup on the generators [ x1, x2, x3, x4, x5, x6, x7 ]>
+gap> S := FreeInverseSemigroup(7,"s");
+&lt; free inverse semigroup on the generators [ s1, s2, s3, s4, s5, s6, s7 ]>
+gap> S := FreeInverseSemigroup("a", "b", "c");
+&lt; free inverse semigroup on the generators [ a, b, c ]>
+gap> S := FreeInverseSemigroup(["a", "b", "c"]);
+&lt; free inverse semigroup on the generators [ a, b, c ]>
     </Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="FreeInverseSemiCanonicalForm">
+<#GAPDoc Label="CanonicalForm">
   <ManSection>
-    <Oper Name = "FreeInverseSemiCanonicalForm" Arg = "s"/>
+    <Oper Name = "CanonicalForm" Arg = "w" Label="for a free inverse semigroup
+      element"/>
     <Returns> A free inverse semigroup element. </Returns>
     <Description>
-      For a free inverse semigroup element <C>s</C>,
-      <A>FreeInverseSemiCanonicalForm</A> puts the element into
+      For a free inverse semigroup element <A>s</A>,
+      <C>FreeInverseSemiCanonicalForm</C> puts the element into
       a canonical form, Which is unique up to rearranging 
       idempotents in the product.
     <Example>
-      gap> S := FreeInverseSemigroup(3);
-      &lt; free inverse semigroup on the generators [ x1, x2, x3 ]>
-      gap> x := S.1;
-      x1
-      gap> y := S.2;
-      x2
-      gap> FreeInverseSemiCanonicalForm(x^3 *y^3);
-      "x1x1x1x2x2x2x2^-1x2^-1x2^-1x1^-1x1^-1x1^-1x1x1x1x2x2x2"
+gap> S := FreeInverseSemigroup(3);
+&lt; free inverse semigroup on the generators [ x1, x2, x3 ]>
+gap> x := S.1;
+x1
+gap> y := S.2;
+x2
+gap> FreeInverseSemiCanonicalForm(x^3 *y^3);
+"x1x1x1x2x2x2x2^-1x2^-1x2^-1x1^-1x1^-1x1^-1x1x1x1x2x2x2"
     </Example>
     </Description>
   </ManSection>

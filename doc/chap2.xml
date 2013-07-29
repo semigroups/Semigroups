@@ -145,7 +145,7 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ),
     <Heading> Free Inverse Semigroup</Heading>
 
     <#Include Label = "FreeInverseSemigroup">
-    <#Include Label = "FreeInverseSemiCanonicalForm">
+    <#Include Label = "CanonicalForm">
   </Section>
 
 
