@@ -14,8 +14,21 @@
     <Oper Name="PermRightBlocks" Arg="blocks, f"/>
     <Returns>A permutation.</Returns>
     <Description>
-permutation of indices of signed (connected) blocks of blocks under the
- action of f which is assumed to stabilise blocks.
+      If <A>f</A> is a bipartition that stabilises <A>blocks</A>, i.e.
+      <C>OnRightBlocks(<A>blocks</A>, <A>f</A>)=<A>blocks</A></C>, then
+      <C>PermRightBlocks</C> returns the permutation of the indices of the
+      transverse blocks of <A>blocks</A> under the action of <A>f</A>.
+
+
+      <Example>
+gap> f:=Bipartition( [ [ 1, 10 ], [ 2, -7, -9 ], [ 3, 4, 6, 8 ], [ 5, -5 ], 
+> [ 7, 9, -2 ], [ -1, -10 ], [ -3, -4, -6, -8 ] ] );;
+gap> blocks:=BlocksNC([[ -1, -10 ], [ 2 ], [ -3, -4, -6, -8 ], [ 5 ], 
+> [ 7, 9 ]]);;
+gap> OnRightBlocks(blocks, f)=blocks;
+true
+gap> PermRightBlocks(blocks, f);
+(2,5)</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

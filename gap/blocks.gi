@@ -16,6 +16,29 @@ BindGlobal("BlocksType", NewType(BlocksFamily,
 
 #
 
+InstallGlobalFunction(BlocksNC, 
+function(blocks)
+  local n, out, i, j;
+  
+  n:=Sum(List(blocks, Length));
+  out:=EmptyPlist(n+Length(blocks)+1);
+  out[1]:=Length(blocks);
+
+  for i in [1..Length(blocks)] do
+    if blocks[i][1]>0 then 
+      out[1+n+i]:=1;
+    else
+      out[1+n+i]:=0;
+    fi;
+    for j in blocks[i] do 
+      out[AbsInt(j)+1]:=i;
+    od;
+  od; 
+  return Objectify(BlocksType, rec(blocks:=out));
+end);
+
+#
+
 InstallGlobalFunction(ORB_HashFunctionForBlocks,
 function(blocks, data)
   return ORB_HashFunctionForPlainFlatList(blocks!.blocks, data);
@@ -515,7 +538,7 @@ end);
 # action of <f> which is assumed to stabilise <blocks>.
 
 InstallMethod(PermRightBlocks, "for blocks and bipartition",
-[IsList, IsBipartition],
+[IsBlocks, IsBipartition],
 function(blocks, f)
   local n, nrblocks, fblocks, fuseit, signed, tab, next, x, i;
 

@@ -260,6 +260,9 @@ gap> BipartitionByIntRep([ 1, 2, 2, 1, 3, 4 ]);
       equal left and right blocks, and returns an error if they do not.
       <C>PermLeftQuoTransformationNC</C> does no checks.<P/>
 
+      The value returned by <C>PermLeftQuoBipartition(<A>f</A>,<A>g</A>)</C> is
+      the same as that returned by 
+      <C>PermRightBlocks(RightBlocks(<A>f</A>), Inverse(<A>f</A>)*g)</C>.
       See also <Ref Oper="PermRightBlocks"/> and 
        <Ref Oper="OnRightBlocksBipartitionByPerm"/>.
       <Example>

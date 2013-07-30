@@ -12,6 +12,7 @@ DeclareCategory("IsBlocks", IsList);
 DeclareCategoryCollections("IsBlocks");
 
 DeclareGlobalFunction("ORB_HashFunctionForBlocks");
+DeclareGlobalFunction("BlocksNC");
 
 DeclareAttribute("NrBlocks", IsBipartition);
 DeclareAttribute("NrBlocks", IsBlocks);
