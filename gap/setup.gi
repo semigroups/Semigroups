@@ -69,7 +69,7 @@ InstallMethod(LambdaOrbOpts, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> rec(forflatplainlists:=true));
 
 InstallMethod(LambdaOrbOpts, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s-> rec(forflatplainlists:=true));
+[IsBipartitionSemigroup], s-> rec());
 
 InstallMethod(RhoOrbOpts, "for a transformation semigroup",
 [IsTransformationSemigroup], s-> rec(forflatplainlists:=true));
@@ -78,7 +78,7 @@ InstallMethod(RhoOrbOpts, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> rec(forflatplainlists:=true));
 
 InstallMethod(RhoOrbOpts, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s-> rec(forflatplainlists:=true));
+[IsBipartitionSemigroup], s-> rec());
 
 # the lambda and rho acts
 
@@ -88,7 +88,7 @@ InstallMethod(LambdaAct, "for a transformation semigroup",
 InstallMethod(LambdaAct, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x-> OnPosIntSetsPartialPerm);
 
-InstallMethod(LambdaAct, "for a partial perm semigroup",
+InstallMethod(LambdaAct, "for a bipartition semigroup",
 [IsBipartitionSemigroup], x-> OnRightBlocks);
 
 #
@@ -115,7 +115,7 @@ InstallMethod(LambdaOrbSeed, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> [0]);
 
 InstallMethod(LambdaOrbSeed, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s-> [0]);
+[IsBipartitionSemigroup], s-> EmptyBlocks);
 
 # the seed or dummy start point for RhoOrb
 
@@ -126,7 +126,7 @@ InstallMethod(RhoOrbSeed, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> [0]);
 
 InstallMethod(RhoOrbSeed, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s-> [0]);
+[IsBipartitionSemigroup], s-> EmptyBlocks);
 
 # the function calculating the lambda or rho value of an element
 

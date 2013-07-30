@@ -1,15 +1,30 @@
+############################################################################
+##
+#W  blocks.gd
+#Y  Copyright (C) 2011-13                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+DeclareCategory("IsBlocks", IsList);
+DeclareCategoryCollections("IsBlocks");
+
+DeclareGlobalFunction("ORB_HashFunctionForBlocks");
 
 DeclareAttribute("NrBlocks", IsBipartition);
+DeclareAttribute("NrBlocks", IsBlocks);
 DeclareAttribute("NrLeftBlocks", IsBipartition);
 DeclareAttribute("NrRightBlocks", IsBipartition);
 
-DeclareGlobalFunction("RankOfBlocks");
-DeclareGlobalFunction("DegreeOfBlocks");
+DeclareAttribute("RankOfBlocks", IsBlocks);
+DeclareAttribute("DegreeOfBlocks", IsBlocks);
 
 DeclareAttribute("LeftBlocks", IsBipartition);
 DeclareAttribute("RightBlocks", IsBipartition);
 
-DeclareGlobalFunction("ExtRepOfBlocks");
+DeclareAttribute("ExtRepOfBlocks", IsBlocks);
 DeclareGlobalFunction("BlocksByExtRep");
 
 DeclareGlobalFunction("OnRightBlocks");

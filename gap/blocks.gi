@@ -1,3 +1,108 @@
+############################################################################
+##
+#W  blocks.gi
+#Y  Copyright (C) 2011-13                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+BindGlobal("BlocksFamily", NewFamily("BlocksFamily",
+ IsBlocks, CanEasilySortElements, CanEasilySortElements));
+
+BindGlobal("BlocksType", NewType(BlocksFamily,
+ IsBlocks and IsComponentObjectRep and IsAttributeStoringRep));
+
+#
+
+InstallGlobalFunction(ORB_HashFunctionForBlocks,
+function(blocks, data)
+  return ORB_HashFunctionForPlainFlatList(blocks!.blocks, data);
+end);
+
+#
+
+InstallMethod(ChooseHashFunction, "for blocks",
+[IsBlocks, IsInt],
+function(t,hashlen)
+  return rec(func := ORB_HashFunctionForBlocks, data:=hashlen);
+end );
+
+#
+
+BindGlobal("EmptyBlocks", Objectify(BlocksType, rec(blocks:=[0])));
+
+#
+
+InstallMethod(\=, "for blocks", [IsBlocks, IsBlocks],
+function(a, b)
+  return a!.blocks=b!.blocks;
+end);
+
+#
+
+InstallMethod(\<, "for blocks", [IsBlocks, IsBlocks],
+function(a, b)
+  return a!.blocks<b!.blocks;
+end);
+
+#
+
+InstallMethod(ELM_LIST, "for blocks", [IsBlocks, IsPosInt],
+function(b, i)
+  return b!.blocks[i+1];
+end);
+
+#
+
+InstallMethod(NrBlocks, "for blocks", [IsBlocks], 
+function(blocks)
+  return blocks!.blocks[1]; #don't change this!!
+end);
+
+#
+
+InstallMethod(ExtRepOfBlocks, "for blocks", [IsBlocks],
+function(blocks)
+  local n, bl, ext, i;
+
+  n:=DegreeOfBlocks(blocks);
+  ext:=[];
+  
+  for i in [1..n] do 
+    if not IsBound(ext[blocks[i]]) then 
+      ext[blocks[i]]:=[];
+    fi;
+    if blocks[blocks[i]+n]=1 then 
+      Add(ext[blocks[i]], i);
+    else
+      Add(ext[blocks[i]], -i);
+    fi;
+  od;
+  return ext;
+end);
+
+#
+
+InstallMethod(ViewObj, "for blocks", [IsBlocks],
+function(blocks)
+  local ext, i;
+  
+  ext:=ExtRepOfBlocks(blocks);
+  if Length(ext)>0 then 
+    Print("<blocks: ");
+    Print(ext[1]);
+    for i in [2..Length(ext)] do
+      Print(", ", ext[i]);
+    od;
+  else 
+    Print("<empty blocks");
+  fi;
+  
+  Print(">");
+  return;
+end);
 
 #
 
@@ -24,6 +129,7 @@ function(f)
     out[i-n+1]:=tab[blocks[i]];
   od;
   out[1]:=nrblocks;
+  out:=Objectify(BlocksType, rec(blocks:=out));
   return out;
 end);
 
@@ -56,6 +162,7 @@ function(f)
     fi;
   od;
 
+  out:=Objectify(BlocksType, rec(blocks:=out));
   return out;
 end);
 
@@ -65,14 +172,14 @@ InstallGlobalFunction(OnRightBlocks,
 function(blocks, f)
   local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out,
    next, i;
-
-  n:=DegreeOfBlocks(blocks); # length of partition!!
-  nrblocks:=blocks[1];
-  
-  if nrblocks=0 then   # special case for dummy/seed 
+ 
+  if blocks!.blocks=[0] then   # special case for dummy/seed 
     return RightBlocks(f);
   fi;
 
+  n:=DegreeOfBlocks(blocks); # length of partition!!
+  nrblocks:=NrBlocks(blocks);
+  
   nrfblocks:=NrBlocks(f); 
   fblocks:=f!.blocks;
   
@@ -80,7 +187,7 @@ function(blocks, f)
   sign:=EmptyPlist(nrfblocks+nrblocks);
 
   for i in [1..nrblocks] do 
-    sign[i]:=blocks[n+1+i];
+    sign[i]:=blocks[n+i];
   od;
   for i in [nrblocks+1..nrfblocks+nrblocks] do 
     sign[i]:=0;
@@ -94,7 +201,7 @@ function(blocks, f)
   end;
   
   for i in [1..n] do
-    x := fuseit(blocks[i+1]);
+    x := fuseit(blocks[i]);
     y := fuseit(fblocks[i]+nrblocks);
     if x <> y then
       if x < y then
@@ -125,6 +232,7 @@ function(blocks, f)
     out[n+1+tab[x]]:=sign[x];
   od;
   out[1]:=next;
+  out:=Objectify(BlocksType, rec(blocks:=out));
   return out;
 end);
 
@@ -134,13 +242,13 @@ InstallGlobalFunction(OnLeftBlocks,
 function(blocks, f)
   local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out, next, i;
 
-  n:=DegreeOfBlocks(blocks);  # length of <blocks>
-  nrblocks:=blocks[1];
-  
-  if nrblocks=0 then 
+  if blocks!.blocks=[0] then 
     return LeftBlocks(f);
   fi;
 
+  n:=DegreeOfBlocks(blocks);  # length of <blocks>
+  nrblocks:=NrBlocks(blocks);
+  
   nrfblocks:=NrBlocks(f);
   fblocks:=f!.blocks;
   
@@ -151,7 +259,7 @@ function(blocks, f)
     sign[i]:=0;
   od;
   for i in [1..nrblocks] do 
-    sign[i+nrfblocks]:=blocks[n+1+i];
+    sign[i+nrfblocks]:=blocks[n+i];
   od;
 
   fuseit := function(i) 
@@ -163,7 +271,7 @@ function(blocks, f)
   
   for i in [1..n] do
     x := fuseit(fblocks[n+i]);
-    y := fuseit(blocks[i+1]+nrfblocks);
+    y := fuseit(blocks[i]+nrfblocks);
     if x <> y then
       if x < y then
         fuse[y] := x;
@@ -193,26 +301,27 @@ function(blocks, f)
     out[n+1+tab[x]]:=sign[x];
   od;
   out[1]:=next;
+  out:=Objectify(BlocksType, rec(blocks:=out));
   return out;
 end);
 
 #
 
-InstallGlobalFunction(ExtRepOfBlocks,
-function(blocks)
-  local n, sign, out, i;
-  
-  n:=DegreeOfBlocks(blocks);
-  out:=EmptyPlist(n);
-  for i in [1..n] do 
-    out[i]:=blocks[i+1];
-    if blocks[n+1+blocks[i+1]]=0 then 
-      out[i]:=out[i]*-1;
-    fi;
-  od;
-    
-  return out;
-end);
+#InstallGlobalFunction(ExtRepOfBlocks,
+#function(blocks)
+#  local n, sign, out, i;
+#  
+#  n:=DegreeOfBlocks(blocks);
+#  out:=EmptyPlist(n);
+#  for i in [1..n] do 
+#    out[i]:=blocks[i+1];
+#    if blocks[n+1+blocks[i+1]]=0 then 
+#      out[i]:=out[i]*-1;
+#    fi;
+#  od;
+#    
+#  return out;
+#end);
 
 #
 
@@ -241,19 +350,20 @@ function(ext)
   od;
 
   out[1]:=nr;
+  out:=Objectify(BlocksType, rec(blocks:=out));
   return out;
 end);
 
 #
 
-InstallGlobalFunction(RankOfBlocks, 
+InstallMethod(RankOfBlocks, "for blocks", [IsBlocks],
 function(blocks)
   local n, rank, i;
   
   n:=DegreeOfBlocks(blocks);
   rank:=0;
-  for i in [1..blocks[1]] do 
-    if blocks[n+1+i]=1 then 
+  for i in [1..NrBlocks(blocks)] do 
+    if blocks[n+i]=1 then 
       rank:=rank+1;
     fi;
   od;
@@ -262,11 +372,12 @@ end);
 
 #
 
-InstallGlobalFunction(DegreeOfBlocks,
-function(blocks)
-  return Length(blocks)-blocks[1]-1;
+InstallMethod(DegreeOfBlocks, "for blocks", [IsBlocks],
+function(b)
+  return Length(b!.blocks)-b!.blocks[1]-1;
 end);
 
+#
 
 InstallGlobalFunction(BlocksIdempotentTester,
 function(lambda, rho)
@@ -409,7 +520,7 @@ function(blocks, f)
   local n, nrblocks, fblocks, fuseit, signed, tab, next, x, i;
 
   n:=DegreeOfBlocks(blocks); # length of partition!!
-  nrblocks:=blocks[1];
+  nrblocks:=NrBlocks(blocks);
   fblocks:=f!.blocks;
 
   fuseit:=FuseRightBlocks(blocks, f, false); 
@@ -417,7 +528,7 @@ function(blocks, f)
 
   # JDM could stop here after reaching the maximum signed class of <blocks>
   for i in [n+1..2*n] do 
-    if blocks[n+1+blocks[i-n]]=1 then 
+    if blocks[n+blocks[i-n]]=1 then 
       Add(signed, blocks[i-n]);
     fi;
     x:=fuseit(fblocks[i]+nrblocks);
@@ -461,7 +572,7 @@ function(blocks, f)
    tab1, x, nrleft, tab2, i;
 
   n:=DegreeOfBlocks(blocks); # length of partition!!
-  nrblocks:=blocks[1];
+  nrblocks:=NrBlocks(blocks);
   fblocks:=f!.blocks;
   
   fusesign:=FuseRightBlocks(blocks, f, true); 
@@ -501,8 +612,8 @@ function(blocks, f)
   # find the right blocks of the output
   tab2:=[];
   for i in [n+1..2*n] do 
-    x:=blocks[i-n+1];
-    if blocks[n+1+x]=1 then 
+    x:=blocks[i-n];
+    if blocks[n+x]=1 then 
       x:=fuseit(x);
       out[i]:=tab1[x];
     else
@@ -529,24 +640,24 @@ function(blocks, f)
   local n, nrblocks, fblocks, fuseit, out, tab, x, i;
 
   n:=DegreeOfBlocks(blocks); # length of partition!!
-  nrblocks:=blocks[1];
+  nrblocks:=NrBlocks(blocks);
   fblocks:=f!.blocks;
   
   fuseit:=FuseLeftBlocks(blocks, f); 
   out:=[]; tab:=[];
 
   for i in [1..nrblocks] do 
-    if blocks[n+1+i]=1 then 
+    if blocks[n+i]=1 then 
       tab[fuseit(i)]:=i;
     fi;
   od;
 
   # find the left blocks of the output
   for i in [1..n] do
-    out[i]:=blocks[i+1];
+    out[i]:=blocks[i];
     x:=fuseit(fblocks[i]+nrblocks);
-    if x>blocks[1] or not IsBound(tab[x]) then 
-      out[i+n]:=blocks[1]+1; #junk
+    if x>nrblocks or not IsBound(tab[x]) then 
+      out[i+n]:=nrblocks+1; #junk
     else
       out[i+n]:=tab[x];
     fi;
@@ -554,8 +665,8 @@ function(blocks, f)
 
   out:=Objectify(BipartitionType, rec(blocks:=out));
   SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, blocks[1]);
-  SetNrBlocks(out, blocks[1]+1);
+  SetNrLeftBlocks(out, nrblocks);
+  SetNrBlocks(out, nrblocks+1);
   return out;
 end);
 
@@ -568,7 +679,7 @@ function(blocks, f, sign)
   
   n:=DegreeOfBlocks(blocks);
   fblocks:=f!.blocks;
-  nrblocks:=blocks[1];
+  nrblocks:=NrBlocks(blocks);
   nrfblocks:=NrBlocks(f);
 
   fuse:=[1..nrblocks+nrfblocks];
@@ -583,14 +694,14 @@ function(blocks, f, sign)
     sign:=EmptyPlist(nrfblocks+nrblocks);
 
     for i in [1..nrblocks] do
-      sign[i]:=blocks[n+1+i];
+      sign[i]:=blocks[n+i];
     od;
     for i in [nrblocks+1..nrfblocks+nrblocks] do
       sign[i]:=0;
     od;
     
     for i in [1..n] do
-      x := fuseit(blocks[i+1]);
+      x := fuseit(blocks[i]);
       y := fuseit(fblocks[i]+nrblocks);
       if x <> y then
         if x < y then
@@ -609,7 +720,7 @@ function(blocks, f, sign)
     return [fuseit, sign];
   else 
     for i in [1..n] do
-      x := fuseit(blocks[i+1]);
+      x := fuseit(blocks[i]);
       y := fuseit(fblocks[i]+nrblocks);
       if x <> y then
         if x < y then
@@ -631,7 +742,7 @@ function(blocks, f)
   
   n:=DegreeOfBlocks(blocks);
   fblocks:=f!.blocks;
-  nrblocks:=blocks[1];
+  nrblocks:=NrBlocks(blocks);
   nrfblocks:=NrBlocks(f);
 
   fuse:=[1..nrblocks+nrfblocks];
@@ -643,7 +754,7 @@ function(blocks, f)
   end;
 
   for i in [1..n] do
-    x := fuseit(blocks[i+1]);
+    x := fuseit(blocks[i]);
     y := fuseit(fblocks[n+i]+nrblocks);
     if x <> y then
       if x < y then
