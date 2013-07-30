@@ -6,8 +6,6 @@
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
-
-
 <#GAPDoc Label="FreeInverseSemigroup" >
 <ManSection>
     <Oper Name = "FreeInverseSemigroup" Arg = "rank[, name]"
@@ -22,9 +20,6 @@
      Returns a Free Inverse Semigroup on <A>rank</A> generators, where 
       <A>rank</A> is a finite positive integer. If <A>rank</A> is not 
       specified the number of names is used. 
-
-      The internal representation is based on Munn tree diagrams, for
-      reference see J. Howie Fundamentals of Semigroup Theory.
 <Example>
 gap> S := FreeInverseSemigroup(7);
 &lt;free inverse semigroup on the generators 
