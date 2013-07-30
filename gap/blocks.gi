@@ -397,8 +397,8 @@ function(lambda, rho)
   fi;
 
   n:=DegreeOfBlocks(lambda);
-  lambdanr:=lambda[1]; 
-  rhonr:=rho[1];
+  lambdanr:=NrBlocks(lambda); 
+  rhonr:=NrBlocks(rho);
 
   fuse:=[1..lambdanr+rhonr];
   fuseit := function(i) 
@@ -410,12 +410,12 @@ function(lambda, rho)
   
   sign:=[1..lambdanr]*0;
   for i in [lambdanr+1..lambdanr+rhonr] do #copy the signs from <rho>
-    sign[i]:=rho[n+1+i-lambdanr]; 
+    sign[i]:=rho[n+i-lambdanr]; 
   od;
   
   for i in [1..n] do
-    x := fuseit(lambda[i+1]);
-    y := fuseit(rho[i+1]+lambdanr);
+    x := fuseit(lambda[i]);
+    y := fuseit(rho[i]+lambdanr);
     if x <> y then
       if x < y then
         fuse[y] := x;
@@ -436,7 +436,7 @@ function(lambda, rho)
 
   seen:=BlistList([1..lambdanr], []);
   for i in [1..lambdanr] do 
-    if lambda[n+1+i]=1 then # is block <i> a signed block?
+    if lambda[n+i]=1 then # is block <i> a signed block?
       x:=fuseit(i);
       if seen[x] or sign[x]=0 then 
         return false;
@@ -454,8 +454,8 @@ function(lambda, rho)
   local n, lambdanr, rhonr, fuse, fuseit, x, y, tab1, tab2, out, next, i;
 
   n:=DegreeOfBlocks(lambda);
-  lambdanr:=lambda[1]; 
-  rhonr:=rho[1];
+  lambdanr:=NrBlocks(lambda); 
+  rhonr:=NrBlocks(rho);
 
   fuse:=[1..lambdanr+rhonr];
   fuseit := function(i) 
@@ -466,8 +466,8 @@ function(lambda, rho)
   end;
   
   for i in [1..n] do
-    x := fuseit(lambda[i+1]);
-    y := fuseit(rho[i+1]+lambdanr);
+    x := fuseit(lambda[i]);
+    y := fuseit(rho[i]+lambdanr);
     if x <> y then
       if x < y then
         fuse[y] := x;
@@ -481,32 +481,32 @@ function(lambda, rho)
 
   #find new names for the signed blocks of rho
   for i in [1..rhonr] do 
-    if rho[n+1+i]=1 then 
+    if rho[n+i]=1 then 
       tab1[fuseit(i+lambdanr)]:=i;
     fi;
   od;
   
   tab2:=EmptyPlist(lambdanr);
   out:=EmptyPlist(2*n);
-  next:=rho[1];
+  next:=rhonr;
   
   for i in [1..n] do 
-    out[i]:=rho[i+1];
-    if lambda[n+1+lambda[i+1]]=1 then 
-      out[i+n]:=tab1[fuseit(lambda[i+1])];
+    out[i]:=rho[i];
+    if lambda[n+1+lambda[i]]=1 then 
+      out[i+n]:=tab1[fuseit(lambda[i])];
     else
-      if not IsBound(tab2[lambda[i+1]]) then 
+      if not IsBound(tab2[lambda[i]]) then 
         next:=next+1;
-        tab2[lambda[i+1]]:=next;
+        tab2[lambda[i]]:=next;
       fi;
-      out[i+n]:=tab2[lambda[i+1]];
+      out[i+n]:=tab2[lambda[i]];
     fi;
   od;
 
   out:=Objectify(BipartitionType, rec(blocks:=out)); 
   SetDegreeOfBipartition(out, n);
   SetRankOfBipartition(out, RankOfBlocks(rho));
-  SetNrLeftBlocks(out, rho[1]);
+  SetNrLeftBlocks(out, rhonr);
   SetNrBlocks(out, next);
   return out;
 end);
