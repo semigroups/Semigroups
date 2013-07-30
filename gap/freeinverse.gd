@@ -3,5 +3,4 @@ DeclareCategory("IsFreeInverseSemigroupElement",
 DeclareCategoryCollections("IsFreeInverseSemigroupElement");
 DeclareProperty("IsFreeInverseSemigroup", IsSemigroup);
 DeclareGlobalFunction("FreeInverseSemigroup");
-
-DeclareGlobalFunction("FreeInverseSemiCanonicalForm");
+DeclareGlobalFunction("CanonicalForm");

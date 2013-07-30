@@ -141,14 +141,6 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ),
     <#Include Label="RegularBinaryRelationSemigroup">
   </Section>
 
-  <Section Label = "FreeInverseSemi ">
-    <Heading> Free Inverse Semigroup</Heading>
-
-    <#Include Label = "FreeInverse">
-    <#Include Label = "FreeInverseCF">
-  </Section>
-
-
 <Section Label="Catalogues"><Heading>The examples directory</Heading>
     
     The <C>examples</C> folder of the &Semigroups; package directory contains

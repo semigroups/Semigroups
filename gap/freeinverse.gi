@@ -265,10 +265,11 @@ end );
 
 ##############################################################################
 ##
-## FreeInverseSemiCanonicalForm( s ) 
+## CanonicalForm( s ) 
+##
 ##
 
-InstallGlobalFunction( FreeInverseSemiCanonicalForm,
+InstallGlobalFunction( CanonicalForm,
 function(tree)
   local output, maxleftreduced, maxleftreducedpath, pivot, i, InvertGenerator,
          children, fork, tail, groupelem;
@@ -355,7 +356,7 @@ function(tree1, tree2)
   od;
 
   if not isequal then
-    isequal := FreeInverseSemiCanonicalForm(tree1) = FreeInverseSemiCanonicalForm(tree2);
+    isequal := CanonicalForm(tree1) = CanonicalForm(tree2);
   fi;
  
   return isequal; 
