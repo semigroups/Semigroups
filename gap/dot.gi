@@ -16,7 +16,7 @@ TikzPicLeftSignedPartition:=function(f)
   local str, ext, n, up, down, min, i, block, j;
   
   str:="\\begin{tikzpicture}\n"; 
-  ext:=ExtRepBipartition(f);
+  ext:=ExtRepOfBipartition(f);
   n:=DegreeOfBipartition(f);
  
   # draw the lines
@@ -86,7 +86,7 @@ TikzPicRightSignedPartition:=function(f)
   local str, ext, n, up, down, min, i, block, j;
   
   str:="\\begin{tikzpicture}\n"; 
-  ext:=ExtRepBipartition(f);
+  ext:=ExtRepOfBipartition(f);
   n:=DegreeOfBipartition(f)/2;
  
   # draw the lines
@@ -156,7 +156,7 @@ TikzPicBipartition:=function(f)
   local str, ext, n, up, down, min, i, block, j;
   
   str:="\\begin{tikzpicture}\n"; 
-  ext:=ExtRepBipartition(f);
+  ext:=ExtRepOfBipartition(f);
   n:=DegreeOfBipartition(f);
  
   # vertices and their labels

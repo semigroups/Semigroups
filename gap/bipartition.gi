@@ -363,7 +363,7 @@ end);
 
 # return the classes of <f> as a list of lists
 
-InstallMethod(ExtRepBipartition, "for a bipartition",
+InstallMethod(ExtRepOfBipartition, "for a bipartition",
 [IsBipartition],
 function(f)
   local n, blocks, ext, i;
@@ -440,8 +440,7 @@ end);
 
 # xx^* - linear - 2*degree - attribute
 
-InstallMethod(LeftProjection, "for a bipartition", 
-[IsBipartition],
+InstallMethod(LeftOne, "for a bipartition", [IsBipartition],
 function(f)
   local n, k, blocks, lookup, table, out, i;
 
@@ -667,7 +666,7 @@ function(classes)
   
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, nrker);
-  SetExtRepBipartition(out, classes);
+  SetExtRepOfBipartition(out, classes);
   SetNrBlocks(out, Length(classes));
 
   return out;
@@ -831,7 +830,7 @@ end);
 
 # StabiliserAction
 
-InstallGlobalFunction(OnRightBlocksPerm,
+InstallGlobalFunction(OnRightBlocksBipartitionByPerm,
 function(f, p)
   local n, out, blocks, tab1, tab2, next, q, i;
   
@@ -887,7 +886,7 @@ function(f)
   local ext, i;
 
   Print("<bipartition: ");
-  ext:=ExtRepBipartition(f);
+  ext:=ExtRepOfBipartition(f);
   Print(ext[1]);
   for i in [2..Length(ext)] do 
     Print(", ", ext[i]);
@@ -901,7 +900,7 @@ end);
 InstallMethod(PrintObj, "for a bipartition",
 [IsBipartition], 
 function(f)
-  Print("Bipartition( ", ExtRepBipartition(f), " )");
+  Print("Bipartition( ", ExtRepOfBipartition(f), " )");
   return;
 end);
 

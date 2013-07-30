@@ -27,6 +27,23 @@
     <#Include Label="RandomBipartition">
   </Section>
 
+  <Section Label="changing-rep-bipartitions">
+    <Heading>Changing the representation of a bipartition</Heading>
+   It  is  possible that a bipartition in &GAP; can be represented as another
+  type  of object, or that another type of &GAP; object can be represented as a
+  bipartition. In this section, we describe the functions in the &Semigroups;
+  package for changing the representation of bipartition, or for changing the
+  representation of another type of object to that of a bipartition.<P/> 
+  
+  The  operations  <Ref Oper="AsPermutation" Label="for a bipartition"/>, 
+  <Ref Oper="AsPartialPerm" Label="for a bipartition"/>, 
+  <Ref Oper="AsTransformation" Label="for a bipartition"/> can be 
+  used  to convert bipartitions into permutations, partial permutations, or
+  transformations where  appropriate.  
+    <#Include Label="AsBipartition"/>
+    <#Include Label="AsTransformation"/>
+  </Section>
+ 
   <Section Label="operators-bipartitions">
   <Heading>Operators for bipartitions</Heading>
     <List>
@@ -53,15 +70,17 @@
    </List> 
    
    <#Include Label="PermLeftQuoBipartition">
-   </Section>     
+   <#Include Label="OnRightBlocksBipartitionByPerm">
+ </Section>    
+
   <Section Label="attributes-bipartitions">
   <Heading>Attributes for bipartitons</Heading>
     Details 
     <#Include Label="IsTransBipartition">
     <#Include Label="IsPermBipartition">
     <#Include Label="DegreeOfBipartition">
-    <#Include Label="ExtRepOfBipartition">
     <#Include Label="RankOfBipartition">
+    <#Include Label="ExtRepOfBipartition">
     <#Include Label="NrBlocks">
     <#Include Label="NrLeftBlocks">
     <#Include Label="NrRightBlocks">

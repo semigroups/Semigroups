@@ -15,18 +15,14 @@ DeclareCategoryCollections("IsBipartition");
 DeclareGlobalFunction("BipartitionNC");
 DeclareGlobalFunction("Bipartition");
 
-DeclareSynonym("IsBipartitionSemigroup", IsSemigroup and
-IsBipartitionCollection);
-
 DeclareAttribute("DegreeOfBipartition", IsBipartition);
 DeclareAttribute("RankOfBipartition", IsBipartition);
-DeclareAttribute("ExtRepBipartition", IsBipartition);
+DeclareAttribute("ExtRepOfBipartition", IsBipartition);
 
-DeclareAttribute("LeftProjection", IsBipartition);
-DeclareAttribute("RightProjection", IsBipartition);
+DeclareSynonymAttr("LeftProjection", LeftOne);
+DeclareSynonymAttr("RightProjection", RightOne);
 DeclareOperation("InverseOp", [IsBipartition]);
 DeclareOperation("RandomBipartition", [IsPosInt]);
-
 
 DeclareOperation("IdentityBipartition", [IsPosInt]);
 DeclareOperation("BipartitionByIntRepNC", [IsList]);
@@ -48,10 +44,12 @@ DeclareProperty("IsPermBipartition", IsBipartition);
 DeclareProperty("IsPartialPermBipartition", IsBipartition);
 DeclareGlobalFunction("PermLeftQuoBipartitionNC");
 DeclareOperation("PermLeftQuoBipartition", [IsBipartition, IsBipartition]);
+DeclareGlobalFunction("OnRightBlocksBipartitionByPerm");
+
+#collections
+DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
 
 #internal...
-DeclareGlobalFunction("OnRightBlocksPerm");
 DeclareGlobalFunction("TransverseBlocksLookup");
 DeclareGlobalFunction("BipartRightBlocksConj");
 
-DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);

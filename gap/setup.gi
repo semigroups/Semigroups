@@ -279,7 +279,7 @@ s-> PROD);
 InstallMethod(StabiliserAction, 
 "for a bipartition semigroup with generators",
 [IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
-s-> OnRightBlocksPerm);
+s-> OnRightBlocksBipartitionByPerm);
 
 # IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only
 # if it is only possible to multiply elements of the type in the semigroup with

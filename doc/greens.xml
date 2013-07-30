@@ -391,19 +391,19 @@ gap> S:=Semigroup(Transformation( [ 3, 4, 4, 4 ] ),
 > Transformation( [ 4, 3, 1, 2 ] ));;
 gap> DClassReps(S);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 3, 1, 2 ] ), 
-Transformation( [ 4, 4, 4, 4 ] ) ]
+  Transformation( [ 4, 4, 4, 4 ] ) ]
 gap> LClassReps(S);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ), 
-Transformation( [ 4, 3, 1, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ), 
-Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ), 
-Transformation( [ 1, 1, 1, 1 ] ) ]
+  Transformation( [ 4, 3, 1, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ), 
+  Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ), 
+  Transformation( [ 1, 1, 1, 1 ] ) ]
 gap> D:=GreensDClasses(S)[1];
 {Transformation( [ 3, 4, 4, 4 ] )}
 gap> LClassReps(D);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ) ]
 gap> RClassReps(D);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ), 
-Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
+  Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
 gap> R:=GreensRClasses(D)[1];;
 gap> HClassReps(R);
 [ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ) ]
@@ -412,23 +412,23 @@ gap> e:=InverseSemigroup(Idempotents(S));;
 gap> M:=MunnSemigroup(e);;
 gap> DClassReps(M);
 [ &lt;identity partial perm on [ 51 ]>, 
-&lt;identity partial perm on [ 27, 51 ]>, 
-&lt;identity partial perm on [ 15, 27, 50, 51 ]>, 
-&lt;identity partial perm on [ 8, 15, 26, 27, 49, 50, 51, 64 ]>, 
-&lt;identity partial perm on 
-  [ 4, 8, 14, 15, 25, 26, 27, 48, 49, 50, 51, 60, 61, 62, 63, 64 ]>,
-&lt;identity partial perm on 
-  [ 2, 4, 7, 8, 13, 14, 15, 21, 25, 26, 27, 29, 34, 39, 44, 48, 49, \
+  &lt;identity partial perm on [ 27, 51 ]>, 
+  &lt;identity partial perm on [ 15, 27, 50, 51 ]>, 
+  &lt;identity partial perm on [ 8, 15, 26, 27, 49, 50, 51, 64 ]>, 
+  &lt;identity partial perm on 
+    [ 4, 8, 14, 15, 25, 26, 27, 48, 49, 50, 51, 60, 61, 62, 63, 64 ]>,
+  &lt;identity partial perm on 
+    [ 2, 4, 7, 8, 13, 14, 15, 21, 25, 26, 27, 29, 34, 39, 44, 48, 49, \
 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64 ]>, 
-&lt;identity partial perm on 
-  [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1\
+  &lt;identity partial perm on 
+    [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1\
 9, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,\
-37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 5\
+ 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 5\
 4, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64 ]> ]
 gap> L:=LClassNC(M, PartialPerm( [ 51, 63 ] , [ 51, 47 ] ));;
 gap> HClassReps(L);
 [ &lt;identity partial perm on [ 47, 51 ]>, [27,47](51), [50,47](51), 
-[59,47](51), [63,47](51), [64,47](51) ]</Example>
+  [59,47](51), [63,47](51), [64,47](51) ]</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -1019,8 +1019,7 @@ gap> List(DClasses(S), SchutzenbergerGroup);
    9) ]), Group([ (4,9) ]), Group(()), Group(()), Group(()), 
   Group(()), Group(()), Group(()), Group(()), Group(()), Group(()), 
   Group(()), Group([ (2,5)(3,7) ]), Group([ (1,7,5,6,9,3) ]), 
-  Group(()), Group(()), Group(()), Group(()), Group(()) ]
-Group(()), Group(()), Group(()) ]</Example>
+  Group(()), Group(()), Group(()), Group(()), Group(()) ]</Example>
   </Description>
   </ManSection>
 <#/GAPDoc>
