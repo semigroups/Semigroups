@@ -372,7 +372,7 @@ gap> DegreeOfBipartitionCollection(s);
     <Func Name="BipartitionNC" Arg="blocks"/>
     <Returns>A bipartition.</Returns>
     <Description>
-      <C>Bipartition</C> return the bipartition <C>f</C> with equivalence
+      <C>Bipartition</C> returns the bipartition <C>f</C> with equivalence
       classes <A>blocks</A>, which should be a list of duplicate-free lists
       whose union is <C>[-n..-1]</C> union <C>[1..n]</C> for some positive
       integer <C>n</C>. <P/>

@@ -94,7 +94,7 @@
     In this section, we describe the functions in the &Semigroups; package for
     creating and manipulating blocks.
     <#Include Label="ExtRepOfBlocks">
-    <#Include Label="BlocksByExtRep">
+    <#Include Lable="NrBlocks">
     <#Include Label="RankOfBlocks">
     <#Include Label="DegreeOfBlocks">
   </Section>

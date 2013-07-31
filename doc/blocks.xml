@@ -8,7 +8,6 @@
 #############################################################################
 ##
 
-
 <#GAPDoc Label="PermRightBlocks">
   <ManSection>
     <Oper Name="PermRightBlocks" Arg="blocks, f"/>
@@ -18,7 +17,6 @@
       <C>OnRightBlocks(<A>blocks</A>, <A>f</A>)=<A>blocks</A></C>, then
       <C>PermRightBlocks</C> returns the permutation of the indices of the
       transverse blocks of <A>blocks</A> under the action of <A>f</A>.
-
 
       <Example>
 gap> f:=Bipartition( [ [ 1, 10 ], [ 2, -7, -9 ], [ 3, 4, 6, 8 ], [ 5, -5 ], 
@@ -33,11 +31,60 @@ gap> PermRightBlocks(blocks, f);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="NrBlocks">
+  <ManSection>
+    <Func Name="NrBlocks" Arg="blocks" Label="for blocks"/>
+    <Func Name="NrBlocks" Arg="f" Label="for a bipartition"/>
+    <Returns>A positive integer.</Returns>
+    <Description>
+      If <A>blocks</A> is some blocks or <A>f</A> is a bipartition, then
+      <C>NrBlocks</C> returns the number of blocks in <A>blocks</A> or <A>f</A>,
+      respectively. 
+      <Example>
+gap> blocks:=BlocksNC([[ -1, -2, -3, -4 ], [ -5 ], [ 6 ]]);
+&lt;blocks: [ -1, -2, -3, -4 ], [ -5 ], [ 6 ]>
+gap> NrBlocks(blocks);
+3
+gap> f:=Bipartition( [ [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], [ -3 ] ] );
+&lt;bipartition: [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], [ -3 ]>
+gap> NrBlocks(f);
+4</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="BlocksNC">
+  <ManSection>
+    <Func Name="BlocksNC" Arg="classes"/>
+    <Returns>A blocks.</Returns>
+    <Description>
+      <C>BlocksNC</C> returns the blocks with equivalence
+      classes <A>classes</A>, which should be a list of duplicate-free lists
+      consisting solely of positive or negative integers, where the union of the
+      absolute values of the lists is <C>[1..n]</C> for some <C>n</C>. The
+      blocks with positive entries are transverse blocks and the classes with
+      negative entries are non-transverse blocks. 
+
+      <Example>
+gap> BlocksNC([[ 1 ], [ 2 ], [ -3, -6 ], [ -4, -5 ]]);
+&lt;blocks: [ 1 ], [ 2 ], [ -3, -6 ], [ -4, -5 ]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="InverseRightBlocks">
   <ManSection>
     <Func Name="InverseRightBlocks" Arg="blocks, f"/>
     <Returns>A bipartition.</Returns>
     <Description>
+    If <C>OnRightBlocks(<A>blocks</A>, <A>f</A>)</C> has rank equal to the rank
+    of <A>blocks</A>, then <C>InverseRightBlocks</C> returns a bipartition
+    <C>g</C> such that 
+    <C>OnRightBlocks(<A>blocks</A>, <A>f</A>*g)=<A>blocks</A></C>
+    and where <C>PermRightBlocks(<A>blocks</A>, <A>f</A>*g)</C> is the identity
+    permutation.<P/>
+
+    See <Ref Oper="PermRightBlocks"/> and <Ref Oper="OnRightBlocks"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -47,6 +94,14 @@ gap> PermRightBlocks(blocks, f);
     <Func Name="InverseLeftBlocks" Arg="blocks, f"/>
     <Returns>A bipartition.</Returns>
     <Description>
+    If <C>OnLeftBlocks(<A>blocks</A>, <A>f</A>)</C> has rank equal to the rank
+    of <A>blocks</A>, then <C>InverseLeftBlocks</C> returns a bipartition
+    <C>g</C> such that 
+    <C>OnLeftBlocks(<A>blocks</A>, g*<A>f</A>)=<A>blocks</A></C>
+    and where <C>PermLeftBlocks(<A>blocks</A>, g*<A>f</A>)</C> is the identity
+    permutation.<P/>
+
+    See <Ref Oper="PermRightBlocks"/> and <Ref Oper="OnLeftBlocks"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -56,6 +111,13 @@ gap> PermRightBlocks(blocks, f);
     <Attr Name="RightBlocks" Arg="f"/>
     <Returns>The right blocks of a bipartition.</Returns>
     <Description>
+      <C>RightBlocks</C> returns the right blocks of the
+      bipartition <A>f</A>.  <P/>
+      
+      The <E>right blocks</E> of a bipartition <A>f</A> are just the
+      intersections of the blocks of <A>f</A> with <C>[-n..-1]</C> where
+      <C>n</C> is the degree of <A>f</A>, the values in transverse blocks are
+      positive, and the values in non-transverse blocks are negative. 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -65,6 +127,13 @@ gap> PermRightBlocks(blocks, f);
     <Attr Name="LeftBlocks" Arg="f"/>
     <Returns>The left blocks of a bipartition.</Returns>
     <Description>
+      <C>LeftBlocks</C> returns the left blocks of the
+      bipartition <A>f</A>.  <P/>
+      
+      The <E>left blocks</E> of a bipartition <A>f</A> are just the
+      intersections of the blocks of <A>f</A> with <C>[1..n]</C> where <C>n</C>
+      is the degree of <A>f</A>, the values in transverse blocks are positive,
+      and the values in non-transverse blocks are negative. 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -74,6 +143,9 @@ gap> PermRightBlocks(blocks, f);
     <Func Name="OnRightBlocks" Arg="blocks, f"/>
     <Returns>The blocks of a bipartition.</Returns>
     <Description>
+      <C>OnRightBlocks</C> returns the right blocks of the product
+      <C>g*<A>f</A></C> where <C>g</C> is any bipartition whose right blocks
+      are equal to <A>blocks</A>. 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -83,6 +155,9 @@ gap> PermRightBlocks(blocks, f);
     <Func Name="OnLeftBlocks" Arg="blocks, f"/>
     <Returns>The blocks of a bipartition.</Returns>
     <Description>
+      <C>OnLeftBlocks</C> returns the left blocks of the product
+      <C><A>f</A>*g</C> where <C>g</C> is any bipartition whose left blocks
+      are equal to <A>blocks</A>. 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -90,15 +165,6 @@ gap> PermRightBlocks(blocks, f);
 <#GAPDoc Label="ExtRepOfBlocks">
   <ManSection>
     <Func Name="ExtRepOfBlocks" Arg="blocks"/>
-    <Returns>A list of integers.</Returns>
-    <Description>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="BlocksByExtRep">
-  <ManSection>
-    <Func Name="BlocksByExtRep" Arg="list"/>
     <Returns>A list of integers.</Returns>
     <Description>
     </Description>
@@ -141,11 +207,3 @@ gap> PermRightBlocks(blocks, f);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="NrBlocks">
-  <ManSection>
-    <Func Name="NrBlocks" Arg="f"/>
-    <Returns>A non-negative integer.</Returns>
-    <Description>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
