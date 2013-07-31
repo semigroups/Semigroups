@@ -8,10 +8,14 @@
 #############################################################################
 
 1.1 -> 1.2
-            - several new methods for inverse semigroups of partial permutations.
-            - SmallerDegreePartialPermRepresentation, JoinIrreducibleDClasses,
-            - Result of the University of St Andrews Research for
-            Undergraduates Summer School in July 2012.
+            This release includes several new methods for inverse semigroups of
+            partial permutations. Most notably are 
+            SmallerDegreePartialPermRepresentation and 
+            VagnerPrestonRepresentation,
+            for changing the representation of an inverse semigroup of partial 
+            permutations. The changes in this release were the result of the 
+            University of St Andrews Research for Undergraduates Summer School 
+            in July 2012.
 
 1.0 -> 1.1  
             A minor release to fix some technical issues in PackageInfo.g, the
