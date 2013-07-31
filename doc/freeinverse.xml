@@ -53,8 +53,7 @@ gap> S := FreeInverseSemigroup(["a", "b", "c"]);
 
 <#GAPDoc Label="CanonicalForm" >
   <ManSection>
-    <Attr Name = "CanonicalForm" Arg = "w" Label = "for free inverse semigroup
-      element" />
+    <Oper Name = "CanonicalForm" Arg = "w" Label = "for free inverse semigroup element" />
     <Returns> A Free Inverse Semigroup elemenet. </Returns>
     <Description>
       For a Free Inverse Semigroup element <A>w</A>,

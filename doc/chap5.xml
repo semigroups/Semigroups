@@ -24,9 +24,9 @@
   For more information regarding free inverse semigroups and the Munn
   representations see Section 5.10 of <Cite Key = "howie"/>.
  
-  See also <Ref Sect = "sect:IsInverseSemigroup"/>,
-  <Ref Chap = "Partial permutations"/> and
-  <Ref Sect = "Free Groups, Monoids and Semigroups"/>.<P/> 
+  See also <Ref Chap = "Inverse semigroups and monoids" BookName = "ref"/>,
+  <Ref Chap = "Partial permutations" BookName = "ref"/> and
+  <Ref Sect = "Free Groups, Monoids and Semigroups" BookName = "ref" />.<P/> 
   
 
   A free inverse semigroup element in &Semigroups; will be displayed 
@@ -34,7 +34,7 @@
   be more than one word of the minimum length. For example, if <M>x</M>
   and <M>y</M> are generators of a free inverse semigroups, then 
   <Display>xyy^{-1}xx^{-1}x^{-1} = xxx^{-1}yy^{-1}x^{-1}.</Display>
-  Therefore we need a differenet canonical form <Ref Attr = "CanoncialForm"/>.
+  Therefore we need a differenet canonical form.
   If a free inverse semigroup element is given as a Munn tree, let 
   <M>L</M> be the set of words corresponding to the shortest paths from
   the start vertex to the leaves of the tree. Also let <M>w</M>
@@ -47,7 +47,8 @@
   <M>xx</M> and <M>xy</M>. And <M>w</M> is an empty word since start and 
   terminal vertices are the same. Therefore, the canonical form is 
   <Display>xxx^{-1}x^{-1}xyy^{-1}x^{-1}.</Display>
-    
+  See <Ref Oper = "CanoncialForm" Label = "for free inverse semigroup element"/>.
+ 
 <Section Label = "sect:Free inverse semigroups">
   <Heading> Free inverse semigroups</Heading>
   <#Include Label = "FreeInverseSemigroup">
