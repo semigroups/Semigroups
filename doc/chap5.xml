@@ -1,45 +1,59 @@
 <Chapter Label="Free inverse semigroups">
   <Heading>Free inverse semigroups</Heading>
 
-  This chapter describes the functions in &GAP; for dealing with
+  This chapter describes the functions in &Semigroups; for dealing with
   free inverse semigroups.<P/>
 
   A <E>free inverse semigroup</E> is an inverse semigroup having the following
-  universal property. More precisely, <M>S</M> is a free inverse semigroup
-  on a non-empty set <M>X</M> if <M>F</M> is an inverse semigroup with a map f
-  from <M>F</M> to X such that for every inverse semigroup S and a
-  map g from X to S there exists a unique morphism g' from FS to S
-  such that fg' = g. This object is unique up to isomorphism.
+  universal property. More precisely, <M>F</M> is a free inverse semigroup
+  on a non-empty set <M>X</M> if <M>F</M> is an inverse semigroup with a map
+  <M>f</M> from <M>F</M> to <M>X</M> such that for every inverse semigroup
+  <M>S</M> and a map <M>g</M> from <M>X</M> to <M>S</M> there exists a 
+  unique morphism <M>g'</M> from <M>F</M> to <M>S</M>
+  such that <M>fg' = g</M>. This object is unique up to isomorphism.
   Moreover, by the universal property, every inverse
   semigroup can be expressed as a quotient of a free inverse
-  semigroup. For more details see... <P/>
+  semigroup.<P/>
 
   The internal representation of free inverse semigroup elements uses
-  Munn tree diagrams. [JDM reference the chapter of the main GAP manual about
-  inverse semigroups, partial perms, free groups and semigroups]. 
-  
+  Munn tree diagrams. Where a Munn tree is
+  a directed tree with edges labeled by generators such that two edges
+  labeled by the same generator can only be incident to the same vertex if
+  one of the edges is coming in and the other is leaving the vertex,
+  together with distinguished start and terminal vertices.
   For more information regarding free inverse semigroups and the Munn
-  representations see <Cite Key = "howie"/>. [JDM more specific.]
+  representations see Section 5.10 of <Cite Key = "howie"/>.
+ 
+  See also <Ref Sect = "sect:IsInverseSemigroup"/>,
+  <Ref Chap = "Partial permutations"/> and
+  <Ref Sect = "Free Groups, Monoids and Semigroups"/>.<P/> 
   
-  For a free inverse semigroup element there is a canonical form
-  given by specifying a set M of maximal group-reduced left factors
-  of the given element. Then for each element w of M, there is an
-  idempotent ww^-1 and the product of these idempotents multiplied
-  by group-reduced word gives the canonical form. If the free
-  inverse semigroup element is described in terms of Munn
-  tree diagrams, maximal group-reduced left factor is just the shortest
-  path from the start vertex to a leaf. Similarly group-reduced 
-  word is the shortest path from start vertex to the terminal vertex.
-  See <Cite Key="howie"/> <P/>. [JDM: reference the man section about
-  CanonicalForm].
 
-  [JDM: printing and a shortest word representing, include explanation/example
-  that this does not give a canonical form.]
-
-  <Section Label = "Free inverse semigroups">
+  A free inverse semigroup element in &Semigroups; will be displayed 
+  as a shortest word corresponding to the element. However, there might
+  be more than one word of the minimum length. For example, if <M>x</M>
+  and <M>y</M> are generators of a free inverse semigroups, then 
+  <Display>xyy^{-1}xx^{-1}x^{-1} = xxx^{-1}yy^{-1}x^{-1}.</Display>
+  Therefore we need a differenet canonical form <Ref Attr = "CanoncialForm"/>.
+  If a free inverse semigroup element is given as a Munn tree, let 
+  <M>L</M> be the set of words corresponding to the shortest paths from
+  the start vertex to the leaves of the tree. Also let <M>w</M>
+  be a word corresponding to the shortest path from start to terminal
+  vertices. <M>vv^{-1}</M> is an idempotent for every <M>v</M> in <M>L</M>. 
+  Then the canonical form in &Semigroups; is given multiplying these 
+  idempotents in the shortlex order and then postmultiplying by <M>w</M>.
+  For example, consider the word <M>xyy^{-1}xx^{-1}x^{-1}</M> again. 
+  The words corresponding to the paths to the leaves are in this case 
+  <M>xx</M> and <M>xy</M>. And <M>w</M> is an empty word since start and 
+  terminal vertices are the same. Therefore, the canonical form is 
+  <Display>xxx^{-1}x^{-1}xyy^{-1}x^{-1}.</Display>
+    
+<Section Label = "sect:Free inverse semigroups">
   <Heading> Free inverse semigroups</Heading>
-</Section>
   <#Include Label = "FreeInverseSemigroup">
+  <#Include Label = "IsFreeInverseSemigroup">
+  <#Include Label = "IsFreeInverseSemigroupElement">
+  </Section>
 
   <Section>
     <Heading>Operators and operations for free inverse semigroup elements
@@ -55,6 +69,11 @@
   returns the product of two free inverse semigroup elements <A>u</A>
   and <A>v</A>.
 </Item>
+<Mark><C><A>u</A> = <A>v</A> </C></Mark>
+  <Item>
+    checks if two free inverse semigroup elements are equal, by comparing their
+    canonical forms.
+  </Item>
 </List>
 
   <#Include Label = "CanonicalForm"> 

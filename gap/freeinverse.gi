@@ -1,21 +1,31 @@
-
-#HEADER required...
-
-############################################################################
+################################################################################
 ##
-##  Elements of Free Inverse Semigroups are represented by [number of generators,
-##  , number of vertices, finish vertex, parent list, list of labels (p->c), 
-##  adjacency list for every vertex]
+#W  inverse.gi
+#Y  Copyright (C) 2013                                 Julius Jonusas
 ##
-##  Names:
-##  x1 = 1, x1^-1 = 2, ... 
+##  Licensing information can be foundin the README file of this package.
 ##
-##  Example:
-##  a := [2, 4, 2, [fail, 1, 2, 2], [fail, 1, 1, 4], [2, , , ,], [3, 1 , ,4],
+################################################################################
+## 
+##  Internal representation of the elements of free inverse semigroups is
+##  is given as a list:
+##  [
+##  number of generators,
+##  number of vertices,
+##  finish vertex,
+##  parent list (for each vertex gives the name of a parent),
+##  list of labels (from a parent to a child), 
+##  adjacency list for every vertex
+##  ]
+##
+##  For example an element xxx^-1yy^-1 is represented by:
+##  [2, 4, 2, [fail, 1, 2, 2], [fail, 1, 1, 4], [2, , , ,], [3, 1 , ,4],
 ##     [ , 2, , ], [, , 2, ]];
 ##
-
-############################################################################
+##  Not that if x1, x2, ... are the generators, then in the internal
+##  representation x1 is refered by 1, x1^-1 by 2, x2 by 3 and so on.
+##
+################################################################################
 ##
 ##  Iterator( <S> )
 ##

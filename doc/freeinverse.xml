@@ -14,12 +14,11 @@
     Label="for a list of names"/>
     <Oper Name = "FreeInverseSemigroup" Arg = "names"
     Label="for various names"/>
-    <Oper Name = "FreeInverseSemigroup" Arg = "names" />
-    <Returns> A Free Inverse Semigroup. </Returns>
+    <Returns> A free inverse semigroup. </Returns>
     <Description>
-     Returns a Free Inverse Semigroup on <A>rank</A> generators, where 
+     Returns a free inverse semigroup on <A>rank</A> generators, where 
       <A>rank</A> is a finite positive integer. If <A>rank</A> is not 
-      specified the number of names is used. 
+      specified the number of <A>names</A> is used. 
 <Example>
 gap> S := FreeInverseSemigroup(7);
 &lt;free inverse semigroup on the generators 
@@ -36,9 +35,25 @@ gap> S := FreeInverseSemigroup(["a", "b", "c"]);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IsFreeInverseSemigroup">
+  <ManSection>
+    <Filt Name="IsFreeInverseSemigroup" />
+    <Returns> </Returns>
+    <Description> </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsFreeInverseSemigroupElement">
+  <ManSection>
+    <Filt Name="IsFreeInverseSemigroupElement" />
+    <Returns> </Returns>
+    <Description> </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="CanonicalForm" >
   <ManSection>
-    <Oper Name = "CanonicalForm" Arg = "w" Label = "for free inverse semigroup
+    <Attr Name = "CanonicalForm" Arg = "w" Label = "for free inverse semigroup
       element" />
     <Returns> A Free Inverse Semigroup elemenet. </Returns>
     <Description>
