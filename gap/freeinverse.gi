@@ -1,3 +1,6 @@
+
+#HEADER required...
+
 ############################################################################
 ##
 ##  Elements of Free Inverse Semigroups are represented by [number of generators,
@@ -269,7 +272,8 @@ end );
 ##
 ##
 
-InstallGlobalFunction( CanonicalForm,
+InstallMethod( CanonicalForm, "for a free inverse semigroup element",
+[IsFreeInverseSemigroupElement], 
 function(tree)
   local output, maxleftreduced, maxleftreducedpath, pivot, i, InvertGenerator,
          children, fork, tail, groupelem;

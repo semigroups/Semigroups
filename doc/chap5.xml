@@ -4,39 +4,23 @@
   This chapter describes the functions in &GAP; for dealing with
   free inverse semigroups.<P/>
 
-  A <E>free inverse semigroup</E> is an inverse semigroup having a
-  universal property. More precisely, S is a free inverse semigroup
-  on a non-empty set X if FS is an inverse semigroup with a map f
-  from FS to X such that for every inverse semigroup S and and a
+  A <E>free inverse semigroup</E> is an inverse semigroup having the following
+  universal property. More precisely, <M>S</M> is a free inverse semigroup
+  on a non-empty set <M>X</M> if <M>F</M> is an inverse semigroup with a map f
+  from <M>F</M> to X such that for every inverse semigroup S and a
   map g from X to S there exists a unique morphism g' from FS to S
   such that fg' = g. This object is unique up to isomorphism.
   Moreover, by the universal property, every inverse
   semigroup can be expressed as a quotient of a free inverse
-  semigroup. <P/>
+  semigroup. For more details see... <P/>
 
-  For internal representation of free inverse semigroup elements
-  the Munn tree diagrams are used. For more information see
-  <Cite Key = "howie"/>. 
-<Section Label = "Free inverse semigroups">
-  <Heading> Free inverse semigroups</Heading>
-
-  <#Include Label = "FreeInverseSemigroup">
-
-Operations for free inverse semigroup elements:
-<List>
-<Mark><C><A>w</A> ^ -1</C></Mark>
-<Item>
-  returns the inverse of the free inverse semigroup element <A>w</A>.
-</Item>
-
-<Mark><C><A>w</A> * <A>u</A></C></Mark>
-<Item>
-  returns the product of two free inverse semigroup elements <A>w</A>
-  and <A>u</A>.
-</Item>
-</List>
-
-  <#Include Label = "CanonicalForm"> 
+  The internal representation of free inverse semigroup elements uses
+  Munn tree diagrams. [JDM reference the chapter of the main GAP manual about
+  inverse semigroups, partial perms, free groups and semigroups]. 
+  
+  For more information regarding free inverse semigroups and the Munn
+  representations see <Cite Key = "howie"/>. [JDM more specific.]
+  
   For a free inverse semigroup element there is a canonical form
   given by specifying a set M of maximal group-reduced left factors
   of the given element. Then for each element w of M, there is an
@@ -46,6 +30,33 @@ Operations for free inverse semigroup elements:
   tree diagrams, maximal group-reduced left factor is just the shortest
   path from the start vertex to a leaf. Similarly group-reduced 
   word is the shortest path from start vertex to the terminal vertex.
-  See <Cite Key="howie"/> <P/>.
+  See <Cite Key="howie"/> <P/>. [JDM: reference the man section about
+  CanonicalForm].
+
+  [JDM: printing and a shortest word representing, include explanation/example
+  that this does not give a canonical form.]
+
+  <Section Label = "Free inverse semigroups">
+  <Heading> Free inverse semigroups</Heading>
+</Section>
+  <#Include Label = "FreeInverseSemigroup">
+
+  <Section>
+    <Heading>Operators and operations for free inverse semigroup elements
+    </Heading>
+    <List>
+<Mark><C><A>w</A> ^ -1</C></Mark>
+<Item>
+  returns the semigroup inverse of the free inverse semigroup element <A>w</A>.
+</Item>
+
+<Mark><C><A>u</A> * <A>v</A></C></Mark>
+<Item>
+  returns the product of two free inverse semigroup elements <A>u</A>
+  and <A>v</A>.
+</Item>
+</List>
+
+  <#Include Label = "CanonicalForm"> 
 </Section>
 </Chapter>
