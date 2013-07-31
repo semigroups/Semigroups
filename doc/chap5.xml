@@ -1,0 +1,51 @@
+<Chapter Label="Free inverse semigroups">
+  <Heading>Free inverse semigroups</Heading>
+
+  This chapter describes the functions in &GAP; for dealing with
+  free inverse semigroups.<P/>
+
+  A <E>free inverse semigroup</E> is an inverse semigroup having a
+  universal property. More precisely, S is a free inverse semigroup
+  on a non-empty set X if FS is an inverse semigroup with a map f
+  from FS to X such that for every inverse semigroup S and and a
+  map g from X to S there exists a unique morphism g' from FS to S
+  such that fg' = g. This object is unique up to isomorphism.
+  Moreover, by the universal property, every inverse
+  semigroup can be expressed as a quotient of a free inverse
+  semigroup. <P/>
+
+  For internal representation of free inverse semigroup elements
+  the Munn tree diagrams are used. For more information see
+  <Cite Key = "howie"/>. 
+<Section Label = "Free inverse semigroups">
+  <Heading> Free inverse semigroups</Heading>
+
+  <#Include Label = "FreeInverseSemigroup">
+
+Operations for free inverse semigroup elements:
+<List>
+<Mark><C><A>w</A> ^ -1</C></Mark>
+<Item>
+  returns the inverse of the free inverse semigroup element <A>w</A>.
+</Item>
+
+<Mark><C><A>w</A> * <A>u</A></C></Mark>
+<Item>
+  returns the product of two free inverse semigroup elements <A>w</A>
+  and <A>u</A>.
+</Item>
+</List>
+
+  <#Include Label = "CanonicalForm"> 
+  For a free inverse semigroup element there is a canonical form
+  given by specifying a set M of maximal group-reduced left factors
+  of the given element. Then for each element w of M, there is an
+  idempotent ww^-1 and the product of these idempotents multiplied
+  by group-reduced word gives the canonical form. If the free
+  inverse semigroup element is described in terms of Munn
+  tree diagrams, maximal group-reduced left factor is just the shortest
+  path from the start vertex to a leaf. Similarly group-reduced 
+  word is the shortest path from start vertex to the terminal vertex.
+  See <Cite Key="howie"/> <P/>.
+</Section>
+</Chapter>
