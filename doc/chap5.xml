@@ -78,14 +78,12 @@
   </List>
 
 <Example>
-gap> SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
-"minimal");
+gap> SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "minimal");
 gap> S:=FreeInverseSemigroup(2);
 &lt;free inverse semigroup on the generators [ x1, x2 ]>
 gap> S.1 * S.2;
 x1*x2
-gap> SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", 
-"canonical");
+gap> SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "canonical");
 gap> S.1 * S.2;
 x1x2x2^-1x1^-1x1x2
 </Example>
@@ -113,5 +111,6 @@ x1x2x2^-1x1^-1x1x2
 </List>
 
   <#Include Label = "CanonicalForm"> 
+  <#Include Label = "MinimalWord">
 </Section>
 </Chapter>

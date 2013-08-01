@@ -54,12 +54,11 @@ gap> S := FreeInverseSemigroup(["a", "b", "c"]);
 <#GAPDoc Label="CanonicalForm" >
   <ManSection>
     <Oper Name = "CanonicalForm" Arg = "w" Label = "for free inverse semigroup element" />
-    <Returns> A Free Inverse Semigroup elemenet. </Returns>
+    <Returns> A free inverse semigroup elemenet. </Returns>
     <Description>
-      For a Free Inverse Semigroup element <A>w</A>,
+      For a free inverse semigroup element <A>w</A>,
       <C>CanonicalForm</C> puts the element into
-      a canonical form. Which is unique up to rearranging 
-      idempotents in the product.
+      a canonical form.
 <Example>
 gap> S := FreeInverseSemigroup(3);
 &lt;free inverse semigroup on the generators [ x1, x2, x3 ]>
@@ -69,6 +68,28 @@ gap> y := S.2;
 x2
 gap> CanonicalForm(x^3 *y^3);
 "x1x1x1x2x2x2x2^-1x2^-1x2^-1x1^-1x1^-1x1^-1x1x1x1x2x2x2"
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="MinimalWord" >
+  <ManSection>
+    <Oper Name = "MinimalWord" Arg = "w" Label = "for free inverse semigroup element" />
+    <Returns> A free inverse semigroup elemenet. </Returns>
+    <Description>
+      For a free inverse semigroup element <A>w</A>,
+      <C>MinimalWord</C> gives a minimal word corresponding to
+      the element.
+<Example>
+gap> S := FreeInverseSemigroup(3);
+&lt;free inverse semigroup on the generators [ x1, x2, x3 ]>
+gap> x := S.1;
+x1
+gap> y := S.2;
+x2
+gap> MinimalWord(x^3 * y^3);
+"x1*x1*x1*x2*x2*x2"
 </Example>
     </Description>
   </ManSection>
