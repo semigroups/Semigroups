@@ -56,6 +56,41 @@
   <#Include Label = "IsFreeInverseSemigroupElement">
   </Section>
 
+<Section>
+  <Heading> Displaying free inverse semigroup elements </Heading>
+  There is a way to change how &GAP; displays free inverse semigroup
+  elements using the user preference <C>FreeInverseSemigroupElementDisplay</C>.
+  See <Ref Func = "UserPreference" BookName = "ref"/> for more information
+  about user preferences.<P/>
+
+  There are two possible values for <C>FreeInverseSemigroupElementDisplay</C>:
+  <List>
+    <Mark>minimal </Mark>
+    <Item> With this option selected, &GAP; will display a shortest word
+      corresponding to the free inverse semigroup element. However, 
+      this shortest word is not unique. This is a default setting.
+    </Item>
+
+    <Mark>canonical</Mark>
+    <Item> With this option selected, &GAP; will display a free inverse 
+      semigroup element in the canonical form.
+    </Item>
+  </List>
+
+<Example>
+gap> SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
+"minimal");
+gap> S:=FreeInverseSemigroup(2);
+&lt;free inverse semigroup on the generators [ x1, x2 ]>
+gap> S.1 * S.2;
+x1*x2
+gap> SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", 
+"canonical");
+gap> S.1 * S.2;
+x1x2x2^-1x1^-1x1x2
+</Example>
+</Section>
+
   <Section>
     <Heading>Operators and operations for free inverse semigroup elements
     </Heading>

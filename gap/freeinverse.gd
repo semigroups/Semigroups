@@ -11,7 +11,9 @@ DeclareUserPreference(rec(
   name:= "FreeInverseSemigroupElementDisplay",
   description:= ["options for the display of free inverse semigroup elements"],
   default:= "minimal",
-  check:=function(a) return (IsString(a) and a in ["minimal", "canonical"]);end));
+  values := ["minimal", "canonical"],
+  multi := false,
+  package := "semigroups"));
 
 DeclareCategory("IsFreeInverseSemigroupElement",
   IsAssociativeElementWithUniqueSemigroupInverse);
