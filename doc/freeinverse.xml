@@ -62,11 +62,11 @@ b
 <#GAPDoc Label="CanonicalForm" >
   <ManSection>
     <Oper Name = "CanonicalForm" Arg = "w" Label = "for free inverse semigroup element" />
-    <Returns> A free inverse semigroup elemenet. </Returns>
+    <Returns> A string. </Returns>
     <Description>
       For a free inverse semigroup element <A>w</A>,
-      <C>CanonicalForm</C> puts the element into
-      a canonical form.
+      <C>CanonicalForm</C> returns a string which corresponds to
+      the canonical form of the element.
 <Example>
 gap> S := FreeInverseSemigroup(3);
 &lt;free inverse semigroup on the generators [ x1, x2, x3 ]>
@@ -84,11 +84,11 @@ gap> CanonicalForm(x^3 *y^3);
 <#GAPDoc Label="MinimalWord" >
   <ManSection>
     <Oper Name = "MinimalWord" Arg = "w" Label = "for free inverse semigroup element" />
-    <Returns> A free inverse semigroup elemenet. </Returns>
+    <Returns> A string. </Returns>
     <Description>
       For a free inverse semigroup element <A>w</A>,
-      <C>MinimalWord</C> gives a minimal word corresponding to
-      the element.
+      <C>MinimalWord</C> returns a string which corresponds to
+      a minimal word corresponding to the element.
 <Example>
 gap> S := FreeInverseSemigroup(3);
 &lt;free inverse semigroup on the generators [ x1, x2, x3 ]>
