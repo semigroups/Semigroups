@@ -361,7 +361,9 @@ function(tree)
   od;
   groupelem := Reversed(List(groupelem, x-> tree![5][x]));
 
-  if Length(maxleftreduced[1]) = 2 and
+  if Length(maxleftreduced) = 1 and
+     Length(maxleftreduced[1]) = 2 and
+     Length(groupelem) > 0 and
     ( (maxleftreduced[1][1] mod 2 = 1 and maxleftreduced[1][2] = maxleftreduced[1][1] + 1 ) or
       (maxleftreduced[1][1] mod 2 = 0 and maxleftreduced[1][2] = maxleftreduced[1][1] - 1 ))
   then
