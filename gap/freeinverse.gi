@@ -189,6 +189,39 @@ InstallMethod(PrintObj, "for a free inverse semigroup element",
 InstallMethod(ViewObj, "for a free inverse semigroup element", 
 [IsFreeInverseSemigroupElement],
 function(x)
+
+  if UserPreference("semigroups","FreeInverseSemigroupElementDisplay") = "minimal" then
+    Print(MinimalWord(x));
+  else
+    Print(CanonicalForm(x));
+  fi;
+
+  return;
+end);
+
+InstallMethod(ViewObj,
+"for a free inverse semigroup containing the whole family",
+[IsFreeInverseSemigroup],
+function( S )
+  if GAPInfo.ViewLength * 10 < Length( GeneratorsOfMagma( S ) ) then
+    Print( "<free inverse semigroup with ", Length( GeneratorsOfInverseSemigroup( S ) ),
+           " generators>" );
+  else
+    Print( "<free inverse semigroup on the generators ",
+           GeneratorsOfInverseSemigroup( S ), ">" );
+  fi;
+end );
+
+
+
+############################################################################
+##
+## MinimalWord
+##
+
+InstallMethod(MinimalWord, "for a free inverse semigroup element",
+[IsFreeInverseSemigroupElement], 
+function(x)
   local InvertGenerator, is_a_child_of, gen, stop_start, i, j, path, words, pos, part, temp_word, out, labels, names;
  
   InvertGenerator:=function(n)
@@ -243,9 +276,6 @@ function(x)
   path:=Reversed(path);
   
   names:=FamilyObj(x)!.names;
-  #names := Concatenation( List( [1 .. x![2] ],
-  #                        i -> [ Concatenation( "s", String(i) ) ,
-  #                               Concatenation( ["s", String(i), "^-1"] )] ) );
 
   for i in path do 
     Append(out, List(words[stop_start[i]], l -> Concatenation(names[l],"*")));
@@ -258,23 +288,10 @@ function(x)
   if out[Length(out)] = '*' then
    Unbind(out[Length(out)]);
   fi;
-
-  Print(out);
-  return;
+  
+  return out;
 end);
 
-InstallMethod(ViewObj,
-"for a free inverse semigroup containing the whole family",
-[IsFreeInverseSemigroup],
-function( S )
-  if GAPInfo.ViewLength * 10 < Length( GeneratorsOfMagma( S ) ) then
-    Print( "<free inverse semigroup with ", Length( GeneratorsOfInverseSemigroup( S ) ),
-           " generators>" );
-  else
-    Print( "<free inverse semigroup on the generators ",
-           GeneratorsOfInverseSemigroup( S ), ">" );
-  fi;
-end );
 
 ##############################################################################
 ##
@@ -343,10 +360,16 @@ function(tree)
     i := tree![4][i];
   od;
   groupelem := Reversed(List(groupelem, x-> tree![5][x]));
-  
-  output := Concatenation(List(Concatenation(Concatenation(Set(maxleftreduced)),
-    groupelem), x -> FamilyObj(tree)!.names[x]));
 
+  if Length(maxleftreduced[1]) = 2 and
+    ( (maxleftreduced[1][1] mod 2 = 1 and maxleftreduced[1][2] = maxleftreduced[1][1] + 1 ) or
+      (maxleftreduced[1][1] mod 2 = 0 and maxleftreduced[1][2] = maxleftreduced[1][1] - 1 ))
+  then
+    output := Concatenation(List(groupelem, x -> FamilyObj(tree)!.names[x])); 
+  else
+    output := Concatenation(List(Concatenation(Concatenation(Set(maxleftreduced)),
+    groupelem), x -> FamilyObj(tree)!.names[x]));
+  fi;
   return output;
 end);
 
