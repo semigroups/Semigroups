@@ -14,6 +14,14 @@ BindGlobal("BlocksFamily", NewFamily("BlocksFamily",
 BindGlobal("BlocksType", NewType(BlocksFamily,
  IsBlocks and IsComponentObjectRep and IsAttributeStoringRep));
 
+InstallMethod(PrintObj, "for blocks", [IsBlocks], 5,
+function(blocks) 
+  Print("BlocksNC(");
+  Print(ExtRepOfBlocks(blocks));
+  Print(")");
+  return;
+end);
+
 #
 
 InstallGlobalFunction(BlocksNC, 
@@ -536,6 +544,14 @@ end);
 
 # permutation of indices of signed (connected) blocks of <blocks> under the
 # action of <f> which is assumed to stabilise <blocks>.
+
+InstallMethod(PermLeftBlocks, "for blocks and bipartition",
+[IsBlocks, IsBipartition], 
+function(blocks, f)
+  return PermRightBlocks(blocks, Inverse(f));
+end);
+
+#
 
 InstallMethod(PermRightBlocks, "for blocks and bipartition",
 [IsBlocks, IsBipartition],

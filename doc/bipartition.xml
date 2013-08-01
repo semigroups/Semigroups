@@ -323,8 +323,8 @@ gap> IdentityBipartition(10);
     <Returns>The rank of a bipartition.</Returns>
     <Description>
       When the argument is a bipartition <A>f</A>, <C>RankOfBipartition</C>
-      return the number of blocks of <A>f</A> containing positive and negative
-      entries. <P/>
+      returns the number of blocks of <A>f</A> containing both positive and
+      negative entries, i.e. the number of transverse blocks of <A>f</A>.<P/>
 
       <C>NrTransverseBlocks</C> is just a synonym for <C>RankOfBipartition</C>. 
       <Example>
@@ -345,8 +345,7 @@ gap> RankOfBipartition(f);
     <Returns>A positive integer.</Returns>
     <Description>
 The degree of a bipartition is, roughly speaking, the number of points where
-the bipartition is defined. More precisely, if <A>f</A> is a bipartition which
-on <C>2*n</C> points, then the degree of <A>f</A> is <C>n</C>. <P/>
+the bipartition is defined. More precisely, if <A>f</A> is a bipartition defined on <C>2*n</C> points, then the degree of <A>f</A> is <C>n</C>. <P/>
 
 The degree of a collection <A>coll</A> of bipartitions of equal degree is just
 the degree of any (and every) bipartition in <A>coll</A>. The degree of collection of bipartitions of unequal degrees is not defined. 
