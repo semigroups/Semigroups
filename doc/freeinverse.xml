@@ -44,16 +44,18 @@ b
 <#GAPDoc Label="IsFreeInverseSemigroup">
   <ManSection>
     <Filt Name="IsFreeInverseSemigroup" />
-    <Returns> </Returns>
-    <Description> </Description>
+    <Description>
+      checks is the object is in the <C>IsFreeInverseSemigroup</C> category.
+    </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsFreeInverseSemigroupElement">
   <ManSection>
     <Filt Name="IsFreeInverseSemigroupElement" />
-    <Returns> </Returns>
-    <Description> </Description>
+    <Description>
+      checks is the object is in the <C>IsFreeInverseSemigroupElement</C> category.
+    </Description>
   </ManSection>
 <#/GAPDoc>
 
