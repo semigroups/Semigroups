@@ -17,8 +17,10 @@
     <Returns> A free inverse semigroup. </Returns>
     <Description>
      Returns a free inverse semigroup on <A>rank</A> generators, where 
-      <A>rank</A> is a finite positive integer. If <A>rank</A> is not 
-      specified the number of <A>names</A> is used. 
+     <A>rank</A> is a finite positive integer. If <A>rank</A> is not 
+     specified the number of <A>names</A> is used. <C>S</C> is a
+     free inverse semigroup, then the generators can be accessed by
+     <C>S.1</C>, <C>S.2</C> and so on.
 <Example>
 gap> S := FreeInverseSemigroup(7);
 &lt;free inverse semigroup on the generators 
@@ -30,6 +32,10 @@ gap> S := FreeInverseSemigroup("a", "b", "c");
 &lt;free inverse semigroup on the generators [ a, b, c ]>
 gap> S := FreeInverseSemigroup(["a", "b", "c"]);
 &lt;free inverse semigroup on the generators [ a, b, c ]>
+gap> S.1;
+a
+gap> S.2;
+b
 </Example>
     </Description>
   </ManSection>
