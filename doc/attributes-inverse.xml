@@ -89,7 +89,7 @@ true
     <C>JoinIrreducibleDClasses</C> returns a list of the join irreducible
     &D;-classes of the inverse semigroup of partial permutations <A>S</A>.<P/>
 
-    A join irreducible &D;-class is a &D;-class containing only join irreducible
+    A <E>join irreducible &D;-class</E> is a &D;-class containing only join irreducible
     elements.
     See <Ref Oper="IsJoinIrreducible"/>.
     If a &D;-class contains one join irreducible element, then all of the 
@@ -122,7 +122,8 @@ gap> JoinIrreducibleDClasses(T);
     See <Ref Func="IsMajorantlyClosed"/>.
     The result contains all elements of <A>S</A> which are greater than or
     equal to any element of <A>T</A> (with respect to the natural partial 
-    order). In particular, the result contains <A>T</A>.<P/>
+    order <Ref Func = "NaturalLeqPartialPerm" BookName="ref"/>).
+    In particular, the result contains <A>T</A>.<P/>
     Note that <A>T</A> can be a subset of <A>S</A> or an inverse subsemigroup
     of <A>S</A>.
   </Description>
@@ -149,9 +150,9 @@ gap> U:=MajorantClosure(S,T);
   <Description>
     <C>Minorants</C> takes an element <A>f</A> from an inverse semigroup of 
     partial permutations <A>S</A> and returns a list of the minorants of 
-    <A>f</A> in <A>S</A>. A minorant of <A>f</A> is an element of <A>S</A> 
+    <A>f</A> in <A>S</A>. A <E>minorant of <A>f</A></E> is an element of <A>S</A> 
     which is strictly less than <A>f</A> in the natural partial order of 
-    <A>S</A>. See <Ref Attr="NaturalPartialOrder" BookName="ref" />.
+    <A>S</A>. See <Ref Attr="NaturalLeqPartialPerm" BookName="ref" />.
   </Description>
 </ManSection>
 <Example>
@@ -214,7 +215,7 @@ gap> RC:=RightCosetsOfInverseSemigroup(S,T);
     Given a group H-class <A>h</A> in an inverse semigroup of partial 
     permutations <M>S</M>, <C>SameMinorantsSubgroup</C> returns a list of the 
     elements of <A>h</A> which have the same strict minorants as the 
-    identity element of <A>h</A>. A strict minorant of <M>x \in h</M> is an 
+    identity element of <A>h</A>. A <E>strict minorant of <M>x \in h</M></E> is an 
     element of <M>S</M> which is less than <M>x</M> (with respect to the 
     natural partial order), but is not equal to <M>x</M>.<P/>
     The returned list of elements of <A>h</A> describe a subgroup of <A>h</A>.
@@ -259,7 +260,8 @@ gap> SameMinorantsSubgroup(f);
     If the function can not reduce the degree, the identity mapping is returned.
     <P/>
     Note that there is no guarantee that the smallest possible degree 
-    representation is returned.
+    representation is returned. For more information see
+    <Cite Key ="Schein1992aa"/>.
   </Description>
 </ManSection>
 <Example>
