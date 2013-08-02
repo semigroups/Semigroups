@@ -19,11 +19,12 @@
     <K>true</K> or <K>false</K>.
   </Returns>
   <Description>
-    <C>IsJoinIrreducible</C> determines whether an element <M>x</M> of an 
+    <C>IsJoinIrreducible</C> determines whether an element <A>x</A> of an 
     inverse semigroup <A>S</A> of partial permutations is join irreducible.
-    An element <M>x</M> is join irreducible when it is not the least upper 
-    bound (with respect to the natural partial order) of any subset of <A>S</A> 
-    not containing <M>x</M>.
+    An element <A>x</A> is join irreducible when it is not the least upper 
+    bound (with respect to the natural partial order 
+    <Ref Func = "NaturalLeqPartialPerm" BookName="ref"/>) of any subset of <A>S</A> 
+    not containing <A>x</A>.
   </Description>
 </ManSection>
 <Example>
@@ -52,10 +53,14 @@ true
 <Description>
   <C>IsMajorantlyClosed</C> determines whether the subset <A>T</A> of the
   inverse semigroup of partial permutations <A>S</A> is majorantly closed in 
-  <A>S</A>.<P/> We say that <A>T</A> is majorantly closed in <A>S</A> if it 
+  <A>S</A>.<P/>
+ 
+  We say that <A>T</A> is <E>majorantly closed</E> in <A>S</A> if it 
   contains all elements of <A>S</A> which are greater than or equal to any 
   element of <A>T</A>, with respect to the natural partial order.
-  <P/> Note that <A>T</A> can be a subset of <A>S</A> or an inverse 
+  See <Ref Func = "NaturalLeqPartialPerm" BookName="ref"/>.<P/>
+  
+  Note that <A>T</A> can be a subset of <A>S</A> or an inverse 
   subsemigroup of <A>S</A>.
 </Description>
 </ManSection>
@@ -206,13 +211,13 @@ gap> RC:=RightCosetsOfInverseSemigroup(S,T);
     A list of elements of the group H-class <M>h</M>.
   </Returns>
   <Description>
-    Given a group H-class <M>h</M> in an inverse semigroup of partial 
-    permutations <A>S</A>, <C>SameMinorantsSubgroup</C> returns a list of the 
-    elements of <M>h</M> which have the same strict minorants as the 
-    identity element of <M>h</M>. A strict minorant of <M>x \in h</M> is an 
-    element of <A>S</A> which is less than <M>x</M> (with respect to the 
+    Given a group H-class <A>h</A> in an inverse semigroup of partial 
+    permutations <M>S</M>, <C>SameMinorantsSubgroup</C> returns a list of the 
+    elements of <A>h</A> which have the same strict minorants as the 
+    identity element of <A>h</A>. A strict minorant of <M>x \in h</M> is an 
+    element of <M>S</M> which is less than <M>x</M> (with respect to the 
     natural partial order), but is not equal to <M>x</M>.<P/>
-    The returned list of elements of <M>h</M> describe a subgroup of <M>h</M>.
+    The returned list of elements of <A>h</A> describe a subgroup of <A>h</A>.
   </Description>
 </ManSection>
 <Example>
