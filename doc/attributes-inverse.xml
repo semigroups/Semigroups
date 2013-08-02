@@ -84,15 +84,14 @@ true
 <ManSection>
 <Attr Name="JoinIrreducibleDClasses" Arg="S"/>
   <Returns>
-    A list of D-Classes.
+    A list of &D;-classes.
   </Returns>
   <Description>
     <C>JoinIrreducibleDClasses</C> returns a list of the join irreducible
     &D;-classes of the inverse semigroup of partial permutations <A>S</A>.<P/>
 
-    A <E>join irreducible &D;-class</E> is a &D;-class containing only join irreducible
-    elements.
-    See <Ref Oper="IsJoinIrreducible"/>.
+    A <E>join irreducible &D;-class</E> is a &D;-class containing only join
+    irreducible elements.  See <Ref Oper="IsJoinIrreducible"/>.
     If a &D;-class contains one join irreducible element, then all of the 
     elements in the &D;-class are join irreducible.  
 <Example>

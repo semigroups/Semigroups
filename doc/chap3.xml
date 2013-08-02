@@ -123,10 +123,10 @@
     &Semigroups;. The functions 
     <Ref Oper="IsJoinIrreducible"/>,
     <Ref Oper="IsMajorantlyClosed"/>, 
-    <Ref Oper="JoinIrreducibleDClasses"/>,
-    <Ref Func="MajorantClosure"/>, 
+    <Ref Attr="JoinIrreducibleDClasses"/>,
+    <Ref Oper="MajorantClosure"/>, 
     <Ref Oper="Minorants"/>, 
-    <Ref Func="RightCosetsOfInverseSemigroup"/>, 
+    <Ref Oper="RightCosetsOfInverseSemigroup"/>, 
     <Ref Attr="SmallerDegreePartialPermRepresentation"/>, and 
     <Ref Attr="VagnerPrestonRepresentation"/> were written by 
     Wilf Wilson and Robert Hancock. 
