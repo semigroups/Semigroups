@@ -61,7 +61,7 @@ b
 
 <#GAPDoc Label="CanonicalForm" >
   <ManSection>
-    <Oper Name = "CanonicalForm" Arg = "w" Label = "for free inverse semigroup element" />
+    <Oper Name = "CanonicalForm" Arg = "w" Label = "for a free inverse semigroup element" />
     <Returns> A string. </Returns>
     <Description>
       For a free inverse semigroup element <A>w</A>,

@@ -47,7 +47,7 @@
   <M>xx</M> and <M>xy</M>. And <M>w</M> is an empty word since start and 
   terminal vertices are the same. Therefore, the canonical form is 
   <Display>xxx^{-1}x^{-1}xyy^{-1}x^{-1}.</Display>
-  See <Ref Oper = "CanoncialForm" Label = "for free inverse semigroup element"/>.
+  See <Ref Oper = "CanonicalForm" Label = "for a free inverse semigroup element"/>.
  
 <Section Label = "sect:Free inverse semigroups">
   <Heading> Free inverse semigroups</Heading>
