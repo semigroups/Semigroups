@@ -2,7 +2,8 @@
   <Heading>Free inverse semigroups</Heading>
 
   This chapter describes the functions in &Semigroups; for dealing with
-  free inverse semigroups.<P/>
+  free inverse semigroups. This part of the manual and the functions described
+  herein were written by Julius Jonu&#353;as.<P/>
 
   A <E>free inverse semigroup</E> is an inverse semigroup having the following
   universal property. An inverse semigroup <M>F</M> is a <E>free inverse

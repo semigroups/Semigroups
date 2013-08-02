@@ -49,7 +49,8 @@
     <P/>
 
     There are also functions in &Semigroups; to define and manipulate free
-    inverse semigroups and their elements. <P/>
+    inverse semigroups and their elements; this part of the package was written
+    by Julius Jonu&#353;as.<P/>
 
     &noindent; The &Semigroups; package is written &GAP; code and 
     requires the &Orb;, &IO;, and &GENSS;  packages. The &Orb; package is used
