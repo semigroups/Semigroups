@@ -9,21 +9,21 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "1.1">
+##  <!ENTITY VERSION "1.2">
 ##  <!ENTITY ORBVERS "4.6">
 ##  <!ENTITY GENSSVERS "1.5">
 ##  <!ENTITY IOVERS "4.1">
 ##  <!ENTITY GRAPEVERS "4.5">
-##  <!ENTITY ARCHIVENAME "semigroups-1.1">
+##  <!ENTITY ARCHIVENAME "semigroups-1.2">
 ##  <!ENTITY COPYRIGHTYEARS "2011-13">
 ##  <#/GAPDoc>
 
 SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "Methods for Semigroups",
-Version := "1.1",
-Date := "11/06/2013",
-ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-1.1",
+Version := "1.2",
+Date := "02/08/2013",
+ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-1.2",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
@@ -64,7 +64,8 @@ AbstractHTML := Concatenation(
   "Several catalogues of examples are provided, such as generators for the ",
   "endomorphism monoids of every connected graph with at most 8 vertices ", 
   "and generators for the endomorphism monoids of the non-abelian groups with ",
-  "order at most 64."),
+  "order at most 64. There are functions to define and manipulate free", 
+  " inverse semigroups and their elements"),
 
 PackageWWWHome := "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php",
                
@@ -88,5 +89,5 @@ Dependencies := rec(
   Autoload := false,
   TestFile := "tst/testinstall.tst",
   Keywords := ["transformation semigroups", "partial permutations",
-  "inverse semigroups", "Green's relations"]
+  "inverse semigroups", "Green's relations", "free inverse semigroup"]
 ));

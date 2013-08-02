@@ -29,6 +29,9 @@
 #############################################################################
 #############################################################################
 
+DeclareAttribute("MaximalDClasses", IsSemigroup);
+DeclareAttribute("MinimalDClass", IsSemigroup);
+
 #new
 
 DeclareAttribute("MultiplicativeNeutralElement", IsGreensHClass);

@@ -26,6 +26,7 @@ ReadPackage("semigroups/gap/inverse.gd");
 
 ReadPackage("semigroups/gap/properties.gd");
 ReadPackage("semigroups/gap/attributes.gd");
+ReadPackage("semigroups/gap/attributes-inverse.gd");
 ReadPackage("semigroups/gap/orbits.gd");
 
 ReadPackage("semigroups/gap/slp.gd");
@@ -33,6 +34,6 @@ ReadPackage("semigroups/gap/slp.gd");
 ReadPackage("semigroups/gap/examples.gd");
 ReadPackage("semigroups/gap/utils.gd");
 ReadPackage("semigroups/gap/options.g");
-
 DeclareInfoClass("InfoSemigroups");;
 
+ReadPackage("semigroups/gap/freeinverse.gd");

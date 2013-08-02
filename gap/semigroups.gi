@@ -161,7 +161,7 @@ function(gens, opts)
           s:=ClosureSemigroupNC(s, [gens[i]], closure_opts);
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(s)),
-        " generators so far\n");
+        " generators so far\r");
       od;
       Print("\n");
     else

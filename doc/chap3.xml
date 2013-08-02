@@ -1,4 +1,7 @@
-<Chapter Label="green"><Heading>Determining the structure of a semigroup</Heading>
+<Chapter Label="green">
+  <Heading>
+    Determining the structure of a semigroup
+  </Heading>
 
   In this chapter we describe the functions in &Semigroups; for determining the
   structure of a semigroup of transformations or partial permutations, in
@@ -81,7 +84,8 @@
     <#Include Label="SmallGeneratingSet"> 
 
   </Section>
-  
+
+
   <Section><Heading>Further properties of semigroups</Heading>
     In this section we describe several properties 
     <Ref Sect="Properties" BookName="ref"/> of an
@@ -89,18 +93,13 @@
     that can be determined using &Semigroups;.
     <#Include Label="IsBand">
     <#Include Label="IsBlockGroup">
-    <#Include Label="IsBrandtSemigroup">
-    <#Include Label="IsCliffordSemigroup">
     <#Include Label="IsCommutativeSemigroup">
     <#Include Label="IsCompletelyRegularSemigroup">
-    <#Include Label="IsFactorisableSemigroup">
     <#Include Label="IsGroupAsSemigroup">
     <#Include Label="IsIdempotentGenerated">
-    <#Include Label="IsInverseSemigroup">
     <#Include Label="IsLeftSimple">
     <#Include Label="IsLeftZeroSemigroup">
     <#Include Label="IsMonogenicSemigroup">
-    <#Include Label="IsMonogenicInverseSemigroup">
     <#Include Label="IsMonoidAsSemigroup">
     <#Include Label="IsOrthodoxSemigroup">
     <#Include Label="IsRectangularBand">
@@ -116,6 +115,38 @@
     <#Include Label="IsZeroSimpleSemigroup">
   </Section>
 
+  <Section><Heading>Properties and attributes of inverse semigroups</Heading>
+
+    In this section we describe several properties and attributes 
+    <Ref Sect="Properties" BookName="ref"/> of inverse semigroup of
+    transformations or partial permutations that can be determined using
+    &Semigroups;. The functions 
+    <Ref Oper="IsJoinIrreducible"/>,
+    <Ref Oper="IsMajorantlyClosed"/>, 
+    <Ref Attr="JoinIrreducibleDClasses"/>,
+    <Ref Oper="MajorantClosure"/>, 
+    <Ref Oper="Minorants"/>, 
+    <Ref Oper="RightCosetsOfInverseSemigroup"/>, 
+    <Ref Attr="SmallerDegreePartialPermRepresentation"/>, and 
+    <Ref Attr="VagnerPrestonRepresentation"/> were written by 
+    Wilf Wilson and Robert Hancock. 
+    
+    <#Include Label="IsCliffordSemigroup">
+    <#Include Label="IsBrandtSemigroup">
+    <#Include Label="IsFactorisableSemigroup">
+    <#Include Label="IsJoinIrreducible">
+    <#Include Label="IsMajorantlyClosed">
+    <#Include Label="IsMonogenicInverseSemigroup">
+    <#Include Label="JoinIrreducibleDClasses">
+    <#Include Label="MajorantClosure">
+    <#Include Label="Minorants">
+    <#Include Label="RightCosetsOfInverseSemigroup">
+    <#Include Label="SameMinorantsSubgroup">
+    <#Include Label="SmallerDegreePartialPermRepresentation">
+    <#Include Label="VagnerPrestonRepresentation">
+
+  </Section>
+     
   <Section><Heading>Changing the representation of a semigroup</Heading>
     <#Include Label="IsomorphismPermGroup">
     <#Include Label="IsomorphismTransformationMonoid">

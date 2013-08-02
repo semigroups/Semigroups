@@ -20,6 +20,7 @@ ReadPackage("semigroups/gap/enums.gi");
 ReadPackage("semigroups/gap/iterators.gi");
 ReadPackage("semigroups/gap/properties.gi");
 ReadPackage("semigroups/gap/attributes.gi");
+ReadPackage("semigroups/gap/attributes-inverse.gi");
 ReadPackage("semigroups/gap/orbits.gi");
 ReadPackage("semigroups/gap/ideals.gi");
 
@@ -27,4 +28,4 @@ ReadPackage("semigroups/gap/examples.gi");
 
 ReadPackage("semigroups/gap/utils.gi");
 
-
+ReadPackage("semigroups/gap/freeinverse.gi");
