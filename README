@@ -59,7 +59,7 @@ install it can be obtained from the main GAP webpage
 The  following  is  a  summary of the steps that should lead to a successful
 installation of Semigroups:
 
- 1.  download  and  install the Orb package version 4.2 or higher. For more
+ 1.  download  and  install the Orb package version 4.6 or higher. For more
      details go to:
 
   http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
@@ -71,7 +71,7 @@ installation of Semigroups:
 
   http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html
 
- 3.  download and install the IO package version 4.1 or higher. For more
+ 3.  download and install the IO package version 4.2 or higher. For more
      details go to:
 
   http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html
