@@ -194,6 +194,9 @@ function()
   
   ex:=SemigroupsManualExamples(); 
   SemigroupsStartTest();
+  if TestPackageAvailability("grape")=fail then 
+    ex:=Filtered(ex, x-> PositionSublist(x[1][1], "MunnSemigroup")=fail);
+  fi;
   RunExamples(ex);
   SemigroupsStopTest();
   return;
