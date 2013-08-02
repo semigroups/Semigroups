@@ -30,7 +30,10 @@ function()
   record.NotationForPartialPerms:=UserPreference("NotationForPartialPerms");;
   record.NotationForTransformations:=
    UserPreference("NotationForTransformations");;
-  
+ 
+  record.FreeInverseSemigroupElementDisplay := UserPreference("semigroups",
+    "FreeInverseSemigroupElementDisplay");
+
   SetInfoLevel(InfoWarning, 0);;
   SetInfoLevel(InfoSemigroups, 0);
   
@@ -38,6 +41,7 @@ function()
   SetUserPreference("TransformationDisplayLimit", 100);;
   SetUserPreference("NotationForPartialPerms", "component");;
   SetUserPreference("NotationForTransformations", "input");;
+  SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "minimal");
   return; 
 end);
 
@@ -60,6 +64,8 @@ function()
    record.NotationForPartialPerms);
   SetUserPreference("NotationForTransformations",
    record.NotationForTransformations);
+  SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
+   record.FreeInverseSemigroupElementDisplay);
   return;
 end);
 
