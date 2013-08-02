@@ -5,9 +5,10 @@
   free inverse semigroups.<P/>
 
   A <E>free inverse semigroup</E> is an inverse semigroup having the following
-  universal property. More precisely, <M>F</M> is a free inverse semigroup
-  on a non-empty set <M>X</M> if <M>F</M> is an inverse semigroup with a map
-  <M>f</M> from <M>F</M> to <M>X</M> such that for every inverse semigroup
+  universal property. An inverse semigroup <M>F</M> is a <E>free inverse
+    semigroup</E> on a non-empty set <M>X</M> if <M>F</M> is an inverse
+  semigroup with a map <M>f</M> from <M>F</M> to <M>X</M> such that for every
+  inverse semigroup
   <M>S</M> and a map <M>g</M> from <M>X</M> to <M>S</M> there exists a 
   unique morphism <M>g'</M> from <M>F</M> to <M>S</M>
   such that <M>fg' = g</M>. This object is unique up to isomorphism.
@@ -15,33 +16,34 @@
   semigroup can be expressed as a quotient of a free inverse
   semigroup.<P/>
 
-  The internal representation of free inverse semigroup elements uses
-  Munn tree diagrams. Where a Munn tree is
-  a directed tree with edges labeled by generators such that two edges
-  labeled by the same generator can only be incident to the same vertex if
-  one of the edges is coming in and the other is leaving the vertex,
-  together with distinguished start and terminal vertices.
+  The internal representation of an element of a free inverse semigroup
+  uses a Munn tree. A <E>Munn tree</E> is a directed tree with distinguished
+  start and terminal vertices and where the edges are labeled by generators so
+  that two edges labeled by the same generator are only incident to the same
+  vertex if one of the edges is coming in and the other is leaving the vertex.
   For more information regarding free inverse semigroups and the Munn
   representations see Section 5.10 of <Cite Key = "howie"/>.
  
   See also <Ref Chap = "Inverse semigroups and monoids" BookName = "ref"/>,
-  <Ref Chap = "Partial permutations" BookName = "ref"/> and
-  <Ref Sect = "Free Groups, Monoids and Semigroups" BookName = "ref" />.<P/> 
-  
+  <Ref Chap = "Partial permutations" BookName = "ref"/> and <Ref Sect = "Free
+    Groups, Monoids and Semigroups" BookName = "ref" />.<P/> 
 
-  A free inverse semigroup element in &Semigroups; will be displayed 
-  as a shortest word corresponding to the element. However, there might
+  An element of a free inverse semigroup in &Semigroups; is be displayed, by
+  default, as a shortest word corresponding to the element. 
+  However, there might
   be more than one word of the minimum length. For example, if <M>x</M>
   and <M>y</M> are generators of a free inverse semigroups, then 
   <Display>xyy^{-1}xx^{-1}x^{-1} = xxx^{-1}yy^{-1}x^{-1}.</Display>
-  Therefore we need a differenet canonical form.
-  If a free inverse semigroup element is given as a Munn tree, let 
+  See <Ref Oper="MinimalWord" Label = "for free inverse semigroup element"/> 
+  Therefore we provide a another method for printing elements of a free
+  inverse semigroup: a unique canonical form.
+  Suppose an element of a free inverse semigroup is given as a Munn tree. Let 
   <M>L</M> be the set of words corresponding to the shortest paths from
   the start vertex to the leaves of the tree. Also let <M>w</M>
   be a word corresponding to the shortest path from start to terminal
-  vertices. <M>vv^{-1}</M> is an idempotent for every <M>v</M> in <M>L</M>. 
-  Then the canonical form in &Semigroups; is given multiplying these 
-  idempotents in the shortlex order and then postmultiplying by <M>w</M>.
+  vertices. The word <M>vv^{-1}</M> is an idempotent for every <M>v</M> in
+  <M>L</M>.  The canonical form is given by multiplying these 
+  idempotents, in shortlex order, and then postmultiplying by <M>w</M>.
   For example, consider the word <M>xyy^{-1}xx^{-1}x^{-1}</M> again. 
   The words corresponding to the paths to the leaves are in this case 
   <M>xx</M> and <M>xy</M>. And <M>w</M> is an empty word since start and 
