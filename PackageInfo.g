@@ -64,7 +64,8 @@ AbstractHTML := Concatenation(
   "Several catalogues of examples are provided, such as generators for the ",
   "endomorphism monoids of every connected graph with at most 8 vertices ", 
   "and generators for the endomorphism monoids of the non-abelian groups with ",
-  "order at most 64."),
+  "order at most 64. There are functions to define and manipulate free", 
+  " inverse semigroups and their elements"),
 
 PackageWWWHome := "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php",
                
@@ -88,5 +89,6 @@ Dependencies := rec(
   Autoload := false,
   TestFile := "tst/testinstall.tst",
   Keywords := ["transformation semigroups", "partial permutations",
-  "inverse semigroups", "bipartitions", "Green's relations"]
+  "inverse semigroups", "Green's relations", "free inverse semigroup", 
+  "partition monoid", "bipartitions"]
 ));

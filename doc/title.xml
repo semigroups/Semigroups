@@ -1,7 +1,6 @@
 <TitlePage>
   <Title>&Semigroups;</Title>
-  <Subtitle>Computing with Semigroups of Transformations and Partial
-    Permutations</Subtitle>
+  <Subtitle>Method for semigroups</Subtitle>
   <Version>Version &VERSION;</Version>
 
   <Author>J. D. Mitchell
@@ -20,7 +19,8 @@
   </Copyright>
 
   <Abstract>
-     The &Semigroups; package is a &GAP; package for computing with semigroups
+    The &Semigroups; package is a &GAP; package containing methods for
+    semigroups, principally semigroups of 
      of transformations and partial permutations. &Semigroups; contains more
      efficient methods than those available in the GAP library (and in many
      cases more efficient than any other software) for creating semigroups of

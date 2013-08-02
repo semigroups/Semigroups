@@ -70,8 +70,8 @@ end);
 
 InstallMethod(IsMajorantlyClosed, 
 "for an inverse subsemigroup of partial perms and an inverse subsemigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup,
-IsPartialPermSemigroup and IsInverseSemigroup],
+[IsInverseSemigroup and IsPartialPermSemigroup,
+IsInverseSemigroup and IsPartialPermSemigroup],
 function(S, T)
 
   return IsMajorantlyClosed(S, Elements(T));
@@ -82,7 +82,7 @@ end);
 
 InstallMethod(IsMajorantlyClosed, 
 "for an inverse subsemigroup of partial permutations and a subset",
-[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermCollection],
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection],
 function(S, T)
 
 	local t;
@@ -101,7 +101,7 @@ end);
 
 InstallMethod(IsMajorantlyClosedNC, 
 "for an inverse subsemigroup of partial permutations and a subset",
-[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermCollection],
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection],
 function(S, T)
 
   local t, iter, u, i;
@@ -203,8 +203,8 @@ end);
 
 InstallMethod(MajorantClosure, 
 "for an inverse subsemigroup of partial perms and an inverse subsemigroup",
-[IsPartialPermSemigroup and IsInverseSemigroup,
-IsPartialPermSemigroup and IsInverseSemigroup],
+[IsInverseSemigroup and IsPartialPermSemigroup,
+IsInverseSemigroup and IsPartialPermSemigroup],
 function(S, T)
   return MajorantClosure(S, Elements(T));;
 end);
@@ -213,7 +213,7 @@ end);
 
 InstallMethod(MajorantClosure, 
 "for an inverse subsemigroup of partial permutations and a subset",
-[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermCollection],
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection],
 function(S, T)
 	local t;
 
@@ -230,7 +230,7 @@ end);
 
 InstallMethod(MajorantClosureNC, 
 "for an inverse subsemigroup of partial permutations and a subset",
-[IsPartialPermSemigroup and IsInverseSemigroup, IsPartialPermCollection],
+[IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection],
 function(S, T)
 
 	local elts, n, out, t, i, val, ht, k;
@@ -367,7 +367,7 @@ end);
 
 InstallMethod(SameMinorantsSubgroup, 
 "for a group H-class of an inverse semigroup of partial perms",
-[IsGroupHClass],
+[IsGroupHClass and IsPartialPermCollection],
 function(h)
   local e, F, out, f, i;
 

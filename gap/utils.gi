@@ -30,7 +30,10 @@ function()
   record.NotationForPartialPerms:=UserPreference("NotationForPartialPerms");;
   record.NotationForTransformations:=
    UserPreference("NotationForTransformations");;
-  
+ 
+  record.FreeInverseSemigroupElementDisplay := UserPreference("semigroups",
+    "FreeInverseSemigroupElementDisplay");
+
   SetInfoLevel(InfoWarning, 0);;
   SetInfoLevel(InfoSemigroups, 0);
   
@@ -38,6 +41,7 @@ function()
   SetUserPreference("TransformationDisplayLimit", 100);;
   SetUserPreference("NotationForPartialPerms", "component");;
   SetUserPreference("NotationForTransformations", "input");;
+  SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "minimal");
   return; 
 end);
 
@@ -60,6 +64,8 @@ function()
    record.NotationForPartialPerms);
   SetUserPreference("NotationForTransformations",
    record.NotationForTransformations);
+  SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay",
+   record.FreeInverseSemigroupElementDisplay);
   return;
 end);
 
@@ -77,8 +83,8 @@ function()
   MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.
    InstallationPath, "/doc"), "main.xml", 
    ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
-   "semigroups.xml", "attributes-inverse.xml",
-   "freeinverse.xml", "bipartition.xml", "blocks.xml", "../PackageInfo.g"],
+   "semigroups.xml", "transform.xml", "attributes-inverse.xml",
+   "freeinverse.xml", "../PackageInfo.g"],
    "semigroups", "MathJax", "../../..");;
   return;
 end);
@@ -170,9 +176,8 @@ return
   ExtractExamples(DirectoriesPackageLibrary("semigroups","doc"), 
   "main.xml",  [ "utils.xml",
   "greens.xml", "orbits.xml", "properties.xml",
-  "semigroups.xml",  "attributes-inverse.xml",
-  "bipartition.xml", "blocks.xml", "freeinverse.xml",
-  "../PackageInfo.g" ], "Single" );
+  "semigroups.xml",  "transform.xml", "attributes-inverse.xml",
+  "freeinverse.xml", "../PackageInfo.g" ], "Single" );
 end);
 
 #
@@ -189,6 +194,11 @@ function()
   
   ex:=SemigroupsManualExamples(); 
   SemigroupsStartTest();
+  if TestPackageAvailability("grape")=fail or 
+   ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
+    then 
+    ex:=Filtered(ex, x-> PositionSublist(x[1][1], "MunnSemigroup")=fail);
+  fi;
   RunExamples(ex);
   SemigroupsStopTest();
   return;

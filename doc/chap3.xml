@@ -120,7 +120,16 @@
     In this section we describe several properties and attributes 
     <Ref Sect="Properties" BookName="ref"/> of inverse semigroup of
     transformations or partial permutations that can be determined using
-    &Semigroups;.
+    &Semigroups;. The functions 
+    <Ref Oper="IsJoinIrreducible"/>,
+    <Ref Oper="IsMajorantlyClosed"/>, 
+    <Ref Attr="JoinIrreducibleDClasses"/>,
+    <Ref Oper="MajorantClosure"/>, 
+    <Ref Oper="Minorants"/>, 
+    <Ref Oper="RightCosetsOfInverseSemigroup"/>, 
+    <Ref Attr="SmallerDegreePartialPermRepresentation"/>, and 
+    <Ref Attr="VagnerPrestonRepresentation"/> were written by 
+    Wilf Wilson and Robert Hancock. 
     
     <#Include Label="IsCliffordSemigroup">
     <#Include Label="IsBrandtSemigroup">

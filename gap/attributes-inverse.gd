@@ -31,7 +31,7 @@ IsPartialPerm]);
 DeclareOperation("RightCosetsOfInverseSemigroup", [IsInverseSemigroup and
 IsPartialPermSemigroup, IsInverseSemigroup and IsPartialPermSemigroup]);
 
-DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass);
+DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass and IsPartialPermCollection);
 DeclareAttribute("SmallerDegreePartialPermRepresentation", IsInverseSemigroup and
 IsPartialPermSemigroup);
 DeclareGlobalFunction("SupremumIdempotentsNC");

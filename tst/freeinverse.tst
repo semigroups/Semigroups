@@ -6,7 +6,7 @@
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
-START_TEST("Semigroups package: freeinverse.tst");
+gap> START_TEST("Semigroups package: freeinverse.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -33,8 +33,7 @@ gap> x * x^-1 = y * y^-1;
 false
 
 #
-
-gap>S := FreeInverseSemigroup("a", "b", "c");
+gap> S := FreeInverseSemigroup("a", "b", "c");
 <free inverse semigroup on the generators [ a, b, c ]>
 gap> Size(S);
 infinity
@@ -55,4 +54,6 @@ false
 
 #
 gap> SemigroupsStopTest();
+
+#
 gap> STOP_TEST("Semigroups package: freeinverse.tst", 0);

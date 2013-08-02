@@ -1,18 +1,31 @@
-############################################################################
+################################################################################
 ##
-##  Elements of Free Inverse Semigroups are represented by [number of generators,
-##  , number of vertices, finish vertex, parent list, list of labels (p->c), 
-##  adjacency list for every vertex]
+#W  inverse.gi
+#Y  Copyright (C) 2013                                 Julius Jonusas
 ##
-##  Names:
-##  x1 = 1, x1^-1 = 2, ... 
+##  Licensing information can be foundin the README file of this package.
 ##
-##  Example:
-##  a := [2, 4, 2, [fail, 1, 2, 2], [fail, 1, 1, 4], [2, , , ,], [3, 1 , ,4],
+################################################################################
+## 
+##  Internal representation of the elements of free inverse semigroups is
+##  is given as a list:
+##  [
+##  number of generators,
+##  number of vertices,
+##  finish vertex,
+##  parent list (for each vertex gives the name of a parent),
+##  list of labels (from a parent to a child), 
+##  adjacency list for every vertex
+##  ]
+##
+##  For example an element xxx^-1yy^-1 is represented by:
+##  [2, 4, 2, [fail, 1, 2, 2], [fail, 1, 1, 4], [2, , , ,], [3, 1 , ,4],
 ##     [ , 2, , ], [, , 2, ]];
 ##
-
-############################################################################
+##  Not that if x1, x2, ... are the generators, then in the internal
+##  representation x1 is refered by 1, x1^-1 by 2, x2 by 3 and so on.
+##
+################################################################################
 ##
 ##  Iterator( <S> )
 ##
@@ -176,6 +189,39 @@ InstallMethod(PrintObj, "for a free inverse semigroup element",
 InstallMethod(ViewObj, "for a free inverse semigroup element", 
 [IsFreeInverseSemigroupElement],
 function(x)
+
+  if UserPreference("semigroups","FreeInverseSemigroupElementDisplay") = "minimal" then
+    Print(MinimalWord(x));
+  else
+    Print(CanonicalForm(x));
+  fi;
+
+  return;
+end);
+
+InstallMethod(ViewObj,
+"for a free inverse semigroup containing the whole family",
+[IsFreeInverseSemigroup],
+function( S )
+  if GAPInfo.ViewLength * 10 < Length( GeneratorsOfMagma( S ) ) then
+    Print( "<free inverse semigroup with ", Length( GeneratorsOfInverseSemigroup( S ) ),
+           " generators>" );
+  else
+    Print( "<free inverse semigroup on the generators ",
+           GeneratorsOfInverseSemigroup( S ), ">" );
+  fi;
+end );
+
+
+
+############################################################################
+##
+## MinimalWord
+##
+
+InstallMethod(MinimalWord, "for a free inverse semigroup element",
+[IsFreeInverseSemigroupElement], 
+function(x)
   local InvertGenerator, is_a_child_of, gen, stop_start, i, j, path, words, pos, part, temp_word, out, labels, names;
  
   InvertGenerator:=function(n)
@@ -230,9 +276,6 @@ function(x)
   path:=Reversed(path);
   
   names:=FamilyObj(x)!.names;
-  #names := Concatenation( List( [1 .. x![2] ],
-  #                        i -> [ Concatenation( "s", String(i) ) ,
-  #                               Concatenation( ["s", String(i), "^-1"] )] ) );
 
   for i in path do 
     Append(out, List(words[stop_start[i]], l -> Concatenation(names[l],"*")));
@@ -245,30 +288,19 @@ function(x)
   if out[Length(out)] = '*' then
    Unbind(out[Length(out)]);
   fi;
-
-  Print(out);
-  return;
+  
+  return out;
 end);
 
-InstallMethod(ViewObj,
-"for a free inverse semigroup containing the whole family",
-[IsFreeInverseSemigroup],
-function( S )
-  if GAPInfo.ViewLength * 10 < Length( GeneratorsOfMagma( S ) ) then
-    Print( "<free inverse semigroup with ", Length( GeneratorsOfInverseSemigroup( S ) ),
-           " generators>" );
-  else
-    Print( "<free inverse semigroup on the generators ",
-           GeneratorsOfInverseSemigroup( S ), ">" );
-  fi;
-end );
 
 ##############################################################################
 ##
-## FreeInverseSemiCanonicalForm( s ) 
+## CanonicalForm( s ) 
+##
 ##
 
-InstallGlobalFunction( FreeInverseSemiCanonicalForm,
+InstallMethod( CanonicalForm, "for a free inverse semigroup element",
+[IsFreeInverseSemigroupElement], 
 function(tree)
   local output, maxleftreduced, maxleftreducedpath, pivot, i, InvertGenerator,
          children, fork, tail, groupelem;
@@ -328,10 +360,18 @@ function(tree)
     i := tree![4][i];
   od;
   groupelem := Reversed(List(groupelem, x-> tree![5][x]));
-  
-  output := Concatenation(List(Concatenation(Concatenation(Set(maxleftreduced)),
-    groupelem), x -> FamilyObj(tree)!.names[x]));
 
+  if Length(maxleftreduced) = 1 and
+     Length(maxleftreduced[1]) = 2 and
+     Length(groupelem) > 0 and
+    ( (maxleftreduced[1][1] mod 2 = 1 and maxleftreduced[1][2] = maxleftreduced[1][1] + 1 ) or
+      (maxleftreduced[1][1] mod 2 = 0 and maxleftreduced[1][2] = maxleftreduced[1][1] - 1 ))
+  then
+    output := Concatenation(List(groupelem, x -> FamilyObj(tree)!.names[x])); 
+  else
+    output := Concatenation(List(Concatenation(Concatenation(Set(maxleftreduced)),
+    groupelem), x -> FamilyObj(tree)!.names[x]));
+  fi;
   return output;
 end);
 
@@ -355,7 +395,7 @@ function(tree1, tree2)
   od;
 
   if not isequal then
-    isequal := FreeInverseSemiCanonicalForm(tree1) = FreeInverseSemiCanonicalForm(tree2);
+    isequal := CanonicalForm(tree1) = CanonicalForm(tree2);
   fi;
  
   return isequal; 

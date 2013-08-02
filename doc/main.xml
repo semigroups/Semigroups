@@ -39,6 +39,7 @@
 <#Include SYSTEM "chap2.xml">
 <#Include SYSTEM "chap3.xml">
 <#Include SYSTEM "chap4.xml">
+<#Include SYSTEM "chap5.xml">
 </Body>
 
 <Bibliography Databases="semigroups" />
