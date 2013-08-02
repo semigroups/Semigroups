@@ -81,7 +81,7 @@ true
 
 <#GAPDoc Label="JoinIrreducibleDClasses">
 <ManSection>
-<Func Name="JoinIrreducibleDClasses" Arg="S"/>
+<Attr Name="JoinIrreducibleDClasses" Arg="S"/>
   <Returns>
     A list of D-Classes.
   </Returns>
@@ -112,7 +112,7 @@ gap> JoinIrreducibleDClasses(T);
 
 <#GAPDoc Label="MajorantClosure">
 <ManSection>
-<Func Name="MajorantClosure" Arg="S,T"/>
+<Oper Name="MajorantClosure" Arg="S,T"/>
   <Returns>
     A majorantly closed list of partial permutations.
   </Returns>
@@ -173,7 +173,7 @@ gap> Minorants(S,f);
 
 <#GAPDoc Label="RightCosetsOfInverseSemigroup">
 <ManSection>
-<Func Name="RightCosetsOfInverseSemigroup" Arg="S,T"/>
+<Oper Name="RightCosetsOfInverseSemigroup" Arg="S,T"/>
   <Returns>
     A list of lists of partial permutations.
   </Returns>
@@ -207,7 +207,7 @@ gap> RC:=RightCosetsOfInverseSemigroup(S,T);
 
 <#GAPDoc Label="SameMinorantsSubgroup">
 <ManSection>
-<Func Name="SameMinorantsSubgroup" Arg="h"/>
+<Attr Name="SameMinorantsSubgroup" Arg="h"/>
   <Returns>
     A list of elements of the group H-class <M>h</M>.
   </Returns>
@@ -249,7 +249,7 @@ gap> SameMinorantsSubgroup(f);
 
 <#GAPDoc Label="SmallerDegreePartialPermRepresentation">
 <ManSection>
-<Func Name="SmallerDegreePartialPermRepresentation" Arg="S"/>
+<Attr Name="SmallerDegreePartialPermRepresentation" Arg="S"/>
   <Returns>
     An isomorphic mapping.
   </Returns>
