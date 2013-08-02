@@ -20,6 +20,9 @@ DeclareAttribute("NrLeftBlocks", IsBipartition);
 DeclareAttribute("NrRightBlocks", IsBipartition);
 
 DeclareAttribute("RankOfBlocks", IsBlocks);
+DeclareAttribute("NrTransverseBlocks", IsBlocks);
+
+
 DeclareAttribute("DegreeOfBlocks", IsBlocks);
 
 DeclareAttribute("LeftBlocks", IsBipartition);

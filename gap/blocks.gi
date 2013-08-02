@@ -14,6 +14,9 @@ BindGlobal("BlocksFamily", NewFamily("BlocksFamily",
 BindGlobal("BlocksType", NewType(BlocksFamily,
  IsBlocks and IsComponentObjectRep and IsAttributeStoringRep));
 
+# not a synonym since NrTransverseBlocks applies to a bipartition also
+InstallMethod(NrTransverseBlocks, "for blocks", [IsBlocks], RankOfBlocks);
+
 InstallMethod(PrintObj, "for blocks", [IsBlocks], 5,
 function(blocks) 
   Print("BlocksNC(");
@@ -394,9 +397,7 @@ function(blocks)
   n:=DegreeOfBlocks(blocks);
   rank:=0;
   for i in [1..NrBlocks(blocks)] do 
-    if blocks[n+i]=1 then 
-      rank:=rank+1;
-    fi;
+    rank:=rank+blocks[n+i];
   od;
   return rank;
 end);
