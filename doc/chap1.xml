@@ -2,8 +2,7 @@
   <Heading>The &Semigroups; package</Heading>
   <Index Key="Semigroups">&Semigroups; package overview</Index>	
     
-    This is the manual for the &Semigroups; package version &VERSION; for
-    computing with semigroups of transformations and partial permutations.
+    This is the manual for the &Semigroups; package version &VERSION;.
     &Semigroups; &VERSION; is an updated and expanded version of the 
     <URL Text="Monoid package for GAP 3">
       http://schmidt.nuigalway.ie/monoid/index.html</URL> by Goetz Pfeiffer,
@@ -12,9 +11,14 @@
       http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html</URL> by
     J.  D. Mitchell.<P/>
 
-    Some of the theory behind the algorithms in &Semigroups; is described in 
+    Some of the theory behind the algorithms in &Semigroups; for computing with
+    semigroups of transformations and partial permutations is described in 
     <Cite Key="pfeiffer1"/> and described in <Cite Key="pfeiffer2"/>.  Another
-    reference is <Cite Key="lallement"/>.<P/> 
+    reference is <Cite Key="lallement"/>. A reference for free inverse
+    semigroups is Section 5.10 in <Cite Key="howie"/>. The functions for
+    finding a smaller degree partial permutation representation of an inverse
+    semigroup are based on <Cite Key="Schein1992aa"/>.
+    <P/> 
     
     The functionality of &Monoid; 3.1.4 for &GAP; 4 has been split between the
     &GAP; 4.5 packages &Semigroups; and &Comatose;.
@@ -41,7 +45,11 @@
     of the commonly used &GAP; library functions related to semigroups, and
     functions to read and write large collections of transformations or partial
     permutations to a file; see <Ref Func="ReadSemigroups"/> and <Ref
-      Func="WriteSemigroups"/>. <P/>
+      Func="WriteSemigroups"/>. 
+    <P/>
+
+    There are also functions in &Semigroups; to define and manipulate free
+    inverse semigroups and their elements. <P/>
 
     &noindent; The &Semigroups; package is written &GAP; code and 
     requires the &Orb;, &IO;, and &GENSS;  packages. The &Orb; package is used
@@ -240,8 +248,7 @@ or 64-bit mode correctly!
     <#Include Label="WriteSemigroups">
   </Section>
 
-  <Section><Heading>What does &Semigroups; do best?</Heading>
-
+  <Section><Heading>Use &R;-classes not &L;-classes</Heading>
     It is harder for &Semigroups; to compute Green's &L;- and
     &H;-classes and the methods used to compute with
     Green's &R;- and &D;-classes are the most efficient in &Semigroups;.  Thus,
@@ -261,7 +268,6 @@ or 64-bit mode correctly!
     <Ref Func="NrRClasses"/>.  This may be useful if you want to study a very
     large semigroup where computing all the elements of the semigroup is
     infeasible.
-
   </Section>
 
   <Section><Heading>New methods for existing functions</Heading>
