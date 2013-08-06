@@ -174,9 +174,10 @@ function(blocks, labels, edges)
   return str;
 end);
 
-#
+# JDM - requires reworking.
 
-TikzStringForBipartition:=function(f)
+InstallGlobalFunction(TikzStringForBipartition,
+function(f)
   local str, ext, n, up, down, min, i, block, j;
   
   str:="\\begin{tikzpicture}\n"; 
@@ -258,7 +259,7 @@ TikzStringForBipartition:=function(f)
   od;
   Append(str, "\\end{tikzpicture}\n\n");
   return str;
-end;
+end);
 
 
 #

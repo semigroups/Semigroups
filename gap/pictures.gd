@@ -10,6 +10,14 @@
 
 DeclareGlobalFunction("TikzEnd");
 DeclareGlobalFunction("TikzStringForBlocks");
+DeclareGlobalFunction("TikzBipartition");
+DeclareGlobalFunction("TikzBipartitionRight");
+DeclareGlobalFunction("TikzBipartitionLeft");
+DeclareGlobalFunction("TikzBipartitionLeftRight");
+DeclareGlobalFunction("TikzStringForBipartition");
+DeclareGlobalFunction("TikzRightBlocks");
+DeclareGlobalFunction("TikzLeftBlocks");
+DeclareGlobalFunction("TikzBlocks");
 
 DeclareOperation("DotDClasses", [IsActingSemigroup]);
 DeclareOperation("DotDClasses", [IsActingSemigroup, IsRecord]);
