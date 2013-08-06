@@ -1,158 +1,182 @@
+#############################################################################
+##
+#W  pictures.gi
+#Y  Copyright (C) 2013                                   James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
 
 #
 
-TikzInit:=function()
+BindGlobal("TikzInit",
+function()
   local str;
 
-  str:="\\documentclass{minimal}\n";
+  str:="%tikz\n"; #for viz
+  Append(str, "\\documentclass{minimal}\n");
   Append(str, "\\usepackage{tikz}\n");
   Append(str, "\\begin{document}\n");
   return str;
-end;
+end);
 
 #
 
-TikzPicLeftSignedPartition:=function(f)
-  local str, ext, n, up, down, min, i, block, j;
+InstallGlobalFunction(TikzEnd, function(str)
+  Append(str, "\\end{document}");
+  return str;
+end);
+
+#
+
+InstallGlobalFunction(TikzBipartition, 
+function(f)
+  return Concatenation(TikzInit, TikzEnd(TikzStringForBipartition(f)));
+end);
+
+# for bipartition
+
+InstallGlobalFunction(TikzRightBlocks,
+function(f)
+  return Concatenation(TikzInit,
+   TikzEnd(TikzStringForBlocks(RightBlocks(f), "right", "right")));
+end);
+
+# for bipartition
+
+InstallGlobalFunction(TikzLeftBlocks,
+function(f)
+  return Concatenation(TikzInit,
+   TikzEnd(TikzStringForBlocks(RightBlocks(f), "left", "left")));
+end);
+
+# for blocks, JDM have a right/left version of this
+
+InstallGlobalFunction(TikzBlocks, 
+function(blocks)
+  return Concatenation(TikzInit, 
+   TikzEnd(TikzStringForBlocks(blocks, "left", "left")));
+end);
+
+#
+
+InstallGlobalFunction(TikzBipartitionRight, 
+function(f)
+  return Concatenation(TikzInit, TikzStringForBipartition(f),
+    TikzEnd(TikzStringForBlocks(RightBlocks(f), "none", "right")));
+end);
+
+#
+
+InstallGlobalFunction(TikzBipartitionLeft, function(f)
+  return Concatenation(TikzInit, 
+  TikzStringForBlocks(LeftBlocks(f), "none", "left"), 
+  TikzEnd(TikzStringForBipartition(f)));
+end);
+
+#
+
+InstallGlobalFunction(TikzBipartitionLeftRight, 
+function(f)
+  return Concatenation(TikzInit, 
+  TikzStringForBlocks(LeftBlocks(f), "none", "left"), 
+  TikzStringForBipartition(f), 
+  TikzEnd(TikzStringForBlocks(RightBlocks(f), "none", "right")));
+end);
+
+#
+
+
+InstallGlobalFunction(TikzStringForBlocks,
+function(blocks, labels, edges)
+  local str, n, x, ext, block, y, i;
   
   str:="\\begin{tikzpicture}\n"; 
-  ext:=ExtRepOfBipartition(f);
-  n:=DegreeOfBipartition(f);
- 
-  # draw the lines
-  for block in ext do
+  n:=DegreeOfBlocks(blocks);
+
+  # draw the nodes
+  for i in [1..n] do
+    if blocks[n+blocks[i]]=0 then #non-transverse block
+      #node
+      Append(str, "\\draw[ultra thick](2,");
+      Append(str, ViewString(n-i+1));
+      Append(str, ")circle(.115);\n");
+    else #transverse block
+      #node
+      Append(str, "\\fill(2,");
+      Append(str, ViewString(n-i+1));
+      Append(str, ")circle(.125);\n");
+    fi;  
     
-    if ForAny(block, i-> i<=n) then 
-      if not ForAny(block, i-> i>n) then #non-transverse block
-        for i in block do
-          if i<=n then 
-            #node
-            Append(str, "\\draw[ultra thick](");
-            Append(str, ViewString(i-1));
-            Append(str, ",2)circle(.115);\n");
-
-            #node label
-            Append(str, "\\draw("); Append(str, ViewString(i-1.05));
-            Append(str, ", 2.2) node [above] {{ $"); 
-            Append(str, ViewString(i));
-            Append(str, "$}};"); Append(str, "\n");
-          fi;
-        od;  
-      else #transverse block
-        for i in block do 
-          if i<=n then 
-            #node
-            Append(str, "\\fill(");
-            Append(str, ViewString(i-1));
-            Append(str, ",2)circle(.125);\n");
-
-            #node label
-            Append(str, "\\draw("); Append(str, ViewString(i-1.05));
-            Append(str, ", 2.2) node [above] {{ $"); 
-            Append(str, ViewString(i));
-            Append(str, "$}};"); Append(str, "\n");
-          fi;  
-        od;
+    if labels<>"none" then  
+      if labels="left" then 
+        #node label
+        x:="1.8";
+      elif labels="right" then 
+        x:="2.2";
+      else
+        Error("usage: <labels> should be \"right\", \"left\", or \"none\",");
+        return;
       fi;
+      Append(str, "\\draw(");
+      Append(str, x);
+      Append(str, ","); 
+      Append(str, ViewString(n-i+1));
+      Append(str, ") node [");
+      Append(str, labels);
+      Append(str, "] {{ $"); 
+      Append(str, ViewString(i));
+      Append(str, "$}};"); 
+      Append(str, "\n");
+    fi;
+  od;
+    
+  # draw the edges
+  ext:=ExtRepOfBlocks(blocks);
+  for block in ext do
+    block:=ShallowCopy(block);
+    Apply(block, AbsInt);
+    
+    if edges="left" then 
+      x:="2.125";
+      y:=i-> ViewString(Float(2.5+(1/(2*n))*(block[i]-block[i-1])));
+    elif edges="right" then  
+      x:="1.875";
+      y:=i-> ViewString(Float(1.5-(1/(2*n))*(block[i]-block[i-1])));
+    else 
+      Error("usage: <edges> should be \"left\" or \"right\",");
+      return;
     fi;
     
-    # edges
     for i in [2..Length(block)] do
-      if block[i-1]<=n and block[i]<=n then
-        Append(str, "\\draw (");
-        Append(str, ViewString(block[i-1]-1));
-        Append(str, ",1.875) .. controls (");
-        Append(str, ViewString(block[i-1]-1));
-        Append(str, ",");
-        Append(str, ViewString(Float(1.5-(1/(2*n))*(block[i]-block[i-1]))));
-        Append(str, ") and (");
-        Append(str, ViewString(block[i]-1));
-        Append(str, ",");
-        Append(str, ViewString(Float(1.5-(1/(2*n))*(block[i]-block[i-1]))));
-        Append(str, ") .. (");
-        Append(str, ViewString(block[i]-1));
-        Append(str, ",1.875);\n");
-      fi;
+      Append(str, "\\draw (");
+      Append(str, x);
+      Append(str, ",");
+      Append(str, ViewString(n-block[i-1]+1));
+      Append(str, ") .. controls (");
+      Append(str, y(i));
+      Append(str, ",");
+      Append(str, ViewString(n-block[i-1]+1));
+      Append(str, ") and (");
+      Append(str, y(i));
+      Append(str, ",");
+      Append(str, ViewString(n-block[i]+1));
+      Append(str, ") .. (");
+      Append(str, x);
+      Append(str, ",");
+      Append(str, ViewString(n-block[i]+1));
+      Append(str, ");\n");
     od;
   od;
 
   Append(str, "\\end{tikzpicture}\n\n");
   return str;
-end;
+end);
 
 #
 
-TikzPicRightSignedPartition:=function(f)
-  local str, ext, n, up, down, min, i, block, j;
-  
-  str:="\\begin{tikzpicture}\n"; 
-  ext:=ExtRepOfBipartition(f);
-  n:=DegreeOfBipartition(f)/2;
- 
-  # draw the lines
-  for block in ext do
-    
-    if ForAny(block, i-> i>n) then 
-      if not ForAny(block, i-> i<=n) then #non-transverse block
-        for i in block do
-          if i>n then 
-            #node
-            Append(str, "\\draw[ultra thick](");
-            Append(str, ViewString(i-n-1));
-            Append(str, ",2)circle(.115);\n");
-
-            #node label
-            Append(str, "\\draw("); Append(str, ViewString(i-n-1.05));
-            Append(str, ", 1.8) node [below] {{ $"); 
-            Append(str, ViewString(i-n));
-            Append(str, "$}};"); Append(str, "\n");
-          fi;
-        od;  
-      else #transverse block
-        for i in block do 
-          if i>n then 
-            #node
-            Append(str, "\\fill(");
-            Append(str, ViewString(i-n-1));
-            Append(str, ",2)circle(.125);\n");
-
-            #node label
-            Append(str, "\\draw("); Append(str, ViewString(i-n-1.05));
-            Append(str, ", 1.8) node [below] {{ $"); 
-            Append(str, ViewString(i-n));
-            Append(str, "$}};"); Append(str, "\n");
-          fi;  
-        od;
-      fi;
-    fi;
-    
-    # edges
-    for i in [2..Length(block)] do
-      if block[i-1]>n and block[i]>n then 
-        Append(str, "\\draw (");
-        Append(str, ViewString(block[i-1]-1-n));
-        Append(str, ",2.125) .. controls (");
-        Append(str, ViewString(block[i-1]-1-n));
-        Append(str, ",");
-        Append(str, ViewString(Float(2.5+(1/(2*n))*(block[i]-block[i-1]))));
-        Append(str, ") and (");
-        Append(str, ViewString(block[i]-1-n));
-        Append(str, ",");
-        Append(str, ViewString(Float(2.5+(1/(2*n))*(block[i]-block[i-1]))));
-        Append(str, ") .. (");
-        Append(str, ViewString(block[i]-1-n));
-        Append(str, ",2.125);\n");
-      fi;
-    od;
-  od;
-
-  Append(str, "\\end{tikzpicture}\n\n");
-  return str;
-end;
-
-#
-
-TikzPicBipartition:=function(f)
+TikzStringForBipartition:=function(f)
   local str, ext, n, up, down, min, i, block, j;
   
   str:="\\begin{tikzpicture}\n"; 
@@ -236,38 +260,6 @@ TikzPicBipartition:=function(f)
   return str;
 end;
 
-TikzEnd:=function(str)
-
-  Append(str, "\\end{document}");
-  return str;
-end;
-
-TikzBipartition:=function(f)
-  return Concatenation(TikzInit(), TikzEnd(TikzPicBipartition(f)));
-end;
-
-TikzRightSignedPartition:=function(f)
-  return Concatenation(TikzInit(), TikzEnd(TikzPicRightSignedPartition(f)));
-end;
-
-TikzLeftSignedPartition:=function(f)
-  return Concatenation(TikzInit(), TikzEnd(TikzPicLeftSignedPartition(f)));
-end;
-
-TikzBipartitionRight:=function(f)
-  return Concatenation(TikzInit(), TikzPicBipartition(f),
-    TikzEnd(TikzPicRightSignedPartition(f)));
-end;
-
-TikzBipartitionLeft:=function(f)
-  return Concatenation(TikzInit(), TikzPicLeftSignedPartition(f), 
-  TikzEnd(TikzPicBipartition(f)));
-end;
-
-TikzBipartitionLeftRight:=function(f)
-  return Concatenation(TikzInit(), TikzPicLeftSignedPartition(f), 
-  TikzPicBipartition(f), TikzEnd(TikzPicRightSignedPartition(f)));
-end;
 
 #
 

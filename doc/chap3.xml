@@ -79,7 +79,6 @@
     <#Include Label="IrredundantGeneratingSubset">
     <#Include Label="MinimalIdeal">
     <#Include Label="MultiplicativeZero">
-    <#Include Label="PrimitiveIdempotents">
     <#Include Label="Random">
     <#Include Label="SmallGeneratingSet"> 
 
@@ -140,6 +139,7 @@
     <#Include Label="JoinIrreducibleDClasses">
     <#Include Label="MajorantClosure">
     <#Include Label="Minorants">
+    <#Include Label="PrimitiveIdempotents">
     <#Include Label="RightCosetsOfInverseSemigroup">
     <#Include Label="SameMinorantsSubgroup">
     <#Include Label="SmallerDegreePartialPermRepresentation">
@@ -150,6 +150,10 @@
   <Section><Heading>Changing the representation of a semigroup</Heading>
     <#Include Label="IsomorphismPermGroup">
     <#Include Label="IsomorphismTransformationMonoid">
+  </Section>
+
+  <Section><Heading>Visualising the &D;-class structure</Heading>
+
   </Section>
 </Chapter>
 

@@ -33,3 +33,4 @@ ReadPackage("semigroups/gap/examples.gi");
 ReadPackage("semigroups/gap/utils.gi");
 
 ReadPackage("semigroups/gap/freeinverse.gi");
+ReadPackage("semigroups/gap/pictures.gi");

@@ -38,6 +38,9 @@ ReadPackage("semigroups/gap/slp.gd");
 ReadPackage("semigroups/gap/examples.gd");
 ReadPackage("semigroups/gap/utils.gd");
 ReadPackage("semigroups/gap/options.g");
-DeclareInfoClass("InfoSemigroups");;
 
 ReadPackage("semigroups/gap/freeinverse.gd");
+
+ReadPackage("semigroups/gap/pictures.gd");
+
+DeclareInfoClass("InfoSemigroups");;
