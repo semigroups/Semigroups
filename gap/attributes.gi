@@ -91,6 +91,7 @@ InstallMethod(StructureDescriptionMaximalSubgroups,
 "for an acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
+  local out, d;
 
   out:=[];
   for d in DClasses(s) do 
