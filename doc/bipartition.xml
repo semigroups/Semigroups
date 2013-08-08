@@ -319,7 +319,7 @@ gap> IdentityBipartition(10);
 <#GAPDoc Label="RankOfBipartition">
   <ManSection>
     <Attr Name="RankOfBipartition" Arg="f"/>
-    <Attr Name="NrTransverseBlocks" Arg="f"/>
+    <Attr Name="NrTransverseBlocks" Arg="f" Label="for a bipartition"/>
     <Returns>The rank of a bipartition.</Returns>
     <Description>
       When the argument is a bipartition <A>f</A>, <C>RankOfBipartition</C>

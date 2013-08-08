@@ -108,13 +108,13 @@
   </Section>
 
   <Section><Heading>Visualising blocks and bipartitions</Heading>
-    There are some functions in &Semigroups; for creating &Latex; pictures of
+    There are some functions in &Semigroups; for creating &LaTeX; pictures of
     bipartitions and blocks. Descriptions of these methods can be found in this
     section. <P/>
 
     Many of the functions described herein return a string, which can be
-    written to a file using the function <Ref Func="FileString"
-      BookName="ref"/>.
+    written to a file using the function 
+    <Ref Func="FileString" BookName="ref"/>.
 
     
 

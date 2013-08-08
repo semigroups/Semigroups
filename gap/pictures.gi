@@ -11,15 +11,11 @@
 #
 
 BindGlobal("TikzInit",
-function()
-  local str;
-
-  str:="%tikz\n"; #for viz
-  Append(str, "\\documentclass{minimal}\n");
-  Append(str, "\\usepackage{tikz}\n");
-  Append(str, "\\begin{document}\n");
-  return str;
-end);
+  Concatenation("%tikz\n", 
+   "\\documentclass{minimal}\n",
+   "\\usepackage{tikz}\n",
+   "\\begin{document}\n")
+);
 
 #
 
@@ -48,7 +44,7 @@ end);
 InstallGlobalFunction(TikzLeftBlocks,
 function(f)
   return Concatenation(TikzInit,
-   TikzEnd(TikzStringForBlocks(RightBlocks(f), "left", "left")));
+   TikzEnd(TikzStringForBlocks(LeftBlocks(f), "left", "left")));
 end);
 
 # for blocks, JDM have a right/left version of this
@@ -125,7 +121,7 @@ function(blocks, labels, edges)
       Append(str, ViewString(n-i+1));
       Append(str, ") node [");
       Append(str, labels);
-      Append(str, "] {{ $"); 
+      Append(str, "] {{$"); 
       Append(str, ViewString(i));
       Append(str, "$}};"); 
       Append(str, "\n");

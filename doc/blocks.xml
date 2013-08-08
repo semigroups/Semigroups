@@ -249,7 +249,7 @@ gap> ExtRepOfBlocks(blocks);
 <#GAPDoc Label="RankOfBlocks">
   <ManSection>
     <Attr Name="RankOfBlocks" Arg="blocks"/>
-    <Attr Name="NrTransverseBlocks" Arg="blocks"/>
+    <Attr Name="NrTransverseBlocks" Arg="blocks" Label="for blocks"/>
     <Returns>A non-negative integer.</Returns>
     <Description>
       When the argument is some blocks <A>blocks</A>, <C>RankOfBlocks</C>
