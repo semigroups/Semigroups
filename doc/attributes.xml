@@ -8,11 +8,45 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="StructureDescriptionMaximalSubgroups">
+  <ManSection>
+    <Attr Name="StructureDescriptionMaximalGroups" Arg="S"/>
+    <Returns>Distinct structure descriptions of the maximal subgroups 
+      of a semigroup.</Returns>
+    <Description>
+      <Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="StructureDescriptionSchutzenbergerGroups">
   <ManSection>
     <Attr Name="StructureDescriptionSchutzenbergerGroups" Arg="S"/>
     <Returns>Distinct structure descriptions of the Schutzenberger groups of a
       semigroup.</Returns>
+    <Description>
+      <Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="MinimalDClass">
+  <ManSection>
+    <Attr Name="MinimalDClass" Arg="S"/>
+    <Returns>The minimal &D;-class of a semigroup.</Returns>
+    <Description>
+      <Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="MaximalDClasses">
+  <ManSection>
+    <Attr Name="MaximalDClasses" Arg="S"/>
+    <Returns>The maximal &D;-classes of a semigroup.</Returns>
     <Description>
       <Example>
 </Example>

@@ -87,6 +87,23 @@ end);
 
 #
 
+InstallMethod(StructureDescriptionMaximalSubgroups, 
+"for an acting semigroup", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+
+  out:=[];
+  for d in DClasses(s) do 
+    if IsRegularClass(d) then 
+      AddSet(out, StructureDescription(GroupHClass(d)));
+    fi;
+  od;
+
+  return out;
+end);
+
+#
+
 InstallMethod(GroupOfUnits, 
 "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
@@ -610,6 +627,36 @@ function(s)
 
   SetIsSimpleSemigroup(I, true);
   return I; 
+end);
+
+# same method for inverse
+
+InstallMethod(MinimalDClass, "for an acting semigroup with generators", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local rank, o, pos, min, len, m, f, I, n, i;
+
+  if HasMinimalIdeal(s) then 
+    return GreensDClassOfElementNC(s, Representative(MinimalIdeal(s)));
+  fi;
+
+  rank:=LambdaRank(s);
+  o:=LambdaOrb(s);
+  
+  pos:=LookForInOrb(o, function(o, x) return rank(x)=MinActionRank(s); end, 2);
+
+  if pos=false then 
+    min:=rank(o[2]); pos:=2; len:=Length(o);
+    for i in [3..len] do 
+      m:=rank(o[i]);
+      if m<min then
+        pos:=i; min:=m;
+      fi;
+    od;
+  fi;
+
+  f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, pos));
+  return GreensDClassOfElementNC(s, f);
 end);
 
 #

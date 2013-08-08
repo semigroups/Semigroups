@@ -27,3 +27,6 @@ DeclareAttribute("SmallGeneratingSet", IsActingSemigroup);
 DeclareAttribute("StructureDescription", IsBrandtSemigroup);
 DeclareAttribute("StructureDescription", IsGroupAsSemigroup);
 DeclareAttribute("StructureDescriptionSchutzenbergerGroups", IsActingSemigroup);
+DeclareAttribute("StructureDescriptionMaximalSubgroups", IsActingSemigroup);
+DeclareAttribute("MaximalDClasses", IsSemigroup);
+DeclareAttribute("MinimalDClass", IsSemigroup);
