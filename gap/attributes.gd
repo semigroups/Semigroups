@@ -8,9 +8,11 @@
 #############################################################################
 ##
 
+DeclareOperation("IrredundantGeneratingSubset",
+[IsAssociativeElementWithActionCollection]);
+
 DeclareGlobalFunction("SemigroupActionHomomorphism");
 
-DeclareOperation("EmbeddingNC", [IsSemigroup, IsGreensHClass]);
 DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
 DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);

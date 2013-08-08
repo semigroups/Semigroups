@@ -13,6 +13,25 @@
 
 #
 
+InstallMethod(PrimitiveIdempotents, 
+"for an acting semigroup with inverse op and generators",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+function(s)
+  local r;
+  
+  if MultiplicativeZero(s)=fail then 
+    r:=Set(List(OrbSCC(LambdaOrb(s)), 
+     x-> LambdaRank(s)(LambdaOrb(s)[x[1]])))[1];
+  else
+    r:=Set(List(OrbSCC(LambdaOrb(s)), 
+     x-> LambdaRank(s)(LambdaOrb(s)[x[1]])))[2];
+  fi;
+
+  return Idempotents(s, r);
+end);
+
+#
+
 InstallMethod(IsJoinIrreducible, 
 "for an inverse semigroup of partial perms and a partial perm",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],

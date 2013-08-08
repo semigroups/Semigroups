@@ -34,10 +34,10 @@ function(s)
 
   o:=LambdaOrb(s);
   scc:=OrbSCC(o);
-  out:=EmptyPlist(Length(scc)-1);
+  out:=[];
 
   for m in [2..Length(scc)] do 
-    out[m-1]:=StructureDescription(LambdaOrbSchutzGp(o, m));
+    AddSet(out, StructureDescription(LambdaOrbSchutzGp(o, m)));
   od;
 
   return out;
@@ -597,25 +597,6 @@ function(s)
    rec(small:=true));
   SetIsGroupAsSemigroup(I, true);
   return I;
-end);
-
-#
-
-InstallMethod(PrimitiveIdempotents, 
-"for an acting semigroup with inverse op and generators",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
-function(s)
-  local r;
-  
-  if MultiplicativeZero(s)=fail then 
-    r:=Set(List(OrbSCC(LambdaOrb(s)), 
-     x-> LambdaRank(s)(LambdaOrb(s)[x[1]])))[1];
-  else
-    r:=Set(List(OrbSCC(LambdaOrb(s)), 
-     x-> LambdaRank(s)(LambdaOrb(s)[x[1]])))[2];
-  fi;
-
-  return Idempotents(s, r);
 end);
 
 #
