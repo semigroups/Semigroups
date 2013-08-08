@@ -67,6 +67,7 @@
     <#Include Label="MinimalDClass">
     <#Include Label="MaximalDClasses">
     <#Include Label="StructureDescriptionSchutzenbergerGroups">
+    <#Include Label="StructureDescriptionMaximalSubgroups">
   </Section>
 
   <Section><Heading>Further attributes of semigroups</Heading>
