@@ -301,10 +301,14 @@ function(arg)
     return;
   fi;
 
-  if IsTransformationCollection(arg[2]) or IsPartialPermCollection(arg[2]) then 
+  if IsTransformationCollection(arg[2]) 
+    or IsPartialPermCollection(arg[2]) 
+    or IsBipartitionCollection(arg[2]) then 
     trans:=[arg[2]];
   elif IsList(arg[2]) and IsBound(arg[2][1]) and
-  (IsTransformationCollection(arg[2][1]) or IsPartialPermCollection(arg[2][1]))
+  (IsTransformationCollection(arg[2][1]) 
+   or IsPartialPermCollection(arg[2][1])
+   or IsBipartitionCollection(arg[2][1]))
    then 
     trans:=arg[2];
   else
@@ -322,7 +326,9 @@ function(arg)
 
   for i in [1..Length(trans)] do 
     if IsTransformationSemigroup(trans[i]) 
-      or IsPartialPermSemigroup(trans[i]) then 
+      or IsPartialPermSemigroup(trans[i]) 
+      or IsBipartitionSemigroup(trans[i]) then 
+      
       gens[i]:=GeneratorsOfSemigroup(trans[i]);
       # we could use a smaller generating set (i.e. GeneratorsOfMonoid,
       # GeneratorsOfInverseSemigroup etc) but we have no way of knowing which
@@ -392,6 +398,21 @@ function(arg)
         append(str, deg, nrdigits);
         for i in [1..DegreeOfPartialPerm(f)] do 
           append(str, i^f, nrdigits);
+        od;
+      od;
+      Append(str, "\n");
+    od;
+  elif IsBipartitionCollection(gens[1]) then 
+    for s in gens do 
+      Append(str, "b");
+      for f in s do 
+        deg:=String(DegreeOfBipartition(f));
+        nrdigits:=Length(deg);
+        Append(str, String(nrdigits));
+        Append(str, deg);
+        f:=f!.blocks;
+        for i in [1..Length(blocks)] do 
+          append(str, f[i], nrdigits);
         od;
       od;
       Append(str, "\n");
