@@ -278,7 +278,10 @@ function(line)
     Apply(out, TransformationNC); 
   elif line[1]='p' then # partial perms
     Apply(out, DensePartialPermNC);
+  elif line[1]='b' then #bipartitions
+    Apply(out, BipartitionByIntRepNC);
   fi;
+
   return out;
 end);
 
@@ -288,7 +291,7 @@ end);
 
 InstallGlobalFunction(WriteSemigroups, 
 function(arg)
-  local trans, gens, append, gzip, str, deg, nrdigits, out, i, s, f;
+  local trans, gens, append, gzip, str, deg, nrdigits, blocks, out, i, s, f;
   
   if not (Length(arg)=3 or Length(arg)=2) then
     Error("usage: filename as string and a transformation, transformation ",
@@ -366,7 +369,7 @@ function(arg)
       str:=StringFile(arg[1]);
     fi;
   else
-    str:=StringFile(arg[1]);
+    str:="";
   fi;
   
   if str=fail then 
@@ -406,13 +409,13 @@ function(arg)
     for s in gens do 
       Append(str, "b");
       for f in s do 
-        deg:=String(DegreeOfBipartition(f));
+        deg:=String(2*DegreeOfBipartition(f));
         nrdigits:=Length(deg);
         Append(str, String(nrdigits));
         Append(str, deg);
-        f:=f!.blocks;
+        blocks:=f!.blocks;
         for i in [1..Length(blocks)] do 
-          append(str, f[i], nrdigits);
+          append(str, blocks[i], nrdigits);
         od;
       od;
       Append(str, "\n");
