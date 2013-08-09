@@ -194,23 +194,23 @@ gap> GeneratorsOfSemigroup(S);
     <Returns>The number of bytes written or <K>fail</K></Returns>
     <Description>
       This function provides a method for writing transformations, partial
-      permutations, and bipartitions to a file that uses a relatively small
+      permutations, and bipartitions to a file, that uses a relatively small
       amount of disk space.  The resulting file can be further compressed using
       <C>gzip</C>.<P/>
       
-      <A>list</A> should be a list of: transformations, partial
-      permutations, bipartitions, a semigroup of transformations, partial
-      permutations, or bipartitions, or a list of lists of transformations,
-      partial permutations, bipartitions, or semigroups of transformations,
-      partial permutations, or bipartitions; and <A>filename</A> should be
+      The argument <A>list</A> should be a list of elements, a semigroup, or a
+      list of lists of elements, or semigroups. The types of elements and
+      semigroups supported are: transformations, partial permutations, and
+      bipartitions. <P/>
+     
+      The argument <A>filename</A> should be
       a string containing the name of a file where the entries in
       <A>list</A> will be written. <P/>
 
       If  the  optional  third argument <A>append</A> is given and
-      equals  <K>true</K>,  then  the elements are appended to the
-      file <A>filename</A>.  Otherwise the previous content  of the file is
-      deleted. This function returns the number of bytes written or <K>fail</K>
-      if something went wrong. <P/> 
+      equals  <K>false</K>,  then the previous content of the file is deleted. 
+      Otherwise the elements are appended to the file.  This function returns
+      the number of bytes written or <K>fail</K> if something went wrong. <P/> 
 
       <C>WriteSemigroups</C> appends a line to the file <A>filename</A>
       for every entry in <A>list</A>. If any element of <A>list</A> is a
