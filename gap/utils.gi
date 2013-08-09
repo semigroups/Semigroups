@@ -368,11 +368,9 @@ function(arg)
     else 
       str:=StringFile(arg[1]);
     fi;
-  else
-    str:="";
   fi;
   
-  if str=fail then 
+  if str=fail or not IsBound(str) then 
     str:="";
   fi;
   
