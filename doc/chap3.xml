@@ -10,12 +10,10 @@
   
   <Section><Heading>Expressing semigroup elements as words in
     generators</Heading>
-    In some cases it is possible to express the elements of a transformation
+    It is possible to express the elements of a transformation or partial perm
     semigroup as a word in the generators. This section describes how to
     accomplish this in &Semigroups;. <P/>
 
-    Note that at present it is not possible to factorize elements in a
-    semigroup of partial permutations.
     <#Include Label="EvaluateWord">
     <#Include Label="Factorization">
   </Section>
