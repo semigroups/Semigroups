@@ -172,11 +172,14 @@ gap> GeneratorsOfSemigroup(S);
     <Func Name="ReadSemigroups" Arg="filename[, nr]"/>
     <Returns>A list of lists of semigroup elements</Returns>
     <Description>
-      If <A>filename</A> is a file created using <Ref Func="WriteSemigroups"/>,
-      then <C>ReadSemigroups</C> returns the contents of this file as a list of
-      lists of transformations, partial permutations, or bipartitions. If the
-      optional second argument <A>nr</A> is present, then <C>ReadSemigroups</C>
-      returns the elements stored in the <A>nr</A>th line of <A>filename</A>.
+      If <A>filename</A> is the name of a file created using 
+      <Ref Func="WriteSemigroups"/>, then <C>ReadSemigroups</C> returns the
+      contents of this file as a list of lists of transformations, partial
+      permutations, or bipartitions. <P/>
+      
+      If the optional second argument <A>nr</A> is present, then
+      <C>ReadSemigroups</C> returns the elements stored in the <A>nr</A>th line
+      of <A>filename</A>.
       <P/>
       
       Note that if the file <A>filename</A> is gzipped, then the message
@@ -191,7 +194,7 @@ gap> GeneratorsOfSemigroup(S);
 <#GAPDoc Label="WriteSemigroups">
   <ManSection> 
     <Func Name="WriteSemigroups" Arg="filename, list[, append]"/>
-    <Returns>The number of bytes written or <K>fail</K></Returns>
+    <Returns>The number of bytes written or <K>fail</K>.</Returns>
     <Description>
       This function provides a method for writing transformations, partial
       permutations, and bipartitions to a file, that uses a relatively small
