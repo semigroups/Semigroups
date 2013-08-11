@@ -206,9 +206,7 @@ function(f, s)
   ht:=data!.ht;
 
   # check if f is an existing R-rep
-  val:=HTValue(ht, f);
-
-  if val<>fail then 
+  if HTValue(ht, f)<>fail then 
     return true;
   fi;
 
