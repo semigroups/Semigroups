@@ -130,14 +130,20 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ),
    </Section>
     
   <Section Label="Examples"><Heading>Standard examples</Heading>
-    In this section we describe functions for creating several standard
-    examples of semigroups of transformations and partial permutations. 
-    
+    In this section, we describe the operations in &Semigroups;, which can be
+    used to creating semigroups belonging to several standard classes of
+    example. 
+    <#Include Label="JonesMonoid"> 
+    <#Include Label="BrauerMonoid"> 
+    <#Include Label="FactorisableDualSymmetricInverseSemigroup">
+    <#Include Label="DualSymmetricInverseSemigroup">
+    <#Include Label="PartitionMonoid"> 
+    <#Include Label="PartialTransformationSemigroup"> 
     <#Include Label="FullMatrixSemigroup">
     <#Include Label="IsFullMatrixSemigroup">
     <#Include Label="MunnSemigroup">
     <#Include Label="OPOIPOPI">
-    <#Include Label="SingularSemigroup">
+    <#Include Label="SingularTransformationSemigroup">
     <#Include Label="RegularBinaryRelationSemigroup">
   </Section>
 

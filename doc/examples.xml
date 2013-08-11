@@ -8,6 +8,74 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="JonesMonoid">
+   <ManSection>
+    <Oper Name="JonesMonoid" Arg="n"/>
+    <Oper Name="TemperleyLiebMonoid" Arg="n"/>
+    <Returns>A bipartition monoid.</Returns>
+    <Description>
+      <Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="BrauerMonoid">
+   <ManSection>
+    <Oper Name="BrauerMonoid" Arg="n"/>
+    <Returns>A bipartition monoid.</Returns>
+    <Description>
+      <Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="FactorisableDualSymmetricInverseSemigroup">
+   <ManSection>
+    <Oper Name="FactorisableDualSymmetricInverseSemigroup" Arg="n"/>
+    <Returns>An inverse bipartition monoid.</Returns>
+    <Description>
+      <Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DualSymmetricInverseSemigroup">
+   <ManSection>
+    <Oper Name="DualSymmetricInverseSemigroup" Arg="n"/>
+    <Oper Name="DualSymmetricInverseMonoid" Arg="n"/>
+    <Returns>An inverse bipartition monoid.</Returns>
+    <Description>
+      <Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="PartitionMonoid">
+   <ManSection>
+    <Oper Name="PartitionMonoid" Arg="n"/>
+    <Returns>A bipartition monoid.</Returns>
+    <Description>
+      <Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="PartialTransformationSemigroup">
+   <ManSection>
+    <Oper Name="PartialTransformationSemigroup" Arg="n"/>
+    <Returns>A transformation monoid.</Returns>
+    <Description>
+      <Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="FullMatrixSemigroup">
    <ManSection>
     <Oper Name="FullMatrixSemigroup" Arg="d, q"/>
@@ -196,9 +264,9 @@ true</Example>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="SingularSemigroup">
+<#GAPDoc Label="SingularTransformationSemigroup">
     <ManSection>
-      <Oper Name="SingularSemigroup" Arg="n"/>
+      <Oper Name="SingularTransformationSemigroup" Arg="n"/>
       <Returns>The semigroup of non-invertible transformations.</Returns>
       <Description>
         If <A>n</A> is a positive integer, then

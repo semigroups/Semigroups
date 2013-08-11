@@ -415,7 +415,7 @@ end);
 
 #
 
-InstallMethod(SingularSemigroup, "for a positive integer",
+InstallMethod(SingularTransformationSemigroup, "for a positive integer",
 [IsPosInt],
 function(n)
   local x, S, T;
