@@ -29,6 +29,8 @@
     possible to calculate the strongly connected components of an orbit of a
     semigroup acting on a set until the entire orbit has been found.
 
+    <#Include Label="EnumeratePosition">
+    <#Include Label="LookForInOrb">
     <#Include Label="OrbSCC">
     <#Include Label="OrbSCCLookup">
     <#Include Label="OrbSCCTruthTable">
