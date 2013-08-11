@@ -1,0 +1,25 @@
+#############################################################################
+##
+#W  semibipart.xml
+#Y  Copyright (C) 2011-13                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="IsBipartitionSemigroup">
+  <ManSection>
+    <Prop Name="IsBipartitionSemigroup" Arg="S"/>
+    <Description>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DegreeOfBipartitionSemigroup">
+  <ManSection>
+    <Attr Name="DegreeOfBipartitionSemigroup" Arg="S"/>
+    <Description>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

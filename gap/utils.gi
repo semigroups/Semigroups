@@ -84,7 +84,8 @@ function()
    InstallationPath, "/doc"), "main.xml", 
    ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
    "semigroups.xml", "attributes-inverse.xml", "bipartition.xml", "slp.xml",
-   "blocks.xml", "freeinverse.xml", "attributes.xml", "../PackageInfo.g"],
+   "blocks.xml", "freeinverse.xml", "attributes.xml", "semibipart.xml",
+   "../PackageInfo.g"],
    "semigroups", "MathJax", "../../..");;
   return;
 end);
@@ -174,7 +175,7 @@ InstallGlobalFunction(SemigroupsManualExamples,
 function()
 return 
   ExtractExamples(DirectoriesPackageLibrary("semigroups","doc"), 
-  "main.xml",  [ "utils.xml", "examples.xml", "slp.xml", 
+  "main.xml",  [ "utils.xml", "examples.xml", "slp.xml", "semibipart.xml",
   "greens.xml", "orbits.xml", "properties.xml", "blocks.xml",
   "semigroups.xml",  "attributes-inverse.xml", "bipartition.xml",
   "freeinverse.xml", "attributes.xml", "../PackageInfo.g" ], "Single" );
