@@ -44,8 +44,6 @@ DeclareOperation("ClosureSemigroup",
 DeclareOperation("ClosureSemigroup", [IsActingSemigroup, IsList and IsEmpty]); #JDM remove me!
 DeclareGlobalFunction("ClosureSemigroupNC");
 
-DeclareAttribute("Generators", IsSemigroup);
-
 DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBinaryRelationMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomMatrixSemigroup", [IsRing, IsPosInt, IsPosInt]);
@@ -58,8 +56,6 @@ DeclareSynonym("RandomPartialPermSemigroup", RandomBlockGroup);
 DeclareOperation("RandomBipartitionSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBipartitionMonoid", [IsPosInt, IsPosInt]);
 
-DeclareGlobalFunction("RegularSemigroup");
-
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
 DeclareOperation("SubsemigroupByProperty", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsFunction, IsPosInt]);
@@ -69,6 +65,9 @@ DeclareOperation("InverseSubsemigroupByProperty",
 DeclareOperation("InverseSubsemigroupByProperty", 
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup, IsFunction,       IsPosInt]);
 
+# undoc
+
 DeclareProperty("IsBinaryRelationSemigroup", IsSemigroup);
+DeclareGlobalFunction("RegularSemigroup");
 
 #EOF

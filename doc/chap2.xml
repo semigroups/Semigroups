@@ -14,12 +14,16 @@
  <Section><Heading>Random semigroups</Heading> 
     <#Include Label="RandomInverseMonoid"> 
     <#Include Label="RandomTransformationMonoid"> 
+    <#Include Label="RandomPartialPermMonoid"> 
+    <#Include Label="RandomBinaryRelationMonoid"> 
+    <#Include Label="RandomBipartitionMonoid"> 
   </Section> 
 
   <Section><Heading>New semigroups from old</Heading> 
     <#Include Label="ClosureInverseSemigroup">
     <#Include Label="ClosureSemigroup">
     <#Include Label="SubsemigroupByProperty">
+    <#Include Label="InverseSubsemigroupByProperty">
   </Section> 
   
   <Section Label="opts"><Heading>Options when creating semigroups</Heading>
