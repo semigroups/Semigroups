@@ -66,6 +66,13 @@
     <#Include Label="MaximalDClasses">
     <#Include Label="StructureDescriptionSchutzenbergerGroups">
     <#Include Label="StructureDescriptionMaximalSubgroups">
+    <#Include Label="MultiplicativeNeutralElement">
+    <#Include Label="IsGreensClassNC">
+    <#Include Label="IsTransformationSemigroupGreensClass">
+    <#Include Label="IsBipartitionSemigroupGreensClass">
+    <#Include Label="IsPartialPermSemigroupGreensClass">
+    <#Include Label="StructureDescription">
+
   </Section>
 
   <Section><Heading>Further attributes of semigroups</Heading>

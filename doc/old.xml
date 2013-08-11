@@ -1,4 +1,21 @@
 
+<#GAPDoc Label="UnderlyingSemigroupOfIterator">
+  <ManSection>
+    <Func Name="UnderlyingSemigroupOfIterator" Arg="iter"/>
+    <Returns>
+      The underlying semigroup of an iterator <A>iter</A>.
+    </Returns>
+    <Description>
+      If <A>iter</A> satisfies <Ref Prop="IsIterator" BookName="ref"/> and
+      <C>IsSemigroupsPkgIterator</C>, then <C>UnderlyingSemigroupOfIterator</C> 
+      returns <A>iter!.s</A>, which is set during the creation of the 
+      iterator.  
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+
+
 <#GAPDoc Label="RandomIdempotent">
   <ManSection><Heading>RandomIdempotent</Heading>
     <Oper Name="RandomIdempotent" Arg="img, m"/>

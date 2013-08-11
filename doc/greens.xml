@@ -8,6 +8,60 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="IsGreensClassNC">
+  <ManSection>
+    <Meth Name="IsGreensClassNC" Arg="class"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+    </Description> 
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="MultiplicativeNeutralElement">
+  <ManSection>
+    <Meth Name="MultiplicativeNeutralElement" Arg="H" Label="for an H-class"/>
+    <Returns>A semigroup element or <K>fail</K>.</Returns>
+    <Description>
+    </Description> 
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsPartialPermSemigroupGreensClass">
+  <ManSection>
+    <Meth Name="IsPartialPermSemigroupGreensClass" Arg="class"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+    </Description> 
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsBipartitionSemigroupGreensClass">
+  <ManSection>
+    <Meth Name="IsBipartitionSemigroupGreensClass" Arg="class"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+    </Description> 
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsTransformationSemigroupGreensClass">
+  <ManSection>
+    <Meth Name="IsTransformationSemigroupGreensClass" Arg="class"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+    </Description> 
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="StructureDescription">
+  <ManSection>
+    <Meth Name="StructureDescription" Arg="class" Label="for a group H-class"/>
+    <Returns>A string.</Returns>
+    <Description>
+    </Description> 
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="Random">
   <ManSection>
     <Meth Name="Random" Arg="S" Label="for a semigroup"/>
@@ -1021,21 +1075,6 @@ gap> List(DClasses(S), SchutzenbergerGroup);
   Group(()), Group([ (2,5)(3,7) ]), Group([ (1,7,5,6,9,3) ]), 
   Group(()), Group(()), Group(()), Group(()), Group(()) ]</Example>
   </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="UnderlyingSemigroupOfIterator">
-  <ManSection>
-    <Func Name="UnderlyingSemigroupOfIterator" Arg="iter"/>
-    <Returns>
-      The underlying semigroup of an iterator <A>iter</A>.
-    </Returns>
-    <Description>
-      If <A>iter</A> satisfies <Ref Prop="IsIterator" BookName="ref"/> and
-      <C>IsSemigroupsPkgIterator</C>, then <C>UnderlyingSemigroupOfIterator</C> 
-      returns <A>iter!.s</A>, which is set during the creation of the 
-      iterator.  
-    </Description>
   </ManSection>
 <#/GAPDoc>
 

@@ -449,7 +449,7 @@ end);
 #this method is unnecesary if we write a method for RhoOrb of a inverse op
 #D-classJDM
 
-#HERE!!
+#HERE - JDM - StabiliserAction implementation!!
 
 InstallMethod(Enumerator, "for a D-class of an inverse acting semigroup",
 [IsGreensDClass and IsInverseOpClass and IsActingSemigroupGreensClass],

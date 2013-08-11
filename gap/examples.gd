@@ -25,12 +25,12 @@ DeclareOperation("PartialTransformationSemigroup", [IsPosInt]);
 DeclareOperation("PartitionMonoid", [IsPosInt]);
 DeclareOperation("POI", [IsPosInt]);
 DeclareOperation("POPI", [IsPosInt]);
-DeclareOperation("PowerSemigroup", [IsGroup]);
 DeclareOperation("RegularBinaryRelationSemigroup", [IsPosInt]);
 DeclareOperation("SingularTransformationSemigroup", [IsPosInt]);
 DeclareSynonym("SingularTransformationMonoid",
 SingularTransformationSemigroup);
 
 #not implemented or documented
+DeclareOperation("PowerSemigroup", [IsGroup]);
 DeclareOperation("FullBinaryRelationSemigroup", [IsPosInt]);
 DeclareOperation("MonoidOfMultiplicationByN", [IsPosInt]);
