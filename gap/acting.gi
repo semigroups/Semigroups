@@ -119,12 +119,27 @@ end);
 
 #
 
-InstallMethod(LambdaRhoHT, "for an acting semi",
+InstallMethod(LambdaRhoHT, "for an acting semigroup",
 [IsActingSemigroup],
-function(s) 
-  return HTCreate(Concatenation([1], RhoFunc(s)(Representative(s))),
-  rec(forflatplainlists:=true,
-     treehashsize:=s!.opts.hashlen.M));
+function(s)
+  local val, ht;
+  
+  val:=RhoFunc(s)(Representative(s));
+  ht:=HTCreate([1, val], rec(treehashsize:=s!.opts.hashlen.M));
+
+  if IsBound(RhoOrbOpts(s).forflatplainlists) 
+   and RhoOrbOpts(s).forflatplainlists then 
+    ht!.rhohf:=ORB_HashFunctionForPlainFlatList;
+  else
+    ht!.rhohf:=ChooseHashFunction(val, ht!.len).func;
+  fi;
+  
+  ht!.hf:=function( x, data )
+    return (x[1]+ht!.rhohf(x[2], data)) mod data + 1;
+  end;
+  ht!.hfd:=ht!.len;
+  
+  return ht;
 end);
 
 #
@@ -212,8 +227,7 @@ function(f, s)
   scc:=OrbSCC(o);
 
   # check if lambdarho is already known
-  lambdarho:=[m];
-  Append(lambdarho, RhoFunc(s)(f));
+  lambdarho:=[m, RhoFunc(s)(f)];
   val:=HTValue(LambdaRhoHT(s), lambdarho);
 
   lookfunc:=function(data, x) 
@@ -452,8 +466,8 @@ function(data, limit, lookfunc)
       else
         y:=x;
       fi;
-      rhoy:=[m];
-      Append(rhoy, rho(y));;
+      rhoy:=[m, rho(y)];
+      #Append(rhoy, rho(y));;
       val:=htvalue(lambdarhoht, rhoy);
       # this is what we keep if it is new
       # x:=[s, m, o, y, false, nr+1];

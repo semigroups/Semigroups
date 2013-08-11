@@ -1842,7 +1842,7 @@ function(s)
         f:=f*x;
         l:=Position(o, lambdafunc(f));
         m:=lookup[l];
-        val:=HTValue(lambdarhoht, Concatenation([m], rhofunc(f)));
+        val:=HTValue(lambdarhoht, [m,rhofunc(f)]);
         if not IsBound(schutz[m]) then 
           LambdaOrbSchutzGp(o, m);
         fi;
