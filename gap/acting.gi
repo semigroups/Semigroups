@@ -231,7 +231,7 @@ function(f, s)
   val:=HTValue(LambdaRhoHT(s), lambdarho);
 
   lookfunc:=function(data, x) 
-    return Concatenation([x[2]], RhoFunc(s)(x[4]))=lambdarho;
+    return [x[2], RhoFunc(s)(x[4])]=lambdarho;
   end;
   
   # if lambdarho is not already known, then look for it
