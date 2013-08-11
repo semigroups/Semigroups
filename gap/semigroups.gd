@@ -44,6 +44,8 @@ DeclareOperation("ClosureSemigroup",
 DeclareOperation("ClosureSemigroup", [IsActingSemigroup, IsList and IsEmpty]); #JDM remove me!
 DeclareGlobalFunction("ClosureSemigroupNC");
 
+DeclareAttribute("Generators", IsSemigroup);
+
 DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomBinaryRelationMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomMatrixSemigroup", [IsRing, IsPosInt, IsPosInt]);
