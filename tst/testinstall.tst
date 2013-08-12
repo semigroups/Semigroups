@@ -37,7 +37,7 @@ gap> IsSimpleSemigroup(s);
 false
 
 #
-gap> s:=SingularSemigroup(6);
+gap> s:=SingularTransformationSemigroup(6);
 <regular transformation semigroup on 6 pts with 30 generators>
 gap> Size(s);
 45936
