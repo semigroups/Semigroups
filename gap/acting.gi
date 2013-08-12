@@ -36,7 +36,7 @@ end);
 
 #
 
-InstallMethod(GradedLambdaHT, "for an acting semi",
+InstallMethod(GradedLambdaHT, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
   local record;
@@ -48,7 +48,7 @@ end);
 
 #
 
-InstallMethod(GradedRhoHT, "for an acting semi",
+InstallMethod(GradedRhoHT, "for an acting semigroup",
 [IsActingSemigroup],
 function(s)
   local record;
@@ -144,7 +144,8 @@ end);
 
 #
 
-InstallMethod(\in, "for lambda value of acting semi elt and graded lambda orbs",
+InstallMethod(\in, 
+"for lambda value of acting semigroup element and graded lambda orbs",
 [IsObject, IsGradedLambdaOrbs],
 function(lamf, o)
   return not HTValue(GradedLambdaHT(o!.parent), lamf)=fail;
@@ -152,7 +153,8 @@ end);
 
 #
 
-InstallMethod(\in, "for rho value of acting semi elt and graded rho orbs",
+InstallMethod(\in, 
+"for rho value of acting semigroup element and graded rho orbs",
 [IsObject, IsGradedRhoOrbs],
 function(rho, o)
   return not HTValue(GradedRhoHT(o!.parent), rho)=fail;
@@ -160,7 +162,7 @@ end);
 
 # expand?
 
-InstallMethod(\in, "for acting semi elt and semigroup data",
+InstallMethod(\in, "for acting semigroup element and semigroup data",
 [IsAssociativeElementWithAction, IsSemigroupData],
 function(f, data)
   return not Position(data, f)=fail;
@@ -168,7 +170,7 @@ end);
 
 #
 
-InstallMethod(\in, "for an acting elt and acting semigroup",
+InstallMethod(\in, "for an acting element and acting semigroup",
 [IsAssociativeElementWithAction, IsActingSemigroup], 
 function(f, s)
   local data, len, ht, val, lambda, o, l, lookfunc, m, scc, lambdarho, schutz, g, reps, repslens, lambdaperm, n, max, found;
@@ -347,7 +349,7 @@ end);
 
 #
 
-InstallMethod(ELM_LIST, "for acting semigp data, and pos int",
+InstallMethod(ELM_LIST, "for acting semigroup data, and pos int",
 [IsSemigroupData, IsPosInt], 
 function(o, nr)
   return o!.orbit[nr];
@@ -363,7 +365,7 @@ end);
 
 #
 
-InstallMethod(Enumerate, "for an acting semi data and limit", 
+InstallMethod(Enumerate, "for an acting semigroup data and limit", 
 [IsSemigroupData, IsCyclotomic],
 function(data, limit)
   return Enumerate(data, limit, ReturnFalse);
@@ -372,7 +374,7 @@ end);
 #
 
 InstallMethod(Enumerate, 
-"for an acting semi data, limit, and func",
+"for an acting semigroup data, limit, and func",
 [IsSemigroupData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
   local looking, ht, orb, nr, i, graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact, lambdaperm, rho, lambdarhoht, o, oht, scc, lookup, htadd, htvalue, x, lamx, pos, m, y, rhoy, val, schutz, tmp, old, j, n;
@@ -1077,7 +1079,7 @@ end);
 # returns the index of the representative of the R-class containing x in the
 # parent of data. 
 
-InstallMethod(Position, "for acting semigroup data and acting elt",
+InstallMethod(Position, "for acting semigroup data and acting element",
 [IsSemigroupData, IsObject, IsZeroCyc], 100,
 function(data, x, n)
   local val, s, o, l, m, scc, schutz, repslookup, y, reps, repslens, lambdaperm;
