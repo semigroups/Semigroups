@@ -400,8 +400,7 @@ function(data, limit, lookfunc)
   i:=data!.pos;       # points in orb in position at most i have descendants
   graph:=data!.graph; # orbit graph of orbit of R-classes under left mult 
   reps:=data!.reps;   # reps grouped by equal lambda and rho value
-                      # HTValue(lambdarhoht, Concatenation(lambda(x),
-                      # rho(x))
+                      # HTValue(lambdarhoht, [lambda(x), rho(x)]
   
   repslookup:=data!.repslookup; # Position(orb, reps[i][j])=repslookup[i][j]
                                 # = HTValue(ht, reps[i][j])
@@ -1101,7 +1100,7 @@ function(data, x, n)
   m:=OrbSCCLookup(o)[l];
   scc:=OrbSCC(o);
 
-  val:=HTValue(LambdaRhoHT(s), Concatenation([m], RhoFunc(s)(x)));
+  val:=HTValue(LambdaRhoHT(s), [m, RhoFunc(s)(x)]);
   if val=fail then 
     return fail;
   fi;

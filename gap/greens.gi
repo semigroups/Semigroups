@@ -1054,7 +1054,6 @@ function(d)
 
   for i in scc do 
     if tester(o[i], rho) then 
-      Error();
       if not HasIsRegularClass(d) then 
         SetIsRegularClass(d, true);
       fi;

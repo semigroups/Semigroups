@@ -688,8 +688,7 @@ function(s, coll, opts)
        *LambdaOrbMult(o, m, pos)[2];
     fi;
    
-    rhoy:=[m];
-    Append(rhoy, rho(y));
+    rhoy:=[m, rho(y)];
     val:=htvalue(lambdarhoht, rhoy);
 
     if val=fail or rank>max_rank then #new rho value, and hence new R-rep

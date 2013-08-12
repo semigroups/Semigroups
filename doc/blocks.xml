@@ -49,8 +49,10 @@ gap> blocks:=BlocksNC([[ -1, -2, -3, -4 ], [ -5 ], [ 6 ]]);
 &lt;blocks: [ -1, -2, -3, -4 ], [ -5 ], [ 6 ]>
 gap> NrBlocks(blocks);
 3
-gap> f:=Bipartition( [ [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], [ -3 ] ] );
-&lt;bipartition: [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], [ -3 ]>
+gap> f:=Bipartition( [ [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], 
+> [ -3 ] ] );
+&lt;bipartition: [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], 
+[ -3 ]>
 gap> NrBlocks(f);
 4</Example>
     </Description>
@@ -126,12 +128,12 @@ gap> PermRightBlocks(blocks, f*g);
     <Example>
 gap> f:=Bipartition( [ [ 1, 4, 7, 8, -4 ], [ 2, 3, 5, -2, -7 ], 
 > [ 6, -1 ], [ -3 ], [ -5, -6, -8 ] ] );;
-gap> blocks:=BlocksNC([[ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]]);
+gap> blocks:=BlocksNC([[ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]]);;
 gap> RankOfBlocks(OnLeftBlocks(blocks, f));
 1
 gap> g:=InverseLeftBlocks(blocks, f);
-&lt;bipartition: [ 1, 2, 6 ], [ 3, 4, 5, -1, -2, -3, -4, -5, -6, -7, -8 ], 
-[ 7, 8 ]>
+&lt;bipartition: [ 1, 2, 6 ], [ 3, 4, 5, -1, -2, -3, -4, -5, -6, -7, -8 
+ ], [ 7, 8 ]>
 gap> OnLeftBlocks(blocks, g*f);
 &lt;blocks: [ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]>
 gap> PermLeftBlocks(blocks, g*f);          
@@ -223,8 +225,7 @@ gap> g:=Bipartition( [ [ 1, 3, -4, -5 ], [ 2, 4, 5, 8 ], [ 6, -1, -3 ],
 gap> LeftBlocks(f*g);
 &lt;blocks: [ 1, 4, 5, 7 ], [ -2, -3, -6, -8 ]>
 gap> OnLeftBlocks(LeftBlocks(g), f);
-&lt;blocks: [ 1, 4, 5, 7 ], [ -2, -3, -6, -8 ]>
-      </Example>
+&lt;blocks: [ 1, 4, 5, 7 ], [ -2, -3, -6, -8 ]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -239,7 +240,7 @@ gap> OnLeftBlocks(LeftBlocks(g), f);
       <C>[1..n]</C> corresponding to <A>blocks</A> as a
       sorted list of duplicate-free lists. 
       <Example>
-gap> blocks:=BlocksNC([ 1, 6 ], [ 2, 3, 7 ], [ 4, 5 ], [ -8 ]);;
+gap> blocks:=BlocksNC([[ 1, 6 ], [ 2, 3, 7 ], [ 4, 5 ], [ -8 ] ]);;
 gap> ExtRepOfBlocks(blocks);
 [ [ 1, 6 ], [ 2, 3, 7 ], [ 4, 5 ], [ -8 ] ]</Example>
     </Description>
@@ -260,7 +261,7 @@ gap> ExtRepOfBlocks(blocks);
       context. 
       <Example>
 gap> blocks:=BlocksNC([ [ -1, -2, -4, -6 ], [ 3, 10, 12 ], [ 5, 7 ], 
-[ 8 ], [ 9 ], [ -11 ] ]);;
+> [ 8 ], [ 9 ], [ -11 ] ]);;
 gap> RankOfBlocks(blocks);
 4</Example>
     </Description>
@@ -277,7 +278,7 @@ gap> RankOfBlocks(blocks);
       <C>[1..n]</C> after taking the absolute value of every element. 
       <Example>
 gap> blocks:=BlocksNC([ [ -1, -11 ], [ 2 ], [ 3, 5, 6, 7 ], [ 4, 8 ], 
-[ 9, 10 ], [ 12 ] ]);;
+> [ 9, 10 ], [ 12 ] ]);;
 gap> DegreeOfBlocks(blocks);
 12</Example>
     </Description>
@@ -294,7 +295,7 @@ gap> DegreeOfBlocks(blocks);
       <A>f</A> intersected with <C>[1..n]</C>. 
       <Example>
 gap> f:=Bipartition( [ [ 1, 2, 3, 4, 5, 6, 8 ], [ 7, -2, -3 ], 
-[ -1, -4, -7, -8 ], [ -5, -6 ] ] );;
+> [ -1, -4, -7, -8 ], [ -5, -6 ] ] );;
 gap> NrLeftBlocks(f);
 2
 gap> LeftBlocks(f);

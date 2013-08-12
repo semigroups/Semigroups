@@ -122,8 +122,7 @@ function(I)
     else
       y:=x;
     fi;
-    rhoy:=[m];
-    Append(rhoy, rho(y));;
+    rhoy:=[m, rho(y)];
     val:=htvalue(lambdarhoht, rhoy);
     if val=fail then  #new rho value, and hence new R-rep
       lenreps:=lenreps+1;
