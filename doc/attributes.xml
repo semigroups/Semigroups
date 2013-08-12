@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="StructureDescriptionMaximalSubgroups">
   <ManSection>
-    <Attr Name="StructureDescriptionMaximalGroups" Arg="S"/>
+    <Attr Name="StructureDescriptionMaximalSubgroups" Arg="S"/>
     <Returns>Distinct structure descriptions of the maximal subgroups 
       of a semigroup.</Returns>
     <Description>

@@ -524,7 +524,7 @@ function(lambda, rho)
   
   for i in [1..n] do 
     out[i]:=rho[i];
-    if lambda[n+1+lambda[i]]=1 then 
+    if lambda[n+lambda[i]]=1 then 
       out[i+n]:=tab1[fuseit(lambda[i])];
     else
       if not IsBound(tab2[lambda[i]]) then 
