@@ -44,9 +44,9 @@ gap> StructureDescriptionMaximalSubgroups(S);
       <A>S</A>.
       <Example>
 gap> S:=Monoid( 
-> Bipartition( [ [ 1, 2, 5, -1, -2 ], [ 3, 4, -3, -5 ], [ -4 ] ] ), 
-> Bipartition( [ [ 1, 2, -2 ], [ 3, -1 ], [ 4 ], [ 5 ], [ -3, -4 ], [ -5 ] ] ),
-> Bipartition( [ [ 1 ], [ 2, 3, -5 ], [ 4, -3 ], [ 5, -2 ], [ -1, -4 ] ] ) );
+> Bipartition([[ 1, 2, 5, -1, -2 ], [ 3, 4, -3, -5 ], [ -4 ]]), 
+> Bipartition([[ 1, 2, -2 ], [ 3, -1 ], [ 4 ], [ 5 ], [ -3, -4 ], [ -5 ]]),
+> Bipartition([[ 1 ], [ 2, 3, -5 ], [ 4, -3 ], [ 5, -2 ], [ -1, -4 ]]));
 &lt;bipartition monoid on 5 pts with 3 generators>
 gap> StructureDescriptionSchutzenbergerGroups(S);
 [ "1", "C2" ]</Example>
@@ -59,6 +59,18 @@ gap> StructureDescriptionSchutzenbergerGroups(S);
     <Attr Name="MinimalDClass" Arg="S"/>
     <Returns>The minimal &D;-class of a semigroup.</Returns>
     <Description>
+      The minimal ideal of a semigroup is the least ideal with respect to
+      containment. <C>MinimalDClass</C> returns the &D;-class corresponding to
+      the minimal ideal of the semigroup <A>S</A>. Equivalently,
+      <C>MinimalDClass</C> returns the minimal &D;-class with respect to the
+      partial order of &D;-classes.<P/>
+
+      Note that <C>MinimalDClass</C> is significantly faster than finding the
+      &D;-class with minimum rank representative. 
+
+      See also <Ref Attr="PartialOrderOfDClasses"/>,
+      <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and 
+      <Ref Attr="MinimalIdeal"/>.
       <Example>
 </Example>
     </Description>
@@ -70,8 +82,26 @@ gap> StructureDescriptionSchutzenbergerGroups(S);
     <Attr Name="MaximalDClasses" Arg="S"/>
     <Returns>The maximal &D;-classes of a semigroup.</Returns>
     <Description>
+      <C>MaximalDClasses</C> returns the maximal &D;-classes with respect to
+      the partial order of &D;-classes. <P/>
+      
+      See also <Ref Attr="PartialOrderOfDClasses"/>,
+      <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and
+      <Ref Attr="MinimalDClass"/>.
       <Example>
-</Example>
+gap> MaximalDClasses(BrauerMonoid(8));
+[ {Bipartition( [ [ 1, -2 ], [ 2, -3 ], [ 3, -4 ], [ 4, -5 ], 
+      [ 5, -6 ], [ 6, -7 ], [ 7, -8 ], [ 8, -1 ] ] )} ]
+gap> MaximalDClasses(FullTransformationMonoid(5));
+[ {IdentityTransformation()} ]
+gap> S:=Semigroup( 
+> PartialPerm( [ 1, 2, 3, 4, 5, 6, 7 ], [ 3, 8, 1, 4, 5, 6, 7 ] ), 
+> PartialPerm( [ 1, 2, 3, 6, 8 ], [ 2, 6, 7, 1, 5 ] ), 
+> PartialPerm( [ 1, 2, 3, 4, 6, 8 ], [ 4, 3, 2, 7, 6, 5 ] ), 
+> PartialPerm( [ 1, 2, 4, 5, 6, 7, 8 ], [ 7, 1, 4, 2, 5, 6, 3 ] ) );;
+gap> MaximalDClasses(S);
+[ {PartialPerm( [ 1, 2, 3, 4, 5, 6, 7 ], [ 3, 8, 1, 4, 5, 6, 7 ] )}, 
+  {PartialPerm( [ 1, 2, 4, 5, 6, 7, 8 ], [ 7, 1, 4, 2, 5, 6, 3 ] )} ]</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -179,9 +209,9 @@ gap> MultiplicativeZero(S);
     &D;-class with minimum rank representative (which is also
     the minimal ideal). 
 
-    See also <Ref Attr="PartialOrderOfDClasses"/> and 
-    <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>. 
-    
+    See also <Ref Attr="PartialOrderOfDClasses"/>,
+    <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and 
+    <Ref Attr="MinimalDClass"/>.
     <Example>
 gap> S:=Semigroup( Transformation( [ 3, 4, 1, 3, 6, 3, 4, 6, 10, 1 ] ), 
 > Transformation( [ 8, 2, 3, 8, 4, 1, 3, 4, 9, 7 ] ));;

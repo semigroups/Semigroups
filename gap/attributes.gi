@@ -624,8 +624,9 @@ function(s)
   fi;
 
   f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, pos));
-  I:=Semigroup(Elements(GreensDClassOfElementNC(s, f)), rec(small:=true));
-
+  d:=GreensDClassOfElementNC(s, f);
+  I:=Semigroup(Elements(d), rec(small:=true));
+  SetMinimalDClass(s, d);
   SetIsSimpleSemigroup(I, true);
   return I; 
 end);
@@ -636,10 +637,6 @@ InstallMethod(MinimalDClass, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local rank, o, pos, min, len, m, f, I, n, i;
-
-  if HasMinimalIdeal(s) then 
-    return GreensDClassOfElementNC(s, Representative(MinimalIdeal(s)));
-  fi;
 
   rank:=LambdaRank(s);
   o:=LambdaOrb(s);
