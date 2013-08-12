@@ -59,5 +59,5 @@ InstallTrueMethod(IsZeroGroup, IsZeroRectangularBand and IsInverseSemigroup);
 InstallTrueMethod(IsRegularSemigroup, IsStarRegularSemigroup);
 InstallTrueMethod(IsStarRegularSemigroup, IsInverseSemigroup);
 InstallTrueMethod(IsInverseSemigroup, IsGroup);
-
+InstallTrueMethod(IsInverseSemigroup, IsBlockGroup and IsRegularSemigroup);
 #EOF
