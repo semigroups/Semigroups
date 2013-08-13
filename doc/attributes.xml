@@ -294,7 +294,21 @@ gap> S:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
 gap> IsomorphismPermGroup(S);
 MappingByFunction( &lt;inverse partial perm semigroup on 4 pts
  with 2 generators>, Group([ (1,2,3,4), (1,
-2) ]), &lt;Attribute "AsPermutation">, function( x ) ... end )</Example>
+2) ]), &lt;Attribute "AsPermutation">, function( x ) ... end )
+gap> G:=GroupOfUnits(PartitionMonoid(4));
+&lt;bipartition group on 4 pts with 2 generators>
+gap> StructureDescription(G);
+"S4"
+gap> iso:=IsomorphismPermGroup(G);  
+MappingByFunction( &lt;bipartition group on 4 pts with 2 generators>
+ , S4, &lt;Attribute "AsPermutation">, function( x ) ... end )
+gap> RespectsMultiplication(iso);
+true
+gap> inv:=InverseGeneralMapping(iso);;
+gap> ForAll(G, x-> (x^iso)^inv=x);
+true
+gap> ForAll(G, x-> ForAll(G, y-> (x*y)^iso=x^iso*y^iso));
+true</Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
