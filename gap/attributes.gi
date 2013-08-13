@@ -578,13 +578,12 @@ function(s)
   else
     pos:=LookForInOrb(o, function(o, x) return rank(x)=min; end, 2);
   fi;
-  if pos<>fail then
+
+  if pos<>fail and pos<>false then
     f:=EvaluateWord(GeneratorsOfSemigroup(s), 
      TraceSchreierTreeForward(o, pos));
-  fi;
-
-  # lambda orb is closed, find an element with minimum rank
-  if not IsBound(f) then 
+  else
+    # lambda orb is closed, find an element with minimum rank
     min_found:=rank(o[2]); pos:=2; i:=1; 
     
     while min_found>min and i<Length(o) do 
