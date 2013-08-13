@@ -40,6 +40,7 @@ DeclareOperation("AsBipartition", [IsBipartition, IsPosInt]);
 DeclareOperation("AsBipartition", [IsBipartition]);
 
 DeclareAttribute("AsTransformationNC", IsBipartition);
+DeclareAttribute("AsPermutationNC", IsBipartition);
 
 DeclareProperty("IsTransBipartition", IsBipartition);
 DeclareProperty("IsPermBipartition", IsBipartition);

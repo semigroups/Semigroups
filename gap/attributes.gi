@@ -160,6 +160,31 @@ end);
 
 #
 
+InstallMethod(GroupOfUnits, 
+"for a bipartition semigroup with generators",
+[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local r, g, deg, u;
+
+  if MultiplicativeNeutralElement(s)=fail then
+    return fail;
+  fi;
+
+  r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
+  g:=SchutzenbergerGroup(r);
+  deg:=DegreeOfBipartitionSemigroup(s);
+  u:=Monoid(List(GeneratorsOfGroup(g), x-> AsBipartition(x, deg)));
+  
+  SetIsomorphismPermGroup(u, MappingByFunction(u, g, AsPermutation, 
+   x-> AsBipartition(x, deg)));
+   
+  SetIsGroupAsSemigroup(u, true);
+  UseIsomorphismRelation(u, g);
+
+  return u;
+end);
+#
+
 InstallMethod(IdempotentGeneratedSubsemigroup, 
 "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],

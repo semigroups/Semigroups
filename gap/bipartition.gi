@@ -204,6 +204,41 @@ end);
 
 # change representations...
 
+InstallMethod(AsPermutation, "for a bipartition", [IsBipartition], 
+function(f)
+  if not IsPermBipartition(f) then 
+    Info(InfoWarning, 2, "<f> does not define a permutation,");
+    return fail;
+  fi;
+  return AsPermutationNC(f);
+end);
+
+#
+
+InstallMethod(AsPermutationNC, "for a bipartition", [IsBipartition],
+function(f)
+  local n, blocks, nr, im, out, i;
+
+  n:=DegreeOfBipartition(f);
+  blocks:=f!.blocks;
+  nr:=NrLeftBlocks(f);
+  im:=EmptyPlist(n);
+
+  for i in [n+1..2*n] do 
+    if blocks[i]<=nr then 
+      im[blocks[i]]:=i-n;
+    fi;
+  od;
+
+  out:=EmptyPlist(n);
+  for i in [1..n] do 
+    out[i]:=im[blocks[i]];
+  od;
+  return PermList(out);
+end);
+
+#
+
 InstallMethod(AsTransformation, "for a bipartition", [IsBipartition],
 function(f)
   if not IsTransBipartition(f) then 
