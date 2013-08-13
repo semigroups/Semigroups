@@ -177,11 +177,10 @@ s-> InverseSemigroup(Idempotents(s), rec(small:=true)));
 InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local g, rep, rreps, lreps, mat, inj, zero, bound_r, bound_l, inv_l, inv_r,
-  f, rms, iso, inv, hom, i, j;
+  local g, rep, rreps, lreps, mat, inj, zero, bound_r, bound_l, inv_l, inv_r, lambdaperm, f, rms, iso, inv, hom, i, j;
 
   if not IsRegularDClass(d) then
-    Error("not yet implemented,");
+    Error("usage: <d> must be a regular D-class,");
     return;
   elif NrIdempotents(d)=NrHClasses(d) then
     return IsomorphismReesMatrixSemigroup(d);
@@ -205,12 +204,16 @@ function(d)
   inv_l:=EmptyPlist(Length(lreps));
   inv_r:=EmptyPlist(Length(rreps));
 
+  lambdaperm:=LambdaPerm(Parent(d));
+
   for i in [1..Length(lreps)] do
     mat[i]:=[];
     for j in [1..Length(rreps)] do
       f:=lreps[i]*rreps[j];
       if f in d then
-        mat[i][j]:=AsPermutation(f); #JDM this doesn't work for partition monoids
+        #mat[i][j]:=AsPermutation(f); 
+        #JDM AsPermutation doesn't work for partition monoids
+        mat[i][j]:=lambdaperm(rep, f);
         if not bound_r[j] then
           bound_r[j]:=true;
           inv_r[j]:=mat[i][j]^-1*lreps[i];
@@ -321,7 +324,7 @@ InstallMethod(IsomorphismReesMatrixSemigroup,
 "for D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local g, rep, rreps, lreps, mat, rms, iso, inv, hom, i, j;
+  local g, rep, rreps, lreps, mat, lambdaperm, rms, iso, inv, hom, i, j;
 
   if not IsRegularDClass(d) or not NrIdempotents(d)=NrHClasses(d) then
     Error("every H-class of the D-class should be a group,",
@@ -337,11 +340,13 @@ function(d)
   rreps:=HClassReps(LClass(d, rep)); 
   lreps:=HClassReps(RClass(d, rep));
   mat:=[];
-  
+  lambdaperm:=LambdaPerm(Parent(d));
+
   for i in [1..Length(lreps)] do 
     mat[i]:=[];
     for j in [1..Length(rreps)] do 
-      mat[i][j]:=AsPermutation(lreps[i]*rreps[j]);
+      mat[i][j]:=lambdaperm(rep, lreps[i]*rreps[j]);
+      #mat[i][j]:=AsPermutation(lreps[i]*rreps[j]);
     od;
   od;
 
