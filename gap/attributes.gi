@@ -605,7 +605,7 @@ end);
 InstallMethod(MinimalIdeal, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local rank, o, pos, min, len, m, f, I, n, i;
+  local rank, o, pos, min, len, m, f, d, I, n, i;
 
   rank:=LambdaRank(s);
   o:=LambdaOrb(s);
