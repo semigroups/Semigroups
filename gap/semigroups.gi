@@ -31,6 +31,45 @@ end);
 
 #
 
+InstallMethod(ViewString, "for a group of bipartitions",
+[IsBipartitionSemigroup and IsGroupAsSemigroup],
+function(s)
+  local str, nrgens;
+  if IsGroup(s) then 
+    TryNextMethod();
+  fi;
+  str:="\><";
+  if HasIsTrivial(s) and IsTrivial(s) then
+    Append(str, "\>trivial\< ");
+  fi;
+
+  Append(str, "\>bipartition\< \>group\< ");
+  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) and Size(s)<2^64 then
+    Append(str, "\>of size\> ");
+    Append(str, String(Size(s)));
+    Append(str, ",\<\< ");
+  fi;
+
+  nrgens:=Length(Generators(s));
+  
+  Append(str, "\>on \>");
+  Append(str, ViewString(DegreeOfBipartitionSemigroup(s)));
+  Append(str, "\< pts with\> ");
+  Append(str, ViewString(nrgens));
+  Append(str, "\< generator");
+
+  if nrgens>1 or nrgens=0 then
+    Append(str, "s\<");
+  else
+    Append(str, "\<");
+  fi;
+  Append(str, ">\<");
+
+  return str;
+end);
+
+#
+
 InstallMethod(ViewString, "for a group of transformations",
 [IsTransformationSemigroup and IsGroupAsSemigroup],
 function(s)
