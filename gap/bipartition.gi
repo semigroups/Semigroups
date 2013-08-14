@@ -15,6 +15,16 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsComponentObjectRep and IsAttributeStoringRep and
  IsAssociativeElementWithAction));
 
+#
+
+InstallMethod(IsBlockBijection, "for a bipartition", 
+[IsBipartition], 
+function(f) 
+  return NrBlocks(f)=NrLeftBlocks(f) and NrRightBlocks(f)=NrLeftBlocks(f);
+end);
+
+#
+
 #not a synonym since NrTransverseBlocks also applies to blocks
 InstallMethod(NrTransverseBlocks, "for a bipartition", [IsBipartition], 
 RankOfBipartition);

@@ -45,6 +45,7 @@ DeclareAttribute("AsPermutationNC", IsBipartition);
 DeclareProperty("IsTransBipartition", IsBipartition);
 DeclareProperty("IsPermBipartition", IsBipartition);
 DeclareProperty("IsPartialPermBipartition", IsBipartition);
+DeclareProperty("IsBlockBijection", IsBipartition);
 DeclareGlobalFunction("PermLeftQuoBipartitionNC");
 DeclareOperation("PermLeftQuoBipartition", [IsBipartition, IsBipartition]);
 DeclareGlobalFunction("OnRightBlocksBipartitionByPerm");
