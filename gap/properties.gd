@@ -37,6 +37,7 @@ IsTransformationCollection);
 DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsStarRegularSemigroup and IsActingSemigroup);
 InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
 InstallTrueMethod(IsBlockGroup, IsInverseSemigroup);
