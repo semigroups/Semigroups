@@ -823,7 +823,7 @@ end);
 #
 
 InstallMethod(NrIdempotents, "for a *-regular acting semigroup",
-[IsStarRegularSemigroup and IsActingSemigroup],
+[IsRegularStarSemigroup and IsActingSemigroup],
 function(s)
   local nr, tester, o, scc, printed, m, i, j;
 
