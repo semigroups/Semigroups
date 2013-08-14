@@ -909,7 +909,7 @@ function(s)
   if not IsClosed(o) then 
     func:=function(iter, i) 
       local rep;
-      rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
+      rep:=Inverse(EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)));
       # <rep> has rho val corresponding to <i> and lambda val in position 1 of
       # GradedLambdaOrb(s, rep, false), if we use <true> as the last arg, then
       # this is no longer the case, and this is would be more complicated.
@@ -924,7 +924,7 @@ function(s)
       local rep; 
       
       # <rep> has rho val corresponding to <i> 
-      rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
+      rep:=Inverse(EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)));
      
       # rectify the lambda value of <rep>
       rep:=rep*LambdaOrbMult(o, lookup[i], Position(o, LambdaFunc(s)(rep)))[2];
@@ -942,7 +942,7 @@ end);
 
 InstallMethod(IteratorOfLClassReps, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
-s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4]^-1,
+s-> IteratorByIterator(IteratorOfRClassData(s), x-> Inverse(x[4]),
 [IsIteratorOfLClassReps]));
 
 #
@@ -951,7 +951,7 @@ InstallMethod(IteratorOfLClasses, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 s-> IteratorByIterator(IteratorOfRClassData(s), 
 function(x)
-  x[4]:=x[4]^-1;
+  x[4]:=Inverse(x[4]); #JDM is this a good idea??
   return CallFuncList(CreateInverseOpLClass, x);
 end, [IsIteratorOfLClasses]));
 
