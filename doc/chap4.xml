@@ -78,6 +78,7 @@
     Details 
     <#Include Label="IsTransBipartition">
     <#Include Label="IsPermBipartition">
+    <#Include Label="IsBlockBijection">
     <#Include Label="DegreeOfBipartition">
     <#Include Label="RankOfBipartition">
     <#Include Label="ExtRepOfBipartition">

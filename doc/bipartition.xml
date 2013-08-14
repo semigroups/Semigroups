@@ -8,6 +8,14 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="IsBlockBijection">
+  <ManSection>
+    <Filt Name="IsBlockBijection" Arg='f'/>
+    <Description>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="BipartitionFamily">
   <ManSection>
     <Fam Name="BipartitionFamily"/>
