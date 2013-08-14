@@ -253,7 +253,7 @@ function(n)
    List([3..n], x-> [x, -x]))));
 
   s:=Semigroup(gens);
-  SetIsStarRegularSemigroup(s, true);
+  SetIsRegularStarSemigroup(s, true);
   return s;
 end);
 
@@ -262,7 +262,7 @@ end);
 InstallMethod(DualSymmetricInverseSemigroup, "for a positive integer",
 [IsPosInt], 
 function(n)
-  local gens;
+  local gens, s;
   
   if n=1 then 
     return Semigroup(BipartitionNC([[1,-1]]));
@@ -276,7 +276,9 @@ function(n)
     Add(gens, BipartitionNC(Concatenation([[1,2,-3], [3,-1,-2]],
      List([4..n], x-> [x, -x]))));
   fi;
-  return Semigroup(gens);
+  s:=Semigroup(gens);
+  SetIsInverseSemigroup(s, true);
+  return s;
 end);
 
 #
@@ -304,7 +306,7 @@ function(n)
   Add(gens, BipartitionNC(Concatenation([[1,2]], 
    List([3..n], x-> [x, -x]),[[-1,-2]])));
   s:=Semigroup(gens);
-  SetIsStarRegularSemigroup(s, true);
+  SetIsRegularStarSemigroup(s, true);
   return s;
 end);
 
@@ -334,11 +336,11 @@ function(n)
     gens[i]:=BipartitionByIntRep(next);
   od;
   s:=Monoid(gens);
-  SetIsStarRegularSemigroup(s, true);
+  SetIsRegularStarSemigroup(s, true);
   return s;
 end);
 
-#
+# JDM rename and make global
 
 HamMonoid:=
 function(n)

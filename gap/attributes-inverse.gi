@@ -17,17 +17,28 @@ InstallMethod(PrimitiveIdempotents,
 "for an acting semigroup with inverse op and generators",
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
 function(s)
-  local r;
+  local o, scc, rank, min, l, min2, m;
   
-  if MultiplicativeZero(s)=fail then 
-    r:=Set(List(OrbSCC(LambdaOrb(s)), 
-     x-> LambdaRank(s)(LambdaOrb(s)[x[1]])))[1];
-  else
-    r:=Set(List(OrbSCC(LambdaOrb(s)), 
-     x-> LambdaRank(s)(LambdaOrb(s)[x[1]])))[2];
-  fi;
+  o:=LambdaOrb(s);      scc:=OrbSCC(o);
+  rank:=LambdaRank(s);  min:=ActionDegree(s);
 
-  return Idempotents(s, r);
+  if MultiplicativeZero(s)=fail then 
+    for m in [2..Length(scc)] do 
+      l:=rank(o[scc[m][1]]);
+      if l<min then 
+        min:=l;
+      fi;
+    od;
+    return Idempotents(s, min);
+  else
+    for m in [2..Length(scc)] do 
+      l:=rank(o[scc[m][1]]);
+      if l<min then 
+        min2:=min; min:=l;
+      fi;
+    od;
+    return Idempotents(s, min2);
+  fi;
 end);
 
 #
