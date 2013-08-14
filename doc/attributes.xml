@@ -130,7 +130,7 @@ gap> S:=Semigroup(
 gap> d:=MinimalDClass(S);    
 {Bipartition( [ [ 1, 2, 3, 4, 5, -1, -3 ], [ -2, -5 ], [ -4 ] ] )}
 gap> PrincipalFactor(d);
-&lt;Rees matrix semigroup 1x5 over Group(())>
+&lt;Rees matrix semigroup 1x5 over Group(())></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -259,7 +259,7 @@ true
 gap> MinimalIdeal(POI(10));
 &lt;partial perm group on 0 pts with 1 generator>
 gap> MinimalIdeal(BrauerMonoid(6));
-&lt;simple bipartition semigroup on 6 pts with 23 generators></Example>
+&lt;simple bipartition semigroup on 6 pts with 22 generators></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -353,7 +353,13 @@ gap> StructureDescription(GroupOfUnits(S));
 gap> S:=InverseSemigroup( PartialPerm( [ 1, 3, 4 ], [ 4, 3, 5 ] ),
 > PartialPerm( [ 1, 2, 3, 5 ], [ 3, 1, 5, 2 ] ) );;
 gap> GroupOfUnits(S);
-fail</Example>
+fail
+gap> S:=Semigroup( Bipartition( [ [ 1, 2, 3, -1, -3 ], [ -2 ] ] ), 
+> Bipartition( [ [ 1, -1 ], [ 2, 3, -2, -3 ] ] ), 
+> Bipartition( [ [ 1, -2 ], [ 2, -3 ], [ 3, -1 ] ] ), 
+> Bipartition( [ [ 1 ], [ 2, 3, -2 ], [ -1, -3 ] ] ) );;
+gap> StructureDescription(GroupOfUnits(S));
+"C3"</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -377,7 +383,15 @@ gap> IdempotentGeneratedSubsemigroup(S);
 gap> S:=SymmetricInverseSemigroup(5);
 &lt;symmetric inverse semigroup on 5 pts>
 gap> IdempotentGeneratedSubsemigroup(S);
-&lt;inverse partial perm semigroup on 5 pts with 6 generators></Example>
+&lt;inverse partial perm semigroup on 5 pts with 6 generators>
+gap> S:=DualSymmetricInverseSemigroup(5);
+&lt;bipartition semigroup on 5 pts with 3 generators>
+gap> S:=DualSymmetricInverseSemigroup(5); 
+&lt;bipartition semigroup on 5 pts with 3 generators>
+gap> IdempotentGeneratedSubsemigroup(S);
+&lt;bipartition monoid on 5 pts with 10 generators>
+gap> IsSemilatticeAsSemigroup(last);
+true</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
