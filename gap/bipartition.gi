@@ -20,11 +20,11 @@ BindGlobal("BlockBijectionFamily", NewFamily("BlockBijectionFamily",
 BindGlobal("BlockBijectionType", NewType(BlockBijectionFamily,
  IsBlockBijection and IsComponentObjectRep and IsAttributeStoringRep));
 
-#InstallMethod(IsBlockBijection, "for a bipartition", 
-#[IsBipartition], 
-#function(f) 
-#  return NrBlocks(f)=NrLeftBlocks(f) and NrRightBlocks(f)=NrLeftBlocks(f);
-#end);
+InstallOtherMethod(InverseMutable, "for a bipartition", [IsBipartition],
+ReturnFail);
+
+InstallOtherMethod(InverseMutable, "for a block bijection", [IsBlockBijection],
+StarOp);
 
 #not a synonym since NrTransverseBlocks also applies to blocks
 InstallMethod(NrTransverseBlocks, "for a bipartition", [IsBipartition], 
@@ -555,7 +555,7 @@ end);
 
 # linear - 2*degree
 
-InstallMethod(InverseOp, "for a bipartition", [IsBipartition],
+InstallMethod(StarOp, "for a bipartition", [IsBipartition],
 function(f)
   local n, blocks, table, out, k, nrker, i;
 
@@ -588,12 +588,16 @@ function(f)
     fi;
   od;
 
-  out:=Objectify(BipartitionType, rec(blocks:=out));
+  if IsBlockBijection(f) then #block bijection
+    out:=Objectify(BlockBijectionType, rec(blocks:=out));
+  else
+    out:=Objectify(BipartitionType, rec(blocks:=out)); 
+  fi;
   
   SetDegreeOfBipartition(out, Length(blocks)/2);
   SetNrLeftBlocks(out, nrker);
   SetNrBlocks(out, k);
-  #SetRankOfBipartition(out, RankOfBipartition(f));
+  SetRankOfBipartition(out, RankOfBipartition(f));
   return out;
 end);  
 
@@ -777,8 +781,14 @@ end);
 
 #
 
-InstallOtherMethod(OneMutable, "for a bipartition",
+InstallMethod(OneMutable, "for a bipartition",
 [IsBipartition], x-> IdentityBipartition(DegreeOfBipartition(x)));
+
+#
+
+InstallMethod(OneMutable, "for a bipartition collection",
+[IsBipartitionCollection], x->
+IdentityBipartition(DegreeOfBipartitionCollection(x)));
 
 #
 

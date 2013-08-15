@@ -8,11 +8,12 @@
 ############################################################################# 
 ##
 
-#DeclareProperty("IsGeneratorsOfInverseSemigroup",
-#IsAssociativeElementCollection);
-
-#InstallTrueMethod(IsAssociativeElementWithUniqueSemigroupInverse,
-#IsBlockBijection);
+DeclareCategory("IsAssociativeElementWithStar", IsAssociativeElement);
+DeclareCategoryCollections("IsAssociativeElementWithStar");
+DeclareOperation("StarOp", [IsAssociativeElementWithStar]);
+DeclareAttribute("Star", IsAssociativeElementWithStar);
+DeclareSynonym("IsRegularStarSemigroup", IsRegularSemigroup and                 IsAssociativeElementWithStarCollection);
+DeclareOperation("InverseOp", [IsAssociativeElementWithStar and IsAssociativeElementWithUniqueSemigroupInverse]);
 
 DeclareOperation("SemigroupByGenerators",
 [IsAssociativeElementWithActionCollection, IsRecord]);

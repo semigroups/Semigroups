@@ -241,7 +241,7 @@ end);
 InstallMethod(PartitionMonoid, "for a positive integer",
 [IsPosInt], 
 function(n)
-  local gens, g, s;
+  local gens;
 
   if n=1 then 
     return Semigroup(BipartitionNC([[1,-1]]));
@@ -252,9 +252,7 @@ function(n)
   Add(gens, BipartitionNC(Concatenation([[1,2,-1, -2]], 
    List([3..n], x-> [x, -x]))));
 
-  s:=Semigroup(gens);
-  SetIsRegularStarSemigroup(s, true);
-  return s;
+  return Semigroup(gens);
 end);
 
 ##
@@ -297,7 +295,7 @@ end);
 
 InstallMethod(BrauerMonoid, "for a positive integer", [IsPosInt],
 function(n)
-  local gens, s;
+  local gens;
 
   if n=1 then 
     return Semigroup(BipartitionNC([[1,-1]]));
@@ -305,9 +303,7 @@ function(n)
   gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
   Add(gens, BipartitionNC(Concatenation([[1,2]], 
    List([3..n], x-> [x, -x]),[[-1,-2]])));
-  s:=Semigroup(gens);
-  SetIsRegularStarSemigroup(s, true);
-  return s;
+  return Semigroup(gens);
 end);
 
 #
@@ -335,9 +331,7 @@ function(n)
     od;
     gens[i]:=BipartitionByIntRep(next);
   od;
-  s:=Monoid(gens);
-  SetIsRegularStarSemigroup(s, true);
-  return s;
+  return Monoid(gens);
 end);
 
 # JDM rename and make global

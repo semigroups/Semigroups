@@ -8,6 +8,23 @@
 ############################################################################# 
 ##
 
+# star 
+
+InstallMethod(Star, "for an associative element with star",
+[IsAssociativeElementWithStar], 
+function(elm)
+  elm:=StarOp(elm);
+  MakeImmutable(elm);
+  return elm;
+end);
+
+#
+
+InstallMethod(InverseMutable, 
+"for an associative element with star and unique inverse",
+[IsAssociativeElementWithStar and
+IsAssociativeElementWithUniqueSemigroupInverse], StarOp);
+
 # basic things
 
 InstallMethod(Generators, "for a semigroup with generators",

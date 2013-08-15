@@ -1,6 +1,23 @@
 
 
 
+InstallImmediateMethod(GeneratorsOfSemigroup, IsBlockBijectionCollection and IsSemigroup and HasGeneratorsOfInverseSemigroup, 0, 
+function(s)
+  local gens, f;
+
+  gens:=ShallowCopy(GeneratorsOfInverseSemigroup(s));
+  for f in gens do 
+    if not IsPermBipartition(f) then 
+      f:=f^-1;
+      if not f in gens then 
+        Add(gens, f);
+      fi;
+    fi;
+  od;
+  MakeImmutable(gens);
+  return gens;
+end);
+
 #
 
 InstallMethod(ViewString, "for a bipartition semigroup with generators",
