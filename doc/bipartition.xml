@@ -8,6 +8,14 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="IsDualTransBipartition">
+  <ManSection>
+    <Filt Name="IsDualTransBipartition" Arg='f'/>
+    <Description>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="IsBlockBijection">
   <ManSection>
     <Filt Name="IsBlockBijection" Arg='f'/>

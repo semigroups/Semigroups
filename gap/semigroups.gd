@@ -8,6 +8,11 @@
 ############################################################################# 
 ##
 
+#DeclareProperty("IsGeneratorsOfInverseSemigroup",
+#IsAssociativeElementCollection);
+
+#InstallTrueMethod(IsAssociativeElementWithUniqueSemigroupInverse,
+#IsBlockBijection);
 
 DeclareOperation("SemigroupByGenerators",
 [IsAssociativeElementWithActionCollection, IsRecord]);

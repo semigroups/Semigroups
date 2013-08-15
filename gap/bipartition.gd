@@ -10,6 +10,7 @@
 
 DeclareCategory("IsBipartition", IsMultiplicativeElementWithOne and
  IsAssociativeElementWithAction);
+
 DeclareCategoryCollections("IsBipartition");
 
 DeclareGlobalFunction("BipartitionNC");
@@ -20,7 +21,8 @@ DeclareAttribute("RankOfBipartition", IsBipartition);
 DeclareAttribute("NrTransverseBlocks", IsBipartition);
 
 DeclareAttribute("ExtRepOfBipartition", IsBipartition);
-
+DeclareAttribute("Star", IsBipartition);
+DeclareOperation("StarOp", [IsBipartition]);
 DeclareSynonymAttr("LeftProjection", LeftOne);
 DeclareSynonymAttr("RightProjection", RightOne);
 DeclareOperation("InverseOp", [IsBipartition]);
@@ -46,7 +48,9 @@ DeclareProperty("IsTransBipartition", IsBipartition);
 DeclareProperty("IsDualTransBipartition", IsBipartition);
 DeclareProperty("IsPermBipartition", IsBipartition);
 DeclareProperty("IsPartialPermBipartition", IsBipartition);
-DeclareProperty("IsBlockBijection", IsBipartition);
+DeclareCategory("IsBlockBijection", IsBipartition and
+IsAssociativeElementWithUniqueSemigroupInverse);
+DeclareCategoryCollections("IsBlockBijection");
 
 DeclareGlobalFunction("PermLeftQuoBipartitionNC");
 DeclareOperation("PermLeftQuoBipartition", [IsBipartition, IsBipartition]);

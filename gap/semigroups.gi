@@ -256,7 +256,7 @@ InstallMethod(MonoidByGenerators,
 "for an asssociative element with action collection and record",
 [IsAssociativeElementWithActionCollection, IsRecord],
 function(gens, record)
-  local deg, n, i, closure_opts, s, filts, f;
+  local deg, n, i, closure_opts, s, filts, pos, f;
   
   record:=SemigroupOptions(record);
   gens:=ShallowCopy(gens);
@@ -313,7 +313,15 @@ function(gens, record)
   if record.regular then 
     SetIsRegularSemigroup(s, true);
   fi;
-
+  
+  # remove one from gens if there.
+  if CanEasilyCompareElements(gens) then
+    pos:=Position(gens, One(gens));
+    if pos<>fail then 
+      gens:=ShallowCopy(gens);
+      Remove(gens, pos);
+    fi;
+  fi; 
   SetGeneratorsOfMagmaWithOne( s, gens );
   return s;
 end);

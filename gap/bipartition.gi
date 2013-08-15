@@ -12,18 +12,19 @@ BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
  IsBipartition, CanEasilySortElements, CanEasilySortElements));
 
 BindGlobal("BipartitionType", NewType(BipartitionFamily,
- IsBipartition and IsComponentObjectRep and IsAttributeStoringRep and
- IsAssociativeElementWithAction));
+ IsBipartition and IsComponentObjectRep and IsAttributeStoringRep));
 
-#
+BindGlobal("BlockBijectionFamily", NewFamily("BlockBijectionFamily",
+ IsBlockBijection, CanEasilySortElements, CanEasilySortElements));
 
-InstallMethod(IsBlockBijection, "for a bipartition", 
-[IsBipartition], 
-function(f) 
-  return NrBlocks(f)=NrLeftBlocks(f) and NrRightBlocks(f)=NrLeftBlocks(f);
-end);
+BindGlobal("BlockBijectionType", NewType(BlockBijectionFamily,
+ IsBlockBijection and IsComponentObjectRep and IsAttributeStoringRep));
 
-#
+#InstallMethod(IsBlockBijection, "for a bipartition", 
+#[IsBipartition], 
+#function(f) 
+#  return NrBlocks(f)=NrLeftBlocks(f) and NrRightBlocks(f)=NrLeftBlocks(f);
+#end);
 
 #not a synonym since NrTransverseBlocks also applies to blocks
 InstallMethod(NrTransverseBlocks, "for a bipartition", [IsBipartition], 
@@ -728,27 +729,48 @@ end);
 
 InstallGlobalFunction(BipartitionNC, 
 function(classes)
-  local list, n, nrker, out, i, j;
+  local blocks, n, nrtrans, nrleft, nrblocks, k, known, out, i, j;
 
-  list:=[];
+  blocks:=[];
   n:=Sum(List(classes, Length))/2;
+  nrtrans:=0; 
+  nrleft:=0;
+  nrblocks:=Length(classes);
 
   for i in [1..Length(classes)] do
+    k:=0; # detect if the class is transverse or not
+    known:=false;
     for j in classes[i] do 
       if j<0 then 
-        list[AbsInt(j)+n]:=i;
+        if not known and k>0 then 
+          nrtrans:=nrtrans+1;
+          known:=true;
+        fi;
+        k:=-1;
+        blocks[-j+n]:=i;
       else 
-        nrker:=i;
-        list[j]:=i;
+        if not known and k<0 then 
+          nrtrans:=nrtrans+1;
+          known:=true;
+        fi;
+        k:=1;
+        nrleft:=i;
+        blocks[j]:=i;
       fi;
     od;
   od;
-  out:=Objectify(BipartitionType, rec(blocks:=list)); 
+
+  if nrleft=nrblocks and nrtrans=nrleft then #block bijection
+    out:=Objectify(BlockBijectionType, rec(blocks:=blocks));
+  else
+    out:=Objectify(BipartitionType, rec(blocks:=blocks)); 
+  fi;
   
   SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrker);
+  SetNrLeftBlocks(out, nrleft);
+  SetNrTransverseBlocks(out, nrtrans);
   SetExtRepOfBipartition(out, classes);
-  SetNrBlocks(out, Length(classes));
+  SetNrBlocks(out, nrblocks);
 
   return out;
 end);
