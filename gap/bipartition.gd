@@ -43,15 +43,20 @@ DeclareAttribute("AsTransformationNC", IsBipartition);
 DeclareAttribute("AsPermutationNC", IsBipartition);
 
 DeclareProperty("IsTransBipartition", IsBipartition);
+DeclareProperty("IsDualTransBipartition", IsBipartition);
 DeclareProperty("IsPermBipartition", IsBipartition);
 DeclareProperty("IsPartialPermBipartition", IsBipartition);
 DeclareProperty("IsBlockBijection", IsBipartition);
+
 DeclareGlobalFunction("PermLeftQuoBipartitionNC");
 DeclareOperation("PermLeftQuoBipartition", [IsBipartition, IsBipartition]);
 DeclareGlobalFunction("OnRightBlocksBipartitionByPerm");
 
 #collections
 DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
+
+InstallTrueMethod(IsPermBipartition, IsTransBipartition and
+IsDualTransBipartition);
 
 #internal...
 DeclareGlobalFunction("TransverseBlocksLookup");

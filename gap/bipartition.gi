@@ -443,7 +443,7 @@ function(f)
 end);
 
 # a bipartition is a transformation if and only if the second row is a
-# permutation of [1..n]
+# permutation of [1..n], where n is the degree. 
 
 InstallMethod(IsTransBipartition, "for a bipartition",
 [IsBipartition], 
@@ -460,6 +460,30 @@ function(f)
     seen[blocks[i]]:=true;
   od;
 
+  return true;
+end);
+
+#
+
+InstallMethod(IsDualTransBipartition, "for a bipartition", [IsBipartition], 
+function(f)
+  local n, blocks, seen, i;
+
+  n:=DegreeOfBipartition(f);
+  
+  if NrBlocks(f)>n then 
+    return false;
+  fi;
+  
+  blocks:=f!.blocks;
+  seen:=BlistList([1..n], []);
+  for i in [1..n] do 
+    if seen[blocks[i]] then 
+      return false;
+    fi;
+    seen[blocks[i]]:=true;
+  od;
+  
   return true;
 end);
 
@@ -555,6 +579,7 @@ function(f)
   for i in [1..n] do 
     if IsBound(table[blocks[i]]) then 
       out[i+n]:=table[blocks[i]];
+
     else
       k:=k+1;
       table[blocks[i]]:=k;
