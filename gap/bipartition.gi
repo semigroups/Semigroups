@@ -575,7 +575,7 @@ end);
 
 InstallMethod(StarOp, "for a bipartition", [IsBipartition],
 function(f)
-  local n, blocks, table, out, k, nrker, i;
+  local n, blocks, table, out, k, nrleft, i;
 
   n:=DegreeOfBipartition(f);
   blocks:=f!.blocks;
@@ -593,12 +593,11 @@ function(f)
     fi;
   od;
 
-  nrker:=k;
+  nrleft:=k;
 
   for i in [1..n] do 
     if IsBound(table[blocks[i]]) then 
       out[i+n]:=table[blocks[i]];
-
     else
       k:=k+1;
       table[blocks[i]]:=k;
@@ -613,7 +612,7 @@ function(f)
   fi;
   
   SetDegreeOfBipartition(out, Length(blocks)/2);
-  SetNrLeftBlocks(out, nrker);
+  SetNrLeftBlocks(out, nrleft);
   SetNrBlocks(out, k);
   SetRankOfBipartition(out, RankOfBipartition(f));
   return out;
@@ -624,7 +623,7 @@ end);
 InstallMethod(RightProjection, "for a bipartition",
 [IsBipartition],
 function(f)
-  local n, blocks, table, out, k, nrker, lookup, i;
+  local n, blocks, table, out, k, nrleft, lookup, i;
 
   n:=DegreeOfBipartition(f);
   blocks:=f!.blocks;
@@ -642,7 +641,7 @@ function(f)
     fi;
   od;
 
-  nrker:=k;
+  nrleft:=k;
   table:=[];
   lookup:=TransverseBlocksLookup(f);
 
@@ -665,7 +664,7 @@ function(f)
   fi;
   
   SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrker);
+  SetNrLeftBlocks(out, nrleft);
   SetNrBlocks(out, k);
   return out;
 end);
