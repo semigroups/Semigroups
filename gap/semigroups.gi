@@ -330,7 +330,9 @@ function(gens, record)
   if record.regular then 
     SetIsRegularSemigroup(s, true);
   fi;
-  
+ 
+  SetGeneratorsOfMagma(s, AsList(gens));
+
   # remove one from gens if there.
   if CanEasilyCompareElements(gens) then
     pos:=Position(gens, One(gens));
