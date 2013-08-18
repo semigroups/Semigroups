@@ -57,7 +57,7 @@ InstallTrueMethod(IsMonogenicInverseSemigroup, IsInverseSemigroup and IsMonogeni
 InstallTrueMethod(IsZeroRectangularBand, IsZeroGroup);
 InstallTrueMethod(IsZeroGroup, IsZeroRectangularBand and IsInverseSemigroup);
 InstallTrueMethod(IsRegularSemigroup, IsRegularStarSemigroup);
-InstallTrueMethod(IsRegularStarSemigroup, IsInverseSemigroup);
+#InstallTrueMethod(IsRegularStarSemigroup, IsInverseSemigroup);
 InstallTrueMethod(IsInverseSemigroup, IsGroup);
 InstallTrueMethod(IsInverseSemigroup, IsBlockGroup and IsRegularSemigroup);
 #EOF
