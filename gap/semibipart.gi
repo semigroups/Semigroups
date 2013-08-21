@@ -1,7 +1,14 @@
+############################################################################# 
+## 
+#W  semibipart.gi 
+#Y  Copyright (C) 2013                                    James D. Mitchell
+## 
+##  Licensing information can be found in the README file of this package. 
+## 
+############################################################################# 
+##
 
-
-
-InstallImmediateMethod(GeneratorsOfSemigroup, IsBlockBijectionCollection and IsSemigroup and HasGeneratorsOfInverseSemigroup, 0, 
+InstallImmediateMethod(GeneratorsOfSemigroup, IsBipartitionCollection and IsSemigroup and HasGeneratorsOfInverseSemigroup, 0, 
 function(s)
   local gens, f;
 

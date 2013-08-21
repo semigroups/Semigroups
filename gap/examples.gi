@@ -274,8 +274,7 @@ function(n)
     Add(gens, BipartitionNC(Concatenation([[1,2,-3], [3,-1,-2]],
      List([4..n], x-> [x, -x]))));
   fi;
-  s:=Semigroup(gens);
-  SetIsInverseSemigroup(s, true);
+  s:=InverseSemigroup(gens);
   return s;
 end);
 

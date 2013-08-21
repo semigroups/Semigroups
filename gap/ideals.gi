@@ -13,15 +13,15 @@
 InstallMethod(MagmaIdealByGenerators,
 "for an acting semigroup and collection of its elements", 
 IsIdenticalObj, 
-[IsActingSemigroup, IsAssociativeElementWithActionCollection],
+[IsActingSemigroup, IsAssociativeElementCollection],
 SemigroupIdealByGenerators);
 
 #
 
 InstallMethod(SemigroupIdealByGenerators,
-"for an acting semigroup and collection of its elements", 
+"for an acting semigroup and associative element collection", 
 IsIdenticalObj, 
-[IsActingSemigroup, IsAssociativeElementWithActionCollection],
+[IsActingSemigroup, IsAssociativeElementCollection],
 function( M, gens )
 local S;
     

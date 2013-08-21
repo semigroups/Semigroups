@@ -14,17 +14,32 @@ BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
 BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsComponentObjectRep and IsAttributeStoringRep));
 
-BindGlobal("BlockBijectionFamily", NewFamily("BlockBijectionFamily",
- IsBlockBijection, CanEasilySortElements, CanEasilySortElements));
+#
 
-BindGlobal("BlockBijectionType", NewType(BlockBijectionFamily,
- IsBlockBijection and IsComponentObjectRep and IsAttributeStoringRep));
+InstallMethod(IsBlockBijection, "for a bipartition", 
+[IsBipartition], 
+function(f) 
+  return NrBlocks(f)=NrLeftBlocks(f) and NrRightBlocks(f)=NrLeftBlocks(f);
+end);
+
+#
 
 InstallOtherMethod(InverseMutable, "for a bipartition", [IsBipartition],
-ReturnFail);
+function(f)
+  if IsBlockBijection(f) then 
+    return Star(f);
+  else
+    return fail;
+  fi;
+end);
 
-InstallOtherMethod(InverseMutable, "for a block bijection", [IsBlockBijection],
-StarOp);
+#
+
+InstallMethod(IsGeneratorsOfInverseSemigroup, "for a bipartition collection", 
+[IsBipartitionCollection], 
+function(coll)
+  return ForAll(coll, IsBlockBijection);
+end);
 
 #not a synonym since NrTransverseBlocks also applies to blocks
 InstallMethod(NrTransverseBlocks, "for a bipartition", [IsBipartition], 
@@ -42,7 +57,7 @@ end);
 InstallMethod(\*, "for a bipartition and bipartition",
 [IsBipartition, IsBipartition], 
 function(a,b)
-  local n, anr, fuse, fuseit, ablocks, bblocks, x, y, tab, cblocks, next, nrleft, rank, lookup, c, i;
+  local n, anr, fuse, fuseit, ablocks, bblocks, x, y, tab, cblocks, next, nrleft, c, i;
   
   n := DegreeOfBipartition(a);
   Assert(1,n = DegreeOfBipartition(b));
@@ -86,8 +101,6 @@ function(a,b)
   od;
   
   nrleft:=next;
-  rank:=0; 
-  lookup:=BlistList([1..nrleft], []);
 
   for i in [n+1..2*n] do
     x:=fuseit(bblocks[i]+anr);
@@ -96,21 +109,11 @@ function(a,b)
       tab[x]:=next;
     fi;
     cblocks[i]:=tab[x];
-    if tab[x]<=nrleft and not lookup[tab[x]] then 
-      lookup[tab[x]]:=true;
-      rank:=rank+1;
-    fi;
   od;
   
-  if next=nrleft and rank=nrleft then 
-    c:=Objectify(BlockBijectionType, rec(blocks:=cblocks));
-  else
-    c:=Objectify(BipartitionType, rec(blocks:=cblocks)); 
-  fi;
+  c:=Objectify(BipartitionType, rec(blocks:=cblocks)); 
 
   SetDegreeOfBipartition(c, n);
-  SetRankOfBipartition(c, rank);
-  SetTransverseBlocksLookup(c, lookup);
   SetNrLeftBlocks(c, nrleft);
   SetNrBlocks(c, next);
   return c;
@@ -536,10 +539,10 @@ end);
 
 InstallMethod(LeftOne, "for a bipartition", [IsBipartition],
 function(f)
-  local n, k, blocks, lookup, table, out, i;
+  local n, next, blocks, lookup, table, out, i;
 
   n:=DegreeOfBipartition(f);
-  k:=NrLeftBlocks(f);
+  next:=NrLeftBlocks(f);
   blocks:=f!.blocks;
   lookup:=TransverseBlocksLookup(f);
   table:=[];
@@ -552,22 +555,18 @@ function(f)
     elif IsBound(table[blocks[i]]) then 
       out[i+n]:=table[blocks[i]];
     else 
-      k:=k+1;
-      table[blocks[i]]:=k;
-      out[i+n]:=k;
+      next:=next+1;
+      table[blocks[i]]:=next;
+      out[i+n]:=next;
     fi;
   od;
 
-  if IsBlockBijection(f) then 
-    out:=Objectify(BlockBijectionType, rec(blocks:=out));
-  else
-    out:=Objectify(BipartitionType, rec(blocks:=out));
-  fi;
+  out:=Objectify(BipartitionType, rec(blocks:=out));
   
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, NrLeftBlocks(f));
-  SetNrBlocks(out, k);
-  #SetRankOfBipartition(out, RankOfBipartition(f));
+  SetNrBlocks(out, next);
+  SetRankOfBipartition(out, RankOfBipartition(f));
   return out;
 end);
 
@@ -575,45 +574,41 @@ end);
 
 InstallMethod(StarOp, "for a bipartition", [IsBipartition],
 function(f)
-  local n, blocks, table, out, k, nrleft, i;
+  local n, blocks, table, out, next, nrleft, i;
 
   n:=DegreeOfBipartition(f);
   blocks:=f!.blocks;
   table:=[];
   out:=[];
-  k:=0;
+  next:=0;
 
   for i in [1..n] do 
     if IsBound(table[blocks[i+n]]) then 
       out[i]:=table[blocks[i+n]];
     else
-      k:=k+1;
-      table[blocks[i+n]]:=k;
-      out[i]:=k;
+      next:=next+1;
+      table[blocks[i+n]]:=next;
+      out[i]:=next;
     fi;
   od;
 
-  nrleft:=k;
+  nrleft:=next;
 
   for i in [1..n] do 
     if IsBound(table[blocks[i]]) then 
       out[i+n]:=table[blocks[i]];
     else
-      k:=k+1;
-      table[blocks[i]]:=k;
-      out[i+n]:=k;
+      next:=next+1;
+      table[blocks[i]]:=next;
+      out[i+n]:=next;
     fi;
   od;
 
-  if IsBlockBijection(f) then #block bijection
-    out:=Objectify(BlockBijectionType, rec(blocks:=out));
-  else
-    out:=Objectify(BipartitionType, rec(blocks:=out)); 
-  fi;
+  out:=Objectify(BipartitionType, rec(blocks:=out)); 
   
   SetDegreeOfBipartition(out, Length(blocks)/2);
   SetNrLeftBlocks(out, nrleft);
-  SetNrBlocks(out, k);
+  SetNrBlocks(out, next);
   SetRankOfBipartition(out, RankOfBipartition(f));
   return out;
 end);  
@@ -623,25 +618,25 @@ end);
 InstallMethod(RightProjection, "for a bipartition",
 [IsBipartition],
 function(f)
-  local n, blocks, table, out, k, nrleft, lookup, i;
+  local n, blocks, table, out, next, nrleft, lookup, i;
 
   n:=DegreeOfBipartition(f);
   blocks:=f!.blocks;
   table:=[];
   out:=[];
-  k:=0;
+  next:=0;
 
   for i in [1..n] do 
     if IsBound(table[blocks[i+n]]) then 
       out[i]:=table[blocks[i+n]];
     else
-      k:=k+1;
-      table[blocks[i+n]]:=k;
-      out[i]:=k;
+      next:=next+1;
+      table[blocks[i+n]]:=next;
+      out[i]:=next;
     fi;
   od;
 
-  nrleft:=k;
+  nrleft:=next;
   table:=[];
   lookup:=TransverseBlocksLookup(f);
 
@@ -651,21 +646,17 @@ function(f)
     elif IsBound(table[blocks[i+n]]) then 
       out[i+n]:=table[blocks[i+n]];
     else
-      k:=k+1;
-      table[blocks[i+n]]:=k;
-      out[i+n]:=k;
+      next:=next+1;
+      table[blocks[i+n]]:=next;
+      out[i+n]:=next;
     fi;
   od;
 
-  if IsBlockBijection(f) then 
-    out:=Objectify(BlockBijectionType, rec(blocks:=out));
-  else
-    out:=Objectify(BipartitionType, rec(blocks:=out));
-  fi;
+  out:=Objectify(BipartitionType, rec(blocks:=out));
   
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, nrleft);
-  SetNrBlocks(out, k);
+  SetNrBlocks(out, next);
   return out;
 end);
 
@@ -673,7 +664,7 @@ end);
 
 InstallMethod(RandomBipartition, "for a pos int", [IsPosInt],
 function(n)
-  local out, nrblocks, vals, j, nrleft, rank, lookup, i;
+  local out, nrblocks, vals, j, nrleft, i;
 
   out:=EmptyPlist(2*n);
   nrblocks:=0;
@@ -688,30 +679,20 @@ function(n)
     out[i]:=j;
   od;
 
-  nrleft:=nrblocks; rank:=0; 
-  lookup:=BlistList([1..nrleft], []);
+  nrleft:=nrblocks;
 
   for i in [1..n] do 
     j:=Random(vals);
     if j=nrblocks+1 then 
       nrblocks:=nrblocks+1;
       Add(vals, nrblocks+1);
-    elif j<=nrleft and not lookup[j] then 
-      lookup[j]:=true;
-      rank:=rank+1;      
     fi;
     out[i+n]:=j;
   od;
 
-  if nrleft=nrblocks and rank=nrleft then #block bijection
-    out:=Objectify(BlockBijectionType, rec(blocks:=out));
-  else
-    out:=Objectify(BipartitionType, rec(blocks:=out)); 
-  fi;
+  out:=Objectify(BipartitionType, rec(blocks:=out)); 
   
   SetDegreeOfBipartition(out, n);
-  SetRankOfBipartition(out, rank);
-  SetTransverseBlocksLookup(out, lookup);
   SetNrLeftBlocks(out, nrleft);
   SetNrBlocks(out, nrblocks);
 
@@ -763,7 +744,7 @@ end);
 
 InstallGlobalFunction(BipartitionNC, 
 function(classes)
-  local blocks, n, rank, nrleft, nrblocks, k, known, out, i, j;
+  local blocks, n, rank, nrleft, nrblocks, k, out, i, j;
 
   blocks:=[];
   n:=Sum(List(classes, Length))/2;
@@ -773,36 +754,20 @@ function(classes)
 
   for i in [1..Length(classes)] do
     k:=0; # detect if the class is transverse or not
-    known:=false;
     for j in classes[i] do 
       if j<0 then 
-        if not known and k>0 then 
-          rank:=rank+1;
-          known:=true;
-        fi;
-        k:=-1;
         blocks[-j+n]:=i;
       else 
-        if not known and k<0 then 
-          rank:=rank+1;
-          known:=true;
-        fi;
-        k:=1;
         nrleft:=i;
         blocks[j]:=i;
       fi;
     od;
   od;
 
-  if nrleft=nrblocks and rank=nrleft then #block bijection
-    out:=Objectify(BlockBijectionType, rec(blocks:=blocks));
-  else
-    out:=Objectify(BipartitionType, rec(blocks:=blocks)); 
-  fi;
+  out:=Objectify(BipartitionType, rec(blocks:=blocks)); 
   
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, nrleft);
-  SetNrTransverseBlocks(out, rank);
   SetExtRepOfBipartition(out, classes);
   SetNrBlocks(out, nrblocks);
 
@@ -832,7 +797,7 @@ function(n)
     blocks[i+n]:=i;
   od;
   
-  out:=Objectify(BlockBijectionType, rec(blocks:=blocks));
+  out:=Objectify(BipartitionType, rec(blocks:=blocks));
 
   SetDegreeOfBipartition(out, n);
   SetRankOfBipartition(out, n);
@@ -860,28 +825,17 @@ function(blocks)
   od;
   
   nrleft:=next; 
-  rank:=0;
-  lookup:=BlistList([1..nrleft], []);
 
   for i in [n+1..2*n] do 
     if not seen[blocks[i]] then #new block
       next:=next+1;
       seen[blocks[i]]:=true;
-    elif blocks[i]<=nrleft and not lookup[blocks[i]] then #transverse block
-      rank:=rank+1;
-      lookup[blocks[i]]:=true;
     fi;
   od;
 
-  if nrleft=next and rank=nrleft then #block bijection
-    out:=Objectify(BlockBijectionType, rec(blocks:=blocks));
-  else
-    out:=Objectify(BipartitionType, rec(blocks:=blocks)); 
-  fi;
+  out:=Objectify(BipartitionType, rec(blocks:=blocks)); 
 
   SetDegreeOfBipartition(out, n);
-  SetRankOfBipartition(out, rank);
-  SetTransverseBlocksLookup(out, lookup);
   SetNrLeftBlocks(out, nrleft);
   SetNrBlocks(out, next);
   return out;
@@ -920,8 +874,6 @@ function(blocks)
   od;
   
   nrleft:=next; 
-  rank:=0;
-  lookup:=BlistList([1..nrleft], []);
 
   for i in [n+1..2*n] do 
     if not seen[blocks[i]] then 
@@ -931,21 +883,12 @@ function(blocks)
         return;
       fi;
       seen[blocks[i]]:=true;
-    elif blocks[i]<=nrleft and not lookup[blocks[i]] then #transverse block
-      rank:=rank+1;
-      lookup[blocks[i]]:=true;
-    fi;
+   fi;
   od;
 
-  if nrleft=next and rank=nrleft then #block bijection
-    out:=Objectify(BlockBijectionType, rec(blocks:=blocks));
-  else
-    out:=Objectify(BipartitionType, rec(blocks:=blocks)); 
-  fi;
+  out:=Objectify(BipartitionType, rec(blocks:=blocks)); 
 
   SetDegreeOfBipartition(out, n);
-  SetRankOfBipartition(out, rank);
-  SetTransverseBlocksLookup(out, lookup);
   SetNrLeftBlocks(out, nrleft);
   SetNrBlocks(out, next);
   return out;
@@ -1027,11 +970,7 @@ function(f, p)
     out[i+n]:=tab2[tab1[blocks[i+n]]];
   od;
 
-  if IsBlockBijection(f) then 
-    out:=Objectify(BlockBijectionType, rec(blocks:=out));
-  else
-    out:=Objectify(BipartitionType, rec(blocks:=out)); 
-  fi;
+  out:=Objectify(BipartitionType, rec(blocks:=out)); 
   
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, NrLeftBlocks(f));

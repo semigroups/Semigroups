@@ -176,7 +176,7 @@ end);
 #
 
 InstallMethod(\in, "for inverse op D-class",
-[IsAssociativeElementWithUniqueSemigroupInverse, 
+[IsAssociativeElement, 
 IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(f, d)
   local rep, s, o, m, lookup, rho_l, lambda_l, schutz, scc, g;
@@ -920,6 +920,8 @@ InstallMethod(RClassReps, "for an acting semigroup with inverse op",
 InstallMethod(RClassReps, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
 d-> List(LClassReps(d), x-> Inverse(x)));
+
+#
 
 InstallMethod(Random, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],

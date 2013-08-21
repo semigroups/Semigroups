@@ -12,8 +12,13 @@
 # Setup - install the basic things required for specific acting semigroups    #
 ###############################################################################
 
+InstallTrueMethod(IsGeneratorsOfActingSemigroup, IsTransformationCollection);
+InstallTrueMethod(IsGeneratorsOfActingSemigroup, IsPartialPermCollection);
+InstallTrueMethod(IsGeneratorsOfActingSemigroup, IsBipartitionCollection);
+
 InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
 
+# JDM shouldn't IsActingSemigroupGreensClass be a category??
 InstallImmediateMethod(IsActingSemigroupGreensClass, IsGreensClass, 0, 
 x-> IsActingSemigroup(Parent(x)));
 
@@ -21,7 +26,7 @@ x-> IsActingSemigroup(Parent(x)));
 
 InstallMethod(ActionDegree, 
 "for associative element with action collection",
-[IsAssociativeElementWithActionCollection], 
+[IsAssociativeElementCollection], 
 s-> ActionDegree(Representative(s)));
 
 InstallMethod(ActionDegree, "for a partial perm collection",

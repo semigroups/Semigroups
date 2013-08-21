@@ -9,7 +9,7 @@
 ##
 
 DeclareOperation("IrredundantGeneratingSubset",
-[IsAssociativeElementWithActionCollection]);
+[IsAssociativeElementCollection]);
 DeclareOperation("InversesOfSemigroupElementNC", [IsActingSemigroup and
 HasGeneratorsOfSemigroup, IsAssociativeElement]);
 

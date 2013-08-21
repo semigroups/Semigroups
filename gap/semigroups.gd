@@ -12,41 +12,42 @@ DeclareCategory("IsAssociativeElementWithStar", IsAssociativeElement);
 DeclareCategoryCollections("IsAssociativeElementWithStar");
 DeclareOperation("StarOp", [IsAssociativeElementWithStar]);
 DeclareAttribute("Star", IsAssociativeElementWithStar);
+
 DeclareSynonym("IsRegularStarSemigroup", IsRegularSemigroup and                 IsAssociativeElementWithStarCollection);
-DeclareOperation("InverseOp", [IsAssociativeElementWithStar and IsAssociativeElementWithUniqueSemigroupInverse]);
+
+DeclareOperation("InverseOp", [IsAssociativeElementWithStar]);
 
 DeclareOperation("SemigroupByGenerators",
-[IsAssociativeElementWithActionCollection, IsRecord]);
+[IsAssociativeElementCollection, IsRecord]);
 
 DeclareOperation("MonoidByGenerators",
-[IsAssociativeElementWithActionCollection, IsRecord]);
+[IsAssociativeElementCollection, IsRecord]);
 
 DeclareOperation("InverseMonoidByGenerators",
-[IsAssociativeElementWithUniqueSemigroupInverseCollection and
-IsAssociativeElementWithActionCollection, IsRecord]);
+[IsAssociativeElementCollection and
+IsAssociativeElementCollection, IsRecord]);
 
 DeclareOperation("InverseSemigroupByGenerators",
-[IsAssociativeElementWithUniqueSemigroupInverseCollection and
-IsAssociativeElementWithActionCollection, IsRecord]);
+[IsAssociativeElementCollection, IsRecord]);
 
 DeclareOperation("ClosureInverseSemigroup", [IsActingSemigroupWithInverseOp,
-IsAssociativeElementWithActionCollection, IsRecord]);
+IsAssociativeElementCollection, IsRecord]);
 DeclareOperation("ClosureInverseSemigroup",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementWithActionCollection]);
+[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection]);
 DeclareOperation("ClosureInverseSemigroup", 
-[IsActingSemigroupWithInverseOp, IsAssociativeElementWithAction]);
+[IsActingSemigroupWithInverseOp, IsAssociativeElement]);
 DeclareOperation("ClosureInverseSemigroup",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementWithAction, IsRecord]);
+[IsActingSemigroupWithInverseOp, IsAssociativeElement, IsRecord]);
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
 
 DeclareOperation("ClosureSemigroup", 
-[IsActingSemigroup, IsAssociativeElementWithActionCollection, IsRecord]);
+[IsActingSemigroup, IsAssociativeElementCollection, IsRecord]);
 DeclareOperation("ClosureSemigroup", 
-[IsActingSemigroup, IsAssociativeElementWithActionCollection]);
+[IsActingSemigroup, IsAssociativeElementCollection]);
 DeclareOperation("ClosureSemigroup",
-[IsActingSemigroup, IsAssociativeElementWithAction]);
+[IsActingSemigroup, IsAssociativeElement]);
 DeclareOperation("ClosureSemigroup",
-[IsActingSemigroup, IsAssociativeElementWithAction, IsRecord]);
+[IsActingSemigroup, IsAssociativeElement, IsRecord]);
 DeclareOperation("ClosureSemigroup", [IsActingSemigroup, IsList and IsEmpty]); #JDM remove me!
 DeclareGlobalFunction("ClosureSemigroupNC");
 

@@ -384,8 +384,6 @@ gap> S:=SymmetricInverseSemigroup(5);
 &lt;symmetric inverse semigroup on 5 pts>
 gap> IdempotentGeneratedSubsemigroup(S);
 &lt;inverse partial perm semigroup on 5 pts with 6 generators>
-gap> S:=DualSymmetricInverseSemigroup(5);
-&lt;bipartition semigroup on 5 pts with 3 generators>
 gap> S:=DualSymmetricInverseSemigroup(5); 
 &lt;bipartition semigroup on 5 pts with 3 generators>
 gap> IdempotentGeneratedSubsemigroup(S);

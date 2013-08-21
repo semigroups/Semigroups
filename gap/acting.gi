@@ -163,7 +163,7 @@ end);
 # expand?
 
 InstallMethod(\in, "for acting semigroup element and semigroup data",
-[IsAssociativeElementWithAction, IsSemigroupData],
+[IsAssociativeElement, IsSemigroupData],
 function(f, data)
   return not Position(data, f)=fail;
 end);
@@ -171,7 +171,7 @@ end);
 #
 
 InstallMethod(\in, "for an acting element and acting semigroup",
-[IsAssociativeElementWithAction, IsActingSemigroup], 
+[IsAssociativeElement, IsActingSemigroup], 
 function(f, s)
   local data, len, ht, val, lambda, o, l, lookfunc, m, scc, lambdarho, schutz, g, reps, repslens, lambdaperm, n, max, found;
   
@@ -567,7 +567,7 @@ function(s, f, opt)
   if not IsActingSemigroup(s) then 
     Error("usage: <s> must be an acting semigroup,");
     return;
-  elif not IsAssociativeElementWithAction(f) then 
+  elif not IsAssociativeElement(f) then 
     Error("usage: <f> must be an associative element with action,");
     return;
   elif not IsBool(opt) then 
@@ -637,7 +637,7 @@ function(s, f, opt)
   if not IsActingSemigroup(s) then 
     Error("usage: <s> must be an acting semigroup,");
     return;
-  elif not IsAssociativeElementWithAction(f) then 
+  elif not IsAssociativeElement(f) then 
     Error("usage: <f> must be an associative element with action,");
     return;
   elif not IsBool(opt) then 

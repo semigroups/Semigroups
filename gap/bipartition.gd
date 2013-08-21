@@ -8,14 +8,11 @@
 #############################################################################
 ##
 
-DeclareCategory("IsBipartition", IsMultiplicativeElementWithOne and
- IsAssociativeElementWithAction and IsAssociativeElementWithStar 
- and IsMultiplicativeElementWithInverse);
+DeclareCategory("IsBipartition", IsMultiplicativeElementWithInverse and
+ IsAssociativeElementWithStar);
 DeclareCategoryCollections("IsBipartition");
 
-DeclareCategory("IsBlockBijection", IsBipartition and
-IsAssociativeElementWithUniqueSemigroupInverse);
-DeclareCategoryCollections("IsBlockBijection");
+DeclareProperty("IsBlockBijection", IsBipartition);
 
 DeclareGlobalFunction("BipartitionNC");
 DeclareGlobalFunction("Bipartition");

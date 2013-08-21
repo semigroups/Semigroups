@@ -1461,7 +1461,7 @@ end);
 
 # same method for regular/inverse
 
-InstallMethod(IsomorphismPermGroup, "for H-class of an acting semi",
+InstallMethod(IsomorphismPermGroup, "for H-class of an acting semigroup",
 [IsGreensHClass and IsActingSemigroupGreensClass],
 function(h)
 

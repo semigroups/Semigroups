@@ -295,8 +295,8 @@ end);
 #
 
 InstallMethod(IrredundantGeneratingSubset,
-"for an associative element with action collection",
-[IsAssociativeElementWithActionCollection],
+"for an associative element collection",
+[IsAssociativeElementCollection],
 function(coll)
   local gens, j, out, i, redund, f;
   
