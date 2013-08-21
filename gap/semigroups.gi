@@ -449,7 +449,7 @@ end);
 
 InstallMethod(ClosureInverseSemigroup, 
 "for acting semigroup with inverse op and generators of inverse acting semigroup",
-[IsActingSemigroupWithInverseOp, IsGeneratorsOfActingSemigroup and IsGeneratorsOfInverseSemigroup],
+[IsActingSemigroupWithInverseOp, IsGeneratorsOfActingSemigroup],
 function(s, coll) 
   return ClosureInverseSemigroup(s, coll, s!.opts);
 end);
@@ -476,12 +476,17 @@ end);
 
 InstallMethod(ClosureInverseSemigroup, 
 "for an acting semigroup with inverse op, ass. elt. coll, and record",
-[IsActingSemigroupWithInverseOp, IsGeneratorsOfInverseSemigroup and IsGeneratorsOfActingSemigroup, IsRecord],
+[IsActingSemigroupWithInverseOp, IsGeneratorsOfActingSemigroup, IsRecord],
 function(s, coll, record)
   local n;
 
   if not ElementsFamily(FamilyObj(s))=FamilyObj(Representative(coll)) then 
     Error("the semigroup and collection of elements are not of the same type,");
+    return;
+  fi;
+
+  if not IsGeneratorsOfInverseSemigroup(coll) then 
+    Error("<coll> is a collection of generators of an inverse semigroup,");
     return;
   fi;
 
