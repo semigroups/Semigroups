@@ -19,7 +19,7 @@
       the maximal subgroups of the semigroup <A>S</A>. 
       <Example>
 gap> S:=DualSymmetricInverseSemigroup(6);
-&lt;bipartition semigroup on 6 pts with 3 generators>
+&lt;inverse bipartition semigroup on 6 pts with 3 generators>
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S3", "S4", "S5", "S6" ]
 gap> S:=Semigroup( PartialPerm( [ 1, 3, 4, 5, 8 ], [ 8, 3, 9, 4, 5 ] ), 
@@ -212,7 +212,7 @@ gap> S:=PartitionMonoid(6);
 gap> MultiplicativeZero(S);
 fail
 gap> S:=DualSymmetricInverseMonoid(6);
-&lt;bipartition semigroup on 6 pts with 3 generators>
+&lt;inverse bipartition semigroup on 6 pts with 3 generators>
 gap> MultiplicativeZero(S);
 &lt;bipartition: [ 1, 2, 3, 4, 5, 6, -1, -2, -3, -4, -5, -6 ]></Example> 
     </Description>
@@ -385,9 +385,9 @@ gap> S:=SymmetricInverseSemigroup(5);
 gap> IdempotentGeneratedSubsemigroup(S);
 &lt;inverse partial perm semigroup on 5 pts with 6 generators>
 gap> S:=DualSymmetricInverseSemigroup(5); 
-&lt;bipartition semigroup on 5 pts with 3 generators>
+&lt;inverse bipartition semigroup on 5 pts with 3 generators>
 gap> IdempotentGeneratedSubsemigroup(S);
-&lt;bipartition monoid on 5 pts with 10 generators>
+&lt;inverse bipartition semigroup on 5 pts with 11 generators>
 gap> IsSemilatticeAsSemigroup(last);
 true</Example>
     </Description>

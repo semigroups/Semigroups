@@ -549,7 +549,7 @@ end);
 InstallMethod(PermLeftBlocks, "for blocks and bipartition",
 [IsBlocks, IsBipartition], 
 function(blocks, f)
-  return PermRightBlocks(blocks, Inverse(f));
+  return PermRightBlocks(blocks, Star(f));
 end);
 
 #

@@ -12,6 +12,24 @@
   <ManSection>
     <Filt Name="IsDualTransBipartition" Arg='f'/>
     <Description>
+    If the star of the bipartition <A>f</A> defines a transformation, then
+    <C>IsDualTransBipartition</C> returns <K>true</K>, and if not, then
+    <K>false</K> is returned.<P/>
+
+    The star of a bipartition <A>f</A> defines a transformation if and only if
+    the left blocks of <A>f</A> corresponds to a permutation of <C>[1..n]</C>,
+    where <C>n</C> is the degree of <A>f</A>.
+    <Example>
+gap> f:=Bipartition( [ [ 1, -8, -9 ], [ 2, -1, -4 ], [ 3 ], [ 4 ], [ 5, -10 ], 
+> [ 6, -2, -5 ], [ 7, -3 ], [ 8 ], [ 9, -6, -7 ], [ 10 ] ] );;
+gap> IsDualTransBipartition(f);
+true
+gap> f:=Bipartition( [ [ 1, 4, -3, -6 ], [ 2, 5, -4, -5 ], [ 3, 6, -1 ], 
+> [ -2 ] ] );;
+gap> IsTransBipartition(f);
+false
+gap> Number(PartitionMonoid(3), IsDualTransBipartition);
+27</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -44,7 +62,7 @@
     <Ref Attr="ExtRepOfBipartition"/>,
     <Ref Attr="LeftProjection"/>,
     <Ref Attr="RightProjection"/>,
-    <Ref Oper="InverseOp" Label="for a bipartition"/>, 
+    <Ref Oper="StarOp"/>, 
     <Ref Attr="DegreeOfBipartition"/>,
     <Ref Attr="RankOfBipartition"/>,
     multiplication of two bipartitions of equal degree is 
@@ -270,7 +288,7 @@ gap> BipartitionByIntRep([ 1, 2, 2, 1, 3, 4 ]);
       If <A>f</A> and <A>g</A> are bipartitions with equal left and right
       blocks, then <C>PermLeftQuoBipartition</C> returns the permutation of the
       indices of the right blocks of <A>f</A> (and <A>g</A>) induced by 
-      <C>Inverse(<A>f</A>)*<A>g</A></C>. <P/>
+      <C>Star(<A>f</A>)*<A>g</A></C>. <P/>
 
       <C>PermLeftQuoBipartition</C> verifies that <A>f</A> and <A>g</A> have
       equal left and right blocks, and returns an error if they do not.
@@ -278,7 +296,7 @@ gap> BipartitionByIntRep([ 1, 2, 2, 1, 3, 4 ]);
 
       The value returned by <C>PermLeftQuoBipartition(<A>f</A>,<A>g</A>)</C> is
       the same as that returned by 
-      <C>PermRightBlocks(RightBlocks(<A>f</A>), Inverse(<A>f</A>)*g)</C>.
+      <C>PermRightBlocks(RightBlocks(<A>f</A>), Star(<A>f</A>)*g)</C>.
       See also <Ref Oper="PermRightBlocks"/> and 
        <Ref Oper="OnRightBlocksBipartitionByPerm"/>.
       <Example>
@@ -288,7 +306,7 @@ gap> g:=Bipartition( [ [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -3, -6, -7, -9 ],
 > [ 3, -4, -5 ], [ 9, -1, -2, -8 ], [ -10 ] ] );;
 gap> PermLeftQuoBipartition(f, g);
 (1,2,3)
-gap> Inverse(f)*g;
+gap> Star(f)*g;
 &lt;bipartition: [ 1, 2, 8, -3, -6, -7, -9 ], [ 3, 6, 7, 9, -4, -5 ], 
 [ 4, 5, -1, -2, -8 ], [ 10 ], [ -10 ]>
 gap> PermRightBlocks(RightBlocks(f), last);
@@ -427,7 +445,7 @@ gap> ExtRepOfBipartition(f);
     <Returns>A bipartition.</Returns>
     <Description>
       The <C>LeftProjection</C> of a bipartition <A>f</A> is the bipartition
-      <C><A>f</A>*Inverse(<A>f</A>)</C>. It is so-named, since the left and
+      <C><A>f</A>*Star(<A>f</A>)</C>. It is so-named, since the left and
       right blocks of the left projection equal the left blocks of <A>f</A>.
       <P/>
 
@@ -458,7 +476,7 @@ true</Example>
     <Returns>A bipartition.</Returns>
     <Description>
       The <C>RightProjection</C> of a bipartition <A>f</A> is the bipartition
-      <C>Inverse(<A>f</A>)*<A>f</A></C>. It is so-named, since the left and
+      <C>Star(<A>f</A>)*<A>f</A></C>. It is so-named, since the left and
       right blocks of the right projection equal the right blocks of <A>f</A>.
       <P/>
 
@@ -481,15 +499,16 @@ true</Example>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="InverseOp">
+<#GAPDoc Label="StarOp">
   <ManSection>
-    <Oper Name="InverseOp" Arg="f" Label="for a bipartition"/>
+    <Oper Name="StarOp" Arg="f"/>
+    <Attr Name="Star" Arg="f"/>
     <Returns>A bipartition.</Returns>
     <Description>
-      <C>InverseOp</C> returns the unique bipartition <C>g</C> with the
+      <C>StarOp</C> returns the unique bipartition <C>g</C> with the
       property that: <C><A>f</A>*g*<A>f</A>=<A>f</A></C>,
       <C>RightBlocks(<A>f</A>)=LeftBlocks(g)</C>, and
-      <C>LeftBlocks(<A>f</A>)=RightBlocks(g)</C>. The inverse <C>g</C> can
+      <C>LeftBlocks(<A>f</A>)=RightBlocks(g)</C>. The star <C>g</C> can
       be obtained from <A>f</A> by changing the sign of every integer in the
       external representation of <A>f</A>.  
       <Example>
@@ -497,7 +516,7 @@ gap> f:=Bipartition( [ [ 1, -4 ], [ 2, 3, 4 ], [ 5 ], [ -1 ],
 > [ -2, -3 ], [ -5 ] ] );
 &lt;bipartition: [ 1, -4 ], [ 2, 3, 4 ], [ 5 ], [ -1 ], [ -2, -3 ], 
 [ -5 ]>
-gap> g:=Inverse(f);
+gap> g:=Star(f);
 &lt;bipartition: [ 1 ], [ 2, 3 ], [ 4, -1 ], [ 5 ], [ -2, -3, -4 ], 
 [ -5 ]>
 gap> f*g*f=f;
