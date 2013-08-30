@@ -726,14 +726,26 @@ d-> Range(InjectionPrincipalFactor(d)));
 InstallMethod(SmallGeneratingSet, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-s -> Generators(Semigroup(Generators(s), rec(small:=true))));
+function(s)
+  if IsEmpty(Generators(s)) then 
+    return Generators(s);
+  else
+    return Generators(Semigroup(Generators(s), rec(small:=true)));
+  fi;
+end);
 
 #
 
 InstallMethod(SmallGeneratingSet, 
 "for an acting semigroup with inverse op and generators", 
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
-s -> Generators(InverseSemigroup(Generators(s), rec(small:=true))));
+function(s)
+  if IsEmpty(Generators(s)) then 
+    return Generators(s);
+  else
+    return Generators(InverseSemigroup(Generators(s), rec(small:=true)));
+  fi;
+end);
 
 #
 
