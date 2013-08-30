@@ -27,183 +27,140 @@
 InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup], 
 function(s)
-  local out, g, I, J, i, j, r, mat, thezero, gens, element, newgens,
-        p, maxsub, contained,  map,
-        numNZEs, posofNZE, oneElementRows, oneElementCols, 
-        singletonMatrixRowelements, singletonMatrixColelements, addback,
-        zeroMatrixColumnProducingElements, zeroMatrixRowProducingElements;
+  local out, G, mat, I, J, P, new, pos, inj, gens, regular, rectangles, H, i, j, x, k;
 
   out:=[];
-  g:=Source(UnderlyingInjectionZeroMagma(UnderlyingSemigroup(s)));
+  G:=UnderlyingSemigroup(s);
   mat:=MatrixOfRMS(s);
   I:=[1..Length(mat[1])]; J:=[1..Length(mat)];
-  
-  p:=Concatenation(mat);
-  thezero:=MultiplicativeZero(s);
-  
-  p:=Filtered(p, x-> not x!.IsTheZero);
-  p:=Set(List(p, x-> x!.UnderlyingElement));
-
-  ### CASE 1 ###
-  # Check if there is a maximal subgroup of G (S=IxGxJ) contained in the matrix
-  if Size(Group(p)) < Size(g)-1 then
-
-                map:=FamilyObj(mat[1][1])!.injection;
-
-    for maxsub in MaximalSubgroups(g) do
-    
-      contained:=true;
-      for element in p do
-        if not element in maxsub then
-          contained:=false;
-          break;
-        fi;
-      od;
-                        
-      if contained then
-
-                                gens:=List(GeneratorsOfGroup(maxsub), x->x^map);
-                                Add(gens, One(maxsub)^map);
-                                newgens:=[];
-                                
-                                for i in I do
-                                        for j in J do
-                                                for element in gens do
-                                                        Add(newgens, RMSElementNC(s, i, element, j));
-                                                od;
-                                        od;
-                                od;
-                                
-                                Add(newgens, MultiplicativeZero(s));                            
-        r:=Semigroup(newgens);
-        SetAsSSortedList(r, newgens);
-        SetSize(r, Length(newgens));
-        Add(out, Semigroup(r));
-
-      fi;
-                        
-    od;
-    
+ 
+  # find the set of group elements in the matrix
+  P:=Union(mat);
+  if IsMultiplicativeZero(G, P[1]) then 
+    Remove(P, 1);
+  else  # S\{0} is a maximal subsemigroup 
+        # the unique case when the missing D-class is {0}
+    new:=ShallowCopy(GeneratorsOfSemigroup(s));
+    pos:=Position(new, MultiplicativeZero(s)); 
+    Remove(new, pos); #remove the zero, which has to be present
+    Add(out, Semigroup(new));
   fi;
+ 
+  Apply(P, x-> x!.elt);
+  P:=Group(P);
+  inj:=UnderlyingInjectionZeroMagma(G);
+  G:=Source(UnderlyingInjectionZeroMagma(G));
+
+  if IsAbelian(G) and IsSimple(G) then 
+    # the unique case when {0} is a maximal subsemigroup
+    Add(out, Semigroup(MultiplicativeZero(s)));
+  fi;
+
+  # Case 1: maximal subsemigroups of the form (IxHxJ)\cup\{0\} where H is a
+  # maximal subsemigroup of G
   
-
-  ### CASE 2: (a), (b), and (c) ###
-  
-  # Code assumes that S doesn't have any matrix rows/columns of just zeroes
-  
-  # A subsemigroup formed by removing one index is maximal
-  #  iff 
-  # There are no rows or columns in the resulting matrix containing just zeroes
-
-        # If there *are* zero rows/columns in the resulting matrix
-        #  then
-        # Add back the entries from the removed column/row corresponding to the zero rows/columns
-        # And your subsemigroup will be maximal
-
-
-  zeroMatrixRowProducingElements:=[];
-  zeroMatrixColumnProducingElements:=[];
-
-  for i in I do
-  
-    numNZEs:=0;
-
-    for j in J do
-      if not mat[j][i]!.IsTheZero then
-        numNZEs:=numNZEs+1;     
-        posofNZE:=j;            
+  if P<>G then # every subsemigroup of S containing a cross-section of L- and
+               # R-classes contains P as a maximal subgroup
+    for H in MaximalSubgroups(G) do
+      if IsSubgroup(H, P) then 
+        gens:=OnTuples(GeneratorsOfGroup(H), inj);
+        new:=[MultiplicativeZero(s)];
+        for i in I do
+          for j in J do
+            for x in gens do
+              Add(new, RMSElementNC(s, i, x, j));
+            od;
+          od;
+        od;
+        Add(out, Semigroup(new));
       fi;
-      if numNZEs > 1 then break; fi;
     od;
-        
-    if numNZEs = 1 then
-      Add(zeroMatrixColumnProducingElements, [posofNZE, i]);
-    elif numNZEs = 0 then 
-      Error("A column in the matrix is all zeroes,");
-    fi;
-        
-  od;
-  
-  for j in J do
-  
-    numNZEs:=0;
-    
-    for i in I do
-      if not mat[j][i]!.IsTheZero then
-        numNZEs:=numNZEs+1;
-        posofNZE:=i;
-      fi;
-      if numNZEs > 1 then break; fi;
-    od;         
-        
-    if numNZEs = 1 then
-      Add(zeroMatrixRowProducingElements, [j, posofNZE]);
-    elif numNZEs = 0 then 
-      Error("A row in the matrix is all zeroes,");
-    fi;
-        
-  od;
-  
-  
-  # We have now calculated which matrix columns/rows have only a single element
-  # And where those elements are within the matrix
+  fi;
 
-  gens:=Filtered(GeneratorsOfSemigroup(s), x -> not x = thezero);
+  #JDM could test for IsRUnipotent or IsLUnipotent here!
 
-        # Loop through each matrix column
-  for i in I do
+  # Case 2: maximal subsemigroup of the form (IxGxJ')\cup\{0\} where J'=J\{j}
+  # for some j in J, and where the resultant matrix has no zero columns or rows.
+
+  G:=UnderlyingSemigroup(s);
+  gens:=GeneratorsOfSemigroup(G);
   
-        # Throw away the RMS generators with this I index
-        newgens:=Filtered(gens, x -> not RowOfRMSElement(x) = i);
-        Add(newgens, thezero);
-        
-        # Check if removing matrix column i has produced some zero matrix rows
-        # If so, add back in necessary generators
-        if i in Set(List(zeroMatrixRowProducingElements, x -> x[2])) then
-                addback:=[];
-                for element in Filtered(zeroMatrixRowProducingElements, x->x[2]=i) do
-                        Add(addback, element[1]);
+  for j in J do 
+    regular:=false;
+    for i in I do 
+      if not IsMultiplicativeZero(G, mat[j][i]) then 
+        if regular then # the col. has at least 2 non-zero entries
+          new:=[];
+          for i in I do 
+            for k in J do
+              if k<>j then 
+                for x in gens do 
+                  Add(new, RMSElementNC(s, i, x, k));
                 od;
-                        newgens:=Concatenation(newgens, Filtered(gens, x -> RowOfRMSElement(x) = i and ColumnOfRMSElement(x) in addback));
-                fi;
-
-                r:=Semigroup(newgens);
-                SetAsSSortedList(r, newgens);
-                SetSize(r, Length(newgens));
-    Add(out, r);
-    
+              fi;
+            od;
+          od;
+          Add(out, Semigroup(new));
+          break;
+        else
+          regular:=true;
+        fi;
+      fi;
+    od;
   od;
 
-  # Loop through each matrix row
-  for j in J do
-  
-    # Throw away the RMS generators with this J index
-    newgens:=Filtered(gens, x -> not ColumnOfRMSElement(x) = j);
-    Add(newgens, thezero);
-    
-    # Check if removing matrix row j has produced some zero matrix columns
-    # If so, add back in necessary generators
-    if j in Set(List(zeroMatrixColumnProducingElements, x -> x[1])) then
-                        addback:=[];
-                        for element in Filtered(zeroMatrixColumnProducingElements, x->x[1]=j) do
-                                Add(addback, element[2]);
-                        od;
-                        
-                newgens:=Concatenation(newgens, Filtered(gens, x -> ColumnOfRMSElement(x) = j and RowOfRMSElement(x) in addback));
-    fi;
-
-                r:=Semigroup(newgens);
-                SetAsSSortedList(r, newgens);
-                SetSize(r, Length(newgens));
-    Add(out, r);
-    
+  # Case 3: the dual of case 2.
+  for i in I do 
+    regular:=false;
+    for j in J do 
+      if not IsMultiplicativeZero(G, mat[j][i]) then 
+        if regular then # the row has at least 2 non-zero entries
+          new:=[];
+          for k in I do 
+            for j in J do
+              if k<>i then 
+                for x in gens do 
+                  Add(new, RMSElementNC(s, k, x, j));
+                od;
+              fi;
+            od;
+          od;
+          Add(out, Semigroup(new));
+          break;
+        else
+          regular:=true;
+        fi;
+      fi;
+    od;
   od;
+
+  # Case 4: maximal rectangle of zeros in the matrix
+
+  rectangles:=CompleteSubgraphs(Graph(Group(()), [1..Length(I)+Length(J)],
+   OnPoints, 
+   function(i,j) 
+     if i<=Length(I) and j>Length(I) then 
+       return IsMultiplicativeZero(G, mat[j-Length(I)][i]); 
+     elif j<=Length(I) and i>Length(I) then 
+       return IsMultiplicativeZero(G, mat[i-Length(I)][j]); 
+     else
+       return i<>j;
+     fi;
+   end, true));
   
-        return out;
-          
+  for k in [2..Length(rectangles)-1] do 
+    # the first and last entries correspond to removing all the rows or columns
+    for i in Difference(I, rectangles[k]) do 
+      for j in Difference(J, rectangles[k]-Length(I)) do 
+        for x in gens do 
+          Add(new, RMSElementNC(s, k, x, j));
+        od;
+      od;
+    od;
+    Add(out, Semigroup(new));
+  od;
+  return out;
 end);
-
-
 
 # Note that a semigroup satisfies IsTransformationMonoid only if One(s)<>fail. 
 
