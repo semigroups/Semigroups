@@ -577,7 +577,7 @@ end);
 # partial permutations has to coincide with the One. This is not the case for
 # transformation semigroups
 
-InstallMethod(MultiplicativeNeutralElement, "for a partial perm semi",
+InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
 [IsPartialPermSemigroup], One);
 
 #
