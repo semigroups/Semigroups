@@ -27,9 +27,9 @@
 InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup], 
 function(s)
-  local out, G, mat, I, J, P, new, pos, inj, gens, regular, rectangles, H, i, j, x, k;
+  local out, G, mat, I, J, P, new, pos, inj, gens, regular, rectangles, len, nr, H, i, j, x, k;
 
-  out:=[];
+  out:=[[], [], [], [], [], []];
   G:=UnderlyingSemigroup(s);
   mat:=MatrixOfRMS(s);
   I:=[1..Length(mat[1])]; J:=[1..Length(mat)];
@@ -43,7 +43,7 @@ function(s)
     new:=ShallowCopy(GeneratorsOfSemigroup(s));
     pos:=Position(new, MultiplicativeZero(s)); 
     Remove(new, pos); #remove the zero, which has to be present
-    Add(out, Semigroup(new));
+    Add(out[1], Semigroup(new));
   fi;
  
   Apply(P, x-> x!.elt);
@@ -51,9 +51,9 @@ function(s)
   inj:=UnderlyingInjectionZeroMagma(G);
   G:=Source(UnderlyingInjectionZeroMagma(G));
 
-  if IsAbelian(G) and IsSimple(G) then 
+  if IsAbelian(G) and IsSimple(G) then #JDM this isn't right 
     # the unique case when {0} is a maximal subsemigroup
-    Add(out, Semigroup(MultiplicativeZero(s)));
+    Add(out[2], Semigroup(MultiplicativeZero(s)));
   fi;
 
   # Case 1: maximal subsemigroups of the form (IxHxJ)\cup\{0\} where H is a
@@ -72,7 +72,7 @@ function(s)
             od;
           od;
         od;
-        Add(out, Semigroup(new));
+        Add(out[3], Semigroup(new));
       fi;
     od;
   fi;
@@ -100,7 +100,7 @@ function(s)
               fi;
             od;
           od;
-          Add(out, Semigroup(new));
+          Add(out[4], Semigroup(new));
           break;
         else
           regular:=true;
@@ -125,7 +125,7 @@ function(s)
               fi;
             od;
           od;
-          Add(out, Semigroup(new));
+          Add(out[5], Semigroup(new));
           break;
         else
           regular:=true;
@@ -147,17 +147,25 @@ function(s)
        return i<>j;
      fi;
    end, true));
-  
+
+  len:=Length(I);
   for k in [2..Length(rectangles)-1] do 
     # the first and last entries correspond to removing all the rows or columns
-    for i in Difference(I, rectangles[k]) do 
-      for j in Difference(J, rectangles[k]-Length(I)) do 
-        for x in gens do 
-          Add(new, RMSElementNC(s, k, x, j));
+    nr:=Number(rectangles[k], x-> x>Length(I));
+
+    if nr>1 and Length(rectangles[k])-nr>1 then 
+      new:=[];
+      for i in I do 
+        for j in J do 
+          if not (i in rectangles[k] and j+len in rectangles[k]) then 
+            for x in gens do 
+              Add(new, RMSElementNC(s, i, x, j));
+            od;
+          fi;
         od;
       od;
-    od;
-    Add(out, Semigroup(new));
+      Add(out[6], Semigroup(new));
+    fi;
   od;
   return out;
 end);
