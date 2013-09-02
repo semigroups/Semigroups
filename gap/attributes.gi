@@ -162,6 +162,9 @@ function(s)
           if not (i in rectangles[k] and j+len in rectangles[k]) then 
             for x in gens do 
               # Add(new, RMSElementNC(s, i, x, j)); JDM update
+              # also this is not correct, we should only use those rectangles
+              # corresponding to subsemigroups (i.e. where the corresponding
+              # set of elements is closed!
             od;
           fi;
         od;
