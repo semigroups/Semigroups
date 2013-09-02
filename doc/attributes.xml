@@ -447,20 +447,11 @@ gap> S:=InverseSemigroup(
 gap> f:=PartialPerm([ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ]);;
 gap> d:=GreensDClassOfElement(S, f);
 {PartialPerm( [ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ] )}
-gap> InjectionPrincipalFactor(d);
-MappingByFunction( {PartialPerm( [ 1, 2, 5, 6, 7, 9 ], 
- [ 1, 2, 5, 6, 7, 9 ] )}, &lt;Rees 0-matrix semigroup 3x
- 3 over &lt;Group(()) with 0 adjoined>>
- , function( f ) ... end, function( x ) ... end )
+gap> InjectionPrincipalFactor(d);;
 gap> rms:=Range(last);
-&lt;Rees 0-matrix semigroup 3x3 over &lt;Group(()) with 0 adjoined>>
+&lt;Rees 0-matrix semigroup 3x3 over Group(())>
 gap> MatrixOfReesZeroMatrixSemigroup(rms);
-[ [ &lt;group with 0 adjoined elt: ()>, &lt;group with 0 adjoined elt: 0>, 
-      &lt;group with 0 adjoined elt: 0> ], 
-  [ &lt;group with 0 adjoined elt: 0>, &lt;group with 0 adjoined elt: ()>, 
-      &lt;group with 0 adjoined elt: 0> ], 
-  [ &lt;group with 0 adjoined elt: 0>, &lt;group with 0 adjoined elt: 0>, 
-      &lt;group with 0 adjoined elt: ()> ] ]
+[ [ (), 0, 0 ], [ 0, (), 0 ], [ 0, 0, () ] ]
 gap> Size(rms);
 10
 gap> Size(d);

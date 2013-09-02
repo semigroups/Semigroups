@@ -252,7 +252,7 @@ function(n)
   Add(gens, BipartitionNC(Concatenation([[1,2,-1, -2]], 
    List([3..n], x-> [x, -x]))));
 
-  return Semigroup(gens);
+  return Semigroup(gens, rec(regular:=true));
 end);
 
 ##
@@ -287,7 +287,7 @@ function(n)
   gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
   Add(gens, BipartitionNC(Concatenation([[1,2,-1,-2]],
    List([3..n], x-> [x, -x]))));
-  return Semigroup(gens);
+  return InverseSemigroup(gens);
 end);
 
 #
@@ -302,7 +302,7 @@ function(n)
   gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
   Add(gens, BipartitionNC(Concatenation([[1,2]], 
    List([3..n], x-> [x, -x]),[[-1,-2]])));
-  return Semigroup(gens);
+  return Semigroup(gens, rec(regular:=true));
 end);
 
 #
@@ -330,7 +330,7 @@ function(n)
     od;
     gens[i]:=BipartitionByIntRep(next);
   od;
-  return Monoid(gens);
+  return Monoid(gens, rec(regular:=true));
 end);
 
 # JDM rename and make global

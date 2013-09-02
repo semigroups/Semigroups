@@ -33,7 +33,7 @@ function(s)
 
   out:=[];
   G:=UnderlyingSemigroup(s);
-  mat:=MatrixOfRMS(s);
+  mat:=Matrix(s);
   I:=[1..Length(mat[1])]; J:=[1..Length(mat)];
  
   # find the set of group elements in the matrix
@@ -70,7 +70,7 @@ function(s)
         for i in I do
           for j in J do
             for x in gens do
-              Add(new, RMSElementNC(s, i, x, j));
+        #      Add(new, RMSElementNC(s, i, x, j)); JDM Update
             od;
           od;
         od;
@@ -97,7 +97,7 @@ function(s)
             for k in J do
               if k<>j then 
                 for x in gens do 
-                  Add(new, RMSElementNC(s, i, x, k));
+                  #Add(new, RMSElementNC(s, i, x, k)); JDM update
                 od;
               fi;
             od;
@@ -122,7 +122,7 @@ function(s)
             for j in J do
               if k<>i then 
                 for x in gens do 
-                  Add(new, RMSElementNC(s, k, x, j));
+                  #Add(new, RMSElementNC(s, k, x, j)); JDM update
                 od;
               fi;
             od;
@@ -161,7 +161,7 @@ function(s)
         for j in J do 
           if not (i in rectangles[k] and j+len in rectangles[k]) then 
             for x in gens do 
-              Add(new, RMSElementNC(s, i, x, j));
+              # Add(new, RMSElementNC(s, i, x, j)); JDM update
             od;
           fi;
         od;
@@ -367,11 +367,6 @@ function(d)
   lreps:=HClassReps(RClass(d, rep));
   mat:=[];
 
-  inj:=InjectionZeroMagma(g);
-  SetIsTotal(inj, true);
-  SetIsSingleValued(inj, true);
-  g:=Range(inj);
-  zero:=MultiplicativeZero(g);
   bound_r:=BlistList([1..Length(rreps)], []);
   bound_l:=BlistList([1..Length(lreps)], []);
   inv_l:=EmptyPlist(Length(lreps));
@@ -393,11 +388,11 @@ function(d)
         fi;
         if not bound_l[i] then
           bound_l[i]:=true;
-        inv_l[i]:=rreps[j]*mat[i][j]^-1;
+          inv_l[i]:=rreps[j]*mat[i][j]^-1;
         fi;
-        mat[i][j]:=mat[i][j]^inj;
+        mat[i][j]:=mat[i][j];
       else
-        mat[i][j]:=zero;
+        mat[i][j]:=0;
       fi;
     od;
   od;
@@ -421,16 +416,15 @@ function(d)
     fi;
     j:=Position(OrbSCC(o)[OrbSCCLookup(o)[j]], j);
 
-    return RMSElementNC(rms, j,
-      AsPermutation(inv_r[j]*f*inv_l[i])^inj, i);
+    return Objectify(TypeReesMatrixSemigroupElements(rms), 
+     [j, AsPermutation(inv_r[j]*f*inv_l[i]), i]);
   end;
 
   inv:=function(x)
-    local i, a, j;
-    i:=RowOfRMSElement(x);
-    a:=Images(InverseGeneralMapping(inj), UnderlyingElementOfRMSElement(x))[1];
-    j:=ColumnOfRMSElement(x);
-    return rreps[i]*a*lreps[j];
+    if x![1]=0 then 
+      return fail;
+    fi;
+    return rreps[x![1]]*x![2]*lreps[x![3]];
   end;
 
   hom:=MappingByFunction(d, rms, iso, inv);
@@ -542,17 +536,13 @@ function(d)
     fi;
     j:=Position(OrbSCC(o)[OrbSCCLookup(o)[j]], j);
 
-    return RMSElementNC(rms, j,
-      AsPermutation(rreps[j])^-1*AsPermutation(f)*
-      AsPermutation(lreps[i])^-1, i);
+    return Objectify(TypeReesMatrixSemigroupElements(rms), 
+    [j, AsPermutation(rreps[j])^-1*AsPermutation(f)*AsPermutation(lreps[i])^-1,
+     i]);
   end;
 
   inv:=function(x)
-    local i, a, j;
-    i:=RowOfReesMatrixSemigroupElement(x);
-    a:=UnderlyingElementOfReesMatrixSemigroupElement(x);
-    j:=ColumnOfReesMatrixSemigroupElement(x);
-    return rreps[i]*a*lreps[j];
+    return rreps[x![1]]*x![2]*lreps[x![2]];
   end;
 
   hom:=MappingByFunction(d, rms, iso, inv);
