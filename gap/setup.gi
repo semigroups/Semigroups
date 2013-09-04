@@ -291,20 +291,14 @@ InstallMethod(IdempotentCreator, "for a bipartition semigroup",
 # StabiliserAction will be \* for transformation and partial perm semigroups 
 # and something else for semigroups of bipartitions.
 
-InstallMethod(StabiliserAction, 
-"for a transformation semigroup with generators",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-s-> PROD);
+InstallMethod(StabiliserAction, "for a transformation semigroup",
+[IsTransformationSemigroup], s-> PROD);
 
-InstallMethod(StabiliserAction, 
-"for a partial perm semigroup with generators",
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
-s-> PROD);
+InstallMethod(StabiliserAction, "for a partial perm semigroup",
+[IsPartialPermSemigroup], s-> PROD);
 
-InstallMethod(StabiliserAction, 
-"for a bipartition semigroup with generators",
-[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
-s-> OnRightBlocksBipartitionByPerm);
+InstallMethod(StabiliserAction, "for a bipartition semigroup",
+[IsBipartitionSemigroup], s-> OnRightBlocksBipartitionByPerm);
 
 # IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only
 # if it is only possible to multiply elements of the type in the semigroup with
