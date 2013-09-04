@@ -479,14 +479,17 @@ function(coll)
   return out;
 end);
 
-#
+# this method is wrong, the returned function should have Source=s not the
+# the unique D-class of S, also there is no library method for
+# IsomorphismReesMatrixSemigroup of a D-class and so this doesn't work for
+# (say) Rees matrix semigroups. JDM
 
-InstallMethod(IsomorphismReesMatrixSemigroup, 
-"for a simple semigroup with generators",
-[IsSimpleSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  return IsomorphismReesMatrixSemigroup(DClass(s, Representative(s)));
-end);
+#InstallMethod(IsomorphismReesMatrixSemigroup, 
+#"for a simple semigroup with generators",
+#[IsSimpleSemigroup and HasGeneratorsOfSemigroup],
+#function(s)
+#  return IsomorphismReesMatrixSemigroup(DClass(s, Representative(s)));
+#end);
 
 #
 
