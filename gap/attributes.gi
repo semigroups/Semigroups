@@ -28,53 +28,44 @@
 
 InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup], 
-function(s)
+function(R)
   local out, G, mat, I, J, P, new, pos, inj, gens, regular, rectangles, len, nr, H, i, j, x, k;
 
+  G:=UnderlyingSemigroup(R);    
+
+  #JDM handle the case when G is not a group, and maybe R is not 0-simple, in
+  #these case the generic method should be used
+
   out:=[];
-  G:=UnderlyingSemigroup(s);
-  mat:=Matrix(s);
-  I:=[1..Length(mat[1])]; J:=[1..Length(mat)];
+  mat:=Matrix(R);     I:=Rows(R);         J:=Columns(R);
  
   # find the set of group elements in the matrix
   P:=Union(mat);
-  if IsMultiplicativeZero(G, P[1]) then 
+  if P[1]=0 then 
     Remove(P, 1);
   else  # S\{0} is a maximal subsemigroup 
         # the unique case when the missing D-class is {0}
-    new:=ShallowCopy(GeneratorsOfSemigroup(s));
-    pos:=Position(new, MultiplicativeZero(s)); 
+    new:=ShallowCopy(GeneratorsOfSemigroup(R));
+    pos:=Position(new, MultiplicativeZero(R)); 
     Remove(new, pos); #remove the zero, which has to be present
     Add(out, Semigroup(new));
   fi;
  
-  Apply(P, x-> x!.elt);
   P:=Group(P);
-  inj:=UnderlyingInjectionZeroMagma(G);
-  G:=Source(UnderlyingInjectionZeroMagma(G));
-
+  
   if IsAbelian(G) and IsSimple(G) then #JDM this isn't right 
     # the unique case when {0} is a maximal subsemigroup
-    Add(out, Semigroup(MultiplicativeZero(s)));
+    Add(out, Semigroup(MultiplicativeZero(R)));
   fi;
 
   # Case 1: maximal subsemigroups of the form (IxHxJ)\cup\{0\} where H is a
-  # maximal subsemigroup of G
+  # maximal subgroup of G
   
   if P<>G then # every subsemigroup of S containing a cross-section of L- and
                # R-classes contains P as a maximal subgroup
     for H in MaximalSubgroups(G) do
       if IsSubgroup(H, P) then 
-        gens:=OnTuples(GeneratorsOfGroup(H), inj);
-        new:=[MultiplicativeZero(s)];
-        for i in I do
-          for j in J do
-            for x in gens do
-        #      Add(new, RMSElementNC(s, i, x, j)); JDM Update
-            od;
-          od;
-        od;
-        Add(out, Semigroup(new));
+        Add(out, ReesZeroMatrixSubsemigroupNC(R, I, H, J));
       fi;
     od;
   fi;
@@ -83,26 +74,12 @@ function(s)
 
   # Case 2: maximal subsemigroup of the form (IxGxJ')\cup\{0\} where J'=J\{j}
   # for some j in J, and where the resultant matrix has no zero columns or rows.
-
-  G:=UnderlyingSemigroup(s);
-  gens:=GeneratorsOfSemigroup(G);
-  
-  for j in J do 
+  for i in I do 
     regular:=false;
-    for i in I do 
-      if not IsMultiplicativeZero(G, mat[j][i]) then 
-        if regular then # the col. has at least 2 non-zero entries
-          new:=[];
-          for i in I do 
-            for k in J do
-              if k<>j then 
-                for x in gens do 
-                  #Add(new, RMSElementNC(s, i, x, k)); JDM update
-                od;
-              fi;
-            od;
-          od;
-          Add(out, Semigroup(new));
+    for j in J do 
+      if mat[j][i]<>0 then 
+        if regular then 
+          Add(out, ReesZeroMatrixSubsemigroupNC(R, I, G, Difference(J, [j])));
           break;
         else
           regular:=true;
@@ -112,22 +89,12 @@ function(s)
   od;
 
   # Case 3: the dual of case 2.
-  for i in I do 
+  for j in J do 
     regular:=false;
-    for j in J do 
-      if not IsMultiplicativeZero(G, mat[j][i]) then 
-        if regular then # the row has at least 2 non-zero entries
-          new:=[];
-          for k in I do 
-            for j in J do
-              if k<>i then 
-                for x in gens do 
-                  #Add(new, RMSElementNC(s, k, x, j)); JDM update
-                od;
-              fi;
-            od;
-          od;
-          Add(out, Semigroup(new));
+    for i in I do 
+      if mat[j][i]<>0 then 
+        if regular then 
+          Add(out, ReesZeroMatrixSubsemigroupNC(R, Difference(I, [i]), G, J));
           break;
         else
           regular:=true;
@@ -142,9 +109,9 @@ function(s)
    OnPoints, 
    function(i,j) 
      if i<=Length(I) and j>Length(I) then 
-       return IsMultiplicativeZero(G, mat[j-Length(I)][i]); 
+       return mat[j-Length(I)][i]=0; 
      elif j<=Length(I) and i>Length(I) then 
-       return IsMultiplicativeZero(G, mat[i-Length(I)][j]); 
+       return mat[i-Length(I)][j]=0; 
      else
        return i<>j;
      fi;
@@ -152,14 +119,19 @@ function(s)
 
   len:=Length(I);
   for k in [2..Length(rectangles)-1] do 
-    # the first and last entries correspond to removing all the rows or columns
+    #the first and last entries correspond to removing all the rows or columns
     nr:=Number(rectangles[k], x-> x>Length(I));
 
     if nr>1 and Length(rectangles[k])-nr>1 then 
+      #at least 2 elements on each side are required to be a "rectangle"
       new:=[];
       for i in I do 
         for j in J do 
           if not (i in rectangles[k] and j+len in rectangles[k]) then 
+            if mat[j][i]<>0 then #the rectangle does not define a subsemigroup
+              notsubsemi:=true;
+              break;
+            fi;
             for x in gens do 
               # Add(new, RMSElementNC(s, i, x, j)); JDM update
               # also this is not correct, we should only use those rectangles
