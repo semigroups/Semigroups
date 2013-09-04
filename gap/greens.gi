@@ -1072,8 +1072,12 @@ end);
 
 # same method for regular/inverse
 
+# this should not apply to semigroups which are not defined and used in
+# Semigroups, since there are no methods for GroupHClass for these semigroups. 
+# JDM
+
 InstallMethod(GroupHClassOfGreensDClass, "for a D-class",
-[IsGreensDClass], GroupHClass);
+[IsGreensDClass and IsActingSemigroupGreensClass], GroupHClass);
 
 # different method for regular/inverse
 
