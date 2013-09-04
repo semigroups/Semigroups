@@ -545,7 +545,7 @@ function(d)
   end;
 
   inv:=function(x)
-    return rreps[x![1]]*x![2]*lreps[x![2]];
+    return rreps[x![1]]*x![2]*lreps[x![3]];
   end;
 
   hom:=MappingByFunction(d, rms, iso, inv);

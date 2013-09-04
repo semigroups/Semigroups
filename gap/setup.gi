@@ -12,9 +12,29 @@
 # Setup - install the basic things required for specific acting semigroups    #
 ###############################################################################
 
-InstallTrueMethod(IsGeneratorsOfActingSemigroup, IsTransformationCollection);
-InstallTrueMethod(IsGeneratorsOfActingSemigroup, IsPartialPermCollection);
-InstallTrueMethod(IsGeneratorsOfActingSemigroup, IsBipartitionCollection);
+InstallMethod(IsGeneratorsOfActingSemigroup, 
+"for an associative element collection",
+[IsAssociativeElementCollection], ReturnFalse);
+
+# In the below can't do ReturnTrue, since GAP insists that we use
+# InstallTrueMethod.
+#
+# InstallTrueMethod(IsGeneratorsOfActingSemigroup, IsTransformationCollection);
+# 
+# can't do InstallTrueMethod for the above since this is not picked up 
+# if Semigroups is loaded after any transformation semigroup has been created.
+# It seems that since IsTransformationCollection has had its implied filters
+# installed, if we add an additional implied filter
+# IsGeneratorsOfActingSemigroup, then this is ignored. I think this is a bug.
+
+InstallMethod(IsGeneratorsOfActingSemigroup, "for a transformation collection", 
+[IsTransformationCollection], x-> true);
+
+InstallMethod(IsGeneratorsOfActingSemigroup, "for a partial perm collection", 
+[IsPartialPermCollection], x-> true);
+
+InstallMethod(IsGeneratorsOfActingSemigroup, "for a bipartition collection", 
+[IsBipartitionCollection], x-> true);
 
 InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
 

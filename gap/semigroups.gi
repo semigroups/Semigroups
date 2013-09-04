@@ -157,23 +157,38 @@ end);
 # creating semigroups, monoids, inverse semigroups, etc
 
 InstallMethod(MagmaByGenerators, "for generators of acting semigroup",
-[IsGeneratorsOfActingSemigroup], SemigroupByGenerators);
+[IsAssociativeElementCollection], 
+function(coll)
+  if IsGeneratorsOfActingSemigroup(coll) then 
+    return SemigroupByGenerators(coll);
+  else
+    TryNextMethod();
+  fi;
+end);
 
 #
 
 InstallMethod(SemigroupByGenerators, "for generators of acting semigroup",
-[IsGeneratorsOfActingSemigroup],
+[IsAssociativeElementCollection], 
 function(gens)
-   return SemigroupByGenerators(gens, SemigroupsOptionsRec);
+   if IsGeneratorsOfActingSemigroup(gens) then 
+     return SemigroupByGenerators(gens, SemigroupsOptionsRec);
+   else
+     TryNextMethod();
+    fi;
 end);
 
 #
 
 InstallMethod(SemigroupByGenerators, 
 "for generators of an acting semigroup  and record",
-[IsGeneratorsOfActingSemigroup, IsRecord],
+[IsAssociativeElementCollection, IsRecord],
 function(gens, opts)
   local deg, n, i, closure_opts, s, filts, pos, f;
+
+  if not IsGeneratorsOfActingSemigroup(gens) then 
+    TryNextMethod();
+  fi;
 
   opts:=SemigroupOptions(opts);
   gens:=ShallowCopy(gens);
@@ -251,21 +266,28 @@ end);
 
 #
 
-InstallMethod(MonoidByGenerators, 
-"for generators of acting semigroup", 
-[IsGeneratorsOfActingSemigroup],
+InstallMethod(MonoidByGenerators, "for generators of acting semigroup", 
+[IsAssociativeElementCollection],
 function(gens)
-  return MonoidByGenerators(gens, SemigroupsOptionsRec);
+  if IsGeneratorsOfActingSemigroup(gens) then 
+    return MonoidByGenerators(gens, SemigroupsOptionsRec);
+  else
+    TryNextMethod();
+  fi;
 end);
 
 #
 
 InstallMethod(MonoidByGenerators, 
 "for generators of acting semigroup and record",
-[IsGeneratorsOfActingSemigroup, IsRecord],
+[IsAssociativeElementCollection, IsRecord],
 function(gens, record)
   local deg, n, i, closure_opts, s, filts, pos, f;
-  
+
+  if not IsGeneratorsOfActingSemigroup(gens) then 
+    TryNextMethod();
+  fi;
+
   record:=SemigroupOptions(record);
   gens:=ShallowCopy(gens);
 
@@ -341,27 +363,40 @@ end);
 
 InstallMethod(InverseMonoidByGenerators, 
 "for generators of an acting semigroup", 
-[IsGeneratorsOfActingSemigroup],
+[IsAssociativeElementCollection],
 function(gens)
-  return InverseMonoidByGenerators(gens, SemigroupsOptionsRec);
+
+  if IsGeneratorsOfActingSemigroup(gens) then 
+    return InverseMonoidByGenerators(gens, SemigroupsOptionsRec);
+  else
+    TryNextMethod();
+  fi;
 end);
 
 #
 
 InstallMethod(InverseSemigroupByGenerators, 
 "for generators of an acting semigroup", 
-[IsGeneratorsOfActingSemigroup],
+[IsAssociativeElementCollection],
 function(gens)
-  return InverseSemigroupByGenerators(gens, SemigroupsOptionsRec);
+  if IsGeneratorsOfActingSemigroup(gens) then 
+    return InverseSemigroupByGenerators(gens, SemigroupsOptionsRec);
+  else
+    TryNextMethod();
+  fi;
 end);
 
 #
 
 InstallMethod(InverseMonoidByGenerators, 
 "for generators of an acting semigroup and record",  
-[IsGeneratorsOfActingSemigroup, IsRecord],
+[IsAssociativeElementCollection, IsRecord],
 function(gens, record)
   local closure_opts, s, filts, one, pos, f;
+  
+  if not IsGeneratorsOfActingSemigroup(gens) then 
+    TryNextMethod();
+  fi;
 
   record:=SemigroupOptions(record);
 
@@ -412,9 +447,13 @@ end);
 
 InstallMethod(InverseSemigroupByGenerators, 
 "for generators of acting semigroup and record",
-[IsGeneratorsOfActingSemigroup, IsRecord],
+[IsAssociativeElementCollection, IsRecord],
 function(gens, record)
   local closure_opts, s, filts, f;
+
+  if not IsGeneratorsOfActingSemigroup(gens) then 
+    TryNextMethod();
+  fi;
 
   record:=SemigroupOptions(record);
   
@@ -448,8 +487,8 @@ end);
 # closure
 
 InstallMethod(ClosureInverseSemigroup, 
-"for acting semigroup with inverse op and generators of inverse acting semigroup",
-[IsActingSemigroupWithInverseOp, IsGeneratorsOfActingSemigroup],
+"for acting semigroup with inverse op and associative element coll.",
+[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(s, coll) 
   return ClosureInverseSemigroup(s, coll, s!.opts);
 end);
@@ -476,9 +515,15 @@ end);
 
 InstallMethod(ClosureInverseSemigroup, 
 "for an acting semigroup with inverse op, ass. elt. coll, and record",
-[IsActingSemigroupWithInverseOp, IsGeneratorsOfActingSemigroup, IsRecord],
+[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection, IsRecord],
 function(s, coll, record)
   local n;
+
+  if not IsGeneratorsOfActingSemigroup(coll) then 
+    Error("usage: the second argument <coll> should be a collection",
+    " satisfying IsGeneratorsOfActingSemigroup,");
+    return;
+  fi;
 
   if not ElementsFamily(FamilyObj(s))=FamilyObj(Representative(coll)) then 
     Error("the semigroup and collection of elements are not of the same type,");
@@ -540,7 +585,7 @@ end);
 
 InstallMethod(ClosureSemigroup, 
 "for an acting semigroup and associative element with action coll",
-[IsActingSemigroup, IsGeneratorsOfActingSemigroup],
+[IsActingSemigroup, IsAssociativeElementCollection],
 function(s, coll)
   return ClosureSemigroup(s, coll, s!.opts);
 end);
@@ -576,9 +621,15 @@ end);
 
 InstallMethod(ClosureSemigroup, 
 "for an acting semigroup, generators of acting semigroup, and record",
-[IsActingSemigroup, IsGeneratorsOfActingSemigroup, IsRecord],
+[IsActingSemigroup, IsAssociativeElementCollection, IsRecord],
 function(s, coll, record)
   
+  if not IsGeneratorsOfActingSemigroup(coll) then 
+    Error("usage: the second argument <coll> should be a collection",
+    " satisfying IsGeneratorsOfActingSemigroup,");
+    return;
+  fi;
+
   if not ElementsFamily(FamilyObj(s))=FamilyObj(Representative(coll)) then 
     Error("the semigroup and collection of elements are not of the same type,");
     return;

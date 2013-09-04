@@ -153,7 +153,7 @@ function(arg)
   type:=NewType(F, IsFreeInverseSemigroupElement and IsPositionalObjectRep);
 
   if IsEmpty( names ) then
-    Error();
+    Error(); #JDM there should be some meaningful error messages here
   elif IsFinite( names ) then
     gens:=EmptyPlist( Length(names) );
     for m in [1 .. Length(names)] do 
@@ -167,7 +167,7 @@ function(arg)
     S:=InverseSemigroup(gens);
     SetIsFreeInverseSemigroup(S, true);
   else
-    Error();
+    Error(); #JDM there should be some meaningful error messages here
   fi;
 
   FamilyObj(S)!.semigroup := S;
