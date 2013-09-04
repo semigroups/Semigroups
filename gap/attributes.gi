@@ -78,7 +78,7 @@ function(R)
     regular:=false;
     for j in J do 
       if mat[j][i]<>0 then 
-        if regular then 
+        if regular then #this can't be correct JDM since we could never remove the first value of J
           Add(out, ReesZeroMatrixSubsemigroupNC(R, I, G, Difference(J, [j])));
           break;
         else
