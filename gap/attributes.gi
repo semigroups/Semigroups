@@ -24,6 +24,54 @@
 # MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
 # fail but IsMonoidAsSemigroup is still true. 
 
+InstallMethod(\<, "for Rees 0-matrix semigroups", 
+[IsReesZeroMatrixSubsemigroup, IsReesZeroMatrixSubsemigroup], 
+function(R, S)
+  return GeneratorsOfSemigroup(R)<GeneratorsOfSemigroup(S);
+end);
+
+#
+
+InstallMethod(\<, "for Rees 0-matrix semigroups", 
+[IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup], 100,
+function(R, S)
+  return Size(R)<Size(S) or (Rows(R)<Rows(S) or (Rows(R)=Rows(S) and
+  Columns(R)<Columns(S)) or (Rows(R)=Rows(S) and Columns(R)=Columns(S) 
+    and UnderlyingSemigroup(R)<UnderlyingSemigroup(S)));
+end);
+
+#
+
+LongestChainOfSubsemigroups:=function(R)
+  if Size(R)>1 then 
+    return Maximum(List(MaximalSubsemigroups(R), 
+     LongestChainOfSubsemigroups))+1;
+  fi;
+  return 0;
+end;
+
+#
+
+Subsemigroups:=function(R) #for a Rees 0-matrix semigroup...
+  local max, o, U, V;
+  
+  max:=Set(MaximalSubsemigroups(R));
+  o:=ShallowCopy(max);
+  
+  for U in o do 
+    if Size(U)>1 then 
+      for V in MaximalSubsemigroups(U) do 
+        if not V in max then 
+          AddSet(max, V);
+          Add(o, V);
+        fi;
+      od;
+    fi;
+  od;
+
+  return max;
+end;
+
 #
 
 IsMaximalSubsemigroup:=function(S, T)
@@ -34,18 +82,51 @@ IsMaximalSubsemigroup:=function(S, T)
   fi;
 end; 
 
+#
+
+#InstallMethod(MaximalSubsemigroups, "for a semigroup with generators", 
+#[IsSemigroup and HasGeneratorsOfSemigroup],
+#function(S)
+#  #assumes that the generators are irredundant
+#  D:=MaximalDClasses(S);
+#  otherD:=List(Filtered(GeneratorsOfSemigroup(S), x-> not DClass(S, x) in D), 
+#  x-> DClass(S, x));
+
+#  for d in D do 
+#    if Size(d)=1 then 
+#      Add(out, 
+#
+
+#end);
+
 # the following method comes from Remark 1 in Graham, Graham, and Rhodes.
+# and only works for Rees 0-matrix semigroup over groups
 
-InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup], 
+InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup], 
 function(R)
-  local G, out, mat, I, J, P, new, pos, JJ, solo, II, rectangles, len, gens, nr, K, L, issubsemi, H, i, j, k, l, x;
-
-  G:=UnderlyingSemigroup(R);    
-  if not IsGroup(G) then 
-    Error("not yet implemented,");
+  local G, out, mat, I, J, P, new, pos, JJ, solo, II, len, graph, names, rectangles, gens, K, L, issubsemi, H, i, j, r, k, l, x;
+  
+  if not IsReesZeroMatrixSemigroup(R) then 
+    TryNextMethod(); 
     return;
   fi;
+ 
+  G:=UnderlyingSemigroup(R);    
+  
+  if not IsGroup(G) then 
+    if IsZeroSimpleSemigroup(R) then 
+      #take an isomorphism to a Rees 0-matrix semigroup, then find its maximal
+      #subsemigroups, then pull those back, (should specify some methods for the
+      #pulling back part)
+      Error("not yet implemented,");
+      return;
+    else
+      TryNextMethod();
+      return;
+    fi;
+  fi;
+
   #JDM in the case when G is not a group, and maybe R is not 0-simple, in
   #these case the generic method should be used
 
@@ -63,10 +144,8 @@ function(R)
     Remove(new, pos); #remove the zero, which has to be present
     Add(out, Semigroup(new));
   fi;
- 
-  P:=Group(P);
   
-  if IsAbelian(G) and IsSimple(G) then #JDM this isn't right 
+  if Length(I)=1 and Length(J)=1 and IsAbelian(G) and IsSimple(G) then 
     # the unique case when {0} is a maximal subsemigroup
     Add(out, Semigroup(MultiplicativeZero(R)));
   fi;
@@ -76,6 +155,7 @@ function(R)
   # Case 1: maximal subsemigroups of the form (IxHxJ)\cup\{0\} where H is a
   # maximal subgroup of G
   
+  P:=Group(P);
   if P<>G then # every subsemigroup of S containing a cross-section of L- and
                # R-classes contains P as a maximal subgroup
     for H in MaximalSubgroups(G) do
@@ -163,58 +243,68 @@ function(R)
 
   Info(InfoSemigroups, 3, "finding rectangles...");
 
-  rectangles:=CompleteSubgraphs(Graph(Group(()), [1..Length(I)+Length(J)],
-   OnPoints, 
-   function(i,j) 
-     if i<=Length(I) and j>Length(I) then 
-       return mat[j-Length(I)][i]=0; 
-     elif j<=Length(I) and i>Length(I) then 
-       return mat[i-Length(I)][j]=0; 
+  len:=Length(mat[1]); # use <mat> to keep the indices correct
+
+  graph:=Graph(Group(()), Union(I, J+len), OnPoints,
+   function(i,j)
+     if i<=len and j>len then
+       return mat[j-len][i]=0;
+     elif j<=len and i>len then
+       return mat[i-len][j]=0;
      else
        return i<>j;
      fi;
-   end, true));
+   end, true);
+
+  names:=x-> graph.names[x];
+
+  rectangles:=CompleteSubgraphs(graph);
+
   Info(InfoSemigroups, 3, "...found ", Length(rectangles));
-  len:=Length(I);
+  
   gens:=GeneratorsOfGroup(G);
+  
   Info(InfoSemigroups, 3, 
    "finding rectangles which give rise to subsemigroups...");
-  for k in [2..Length(rectangles)-1] do 
+  for r in [2..Length(rectangles)-1] do 
+    Apply(rectangles[r], names);
     #the first and last entries correspond to removing all the rows or columns
-    if Length(rectangles[k])>3 then  
-      nr:=Number(rectangles[k], x-> x>len);
-      #at least 2 elements on each side are required to be a "rectangle"
-      if nr>1 and Length(rectangles[k])-nr>1 then 
-        K:=Difference(I, rectangles[k]);
-        L:=Difference(J, rectangles[k]-len);
-        #a rectangle KxL describes a subsemigroups if and only if (I\K)x(J\L)
-        #consists entirely of zeros
-        issubsemi:=true;
-        for k in K do 
-          for l in L do
-            if mat[l][k]<>0 then # not a subsemigroup
-              issubsemi:=false;
-              break;
-            fi;
-          od;
-          if not issubsemi then 
-            break;
-          fi;
-        od;
-        if issubsemi then 
-          new:=[];
-          for i in I do 
-            for j in J do 
-              if (not i in rectangles[k]) or (not j+len in rectangles[k]) then 
-                for x in gens do 
-                  Add(new, RMSElement(R, i, x, j));
-                od;
-              fi;
+    K:=Difference(I, rectangles[r]);
+    L:=Difference(J, rectangles[r]-len);
+    #a rectangle KxL describes a subsemigroups if and only if (I\K)x(J\L)
+    #consists entirely of zeros
+    issubsemi:=true;
+    for k in K do 
+      for l in L do
+        if mat[l][k]<>0 then # not a subsemigroup
+          issubsemi:=false;
+          break;
+        fi;
+      od;
+      if not issubsemi then 
+        break;
+      fi;
+    od;
+    if issubsemi then 
+      new:=[];
+      for i in I do
+        if not (i in rectangles[r]) then 
+          for j in J do 
+            for x in gens do 
+              Add(new, RMSElement(R, i, x, j));
             od;
           od;
-          Add(out, Semigroup(new));
+        else 
+          for j in J do 
+            if not (j+len in rectangles[r]) then 
+              for x in gens do 
+                Add(new, RMSElement(R, i, x, j));
+              od;
+            fi;
+          od;
         fi;
-      fi;
+      od;
+      Add(out, Semigroup(new));
     fi;
   od;
   return out;
@@ -490,6 +580,10 @@ InstallMethod(IrredundantGeneratingSubset,
 function(coll)
   local gens, j, out, i, redund, f;
   
+  if not IsGeneratorsOfActingSemigroup(coll) then 
+    Error();
+  fi;
+
   if IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll) then
     coll:=ShallowCopy(GeneratorsOfSemigroup(coll));
   fi;
