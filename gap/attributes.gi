@@ -24,16 +24,29 @@
 # MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
 # fail but IsMonoidAsSemigroup is still true. 
 
+#
+
+IsMaximalSubsemigroup:=function(S, T)
+  if IsSubsemigroup(S, T) then 
+    return ForAll(S, x-> x in T or Semigroup(GeneratorsOfSemigroup(T), x)=S);
+  else
+    return false;
+  fi;
+end; 
+
 # the following method comes from Remark 1 in Graham, Graham, and Rhodes.
 
 InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup], 
 function(R)
-  local out, G, mat, I, J, P, new, pos, inj, gens, regular, rectangles, len, nr, H, i, j, x, k;
+  local G, out, mat, I, J, P, new, pos, JJ, solo, II, rectangles, len, gens, nr, K, L, issubsemi, H, i, j, k, l, x;
 
   G:=UnderlyingSemigroup(R);    
-
-  #JDM handle the case when G is not a group, and maybe R is not 0-simple, in
+  if not IsGroup(G) then 
+    Error("not yet implemented,");
+    return;
+  fi;
+  #JDM in the case when G is not a group, and maybe R is not 0-simple, in
   #these case the generic method should be used
 
   out:=[];
@@ -57,7 +70,9 @@ function(R)
     # the unique case when {0} is a maximal subsemigroup
     Add(out, Semigroup(MultiplicativeZero(R)));
   fi;
-
+  
+  Info(InfoSemigroups, 3, 
+   "Case 1: maximal subsemigroups arising from maximal subgroups...");
   # Case 1: maximal subsemigroups of the form (IxHxJ)\cup\{0\} where H is a
   # maximal subgroup of G
   
@@ -70,40 +85,83 @@ function(R)
     od;
   fi;
 
+  Info(InfoSemigroups, 3, "...found ", Length(out));
+
   #JDM could test for IsRUnipotent or IsLUnipotent here!
+
+  Info(InfoSemigroups, 3, 
+   "Case 2: maximal subsemigroups obtained by removing a column...");
 
   # Case 2: maximal subsemigroup of the form (IxGxJ')\cup\{0\} where J'=J\{j}
   # for some j in J, and where the resultant matrix has no zero columns or rows.
-  for i in I do 
-    regular:=false;
-    for j in J do 
-      if mat[j][i]<>0 then 
-        if regular then #this can't be correct JDM since we could never remove the first value of J
-          Add(out, ReesZeroMatrixSubsemigroupNC(R, I, G, Difference(J, [j])));
-          break;
+
+  # in the Graham-Houghton IxJ bipartite graph, we can remove any vertex <j> in
+  # <J> which is not adjacent to a vertex <i> which is only adjacent to <j>.
+  # So, we run through the vertices <i> of <I> and find the ones of degree 1,
+  # and we discard the vertices <j> adjacent to such <i>. 
+  
+  JJ:=ShallowCopy(J);
+
+  for i in I do  
+    solo:=false; # keep track of whether <i> has degree 1
+    for j in J do
+      if mat[j][i]<>0 then
+        if solo<>false then    # <i> has degree greater than 1
+          solo:=false;         
+          break;               # so skip it
         else
-          regular:=true;
+          solo:=j;             # <i> is adjacent to <j> and we don't know if
+                               # it is adjacent to any other vertex
         fi;
       fi;
     od;
+    if solo<>false then        # <i> is adjacent to <solo> and nothing else
+      RemoveSet(JJ, solo);     # so remove it. 
+    fi;
   od;
+  
+  for j in JJ do 
+    Add(out, ReesZeroMatrixSubsemigroupNC(R, I, G, Difference(J, [j])));
+  od;
+  Info(InfoSemigroups, 3, "...found ", Length(JJ));
+
+  Info(InfoSemigroups, 3, 
+   "Case 3: maximal subsemigroups obtained by removing a row...");
 
   # Case 3: the dual of case 2.
-  for j in J do 
-    regular:=false;
-    for i in I do 
-      if mat[j][i]<>0 then 
-        if regular then 
-          Add(out, ReesZeroMatrixSubsemigroupNC(R, Difference(I, [i]), G, J));
-          break;
+  
+  II:=ShallowCopy(I);
+
+  for j in J do  
+    solo:=false; # keep track of whether <i> has degree 1
+    for i in I do
+      if mat[j][i]<>0 then
+        if solo<>false then    # <i> has degree greater than 1
+          solo:=false;         
+          break;               # so skip it
         else
-          regular:=true;
+          solo:=i;             # <i> is adjacent to <j> and we don't know if
+                               # it is adjacent to any other vertex
         fi;
       fi;
     od;
+    if solo<>false then        # <i> is adjacent to <solo> and nothing else
+      RemoveSet(II, solo);     # so remove it. 
+    fi;
+  od;
+  
+  for i in II do 
+    Add(out, ReesZeroMatrixSubsemigroupNC(R, Difference(I, [i]), G, J));
   od;
 
+  Info(InfoSemigroups, 3, "...found ", Length(II));
+
+  Info(InfoSemigroups, 3, 
+   "Case 4: maximal subsemigroups obtained by removing a rectangle...");
+
   # Case 4: maximal rectangle of zeros in the matrix
+
+  Info(InfoSemigroups, 3, "finding rectangles...");
 
   rectangles:=CompleteSubgraphs(Graph(Group(()), [1..Length(I)+Length(J)],
    OnPoints, 
@@ -116,32 +174,47 @@ function(R)
        return i<>j;
      fi;
    end, true));
-
+  Info(InfoSemigroups, 3, "...found ", Length(rectangles));
   len:=Length(I);
+  gens:=GeneratorsOfGroup(G);
+  Info(InfoSemigroups, 3, 
+   "finding rectangles which give rise to subsemigroups...");
   for k in [2..Length(rectangles)-1] do 
     #the first and last entries correspond to removing all the rows or columns
-    nr:=Number(rectangles[k], x-> x>Length(I));
-
-    if nr>1 and Length(rectangles[k])-nr>1 then 
+    if Length(rectangles[k])>3 then  
+      nr:=Number(rectangles[k], x-> x>len);
       #at least 2 elements on each side are required to be a "rectangle"
-      new:=[];
-      for i in I do 
-        for j in J do 
-          if not (i in rectangles[k] and j+len in rectangles[k]) then 
-            if mat[j][i]<>0 then #the rectangle does not define a subsemigroup
-              notsubsemi:=true;
+      if nr>1 and Length(rectangles[k])-nr>1 then 
+        K:=Difference(I, rectangles[k]);
+        L:=Difference(J, rectangles[k]-len);
+        #a rectangle KxL describes a subsemigroups if and only if (I\K)x(J\L)
+        #consists entirely of zeros
+        issubsemi:=true;
+        for k in K do 
+          for l in L do
+            if mat[l][k]<>0 then # not a subsemigroup
+              issubsemi:=false;
               break;
             fi;
-            for x in gens do 
-              # Add(new, RMSElementNC(s, i, x, j)); JDM update
-              # also this is not correct, we should only use those rectangles
-              # corresponding to subsemigroups (i.e. where the corresponding
-              # set of elements is closed!
-            od;
+          od;
+          if not issubsemi then 
+            break;
           fi;
         od;
-      od;
-      Add(out, Semigroup(new));
+        if issubsemi then 
+          new:=[];
+          for i in I do 
+            for j in J do 
+              if (not i in rectangles[k]) or (not j+len in rectangles[k]) then 
+                for x in gens do 
+                  Add(new, RMSElement(R, i, x, j));
+                od;
+              fi;
+            od;
+          od;
+          Add(out, Semigroup(new));
+        fi;
+      fi;
     fi;
   od;
   return out;
