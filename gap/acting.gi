@@ -1457,7 +1457,7 @@ end);
 
 InstallMethod(ViewObj, [IsSemigroupData], 999,
 function(data)
-  Print("<semigroup data: ", Length(data!.orbit), " reps, ",
+  Print("<semigroup data: ", Length(data!.orbit)-1, " reps, ",
   Length(data!.reps), " lambda-rho values>");
   return;
 end);

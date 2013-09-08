@@ -84,20 +84,55 @@ end;
 
 #
 
-#InstallMethod(MaximalSubsemigroups, "for a semigroup with generators", 
-#[IsSemigroup and HasGeneratorsOfSemigroup],
-#function(S)
-#  #assumes that the generators are irredundant
-#  D:=MaximalDClasses(S);
-#  otherD:=List(Filtered(GeneratorsOfSemigroup(S), x-> not DClass(S, x) in D), 
-#  x-> DClass(S, x));
+InstallMethod(MaximalSubsemigroups, "for a semigroup with generators", 
+[IsSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local gens, D, lookup, pos, ideals, ismaximal, out, new, i;
+  
+  # assumes that the generators are irredundant
+  # could use PartialOrderOfDClasses if known
+  
+  # Step 1. find and keep track of distinct D-classes of generators...
+  gens:=GeneratorsOfSemigroup(S);
+  D:=[GreensDClassOfElementNC(S, gens[1])];
+  lookup:=[[1]];
 
-#  for d in D do 
-#    if Size(d)=1 then 
-#      Add(out, 
-#
+  for i in [2..Length(gens)] do 
+    pos:=PositionProperty(D, d-> gens[i] in d);
+    if pos=fail then 
+      Add(D, GreensDClassOfElementNC(S, gens[i]));
+      lookup[Length(lookup)+1]:=[i];
+    else
+      Add(lookup[pos], i); 
+    fi;
+  od;
+  
+  ideals:=List(D, x-> SemigroupIdealByGenerators(S, [Representative(x)]));
+  ismaximal:=BlistList([1..Length(D)], []);
 
-#end);
+  for i in [1..Length(D)] do 
+    if not ForAny([1..Length(D)], 
+     j-> j<>i and Representative(D[i]) in ideals[j]) then  
+      ismaximal[i]:=true;
+    fi;
+  od;
+
+  # start the search...
+
+  out:=[];
+
+  for i in [1..Length(D)] do 
+    if Size(D[i])=1 then #Step 2: S\D[i] is maximal
+      new:=ShallowCopy(gens);
+      Remove(new, lookup[i][1]);  #lookup[i] only contains 1 element
+      Add(new, gens[i]^2);
+      Add(out, SemigroupIdealByGenerators(S, new));
+    fi;
+  od;
+
+  Error("not yet fully implemented...");
+  return;
+end);
 
 # the following method comes from Remark 1 in Graham, Graham, and Rhodes.
 # and only works for Rees 0-matrix semigroup over groups
