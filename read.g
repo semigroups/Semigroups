@@ -8,31 +8,31 @@
 #############################################################################
 ##
 
-ReadPackage("semigroups/gap/bipartition.gi");
-ReadPackage("semigroups/gap/semibipart.gi");
-ReadPackage("semigroups/gap/blocks.gi");
+ReadPackage("semigroups/gap/bipartitions/bipartition.gi");
+ReadPackage("semigroups/gap/bipartitions/semibipart.gi");
+ReadPackage("semigroups/gap/bipartitions/blocks.gi");
 
-ReadPackage("semigroups/gap/setup.gi");
-ReadPackage("semigroups/gap/lambda-rho.gi");
-ReadPackage("semigroups/gap/acting.gi");
-ReadPackage("semigroups/gap/graded.gi");
+ReadPackage("semigroups/gap/acting-semigroups/setup.gi");
+ReadPackage("semigroups/gap/acting-semigroups/lambda-rho.gi");
+ReadPackage("semigroups/gap/acting-semigroups/acting.gi");
+ReadPackage("semigroups/gap/acting-semigroups/graded.gi");
+ReadPackage("semigroups/gap/acting-semigroups/semigroups.gi");
+ReadPackage("semigroups/gap/acting-semigroups/greens.gi");
+ReadPackage("semigroups/gap/acting-semigroups/slp.gi");
+ReadPackage("semigroups/gap/acting-semigroups/regular.gi");
+ReadPackage("semigroups/gap/acting-semigroups/inverse.gi");
+ReadPackage("semigroups/gap/acting-semigroups/enums.gi");
+ReadPackage("semigroups/gap/acting-semigroups/iterators.gi");
+ReadPackage("semigroups/gap/acting-semigroups/properties.gi");
+ReadPackage("semigroups/gap/acting-semigroups/attributes.gi");
+ReadPackage("semigroups/gap/acting-semigroups/attributes-inverse.gi");
+ReadPackage("semigroups/gap/acting-semigroups/examples.gi");
+ReadPackage("semigroups/gap/acting-semigroups/pictures.gi");
 
-ReadPackage("semigroups/gap/semigroups.gi");
-ReadPackage("semigroups/gap/greens.gi");
-ReadPackage("semigroups/gap/slp.gi");
-ReadPackage("semigroups/gap/regular.gi");
-ReadPackage("semigroups/gap/inverse.gi");
-ReadPackage("semigroups/gap/enums.gi");
-ReadPackage("semigroups/gap/iterators.gi");
-ReadPackage("semigroups/gap/properties.gi");
-ReadPackage("semigroups/gap/attributes.gi");
-ReadPackage("semigroups/gap/attributes-inverse.gi");
-ReadPackage("semigroups/gap/orbits.gi");
-ReadPackage("semigroups/gap/ideals.gi");
+ReadPackage("semigroups/gap/acting-ideals/ideals.gi");
 
-ReadPackage("semigroups/gap/examples.gi");
+ReadPackage("semigroups/gap/inverse-semigroups/freeinverse.gi");
 
-ReadPackage("semigroups/gap/utils.gi");
+ReadPackage("semigroups/gap/general/orbits.gi");
+ReadPackage("semigroups/gap/general/utils.gi");
 
-ReadPackage("semigroups/gap/freeinverse.gi");
-ReadPackage("semigroups/gap/pictures.gi");

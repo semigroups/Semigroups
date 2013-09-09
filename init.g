@@ -13,37 +13,32 @@ if not IsBound(ORBC) then
   BindGlobal("HTValue_TreeHash_C", fail);
 fi;
 
-ReadPackage("semigroups/gap/setup.gd");
-ReadPackage("semigroups/gap/greens.gd");
-ReadPackage("semigroups/gap/lambda-rho.gd");
-ReadPackage("semigroups/gap/acting.gd");
-ReadPackage("semigroups/gap/graded.gd");
+ReadPackage("semigroups/gap/acting-semigroups/setup.gd");
+ReadPackage("semigroups/gap/acting-semigroups/greens.gd");
+ReadPackage("semigroups/gap/acting-semigroups/lambda-rho.gd");
+ReadPackage("semigroups/gap/acting-semigroups/acting.gd");
+ReadPackage("semigroups/gap/acting-semigroups/graded.gd");
+ReadPackage("semigroups/gap/acting-semigroups/semigroups.gd");
+ReadPackage("semigroups/gap/acting-semigroups/enums.gd");
+ReadPackage("semigroups/gap/acting-semigroups/iterators.gd");
+ReadPackage("semigroups/gap/acting-semigroups/regular.gd");
+ReadPackage("semigroups/gap/acting-semigroups/properties.gd");
+ReadPackage("semigroups/gap/acting-semigroups/attributes.gd");
+ReadPackage("semigroups/gap/acting-semigroups/attributes-inverse.gd");
+ReadPackage("semigroups/gap/acting-semigroups/pictures.gd");
+ReadPackage("semigroups/gap/acting-semigroups/slp.gd");
+ReadPackage("semigroups/gap/acting-semigroups/examples.gd");
 
-ReadPackage("semigroups/gap/semigroups.gd");
-ReadPackage("semigroups/gap/ideals.gd");
-ReadPackage("semigroups/gap/enums.gd");
-ReadPackage("semigroups/gap/iterators.gd");
+ReadPackage("semigroups/gap/acting-ideals/ideals.gd");
 
-ReadPackage("semigroups/gap/bipartition.gd");
-ReadPackage("semigroups/gap/semibipart.gd");
-ReadPackage("semigroups/gap/blocks.gd");
+ReadPackage("semigroups/gap/bipartitions/bipartition.gd");
+ReadPackage("semigroups/gap/bipartitions/semibipart.gd");
+ReadPackage("semigroups/gap/bipartitions/blocks.gd");
 
-ReadPackage("semigroups/gap/regular.gd");
-ReadPackage("semigroups/gap/inverse.gd");
+ReadPackage("semigroups/gap/general/orbits.gd");
+ReadPackage("semigroups/gap/general/utils.gd");
+ReadPackage("semigroups/gap/general/options.g");
 
-ReadPackage("semigroups/gap/properties.gd");
-ReadPackage("semigroups/gap/attributes.gd");
-ReadPackage("semigroups/gap/attributes-inverse.gd");
-ReadPackage("semigroups/gap/orbits.gd");
-
-ReadPackage("semigroups/gap/slp.gd");
-
-ReadPackage("semigroups/gap/examples.gd");
-ReadPackage("semigroups/gap/utils.gd");
-ReadPackage("semigroups/gap/options.g");
-
-ReadPackage("semigroups/gap/freeinverse.gd");
-
-ReadPackage("semigroups/gap/pictures.gd");
+ReadPackage("semigroups/gap/inverse-semigroups/freeinverse.gd");
 
 DeclareInfoClass("InfoSemigroups");;
