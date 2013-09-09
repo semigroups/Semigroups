@@ -183,7 +183,14 @@ function(I)
   return Representative(GeneratorsOfMagmaIdeal(I));
 end);
 
+#
+
+#InstallMethod(IsInverseSemigroup, "for a semigroup ideal",
+#[IsSemigroupIdeal], I-> IsInverseSemigroup(Parent(I)));
+
 # methods for ideals with ideals of D-classes
+
+#
 
 InstallMethod(Size, "for acting semigroup ideal with ideal of D-classes", 
 [IsActingSemigroup and IsSemigroupIdeal and HasIdealOfDClasses],

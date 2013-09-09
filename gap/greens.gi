@@ -42,6 +42,30 @@ end);
 
 # acting...
 
+InstallMethod(LambdaRhoLookup, "for a D-class of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass], 
+function(d)
+  local data, orb_scc, orblookup1, orblookup2, out, i;
+
+  data:=SemigroupData(Parent(d));
+  
+  # scc of R-reps corresponding to d 
+  orb_scc:=SemigroupDataSCC(d);
+
+  # positions in reps containing R-reps in d 
+  orblookup1:=data!.orblookup1;
+  orblookup2:=data!.orblookup2;
+
+  out:=[]; 
+  for i in orb_scc do 
+    if not IsBound(out[orblookup1[i]]) then 
+      out[orblookup1[i]]:=[];
+    fi;
+    Add(out[orblookup1[i]], orblookup2[i]);
+  od;
+
+  return out;
+end);
 # not required for regular/inverse
 
 InstallMethod(LambdaCosets, "for a D-class of an acting semigroup",
@@ -1815,6 +1839,7 @@ function(s)
   data:=SemigroupData(s);
   gens:=data!.gens;
   graph:=data!.graph;
+  lambdarhoht:=data!.lambdarhoht;
   datalookup:=OrbSCCLookup(data)-1;  
   reps:=data!.reps;
   repslens:=data!.repslens;
@@ -1823,7 +1848,6 @@ function(s)
   
   lambdafunc:=LambdaFunc(s);
   rhofunc:=RhoFunc(s);
-  lambdarhoht:=LambdaRhoHT(s);
   lambdaperm:=LambdaPerm(s);
   
   o:=LambdaOrb(s);

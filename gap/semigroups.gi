@@ -722,6 +722,8 @@ function(s, coll, opts)
   # reps grouped by equal lambda and rho value 
   # HTValue(lambdarhoht, Concatenation(lambda(x), rho(x))
   
+  lambdarhoht:=new_data!.lambdarhoht;
+  
   repslookup:=new_data!.repslookup; 
   # Position(orb, reps[i][j])=repslookup[i][j] = HTValue(ht, reps[i][j])
  
@@ -756,7 +758,6 @@ function(s, coll, opts)
   lambdaact:=LambdaAct(s);
   lambdaperm:=LambdaPerm(s);
   rho:=RhoFunc(s);
-  lambdarhoht:=LambdaRhoHT(t);
 
   oht:=o!.ht;
   scc:=OrbSCC(o);

@@ -13,7 +13,7 @@
 InstallMethod(SemigroupData, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local gens, one, data;
+  local gens, one, data, val, lambdarhoht;
  
   gens:=GeneratorsOfSemigroup(s);
   one:=One(gens);
@@ -26,36 +26,34 @@ function(s)
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail],
      genstoapply:=[1..Length(gens)], stopper:=false);
   
+  # hash table of all valid lambda-rho values found so far, HTValue of
+  # LambdaRhoHT points to where the existing R-class reps with same lambda-rho
+  # value are in SemigroupData(s).reps.  
+  
+  val:=RhoFunc(s)(Representative(s));
+  lambdarhoht:=HTCreate([1, val], rec(treehashsize:=s!.opts.hashlen.M));
+
+  if IsBound(RhoOrbOpts(s).forflatplainlists) 
+   and RhoOrbOpts(s).forflatplainlists then 
+    lambdarhoht!.rhohf:=ORB_HashFunctionForPlainFlatList;
+  else
+    lambdarhoht!.rhohf:=ChooseHashFunction(val, lambdarhoht!.len).func;
+  fi;
+  
+  lambdarhoht!.hf:=function( x, data )
+    return (x[1]+lambdarhoht!.rhohf(x[2], data)) mod data + 1;
+  end;
+  lambdarhoht!.hfd:=lambdarhoht!.len;
+  
+  data.lambdarhoht:=lambdarhoht;
+
+  #
+
   Objectify(NewType(FamilyObj(s), IsSemigroupData and IsAttributeStoringRep),
    data);
   
   SetParent(data, s);
   return data;
-end);
-
-#
-
-InstallMethod(LambdaRhoHT, "for an acting semigroup with generators",
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local val, ht;
-  
-  val:=RhoFunc(s)(Representative(s));
-  ht:=HTCreate([1, val], rec(treehashsize:=s!.opts.hashlen.M));
-
-  if IsBound(RhoOrbOpts(s).forflatplainlists) 
-   and RhoOrbOpts(s).forflatplainlists then 
-    ht!.rhohf:=ORB_HashFunctionForPlainFlatList;
-  else
-    ht!.rhohf:=ChooseHashFunction(val, ht!.len).func;
-  fi;
-  
-  ht!.hf:=function( x, data )
-    return (x[1]+ht!.rhohf(x[2], data)) mod data + 1;
-  end;
-  ht!.hfd:=ht!.len;
-  
-  return ht;
 end);
 
 #
@@ -120,7 +118,7 @@ function(f, s)
 
   # check if lambdarho is already known
   lambdarho:=[m, RhoFunc(s)(f)];
-  val:=HTValue(LambdaRhoHT(s), lambdarho);
+  val:=HTValue(data!.lambdarhoht, lambdarho);
 
   lookfunc:=function(data, x) 
     return [x[2], RhoFunc(s)(x[4])]=lambdarho;
@@ -244,32 +242,6 @@ function(s)
   return i; 
 end);
 
-#
-
-InstallMethod(LambdaRhoLookup, "for a D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass], 
-function(d)
-  local data, orb_scc, orblookup1, orblookup2, out, i;
-
-  data:=SemigroupData(Parent(d));
-  
-  # scc of R-reps corresponding to d 
-  orb_scc:=SemigroupDataSCC(d);
-
-  # positions in reps containing R-reps in d 
-  orblookup1:=data!.orblookup1;
-  orblookup2:=data!.orblookup2;
-
-  out:=[]; 
-  for i in orb_scc do 
-    if not IsBound(out[orblookup1[i]]) then 
-      out[orblookup1[i]]:=[];
-    fi;
-    Add(out[orblookup1[i]], orblookup2[i]);
-  od;
-
-  return out;
-end);
 # data...
 
 InstallMethod(\in, "for associative element and semigroup data",
@@ -330,6 +302,7 @@ function(data, limit, lookfunc)
   graph:=data!.graph; # orbit graph of orbit of R-classes under left mult 
   reps:=data!.reps;   # reps grouped by equal lambda and rho value
                       # HTValue(lambdarhoht, [lambda(x), rho(x)])
+  lambdarhoht:=data!.lambdarhoht;
   
   repslookup:=data!.repslookup; # Position(orb, reps[i][j])=repslookup[i][j]
                                 # = HTValue(ht, reps[i][j])
@@ -362,7 +335,6 @@ function(data, limit, lookfunc)
   lambdaact:=LambdaAct(s);  
   lambdaperm:=LambdaPerm(s);
   rho:=RhoFunc(s);
-  lambdarhoht:=LambdaRhoHT(s);
 
   o:=LambdaOrb(s);
   oht:=o!.ht;
@@ -524,7 +496,7 @@ function(data, x, n)
   m:=OrbSCCLookup(o)[l];
   scc:=OrbSCC(o);
 
-  val:=HTValue(LambdaRhoHT(s), [m, RhoFunc(s)(x)]);
+  val:=HTValue(data!.lambdarhoht, [m, RhoFunc(s)(x)]);
   if val=fail then 
     return fail;
   fi;
