@@ -211,9 +211,8 @@ function(f, I)
   if pos=fail then 
     return false;
   else
-    return OrbSCCLookup(SemigroupData(Parent(I)))[pos] in IdealOfDClasses(I);
+    return OrbSCCLookup(SemigroupData(Parent(I)))[pos]-1 in IdealOfDClasses(I);
   fi;
-
 end);
 
 #
