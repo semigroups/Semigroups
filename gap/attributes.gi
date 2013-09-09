@@ -47,7 +47,7 @@ LongestChainOfSubsemigroups:=function(R)
     return Maximum(List(MaximalSubsemigroups(R), 
      LongestChainOfSubsemigroups))+1;
   fi;
-  return 0;
+  return 1;
 end;
 
 #

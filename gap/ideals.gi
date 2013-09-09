@@ -126,15 +126,14 @@ IsIdenticalObj,
 function( M, gens )
 local S;
     
-    S:= Objectify( NewType( FamilyObj( gens ), IsMagmaIdeal and
-     IsAttributeStoringRep and IsActingSemigroup ),
-     rec(opts:=SemigroupsOptionsRec));
-    
-    SetGeneratorsOfMagmaIdeal( S, AsList( gens ) );
-    SetIsSemigroupIdeal(S, true);
-    SetParent(S, M);
-
-    return S;
+  S:= Objectify( NewType( FamilyObj( gens ), IsMagmaIdeal and
+   IsAttributeStoringRep and IsActingSemigroup ),
+   rec(opts:=SemigroupsOptionsRec));
+  
+  SetGeneratorsOfMagmaIdeal( S, AsList( gens ) );
+  SetIsSemigroupIdeal(S, true);
+  SetParent(S, M);
+  return S;
 end );
 
 # JDM move to lib
@@ -168,7 +167,15 @@ function(I)
 return Representative(GeneratorsOfMagmaIdeal(I));
 end);
 
+IdealOfSemilattice:=function(sl, i)
+  local out;
+  out:=Difference(Union(sl{sl[i]}), sl[i]);
+  return Union(sl[i], Union(List(out, x-> IdealOfSemilattice(sl, x))));
+end;
+
 #JDM here
+
+
 
 InstallMethod(SemigroupData, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
