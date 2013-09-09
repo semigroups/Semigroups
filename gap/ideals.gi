@@ -119,12 +119,23 @@ SemigroupIdealByGenerators);
 
 #
 
+IdealOfSemilattice:=function(semilattice, parents)
+  local children;
+  children:=Union(semilattice{parents});
+  if parents=children then 
+    return parents;
+  fi;
+  return IdealOfSemilattice(semilattice, children);
+end;
+
+#
+
 InstallMethod(SemigroupIdealByGenerators,
 "for an acting semigroup and associative element collection", 
 IsIdenticalObj, 
 [IsActingSemigroup, IsAssociativeElementCollection],
 function( M, gens )
-local S;
+  local S, data;
     
   S:= Objectify( NewType( FamilyObj( gens ), IsMagmaIdeal and
    IsAttributeStoringRep and IsActingSemigroup ),
@@ -133,6 +144,11 @@ local S;
   SetGeneratorsOfMagmaIdeal( S, AsList( gens ) );
   SetIsSemigroupIdeal(S, true);
   SetParent(S, M);
+  if HasPartialOrderOfDClasses(M) then 
+    data:=SemigroupData(M);
+    SetIdealOfDClasses(S, IdealOfSemilattice( PartialOrderOfDClasses(M), 
+     List(gens, x->OrbSCCLookup(data)[Position(data, x)]-1)));
+  fi;
   return S;
 end );
 
@@ -164,221 +180,40 @@ InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsActingSemigroup);
 InstallMethod(Representative, "for a semigroup ideal", 
 [IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
 function(I)
-return Representative(GeneratorsOfMagmaIdeal(I));
+  return Representative(GeneratorsOfMagmaIdeal(I));
 end);
 
-IdealOfSemilattice:=function(sl, i)
-  local out;
-  out:=Difference(Union(sl{sl[i]}), sl[i]);
-  return Union(sl[i], Union(List(out, x-> IdealOfSemilattice(sl, x))));
-end;
+# methods for ideals with ideals of D-classes
+
+InstallMethod(Size, "for acting semigroup ideal with ideal of D-classes", 
+[IsActingSemigroup and IsSemigroupIdeal and HasIdealOfDClasses],
+function(I)
+  return Sum(List(IdealOfDClasses(I), i-> Size(DClasses(Parent(I))[i])));
+end);
+
+#
+
+InstallMethod(\in, 
+"for acting semigroup ideal with ideal of D-classes and associative element",
+[IsAssociativeElement, IsActingSemigroup and IsSemigroupIdeal and HasIdealOfDClasses],
+function(f, I)
+  local pos;
+  
+  pos:=Position(SemigroupData(Parent(I)), f);
+  
+  if pos=fail then 
+    return false;
+  else
+    return OrbSCCLookup(SemigroupData(Parent(I)))[pos] in IdealOfDClasses(I);
+  fi;
+
+end);
+
+#
+
+
 
 #JDM here
 
 
 
-InstallMethod(SemigroupData, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal],
-function(I)
-  local gens, nrgens, rep, data, ht, orb, nr, graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, schreierpos, schreiergen, schreiermult, lambda, lambdaact, lambdaperm, rho, lambdarhoht, o, oht, scc, lookup, htadd, htvalue, lamx, pos, m, y, rhoy, val, x, schutz, tmp, old, parent, genstoapply, n, j;
-
-  nrgens:=Length(GeneratorsOfSemigroup(ParentAttr(I)));
-  rep:=Representative(I);
-
-  data:=rec();
-
-  ht:=HTCreate(rep, rec(treehashsize:=I!.opts.hashlen.L));
-  orb:=[EmptyPlist(0)];
-  nr:=1;
-  graph:=[EmptyPlist(nrgens)];
-  reps:=[];
-  repslookup:=[];
-  orblookup1:=[];
-  orblookup2:=[];
-  repslens:=[];
-  lenreps:=0;
-  schreierpos:=[fail];
-  schreiergen:=[fail];
-  schreiermult:=[fail];
-
-  lambda:=LambdaFunc(I);
-  lambdaact:=LambdaAct(I);
-  lambdaperm:=LambdaPerm(I);
-  rho:=RhoFunc(I);
-  lambdarhoht:=LambdaRhoHT(I);
-
-  o:=LambdaOrb(I);
-  oht:=o!.ht;
-  scc:=OrbSCC(o);
-  lookup:=o!.scc_lookup;
-
-  if IsBoundGlobal("ORBC") then
-    htadd:=HTAdd_TreeHash_C;
-    htvalue:=HTValue_TreeHash_C;
-  else
-    htadd:=HTAdd;
-    htvalue:=HTValue;
-  fi;
-  # install the generators of the ideal, this is more complicated since 
-  # some of them maybe R-related, we must also install descendants of generators
-  # of the parent semigroup
-  gens:=GeneratorsOfMagmaIdeal(I);
-  for x in gens do 
-    lamx:=lambda(x);
-    pos:=htvalue(oht, lamx);
-    m:=lookup[pos];
-    if pos<>scc[m][1] then
-      y:=x*LambdaOrbMult(o, m, pos)[2];
-    else
-      y:=x;
-    fi;
-    rhoy:=[m, rho(y)];
-    val:=htvalue(lambdarhoht, rhoy);
-    if val=fail then  #new rho value, and hence new R-rep
-      lenreps:=lenreps+1;
-      htadd(lambdarhoht, rhoy, lenreps);
-      nr:=nr+1;
-      reps[lenreps]:=[y];
-      repslookup[lenreps]:=[nr];
-      orblookup1[nr]:=lenreps;
-      orblookup2[nr]:=1;
-      repslens[lenreps]:=1;
-      x:=[I, m, o, y, false, nr];
-      # semigroup, lambda orb data, lambda orb, rep, index in orbit,
-      # position of reps with equal lambda-rho value
-
-    else              # old rho value
-      x:=[I, m, o, y, false, nr+1];
-
-      # JDM expand!
-      schutz:=LambdaOrbStabChain(o, m);
-
-      #check membership in schutz gp via stab chain
-
-      if schutz=true then # schutz gp is symmetric group
-        continue;
-      else
-        if schutz=false then # schutz gp is trivial
-          tmp:=htvalue(ht, y);
-          if tmp<>fail then
-            continue;
-          fi;
-        else # schutz gp neither trivial nor symmetric group
-          old:=false;
-          for n in [1..repslens[val]] do
-            if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=() then
-              old:=true;
-              break;
-            fi;
-          od;
-          if old then
-            continue;
-          fi;
-        fi;
-        nr:=nr+1;
-        repslens[val]:=repslens[val]+1;
-        reps[val][repslens[val]]:=y;
-        repslookup[val][repslens[val]]:=nr;
-        orblookup1[nr]:=val;
-        orblookup2[nr]:=repslens[val];
-      fi;
-    fi;
-    orb[nr]:=x;
-    schreierpos[nr]:=fail; 
-    schreiergen[nr]:=fail; # by multiplying by gens[j]
-    schreiermult[nr]:=fail; # and ends up in position <pos> of 
-                           # its lambda orb
-    htadd(ht, y, nr);
-    graph[nr]:=EmptyPlist(nrgens);
-  od;
-
-  parent:=GeneratorsOfSemigroup(ParentAttr(I));
-  genstoapply:=[1..Length(gens)];
-  #install every descendant of  
-  for x in parent do 
-    for j in genstoapply do
-      x:=gens[j]*x;
-      lamx:=lambda(x);
-      pos:=htvalue(oht, lamx);
-      m:=lookup[pos];
-      if pos<>scc[m][1] then
-        y:=x*LambdaOrbMult(o, m, pos)[2];
-      else
-        y:=x;
-      fi;
-      rhoy:=[m, rho(y)];
-      val:=htvalue(lambdarhoht, rhoy);
-      if val=fail then  #new rho value, and hence new R-rep
-        lenreps:=lenreps+1;
-        htadd(lambdarhoht, rhoy, lenreps);
-        nr:=nr+1;
-        reps[lenreps]:=[y];
-        repslookup[lenreps]:=[nr];
-        orblookup1[nr]:=lenreps;
-        orblookup2[nr]:=1;
-        repslens[lenreps]:=1;
-        x:=[I, m, o, y, false, nr];
-        # semigroup, lambda orb data, lambda orb, rep, index in orbit,
-        # position of reps with equal lambda-rho value
-
-      else              # old rho value
-        x:=[I, m, o, y, false, nr+1];
-
-        # JDM expand!
-        schutz:=LambdaOrbStabChain(o, m);
-
-        #check membership in schutz gp via stab chain
-
-        if schutz=true then # schutz gp is symmetric group
-          continue;
-        else
-          if schutz=false then # schutz gp is trivial
-            tmp:=htvalue(ht, y);
-            if tmp<>fail then
-              continue;
-            fi;
-          else # schutz gp neither trivial nor symmetric group
-            old:=false;
-            for n in [1..repslens[val]] do
-              if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=() then
-                old:=true;
-                break;
-              fi;
-            od;
-            if old then
-              continue;
-            fi;
-          fi;
-          nr:=nr+1;
-          repslens[val]:=repslens[val]+1;
-          reps[val][repslens[val]]:=y;
-          repslookup[val][repslens[val]]:=nr;
-          orblookup1[nr]:=val;
-          orblookup2[nr]:=repslens[val];
-        fi;
-      fi;
-      orb[nr]:=x;
-      schreierpos[nr]:=fail; 
-      schreiergen[nr]:=fail; # by multiplying by gens[j]
-      schreiermult[nr]:=fail; # and ends up in position <pos> of 
-                             # its lambda orb
-      htadd(ht, y, nr);
-      graph[nr]:=EmptyPlist(nrgens);
-    od;
-  od;
-  
-  data:=rec(gens:=parent,
-     ht:=ht, pos:=1, graph:=graph,
-     reps:=reps, repslookup:=repslookup, orblookup1:=orblookup1, 
-     orblookup2:=orblookup2,
-     lenreps:=lenreps, orbit:=orb, repslens:=repslens,
-     schreierpos:=schreierpos, schreiergen:=schreiergen, 
-     schreiermult:=schreiermult,
-     genstoapply:=[1..nrgens], stopper:=false);
-
-  Objectify(NewType(FamilyObj(I), IsSemigroupData and IsAttributeStoringRep),
-   data);
-
-  SetParent(data, I);
-  return data;
-end);

@@ -10,3 +10,5 @@
 DeclareSynonymAttr("GeneratorsOfSemigroupIdeal", GeneratorsOfMagmaIdeal);
 DeclareGlobalFunction("SemigroupIdeal");
 
+DeclareAttribute("IdealOfDClasses", IsSemigroupIdeal);
+

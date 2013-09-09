@@ -13,7 +13,9 @@ ReadPackage("semigroups/gap/semibipart.gi");
 ReadPackage("semigroups/gap/blocks.gi");
 
 ReadPackage("semigroups/gap/setup.gi");
+ReadPackage("semigroups/gap/lambda-rho.gi");
 ReadPackage("semigroups/gap/acting.gi");
+ReadPackage("semigroups/gap/graded.gi");
 
 ReadPackage("semigroups/gap/semigroups.gi");
 ReadPackage("semigroups/gap/greens.gi");

@@ -1178,4 +1178,16 @@ end);
 
 #
 
+InstallMethod(Size, "for a monogenic transformation semigroup",
+[IsTransformationSemigroup and IsMonogenicSemigroup],
+function(s)
+  local ind;
+  
+  ind:=IndexPeriodOfTransformation(GeneratorsOfSemigroup(s)[1]);
+  if ind[1]>0 then 
+    return Sum(ind)-1;
+  fi;
+  return Sum(ind);
+end);
+
 #EOF
