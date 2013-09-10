@@ -95,7 +95,7 @@ gap> MinimalDClass(S);
       See also <Ref Attr="PartialOrderOfDClasses"/>,
       <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and
       <Ref Attr="MinimalDClass"/>.
-      <Example>
+      <Log>
 gap> MaximalDClasses(BrauerMonoid(8));
 [ {Bipartition( [ [ 1, -2 ], [ 2, -3 ], [ 3, -4 ], [ 4, -5 ], 
       [ 5, -6 ], [ 6, -7 ], [ 7, -8 ], [ 8, -1 ] ] )} ]
@@ -108,7 +108,7 @@ gap> S:=Semigroup(
 > PartialPerm( [ 1, 2, 4, 5, 6, 7, 8 ], [ 7, 1, 4, 2, 5, 6, 3 ] ) );;
 gap> MaximalDClasses(S);
 [ {PartialPerm( [ 1, 2, 3, 4, 5, 6, 7 ], [ 3, 8, 1, 4, 5, 6, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 4, 5, 6, 7, 8 ], [ 7, 1, 4, 2, 5, 6, 3 ] )} ]</Example>
+  {PartialPerm( [ 1, 2, 4, 5, 6, 7, 8 ], [ 7, 1, 4, 2, 5, 6, 3 ] )} ]</Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
