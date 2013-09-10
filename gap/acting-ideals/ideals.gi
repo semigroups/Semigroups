@@ -138,7 +138,7 @@ function( M, gens )
   local S, data;
     
   S:= Objectify( NewType( FamilyObj( gens ), IsMagmaIdeal and
-   IsAttributeStoringRep and IsActingSemigroup ),
+   IsAttributeStoringRep ),
    rec(opts:=SemigroupsOptionsRec));
   
   SetGeneratorsOfMagmaIdeal( S, AsList( gens ) );
@@ -146,7 +146,7 @@ function( M, gens )
   SetParent(S, M);
   if HasPartialOrderOfDClasses(M) then 
     data:=SemigroupData(M);
-    SetIdealOfDClasses(S, IdealOfSemilattice( PartialOrderOfDClasses(M), 
+    SetIdealOfDClasses(S, IdealOfSemilattice(PartialOrderOfDClasses(M), 
      List(gens, x->OrbSCCLookup(data)[Position(data, x)]-1)));
   fi;
   return S;
@@ -192,8 +192,8 @@ end);
 
 #
 
-InstallMethod(Size, "for acting semigroup ideal with ideal of D-classes", 
-[IsActingSemigroup and IsSemigroupIdeal and HasIdealOfDClasses],
+InstallMethod(Size, "for a semigroup ideal with ideal of D-classes", 
+[IsActingSemigroup and HasIdealOfDClasses],
 function(I)
   return Sum(List(IdealOfDClasses(I), i-> Size(DClasses(Parent(I))[i])));
 end);
@@ -217,9 +217,4 @@ end);
 
 #
 
-
-
-#JDM here
-
-
-
+#EOF
