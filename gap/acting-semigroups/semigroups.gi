@@ -390,7 +390,7 @@ end);
 #
 
 InstallMethod(InverseMonoidByGenerators, 
-"for an associative element collection and record"
+"for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
   local closure_opts, s, filts, one, pos, f;
@@ -447,7 +447,7 @@ end);
 #
 
 InstallMethod(InverseSemigroupByGenerators, 
-"for an associative element collection and record"
+"for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
   local closure_opts, s, filts, f;
