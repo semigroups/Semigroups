@@ -20,7 +20,7 @@ end);
 
 # basic things
 
-InstallMethod(Generators, "for a semigroup with generators",
+InstallMethod(Generators, "for a semigroup",
 [IsSemigroup],
 function(s)
 
@@ -156,7 +156,7 @@ end);
 
 # creating semigroups, monoids, inverse semigroups, etc
 
-InstallMethod(MagmaByGenerators, "for generators of acting semigroup",
+InstallMethod(MagmaByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection], 
 function(coll)
   if IsGeneratorsOfActingSemigroup(coll) then 
@@ -168,7 +168,7 @@ end);
 
 #
 
-InstallMethod(SemigroupByGenerators, "for generators of acting semigroup",
+InstallMethod(SemigroupByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection], 
 function(gens)
    if IsGeneratorsOfActingSemigroup(gens) then 
@@ -181,7 +181,7 @@ end);
 #
 
 InstallMethod(SemigroupByGenerators, 
-"for generators of an acting semigroup  and record",
+"for associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, opts)
   local deg, n, i, closure_opts, s, filts, pos, f;
@@ -266,7 +266,7 @@ end);
 
 #
 
-InstallMethod(MonoidByGenerators, "for generators of acting semigroup", 
+InstallMethod(MonoidByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection],
 function(gens)
   if IsGeneratorsOfActingSemigroup(gens) then 
@@ -279,7 +279,7 @@ end);
 #
 
 InstallMethod(MonoidByGenerators, 
-"for generators of acting semigroup and record",
+"for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
   local deg, n, i, closure_opts, s, filts, pos, f;
@@ -361,8 +361,7 @@ end);
 
 #
 
-InstallMethod(InverseMonoidByGenerators, 
-"for generators of an acting semigroup", 
+InstallMethod(InverseMonoidByGenerators, "for associative element collection"
 [IsAssociativeElementCollection],
 function(gens)
 
@@ -376,7 +375,7 @@ end);
 #
 
 InstallMethod(InverseSemigroupByGenerators, 
-"for generators of an acting semigroup", 
+"for associative element collection",
 [IsAssociativeElementCollection],
 function(gens)
   if IsGeneratorsOfActingSemigroup(gens) then 
@@ -389,7 +388,7 @@ end);
 #
 
 InstallMethod(InverseMonoidByGenerators, 
-"for generators of an acting semigroup and record",  
+"for associative element collection and record"
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
   local closure_opts, s, filts, one, pos, f;
@@ -446,7 +445,7 @@ end);
 #
 
 InstallMethod(InverseSemigroupByGenerators, 
-"for generators of acting semigroup and record",
+"for associative element collection and record"
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
   local closure_opts, s, filts, f;
@@ -496,7 +495,7 @@ end);
 #
 
 InstallMethod(ClosureInverseSemigroup, 
-"for acting semigroup with inverse op and an associative element coll",
+"for acting semigroup with inverse op and an associative element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f) 
   return ClosureInverseSemigroup(s, [f], s!.opts);
@@ -505,7 +504,7 @@ end);
 #
 
 InstallMethod(ClosureInverseSemigroup, 
-"for acting semigroup with inverse op and an associative element coll",
+"for acting semigroup with inverse op, associative element, record",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement, IsRecord],
 function(s, f, record) 
   return ClosureInverseSemigroup(s, [f], record);
@@ -514,7 +513,7 @@ end);
 #
 
 InstallMethod(ClosureInverseSemigroup, 
-"for an acting semigroup with inverse op, ass. elt. coll, and record",
+"for an acting semigroup with inverse op, associative elt coll, and record",
 [IsActingSemigroupWithInverseOp, IsAssociativeElementCollection, IsRecord],
 function(s, coll, record)
   local n;
@@ -565,7 +564,7 @@ function(s, coll, record)
   o:=StructuralCopy(LambdaOrb(s));
   AddGeneratorsToOrbit(o, coll_copy);
 
-  #should be a case split here for semigroups and monoids JDM
+  #should be a case split here for semigroups and monoids 
   t:=InverseSemigroupByGenerators(
    Concatenation(GeneratorsOfInverseSemigroup(s), coll), record);
 
@@ -584,7 +583,7 @@ end);
 #
 
 InstallMethod(ClosureSemigroup, 
-"for an acting semigroup and associative element with action coll",
+"for an acting semigroup and associative element collection",
 [IsActingSemigroup, IsAssociativeElementCollection],
 function(s, coll)
   return ClosureSemigroup(s, coll, s!.opts);
@@ -592,8 +591,7 @@ end);
 
 #
 
-InstallMethod(ClosureSemigroup, 
-"for an acting semigroup and associative element with action coll",
+InstallMethod(ClosureSemigroup, "for an acting semigroup and empty list",
 [IsActingSemigroup, IsList and IsEmpty],
 function(s, coll)
   return s;
@@ -602,7 +600,7 @@ end);
 #
 
 InstallMethod(ClosureSemigroup, 
-"for an acting semigroup and associative element with action",
+"for an acting semigroup and associative element",
 [IsActingSemigroup, IsAssociativeElement],
 function(s, f)
   return ClosureSemigroup(s, [f], s!.opts);
@@ -611,7 +609,7 @@ end);
 #
 
 InstallMethod(ClosureSemigroup, 
-"for an acting semigroup and associative element with action",
+"for an acting semigroup, associative element, and record",
 [IsActingSemigroup, IsAssociativeElement, IsRecord],
 function(s, f, record)
   return ClosureSemigroup(s, [f], SemigroupOptions(record));
@@ -620,7 +618,7 @@ end);
 #
 
 InstallMethod(ClosureSemigroup, 
-"for an acting semigroup, generators of acting semigroup, and record",
+"for an acting semigroup, associative element collection, and record",
 [IsActingSemigroup, IsAssociativeElementCollection, IsRecord],
 function(s, coll, record)
   
@@ -900,7 +898,7 @@ function(S, func, limit)
   until func(f) or IsDoneIterator(iter);
   
   if not func(f) then 
-    return fail; # JDM should really return the empty semigroup
+    return fail; # should really return the empty semigroup
   fi;
 
   T:=Semigroup(f);
@@ -930,7 +928,7 @@ function(S, func, limit)
   until func(f) or IsDoneIterator(iter);
   
   if not func(f) then 
-    return fail; # JDM should really return the empty semigroup
+    return fail; # should really return the empty semigroup
   fi;
 
   T:=InverseSemigroup(f);
@@ -978,7 +976,8 @@ end);
 
 #random
 
-InstallMethod(RandomMatrixSemigroup, "for a ring and pos int",
+InstallMethod(RandomMatrixSemigroup, 
+"for a ring, positive integer and positive integer",
 [IsRing, IsPosInt, IsPosInt], 
 function(R, m, n)
   return Semigroup(List([1..m], x-> RandomMat(n, n, R)));
@@ -986,7 +985,8 @@ end);
 
 #
 
-InstallMethod(RandomBinaryRelationMonoid, "for pos int and pos int",
+InstallMethod(RandomBinaryRelationMonoid, 
+"for positive integer and positive integer",
 [IsPosInt, IsPosInt],
 function(m,n)
   local s;
@@ -998,7 +998,8 @@ end);
 
 #
 
-InstallMethod(RandomBinaryRelationSemigroup, "for pos int and pos int",
+InstallMethod(RandomBinaryRelationSemigroup, 
+"for positive integer and positive integer",
 [IsPosInt, IsPosInt],
 function(m,n)
   local s;
@@ -1010,7 +1011,8 @@ end);
 
 #
 
-InstallMethod(RandomBlockGroup, "for pos int and pos int",
+InstallMethod(RandomBlockGroup, 
+"for positive integer and positive integer",
 [IsPosInt, IsPosInt],
 function(m,n)
   return Semigroup(Set(List([1..m], x-> RandomPartialPerm(n))));
@@ -1018,7 +1020,8 @@ end);
 
 #
 
-InstallMethod(RandomInverseMonoid, "for pos int and pos int",
+InstallMethod(RandomInverseMonoid,
+"for positive integer and positive integer",
 [IsPosInt, IsPosInt],
 function(m,n)
   return InverseMonoid(Set(List([1..m], x-> RandomPartialPerm(n))));
@@ -1026,7 +1029,8 @@ end);
 
 #
 
-InstallMethod(RandomInverseSemigroup, "for pos int and pos int",
+InstallMethod(RandomInverseSemigroup,
+"for positive integer and positive integer",
 [IsPosInt, IsPosInt],
 function(m,n)
   return InverseSemigroup(Set(List([1..m], x-> RandomPartialPerm(n))));
@@ -1034,7 +1038,8 @@ end);
 
 #
 
-InstallMethod(RandomTransformationSemigroup, "for pos int and pos int",
+InstallMethod(RandomTransformationSemigroup,
+"for positive integer and positive integer",
 [IsPosInt, IsPosInt], 
 function(m,n)
   return Semigroup(Set(List([1..m], x-> RandomTransformation(n))));
@@ -1042,7 +1047,8 @@ end);
 
 #
 
-InstallMethod(RandomTransformationMonoid, "for a pos int and pos int",
+InstallMethod(RandomTransformationMonoid, 
+"for positive integer and positive integer",
 [IsPosInt, IsPosInt], 
 function(m,n)
   return Monoid(Set(List([1..m], x-> RandomTransformation(n))));
@@ -1050,7 +1056,8 @@ end);
 
 #
 
-InstallMethod(RandomBipartitionSemigroup, "for pos int and pos int",
+InstallMethod(RandomBipartitionSemigroup,
+"for positive integer and positive integer",
 [IsPosInt, IsPosInt], 
 function(m,n)
   return Semigroup(Set(List([1..m], x-> RandomBipartition(n))));
@@ -1058,7 +1065,8 @@ end);
 
 #
 
-InstallMethod(RandomBipartitionMonoid, "for a pos int and pos int",
+InstallMethod(RandomBipartitionMonoid,
+"for positive integer and positive integer",
 [IsPosInt, IsPosInt], 
 function(m,n)
   return Monoid(Set(List([1..m], x-> RandomBipartition(n))));
