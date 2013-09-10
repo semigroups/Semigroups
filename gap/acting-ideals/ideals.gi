@@ -111,11 +111,11 @@ function( arg )
 end);
 #
 
-InstallMethod(MagmaIdealByGenerators,
-"for an acting semigroup and collection of its elements", 
-IsIdenticalObj, 
-[IsActingSemigroup, IsAssociativeElementCollection],
-SemigroupIdealByGenerators);
+#InstallMethod(MagmaIdealByGenerators,
+#"for an acting semigroup and collection of its elements", 
+#IsIdenticalObj, 
+#[IsActingSemigroup, IsAssociativeElementCollection],
+#SemigroupIdealByGenerators);
 
 #
 
@@ -130,27 +130,27 @@ end;
 
 #
 
-InstallMethod(SemigroupIdealByGenerators,
-"for an acting semigroup and associative element collection", 
-IsIdenticalObj, 
-[IsActingSemigroup, IsAssociativeElementCollection],
-function( M, gens )
-  local S, data;
-    
-  S:= Objectify( NewType( FamilyObj( gens ), IsMagmaIdeal and
-   IsAttributeStoringRep ),
-   rec(opts:=SemigroupsOptionsRec));
-  
-  SetGeneratorsOfMagmaIdeal( S, AsList( gens ) );
-  SetIsSemigroupIdeal(S, true);
-  SetParent(S, M);
-  if HasPartialOrderOfDClasses(M) then 
-    data:=SemigroupData(M);
-    SetIdealOfDClasses(S, IdealOfSemilattice(PartialOrderOfDClasses(M), 
-     List(gens, x->OrbSCCLookup(data)[Position(data, x)]-1)));
-  fi;
-  return S;
-end );
+#InstallMethod(SemigroupIdealByGenerators,
+#"for an acting semigroup and associative element collection", 
+#IsIdenticalObj, 
+#[IsActingSemigroup, IsAssociativeElementCollection],
+#function( M, gens )
+#  local S, data;
+#    
+#  S:= Objectify( NewType( FamilyObj( gens ), IsMagmaIdeal and
+#   IsAttributeStoringRep ),
+#   rec(opts:=SemigroupsOptionsRec));
+#  
+#  SetGeneratorsOfMagmaIdeal( S, AsList( gens ) );
+#  SetIsSemigroupIdeal(S, true);
+#  SetParent(S, M);
+#  if HasPartialOrderOfDClasses(M) then 
+#    data:=SemigroupData(M);
+#    SetIdealOfDClasses(S, IdealOfSemilattice(PartialOrderOfDClasses(M), 
+#     List(gens, x->OrbSCCLookup(data)[Position(data, x)]-1)));
+#  fi;
+#  return S;
+#end );
 
 # JDM move to lib
 
