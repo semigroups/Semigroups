@@ -24,22 +24,6 @@
 # MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
 # fail but IsMonoidAsSemigroup is still true. 
 
-InstallMethod(\<, "for Rees 0-matrix semigroups", 
-[IsReesZeroMatrixSubsemigroup, IsReesZeroMatrixSubsemigroup], 
-function(R, S)
-  return GeneratorsOfSemigroup(R)<GeneratorsOfSemigroup(S);
-end);
-
-#
-
-InstallMethod(\<, "for Rees 0-matrix semigroups", 
-[IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup], 100,
-function(R, S)
-  return Size(R)<Size(S) or (Rows(R)<Rows(S) or (Rows(R)=Rows(S) and
-  Columns(R)<Columns(S)) or (Rows(R)=Rows(S) and Columns(R)=Columns(S) 
-    and UnderlyingSemigroup(R)<UnderlyingSemigroup(S)));
-end);
-
 #
 
 #LongestChainOfSubsemigroups:=function(R)
