@@ -181,7 +181,7 @@ end);
 #
 
 InstallMethod(SemigroupByGenerators, 
-"for associative element collection and record",
+"for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, opts)
   local deg, n, i, closure_opts, s, filts, pos, f;
@@ -361,7 +361,8 @@ end);
 
 #
 
-InstallMethod(InverseMonoidByGenerators, "for associative element collection"
+InstallMethod(InverseMonoidByGenerators, 
+"for an associative element collection",
 [IsAssociativeElementCollection],
 function(gens)
 
@@ -375,8 +376,9 @@ end);
 #
 
 InstallMethod(InverseSemigroupByGenerators, 
-"for associative element collection",
+"for an associative element collection",
 [IsAssociativeElementCollection],
+
 function(gens)
   if IsGeneratorsOfActingSemigroup(gens) then 
     return InverseSemigroupByGenerators(gens, SemigroupsOptionsRec);
@@ -388,7 +390,7 @@ end);
 #
 
 InstallMethod(InverseMonoidByGenerators, 
-"for associative element collection and record"
+"for an associative element collection and record"
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
   local closure_opts, s, filts, one, pos, f;
@@ -445,7 +447,7 @@ end);
 #
 
 InstallMethod(InverseSemigroupByGenerators, 
-"for associative element collection and record"
+"for an associative element collection and record"
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
   local closure_opts, s, filts, f;
