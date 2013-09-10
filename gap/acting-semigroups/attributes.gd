@@ -8,6 +8,7 @@
 #############################################################################
 ##
 
+DeclareOperation("IsMaximalSubsemigroup", [IsSemigroup, IsSemigroup]);
 DeclareOperation("IrredundantGeneratingSubset",
 [IsAssociativeElementCollection]);
 DeclareOperation("InversesOfSemigroupElementNC", [IsActingSemigroup and

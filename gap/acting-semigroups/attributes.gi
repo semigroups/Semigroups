@@ -42,129 +42,47 @@ end);
 
 #
 
-LongestChainOfSubsemigroups:=function(R)
-  if Size(R)>1 then 
-    return Maximum(List(MaximalSubsemigroups(R), 
-     LongestChainOfSubsemigroups))+1;
-  fi;
-  return 1;
-end;
+#LongestChainOfSubsemigroups:=function(R)
+#  if Size(R)>1 then 
+#    return Maximum(List(MaximalSubsemigroups(R), 
+#     LongestChainOfSubsemigroups))+1;
+#  fi;
+#  return 1;
+#end;
 
 #
 
-Subsemigroups:=function(R) #for a Rees 0-matrix semigroup...
-  local max, o, U, V;
-  
-  max:=Set(MaximalSubsemigroups(R));
-  o:=ShallowCopy(max);
-  
-  for U in o do 
-    if Size(U)>1 then 
-      for V in MaximalSubsemigroups(U) do 
-        if not V in max then 
-          AddSet(max, V);
-          Add(o, V);
-        fi;
-      od;
-    fi;
-  od;
-
-  return max;
-end;
+#Subsemigroups:=function(R) #for a Rees 0-matrix semigroup...
+#  local max, o, U, V;
+#  
+#  max:=Set(MaximalSubsemigroups(R));
+#  o:=ShallowCopy(max);
+#  
+#  for U in o do 
+#    if Size(U)>1 then 
+#      for V in MaximalSubsemigroups(U) do 
+#        if not V in max then 
+#          AddSet(max, V);
+#          Add(o, V);
+#        fi;
+#      od;
+#    fi;
+#  od;
+#
+#  return max;
+#end;
 
 #
 
-IsMaximalSubsemigroup:=function(S, T)
+InstallMethod(IsMaximalSubsemigroup, "for a semigroup and semigroup", 
+[IsSemigroup, IsSemigroup],
+function(S, T)
   if IsSubsemigroup(S, T) then 
     return ForAll(S, x-> x in T or Semigroup(GeneratorsOfSemigroup(T), x)=S);
   else
     return false;
   fi;
-end; 
-
-#
-
-InstallMethod(MaximalSubsemigroups, "for an acting semigroup with generators", 
-[IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  local gens, D, lookup, pos, ideals, ismaximal, out, new, i;
-  
-  gens:=IrredundantGeneratingSubset(GeneratorsOfSemigroup(S)); 
-  D:=GreensDClasses(S);
-
-  # we require this to specify our maximal subsemigroups as ideals
-  po:=PartialOrderOfDClasses(S); 
-  
-  # Step 1. find and keep track of distinct D-classes of generators...
- 
-  # figure out which D-classes contain the generators 
-  data:=SemigroupData(S);     
-  lookup1:=EmptyPlist(nrgens); #index of D-class of generator 
-  lookup2:=[];                 #generators in D-class
-  index:=[];
-
-  for i in [1..Length(gens)] do 
-    #the index of the D-class containing <x>
-    lookup1[i]:=OrbSCCLookup(data)[Position(data, gens[i])]-1; 
-    AddSet(index, lookup1[i]);
-    if not IsBound(lookup2[lookup1[i]]) then 
-      lookup2[lookup1[i]]:=[];
-    fi;
-    Add(lookup2[lookup1[i]], i);
-  od;
-
-  # figure out which D-classes are maximal
-  ismaximal:=BlistList([1..Length(D)], []);
-  
-  for i in index do 
-    if not ForAny([1..Length(po)], j-> j<>i and i in po[j]) then 
-      ismaximal[i]:=true;
-    fi;
-  od;
-
-  # start the search...
-
-  out:=[];
-
-  for i in index do 
-    if Size(D[i])=1 then      #Step 2: S\D[i] is maximal if its a subsemigroup
-      if ismaximal[i] then 
-        new:=ShallowCopy(index);
-        Remove(new, lookup2[i]);
-        #JDM this isn't good enough, in every D-class immediately beneath D[i]
-        #too.
-        Add(out, SemigroupIdeal(S, gens{new}));
-      else
-        new:=ShallowCopy(gens);
-        Remove(new, lookup2[i][1]);  #lookup2[i][1] has only 1 element
-        Add(out, Semigroup(new));
-        #JDM  not sure this is correct either...
-        # probably want generators from those D-classes above D[i] and 
-        # generators for the ideal of those things below + all the other
-        # generators
-      fi;
-    elif not ismaximal[i] then 
-      if not IsRegularDClass(D[i]) and Length(lookup2[i])=1 then 
-        new:=ShallowCopy(gens);
-        Remove(new, lookup2[i][1]);  #lookup2[i][1] has only 1 element
-        Add(out, Semigroup(new));
-      else
-        #??
-      fi;
-      
-    else #D[i] is maximal and regular
-      inj:=InjectionPrincipalFactor(D[i]);
-      for U in MaximalSubsemigroups(Range(inj)) do 
-        if Number(lookup2[i], j-> gens[j]^inj in U)=Length(lookup2[i])-1 then
-
-
-      
-    fi;
-  od;
-  return out;
-  Error("not yet fully implemented...");
-  return;
-end);
+end); 
 
 # the following method comes from Remark 1 in Graham, Graham, and Rhodes.
 # and only works for Rees 0-matrix semigroup over groups
