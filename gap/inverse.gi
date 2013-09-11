@@ -379,15 +379,14 @@ LambdaOrb(h), Representative(h), IsGreensClassNC(h)));
 InstallMethod(DClassReps, "for an acting semigroup with inversion",
 [IsActingSemigroupWithInverseOp],
 function(s)            
-  local o, r, out, f, m;
+  local o, r, out, m;
   
-  o:=RhoOrb(s);
+  o:=LambdaOrb(s);
   r:=Length(OrbSCC(o));
-  out:=EmptyPlist(r);
+  out:=EmptyPlist(r-1);
   
   for m in [2..r] do 
-    f:=RhoOrbRep(o, m);
-    out[m-1]:=RightOne(f);
+    out[m-1]:=RightOne(LambdaOrbRep(o, m);
   od;
   return out;
 end);
