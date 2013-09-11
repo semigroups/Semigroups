@@ -34,7 +34,10 @@
      catalogues of examples are provided, such as generators for the
      endomorphism monoids of every connected graph with at most 8 vertices,
      and generators of the endomorphism monoids of the non-abelian groups with
-     order at most 64.
+     order at most 64.<P/>
+
+     There are functions to define and manipulate free inverse semigroups and
+     their elements.
   </Abstract>
 
   <Acknowledgements>
