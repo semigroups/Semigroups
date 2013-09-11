@@ -1,0 +1,321 @@
+#############################################################################
+##
+#W  examples.xml
+#Y  Copyright (C) 2011-13                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="JonesMonoid">
+   <ManSection>
+    <Oper Name="JonesMonoid" Arg="n"/>
+    <Oper Name="TemperleyLiebMonoid" Arg="n"/>
+    <Returns>A bipartition monoid.</Returns>
+    <Description>
+      <Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="BrauerMonoid">
+   <ManSection>
+    <Oper Name="BrauerMonoid" Arg="n"/>
+    <Returns>A bipartition monoid.</Returns>
+    <Description>
+      <Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="FactorisableDualSymmetricInverseSemigroup">
+   <ManSection>
+    <Oper Name="FactorisableDualSymmetricInverseSemigroup" Arg="n"/>
+    <Returns>An inverse bipartition monoid.</Returns>
+    <Description>
+      <Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DualSymmetricInverseSemigroup">
+   <ManSection>
+    <Oper Name="DualSymmetricInverseSemigroup" Arg="n"/>
+    <Oper Name="DualSymmetricInverseMonoid" Arg="n"/>
+    <Returns>An inverse bipartition monoid.</Returns>
+    <Description>
+      <Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="PartitionMonoid">
+   <ManSection>
+    <Oper Name="PartitionMonoid" Arg="n"/>
+    <Returns>A bipartition monoid.</Returns>
+    <Description>
+      <Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="PartialTransformationSemigroup">
+   <ManSection>
+    <Oper Name="PartialTransformationSemigroup" Arg="n"/>
+    <Returns>A transformation monoid.</Returns>
+    <Description>
+      <Example>
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="FullMatrixSemigroup">
+   <ManSection>
+    <Oper Name="FullMatrixSemigroup" Arg="d, q"/>
+    <Oper Name="GeneralLinearSemigroup" Arg="d, q"/>
+    <Returns>A matrix semigroup.</Returns>
+    <Description>
+      <C>FullMatrixSemigroup</C> and <C>GeneralLinearSemigroup</C> are synonyms
+      for each other. They both return the full matrix semigroup, or if you
+      prefer the general linear semigroup, of <A>d</A> by <A>d</A> matrices
+      with entries over the field with <A>q</A> elements.  This semigroup has
+      <C>q^(d^2)</C> elements. <P/>
+
+      <B>Please note:</B> there are currently no special methods for computing
+      with matrix semigroups in &Semigroups; and so it might be advisable to use
+      <Ref Oper="IsomorphismTransformationSemigroup"/>.
+
+      <Example>
+gap> S:=FullMatrixSemigroup(3,4);
+&lt;full matrix semigroup 3x3 over GF(2^2)>
+gap> T:=Range(IsomorphismTransformationSemigroup(S));;
+gap> Size(T);
+262144</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsFullMatrixSemigroup">
+  <ManSection>
+    <Prop Name="IsFullMatrixSemigroup" Arg="S"/>      
+    <Prop Name="IsGeneralLinearSemigroup" Arg="S"/>      
+    <Description>
+      <C>IsFullMatrixSemigroup</C> and <C>IsGeneralLinearSemigroup</C> return
+      <K>true</K> if the semigroup <C>S</C> was created using either of the
+      commands <Ref Oper="FullMatrixSemigroup"/> or 
+      <Ref Oper="GeneralLinearSemigroup"/> and <K>false</K> otherwise. 
+
+      <Example>
+gap> S:=RandomTransformationSemigroup(4,4);;
+gap> IsFullMatrixSemigroup(S);
+false
+gap> S:=GeneralLinearSemigroup(3,3);
+&lt;full matrix semigroup 3x3 over GF(3)>
+gap> IsFullMatrixSemigroup(S);
+true</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="MunnSemigroup">
+    <ManSection>
+      <Oper Name="MunnSemigroup" Arg="S"/>
+      <Returns>The Munn semigroup of a semilattice.</Returns>
+      <Description>
+        If <A>S</A> is a semilattice, then <C>MunnSemigroup(<A>S</A>);</C>
+        returns the inverse semigroup of partial permutations of isomorphisms
+        of principal ideals of <A>S</A>; called the <E>Munn semigroup</E> of
+        <A>S</A>.<P/> 
+
+        This function was written jointly by J. D. Mitchell, Yann Peresse 
+        (St Andrews), Yanhui Wang (York). <P/>
+
+        <B>Please note:</B> the &Grape; package version &GRAPEVERS;
+        or higher should be fully installed for this function to work.
+
+        <Example>
+gap> S:=InverseSemigroup(
+> PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 10 ], [ 4, 6, 7, 3, 8, 2, 9, 5 ] ),
+> PartialPerm( [ 1, 2, 7, 9 ], [ 5, 6, 4, 3 ] ) );
+&lt;inverse partial perm semigroup on 10 pts with 2 generators>
+gap> T:=InverseSemigroup(Idempotents(S), rec(small:=true));;
+gap> M:=MunnSemigroup(T);;
+gap> NrIdempotents(M);
+60
+gap> NrIdempotents(S);
+60</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="OPOIPOPI">
+  <ManSection><Heading>Monoids of order preserving functions</Heading>
+    <Oper Name="OrderEndomorphisms" Arg="n" Label="monoid of order preserving transformations"/>
+    <Oper Name="POI" Arg="n" Label="monoid of order preserving partial perms"/>
+    <Oper Name="POPI" Arg="n" Label="monoid of orientation preserving partial
+      perms"/>
+    <Returns>A semigroup of transformations or partial permutations related
+      to a linear order. 
+    </Returns>
+    <Description>
+      <List>
+        <Mark><C>OrderEndomorphisms(<A>n</A>)</C></Mark>
+        <Item>
+          <C>OrderEndomorphisms(<A>n</A>)</C> returns the monoid of
+          transformations that preserve the usual order on <M>\{1,2,\ldots,
+            n\}</M> where <A>n</A> is a positive integer. 
+          <Alt Not="Text"> 
+            <C>OrderEndomorphisms(<A>n</A>)</C> is generated by the
+            <M><A>n+1</A></M> transformations:
+            <Display>
+              \left(
+              \begin{array}{ccccccccc}
+              1&amp;2&amp;3&amp;\cdots&amp;n-1&amp; n\\
+              1&amp;1&amp;2&amp;\cdots&amp;n-2&amp;n-1
+              \end{array}\right), \qquad
+              \left(
+              \begin{array}{ccccccccc}
+              1&amp;2&amp;\cdots&amp;i-1&amp; i&amp; i+1&amp;i+2&amp;\cdots
+              &amp;n\\
+              1&amp;2&amp;\cdots&amp;i-1&amp; i+1&amp;i+1&amp;i+2&amp;\cdots
+              &amp;n\\
+              \end{array}\right)
+            </Display> 
+            where <M>i=0,\ldots,n-1</M> and has <M>{2n-1\choose n-1}</M>
+            elements.
+          </Alt>
+      </Item>
+      <Mark><C>POI(<A>n</A>)</C></Mark>
+      <Item>
+      <C>POI(<A>n</A>)</C> returns the inverse
+      monoid of partial permutations that preserve the usual order
+      on <M>\{1,2,\ldots, n\}</M> where <A>n</A> is a positive integer.
+      <Alt Not="Text">
+      <C>POI(<A>n</A>)</C> is generated by the <M><A>n</A></M> 
+      partial permutations:
+      <Display>
+      \left(
+      \begin{array}{ccccc}
+      1&amp;2&amp;3&amp;\cdots&amp;n\\          
+      -&amp;1&amp;2&amp;\cdots&amp;n-1
+      \end{array}\right), \qquad
+      \left(
+      \begin{array}{ccccccccc}
+      1&amp;2&amp;\cdots&amp;i-1&amp; i&amp; i+1&amp;i+2&amp;\cdots
+      &amp;n\\
+      1&amp;2&amp;\cdots&amp;i-1&amp; i+1&amp;-&amp;i+2&amp;\cdots&amp;n\\
+      \end{array}\right)
+    </Display>
+    where <M>i=1, \ldots, n-1</M>
+    and has <M>{2n\choose n}</M> elements. </Alt>
+  </Item>
+  <Mark><C>POPI(<A>n</A>)</C></Mark>
+  <Item>
+    <C>POPI(<A>n</A>)</C> returns the inverse monoid of partial permutation
+    that preserve the orientation of <M>\{1,2,\ldots, n\}</M> where
+    <M>n</M> is a positive integer.
+    <Alt Not="Text">
+    <C>POPI(<A>n</A>)</C> is generated by the partial permutations:
+    <Display>
+      \left(
+      \begin{array}{ccccc}
+1&amp;2&amp;\cdots&amp;n-1&amp;n\\
+2&amp;3&amp;\cdots&amp;n&amp;1
+\end{array}\right),\qquad
+\left(
+\begin{array}{cccccc}
+1&amp;2&amp;\cdots&amp;n-2&amp;n-1&amp;n\\
+1&amp;2&amp;\cdots&amp;n-2&amp;n&amp;-
+\end{array}\right).
+    </Display>
+    and has <M>1+\frac{n}{2}{2n\choose n}</M> elements. 
+    </Alt>
+  </Item>
+</List>
+      <Example>
+gap> S:=POPI(10);                                            
+&lt;inverse partial perm monoid on 10 pts with 2 generators>
+gap> Size(S);
+923781
+gap> 1+5*Binomial(20, 10);
+923781
+gap> S:=POI(10);
+&lt;inverse partial perm monoid on 10 pts with 10 generators>
+gap> Size(S);
+184756
+gap> Binomial(20,10);
+184756
+gap> IsSubsemigroup(POPI(10), POI(10));
+true
+gap> S:=OrderEndomorphisms(5);
+&lt;regular transformation monoid on 5 pts with 5 generators>
+gap> IsIdempotentGenerated(S);
+true
+gap> Size(S)=Binomial(2*5-1, 5-1);
+true</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SingularTransformationSemigroup">
+    <ManSection>
+      <Oper Name="SingularTransformationSemigroup" Arg="n"/>
+      <Returns>The semigroup of non-invertible transformations.</Returns>
+      <Description>
+        If <A>n</A> is a positive integer, then
+        <C>SingularTransformationSemigroup(<A>n</A>)</C> returns the semigroup
+        of non-invertible transformations, which is generated by the
+        <C><A>n</A>(<A>n</A>-1)</C> idempotents of degree <A>n</A> and rank
+        <C><A>n</A>-1</C> and has <M>n^n-n!</M> elements. 
+
+        <Example>
+gap> S:=SingularTransformationSemigroup(5);
+&lt;regular transformation semigroup on 5 pts with 20 generators>
+gap> Size(S);
+3005</Example>
+      </Description>
+    </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RegularBinaryRelationSemigroup">
+<ManSection>
+  <Oper Name="RegularBinaryRelationSemigroup" Arg="n"/>
+  <Returns>A semigroup of binary relations.</Returns>
+  <Description> 
+    <C>RegularBinaryRelationSemigroup</C> return the semigroup generated by
+    the regular binary relations on the set <M>\{1,\ldots, <A>n</A>\}</M> for a
+    positive integer <A>n</A>. 
+    <Alt Not="Text"> <C>RegularBinaryRelationSemigroup(<A>n</A>)</C> is
+      generated by the <M>4</M> binary relations:
+      <Display>
+        \begin{array}{ll} 
+        \left(\begin{array}{ccccccccc}
+        1&amp;2&amp;\cdots&amp;n-1&amp; n\\
+        2&amp;3&amp;\cdots&amp;n&amp;1
+        \end{array}\right),&amp; \quad
+        \left(\begin{array}{ccccccccc}
+        1&amp;2&amp;3&amp;\cdots&amp;n\\
+        2&amp;1&amp;3&amp;\cdots&amp;n
+        \end{array}\right),\\
+        \left(\begin{array}{ccccccccc}
+        1&amp;2&amp;\cdots&amp;n-1&amp; n\\
+        2&amp;2&amp;\cdots&amp;n-1&amp;\{1,n\}
+        \end{array}\right), &amp;\quad
+        \left(\begin{array}{ccccccccc}
+        1&amp;2&amp;\cdots&amp;n-1&amp;n\\
+        2&amp;2&amp;\cdots&amp;n-1&amp;-
+        \end{array}\right).
+        \end{array}
+      </Display> 
+    </Alt>
+    Note that this semigroup has nearly <M>2^{(n^2)}</M> elements. 
+  </Description>
+</ManSection>
+<#/GAPDoc>
