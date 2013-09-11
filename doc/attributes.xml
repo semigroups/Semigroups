@@ -1,0 +1,511 @@
+#############################################################################
+##
+#W  attributes.xml
+#Y  Copyright (C) 2011-13                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="StructureDescriptionMaximalSubgroups">
+  <ManSection>
+    <Attr Name="StructureDescriptionMaximalSubgroups" Arg="S"/>
+    <Returns>Distinct structure descriptions of the maximal subgroups 
+      of a semigroup.</Returns>
+    <Description>
+      <C>StructureDescriptionMaximaSubgroups</C> returns the distinct values of
+      <Ref Attr="StructureDescription" BookName="ref"/> when it is applied to
+      the maximal subgroups of the semigroup <A>S</A>. 
+      <Example>
+gap> S:=DualSymmetricInverseSemigroup(6);
+&lt;inverse bipartition semigroup on 6 pts with 3 generators>
+gap> StructureDescriptionMaximalSubgroups(S);
+[ "1", "C2", "S3", "S4", "S5", "S6" ]
+gap> S:=Semigroup( PartialPerm( [ 1, 3, 4, 5, 8 ], [ 8, 3, 9, 4, 5 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 8 ], [ 10, 4, 1, 9, 6 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 10 ], [ 4, 1, 6, 7, 5, 3, 2, 10 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4, 6, 8, 10 ], [ 4, 9, 10, 3, 1, 5, 2 ] ) );;
+gap> StructureDescriptionMaximalSubgroups(S);
+[ "1", "C2", "C3", "C4" ]</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="StructureDescriptionSchutzenbergerGroups">
+  <ManSection>
+    <Attr Name="StructureDescriptionSchutzenbergerGroups" Arg="S"/>
+    <Returns>Distinct structure descriptions of the Schutzenberger groups of a
+      semigroup.</Returns>
+    <Description>
+      <C>StructureDescriptionSchutzenbergerGroups</C> returns the distinct
+      values of <Ref Attr="StructureDescription" BookName="ref"/> when it is
+      applied to the Schutzenberger groups of the &R;-classes of the semigroup
+      <A>S</A>.
+      <Example>
+gap> S:=Monoid( 
+> Bipartition([[ 1, 2, 5, -1, -2 ], [ 3, 4, -3, -5 ], [ -4 ]]), 
+> Bipartition([[ 1, 2, -2 ], [ 3, -1 ], [ 4 ], [ 5 ], [ -3, -4 ], [ -5 ]]),
+> Bipartition([[ 1 ], [ 2, 3, -5 ], [ 4, -3 ], [ 5, -2 ], [ -1, -4 ]]));
+&lt;bipartition monoid on 5 pts with 3 generators>
+gap> StructureDescriptionSchutzenbergerGroups(S);
+[ "1", "C2" ]</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="MinimalDClass">
+  <ManSection>
+    <Attr Name="MinimalDClass" Arg="S"/>
+    <Returns>The minimal &D;-class of a semigroup.</Returns>
+    <Description>
+      The minimal ideal of a semigroup is the least ideal with respect to
+      containment. <C>MinimalDClass</C> returns the &D;-class corresponding to
+      the minimal ideal of the semigroup <A>S</A>. Equivalently,
+      <C>MinimalDClass</C> returns the minimal &D;-class with respect to the
+      partial order of &D;-classes.<P/>
+
+      Note that <C>MinimalDClass</C> is significantly faster than finding the
+      &D;-class with minimum rank representative. 
+
+      See also <Ref Attr="PartialOrderOfDClasses"/>,
+      <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and 
+      <Ref Attr="MinimalIdeal"/>.
+      <Example>
+gap> D:=MinimalDClass(JonesMonoid(8));
+{Bipartition( [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ 7, 8 ], [ -1, -2 ], 
+  [ -3, -4 ], [ -5, -6 ], [ -7, -8 ] ] )}
+gap> S:=InverseSemigroup( 
+> PartialPerm( [ 1, 2, 3, 5, 7, 8, 9 ], [ 2, 6, 9, 1, 5, 3, 8 ] ), 
+> PartialPerm( [ 1, 3, 4, 5, 7, 8, 9 ], [ 9, 4, 10, 5, 6, 7, 1 ] ) );;
+gap> MinimalDClass(S);
+{PartialPerm( [  ], [  ] )}</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="MaximalDClasses">
+  <ManSection>
+    <Attr Name="MaximalDClasses" Arg="S"/>
+    <Returns>The maximal &D;-classes of a semigroup.</Returns>
+    <Description>
+      <C>MaximalDClasses</C> returns the maximal &D;-classes with respect to
+      the partial order of &D;-classes. <P/>
+      
+      See also <Ref Attr="PartialOrderOfDClasses"/>,
+      <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and
+      <Ref Attr="MinimalDClass"/>.
+      <Log>
+gap> MaximalDClasses(BrauerMonoid(8));
+[ {Bipartition( [ [ 1, -2 ], [ 2, -3 ], [ 3, -4 ], [ 4, -5 ], 
+      [ 5, -6 ], [ 6, -7 ], [ 7, -8 ], [ 8, -1 ] ] )} ]
+gap> MaximalDClasses(FullTransformationMonoid(5));
+[ {IdentityTransformation()} ]
+gap> S:=Semigroup( 
+> PartialPerm( [ 1, 2, 3, 4, 5, 6, 7 ], [ 3, 8, 1, 4, 5, 6, 7 ] ), 
+> PartialPerm( [ 1, 2, 3, 6, 8 ], [ 2, 6, 7, 1, 5 ] ), 
+> PartialPerm( [ 1, 2, 3, 4, 6, 8 ], [ 4, 3, 2, 7, 6, 5 ] ), 
+> PartialPerm( [ 1, 2, 4, 5, 6, 7, 8 ], [ 7, 1, 4, 2, 5, 6, 3 ] ) );;
+gap> MaximalDClasses(S);
+[ {PartialPerm( [ 1, 2, 3, 4, 5, 6, 7 ], [ 3, 8, 1, 4, 5, 6, 7 ] )}, 
+  {PartialPerm( [ 1, 2, 4, 5, 6, 7, 8 ], [ 7, 1, 4, 2, 5, 6, 3 ] )} ]</Log>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="PrincipalFactor">
+<ManSection>
+  <Attr Name="PrincipalFactor" Arg="D"/>
+  <Returns>A Rees matrix semigroup.</Returns>
+  <Description> 
+    <C>PrincipalFactor(<A>D</A>)</C> is just shorthand for
+    <C>Range(InjectionPrincipalFactor(<A>D</A>))</C>, where <A>D</A> is a
+    &D;-class of semigroup; see
+    <Ref Oper="InjectionPrincipalFactor"/> for more details. 
+    <Example>
+gap> S:=Semigroup(
+> Bipartition( [ [ 1, 2, 3, 4, 5, -1, -3 ], [ -2, -5 ], [ -4 ] ] ), 
+> Bipartition( [ [ 1, -5 ], [ 2, 3, 4, 5, -1, -3 ], [ -2, -4 ] ] ), 
+> Bipartition( [ [ 1, 5, -4 ], [ 2, 4, -1, -5 ], [ 3, -2, -3 ] ] ) );;
+gap> d:=MinimalDClass(S);    
+{Bipartition( [ [ 1, 2, 3, 4, 5, -1, -3 ], [ -2, -5 ], [ -4 ] ] )}
+gap> PrincipalFactor(d);
+&lt;Rees matrix semigroup 1x5 over Group(())></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SmallGeneratingSet">
+<ManSection>
+  <Attr Name="SmallGeneratingSet" Arg="S"/>
+  <Returns>A small generating set for a semigroup.</Returns>
+    <Description>
+      <C>SmallGeneratingSet</C> returns a relatively small generating subset
+      of the set of generators of the semigroup <A>S</A> of transformations or
+      partial permutations; see <Ref Func="Generators"/>. If the number of
+      generators for <A>S</A> is already relatively small, then this function
+      will often return the original generating set.<P/> 
+
+      As neither irredundancy, nor minimal length are proven,
+    <C>SmallGeneratingSet</C> usually returns an answer  much more quickly than
+    <Ref Oper="IrredundantGeneratingSubset"/>. It can be used whenever a
+    small generating set is desired which does not necessarily needs to be
+    minimal. <C>SmallGeneratingSet</C> works particularly well for inverse
+    semigroups of partial permutations.<P/>
+    
+    Note that <C>SmallGeneratingSet</C> may return different
+    results in different &GAP; sessions.
+
+      <Log>
+gap> S:=Semigroup( Transformation( [ 1, 2, 3, 2, 4 ] ), 
+> Transformation( [ 1, 5, 4, 3, 2 ] ),
+> Transformation( [ 2, 1, 4, 2, 2 ] ), Transformation( [ 2, 4, 4, 2, 1 ] ),
+> Transformation( [ 3, 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 3, 4, 1 ] ),
+> Transformation( [ 4, 4, 3, 3, 5 ] ), Transformation( [ 5, 1, 5, 5, 3 ] ),
+> Transformation( [ 5, 4, 3, 5, 2 ] ), Transformation( [ 5, 5, 4, 5, 5 ] ) );;
+gap> SmallGeneratingSet(S);                  
+[ Transformation( [ 1, 5, 4, 3, 2 ] ), Transformation( [ 3, 2, 3, 4, 1 ] ), 
+  Transformation( [ 5, 4, 3, 5, 2 ] ), Transformation( [ 1, 2, 3, 2, 4 ] ), 
+  Transformation( [ 4, 4, 3, 3, 5 ] ) ]
+gap> S:=RandomInverseMonoid(10000,10);;
+gap> SmallGeneratingSet(S);
+[ [ 1 .. 10 ] -> [ 3, 2, 4, 5, 6, 1, 7, 10, 9, 8 ], 
+  [ 1 .. 10 ] -> [ 5, 10, 8, 9, 3, 2, 4, 7, 6, 1 ], 
+  [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ] -> [ 1, 6, 4, 8, 2, 10, 7, 3, 9 ] ]
+gap> S:=RandomBipartitionSemigroup(100,4);
+&lt;bipartition semigroup on 4 pts with 96 generators>
+gap> Length(SmallGeneratingSet(S));       
+13</Log>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="MultiplicativeZero">
+  <ManSection>
+    <Attr Name="MultiplicativeZero" Arg="S"/>
+    <Returns>
+     The zero element of a semigroup.
+    </Returns>
+    <Description>
+      <C>MultiplicativeZero</C> returns the zero element of the semigroup
+      <A>S</A> of transformations or partial permutations if it has one and
+      <K>fail</K> if it does not. 
+      See also <Ref Attr="MultiplicativeZero" BookName="ref"/>.
+      <Example>
+gap> S:=Semigroup( Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ), 
+> Transformation( [ 1, 6, 3, 6, 2, 1, 6 ] ));;
+gap> MultiplicativeZero(S);
+Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
+gap> S:=Semigroup(Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
+> Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ), 
+> Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ), 
+> Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ));;
+gap> MultiplicativeZero(S);
+fail
+gap> S:=InverseSemigroup( PartialPerm( [ 1, 3, 4 ], [ 5, 3, 1 ] ),
+> PartialPerm( [ 1, 2, 3, 4 ], [ 4, 3, 1, 2 ] ),
+> PartialPerm( [ 1, 3, 4, 5 ], [ 2, 4, 5, 3 ] ) );;
+gap> MultiplicativeZero(S);
+&lt;empty partial perm>
+gap> S:=PartitionMonoid(6); 
+&lt;regular bipartition semigroup on 6 pts with 4 generators>
+gap> MultiplicativeZero(S);
+fail
+gap> S:=DualSymmetricInverseMonoid(6);
+&lt;inverse bipartition semigroup on 6 pts with 3 generators>
+gap> MultiplicativeZero(S);
+&lt;bipartition: [ 1, 2, 3, 4, 5, 6, -1, -2, -3, -4, -5, -6 ]></Example> 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="MinimalIdeal">
+  <ManSection>
+    <Attr Name="MinimalIdeal" Arg="S"/>
+    <Returns> 
+    The minimal ideal of a semigroup. 
+    </Returns>
+    <Description>
+    The minimal ideal of a semigroup is the least ideal with respect to
+    containment. <P/> 
+
+    Currently, <C>MinimalIdeal</C> returns a semigroup with as
+    many generators as elements. There are plans to improve this in future
+    versions of &Semigroups;. <P/>
+
+    Note that <C>MinimalIdeal</C> is significantly faster than finding the
+    &D;-class with minimum rank representative (which is also
+    the minimal ideal). 
+
+    See also <Ref Attr="PartialOrderOfDClasses"/>,
+    <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and 
+    <Ref Attr="MinimalDClass"/>.
+    <Example>
+gap> S:=Semigroup( Transformation( [ 3, 4, 1, 3, 6, 3, 4, 6, 10, 1 ] ), 
+> Transformation( [ 8, 2, 3, 8, 4, 1, 3, 4, 9, 7 ] ));;
+gap> MinimalIdeal(S);
+&lt;simple transformation semigroup on 10 pts with 5 generators>
+gap> Elements(MinimalIdeal(S));
+[ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ), 
+  Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] ), 
+  Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] ), 
+  Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ] ), 
+  Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] ) ]
+gap> f:=Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] );;
+gap> D:=DClass(S, f);
+{Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] )}
+gap> ForAll(GreensDClasses(S), x-> IsGreensLessThanOrEqual(D, x));
+true
+gap> MinimalIdeal(POI(10));
+&lt;partial perm group on 0 pts with 1 generator>
+gap> MinimalIdeal(BrauerMonoid(6));
+&lt;simple bipartition semigroup on 6 pts with 22 generators></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsomorphismPermGroup">
+<ManSection>
+  <Oper Name="IsomorphismPermGroup" Arg="S"/>
+  <Returns>An isomorphism.
+  </Returns>
+  <Description>
+    If the semigroup of transformations or partial permutations <A>S</A>
+    satisfies <Ref Prop="IsGroupAsSemigroup"/>, then
+    <C>IsomorphismPermGroup</C> returns an isomorphism to a permutation
+    group.<P/> 
+   
+    If <A>S</A> does not satisfy <Ref Prop="IsGroupAsSemigroup"/>,
+    then an error is given.
+
+<Example>
+gap> S:=Semigroup( Transformation( [ 2, 2, 3, 4, 6, 8, 5, 5 ] ),
+> Transformation( [ 3, 3, 8, 2, 5, 6, 4, 4 ] ) );;
+gap> IsGroupAsSemigroup(S);
+true
+gap> IsomorphismPermGroup(S); 
+MappingByFunction( &lt;transformation group on 8 pts with 2 generators>
+ , Group([ (5,6,8), (2,3,8,
+4) ]), &lt;Attribute "AsPermutation">, function( x ) ... end )
+gap> StructureDescription(Range(IsomorphismPermGroup(S)));
+"S6"
+gap> S:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
+&lt;inverse partial perm semigroup on 4 pts with 2 generators>
+gap> IsomorphismPermGroup(S);
+MappingByFunction( &lt;inverse partial perm semigroup on 4 pts
+ with 2 generators>, Group([ (1,2,3,4), (1,
+2) ]), &lt;Attribute "AsPermutation">, function( x ) ... end )
+gap> G:=GroupOfUnits(PartitionMonoid(4));
+&lt;bipartition group on 4 pts with 2 generators>
+gap> StructureDescription(G);
+"S4"
+gap> iso:=IsomorphismPermGroup(G);  
+MappingByFunction( &lt;bipartition group on 4 pts with 2 generators>
+ , S4, &lt;Attribute "AsPermutation">, function( x ) ... end )
+gap> RespectsMultiplication(iso);
+true
+gap> inv:=InverseGeneralMapping(iso);;
+gap> ForAll(G, x-> (x^iso)^inv=x);
+true
+gap> ForAll(G, x-> ForAll(G, y-> (x*y)^iso=x^iso*y^iso));
+true</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="GroupOfUnits">
+  <ManSection>
+    <Attr Name="GroupOfUnits" Arg="S"/>
+    <Returns>The group of units of a semigroup.</Returns>
+    <Description>
+      <C>GroupOfUnits</C> returns the group of units of the semigroup of
+      transformations or partial permutations <A>S</A> as a subsemigroup of
+      <A>S</A> if it exists and returns <K>fail</K> if it does not. Use <Ref
+        Oper="IsomorphismPermGroup"/> if you require a permutation
+      representation of the group of units.<P/>
+
+      If a semigroup <A>S</A> has an identity <C>e</C>, then the <E>group of
+        units</E> of <A>S</A> is the set of those <C>s</C> in <A>S</A> such that
+      there exists <C>t</C> in <A>S</A> where <C>s*t=t*s=e</C>. Equivalently,
+      the group of units is the &H;-class of the identity of <A>S</A>.<P/> 
+      
+      See also 
+      <Ref Oper="GreensHClassOfElement" BookName="ref"/>,
+      <Ref Prop="IsMonoidAsSemigroup"/>, and
+      <Ref Attr="MultiplicativeNeutralElement" BookName="ref"/>.
+
+      <Example>
+gap> S:=Semigroup(Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
+>   Transformation( [ 1, 6, 3, 4, 7, 2, 5, 8 ] ),
+>   Transformation( [ 2, 1, 6, 7, 8, 3, 4, 5 ] ),
+>   Transformation( [ 3, 2, 3, 6, 1, 6, 1, 2 ] ),
+>   Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] ) );;
+gap> Size(S);
+5304
+gap> StructureDescription(GroupOfUnits(S));
+"C2 x S4"
+gap> S:=InverseSemigroup( PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
+> [ 2, 4, 5, 3, 6, 7, 10, 9, 8, 1 ] ),
+> PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 10 ], 
+> [ 8, 2, 3, 1, 4, 5, 10, 6, 9 ] ) );;
+gap> StructureDescription(GroupOfUnits(S));
+"C8"
+gap> S:=InverseSemigroup( PartialPerm( [ 1, 3, 4 ], [ 4, 3, 5 ] ),
+> PartialPerm( [ 1, 2, 3, 5 ], [ 3, 1, 5, 2 ] ) );;
+gap> GroupOfUnits(S);
+fail
+gap> S:=Semigroup( Bipartition( [ [ 1, 2, 3, -1, -3 ], [ -2 ] ] ), 
+> Bipartition( [ [ 1, -1 ], [ 2, 3, -2, -3 ] ] ), 
+> Bipartition( [ [ 1, -2 ], [ 2, -3 ], [ 3, -1 ] ] ), 
+> Bipartition( [ [ 1 ], [ 2, 3, -2 ], [ -1, -3 ] ] ) );;
+gap> StructureDescription(GroupOfUnits(S));
+"C3"</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IdempotentGeneratedSubsemigroup">
+  <ManSection>
+    <Oper Name="IdempotentGeneratedSubsemigroup" Arg="S"/>
+    <Returns>A semigroup.  
+    </Returns>
+    <Description> 
+      <C>IdempotentGeneratedSubsemigroup</C> returns the subsemigroup of the
+      semigroup of transformations or partial permutations <A>S</A> generated
+      by the idempotents of <A>S</A>.<P/>
+      
+      See also <Ref Attr="Idempotents"/> and <Ref Attr="SmallGeneratingSet"/>.
+<Example>
+gap> file:=Concatenation(SemigroupsDir(), "/examples/graph8c.semigroups.gz");;
+gap> S:=Semigroup(ReadSemigroups(file, 13));;
+gap> IdempotentGeneratedSubsemigroup(S);
+&lt;transformation monoid on 8 pts with 18 generators>
+gap> S:=SymmetricInverseSemigroup(5);
+&lt;symmetric inverse semigroup on 5 pts>
+gap> IdempotentGeneratedSubsemigroup(S);
+&lt;inverse partial perm semigroup on 5 pts with 6 generators>
+gap> S:=DualSymmetricInverseSemigroup(5); 
+&lt;inverse bipartition semigroup on 5 pts with 3 generators>
+gap> IdempotentGeneratedSubsemigroup(S);
+&lt;inverse bipartition semigroup on 5 pts with 11 generators>
+gap> IsSemilatticeAsSemigroup(last);
+true</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="InjectionPrincipalFactor">
+<ManSection>
+  <Attr Name="InjectionPrincipalFactor" Arg="D"/>
+  <Attr Name="IsomorphismReesMatrixSemigroup" Arg="D"/>
+  <Returns>A injective mapping.</Returns>
+  <Description> 
+    The argument <A>D</A> should be a &D;-class of a semigroup of
+    transformations or partial permutations.  If <A>D</A> is a
+    subsemigroup of <C>S</C>, then 
+    the <E>principal factor</E> of <A>D</A> is just <A>D</A> itself.
+    If <A>D</A> is not a subsemigroup of <C>S</C>, then 
+    the principal factor of <A>D</A> is 
+    the semigroup with elements <A>D</A> and a new element <C>0</C> with
+    multiplication of <M>x,y\in D</M> defined by:
+    <Alt Not="Text">
+      <Display>
+        xy=\left\{\begin{array}{ll}
+        x*y\ (\textrm{in }S)&amp;\textrm{if }x*y\in D\\
+        0&amp;\textrm{if }xy\not\in D.
+        \end{array}\right.
+      </Display>
+    </Alt>
+    <Alt Only="Text">
+      <C>xy</C> equals the product of <C>x</C> and <C>y</C> if it belongs to
+      <A>D</A> and <C>0</C> if it does not. <P/>
+    </Alt>
+    <C>InjectionPrincipalFactor</C> returns an injective function
+    from the &D;-class <A>D</A> to a Rees matrix semigroup, which
+    contains the principal factor of <A>D</A> as a subsemigroup. <P/>
+
+    If <A>D</A> is a subsemigroup of its parent semigroup, then the
+    function returned by <C>InjectionPrincipalFactor</C> or
+    <C>IsomorphismReesMatrixSemigroup</C> 
+    is an isomorphism from <A>D</A> to a Rees matrix semigroup; see
+    <Ref Func="ReesMatrixSemigroup" BookName="ref"/>.<P/>
+
+    If <A>D</A> is not a semigroup, then the function returned by
+    <C>InjectionPrincipalFactor</C> is an
+    injective function from <A>D</A> to a Rees 0-matrix semigroup isomorphic
+    to the principal factor of <A>D</A>; see 
+    <Ref Func="ReesZeroMatrixSemigroup" BookName="ref"/>. In this case, 
+    <C>IsomorphismReesMatrixSemigroup</C> returns an error.<P/>
+
+    See also <Ref Attr="PrincipalFactor"/>.
+    
+    <Example>
+gap> S:=InverseSemigroup(
+> PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ),
+> PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 10 ], 
+> [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
+gap> f:=PartialPerm([ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ]);;
+gap> d:=GreensDClassOfElement(S, f);
+{PartialPerm( [ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ] )}
+gap> InjectionPrincipalFactor(d);;
+gap> rms:=Range(last);
+&lt;Rees 0-matrix semigroup 3x3 over Group(())>
+gap> MatrixOfReesZeroMatrixSemigroup(rms);
+[ [ (), 0, 0 ], [ 0, (), 0 ], [ 0, 0, () ] ]
+gap> Size(rms);
+10
+gap> Size(d);
+9</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IrredundantGeneratingSubset">
+  <ManSection>
+    <Oper Name="IrredundantGeneratingSubset" Arg="coll"/>
+    <Returns>    
+    A list of transformations or partial permutations.
+    </Returns>
+    <Description>
+      If <A>coll</A> is a transformation or partial permutation collection,
+      then this function returns a subset <C>U</C> of <A>coll</A> or
+      <C>Generators(<A>coll</A>)</C> such that no element of <C>U</C> is
+      generated by the other elements of <C>U</C>.  <P/>
+
+      See also <Ref Func="Generators"/>, 
+      <Ref Prop="IsTransformationCollection" BookName="ref"/>, and 
+      <Ref Oper="SmallGeneratingSet"/>.
+
+      <Log>
+gap> S:=Semigroup( Transformation( [ 5, 1, 4, 6, 2, 3 ] ),
+> Transformation( [ 1, 2, 3, 4, 5, 6 ] ),
+> Transformation( [ 4, 6, 3, 4, 2, 5 ] ),
+> Transformation( [ 5, 4, 6, 3, 1, 3 ] ),
+> Transformation( [ 2, 2, 6, 5, 4, 3 ] ),
+> Transformation( [ 3, 5, 5, 1, 2, 4 ] ),
+> Transformation( [ 6, 5, 1, 3, 3, 4 ] ),
+> Transformation( [ 1, 3, 4, 3, 2, 1 ] ) );;
+gap> IrredundantGeneratingSubset(S);
+[ Transformation( [ 1, 3, 4, 3, 2, 1 ] ), 
+  Transformation( [ 2, 2, 6, 5, 4, 3 ] ), 
+  Transformation( [ 3, 5, 5, 1, 2, 4 ] ), 
+  Transformation( [ 5, 1, 4, 6, 2, 3 ] ), 
+  Transformation( [ 5, 4, 6, 3, 1, 3 ] ), 
+  Transformation( [ 6, 5, 1, 3, 3, 4 ] ) ]
+gap> S:=RandomInverseMonoid(1000,10);
+&lt;inverse monoid with 1000 generators>
+gap> SmallGeneratingSet(S);
+[ [ 1 .. 10 ] -> [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ], 
+  [ 1 .. 10 ] -> [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ], 
+  [ 1, 2, 3, 4, 6, 7, 8, 9 ] -> [ 7, 5, 10, 1, 8, 4, 9, 6 ]
+  [ 1 .. 9 ] -> [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ] ]
+gap> IrredundantGeneratingSubset(last);
+[ [ 1 .. 9 ] -> [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ], 
+  [ 1 .. 10 ] -> [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ], 
+  [ 1 .. 10 ] -> [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ] ]
+</Log>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+#EOF
