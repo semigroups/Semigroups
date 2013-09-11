@@ -10,12 +10,10 @@
   
   <Section><Heading>Expressing semigroup elements as words in
     generators</Heading>
-    In some cases it is possible to express the elements of a transformation
-    semigroup as a word in the generators. This section describes how to
-    accomplish this in &Semigroups;. <P/>
+    It is possible to express an element of a transformation or partial perm
+    semigroup as a word in the generators of that semigroup. This section
+    describes how to accomplish this in &Semigroups;. <P/>
 
-    Note that at present it is not possible to factorize elements in a
-    semigroup of partial permutations.
     <#Include Label="EvaluateWord">
     <#Include Label="Factorization">
   </Section>
@@ -31,6 +29,8 @@
     possible to calculate the strongly connected components of an orbit of a
     semigroup acting on a set until the entire orbit has been found.
 
+    <#Include Label="EnumeratePosition">
+    <#Include Label="LookForInOrb">
     <#Include Label="OrbSCC">
     <#Include Label="OrbSCCLookup">
     <#Include Label="OrbSCCTruthTable">
@@ -64,6 +64,17 @@
     <#Include Label="NrXClasses">
     <#Include Label="PartialOrderOfDClasses">
     <#Include Label="SchutzenbergerGroup">
+    <#Include Label="MinimalDClass">
+    <#Include Label="MaximalDClasses">
+    <#Include Label="StructureDescriptionSchutzenbergerGroups">
+    <#Include Label="StructureDescriptionMaximalSubgroups">
+    <#Include Label="MultiplicativeNeutralElement">
+    <#Include Label="IsGreensClassNC">
+    <#Include Label="IsTransformationSemigroupGreensClass">
+    <#Include Label="IsBipartitionSemigroupGreensClass">
+    <#Include Label="IsPartialPermSemigroupGreensClass">
+    <#Include Label="StructureDescription">
+
   </Section>
 
   <Section><Heading>Further attributes of semigroups</Heading>
@@ -79,7 +90,6 @@
     <#Include Label="IrredundantGeneratingSubset">
     <#Include Label="MinimalIdeal">
     <#Include Label="MultiplicativeZero">
-    <#Include Label="PrimitiveIdempotents">
     <#Include Label="Random">
     <#Include Label="SmallGeneratingSet"> 
 
@@ -140,6 +150,7 @@
     <#Include Label="JoinIrreducibleDClasses">
     <#Include Label="MajorantClosure">
     <#Include Label="Minorants">
+    <#Include Label="PrimitiveIdempotents">
     <#Include Label="RightCosetsOfInverseSemigroup">
     <#Include Label="SameMinorantsSubgroup">
     <#Include Label="SmallerDegreePartialPermRepresentation">
