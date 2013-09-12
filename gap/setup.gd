@@ -10,10 +10,11 @@
 
 DeclareCategory("IsActingSemigroup", IsSemigroup);
 DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
+DeclareProperty("IsGeneratorsOfActingSemigroup", IsAssociativeElementCollection);
 DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);
-DeclareAttribute("ActionDegree", IsAssociativeElementWithActionCollection);
+DeclareAttribute("ActionDegree", IsAssociativeElementCollection);
 DeclareAttribute("ActionRank", IsAssociativeElement);
 DeclareAttribute("MinActionRank", IsSemigroup);
 
@@ -40,10 +41,9 @@ DeclareAttribute("RhoOrbSeed", IsSemigroup);
 DeclareAttribute("IdempotentTester", IsSemigroup);
 DeclareAttribute("IdempotentCreator", IsSemigroup);
 
-DeclareOperation("IsInSubgroupOfSemigroup", [IsAssociativeElementWithAction]);
 DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
 IsSemigroup);
 
-DeclareAttribute("GroupElementAction", IsSemigroup);
+DeclareAttribute("StabiliserAction", IsSemigroup);
 
 #EOF
