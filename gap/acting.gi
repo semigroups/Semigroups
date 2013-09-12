@@ -79,6 +79,10 @@ function(f, s)
     return false;
   elif IsTransformation(f) and ActionDegree(f)<>ActionDegree(s) then 
     f:=AsTransformation(f, ActionDegree(s));
+    # if AsTransformation doesn't work, then <f> is unchanged.
+    if ActionDegree(f)<>ActionDegree(s) then 
+      return false;
+    fi;
   fi;
 
   if not (IsMonoid(s) and IsOne(f)) and 
