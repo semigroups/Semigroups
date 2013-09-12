@@ -8,6 +8,74 @@
 #############################################################################
 ##
 
+#
+
+BindGlobal("SemigroupsCompareTestTimings", 
+function(path, vers)
+  local dir, files, suffix, tstdir, split, tstfile, file;
+  
+  vers:=Concatenation("-", vers, ".");
+  if not path[Length(path)]='/' then 
+    Add(path, '/');
+  fi;
+  
+  dir:=Directory(path);
+  files:=DirectoryContents(dir);
+  suffix:=Concatenation(vers, "tst.timings"); 
+
+  tstdir:=DirectoriesPackageLibrary("semigroups", "tst" )[1];
+  tstdir:=DirectoryContents(tstdir);
+
+  for file in files do
+    split:=SplitString(file, '.');
+    if split[Length(split)]="timings" then 
+      if file{[Length(file)-Length(suffix)+1..Length(file)]}=suffix then 
+        tstfile:=Concatenation(SplitString(split[1], '-')[1], ".tst");
+        if not tstfile in tstdir then 
+          Print("can't find ", 
+           Concatenation(SplitString(file[1], '-')[1], ".tst"), 
+           "in semigroups/tst for comparison!\n");
+        else
+          Test(Filename(tstdir, tstfile), rec(compareTimings:=file));
+        fi;
+      fi;
+    fi;
+  od;
+  return true;
+end);
+
+#
+
+BindGlobal("SemigroupsCreateTestTimings", 
+function(path, vers)
+  local dir, files, file, out;
+  
+  vers:=Concatenation("-", vers, ".");
+  if not path[Length(path)]='/' then 
+    Add(path, '/');
+  fi;
+  
+  dir:=DirectoriesPackageLibrary( "semigroups", "tst" )[1];
+  files:=DirectoryContents(dir);
+  
+  for file in files do
+    file:=SplitString(file, '.');
+    if file[Length(file)]="tst" then 
+      out:=Concatenation(path, JoinStringsWithSeparator(file, vers),
+      ".timings");
+      file:=JoinStringsWithSeparator(file, ".");
+      Print("checking ", file ,"...\n");
+      if not Test(Filename(dir, file)) then 
+        Print(file, " returns differences in output, exiting...");
+        return;
+      fi;
+      Print("writing ", file, " ...\n");
+      Test(Filename(dir, file), rec(writeTimings:=out));
+    fi;
+  od;
+  return true;
+end);
+
 # this file contains utilies for use with the Semigroups package. 
 
 BindGlobal("SemigroupsTestRec",
