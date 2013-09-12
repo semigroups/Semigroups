@@ -409,11 +409,12 @@ function(d)
 
   #
   convert_out:=function(enum, tuple)
-    local d, rep;
+    local d, rep, act;
     if tuple=fail then return fail; fi;
     d:=enum!.parent; rep:=Representative(d);
-    return RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), tuple[1])[1]*rep*tuple[2]
-     *LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
+    act:=StabiliserAction(Parent(d));
+    return act(RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), tuple[1])[1]*rep,
+     tuple[2])*LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
   end;
   #
   convert_in:=function(enum, elt)
@@ -466,12 +467,13 @@ function(d)
 
   #
   convert_out:=function(enum, tuple)
-    local d, rep;
+    local d, rep, act;
     if tuple=fail then return fail; fi;
-    d:=enum!.parent; rep:=Representative(d);
-    return LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[1])[2]
-     *rep*tuple[2]
-     *LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
+    d:=enum!.parent; rep:=Representative(d); 
+    act:=StabiliserAction(Parent(d));
+    return act(LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[1])[2]
+     *rep, tuple[2])*LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d),
+     tuple[3])[1];
   end;
   #
   convert_in:=function(enum, elt)
@@ -553,6 +555,8 @@ end);
 
 # same method for regular, different method for inverse
 
+#HERE - JDM - StabiliserAction implementation!!
+
 InstallMethod(Enumerator, "for L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
@@ -573,11 +577,13 @@ function(l)
   record.Length:=enum-> Size(l);
   #
   convert_out:=function(enum, tuple)
-    local l, rep;
+    local l, rep, act;
     if tuple=fail then return fail; fi;
     l:=enum!.parent;
     rep:=Representative(l);
-    return RhoOrbMult(RhoOrb(l), RhoOrbSCCIndex(l), tuple[1])[1]*rep*tuple[2];
+    act:=StabiliserAction(Parent(l));
+    return act(RhoOrbMult(RhoOrb(l), RhoOrbSCCIndex(l),
+      tuple[1])[1]*rep, tuple[2]);
   end;
   #
   convert_in:=function(enum, elt)
@@ -629,12 +635,13 @@ function(l)
   record.Length:=enum-> Size(l);
   #
   convert_out:=function(enum, tuple)
-    local l, rep;
+    local l, rep, act;
     if tuple=fail then return fail; fi;
     l:=enum!.parent;
     rep:=Representative(l);
-    return LambdaOrbMult(LambdaOrb(l), LambdaOrbSCCIndex(l), tuple[1])[2]
-     *rep*tuple[2];
+    act:=StabiliserAction(Parent(l));
+    return act(LambdaOrbMult(LambdaOrb(l), LambdaOrbSCCIndex(l), tuple[1])[2]
+     *rep, tuple[2]);
   end;
   #
   convert_in:=function(enum, elt)
@@ -689,8 +696,8 @@ function(r)
     if tuple=fail then return fail; fi;
     r:=enum!.parent;
     rep:=Representative(r);
-    return rep*tuple[1]*LambdaOrbMult(LambdaOrb(r), 
-     LambdaOrbSCCIndex(r), tuple[2])[1];
+    return StabiliserAction(Parent(r))(rep,tuple[1])
+     *LambdaOrbMult(LambdaOrb(r), LambdaOrbSCCIndex(r), tuple[2])[1];
   end;
   #
   convert_in:=function(enum, elt)
