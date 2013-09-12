@@ -176,7 +176,7 @@ end);
 #
 
 InstallMethod(\in, "for inverse op D-class",
-[IsAssociativeElementWithUniqueSemigroupInverse, 
+[IsAssociativeElement, 
 IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(f, d)
   local rep, s, o, m, lookup, rho_l, lambda_l, schutz, scc, g;
@@ -386,7 +386,7 @@ function(s)
   out:=EmptyPlist(r-1);
   
   for m in [2..r] do 
-    out[m-1]:=RightOne(LambdaOrbRep(o, m);
+    out[m-1]:=RightOne(LambdaOrbRep(o, m));
   od;
   return out;
 end);
