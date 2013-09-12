@@ -10,7 +10,7 @@
 
 # basic things
 
-InstallMethod(Generators, "for a semigroup with generators",
+InstallMethod(Generators, "for a semigroup",
 [IsSemigroup],
 function(s)
 
@@ -107,26 +107,39 @@ end);
 
 # creating semigroups, monoids, inverse semigroups, etc
 
-InstallMethod(MagmaByGenerators, 
-"for an associative element with action collection",
-[IsAssociativeElementWithActionCollection], SemigroupByGenerators);
+InstallMethod(MagmaByGenerators, "for an associative element collection",
+[IsAssociativeElementCollection], 
+function(coll)
+  if IsGeneratorsOfActingSemigroup(coll) then 
+    return SemigroupByGenerators(coll);
+  else
+    TryNextMethod();
+  fi;
+end);
 
 #
 
-InstallMethod(SemigroupByGenerators, 
-"for an associative element with action collection",
-[IsAssociativeElementWithActionCollection],
+InstallMethod(SemigroupByGenerators, "for an associative element collection",
+[IsAssociativeElementCollection], 
 function(gens)
-   return SemigroupByGenerators(gens, SemigroupsOptionsRec);
+   if IsGeneratorsOfActingSemigroup(gens) then 
+     return SemigroupByGenerators(gens, SemigroupsOptionsRec);
+   else
+     TryNextMethod();
+    fi;
 end);
 
 #
 
 InstallMethod(SemigroupByGenerators, 
-"for an associative element with action collection and record",
-[IsAssociativeElementWithActionCollection, IsRecord],
+"for an associative element collection and record",
+[IsAssociativeElementCollection, IsRecord],
 function(gens, opts)
   local deg, n, i, closure_opts, s, filts, pos, f;
+
+  if not IsGeneratorsOfActingSemigroup(gens) then 
+    TryNextMethod();
+  fi;
 
   opts:=SemigroupOptions(opts);
   gens:=ShallowCopy(gens);
@@ -204,21 +217,28 @@ end);
 
 #
 
-InstallMethod(MonoidByGenerators, 
-"for an associative element collection",
-[IsAssociativeElementWithActionCollection],
+InstallMethod(MonoidByGenerators, "for an associative element collection",
+[IsAssociativeElementCollection],
 function(gens)
-  return MonoidByGenerators(gens, SemigroupsOptionsRec);
+  if IsGeneratorsOfActingSemigroup(gens) then 
+    return MonoidByGenerators(gens, SemigroupsOptionsRec);
+  else
+    TryNextMethod();
+  fi;
 end);
 
 #
 
 InstallMethod(MonoidByGenerators, 
-"for an asssociative element with action collection and record",
-[IsAssociativeElementWithActionCollection, IsRecord],
+"for an associative element collection and record",
+[IsAssociativeElementCollection, IsRecord],
 function(gens, record)
-  local deg, n, i, closure_opts, s, filts, f;
-  
+  local deg, n, i, closure_opts, s, filts, pos, f;
+
+  if not IsGeneratorsOfActingSemigroup(gens) then 
+    TryNextMethod();
+  fi;
+
   record:=SemigroupOptions(record);
   gens:=ShallowCopy(gens);
 
@@ -275,6 +295,17 @@ function(gens, record)
     SetIsRegularSemigroup(s, true);
   fi;
 
+  # remove one from gens if there.
+  if CanEasilyCompareElements(gens) then
+    pos:=Position(gens, One(gens));
+    if pos<>fail then 
+      SetGeneratorsOfMagma(s, AsList(gens));
+      gens:=ShallowCopy(gens);
+      Remove(gens, pos);
+    else
+      SetGeneratorsOfMagma(s, Concatenation([One(gens)], gens));
+    fi;
+  fi; 
   SetGeneratorsOfMagmaWithOne( s, gens );
   return s;
 end);
@@ -282,31 +313,42 @@ end);
 #
 
 InstallMethod(InverseMonoidByGenerators, 
-"for associative element with semigroup inverse and action collection", 
-[IsAssociativeElementWithUniqueSemigroupInverseCollection and
-IsAssociativeElementWithActionCollection],
+"for an associative element collection",
+[IsAssociativeElementCollection],
 function(gens)
-  return InverseMonoidByGenerators(gens, SemigroupsOptionsRec);
+
+  if IsGeneratorsOfActingSemigroup(gens) then 
+    return InverseMonoidByGenerators(gens, SemigroupsOptionsRec);
+  else
+    TryNextMethod();
+  fi;
 end);
 
 #
 
 InstallMethod(InverseSemigroupByGenerators, 
-"for associative element with semigroup inverse and action collection", 
-[IsAssociativeElementWithUniqueSemigroupInverseCollection and
-IsAssociativeElementWithActionCollection],
+"for an associative element collection",
+[IsAssociativeElementCollection],
+
 function(gens)
-  return InverseSemigroupByGenerators(gens, SemigroupsOptionsRec);
+  if IsGeneratorsOfActingSemigroup(gens) then 
+    return InverseSemigroupByGenerators(gens, SemigroupsOptionsRec);
+  else
+    TryNextMethod();
+  fi;
 end);
 
 #
 
 InstallMethod(InverseMonoidByGenerators, 
-"for associative element with semigroup inverse and action coll, and record",  
-[IsAssociativeElementWithUniqueSemigroupInverseCollection and
-IsAssociativeElementWithActionCollection, IsRecord],
+"for an associative element collection and record",
+[IsAssociativeElementCollection, IsRecord],
 function(gens, record)
   local closure_opts, s, filts, one, pos, f;
+  
+  if not IsGeneratorsOfActingSemigroup(gens) then 
+    TryNextMethod();
+  fi;
 
   record:=SemigroupOptions(record);
 
@@ -356,11 +398,14 @@ end);
 #
 
 InstallMethod(InverseSemigroupByGenerators, 
-"for partial perm coll, partial perm coll, and record",
-[IsAssociativeElementWithUniqueSemigroupInverseCollection and
-IsAssociativeElementWithActionCollection, IsRecord],
+"for an associative element collection and record",
+[IsAssociativeElementCollection, IsRecord],
 function(gens, record)
   local closure_opts, s, filts, f;
+
+  if not IsGeneratorsOfActingSemigroup(gens) then 
+    TryNextMethod();
+  fi;
 
   record:=SemigroupOptions(record);
   
@@ -394,8 +439,8 @@ end);
 # closure
 
 InstallMethod(ClosureInverseSemigroup, 
-"for acting semigroup with inverse op and an associative element coll",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementWithActionCollection],
+"for acting semigroup with inverse op and associative element coll.",
+[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(s, coll) 
   return ClosureInverseSemigroup(s, coll, s!.opts);
 end);
@@ -403,8 +448,8 @@ end);
 #
 
 InstallMethod(ClosureInverseSemigroup, 
-"for acting semigroup with inverse op and an associative element coll",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementWithAction],
+"for acting semigroup with inverse op and an associative element",
+[IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f) 
   return ClosureInverseSemigroup(s, [f], s!.opts);
 end);
@@ -412,8 +457,8 @@ end);
 #
 
 InstallMethod(ClosureInverseSemigroup, 
-"for acting semigroup with inverse op and an associative element coll",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementWithAction, IsRecord],
+"for acting semigroup with inverse op, associative element, record",
+[IsActingSemigroupWithInverseOp, IsAssociativeElement, IsRecord],
 function(s, f, record) 
   return ClosureInverseSemigroup(s, [f], record);
 end);
@@ -421,13 +466,24 @@ end);
 #
 
 InstallMethod(ClosureInverseSemigroup, 
-"for an acting semigroup with inverse op, ass. elt. coll, and record",
-[IsActingSemigroupWithInverseOp, IsAssociativeElementWithActionCollection, IsRecord],
+"for an acting semigroup with inverse op, associative elt coll, and record",
+[IsActingSemigroupWithInverseOp, IsAssociativeElementCollection, IsRecord],
 function(s, coll, record)
   local n;
 
+  if not IsGeneratorsOfActingSemigroup(coll) then 
+    Error("usage: the second argument <coll> should be a collection",
+    " satisfying IsGeneratorsOfActingSemigroup,");
+    return;
+  fi;
+
   if not ElementsFamily(FamilyObj(s))=FamilyObj(Representative(coll)) then 
     Error("the semigroup and collection of elements are not of the same type,");
+    return;
+  fi;
+
+  if not IsGeneratorsOfInverseSemigroup(coll) then 
+    Error("<coll> is a collection of generators of an inverse semigroup,");
     return;
   fi;
 
@@ -461,7 +517,7 @@ function(s, coll, record)
   o:=StructuralCopy(LambdaOrb(s));
   AddGeneratorsToOrbit(o, coll_copy);
 
-  #should be a case split here for semigroups and monoids JDM
+  #should be a case split here for semigroups and monoids 
   t:=InverseSemigroupByGenerators(
    Concatenation(GeneratorsOfInverseSemigroup(s), coll), record);
 
@@ -480,16 +536,15 @@ end);
 #
 
 InstallMethod(ClosureSemigroup, 
-"for an acting semigroup and associative element with action coll",
-[IsActingSemigroup, IsAssociativeElementWithActionCollection],
+"for an acting semigroup and associative element collection",
+[IsActingSemigroup, IsAssociativeElementCollection],
 function(s, coll)
   return ClosureSemigroup(s, coll, s!.opts);
 end);
 
 #
 
-InstallMethod(ClosureSemigroup, 
-"for an acting semigroup and associative element with action coll",
+InstallMethod(ClosureSemigroup, "for an acting semigroup and empty list",
 [IsActingSemigroup, IsList and IsEmpty],
 function(s, coll)
   return s;
@@ -498,8 +553,8 @@ end);
 #
 
 InstallMethod(ClosureSemigroup, 
-"for an acting semigroup and associative element with action",
-[IsActingSemigroup, IsAssociativeElementWithAction],
+"for an acting semigroup and associative element",
+[IsActingSemigroup, IsAssociativeElement],
 function(s, f)
   return ClosureSemigroup(s, [f], s!.opts);
 end);
@@ -507,8 +562,8 @@ end);
 #
 
 InstallMethod(ClosureSemigroup, 
-"for an acting semigroup and associative element with action",
-[IsActingSemigroup, IsAssociativeElementWithAction, IsRecord],
+"for an acting semigroup, associative element, and record",
+[IsActingSemigroup, IsAssociativeElement, IsRecord],
 function(s, f, record)
   return ClosureSemigroup(s, [f], SemigroupOptions(record));
 end);
@@ -516,10 +571,16 @@ end);
 #
 
 InstallMethod(ClosureSemigroup, 
-"for an acting semigroup, associative element with action coll, and record",
-[IsActingSemigroup, IsAssociativeElementWithActionCollection, IsRecord],
+"for an acting semigroup, associative element collection, and record",
+[IsActingSemigroup, IsAssociativeElementCollection, IsRecord],
 function(s, coll, record)
   
+  if not IsGeneratorsOfActingSemigroup(coll) then 
+    Error("usage: the second argument <coll> should be a collection",
+    " satisfying IsGeneratorsOfActingSemigroup,");
+    return;
+  fi;
+
   if not ElementsFamily(FamilyObj(s))=FamilyObj(Representative(coll)) then 
     Error("the semigroup and collection of elements are not of the same type,");
     return;
@@ -612,6 +673,8 @@ function(s, coll, opts)
   # reps grouped by equal lambda and rho value 
   # HTValue(lambdarhoht, Concatenation(lambda(x), rho(x))
   
+  lambdarhoht:=new_data!.lambdarhoht;
+  
   repslookup:=new_data!.repslookup; 
   # Position(orb, reps[i][j])=repslookup[i][j] = HTValue(ht, reps[i][j])
  
@@ -646,7 +709,6 @@ function(s, coll, opts)
   lambdaact:=LambdaAct(s);
   lambdaperm:=LambdaPerm(s);
   rho:=RhoFunc(s);
-  lambdarhoht:=LambdaRhoHT(t);
 
   oht:=o!.ht;
   scc:=OrbSCC(o);
@@ -688,8 +750,7 @@ function(s, coll, opts)
        *LambdaOrbMult(o, m, pos)[2];
     fi;
    
-    rhoy:=[m];
-    Append(rhoy, rho(y));
+    rhoy:=[m, rho(y)];
     val:=htvalue(lambdarhoht, rhoy);
 
     if val=fail or rank>max_rank then #new rho value, and hence new R-rep
@@ -790,7 +851,7 @@ function(S, func, limit)
   until func(f) or IsDoneIterator(iter);
   
   if not func(f) then 
-    return fail; # JDM should really return the empty semigroup
+    return fail; # should really return the empty semigroup
   fi;
 
   T:=Semigroup(f);
@@ -820,7 +881,7 @@ function(S, func, limit)
   until func(f) or IsDoneIterator(iter);
   
   if not func(f) then 
-    return fail; # JDM should really return the empty semigroup
+    return fail; # should really return the empty semigroup
   fi;
 
   T:=InverseSemigroup(f);
@@ -868,7 +929,8 @@ end);
 
 #random
 
-InstallMethod(RandomMatrixSemigroup, "for a ring and pos int",
+InstallMethod(RandomMatrixSemigroup, 
+"for a ring, positive integer and positive integer",
 [IsRing, IsPosInt, IsPosInt], 
 function(R, m, n)
   return Semigroup(List([1..m], x-> RandomMat(n, n, R)));
@@ -876,29 +938,34 @@ end);
 
 #
 
-#InstallMethod(RandomBinaryRelationMonoid, "for pos int and pos int",
-#[IsPosInt, IsPosInt],
-#function(m,n)
-#  local s;
+InstallMethod(RandomBinaryRelationMonoid, 
+"for positive integer and positive integer",
+[IsPosInt, IsPosInt],
+function(m,n)
+  local s;
 
-#  s:=Monoid(List([1..m], x-> RandomBinaryRelationOnPoints(n)));
-#  SetIsBinaryRelationSemigroup(s, true); 
-#  return s;
-#end);
+  s:=Monoid(List([1..m], x-> RandomBinaryRelationOnPoints(n)));
+  SetIsBinaryRelationSemigroup(s, true); 
+  return s;
+end);
 
 #
 
-#InstallMethod(RandomBinaryRelationSemigroup, "for pos int and pos int",
-#[IsPosInt, IsPosInt],
-#function(m,n)
-#  local s;
+InstallMethod(RandomBinaryRelationSemigroup, 
+"for positive integer and positive integer",
+[IsPosInt, IsPosInt],
+function(m,n)
+  local s;
 
-#  s:=Semigroup(List([1..m], x-> RandomBinaryRelationOnPoints(n)));
-#  SetIsBinaryRelationSemigroup(s, true);
-#  return s;
-#end);
+  s:=Semigroup(List([1..m], x-> RandomBinaryRelationOnPoints(n)));
+  SetIsBinaryRelationSemigroup(s, true);
+  return s;
+end);
 
-InstallMethod(RandomBlockGroup, "for pos int and pos int",
+#
+
+InstallMethod(RandomBlockGroup, 
+"for positive integer and positive integer",
 [IsPosInt, IsPosInt],
 function(m,n)
   return Semigroup(Set(List([1..m], x-> RandomPartialPerm(n))));
@@ -906,7 +973,8 @@ end);
 
 #
 
-InstallMethod(RandomInverseMonoid, "for pos int and pos int",
+InstallMethod(RandomInverseMonoid,
+"for positive integer and positive integer",
 [IsPosInt, IsPosInt],
 function(m,n)
   return InverseMonoid(Set(List([1..m], x-> RandomPartialPerm(n))));
@@ -914,7 +982,8 @@ end);
 
 #
 
-InstallMethod(RandomInverseSemigroup, "for pos int and pos int",
+InstallMethod(RandomInverseSemigroup,
+"for positive integer and positive integer",
 [IsPosInt, IsPosInt],
 function(m,n)
   return InverseSemigroup(Set(List([1..m], x-> RandomPartialPerm(n))));
@@ -922,7 +991,8 @@ end);
 
 #
 
-InstallMethod(RandomTransformationSemigroup, "for pos int and pos int",
+InstallMethod(RandomTransformationSemigroup,
+"for positive integer and positive integer",
 [IsPosInt, IsPosInt], 
 function(m,n)
   return Semigroup(Set(List([1..m], x-> RandomTransformation(n))));
@@ -930,7 +1000,8 @@ end);
 
 #
 
-InstallMethod(RandomTransformationMonoid, "for a pos int and pos int",
+InstallMethod(RandomTransformationMonoid, 
+"for positive integer and positive integer",
 [IsPosInt, IsPosInt], 
 function(m,n)
   return Monoid(Set(List([1..m], x-> RandomTransformation(n))));
