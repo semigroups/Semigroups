@@ -8,28 +8,27 @@
 #############################################################################
 ##
 
-DeclareGlobalFunction("SemigroupActionHomomorphism");
-
-DeclareOperation("EmbeddingNC", [IsSemigroup, IsGreensHClass]);
-DeclareAttribute("GroupOfUnits", IsSemigroup);
-DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
-DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
-
+DeclareOperation("IsMaximalSubsemigroup", [IsSemigroup, IsSemigroup]);
+DeclareOperation("IrredundantGeneratingSubset",
+[IsAssociativeElementCollection]);
 DeclareOperation("InversesOfSemigroupElementNC", [IsActingSemigroup and
 HasGeneratorsOfSemigroup, IsAssociativeElement]);
 
-DeclareOperation("IsomorphismBipartitionSemigroup", [IsSemigroup]);
+DeclareAttribute("GroupOfUnits", IsSemigroup);
+DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
+DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 DeclareAttribute("IsomorphismReesMatrixSemigroup", IsGreensDClass);
 DeclareAttribute("IsomorphismPermGroup", IsTransformationSemigroup);
-
 DeclareAttribute("MinimalIdeal", IsSemigroup);
-DeclareOperation("NrElementsOfRank", [IsSemigroup and
-HasGeneratorsOfSemigroup, IsPosInt]);
 DeclareAttribute("PosetOfIdempotents", IsSemigroup);
 DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
 DeclareAttribute("PrincipalFactor", IsGreensDClass);
-
 DeclareAttribute("MultiplicativeZero", IsActingSemigroup);
 DeclareAttribute("SmallGeneratingSet", IsActingSemigroup);
 DeclareAttribute("StructureDescription", IsBrandtSemigroup);
 DeclareAttribute("StructureDescription", IsGroupAsSemigroup);
+DeclareAttribute("StructureDescriptionSchutzenbergerGroups", IsActingSemigroup);
+DeclareAttribute("StructureDescriptionMaximalSubgroups", IsActingSemigroup);
+DeclareAttribute("MaximalDClasses", IsSemigroup);
+DeclareAttribute("MaximalSubsemigroups", IsSemigroup);
+DeclareAttribute("MinimalDClass", IsSemigroup);
