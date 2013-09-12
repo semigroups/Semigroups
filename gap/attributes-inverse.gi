@@ -13,17 +13,49 @@
 
 #
 
+InstallMethod(PrimitiveIdempotents, 
+"for an acting semigroup with inverse op and generators",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+function(s)
+  local o, scc, rank, min, l, min2, m;
+  
+  o:=LambdaOrb(s);      scc:=OrbSCC(o);
+  rank:=LambdaRank(s);  min:=ActionDegree(s);
+
+  if MultiplicativeZero(s)=fail then 
+    for m in [2..Length(scc)] do 
+      l:=rank(o[scc[m][1]]);
+      if l<min then 
+        min:=l;
+      fi;
+    od;
+    return Idempotents(s, min);
+  else
+    for m in [2..Length(scc)] do 
+      l:=rank(o[scc[m][1]]);
+      if l<min then 
+        min2:=min; min:=l;
+      fi;
+    od;
+    return Idempotents(s, min2);
+  fi;
+end);
+
+#
+
 InstallMethod(IsJoinIrreducible, 
 "for an inverse semigroup of partial perms and a partial perm",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPerm],
 function(S, x)
-
-  local elts, i, j, k, y, singleline, sup;
+  local y, elts, i, k, singleline, sup, j;
 
   if not x in S then
-    Error("Second argument should be a partial permu within first argument");
+    Error("Second argument should be a partial perm within first argument");
   fi;
-  if IsMultiplicativeZero(S,x) then return false; fi;
+  
+  if IsMultiplicativeZero(S, x) then 
+    return false; 
+  fi;
 
   y:=LeftOne(x);    
   elts:=Set(Idempotents(S));;
@@ -73,9 +105,7 @@ InstallMethod(IsMajorantlyClosed,
 [IsInverseSemigroup and IsPartialPermSemigroup,
 IsInverseSemigroup and IsPartialPermSemigroup],
 function(S, T)
-
   return IsMajorantlyClosed(S, Elements(T));
-
 end);
 
 #
@@ -84,17 +114,11 @@ InstallMethod(IsMajorantlyClosed,
 "for an inverse subsemigroup of partial permutations and a subset",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection],
 function(S, T)
-
-	local t;
-
   if not IsSubset(S,T) then
     Error("The second argument should be a subset of the first");
   else
     return IsMajorantlyClosedNC(S,T);
   fi;
-	
-	return;
-
 end);
 
 #
@@ -103,12 +127,11 @@ InstallMethod(IsMajorantlyClosedNC,
 "for an inverse subsemigroup of partial permutations and a subset",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection],
 function(S, T)
+  local i, iter, t, u;
 
-  local t, iter, u, i;
-
-	if Size(S) = Size(T) then
-		return true;
-	fi;
+  if Size(S) = Size(T) then
+    return true;
+  fi;
 	
   i:=0;
   for t in T do
@@ -120,9 +143,7 @@ function(S, T)
       fi;
     od;
   od;
-
   return true;
-
 end);
 
 #
@@ -131,7 +152,6 @@ InstallMethod(JoinIrreducibleDClasses,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-
   local D, elts, out, seen_zero, rep, i, k, minorants, singleline, d, j, p;
   
   D:=GreensDClasses(S);
@@ -215,15 +235,11 @@ InstallMethod(MajorantClosure,
 "for an inverse subsemigroup of partial permutations and a subset",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection],
 function(S, T)
-	local t;
-
   if not IsSubset(S,T) then
     Error("The second argument should be a subset of the first");
   else
     return MajorantClosureNC(S,T);
   fi;
-	
-	return;
 end);
 
 #
@@ -232,39 +248,36 @@ InstallMethod(MajorantClosureNC,
 "for an inverse subsemigroup of partial permutations and a subset",
 [IsInverseSemigroup and IsPartialPermSemigroup, IsPartialPermCollection],
 function(S, T)
+  local elts, n, out, ht, k, val, t, i;
+	
+  elts:=Elements(S);
+  n:=Length(elts);
+  out:=EmptyPlist(n);
+  ht:=HTCreate(T[1]);
+  k:=0;
+  
+  for t in T do
+    HTAdd(ht, t, true);
+    Add(out, t);
+    k:=k+1;
+  od;
 
-	local elts, n, out, t, i, val, ht, k;
-	
-	elts:=Elements(S);
-	n:=Length(elts);
-	out:=EmptyPlist(n);
-	ht:=HTCreate(T[1]);
-	k:=0;
-	
-	for t in T do
-		HTAdd(ht, t, true);
-  	Add(out, t);
-  	k:=k+1;
- 	od;
-
-	for t in out do
-		for i in [1..n] do
-			if NaturalLeqPartialPerm(t, elts[i]) then
-				val:=HTValue(ht, elts[i]);
-				if val=fail then
-					k:=k+1;
-					Add(out, elts[i]);
-					HTAdd(ht, elts[i], true);
-					if k=Size(S) then
-						return out;
-					fi;
-				fi;
-			fi;
-		od;
-	od;
-	
- return out;
- 
+  for t in out do
+    for i in [1..n] do
+      if NaturalLeqPartialPerm(t, elts[i]) then
+        val:=HTValue(ht, elts[i]);
+        if val=fail then
+          k:=k+1;
+          Add(out, elts[i]);
+          HTAdd(ht, elts[i], true);
+          if k=Size(S) then
+            return out;
+          fi;
+        fi;
+      fi;
+    od;
+  od;
+  return out;
 end);
 
 #
@@ -316,15 +329,14 @@ InstallMethod(RightCosetsOfInverseSemigroup,
 [IsInverseSemigroup and IsPartialPermSemigroup,
 IsInverseSemigroup and IsPartialPermSemigroup],
 function(S, T)
-
-  local s, t, dupe, idem, elts, rep, usedreps, coset, out;
+  local elts, idem, usedreps, out, dupe, coset, s, rep, t;
   
   if not IsSubset(S,T) then
     Error("The second argument should be a subsemigroup of the first");
     return;
   fi;
   if not IsMajorantlyClosed(S,T) then
-  	Error("The second argument should be majorantly closed.");
+    Error("The second argument should be majorantly closed.");
   fi;
 
   elts:=Elements(T);
@@ -369,7 +381,7 @@ InstallMethod(SameMinorantsSubgroup,
 "for a group H-class of an inverse semigroup of partial perms",
 [IsGroupHClass and IsPartialPermCollection],
 function(h)
-  local e, F, out, f, i;
+  local e, F, out, i;
 
   e:=Representative(h);
   F:=Minorants(Parent(h), e);
@@ -390,12 +402,7 @@ InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-
-  local out, oldgens, newgens, D, He, sup, trivialse, sigma, sigmainv, rho,
-        rhoinv, orbits, HeCosetReps, Fei, FeiSigma, HeCosetRepsSigma,
-        HeCosetsReps, h, CosetsInHe, numcosets, j, reps, lookup, gen, offset,
-        rep, box, subbox, T, d, e, i, k, m, schutz, psi, psiinv, nrcosets,
-        cosets, stab, stabpp;
+  local oldgens, newgens, D, e, He, sigma, sigmainv, schutz, sup, trivialse, psi, psiinv, rho, rhoinv, orbits, cosets, stabpp, stab, h, nrcosets, j, reps, lookup, gen, offset, rep, box, subbox, T, d, i, k, m;
           
   oldgens:=Generators(S);
   newgens:=List(oldgens, x-> []);  
@@ -447,8 +454,9 @@ function(S)
       h:=HClassReps( RClassNC(d, e) );
       nrcosets:=Size(h)*Length(cosets);
       
-      #### Generate representatives for ALL the cosets the generator will act on  
-      #### Divide every H-Class in the R-Class into 'cosets' like stab in He
+      # Generate representatives for ALL the cosets the generator will act
+      #on  #### Divide every H-Class in the R-Class into 'cosets' like stab in
+      #He
       j:=0;
       reps:=[];
       lookup:=EmptyPlist(Length(LambdaOrb(d)));
