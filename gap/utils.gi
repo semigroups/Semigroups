@@ -82,9 +82,9 @@ InstallGlobalFunction(SemigroupsMakeDoc,
 function()
   MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.
    InstallationPath, "/doc"), "main.xml", 
-   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
-   "semigroups.xml", "transform.xml", "attributes-inverse.xml",
-   "freeinverse.xml", "../PackageInfo.g"],
+   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
+    "semigroups.xml", "attributes-inverse.xml", "slp.xml", "freeinverse.xml",
+    "attributes.xml", "../PackageInfo.g"],
    "semigroups", "MathJax", "../../..");;
   return;
 end);
@@ -174,10 +174,9 @@ InstallGlobalFunction(SemigroupsManualExamples,
 function()
 return 
   ExtractExamples(DirectoriesPackageLibrary("semigroups","doc"), 
-  "main.xml",  [ "utils.xml",
-  "greens.xml", "orbits.xml", "properties.xml",
-  "semigroups.xml",  "transform.xml", "attributes-inverse.xml",
-  "freeinverse.xml", "../PackageInfo.g" ], "Single" );
+  "main.xml",  [ "utils.xml", "examples.xml", "slp.xml", "greens.xml",
+  "orbits.xml", "properties.xml", "semigroups.xml",  "attributes-inverse.xml", 
+  "freeinverse.xml", "attributes.xml", "../PackageInfo.g" ], "Single" );
 end);
 
 #
@@ -279,6 +278,7 @@ function(line)
   elif line[1]='p' then # partial perms
     Apply(out, DensePartialPermNC);
   fi;
+
   return out;
 end);
 
@@ -301,8 +301,12 @@ function(arg)
     return;
   fi;
 
+  if IsTransformationCollection(arg[2]) 
+    or IsPartialPermCollection(arg[2]) then 
     trans:=[arg[2]];
   elif IsList(arg[2]) and IsBound(arg[2][1]) and
+  (IsTransformationCollection(arg[2][1]) 
+   or IsPartialPermCollection(arg[2][1]) then 
    then 
     trans:=arg[2];
   else
@@ -321,6 +325,7 @@ function(arg)
   for i in [1..Length(trans)] do 
     if IsTransformationSemigroup(trans[i]) 
       or IsPartialPermSemigroup(trans[i]) then 
+      
       gens[i]:=GeneratorsOfSemigroup(trans[i]);
       # we could use a smaller generating set (i.e. GeneratorsOfMonoid,
       # GeneratorsOfInverseSemigroup etc) but we have no way of knowing which
