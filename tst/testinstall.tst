@@ -419,6 +419,19 @@ true
 gap>  IdentityTransformation(4) in s;
 true
 
+# Issue 23 in the new numbering...
+gap> S:=FullTransformationSemigroup(3);;
+gap> f:=Transformation( [ 4, 3, 1, 2 ] );;
+gap> ClosureSemigroup(S, f);           
+<transformation monoid on 4 pts with 4 generators>
+gap> f:=IdentityTransformation();;
+gap> DegreeOfTransformation(f);
+0
+gap> ClosureSemigroup(S, f);
+<transformation monoid on 3 pts with 3 generators>
+gap> IsFullTransformationSemigroup(last);
+true
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);
