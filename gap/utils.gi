@@ -304,10 +304,9 @@ function(arg)
   if IsTransformationCollection(arg[2]) 
     or IsPartialPermCollection(arg[2]) then 
     trans:=[arg[2]];
-  elif IsList(arg[2]) and IsBound(arg[2][1]) and
-  (IsTransformationCollection(arg[2][1]) 
-   or IsPartialPermCollection(arg[2][1]) then 
-   then 
+  elif IsList(arg[2]) and IsBound(arg[2][1]) 
+   and (IsTransformationCollection(arg[2][1]) 
+    or IsPartialPermCollection(arg[2][1])) then 
     trans:=arg[2];
   else
     Error("usage: the 2nd argument must be transformation or partial perm ",
