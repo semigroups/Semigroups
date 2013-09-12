@@ -8,11 +8,12 @@
 #############################################################################
 ##
 
-#
+# <path> to the folder containing the timings, <vers> the version number to
+# check against.
 
 BindGlobal("SemigroupsCompareTestTimings", 
 function(path, vers)
-  local dir, files, suffix, tstdir, split, tstfile, file;
+  local dir, files, suffix, tstdir, tstfiles, split, tstfile, file;
   
   vers:=Concatenation("-", vers, ".");
   if not path[Length(path)]='/' then 
@@ -24,19 +25,20 @@ function(path, vers)
   suffix:=Concatenation(vers, "tst.timings"); 
 
   tstdir:=DirectoriesPackageLibrary("semigroups", "tst" )[1];
-  tstdir:=DirectoryContents(tstdir);
+  tstfiles:=DirectoryContents(tstdir);
 
   for file in files do
     split:=SplitString(file, '.');
     if split[Length(split)]="timings" then 
       if file{[Length(file)-Length(suffix)+1..Length(file)]}=suffix then 
         tstfile:=Concatenation(SplitString(split[1], '-')[1], ".tst");
-        if not tstfile in tstdir then 
+        if not tstfile in tstfiles then 
           Print("can't find ", 
            Concatenation(SplitString(file[1], '-')[1], ".tst"), 
            "in semigroups/tst for comparison!\n");
         else
-          Test(Filename(tstdir, tstfile), rec(compareTimings:=file));
+          Print(Test(Filename(tstdir, tstfile), rec(compareTimings:=file),
+          "\n"));
         fi;
       fi;
     fi;
