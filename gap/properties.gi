@@ -461,7 +461,7 @@ function(s)
   fi;
 
   n:=ActionDegree(s); 
-  lambda:=LambdaOrb(s); Enumerate(lambda, 2^n+1);
+  lambda:=LambdaOrb(s); Enumerate(lambda);
   rho:=RhoOrb(s); Enumerate(rho, Length(lambda));
 
   if not (IsClosed(rho) and Length(rho)>=Length(lambda)) then 
