@@ -33,9 +33,6 @@ InstallMethod(IsGeneratorsOfActingSemigroup, "for a transformation collection",
 InstallMethod(IsGeneratorsOfActingSemigroup, "for a partial perm collection", 
 [IsPartialPermCollection], x-> true);
 
-InstallMethod(IsGeneratorsOfActingSemigroup, "for a bipartition collection", 
-[IsBipartitionCollection], x-> true);
-
 InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
 
 # JDM shouldn't IsActingSemigroupGreensClass be a category??
@@ -109,9 +106,6 @@ InstallMethod(RhoAct, "for a partial perm semigroup",
   function(set, f) 
     return OnPosIntSetsPartialPerm(set, f^-1);
   end);
-
-InstallMethod(RhoAct, "for a partial perm semigroup",
-[IsBipartitionSemigroup], x-> OnLeftBlocks);
 
 # the seed or dummy start point for LambdaOrb
 
@@ -237,7 +231,6 @@ InstallMethod(StabiliserAction, "for a transformation semigroup",
 
 InstallMethod(StabiliserAction, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> PROD);
-
 
 # IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only
 # if it is only possible to multiply elements of the type in the semigroup with
