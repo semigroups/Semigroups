@@ -236,8 +236,8 @@ InstallMethod(StabiliserAction, "for a partial perm semigroup",
 # if it is only possible to multiply elements of the type in the semigroup with
 # equal degrees.
 
-InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
-IsTransformationSemigroup);
+InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
+"for a transformation semigroup", [IsTransformationSemigroup], ReturnFalse);
 
 InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
 "for a partial perm semigroup", [IsPartialPermSemigroup], ReturnFalse);

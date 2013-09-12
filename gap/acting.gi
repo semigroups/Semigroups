@@ -76,7 +76,9 @@ function(f, s)
 
   if IsActingSemigroupWithFixedDegreeMultiplication(s) 
     and ActionDegree(f)<>ActionDegree(s) then 
-    return false;       
+    return false;
+  elif IsTransformation(f) and ActionDegree(f)<>ActionDegree(s) then 
+    f:=AsTransformation(f, ActionDegree(s));
   fi;
 
   if not (IsMonoid(s) and IsOne(f)) and 

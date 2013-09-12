@@ -379,7 +379,7 @@ end);
 
 #
 
-InstallMethod(IsGroupAsSemigroup, "for an acting semigroup", 
+InstallMethod(IsGroupAsSemigroup, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, lambdafunc, lambda, rhofunc, rho, tester, lambda_f, rho_f, f;

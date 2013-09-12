@@ -409,6 +409,16 @@ true
 gap> x * x^-1 = y * y^-1;
 false
 
+# Issue 27 in the new numbering...
+gap> s:=Semigroup(List(GeneratorsOfSemigroup(FullTransformationSemigroup(3)),
+>  x-> AsTransformation(x, 4)));;
+gap> IsFullTransformationSemigroup(s);
+true
+gap>  IdentityTransformation(3) in s; 
+true
+gap>  IdentityTransformation(4) in s;
+true
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);
