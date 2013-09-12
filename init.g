@@ -19,6 +19,7 @@ ReadPackage("semigroups/gap/lambda-rho.gd");
 ReadPackage("semigroups/gap/acting.gd");
 ReadPackage("semigroups/gap/graded.gd");
 ReadPackage("semigroups/gap/semigroups.gd");
+ReadPackage("semigroups/gap/ideals.gd");
 ReadPackage("semigroups/gap/enums.gd");
 ReadPackage("semigroups/gap/iterators.gd");
 ReadPackage("semigroups/gap/properties.gd");
