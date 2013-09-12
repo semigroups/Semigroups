@@ -288,7 +288,7 @@ end);
 
 InstallGlobalFunction(WriteSemigroups, 
 function(arg)
-  local trans, gens, append, gzip, str, deg, nrdigits, out, i, s, f;
+  local trans, gens, append, gzip, str, deg, nrdigits, blocks, out, i, s, f;
   
   if not (Length(arg)=3 or Length(arg)=2) then
     Error("usage: filename as string and a transformation, transformation ",
@@ -301,10 +301,8 @@ function(arg)
     return;
   fi;
 
-  if IsTransformationCollection(arg[2]) or IsPartialPermCollection(arg[2]) then 
     trans:=[arg[2]];
   elif IsList(arg[2]) and IsBound(arg[2][1]) and
-  (IsTransformationCollection(arg[2][1]) or IsPartialPermCollection(arg[2][1]))
    then 
     trans:=arg[2];
   else
@@ -359,11 +357,9 @@ function(arg)
     else 
       str:=StringFile(arg[1]);
     fi;
-  else
-    str:=StringFile(arg[1]);
   fi;
   
-  if str=fail then 
+  if str=fail or not IsBound(str) then 
     str:="";
   fi;
   
