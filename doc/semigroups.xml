@@ -18,7 +18,11 @@
       <A>coll</A> after removing duplicates and elements
       from <A>coll</A> that are already in <A>S</A>. The new
       semigroup knows at least as much information about its structure as was
-      already known about that of <A>S</A>. <P/>
+      already known about that of <A>S</A> with one exception. In the case that
+      <A>S</A> is a transformation semigroup and <A>coll</A> contains a
+      transformation of degree greater than the degree of <A>S</A>, the
+      semigroup returned by <C>ClosureSemigroup</C> will be newly created and
+      not retain any information from <A>S</A>.<P/>
 
       If present, the optional third argument <A>opts</A> should be a record
       containing the values of the options for the semigroup being created as
