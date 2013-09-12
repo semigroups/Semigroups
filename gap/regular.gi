@@ -10,6 +10,12 @@
 
 ## Methods for Green's classes of regular acting semigroups
 
+InstallMethod(RhoCosets, "for a regular class of an acting semigroup", 
+[IsRegularClass and IsActingSemigroupGreensClass], 
+function(x)
+  return [()];
+end);
+
 # acting...
 
 # not required for inverse.
@@ -35,8 +41,8 @@ end);
 
 # different method for inverse
 
-InstallMethod(\in, "for an acting elt and regular acting semigroup",
-[IsAssociativeElement, IsActingSemigroup and IsRegularSemigroup], 
+InstallMethod(\in, "for an acting element and regular acting semigroup",
+[IsAssociativeElement, IsActingSemigroup and IsRegularSemigroup],  1000,
 function(f, s)
   local lambda_o, lambda_l, rho_o, rho_l, m, schutz, g, n, rep;
 
@@ -97,9 +103,9 @@ function(f, s)
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
-#JDM revise this if revising \in for elt and D-class in greens.gi
+#JDM revise this if revising \in for element and D-class in greens.gi
 
-InstallMethod(\in, "for acting elt and regular D-class of acting semigroup.",
+InstallMethod(\in, "for acting element and regular D-class of acting semigroup",
 [IsAssociativeElement, IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(f, d)
   local rep, s, g, m, o, scc, l, schutz;
@@ -686,7 +692,7 @@ end);
 
 # same method for inverse.
 
-InstallMethod(GreensRClassOfElement, "for regular acting semi and elt",
+InstallMethod(GreensRClassOfElement, "for regular acting semigroup and element",
 [IsRegularSemigroup and IsActingSemigroup, IsAssociativeElement],
 function(s, f)
   local o;
@@ -925,7 +931,7 @@ end);
 
 #
 
-InstallMethod(Size, "for a regular D-class of an acting semigroup.",
+InstallMethod(Size, "for a regular D-class of an acting semigroup",
 [IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   return Size(SchutzenbergerGroup(d))*Length(LambdaOrbSCC(d))
