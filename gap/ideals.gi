@@ -8,10 +8,6 @@
 ############################################################################# 
 ##
 
-
-#
-
-
 #
 
 InstallMethod(\., "for a semigroup ideal with generators and pos int",
@@ -29,7 +25,7 @@ function(S, n)
   return S[n];
 end);
 
-# a convenience, similar to the function <Semigroup>...
+# a convenience, similar to the functions <Semigroup>, <Monoid>, etc
 
 InstallGlobalFunction(SemigroupIdeal, 
 function( arg )
@@ -89,9 +85,7 @@ function( arg )
   fi;
 end);
 
-#
-
-# JDM move to lib
+# JDM move to lib?
 
 InstallMethod(\=, "for semigroup ideals", 
 [IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal, 
@@ -121,14 +115,5 @@ InstallMethod(Representative, "for a semigroup ideal",
 function(I)
   return Representative(GeneratorsOfMagmaIdeal(I));
 end);
-
-#
-
-function(I)
-
-#
-
-
-#
 
 #EOF
