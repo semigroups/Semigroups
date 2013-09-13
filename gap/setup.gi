@@ -90,7 +90,10 @@ InstallMethod(RhoOrbOpts, "for a partial perm semigroup",
 # the lambda and rho acts
 
 InstallMethod(LambdaAct, "for a transformation semigroup",
-[IsTransformationSemigroup], x-> OnPosIntSetsTrans);
+[IsTransformationSemigroup], x-> 
+  function(set, f)
+    return OnPosIntSetsTrans(set, f, DegreeOfTransformationSemigroup(x));
+  end);
 
 InstallMethod(LambdaAct, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x-> OnPosIntSetsPartialPerm);
@@ -126,7 +129,15 @@ InstallMethod(RhoOrbSeed, "for a partial perm semigroup",
 # the function calculating the lambda or rho value of an element
 
 InstallMethod(LambdaFunc, "for a transformation semigroup",
-[IsTransformationSemigroup], x-> IMAGE_SET_TRANS);
+[IsTransformationSemigroup], 
+function(S)
+  local deg;
+  deg:=DegreeOfTransformationSemigroup(S);
+  return 
+    function(f)
+      return IMAGE_SET_TRANS_INT(f, deg);
+    end;
+end);
 
 InstallMethod(LambdaFunc, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x-> IMAGE_SET_PPERM);
@@ -134,7 +145,15 @@ InstallMethod(LambdaFunc, "for a partial perm semigroup",
 #
 
 InstallMethod(RhoFunc, "for a transformation semigroup",
-[IsTransformationSemigroup], x-> FLAT_KERNEL_TRANS);
+[IsTransformationSemigroup], 
+function(S)
+  local deg;
+  deg:=DegreeOfTransformationSemigroup(S);
+  return 
+    function(f)
+      return FLAT_KERNEL_TRANS_INT(f, deg);
+    end;
+end);
 
 InstallMethod(RhoFunc, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x-> DOMAIN_PPERM);

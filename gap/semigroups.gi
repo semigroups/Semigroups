@@ -53,7 +53,7 @@ function(s)
   nrgens:=Length(Generators(s));
   
   Append(str, "\>on \>");
-  Append(str, ViewString(NormalizedDegreeOfTransformationSemigroup(s)));
+  Append(str, ViewString(DegreeOfTransformationSemigroup(s)));
   Append(str, "\< pts with\> ");
   Append(str, ViewString(nrgens));
   Append(str, "\< generator");
@@ -145,10 +145,10 @@ function(gens, opts)
   gens:=ShallowCopy(gens);
   
   # all generators must have equal degree!
-  if Length(gens)>1 and IsTransformationCollection(gens) then
-    deg:=DegreeOfTransformationCollection(gens);
-    Apply(gens, x-> AsTransformation(x, deg));
-  fi;
+  #if Length(gens)>1 and IsTransformationCollection(gens) then
+  #  deg:=DegreeOfTransformationCollection(gens);
+  #  Apply(gens, x-> AsTransformation(x, deg));
+  #fi;
 
   # try to find a smaller generating set
   if opts.small and Length(gens)>1 then 
@@ -243,10 +243,10 @@ function(gens, record)
   gens:=ShallowCopy(gens);
 
   # all generators must have equal degree!
-  if IsTransformationCollection(gens) then
-    deg:=DegreeOfTransformationCollection(gens);
-    Apply(gens, x-> AsTransformation(x, deg));
-  fi;
+  #if IsTransformationCollection(gens) then
+  #  deg:=DegreeOfTransformationCollection(gens);
+  #  Apply(gens, x-> AsTransformation(x, deg));
+  #fi;
   
   if record.small and Length(gens)>1 then #small gen. set
     gens:=SSortedList(gens); #remove duplicates 
@@ -597,19 +597,19 @@ function(s, coll, record)
     ActionDegree(s)<>ActionDegree(Representative(coll)) then 
     Error("usage: the degree of the semigroup and collection must be equal,");
     return;
-  elif IsTransformationCollection(coll) then 
-    coll:=ShallowCopy(coll);
-    deg:=ActionDegree(s);
-    for x in coll do 
-      if DegreeOfTransformation(x)>deg then 
-        # we have to create an entirely new semigroup :(
-        Apply(coll, x-> AsTransformation(x,
-         DegreeOfTransformationCollection(coll)));
-        return Semigroup(GeneratorsOfSemigroup(s), coll);
-      elif DegreeOfTransformation(x)<deg then
-        x:=AsTransformation(x, deg);
-      fi;
-    od;
+  #elif IsTransformationCollection(coll) then 
+  #  coll:=ShallowCopy(coll);
+  #  deg:=ActionDegree(s);
+  #  for x in coll do 
+  #    if DegreeOfTransformation(x)>deg then 
+  #      # we have to create an entirely new semigroup :(
+  #      Apply(coll, x-> AsTransformation(x,
+  #       DegreeOfTransformationCollection(coll)));
+  #      return Semigroup(GeneratorsOfSemigroup(s), coll);
+  #    elif DegreeOfTransformation(x)<deg then
+  #      x:=AsTransformation(x, deg);
+  #    fi;
+  #  od;
   fi;
 
   return ClosureSemigroupNC(s, Filtered(coll, x-> not x in s),

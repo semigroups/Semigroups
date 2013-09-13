@@ -30,20 +30,22 @@ function(s)
   # LambdaRhoHT points to where the existing R-class reps with same lambda-rho
   # value are in SemigroupData(s).reps.  
   
-  val:=RhoFunc(s)(Representative(s));
-  lambdarhoht:=HTCreate([1, val], rec(treehashsize:=s!.opts.hashlen.M));
+  #val:=[1];
+  #Append(val, RhoFunc(s)(Representative(s)));
+  lambdarhoht:=HTCreate(RhoFunc(s)(Representative(s)), 
+   rec(treehashsize:=s!.opts.hashlen.M, forflatplainlists:=true));
 
-  if IsBound(RhoOrbOpts(s).forflatplainlists) 
-   and RhoOrbOpts(s).forflatplainlists then 
-    lambdarhoht!.rhohf:=ORB_HashFunctionForPlainFlatList;
-  else
-    lambdarhoht!.rhohf:=ChooseHashFunction(val, lambdarhoht!.len).func;
-  fi;
+  #if IsBound(RhoOrbOpts(s).forflatplainlists) 
+  # and RhoOrbOpts(s).forflatplainlists then 
+  #  lambdarhoht!.rhohf:=ORB_HashFunctionForPlainFlatList;
+  #else
+  #  lambdarhoht!.rhohf:=ChooseHashFunction(val, lambdarhoht!.len).func;
+  #fi;
   
-  lambdarhoht!.hf:=function( x, data )
-    return (x[1]+lambdarhoht!.rhohf(x[2], data)) mod data + 1;
-  end;
-  lambdarhoht!.hfd:=lambdarhoht!.len;
+  #lambdarhoht!.hf:=function( x, data )
+  #  return (x[1]+lambdarhoht!.rhohf(x[2], data)) mod data + 1;
+  #end;
+  #lambdarhoht!.hfd:=lambdarhoht!.len;
   
   data.lambdarhoht:=lambdarhoht;
 
@@ -77,12 +79,12 @@ function(f, s)
   if IsActingSemigroupWithFixedDegreeMultiplication(s) 
     and ActionDegree(f)<>ActionDegree(s) then 
     return false;
-  elif IsTransformation(f) and ActionDegree(f)<>ActionDegree(s) then 
-    f:=AsTransformation(f, ActionDegree(s));
-    # if AsTransformation doesn't work, then <f> is unchanged.
-    if ActionDegree(f)<>ActionDegree(s) then 
-      return false;
-    fi;
+  #elif IsTransformation(f) and ActionDegree(f)<>ActionDegree(s) then 
+  #  f:=AsTransformation(f, ActionDegree(s));
+  #  # if AsTransformation doesn't work, then <f> is unchanged.
+  #  if ActionDegree(f)<>ActionDegree(s) then 
+  #    return false;
+  #  fi;
   fi;
 
   if not (IsMonoid(s) and IsOne(f)) and 
@@ -372,15 +374,15 @@ function(data, limit, lookfunc)
       else
         y:=x;
       fi;
-      rhoy:=[m, rho(y)];
-      #Append(rhoy, rho(y));;
+      #rhoy:=[m, rho(y)];
+      rhoy:=rho(y);
       val:=htvalue(lambdarhoht, rhoy);
       # this is what we keep if it is new
       # x:=[s, m, o, y, false, nr+1];
 
       if val=fail then  #new rho value, and hence new R-rep
-        lenreps:=lenreps+1;
-        htadd(lambdarhoht, rhoy, lenreps);
+        lenreps[m]:=lenreps[m]+1;
+        htadd(lambdarhoht, rhoy, lenreps[m]);
         nr:=nr+1;
         reps[lenreps]:=[y];
         repslookup[lenreps]:=[nr];
