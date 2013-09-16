@@ -310,7 +310,7 @@ function(arg)
         Error(arg[1], " only has ", i-1, " lines,"); 
         return;
       else
-        return ReadSemigroupsLine(Chomp(line));
+        return ReadGeneratorsLine(Chomp(line));
       fi;
     else
       Error("the second argument should be a positive integer,");
@@ -320,12 +320,12 @@ function(arg)
   
   line:=IO_ReadLines(file);
   IO_Close(file);
-  return List(line, x-> ReadSemigroupsLine(Chomp(x)));
+  return List(line, x-> ReadGeneratorsLine(Chomp(x)));
 end);
 
 #
 
-InstallGlobalFunction(ReadSemigroupsLine, 
+InstallGlobalFunction(ReadGeneratorsLine, 
 function(line)
   local i, k, out, m, deg, f, j;
   
@@ -485,7 +485,7 @@ end);
 InstallMethod(ShortStringRep, "for a transformation",
 [IsTransformation],
 function(f)
-  local append, deg, nrdigits, i;
+  local append, line, deg, nrdigits, i;
 
   append:=function(str, pt, m)
     local i, j;
@@ -496,7 +496,7 @@ function(f)
     Append(str, i);
     return str;
   end;
-  
+  line:=""; 
   deg:=String(DegreeOfTransformation(f));
   nrdigits:=Length(deg);
   Append(line, String(nrdigits));

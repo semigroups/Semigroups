@@ -19,8 +19,8 @@ DeclareGlobalFunction("SemigroupsTestInstall");
 DeclareGlobalFunction("SemigroupsTestManualExamples");
 DeclareGlobalFunction("SemigroupsManualExamples");
 
-DeclareGlobalFunction("ReadSemigroups");
-DeclareGlobalFunction("ReadSemigroupsLine");
-DeclareGlobalFunction("WriteSemigroups");
+DeclareGlobalFunction("ReadGenerators");
+DeclareGlobalFunction("ReadGeneratorsLine");
+DeclareGlobalFunction("WriteGenerators");
 DeclareOperation("ShortStringRep", [IsAssociativeElement]);
 
