@@ -275,7 +275,7 @@ end);
 
 #
 
-InstallGlobalFunction(ReadSemigroups, 
+InstallGlobalFunction(ReadGenerators, 
 function(arg)
   local file, i, line;
  
@@ -285,11 +285,11 @@ function(arg)
   else
     file:=SplitString(arg[1], ".");
     if file[Length(file)] = "gz" then 
-      file:=IO_FilteredFile([["gzip", ["-dcq"]]], arg[1]);
+      file:=IO_FilteredFile([["gzip", ["-dq"]]], arg[1]);
     else  
       file:=IO_File(arg[1]);
       if file=fail then 
-        file:=IO_FilteredFile([["gzip", ["-dcq"]]], 
+        file:=IO_FilteredFile([["gzip", ["-dq"]]], 
          Concatenation(arg[1], ".gz"));
       fi;
     fi;
@@ -356,9 +356,9 @@ end);
 
 # Returns: nothing. 
 
-InstallGlobalFunction(WriteSemigroups, 
+InstallGlobalFunction(WriteGenerators, 
 function(arg)
-  local trans, gens, append, gzip, str, deg, nrdigits, blocks, out, i, s, f;
+  local trans, gens, append, gzip, mode, file, line, deg, nrdigits, i, writin, s, f;
   
   if not (Length(arg)=3 or Length(arg)=2) then
     Error("usage: filename as string and a transformation, transformation ",
@@ -366,9 +366,13 @@ function(arg)
     return;
   fi;
 
-  if IsExistingFile(arg[1]) and not IsWritableFile(arg[1]) then 
-    Error(arg[1], " exists and is not a writable file,");
-    return;
+  if IsExistingFile(arg[1]) then 
+    if not IsWritableFile(arg[1]) then 
+      Error(arg[1], " exists and is not a writable file,");
+      return;
+    fi;
+  else
+    PrintTo(arg[1], "");
   fi;
 
   if IsTransformationCollection(arg[2]) 
@@ -420,60 +424,87 @@ function(arg)
 
   #####
 
-  #by default or if arg[3]=true append the result to arg[1]
-  
   gzip:=SplitString(arg[1], '.');
   gzip:=[JoinStringsWithSeparator(gzip{[1..Length(gzip)-1]}, "."),
    gzip[Length(gzip)]];
+  
+  #by default or if arg[3]=true append the result to arg[1]
   if Length(arg)=2 or arg[3] then 
-    if Length(gzip)>1 and gzip[2]="gz" then 
-      str:=StringFile(gzip[1]);
-    else 
-      str:=StringFile(arg[1]);
-    fi;
+    mode:="a";
+  else
+    mode:="w";
+  fi;
+
+  if Length(gzip)>1 and gzip[2]="gz" then
+    file:=IO_FilteredFile([["gzip", ["-9q"]]], arg[1], mode);
+  else 
+    file:=IO_File(arg[1], mode);
   fi;
   
-  if str=fail or not IsBound(str) then 
-    str:="";
+  if file=fail then 
+    Error("something went wrong when trying to open the file for writing,");
+    return;
   fi;
-  
+
   if IsTransformationCollection(gens[1]) then 
     for s in gens do
-      Append(str, "t");
+      line:="t";
       for f in s do
         deg:=String(DegreeOfTransformation(f));
         nrdigits:=Length(deg);
-        Append(str, String(nrdigits));
-        Append(str, deg);
+        Append(line, String(nrdigits));
+        Append(line, deg);
         for i in [1..DegreeOfTransformation(f)] do 
-          append(str, i^f, nrdigits);
+          append(line, i^f, nrdigits);
         od;
+        IO_WriteLine(file, line);
       od;
-      Append(str, "\n" );
     od;
   elif IsPartialPermCollection(gens[1]) then 
     for s in gens do 
-      Append(str, "p");
+      line:="p";
       for f in s do 
         deg:=String(DegreeOfPartialPerm(f));
         nrdigits:=Length(String(Maximum(
          DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f))));
-        Append(str, String(nrdigits));
-        append(str, deg, nrdigits);
+        Append(line, String(nrdigits));
+        append(line, deg, nrdigits);
         for i in [1..DegreeOfPartialPerm(f)] do 
-          append(str, i^f, nrdigits);
+          append(line, i^f, nrdigits);
         od;
       od;
-      Append(str, "\n");
+      IO_WriteLine(file, line);
     od;
   fi;
   
-  if Length(gzip)>1 and gzip[2]="gz" then 
-    out:=FileString(gzip[1], str);
-    Exec("gzip -fq9 ", gzip[1]);
-    return out;
-  fi;
-  return FileString(arg[1], str);
+  return IO_Close(file);
+end);
+
+#
+
+InstallMethod(ShortStringRep, "for a transformation",
+[IsTransformation],
+function(f)
+  local append, deg, nrdigits, i;
+
+  append:=function(str, pt, m)
+    local i, j;
+    i:=String(pt);
+    for j in [1..m-Length(i)] do 
+      Append(str, " ");
+    od;
+    Append(str, i);
+    return str;
+  end;
+  
+  deg:=String(DegreeOfTransformation(f));
+  nrdigits:=Length(deg);
+  Append(line, String(nrdigits));
+  Append(line, deg);
+  for i in [1..DegreeOfTransformation(f)] do 
+    append(line, i^f, nrdigits);
+  od;
+  return line;
 end);
 
 #EOF

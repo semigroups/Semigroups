@@ -22,4 +22,5 @@ DeclareGlobalFunction("SemigroupsManualExamples");
 DeclareGlobalFunction("ReadSemigroups");
 DeclareGlobalFunction("ReadSemigroupsLine");
 DeclareGlobalFunction("WriteSemigroups");
+DeclareOperation("ShortStringRep", [IsAssociativeElement]);
 
