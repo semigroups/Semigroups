@@ -166,7 +166,7 @@ gap> t:=ClosureSemigroup(s, [Transformation( [ 4, 4, 3, 1, 5, 6, 3, 8 ] )]);
 gap> Size(t)=Size(Semigroup(Generators(t)));
 true
 
-#gap> s:=Semigroup(ReadSemigroups("pkg/semigroups/examples/graph9c.semigroups.gz", 100013));;
+#gap> s:=Semigroup(ReadGenerators("pkg/semigroups/examples/graph9c.semigroups.gz", 100013));;
 gap> s:=Semigroup([ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ), 
 >  Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 8 ] ), 
 >  Transformation( [ 7, 2, 8, 4, 5, 6, 1, 9, 8 ] ), 

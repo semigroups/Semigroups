@@ -18,7 +18,7 @@ gap> SemigroupsStartTest();
 
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/misc.semigroups.gz");;
-gap> gens:=ReadSemigroups(file){[25..124]};;
+gap> gens:=ReadGenerators(file){[25..124]};;
 gap> out:=[];;
 gap> for x in gens do                            
 > s:=Semigroup(x);
