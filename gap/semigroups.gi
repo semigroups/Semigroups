@@ -13,9 +13,11 @@
 InstallMethod(Generators, "for a semigroup",
 [IsSemigroup],
 function(s)
-
+  
   if HasGeneratorsOfMagmaIdeal(s) then 
     return GeneratorsOfMagmaIdeal(s);
+  elif HasGeneratorsOfGroup(s) then 
+    return GeneratorsOfGroup(s);
   elif HasGeneratorsOfInverseMonoid(s) then 
     return GeneratorsOfInverseMonoid(s);
   elif HasGeneratorsOfInverseSemigroup(s) then 
@@ -31,42 +33,51 @@ end);
 
 #
 
-InstallMethod(ViewString, "for a group of transformations",
-[IsTransformationSemigroup and IsGroupAsSemigroup],
-function(s)
-  local str, nrgens;
-  if IsGroup(s) then 
-    TryNextMethod();
-  fi;
+ViewStringForGroupOfTransformations@:=function(s)
+local str, nrgens;
   str:="\><";
   if HasIsTrivial(s) and IsTrivial(s) then
     Append(str, "\>trivial\< ");
   fi;
 
-  Append(str, "\>transformation\< \>group\< ");
-  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) and Size(s)<2^64 then
+  Append(str, "\>transformation\< \>group\<");
+  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) 
+   and Size(s)<2^64 then
     Append(str, "\>of size\> ");
     Append(str, String(Size(s)));
     Append(str, ",\<\< ");
   fi;
 
   nrgens:=Length(Generators(s));
-  
-  Append(str, "\>on \>");
-  Append(str, ViewString(DegreeOfTransformationSemigroup(s)));
-  Append(str, "\< pts with\> ");
-  Append(str, ViewString(nrgens));
-  Append(str, "\< generator");
-
-  if nrgens>1 or nrgens=0 then
-    Append(str, "s\<");
-  else
-    Append(str, "\<");
+  if DegreeOfTransformationSemigroup(s)>0 then  
+    Append(str, " \>on \>");
+    Append(str, ViewString(DegreeOfTransformationSemigroup(s)));
+    Append(str, "\< pts");
+  fi;
+  if nrgens>0 then 
+    Append(str, " with\> ");
+    Append(str, ViewString(nrgens));
+    Append(str, "\< generator");
+    if nrgens>1 or nrgens=0 then
+      Append(str, "s\<");
+    else
+      Append(str, "\<");
+    fi;
   fi;
   Append(str, ">\<");
 
   return str;
-end);
+end;
+  
+InstallMethod(ViewString, "for a group of transformations",
+[IsTransformationSemigroup and IsGroupAsSemigroup],
+ViewStringForGroupOfTransformations@);
+
+InstallMethod(ViewString, "for a group of transformations",
+[IsTransformationSemigroup and IsGroup],
+ViewStringForGroupOfTransformations@);
+
+Unbind(ViewStringForGroupOfTransformations);
 
 #
 
