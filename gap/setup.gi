@@ -90,10 +90,15 @@ InstallMethod(RhoOrbOpts, "for a partial perm semigroup",
 # the lambda and rho acts
 
 InstallMethod(LambdaAct, "for a transformation semigroup",
-[IsTransformationSemigroup], x-> 
-  function(set, f)
-    return OnPosIntSetsTrans(set, f, DegreeOfTransformationSemigroup(x));
-  end);
+[IsTransformationSemigroup], 
+function(S)
+  local deg;
+  deg:=DegreeOfTransformationSemigroup(S);
+  return 
+    function(set, f) 
+      return OnPosIntSetsTrans(set, f, deg);
+    end;
+end);
 
 InstallMethod(LambdaAct, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x-> OnPosIntSetsPartialPerm);
@@ -101,7 +106,15 @@ InstallMethod(LambdaAct, "for a partial perm semigroup",
 #
 
 InstallMethod(RhoAct, "for a transformation semigroup",
-[IsTransformationSemigroup], x-> ON_KERNEL_ANTI_ACTION);
+[IsTransformationSemigroup], 
+function(S)
+  local deg;
+  deg:=DegreeOfTransformationSemigroup(S);
+  return 
+    function(set, f) 
+      return ON_KERNEL_ANTI_ACTION(set, f, deg);
+    end;
+end);
 
 # JDM new c method for this!
 InstallMethod(RhoAct, "for a partial perm semigroup",
@@ -121,7 +134,7 @@ InstallMethod(LambdaOrbSeed, "for a partial perm semigroup",
 # the seed or dummy start point for RhoOrb
 
 InstallMethod(RhoOrbSeed, "for a transformation semigroup",
-[IsTransformationSemigroup], s->[0]);
+[IsTransformationSemigroup], s-> [0]);
 
 InstallMethod(RhoOrbSeed, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> [0]);

@@ -13,7 +13,7 @@
 InstallMethod(SemigroupData, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local gens, one, data, val, lambdarhoht;
+  local gens, one, data, val;
  
   gens:=GeneratorsOfSemigroup(s);
   one:=One(gens);
@@ -30,24 +30,9 @@ function(s)
   # LambdaRhoHT points to where the existing R-class reps with same lambda-rho
   # value are in SemigroupData(s).reps.  
   
-  #val:=[1];
-  #Append(val, RhoFunc(s)(Representative(s)));
-  lambdarhoht:=HTCreate(RhoFunc(s)(Representative(s)), 
+  val:=Concatenation([1], RhoFunc(s)(Representative(s)));
+  data.lambdarhoht:=HTCreate(val, 
    rec(treehashsize:=s!.opts.hashlen.M, forflatplainlists:=true));
-
-  #if IsBound(RhoOrbOpts(s).forflatplainlists) 
-  # and RhoOrbOpts(s).forflatplainlists then 
-  #  lambdarhoht!.rhohf:=ORB_HashFunctionForPlainFlatList;
-  #else
-  #  lambdarhoht!.rhohf:=ChooseHashFunction(val, lambdarhoht!.len).func;
-  #fi;
-  
-  #lambdarhoht!.hf:=function( x, data )
-  #  return (x[1]+lambdarhoht!.rhohf(x[2], data)) mod data + 1;
-  #end;
-  #lambdarhoht!.hfd:=lambdarhoht!.len;
-  
-  data.lambdarhoht:=lambdarhoht;
 
   #
 
@@ -87,6 +72,9 @@ function(f, s)
   #  fi;
   fi;
 
+  
+  # add degree here, since that applies to both partial perms and
+  # transformations JDM
   if not (IsMonoid(s) and IsOne(f)) and 
    ActionRank(f) > MaximumList(List(Generators(s), ActionRank)) then
     Info(InfoSemigroups, 2, "element has larger rank than any element of ",
@@ -94,6 +82,8 @@ function(f, s)
     return false;
   fi;
 
+  # add degree here, since that applies to both partial perms and
+  # transformations JDM
   if HasMinimalIdeal(s) and 
    ActionRank(f) < ActionRank(Representative(MinimalIdeal(s))) then
     Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
@@ -125,11 +115,12 @@ function(f, s)
   scc:=OrbSCC(o);
 
   # check if lambdarho is already known
-  lambdarho:=[m, RhoFunc(s)(f)];
+  lambdarho:=[m];
+  Append(lambdarho, RhoFunc(s)(f));
   val:=HTValue(data!.lambdarhoht, lambdarho);
 
   lookfunc:=function(data, x) 
-    return [x[2], RhoFunc(s)(x[4])]=lambdarho;
+    return Concatenation([x[2]], RhoFunc(s)(x[4]))=lambdarho;
   end;
   
   # if lambdarho is not already known, then look for it
@@ -375,14 +366,15 @@ function(data, limit, lookfunc)
         y:=x;
       fi;
       #rhoy:=[m, rho(y)];
-      rhoy:=rho(y);
+      rhoy:=[m];
+      Append(rhoy, rho(y));
       val:=htvalue(lambdarhoht, rhoy);
       # this is what we keep if it is new
       # x:=[s, m, o, y, false, nr+1];
 
       if val=fail then  #new rho value, and hence new R-rep
-        lenreps[m]:=lenreps[m]+1;
-        htadd(lambdarhoht, rhoy, lenreps[m]);
+        lenreps:=lenreps+1;
+        htadd(lambdarhoht, rhoy, lenreps);
         nr:=nr+1;
         reps[lenreps]:=[y];
         repslookup[lenreps]:=[nr];
@@ -504,7 +496,7 @@ function(data, x, n)
   m:=OrbSCCLookup(o)[l];
   scc:=OrbSCC(o);
 
-  val:=HTValue(data!.lambdarhoht, [m, RhoFunc(s)(x)]);
+  val:=HTValue(data!.lambdarhoht, Concatenation([m], RhoFunc(s)(x)));
   if val=fail then 
     return fail;
   fi;

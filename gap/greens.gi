@@ -276,15 +276,16 @@ function(f, l)
   s:=Parent(l);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-    ActionDegree(f) <> ActionDegree(rep) or 
-    ActionRank(f) <> ActionRank(rep) or 
     LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
-    Info(InfoSemigroups, 1, 
-    "degree, rank, or lambda value not equal to those of",
+    Info(InfoSemigroups, 1, "the lambda value of <f> is not equal to those of",
     " any of the L-class elements,");
     return false;
   fi;
 
+  if IsActingSemigroupWithFixedDegreeMultiplication(s) 
+    and ActionDegree(f) <> ActionDegree(rep) then
+    return false;
+  fi;
   m:=RhoOrbSCCIndex(l);
   o:=RhoOrb(l);
   
@@ -1870,7 +1871,9 @@ function(s)
         f:=f*x;
         l:=Position(o, lambdafunc(f));
         m:=lookup[l];
-        val:=HTValue(lambdarhoht, [m,rhofunc(f)]);
+        val:=[m];
+        Append(val, rhofunc(f));
+        val:=HTValue(lambdarhoht, val);
         if not IsBound(schutz[m]) then 
           LambdaOrbSchutzGp(o, m);
         fi;

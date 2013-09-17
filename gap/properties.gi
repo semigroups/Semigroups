@@ -778,7 +778,7 @@ function(s, f)
   
   if not f in s then 
     Info(InfoSemigroups, 2, "the element does not belong to the semigroup,");
-    return fail;
+    return false;
   fi;
   
   if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then
