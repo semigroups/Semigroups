@@ -38,7 +38,7 @@ true
 gap> ForAll(s, x-> x in s);
 true
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> List(s, x-> InversesOfSemigroupElement(s, x)); 
 [ [ Transformation( [ 1, 4, 1, 4, 1, 4, 1, 4 ] ) ], 
   [ Transformation( [ 1, 3, 5, 1, 7, 7, 3, 5 ] ) ], 
@@ -46,7 +46,7 @@ gap> List(s, x-> InversesOfSemigroupElement(s, x));
   [ Transformation( [ 1, 5, 7, 1, 3, 3, 5, 7 ] ) ], 
   [ Transformation( [ 1, 8, 5, 4, 7, 2, 3, 6 ] ) ], 
   [ Transformation( [ 1, 6, 7, 4, 3, 8, 5, 2 ] ) ], 
-  [ IdentityTransformation() ], 
+  [ IdentityTransformation ], 
   [ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] ) ] ]
 gap> IsMonoidAsSemigroup(s);
 true
@@ -889,7 +889,7 @@ gap> AsList(last);
   [ 2, 3, 4 ], [ 1, 5 ], [ 2, 5 ], [ 1, 3 ], [ 4, 5 ], [ 3, 5 ], [ 2, 3 ], 
   [ 2, 4 ], [ 1, 2 ], [ 5 ], [ 3, 4 ], [ 1 ], [ 3 ], [ 4 ], [ 2 ] ]
 gap> LambdaOrbMults(LambdaOrb(r), LambdaOrbSCCIndex(r))[LambdaOrbSCCIndex(r)];
-[ IdentityTransformation(), IdentityTransformation() ]
+[ IdentityTransformation, IdentityTransformation ]
 gap> SchutzenbergerGroup(r);
 Group([ (1,3,2,5) ])
 gap> gens:=[ Transformation( [ 4, 1, 5, 2, 4 ] ), 
@@ -922,9 +922,9 @@ gap> Idempotents(S, 2);
 gap> Idempotents(S, 3);                        
 [  ]
 gap> Idempotents(S, 4);                        
-[ IdentityTransformation() ]
+[ IdentityTransformation ]
 gap> Idempotents(S);
-[ IdentityTransformation(), Transformation( [ 1, 1, 3, 3 ] ), 
+[ IdentityTransformation, Transformation( [ 1, 1, 3, 3 ] ), 
   Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
   Transformation( [ 4, 2, 2, 4 ] ) ]
 gap> S:=Semigroup([ Transformation( [ 2, 4, 1, 2 ] ),

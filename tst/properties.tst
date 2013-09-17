@@ -555,7 +555,7 @@ gap> [ Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] ),
 >   Transformation( [ 5, 5, 7, 5, 7, 3, 7, 7, 5 ] ) ];;
 gap> s:=Semigroup(last);;
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 
 ##
 #gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),

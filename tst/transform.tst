@@ -90,7 +90,7 @@ gap> filt:=Filtered(Elements(FullTransformationSemigroup(3)),
 > x-> RankOfTransformation(x^2)=RankOfTransformation(x));
 [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1 ] ), 
   Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 2 ] ), 
-  IdentityTransformation(), Transformation( [ 1, 3, 2 ] ), 
+  IdentityTransformation, Transformation( [ 1, 3, 2 ] ), 
   Transformation( [ 1, 3, 3 ] ), Transformation( [ 2, 1, 1 ] ), 
   Transformation( [ 2, 1, 2 ] ), Transformation( [ 2, 1 ] ), 
   Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 2 ] ), 
@@ -117,7 +117,7 @@ gap> im:=List(filt, ImageSetOfTransformation);
 gap> List([1..21], i-> Idempotent(im[i], ker[i])*perms[i]);         
 [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1 ] ), 
   Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 2 ] ), 
-  IdentityTransformation(), Transformation( [ 1, 3, 2 ] ), 
+  IdentityTransformation, Transformation( [ 1, 3, 2 ] ), 
   Transformation( [ 1, 3, 3 ] ), Transformation( [ 2, 1, 1 ] ), 
   Transformation( [ 2, 1, 2 ] ), Transformation( [ 2, 1 ] ), 
   Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 2 ] ), 

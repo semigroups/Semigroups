@@ -717,9 +717,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 8
@@ -1595,9 +1595,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 Transformation( [ 8, 8, 8, 8, 5, 8, 8, 8 ] )
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 1
@@ -1668,9 +1668,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8 ] )
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 1
@@ -1742,9 +1742,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 720
@@ -1824,9 +1824,9 @@ gap> MultiplicativeZero(s);
 Transformation( [ 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
   4 ] )
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 1
@@ -1913,9 +1913,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 24
@@ -2219,9 +2219,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 7
@@ -2294,9 +2294,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 9

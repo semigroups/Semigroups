@@ -27,7 +27,7 @@ gap> AsList(LambdaOrb(r)){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]};
 [ [ 1, 2, 3, 4, 5 ], [ 1, 2, 4, 5, 6 ], [ 1, 2, 3, 5, 6 ], [ 1, 2, 3, 4, 6 ] ]
 gap> LambdaOrbMults(LambdaOrb(r),
 > LambdaOrbSCCIndex(r)){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]};
-[ [ IdentityTransformation(), IdentityTransformation() ], 
+[ [ IdentityTransformation, IdentityTransformation ], 
   [ Transformation( [ 6, 1, 2, 5, 4, 1 ] ), 
       Transformation( [ 2, 3, 1, 5, 4, 1 ] ) ], 
   [ Transformation( [ 1, 2, 5, 6, 3, 1 ] ), 
@@ -48,7 +48,7 @@ gap> AsList(LambdaOrb(r){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]});
 [ [ 2, 3 ], [ 4, 6 ], [ 2, 6 ], [ 1, 4 ], [ 1, 6 ], [ 2, 4 ], [ 3, 6 ] ]
 gap> LambdaOrbMults(LambdaOrb(r),
 > LambdaOrbSCCIndex(r)){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]};
-[ [ IdentityTransformation(), IdentityTransformation() ], 
+[ [ IdentityTransformation, IdentityTransformation ], 
   [ Transformation( [ 4, 4, 6, 4, 4, 4, 4 ] ), 
       Transformation( [ 6, 3, 3, 2, 3, 3, 3 ] ) ], 
   [ Transformation( [ 2, 6, 2, 2, 2, 2, 2 ] ), 

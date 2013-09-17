@@ -388,7 +388,7 @@ gap> AsList(RhoOrb(C));
 [ [ 1, 2, 1, 3, 2 ] ]
 gap> RhoOrbMults(RhoOrb(C),
 > RhoOrbSCCIndex(C)){OrbSCC(RhoOrb(C))[RhoOrbSCCIndex(C)]};
-[ [ IdentityTransformation(), IdentityTransformation() ] ]
+[ [ IdentityTransformation, IdentityTransformation ] ]
 gap> SchutzenbergerGroup(C);
 Group([ (3,5,4), (3,5) ])
 gap> gens:=[ Transformation( [ 1, 2, 1, 2, 1 ] ), 
@@ -430,7 +430,7 @@ Group([ (4,5) ])
 gap> S:=Semigroup([ Transformation( [ 2, 3, 4, 1 ] ), 
 > Transformation( [ 3, 3, 1, 1 ] ) ]);;
 gap> Idempotents(S);
-[ IdentityTransformation(), Transformation( [ 1, 1, 3, 3 ] ), 
+[ IdentityTransformation, Transformation( [ 1, 1, 3, 3 ] ), 
   Transformation( [ 1, 3, 3, 1 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
   Transformation( [ 4, 2, 2, 4 ] ) ]
 gap> gens:= [ Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ), 
