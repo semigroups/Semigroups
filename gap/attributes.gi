@@ -770,14 +770,14 @@ function(s)
 
   gens:=Generators(s);
   n:=Maximum(List(gens, ActionRank));
+  rank:=LambdaRank(s);
+  lambda:=LambdaFunc(s);
+  f:=First(gens, f-> rank(lambda(f))=n);
 
   if n=ActionDegree(s) then
     return One(s);
   fi;
 
-  rank:=LambdaRank(s);
-  lambda:=LambdaFunc(s);
-  f:=First(gens, f-> rank(lambda(f))=n);
 
   r:=GreensRClassOfElementNC(s, f); #NC? JDM 
 
