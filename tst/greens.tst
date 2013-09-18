@@ -996,7 +996,7 @@ gap> Size(r);
 gap> iter:=Iterator(r);
 <iterator of R-class>
 gap> for i in [1..100000] do NextIterator(iter); od;
-gap> gens:=[  Transformation( [ 3, 12, 14, 4, 11, 18, 17, 2, 2, 9, 5, 15, 2, 18, 
+gap> gens:=[ Transformation( [ 3, 12, 14, 4, 11, 18, 17, 2, 2, 9, 5, 15, 2, 18, 
 > 17, 8, 20, 10, 19, 12 ] ),
 > Transformation( [ 13, 1, 8, 5, 4, 14, 13, 11, 12, 9, 13, 20, 20, 2, 14, 18,
 > 20, 7, 3, 19 ] ) ];;
@@ -1249,7 +1249,7 @@ gap> r:=GreensRClassOfElement(s, f);
 gap> elts:=Elements(r);;
 gap> for i in elts do if not i in d then Print("Error 1");fi; od;
 gap> rr:=GreensRClassOfElement(s, Transformation([1,1,1,2,3,4,5,6]));
-{Transformation( [ 1, 1, 1, 2, 3, 4, 5, 6 ] )}
+{Transformation( [ 1, 1, 1, 3, 4, 5, 6, 7 ] )}
 gap> elts:=Elements(rr);; d:=DClassOfRClass(rr);;
 gap> for i in elts do if not i in d then Print("Error 2");  fi; od;
 gap> Sum(List(GreensDClasses(s), Size)); 8^8;

@@ -766,20 +766,26 @@ end);
 InstallMethod(MultiplicativeNeutralElement, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local gens, n, rank, lambda, f, r;
+  local gens, rank, lambda, max, r, rep, f;
 
   gens:=Generators(s);
-  n:=Maximum(List(gens, ActionRank));
   rank:=LambdaRank(s);
   lambda:=LambdaFunc(s);
-  f:=First(gens, f-> rank(lambda(f))=n);
+  max:=0;
+  
+  for f in gens do 
+    r:=rank(lambda(f));
+    if r>max then 
+      max:=r;
+      rep:=f;
+    fi;
+  od;
 
-  if n=ActionDegree(s) then
+  if max=ActionDegree(s) then
     return One(s);
   fi;
 
-
-  r:=GreensRClassOfElementNC(s, f); #NC? JDM 
+  r:=GreensRClassOfElementNC(s, f);
 
   if not NrIdempotents(r)=1 then
     Info(InfoSemigroups, 2, "the number of idempotents in the R-class of the",

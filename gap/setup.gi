@@ -25,7 +25,7 @@ InstallMethod(IsGeneratorsOfActingSemigroup,
 # if Semigroups is loaded after any transformation semigroup has been created.
 # It seems that since IsTransformationCollection has had its implied filters
 # installed, if we add an additional implied filter
-# IsGeneratorsOfActingSemigroup, then this is ignored. I think this is a bug.
+# IsGeneratorsOfActingSemigroup, then this is ignored. 
 
 InstallMethod(IsGeneratorsOfActingSemigroup, "for a transformation collection", 
 [IsTransformationCollection], x-> true);
@@ -42,12 +42,15 @@ x-> IsActingSemigroup(Parent(x)));
 # the number of points in the action
 
 InstallMethod(ActionDegree, 
-"for associative element with action collection",
-[IsAssociativeElementCollection], 
+"for an acting semigroup with fixed degree multiplication",
+[IsActingSemigroupWithFixedDegreeMultiplication], 
 s-> ActionDegree(Representative(s)));
 
-InstallMethod(ActionDegree, "for a partial perm collection",
-[IsPartialPermCollection], DegreeOfPartialPermCollection);
+InstallMethod(ActionDegree, "for a transformation semigroup",
+[IsTransformationSemigroup], DegreeOfTransformationSemigroup);
+
+InstallMethod(ActionDegree, "for a partial perm semigroup",
+[IsPartialPermSemigroup], DegreeOfPartialPermSemigroup);
 
 #
 
