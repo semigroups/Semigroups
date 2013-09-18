@@ -17,7 +17,7 @@ gap> SemigroupsStartTest();
 
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/misc.semigroups.gz");;
-gap> semis:=List([1..22], i-> Semigroup(ReadSemigroups(file, i)));;
+gap> semis:=List([1..22], i-> Semigroup(ReadGenerators(file, i)));;
 gap> List([1..15], i-> IsCompletelyRegularSemigroup(semis[i]));   
 [ false, true, false, false, false, true, true, true, true, true, false, 
   false, false, false, true ]
@@ -654,7 +654,7 @@ IdentityTransformation()
 #
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/graph8c.semigroups.gz");;
-gap> ReadSemigroups(file, 1303);;
+gap> ReadGenerators(file, 1303);;
 gap> s:=Semigroup(last);;
 gap> t:=IdempotentGeneratedSubsemigroup(s);;
 gap> Size(t);

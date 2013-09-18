@@ -38,7 +38,7 @@ gap> GroupOfUnits(s);
 
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/syntactic.semigroups.gz");;
-gap> gens:=ReadSemigroups(file, 299);;
+gap> gens:=ReadGenerators(file, 299);;
 gap> s:=Semigroup(gens[1]);; 
 gap> for i in [2..Length(gens)] do 
 > s:=ClosureSemigroup(s, gens[i]); 
@@ -62,7 +62,7 @@ gap> NrLClasses(t);
 
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/syntactic.semigroups.gz");;
-gap> gens:=ReadSemigroups(file, 299);;
+gap> gens:=ReadGenerators(file, 299);;
 gap> s:=Semigroup(gens[1]);; Size(s);
 30
 gap> for i in [2..Length(gens)] do 
@@ -87,7 +87,7 @@ gap> NrLClasses(t);
 
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/path.semigroups.gz");;
-gap> gens:=ReadSemigroups(file, 10);;
+gap> gens:=ReadGenerators(file, 10);;
 gap> s:=Semigroup(gens[1]);;         
 gap> for i in [2..Length(gens)] do
 > s:=ClosureSemigroup(s, gens[i]); Size(s);
@@ -111,7 +111,7 @@ gap> NrRClasses(t); NrLClasses(t); NrDClasses(t); NrIdempotents(t);
 
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/path.semigroups.gz");;
-gap> gens:=ReadSemigroups(file, 10);;
+gap> gens:=ReadGenerators(file, 10);;
 gap> s:=Semigroup(gens[1]);;        
 gap> s:=ClosureSemigroup(s, gens[2]);;
 gap> for i in [2..Length(gens)] do
