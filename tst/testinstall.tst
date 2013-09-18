@@ -425,6 +425,12 @@ gap> f:=Transformation( [ 4, 3, 1, 2 ] );;
 gap> ClosureSemigroup(S, f);           
 <transformation monoid on 4 pts with 4 generators>
 
+# Issue 36 in the new numbering...
+gap> S:=Semigroup(IdentityTransformation);
+<trivial transformation group>
+gap> SmallGeneratingSet(S);
+[  ]
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);
