@@ -183,9 +183,9 @@ function(f, d)
   s:=Parent(d);
  
   # ActionRank method selection causes slowdown here.
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-    ActionRank(f) <> ActionRank(rep) or
-    ActionDegree(f)<>ActionDegree(rep) then
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
+    or (IsActingSemigroupWithFixedDegreeMultiplication(s) 
+     and ActionDegree(f)<>ActionDegree(rep)) then
     return false;
   fi;
 
@@ -253,10 +253,10 @@ function(f, h)
   rep:=Representative(h);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-    ActionRank(f) <> ActionRank(rep) or
+    #ActionDegree(rep)<>ActionDegree(f) or
+    #ActionRank(f) <> ActionRank(rep) or
     RhoFunc(s)(f) <> RhoFunc(s)(rep) or 
-    LambdaFunc(s)(f) <> LambdaFunc(s)(rep) or
-    ActionDegree(rep)<>ActionDegree(f) then 
+    LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then 
     return false;
   fi;
 
@@ -286,6 +286,7 @@ function(f, l)
     and ActionDegree(f) <> ActionDegree(rep) then
     return false;
   fi;
+
   m:=RhoOrbSCCIndex(l);
   o:=RhoOrb(l);
   
@@ -337,8 +338,8 @@ function(f, r)
   s:=Parent(r);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-    ActionDegree(f) <> ActionDegree(rep) or 
-    ActionRank(f) <> ActionRank(rep) or 
+    #ActionDegree(f) <> ActionDegree(rep) or 
+    #ActionRank(f) <> ActionRank(rep) or 
     RhoFunc(s)(f) <> RhoFunc(s)(rep) then
     Info(InfoSemigroups, 1, "degree, rank, or rho value not equal to those of",
     " any of the R-class elements,");

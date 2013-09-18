@@ -113,9 +113,10 @@ function(f, d)
   rep:=Representative(d);
   s:=Parent(d);
 
-  # much much better performance using f[2]<>rep[2] below
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
-    or ActionRank(f) <> ActionRank(rep) then
+    or (IsActingSemigroupWithFixedDegreeMultiplication(s) 
+     and ActionDegree(f)<>ActionDegree(rep)) then 
+    #or ActionRank(f) <> ActionRank(rep) then
     return false;
   fi;
 

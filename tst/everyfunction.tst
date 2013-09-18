@@ -2625,9 +2625,8 @@ gap> List(DClasses(s), Idempotents);
       Transformation( [ 11, 2, 4, 4, 5, 6, 7, 6, 10, 10, 11 ] ), 
       Transformation( [ 4, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ) ] ]
 gap> Concatenation(last);
-[ IdentityTransformation, 
-  Transformation( [ 1, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
-  Transformation( [ 4, 2, 2, 4, 5, 6, 7, 7, 7 ] ), 
+[ IdentityTransformation, Transformation( [ 1, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] )
+    , Transformation( [ 4, 2, 2, 4, 5, 6, 7, 7, 7 ] ), 
   Transformation( [ 2, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
   Transformation( [ 6, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
   Transformation( [ 7, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
@@ -2636,9 +2635,8 @@ gap> Concatenation(last);
   Transformation( [ 11, 2, 4, 4, 5, 6, 7, 6, 10, 10, 11 ] ), 
   Transformation( [ 4, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ) ]
 gap> e:=last;
-[ IdentityTransformation, 
-  Transformation( [ 1, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
-  Transformation( [ 4, 2, 2, 4, 5, 6, 7, 7, 7 ] ), 
+[ IdentityTransformation, Transformation( [ 1, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] )
+    , Transformation( [ 4, 2, 2, 4, 5, 6, 7, 7, 7 ] ), 
   Transformation( [ 2, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
   Transformation( [ 6, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
   Transformation( [ 7, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
@@ -3633,8 +3631,6 @@ gap> f:=One(s);
 IdentityTransformation
 gap> h:=HClassNC(s, f);
 {IdentityTransformation}
-gap> enum:=Enumerator(d);
-<enumerator of D-class>
 gap> enum:=Enumerator(h);
 <enumerator of H-class>
 gap> ForAll(enum, x-> x in h);

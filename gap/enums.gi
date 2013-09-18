@@ -531,8 +531,7 @@ function(h)
       s:=Parent(h);
       rep:=Representative(h);
 
-      if ActionRank(f) <> ActionRank(rep) 
-        or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) 
+      if LambdaFunc(s)(f) <> LambdaFunc(s)(rep) 
         or RhoFunc(s)(f) <> RhoFunc(s)(rep) then
         return fail;
       fi;

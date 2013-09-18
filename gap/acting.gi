@@ -64,12 +64,6 @@ function(f, s)
   if IsActingSemigroupWithFixedDegreeMultiplication(s) 
     and ActionDegree(f)<>ActionDegree(s) then 
     return false;
-  #elif IsTransformation(f) and ActionDegree(f)<>ActionDegree(s) then 
-  #  f:=AsTransformation(f, ActionDegree(s));
-  #  # if AsTransformation doesn't work, then <f> is unchanged.
-  #  if ActionDegree(f)<>ActionDegree(s) then 
-  #    return false;
-  #  fi;
   fi;
 
   
@@ -248,6 +242,7 @@ InstallMethod(\in, "for associative element and semigroup data",
 function(f, data)
   return not Position(data, f)=fail;
 end);
+
 #
 
 InstallMethod(ELM_LIST, "for semigroup data, and pos int",
