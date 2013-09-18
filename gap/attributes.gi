@@ -658,7 +658,7 @@ end);
 #
 
 InstallMethod(InversesOfSemigroupElementNC, 
-"for an acting semigroup and acting elt",
+"for an acting semigroup and acting element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(s, f)
   local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades, rho_f, lambdarank, creator, inv, out, k, g, rho, name, i, x;
@@ -670,7 +670,7 @@ function(s, f)
   fi;
 
   lambda:=LambdaFunc(s)(f);
-  rank:=ActionRank(f); 
+  rank:=LambdaRank(s)(LambdaFunc(s)(f)); 
   rhorank:=RhoRank(s);
   tester:=IdempotentTester(s);
   j:=0;

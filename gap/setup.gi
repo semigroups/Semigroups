@@ -41,10 +41,16 @@ x-> IsActingSemigroup(Parent(x)));
 
 # the number of points in the action
 
-InstallMethod(ActionDegree, 
-"for an acting semigroup with fixed degree multiplication",
-[IsActingSemigroupWithFixedDegreeMultiplication], 
-s-> ActionDegree(Representative(s)));
+#InstallMethod(ActionDegree, 
+#"for an acting semigroup with fixed degree multiplication",
+#[IsActingSemigroupWithFixedDegreeMultiplication], 
+#s-> ActionDegree(Representative(s)));
+
+InstallMethod(ActionDegree, "for a transformation collection",
+[IsTransformationCollection], DegreeOfTransformationCollection);
+
+InstallMethod(ActionDegree, "for a partial perm collection",
+[IsPartialPermCollection], DegreeOfPartialPermCollection);
 
 InstallMethod(ActionDegree, "for a transformation semigroup",
 [IsTransformationSemigroup], DegreeOfTransformationSemigroup);
