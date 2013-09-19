@@ -783,9 +783,9 @@ true</Example>
 
 <#GAPDoc Label="IsSynchronizingSemigroup">
   <ManSection>
-    <Prop Name="IsSynchronizingSemigroup" Arg="S"/>
+    <Oper Name="IsSynchronizingSemigroup" Arg="S, n"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
-    <Description>
+    <Description><!--JDM update me!!-->
       <C>IsSynchronizingSemigroup</C> returns <K>true</K> if the semigroup of
       transformations <A>S</A> contains a
       constant transformation. 
