@@ -304,7 +304,7 @@ gap> IsLeftZeroSemigroup(i);
 false
 gap> IsRightZeroSemigroup(i);
 true
-gap> IsSynchronizingSemigroup(i);
+gap> IsSynchronizingSemigroup(i, 4);
 true
 
 #
@@ -498,7 +498,7 @@ gap> s:=FullTransformationSemigroup(3);;
 gap> j:=0;;
 gap> for f in s do
 > for g in s do
-> if IsSynchronizingSemigroup(Semigroup(f,g)) then j:=j+1; fi;
+> if IsSynchronizingSemigroup(Semigroup(f,g), 3) then j:=j+1; fi;
 > od;
 > od;
 gap> j;

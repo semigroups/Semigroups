@@ -948,17 +948,19 @@ InstallMethod(IsSimpleSemigroup, "for an inverse semigroup",
 #
 
 InstallMethod(IsSynchronizingSemigroup, 
-"for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
+"for a transformation semigroup with generators and positive integer", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
+function(s, n)
   local o;
 
-  o:=Orb(s, [1..DegreeOfTransformationSemigroup(s)], OnSets, 
-        rec(schreier:=true, 
-        lookingfor:=function(o, x) return Length(x)=1; end));
-
+  o:=Orb(s, [1..n], LambdaAct(s), rec( schreier:=true, 
+    lookingfor:=function(o, x) 
+      return Length(x)=1; 
+    end));
+  
   Enumerate(o);
-  if IsPosInt(PositionOfFound(o)) then 
+
+  if PositionOfFound(o)<>false then 
     Info(InfoSemigroups, 2, "the product of the generators: ",
     TraceSchreierTreeForward(o, PositionOfFound(o)));
 
@@ -973,13 +975,14 @@ end);
 #
 
 InstallMethod(IsSynchronizingTransformationCollection, 
-"for a transformation collection", 
-[IsTransformationCollection],
-function(coll)
+"for a transformation collection and positive integer", 
+[IsTransformationCollection, IsPosInt],
+function(coll, n)
   local o;
 
-  o:=Orb(coll, [1..DegreeOfTransformationCollection(coll)], 
-    OnPosIntSetsTrans, rec( lookingfor:=function(o, x) return Length(x)=1;
+  o:=Orb(coll, [1..n], OnPosIntSetsTrans, rec(
+    lookingfor:=function(o, x) 
+      return Length(x)=1;
     end));
 
   Enumerate(o);

@@ -21,8 +21,8 @@
 
 <#GAPDoc Label="LookForInOrb">
   <ManSection> 
-    <Oper Name="LookForInOrb" Arg="?"/>
-    <Returns>?.</Returns>
+    <Oper Name="LookForInOrb" Arg="o, func, start"/>
+    <Returns><K>false</K> or a positive integer.</Returns>
     <Description> 
 <Example>
 </Example>

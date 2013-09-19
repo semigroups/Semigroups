@@ -785,7 +785,7 @@ function(s)
     return One(s);
   fi;
 
-  r:=GreensRClassOfElementNC(s, f);
+  r:=GreensRClassOfElementNC(s, rep);
 
   if not NrIdempotents(r)=1 then
     Info(InfoSemigroups, 2, "the number of idempotents in the R-class of the",

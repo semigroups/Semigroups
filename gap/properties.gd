@@ -30,9 +30,10 @@ DeclareProperty("IsMonogenicInverseSemigroup", IsSemigroup);
 DeclareOperation("IsRegularSemigroupElementNC", [IsSemigroup, IsMultiplicativeElement and IsAssociativeElement]);
 DeclareProperty("IsRightSimple", IsSemigroup);
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
-DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
-DeclareProperty("IsSynchronizingTransformationCollection",
-IsTransformationCollection);
+DeclareOperation("IsSynchronizingSemigroup", 
+[IsTransformationSemigroup, IsPosInt]);
+DeclareOperation("IsSynchronizingTransformationCollection",
+[IsTransformationCollection, IsPosInt]);
 DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 
