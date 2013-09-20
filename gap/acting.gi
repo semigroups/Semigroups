@@ -52,38 +52,32 @@ function(f, s)
   local data, len, ht, val, lambda, o, l, lookfunc, m, scc, lambdarho, schutz,
   g, reps, repslens, lambdaperm, n, max, found;
   
-  if ElementsFamily(FamilyObj(s))<>FamilyObj(f) then 
-    Error("the element and semigroup are not of the same type,");
-    return;
+  if ElementsFamily(FamilyObj(s))<>FamilyObj(f) 
+    or (IsActingSemigroupWithFixedDegreeMultiplication(s) 
+     and ActionDegree(f)<>ActionDegree(s)) 
+    or (ActionDegree(f)>ActionDegree(s)) then 
+    return false;
   fi;
 
   if HasAsSSortedList(s) then 
     return f in AsSSortedList(s); 
   fi;
-
-  if (IsActingSemigroupWithFixedDegreeMultiplication(s) 
-     and ActionDegree(f)<>ActionDegree(s)) 
-    or (ActionDegree(f)>ActionDegree(s)) then 
-    return false;
-  fi;
   
-  # add degree here, since that applies to both partial perms and
-  # transformations JDM
-  if not (IsMonoid(s) and IsOne(f)) 
-    and ActionRank(s)(f) 
-     > MaximumList(List(Generators(s), f-> ActionRank(s)(f))) then
-    Info(InfoSemigroups, 2, "element has larger rank than any element of ",
-     "semigroup.");
-    return false;
+  if not (IsMonoid(s) and IsOne(f)) then 
+    if ActionRank(s)(f)>MaximumList(List(Generators(s), f-> ActionRank(s)(f)))
+     then
+      Info(InfoSemigroups, 2, "element has larger rank than any element of ",
+       "semigroup.");
+      return false;
+    fi;
   fi;
 
-  # add degree here, since that applies to both partial perms and
-  # transformations JDM
-  if HasMinimalIdeal(s) and 
-   ActionRank(s)(f) < ActionRank(s)(Representative(MinimalIdeal(s))) then
-    Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
-     "semigroup.");
-    return false;
+  if HasMinimalIdeal(s) then 
+    if ActionRank(s)(f)<ActionRank(s)(Representative(MinimalIdeal(s))) then
+      Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
+       "semigroup.");
+      return false;
+    fi;
   fi;  
 
   data:=SemigroupData(s);

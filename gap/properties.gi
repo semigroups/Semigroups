@@ -450,7 +450,7 @@ InstallMethod(IsInverseSemigroup,
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local n, lambda, rho, iter, x;
+  local lambda, rho, iter, x;
 
   if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
     Info(InfoSemigroups, 2, "the semigroup is not regular");
@@ -460,7 +460,6 @@ function(s)
     return IsCliffordSemigroup(s);
   fi;
 
-  n:=ActionDegree(s); 
   lambda:=LambdaOrb(s); Enumerate(lambda);
   rho:=RhoOrb(s); Enumerate(rho, Length(lambda));
 
@@ -471,16 +470,20 @@ function(s)
   
   if HasGreensDClasses(s) then 
     iter:=GreensDClasses(s);
+    for x in iter do
+      if not IsRegularClass(x) or NrIdempotents(x)<>NrRClasses(x) then 
+        return false;
+      fi;
+    od;
   else
     iter:=IteratorOfRClasses(s);
+    for x in iter do
+      if not IsRegularClass(x) or NrIdempotents(x)>1 then 
+        return false;
+      fi;
+    od;
   fi;
   
-  for x in iter do
-    if not IsRegularClass(x) or NrIdempotents(x)>1 then 
-      return false;
-    fi;
-  od;
-
   return true;
 end);
 
@@ -738,7 +741,8 @@ function(s)
     fi;
     
     # data corresponds to the group of units...
-    if ActionRank(s)(x[4])=ActionDegree(x[4]) then 
+    if IsActingSemigroupWithFixedDegreeMultiplication(s) 
+     and ActionRank(s)(x[4])=ActionDegree(x[4]) then 
       return false;
     fi;
     

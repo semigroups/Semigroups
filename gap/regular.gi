@@ -46,14 +46,29 @@ InstallMethod(\in, "for an acting element and regular acting semigroup",
 function(f, s)
   local lambda_o, lambda_l, rho_o, rho_l, m, schutz, g, n, rep;
 
-  if ElementsFamily(FamilyObj(s))<>FamilyObj(f) then 
-    Error("the element and semigroup are not of the same type,");
-    return;
-  fi;
-
-  if ActionDegree(f)>ActionDegree(s) then 
+  if ElementsFamily(FamilyObj(s))<>FamilyObj(f) 
+    or (IsActingSemigroupWithFixedDegreeMultiplication(s)
+        and ActionDegree(f)<>ActionDegree(rep))
+    or ActionDegree(f)>ActionDegree(s) then
     return false;
   fi;
+ 
+  if not (IsMonoid(s) and IsOne(f)) then
+    if ActionRank(s)(f)>MaximumList(List(Generators(s), f-> ActionRank(s)(f)))
+     then
+      Info(InfoSemigroups, 2, "element has larger rank than any element of ",
+       "semigroup.");
+      return false;
+    fi;
+  fi;
+
+  if HasMinimalIdeal(s) then
+    if ActionRank(s)(f)<ActionRank(s)(Representative(MinimalIdeal(s))) then
+      Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
+       "semigroup.");
+      return false;
+    fi;
+  fi;  
 
   if HasAsSSortedList(s) then 
     return f in AsSSortedList(s); 
@@ -119,8 +134,8 @@ function(f, d)
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
     or (IsActingSemigroupWithFixedDegreeMultiplication(s) 
-     and ActionDegree(f)<>ActionDegree(rep)) then 
-    #or ActionRank(f) <> ActionRank(rep) then
+        and ActionDegree(f)<>ActionDegree(rep)) 
+    or ActionRank(s)(f) <> ActionRank(s)(rep) then
     return false;
   fi;
 

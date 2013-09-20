@@ -170,8 +170,6 @@ end);
 
 # main 
 
-#JDM revise this as per the other version of \in just deleted :)
-
 # different method for regular/inverse 
 
 InstallMethod(\in, "for acting element and D-class of acting semigroup",
@@ -182,10 +180,11 @@ function(f, d)
   rep:=Representative(d); 
   s:=Parent(d);
  
-  # ActionRank method selection causes slowdown here.
+  # <ActionRank> method selection causes slow down here...
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
     or (IsActingSemigroupWithFixedDegreeMultiplication(s) 
-     and ActionDegree(f)<>ActionDegree(rep)) then
+        and ActionDegree(f)<>ActionDegree(rep)) 
+    or ActionRank(s)(f)<>ActionRank(s)(rep) then 
     return false;
   fi;
 
@@ -252,11 +251,11 @@ function(f, h)
   s:=Parent(h);
   rep:=Representative(h);
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-    #ActionDegree(rep)<>ActionDegree(f) or
-    #ActionRank(f) <> ActionRank(rep) or
-    RhoFunc(s)(f) <> RhoFunc(s)(rep) or 
-    LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then 
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
+    or ActionDegree(f)<>ActionDegree(rep)
+    or ActionRank(s)(f) <> ActionRank(s)(rep)
+    or RhoFunc(s)(f) <> RhoFunc(s)(rep) 
+    or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then 
     return false;
   fi;
 
@@ -275,15 +274,11 @@ function(f, l)
   rep:=Representative(l); 
   s:=Parent(l);
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-    LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
-    Info(InfoSemigroups, 1, "the lambda value of <f> is not equal to those of",
-    " any of the L-class elements,");
-    return false;
-  fi;
-
-  if IsActingSemigroupWithFixedDegreeMultiplication(s) 
-    and ActionDegree(f) <> ActionDegree(rep) then
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
+    or (IsActingSemigroupWithFixedDegreeMultiplication(s) 
+        and ActionDegree(f) <> ActionDegree(rep)) 
+    or ActionRank(s)(f) <> ActionRank(s)(rep)  
+    or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
     return false;
   fi;
 
@@ -337,12 +332,11 @@ function(f, r)
   rep:=Representative(r); 
   s:=Parent(r);
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-    #ActionDegree(f) <> ActionDegree(rep) or 
-    #ActionRank(f) <> ActionRank(rep) or 
-    RhoFunc(s)(f) <> RhoFunc(s)(rep) then
-    Info(InfoSemigroups, 1, "degree, rank, or rho value not equal to those of",
-    " any of the R-class elements,");
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
+    or (IsActingSemigroupWithFixedDegreeMultiplication(s) 
+        and ActionDegree(f) <> ActionDegree(rep)) 
+    or ActionRank(s)(f) <> ActionRank(s)(rep)  
+    or RhoFunc(s)(f) <> RhoFunc(s)(rep) then
     return false;
   fi;
 
@@ -1918,7 +1912,6 @@ function(s)
   
   if not IsClosed(data) then
     gens:=GeneratorsOfSemigroup(s);
-    n:=ActionDegree(s);
     i:=Random([1..2*Length(gens)]);
     w:=List([1..i], x-> Random([1..Length(gens)]));
     return EvaluateWord(gens, w);
