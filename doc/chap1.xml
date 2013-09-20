@@ -44,8 +44,8 @@
     provides abbreviated names for some
     of the commonly used &GAP; library functions related to semigroups, and
     functions to read and write large collections of transformations or partial
-    permutations to a file; see <Ref Func="ReadSemigroups"/> and <Ref
-      Func="WriteSemigroups"/>. 
+    permutations to a file; see <Ref Func="ReadGenerators"/> and <Ref
+      Func="WriteGenerators"/>. 
     <P/>
 
     There are also functions in &Semigroups; to define and manipulate free
@@ -242,11 +242,12 @@ or 64-bit mode correctly!
 
     <Section><Heading>Reading and writing transformations and partial
       permutations to a file</Heading>
-    The functions <Ref Func="ReadSemigroups"/> and <Ref Func="WriteSemigroups"/> can be
-    used to read or write transformations or partial permutations to a file. 
+    The functions <Ref Func="ReadGenerators"/> and 
+    <Ref Func="WriteGenerators"/> can be used to read or write transformations
+    or partial permutations to a file. 
     <#Include Label="SemigroupsDir">
-    <#Include Label="ReadSemigroups">
-    <#Include Label="WriteSemigroups">
+    <#Include Label="ReadGenerators">
+    <#Include Label="WriteGenerators">
   </Section>
 
   <Section><Heading>Use &R;-classes not &L;-classes</Heading>

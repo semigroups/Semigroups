@@ -377,7 +377,7 @@ gap> StructureDescription(GroupOfUnits(S));
       See also <Ref Attr="Idempotents"/> and <Ref Attr="SmallGeneratingSet"/>.
 <Example>
 gap> file:=Concatenation(SemigroupsDir(), "/examples/graph8c.semigroups.gz");;
-gap> S:=Semigroup(ReadSemigroups(file, 13));;
+gap> S:=Semigroup(ReadGenerators(file, 13));;
 gap> IdempotentGeneratedSubsemigroup(S);
 &lt;transformation monoid on 8 pts with 18 generators>
 gap> S:=SymmetricInverseSemigroup(5);
