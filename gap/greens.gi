@@ -172,7 +172,7 @@ end);
 
 # different method for regular/inverse 
 
-InstallMethod(\in, "for acting element and D-class of acting semigroup",
+InstallMethod(\in, "for associative element and D-class of acting semigroup",
 [IsAssociativeElement, IsGreensDClass and IsActingSemigroupGreensClass],
 function(f, d)
   local rep, s, g, m, o, scc, l, schutz, cosets, x;
@@ -267,7 +267,7 @@ end);
 
 # same method for regular, different method for inverse 
 
-InstallMethod(\in, "for acting element and L-class of acting semigroup",
+InstallMethod(\in, "for associative element and L-class of acting semigroup",
 [IsAssociativeElement, IsGreensLClass and IsActingSemigroupGreensClass],
 function(f, l)
   local rep, s, m, o, i, schutz, g, p;
@@ -325,7 +325,7 @@ end);
 # Algorithm E. 
 # same method for regular/inverse 
 
-InstallMethod(\in, "for acting element and R-class of acting semigroup",
+InstallMethod(\in, "for associative element and R-class of acting semigroup",
 [IsAssociativeElement, IsGreensRClass and IsActingSemigroupGreensClass],
 function(f, r)
   local rep, s, m, o, l, schutz, g;
@@ -409,7 +409,7 @@ function(l)
     i:=Position(o, LambdaFunc(s)(f));
   else
     o:=GradedLambdaOrb(s, f, nc<>true);
-    i:=LambdaPos(o);
+    i:=o[2]; o:=o[1];
   fi;
 
   if nc then 
@@ -443,7 +443,7 @@ function(r)
     i:=Position(o, RhoFunc(s)(f));
   else
     o:=GradedRhoOrb(s, f, nc<>true);
-    i:=RhoPos(o);
+    i:=o[2]; o:=o[1];
   fi;
 
   if nc then 
@@ -750,7 +750,8 @@ function(s, f)
     i:=fail;
   else
     rho_o:=GradedRhoOrb(s, f, true);
-    i:=RhoPos(rho_o);#Position(o, RhoFunc(s)(f));
+    i:=rho_o[2];#Position(o, RhoFunc(s)(f));
+    rho_o:=rho_o[1];
   fi;
 
   rectify:=RectifyRho(s, rho_o, rep, i);
@@ -764,8 +765,8 @@ end);
 InstallMethod(GreensDClassOfElementNC, "for an acting semigroup and element",
 [IsActingSemigroup, IsAssociativeElement],
 function(s, f)
-  return CreateDClassNC(s, 1, GradedLambdaOrb(s, f, false), 
-   1, GradedRhoOrb(s, f, false), f, true);
+  return CreateDClassNC(s, 1, GradedLambdaOrb(s, f, false)[1], 
+   1, GradedRhoOrb(s, f, false)[1], f, true);
 end);
 
 # same method for regular, different method for inverse
@@ -787,8 +788,8 @@ function(s, f)
     rho_o:=RhoOrb(s);
     i:=Position(rho_o, RhoFunc(s)(f));
   else
-    rho_o:=GradedRhoOrb(s, f, true);
-    i:=RhoPos(rho_o);#Position(o, RhoFunc(s)(f));
+    rho_o:=GradedRhoOrb(s, f, true)[1];
+    i:=rho_o[2]; rho_o:=rho_o[1];
   fi;
 
   rho_m:=OrbSCCLookup(rho_o)[i];     
@@ -801,8 +802,8 @@ end);
 InstallMethod(GreensHClassOfElementNC, "for an acting semigroup and element",
 [IsActingSemigroup, IsAssociativeElement],
 function(s, f)
-  return CreateHClass(s, 1, GradedLambdaOrb(s, f, false), 
-   1, GradedRhoOrb(s, f, false), f, true);
+  return CreateHClass(s, 1, GradedLambdaOrb(s, f, false)[1], 
+   1, GradedRhoOrb(s, f, false)[1], f, true);
 end);
 
 # same method for regular, different method for inverse
@@ -858,7 +859,7 @@ function(l, f)
     i:=Position(o, LambdaFunc(s)(f));
   else
     o:=GradedLambdaOrb(s, f, nc<>true);
-    i:=LambdaPos(o);
+    i:=o[2]; o:=o[1];
   fi;
 
   h:=CreateHClass(s, OrbSCCLookup(o)[i], o, RhoOrbSCCIndex(l), RhoOrb(l), f,
@@ -875,8 +876,7 @@ InstallMethod(GreensHClassOfElementNC, "for an L-class and element",
 function(l, f)
   local h;
  
-  h:=CreateHClass(Parent(l), 
-   1, GradedLambdaOrb(Parent(l), f, false), 
+  h:=CreateHClass(Parent(l), 1, GradedLambdaOrb(Parent(l), f, false)[1], 
    RhoOrbSCCIndex(l), RhoOrb(l), f, true);
   SetLClassOfHClass(h, l);
 
@@ -903,7 +903,7 @@ function(r, f)
     i:=Position(o, RhoFunc(s)(f));
   else
     o:=GradedRhoOrb(s, f, nc<>true);
-    i:=RhoPos(o);
+    i:=o[2]; o:=o[1];
   fi;
 
   h:=CreateHClass(s, LambdaOrbSCCIndex(r), LambdaOrb(r), OrbSCCLookup(o)[i], 
@@ -921,7 +921,7 @@ function(r, f)
   local h;
   
   h:=CreateHClass(Parent(r), LambdaOrbSCCIndex(r), LambdaOrb(r), 
-   1, GradedRhoOrb(Parent(r), f, false), f, true);
+   1, GradedRhoOrb(Parent(r), f, false)[1], f, true);
   SetRClassOfHClass(h, r);
 
   return h;
@@ -942,11 +942,12 @@ function(s, f)
   if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then 
     o:=RhoOrb(s);
   else
-    o:=GradedRhoOrb(s, f, true);
+    o:=GradedRhoOrb(s, f, true)[1];
   fi;
   # use non-NC so that rho value of f is rectified. 
   # not that if o is graded orb, then Position(o, RhoFunc(s)(f)) is 
   # passed to CreateLClass and hence RectifyRho in o!.rho_l.
+  # JDM this is no longer true in 1.3 (nothing is passed)
   return CreateLClass(s, fail, o, f, false);
 end);
 
@@ -957,7 +958,7 @@ InstallMethod(GreensLClassOfElementNC, "for an acting semigroup and element",
 function(s, f)
   # use NC since rho value of f has to be in first place of GradedRhoOrb
   # with false as final arg
-  return CreateLClassNC(s, 1, GradedRhoOrb(s, f, false), f, true);
+  return CreateLClassNC(s, 1, GradedRhoOrb(s, f, false)[1], f, true);
 end);
 
 # same method for regular, different method for inverse
@@ -982,7 +983,7 @@ end);
 
 # same method for regular, different method for inverse
 
-InstallMethod(GreensLClassOfElementNC, "for D-class and acting element",
+InstallMethod(GreensLClassOfElementNC, "for D-class and associative element",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(d, f)
   local l;
@@ -1021,12 +1022,13 @@ function(s, f)
     fi;  
   fi;
   
-  return CreateRClassNC(s, 1, GradedLambdaOrb(s, f, false), f, true);
+  return CreateRClassNC(s, 1, GradedLambdaOrb(s, f, false)[1], f, true);
 end);
 
 # same method for regular/inverse.
 
-InstallMethod(GreensRClassOfElement, "for D-class and acting element",
+InstallMethod(GreensRClassOfElement, 
+"for an acting semigroup D-class and associative element",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(d, f)
   local r;
@@ -1045,7 +1047,7 @@ end);
 
 # same method for regular/inverse.
 
-InstallMethod(GreensRClassOfElementNC, "for D-class and acting element",
+InstallMethod(GreensRClassOfElementNC, "for D-class and associative element",
 [IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(d, f)
   local r;
@@ -2190,7 +2192,7 @@ end);
 InstallGlobalFunction(CreateLClass,
 function(s, m, o, rep, nc)
   local rectify;
-  rectify:=RectifyRho(s, o, rep, RhoPos(o), m);
+  rectify:=RectifyRho(s, o, rep, fail, m);
   return CreateLClassNC(s, rectify.m, o, rectify.rep, nc);
 end);
 
@@ -2234,7 +2236,7 @@ end);
 InstallGlobalFunction(CreateRClass,
 function(s, m, o, rep, nc)
   local rectify;
-  rectify:=RectifyLambda(s, o, rep, LambdaPos(o), m);
+  rectify:=RectifyLambda(s, o, rep, fail, m);
   return CreateRClassNC(s, rectify.m, o, rectify.rep, nc);
 end);
 

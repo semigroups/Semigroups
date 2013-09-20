@@ -793,7 +793,7 @@ function(s, f)
   if IsClosed(LambdaOrb(s)) then 
     o:=LambdaOrb(s); 
   else
-    o:=GradedLambdaOrb(s, f, true); 
+    o:=GradedLambdaOrb(s, f, true)[1]; 
   fi;
         
   scc:=OrbSCC(o)[OrbSCCLookup(o)[Position(o, LambdaFunc(s)(f))]];
@@ -816,7 +816,7 @@ InstallMethod(IsRegularSemigroupElementNC,
 function(s, f)                                  
   local o, scc, rho, tester, i;
  
-  o:=GradedLambdaOrb(s, f, false);
+  o:=GradedLambdaOrb(s, f, false)[1];
         
   scc:=OrbSCC(o)[OrbSCCLookup(o)[Position(o, LambdaFunc(s)(f))]];
   rho:=RhoFunc(s)(f);
@@ -1042,7 +1042,7 @@ function(s)
       rho:=rhofunc(EvaluateWord(gens, TraceSchreierTreeForward(o, scc[m][1])));
       for j in scc[m] do 
         if not o[j] in graded then 
-          if not ForAny(GradedLambdaOrb(g, o[j], true), x-> tester(x, rho))
+          if not ForAny(GradedLambdaOrb(g, o[j], true)[1], x-> tester(x, rho))
            then 
             return false;
           fi;

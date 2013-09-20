@@ -725,7 +725,7 @@ function(s)
         
       # rep has rectified lambda val and rho val.
       rep:=LambdaOrbRep(iter!.o, m)*LambdaOrbMult(iter!.o, m, l)[2]; 
-      return [s, m, iter!.o, 1, GradedRhoOrb(s, rep, false), rep, false];
+      return [s, m, iter!.o, 1, GradedRhoOrb(s, rep, false)[1], rep, false];
     end;
 
     record.ShallowCopy:=iter-> rec(m:=fail, 
@@ -739,7 +739,7 @@ function(s)
       local rep;
       # rep has rectified lambda val and rho val.
       rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][1])); 
-      return [s, m, o, 1, GradedRhoOrb(s, rep, false), rep, false];
+      return [s, m, o, 1, GradedRhoOrb(s, rep, false)[1], rep, false];
     end;
     
     return IteratorByIterator(IteratorList([2..Length(scc)]), func);
@@ -765,7 +765,7 @@ function(s)
     # We don't rectify the rho val of <rep> in <o> since we require to
     # enumerate RhoOrb(s) to do this, if we use GradedRhoOrb(s, rep,
     # true) then this get more complicated.
-    return [s, 1, GradedRhoOrb(s, rep, false), rep, true];
+    return [s, 1, GradedRhoOrb(s, rep, false)[1], rep, true];
   end;
 
   if not IsClosed(o) then 
@@ -796,7 +796,7 @@ function(s)
     # We don't rectify the lambda val of <rep> in <o> since we require to
     # enumerate LambdaOrb(s) to do this, if we use GradedLambdaOrb(s, rep,
     # true) then this get more complicated.
-    return [s, 1, GradedLambdaOrb(s, rep, false), rep, true];
+    return [s, 1, GradedLambdaOrb(s, rep, false)[1], rep, true];
   end;
 
   if not IsClosed(o) then 
@@ -917,7 +917,7 @@ function(s)
       # GradedLambdaOrb(s, rep, false), if we use <true> as the last arg, then
       # this is no longer the case, and this is would be more complicated.
       
-      return [s, 1, GradedLambdaOrb(s, rep, false), rep, true]; 
+      return [s, 1, GradedLambdaOrb(s, rep, false)[1], rep, true]; 
     end;
     iter:=IteratorByOrbFunc(o, func, 2);
   else 

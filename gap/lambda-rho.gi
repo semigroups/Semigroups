@@ -8,32 +8,6 @@
 #############################################################################
 ##
 
-#
-
-InstallGlobalFunction(RhoPos, 
-function(o)
-  local i;
-  if not IsBound(o!.rho_l) then 
-    return fail;
-  fi;
-
-  i:=o!.rho_l;
-  Unbind(o!.rho_l);
-  return i;
-end);
-
-InstallGlobalFunction(LambdaPos, 
-function(o)
-  local i;
-  if not IsBound(o!.lambda_l) then 
-    return fail;
-  fi;
-
-  i:=o!.lambda_l;
-  Unbind(o!.lambda_l);
-  return i;
-end);
-
 # returns the element <f> premultiplied by RhoOrbMult so that the resulting 
 # element has its RhoValue in the first position of its scc.
 

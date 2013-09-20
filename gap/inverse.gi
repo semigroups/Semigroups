@@ -602,10 +602,10 @@ function(s, f)
 
   if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
     o:=LambdaOrb(s);
-    i:=Position(o, RhoFunc(s)(f)); #DomPP easier to find :)
+    i:=Position(o, RhoFunc(s)(f));
   else
     o:=GradedLambdaOrb(s, f, true);
-    i:=LambdaPos(o);
+    i:=o[2]; o:=o[1];
   fi;
   
   m:=OrbSCCLookup(o)[i];
@@ -620,7 +620,7 @@ InstallMethod(GreensDClassOfElementNC,
 "for an acting semigp with inverse op and element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
-  return CreateDClassNC(s, 1, GradedLambdaOrb(s, f, false), 
+  return CreateDClassNC(s, 1, GradedLambdaOrb(s, f, false)[1], 
    fail, fail, RightOne(f), true);
 end);
 
@@ -648,7 +648,7 @@ end);
 InstallMethod(GreensHClassOfElementNC, "for an acting semigp and element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
-  return CreateHClass(s, 1, GradedLambdaOrb(s, f, false),
+  return CreateHClass(s, 1, GradedLambdaOrb(s, f, false)[1],
    fail, fail, f, true);
 end);
 
@@ -715,7 +715,7 @@ function(s, f)
   if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then
     o:=LambdaOrb(s);
   else
-    o:=GradedLambdaOrb(s, f, true);
+    o:=GradedLambdaOrb(s, f, true)[1];
   fi;
 
   l:=Position(o, RhoFunc(s)(f));
@@ -736,7 +736,7 @@ function(s, f)
   # lambda value of f has to be in first place of GradedLambdaOrb
   # with false as final arg, use non-NC version since rho value of f should be
   # in first place. 
-  return CreateInverseOpLClass(s, 1, GradedLambdaOrb(s, f, false), f, true);
+  return CreateInverseOpLClass(s, 1, GradedLambdaOrb(s, f, false)[1], f, true);
 end);
 
 #

@@ -535,7 +535,7 @@ function(l)
     lambda_l:=Position(lambda_o, LambdaFunc(s)(f));
   else
     lambda_o:=GradedLambdaOrb(s, f, nc<>true);
-    lambda_l:=LambdaPos(lambda_o);
+    lambda_l:=lambda_o[2]; lambda_o:=lambda_o[1];
   fi;
   lambda_m:=OrbSCCLookup(lambda_o)[lambda_l];
 
@@ -573,7 +573,7 @@ function(r)
     rho_l:=Position(rho_o, RhoFunc(s)(f));
   else
     rho_o:=GradedRhoOrb(s, f, nc<>true);
-    rho_l:=RhoPos(rho_o);
+    rho_l:=rho_o[2]; rho_o:=rho_o[1];
   fi;
   rho_m:=OrbSCCLookup(rho_o)[rho_l];
 
@@ -725,7 +725,7 @@ function(s, f)
   if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
     o:=LambdaOrb(s);
   else
-    o:=GradedLambdaOrb(s, f, true);
+    o:=GradedLambdaOrb(s, f, true)[1];
   fi;
 
   return CreateRClass(s, fail, o, f, false); 

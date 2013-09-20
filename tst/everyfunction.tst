@@ -4066,7 +4066,7 @@ gap> f:=Transformation( [ 4, 4, 1, 2, 1, 2 ] );;
 gap> h:=HClassNC(s, f);
 {Transformation( [ 4, 4, 1, 2, 1, 2 ] )}
 gap> IsRegularClass(h);
-true
+false
 gap> IsGroupHClass(h);
 false
 gap> h:=GroupHClass(DClass(h));
