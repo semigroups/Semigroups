@@ -273,9 +273,9 @@ function(o, m)
   g:=Group(()); is_sym:=false;
 
   for k in scc do
+    vor:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, k));
     for l in [1..nrgens] do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
-        vor:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, k));
         f:=lambdaperm(rep, 
          rep*vor*gens[l]*LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
         #f:=lambdaperm(rep, rep*LambdaOrbMult(o, m, k)[1]*gens[l]

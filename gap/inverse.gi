@@ -185,8 +185,8 @@ function(f, d)
   s:=Parent(d);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
-    or ActionRank(f) <> ActionRank(rep) 
-    or ActionDegree(f)<>ActionDegree(rep) then
+    or ActionRank(s)(f) <> ActionRank(s)(rep) 
+    or ActionDegree(f)<>ActionDegree(rep) then#JDM this is not correct!!
     return false;
   fi;
 
@@ -240,7 +240,7 @@ function(f, l)
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
     or ActionDegree(f) <> ActionDegree(rep)  
-    or ActionRank(f) <> ActionRank(rep) 
+    or ActionRank(s)(f) <> ActionRank(s)(rep) 
     or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
     Info(InfoSemigroups, 1, "degree, rank, or lambda value not equal to",
      " those of  any of the L-class elements,");
@@ -294,7 +294,7 @@ function(f, r)
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
    ActionDegree(f) <> ActionDegree(rep) or 
-   ActionRank(f) <> ActionRank(rep) or 
+   ActionRank(s)(f) <> ActionRank(s)(rep) or 
    RhoFunc(s)(f) <> RhoFunc(s)(rep) then
     Info(InfoSemigroups, 1, 
     "degree, rank, or lambda value not equal to those of",
@@ -886,7 +886,7 @@ function(s, n)
   fi;
 
   if HasIdempotents(s) then 
-    return Filtered(Idempotents(s), x-> ActionRank(x)=n);
+    return Filtered(Idempotents(s), x-> ActionRank(s)(x)=n);
   fi;
 
   o:=LambdaOrb(s);

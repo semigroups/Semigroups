@@ -147,7 +147,7 @@ function(l)
   if IsTrivial(g) then 
     return false;
   elif IsNaturalSymmetricGroup(g) and
-   NrMovedPoints(g)=ActionRank(Representative(l)) then 
+   NrMovedPoints(g)=ActionRank(Parent(l))(Representative(l)) then 
     return true; 
   fi;
   return StabChainImmutable(g);
@@ -1301,7 +1301,7 @@ function(x, value, scc, o, onright)
   s:=Parent(x);
 
   if IsActingSemigroupWithFixedDegreeMultiplication(s) and 
-   ActionRank(Representative(x))=ActionDegree(Representative(x)) then
+   ActionRank(s)(Representative(x))=ActionDegree(Representative(x)) then
     return [One(s)];
   fi;
 
@@ -1395,7 +1395,7 @@ function(s, n)
   fi;
 
   if HasIdempotents(s) or not IsRegularSemigroup(s) then
-    return Filtered(Idempotents(s), x-> ActionRank(x)=n);
+    return Filtered(Idempotents(s), x-> ActionRank(s)(x)=n);
   else
 
     out:=[];
@@ -1525,7 +1525,7 @@ function(x, value, scc, o, onright)
   
   # is x the group of units...
   if IsActingSemigroupWithFixedDegreeMultiplication(s) and 
-    ActionRank(Representative(x))=ActionDegree(Representative(x)) then
+    ActionRank(s)(Representative(x))=ActionDegree(Representative(x)) then
     return true;
   fi;   
  
@@ -1711,7 +1711,7 @@ function(x, value, scc, o, onright)
 
   # is r the group of units...
   if IsActingSemigroupWithFixedDegreeMultiplication(s) and
-   ActionRank(Representative(x))=ActionDegree(Representative(x)) then
+   ActionRank(s)(Representative(x))=ActionDegree(Representative(x)) then
     return 1;
   fi;
 

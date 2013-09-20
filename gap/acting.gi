@@ -65,12 +65,12 @@ function(f, s)
     and ActionDegree(f)<>ActionDegree(s) then 
     return false;
   fi;
-
   
   # add degree here, since that applies to both partial perms and
   # transformations JDM
-  if not (IsMonoid(s) and IsOne(f)) and 
-   ActionRank(f) > MaximumList(List(Generators(s), ActionRank)) then
+  if not (IsMonoid(s) and IsOne(f)) 
+    and ActionRank(s)(f) 
+     > MaximumList(List(Generators(s), f-> ActionRank(s)(f))) then
     Info(InfoSemigroups, 2, "element has larger rank than any element of ",
      "semigroup.");
     return false;
@@ -79,7 +79,7 @@ function(f, s)
   # add degree here, since that applies to both partial perms and
   # transformations JDM
   if HasMinimalIdeal(s) and 
-   ActionRank(f) < ActionRank(Representative(MinimalIdeal(s))) then
+   ActionRank(s)(f) < ActionRank(s)(Representative(MinimalIdeal(s))) then
     Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
      "semigroup.");
     return false;

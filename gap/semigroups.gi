@@ -165,12 +165,11 @@ function(gens, opts)
   if opts.small and Length(gens)>1 then 
     gens:=SSortedList(gens); #remove duplicates 
     gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
-    Sort(gens, function(x, y) return ActionRank(x)>ActionRank(y); end);;
-
     n:=ActionDegree(gens);
+    Sort(gens, function(x, y) return ActionRank(x, n)>ActionRank(y, n); end);;
 
     #remove the identity
-    if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2])=n then
+    if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2], n)=n then
       Remove(gens, 1);
     fi;
 
@@ -262,10 +261,10 @@ function(gens, record)
   if record.small and Length(gens)>1 then #small gen. set
     gens:=SSortedList(gens); #remove duplicates 
     gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
-    Sort(gens, function(x, y) return ActionRank(x)>ActionRank(y); end);;
-
     n:=ActionDegree(gens);
-    if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2])=n then
+    Sort(gens, function(x, y) return ActionRank(x, n)>ActionRank(y, n); end);;
+
+    if IsOne(gens[1]) and IsBound(gens[2]) and ActionRank(gens[2], n)=n then
       #remove id
       Remove(gens, 1);
     fi;
@@ -340,7 +339,6 @@ end);
 InstallMethod(InverseSemigroupByGenerators, 
 "for an associative element collection",
 [IsAssociativeElementCollection],
-
 function(gens)
   if IsGeneratorsOfActingSemigroup(gens) then 
     return InverseSemigroupByGenerators(gens, SemigroupsOptionsRec);
@@ -355,7 +353,7 @@ InstallMethod(InverseMonoidByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
-  local closure_opts, s, filts, one, pos, f;
+  local n, closure_opts, s, filts, one, pos, f;
   
   if not IsGeneratorsOfActingSemigroup(gens) then 
     TryNextMethod();
@@ -366,7 +364,8 @@ function(gens, record)
   if record.small and Length(gens)>1 then 
     gens:=SSortedList(ShallowCopy(gens));
     gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
-    Sort(gens, function(x, y) return ActionRank(x)>ActionRank(y); end);;
+    n:=ActionDegree(gens);
+    Sort(gens, function(x, y) return ActionRank(x,n)>ActionRank(y,n); end);;
     
     closure_opts:=rec(small:=false, hashlen:=record.hashlen);
     s:=InverseMonoid(gens[1], closure_opts);
@@ -412,7 +411,7 @@ InstallMethod(InverseSemigroupByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
-  local closure_opts, s, filts, f;
+  local n, closure_opts, s, filts, f;
 
   if not IsGeneratorsOfActingSemigroup(gens) then 
     TryNextMethod();
@@ -423,7 +422,8 @@ function(gens, record)
   if record.small and Length(gens)>1 then 
     gens:=SSortedList(ShallowCopy(gens));
     gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
-    Sort(gens, function(x, y) return ActionRank(x)>ActionRank(y); end);;
+    n:=ActionDegree(gens);
+    Sort(gens, function(x, y) return ActionRank(x,n)>ActionRank(y,n); end);;
     
     closure_opts:=rec(small:=false, hashlen:=record.hashlen);
     s:=InverseSemigroup(gens[1], closure_opts);
@@ -675,7 +675,7 @@ function(s, coll, opts)
   # get new and old R-rep orbit data
   new_data:=SemigroupData(t);
   old_data:=SemigroupData(s);
-  max_rank:=MaximumList(List(coll, ActionRank)); 
+  max_rank:=MaximumList(List(coll, x-> ActionRank(s)(x))); 
 
   ht:=new_data!.ht;       
   # so far found R-reps
@@ -762,7 +762,7 @@ function(s, coll, opts)
     x:=old_orb[i][4];
     pos:=old_schreiermult[i];
     m:=lookup[pos];
-    rank:=ActionRank(x);
+    rank:=ActionRank(t)(x);
     
     if rank>max_rank or scc[m][1]=old_scc[old_lookup[pos]][1] then 
       y:=x;

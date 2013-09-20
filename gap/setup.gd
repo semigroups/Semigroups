@@ -15,7 +15,8 @@ DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);
 DeclareAttribute("ActionDegree", IsAssociativeElementCollection);
-DeclareAttribute("ActionRank", IsAssociativeElement);
+DeclareAttribute("ActionRank", IsSemigroup);
+DeclareOperation("ActionRank", [IsAssociativeElement, IsPosInt]);
 DeclareAttribute("MinActionRank", IsSemigroup);
 
 DeclareAttribute("RhoAct", IsSemigroup);

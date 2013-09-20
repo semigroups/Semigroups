@@ -30,7 +30,7 @@ function(d)
   if IsTrivial(g) then 
     return false;
   elif IsNaturalSymmetricGroup(g) and
-     NrMovedPoints(g)=ActionRank(Representative(d)) then 
+     NrMovedPoints(g)=ActionRank(Parent(d))(Representative(d)) then 
     return true;
   fi;
 

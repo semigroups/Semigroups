@@ -522,7 +522,7 @@ InstallMethod(IrredundantGeneratingSubset,
 "for an associative element collection",
 [IsAssociativeElementCollection],
 function(coll)
-  local gens, j, out, i, redund, f;
+  local gens, nrgens, deg, out, redund, i, f;
   
   if not IsGeneratorsOfActingSemigroup(coll) then 
     Error();
@@ -532,9 +532,11 @@ function(coll)
     coll:=ShallowCopy(GeneratorsOfSemigroup(coll));
   fi;
   
-  gens:=Set(ShallowCopy(coll)); j:=Length(gens);
+  gens:=Set(ShallowCopy(coll)); 
+  nrgens:=Length(gens); 
+  deg:=ActionDegree(coll);
   coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));
-  Sort(coll, function(x, y) return ActionRank(x)>ActionRank(y); end);
+  Sort(coll, function(x, y) return ActionRank(x, deg)>ActionRank(y, deg); end);
  
   out:=EmptyPlist(Length(coll));
   redund:=EmptyPlist(Length(coll));
@@ -554,7 +556,7 @@ function(coll)
         AddSet(out, f);
       fi;
     fi;
-  until Length(redund)+Length(out)=j;
+  until Length(redund)+Length(out)=nrgens;
 
   if InfoLevel(InfoSemigroups)>1 then
     Print("\n");

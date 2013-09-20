@@ -387,7 +387,7 @@ function(s)
   gens:=GeneratorsOfSemigroup(s); #not GeneratorsOfMonoid!
 
   if IsActingSemigroupWithFixedDegreeMultiplication(s) and 
-   ForAll(gens, f->ActionRank(f)=ActionDegree(f)) then
+   ForAll(gens, f->ActionRank(s)(f)=ActionDegree(f)) then
     return true;
   fi;
 
@@ -427,8 +427,8 @@ function(s)
   if HasIdempotentGeneratedSubsemigroup(s) then 
     t:=IdempotentGeneratedSubsemigroup(s);
   else
-    min:=MinimumList(List(gens, ActionRank));
-    new:=Filtered(Idempotents(s), x-> ActionRank(x)>=min);
+    min:=MinimumList(List(gens, x-> ActionRank(s)(x)));
+    new:=Filtered(Idempotents(s), x-> ActionRank(s)(x)>=min);
     if new=[] then 
       return false;
     fi;
@@ -738,7 +738,7 @@ function(s)
     fi;
     
     # data corresponds to the group of units...
-    if ActionRank(x[4])=ActionDegree(x[4]) then 
+    if ActionRank(s)(x[4])=ActionDegree(x[4]) then 
       return false;
     fi;
     

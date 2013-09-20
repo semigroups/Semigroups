@@ -68,11 +68,33 @@ InstallMethod(ActionDegree, "for a partial perm",
 
 # the number of points in the range of the action
 
-InstallMethod(ActionRank, "for a transformation",
-[IsTransformation], RankOfTransformation);
+InstallMethod(ActionRank, "for a transformation and positive integer",
+[IsTransformation, IsPosInt], 
+function(f, n)
+  return RankOfTransformation(f, n);
+end);
 
-InstallMethod(ActionRank, "for a partial perm",
-[IsPartialPerm], RankOfPartialPerm);
+InstallMethod(ActionRank, "for a transformation semigroup",
+[IsTransformationSemigroup], 
+function(s)
+  local deg;
+  deg:=DegreeOfTransformationSemigroup(s);
+  return function(f)
+    return RankOfTransformation(f, deg);
+  end;
+end);
+
+InstallMethod(ActionRank, "for a partial perm and positive integer",
+[IsPartialPerm, IsPosInt], 
+function(f, n)
+  return RankOfPartialPerm(f);
+end);
+
+InstallMethod(ActionRank, "for a partial perm semigroup",
+[IsPartialPermSemigroup], 
+function(s)
+  return RankOfPartialPerm;
+end);
 
 # the minimum possible rank of an element
 
