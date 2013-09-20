@@ -972,16 +972,6 @@ end);
 
 # different method for inverse semigroups
 
-InstallMethod(HClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
-function(s)
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensHClass 
-         and IsActingSemigroupGreensClass);
-end);
-
-# different method for inverse semigroups
-
 InstallMethod(LClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)

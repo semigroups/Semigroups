@@ -1058,7 +1058,7 @@ end);
 
 # same method for regular, different method for inverse.
 
-InstallMethod(GroupHClass, "for a D-class of an acting semigroup",
+InstallMethod(GroupHClassOfGreensDClass, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
   local s, rho, o, scc, tester, h, i;
@@ -1090,15 +1090,6 @@ function(d)
   fi;
   return fail;
 end);
-
-# same method for regular/inverse
-
-# this should not apply to semigroups which are not defined and used in
-# Semigroups, since there are no methods for GroupHClass for these semigroups. 
-# JDM
-
-InstallMethod(GroupHClassOfGreensDClass, "for a D-class",
-[IsGreensDClass and IsActingSemigroupGreensClass], GroupHClass);
 
 # different method for regular/inverse
 
@@ -1550,11 +1541,10 @@ InstallMethod(IsRegularClass, "for an D-class of an acting semigroup",
 d-> IsRegularClass@(d, RhoFunc(Parent(d))(Representative(d)),
 LambdaOrbSCC(d), LambdaOrb(d), true));
 
-# no method required for regular/inverse
+# same method for regular/inverse
 
 InstallMethod(IsRegularClass, "for an H-class of an acting semigroup",
-[IsGreensHClass and IsActingSemigroupGreensClass],
-h-> IsRegularClass(RClassOfHClass(h)));
+[IsGreensHClass and IsActingSemigroupGreensClass], IsGroupHClass);
 
 # not required for regular/inverse
 
@@ -2299,7 +2289,7 @@ function(s);
           IsActingSemigroupGreensClass);
 end);
 
-# different method for regular/inverse
+# same method for regular, different method for inverse
 
 InstallMethod(HClassType, "for a transformation semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
