@@ -39,32 +39,27 @@ InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
 InstallImmediateMethod(IsActingSemigroupGreensClass, IsGreensClass, 0, 
 x-> IsActingSemigroup(Parent(x)));
 
-# the number of points in the action
+# the largest point involved in the action
 
-#InstallMethod(ActionDegree, 
-#"for an acting semigroup with fixed degree multiplication",
-#[IsActingSemigroupWithFixedDegreeMultiplication], 
-#s-> ActionDegree(Representative(s)));
+InstallMethod(ActionDegree, "for a transformation",
+[IsTransformation], DegreeOfTransformation);
+
+InstallMethod(ActionDegree, "for a partial perm",
+[IsPartialPerm], x-> Maximum(DegreeOfPartialPerm(x), 
+CodegreeOfPartialPerm(x)));
 
 InstallMethod(ActionDegree, "for a transformation collection",
 [IsTransformationCollection], DegreeOfTransformationCollection);
 
 InstallMethod(ActionDegree, "for a partial perm collection",
-[IsPartialPermCollection], DegreeOfPartialPermCollection);
+[IsPartialPermCollection], x-> Maximum(DegreeOfPartialPermCollection(x), 
+CodegreeOfPartialPermCollection(x)));
 
 InstallMethod(ActionDegree, "for a transformation semigroup",
 [IsTransformationSemigroup], DegreeOfTransformationSemigroup);
 
 InstallMethod(ActionDegree, "for a partial perm semigroup",
 [IsPartialPermSemigroup], DegreeOfPartialPermSemigroup);
-
-#
-
-InstallMethod(ActionDegree, "for a transformation",
-[IsTransformation], DegreeOfTransformation);
-
-InstallMethod(ActionDegree, "for a partial perm",
-[IsPartialPerm], RankOfPartialPerm);
 
 # the number of points in the range of the action
 

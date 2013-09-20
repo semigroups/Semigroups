@@ -343,13 +343,8 @@ end);
 InstallMethod(DClassOfRClass, "for inverse op R-class", 
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
 function(r)
-  local s, o, m, f;
-
-  s:=Parent(r);
-  o:=LambdaOrb(r); 
-  m:=LambdaOrbSCCIndex(r);
-  f:=RectifyLambda(s, o, Representative(r), fail, m).rep;
-  return CreateDClassNC(s, m, o, fail, fail, f, IsGreensClassNC(r));
+  return CreateDClassNC(Parent(r), LambdaOrb(r), LambdaOrbSCCIndex(r), fail,
+   fail, RightOne(Representative(r)), IsGreensClassNC(r));
 end);
 
 #
@@ -363,7 +358,7 @@ function(h)
   o:=LambdaOrb(h); 
   m:=LambdaOrbSCCIndex(h);
   f:=RectifyLambda(s, o, Representative(h), fail, m).rep;
-  return CreateDClassNC(s, m, o, fail, fail, f, IsGreensClassNC(h));
+  return CreateDClassNC(s, m, o, fail, fail, RightOne(f), IsGreensClassNC(h));
 end);
 
 #
