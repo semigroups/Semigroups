@@ -110,7 +110,7 @@ function(f, s)
   local dom, o, lambda, lambda_l, rho, rho_l, lookingfor, m, schutz, scc, g,
   rep, n;
   
-  if not ElementsFamily(FamilyObj(s))=FamilyObj(f) then 
+  if ElementsFamily(FamilyObj(s))<>FamilyObj(f) then 
     Error("the element and semigroup are not of the same type,");
     return;
   fi;
@@ -184,13 +184,10 @@ function(f, d)
   rep:=Representative(d);
   s:=Parent(d);
 
-  if IsActingSemigroupWithFixedDegreeMultiplication(s) and
-   ActionDegree(f)<>ActionDegree(rep) then 
-    return false;
-  fi;
-
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
-    or ActionRank(s)(f) <> ActionRank(s)(rep) then
+    or ActionRank(s)(f) <> ActionRank(s)(rep) 
+    or (IsActingSemigroupWithFixedDegreeMultiplication(s) and
+        ActionDegree(f)<>ActionDegree(rep)) then
     return false;
   fi;
 
@@ -245,11 +242,10 @@ function(f, l)
   s:=Parent(l);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
-    or ActionDegree(f) <> ActionDegree(rep)  
     or ActionRank(s)(f) <> ActionRank(s)(rep) 
+    or (IsActingSemigroupWithFixedDegreeMultiplication(s) and
+        ActionDegree(f)<>ActionDegree(rep)) 
     or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then
-    Info(InfoSemigroups, 1, "degree, rank, or lambda value not equal to",
-     " those of  any of the L-class elements,");
     return false;
   fi;
 
@@ -298,13 +294,11 @@ function(f, r)
   rep:=Representative(r);
   s:=Parent(r);
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) or 
-   ActionDegree(f) <> ActionDegree(rep) or 
-   ActionRank(s)(f) <> ActionRank(s)(rep) or 
-   RhoFunc(s)(f) <> RhoFunc(s)(rep) then
-    Info(InfoSemigroups, 1, 
-    "degree, rank, or lambda value not equal to those of",
-    " any of the L-class elements,");
+  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
+    or ActionRank(s)(f) <> ActionRank(s)(rep) 
+    or (IsActingSemigroupWithFixedDegreeMultiplication(s) and
+        ActionDegree(f)<>ActionDegree(rep)) 
+    or RhoFunc(s)(f) <> RhoFunc(s)(rep) then
     return false;
   fi;
 
