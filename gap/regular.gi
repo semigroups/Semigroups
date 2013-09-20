@@ -53,7 +53,7 @@ function(f, s)
     return false;
   fi;
  
-  if not (IsMonoid(s) and IsOne(f)) then
+  if not IsMonoid(s) and IsOne(f) then
     if ActionRank(s)(f)>MaximumList(List(Generators(s), f-> ActionRank(s)(f)))
      then
       Info(InfoSemigroups, 2, "element has larger rank than any element of ",
