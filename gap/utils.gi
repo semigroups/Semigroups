@@ -249,11 +249,12 @@ return
   "freeinverse.xml", "attributes.xml", "../PackageInfo.g" ], "Single" );
 end);
 
-#
+# if <arg> is some strings, then any example containing any of these strings is
+# omitted from the test...
 
-InstallGlobalFunction(SemigroupsTestManualExamples, 
-function()
-  local ex;
+InstallGlobalFunction(SemigroupsTestManualExamples@, 
+function(arg)
+  local ex, i;
 
   #if not Semigroups_C then 
   #  Print("Semigroups is not compiled and so this will produce many many
@@ -267,9 +268,21 @@ function()
    ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
     then 
     ex:=Filtered(ex, x-> PositionSublist(x[1][1], "MunnSemigroup")=fail);
+    Print("#I  not testing examples containing MunnSemigroup...\n");
   fi;
+  
+  for i in [1..Length(arg)] do 
+    ex:=Filtered(ex, x-> PositionSublist(x[1][1], arg[i])=fail);
+    Print("#I  not testing examples containing ", arg[i], "...\n");
+  od;
   RunExamples(ex);
   SemigroupsStopTest();
+  return;
+end);
+
+InstallGlobalFunction(SemigroupsTestManualExamples, 
+function()
+  SemigroupsTestManualExamples@("Partition", "partition");
   return;
 end);
 
