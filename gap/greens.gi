@@ -252,7 +252,8 @@ function(f, h)
   rep:=Representative(h);
 
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
-    or ActionDegree(f)<>ActionDegree(rep)
+    or (IsActingSemigroupWithFixedDegreeMultiplication(s) and
+        ActionDegree(f)<>ActionDegree(rep))
     or ActionRank(s)(f) <> ActionRank(s)(rep)
     or RhoFunc(s)(f) <> RhoFunc(s)(rep) 
     or LambdaFunc(s)(f) <> LambdaFunc(s)(rep) then 
