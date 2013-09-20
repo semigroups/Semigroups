@@ -131,7 +131,7 @@
 gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
 > Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
 gap> GeneratorsOfSemigroup(M);
-[ IdentityTransformation(), 
+[ IdentityTransformation, 
   Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
 gap> GeneratorsOfMonoid(M);
@@ -235,7 +235,7 @@ t210 2 2 6 7 2 6 9 9 1 1 5 3 8 1 9 9 410 510 6</Log>
 <Example>
 gap> file:=Concatenation(SemigroupsDir(), "/examples/graph7c.semigroups.gz");;
 gap> ReadGenerators(file, 453);
-[ Transformation( [ 1, 2, 2 ] ), IdentityTransformation(), 
+[ Transformation( [ 1, 2, 2 ] ), IdentityTransformation, 
   Transformation( [ 1, 2, 3, 4, 5, 7, 7 ] ), 
   Transformation( [ 1, 3, 2, 4, 7, 6, 7 ] ), 
   Transformation( [ 4, 2, 1, 1, 6, 5 ] ), 

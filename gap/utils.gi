@@ -268,12 +268,14 @@ function(arg)
    ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
     then 
     ex:=Filtered(ex, x-> PositionSublist(x[1][1], "MunnSemigroup")=fail);
-    Print("#I  not testing examples containing MunnSemigroup...\n");
+    Print("# not testing examples containing the string \"MunnSemigroup\"", 
+    " . . .\n");
   fi;
   
   for i in [1..Length(arg)] do 
     ex:=Filtered(ex, x-> PositionSublist(x[1][1], arg[i])=fail);
-    Print("#I  not testing examples containing ", arg[i], "...\n");
+    Print("# not testing examples containing the string \"", arg[i], "\"", 
+    " . . .\n");
   od;
   RunExamples(ex);
   SemigroupsStopTest();
