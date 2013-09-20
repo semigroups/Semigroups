@@ -69,10 +69,7 @@ InstallMethod(ActionDegree, "for a partial perm",
 # the number of points in the range of the action
 
 InstallMethod(ActionRank, "for a transformation and positive integer",
-[IsTransformation, IsPosInt], 
-function(f, n)
-  return RankOfTransformation(f, n);
-end);
+[IsTransformation, IsPosInt], RANK_TRANS_INT);
 
 InstallMethod(ActionRank, "for a transformation semigroup",
 [IsTransformationSemigroup], 
@@ -80,7 +77,7 @@ function(s)
   local deg;
   deg:=DegreeOfTransformationSemigroup(s);
   return function(f)
-    return RankOfTransformation(f, deg);
+    return RANK_TRANS_INT(f, deg);
   end;
 end);
 
