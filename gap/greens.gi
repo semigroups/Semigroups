@@ -788,7 +788,7 @@ function(s, f)
     rho_o:=RhoOrb(s);
     i:=Position(rho_o, RhoFunc(s)(f));
   else
-    rho_o:=GradedRhoOrb(s, f, true)[1];
+    rho_o:=GradedRhoOrb(s, f, true);
     i:=rho_o[2]; rho_o:=rho_o[1];
   fi;
 
