@@ -83,7 +83,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -158,7 +158,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -233,7 +233,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -314,7 +314,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -388,7 +388,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -463,7 +463,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -538,7 +538,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -613,7 +613,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -686,7 +686,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -761,7 +761,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -834,7 +834,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -908,7 +908,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -982,7 +982,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -1055,7 +1055,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -1128,7 +1128,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 true
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -1201,7 +1201,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -1274,7 +1274,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -1347,7 +1347,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 true
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -1420,7 +1420,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -1493,7 +1493,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 true
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -1566,7 +1566,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -1639,7 +1639,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -1712,7 +1712,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -1786,7 +1786,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -1868,7 +1868,7 @@ gap> IsSemilatticeAsSemigroup(s);
 true
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -1957,7 +1957,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -2032,7 +2032,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 true
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -2110,7 +2110,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 true
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -2185,7 +2185,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 true
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -2263,7 +2263,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -2338,7 +2338,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
