@@ -59,7 +59,11 @@ InstallMethod(ActionDegree, "for a transformation semigroup",
 [IsTransformationSemigroup], DegreeOfTransformationSemigroup);
 
 InstallMethod(ActionDegree, "for a partial perm semigroup",
-[IsPartialPermSemigroup], DegreeOfPartialPermSemigroup);
+[IsPartialPermSemigroup], x-> Maximum(DegreeOfPartialPermSemigroup(x), 
+CodegreeOfPartialPermSemigroup(x)));
+
+InstallMethod(ActionDegree, "for a partial perm inverse semigroup",
+[IsPartialPermSemigroup and IsInverseSemigroup], DegreeOfPartialPermSemigroup);
 
 # the number of points in the range of the action
 

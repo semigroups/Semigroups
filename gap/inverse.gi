@@ -104,7 +104,7 @@ end);
 #
 
 InstallMethod(\in, 
-"for inverse acting elt and acting semigroup with inversion",
+"for inverse acting element and acting semigroup with inversion",
 [IsAssociativeElement, IsActingSemigroupWithInverseOp],
 function(f, s)
   local dom, o, lambda, lambda_l, rho, rho_l, lookingfor, m, schutz, scc, g,
@@ -184,9 +184,13 @@ function(f, d)
   rep:=Representative(d);
   s:=Parent(d);
 
+  if IsActingSemigroupWithFixedDegreeMultiplication(s) and
+   ActionDegree(f)<>ActionDegree(rep) then 
+    return false;
+  fi;
+
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
-    or ActionRank(s)(f) <> ActionRank(s)(rep) 
-    or ActionDegree(f)<>ActionDegree(rep) then#JDM this is not correct!!
+    or ActionRank(s)(f) <> ActionRank(s)(rep) then
     return false;
   fi;
 
@@ -194,11 +198,13 @@ function(f, d)
   m:=LambdaOrbSCCIndex(d);
   lookup:=OrbSCCLookup(o);
 
-  rho_l:=Position(o, RhoFunc(s)(f)); 
-  lambda_l:=Position(o, LambdaFunc(s)(f));
+  rho_l:=Position(o, RhoFunc(s)(f));
+  if rho_l=fail or lookup[rho_l]<>m then 
+    return false;
+  fi;
   
-  if rho_l=fail or lambda_l=fail or lookup[rho_l]<>m or lookup[lambda_l]<>m
-   then 
+  lambda_l:=Position(o, LambdaFunc(s)(f));
+  if lambda_l=fail or lookup[lambda_l]<>m then 
     return false;
   fi;
 
@@ -230,7 +236,7 @@ end);
 
 #
 
-InstallMethod(\in, "for acting elt and inverse op L-class of acting semigp.",
+InstallMethod(\in, "for acting element and inverse op L-class of acting semigp.",
 [IsAssociativeElement, IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
 function(f, l)
   local rep, s, m, o, i, schutz, g, p;
@@ -284,7 +290,7 @@ end);
 
 #
 
-InstallMethod(\in, "for acting elt and inverse op R-class of acting semigp.",
+InstallMethod(\in, "for acting element and inverse op R-class of acting semigp.",
 [IsAssociativeElement, IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
 function(f, r)
   local rep, s, m, o, i, schutz, g, p;
@@ -575,7 +581,7 @@ end);
 #
 
 InstallMethod(GreensDClassOfElement, 
-"for acting semi with inv op and elt",
+"for acting semi with inv op and element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
   local o, i, m, rep;
@@ -602,7 +608,7 @@ end);
 #
 
 InstallMethod(GreensDClassOfElementNC, 
-"for an acting semigp with inverse op and elt",
+"for an acting semigp with inverse op and element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
   return CreateDClassNC(s, 1, GradedLambdaOrb(s, f, false), 
@@ -612,7 +618,7 @@ end);
 #
 
 InstallMethod(GreensHClassOfElement, 
-"for an acting semigp with inverse op and elt",
+"for an acting semigp with inverse op and element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
   local o, m;
@@ -630,7 +636,7 @@ end);
 
 #
 
-InstallMethod(GreensHClassOfElementNC, "for an acting semigp and elt",
+InstallMethod(GreensHClassOfElementNC, "for an acting semigp and element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
   return CreateHClass(s, 1, GradedLambdaOrb(s, f, false),
@@ -639,7 +645,7 @@ end);
 
 #
 
-InstallMethod(GreensHClassOfElement, "for inverse op class and elt",
+InstallMethod(GreensHClassOfElement, "for inverse op class and element",
 [IsActingSemigroupGreensClass and IsInverseOpClass, IsAssociativeElement],
 function(x, f)
   local h;
@@ -665,7 +671,7 @@ end);
 
 #
 
-InstallMethod(GreensHClassOfElementNC, "for inverse op class and elt",
+InstallMethod(GreensHClassOfElementNC, "for inverse op class and element",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensLClass, IsAssociativeElement],
 function(x, f)
   local h;
@@ -687,7 +693,7 @@ end);
 #
 
 InstallMethod(GreensLClassOfElement, 
-"for acting semigp with inverse op and elt",
+"for acting semigp with inverse op and element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
   local o, l, m;
@@ -715,7 +721,7 @@ end);
 
 #
 
-InstallMethod(GreensLClassOfElementNC, "for an acting semigp and elt",
+InstallMethod(GreensLClassOfElementNC, "for an acting semigp and element",
 [IsActingSemigroupWithInverseOp, IsAssociativeElement],
 function(s, f)
   # lambda value of f has to be in first place of GradedLambdaOrb
@@ -726,7 +732,7 @@ end);
 
 #
 
-InstallMethod(GreensLClassOfElement, "for inverse op D-class and elt",
+InstallMethod(GreensLClassOfElement, "for inverse op D-class and element",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(d, f)
   local l;
@@ -746,7 +752,7 @@ end);
 
 #
 
-InstallMethod(GreensLClassOfElementNC, "for D-class and acting elt",
+InstallMethod(GreensLClassOfElementNC, "for D-class and acting element",
 [IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass, IsAssociativeElement],
 function(d, f)
   local l;
