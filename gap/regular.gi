@@ -122,7 +122,7 @@ function(f, s)
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
-#JDM revise this if revising \in for element and D-class in greens.gi
+#
 
 InstallMethod(\in, "for acting element and regular D-class of acting semigroup",
 [IsAssociativeElement, IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
@@ -913,7 +913,7 @@ d-> LambdaOrbSchutzGp(LambdaOrb(d), LambdaOrbSCCIndex(d)));
 # same method for inverse
 
 InstallMethod(SchutzenbergerGroup, "for H-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularClass and IsGreensHClass],
+[IsActingSemigroupGreensClass and IsHClassOfRegularSemigroup and IsGreensHClass],
 function(h)
   local o, rep, s, p;
 
@@ -988,6 +988,16 @@ function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensRClass and
          IsActingSemigroupGreensClass);
+end);
+
+#
+
+InstallMethod(HClassType, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s);
+ return NewType( FamilyObj( s ), IsEquivalenceClass and
+  IsEquivalenceClassDefaultRep and IsGreensHClass and IsHClassOfRegularSemigroup and 
+  IsActingSemigroupGreensClass);
 end);
 
 #EOF

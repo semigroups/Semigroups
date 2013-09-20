@@ -3654,7 +3654,7 @@ gap> h:=HClass(s, Transformation( [ 5, 1, 3, 3, 5, 5, 3 ] ));;
 gap> IsGroupHClass(h);
 false
 gap> IsRegularClass(h);
-true
+false
 
 #
 gap> gens:=
@@ -3768,9 +3768,9 @@ gap> SchutzenbergerGroup(h);
 Group([ (3,6)(4,5) ])
 gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
-{Transformation( [ 3, 2, 2, 3, 4, 5, 4 ] )}
+{Transformation( [ 1, 2, 2, 1, 7, 6, 7 ] )}
 gap> IsGroupHClass(h);
-false
+true
 gap> h:=GroupHClass(DClass(h));
 {Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )}
 gap> IsGroupHClass(h);
@@ -3784,9 +3784,9 @@ gap> One(h);
 IdentityTransformation
 gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
-{Transformation( [ 3, 4, 4, 3, 2, 1, 2 ] )}
+{Transformation( [ 4, 3, 2, 1, 2, 2, 3 ] )}
 gap> IsGroupHClass(h);
-false
+true
 gap> h:=GroupHClass(DClass(h));
 {Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )}
 gap> IsGroupHClass(h);
@@ -3829,9 +3829,9 @@ gap> iter:=IteratorOfHClasses(s);
 <iterator of H-classes>
 gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
-{PartialPerm( [ 1, 2, 3 ], [ 1, 5, 3 ] )}
+{PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}
 gap> IsGroupHClass(h);
-false
+true
 gap> h:=GroupHClass(DClass(h));
 {PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}
 gap> iso:=IsomorphismPermGroup(h); inv:=InverseGeneralMapping(iso);

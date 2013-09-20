@@ -98,6 +98,7 @@ DeclareAttribute("StructureDescription", IsGreensHClass and IsGroupHClass);
 
 DeclareProperty("IsRegularClass", IsGreensClass);
 InstallTrueMethod(IsRegularClass, IsRegularDClass);
+DeclareCategory("IsHClassOfRegularSemigroup", IsGreensClass);
 DeclareCategory("IsInverseOpClass", IsGreensClass); 
 InstallTrueMethod(IsRegularClass, IsInverseOpClass and IsGreensDClass);
 InstallTrueMethod(IsRegularClass, IsInverseOpClass and IsGreensRClass);

@@ -591,7 +591,6 @@ function(d)
   fi;
 
   g:=GroupHClass(d);
-
   rep:=Representative(g); 
   g:=Range(IsomorphismPermGroup(g));
 

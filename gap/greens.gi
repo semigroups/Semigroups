@@ -2289,9 +2289,9 @@ function(s);
           IsActingSemigroupGreensClass);
 end);
 
-# same method for regular, different method for inverse
+# different method for regular/inverse
 
-InstallMethod(HClassType, "for a transformation semigroup",
+InstallMethod(HClassType, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s);
  return NewType( FamilyObj( s ), IsEquivalenceClass and

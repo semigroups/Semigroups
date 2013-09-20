@@ -78,7 +78,7 @@ InstallMethod(HClassType, "for acting semigroup with inverse op",
 function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsInverseOpClass and IsGreensHClass
-         and IsActingSemigroupGreensClass);
+         and IsActingSemigroupGreensClass and IsHClassOfRegularSemigroup);
 end);
 
 #
