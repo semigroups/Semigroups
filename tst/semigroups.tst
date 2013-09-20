@@ -131,7 +131,7 @@ gap> for i in [2..100] do
 > s:=ClosureInverseSemigroup(s, gens[i]);
 > od;
 gap> s;
-<inverse partial perm semigroup on 10 pts with 54 generators>
+<inverse partial perm semigroup on 10 pts with 53 generators>
 gap> Size(s);
 89616897
 gap> s:=InverseMonoid(gens);
@@ -145,7 +145,7 @@ gap> for i in [2..100] do
 > s:=ClosureInverseSemigroup(s, gens[i]);
 > od;
 gap> s;
-<inverse partial perm semigroup on 10 pts with 55 generators>
+<inverse partial perm semigroup on 10 pts with 54 generators>
 gap> Size(s);
 89616898
 gap> NrDClasses(s);

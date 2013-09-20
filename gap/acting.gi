@@ -61,8 +61,9 @@ function(f, s)
     return f in AsSSortedList(s); 
   fi;
 
-  if IsActingSemigroupWithFixedDegreeMultiplication(s) 
-    and ActionDegree(f)<>ActionDegree(s) then 
+  if (IsActingSemigroupWithFixedDegreeMultiplication(s) 
+     and ActionDegree(f)<>ActionDegree(s)) 
+    or (ActionDegree(f)>ActionDegree(s)) then 
     return false;
   fi;
   

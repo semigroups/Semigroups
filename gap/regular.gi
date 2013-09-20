@@ -46,9 +46,13 @@ InstallMethod(\in, "for an acting element and regular acting semigroup",
 function(f, s)
   local lambda_o, lambda_l, rho_o, rho_l, m, schutz, g, n, rep;
 
-  if not ElementsFamily(FamilyObj(s))=FamilyObj(f) then 
+  if ElementsFamily(FamilyObj(s))<>FamilyObj(f) then 
     Error("the element and semigroup are not of the same type,");
     return;
+  fi;
+
+  if ActionDegree(f)>ActionDegree(s) then 
+    return false;
   fi;
 
   if HasAsSSortedList(s) then 

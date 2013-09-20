@@ -603,24 +603,10 @@ function(s, coll, record)
     coll:=Generators(coll);
   fi;
 
-
   if IsActingSemigroupWithFixedDegreeMultiplication(s) and
     ActionDegree(s)<>ActionDegree(Representative(coll)) then 
     Error("usage: the degree of the semigroup and collection must be equal,");
     return;
-  #elif IsTransformationCollection(coll) then 
-  #  coll:=ShallowCopy(coll);
-  #  deg:=ActionDegree(s);
-  #  for x in coll do 
-  #    if DegreeOfTransformation(x)>deg then 
-  #      # we have to create an entirely new semigroup :(
-  #      Apply(coll, x-> AsTransformation(x,
-  #       DegreeOfTransformationCollection(coll)));
-  #      return Semigroup(GeneratorsOfSemigroup(s), coll);
-  #    elif DegreeOfTransformation(x)<deg then
-  #      x:=AsTransformation(x, deg);
-  #    fi;
-  #  od;
   fi;
 
   return ClosureSemigroupNC(s, Filtered(coll, x-> not x in s),
@@ -647,7 +633,10 @@ function(s, coll, opts)
   fi;
   
   # if nothing is known about s, then return t
-  if not HasLambdaOrb(s) then 
+  if not HasLambdaOrb(s) 
+    or (IsTransformationSemigroup(s) 
+      and DegreeOfTransformationSemigroup(s)<DegreeOfTransformationSemigroup(t))
+   then #JDM improve this!
     return t;
   fi;
   
