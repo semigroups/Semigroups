@@ -61,7 +61,7 @@
 InstallMethod(IsMaximalSubsemigroup, "for a semigroup and semigroup", 
 [IsSemigroup, IsSemigroup],
 function(S, T)
-  if IsSubsemigroup(S, T) then 
+  if IsSubsemigroup(S, T) and S<>T then 
     return ForAll(S, x-> x in T or Semigroup(GeneratorsOfSemigroup(T), x)=S);
   else
     return false;
@@ -74,7 +74,7 @@ end);
 InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], 
 function(R)
-  local G, out, mat, I, J, P, new, pos, JJ, solo, II, len, graph, names, rectangles, gens, H, i, j, r, x;
+  local G, out, mat, I, J, P, new, pos, JJ, solo, II, len, graph, names, rectangles, gens, j, H, i, r, x;
   
   if not IsReesZeroMatrixSemigroup(R) then 
     TryNextMethod(); 
@@ -114,8 +114,9 @@ function(R)
     Add(out, Semigroup(new));
   fi;
   
-  if Length(I)=1 and Length(J)=1 and IsAbelian(G) and IsSimple(G) then 
-    # the unique case when {0} is a maximal subsemigroup
+  if Length(I)=1 and Length(J)=1 and IsTrivial(G) then 
+    # the unique case when {0} is a maximal subsemigroup, if <G> is non-trivial
+    # then {0, 1_G} is a subsemigroup containing <0> and not equal to <R>. 
     Add(out, Semigroup(MultiplicativeZero(R)));
   fi;
   
@@ -230,7 +231,7 @@ function(R)
   rectangles:=CompleteSubgraphs(graph);
 
   Info(InfoSemigroups, 3, "...found ", Length(rectangles));
-  
+
   gens:=GeneratorsOfGroup(G);
   
   Info(InfoSemigroups, 3, 
@@ -242,15 +243,22 @@ function(R)
     for i in rectangles[r] do 
       if i<=len then # i in I
         for j in J do 
+          for x in gens do #JDM must be able to do better than this!
+            Add(new, RMSElement(R, i, x, j));
+          od;
+          if mat[j][i]<>0 and IsEvenInt(Order(mat[j][i])) then 
+            Add(new, RMSElement(R, i, mat[j][i]^-2, j));
+          fi;
+        od;
+      else # i-len in J
+        j:=i-len;
+        for i in I do 
           for x in gens do 
             Add(new, RMSElement(R, i, x, j));
           od;
-        od;
-      else # i-len in J
-        for j in I do 
-          for x in gens do 
-            Add(new, RMSElement(R, j, x, i-len));
-          od;
+          if mat[j][i]<>0 and IsEvenInt(Order(mat[j][i])) then 
+            Add(new, RMSElement(R, i, mat[j][i]^-2, j));
+          fi;
         od;
       fi;
     od;
