@@ -74,7 +74,7 @@ end);
 InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], 
 function(R)
-  local G, out, mat, I, J, P, new, pos, JJ, solo, II, len, graph, names, rectangles, gens, K, L, issubsemi, H, i, j, r, k, l, x;
+  local G, out, mat, I, J, P, new, pos, JJ, solo, II, len, graph, names, rectangles, gens, H, i, j, r, x;
   
   if not IsReesZeroMatrixSemigroup(R) then 
     TryNextMethod(); 
@@ -238,43 +238,23 @@ function(R)
   for r in [2..Length(rectangles)-1] do 
     Apply(rectangles[r], names);
     #the first and last entries correspond to removing all the rows or columns
-    K:=Difference(I, rectangles[r]);
-    L:=Difference(J, rectangles[r]-len);
-    #a rectangle KxL describes a subsemigroups if and only if (I\K)x(J\L)
-    #consists entirely of zeros
-    issubsemi:=true;
-    for k in K do 
-      for l in L do
-        if mat[l][k]<>0 then # not a subsemigroup
-          issubsemi:=false;
-          break;
-        fi;
-      od;
-      if not issubsemi then 
-        break;
+    new:=[];
+    for i in rectangles[r] do 
+      if i<=len then # i in I
+        for j in J do 
+          for x in gens do 
+            Add(new, RMSElement(R, i, x, j));
+          od;
+        od;
+      else # i-len in J
+        for j in I do 
+          for x in gens do 
+            Add(new, RMSElement(R, j, x, i-len));
+          od;
+        od;
       fi;
     od;
-    if issubsemi then 
-      new:=[];
-      for i in I do
-        if not (i in rectangles[r]) then 
-          for j in J do 
-            for x in gens do 
-              Add(new, RMSElement(R, i, x, j));
-            od;
-          od;
-        else 
-          for j in J do 
-            if not (j+len in rectangles[r]) then 
-              for x in gens do 
-                Add(new, RMSElement(R, i, x, j));
-              od;
-            fi;
-          od;
-        fi;
-      od;
-      Add(out, Semigroup(new));
-    fi;
+    Add(out, Semigroup(new));
   od;
   return out;
 end);
