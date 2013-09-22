@@ -235,7 +235,7 @@ function(R)
   gens:=GeneratorsOfGroup(G);
   
   Info(InfoSemigroups, 3, 
-   "finding rectangles which give rise to subsemigroups...");
+   "finding subsemigroups arising from rectangles...");
   for r in [2..Length(rectangles)-1] do 
     Apply(rectangles[r], names);
     #the first and last entries correspond to removing all the rows or columns
