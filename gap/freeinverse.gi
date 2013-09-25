@@ -153,7 +153,8 @@ function(arg)
   type:=NewType(F, IsFreeInverseSemigroupElement and IsPositionalObjectRep);
 
   if IsEmpty( names ) then
-    Error(); #JDM there should be some meaningful error messages here
+    Error("the number of generators for FreeInverseSemigroups has to be
+           non zero"); 
   elif IsFinite( names ) then
     gens:=EmptyPlist( Length(names) );
     for m in [1 .. Length(names)] do 
@@ -167,7 +168,7 @@ function(arg)
     S:=InverseSemigroup(gens);
     SetIsFreeInverseSemigroup(S, true);
   else
-    Error(); #JDM there should be some meaningful error messages here
+    Error("the number of generators for FreeInverseSemigroups has to be finite"); 
   fi;
 
   FamilyObj(S)!.semigroup := S;
