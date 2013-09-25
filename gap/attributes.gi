@@ -69,14 +69,14 @@ function(S, T)
 end); 
 
 # the following method comes from Remark 1 in Graham, Graham, and Rhodes.
-# and only works for Rees 0-matrix semigroup over groups
+# and only works for Rees matrix semigroup over groups
 
-InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], 
+InstallMethod(MaximalSubsemigroups, "for a Rees matrix subsemigroup",
+[IsReesMatrixSubsemigroup], 
 function(R)
-  local G, out, mat, I, J, P, new, pos, JJ, solo, II, len, graph, names, rectangles, gens, j, H, i, r, x;
+  local G, out, mat, I, J, P, H, j, i;
   
-  if not IsReesZeroMatrixSemigroup(R) then 
+  if not IsReesMatrixSemigroup(R) then 
     TryNextMethod(); 
     return;
   fi;
@@ -84,7 +84,7 @@ function(R)
   G:=UnderlyingSemigroup(R);    
   
   if not IsGroup(G) then 
-    if IsZeroSimpleSemigroup(R) then 
+    if IsSimpleSemigroup(R) then 
       #take an isomorphism to a Rees 0-matrix semigroup, then find its maximal
       #subsemigroups, then pull those back, (should specify some methods for the
       #pulling back part)
@@ -96,176 +96,320 @@ function(R)
     fi;
   fi;
 
-  #JDM in the case when G is not a group, and maybe R is not 0-simple, in
-  #these case the generic method should be used
-
   out:=[];
   mat:=Matrix(R);     I:=Rows(R);         J:=Columns(R);
  
-  # find the set of group elements in the matrix
-  P:=Union(mat);
-  if P[1]=0 then 
-    Remove(P, 1);
-  else  # S\{0} is a maximal subsemigroup 
-        # the unique case when the missing D-class is {0}
-    new:=ShallowCopy(GeneratorsOfSemigroup(R));
-    pos:=Position(new, MultiplicativeZero(R)); 
-    Remove(new, pos); #remove the zero, which has to be present
-    Add(out, Semigroup(new));
-  fi;
-  
-  if Length(I)=1 and Length(J)=1 and IsTrivial(G) then 
-    # the unique case when {0} is a maximal subsemigroup, if <G> is non-trivial
-    # then {0, 1_G} is a subsemigroup containing <0> and not equal to <R>. 
-    Add(out, Semigroup(MultiplicativeZero(R)));
-  fi;
-  
   Info(InfoSemigroups, 3, 
    "Case 1: maximal subsemigroups arising from maximal subgroups...");
-  # Case 1: maximal subsemigroups of the form (IxHxJ)\cup\{0\} where H is a
+  # Case 1: maximal subsemigroups of the form (IxHxJ) where H is a
   # maximal subgroup of G
   
-  P:=Group(P);
+  P:=Group(Union(mat));
   if P<>G then # every subsemigroup of S containing a cross-section of L- and
                # R-classes contains P as a maximal subgroup
     for H in MaximalSubgroups(G) do
       if IsSubgroup(H, P) then 
-        Add(out, ReesZeroMatrixSubsemigroupNC(R, I, H, J));
+        Add(out, ReesMatrixSubsemigroupNC(R, I, H, J));
       fi;
     od;
   fi;
 
   Info(InfoSemigroups, 3, "...found ", Length(out));
 
-  #JDM could test for IsRUnipotent or IsLUnipotent here!
-
   Info(InfoSemigroups, 3, 
    "Case 2: maximal subsemigroups obtained by removing a column...");
 
-  # Case 2: maximal subsemigroup of the form (IxGxJ')\cup\{0\} where J'=J\{j}
-  # for some j in J, and where the resultant matrix has no zero columns or rows.
-
-  # in the Graham-Houghton IxJ bipartite graph, we can remove any vertex <j> in
-  # <J> which is not adjacent to a vertex <i> which is only adjacent to <j>.
-  # So, we run through the vertices <i> of <I> and find the ones of degree 1,
-  # and we discard the vertices <j> adjacent to such <i>. 
-  
-  JJ:=ShallowCopy(J);
-
-  for i in I do  
-    solo:=false; # keep track of whether <i> has degree 1
-    for j in J do
-      if mat[j][i]<>0 then
-        if solo<>false then    # <i> has degree greater than 1
-          solo:=false;         
-          break;               # so skip it
-        else
-          solo:=j;             # <i> is adjacent to <j> and we don't know if
-                               # it is adjacent to any other vertex
-        fi;
-      fi;
+  # Case 2: maximal subsemigroup of the form (IxGxJ') where J'=J\{j} for some j
+  # in J.
+  if Length(J)>1 then 
+    for j in J do 
+      Add(out, ReesMatrixSubsemigroupNC(R, I, G, Difference(J, [j])));
     od;
-    if solo<>false then        # <i> is adjacent to <solo> and nothing else
-      RemoveSet(JJ, solo);     # so remove it. 
-    fi;
-  od;
+  fi;
   
-  for j in JJ do 
-    Add(out, ReesZeroMatrixSubsemigroupNC(R, I, G, Difference(J, [j])));
-  od;
-  Info(InfoSemigroups, 3, "...found ", Length(JJ));
-
   Info(InfoSemigroups, 3, 
    "Case 3: maximal subsemigroups obtained by removing a row...");
 
   # Case 3: the dual of case 2.
   
-  II:=ShallowCopy(I);
-
-  for j in J do  
-    solo:=false; # keep track of whether <i> has degree 1
-    for i in I do
-      if mat[j][i]<>0 then
-        if solo<>false then    # <i> has degree greater than 1
-          solo:=false;         
-          break;               # so skip it
-        else
-          solo:=i;             # <i> is adjacent to <j> and we don't know if
-                               # it is adjacent to any other vertex
-        fi;
-      fi;
+  if Length(I)>1 then 
+    for i in I do 
+      Add(out, ReesMatrixSubsemigroupNC(R, Difference(I, [i]), G, J));
     od;
-    if solo<>false then        # <i> is adjacent to <solo> and nothing else
-      RemoveSet(II, solo);     # so remove it. 
-    fi;
-  od;
-  
-  for i in II do 
-    Add(out, ReesZeroMatrixSubsemigroupNC(R, Difference(I, [i]), G, J));
-  od;
+  fi;
 
-  Info(InfoSemigroups, 3, "...found ", Length(II));
-
-  Info(InfoSemigroups, 3, 
-   "Case 4: maximal subsemigroups obtained by removing a rectangle...");
-
-  # Case 4: maximal rectangle of zeros in the matrix
-
-  Info(InfoSemigroups, 3, "finding rectangles...");
-
-  len:=Length(mat[1]); # use <mat> to keep the indices correct
-
-  graph:=Graph(Group(()), Union(I, J+len), OnPoints,
-   function(i,j)
-     if i<=len and j>len then
-       return mat[j-len][i]=0;
-     elif j<=len and i>len then
-       return mat[i-len][j]=0;
-     else
-       return i<>j;
-     fi;
-   end, true);
-
-  names:=x-> graph.names[x];
-
-  rectangles:=CompleteSubgraphs(graph);
-
-  Info(InfoSemigroups, 3, "...found ", Length(rectangles));
-
-  gens:=GeneratorsOfGroup(G);
-  
-  Info(InfoSemigroups, 3, 
-   "finding subsemigroups arising from rectangles...");
-  for r in [2..Length(rectangles)-1] do 
-    Apply(rectangles[r], names);
-    #the first and last entries correspond to removing all the rows or columns
-    new:=[];
-    for i in rectangles[r] do 
-      if i<=len then # i in I
-        for j in J do 
-          for x in gens do #JDM must be able to do better than this!
-            Add(new, RMSElement(R, i, x, j));
-          od;
-          if mat[j][i]<>0 and IsEvenInt(Order(mat[j][i])) then 
-            Add(new, RMSElement(R, i, mat[j][i]^-2, j));
-          fi;
-        od;
-      else # i-len in J
-        j:=i-len;
-        for i in I do 
-          for x in gens do 
-            Add(new, RMSElement(R, i, x, j));
-          od;
-          if mat[j][i]<>0 and IsEvenInt(Order(mat[j][i])) then 
-            Add(new, RMSElement(R, i, mat[j][i]^-2, j));
-          fi;
-        od;
-      fi;
-    od;
-    Add(out, Semigroup(new));
-  od;
   return out;
 end);
+
+# the following method comes from Remark 1 in Graham, Graham, and Rhodes.
+# and only works for Rees 0-matrix semigroup over groups
+
+if not IsBound(GAPInfo.PackagesLoaded.grape) then 
+  InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
+  [IsReesZeroMatrixSubsemigroup], 
+  function(R)
+    Info(InfoWarning, 1, "the GRAPE is not loaded, and so this function does",
+         " not work");
+    return fail;
+  end); 
+else
+  InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
+  [IsReesZeroMatrixSubsemigroup], 
+  function(R)
+    local G, out, mat, I, J, P, new, pos, JJ, solo, II, len, graph, names,
+    rectangles, gens, j, H, i, r, x;
+    
+    if not IsReesZeroMatrixSemigroup(R) then 
+      TryNextMethod(); 
+      return;
+    fi;
+   
+    G:=UnderlyingSemigroup(R);    
+    
+    if not IsGroup(G) then 
+      if IsZeroSimpleSemigroup(R) then 
+        #take an isomorphism to a Rees 0-matrix semigroup, then find its maximal
+        #subsemigroups, then pull those back, (should specify some methods for
+        #the pulling back part)
+        Error("not yet implemented,");
+        return;
+      else
+        TryNextMethod();
+        return;
+      fi;
+    fi;
+
+    #JDM in the case when G is not a group, and maybe R is not 0-simple, in
+    #these case the generic method should be used
+
+    out:=[];
+    mat:=Matrix(R);     I:=Rows(R);         J:=Columns(R);
+   
+    # find the set of group elements in the matrix
+    P:=Union(mat);
+    if P[1]=0 then 
+      Remove(P, 1);
+    else  # S\{0} is a maximal subsemigroup 
+          # the unique case when the missing D-class is {0}
+      new:=ShallowCopy(GeneratorsOfSemigroup(R));
+      pos:=Position(new, MultiplicativeZero(R)); 
+      Remove(new, pos); #remove the zero, which has to be present
+      Add(out, Semigroup(new));
+    fi;
+    
+    if Length(I)=1 and Length(J)=1 and IsTrivial(G) then 
+      # the unique case when {0} is a maximal subsemigroup, if <G> is
+      # non-trivial then {0, 1_G} is a subsemigroup containing <0> and not
+      # equal to <R>. 
+      Add(out, Semigroup(MultiplicativeZero(R)));
+    fi;
+    
+    Info(InfoSemigroups, 3, 
+     "Case 1: maximal subsemigroups arising from maximal subgroups...");
+    # Case 1: maximal subsemigroups of the form (IxHxJ)\cup\{0\} where H is a
+    # maximal subgroup of G
+    
+    P:=Group(P);
+    if P<>G then # every subsemigroup of S containing a cross-section of L- and
+                 # R-classes contains P as a maximal subgroup
+      for H in MaximalSubgroups(G) do
+        if IsSubgroup(H, P) then 
+          Add(out, ReesZeroMatrixSubsemigroupNC(R, I, H, J));
+        fi;
+      od;
+    fi;
+
+    Info(InfoSemigroups, 3, "...found ", Length(out));
+
+    #JDM could test for IsRUnipotent or IsLUnipotent here!
+
+    Info(InfoSemigroups, 3, 
+     "Case 2: maximal subsemigroups obtained by removing a column...");
+
+    # Case 2: maximal subsemigroup of the form (IxGxJ')\cup\{0\} where J'=J\{j}
+    # for some j in J, and where the resultant matrix has no zero columns or
+    # rows.
+
+    # in the Graham-Houghton IxJ bipartite graph, we can remove any vertex <j>
+    # in <J> which is not adjacent to a vertex <i> which is only adjacent to
+    # <j>.  So, we run through the vertices <i> of <I> and find the ones of
+    # degree 1, and we discard the vertices <j> adjacent to such <i>. 
+    
+    JJ:=ShallowCopy(J);
+
+    for i in I do  
+      solo:=false; # keep track of whether <i> has degree 1
+      for j in J do
+        if mat[j][i]<>0 then
+          if solo<>false then    # <i> has degree greater than 1
+            solo:=false;         
+            break;               # so skip it
+          else
+            solo:=j;             # <i> is adjacent to <j> and we don't know if
+                                 # it is adjacent to any other vertex
+          fi;
+        fi;
+      od;
+      if solo<>false then        # <i> is adjacent to <solo> and nothing else
+        RemoveSet(JJ, solo);     # so remove it. 
+      fi;
+    od;
+    
+    for j in JJ do 
+      Add(out, ReesZeroMatrixSubsemigroupNC(R, I, G, Difference(J, [j])));
+    od;
+    Info(InfoSemigroups, 3, "...found ", Length(JJ));
+
+    Info(InfoSemigroups, 3, 
+     "Case 3: maximal subsemigroups obtained by removing a row...");
+
+    # Case 3: the dual of case 2.
+    
+    II:=ShallowCopy(I);
+
+    for j in J do  
+      solo:=false; # keep track of whether <i> has degree 1
+      for i in I do
+        if mat[j][i]<>0 then
+          if solo<>false then    # <i> has degree greater than 1
+            solo:=false;         
+            break;               # so skip it
+          else
+            solo:=i;             # <i> is adjacent to <j> and we don't know if
+                                 # it is adjacent to any other vertex
+          fi;
+        fi;
+      od;
+      if solo<>false then        # <i> is adjacent to <solo> and nothing else
+        RemoveSet(II, solo);     # so remove it. 
+      fi;
+    od;
+    
+    for i in II do 
+      Add(out, ReesZeroMatrixSubsemigroupNC(R, Difference(I, [i]), G, J));
+    od;
+
+    Info(InfoSemigroups, 3, "...found ", Length(II));
+
+    Info(InfoSemigroups, 3, 
+     "Case 4: maximal subsemigroups obtained by removing a rectangle...");
+
+    # Case 4: maximal rectangle of zeros in the matrix
+
+    Info(InfoSemigroups, 3, "finding rectangles...");
+
+    len:=Length(mat[1]); # use <mat> to keep the indices correct
+
+    graph:=Graph(Group(()), Union(I, J+len), OnPoints,
+     function(i,j)
+       if i<=len and j>len then
+         return mat[j-len][i]=0;
+       elif j<=len and i>len then
+         return mat[i-len][j]=0;
+       else
+         return i<>j;
+       fi;
+     end, true);
+
+    names:=x-> graph.names[x];
+
+    rectangles:=CompleteSubgraphs(graph);
+
+    Info(InfoSemigroups, 3, "...found ", Length(rectangles));
+
+    gens:=GeneratorsOfGroup(G);
+    
+    Info(InfoSemigroups, 3, 
+     "finding subsemigroups arising from rectangles...");
+    for r in [2..Length(rectangles)-1] do 
+      Apply(rectangles[r], names);
+      #the first and last entries correspond to removing all the rows or columns
+      new:=[];
+      for i in rectangles[r] do 
+        if i<=len then # i in I
+          for j in J do 
+            for x in gens do #JDM must be able to do better than this!
+              Add(new, RMSElement(R, i, x, j));
+            od;
+            if mat[j][i]<>0 and IsEvenInt(Order(mat[j][i])) then 
+              Add(new, RMSElement(R, i, mat[j][i]^-2, j));
+            fi;
+          od;
+        else # i-len in J
+          j:=i-len;
+          for i in I do 
+            for x in gens do 
+              Add(new, RMSElement(R, i, x, j));
+            od;
+            if mat[j][i]<>0 and IsEvenInt(Order(mat[j][i])) then 
+              Add(new, RMSElement(R, i, mat[j][i]^-2, j));
+            fi;
+          od;
+        fi;
+      od;
+      Add(out, Semigroup(new));
+    od;
+    return out;
+  end);
+fi;
+
+#
+
+InstallMethod(MaximalSubsemigroups, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(S)
+  local out, gens, po, classes, D, lookup, max, gens2, pos, inj, R, V, i, U;
+  
+  # preprocessing...
+  out:=[];
+  gens:=IrredundantGeneratingSubset(S);
+  po:=ShallowCopy(PartialOrderOfDClasses(S));
+  classes:=GreensDClasses(S);
+  D:=List(gens, x-> PositionProperty(classes, d-> x in d));
+  lookup:=[]; max:=[];
+
+  for i in [1..Length(gens)] do 
+    if not ForAny([1..Length(po)], j-> j<>D[i] and D[i] in po[j]) then 
+      Add(max, D[i]);
+    fi;
+    if not IsBound(lookup[D[i]]) then 
+      lookup[D[i]]:=[];
+    fi;
+    Add(lookup[D[i]], i);
+  od;
+  
+  # Type 1: maximal subsemigroups arising from maximal subsemigroup of
+  # principal factors of maximal D-classes...
+  for i in max do 
+    if Size(classes[i])=1 then #remove the whole thing...
+      gens2:=ShallowCopy(gens);
+      Remove(gens2, lookup[i][1]);
+      pos:=Position(po[i], i);
+      if pos<>fail then 
+        Remove(po[i], pos);
+      fi;
+      Append(gens2, List(classes{po[i]}, Representative));
+      Add(out, SemigroupIdealByGenerators(S, gens2));
+    else 
+      inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
+      R:=Source(inj);
+      for U in MaximalSubsemigroups(R) do 
+        gens2:=ShallowCopy(gens){Difference([1..Length(gens)], lookup[i])};
+        pos:=Position(po[i], i);
+        if pos<>fail then 
+          Remove(po[i], pos);
+        fi;
+        Append(gens2, List(classes{po[i]}, Representative));
+        V:=SemigroupIdealByGenerators(S, gens2);
+        Add(out, Semigroup(GeneratorsOfSemigroup(V), 
+          OnTuples(GeneratorsOfSemigroup(U), inj), rec(small:=true)));
+      od;
+    fi;
+  od;
+
+  return out;
+end);
+
 
 # Note that a semigroup satisfies IsTransformationMonoid only if One(s)<>fail. 
 
