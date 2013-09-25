@@ -11,8 +11,8 @@
 DeclareOperation("DualSymmetricInverseSemigroup", [IsPosInt]);
 DeclareOperation("FullMatrixSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
-DeclareProperty("IsFullMatrixSemigroup", IsSemigroup);
-DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
+# DeclareProperty("IsFullMatrixSemigroup", IsSemigroup);
+# DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
 DeclareOperation("MunnSemigroup", [IsSemigroup]);
 DeclareOperation("OrderEndomorphisms", [IsPosInt]);
 DeclareOperation("PartialTransformationSemigroup", [IsPosInt]);
