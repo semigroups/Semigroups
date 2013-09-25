@@ -32,3 +32,16 @@ ReadPackage("semigroups/gap/freeinverse.gi");
 ReadPackage("semigroups/gap/orbits.gi");
 ReadPackage("semigroups/gap/utils.gi");
 
+if TestPackageAvailability("grape")=fail then 
+  Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
+  if ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
+   then 
+    Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
+  fi;
+fi;
+
+if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")
+ then 
+  Add(SemigroupsOmitFromTestManualExamples, "partition");
+  Add(SemigroupsOmitFromTestManualExamples, "Partition");
+fi;

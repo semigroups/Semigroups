@@ -7,6 +7,7 @@
 ##
 #############################################################################
 ##
+## this file contains utilies for use with the Semigroups package. 
 
 # <path> to the folder containing the timings, <vers> the version number to
 # check against.
@@ -78,11 +79,7 @@ function(path, vers)
   return true;
 end);
 
-# this file contains utilies for use with the Semigroups package. 
-
-BindGlobal("SemigroupsTestRec",
-  rec());
-
+BindGlobal("SemigroupsTestRec", rec());
 MakeReadWriteGlobal("SemigroupsTestRec");
 
 InstallGlobalFunction(SemigroupsStartTest, 
@@ -252,42 +249,24 @@ end);
 # if <arg> is some strings, then any example containing any of these strings is
 # omitted from the test...
 
-InstallGlobalFunction(SemigroupsTestManualExamples@, 
-function(arg)
-  local ex, i;
+BindGlobal("SemigroupsOmitFromTestManualExamples", []);
 
-  #if not Semigroups_C then 
-  #  Print("Semigroups is not compiled and so this will produce many many
-  #  errors.");
-  #  return fail;
-  #fi;
-  
+InstallGlobalFunction(SemigroupsTestManualExamples, 
+function()
+  local ex, omit, str;
+
   ex:=SemigroupsManualExamples(); 
-  SemigroupsStartTest();
-  if TestPackageAvailability("grape")=fail or 
-   ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
-    then 
-    ex:=Filtered(ex, x-> PositionSublist(x[1][1], "MunnSemigroup")=fail);
-    Print("# not testing examples containing the string \"MunnSemigroup\"", 
-    " . . .\n");
-  fi;
-  
-  for i in [1..Length(arg)] do 
-    ex:=Filtered(ex, x-> PositionSublist(x[1][1], arg[i])=fail);
-    Print("# not testing examples containing the string \"", arg[i], "\"", 
+  omit:=SemigroupsOmitFromTestManualExamples;
+  for str in omit do 
+    ex:=Filtered(ex, x-> PositionSublist(x[1][1], str)=fail);
+    Print("# not testing examples containing the string \"", str, "\"", 
     " . . .\n");
   od;
+  SemigroupsStartTest();
   RunExamples(ex);
   SemigroupsStopTest();
   return;
 end);
-
-InstallGlobalFunction(SemigroupsTestManualExamples, 
-function()
-  SemigroupsTestManualExamples@("Partition", "partition");
-  return;
-end);
-
 #
 
 InstallGlobalFunction(ReadGenerators, 
