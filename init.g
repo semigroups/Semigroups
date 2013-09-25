@@ -33,5 +33,6 @@ ReadPackage("semigroups/gap/utils.gd");
 ReadPackage("semigroups/gap/options.g");
 
 ReadPackage("semigroups/gap/freeinverse.gd");
+ReadPackage("semigroups/gap/matrix/semimat.gd");
 
 DeclareInfoClass("InfoSemigroups");;

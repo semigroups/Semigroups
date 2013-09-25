@@ -28,6 +28,7 @@ ReadPackage("semigroups/gap/pictures.gi");
 ReadPackage("semigroups/gap/ideals.gi");
 
 ReadPackage("semigroups/gap/freeinverse.gi");
+ReadPackage("semigroups/gap/matrix/semimat.gi");
 
 ReadPackage("semigroups/gap/orbits.gi");
 ReadPackage("semigroups/gap/utils.gi");

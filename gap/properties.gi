@@ -26,15 +26,6 @@
 
 # a better method for MinimalIdeal of a simple semigroup.
 
-InstallMethod(OneMutable, "for ring element coll coll coll",
-[IsRingElementCollCollColl], x-> One(Representative(x)));
-
-InstallMethod(IsGroupAsSemigroup, "for a matrix semigroup",
-[IsMatrixSemigroup],
-s-> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(s))));
-
-#
-
 #InstallMethod(IsAbundantSemigroup, "for a trans. semigroup",
 #[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 #function(s)
