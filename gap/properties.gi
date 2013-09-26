@@ -984,7 +984,7 @@ InstallMethod(IsSynchronizingTransformationCollection,
 function(coll, n)
   local o;
 
-  o:=Orb(coll, [1..n], OnPosIntSetsTrans, rec(
+  o:=Orb(coll, [1..n], OnSets, rec(
     lookingfor:=function(o, x) 
       return Length(x)=1;
     end));
