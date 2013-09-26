@@ -410,17 +410,16 @@ function(S)
   return out;
 end);
 
-
-# Note that a semigroup satisfies IsTransformationMonoid only if One(s)<>fail. 
+#
 
 InstallMethod(MaximalDClasses, "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local gens, po, classes, D, out, ideals, i, x;
+  local gens, po, classes, D, out, i;
 
   gens:=GeneratorsOfSemigroup(s);
   
-  if HasPartialOrderOfDClasses(s) then 
+  #if HasPartialOrderOfDClasses(s) then 
     po:=PartialOrderOfDClasses(s);
     classes:=GreensDClasses(s);
     D:=List(gens, x-> PositionProperty(classes, d-> x in d));
@@ -430,25 +429,25 @@ function(s)
         Add(out, classes[i]);
       fi;
     od;
-  else
-    D:=[GreensDClassOfElementNC(s, gens[1])];
-  
-    for x in gens do 
-      if not ForAny(D, d-> x in d) then 
-        Add(D, GreensDClassOfElementNC(s, x));
-      fi;
-    od;
-    
-    ideals:=List(D, x-> SemigroupIdealByGenerators(s, [Representative(x)]));
-    out:=[];
+  #else
+  #  D:=[GreensDClassOfElementNC(s, gens[1])];
+  #
+  #  for x in gens do 
+  #    if not ForAny(D, d-> x in d) then 
+  #      Add(D, GreensDClassOfElementNC(s, x));
+  #    fi;
+  #  od;
+  #  
+  #  ideals:=List(D, x-> SemigroupIdealByGenerators(s, [Representative(x)]));
+  #  out:=[];
 
-    for i in [1..Length(D)] do 
-      if not ForAny([1..Length(D)], 
-        j-> j<>i and Representative(D[i]) in ideals[j]) then  
-        Add(out, D[i]);
-      fi;
-    od;
-  fi;
+  #  for i in [1..Length(D)] do 
+  #    if not ForAny([1..Length(D)], 
+  #      j-> j<>i and Representative(D[i]) in ideals[j]) then  
+  #      Add(out, D[i]);
+  #    fi;
+  #  od;
+  #fi;
 
   return out;
 end);
