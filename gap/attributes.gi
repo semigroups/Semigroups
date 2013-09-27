@@ -411,7 +411,7 @@ end);
 #
 
 InstallMethod(MaximalDClasses, "for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, partial, data, pos, i, out, classes, x;
 

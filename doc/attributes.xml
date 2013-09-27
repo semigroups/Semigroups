@@ -95,9 +95,9 @@ gap> MinimalDClass(S);
       See also <Ref Attr="PartialOrderOfDClasses"/>,
       <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and
       <Ref Attr="MinimalDClass"/>.
-      <Log>
+      <Example>
 gap> MaximalDClasses(FullTransformationMonoid(5));
-[ {IdentityTransformation()} ]
+[ {IdentityTransformation} ]
 gap> S:=Semigroup( 
 > PartialPerm( [ 1, 2, 3, 4, 5, 6, 7 ], [ 3, 8, 1, 4, 5, 6, 7 ] ), 
 > PartialPerm( [ 1, 2, 3, 6, 8 ], [ 2, 6, 7, 1, 5 ] ), 
@@ -105,7 +105,7 @@ gap> S:=Semigroup(
 > PartialPerm( [ 1, 2, 4, 5, 6, 7, 8 ], [ 7, 1, 4, 2, 5, 6, 3 ] ) );;
 gap> MaximalDClasses(S);
 [ {PartialPerm( [ 1, 2, 3, 4, 5, 6, 7 ], [ 3, 8, 1, 4, 5, 6, 7 ] )}, 
-  {PartialPerm( [ 1, 2, 4, 5, 6, 7, 8 ], [ 7, 1, 4, 2, 5, 6, 3 ] )} ]</Log>
+  {PartialPerm( [ 1, 2, 4, 5, 6, 7, 8 ], [ 7, 1, 4, 2, 5, 6, 3 ] )} ]</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

@@ -249,19 +249,20 @@ end);
 # if <arg> is some strings, then any example containing any of these strings is
 # omitted from the test...
 
-BindGlobal("SemigroupsOmitFromTestManualExamples", []);
-
 InstallGlobalFunction(SemigroupsTestManualExamples, 
 function()
   local ex, omit, str;
 
   ex:=SemigroupsManualExamples(); 
   omit:=SemigroupsOmitFromTestManualExamples;
-  for str in omit do 
-    ex:=Filtered(ex, x-> PositionSublist(x[1][1], str)=fail);
-    Print("# not testing examples containing the string \"", str, "\"", 
-    " . . .\n");
-  od;
+  if Length(omit)>0 then 
+    Print("# not testing examples containing the strings");
+    for str in omit do 
+      ex:=Filtered(ex, x-> PositionSublist(x[1][1], str)=fail);
+      Print(", \"", str, "\"");
+    od;
+    Print(" . . .\n");
+  fi;
   SemigroupsStartTest();
   RunExamples(ex);
   SemigroupsStopTest();

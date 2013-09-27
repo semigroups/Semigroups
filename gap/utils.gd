@@ -24,3 +24,5 @@ DeclareGlobalFunction("ReadGeneratorsLine");
 DeclareGlobalFunction("WriteGenerators");
 DeclareOperation("ShortStringRep", [IsAssociativeElement]);
 
+BindGlobal("SemigroupsOmitFromTestManualExamples", []);
+
