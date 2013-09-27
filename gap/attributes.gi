@@ -410,51 +410,52 @@ end);
 
 #
 
-#InstallMethod(MaximalDClasses, "for a semigroup with generators",
-#[IsSemigroup and HasGeneratorsOfSemigroup],
-#function(s)
-#  local gens, po, classes, D, out, i;
-#
-#  gens:=GeneratorsOfSemigroup(s);
-#  
-#  #if HasPartialOrderOfDClasses(s) then 
-#    partial:=PartialOrderOfDClasses(s);
-#    classes:=GreensDClasses(s);
-#    pos:=[];
-#    for x in gens do 
-#      index:=OrbSCCLookup(data)[Position(data, x)]-1; 
-#      #index of the D-class containing x
-#      AddSet(pos, index);
-#
-#    D:=List(gens, x-> PositionProperty(classes, d-> x in d));
-#    out:=[];
-#    for i in D do 
-#      if not ForAny([1..Length(po)], j-> j<>i and i in po[j]) then 
-#        Add(out, classes[i]);
-#      fi;
-#    od;
-#  #else
-#  #  D:=[GreensDClassOfElementNC(s, gens[1])];
-#  #
-#  #  for x in gens do 
-#  #    if not ForAny(D, d-> x in d) then 
-#  #      Add(D, GreensDClassOfElementNC(s, x));
-#  #    fi;
-#  #  od;
-#  #  
-#  #  ideals:=List(D, x-> SemigroupIdealByGenerators(s, [Representative(x)]));
-#  #  out:=[];
-#
-#  #  for i in [1..Length(D)] do 
-#  #    if not ForAny([1..Length(D)], 
-#  #      j-> j<>i and Representative(D[i]) in ideals[j]) then  
-#  #      Add(out, D[i]);
-#  #    fi;
-#  #  od;
-#  #fi;
-#
-#  return out;
-#end);
+InstallMethod(MaximalDClasses, "for a semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local gens, partial, data, pos, i, out, classes, x;
+
+  gens:=GeneratorsOfSemigroup(s);
+  
+  #if HasPartialOrderOfDClasses(s) then 
+    partial:=PartialOrderOfDClasses(s);
+    data:=SemigroupData(s);
+    pos:=[];
+    for x in gens do 
+      i:=OrbSCCLookup(data)[Position(data, x)]-1; 
+      #index of the D-class containing x 
+      AddSet(pos, i);
+    od;
+
+    out:=[];
+    classes:=GreensDClasses(s);
+    for i in pos do 
+      if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
+        Add(out, classes[i]);
+      fi;
+    od;
+  #else
+  #  D:=[GreensDClassOfElementNC(s, gens[1])];
+  #
+  #  for x in gens do 
+  #    if not ForAny(D, d-> x in d) then 
+  #      Add(D, GreensDClassOfElementNC(s, x));
+  #    fi;
+  #  od;
+  #  
+  #  ideals:=List(D, x-> SemigroupIdealByGenerators(s, [Representative(x)]));
+  #  out:=[];
+
+  #  for i in [1..Length(D)] do 
+  #    if not ForAny([1..Length(D)], 
+  #      j-> j<>i and Representative(D[i]) in ideals[j]) then  
+  #      Add(out, D[i]);
+  #    fi;
+  #  od;
+  #fi;
+
+  return out;
+end);
 
 #
 
