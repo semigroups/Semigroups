@@ -24,11 +24,9 @@ function(s)
     return GeneratorsOfInverseSemigroup(s);
   elif HasGeneratorsOfMonoid(s) then
     return GeneratorsOfMonoid(s);
-  elif HasGeneratorsOfSemigroup(s) then 
-    return GeneratorsOfSemigroup(s);
   fi;
 
-  return fail;
+  return GeneratorsOfSemigroup(s);
 end);
 
 #
@@ -155,12 +153,6 @@ function(gens, opts)
   opts:=SemigroupOptions(opts);
   gens:=ShallowCopy(gens);
   
-  # all generators must have equal degree!
-  #if Length(gens)>1 and IsTransformationCollection(gens) then
-  #  deg:=DegreeOfTransformationCollection(gens);
-  #  Apply(gens, x-> AsTransformation(x, deg));
-  #fi;
-
   # try to find a smaller generating set
   if opts.small and Length(gens)>1 then 
     gens:=SSortedList(gens); #remove duplicates 
@@ -252,12 +244,6 @@ function(gens, record)
   record:=SemigroupOptions(record);
   gens:=ShallowCopy(gens);
 
-  # all generators must have equal degree!
-  #if IsTransformationCollection(gens) then
-  #  deg:=DegreeOfTransformationCollection(gens);
-  #  Apply(gens, x-> AsTransformation(x, deg));
-  #fi;
-  
   if record.small and Length(gens)>1 then #small gen. set
     gens:=SSortedList(gens); #remove duplicates 
     gens:=Permuted(gens, Random(SymmetricGroup(Length(gens))));;
