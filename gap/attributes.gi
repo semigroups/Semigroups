@@ -156,8 +156,7 @@ else
   InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
   [IsReesZeroMatrixSubsemigroup], 
   function(R)
-    local G, out, mat, I, J, P, new, pos, JJ, solo, II, len, graph, names,
-    rectangles, gens, j, H, i, r, x;
+    local G, out, mat, I, J, P, new, pos, JJ, solo, II, len, graph, names, rectangles, gens, i, j, H, r, k;
     
     if not IsReesZeroMatrixSemigroup(R) then 
       TryNextMethod(); 
@@ -322,28 +321,27 @@ else
     Info(InfoSemigroups, 3, 
      "finding subsemigroups arising from rectangles...");
     for r in [2..Length(rectangles)-1] do 
+    #the first and last entries correspond to removing all the rows or columns
       Apply(rectangles[r], names);
-      #the first and last entries correspond to removing all the rows or columns
-      new:=[];
-      for i in rectangles[r] do 
-        if i<=len then # i in I
+      
+      # add group generators
+      i:=rectangles[r][1];  
+      j:=First(Columns(R), j-> mat[j][i]<>0 and not j+len in rectangles[r]); 
+      new:=List(gens, x-> Objectify(TypeReesMatrixSemigroupElements(R), 
+        [i, x*mat[j][i]^-1, j]));
+      j:=First(rectangles[r], j-> j>len)-len;
+      i:=First(Rows(R), i-> mat[j][i]<>0 and not i in rectangles[r]);
+      Append(new, List(gens, x-> 
+       Objectify(TypeReesMatrixSemigroupElements(R), [i, x*mat[j][i]^-1, j])));
+
+      for k in rectangles[r] do  
+        if k<=len then # k in I
           for j in J do 
-            for x in gens do #JDM must be able to do better than this!
-              Add(new, RMSElement(R, i, x, j));
-            od;
-            if mat[j][i]<>0 and IsEvenInt(Order(mat[j][i])) then 
-              Add(new, RMSElement(R, i, mat[j][i]^-2, j));
-            fi;
+            Add(new, RMSElement(R, k, One(G), j));
           od;
-        else # i-len in J
-          j:=i-len;
+        else # k-len in J
           for i in I do 
-            for x in gens do 
-              Add(new, RMSElement(R, i, x, j));
-            od;
-            if mat[j][i]<>0 and IsEvenInt(Order(mat[j][i])) then 
-              Add(new, RMSElement(R, i, mat[j][i]^-2, j));
-            fi;
+            Add(new, RMSElement(R, i, One(G), k-len));
           od;
         fi;
       od;
@@ -412,45 +410,51 @@ end);
 
 #
 
-InstallMethod(MaximalDClasses, "for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local gens, po, classes, D, out, i;
-
-  gens:=GeneratorsOfSemigroup(s);
-  
-  #if HasPartialOrderOfDClasses(s) then 
-    po:=PartialOrderOfDClasses(s);
-    classes:=GreensDClasses(s);
-    D:=List(gens, x-> PositionProperty(classes, d-> x in d));
-    out:=[];
-    for i in D do 
-      if not ForAny([1..Length(po)], j-> j<>i and i in po[j]) then 
-        Add(out, classes[i]);
-      fi;
-    od;
-  #else
-  #  D:=[GreensDClassOfElementNC(s, gens[1])];
-  #
-  #  for x in gens do 
-  #    if not ForAny(D, d-> x in d) then 
-  #      Add(D, GreensDClassOfElementNC(s, x));
-  #    fi;
-  #  od;
-  #  
-  #  ideals:=List(D, x-> SemigroupIdealByGenerators(s, [Representative(x)]));
-  #  out:=[];
-
-  #  for i in [1..Length(D)] do 
-  #    if not ForAny([1..Length(D)], 
-  #      j-> j<>i and Representative(D[i]) in ideals[j]) then  
-  #      Add(out, D[i]);
-  #    fi;
-  #  od;
-  #fi;
-
-  return out;
-end);
+#InstallMethod(MaximalDClasses, "for a semigroup with generators",
+#[IsSemigroup and HasGeneratorsOfSemigroup],
+#function(s)
+#  local gens, po, classes, D, out, i;
+#
+#  gens:=GeneratorsOfSemigroup(s);
+#  
+#  #if HasPartialOrderOfDClasses(s) then 
+#    partial:=PartialOrderOfDClasses(s);
+#    classes:=GreensDClasses(s);
+#    pos:=[];
+#    for x in gens do 
+#      index:=OrbSCCLookup(data)[Position(data, x)]-1; 
+#      #index of the D-class containing x
+#      AddSet(pos, index);
+#
+#    D:=List(gens, x-> PositionProperty(classes, d-> x in d));
+#    out:=[];
+#    for i in D do 
+#      if not ForAny([1..Length(po)], j-> j<>i and i in po[j]) then 
+#        Add(out, classes[i]);
+#      fi;
+#    od;
+#  #else
+#  #  D:=[GreensDClassOfElementNC(s, gens[1])];
+#  #
+#  #  for x in gens do 
+#  #    if not ForAny(D, d-> x in d) then 
+#  #      Add(D, GreensDClassOfElementNC(s, x));
+#  #    fi;
+#  #  od;
+#  #  
+#  #  ideals:=List(D, x-> SemigroupIdealByGenerators(s, [Representative(x)]));
+#  #  out:=[];
+#
+#  #  for i in [1..Length(D)] do 
+#  #    if not ForAny([1..Length(D)], 
+#  #      j-> j<>i and Representative(D[i]) in ideals[j]) then  
+#  #      Add(out, D[i]);
+#  #    fi;
+#  #  od;
+#  #fi;
+#
+#  return out;
+#end);
 
 #
 
