@@ -11,6 +11,29 @@
 #############################################################################
 ##
 
+InstallMethod(IsGreensDLeq, "for an acting semigroup",
+[IsActingSemigroupWithInverseOp], 
+function(S)
+  local partial, o, comp_index;
+  
+  partial:=PartialOrderOfDClasses(S);
+  o:=LambdaOrb(S);
+
+  comp_index:=function(x, y)
+    if y in partial[x] then
+      return true;
+    elif Length(partial[x])=1 and partial[partial[x][1]]=partial[x] then
+      return false;
+    fi;
+    return ForAny(partial[x], z-> z<>x and comp_index(z,y));
+  end;
+
+  return function(x,y)
+    return comp_index(OrbSCCLookup(o)[Position(o, LambdaFunc(S)(x))]-1,
+      OrbSCCLookup(o)[Position(o, LambdaFunc(S)(y))]-1);
+  end;
+end);
+
 #
 
 InstallMethod(PrimitiveIdempotents, 

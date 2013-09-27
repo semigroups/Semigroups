@@ -11,6 +11,8 @@
 #############################################################################
 ##
 
+DeclareAttribute("IsGreensDLeq", IsActingSemigroupWithInverseOp);
+
 DeclareOperation("IsJoinIrreducible", [IsInverseSemigroup and
 IsPartialPermSemigroup, IsPartialPerm]);
 DeclareOperation("IsMajorantlyClosed", [IsInverseSemigroup and
