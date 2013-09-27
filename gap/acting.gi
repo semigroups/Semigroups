@@ -10,7 +10,16 @@
 
 # acting semigroups...
 
-InstallMethod(SemigroupData, "for an acting semigroup",
+InstallMethod(SemigroupData, 
+"for an acting semigroup with inverse op and generators",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+function(S)
+  return fail;
+end);
+
+#
+
+InstallMethod(SemigroupData, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, one, data, val;
