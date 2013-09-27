@@ -8,6 +8,49 @@
 #############################################################################
 ##
 
+#
+
+InstallMethod(ComponentRepsOfTransformationSemigroup, 
+"for a transformation semigroup", [IsTransformationSemigroup],
+function(S)
+  local pts, seen, reps, next, lookfunc, o, out, i;
+
+  pts:=[1..DegreeOfTransformationSemigroup(S)];
+  seen:=BlistList(pts, []);
+  reps:=BlistList(pts, []);
+  next:=1;
+  
+  lookfunc:=function(o, x)
+    return reps[x]<>false;
+  end;
+
+  repeat
+    o:=Orb(S, next, OnPoints, rec(lookingfor:=lookfunc));  
+    Enumerate(o);
+    if PositionOfFound(o)=false then 
+      reps[next]:=true;
+    else
+      reps[o[PositionOfFound(o)]]:=false;
+      reps[next]:=true;
+    fi;
+    for i in o do 
+      seen[i]:=true;
+    od;
+    next:=Position(seen, false, next);
+  until next=fail;
+
+  out:=[];
+  for i in pts do 
+    if reps[i] then 
+      Add(out, i);
+    fi;
+  od;
+
+  return out;
+end);
+
+#
+
 InstallMethod( Enumerate, 
 "for a hash orbit and a limit", 
 [IsOrbit and IsHashOrbitRep and IsLambdaOrb, IsCyclotomic],
