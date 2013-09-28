@@ -13,30 +13,32 @@
 InstallMethod(ComponentRepsOfTransformationSemigroup, 
 "for a transformation semigroup", [IsTransformationSemigroup],
 function(S)
-  local pts, seen, reps, next, opts, o, out, i;
+  local pts, reps, next, opts, o, out, i;
 
   pts:=[1..DegreeOfTransformationSemigroup(S)];
-  seen:=BlistList(pts, []);
   reps:=BlistList(pts, []);
+  # true=its a rep, false=not seen it, fail=its not a rep
   next:=1;
-  opts:=rec(lookingfor:=function(o, x) return seen[x]; end);
+  opts:=rec(lookingfor:=function(o, x) 
+    return reps[x]=true or reps[x]=fail;
+  end);
 
   repeat
     o:=Orb(S, next, OnPoints, opts);  
     Enumerate(o);
-    if PositionOfFound(o)<>false and reps[o[PositionOfFound(o)]] then 
-      reps[o[PositionOfFound(o)]]:=false;
+    if PositionOfFound(o)<>false and reps[o[PositionOfFound(o)]]=true then 
+      reps[o[PositionOfFound(o)]]:=fail;
     fi;
     reps[next]:=true;
-    for i in o do 
-      seen[i]:=true;
+    for i in [2..Length(o)] do 
+      reps[o[i]]:=fail;
     od;
-    next:=Position(seen, false, next);
+    next:=Position(reps, false, next);
   until next=fail;
 
   out:=[];
   for i in pts do 
-    if reps[i] then 
+    if reps[i]=true then 
       Add(out, i);
     fi;
   od;
