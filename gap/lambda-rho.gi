@@ -74,10 +74,11 @@ function(s)
   local record, o;
   
   record:=ShallowCopy(LambdaOrbOpts(s));
+  record.scc_reps:=[One(GeneratorsOfSemigroup(s))];
+  
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
   record.parent:=s;             record.treehashsize:=s!.opts.hashlen.M;
-  record.scc_reps:=[One(GeneratorsOfSemigroup(s))];
 
   o:=Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), record);
   

@@ -43,6 +43,8 @@ DeclareOperation("ClosureSemigroup",
 DeclareOperation("ClosureSemigroup", [IsActingSemigroup, IsList and IsEmpty]); #JDM remove me!
 DeclareGlobalFunction("ClosureSemigroupNC");
 
+DeclareGlobalFunction("RebaseTransformationSemigroupLambdaOrb");
+
 DeclareAttribute("Generators", IsSemigroup);
 
 DeclareOperation("RandomBinaryRelationSemigroup", [IsPosInt, IsPosInt]);

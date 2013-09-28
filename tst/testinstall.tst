@@ -448,6 +448,17 @@ gap> MaximalSubsemigroups(R);
 gap> List(last, U-> IsMaximalSubsemigroup(R, U));
 [ true, true, true, true, true, true ]
 
+# ClosureSemigroup with an element of higher degree
+gap> S:=Semigroup( 
+> Transformation( [ 1, 3, 3, 2 ] ), Transformation( [ 4, 1, 4, 2 ] ), 
+> Transformation( [ 4, 2, 3, 3 ] ), Transformation( [ 4, 4, 4, 4 ] ) );;
+gap> Size(S);
+130
+gap> f:=Transformation( [ 3, 5, 1, 5, 2 ] );;
+gap> T:=ClosureSemigroup(S, f);;
+gap> Size(T);
+1619
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);

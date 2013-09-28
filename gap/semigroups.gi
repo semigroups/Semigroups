@@ -599,11 +599,35 @@ function(s, coll, record)
    SemigroupOptions(record));
 end);
 
+#recreate the lambda orb using the higher degree!
+InstallGlobalFunction(RebaseTransformationSemigroupLambdaOrb, 
+function(o, old_deg, t)
+  local extra, old_ht, ht, i;
+
+  # rehash the orbit values
+  extra:=[old_deg+1..DegreeOfTransformationSemigroup(t)];
+  old_ht:=o!.ht;
+  ht:=HTCreate(o[1], rec(treehashsize:=o!.treehashsize));
+  HTAdd(ht, o[1], 1);
+  for i in [2..Length(o)] do 
+    o!.orbit[i]:=ShallowCopy(o[i]);
+    Append(o[i], extra);
+    HTAdd(ht, o[i], i);
+  od;
+  Unbind(o!.ht);
+  o!.ht:=ht;
+  
+  # change the action of <o> to that of <t> 
+  o!.op:=LambdaAct(t);
+
+  return o;
+end);
+
 # coll should consist of elements not in s
 
 InstallGlobalFunction(ClosureSemigroupNC,
 function(s, coll, opts)
-  local t, old_o, o, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, graph, old_graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, lambdarhoht, oht, scc, old_scc, lookup, old_lookup, old_to_new, htadd, htvalue, i, x, pos, m, rank, y, rhoy, val, schutz, tmp, old, j, n;
+  local t, old_o, o, old_deg, new_deg, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, graph, old_graph, reps, lambdarhoht, repslookup, orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, oht, scc, old_scc, lookup, old_lookup, old_to_new, htadd, htvalue, i, x, pos, m, rank, y, rhoy, val, schutz, tmp, old, n, j;
  
   if coll=[] then 
     Info(InfoSemigroups, 2, "all the elements in the collection belong to the ",
@@ -619,24 +643,29 @@ function(s, coll, opts)
   fi;
   
   # if nothing is known about s, then return t
-  if not HasLambdaOrb(s) 
-    or (IsTransformationSemigroup(s) 
-      and DegreeOfTransformationSemigroup(s)<DegreeOfTransformationSemigroup(t))
-   then #JDM improve this!
+  if not HasLambdaOrb(s) then 
     return t;
   fi;
   
   # set up lambda orb for t
   old_o:=LambdaOrb(s);
   o:=StructuralCopy(old_o);
+  
+  if IsTransformationSemigroup(s) then 
+    old_deg:=DegreeOfTransformationSemigroup(s);
+    if old_deg<DegreeOfTransformationSemigroup(t) then 
+      RebaseTransformationSemigroupLambdaOrb(o, old_deg, t);
+    fi;
+  fi;
+  
   AddGeneratorsToOrbit(o, coll);
 
   # unbind everything related to strongly connected components, since 
   # even if the orbit length doesn't change the strongly connected components
   # might
-  Unbind(o!.scc); Unbind(o!.trees); Unbind(o!.scc_lookup);
+  Unbind(o!.scc);   Unbind(o!.trees);  Unbind(o!.scc_lookup);
   Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse); 
-  Unbind(o!.rev); Unbind(o!.truth); Unbind(o!.schutzstab); Unbind(o!.slp); 
+  Unbind(o!.rev);   Unbind(o!.truth);  Unbind(o!.schutzstab); Unbind(o!.slp); 
   
   o!.parent:=t;
   o!.scc_reps:=[One(Generators(t))];
@@ -650,7 +679,7 @@ function(s, coll, opts)
   # get new and old R-rep orbit data
   new_data:=SemigroupData(t);
   old_data:=SemigroupData(s);
-  max_rank:=MaximumList(List(coll, x-> ActionRank(s)(x))); 
+  max_rank:=MaximumList(List(coll, x-> ActionRank(t)(x))); 
 
   ht:=new_data!.ht;       
   # so far found R-reps
@@ -704,10 +733,10 @@ function(s, coll, opts)
   nr_old_gens:=Length(old_data!.gens);
 
   # lambda/rho
-  lambda:=LambdaFunc(s);
-  lambdaact:=LambdaAct(s);
-  lambdaperm:=LambdaPerm(s);
-  rho:=RhoFunc(s);
+  lambda:=LambdaFunc(t);
+  lambdaact:=LambdaAct(t);
+  lambdaperm:=LambdaPerm(t);
+  rho:=RhoFunc(t);
 
   oht:=o!.ht;
   scc:=OrbSCC(o);
