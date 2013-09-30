@@ -328,11 +328,12 @@ else
       i:=rectangles[r][1];  
       j:=First(Columns(R), j-> mat[j][i]<>0 and not j+len in rectangles[r]); 
       new:=List(gens, x-> Objectify(TypeReesMatrixSemigroupElements(R), 
-        [i, x*mat[j][i]^-1, j]));
+        [i, x*mat[j][i]^-1, j, mat]));
       j:=First(rectangles[r], j-> j>len)-len;
       i:=First(Rows(R), i-> mat[j][i]<>0 and not i in rectangles[r]);
       Append(new, List(gens, x-> 
-       Objectify(TypeReesMatrixSemigroupElements(R), [i, x*mat[j][i]^-1, j])));
+       Objectify(TypeReesMatrixSemigroupElements(R), 
+        [i, x*mat[j][i]^-1, j, mat])));
 
       for k in rectangles[r] do  
         if k<=len then # k in I
@@ -635,7 +636,7 @@ function(d)
     j:=Position(OrbSCC(o)[OrbSCCLookup(o)[j]], j);
 
     return Objectify(TypeReesMatrixSemigroupElements(rms), 
-     [j, AsPermutation(inv_r[j]*f*inv_l[i]), i]);
+     [j, AsPermutation(inv_r[j]*f*inv_l[i]), i, mat]);
   end;
 
   inv:=function(x)
@@ -764,7 +765,7 @@ function(d)
 
     return Objectify(TypeReesMatrixSemigroupElements(rms), 
     [j, AsPermutation(rreps[j])^-1*AsPermutation(f)*AsPermutation(lreps[i])^-1,
-     i]);
+     i, mat]);
   end;
 
   inv:=function(x)

@@ -16,7 +16,7 @@ DeclareCategory("IsActingSemigroupGreensClass", IsGreensClass);
 DeclareAttribute("ActionDegree", IsAssociativeElement);
 DeclareAttribute("ActionDegree", IsAssociativeElementCollection);
 DeclareAttribute("ActionRank", IsSemigroup);
-DeclareOperation("ActionRank", [IsAssociativeElement, IsPosInt]);
+DeclareOperation("ActionRank", [IsAssociativeElement, IsObject]);
 DeclareAttribute("MinActionRank", IsSemigroup);
 
 DeclareAttribute("RhoAct", IsSemigroup);
@@ -46,5 +46,7 @@ DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
 IsSemigroup);
 
 DeclareAttribute("StabiliserAction", IsSemigroup);
+
+DeclareGlobalFunction("ORB_HashFunctionReesZeroMatrixSemigroupElements");
 
 #EOF

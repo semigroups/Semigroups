@@ -28,7 +28,7 @@ function(s)
   one:=One(gens);
 
   data:=rec(gens:=gens, 
-     ht:=HTCreate(one, rec(treehashsize:=s!.opts.hashlen.L)),
+     ht:=HTCreate(gens[1], rec(treehashsize:=s!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], 
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[],
      lenreps:=0, orbit:=[[,,,one]], repslens:=[], 
@@ -348,7 +348,7 @@ function(data, limit, lookfunc)
   fi;
 
   while nr<=limit and i<nr and i<>stopper do 
-    
+     
     i:=i+1;
     for j in genstoapply do #JDM
       x:=gens[j]*orb[i][4];
@@ -569,5 +569,34 @@ function(data)
   Length(data!.reps), " lambda-rho values>");
   return;
 end);
+
+# we require a fake one in the case that the objects we are dealing with don't
+# have one.
+
+InstallMethod(String, "for the universal fake one",
+[IsUniversalFakeOne], 
+function(obj)
+  return "<universal fake one>";
+end);
+
+InstallMethod(\*, 
+"for the universal fake one and an associative element",
+[IsUniversalFakeOne, IsAssociativeElement],
+function(x, y)
+  return y;
+end);
+
+InstallMethod(\*, 
+"for an associative element and the universal fake one",
+[IsAssociativeElement, IsUniversalFakeOne],
+function(x, y)
+  return x;
+end);
+
+InstallMethod(\<, "for the universal fake one and an associative element",
+[IsUniversalFakeOne, IsAssociativeElement], ReturnTrue);
+
+InstallMethod(\<, "for an associative element and the universal fake one",
+[IsAssociativeElement, IsUniversalFakeOne], ReturnFalse);
 
 #EOF
