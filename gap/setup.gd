@@ -47,6 +47,8 @@ IsSemigroup);
 
 DeclareAttribute("StabiliserAction", IsSemigroup);
 
+DeclareOperation("FakeOne", [IsAssociativeElementCollection]);
+
 DeclareGlobalFunction("ORB_HashFunctionReesZeroMatrixSemigroupElements");
 
 #EOF

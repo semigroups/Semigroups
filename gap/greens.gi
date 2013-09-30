@@ -1288,8 +1288,9 @@ function(x, value, scc, o, onright)
   
   s:=Parent(x);
 
-  if IsActingSemigroupWithFixedDegreeMultiplication(s) and 
-   ActionRank(s)(Representative(x))=ActionDegree(Representative(x)) then
+  if IsActingSemigroupWithFixedDegreeMultiplication(s) 
+   and IsMultiplicativeElementWithOneCollection(s) 
+   and ActionRank(s)(Representative(x))=ActionDegree(Representative(x)) then
     return [One(s)];
   fi;
 

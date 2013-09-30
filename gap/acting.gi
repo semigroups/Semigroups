@@ -25,7 +25,7 @@ function(s)
   local gens, one, data, val;
  
   gens:=GeneratorsOfSemigroup(s);
-  one:=One(gens);
+  one:=FakeOne(gens);
 
   data:=rec(gens:=gens, 
      ht:=HTCreate(gens[1], rec(treehashsize:=s!.opts.hashlen.L)),
@@ -364,7 +364,7 @@ function(data, limit, lookfunc)
       else
         y:=x;
       fi;
-      #rhoy:=[m, rho(y)];
+      
       rhoy:=[m];
       Append(rhoy, rho(y));
       val:=htvalue(lambdarhoht, rhoy);

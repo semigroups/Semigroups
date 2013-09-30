@@ -9,6 +9,8 @@
 ##
 
 DeclareOperation("EvaluateWord", [IsPartialPermCollection, IsList]);
+DeclareOperation("EvaluateWord", 
+[IsReesZeroMatrixSemigroupElementCollection, IsList]);
 DeclareGlobalFunction("EnumeratePosition");
 DeclareGlobalFunction("LookForInOrb");
 DeclareGlobalFunction("OrbSCC");

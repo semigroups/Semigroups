@@ -524,7 +524,7 @@ function(s, coll, record)
   Unbind(o!.rev); Unbind(o!.truth); Unbind(o!.schutzstab); Unbind(o!.slp);
 
   o!.parent:=t;
-  o!.scc_reps:=[One(Generators(t))];
+  o!.scc_reps:=[FakeOne(Generators(t))];
   
   SetLambdaOrb(t, o);
   return t;
@@ -668,7 +668,7 @@ function(s, coll, opts)
   Unbind(o!.rev);   Unbind(o!.truth);  Unbind(o!.schutzstab); Unbind(o!.slp); 
   
   o!.parent:=t;
-  o!.scc_reps:=[One(Generators(t))];
+  o!.scc_reps:=[FakeOne(Generators(t))];
 
   SetLambdaOrb(t, o); 
   

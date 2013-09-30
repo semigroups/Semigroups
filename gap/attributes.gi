@@ -919,7 +919,7 @@ function(s)
     fi;
   od;
 
-  if max=ActionDegree(s) then
+  if max=ActionDegree(s) and IsMultiplicativeElementWithOneCollection(s) then
     return One(s);
   fi;
 

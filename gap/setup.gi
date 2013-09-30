@@ -469,20 +469,16 @@ InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication, 
 "for a Rees 0-matrix subsemigroup", [IsReesZeroMatrixSubsemigroup], ReturnFalse);
 
-# One or really a fake one for those types of object without one.
+# One or a fake one for those types of object without one.
 
-InstallOtherMethod(One, 
-"for a Rees 0-matrix semigroup element collection",
-[IsReesZeroMatrixSemigroupElementCollection], 5, R-> UniversalFakeOne);
+InstallMethod(FakeOne, "for a transformation collection", 
+[IsTransformationCollection], One);
 
-InstallOtherMethod(One, "for a Rees 0-matrix semigroup element",
-[IsReesZeroMatrixSemigroupElement], 5, x-> UniversalFakeOne);
+InstallMethod(FakeOne, "for a partial perm collection", 
+[IsPartialPermCollection], One);
 
-InstallOtherMethod(\^, "for a Rees 0-matrix semigroup element",
-[IsReesZeroMatrixSemigroupElement, IsZeroCyc], 
-function(x, y)
-  return UniversalFakeOne;
-end);
+InstallMethod(FakeOne, "for a Rees 0-matrix semigroup element collection",
+[IsReesZeroMatrixSemigroupElementCollection],  R-> UniversalFakeOne);
 
 # missing hash functions
 

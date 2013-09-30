@@ -187,6 +187,23 @@ end);
 
 #
 
+InstallMethod(EvaluateWord, 
+"for Rees 0-matrix semigroup element collection and a list of positive integers", 
+[IsReesZeroMatrixSemigroupElementCollection, IsList],
+function ( gens, w )
+    local  i, res, pts;
+    if Length( w ) = 0  then
+        return UniversalFakeOne;
+    fi;
+    res := gens[w[1]];
+    for i  in [ 2 .. Length( w ) ]  do
+        res := res * gens[w[i]];
+    od;
+    return res;
+end);
+
+#
+
 InstallGlobalFunction(EnumeratePosition, 
 "for an orbit, value, and boolean",
 function(o, val, onlynew)

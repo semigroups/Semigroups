@@ -74,7 +74,7 @@ function(s)
   local record, o;
   
   record:=ShallowCopy(LambdaOrbOpts(s));
-  record.scc_reps:=[One(GeneratorsOfSemigroup(s))];
+  record.scc_reps:=[FakeOne(GeneratorsOfSemigroup(s))];
   
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
@@ -104,7 +104,7 @@ function(o, m)
   else 
     if not IsBound(o!.mults) then 
       mults:=EmptyPlist(Length(o));
-      one:=[One(o!.gens), One(o!.gens)];
+      one:=[FakeOne(o!.gens), FakeOne(o!.gens)];
       for x in OrbSCC(o) do 
         mults[x[1]]:=one;
       od;
@@ -119,7 +119,7 @@ function(o, m)
   mults:=o!.mults;
   
   if not IsBound(mults[scc[1]]) then 
-    mults[scc[1]]:=[One(gens), One(gens)];
+    mults[scc[1]]:=[FakeOne(gens), FakeOne(gens)];
   fi; 
  
   genpos:=ReverseSchreierTreeOfSCC(o, m);
@@ -154,7 +154,7 @@ function(o, m, i)
     fi;
   else
     mults:=EmptyPlist(Length(o));
-    one:=[One(o!.gens), One(o!.gens)];
+    one:=[FakeOne(o!.gens), FakeOne(o!.gens)];
     for x in OrbSCC(o) do 
       mults[x[1]]:=one;
     od;
@@ -333,7 +333,7 @@ function(s)
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
   record.parent:=s;             record.treehashsize:=s!.opts.hashlen.M;
-  record.scc_reps:=[One(GeneratorsOfSemigroup(s))];
+  record.scc_reps:=[FakeOne(GeneratorsOfSemigroup(s))];
 
   o:=Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s), record);
   
@@ -356,7 +356,7 @@ function(o, m, i)
     fi;
   else
     mults:=EmptyPlist(Length(o));
-    one:=[One(o!.gens), One(o!.gens)];
+    one:=[FakeOne(o!.gens), FakeOne(o!.gens)];
     for x in OrbSCC(o) do 
       mults[x[1]]:=one;
     od;
@@ -399,7 +399,7 @@ function(o, m)
   else 
     if not IsBound(o!.mults) then 
       mults:=EmptyPlist(Length(o));
-      one:=[One(o!.gens), One(o!.gens)];
+      one:=[FakeOne(o!.gens), FakeOne(o!.gens)];
       for x in OrbSCC(o) do 
         mults[x[1]]:=one;
       od;
@@ -414,7 +414,7 @@ function(o, m)
   mults:=o!.mults;
   
   if not IsBound(mults[scc[1]]) then 
-    mults[scc[1]]:=[One(gens), One(gens)];
+    mults[scc[1]]:=[FakeOne(gens), FakeOne(gens)];
   fi; 
 
   genpos:=SchreierTreeOfSCC(o, m);
