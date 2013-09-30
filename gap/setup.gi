@@ -12,6 +12,10 @@
 # Setup - install the basic things required for specific acting semigroups    #
 ###############################################################################
 
+InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
+
+# IsGeneratorsOfActingSemigroup
+
 InstallMethod(IsGeneratorsOfActingSemigroup, 
 "for an associative element collection",
 [IsAssociativeElementCollection], ReturnFalse);
@@ -33,11 +37,14 @@ InstallMethod(IsGeneratorsOfActingSemigroup, "for a transformation collection",
 InstallMethod(IsGeneratorsOfActingSemigroup, "for a partial perm collection", 
 [IsPartialPermCollection], x-> true);
 
-InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
+InstallMethod(IsGeneratorsOfActingSemigroup, 
+"for a Rees 0-matrix semigroup element collection", 
+[IsReesZeroMatrixSemigroupElementCollection], x-> true);
 
-# JDM shouldn't IsActingSemigroupGreensClass be a category??
-InstallImmediateMethod(IsActingSemigroupGreensClass, IsGreensClass, 0, 
-x-> IsActingSemigroup(Parent(x)));
+InstallMethod(IsGeneratorsOfActingSemigroup, 
+"for a Rees matrix semigroup element collection", 
+[IsReesMatrixSemigroupElementCollection], x-> true);
+
 
 # the largest point involved in the action
 

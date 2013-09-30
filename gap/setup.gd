@@ -11,7 +11,7 @@
 DeclareCategory("IsActingSemigroup", IsSemigroup);
 DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
 DeclareProperty("IsGeneratorsOfActingSemigroup", IsAssociativeElementCollection);
-DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
+DeclareCategory("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);
 DeclareAttribute("ActionDegree", IsAssociativeElementCollection);
