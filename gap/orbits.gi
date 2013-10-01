@@ -206,9 +206,16 @@ end);
 
 InstallGlobalFunction(EnumeratePosition, 
 "for an orbit, value, and boolean",
-function(o, val, onlynew)
-  local pos;
+function(arg)
+  local o, val, onlynew, pos;
   
+  o:=arg[1]; val:=arg[2];
+  if Length(arg)=3 then 
+    onlynew:=arg[3];
+  else
+    onlynew:=false;
+  fi;
+
   if not onlynew then 
     pos:=Position(o, val);
     if pos<>fail or IsClosed(o) then 

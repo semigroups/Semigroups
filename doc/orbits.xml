@@ -10,10 +10,16 @@
 
 <#GAPDoc Label="EnumeratePosition">
   <ManSection> 
-    <Oper Name="EnumeratePosition" Arg="?"/>
-    <Returns>?.</Returns>
+    <Oper Name="EnumeratePosition" Arg="o, val[, onlynew]"/>
+    <Returns>A positive integer or <K>fail</K>.</Returns>
     <Description> 
-<Example>
+      This function returns the position of the value <A>val</A> in the orbit
+      <A>o</A>. If <A>o</A> is closed, then this is equivalent to doing 
+      <C>Position(<A>o</A>, <A>val</A>)</C>. However, if <A>o</A> is open, then
+      the orbit is enumerated until <A>val</A> is found, in which case the
+      position of <A>val</A> is returned, or the enumeration ends, in which
+      case <K>fail</K> is returned.  
+      <Example>
 </Example>
     </Description>
   </ManSection>

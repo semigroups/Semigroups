@@ -750,6 +750,14 @@ function(s, coll, opts)
   old_to_new:=EmptyPlist(old_nr);
   old_to_new[1]:=1;
 
+  # initialise <reps>, <repslookup>, <repslens>, <lenreps>...
+  for i in [2..Length(scc)] do
+    reps[i]:=[];
+    repslookup[i]:=[];
+    repslens[i]:=[];
+    lenreps[i]:=0;
+  od;
+
   if IsBoundGlobal("ORBC") then
     htadd:=HTAdd_TreeHash_C;
     htvalue:=HTValue_TreeHash_C;
@@ -777,28 +785,35 @@ function(s, coll, opts)
       y:=x*LambdaOrbMult(old_o, old_lookup[pos], pos)[1]
        *LambdaOrbMult(o, m, pos)[2];
     fi;
-   
-    rhoy:=[m];
-    Append(rhoy, rho(y));
+  
+    rhoy:=rho(y);
     val:=htvalue(lambdarhoht, rhoy);
 
-    if val=fail or rank>max_rank then #new rho value, and hence new R-rep
-      lenreps:=lenreps+1;
-      htadd(lambdarhoht, rhoy, lenreps);
+    if val=fail or not IsBound(val[m]) or rank>max_rank then 
+      #new rho value, and hence new R-rep
+      lenreps[m]:=lenreps[m]+1;
+      if val=fail then 
+        val:=[];
+        val[m]:=lenreps[m];
+        htadd(lambdarhoht, rhoy, val);
+      else 
+        val[m]:=lenreps[m];
+      fi;
       new_nr:=new_nr+1;
-      reps[lenreps]:=[y];
-      repslookup[lenreps]:=[new_nr];
+      reps[m][lenreps[m]]:=[y];
+      repslookup[m][lenreps[m]]:=[new_nr];
+      repslens[m][lenreps[m]]:=1;
       orblookup1[new_nr]:=lenreps;
       orblookup2[new_nr]:=1;
-      repslens[lenreps]:=1;
       x:=[t, m, o, y, false, new_nr];
     else              # old rho value
+      val:=val[m];
       x:=[t, m, o, y, false, new_nr+1];
       #check membership in schutz gp via stab chain
       schutz:=LambdaOrbStabChain(o, m);
 
       if schutz=true then # schutz gp is symmetric group
-        old_to_new[i]:=repslookup[val][1];
+        old_to_new[i]:=repslookup[m][val][1];
         continue;
       else
         if schutz=false then # schutz gp is trivial
@@ -809,11 +824,11 @@ function(s, coll, opts)
           fi;
         else # schutz gp neither trivial nor symmetric group
           old:=false;
-          for n in [1..repslens[val]] do
-            if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=()
+          for n in [1..repslens[m][val]] do
+            if SiftedPermutation(schutz, lambdaperm(reps[m][val][n], y))=()
               then
               old:=true;
-              old_to_new[i]:=repslookup[val][n];
+              old_to_new[i]:=repslookup[m][val][n];
               break;
             fi;
           od;
@@ -822,11 +837,11 @@ function(s, coll, opts)
           fi;
         fi;
         new_nr:=new_nr+1;
-        repslens[val]:=repslens[val]+1;
-        reps[val][repslens[val]]:=y;
-        repslookup[val][repslens[val]]:=new_nr;
+        repslens[m][val]:=repslens[m][val]+1;
+        reps[m][val][repslens[m][val]]:=y;
+        repslookup[m][val][repslens[m][val]]:=new_nr;
         orblookup1[new_nr]:=val;
-        orblookup2[new_nr]:=repslens[val];
+        orblookup2[new_nr]:=repslens[m][val];
       fi;
     fi;
     new_orb[new_nr]:=x;
@@ -853,7 +868,7 @@ function(s, coll, opts)
   new_data!.genstoapply:=[nr_old_gens+1..nr_new_gens];
   new_data!.pos:=0;
   new_data!.stopper:=old_to_new[old_data!.pos];
-  new_data!.lenreps:=lenreps;
+  new_data!.init:=true;
   Enumerate(new_data, infinity, ReturnFalse);
 
   new_data!.pos:=old_to_new[old_data!.pos];

@@ -1497,7 +1497,7 @@ end);
 
 InstallGlobalFunction(IsRegularClass@, 
 function(x, value, scc, o, onright)
-  local s, data, tester, i;
+  local s, data, m, tester, i;
 
   if HasNrIdempotents(x) then 
     return NrIdempotents(x)<>0;
@@ -1507,7 +1507,9 @@ function(x, value, scc, o, onright)
   
   if HasSemigroupDataIndex(x) then
     data:=SemigroupData(s);
-    if data!.repslens[data!.orblookup1[SemigroupDataIndex(x)]]>1 then
+    m:=LambdaOrbSCCIndex(x);
+    if data!.repslens[m][data!.orblookup1[SemigroupDataIndex(x)]]>1
+      then
       return false;
     fi;
   fi; 
@@ -1680,7 +1682,7 @@ d-> Length(RhoCosets(d))*Length(RhoOrbSCC(d)));
 
 InstallGlobalFunction(NrIdempotents@, 
 function(x, value, scc, o, onright)
-  local s, data, nr, tester, i;
+  local s, data, m, nr, tester, i;
 
   if HasIsRegularClass(x) and not IsRegularClass(x) then 
     return 0;
@@ -1692,7 +1694,8 @@ function(x, value, scc, o, onright)
   if HasSemigroupDataIndex(x) and not (HasIsRegularClass(x) and
    IsRegularClass(x)) then
     data:=SemigroupData(s);
-    if data!.repslens[data!.orblookup1[SemigroupDataIndex(x)]]>1 then
+    m:=LambdaOrbSCCIndex(x);
+    if data!.repslens[m][data!.orblookup1[SemigroupDataIndex(x)]]>1 then
       return 0;
     fi;
   fi;
@@ -1780,35 +1783,32 @@ r-> NrIdempotents@(r, RhoFunc(Parent(r))(Representative(r)), LambdaOrbSCC(r), La
 InstallMethod(NrIdempotents, "for an acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local data, reps, repslookup, lenreps, repslens, rhofunc, tester, nr, f, m,
-  o, rho, i, k;
+  local o, scc, data, reps, lenreps, repslens, rhofunc, tester, nr, rho, m, i, k;
 
   if HasIdempotents(s) then 
     return Length(Idempotents(s));
   fi;
 
-  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  o:=LambdaOrb(s);    scc:=OrbSCC(o);
   
-  reps:=data!.reps; 
-  repslookup:=data!.repslookup;
-  lenreps:=data!.lenreps;
-  repslens:=data!.repslens;
+  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  reps:=data!.reps; lenreps:=data!.lenreps; repslens:=data!.repslens;
 
   rhofunc:=RhoFunc(s);
   tester:=IdempotentTester(s);
 
   nr:=0;
-  for i in [1..lenreps] do 
-    f:=reps[i][1]; 
-    m:=data[repslookup[i][1]][2];
-    o:=data[repslookup[i][1]][3];
-    rho:=rhofunc(f);
-    for k in OrbSCC(o)[m] do 
-      if tester(o[k], rho) then 
-        nr:=nr+repslens[i];
-      fi;
+  for m in [2..Length(scc)] do 
+    for i in [1..lenreps[m]] do 
+      rho:=rhofunc(reps[m][i][1]);
+      for k in scc[m] do 
+        if tester(o[k], rho) then 
+          nr:=nr+repslens[m][i];
+        fi;
+      od;
     od;
   od;
+
 
   return nr;
 end);
@@ -1860,14 +1860,12 @@ function(s)
         f:=f*x;
         l:=Position(o, lambdafunc(f));
         m:=lookup[l];
-        val:=[m];
-        Append(val, rhofunc(f));
-        val:=HTValue(lambdarhoht, val);
+        val:=HTValue(lambdarhoht, rhofunc(f))[m];
         if not IsBound(schutz[m]) then 
           LambdaOrbSchutzGp(o, m);
         fi;
         if schutz[m]=true then 
-          j:=repslookup[val][1];
+          j:=repslookup[m][val][1];
         else
           if l<>scc[m][1] then 
             f:=f*mults[l][2];
@@ -1878,9 +1876,9 @@ function(s)
             n:=0; j:=0;
             repeat 
               n:=n+1;
-              if SiftedPermutation(schutz[m], lambdaperm(reps[val][n], f))=()
+              if SiftedPermutation(schutz[m], lambdaperm(reps[m][val][n], f))=()
                then 
-                j:=repslookup[val][n];
+                j:=repslookup[m][val][n];
               fi;
             until j<>0;
           fi;

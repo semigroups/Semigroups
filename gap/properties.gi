@@ -736,7 +736,7 @@ function(s)
   # look for s not being regular
   lookfunc:=function(data, x)
     local rho, scc, i;
-    if data!.repslens[data!.orblookup1[x[6]]]>1 then
+    if data!.repslens[x[2]][data!.orblookup1[x[6]]]>1 then
       return true;
     fi;
     
