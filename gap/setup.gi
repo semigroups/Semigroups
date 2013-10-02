@@ -455,6 +455,22 @@ function(x, p)
   return Objectify(TypeObj(x), [x![1], x![2]*p, x![3], x![4]]);
 end);
 
+InstallMethod(LeftStabAction, "for a transformation semigroup",
+[IsTransformationSemigroup], s-> PROD);
+
+InstallMethod(LeftStabAction, "for a partial perm semigroup",
+[IsPartialPermSemigroup], s-> PROD);
+
+InstallMethod(LeftStabAction, "for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup], s-> 
+function(p, x)
+
+  if x![1]=0 then 
+    return x;
+  fi;
+  return Objectify(TypeObj(x), [x![1], p*x![2], x![3], x![4]]);
+end);
+
 # IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only
 # if it is only possible to multiply elements of the type in the semigroup with
 # equal degrees.

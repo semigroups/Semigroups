@@ -46,6 +46,7 @@ DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
 IsSemigroup);
 
 DeclareAttribute("RightStabAction", IsSemigroup);
+DeclareAttribute("LeftStabAction",  IsSemigroup);
 
 DeclareOperation("FakeOne", [IsAssociativeElementCollection]);
 
