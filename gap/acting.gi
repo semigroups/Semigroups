@@ -196,7 +196,7 @@ function(f, s)
             return true;
           fi;
         fi;
-      until found=false or repslens[val]>=max;
+      until found=false or repslens[m][val]>=max;
     else 
       repeat
         

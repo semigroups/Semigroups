@@ -803,7 +803,7 @@ function(s, coll, opts)
       reps[m][lenreps[m]]:=[y];
       repslookup[m][lenreps[m]]:=[new_nr];
       repslens[m][lenreps[m]]:=1;
-      orblookup1[new_nr]:=lenreps;
+      orblookup1[new_nr]:=lenreps[m];
       orblookup2[new_nr]:=1;
       x:=[t, m, o, y, false, new_nr];
     else              # old rho value
