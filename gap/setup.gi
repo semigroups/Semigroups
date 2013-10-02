@@ -35,6 +35,11 @@ InstallMethod(IsGeneratorsOfActingSemigroup, "for a partial perm collection",
 
 InstallTrueMethod(IsInverseSemigroup, IsActingSemigroupWithInverseOp);
 
+# This is a terrible hack, because a list of matrices
+# is not an associative element collection
+InstallOtherMethod(IsGeneratorsOfActingSemigroup, "for a collection of matrices over a ring",
+[IsRingElementCollCollColl], x -> true);
+
 # JDM shouldn't IsActingSemigroupGreensClass be a category??
 InstallImmediateMethod(IsActingSemigroupGreensClass, IsGreensClass, 0, 
 x-> IsActingSemigroup(Parent(x)));
@@ -89,6 +94,7 @@ end);
 InstallMethod(ActionRank, "for a partial perm semigroup",
 [IsPartialPermSemigroup], 
 function(s)
+    # (mp) is this supposed to be return RankOfPartialPerm(s)?
   return RankOfPartialPerm;
 end);
 

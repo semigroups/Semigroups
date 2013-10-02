@@ -8,7 +8,7 @@
 ##
 #############################################################################
 ##
-
+## Some of this code is taken from grpmat.gi from the GAP library
 
 InstallMethod(OneMutable, "for ring element coll coll coll",
 [IsRingElementCollCollColl], x-> One(Representative(x)));

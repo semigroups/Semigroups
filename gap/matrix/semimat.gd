@@ -8,6 +8,8 @@
 ##
 #############################################################################
 ##
+## Some of this code is based on code taken from grpmat.gd in the GAP
+## library
 
 DeclareSynonym("IsMatrixSemigroup", IsSemigroup and IsRingElementCollCollColl);
 DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
