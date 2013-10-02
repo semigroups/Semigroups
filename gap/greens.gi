@@ -106,7 +106,7 @@ function(l)
     #the following step is necessary in case p is not in the schutz gp of d 
     p:=LambdaPerm(Parent(l))(Representative(l)*mult[2],
      Representative(d));
-    act:=StabiliserAction(Parent(l));
+    act:=RightStabAction(Parent(l));
     #JDM the following line always returns elements of the semigroup not
     #permutations what sense does this make?
     return List(RhoCosets(d), x-> act(mult[2], x^p)*mult[1]);
@@ -610,7 +610,7 @@ function(r)
   cosets:=LambdaCosets(d);
   f:=Representative(r);
   nc:=IsGreensClassNC(r);
-  act:=StabiliserAction(Parent(r));
+  act:=RightStabAction(Parent(r));
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
@@ -662,7 +662,7 @@ function(d)
   o:=RhoOrb(d);
   m:=RhoOrbSCCIndex(d);
   nc:=IsGreensClassNC(d);
-  act:=StabiliserAction(s);
+  act:=RightStabAction(s);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
@@ -1129,7 +1129,7 @@ function(l)
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
-  act:=StabiliserAction(Parent(l));
+  act:=RightStabAction(Parent(l));
 
   for i in scc do 
     i:=mults[i][1]*f;
@@ -1158,7 +1158,7 @@ function(r)
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
 
-  act:=StabiliserAction(Parent(r));
+  act:=RightStabAction(Parent(r));
 
   for i in cosets do 
     i:=act(f, i);
@@ -1219,7 +1219,7 @@ function(d)
  
   cosets:=LambdaCosets(d);
   out:=EmptyPlist(Length(scc)*Length(cosets));
-  act:=StabiliserAction(Parent(d));
+  act:=RightStabAction(Parent(d));
   k:=0;
   for i in cosets do
     g:=act(f, i);
@@ -1266,7 +1266,7 @@ function(d)
   out:=EmptyPlist(Length(scc)*Length(cosets));
   
   k:=0;
-  act:=StabiliserAction(Parent(d));
+  act:=RightStabAction(Parent(d));
   for i in scc do
     g:=mults[i][1]*f;
     for j in cosets do
@@ -1491,7 +1491,7 @@ function(h)
   fi;
 
   return MappingByFunction(h, SchutzenbergerGroup(h), AsPermutation, x->
-    StabiliserAction(Parent(h))(MultiplicativeNeutralElement(h), x));
+    RightStabAction(Parent(h))(MultiplicativeNeutralElement(h), x));
 end);
 
 #
@@ -1915,7 +1915,7 @@ function(s)
 
   g:=Random(LambdaOrbSchutzGp(o, m));
   i:=Random(OrbSCC(o)[m]);
-  return StabiliserAction(s)(rep,g)*LambdaOrbMult(o, m, i)[1];
+  return RightStabAction(s)(rep,g)*LambdaOrbMult(o, m, i)[1];
 end);
 
 # different method for regular/inverse

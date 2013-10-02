@@ -436,16 +436,16 @@ end);
 # the action of elements of the stabiliser of a lambda-value on any element of
 # the semigroup with that lambda-value 
 
-# StabiliserAction will be \* for transformation and partial perm semigroups 
+# RightStabAction will be \* for transformation and partial perm semigroups 
 # and something else for semigroups of bipartitions.
 
-InstallMethod(StabiliserAction, "for a transformation semigroup",
+InstallMethod(RightStabAction, "for a transformation semigroup",
 [IsTransformationSemigroup], s-> PROD);
 
-InstallMethod(StabiliserAction, "for a partial perm semigroup",
+InstallMethod(RightStabAction, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> PROD);
 
-InstallMethod(StabiliserAction, "for a Rees 0-matrix subsemigroup",
+InstallMethod(RightStabAction, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], s-> 
 function(x, p)
 
