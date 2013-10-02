@@ -213,7 +213,7 @@ function(f, s)
           od;
           n:=repslens[m][val];
         fi;
-      until found=false or repslens[val]>=max;
+      until found=false or repslens[m][val]>=max;
     fi;
   fi;
   return false;

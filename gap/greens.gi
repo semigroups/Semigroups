@@ -1114,7 +1114,7 @@ end);
 InstallMethod(HClassReps, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  local o, m, scc, mults, f, d, cosets, pos, g, out, k, i, j;
+  local o, m, scc, mults, f, cosets, out, k, act, i, j;
 
   o:=RhoOrb(l); 
   m:=RhoOrbSCCIndex(l);
@@ -1129,12 +1129,13 @@ function(l)
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
+  act:=StabiliserAction(Parent(l));
 
   for i in scc do 
     i:=mults[i][1]*f;
     for j in cosets do 
       k:=k+1;
-      out[k]:=i*j;
+      out[k]:=act(i, j);
     od;
   od;
   return out;

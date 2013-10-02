@@ -26,38 +26,6 @@
 
 #
 
-#LongestChainOfSubsemigroups:=function(R)
-#  if Size(R)>1 then 
-#    return Maximum(List(MaximalSubsemigroups(R), 
-#     LongestChainOfSubsemigroups))+1;
-#  fi;
-#  return 1;
-#end;
-
-#
-
-#Subsemigroups:=function(R) #for a Rees 0-matrix semigroup...
-#  local max, o, U, V;
-#  
-#  max:=Set(MaximalSubsemigroups(R));
-#  o:=ShallowCopy(max);
-#  
-#  for U in o do 
-#    if Size(U)>1 then 
-#      for V in MaximalSubsemigroups(U) do 
-#        if not V in max then 
-#          AddSet(max, V);
-#          Add(o, V);
-#        fi;
-#      od;
-#    fi;
-#  od;
-#
-#  return max;
-#end;
-
-#
-
 InstallMethod(IsMaximalSubsemigroup, "for a semigroup and semigroup", 
 [IsSemigroup, IsSemigroup],
 function(S, T)
@@ -1243,4 +1211,35 @@ function(s)
   return Sum(ind);
 end);
 
+#
+
+#LongestChainOfSubsemigroups:=function(R)
+#  if Size(R)>1 then 
+#    return Maximum(List(MaximalSubsemigroups(R), 
+#     LongestChainOfSubsemigroups))+1;
+#  fi;
+#  return 1;
+#end;
+
+#
+
+#Subsemigroups:=function(R) #for a Rees 0-matrix semigroup...
+#  local max, o, U, V;
+#  
+#  max:=Set(MaximalSubsemigroups(R));
+#  o:=ShallowCopy(max);
+#  
+#  for U in o do 
+#    if Size(U)>1 then 
+#      for V in MaximalSubsemigroups(U) do 
+#        if not V in max then 
+#          AddSet(max, V);
+#          Add(o, V);
+#        fi;
+#      od;
+#    fi;
+#  od;
+#
+#  return max;
+#end;
 #EOF
