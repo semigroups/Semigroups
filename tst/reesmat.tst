@@ -96,3 +96,4 @@ gap> MaximalDClasses(U[4]);
 gap> Filtered(DClasses(V), IsRegularClass);
 [ {0}, {(13,(1,6)(5,8),3)}, {(22,(1,6),1)} ]
 gap> VV:=PrincipalFactor(last[2]);
+<Rees 0-matrix semigroup 6x4 over Group([ (5,8)(6,9), (1,9,6), (5,8) ])>

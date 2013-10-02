@@ -537,7 +537,7 @@ s-> InverseSemigroup(Idempotents(s), rec(small:=true)));
 InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local g, rep, rreps, lreps, mat, inj, zero, bound_r, bound_l, inv_l, inv_r, lambdaperm, f, rms, iso, inv, hom, i, j;
+  local g, rep, rreps, lreps, mat, bound_r, bound_l, inv_l, inv_r, lambdaperm, leftact, rightact, f, rms, iso, inv, hom, i, j;
 
   if not IsRegularDClass(d) then
     Error("usage: <d> must be a regular D-class,");
@@ -560,22 +560,23 @@ function(d)
   inv_r:=EmptyPlist(Length(rreps));
 
   lambdaperm:=LambdaPerm(Parent(d));
+  leftact:=LeftStabAction(Parent(d));
+  rightact:=RightStabAction(Parent(d));
 
   for i in [1..Length(lreps)] do
     mat[i]:=[];
     for j in [1..Length(rreps)] do
       f:=lreps[i]*rreps[j];
       if f in d then
-        #mat[i][j]:=AsPermutation(f); 
-        #JDM AsPermutation doesn't work for partition monoids
         mat[i][j]:=lambdaperm(rep, f);
+      Print(RankOfTransformation(f), "\n");
         if not bound_r[j] then
           bound_r[j]:=true;
-          inv_r[j]:=mat[i][j]^-1*lreps[i];
+          inv_r[j]:=leftact(mat[i][j]^-1, lreps[i]);
         fi;
         if not bound_l[i] then
           bound_l[i]:=true;
-          inv_l[i]:=rreps[j]*mat[i][j]^-1;
+          inv_l[i]:=rightact(rreps[j], mat[i][j]^-1);
         fi;
         mat[i][j]:=mat[i][j];
       else
@@ -602,16 +603,15 @@ function(d)
       return fail;
     fi;
     j:=Position(OrbSCC(o)[OrbSCCLookup(o)[j]], j);
-
     return Objectify(TypeReesMatrixSemigroupElements(rms), 
-     [j, AsPermutation(inv_r[j]*f*inv_l[i]), i, mat]);
+     [j, lambdaperm(rep, rep*inv_r[j]*f*inv_l[i]), i, mat]);
   end;
 
   inv:=function(x)
     if x![1]=0 then 
       return fail;
     fi;
-    return rreps[x![1]]*x![2]*lreps[x![3]];
+    return rightact(rreps[x![1]], x![2])*lreps[x![3]];
   end;
 
   hom:=MappingByFunction(d, rms, iso, inv);
