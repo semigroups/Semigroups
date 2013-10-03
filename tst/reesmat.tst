@@ -93,7 +93,11 @@ gap> MaximalDClasses(U[4]);
 [ {(2,(),4)}, {(1,(5,8)(6,9),1)} ]
 
 # PrincipalFactor
-gap> Filtered(DClasses(V), IsRegularClass);
-[ {0}, {(13,(1,6)(5,8),3)}, {(22,(1,6),1)} ]
-gap> VV:=PrincipalFactor(last[2]);
-<Rees 0-matrix semigroup 6x4 over Group([ (5,8)(6,9), (1,9,6), (5,8) ])>
+gap> D:=Filtered(DClasses(V), IsRegularClass)[2];
+{(13,(1,6)(5,8),3)}
+gap> inj:=InjectionPrincipalFactor(D);; inv:=InverseGeneralMapping(inj);;
+gap> ForAll(D, x-> (x^inj)^inv=x);                                         
+true
+gap> ForAll(D, x-> ForAll(D, y-> (not x*y in D) or (x*y)^inj=x^inj*y^inj));
+true
+

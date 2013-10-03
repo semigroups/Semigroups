@@ -364,11 +364,10 @@ InstallMethod(LambdaPerm, "for a partial perm semigroup",
 InstallMethod(LambdaPerm, "for a Rees 0-matrix subsemigroup", 
 [IsReesZeroMatrixSubsemigroup], s-> 
 function(x, y)
-  local mat;
   if x![1]=0 or y![1]=0 then 
     return ();
   fi;
-  return LQUO(x![2], y![2]);
+  return x![2]^-1*y![2];
 end);
 
 # returns a permutation mapping LambdaFunc(s)(f) to LambdaFunc(s)(g) so that 
@@ -453,22 +452,6 @@ function(x, p)
     return x;
   fi;
   return Objectify(TypeObj(x), [x![1], x![2]*p, x![3], x![4]]);
-end);
-
-InstallMethod(LeftStabAction, "for a transformation semigroup",
-[IsTransformationSemigroup], s-> PROD);
-
-InstallMethod(LeftStabAction, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s-> PROD);
-
-InstallMethod(LeftStabAction, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s-> 
-function(p, x)
-
-  if x![1]=0 then 
-    return x;
-  fi;
-  return Objectify(TypeObj(x), [x![1], p*x![2], x![3], x![4]]);
 end);
 
 # IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only

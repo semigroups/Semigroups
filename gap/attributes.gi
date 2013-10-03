@@ -560,7 +560,16 @@ function(d)
   inv_r:=EmptyPlist(Length(rreps));
 
   lambdaperm:=LambdaPerm(Parent(d));
-  leftact:=LeftStabAction(Parent(d));
+  if IsTransformationSemigroupGreensClass(d) 
+    or IsPartialPermSemigroupGreensClass(d) then 
+    leftact:=PROD;
+  elif IsReesZeroMatrixSubsemigroup(Parent(d)) then 
+    leftact:=function(x, y)
+      return Objectify(TypeObj(y), [y![1], y![4][rep![3]][rep![1]]^-1
+      *x*rep![2]^-1*y![2], y![3], y![4]]);
+    end;
+  fi;
+
   rightact:=RightStabAction(Parent(d));
 
   for i in [1..Length(lreps)] do
@@ -569,7 +578,6 @@ function(d)
       f:=lreps[i]*rreps[j];
       if f in d then
         mat[i][j]:=lambdaperm(rep, f);
-      Print(RankOfTransformation(f), "\n");
         if not bound_r[j] then
           bound_r[j]:=true;
           inv_r[j]:=leftact(mat[i][j]^-1, lreps[i]);
@@ -591,7 +599,7 @@ function(d)
     o:=LambdaOrb(d);
     i:=Position(o, LambdaFunc(Parent(d))(f));
 
-    if i=fail then
+    if i=fail or OrbSCCLookup(o)[i]<>LambdaOrbSCCIndex(d) then
       return fail;
     fi;
     i:=Position(OrbSCC(o)[OrbSCCLookup(o)[i]], i);
@@ -599,7 +607,7 @@ function(d)
       o:=RhoOrb(d);
     fi;
     j:=Position(o, RhoFunc(Parent(d))(f));
-    if j=fail then
+    if j=fail or OrbSCCLookup(o)[j]<>RhoOrbSCCIndex(d) then
       return fail;
     fi;
     j:=Position(OrbSCC(o)[OrbSCCLookup(o)[j]], j);
@@ -613,7 +621,6 @@ function(d)
     fi;
     return rightact(rreps[x![1]], x![2])*lreps[x![3]];
   end;
-
   hom:=MappingByFunction(d, rms, iso, inv);
   SetIsInjective(hom, true);
   SetIsTotal(hom, true);
