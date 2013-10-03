@@ -333,11 +333,13 @@ function(S)
   po:=ShallowCopy(PartialOrderOfDClasses(S));
   classes:=GreensDClasses(S);
   D:=List(gens, x-> PositionProperty(classes, d-> x in d));
-  lookup:=[]; max:=[];
+  lookup:=[]; max:=[]; nonmax:=[];
 
   for i in [1..Length(gens)] do 
     if not ForAny([1..Length(po)], j-> j<>D[i] and D[i] in po[j]) then 
-      Add(max, D[i]);
+      AddSet(max, D[i]);
+    else 
+      AddSet(nonmax, D[i]);
     fi;
     if not IsBound(lookup[D[i]]) then 
       lookup[D[i]]:=[];
@@ -374,6 +376,47 @@ function(S)
     fi;
   od;
 
+  #Type 2: maximal subsemigroups arising from non-maximal D-classes
+  for i in nonmax do 
+    if not IsRegularDClass(classes[i]) then 
+      #find the generators for the ideal...
+      gens2:=ShallowCopy(gens);
+      Remove(gens2, lookup[i][1]); #there's only one generator in the D-class
+      pos:=Position(po[i], i);
+      if pos<>fail then
+        Remove(po[i], pos);
+      fi;
+      Append(gens2, 
+       SmallGeneratingSet(SemigroupIdealByGenerators(S,
+        List(classes{po[i]}, Representative));
+      Add(out, Semigroup(gens2));
+      #find the generator above <classes[i]>
+    else # <classes[i]> is regular
+      for j in lookup[i] do 
+        gens2:=ShallowCopy(gens);
+        Remove(gens2, j);
+        B:=Intersection(Semigroup(gens2), classes[i]);
+        A:=Difference(classes[i], B);
+        RemoveSet(A, gens[j]);
+        XX:=[gens[j]];
+        while not IsEmpty(A) do 
+          a:=A[1];
+          C:=Semigroup(a, gens2);
+          if ForAny(XX, x-> x in C) then 
+            RemoveSet(A, a);
+            AddSet(XX, a);
+          else
+            A:=Difference(A, C);
+          fi;
+        od;
+      od;
+
+
+        
+    fi;
+
+      
+  
   return out;
 end);
 
