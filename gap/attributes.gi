@@ -24,6 +24,29 @@
 # MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
 # fail but IsMonoidAsSemigroup is still true. 
 
+InstallMethod(IsGreensDLeq, "for an acting semigroup",
+[IsActingSemigroup],
+function(S)
+  local partial, data, comp_index;
+
+  partial:=PartialOrderOfDClasses(S);
+  data:=SemigroupData(S);
+
+  comp_index:=function(x, y)
+    if y in partial[x] then
+      return true;
+    elif Length(partial[x])=1 and partial[partial[x][1]]=partial[x] then
+      return false;
+    fi;
+    return ForAny(partial[x], z-> z<>x and comp_index(z,y));
+  end;
+
+  return function(x,y)
+    return comp_index(OrbSCCLookup(data)[Position(data, x)]-1,
+      OrbSCCLookup(data)[Position(data, y)]-1);
+  end;
+end);
+
 #
 
 InstallMethod(IsMaximalSubsemigroup, "for a semigroup and semigroup", 

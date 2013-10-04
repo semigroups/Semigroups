@@ -11,7 +11,7 @@
 #############################################################################
 ##
 
-InstallMethod(IsGreensDLeq, "for an acting semigroup",
+InstallMethod(IsGreensDLeq, "for an inverse op acting semigroup",
 [IsActingSemigroupWithInverseOp], 
 function(S)
   local partial, o, comp_index;

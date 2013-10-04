@@ -32,3 +32,5 @@ DeclareAttribute("StructureDescriptionMaximalSubgroups", IsActingSemigroup);
 DeclareAttribute("MaximalDClasses", IsSemigroup);
 DeclareAttribute("MaximalSubsemigroups", IsSemigroup);
 DeclareAttribute("MinimalDClass", IsSemigroup);
+DeclareAttribute("IsGreensDLeq", IsActingSemigroup);
+
