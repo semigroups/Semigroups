@@ -1170,13 +1170,31 @@ InstallMethod(IsomorphismPermGroup, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
  
-   if not IsGroupAsSemigroup(s)  then
-     Error( "usage: transformation semigroup satisfying IsGroupAsSemigroup,");
-     return; 
-   fi;
- 
-   return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
+  if not IsGroupAsSemigroup(s)  then
+   Error( "usage: a transformation semigroup satisfying IsGroupAsSemigroup,");
+   return; 
+  fi;
+
+  return MagmaIsomorphismByFunctionsNC(s, 
+   Group(List(Generators(s), AsPermutation)), 
     AsPermutation, x-> AsTransformation(x, DegreeOfTransformationSemigroup(s)));
+end);
+
+#
+
+InstallMethod(IsomorphismPermGroup,
+"for a partial perm semigroup with generators",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+
+  if not IsGroupAsSemigroup(s)  then
+   Error( "usage: a partial perm semigroup satisfying IsGroupAsSemigroup,");
+   return; 
+  fi;
+
+  return MagmaIsomorphismByFunctionsNC(s,
+   Group(List(GeneratorsOfSemigroup(s), AsPermutation)),
+    AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
 end);
 
 #

@@ -117,3 +117,16 @@ gap> U;
   <subsemigroup of 26x5 Rees 0-matrix semigroup with 29 generators>, 
   <subsemigroup of 26x5 Rees 0-matrix semigroup with 36 generators> ]
 
+#MinimalIdeal
+gap> MinimalIdeal(V);
+<subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator>
+gap> List(U, MinimalIdeal);
+[ <subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator> ]
+
+
+
