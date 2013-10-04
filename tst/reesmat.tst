@@ -14,6 +14,30 @@ gap> LoadPackage( "semigroups", false );;
 # Set info levels and user preferences
 gap> SemigroupsStartTest();
 
+# some semigroups to which the methods in Semigroups should not apply...
+gap> R:=ReesZeroMatrixSemigroup(POI(5), [[0,0,0], [0,0,0]]);
+<Rees 0-matrix semigroup 3x2 over <inverse partial perm monoid on 5 pts
+ with 5 generators>>
+gap> R:=Semigroup(Generators(R));
+<subsemigroup of 3x2 Rees 0-matrix semigroup with 1513 generators>
+gap> IsActingSemigroup(R);
+false
+gap> R:=ReesZeroMatrixSemigroup(Group(()), [[0,0,0], [0,0,0]]);
+<Rees 0-matrix semigroup 3x2 over Group(())>
+gap> R:=ReesZeroMatrixSemigroup(Group(()), [[0,0,0], [0,0,0]]);
+<Rees 0-matrix semigroup 3x2 over Group(())>
+gap> R:=Semigroup(Generators(R));                              
+<subsemigroup of 3x2 Rees 0-matrix semigroup with 7 generators>
+gap> IsActingSemigroup(R);
+false
+gap> R:=ReesZeroMatrixSemigroup(POI(5), [[PartialPerm([],[]),0], [0,PartialPer$
+<Rees 0-matrix semigroup 2x2 over <inverse partial perm monoid on 5 pts
+ with 5 generators>>
+gap> R:=Semigroup(Generators(R));                                              
+<subsemigroup of 2x2 Rees 0-matrix semigroup with 1009 generators>
+gap> IsActingSemigroup(R);
+false
+
 # find a source of interesting subsemigroups of Rees 0-matrix semigroups...
 gap> S:=Semigroup( 
 >  Transformation( [ 1, 1, 2, 7, 9, 8, 5, 9, 6 ] ), 

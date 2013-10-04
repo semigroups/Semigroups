@@ -197,17 +197,17 @@ gap> Size(Range(iso));
 gap> s:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
 <inverse partial perm semigroup on 4 pts with 2 generators>
 gap> IsomorphismPermGroup(s);
-MappingByFunction( <inverse partial perm semigroup on 4 pts
- with 2 generators>, Group([ (1,2,3,4), (1,
+MappingByFunction( <partial perm group on 4 pts with 2 generators>
+ , Group([ (1,2,3,4), (1,
 2) ]), <Attribute "AsPermutation">, function( x ) ... end )
 gap> iso:=last;
-MappingByFunction( <inverse partial perm semigroup on 4 pts
- with 2 generators>, Group([ (1,2,3,4), (1,
+MappingByFunction( <partial perm group on 4 pts with 2 generators>
+ , Group([ (1,2,3,4), (1,
 2) ]), <Attribute "AsPermutation">, function( x ) ... end )
 gap> inv:=InverseGeneralMapping(iso);
 MappingByFunction( Group([ (1,2,3,4), (1,
-2) ]), <inverse partial perm semigroup on 4 pts
- with 2 generators>, function( x ) ... end, <Attribute "AsPermutation"> )
+2) ]), <partial perm group on 4 pts with 2 generators>
+ , function( x ) ... end, <Attribute "AsPermutation"> )
 gap> f:=Random(s);
 (1,2)(3)(4)
 gap> f^iso;       

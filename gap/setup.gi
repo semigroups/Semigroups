@@ -39,7 +39,12 @@ InstallMethod(IsGeneratorsOfActingSemigroup, "for a partial perm collection",
 
 InstallMethod(IsGeneratorsOfActingSemigroup, 
 "for a Rees 0-matrix semigroup element collection", 
-[IsReesZeroMatrixSemigroupElementCollection], x-> true);
+[IsReesZeroMatrixSemigroupElementCollection],
+function(coll)
+  local R;
+  R:=ReesMatrixSemigroupOfFamily(FamilyObj(coll[1]));
+  return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
+end);
 
 # the largest point involved in the action
 

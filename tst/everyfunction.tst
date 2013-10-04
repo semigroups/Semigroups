@@ -3922,8 +3922,7 @@ IdentityTransformation
 gap> IsGroupHClass(h);
 true
 gap> KnownPropertiesOfObject(h);
-[ "IsFinite", "IsDuplicateFree", "IsGroupHClass", 
-  "IsActingSemigroupGreensClass", "IsGreensClassNC" ]
+[ "IsFinite", "IsDuplicateFree", "IsGroupHClass", "IsGreensClassNC" ]
 gap> KnownAttributesOfObject(h);
 [ "Representative", "OneImmutable", "ParentAttr", "EquivalenceClassRelation", 
   "LambdaOrbSCCIndex", "RhoOrbSCCIndex", "LambdaOrb", "RhoOrb" ]
