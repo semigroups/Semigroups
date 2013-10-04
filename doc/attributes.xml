@@ -417,16 +417,17 @@ gap> IdempotentGeneratedSubsemigroup(S);
 gap> S:=SymmetricInverseSemigroup(5);
 &lt;symmetric inverse semigroup on 5 pts>
 gap> IdempotentGeneratedSubsemigroup(S);
-&lt;inverse partial perm semigroup on 5 pts with 6 generators>
+&lt;inverse partial perm semigroup on 5 pts with 6 generators></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 gap> S:=DualSymmetricInverseSemigroup(5); 
 &lt;inverse bipartition semigroup on 5 pts with 3 generators>
 gap> IdempotentGeneratedSubsemigroup(S);
 &lt;inverse bipartition semigroup on 5 pts with 11 generators>
 gap> IsSemilatticeAsSemigroup(last);
 true</Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
 
 <#GAPDoc Label="InjectionPrincipalFactor">
 <ManSection>

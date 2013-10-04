@@ -76,6 +76,8 @@ gap> V:=Semigroup(MultiplicativeZero(U[3]),
 > RMSElement(U[3],15,(1,9)(5,8),2), 
 > RMSElement(U[3],22,(1,9),1));;
 
+# from attributes.xml...
+
 # StuctureDescriptionMaximalSubgroups
 gap> StructureDescriptionMaximalSubgroups(U[1]);
 [ "1", "D12" ]
@@ -179,6 +181,21 @@ gap> List(last, Size);
 gap> last2[1]=last2[2];
 true
 
+#IrredundantGeneratingSubset
+gap> IrredundantGeneratingSubset(V);
+[ (1,(1,6),3), (2,(1,6),5), (6,(1,9)(5,8),1), (7,(1,6)(5,8),3), (11,(1,9),5), 
+  (13,(1,6)(5,8),3), (15,(1,9)(5,8),2), (22,(1,6),1), (23,(5,8),2), 
+  (24,(1,6)(5,8),4) ]
+gap> Length(last);
+10
+gap> IrredundantGeneratingSubset(U[1]);
+[ (1,(1,6),1), (2,(),5), (3,(),5), (4,(),1), (5,(),4), (6,(),1), (7,(1,6),2), 
+  (8,(),3), (9,(),3), (10,(),1), (10,(),2), (11,(),3), (12,(),2), (13,(),3), 
+  (14,(),1), (15,(),1), (16,(),3), (17,(),1), (18,(),2), (19,(),3), 
+  (20,(),3), (21,(),2), (22,(),4), (23,(),4), (24,(),5), (25,(),5), (26,(),3) 
+ ]
+gap> Length(last);
+27
 
 #
 gap> SemigroupsStopTest();
