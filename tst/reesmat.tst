@@ -324,7 +324,63 @@ gap> GroupHClass(D);
 gap> StructureDescription(last);
 "1"
 
+# Idempotents
+gap> Idempotents(V);
+[ 0, (13,(1,9,6),3), (13,(1,9,6),2), (7,(),3), (7,(),2), (23,(1,6),5), 
+  (23,(1,6),4), (22,(),1), (11,(1,6),3), (11,(1,6),2), (2,(5,8)(6,9),5), 
+  (2,(5,8)(6,9),4), (24,(),5), (24,(),4), (6,(1,6),1) ]
+gap> ForAll(last, IsIdempotent);
+true
+gap> Idempotents(U[2]);
+[ (14,(5,8)(6,9),1), (7,(),3), (7,(),2), (16,(1,9,6)(5,8),3), 
+  (16,(1,9,6)(5,8),2), (6,(1,6),1), (19,(1,9,6)(5,8),3), (19,(1,9,6)(5,8),2), 
+  (11,(1,6),3), (11,(1,6),2), (22,(),1), (20,(),3), (20,(),2), 
+  (5,(5,8)(6,9),5), (5,(5,8)(6,9),4), (26,(1,9),3), (26,(1,9),2), (25,(),5), 
+  (25,(),4), (8,(1,9)(5,8),3), (8,(1,9)(5,8),2), (9,(1,9),3), (9,(1,9),2), 
+  (18,(1,9,6)(5,8),3), (18,(1,9,6)(5,8),2), (12,(1,6)(5,8),3), 
+  (12,(1,6)(5,8),2), (3,(5,8)(6,9),5), (3,(5,8)(6,9),4), (4,(),5), (4,(),4), 
+  (21,(1,9,6)(5,8),3), (21,(1,9,6)(5,8),2), (17,(1,9)(5,8),5), 
+  (17,(1,9)(5,8),4), (15,(1,9),1), (10,(),1), (1,(),1), (24,(),5), (24,(),4), 
+  (23,(1,6),5), (23,(1,6),4), (2,(5,8)(6,9),5), (2,(5,8)(6,9),4), 
+  (13,(1,9,6),3), (13,(1,9,6),2), 0 ]
+gap> ForAll(last, IsIdempotent);
+true
+
+# IsRegularClass
+gap> Number(RClasses(V), IsRegularClass);
+9
+gap> Number(DClasses(V), IsRegularClass);
+3
+gap> NrRegularDClasses(V);
+3
+gap> Number(DClasses(U[4]), IsRegularClass);
+3
+gap> NrRegularDClasses(U[4]);
+3
+gap> Number(LClasses(U[4]), IsRegularClass);
+6
+
+# NrIdempotents
+gap> NrIdempotents(V)=Length(Idempotents(V));
+true
+gap> ForAll(U, x-> NrIdempotents(x)=Length(Idempotents(x)));
+true
+gap> List(DClasses(V), NrIdempotents);
+[ 1, 12, 0, 2, 0, 0 ]
+gap> List(RClasses(V), NrIdempotents);
+[ 1, 2, 0, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0 ]
+gap> List(LClasses(U[3]), NrIdempotents);
+[ 12, 8, 12, 8, 0, 0, 0, 0, 6, 1 ]
+
+# PartialOrderOfDClasses
+gap> PartialOrderOfDClasses(V);
+[ [ 1 ], [ 1, 2, 3, 5 ], [ 1, 3, 6 ], [ 1, 4, 6 ], [ 1, 5, 6 ], [ 1, 6 ] ]
+gap> PartialOrderOfDClasses(U[1]); 
+[ [ 1, 2, 4 ], [ 2, 4 ], [ 2, 3, 4 ], [ 4 ] ]
+gap> PartialOrderOfDClasses(U[2]);
+[ [ 1, 4 ], [ 1, 2, 4 ], [ 1, 3, 4 ], [ 4 ] ]
 
 #
+#
 gap> SemigroupsStopTest();
-gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);
+gap> STOP_TEST( "Semigroups package: reesmat.tst", 10000);
