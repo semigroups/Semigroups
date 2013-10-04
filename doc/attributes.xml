@@ -8,6 +8,51 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="MaximalSubsemigroups">
+<ManSection>
+  <Attr Name="MaximalSubsemigroups" Arg="S"/>
+  <Returns>The maximal subsemigroups of <A>S</A>.</Returns>
+  <Description>
+    If <A>S</A> is a regular Rees matrix semigroup or Rees 0-matrix semigroup
+    over a group, then <C>MaximalSubsemigroups</C> returns a list of the
+    maximal subsemigroups of <A>S</A>. <P/>
+
+    The method for this funciton is based on Remark 1 of 
+    <Cite Key="Graham1968aa"/>. 
+
+  <Example>
+gap> S:=FullTransformationSemigroup(4);                              
+&lt;full transformation semigroup on 4 pts>
+gap> D:=DClass(S, Transformation([2,2]));
+{Transformation( [ 2, 2, 3, 1 ] )}
+gap> R:=PrincipalFactor(D);
+&lt;Rees 0-matrix semigroup 6x4 over Group([ (2,3,4), (2,4) ])>
+gap> MaximalSubsemigroups(R);                                       
+[ &lt;Rees 0-matrix semigroup 6x3 over Group([ (2,3,4), (2,4) ])>, 
+  &lt;Rees 0-matrix semigroup 6x3 over Group([ (2,3,4), (2,4) ])>, 
+  &lt;Rees 0-matrix semigroup 6x3 over Group([ (2,3,4), (2,4) ])>, 
+  &lt;Rees 0-matrix semigroup 6x3 over Group([ (2,3,4), (2,4) ])>, 
+  &lt;Rees 0-matrix semigroup 5x4 over Group([ (2,3,4), (2,4) ])>, 
+  &lt;Rees 0-matrix semigroup 5x4 over Group([ (2,3,4), (2,4) ])>, 
+  &lt;Rees 0-matrix semigroup 5x4 over Group([ (2,3,4), (2,4) ])>, 
+  &lt;Rees 0-matrix semigroup 5x4 over Group([ (2,3,4), (2,4) ])>, 
+  &lt;Rees 0-matrix semigroup 5x4 over Group([ (2,3,4), (2,4) ])>, 
+  &lt;Rees 0-matrix semigroup 5x4 over Group([ (2,3,4), (2,4) ])>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 22 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 22 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 20 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 22 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 20 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 22 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 20 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 20 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 20 generators>, 
+  &lt;subsemigroup of 6x4 Rees 0-matrix semigroup with 20 generators> ]
+</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="IsGreensDLeq">
 <ManSection>
   <Attr Name="IsGreensDLeq" Arg="S"/>

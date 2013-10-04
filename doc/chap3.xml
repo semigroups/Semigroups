@@ -73,6 +73,7 @@
     <#Include Label="IsTransformationSemigroupGreensClass">
     <#Include Label="IsPartialPermSemigroupGreensClass">
     <#Include Label="StructureDescription">
+    <#Include Label="IsGreensDLeq">
 
   </Section>
 
@@ -91,9 +92,9 @@
     <#Include Label="MultiplicativeZero">
     <#Include Label="Random">
     <#Include Label="SmallGeneratingSet"> 
+    <#Include Label="MaximalSubsemigroups"> 
 
   </Section>
-
 
   <Section><Heading>Further properties of semigroups</Heading>
     In this section we describe several properties 
