@@ -910,6 +910,7 @@ function(s)
   rank:=LambdaRank(s);
   lambda:=LambdaFunc(s);
   max:=0;
+  rep:=gens[1];
   
   for f in gens do 
     r:=rank(lambda(f));

@@ -427,6 +427,93 @@ gap> IsRightSimple(R);
 false
 gap> IsLeftSimple(R); 
 true
+gap> IsCompletelyRegularSemigroup(R);
+true
+gap> R:=ReesZeroMatrixSemigroup(Group(()),  [[(), (), (), (), ()]]);;
+gap> R:=Semigroup(Difference(Generators(R), [MultiplicativeZero(R)]));  
+<subsemigroup of 5x1 Rees 0-matrix semigroup with 5 generators>
+gap> IsLeftZeroSemigroup(R);
+true
+gap> IsRightZeroSemigroup(R);
+false
+gap> IsMonogenicSemigroup(R);
+false
+gap> List(U, IsMonogenicSemigroup);
+[ false, false, false, false, false, false ]
+gap> R:=ReesZeroMatrixSemigroup(Group(()),  [[()]]);                  
+<Rees 0-matrix semigroup 1x1 over Group(())>
+gap> R:=Semigroup(Generators(R));                                     
+<subsemigroup of 1x1 Rees 0-matrix semigroup with 2 generators>
+gap> IsMonoidAsSemigroup(R);
+true
+gap> List(U, IsMonoidAsSemigroup);
+[ false, false, false, false, false, false ]
+gap> IsomorphismTransformationSemigroup(R);
+MappingByFunction( <subsemigroup of 1x1 Rees 0-matrix semigroup 
+ with 2 generators>, <commutative transformation monoid 
+ on 2 pts with 1 generator>, function( x ) ... end, function( x ) ... end )
+gap> IsOrthodoxSemigroup(R);
+true
+gap> IsOrthodoxSemigroup(V);
+false
+gap> List(U, IsOrthodoxSemigroup);
+[ false, false, false, false, false, false ]
+gap> R:=ReesZeroMatrixSemigroup(Group(()), [[(), (), ()], [(), (), ()]]);  
+<Rees 0-matrix semigroup 3x2 over Group(())>
+gap> R:=Semigroup(Difference(Generators(R), [MultiplicativeZero(R)]));     
+<subsemigroup of 3x2 Rees 0-matrix semigroup with 4 generators>
+gap> IsRectangularBand(R);
+true
+gap> IsRectangularBand(V);              
+false
+gap> List(U, IsRectangularBand);
+[ false, false, false, false, false, false ]
+gap> List(U, IsRegularSemigroup);
+[ false, false, false, false, false, false ]
+gap> IsRegularSemigroup(V);      
+false
+gap> UU:=IdempotentGeneratedSubsemigroup(U[3]);  
+<subsemigroup of 26x5 Rees 0-matrix semigroup with 26 generators>
+gap> IsSemilatticeAsSemigroup(UU);
+false
+gap> IsSimpleSemigroup(V);        
+false
+gap> List(U, IsSimpleSemigroup); 
+[ false, false, false, false, false, false ]
+gap> R;
+<subsemigroup of 3x2 Rees 0-matrix semigroup with 4 generators>
+gap> IsSimpleSemigroup(V);
+false
+gap> IsSimpleSemigroup(R);
+true
+gap> IsomorphismReesMatrixSemigroup(R);
+InverseGeneralMapping( MappingByFunction( <Rees matrix semigroup 3x2 over 
+  Group(())>, <subsemigroup of 3x2 Rees 0-matrix semigroup with 4 generators>
+ , function( x ) ... end ) )
+gap> R:=ReesZeroMatrixSemigroup(Group(()), [[(), (), ()], [(), (), ()]]);
+<Rees 0-matrix semigroup 3x2 over Group(())>
+gap> R:=Semigroup(Generators(R));                                      
+<subsemigroup of 3x2 Rees 0-matrix semigroup with 5 generators>
+gap> IsZeroGroup(R);
+false
+gap> IsZeroRectangularBand(R);
+true
+gap> IsZeroSimpleSemigroup(R);
+true
+gap> R:=ReesZeroMatrixSemigroup(Group(()), [[(),(),()], [(),0,0], [(),0,0]]); 
+<Rees 0-matrix semigroup 3x3 over Group(())>
+gap> R:=ReesZeroMatrixSubsemigroup(R, [2,3], Group(()), [2,3]);
+<Rees 0-matrix semigroup 2x2 over Group(())>
+gap> R:=Semigroup(Generators(R));                                
+<subsemigroup of 3x3 Rees 0-matrix semigroup with 5 generators>
+gap> Size(R);
+5
+gap> IsZeroSemigroup(R);
+true
+gap> IsZeroSemigroup(V);
+false
+
+
 
 #
 #
