@@ -8,6 +8,12 @@
 #############################################################################
 ##
 
+gap> START_TEST("Semigroups package: reesmat.tst");
+gap> LoadPackage( "semigroups", false );;
+
+# Set info levels and user preferences
+gap> SemigroupsStartTest();
+
 # find a source of interesting subsemigroups of Rees 0-matrix semigroups...
 gap> S:=Semigroup( 
 >  Transformation( [ 1, 1, 2, 7, 9, 8, 5, 9, 6 ] ), 
@@ -102,20 +108,9 @@ gap> ForAll(D, x-> ForAll(D, y-> (not x*y in D) or (x*y)^inj=x^inj*y^inj));
 true
 
 # SmallGeneratingSet
-gap> SmallGeneratingSet(V);
-[ (23,(5,8),2), (1,(1,6),3), (6,(1,9)(5,8),1), (7,(1,6)(5,8),3), 
-  (22,(1,9),1), (2,(1,6),5), (11,(1,9),5), (24,(1,6)(5,8),4), 
-  (15,(1,9)(5,8),2), (13,(1,6)(5,8),3) ]
-gap> Length(last);
-10
+gap> Length(SmallGeneratingSet(V))<Length(Generators(V));
+true
 gap> Apply(U, x-> Semigroup(SmallGeneratingSet(x)));
-gap> U;
-[ <subsemigroup of 26x5 Rees 0-matrix semigroup with 32 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 33 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 31 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 33 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 29 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 36 generators> ]
 
 #MinimalIdeal
 gap> MinimalIdeal(V);
@@ -128,5 +123,33 @@ gap> List(U, MinimalIdeal);
   <subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator>, 
   <subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator> ]
 
+#IsomorphismPermGroup
+gap> R:=ReesZeroMatrixSemigroup(QuaternionGroup(IsPermGroup, 8), [[()]]);;
+gap> T:=Semigroup(Filtered(Generators(R), x-> x![1]<>0));;
+gap> iso:=IsomorphismPermGroup(T);              
+MappingByFunction( <subsemigroup of 1x1 Rees 0-matrix semigroup 
+ with 2 generators>, Group([ (1,5,3,7)(2,8,4,6), (1,2,3,4)
+(5,6,7,8) ]), function( x ) ... end, function( x ) ... end )
+gap> inv:=InverseGeneralMapping(iso);
+MappingByFunction( Group([ (1,5,3,7)(2,8,4,6), (1,2,3,4)
+(5,6,7,8) ]), <subsemigroup of 1x1 Rees 0-matrix semigroup with 2 generators>
+ , function( x ) ... end, function( x ) ... end )
+gap> ForAll(T, x-> (x^iso)^inv=x);
+true
+gap> ForAll(T, x-> ForAll(T, y-> (x*y)^iso=x^iso*y^iso));                   
+true
+gap> iso:=IsomorphismPermGroup(MinimalIdeal(V));
+MappingByFunction( <subsemigroup of 26x5 Rees 0-matrix semigroup 
+ with 1 generator>, Group(()), function( x ) ... end, function( x ) ... end )
+gap> inv:=InverseGeneralMapping(iso);
+MappingByFunction( Group(()), <subsemigroup of 26x5 Rees 0-matrix semigroup 
+ with 1 generator>, function( x ) ... end, function( x ) ... end )
+gap> ForAll(MinimalIdeal(V), x-> (x^iso)^inv=x);         
+true
+gap> ForAll(MinimalIdeal(V), x-> ForAll(MinimalIdeal(V), y-> 
+> (x*y)^iso=x^iso*y^iso));
+true
 
-
+#
+gap> SemigroupsStopTest();
+gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);

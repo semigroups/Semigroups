@@ -18,7 +18,7 @@ DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
 DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 DeclareAttribute("IsomorphismReesMatrixSemigroup", IsGreensDClass);
-DeclareAttribute("IsomorphismPermGroup", IsTransformationSemigroup);
+DeclareAttribute("IsomorphismPermGroup", IsSemigroup and HasGeneratorsOfSemigroup);
 DeclareAttribute("MinimalIdeal", IsSemigroup);
 DeclareAttribute("PosetOfIdempotents", IsSemigroup);
 DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);

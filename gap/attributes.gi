@@ -1199,6 +1199,30 @@ end);
 
 #
 
+InstallMethod(IsomorphismPermGroup,
+"for a subsemigroup of a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local rep;
+
+  if not IsGroupAsSemigroup(s)  then
+   Error( "usage: a subsemigroup of a Rees 0-matrix semigroup satisfying\n", 
+    "IsGroupAsSemigroup,");
+   return; 
+  fi;
+
+  rep:=s.1;
+  if rep![1]=0 then # special case for the group consisting of 0
+    return MagmaIsomorphismByFunctionsNC(s, Group(()), x-> (), x-> rep);
+  fi;
+
+  return MagmaIsomorphismByFunctionsNC(s, 
+    Group(List(GeneratorsOfSemigroup(s), x-> x![2])),
+      x-> x![2], x-> RMSElement(s, rep![1], x, rep![3]));
+end);
+
+#
+
 InstallMethod(IsomorphismTransformationSemigroup, 
 "for semigroup of binary relations with generators", 
 [IsBinaryRelationSemigroup and HasGeneratorsOfSemigroup], 2, 
