@@ -513,6 +513,7 @@ true
 gap> IsZeroSemigroup(V);
 false
 
+# from semigroups.xml ...
 
 
 #

@@ -104,8 +104,8 @@ gap> S:=RandomInverseMonoid(10,10);
     <Oper Name="RandomTransformationSemigroup" Arg="m, n"/>
     <Returns>A transformation semigroup or monoid.</Returns>
     <Description>
-      Returns a random transformation monoid or semigroup of degree <A>n</A> 
-      with <A>m</A> generators.
+      Returns a random transformation monoid or semigroup of at most degree
+      <A>n</A> with <A>m</A> generators.
       <Example>
 gap> S:=RandomTransformationMonoid(5,5);
 &lt;transformation monoid on 5 pts with 5 generators>
@@ -121,8 +121,11 @@ gap> S:=RandomTransformationSemigroup(5,5);
     <Func Name="RandomPartialPermSemigroup" Arg="m, n"/>
     <Returns>A partial perm semigroup or monoid.</Returns>
     <Description>
+      Returns a random partial perm monoid or semigroup of degree at most
+      <A>n</A> with <A>m</A> generators.
       <Example>
-</Example>
+gap> S:=RandomPartialPermSemigroup(5, 5);
+&lt;partial perm semigroup on 4 pts with 5 generators></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

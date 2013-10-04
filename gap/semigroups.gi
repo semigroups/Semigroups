@@ -1017,6 +1017,15 @@ end);
 
 #
 
+InstallMethod(RandomPartialPermMonoid, 
+"for positive integer and positive integer",
+[IsPosInt, IsPosInt],
+function(m,n)
+  return Monoid(Set(List([1..m], x-> RandomPartialPerm(n))));
+end);
+
+#
+
 InstallMethod(RandomInverseMonoid,
 "for positive integer and positive integer",
 [IsPosInt, IsPosInt],
