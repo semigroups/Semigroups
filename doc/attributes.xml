@@ -128,7 +128,7 @@ gap> S:=Semigroup( PartialPerm( [ 1, 2, 3 ], [ 2, 5, 4 ] ),
 >  PartialPerm( [ 1, 2, 3, 5 ], [ 2, 3, 5, 4 ] ), 
 >  PartialPerm( [ 1, 2, 3, 5 ], [ 4, 2, 5, 1 ] ), 
 >  PartialPerm( [ 1, 2, 3, 5 ], [ 5, 2, 4, 3 ] ), 
->  PartialPerm( [ 1, 2, 5 ], [ 5, 4, 3 ] ) );
+>  PartialPerm( [ 1, 2, 5 ], [ 5, 4, 3 ] ) );;
 gap> StructureDescriptionSchutzenbergerGroups(S);            
 [ "1", "C2", "S3" ]</Example>
     </Description>
@@ -400,8 +400,8 @@ gap> StructureDescription(Range(IsomorphismPermGroup(S)));
 gap> S:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
 &lt;inverse partial perm semigroup on 4 pts with 2 generators>
 gap> IsomorphismPermGroup(S);
-MappingByFunction( &lt;inverse partial perm semigroup on 4 pts
- with 2 generators>, Group([ (1,2,3,4), (1,
+MappingByFunction( &lt;partial perm group on 4 pts with 2 generators>
+ , Group([ (1,2,3,4), (1,
 2) ]), &lt;Attribute "AsPermutation">, function( x ) ... end )</Example>
   </Description>
 </ManSection>

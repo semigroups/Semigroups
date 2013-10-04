@@ -602,11 +602,10 @@ end);
 #recreate the lambda orb using the higher degree!
 InstallGlobalFunction(RebaseTransformationSemigroupLambdaOrb, 
 function(o, old_deg, t)
-  local extra, old_ht, ht, i;
+  local extra, ht, i;
 
   # rehash the orbit values
   extra:=[old_deg+1..DegreeOfTransformationSemigroup(t)];
-  old_ht:=o!.ht;
   ht:=HTCreate(o[1], rec(treehashsize:=o!.treehashsize));
   HTAdd(ht, o[1], 1);
   for i in [2..Length(o)] do 
@@ -619,7 +618,6 @@ function(o, old_deg, t)
   
   # change the action of <o> to that of <t> 
   o!.op:=LambdaAct(t);
-
   return o;
 end);
 
@@ -627,7 +625,7 @@ end);
 
 InstallGlobalFunction(ClosureSemigroupNC,
 function(s, coll, opts)
-  local t, old_o, o, old_deg, new_deg, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, graph, old_graph, reps, lambdarhoht, repslookup, orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, oht, scc, old_scc, lookup, old_lookup, old_to_new, htadd, htvalue, i, x, pos, m, rank, y, rhoy, val, schutz, tmp, old, n, j;
+  local t, old_o, o, old_deg, oldnrgens, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, graph, old_graph, reps, lambdarhoht, repslookup, orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, oht, scc, old_scc, lookup, old_lookup, old_to_new, htadd, htvalue, i, x, pos, m, rank, y, rhoy, val, schutz, tmp, old, n, j;
  
   if coll=[] then 
     Info(InfoSemigroups, 2, "all the elements in the collection belong to the ",
@@ -657,8 +655,23 @@ function(s, coll, opts)
       RebaseTransformationSemigroupLambdaOrb(o, old_deg, t);
     fi;
   fi;
-  
-  AddGeneratorsToOrbit(o, coll);
+  AddGeneratorsToOrbit(o, coll); 
+  #JDM I'm not certain this is working properly, the OrbitGraph seems not to be
+  #updated in the second position, in the first example in
+  #IdempotentGeneratedSubsemigroup man section
+
+  #oldnrgens := Length(o!.gens);
+  #Append(o!.gens,coll);
+  #ResetFilterObj(o,IsClosed);
+  #o!.stopper := o!.pos;
+  #o!.pos := 1;
+  #o!.genstoapply := [oldnrgens+1..Length(o!.gens)];
+  #Enumerate(o);
+  #if o!.pos <> o!.stopper then
+  #  Error("Unexpected case!");
+  #fi; 
+  #o!.stopper := false;
+  #o!.genstoapply := [1..Length(o!.gens)];
 
   # unbind everything related to strongly connected components, since 
   # even if the orbit length doesn't change the strongly connected components
@@ -772,10 +785,12 @@ function(s, coll, opts)
   while new_nr<=old_nr and i<old_nr do
     i:=i+1;
     x:=old_orb[i][4];
-    pos:=old_schreiermult[i];
-    m:=lookup[pos];
+    if not x in s then 
+      Error();
+    fi;
+    pos:=old_schreiermult[i]; 
+    m:=lookup[pos];           
     rank:=ActionRank(t)(x);
-    
     if rank>max_rank or scc[m][1]=old_scc[old_lookup[pos]][1] then 
       y:=x;
     elif pos=old_scc[old_lookup[pos]][1] then 
@@ -855,6 +870,7 @@ function(s, coll, opts)
     htadd(ht, y, new_nr);
     old_to_new[i]:=new_nr;
   od;
+  
   
   # process the orbit graph
 

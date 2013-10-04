@@ -86,12 +86,13 @@ fail</Example>
 
 <#GAPDoc Label="StructureDescription">
   <ManSection>
-    <Meth Name="StructureDescription" Arg="class" Label="for a group H-class"/>
-    <Returns>A string.</Returns>
+    <Meth Name="StructureDescription" Arg="class" Label="for an H-class"/>
+    <Returns>A string or <K>fail</K>.</Returns>
     <Description>
       <C>StructureDescription</C> returns the value of
       <Ref Attr="StructureDescription" BookName="ref"/> when it is applied to
-      a group isomorphic to the group &H;-class <A>class</A>. 
+      a group isomorphic to the group &H;-class <A>class</A>. If <A>class</A> is
+      not a group &H;-class, then <K>fail</K> is returned. 
       <Example>
 gap> S:=Semigroup( 
 > PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 9 ], [ 1, 9, 4, 3, 5, 2, 10, 7 ] ), 

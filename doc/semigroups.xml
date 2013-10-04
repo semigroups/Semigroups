@@ -123,11 +123,11 @@ gap> S:=RandomTransformationSemigroup(5,5);
     <Description>
       Returns a random partial perm monoid or semigroup of degree at most
       <A>n</A> with <A>m</A> generators.
-      <Example>
+      <Log>
 gap> S:=RandomPartialPermSemigroup(5, 5);
 &lt;partial perm semigroup on 4 pts with 5 generators>
 gap> S:=RandomPartialPermMonoid(5, 5);
-&lt;partial perm monoid on 5 pts with 5 generators></Example>
+&lt;partial perm monoid on 5 pts with 5 generators></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
