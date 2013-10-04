@@ -605,6 +605,8 @@ function(d)
         mat[i][j]:=lambdaperm(rep, f);
         if not bound_r[j] then
           bound_r[j]:=true;
+          # could use lreps[i]*rreps[j]^-1*lreps[i] instead if there was a
+          # method for ^-1...
           inv_r[j]:=leftact(mat[i][j]^-1, lreps[i]);
         fi;
         if not bound_l[i] then
@@ -620,19 +622,20 @@ function(d)
 
   rms:=ReesZeroMatrixSemigroup(g, mat);
   iso:=function(f)
-    local o, i, j;
-    o:=LambdaOrb(d);
+    local o, m, i, j;
+    o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
     i:=Position(o, LambdaFunc(Parent(d))(f));
 
-    if i=fail or OrbSCCLookup(o)[i]<>LambdaOrbSCCIndex(d) then
+    if i=fail or OrbSCCLookup(o)[i]<>m then
       return fail;
     fi;
     i:=Position(OrbSCC(o)[OrbSCCLookup(o)[i]], i);
     if not IsInverseOpClass(d) then 
       o:=RhoOrb(d);
+      m:=RhoOrbSCCIndex(d);
     fi;
     j:=Position(o, RhoFunc(Parent(d))(f));
-    if j=fail or OrbSCCLookup(o)[j]<>RhoOrbSCCIndex(d) then
+    if j=fail or OrbSCCLookup(o)[j]<>m then
       return fail;
     fi;
     j:=Position(OrbSCC(o)[OrbSCCLookup(o)[j]], j);
