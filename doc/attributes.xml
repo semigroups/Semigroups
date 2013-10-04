@@ -14,7 +14,7 @@
     <Returns>Distinct structure descriptions of the maximal subgroups 
       of a semigroup.</Returns>
     <Description>
-      <C>StructureDescriptionMaximaSubgroups</C> returns the distinct values of
+      <C>StructureDescriptionMaximalSubgroups</C> returns the distinct values of
       <Ref Attr="StructureDescription" BookName="ref"/> when it is applied to
       the maximal subgroups of the semigroup <A>S</A>. 
       <Example>

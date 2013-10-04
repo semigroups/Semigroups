@@ -1577,8 +1577,7 @@ InstallMethod(MultiplicativeNeutralElement,
 function(h)
 
   if not IsGroupHClass(h) then
-    Error("the H-class is not a group,");
-    return;        
+    return fail;        
   fi;
   return Idempotents(h)[1];
 end);

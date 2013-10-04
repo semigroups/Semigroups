@@ -993,7 +993,12 @@ function(s)
     f:=EvaluateWord(GeneratorsOfSemigroup(s), TraceSchreierTreeForward(o, pos));
   fi;
 
-  if IsIdempotent(f) and Size(GreensRClassOfElementNC(s, f))=1 then
+  #JDM JDM for some reason after running the reesmat.tst up to line 305, 
+  #the <f> obtained here does not satisfy IsIdempotent. It appears to be created
+  #(by multiplying) knowing that it is not an idempotent (i.e. with IsIdempotent
+  #set). WTF?
+  #if IsIdempotent(f) and Size(GreensRClassOfElementNC(s, f))=1 then
+  if f*f=f and Size(GreensRClassOfElementNC(s, f))=1 then
     return f;
   fi;
 
