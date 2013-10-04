@@ -117,5 +117,3 @@ gap> U;
   <subsemigroup of 26x5 Rees 0-matrix semigroup with 29 generators>, 
   <subsemigroup of 26x5 Rees 0-matrix semigroup with 36 generators> ]
 
-
-

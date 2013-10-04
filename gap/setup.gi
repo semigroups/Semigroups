@@ -112,13 +112,25 @@ end);
 InstallMethod(ActionRank, "for a Rees 0-matrix semigroup element", 
 [IsReesZeroMatrixSemigroupElement, IsBool],
 function(f, n)
-  return f![1]=0;
+  local R;
+  if f![1]=0 then 
+    return 0;
+  else
+    R:=ReesMatrixSemigroupOfFamily(FamilyObj(f));
+    return NrMovedPoints(UnderlyingSemigroup(R)); 
+  fi;
 end);
 
 InstallMethod(ActionRank, "for a Rees 0-matrix subsemigroup with generators", 
 [IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  return x-> x![1]=0; 
+  return function(x)
+    if x![1]=0 then 
+      return 0;
+    else
+      return NrMovedPoints(UnderlyingSemigroup(ParentAttr(s))); 
+    fi;
+  end;
 end);
 
 # the minimum possible rank of an element
@@ -130,7 +142,7 @@ InstallMethod(MinActionRank, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x-> 0);
 
 InstallMethod(MinActionRank, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], ReturnTrue);
+[IsReesZeroMatrixSubsemigroup], x-> 0);
 
 # options passed to LambdaOrb(s) when it is created
 
@@ -294,7 +306,13 @@ InstallMethod(LambdaRank, "for a partial perm semigroup",
 
 InstallMethod(LambdaRank, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R-> 
-( x-> NrMovedPoints(UnderlyingSemigroup(ParentAttr(R))))); 
+function(x)
+  if x=[0] then 
+    return 0;
+  else 
+    return NrMovedPoints(UnderlyingSemigroup(ParentAttr(R))); 
+  fi;
+end);
 
 #
 
@@ -305,7 +323,8 @@ InstallMethod(RhoRank, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x-> Length);
 
 InstallMethod(RhoRank, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], R-> (x-> x![1]=0));
+[IsReesZeroMatrixSubsemigroup], R->
+  (x-> NrMovedPoints(UnderlyingSemigroup(ParentAttr(R))))); 
 
 # if g=LambdaInverse(X, f) and X^f=Y, then Y^g=X and g acts on the right 
 # like the inverse of f on Y.
