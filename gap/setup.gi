@@ -293,7 +293,8 @@ InstallMethod(LambdaRank, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x-> Length);
 
 InstallMethod(LambdaRank, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], R-> (x-> x![1]=0));
+[IsReesZeroMatrixSubsemigroup], R-> 
+( x-> NrMovedPoints(UnderlyingSemigroup(ParentAttr(R))))); 
 
 #
 

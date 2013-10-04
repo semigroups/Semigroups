@@ -101,3 +101,21 @@ true
 gap> ForAll(D, x-> ForAll(D, y-> (not x*y in D) or (x*y)^inj=x^inj*y^inj));
 true
 
+# SmallGeneratingSet
+gap> SmallGeneratingSet(V);
+[ (23,(5,8),2), (1,(1,6),3), (6,(1,9)(5,8),1), (7,(1,6)(5,8),3), 
+  (22,(1,9),1), (2,(1,6),5), (11,(1,9),5), (24,(1,6)(5,8),4), 
+  (15,(1,9)(5,8),2), (13,(1,6)(5,8),3) ]
+gap> Length(last);
+10
+gap> Apply(U, x-> Semigroup(SmallGeneratingSet(x)));
+gap> U;
+[ <subsemigroup of 26x5 Rees 0-matrix semigroup with 32 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 33 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 31 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 33 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 29 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 36 generators> ]
+
+
+
