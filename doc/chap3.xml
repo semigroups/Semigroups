@@ -71,7 +71,6 @@
     <#Include Label="MultiplicativeNeutralElement">
     <#Include Label="IsGreensClassNC">
     <#Include Label="IsTransformationSemigroupGreensClass">
-    <#Include Label="IsBipartitionSemigroupGreensClass">
     <#Include Label="IsPartialPermSemigroupGreensClass">
     <#Include Label="StructureDescription">
 
