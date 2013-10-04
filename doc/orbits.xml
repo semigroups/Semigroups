@@ -18,9 +18,12 @@
       <C>Position(<A>o</A>, <A>val</A>)</C>. However, if <A>o</A> is open, then
       the orbit is enumerated until <A>val</A> is found, in which case the
       position of <A>val</A> is returned, or the enumeration ends, in which
-      case <K>fail</K> is returned.  
-      <Example>
-</Example>
+      case <K>fail</K> is returned.  <P/>
+
+      If the optional argument <A>onlynew</A> is present, it should be
+      <K>true</K> or <K>false</K>. If <A>onlynew</A> is <K>true</A>, then
+      <A>val</A> will only be checked against new points in <A>o</A>. Otherwise,
+      every point in the <A>o</A>, not only the new ones, are considered.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -30,8 +33,23 @@
     <Oper Name="LookForInOrb" Arg="o, func, start"/>
     <Returns><K>false</K> or a positive integer.</Returns>
     <Description> 
+      The arguments of this function should be an orbit <A>o</A>, a function
+      <A>func</A> which get the orbit object and a point in the orbit as
+      arguments, and a positive integer <A>start</A>. The function <A>func</A>
+      will be called for every point in <A>o</A> starting from <A>start</A>
+      (inclusive) and the orbit will be enumerated until <A>func</A> returns
+      <K>true</K> or the enumeration ends. In the former case, the position of
+      the first point in <A>o</A> for which <A>func</A> returns <K>true</K> is
+      returned. In the latter, <K>false</K> is returned.  
 <Example>
-</Example>
+gap> o:=Orb(SymmetricGroup(100), 1, OnPoints);
+&lt;open Int-orbit, 1 points>
+gap> func:=function(o, x) return x=42; end;
+function( o, x ) ... end
+gap> LookForInOrb(o, func, 1);
+42
+gap> o;
+&lt;open Int-orbit, 42 points></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
