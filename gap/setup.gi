@@ -445,7 +445,7 @@ InstallMethod(IdempotentCreator, "for a Rees 0-matrix subsemigroup",
 function(j,i)
   local mat;
   if i[1]=0 and j[1]=0 then 
-    return MultiplicativeZero(s);
+    return Objectify(TypeReesMatrixSemigroupElements(s), [0]);
   fi;
   mat:=Matrix(ParentAttr(s));
   return Objectify(TypeReesMatrixSemigroupElements(s), 

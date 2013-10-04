@@ -520,6 +520,31 @@ end);
 
 #
 
+InstallMethod(GroupOfUnits, 
+"for a Rees 0-matrix subsemigroup with generators",
+[IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local r, g, i, j, u;
+
+  if MultiplicativeNeutralElement(s)=fail then
+    return fail;
+  fi;
+
+  r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
+  g:=SchutzenbergerGroup(r);
+  i:=MultiplicativeNeutralElement(s)![1];
+  j:=MultiplicativeNeutralElement(s)![3];
+
+  u:=Semigroup(List(GeneratorsOfGroup(g), x-> RMSElement(s, i, x, j)));
+  
+  SetIsGroupAsSemigroup(u, true);
+  UseIsomorphismRelation(u, g);
+
+  return u;
+end);
+
+#
+
 InstallMethod(IdempotentGeneratedSubsemigroup, 
 "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],

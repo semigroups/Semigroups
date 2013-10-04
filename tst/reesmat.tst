@@ -150,6 +150,36 @@ gap> ForAll(MinimalIdeal(V), x-> ForAll(MinimalIdeal(V), y->
 > (x*y)^iso=x^iso*y^iso));
 true
 
+#GroupOfUnits
+gap> R:=Semigroup(Generators(R));
+<subsemigroup of 1x1 Rees 0-matrix semigroup with 3 generators>
+gap> GroupOfUnits(R);
+<subsemigroup of 1x1 Rees 0-matrix semigroup with 2 generators>
+gap> GroupOfUnits(V);
+fail
+gap> GroupOfUnits(U[5]);
+fail
+
+#IdempotentGeneratedSubsemigroup
+gap> eV:=IdempotentGeneratedSubsemigroup(V);
+<subsemigroup of 26x5 Rees 0-matrix semigroup with 9 generators>
+gap> Size(eV);
+15
+gap> Size(V);
+505
+gap> List(U, IdempotentGeneratedSubsemigroup);
+[ <subsemigroup of 26x5 Rees 0-matrix semigroup with 27 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 26 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 26 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 27 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 26 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 27 generators> ]
+gap> List(last, Size);
+[ 47, 47, 47, 47, 47, 47 ]
+gap> last2[1]=last2[2];
+true
+
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);
