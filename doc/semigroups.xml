@@ -125,7 +125,9 @@ gap> S:=RandomTransformationSemigroup(5,5);
       <A>n</A> with <A>m</A> generators.
       <Example>
 gap> S:=RandomPartialPermSemigroup(5, 5);
-&lt;partial perm semigroup on 4 pts with 5 generators></Example>
+&lt;partial perm semigroup on 4 pts with 5 generators>
+gap> S:=RandomPartialPermMonoid(5, 5);
+&lt;partial perm monoid on 5 pts with 5 generators></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -134,10 +136,15 @@ gap> S:=RandomPartialPermSemigroup(5, 5);
   <ManSection>
     <Func Name="RandomBinaryRelationMonoid" Arg="m, n"/>
     <Func Name="RandomBinaryRelationSemigroup" Arg="m, n"/>
-    <Returns>A partial perm semigroup or monoid.</Returns>
+    <Returns>A semigroup or monoid of binary relations.</Returns>
     <Description>
+      Returns a random monoid or semigroup of binary relations on <A>n</A>
+      points with <A>m</A> generators.
       <Example>
-</Example>
+gap> RandomBinaryRelationSemigroup(5,5);
+&lt;semigroup with 5 generators>
+gap> RandomBinaryRelationMonoid(5,5);   
+&lt;monoid with 5 generators></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -148,6 +155,8 @@ gap> S:=RandomPartialPermSemigroup(5, 5);
     <Func Name="RandomBipartitionMonoid" Arg="m, n"/>
     <Returns>A bipartition semigroup or monoid.</Returns>
     <Description>
+      Returns a random monoid or semigroup of bipartition on <A>n</A>
+      points with <A>m</A> generators.
       <Example>
 </Example>
     </Description>
@@ -157,7 +166,7 @@ gap> S:=RandomPartialPermSemigroup(5, 5);
 <#GAPDoc Label="InverseSubsemigroupByProperty">
   <ManSection>
     <Func Name="InverseSubsemigroupByProperty" Arg="??"/>
-    <Returns>??.</Returns>
+    <Returns>An inverse semigroup.</Returns>
     <Description>
       <Example>
 </Example>
@@ -182,6 +191,8 @@ gap> S:=RandomPartialPermSemigroup(5, 5);
     If the optional third argument <A>limit</A> is present and a positive
     integer, then once the subsemigroup has at least <A>limit</A> elements the
     computation stops.
+<Example>
+</Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
