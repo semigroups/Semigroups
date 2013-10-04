@@ -21,7 +21,7 @@
       case <K>fail</K> is returned.  <P/>
 
       If the optional argument <A>onlynew</A> is present, it should be
-      <K>true</K> or <K>false</K>. If <A>onlynew</A> is <K>true</A>, then
+      <K>true</K> or <K>false</K>. If <A>onlynew</A> is <K>true</K>, then
       <A>val</A> will only be checked against new points in <A>o</A>. Otherwise,
       every point in the <A>o</A>, not only the new ones, are considered.
     </Description>

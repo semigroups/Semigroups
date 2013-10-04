@@ -51,7 +51,14 @@ InstallMethod(ActionDegree, "for a partial perm",
 CodegreeOfPartialPerm(x)));
 
 InstallMethod(ActionDegree, "for a Rees 0-matrix semigroup element", 
-[IsReesZeroMatrixSemigroupElement], x-> x![1]=0);
+[IsReesZeroMatrixSemigroupElement], 
+function(x)
+  if x![1]=0 then 
+    return 0; 
+  else 
+    return NrMovedPoints(x![2]); 
+  fi; 
+end);
 
 #
 
@@ -64,7 +71,14 @@ CodegreeOfPartialPermCollection(x)));
 
 InstallMethod(ActionDegree, "for a Rees 0-matrix semigroup element collection",
 [IsReesZeroMatrixSemigroupElementCollection],           
-coll-> ForAll(coll, x-> x![1]=0));
+function(coll)
+  if ForAny(coll, x-> x![1]<>0) then 
+    return NrMovedPoints(
+     UnderlyingSemigroup(ReesMatrixSemigroupOfFamily(FamilyObj(coll[1]))));
+  else
+    return 0;
+  fi;
+end);
 
 #
 
@@ -80,7 +94,13 @@ InstallMethod(ActionDegree, "for a partial perm inverse semigroup",
 
 InstallMethod(ActionDegree, "for a Rees 0-matrix subsemigroup with generators",
 [IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup],
-R-> ForAll(GeneratorsOfSemigroup(R), x-> x![1]=0));
+function(R) 
+  if ForAny(GeneratorsOfSemigroup(R), x-> x![1]<>0) then 
+    return NrMovedPoints(UnderlyingSemigroup(ParentAttr(R)));
+  else
+    return 0;
+  fi;
+end);
 
 # the number of points in the range of the action
 
@@ -110,7 +130,7 @@ function(s)
 end);
 
 InstallMethod(ActionRank, "for a Rees 0-matrix semigroup element", 
-[IsReesZeroMatrixSemigroupElement, IsBool],
+[IsReesZeroMatrixSemigroupElement, IsPosInt],
 function(f, n)
   local R;
   if f![1]=0 then 

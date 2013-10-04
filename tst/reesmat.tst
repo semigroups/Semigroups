@@ -380,6 +380,54 @@ gap> PartialOrderOfDClasses(U[1]);
 gap> PartialOrderOfDClasses(U[2]);
 [ [ 1, 4 ], [ 1, 2, 4 ], [ 1, 3, 4 ], [ 4 ] ]
 
+# from properties.xml...
+gap> IsBand(V);
+false
+gap> List(U, IsBand);
+[ false, false, false, false, false, false ]
+gap> IsBlockGroup(V);
+false
+gap> List(U, IsBlockGroup);
+[ false, false, false, false, false, false ]
+gap> IsBrandtSemigroup(V); 
+false
+gap> List(U, IsBrandtSemigroup);
+[ false, false, false, false, false, false ]
+gap> IsCliffordSemigroup(V);
+false
+gap> List(U, IsCliffordSemigroup);
+[ false, false, false, false, false, false ]
+gap> IsCommutativeSemigroup(V);
+false
+gap> List(U, IsCommutativeSemigroup);
+[ false, false, false, false, false, false ]
+gap> IsCompletelyRegularSemigroup(V);
+false
+gap> List(U, IsCompletelyRegularSemigroup); 
+[ false, false, false, false, false, false ]
+gap> IsDTrivial(V);
+false
+gap> IsRTrivial(V);
+false
+gap> IsLTrivial(V);
+false
+gap> IsHTrivial(V);
+false
+gap> List(U, IsGroupAsSemigroup);
+[ false, false, false, false, false, false ]
+gap> List(U, IsIdempotentGenerated);
+[ false, false, false, false, false, false ]
+gap> List(U, IsInverseSemigroup);
+[ false, false, false, false, false, false ]
+gap> R:=ReesZeroMatrixSemigroup(QuaternionGroup(IsPermGroup, 8), 
+> [[(), (), ()]]);;
+gap> R:=Semigroup(Difference(Generators(R), [MultiplicativeZero(R)]));
+<subsemigroup of 3x1 Rees 0-matrix semigroup with 4 generators>
+gap> IsRightSimple(R);
+false
+gap> IsLeftSimple(R); 
+true
+
 #
 #
 gap> SemigroupsStopTest();
