@@ -514,7 +514,33 @@ gap> IsZeroSemigroup(V);
 false
 
 # from semigroups.xml ...
+gap> gens:=Generators(V);;
+gap> V:=Semigroup(gens[1]);
+<subsemigroup of 26x5 Rees 0-matrix semigroup with 1 generator>
+gap> for i in [2..12] do 
+> V:=ClosureSemigroup(V, gens[i]);
+> od;
+gap> V;
+<subsemigroup of 26x5 Rees 0-matrix semigroup with 11 generators>
+gap> Size(V);
+505
 
+# from slp.xml...
+gap> x:=RMSElement(V, 22,(1,6,9),1);;
+gap> Factorization(V, x);
+[ 6, 10, 10, 6 ]
+gap> EvaluateWord(Generators(V), last);
+(22,(1,6,9),1)
+gap> x:=MultiplicativeZero(R);;
+gap> Factorization(R, x);
+[ 1 ]
+gap> EvaluateWord(Generators(R), last);
+0
+gap> x:=RMSElement(U[4], 26,(6,9),5);;
+gap> Factorization(U[4], x);
+[ 4, 1, 8, 16, 3, 1, 13, 1 ]
+gap> EvaluateWord(Generators(U[4]), last);
+(26,(6,9),5)
 
 #
 #
