@@ -178,7 +178,7 @@ InstallMethod(LambdaOrbOpts, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> rec(forflatplainlists:=true));
 
 InstallMethod(LambdaOrbOpts, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s-> rec(forflatplainlists:=true));
+[IsReesZeroMatrixSubsemigroup], s-> rec());
 
 InstallMethod(RhoOrbOpts, "for a transformation semigroup",
 [IsTransformationSemigroup], s-> rec(forflatplainlists:=true));
@@ -187,7 +187,7 @@ InstallMethod(RhoOrbOpts, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> rec(forflatplainlists:=true));
 
 InstallMethod(RhoOrbOpts, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s-> rec(forflatplainlists:=true));
+[IsReesZeroMatrixSubsemigroup], s-> rec());
 
 # the lambda and rho acts
 
@@ -207,17 +207,12 @@ InstallMethod(LambdaAct, "for a partial perm semigroup",
 
 InstallMethod(LambdaAct, "for a Rees 0-matrix subsemigroup", 
 [IsReesZeroMatrixSubsemigroup], x-> function(pt, x)
-  pt:=pt[1];
-  if x![1]=0 then 
-    return [0];
-  elif pt=-1 then 
-    return [x![3]];
-  elif pt=0 then 
-    return [pt];
-  elif x![4][pt][x![1]]<>0 then 
-    return [x![3]];
+  if x![1]=0 or pt=0 then 
+    return 0;
+  elif pt=-1 or x![4][pt][x![1]]<>0 then 
+    return x![3];
   else
-    return [0];
+    return 0;
   fi;
 end);
 
@@ -243,15 +238,12 @@ InstallMethod(RhoAct, "for a partial perm semigroup",
 
 InstallMethod(RhoAct, "for a Rees 0-matrix subsemigroup", 
 [IsReesZeroMatrixSubsemigroup], x-> function(pt, x)
-  pt:=pt[1];
-  if pt=-1 or x![1]=0 then 
-    return [x![1]];
-  elif pt=0 then 
-    return [pt];
-  elif x![4][x![3]][pt]<>0 then 
-    return [x![1]];
+  if x![1]=0 or pt=0 then 
+    return 0;
+  elif pt=-1 or x![4][x![3]][pt]<>0 then 
+    return x![1];
   else
-    return [0];
+    return 0;
   fi;
 end);
 
@@ -264,7 +256,7 @@ InstallMethod(LambdaOrbSeed, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> [0]);
 
 InstallMethod(LambdaOrbSeed, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s-> [-1]);
+[IsReesZeroMatrixSubsemigroup], s-> -1);
 
 # the seed or dummy start point for RhoOrb
 
@@ -275,7 +267,7 @@ InstallMethod(RhoOrbSeed, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s-> [0]);
 
 InstallMethod(RhoOrbSeed, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s-> [-1]);
+[IsReesZeroMatrixSubsemigroup], s-> -1);
 
 # the function calculating the lambda or rho value of an element
 
@@ -296,9 +288,9 @@ InstallMethod(LambdaFunc, "for a partial perm semigroup",
 InstallMethod(LambdaFunc, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R-> function(x)
   if x![1]<>0 then 
-    return [x![3]];
+    return x![3];
   else 
-    return [0];
+    return 0;
   fi;
 end);
 
@@ -319,7 +311,7 @@ InstallMethod(RhoFunc, "for a partial perm semigroup",
 [IsPartialPermSemigroup], x-> DOMAIN_PPERM);
 
 InstallMethod(RhoFunc, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], R->(x-> [x![1]]));
+[IsReesZeroMatrixSubsemigroup], R->(x-> x![1]));
 
 # the function used to calculate the rank of lambda or rho value
 
@@ -332,7 +324,7 @@ InstallMethod(LambdaRank, "for a partial perm semigroup",
 InstallMethod(LambdaRank, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R-> 
 function(x)
-  if x=[0] then 
+  if x=0 then 
     return 0;
   else 
     return NrMovedPoints(UnderlyingSemigroup(ParentAttr(R)))+1; 
@@ -364,12 +356,12 @@ InstallMethod(LambdaInverse, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], s-> 
 function(k, x)
   local i;
-  k:=k[1];
-  if x![1]=0 then 
+  if x![1]=0 or k=0 then 
     return x;
   fi;
   i:=First([1..Length(x![4][x![3]])], i-> x![4][x![3]][i]<>0);
-  return Objectify(TypeObj(x), [i, (x![2]*x![4][x![3]][i])^-1, k, x![4]]);
+  return Objectify(FamilyObj(x)!.type, 
+   [i, (x![2]*x![4][x![3]][i])^-1, k, x![4]]);
 end);
 
 # if g=RhoInverse(X, f) and f^X=Y (this is a left action), then g^Y=X and g
@@ -388,12 +380,12 @@ InstallMethod(RhoInverse, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], s-> 
 function(k, x)
   local j;
-  k:=k[1]; 
-  if x![1]=0 then 
+  if x![1]=0 or k=0 then 
     return x;
   fi;
   j:=First([1..Length(x![4])], j-> x![4][j][x![1]]<>0);
-  return Objectify(TypeObj(x), [k, (x![4][j][x![1]]*x![2])^-1, j, x![4]]);
+  return Objectify(FamilyObj(x)!.type, 
+    [k, (x![4][j][x![1]]*x![2])^-1, j, x![4]]);
 end);
 
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
@@ -449,11 +441,11 @@ InstallMethod(IdempotentTester, "for a partial perm semigroup",
 InstallMethod(IdempotentTester, "for a Rees 0-matrix subsemigroup", 
 [IsReesZeroMatrixSubsemigroup], s-> 
 function(j,i)
-  if i[1]=0 and j[1]=0 then 
+  if i=0 and j=0 then 
     return true;
   fi;
   return Matrix(ReesMatrixSemigroupOfFamily(
-   ElementsFamily(FamilyObj(s))))[j[1]][i[1]]<>0;
+   ElementsFamily(FamilyObj(s))))[j][i]<>0;
 end);
 
 # the function used to create an idempotent with the specified lambda and rho
@@ -469,12 +461,12 @@ InstallMethod(IdempotentCreator, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], s-> 
 function(j,i)
   local mat;
-  if i[1]=0 and j[1]=0 then 
+  if i=0 and j=0 then 
     return Objectify(TypeReesMatrixSemigroupElements(s), [0]);
   fi;
   mat:=Matrix(ParentAttr(s));
   return Objectify(TypeReesMatrixSemigroupElements(s), 
-     [i[1], mat[j[1]][i[1]]^-1, j[1], mat]);
+     [i, mat[j][i]^-1, j, mat]);
 end);
 
 # the action of elements of the stabiliser of a lambda-value on any element of

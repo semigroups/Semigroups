@@ -687,7 +687,7 @@ InstallMethod(IrredundantGeneratingSubset,
 function(coll)
   local gens, nrgens, deg, out, redund, i, f;
   
-  if not IsGeneratorsOfActingSemigroup(coll) then 
+  if not (IsActingSemigroup(coll) or IsGeneratorsOfActingSemigroup(coll)) then 
     Error();
   fi;
 

@@ -30,7 +30,8 @@ gap> R:=Semigroup(Generators(R));
 <subsemigroup of 3x2 Rees 0-matrix semigroup with 7 generators>
 gap> IsActingSemigroup(R);
 false
-gap> R:=ReesZeroMatrixSemigroup(POI(5), [[PartialPerm([],[]),0], [0,PartialPer$
+gap> R:=ReesZeroMatrixSemigroup(POI(5), [[PartialPerm([],[]),0],
+> [0, PartialPerm([], [])]]);
 <Rees 0-matrix semigroup 2x2 over <inverse partial perm monoid on 5 pts
  with 5 generators>>
 gap> R:=Semigroup(Generators(R));                                              
