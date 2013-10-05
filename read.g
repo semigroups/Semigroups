@@ -32,6 +32,8 @@ ReadPackage("semigroups/gap/freeinverse.gi");
 ReadPackage("semigroups/gap/orbits.gi");
 ReadPackage("semigroups/gap/utils.gi");
 
+ReadPackage("semigroups/gap/display.gi");
+
 if TestPackageAvailability("grape")=fail then 
   Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
   if ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
