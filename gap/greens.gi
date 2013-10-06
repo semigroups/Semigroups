@@ -85,33 +85,40 @@ function(d)
 end);
 
 # note that the RhoCosets of the D-class containing an L-class are not the same
-# as the RhoCosets of the D-class. The RhoCosets of a D-class correspond to the
+# as the RhoCosets of the L-class. The RhoCosets of a D-class correspond to the
 # lambda value of the rep of the D-class (which is in the first place of its 
 # scc) and the rep of the D-class but the RhoCosets of the L-class should 
 # correspond to the lambda value of the rep of the L-class which is not nec in 
 # the first place of its scc.
 
+# different method for regular
+
+#JDM this method should be checked!!
+
 InstallMethod(RhoCosets, "for a L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
-function(l)
-  local d, o, pos, m, mult, p, act;
-  
-  d:=DClassOfLClass(l);
-  o:=LambdaOrb(d);
-  #JDM can we improve the next line? Isn't this know already when l is created?
-  pos:=Position(o, LambdaFunc(Parent(l))(Representative(l)));
-  m:=LambdaOrbSCCIndex(d);
-  if pos<>OrbSCC(o)[m][1] then
-    mult:=LambdaOrbMult(o, m, pos);
-    #the following step is necessary in case p is not in the schutz gp of d 
-    p:=LambdaPerm(Parent(l))(Representative(l)*mult[2],
-     Representative(d));
-    act:=RightStabAction(Parent(l));
-    #JDM the following line always returns elements of the semigroup not
-    #permutations what sense does this make?
-    return List(RhoCosets(d), x-> act(mult[2], x^p)*mult[1]);
+function(L)
+  local S, D, o, rep, pos, m, mult, conj1, conj2;
+
+  if IsRegularClass(L) or Length(RhoCosets(D))=1 then 
+    #maybe <L> is regular and doesn't know it!
+    return [()];
   fi;
-  return RhoCosets(d);
+
+  S:=Parent(L);
+  D:=DClassOfLClass(L);
+  o:=LambdaOrb(D);
+  rep:=Representative(L);
+  pos:=Position(o, LambdaFunc(S)(rep));
+  m:=LambdaOrbSCCIndex(D);
+  
+  if pos<>OrbSCC(o)[m][1] then
+    mult:=LambdaOrbMult(o, m, Position(o, LambdaFunc(S)(rep)));
+    conj1:=LambdaConjugator(S)(rep*mult[2], rep);
+    conj2:=LambdaConjugator(S)(Representative(D), rep);
+    return (RhoCosets(D)^conj1)^conj2;
+  fi;
+  return RhoCosets(D);
 end);
 
 # same method for regular/inverse

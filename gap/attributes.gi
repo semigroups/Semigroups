@@ -65,7 +65,7 @@ end);
 InstallMethod(MaximalSubsemigroups, "for a Rees matrix subsemigroup",
 [IsReesMatrixSubsemigroup], 
 function(R)
-  local G, out, mat, I, J, P, H, j, i;
+  local G, out, mat, I, J, P, U, H, j, i;
   
   if not IsReesMatrixSemigroup(R) then 
     TryNextMethod(); 
@@ -90,46 +90,175 @@ function(R)
   out:=[];
   mat:=Matrix(R);     I:=Rows(R);         J:=Columns(R);
  
-  Info(InfoSemigroups, 3, 
-   "Case 1: maximal subsemigroups arising from maximal subgroups...");
   # Case 1: maximal subsemigroups of the form (IxHxJ) where H is a
   # maximal subgroup of G
-  
-  P:=Group(Union(mat));
-  if P<>G then # every subsemigroup of S containing a cross-section of L- and
-               # R-classes contains P as a maximal subgroup
-    for H in MaximalSubgroups(G) do
-      if IsSubgroup(H, P) then 
-        Add(out, ReesMatrixSubsemigroupNC(R, I, H, J));
-      fi;
-    od;
-  fi;
-
-  Info(InfoSemigroups, 3, "...found ", Length(out));
-
   Info(InfoSemigroups, 3, 
-   "Case 2: maximal subsemigroups obtained by removing a column...");
+   "Case 1: maximal subsemigroups arising from maximal subgroups...");
+  P:=Group(Union(mat{J}{I}));
+  for H in MaximalSubgroups(G) do
+    U:=Semigroup(GeneratorsOfReesMatrixSubsemigroupNC(R, H));
+    if Size(U)<Size(R) then 
+      Add(out, U);
+    fi;
+  od;
+  Info(InfoSemigroups, 3, "...found ", Length(out));
 
   # Case 2: maximal subsemigroup of the form (IxGxJ') where J'=J\{j} for some j
   # in J.
+  Info(InfoSemigroups, 3, 
+   "Case 2: maximal subsemigroups obtained by removing a column...");
   if Length(J)>1 then 
     for j in J do 
-      Add(out, ReesMatrixSubsemigroupNC(R, I, G, Difference(J, [j])));
+      Add(out, SubsemigroupByIndicesNC(R, I, Difference(J, [j])));
     od;
   fi;
   
+  # Case 3: the dual of case 2.
   Info(InfoSemigroups, 3, 
    "Case 3: maximal subsemigroups obtained by removing a row...");
-
-  # Case 3: the dual of case 2.
-  
   if Length(I)>1 then 
     for i in I do 
-      Add(out, ReesMatrixSubsemigroupNC(R, Difference(I, [i]), G, J));
+      Add(out, SubsemigroupByIndicesNC(R, Difference(I, [i]), J));
     od;
   fi;
 
   return out;
+end);
+
+#
+
+InstallMethod(SubsemigroupByIndicesNC, 
+"for a Rees matrix semigroup, rows and columns",
+[IsReesMatrixSemigroup, IsDenseList, IsDenseList],
+function(R, I, J)
+  local U;
+
+  U := Objectify( NewType( FamilyObj(R),
+   IsReesMatrixSubsemigroup and IsAttributeStoringRep ), rec() );
+  SetTypeReesMatrixSemigroupElements(U, TypeReesMatrixSemigroupElements(R));
+
+  SetMatrix(U, Matrix(R));  SetUnderlyingSemigroup(U, UnderlyingSemigroup(R));
+  SetRows(U, I);            SetColumns(U, J);
+  SetParentAttr(U, R);
+
+  if HasIsSimpleSemigroup(R) and IsSimpleSemigroup(R) then
+    SetIsSimpleSemigroup(U, true);
+  fi;
+  SetIsReesMatrixSemigroup(U, true);
+  SetIsZeroSimpleSemigroup(U, false);
+  return U;
+end);
+
+# Note that it is possible that the rows and columns of the matrix only contain
+# the zero element, if the resulting semigroup were taken to be in
+# IsReesMatrixSemigroup then it would belong to IsReesMatrixSemigroup and
+# IsReesZeroMatrixSubsemigroup, so that its elements belong to
+# IsReesZeroMatrixSemigroupElement but not to IsReesMatrixSemigroupElement
+# (since this makes reference to the whole family used to create the
+# semigroups). On the other hand, if we simply exclude the 0, then every method
+# for IsReesZeroMatrixSemigroup is messed up because we assume that they always
+# contain the 0. 
+#
+# Hence we always include the 0 element, even if all the matrix
+# entries corresponding to I and J are non-zero.
+
+InstallMethod(SubsemigroupByIndicesNC,
+"for a Rees 0-matrix semigroup, rows and columns",
+[IsReesZeroMatrixSemigroup, IsDenseList, IsDenseList],
+function(R, I, J)
+  local U;
+
+  U := Objectify( NewType( FamilyObj(R),
+   IsReesZeroMatrixSubsemigroup and IsAttributeStoringRep ), rec() );
+  SetTypeReesMatrixSemigroupElements(U, TypeReesMatrixSemigroupElements(R));
+  
+  SetMatrix(U, Matrix(R));  SetUnderlyingSemigroup(U, UnderlyingSemigroup(R));
+  SetRows(U, I);            SetColumns(U, J);
+  SetParentAttr(U, R);
+  
+  #it might be that all the matrix entries corresponding to I and J are zero
+  #and so we can't set IsZeroSimpleSemigroup here. 
+  SetMultiplicativeZero(U, MultiplicativeZero(R));
+  SetIsSimpleSemigroup(U, false);
+  SetIsReesZeroMatrixSemigroup(U, true);
+
+  return U;
+end);
+
+# assumes <R> is over a group
+
+InstallMethod(GeneratorsOfReesMatrixSubsemigroupNC, 
+"for a Rees matrix semigroup and a group",
+[IsReesMatrixSemigroup, IsGroup],
+function(R, G)
+  local P, i, j, gens;
+  
+  P:=Matrix(R); i:=Rows(R)[1]; j:=Columns(R)[1];
+  if IsTrivial(G) then 
+    gens:=[Objectify(TypeReesMatrixSemigroupElements(R), 
+      [i, P[j][i]^-1, j, P])];
+  else
+    gens:=List(GeneratorsOfGroup(G), x-> 
+      Objectify(TypeReesMatrixSemigroupElements(R), [i, x*P[j][i]^-1, j, P]));
+  fi;
+  
+  if Length(Rows(R))>Length(Columns(R)) then 
+    for i in [2..Length(Columns(R))] do 
+      Add(gens, Objectify(TypeReesMatrixSemigroupElements(R), 
+        [Rows(R)[i], One(G), Columns(R)[i], P]));
+    od;
+    for i in [Length(Columns(R))+1..Length(Rows(R))] do 
+      Add(gens, Objectify(TypeReesMatrixSemigroupElements(R), 
+        [Rows(R)[i], One(G), Columns(R)[1], P]));
+    od;
+  else
+    for i in [2..Length(Rows(R))] do 
+      Add(gens, Objectify(TypeReesMatrixSemigroupElements(R), 
+        [Rows(R)[i], One(G), Columns(R)[i], P]));
+    od;
+    for i in [Length(Rows(R))+1..Length(Columns(R))] do 
+      Add(gens, Objectify(TypeReesMatrixSemigroupElements(R), 
+        [Rows(R)[1], One(G), Columns(R)[i], P]));
+    od;
+  fi;
+  return gens;
+end);
+
+# assumes <R> is over a group and is regular
+
+InstallMethod(GeneratorsOfReesMatrixSubsemigroupNC, 
+"for a Rees 0-matrix semigroup and a group",
+[IsReesZeroMatrixSemigroup, IsGroup],
+function(R, G)
+  local P, i, j, gens, k;
+
+  P:=Matrix(R); i:=Rows(R)[1]; j:=First(Columns(R), j-> P[j][i]<>0);
+  
+  if IsTrivial(G) then 
+    gens:=[Objectify(TypeReesMatrixSemigroupElements(R),[i, P[j][i]^-1, j, P])];
+  else
+    gens:=List(GeneratorsOfGroup(G), x->
+      Objectify(TypeReesMatrixSemigroupElements(R), [i, x*P[j][i]^-1, j, P]));
+  fi; 
+
+  for k in Columns(R) do
+    if k<>j then
+      Add(gens, Objectify(TypeReesMatrixSemigroupElements(R),
+       [i, One(G), k, P]));
+    fi;
+  od;
+
+  for k in Rows(R) do
+    if k<>i then
+      Add(gens, Objectify(TypeReesMatrixSemigroupElements(R),
+        [k, One(G), j, P]));
+    fi;
+  od;
+
+  if ForAll(Rows(R), i-> ForAll(Columns(R), j-> P[j][i]<>0)) then
+    Add(gens, MultiplicativeZero(R));
+  fi;
+  return gens;
 end);
 
 # the following method comes from Remark 1 in Graham, Graham, and Rhodes.
@@ -147,7 +276,7 @@ else
   InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
   [IsReesZeroMatrixSubsemigroup], 
   function(R)
-    local G, out, mat, I, J, P, new, pos, JJ, solo, II, len, graph, names, rectangles, gens, i, j, H, r, k;
+    local G, out, I, J, mat, P, new, pos, U, JJ, solo, II, len, graph, names, rectangles, gens, i, j, H, r, k;
     
     if not IsReesZeroMatrixSemigroup(R) then 
       TryNextMethod(); 
@@ -169,21 +298,19 @@ else
       fi;
     fi;
 
-    #JDM in the case when G is not a group, and maybe R is not 0-simple, in
-    #these case the generic method should be used
-
-    out:=[];
-    mat:=Matrix(R);     I:=Rows(R);         J:=Columns(R);
+    out:=[]; I:=Rows(R); J:=Columns(R); mat:=Matrix(R);     
    
     # find the set of group elements in the matrix
-    P:=Union(mat);
+    P:=Union(mat{J}{I});
     if P[1]=0 then 
       Remove(P, 1);
     else  # S\{0} is a maximal subsemigroup 
           # the unique case when the missing D-class is {0}
       new:=ShallowCopy(GeneratorsOfSemigroup(R));
-      pos:=Position(new, MultiplicativeZero(R)); 
-      Remove(new, pos); #remove the zero, which has to be present
+      if Size(new)>1 then  
+        pos:=Position(new, MultiplicativeZero(R)); 
+        Remove(new, pos); #remove the zero, which has to be present
+      fi;
       Add(out, Semigroup(new));
     fi;
     
@@ -194,27 +321,21 @@ else
       Add(out, Semigroup(MultiplicativeZero(R)));
     fi;
     
-    Info(InfoSemigroups, 3, 
-     "Case 1: maximal subsemigroups arising from maximal subgroups...");
     # Case 1: maximal subsemigroups of the form (IxHxJ)\cup\{0\} where H is a
     # maximal subgroup of G
     
+    Info(InfoSemigroups, 3, 
+     "Case 1: maximal subsemigroups arising from maximal subgroups...");
+    
     P:=Group(P);
-    if P<>G then # every subsemigroup of S containing a cross-section of L- and
-                 # R-classes contains P as a maximal subgroup
-      for H in MaximalSubgroups(G) do
-        if IsSubgroup(H, P) then 
-          Add(out, ReesZeroMatrixSubsemigroupNC(R, I, H, J));
-        fi;
-      od;
-    fi;
+    for H in MaximalSubgroups(G) do
+      U:=Semigroup(GeneratorsOfReesMatrixSubsemigroupNC(R, H));
+      if Size(U)<Size(R) then 
+        Add(out, U);
+      fi;
+    od;
 
     Info(InfoSemigroups, 3, "...found ", Length(out));
-
-    #JDM could test for IsRUnipotent or IsLUnipotent here!
-
-    Info(InfoSemigroups, 3, 
-     "Case 2: maximal subsemigroups obtained by removing a column...");
 
     # Case 2: maximal subsemigroup of the form (IxGxJ')\cup\{0\} where J'=J\{j}
     # for some j in J, and where the resultant matrix has no zero columns or
@@ -224,6 +345,9 @@ else
     # in <J> which is not adjacent to a vertex <i> which is only adjacent to
     # <j>.  So, we run through the vertices <i> of <I> and find the ones of
     # degree 1, and we discard the vertices <j> adjacent to such <i>. 
+    
+    Info(InfoSemigroups, 3, 
+     "Case 2: maximal subsemigroups obtained by removing a column...");
     
     JJ:=ShallowCopy(J);
 
@@ -246,7 +370,7 @@ else
     od;
     
     for j in JJ do 
-      Add(out, ReesZeroMatrixSubsemigroupNC(R, I, G, Difference(J, [j])));
+      Add(out, SubsemigroupByIndicesNC(R, I, Difference(J, [j])));
     od;
     Info(InfoSemigroups, 3, "...found ", Length(JJ));
 
@@ -276,7 +400,7 @@ else
     od;
     
     for i in II do 
-      Add(out, ReesZeroMatrixSubsemigroupNC(R, Difference(I, [i]), G, J));
+      Add(out, SubsemigroupByIndicesNC(R, Difference(I, [i]), J));
     od;
 
     Info(InfoSemigroups, 3, "...found ", Length(II));
@@ -314,17 +438,28 @@ else
     for r in [2..Length(rectangles)-1] do 
     #the first and last entries correspond to removing all the rows or columns
       Apply(rectangles[r], names);
-      
+       
       # add group generators
       i:=rectangles[r][1];  
       j:=First(Columns(R), j-> mat[j][i]<>0 and not j+len in rectangles[r]); 
-      new:=List(gens, x-> Objectify(TypeReesMatrixSemigroupElements(R), 
-        [i, x*mat[j][i]^-1, j, mat]));
+      if IsTrivial(G) then 
+        new:=[Objectify(TypeReesMatrixSemigroupElements(R),
+         [i, mat[j][i]^-1, j, mat])];
+      else
+        new:=List(gens, x-> Objectify(TypeReesMatrixSemigroupElements(R), 
+          [i, x*mat[j][i]^-1, j, mat]));
+      fi;
+      
       j:=First(rectangles[r], j-> j>len)-len;
       i:=First(Rows(R), i-> mat[j][i]<>0 and not i in rectangles[r]);
-      Append(new, List(gens, x-> 
-       Objectify(TypeReesMatrixSemigroupElements(R), 
-        [i, x*mat[j][i]^-1, j, mat])));
+      if IsTrivial(G) then 
+        Add(new, Objectify(TypeReesMatrixSemigroupElements(R),
+         [i, mat[j][i]^-1, j, mat]));
+      else
+        Append(new, List(gens, x-> 
+         Objectify(TypeReesMatrixSemigroupElements(R), 
+          [i, x*mat[j][i]^-1, j, mat])));
+      fi;
 
       for k in rectangles[r] do  
         if k<=len then # k in I
@@ -1314,13 +1449,36 @@ end);
 
 #
 
-#LongestChainOfSubsemigroups:=function(R)
-#  if Size(R)>1 then 
-#    return Maximum(List(MaximalSubsemigroups(R), 
-#     LongestChainOfSubsemigroups))+1;
-#  fi;
-#  return 1;
-#end;
+InstallOtherMethod(IsReesMatrixSemigroup, "for a semigroup",
+[IsSemigroup], ReturnFalse);
+
+InstallOtherMethod(IsReesZeroMatrixSemigroup, "for a semigroup",
+[IsSemigroup], ReturnFalse);
+
+calls:=0;
+printed:=0;
+
+LongestChainOfSubsemigroups:=function(R)
+  calls:=calls+1;
+  if calls>printed+99 then 
+    printed:=calls;
+    Print(calls, " calls so far. . .\n");
+  fi;
+  if Size(R)=1 then 
+    return 1;
+  elif IsReesMatrixSemigroup(R) or IsReesZeroMatrixSemigroup(R) then 
+    return Maximum(List(MaximalSubsemigroups(R), 
+     LongestChainOfSubsemigroups))+1;
+  else
+    return Sum(List(DClasses(R), function(D)
+      if IsRegularDClass(D) then 
+        return LongestChainOfSubsemigroups(PrincipalFactor(D));
+      else 
+        return Size(D)+1;
+      fi;
+    end));
+  fi;
+end;
 
 #
 

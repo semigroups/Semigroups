@@ -34,3 +34,11 @@ DeclareAttribute("MaximalSubsemigroups", IsSemigroup);
 DeclareAttribute("MinimalDClass", IsSemigroup);
 DeclareAttribute("IsGreensDLeq", IsActingSemigroup);
 
+DeclareOperation("SubsemigroupByIndicesNC", 
+[IsReesMatrixSubsemigroup, IsDenseList, IsDenseList]);
+DeclareOperation("SubsemigroupByIndicesNC",
+[IsReesZeroMatrixSubsemigroup, IsDenseList, IsDenseList]);
+DeclareOperation("GeneratorsOfReesMatrixSubsemigroupNC",
+[IsReesMatrixSemigroup, IsGroup]);
+DeclareOperation("GeneratorsOfReesMatrixSubsemigroupNC",
+[IsReesZeroMatrixSemigroup, IsGroup]);
