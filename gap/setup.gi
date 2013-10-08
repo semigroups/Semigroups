@@ -1,4 +1,5 @@
-############################################################################
+#
+###########################################################################
 ##
 #W  setup.gi
 #Y  Copyright (C) 2013                                   James D. Mitchell
@@ -361,7 +362,7 @@ function(k, x)
   fi;
   i:=First([1..Length(x![4][x![3]])], i-> x![4][x![3]][i]<>0);
   return Objectify(FamilyObj(x)!.type, 
-   [i, (x![2]*x![4][x![3]][i])^-1, k, x![4]]);
+   [i, (x![4][k][x![1]]*x![2]*x![4][x![3]][i])^-1, k, x![4]]);
 end);
 
 # if g=RhoInverse(X, f) and f^X=Y (this is a left action), then g^Y=X and g
@@ -379,13 +380,13 @@ InstallMethod(RhoInverse, "for a partial perm semigroup",
 InstallMethod(RhoInverse, "for a Rees 0-matrix subsemigroup", 
 [IsReesZeroMatrixSubsemigroup], s-> 
 function(k, x)
-  local j;
+  local i;
   if x![1]=0 or k=0 then 
     return x;
   fi;
-  j:=First([1..Length(x![4])], j-> x![4][j][x![1]]<>0);
+  i:=First([1..Length(x![4])], i-> x![4][i][x![1]]<>0);
   return Objectify(FamilyObj(x)!.type, 
-    [k, (x![4][j][x![1]]*x![2])^-1, j, x![4]]);
+    [k, (x![4][i][x![1]]*x![2]*x![4][x![3]][k])^-1, i, x![4]]);
 end);
 
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with

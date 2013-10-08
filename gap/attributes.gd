@@ -35,9 +35,9 @@ DeclareAttribute("MinimalDClass", IsSemigroup);
 DeclareAttribute("IsGreensDLeq", IsActingSemigroup);
 
 DeclareOperation("SubsemigroupByIndicesNC", 
-[IsReesMatrixSubsemigroup, IsDenseList, IsDenseList]);
+[IsReesMatrixSemigroup, IsDenseList, IsDenseList]);
 DeclareOperation("SubsemigroupByIndicesNC",
-[IsReesZeroMatrixSubsemigroup, IsDenseList, IsDenseList]);
+[IsReesZeroMatrixSemigroup, IsDenseList, IsDenseList]);
 DeclareOperation("GeneratorsOfReesMatrixSubsemigroupNC",
 [IsReesMatrixSemigroup, IsGroup]);
 DeclareOperation("GeneratorsOfReesMatrixSubsemigroupNC",

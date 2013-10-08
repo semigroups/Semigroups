@@ -562,8 +562,7 @@ end);
 InstallMethod(GreensHClasses, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  local rho_o, rho_m, s, scc, mults, d, lambda_o, lambda_m, cosets, f, nc, out,
-  k, i, j;
+  local rho_o, rho_m, s, scc, mults, d, lambda_o, lambda_m, cosets, f, nc, act, out, k, i, j;
 
   rho_o:=RhoOrb(l); 
   rho_m:=RhoOrbSCCIndex(l);
@@ -579,6 +578,7 @@ function(l)
   cosets:=RhoCosets(l);
   f:=Representative(l);
   nc:=IsGreensClassNC(l);
+  act:=RightStabAction(s);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
@@ -587,8 +587,7 @@ function(l)
     i:=mults[i][1]*f;
     for j in cosets do 
       k:=k+1;
-      # JDM maybe a bad idea to use CreateHClass here, perhaps expand?
-      out[k]:=CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o, i*j, nc);
+      out[k]:=CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o, act(i, j), nc);
       SetLClassOfHClass(out[k], l);
       SetDClassOfHClass(out[k], d);
     od;

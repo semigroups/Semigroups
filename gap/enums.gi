@@ -554,8 +554,6 @@ end);
 
 # same method for regular, different method for inverse
 
-#HERE - JDM - RightStabAction implementation!!
-
 InstallMethod(Enumerator, "for L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
