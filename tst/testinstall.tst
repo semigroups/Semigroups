@@ -457,6 +457,23 @@ gap> T:=ClosureSemigroup(S, f);;
 gap> Size(T);
 1619
 
+# bug with Elements and IsomorphismPermGroup for group H-class
+gap> R:=ReesZeroMatrixSemigroup(Group(()), 
+> [ [ (), (), () ], [ (), 0, 0 ], [ (), 0, 0 ] ]);
+<Rees 0-matrix semigroup 3x3 over Group(())>
+gap> R:=ReesZeroMatrixSubsemigroup(R, [2,3], Group(()), [2,3]);
+<Rees 0-matrix semigroup 2x2 over Group(())>
+gap> H:=First(HClasses(R), IsGroupHClass);
+{0}
+gap> Elements(H);   
+[ 0 ]
+gap> f:=IsomorphismPermGroup(H);;
+gap> g:=InverseGeneralMapping(f);;
+gap> Elements(H)[1]^f;
+()
+gap> ()^g;            
+0
+
 #
 gap> SemigroupsStopTest();
 gap> STOP_TEST( "Semigroups package: testinstall.tst", 10000);

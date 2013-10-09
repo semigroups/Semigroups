@@ -1494,8 +1494,9 @@ function(h)
     return;
   fi;
 
-  return MappingByFunction(h, SchutzenbergerGroup(h), AsPermutation, x->
-    RightStabAction(Parent(h))(MultiplicativeNeutralElement(h), x));
+  return MappingByFunction(h, SchutzenbergerGroup(h),
+   x-> LambdaPerm(Parent(h))(Representative(h), x),
+   x-> RightStabAction(Parent(h))(MultiplicativeNeutralElement(h), x));
 end);
 
 #

@@ -523,7 +523,7 @@ function(h)
         return fail;
       fi;
 
-      return Representative(h)*enum!.schutz[pos];
+      return RightStabAction(Parent(h))(Representative(h), enum!.schutz[pos]);
     end,
 
     NumberElement:=function(enum, f)
