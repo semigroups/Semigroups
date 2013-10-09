@@ -93,30 +93,27 @@ end);
 
 # different method for regular
 
-#JDM this method should be checked!!
-
 InstallMethod(RhoCosets, "for a L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(L)
-  local S, D, o, rep, pos, m, mult, conj1, conj2;
-
+  local D, S, o, rep, pos, m, x, conj;
+  
+  D:=DClassOfLClass(L);
   if IsRegularClass(L) or Length(RhoCosets(D))=1 then 
     #maybe <L> is regular and doesn't know it!
     return [()];
   fi;
+  
+  S:=Parent(L);               rep:=Representative(L);
+  m:=LambdaOrbSCCIndex(D);    o:=LambdaOrb(D);
 
-  S:=Parent(L);
-  D:=DClassOfLClass(L);
-  o:=LambdaOrb(D);
-  rep:=Representative(L);
   pos:=Position(o, LambdaFunc(S)(rep));
-  m:=LambdaOrbSCCIndex(D);
   
   if pos<>OrbSCC(o)[m][1] then
-    mult:=LambdaOrbMult(o, m, Position(o, LambdaFunc(S)(rep)));
-    conj1:=LambdaConjugator(S)(rep*mult[2], rep);
-    conj2:=LambdaConjugator(S)(Representative(D), rep);
-    return (RhoCosets(D)^conj1)^conj2;
+    x:=rep*LambdaOrbMult(o, m, pos)[2];
+    conj:=LambdaConjugator(S)(x, rep);
+    conj:=conj*LambdaPerm(S)(x, Representative(D));
+    return List(RhoCosets(D), x-> x^conj);
   fi;
   return RhoCosets(D);
 end);
