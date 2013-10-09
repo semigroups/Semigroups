@@ -45,8 +45,7 @@ DeclareAttribute("IdempotentCreator", IsSemigroup);
 DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
 IsSemigroup);
 
-DeclareAttribute("RightStabAction", IsSemigroup);
-DeclareAttribute("LeftStabAction",  IsSemigroup);
+DeclareAttribute("StabilizerAction", IsSemigroup);
 
 DeclareOperation("FakeOne", [IsAssociativeElementCollection]);
 

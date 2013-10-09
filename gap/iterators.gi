@@ -369,7 +369,7 @@ function(d)
   
   convert:=function(x)
     
-    return RightStabAction(Parent(d))(
+    return StabilizerAction(Parent(d))(
      RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), x[1])[1]
       *Representative(d), x[2])
      *LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), x[3])[1];
@@ -396,7 +396,7 @@ function(d)
   baseiter:=IteratorOfCartesianProduct(scc, SchutzenbergerGroup(d), scc);
   
   convert:=function(x)
-    return RightStabAction(Parent(d))(LambdaOrbMult(LambdaOrb(d),
+    return StabilizerAction(Parent(d))(LambdaOrbMult(LambdaOrb(d),
      LambdaOrbSCCIndex(d), x[1])[2]*Representative(d), x[2])
      *LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), x[3])[1];
   end;
@@ -419,7 +419,7 @@ function(h)
 
   s:=Parent(h);
   return IteratorByIterator(Iterator(SchutzenbergerGroup(h)), x->
-   RightStabAction(s)(Representative(h), x), [IsIteratorOfHClassElements]);
+   StabilizerAction(s)(Representative(h), x), [IsIteratorOfHClassElements]);
 end);
 
 # same method for regular, different method for inverse
@@ -439,7 +439,7 @@ function(l)
    Enumerator(SchutzenbergerGroup(l)));
   
   convert:=function(x)
-    return RightStabAction(Parent(l))(
+    return StabilizerAction(Parent(l))(
      RhoOrbMult(RhoOrb(l), RhoOrbSCCIndex(l), x[1])[1]
      *Representative(l), x[2]);
   end;
@@ -467,7 +467,7 @@ function(r)
      OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)] );
   
   convert:=function(x)
-    return RightStabAction(Parent(r))(Representative(r),
+    return StabilizerAction(Parent(r))(Representative(r),
      x[1])*LambdaOrbMult(LambdaOrb(r),
       LambdaOrbSCCIndex(r), x[2])[1];
   end;
@@ -976,7 +976,7 @@ function(l)
     Enumerator(SchutzenbergerGroup(l)) );
   
   convert:=function(x)
-    return RightStabAction(Parent(l))(
+    return StabilizerAction(Parent(l))(
      LambdaOrbMult(LambdaOrb(l), LambdaOrbSCCIndex(l), x[1])[2]
       *Representative(l), x[2]);
   end;

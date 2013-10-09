@@ -623,7 +623,7 @@ function(d)
     end;
   fi;
 
-  rightact:=RightStabAction(Parent(d));
+  rightact:=StabilizerAction(Parent(d));
 
   for i in [1..Length(lreps)] do
     mat[i]:=[];

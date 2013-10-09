@@ -575,7 +575,7 @@ function(l)
   cosets:=RhoCosets(l);
   f:=Representative(l);
   nc:=IsGreensClassNC(l);
-  act:=RightStabAction(s);
+  act:=StabilizerAction(s);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
@@ -613,7 +613,7 @@ function(r)
   cosets:=LambdaCosets(d);
   f:=Representative(r);
   nc:=IsGreensClassNC(r);
-  act:=RightStabAction(Parent(r));
+  act:=StabilizerAction(Parent(r));
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
@@ -665,7 +665,7 @@ function(d)
   o:=RhoOrb(d);
   m:=RhoOrbSCCIndex(d);
   nc:=IsGreensClassNC(d);
-  act:=RightStabAction(s);
+  act:=StabilizerAction(s);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
@@ -716,7 +716,7 @@ function(d)
   o:=LambdaOrb(d);
   m:=LambdaOrbSCCIndex(d);
   nc:=IsGreensClassNC(d); 
-  act:=RightStabAction(s);
+  act:=StabilizerAction(s);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
@@ -1133,7 +1133,7 @@ function(l)
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
-  act:=RightStabAction(Parent(l));
+  act:=StabilizerAction(Parent(l));
 
   for i in scc do 
     i:=mults[i][1]*f;
@@ -1162,7 +1162,7 @@ function(r)
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
 
-  act:=RightStabAction(Parent(r));
+  act:=StabilizerAction(Parent(r));
 
   for i in cosets do 
     i:=act(f, i);
@@ -1223,7 +1223,7 @@ function(d)
  
   cosets:=LambdaCosets(d);
   out:=EmptyPlist(Length(scc)*Length(cosets));
-  act:=RightStabAction(Parent(d));
+  act:=StabilizerAction(Parent(d));
   k:=0;
   for i in cosets do
     g:=act(f, i);
@@ -1270,7 +1270,7 @@ function(d)
   out:=EmptyPlist(Length(scc)*Length(cosets));
   
   k:=0;
-  act:=RightStabAction(Parent(d));
+  act:=StabilizerAction(Parent(d));
   for i in scc do
     g:=mults[i][1]*f;
     for j in cosets do
@@ -1496,7 +1496,7 @@ function(h)
 
   return MappingByFunction(h, SchutzenbergerGroup(h),
    x-> LambdaPerm(Parent(h))(Representative(h), x),
-   x-> RightStabAction(Parent(h))(MultiplicativeNeutralElement(h), x));
+   x-> StabilizerAction(Parent(h))(MultiplicativeNeutralElement(h), x));
 end);
 
 #
@@ -1919,7 +1919,7 @@ function(s)
 
   g:=Random(LambdaOrbSchutzGp(o, m));
   i:=Random(OrbSCC(o)[m]);
-  return RightStabAction(s)(rep,g)*LambdaOrbMult(o, m, i)[1];
+  return StabilizerAction(s)(rep,g)*LambdaOrbMult(o, m, i)[1];
 end);
 
 # different method for regular/inverse
