@@ -452,8 +452,8 @@ function(arg)
         for i in [1..DegreeOfTransformation(f)] do 
           append(line, i^f, nrdigits);
         od;
-        IO_WriteLine(file, line);
       od;
+      IO_WriteLine(file, line);
     od;
   elif IsPartialPermCollection(gens[1]) then 
     for s in gens do 
@@ -468,8 +468,8 @@ function(arg)
           append(line, i^f, nrdigits);
         od;
       od;
-      IO_WriteLine(file, line);
     od;
+    IO_WriteLine(file, line);
   fi;
   
   return IO_Close(file);
