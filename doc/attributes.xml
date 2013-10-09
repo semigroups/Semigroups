@@ -69,13 +69,18 @@ gap>  S:=Semigroup( [ Transformation( [ 1, 3, 4, 1, 3 ] ),
 >  Transformation( [ 2, 4, 1, 5, 5 ] ), Transformation( [ 2, 5, 3, 5, 3 ] ), 
 >  Transformation( [ 5, 5, 1, 1, 3 ] ) ] );;
 gap> reps:=ShallowCopy(DClassReps(S));
-[ Transformation( [ 1, 3, 4, 1, 3 ] ), Transformation( [ 2, 4, 1, 5, 5 ] ), 
-  Transformation( [ 1, 4, 1, 1, 4 ] ), Transformation( [ 1, 1, 1, 1, 1 ] ) ]
+[ Transformation( [ 1, 3, 4, 1, 3 ] ), 
+  Transformation( [ 2, 4, 1, 5, 5 ] ), 
+  Transformation( [ 1, 4, 1, 1, 4 ] ), 
+  Transformation( [ 1, 1, 1, 1, 1 ] ) ]
 gap> Sort(reps, IsGreensDLeq(S));
 gap> reps;
-[ Transformation( [ 2, 4, 1, 5, 5 ] ), Transformation( [ 1, 3, 4, 1, 3 ] ), 
-  Transformation( [ 1, 4, 1, 1, 4 ] ), Transformation( [ 1, 1, 1, 1, 1 ] ) ]
-gap> IsGreensLessThanOrEqual(DClass(S, reps[2]), DClass(S, reps[1]);</Example>
+[ Transformation( [ 2, 4, 1, 5, 5 ] ), 
+  Transformation( [ 1, 3, 4, 1, 3 ] ), 
+  Transformation( [ 1, 4, 1, 1, 4 ] ), 
+  Transformation( [ 1, 1, 1, 1, 1 ] ) ]
+gap> IsGreensLessThanOrEqual(DClass(S, reps[2]), DClass(S, reps[1]));
+true</Example>
     </Description>
 </ManSection>
 <#/GAPDoc>
