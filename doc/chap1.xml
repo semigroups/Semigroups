@@ -58,12 +58,11 @@
     by Julius Jonu&#353;as.<P/>
 
     &noindent; The &Semigroups; package is written &GAP; code and 
-    requires the &Orb;, &IO;, and &GENSS; packages. The &Orb; package is used
-    to efficiently compute orbits in semigroups of transformations and partial
-    permutations, and these methods underpin many of the features of
-    &Semigroups;.  The &IO; package is used to read and write transformations
-    and partial permutations to a file.  The &Grape; package is used in the
-    functions <Ref Oper="MunnSemigroup"/> and <Ref
+    requires the &Orb; and &IO;packages. The &Orb; package is used
+    to efficiently compute components of actions, which underpin many of the
+    features of &Semigroups;.  The &IO; package is used to read and write
+    transformations and partial permutations to a file.  The &Grape; package is
+    used in the functions <Ref Oper="MunnSemigroup"/> and <Ref
       Attr="MaximalSubsemigroups"/> but nowhere else in &Semigroups;. If
     &Grape; is not fully installed, then &Semigroups; can be used as normal
     with the exception that <Ref Oper="MunnSemigroup"/> and <Ref
@@ -79,6 +78,7 @@
     particular, see <Ref Sect="Semigroups" BookName="ref"/> or 
     <Ref Sect="Green's Relations" BookName="ref"/>.
   </Section>
+  
   <Section Label="install">
     <Heading>Installing &Semigroups;</Heading>
 
@@ -95,12 +95,6 @@
     &noindent; The following is a summary of the steps that should lead to a
     successful installation of &Semigroups;:
     <List>
-      <Item> download and install the &GENSS; package version 
-      &GENSSVERS; or higher. For more details go to:
-      &vspace;<P/>&noindent; 
-      <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html
-      </URL><P/>
-      </Item>
       <Item> download and install the &Orb; package version 
       &ORBVERS; or higher. For more details go to:
       &vspace;<P/>&noindent; 
