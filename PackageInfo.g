@@ -10,6 +10,7 @@
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "1.3">
+##  <!ENTITY GAPVERS "4.7.1">
 ##  <!ENTITY ORBVERS "4.6">
 ##  <!ENTITY IOVERS "4.1">
 ##  <!ENTITY GRAPEVERS "4.5">
@@ -87,5 +88,6 @@ Dependencies := rec(
   Autoload := false,
   TestFile := "tst/testinstall.tst",
   Keywords := ["transformation semigroups", "partial permutations",
-  "inverse semigroups", "Green's relations", "free inverse semigroup"]
+  "inverse semigroups", "Green's relations", "free inverse semigroup", 
+  "Rees matrix semigroups"]
 ));

@@ -64,7 +64,7 @@
     transformations and partial permutations to a file.  The &Grape; package is
     used in the functions <Ref Oper="MunnSemigroup"/> and <Ref
       Attr="MaximalSubsemigroups"/> but nowhere else in &Semigroups;. If
-    &Grape; is not fully installed, then &Semigroups; can be used as normal
+    &Grape; is not available, then &Semigroups; can be used as normal
     with the exception that <Ref Oper="MunnSemigroup"/> and <Ref
       Attr="MaximalSubsemigroups"/> will not work.  <P/>
     
@@ -87,16 +87,23 @@
     you could try emailing me at <Email>jdm3@st-and.ac.uk</Email>. <P/>
 
     It is assumed that you have a working copy of &GAP; with version number 
-    4.7 or higher. The most up-to-date version of &GAP; and instructions on
-    how to install it can be obtained from the main &GAP; webpage
+    &GAPVERS; or higher. The most up-to-date version of &GAP; and instructions
+    on how to install it can be obtained from the main &GAP; webpage
     &vspace;<P/>&noindent;&vspace;
     <URL>http://www.gap-system.org</URL><P/>
 
     &noindent; The following is a summary of the steps that should lead to a
     successful installation of &Semigroups;:
     <List>
-      <Item> download and install the &Orb; package version 
-      &ORBVERS; or higher. For more details go to:
+     <Item> ensure that the &IO; package version                 
+      &IOVERS; or higher. For more details go to:
+      &vspace;<P/>&noindent;
+      <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/ io.html
+      </URL>
+      </Item>
+      
+      <Item> ensure that the &Orb; package version 
+      &ORBVERS; or higher is available. For more details go to:
       &vspace;<P/>&noindent; 
       <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
       </URL><P/>
@@ -104,17 +111,11 @@
       is compiled. 
       </Item>
 
-     <Item> download and install the &IO; package version                 
-      &IOVERS; or higher. For more details go to:
-      &vspace;<P/>&noindent;
-      <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/ io.html
-      </URL>
-      </Item>
-
       <Item>  if you want to be able to calculate the Munn semigroup of a
-        semilattice <Ref Oper="MunnSemigroup"/>, then download and fully
-        install the &Grape; package version &GRAPEVERS; or higher.  For more
-        details go to:&vspace;<P/>&noindent;
+        semilattice <Ref Oper="MunnSemigroup"/> or the maximal subsemigroups of
+        a Rees 0-matrix semigroup, then make sure that fully
+        the &Grape; package version &GRAPEVERS; or higher is available.  For
+        more details go to:&vspace;<P/>&noindent;
         <URL>http://www.maths.qmul.ac.uk/~leonard/grape/</URL><P/>
         If &Grape; is not fully installed, then &Semigroups; can be used as
         normal with the except that <Ref Oper="MunnSemigroup"/>
@@ -213,15 +214,16 @@ or 64-bit mode correctly!
     In this section we describe how to test that &Semigroups; is working as
     intended.  To test that &Semigroups; is installed correctly use 
     <Ref Func="SemigroupsTestInstall"/> or for more extensive tests use 
-    <Ref Func="SemigroupsTestAll"/>. Please note that it will take a few seconds for
-    <Ref Func="SemigroupsTestInstall"/> to finish and it will take no more than 1
-    minute for <Ref Func="SemigroupsTestAll"/> to finish.<P/>
+    <Ref Func="SemigroupsTestAll"/>. Please note that it will take a few
+    seconds for <Ref Func="SemigroupsTestInstall"/> to finish and it will take
+    no more than 1 minute for <Ref Func="SemigroupsTestAll"/> to finish.<P/>
 
-    Note that after calling <Ref Func="SemigroupsTestAll"/>, 
-    <Ref Func="SemigroupsTestAll"/>, or <Ref Func="SemigroupsTestManualExamples"/>, the
-    message <C>gzip: stdout: Broken pipe</C> might be displayed (several
-    times). While this is unfortunate, it is not an error and should simply be
-    ignored.  We hope to resolve this issue in the future.
+    Note that after calling <Ref Func="SemigroupsTestAll"/>, <Ref
+      Func="SemigroupsTestAll"/>, or <Ref
+      Func="SemigroupsTestManualExamples"/>, the message <C>gzip: stdout:
+      Broken pipe</C> might be displayed (several times). While this is
+    unfortunate, it is not an error and should simply be ignored.  We hope to
+    resolve this issue in the future.
 
     If something goes wrong, then please review the instructions in Section
     <Ref Sect="install"/> and ensure that &Semigroups; has been properly
@@ -235,9 +237,7 @@ or 64-bit mode correctly!
   </Section>
 
   <Section><Heading>More information during a computation</Heading>
-    
     <#Include Label="InfoSemigroups">
-
   </Section>
 
     <Section><Heading>Reading and writing transformations and partial
@@ -273,22 +273,15 @@ or 64-bit mode correctly!
   </Section>
 
   <Section><Heading>New methods for existing functions</Heading>
-    In this section we list the functions from the &GAP; library (those
-    available when &Semigroups; is not loaded) which have new methods in
-    &Semigroups;.  Some of these new methods apply to a wider class of objects
-    than the existing methods. Where this is the case, we give references to
-    both the &Semigroups; documentation and the &GAP; manual; otherwise we may
-    only give references to the &GAP; manual.<P/>
-
-    &Semigroups; contains special methods for some &GAP; library functions, and
-    so you might notice that &GAP; behaves differently when &Semigroups; is
-    loaded. 
-    For more details about semigroups in &GAP; or Green's relations in
-    particular, see <Ref Sect="Semigroups" BookName="ref"/> or 
-    <Ref Sect="Green's Relations" BookName="ref"/>.
-
     &Semigroups; contains functions synonymous to some of those define in the
     &GAP; library but, for the sake of convenience, they have abbreviated
-    names; for further details see below.
+    names; further details can be found at the appropriate points in the
+    later chapters of the manual. <P/>
+    
+    &Semigroups; contains different methods for some &GAP; library functions,
+    and so you might notice that &GAP; behaves differently when &Semigroups; is
+    loaded.  For more details about semigroups in &GAP; or Green's relations in
+    particular, see <Ref Sect="Semigroups" BookName="ref"/> or 
+    <Ref Sect="Green's Relations" BookName="ref"/>.
   </Section>
 </Chapter>
