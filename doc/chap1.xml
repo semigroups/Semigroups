@@ -2,6 +2,16 @@
   <Heading>The &Semigroups; package</Heading>
   <Index Key="Semigroups">&Semigroups; package overview</Index>	
     
+  <Section><Heading>An important note</Heading>
+    The operations, methods, properties, and functions
+    described in this manual only apply to semigroups of transformations,
+    partial permutations, and subsemigroups of regular Rees 0-matrix semigroups
+    over groups. For the sake of brevity, we have opted to say
+    <B>semigroup</B> rather than <B>semigroup of transformations, partial
+      permutations, and subsemigroups of regular Rees 0-matrix semigroups over
+      groups</B>.
+  </Section>
+  <Section><Heading>Introduction</Heading>
     This is the manual for the &Semigroups; package version &VERSION;.
     &Semigroups; &VERSION; is an updated and expanded version of the 
     <URL Text="Monoid package for GAP 3">
@@ -11,23 +21,19 @@
       http://www-history.mcs.st-and.ac.uk/~jamesm/monoid/index.html</URL> by
     J.  D. Mitchell.<P/>
 
-    Some of the theory behind the algorithms in &Semigroups; for computing with
-    semigroups of transformations and partial permutations is described in 
+    Some of the theory behind the algorithms in &Semigroups; is described in 
     <Cite Key="pfeiffer1"/> and described in <Cite Key="pfeiffer2"/>.  Another
     reference is <Cite Key="lallement"/>. A reference for free inverse
-    semigroups is Section 5.10 in <Cite Key="howie"/>. The functions for
+    semigroups is Section 5.10 in <Cite Key="howie"/>. The functions for:
     finding a smaller degree partial permutation representation of an inverse
-    semigroup are based on <Cite Key="Schein1992aa"/>.
-    <P/> 
+    semigroup are based on <Cite Key="Schein1992aa"/>; and finding the
+    maximal subsemigroups of a Rees matrix or 0-matrix semigroup are based on
+    Remark 1 in <Cite Key="Graham1968aa"/>.
+    <P/>
     
-    The functionality of &Monoid; 3.1.4 for &GAP; 4 has been split between the
-    &GAP; 4.5 packages &Semigroups; and &Comatose;.
-
     &Semigroups; &VERSION; retains all the functionality of the original
-    &Monoid; for &GAP; 3; and many of those functions
-    from &Monoid; 3.1.4 not involved in the computation of automorphism groups
-    of semigroups. The &Comatose; package retains those functions from &Monoid;
-    3.1.4 used to compute automorphism groups of transformation semigroups. <P/>
+    &Monoid; for &GAP; 3; and those functions from &Monoid; 3.1.4 not involved
+    in the computation of automorphism groups of semigroups.<P/>
 
     &noindent; &Semigroups; &VERSION; contains more efficient methods than those
     available in the &GAP; library (and in many cases more efficient than any
@@ -39,12 +45,11 @@
     also methods for testing if a semigroup satisfies a particular property,
     such as if it is regular, simple, inverse, completely regular, and a
     variety of further properties; see Chapter <Ref Chap="green"/>. 
-    Several large catalogues of examples is provided; see Sections <Ref
-      Sect="Examples"/> and <Ref Sect="Catalogues"/>.  &Semigroups; also
-    provides abbreviated names for some
-    of the commonly used &GAP; library functions related to semigroups, and
-    functions to read and write large collections of transformations or partial
-    permutations to a file; see <Ref Func="ReadGenerators"/> and <Ref
+    Several standard examples of semigroups are provided see Sections 
+    <Ref Sect="Examples"/>.  &Semigroups; also provides abbreviated names for
+    some of the commonly used &GAP; library functions related to semigroups,
+    and functions to read and write collections of transformations or
+    partial permutations to a file; see <Ref Func="ReadGenerators"/> and <Ref
       Func="WriteGenerators"/>. 
     <P/>
 
@@ -53,16 +58,16 @@
     by Julius Jonu&#353;as.<P/>
 
     &noindent; The &Semigroups; package is written &GAP; code and 
-    requires the &Orb;, &IO;, and &GENSS;  packages. The &Orb; package is used
+    requires the &Orb;, &IO;, and &GENSS; packages. The &Orb; package is used
     to efficiently compute orbits in semigroups of transformations and partial
     permutations, and these methods underpin many of the features of
-    &Semigroups;.
-    The &IO; package is used to read and write transformations and partial
-    permutations to a file.
-    The &Grape; package is used in the function <Ref Oper="MunnSemigroup"/> but
-    nowhere else in &Semigroups;. If &Grape; is not fully installed, then
-    &Semigroups; can be used as normal with the exception that the operation
-    <Ref Oper="MunnSemigroup"/> does not work.  <P/>
+    &Semigroups;.  The &IO; package is used to read and write transformations
+    and partial permutations to a file.  The &Grape; package is used in the
+    functions <Ref Oper="MunnSemigroup"/> and <Ref
+      Attr="MaximalSubsemigroups"/> but nowhere else in &Semigroups;. If
+    &Grape; is not fully installed, then &Semigroups; can be used as normal
+    with the exception that <Ref Oper="MunnSemigroup"/> and <Ref
+      Attr="MaximalSubsemigroups"/> will not work.  <P/>
     
     &Semigroups; is still under development, and so some features may not
     function as expected. At the present time, I do not know of any errors or
@@ -73,7 +78,7 @@
     For more details about semigroups in &GAP; or Green's relations in
     particular, see <Ref Sect="Semigroups" BookName="ref"/> or 
     <Ref Sect="Green's Relations" BookName="ref"/>.
-
+  </Section>
   <Section Label="install">
     <Heading>Installing &Semigroups;</Heading>
 
@@ -117,10 +122,11 @@
         install the &Grape; package version &GRAPEVERS; or higher.  For more
         details go to:&vspace;<P/>&noindent;
         <URL>http://www.maths.qmul.ac.uk/~leonard/grape/</URL><P/>
-         If
-    &Grape; is not fully installed, then &Semigroups; can be used as normal with the
-    except that the operation <Ref Oper="MunnSemigroup"/> does not work.
-
+        If &Grape; is not fully installed, then &Semigroups; can be used as
+        normal with the except that <Ref Oper="MunnSemigroup"/>
+        will not work. The method for <Ref Attr="MaximalSubsemigroups"/> will
+        work provided &Grape; can be loaded, i.e. it is not necessary for
+        &Grape; to be compiled.
       </Item>
 
       <Item> download the package archive <F>&ARCHIVENAME;.tar.gz</F> from

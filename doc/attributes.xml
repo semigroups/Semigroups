@@ -13,7 +13,7 @@
   <Attr Name="MaximalSubsemigroups" Arg="S"/>
   <Returns>The maximal subsemigroups of <A>S</A>.</Returns>
   <Description>
-    If <A>S</A> is a regular Rees matrix semigroup or Rees 0-matrix semigroup
+    If <A>S</A> is a Rees matrix semigroup or regular Rees 0-matrix semigroup
     over a group, then <C>MaximalSubsemigroups</C> returns a list of the
     maximal subsemigroups of <A>S</A>. <P/>
 
@@ -66,7 +66,8 @@ gap> MaximalSubsemigroups(R);
 
   <Example>
 gap>  S:=Semigroup( [ Transformation( [ 1, 3, 4, 1, 3 ] ), 
->  Transformation( [ 2, 4, 1, 5, 5 ] ), Transformation( [ 2, 5, 3, 5, 3 ] ), 
+>  Transformation( [ 2, 4, 1, 5, 5 ] ), 
+>  Transformation( [ 2, 5, 3, 5, 3 ] ), 
 >  Transformation( [ 5, 5, 1, 1, 3 ] ) ] );;
 gap> reps:=ShallowCopy(DClassReps(S));
 [ Transformation( [ 1, 3, 4, 1, 3 ] ), 
@@ -314,8 +315,8 @@ gap> PrincipalFactor(d);
   <Returns>A small generating set for a semigroup.</Returns>
     <Description>
       <C>SmallGeneratingSet</C> returns a relatively small generating subset
-      of the set of generators of the semigroup <A>S</A> of transformations or
-      partial permutations; see <Ref Func="Generators"/>. If the number of
+      of the set of generators of the semigroup <A>S</A>; 
+      see <Ref Func="Generators"/>. If the number of
       generators for <A>S</A> is already relatively small, then this function
       will often return the original generating set.<P/> 
 
@@ -332,10 +333,14 @@ gap> PrincipalFactor(d);
       <Log>
 gap> S:=Semigroup( Transformation( [ 1, 2, 3, 2, 4 ] ), 
 > Transformation( [ 1, 5, 4, 3, 2 ] ),
-> Transformation( [ 2, 1, 4, 2, 2 ] ), Transformation( [ 2, 4, 4, 2, 1 ] ),
-> Transformation( [ 3, 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 3, 4, 1 ] ),
-> Transformation( [ 4, 4, 3, 3, 5 ] ), Transformation( [ 5, 1, 5, 5, 3 ] ),
-> Transformation( [ 5, 4, 3, 5, 2 ] ), Transformation( [ 5, 5, 4, 5, 5 ] ) );;
+> Transformation( [ 2, 1, 4, 2, 2 ] ), 
+> Transformation( [ 2, 4, 4, 2, 1 ] ),
+> Transformation( [ 3, 1, 4, 3, 2 ] ), 
+> Transformation( [ 3, 2, 3, 4, 1 ] ),
+> Transformation( [ 4, 4, 3, 3, 5 ] ), 
+> Transformation( [ 5, 1, 5, 5, 3 ] ),
+> Transformation( [ 5, 4, 3, 5, 2 ] ), 
+> Transformation( [ 5, 5, 4, 5, 5 ] ) );;
 gap> SmallGeneratingSet(S);                  
 [ Transformation( [ 1, 5, 4, 3, 2 ] ), Transformation( [ 3, 2, 3, 4, 1 ] ), 
   Transformation( [ 5, 4, 3, 5, 2 ] ), Transformation( [ 1, 2, 3, 2, 4 ] ), 

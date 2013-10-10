@@ -525,21 +525,14 @@ function(S)
   T:=InverseSemigroup(List(newgens, x->PartialPermNC(x)));
 
   # Return identity mapping if nothing has been accomplished; else the result.
-  if NrMovedPoints(T) > NrMovedPoints(S) or 
-    (NrMovedPoints(T) = NrMovedPoints(S) and ActionDegree(T) >= ActionDegree(S))
-  then
-
+  if NrMovedPoints(T) > NrMovedPoints(S)
+    or (NrMovedPoints(T) = NrMovedPoints(S) 
+        and ActionDegree(T) >= ActionDegree(S)) then
     return IdentityMapping(S);
-
   else
-    
     return MagmaIsomorphismByFunctionsNC(S, T,
-      x -> ResultOfStraightLineProgram(
-             SemigroupElementSLP(S, x), GeneratorsOfSemigroup(T)),
-      x -> ResultOfStraightLineProgram(
-           SemigroupElementSLP(T, x), GeneratorsOfSemigroup(S))
-    );
-    
+      x -> EvaluateWord(GeneratorsOfSemigroup(T), Factorization(S, x)),
+      x -> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x)));
   fi;
   
 end);

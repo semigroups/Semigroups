@@ -59,17 +59,29 @@ gap> o;
     <Oper Name="EvaluateWord" Arg="gens, w"/>
     <Returns>A semigroup element.</Returns>
     <Description> 
-      The argument <A>gens</A> should be a list of transformations or partial
-      permutations and the
-      argument <A>w</A> should be a list of positive integers less than or
-      equal to the length of <A>gens</A>.  This operation evaluates the word
-      <A>w</A> in the generators <A>gens</A>. More precisely,
-      <C>EvaluateWord</C> returns the equivalent of: 
-      <Log>Product(List(w, i-> gens[i]));</Log> 
-      see also <Ref Meth="Factorization"/>.<P/>
+      <List>
+        <Mark>for elements of a semigroup</Mark>
+        <Item>
+          When <A>gens</A> is a list of elements of a semigroup and <A>w</A> is
+          a list of positive integers less than or equal to the length of
+          <A>gens</A>, this operation returns the product
+          <C>gens[w[1]]*gens[w[2]]*...*gens[w[n]]</C> when the length of
+          <A>w</A> is <C>n</C>.
+        </Item>
+        
+        <Mark>for elements of an inverse semigroup</Mark>
+        <Item>
+          When <A>gens</A> is a list of elements with a semigroup inverse and
+          <A>w</A> is a list of non-zero integers whose absolute value does not
+          exceed the length of <A>gens</A>, this operation returns the product
+    <C>gens[AbsInt(w[1])]^SignInt(w[1])*...*gens[AbsInt(w[n])]^SignInt(w[n])</C>
+          where <C>n</C> is the length of <A>w</A>.
+        </Item>
+      </List>
 
       Note that <C>EvaluateWord(<A>gens</A>, [])</C> returns
-      <C>One(<A>gens</A>)</C>. 
+      <C>One(<A>gens</A>)</C> if <A>gens</A> is belongs to the category
+      <Ref Filt="IsMultiplicativeElementWithOne" BookName="ref"/>.
 <Example>
 gap> gens:=[ Transformation( [ 2, 4, 4, 6, 8, 8, 6, 6 ] ), 
 > Transformation( [ 2, 7, 4, 1, 4, 6, 5, 2 ] ), 
@@ -81,7 +93,19 @@ gap> f:=Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] );;
 gap> Factorization(S, f);
 [ 4, 2 ]
 gap> EvaluateWord(gens, last);
-Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] )</Example>
+Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] )
+gap> S:=SymmetricInverseMonoid(10);;
+gap> f:=PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] );
+[3,7][8,1,2,6,9][10,5]
+gap> Factorization(S, f);
+[ -2, -2, -2, -2, -3, -4, -3, -2, -2, -2, -2, -3, -2, 2, 2, 2, 2, 4, 4, 4, 
+  4, 2, 2, 2, 2, 2, 3, 4, -3, -2, -3, -2, -3, -2, 2, 2, 2, 2, 2, 3, 4, -3, 
+  -2, -3, -2, -3, -2, 2, 2, 2, 2, 2, 3, 4, -3, -2, -3, -2, -3, -2, 2, 2, 2, 
+  2, 2, 3, 4, -3, -2, -3, -2, -3, -2, 2, 2, 2, 2, 2, 3, 4, -3, -2, -3, -2, 
+  -3, -2, 3, 2, 2, 2, 2, 2, 3, 4, -3, -2, -3, -2, -3, -2, 2, 3, 2, 3, 2, 2, 
+  2, 3, 2, 2, 2, 2, 2, 3, 2, 3, 2 ]
+gap> EvaluateWord(GeneratorsOfSemigroup(S), w); 
+[3,7][8,1,2,6,9][10,5]</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
