@@ -41,9 +41,9 @@ local str, nrgens;
   Append(str, "\>transformation\< \>group\<");
   if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) 
    and Size(s)<2^64 then
-    Append(str, "\>of size\> ");
+    Append(str, " \>of size \>");
     Append(str, String(Size(s)));
-    Append(str, ",\<\< ");
+    Append(str, ",\<\<");
   fi;
 
   nrgens:=Length(Generators(s));
