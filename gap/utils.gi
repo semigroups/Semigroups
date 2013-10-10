@@ -151,7 +151,7 @@ function()
    InstallationPath, "/doc"), "main.xml", 
    ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
     "semigroups.xml", "attributes-inverse.xml", "slp.xml", "freeinverse.xml",
-    "attributes.xml", "../PackageInfo.g"],
+    "attributes.xml", "display.xml", "../PackageInfo.g"],
    "semigroups", "MathJax", "../../..");;
   return;
 end);
@@ -243,7 +243,8 @@ return
   ExtractExamples(DirectoriesPackageLibrary("semigroups","doc"), 
   "main.xml",  [ "utils.xml", "examples.xml", "slp.xml", "greens.xml",
   "orbits.xml", "properties.xml", "semigroups.xml",  "attributes-inverse.xml", 
-  "freeinverse.xml", "attributes.xml", "../PackageInfo.g" ], "Single" );
+  "freeinverse.xml", "attributes.xml", "display.xml",
+  "../PackageInfo.g" ], "Single" );
 end);
 
 # if <arg> is some strings, then any example containing any of these strings is

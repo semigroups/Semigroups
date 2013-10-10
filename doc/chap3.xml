@@ -162,5 +162,13 @@
     <#Include Label="IsomorphismPermGroup">
     <#Include Label="IsomorphismTransformationMonoid">
   </Section>
+
+  <Section><Heading>Visualising the &D;-class structure</Heading>
+    In this section, we describe a function for creating a picture of the 
+    &D;-class structure of a semigroup of transformations, partial
+    permutations, or a subsemigroup of a Rees 0-matrix semigroup.
+    <#Include Label="DotDClasses"/>
+ 
+  </Section>
 </Chapter>
 
