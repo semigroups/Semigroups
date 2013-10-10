@@ -8,7 +8,8 @@
   particular for computing Green's classes and related properties of 
   semigroups. 
   
-  <Section><Heading>Expressing semigroup elements as words in
+  <Section><!--JDM properties/attributes chapter-->
+    <Heading>Expressing semigroup elements as words in
     generators</Heading>
     It is possible to express an element of a transformation or partial perm
     semigroup as a word in the generators of that semigroup. This section
@@ -18,7 +19,7 @@
     <#Include Label="Factorization">
   </Section>
 
-  <Section>
+  <Section><!--new chapter JDM-->
   <Heading>Strongly connected components of orbits</Heading>
     The following functions supplement the &Orb; package by providing methods
     for computations related to the strongly connected components of an
@@ -41,6 +42,7 @@
   </Section>
   
   <Section><Heading>Creating Green's classes</Heading>
+    <!--JDM green's classes and relations chapter-->
     <#Include Label="XClassOfYClass">
     <#Include Label="GreensXClassOfElement">
     <#Include Label="GreensXClassOfElementNC">
@@ -48,6 +50,7 @@
   </Section>
   
   <Section><Heading>Iterators and enumerators of classes and representatives
+    <!--JDM green's classes and relations chapter-->
   </Heading>
     <#Include Label="GreensXClasses">
     <#Include Label="IteratorOfXClassReps"> 
@@ -56,6 +59,7 @@
   </Section>
 
   <Section><Heading>Attributes and properties directly related to Green's classes</Heading>
+    <!--JDM green's classes and relations chapter-->
     <#Include Label="\&lt;">
     <#Include Label="InjectionPrincipalFactor">
     <#Include Label="PrincipalFactor">
@@ -78,6 +82,7 @@
   </Section>
 
   <Section><Heading>Further attributes of semigroups</Heading>
+    <!--JDM attributes and properties chapter-->
     In this section we describe the attributes <Ref Sect="Attributes"
       BookName="ref"/> of arbitrary semigroups of transformations or partial
     permutations  that can be found using &Semigroups;. <P/>
@@ -97,6 +102,7 @@
   </Section>
 
   <Section><Heading>Further properties of semigroups</Heading>
+    <!--JDM attributes and properties chapter-->
     In this section we describe several properties 
     <Ref Sect="Properties" BookName="ref"/> of an
     arbitrary semigroup of transformations or partial permutations 
@@ -126,7 +132,7 @@
   </Section>
 
   <Section><Heading>Properties and attributes of inverse semigroups</Heading>
-
+    <!--JDM attributes and properties of inverse semigroups chapter-->
     In this section we describe several properties and attributes 
     <Ref Sect="Properties" BookName="ref"/> of inverse semigroup of
     transformations or partial permutations that can be determined using
@@ -156,11 +162,6 @@
     <#Include Label="SmallerDegreePartialPermRepresentation">
     <#Include Label="VagnerPrestonRepresentation">
 
-  </Section>
-     
-  <Section><Heading>Changing the representation of a semigroup</Heading>
-    <#Include Label="IsomorphismPermGroup">
-    <#Include Label="IsomorphismTransformationMonoid">
   </Section>
 
   <Section><Heading>Visualising the &D;-class structure</Heading>
