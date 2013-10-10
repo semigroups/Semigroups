@@ -252,13 +252,14 @@ or 64-bit mode correctly!
 
   <Section><Heading>Use &R;-classes not &L;-classes</Heading>
     It is harder for &Semigroups; to compute Green's &L;- and
-    &H;-classes and the methods used to compute with
-    Green's &R;- and &D;-classes are the most efficient in &Semigroups;.  Thus,
-    if you are computing with a semigroup, wherever
+    &H;-classes of a transformation semigroup and the methods used to compute
+    with Green's &R;- and &D;-classes are the most efficient in &Semigroups;.
+    Thus, if you are computing with a transformation semigroup, wherever
     possible it is advisable to use the commands relating to Green's
     &R;- or &D;-classes rather than those relating to Green's &L;-  or
     &H;-classes. No such difficulties are present when computing with
-    semigroups of partial permutations. <P/>
+    semigroups of partial permutations, or subsemigroups of a regular Rees
+    0-matrix semigroup over a group.<P/>
     
     The methods in &Semigroups; allow the computation of individual Green's
     classes without the need to compute all the elements of the underlying
