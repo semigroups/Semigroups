@@ -140,7 +140,7 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ),
   
   <Section Label="Examples"><Heading>Standard examples</Heading>
      <!-- JDM new chapter -->
-    In this section, we describe the operations in &Semigroups;, which can be
+    In this section, we describe the operations in &Semigroups; that can be
     used to creating semigroups belonging to several standard classes of
     example. 
     <#Include Label="PartialTransformationSemigroup"> 
@@ -162,7 +162,7 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ),
 
     Further examples can be downloaded from &vspace;<P/>
 
-    <URL>http://tinyurl.com/jdmitchell/examples.php</URL>&vspace;<P/>
+    <URL>http://tinyurl.com/jdmitchell/data.php</URL>&vspace;<P/>
 
     &noindent; A summary of the available files, a desciption of their
     contents, and how they were created is given below.<P/>
@@ -202,9 +202,6 @@ gap> S:=Semigroup(Transformation( [ 1, 2, 3, 3 ] ),
         <Log>AllSmallSemigroups([2..8], IsSemilatticeAsSemigroup, true);</Log>
         and the generators for the Munn semigroups were calculated using 
         <Ref Oper="MunnSemigroup"/>.
-        More information is available at:<P/>
-  
-        <URL>http://tinyurl.com/jdmitchell/examples.html</URL>
       </Item>
 
       <Mark>Syntactic semigroups</Mark>

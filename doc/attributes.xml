@@ -93,11 +93,10 @@ true</Example>
   <Returns>An isomorphism.
   </Returns>
   <Description>
-  <C>IsomorphismTransformationSemigroup(<A>S</A>)</C>
-   returns an isomorphism from the semigroup <A>S</A> to a
-   semigroup of transformations.<P/>
+    <C>IsomorphismTransformationSemigroup</C> returns an isomorphism
+    from the semigroup <A>S</A> to a semigroup of transformations.<P/>
 
-   <C>IsomorphismTransformationMonoid(<A>S</A>)</C> returns an isomorphism from
+   <C>IsomorphismTransformationMonoid</C> returns an isomorphism from
    the monoid <A>S</A> to a monoid of transformations. <P/>
    
    We only describe <C>IsomorphismTransformationMonoid</C>,
@@ -105,13 +104,11 @@ true</Example>
    also hold.
 
    <List>
-
      <Mark>Partial permutation semigroups</Mark>
      <Item>
-       If <A>S</A> is a partial permutation monoid, then
-       <C>IsomorphismTransformationMonoid(<A>S</A>)</C> returns an isomorphism
-       from <A>S</A> to a monoid of partial permutations on
-       <C>[1..LargestMovedPoint(<A>S</A>)+1]</C> obtained using 
+       If <A>S</A> is a partial permutation monoid, then this function 
+       returns an isomorphism from <A>S</A> to a monoid of partial permutations
+       on <C>[1..LargestMovedPoint(<A>S</A>)+1]</C> obtained using 
        <Ref Oper="AsTransformation" BookName="ref"/>. The inverse of this
        isomorphism is obtained using 
        <Ref Func="AsPartialPerm" BookName="ref"/>; see 
@@ -122,9 +119,8 @@ true</Example>
      
     <Mark>Permutation groups</Mark>
     <Item>
-      If <A>S</A> is a permutation group, then
-      <C>IsomorphismTransformationMonoid</C> returns an isomorphism from
-      <A>S</A> to a transformation monoid acting on the set
+      If <A>S</A> is a permutation group, then this function returns an
+      isomorphism from <A>S</A> to a transformation monoid acting on the set
       <C>[1..NrMovedPoints(<A>S</A>)]</C> obtained using 
       <Ref Oper="AsTransformation" BookName="ref"/>; see 
       <Ref Attr="NrMovedPoints" BookName="ref"/>.
@@ -457,11 +453,9 @@ gap> MinimalIdeal(BrauerMonoid(6));
 <#GAPDoc Label="IsomorphismPermGroup">
 <ManSection>
   <Oper Name="IsomorphismPermGroup" Arg="S"/>
-  <Returns>An isomorphism.
-  </Returns>
+  <Returns> An isomorphism. </Returns>
   <Description>
-    If the semigroup of transformations or partial permutations <A>S</A>
-    satisfies <Ref Prop="IsGroupAsSemigroup"/>, then
+    If the semigroup <A>S</A> satisfies <Ref Prop="IsGroupAsSemigroup"/>, then
     <C>IsomorphismPermGroup</C> returns an isomorphism to a permutation
     group.<P/> 
    

@@ -4,41 +4,18 @@
   </Heading>
 
   In this chapter we describe the functions in &Semigroups; for determining the
-  structure of a semigroup of transformations or partial permutations, in
-  particular for computing Green's classes and related properties of 
-  semigroups. 
+  structure of a semigroup, in particular for computing Green's classes and
+  related properties of semigroups. 
   
   <Section><!--JDM properties/attributes chapter-->
     <Heading>Expressing semigroup elements as words in
     generators</Heading>
-    It is possible to express an element of a transformation or partial perm
-    semigroup as a word in the generators of that semigroup. This section
-    describes how to accomplish this in &Semigroups;. <P/>
+    It is possible to express an element of a semigroup as a word in the
+    generators of that semigroup. This section describes how to accomplish this
+    in &Semigroups;. <P/>
 
     <#Include Label="EvaluateWord">
     <#Include Label="Factorization">
-  </Section>
-
-  <Section><!--new chapter JDM-->
-  <Heading>Strongly connected components of orbits</Heading>
-    The following functions supplement the &Orb; package by providing methods
-    for computations related to the strongly connected components of an
-    orbit of a semigroup. <P/>
-
-    Please note that if any of the functions in this section is applied to an
-    open orbit, then the orbit is enumerated before anything else. It is not
-    possible to calculate the strongly connected components of an orbit of a
-    semigroup acting on a set until the entire orbit has been found.
-
-    <#Include Label="EnumeratePosition">
-    <#Include Label="LookForInOrb">
-    <#Include Label="OrbSCC">
-    <#Include Label="OrbSCCLookup">
-    <#Include Label="OrbSCCTruthTable">
-    <#Include Label="ReverseSchreierTreeOfSCC">
-    <#Include Label="SchreierTreeOfSCC">
-    <#Include Label="TraceSchreierTreeOfSCCBack">
-    <#Include Label="TraceSchreierTreeOfSCCForward">
   </Section>
   
   <Section><Heading>Creating Green's classes</Heading>

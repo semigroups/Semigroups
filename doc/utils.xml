@@ -184,9 +184,9 @@ gap> GeneratorsOfSemigroup(S);
       
       Note that if the file <A>filename</A> is gzipped, then the message
       <C>gzip: stdout: Broken pipe</C> might be displayed when
-      <C>ReadGenerators</C> is used. While this is unfortunate, it not an error
-      that affect the output of <C>ReadGenerators</C>. We hope to resolve this
-      issue in the future.
+      <C>ReadGenerators</C> is used. While this is unfortunate, it is not an
+      error that affects the output of <C>ReadGenerators</C>. We hope to
+      resolve this issue in the future.
     </Description>
   </ManSection>
 <#/GAPDoc>

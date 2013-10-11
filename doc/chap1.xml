@@ -11,6 +11,7 @@
       permutations, and subsemigroups of regular Rees 0-matrix semigroups over
       groups</B>.
   </Section>
+  
   <Section><Heading>Introduction</Heading>
     This is the manual for the &Semigroups; package version &VERSION;.
     &Semigroups; &VERSION; is an updated and expanded version of the 
@@ -37,15 +38,15 @@
 
     &noindent; &Semigroups; &VERSION; contains more efficient methods than those
     available in the &GAP; library (and in many cases more efficient than any
-    other software) for creating semigroups of transformations and partial
-    permutations, calculating their Green's classes, size, elements, group of
-    units, minimal ideal, and testing membership, finding the inverses of a
-    regular element, and factorizing elements over the generators, and many
-    more; see Chapters <Ref Chap="create"/> and  <Ref Chap="green"/>. There are
-    also methods for testing if a semigroup satisfies a particular property,
-    such as if it is regular, simple, inverse, completely regular, and a
-    variety of further properties; see Chapter <Ref Chap="green"/>. 
-    Several standard examples of semigroups are provided see Sections 
+    other software) for creating semigroups, calculating their Green's classes,
+    size, elements, group of units, minimal ideal, and testing membership,
+    finding the inverses of a regular element, and factorizing elements over
+    the generators, and many more; see Chapters <Ref Chap="create"/> and  <Ref
+      Chap="green"/>. There are also methods for testing if a semigroup
+    satisfies a particular property, such as if it is regular, simple, inverse,
+    completely regular, and a variety of further properties; see Chapter <Ref
+      Chap="green"/>. 
+    Several standard examples of semigroups are provided see Section 
     <Ref Sect="Examples"/>.  &Semigroups; also provides abbreviated names for
     some of the commonly used &GAP; library functions related to semigroups,
     and functions to read and write collections of transformations or
@@ -80,7 +81,7 @@
   </Section>
   
   <Section Label="install">
-    <Heading>Installing &Semigroups;</Heading>
+    <Heading>Installing the &Semigroups; package</Heading>
 
     In this section we give a brief description of how to start using
     &Semigroups;. If you have any problems getting &Semigroups; working, then
@@ -95,9 +96,8 @@
     &noindent; The following is a summary of the steps that should lead to a
     successful installation of &Semigroups;:
     <List>
-     <Item> ensure that the &IO; package version                 
-      &IOVERS; or higher. For more details go to:
-      &vspace;<P/>&noindent;
+     <Item> ensure that the &IO; package version &IOVERS; or higher is
+       available. For more details go to:&vspace;<P/>&noindent;
       <URL>http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/ io.html
       </URL>
       </Item>
@@ -113,7 +113,7 @@
 
       <Item>  if you want to be able to calculate the Munn semigroup of a
         semilattice <Ref Oper="MunnSemigroup"/> or the maximal subsemigroups of
-        a Rees 0-matrix semigroup, then make sure that fully
+        a Rees 0-matrix semigroup, then make sure that 
         the &Grape; package version &GRAPEVERS; or higher is available.  For
         more details go to:&vspace;<P/>&noindent;
         <URL>http://www.maths.qmul.ac.uk/~leonard/grape/</URL><P/>
@@ -126,17 +126,16 @@
 
       <Item> download the package archive <F>&ARCHIVENAME;.tar.gz</F> from
       &vspace;<P/>&noindent;&vspace;
-      <URL>http://www-history.mcs.st-and.ac.uk/~jamesm/semigroups/index.html
-      </URL>
+      <URL>http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php</URL>
       </Item>
     
       <Item> unzip and untar the file, this should create a directory called
-      <C>&ARCHIVENAME;</C>.</Item>
+      <F>&ARCHIVENAME;</F>.</Item>
     
       <Item> 
-      locate the <C>pkg</C> directory of your &GAP; directory, which contains
-      the directories <C>lib</C>, <C>doc</C> and so on. Move the directory
-      <C>&ARCHIVENAME;</C> into the <C>pkg</C> directory.  
+      locate the <F>pkg</F> directory of your &GAP; directory, which contains
+      the directories <F>lib</F>, <F>doc</F> and so on. Move the directory
+      <F>&ARCHIVENAME;</F> into the <F>pkg</F> directory.  
       </Item>
 
       <!--     <Item> to use the functions in &Semigroups; for partial permutations and
@@ -157,7 +156,7 @@ make]]></Listing>
     </Item>
 
   </List>
-
+  
   <!--    <E><B>Please note that</B> &Semigroups; can only be used to compute with
       semigroups of partial permutations if it has been compiled.  </E><P/>-->
 
@@ -215,8 +214,8 @@ or 64-bit mode correctly!
     intended.  To test that &Semigroups; is installed correctly use 
     <Ref Func="SemigroupsTestInstall"/> or for more extensive tests use 
     <Ref Func="SemigroupsTestAll"/>. Please note that it will take a few
-    seconds for <Ref Func="SemigroupsTestInstall"/> to finish and it will take
-    no more than 1 minute for <Ref Func="SemigroupsTestAll"/> to finish.<P/>
+    seconds for <Ref Func="SemigroupsTestInstall"/> to finish and it may take
+    several minutes for <Ref Func="SemigroupsTestAll"/> to finish.<P/>
 
     Note that after calling <Ref Func="SemigroupsTestAll"/>, <Ref
       Func="SemigroupsTestAll"/>, or <Ref
@@ -265,12 +264,12 @@ or 64-bit mode correctly!
     classes without the need to compute all the elements of the underlying
     semigroup; see <Ref Oper="GreensRClassOfElementNC"/>.  It is also possible
     to compute all the &R;-classes, the number of elements and test membership
-    in a transformation semigroup without computing all the elements; see, for
+    in a semigroup without computing all the elements; see, for
     example, <Ref Oper="GreensRClasses"/>, <Ref Attr="RClassReps"/>, 
     <Ref Func="IteratorOfRClassReps"/>, <Ref Func="IteratorOfRClasses"/>, or
     <Ref Func="NrRClasses"/>.  This may be useful if you want to study a very
     large semigroup where computing all the elements of the semigroup is
-    infeasible.
+    not feasible.
   </Section>
 
   <Section><Heading>New methods for existing functions</Heading>

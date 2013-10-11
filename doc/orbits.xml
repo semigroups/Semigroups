@@ -23,7 +23,7 @@
       If the optional argument <A>onlynew</A> is present, it should be
       <K>true</K> or <K>false</K>. If <A>onlynew</A> is <K>true</K>, then
       <A>val</A> will only be checked against new points in <A>o</A>. Otherwise,
-      every point in the <A>o</A>, not only the new ones, are considered.
+      every point in the <A>o</A>, not only the new ones, is considered.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -34,13 +34,13 @@
     <Returns><K>false</K> or a positive integer.</Returns>
     <Description> 
       The arguments of this function should be an orbit <A>o</A>, a function
-      <A>func</A> which get the orbit object and a point in the orbit as
+      <A>func</A> which gets the orbit object and a point in the orbit as
       arguments, and a positive integer <A>start</A>. The function <A>func</A>
       will be called for every point in <A>o</A> starting from <A>start</A>
       (inclusive) and the orbit will be enumerated until <A>func</A> returns
       <K>true</K> or the enumeration ends. In the former case, the position of
       the first point in <A>o</A> for which <A>func</A> returns <K>true</K> is
-      returned. In the latter, <K>false</K> is returned.  
+      returned, and in the latter <K>false</K> is returned.  
 <Example>
 gap> o:=Orb(SymmetricGroup(100), 1, OnPoints);
 &lt;open Int-orbit, 1 points>
