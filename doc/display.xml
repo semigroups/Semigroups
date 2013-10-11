@@ -46,7 +46,7 @@ gap> Size(S);
       <URL>http://www.graphviz.org</URL>. <P/>
 
       The string returned by <C>DotDClasses</C> can be written to a file using
-      the command <Ref Func="FileString" BookName="ref"/>.<P/>
+      the command <Ref Func="FileString" BookName="GAPDoc"/>.<P/>
 
       The &D;-classes are shown as eggbox diagrams with &L;-classes as rows and
       &R;-classes as columns; group &H;-classes are shaded gray and contain an

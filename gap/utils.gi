@@ -150,7 +150,7 @@ function()
   MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.
    InstallationPath, "/doc"), "main.xml", 
    ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
-    "semigroups.xml", "attributes-inverse.xml", "slp.xml", "freeinverse.xml",
+    "semigroups.xml", "attributes-inverse.xml", "factor.xml", "freeinverse.xml",
     "attributes.xml", "display.xml", "../PackageInfo.g"],
    "semigroups", "MathJax", "../../..");;
   return;
@@ -241,7 +241,7 @@ InstallGlobalFunction(SemigroupsManualExamples,
 function()
 return 
   ExtractExamples(DirectoriesPackageLibrary("semigroups","doc"), 
-  "main.xml",  [ "utils.xml", "examples.xml", "slp.xml", "greens.xml",
+  "main.xml",  [ "utils.xml", "examples.xml", "factor.xml", "greens.xml",
   "orbits.xml", "properties.xml", "semigroups.xml",  "attributes-inverse.xml", 
   "freeinverse.xml", "attributes.xml", "display.xml",
   "../PackageInfo.g" ], "Single" );

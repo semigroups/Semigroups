@@ -14,7 +14,7 @@ ReadPackage("semigroups/gap/acting.gi");
 ReadPackage("semigroups/gap/graded.gi");
 ReadPackage("semigroups/gap/semigroups.gi");
 ReadPackage("semigroups/gap/greens.gi");
-ReadPackage("semigroups/gap/slp.gi");
+ReadPackage("semigroups/gap/factor.gi");
 ReadPackage("semigroups/gap/regular.gi");
 ReadPackage("semigroups/gap/inverse.gi");
 ReadPackage("semigroups/gap/enums.gi");
