@@ -215,8 +215,8 @@ gap> Size(S);
     integer, then once the subsemigroup has at least <A>limit</A> elements the
     computation stops.
     <Example>
-gap> func:=function(f) return x^f&lt;>x and
-> ForAll([1..DegreeOfTransformation(f)], y-> y=x or y^f=y); end;
+gap> func:=function(f) return 1^f&lt;>1 and
+> ForAll([1..DegreeOfTransformation(f)], y-> y=1 or y^f=y); end;
 function( f ) ... end
 gap> T:=SubsemigroupByProperty(FullTransformationSemigroup(3), func);
 &lt;transformation semigroup of size 2, on 3 pts with 2 generators>
