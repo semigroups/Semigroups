@@ -38,6 +38,7 @@ function(path, vers)
            Concatenation(SplitString(file[1], '-')[1], ".tst"), 
            "in semigroups/tst for comparison!\n");
         else
+          Print("\n");
           Print(Test(Filename(tstdir, tstfile), rec(compareTimings:=file),
           "\n"));
         fi;
