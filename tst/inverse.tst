@@ -265,7 +265,7 @@ true
 
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/graph7c.semigroups.gz");;
-gap> s:=Semigroup(ReadSemigroups(file, 600));
+gap> s:=Semigroup(ReadGenerators(file, 600));
 <transformation semigroup on 7 pts with 2 generators>
 gap> iso:=IsomorphismPartialPermSemigroup(s);;
 gap> inv:=InverseGeneralMapping(iso);;
@@ -979,7 +979,7 @@ gap> List(DClasses(S), SchutzenbergerGroup);
 
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/munn.semigroups.gz");;
-gap> ReadSemigroups(file, 1078);;
+gap> ReadGenerators(file, 1078);;
 gap> s:=InverseSemigroup(last);
 <inverse partial perm semigroup on 9 pts with 6 generators>
 gap> Size(s);

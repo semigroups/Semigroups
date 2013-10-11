@@ -15,8 +15,7 @@ DeclareUserPreference(rec(
   multi := false,
   package := "semigroups"));
 
-DeclareCategory("IsFreeInverseSemigroupElement",
-  IsAssociativeElementWithUniqueSemigroupInverse);
+DeclareCategory("IsFreeInverseSemigroupElement", IsAssociativeElement);
 DeclareCategoryCollections("IsFreeInverseSemigroupElement");
 DeclareProperty("IsFreeInverseSemigroup", IsSemigroup);
 DeclareGlobalFunction("FreeInverseSemigroup");

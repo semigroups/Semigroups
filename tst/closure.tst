@@ -34,11 +34,11 @@ gap> NrLClasses(s);
 gap> NrDClasses(s);
 662
 gap> GroupOfUnits(s);
-<transformation group on 0 pts with 1 generator>
+<trivial transformation group>
 
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/syntactic.semigroups.gz");;
-gap> gens:=ReadSemigroups(file, 299);;
+gap> gens:=ReadGenerators(file, 299);;
 gap> s:=Semigroup(gens[1]);; 
 gap> for i in [2..Length(gens)] do 
 > s:=ClosureSemigroup(s, gens[i]); 
@@ -62,7 +62,7 @@ gap> NrLClasses(t);
 
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/syntactic.semigroups.gz");;
-gap> gens:=ReadSemigroups(file, 299);;
+gap> gens:=ReadGenerators(file, 299);;
 gap> s:=Semigroup(gens[1]);; Size(s);
 30
 gap> for i in [2..Length(gens)] do 
@@ -87,7 +87,7 @@ gap> NrLClasses(t);
 
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/path.semigroups.gz");;
-gap> gens:=ReadSemigroups(file, 10);;
+gap> gens:=ReadGenerators(file, 10);;
 gap> s:=Semigroup(gens[1]);;         
 gap> for i in [2..Length(gens)] do
 > s:=ClosureSemigroup(s, gens[i]); Size(s);
@@ -111,7 +111,7 @@ gap> NrRClasses(t); NrLClasses(t); NrDClasses(t); NrIdempotents(t);
 
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/path.semigroups.gz");;
-gap> gens:=ReadSemigroups(file, 10);;
+gap> gens:=ReadGenerators(file, 10);;
 gap> s:=Semigroup(gens[1]);;        
 gap> s:=ClosureSemigroup(s, gens[2]);;
 gap> for i in [2..Length(gens)] do
@@ -149,7 +149,7 @@ true
 gap> MultiplicativeZero(s);
 fail
 gap> GroupOfUnits(s);
-<transformation group on 0 pts with 1 generator>
+<trivial transformation group>
 
 #
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
@@ -166,7 +166,7 @@ true
 gap> MultiplicativeZero(s);
 fail
 gap> GroupOfUnits(s);
-<transformation group on 0 pts with 1 generator>
+<trivial transformation group>
 
 #
 gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),

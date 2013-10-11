@@ -83,7 +83,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -158,7 +158,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -233,7 +233,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -314,7 +314,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -388,7 +388,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -463,7 +463,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -538,7 +538,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -613,7 +613,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -686,7 +686,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -717,9 +717,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 8
@@ -761,7 +761,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -834,7 +834,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -908,7 +908,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -982,7 +982,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -1055,7 +1055,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -1128,7 +1128,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 true
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -1201,7 +1201,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -1274,7 +1274,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -1347,7 +1347,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 true
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -1420,7 +1420,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -1493,7 +1493,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 true
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -1566,7 +1566,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -1595,9 +1595,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 Transformation( [ 8, 8, 8, 8, 5, 8, 8, 8 ] )
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 1
@@ -1639,7 +1639,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -1668,9 +1668,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8 ] )
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 1
@@ -1712,7 +1712,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -1742,9 +1742,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 720
@@ -1786,7 +1786,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -1824,9 +1824,9 @@ gap> MultiplicativeZero(s);
 Transformation( [ 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
   4 ] )
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 1
@@ -1868,7 +1868,7 @@ gap> IsSemilatticeAsSemigroup(s);
 true
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -1913,9 +1913,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 24
@@ -1957,7 +1957,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -2032,7 +2032,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 true
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -2110,7 +2110,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 true
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -2185,7 +2185,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 true
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 false
 gap> IsZeroGroup(s);
 false
@@ -2219,9 +2219,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 7
@@ -2263,7 +2263,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false
@@ -2294,9 +2294,9 @@ gap> NrRegularDClasses(s);
 gap> MultiplicativeZero(s);
 fail
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 gap> One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> if GroupOfUnits(s)<>fail then StructureDescription(GroupOfUnits(s)); fi;;
 gap> Size(MinimalIdeal(s));
 9
@@ -2338,7 +2338,7 @@ gap> IsSemilatticeAsSemigroup(s);
 false
 gap> IsSimpleSemigroup(s);
 false
-gap> IsSynchronizingSemigroup(s);
+gap> IsSynchronizingSemigroup(s, DegreeOfTransformationSemigroup(s));
 true
 gap> IsZeroGroup(s);
 false

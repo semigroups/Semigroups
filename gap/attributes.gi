@@ -24,7 +24,474 @@
 # MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
 # fail but IsMonoidAsSemigroup is still true. 
 
-# Note that a semigroup satisfies IsTransformationMonoid only if One(s)<>fail. 
+InstallMethod(IsGreensDLeq, "for an acting semigroup",
+[IsActingSemigroup],
+function(S)
+  local partial, data, comp_index;
+
+  partial:=PartialOrderOfDClasses(S);
+  data:=SemigroupData(S);
+
+  comp_index:=function(x, y)
+    if y in partial[x] then
+      return true;
+    elif Length(partial[x])=1 and partial[partial[x][1]]=partial[x] then
+      return false;
+    fi;
+    return ForAny(partial[x], z-> z<>x and comp_index(z,y));
+  end;
+
+  return function(x,y)
+    return comp_index(OrbSCCLookup(data)[Position(data, x)]-1,
+      OrbSCCLookup(data)[Position(data, y)]-1);
+  end;
+end);
+
+#
+
+InstallMethod(IsMaximalSubsemigroup, "for a semigroup and semigroup", 
+[IsSemigroup, IsSemigroup],
+function(S, T)
+  if IsSubsemigroup(S, T) and S<>T then 
+    return ForAll(S, x-> x in T or Semigroup(GeneratorsOfSemigroup(T), x)=S);
+  else
+    return false;
+  fi;
+end); 
+
+# the following method comes from Remark 1 in Graham, Graham, and Rhodes.
+# and only works for Rees matrix semigroup over groups
+
+InstallMethod(MaximalSubsemigroups, "for a Rees matrix subsemigroup",
+[IsReesMatrixSubsemigroup], 
+function(R)
+  local G, out, mat, I, J, P, U, H, j, i;
+  
+  if not IsReesMatrixSemigroup(R) then 
+    TryNextMethod(); 
+    return;
+  fi;
+ 
+  G:=UnderlyingSemigroup(R);    
+  
+  if not IsGroup(G) then 
+    if IsSimpleSemigroup(R) then 
+      #take an isomorphism to a Rees 0-matrix semigroup, then find its maximal
+      #subsemigroups, then pull those back, (should specify some methods for the
+      #pulling back part)
+      Error("not yet implemented,");
+      return;
+    else
+      TryNextMethod();
+      return;
+    fi;
+  fi;
+
+  out:=[];
+  mat:=Matrix(R);     I:=Rows(R);         J:=Columns(R);
+ 
+  # Case 1: maximal subsemigroups of the form (IxHxJ) where H is a
+  # maximal subgroup of G
+  Info(InfoSemigroups, 3, 
+   "Case 1: maximal subsemigroups arising from maximal subgroups...");
+  for H in MaximalSubgroups(G) do
+    U:=Semigroup(GeneratorsOfReesMatrixSemigroupNC(R, I, H, J));
+    if Size(U)<Size(R) then 
+      Add(out, U);
+    fi;
+  od;
+  Info(InfoSemigroups, 3, "...found ", Length(out));
+
+  # Case 2: maximal subsemigroup of the form (IxGxJ') where J'=J\{j} for some j
+  # in J.
+  Info(InfoSemigroups, 3, 
+   "Case 2: maximal subsemigroups obtained by removing a column...");
+  if Length(J)>1 then 
+    for j in J do 
+      Add(out, ReesMatrixSubsemigroupNC(R, I, G, Difference(J, [j])));
+    od;
+  fi;
+  
+  # Case 3: the dual of case 2.
+  Info(InfoSemigroups, 3, 
+   "Case 3: maximal subsemigroups obtained by removing a row...");
+  if Length(I)>1 then 
+    for i in I do 
+      Add(out, ReesMatrixSubsemigroupNC(R, Difference(I, [i]), G, J));
+    od;
+  fi;
+
+  return out;
+end);
+
+# the following method comes from Remark 1 in Graham, Graham, and Rhodes.
+# and only works for Rees 0-matrix semigroup over groups
+
+if not IsBound(GAPInfo.PackagesLoaded.grape) then 
+  InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
+  [IsReesZeroMatrixSubsemigroup], 
+  function(R)
+    Info(InfoWarning, 1, "the GRAPE is not loaded, and so this function does",
+         " not work");
+    return fail;
+  end); 
+else
+  InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
+  [IsReesZeroMatrixSubsemigroup], 
+  function(R)
+    local G, out, I, J, mat, P, new, pos, U, JJ, solo, II, len, graph, names, rectangles, gens, i, j, H, r, k;
+    
+    if not IsReesZeroMatrixSemigroup(R) then 
+      TryNextMethod(); 
+      return;
+    fi;
+   
+    G:=UnderlyingSemigroup(R);    
+    
+    if not IsGroup(G) then 
+      if IsZeroSimpleSemigroup(R) then 
+        #take an isomorphism to a Rees 0-matrix semigroup, then find its maximal
+        #subsemigroups, then pull those back, (should specify some methods for
+        #the pulling back part)
+        Error("not yet implemented,");
+        return;
+      else
+        TryNextMethod();
+        return;
+      fi;
+    fi;
+
+    out:=[]; I:=Rows(R); J:=Columns(R); mat:=Matrix(R);     
+   
+    # find the set of group elements in the matrix
+    P:=Union(mat{J}{I});
+    if P[1]=0 then 
+      Remove(P, 1);
+    else  # S\{0} is a maximal subsemigroup 
+          # the unique case when the missing D-class is {0}
+      new:=ShallowCopy(GeneratorsOfSemigroup(R));
+      if Size(new)>1 then  
+        pos:=Position(new, MultiplicativeZero(R)); 
+        Remove(new, pos); #remove the zero, which has to be present
+      fi;
+      Add(out, Semigroup(new));
+    fi;
+    
+    if Length(I)=1 and Length(J)=1 and IsTrivial(G) then 
+      # the unique case when {0} is a maximal subsemigroup, if <G> is
+      # non-trivial then {0, 1_G} is a subsemigroup containing <0> and not
+      # equal to <R>. 
+      Add(out, Semigroup(MultiplicativeZero(R)));
+    fi;
+    
+    # Case 1: maximal subsemigroups of the form (IxHxJ)\cup\{0\} where H is a
+    # maximal subgroup of G
+    
+    Info(InfoSemigroups, 3, 
+     "Case 1: maximal subsemigroups arising from maximal subgroups...");
+    
+    for H in MaximalSubgroups(G) do
+      U:=Semigroup(GeneratorsOfReesZeroMatrixSemigroupNC(R, I, H, J));
+      if Size(U)<Size(R) then 
+        Add(out, U);
+      fi;
+    od;
+
+    Info(InfoSemigroups, 3, "...found ", Length(out));
+
+    # Case 2: maximal subsemigroup of the form (IxGxJ')\cup\{0\} where J'=J\{j}
+    # for some j in J, and where the resultant matrix has no zero columns or
+    # rows.
+
+    # in the Graham-Houghton IxJ bipartite graph, we can remove any vertex <j>
+    # in <J> which is not adjacent to a vertex <i> which is only adjacent to
+    # <j>.  So, we run through the vertices <i> of <I> and find the ones of
+    # degree 1, and we discard the vertices <j> adjacent to such <i>. 
+    
+    Info(InfoSemigroups, 3, 
+     "Case 2: maximal subsemigroups obtained by removing a column...");
+    
+    JJ:=ShallowCopy(J);
+
+    for i in I do  
+      solo:=false; # keep track of whether <i> has degree 1
+      for j in J do
+        if mat[j][i]<>0 then
+          if solo<>false then    # <i> has degree greater than 1
+            solo:=false;         
+            break;               # so skip it
+          else
+            solo:=j;             # <i> is adjacent to <j> and we don't know if
+                                 # it is adjacent to any other vertex
+          fi;
+        fi;
+      od;
+      if solo<>false then        # <i> is adjacent to <solo> and nothing else
+        RemoveSet(JJ, solo);     # so remove it. 
+      fi;
+    od;
+    
+    for j in JJ do 
+      U:=ReesZeroMatrixSubsemigroupNC(R, I, G, Difference(J, [j]));
+      if not MultiplicativeZero(R) in U then 
+        U:=Semigroup(U, MultiplicativeZero(R));
+        SetIsReesZeroMatrixSemigroup(U, true);
+      fi;
+      Add(out, U);
+    od;
+    Info(InfoSemigroups, 3, "...found ", Length(JJ));
+
+    # Case 3: the dual of case 2.
+    
+    Info(InfoSemigroups, 3, 
+     "Case 3: maximal subsemigroups obtained by removing a row...");
+    
+    II:=ShallowCopy(I);
+
+    for j in J do  
+      solo:=false; # keep track of whether <i> has degree 1
+      for i in I do
+        if mat[j][i]<>0 then
+          if solo<>false then    # <i> has degree greater than 1
+            solo:=false;         
+            break;               # so skip it
+          else
+            solo:=i;             # <i> is adjacent to <j> and we don't know if
+                                 # it is adjacent to any other vertex
+          fi;
+        fi;
+      od;
+      if solo<>false then        # <i> is adjacent to <solo> and nothing else
+        RemoveSet(II, solo);     # so remove it. 
+      fi;
+    od;
+    
+    for i in II do 
+      U:=ReesZeroMatrixSubsemigroupNC(R, Difference(I, [i]), G, J);
+      if not MultiplicativeZero(R) in U then 
+        U:=Semigroup(U, MultiplicativeZero(R));
+        SetIsReesZeroMatrixSemigroup(U, true);
+      fi;
+      Add(out, U);
+    od;
+
+    Info(InfoSemigroups, 3, "...found ", Length(II));
+
+    # Case 4: maximal rectangle of zeros in the matrix
+    Info(InfoSemigroups, 3, 
+     "Case 4: maximal subsemigroups obtained by removing a rectangle...");
+    Info(InfoSemigroups, 3, "finding rectangles...");
+
+    len:=Length(mat[1]); # use <mat> to keep the indices correct
+
+    graph:=Graph(Group(()), Union(I, J+len), OnPoints,
+     function(i,j)
+       if i<=len and j>len then
+         return mat[j-len][i]=0;
+       elif j<=len and i>len then
+         return mat[i-len][j]=0;
+       else
+         return i<>j;
+       fi;
+     end, true);
+
+    names:=x-> graph.names[x];
+
+    rectangles:=CompleteSubgraphs(graph);
+
+    Info(InfoSemigroups, 3, "...found ", Length(rectangles));
+
+    gens:=GeneratorsOfGroup(G);
+    
+    Info(InfoSemigroups, 3, 
+     "finding subsemigroups arising from rectangles...");
+    for r in [2..Length(rectangles)-1] do 
+    #the first and last entries correspond to removing all the rows or columns
+      Apply(rectangles[r], names);
+       
+      # add group generators
+      i:=rectangles[r][1];  
+      j:=First(Columns(R), j-> mat[j][i]<>0 and not j+len in rectangles[r]); 
+      if IsTrivial(G) then 
+        new:=[Objectify(TypeReesMatrixSemigroupElements(R),
+         [i, mat[j][i]^-1, j, mat])];
+      else
+        new:=List(gens, x-> Objectify(TypeReesMatrixSemigroupElements(R), 
+          [i, x*mat[j][i]^-1, j, mat]));
+      fi;
+      
+      j:=First(rectangles[r], j-> j>len)-len;
+      i:=First(Rows(R), i-> mat[j][i]<>0 and not i in rectangles[r]);
+      if IsTrivial(G) then 
+        Add(new, Objectify(TypeReesMatrixSemigroupElements(R),
+         [i, mat[j][i]^-1, j, mat]));
+      else
+        Append(new, List(gens, x-> 
+         Objectify(TypeReesMatrixSemigroupElements(R), 
+          [i, x*mat[j][i]^-1, j, mat])));
+      fi;
+
+      for k in rectangles[r] do  
+        if k<=len then # k in I
+          for j in J do 
+            Add(new, RMSElement(R, k, One(G), j));
+          od;
+        else # k-len in J
+          for i in I do 
+            Add(new, RMSElement(R, i, One(G), k-len));
+          od;
+        fi;
+      od;
+      Add(out, Semigroup(new));
+    od;
+    return out;
+  end);
+fi;
+
+#
+
+#InstallMethod(MaximalSubsemigroups, "for a transformation semigroup",
+#[IsTransformationSemigroup],
+#function(S)
+#  local out, gens, po, classes, D, lookup, max, gens2, pos, inj, R, V, i, U;
+#  
+#  # preprocessing...
+#  out:=[];
+#  gens:=IrredundantGeneratingSubset(S);
+#  po:=ShallowCopy(PartialOrderOfDClasses(S));
+#  classes:=GreensDClasses(S);
+#  D:=List(gens, x-> PositionProperty(classes, d-> x in d));
+#  lookup:=[]; max:=[];
+#
+#  for i in [1..Length(gens)] do 
+#    if not ForAny([1..Length(po)], j-> j<>D[i] and D[i] in po[j]) then 
+#      Add(max, D[i]);
+#    fi;
+#    if not IsBound(lookup[D[i]]) then 
+#      lookup[D[i]]:=[];
+#    fi;
+#    Add(lookup[D[i]], i);
+#  od;
+#  
+#  # Type 1: maximal subsemigroups arising from maximal subsemigroup of
+#  # principal factors of maximal D-classes...
+#  for i in max do 
+#    if Size(classes[i])=1 then #remove the whole thing...
+#      gens2:=ShallowCopy(gens);
+#      Remove(gens2, lookup[i][1]);
+#      pos:=Position(po[i], i);
+#      if pos<>fail then 
+#        Remove(po[i], pos);
+#      fi;
+#      Append(gens2, List(classes{po[i]}, Representative));
+#      Add(out, SemigroupIdealByGenerators(S, gens2));
+#    else 
+#      inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
+#      R:=Source(inj);
+#      for U in MaximalSubsemigroups(R) do 
+#        gens2:=ShallowCopy(gens){Difference([1..Length(gens)], lookup[i])};
+#        pos:=Position(po[i], i);
+#        if pos<>fail then 
+#          Remove(po[i], pos);
+#        fi;
+#        Append(gens2, List(classes{po[i]}, Representative));
+#        V:=SemigroupIdealByGenerators(S, gens2);
+#        Add(out, Semigroup(GeneratorsOfSemigroup(V), 
+#          OnTuples(GeneratorsOfSemigroup(U), inj), rec(small:=true)));
+#      od;
+#    fi;
+#  od;
+#
+#  return out;
+#end);
+
+#
+
+InstallMethod(MaximalDClasses, "for a semigroup with generators",
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local gens, partial, data, pos, i, out, classes, x;
+
+  gens:=GeneratorsOfSemigroup(s);
+  
+  #if HasPartialOrderOfDClasses(s) then 
+    partial:=PartialOrderOfDClasses(s);
+    data:=SemigroupData(s);
+    pos:=[];
+    for x in gens do 
+      i:=OrbSCCLookup(data)[Position(data, x)]-1; 
+      #index of the D-class containing x 
+      AddSet(pos, i);
+    od;
+
+    out:=[];
+    classes:=GreensDClasses(s);
+    for i in pos do 
+      if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
+        Add(out, classes[i]);
+      fi;
+    od;
+  #else
+  #  D:=[GreensDClassOfElementNC(s, gens[1])];
+  #
+  #  for x in gens do 
+  #    if not ForAny(D, d-> x in d) then 
+  #      Add(D, GreensDClassOfElementNC(s, x));
+  #    fi;
+  #  od;
+  #  
+  #  ideals:=List(D, x-> SemigroupIdealByGenerators(s, [Representative(x)]));
+  #  out:=[];
+
+  #  for i in [1..Length(D)] do 
+  #    if not ForAny([1..Length(D)], 
+  #      j-> j<>i and Representative(D[i]) in ideals[j]) then  
+  #      Add(out, D[i]);
+  #    fi;
+  #  od;
+  #fi;
+
+  return out;
+end);
+
+#
+
+InstallMethod(StructureDescriptionSchutzenbergerGroups, 
+"for an acting semigroup", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local o, scc, out, m;
+
+  o:=LambdaOrb(s);
+  scc:=OrbSCC(o);
+  out:=[];
+
+  for m in [2..Length(scc)] do 
+    AddSet(out, StructureDescription(LambdaOrbSchutzGp(o, m)));
+  od;
+
+  return out;
+end);
+
+#
+
+InstallMethod(StructureDescriptionMaximalSubgroups, 
+"for an acting semigroup", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local out, d;
+
+  out:=[];
+  for d in DClasses(s) do 
+    if IsRegularClass(d) then 
+      AddSet(out, StructureDescription(GroupHClass(d)));
+    fi;
+  od;
+
+  return out;
+end);
+
+#
 
 InstallMethod(GroupOfUnits, 
 "for a transformation semigroup with generators",
@@ -81,6 +548,31 @@ end);
 
 #
 
+InstallMethod(GroupOfUnits, 
+"for a Rees 0-matrix subsemigroup with generators",
+[IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local r, g, i, j, u;
+
+  if MultiplicativeNeutralElement(s)=fail then
+    return fail;
+  fi;
+
+  r:=GreensRClassOfElementNC(s, MultiplicativeNeutralElement(s));
+  g:=SchutzenbergerGroup(r);
+  i:=MultiplicativeNeutralElement(s)![1];
+  j:=MultiplicativeNeutralElement(s)![3];
+
+  u:=Semigroup(List(GeneratorsOfGroup(g), x-> RMSElement(s, i, x, j)));
+  
+  SetIsGroupAsSemigroup(u, true);
+  UseIsomorphismRelation(u, g);
+
+  return u;
+end);
+
+#
+
 InstallMethod(IdempotentGeneratedSubsemigroup, 
 "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -98,11 +590,10 @@ s-> InverseSemigroup(Idempotents(s), rec(small:=true)));
 InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local g, rep, rreps, lreps, mat, inj, zero, bound_r, bound_l, inv_l, inv_r,
-  f, rms, iso, inv, hom, i, j;
+  local g, rep, rreps, lreps, mat, bound_r, bound_l, inv_l, inv_r, lambdaperm, leftact, rightact, f, rms, iso, inv, hom, i, j;
 
   if not IsRegularDClass(d) then
-    Error("not yet implemented,");
+    Error("usage: <d> must be a regular D-class,");
     return;
   elif NrIdempotents(d)=NrHClasses(d) then
     return IsomorphismReesMatrixSemigroup(d);
@@ -116,68 +607,76 @@ function(d)
   lreps:=HClassReps(RClass(d, rep));
   mat:=[];
 
-  inj:=InjectionZeroMagma(g);
-  SetIsTotal(inj, true);
-  SetIsSingleValued(inj, true);
-  g:=Range(inj);
-  zero:=MultiplicativeZero(g);
   bound_r:=BlistList([1..Length(rreps)], []);
   bound_l:=BlistList([1..Length(lreps)], []);
   inv_l:=EmptyPlist(Length(lreps));
   inv_r:=EmptyPlist(Length(rreps));
+
+  lambdaperm:=LambdaPerm(Parent(d));
+  if IsTransformationSemigroupGreensClass(d) 
+    or IsPartialPermSemigroupGreensClass(d) then 
+    leftact:=PROD;
+  elif IsReesZeroMatrixSubsemigroup(Parent(d)) then 
+    leftact:=function(x, y)
+      return Objectify(TypeObj(y), [y![1], y![4][rep![3]][rep![1]]^-1
+      *x*rep![2]^-1*y![2], y![3], y![4]]);
+    end;
+  fi;
+
+  rightact:=StabilizerAction(Parent(d));
 
   for i in [1..Length(lreps)] do
     mat[i]:=[];
     for j in [1..Length(rreps)] do
       f:=lreps[i]*rreps[j];
       if f in d then
-        mat[i][j]:=AsPermutation(f);
+        mat[i][j]:=lambdaperm(rep, f);
         if not bound_r[j] then
           bound_r[j]:=true;
-          inv_r[j]:=mat[i][j]^-1*lreps[i];
+          # could use lreps[i]*rreps[j]^-1*lreps[i] instead if there was a
+          # method for ^-1...
+          inv_r[j]:=leftact(mat[i][j]^-1, lreps[i]);
         fi;
         if not bound_l[i] then
           bound_l[i]:=true;
-        inv_l[i]:=rreps[j]*mat[i][j]^-1;
+          inv_l[i]:=rightact(rreps[j], mat[i][j]^-1);
         fi;
-        mat[i][j]:=mat[i][j]^inj;
+        mat[i][j]:=mat[i][j];
       else
-        mat[i][j]:=zero;
+        mat[i][j]:=0;
       fi;
     od;
   od;
 
   rms:=ReesZeroMatrixSemigroup(g, mat);
   iso:=function(f)
-    local o, i, j;
-    o:=LambdaOrb(d);
+    local o, m, i, j;
+    o:=LambdaOrb(d); m:=LambdaOrbSCCIndex(d);
     i:=Position(o, LambdaFunc(Parent(d))(f));
 
-    if i=fail then
+    if i=fail or OrbSCCLookup(o)[i]<>m then
       return fail;
     fi;
     i:=Position(OrbSCC(o)[OrbSCCLookup(o)[i]], i);
     if not IsInverseOpClass(d) then 
       o:=RhoOrb(d);
+      m:=RhoOrbSCCIndex(d);
     fi;
     j:=Position(o, RhoFunc(Parent(d))(f));
-    if j=fail then
+    if j=fail or OrbSCCLookup(o)[j]<>m then
       return fail;
     fi;
     j:=Position(OrbSCC(o)[OrbSCCLookup(o)[j]], j);
-
-    return RMSElementNC(rms, j,
-      AsPermutation(inv_r[j]*f*inv_l[i])^inj, i);
+    return Objectify(TypeReesMatrixSemigroupElements(rms), 
+     [j, lambdaperm(rep, rep*inv_r[j]*f*inv_l[i]), i, mat]);
   end;
 
   inv:=function(x)
-    local i, a, j;
-    i:=RowOfRMSElement(x);
-    a:=Images(InverseGeneralMapping(inj), UnderlyingElementOfRMSElement(x))[1];
-    j:=ColumnOfRMSElement(x);
-    return rreps[i]*a*lreps[j];
+    if x![1]=0 then 
+      return fail;
+    fi;
+    return rightact(rreps[x![1]], x![2])*lreps[x![3]];
   end;
-
   hom:=MappingByFunction(d, rms, iso, inv);
   SetIsInjective(hom, true);
   SetIsTotal(hom, true);
@@ -188,18 +687,24 @@ end);
 #
 
 InstallMethod(IrredundantGeneratingSubset,
-"for an associative element with action collection",
-[IsAssociativeElementWithActionCollection],
+"for an associative element collection",
+[IsAssociativeElementCollection],
 function(coll)
-  local gens, j, out, i, redund, f;
+  local gens, nrgens, deg, out, redund, i, f;
   
+  if not (IsActingSemigroup(coll) or IsGeneratorsOfActingSemigroup(coll)) then 
+    Error();
+  fi;
+
   if IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll) then
     coll:=ShallowCopy(GeneratorsOfSemigroup(coll));
   fi;
   
-  gens:=Set(ShallowCopy(coll)); j:=Length(gens);
+  gens:=Set(ShallowCopy(coll)); 
+  nrgens:=Length(gens); 
+  deg:=ActionDegree(coll);
   coll:=Permuted(coll, Random(SymmetricGroup(Length(coll))));
-  Sort(coll, function(x, y) return ActionRank(x)>ActionRank(y); end);
+  Sort(coll, function(x, y) return ActionRank(x, deg)>ActionRank(y, deg); end);
  
   out:=EmptyPlist(Length(coll));
   redund:=EmptyPlist(Length(coll));
@@ -219,7 +724,7 @@ function(coll)
         AddSet(out, f);
       fi;
     fi;
-  until Length(redund)+Length(out)=j;
+  until Length(redund)+Length(out)=nrgens;
 
   if InfoLevel(InfoSemigroups)>1 then
     Print("\n");
@@ -227,14 +732,17 @@ function(coll)
   return out;
 end);
 
-#
+# this method is wrong, the returned function should have Source=s not the
+# the unique D-class of S, also there is no library method for
+# IsomorphismReesMatrixSemigroup of a D-class and so this doesn't work for
+# (say) Rees matrix semigroups. JDM
 
-InstallMethod(IsomorphismReesMatrixSemigroup, 
-"for a simple semigroup with generators",
-[IsSimpleSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  return IsomorphismReesMatrixSemigroup(DClass(s, Representative(s)));
-end);
+#InstallMethod(IsomorphismReesMatrixSemigroup, 
+#"for a simple semigroup with generators",
+#[IsSimpleSemigroup and HasGeneratorsOfSemigroup],
+#function(s)
+#  return IsomorphismReesMatrixSemigroup(DClass(s, Representative(s)));
+#end);
 
 #
 
@@ -242,7 +750,7 @@ InstallMethod(IsomorphismReesMatrixSemigroup,
 "for D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local g, rep, rreps, lreps, mat, rms, iso, inv, hom, i, j;
+  local g, rep, rreps, lreps, mat, lambdaperm, rms, iso, inv, hom, i, j;
 
   if not IsRegularDClass(d) or not NrIdempotents(d)=NrHClasses(d) then
     Error("every H-class of the D-class should be a group,",
@@ -251,18 +759,19 @@ function(d)
   fi;
 
   g:=GroupHClass(d);
-
   rep:=Representative(g); 
   g:=Range(IsomorphismPermGroup(g));
 
   rreps:=HClassReps(LClass(d, rep)); 
   lreps:=HClassReps(RClass(d, rep));
   mat:=[];
-  
+  lambdaperm:=LambdaPerm(Parent(d));
+
   for i in [1..Length(lreps)] do 
     mat[i]:=[];
     for j in [1..Length(rreps)] do 
-      mat[i][j]:=AsPermutation(lreps[i]*rreps[j]);
+      mat[i][j]:=lambdaperm(rep, lreps[i]*rreps[j]);
+      #mat[i][j]:=AsPermutation(lreps[i]*rreps[j]);
     od;
   od;
 
@@ -285,17 +794,13 @@ function(d)
     fi;
     j:=Position(OrbSCC(o)[OrbSCCLookup(o)[j]], j);
 
-    return RMSElementNC(rms, j,
-      AsPermutation(rreps[j])^-1*AsPermutation(f)*
-      AsPermutation(lreps[i])^-1, i);
+    return Objectify(TypeReesMatrixSemigroupElements(rms), 
+    [j, AsPermutation(rreps[j])^-1*AsPermutation(f)*AsPermutation(lreps[i])^-1,
+     i, mat]);
   end;
 
   inv:=function(x)
-    local i, a, j;
-    i:=RowOfReesMatrixSemigroupElement(x);
-    a:=UnderlyingElementOfReesMatrixSemigroupElement(x);
-    j:=ColumnOfReesMatrixSemigroupElement(x);
-    return rreps[i]*a*lreps[j];
+    return rreps[x![1]]*x![2]*lreps[x![3]];
   end;
 
   hom:=MappingByFunction(d, rms, iso, inv);
@@ -322,7 +827,7 @@ end);
 #
 
 InstallMethod(InversesOfSemigroupElementNC, 
-"for an acting semigroup and acting elt",
+"for an acting semigroup and acting element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
 function(s, f)
   local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades, rho_f, lambdarank, creator, inv, out, k, g, rho, name, i, x;
@@ -334,7 +839,7 @@ function(s, f)
   fi;
 
   lambda:=LambdaFunc(s)(f);
-  rank:=ActionRank(f); 
+  rank:=LambdaRank(s)(LambdaFunc(s)(f)); 
   rhorank:=RhoRank(s);
   tester:=IdempotentTester(s);
   j:=0;
@@ -430,20 +935,27 @@ end);
 InstallMethod(MultiplicativeNeutralElement, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local gens, n, rank, lambda, f, r;
+  local gens, rank, lambda, max, r, rep, f;
 
   gens:=Generators(s);
-  n:=Maximum(List(gens, ActionRank));
+  rank:=LambdaRank(s);
+  lambda:=LambdaFunc(s);
+  max:=0;
+  rep:=gens[1];
+  
+  for f in gens do 
+    r:=rank(lambda(f));
+    if r>max then 
+      max:=r;
+      rep:=f;
+    fi;
+  od;
 
-  if n=ActionDegree(s) then
+  if max=ActionDegree(s) and IsMultiplicativeElementWithOneCollection(s) then
     return One(s);
   fi;
 
-  rank:=LambdaRank(s);
-  lambda:=LambdaFunc(s);
-  f:=First(gens, f-> rank(lambda(f))=n);
-
-  r:=GreensRClassOfElementNC(s, f); #NC? JDM 
+  r:=GreensRClassOfElementNC(s, rep);
 
   if not NrIdempotents(r)=1 then
     Info(InfoSemigroups, 2, "the number of idempotents in the R-class of the",
@@ -468,7 +980,7 @@ end);
 # partial permutations has to coincide with the One. This is not the case for
 # transformation semigroups
 
-InstallMethod(MultiplicativeNeutralElement, "for a partial perm semi",
+InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
 [IsPartialPermSemigroup], One);
 
 #
@@ -494,13 +1006,12 @@ function(s)
   else
     pos:=LookForInOrb(o, function(o, x) return rank(x)=min; end, 2);
   fi;
-  if pos<>fail then
+
+  if pos<>fail and pos<>false then
     f:=EvaluateWord(GeneratorsOfSemigroup(s), 
      TraceSchreierTreeForward(o, pos));
-  fi;
-
-  # lambda orb is closed, find an element with minimum rank
-  if not IsBound(f) then 
+  else
+    # lambda orb is closed, find an element with minimum rank
     min_found:=rank(o[2]); pos:=2; i:=1; 
     
     while min_found>min and i<Length(o) do 
@@ -526,7 +1037,7 @@ end);
 InstallMethod(MinimalIdeal, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local rank, o, pos, min, len, m, f, I, n, i;
+  local rank, o, pos, min, len, m, f, d, I, n, i;
 
   rank:=LambdaRank(s);
   o:=LambdaOrb(s);
@@ -545,10 +1056,37 @@ function(s)
   fi;
 
   f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, pos));
-  I:=Semigroup(Elements(GreensDClassOfElementNC(s, f)), rec(small:=true));
-
+  d:=GreensDClassOfElementNC(s, f);
+  I:=Semigroup(Elements(d), rec(small:=true));
+  SetMinimalDClass(s, d);
   SetIsSimpleSemigroup(I, true);
   return I; 
+end);
+
+# same method for inverse
+
+InstallMethod(MinimalDClass, "for an acting semigroup with generators", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local rank, o, pos, min, len, m, f, I, n, i;
+
+  rank:=LambdaRank(s);
+  o:=LambdaOrb(s);
+  
+  pos:=LookForInOrb(o, function(o, x) return rank(x)=MinActionRank(s); end, 2);
+
+  if pos=false then 
+    min:=rank(o[2]); pos:=2; len:=Length(o);
+    for i in [3..len] do 
+      m:=rank(o[i]);
+      if m<min then
+        pos:=i; min:=m;
+      fi;
+    od;
+  fi;
+
+  f:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, pos));
+  return GreensDClassOfElementNC(s, f);
 end);
 
 #
@@ -582,42 +1120,40 @@ end);
 
 #
 
-InstallMethod(PrimitiveIdempotents, 
-"for an acting semigroup with inverse op and generators",
-[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
-function(s)
-  local r;
-  
-  if MultiplicativeZero(s)=fail then 
-    r:=Set(List(OrbSCC(LambdaOrb(s)), 
-     x-> LambdaRank(s)(LambdaOrb(s)[x[1]])))[1];
-  else
-    r:=Set(List(OrbSCC(LambdaOrb(s)), 
-     x-> LambdaRank(s)(LambdaOrb(s)[x[1]])))[2];
-  fi;
-
-  return Idempotents(s, r);
-end);
+InstallMethod(PrincipalFactor, "for a D-class", 
+[IsGreensDClass and IsActingSemigroupGreensClass], 
+d-> Range(InjectionPrincipalFactor(d)));
 
 #
 
-InstallMethod(PrincipalFactor, "for a D-class", 
-[IsGreensDClass], 
-d-> Range(InjectionPrincipalFactor(d)));
+InstallMethod(PrincipalFactor, "for a D-class",
+[IsGreensDClass], AssociatedReesMatrixSemigroupOfDClass);
 
 #
 
 InstallMethod(SmallGeneratingSet, 
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-s -> Generators(Semigroup(Generators(s), rec(small:=true))));
+function(s)
+  if IsEmpty(Generators(s)) then 
+    return Generators(s);
+  else
+    return Generators(Semigroup(Generators(s), rec(small:=true)));
+  fi;
+end);
 
 #
 
 InstallMethod(SmallGeneratingSet, 
 "for an acting semigroup with inverse op and generators", 
 [IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
-s -> Generators(InverseSemigroup(Generators(s), rec(small:=true))));
+function(s)
+  if IsEmpty(Generators(s)) then 
+    return Generators(s);
+  else
+    return Generators(InverseSemigroup(Generators(s), rec(small:=true)));
+  fi;
+end);
 
 #
 
@@ -696,15 +1232,174 @@ InstallMethod(IsomorphismPermGroup, "for a transformation semigroup",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(s)
  
-   if not IsGroupAsSemigroup(s)  then
-     Error( "usage: transformation semigroup satisfying IsGroupAsSemigroup,");
-     return; 
-   fi;
- 
-   return MappingByFunction(s, Group(List(Generators(s), AsPermutation)), 
+  if not IsGroupAsSemigroup(s)  then
+   Error( "usage: a transformation semigroup satisfying IsGroupAsSemigroup,");
+   return; 
+  fi;
+
+  return MagmaIsomorphismByFunctionsNC(s, 
+   Group(List(Generators(s), AsPermutation)), 
     AsPermutation, x-> AsTransformation(x, DegreeOfTransformationSemigroup(s)));
 end);
 
 #
 
+InstallMethod(IsomorphismPermGroup,
+"for a partial perm semigroup with generators",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+
+  if not IsGroupAsSemigroup(s)  then
+   Error( "usage: a partial perm semigroup satisfying IsGroupAsSemigroup,");
+   return; 
+  fi;
+
+  return MagmaIsomorphismByFunctionsNC(s,
+   Group(List(GeneratorsOfSemigroup(s), AsPermutation)),
+    AsPermutation, x-> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
+end);
+
+#
+
+InstallMethod(IsomorphismPermGroup,
+"for a subsemigroup of a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local rep;
+
+  if not IsGroupAsSemigroup(s)  then
+   Error( "usage: a subsemigroup of a Rees 0-matrix semigroup satisfying\n", 
+    "IsGroupAsSemigroup,");
+   return; 
+  fi;
+
+  rep:=s.1;
+  if rep![1]=0 then # special case for the group consisting of 0
+    return MagmaIsomorphismByFunctionsNC(s, Group(()), x-> (), x-> rep);
+  fi;
+
+  return MagmaIsomorphismByFunctionsNC(s, 
+    Group(List(GeneratorsOfSemigroup(s), x-> x![2])),
+      x-> x![2], x-> RMSElement(s, rep![1], x, rep![3]));
+end);
+
+#
+
+InstallMethod(IsomorphismTransformationSemigroup, 
+"for semigroup of binary relations with generators", 
+[IsBinaryRelationSemigroup and HasGeneratorsOfSemigroup], 2, 
+#to beat the method for a semigroups of general mappings
+function(s)        
+  local n, pts, o, t, pos, i;
+
+  n:=DegreeOfBinaryRelation(Generators(s)[1]);
+  pts:=EmptyPlist(2^n);
+
+  for i in [1..n] do 
+    o:=Orb(s, [i], OnPoints); #JDM multiseed orb
+    Enumerate(o);
+    pts:=Union(pts, AsList(o));
+  od;
+  ShrinkAllocationPlist(pts);
+  pos:=List([1..n], x-> Position(pts, [x]));
+  t:=Semigroup(List(Generators(s), x-> TransformationOpNC(x, pts, OnPoints)));
+  
+  return MappingByFunction(s, t, x-> TransformationOpNC(x, pts, OnPoints),
+  x-> BinaryRelationOnPoints(List([1..n], i-> pts[pos[i]^x])));
+end);
+
+#
+
+InstallMethod(Size, "for a monogenic transformation semigroup",
+[IsTransformationSemigroup and IsMonogenicSemigroup],
+function(s)
+  local ind;
+  
+  ind:=IndexPeriodOfTransformation(GeneratorsOfSemigroup(s)[1]);
+  if ind[1]>0 then 
+    return Sum(ind)-1;
+  fi;
+  return Sum(ind);
+end);
+
+
+calls:=0;
+printed:=0;
+
+LongestChainOfSubsemigroups:=function(R)
+  local gens, partial, data, pos, i, max, I, x;
+
+  calls:=calls+1;
+  if calls>printed+99 then 
+    printed:=calls;
+    Print(calls, " calls so far. . .\n");
+  fi;
+  if Size(R)=1 then 
+    return 1;
+  elif (IsReesMatrixSemigroup(R) or IsReesZeroMatrixSemigroup(R)) and 
+   IsRegularSemigroup(R) then 
+    return Maximum(List(MaximalSubsemigroups(R), 
+     LongestChainOfSubsemigroups))+1;
+  elif IsSimpleSemigroup(R) then 
+    return LongestChainOfSubsemigroups(Range(IsomorphismReesMatrixSemigroup(R)));
+  else
+    gens:=GeneratorsOfSemigroup(R);
+    partial:=PartialOrderOfDClasses(R);
+    data:=SemigroupData(R);
+    pos:=[];
+    for x in gens do 
+      i:=OrbSCCLookup(data)[Position(data, x)]-1; 
+      #index of the D-class containing x 
+      AddSet(pos, i);
+    od;
+    max:=[];
+    for i in pos do 
+      if not ForAny([1..Length(partial)], j-> j<>i and i in partial[j]) then 
+        Add(max, i);
+      fi;
+    od;
+  
+    gens:=List([2..Length(max)], i-> Representative(DClasses(R)[i]));
+    
+    for i in partial[max[1]] do 
+      if i<>max[1] then 
+        Add(gens, Representative(DClasses(R)[i]));
+      fi;
+    od;
+
+    I:=Semigroup(GeneratorsOfSemigroup(SemigroupIdealByGenerators(R, gens)));
+    if not IsRegularDClass(DClasses(R)[max[1]]) then 
+      return 1+LongestChainOfSubsemigroups(I);
+    else
+      R:=PrincipalFactor(DClasses(R)[max[1]]);
+      if IsReesZeroMatrixSemigroup(R) then 
+        return LongestChainOfSubsemigroups(R)+LongestChainOfSubsemigroups(I)-1;
+      else 
+         return LongestChainOfSubsemigroups(R)+LongestChainOfSubsemigroups(I);
+      fi; 
+    fi; 
+  fi;
+end;
+
+#
+
+#Subsemigroups:=function(R) #for a Rees 0-matrix semigroup...
+#  local max, o, U, V;
+#  
+#  max:=Set(MaximalSubsemigroups(R));
+#  o:=ShallowCopy(max);
+#  
+#  for U in o do 
+#    if Size(U)>1 then 
+#      for V in MaximalSubsemigroups(U) do 
+#        if not V in max then 
+#          AddSet(max, V);
+#          Add(o, V);
+#        fi;
+#      od;
+#    fi;
+#  od;
+#
+#  return max;
+#end;
 #EOF

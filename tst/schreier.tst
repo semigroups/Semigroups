@@ -129,7 +129,7 @@ gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s),
 true
 
 # test a regular semigroup that only learns this after creation
-gap> s:=SingularSemigroup(5);
+gap> s:=SingularTransformationSemigroup(5);
 <regular transformation semigroup on 5 pts with 20 generators>
 gap> s:=Semigroup(Generators(s));
 <transformation semigroup on 5 pts with 20 generators>

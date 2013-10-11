@@ -25,6 +25,9 @@
 ##  Not that if x1, x2, ... are the generators, then in the internal
 ##  representation x1 is refered by 1, x1^-1 by 2, x2 by 3 and so on.
 ##
+
+InstallTrueMethod(IsGeneratorsOfInverseSemigroup, IsFreeInverseSemigroupElementCollection);
+
 ################################################################################
 ##
 ##  Iterator( <S> )
@@ -150,7 +153,9 @@ function(arg)
   type:=NewType(F, IsFreeInverseSemigroupElement and IsPositionalObjectRep);
 
   if IsEmpty( names ) then
-    Error();
+    Error("usage: the number of generators of a free inverse semigroup must", 
+      " be non-zero,"); 
+    return;
   elif IsFinite( names ) then
     gens:=EmptyPlist( Length(names) );
     for m in [1 .. Length(names)] do 
@@ -159,12 +164,14 @@ function(arg)
       gens[m]![6][2*m-1]:=2;
       gens[m]![7][2*m]:=1;
     od;
-    S:=InverseSemigroup(gens);
-    SetIsFreeInverseSemigroup(S, true);
     names:=Concatenation(List(names, x-> [x, Concatenation(x, "^-1")]));
     StoreInfoFreeMagma( F, names, IsFreeInverseSemigroupElement );
+    S:=InverseSemigroup(gens);
+    SetIsFreeInverseSemigroup(S, true);
   else
-    Error();
+    Error("usage: the number of generators of a free inverse semigroup must", 
+      " be finite,"); 
+    return;
   fi;
 
   FamilyObj(S)!.semigroup := S;

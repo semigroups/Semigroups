@@ -7,12 +7,80 @@
 ##
 #############################################################################
 ##
+## this file contains utilies for use with the Semigroups package. 
 
-# this file contains utilies for use with the Semigroups package. 
+# <path> to the folder containing the timings, <vers> the version number to
+# check against.
 
-BindGlobal("SemigroupsTestRec",
-  rec());
+BindGlobal("SemigroupsCompareTestTimings", 
+function(path, vers)
+  local dir, files, suffix, tstdir, tstfiles, split, tstfile, file;
+  
+  vers:=Concatenation("-", vers, ".");
+  if not path[Length(path)]='/' then 
+    Add(path, '/');
+  fi;
+  
+  dir:=Directory(path);
+  files:=DirectoryContents(dir);
+  suffix:=Concatenation(vers, "tst.timings"); 
 
+  tstdir:=DirectoriesPackageLibrary("semigroups", "tst" )[1];
+  tstfiles:=DirectoryContents(tstdir);
+
+  for file in files do
+    split:=SplitString(file, '.');
+    if split[Length(split)]="timings" then 
+      if file{[Length(file)-Length(suffix)+1..Length(file)]}=suffix then 
+        tstfile:=Concatenation(SplitString(split[1], '-')[1], ".tst");
+        if not tstfile in tstfiles then 
+          Print("can't find ", 
+           Concatenation(SplitString(file[1], '-')[1], ".tst"), 
+           "in semigroups/tst for comparison!\n");
+        else
+          Print("\n");
+          Print(Test(Filename(tstdir, tstfile), rec(compareTimings:=file),
+          "\n"));
+        fi;
+      fi;
+    fi;
+  od;
+  return true;
+end);
+
+#
+
+BindGlobal("SemigroupsCreateTestTimings", 
+function(path, vers)
+  local dir, files, file, out;
+  
+  vers:=Concatenation("-", vers, ".");
+  if not path[Length(path)]='/' then 
+    Add(path, '/');
+  fi;
+  
+  dir:=DirectoriesPackageLibrary( "semigroups", "tst" )[1];
+  files:=DirectoryContents(dir);
+  
+  for file in files do
+    file:=SplitString(file, '.');
+    if file[Length(file)]="tst" then 
+      out:=Concatenation(path, JoinStringsWithSeparator(file, vers),
+      ".timings");
+      file:=JoinStringsWithSeparator(file, ".");
+      Print("checking ", file ,"...\n");
+      if not Test(Filename(dir, file)) then 
+        Print(file, " returns differences in output, exiting...");
+        return;
+      fi;
+      Print("writing ", file, " ...\n");
+      Test(Filename(dir, file), rec(writeTimings:=out));
+    fi;
+  od;
+  return true;
+end);
+
+BindGlobal("SemigroupsTestRec", rec());
 MakeReadWriteGlobal("SemigroupsTestRec");
 
 InstallGlobalFunction(SemigroupsStartTest, 
@@ -82,9 +150,9 @@ InstallGlobalFunction(SemigroupsMakeDoc,
 function()
   MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.
    InstallationPath, "/doc"), "main.xml", 
-   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml",
-   "semigroups.xml", "transform.xml", "attributes-inverse.xml",
-   "freeinverse.xml", "../PackageInfo.g"],
+   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
+    "semigroups.xml", "attributes-inverse.xml", "factor.xml", "freeinverse.xml",
+    "attributes.xml", "display.xml", "../PackageInfo.g"],
    "semigroups", "MathJax", "../../..");;
   return;
 end);
@@ -174,39 +242,37 @@ InstallGlobalFunction(SemigroupsManualExamples,
 function()
 return 
   ExtractExamples(DirectoriesPackageLibrary("semigroups","doc"), 
-  "main.xml",  [ "utils.xml",
-  "greens.xml", "orbits.xml", "properties.xml",
-  "semigroups.xml",  "transform.xml", "attributes-inverse.xml",
-  "freeinverse.xml", "../PackageInfo.g" ], "Single" );
+  "main.xml",  [ "utils.xml", "examples.xml", "factor.xml", "greens.xml",
+  "orbits.xml", "properties.xml", "semigroups.xml",  "attributes-inverse.xml", 
+  "freeinverse.xml", "attributes.xml", "display.xml",
+  "../PackageInfo.g" ], "Single" );
 end);
 
-#
+# if <arg> is some strings, then any example containing any of these strings is
+# omitted from the test...
 
 InstallGlobalFunction(SemigroupsTestManualExamples, 
 function()
-  local ex;
+  local ex, omit, str;
 
-  #if not Semigroups_C then 
-  #  Print("Semigroups is not compiled and so this will produce many many
-  #  errors.");
-  #  return fail;
-  #fi;
-  
   ex:=SemigroupsManualExamples(); 
-  SemigroupsStartTest();
-  if TestPackageAvailability("grape")=fail or 
-   ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
-    then 
-    ex:=Filtered(ex, x-> PositionSublist(x[1][1], "MunnSemigroup")=fail);
+  omit:=SemigroupsOmitFromTestManualExamples;
+  if Length(omit)>0 then 
+    Print("# not testing examples containing the strings");
+    for str in omit do 
+      ex:=Filtered(ex, x-> PositionSublist(x[1][1], str)=fail);
+      Print(", \"", str, "\"");
+    od;
+    Print(" . . .\n");
   fi;
+  SemigroupsStartTest();
   RunExamples(ex);
   SemigroupsStopTest();
   return;
 end);
-
 #
 
-InstallGlobalFunction(ReadSemigroups, 
+InstallGlobalFunction(ReadGenerators, 
 function(arg)
   local file, i, line;
  
@@ -216,11 +282,11 @@ function(arg)
   else
     file:=SplitString(arg[1], ".");
     if file[Length(file)] = "gz" then 
-      file:=IO_FilteredFile([["gzip", ["-dcq"]]], arg[1]);
+      file:=IO_FilteredFile([["gzip", ["-dq"]]], arg[1]);
     else  
       file:=IO_File(arg[1]);
       if file=fail then 
-        file:=IO_FilteredFile([["gzip", ["-dcq"]]], 
+        file:=IO_FilteredFile([["gzip", ["-dq"]]], 
          Concatenation(arg[1], ".gz"));
       fi;
     fi;
@@ -241,7 +307,7 @@ function(arg)
         Error(arg[1], " only has ", i-1, " lines,"); 
         return;
       else
-        return ReadSemigroupsLine(Chomp(line));
+        return ReadGeneratorsLine(Chomp(line));
       fi;
     else
       Error("the second argument should be a positive integer,");
@@ -251,12 +317,12 @@ function(arg)
   
   line:=IO_ReadLines(file);
   IO_Close(file);
-  return List(line, x-> ReadSemigroupsLine(Chomp(x)));
+  return List(line, x-> ReadGeneratorsLine(Chomp(x)));
 end);
 
 #
 
-InstallGlobalFunction(ReadSemigroupsLine, 
+InstallGlobalFunction(ReadGeneratorsLine, 
 function(line)
   local i, k, out, m, deg, f, j;
   
@@ -279,6 +345,7 @@ function(line)
   elif line[1]='p' then # partial perms
     Apply(out, DensePartialPermNC);
   fi;
+
   return out;
 end);
 
@@ -286,9 +353,9 @@ end);
 
 # Returns: nothing. 
 
-InstallGlobalFunction(WriteSemigroups, 
+InstallGlobalFunction(WriteGenerators, 
 function(arg)
-  local trans, gens, append, gzip, str, deg, nrdigits, out, i, s, f;
+  local trans, gens, append, gzip, mode, file, line, deg, nrdigits, i, writin, s, f;
   
   if not (Length(arg)=3 or Length(arg)=2) then
     Error("usage: filename as string and a transformation, transformation ",
@@ -296,16 +363,21 @@ function(arg)
     return;
   fi;
 
-  if IsExistingFile(arg[1]) and not IsWritableFile(arg[1]) then 
-    Error(arg[1], " exists and is not a writable file,");
-    return;
+  if IsExistingFile(arg[1]) then 
+    if not IsWritableFile(arg[1]) then 
+      Error(arg[1], " exists and is not a writable file,");
+      return;
+    fi;
+  else
+    PrintTo(arg[1], "");
   fi;
 
-  if IsTransformationCollection(arg[2]) or IsPartialPermCollection(arg[2]) then 
+  if IsTransformationCollection(arg[2]) 
+    or IsPartialPermCollection(arg[2]) then 
     trans:=[arg[2]];
-  elif IsList(arg[2]) and IsBound(arg[2][1]) and
-  (IsTransformationCollection(arg[2][1]) or IsPartialPermCollection(arg[2][1]))
-   then 
+  elif IsList(arg[2]) and IsBound(arg[2][1]) 
+   and (IsTransformationCollection(arg[2][1]) 
+    or IsPartialPermCollection(arg[2][1])) then 
     trans:=arg[2];
   else
     Error("usage: the 2nd argument must be transformation or partial perm ",
@@ -323,6 +395,7 @@ function(arg)
   for i in [1..Length(trans)] do 
     if IsTransformationSemigroup(trans[i]) 
       or IsPartialPermSemigroup(trans[i]) then 
+      
       gens[i]:=GeneratorsOfSemigroup(trans[i]);
       # we could use a smaller generating set (i.e. GeneratorsOfMonoid,
       # GeneratorsOfInverseSemigroup etc) but we have no way of knowing which
@@ -348,62 +421,87 @@ function(arg)
 
   #####
 
-  #by default or if arg[3]=true append the result to arg[1]
-  
   gzip:=SplitString(arg[1], '.');
   gzip:=[JoinStringsWithSeparator(gzip{[1..Length(gzip)-1]}, "."),
    gzip[Length(gzip)]];
+  
+  #by default or if arg[3]=true append the result to arg[1]
   if Length(arg)=2 or arg[3] then 
-    if Length(gzip)>1 and gzip[2]="gz" then 
-      str:=StringFile(gzip[1]);
-    else 
-      str:=StringFile(arg[1]);
-    fi;
+    mode:="a";
   else
-    str:=StringFile(arg[1]);
+    mode:="w";
+  fi;
+
+  if Length(gzip)>1 and gzip[2]="gz" then
+    file:=IO_FilteredFile([["gzip", ["-9q"]]], arg[1], mode);
+  else 
+    file:=IO_File(arg[1], mode);
   fi;
   
-  if str=fail then 
-    str:="";
+  if file=fail then 
+    Error("something went wrong when trying to open the file for writing,");
+    return;
   fi;
-  
+
   if IsTransformationCollection(gens[1]) then 
     for s in gens do
-      Append(str, "t");
+      line:="t";
       for f in s do
         deg:=String(DegreeOfTransformation(f));
         nrdigits:=Length(deg);
-        Append(str, String(nrdigits));
-        Append(str, deg);
+        Append(line, String(nrdigits));
+        Append(line, deg);
         for i in [1..DegreeOfTransformation(f)] do 
-          append(str, i^f, nrdigits);
+          append(line, i^f, nrdigits);
         od;
       od;
-      Append(str, "\n" );
+      IO_WriteLine(file, line);
     od;
   elif IsPartialPermCollection(gens[1]) then 
     for s in gens do 
-      Append(str, "p");
+      line:="p";
       for f in s do 
         deg:=String(DegreeOfPartialPerm(f));
         nrdigits:=Length(String(Maximum(
          DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f))));
-        Append(str, String(nrdigits));
-        append(str, deg, nrdigits);
+        Append(line, String(nrdigits));
+        append(line, deg, nrdigits);
         for i in [1..DegreeOfPartialPerm(f)] do 
-          append(str, i^f, nrdigits);
+          append(line, i^f, nrdigits);
         od;
       od;
-      Append(str, "\n");
     od;
+    IO_WriteLine(file, line);
   fi;
   
-  if Length(gzip)>1 and gzip[2]="gz" then 
-    out:=FileString(gzip[1], str);
-    Exec("gzip -fq9 ", gzip[1]);
-    return out;
-  fi;
-  return FileString(arg[1], str);
+  return IO_Close(file);
+end);
+
+#
+
+InstallMethod(ShortStringRep, "for a transformation",
+[IsTransformation],
+function(f)
+  local append, line, deg, nrdigits, i;
+
+  append:=function(str, pt, m)
+    local i, j;
+    i:=String(pt);
+    for j in [1..m-Length(i)] do 
+      Append(str, " ");
+    od;
+    Append(str, i);
+    return str;
+  end;
+  line:=""; 
+  deg:=String(DegreeOfTransformation(f));
+  nrdigits:=Length(deg);
+  Append(line, String(nrdigits));
+  Append(line, deg);
+  for i in [1..DegreeOfTransformation(f)] do 
+    append(line, i^f, nrdigits);
+  od;
+  return line;
 end);
 
 #EOF

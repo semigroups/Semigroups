@@ -1,6 +1,6 @@
-#############################################################################
+############################################################################
 ##
-#W  properties.xml
+#W  attributes-inverse.xml
 #Y  Copyright (C) 2011-13                                James D. Mitchell
 ##                                                       Wilf Wilson,
 ##                                                       Rhiannon Dougall,
@@ -11,6 +11,30 @@
 ##
 #############################################################################
 ##
+
+<#GAPDoc Label="PrimitiveIdempotents">
+<ManSection>
+  <Attr Name="PrimitiveIdempotents" Arg="S"/>
+  <Returns>A list of idempotent partial permutations.</Returns>
+  <Description>
+    An idempotent in an inverse semigroup <A>S</A> is <E>primitive</E> if it is
+    non-zero and minimal with respect to the 
+    <Ref Attr="NaturalPartialOrder" BookName="ref"/>
+    on <A>S</A>. <C>PrimitiveIdempotents</C> returns the list of primitive
+    idempotents in the inverse semigroup of partial permutations <A>S</A>. 
+    <Example>
+gap> S:= InverseMonoid(
+> PartialPerm( [ 1 ], [ 4 ] ),
+> PartialPerm( [ 1, 2, 3 ], [ 2, 1, 3 ] ),
+> PartialPerm( [ 1, 2, 3 ], [ 3, 1, 2 ] ) );;
+gap> MultiplicativeZero(S);
+&lt;empty partial perm>
+gap> PrimitiveIdempotents(S);
+[ &lt;identity partial perm on [ 4 ]>, &lt;identity partial perm on [ 1 ]>, 
+  &lt;identity partial perm on [ 2 ]>, &lt;identity partial perm on [ 3 ]> ]</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
 
 <#GAPDoc Label="IsJoinIrreducible">
 <ManSection>

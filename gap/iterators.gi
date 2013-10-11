@@ -368,8 +368,10 @@ function(d)
    SchutzenbergerGroup(d), OrbSCC(LambdaOrb(d))[LambdaOrbSCCIndex(d)]);
   
   convert:=function(x)
-    return RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), x[1])[1]
-     *Representative(d)*x[2]
+    
+    return StabilizerAction(Parent(d))(
+     RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), x[1])[1]
+      *Representative(d), x[2])
      *LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), x[3])[1];
   end;
 
@@ -394,8 +396,8 @@ function(d)
   baseiter:=IteratorOfCartesianProduct(scc, SchutzenbergerGroup(d), scc);
   
   convert:=function(x)
-    return LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), x[1])[2]
-     *Representative(d)*x[2]
+    return StabilizerAction(Parent(d))(LambdaOrbMult(LambdaOrb(d),
+     LambdaOrbSCCIndex(d), x[1])[2]*Representative(d), x[2])
      *LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), x[3])[1];
   end;
 
@@ -417,7 +419,7 @@ function(h)
 
   s:=Parent(h);
   return IteratorByIterator(Iterator(SchutzenbergerGroup(h)), x->
-   Representative(h)*x, [IsIteratorOfHClassElements]);
+   StabilizerAction(s)(Representative(h), x), [IsIteratorOfHClassElements]);
 end);
 
 # same method for regular, different method for inverse
@@ -437,8 +439,9 @@ function(l)
    Enumerator(SchutzenbergerGroup(l)));
   
   convert:=function(x)
-    return RhoOrbMult(RhoOrb(l), RhoOrbSCCIndex(l), x[1])[1]
-     *Representative(l)*x[2];
+    return StabilizerAction(Parent(l))(
+     RhoOrbMult(RhoOrb(l), RhoOrbSCCIndex(l), x[1])[1]
+     *Representative(l), x[2]);
   end;
 
   return IteratorByIterator(baseiter, convert, [IsIteratorOfLClassElements]);
@@ -464,8 +467,9 @@ function(r)
      OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)] );
   
   convert:=function(x)
-    return Representative(r)*x[1]*LambdaOrbMult(LambdaOrb(r),
-     LambdaOrbSCCIndex(r), x[2])[1];
+    return StabilizerAction(Parent(r))(Representative(r),
+     x[1])*LambdaOrbMult(LambdaOrb(r),
+      LambdaOrbSCCIndex(r), x[2])[1];
   end;
 
   return IteratorByIterator(baseiter, convert, [IsIteratorOfRClassElements]);
@@ -721,7 +725,7 @@ function(s)
         
       # rep has rectified lambda val and rho val.
       rep:=LambdaOrbRep(iter!.o, m)*LambdaOrbMult(iter!.o, m, l)[2]; 
-      return [s, m, iter!.o, 1, GradedRhoOrb(s, rep, false), rep, false];
+      return [s, m, iter!.o, 1, GradedRhoOrb(s, rep, false)[1], rep, false];
     end;
 
     record.ShallowCopy:=iter-> rec(m:=fail, 
@@ -735,7 +739,7 @@ function(s)
       local rep;
       # rep has rectified lambda val and rho val.
       rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, scc[m][1])); 
-      return [s, m, o, 1, GradedRhoOrb(s, rep, false), rep, false];
+      return [s, m, o, 1, GradedRhoOrb(s, rep, false)[1], rep, false];
     end;
     
     return IteratorByIterator(IteratorList([2..Length(scc)]), func);
@@ -761,7 +765,7 @@ function(s)
     # We don't rectify the rho val of <rep> in <o> since we require to
     # enumerate RhoOrb(s) to do this, if we use GradedRhoOrb(s, rep,
     # true) then this get more complicated.
-    return [s, 1, GradedRhoOrb(s, rep, false), rep, true];
+    return [s, 1, GradedRhoOrb(s, rep, false)[1], rep, true];
   end;
 
   if not IsClosed(o) then 
@@ -792,7 +796,7 @@ function(s)
     # We don't rectify the lambda val of <rep> in <o> since we require to
     # enumerate LambdaOrb(s) to do this, if we use GradedLambdaOrb(s, rep,
     # true) then this get more complicated.
-    return [s, 1, GradedLambdaOrb(s, rep, false), rep, true];
+    return [s, 1, GradedLambdaOrb(s, rep, false)[1], rep, true];
   end;
 
   if not IsClosed(o) then 
@@ -908,12 +912,12 @@ function(s)
   if not IsClosed(o) then 
     func:=function(iter, i) 
       local rep;
-      rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
+      rep:=Inverse(EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)));
       # <rep> has rho val corresponding to <i> and lambda val in position 1 of
       # GradedLambdaOrb(s, rep, false), if we use <true> as the last arg, then
       # this is no longer the case, and this is would be more complicated.
       
-      return [s, 1, GradedLambdaOrb(s, rep, false), rep, true]; 
+      return [s, 1, GradedLambdaOrb(s, rep, false)[1], rep, true]; 
     end;
     iter:=IteratorByOrbFunc(o, func, 2);
   else 
@@ -923,7 +927,7 @@ function(s)
       local rep; 
       
       # <rep> has rho val corresponding to <i> 
-      rep:=EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i))^-1;
+      rep:=Inverse(EvaluateWord(o!.gens, TraceSchreierTreeForward(o, i)));
      
       # rectify the lambda value of <rep>
       rep:=rep*LambdaOrbMult(o, lookup[i], Position(o, LambdaFunc(s)(rep)))[2];
@@ -941,7 +945,7 @@ end);
 
 InstallMethod(IteratorOfLClassReps, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
-s-> IteratorByIterator(IteratorOfRClassData(s), x-> x[4]^-1,
+s-> IteratorByIterator(IteratorOfRClassData(s), x-> Inverse(x[4]),
 [IsIteratorOfLClassReps]));
 
 #
@@ -950,7 +954,7 @@ InstallMethod(IteratorOfLClasses, "for acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
 s-> IteratorByIterator(IteratorOfRClassData(s), 
 function(x)
-  x[4]:=x[4]^-1;
+  x[4]:=Inverse(x[4]); #JDM is this a good idea??
   return CallFuncList(CreateInverseOpLClass, x);
 end, [IsIteratorOfLClasses]));
 
@@ -972,8 +976,9 @@ function(l)
     Enumerator(SchutzenbergerGroup(l)) );
   
   convert:=function(x)
-    return LambdaOrbMult(LambdaOrb(l), LambdaOrbSCCIndex(l), x[1])[2]
-     *Representative(l)*x[2];
+    return StabilizerAction(Parent(l))(
+     LambdaOrbMult(LambdaOrb(l), LambdaOrbSCCIndex(l), x[1])[2]
+      *Representative(l), x[2]);
   end;
 
   return IteratorByIterator(baseiter, convert, [IsIteratorOfLClassElements]);
