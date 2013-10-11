@@ -8,199 +8,6 @@
 #############################################################################
 ##
 
-<#GAPDoc Label="GroupOfUnits">
-  <ManSection>
-    <Attr Name="GroupOfUnits" Arg="S"/>
-    <Returns>The group of units of a semigroup.</Returns>
-    <Description>
-      <C>GroupOfUnits</C> returns the group of units of the semigroup of
-      transformations or partial permutations <A>S</A> as a subsemigroup of
-      <A>S</A> if it exists and returns <K>fail</K> if it does not. Use <Ref
-        Oper="IsomorphismPermGroup"/> if you require a permutation
-      representation of the group of units.<P/>
-
-      If a semigroup <A>S</A> has an identity <C>e</C>, then the <E>group of
-        units</E> of <A>S</A> is the set of those <C>s</C> in <A>S</A> such that
-      there exists <C>t</C> in <A>S</A> where <C>s*t=t*s=e</C>. Equivalently,
-      the group of units is the &H;-class of the identity of <A>S</A>.<P/> 
-      
-      See also 
-      <Ref Oper="GreensHClassOfElement" BookName="ref"/>,
-      <Ref Prop="IsMonoidAsSemigroup"/>, and
-      <Ref Attr="MultiplicativeNeutralElement" BookName="ref"/>.
-
-      <Example>
-gap> S:=Semigroup(Transformation( [ 1, 2, 5, 4, 3, 8, 7, 6 ] ),
->   Transformation( [ 1, 6, 3, 4, 7, 2, 5, 8 ] ),
->   Transformation( [ 2, 1, 6, 7, 8, 3, 4, 5 ] ),
->   Transformation( [ 3, 2, 3, 6, 1, 6, 1, 2 ] ),
->   Transformation( [ 5, 2, 3, 6, 3, 4, 7, 4 ] ) );;
-gap> Size(S);
-5304
-gap> StructureDescription(GroupOfUnits(S));
-"C2 x S4"
-gap> S:=InverseSemigroup( PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 
-> [ 2, 4, 5, 3, 6, 7, 10, 9, 8, 1 ] ),
-> PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 10 ], 
-> [ 8, 2, 3, 1, 4, 5, 10, 6, 9 ] ) );;
-gap> StructureDescription(GroupOfUnits(S));
-"C8"
-gap> S:=InverseSemigroup( PartialPerm( [ 1, 3, 4 ], [ 4, 3, 5 ] ),
-> PartialPerm( [ 1, 2, 3, 5 ], [ 3, 1, 5, 2 ] ) );;
-gap> GroupOfUnits(S);
-fail</Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="IdempotentGeneratedSubsemigroup">
-  <ManSection>
-    <Oper Name="IdempotentGeneratedSubsemigroup" Arg="S"/>
-    <Returns>A semigroup.  
-    </Returns>
-    <Description> 
-      <C>IdempotentGeneratedSubsemigroup</C> returns the subsemigroup of the
-      semigroup of transformations or partial permutations <A>S</A> generated
-      by the idempotents of <A>S</A>.<P/>
-      
-      See also <Ref Attr="Idempotents"/> and <Ref Attr="SmallGeneratingSet"/>.
-<Example>
-gap> file:=Concatenation(SemigroupsDir(), "/examples/graph8c.semigroups.gz");;
-gap> S:=Semigroup(ReadSemigroups(file, 13));;
-gap> IdempotentGeneratedSubsemigroup(S);
-&lt;transformation monoid on 8 pts with 18 generators>
-gap> S:=SymmetricInverseSemigroup(5);
-&lt;symmetric inverse semigroup on 5 pts>
-gap> IdempotentGeneratedSubsemigroup(S);
-&lt;inverse partial perm semigroup on 5 pts with 6 generators></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="InjectionPrincipalFactor">
-<ManSection>
-  <Attr Name="InjectionPrincipalFactor" Arg="D"/>
-  <Attr Name="IsomorphismReesMatrixSemigroup" Arg="D"/>
-  <Returns>A injective mapping.</Returns>
-  <Description> 
-    The argument <A>D</A> should be a &D;-class of a semigroup of
-    transformations or partial permutations.  If <A>D</A> is a
-    subsemigroup of <C>S</C>, then 
-    the <E>principal factor</E> of <A>D</A> is just <A>D</A> itself.
-    If <A>D</A> is not a subsemigroup of <C>S</C>, then 
-    the principal factor of <A>D</A> is 
-    the semigroup with elements <A>D</A> and a new element <C>0</C> with
-    multiplication of <M>x,y\in D</M> defined by:
-    <Alt Not="Text">
-      <Display>
-        xy=\left\{\begin{array}{ll}
-        x*y\ (\textrm{in }S)&amp;\textrm{if }x*y\in D\\
-        0&amp;\textrm{if }xy\not\in D.
-        \end{array}\right.
-      </Display>
-    </Alt>
-    <Alt Only="Text">
-      <C>xy</C> equals the product of <C>x</C> and <C>y</C> if it belongs to
-      <A>D</A> and <C>0</C> if it does not. <P/>
-    </Alt>
-    <C>InjectionPrincipalFactor</C> returns an injective function
-    from the &D;-class <A>D</A> to a Rees matrix semigroup, which
-    contains the principal factor of <A>D</A> as a subsemigroup. <P/>
-
-    If <A>D</A> is a subsemigroup of its parent semigroup, then the
-    function returned by <C>InjectionPrincipalFactor</C> or
-    <C>IsomorphismReesMatrixSemigroup</C> 
-    is an isomorphism from <A>D</A> to a Rees matrix semigroup; see
-    <Ref Func="ReesMatrixSemigroup" BookName="ref"/>.<P/>
-
-    If <A>D</A> is not a semigroup, then the function returned by
-    <C>InjectionPrincipalFactor</C> is an
-    injective function from <A>D</A> to a Rees 0-matrix semigroup isomorphic
-    to the principal factor of <A>D</A>; see 
-    <Ref Func="ReesZeroMatrixSemigroup" BookName="ref"/>. In this case, 
-    <C>IsomorphismReesMatrixSemigroup</C> returns an error.<P/>
-
-    See also <Ref Attr="PrincipalFactor"/>.
-    
-    <Example>
-    gap> S:=InverseSemigroup(
-    > PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ),
-    > PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 10 ], 
-    > [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
-    gap> f:=PartialPerm([ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ]);;
-    gap> d:=GreensDClassOfElement(S, f);
-    {PartialPerm( [ 1, 2, 5, 6, 7, 9 ], [ 1, 2, 5, 6, 7, 9 ] )}
-    gap> InjectionPrincipalFactor(d);
-    MappingByFunction( {PartialPerm( [ 1, 2, 5, 6, 7, 9 ], 
-     [ 1, 2, 5, 6, 7, 9 ] )}, &lt;Rees 0-matrix semigroup 3x
-     3 over &lt;Group(()) with 0 adjoined>>
-     , function( f ) ... end, function( x ) ... end )
-    gap> rms:=Range(last);
-    &lt;Rees 0-matrix semigroup 3x3 over &lt;Group(()) with 0 adjoined>>
-    gap> MatrixOfReesZeroMatrixSemigroup(rms);
-    [ [ &lt;group with 0 adjoined elt: ()>, &lt;group with 0 adjoined elt: 0>, 
-          &lt;group with 0 adjoined elt: 0> ], 
-      [ &lt;group with 0 adjoined elt: 0>, &lt;group with 0 adjoined elt: ()>, 
-          &lt;group with 0 adjoined elt: 0> ], 
-      [ &lt;group with 0 adjoined elt: 0>, &lt;group with 0 adjoined elt: 0>, 
-          &lt;group with 0 adjoined elt: ()> ] ]
-    gap> Size(rms);
-    10
-    gap> Size(d);
-    9
-9</Example>
-  </Description>
-</ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="IrredundantGeneratingSubset">
-  <ManSection>
-    <Oper Name="IrredundantGeneratingSubset" Arg="coll"/>
-    <Returns>    
-    A list of transformations or partial permutations.
-    </Returns>
-    <Description>
-      If <A>coll</A> is a transformation or partial permutation collection,
-      then this function returns a subset <C>U</C> of <A>coll</A> or
-      <C>Generators(<A>coll</A>)</C> such that no element of <C>U</C> is
-      generated by the other elements of <C>U</C>.  <P/>
-
-      See also <Ref Func="Generators"/>, 
-      <Ref Prop="IsTransformationCollection" BookName="ref"/>, and 
-      <Ref Oper="SmallGeneratingSet"/>.
-
-      <Log>
-gap> S:=Semigroup( Transformation( [ 5, 1, 4, 6, 2, 3 ] ),
-> Transformation( [ 1, 2, 3, 4, 5, 6 ] ),
-> Transformation( [ 4, 6, 3, 4, 2, 5 ] ),
-> Transformation( [ 5, 4, 6, 3, 1, 3 ] ),
-> Transformation( [ 2, 2, 6, 5, 4, 3 ] ),
-> Transformation( [ 3, 5, 5, 1, 2, 4 ] ),
-> Transformation( [ 6, 5, 1, 3, 3, 4 ] ),
-> Transformation( [ 1, 3, 4, 3, 2, 1 ] ) );;
-gap> IrredundantGeneratingSubset(S);
-[ Transformation( [ 1, 3, 4, 3, 2, 1 ] ), 
-  Transformation( [ 2, 2, 6, 5, 4, 3 ] ), 
-  Transformation( [ 3, 5, 5, 1, 2, 4 ] ), 
-  Transformation( [ 5, 1, 4, 6, 2, 3 ] ), 
-  Transformation( [ 5, 4, 6, 3, 1, 3 ] ), 
-  Transformation( [ 6, 5, 1, 3, 3, 4 ] ) ]
-gap> S:=RandomInverseMonoid(1000,10);
-&lt;inverse monoid with 1000 generators>
-gap> SmallGeneratingSet(S);
-[ [ 1 .. 10 ] -> [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ], 
-  [ 1 .. 10 ] -> [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ], 
-  [ 1, 2, 3, 4, 6, 7, 8, 9 ] -> [ 7, 5, 10, 1, 8, 4, 9, 6 ]
-  [ 1 .. 9 ] -> [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ] ]
-gap> IrredundantGeneratingSubset(last);
-[ [ 1 .. 9 ] -> [ 4, 3, 5, 7, 10, 9, 1, 6, 8 ], 
-  [ 1 .. 10 ] -> [ 1, 4, 6, 2, 8, 5, 7, 10, 3, 9 ], 
-  [ 1 .. 10 ] -> [ 6, 5, 1, 9, 8, 3, 10, 4, 7, 2 ] ]
-</Log>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <!-- JDM improve --> 
 <#GAPDoc Label="IsAbundantSemigroup">
   <ManSection>
@@ -258,10 +65,10 @@ false</Example>
     <Prop Name="IsBand" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsBand</C> returns <K>true</K> if every element of the semigroup of
-      transformations or partial permutations <A>S</A> is an idempotent and
-      <K>false</K> if it is not. An inverse semigroup is band if and only if it
-      is a semilattice; see <Ref Prop="IsSemilatticeAsSemigroup"/>.
+      <C>IsBand</C> returns <K>true</K> if every element of the semigroup
+      <A>S</A> is an idempotent and <K>false</K> if it is not. An inverse
+      semigroup is band if and only if it is a semilattice; see 
+      <Ref Prop="IsSemilatticeAsSemigroup"/>.
 
       <Example>
 gap> gens:=[ Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 1 ] ), 
@@ -290,8 +97,8 @@ true</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsBlockGroup</C> and <C>IsSemigroupWithCommutingIdempotents</C> return
-      <K>true</K> if the semigroup <A>S</A> of transformations or partial
-      permutations is a block group and <K>false</K> if it is not.<P/>
+      <K>true</K> if the semigroup <A>S</A> is a block group and <K>false</K>
+      if it is not.<P/>
 
       A semigroup <A>S</A> is a <E>block group</E> if every &L;-class and every
       &R;-class of <A>S</A> contains at most one idempotent. Every semigroup
@@ -314,10 +121,10 @@ false</Example>
     <Prop Name="IsBrandtSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsBrandtSemigroup</C> return <K>true</K> if the semigroup of
-      transformations or partial permutations is 
+      <C>IsBrandtSemigroup</C> return <K>true</K> if the semigroup <A>S</A> is 
       a 0-simple inverse semigroup, and <K>false</K> if it is not. See also
-      <Ref Prop="IsZeroSimpleSemigroup"/> and <Ref Prop="IsInverseSemigroup"/>.
+      <Ref Prop="IsZeroSimpleSemigroup"/> and <Ref Prop="IsInverseSemigroup"
+        BookName="ref" />.
       <Example>
 gap> S:=Semigroup(Transformation( [ 2, 8, 8, 8, 8, 8, 8, 8 ] ),
 > Transformation( [ 5, 8, 8, 8, 8, 8, 8, 8 ] ),
@@ -342,8 +149,7 @@ true</Example>
     <Prop Name="IsCliffordSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsCliffordSemigroup</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is  
+      <C>IsCliffordSemigroup</C> returns <K>true</K> if the <A>S</A> is  
       regular and its idempotents are central, and <K>false</K> if it is not. 
       
       <Example>
@@ -364,9 +170,8 @@ true</Example>
     <Prop Name="IsCommutativeSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsCommutativeSemigroup</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is commutative and
-      <K>false</K> if it is not.  
+      <C>IsCommutativeSemigroup</C> returns <K>true</K> if the semigroup
+      <A>S</A> is commutative and <K>false</K> if it is not.  
       The function <Ref Prop="IsCommutative" BookName="ref"/> can also be used
       to test if a semigroup is commutative.  <P/>
 
@@ -396,12 +201,10 @@ false</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsCompletelyRegularSemigroup</C> returns <K>true</K> if every element
-      of the semigroup of transformations or partial permutations <A>S</A>
-      is contained in a subgroup of <A>S</A>.<P/> 
+      of the semigroup <A>S</A> is contained in a subgroup of <A>S</A>.<P/> 
       
-      An inverse semigroup is
-      completely regular if and only if it is a Clifford semigroup; see
-      <Ref Prop="IsCliffordSemigroup"/>. 
+      An inverse semigroup is completely regular if and only if it is a
+      Clifford semigroup; see <Ref Prop="IsCliffordSemigroup"/>. 
 
       <Example>
 gap> gens:=[ Transformation( [ 1, 2, 4, 3, 6, 5, 4 ] ), 
@@ -433,8 +236,7 @@ true</Example>
     <Description>
       <C>IsXTrivial</C> returns <K>true</K> if Green's &R;-relation,
       &L;-relation, &H;-relation, &D;-relation, respectively, on the
-      semigroup of transformations or partial permutations <A>S</A> is 
-      trivial and <K>false</K> if it is not.
+      semigroup <A>S</A> is trivial and <K>false</K> if it is not.
       These properties can also be applied to a Green's class instead of a
       semigroup where applicable. 
       <P/> 
@@ -492,20 +294,19 @@ true</Example>
     <Prop Name="IsGroupAsSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      If the semigroup of transformations or partial permutations <A>S</A>
-      is actually a group, then <C>IsGroupAsSemigroup</C> returns <K>true</K>.
-      If it is not a group, then <K>false</K> is returned.
-      <Example>
-      gap> gens:=[ Transformation( [ 2, 4, 5, 3, 7, 8, 6, 9, 1 ] ), 
-      >  Transformation( [ 3, 5, 6, 7, 8, 1, 9, 2, 4 ] ) ];;
-      gap> S:=Semigroup(gens);;
-      gap> IsGroupAsSemigroup(S);
-      true
-      gap> G:=SymmetricGroup(5);;
-      gap> S:=Range(IsomorphismPartialPermSemigroup(G));
-      &lt;inverse partial perm semigroup on 5 pts with 2 generators>
-      gap> IsGroupAsSemigroup(S);
-      true
+      If the semigroup <A>S</A> is actually a group, then
+      <C>IsGroupAsSemigroup</C> returns <K>true</K>.  If it is not a group,
+      then <K>false</K> is returned.
+<Example>
+gap> gens:=[ Transformation( [ 2, 4, 5, 3, 7, 8, 6, 9, 1 ] ), 
+>  Transformation( [ 3, 5, 6, 7, 8, 1, 9, 2, 4 ] ) ];;
+gap> S:=Semigroup(gens);;
+gap> IsGroupAsSemigroup(S);
+true
+gap> G:=SymmetricGroup(5);;
+gap> S:=Range(IsomorphismPartialPermSemigroup(G));
+&lt;inverse partial perm semigroup on 5 pts with 2 generators>
+gap> IsGroupAsSemigroup(S);
 true</Example>
     </Description>
   </ManSection>
@@ -518,9 +319,8 @@ true</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsIdempotentGenerated</C> and <C>IsSemiBand</C> return 
-      <K>true</K> if the semigroup of transformations or partial
-      permutations <A>S</A> is generated by its idempotents and <K>false</K> if
-      it is not.  See also <Ref Attr="Idempotents"/> and 
+      <K>true</K> if the semigroup <A>S</A> is generated by its idempotents and
+      <K>false</K> if it is not.  See also <Ref Attr="Idempotents"/> and 
       <Ref Attr="IdempotentGeneratedSubsemigroup"/>. <P/>
 
       An inverse semigroup is idempotent-generated if and only if it is a
@@ -530,10 +330,9 @@ true</Example>
       in this context. 
 
       <Example>
-      gap> S:=SingularSemigroup(4);
-      &lt;regular transformation semigroup on 4 pts with 12 generators>
-      gap> IsIdempotentGenerated(S);
-      true
+gap> S:=SingularTransformationSemigroup(4);
+&lt;regular transformation semigroup on 4 pts with 12 generators>
+gap> IsIdempotentGenerated(S);
 true</Example>
     </Description>
   </ManSection>
@@ -545,12 +344,11 @@ true</Example>
   <Prop Name="IsInverseMonoid" Arg="S"/>
   <Returns><K>true</K> or <K>false</K>.</Returns>
   <Description>
-    If <A>S</A> is a semigroup of transformations or partial permutations, then
-    <C>IsInverseSemigroup</C> returns <K>true</K> if <A>S</A> is an inverse
-    semigroup and <K>false</K> if it is not. If <A>S</A> is monoid of
-    transformations or partial permutations, then <C>IsInverseMonoid</C>
-    returns <K>true</K> if <A>S</A> is an inverse monoid and <K>false</K> if
-    it is not.<P/>
+    If <A>S</A> is a semigroup, then <C>IsInverseSemigroup</C> returns
+    <K>true</K> if <A>S</A> is an inverse semigroup and <K>false</K> if it is
+    not. If <A>S</A> is monoid of transformations or partial permutations, then
+    <C>IsInverseMonoid</C> returns <K>true</K> if <A>S</A> is an inverse monoid
+    and <K>false</K> if it is not.<P/>
 
     A semigroup is an <E>inverse semigroup</E> if every element 
     <C>x</C> has a unique semigroup inverse, that is, a unique
@@ -567,23 +365,6 @@ true</Example>
 </ManSection>
 <#/GAPDoc>
 
-<!-- the following does not currently exist! -->
-<#GAPDoc Label="IsIrredundantGeneratingSet">
-  <ManSection>
-    <Oper Name="IsIrredundantGeneratingSet" Arg="[S, ]U"/>
-    <Description>
-      returns <K>true</K> if <C>u</C> is not an element of the subsemigroup 
-      generated by <C>U</C> without <C>u</C> for all <C>u</C> in <C>U</C>.<P/>
-
-      If the optional first argument is present, then 
-      <C>IsIrredundantGeneratingSet</C> first checks that <C>U</C> generates 
-      <A>S</A>.
-
-      <Example></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="IsLeftSimple">
   <ManSection>
     <Prop Name="IsLeftSimple" Arg="S"/>
@@ -591,8 +372,7 @@ true</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
     <C>IsLeftSimple</C> and <C>IsRightSimple</C> returns <K>true</K> if the 
-    semigroup of transformations or partial permutations <A>S</A> has only one
-    &L;-class or one &R;-class,
+    semigroup <A>S</A> has only one &L;-class or one &R;-class,
     respectively, and returns <K>false</K> if it has more than one. <P/>
 
     An inverse semigroup is left simple if and only if it is right simple if
@@ -632,8 +412,7 @@ gap> NrRClasses(S);
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsLeftZeroSemigroup</C> returns  <K>true</K> if the semigroup <A>S</A>
-      of transformations or partial permutations is
-      a left zero semigroup and <K>false</K> if it is not. <P/>
+      is a left zero semigroup and <K>false</K> if it is not. <P/>
 
       A semigroup is a <E>left zero semigroup</E> if <C>x*y=x</C> for
       all <C>x,y</C>. An inverse semigroup is a left zero semigroup if and only
@@ -660,8 +439,7 @@ true</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
    <Description>
      <C>IsMonogenicSemigroup</C> returns <K>true</K> if the semigroup <A>S</A>
-     of transformations or partial permutations is monogenic and it returns
-     <K>false</K> if it is not. <P/>
+     is monogenic and it returns <K>false</K> if it is not. <P/>
 
      A semigroup is <E>monogenic</E> if it is generated by a single element.
      See also <Ref Prop="IsMonogenicInverseSemigroup"/> and <Ref Attr="IndexPeriodOfTransformation" BookName="ref"/>.
@@ -683,8 +461,8 @@ true</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
    <Description>
      <C>IsMonogenicInverseSemigroup</C> returns <K>true</K> if the semigroup
-     <A>S</A> of transformations or partial permutations is an inverse
-     monogenic semigroup and it returns <K>false</K> if it is not. <P/>
+     <A>S</A> is an inverse monogenic semigroup and it returns <K>false</K> if
+     it is not. <P/>
 
      A inverse semigroup is <E>monogenic</E> if it is generated as an inverse
      semigroup by a single element.  See also <Ref
@@ -707,11 +485,10 @@ true</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsMonoidAsSemigroup</C> returns <K>true</K> if the semigroup
-      of transformations or partial permutations <A>S</A> is a monoid and
-      <K>false</K> if it is not. It is possible that <A>S</A> is a monoid but
-      does not satisfy <Ref Prop="IsMonoid" BookName="ref"/> and so <A>S</A>
-      does not possess the attributes of a monoid (such as, <Ref
-        Attr="GeneratorsOfMonoid" BookName="ref"/>).<P/>
+      <A>S</A> is a monoid and <K>false</K> if it is not. It is possible that
+      <A>S</A> is a monoid but does not satisfy <Ref Prop="IsMonoid"
+        BookName="ref"/> and so <A>S</A> does not possess the attributes of a
+      monoid (such as, <Ref Attr="GeneratorsOfMonoid" BookName="ref"/>).<P/>
 
       A semigroup of transformations satisfies
       <C>IsMonoidAsSemigroup</C> if and only if it satisfies
@@ -738,124 +515,13 @@ false</Example>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsomorphismTransformationMonoid">
-<ManSection>
-  <Oper Name="IsomorphismTransformationMonoid" Arg="S"/>
-  <Oper Name="IsomorphismTransformationSemigroup" Arg="S"/>
-  <Returns>An isomorphism.
-  </Returns>
-  <Description>
-  <C>IsomorphismTransformationSemigroup(<A>S</A>)</C>
-   returns an isomorphism from the semigroup <A>S</A> to a
-   semigroup of transformations.<P/>
-
-   <C>IsomorphismTransformationMonoid(<A>S</A>)</C> returns an isomorphism from
-   the monoid <A>S</A> to a monoid of transformations. <P/>
-   
-   We only describe <C>IsomorphismTransformationMonoid</C>,
-   the corresponding statements for <C>IsomorphismTransformationSemigroup</C>
-   also hold.
-
-   <List>
-
-     <Mark>Partial permutation semigroups</Mark>
-     <Item>
-       If <A>S</A> is a partial permutation monoid, then
-       <C>IsomorphismTransformationMonoid(<A>S</A>)</C> returns an isomorphism
-       from <A>S</A> to a monoid of partial permutations on
-       <C>[1..LargestMovedPoint(<A>S</A>)+1]</C> obtained using <Ref
-         Oper="AsTransformation" BookName="ref"/>. The inverse of this isomorphism is obtained
-       using <Ref Func="AsPartialPerm" BookName="ref"/>; see <Ref Attr="LargestMovedPoint"
-         Label="for a partial perm" BookName="ref"/>, 
-       <Ref Func="InverseMonoid" BookName="ref"/> and <Ref Func="Monoid" BookName="ref"/>.
-     </Item>
-     
-    <Mark>Permutation groups</Mark>
-    <Item>
-      If <A>S</A> is a permutation group, then
-      <C>IsomorphismTransformationMonoid</C> returns an isomorphism from
-      <A>S</A> to a transformation monoid acting on the set
-      <C>[1..NrMovedPoints(<A>S</A>)]</C> obtained using 
-      <Ref Oper="AsTransformation" BookName="ref"/>; see 
-      <Ref Attr="NrMovedPoints" BookName="ref"/>.
-    </Item>
-
-    <Mark>Transformation semigroups</Mark>
-    <Item>
-      If <A>S</A> is a transformation semigroup satisfying <Ref
-      Prop="IsMonoidAsSemigroup"/>, then this function returns an isomorphism
-      from <A>S</A> to a transformation monoid. <P/>
-    </Item>
-  </List>
-
-  <Example>
-  gap> S:=Semigroup( Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
-  > Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
-  gap> IsTransformationMonoid(S);
-  false
-  gap> IsMonoidAsSemigroup(S);
-  true
-  gap> M:=Range(IsomorphismTransformationMonoid(S));
-  &lt;transformation monoid on 8 pts with 2 generators>
-  gap> IsTransformationMonoid(M);
-  true
-  gap> s:=InverseMonoid(
-  >  PartialPerm( [ 1, 2, 3 ], [ 4, 2, 3 ] ),
-  >  PartialPerm( [ 1, 2, 4 ], [ 1, 3, 2 ] ),
-  >  PartialPerm( [ 1, 2, 4 ], [ 4, 1, 2 ] ) );;
-  gap> t:=Range(IsomorphismTransformationMonoid(s));
-  &lt;transformation monoid on 5 pts with 6 generators>
-  gap> Size(s); Size(t);
-  117
-  117
-117</Example>
-    </Description>
-</ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="IsomorphismPermGroup">
-<ManSection>
-  <Oper Name="IsomorphismPermGroup" Arg="S"/>
-  <Returns>An isomorphism.
-  </Returns>
-  <Description>
-    If the semigroup of transformations or partial permutations <A>S</A>
-    satisfies <Ref Prop="IsGroupAsSemigroup"/>, then
-    <C>IsomorphismPermGroup</C> returns an isomorphism to a permutation
-    group.<P/> 
-   
-    If <A>S</A> does not satisfy <Ref Prop="IsGroupAsSemigroup"/>,
-    then an error is given.
-
-<Example>
-gap> S:=Semigroup( Transformation( [ 2, 2, 3, 4, 6, 8, 5, 5 ] ),
-> Transformation( [ 3, 3, 8, 2, 5, 6, 4, 4 ] ) );;
-gap> IsGroupAsSemigroup(S);
-true
-gap> IsomorphismPermGroup(S); 
-MappingByFunction( &lt;transformation group on 8 pts with 2 generators>
- , Group([ (5,6,8), (2,3,8,
-4) ]), &lt;Attribute "AsPermutation">, function( x ) ... end )
-gap> StructureDescription(Range(IsomorphismPermGroup(S)));
-"S6"
-gap> S:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
-&lt;inverse partial perm semigroup on 4 pts with 2 generators>
-gap> IsomorphismPermGroup(S);
-MappingByFunction( &lt;inverse partial perm semigroup on 4 pts
- with 2 generators>, Group([ (1,2,3,4), (1,
-2) ]), &lt;Attribute "AsPermutation">, function( x ) ... end )</Example>
-  </Description>
-</ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="IsOrthodoxSemigroup">
   <ManSection>
     <Prop Name="IsOrthodoxSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsOrthodoxSemigroup</C> returns <K>true</K> if the semigroup 
-      <A>S</A> of transformations or partial permutations is 
-      orthodox and <K>false</K> if it is not.<P/>
+      <A>S</A> is orthodox and <K>false</K> if it is not.<P/>
 
       A semigroup is <E>orthodox</E> if it is regular and its  
       idempotent elements form a subsemigroup.
@@ -882,9 +548,8 @@ true</Example>
     <Prop Name="IsRectangularBand" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsRectangularBand</C> returns <K>true</K> if the semigroup <A>S</A> of
-      transformations or partial permutations is a 
-      rectangular band and <K>false</K> if it is not.<P/>
+      <C>IsRectangularBand</C> returns <K>true</K> if the semigroup <A>S</A> 
+      is a rectangular band and <K>false</K> if it is not.<P/>
       
       A semigroup <A>S</A> is a <E>rectangular band</E> if for all <C>x,y,z</C> 
       in <A>S</A> we have that <C>x^2=x</C> and <C>xyz=xz</C>.
@@ -907,9 +572,8 @@ true</Example>
     <Prop Name="IsRegularSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsRegularSemigroup</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is regular
-      and <K>false</K> if it is not. <P/>
+      <C>IsRegularSemigroup</C> returns <K>true</K> if the semigroup 
+      <A>S</A> is regular and <K>false</K> if it is not. <P/>
 
       A semigroup <C>S</C> is <E>regular</E> if for all <C>x</C> in <C>S</C> 
       there exists <C>y</C> in <C>S</C> such that <C>x*y*x=x</C>. Every inverse
@@ -932,9 +596,8 @@ true</Example>
     <Prop Name="IsRightZeroSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsRightZeroSemigroup</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is 
-      a right zero semigroup and <K>false</K> if it is not.<P/>
+      <C>IsRightZeroSemigroup</C> returns <K>true</K> if the <A>S</A> is a
+      right zero semigroup and <K>false</K> if it is not.<P/>
       
       A semigroup <C>S</C> is a <E>right zero semigroup</E> if <C>x*y=y</C> for 
       all <C>x,y</C> in <C>S</C>. An inverse semigroup is a right zero
@@ -967,16 +630,15 @@ true</Example>
       <E>semilattice</E> if it is commutative and every element is an 
       idempotent. The idempotents of an inverse semigroup form a semilattice. 
       <Example>
-      gap> S:=Semigroup(Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ), 
-      > Transformation( [ 3, 6, 5, 7, 2, 1, 7 ] ) );;                    
-      gap> Size(S);
-      631
-      gap> IsInverseSemigroup(S);
-      true
-      gap> A:=Semigroup(Idempotents(S)); 
-      &lt;transformation semigroup on 7 pts with 32 generators>
-      gap> IsSemilatticeAsSemigroup(A);
-      true
+gap> S:=Semigroup(Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ), 
+> Transformation( [ 3, 6, 5, 7, 2, 1, 7 ] ) );;                    
+gap> Size(S);
+631
+gap> IsInverseSemigroup(S);
+true
+gap> A:=Semigroup(Idempotents(S)); 
+&lt;transformation semigroup on 7 pts with 32 generators>
+gap> IsSemilatticeAsSemigroup(A);
 true</Example>
     </Description>
   </ManSection>
@@ -1013,25 +675,24 @@ true</Example>
 
 <#GAPDoc Label="IsSynchronizingSemigroup">
   <ManSection>
-    <Prop Name="IsSynchronizingSemigroup" Arg="S"/>
+    <Oper Name="IsSynchronizingSemigroup" Arg="S, n"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsSynchronizingSemigroup</C> returns <K>true</K> if the semigroup of
-      transformations <A>S</A> contains a
-      constant transformation. 
+      transformations <A>S</A> contains a transformation with constant value on
+      <C>[1..<A>n</A>]</C>.
       See also <Ref Oper="ConstantTransformation" BookName="ref"/>. 
       <Example>
-      gap> S:=Semigroup( Transformation( [ 1, 1, 8, 7, 6, 6, 4, 1, 8, 9 ] ), 
-      >  Transformation( [ 5, 8, 7, 6, 10, 8, 7, 6, 9, 7 ] ) );;
-      gap> IsSynchronizingSemigroup(S);
-      true
-      gap> S:=Semigroup( Transformation( [ 3, 8, 1, 1, 9, 9, 8, 7, 9, 6 ] ), 
-      >  Transformation( [ 7, 6, 8, 7, 5, 6, 8, 7, 8, 9 ] ) );;
-      gap> IsSynchronizingSemigroup(S);
-      false
-      gap> Representative(MinimalIdeal(S));
-      Transformation( [ 8, 7, 7, 8, 7, 7, 7, 8, 7, 8 ] )
-Transformation( [ 7, 7, 8, 7, 7, 7, 8, 7, 8, 7 ] )</Example>
+gap> S:=Semigroup( Transformation( [ 1, 1, 8, 7, 6, 6, 4, 1, 8, 9 ] ), 
+>  Transformation( [ 5, 8, 7, 6, 10, 8, 7, 6, 9, 7 ] ) );;
+gap> IsSynchronizingSemigroup(S, 10);
+true
+gap> S:=Semigroup( Transformation( [ 3, 8, 1, 1, 9, 9, 8, 7, 9, 6 ] ), 
+>  Transformation( [ 7, 6, 8, 7, 5, 6, 8, 7, 8, 9 ] ) );;
+gap> IsSynchronizingSemigroup(S, 10);
+false
+gap> Representative(MinimalIdeal(S));
+Transformation( [ 8, 7, 7, 8, 7, 7, 7, 8, 7, 8 ] )</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -1041,9 +702,8 @@ Transformation( [ 7, 7, 8, 7, 7, 7, 8, 7, 8, 7 ] )</Example>
     <Prop Name="IsZeroGroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description> 
-      <C>IsZeroGroup</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is 
-      a zero group and <K>false</K> if it is not.<P/>
+      <C>IsZeroGroup</C> returns <K>true</K> if the semigroup 
+      <A>S</A> is a zero group and <K>false</K> if it is not.<P/>
 
       A semigroup <C>S</C> is a <E>zero group</E> if there exists an 
       element <C>z</C> in <C>S</C> such that <C>S</C> without <C>z</C> is a
@@ -1067,9 +727,8 @@ true</Example>
     <Prop Name="IsZeroRectangularBand" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsZeroRectangularBand</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is a zero
-      rectangular band and <K>false</K> if it is not.<P/>
+      <C>IsZeroRectangularBand</C> returns <K>true</K> if the semigroup 
+      <A>S</A> is a zero rectangular band and <K>false</K> if it is not.<P/>
 
       A semigroup is a <E>zero rectangular band</E> if it is zero simple and
       &H;-trivial; see also <Ref Prop="IsZeroSimpleSemigroup"/>
@@ -1101,9 +760,8 @@ false</Example>
     <Prop Name="IsZeroSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description> 
-      <C>IsZeroSemigroup</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is 
-      a zero semigroup and <K>false</K> if it is not.<P/>
+      <C>IsZeroSemigroup</C> returns <K>true</K> if the semigroup 
+      <A>S</A> is a zero semigroup and <K>false</K> if it is not.<P/>
 
       A semigroup <C>S</C> is a <E>zero semigroup</E> if there exists an 
       element <C>z</C> in <C>S</C> such that <C>x*y=z</C> for all <C>x,y</C>
@@ -1133,9 +791,8 @@ Transformation( [ 8, 8, 8, 8, 5, 8, 8, 8 ] )</Example>
     <Prop Name="IsZeroSimpleSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsZeroSimpleSemigroup</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is
-      a zero simple semigroup and <K>false</K> if it is not.<P/>
+      <C>IsZeroSimpleSemigroup</C> returns <K>true</K> if the semigroup
+      <A>S</A> is a zero simple semigroup and <K>false</K> if it is not.<P/>
 
       A semigroup is a <E>zero simple semigroup</E> if it has no two-sided 
       ideals other than itself and the set containing the zero element; see
@@ -1163,279 +820,5 @@ false</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
-
-<#GAPDoc Label="MinimalIdeal">
-  <ManSection>
-    <Attr Name="MinimalIdeal" Arg="S"/>
-    <Returns> 
-    The minimal ideal of a semigroup. 
-    </Returns>
-    <Description>
-    The minimal ideal of a semigroup is the least ideal with respect to
-    containment. <P/> 
-
-    Currently, <C>MinimalIdeal</C> returns a semigroup with as
-    many generators as elements. There are plans to improve this in future
-    versions of &Semigroups;. <P/>
-
-    Note that <C>MinimalIdeal</C> is significantly faster than finding the
-    &D;-class with minimum rank representative (which is also
-    the minimal ideal). 
-
-    See also <Ref Attr="PartialOrderOfDClasses"/> and 
-    <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>. 
-    
-    <Example>
-    gap> S:=Semigroup( Transformation( [ 3, 4, 1, 3, 6, 3, 4, 6, 10, 1 ] ), 
-    > Transformation( [ 8, 2, 3, 8, 4, 1, 3, 4, 9, 7 ] ));;
-    gap> MinimalIdeal(S);
-    &lt;simple transformation semigroup on 10 pts with 5 generators>
-    gap> Elements(MinimalIdeal(S));
-    [ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ), 
-      Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] ), 
-      Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] ), 
-      Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 ] ), 
-      Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] ) ]
-    gap> f:=Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] );;
-    gap> D:=DClass(S, f);
-    {Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ] )}
-    gap> ForAll(GreensDClasses(S), x-> IsGreensLessThanOrEqual(D, x));
-    true
-    gap> S:=POI(10);                  
-    &lt;inverse partial perm monoid on 10 pts with 10 generators>
-    gap> MinimalIdeal(S);
-    &lt;partial perm group on 0 pts with 1 generator>
-&lt;inverse semigroup with 1 generator></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-    
-<#GAPDoc Label="MultiplicativeZero">
-  <ManSection>
-    <Attr Name="MultiplicativeZero" Arg="S"/>
-    <Returns>
-     The zero element of a semigroup.
-    </Returns>
-    <Description>
-      <C>MultiplicativeZero</C> returns the zero element of the semigroup
-      <A>S</A> of transformations or partial permutations if it has one and
-      <K>fail</K> if it does not. 
-      See also <Ref Attr="MultiplicativeZero" BookName="ref"/>.
-      <Example>
-      gap> S:=Semigroup( Transformation( [ 1, 4, 2, 6, 6, 5, 2 ] ), 
-      > Transformation( [ 1, 6, 3, 6, 2, 1, 6 ] ));;
-      gap> MultiplicativeZero(S);
-      Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
-      gap> S:=Semigroup(Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ), 
-      > Transformation( [ 3, 5, 7, 2, 5, 6, 3, 8 ] ), 
-      > Transformation( [ 6, 7, 4, 1, 4, 1, 6, 2 ] ), 
-      > Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ));;
-      gap> MultiplicativeZero(S);
-      fail
-      gap> S:=InverseSemigroup( PartialPerm( [ 1, 3, 4 ], [ 5, 3, 1 ] ),
-      > PartialPerm( [ 1, 2, 3, 4 ], [ 4, 3, 1, 2 ] ),
-      > PartialPerm( [ 1, 3, 4, 5 ], [ 2, 4, 5, 3 ] ) );;
-      gap> MultiplicativeZero(S);
-      &lt;empty partial perm>
-&lt;empty mapping></Example> 
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="SmallGeneratingSet">
-<ManSection>
-  <Attr Name="SmallGeneratingSet" Arg="S"/>
-  <Returns>A small generating set for a semigroup.</Returns>
-    <Description>
-      <C>SmallGeneratingSet</C> returns a relatively small generating subset
-      of the set of generators of the semigroup <A>S</A> of transformations or
-      partial permutations; see <Ref Func="Generators"/>. If the number of
-      generators for <A>S</A> is already relatively small, then this function
-      will often return the original generating set.<P/> 
-
-      As neither irredundancy, nor minimal length are proven,
-    <C>SmallGeneratingSet</C> usually returns an answer  much faster than
-    <Ref Oper="IrredundantGeneratingSubset"/>. It can be used whenever a
-    small generating set is desired which does not necessarily needs to be
-    optimal. <C>SmallGeneratingSet</C> works particularly well for inverse
-    semigroups of partial permutations.<P/>
-    
-    Note that <C>SmallGeneratingSet</C> may return different
-    results in different &GAP; sessions.
-
-      <Log>
-gap> S:=Semigroup( Transformation( [ 1, 2, 3, 2, 4 ] ), 
-> Transformation( [ 1, 5, 4, 3, 2 ] ),
-> Transformation( [ 2, 1, 4, 2, 2 ] ), Transformation( [ 2, 4, 4, 2, 1 ] ),
-> Transformation( [ 3, 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 3, 4, 1 ] ),
-> Transformation( [ 4, 4, 3, 3, 5 ] ), Transformation( [ 5, 1, 5, 5, 3 ] ),
-> Transformation( [ 5, 4, 3, 5, 2 ] ), Transformation( [ 5, 5, 4, 5, 5 ] ) );;
-gap> SmallGeneratingSet(S);                  
-[ Transformation( [ 1, 5, 4, 3, 2 ] ), Transformation( [ 3, 2, 3, 4, 1 ] ), 
-  Transformation( [ 5, 4, 3, 5, 2 ] ), Transformation( [ 1, 2, 3, 2, 4 ] ), 
-  Transformation( [ 4, 4, 3, 3, 5 ] ) ]
-gap> S:=RandomInverseMonoid(10000,10);;
-gap> SmallGeneratingSet(S);
-[ [ 1 .. 10 ] -> [ 3, 2, 4, 5, 6, 1, 7, 10, 9, 8 ], 
-  [ 1 .. 10 ] -> [ 5, 10, 8, 9, 3, 2, 4, 7, 6, 1 ], 
-  [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ] -> [ 1, 6, 4, 8, 2, 10, 7, 3, 9 ] ]</Log>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="PrimitiveIdempotents">
-<ManSection>
-  <Attr Name="PrimitiveIdempotents" Arg="S"/>
-  <Returns>A list of idempotent partial permutations.</Returns>
-  <Description>
-    An idempotent in an inverse semigroup <A>S</A> is <E>primitive</E> if it is
-    non-zero and minimal with respect to the 
-    <Ref Attr="NaturalPartialOrder" BookName="ref"/>
-    on <A>S</A>. <C>PrimitiveIdempotents</C> returns the list of primitive
-    idempotents in the inverse semigroup of partial permutations <A>S</A>. 
-    <Example>
-    gap> S:= InverseMonoid(
-    > PartialPerm( [ 1 ], [ 4 ] ),
-    > PartialPerm( [ 1, 2, 3 ], [ 2, 1, 3 ] ),
-    > PartialPerm( [ 1, 2, 3 ], [ 3, 1, 2 ] ) );;
-    gap> MultiplicativeZero(S);
-    &lt;empty partial perm>
-    gap> PrimitiveIdempotents(S);
-    [ &lt;identity partial perm on [ 4 ]>, &lt;identity partial perm on [ 1 ]>, 
-      &lt;identity partial perm on [ 2 ]>, &lt;identity partial perm on [ 3 ]> ]
-  &lt;identity on [ 3 ]> ]</Example>
-  </Description>
-</ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="PrincipalFactor">
-<ManSection>
-  <Attr Name="PrincipalFactor" Arg="D"/>
-  <Returns>A Rees matrix semigroup.</Returns>
-  <Description> 
-    <C>PrincipalFactor(<A>D</A>)</C> is just shorthand for
-    <C>Range(InjectionPrincipalFactor(<A>D</A>))</C>; see
-    <Ref Oper="InjectionPrincipalFactor"/> for more details. 
-  </Description>
-</ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="WagnerPrestonRepresentation">
-<ManSection>
-  <Func Name="WagnerPrestonPresentation" Arg="S"/>
-  <Returns>
-    An inverse semigroup of partial permutations.
-  </Returns>
-  <Description>
-    <C>WagnerPrestonRepresentation</C> returns the inverse semigroup of 
-    partial permutations using the algorithm in the Wagner Preston
-    Representation Theorem on the inverse semigroup of partial permutations,
-    <A>S</A>.
-  </Description>
-</ManSection>
-<Example>
-gap> S:=SymmetricInverseSemigroup(2);
-  &lt;inverse semigroup with 2 generators>
-gap> Elements(S);
-  [ &lt;empty mapping>, &lt;identity on [ 1 ]>, [ 1 ] -> [ 2 ], [ 2 ] -> [ 1 ],
-  &lt;identity on [ 2 ]>, &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 2, 1 ] ]
-gap> T:=WagnerPrestonRepresentation(S);
-  &lt;inverse semigroup with 2 generators>
-gap> Elements(T);
-  [ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2, 4 ]>, 
-  [ 1, 2, 4 ] -> [ 1, 3 .. 5 ], [ 1, 3 .. 5 ] -> [ 1, 2, 4 ], 
-  &lt;identity on [ 1, 3 .. 5 ]>, &lt;identity on [ 1 .. 7 ]>, 
-  [ 1 .. 7 ] -> [ 1, 3, 2, 5, 4, 7, 6 ] ]
-</Example>          
-<#/GAPDoc>
-
-<#GAPDoc Label="IsMajorantlyClosed">
-<ManSection>
-<Attr Name="IsMajorantlyClosed" Arg="S, T"/>
-<Returns>
-  <K>true</K> or <K>false</K>.
-</Returns>
-<Description>
-  <C>IsMajorantlyClosed</C> determines whether the subset <A>T</A> of the
-  inverse semigroup <A>S</A> is majorantly closed in <A>S</A>. We say 
-  <A>T</A> is majorantly closed in <A>S</A> if it contains all
-  elements of <A>S</A> that are greater than any given element of 
-  <A>T</A>.
-</Description>
-</ManSection>
-<Example>
-gap> S:=SymmetricInverseSemigroup(2);
-&lt;inverse semigroup with 2 generators>
-gap> T:=[Elements(S)[2]];
-&lt;identity on [ 1 ]>
-gap> IsMajorantlyClosed(S,T);
-false
-gap> U:=[Elements(S)[2],Elements(S)[6]];
-[&lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]> ]
-gap> IsMajorantlyClosed(S,U);           
-true
-</Example>
-<#/GAPDoc>
-
-<#GAPDoc Label="IsMajorantlyClosedInverseSubsemigroup">
-<ManSection>
-<Attr Name="IsMajorantlyClosedInverseSubsemigroup" Arg="S,T"/>
-<Returns>
-  <K>true</K> or <K>false</K>
-</Returns>
-<Description>
-  <C>IsMajorantlyClosedInverseSubsemigroup</C> determines whether a subset
-  <A>T</A> of an inverse semigroup <A>S</A> is both an inverse semigroup and is
-  majorantly closed in <A>S</A>. See <Ref Func="IsMajorantlyClosed"/>.
-</Description>
-</ManSection>
-<Example>
-gap> S:=SymmetricInverseSemigroup(2);
-&lt;inverse semigroup with 2 generators>
-gap> T:=[Elements(S)[2]];
-&lt;identity on [ 1 ]>
-gap> IsMajorantlyClosedInverseSubsemigroup(S,T);
-false
-gap> U:=[Elements(S)[2],Elements(S)[6],Elements(S)[7]];
-[ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 2, 1 ] ]
-gap> IsMajorantlyClosedInverseSubsemigroup(S,U);
-false
-gap> IsMajorantlyClosedInverseSubsemigroup(S,S);
-true
-</Example>
-<#/GAPDoc>
-
-
-<#GAPDoc Label="MajorantClosure">
-<ManSection>
-<Func Name="MajorantClosure" Arg="S,T"/>
-  <Returns>
-    A majorantly closed subset of <A>S</A>
-  </Returns>
-  <Description>
-    <C>IsMajorantlyClosedInverseSubsemigroup</C> returns the subset of 
-    the inverse semigroup <A>S</A>
-    containing only elements of <A>S</A> that are greater than or equal to
-    elements of the subset <A>T<A>.
-            majorantly closed in <A>S</A>. See <Ref Func="IsMajorantlyClosed"/>.
-          </Description>
-        </ManSection>
-        <Example>
-          gap> S:=SymmetricInverseSemigroup(2);
-          &lt;inverse semigroup with 2 generators>
-          gap> T:=[Elements(S)[2]];
-          &lt;identity on [ 1 ]>
-          gap> IsMajorantlyClosedInverseSubsemigroup(S,T);
-          false
-          gap> U:=[Elements(S)[2],Elements(S)[6],Elements(S)[7]];
-          [ &lt;identity on [ 1 ]>, &lt;identity on [ 1, 2 ]>, [ 1, 2 ] -> [ 2,
-          1 ] ]
-          gap> IsMajorantlyClosedInverseSubsemigroup(S,U);
-          false
-          gap> IsMajorantlyClosedInverseSubsemigroup(S,S);
-          true
-</Example>
-<#/GAPDoc>
-
 
 #EOF

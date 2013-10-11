@@ -1,7 +1,6 @@
 <TitlePage>
   <Title>&Semigroups;</Title>
-  <Subtitle>Computing with Semigroups of Transformations and Partial
-    Permutations</Subtitle>
+  <Subtitle>Method for semigroups</Subtitle>
   <Version>Version &VERSION;</Version>
 
   <Author>J. D. Mitchell
@@ -10,31 +9,28 @@
   </Author>
 
   <Copyright>&copyright; &COPYRIGHTYEARS; by J. D. Mitchell.<P/>
-
     &Semigroups; is free software; you can redistribute it and/or modify it
     under the terms of the <URL Text="GNU General Public License">
     http://www.fsf.org/licenses/gpl.html</URL> as published by the Free Software
     Foundation; either version 2 of the License, or (at your option) any later
     version.
-
   </Copyright>
 
   <Abstract>
-     The &Semigroups; package is a &GAP; package for computing with semigroups
-     of transformations and partial permutations. &Semigroups; contains more
-     efficient methods than those available in the GAP library (and in many
-     cases more efficient than any other software) for creating semigroups of
-     transformations and partial permutations, calculating their
-     Green's classes, size, elements, group of units, minimal ideal,
-     small generating sets, testing membership, finding the inverses of
-     a regular element, factorizing elements over the generators, and
-     many more. It is also possible to test if a semigroup satisfies a
-     particular property, such as if it is regular, simple, inverse,
-     completely regular, and a variety of further properties. Several
-     catalogues of examples are provided, such as generators for the
-     endomorphism monoids of every connected graph with at most 8 vertices,
-     and generators of the endomorphism monoids of the non-abelian groups with
-     order at most 64.
+    The &Semigroups; package is a &GAP; package containing methods for
+    semigroups, principally semigroups of transformations, partial
+    permutations or subsemigroups of regular Rees 0-matrix semigroups.
+    &Semigroups; contains more efficient methods than those available in the
+    &GAP; library (and in many cases more efficient than any other software)
+    for creating semigroups, calculating their Green's classes, size, elements,
+    group of units, minimal ideal, small generating sets, testing membership,
+    finding the inverses of a regular element, factorizing elements over the
+    generators, and many more. It is also possible to test if a semigroup
+    satisfies a particular property, such as if it is regular, simple, inverse,
+    completely regular, and a variety of further properties. <P/>
+
+    There are also functions to define and manipulate free inverse semigroups
+    and their elements.  
   </Abstract>
 
   <Acknowledgements>

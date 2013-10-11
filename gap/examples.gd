@@ -9,10 +9,8 @@
 ##
 
 DeclareOperation("DualSymmetricInverseSemigroup", [IsPosInt]);
-DeclareOperation("FullBinaryRelationSemigroup", [IsPosInt]);
 DeclareOperation("FullMatrixSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
-DeclareOperation("MonoidOfMultiplicationByN", [IsPosInt]);
 DeclareProperty("IsFullMatrixSemigroup", IsSemigroup);
 DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
 DeclareOperation("MunnSemigroup", [IsSemigroup]);
@@ -21,7 +19,12 @@ DeclareOperation("PartialTransformationSemigroup", [IsPosInt]);
 DeclareOperation("PartitionMonoid", [IsPosInt]);
 DeclareOperation("POI", [IsPosInt]);
 DeclareOperation("POPI", [IsPosInt]);
-DeclareOperation("PowerSemigroup", [IsGroup]);
 DeclareOperation("RegularBinaryRelationSemigroup", [IsPosInt]);
-DeclareSynonymAttr("RB", RegularBinaryRelationSemigroup);
-DeclareOperation("SingularSemigroup", [IsPosInt]);
+DeclareOperation("SingularTransformationSemigroup", [IsPosInt]);
+DeclareSynonym("SingularTransformationMonoid",
+SingularTransformationSemigroup);
+
+#not implemented or documented
+DeclareOperation("PowerSemigroup", [IsGroup]);
+DeclareOperation("FullBinaryRelationSemigroup", [IsPosInt]);
+DeclareOperation("MonoidOfMultiplicationByN", [IsPosInt]);

@@ -1,43 +1,25 @@
-<Chapter Label="green"><Heading>Determining the structure of a semigroup</Heading>
+<Chapter Label="green">
+  <Heading>
+    Determining the structure of a semigroup
+  </Heading>
 
   In this chapter we describe the functions in &Semigroups; for determining the
-  structure of a semigroup of transformations or partial permutations, in
-  particular for computing Green's classes and related properties of 
-  semigroups. 
+  structure of a semigroup, in particular for computing Green's classes and
+  related properties of semigroups. 
   
-  <Section><Heading>Expressing semigroup elements as words in
+  <Section><!--JDM properties/attributes chapter-->
+    <Heading>Expressing semigroup elements as words in
     generators</Heading>
-    In some cases it is possible to express the elements of a transformation
-    semigroup as a word in the generators. This section describes how to
-    accomplish this in &Semigroups;. <P/>
+    It is possible to express an element of a semigroup as a word in the
+    generators of that semigroup. This section describes how to accomplish this
+    in &Semigroups;. <P/>
 
-    Note that at present it is not possible to factorize elements in a
-    semigroup of partial permutations.
     <#Include Label="EvaluateWord">
     <#Include Label="Factorization">
   </Section>
-
-  <Section>
-  <Heading>Strongly connected components of orbits</Heading>
-    The following functions supplement the &Orb; package by providing methods
-    for computations related to the strongly connected components of an
-    orbit of a semigroup. <P/>
-
-    Please note that if any of the functions in this section is applied to an
-    open orbit, then the orbit is enumerated before anything else. It is not
-    possible to calculate the strongly connected components of an orbit of a
-    semigroup acting on a set until the entire orbit has been found.
-
-    <#Include Label="OrbSCC">
-    <#Include Label="OrbSCCLookup">
-    <#Include Label="OrbSCCTruthTable">
-    <#Include Label="ReverseSchreierTreeOfSCC">
-    <#Include Label="SchreierTreeOfSCC">
-    <#Include Label="TraceSchreierTreeOfSCCBack">
-    <#Include Label="TraceSchreierTreeOfSCCForward">
-  </Section>
   
   <Section><Heading>Creating Green's classes</Heading>
+    <!--JDM green's classes and relations chapter-->
     <#Include Label="XClassOfYClass">
     <#Include Label="GreensXClassOfElement">
     <#Include Label="GreensXClassOfElementNC">
@@ -45,6 +27,7 @@
   </Section>
   
   <Section><Heading>Iterators and enumerators of classes and representatives
+    <!--JDM green's classes and relations chapter-->
   </Heading>
     <#Include Label="GreensXClasses">
     <#Include Label="IteratorOfXClassReps"> 
@@ -53,6 +36,7 @@
   </Section>
 
   <Section><Heading>Attributes and properties directly related to Green's classes</Heading>
+    <!--JDM green's classes and relations chapter-->
     <#Include Label="\&lt;">
     <#Include Label="InjectionPrincipalFactor">
     <#Include Label="PrincipalFactor">
@@ -61,9 +45,21 @@
     <#Include Label="NrXClasses">
     <#Include Label="PartialOrderOfDClasses">
     <#Include Label="SchutzenbergerGroup">
+    <#Include Label="MinimalDClass">
+    <#Include Label="MaximalDClasses">
+    <#Include Label="StructureDescriptionSchutzenbergerGroups">
+    <#Include Label="StructureDescriptionMaximalSubgroups">
+    <#Include Label="MultiplicativeNeutralElement">
+    <#Include Label="IsGreensClassNC">
+    <#Include Label="IsTransformationSemigroupGreensClass">
+    <#Include Label="IsPartialPermSemigroupGreensClass">
+    <#Include Label="StructureDescription">
+    <#Include Label="IsGreensDLeq">
+
   </Section>
 
   <Section><Heading>Further attributes of semigroups</Heading>
+    <!--JDM attributes and properties chapter-->
     In this section we describe the attributes <Ref Sect="Attributes"
       BookName="ref"/> of arbitrary semigroups of transformations or partial
     permutations  that can be found using &Semigroups;. <P/>
@@ -76,31 +72,28 @@
     <#Include Label="IrredundantGeneratingSubset">
     <#Include Label="MinimalIdeal">
     <#Include Label="MultiplicativeZero">
-    <#Include Label="PrimitiveIdempotents">
     <#Include Label="Random">
     <#Include Label="SmallGeneratingSet"> 
+    <#Include Label="MaximalSubsemigroups"> 
+    <#Include Label="ComponentRepsOfTransformationSemigroup">
 
   </Section>
-  
+
   <Section><Heading>Further properties of semigroups</Heading>
+    <!--JDM attributes and properties chapter-->
     In this section we describe several properties 
     <Ref Sect="Properties" BookName="ref"/> of an
     arbitrary semigroup of transformations or partial permutations 
     that can be determined using &Semigroups;.
     <#Include Label="IsBand">
     <#Include Label="IsBlockGroup">
-    <#Include Label="IsBrandtSemigroup">
-    <#Include Label="IsCliffordSemigroup">
     <#Include Label="IsCommutativeSemigroup">
     <#Include Label="IsCompletelyRegularSemigroup">
-    <#Include Label="IsFactorisableSemigroup">
     <#Include Label="IsGroupAsSemigroup">
     <#Include Label="IsIdempotentGenerated">
-    <#Include Label="IsInverseSemigroup">
     <#Include Label="IsLeftSimple">
     <#Include Label="IsLeftZeroSemigroup">
     <#Include Label="IsMonogenicSemigroup">
-    <#Include Label="IsMonogenicInverseSemigroup">
     <#Include Label="IsMonoidAsSemigroup">
     <#Include Label="IsOrthodoxSemigroup">
     <#Include Label="IsRectangularBand">
@@ -116,9 +109,45 @@
     <#Include Label="IsZeroSimpleSemigroup">
   </Section>
 
-  <Section><Heading>Changing the representation of a semigroup</Heading>
-    <#Include Label="IsomorphismPermGroup">
-    <#Include Label="IsomorphismTransformationMonoid">
+  <Section><Heading>Properties and attributes of inverse semigroups</Heading>
+    <!--JDM attributes and properties of inverse semigroups chapter-->
+    In this section we describe several properties and attributes 
+    <Ref Sect="Properties" BookName="ref"/> of inverse semigroup of
+    transformations or partial permutations that can be determined using
+    &Semigroups;. The functions 
+    <Ref Oper="IsJoinIrreducible"/>,
+    <Ref Oper="IsMajorantlyClosed"/>, 
+    <Ref Attr="JoinIrreducibleDClasses"/>,
+    <Ref Oper="MajorantClosure"/>, 
+    <Ref Oper="Minorants"/>, 
+    <Ref Oper="RightCosetsOfInverseSemigroup"/>, 
+    <Ref Attr="SmallerDegreePartialPermRepresentation"/>, and 
+    <Ref Attr="VagnerPrestonRepresentation"/> were written by 
+    Wilf Wilson and Robert Hancock. 
+    
+    <#Include Label="IsCliffordSemigroup">
+    <#Include Label="IsBrandtSemigroup">
+    <#Include Label="IsFactorisableSemigroup">
+    <#Include Label="IsJoinIrreducible">
+    <#Include Label="IsMajorantlyClosed">
+    <#Include Label="IsMonogenicInverseSemigroup">
+    <#Include Label="JoinIrreducibleDClasses">
+    <#Include Label="MajorantClosure">
+    <#Include Label="Minorants">
+    <#Include Label="PrimitiveIdempotents">
+    <#Include Label="RightCosetsOfInverseSemigroup">
+    <#Include Label="SameMinorantsSubgroup">
+    <#Include Label="SmallerDegreePartialPermRepresentation">
+    <#Include Label="VagnerPrestonRepresentation">
+
+  </Section>
+
+  <Section><Heading>Visualising the &D;-class structure</Heading>
+    In this section, we describe a function for creating a picture of the 
+    &D;-class structure of a semigroup of transformations, partial
+    permutations, or a subsemigroup of a Rees 0-matrix semigroup.
+    <#Include Label="DotDClasses"/>
+ 
   </Section>
 </Chapter>
 

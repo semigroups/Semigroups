@@ -131,7 +131,7 @@ gap> for i in [2..100] do
 > s:=ClosureInverseSemigroup(s, gens[i]);
 > od;
 gap> s;
-<inverse partial perm semigroup on 10 pts with 54 generators>
+<inverse partial perm semigroup on 10 pts with 53 generators>
 gap> Size(s);
 89616897
 gap> s:=InverseMonoid(gens);
@@ -145,7 +145,7 @@ gap> for i in [2..100] do
 > s:=ClosureInverseSemigroup(s, gens[i]);
 > od;
 gap> s;
-<inverse partial perm semigroup on 10 pts with 55 generators>
+<inverse partial perm semigroup on 10 pts with 54 generators>
 gap> Size(s);
 89616898
 gap> NrDClasses(s);
@@ -197,17 +197,17 @@ gap> Size(Range(iso));
 gap> s:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
 <inverse partial perm semigroup on 4 pts with 2 generators>
 gap> IsomorphismPermGroup(s);
-MappingByFunction( <inverse partial perm semigroup on 4 pts
- with 2 generators>, Group([ (1,2,3,4), (1,
+MappingByFunction( <partial perm group on 4 pts with 2 generators>
+ , Group([ (1,2,3,4), (1,
 2) ]), <Attribute "AsPermutation">, function( x ) ... end )
 gap> iso:=last;
-MappingByFunction( <inverse partial perm semigroup on 4 pts
- with 2 generators>, Group([ (1,2,3,4), (1,
+MappingByFunction( <partial perm group on 4 pts with 2 generators>
+ , Group([ (1,2,3,4), (1,
 2) ]), <Attribute "AsPermutation">, function( x ) ... end )
 gap> inv:=InverseGeneralMapping(iso);
 MappingByFunction( Group([ (1,2,3,4), (1,
-2) ]), <inverse partial perm semigroup on 4 pts
- with 2 generators>, function( x ) ... end, <Attribute "AsPermutation"> )
+2) ]), <partial perm group on 4 pts with 2 generators>
+ , function( x ) ... end, <Attribute "AsPermutation"> )
 gap> f:=Random(s);
 (1,2)(3)(4)
 gap> f^iso;       
@@ -226,6 +226,26 @@ gap> SetInfoLevel(InfoWarning, InfoLevelInfoWarning);;
 gap> SetInfoLevel(InfoSemigroups, InfoLevelInfoSemigroups);;
 gap> Unbind(InfoLevelInfoSemigroups);; Unbind(InfoLevelInfoWarning);;
 gap> Unbind(s);; Unbind(gens);;
+
+#
+gap> S := FreeInverseSemigroup(3);
+<free inverse semigroup on the generators [ x1, x2, x3 ]>
+gap> Size(S);
+infinity
+gap> x := S.1;
+x1
+gap> y := S.2;
+x2
+gap> z := S.3;
+x3
+gap> u := x^5 * y^3 * z;
+x1*x1*x1*x1*x1*x2*x2*x2*x3
+gap> u^-1;
+x3^-1*x2^-1*x2^-1*x2^-1*x1^-1*x1^-1*x1^-1*x1^-1*x1^-1
+gap> x^2 * y = x^2 * y;
+true
+gap> x * x^-1 = y * y^-1;
+false
 
 #
 gap> STOP_TEST( "Semigroups package: semigroups.tst", 10000);

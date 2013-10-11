@@ -10,33 +10,82 @@
 
 #
 
-InstallMethod(MagmaIdealByGenerators,
-"for an acting semigroup and collection of its elements", 
-IsIdenticalObj, 
-[IsActingSemigroup, IsAssociativeElementWithActionCollection],
-SemigroupIdealByGenerators);
+InstallMethod(\., "for a semigroup ideal with generators and pos int",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal, IsPosInt],
+function(S, n)
+  S:=GeneratorsOfSemigroupIdeal(S);
+  n:=NameRNam(n);
+  n:=Int(n);
+  if n=fail or Length(S)<n then
+    Error("usage: the second argument <n> should be a positive integer\n",
+     "not greater than the number of generators of the semigroup <S> in\n", 
+     "the first argument,");
+    return;
+  fi;
+  return S[n];
+end);
 
-#
+# a convenience, similar to the functions <Semigroup>, <Monoid>, etc
 
-InstallMethod(SemigroupIdealByGenerators,
-"for an acting semigroup and collection of its elements", 
-IsIdenticalObj, 
-[IsActingSemigroup, IsAssociativeElementWithActionCollection],
-function( M, gens )
-local S;
-    
-    S:= Objectify( NewType( FamilyObj( gens ), IsMagmaIdeal and
-     IsAttributeStoringRep and IsActingSemigroup ),
-     rec(opts:=SemigroupsOptionsRec));
-    
-    SetGeneratorsOfMagmaIdeal( S, AsList( gens ) );
-    SetIsSemigroupIdeal(S, true);
-    SetParent(S, M);
+InstallGlobalFunction(SemigroupIdeal, 
+function( arg )
+  local out, i;
 
-    return S;
-end );
+  if not IsSemigroup(arg[1]) then 
+    Error("usage: the first argument should be a semigroup,");
+    return;
+  fi;
 
-# JDM move to lib
+  if Length(arg)=1 then 
+    Error("usage: there must be a second argument, which specifies\n",
+    "the ideal you are trying to create,");
+    return;
+  fi;
+
+  # special case for matrices, because they may look like lists
+  if Length( arg ) = 2 and IsMatrix( arg[2] )  then
+    return SemigroupIdealByGenerators(arg[1],  [arg[2]]);
+
+  # list of generators
+  elif Length(arg)=2 and IsList(arg[2]) and 0 < Length(arg[2]) then
+    return SemigroupIdealByGenerators(arg[1], arg[2]);
+  
+  # generators and collections of generators
+  elif IsAssociativeElement(arg[2]) 
+   or IsAssociativeElementCollection(arg[2]) then
+    out:=[];
+    for i in [2..Length(arg)] do
+      if IsAssociativeElement(arg[i]) then
+        Add(out, arg[i]);
+      elif IsAssociativeElementCollection(arg[i]) then
+        if HasGeneratorsOfSemigroup(arg[i]) then
+          Append(out, GeneratorsOfSemigroup(arg[i]));
+        elif HasGeneratorsOfSemigroupIdeal(arg[i]) then 
+          Append(out, GeneratorsOfSemigroupIdeal(arg[i]));
+        elif IsList(arg[i]) then 
+          Append(out, arg[i]);
+        else 
+          Append(out, AsList(arg[1])); #JDM should use this in Semigroup too
+        fi;
+      #so that we can pass the options record in the Semigroups package 
+      #elif i=Length(arg[2]) and IsRecord(arg[2][i]) then
+      #  return SemigroupIdealByGenerators(out, arg[2][i]);
+      else
+        Error( "usage: the second argument should be some\n",
+        "combination of generators, lists of generators, or semigroups,");
+        return;
+      fi;
+    od;
+    return SemigroupIdealByGenerators(arg[1], out);
+  # no argument given, error
+  else
+    Error( "usage: the second argument should be some\n",
+    "combination of generators, lists of generators, or semigroups,");
+    return;
+  fi;
+end);
+
+# JDM move to lib?
 
 InstallMethod(\=, "for semigroup ideals", 
 [IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal, 
@@ -64,137 +113,7 @@ InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsActingSemigroup);
 InstallMethod(Representative, "for a semigroup ideal", 
 [IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
 function(I)
-return Representative(GeneratorsOfMagmaIdeal(I));
+  return Representative(GeneratorsOfMagmaIdeal(I));
 end);
 
-#
-
-InstallMethod(SemigroupData, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal],
-function(I)
-  local gens, nrgens, rep, data, ht, orb, nr, i, graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, schreierpos, schreiergen, schreiermult, lambda, lambdaact, lambdaperm, rho, lambdarhoht, o, oht, scc, lookup, htadd, htvalue, lamx, pos, m, y, rhoy, val, x, schutz, tmp, old, stopper, n;
-
-  gens:=GeneratorsOfSemigroup(ParentAttr(I));
-  nrgens:=Length(gens);
-  rep:=Representative(I);
-
-  data:=rec();
-
-  ht:=HTCreate(rep, rec(treehashsize:=I!.opts.hashlen.L));
-  orb:=[EmptyPlist(0)];
-  nr:=1;
-  graph:=[EmptyPlist(Length(gens))];
-  reps:=[];
-  repslookup:=[];
-  orblookup1:=[];
-  orblookup2:=[];
-  repslens:=[];
-  lenreps:=0;
-  schreierpos:=[fail];
-  schreiergen:=[fail];
-  schreiermult:=[fail];
-
-  lambda:=LambdaFunc(I);
-  lambdaact:=LambdaAct(I);
-  lambdaperm:=LambdaPerm(I);
-  rho:=RhoFunc(I);
-  lambdarhoht:=LambdaRhoHT(I);
-
-  o:=LambdaOrb(I);
-  oht:=o!.ht;
-  scc:=OrbSCC(o);
-  lookup:=o!.scc_lookup;
-
-  if IsBoundGlobal("ORBC") then
-    htadd:=HTAdd_TreeHash_C;
-    htvalue:=HTValue_TreeHash_C;
-  else
-    htadd:=HTAdd;
-    htvalue:=HTValue;
-  fi;
-  
-  for x in GeneratorsOfMagmaIdeal(I) do 
-    lamx:=lambda(x);
-    pos:=htvalue(oht, lamx);
-    m:=lookup[pos];
-    if pos<>scc[m][1] then
-      y:=x*LambdaOrbMult(o, m, pos)[2];
-    else
-      y:=x;
-    fi;
-    rhoy:=[m];
-    Append(rhoy, rho(y));;
-    val:=htvalue(lambdarhoht, rhoy);
-    if val=fail then  #new rho value, and hence new R-rep
-      lenreps:=lenreps+1;
-      htadd(lambdarhoht, rhoy, lenreps);
-      nr:=nr+1;
-      reps[lenreps]:=[y];
-      repslookup[lenreps]:=[nr];
-      orblookup1[nr]:=lenreps;
-      orblookup2[nr]:=1;
-      repslens[lenreps]:=1;
-      x:=[I, m, o, y, false, nr];
-      # semigroup, lambda orb data, lambda orb, rep, index in orbit,
-      # position of reps with equal lambda-rho value
-
-    else              # old rho value
-      x:=[I, m, o, y, false, nr+1];
-
-      # JDM expand!
-      schutz:=LambdaOrbStabChain(o, m);
-
-      #check membership in schutz gp via stab chain
-
-      if schutz=true then # schutz gp is symmetric group
-        continue;
-      else
-        if schutz=false then # schutz gp is trivial
-          tmp:=htvalue(ht, y);
-          if tmp<>fail then
-            continue;
-          fi;
-        else # schutz gp neither trivial nor symmetric group
-          old:=false;
-          for n in [1..repslens[val]] do
-            if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=() then
-              old:=true;
-              break;
-            fi;
-          od;
-          if old then
-            continue;
-          fi;
-        fi;
-        nr:=nr+1;
-        repslens[val]:=repslens[val]+1;
-        reps[val][repslens[val]]:=y;
-        repslookup[val][repslens[val]]:=nr;
-        orblookup1[nr]:=val;
-        orblookup2[nr]:=repslens[val];
-      fi;
-    fi;
-    orb[nr]:=x;
-    schreierpos[nr]:=fail; 
-    schreiergen[nr]:=fail; # by multiplying by gens[j]
-    schreiermult[nr]:=fail; # and ends up in position <pos> of 
-                           # its lambda orb
-    htadd(ht, y, nr);
-    graph[nr]:=EmptyPlist(nrgens);
-  od;
-
-  data:=rec(gens:=gens,
-     ht:=ht, pos:=1, graph:=graph,
-     reps:=reps, repslookup:=repslookup, orblookup1:=orblookup1, 
-     orblookup2:=orblookup2,
-     lenreps:=lenreps, orbit:=orb, repslens:=repslens,
-     schreierpos:=schreierpos, schreiergen:=schreiergen, 
-     schreiermult:=schreiermult,
-     genstoapply:=[1..nrgens], stopper:=false);
-
-  Objectify(NewType(FamilyObj(I), IsSemigroupData and IsAttributeStoringRep),
-   data);
-
-  SetParent(data, I);
-  return data;
-end);
+#EOF

@@ -17,7 +17,7 @@ gap> SemigroupsStartTest();
 
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/misc.semigroups.gz");;
-gap> semis:=List([1..22], i-> Semigroup(ReadSemigroups(file, i)));;
+gap> semis:=List([1..22], i-> Semigroup(ReadGenerators(file, i)));;
 gap> List([1..15], i-> IsCompletelyRegularSemigroup(semis[i]));   
 [ false, true, false, false, false, true, true, true, true, true, false, 
   false, false, false, true ]
@@ -304,7 +304,7 @@ gap> IsLeftZeroSemigroup(i);
 false
 gap> IsRightZeroSemigroup(i);
 true
-gap> IsSynchronizingSemigroup(i);
+gap> IsSynchronizingSemigroup(i, 4);
 true
 
 #
@@ -498,7 +498,7 @@ gap> s:=FullTransformationSemigroup(3);;
 gap> j:=0;;
 gap> for f in s do
 > for g in s do
-> if IsSynchronizingSemigroup(Semigroup(f,g)) then j:=j+1; fi;
+> if IsSynchronizingSemigroup(Semigroup(f,g), 3) then j:=j+1; fi;
 > od;
 > od;
 gap> j;
@@ -555,7 +555,7 @@ gap> [ Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] ),
 >   Transformation( [ 5, 5, 7, 5, 7, 3, 7, 7, 5 ] ) ];;
 gap> s:=Semigroup(last);;
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 
 ##
 #gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
@@ -654,7 +654,7 @@ IdentityTransformation()
 #
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/graph8c.semigroups.gz");;
-gap> ReadSemigroups(file, 1303);;
+gap> ReadGenerators(file, 1303);;
 gap> s:=Semigroup(last);;
 gap> t:=IdempotentGeneratedSubsemigroup(s);;
 gap> Size(t);

@@ -37,13 +37,13 @@ gap> IsSimpleSemigroup(s);
 false
 
 #
-gap> s:=SingularSemigroup(6);
+gap> s:=SingularTransformationSemigroup(6);
 <regular transformation semigroup on 6 pts with 30 generators>
 gap> Size(s);
 45936
 
 #
-gap> s:=Semigroup(IdentityTransformation());;
+gap> s:=Semigroup(IdentityTransformation);;
 gap> LambdaOrb(s);
 <open orbit, 1 points with Schreier tree with log>
 gap> Enumerate(last);
@@ -166,7 +166,7 @@ gap> t:=ClosureSemigroup(s, [Transformation( [ 4, 4, 3, 1, 5, 6, 3, 8 ] )]);
 gap> Size(t)=Size(Semigroup(Generators(t)));
 true
 
-#gap> s:=Semigroup(ReadSemigroups("pkg/semigroups/examples/graph9c.semigroups.gz", 100013));;
+#gap> s:=Semigroup(ReadGenerators("pkg/semigroups/examples/graph9c.semigroups.gz", 100013));;
 gap> s:=Semigroup([ Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ), 
 >  Transformation( [ 1, 2, 3, 4, 5, 6, 7, 9, 8 ] ), 
 >  Transformation( [ 7, 2, 8, 4, 5, 6, 1, 9, 8 ] ), 
@@ -291,7 +291,7 @@ gap> InversesOfSemigroupElement(FullTransformationSemigroup(12),f);
 
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/munn.semigroups.gz");;
-gap>  ReadSemigroups(file, 1376);
+gap>  ReadGenerators(file, 1376);
 [ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]>, 
   <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 9 ]>, 
   <identity partial perm on [ 1, 2, 3, 4, 5, 6, 9 ]>, 
@@ -388,6 +388,91 @@ gap> [ Size( s ), Size( AsSet( s ) ) ];
 gap> Elements(s); 
 [ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2, 3 ]>, 
   (1)(2,3) ]
+
+#
+gap> S := FreeInverseSemigroup(3);
+<free inverse semigroup on the generators [ x1, x2, x3 ]>
+gap> Size(S);
+infinity
+gap> x := S.1;
+x1
+gap> y := S.2;
+x2
+gap> z := S.3;
+x3
+gap> u := x^5 * y^3 * z;
+x1*x1*x1*x1*x1*x2*x2*x2*x3
+gap> u^-1;
+x3^-1*x2^-1*x2^-1*x2^-1*x1^-1*x1^-1*x1^-1*x1^-1*x1^-1
+gap> x^2 * y = x^2 * y;
+true
+gap> x * x^-1 = y * y^-1;
+false
+
+# Issue 27 in the new numbering...
+gap> s:=Semigroup(List(GeneratorsOfSemigroup(FullTransformationSemigroup(3)),
+>  x-> AsTransformation(x, 4)));;
+gap> IsFullTransformationSemigroup(s);
+true
+gap>  IdentityTransformation in s; 
+true
+gap>  IdentityTransformation in s;
+true
+
+# Issue 23 in the new numbering...
+gap> S:=FullTransformationSemigroup(3);;
+gap> f:=Transformation( [ 4, 3, 1, 2 ] );;
+gap> ClosureSemigroup(S, f);           
+<transformation monoid on 4 pts with 4 generators>
+
+# Issue 36 in the new numbering...
+gap> S:=Semigroup(IdentityTransformation);
+<trivial transformation group>
+gap> SmallGeneratingSet(S);
+[  ]
+
+# MaximalSubsemigroups of Rees 0-matrix semigroups
+gap> G:=Group((1,2),(3,4));;
+gap> mat:=[[(), ()], [(), 0], [(), (1,2)]];;
+gap> R:=ReesZeroMatrixSemigroup(G, mat);
+<Rees 0-matrix semigroup 2x3 over Group([ (1,2), (3,4) ])>
+gap> MaximalSubsemigroups(R);
+[ <subsemigroup of 2x3 Rees 0-matrix semigroup with 4 generators>, 
+  <Rees 0-matrix semigroup 2x2 over Group([ (1,2), (3,4) ])>, 
+  <Rees 0-matrix semigroup 2x2 over Group([ (3,4), (1,2) ])>, 
+  <Rees 0-matrix semigroup 2x2 over Group([ (1,2), (3,4) ])>, 
+  <Rees 0-matrix semigroup 1x3 over Group([ (3,4), (1,2) ])>, 
+  <subsemigroup of 2x3 Rees 0-matrix semigroup with 9 generators> ]
+gap> List(last, U-> IsMaximalSubsemigroup(R, U));
+[ true, true, true, true, true, true ]
+
+# ClosureSemigroup with an element of higher degree
+gap> S:=Semigroup( 
+> Transformation( [ 1, 3, 3, 2 ] ), Transformation( [ 4, 1, 4, 2 ] ), 
+> Transformation( [ 4, 2, 3, 3 ] ), Transformation( [ 4, 4, 4, 4 ] ) );;
+gap> Size(S);
+130
+gap> f:=Transformation( [ 3, 5, 1, 5, 2 ] );;
+gap> T:=ClosureSemigroup(S, f);;
+gap> Size(T);
+1619
+
+# bug with Elements and IsomorphismPermGroup for group H-class
+gap> R:=ReesZeroMatrixSemigroup(Group(()), 
+> [ [ (), (), () ], [ (), 0, 0 ], [ (), 0, 0 ] ]);
+<Rees 0-matrix semigroup 3x3 over Group(())>
+gap> R:=ReesZeroMatrixSubsemigroup(R, [2,3], Group(()), [2,3]);
+<Rees 0-matrix semigroup 2x2 over Group(())>
+gap> H:=First(HClasses(R), IsGroupHClass);
+{0}
+gap> Elements(H);   
+[ 0 ]
+gap> f:=IsomorphismPermGroup(H);;
+gap> g:=InverseGeneralMapping(f);;
+gap> Elements(H)[1]^f;
+()
+gap> ()^g;            
+0
 
 #
 gap> SemigroupsStopTest();

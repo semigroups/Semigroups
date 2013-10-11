@@ -41,7 +41,6 @@ function(d,q)
   SetIsFullMatrixSemigroup(S, true);
   SetIsGeneralLinearSemigroup(S, true);
   SetIsRegularSemigroup(S, true);
-
   return S;
 end);
 
@@ -55,9 +54,6 @@ function(s)
   Print("<full matrix semigroup ");
   n:=Length(GeneratorsOfSemigroup(s)[1][1]);
   Print(n, "x", n, " over ", BaseDomain(GeneratorsOfSemigroup(s)[1][1]));
-  if HasSize(s) then 
-    Print("of size ", Size(s));
-  fi;
   Print(">");
 end);
 
@@ -92,8 +88,7 @@ end);
 #
 
 if Filename(DirectoriesPackagePrograms("grape"),"dreadnautB") = fail then
-  InstallMethod(MunnSemigroup, "for a semilattice", 
-  [IsSemigroup], 
+  InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup], 
   function(s)
     Info(InfoWarning, 1, "the nauty/dreadnaut binaries in GRAPE are not", 
     " installed and so this ");
@@ -102,8 +97,7 @@ if Filename(DirectoriesPackagePrograms("grape"),"dreadnautB") = fail then
   end);
 else
   # JDM use ClosureInverseSemigroup to improve things here!
-  InstallMethod(MunnSemigroup, "for a semilattice",
-  [IsSemigroup],
+  InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup],
   function(s)
   local sl, GraphFromIdeal, IdealOfSemilattice, AutGpIdeal, IdentityTrans, 
   d, max, ideals, out, min, n, f, j, g, not_iso, k, g_j, g_k, p, i;
@@ -241,32 +235,8 @@ end);
 
 #
 
-#InstallMethod(PartitionMonoid, "for a positive integer",
-#[IsPosInt], 
-#function(n)
-#  local gens, g, s;
 #
-#  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
-#  Add(gens, AsBipartition(PartialPermNC([2..n], [2..n]), n));
-#  Add(gens, BipartitionNC(Concatenation([[1,2,n+1, n+2]], 
-#   List([3..n], x-> [x, x+n]))));
 #
-#  s:=Semigroup(gens);
-#  SetIsRegularSemigroup(s, true);
-#  return s;
-#end);
-#
-##
-#
-#InstallMethod(DualSymmetricInverseSemigroup, "for a positive integer",
-#[IsPosInt], 
-#function(n)
-#  local gens;
-#  gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
-#  Add(gens, BipartitionNC(Concatenation([[1,2,3+n], [1+n,2+n,3]], 
-#   List([4..n], x-> [x, x+n]))));
-#  return Semigroup(gens);
-#end);
 #
 #
 
@@ -321,7 +291,7 @@ end);
 
 #
 
-InstallMethod(SingularSemigroup, "for a positive integer",
+InstallMethod(SingularTransformationSemigroup, "for a positive integer",
 [IsPosInt],
 function(n)
   local x, S, T;
