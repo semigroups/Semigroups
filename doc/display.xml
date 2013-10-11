@@ -15,7 +15,6 @@
     <Description>
       This global variable is set to the following string:
       <Q>\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{document}\n</Q>
-     
 
       <Example>
 gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
@@ -102,10 +101,8 @@ gap> FileString(DotDClasses(S), "t3.dot");
 fail
 gap> FileString("t3.dot", DotDClasses(S));
 966]]></Log>
-
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-
-
+#EOF

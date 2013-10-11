@@ -65,10 +65,10 @@ false</Example>
     <Prop Name="IsBand" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsBand</C> returns <K>true</K> if every element of the semigroup of
-      transformations or partial permutations <A>S</A> is an idempotent and
-      <K>false</K> if it is not. An inverse semigroup is band if and only if it
-      is a semilattice; see <Ref Prop="IsSemilatticeAsSemigroup"/>.
+      <C>IsBand</C> returns <K>true</K> if every element of the semigroup
+      <A>S</A> is an idempotent and <K>false</K> if it is not. An inverse
+      semigroup is band if and only if it is a semilattice; see 
+      <Ref Prop="IsSemilatticeAsSemigroup"/>.
 
       <Example>
 gap> gens:=[ Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 1 ] ), 
@@ -97,8 +97,8 @@ true</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsBlockGroup</C> and <C>IsSemigroupWithCommutingIdempotents</C> return
-      <K>true</K> if the semigroup <A>S</A> of transformations or partial
-      permutations is a block group and <K>false</K> if it is not.<P/>
+      <K>true</K> if the semigroup <A>S</A> is a block group and <K>false</K>
+      if it is not.<P/>
 
       A semigroup <A>S</A> is a <E>block group</E> if every &L;-class and every
       &R;-class of <A>S</A> contains at most one idempotent. Every semigroup
@@ -121,10 +121,10 @@ false</Example>
     <Prop Name="IsBrandtSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsBrandtSemigroup</C> return <K>true</K> if the semigroup of
-      transformations or partial permutations is 
+      <C>IsBrandtSemigroup</C> return <K>true</K> if the semigroup <A>S</A> is 
       a 0-simple inverse semigroup, and <K>false</K> if it is not. See also
-      <Ref Prop="IsZeroSimpleSemigroup"/> and <Ref Prop="IsInverseSemigroup" BookName="ref" />.
+      <Ref Prop="IsZeroSimpleSemigroup"/> and <Ref Prop="IsInverseSemigroup"
+        BookName="ref" />.
       <Example>
 gap> S:=Semigroup(Transformation( [ 2, 8, 8, 8, 8, 8, 8, 8 ] ),
 > Transformation( [ 5, 8, 8, 8, 8, 8, 8, 8 ] ),
@@ -149,8 +149,7 @@ true</Example>
     <Prop Name="IsCliffordSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsCliffordSemigroup</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is  
+      <C>IsCliffordSemigroup</C> returns <K>true</K> if the <A>S</A> is  
       regular and its idempotents are central, and <K>false</K> if it is not. 
       
       <Example>
@@ -171,9 +170,8 @@ true</Example>
     <Prop Name="IsCommutativeSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsCommutativeSemigroup</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is commutative and
-      <K>false</K> if it is not.  
+      <C>IsCommutativeSemigroup</C> returns <K>true</K> if the semigroup
+      <A>S</A> is commutative and <K>false</K> if it is not.  
       The function <Ref Prop="IsCommutative" BookName="ref"/> can also be used
       to test if a semigroup is commutative.  <P/>
 
@@ -203,12 +201,10 @@ false</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsCompletelyRegularSemigroup</C> returns <K>true</K> if every element
-      of the semigroup of transformations or partial permutations <A>S</A>
-      is contained in a subgroup of <A>S</A>.<P/> 
+      of the semigroup <A>S</A> is contained in a subgroup of <A>S</A>.<P/> 
       
-      An inverse semigroup is
-      completely regular if and only if it is a Clifford semigroup; see
-      <Ref Prop="IsCliffordSemigroup"/>. 
+      An inverse semigroup is completely regular if and only if it is a
+      Clifford semigroup; see <Ref Prop="IsCliffordSemigroup"/>. 
 
       <Example>
 gap> gens:=[ Transformation( [ 1, 2, 4, 3, 6, 5, 4 ] ), 
@@ -240,8 +236,7 @@ true</Example>
     <Description>
       <C>IsXTrivial</C> returns <K>true</K> if Green's &R;-relation,
       &L;-relation, &H;-relation, &D;-relation, respectively, on the
-      semigroup of transformations or partial permutations <A>S</A> is 
-      trivial and <K>false</K> if it is not.
+      semigroup <A>S</A> is trivial and <K>false</K> if it is not.
       These properties can also be applied to a Green's class instead of a
       semigroup where applicable. 
       <P/> 
@@ -299,10 +294,10 @@ true</Example>
     <Prop Name="IsGroupAsSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      If the semigroup of transformations or partial permutations <A>S</A>
-      is actually a group, then <C>IsGroupAsSemigroup</C> returns <K>true</K>.
-      If it is not a group, then <K>false</K> is returned.
-      <Example>
+      If the semigroup <A>S</A> is actually a group, then
+      <C>IsGroupAsSemigroup</C> returns <K>true</K>.  If it is not a group,
+      then <K>false</K> is returned.
+<Example>
 gap> gens:=[ Transformation( [ 2, 4, 5, 3, 7, 8, 6, 9, 1 ] ), 
 >  Transformation( [ 3, 5, 6, 7, 8, 1, 9, 2, 4 ] ) ];;
 gap> S:=Semigroup(gens);;
@@ -324,9 +319,8 @@ true</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsIdempotentGenerated</C> and <C>IsSemiBand</C> return 
-      <K>true</K> if the semigroup of transformations or partial
-      permutations <A>S</A> is generated by its idempotents and <K>false</K> if
-      it is not.  See also <Ref Attr="Idempotents"/> and 
+      <K>true</K> if the semigroup <A>S</A> is generated by its idempotents and
+      <K>false</K> if it is not.  See also <Ref Attr="Idempotents"/> and 
       <Ref Attr="IdempotentGeneratedSubsemigroup"/>. <P/>
 
       An inverse semigroup is idempotent-generated if and only if it is a
@@ -350,12 +344,11 @@ true</Example>
   <Prop Name="IsInverseMonoid" Arg="S"/>
   <Returns><K>true</K> or <K>false</K>.</Returns>
   <Description>
-    If <A>S</A> is a semigroup of transformations or partial permutations, then
-    <C>IsInverseSemigroup</C> returns <K>true</K> if <A>S</A> is an inverse
-    semigroup and <K>false</K> if it is not. If <A>S</A> is monoid of
-    transformations or partial permutations, then <C>IsInverseMonoid</C>
-    returns <K>true</K> if <A>S</A> is an inverse monoid and <K>false</K> if
-    it is not.<P/>
+    If <A>S</A> is a semigroup, then <C>IsInverseSemigroup</C> returns
+    <K>true</K> if <A>S</A> is an inverse semigroup and <K>false</K> if it is
+    not. If <A>S</A> is monoid of transformations or partial permutations, then
+    <C>IsInverseMonoid</C> returns <K>true</K> if <A>S</A> is an inverse monoid
+    and <K>false</K> if it is not.<P/>
 
     A semigroup is an <E>inverse semigroup</E> if every element 
     <C>x</C> has a unique semigroup inverse, that is, a unique
@@ -379,8 +372,7 @@ true</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
     <C>IsLeftSimple</C> and <C>IsRightSimple</C> returns <K>true</K> if the 
-    semigroup of transformations or partial permutations <A>S</A> has only one
-    &L;-class or one &R;-class,
+    semigroup <A>S</A> has only one &L;-class or one &R;-class,
     respectively, and returns <K>false</K> if it has more than one. <P/>
 
     An inverse semigroup is left simple if and only if it is right simple if
@@ -420,8 +412,7 @@ gap> NrRClasses(S);
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsLeftZeroSemigroup</C> returns  <K>true</K> if the semigroup <A>S</A>
-      of transformations or partial permutations is
-      a left zero semigroup and <K>false</K> if it is not. <P/>
+      is a left zero semigroup and <K>false</K> if it is not. <P/>
 
       A semigroup is a <E>left zero semigroup</E> if <C>x*y=x</C> for
       all <C>x,y</C>. An inverse semigroup is a left zero semigroup if and only
@@ -448,8 +439,7 @@ true</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
    <Description>
      <C>IsMonogenicSemigroup</C> returns <K>true</K> if the semigroup <A>S</A>
-     of transformations or partial permutations is monogenic and it returns
-     <K>false</K> if it is not. <P/>
+     is monogenic and it returns <K>false</K> if it is not. <P/>
 
      A semigroup is <E>monogenic</E> if it is generated by a single element.
      See also <Ref Prop="IsMonogenicInverseSemigroup"/> and <Ref Attr="IndexPeriodOfTransformation" BookName="ref"/>.
@@ -471,8 +461,8 @@ true</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
    <Description>
      <C>IsMonogenicInverseSemigroup</C> returns <K>true</K> if the semigroup
-     <A>S</A> of transformations or partial permutations is an inverse
-     monogenic semigroup and it returns <K>false</K> if it is not. <P/>
+     <A>S</A> is an inverse monogenic semigroup and it returns <K>false</K> if
+     it is not. <P/>
 
      A inverse semigroup is <E>monogenic</E> if it is generated as an inverse
      semigroup by a single element.  See also <Ref
@@ -495,11 +485,10 @@ true</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsMonoidAsSemigroup</C> returns <K>true</K> if the semigroup
-      of transformations or partial permutations <A>S</A> is a monoid and
-      <K>false</K> if it is not. It is possible that <A>S</A> is a monoid but
-      does not satisfy <Ref Prop="IsMonoid" BookName="ref"/> and so <A>S</A>
-      does not possess the attributes of a monoid (such as, <Ref
-        Attr="GeneratorsOfMonoid" BookName="ref"/>).<P/>
+      <A>S</A> is a monoid and <K>false</K> if it is not. It is possible that
+      <A>S</A> is a monoid but does not satisfy <Ref Prop="IsMonoid"
+        BookName="ref"/> and so <A>S</A> does not possess the attributes of a
+      monoid (such as, <Ref Attr="GeneratorsOfMonoid" BookName="ref"/>).<P/>
 
       A semigroup of transformations satisfies
       <C>IsMonoidAsSemigroup</C> if and only if it satisfies
@@ -532,8 +521,7 @@ false</Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsOrthodoxSemigroup</C> returns <K>true</K> if the semigroup 
-      <A>S</A> of transformations or partial permutations is 
-      orthodox and <K>false</K> if it is not.<P/>
+      <A>S</A> is orthodox and <K>false</K> if it is not.<P/>
 
       A semigroup is <E>orthodox</E> if it is regular and its  
       idempotent elements form a subsemigroup.
@@ -560,9 +548,8 @@ true</Example>
     <Prop Name="IsRectangularBand" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsRectangularBand</C> returns <K>true</K> if the semigroup <A>S</A> of
-      transformations or partial permutations is a 
-      rectangular band and <K>false</K> if it is not.<P/>
+      <C>IsRectangularBand</C> returns <K>true</K> if the semigroup <A>S</A> 
+      is a rectangular band and <K>false</K> if it is not.<P/>
       
       A semigroup <A>S</A> is a <E>rectangular band</E> if for all <C>x,y,z</C> 
       in <A>S</A> we have that <C>x^2=x</C> and <C>xyz=xz</C>.
@@ -585,9 +572,8 @@ true</Example>
     <Prop Name="IsRegularSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsRegularSemigroup</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is regular
-      and <K>false</K> if it is not. <P/>
+      <C>IsRegularSemigroup</C> returns <K>true</K> if the semigroup 
+      <A>S</A> is regular and <K>false</K> if it is not. <P/>
 
       A semigroup <C>S</C> is <E>regular</E> if for all <C>x</C> in <C>S</C> 
       there exists <C>y</C> in <C>S</C> such that <C>x*y*x=x</C>. Every inverse
@@ -610,9 +596,8 @@ true</Example>
     <Prop Name="IsRightZeroSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsRightZeroSemigroup</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is 
-      a right zero semigroup and <K>false</K> if it is not.<P/>
+      <C>IsRightZeroSemigroup</C> returns <K>true</K> if the <A>S</A> is a
+      right zero semigroup and <K>false</K> if it is not.<P/>
       
       A semigroup <C>S</C> is a <E>right zero semigroup</E> if <C>x*y=y</C> for 
       all <C>x,y</C> in <C>S</C>. An inverse semigroup is a right zero
@@ -692,7 +677,7 @@ true</Example>
   <ManSection>
     <Oper Name="IsSynchronizingSemigroup" Arg="S, n"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
-    <Description><!--JDM update me!!-->
+    <Description>
       <C>IsSynchronizingSemigroup</C> returns <K>true</K> if the semigroup of
       transformations <A>S</A> contains a transformation with constant value on
       <C>[1..<A>n</A>]</C>.
@@ -717,9 +702,8 @@ Transformation( [ 8, 7, 7, 8, 7, 7, 7, 8, 7, 8 ] )</Example>
     <Prop Name="IsZeroGroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description> 
-      <C>IsZeroGroup</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is 
-      a zero group and <K>false</K> if it is not.<P/>
+      <C>IsZeroGroup</C> returns <K>true</K> if the semigroup 
+      <A>S</A> is a zero group and <K>false</K> if it is not.<P/>
 
       A semigroup <C>S</C> is a <E>zero group</E> if there exists an 
       element <C>z</C> in <C>S</C> such that <C>S</C> without <C>z</C> is a
@@ -743,9 +727,8 @@ true</Example>
     <Prop Name="IsZeroRectangularBand" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsZeroRectangularBand</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is a zero
-      rectangular band and <K>false</K> if it is not.<P/>
+      <C>IsZeroRectangularBand</C> returns <K>true</K> if the semigroup 
+      <A>S</A> is a zero rectangular band and <K>false</K> if it is not.<P/>
 
       A semigroup is a <E>zero rectangular band</E> if it is zero simple and
       &H;-trivial; see also <Ref Prop="IsZeroSimpleSemigroup"/>
@@ -777,9 +760,8 @@ false</Example>
     <Prop Name="IsZeroSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description> 
-      <C>IsZeroSemigroup</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is 
-      a zero semigroup and <K>false</K> if it is not.<P/>
+      <C>IsZeroSemigroup</C> returns <K>true</K> if the semigroup 
+      <A>S</A> is a zero semigroup and <K>false</K> if it is not.<P/>
 
       A semigroup <C>S</C> is a <E>zero semigroup</E> if there exists an 
       element <C>z</C> in <C>S</C> such that <C>x*y=z</C> for all <C>x,y</C>
@@ -809,9 +791,8 @@ Transformation( [ 8, 8, 8, 8, 5, 8, 8, 8 ] )</Example>
     <Prop Name="IsZeroSimpleSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsZeroSimpleSemigroup</C> returns <K>true</K> if the semigroup of
-      transformations or partial permutations <A>S</A> is
-      a zero simple semigroup and <K>false</K> if it is not.<P/>
+      <C>IsZeroSimpleSemigroup</C> returns <K>true</K> if the semigroup
+      <A>S</A> is a zero simple semigroup and <K>false</K> if it is not.<P/>
 
       A semigroup is a <E>zero simple semigroup</E> if it has no two-sided 
       ideals other than itself and the set containing the zero element; see
