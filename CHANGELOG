@@ -23,7 +23,7 @@
             now possible to use WriteGenerators to write to a gzipped file; 
 
             • the operation SingularSemigroup has been renamed
-            SingularTransformation semigroup;
+            SingularTransformationSemigroup;
 
             • the following attributes have been introduced: MinimalDClass,
             MaximalDClasses, StructureDescriptionMaximalSubgroups,

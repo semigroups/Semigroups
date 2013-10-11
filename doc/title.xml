@@ -18,7 +18,7 @@
 
   <Abstract>
     The &Semigroups; package is a &GAP; package containing methods for
-    semigroups principally semigroups of of transformations, partial
+    semigroups, principally semigroups of transformations, partial
     permutations or subsemigroups of regular Rees 0-matrix semigroups.
     &Semigroups; contains more efficient methods than those available in the
     &GAP; library (and in many cases more efficient than any other software)
