@@ -405,6 +405,104 @@ fi;
 #  return out;
 #end);
 
+InstallMethod(MaximalSubsemigroups, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(S)
+  local out, gens, po, classes, D, lookup, max, gens2, pos, inj, R, V, i, U;
+  
+  # preprocessing...
+  out:=[];
+  gens:=IrredundantGeneratingSubset(S);
+  po:=ShallowCopy(PartialOrderOfDClasses(S));
+  classes:=GreensDClasses(S);
+  D:=List(gens, x-> PositionProperty(classes, d-> x in d));
+  lookup:=[]; max:=[]; nonmax:=[];
+
+  for i in [1..Length(gens)] do 
+    if not ForAny([1..Length(po)], j-> j<>D[i] and D[i] in po[j]) then 
+      AddSet(max, D[i]);
+    else 
+      AddSet(nonmax, D[i]);
+    fi;
+    if not IsBound(lookup[D[i]]) then 
+      lookup[D[i]]:=[];
+    fi;
+    Add(lookup[D[i]], i);
+  od;
+  
+  # Type 1: maximal subsemigroups arising from maximal subsemigroup of
+  # principal factors of maximal D-classes...
+  for i in max do 
+    if Size(classes[i])=1 then #remove the whole thing...
+      gens2:=ShallowCopy(gens);
+      Remove(gens2, lookup[i][1]);
+      pos:=Position(po[i], i);
+      if pos<>fail then 
+        Remove(po[i], pos);
+      fi;
+      Append(gens2, List(classes{po[i]}, Representative));
+      Add(out, SemigroupIdealByGenerators(S, gens2));
+    else 
+      inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
+      R:=Source(inj);
+      for U in MaximalSubsemigroups(R) do 
+        gens2:=ShallowCopy(gens){Difference([1..Length(gens)], lookup[i])};
+        pos:=Position(po[i], i);
+        if pos<>fail then 
+          Remove(po[i], pos);
+        fi;
+        Append(gens2, List(classes{po[i]}, Representative));
+        V:=SemigroupIdealByGenerators(S, gens2);
+        Add(out, Semigroup(GeneratorsOfSemigroup(V), 
+          OnTuples(GeneratorsOfSemigroup(U), inj), rec(small:=true)));
+      od;
+    fi;
+  od;
+
+  #Type 2: maximal subsemigroups arising from non-maximal D-classes
+  for i in nonmax do 
+    if not IsRegularDClass(classes[i]) then 
+      #find the generators for the ideal...
+      gens2:=ShallowCopy(gens);
+      Remove(gens2, lookup[i][1]); #there's only one generator in the D-class
+      pos:=Position(po[i], i);
+      if pos<>fail then
+        Remove(po[i], pos);
+      fi;
+      Append(gens2, 
+       SmallGeneratingSet(SemigroupIdealByGenerators(S,
+        List(classes{po[i]}, Representative));
+      Add(out, Semigroup(gens2));
+      #find the generator above <classes[i]>
+    else # <classes[i]> is regular
+      for j in lookup[i] do 
+        gens2:=ShallowCopy(gens);
+        Remove(gens2, j);
+        B:=Intersection(Semigroup(gens2), classes[i]);
+        A:=Difference(classes[i], B);
+        RemoveSet(A, gens[j]);
+        XX:=[gens[j]];
+        while not IsEmpty(A) do 
+          a:=A[1];
+          C:=Semigroup(a, gens2);
+          if ForAny(XX, x-> x in C) then 
+            RemoveSet(A, a);
+            AddSet(XX, a);
+          else
+            A:=Difference(A, C);
+          fi;
+        od;
+      od;
+
+
+        
+    fi;
+
+      
+  
+  return out;
+end);
+
 #
 
 InstallMethod(MaximalDClasses, "for a semigroup with generators",
