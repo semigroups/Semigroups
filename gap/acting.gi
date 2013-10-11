@@ -572,7 +572,7 @@ function( data )
   return data!.found;
 end);
 
-#JDM this need to be redone!
+#
 
 InstallGlobalFunction(SizeOfSemigroupData,
 function(data)
