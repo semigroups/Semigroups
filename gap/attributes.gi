@@ -1375,9 +1375,7 @@ LongestChainOfSubsemigroups:=function(R)
       if IsReesZeroMatrixSemigroup(R) then 
         return LongestChainOfSubsemigroups(R)+LongestChainOfSubsemigroups(I)-1;
       else 
-         return
-         LongestChainOfSubsemigroups(R)
-                        +LongestChainOfSubsemigroups(I);
+         return LongestChainOfSubsemigroups(R)+LongestChainOfSubsemigroups(I);
       fi; 
     fi; 
   fi;
