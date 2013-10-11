@@ -112,13 +112,13 @@
       </Item>
 
       <Item>  if you want to be able to calculate the Munn semigroup of a
-        semilattice <Ref Oper="MunnSemigroup"/> or the maximal subsemigroups of
+        semilattice or the maximal subsemigroups of
         a Rees 0-matrix semigroup, then make sure that 
         the &Grape; package version &GRAPEVERS; or higher is available.  For
         more details go to:&vspace;<P/>&noindent;
         <URL>http://www.maths.qmul.ac.uk/~leonard/grape/</URL><P/>
         If &Grape; is not fully installed, then &Semigroups; can be used as
-        normal with the except that <Ref Oper="MunnSemigroup"/>
+        normal with the exception that <Ref Oper="MunnSemigroup"/>
         will not work. The method for <Ref Attr="MaximalSubsemigroups"/> will
         work provided &Grape; can be loaded, i.e. it is not necessary for
         &Grape; to be compiled.
