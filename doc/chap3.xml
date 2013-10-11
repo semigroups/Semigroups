@@ -75,6 +75,7 @@
     <#Include Label="Random">
     <#Include Label="SmallGeneratingSet"> 
     <#Include Label="MaximalSubsemigroups"> 
+    <#Include Label="ComponentRepsOfTransformationSemigroup">
 
   </Section>
 
