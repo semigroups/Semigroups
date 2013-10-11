@@ -80,7 +80,7 @@ gap> GroupHClass(GreensDClassOfElement(S, Elements(S)[1]));
 {Transformation( [ 2, 2, 2, 2, 2 ] )}
 gap> IsomorphismPermGroup(last);
 MappingByFunction( {Transformation( [ 2, 2, 2, 2, 2 ] )
- }, Group(()), <Attribute "AsPermutation">, function( x ) ... end )
+ }, Group(()), function( x ) ... end, function( x ) ... end )
 
 #
 gap> gens:=[ Transformation( [ 4, 4, 8, 8, 8, 8, 4, 8 ] ),
