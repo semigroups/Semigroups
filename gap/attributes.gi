@@ -1,3 +1,4 @@
+
 #############################################################################
 ##
 #W  attributes.gi
@@ -1380,6 +1381,44 @@ LongestChainOfSubsemigroups:=function(R)
     fi; 
   fi;
 end;
+
+#
+
+InstallMethod(IsCongruenceFreeSemigroup,
+"for a finite semigroup",
+[IsSemigroup],
+function(s)
+  local t, p, rowsDiff, colsDiff;
+  if MultiplicativeZero(s) <> fail then
+    # CASE 1: s has zero
+    if IsZeroSimpleSemigroup(s) then
+      # Find an isomorphic RMS
+      t := Range(IsomorphismReesMatrixSemigroup(s));
+      if IsTrivial(UnderlyingSemigroup(t)) then
+        # Check that no two rows or columns are identical
+        p := Matrix(t);
+        rowsDiff := ForAll([1..Size(p)], i -> 
+                           ForAll(Union([1..i-1],[i+1..Size(p)]), j ->
+                                  p[i] <> p[j]) );
+        p := TransposedMat(p);
+        colsDiff := ForAll([1..Size(p)], i -> 
+                           ForAll(Union([1..i-1],[i+1..Size(p)]), j ->
+                                  p[i] <> p[j]) );
+        if rowsDiff and colsDiff then
+          return true;
+        fi;
+      fi;
+    fi;
+    return false;
+  else
+    # CASE 2: s has no zero
+    if IsGroup(s) and IsSimpleGroup(s) then
+      return true;
+    else
+      return false;
+    fi;
+  fi;
+end);
 
 #
 

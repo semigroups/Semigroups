@@ -42,3 +42,6 @@ DeclareOperation("GeneratorsOfReesMatrixSubsemigroupNC",
 [IsReesMatrixSemigroup, IsGroup]);
 DeclareOperation("GeneratorsOfReesMatrixSubsemigroupNC",
 [IsReesZeroMatrixSemigroup, IsGroup]);
+
+DeclareAttribute("IsCongruenceFreeSemigroup",
+IsSemigroup);
