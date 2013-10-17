@@ -408,15 +408,17 @@ fi;
 InstallMethod(MaximalSubsemigroups, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local out, gens, po, classes, D, lookup, max, gens2, pos, inj, R, V, i, U;
+  local out, gens, po, classes, D, lookup, max, nonmax, gens2, pos, inj, R, V, YannRecursion, U, A, XX, a, C, i, j;
   
   # preprocessing...
   out:=[];
   gens:=IrredundantGeneratingSubset(S);
-  po:=ShallowCopy(PartialOrderOfDClasses(S));
+  po:=List(PartialOrderOfDClasses(S), x-> ShallowCopy(x));
   classes:=GreensDClasses(S);
   D:=List(gens, x-> PositionProperty(classes, d-> x in d));
-  lookup:=[]; max:=[]; nonmax:=[];
+  lookup:=[]; #lookup[i] is the positions of gens in classes[i]
+  max:=[];    #index of maximal D-classes containing gens
+  nonmax:=[]; #index of non-maximal D-classes containing gens.
 
   for i in [1..Length(gens)] do 
     if not ForAny([1..Length(po)], j-> j<>D[i] and D[i] in po[j]) then 
@@ -441,7 +443,7 @@ function(S)
         Remove(po[i], pos);
       fi;
       Append(gens2, List(classes{po[i]}, Representative));
-      Add(out, SemigroupIdealByGenerators(S, gens2));
+      AddSet(out, SemigroupIdealByGenerators(S, gens2));
     else 
       inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
       R:=Source(inj);
@@ -453,7 +455,7 @@ function(S)
         fi;
         Append(gens2, List(classes{po[i]}, Representative));
         V:=SemigroupIdealByGenerators(S, gens2);
-        Add(out, Semigroup(GeneratorsOfSemigroup(V), 
+        AddSet(out, Semigroup(GeneratorsOfSemigroup(V), 
           OnTuples(GeneratorsOfSemigroup(U), inj), rec(small:=true)));
       od;
     fi;
@@ -470,16 +472,43 @@ function(S)
         Remove(po[i], pos);
       fi;
       Append(gens2, 
-       SmallGeneratingSet(SemigroupIdealByGenerators(S,
-        List(classes{po[i]}, Representative));
-      Add(out, Semigroup(gens2));
+       GeneratorsOfSemigroup(SemigroupIdealByGenerators(S,
+        List(classes{po[i]}, Representative))));
+      AddSet(out, Semigroup(gens2, rec(small:=true)));
       #find the generator above <classes[i]>
     else # <classes[i]> is regular
-      for j in lookup[i] do 
+      YannRecursion:=function(U, known, A)
+        local ismax, new_known, a, V, didtest;
+        ismax:=true; new_known:=ShallowCopy(known);
+        didtest:=false;
+        while not IsEmpty(A) do 
+          a:=A[1];
+          if not a in known then 
+            didtest:=true;
+            V:=Semigroup(U, a); 
+            A:=Difference(A, V);
+            if ForAll(XX, x-> not x in V) then 
+              ismax:=false;
+              if ForAll(known, x-> not x in V) then 
+                YannRecursion(V, new_known, A);
+              fi;
+              Add(new_known, a);
+            fi;
+          else
+            Remove(A, 1);
+          fi;
+        od;
+        if ismax and didtest then
+          AddSet(out, U);
+        fi;
+        return;
+      end;
+      
+      for j in lookup[i] do # indices of gens in classes[i]
         gens2:=ShallowCopy(gens);
         Remove(gens2, j);
-        B:=Intersection(Semigroup(gens2), classes[i]);
-        A:=Difference(classes[i], B);
+        U:=Semigroup(gens2);
+        A:=Difference(classes[i], Intersection(U, classes[i]));
         RemoveSet(A, gens[j]);
         XX:=[gens[j]];
         while not IsEmpty(A) do 
@@ -492,16 +521,25 @@ function(S)
             A:=Difference(A, C);
           fi;
         od;
+        if Length(XX)=Size(classes[i]) then 
+          pos:=Position(po[i], i);
+          if pos<>fail then
+            Remove(po[i], pos);
+          fi;
+          Append(gens2, 
+           GeneratorsOfSemigroup(SemigroupIdealByGenerators(S,
+            List(classes{po[i]}, Representative))));
+          AddSet(out, Semigroup(gens2, rec(small:=true)));
+        else
+          YannRecursion(U, [], 
+           Filtered(classes[i], x-> not (x in XX or x in U)));
+        fi;
       od;
-
-
-        
     fi;
-
-      
-  
+  od;
   return out;
 end);
+
 
 #
 
@@ -1473,7 +1511,7 @@ LongestChainOfSubsemigroups:=function(R)
       if IsReesZeroMatrixSemigroup(R) then 
         return LongestChainOfSubsemigroups(R)+LongestChainOfSubsemigroups(I)-1;
       else 
-         return LongestChainOfSubsemigroups(R)+LongestChainOfSubsemigroups(I);
+        return LongestChainOfSubsemigroups(R)+LongestChainOfSubsemigroups(I);
       fi; 
     fi; 
   fi;
