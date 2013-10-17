@@ -1140,6 +1140,9 @@ function(s)
   fi;
   iter:=IteratorOfDClassReps(s);
   NextIterator(iter);
+  if IsDoneIterator(iter) then 
+    return false;
+  fi;
   NextIterator(iter);
   return IsDoneIterator(iter);
 end);

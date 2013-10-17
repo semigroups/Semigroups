@@ -590,7 +590,7 @@ s-> InverseSemigroup(Idempotents(s), rec(small:=true)));
 InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(d)
-  local g, rep, rreps, lreps, mat, bound_r, bound_l, inv_l, inv_r, lambdaperm, leftact, rightact, f, rms, iso, inv, hom, i, j;
+  local g, rep, rreps, lreps, mat, inv_l, inv_r, lambdaperm, leftact, rightact, f, rms, iso, inv, hom, i, j;
 
   if not IsRegularDClass(d) then
     Error("usage: <d> must be a regular D-class,");
@@ -607,8 +607,6 @@ function(d)
   lreps:=HClassReps(RClass(d, rep));
   mat:=[];
 
-  bound_r:=BlistList([1..Length(rreps)], []);
-  bound_l:=BlistList([1..Length(lreps)], []);
   inv_l:=EmptyPlist(Length(lreps));
   inv_r:=EmptyPlist(Length(rreps));
 
@@ -631,14 +629,12 @@ function(d)
       f:=lreps[i]*rreps[j];
       if f in d then
         mat[i][j]:=lambdaperm(rep, f);
-        if not bound_r[j] then
-          bound_r[j]:=true;
+        if not IsBound(inv_r[j]) then
           # could use lreps[i]*rreps[j]^-1*lreps[i] instead if there was a
           # method for ^-1...
           inv_r[j]:=leftact(mat[i][j]^-1, lreps[i]);
         fi;
-        if not bound_l[i] then
-          bound_l[i]:=true;
+        if not IsBound(inv_l[i]) then
           inv_l[i]:=rightact(rreps[j], mat[i][j]^-1);
         fi;
         mat[i][j]:=mat[i][j];
