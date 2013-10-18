@@ -335,7 +335,7 @@ end);
 #
 
 InstallMethod(RhoRank, "for a transformation semigroup", 
-[IsTransformationSemigroup], function(x)
+[IsTransformationSemigroup], S-> function(x)
   if IsEmpty(x) then 
     return 0;
   else 
@@ -439,8 +439,8 @@ end);
 InstallMethod(IdempotentTester, "for a transformation semigroup", 
 [IsTransformationSemigroup], s-> 
 function(img, ker)
-  if IsEmpty(img) and IsEmpty(ker) then 
-    return true;
+  if IsEmpty(img) then 
+    return IsEmpty(ker);
   fi;
   return IS_INJECTIVE_LIST_TRANS(img, ker) and Length(img)=MaximumList(ker);
 end);
