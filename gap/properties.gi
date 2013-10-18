@@ -1126,25 +1126,24 @@ InstallMethod(IsZeroSemigroup, "for an inverse semigroup",
 
 #
 
-InstallMethod(IsZeroSimpleSemigroup, 
-"for an acting semigroup with generators",
+InstallMethod(IsZeroSimpleSemigroup, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local iter;
+function(S)
+  local iter, D;
   
-  if MultiplicativeZero(s)=fail then 
+  if MultiplicativeZero(S)=fail then 
     return false;
   fi;
-  if IsClosed(SemigroupData(s)) then 
-    return NrDClasses(s)=2;
+  if IsClosed(SemigroupData(S)) then 
+    return IsRegularSemigroup(S) and NrDClasses(S)=2;
   fi;
-  iter:=IteratorOfDClassReps(s);
-  NextIterator(iter);
-  if IsDoneIterator(iter) then 
+  iter:=IteratorOfDClasses(S);
+  D:=NextIterator(iter);
+  if IsDoneIterator(iter) or not IsRegularDClass(D) then 
     return false;
   fi;
-  NextIterator(iter);
-  return IsDoneIterator(iter);
+  D:=NextIterator(iter);
+  return IsDoneIterator(iter) and IsRegularDClass(D);
 end);
 
 #EOF
