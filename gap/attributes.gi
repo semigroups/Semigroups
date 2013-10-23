@@ -463,7 +463,7 @@ function(S)
 
   #Type 2: maximal subsemigroups arising from non-maximal D-classes
   for i in nonmax do 
-    if not IsRegularDClass(classes[i]) then 
+    if not IsRegularDClass(classes[i]) then #remove the whole thing...
       #find the generators for the ideal...
       gens2:=ShallowCopy(gens);
       Remove(gens2, lookup[i][1]); #there's only one generator in the D-class
@@ -479,27 +479,29 @@ function(S)
     else # <classes[i]> is regular
       YannRecursion:=function(U, known, A)
         local ismax, new_known, a, V, didtest;
-        ismax:=true; new_known:=ShallowCopy(known);
+        ismax:=true; 
+        new_known:=ShallowCopy(known);
         didtest:=false;
-        while not IsEmpty(A) do 
-          a:=A[1];
+        for a in A do 
           if not a in known then 
             didtest:=true;
             V:=Semigroup(U, a); 
-            A:=Difference(A, V);
-            if ForAll(XX, x-> not x in V) then 
+            if ForAll(XX, x-> not x in V) then #i.e. check that V<>S
               ismax:=false;
-              if ForAll(known, x-> not x in V) then 
-                YannRecursion(V, new_known, A);
+              if ForAll(new_known, x-> not x in V) then 
+                YannRecursion(V, new_known, Difference(A, V));
               fi;
               Add(new_known, a);
             fi;
-          else
-            Remove(A, 1);
           fi;
         od;
         if ismax and didtest then
-          AddSet(out, U);
+          if not ForAny(out, W-> IsSubsemigroup(W, U)) then 
+            if U=XXX then
+              Error();
+            fi;
+            Add(out, U);
+          fi;
         fi;
         return;
       end;
@@ -521,7 +523,7 @@ function(S)
             A:=Difference(A, C);
           fi;
         od;
-        if Length(XX)=Size(classes[i]) then 
+        if Length(XX)=Size(classes[i]) then #remove the whole class
           pos:=Position(po[i], i);
           if pos<>fail then
             Remove(po[i], pos);
@@ -530,16 +532,24 @@ function(S)
            GeneratorsOfSemigroup(SemigroupIdealByGenerators(S,
             List(classes{po[i]}, Representative))));
           AddSet(out, Semigroup(gens2, rec(small:=true)));
-        else
-          YannRecursion(U, [], 
-           Filtered(classes[i], x-> not (x in XX or x in U)));
+        else 
+          A:=Filtered(classes[i], x-> not (x in XX or x in U));
+          if IsEmpty(A) then 
+            Add(out, U);
+          else
+            V:=Semigroup(U, A, rec(small:=true));
+            if V<>S then 
+              Add(out, V);
+            else
+              YannRecursion(U, [], A);
+            fi;
+          fi;
         fi;
       od;
     fi;
   od;
   return out;
 end);
-
 
 #
 
