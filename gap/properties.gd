@@ -36,6 +36,7 @@ DeclareOperation("IsSynchronizingTransformationCollection",
 [IsTransformationCollection, IsPosInt]);
 DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
+DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 
 InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
