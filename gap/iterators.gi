@@ -8,6 +8,15 @@
 #############################################################################
 ##
 
+DeclareGlobalFunction("IteratorOfSemigroups");
+InstallGlobalFunction(IteratorOfSemigroups, 
+function(filename, decoder)
+  local record;
+  record:=rec();
+end);
+
+
+
 # to lib...
 
 InstallGlobalFunction(IteratorOfArrangements, 

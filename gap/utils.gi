@@ -80,6 +80,8 @@ function(path, vers)
   return true;
 end);
 
+#
+
 BindGlobal("SemigroupsTestRec", rec());
 MakeReadWriteGlobal("SemigroupsTestRec");
 
