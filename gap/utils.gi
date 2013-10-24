@@ -272,33 +272,44 @@ function()
   SemigroupsStopTest();
   return;
 end);
+
+InstallGlobalFunction(GeneratorsReadFile, 
+function(str)
+  local file;
+
+  if not IsString(str) then 
+    Error("usage: the argument must be a string,");
+    return;
+  fi;
+  
+  file:=SplitString(str, ".");
+  if file[Length(file)] = "gz" then 
+    file:=IO_FilteredFile([["gzip", ["-dq"]]], str);
+  elif file[Length(file)] = "xz" then 
+    file:=IO_FilteredFile([["xz", ["-dq"]]], str);
+  else  
+    file:=IO_File(str);
+  fi;
+  
+  return file;
+end);
+
 #
 
 InstallGlobalFunction(ReadGenerators, 
 function(arg)
   local file, i, line;
  
-  if not IsString(arg[1]) then 
-    Error("the first argument must be a string,");
-    return;
+  if IsString(arg[1]) then 
+    file:=GeneratorsReadFile(arg[1]);
+  elif IsFile(arg[1]) then 
+    file:=arg[1];
   else
-    file:=SplitString(arg[1], ".");
-    if file[Length(file)] = "gz" then 
-      file:=IO_FilteredFile([["gzip", ["-dq"]]], arg[1]);
-    else  
-      file:=IO_File(arg[1]);
-      if file=fail then 
-        file:=IO_FilteredFile([["gzip", ["-dq"]]], 
-         Concatenation(arg[1], ".gz"));
-      fi;
-    fi;
+    Error("usage: the 1st argument must be a string or a file,");
+    return;
   fi;
 
-  if file=fail then 
-    Error(arg[1], " is not a readable file,");
-    return;
-  fi;
-  if Length(arg)>1 then 
+  if Length(arg)=2 then 
     if IsPosInt(arg[2]) then 
       i:=0;
       repeat  
@@ -312,13 +323,18 @@ function(arg)
         return ReadGeneratorsLine(Chomp(line));
       fi;
     else
-      Error("the second argument should be a positive integer,");
+      Error("usage: the 2nd argument must be a positive integer,");
       return;
     fi;
+  else
+    Error("usage: there should be at most 2 arguments,");
+    return;
   fi;
   
   line:=IO_ReadLines(file);
-  IO_Close(file);
+  if IsString(arg[1]) then 
+    IO_Close(file);
+  fi;
   return List(line, x-> ReadGeneratorsLine(Chomp(x)));
 end);
 
@@ -351,27 +367,79 @@ function(line)
   return out;
 end);
 
-# usage: filename as a string and trans. coll. 
+#
 
-# Returns: nothing. 
+InstallGlobalFunction(GeneratorsWriteFile, 
+function(arg)
+  local mode, file;
+
+  if IsString(arg[1]) then 
+    if IsExistingFile(arg[1]) then 
+      if not IsWritableFile(arg[1]) then 
+        Error(arg[1], " exists and is not a writable file,");
+        return;
+      fi;
+    else
+      if not (IsExistingFile(Concatenation(arg[1], ".gz")) or 
+        IsExistingFile(Concatenation(arg[1], ".xz"))) then 
+        Exec("touch ", arg[1]);
+      fi;
+    fi;
+  else
+    Error("usage: the 1st argument must be a string");
+    return;
+  fi;
+
+  if Length(arg)=2 and not (IsString(arg[2]) and (arg[2]="a" or arg[2]="w"))
+   then 
+    Error("usage: the 2nd argument must be \"a\" or \"w\",");
+    return;
+  fi;
+
+  if Length(arg)>2 then 
+    Error("usage: there must be at most 2 arguments,");
+    return;
+  fi;
+  
+  if Length(arg)=1 or arg[2] then 
+    mode:="a";
+  else
+    mode:="w";
+  fi;
+
+  file:=SplitString(arg[1], ".");
+  if file[Length(file)] = "gz" then 
+    file:=IO_FilteredFile([["gzip", ["-9q"]]], arg[1], mode);
+  elif file[Length(file)] = "xz" then 
+    file:=IO_FilteredFile([["xz", ["-9q"]]], arg[1], mode);
+  else  
+    file:=IO_File(arg[1]);
+  fi;
+  return file;
+end);
+
+#
 
 InstallGlobalFunction(WriteGenerators, 
 function(arg)
   local trans, gens, append, gzip, mode, file, line, deg, nrdigits, i, writin, s, f;
   
   if not (Length(arg)=3 or Length(arg)=2) then
-    Error("usage: filename as string and a transformation, transformation ",
-    "collection, partial perm or partial perm collection, and a boolean,");
+    Error("usage: there should be 2 or 3 arguments,"); 
     return;
   fi;
 
-  if IsExistingFile(arg[1]) then 
-    if not IsWritableFile(arg[1]) then 
-      Error(arg[1], " exists and is not a writable file,");
-      return;
+  if IsString(arg[1]) then
+    if IsBound(arg[3]) then 
+      file:=GeneratorsWriteFile(arg[1], arg[3]);
+    else 
+      file:=GeneratorsWriteFile(arg[1]);
     fi;
-  else
-    PrintTo(arg[1], "");
+  elif IsFile(arg[1]) then 
+    file:=arg[1];
+  else 
+    Error("usage: the 1st argument must be a string or a file,");
+    return;
   fi;
 
   if IsTransformationCollection(arg[2]) 
@@ -382,7 +450,7 @@ function(arg)
     or IsPartialPermCollection(arg[2][1])) then 
     trans:=arg[2];
   else
-    Error("usage: the 2nd argument must be transformation or partial perm ",
+    Error("usage: the 2nd argument must be transformation or partial perm\n",
     "semigroup or collection, or a list of such semigroups or collections,");
     return;
   fi;
@@ -397,7 +465,6 @@ function(arg)
   for i in [1..Length(trans)] do 
     if IsTransformationSemigroup(trans[i]) 
       or IsPartialPermSemigroup(trans[i]) then 
-      
       gens[i]:=GeneratorsOfSemigroup(trans[i]);
       # we could use a smaller generating set (i.e. GeneratorsOfMonoid,
       # GeneratorsOfInverseSemigroup etc) but we have no way of knowing which
@@ -422,28 +489,6 @@ function(arg)
   end;
 
   #####
-
-  gzip:=SplitString(arg[1], '.');
-  gzip:=[JoinStringsWithSeparator(gzip{[1..Length(gzip)-1]}, "."),
-   gzip[Length(gzip)]];
-  
-  #by default or if arg[3]=true append the result to arg[1]
-  if Length(arg)=2 or arg[3] then 
-    mode:="a";
-  else
-    mode:="w";
-  fi;
-
-  if Length(gzip)>1 and gzip[2]="gz" then
-    file:=IO_FilteredFile([["gzip", ["-9q"]]], arg[1], mode);
-  else 
-    file:=IO_File(arg[1], mode);
-  fi;
-  
-  if file=fail then 
-    Error("something went wrong when trying to open the file for writing,");
-    return;
-  fi;
 
   if IsTransformationCollection(gens[1]) then 
     for s in gens do
@@ -475,8 +520,47 @@ function(arg)
     od;
     IO_WriteLine(file, line);
   fi;
+
+  if IsString(arg[1]) then  
+    IO_Close(file);
+  fi;
+  return true;
+end);
+
+#
+
+InstallGlobalFunction(WriteGeneratorsLine, 
+function(f)
+  local append, line, deg, strdeg, nrdigits, i;
   
-  return IO_Close(file);
+  append:=function(str, pt, m)
+    local i, j;
+    i:=String(pt);
+    for j in [1..m-Length(i)] do 
+      Append(str, " ");
+    od;
+    Append(str, i);
+    return str;
+  end;
+
+  if IsTransformation(f) then 
+    line:="t";
+    deg:=DegreeOfTransformation(f);
+    strdeg:=String(deg);
+    nrdigits:=Length(strdeg);
+  elif IsPartialPerm(f) then 
+    line:="p";
+    deg:=DegreeOfPartialPerm(f);
+    strdeg:=String(strdeg);
+    nrdigits:=Length(String(Maximum(deg, CodegreeOfPartialPerm(f))));
+  fi;
+  
+  Append(line, String(nrdigits));
+  Append(line, strdeg);
+  for i in [1..deg] do 
+    append(line, i^f, nrdigits);
+  od;
+  return line;
 end);
 
 #
