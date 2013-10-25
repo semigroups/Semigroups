@@ -326,7 +326,7 @@ function(arg)
       Error("usage: the 2nd argument must be a positive integer,");
       return;
     fi;
-  else
+  elif Length(arg)>2 then 
     Error("usage: there should be at most 2 arguments,");
     return;
   fi;
