@@ -36,10 +36,9 @@ ReadPackage("semigroups/gap/display.gi");
 
 if TestPackageAvailability("grape")=fail then 
   Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
-  if ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
+elif ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
    then 
-    Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
-  fi;
+  Add(SemigroupsOmitFromTestManualExamples, "MunnSemigroup");
 fi;
 
 if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")
