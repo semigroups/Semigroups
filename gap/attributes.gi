@@ -350,7 +350,7 @@ fi;
 
 #
 
-InstallMethod(MaximalDClasses, "for a semigroup with generators",
+InstallMethod(MaximalDClasses, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, partial, data, pos, i, out, classes, x;
@@ -380,7 +380,8 @@ end);
 #
 
 InstallMethod(StructureDescriptionSchutzenbergerGroups, 
-"for an acting semigroup", [IsActingSemigroup and HasGeneratorsOfSemigroup],
+"for an acting semigroup with generators", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local o, scc, out, m;
 
@@ -398,7 +399,8 @@ end);
 #
 
 InstallMethod(StructureDescriptionMaximalSubgroups, 
-"for an acting semigroup", [IsActingSemigroup and HasGeneratorsOfSemigroup],
+"for an acting semigroup with generators", 
+[IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local out, d;
 
@@ -657,7 +659,7 @@ end);
 #
 
 InstallMethod(IsomorphismReesMatrixSemigroup, 
-"for a simple acting semigroup with generators",
+"for a simple  or 0-simple acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local D, iso, inv;

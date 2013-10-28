@@ -14,7 +14,7 @@
 ##  <!ENTITY ORBVERS "4.6">
 ##  <!ENTITY IOVERS "4.1">
 ##  <!ENTITY GRAPEVERS "4.5">
-##  <!ENTITY ARCHIVENAME "semigroups-1.3">
+##  <!ENTITY ARCHIVENAME "semigroups-1.4">
 ##  <!ENTITY COPYRIGHTYEARS "2011-13">
 ##  <#/GAPDoc>
 
@@ -22,8 +22,8 @@ SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "Methods for Semigroups",
 Version := "1.4",
-Date := "11/10/2013",
-ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-1.3",
+Date := "28/10/2013",
+ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-1.4",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec( 
