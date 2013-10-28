@@ -386,7 +386,7 @@ function(arg)
       fi;
     fi;
   else
-    Error("usage: the 1st argument must be a string");
+    Error("usage: the 1st argument must be a string,");
     return;
   fi;
 
@@ -401,10 +401,10 @@ function(arg)
     return;
   fi;
   
-  if Length(arg)=1 or arg[2] then 
+  if Length(arg)=1 then 
     mode:="a";
   else
-    mode:="w";
+    mode:=arg[2];
   fi;
 
   file:=SplitString(arg[1], ".");
@@ -452,11 +452,6 @@ function(arg)
   else
     Error("usage: the 2nd argument must be transformation or partial perm\n",
     "semigroup or collection, or a list of such semigroups or collections,");
-    return;
-  fi;
-
-  if Length(arg)=3 and not IsBool(arg[3]) then 
-    Error("usage: the 3rd argument must be <true> or <false>,");
     return;
   fi;
 
