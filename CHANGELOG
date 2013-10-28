@@ -27,7 +27,7 @@
             IsomorphismPermGroup and ClosureSemigroup were moved/changed to
             avoid warnings that their methods matched more than one
             declaration. These warnings were exposed by doing LoadAllPackages,
-            but were not present when loading Semigroup by itself.
+            but were not present when loading Semigroups by itself.
 
 1.2 -> 1.3  
             Version 1.3 contains many bug fixes, extensions and improvements in
