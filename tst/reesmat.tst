@@ -497,10 +497,14 @@ gap> IsSimpleSemigroup(V);
 false
 gap> IsSimpleSemigroup(R);
 true
-gap> IsomorphismReesMatrixSemigroup(R);
-InverseGeneralMapping( MappingByFunction( <Rees matrix semigroup 3x2 over 
-  Group(())>, <subsemigroup of 3x2 Rees 0-matrix semigroup with 4 generators>
- , function( x ) ... end ) )
+gap> f:=IsomorphismReesMatrixSemigroup(R); g:=InverseGeneralMapping(f);;
+MappingByFunction( <subsemigroup of 3x2 Rees 0-matrix semigroup 
+ with 4 generators>, <Rees matrix semigroup 3x2 over Group(())>
+ , function( x ) ... end, function( x ) ... end )
+gap> ForAll(R, x-> (x^f)^g=x); 
+true
+gap> ForAll(R, x-> ForAll(R, y-> (x*y)^f=x^f*y^f));
+true
 gap> R:=ReesZeroMatrixSemigroup(Group(()), [[(), (), ()], [(), (), ()]]);
 <Rees 0-matrix semigroup 3x2 over Group(())>
 gap> R:=Semigroup(Generators(R));                                      

@@ -7,7 +7,30 @@
 ##
 #############################################################################
 
-1.2 -> 1.3  Version 1.3 contains many bug fixes, extensions and improvements in
+
+1.3 -> 1.4  
+            This is a minor release containing some bug fixes. Specifically:
+            the functionality of ReadGenerators and WriteGenerators has been
+            improved to allow the argument to be an IO file object, and support
+            is added to read and write directly to files compressed using
+            xz. A minor bug relating to the creation of idempotents in
+            transformation semigroups which was triggered by the identity
+            transformation has been resolved. The functions
+            IsomorphismReesMatrixSemigroup, InjectionPrincipalFactor, and
+            IsZeroSimpleSemigroup have been revised. IsZeroSimpleSemigroup
+            formerly returned true for the 2 element zero semigroup, which is
+            not 0-simple. IsomorphismReesMatrixSemigroup could have returned an
+            error if called for a semigroup which was not a semigroup of
+            partial perms or transformations. The use of AsPermutation was
+            changed to PermutationOfImage where appropriate following a change
+            to the library methods for AsPermutation. The declarations of
+            IsomorphismPermGroup and ClosureSemigroup were moved/changed to
+            avoid warnings that their methods matched more than one
+            declaration. These warnings were exposed by doing LoadAllPackages,
+            but were not present when loading Semigroups by itself.
+
+1.2 -> 1.3  
+            Version 1.3 contains many bug fixes, extensions and improvements in
             the documentation, and several new methods and functions. Most
             notably are (in no particular order): 
             
