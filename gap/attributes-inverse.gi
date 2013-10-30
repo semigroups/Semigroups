@@ -511,8 +511,7 @@ function(S)
             else
               ## Below, could be ^sigma instead of AsPermutation
               subbox:=PositionCanonical(cosets,
-               AsPermutation((rep*h[box]^(-1)))
-              );
+               AsPermutation((rep*h[box]^(-1))));
             fi;
             Add(newgens[j], (box-1)*Length(cosets)+subbox+offset);  
           fi;

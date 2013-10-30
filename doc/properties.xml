@@ -745,9 +745,7 @@ gap> S:=Semigroup(
 >      22, 1, 8, 1, 1, 1, 1, 1 ] ),
 > Transformation( [ 1, 6, 6, 1, 1, 1, 6, 1, 1, 1, 1, 1, 6, 1, 6, 1, 1, 6, 1,
 >      1, 24, 1, 1, 1, 1, 6 ] ) );;
-gap> IsZeroRectangularBand(Semigroup(Elements(GreensDClasses(S)[9]))); 
-true
-gap> IsZeroRectangularBand(Semigroup(Elements(GreensDClasses(S)[3])));
+gap> IsZeroRectangularBand(Semigroup(Elements(GreensDClasses(S)[7]))); 
 true
 gap> IsZeroRectangularBand(Semigroup(Elements(GreensDClasses(S)[1])));
 false</Example>

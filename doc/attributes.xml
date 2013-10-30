@@ -486,7 +486,7 @@ true
 gap> IsomorphismPermGroup(S); 
 MappingByFunction( &lt;transformation group on 8 pts with 2 generators>
  , Group([ (5,6,8), (2,3,8,
-4) ]), &lt;Attribute "AsPermutation">, function( x ) ... end )
+4) ]), &lt;Attribute "PermutationOfImage">, function( x ) ... end )
 gap> StructureDescription(Range(IsomorphismPermGroup(S)));
 "S6"
 gap> S:=Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
