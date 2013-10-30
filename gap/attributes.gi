@@ -353,10 +353,11 @@ fi;
 InstallMethod(MaximalSubsemigroups, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local out, gens, po, classes, D, lookup, max, nonmax, gens2, pos, inj, R, V, YannRecursion, U, A, XX, a, C, i, j;
+  local out, gens, po, classes, D, lookup, max, nonmax, tot, gens2, pos, inj, R, V, ideal, count, YannRecursion, U, A, XX, a, C, i, j;
   
   # preprocessing...
   out:=[];
+  Info(InfoSemigroups, 2, "finding irredundant generating set...");
   gens:=IrredundantGeneratingSubset(S);
   po:=List(PartialOrderOfDClasses(S), x-> ShallowCopy(x));
   classes:=GreensDClasses(S);
@@ -365,6 +366,7 @@ function(S)
   max:=[];    #index of maximal D-classes containing gens
   nonmax:=[]; #index of non-maximal D-classes containing gens.
 
+  Info(InfoSemigroups, 2, "finding D-classes of generators...");
   for i in [1..Length(gens)] do 
     if not ForAny([1..Length(po)], j-> j<>D[i] and D[i] in po[j]) then 
       AddSet(max, D[i]);
@@ -379,7 +381,11 @@ function(S)
   
   # Type 1: maximal subsemigroups arising from maximal subsemigroup of
   # principal factors of maximal D-classes...
+  Info(InfoSemigroups, 2, "finding maximal subsemigroups arising from", 
+  " maximal D-classes...");
+  tot:=0;
   for i in max do 
+    Info(InfoSemigroups, 2, "considering D-class ", i);
     if Size(classes[i])=1 then #remove the whole thing...
       gens2:=ShallowCopy(gens);
       Remove(gens2, lookup[i][1]);
@@ -388,7 +394,7 @@ function(S)
         Remove(po[i], pos);
       fi;
       Append(gens2, List(classes{po[i]}, Representative));
-      AddSet(out, SemigroupIdealByGenerators(S, gens2));
+      Add(out, SemigroupIdealByGenerators(S, gens2));
     else 
       inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
       R:=Source(inj);
@@ -400,12 +406,16 @@ function(S)
         fi;
         Append(gens2, List(classes{po[i]}, Representative));
         V:=SemigroupIdealByGenerators(S, gens2);
-        AddSet(out, Semigroup(GeneratorsOfSemigroup(V), 
+        Add(out, Semigroup(GeneratorsOfSemigroup(V), 
           OnTuples(GeneratorsOfSemigroup(U), inj), rec(small:=true)));
       od;
     fi;
+    Info(InfoSemigroups, 2, "found ", Length(out)-tot, " maximal subsemigroups");
+    tot:=Length(out);
   od;
 
+  Info(InfoSemigroups, 2, "finding maximal subsemigroups arising from", 
+  " non-maximal D-classes...");
   #Type 2: maximal subsemigroups arising from non-maximal D-classes
   for i in nonmax do 
     if not IsRegularDClass(classes[i]) then #remove the whole thing...
@@ -419,11 +429,22 @@ function(S)
       Append(gens2, 
        GeneratorsOfSemigroup(SemigroupIdealByGenerators(S,
         List(classes{po[i]}, Representative))));
-      AddSet(out, Semigroup(gens2, rec(small:=true)));
+      Add(out, Semigroup(gens2, rec(small:=true)));
       #find the generator above <classes[i]>
     else # <classes[i]> is regular
+      
+      pos:=Position(po[i], i);
+      if pos<>fail then 
+        Remove(po[i], pos);
+      fi;
+
+      ideal:=GeneratorsOfSemigroup(Semigroup(SemigroupIdealByGenerators(S,
+        List(classes{po[i]}, Representative)), rec(small:=true)));
+      count:=0;
       YannRecursion:=function(U, known, A)
         local ismax, new_known, a, V, didtest;
+        count:=count+1;
+        Print("at depth: ", count,"\n");
         ismax:=true; 
         new_known:=ShallowCopy(known);
         didtest:=false;
@@ -442,12 +463,12 @@ function(S)
         od;
         if ismax and didtest then
           if not ForAny(out, W-> IsSubsemigroup(W, U)) then 
-            Add(out, U);
+            Add(out, Semigroup(U, ideal));
           fi;
         fi;
         return;
       end;
-      
+      Print("\n");
       for j in lookup[i] do # indices of gens in classes[i]
         gens2:=ShallowCopy(gens);
         Remove(gens2, j);
@@ -465,21 +486,15 @@ function(S)
             A:=Difference(A, C);
           fi;
         od;
+        
         if Length(XX)=Size(classes[i]) then #remove the whole class
-          pos:=Position(po[i], i);
-          if pos<>fail then
-            Remove(po[i], pos);
-          fi;
-          Append(gens2, 
-           GeneratorsOfSemigroup(SemigroupIdealByGenerators(S,
-            List(classes{po[i]}, Representative))));
-          AddSet(out, Semigroup(gens2, rec(small:=true)));
+          Add(out, Semigroup(gens2, ideal));
         else 
           A:=Filtered(classes[i], x-> not (x in XX or x in U));
           if IsEmpty(A) then 
-            Add(out, U);
+            Add(out, Semigroup(U, ideal));
           else
-            V:=Semigroup(U, A, rec(small:=true));
+            V:=Semigroup(U, A, ideal, rec(small:=true));
             if V<>S then 
               Add(out, V);
             else
@@ -490,12 +505,12 @@ function(S)
       od;
     fi;
   od;
+  out:=List(out, x-> Semigroup(x, rec(small:=true))); 
   return out;
 end);
 
 #
 
-InstallMethod(MaximalDClasses, "for a semigroup with generators",
 InstallMethod(MaximalDClasses, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
