@@ -821,4 +821,26 @@ false</Example>
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IsCongruenceFreeSemigroup">
+  <ManSection>
+    <Prop Name="IsCongruenceFreeSemigroup" Arg="S"/>
+    <Returns><K>true</K> or <K>false</K>.  </Returns>
+    <Description> 
+      <C>IsCongruenceFreeSemigroup</C> returns <K>true</K> if the semigroup 
+      <A>S</A> is a congruence-free semigroup and <K>false</K> if it is 
+      not.<P/>
+
+      A semigroup <C>S</C> is a <E>congruence-free semigroup</E> if it has no 
+      non-trivial congruences.
+
+      A semigroup with zero is congruence-free iff it is isomorphic to a Rees 
+      matrix semigroup whose underlying semigroup is trivial.  A semigroup 
+      without zero is congruence-free iff it is a simple group or has order 2.
+
+      <Example>
+      </Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 #EOF
