@@ -1151,6 +1151,11 @@ InstallMethod(IsCongruenceFreeSemigroup,
 [IsSemigroup],
 function(s)
   local t, p, rowsDiff, colsDiff;
+  
+  if Size(s) <= 2 then
+    return true;
+  fi;
+  
   if MultiplicativeZero(s) <> fail then
     # CASE 1: s has zero
     if IsZeroSimpleSemigroup(s) then
