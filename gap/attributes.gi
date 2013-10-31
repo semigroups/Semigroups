@@ -407,7 +407,7 @@ function(S)
         Append(gens2, List(classes{po[i]}, Representative));
         V:=SemigroupIdealByGenerators(S, gens2);
         Add(out, Semigroup(GeneratorsOfSemigroup(V), 
-          OnTuples(GeneratorsOfSemigroup(U), inj), rec(small:=true)));
+          OnTuples(Filtered(GeneratorsOfSemigroup(U), x-> not IsMultiplicativeZero(U), x), inj), rec(small:=true)));
       od;
     fi;
     Info(InfoSemigroups, 2, "found ", Length(out)-tot, " maximal subsemigroups");
@@ -469,40 +469,41 @@ function(S)
         return;
       end;
       Print("\n");
-      for j in lookup[i] do # indices of gens in classes[i]
-        gens2:=ShallowCopy(gens);
-        Remove(gens2, j);
-        U:=Semigroup(gens2);
-        A:=Difference(classes[i], Intersection(U, classes[i]));
-        RemoveSet(A, gens[j]);
-        XX:=[gens[j]];
-        while not IsEmpty(A) do 
-          a:=A[1];
-          C:=Semigroup(a, gens2);
-          if ForAny(XX, x-> x in C) then 
-            RemoveSet(A, a);
-            AddSet(XX, a);
-          else
-            A:=Difference(A, C);
-          fi;
-        od;
-        
-        if Length(XX)=Size(classes[i]) then #remove the whole class
-          Add(out, Semigroup(gens2, ideal));
-        else 
-          A:=Filtered(classes[i], x-> not (x in XX or x in U));
-          if IsEmpty(A) then 
-            Add(out, Semigroup(U, ideal));
-          else
-            V:=Semigroup(U, A, ideal, rec(small:=true));
-            if V<>S then 
-              Add(out, V);
+      for j in EnumeratorOfCombinations(lookup[i]) do 
+        # indices of gens in classes[i]
+        if j<>[] then 
+          gens2:=Difference(ShallowCopy(gens), gens{j});
+          U:=Semigroup(gens2);
+          A:=Difference(classes[i], Intersection(U, classes[i]));
+          RemoveSet(A, gens{j});
+          XX:=[gens{j}];
+          while not IsEmpty(A) do 
+            a:=A[1];
+            C:=Semigroup(a, gens2);
+            if ForAny(XX, x-> x in C) then 
+              RemoveSet(A, a);
+              AddSet(XX, a);
             else
-              YannRecursion(U, [], A);
+              A:=Difference(A, C);
+            fi;
+          od;
+          
+          if Length(XX)=Size(classes[i]) then #remove the whole class
+            Add(out, Semigroup(gens2, ideal));
+          else 
+            A:=Filtered(classes[i], x-> not (x in XX or x in U));
+            if IsEmpty(A) then 
+              Add(out, Semigroup(U, ideal));
+            else
+              V:=Semigroup(U, A, ideal, rec(small:=true));
+              if V<>S then 
+                Add(out, V);
+              else
+                YannRecursion(U, [], A);
+              fi;
             fi;
           fi;
-        fi;
-      od;
+        od;
     fi;
   od;
   out:=List(out, x-> Semigroup(x, rec(small:=true))); 
