@@ -194,24 +194,26 @@ gap> GeneratorsOfSemigroup(S);
 <#GAPDoc Label="WriteGenerators">
   <ManSection> 
     <Func Name="WriteGenerators" Arg="filename, list[, append]"/>
-    <Returns>The number of bytes written or <K>fail</K>.</Returns>
+    <Returns><K>true</K> or <K>fail</K>.</Returns>
     <Description>
       This function provides a method for writing transformations and partial
       permutations to a file, that uses a relatively small
       amount of disk space.  The resulting file can be further compressed using
-      <C>gzip</C>.<P/>
+      <C>gzip</C> or <C>xz</C>.<P/>
       
       The argument <A>list</A> should be a list of elements, a semigroup, or a
-      list of lists of elements, or semigroups. The types of elements and
-      semigroups supported are: transformations and partial permutations.<P/>
+      list of lists of elements, or semigroups; or an <Package>IO</Package>
+      file object. The types of elements and semigroups supported are:
+      transformations and partial permutations.<P/>
      
       The argument <A>filename</A> should be a string containing the name of a
       file where the entries in <A>list</A> will be written. <P/>
 
       If  the  optional  third argument <A>append</A> is given and
-      equals  <K>false</K>,  then the previous content of the file is deleted. 
-      Otherwise the elements are appended to the file.  This function returns
-      the number of bytes written or <K>fail</K> if something went wrong. <P/> 
+      equals  <C>"w"</C>,  then the previous content of the file is deleted. 
+      If the optional third argument is <C>"a"</C> or is not present, then
+      <C>list</C> is appended to the file.  This function returns <K>true</K>
+      if everything went well or <K>fail</K> if something went wrong.<P/> 
 
       <C>WriteGenerators</C> appends a line to the file <A>filename</A>
       for every entry in <A>list</A>. If any element of <A>list</A> is a

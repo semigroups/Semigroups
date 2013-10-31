@@ -541,14 +541,6 @@ end);
 
 #
 
-InstallMethod(ClosureSemigroup, "for an acting semigroup and empty list",
-[IsActingSemigroup, IsList and IsEmpty],
-function(s, coll)
-  return s;
-end);
-
-#
-
 InstallMethod(ClosureSemigroup, 
 "for an acting semigroup and associative element",
 [IsActingSemigroup, IsAssociativeElement],
@@ -571,7 +563,11 @@ InstallMethod(ClosureSemigroup,
 "for an acting semigroup, associative element collection, and record",
 [IsActingSemigroup, IsAssociativeElementCollection, IsRecord],
 function(s, coll, record)
-  
+ 
+  if IsEmpty(coll) then 
+    return s;
+  fi;
+
   if not IsGeneratorsOfActingSemigroup(coll) then 
     Error("usage: the second argument <coll> should be a collection",
     " satisfying IsGeneratorsOfActingSemigroup,");

@@ -104,7 +104,7 @@ gap> filt:=Filtered(Elements(FullTransformationSemigroup(3)),
   Transformation( [ 3, 3, 3 ] ) ]
 gap> Length(filt);
 21
-gap> perms:=List(filt, AsPermutation);
+gap> perms:=List(filt, PermutationOfImage);
 [ (), (), (), (), (), (2,3), (), (1,2), (1,2), (1,2), (), (), (1,2,3), (2,3), 
   (1,3), (1,3,2), (1,3), (), (1,3), (2,3), () ]
 gap> ker:=List(filt, x-> FlatKernelOfTransformation(x, 3));
@@ -183,11 +183,11 @@ Transformation( [ 1, 2, 2, 2, 5, 5 ] )
 gap> Idempotent([1,5,6], [1,1,1,2,2,3,3]);
 Transformation( [ 1, 1, 1, 5, 5, 6, 6 ] )
 gap> t:=Transformation([1,2,9,9,9,8,8,8,4]);;
-gap> AsPermutation(t);
+gap> PermutationOfImage(t);
 (4,9)
 gap> t*last;
 Transformation( [ 1, 2, 4, 4, 4, 8, 8, 8 ] )
-gap> AsPermutation(last);
+gap> PermutationOfImage(last);
 ()
 gap> x:=Transformation( [ 3, 4, 4, 6, 1, 3, 3, 7, 1 ] );;
 gap> IndexPeriodOfTransformation(x);
