@@ -407,7 +407,7 @@ function(S)
         Append(gens2, List(classes{po[i]}, Representative));
         V:=SemigroupIdealByGenerators(S, gens2);
         Add(out, Semigroup(GeneratorsOfSemigroup(V), 
-          OnTuples(Filtered(GeneratorsOfSemigroup(U), x-> not IsMultiplicativeZero(U), x), inj), rec(small:=true)));
+          OnTuples(Filtered(GeneratorsOfSemigroup(U), x-> not IsMultiplicativeZero(U, x)), inj), rec(small:=true)));
       od;
     fi;
     Info(InfoSemigroups, 2, "found ", Length(out)-tot, " maximal subsemigroups");
@@ -503,7 +503,8 @@ function(S)
               fi;
             fi;
           fi;
-        od;
+        fi;
+      od;
     fi;
   od;
   out:=List(out, x-> Semigroup(x, rec(small:=true))); 
