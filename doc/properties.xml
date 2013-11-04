@@ -836,7 +836,14 @@ false</Example>
       without zero is congruence-free iff it is a simple group or has order 2.
 
       <Example>
-      </Example>
+gap> S := Semigroup( Transformation( [ 4, 2, 3, 3, 4 ] ) );;
+gap> IsCongruenceFreeSemigroup(S);
+true
+gap> S := Semigroup(
+>  Transformation( [ 2, 2, 4, 4 ] ),
+>  Transformation( [ 5, 3, 4, 4, 6, 6 ] ) );;
+gap> IsCongruenceFreeSemigroup(S);
+false</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
