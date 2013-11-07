@@ -48,7 +48,7 @@ function(f, s)
 
   if ElementsFamily(FamilyObj(s))<>FamilyObj(f) 
     or (IsActingSemigroupWithFixedDegreeMultiplication(s)
-        and ActionDegree(f)<>ActionDegree(rep))
+        and ActionDegree(f)<>ActionDegree(s))
     or ActionDegree(f)>ActionDegree(s) then
     return false;
   fi;

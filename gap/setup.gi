@@ -80,6 +80,9 @@ InstallMethod(ActionDegree, "for a partial perm",
 [IsPartialPerm], x-> Maximum(DegreeOfPartialPerm(x), 
 CodegreeOfPartialPerm(x)));
 
+InstallMethod(ActionDegree, "for a bipartition",
+[IsBipartition], DegreeOfBipartition);
+
 InstallMethod(ActionDegree, "for a Rees 0-matrix semigroup element", 
 [IsReesZeroMatrixSemigroupElement], 
 function(x)
@@ -122,6 +125,9 @@ CodegreeOfPartialPermSemigroup(x)));
 InstallMethod(ActionDegree, "for a partial perm inverse semigroup",
 [IsPartialPermSemigroup and IsInverseSemigroup], DegreeOfPartialPermSemigroup);
 
+InstallMethod(ActionDegree, "for a bipartition semigroup",
+[IsBipartitionSemigroup], DegreeOfBipartitionSemigroup);
+
 InstallMethod(ActionDegree, "for a Rees 0-matrix subsemigroup with generators",
 [IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup],
 function(R) 
@@ -132,8 +138,6 @@ function(R)
   fi;
 end);
 
-InstallMethod(ActionDegree, "for a bipartition",
-[IsBipartition], DegreeOfBipartition);
 
 # the number of points in the range of the action
 
@@ -162,6 +166,15 @@ function(s)
   return RankOfPartialPerm;
 end);
 
+InstallMethod(ActionRank, "for a bipartition",
+[IsBipartition], RankOfBipartition);
+
+InstallMethod(ActionRank, "for a bipartition semigroup",
+[IsBipartitionSemigroup], 
+function(s)
+  return RankOfBipartition;
+end);
+
 InstallMethod(ActionRank, "for a Rees 0-matrix semigroup element", 
 [IsReesZeroMatrixSemigroupElement, IsInt],
 function(f, n)
@@ -185,9 +198,6 @@ function(s)
     fi;
   end;
 end);
-
-InstallMethod(ActionRank, "for a bipartition",
-[IsBipartitionSemigroup and HasGeneratorsOfSemigroup], RankOfBipartition);
 
 # the minimum possible rank of an element
 
@@ -614,6 +624,9 @@ InstallMethod(FakeOne, "for a transformation collection",
 
 InstallMethod(FakeOne, "for a partial perm collection", 
 [IsPartialPermCollection], One);
+
+InstallMethod(FakeOne, "for a bipartition collection", 
+[IsBipartitionCollection], One);
 
 InstallMethod(FakeOne, "for a Rees 0-matrix semigroup element collection",
 [IsReesZeroMatrixSemigroupElementCollection],  R-> UniversalFakeOne);

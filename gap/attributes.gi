@@ -469,6 +469,32 @@ end);
 
 #
 
+InstallMethod(GroupOfUnits, "for a bipartition semigroup with generators",
+[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local R, G, deg, U;
+
+  if MultiplicativeNeutralElement(S)=fail then
+    return fail;
+  fi;
+
+  R:=GreensRClassOfElementNC(S, MultiplicativeNeutralElement(S));
+  G:=SchutzenbergerGroup(R);
+  deg:=DegreeOfBipartitionSemigroup(S);
+  
+  U:=Monoid(List(GeneratorsOfGroup(G), x-> AsPartialPerm(x, deg)));
+  
+  SetIsomorphismPermGroup(U, MappingByFunction(U, G, AsPermutation, 
+   x-> AsPartialPerm(x, deg)));
+   
+  SetIsGroupAsSemigroup(U, true);
+  UseIsomorphismRelation(U, G);
+
+  return U;
+end);
+
+#
+
 InstallMethod(GroupOfUnits, "for a Rees 0-matrix subsemigroup with generators",
 [IsReesZeroMatrixSubsemigroup and HasGeneratorsOfSemigroup],
 function(s)

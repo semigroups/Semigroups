@@ -116,7 +116,7 @@
 
     Many of the functions described herein return a string, which can be
     written to a file using the function 
-    <Ref Func="FileString" BookName="ref"/>.
+    <Ref Func="FileString" BookName="GAPDoc"/>.
   </Section>
 
   <Section><Heading>Semigroups of bipartitions</Heading>
