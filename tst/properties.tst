@@ -304,7 +304,7 @@ gap> IsLeftZeroSemigroup(i);
 false
 gap> IsRightZeroSemigroup(i);
 true
-gap> IsSynchronizingSemigroup(i);
+gap> IsSynchronizingSemigroup(i, 4);
 true
 
 #
@@ -498,7 +498,7 @@ gap> s:=FullTransformationSemigroup(3);;
 gap> j:=0;;
 gap> for f in s do
 > for g in s do
-> if IsSynchronizingSemigroup(Semigroup(f,g)) then j:=j+1; fi;
+> if IsSynchronizingSemigroup(Semigroup(f,g), 3) then j:=j+1; fi;
 > od;
 > od;
 gap> j;
@@ -555,7 +555,7 @@ gap> [ Transformation( [ 3, 6, 9, 1, 4, 7, 2, 5, 8 ] ),
 >   Transformation( [ 5, 5, 7, 5, 7, 3, 7, 7, 5 ] ) ];;
 gap> s:=Semigroup(last);;
 gap> MultiplicativeNeutralElement(s);
-IdentityTransformation()
+IdentityTransformation
 
 ##
 #gap> gens:=[ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),

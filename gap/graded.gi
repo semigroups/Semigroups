@@ -64,8 +64,7 @@ function(o, j)
   return o!.orbits[j];
 end);
 
-# if GradedLambdaOrb(s, f, true) is called, then the returned orbit o has 
-# the position in o of lambda val of f stored in o!.lambda_l.
+#
 
 InstallGlobalFunction(GradedLambdaOrb,
 function(s, f, opt)
@@ -89,8 +88,7 @@ function(s, f, opt)
     pos:=HTValue(GradedLambdaHT(s), lambda);
   
     if pos<>fail then 
-      graded[pos[1]][pos[2]]!.lambda_l:=pos[3];
-      return graded[pos[1]][pos[2]];
+      return [graded[pos[1]][pos[2]], pos[3]];
     fi;
     
     gradingfunc := function(o,x) return [LambdaRank(s)(x), x]; end;
@@ -117,7 +115,6 @@ function(s, f, opt)
 
   o:=Orb(s, lambda, LambdaAct(s), record);
   SetIsGradedLambdaOrb(o, true);
-  o!.lambda_l:=1;
   
   if opt then # store o
     j:=LambdaRank(s)(lambda)+1;
@@ -128,11 +125,11 @@ function(s, f, opt)
     for l in [1..Length(o)] do
       HTAdd(onlygradesdata, o[l], [j,k,l]);
     od;
-    o!.val:=[j,k,1]; 
+    o!.position_in_graded:=[j,k]; 
     graded!.lens[j]:=k;
   fi;
 
-  return o;
+  return [o, 1];
 end);
 
 #
@@ -159,9 +156,7 @@ function(s, f, opt)
     pos:=HTValue(GradedRhoHT(s), rho);
   
     if pos<>fail then 
-      # store the position of RhoFunc(s)(f) in o 
-      graded[pos[1]][pos[2]]!.rho_l:=pos[3];
-      return graded[pos[1]][pos[2]];
+      return [graded[pos[1]][pos[2]], pos[3]];
     fi;
     
     gradingfunc := function(o,x) return [RhoRank(s)(x), x]; end;
@@ -191,7 +186,6 @@ function(s, f, opt)
   o:=Orb(s, rho, RhoAct(s), record);
 
   SetIsGradedRhoOrb(o, true);
-  o!.rho_l:=1; 
   
   if opt then # store o
     j:=RhoRank(s)(RhoFunc(s)(f))+1;
@@ -207,7 +201,7 @@ function(s, f, opt)
     graded!.lens[j]:=k;
   fi;
 
-  return o;
+  return [o, 1];
 end);
 
 # stores so far calculated GradedLambdaOrbs
@@ -320,10 +314,9 @@ function(s)
     if val<>fail then # previously calculated graded orbit
       o:=GradedLambdaOrbs(s)[val[1]][val[2]];
     else # new graded orbit
-      o:=GradedLambdaOrb(s, 
-          EvaluateWord(lambda_o!.gens, 
-          TraceSchreierTreeForward(lambda_o, pos)), true);
-      val:=o!.val;
+      o:=GradedLambdaOrb(s, EvaluateWord(lambda_o!.gens, 
+          TraceSchreierTreeForward(lambda_o, pos)), true)[1];
+      val:=o!.position_in_graded;
     fi;
 
     if not IsBound(seen[val[1]]) then 

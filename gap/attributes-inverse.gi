@@ -11,6 +11,59 @@
 #############################################################################
 ##
 
+InstallMethod(IsGreensDLeq, "for an inverse op acting semigroup",
+[IsActingSemigroupWithInverseOp], 
+function(S)
+  local partial, o, comp_index;
+  
+  partial:=PartialOrderOfDClasses(S);
+  o:=LambdaOrb(S);
+
+  comp_index:=function(x, y)
+    if y in partial[x] then
+      return true;
+    elif Length(partial[x])=1 and partial[partial[x][1]]=partial[x] then
+      return false;
+    fi;
+    return ForAny(partial[x], z-> z<>x and comp_index(z,y));
+  end;
+
+  return function(x,y)
+    return comp_index(OrbSCCLookup(o)[Position(o, LambdaFunc(S)(x))]-1,
+      OrbSCCLookup(o)[Position(o, LambdaFunc(S)(y))]-1);
+  end;
+end);
+
+#
+
+InstallMethod(PrimitiveIdempotents, 
+"for an acting semigroup with inverse op and generators",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+function(s)
+  local o, scc, rank, min, l, min2, m;
+  
+  o:=LambdaOrb(s);      scc:=OrbSCC(o);
+  rank:=LambdaRank(s);  min:=ActionDegree(s);
+
+  if MultiplicativeZero(s)=fail then 
+    for m in [2..Length(scc)] do 
+      l:=rank(o[scc[m][1]]);
+      if l<min then 
+        min:=l;
+      fi;
+    od;
+    return Idempotents(s, min);
+  else
+    for m in [2..Length(scc)] do 
+      l:=rank(o[scc[m][1]]);
+      if l<min then 
+        min2:=min; min:=l;
+      fi;
+    od;
+    return Idempotents(s, min2);
+  fi;
+end);
+
 #
 
 InstallMethod(PrimitiveIdempotents, 
@@ -488,8 +541,7 @@ function(S)
             else
               ## Below, could be ^sigma instead of AsPermutation
               subbox:=PositionCanonical(cosets,
-               AsPermutation((rep*h[box]^(-1)))
-              );
+               AsPermutation((rep*h[box]^(-1))));
             fi;
             Add(newgens[j], (box-1)*Length(cosets)+subbox+offset);  
           fi;
@@ -502,21 +554,14 @@ function(S)
   T:=InverseSemigroup(List(newgens, x->PartialPermNC(x)));
 
   # Return identity mapping if nothing has been accomplished; else the result.
-  if NrMovedPoints(T) > NrMovedPoints(S) or 
-    (NrMovedPoints(T) = NrMovedPoints(S) and ActionDegree(T) >= ActionDegree(S))
-  then
-
+  if NrMovedPoints(T) > NrMovedPoints(S)
+    or (NrMovedPoints(T) = NrMovedPoints(S) 
+        and ActionDegree(T) >= ActionDegree(S)) then
     return IdentityMapping(S);
-
   else
-    
     return MagmaIsomorphismByFunctionsNC(S, T,
-      x -> ResultOfStraightLineProgram(
-             SemigroupElementSLP(S, x), GeneratorsOfSemigroup(T)),
-      x -> ResultOfStraightLineProgram(
-           SemigroupElementSLP(T, x), GeneratorsOfSemigroup(S))
-    );
-    
+      x -> EvaluateWord(GeneratorsOfSemigroup(T), Factorization(S, x)),
+      x -> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x)));
   fi;
   
 end);

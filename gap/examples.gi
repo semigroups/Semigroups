@@ -41,7 +41,7 @@ function(d,q)
   SetIsFullMatrixSemigroup(S, true);
   SetIsGeneralLinearSemigroup(S, true);
   SetIsRegularSemigroup(S, true);
- 
+  
   return S;
 end);
 
@@ -89,8 +89,7 @@ end);
 #
 
 if Filename(DirectoriesPackagePrograms("grape"),"dreadnautB") = fail then
-  InstallMethod(MunnSemigroup, "for a semilattice", 
-  [IsSemigroup], 
+  InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup], 
   function(s)
     Info(InfoWarning, 1, "the nauty/dreadnaut binaries in GRAPE are not", 
     " installed and so this ");
@@ -99,8 +98,7 @@ if Filename(DirectoriesPackagePrograms("grape"),"dreadnautB") = fail then
   end);
 else
   # JDM use ClosureInverseSemigroup to improve things here!
-  InstallMethod(MunnSemigroup, "for a semilattice",
-  [IsSemigroup],
+  InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup],
   function(s)
   local sl, GraphFromIdeal, IdealOfSemilattice, AutGpIdeal, IdentityTrans, 
   d, max, ideals, out, min, n, f, j, g, not_iso, k, g_j, g_k, p, i;
@@ -255,7 +253,7 @@ function(n)
   return Semigroup(gens, rec(regular:=true));
 end);
 
-##
+#
 
 InstallMethod(DualSymmetricInverseSemigroup, "for a positive integer",
 [IsPosInt], 
@@ -335,8 +333,7 @@ end);
 
 # JDM rename and make global
 
-HamMonoid:=
-function(n)
+HamMonoid:=function(n)
   local gens, next, i, j;
   
   gens:=[];

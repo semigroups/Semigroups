@@ -92,14 +92,17 @@ DeclareAttribute("RClassReps", IsGreensDClass);
 
 DeclareAttribute("Idempotents", IsGreensClass);
 DeclareOperation("Idempotents", [IsSemigroup, IsInt]);
-DeclareAttribute("GroupHClass", IsGreensDClass);
+DeclareSynonymAttr("GroupHClass", GroupHClassOfGreensDClass);
 
-DeclareAttribute("StructureDescription", IsGreensHClass and IsGroupHClass);
+DeclareAttribute("StructureDescription", IsGreensHClass);
 
 DeclareProperty("IsRegularClass", IsGreensClass);
 InstallTrueMethod(IsRegularClass, IsRegularDClass);
+DeclareCategory("IsHClassOfRegularSemigroup", IsGreensClass);
 DeclareCategory("IsInverseOpClass", IsGreensClass); 
-InstallTrueMethod(IsRegularClass, IsInverseOpClass);
+InstallTrueMethod(IsRegularClass, IsInverseOpClass and IsGreensDClass);
+InstallTrueMethod(IsRegularClass, IsInverseOpClass and IsGreensRClass);
+InstallTrueMethod(IsRegularClass, IsInverseOpClass and IsGreensLClass);
 
 DeclareAttribute("PartialOrderOfDClasses", IsSemigroup);
 DeclareAttribute("SchutzenbergerGroup", IsGreensClass);

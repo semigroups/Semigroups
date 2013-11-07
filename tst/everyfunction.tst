@@ -995,7 +995,7 @@ gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),
 > Transformation( [ 3, 3, 4, 1 ] ) ];;
 gap> s:=Monoid(gens);;
 gap> List(GreensDClasses(s), LClasses);
-[ [ {IdentityTransformation()} ], 
+[ [ {IdentityTransformation} ], 
   [ {Transformation( [ 1, 3, 4, 1 ] )}, {Transformation( [ 4, 1, 3, 4 ] )}, 
       {Transformation( [ 3, 4, 1, 3 ] )} ], 
   [ {Transformation( [ 2, 4, 1, 2 ] )} ], 
@@ -1013,7 +1013,7 @@ gap> Sum(last);
 gap> Size(s);
 62
 gap> l:=Concatenation(List(GreensDClasses(s), LClasses));
-[ {IdentityTransformation()}, {Transformation( [ 1, 3, 4, 1 ] )}, 
+[ {IdentityTransformation}, {Transformation( [ 1, 3, 4, 1 ] )}, 
   {Transformation( [ 4, 1, 3, 4 ] )}, {Transformation( [ 3, 4, 1, 3 ] )}, 
   {Transformation( [ 2, 4, 1, 2 ] )}, {Transformation( [ 3, 1, 1, 3 ] )}, 
   {Transformation( [ 1, 4, 4, 1 ] )}, {Transformation( [ 2, 1, 1, 2 ] )}, 
@@ -1022,7 +1022,7 @@ gap> l:=Concatenation(List(GreensDClasses(s), LClasses));
   {Transformation( [ 2, 2, 2, 2 ] )}, {Transformation( [ 3, 3, 3, 3 ] )}, 
   {Transformation( [ 4, 4, 4, 4 ] )} ]
 gap> List(last, Elements);
-[ [ IdentityTransformation() ], [ Transformation( [ 1, 3, 4, 1 ] ) ], 
+[ [ IdentityTransformation ], [ Transformation( [ 1, 3, 4, 1 ] ) ], 
   [ Transformation( [ 4, 1, 3, 4 ] ) ], [ Transformation( [ 3, 4, 1, 3 ] ) ], 
   [ Transformation( [ 2, 4, 1, 2 ] ) ], 
   [ Transformation( [ 1, 1, 1, 3 ] ), Transformation( [ 1, 1, 3, 1 ] ), 
@@ -1061,7 +1061,7 @@ gap> Union(last);
   Transformation( [ 1, 1, 3, 1 ] ), Transformation( [ 1, 1, 3, 3 ] ), 
   Transformation( [ 1, 1 ] ), Transformation( [ 1, 1, 4, 1 ] ), 
   Transformation( [ 1, 1, 4, 4 ] ), Transformation( [ 1, 2, 1, 1 ] ), 
-  Transformation( [ 1, 2, 2, 1 ] ), IdentityTransformation(), 
+  Transformation( [ 1, 2, 2, 1 ] ), IdentityTransformation, 
   Transformation( [ 1, 3, 1, 1 ] ), Transformation( [ 1, 3, 3, 1 ] ), 
   Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 1, 4, 1, 1 ] ), 
   Transformation( [ 1, 4, 4, 1 ] ), Transformation( [ 2, 1, 1, 2 ] ), 
@@ -2267,7 +2267,7 @@ gap> gens:=[ Transformation( [ 1, 3, 2, 3 ] ),
 >  Transformation( [ 4, 1, 2, 1 ] ) ];;
 gap> s:=Monoid(gens);;
 gap> List(DClasses(s), RClassReps);
-[ [ IdentityTransformation() ], [ Transformation( [ 1, 3, 2, 3 ] ) ], 
+[ [ IdentityTransformation ], [ Transformation( [ 1, 3, 2, 3 ] ) ], 
   [ Transformation( [ 1, 4, 1, 2 ] ), Transformation( [ 1, 2, 4, 4 ] ) ], 
   [ Transformation( [ 4, 1, 2, 1 ] ), Transformation( [ 4, 2, 1, 2 ] ) ], 
   [ Transformation( [ 1, 4, 1, 4 ] ), Transformation( [ 1, 4, 4, 4 ] ), 
@@ -2277,7 +2277,7 @@ gap> List(DClasses(s), RClassReps);
     , [ Transformation( [ 2, 4, 2, 4 ] ), Transformation( [ 2, 4, 4, 4 ] ), 
       Transformation( [ 2, 2, 4, 2 ] ) ] ]
 gap> reps:=Concatenation(last);
-[ IdentityTransformation(), Transformation( [ 1, 3, 2, 3 ] ), 
+[ IdentityTransformation, Transformation( [ 1, 3, 2, 3 ] ), 
   Transformation( [ 1, 4, 1, 2 ] ), Transformation( [ 1, 2, 4, 4 ] ), 
   Transformation( [ 4, 1, 2, 1 ] ), Transformation( [ 4, 2, 1, 2 ] ), 
   Transformation( [ 1, 4, 1, 4 ] ), Transformation( [ 1, 4, 4, 4 ] ), 
@@ -2297,7 +2297,7 @@ gap> NrDClasses(s);
 gap> NrLClasses(s);
 21
 gap> List(reps, x-> DClass(s, x));
-[ {IdentityTransformation()}, {Transformation( [ 1, 3, 2, 3 ] )}, 
+[ {IdentityTransformation}, {Transformation( [ 1, 3, 2, 3 ] )}, 
   {Transformation( [ 1, 4, 1, 2 ] )}, {Transformation( [ 1, 4, 1, 2 ] )}, 
   {Transformation( [ 4, 1, 2, 1 ] )}, {Transformation( [ 4, 2, 1, 2 ] )}, 
   {Transformation( [ 1, 4, 1, 4 ] )}, {Transformation( [ 1, 4, 1, 4 ] )}, 
@@ -2321,7 +2321,7 @@ gap>    o:=RhoOrb(s);
 gap>     rectify:=RectifyRho(s, o, f);
 rec( l := 5, m := 4, rep := Transformation( [ 1, 4, 1, 2 ] ) )
 gap> List(reps, x-> DClass(s, x));
-[ {IdentityTransformation()}, {Transformation( [ 1, 3, 2, 3 ] )}, 
+[ {IdentityTransformation}, {Transformation( [ 1, 3, 2, 3 ] )}, 
   {Transformation( [ 1, 4, 1, 2 ] )}, {Transformation( [ 1, 4, 1, 2 ] )}, 
   {Transformation( [ 4, 1, 2, 1 ] )}, {Transformation( [ 4, 2, 1, 2 ] )}, 
   {Transformation( [ 1, 4, 1, 4 ] )}, {Transformation( [ 1, 4, 1, 4 ] )}, 
@@ -2333,7 +2333,7 @@ gap> List(reps, x-> DClass(s, x));
 gap> Union(List(last, x-> LClass(x,Representative(x))));
 [ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 4, 1 ] ), 
   Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 3, 2 ] ), 
-  IdentityTransformation(), Transformation( [ 1, 2, 4, 2 ] ), 
+  IdentityTransformation, Transformation( [ 1, 2, 4, 2 ] ), 
   Transformation( [ 1, 2, 4, 4 ] ), Transformation( [ 1, 3, 2, 3 ] ), 
   Transformation( [ 1, 4, 1, 2 ] ), Transformation( [ 1, 4, 1, 4 ] ), 
   Transformation( [ 1, 4, 2, 2 ] ), Transformation( [ 1, 4, 2, 4 ] ), 
@@ -2349,7 +2349,7 @@ gap> Union(List(last, x-> LClass(x,Representative(x))));
 gap> Length(last);
 30
 gap> D:=List(reps, x-> DClass(s, x));
-[ {IdentityTransformation()}, {Transformation( [ 1, 3, 2, 3 ] )}, 
+[ {IdentityTransformation}, {Transformation( [ 1, 3, 2, 3 ] )}, 
   {Transformation( [ 1, 4, 1, 2 ] )}, {Transformation( [ 1, 4, 1, 2 ] )}, 
   {Transformation( [ 4, 1, 2, 1 ] )}, {Transformation( [ 4, 2, 1, 2 ] )}, 
   {Transformation( [ 1, 4, 1, 4 ] )}, {Transformation( [ 1, 4, 1, 4 ] )}, 
@@ -2361,7 +2361,7 @@ gap> D:=List(reps, x-> DClass(s, x));
 gap> Length(Set(D));
 9
 gap> List(D, x-> LClass(x, Representative(x)));
-[ {IdentityTransformation()}, {Transformation( [ 1, 3, 2, 3 ] )}, 
+[ {IdentityTransformation}, {Transformation( [ 1, 3, 2, 3 ] )}, 
   {Transformation( [ 1, 4, 1, 2 ] )}, {Transformation( [ 1, 4, 1, 2 ] )}, 
   {Transformation( [ 4, 1, 2, 1 ] )}, {Transformation( [ 4, 2, 1, 2 ] )}, 
   {Transformation( [ 1, 4, 1, 4 ] )}, {Transformation( [ 1, 4, 1, 4 ] )}, 
@@ -2373,7 +2373,7 @@ gap> List(D, x-> LClass(x, Representative(x)));
 gap> Union(last);
 [ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 4, 1 ] ), 
   Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 3, 2 ] ), 
-  IdentityTransformation(), Transformation( [ 1, 2, 4, 2 ] ), 
+  IdentityTransformation, Transformation( [ 1, 2, 4, 2 ] ), 
   Transformation( [ 1, 2, 4, 4 ] ), Transformation( [ 1, 3, 2, 3 ] ), 
   Transformation( [ 1, 4, 1, 2 ] ), Transformation( [ 1, 4, 1, 4 ] ), 
   Transformation( [ 1, 4, 2, 2 ] ), Transformation( [ 1, 4, 2, 4 ] ), 
@@ -2389,7 +2389,7 @@ gap> Union(last);
 gap> Set(last2)=Set(LClasses(s));
 false
 gap> L:=Set(last3);
-[ {Transformation( [ 1, 1, 1, 1 ] )}, {IdentityTransformation()}, 
+[ {Transformation( [ 1, 1, 1, 1 ] )}, {IdentityTransformation}, 
   {Transformation( [ 1, 3, 2, 3 ] )}, {Transformation( [ 1, 4, 1, 2 ] )}, 
   {Transformation( [ 1, 4, 1, 4 ] )}, {Transformation( [ 1, 4, 2, 4 ] )}, 
   {Transformation( [ 2, 4, 2, 4 ] )}, {Transformation( [ 4, 1, 2, 1 ] )}, 
@@ -2614,7 +2614,7 @@ gap> gens:=[Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ),
 > Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] )];;
 gap> s:=Monoid(gens);;
 gap> List(DClasses(s), Idempotents);
-[ [ IdentityTransformation() ], 
+[ [ IdentityTransformation ], 
   [ Transformation( [ 1, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ) ], 
   [ Transformation( [ 4, 2, 2, 4, 5, 6, 7, 7, 7 ] ), 
       Transformation( [ 2, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
@@ -2625,9 +2625,8 @@ gap> List(DClasses(s), Idempotents);
       Transformation( [ 11, 2, 4, 4, 5, 6, 7, 6, 10, 10, 11 ] ), 
       Transformation( [ 4, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ) ] ]
 gap> Concatenation(last);
-[ IdentityTransformation(), 
-  Transformation( [ 1, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
-  Transformation( [ 4, 2, 2, 4, 5, 6, 7, 7, 7 ] ), 
+[ IdentityTransformation, Transformation( [ 1, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] )
+    , Transformation( [ 4, 2, 2, 4, 5, 6, 7, 7, 7 ] ), 
   Transformation( [ 2, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
   Transformation( [ 6, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
   Transformation( [ 7, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
@@ -2636,9 +2635,8 @@ gap> Concatenation(last);
   Transformation( [ 11, 2, 4, 4, 5, 6, 7, 6, 10, 10, 11 ] ), 
   Transformation( [ 4, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ) ]
 gap> e:=last;
-[ IdentityTransformation(), 
-  Transformation( [ 1, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
-  Transformation( [ 4, 2, 2, 4, 5, 6, 7, 7, 7 ] ), 
+[ IdentityTransformation, Transformation( [ 1, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] )
+    , Transformation( [ 4, 2, 2, 4, 5, 6, 7, 7, 7 ] ), 
   Transformation( [ 2, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
   Transformation( [ 6, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
   Transformation( [ 7, 2, 4, 4, 5, 6, 7, 6, 10, 10 ] ), 
@@ -2944,7 +2942,7 @@ gap> Size(d);
 gap> HClassReps(d);
 [ Transformation( [ 2, 1, 3, 5, 4, 10, 9, 8, 7, 6 ] ) ]
 gap> h:=GroupHClass(d);
-{IdentityTransformation()}
+{IdentityTransformation}
 gap> h=d;
 true
 gap> Size(s);
@@ -3630,11 +3628,9 @@ gap> s:=FullTransformationSemigroup(7);
 gap> Factorial(7);
 5040
 gap> f:=One(s);
-IdentityTransformation()
+IdentityTransformation
 gap> h:=HClassNC(s, f);
-{IdentityTransformation()}
-gap> enum:=Enumerator(d);
-<enumerator of D-class>
+{IdentityTransformation}
 gap> enum:=Enumerator(h);
 <enumerator of H-class>
 gap> ForAll(enum, x-> x in h);
@@ -3646,7 +3642,7 @@ true
 gap> ForAll([1..Length(enum)], x-> Position(enum, enum[x])=x);
 true
 gap> Idempotents(h);
-[ IdentityTransformation() ]
+[ IdentityTransformation ]
 gap> f:=Transformation( [ 3, 2, 4, 5, 6, 1, 1 ] );;
 gap> h:=HClassNC(s, f);
 {Transformation( [ 3, 2, 4, 5, 6, 1, 1 ] )}
@@ -3658,7 +3654,7 @@ gap> h:=HClass(s, Transformation( [ 5, 1, 3, 3, 5, 5, 3 ] ));;
 gap> IsGroupHClass(h);
 false
 gap> IsRegularClass(h);
-true
+false
 
 #
 gap> gens:=
@@ -3767,14 +3763,14 @@ gap> IsGroupHClass(h);
 true
 gap> IsomorphismPermGroup(h);
 MappingByFunction( {Transformation( [ 5, 6, 6, 5, 4, 3, 4 ] )}, Group([ (3,6)
-(4,5) ]), <Attribute "AsPermutation">, function( x ) ... end )
+(4,5) ]), function( x ) ... end, function( x ) ... end )
 gap> SchutzenbergerGroup(h);
 Group([ (3,6)(4,5) ])
 gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
-{Transformation( [ 3, 2, 2, 3, 4, 5, 4 ] )}
+{Transformation( [ 1, 2, 2, 1, 7, 6, 7 ] )}
 gap> IsGroupHClass(h);
-false
+true
 gap> h:=GroupHClass(DClass(h));
 {Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )}
 gap> IsGroupHClass(h);
@@ -3785,22 +3781,22 @@ true
 gap> First(h, x-> (x^iso)^inv<>x);
 fail
 gap> One(h);
-IdentityTransformation()
+IdentityTransformation
 gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
-{Transformation( [ 3, 4, 4, 3, 2, 1, 2 ] )}
+{Transformation( [ 4, 3, 2, 1, 2, 2, 3 ] )}
 gap> IsGroupHClass(h);
-false
+true
 gap> h:=GroupHClass(DClass(h));
 {Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )}
 gap> IsGroupHClass(h);
 true
 gap> iso:=IsomorphismPermGroup(h); inv:=InverseGeneralMapping(iso);
 MappingByFunction( {Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )}, Group([ (3,6)
-(4,5) ]), <Attribute "AsPermutation">, function( x ) ... end )
+(4,5) ]), function( x ) ... end, function( x ) ... end )
 MappingByFunction( Group([ (3,6)
 (4,5) ]), {Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )
- }, function( x ) ... end, <Attribute "AsPermutation"> )
+ }, function( x ) ... end, function( x ) ... end )
 gap> ForAll(h, x-> (x^iso)^inv=x);
 true
 
@@ -3833,17 +3829,16 @@ gap> iter:=IteratorOfHClasses(s);
 <iterator of H-classes>
 gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
 gap> h;
-{PartialPerm( [ 1, 2, 3 ], [ 1, 5, 3 ] )}
+{PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}
 gap> IsGroupHClass(h);
-false
+true
 gap> h:=GroupHClass(DClass(h));
 {PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}
 gap> iso:=IsomorphismPermGroup(h); inv:=InverseGeneralMapping(iso);
 MappingByFunction( {PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}, Group([ (1,2),
- (2,3) ]), <Attribute "AsPermutation">, function( x ) ... end )
+ (2,3) ]), function( x ) ... end, function( x ) ... end )
 MappingByFunction( Group([ (1,2), (2,3) ]), {PartialPerm(
- [ 1, 2, 3 ], [ 1, 2, 3 ]
-  )}, function( x ) ... end, <Attribute "AsPermutation"> )
+ [ 1, 2, 3 ], [ 1, 2, 3 ] )}, function( x ) ... end, function( x ) ... end )
 gap> ForAll(h, x-> (x^iso)^inv=x);
 true
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
@@ -3922,12 +3917,11 @@ false
 gap> h:=GroupHClass(DClass(h));
 {Transformation( [ 1, 2, 3, 4, 4, 6, 2 ] )}
 gap> One(h);
-IdentityTransformation()
+IdentityTransformation
 gap> IsGroupHClass(h);
 true
 gap> KnownPropertiesOfObject(h);
-[ "IsFinite", "IsDuplicateFree", "IsGroupHClass", 
-  "IsActingSemigroupGreensClass", "IsGreensClassNC" ]
+[ "IsFinite", "IsDuplicateFree", "IsGroupHClass", "IsGreensClassNC" ]
 gap> KnownAttributesOfObject(h);
 [ "Representative", "OneImmutable", "ParentAttr", "EquivalenceClassRelation", 
   "LambdaOrbSCCIndex", "RhoOrbSCCIndex", "LambdaOrb", "RhoOrb" ]
@@ -4070,7 +4064,7 @@ gap> f:=Transformation( [ 4, 4, 1, 2, 1, 2 ] );;
 gap> h:=HClassNC(s, f);
 {Transformation( [ 4, 4, 1, 2, 1, 2 ] )}
 gap> IsRegularClass(h);
-true
+false
 gap> IsGroupHClass(h);
 false
 gap> h:=GroupHClass(DClass(h));

@@ -13,8 +13,8 @@
     <Func Name="SemigroupsDir" Arg=""/>
     <Returns>A string.</Returns>    
     <Description>
-      This function returns the absolute path to the &Semigroups; package directory
-      as a string. The same result can be obtained typing:
+      This function returns the absolute path to the &Semigroups; package
+      directory as a string. The same result can be obtained typing:
 
       <Log>PackageInfo("semigroups")[1]!.InstallationPath;</Log>
 
@@ -71,10 +71,9 @@
     <Returns>Nothing.</Returns> 
     <Description>
       This function should be called with no argument to test the examples in
-      the &Semigroups; manual. These tests should take no more than a few minutes
-      to complete.
-      To more comprehensively test that &Semigroups; is installed
-      correctly use <Ref Func="SemigroupsTestAll"/>. See also <Ref
+      the &Semigroups; manual. These tests should take no more than a few
+      minutes to complete.  To more comprehensively test that &Semigroups; is
+      installed correctly use <Ref Func="SemigroupsTestAll"/>. See also <Ref
       Func="SemigroupsTestInstall"/>.
     </Description>
   </ManSection>
@@ -86,10 +85,10 @@
     <Returns>Nothing.</Returns> 
     <Description>
       This function should be called with no argument to test your installation
-      of &Semigroups; is working correctly. These tests should take no more than a
-      fraction of a second to complete. 
-      To more comprehensively test that &Semigroups; is
-      installed correctly use <Ref Func="SemigroupsTestAll"/>. 
+      of &Semigroups; is working correctly. These tests should take no more
+      than a fraction of a second to complete.  To more comprehensively test
+      that &Semigroups; is installed correctly use 
+      <Ref Func="SemigroupsTestAll"/>. 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -97,32 +96,31 @@
 <#GAPDoc Label="Generators">
   <ManSection>
     <Func Name="Generators" Arg="S"/>
-    <Returns>A list of transformations or partial permutations.</Returns>
+    <Returns>A list of generators.</Returns>
     <Description>
-      <C>Generators</C> returns the generating set used to define 
-      the semigroup <A>S</A> of transformations or partial permutations.  
-      The generators of a monoid or inverse semigroup
-      <A>S</A> can be defined in several ways, for example, including or
-      excluding the identity element, including or not the inverses of the
-      generators. <C>Generators(<A>S</A>)</C>
-      uses the definition that returns the least number of generators. Nothing
-      new is computed when <C>Generators</C> is called and this function 
-      should not be confused with <Ref Attr="SmallGeneratingSet"/>.
+      <C>Generators</C> returns the generating set used to define the semigroup
+      <A>S</A>.  The generators of a monoid or inverse semigroup <A>S</A> can
+      be defined in several ways, for example, including or excluding the
+      identity element, including or not the inverses of the generators.
+      <C>Generators</C> uses the definition that returns the least number of
+      generators. Nothing new is computed when <C>Generators</C> is called and
+      this function should not be confused with 
+      <Ref Attr="SmallGeneratingSet"/>.
 
       <List>
-        <Mark>Transformation semigroup</Mark>
+        <Mark>for a semigroup</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 
           <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/>.
         </Item>
-        <Mark>Transformation monoid</Mark>
+        <Mark>for a monoid</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 
           <Ref Attr="GeneratorsOfMonoid" BookName="ref"/>.
         </Item>
-        <Mark>Inverse semigroup</Mark>
+        <Mark>for an inverse semigroup</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 
           <Ref Attr="GeneratorsOfInverseSemigroup" BookName="ref"/>.
         </Item>
-        <Mark>Inverse monoid</Mark>
+        <Mark>for an inverse monoid</Mark>
         <Item><C>Generators(<A>S</A>)</C> is a synonym for 
           <Ref Attr="GeneratorsOfInverseMonoid" BookName="ref"/>.
         </Item>
@@ -131,7 +129,7 @@
 gap> M:=Monoid(Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
 > Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
 gap> GeneratorsOfSemigroup(M);
-[ IdentityTransformation(), 
+[ IdentityTransformation, 
   Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ), 
   Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) ]
 gap> GeneratorsOfMonoid(M);
@@ -167,77 +165,79 @@ gap> GeneratorsOfSemigroup(S);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="ReadSemigroups">
+<#GAPDoc Label="ReadGenerators">
   <ManSection> 
-    <Func Name="ReadSemigroups" Arg="filename[, nr]"/>
-    <Returns>A list of lists of semigroup elements</Returns>
+    <Func Name="ReadGenerators" Arg="filename[, nr]"/>
+    <Returns>A list of lists of semigroup elements.</Returns>
     <Description>
       If <A>filename</A> is the name of a file created using 
-      <Ref Func="WriteSemigroups"/>, then <C>ReadSemigroups</C> returns the
+      <Ref Func="WriteGenerators"/>, then <C>ReadGenerators</C> returns the
       contents of this file as a list of lists of transformations, partial
       permutations, or bipartitions. <P/>
       
       If the optional second argument <A>nr</A> is present, then
-      <C>ReadSemigroups</C> returns the elements stored in the <A>nr</A>th line
+      <C>ReadGenerators</C> returns the elements stored in the <A>nr</A>th line
       of <A>filename</A>.
       <P/>
       
       Note that if the file <A>filename</A> is gzipped, then the message
       <C>gzip: stdout: Broken pipe</C> might be displayed when
-      <C>ReadSemigroups</C> is used. While this is unfortunate, it not an error
-      that affect the output of <C>ReadSemigroups</C>. We hope to resolve this
-      issue in the future.
+      <C>ReadGenerators</C> is used. While this is unfortunate, it is not an
+      error that affects the output of <C>ReadGenerators</C>. We hope to
+      resolve this issue in the future.
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="WriteSemigroups">
+<#GAPDoc Label="WriteGenerators">
   <ManSection> 
-    <Func Name="WriteSemigroups" Arg="filename, list[, append]"/>
-    <Returns>The number of bytes written or <K>fail</K>.</Returns>
+    <Func Name="WriteGenerators" Arg="filename, list[, append]"/>
+    <Returns><K>true</K> or <K>fail</K>.</Returns>
     <Description>
       This function provides a method for writing transformations, partial
       permutations, and bipartitions to a file, that uses a relatively small
       amount of disk space.  The resulting file can be further compressed using
-      <C>gzip</C>.<P/>
+      <C>gzip</C> or <C>xz</C>.<P/>
       
       The argument <A>list</A> should be a list of elements, a semigroup, or a
       list of lists of elements, or semigroups. The types of elements and
       semigroups supported are: transformations, partial permutations, and
       bipartitions. <P/>
      
-      The argument <A>filename</A> should be
-      a string containing the name of a file where the entries in
-      <A>list</A> will be written. <P/>
+      The argument <A>filename</A> should be a string containing the name of a
+      file where the entries in <A>list</A> will be written or an
+      <Package>IO</Package> package file object.<P/>
 
       If  the  optional  third argument <A>append</A> is given and
-      equals  <K>false</K>,  then the previous content of the file is deleted. 
-      Otherwise the elements are appended to the file.  This function returns
-      the number of bytes written or <K>fail</K> if something went wrong. <P/> 
+      equals  <C>"w"</C>,  then the previous content of the file is deleted. 
+      If the optional third argument is <C>"a"</C> or is not present, then
+      <C>list</C> is appended to the file.  This function returns <K>true</K>
+      if everything went well or <K>fail</K> if something went wrong.<P/> 
 
-      <C>WriteSemigroups</C> appends a line to the file <A>filename</A>
+      <C>WriteGenerators</C> appends a line to the file <A>filename</A>
       for every entry in <A>list</A>. If any element of <A>list</A> is a
       semigroup, then the generators of that semigroup are written to
       <A>filename</A>. <P/>
       
-      The first character <C>m</C> of the appended line is the number of
-      characters in the degree of the elements to be written, the next
-      <C>m</C> characters are the degree <C>n</C> of the elementss to be
-      written, and the internal representation of the elements themselves are
-      written in blocks of <C>m*n</C> in the remainder of the line. For
-      example, the transformations:
+      The first character of the appended line indicates which type of element
+      is contained in that line, the second character <C>m</C> is the number of
+      characters in the degree of the elements to be written, the next <C>m</C>
+      characters are the degree <C>n</C> of the elements to be written, and the
+      internal representation of the elements themselves are written in blocks
+      of <C>m*n</C> in the remainder of the line. For example, the
+      transformations: 
       <Log>
 [ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ), 
   Transformation( [ 3, 8, 1, 9, 9, 4, 10, 5, 10, 6 ] )]</Log>
       are written as:
       <Log>
-210 2 2 6 7 2 6 9 9 1 1 5 3 8 1 9 9 410 510 6</Log>
+t210 2 2 6 7 2 6 9 9 1 1 5 3 8 1 9 9 410 510 6</Log>
      
-      The file <A>filename</A> can be read using <Ref Func="ReadSemigroups"/>.
+      The file <A>filename</A> can be read using <Ref Func="ReadGenerators"/>.
 <Example>
 gap> file:=Concatenation(SemigroupsDir(), "/examples/graph7c.semigroups.gz");;
-gap> ReadSemigroups(file, 453);
-[ Transformation( [ 1, 2, 2 ] ), IdentityTransformation(), 
+gap> ReadGenerators(file, 453);
+[ Transformation( [ 1, 2, 2 ] ), IdentityTransformation, 
   Transformation( [ 1, 2, 3, 4, 5, 7, 7 ] ), 
   Transformation( [ 1, 3, 2, 4, 7, 6, 7 ] ), 
   Transformation( [ 4, 2, 1, 1, 6, 5 ] ), 

@@ -9,8 +9,6 @@
 ##
 
 DeclareGlobalFunction("RectifyLambda");
-DeclareGlobalFunction("RhoPos");
-DeclareGlobalFunction("LambdaPos");
 DeclareGlobalFunction("RectifyRho");
 DeclareGlobalFunction("RectifyInverseRho");
 

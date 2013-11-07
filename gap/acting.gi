@@ -10,44 +10,37 @@
 
 # acting semigroups...
 
-InstallMethod(SemigroupData, "for an acting semigroup",
+InstallMethod(SemigroupData, 
+"for an acting semigroup with inverse op and generators",
+[IsActingSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+function(S)
+  return fail;
+end);
+
+#
+
+InstallMethod(SemigroupData, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local gens, one, data, val, lambdarhoht;
+  local gens, data, opts;
  
   gens:=GeneratorsOfSemigroup(s);
-  one:=One(gens);
 
   data:=rec(gens:=gens, 
-     ht:=HTCreate(one, rec(treehashsize:=s!.opts.hashlen.L)),
-     pos:=0, graph:=[EmptyPlist(Length(gens))], 
+     ht:=HTCreate(gens[1], rec(treehashsize:=s!.opts.hashlen.L)),
+     pos:=0, graph:=[EmptyPlist(Length(gens))], init:=false,
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[],
-     lenreps:=0, orbit:=[[,,,one]], repslens:=[], 
+     lenreps:=[], orbit:=[[,,,FakeOne(gens)]], repslens:=[], 
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail],
      genstoapply:=[1..Length(gens)], stopper:=false);
   
-  # hash table of all valid lambda-rho values found so far, HTValue of
+  # hash table of all valid rho values found so far, HTValue[m] of
   # LambdaRhoHT points to where the existing R-class reps with same lambda-rho
-  # value are in SemigroupData(s).reps.  
+  # value are in SemigroupData(s).reps[m].  
   
-  val:=RhoFunc(s)(Representative(s));
-  lambdarhoht:=HTCreate([1, val], rec(treehashsize:=s!.opts.hashlen.M));
-
-  if IsBound(RhoOrbOpts(s).forflatplainlists) 
-   and RhoOrbOpts(s).forflatplainlists then 
-    lambdarhoht!.rhohf:=ORB_HashFunctionForPlainFlatList;
-  else
-    lambdarhoht!.rhohf:=ChooseHashFunction(val, lambdarhoht!.len).func;
-  fi;
-  
-  lambdarhoht!.hf:=function( x, data )
-    return (x[1]+lambdarhoht!.rhohf(x[2], data)) mod data + 1;
-  end;
-  lambdarhoht!.hfd:=lambdarhoht!.len;
-  
-  data.lambdarhoht:=lambdarhoht;
-
-  #
+  opts:=ShallowCopy(RhoOrbOpts(s));
+  opts.treehashsize:=s!.opts.hashlen.M;
+  data.lambdarhoht:=HTCreate(RhoFunc(s)(Representative(s)), opts);
 
   Objectify(NewType(FamilyObj(s), IsSemigroupData and IsAttributeStoringRep),
    data);
@@ -62,35 +55,34 @@ InstallMethod(\in,
 "for an associative element and acting semigroup with generators",
 [IsAssociativeElement, IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(f, s)
-  local data, len, ht, val, lambda, o, l, lookfunc, m, scc, lambdarho, schutz,
-  g, reps, repslens, lambdaperm, n, max, found;
+  local data, len, ht, lambda, o, l, m, scc, rho, val, lookfunc, schutz, g, reps, repslens, lambdaperm, max, found, n, i;
   
-  if ElementsFamily(FamilyObj(s))<>FamilyObj(f) then 
-    Error("the element and semigroup are not of the same type,");
-    return;
-  fi;
-
-  if HasAsSSortedList(s) then 
-    return f in AsSSortedList(s); 
-  fi;
-
-  if IsActingSemigroupWithFixedDegreeMultiplication(s) 
-    and ActionDegree(f)<>ActionDegree(s) then 
-    return false;       
-  fi;
-
-  if not (IsMonoid(s) and IsOne(f)) and 
-   ActionRank(f) > MaximumList(List(Generators(s), ActionRank)) then
-    Info(InfoSemigroups, 2, "element has larger rank than any element of ",
-     "semigroup.");
+  if ElementsFamily(FamilyObj(s))<>FamilyObj(f) 
+    or (IsActingSemigroupWithFixedDegreeMultiplication(s) 
+     and ActionDegree(f)<>ActionDegree(s)) 
+    or (ActionDegree(f)>ActionDegree(s)) then 
     return false;
   fi;
 
-  if HasMinimalIdeal(s) and 
-   ActionRank(f) < ActionRank(Representative(MinimalIdeal(s))) then
-    Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
-     "semigroup.");
-    return false;
+  #if HasAsSSortedList(s) then 
+  #  return f in AsSSortedList(s); 
+  #fi;
+  
+  if not (IsMonoid(s) and IsOne(f)) then 
+    if ActionRank(s)(f)>MaximumList(List(Generators(s), f-> ActionRank(s)(f)))
+     then
+      Info(InfoSemigroups, 2, "element has larger rank than any element of ",
+       "semigroup.");
+      return false;
+    fi;
+  fi;
+
+  if HasMinimalIdeal(s) then 
+    if ActionRank(s)(f)<ActionRank(s)(Representative(MinimalIdeal(s))) then
+      Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
+       "semigroup.");
+      return false;
+    fi;
   fi;  
 
   data:=SemigroupData(s);
@@ -105,8 +97,12 @@ function(f, s)
   lambda:=LambdaFunc(s)(f);
 
   # look for lambda!
-  o:=LambdaOrb(s);
-  l:=EnumeratePosition(o, lambda, false);
+  o:=LambdaOrb(s); 
+  if not IsClosed(o) then 
+    Enumerate(o, infinity);
+  fi;
+  
+  l:=Position(o, lambda);
     
   if l=fail then 
     return false;
@@ -116,16 +112,17 @@ function(f, s)
   m:=OrbSCCLookup(o)[l];
   scc:=OrbSCC(o);
 
-  # check if lambdarho is already known
-  lambdarho:=[m, RhoFunc(s)(f)];
-  val:=HTValue(data!.lambdarhoht, lambdarho);
+  # check if rho is already known
+  
+  rho:=RhoFunc(s)(f);
+  val:=HTValue(data!.lambdarhoht, rho);
 
   lookfunc:=function(data, x) 
-    return [x[2], RhoFunc(s)(x[4])]=lambdarho;
+    return x[2]=m and RhoFunc(s)(x[4])=rho;
   end;
   
   # if lambdarho is not already known, then look for it
-  if val=fail then 
+  if val=fail or not IsBound(val[m]) then 
     if IsClosed(data) then 
       return false;
     fi;
@@ -140,6 +137,8 @@ function(f, s)
     val:=data!.orblookup1[val]; 
     # the index of the list of reps with same lambdarho value as f. 
     # = HTValue(LambdaRhoHT(s), lambdarho);
+  else 
+    val:=val[m];
   fi;
 
   schutz:=LambdaOrbStabChain(o, m);
@@ -172,33 +171,32 @@ function(f, s)
 
     # check if f already corresponds to an element of reps[val]
     lambdaperm:=LambdaPerm(s);
-    for n in [1..repslens[val]] do 
-      if SiftedPermutation(schutz, lambdaperm(reps[val][n], g))=() then
+    for n in [1..repslens[m][val]] do 
+      if SiftedPermutation(schutz, lambdaperm(reps[m][val][n], g))=() then
         return true;
       fi;
     od;
   fi; 
- 
+
   if IsClosed(data) then 
     return false;
   fi;
 
-  # enumerate until we find f or the number of elts in reps[val] exceeds max
+  # enumerate until we find f or the number of elts in reps[m][val] exceeds max
   max:=Factorial(LambdaRank(s)(lambda))/Size(LambdaOrbSchutzGp(o, m));
 
-  if repslens[val]<max then 
+  if repslens[m][val]<max then 
     if schutz=false then 
       repeat 
         # look for more R-reps with same lambda-rho value
         data:=Enumerate(data, infinity, lookfunc);
         found:=data!.found;
         if found<>false then 
-          n:=HTValue(ht, g);
-          if n<>fail then 
+          if g=data[found][4] then 
             return true;
           fi;
         fi;
-      until found=false or repslens[val]>=max;
+      until found=false or repslens[m][val]>=max;
     else 
       repeat
         
@@ -207,17 +205,17 @@ function(f, s)
         found:=data!.found;
         if found<>false then 
           reps:=data!.reps; repslens:=data!.repslens;
-          for m in [n+1..repslens[val]] do 
-            if SiftedPermutation(schutz, lambdaperm(reps[val][m], g))=() then 
+          for i in [n+1..repslens[m][val]] do 
+            if SiftedPermutation(schutz, lambdaperm(reps[m][val][i], g))=()
+             then 
               return true;
             fi;
           od;
-          n:=repslens[val];
+          n:=repslens[m][val];
         fi;
-      until found=false or repslens[val]>=max;
+      until found=false or repslens[m][val]>=max;
     fi;
   fi;
-
   return false;
 end);
 
@@ -226,20 +224,25 @@ end);
 InstallMethod(Size, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local data, reps, nr, repslookup, orbit, i, j;
+  local data, lenreps, repslens, o, scc, r, n, m, i, j;
    
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
-  reps:=data!.reps;
-  nr:=Length(reps);
-  repslookup:=data!.repslookup;
-  orbit:=data!.orbit;
-  i:=0;
-
-  for j in [1..nr] do 
-    data:=orbit[repslookup[j][1]];
-    i:=i+Length(reps[j])*Size(LambdaOrbSchutzGp(data[3], data[2]))*Length(OrbSCC(data[3])[data[2]]);
+  lenreps:=data!.lenreps;
+  repslens:=data!.repslens;
+  o:=LambdaOrb(s);
+  scc:=OrbSCC(o);
+  
+  r:=0;
+  for m in [2..Length(scc)] do 
+    n:=Size(LambdaOrbSchutzGp(o, m))*Length(scc[m]);
+    for i in [1..lenreps[m]] do 
+      for j in [1..repslens[m][i]] do 
+        r:=r+n;
+      od;
+    od;
   od;
-  return i; 
+
+  return r; 
 end);
 
 # data...
@@ -278,7 +281,7 @@ InstallMethod(Enumerate,
 "for an semigroup data, limit, and func",
 [IsSemigroupData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr, i, graph, reps, repslookup, orblookup1, orblookup2, repslens, lenreps, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact, lambdaperm, rho, lambdarhoht, o, oht, scc, lookup, htadd, htvalue, x, lamx, pos, m, y, rhoy, val, schutz, tmp, old, j, n;
+  local looking, ht, orb, nr, i, graph, reps, lambdarhoht, repslookup, orblookup1, orblookup2, repslens, lenreps, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact, lambdaperm, rho, o, oht, scc, lookup, htadd, htvalue, x, pos, m, y, rhoy, val, tmp, schutz, old, j, n;
  
  if lookfunc<>ReturnFalse then 
     looking:=true;
@@ -300,26 +303,27 @@ function(data, limit, lookfunc)
   nr:=Length(orb);
   i:=data!.pos;       # points in orb in position at most i have descendants
   graph:=data!.graph; # orbit graph of orbit of R-classes under left mult 
-  reps:=data!.reps;   # reps grouped by equal lambda and rho value
-                      # HTValue(lambdarhoht, [lambda(x), rho(x)])
+  reps:=data!.reps;   # reps grouped by equal lambda scc index and rho value
+                      # HTValue(lambdarhoht, rho(x))[m]
   lambdarhoht:=data!.lambdarhoht;
   
-  repslookup:=data!.repslookup; # Position(orb, reps[i][j])=repslookup[i][j]
-                                # = HTValue(ht, reps[i][j])
+  repslookup:=data!.repslookup; # Position(orb, reps[m][i][j])
+                                # = repslookup[m][i][j]
+                                # = HTValue(ht, reps[m][i][j])
   
-  orblookup1:=data!.orblookup1; # orblookup1[i] position in reps containing 
+  orblookup1:=data!.orblookup1; # orblookup1[i] position in reps[m] containing 
                                 # orb[i][4] (the R-rep)
 
-  orblookup2:=data!.orblookup2; # orblookup2[i] position in reps[orblookup1[i]] 
+  orblookup2:=data!.orblookup2; # orblookup2[i] position in 
+                                # reps[m][orblookup1[i]] 
                                 # containing orb[i][4] (the R-rep)
 
-  repslens:=data!.repslens;     # Length(reps[i])=repslens[i] 
-  lenreps:=data!.lenreps;       # lenreps=Length(reps)
+  repslens:=data!.repslens;     # Length(reps[m][i])=repslens[m][i] 
+  lenreps:=data!.lenreps;       # lenreps[m]=Length(reps[m])
 
   stopper:=data!.stopper;       # stop at this place in the orbit
 
   # schreier
-
   schreierpos:=data!.schreierpos;
   schreiergen:=data!.schreiergen;
   schreiermult:=data!.schreiermult;
@@ -340,6 +344,17 @@ function(data, limit, lookfunc)
   oht:=o!.ht;
   scc:=OrbSCC(o); 
   lookup:=o!.scc_lookup;
+  
+  if data!.init=false then #init these lists
+    for i in [2..Length(scc)] do 
+      reps[i]:=[];
+      repslookup[i]:=[];
+      repslens[i]:=[];
+      lenreps[i]:=0;
+    od;
+    data!.init:=true;
+    i:=data!.pos;
+  fi;
  
   if IsBoundGlobal("ORBC") then 
     htadd:=HTAdd_TreeHash_C;
@@ -348,14 +363,13 @@ function(data, limit, lookfunc)
     htadd:=HTAdd;
     htvalue:=HTValue;
   fi;
-
+  
   while nr<=limit and i<nr and i<>stopper do 
-    
+     
     i:=i+1;
     for j in genstoapply do #JDM
       x:=gens[j]*orb[i][4];
-      lamx:=lambda(x);
-      pos:=htvalue(oht, lamx); 
+      pos:=htvalue(oht, lambda(x)); 
 
       #find the scc
       m:=lookup[pos];
@@ -366,26 +380,35 @@ function(data, limit, lookfunc)
       else
         y:=x;
       fi;
-      rhoy:=[m, rho(y)];
-      #Append(rhoy, rho(y));;
+      rhoy:=rho(y); 
       val:=htvalue(lambdarhoht, rhoy);
-      # this is what we keep if it is new
-      # x:=[s, m, o, y, false, nr+1];
 
-      if val=fail then  #new rho value, and hence new R-rep
-        lenreps:=lenreps+1;
-        htadd(lambdarhoht, rhoy, lenreps);
+      # this is what we keep if it is new
+      # x:=[s, m, o, y, nr+1];
+
+      if val=fail or not IsBound(val[m]) then  
+        #new rho value, and hence new R-rep
+        lenreps[m]:=lenreps[m]+1;
+        if val=fail then 
+          val:=[];
+          val[m]:=lenreps[m];
+          htadd(lambdarhoht, rhoy, val);
+        else 
+          val[m]:=lenreps[m];
+        fi;
         nr:=nr+1;
-        reps[lenreps]:=[y];
-        repslookup[lenreps]:=[nr];
-        orblookup1[nr]:=lenreps;
+        reps[m][lenreps[m]]:=[y];
+        repslookup[m][lenreps[m]]:=[nr];
+        repslens[m][lenreps[m]]:=1;
+        orblookup1[nr]:=lenreps[m];
         orblookup2[nr]:=1;
-        repslens[lenreps]:=1;
         x:=[s, m, o, y, false, nr];
-        # semigroup, lambda orb data, lambda orb, rep, index in orbit,
-        # position of reps with equal lambda-rho value
+        # semigroup, lambda orb scc index, lambda orb, rep,
+        # IsGreensClassNC, index in orbit,
+    
 
       else              # old rho value
+        val:=val[m];
         x:=[s, m, o, y, false, nr+1];
         # JDM expand!
         schutz:=LambdaOrbStabChain(o, m);
@@ -393,7 +416,7 @@ function(data, limit, lookfunc)
         #check membership in schutz gp via stab chain
         
         if schutz=true then # schutz gp is symmetric group
-          graph[i][j]:=repslookup[val][1];
+          graph[i][j]:=repslookup[m][val][1];
           continue;
         else
           if schutz=false then # schutz gp is trivial
@@ -404,10 +427,11 @@ function(data, limit, lookfunc)
             fi;
           else # schutz gp neither trivial nor symmetric group
             old:=false; 
-            for n in [1..repslens[val]] do 
-              if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=() then 
+            for n in [1..repslens[m][val]] do 
+              if SiftedPermutation(schutz, lambdaperm(reps[m][val][n], y))=()
+                then
                 old:=true;
-                graph[i][j]:=repslookup[val][n]; 
+                graph[i][j]:=repslookup[m][val][n]; 
                 break;
               fi;
             od;
@@ -416,11 +440,11 @@ function(data, limit, lookfunc)
             fi;
           fi;
           nr:=nr+1;
-          repslens[val]:=repslens[val]+1;
-          reps[val][repslens[val]]:=y;
-          repslookup[val][repslens[val]]:=nr;
+          repslens[m][val]:=repslens[m][val]+1;
+          reps[m][val][repslens[m][val]]:=y;
+          repslookup[m][val][repslens[m][val]]:=nr;
           orblookup1[nr]:=val;
-          orblookup2[nr]:=repslens[val];
+          orblookup2[nr]:=repslens[m][val];
         fi;
       fi;
       # add reporting here!!
@@ -493,19 +517,24 @@ function(data, x, n)
   fi;
   
   l:=Position(o, LambdaFunc(s)(x));
+  
+  if l=fail then 
+    return fail;
+  fi;
+  
   m:=OrbSCCLookup(o)[l];
   scc:=OrbSCC(o);
 
-  val:=HTValue(data!.lambdarhoht, [m, RhoFunc(s)(x)]);
-  if val=fail then 
+  val:=HTValue(data!.lambdarhoht, RhoFunc(s)(x));
+  if val=fail or not IsBound(val[m]) then 
     return fail;
   fi;
 
   schutz:=LambdaOrbStabChain(o, m);
-  repslookup:=data!.repslookup;
+  repslookup:=data!.repslookup[m][val[m]];
 
   if schutz=true then 
-    return repslookup[val][1];
+    return repslookup[1];
   fi;
  
   if l<>scc[m][1] then 
@@ -514,16 +543,15 @@ function(data, x, n)
     y:=x;
   fi; 
 
-  reps:=data!.reps; repslens:=data!.repslens;
+  reps:=data!.reps[m][val[m]]; repslens:=data!.repslens[m][val[m]];
 
   if schutz=false then 
     return HTValue(data!.ht, y);
   else
     lambdaperm:=LambdaPerm(s);
-    for n in [1..repslens[val]] do 
-      if SiftedPermutation(schutz, lambdaperm(reps[val][n], y))=() then 
-      #if SiftGroupElement(schutz, lambdaperm(reps[val][n], y)).isone then
-        return repslookup[val][n];
+    for n in [1..repslens] do 
+      if SiftedPermutation(schutz, lambdaperm(reps[n], y))=() then 
+        return repslookup[n];
       fi;
     od;
   fi; 
@@ -566,9 +594,44 @@ end);
 
 InstallMethod(ViewObj, [IsSemigroupData], 999,
 function(data)
-  Print("<semigroup data: ", Length(data!.orbit)-1, " reps, ",
-  Length(data!.reps), " lambda-rho values>");
+  Print("<");
+
+  if IsClosed(data) then 
+    Print("closed ");
+  else 
+    Print("open ");
+  fi;
+  Print("semigroup data with ", Length(data!.orbit)-1, " reps>");
   return;
 end);
+
+# we require a fake one in the case that the objects we are dealing with don't
+# have one.
+
+InstallMethod(String, "for the universal fake one",
+[IsUniversalFakeOne], 
+function(obj)
+  return "<universal fake one>";
+end);
+
+InstallMethod(\*, 
+"for the universal fake one and an associative element",
+[IsUniversalFakeOne, IsAssociativeElement],
+function(x, y)
+  return y;
+end);
+
+InstallMethod(\*, 
+"for an associative element and the universal fake one",
+[IsAssociativeElement, IsUniversalFakeOne],
+function(x, y)
+  return x;
+end);
+
+InstallMethod(\<, "for the universal fake one and an associative element",
+[IsUniversalFakeOne, IsAssociativeElement], ReturnTrue);
+
+InstallMethod(\<, "for an associative element and the universal fake one",
+[IsAssociativeElement, IsUniversalFakeOne], ReturnFalse);
 
 #EOF

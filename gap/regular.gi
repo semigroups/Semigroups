@@ -30,7 +30,7 @@ function(d)
   if IsTrivial(g) then 
     return false;
   elif IsNaturalSymmetricGroup(g) and
-     NrMovedPoints(g)=ActionRank(Representative(d)) then 
+     NrMovedPoints(g)=ActionRank(Parent(d))(Representative(d)) then 
     return true;
   fi;
 
@@ -46,10 +46,29 @@ InstallMethod(\in, "for an acting element and regular acting semigroup",
 function(f, s)
   local lambda_o, lambda_l, rho_o, rho_l, m, schutz, g, n, rep;
 
-  if not ElementsFamily(FamilyObj(s))=FamilyObj(f) then 
-    Error("the element and semigroup are not of the same type,");
-    return;
+  if ElementsFamily(FamilyObj(s))<>FamilyObj(f) 
+    or (IsActingSemigroupWithFixedDegreeMultiplication(s)
+        and ActionDegree(f)<>ActionDegree(rep))
+    or ActionDegree(f)>ActionDegree(s) then
+    return false;
   fi;
+ 
+  if not IsMonoid(s) and IsOne(f) then
+    if ActionRank(s)(f)>MaximumList(List(Generators(s), f-> ActionRank(s)(f)))
+     then
+      Info(InfoSemigroups, 2, "element has larger rank than any element of ",
+       "semigroup.");
+      return false;
+    fi;
+  fi;
+
+  if HasMinimalIdeal(s) then
+    if ActionRank(s)(f)<ActionRank(s)(Representative(MinimalIdeal(s))) then
+      Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
+       "semigroup.");
+      return false;
+    fi;
+  fi;  
 
   if HasAsSSortedList(s) then 
     return f in AsSSortedList(s); 
@@ -103,7 +122,7 @@ function(f, s)
   return SiftedPermutation(schutz, LambdaPerm(s)(rep, g))=();
 end);
 
-#JDM revise this if revising \in for element and D-class in greens.gi
+#
 
 InstallMethod(\in, "for acting element and regular D-class of acting semigroup",
 [IsAssociativeElement, IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
@@ -113,9 +132,10 @@ function(f, d)
   rep:=Representative(d);
   s:=Parent(d);
 
-  # much much better performance using f[2]<>rep[2] below
   if ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
-    or ActionRank(f) <> ActionRank(rep) then
+    or (IsActingSemigroupWithFixedDegreeMultiplication(s) 
+        and ActionDegree(f)<>ActionDegree(rep)) 
+    or ActionRank(s)(f) <> ActionRank(s)(rep) then
     return false;
   fi;
 
@@ -515,7 +535,7 @@ function(l)
     lambda_l:=Position(lambda_o, LambdaFunc(s)(f));
   else
     lambda_o:=GradedLambdaOrb(s, f, nc<>true);
-    lambda_l:=LambdaPos(lambda_o);
+    lambda_l:=lambda_o[2]; lambda_o:=lambda_o[1];
   fi;
   lambda_m:=OrbSCCLookup(lambda_o)[lambda_l];
 
@@ -553,7 +573,7 @@ function(r)
     rho_l:=Position(rho_o, RhoFunc(s)(f));
   else
     rho_o:=GradedRhoOrb(s, f, nc<>true);
-    rho_l:=RhoPos(rho_o);
+    rho_l:=rho_o[2]; rho_o:=rho_o[1];
   fi;
   rho_m:=OrbSCCLookup(rho_o)[rho_l];
 
@@ -705,7 +725,7 @@ function(s, f)
   if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then 
     o:=LambdaOrb(s);
   else
-    o:=GradedLambdaOrb(s, f, true);
+    o:=GradedLambdaOrb(s, f, true)[1];
   fi;
 
   return CreateRClass(s, fail, o, f, false); 
@@ -820,57 +840,6 @@ function(s)
   return nr;
 end);
 
-#
-
-InstallMethod(NrIdempotents, "for a *-regular acting semigroup",
-[IsRegularStarSemigroup and IsActingSemigroup],
-function(s)
-  local nr, tester, o, scc, printed, m, i, j;
-
-  nr:=0;
-  tester:=IdempotentTester(s);
-  o:=LambdaOrb(s);
-  scc:=OrbSCC(o); 
-
-  if InfoLevel(InfoSemigroups)>1 then 
-    printed:=0;
-    for m in [2..Length(scc)] do 
-      for i in [1..Length(scc[m])] do 
-        if tester(o[scc[m][i]], o[scc[m][i]]) then 
-          nr:=nr+1;
-        fi;
-        for j in [i+1..Length(scc[m])] do 
-          if tester(o[scc[m][i]], o[scc[m][j]]) then
-            if nr>printed+10000 then 
-              printed:=nr;
-              Print("m=", m, ", i=", i, ", j=", j, " of ", Length(scc[m]), " found ", nr, "          \r");
-            fi;
-            nr:=nr+2;
-          fi;
-        od;
-      od;
-    od;
-    if printed>0 then 
-      Print("\n");
-    fi;
-  else
-    for m in [2..Length(scc)] do 
-      for i in [1..Length(scc[m])] do 
-        if tester(o[scc[m][i]], o[scc[m][i]]) then 
-          nr:=nr+1;
-        fi;
-        for j in [i+1..Length(scc[m])] do 
-          if tester(o[scc[m][i]], o[scc[m][j]]) then
-            nr:=nr+2;
-          fi;
-        od;
-      od;
-    od;
-  fi;
-
-  return nr;
-end);
-
 # same method for inverse semigroups
 
 InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
@@ -944,7 +913,7 @@ d-> LambdaOrbSchutzGp(LambdaOrb(d), LambdaOrbSCCIndex(d)));
 # same method for inverse
 
 InstallMethod(SchutzenbergerGroup, "for H-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularClass and IsGreensHClass],
+[IsActingSemigroupGreensClass and IsHClassOfRegularSemigroup and IsGreensHClass],
 function(h)
   local o, rep, s, p;
 
@@ -1003,16 +972,6 @@ end);
 
 # different method for inverse semigroups
 
-InstallMethod(HClassType, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
-function(s)
-  return NewType( FamilyObj( s ), IsEquivalenceClass and
-         IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensHClass 
-         and IsActingSemigroupGreensClass);
-end);
-
-# different method for inverse semigroups
-
 InstallMethod(LClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s)
@@ -1029,6 +988,16 @@ function(s)
   return NewType( FamilyObj( s ), IsEquivalenceClass and
          IsEquivalenceClassDefaultRep and IsRegularClass and IsGreensRClass and
          IsActingSemigroupGreensClass);
+end);
+
+#
+
+InstallMethod(HClassType, "for a regular acting semigroup",
+[IsRegularSemigroup and IsActingSemigroup],
+function(s);
+ return NewType( FamilyObj( s ), IsEquivalenceClass and
+  IsEquivalenceClassDefaultRep and IsGreensHClass and
+  IsHClassOfRegularSemigroup and IsActingSemigroupGreensClass);
 end);
 
 #EOF

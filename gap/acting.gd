@@ -18,4 +18,12 @@ DeclareOperation("Enumerate", [IsSemigroupData, IsCyclotomic, IsFunction]);
 DeclareOperation("OrbitGraphAsSets", [IsSemigroupData]);
 DeclareOperation("PositionOfFound", [IsSemigroupData]);
 
+DeclareCategory("IsUniversalFakeOne", IsAssociativeElement);
+BindGlobal("UniversalFakeOneFamily", 
+  NewFamily("UniversalFakeOneFamily", IsUniversalFakeOne,
+   CanEasilyCompareElements, CanEasilyCompareElements));
+                                                
+BindGlobal("UniversalFakeOne", 
+Objectify(NewType(UniversalFakeOneFamily, IsUniversalFakeOne), rec()));
+
 #EOF

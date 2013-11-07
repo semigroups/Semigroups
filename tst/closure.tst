@@ -34,7 +34,7 @@ gap> NrLClasses(s);
 gap> NrDClasses(s);
 662
 gap> GroupOfUnits(s);
-<transformation group on 0 pts with 1 generator>
+<trivial transformation group>
 
 #
 gap> file:=Concatenation(SemigroupsDir(), "/examples/syntactic.semigroups.gz");;
@@ -149,7 +149,7 @@ true
 gap> MultiplicativeZero(s);
 fail
 gap> GroupOfUnits(s);
-<transformation group on 0 pts with 1 generator>
+<trivial transformation group>
 
 #
 gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ),
@@ -166,7 +166,7 @@ true
 gap> MultiplicativeZero(s);
 fail
 gap> GroupOfUnits(s);
-<transformation group on 0 pts with 1 generator>
+<trivial transformation group>
 
 #
 gap> gens:=[ Transformation( [ 1, 3, 4, 1 ] ),

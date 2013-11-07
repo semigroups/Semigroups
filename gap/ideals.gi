@@ -8,31 +8,6 @@
 ############################################################################# 
 ##
 
-InstallMethod(ViewObj, "for a semigroup ideal with generators",
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal], 1,
-function(S)
-  Print(ViewString(S));
-end);
-
-#
-
-InstallMethod(ViewString, "for a semigroup ideal with generators",
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(S)
-  local str;
-  
-  str:="<ideal of ";
-  Append(str, ViewString(Parent(S)));
-  Append(str, " with ");
-  Append(str, String(Length(GeneratorsOfSemigroupIdeal(S))));
-  Append(str, " generator");
-  if Length(GeneratorsOfSemigroupIdeal(S))>1 then 
-    Append(str, "s");
-  fi;
-  Append(str, ">");
-  return str;
-end);
-
 #
 
 InstallMethod(\., "for a semigroup ideal with generators and pos int",
@@ -50,7 +25,7 @@ function(S, n)
   return S[n];
 end);
 
-# a convenience, similar to the function <Semigroup>...
+# a convenience, similar to the functions <Semigroup>, <Monoid>, etc
 
 InstallGlobalFunction(SemigroupIdeal, 
 function( arg )
@@ -109,50 +84,8 @@ function( arg )
     return;
   fi;
 end);
-#
 
-#InstallMethod(MagmaIdealByGenerators,
-#"for an acting semigroup and collection of its elements", 
-#IsIdenticalObj, 
-#[IsActingSemigroup, IsAssociativeElementCollection],
-#SemigroupIdealByGenerators);
-
-#
-
-IdealOfSemilattice:=function(semilattice, parents)
-  local children;
-  children:=Union(semilattice{parents});
-  if parents=children then 
-    return parents;
-  fi;
-  return IdealOfSemilattice(semilattice, children);
-end;
-
-#
-
-#InstallMethod(SemigroupIdealByGenerators,
-#"for an acting semigroup and associative element collection", 
-#IsIdenticalObj, 
-#[IsActingSemigroup, IsAssociativeElementCollection],
-#function( M, gens )
-#  local S, data;
-#    
-#  S:= Objectify( NewType( FamilyObj( gens ), IsMagmaIdeal and
-#   IsAttributeStoringRep ),
-#   rec(opts:=SemigroupsOptionsRec));
-#  
-#  SetGeneratorsOfMagmaIdeal( S, AsList( gens ) );
-#  SetIsSemigroupIdeal(S, true);
-#  SetParent(S, M);
-#  if HasPartialOrderOfDClasses(M) then 
-#    data:=SemigroupData(M);
-#    SetIdealOfDClasses(S, IdealOfSemilattice(PartialOrderOfDClasses(M), 
-#     List(gens, x->OrbSCCLookup(data)[Position(data, x)]-1)));
-#  fi;
-#  return S;
-#end );
-
-# JDM move to lib
+# JDM move to lib?
 
 InstallMethod(\=, "for semigroup ideals", 
 [IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal, 
@@ -182,39 +115,5 @@ InstallMethod(Representative, "for a semigroup ideal",
 function(I)
   return Representative(GeneratorsOfMagmaIdeal(I));
 end);
-
-#
-
-#InstallMethod(IsInverseSemigroup, "for a semigroup ideal",
-#[IsSemigroupIdeal], I-> IsInverseSemigroup(Parent(I)));
-
-# methods for ideals with ideals of D-classes
-
-#
-
-InstallMethod(Size, "for a semigroup ideal with ideal of D-classes", 
-[IsActingSemigroup and HasIdealOfDClasses],
-function(I)
-  return Sum(List(IdealOfDClasses(I), i-> Size(DClasses(Parent(I))[i])));
-end);
-
-#
-
-InstallMethod(\in, 
-"for acting semigroup ideal with ideal of D-classes and associative element",
-[IsAssociativeElement, IsActingSemigroup and IsSemigroupIdeal and HasIdealOfDClasses],
-function(f, I)
-  local pos;
-  
-  pos:=Position(SemigroupData(Parent(I)), f);
-  
-  if pos=fail then 
-    return false;
-  else
-    return OrbSCCLookup(SemigroupData(Parent(I)))[pos]-1 in IdealOfDClasses(I);
-  fi;
-end);
-
-#
 
 #EOF

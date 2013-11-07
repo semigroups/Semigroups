@@ -379,7 +379,7 @@ end);
 
 #
 
-InstallMethod(IsGroupAsSemigroup, "for an acting semigroup", 
+InstallMethod(IsGroupAsSemigroup, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
   local gens, lambdafunc, lambda, rhofunc, rho, tester, lambda_f, rho_f, f;
@@ -387,7 +387,7 @@ function(s)
   gens:=GeneratorsOfSemigroup(s); #not GeneratorsOfMonoid!
 
   if IsActingSemigroupWithFixedDegreeMultiplication(s) and 
-   ForAll(gens, f->ActionRank(f)=ActionDegree(f)) then
+   ForAll(gens, f->ActionRank(s)(f)=ActionDegree(f)) then
     return true;
   fi;
 
@@ -427,8 +427,8 @@ function(s)
   if HasIdempotentGeneratedSubsemigroup(s) then 
     t:=IdempotentGeneratedSubsemigroup(s);
   else
-    min:=MinimumList(List(gens, ActionRank));
-    new:=Filtered(Idempotents(s), x-> ActionRank(x)>=min);
+    min:=MinimumList(List(gens, x-> ActionRank(s)(x)));
+    new:=Filtered(Idempotents(s), x-> ActionRank(s)(x)>=min);
     if new=[] then 
       return false;
     fi;
@@ -450,7 +450,7 @@ InstallMethod(IsInverseSemigroup,
 "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local n, lambda, rho, iter, x;
+  local lambda, rho, iter, x;
 
   if HasIsRegularSemigroup(s) and not IsRegularSemigroup(s) then 
     Info(InfoSemigroups, 2, "the semigroup is not regular");
@@ -460,7 +460,6 @@ function(s)
     return IsCliffordSemigroup(s);
   fi;
 
-  n:=ActionDegree(s); 
   lambda:=LambdaOrb(s); Enumerate(lambda);
   rho:=RhoOrb(s); Enumerate(rho, Length(lambda));
 
@@ -471,16 +470,20 @@ function(s)
   
   if HasGreensDClasses(s) then 
     iter:=GreensDClasses(s);
+    for x in iter do
+      if not IsRegularClass(x) or NrIdempotents(x)<>NrRClasses(x) then 
+        return false;
+      fi;
+    od;
   else
     iter:=IteratorOfRClasses(s);
+    for x in iter do
+      if not IsRegularClass(x) or NrIdempotents(x)>1 then 
+        return false;
+      fi;
+    od;
   fi;
   
-  for x in iter do
-    if not IsRegularClass(x) or NrIdempotents(x)>1 then 
-      return false;
-    fi;
-  od;
-
   return true;
 end);
 
@@ -733,12 +736,13 @@ function(s)
   # look for s not being regular
   lookfunc:=function(data, x)
     local rho, scc, i;
-    if data!.repslens[data!.orblookup1[x[6]]]>1 then
+    if data!.repslens[x[2]][data!.orblookup1[x[6]]]>1 then
       return true;
     fi;
     
     # data corresponds to the group of units...
-    if ActionRank(x[4])=ActionDegree(x[4]) then 
+    if IsActingSemigroupWithFixedDegreeMultiplication(s) 
+     and ActionRank(s)(x[4])=ActionDegree(x[4]) then 
       return false;
     fi;
     
@@ -778,7 +782,7 @@ function(s, f)
   
   if not f in s then 
     Info(InfoSemigroups, 2, "the element does not belong to the semigroup,");
-    return fail;
+    return false;
   fi;
   
   if HasIsRegularSemigroup(s) and IsRegularSemigroup(s) then
@@ -789,7 +793,7 @@ function(s, f)
   if IsClosed(LambdaOrb(s)) then 
     o:=LambdaOrb(s); 
   else
-    o:=GradedLambdaOrb(s, f, true); 
+    o:=GradedLambdaOrb(s, f, true)[1]; 
   fi;
         
   scc:=OrbSCC(o)[OrbSCCLookup(o)[Position(o, LambdaFunc(s)(f))]];
@@ -812,7 +816,7 @@ InstallMethod(IsRegularSemigroupElementNC,
 function(s, f)                                  
   local o, scc, rho, tester, i;
  
-  o:=GradedLambdaOrb(s, f, false);
+  o:=GradedLambdaOrb(s, f, false)[1];
         
   scc:=OrbSCC(o)[OrbSCCLookup(o)[Position(o, LambdaFunc(s)(f))]];
   rho:=RhoFunc(s)(f);
@@ -948,17 +952,19 @@ InstallMethod(IsSimpleSemigroup, "for an inverse semigroup",
 #
 
 InstallMethod(IsSynchronizingSemigroup, 
-"for a transformation semigroup", 
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(s)
+"for a transformation semigroup with generators and positive integer", 
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
+function(s, n)
   local o;
 
-  o:=Orb(s, [1..DegreeOfTransformationSemigroup(s)], OnSets, 
-        rec(schreier:=true, 
-        lookingfor:=function(o, x) return Length(x)=1; end));
-
+  o:=Orb(s, [1..n], LambdaAct(s), rec( schreier:=true, 
+    lookingfor:=function(o, x) 
+      return Length(x)=1; 
+    end));
+  
   Enumerate(o);
-  if IsPosInt(PositionOfFound(o)) then 
+
+  if PositionOfFound(o)<>false then 
     Info(InfoSemigroups, 2, "the product of the generators: ",
     TraceSchreierTreeForward(o, PositionOfFound(o)));
 
@@ -973,13 +979,14 @@ end);
 #
 
 InstallMethod(IsSynchronizingTransformationCollection, 
-"for a transformation collection", 
-[IsTransformationCollection],
-function(coll)
+"for a transformation collection and positive integer", 
+[IsTransformationCollection, IsPosInt],
+function(coll, n)
   local o;
 
-  o:=Orb(coll, [1..DegreeOfTransformationCollection(coll)], 
-    OnPosIntSetsTrans, rec( lookingfor:=function(o, x) return Length(x)=1;
+  o:=Orb(coll, [1..n], OnSets, rec(
+    lookingfor:=function(o, x) 
+      return Length(x)=1;
     end));
 
   Enumerate(o);
@@ -1035,7 +1042,7 @@ function(s)
       rho:=rhofunc(EvaluateWord(gens, TraceSchreierTreeForward(o, scc[m][1])));
       for j in scc[m] do 
         if not o[j] in graded then 
-          if not ForAny(GradedLambdaOrb(g, o[j], true), x-> tester(x, rho))
+          if not ForAny(GradedLambdaOrb(g, o[j], true)[1], x-> tester(x, rho))
            then 
             return false;
           fi;
@@ -1119,22 +1126,24 @@ InstallMethod(IsZeroSemigroup, "for an inverse semigroup",
 
 #
 
-InstallMethod(IsZeroSimpleSemigroup, 
-"for an acting semigroup with generators",
+InstallMethod(IsZeroSimpleSemigroup, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local iter;
+function(S)
+  local iter, D;
   
-  if MultiplicativeZero(s)=fail then 
+  if MultiplicativeZero(S)=fail then 
     return false;
   fi;
-  if IsClosed(SemigroupData(s)) then 
-    return NrDClasses(s)=2;
+  if IsClosed(SemigroupData(S)) then 
+    return IsRegularSemigroup(S) and NrDClasses(S)=2;
   fi;
-  iter:=IteratorOfDClassReps(s);
-  NextIterator(iter);
-  NextIterator(iter);
-  return IsDoneIterator(iter);
+  iter:=IteratorOfDClasses(S);
+  D:=NextIterator(iter);
+  if IsDoneIterator(iter) or not IsRegularDClass(D) then 
+    return false;
+  fi;
+  D:=NextIterator(iter);
+  return IsDoneIterator(iter) and IsRegularDClass(D);
 end);
 
 #EOF

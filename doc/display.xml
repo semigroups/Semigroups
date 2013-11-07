@@ -1,0 +1,108 @@
+#############################################################################
+##
+#W  pictures.xml
+#Y  Copyright (C) 2011-13                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="TikzInit">
+  <ManSection>
+    <Var Name="TikzInit"/>
+    <Returns>A string.</Returns>
+    <Description>
+      This global variable is set to the following string:
+      <Q>\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{document}\n</Q>
+
+      <Example>
+gap> gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ),
+>  Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ),
+>  Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ),
+>  Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] ) ];;
+gap> S:=Monoid(gens[1]);;
+gap> for i in [2..4] do S:=ClosureSemigroup(S, gens[i]); od;
+gap> S;
+&lt;transformation monoid on 8 pts with 4 generators>
+gap> Size(S);
+233606</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DotDClasses">
+  <ManSection>
+    <Attr Name="DotDClasses" Arg="S" Label="for a semigroup"/>
+    <Oper Name="DotDClasses" Arg="S, record" />
+    <Returns>A string.</Returns>
+    <Description>
+      This function produces a graphical representation of the partial order of
+      the &D;-classes of the semigroup <A>S</A> together with the eggbox
+      diagram of each &D;-class. The output is in <C>dot</C> format (also known
+      as <C>GraphViz</C>) format. For details about this file format, and
+      information about how to display or edit this format see 
+      <URL>http://www.graphviz.org</URL>. <P/>
+
+      The string returned by <C>DotDClasses</C> can be written to a file using
+      the command <Ref Func="FileString" BookName="GAPDoc"/>.<P/>
+
+      The &D;-classes are shown as eggbox diagrams with &L;-classes as rows and
+      &R;-classes as columns; group &H;-classes are shaded gray and contain an
+      asterisk. The &D;-classes are numbered according to their index in
+      <C>GreensDClasses(<A>S</A>)</C>, so that a <C>i</C> appears next to the
+      eggbox diagram of <C>GreensDClasses(<A>S</A>)[i]</C>. A red line from one
+      &D;-class to another indicates that higher &D;-class is greater than 
+      the lower one in the &D;-order on <A>S</A>. <P/>
+
+      If the optional second argument <A>record</A> is present, it can be used
+      to specify some options for output. 
+
+      <List>
+        <Mark>number</Mark>
+        <Item> 
+          if <C><A>record</A>.number</C> is <K>false</K>, then the &D;-classes
+          in the diagram are not numbered according to their index in the list
+          of &D;-classes of <A>S</A>. The default value for this option is
+          <K>true</K>.
+        </Item>
+
+        <Mark>maximal</Mark>
+        <Item> 
+          if <C><A>record</A>.maximal</C> is <K>true</K>, then the structure
+          description of the group &H;-classes is displayed; see
+          <Ref Attr="StructureDescription" BookName="ref"/>. Setting
+          this attribute to <K>true</K> can adversely affect the performance of
+          <C>DotDClasses</C>. The default value for this option is
+          <K>false</K>. 
+        </Item>
+      </List>
+      <Log><![CDATA[
+gap> S:=FullTransformationSemigroup(3);
+<full transformation semigroup on 3 pts>
+gap> DotDClasses(S);        
+"digraph  DClasses {\nnode [shape=plaintext]\nedge [color=red,arrowhe\
+ad=none]\n1 [shape=box style=dotted label=<\n<TABLE BORDER=\"0\" CELL\
+BORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"1\">\n<TR BO\
+RDER=\"0\"><TD COLSPAN=\"1\" BORDER=\"0\" >1</TD></TR><TR><TD BGCOLOR\
+=\"grey\">*</TD></TR>\n</TABLE>>];\n2 [shape=box style=dotted label=<\
+\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING\
+=\"0\" PORT=\"2\">\n<TR BORDER=\"0\"><TD COLSPAN=\"3\" BORDER=\"0\" >\
+2</TD></TR><TR><TD BGCOLOR=\"grey\">*</TD><TD BGCOLOR=\"grey\">*</TD>\
+<TD></TD></TR>\n<TR><TD BGCOLOR=\"grey\">*</TD><TD></TD><TD BGCOLOR=\
+\"grey\">*</TD></TR>\n<TR><TD></TD><TD BGCOLOR=\"grey\">*</TD><TD BGC\
+OLOR=\"grey\">*</TD></TR>\n</TABLE>>];\n3 [shape=box style=dotted lab\
+el=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPA\
+CING=\"0\" PORT=\"3\">\n<TR BORDER=\"0\"><TD COLSPAN=\"1\" BORDER=\"0\
+\" >3</TD></TR><TR><TD BGCOLOR=\"grey\">*</TD></TR>\n<TR><TD BGCOLOR=\
+\"grey\">*</TD></TR>\n<TR><TD BGCOLOR=\"grey\">*</TD></TR>\n</TABLE>>\
+];\n1 -> 2\n2 -> 3\n }"
+gap> FileString(DotDClasses(S), "t3.dot");
+fail
+gap> FileString("t3.dot", DotDClasses(S));
+966]]></Log>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+#EOF

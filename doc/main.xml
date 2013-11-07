@@ -9,9 +9,6 @@
      <!ENTITY Orb "<Alt Not='Text'><URL Text='Orb'>
      http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
 </URL></Alt><Alt Only='Text'><Package>Orb</Package></Alt>">
-     <!ENTITY GENSS "<Alt Not='Text'><URL Text='genss'>
-     http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html
-</URL></Alt><Alt Only='Text'><Package>genss</Package></Alt>">
      <!ENTITY IO "<Alt Not='Text'><URL Text='IO'>
      http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html
 </URL></Alt><Alt Only='Text'><Package>IO</Package></Alt>">
@@ -40,6 +37,7 @@
 <#Include SYSTEM "chap3.xml">
 <#Include SYSTEM "chap4.xml">
 <#Include SYSTEM "chap5.xml">
+<#Include SYSTEM "chap6.xml">
 </Body>
 
 <Bibliography Databases="semigroups" />

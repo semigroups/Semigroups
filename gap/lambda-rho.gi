@@ -8,32 +8,6 @@
 #############################################################################
 ##
 
-#
-
-InstallGlobalFunction(RhoPos, 
-function(o)
-  local i;
-  if not IsBound(o!.rho_l) then 
-    return fail;
-  fi;
-
-  i:=o!.rho_l;
-  Unbind(o!.rho_l);
-  return i;
-end);
-
-InstallGlobalFunction(LambdaPos, 
-function(o)
-  local i;
-  if not IsBound(o!.lambda_l) then 
-    return fail;
-  fi;
-
-  i:=o!.lambda_l;
-  Unbind(o!.lambda_l);
-  return i;
-end);
-
 # returns the element <f> premultiplied by RhoOrbMult so that the resulting 
 # element has its RhoValue in the first position of its scc.
 
@@ -100,10 +74,11 @@ function(s)
   local record, o;
   
   record:=ShallowCopy(LambdaOrbOpts(s));
+  record.scc_reps:=[FakeOne(GeneratorsOfSemigroup(s))];
+  
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
   record.parent:=s;             record.treehashsize:=s!.opts.hashlen.M;
-  record.scc_reps:=[One(GeneratorsOfSemigroup(s))];
 
   o:=Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), record);
   
@@ -129,7 +104,7 @@ function(o, m)
   else 
     if not IsBound(o!.mults) then 
       mults:=EmptyPlist(Length(o));
-      one:=[One(o!.gens), One(o!.gens)];
+      one:=[FakeOne(o!.gens), FakeOne(o!.gens)];
       for x in OrbSCC(o) do 
         mults[x[1]]:=one;
       od;
@@ -144,7 +119,7 @@ function(o, m)
   mults:=o!.mults;
   
   if not IsBound(mults[scc[1]]) then 
-    mults[scc[1]]:=[One(gens), One(gens)];
+    mults[scc[1]]:=[FakeOne(gens), FakeOne(gens)];
   fi; 
  
   genpos:=ReverseSchreierTreeOfSCC(o, m);
@@ -179,7 +154,7 @@ function(o, m, i)
     fi;
   else
     mults:=EmptyPlist(Length(o));
-    one:=[One(o!.gens), One(o!.gens)];
+    one:=[FakeOne(o!.gens), FakeOne(o!.gens)];
     for x in OrbSCC(o) do 
       mults[x[1]]:=one;
     od;
@@ -273,9 +248,9 @@ function(o, m)
   g:=Group(()); is_sym:=false;
 
   for k in scc do
+    vor:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, k));
     for l in [1..nrgens] do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
-        vor:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, k));
         f:=lambdaperm(rep, 
          rep*vor*gens[l]*LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
         #f:=lambdaperm(rep, rep*LambdaOrbMult(o, m, k)[1]*gens[l]
@@ -358,7 +333,7 @@ function(s)
   record.schreier:=true;        record.orbitgraph:=true;
   record.storenumbers:=true;    record.log:=true;
   record.parent:=s;             record.treehashsize:=s!.opts.hashlen.M;
-  record.scc_reps:=[One(GeneratorsOfSemigroup(s))];
+  record.scc_reps:=[FakeOne(GeneratorsOfSemigroup(s))];
 
   o:=Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s), record);
   
@@ -381,7 +356,7 @@ function(o, m, i)
     fi;
   else
     mults:=EmptyPlist(Length(o));
-    one:=[One(o!.gens), One(o!.gens)];
+    one:=[FakeOne(o!.gens), FakeOne(o!.gens)];
     for x in OrbSCC(o) do 
       mults[x[1]]:=one;
     od;
@@ -424,7 +399,7 @@ function(o, m)
   else 
     if not IsBound(o!.mults) then 
       mults:=EmptyPlist(Length(o));
-      one:=[One(o!.gens), One(o!.gens)];
+      one:=[FakeOne(o!.gens), FakeOne(o!.gens)];
       for x in OrbSCC(o) do 
         mults[x[1]]:=one;
       od;
@@ -439,7 +414,7 @@ function(o, m)
   mults:=o!.mults;
   
   if not IsBound(mults[scc[1]]) then 
-    mults[scc[1]]:=[One(gens), One(gens)];
+    mults[scc[1]]:=[FakeOne(gens), FakeOne(gens)];
   fi; 
 
   genpos:=SchreierTreeOfSCC(o, m);
