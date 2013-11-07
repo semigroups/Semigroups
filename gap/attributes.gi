@@ -407,7 +407,8 @@ function(S)
         Append(gens2, List(classes{po[i]}, Representative));
         V:=SemigroupIdealByGenerators(S, gens2);
         Add(out, Semigroup(GeneratorsOfSemigroup(V), 
-          OnTuples(Filtered(GeneratorsOfSemigroup(U), x-> not IsMultiplicativeZero(U, x)), inj), rec(small:=true)));
+          OnTuples(Filtered(GeneratorsOfSemigroup(U), 
+           x-> not IsMultiplicativeZero(U, x)), inj), rec(small:=true)));
       od;
     fi;
     Info(InfoSemigroups, 2, "found ", Length(out)-tot, " maximal subsemigroups");
@@ -471,6 +472,8 @@ function(S)
         if ismax and didtest then
           if not ForAny(out, W-> IsSubsemigroup(W, U)) then 
             Add(out, Semigroup(U, ideal));
+            Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
+            " YannRecursion");
           fi;
         fi;
         return;
@@ -509,6 +512,8 @@ function(S)
               V:=Semigroup(U, A, ideal, rec(small:=true));
               if V<>S then 
                 Add(out, V);
+                Info(InfoSemigroups, 2, "found maximal subsemigroup arising ",
+                " from including everything not in XX");
               else
                 YannRecursion(U, [], A);
               fi;
