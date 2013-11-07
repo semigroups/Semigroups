@@ -353,7 +353,7 @@ fi;
 InstallMethod(MaximalSubsemigroups, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local out, gens, po, classes, D, lookup, max, nonmax, tot, gens2, pos, inj, R, V, ideal, count, YannRecursion, U, A, XX, a, C, i, j;
+  local out, gens, po, classes, D, lookup, max, nonmax, tot, gens2, pos, inj, R, V, ideal, count, YannRecursion, U, A, XX, a, C, i, j, k;
   
   # preprocessing...
   out:=[];
@@ -469,9 +469,9 @@ function(S)
         return;
       end;
       Print("\n");
-      for j in EnumeratorOfCombinations(lookup[i]) do 
+      for k in [1..Length(lookup[i])] do
+        for j in Combinations(lookup[i], k) do 
         # indices of gens in classes[i]
-        if j<>[] then 
           gens2:=Difference(ShallowCopy(gens), gens{j});
           U:=Semigroup(gens2);
           A:=Difference(classes[i], Intersection(U, classes[i]));
@@ -503,7 +503,7 @@ function(S)
               fi;
             fi;
           fi;
-        fi;
+        od;
       od;
     fi;
   od;
