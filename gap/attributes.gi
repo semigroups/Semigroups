@@ -414,10 +414,15 @@ function(S)
     tot:=Length(out);
   od;
 
-  Info(InfoSemigroups, 2, "finding maximal subsemigroups arising from", 
-  " non-maximal D-classes...");
+  if not IsEmpty(nonmax) then
+    Info(InfoSemigroups, 2, "finding maximal subsemigroups arising from", 
+    " non-maximal D-classes...");
+  else
+    Info(InfoSemigroups, 2, "no non-maximal D-classes to consider...");    
+  fi;
   #Type 2: maximal subsemigroups arising from non-maximal D-classes
   for i in nonmax do 
+    Info(InfoSemigroups, 2, "considering D-class ", i);
     if not IsRegularDClass(classes[i]) then #remove the whole thing...
       #find the generators for the ideal...
       gens2:=ShallowCopy(gens);
@@ -430,6 +435,8 @@ function(S)
        GeneratorsOfSemigroup(SemigroupIdealByGenerators(S,
         List(classes{po[i]}, Representative))));
       Add(out, Semigroup(gens2, rec(small:=true)));
+      Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
+      " removing whole non-maximal non-regular D-class...");
       #find the generator above <classes[i]>
     else # <classes[i]> is regular
       
@@ -475,7 +482,7 @@ function(S)
           gens2:=Difference(ShallowCopy(gens), gens{j});
           U:=Semigroup(gens2);
           A:=Difference(classes[i], Intersection(U, classes[i]));
-          RemoveSet(A, gens{j});
+          for a in gens{j} do RemoveSet(A, a); od;
           XX:=[gens{j}];
           while not IsEmpty(A) do 
             a:=A[1];
@@ -490,10 +497,14 @@ function(S)
           
           if Length(XX)=Size(classes[i]) then #remove the whole class
             Add(out, Semigroup(gens2, ideal));
+            Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
+            " removing whole non-maximal regular D-class...");
           else 
             A:=Filtered(classes[i], x-> not (x in XX or x in U));
             if IsEmpty(A) then 
               Add(out, Semigroup(U, ideal));
+              Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
+              " removing all of XX");
             else
               V:=Semigroup(U, A, ideal, rec(small:=true));
               if V<>S then 
@@ -507,6 +518,7 @@ function(S)
       od;
     fi;
   od;
+  Info(InfoSemigroups, 2, "generating all found maximal subsemigroups...");
   out:=List(out, x-> Semigroup(x, rec(small:=true))); 
   return out;
 end);
