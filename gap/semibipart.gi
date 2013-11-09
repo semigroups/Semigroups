@@ -8,6 +8,9 @@
 ############################################################################# 
 ##
 
+InstallMethod(IsBipartitionSemigroupGreensClass, "for a Green's class",
+[IsGreensClass], x-> IsBipartitionSemigroup(Parent(x)));
+
 InstallImmediateMethod(GeneratorsOfSemigroup, IsBipartitionCollection and IsSemigroup and HasGeneratorsOfInverseSemigroup, 0, 
 function(s)
   local gens, f;

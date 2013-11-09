@@ -482,10 +482,10 @@ function(S)
   G:=SchutzenbergerGroup(R);
   deg:=DegreeOfBipartitionSemigroup(S);
   
-  U:=Monoid(List(GeneratorsOfGroup(G), x-> AsPartialPerm(x, deg)));
+  U:=Monoid(List(GeneratorsOfGroup(G), x-> AsBipartition(x, deg)));
   
   SetIsomorphismPermGroup(U, MappingByFunction(U, G, AsPermutation, 
-   x-> AsPartialPerm(x, deg)));
+   x-> AsBipartition(x, deg)));
    
   SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, G);
@@ -556,7 +556,8 @@ function(d)
 
   lambdaperm:=LambdaPerm(Parent(d));
   if IsTransformationSemigroupGreensClass(d) 
-    or IsPartialPermSemigroupGreensClass(d) then 
+    or IsPartialPermSemigroupGreensClass(d) 
+    or IsBipartitionSemigroupGreensClass(d) then 
     leftact:=PROD;
   elif IsReesZeroMatrixSubsemigroup(Parent(d)) then 
     leftact:=function(x, y)

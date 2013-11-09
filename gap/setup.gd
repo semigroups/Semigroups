@@ -16,7 +16,6 @@ DeclareCategory("IsActingSemigroupGreensClass", IsGreensClass);
 DeclareAttribute("ActionDegree", IsAssociativeElement);
 DeclareAttribute("ActionDegree", IsAssociativeElementCollection);
 DeclareAttribute("ActionRank", IsSemigroup);
-DeclareAttribute("ActionRank", IsAssociativeElement);
 DeclareOperation("ActionRank", [IsAssociativeElement, IsInt]);
 DeclareAttribute("MinActionRank", IsSemigroup);
 

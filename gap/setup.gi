@@ -102,6 +102,9 @@ InstallMethod(ActionDegree, "for a partial perm collection",
 [IsPartialPermCollection], x-> Maximum(DegreeOfPartialPermCollection(x), 
 CodegreeOfPartialPermCollection(x)));
 
+InstallMethod(ActionDegree, "for a bipartition collection",
+[IsBipartitionCollection], DegreeOfBipartitionCollection);
+
 InstallMethod(ActionDegree, "for a Rees 0-matrix semigroup element collection",
 [IsReesZeroMatrixSemigroupElementCollection],           
 function(coll)
@@ -167,7 +170,10 @@ function(s)
 end);
 
 InstallMethod(ActionRank, "for a bipartition",
-[IsBipartition], RankOfBipartition);
+[IsBipartition, IsInt], 
+function(f, n)
+  return RankOfBipartition(f);
+end);
 
 InstallMethod(ActionRank, "for a bipartition semigroup",
 [IsBipartitionSemigroup], 
