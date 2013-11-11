@@ -516,7 +516,7 @@ function(S)
                   Add(out, V);
                   Info(InfoSemigroups, 2, "found maximal subsemigroup arising",
                   " from including everything not in XX #1");
-                elif ForAll(XX, x->not x in V) and ForAll(out, x-> not IsSubsemigroup(Semigroup(x, rec(small:=true)), V)) then
+                elif ForAll(XX, x->not x in V) and not ForAny(out, W-> not IsSubsemigroup(W, V)) then
                   Add(out, V);
                   Info(InfoSemigroups, 2, "found maximal subsemigroup arising",
                   " from including everything not in XX #2");
