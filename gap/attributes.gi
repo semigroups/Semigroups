@@ -353,7 +353,7 @@ fi;
 InstallMethod(MaximalSubsemigroups, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local out, gens, po, classes, D, lookup, max, nonmax, tot, gens2, pos, inj, R, V, ideal, count, YannRecursion, U, A, XX, a, C, i, j, k;
+  local out, gens, po, classes, D, lookup, max, nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, count, YannRecursion, U, A, XX, a, C, i, j, k;
   
   # preprocessing...
   out:=[];
@@ -406,9 +406,15 @@ function(S)
         fi;
         Append(gens2, List(classes{po[i]}, Representative));
         V:=SemigroupIdealByGenerators(S, gens2);
-        Add(out, Semigroup(GeneratorsOfSemigroup(V), 
-          OnTuples(Filtered(GeneratorsOfSemigroup(U), 
-           x-> not IsMultiplicativeZero(U, x)), inj), rec(small:=true)));
+        tuples:=OnTuples(Filtered(GeneratorsOfSemigroup(U), 
+             x-> not IsMultiplicativeZero(U, x)), inj);
+        if tuples=[] and Size(U) = 1 then
+          Add(out, Semigroup(GeneratorsOfSemigroup(V), OnTuples(
+          GeneratorsOfSemigroup(U), inj), rec(small:=true)));
+        elif tuples<>[] then
+          Add(out, Semigroup(GeneratorsOfSemigroup(V), 
+            tuples, rec(small:=true)));
+        fi;
       od;
     fi;
     Info(InfoSemigroups, 2, "found ", Length(out)-tot, " maximal subsemigroups");
@@ -480,9 +486,9 @@ function(S)
       end;
       for k in [1..Length(lookup[i])] do
         for j in Combinations(lookup[i], k) do 
-        Info(InfoSemigroups, 2, "\nTrying to remove gens: ", j, "...");
-        count:=0;
-        # indices of gens in classes[i]
+          Info(InfoSemigroups, 2, "\nTrying to remove gens: ", j, "...");
+          count:=0;
+          # indices of gens in classes[i]
           gens2:=Difference(ShallowCopy(gens), gens{j});
           U:=Semigroup(gens2);
           A:=Difference(classes[i], Intersection(U, classes[i]));
@@ -509,7 +515,7 @@ function(S)
               Add(out, Semigroup(U, ideal));
               Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
               " removing all of XX");
-            else
+            elif not IsEmpty(A) then
               V:=Semigroup(U, A, ideal, rec(small:=true));
               if V<>S then
                 if k = 1 then
