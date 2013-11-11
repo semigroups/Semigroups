@@ -478,9 +478,10 @@ function(S)
         fi;
         return;
       end;
-      Print("\n");
       for k in [1..Length(lookup[i])] do
         for j in Combinations(lookup[i], k) do 
+        Info(InfoSemigroups, 2, "\nTrying to remove gens: ", j, "...");
+        count:=0;
         # indices of gens in classes[i]
           gens2:=Difference(ShallowCopy(gens), gens{j});
           U:=Semigroup(gens2);
@@ -498,22 +499,28 @@ function(S)
             fi;
           od;
           
-          if Length(XX)=Size(classes[i]) then #remove the whole class
+          if k = 1 and Length(XX)=Size(classes[i]) then #remove the whole class
             Add(out, Semigroup(gens2, ideal));
             Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
             " removing whole non-maximal regular D-class...");
           else 
             A:=Filtered(classes[i], x-> not (x in XX or x in U));
-            if IsEmpty(A) then 
+            if IsEmpty(A) and k = 1 then 
               Add(out, Semigroup(U, ideal));
               Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
               " removing all of XX");
             else
               V:=Semigroup(U, A, ideal, rec(small:=true));
-              if V<>S then 
-                Add(out, V);
-                Info(InfoSemigroups, 2, "found maximal subsemigroup arising ",
-                " from including everything not in XX");
+              if V<>S then
+                if k = 1 then
+                  Add(out, V);
+                  Info(InfoSemigroups, 2, "found maximal subsemigroup arising",
+                  " from including everything not in XX #1");
+                elif ForAll(XX, x->not x in V) and ForAll(out, x-> not IsSubsemigroup(Semigroup(x, rec(small:=true)), V)) then
+                  Add(out, V);
+                  Info(InfoSemigroups, 2, "found maximal subsemigroup arising",
+                  " from including everything not in XX #2");
+                fi;
               else
                 YannRecursion(U, [], A);
               fi;
