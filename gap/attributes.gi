@@ -487,7 +487,7 @@ function(S)
           U:=Semigroup(gens2);
           A:=Difference(classes[i], Intersection(U, classes[i]));
           for a in gens{j} do RemoveSet(A, a); od;
-          XX:=[gens{j}];
+          XX:=gens{j};
           while not IsEmpty(A) do 
             a:=A[1];
             C:=Semigroup(a, gens2);
