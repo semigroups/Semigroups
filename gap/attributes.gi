@@ -353,7 +353,7 @@ fi;
 InstallMethod(MaximalSubsemigroups, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local out, gens, po, classes, D, lookup, max, nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, count, YannRecursion1, WilfRecursion, U, A, XX, a, C, i, j, k;
+  local out, gens, po, classes, D, lookup, max, nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, count, YannRecursion1, WilfRecursion	, U, A, XX, a, C, i, j, k;
   
   # preprocessing...
   out:=[];
