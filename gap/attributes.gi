@@ -455,31 +455,34 @@ function(S)
       ideal:=GeneratorsOfSemigroup(Semigroup(SemigroupIdealByGenerators(S,
         List(classes{po[i]}, Representative)), rec(small:=true)));
       count:=0;
-      YannRecursion:=function(U, known, A)
-        local ismax, new_known, a, V, didtest;
+      YannRecursion1:=function(U, known, A)
+        local ismax, new_known, a, V, didtest, h;
         count:=count+1;
         Print("at depth: ", count,"\n");
         ismax:=true; 
         new_known:=ShallowCopy(known);
         didtest:=false;
-        for a in A do 
-          if not a in known then 
+        while not IsEmpty(A) do
+          a:=A[1];
+          h:=HClass(S,a);
+          if not ForAny(h, x->x in known) then 
             didtest:=true;
-            V:=Semigroup(U, a); 
+            V:=WilfRecursion(Semigroup(U, h));
             if ForAll(XX, x-> not x in V) then #i.e. check that V<>S
               ismax:=false;
               if ForAll(new_known, x-> not x in V) then 
-                YannRecursion(V, new_known, Difference(A, V));
+                YannRecursion1(V, new_known, Difference(A, V));
               fi;
-              Add(new_known, a);
+              new_known:=Union(new_known, h);
             fi;
+            A:=Difference(A,h);
           fi;
         od;
         if ismax and didtest then
           if not ForAny(out, W-> IsSubsemigroup(W, U)) then 
             Add(out, Semigroup(U, ideal));
             Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
-            " YannRecursion");
+            " YannRecursion1");
           fi;
         fi;
         return;
@@ -530,7 +533,27 @@ function(S)
                   " from including everything not in XX #2");
                 fi;
               else
-                YannRecursion(U, [], A);
+              
+                # Set U to be a union of H-classes of S
+                WilfRecursion:=function(U)
+                  local V, B;
+                  B:=Intersection(U, classes[i]);
+                  V:=Semigroup(U, Union(List(B, x-> 
+                      Elements(HClass(S, x)))), rec(small:=true));
+                  if Size(V) = Size(U) then
+                    return U;
+                  fi;
+                  return WilfRecursion(V);
+                end;
+            
+                # Case 1 of 2: Maximal Subsemigroups which are unions of H-classes
+                U:=WilfRecursion(U);
+                
+                if not ForAny(XX, x->x in U) then           
+                  A:=Filtered(classes[i], x-> not (x in XX or x in U));
+                  YannRecursion1(U, [], A);
+                fi;
+                  
               fi;
             fi;
           fi;
