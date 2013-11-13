@@ -408,7 +408,7 @@ function(S)
         V:=SemigroupIdealByGenerators(S, gens2);
         tuples:=OnTuples(Filtered(GeneratorsOfSemigroup(U), 
              x-> not IsMultiplicativeZero(U, x)), inj);
-        if tuples=[] and Size(U) = 1 then
+        if tuples=[] and Size(U) = 1 then  # This will fail if U = {0} ???
           Add(out, Semigroup(GeneratorsOfSemigroup(V), OnTuples(
           GeneratorsOfSemigroup(U), inj), rec(small:=true)));
         elif tuples<>[] then
@@ -509,12 +509,14 @@ function(S)
             Add(out, Semigroup(gens2, ideal));
             Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
             " removing whole non-maximal regular D-class...");
+            # if k > 1, we can stop considering this subset gens{j}
           else 
             A:=Filtered(classes[i], x-> not (x in XX or x in U));
             if IsEmpty(A) and k = 1 then 
               Add(out, Semigroup(U, ideal));
               Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
               " removing all of XX");
+              # if k > 1, I think we can stop considering this subset gens{j}
             elif not IsEmpty(A) then
               V:=Semigroup(U, A, ideal, rec(small:=true));
               if V<>S then
