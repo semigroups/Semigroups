@@ -709,19 +709,6 @@ function(s, coll, opts)
   #updated in the second position, in the first example in
   #IdempotentGeneratedSubsemigroup man section
 
-  #oldnrgens := Length(o!.gens);
-  #Append(o!.gens,coll);
-  #ResetFilterObj(o,IsClosed);
-  #o!.stopper := o!.pos;
-  #o!.pos := 1;
-  #o!.genstoapply := [oldnrgens+1..Length(o!.gens)];
-  #Enumerate(o);
-  #if o!.pos <> o!.stopper then
-  #  Error("Unexpected case!");
-  #fi; 
-  #o!.stopper := false;
-  #o!.genstoapply := [1..Length(o!.gens)];
-
   # unbind everything related to strongly connected components, since 
   # even if the orbit length doesn't change the strongly connected components
   # might
@@ -834,13 +821,13 @@ function(s, coll, opts)
   while new_nr<=old_nr and i<old_nr do
     i:=i+1;
     x:=old_orb[i][4];
-    if not x in s then 
-      Error();
-    fi;
+    
     pos:=old_schreiermult[i]; 
     m:=lookup[pos];           
     rank:=ActionRank(t)(x);
+    
     if rank>max_rank or scc[m][1]=old_scc[old_lookup[pos]][1] then 
+    # in either case x is an old R-rep and so has rectified lambda value.
       y:=x;
     elif pos=old_scc[old_lookup[pos]][1] then 
       y:=x*LambdaOrbMult(o, m, pos)[2];
@@ -849,12 +836,12 @@ function(s, coll, opts)
       y:=x*LambdaOrbMult(old_o, old_lookup[pos], pos)[1]
        *LambdaOrbMult(o, m, pos)[2];
     fi;
-  
+    
     rhoy:=rho(y);
     val:=htvalue(lambdarhoht, rhoy);
 
-    if val=fail or not IsBound(val[m]) or rank>max_rank then 
-      #new rho value, and hence new R-rep
+    if val=fail or not IsBound(val[m]) then 
+    #new rho value, and hence new R-rep
       lenreps[m]:=lenreps[m]+1;
       if val=fail then 
         val:=[];
@@ -870,44 +857,53 @@ function(s, coll, opts)
       orblookup1[new_nr]:=lenreps[m];
       orblookup2[new_nr]:=1;
       x:=[t, m, o, y, false, new_nr];
-    else              # old rho value
+    
+    
+    else              
+    # old rho value, and maybe we already have a rep of y's R-class...
       val:=val[m];
       x:=[t, m, o, y, false, new_nr+1];
-      #check membership in schutz gp via stab chain
-      schutz:=LambdaOrbStabChain(o, m);
+      if not rank>max_rank then 
+      # this is not nec. one of the old R-reps and so tests are required...
+        
+        #check membership in schutz gp via stab chain
+        schutz:=LambdaOrbStabChain(o, m);
 
-      if schutz=true then # schutz gp is symmetric group
-        old_to_new[i]:=repslookup[m][val][1];
-        continue;
-      else
-        if schutz=false then # schutz gp is trivial
-          tmp:=htvalue(ht, y);
-          if tmp<>fail then
-            old_to_new[i]:=tmp;
-            continue;
-          fi;
-        else # schutz gp neither trivial nor symmetric group
-          old:=false;
-          for n in [1..repslens[m][val]] do
-            if SiftedPermutation(schutz, lambdaperm(reps[m][val][n], y))=()
-              then
-              old:=true;
-              old_to_new[i]:=repslookup[m][val][n];
-              break;
+        if schutz=true then # schutz gp is symmetric group
+          old_to_new[i]:=repslookup[m][val][1];
+          continue;
+        else
+          if schutz=false then # schutz gp is trivial
+            tmp:=htvalue(ht, y);
+            if tmp<>fail then
+              old_to_new[i]:=tmp;
+              continue;
             fi;
-          od;
-          if old then
-            continue;
+          else # schutz gp neither trivial nor symmetric group
+            old:=false;
+            for n in [1..repslens[m][val]] do
+              if SiftedPermutation(schutz, lambdaperm(reps[m][val][n], y))=()
+                then
+                old:=true;
+                old_to_new[i]:=repslookup[m][val][n];
+                break;
+              fi;
+            od;
+            if old then
+              continue;
+            fi;
           fi;
         fi;
-        new_nr:=new_nr+1;
-        repslens[m][val]:=repslens[m][val]+1;
-        reps[m][val][repslens[m][val]]:=y;
-        repslookup[m][val][repslens[m][val]]:=new_nr;
-        orblookup1[new_nr]:=val;
-        orblookup2[new_nr]:=repslens[m][val];
       fi;
+      # if rank>max_rank, then <y> is an old R-rep and hence a new one too
+      new_nr:=new_nr+1;
+      repslens[m][val]:=repslens[m][val]+1;
+      reps[m][val][repslens[m][val]]:=y;
+      repslookup[m][val][repslens[m][val]]:=new_nr;
+      orblookup1[new_nr]:=val;
+      orblookup2[new_nr]:=repslens[m][val];
     fi;
+
     new_orb[new_nr]:=x;
     graph[new_nr]:=ShallowCopy(old_graph[i]);
     new_schreierpos[new_nr]:=old_to_new[old_schreierpos[i]];
