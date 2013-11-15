@@ -1,0 +1,73 @@
+gap> S:=Semigroup([ Transformation( [ 1, 3, 4, 1, 3, 5 ] ), 
+>   Transformation( [ 1, 5, 3, 5, 5, 5 ] ), 
+>   Transformation( [ 2, 4, 6, 1, 6, 5 ] ), 
+>   Transformation( [ 3, 2, 4, 2, 3, 3 ] ), 
+>   Transformation( [ 4, 1, 2, 6, 2, 1 ] ), 
+>   Transformation( [ 4, 6, 4, 3, 3, 3 ] ), 
+>   Transformation( [ 4, 6, 5, 5, 2, 6 ] ), 
+>   Transformation( [ 5, 1, 6, 1, 6, 3 ] ), 
+>   Transformation( [ 5, 2, 5, 3, 5, 3 ] ), 
+>   Transformation( [ 6, 4, 5, 5, 1, 6 ] ) ]);
+
+gap> T:=Semigroup([ Transformation( [ 2, 4, 6, 1, 6, 5 ] ), 
+>   Transformation( [ 3, 4, 5, 1, 5, 4 ] ), 
+>   Transformation( [ 4, 1, 3, 3, 5, 4 ] ), 
+>   Transformation( [ 5, 4, 2, 2, 1, 5 ] ), 
+>   Transformation( [ 5, 6, 5, 3, 5, 1 ] ), 
+>   Transformation( [ 1, 3, 4, 4, 5, 3 ] ), 
+>   Transformation( [ 4, 5, 3, 4, 3, 1 ] ),
+>   Transformation( [ 1, 1, 5, 2, 5 ] ),
+>   Transformation( [ 5, 3, 1, 1, 4, 3 ] ), 
+>   Transformation( [ 1, 5, 4, 4, 3, 5 ] ), 
+>   Transformation( [ 5, 1, 4, 4, 3, 1 ] ), 
+>   Transformation( [ 1, 4, 2, 2, 5, 4 ] ),
+>   Transformation( [ 5, 5, 1, 2, 1 ] ),
+>   Transformation( [ 1, 3, 4, 1, 3, 5 ] ), 
+>   Transformation( [ 1, 3, 6, 3, 1, 1 ] ), 
+>   Transformation( [ 5, 2, 5, 3, 5, 3 ] ), 
+>   Transformation( [ 4, 2, 2, 3, 2, 3 ] ), 
+>   Transformation( [ 4, 6, 4, 3, 3, 3 ] ), 
+>   Transformation( [ 3, 1, 5, 3, 1, 5 ] ), 
+>   Transformation( [ 6, 4, 3, 4, 4, 4 ] ) ]);
+
+# Preamble & Observations
+
+#Let S be a finite semigroup. Always assume our generating set is irredundant
+
+# If a D Class is maximal and non-regular, it is a singleton,
+# and throwing it away gives a maximal subsemigroup
+
+# If D(M) is maximal (in the poset of DClasses), it must contain a generator.
+# Then each of the maximal subsemigroups of D(M)* [The principal factor] gives
+# rise to a maximal subsemigroup of S.
+
+# Algorithm
+
+# 1.  Get D-classes of non-redundant generators:
+#     D1, ... , Dm, and E1, ... , En
+#     Where the D ones are the maximal D-classes in the D-class poset
+#     And the E ones are those which aren't maximal
+#    
+# 2.  For those D-classes Di or Ei with |Di| = 1 = |Ej|,
+#     then clearly S\Di and S\Ej are clearly maximal   
+#     Or if Ej is non-regular, then S\Ej is maximal
+#
+# 3.  For Di, we must have Di regular since Di non-regular => |Di| = 1
+#     If U* <= Di* is a maximal subsemigroup of Di*,
+#     then (S\Di) union U is maximal in S.
+#         
+# 4.  ?
+        
+     
+# Notes     
+        
+# How to generate an (S\Di) union U:
+# Semigroup( Filtered(Elements(S), x -> not x in Di), U, rec(small:=true) )
+
+# Could restrict the algorithm technically, so that we compute the 
+# maximal-subsemigroups just related to playing with a particular D-class
+# Big algorithm would just call this on all relevant D-classes
+
+# Because this computation could take a while, would be nice to give feedback
+# as the algorithm is running to the user.
+# Do this by putting Info(InfoSemigroups, "blah");
