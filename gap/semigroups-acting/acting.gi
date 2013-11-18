@@ -64,10 +64,6 @@ function(f, s)
     return false;
   fi;
 
-  #if HasAsSSortedList(s) then 
-  #  return f in AsSSortedList(s); 
-  #fi;
-  
   if not (IsMonoid(s) and IsOne(f)) then 
     if ActionRank(s)(f)>MaximumList(List(Generators(s), f-> ActionRank(s)(f)))
      then
@@ -171,6 +167,9 @@ function(f, s)
 
     # check if f already corresponds to an element of reps[val]
     lambdaperm:=LambdaPerm(s);
+    # JDM: could test if repslens[m][val]=n!/|schutz gp| or check if the
+    # existing R-class(es) are regular, since if it is then
+    # <f> has to be in there. 
     for n in [1..repslens[m][val]] do 
       if SiftedPermutation(schutz, lambdaperm(reps[m][val][n], g))=() then
         return true;
