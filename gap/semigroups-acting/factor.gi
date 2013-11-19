@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  slp.gi
+#W  factor.gi
 #Y  Copyright (C) 2013                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -245,7 +245,7 @@ end);
 # reps are obtained from earlier reps by left multiplication but the orbit
 # multipliers correspond to right multiplication.
 
-InstallMethod(TraceSchreierTreeForward, "for semigp data and pos int",
+InstallMethod(TraceSchreierTreeForward, "for semigroup data and pos int",
 [IsSemigroupData, IsPosInt], 100,
 function(data, pos)
   local word, word2, schreiergen, schreierpos, schreiermult, orb, o, m;

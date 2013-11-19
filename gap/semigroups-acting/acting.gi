@@ -110,15 +110,17 @@ function(f, s)
 
   # check if rho is already known
   
-  rho:=RhoFunc(s)(f);
-  val:=HTValue(data!.lambdarhoht, rho);
-
+  rho:=RhoFunc(s)(f); 
+  oo:=RhoOrb(s);
+  rho_val:=Position(oo, rho);
+  lambdarhotable:=oo!.lambdarhotable;
+  
   lookfunc:=function(data, x) 
-    return x[2]=m and RhoFunc(s)(x[4])=rho;
+    return IsBound(lambdarhotable[rho_val][m]);
   end;
   
   # if lambdarho is not already known, then look for it
-  if val=fail or not IsBound(val[m]) then 
+  if rho_val=fail or not IsBound(lambdarhotable[rho_val][m]) then 
     if IsClosed(data) then 
       return false;
     fi;
@@ -134,7 +136,7 @@ function(f, s)
     # the index of the list of reps with same lambdarho value as f. 
     # = HTValue(LambdaRhoHT(s), lambdarho);
   else 
-    val:=val[m];
+    val:=lambdarhotable[rho_val][m];
   fi;
 
   schutz:=LambdaOrbStabChain(o, m);
@@ -146,32 +148,31 @@ function(f, s)
 
   # make sure lambda of f is in the first place of its scc
   if l<>scc[m][1] then 
-    g:=f*LambdaOrbMult(o, m, l)[2];
-  else
-    g:=f;
+    f:=f*LambdaOrbMult(o, m, l)[2];
   fi;
 
   # check if anything changed
   if len<Length(data!.orbit) or l<>scc[m][1] then 
 
-    # check again if g is an R-class rep.
-    if HTValue(ht, g)<>fail then
+    # check again if f is an R-class rep.
+    if HTValue(ht, f)<>fail then
       return true;
     fi;
   fi;
 
   reps:=data!.reps; repslens:=data!.repslens;
+  max:=Factorial(LambdaRank(s)(lambda))/Size(LambdaOrbSchutzGp(o, m));
   
-  # if schutz is false, then g has to be an R-rep which it is not...
+  # if schutz is false, then f has to be an R-rep which it is not...
   if schutz<>false then 
-
+    if repslens[m][val]=max then 
+      return true;
+    fi;
+    
     # check if f already corresponds to an element of reps[val]
     lambdaperm:=LambdaPerm(s);
-    # JDM: could test if repslens[m][val]=n!/|schutz gp| or check if the
-    # existing R-class(es) are regular, since if it is then
-    # <f> has to be in there. 
     for n in [1..repslens[m][val]] do 
-      if SiftedPermutation(schutz, lambdaperm(reps[m][val][n], g))=() then
+      if SiftedPermutation(schutz, lambdaperm(reps[m][val][n], f))=() then
         return true;
       fi;
     od;
@@ -182,8 +183,6 @@ function(f, s)
   fi;
 
   # enumerate until we find f or the number of elts in reps[m][val] exceeds max
-  max:=Factorial(LambdaRank(s)(lambda))/Size(LambdaOrbSchutzGp(o, m));
-
   if repslens[m][val]<max then 
     if schutz=false then 
       repeat 
@@ -191,7 +190,7 @@ function(f, s)
         data:=Enumerate(data, infinity, lookfunc);
         found:=data!.found;
         if found<>false then 
-          if g=data[found][4] then 
+          if f=data[found][4] then 
             return true;
           fi;
         fi;
@@ -205,7 +204,7 @@ function(f, s)
         if found<>false then 
           reps:=data!.reps; repslens:=data!.repslens;
           for i in [n+1..repslens[m][val]] do 
-            if SiftedPermutation(schutz, lambdaperm(reps[m][val][i], g))=()
+            if SiftedPermutation(schutz, lambdaperm(reps[m][val][i], f))=()
              then 
               return true;
             fi;
@@ -361,8 +360,14 @@ function(data, limit, lookfunc)
 
   if not IsBound(rho_o!.lambdarhotable) then 
     rho_o!.lambdarhotable:=[];
+    lambdarhotable:=rho_o!.lambdarhotable;
+    for i in [1..rho_nr] do 
+      lambdarhotable[i]:=[];
+    od;
+  else 
+    lambdarhotable:=rho_o!.lambdarhotable;
   fi;
-  lambdarhotable:=rho_o!.lambdarhotable;
+  
   rho_lookup:=data!.rho_lookup;
 
   # initialise the data if necessary
