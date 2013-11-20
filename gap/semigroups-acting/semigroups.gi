@@ -858,7 +858,6 @@ function(s, coll, opts)
       orblookup2[new_nr]:=1;
       x:=[t, m, o, y, false, new_nr];
     
-    
     else              
     # old rho value, and maybe we already have a rep of y's R-class...
       val:=val[m];
