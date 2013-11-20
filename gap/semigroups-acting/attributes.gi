@@ -353,7 +353,11 @@ fi;
 InstallMethod(MaximalSubsemigroups, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local out, gens, po, classes, D, lookup, max, nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, count, YannRecursion1, WilfRecursion	, U, A, XX, a, C, i, j, k;
+  local out, gens, po, reps, classes, D, lookup, count, max, XXtemp, nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, YannRecursion1, HClassClosure	, U, A, XX, a, C, i, j, k, gens3, UU, Utemp, G, I, J, H;
+  
+  if Size(S) = 1 then
+    return [];
+  fi;
   
   # preprocessing...
   out:=[];
@@ -394,7 +398,9 @@ function(S)
         Remove(po[i], pos);
       fi;
       Append(gens2, List(classes{po[i]}, Representative));
-      Add(out, SemigroupIdealByGenerators(S, gens2));
+      if not IsEmpty(gens2) then
+        Add(out, SemigroupIdealByGenerators(S, gens2));
+      fi;
     else 
       inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
       R:=Source(inj);
@@ -405,14 +411,18 @@ function(S)
           Remove(po[i], pos);
         fi;
         Append(gens2, List(classes{po[i]}, Representative));
-        V:=SemigroupIdealByGenerators(S, gens2);
+        if not IsEmpty(gens2) then
+          V:=SemigroupIdealByGenerators(S, gens2);
+        else
+          V:=[];
+        fi;
         tuples:=OnTuples(Filtered(GeneratorsOfSemigroup(U), 
              x-> not IsMultiplicativeZero(U, x)), inj);
         if tuples=[] and Size(U) = 1 then  # This will fail if U = {0} ???
-          Add(out, Semigroup(GeneratorsOfSemigroup(V), OnTuples(
-          GeneratorsOfSemigroup(U), inj), rec(small:=true)));
+          Add(out, Semigroup(OnTuples(
+          GeneratorsOfSemigroup(U), inj), V, rec(small:=true)));
         elif tuples<>[] then
-          Add(out, Semigroup(GeneratorsOfSemigroup(V), 
+          Add(out, Semigroup(V, 
             tuples, rec(small:=true)));
         fi;
       od;
@@ -438,9 +448,12 @@ function(S)
       if pos<>fail then
         Remove(po[i], pos);
       fi;
-      Append(gens2, 
-       GeneratorsOfSemigroup(SemigroupIdealByGenerators(S,
-        List(classes{po[i]}, Representative))));
+      reps:=List(classes{po[i]}, Representative);
+      if not IsEmpty(reps) then
+        Append(gens2, 
+         GeneratorsOfSemigroup(SemigroupIdealByGenerators(S,
+          reps)));
+      fi;
       Add(out, Semigroup(gens2, rec(small:=true)));
       Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
       " removing whole non-maximal non-regular D-class...");
@@ -451,14 +464,19 @@ function(S)
       if pos<>fail then 
         Remove(po[i], pos);
       fi;
-
-      ideal:=GeneratorsOfSemigroup(Semigroup(SemigroupIdealByGenerators(S,
-        List(classes{po[i]}, Representative)), rec(small:=true)));
       count:=0;
-      YannRecursion1:=function(U, known, A)
-        local ismax, new_known, a, V, didtest, h;
+      reps:=List(classes{po[i]}, Representative);
+      if not IsEmpty(reps) then
+        ideal:=GeneratorsOfSemigroup(Semigroup(SemigroupIdealByGenerators(S,
+        reps), rec(small:=true)));
+      else
+        ideal:=[];
+      fi;
+      YannRecursion1:=function(U, known, A, depth)
+        local ismax, new_known, a, V, didtest, h, new_depth;
+        new_depth:=depth+1;
         count:=count+1;
-        Print("at depth: ", count,"\n");
+        Print("call: ", count, ", depth: ", new_depth,"\n");
         ismax:=true; 
         new_known:=ShallowCopy(known);
         didtest:=false;
@@ -467,11 +485,12 @@ function(S)
           h:=HClass(S,a);
           if not ForAny(h, x->x in known) then 
             didtest:=true;
-            V:=WilfRecursion(Semigroup(U, h));
+            #V:=HClassClosure(Semigroup(U, h));
+            V:=Semigroup(U, h);
             if ForAll(XX, x-> not x in V) then #i.e. check that V<>S
               ismax:=false;
               if ForAll(new_known, x-> not x in V) then 
-                YannRecursion1(V, new_known, Difference(A, V));
+                YannRecursion1(V, new_known, Difference(A, V), new_depth);
               fi;
               new_known:=Union(new_known, h);
             fi;
@@ -487,10 +506,35 @@ function(S)
         fi;
         return;
       end;
-      for k in [1..Length(lookup[i])] do
+      
+    # Case "2": Assume maximal subsemigroups intersect every Hclass
+     
+    Info(InfoSemigroups, 2, "lookin' for case 2 stuff");    
+    gens3:=gens{lookup[i]};
+    gens2:=Difference(ShallowCopy(gens), gens3);
+    U:=Semigroup(gens2);
+    
+    inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
+    R:=Source(inj);
+    
+    G:=UnderlyingSemigroup(R); 
+    I:=Rows(R); J:=Columns(R);
+                
+    for H in MaximalSubgroups(G) do
+      UU:=GeneratorsOfReesZeroMatrixSemigroupNC(R, I, H, J);
+      if Size(Semigroup(UU))<Size(R) then
+        UU:=Semigroup(Images(inj, UU), U);
+        if ForAny(gens3, x-> not x in UU) then
+          Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
+            " Case 2");
+          Add(out, Semigroup(Concatenation(GeneratorsOfSemigroup(UU), ideal)));
+        fi;
+      fi;
+    od;
+        
+      for k in [1..Length(lookup[i])] do      
         for j in Combinations(lookup[i], k) do 
           Info(InfoSemigroups, 2, "\nTrying to remove gens: ", j, "...");
-          count:=0;
           # indices of gens in classes[i]
           gens2:=Difference(ShallowCopy(gens), gens{j});
           U:=Semigroup(gens2);
@@ -509,19 +553,19 @@ function(S)
           od;
           
           if k = 1 and Length(XX)=Size(classes[i]) then #remove the whole class
-            Add(out, Semigroup(gens2, ideal));
+            Add(out, Semigroup(Concatenation(gens2, ideal)));
             Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
             " removing whole non-maximal regular D-class...");
             # if k > 1, we can stop considering this subset gens{j}
           else 
             A:=Filtered(classes[i], x-> not (x in XX or x in U));
             if IsEmpty(A) and k = 1 then 
-              Add(out, Semigroup(U, ideal));
+              Add(out, Semigroup(Concatenation(GeneratorsOfSemigroup(U), ideal)));
               Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
               " removing all of XX");
               # if k > 1, I think we can stop considering this subset gens{j}
             elif not IsEmpty(A) then
-              V:=Semigroup(U, A, ideal, rec(small:=true));
+              V:=Semigroup(U, Concatenation(A, ideal), rec(small:=true));
               if V<>S then
                 if k = 1 then
                   Add(out, V);
@@ -534,26 +578,36 @@ function(S)
                 fi;
               else
               
+                XXtemp:=XX;
+                Utemp:=U;
+                XX:=Union(List(XX, x-> Elements(HClass(S, x))));
+                A:=Filtered(classes[i], x-> not (x in XX or x in U));
+              
                 # Set U to be a union of H-classes of S
-                WilfRecursion:=function(U)
+                HClassClosure:=function(U)
                   local V, B;
                   B:=Intersection(U, classes[i]);
-                  V:=Semigroup(U, Union(List(B, x-> 
-                      Elements(HClass(S, x)))), rec(small:=true));
-                  if Size(V) = Size(U) then
-                    return U;
+                  B:=Union(List(B, x-> Elements(HClass(S, x))));
+                  if not IsEmpty(B) then
+                    return Semigroup(U, B, rec(small:=true));
                   fi;
-                  return WilfRecursion(V);
+                  return U;
                 end;
             
-                # Case 1 of 2: Maximal Subsemigroups which are unions of H-classes
-                U:=WilfRecursion(U);
+                # Case 1 of 2: Find Maximal Subsemigroups which are unions of H-classes
+                U:=HClassClosure(U);
                 
                 if not ForAny(XX, x->x in U) then           
                   A:=Filtered(classes[i], x-> not (x in XX or x in U));
-                  YannRecursion1(U, [], A);
+                  count:=0;
+                  YannRecursion1(U, [], A, 0);
                 fi;
-                  
+                
+                # Case 2 of 2: Maximal subgroups stuff
+                XX:=XXtemp;
+                U:=Utemp;
+                
+                
               fi;
             fi;
           fi;
@@ -860,13 +914,17 @@ InstallMethod(IrredundantGeneratingSubset,
 [IsAssociativeElementCollection],
 function(coll)
   local gens, nrgens, deg, out, redund, i, f;
-  
+    
   if not (IsActingSemigroup(coll) or IsGeneratorsOfActingSemigroup(coll)) then 
     Error();
   fi;
 
   if IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll) then
     coll:=ShallowCopy(GeneratorsOfSemigroup(coll));
+  fi;
+  
+  if Size(coll) = 1 then
+    return coll;
   fi;
   
   gens:=Set(ShallowCopy(coll)); 
@@ -1436,24 +1494,24 @@ end);
 
 #
 
-#Subsemigroups:=function(R) #for a Rees 0-matrix semigroup...
-#  local max, o, U, V;
-#  
-#  max:=Set(MaximalSubsemigroups(R));
-#  o:=ShallowCopy(max);
-#  
-#  for U in o do 
-#    if Size(U)>1 then 
-#      for V in MaximalSubsemigroups(U) do 
-#        if not V in max then 
-#          AddSet(max, V);
-#          Add(o, V);
-#        fi;
-#      od;
-#    fi;
-#  od;
-#
-#  return max;
-#end;
+Subsemigroups:=function(R)
+  local max, o, U, V;
+  
+  max:=Set(MaximalSubsemigroups(R));
+  o:=ShallowCopy(max);
+  
+  for U in o do 
+    if Size(U)>1 then 
+      for V in MaximalSubsemigroups(U) do 
+        if not V in max then 
+          AddSet(max, V);
+          Add(o, V);
+        fi;
+      od;
+    fi;
+  od;
+
+  return max;
+end;
 
 #EOF

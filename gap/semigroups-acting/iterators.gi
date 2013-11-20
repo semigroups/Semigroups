@@ -660,7 +660,7 @@ end);
 InstallMethod(Iterator, "for a trivial acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup and IsTrivial], 9999,
 function(s)
-  return TrivialIterator(Generators(s)[1]);
+  return TrivialIterator(GeneratorsOfSemigroup(s)[1]);
 end);
 
 # different method for regular/inverse
