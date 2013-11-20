@@ -239,7 +239,7 @@ end);
 InstallMethod(Size, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local data, lenreps, o, scc, r, n, m, i, j;
+  local data, lenreps, o, scc, r, n, m, i;
    
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   lenreps:=data!.lenreps;
@@ -249,10 +249,8 @@ function(s)
   r:=0;
   for m in [2..Length(scc)] do 
     n:=Size(LambdaOrbSchutzGp(o, m))*Length(scc[m]);
-    for i in [1..lenreps[m]] do 
-      for j in [1..repslens[m][i]] do 
-        r:=r+n;
-      od;
+    for i in lenreps[m] do 
+      r:=r+i*n;
     od;
   od;
 
