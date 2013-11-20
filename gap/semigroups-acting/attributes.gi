@@ -651,6 +651,10 @@ function(coll)
     coll:=ShallowCopy(GeneratorsOfSemigroup(coll));
   fi;
   
+  if Size(coll)=1 then 
+    return coll;
+  fi;
+
   gens:=Set(ShallowCopy(coll)); 
   nrgens:=Length(gens); 
   deg:=ActionDegree(coll);
