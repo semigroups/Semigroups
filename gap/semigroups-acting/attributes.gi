@@ -1533,7 +1533,7 @@ end;
 
 #
 
-NumberSubsemigroups:=function(R)
+NumberOfSubsemigroups:=function(R)
   local max, o, U, V, count;
   
   max:=Set(MaximalSubsemigroups(R));
