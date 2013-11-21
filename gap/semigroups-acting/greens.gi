@@ -1514,7 +1514,7 @@ function(x, value, scc, o, onright)
   if HasSemigroupDataIndex(x) then
     data:=SemigroupData(s);
     m:=LambdaOrbSCCIndex(x);
-    if data!.repslens[m][data!.orblookup1[SemigroupDataIndex(x)]]>1
+    if data!.lenreps[m][data!.orblookup1[SemigroupDataIndex(x)]]>1
       then
       return false;
     fi;
@@ -1700,7 +1700,7 @@ function(x, value, scc, o, onright)
    IsRegularClass(x)) then
     data:=SemigroupData(s);
     m:=LambdaOrbSCCIndex(x);
-    if data!.repslens[m][data!.orblookup1[SemigroupDataIndex(x)]]>1 then
+    if data!.lenreps[m][data!.orblookup1[SemigroupDataIndex(x)]]>1 then
       return 0;
     fi;
   fi;
@@ -1784,36 +1784,39 @@ InstallMethod(NrIdempotents, "for an R-class of an acting semigroup",
 r-> NrIdempotents@(r, RhoFunc(Parent(r))(Representative(r)), LambdaOrbSCC(r), LambdaOrb(r), true));
 
 # different method for regular/inverse
+#JDM this should be updated after changes to repslens...
 
 InstallMethod(NrIdempotents, "for an acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local o, scc, data, reps, lenreps, repslens, rhofunc, tester, nr, rho, m, i, k;
+  local data, lo, scc, ro, lenreps, rholookup, o, tester, nr, rho, i;
 
   if HasIdempotents(s) then 
     return Length(Idempotents(s));
   fi;
 
-  o:=LambdaOrb(s);    scc:=OrbSCC(o);
-  
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
-  reps:=data!.reps; lenreps:=data!.lenreps; repslens:=data!.repslens;
-
-  rhofunc:=RhoFunc(s);
+  
+  lo:=LambdaOrb(s);    
+  scc:=OrbSCC(lo);
+  ro:=RhoOrb(s);
+  
+  lenreps:=data!.lenreps;
+  rholookup:=data!.rholookup;
+  o:=data!.orbit;
   tester:=IdempotentTester(s);
 
   nr:=0;
-  for m in [2..Length(scc)] do 
-    for i in [1..lenreps[m]] do 
-      rho:=rhofunc(reps[m][i][1]);
-      for k in scc[m] do 
-        if tester(o[k], rho) then 
-          nr:=nr+repslens[m][i];
+  for i in [2..Length(data)] do 
+    if lenreps[o[i][2]][rholookup[i]]=1 then
+      rho:=ro[rholookup[i]]; #rhofunc(reps[m][i][1]);
+      for i in scc[o[i][2]] do 
+        if tester(lo[i], rho) then 
+          nr:=nr+1;
         fi;
       od;
-    od;
+    fi;
   od;
-
 
   return nr;
 end);
