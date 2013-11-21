@@ -353,10 +353,31 @@ fi;
 InstallMethod(MaximalSubsemigroups, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local out, gens, po, reps, classes, D, lookup, count, max, nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, YannRecursion, HClassClosure	, U, A, XX, a, C, i, j, k, gens3, UU, G, I, J, H;
+  local out, gens, po, reps, classes, D, lookup, count, max, max2, nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, YannRecursion, HClassClosure	, U, A, XX, a, C, i, j, k, gens3, UU, G, I, J, H;
   
   if Size(S) = 1 then
     return [];
+  fi;
+  
+  # Should be made into its own method or something
+  if IsGroupAsSemigroup(S) then
+    max2:=function(S)
+      local out, G, iso, inv, max, g, gens;
+  
+      out:=[];
+      iso:=IsomorphismPermGroup(S);
+      inv:=InverseGeneralMapping(iso);
+      G:=Range(iso);
+      max:=MaximalSubgroups(G);
+      for g in max do
+        gens:=GeneratorsOfSemigroup(g);
+        Add(out, Semigroup(Images(inv,gens)));
+      od;
+  
+      return out;
+  
+    end;
+    return max2(S);
   fi;
   
   # preprocessing...
@@ -422,8 +443,7 @@ function(S)
           Add(out, Semigroup(OnTuples(
           GeneratorsOfSemigroup(U), inj), V, rec(small:=true)));
         elif tuples<>[] then
-          Add(out, Semigroup(V, 
-            tuples, rec(small:=true)));
+          Add(out, Semigroup(tuples, V, rec(small:=true)));
         fi;
       od;
     fi;
@@ -1508,7 +1528,35 @@ Subsemigroups:=function(R)
     fi;
   od;
 
-  return max;
+  return Concatenation(max, [R]);
 end;
+
+#
+
+NumberSubsemigroups:=function(R)
+  local max, o, U, V, count;
+  
+  max:=Set(MaximalSubsemigroups(R));
+  o:=ShallowCopy(max);
+  count:=Length(o)+1; # +1 for R itself
+  
+  while not IsEmpty(o) do
+    U:=o[1];
+    if Size(U)>1 then 
+      for V in MaximalSubsemigroups(U) do 
+        if not V in max then 
+          AddSet(max, V);
+          Add(o, V);
+          count:=count+1;
+          Print(count,"\n");
+        fi;
+      od;
+    fi;
+    Remove(o,1);
+  od;
+
+  return count;
+end;
+
 
 #EOF
