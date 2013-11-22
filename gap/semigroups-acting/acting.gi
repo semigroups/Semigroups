@@ -30,7 +30,7 @@ function(s)
      ht:=HTCreate(gens[1], rec(treehashsize:=s!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], init:=false,
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[], rholookup:=[1],
-     lenreps:=[], orbit:=[[,,,FakeOne(gens)]], repslens:=[], lambdarhoht:=[],
+     lenreps:=[0], orbit:=[[,,,FakeOne(gens)]], repslens:=[], lambdarhoht:=[],
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail],
      genstoapply:=[1..Length(gens)], stopper:=false);
   
@@ -224,7 +224,7 @@ end);
 InstallMethod(Size, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local data, lenreps, repslens, o, scc, r, n, m, i, j;
+  local data, lenreps, repslens, o, scc, size, n, m, i;
    
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   lenreps:=data!.lenreps;
@@ -232,17 +232,15 @@ function(s)
   o:=LambdaOrb(s);
   scc:=OrbSCC(o);
   
-  r:=0;
+  size:=0;
   for m in [2..Length(scc)] do 
     n:=Size(LambdaOrbSchutzGp(o, m))*Length(scc[m]);
     for i in [1..lenreps[m]] do 
-      for j in [1..repslens[m][i]] do 
-        r:=r+n;
-      od;
+      size:=size+n*repslens[m][i];
     od;
   od;
 
-  return r; 
+  return size; 
 end);
 
 # data...
@@ -587,11 +585,6 @@ function(data, limit, lookfunc)
   return data;
 end);
 
-# JDM this is stored as an attribute, unfortunately..
-
-InstallMethod(Length, "for semigroup data", [IsSemigroupData], 
-x-> Length(x!.orbit));
-
 #
 
 InstallMethod(OrbitGraphAsSets, "for semigroup data",  
@@ -601,26 +594,17 @@ function(data)
 end);
 
 # returns the index of the representative of the R-class containing x in the
-# parent of data. 
+# parent of data. Note that this depends on the state of the data, it only tells
+# you if it is there already, it doesn't try to find it. 
 
 InstallMethod(Position, "for semigroup data and an associative element",
 [IsSemigroupData, IsAssociativeElement, IsZeroCyc], 100,
 function(data, x, n)
-  local val, s, o, l, m, scc, schutz, repslookup, y, reps, repslens, lambdaperm;
-
-  val:=HTValue(data!.ht, x);
-
-  if val<>fail then 
-    return val;
-  fi;
+  local s, o, l, m, val, schutz, lambdarhoht, ind, repslookup, reps, repslens,
+  lambdaperm;
 
   s:=Parent(data);
   o:=LambdaOrb(s);
-
-  if not IsClosed(o) then 
-    Enumerate(o, infinity);
-  fi;
-  
   l:=Position(o, LambdaFunc(s)(x));
   
   if l=fail then 
@@ -628,38 +612,48 @@ function(data, x, n)
   fi;
   
   m:=OrbSCCLookup(o)[l];
-  scc:=OrbSCC(o);
 
-  val:=HTValue(data!.lambdarhoht, RhoFunc(s)(x));
-  if val=fail or not IsBound(val[m]) then 
+  if l<>OrbSCC(o)[m][1] then 
+    x:=x*LambdaOrbMult(o, m, l)[2];
+  fi; 
+  
+  val:=HTValue(data!.ht, x);
+  schutz:=LambdaOrbStabChain(o, m);
+  
+  if val<>fail then 
+    return val;
+  elif schutz=false then 
+    return false;
+  fi;
+  
+  l:=Position(RhoOrb(s), RhoFunc(s)(x));
+  
+  if l=fail then 
+    return fail;
+  fi;
+  
+  lambdarhoht:=data!.lambdarhoht;
+
+  if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then 
     return fail;
   fi;
 
-  schutz:=LambdaOrbStabChain(o, m);
-  repslookup:=data!.repslookup[m][val[m]];
+  ind:=lambdarhoht[l][m];
+  repslookup:=data!.repslookup[m][ind];
 
   if schutz=true then 
     return repslookup[1];
   fi;
- 
-  if l<>scc[m][1] then 
-    y:=x*LambdaOrbMult(o, m, l)[2];
-  else
-    y:=x;
-  fi; 
 
-  reps:=data!.reps[m][val[m]]; repslens:=data!.repslens[m][val[m]];
+  reps:=data!.reps[m][ind]; repslens:=data!.repslens[m][ind];
 
-  if schutz=false then 
-    return HTValue(data!.ht, y);
-  else
-    lambdaperm:=LambdaPerm(s);
-    for n in [1..repslens] do 
-      if SiftedPermutation(schutz, lambdaperm(reps[n], y))=() then 
-        return repslookup[n];
-      fi;
-    od;
-  fi; 
+  lambdaperm:=LambdaPerm(s);
+  for n in [1..repslens] do 
+    if SiftedPermutation(schutz, lambdaperm(reps[n], x))=() then 
+      return repslookup[n];
+    fi;
+  od;
+
   return fail;
 end);
 
@@ -679,20 +673,22 @@ end);
 
 InstallGlobalFunction(SizeOfSemigroupData,
 function(data)
-  local reps, nr, repslookup, orbit, i, j;
+  local lenreps, repslens, o, scc, size, n, m, i;
    
-  reps:=data!.reps;
-  nr:=Length(reps);
-  repslookup:=data!.repslookup;
-  orbit:=data!.orbit;
-  i:=0;
-
-  for j in [1..nr] do 
-    data:=orbit[repslookup[j][1]];
-    i:=i+Length(reps[j])*Size(LambdaOrbSchutzGp(data[3], data[2]))
-     *Length(OrbSCC(data[3])[data[2]]);
+  data:=Enumerate(data, infinity, ReturnFalse);
+  lenreps:=data!.lenreps;
+  repslens:=data!.repslens;
+  o:=LambdaOrb(Parent(data));
+  scc:=OrbSCC(o);
+  
+  size:=0;
+  for m in [2..Length(scc)] do 
+    n:=Size(LambdaOrbSchutzGp(o, m))*Length(scc[m]);
+    for i in [1..lenreps[m]] do 
+      size:=size+n*repslens[m][i];
+    od;
   od;
-  return i; 
+  return size; 
 end);
 
 #
@@ -706,7 +702,10 @@ function(data)
   else 
     Print("open ");
   fi;
-  Print("semigroup data with ", Length(data!.orbit)-1, " reps>");
+  Print("semigroup data with ", Length(data!.orbit)-1, " reps, ",
+   Length(LambdaOrb(Parent(data))), " lambda-values, ", 
+   Length(RhoOrb(Parent(data))), " rho-values>"); 
+   #Sum(data!.lenreps), " lambda-rho combos>");
   return;
 end);
 
