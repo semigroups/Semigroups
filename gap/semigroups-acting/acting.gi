@@ -30,11 +30,20 @@ function(s)
      ht:=HTCreate(gens[1], rec(treehashsize:=s!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], init:=false,
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[], rholookup:=[1],
-     lenreps:=[], orbit:=[[,,,FakeOne(gens)]], lambdarho:=[],
+     lenreps:=[], orbit:=[[,,,FakeOne(gens)]], repslens:=[], 
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail],
      genstoapply:=[1..Length(gens)], stopper:=false);
   
-  Objectify(NewType(FamilyObj(s), IsSemigroupData and IsAttributeStoringRep), data);
+  # hash table of all valid rho values found so far, HTValue[m] of
+  # LambdaRhoHT points to where the existing R-class reps with same lambda-rho
+  # value are in SemigroupData(s).reps[m].  
+  
+  opts:=rec(forflatplainlists := true, treehashsize:=s!.opts.hashlen.M);
+  data.lambdarhoht:=HTCreate([1,1], opts);
+
+  Objectify(NewType(FamilyObj(s), IsSemigroupData and IsAttributeStoringRep),
+   data);
+  
   SetParent(data, s);
   return data;
 end);
@@ -45,7 +54,7 @@ InstallMethod(\in,
 "for an associative element and acting semigroup with generators",
 [IsAssociativeElement, IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(f, s)
-  local data, len, ht, lambda, o, l, m, scc, rho, oo, val, reps, lookfunc, schutz, lenreps, max, lambdaperm, found, n, i;
+  local data, len, ht, lambda, o, l, m, scc, rho, oo, rho_val, lambdarhotable, lookfunc, val, schutz, reps, repslens, max, lambdaperm, found, n, i;
   
   if ElementsFamily(FamilyObj(s))<>FamilyObj(f) 
     or (IsActingSemigroupWithFixedDegreeMultiplication(s) 
@@ -102,53 +111,37 @@ function(f, s)
   
   rho:=RhoFunc(s)(f); 
   oo:=RhoOrb(s);
-  val:=Position(oo, rho);
-  reps:=data!.reps;
-
-  # if rho is not already known, then look for it
-  if val=fail then 
-    if IsClosed(oo) then 
-      return false;
-    fi;
-
-    lookfunc:=function(data, x) 
-      val:=Position(oo, rho);
-      return val<>fail;
-    end;
+  rho_val:=Position(oo, rho);
+  lambdarhotable:=oo!.lambdarhotable;
   
-    data:=Enumerate(data, infinity, lookfunc);
-
-    # rho not found, so f not in s
-    if val=fail then 
-      return false;
-    fi;
-  elif not IsBound(reps[m][val]) then 
+  lookfunc:=function(data, x) 
+    return IsBound(lambdarhotable[rho_val][m]);
+  end;
+  
+  # if lambdarho is not already known, then look for it
+  if rho_val=fail or not IsBound(lambdarhotable[rho_val][m]) then 
     if IsClosed(data) then 
       return false;
     fi;
-
-    lookfunc:=function(data, x)
-      return IsBound(reps[m][val]);
-    end;
-
+  
     data:=Enumerate(data, infinity, lookfunc);
-    if data!.found=false then 
+    val:=data!.found; # position in data!.orbit 
+
+    # lambdarho not found, so f not in s
+    if val=false then 
       return false;
     fi;
+    val:=data!.orblookup1[val]; 
+    # the index of the list of reps with same lambdarho value as f. 
+    # = HTValue(LambdaRhoHT(s), lambdarho);
+  else 
+    val:=lambdarhotable[rho_val][m];
   fi;
 
   schutz:=LambdaOrbStabChain(o, m);
-  
+
   # if the schutz gp is the symmetric group, then f in s!
   if schutz=true then 
-    return true;
-  fi;
-
-  reps:=data!.reps; lenreps:=data!.lenreps;
-
-  max:=Factorial(LambdaRank(s)(lambda))/Size(LambdaOrbSchutzGp(o, m));
- 
-  if lenreps[m][val]=max then 
     return true;
   fi;
 
@@ -165,13 +158,19 @@ function(f, s)
       return true;
     fi;
   fi;
+
+  reps:=data!.reps; repslens:=data!.repslens;
+  max:=Factorial(LambdaRank(s)(lambda))/Size(LambdaOrbSchutzGp(o, m));
   
   # if schutz is false, then f has to be an R-rep which it is not...
   if schutz<>false then 
+    if repslens[m][val]=max then 
+      return true;
+    fi;
     
     # check if f already corresponds to an element of reps[val]
     lambdaperm:=LambdaPerm(s);
-    for n in [1..lenreps[m][val]] do 
+    for n in [1..repslens[m][val]] do 
       if SiftedPermutation(schutz, lambdaperm(reps[m][val][n], f))=() then
         return true;
       fi;
@@ -181,28 +180,20 @@ function(f, s)
   if IsClosed(data) then 
     return false;
   fi;
-  
-  len:=lenreps[m][val];
-
-  lookfunc:=function(o, x)
-    return lenreps[m][val]>len;
-  end;
 
   # enumerate until we find f or the number of elts in reps[m][val] exceeds max
-  if lenreps[m][val]<max then# doesn't this have to be try JDM  
+  if repslens[m][val]<max then 
     if schutz=false then 
       repeat 
         # look for more R-reps with same lambda-rho value
         data:=Enumerate(data, infinity, lookfunc);
-        len:=lenreps[m][val];
         found:=data!.found;
         if found<>false then 
           if f=data[found][4] then 
             return true;
           fi;
         fi;
-        
-      until found=false or lenreps[m][val]>=max;
+      until found=false or repslens[m][val]>=max;
     else 
       repeat
         
@@ -210,15 +201,16 @@ function(f, s)
         data:=Enumerate(data, infinity, lookfunc);
         found:=data!.found;
         if found<>false then 
-          for i in [n+1..lenreps[m][val]] do 
+          reps:=data!.reps; repslens:=data!.repslens;
+          for i in [n+1..repslens[m][val]] do 
             if SiftedPermutation(schutz, lambdaperm(reps[m][val][i], f))=()
              then 
               return true;
             fi;
           od;
-          n:=lenreps[m][val];
+          n:=repslens[m][val];
         fi;
-      until found=false or lenreps[m][val]>=max;
+      until found=false or repslens[m][val]>=max;
     fi;
   fi;
   return false;
@@ -229,18 +221,21 @@ end);
 InstallMethod(Size, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(s)
-  local data, lenreps, o, scc, r, n, m, i;
+  local data, lenreps, repslens, o, scc, r, n, m, i, j;
    
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   lenreps:=data!.lenreps;
+  repslens:=data!.repslens;
   o:=LambdaOrb(s);
   scc:=OrbSCC(o);
   
   r:=0;
   for m in [2..Length(scc)] do 
     n:=Size(LambdaOrbSchutzGp(o, m))*Length(scc[m]);
-    for i in lenreps[m] do 
-      r:=r+i*n;
+    for i in [1..lenreps[m]] do 
+      for j in [1..repslens[m][i]] do 
+        r:=r+n;
+      od;
     od;
   od;
 
@@ -283,7 +278,7 @@ InstallMethod(Enumerate,
 "for an semigroup data, limit, and func",
 [IsSemigroupData, IsCyclotomic, IsFunction],
 function(data, limit, lookfunc)
-  local looking, ht, orb, nr, i, graph, reps, len, lambdarho, repslookup, orblookup1, orblookup2, lenreps, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact, lambdaperm, o, oht, scc, lookup, rho, rho_o, rho_orb, rho_nr, rho_ht, rho_schreiergen, rho_schreierpos, rho_log, rho_logind, rho_logpos, rho_depth, rho_depthmarks, rho_orbitgraph, htadd, htvalue, suc, x, pos, m, rhox, l, pt, r, schutz, data_pos, old, j, n;
+  local looking, ht, orb, nr, i, graph, reps, repslens, lenreps, lambdarhoht, repslookup, orblookup1, orblookup2, rholookup, stopper, schreierpos, schreiergen, schreiermult, gens, nrgens, genstoapply, s, lambda, lambdaact, lambdaperm, o, oht, scc, lookup, rho, rho_o, rho_orb, rho_nr, rho_ht, rho_schreiergen, rho_schreierpos, rho_log, rho_logind, rho_logpos, rho_depth, rho_depthmarks, rho_orbitgraph, htadd, htvalue, suc, x, pos, m, rhox, l, pt, ind, schutz, data_val, old, j, n;
  
  if lookfunc<>ReturnFalse then 
     looking:=true;
@@ -300,41 +295,39 @@ function(data, limit, lookfunc)
   
   data!.looking:=looking;
 
-  ht:=data!.ht;       # so far found R-reps          
+  ht:=data!.ht;       # so far found R-reps
   orb:=data!.orbit;   # the so far found R-reps data 
   nr:=Length(orb);
   i:=data!.pos;       # points in orb in position at most i have descendants
-  graph:=data!.graph; # orbit graph of orbit of R-classes under left mult   
-  reps:=data!.reps;   # reps grouped by equal lambda scc index and rho value
-  len:=Length(reps);
-
-  lambdarho:=data!.lambdarho;
-                      # <reps[lambdarho[m][l]]> contains reps <x> with 
-                      # lambda-orb-scc-index <x> equal <m>             
-                      # and <Position(RhoOrb(s), x)=l>                 
-
-  repslookup:=data!.repslookup; # Position(orb, reps[i][j])
-                                # = repslookup[i][j]       
-                                # = HTValue(ht, reps[i][j])
+  graph:=data!.graph; # orbit graph of orbit of R-classes under left mult 
+  reps:=data!.reps;   # reps grouped by equal lambda-scc-index and rho-value-index
+ 
+  repslens:=data!.repslens;       # Length(reps[m][i])=repslens[m][i] 
+  lenreps:=data!.lenreps;         # lenreps[m]=Length(reps[m])
   
-  orblookup1:=data!.orblookup1; # orblookup1[i] position in reps containing 
-                                # orb[i][4] (the R-rep)                     
+  lambdarhoht:=data!.lambdarhoht; # HTValue(lambdarhoht, [m,l])=position in reps[m] 
+                                  # of R-reps with lambda-scc-index=m and
+                                  # rho-value-index=l
+                      
+  repslookup:=data!.repslookup; # Position(orb, reps[m][i][j])
+                                # = repslookup[m][i][j]
+                                # = HTValue(ht, reps[m][i][j])
+  
+  orblookup1:=data!.orblookup1; # orblookup1[i] position in reps[m] containing 
+                                # orb[i][4] (the R-rep)
 
-  orblookup2:=data!.orblookup2; # orblookup2[i] position in       
-                                # reps[orblookup1[i]]             
+  orblookup2:=data!.orblookup2; # orblookup2[i] position in 
+                                # reps[m][orblookup1[i]] 
                                 # containing orb[i][4] (the R-rep)
 
-  lenreps:=data!.lenreps;       # lenreps[i]=Length(reps[i]);
-
-  rholookup:=data!.rholookup;   # rholookup[i]=Position(rho_o, rho(orb[i][4]))
+  rholookup:=data!.rholookup;   #rholookup[i]=rho-value-index of orb[i][4]
   
   stopper:=data!.stopper;       # stop at this place in the orbit
 
   # schreier
-  schreierpos:=data!.schreierpos;   # orb[i][4] is obtained from 
-  schreiergen:=data!.schreiergen;   # gens[schreiergen[i]]*orb[schreierpos[i]]
-  schreiermult:=data!.schreiermult; # Position(LambdaOrb(s), lambda(orb[i][4]))
-                                    # =schreiermult[4] 
+  schreierpos:=data!.schreierpos;
+  schreiergen:=data!.schreiergen;
+  schreiermult:=data!.schreiermult;
 
   # generators
   gens:=data!.gens; 
@@ -372,7 +365,10 @@ function(data, limit, lookfunc)
   # initialise the data if necessary
   if data!.init=false then 
     for i in [2..Length(scc)] do 
-      lambdarho[i]:=[];
+      reps[i]:=[];
+      repslookup[i]:=[];
+      repslens[i]:=[];
+      lenreps[i]:=0;
     od;
     data!.init:=true;
     i:=data!.pos;
@@ -390,20 +386,18 @@ function(data, limit, lookfunc)
      
     i:=i+1;
     
-    # for the rho-orbit                             #
+    # for the rho-orbit
     if rholookup[i]>=rho_depthmarks[rho_depth+1] then
       rho_depth:=rho_depth+1;
       rho_depthmarks[rho_depth+1]:=rho_nr+1;
     fi;
     rho_logind[rholookup[i]]:=rho_logpos; suc:=false;
-    #                                               #
+    #
     
     for j in genstoapply do #JDM
       x:=gens[j]*orb[i][4];
       pos:=htvalue(oht, lambda(x)); 
-
-      #find the scc
-      m:=lookup[pos];
+      m:=lookup[pos];   #lambda-value-scc-index
 
       #put lambda(x) in the first position in its scc
       if pos<>scc[m][1] then 
@@ -415,12 +409,12 @@ function(data, limit, lookfunc)
 
       if l=fail then #new rho-value, new R-rep
       
-        #                 rho-orb                #
+        #                update rho-orb               #
         rho_nr:=rho_nr+1;
         l:=rho_nr;
         rho_orb[rho_nr]:=rhox;
         htadd(rho_ht, rhox, rho_nr);
-
+        
         rho_orbitgraph[rho_nr]:=EmptyPlist(nrgens);
         rho_orbitgraph[rholookup[i]][j]:=rho_nr;
 
@@ -432,92 +426,95 @@ function(data, limit, lookfunc)
         rho_log[rho_logpos+1]:=rho_nr;
         rho_logpos:=rho_logpos+2;
         rho_o!.logpos:=rho_logpos;
-        #                 rho-orb                #
+        #                                              #
+    
+        nr:=nr+1;
+        lenreps[m]:=lenreps[m]+1;
+        htadd(lambdarhoht, [m, l], lenreps[m]);
         
-        nr:=nr+1;               # nr R-class reps increased by 1
-        len:=len+1;             # length of reps increased by 1
-        lambdarho[m][l]:=len;   
-        reps[len]:=[x];
-        lenreps[len]:=1;
-        repslookup[len]:=[nr];
-
-        orblookup1[nr]:=len;
+        reps[m][lenreps[m]]:=[x];
+        repslookup[m][lenreps[m]]:=[nr];
+        repslens[m][lenreps[m]]:=1;
+        
+        orblookup1[nr]:=lenreps[m];
         orblookup2[nr]:=1;
+
         pt:=[s, m, o, x, false, nr];
         # semigroup, lambda orb scc index, lambda orb, rep,
         # IsGreensClassNC, index in orbit
 
-      elif not IsBound(lambdarho[m][l]) then 
-      # old rho-value, but new rho-lambda-combination
-           
-        nr:=nr+1;
-        len:=len+1;
-        lambdarho[m][l]:=len;   
-        reps[len]:=[x];
-        lenreps[len]:=1;
-        repslookup[len]:=[nr];
-
-        orblookup1[nr]:=len;
-        orblookup2[nr]:=1;
-        pt:=[s, m, o, x, false, nr];
-        
-        # update rho orbit graph
-        rho_orbitgraph[rholookup[i]][j]:=l;
-      
-      else              
-      # old lambda-rho combination
-        
-        r:=lambdarho[m][l];  # position in <reps> of R-reps with
-                             # lambda-orb-scc-index equal <m>   
-                             # and rho-orb-position <l>         
-
-        pt:=[s, m, o, x, false, nr+1];
-        
-        #check membership in Schutzenberger group via stabiliser chain
-        schutz:=LambdaOrbStabChain(o, m);
-
-        if schutz=true then 
-        # the Schutzenberger group is the symmetric group
-          graph[i][j]:=repslookup[r][1];
-          rho_orbitgraph[rholookup[i]][j]:=l;
-          continue;
-        else
-          if schutz=false then 
-          # the Schutzenberger group is trivial
-            data_pos:=htvalue(ht, x);
-            if data_pos<>fail then 
-              graph[i][j]:=data_pos;
-              rho_orbitgraph[rholookup[i]][j]:=l;
-              continue;
-            fi;
-          else 
-          # the Schutzenberger group is neither trivial nor the symmetric group
-            old:=false; 
-            for n in [1..lenreps[r]] do 
-              if SiftedPermutation(schutz, lambdaperm(reps[r][n], x))=() then
-                old:=true;
-                graph[i][j]:=repslookup[r][n]; 
-                rho_orbitgraph[rholookup[i]][j]:=l;
-                break;
-              fi;
-            od;
-            if old then 
-              continue;
-            fi;
-          fi;
-          nr:=nr+1;
-          lenreps[r]:=lenreps[r]+1;
-          reps[r][lenreps[r]]:=x;
-          repslookup[r][lenreps[r]]:=nr;
-          orblookup1[nr]:=r;
-          orblookup2[nr]:=lenreps[r];
+      else # existing rho-value 
+        ind:=htvalue(lambdarhoht, [m, l]);  # index in reps[m] containing R-reps
+                                            # with lambda-scc-index=m and
+                                            # rho-value-index=l
+        if ind=fail then 
+        # old rho-value, but new lambda-rho-combination
           
-          # update rho orbit graph and rholookup
+          # update rho orbit graph
           rho_orbitgraph[rholookup[i]][j]:=l;
+          
+          nr:=nr+1;
+          lenreps[m]:=lenreps[m]+1;
+          ind:=lenreps[m];
+          htadd(lambdarhoht, [m, l], ind);
+          
+          reps[m][ind]:=[x];
+          repslookup[m][ind]:=[nr];
+          repslens[m][ind]:=1;
+          
+          orblookup1[nr]:=ind;
+          orblookup2[nr]:=1;
+
+          pt:=[s, m, o, x, false, nr];
+        else 
+        # old lambda-rho combination
+          pt:=[s, m, o, x, false, nr+1];
+          
+          #check membership in Schutzenberger group via stabiliser chain
+          schutz:=LambdaOrbStabChain(o, m);
+
+          if schutz=true then 
+          # the Schutzenberger group is the symmetric group
+            graph[i][j]:=repslookup[m][ind][1];
+            rho_orbitgraph[rholookup[i]][j]:=l;
+            continue;
+          else
+            if schutz=false then 
+            # the Schutzenberger group is trivial
+              data_val:=htvalue(ht, x);
+              if data_val<>fail then 
+                graph[i][j]:=data_val;
+                rho_orbitgraph[rholookup[i]][j]:=l;
+                continue;
+              fi;
+            else 
+            # the Schutzenberger group is neither trivial nor symmetric group
+              old:=false; 
+              for n in [1..repslens[m][ind]] do 
+                if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x))=() then
+                  old:=true;
+                  graph[i][j]:=repslookup[m][ind][n]; 
+                  rho_orbitgraph[rholookup[i]][j]:=l;
+                  break;
+                fi;
+              od;
+              if old then 
+                continue;
+              fi;
+            fi;
+            nr:=nr+1;
+            repslens[m][ind]:=repslens[m][ind]+1;
+            reps[m][ind][repslens[m][ind]]:=x;
+            repslookup[m][ind][repslens[m][ind]]:=nr;
+            orblookup1[nr]:=ind;
+            orblookup2[nr]:=repslens[m][ind];
+            
+            # update rho orbit graph and rholookup
+            rho_orbitgraph[rholookup[i]][j]:=l;
+          fi;
         fi;
       fi;
-      # orb[nr] has rho-value in rho_o[rho_nr]
-      rholookup[nr]:=l;
+      rholookup[nr]:=l; # orb[nr] has rho-value in position l of the rho-orb
       
       orb[nr]:=pt;
       schreierpos[nr]:=i; # orb[nr] is obtained from orb[i]
@@ -552,6 +549,7 @@ function(data, limit, lookfunc)
   
   # for the data-orbit
   data!.pos:=i;
+  data!.lenreps:=lenreps;
   if looking then 
     data!.found:=false;
   fi;
@@ -587,7 +585,7 @@ end);
 InstallMethod(Position, "for semigroup data and an associative element",
 [IsSemigroupData, IsAssociativeElement, IsZeroCyc], 100,
 function(data, x, n)
-  local val, s, o, l, m, scc, schutz, repslookup, reps, lambdaperm;
+  local val, s, o, l, m, scc, schutz, repslookup, y, reps, repslens, lambdaperm;
 
   val:=HTValue(data!.ht, x);
 
@@ -611,31 +609,32 @@ function(data, x, n)
   m:=OrbSCCLookup(o)[l];
   scc:=OrbSCC(o);
 
-  val:=Position(RhoOrb(s), RhoFunc(s)(x));
-
-  if val=fail or not IsBound(data!.reps[m][val]) then 
+  val:=HTValue(data!.lambdarhoht, RhoFunc(s)(x));
+  if val=fail or not IsBound(val[m]) then 
     return fail;
   fi;
 
   schutz:=LambdaOrbStabChain(o, m);
-  repslookup:=data!.repslookup[m][val];
+  repslookup:=data!.repslookup[m][val[m]];
 
   if schutz=true then 
     return repslookup[1];
   fi;
  
   if l<>scc[m][1] then 
-    x:=x*LambdaOrbMult(o, m, l)[2];
+    y:=x*LambdaOrbMult(o, m, l)[2];
+  else
+    y:=x;
   fi; 
 
-  reps:=data!.reps[m][val[m]]; 
+  reps:=data!.reps[m][val[m]]; repslens:=data!.repslens[m][val[m]];
 
   if schutz=false then 
-    return HTValue(data!.ht, x);
+    return HTValue(data!.ht, y);
   else
     lambdaperm:=LambdaPerm(s);
-    for n in [1..Length(reps[m][val])] do 
-      if SiftedPermutation(schutz, lambdaperm(reps[n], x))=() then 
+    for n in [1..repslens] do 
+      if SiftedPermutation(schutz, lambdaperm(reps[n], y))=() then 
         return repslookup[n];
       fi;
     od;
@@ -686,9 +685,7 @@ function(data)
   else 
     Print("open ");
   fi;
-  Print("semigroup data with ", Length(data)-1, " reps, ", 
-   Length(LambdaOrb(Parent(data))), " lambda-values, ",
-   Length(RhoOrb(Parent(data))), " rho-values>");
+  Print("semigroup data with ", Length(data!.orbit)-1, " reps>");
   return;
 end);
 
