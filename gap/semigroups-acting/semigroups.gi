@@ -651,25 +651,39 @@ end);
 #recreate the lambda/rho orb using the higher degree!
 InstallGlobalFunction(ChangeDegreeOfTransformationSemigroupOrb, 
 function(o, old_deg, t)
-  local extra, ht, i;
-
-  # rehash the orbit values
-  extra:=[old_deg+1..DegreeOfTransformationSemigroup(t)];
-  ht:=HTCreate(o[1], rec(treehashsize:=o!.treehashsize));
-  #JDM: could make the treehashsize bigger if needed here!
-  HTAdd(ht, o[1], 1);
-  for i in [2..Length(o)] do 
-    o!.orbit[i]:=ShallowCopy(o[i]);
-    Append(o[i], extra);
-    HTAdd(ht, o[i], i);
-  od;
-  Unbind(o!.ht);
-  o!.ht:=ht;
-  
-  # change the action of <o> to that of <t> 
+  local deg, extra, ht, max, i, orb;
+  deg:=DegreeOfTransformationSemigroup(t);
+  orb:=o!.orbit; 
   if IsLambdaOrb(o) then 
+    # rehash the orbit values
+    extra:=[old_deg+1..deg];
+    ht:=HTCreate(o[1], rec(treehashsize:=o!.treehashsize));
+    #JDM: could make the treehashsize bigger if needed here!
+    HTAdd(ht, o[1], 1);
+    for i in [2..Length(o)] do 
+      orb[i]:=ShallowCopy(o[i]);
+      Append(o[i], extra);
+      HTAdd(ht, o[i], i);
+    od;
+    Unbind(o!.ht);
+    o!.ht:=ht;
+    
+    # change the action of <o> to that of <t> 
     o!.op:=LambdaAct(t);
   elif IsRhoOrb(o) then 
+    ht:=HTCreate(o[1], rec(treehashsize:=o!.treehashsize));
+    #JDM: could make the treehashsize bigger if needed here!
+    HTAdd(ht, o[1], 1);
+    for i in [2..Length(o)] do 
+      orb[i]:=ShallowCopy(o[i]);
+      max:=MaximumList(o[i]); #nr kernel classes
+      Append(o[i], [max+1..max+deg-old_deg]);
+      HTAdd(ht, o[i], i);
+    od;
+    Unbind(o!.ht);
+    o!.ht:=ht;
+    
+    # change the action of <o> to that of <t> 
     o!.op:=RhoAct(t);
   fi;
   return o;
@@ -679,7 +693,7 @@ end);
 
 InstallGlobalFunction(ClosureSemigroupNC,
 function(s, coll, opts)
-  local t, old_o, o, rho_o, old_deg, oht, scc, old_scc, lookup, old_lookup, rho_ht, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, graph, old_graph, reps, lambdarhoht, repslookup, orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, old_to_new, htadd, htvalue, i, x, pos, m, rank, rhox, l, ind, pt, schutz, data_val, old, n, j;
+  local t, old_o, o, rho_o, old_deg, oht, scc, old_scc, lookup, old_lookup, rho_ht, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, graph, old_graph, reps, lambdarhoht, rholookup, repslookup, orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, old_to_new, htadd, htvalue, i, x, pos, m, rank, rhox, l, ind, pt, schutz, data_val, old, n, j;
  
   if coll=[] then 
     Info(InfoSemigroups, 2, "every element in the collection belong to the ",
@@ -732,7 +746,7 @@ function(s, coll, opts)
   if not HasSemigroupData(s) or SemigroupData(s)!.pos=0 then 
     return t;
   fi;
-
+  
   oht:=o!.ht;
   scc:=OrbSCC(o);
   old_scc:=OrbSCC(old_o);
@@ -752,9 +766,9 @@ function(s, coll, opts)
   Unbind(rho_o!.slp); 
   
   rho_o!.parent:=t;
-  o!.scc_reps:=[FakeOne(GeneratorsOfSemigroup(t))];
+  rho_o!.scc_reps:=[FakeOne(GeneratorsOfSemigroup(t))];
  
-  SetRhoOrb(t, o);
+  SetRhoOrb(t, rho_o);
 
   # get new and old R-rep orbit data
   new_data:=SemigroupData(t);
@@ -782,7 +796,8 @@ function(s, coll, opts)
   # HTValue(lambdarhoht, Concatenation(lambda(x), rho(x))
   
   lambdarhoht:=new_data!.lambdarhoht;
-  
+  rholookup:=new_data!.rholookup;
+
   repslookup:=new_data!.repslookup; 
   # Position(orb, reps[i][j])=repslookup[i][j] = HTValue(ht, reps[i][j])
  
@@ -944,7 +959,7 @@ function(s, coll, opts)
       orblookup1[new_nr]:=ind;
       orblookup2[new_nr]:=repslens[m][ind];
     fi;
-
+    rholookup[new_nr]:=l;
     new_orb[new_nr]:=pt;
     graph[new_nr]:=ShallowCopy(old_graph[i]);
     new_schreierpos[new_nr]:=old_to_new[old_schreierpos[i]];
