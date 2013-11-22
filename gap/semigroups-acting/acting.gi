@@ -47,7 +47,7 @@ InstallMethod(\in,
 "for an associative element and acting semigroup with generators",
 [IsAssociativeElement, IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(f, s)
-  local data, ht, lambda, lambdao, l, m, rho, rhoo, lambdarhoht, rholookup, lookfunc, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
+  local data, ht, lambda, lambdao, l, m, rho, rhoo, lambdarhoht, rholookup, lookfunc, new, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
   
   if ElementsFamily(FamilyObj(s))<>FamilyObj(f) 
     or (IsActingSemigroupWithFixedDegreeMultiplication(s) 
@@ -123,10 +123,11 @@ function(f, s)
     l:=PositionOfFound(data);
 
     # rho is not found, so f not in s
-    if l=fail then 
+    if l=false then 
       return false;
     fi;
     l:=rholookup[l];
+    new:=true;
   fi;
   
   if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then 
@@ -142,12 +143,12 @@ function(f, s)
     if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then 
       return false;
     fi;
+    new:=true;
   fi;
-  
+ 
   schutz:=LambdaOrbStabChain(lambdao, m);
   ind:=lambdarhoht[l][m];
   # the index of the list of reps with same lambda-rho value as f. 
-
 
   # if the Schutzenberger group is the symmetric group, then f in s!
   if schutz=true then 
@@ -172,6 +173,11 @@ function(f, s)
         return true;
       fi;
     od;
+  elif new then 
+    return HTValue(ht, f)<>fail;
+  else #the Schutzenberger group is trivial, and f wasn't one of the R-reps at
+       #the earlier check, and nothing new was computed. 
+    return false;
   fi; 
 
   if IsClosed(data) then 
