@@ -50,7 +50,7 @@ DeclareOperation("ClosureSemigroup",
 [IsActingSemigroup, IsAssociativeElement]);
 DeclareGlobalFunction("ClosureSemigroupNC");
 
-DeclareGlobalFunction("RebaseTransformationSemigroupLambdaOrb");
+DeclareGlobalFunction("ChangeDegreeOfTransformationSemigroupOrb");
 
 DeclareAttribute("Generators", IsSemigroup);
 
