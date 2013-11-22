@@ -1514,8 +1514,7 @@ function(x, value, scc, o, onright)
   if HasSemigroupDataIndex(x) then
     data:=SemigroupData(s);
     m:=LambdaOrbSCCIndex(x);
-    if data!.lenreps[m][data!.orblookup1[SemigroupDataIndex(x)]]>1
-      then
+    if data!.repslens[m][data!.orblookup1[SemigroupDataIndex(x)]]>1 then
       return false;
     fi;
   fi; 
@@ -1784,12 +1783,12 @@ InstallMethod(NrIdempotents, "for an R-class of an acting semigroup",
 r-> NrIdempotents@(r, RhoFunc(Parent(r))(Representative(r)), LambdaOrbSCC(r), LambdaOrb(r), true));
 
 # different method for regular/inverse
-#JDM this should be updated after changes to repslens...
 
 InstallMethod(NrIdempotents, "for an acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local data, lo, scc, ro, lenreps, rholookup, o, tester, nr, rho, i;
+  local data, lambda, rho, scc, lenreps, repslens, rholookup, repslookup,
+   tester, nr, rhoval, m, ind, i;
 
   if HasIdempotents(s) then 
     return Length(Idempotents(s));
@@ -1797,25 +1796,29 @@ function(s)
 
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
   
-  lo:=LambdaOrb(s);    
-  scc:=OrbSCC(lo);
-  ro:=RhoOrb(s);
+  lambda:=LambdaOrb(s);    
+  rho:=RhoOrb(s);
+  scc:=OrbSCC(lambda);
   
   lenreps:=data!.lenreps;
+  repslens:=data!.repslens;  
   rholookup:=data!.rholookup;
-  o:=data!.orbit;
+  repslookup:=data!.repslookup;
+ 
   tester:=IdempotentTester(s);
-
+  
   nr:=0;
-  for i in [2..Length(data)] do 
-    if lenreps[o[i][2]][rholookup[i]]=1 then
-      rho:=ro[rholookup[i]]; #rhofunc(reps[m][i][1]);
-      for i in scc[o[i][2]] do 
-        if tester(lo[i], rho) then 
-          nr:=nr+1;
-        fi;
-      od;
-    fi;
+  for m in [2..Length(scc)] do 
+    for ind in [1..lenreps[m]] do 
+      if repslens[m][ind]=1 then
+        rhoval:=rho[rholookup[repslookup[m][ind][1]]]; #rhofunc(reps[m][ind][1]);
+        for i in scc[m] do 
+          if tester(lambda[i], rhoval) then 
+            nr:=nr+1;
+          fi;
+        od;
+      fi;
+    od;
   od;
 
   return nr;

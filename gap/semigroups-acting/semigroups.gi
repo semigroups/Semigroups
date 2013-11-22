@@ -648,14 +648,15 @@ function(s, coll, record)
    SemigroupOptions(record));
 end);
 
-#recreate the lambda orb using the higher degree!
-InstallGlobalFunction(RebaseTransformationSemigroupLambdaOrb, 
+#recreate the lambdar/rho orb using the higher degree!
+InstallGlobalFunction(ChangeDegreeOfTransformationSemigroupOrb, 
 function(o, old_deg, t)
   local extra, ht, i;
 
   # rehash the orbit values
   extra:=[old_deg+1..DegreeOfTransformationSemigroup(t)];
   ht:=HTCreate(o[1], rec(treehashsize:=o!.treehashsize));
+  #JDM: could make the treehashsize bigger if needed here!
   HTAdd(ht, o[1], 1);
   for i in [2..Length(o)] do 
     o!.orbit[i]:=ShallowCopy(o[i]);
@@ -666,7 +667,11 @@ function(o, old_deg, t)
   o!.ht:=ht;
   
   # change the action of <o> to that of <t> 
-  o!.op:=LambdaAct(t);
+  if IsLambdaOrb(o) then 
+    o!.op:=LambdaAct(t);
+  elif IsRhoOrb(o) then 
+    o!.op:=RhoAct(t);
+  fi;
   return o;
 end);
 
@@ -677,7 +682,7 @@ function(s, coll, opts)
   local t, old_o, o, old_deg, oldnrgens, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr, graph, old_graph, reps, lambdarhoht, repslookup, orblookup1, orblookup2, repslens, lenreps, new_schreierpos, old_schreierpos, new_schreiergen, old_schreiergen, new_schreiermult, old_schreiermult, gens, nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, oht, scc, old_scc, lookup, old_lookup, old_to_new, htadd, htvalue, i, x, pos, m, rank, y, rhoy, val, schutz, tmp, old, n, j;
  
   if coll=[] then 
-    Info(InfoSemigroups, 2, "all the elements in the collection belong to the ",
+    Info(InfoSemigroups, 2, "every element in the collection belong to the ",
     " semigroup,");
     return s;
   fi;
@@ -697,13 +702,16 @@ function(s, coll, opts)
   # set up lambda orb for t
   old_o:=LambdaOrb(s);
   o:=StructuralCopy(old_o);
+  rho_o:=StructuralCopy(RhoOrb(s));
   
   if IsTransformationSemigroup(s) then 
     old_deg:=DegreeOfTransformationSemigroup(s);
     if old_deg<DegreeOfTransformationSemigroup(t) then 
-      RebaseTransformationSemigroupLambdaOrb(o, old_deg, t);
+      ChangeDegreeOfTransformationSemigroupOrb(o, old_deg, t);
+      ChangeDegreeOfTransformationSemigroupOrb(rho_o, old_deg, t);
     fi;
   fi;
+
   AddGeneratorsToOrbit(o, coll); 
   #JDM I'm not certain this is working properly, the OrbitGraph seems not to be
   #updated in the second position, in the first example in
@@ -717,14 +725,48 @@ function(s, coll, opts)
   Unbind(o!.rev);   Unbind(o!.truth);  Unbind(o!.schutzstab); Unbind(o!.slp); 
   
   o!.parent:=t;
-  o!.scc_reps:=[FakeOne(Generators(t))];
+  o!.scc_reps:=[FakeOne(GeneratorsOfSemigroup(t))];
 
   SetLambdaOrb(t, o); 
   
   if not HasSemigroupData(s) or SemigroupData(s)!.pos=0 then 
     return t;
   fi;
+
+  oht:=o!.ht;
+  scc:=OrbSCC(o);
+  old_scc:=OrbSCC(old_o);
+  lookup:=o!.scc_lookup; 
+  old_lookup:=old_o!.scc_lookup;
   
+  # rho orbit - we don't do AddGeneratorsToOrbit here because this is handled by
+  # Enumerate(SemigroupData.. later
+  rho_orb:=rho_o!.orbit;
+  rho_nr:=Length(rho_orb);
+  rho_ht:=rho_o!.ht;
+  rho_schreiergen:=rho_o!.schreiergen;
+  rho_schreierpos:=rho_o!.schreierpos;
+  
+  rho_log:=rho_o!.log;
+  rho_logind:=rho_o!.logind;
+  rho_logpos:=rho_o!.logpos;
+  rho_depth:=rho_o!.depth;
+  rho_depthmarks:=rho_o!.depthmarks;
+
+  rho_orbitgraph:=rho_o!.orbitgraph;
+  
+  # unbind everything related to strongly connected components, since 
+  # even if the orbit length doesn't change the strongly connected components
+  # might
+  Unbind(rho_o!.scc);   Unbind(rho_o!.trees);  Unbind(rho_o!.scc_lookup);
+  Unbind(rho_o!.mults); Unbind(rho_o!.schutz); Unbind(rho_o!.reverse); 
+  Unbind(rho_o!.rev);   Unbind(rho_o!.truth);  Unbind(rho_o!.schutzstab);
+  Unbind(rho_o!.slp); 
+  
+  rho_o!.parent:=t;
+  o!.scc_reps:=[FakeOne(GeneratorsOfSemigroup(t))];
+  SetRhoOrb(t, o);
+
   # get new and old R-rep orbit data
   new_data:=SemigroupData(t);
   old_data:=SemigroupData(s);
@@ -786,12 +828,6 @@ function(s, coll, opts)
   lambdaact:=LambdaAct(t);
   lambdaperm:=LambdaPerm(t);
   rho:=RhoFunc(t);
-
-  oht:=o!.ht;
-  scc:=OrbSCC(o);
-  old_scc:=OrbSCC(old_o);
-  lookup:=o!.scc_lookup; 
-  old_lookup:=old_o!.scc_lookup;
   
   # look up for old_to_new[i]:=Position(new_orb, old_orb[i]);
   # i.e. position of old R-rep in new_orb
@@ -820,28 +856,54 @@ function(s, coll, opts)
   # install old R-class reps in new_orb
   while new_nr<=old_nr and i<old_nr do
     i:=i+1;
+
+    #               for the rho-orbit               #
+    if rholookup[i]>=rho_depthmarks[rho_depth+1] then
+      rho_depth:=rho_depth+1;
+      rho_depthmarks[rho_depth+1]:=rho_nr+1;
+    fi;
+    rho_logind[rholookup[i]]:=rho_logpos; suc:=false;
+    #                                               #
+
     x:=old_orb[i][4];
     
-    pos:=old_schreiermult[i]; 
+    pos:=old_schreiermult[i]; #lambda-index for x 
     m:=lookup[pos];           
     rank:=ActionRank(t)(x);
     
     if rank>max_rank or scc[m][1]=old_scc[old_lookup[pos]][1] then 
     # in either case x is an old R-rep and so has rectified lambda value.
-      y:=x;
     elif pos=old_scc[old_lookup[pos]][1] then 
-      y:=x*LambdaOrbMult(o, m, pos)[2];
+      x:=x*LambdaOrbMult(o, m, pos)[2];
     else
       # x has rectified lambda value but pos refers to the unrectified value
-      y:=x*LambdaOrbMult(old_o, old_lookup[pos], pos)[1]
+      x:=x*LambdaOrbMult(old_o, old_lookup[pos], pos)[1]
        *LambdaOrbMult(o, m, pos)[2];
     fi;
     
-    rhoy:=rho(y);
-    val:=htvalue(lambdarhoht, rhoy);
+    rhox:=rho(x);
+    l:=htvalue(rho_ht, rhox); #l<>fail since we have copied the old rho values
 
-    if val=fail or not IsBound(val[m]) then 
-    #new rho value, and hence new R-rep
+    if not IsBound(lambdarhoht[l]) then 
+    # old rho-value, but new lambda-rho-combination
+
+      new_nr:=new_nr+1;
+      lenreps[m]:=lenreps[m]+1;
+      ind:=lenreps[m];
+      lambdarhoht[l]:=[];
+      lambdarhoht[l][m]:=ind;
+      
+      reps[m][ind]:=[x];
+      repslookup[m][ind]:=[new_nr];
+      repslens[m][ind]:=1;
+      
+      orblookup1[new_nr]:=ind;
+      orblookup2[new_nr]:=1;
+
+      pt:=[t, m, o, x, false, new_nr];
+
+
+    if l=fail then #new rho value, and hence new R-rep
       lenreps[m]:=lenreps[m]+1;
       if val=fail then 
         val:=[];

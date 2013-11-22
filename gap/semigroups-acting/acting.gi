@@ -47,7 +47,7 @@ InstallMethod(\in,
 "for an associative element and acting semigroup with generators",
 [IsAssociativeElement, IsActingSemigroup and HasGeneratorsOfSemigroup], 
 function(f, s)
-  local data, ht, lambda, o, l, m, scc, rho, lambdarhoht, rholookup, lookfunc, ind, schutz, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
+  local data, ht, lambda, lambdao, l, m, rho, rhoo, lambdarhoht, rholookup, lookfunc, schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
   
   if ElementsFamily(FamilyObj(s))<>FamilyObj(f) 
     or (IsActingSemigroupWithFixedDegreeMultiplication(s) 
@@ -78,23 +78,23 @@ function(f, s)
 
   # look for lambda!
   lambda:=LambdaFunc(s)(f);
-  o:=LambdaOrb(s); 
-  if not IsClosed(o) then 
-    Enumerate(o, infinity);
+  lambdao:=LambdaOrb(s); 
+  if not IsClosed(lambdao) then 
+    Enumerate(lambdao, infinity);
   fi;
   
-  l:=Position(o, lambda);
+  l:=Position(lambdao, lambda);
     
   if l=fail then 
     return false;
   fi;
   
   # strongly connected component of lambda orb
-  m:=OrbSCCLookup(o)[l];
+  m:=OrbSCCLookup(lambdao)[l];
 
   # make sure lambda of f is in the first place of its scc
-  if l<>OrbSCC(o)[m][1] then 
-    f:=f*LambdaOrbMult(o, m, l)[2];
+  if l<>OrbSCC(lambdao)[m][1] then 
+    f:=f*LambdaOrbMult(lambdao, m, l)[2];
   fi;
   
   # check if f is an existing R-rep
@@ -104,28 +104,29 @@ function(f, s)
   
   # check if rho is already known
   rho:=RhoFunc(s)(f); 
-  o:=RhoOrb(s);
-  l:=Position(o, rho);
+  rhoo:=RhoOrb(s);
+  l:=Position(rhoo, rho);
   lambdarhoht:=data!.lambdarhoht;
   rholookup:=data!.rholookup;
   
   if l=fail then 
   # rho is not already known, so we look for it
-    if IsClosed(o) then 
+    if IsClosed(rhoo) then 
       return false;
     fi;
 
     lookfunc:=function(data, x) 
-      return o[rholookup[x[6]]]=rho;
+      return rhoo[rholookup[x[6]]]=rho;
     end;
   
     data:=Enumerate(data, infinity, lookfunc);
-    l:=data!.found;
+    l:=PositionOfFound(data);
 
     # rho is not found, so f not in s
     if l=fail then 
       return false;
     fi;
+    l:=rholookup[l];
   fi;
   
   if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then 
@@ -143,7 +144,7 @@ function(f, s)
     fi;
   fi;
   
-  schutz:=LambdaOrbStabChain(LambdaOrb(s), m);
+  schutz:=LambdaOrbStabChain(lambdao, m);
   ind:=lambdarhoht[l][m];
   # the index of the list of reps with same lambda-rho value as f. 
 
@@ -155,7 +156,7 @@ function(f, s)
 
   reps:=data!.reps;       repslens:=data!.repslens;
 
-  max:=Factorial(LambdaRank(s)(lambda))/Size(LambdaOrbSchutzGp(o, m));
+  max:=Factorial(LambdaRank(s)(lambda))/Size(LambdaOrbSchutzGp(lambdao, m));
   
   if repslens[m][ind]=max then 
     return true;
@@ -387,13 +388,13 @@ function(data, limit, lookfunc)
      
     i:=i+1;
     
-    # for the rho-orbit
+    #               for the rho-orbit               #
     if rholookup[i]>=rho_depthmarks[rho_depth+1] then
       rho_depth:=rho_depth+1;
       rho_depthmarks[rho_depth+1]:=rho_nr+1;
     fi;
     rho_logind[rholookup[i]]:=rho_logpos; suc:=false;
-    #
+    #                                               #
     
     for j in genstoapply do #JDM
       x:=gens[j]*orb[i][4];
@@ -547,7 +548,7 @@ function(data, limit, lookfunc)
       # are we looking for something?
       if looking then 
         # did we find it?
-        if lookfunc(data, x) then 
+        if lookfunc(data, pt) then 
           data!.pos:=i-1;
           data!.found:=nr;
           data!.lenreps:=lenreps;
@@ -703,8 +704,8 @@ function(data)
     Print("open ");
   fi;
   Print("semigroup data with ", Length(data!.orbit)-1, " reps, ",
-   Length(LambdaOrb(Parent(data))), " lambda-values, ", 
-   Length(RhoOrb(Parent(data))), " rho-values>"); 
+   Length(LambdaOrb(Parent(data)))-1, " lambda-values, ", 
+   Length(RhoOrb(Parent(data)))-1, " rho-values>"); 
    #Sum(data!.lenreps), " lambda-rho combos>");
   return;
 end);
