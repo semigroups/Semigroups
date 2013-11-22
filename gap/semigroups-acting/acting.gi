@@ -30,17 +30,10 @@ function(s)
      ht:=HTCreate(gens[1], rec(treehashsize:=s!.opts.hashlen.L)),
      pos:=0, graph:=[EmptyPlist(Length(gens))], init:=false,
      reps:=[], repslookup:=[], orblookup1:=[], orblookup2:=[], rholookup:=[1],
-     lenreps:=[], orbit:=[[,,,FakeOne(gens)]], repslens:=[], 
+     lenreps:=[], orbit:=[[,,,FakeOne(gens)]], repslens:=[], lambdarhoht:=[],
      schreierpos:=[fail], schreiergen:=[fail], schreiermult:=[fail],
      genstoapply:=[1..Length(gens)], stopper:=false);
   
-  # hash table of all valid rho values found so far, HTValue[m] of
-  # LambdaRhoHT points to where the existing R-class reps with same lambda-rho
-  # value are in SemigroupData(s).reps[m].  
-  
-  opts:=rec(forflatplainlists := true, treehashsize:=s!.opts.hashlen.M);
-  data.lambdarhoht:=HTCreate([1,1], opts);
-
   Objectify(NewType(FamilyObj(s), IsSemigroupData and IsAttributeStoringRep),
    data);
   
@@ -409,7 +402,7 @@ function(data, limit, lookfunc)
 
       if l=fail then #new rho-value, new R-rep
       
-        #                update rho-orb               #
+        #                update rho-orbit             #
         rho_nr:=rho_nr+1;
         l:=rho_nr;
         rho_orb[rho_nr]:=rhox;
@@ -430,88 +423,86 @@ function(data, limit, lookfunc)
     
         nr:=nr+1;
         lenreps[m]:=lenreps[m]+1;
-        htadd(lambdarhoht, [m, l], lenreps[m]);
+        ind:=lenreps[m];
+        lambdarhoht[l]:=[];
+        lambdarhoht[l][m]:=ind;
         
-        reps[m][lenreps[m]]:=[x];
-        repslookup[m][lenreps[m]]:=[nr];
-        repslens[m][lenreps[m]]:=1;
+        reps[m][ind]:=[x];
+        repslookup[m][ind]:=[nr];
+        repslens[m][ind]:=1;
         
-        orblookup1[nr]:=lenreps[m];
+        orblookup1[nr]:=ind;
         orblookup2[nr]:=1;
 
         pt:=[s, m, o, x, false, nr];
         # semigroup, lambda orb scc index, lambda orb, rep,
         # IsGreensClassNC, index in orbit
 
-      else # existing rho-value 
-        ind:=htvalue(lambdarhoht, [m, l]);  # index in reps[m] containing R-reps
-                                            # with lambda-scc-index=m and
-                                            # rho-value-index=l
-        if ind=fail then 
+      elif not IsBound(lambdarhoht[l][m]) then 
         # old rho-value, but new lambda-rho-combination
-          
-          # update rho orbit graph
+
+        # update rho orbit graph
+        rho_orbitgraph[rholookup[i]][j]:=l;
+        
+        nr:=nr+1;
+        lenreps[m]:=lenreps[m]+1;
+        ind:=lenreps[m];
+        lambdarhoht[l][m]:=ind;
+        
+        reps[m][ind]:=[x];
+        repslookup[m][ind]:=[nr];
+        repslens[m][ind]:=1;
+        
+        orblookup1[nr]:=ind;
+        orblookup2[nr]:=1;
+
+        pt:=[s, m, o, x, false, nr];
+      else 
+      # old lambda-rho combination
+        ind:=lambdarhoht[l][m];
+        pt:=[s, m, o, x, false, nr+1];
+        
+        #check membership in Schutzenberger group via stabiliser chain
+        schutz:=LambdaOrbStabChain(o, m);
+
+        if schutz=true then 
+        # the Schutzenberger group is the symmetric group
+          graph[i][j]:=repslookup[m][ind][1];
           rho_orbitgraph[rholookup[i]][j]:=l;
-          
-          nr:=nr+1;
-          lenreps[m]:=lenreps[m]+1;
-          ind:=lenreps[m];
-          htadd(lambdarhoht, [m, l], ind);
-          
-          reps[m][ind]:=[x];
-          repslookup[m][ind]:=[nr];
-          repslens[m][ind]:=1;
-          
-          orblookup1[nr]:=ind;
-          orblookup2[nr]:=1;
-
-          pt:=[s, m, o, x, false, nr];
-        else 
-        # old lambda-rho combination
-          pt:=[s, m, o, x, false, nr+1];
-          
-          #check membership in Schutzenberger group via stabiliser chain
-          schutz:=LambdaOrbStabChain(o, m);
-
-          if schutz=true then 
-          # the Schutzenberger group is the symmetric group
-            graph[i][j]:=repslookup[m][ind][1];
-            rho_orbitgraph[rholookup[i]][j]:=l;
-            continue;
-          else
-            if schutz=false then 
-            # the Schutzenberger group is trivial
-              data_val:=htvalue(ht, x);
-              if data_val<>fail then 
-                graph[i][j]:=data_val;
-                rho_orbitgraph[rholookup[i]][j]:=l;
-                continue;
-              fi;
-            else 
-            # the Schutzenberger group is neither trivial nor symmetric group
-              old:=false; 
-              for n in [1..repslens[m][ind]] do 
-                if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x))=() then
-                  old:=true;
-                  graph[i][j]:=repslookup[m][ind][n]; 
-                  rho_orbitgraph[rholookup[i]][j]:=l;
-                  break;
-                fi;
-              od;
-              if old then 
-                continue;
-              fi;
+          continue;
+        else
+          if schutz=false then 
+          # the Schutzenberger group is trivial
+            data_val:=htvalue(ht, x);
+            if data_val<>fail then 
+              graph[i][j]:=data_val;
+              rho_orbitgraph[rholookup[i]][j]:=l;
+              continue;
             fi;
-            nr:=nr+1;
-            repslens[m][ind]:=repslens[m][ind]+1;
-            reps[m][ind][repslens[m][ind]]:=x;
-            repslookup[m][ind][repslens[m][ind]]:=nr;
-            orblookup1[nr]:=ind;
-            orblookup2[nr]:=repslens[m][ind];
-            
-            # update rho orbit graph and rholookup
-            rho_orbitgraph[rholookup[i]][j]:=l;
+          else 
+          # the Schutzenberger group is neither trivial nor symmetric group
+            old:=false; 
+            for n in [1..repslens[m][ind]] do 
+              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x))=() then
+                old:=true;
+                graph[i][j]:=repslookup[m][ind][n]; 
+                rho_orbitgraph[rholookup[i]][j]:=l;
+                break;
+              fi;
+            od;
+            if old then 
+              continue;
+            fi;
           fi;
+          nr:=nr+1;
+          repslens[m][ind]:=repslens[m][ind]+1;
+          reps[m][ind][repslens[m][ind]]:=x;
+          repslookup[m][ind][repslens[m][ind]]:=nr;
+          orblookup1[nr]:=ind;
+          orblookup2[nr]:=repslens[m][ind];
+          
+          # update rho orbit graph and rholookup
+          rho_orbitgraph[rholookup[i]][j]:=l;
         fi;
       fi;
       rholookup[nr]:=l; # orb[nr] has rho-value in position l of the rho-orb
