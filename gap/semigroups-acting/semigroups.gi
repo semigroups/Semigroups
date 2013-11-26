@@ -835,6 +835,8 @@ function(s, coll, opts)
   
   # look up for old_to_new[i]:=Position(new_orb, old_orb[i]);
   # i.e. position of old R-rep in new_orb
+  # JDM: this is mainly used to update the orbit graph of the R-rep orbit, but
+  # I think this could also be done during the main loop below.
   
   old_to_new:=EmptyPlist(old_nr);
   old_to_new[1]:=1;
