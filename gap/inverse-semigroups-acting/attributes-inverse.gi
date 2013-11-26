@@ -20,6 +20,7 @@ SemiCharTable:=function(S)
   # computing the D-Class representatives and ordering them in terms of rank
 
   d_classrep:=ShallowCopy(DClassReps(S)); 
+  
   Sort(d_classrep, function(x,y) return RankOfPartialPerm(x) >
    RankOfPartialPerm(y); end); 
   useful:=[];
