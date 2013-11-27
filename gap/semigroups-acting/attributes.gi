@@ -353,7 +353,7 @@ fi;
 InstallMethod(MaximalSubsemigroups, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local out, gens, po, reps, classes, D, lookup, count, max, max2, found_case2, nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, YannRecursion, HClassClosure	, U, A, XX, a, C, i, j, k, gens3, UU, G, I, J, H;
+  local out, gens, po, reps, classes, D, lookup, count, max, max2, found_case1, nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, YannRecursion, HClassClosure	, U, A, XX, a, C, i, j, k, gens3, UU, G, I, J, H;
   
   if Size(S) = 1 then
     return [];
@@ -527,7 +527,7 @@ function(S)
         return;
       end;
       
-      # Case 2: Max. subsemigroups which intersect every H-class of classes[i]     
+      # Case 1: Max. subsemigroups which intersect every H-class of classes[i]     
       Info(InfoSemigroups, 2, "\n\nLooking for maximal subsemigroups which ",
         "intersect every H-class of the D-class\n");    
       gens3:=gens{lookup[i]};
@@ -555,13 +555,13 @@ function(S)
       od;
       
       if tot > 0 then
-        found_case2:=true;
+        found_case1:=true;
       else
-        found_case2:=false;
+        found_case1:=false;
         Info(InfoSemigroups, 2, "Found no such results\n");    
       fi;
       
-      # Case 1: Max. subsemigroups which are a union of H-classes in classes[i]        
+      # Case 2: Max. subsemigroups which are a union of H-classes in classes[i]        
       Info(InfoSemigroups, 2, "\n\nLooking for maximal subsemigroups which ",
         "are a union of H-classes\n");    
       for k in [1..Length(lookup[i])] do      
@@ -585,7 +585,7 @@ function(S)
           od;
           
           if Length(XX)=Size(classes[i]) then #remove the whole class
-            if k = 1 and not found_case2 then
+            if k = 1 and not found_case1 then
               Add(out, Semigroup(gens2, ideal));
               Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
               " removing whole non-maximal regular D-class...");
