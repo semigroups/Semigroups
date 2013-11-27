@@ -11,6 +11,9 @@
 #############################################################################
 ##
 
+DeclareAttribute("CharacterTableOfInverseSemigroup", IsInverseSemigroup and 
+IsPartialPermSemigroup);
+
 DeclareOperation("IsJoinIrreducible", [IsInverseSemigroup and
 IsPartialPermSemigroup, IsPartialPerm]);
 DeclareOperation("IsMajorantlyClosed", [IsInverseSemigroup and

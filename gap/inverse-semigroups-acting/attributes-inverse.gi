@@ -11,77 +11,90 @@
 #############################################################################
 ##
 
-#CharacterTableOfInverseSemigroup:=function(S)
-SemiCharTable:=function(S)
-  local reps, p, H, C, r, tbl, id, l, A, o, lookup, scc, conjclass, conjlens, j, conjreps, dom, subsets, x, m, u, xx, chain, k, h, i, n, y;
+#if not IsBound(GAPInfo.PackagesLoaded.ctbllib) then 
+#  InstallMethod(CharacterTableOfInverseSemigroup, 
+#  "for an inverse semigroup of partial permutations",
+#  [IsInverseSemigroup and IsPartialPermSemigroup], 
+#  function(R)
+#    Info(InfoWarning, 1, "the ctbllib package is not loaded, and so this", 
+#    " function is not available");
+#    return fail;
+#  end); 
+#else 
+  InstallMethod(CharacterTableOfInverseSemigroup, 
+  "for an inverse semigroup of partial permutations",
+  [IsInverseSemigroup and IsPartialPermSemigroup], 
+  function(S)
+    local reps, p, H, C, r, tbl, id, l, A, o, lookup, scc, conjclass, conjlens,
+    j, conjreps, dom, subsets, x, m, u, k, h, i, n, y;
 
-  reps:=ShallowCopy(DClassReps(S));
-  p:=Sortex(reps, function(x,y) 
-    return RankOfPartialPerm(x)>RankOfPartialPerm(y);     
-  end); 
-  
-  H:=List(reps, e-> SchutzenbergerGroup(HClass(S, e)));
-  C:=[]; # the group character matrices
-  r:=0;
-  
-  #the block diagonal matrix of group character matrices
-  for h in H do 
-    tbl:=CharacterTable(h);
-    id:=IdentificationOfConjugacyClasses(tbl);
-    tbl:=Irr(tbl);
-    l:=Length(id);
-    for i in [1+r..l+r] do 
-      C[i]:=[];
-      for j in [1..r] do 
-        C[i][j]:=0;
-        C[j][i]:=0;
+    reps:=ShallowCopy(DClassReps(S));
+    p:=Sortex(reps, function(x,y) 
+      return RankOfPartialPerm(x)>RankOfPartialPerm(y);     
+    end); 
+    
+    H:=List(reps, e-> SchutzenbergerGroup(HClass(S, e)));
+    C:=[]; # the group character matrices
+    r:=0;
+    
+    #the block diagonal matrix of group character matrices
+    for h in H do 
+      tbl:=CharacterTable(h);
+      id:=IdentificationOfConjugacyClasses(tbl);
+      tbl:=Irr(tbl);
+      l:=Length(id);
+      for i in [1+r..l+r] do 
+        C[i]:=[];
+        for j in [1..r] do 
+          C[i][j]:=0;
+          C[j][i]:=0;
+        od;
+        
+        for j in [1+r..l+r] do 
+          C[i][j]:=tbl[i-r][Position(id, j-r)];
+        od;
       od;
-      
-      for j in [1+r..l+r] do 
-        C[i][j]:=tbl[i-r][Position(id, j-r)];
+      r:=r+l;
+    od;
+
+    A:=List([1..r], x-> [1..r]*0);
+    o:=LambdaOrb(S); 
+    lookup:=OrbSCCLookup(o);
+    scc:=OrbSCC(o);
+   
+    conjclass:=[ConjugacyClasses(H[1])];
+    conjlens:=[0];
+
+    for i in [2..Length(H)] do 
+      Add(conjclass, ConjugacyClasses(H[i]));
+      conjlens[i]:=conjlens[i-1]+Length(conjclass[i-1]);
+    od;
+
+    j:=0; 
+    conjreps:=[];
+    for i in [1..Length(H)] do 
+      dom:=DomainOfPartialPerm(reps[i]);
+      subsets:=Filtered(o, x-> IsSubset(dom, x));
+      for n in [1..Length(conjclass[i])] do
+        j:=j+1;
+        conjreps[n+conjlens[i]]:=AsPartialPerm(Representative(conjclass[i][n]), dom);
+        for y in subsets do 
+          x:=RestrictedPartialPerm(conjreps[n+conjlens[i]], y);
+          if y=ImageSetOfPartialPerm(x) then 
+            l:=Position(o, y);
+            m:=lookup[l];
+            u:=LambdaOrbMult(o, m, l);
+            x:=AsPermutation(u[1]*x*u[2]);
+            m:=(m-1)^p;
+            k:=PositionProperty(conjclass[m], class-> x in class)+conjlens[m];
+            A[k][j]:=A[k][j]+1;
+          fi;
+        od;
       od;
     od;
-    r:=r+l;
-  od;
-
-  A:=List([1..r], x-> [1..r]*0);
-  o:=LambdaOrb(S); 
-  lookup:=OrbSCCLookup(o);
-  scc:=OrbSCC(o);
- 
-  conjclass:=[ConjugacyClasses(H[1])];
-  conjlens:=[0];
-
-  for i in [2..Length(H)] do 
-    Add(conjclass, ConjugacyClasses(H[i]));
-    conjlens[i]:=conjlens[i-1]+Length(conjclass[i-1]);
-  od;
-
-  j:=0; 
-  conjreps:=[];
-  for i in [1..Length(H)] do 
-    dom:=DomainOfPartialPerm(reps[i]);
-    subsets:=Filtered(o, x-> IsSubset(dom, x));
-    for n in [1..Length(conjclass[i])] do
-      j:=j+1;
-      conjreps[n+conjlens[i]]:=AsPartialPerm(Representative(conjclass[i][n]), dom);
-      for y in subsets do 
-        x:=RestrictedPartialPerm(conjreps[n+conjlens[i]], y);
-        if y=ImageSetOfPartialPerm(x) then 
-          l:=Position(o, y);
-          m:=lookup[l];
-          u:=LambdaOrbMult(o, m, l);
-          x:=AsPermutation(u[1]*x*u[2]);
-          m:=(m-1)^p;
-          k:=PositionProperty(conjclass[m], class-> x in class)+conjlens[m];
-          A[k][j]:=A[k][j]+1;
-        fi;
-      od;
-    od;
-  od;
-  return [C*A, conjreps];
-end;
-
+    return [C*A, conjreps];
+  end);
+#fi;
 #
 
 InstallMethod(IsGreensDLeq, "for an inverse op acting semigroup",

@@ -53,12 +53,12 @@ gap> S:=List(gens, InverseSemigroup);
   <inverse partial perm semigroup on 6 pts with 4 generators>, 
   <inverse partial perm semigroup on 5 pts with 3 generators>, 
   <inverse partial perm semigroup on 5 pts with 1 generator> ]
-gap> SemiCharTable(S[1]);
+gap> CharacterTableOfInverseSemigroup(S[1]);
 [ [ [ 1, 0, 0, 0 ], [ 2, 1, 0, 0 ], [ 1, 1, 1, -1 ], [ 1, 1, 1, 1 ] ], 
   [ <identity partial perm on [ 1, 3, 4, 5, 8, 9, 10 ]>, 
       <identity partial perm on [ 1, 3, 4, 8, 10 ]>, 
       <identity partial perm on [ 1, 3, 4, 8 ]>, (1)(3)(4,8) ] ]
-gap> SemiCharTable(S[2]);
+gap> CharacterTableOfInverseSemigroup(S[2]);
 [ [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
@@ -97,7 +97,7 @@ gap> SemiCharTable(S[2]);
       <identity partial perm on [ 5, 6, 7 ]>, (5)(6,7), (5,6,7), 
       <identity partial perm on [ 2, 4 ]>, (2,4), 
       <identity partial perm on [ 7 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[3]);
+gap> CharacterTableOfInverseSemigroup(S[3]);
 [ [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
@@ -125,7 +125,7 @@ gap> SemiCharTable(S[3]);
       <identity partial perm on [ 2, 4, 7 ]>, 
       <identity partial perm on [ 3, 7 ]>, (3,7), 
       <identity partial perm on [ 6 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[4]);
+gap> CharacterTableOfInverseSemigroup(S[4]);
 [ [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
@@ -156,7 +156,7 @@ gap> SemiCharTable(S[4]);
       <identity partial perm on [ 2, 3, 4 ]>, (2,3,4), (2,4,3), 
       <identity partial perm on [ 1, 2 ]>, (1,2), 
       <identity partial perm on [ 1 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[5]);
+gap> CharacterTableOfInverseSemigroup(S[5]);
 [ [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 7, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 5, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0 ]
         , [ 19, 10, 4, 4, 1, 1, 1, 0, 0, 0, 0 ], 
@@ -173,7 +173,7 @@ gap> SemiCharTable(S[5]);
       <identity partial perm on [ 4, 5, 7 ]>, (4,5,7), (4,7,5), 
       <identity partial perm on [ 3, 4 ]>, (3,4), 
       <identity partial perm on [ 4 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[6]);
+gap> CharacterTableOfInverseSemigroup(S[6]);
 [ [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
       [ 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
@@ -220,7 +220,7 @@ gap> SemiCharTable(S[6]);
       <identity partial perm on [ 4, 5, 9 ]>, 
       <identity partial perm on [ 6, 9 ]>, (6,9), 
       <identity partial perm on [ 7 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[7]);
+gap> CharacterTableOfInverseSemigroup(S[7]);
 [ [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
@@ -249,7 +249,7 @@ gap> SemiCharTable(S[7]);
       <identity partial perm on [ 3, 5, 7 ]>, 
       <identity partial perm on [ 3, 6 ]>, (3,6), 
       <identity partial perm on [ 7 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[8]);
+gap> CharacterTableOfInverseSemigroup(S[8]);
 [ [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 2, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 7, 4, 3, 1, -1, 1, 0, 0, 0, 0 ], 
       [ 14, 8, 6, 2, 0, -1, 0, 0, 0, 0 ], [ 7, 4, 3, 1, 1, 1, 0, 0, 0, 0 ], 
@@ -261,7 +261,7 @@ gap> SemiCharTable(S[8]);
       <identity partial perm on [ 2, 3, 6 ]>, (2)(3,6), (2,3,6), 
       <identity partial perm on [ 2, 3 ]>, (2,3), 
       <identity partial perm on [ 6 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[9]);
+gap> CharacterTableOfInverseSemigroup(S[9]);
 [ [ [ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 1, -1, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 4, 0, 1, -1, 0, 0, 0, 0, 0, 0 ], [ 4, 0, 1, 1, 0, 0, 0, 0, 0, 0 ], 
       [ 4, -2, 2, 0, 1, -1, 0, 0, 0, 0 ], [ 4, 2, 2, 0, 1, 1, 0, 0, 0, 0 ], 
@@ -272,19 +272,19 @@ gap> SemiCharTable(S[9]);
       <identity partial perm on [ 1, 3 ]>, (1,3), 
       <identity partial perm on [ 3, 5 ]>, (3,5), 
       <identity partial perm on [ 3 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[10]);
+gap> CharacterTableOfInverseSemigroup(S[10]);
 [ [ [ 1, 0, 0, 0, 0 ], [ 2, 1, 0, 0, 0 ], [ 3, 2, 1, 0, 0 ], 
       [ 4, 3, 2, 1, 0 ], [ 1, 1, 1, 1, 1 ] ], 
   [ <identity partial perm on [ 1, 2, 3, 4 ]>, 
       <identity partial perm on [ 1, 2, 4 ]>, 
       <identity partial perm on [ 1, 4 ]>, <identity partial perm on [ 4 ]>, 
       <empty partial perm> ] ]
-gap> SemiCharTable(S[1]);
+gap> CharacterTableOfInverseSemigroup(S[1]);
 [ [ [ 1, 0, 0, 0 ], [ 2, 1, 0, 0 ], [ 1, 1, 1, -1 ], [ 1, 1, 1, 1 ] ], 
   [ <identity partial perm on [ 1, 3, 4, 5, 8, 9, 10 ]>, 
       <identity partial perm on [ 1, 3, 4, 8, 10 ]>, 
       <identity partial perm on [ 1, 3, 4, 8 ]>, (1)(3)(4,8) ] ]
-gap> SemiCharTable(S[2]);
+gap> CharacterTableOfInverseSemigroup(S[2]);
 [ [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
@@ -323,7 +323,7 @@ gap> SemiCharTable(S[2]);
       <identity partial perm on [ 5, 6, 7 ]>, (5)(6,7), (5,6,7), 
       <identity partial perm on [ 2, 4 ]>, (2,4), 
       <identity partial perm on [ 7 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[3]);
+gap> CharacterTableOfInverseSemigroup(S[3]);
 [ [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
@@ -351,7 +351,7 @@ gap> SemiCharTable(S[3]);
       <identity partial perm on [ 2, 4, 7 ]>, 
       <identity partial perm on [ 3, 7 ]>, (3,7), 
       <identity partial perm on [ 6 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[4]);
+gap> CharacterTableOfInverseSemigroup(S[4]);
 [ [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
@@ -382,7 +382,7 @@ gap> SemiCharTable(S[4]);
       <identity partial perm on [ 2, 3, 4 ]>, (2,3,4), (2,4,3), 
       <identity partial perm on [ 1, 2 ]>, (1,2), 
       <identity partial perm on [ 1 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[5]);
+gap> CharacterTableOfInverseSemigroup(S[5]);
 [ [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 7, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 5, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0 ]
         , [ 19, 10, 4, 4, 1, 1, 1, 0, 0, 0, 0 ], 
@@ -399,7 +399,7 @@ gap> SemiCharTable(S[5]);
       <identity partial perm on [ 4, 5, 7 ]>, (4,5,7), (4,7,5), 
       <identity partial perm on [ 3, 4 ]>, (3,4), 
       <identity partial perm on [ 4 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[6]);
+gap> CharacterTableOfInverseSemigroup(S[6]);
 [ [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
       [ 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
@@ -446,7 +446,7 @@ gap> SemiCharTable(S[6]);
       <identity partial perm on [ 4, 5, 9 ]>, 
       <identity partial perm on [ 6, 9 ]>, (6,9), 
       <identity partial perm on [ 7 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[7]);
+gap> CharacterTableOfInverseSemigroup(S[7]);
 [ [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
@@ -475,7 +475,7 @@ gap> SemiCharTable(S[7]);
       <identity partial perm on [ 3, 5, 7 ]>, 
       <identity partial perm on [ 3, 6 ]>, (3,6), 
       <identity partial perm on [ 7 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[8]);
+gap> CharacterTableOfInverseSemigroup(S[8]);
 [ [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 2, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 7, 4, 3, 1, -1, 1, 0, 0, 0, 0 ], 
       [ 14, 8, 6, 2, 0, -1, 0, 0, 0, 0 ], [ 7, 4, 3, 1, 1, 1, 0, 0, 0, 0 ], 
@@ -487,7 +487,7 @@ gap> SemiCharTable(S[8]);
       <identity partial perm on [ 2, 3, 6 ]>, (2)(3,6), (2,3,6), 
       <identity partial perm on [ 2, 3 ]>, (2,3), 
       <identity partial perm on [ 6 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[9]);
+gap> CharacterTableOfInverseSemigroup(S[9]);
 [ [ [ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 1, -1, 0, 0, 0, 0, 0, 0, 0, 0 ], 
       [ 4, 0, 1, -1, 0, 0, 0, 0, 0, 0 ], [ 4, 0, 1, 1, 0, 0, 0, 0, 0, 0 ], 
       [ 4, -2, 2, 0, 1, -1, 0, 0, 0, 0 ], [ 4, 2, 2, 0, 1, 1, 0, 0, 0, 0 ], 
@@ -498,7 +498,7 @@ gap> SemiCharTable(S[9]);
       <identity partial perm on [ 1, 3 ]>, (1,3), 
       <identity partial perm on [ 3, 5 ]>, (3,5), 
       <identity partial perm on [ 3 ]>, <empty partial perm> ] ]
-gap> SemiCharTable(S[10]);
+gap> CharacterTableOfInverseSemigroup(S[10]);
 [ [ [ 1, 0, 0, 0, 0 ], [ 2, 1, 0, 0, 0 ], [ 3, 2, 1, 0, 0 ], 
       [ 4, 3, 2, 1, 0 ], [ 1, 1, 1, 1, 1 ] ], 
   [ <identity partial perm on [ 1, 2, 3, 4 ]>, 
