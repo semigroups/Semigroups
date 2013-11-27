@@ -71,20 +71,10 @@ SemiCharTable:=function(S)
           l:=Position(o, y);
           m:=lookup[l];
           u:=LambdaOrbMult(o, m, l);
-          x:=u[1]*x*u[2];
-          chain:=LambdaOrbStabChain(o, m);
+          x:=AsPermutation(u[1]*x*u[2]);
           m:=(m-1)^p;
-          if (chain=false and x=reps[m]) then 
-            x:=AsPermutation(x); 
-            k:=PositionProperty(conjclass[m], class-> x in class)+conjlens[m];
-            A[k][j]:=A[k][j]+1;
-          else
-            x:=AsPermutation(x);
-            if chain=true or SiftedPermutation(chain, x)=() then 
-              k:=PositionProperty(conjclass[m], class-> x in class)+conjlens[m];
-              A[k][j]:=A[k][j]+1;
-            fi;
-          fi;
+          k:=PositionProperty(conjclass[m], class-> x in class)+conjlens[m];
+          A[k][j]:=A[k][j]+1;
         fi;
       od;
     od;
