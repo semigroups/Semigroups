@@ -353,7 +353,7 @@ fi;
 InstallMethod(MaximalSubsemigroups, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local out, gens, po, reps, classes, D, lookup, count, max, max2, nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, YannRecursion, HClassClosure	, U, A, XX, a, C, i, j, k, gens3, UU, G, I, J, H;
+  local out, gens, po, reps, classes, D, lookup, count, max, max2, found_case2, nonmax, tot, gens2, pos, inj, R, V, tuples, ideal, YannRecursion, HClassClosure	, U, A, XX, a, C, i, j, k, gens3, UU, G, I, J, H;
   
   if Size(S) = 1 then
     return [];
@@ -527,6 +527,40 @@ function(S)
         return;
       end;
       
+      # Case 2: Max. subsemigroups which intersect every H-class of classes[i]     
+      Info(InfoSemigroups, 2, "\n\nLooking for maximal subsemigroups which ",
+        "intersect every H-class of the D-class\n");    
+      gens3:=gens{lookup[i]};
+      gens2:=Difference(ShallowCopy(gens), gens3);
+      U:=Semigroup(gens2);
+    
+      inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
+      R:=Source(inj);
+    
+      G:=UnderlyingSemigroup(R); 
+      I:=Rows(R); J:=Columns(R);
+             
+      tot:=0;
+      for H in MaximalSubgroups(G) do
+        UU:=GeneratorsOfReesZeroMatrixSemigroupNC(R, I, H, J);
+        if Size(Semigroup(UU))<Size(R) then
+          UU:=Semigroup(Images(inj, UU), U);
+          if ForAny(gens3, x-> not x in UU) then
+            Info(InfoSemigroups, 2, "found maximal subsemigroup which ", 
+              "intersects every H-class of the D-class");
+            Add(out, Semigroup(GeneratorsOfSemigroup(UU), ideal));
+            tot:=tot+1;
+          fi;
+        fi;
+      od;
+      
+      if tot > 0 then
+        found_case2:=true;
+      else
+        found_case2:=false;
+        Info(InfoSemigroups, 2, "Found no such results\n");    
+      fi;
+      
       # Case 1: Max. subsemigroups which are a union of H-classes in classes[i]        
       Info(InfoSemigroups, 2, "\n\nLooking for maximal subsemigroups which ",
         "are a union of H-classes\n");    
@@ -538,31 +572,35 @@ function(S)
           U:=Semigroup(gens2);
           A:=Difference(classes[i], Intersection(U, classes[i]));
           for a in gens{j} do RemoveSet(A, a); od;
-          XX:=gens{j};
+          XX:=Union(List(gens{j},x->Elements(HClass(S,x))));
           while not IsEmpty(A) do 
             a:=A[1];
             C:=Semigroup(a, gens2);
             if ForAny(XX, x-> x in C) then 
               RemoveSet(A, a);
-              AddSet(XX, a);
+              XX:=Union(XX,Elements(HClass(S,a)));
             else
               A:=Difference(A, C);
             fi;
           od;
           
-          if k = 1 and Length(XX)=Size(classes[i]) then #remove the whole class
-            Add(out, Semigroup(gens2, ideal));
-            Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
-            " removing whole non-maximal regular D-class...");
+          if Length(XX)=Size(classes[i]) then #remove the whole class
+            if k = 1 and not found_case2 then
+              Add(out, Semigroup(gens2, ideal));
+              Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
+              " removing whole non-maximal regular D-class...");
+            fi;
             # if k > 1, we can stop considering this subset gens{j}
           else
             A:=Filtered(classes[i], x-> not (x in XX or x in U));
-            if IsEmpty(A) and k = 1 then 
-              Add(out, Semigroup(GeneratorsOfSemigroup(U), ideal));
-              Info(InfoSemigroups, 2, "found maximal subsemigroup arising from", 
-              " removing all of XX");
+            if IsEmpty(A) then 
+              if k = 1 then
+                Add(out, Semigroup(GeneratorsOfSemigroup(U), ideal));
+                Info(InfoSemigroups, 2, "found maximal subsemigroup arising", 
+                " from removing all of XX");
+              fi;
               # if k > 1, I think we can stop considering this subset gens{j}
-            elif not IsEmpty(A) then
+            else # not IsEmpty(A)
               V:=Semigroup(U, A, ideal, rec(small:=true));
               if V<>S then
                 if k = 1 then
@@ -576,11 +614,8 @@ function(S)
                 fi;
               else
                 
-                # I'm not sure whether it is worth doing the below line
-                # Certainly XX can increase in time, however it doesn't
-                # Seem to result in decreased search times in YannRecursion
-                XX:=Union(List(XX, x-> Elements(HClass(S, x))));
-                A:=Filtered(classes[i], x-> not (x in XX or x in U));
+                #XX:=Union(List(XX, x-> Elements(HClass(S, x))));
+                #A:=Filtered(classes[i], x-> not (x in XX or x in U));
               
                 HClassClosure:=function(U)
                   local V, B;
@@ -604,32 +639,6 @@ function(S)
           fi;
         od;
       od;
-      
-      # Case 2: Max. subsemigroups which intersect every H-class of classes[i]     
-      Info(InfoSemigroups, 2, "\n\nLooking for maximal subsemigroups which ",
-        "intersect every H-class of the D-class\n");    
-      gens3:=gens{lookup[i]};
-      gens2:=Difference(ShallowCopy(gens), gens3);
-      U:=Semigroup(gens2);
-    
-      inj:=InverseGeneralMapping(InjectionPrincipalFactor(classes[i]));
-      R:=Source(inj);
-    
-      G:=UnderlyingSemigroup(R); 
-      I:=Rows(R); J:=Columns(R);
-                
-      for H in MaximalSubgroups(G) do
-        UU:=GeneratorsOfReesZeroMatrixSemigroupNC(R, I, H, J);
-        if Size(Semigroup(UU))<Size(R) then
-          UU:=Semigroup(Images(inj, UU), U);
-          if ForAny(gens3, x-> not x in UU) then
-            Info(InfoSemigroups, 2, "found maximal subsemigroup which ", 
-              "intersects every H-class of the D-class");
-            Add(out, Semigroup(GeneratorsOfSemigroup(UU), ideal));
-          fi;
-        fi;
-      od;
-      
     fi;
   od;
   Info(InfoSemigroups, 2, "generating all found maximal subsemigroups...");

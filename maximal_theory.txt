@@ -399,4 +399,15 @@ gap> T:=Semigroup([ Transformation( [ 2, 4, 6, 1, 6, 5 ] ),
       
 # An example which is current failing
 
-gap> S:=Semigroup([ Transformation( [ 2, 2, 2, 4, 3, 5 ] ), Transformation( [ 3, 5, 6, 4, 1, 2 ] ), Transformation( [ 4, 2, 2, 3, 6, 3 ] ), Transformation( [ 4, 3, 6, 4, 5, 6 ] ) ]);
+gap> S:=Semigroup([ Transformation( [ 2, 2, 2, 4, 3, 5 ] ),
+>   Transformation( [ 3, 5, 6, 4, 1, 2 ] ),
+>   Transformation( [ 4, 2, 2, 3, 6, 3 ] ),
+>   Transformation( [ 4, 3, 6, 4, 5, 6 ] ) ]);
+
+# S has maximal subsemigroup:
+gap> T:=Semigroup([ Transformation( [ 2, 2, 2, 4, 3, 5 ] ),
+>   Transformation( [ 3, 5, 6, 4, 1, 2 ] ),
+>   Transformation( [ 3, 6, 6, 3, 2, 6 ] ),
+>   Transformation( [ 3, 6, 6, 4, 2, 4 ] ),
+>   Transformation( [ 4, 3, 6, 4, 5, 6 ] ),
+>   Transformation( [ 6, 4, 5, 6, 5, 1 ] ) ]);
