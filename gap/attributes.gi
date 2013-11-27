@@ -1189,4 +1189,131 @@ function(s)
   return Sum(ind);
 end);
 
+#
+
+InstallMethod(LinkedTriples, "for a Rees matrix semigroup",
+[IsReesMatrixSemigroup],
+function(s)
+  #TODO
+  return fail;
+end);
+
+#
+
+InstallMethod(LinkedTriples, "for a Rees zero matrix semigroup",
+[IsReesZeroMatrixSemigroup and IsZeroSimpleSemigroup and IsFinite],
+function(s)
+  #TODO
+  local g;
+  g := UnderlyingSemigroup(s);
+  if not IsGroup(g) then
+    return fail;
+  fi;
+  return fail;
+end);
+
+#
+
+InstallMethod(CongruenceByLinkedTriple,
+"for a Rees zero matrix semigroup and a linked triple",
+[IsReesZeroMatrixSemigroup and IsZeroSimpleSemigroup and IsFinite,
+ IsGroup,
+ IsDenseList,
+ IsDenseList],
+function(s, n, colCong, rowCong)
+  local g, r, m, AddRelation,
+        i1, x,
+        c, i, j,
+        rowNo, colNo;
+  
+  g := UnderlyingSemigroup(s);
+  if not IsGroup(g) then
+    return fail;
+  fi;
+  
+  if not IsSubgroup(g,n) and IsNormal(g,n) then
+    return fail;
+  fi;
+  
+  m := Matrix(s);
+  
+  # This function combines two congruence classes
+  AddRelation := function(R, x, y)
+    local xClass, yClass;
+    xClass := PositionProperty(R, class -> x in class);
+    yClass := PositionProperty(R, class -> y in class);
+    if xClass <> yClass then
+      Append(R[xClass],R[yClass]);
+      Remove(R,yClass);
+    fi;
+  end;
+  
+  # Construct the congruence r, as a set of congruence classes
+  r := List(s, elt->[elt]);
+  
+  # RELATIONS FROM THE NORMAL SUBGROUP
+  # First, find a matrix entry not equal to zero
+  i1 := PositionProperty(m[1],x-> x<>0);
+  
+  # for each x in N, (i1,x,1) is r-related to (i1,id,1)
+  for x in n do
+    Print("N");
+    AddRelation(r,
+            ReesZeroMatrixSemigroupElement(s,i1,x,1),
+            ReesZeroMatrixSemigroupElement(s,i1,One(g),1)
+            );
+  od;
+  
+  # RELATIONS FROM THE COLUMNS CONGRUENCE
+  # For each class in the congruence...
+  for c in colCong do
+    # For each column in the class...
+    for j in [2..Size(c)] do
+      # For each row in the matrix...
+      for rowNo in [1..Size(m)] do
+        if m[rowNo][c[1]] <> 0 then
+          Print("S");
+          AddRelation(r,
+                  ReesZeroMatrixSemigroupElement(s,c[1],Inverse(m[rowNo][c[1]]),rowNo),
+                  ReesZeroMatrixSemigroupElement(s,c[j],Inverse(m[rowNo][c[j]]),rowNo)
+                  );
+        fi;
+      od;
+    od;
+  od;
+  
+  # RELATIONS FROM THE ROWS CONGRUENCE
+  # For each class in the congruence...
+  for c in rowCong do
+    # For each row in the class...
+    for i in [2..Size(c)] do
+      # For each column in the matrix...
+      for colNo in [1..Size(m[1])] do
+        if m[c[1]][colNo] <> 0 then
+          Print("T");
+          AddRelation(r,
+                  ReesZeroMatrixSemigroupElement(s,colNo,Inverse(m[c[1][colNo]]),c[1]),
+                  ReesZeroMatrixSemigroupElement(s,colNo,Inverse(m[c[i][colNo]]),c[i])
+                  );
+        fi;
+      od;
+    od;
+  od;
+  
+  return r;
+end);
+
+#
+
+InstallMethod(MinimalSemigroupCongruence,
+"for a Rees zero matrix semigroup and a set of pairs",
+[IsReesZeroMatrixSemigroup, IsDenseList],
+function(s, pairs)
+  local p;
+  # Partition the semigroup into singleton classes
+  p := List(s, elt->[elt]);
+  
+  return p;
+end);
+
 #EOF
