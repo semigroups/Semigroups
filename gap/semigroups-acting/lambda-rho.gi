@@ -165,7 +165,7 @@ function(o, m, i)
   mults:=o!.mults;
   gens:=o!.gens;
   if not IsInvLambdaOrb(o) then
-#JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
+  #JDM it would be better to use the SchreierTree here not the ReverseSchreierTree
     genpos:=ReverseSchreierTreeOfSCC(o, m);
     inv:=function(im, f) return LambdaInverse(o!.parent)(im, f); end;
 

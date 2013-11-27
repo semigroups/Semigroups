@@ -11,185 +11,86 @@
 #############################################################################
 ##
 
-#Giving our function a name and stating the local variables
+#CharacterTableOfInverseSemigroup:=function(S)
+SemiCharTable:=function(S)
+  local reps, p, H, C, r, tbl, id, l, A, o, lookup, scc, conjclass, conjlens, j, conjreps, dom, subsets, x, m, u, xx, chain, k, h, i, n, y;
 
-SemiCharTable:=function(S) 
-  local d_classrep, useful, schutzconjclassrep, listgroupchars, inneruseful, h, iso, isoinverse, c_list, schutz_h, schutz_h_class, c_rep, guys, ccl, tbl, GroupCharacterMatrices, x, innergpmatrix, l, innerrow, t, p, C, gps, conjugators, ll, hh, gp_below, gp_below2, innerfilter, innerfilter2, conjgp_below, innerconjrep, ClassIncidenceMatrix, A, e, c, i, j, r, y, hrep, s, g, k;
- 
-
-  # computing the D-Class representatives and ordering them in terms of rank
-
-  d_classrep:=ShallowCopy(DClassReps(S)); 
+  reps:=ShallowCopy(DClassReps(S));
+  p:=Sortex(reps, function(x,y) 
+    return RankOfPartialPerm(x)>RankOfPartialPerm(y);     
+  end); 
   
-  Sort(d_classrep, function(x,y) return RankOfPartialPerm(x) >
-   RankOfPartialPerm(y); end); 
-  useful:=[];
-  schutzconjclassrep:=[];
-  listgroupchars:=[];
-
-  # in the following loop, for each D-Class rep found above, we find its
-  # H-Class, an isomorphism that maps its H-Class to its corresponding
-  # permutation group in S_n, the Schutzemberger group of the H-Class and the
-  # Schutzenberger conjugacy class representatives. This gives us a lot of
-  # useful information for later and we place all the above in a list (of
-  # lists) called useful.  Since we also have enough information at this point
-  # to compute the group character tables, we compute those as well.
-
-  for e in d_classrep do
-    inneruseful:=[];
-    h:=HClass(S, e);
-    iso:=IsomorphismPermGroup(h);
-    isoinverse:=InverseGeneralMapping(iso);
-    c_list:=[];
-    schutz_h:=Range(iso);
-    schutz_h_class:=ConjugacyClasses(schutz_h);
-    for c in schutz_h_class do
-      c_rep:=Representative(c);
-      guys:=Image(isoinverse,c_rep);
-      Add(schutzconjclassrep,guys);
-      Add(c_list,guys);
-    od;
-    inneruseful:=[e,iso,schutz_h_class,c_list];
-    ccl:=schutz_h_class;
-    SetConjugacyClasses(schutz_h, ccl);
-    tbl:=CharacterTable(schutz_h);
-    Add(listgroupchars, tbl);
-    Add(useful, inneruseful);
-  od;
-
-  GroupCharacterMatrices:=[];;
-
-  # In this loop, we create a list of group character matrices. Note that the
-  # CharacterTable function returns a data structure, and we're extracting the
-  # matrix from it, row by row.
-
-  for tbl in listgroupchars do
-    x:=IdentificationOfConjugacyClasses( tbl );
-    innergpmatrix:=[];
-    l:=Length(x);
-    for i in [1..l] do
-      innerrow:=[];
-      for j in [1..l] do
-        Add(innerrow, Irr(tbl)[i][Position(x,j)]);
+  H:=List(reps, e-> SchutzenbergerGroup(HClass(S, e)));
+  C:=[]; # the group character matrices
+  r:=0;
+  
+  #the block diagonal matrix of group character matrices
+  for h in H do 
+    tbl:=CharacterTable(h);
+    id:=IdentificationOfConjugacyClasses(tbl);
+    tbl:=Irr(tbl);
+    l:=Length(id);
+    for i in [1+r..l+r] do 
+      C[i]:=[];
+      for j in [1..r] do 
+        C[i][j]:=0;
+        C[j][i]:=0;
       od;
-      Add(innergpmatrix,innerrow);
+      
+      for j in [1+r..l+r] do 
+        C[i][j]:=tbl[i-r][Position(id, j-r)];
+      od;
     od;
-    Append(GroupCharacterMatrices,innergpmatrix);
+    r:=r+l;
   od;
 
-  t:=Length(GroupCharacterMatrices); p:=0; C:=[];
+  A:=List([1..r], x-> [1..r]*0);
+  o:=LambdaOrb(S); 
+  lookup:=OrbSCCLookup(o);
+  scc:=OrbSCC(o);
+ 
+  conjclass:=[ConjugacyClasses(H[1])];
+  conjlens:=[0];
 
-  # In this loop, we make the above list into a block matrix having the group
-  # character tables as blocks, by placing zeros in the appropriate
-  # places. 
-
-  for r in [1..t] do
-    l:=Length(GroupCharacterMatrices[r]);
-    innerrow:=[];
-    for i in [1..t] do
-      if i <= p or i>(p+l) then 
-        Add(innerrow, 0);
-      else 
-        Add(innerrow, GroupCharacterMatrices[r][i-p]);
-      fi;
-    od;
-    Add(C,innerrow);
-    if r=(p+l) then 
-      p:=p+l;
-    fi;
+  for i in [2..Length(H)] do 
+    Add(conjclass, ConjugacyClasses(H[i]));
+    conjlens[i]:=conjlens[i-1]+Length(conjclass[i-1]);
   od;
 
-  gps:=[];
-
-  conjugators:=[];
-
-  # Now we compute the conjugators for the idempotent elements of our semigroup
-  # S. The conjugator of an H-class conjugates the H-class to the one chosen in
-  # the "useful" list. We also compute the H-classes for the idempotents of S
-  # and put them in a list. 
-
-  for e in Idempotents(S) do
-    h:=HClass(S,e);
-    Add(gps,h);
-    ll:=LClass(S,e);
-    hh:=HClassReps(ll);
-    for y in useful do
-      for hrep in hh do
-        if y[1]/y[1]=hrep/hrep then
-          Add(conjugators,hrep);
-          break;
+  j:=0; 
+  conjreps:=[];
+  for i in [1..Length(H)] do 
+    dom:=DomainOfPartialPerm(reps[i]);
+    subsets:=Filtered(o, x-> IsSubset(dom, x));
+    for n in [1..Length(conjclass[i])] do
+      j:=j+1;
+      conjreps[n+conjlens[i]]:=AsPartialPerm(Representative(conjclass[i][n]), dom);
+      for y in subsets do 
+        x:=RestrictedPartialPerm(conjreps[n+conjlens[i]], y);
+        if y=ImageSetOfPartialPerm(x) then 
+          l:=Position(o, y);
+          m:=lookup[l];
+          u:=LambdaOrbMult(o, m, l);
+          x:=u[1]*x*u[2];
+          chain:=LambdaOrbStabChain(o, m);
+          m:=(m-1)^p;
+          if (chain=false and x=reps[m]) then 
+            x:=AsPermutation(x); 
+            k:=PositionProperty(conjclass[m], class-> x in class)+conjlens[m];
+            A[k][j]:=A[k][j]+1;
+          else
+            x:=AsPermutation(x);
+            if chain=true or SiftedPermutation(chain, x)=() then 
+              k:=PositionProperty(conjclass[m], class-> x in class)+conjlens[m];
+              A[k][j]:=A[k][j]+1;
+            fi;
+          fi;
         fi;
       od;
     od;
   od;
-
-  gp_below:=[]; 
-
-  # In this loop, we compute all the group elements that are less than each of
-  # the elements of our Schutzenberger group conjugacy class representatives.
-  # Apparently the Elements command works faster than working with h directly,
-  # but there seems to be space issues. This seems to be the slowest part of the
-  # algorithm. 
-  
-  for s in schutzconjclassrep do
-    innerfilter:=[];
-    for h in gps do
-      x:=RestrictedPartialPerm(s, DomainOfPartialPerm(Representative(h)));
-      if x in h then 
-        Add(innerfilter, [x]); 
-      else
-        Add(innerfilter, []);
-      fi; 
-      #Add(innerfilter,Filtered(Elements(h), x-> NaturalLeqPartialPerm(x, s)));
-    od;
-    Add(gp_below, innerfilter);
-  od;
-
-  conjgp_below:=[];;
-
-  # Here we convert the group elements to their conjugacy class
-  # representatives. We need this to build the "Class Incidence Matrix". 
-
-  for x in gp_below do
-    innerconjrep:=[];
-    for i in [1..Length(x)] do
-      h:=x[i];
-      p:=conjugators[i];
-      for g in h do
-        for y in useful do
-          if p*(g/p) in Source(y[2]) then
-            for k in [1..Length(y[3])] do
-              if Image(y[2],p*(g/p)) in y[3][k] then
-                Add(innerconjrep,y[4][k]);
-                break;
-              fi;
-            od;
-            break;
-          fi;
-        od;
-      od;
-    od;
-    Add(conjgp_below,innerconjrep);
-  od;
-
-  ClassIncidenceMatrix:=[];
-
- # Now we create the transpose of the Class Incidence Matrix, row by row.
-
-  for x in conjgp_below do
-    innerrow:=[];
-    for y in schutzconjclassrep do
-      Add(innerrow,Length(Positions(x,y)));
-    od;
-    Add(ClassIncidenceMatrix,innerrow);
-  od;
-
-  A:=TransposedMat(ClassIncidenceMatrix);;
-
-  # multiplying the last two matrices gives our character table.
-  return [C*A, schutzconjclassrep];
+  return [C*A, conjreps];
 end;
-
 
 #
 
