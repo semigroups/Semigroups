@@ -175,11 +175,8 @@ function(f, s)
         return true;
       fi;
     od;
-  elif new then 
-    return HTValue(ht, f)<>fail;
-  else #the Schutzenberger group is trivial, and f wasn't one of the R-reps at
-       #the earlier check, and nothing new was computed. 
-    return false;
+  elif new and HTValue(ht, f)<>fail then 
+    return true; 
   fi; 
 
   if IsClosed(data) then 
@@ -632,7 +629,7 @@ function(data, x, n)
   if val<>fail then 
     return val;
   elif schutz=false then 
-    return false;
+    return fail;
   fi;
   
   l:=Position(RhoOrb(s), RhoFunc(s)(x));

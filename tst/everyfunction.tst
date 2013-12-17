@@ -235,7 +235,7 @@ gap> Size(s);
 4857
 gap> f:=PartialPerm([ 6, 9 ], [ 12, 6 ]);;
 gap> l:=LClass(s, f);
-{PartialPerm( [ 6, 9 ], [ 12, 6 ] )}
+{PartialPerm( [ 1, 9 ], [ 6, 12 ] )}
 gap> NrHClasses(l);
 66
 gap> Size(l);
@@ -243,9 +243,9 @@ gap> Size(l);
 gap> SchutzenbergerGroup(l);
 Group([ (6,12) ])
 gap> o:=RhoOrb(l);
-<closed orbit, 40 points with Schreier tree with log with grading>
+<closed orbit, 147 points with Schreier tree with log>
 gap> d:=DClassOfLClass(l);
-{PartialPerm( [ 6, 9 ], [ 12, 6 ] )}
+{PartialPerm( [ 1, 9 ], [ 6, 12 ] )}
 gap> Size(d);
 66
 gap> NrLClasses(d);
@@ -257,41 +257,41 @@ Group(())
 gap> Length(RhoOrbSCC(l));
 33
 gap> HClasses(l);
-[ {PartialPerm( [ 6, 9 ], [ 12, 6 ] )}, {PartialPerm( [ 6, 9 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 2, 3 ], [ 12, 6 ] )}, {PartialPerm( [ 2, 3 ], [ 6, 12 ] )}, 
+[ {PartialPerm( [ 1, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 1, 9 ], [ 12, 6 ] )}, 
   {PartialPerm( [ 2, 7 ], [ 6, 12 ] )}, {PartialPerm( [ 2, 7 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 1, 4 ], [ 12, 6 ] )}, {PartialPerm( [ 1, 4 ], [ 6, 12 ] )}, 
   {PartialPerm( [ 4, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 4, 9 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 1, 8 ], [ 6, 12 ] )}, {PartialPerm( [ 1, 8 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 2, 9 ], [ 12, 6 ] )}, {PartialPerm( [ 2, 9 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 7, 9 ], [ 12, 6 ] )}, {PartialPerm( [ 7, 9 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 3, 9 ], [ 12, 6 ] )}, {PartialPerm( [ 3, 9 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 3, 4 ], [ 6, 12 ] )}, {PartialPerm( [ 3, 4 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 4, 7 ], [ 12, 6 ] )}, {PartialPerm( [ 4, 7 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 1, 7 ], [ 12, 6 ] )}, {PartialPerm( [ 1, 7 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 1, 2 ], [ 12, 6 ] )}, {PartialPerm( [ 1, 2 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 1, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 1, 9 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 8, 9 ], [ 12, 6 ] )}, {PartialPerm( [ 8, 9 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 7, 8 ], [ 6, 12 ] )}, {PartialPerm( [ 7, 8 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 2, 4 ], [ 12, 6 ] )}, {PartialPerm( [ 2, 4 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 4, 5 ], [ 12, 6 ] )}, {PartialPerm( [ 4, 5 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 4, 8 ], [ 12, 6 ] )}, {PartialPerm( [ 4, 8 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 9, 12 ], [ 12, 6 ] )}, {PartialPerm( [ 9, 12 ], [ 6, 12 ] )}
-    , {PartialPerm( [ 2, 8 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 2, 8 ], [ 12, 6 ] )}, {PartialPerm( [ 5, 9 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 5, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 3, 11 ], [ 12, 6 ] )},
-  {PartialPerm( [ 3, 11 ], [ 6, 12 ] )}, {PartialPerm( [ 7, 12 ], [ 6, 12 ] )}
-    , {PartialPerm( [ 7, 12 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 2, 5 ], [ 12, 6 ] )}, {PartialPerm( [ 2, 5 ], [ 6, 12 ] )}, 
+  {PartialPerm( [ 1, 4 ], [ 12, 6 ] )}, {PartialPerm( [ 1, 4 ], [ 6, 12 ] )}, 
   {PartialPerm( [ 1, 3 ], [ 6, 12 ] )}, {PartialPerm( [ 1, 3 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 4, 12 ], [ 12, 6 ] )}, {PartialPerm( [ 4, 12 ], [ 6, 12 ] )}
-    , {PartialPerm( [ 5, 11 ], [ 12, 6 ] )}, 
+  {PartialPerm( [ 1, 7 ], [ 12, 6 ] )}, {PartialPerm( [ 1, 7 ], [ 6, 12 ] )}, 
+  {PartialPerm( [ 4, 8 ], [ 12, 6 ] )}, {PartialPerm( [ 4, 8 ], [ 6, 12 ] )}, 
+  {PartialPerm( [ 7, 8 ], [ 6, 12 ] )}, {PartialPerm( [ 7, 8 ], [ 12, 6 ] )}, 
+  {PartialPerm( [ 3, 9 ], [ 12, 6 ] )}, {PartialPerm( [ 3, 9 ], [ 6, 12 ] )}, 
+  {PartialPerm( [ 1, 2 ], [ 12, 6 ] )}, {PartialPerm( [ 1, 2 ], [ 6, 12 ] )}, 
+  {PartialPerm( [ 2, 8 ], [ 6, 12 ] )}, {PartialPerm( [ 2, 8 ], [ 12, 6 ] )}, 
+  {PartialPerm( [ 3, 4 ], [ 6, 12 ] )}, {PartialPerm( [ 3, 4 ], [ 12, 6 ] )}, 
+  {PartialPerm( [ 2, 3 ], [ 12, 6 ] )}, {PartialPerm( [ 2, 3 ], [ 6, 12 ] )}, 
+  {PartialPerm( [ 2, 4 ], [ 12, 6 ] )}, {PartialPerm( [ 2, 4 ], [ 6, 12 ] )}, 
+  {PartialPerm( [ 1, 5 ], [ 12, 6 ] )}, {PartialPerm( [ 1, 5 ], [ 6, 12 ] )}, 
+  {PartialPerm( [ 9, 12 ], [ 12, 6 ] )}, {PartialPerm( [ 9, 12 ], [ 6, 12 ] )}
+    , {PartialPerm( [ 2, 9 ], [ 12, 6 ] )}, 
+  {PartialPerm( [ 2, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 4, 7 ], [ 12, 6 ] )}, 
+  {PartialPerm( [ 4, 7 ], [ 6, 12 ] )}, {PartialPerm( [ 7, 9 ], [ 12, 6 ] )}, 
+  {PartialPerm( [ 7, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 1, 8 ], [ 6, 12 ] )}, 
+  {PartialPerm( [ 1, 8 ], [ 12, 6 ] )}, {PartialPerm( [ 5, 9 ], [ 12, 6 ] )}, 
+  {PartialPerm( [ 5, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 8, 9 ], [ 12, 6 ] )}, 
+  {PartialPerm( [ 8, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 4, 5 ], [ 12, 6 ] )}, 
+  {PartialPerm( [ 4, 5 ], [ 6, 12 ] )}, {PartialPerm( [ 3, 11 ], [ 12, 6 ] )},
+  {PartialPerm( [ 3, 11 ], [ 6, 12 ] )}, {PartialPerm( [ 6, 9 ], [ 12, 6 ] )},
+  {PartialPerm( [ 6, 9 ], [ 6, 12 ] )}, {PartialPerm( [ 5, 11 ], [ 12, 6 ] )},
   {PartialPerm( [ 5, 11 ], [ 6, 12 ] )}, {PartialPerm( [ 6, 8 ], [ 6, 12 ] )},
-  {PartialPerm( [ 6, 8 ], [ 12, 6 ] )}, {PartialPerm( [ 1, 5 ], [ 12, 6 ] )}, 
-  {PartialPerm( [ 1, 5 ], [ 6, 12 ] )}, {PartialPerm( [ 2, 12 ], [ 12, 6 ] )},
-  {PartialPerm( [ 2, 12 ], [ 6, 12 ] )}, {PartialPerm( [ 4, 11 ], [ 12, 6 ] )}
-    , {PartialPerm( [ 4, 11 ], [ 6, 12 ] )}, 
-  {PartialPerm( [ 4, 6 ], [ 12, 6 ] )}, {PartialPerm( [ 4, 6 ], [ 6, 12 ] )} ]
+  {PartialPerm( [ 6, 8 ], [ 12, 6 ] )}, {PartialPerm( [ 4, 6 ], [ 12, 6 ] )}, 
+  {PartialPerm( [ 4, 6 ], [ 6, 12 ] )}, {PartialPerm( [ 4, 12 ], [ 12, 6 ] )},
+  {PartialPerm( [ 4, 12 ], [ 6, 12 ] )}, {PartialPerm( [ 2, 12 ], [ 12, 6 ] )}
+    , {PartialPerm( [ 2, 12 ], [ 6, 12 ] )}, 
+  {PartialPerm( [ 4, 11 ], [ 12, 6 ] )}, {PartialPerm( [ 4, 11 ], [ 6, 12 ] )}
+    , {PartialPerm( [ 7, 12 ], [ 6, 12 ] )}, 
+  {PartialPerm( [ 7, 12 ], [ 12, 6 ] )}, {PartialPerm( [ 2, 5 ], [ 12, 6 ] )},
+  {PartialPerm( [ 2, 5 ], [ 6, 12 ] )} ]
 gap> IsDuplicateFreeList(last);
 true
 gap> IsRegularClass(l);
@@ -302,7 +302,7 @@ true
 gap> ForAll(H, x-> Representative(x) in d);
 true
 gap> d;
-{PartialPerm( [ 6, 9 ], [ 12, 6 ] )}
+{PartialPerm( [ 1, 9 ], [ 6, 12 ] )}
 gap> Representative(l) in d;
 true
 gap> First(H, x-> not Representative(x) in d);
@@ -310,7 +310,7 @@ fail
 gap> ForAll(l, x-> x in d);
 true
 gap> rep:=Representative(d);
-[9,6,12]
+[1,6][9,12]
 gap> s:=Parent(d);
 <partial perm semigroup of size 4857, on 12 pts with 6 generators>
 gap> ElementsFamily(FamilyObj(s)) <> FamilyObj(f) 
@@ -348,20 +348,33 @@ false
 gap>  l<>scc[m][1];
 false
 gap>   m:=RhoOrbSCCIndex(d); o:=RhoOrb(d); scc:=OrbSCC(o);
-1
-<closed orbit, 40 points with Schreier tree with log with grading>
-[ [ 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 21, 22, 23, 
-      24, 25, 26, 28, 29, 30, 31, 32, 33, 35, 37, 38, 39 ], [ 8 ], [ 13 ], 
-  [ 20 ], [ 27 ], [ 34 ], [ 36 ], [ 40 ] ]
+12
+<closed orbit, 147 points with Schreier tree with log>
+[ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ 8 ], [ 9 ], 
+  [ 10, 42, 45, 48, 50, 51, 52, 53, 115, 134, 144 ], [ 11 ], 
+  [ 12, 43, 46, 47, 54, 59, 62, 63, 65, 69, 70, 74, 81, 89, 93, 94, 98, 100, 
+      102, 103, 112, 120, 121, 122, 123, 124, 125, 128, 132, 133, 138, 143, 
+      145 ], [ 13, 61, 64, 108, 119 ], [ 14 ], [ 15 ], [ 16 ], [ 17 ], 
+  [ 18 ], [ 19 ], [ 20 ], [ 21 ], [ 22 ], [ 23 ], [ 24 ], [ 25 ], [ 26 ], 
+  [ 27 ], [ 28 ], [ 29 ], [ 30 ], [ 31 ], [ 32 ], [ 33 ], [ 34 ], 
+  [ 35, 39, 111, 129, 147 ], [ 36 ], [ 37 ], [ 38 ], [ 40 ], [ 41 ], [ 44 ], 
+  [ 49, 75, 84, 85, 113 ], [ 55 ], [ 56, 95, 135 ], [ 57 ], [ 58 ], [ 60 ], 
+  [ 66 ], [ 67 ], [ 68 ], [ 71 ], [ 72 ], [ 73 ], [ 76 ], [ 77 ], [ 78 ], 
+  [ 79 ], [ 80 ], [ 82 ], [ 83 ], [ 86 ], [ 87 ], [ 88 ], [ 90 ], [ 91 ], 
+  [ 92 ], [ 96 ], [ 97 ], [ 99 ], [ 101 ], [ 104 ], [ 105 ], [ 106 ], 
+  [ 107 ], [ 109 ], [ 110 ], [ 114 ], [ 116 ], [ 117 ], [ 118 ], [ 126 ], 
+  [ 127 ], [ 130 ], [ 131 ], [ 136 ], [ 137 ], [ 139 ], [ 140 ], [ 141 ], 
+  [ 142 ], [ 146 ] ]
 gap> 
 gap>   l:=Position(o, RhoFunc(s)(g));
-1
+123
 gap>  l = fail or OrbSCCLookup(o)[l]<>m;
 false
+gap> g:=RhoOrbMult(o, m, l)[2]*g;;
 gap>  schutz:=RhoOrbStabChain(d);
 <stabilizer chain record, Base [ 6 ], Orbit length 2, Size: 2>
 gap> l<>scc[m][1];
-false
+true
 gap> cosets:=LambdaCosets(d);
 <enumerator of perm group>
 gap> LambdaOrbStabChain(LambdaOrb(d), LambdaOrbSCCIndex(d));
@@ -378,10 +391,10 @@ Group(())
 gap>   lambda_stab:=LambdaOrbStabChain(o, m);
 false
 gap>  o:=RhoOrb(d); m:=RhoOrbSCCIndex(d);
-<closed orbit, 40 points with Schreier tree with log with grading>
-1
+<closed orbit, 147 points with Schreier tree with log>
+12
 gap>   rho_schutz:=RhoOrbSchutzGp(o, m, infinity);
-Group([ (6,12) ])
+Group([ (11,12) ])
 gap>   rho_stab:=RhoOrbStabChain(o, m);
 true
 gap> rho_stab=true ;
@@ -392,7 +405,7 @@ gap> lambda_stab=true;
 false
 gap> p:=LambdaConjugator(Parent(d))(RhoOrbRep(o, m),
 >    Representative(d));
-()
+(6,7,8,9,10,11)
 gap> rho_schutz:=rho_schutz^p;
 Group([ (6,12) ])
 gap> f:=PartialPermNC([ 6, 9 ], [ 12, 6 ]);
@@ -2724,13 +2737,13 @@ gap> NrRClasses(s);
 639
 gap> f:=PartialPerm([ 3, 9 ], [ 5, 4 ]);;
 gap> d:=DClass(s, f);
-{PartialPerm( [ 3, 9 ], [ 7, 6 ] )}
+{PartialPerm( [ 4, 7 ], [ 6, 7 ] )}
 gap> Position(LambdaOrb(d), ImageSetOfPartialPerm(Representative(d)));
 7
 gap> OrbSCC(RhoOrb(d))[RhoOrbSCCIndex(d)];
-[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 
-  22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 
-  41, 42, 43, 44, 45 ]
+[ 8, 15, 24, 38, 39, 40, 60, 61, 62, 63, 64, 92, 93, 94, 95, 96, 132, 133, 
+  134, 135, 136, 146, 158, 160, 183, 184, 185, 209, 211, 238, 239, 240, 270, 
+  271, 273, 303, 304, 305, 339, 369, 370, 371, 407, 434, 435 ]
 gap> OrbSCC(LambdaOrb(d))[LambdaOrbSCCIndex(d)];
 [ 7, 13, 20, 27, 34, 36, 45, 48, 49, 53, 62, 65, 66, 67, 71, 73, 86, 89, 90, 
   92, 95, 110, 113, 114, 115, 116, 119, 120, 137, 139, 142, 143, 147, 148, 
@@ -2949,7 +2962,7 @@ gap> Size(s);
 491558
 gap> f:=Transformation( [ 6, 6, 3, 6, 4, 6, 6, 6, 6, 4 ] );;
 gap> d:=DClass(HClass(s, f));
-{Transformation( [ 9, 9, 4, 9, 3, 9, 9, 9, 9, 3 ] )}
+{Transformation( [ 9, 3, 9, 4, 3, 9, 4, 9, 4, 9 ] )}
 gap> Size(d);
 121500
 gap> NrHClasses(d);
@@ -2959,7 +2972,7 @@ gap> Length(HClassReps(d));
 gap> ForAll(HClassReps(d), x-> x in d);
 true
 gap> d:=DClass(RClass(s, f));
-{Transformation( [ 3, 3, 4, 3, 9, 3, 3, 3, 3, 9 ] )}
+{Transformation( [ 3, 9, 3, 4, 9, 3, 4, 3, 4, 3 ] )}
 gap> Size(d);
 121500
 gap> ForAll(d, x-> x in d);
@@ -3526,7 +3539,7 @@ gap> f:=Transformation( [ 3, 2, 3, 4, 3, 5 ] );;
 gap> r:=RClassNC(s, f);
 {Transformation( [ 3, 5, 3, 4, 3, 2 ] )}
 gap> d:=DClassOfRClass(r);
-{Transformation( [ 3, 5, 3, 4, 3, 2 ] )}
+{Transformation( [ 2, 4, 3, 5, 3, 3 ] )}
 gap> Size(d);
 792
 gap> IsRegularDClass(d);
@@ -3685,7 +3698,7 @@ gap> f:=PartialPermNC([ 1, 2, 5, 6 ], [ 5, 3, 6, 4 ]);;
 gap> h:=HClass(s, f);
 {PartialPerm( [ 1, 2, 5, 6 ], [ 5, 3, 6, 4 ] )}
 gap> d:=DClass(s,f);
-{PartialPerm( [ 1, 2, 5, 6 ], [ 5, 3, 6, 4 ] )}
+{PartialPerm( [ 1, 2, 3, 4 ], [ 6, 3, 5, 4 ] )}
 gap> h:=HClass(s, f);
 {PartialPerm( [ 1, 2, 5, 6 ], [ 5, 3, 6, 4 ] )}
 gap> IsGroupHClass(h);
@@ -4568,7 +4581,7 @@ gap> r;
 gap> Size(DClass(r));
 2400
 gap> d:=DClass(r);
-{PartialPerm( [ 1, 2, 5 ], [ 5, 1, 2 ] )}
+{PartialPerm( [ 1, 2, 6 ], [ 1, 5, 2 ] )}
 gap> ForAll(r, x-> x in d);
 true
 gap> Number(d, x-> x in r);
@@ -4611,7 +4624,7 @@ gap> f:=Transformation( [ 3, 2, 3, 4, 3, 5 ] );;
 gap> r:=RClassNC(s, f);
 {Transformation( [ 3, 5, 3, 4, 3, 2 ] )}
 gap> d:=DClassOfRClass(r);
-{Transformation( [ 3, 5, 3, 4, 3, 2 ] )}
+{Transformation( [ 2, 4, 3, 5, 3, 3 ] )}
 gap> Size(d);
 792
 gap> IsRegularDClass(d);
@@ -4621,108 +4634,24 @@ gap> NrIdempotents(d);
 gap> Idempotents(d);
 [  ]
 gap> HClassReps(d);
-[ Transformation( [ 3, 5, 3, 4, 3, 2 ] ), 
-  Transformation( [ 3, 4, 3, 5, 3, 2 ] ), 
-  Transformation( [ 4, 3, 4, 5, 4, 2 ] ), 
-  Transformation( [ 2, 5, 2, 4, 2, 3 ] ), 
-  Transformation( [ 2, 4, 2, 5, 2, 3 ] ), 
-  Transformation( [ 2, 5, 2, 3, 2, 4 ] ), 
-  Transformation( [ 2, 4, 3, 5, 3, 3 ] ), 
+[ Transformation( [ 2, 4, 3, 5, 3, 3 ] ), 
   Transformation( [ 2, 5, 3, 4, 3, 3 ] ), 
   Transformation( [ 2, 5, 4, 3, 4, 4 ] ), 
   Transformation( [ 3, 4, 2, 5, 2, 2 ] ), 
   Transformation( [ 3, 5, 2, 4, 2, 2 ] ), 
   Transformation( [ 4, 3, 2, 5, 2, 2 ] ), 
-  Transformation( [ 2, 4, 3, 3, 5, 3 ] ), 
-  Transformation( [ 2, 5, 3, 3, 4, 3 ] ), 
-  Transformation( [ 2, 5, 4, 4, 3, 4 ] ), 
-  Transformation( [ 3, 4, 2, 2, 5, 2 ] ), 
-  Transformation( [ 3, 5, 2, 2, 4, 2 ] ), 
-  Transformation( [ 4, 3, 2, 2, 5, 2 ] ), 
-  Transformation( [ 2, 3, 4, 3, 5, 5 ] ), 
-  Transformation( [ 2, 3, 5, 3, 4, 4 ] ), 
-  Transformation( [ 2, 4, 5, 4, 3, 3 ] ), 
-  Transformation( [ 3, 2, 4, 2, 5, 5 ] ), 
-  Transformation( [ 3, 2, 5, 2, 4, 4 ] ), 
-  Transformation( [ 4, 2, 3, 2, 5, 5 ] ), 
-  Transformation( [ 2, 4, 3, 5, 5, 3 ] ), 
-  Transformation( [ 2, 5, 3, 4, 4, 3 ] ), 
-  Transformation( [ 2, 5, 4, 3, 3, 4 ] ), 
-  Transformation( [ 3, 4, 2, 5, 5, 2 ] ), 
-  Transformation( [ 3, 5, 2, 4, 4, 2 ] ), 
-  Transformation( [ 4, 3, 2, 5, 5, 2 ] ), 
-  Transformation( [ 5, 4, 3, 4, 2, 3 ] ), 
-  Transformation( [ 4, 5, 3, 5, 2, 3 ] ), 
-  Transformation( [ 3, 5, 4, 5, 2, 4 ] ), 
-  Transformation( [ 5, 4, 2, 4, 3, 2 ] ), 
-  Transformation( [ 4, 5, 2, 5, 3, 2 ] ), 
-  Transformation( [ 5, 3, 2, 3, 4, 2 ] ), 
-  Transformation( [ 3, 3, 3, 4, 5, 2 ] ), 
-  Transformation( [ 3, 3, 3, 5, 4, 2 ] ), 
-  Transformation( [ 4, 4, 4, 5, 3, 2 ] ), 
-  Transformation( [ 2, 2, 2, 4, 5, 3 ] ), 
-  Transformation( [ 2, 2, 2, 5, 4, 3 ] ), 
-  Transformation( [ 2, 2, 2, 3, 5, 4 ] ), 
-  Transformation( [ 2, 3, 4, 3, 5, 3 ] ), 
-  Transformation( [ 2, 3, 5, 3, 4, 3 ] ), 
-  Transformation( [ 2, 4, 5, 4, 3, 4 ] ), 
-  Transformation( [ 3, 2, 4, 2, 5, 2 ] ), 
-  Transformation( [ 3, 2, 5, 2, 4, 2 ] ), 
-  Transformation( [ 4, 2, 3, 2, 5, 2 ] ), 
-  Transformation( [ 5, 3, 4, 4, 2, 3 ] ), 
-  Transformation( [ 4, 3, 5, 5, 2, 3 ] ), 
-  Transformation( [ 3, 4, 5, 5, 2, 4 ] ), 
-  Transformation( [ 5, 2, 4, 4, 3, 2 ] ), 
-  Transformation( [ 4, 2, 5, 5, 3, 2 ] ), 
-  Transformation( [ 5, 2, 3, 3, 4, 2 ] ), 
-  Transformation( [ 2, 4, 3, 5, 3, 4 ] ), 
-  Transformation( [ 2, 5, 3, 4, 3, 5 ] ), 
-  Transformation( [ 2, 5, 4, 3, 4, 5 ] ), 
-  Transformation( [ 3, 4, 2, 5, 2, 4 ] ), 
-  Transformation( [ 3, 5, 2, 4, 2, 5 ] ), 
-  Transformation( [ 4, 3, 2, 5, 2, 3 ] ), 
-  Transformation( [ 3, 5, 3, 4, 4, 2 ] ), 
-  Transformation( [ 3, 4, 3, 5, 5, 2 ] ), 
-  Transformation( [ 4, 3, 4, 5, 5, 2 ] ), 
-  Transformation( [ 2, 5, 2, 4, 4, 3 ] ), 
-  Transformation( [ 2, 4, 2, 5, 5, 3 ] ), 
-  Transformation( [ 2, 5, 2, 3, 3, 4 ] ), 
-  Transformation( [ 3, 5, 4, 3, 3, 2 ] ), 
-  Transformation( [ 3, 4, 5, 3, 3, 2 ] ), 
-  Transformation( [ 4, 3, 5, 4, 4, 2 ] ), 
-  Transformation( [ 2, 5, 4, 2, 2, 3 ] ), 
-  Transformation( [ 2, 4, 5, 2, 2, 3 ] ), 
-  Transformation( [ 2, 5, 3, 2, 2, 4 ] ), 
-  Transformation( [ 2, 3, 4, 5, 3, 5 ] ), 
-  Transformation( [ 2, 3, 5, 4, 3, 4 ] ), 
-  Transformation( [ 2, 4, 5, 3, 4, 3 ] ), 
-  Transformation( [ 3, 2, 4, 5, 2, 5 ] ), 
-  Transformation( [ 3, 2, 5, 4, 2, 4 ] ), 
-  Transformation( [ 4, 2, 3, 5, 2, 5 ] ), 
-  Transformation( [ 5, 3, 4, 3, 5, 2 ] ), 
-  Transformation( [ 4, 3, 5, 3, 4, 2 ] ), 
-  Transformation( [ 3, 4, 5, 4, 3, 2 ] ), 
-  Transformation( [ 5, 2, 4, 2, 5, 3 ] ), 
-  Transformation( [ 4, 2, 5, 2, 4, 3 ] ), 
-  Transformation( [ 5, 2, 3, 2, 5, 4 ] ), 
-  Transformation( [ 2, 4, 3, 5, 3, 5 ] ), 
-  Transformation( [ 2, 5, 3, 4, 3, 4 ] ), 
-  Transformation( [ 2, 5, 4, 3, 4, 3 ] ), 
-  Transformation( [ 3, 4, 2, 5, 2, 5 ] ), 
-  Transformation( [ 3, 5, 2, 4, 2, 4 ] ), 
-  Transformation( [ 4, 3, 2, 5, 2, 5 ] ), 
-  Transformation( [ 5, 4, 4, 3, 2, 5 ] ), 
-  Transformation( [ 4, 5, 5, 3, 2, 4 ] ), 
-  Transformation( [ 3, 5, 5, 4, 2, 3 ] ), 
-  Transformation( [ 5, 4, 4, 2, 3, 5 ] ), 
-  Transformation( [ 4, 5, 5, 2, 3, 4 ] ), 
-  Transformation( [ 5, 3, 3, 2, 4, 5 ] ), 
-  Transformation( [ 3, 5, 3, 4, 5, 2 ] ), 
-  Transformation( [ 3, 4, 3, 5, 4, 2 ] ), 
-  Transformation( [ 4, 3, 4, 5, 3, 2 ] ), 
-  Transformation( [ 2, 5, 2, 4, 5, 3 ] ), 
-  Transformation( [ 2, 4, 2, 5, 4, 3 ] ), 
-  Transformation( [ 2, 5, 2, 3, 5, 4 ] ), 
+  Transformation( [ 2, 3, 4, 5, 3, 3 ] ), 
+  Transformation( [ 2, 3, 5, 4, 3, 3 ] ), 
+  Transformation( [ 2, 4, 5, 3, 4, 4 ] ), 
+  Transformation( [ 3, 2, 4, 5, 2, 2 ] ), 
+  Transformation( [ 3, 2, 5, 4, 2, 2 ] ), 
+  Transformation( [ 4, 2, 3, 5, 2, 2 ] ), 
+  Transformation( [ 3, 4, 3, 4, 2, 5 ] ), 
+  Transformation( [ 3, 5, 3, 5, 2, 4 ] ), 
+  Transformation( [ 4, 5, 4, 5, 2, 3 ] ), 
+  Transformation( [ 2, 4, 2, 4, 3, 5 ] ), 
+  Transformation( [ 2, 5, 2, 5, 3, 4 ] ), 
+  Transformation( [ 2, 3, 2, 3, 4, 5 ] ), 
   Transformation( [ 5, 3, 3, 4, 5, 2 ] ), 
   Transformation( [ 4, 3, 3, 5, 4, 2 ] ), 
   Transformation( [ 3, 4, 4, 5, 3, 2 ] ), 
@@ -4735,6 +4664,18 @@ gap> HClassReps(d);
   Transformation( [ 5, 5, 4, 2, 2, 3 ] ), 
   Transformation( [ 4, 4, 5, 2, 2, 3 ] ), 
   Transformation( [ 5, 5, 3, 2, 2, 4 ] ), 
+  Transformation( [ 5, 4, 3, 4, 2, 3 ] ), 
+  Transformation( [ 4, 5, 3, 5, 2, 3 ] ), 
+  Transformation( [ 3, 5, 4, 5, 2, 4 ] ), 
+  Transformation( [ 5, 4, 2, 4, 3, 2 ] ), 
+  Transformation( [ 4, 5, 2, 5, 3, 2 ] ), 
+  Transformation( [ 5, 3, 2, 3, 4, 2 ] ), 
+  Transformation( [ 4, 5, 3, 4, 3, 2 ] ), 
+  Transformation( [ 5, 4, 3, 5, 3, 2 ] ), 
+  Transformation( [ 5, 3, 4, 5, 4, 2 ] ), 
+  Transformation( [ 4, 5, 2, 4, 2, 3 ] ), 
+  Transformation( [ 5, 4, 2, 5, 2, 3 ] ), 
+  Transformation( [ 3, 5, 2, 3, 2, 4 ] ), 
   Transformation( [ 2, 3, 4, 5, 5, 5 ] ), 
   Transformation( [ 2, 3, 5, 4, 4, 4 ] ), 
   Transformation( [ 2, 4, 5, 3, 3, 3 ] ), 
@@ -4747,24 +4688,108 @@ gap> HClassReps(d);
   Transformation( [ 5, 2, 4, 4, 3, 5 ] ), 
   Transformation( [ 4, 2, 5, 5, 3, 4 ] ), 
   Transformation( [ 5, 2, 3, 3, 4, 5 ] ), 
+  Transformation( [ 2, 3, 4, 4, 5, 5 ] ), 
+  Transformation( [ 2, 3, 5, 5, 4, 4 ] ), 
+  Transformation( [ 2, 4, 5, 5, 3, 3 ] ), 
+  Transformation( [ 3, 2, 4, 4, 5, 5 ] ), 
+  Transformation( [ 3, 2, 5, 5, 4, 4 ] ), 
+  Transformation( [ 4, 2, 3, 3, 5, 5 ] ), 
   Transformation( [ 2, 4, 3, 5, 5, 4 ] ), 
   Transformation( [ 2, 5, 3, 4, 4, 5 ] ), 
   Transformation( [ 2, 5, 4, 3, 3, 5 ] ), 
   Transformation( [ 3, 4, 2, 5, 5, 4 ] ), 
   Transformation( [ 3, 5, 2, 4, 4, 5 ] ), 
   Transformation( [ 4, 3, 2, 5, 5, 3 ] ), 
-  Transformation( [ 3, 4, 3, 4, 2, 5 ] ), 
-  Transformation( [ 3, 5, 3, 5, 2, 4 ] ), 
-  Transformation( [ 4, 5, 4, 5, 2, 3 ] ), 
-  Transformation( [ 2, 4, 2, 4, 3, 5 ] ), 
-  Transformation( [ 2, 5, 2, 5, 3, 4 ] ), 
-  Transformation( [ 2, 3, 2, 3, 4, 5 ] ), 
-  Transformation( [ 2, 3, 4, 5, 3, 3 ] ), 
-  Transformation( [ 2, 3, 5, 4, 3, 3 ] ), 
-  Transformation( [ 2, 4, 5, 3, 4, 4 ] ), 
-  Transformation( [ 3, 2, 4, 5, 2, 2 ] ), 
-  Transformation( [ 3, 2, 5, 4, 2, 2 ] ), 
-  Transformation( [ 4, 2, 3, 5, 2, 2 ] ), 
+  Transformation( [ 2, 3, 4, 3, 5, 5 ] ), 
+  Transformation( [ 2, 3, 5, 3, 4, 4 ] ), 
+  Transformation( [ 2, 4, 5, 4, 3, 3 ] ), 
+  Transformation( [ 3, 2, 4, 2, 5, 5 ] ), 
+  Transformation( [ 3, 2, 5, 2, 4, 4 ] ), 
+  Transformation( [ 4, 2, 3, 2, 5, 5 ] ), 
+  Transformation( [ 2, 3, 4, 3, 5, 3 ] ), 
+  Transformation( [ 2, 3, 5, 3, 4, 3 ] ), 
+  Transformation( [ 2, 4, 5, 4, 3, 4 ] ), 
+  Transformation( [ 3, 2, 4, 2, 5, 2 ] ), 
+  Transformation( [ 3, 2, 5, 2, 4, 2 ] ), 
+  Transformation( [ 4, 2, 3, 2, 5, 2 ] ), 
+  Transformation( [ 3, 3, 3, 4, 5, 2 ] ), 
+  Transformation( [ 3, 3, 3, 5, 4, 2 ] ), 
+  Transformation( [ 4, 4, 4, 5, 3, 2 ] ), 
+  Transformation( [ 2, 2, 2, 4, 5, 3 ] ), 
+  Transformation( [ 2, 2, 2, 5, 4, 3 ] ), 
+  Transformation( [ 2, 2, 2, 3, 5, 4 ] ), 
+  Transformation( [ 3, 5, 3, 4, 4, 2 ] ), 
+  Transformation( [ 3, 4, 3, 5, 5, 2 ] ), 
+  Transformation( [ 4, 3, 4, 5, 5, 2 ] ), 
+  Transformation( [ 2, 5, 2, 4, 4, 3 ] ), 
+  Transformation( [ 2, 4, 2, 5, 5, 3 ] ), 
+  Transformation( [ 2, 5, 2, 3, 3, 4 ] ), 
+  Transformation( [ 3, 5, 3, 4, 3, 2 ] ), 
+  Transformation( [ 3, 4, 3, 5, 3, 2 ] ), 
+  Transformation( [ 4, 3, 4, 5, 4, 2 ] ), 
+  Transformation( [ 2, 5, 2, 4, 2, 3 ] ), 
+  Transformation( [ 2, 4, 2, 5, 2, 3 ] ), 
+  Transformation( [ 2, 5, 2, 3, 2, 4 ] ), 
+  Transformation( [ 2, 4, 3, 3, 5, 3 ] ), 
+  Transformation( [ 2, 5, 3, 3, 4, 3 ] ), 
+  Transformation( [ 2, 5, 4, 4, 3, 4 ] ), 
+  Transformation( [ 3, 4, 2, 2, 5, 2 ] ), 
+  Transformation( [ 3, 5, 2, 2, 4, 2 ] ), 
+  Transformation( [ 4, 3, 2, 2, 5, 2 ] ), 
+  Transformation( [ 5, 3, 4, 4, 2, 3 ] ), 
+  Transformation( [ 4, 3, 5, 5, 2, 3 ] ), 
+  Transformation( [ 3, 4, 5, 5, 2, 4 ] ), 
+  Transformation( [ 5, 2, 4, 4, 3, 2 ] ), 
+  Transformation( [ 4, 2, 5, 5, 3, 2 ] ), 
+  Transformation( [ 5, 2, 3, 3, 4, 2 ] ), 
+  Transformation( [ 2, 4, 3, 5, 5, 3 ] ), 
+  Transformation( [ 2, 5, 3, 4, 4, 3 ] ), 
+  Transformation( [ 2, 5, 4, 3, 3, 4 ] ), 
+  Transformation( [ 3, 4, 2, 5, 5, 2 ] ), 
+  Transformation( [ 3, 5, 2, 4, 4, 2 ] ), 
+  Transformation( [ 4, 3, 2, 5, 5, 2 ] ), 
+  Transformation( [ 2, 4, 3, 5, 3, 4 ] ), 
+  Transformation( [ 2, 5, 3, 4, 3, 5 ] ), 
+  Transformation( [ 2, 5, 4, 3, 4, 5 ] ), 
+  Transformation( [ 3, 4, 2, 5, 2, 4 ] ), 
+  Transformation( [ 3, 5, 2, 4, 2, 5 ] ), 
+  Transformation( [ 4, 3, 2, 5, 2, 3 ] ), 
+  Transformation( [ 2, 4, 3, 5, 3, 5 ] ), 
+  Transformation( [ 2, 5, 3, 4, 3, 4 ] ), 
+  Transformation( [ 2, 5, 4, 3, 4, 3 ] ), 
+  Transformation( [ 3, 4, 2, 5, 2, 5 ] ), 
+  Transformation( [ 3, 5, 2, 4, 2, 4 ] ), 
+  Transformation( [ 4, 3, 2, 5, 2, 5 ] ), 
+  Transformation( [ 5, 5, 3, 4, 3, 2 ] ), 
+  Transformation( [ 4, 4, 3, 5, 3, 2 ] ), 
+  Transformation( [ 3, 3, 4, 5, 4, 2 ] ), 
+  Transformation( [ 5, 5, 2, 4, 2, 3 ] ), 
+  Transformation( [ 4, 4, 2, 5, 2, 3 ] ), 
+  Transformation( [ 5, 5, 2, 3, 2, 4 ] ), 
+  Transformation( [ 4, 2, 3, 4, 4, 5 ] ), 
+  Transformation( [ 5, 2, 3, 5, 5, 4 ] ), 
+  Transformation( [ 5, 2, 4, 5, 5, 3 ] ), 
+  Transformation( [ 4, 3, 2, 4, 4, 5 ] ), 
+  Transformation( [ 5, 3, 2, 5, 5, 4 ] ), 
+  Transformation( [ 3, 4, 2, 3, 3, 5 ] ), 
+  Transformation( [ 5, 4, 3, 2, 4, 2 ] ), 
+  Transformation( [ 4, 5, 3, 2, 5, 2 ] ), 
+  Transformation( [ 3, 5, 4, 2, 5, 2 ] ), 
+  Transformation( [ 5, 4, 2, 3, 4, 3 ] ), 
+  Transformation( [ 4, 5, 2, 3, 5, 3 ] ), 
+  Transformation( [ 5, 3, 2, 4, 3, 4 ] ), 
+  Transformation( [ 5, 4, 4, 3, 2, 5 ] ), 
+  Transformation( [ 4, 5, 5, 3, 2, 4 ] ), 
+  Transformation( [ 3, 5, 5, 4, 2, 3 ] ), 
+  Transformation( [ 5, 4, 4, 2, 3, 5 ] ), 
+  Transformation( [ 4, 5, 5, 2, 3, 4 ] ), 
+  Transformation( [ 5, 3, 3, 2, 4, 5 ] ), 
+  Transformation( [ 2, 4, 3, 5, 4, 3 ] ), 
+  Transformation( [ 2, 5, 3, 4, 5, 3 ] ), 
+  Transformation( [ 2, 5, 4, 3, 5, 4 ] ), 
+  Transformation( [ 3, 4, 2, 5, 4, 2 ] ), 
+  Transformation( [ 3, 5, 2, 4, 5, 2 ] ), 
+  Transformation( [ 4, 3, 2, 5, 3, 2 ] ), 
   Transformation( [ 3, 3, 4, 3, 5, 2 ] ), 
   Transformation( [ 3, 3, 5, 3, 4, 2 ] ), 
   Transformation( [ 4, 4, 5, 4, 3, 2 ] ), 
@@ -4777,30 +4802,12 @@ gap> HClassReps(d);
   Transformation( [ 2, 4, 4, 2, 3, 5 ] ), 
   Transformation( [ 2, 5, 5, 2, 3, 4 ] ), 
   Transformation( [ 2, 3, 3, 2, 4, 5 ] ), 
-  Transformation( [ 4, 5, 3, 4, 3, 2 ] ), 
-  Transformation( [ 5, 4, 3, 5, 3, 2 ] ), 
-  Transformation( [ 5, 3, 4, 5, 4, 2 ] ), 
-  Transformation( [ 4, 5, 2, 4, 2, 3 ] ), 
-  Transformation( [ 5, 4, 2, 5, 2, 3 ] ), 
-  Transformation( [ 3, 5, 2, 3, 2, 4 ] ), 
-  Transformation( [ 2, 4, 3, 5, 4, 3 ] ), 
-  Transformation( [ 2, 5, 3, 4, 5, 3 ] ), 
-  Transformation( [ 2, 5, 4, 3, 5, 4 ] ), 
-  Transformation( [ 3, 4, 2, 5, 4, 2 ] ), 
-  Transformation( [ 3, 5, 2, 4, 5, 2 ] ), 
-  Transformation( [ 4, 3, 2, 5, 3, 2 ] ), 
-  Transformation( [ 2, 3, 4, 4, 5, 5 ] ), 
-  Transformation( [ 2, 3, 5, 5, 4, 4 ] ), 
-  Transformation( [ 2, 4, 5, 5, 3, 3 ] ), 
-  Transformation( [ 3, 2, 4, 4, 5, 5 ] ), 
-  Transformation( [ 3, 2, 5, 5, 4, 4 ] ), 
-  Transformation( [ 4, 2, 3, 3, 5, 5 ] ), 
-  Transformation( [ 5, 5, 4, 3, 4, 2 ] ), 
-  Transformation( [ 4, 4, 5, 3, 5, 2 ] ), 
-  Transformation( [ 3, 3, 5, 4, 5, 2 ] ), 
-  Transformation( [ 5, 5, 4, 2, 4, 3 ] ), 
-  Transformation( [ 4, 4, 5, 2, 5, 3 ] ), 
-  Transformation( [ 5, 5, 3, 2, 3, 4 ] ), 
+  Transformation( [ 5, 3, 4, 3, 5, 2 ] ), 
+  Transformation( [ 4, 3, 5, 3, 4, 2 ] ), 
+  Transformation( [ 3, 4, 5, 4, 3, 2 ] ), 
+  Transformation( [ 5, 2, 4, 2, 5, 3 ] ), 
+  Transformation( [ 4, 2, 5, 2, 4, 3 ] ), 
+  Transformation( [ 5, 2, 3, 2, 5, 4 ] ), 
   Transformation( [ 5, 4, 3, 4, 2, 5 ] ), 
   Transformation( [ 4, 5, 3, 5, 2, 4 ] ), 
   Transformation( [ 3, 5, 4, 5, 2, 3 ] ), 
@@ -4818,7 +4825,13 @@ gap> HClassReps(d);
   Transformation( [ 5, 3, 4, 5, 3, 2 ] ), 
   Transformation( [ 4, 5, 2, 4, 5, 3 ] ), 
   Transformation( [ 5, 4, 2, 5, 4, 3 ] ), 
-  Transformation( [ 3, 5, 2, 3, 5, 4 ] ) ]
+  Transformation( [ 3, 5, 2, 3, 5, 4 ] ), 
+  Transformation( [ 3, 5, 3, 4, 5, 2 ] ), 
+  Transformation( [ 3, 4, 3, 5, 4, 2 ] ), 
+  Transformation( [ 4, 3, 4, 5, 3, 2 ] ), 
+  Transformation( [ 2, 5, 2, 4, 5, 3 ] ), 
+  Transformation( [ 2, 4, 2, 5, 4, 3 ] ), 
+  Transformation( [ 2, 5, 2, 3, 5, 4 ] ) ]
 gap> Number(HClassReps(d), x-> x in r);
 6
 gap> NrHClasses(r);
