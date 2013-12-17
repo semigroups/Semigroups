@@ -110,6 +110,7 @@
     <#Include Label="IsBlockGroup">
     <#Include Label="IsCommutativeSemigroup">
     <#Include Label="IsCompletelyRegularSemigroup">
+    <#Include Label="IsCongruenceFreeSemigroup">
     <#Include Label="IsGroupAsSemigroup">
     <#Include Label="IsIdempotentGenerated">
     <#Include Label="IsLeftSimple">

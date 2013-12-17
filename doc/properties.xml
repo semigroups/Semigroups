@@ -829,10 +829,12 @@ false</Example>
       A semigroup with zero is congruence-free if and only if it is isomorphic
       to a regular Rees 0-matrix semigroup <C>R</C> whose underlying semigroup
       is the trivial group, no two rows of the matrix of <C>R</C> are identical,
-      and no two columns are identical.<P/>
+      and no two columns are identical; see Theorem 3.7.1 in 
+      <Cite Key="howie"/>.<P/>
      
       A semigroup without zero is
-      congruence-free if and only if it is a simple group or has order 2.
+      congruence-free if and only if it is a simple group or has order 2; see
+      Theorem 3.7.2 in <Cite Key="howie"/>.
 
       <Example>
 gap> S := Semigroup( Transformation( [ 4, 2, 3, 3, 4 ] ) );;
