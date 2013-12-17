@@ -585,8 +585,10 @@ function(data, limit, lookfunc)
   fi;
 
   #for the rho-orbit
-  rho_o!.pos:=rholookup[i];
-  rho_o!.depth:=rho_depth;
+  if i<>0 then 
+    rho_o!.pos:=rholookup[i];
+    rho_o!.depth:=rho_depth;
+  fi;
   
   return data;
 end);
