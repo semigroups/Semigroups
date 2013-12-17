@@ -11,6 +11,75 @@
 ##
 #############################################################################
 ##
+<#GAPDoc Label="CharacterTableOfInverseSemigroup" >
+  <ManSection>
+    <Attr Name="CharacterTableOfInverseSemigroup" Arg = "S"/>
+    <Returns>
+      The character table for an inverse semigroup <A>S</A> and a list
+      of conjugacy class representatives of <A>S</A>. 
+    </Returns>
+    <Description>
+      Returns a list with two entries: the first entry being the character table
+      of the inverse semigroup <A>S</A> as a matrix, while the second entry is a
+      list of conjugacy class representatives of <A>S</A>. <P/>
+     
+      The order of the columns in the character table matrix follows the order of
+      the conjugacy class representatives list. The conjugacy representatives are
+      grouped by &D;-class and then sorted by rank. Also, as is typical of
+      character tables, the rows of the matrix correspond to the irreducible
+      characters and the columns correspond to the conjugacy classes. 
+
+      <Example>
+gap> S:=RandomInverseMonoid(4,4);;
+gap> tbl:=CharacterTableOfInverseSemigroup(S);
+[ [ [ 1, -1, 0, 0, 0, 0, 0, 0, 0 ], [ 1, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 3, -1, 1, -1, 1, 0, 0, 0, 0 ],
+      [ 6, 0, 2, 0, -1, 0, 0, 0, 0 ], [ 3, 1, 1, 1, 1, 0, 0, 0, 0 ], [ 6, 0, 3, -1, 0, 1, -1, 0, 0 ],
+      [ 6, 2, 3, 1, 0, 1, 1, 0, 0 ], [ 4, 2, 3, 1, 0, 2, 0, 1, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ],
+  [ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2,3)(4), <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3),
+      (1,2,3), <identity partial perm on [ 1, 4 ]>, (1,4), <identity partial perm on [ 1 ]>, <empty partial perm> ] ]
+gap>Display(tbl[1]);
+[ [   1,  -1,   0,   0,   0,   0,   0,   0,   0 ],
+  [   1,   1,   0,   0,   0,   0,   0,   0,   0 ],
+  [   3,  -1,   1,  -1,   1,   0,   0,   0,   0 ],
+  [   6,   0,   2,   0,  -1,   0,   0,   0,   0 ],
+  [   3,   1,   1,   1,   1,   0,   0,   0,   0 ],
+  [   6,   0,   3,  -1,   0,   1,  -1,   0,   0 ],
+  [   6,   2,   3,   1,   0,   1,   1,   0,   0 ],
+  [   4,   2,   3,   1,   0,   2,   0,   1,   0 ],
+  [   1,   1,   1,   1,   1,   1,   1,   1,   1 ] ]
+gap> S:=SymmetricInverseMonoid(4);
+<symmetric inverse semigroup on 4 pts>
+gap> tbl2:=CharacterTableOfInverseSemigroup(S);
+[ [ [ 1, -1, 1, 1, -1, 0, 0, 0, 0, 0, 0, 0 ], [ 3, -1, 0, -1, 1, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 2, 0, -1, 2, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 0, -1, -1, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 4, -2, 1, 0, 0, 1, -1, 1, 0, 0, 0, 0 ],
+      [ 8, 0, -1, 0, 0, 2, 0, -1, 0, 0, 0, 0 ], [ 4, 2, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0 ],
+      [ 6, 0, 0, -2, 0, 3, -1, 0, 1, -1, 0, 0 ], [ 6, 2, 0, 2, 0, 3, 1, 0, 1, 1, 0, 0 ],
+      [ 4, 2, 1, 0, 0, 3, 1, 0, 2, 0, 1, 0 ], [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ],
+  [ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4), (1)(2,3,4), (1,2)(3,4), (1,2,3,4),
+      <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3), (1,2,3), <identity partial perm on [ 1, 2 ]>, (1,2),
+      <identity partial perm on [ 1 ]>, <empty partial perm> ] ]
+gap> Display(tbl2[1]);
+[ [   1,  -1,   1,   1,  -1,   0,   0,   0,   0,   0,   0,   0 ],
+  [   3,  -1,   0,  -1,   1,   0,   0,   0,   0,   0,   0,   0 ],
+  [   2,   0,  -1,   2,   0,   0,   0,   0,   0,   0,   0,   0 ],
+  [   3,   1,   0,  -1,  -1,   0,   0,   0,   0,   0,   0,   0 ],
+  [   1,   1,   1,   1,   1,   0,   0,   0,   0,   0,   0,   0 ],
+  [   4,  -2,   1,   0,   0,   1,  -1,   1,   0,   0,   0,   0 ],
+  [   8,   0,  -1,   0,   0,   2,   0,  -1,   0,   0,   0,   0 ],
+  [   4,   2,   1,   0,   0,   1,   1,   1,   0,   0,   0,   0 ],
+  [   6,   0,   0,  -2,   0,   3,  -1,   0,   1,  -1,   0,   0 ],
+  [   6,   2,   0,   2,   0,   3,   1,   0,   1,   1,   0,   0 ],
+  [   4,   2,   1,   0,   0,   3,   1,   0,   2,   0,   1,   0 ],
+  [   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1 ] ]
+gap> Display(tbl2[2]);
+[ PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] ), PartialPerm( [ 1, 2, 3 ], [ 1, 3, 2 ] ),
+  PartialPerm( [ 1, 2, 3 ], [ 2, 3, 1 ] ), PartialPerm( [ 1, 2 ], [ 1, 2 ] ), PartialPerm( [ 1, 2 ], [ 2, 1 ] ),
+  PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [  ], [  ] ) ]
+</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
 <#GAPDoc Label="PrimitiveIdempotents">
 <ManSection>
