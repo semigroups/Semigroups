@@ -823,12 +823,16 @@ false</Example>
       <A>S</A> is a congruence-free semigroup and <K>false</K> if it is 
       not.<P/>
 
-      A semigroup <C>S</C> is a <E>congruence-free semigroup</E> if it has no 
-      non-trivial congruences.
+      A semigroup <A>S</A> is a <E>congruence-free semigroup</E> if it has no 
+      non-trivial congruences.<P/>
 
-      A semigroup with zero is congruence-free iff it is isomorphic to a Rees 
-      matrix semigroup whose underlying semigroup is trivial.  A semigroup 
-      without zero is congruence-free iff it is a simple group or has order 2.
+      A semigroup with zero is congruence-free if and only if it is isomorphic
+      to a regular Rees 0-matrix semigroup <C>R</C> whose underlying semigroup
+      is the trivial group, no two rows of the matrix of <C>R</C> are identical,
+      and no two columns are identical.<P/>
+     
+      A semigroup without zero is
+      congruence-free if and only if it is a simple group or has order 2.
 
       <Example>
 gap> S := Semigroup( Transformation( [ 4, 2, 3, 3, 4 ] ) );;

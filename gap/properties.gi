@@ -1181,11 +1181,7 @@ function(s)
     return false;
   else
     # CASE 2: s has no zero
-    if IsGroup(s) and IsSimpleGroup(s) then
-      return true;
-    else
-      return false;
-    fi;
+    return IsGroup(s) and IsSimpleGroup(s);
   fi;
 end);
 
