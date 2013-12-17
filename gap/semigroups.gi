@@ -676,7 +676,11 @@ function(o, old_deg, t)
     HTAdd(ht, o[1], 1);
     for i in [2..Length(o)] do 
       orb[i]:=ShallowCopy(o[i]);
-      max:=MaximumList(o[i]); #nr kernel classes
+      if not IsEmpty(o[i]) then 
+        max:=MaximumList(o[i]); #nr kernel classes
+      else
+        max:=0;
+      fi;
       Append(o[i], [max+1..max+deg-old_deg]);
       HTAdd(ht, o[i], i);
     od;
@@ -767,7 +771,8 @@ function(s, coll, opts)
   
   rho_o!.parent:=t;
   rho_o!.scc_reps:=[FakeOne(GeneratorsOfSemigroup(t))];
- 
+  Append(rho_o!.gens, coll);
+  ResetFilterObj(rho_o, IsClosed);
   SetRhoOrb(t, rho_o);
 
   # get new and old R-rep orbit data

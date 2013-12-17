@@ -44,7 +44,6 @@ gap> MultiplicativeNeutralElement(H);
 gap> H:=HClass(S, PartialPerm( [ 1, 2 ], [ 1, 4 ] ));;
 gap> MultiplicativeNeutralElement(H);
 fail</Example>
->>>>>>> other
     </Description> 
   </ManSection>
 <#/GAPDoc>
@@ -893,7 +892,7 @@ gap> Size(S);
 6342
 gap> f:=Transformation( [ 1, 3, 3, 1, 3, 5 ] );;
 gap> D:=DClass(S, f);
-{Transformation( [ 2, 1, 1, 2, 1, 4 ] )}
+{Transformation( [ 2, 4, 2, 2, 2, 1 ] )}
 gap> NrRClasses(D);
 87
 gap> s:=SymmetricInverseSemigroup(10);;

@@ -1699,7 +1699,7 @@ function(x, value, scc, o, onright)
    IsRegularClass(x)) then
     data:=SemigroupData(s);
     m:=LambdaOrbSCCIndex(x);
-    if data!.lenreps[m][data!.orblookup1[SemigroupDataIndex(x)]]>1 then
+    if data!.repslens[m][data!.orblookup1[SemigroupDataIndex(x)]]>1 then
       return 0;
     fi;
   fi;
@@ -1831,11 +1831,11 @@ end);
 InstallMethod(PartialOrderOfDClasses, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local d, n, out, gens, data, graph, datalookup, o, lambdafunc, rhofunc, scc, lookup, lambdarhoht, lambdaperm, repslookup, schutz, mults, reps, repslens, ht, l, m, val, j, f, i, x, k;
+  local d, n, out, data, gens, graph, lambdarhoht, datalookup, reps, repslens, ht, repslookup, lambdafunc, rhofunc, lambdaperm, o, orho, scc, lookup, schutz, mults, f, l, m, val, j, i, x, k;
 
   d:=GreensDClasses(s); 
   n:=Length(d);
-  out:=List([1..n], x-> EmptyPlist(n));
+  out:=List([1..n], x-> []);
   
   data:=SemigroupData(s);
   gens:=data!.gens;
@@ -1852,6 +1852,7 @@ function(s)
   lambdaperm:=LambdaPerm(s);
   
   o:=LambdaOrb(s);
+  orho:=RhoOrb(s);
   scc:=OrbSCC(o); 
   lookup:=OrbSCCLookup(o);
   schutz:=o!.schutzstab;
@@ -1871,7 +1872,7 @@ function(s)
         f:=f*x;
         l:=Position(o, lambdafunc(f));
         m:=lookup[l];
-        val:=HTValue(lambdarhoht, rhofunc(f))[m];
+        val:=lambdarhoht[Position(orho, rhofunc(f))][m];
         if not IsBound(schutz[m]) then 
           LambdaOrbSchutzGp(o, m);
         fi;

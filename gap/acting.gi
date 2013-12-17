@@ -108,7 +108,9 @@ function(f, s)
   l:=Position(rhoo, rho);
   lambdarhoht:=data!.lambdarhoht;
   rholookup:=data!.rholookup;
-  
+ 
+  new:=false; 
+
   if l=fail then 
   # rho is not already known, so we look for it
     if IsClosed(rhoo) then 
