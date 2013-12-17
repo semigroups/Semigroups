@@ -594,15 +594,15 @@ gap> d:=GreensDClassOfElement(s, f);
 {Transformation( [ 1, 6, 4, 7, 5, 2, 5 ] )}
 gap> reps:=RClassReps(d);
 [ Transformation( [ 1, 6, 4, 7, 5, 2, 5 ] ), 
+  Transformation( [ 4, 5, 6, 7, 1, 6, 2 ] ), 
   Transformation( [ 1, 5, 7, 2, 4, 6, 2 ] ), 
-  Transformation( [ 4, 2, 6, 2, 5, 7, 1 ] ), 
-  Transformation( [ 5, 2, 4, 6, 1, 7, 2 ] ), 
   Transformation( [ 1, 4, 5, 2, 7, 6, 6 ] ), 
+  Transformation( [ 4, 2, 6, 2, 5, 7, 1 ] ), 
   Transformation( [ 5, 4, 7, 7, 1, 6, 2 ] ), 
-  Transformation( [ 4, 7, 6, 2, 7, 5, 1 ] ), 
-  Transformation( [ 4, 5, 6, 7, 1, 6, 2 ] ) ]
+  Transformation( [ 5, 2, 4, 6, 1, 7, 2 ] ), 
+  Transformation( [ 4, 7, 6, 2, 7, 5, 1 ] ) ]
 gap> List(reps, x-> Position(GreensRClasses(s), GreensRClassOfElement(s, x)));
-[ 1, 3, 6, 13, 5, 7, 16, 2 ]
+[ 1, 2, 3, 5, 6, 7, 13, 16 ]
 gap> r:=GreensRClasses(s)[63];;
 gap> Idempotents(r);
 [ Transformation( [ 1, 7, 3, 4, 5, 7, 7 ] ), 
@@ -1213,7 +1213,7 @@ gap> Size(s);
 6342
 gap> f:=Transformation( [ 1, 3, 3, 1, 3, 5 ] );;
 gap> d:=DClass(s, f);
-{Transformation( [ 2, 1, 1, 2, 1, 4 ] )}
+{Transformation( [ 2, 4, 2, 2, 2, 1 ] )}
 gap> NrRClasses(d);
 87
 gap> s:=Semigroup(Transformation( [ 2, 1, 4, 5, 6, 3 ] ), 

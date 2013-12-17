@@ -726,7 +726,7 @@ function(s)
     and IsCompletelyRegularSemigroup(s) then 
     Info(InfoSemigroups, 2, "the semigroup is completely regular");
     return true;
-  elif HasGreensDClasses(s) then 
+  else #HasGreensDClasses(s) then 
     return ForAll(GreensDClasses(s), IsRegularDClass);
   fi;
 
