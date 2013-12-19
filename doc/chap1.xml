@@ -63,11 +63,9 @@
     to efficiently compute components of actions, which underpin many of the
     features of &Semigroups;.  The &IO; package is used to read and write
     transformations and partial permutations to a file.  The &Grape; package is
-    used in the functions <Ref Oper="MunnSemigroup"/> and <Ref
-      Attr="MaximalSubsemigroups"/> but nowhere else in &Semigroups;. If
-    &Grape; is not available, then &Semigroups; can be used as normal
-    with the exception that <Ref Oper="MunnSemigroup"/> and <Ref
-      Attr="MaximalSubsemigroups"/> will not work.  <P/>
+    used in the function <Ref Oper="MunnSemigroup"/> but nowhere else in
+    &Semigroups;. If &Grape; is not available, then &Semigroups; can be used as
+    normal with the exception that <Ref Oper="MunnSemigroup"/> will not work.  <P/>
     
     &Semigroups; is still under development, and so some features may not
     function as expected. At the present time, I do not know of any errors or
@@ -119,9 +117,11 @@
         <URL>http://www.maths.qmul.ac.uk/~leonard/grape/</URL><P/>
         If &Grape; is not fully installed, then &Semigroups; can be used as
         normal with the exception that <Ref Oper="MunnSemigroup"/>
-        will not work. The method for <Ref Attr="MaximalSubsemigroups"/> will
+        will not work. 
+        <!--The method for <Ref Attr="MaximalSubsemigroups"/> will
         work provided &Grape; can be loaded, i.e. it is not necessary for
-        &Grape; to be compiled.
+        &Grape; to be compiled.-->
+
       </Item>
 
       <Item> download the package archive <F>&ARCHIVENAME;.tar.gz</F> from
