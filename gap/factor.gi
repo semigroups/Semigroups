@@ -92,18 +92,18 @@ function(s, f)
     return;
   fi;
  
-  o:=LambdaOrb(s);
-  gens:=o!.gens;
-  l:=Position(o, LambdaFunc(s)(f));
-  m:=OrbSCCLookup(o)[l];
-  scc:=OrbSCC(o)[m];
+  o:=LambdaOrb(s);            l:=Position(o, LambdaFunc(s)(f));
+  m:=OrbSCCLookup(o)[l];      scc:=OrbSCC(o)[m];
+
   data:=SemigroupData(s);
   pos:=Position(data, f);                     #not <fail> since <f> in <s>
   rep:=data[pos][4];                          #rep of R-class of <f>
+  
   word1:=TraceSchreierTreeForward(data, pos); #a word equal to <rep>
   
-  #compensate for the action of the multipliers
+  #compensate for the action of the multipliers, if necessary
   if l<>scc[1] then 
+    gens:=o!.gens;
     word2:=TraceSchreierTreeOfSCCForward(o, m, l);
     p:=LambdaPerm(s)(rep, f*LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
   else 
@@ -111,7 +111,7 @@ function(s, f)
     p:=LambdaPerm(s)(rep, f);
   fi;
 
-  if IsOne(p) then 
+  if IsOne(p) then #no need to factorise <p>
     Append(word1, word2);
     return word1;
   fi;
