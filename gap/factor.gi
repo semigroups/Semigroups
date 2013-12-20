@@ -153,6 +153,7 @@ function(s, f)
   rep:=EvaluateWord(gens, word1);
 
   #compensate for the action of the multipliers
+  #JDM: change this as above!
   if l<>scc[1] then 
     p:=LambdaPerm(s)(rep, f*LambdaOrbMult(o, m, l)[2]);
     word2:=TraceSchreierTreeOfSCCForward(o, m, l);
@@ -215,6 +216,7 @@ function(s, f)
   Append(word1, word2);               #and this word equals <rep>
 
   #compensate for the action of the multipliers
+  #JDM: update this as above
   if l<>scc[1] then 
     p:=LambdaPerm(s)(rep, f*LambdaOrbMult(o, m, l)[2]);
     word2:=TraceSchreierTreeOfSCCForward(o, m, l);
@@ -247,9 +249,9 @@ end);
 InstallMethod(TraceSchreierTreeForward, "for semigroup data and pos int",
 [IsSemigroupData, IsPosInt], 100,
 function(data, pos)
-  local word, word2, schreiergen, schreierpos, schreiermult, orb, o, m;
+  local word1, word2, schreiergen, schreierpos, schreiermult, orb, o, m;
   
-  word:=[];  # the word obtained by tracing schreierpos and schreiergen
+  word1:=[]; # the word obtained by tracing schreierpos and schreiergen
              # (left multiplication)
   word2:=[]; # the word corresponding to multipliers applied (if any)
              # (right multiplication)
@@ -261,14 +263,14 @@ function(data, pos)
   orb:=data!.orbit;
 
   while pos > 1 do
-    Add(word, schreiergen[pos]);
+    Add(word1, schreiergen[pos]);
     Append(word2, Reversed(TraceSchreierTreeOfSCCBack(orb[pos][3], orb[pos][2],
      schreiermult[pos])));
     pos:=schreierpos[pos];
   od;
 
-  Append(word, Reversed(word2));
-  return word;
+  Append(word1, Reversed(word2));
+  return word1;
 end);
 
 #EOF
