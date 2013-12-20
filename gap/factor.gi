@@ -85,7 +85,7 @@ InstallMethod(Factorization,
 "for an acting semigroup with generators and element", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement], 
 function(s, f)
-  local o, gens, l, m, data, pos, rep, word1, p, word2;
+  local o, gens, l, m, scc, data, pos, rep, word1, word2, p;
  
   if not f in s then 
     Error("usage: <f> is not an element of the semigroup <s>,");
@@ -96,20 +96,19 @@ function(s, f)
   gens:=o!.gens;
   l:=Position(o, LambdaFunc(s)(f));
   m:=OrbSCCLookup(o)[l];
+  scc:=OrbSCC(o)[m];
   data:=SemigroupData(s);
   pos:=Position(data, f);                     #not <fail> since <f> in <s>
   rep:=data[pos][4];                          #rep of R-class of <f>
   word1:=TraceSchreierTreeForward(data, pos); #a word equal to <rep>
   
   #compensate for the action of the multipliers
-  if l<>OrbSCC(o)[m][1] then 
-    p:=LambdaPerm(s)(rep, f*LambdaOrbMult(o, m, l)[2]);
+  if l<>scc[1] then 
     word2:=TraceSchreierTreeOfSCCForward(o, m, l);
-    p:=p*LambdaPerm(s)(
-     rep*EvaluateWord(gens, word2)*LambdaOrbMult(o, m, l)[2], rep); 
+    p:=LambdaPerm(s)(rep, f*LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
   else 
-    p:=LambdaPerm(s)(rep, f);
     word2:=[];
+    p:=LambdaPerm(s)(rep, f);
   fi;
 
   if IsOne(p) then 
