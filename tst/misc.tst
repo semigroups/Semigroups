@@ -3021,7 +3021,7 @@ gap> r:=RClass(s, f);
 gap> Size(r);
 546
 gap> SchutzenbergerGroup(r);
-Group([ (2,5), (2,9,5) ])
+Group([ (2,5), (5,9) ])
 gap> ForAll(r, x-> x in r);
 true
 gap> f:=Transformation( [ 8, 8, 8, 8, 8, 8, 7, 7, 8, 8 ] );;
@@ -4141,7 +4141,7 @@ gap> r:=RClass(s, f);
 gap> Size(r);
 546
 gap> SchutzenbergerGroup(r);
-Group([ (2,5), (2,9,5) ])
+Group([ (2,5), (5,9) ])
 gap> ForAll(r, x-> x in r);
 true
 gap> f:=Transformation( [ 8, 8, 8, 8, 8, 8, 7, 7, 8, 8 ] );;
