@@ -989,6 +989,7 @@ function(s, coll, opts)
   new_data!.pos:=0;
   new_data!.stopper:=old_to_new[old_data!.pos];
   new_data!.init:=true;
+  Error();
   Enumerate(new_data, infinity, ReturnFalse);
 
   new_data!.pos:=old_to_new[old_data!.pos];

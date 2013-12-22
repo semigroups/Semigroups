@@ -216,7 +216,7 @@ end);
 InstallGlobalFunction(LambdaOrbSchutzGp, 
 function(o, m)
   local s, gens, scc, lookup, orbitgraph, genstoapply, lambdaperm, rep, rank,
-   bound, g, stop, mult, f, k, l;
+   bound, g, stop, forward, f, k, l;
   
   if IsBound(o!.schutz) then 
     if IsBound(o!.schutz[m]) then 
@@ -242,24 +242,16 @@ function(o, m)
   g:=Group(()); stop:=false; 
 
   for k in scc do
-    #vor:=EvaluateWord(gens, TraceSchreierTreeOfSCCForward(o, m, k));
-    mult:=LambdaOrbMult(o, m, k);
+    forward:=LambdaOrbMult(o, m, k)[1];
     for l in genstoapply do
       if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]]=m then
-        #f:=lambdaperm(rep, 
-        # rep*vor*gens[l]*LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
-        f:=lambdaperm(rep, rep*mult[1]*gens[l]
+        f:=lambdaperm(rep, rep*forward*gens[l]
           *LambdaOrbMult(o, m, orbitgraph[k][l])[2]);
         g:=ClosureGroup(g, f);
-        #if Size(h)>Size(g) then 
-        #  g:=h; 
-        #  lenslp:=lenslp+1;
-        #  slp[lenslp]:=[k,l];
         if Size(g)>=bound then
           stop:=true;
           break;
         fi;
-        #fi;
       fi;
     od;
     if stop then
