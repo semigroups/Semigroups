@@ -46,7 +46,7 @@ function(o, m, elt)
   orbitgraph:=OrbitGraph(o);      genstoapply:=[1..Length(gens)];
   lambdaperm:=LambdaPerm(s);      rep:=LambdaOrbRep(o, m);
   factors:=[];                    bound:=Size(LambdaOrbSchutzGp(o, m));
-  nrgens:=0;
+  nrgens:=0;                      stop:=false;
   
   for k in scc do
     uword:=TraceSchreierTreeOfSCCForward(o, m, k);
