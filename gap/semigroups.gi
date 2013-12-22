@@ -738,9 +738,10 @@ function(s, coll, opts)
   # unbind everything related to strongly connected components, since 
   # even if the orbit length doesn't change the strongly connected components
   # might
-  Unbind(o!.scc);   Unbind(o!.trees);  Unbind(o!.scc_lookup);
-  Unbind(o!.mults); Unbind(o!.schutz); Unbind(o!.reverse); 
-  Unbind(o!.rev);   Unbind(o!.truth);  Unbind(o!.schutzstab); Unbind(o!.slp); 
+  Unbind(o!.scc);     Unbind(o!.trees);    Unbind(o!.scc_lookup);
+  Unbind(o!.mults);   Unbind(o!.schutz);   Unbind(o!.reverse); 
+  Unbind(o!.rev);     Unbind(o!.truth);    Unbind(o!.schutzstab); 
+  Unbind(o!.exhaust); Unbind(o!.factors); 
   
   o!.parent:=t;
   o!.scc_reps:=[FakeOne(GeneratorsOfSemigroup(t))];
@@ -751,10 +752,8 @@ function(s, coll, opts)
     return t;
   fi;
   
-  oht:=o!.ht;
-  scc:=OrbSCC(o);
-  old_scc:=OrbSCC(old_o);
-  lookup:=o!.scc_lookup; 
+  oht:=o!.ht; scc:=OrbSCC(o); old_scc:=OrbSCC(old_o); lookup:=o!.scc_lookup; 
+
   old_lookup:=old_o!.scc_lookup;
   
   # we don't do AddGeneratorsToOrbit of rho_o here because this is handled by
@@ -767,7 +766,6 @@ function(s, coll, opts)
   Unbind(rho_o!.scc);   Unbind(rho_o!.trees);  Unbind(rho_o!.scc_lookup);
   Unbind(rho_o!.mults); Unbind(rho_o!.schutz); Unbind(rho_o!.reverse); 
   Unbind(rho_o!.rev);   Unbind(rho_o!.truth);  Unbind(rho_o!.schutzstab);
-  Unbind(rho_o!.slp); 
   
   rho_o!.parent:=t;
   rho_o!.scc_reps:=[FakeOne(GeneratorsOfSemigroup(t))];
