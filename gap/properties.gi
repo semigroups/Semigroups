@@ -1152,7 +1152,19 @@ InstallMethod(IsCongruenceFreeSemigroup,
 "for a finite semigroup",
 [IsSemigroup],
 function(s)
-  local t, p, rowsDiff, colsDiff;
+  local t, p, rowsDiff;
+  
+  rowsDiff := function(p)
+    local i, j;
+    for i in [1..Size(p)-1] do
+      for j in [i+1..Size(p)] do
+        if p[i] = p[j] then
+          return false;
+        fi;
+      od;
+    od;
+    return true;
+  end;
   
   if Size(s) <= 2 then
     return true;
@@ -1166,14 +1178,7 @@ function(s)
       if IsTrivial(UnderlyingSemigroup(t)) then
         # Check that no two rows or columns are identical
         p := Matrix(t);
-        rowsDiff := ForAll([1..Size(p)], i -> 
-                           ForAll(Union([1..i-1],[i+1..Size(p)]), j ->
-                                  p[i] <> p[j]) );
-        p := TransposedMat(p);
-        colsDiff := ForAll([1..Size(p)], i -> 
-                           ForAll(Union([1..i-1],[i+1..Size(p)]), j ->
-                                  p[i] <> p[j]) );
-        if rowsDiff and colsDiff then
+        if rowsDiff(p) and rowsDiff(TransposedMat(p)) then
           return true;
         fi;
       fi;
