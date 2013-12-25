@@ -405,7 +405,7 @@ function(g)
   return s;
 end);
 
-#
+# JDM; update when ideals are ready...
 
 InstallMethod(SingularTransformationSemigroup, "for a positive integer",
 [IsPosInt],
@@ -417,6 +417,70 @@ function(n)
   T:=SubsemigroupNC(S, Idempotents(GreensDClassOfElementNC(S, x)));
   SetIsRegularSemigroup(T, true);
   return T;
+end);
+
+# JDM; update when ideals are ready...
+
+InstallMethod(SingularBrauerMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local blocks, x, S, i;
+  
+  blocks:=[[1,2], [-1,-2]];
+  for i in [3..n] do 
+    blocks[i]:=[i, -i];
+  od;
+  x:=Bipartition(blocks);
+  S:=BrauerMonoid(n);
+  return Semigroup(Idempotents(DClassNC(S, x)), rec(small:=true, regular:=true));
+end);
+
+# JDM; update when ideals are ready...
+
+InstallMethod(SingularJonesMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local blocks, x, S, i;
+  
+  blocks:=[[1,2], [-1,-2]];
+  for i in [3..n] do 
+    blocks[i]:=[i, -i];
+  od;
+  x:=Bipartition(blocks);
+  S:=JonesMonoid(n);
+  return Semigroup(Idempotents(DClassNC(S, x)), rec(small:=true, regular:=true));
+end);
+
+# JDM; update when ideals are ready...
+
+InstallMethod(SingularDualSymmetricInverseSemigroup, "for a positive integer",
+[IsPosInt],
+function(n)
+  local blocks, x, S, i;
+  
+  blocks:=[[1,2,-1,-2]];
+  for i in [3..n] do 
+    blocks[i-1]:=[i, -i];
+  od;
+  x:=Bipartition(blocks);
+  S:=DualSymmetricInverseMonoid(n);
+  return Semigroup(DClassNC(S, x), rec(small:=true, regular:=true));
+end);
+
+# JDM; update when ideals are ready...
+
+InstallMethod(SingularFactorisableDualSymmetricInverseSemigroup, 
+"for a positive integer", [IsPosInt],
+function(n)
+  local blocks, x, S, i;
+  
+  blocks:=[[1,2,-1,-2]];
+  for i in [3..n] do 
+    blocks[i-1]:=[i, -i];
+  od;
+  x:=Bipartition(blocks);
+  S:=FactorisableDualSymmetricInverseSemigroup(n);
+  return Semigroup(DClassNC(S, x), rec(small:=true, regular:=true));
 end);
 
 #EOF
