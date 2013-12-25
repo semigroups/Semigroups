@@ -86,4 +86,51 @@ function(S)
   return out;
 end);
 
+#
+
+InstallMethod(CyclesOfTransformationSemigroup, 
+"for a transformation semigroup", [IsTransformationSemigroup],
+function(S)
+  local pts, comp, next, nr, cycles, opts, o, cyc, out, i;
+
+  pts:=[1..DegreeOfTransformationSemigroup(S)];
+  comp:=BlistList(pts, []);
+  # integer=its component index, false=not seen it
+  next:=1;  nr:=0; cycles:=[];
+  opts:=rec(lookingfor:=function(o, x) 
+    return IsPosInt(comp[x]);
+  end);
+
+  repeat
+    o:=Orb(S, next, OnPoints, opts);  
+    Enumerate(o);
+    if PositionOfFound(o)<>false then 
+      for i in o do 
+        comp[i]:=comp[o[PositionOfFound(o)]];
+      od;
+    else
+      nr:=nr+1;
+      for i in o do 
+        comp[i]:=nr;
+      od;
+      cyc:=First(OrbSCC(o), x-> Length(x)>1);
+      if cyc=fail then 
+        Add(cycles, [o[Length(o)]]);
+      else
+        Add(cycles, cyc);
+      fi;
+    fi;
+    next:=Position(comp, false, next);
+  until next=fail;
+
+  out:=[];
+  for i in pts do
+    if not IsBound(out[comp[i]]) then 
+      out[comp[i]]:=[];
+    fi;
+    Add(out[comp[i]], i);
+  od;
+
+  return out;
+end);
 #EOF
