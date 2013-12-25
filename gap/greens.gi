@@ -1859,14 +1859,14 @@ function(s)
   mults:=o!.mults;
 
   for i in [1..n] do
-    for x in gens do
-      # collect info about left multiplying R-class reps of d[i] by gens
-      for j in SemigroupDataSCC(d[i]) do 
-        for k in graph[j] do  
-          AddSet(out[i], datalookup[k]);
-        od;
+    # collect info about left multiplying R-class reps of d[i] by gens
+    for j in SemigroupDataSCC(d[i]) do 
+      for k in graph[j] do  
+        AddSet(out[i], datalookup[k]);
       od;
-
+    od;
+    
+    for x in gens do
       for f in LClassReps(d[i]) do
         # the below is an expanded version of Position(data, f * x)
         f:=f*x;
