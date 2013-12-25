@@ -10,6 +10,7 @@
 
 ReadPackage("semigroups/gap/bipartition.gi");
 ReadPackage("semigroups/gap/semibipart.gi");
+ReadPackage("semigroups/gap/semitrans.gi");
 ReadPackage("semigroups/gap/blocks.gi");
 
 ReadPackage("semigroups/gap/setup.gi");

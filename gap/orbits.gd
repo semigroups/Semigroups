@@ -21,5 +21,4 @@ DeclareGlobalFunction("SchreierTreeOfSCC");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCForward");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCBack");
 
-DeclareAttribute("ComponentRepsOfTransformationSemigroup",
-IsTransformationSemigroup);
+
