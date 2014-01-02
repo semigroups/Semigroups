@@ -291,6 +291,7 @@ gap> SameMinorantsSubgroup(f);
     representation is returned. For more information see
     <Cite Key ="Schein1992aa"/>.
   </Description>
+</ManSection>
 <Example>
 gap> S:=InverseSemigroup(PartialPerm([2,1,4,3,6,5,8,7]));
 &lt;commutative inverse partial perm semigroup on 8 pts with 1 generator>
@@ -308,14 +309,13 @@ gap> R:=Range(T);
 gap> Elements(R);
 [ &lt;identity partial perm on [ 1, 2 ]>, (1,2) ]
 gap> S:=DualSymmetricInverseMonoid(5);;
-gap> T:=Range(IsomorphismPartialPermSemigroup(S));;
+gap> T:=Range(IsomorphismPartialPermSemigroup(S));
 &lt;inverse partial perm semigroup on 6721 pts with 3 generators>
 gap> SmallerDegreePartialPermRepresentation(T);
 MappingByFunction( &lt;inverse partial perm semigroup on 6721 pts
  with 3 generators>, &lt;inverse partial perm semigroup on 30 pts
  with 3 generators>, function( x ) ... end, function( x ) ... end )
 </Example>
-</ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="VagnerPrestonRepresentation">

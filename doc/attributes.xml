@@ -8,25 +8,6 @@
 #############################################################################
 ##
 
-<#GAPDoc Label="ComponentRepsOfTransformationSemigroup">
-<ManSection>
-  <Attr Name="ComponentRepsOfTransformationSemigroup" Arg="S"/>
-  <Returns>The representatives of components of <A>S</A>.</Returns>
-  <Description>
-    This function returns the representatives of the components of the 
-    action of the transformation semigroup <A>S</A> on the set of positive
-    integers on which it acts. The representatives are the least set of points
-    such that every point can be reached from some representative under the
-    action of <A>S</A>.
-  <Example>
-gap> S:=Semigroup( 
-> Transformation( [ 11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5 ] ), 
-> Transformation( [ 12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12 ] ) );;
-gap> ComponentRepsOfTransformationSemigroup(S);
-[ 2, 3, 8 ]</Example>
-  </Description>
-</ManSection>
-<#/GAPDoc>
 
 <#GAPDoc Label="MaximalSubsemigroups">
 <ManSection>

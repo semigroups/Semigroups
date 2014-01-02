@@ -351,21 +351,29 @@ InstallMethod(IsRTrivial, "for an inverse semigroup",
 
 InstallMethod(IsRTrivial, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
+function(S)
   local iter, x;
 
-  if IsClosed(SemigroupData(s)) and IsClosed(RhoOrb(s)) then 
-    for x in GreensDClasses(s) do 
+  if IsTransformationSemigroup(S) then 
+    if ForAny(GeneratorsOfSemigroup(S), x-> 
+     ForAny(CyclesOfTransformation(x), y-> Length(y)>1)) then 
+      return false;
+    else
+      return ForAll(CyclesOfTransformationSemigroup(S), y-> Length(y)=1);
+    fi;
+  fi;
+
+  if IsClosed(SemigroupData(S)) and IsClosed(RhoOrb(S)) then 
+    for x in GreensDClasses(S) do 
       if (not IsTrivial(SchutzenbergerGroup(x))) or Length(LambdaOrbSCC(x))>1 
        then
         return false;
       fi;
     od;
-	
     return true;
   fi;
 
-  iter:=IteratorOfRClasses(s); 
+  iter:=IteratorOfRClasses(S); 
   
   for x in iter do
     if (not IsTrivial(SchutzenbergerGroup(x))) or

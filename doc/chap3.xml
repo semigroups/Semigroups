@@ -97,6 +97,11 @@
     <#Include Label="Random">
     <#Include Label="SmallGeneratingSet"> 
     <#Include Label="ComponentRepsOfTransformationSemigroup">
+    <#Include Label="ComponentsOfTransformationSemigroup">
+    <#Include Label="CyclesOfTransformationSemigroup">
+    <#Include Label="ComponentRepsOfPartialPermSemigroup">
+    <#Include Label="ComponentsOfPartialPermSemigroup">
+    <#Include Label="CyclesOfPartialPermSemigroup">
   </Section>
 
   <Section><Heading>Further properties of semigroups</Heading>

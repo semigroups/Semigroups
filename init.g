@@ -33,6 +33,7 @@ ReadPackage("semigroups/gap/examples.gd");
 ReadPackage("semigroups/gap/bipartition.gd");
 ReadPackage("semigroups/gap/semibipart.gd");
 ReadPackage("semigroups/gap/semitrans.gd");
+ReadPackage("semigroups/gap/semipperm.gd");
 ReadPackage("semigroups/gap/blocks.gd");
 
 ReadPackage("semigroups/gap/ideals.gd");

@@ -1,19 +1,19 @@
 #############################################################################
 ##
-#W  semitrans.gi
-#Y  Copyright (C) 2013                                   James D. Mitchell
+#W  semipperm.gi
+#Y  Copyright (C) 2014                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-InstallMethod(ComponentRepsOfTransformationSemigroup, 
-"for a transformation semigroup", [IsTransformationSemigroup],
+InstallMethod(ComponentRepsOfPartialPermSemigroup, 
+"for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
   local pts, reps, next, opts, o, out, i;
 
-  pts:=[1..DegreeOfTransformationSemigroup(S)];
+  pts:=[1..DegreeOfPartialPermSemigroup(S)];
   reps:=BlistList(pts, []);
   # true=its a rep, false=not seen it, fail=its not a rep
   next:=1;
@@ -46,12 +46,12 @@ end);
 
 #
 
-InstallMethod(ComponentsOfTransformationSemigroup, 
-"for a transformation semigroup", [IsTransformationSemigroup],
+InstallMethod(ComponentsOfPartialPermSemigroup, 
+"for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
   local pts, comp, next, nr, opts, o, out, i;
 
-  pts:=[1..DegreeOfTransformationSemigroup(S)];
+  pts:=[1..DegreeOfPartialPermSemigroup(S)];
   comp:=BlistList(pts, []);
   # integer=its component index, false=not seen it
   next:=1;  nr:=0;
@@ -88,36 +88,43 @@ end);
 
 #
 
-InstallMethod(CyclesOfTransformationSemigroup, 
-"for a transformation semigroup", [IsTransformationSemigroup],
+InstallMethod(CyclesOfPartialPermSemigroup, 
+"for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
   local pts, comp, next, nr, cycles, opts, o, scc, i;
 
-  pts:=[1..DegreeOfTransformationSemigroup(S)];
+  pts:=[1..DegreeOfPartialPermSemigroup(S)];
   comp:=BlistList(pts, []);
   # integer=its component index, false=not seen it
   next:=1;  nr:=0; cycles:=[];
   opts:=rec(lookingfor:=function(o, x) 
-    return IsPosInt(comp[x]);
+    if not IsEmpty(x) then 
+      return IsPosInt(comp[x[1]]);
+    else
+      return false;
+    fi;
   end);
 
   repeat
-    o:=Orb(S, next, OnPoints, opts);  
+    #JDM the next line doesn't work if OnPoints is used...
+    o:=Orb(S, [next], OnSets, opts);  
     Enumerate(o);
     if PositionOfFound(o)<>false then 
       for i in o do 
-        comp[i]:=comp[o[PositionOfFound(o)]];
+        if not IsEmpty(i) then
+          comp[i[1]]:=comp[o[PositionOfFound(o)][1]];
+        fi;
       od;
     else
       nr:=nr+1;
       for i in o do 
-        comp[i]:=nr;
+        if not IsEmpty(i) then
+          comp[i[1]]:=nr;
+        fi;
       od;
       scc:=First(OrbSCC(o), x-> Length(x)>1);
-      if scc=fail then 
-        Add(cycles, [o[Length(o)]]);
-      else
-        Add(cycles, o{scc});
+      if scc<>fail then 
+        Add(cycles, List(o{scc}, x-> x[1]));
       fi;
     fi;
     next:=Position(comp, false, next);
@@ -125,4 +132,5 @@ function(S)
 
   return cycles;
 end);
+
 #EOF
