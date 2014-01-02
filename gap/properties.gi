@@ -349,19 +349,36 @@ InstallMethod(IsRTrivial, "for an inverse semigroup",
 
 #
 
+InstallMethod(IsRTrivial, "for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+function(S)
+  if ForAny(GeneratorsOfSemigroup(S), x-> 
+   ForAny(CyclesOfTransformation(x), y-> Length(y)>1)) then 
+    return false;
+  else
+    return ForAll(CyclesOfTransformationSemigroup(S), x-> Length(x)=1);
+  fi;
+end);
+
+#
+
+InstallMethod(IsRTrivial, "for a partial perm semigroup with generators",
+[IsPartialPermSemigroup], 
+function(S)
+  if ForAny(GeneratorsOfSemigroup(S), x-> 
+   ForAny(CyclesOfPartialPerm(x), y-> Length(y)>1)) then 
+    return false;
+  else
+    return ForAll(CyclesOfPartialPerm(S), x-> Length(x)=1);
+  fi;
+end);
+
+#
+
 InstallMethod(IsRTrivial, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local iter, x;
-
-  if IsTransformationSemigroup(S) then 
-    if ForAny(GeneratorsOfSemigroup(S), x-> 
-     ForAny(CyclesOfTransformation(x), y-> Length(y)>1)) then 
-      return false;
-    else
-      return ForAll(CyclesOfTransformationSemigroup(S), y-> Length(y)=1);
-    fi;
-  fi;
 
   if IsClosed(SemigroupData(S)) and IsClosed(RhoOrb(S)) then 
     for x in GreensDClasses(S) do 
@@ -1192,5 +1209,10 @@ function(s)
     return IsGroup(s) and IsSimpleGroup(s);
   fi;
 end);
+
+# for general semigroups...
+
+InstallMethod(IsRTrivial, "for a semigroup", 
+[IsSemigroup], S-> Size(S)=NrRClasses(S));
 
 #EOF
