@@ -18,18 +18,26 @@ function(S)
   # true=its a rep, false=not seen it, fail=its not a rep
   next:=1;
   opts:=rec(lookingfor:=function(o, x) 
-    return reps[x]=true or reps[x]=fail;
+    if not IsEmpty(x) then 
+      return reps[x[1]]=true or reps[x[1]]=fail;
+    else
+      return false;
+    fi;
   end);
 
   repeat
-    o:=Orb(S, next, OnPoints, opts);  
+    o:=Orb(S, [next], OnSets, opts);  
     Enumerate(o);
-    if PositionOfFound(o)<>false and reps[o[PositionOfFound(o)]]=true then 
-      reps[o[PositionOfFound(o)]]:=fail;
+    if PositionOfFound(o)<>false and reps[o[PositionOfFound(o)][1]]=true then 
+      if not IsEmpty(o[PositionOfFound(o)]) then 
+        reps[o[PositionOfFound(o)][1]]:=fail;
+      fi;
     fi;
     reps[next]:=true;
     for i in [2..Length(o)] do 
-      reps[o[i]]:=fail;
+      if not IsEmpty(o[i]) then 
+        reps[o[i][1]]:=fail;
+      fi;
     od;
     next:=Position(reps, false, next);
   until next=fail;
@@ -56,20 +64,28 @@ function(S)
   # integer=its component index, false=not seen it
   next:=1;  nr:=0;
   opts:=rec(lookingfor:=function(o, x) 
-    return IsPosInt(comp[x]);
+    if not IsEmpty(x) then 
+      return IsPosInt(comp[x[1]]);
+    else
+      return false;
+    fi;
   end);
 
   repeat
-    o:=Orb(S, next, OnPoints, opts);  
+    o:=Orb(S, [next], OnSets, opts);  
     Enumerate(o);
     if PositionOfFound(o)<>false then 
       for i in o do 
-        comp[i]:=comp[o[PositionOfFound(o)]];
+        if not IsEmpty(i) then 
+          comp[i[1]]:=comp[o[PositionOfFound(o)][1]];
+        fi;
       od;
     else
       nr:=nr+1;
       for i in o do 
-        comp[i]:=nr;
+        if not IsEmpty(i) then
+          comp[i[1]]:=nr;
+        fi;
       od;
     fi;
     next:=Position(comp, false, next);
