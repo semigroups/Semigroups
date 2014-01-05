@@ -369,7 +369,7 @@ function(S)
    ForAny(CyclesOfPartialPerm(x), y-> Length(y)>1)) then 
     return false;
   else
-    return ForAll(CyclesOfPartialPerm(S), x-> Length(x)=1);
+    return ForAll(CyclesOfPartialPermSemigroup(S), x-> Length(x)=1);
   fi;
 end);
 
