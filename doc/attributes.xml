@@ -82,7 +82,16 @@ gap> reps;
   Transformation( [ 1, 4, 1, 1, 4 ] ), 
   Transformation( [ 1, 1, 1, 1, 1 ] ) ]
 gap> IsGreensLessThanOrEqual(DClass(S, reps[2]), DClass(S, reps[1]));
-true</Example>
+true
+gap> S:=DualSymmetricInverseMonoid(4);;
+gap> IsGreensDLeq(S)(S.1, S.3);                      
+true
+gap> IsGreensDLeq(S)(S.3, S.1);
+false
+gap> IsGreensLessThanOrEqual(DClass(S, S.3), DClass(S, S.1));
+true
+gap> IsGreensLessThanOrEqual(DClass(S, S.1), DClass(S, S.3));
+false</Example>
     </Description>
 </ManSection>
 <#/GAPDoc>
