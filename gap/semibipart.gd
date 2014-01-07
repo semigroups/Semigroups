@@ -10,5 +10,7 @@
 
 DeclareSynonym("IsBipartitionSemigroup", IsSemigroup and
 IsBipartitionCollection);
+DeclareSynonym("IsBipartitionMonoid", IsMonoid and
+IsBipartitionCollection);
 DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
 DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);

@@ -8,10 +8,47 @@
 ############################################################################# 
 ##
 
-InstallMethod(IsBipartitionSemigroupGreensClass, "for a Green's class",
-[IsGreensClass], x-> IsBipartitionSemigroup(Parent(x)));
+InstallMethod(GeneratorsOfInverseSemigroup,
+"for an inverse bipartition semigroup with generators",
+[IsBipartitionSemigroup and IsInverseSemigroup and HasGeneratorsOfSemigroup],
+function(s)
+  local gens, pos, f;
 
-InstallImmediateMethod(GeneratorsOfSemigroup, IsBipartitionCollection and IsSemigroup and HasGeneratorsOfInverseSemigroup, 0, 
+  gens:=ShallowCopy(GeneratorsOfSemigroup(s));
+  for f in gens do
+    pos:=Position(gens, f^-1);
+    if pos<>fail and f<>f^-1 then 
+      Remove(gens, pos);
+    fi;
+  od;
+  MakeImmutable(gens);
+  return gens;
+end);
+
+#
+
+InstallMethod(GeneratorsOfInverseMonoid,
+"for an inverse bipartition monoid with generators",
+[IsBipartitionSemigroup and IsInverseMonoid and HasGeneratorsOfMonoid],
+function(s)
+  local gens, one, pos, f;
+
+  gens:=ShallowCopy(GeneratorsOfMonoid(s));
+  one:=One(s);
+  for f in gens do
+    pos:=Position(gens, f^-1);
+    if pos<>fail and (f<>f^-1 or f=one) then 
+      Remove(gens, pos);
+    fi;
+  od;
+  MakeImmutable(gens);
+  return gens;
+end);
+
+#
+
+InstallImmediateMethod(GeneratorsOfSemigroup, 
+IsBipartitionSemigroup and HasGeneratorsOfInverseSemigroup, 0, 
 function(s)
   local gens, f;
 
@@ -27,6 +64,31 @@ function(s)
   MakeImmutable(gens);
   return gens;
 end);
+
+#
+
+InstallImmediateMethod(GeneratorsOfMonoid,
+IsBipartitionMonoid and HasGeneratorsOfInverseMonoid, 0, 
+function(s)
+  local gens, pos, f;
+
+  gens:=ShallowCopy(GeneratorsOfInverseMonoid(s));
+  for f in gens do
+    if not IsPermBipartition(f) then  
+      f:=f^-1;
+      if not f in gens then 
+        Add(gens, f);
+      fi;
+    fi;
+  od;
+  MakeImmutable(gens);
+  return gens;
+end);
+
+#
+
+InstallMethod(IsBipartitionSemigroupGreensClass, "for a Green's class",
+[IsGreensClass], x-> IsBipartitionSemigroup(Parent(x)));
 
 #
 
