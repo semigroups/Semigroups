@@ -446,11 +446,7 @@ InstallMethod(InverseSemigroupByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection, IsRecord],
 function(gens, record)
-  local n, closure_opts, s, filts, f;
-
-  if not IsGeneratorsOfActingSemigroup(gens) then 
-    TryNextMethod();
-  fi;
+  local n, closure_opts, s, filts, pos, f;
 
   if not IsGeneratorsOfActingSemigroup(gens) then 
     TryNextMethod();
@@ -481,8 +477,17 @@ function(gens, record)
   fi;
 
   s:=Objectify( NewType (FamilyObj( gens ), filts), rec(opts:=record));
-
-  SetGeneratorsOfInverseSemigroup(s, gens);
+  SetGeneratorsOfInverseSemigroup(s, AsList(gens));
+  
+  if IsMultiplicativeElementWithOneCollection(gens) then 
+    pos:=Position(gens, One(gens));
+    if pos<>fail then 
+      SetFilterObj(s, IsMonoid);
+      gens:=ShallowCopy(gens);
+      Remove(gens, pos);
+      SetGeneratorsOfInverseMonoid(s, gens);
+    fi;
+  fi;
   return s;
 end);
 
