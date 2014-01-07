@@ -111,3 +111,5 @@ InstallMethod(PrintObj, "for a bipartition semigroup",
 function(s)
   Print(Generators(s));
 end);
+
+#

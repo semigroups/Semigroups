@@ -250,7 +250,7 @@ function(n)
   Add(gens, BipartitionNC(Concatenation([[1,2,-1, -2]], 
    List([3..n], x-> [x, -x]))));
 
-  return Semigroup(gens, rec(regular:=true));
+  return Monoid(gens, rec(regular:=true));
 end);
 
 #
@@ -272,7 +272,7 @@ function(n)
     Add(gens, BipartitionNC(Concatenation([[1,2,-3], [3,-1,-2]],
      List([4..n], x-> [x, -x]))));
   fi;
-  s:=InverseSemigroup(gens);
+  s:=InverseMonoid(gens);
   return s;
 end);
 
@@ -285,7 +285,7 @@ function(n)
   gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
   Add(gens, BipartitionNC(Concatenation([[1,2,-1,-2]],
    List([3..n], x-> [x, -x]))));
-  return InverseSemigroup(gens);
+  return InverseMonoid(gens);
 end);
 
 #
@@ -300,7 +300,7 @@ function(n)
   gens:=List(GeneratorsOfGroup(SymmetricGroup(n)), x-> AsBipartition(x, n));
   Add(gens, BipartitionNC(Concatenation([[1,2]], 
    List([3..n], x-> [x, -x]),[[-1,-2]])));
-  return Semigroup(gens, rec(regular:=true));
+  return Monoid(gens, rec(regular:=true));
 end);
 
 #
@@ -310,7 +310,7 @@ function(n)
   local gens, next, s, i, j;
  
   if n=1 then 
-    return Semigroup(BipartitionNC([[1,-1]]));
+    return Monoid(BipartitionNC([[1,-1]]));
   fi;
 
   gens:=[];
@@ -414,6 +414,20 @@ function(n)
   
   x:=TransformationNC(Concatenation([1..n-1], [n-1]));
   S:=FullTransformationSemigroup(n);
+  T:=SubsemigroupNC(S, Idempotents(GreensDClassOfElementNC(S, x)));
+  SetIsRegularSemigroup(T, true);
+  return T;
+end);
+
+# JDM; update when ideals are ready...
+
+InstallMethod(SingularOrderEndomorphisms, "for a positive integer",
+[IsPosInt],
+function(n)
+  local x, S, T;
+  
+  x:=TransformationNC(Concatenation([1..n-1], [n-1]));
+  S:=OrderEndomorphisms(n);
   T:=SubsemigroupNC(S, Idempotents(GreensDClassOfElementNC(S, x)));
   SetIsRegularSemigroup(T, true);
   return T;

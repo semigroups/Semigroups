@@ -26,6 +26,7 @@ DeclareProperty("IsFullMatrixSemigroup", IsSemigroup);
 DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
 DeclareOperation("MunnSemigroup", [IsSemigroup]);
 DeclareOperation("OrderEndomorphisms", [IsPosInt]);
+DeclareOperation("SingularOrderEndomorphisms", [IsPosInt]);
 DeclareOperation("PartialTransformationSemigroup", [IsPosInt]);
 DeclareOperation("PartitionMonoid", [IsPosInt]);
 DeclareOperation("POI", [IsPosInt]);
