@@ -528,8 +528,8 @@ function(S)
       end;
       
       # Case 1: Max. subsemigroups which intersect every H-class of classes[i]     
-      Info(InfoSemigroups, 2, "\n\nLooking for maximal subsemigroups which ",
-        "intersect every H-class of the D-class\n");    
+      Info(InfoSemigroups, 2, "\n\nCase 1: Looking for maximal subsemigroups ",
+        "which intersect every H-class of the D-class\n");    
       gens3:=gens{lookup[i]};
       gens2:=Difference(ShallowCopy(gens), gens3);
       U:=Semigroup(gens2);
@@ -562,8 +562,8 @@ function(S)
       fi;
       
       # Case 2: Max. subsemigroups which are a union of H-classes in classes[i]        
-      Info(InfoSemigroups, 2, "\n\nLooking for maximal subsemigroups which ",
-        "are a union of H-classes\n");    
+      Info(InfoSemigroups, 2, "\n\nCase 2: Looking for maximal subsemigroups ",
+        "which are a union of H-classes\n");    
       for k in [1..Length(lookup[i])] do      
         for j in Combinations(lookup[i], k) do 
           Info(InfoSemigroups, 2, "\nTrying to remove gens: ", j, "...");
