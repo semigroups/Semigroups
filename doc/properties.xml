@@ -497,7 +497,7 @@ true</Example>
 
      See also <Ref Attr="One" BookName="ref"/>, 
      <Ref Prop="IsInverseMonoid" BookName="ref"/>
-     and <Ref Oper="IsomorphismTransformationMonoid"/>.
+     and <Ref Oper="IsomorphismTransformationMonoid" BookName="ref"/>.
       <Example>
 gap> S:=Semigroup( Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
 > Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;

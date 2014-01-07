@@ -1,8 +1,43 @@
+#############################################################################
+##
+#W  bipartition.tst
+#Y  Copyright (C) 2014                                    Attila Egri-Nagy
+##                                                       James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
 gap> START_TEST("Semigroups package: bipartition.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SemigroupsStartTest();
+
+#IsomorphismTransformationMonoid, IsomorphismTransformationSemigroup
+gap> S:=DualSymmetricInverseMonoid(4);                                
+<inverse bipartition monoid on 4 pts with 4 generators>
+gap> IsomorphismTransformationMonoid(S);
+MappingByFunction( <inverse bipartition monoid of size 339, 
+ on 4 pts with 4 generators>, <transformation monoid 
+ on 339 pts with 3 generators>, function( x ) ... end, function( x ) ... end )
+gap> S:=Semigroup( Bipartition( [ [ 1, 2, 3, 4, -2, -3 ], [ -1 ], [ -4 ] ] ), 
+>  Bipartition( [ [ 1, 2, -1, -3 ], [ 3, 4, -2, -4 ] ] ), 
+>  Bipartition( [ [ 1, 3, -1 ], [ 2, 4, -2, -3 ], [ -4 ] ] ), 
+>  Bipartition( [ [ 1, -4 ], [ 2 ], [ 3, -2 ], [ 4, -1 ], [ -3 ] ] ) );;
+gap> IsomorphismTransformationSemigroup(S);
+MappingByFunction( <bipartition semigroup of size 284, 
+ on 4 pts with 4 generators>, <transformation semigroup 
+ on 285 pts with 4 generators>, function( x ) ... end, function( x ) ... end )
+gap> S:=Monoid(Bipartition( [ [ 1, 2, -2 ], [ 3 ], [ 4, -3, -4 ], [ -1 ] ] ), 
+>  Bipartition( [ [ 1, 3, -3, -4 ], [ 2, 4, -1, -2 ] ] ), 
+>  Bipartition( [ [ 1, -1, -2 ], [ 2, 3, -3, -4 ], [ 4 ] ] ), 
+>  Bipartition( [ [ 1, 4, -4 ], [ 2, -1 ], [ 3, -2, -3 ] ] ) );;
+gap> IsomorphismTransformationMonoid(S);
+MappingByFunction( <bipartition monoid of size 41, on 4 pts with 4 generators>
+ , <transformation monoid on 41 pts with 4 generators>
+ , function( x ) ... end, function( x ) ... end )
 
 #the number of iterations, change here to get faster test
 gap> N := 333;;

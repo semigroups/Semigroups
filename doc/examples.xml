@@ -98,7 +98,7 @@ gap> Size(last);
 
       <B>Please note:</B> there are currently no special methods for computing
       with matrix semigroups in &Semigroups; and so it might be advisable to use
-      <Ref Oper="IsomorphismTransformationSemigroup"/>.
+      <Ref Oper="IsomorphismTransformationSemigroup" BookName="ref"/>.
 
       <Example>
 gap> S:=FullMatrixSemigroup(3,4);

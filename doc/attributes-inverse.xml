@@ -33,7 +33,7 @@ gap> PrimitiveIdempotents(S);
 [ <identity partial perm on [ 4 ]>, <identity partial perm on [ 1 ]>, 
   <identity partial perm on [ 2 ]>, <identity partial perm on [ 3 ]> ]
 gap> S:=DualSymmetricInverseMonoid(4);
-<inverse bipartition semigroup on 4 pts with 3 generators>
+<inverse bipartition monoid on 4 pts with 3 generators>
 gap> PrimitiveIdempotents(S);
 [ <bipartition: [ 1, 2, 3, -1, -2, -3 ], [ 4, -4 ]>, 
   <bipartition: [ 1, 2, 4, -1, -2, -4 ], [ 3, -3 ]>, 
@@ -228,7 +228,7 @@ gap> Minorants(S,f);
 gap> S:=SymmetricInverseSemigroup(3);
 &lt;symmetric inverse semigroup on 3 pts>
 gap> T:=InverseSemigroup(MajorantClosure(S,[PartialPerm([1])]));
-&lt;inverse partial perm semigroup on 3 pts with 7 generators>
+&lt;inverse partial perm monoid on 3 pts with 6 generators>
 gap> IsMajorantlyClosed(S,T);
 true
 gap> RC:=RightCosetsOfInverseSemigroup(S,T);
@@ -237,8 +237,7 @@ gap> RC:=RightCosetsOfInverseSemigroup(S,T);
       &lt;identity partial perm on [ 1, 3 ]>, 
       &lt;identity partial perm on [ 1, 2, 3 ]>, (1)(2,3) ], 
   [ [1,3], [2,1,3], [1,3](2), (1,3), [1,3,2], (1,3,2), (1,3)(2) ], 
-  [ [1,2], (1,2), [1,2,3], [3,1,2], [1,2](3), (1,2)(3), (1,2,3) ] ]
-</Example>
+  [ [1,2], (1,2), [1,2,3], [3,1,2], [1,2](3), (1,2)(3), (1,2,3) ] ]</Example>
 <#/GAPDoc>
 
 <#GAPDoc Label="SameMinorantsSubgroup">
@@ -319,9 +318,9 @@ gap> Elements(R);
 [ &lt;identity partial perm on [ 1, 2 ]>, (1,2) ]
 gap> S:=DualSymmetricInverseMonoid(5);;
 gap> T:=Range(IsomorphismPartialPermSemigroup(S));
-&lt;inverse partial perm semigroup on 6721 pts with 3 generators>
+&lt;inverse partial perm monoid on 6721 pts with 3 generators>
 gap> SmallerDegreePartialPermRepresentation(T);
-MappingByFunction( &lt;inverse partial perm semigroup on 6721 pts
+MappingByFunction( &lt;inverse partial perm monoid on 6721 pts
  with 3 generators>, &lt;inverse partial perm semigroup on 30 pts
  with 3 generators>, function( x ) ... end, function( x ) ... end )
 </Example>
@@ -357,8 +356,8 @@ gap> Size(S);
 7
 gap> iso:=VagnerPrestonRepresentation(S);
 MappingByFunction( &lt;symmetric inverse semigroup on 2 pts>, &lt;inverse pa\
-rtial perm semigroup on 7 pts
- with 3 generators>, function( x ) ... end, function( x ) ... end )
+rtial perm monoid on 7 pts
+ with 2 generators>, function( x ) ... end, function( x ) ... end )
 gap> RespectsMultiplication(iso);
 true
 gap> inv:=InverseGeneralMapping(iso);;

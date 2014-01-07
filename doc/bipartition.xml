@@ -390,7 +390,7 @@ gap> f:=Bipartition( [ [ 1, 7, -3, -8 ], [ 2, 6 ], [ 3 ], [ 4, -7, -9 ],
 gap> DegreeOfBipartition(f);
 9
 gap> s:=BrauerMonoid(5);
-&lt;regular bipartition semigroup on 5 pts with 3 generators>
+&lt;regular bipartition monoid on 5 pts with 3 generators>
 gap> IsBipartitionCollection(s);
 true
 gap> DegreeOfBipartitionCollection(s);
