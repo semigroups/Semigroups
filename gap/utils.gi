@@ -418,7 +418,7 @@ function(arg)
   elif file[Length(file)] = "xz" then 
     file:=IO_FilteredFile([["xz", ["-9q"]]], arg[1], mode);
   else  
-    file:=IO_File(arg[1]);
+    file:=IO_File(arg[1], mode);
   fi;
   return file;
 end);
@@ -538,7 +538,7 @@ function(arg)
       IO_WriteLine(file, line);
     od;
   fi;
-
+  
   if IsString(arg[1]) then  
     IO_Close(file);
   fi;
