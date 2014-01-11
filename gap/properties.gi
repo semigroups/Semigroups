@@ -282,13 +282,27 @@ end);
 
 InstallMethod(IsHTrivial, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  local iter, d;
+function(S)
+  local iter, x;
 
-  iter:=IteratorOfDClasses(s);
+  if IsTransformationSemigroup(S) then 
+    for x in GeneratorsOfSemigroup(S) do 
+      if IndexPeriodOfTransformation(x)[2]<>1 then 
+        return false;
+      fi;
+    od;
+  elif IsPartialPermSemigroup(S) then 
+    for x in GeneratorsOfSemigroup(S) do 
+      if IndexPeriodOfPartialPerm(x)[2]<>1 then 
+        return false;
+      fi;
+    od;
+  fi;
+
+  iter:=IteratorOfDClasses(S);
   
-  for d in iter do  
-    if not IsTrivial(SchutzenbergerGroup(d)) then 
+  for x in iter do  
+    if not IsTrivial(SchutzenbergerGroup(x)) then 
       return false;
     fi;
   od;
