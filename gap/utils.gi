@@ -318,7 +318,9 @@ function(arg)
       repeat  
         i:=i+1; line:=IO_ReadLine(file);
       until i=arg[2] or line="";
-      IO_Close(file);
+      if IsString(arg[1]) then 
+        IO_Close(file);
+      fi;
       if line="" then
         Error(arg[1], " only has ", i-1, " lines,"); 
         return;
