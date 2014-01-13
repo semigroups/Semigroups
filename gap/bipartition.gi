@@ -301,6 +301,12 @@ end);
 
 #
 
+InstallMethod(AsBipartition, "for a permutation and zero",
+[IsPerm, IsZeroCyc],
+function(x, y) 
+  return Bipartition([[]]);
+end);
+
 InstallMethod(AsBipartition, "for a permutation and pos int",
 [IsPerm, IsPosInt],
 function(f, n)
@@ -323,6 +329,12 @@ function(f)
 end);
 
 #
+
+InstallMethod(AsBipartition, "for a partial perm and zero",
+[IsPartialPerm, IsZeroCyc],
+function(f, n)
+  return Bipartition([[]]);
+end);
 
 InstallMethod(AsBipartition, "for a partial perm and pos int",
 [IsPartialPerm, IsPosInt],
@@ -355,11 +367,19 @@ end);
 
 #
 
+InstallMethod(AsBipartition, "for a transformation and zero",
+[IsTransformation, IsZeroCyc],
+function(f, n)
+  return Bipartition([[]]);
+end);
+
+#
+
 InstallMethod(AsBipartition, "for a transformation and a positive integer",
 [IsTransformation, IsPosInt],
 function(f, n)
   local r, ker, out, g, i;
-
+  
   if n<DegreeOfTransformation(f) then 
     #verify <f> is a transformation on [1..n]
     for i in [1..n] do 
@@ -994,6 +1014,11 @@ InstallMethod(ViewObj, "for a bipartition",
 [IsBipartition],
 function(f)
   local ext, i;
+
+  if DegreeOfBipartition(f)=0 then 
+    Print("<empty bipartition>");
+    return;
+  fi;
 
   Print("<bipartition: ");
   ext:=ExtRepOfBipartition(f);

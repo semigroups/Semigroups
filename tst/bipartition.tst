@@ -17,10 +17,10 @@ gap> SemigroupsStartTest();
 
 #IsomorphismTransformationMonoid, IsomorphismTransformationSemigroup
 gap> S:=DualSymmetricInverseMonoid(4);                                
-<inverse bipartition monoid on 4 pts with 4 generators>
+<inverse bipartition monoid on 4 pts with 3 generators>
 gap> IsomorphismTransformationMonoid(S);
 MappingByFunction( <inverse bipartition monoid of size 339, 
- on 4 pts with 4 generators>, <transformation monoid 
+ on 4 pts with 3 generators>, <transformation monoid 
  on 339 pts with 3 generators>, function( x ) ... end, function( x ) ... end )
 gap> S:=Semigroup( Bipartition( [ [ 1, 2, 3, 4, -2, -3 ], [ -1 ], [ -4 ] ] ), 
 >  Bipartition( [ [ 1, 2, -1, -3 ], [ 3, 4, -2, -4 ] ] ), 
@@ -80,7 +80,7 @@ gap> ForAll(l,t->IsTransBipartition(AsBipartition(t)));
 true
 
 # check big size, identity, multiplication
-gap> bp := RandomBipartition(999999);;bp*One(bp)=bp;One(bp)*bp=bp;
+gap> bp := RandomBipartition(70000);;bp*One(bp)=bp;One(bp)*bp=bp;
 true
 true
 
