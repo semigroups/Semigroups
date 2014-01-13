@@ -283,10 +283,9 @@ true</Example>
 <#GAPDoc Label="BipartitionByIntRep">
   <ManSection>
     <Oper Name="BipartitionByIntRep" Arg="list"/>
-    <Oper Name="BipartitionByIntRepNC" Arg="list"/>
     <Returns>A bipartition.</Returns>
     <Description>
-      It is possible to create a bipartition using from its internal
+      It is possible to create a bipartition using its internal
       representation. The argument <A>list</A> must be a list of positive
       integers not greater than <C>n</C>, of length <C>2*n</C>, and where
       <C>i</C> appears in the list only if <C>i-1</C> occurs earlier in the
@@ -306,8 +305,7 @@ true</Example>
       <C>3</C> in the second position.<P/>
 
       In its first form <C>BipartitionByIntRep</C> verifies that the argument
-      <A>list</A> is the internal representation of a bipartition, whereas
-      <C>BipartitionByIntRepNC</C> performs no checks. 
+      <A>list</A> is the internal representation of a bipartition. 
       <Example>
 gap> BipartitionByIntRep([ 1, 2, 2, 1, 3, 4 ]);                         
 &lt;bipartition: [ 1, -1 ], [ 2, 3 ], [ -2 ], [ -3 ]></Example> 
@@ -318,7 +316,6 @@ gap> BipartitionByIntRep([ 1, 2, 2, 1, 3, 4 ]);
 <#GAPDoc Label="PermLeftQuoBipartition">
   <ManSection>
     <Oper Name="PermLeftQuoBipartition" Arg="f, g"/>
-    <Func Name="PermLeftQuoBipartitionNC" Arg="f, g"/>
     <Returns>A permutation.</Returns>
     <Description>
       If <A>f</A> and <A>g</A> are bipartitions with equal left and right
@@ -328,7 +325,6 @@ gap> BipartitionByIntRep([ 1, 2, 2, 1, 3, 4 ]);
 
       <C>PermLeftQuoBipartition</C> verifies that <A>f</A> and <A>g</A> have
       equal left and right blocks, and returns an error if they do not.
-      <C>PermLeftQuoTransformationNC</C> does no checks.<P/>
 
       The value returned by <C>PermLeftQuoBipartition(<A>f</A>,<A>g</A>)</C> is
       the same as that returned by 
@@ -414,8 +410,9 @@ gap> RankOfBipartition(f);
     <Attr Name="DegreeOfBipartitionCollection" Arg="f"/>
     <Returns>A positive integer.</Returns>
     <Description>
-The degree of a bipartition is, roughly speaking, the number of points where
-the bipartition is defined. More precisely, if <A>f</A> is a bipartition defined on <C>2*n</C> points, then the degree of <A>f</A> is <C>n</C>. <P/>
+The degree of a bipartition is, roughly speaking, the number of points where it
+is defined. More precisely, if <A>f</A> is a bipartition defined on <C>2*n</C>
+points, then the degree of <A>f</A> is <C>n</C>. <P/>
 
 The degree of a collection <A>coll</A> of bipartitions of equal degree is just
 the degree of any (and every) bipartition in <A>coll</A>. The degree of collection of bipartitions of unequal degrees is not defined. 
@@ -438,7 +435,6 @@ gap> DegreeOfBipartitionCollection(s);
 <#GAPDoc Label="Bipartition">
   <ManSection>
     <Func Name="Bipartition" Arg="blocks"/>
-    <Func Name="BipartitionNC" Arg="blocks"/>
     <Returns>A bipartition.</Returns>
     <Description>
       <C>Bipartition</C> returns the bipartition <C>f</C> with equivalence
@@ -447,8 +443,7 @@ gap> DegreeOfBipartitionCollection(s);
       integer <C>n</C>. <P/>
       
       <C>Bipartition</C> returns an error if the argument does not define a
-      bipartition, whereas <C>BipartitionNC</C> performs no checks on its
-      argument. 
+      bipartition. 
       <Example>
 gap> f:=Bipartition( [ [ 1, -1 ],[ 2, 3, -3 ], [ -2 ] ] );
 &lt;bipartition: [ 1, -1 ], [ 2, 3, -3 ], [ -2 ]></Example>
