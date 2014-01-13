@@ -102,7 +102,6 @@ true]]></Example>
 <#GAPDoc Label="AsTransformation">
   <ManSection>
     <Oper Name="AsTransformation" Arg="f" Label="for a bipartition"/>
-    <Oper Name="AsTransformationNC" Arg="f" Label="for a bipartition"/>
     <Returns>A transformation or <K>fail</K>.</Returns>
     <Description>
       When the argument <A>f</A> is a bipartition, that mathematically defines
@@ -111,9 +110,34 @@ true]]></Example>
       blocks are the image list of a permutation of <C>[1..n]</C> where
       <C>n</C> is the degere of <A>f</A>. <P/>
       
-      <C>AsTransformation</C> verifies that its argument defines a
-      transformation and <C>AsTransformationNC</C> does not. See 
-      <Ref Oper="IsTransBipartition"/>. 
+      See <Ref Oper="IsTransBipartition"/>. 
+      <Example>
+gap> f:=Bipartition([[ 1, -3 ], [ 2, -2 ], [ 3, 5, 10, -7 ], [ 4, -12 ], 
+> [ 6, 7, -6 ], [ 8, -5 ], [ 9, -11 ], [ 11, 12, -10 ], [ -1 ], [ -4 ], 
+> [ -8 ], [ -9 ]]);;
+gap> AsTransformation(f);
+Transformation( [ 3, 2, 7, 12, 7, 6, 6, 5, 11, 7, 10, 10 ] )
+gap> IsTransBipartition(f);
+true
+gap> f:=Bipartition([[ 1, 5 ], [ 2, 4, 8, 10 ], [ 3, 6, 7, -1, -2 ], 
+> [ 9, -4, -6, -9 ], [ -3, -5 ], [ -7, -8 ], [ -10 ]]);;
+gap> AsTransformation(f);
+fail</Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsPartialPerm">
+  <ManSection>
+    <Oper Name="AsPartialPerm" Arg="f" Label="for a bipartition"/>
+    <Returns>A partial perm or <K>fail</K>.</Returns>
+    <Description>
+      When the argument <A>f</A> is a bipartition that mathematically defines a
+      partial perm, this function returns that partial perm. A bipartition
+      <A>f</A> defines a partial perm if and only if its number of left and
+      right blocks equals its degree.<P/>
+      
+      See <Ref Oper="IsPartialPermBipartition"/>. 
       <Example>
 gap> f:=Bipartition([[ 1, -3 ], [ 2, -2 ], [ 3, 5, 10, -7 ], [ 4, -12 ], 
 > [ 6, 7, -6 ], [ 8, -5 ], [ 9, -11 ], [ 11, 12, -10 ], [ -1 ], [ -4 ], 

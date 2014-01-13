@@ -111,6 +111,22 @@ gap> AsBipartition(f, 6);
 gap> AsBipartition(f, 4);
 <bipartition: [ 1, 2, 3 ], [ 4, -1, -3 ], [ -2 ], [ -4 ]>
 
+# AsPartialPerm for a bipartition
+gap> S:=DualSymmetricInverseMonoid(4);;
+gap> Number(S, IsPartialPermBipartition);
+24
+gap> S:=PartitionMonoid(4);;
+gap> Number(S, IsPartialPermBipartition);
+209
+gap> Size(SymmetricInverseMonoid(4));
+209
+gap> S:=SymmetricInverseMonoid(4);;
+gap> ForAll(S, x-> AsPartialPerm(AsBipartition(x))=x);
+true
+gap> elts:=Filtered(PartitionMonoid(4), IsPartialPermBipartition);;
+gap> ForAll(elts, x-> AsBipartition(AsPartialPerm(x),4)=x);
+true
+
 #
 gap> SemigroupsStopTest();
 
