@@ -224,30 +224,50 @@ end);
 
 # change representations...
 
-InstallMethod(AsPermutation, "for a bipartition", [IsBipartition], 
+InstallMethod(AsPartialPerm, "for a bipartition", [IsBipartition], 
 function(f)
-  if not IsPermBipartition(f) then 
-    Info(InfoWarning, 2, "<f> does not define a permutation,");
+  local n, blocks, nrleft, im, out, i;
+
+  if not IsPartialPermBipartition(f) then 
+    Info(InfoWarning, 2, "<f> does not define a partial perm,");
     return fail;
   fi;
-  return AsPermutationNC(f);
+    
+  n:=DegreeOfBipartition(f);
+  blocks:=f!.blocks;
+  nrleft:=NrLeftBlocks(f);
+  im:=[1..n]*0;
+
+  for i in [n+1..2*n] do 
+    if blocks[i]<=nrleft then 
+      im[blocks[i]]:=i-n;
+    fi;
+  od;
+
+  out:=EmptyPlist(n);
+  for i in [1..n] do 
+    out[i]:=im[blocks[i]];
+  od;
+  return PartialPermNC(out);
 end);
 
 #
 
-InstallMethod(AsPermutationNC, "for a bipartition", [IsBipartition],
+InstallMethod(AsPermutation, "for a bipartition", [IsBipartition], 
 function(f)
   local n, blocks, nr, im, out, i;
+  
+  if not IsPermBipartition(f) then 
+    Info(InfoWarning, 2, "<f> does not define a permutation,");
+    return fail;
+  fi;
 
   n:=DegreeOfBipartition(f);
   blocks:=f!.blocks;
-  nr:=NrLeftBlocks(f);
   im:=EmptyPlist(n);
 
   for i in [n+1..2*n] do 
-    if blocks[i]<=nr then 
-      im[blocks[i]]:=i-n;
-    fi;
+    im[blocks[i]]:=i-n;
   od;
 
   out:=EmptyPlist(n);
@@ -261,18 +281,12 @@ end);
 
 InstallMethod(AsTransformation, "for a bipartition", [IsBipartition],
 function(f)
+  local n, blocks, nr, im, out, i;
+  
   if not IsTransBipartition(f) then 
     Info(InfoWarning, 2, "<f> does not define a transformation,");
     return fail;
   fi;
-  return AsTransformationNC(f);
-end);
-
-#
-
-InstallMethod(AsTransformationNC, "for a bipartition", [IsBipartition],
-function(f)
-  local n, blocks, nr, im, out, i;
 
   n:=DegreeOfBipartition(f);
   blocks:=f!.blocks;

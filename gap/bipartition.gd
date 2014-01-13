@@ -12,8 +12,6 @@ DeclareCategory("IsBipartition", IsMultiplicativeElementWithInverse and
  IsAssociativeElementWithStar);
 DeclareCategoryCollections("IsBipartition");
 
-DeclareProperty("IsBlockBijection", IsBipartition);
-
 DeclareGlobalFunction("BipartitionNC");
 DeclareGlobalFunction("Bipartition");
 
@@ -45,9 +43,7 @@ DeclareOperation("AsBipartition", [IsBipartition, IsPosInt]);
 DeclareOperation("AsBipartition", [IsBipartition, IsZeroCyc]);
 DeclareOperation("AsBipartition", [IsBipartition]);
 
-DeclareAttribute("AsTransformationNC", IsBipartition);
-DeclareAttribute("AsPermutationNC", IsBipartition);
-
+DeclareProperty("IsBlockBijection", IsBipartition);
 DeclareProperty("IsTransBipartition", IsBipartition);
 DeclareProperty("IsDualTransBipartition", IsBipartition);
 DeclareProperty("IsPermBipartition", IsBipartition);
