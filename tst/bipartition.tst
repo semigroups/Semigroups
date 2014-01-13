@@ -100,6 +100,17 @@ true
 gap> LeftBlocks(e) = r;
 true
 
+# AsBipartition for a bipartition
+gap> f:=Bipartition( [ [ 1, 2, 3 ], [ 4, -1, -3 ], [ 5, 6, -4, -5 ], 
+> [ -2 ], [ -6 ] ] );;
+gap> AsBipartition(f, 8);
+<bipartition: [ 1, 2, 3 ], [ 4, -1, -3 ], [ 5, 6, -4, -5 ], [ 7 ], [ 8 ], 
+[ -2 ], [ -6 ], [ -7 ], [ -8 ]>
+gap> AsBipartition(f, 6);
+<bipartition: [ 1, 2, 3 ], [ 4, -1, -3 ], [ 5, 6, -4, -5 ], [ -2 ], [ -6 ]>
+gap> AsBipartition(f, 4);
+<bipartition: [ 1, 2, 3 ], [ 4, -1, -3 ], [ -2 ], [ -4 ]>
+
 #
 gap> SemigroupsStopTest();
 

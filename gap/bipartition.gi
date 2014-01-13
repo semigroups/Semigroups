@@ -303,7 +303,7 @@ end);
 
 InstallMethod(AsBipartition, "for a permutation and zero",
 [IsPerm, IsZeroCyc],
-function(x, y) 
+function(f, n) 
   return Bipartition([[]]);
 end);
 
@@ -327,8 +327,6 @@ function(f)
   return AsBipartition(f, Maximum(DegreeOfPartialPerm(f),
    CodegreeOfPartialPerm(f)));
 end);
-
-#
 
 InstallMethod(AsBipartition, "for a partial perm and zero",
 [IsPartialPerm, IsZeroCyc],
@@ -415,6 +413,72 @@ end);
 #
 
 InstallMethod(AsBipartition, "for a bipartition", [IsBipartition], IdFunc);
+
+InstallMethod(AsBipartition, "for a bipartition", [IsBipartition, IsZeroCyc], 
+function(f, n) return Bipartition([[]]); end);
+
+InstallMethod(AsBipartition, "for a bipartition and pos int", 
+[IsBipartition, IsPosInt],
+function(f, n)
+  local deg, blocks, out, nrblocks, nrleft, lookup, j, i;
+ 
+  deg:=DegreeOfBipartition(f);
+  if n=deg then 
+    return f;
+  fi;
+  blocks:=f!.blocks;
+  out:=[]; 
+  nrblocks:=0; 
+  
+  if n<deg then
+    for i in [1..n] do 
+      out[i]:=blocks[i];
+      if out[i]>nrblocks then 
+        nrblocks:=nrblocks+1;
+      fi;
+    od;
+    nrleft:=nrblocks;
+    lookup:=EmptyPlist(NrBlocks(f));
+    for i in [n+1..2*n] do
+      j:=blocks[i+deg-n];
+      if j>nrleft then 
+        if not IsBound(lookup[j]) then 
+          nrblocks:=nrblocks+1;
+          lookup[j]:=nrblocks;
+        fi;
+        j:=lookup[j];
+      fi;
+      out[i]:=j;
+    od;
+  else # n>deg
+    for i in [1..deg] do 
+      out[i]:=blocks[i];
+    od;
+    nrblocks:=NrLeftBlocks(f);
+    for i in [deg+1..n] do 
+      nrblocks:=nrblocks+1;
+      out[i]:=nrblocks;
+    od;
+    nrleft:=nrblocks; #=n-deg+NrLeftBlocks(f)
+    for i in [n+1..n+deg] do 
+      if blocks[i-n+deg]<=nrleft-n+deg then #it's a left block
+        out[i]:=blocks[i-n+deg];
+      else
+        out[i]:=blocks[i-n+deg]+n-deg;
+      fi;
+    od;
+    nrblocks:=NrBlocks(f)+n-deg;
+    for i in [n+deg+1..2*n] do 
+      nrblocks:=nrblocks+1;
+      out[i]:=nrblocks;
+    od;
+  fi;
+  out:=Objectify(BipartitionType, rec(blocks:=out));
+  SetDegreeOfBipartition(out, n);
+  SetNrBlocks(out, nrblocks);
+  SetNrLeftBlocks(out, nrleft);
+  return out;
+end);
 
 #properties/attributes
 
@@ -788,7 +852,7 @@ function(classes)
   
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, nrleft);
-  SetExtRepOfBipartition(out, classes);
+  SetExtRepOfBipartition(out, AsList(classes));
   SetNrBlocks(out, nrblocks);
 
   return out;
