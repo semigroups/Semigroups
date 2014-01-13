@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="IsDualTransBipartition">
   <ManSection>
-    <Filt Name="IsDualTransBipartition" Arg='f'/>
+    <Filt Name="IsDualTransBipartition" Arg="f"/>
     <Description>
     If the star of the bipartition <A>f</A> defines a transformation, then
     <C>IsDualTransBipartition</C> returns <K>true</K>, and if not, then
@@ -20,8 +20,8 @@
     the left blocks of <A>f</A> corresponds to a permutation of <C>[1..n]</C>,
     where <C>n</C> is the degree of <A>f</A>.
     <Example>
-gap> f:=Bipartition( [ [ 1, -8, -9 ], [ 2, -1, -4 ], [ 3 ], [ 4 ], [ 5, -10 ], 
-> [ 6, -2, -5 ], [ 7, -3 ], [ 8 ], [ 9, -6, -7 ], [ 10 ] ] );;
+gap> f:=Bipartition( [ [ 1, -8, -9 ], [ 2, -1, -4 ], [ 3 ], [ 4 ], 
+> [ 5, -10 ], [ 6, -2, -5 ], [ 7, -3 ], [ 8 ], [ 9, -6, -7 ], [ 10 ] ] );;
 gap> IsDualTransBipartition(f);
 true
 gap> f:=Bipartition( [ [ 1, 4, -3, -6 ], [ 2, 5, -4, -5 ], [ 3, 6, -1 ], 
@@ -36,8 +36,23 @@ gap> Number(PartitionMonoid(3), IsDualTransBipartition);
 
 <#GAPDoc Label="IsBlockBijection">
   <ManSection>
-    <Filt Name="IsBlockBijection" Arg='f'/>
+    <Filt Name="IsBlockBijection" Arg="f"/>
     <Description>
+      If the bipartition <A>f</A> induces a bijection from the quotient of
+      <C>[1..n]</C> by the blocks of <A>f</A> to the quotient of <C>[-n..-1]</C>
+      by the blocks of <A>f</A>, then <C>IsBlockBijection</C> return
+      <K>true</K>, and if not, then it returns <K>false</K>. <P/>
+      
+      A bipartition is a block bijection if and only if its number of blocks,
+      left blocks and right blocks are equal.
+      <Example><![CDATA[
+gap> f:=Bipartition( [ [ 1, 4, 5, -2 ], [ 2, 3, -1 ], 
+> [ 6, -5, -6 ], [ -3, -4 ] ] );;
+gap> IsBlockBijection(f);
+false
+gap> f:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], [ 5, -5 ] ] );
+gap> IsBlockBijection(f);
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -53,7 +68,7 @@ gap> Number(PartitionMonoid(3), IsDualTransBipartition);
 
 <#GAPDoc Label="IsBipartition">
   <ManSection>
-    <Filt Name="IsBipartition" Arg='obj' Type='Category'/>
+    <Filt Name="IsBipartition" Arg="obj" Type="Category"/>
     <Description>
    Every bipartition in &GAP; belongs to the category
     <C>IsBipartition</C>. Basic operations for bipartitions are
@@ -73,7 +88,7 @@ gap> Number(PartitionMonoid(3), IsDualTransBipartition);
 
 <#GAPDoc Label="IsBipartitionCollection">
   <ManSection>
-    <Filt Name="IsBipartitionCollection" Arg='obj' Type='Category'/>
+    <Filt Name="IsBipartitionCollection" Arg="obj" Type="Category"/>
     <Description>
        Every collection of bipartitions belongs to the category
      <C>IsBipartitionCollection</C>. For example, bipartition semigroups
