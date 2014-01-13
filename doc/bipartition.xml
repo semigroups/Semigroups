@@ -16,9 +16,10 @@
     <C>IsDualTransBipartition</C> returns <K>true</K>, and if not, then
     <K>false</K> is returned.<P/>
 
-    The star of a bipartition <A>f</A> defines a transformation if and only if
-    the left blocks of <A>f</A> corresponds to a permutation of <C>[1..n]</C>,
-    where <C>n</C> is the degree of <A>f</A>.
+    A bipartition is the dual of a transformation if and only if its number of
+    right blocks equals its number of transverse blocks and its number of left
+    blocks equals its degree.
+
     <Example>
 gap> f:=Bipartition( [ [ 1, -8, -9 ], [ 2, -1, -4 ], [ 3 ], [ 4 ], 
 > [ 5, -10 ], [ 6, -2, -5 ], [ 7, -3 ], [ 8 ], [ 9, -6, -7 ], [ 10 ] ] );;
@@ -50,7 +51,8 @@ gap> f:=Bipartition( [ [ 1, 4, 5, -2 ], [ 2, 3, -1 ],
 > [ 6, -5, -6 ], [ -3, -4 ] ] );;
 gap> IsBlockBijection(f);
 false
-gap> f:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], [ 5, -5 ] ] );;
+gap> f:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], 
+> [ 5, -5 ] ] );;
 gap> IsBlockBijection(f);
 true]]></Example>
     </Description>
@@ -236,9 +238,10 @@ gap> AsBipartition(f, 8);
     <C>IsTransBipartition</C> returns <K>true</K>, and if not, then
     <K>false</K> is returned.<P/>
 
-    A bipartition <A>f</A> defines a transformation if and only if the right
-    blocks of <A>f</A> corresponds to a permutation of <C>[1..n]</C>, where
-    <C>n</C> is the degree of <A>f</A>.
+    A bipartition <A>f</A> defines a transformation if and only if the number of
+    left blocks equals the number of transverse blocks and the number of right
+    blocks equals the degree. 
+
     <Example>
 gap> f:=Bipartition( [ [ 1, 4, -2 ], [ 2, 5, -6 ], [ 3, -7 ], [ 6, 7, -9 ], 
 > [ 8, 9, -1 ], [ 10, -5 ], [ -3 ], [ -4 ], [ -8 ], [ -10 ] ] );;
@@ -263,10 +266,9 @@ gap> Number(PartitionMonoid(3), IsTransBipartition);
     <C>IsPermBipartition</C> returns <K>true</K>, and if not, then
     <K>false</K> is returned.<P/>
 
-    A bipartition <A>f</A> defines a permutation if and only if the left blocks
-    of <A>f</A> are singletons and the right blocks of <A>f</A> correspond to a
-    permutation of <C>[1..n]</C>, where <C>n</C> is the degree of <A>f</A>.
-  
+    A bipartition is a permutation if its numbers of left, right,
+    and transverse blocks all equal its degree. 
+
   <Example>
 gap> f:=Bipartition( [ [ 1, 4, -1 ], [ 2, -3 ], [ 3, 6, -5 ], 
 > [ 5, -2, -4, -6 ] ] );;
@@ -275,6 +277,33 @@ false
 gap> f:=Bipartition( [ [ 1, -3 ], [ 2, -4 ], [ 3, -6 ], [ 4, -1 ], [ 5, -5 ], 
 > [ 6, -2 ], [ 7, -8 ], [ 8, -7 ] ] );;
 gap> IsPermBipartition(f);
+true</Example>
+  </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsPartialPermBipartition">
+  <ManSection>
+    <Prop Name="IsPartialPermBipartition" Arg="f"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+    If the bipartition <A>f</A> defines a partial permutation, then
+    <C>IsPartialPermBipartition</C> returns <K>true</K>, and if not, then
+    <K>false</K> is returned.<P/>
+
+    A bipartition <A>f</A> defines a partial permutation if and only if the
+    numbers of left and right blocks of <A>f</A> equal the degree of <A>f</A>.
+
+  <Example>
+gap> f:=Bipartition( [ [ 1, 4, -1 ], [ 2, -3 ], [ 3, 6, -5 ], 
+> [ 5, -2, -4, -6 ] ] );;
+gap> IsPartialPermBipartition(f);
+false
+gap> f:=Bipartition( [ [ 1, -3 ], [ 2 ], [ -4 ], [ 3, -6 ], [ 4, -1 ], 
+> [ 5, -5 ], [ 6, -2 ], [ 7, -8 ], [ 8, -7 ] ] );;
+gap> IsPermBipartition(f);
+false
+gap> IsPartialPermBipartition(f); 
 true</Example>
   </Description>
   </ManSection>
@@ -575,4 +604,4 @@ gap> f:=RandomBipartition(6);
   </ManSection>
 <#/GAPDoc>
 
-
+#EOF

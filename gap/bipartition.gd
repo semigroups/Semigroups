@@ -60,8 +60,11 @@ DeclareGlobalFunction("OnRightBlocksBipartitionByPerm");
 #collections
 DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
 
+# implications
+
 InstallTrueMethod(IsPermBipartition, IsTransBipartition and
 IsDualTransBipartition);
+InstallTrueMethod(IsBlockBijection, IsPermBipartition);
 
 #internal...
 DeclareGlobalFunction("BipartRightBlocksConj");

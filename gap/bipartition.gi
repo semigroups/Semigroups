@@ -14,13 +14,6 @@ BindGlobal("BipartitionFamily", NewFamily("BipartitionFamily",
 BindGlobal("BipartitionType", NewType(BipartitionFamily,
  IsBipartition and IsComponentObjectRep and IsAttributeStoringRep));
 
-#
-
-InstallMethod(IsBlockBijection, "for a bipartition", 
-[IsBipartition], 
-function(f) 
-  return NrBlocks(f)=NrLeftBlocks(f) and NrRightBlocks(f)=NrLeftBlocks(f);
-end);
 
 #
 
@@ -304,7 +297,7 @@ end);
 InstallMethod(AsBipartition, "for a permutation and zero",
 [IsPerm, IsZeroCyc],
 function(f, n) 
-  return Bipartition([[]]);
+  return Bipartition([]);
 end);
 
 InstallMethod(AsBipartition, "for a permutation and pos int",
@@ -331,7 +324,7 @@ end);
 InstallMethod(AsBipartition, "for a partial perm and zero",
 [IsPartialPerm, IsZeroCyc],
 function(f, n)
-  return Bipartition([[]]);
+  return Bipartition([]);
 end);
 
 InstallMethod(AsBipartition, "for a partial perm and pos int",
@@ -368,7 +361,7 @@ end);
 InstallMethod(AsBipartition, "for a transformation and zero",
 [IsTransformation, IsZeroCyc],
 function(f, n)
-  return Bipartition([[]]);
+  return Bipartition([]);
 end);
 
 #
@@ -415,7 +408,7 @@ end);
 InstallMethod(AsBipartition, "for a bipartition", [IsBipartition], IdFunc);
 
 InstallMethod(AsBipartition, "for a bipartition", [IsBipartition, IsZeroCyc], 
-function(f, n) return Bipartition([[]]); end);
+function(f, n) return Bipartition([]); end);
 
 InstallMethod(AsBipartition, "for a bipartition and pos int", 
 [IsBipartition, IsPosInt],
@@ -543,49 +536,39 @@ function(f)
   return ext;
 end);
 
+#
+
+InstallMethod(IsBlockBijection, "for a bipartition", 
+[IsBipartition], 
+function(f) 
+  return NrBlocks(f)=NrLeftBlocks(f) and NrRightBlocks(f)=NrLeftBlocks(f);
+end);
+
+#
+
+InstallMethod(IsPartialPermBipartition, "for a bipartition", 
+[IsBipartition], 
+function(f)
+  return NrLeftBlocks(f)=DegreeOfBipartition(f) 
+    and NrRightBlocks(f)=DegreeOfBipartition(f);
+end);
+
 # a bipartition is a transformation if and only if the second row is a
 # permutation of [1..n], where n is the degree. 
 
 InstallMethod(IsTransBipartition, "for a bipartition",
 [IsBipartition], 
 function(f)
-  local n, blocks, seen, i;
-
-  n:=DegreeOfBipartition(f);
-  blocks:=f!.blocks;
-  seen:=BlistList([1..n], []);
-  for i in [n+1..2*n] do 
-    if blocks[i]>n or seen[blocks[i]] then 
-      return false;
-    fi;
-    seen[blocks[i]]:=true;
-  od;
-
-  return true;
+  return NrLeftBlocks(f)=NrTransverseBlocks(f) 
+   and NrRightBlocks(f)=DegreeOfBipartition(f);
 end);
 
 #
 
 InstallMethod(IsDualTransBipartition, "for a bipartition", [IsBipartition], 
 function(f)
-  local n, blocks, seen, i;
-
-  n:=DegreeOfBipartition(f);
-  
-  if NrBlocks(f)>n then 
-    return false;
-  fi;
-  
-  blocks:=f!.blocks;
-  seen:=BlistList([1..n], []);
-  for i in [1..n] do 
-    if seen[blocks[i]] then 
-      return false;
-    fi;
-    seen[blocks[i]]:=true;
-  od;
-  
-  return true;
+  return NrRightBlocks(f)=NrTransverseBlocks(f) 
+   and NrLeftBlocks(f)=DegreeOfBipartition(f);
 end);
 
 #
@@ -593,28 +576,7 @@ end);
 InstallMethod(IsPermBipartition, "for a bipartition",
 [IsBipartition], 
 function(f)
-  local n, blocks, seen, i;
-
-  n:=DegreeOfBipartition(f);
-  blocks:=f!.blocks;
-
-  seen:=BlistList([1..n], []);
-  for i in [1..n] do 
-    if seen[blocks[i]] then 
-      return false;
-    fi;
-    seen[blocks[i]]:=true;
-  od;
-
-  seen:=BlistList([1..n], []);
-  for i in [n+1..2*n] do 
-    if blocks[i]>n or seen[blocks[i]] then 
-      return false;
-    fi;
-    seen[blocks[i]]:=true;
-  od;
-
-  return true;
+  return IsPartialPermBipartition(f) and NrTransverseBlocks(f)=DegreeOfBipartition(f);
 end);
 
 # creating
@@ -800,7 +762,7 @@ function(classes)
   fi;
   
   copy:=Union(classes);
-  if not (IsEmpty(copy) or copy=Concatenation([Minimum(copy)..-1],
+  if not (copy=classes or copy=Concatenation([Minimum(copy)..-1],
     [1..Maximum(copy)])) then 
     Error("the union of <classes> must be [-n..-1, 1..n],");
     return;
