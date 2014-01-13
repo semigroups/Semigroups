@@ -800,7 +800,8 @@ function(classes)
   fi;
   
   copy:=Union(classes);
-  if not copy=Concatenation([Minimum(copy)..-1], [1..Maximum(copy)]) then 
+  if not (IsEmpty(copy) or copy=Concatenation([Minimum(copy)..-1],
+    [1..Maximum(copy)])) then 
     Error("the union of <classes> must be [-n..-1, 1..n],");
     return;
   fi;
