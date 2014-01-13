@@ -111,7 +111,7 @@ gap> AsBipartition(f, 6);
 gap> AsBipartition(f, 4);
 <bipartition: [ 1, 2, 3 ], [ 4, -1, -3 ], [ -2 ], [ -4 ]>
 
-# AsPartialPerm for a bipartition
+# AsPartialPerm for bipartitions
 gap> S:=DualSymmetricInverseMonoid(4);;
 gap> Number(S, IsPartialPermBipartition);
 24
@@ -125,6 +125,15 @@ gap> ForAll(S, x-> AsPartialPerm(AsBipartition(x))=x);
 true
 gap> elts:=Filtered(PartitionMonoid(4), IsPartialPermBipartition);;
 gap> ForAll(elts, x-> AsBipartition(AsPartialPerm(x),4)=x);
+true
+
+# AsPermutation for bipartitions
+gap> G:=SymmetricGroup(5);;
+gap> ForAll(G, x-> AsPermutation(AsBipartition(x))=x);
+true
+gap> G:=GroupOfUnits(PartitionMonoid(5));                   
+<bipartition group on 5 pts with 2 generators>
+gap> ForAll(G, x-> AsBipartition(AsPermutation(x), 5)=x);
 true
 
 #

@@ -42,6 +42,8 @@
   transformations where  appropriate.  
     <#Include Label="AsBipartition"/>
     <#Include Label="AsTransformation"/>
+    <#Include Label="AsPartialPerm"/>
+    <#Include Label="AsPermutation"/>
   </Section>
  
   <Section Label="operators-bipartitions">
