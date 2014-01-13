@@ -50,7 +50,7 @@ gap> f:=Bipartition( [ [ 1, 4, 5, -2 ], [ 2, 3, -1 ],
 > [ 6, -5, -6 ], [ -3, -4 ] ] );;
 gap> IsBlockBijection(f);
 false
-gap> f:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], [ 5, -5 ] ] );
+gap> f:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], [ 5, -5 ] ] );;
 gap> IsBlockBijection(f);
 true]]></Example>
     </Description>
@@ -155,7 +155,7 @@ fail</Example>
       If <A>f</A> is a transformation and <A>n</A> is a positive integer
       such that <A>f</A> is a transformation of <C>[1..<A>n</A>]</C>, then
       <C>AsTransformation</C> returns the bipartition with classes
-      <M>(i)f^-1\cup \{i\}</M> for all <C>i</C> in the image of <A>f</A>.
+      <M>(i)f^-1\cup \{i\}</M> for all <C>i</C> in the image of <A>f</A>.<P/>
       
       If the positive integer <A>n</A> is not specified, then the
       internal degree of <A>f</A> is used as the value for <A>n</A>.
@@ -166,7 +166,7 @@ fail</Example>
       positive integer, then <C>AsBipartition</C> returns the bipartition 
       with classes <C>[i, i^<A>f</A>]</C> for <C>i</C> in <C>[1..<A>n</A>]</C>. 
       Thus the degree of the returned bipartition is the maximum of <A>n</A>
-      and the values <C>i^<A>f</A></C> where <C>i</C> in <C>[1..<A>n</A>]</C>.
+      and the values <C>i^<A>f</A></C> where <C>i</C> in <C>[1..<A>n</A>]</C>.<P/>
 
       If the optional argument <A>n</A> is not present, then the default value
       of the maximum of the largest moved point and the largest image of a
@@ -174,34 +174,55 @@ fail</Example>
     </Item>
     <Mark>bipartitions</Mark>
     <Item>
-      not yet implemented.
+      If <A>f</A> is a bipartition and <A>n</A> is a non-negative integer, then 
+      <C>AsBipartition</C> returns a bipartition corresponding to <A>f</A> with
+      degree <A>n</A>. <P/>
+      
+      If <A>n</A> equals the degree of <A>f</A>, then <A>f</A>
+      is returned. If <A>n</A> is less than the degree of <A>f</A>, then this
+      function returns the bipartition obtained from <A>f</A> by removing the
+      values exceeding <A>n</A> or less than <A>-n</A> from the blocks of <A>f</A>.
+      If <A>n</A> is greater than the degree of <A>f</A>, then this function
+      returns the bipartition with the same blocks as <A>f</A> and the singleton
+      blocks <C>i</C> and <C>-i</C> for all <C>i</C> greater than the degree of
+      <A>f</A>
     </Item>
   </List>
-  <Example>
+
+  <Example><![CDATA[
 gap> f:=Transformation( [ 3, 5, 3, 4, 1, 2 ] );;
 gap> AsBipartition(f, 5);
-&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [ -2 ]>
+<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [ -2 ]>
 gap> AsBipartition(f);  
-&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], 
+<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], 
 [ 6, -2 ], [ -6 ]>
 gap> AsBipartition(f, 10);
-&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], 
+<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], 
 [ 6, -2 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ], [ -6 ]>
 gap> AsBipartition((1, 3)(2, 4));
-&lt;bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ]>
+<bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ]>
 gap> AsBipartition((1, 3)(2, 4), 10);
-&lt;bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ], [ 5, -5 ], 
+<bipartition: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ], [ 5, -5 ], 
 [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]>
 gap> f:=PartialPerm( [ 1, 2, 3, 4, 5, 6 ], [ 6, 7, 1, 4, 3, 2 ] );;
 gap> AsBipartition(f, 11);            
-&lt;bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
+<bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
 [ 6, -2 ], [ 7 ], [ 8 ], [ 9 ], [ 10 ], [ 11 ], [ -5 ], [ -8 ], 
 [ -9 ], [ -10 ], [ -11 ]>
 gap> AsBipartition(f);
-&lt;bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
+<bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
 [ 6, -2 ], [ 7 ], [ -5 ]>
 gap> AsBipartition(Transformation( [ 1, 1, 2 ] ), 1);
-&lt;bipartition: [ 1, -1 ]></Example>
+<bipartition: [ 1, -1 ]>
+gap> f:=Bipartition( [ [ 1, 2, -2 ], [ 3 ], [ 4, 5, 6, -1 ], 
+> [ -3, -4, -5, -6 ] ] );;
+gap> AsBipartition(f, 0);
+<empty bipartition>
+gap> AsBipartition(f, 2);
+<bipartition: [ 1, 2, -2 ], [ -1 ]>
+gap> AsBipartition(f, 8);
+<bipartition: [ 1, 2, -2 ], [ 3 ], [ 4, 5, 6, -1 ], [ 7 ], [ 8 ], 
+[ -3, -4, -5, -6 ], [ -7 ], [ -8 ]>]]></Example>
   </Description>
   </ManSection>
 <#/GAPDoc>
