@@ -85,8 +85,8 @@ true
 true
 
 #check BlocksIdempotentTester, first a few little examples
-gap> l := [ 3, 1, 2, 3, 3, 0, 0, 0 ];;
-gap> r := [ 2, 1, 2, 2, 2, 0, 0 ];;
+gap> l := BlocksByIntRepNC( [ 3, 1, 2, 3, 3, 0, 0, 0 ]);;
+gap> r := BlocksByIntRepNC( [ 2, 1, 2, 2, 2, 0, 0 ]) ;;
 gap> BlocksIdempotentTester(l,r);
 true
 gap> e := BlocksIdempotentCreator(l,r);

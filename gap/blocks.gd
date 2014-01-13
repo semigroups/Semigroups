@@ -13,6 +13,7 @@ DeclareCategoryCollections("IsBlocks");
 
 DeclareGlobalFunction("ORB_HashFunctionForBlocks");
 DeclareGlobalFunction("BlocksNC");
+DeclareGlobalFunction("BlocksByIntRepNC");
 
 DeclareAttribute("NrBlocks", IsBipartition);
 DeclareAttribute("NrBlocks", IsBlocks);
@@ -21,7 +22,6 @@ DeclareAttribute("NrRightBlocks", IsBipartition);
 
 DeclareAttribute("RankOfBlocks", IsBlocks);
 DeclareAttribute("NrTransverseBlocks", IsBlocks);
-
 
 DeclareAttribute("DegreeOfBlocks", IsBlocks);
 
