@@ -794,15 +794,19 @@ function(classes)
     return;
   fi;
 
-  n:=Sum(List(classes, Length))/2;
+  if not ForAll(classes, x-> ForAll(x, i-> IsPosInt(i) or IsNegInt(i))) then 
+    Error("<classes> must consist of positive and negative integers,");
+    return;
+  fi;
   
-  if not Union(classes)=Concatenation(Set(-1*[1..n]), [1..n]) then
-    Error("the union of <classes> must be [-", n, "..-1,1..", n, "],");
+  copy:=Union(classes);
+  if not copy=Concatenation([Minimum(copy)..-1], [1..Maximum(copy)]) then 
+    Error("the union of <classes> must be [-n..-1, 1..n],");
     return;
   fi;
 
+  n:=Sum(List(classes, Length))/2;
   copy:=StructuralCopy(classes);
-  
   for i in [1..Length(copy)] do
     for j in [1..Length(copy[i])] do 
       if copy[i][j]<0 then 
