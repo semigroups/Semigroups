@@ -806,7 +806,7 @@ function(classes)
   fi;
 
   n:=Sum(List(classes, Length))/2;
-  copy:=StructuralCopy(classes);
+  copy:=List(classes, ShallowCopy);
   for i in [1..Length(copy)] do
     for j in [1..Length(copy[i])] do 
       if copy[i][j]<0 then 
