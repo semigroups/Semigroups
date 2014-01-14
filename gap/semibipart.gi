@@ -8,6 +8,164 @@
 ############################################################################# 
 ##
 
+# this is just a composition of IsomorphismTransformationSemigroup and the
+# method below for IsomorphismBipartitionSemigroup...
+
+InstallMethod(IsomorphismBipartitionSemigroup, "for a semigroup", [IsSemigroup],
+function(S)
+  local en, act, gens;
+
+  en:=EnumeratorSorted(S);
+  
+  act:=function(i, x)
+    if i<=Length(en) then 
+      return Position(en, en[i]*x);
+    fi;
+    return Position(en, x);
+  end;
+  
+  gens:=List(en, x-> AsBipartition(TransformationOp(x, [1..Length(en)+1],
+   act), Length(en)+1));
+
+  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens), 
+   x-> AsBipartition(TransformationOp(x, [1..Length(en)+1], act), Length(en)+1),  
+   x-> en[(Length(en)+1)^AsTransformation(x)]);
+end);
+
+#
+
+InstallMethod(IsomorphismBipartitionSemigroup, 
+"for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local n, source, range, i;
+ 
+  n:=DegreeOfTransformationSemigroup(S);
+  source:=GeneratorsOfSemigroup(S); 
+  range:=EmptyPlist(Length(source));
+
+  for i in [1..Length(source)] do 
+    range[i]:=AsBipartition(source[i], n);
+  od;
+
+  return MagmaIsomorphismByFunctionsNC(S, Semigroup(range), 
+   x-> AsBipartition(x, n), AsTransformation);
+end);
+
+# the converse of the previous method
+
+InstallMethod(IsomorphismTransformationSemigroup, 
+"for a bipartition semigroup with generators",
+[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local n, source, range, i;
+  
+  if not ForAll(GeneratorsOfSemigroup(S), IsTransBipartition) then 
+    TryNextMethod();
+  fi;
+  
+  n:=DegreeOfBipartitionSemigroup(S);
+  source:=GeneratorsOfSemigroup(S); 
+  range:=EmptyPlist(Length(source));
+
+  for i in [1..Length(source)] do 
+    range[i]:=AsTransformation(source[i]);
+  od;
+
+  return MagmaIsomorphismByFunctionsNC(S, Semigroup(range), 
+   AsTransformation, x-> AsBipartition(x, n));
+end);
+
+#
+
+InstallMethod(IsomorphismBipartitionSemigroup, 
+"for a partial perm semigroup with generators",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local n, source, range, i;
+ 
+  n:=Maximum(DegreeOfPartialPermSemigroup(S), CodegreeOfPartialPermSemigroup(S));
+  source:=GeneratorsOfSemigroup(S); 
+  range:=EmptyPlist(Length(source));
+
+  for i in [1..Length(source)] do 
+    range[i]:=AsBipartition(source[i], n);
+  od;
+
+  return MagmaIsomorphismByFunctionsNC(S, Semigroup(range), 
+   x-> AsBipartition(x, n), AsPartialPerm);
+end);
+
+# the converse of the previous method
+
+InstallMethod(IsomorphismPartialPermSemigroup, 
+"for a bipartition semigroup with generators",
+[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local n, source, range, i;
+ 
+  if not ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition) then 
+    return fail;
+  fi;
+
+  n:=DegreeOfBipartitionSemigroup(S);
+  source:=GeneratorsOfSemigroup(S); 
+  range:=EmptyPlist(Length(source));
+
+  for i in [1..Length(source)] do 
+    range[i]:=AsPartialPerm(source[i]);
+  od;
+
+  return MagmaIsomorphismByFunctionsNC(S, Semigroup(range), 
+   AsPartialPerm, x-> AsBipartition(x, n));
+end);
+
+#
+
+InstallMethod(IsomorphismBipartitionSemigroup, 
+"for a perm group with generators",
+[IsPermGroup and HasGeneratorsOfGroup],
+function(S)
+  local n, source, range, i;
+ 
+  n:=LargestMovedPoint(S);
+  source:=GeneratorsOfGroup(S); 
+  range:=EmptyPlist(Length(source));
+
+  for i in [1..Length(source)] do 
+    range[i]:=AsBipartition(source[i], n);
+  od;
+
+  return MagmaIsomorphismByFunctionsNC(S, Semigroup(range), 
+   x-> AsBipartition(x, n), AsPermutation);
+end);
+
+# the converse of the previous method
+
+InstallMethod(IsomorphismPermGroup, 
+"for a bipartition semigroup with generators",
+[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local n, source, range, i;
+
+  if not ForAll(GeneratorsOfSemigroup(S), IsPermBipartition) then 
+    TryNextMethod();
+  fi;
+
+  n:=LargestMovedPoint(S);
+  source:=GeneratorsOfSemigroup(S); 
+  range:=EmptyPlist(Length(source));
+
+  for i in [1..Length(source)] do 
+    range[i]:=AsPermutation(source[i]);
+  od;
+
+  return MagmaIsomorphismByFunctionsNC(S, Semigroup(range), 
+   AsPermutation, x-> AsBipartition(x, n));
+end);
+
+#
+
 InstallMethod(GeneratorsOfInverseSemigroup,
 "for an inverse bipartition semigroup with generators",
 [IsBipartitionSemigroup and IsInverseSemigroup and HasGeneratorsOfSemigroup],

@@ -136,6 +136,178 @@ gap> G:=GroupOfUnits(PartitionMonoid(5));
 gap> ForAll(G, x-> AsBipartition(AsPermutation(x), 5)=x);
 true
 
+#IsomorphismBipartitionSemigroup for a generic semigroup
+gap> S:=Semigroup( 
+> Bipartition( [ [ 1, 2, 3, -3 ], [ 4, -4, -5 ], [ 5, -1 ], [ -2 ] ] ), 
+> Bipartition( [ [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ] ] ), 
+> Bipartition( [ [ 1, 5 ], [ 2, 4, -3, -5 ], [ 3, -1, -2 ], [ -4 ] ] ), 
+> Bipartition( [ [ 1 ], [ 2 ], [ 3, 5, -1, -2 ], [ 4, -3 ], [ -4, -5 ] ] ), 
+> Bipartition( [ [ 1 ], [ 2 ], [ 3 ], [ 4, -1, -4 ], [ 5 ], [ -2, -3 ], 
+>      [ -5 ] ] ));;
+gap> D:=DClass(S, Bipartition( [ [ 1 ], [ 2 ], [ 3 ], [ 4, -1, -4 ], 
+> [ 5 ], [ -2, -3 ], [ -5 ] ] ));;
+gap> IsRegularDClass(D);
+true
+gap> R:=PrincipalFactor(D);
+<Rees 0-matrix semigroup 12x15 over Group(())>
+gap> f:=IsomorphismBipartitionSemigroup(R);
+MappingByFunction( <Rees 0-matrix semigroup 12x15 over Group(())>, 
+<bipartition semigroup on 182 pts with 181 generators>
+ , function( x ) ... end, function( x ) ... end )
+gap> g:=InverseGeneralMapping(f);;
+gap> ForAll(R, x-> (x^f)^g=x);
+true
+gap> x:=RMSElement(R, 12,(),8);;
+gap> ForAll(R, y-> (x^f)*(y^f)=(x*y)^f);               
+true
+
+#IsomorphismBipartitionSemigroup for a transformation semigroup
+gap> gens:=[ Transformation( [ 3, 4, 1, 2, 1 ] ), 
+>   Transformation( [ 4, 2, 1, 5, 5 ] ), 
+>   Transformation( [ 4, 2, 2, 2, 4 ] ) ];;
+gap> s:=Semigroup(gens);;
+gap> S:=Range(IsomorphismBipartitionSemigroup(s));
+<bipartition semigroup on 5 pts with 3 generators>
+gap> f:=IsomorphismBipartitionSemigroup(s);
+MappingByFunction( <transformation semigroup on 5 pts with 3 generators>, 
+<bipartition semigroup on 5 pts with 3 generators>
+ , function( x ) ... end, <Attribute "AsTransformation"> )
+gap> g:=InverseGeneralMapping(f);;
+gap> ForAll(s, x-> (x^f)^g=x);                   
+true
+gap> ForAll(S, x-> (x^g)^f=x);
+true
+gap> Size(s);
+731
+gap> Size(S);
+731
+gap> x:=Random(s);
+Transformation( [ 3, 1, 3, 3, 3 ] )
+gap> ForAll(s, y-> (x^f)*(y^f)=(x*y)^f);
+true
+
+#IsomorphismTransformationSemigroup for a bipartition semigroup consisting of 
+#IsTransBipartition
+gap> S:=Semigroup( Transformation( [ 1, 3, 4, 1, 3 ] ), 
+> Transformation( [ 2, 4, 1, 5, 5 ] ), 
+> Transformation( [ 2, 5, 3, 5, 3 ] ), 
+> Transformation( [ 4, 1, 2, 2, 1 ] ), 
+> Transformation( [ 5, 5, 1, 1, 3 ] ) );;
+gap> T:=Range(IsomorphismBipartitionSemigroup(S));
+<bipartition semigroup on 5 pts with 5 generators>
+gap> f:=IsomorphismTransformationSemigroup(T);
+MappingByFunction( <bipartition semigroup on 5 pts with 5 generators>, 
+<transformation semigroup on 5 pts with 5 generators>
+ , <Attribute "AsTransformation">, function( x ) ... end )
+gap> g:=InverseGeneralMapping(f);;      
+gap> ForAll(T, x-> (x^f)^g=x);
+true
+gap> ForAll(S, x-> (x^g)^f=x);
+true
+gap> Size(T);
+602
+gap> Size(S);
+602
+gap> Size(Range(f));
+602
+
+#IsomorphismBipartitionSemigroup for a partial perm semigroup
+gap> S:=Semigroup(
+> [ PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ), 
+>  PartialPerm( [ 1, 2, 3 ], [ 2, 5, 3 ] ), 
+>  PartialPerm( [ 1, 2, 3 ], [ 4, 1, 2 ] ), 
+>  PartialPerm( [ 1, 2, 3, 4 ], [ 2, 4, 1, 5 ] ), 
+>  PartialPerm( [ 1, 3, 5 ], [ 5, 1, 3 ] ) ]);;
+gap> T:=Range(IsomorphismBipartitionSemigroup(S));
+<bipartition semigroup on 5 pts with 5 generators>
+gap> Generators(S);
+[ [2,3,4](1), [1,2,5](3), [3,2,1,4], [3,1,2,4,5], (1,5,3) ]
+gap> Generators(T);
+[ <bipartition: [ 1, -1 ], [ 2, -3 ], [ 3, -4 ], [ 4 ], [ 5 ], [ -2 ], [ -5 ]>
+    , <bipartition: [ 1, -2 ], [ 2, -5 ], [ 3, -3 ], [ 4 ], [ 5 ], [ -1 ], 
+    [ -4 ]>, <bipartition: [ 1, -4 ], [ 2, -1 ], [ 3, -2 ], [ 4 ], [ 5 ], 
+    [ -3 ], [ -5 ]>, <bipartition: [ 1, -2 ], [ 2, -4 ], [ 3, -1 ], 
+    [ 4, -5 ], [ 5 ], [ -3 ]>, <bipartition: [ 1, -5 ], [ 2 ], [ 3, -1 ], 
+    [ 4 ], [ 5, -3 ], [ -2 ], [ -4 ]> ]
+gap> Size(S);
+156
+gap> Size(T);
+156
+gap> IsInverseSemigroup(S);
+false
+gap> IsInverseSemigroup(T);
+false
+gap> f:=IsomorphismBipartitionSemigroup(S);;
+gap> g:=InverseGeneralMapping(f);;
+gap> ForAll(S, x-> (x^f)^g=x);
+true
+gap> ForAll(T, x-> (x^g)^f=x);
+true
+gap> Size(S);
+156
+gap> ForAll(S, x-> ForAll(S, y-> (x*y)^f=(x^f)*(y^f)));
+true
+
+#IsomorphismPartialPermSemigroup for a semigroup of bipartitions consisting of
+#IsPartialPermBipartition
+gap> f:=IsomorphismPartialPermSemigroup(T);;
+gap> g:=InverseGeneralMapping(f);;
+gap> ForAll(T, x-> ForAll(T, y-> (x*y)^f=(x^f)*(y^f)));
+true
+gap> Size(S); Size(T);
+156
+156
+gap> ForAll(T, x-> (x^f)^g=x);                         
+true
+gap> ForAll(S, x-> (x^g)^f=x);
+true
+
+# testing the cases to which the new methods for IsomorphismPartialPermSemigroup
+# and IsomorphismTransformationSemigroup don't apply...
+gap> S:=Semigroup(
+> Bipartition( [ [ 1, 2, 3, 4, -1, -2, -5 ], [ 5 ], [ -3, -4 ] ] ), 
+> Bipartition( [ [ 1, 2, 3 ], [ 4, -2, -4 ], [ 5, -1, -5 ], [ -3 ] ] ), 
+> Bipartition( [ [ 1, 3, 5 ], [ 2, 4, -1, -2, -5 ], [ -3 ], [ -4 ] ] ), 
+> Bipartition( [ [ 1, -5 ], [ 2, 3, 4, 5 ], [ -1 ], [ -2 ], [ -3, -4 ] ] ), 
+> Bipartition( [ [ 1, -4 ], [ 2 ], [ 3, -2 ], [ 4, 5, -1 ], [ -3, -5 ] ] ) );;
+gap> IsomorphismPartialPermSemigroup(S);
+fail
+gap> Range(IsomorphismTransformationSemigroup(S));
+<transformation semigroup on 208 pts with 5 generators>
+
+# IsomorphismBipartitionSemigroup for a perm group
+gap> G:=DihedralGroup(IsPermGroup, 10);;
+gap> f:=IsomorphismBipartitionSemigroup(G);;
+gap> g:=InverseGeneralMapping(f);;
+gap> ForAll(G, x-> (x^f)^g=x);
+true
+gap> ForAll(G, x-> ForAll(G, y-> (x*y)^f=x^f*y^f));
+true
+gap> ForAll(Range(f), x-> (x^g)^f=x);                     
+true
+
+#IsomorphismPermGroup
+gap> G:=GroupOfUnits(PartitionMonoid(5));
+<bipartition group on 5 pts with 2 generators>
+gap> IsomorphismPermGroup(G);
+MappingByFunction( <bipartition group on 5 pts with 2 generators>, Group([ (1,
+2,3,4,5), (1,2) ]), <Attribute "AsPermutation">, function( x ) ... end )
+gap> f:=last;; g:=InverseGeneralMapping(f);;           
+gap> ForAll(G, x-> ForAll(G, y-> (x*y)^f=x^f*y^f));
+true
+gap> ForAll(G, x-> (x^f)^g=x);                     
+true
+gap> ForAll(Range(f), x-> (x^g)^f=x);
+true
+gap> D:=DClass(PartitionMonoid(5), 
+> Bipartition( [ [ 1 ], [ 2, -3 ], [ 3, -4 ], [ 4, -5 ], [ 5 ], [ -1 ], [ -2 ] ]));;
+gap> G:=GroupHClass(D);
+{Bipartition( [ [ 1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4, -5 ], [ 5 ], [ -1 ] ] )}
+gap> IsomorphismPermGroup(G);
+MappingByFunction( {Bipartition( 
+[ [ 1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4, -5 ], [ 5 ], [ -1 ] ] )}, Group([ (2,
+4,3), (3,4) ]), function( x ) ... end, function( x ) ... end )
+
 #
 gap> SemigroupsStopTest();
 

@@ -67,12 +67,15 @@ false]]></Example>
     <Description>
     </Description>
   </ManSection>
-  <#/GAPDoc>
-  
-<ManSection>
-<Prop Name="IsTransformationSemigroup" Arg="obj"/>
-<Prop Name="IsTransformationMonoid" Arg="obj"/>
-<Returns><K>true</K> or <K>false</K>.</Returns>
-<Description>
-</Description>
-</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsomorphismBipartitionSemigroup">
+  <ManSection>
+    <Attr Name="IsomorphismBipartitionSemigroup" Arg="S"/>
+    <Attr Name="IsomorphismBipartitionMonoid" Arg="S"/>
+    <Description>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+
