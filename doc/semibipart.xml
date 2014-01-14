@@ -11,7 +11,52 @@
 <#GAPDoc Label="IsBipartitionSemigroup">
   <ManSection>
     <Prop Name="IsBipartitionSemigroup" Arg="S"/>
+    <Prop Name="IsBipartitionMonoid" Arg="S"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
+      A <E>bipartition semigroup</E> is simply a semigroup consisting of
+      bipartitions. An object <A>obj</A> is a bipartition semigroup in &GAP; if
+      it satisfies <Ref Prop="IsSemigroup" BookName="ref"/> and 
+      <Ref Filt="IsBipartitionCollection"/>.<P/>
+
+      A <E>bipartition monoid</E> is a monoid consisting of bipartitions. 
+      An object <A>obj</A> is a bipartition monoid in &GAP; if it satisfies 
+      <Ref Prop="IsMonoid" BookName="ref"/> and 
+      <Ref Filt="IsBipartitionCollection"/>.<P/>
+
+      Note that it is possible for a bipartition semigroup to have a
+      multiplicative neutral element (i.e. an identity element) but not to
+      satisfy <C>IsBipartitionMonoid</C>. For example, 
+
+      <Example><![CDATA[
+gap> f:=Bipartition( [ [ 1, 4, -2 ], [ 2, 5, -6 ], [ 3, -7 ], 
+> [ 6, 7, -9 ], [ 8, 9, -1 ], [ 10, -5 ], [ -3 ], [ -4 ], 
+> [ -8 ], [ -10 ] ] );;
+gap> S:=Semigroup(f, One(f));
+<commutative bipartition monoid on 10 pts with 1 generator>
+gap> IsMonoid(S);
+true
+gap> IsBipartitionMonoid(S);
+true
+gap> S:=Semigroup( Bipartition( [ [ 1, -3 ], [ 2, -8 ], [ 3, 8, -1 ], 
+> [ 4, -4 ], [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 9, 10, -10 ], 
+> [ -2 ], [ -9 ] ] ), 
+> Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], 
+> [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, 10, -10 ], 
+> [ -9 ] ] ) );;
+gap> One(S);
+fail
+gap> MultiplicativeNeutralElement(S);
+<bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], 
+[ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, 10, -10 ], [ -9 ]>
+gap> IsMonoid(S);
+false]]></Example>
+      In this example <C>S</C> cannot be converted into a monoid using <Ref
+        Attr="AsMonoid" BookName="ref"/> since the <Ref Attr="One"
+        BookName="ref"/> of any element in <C>S</C> differs from the
+      multiplicative neutral element. <P/>
+
+      For more details see <Ref Filt="IsMagmaWithOne" BookName="ref"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -22,4 +67,12 @@
     <Description>
     </Description>
   </ManSection>
-<#/GAPDoc>
+  <#/GAPDoc>
+  
+<ManSection>
+<Prop Name="IsTransformationSemigroup" Arg="obj"/>
+<Prop Name="IsTransformationMonoid" Arg="obj"/>
+<Returns><K>true</K> or <K>false</K>.</Returns>
+<Description>
+</Description>
+</ManSection>
