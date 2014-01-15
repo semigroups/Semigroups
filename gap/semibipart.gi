@@ -292,16 +292,21 @@ function(s)
   fi;
   
   Append(str, "\>bipartition\< ");
- 
-  if IsGroup(s) then 
-    Append(str, "\>group\< ");
-    nrgens:=Length(GeneratorsOfGroup(s));
-  elif HasIsMonoid(s) and IsMonoid(s) then 
-    Append(str, "\>monoid\< ");
-    nrgens:=Length(GeneratorsOfMonoid(s));
+  
+  if HasIsMonoid(s) and IsMonoid(s) then 
+    Append(str, "monoid ");
+    if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
+      nrgens:=Length(GeneratorsOfInverseMonoid(s));
+    else 
+      nrgens:=Length(GeneratorsOfMonoid(s));
+    fi;
   else 
-    Append(str, "\>semigroup\< ");
-    nrgens:=Length(GeneratorsOfSemigroup(s));
+    Append(str, "semigroup ");
+    if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then 
+      nrgens:=Length(GeneratorsOfInverseSemigroup(s));
+    else
+      nrgens:=Length(GeneratorsOfSemigroup(s));
+    fi;
   fi;
   
   if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s) and Size(s)<2^64 then 
