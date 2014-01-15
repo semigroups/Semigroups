@@ -308,6 +308,76 @@ MappingByFunction( {Bipartition(
 [ [ 1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4, -5 ], [ 5 ], [ -1 ] ] )}, Group([ (2,
 4,3), (3,4) ]), function( x ) ... end, function( x ) ... end )
 
+# IsomorphismBipartitionSemigroup for an inverse semigroup of partial perms
+gap> S:=InverseSemigroup(
+> PartialPerm( [ 1, 3, 5, 7, 9 ], [ 7, 6, 5, 10, 1 ] ), 
+> PartialPerm( [ 1, 2, 3, 4, 6, 10 ], [ 9, 10, 4, 2, 5, 6 ] ) );;
+gap> T:=Range(IsomorphismBipartitionSemigroup(S));
+<inverse bipartition semigroup on 10 pts with 2 generators>
+gap> Size(S);
+281
+gap> Size(T);
+281
+gap> IsomorphismPartialPermSemigroup(T);
+MappingByFunction( <inverse bipartition semigroup of size 281, 
+ on 10 pts with 2 generators>, <inverse partial perm semigroup on 9 pts
+ with 4 generators>, <Operation "AsPartialPerm">, function( x ) ... end )
+gap> Size(Range(last));
+281
+gap> f:=last2;; g:=InverseGeneralMapping(f);;
+gap> ForAll(T, x-> (x^f)^g=x);
+true
+
+# AsBlockBijection and IsomorphismBlockBijectionSemigroup for an inverse
+# semigroup of partial perms
+gap> S:=InverseSemigroup(
+> PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ), 
+> PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 10 ], [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
+gap> AsBlockBijection(S.1);
+<block bijection: [ 1, -2 ], [ 2, -6 ], [ 3, -7 ], 
+[ 4, 5, 7, 9, 11, -3, -4, -8, -10, -11 ], [ 6, -9 ], [ 8, -1 ], [ 10, -5 ]>
+gap> S.1;
+[3,7][8,1,2,6,9][10,5]
+gap> T:=Range(IsomorphismBlockBijectionSemigroup(S));
+<inverse bipartition semigroup on 11 pts with 2 generators>
+gap> f:=IsomorphismBlockBijectionSemigroup(S);;
+gap> g:=InverseGeneralMapping(f);;
+gap> ForAll(S, x-> (x^f)^g=x);
+true
+gap> ForAll(T, x-> (x^g)^f=x);
+true
+gap> Size(S);
+2657
+gap> Size(T);
+2657
+gap> x:=PartialPerm( [ 1, 2, 3, 8 ], [ 8, 4, 10, 3 ] );;
+gap> ForAll(S, y-> x^f*y^f=(x*y)^f);
+true
+
+# Same as last for non-inverse partial perm semigroup
+gap> S:=Semigroup(
+> PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ), 
+> PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 10 ], [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
+gap> Size(S);
+90
+gap> IsInverseSemigroup(S);
+false
+gap> T:=Range(IsomorphismBlockBijectionSemigroup(S));
+<bipartition semigroup on 11 pts with 2 generators>
+gap> Size(T);
+90
+gap> IsInverseSemigroup(T);
+false
+gap> f:=IsomorphismBlockBijectionSemigroup(S);;
+gap> g:=InverseGeneralMapping(f);;
+gap> ForAll(S, x-> (x^f)^g=x);
+true
+gap> ForAll(T, x-> (x^g)^f=x);
+true
+gap> x:=PartialPerm( [ 1, 3 ], [ 3, 1 ] );;
+gap> ForAll(S, y-> x^f*y^f=(x*y)^f);
+true
+
 #
 gap> SemigroupsStopTest();
 

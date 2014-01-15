@@ -15,4 +15,5 @@ IsBipartitionCollection);
 DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
 DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
 DeclareAttribute("IsomorphismBipartitionSemigroup", IsSemigroup);
+DeclareAttribute("IsomorphismBlockBijectionSemigroup", IsSemigroup);
 

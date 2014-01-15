@@ -123,6 +123,50 @@ end);
 #
 
 InstallMethod(IsomorphismBipartitionSemigroup, 
+"for a partial perm inverse semigroup with generators",
+[IsPartialPermSemigroup and IsInverseSemigroup and HasGeneratorsOfInverseSemigroup],
+function(S)
+  local n, source, range, i;
+ 
+  n:=Maximum(DegreeOfPartialPermSemigroup(S), CodegreeOfPartialPermSemigroup(S));
+  source:=GeneratorsOfInverseSemigroup(S); 
+  range:=EmptyPlist(Length(source));
+
+  for i in [1..Length(source)] do 
+    range[i]:=AsBipartition(source[i], n);
+  od;
+
+  return MagmaIsomorphismByFunctionsNC(S, InverseSemigroup(range), 
+   x-> AsBipartition(x, n), AsPartialPerm);
+end);
+
+# the converse of the last method
+
+InstallMethod(IsomorphismPartialPermSemigroup, 
+"for a bipartition inverse semigroup with generators",
+[IsBipartitionSemigroup and IsInverseSemigroup and HasGeneratorsOfInverseSemigroup],
+function(S)
+  local n, source, range, i;
+ 
+  if not ForAll(GeneratorsOfInverseSemigroup(S), IsPartialPermBipartition) then 
+    TryNextMethod();
+  fi;
+
+  n:=DegreeOfBipartitionSemigroup(S);
+  source:=GeneratorsOfSemigroup(S); 
+  range:=EmptyPlist(Length(source));
+
+  for i in [1..Length(source)] do 
+    range[i]:=AsPartialPerm(source[i]);
+  od;
+
+  return MagmaIsomorphismByFunctionsNC(S, InverseSemigroup(range), 
+   AsPartialPerm, x-> AsBipartition(x, n));
+end);
+
+#
+
+InstallMethod(IsomorphismBipartitionSemigroup, 
 "for a perm group with generators",
 [IsPermGroup and HasGeneratorsOfGroup],
 function(S)
@@ -163,6 +207,102 @@ function(S)
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(range), 
    AsPermutation, x-> AsBipartition(x, n));
 end);
+
+# this is one way, i.e. no converse method
+
+InstallMethod(IsomorphismBlockBijectionSemigroup, 
+"for an inverse partial perm semigroup with generators",
+[IsPartialPermSemigroup and IsInverseSemigroup and HasGeneratorsOfInverseSemigroup],
+function(S)
+  local n, source, range, i, inv;
+ 
+  n:=DegreeOfPartialPermSemigroup(S)+1;
+  source:=GeneratorsOfInverseSemigroup(S); 
+  range:=EmptyPlist(Length(source));
+
+  for i in [1..Length(source)] do 
+    range[i]:=AsBlockBijection(source[i], n);
+  od;
+
+  # AsPartialPerm for a block bijection created using AsBlockBijection with
+  # argument a partial perm
+  inv:=function(x) 
+    local blocks, n, seen, i, lookup, out, bigblock; 
+    
+    blocks:=x!.blocks;
+    n:=DegreeOfBipartition(x);
+    bigblock:=blocks[n];
+
+    # find the images of [1..n]
+    lookup:=EmptyPlist(n-1);
+    for i in [1..n-1] do 
+      lookup[blocks[i+n]]:=i;
+    od;
+
+    # put it together
+    out:=[1..n-1]*0;
+    for i in [1..n-1] do 
+      if blocks[i]<>bigblock then 
+        out[i]:=lookup[blocks[i]];
+      fi;
+    od;
+
+    return PartialPerm(out);
+  end;
+
+  return MagmaIsomorphismByFunctionsNC(S, InverseSemigroup(range), 
+   x-> AsBlockBijection(x, n), inv);
+end);
+
+# this is one way, i.e. no converse method
+
+InstallMethod(IsomorphismBlockBijectionSemigroup, 
+"for a partial perm semigroup with generators",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local n, source, range, i, inv;
+ 
+  n:=Maximum(DegreeOfPartialPermSemigroup(S), CodegreeOfPartialPermSemigroup(S))+1;
+  source:=GeneratorsOfSemigroup(S); 
+  range:=EmptyPlist(Length(source));
+
+  for i in [1..Length(source)] do 
+    range[i]:=AsBlockBijection(source[i], n);
+  od;
+
+  # AsPartialPerm for a block bijection created using AsBlockBijection with
+  # argument a partial perm
+  inv:=function(x) 
+    local blocks, n, seen, i, lookup, out, bigblock; 
+    
+    blocks:=x!.blocks;
+    n:=DegreeOfBipartition(x);
+    bigblock:=blocks[n];
+
+    # find the images of [1..n]
+    lookup:=EmptyPlist(n-1);
+    for i in [1..n-1] do 
+      lookup[blocks[i+n]]:=i;
+    od;
+
+    # put it together
+    out:=[1..n-1]*0;
+    for i in [1..n-1] do 
+      if blocks[i]<>bigblock then 
+        out[i]:=lookup[blocks[i]];
+      fi;
+    od;
+
+    return PartialPerm(out);
+  end;
+
+  return MagmaIsomorphismByFunctionsNC(S, Semigroup(range), 
+   x-> AsBlockBijection(x, n), inv);
+end);
+
+# JDM could have a method for
+# IsomorphismBlockBijectionSemigroup for IsPartialPermBipartitions too..
+
 #
 
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a bipartition collection", 
