@@ -385,10 +385,11 @@ function(f, n)
 
   nr:=0;
   out:=[1..2*n]*0;
+  bigblock:=n;
   
   for i in [1..n-1] do 
     if i^f=0 then 
-      if not IsBound(bigblock) then 
+      if bigblock=n then 
         nr:=nr+1;
         bigblock:=nr;
       fi;
@@ -399,7 +400,7 @@ function(f, n)
       out[n+i^f]:=nr;
     fi;
   od;
-  
+
   out[n]:=bigblock;
   out[2*n]:=bigblock;
   
