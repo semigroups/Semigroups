@@ -126,7 +126,10 @@
   <Section><Heading>Semigroups of bipartitions</Heading>
   
     <#Include Label="IsBipartitionSemigroup">
+    <#Include Label="IsBlockBijectionSemigroup">
     <#Include Label="DegreeOfBipartitionSemigroup">
+    <#Include Label="IsomorphismBipartitionSemigroup">
+    <#Include Label="IsomorphismBlockBijectionSemigroup">
 
   </Section>
 </Chapter>
