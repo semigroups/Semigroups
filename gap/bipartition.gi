@@ -19,19 +19,11 @@ BindGlobal("BipartitionType", NewType(BipartitionFamily,
 
 InstallOtherMethod(InverseMutable, "for a bipartition", [IsBipartition],
 function(f)
-  if IsBlockBijection(f) then 
+  if IsBlockBijection(f) or IsPartialPermBipartition(f) then 
     return Star(f);
   else
     return fail;
   fi;
-end);
-
-#
-
-InstallMethod(IsGeneratorsOfInverseSemigroup, "for a bipartition collection", 
-[IsBipartitionCollection], 
-function(coll)
-  return ForAll(coll, IsBlockBijection);
 end);
 
 #not a synonym since NrTransverseBlocks also applies to blocks

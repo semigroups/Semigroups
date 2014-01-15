@@ -163,6 +163,13 @@ function(S)
   return MagmaIsomorphismByFunctionsNC(S, Semigroup(range), 
    AsPermutation, x-> AsBipartition(x, n));
 end);
+#
+
+InstallMethod(IsGeneratorsOfInverseSemigroup, "for a bipartition collection", 
+[IsBipartitionCollection], 
+function(coll)
+  return ForAll(coll, IsBlockBijection) or ForAll(coll, IsPartialPermBipartition);
+end);
 
 #
 
