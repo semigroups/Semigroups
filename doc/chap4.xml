@@ -41,6 +41,7 @@
   used  to convert bipartitions into permutations, partial permutations, or
   transformations where  appropriate.  
     <#Include Label="AsBipartition"/>
+    <#Include Label="AsBlockBijection"/>
     <#Include Label="AsTransformation"/>
     <#Include Label="AsPartialPerm"/>
     <#Include Label="AsPermutation"/>

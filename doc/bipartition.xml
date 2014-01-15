@@ -181,14 +181,52 @@ fail</Example>
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="AsBlockBijection">
+  <ManSection>
+    <Oper Name="AsBlockBijection" Arg="f[, n]"/>
+    <Returns>A block bijection or <K>fail</K>.</Returns>
+    <Description>
+      When the argument <A>f</A> is a partial perm and <A>n</A> is a positive
+      integer which is greater than the maximum of the degree and codegree of
+      <A>f</A>, this function returns a block bijection corresponding to
+      <A>f</A>. This block bijection has the same non-singleton classes as
+      <C>g:=AsBipartition(<A>f</A>, <A>n</A>)</C> and one additional class which is
+      the union the singleton classes of <C>g</C>.<P/> 
+
+      If the optional second argument <A>n</A> is not present, then the maximum
+      of the degree and codegree of <A>f</A> plus 1 is used by default. If the
+      second argument <A>n</A> is not greater than this maximum, then
+      <K>fail</K> is returned.  <P/>
+
+      This is the value at <A>f</A> of the embedding of the symmetric inverse
+      monoid into the dual symmetric inverse monoid given in the
+      FitzGerald-Leech Theorem <Cite Key="Fitzgerald1998aa"/>. 
+
+<Example><![CDATA[
+gap> f:=PartialPerm( [ 1, 2, 3, 6, 7, 10 ], [ 9, 5, 6, 1, 7, 8 ] ) ;  
+[2,5][3,6,1,9][10,8](7)
+gap> AsBipartition(f, 11);
+<bipartition: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], [ 4 ], [ 5 ], 
+[ 6, -1 ], [ 7, -7 ], [ 8 ], [ 9 ], [ 10, -8 ], [ 11 ], [ -2 ], 
+[ -3 ], [ -4 ], [ -10 ], [ -11 ]>
+gap> AsBlockBijection(f, 10);
+fail
+gap> AsBlockBijection(f, 11);
+<block bijection: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], 
+[ 4, 5, 8, 9, 11, -2, -3, -4, -10, -11 ], [ 6, -1 ], [ 7, -7 ], 
+[ 10, -8 ]>]]></Example>
+  </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="AsBipartition">
   <ManSection>
     <Oper Name="AsBipartition" Arg="f[, n]"/>
     <Returns>A bipartition.</Returns>
   <Description>
   <C>AsBipartition</C> 
-  returns the bipartition, permutation, transformation, or partial permutation,
-  as a bipartition. 
+  returns the bipartition, permutation, transformation, or partial permutation
+  <A>f</A>, as a bipartition of degree <A>n</A>.
   
   There are several possible arguments for <C>AsBipartition</C>:
   <List>

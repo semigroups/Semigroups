@@ -105,7 +105,7 @@ function(S)
   local n, source, range, i;
  
   if not ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition) then 
-    return fail;
+    TryNextMethod();
   fi;
 
   n:=DegreeOfBipartitionSemigroup(S);
