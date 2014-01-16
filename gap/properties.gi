@@ -727,7 +727,7 @@ function(s)
   # look for s not being regular
   lookfunc:=function(data, x)
     local rho, scc, i;
-    if data!.repslens[data!.orblookup1[x[6]]]>1 then
+    if data!.repslens[x[2]][data!.orblookup1[x[6]]]>1 then
       return true;
     fi;
     
@@ -975,7 +975,7 @@ InstallMethod(IsSynchronizingTransformationCollection,
 function(coll, n)
   local o;
 
-  o:=Orb(coll, [1..n], OnPosIntSetsTrans, rec(
+  o:=Orb(coll, [1..n], OnSets, rec(
     lookingfor:=function(o, x) 
       return Length(x)=1;
     end));
@@ -1117,22 +1117,24 @@ InstallMethod(IsZeroSemigroup, "for an inverse semigroup",
 
 #
 
-InstallMethod(IsZeroSimpleSemigroup, 
-"for an acting semigroup with generators",
+InstallMethod(IsZeroSimpleSemigroup, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
-  local iter;
+function(S)
+  local iter, D;
   
-  if MultiplicativeZero(s)=fail then 
+  if MultiplicativeZero(S)=fail then 
     return false;
   fi;
-  if IsClosed(SemigroupData(s)) then 
-    return NrDClasses(s)=2;
+  if IsClosed(SemigroupData(S)) then 
+    return IsRegularSemigroup(S) and NrDClasses(S)=2;
   fi;
-  iter:=IteratorOfDClassReps(s);
-  NextIterator(iter);
-  NextIterator(iter);
-  return IsDoneIterator(iter);
+  iter:=IteratorOfDClasses(S);
+  D:=NextIterator(iter);
+  if IsDoneIterator(iter) or not IsRegularDClass(D) then 
+    return false;
+  fi;
+  D:=NextIterator(iter);
+  return IsDoneIterator(iter) and IsRegularDClass(D);
 end);
 
 #EOF

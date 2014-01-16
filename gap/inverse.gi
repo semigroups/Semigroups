@@ -138,16 +138,17 @@ function(f, s)
     fi;
   fi;
 
-  o:=LambdaOrb(s);
+  o:=LambdaOrb(s); 
+  Enumerate(o);
   lambda:=LambdaFunc(s)(f);
-  lambda_l:=EnumeratePosition(o, lambda, false);
+  lambda_l:=Position(o, lambda);
   
   if lambda_l=fail then
     return false;
   fi;
   
   rho:=RhoFunc(s)(f);
-  rho_l:=EnumeratePosition(o, rho, false);
+  rho_l:=Position(o, rho);
   
   if rho_l=fail then
     return false;

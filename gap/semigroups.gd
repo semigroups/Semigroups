@@ -37,11 +37,12 @@ DeclareOperation("ClosureSemigroup",
 DeclareOperation("ClosureSemigroup", 
 [IsActingSemigroup, IsAssociativeElementCollection]);
 DeclareOperation("ClosureSemigroup",
-[IsActingSemigroup, IsAssociativeElement]);
-DeclareOperation("ClosureSemigroup",
 [IsActingSemigroup, IsAssociativeElement, IsRecord]);
-DeclareOperation("ClosureSemigroup", [IsActingSemigroup, IsList and IsEmpty]); #JDM remove me!
+DeclareOperation("ClosureSemigroup",
+[IsActingSemigroup, IsAssociativeElement]);
 DeclareGlobalFunction("ClosureSemigroupNC");
+
+DeclareGlobalFunction("RebaseTransformationSemigroupLambdaOrb");
 
 DeclareAttribute("Generators", IsSemigroup);
 
@@ -54,6 +55,7 @@ DeclareOperation("RandomInverseMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomTransformationMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomTransformationSemigroup", [IsPosInt, IsPosInt]);
 DeclareSynonym("RandomPartialPermSemigroup", RandomBlockGroup);
+DeclareOperation("RandomPartialPermMonoid", [IsPosInt, IsPosInt]);
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
 DeclareOperation("SubsemigroupByProperty", 

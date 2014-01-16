@@ -85,33 +85,37 @@ function(d)
 end);
 
 # note that the RhoCosets of the D-class containing an L-class are not the same
-# as the RhoCosets of the D-class. The RhoCosets of a D-class correspond to the
+# as the RhoCosets of the L-class. The RhoCosets of a D-class correspond to the
 # lambda value of the rep of the D-class (which is in the first place of its 
 # scc) and the rep of the D-class but the RhoCosets of the L-class should 
 # correspond to the lambda value of the rep of the L-class which is not nec in 
 # the first place of its scc.
 
+# different method for regular
+
 InstallMethod(RhoCosets, "for a L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
-function(l)
-  local d, o, pos, m, mult, p, act;
+function(L)
+  local D, S, o, rep, pos, m, x, conj;
   
-  d:=DClassOfLClass(l);
-  o:=LambdaOrb(d);
-  #JDM can we improve the next line? Isn't this know already when l is created?
-  pos:=Position(o, LambdaFunc(Parent(l))(Representative(l)));
-  m:=LambdaOrbSCCIndex(d);
-  if pos<>OrbSCC(o)[m][1] then
-    mult:=LambdaOrbMult(o, m, pos);
-    #the following step is necessary in case p is not in the schutz gp of d 
-    p:=LambdaPerm(Parent(l))(Representative(l)*mult[2],
-     Representative(d));
-    act:=StabiliserAction(Parent(l));
-    #JDM the following line always returns elements of the semigroup not
-    #permutations what sense does this make?
-    return List(RhoCosets(d), x-> act(mult[2], x^p)*mult[1]);
+  D:=DClassOfLClass(L);
+  if IsRegularClass(L) or Length(RhoCosets(D))=1 then 
+    #maybe <L> is regular and doesn't know it!
+    return [()];
   fi;
-  return RhoCosets(d);
+  
+  S:=Parent(L);               rep:=Representative(L);
+  m:=LambdaOrbSCCIndex(D);    o:=LambdaOrb(D);
+
+  pos:=Position(o, LambdaFunc(S)(rep));
+  
+  if pos<>OrbSCC(o)[m][1] then
+    x:=rep*LambdaOrbMult(o, m, pos)[2];
+    conj:=LambdaConjugator(S)(x, rep);
+    conj:=conj*LambdaPerm(S)(x, Representative(D));
+    return List(RhoCosets(D), x-> x^conj);
+  fi;
+  return RhoCosets(D);
 end);
 
 # same method for regular/inverse
@@ -555,8 +559,7 @@ end);
 InstallMethod(GreensHClasses, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  local rho_o, rho_m, s, scc, mults, d, lambda_o, lambda_m, cosets, f, nc, out,
-  k, i, j;
+  local rho_o, rho_m, s, scc, mults, d, lambda_o, lambda_m, cosets, f, nc, act, out, k, i, j;
 
   rho_o:=RhoOrb(l); 
   rho_m:=RhoOrbSCCIndex(l);
@@ -572,6 +575,7 @@ function(l)
   cosets:=RhoCosets(l);
   f:=Representative(l);
   nc:=IsGreensClassNC(l);
+  act:=StabilizerAction(s);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
@@ -580,8 +584,7 @@ function(l)
     i:=mults[i][1]*f;
     for j in cosets do 
       k:=k+1;
-      # JDM maybe a bad idea to use CreateHClass here, perhaps expand?
-      out[k]:=CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o, i*j, nc);
+      out[k]:=CreateHClass(s, lambda_m, lambda_o, rho_m, rho_o, act(i, j), nc);
       SetLClassOfHClass(out[k], l);
       SetDClassOfHClass(out[k], d);
     od;
@@ -610,7 +613,7 @@ function(r)
   cosets:=LambdaCosets(d);
   f:=Representative(r);
   nc:=IsGreensClassNC(r);
-  act:=StabiliserAction(Parent(r));
+  act:=StabilizerAction(Parent(r));
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
@@ -662,7 +665,7 @@ function(d)
   o:=RhoOrb(d);
   m:=RhoOrbSCCIndex(d);
   nc:=IsGreensClassNC(d);
-  act:=StabiliserAction(s);
+  act:=StabilizerAction(s);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
@@ -702,7 +705,7 @@ end);
 InstallMethod(GreensRClasses, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsGreensDClass], 
 function(d)
-  local mults, scc, cosets, f, s, o, m, nc, out, k, g, i, j;
+  local mults, scc, cosets, f, s, o, m, nc, act, out, k, g, i, j;
  
   mults:=RhoOrbMults(RhoOrb(d), RhoOrbSCCIndex(d));
   scc:=RhoOrbSCC(d);
@@ -713,6 +716,7 @@ function(d)
   o:=LambdaOrb(d);
   m:=LambdaOrbSCCIndex(d);
   nc:=IsGreensClassNC(d); 
+  act:=StabilizerAction(s);
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
@@ -720,7 +724,7 @@ function(d)
     g:=mults[i][1]*f;
     for j in cosets do
       k:=k+1;
-      out[k]:=CreateRClassNC(s, m, o, g/j, nc);
+      out[k]:=CreateRClassNC(s, m, o, act(g, j^-1), nc);
       SetDClassOfRClass(out[k], d);
     od;
   od;
@@ -1114,7 +1118,7 @@ end);
 InstallMethod(HClassReps, "for an L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
-  local o, m, scc, mults, f, d, cosets, pos, g, out, k, i, j;
+  local o, m, scc, mults, f, cosets, out, k, act, i, j;
 
   o:=RhoOrb(l); 
   m:=RhoOrbSCCIndex(l);
@@ -1129,12 +1133,13 @@ function(l)
 
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
+  act:=StabilizerAction(Parent(l));
 
   for i in scc do 
     i:=mults[i][1]*f;
     for j in cosets do 
       k:=k+1;
-      out[k]:=i*j;
+      out[k]:=act(i, j);
     od;
   od;
   return out;
@@ -1157,7 +1162,7 @@ function(r)
   out:=EmptyPlist(Length(scc)*Length(cosets));
   k:=0;
 
-  act:=StabiliserAction(Parent(r));
+  act:=StabilizerAction(Parent(r));
 
   for i in cosets do 
     i:=act(f, i);
@@ -1218,7 +1223,7 @@ function(d)
  
   cosets:=LambdaCosets(d);
   out:=EmptyPlist(Length(scc)*Length(cosets));
-  act:=StabiliserAction(Parent(d));
+  act:=StabilizerAction(Parent(d));
   k:=0;
   for i in cosets do
     g:=act(f, i);
@@ -1265,7 +1270,7 @@ function(d)
   out:=EmptyPlist(Length(scc)*Length(cosets));
   
   k:=0;
-  act:=StabiliserAction(Parent(d));
+  act:=StabilizerAction(Parent(d));
   for i in scc do
     g:=mults[i][1]*f;
     for j in cosets do
@@ -1288,8 +1293,9 @@ function(x, value, scc, o, onright)
   
   s:=Parent(x);
 
-  if IsActingSemigroupWithFixedDegreeMultiplication(s) and 
-   ActionRank(s)(Representative(x))=ActionDegree(Representative(x)) then
+  if IsActingSemigroupWithFixedDegreeMultiplication(s) 
+   and IsMultiplicativeElementWithOneCollection(s) 
+   and ActionRank(s)(Representative(x))=ActionDegree(Representative(x)) then
     return [One(s)];
   fi;
 
@@ -1488,15 +1494,16 @@ function(h)
     return;
   fi;
 
-  return MappingByFunction(h, SchutzenbergerGroup(h), AsPermutation, x->
-    StabiliserAction(Parent(h))(MultiplicativeNeutralElement(h), x));
+  return MappingByFunction(h, SchutzenbergerGroup(h),
+   x-> LambdaPerm(Parent(h))(Representative(h), x),
+   x-> StabilizerAction(Parent(h))(MultiplicativeNeutralElement(h), x));
 end);
 
 #
 
 InstallGlobalFunction(IsRegularClass@, 
 function(x, value, scc, o, onright)
-  local s, data, tester, i;
+  local s, data, m, tester, i;
 
   if HasNrIdempotents(x) then 
     return NrIdempotents(x)<>0;
@@ -1506,7 +1513,9 @@ function(x, value, scc, o, onright)
   
   if HasSemigroupDataIndex(x) then
     data:=SemigroupData(s);
-    if data!.repslens[data!.orblookup1[SemigroupDataIndex(x)]]>1 then
+    m:=LambdaOrbSCCIndex(x);
+    if data!.repslens[m][data!.orblookup1[SemigroupDataIndex(x)]]>1
+      then
       return false;
     fi;
   fi; 
@@ -1572,8 +1581,7 @@ InstallMethod(MultiplicativeNeutralElement,
 function(h)
 
   if not IsGroupHClass(h) then
-    Error("the H-class is not a group,");
-    return;        
+    return fail;        
   fi;
   return Idempotents(h)[1];
 end);
@@ -1679,7 +1687,7 @@ d-> Length(RhoCosets(d))*Length(RhoOrbSCC(d)));
 
 InstallGlobalFunction(NrIdempotents@, 
 function(x, value, scc, o, onright)
-  local s, data, nr, tester, i;
+  local s, data, m, nr, tester, i;
 
   if HasIsRegularClass(x) and not IsRegularClass(x) then 
     return 0;
@@ -1691,7 +1699,8 @@ function(x, value, scc, o, onright)
   if HasSemigroupDataIndex(x) and not (HasIsRegularClass(x) and
    IsRegularClass(x)) then
     data:=SemigroupData(s);
-    if data!.repslens[data!.orblookup1[SemigroupDataIndex(x)]]>1 then
+    m:=LambdaOrbSCCIndex(x);
+    if data!.repslens[m][data!.orblookup1[SemigroupDataIndex(x)]]>1 then
       return 0;
     fi;
   fi;
@@ -1779,35 +1788,32 @@ r-> NrIdempotents@(r, RhoFunc(Parent(r))(Representative(r)), LambdaOrbSCC(r), La
 InstallMethod(NrIdempotents, "for an acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local data, reps, repslookup, lenreps, repslens, rhofunc, tester, nr, f, m,
-  o, rho, i, k;
+  local o, scc, data, reps, lenreps, repslens, rhofunc, tester, nr, rho, m, i, k;
 
   if HasIdempotents(s) then 
     return Length(Idempotents(s));
   fi;
 
-  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  o:=LambdaOrb(s);    scc:=OrbSCC(o);
   
-  reps:=data!.reps; 
-  repslookup:=data!.repslookup;
-  lenreps:=data!.lenreps;
-  repslens:=data!.repslens;
+  data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
+  reps:=data!.reps; lenreps:=data!.lenreps; repslens:=data!.repslens;
 
   rhofunc:=RhoFunc(s);
   tester:=IdempotentTester(s);
 
   nr:=0;
-  for i in [1..lenreps] do 
-    f:=reps[i][1]; 
-    m:=data[repslookup[i][1]][2];
-    o:=data[repslookup[i][1]][3];
-    rho:=rhofunc(f);
-    for k in OrbSCC(o)[m] do 
-      if tester(o[k], rho) then 
-        nr:=nr+repslens[i];
-      fi;
+  for m in [2..Length(scc)] do 
+    for i in [1..lenreps[m]] do 
+      rho:=rhofunc(reps[m][i][1]);
+      for k in scc[m] do 
+        if tester(o[k], rho) then 
+          nr:=nr+repslens[m][i];
+        fi;
+      od;
     od;
   od;
+
 
   return nr;
 end);
@@ -1859,14 +1865,12 @@ function(s)
         f:=f*x;
         l:=Position(o, lambdafunc(f));
         m:=lookup[l];
-        val:=[m];
-        Append(val, rhofunc(f));
-        val:=HTValue(lambdarhoht, val);
+        val:=HTValue(lambdarhoht, rhofunc(f))[m];
         if not IsBound(schutz[m]) then 
           LambdaOrbSchutzGp(o, m);
         fi;
         if schutz[m]=true then 
-          j:=repslookup[val][1];
+          j:=repslookup[m][val][1];
         else
           if l<>scc[m][1] then 
             f:=f*mults[l][2];
@@ -1877,9 +1881,9 @@ function(s)
             n:=0; j:=0;
             repeat 
               n:=n+1;
-              if SiftedPermutation(schutz[m], lambdaperm(reps[val][n], f))=()
+              if SiftedPermutation(schutz[m], lambdaperm(reps[m][val][n], f))=()
                then 
-                j:=repslookup[val][n];
+                j:=repslookup[m][val][n];
               fi;
             until j<>0;
           fi;
@@ -1915,7 +1919,7 @@ function(s)
 
   g:=Random(LambdaOrbSchutzGp(o, m));
   i:=Random(OrbSCC(o)[m]);
-  return StabiliserAction(s)(rep,g)*LambdaOrbMult(o, m, i)[1];
+  return StabilizerAction(s)(rep,g)*LambdaOrbMult(o, m, i)[1];
 end);
 
 # different method for regular/inverse
@@ -2069,9 +2073,14 @@ l-> Size(SchutzenbergerGroup(l))*Length(RhoOrbSCC(l)));
 
 #same method for inverse/regular
 
-InstallMethod(StructureDescription, "for group H-class of acting semigroup",
-[IsGreensHClass and IsActingSemigroupGreensClass and IsGroupHClass],
-h-> StructureDescription(Range(IsomorphismPermGroup(h))));
+InstallMethod(StructureDescription, "for an H-class of an acting semigroup",
+[IsGreensHClass and IsActingSemigroupGreensClass],
+function(h)
+  if not IsGroupHClass(h) then 
+    return fail;
+  fi;
+  return StructureDescription(Range(IsomorphismPermGroup(h)));
+end);
 
 # technical
 

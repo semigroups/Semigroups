@@ -10,11 +10,20 @@
 
 <#GAPDoc Label="EnumeratePosition">
   <ManSection> 
-    <Oper Name="EnumeratePosition" Arg="?"/>
-    <Returns>?.</Returns>
+    <Oper Name="EnumeratePosition" Arg="o, val[, onlynew]"/>
+    <Returns>A positive integer or <K>fail</K>.</Returns>
     <Description> 
-<Example>
-</Example>
+      This function returns the position of the value <A>val</A> in the orbit
+      <A>o</A>. If <A>o</A> is closed, then this is equivalent to doing 
+      <C>Position(<A>o</A>, <A>val</A>)</C>. However, if <A>o</A> is open, then
+      the orbit is enumerated until <A>val</A> is found, in which case the
+      position of <A>val</A> is returned, or the enumeration ends, in which
+      case <K>fail</K> is returned.  <P/>
+
+      If the optional argument <A>onlynew</A> is present, it should be
+      <K>true</K> or <K>false</K>. If <A>onlynew</A> is <K>true</K>, then
+      <A>val</A> will only be checked against new points in <A>o</A>. Otherwise,
+      every point in the <A>o</A>, not only the new ones, is considered.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -24,8 +33,23 @@
     <Oper Name="LookForInOrb" Arg="o, func, start"/>
     <Returns><K>false</K> or a positive integer.</Returns>
     <Description> 
+      The arguments of this function should be an orbit <A>o</A>, a function
+      <A>func</A> which gets the orbit object and a point in the orbit as
+      arguments, and a positive integer <A>start</A>. The function <A>func</A>
+      will be called for every point in <A>o</A> starting from <A>start</A>
+      (inclusive) and the orbit will be enumerated until <A>func</A> returns
+      <K>true</K> or the enumeration ends. In the former case, the position of
+      the first point in <A>o</A> for which <A>func</A> returns <K>true</K> is
+      returned, and in the latter <K>false</K> is returned.  
 <Example>
-</Example>
+gap> o:=Orb(SymmetricGroup(100), 1, OnPoints);
+&lt;open Int-orbit, 1 points>
+gap> func:=function(o, x) return x=42; end;
+function( o, x ) ... end
+gap> LookForInOrb(o, func, 1);
+42
+gap> o;
+&lt;open Int-orbit, 42 points></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -35,17 +59,29 @@
     <Oper Name="EvaluateWord" Arg="gens, w"/>
     <Returns>A semigroup element.</Returns>
     <Description> 
-      The argument <A>gens</A> should be a list of transformations or partial
-      permutations and the
-      argument <A>w</A> should be a list of positive integers less than or
-      equal to the length of <A>gens</A>.  This operation evaluates the word
-      <A>w</A> in the generators <A>gens</A>. More precisely,
-      <C>EvaluateWord</C> returns the equivalent of: 
-      <Log>Product(List(w, i-> gens[i]));</Log> 
-      see also <Ref Meth="Factorization"/>.<P/>
+      <List>
+        <Mark>for elements of a semigroup</Mark>
+        <Item>
+          When <A>gens</A> is a list of elements of a semigroup and <A>w</A> is
+          a list of positive integers less than or equal to the length of
+          <A>gens</A>, this operation returns the product
+          <C>gens[w[1]]*gens[w[2]]*...*gens[w[n]]</C> when the length of
+          <A>w</A> is <C>n</C>.
+        </Item>
+        
+        <Mark>for elements of an inverse semigroup</Mark>
+        <Item>
+          When <A>gens</A> is a list of elements with a semigroup inverse and
+          <A>w</A> is a list of non-zero integers whose absolute value does not
+          exceed the length of <A>gens</A>, this operation returns the product
+    <C>gens[AbsInt(w[1])]^SignInt(w[1])*...*gens[AbsInt(w[n])]^SignInt(w[n])</C>
+          where <C>n</C> is the length of <A>w</A>.
+        </Item>
+      </List>
 
       Note that <C>EvaluateWord(<A>gens</A>, [])</C> returns
-      <C>One(<A>gens</A>)</C>. 
+      <C>One(<A>gens</A>)</C> if <A>gens</A> is belongs to the category
+      <Ref Filt="IsMultiplicativeElementWithOne" BookName="ref"/>.
 <Example>
 gap> gens:=[ Transformation( [ 2, 4, 4, 6, 8, 8, 6, 6 ] ), 
 > Transformation( [ 2, 7, 4, 1, 4, 6, 5, 2 ] ), 
@@ -57,7 +93,19 @@ gap> f:=Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] );;
 gap> Factorization(S, f);
 [ 4, 2 ]
 gap> EvaluateWord(gens, last);
-Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] )</Example>
+Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] )
+gap> S:=SymmetricInverseMonoid(10);;
+gap> f:=PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] );
+[3,7][8,1,2,6,9][10,5]
+gap> Factorization(S, f);
+[ -2, -2, -2, -2, -3, -4, -3, -2, -2, -2, -2, -3, -2, 2, 2, 2, 2, 4, 
+  4, 4, 4, 2, 2, 2, 2, 2, 3, 4, -3, -2, -3, -2, -3, -2, 2, 2, 2, 2, 
+  2, 3, 4, -3, -2, -3, -2, -3, -2, 2, 2, 2, 2, 2, 3, 4, -3, -2, -3, 
+  -2, -3, -2, 2, 2, 2, 2, 2, 3, 4, -3, -2, -3, -2, -3, -2, 2, 2, 2, 
+  2, 2, 3, 4, -3, -2, -3, -2, -3, -2, 3, 2, 2, 2, 2, 2, 3, 4, -3, -2, 
+  -3, -2, -3, -2, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 2, 3, 2, 3, 2 ]
+gap> EvaluateWord(GeneratorsOfSemigroup(S), last); 
+[3,7][8,1,2,6,9][10,5]</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

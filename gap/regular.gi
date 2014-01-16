@@ -996,8 +996,8 @@ InstallMethod(HClassType, "for a regular acting semigroup",
 [IsRegularSemigroup and IsActingSemigroup],
 function(s);
  return NewType( FamilyObj( s ), IsEquivalenceClass and
-  IsEquivalenceClassDefaultRep and IsGreensHClass and IsHClassOfRegularSemigroup and 
-  IsActingSemigroupGreensClass);
+  IsEquivalenceClassDefaultRep and IsGreensHClass and
+  IsHClassOfRegularSemigroup and IsActingSemigroupGreensClass);
 end);
 
 #EOF

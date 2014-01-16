@@ -412,7 +412,7 @@ function(d)
     local d, rep, act;
     if tuple=fail then return fail; fi;
     d:=enum!.parent; rep:=Representative(d);
-    act:=StabiliserAction(Parent(d));
+    act:=StabilizerAction(Parent(d));
     return act(RhoOrbMult(RhoOrb(d), RhoOrbSCCIndex(d), tuple[1])[1]*rep,
      tuple[2])*LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[3])[1];
   end;
@@ -470,7 +470,7 @@ function(d)
     local d, rep, act;
     if tuple=fail then return fail; fi;
     d:=enum!.parent; rep:=Representative(d); 
-    act:=StabiliserAction(Parent(d));
+    act:=StabilizerAction(Parent(d));
     return act(LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d), tuple[1])[2]
      *rep, tuple[2])*LambdaOrbMult(LambdaOrb(d), LambdaOrbSCCIndex(d),
      tuple[3])[1];
@@ -523,7 +523,7 @@ function(h)
         return fail;
       fi;
 
-      return Representative(h)*enum!.schutz[pos];
+      return StabilizerAction(Parent(h))(Representative(h), enum!.schutz[pos]);
     end,
 
     NumberElement:=function(enum, f)
@@ -554,8 +554,6 @@ end);
 
 # same method for regular, different method for inverse
 
-#HERE - JDM - StabiliserAction implementation!!
-
 InstallMethod(Enumerator, "for L-class of an acting semigroup",
 [IsGreensLClass and IsActingSemigroupGreensClass],
 function(l)
@@ -580,7 +578,7 @@ function(l)
     if tuple=fail then return fail; fi;
     l:=enum!.parent;
     rep:=Representative(l);
-    act:=StabiliserAction(Parent(l));
+    act:=StabilizerAction(Parent(l));
     return act(RhoOrbMult(RhoOrb(l), RhoOrbSCCIndex(l),
       tuple[1])[1]*rep, tuple[2]);
   end;
@@ -638,7 +636,7 @@ function(l)
     if tuple=fail then return fail; fi;
     l:=enum!.parent;
     rep:=Representative(l);
-    act:=StabiliserAction(Parent(l));
+    act:=StabilizerAction(Parent(l));
     return act(LambdaOrbMult(LambdaOrb(l), LambdaOrbSCCIndex(l), tuple[1])[2]
      *rep, tuple[2]);
   end;
@@ -695,7 +693,7 @@ function(r)
     if tuple=fail then return fail; fi;
     r:=enum!.parent;
     rep:=Representative(r);
-    return StabiliserAction(Parent(r))(rep,tuple[1])
+    return StabilizerAction(Parent(r))(rep,tuple[1])
      *LambdaOrbMult(LambdaOrb(r), LambdaOrbSCCIndex(r), tuple[2])[1];
   end;
   #

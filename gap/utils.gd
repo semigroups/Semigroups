@@ -17,11 +17,16 @@ DeclareGlobalFunction("SemigroupsMathJaxDefault");
 DeclareGlobalFunction("SemigroupsTestAll");
 DeclareGlobalFunction("SemigroupsTestInstall");
 DeclareGlobalFunction("SemigroupsTestManualExamples");
-DeclareGlobalFunction("SemigroupsTestManualExamples@");
 DeclareGlobalFunction("SemigroupsManualExamples");
 
-DeclareGlobalFunction("ReadGenerators");
+DeclareGlobalFunction("GeneratorsReadFile");
 DeclareGlobalFunction("ReadGeneratorsLine");
+DeclareGlobalFunction("ReadGenerators");
+DeclareGlobalFunction("GeneratorsWriteFile");
+DeclareGlobalFunction("WriteGeneratorsLine");
 DeclareGlobalFunction("WriteGenerators");
-DeclareOperation("ShortStringRep", [IsAssociativeElement]);
+
+DeclareOperation("ShortStringRep", [IsTransformation]);
+
+BindGlobal("SemigroupsOmitFromTestManualExamples", []);
 

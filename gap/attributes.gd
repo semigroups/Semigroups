@@ -18,7 +18,6 @@ DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
 DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 DeclareAttribute("IsomorphismReesMatrixSemigroup", IsGreensDClass);
-DeclareAttribute("IsomorphismPermGroup", IsTransformationSemigroup);
 DeclareAttribute("MinimalIdeal", IsSemigroup);
 DeclareAttribute("PosetOfIdempotents", IsSemigroup);
 DeclareAttribute("PrimitiveIdempotents", IsInverseSemigroup);
@@ -32,3 +31,13 @@ DeclareAttribute("StructureDescriptionMaximalSubgroups", IsActingSemigroup);
 DeclareAttribute("MaximalDClasses", IsSemigroup);
 DeclareAttribute("MaximalSubsemigroups", IsSemigroup);
 DeclareAttribute("MinimalDClass", IsSemigroup);
+DeclareAttribute("IsGreensDLeq", IsActingSemigroup);
+
+DeclareOperation("SubsemigroupByIndicesNC", 
+[IsReesMatrixSemigroup, IsDenseList, IsDenseList]);
+DeclareOperation("SubsemigroupByIndicesNC",
+[IsReesZeroMatrixSemigroup, IsDenseList, IsDenseList]);
+DeclareOperation("GeneratorsOfReesMatrixSubsemigroupNC",
+[IsReesMatrixSemigroup, IsGroup]);
+DeclareOperation("GeneratorsOfReesMatrixSubsemigroupNC",
+[IsReesZeroMatrixSemigroup, IsGroup]);

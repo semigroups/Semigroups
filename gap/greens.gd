@@ -94,7 +94,7 @@ DeclareAttribute("Idempotents", IsGreensClass);
 DeclareOperation("Idempotents", [IsSemigroup, IsInt]);
 DeclareSynonymAttr("GroupHClass", GroupHClassOfGreensDClass);
 
-DeclareAttribute("StructureDescription", IsGreensHClass and IsGroupHClass);
+DeclareAttribute("StructureDescription", IsGreensHClass);
 
 DeclareProperty("IsRegularClass", IsGreensClass);
 InstallTrueMethod(IsRegularClass, IsRegularDClass);

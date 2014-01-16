@@ -7,6 +7,56 @@
 ##
 #############################################################################
 
+
+1.3 -> 1.4  
+            This is a minor release containing some bug fixes. Specifically:
+            the functionality of ReadGenerators and WriteGenerators has been
+            improved to allow the argument to be an IO file object, and support
+            is added to read and write directly to files compressed using
+            xz. A minor bug relating to the creation of idempotents in
+            transformation semigroups which was triggered by the identity
+            transformation has been resolved. The functions
+            IsomorphismReesMatrixSemigroup, InjectionPrincipalFactor, and
+            IsZeroSimpleSemigroup have been revised. IsZeroSimpleSemigroup
+            formerly returned true for the 2 element zero semigroup, which is
+            not 0-simple. IsomorphismReesMatrixSemigroup could have returned an
+            error if called for a semigroup which was not a semigroup of
+            partial perms or transformations. The use of AsPermutation was
+            changed to PermutationOfImage where appropriate following a change
+            to the library methods for AsPermutation. The declarations of
+            IsomorphismPermGroup and ClosureSemigroup were moved/changed to
+            avoid warnings that their methods matched more than one
+            declaration. These warnings were exposed by doing LoadAllPackages,
+            but were not present when loading Semigroups by itself.
+
+1.2 -> 1.3  
+            Version 1.3 contains many bug fixes, extensions and improvements in
+            the documentation, and several new methods and functions. Most
+            notably are (in no particular order): 
+            
+            • the methods in Semigroups have been extended to apply to
+            arbitrary subsemigroups of regular Rees 0-matrix semigroups over
+            groups; 
+            
+            • a new method for MaximalSubsemigroups of Rees matrix
+            semigroup has been implemented; 
+            
+            • the function Read/WriteSemigroups have been renamed
+            Read/WriteGenerators and their performance has been improved. It is
+            now possible to use WriteGenerators to write to a gzipped file; 
+
+            • the operation SingularSemigroup has been renamed
+            SingularTransformationSemigroup;
+
+            • the following attributes have been introduced: MinimalDClass,
+            MaximalDClasses, StructureDescriptionMaximalSubgroups,
+            StructureDescriptionSchutzenbergerGroups, and IsGreensDLeq.
+            
+            • the attribute/operation DotDClasses has been introduced. This
+            allows the D-class diagram of a semigroup to be viewed.
+
+            • ComponentRepsOfTransformationSemigroup is reintroduced.
+
 1.1 -> 1.2
             This release includes several new methods for inverse semigroups of
             partial permutations and for free inverse semigroups. Most notably
@@ -44,7 +94,7 @@ Under the name Citrus:
 
 0.999 -> 0.9999
             This is the final release of Citrus (the package will be renamed
-            Semigroups in the next release since the scope of the package has
+            Citrus in the next release since the scope of the package has
             expanded to include more types of semigroups than just those of
             transformations and partial permutations).
 
@@ -75,7 +125,7 @@ Under the name Citrus:
             another minor release. Specific changes were: removed the
             declaration of SmallGeneratingSet for IsSemigroup since it appears
             not to be used and caused a warning to be shown when rcwa was
-            loaded after Semigroups. Added a new abstract to the PackageInfo.g
+            loaded after Citrus. Added a new abstract to the PackageInfo.g
             file, and the documentation, and updated the webpages, in
             particular so that the html version of the manual is linked to that
             on the GAP webpage and the links to other manuals work. 
@@ -89,7 +139,7 @@ Under the name Citrus:
 0.7 -> 0.8 
             minor changes due to incompatibility with Smallsemi 0.6.4 which 
             caused some test files to fail when Nilmat was loaded after
-            Semigroups.  The clashes and the failed test were caused by various
+            Citrus.  The clashes and the failed test were caused by various
             properties being declared for IsTransformationSemigroup rather than
             IsSemigroup. 
 
@@ -115,8 +165,8 @@ Under the name Citrus:
 0.5 -> 0.6 
             fixed a bug relating to the creation of transformation semigroups 
             using MagmaByGenerators. Also added the global variable 
-            SemigroupsOptionsRec containing the default values of the options used 
-            by Semigroups when creating a semigroup. 
+            CitrusOptionsRec containing the default values of the options
+            used by Citrus when creating a semigroup. 
 
 0.4 -> 0.5
             major changes are: the documentation has been further revised,
@@ -124,12 +174,12 @@ Under the name Citrus:
             options have been introduced, several functions have had the word
             `Greens' removed from their names to reduce the length, the
             operation ClosureSemigroup has been introduced, the functions
-            ReadSemigroups and WriteSemigroups for reading and writing transformations
-            to a file have been introduced, several catalogues of examples of
-            transformation semigroups are now included in the examples
-            directory, methods for creating a Green's class inside another
-            Green's class have been included (such as an R-class of a D-class
-            or an H-class of an L-class), the hash functions used for
+            ReadCitrus and WriteCitrus for reading and writing
+            transformations to a file have been introduced, several catalogues
+            of examples of transformation semigroups are now included in the
+            examples directory, methods for creating a Green's class inside
+            another Green's class have been included (such as an R-class of a
+            D-class or an H-class of an L-class), the hash functions used for
             transformations etc have been improved. 
             
             Some minor bugs have been fixed, and new methods or functions with
@@ -168,11 +218,11 @@ Under the name Citrus:
     
             fixed bugs in IndexPeriodOfTransformation (it returned incorrect
             results) and AsPermutation. Also reduce hash table lengths so that 
-            Semigroups uses less memory. Fixed bug that triggered an infinite
+            Citrus uses less memory. Fixed bug that triggered an infinite
             loop when trying to find elements of a trivial trans. semigroup.  
 
-            added the functions SemigroupsDefaultMem, SemigroupsHiMem, SemigroupsLoMem,
-            SemigroupsVeryLoMem, IsBrandtSemigroup, IsLeftSimple,
-            IsMonogenicSemigroup, IsRightSimple, IsZeroRectangularBand,
-            IsZeroSimpleSemigroup. 
+            added the functions CitrusDefaultMem, CitrusHiMem,
+            CitrusLoMem, CitrusVeryLoMem, IsBrandtSemigroup,
+            IsLeftSimple, IsMonogenicSemigroup, IsRightSimple,
+            IsZeroRectangularBand, IsZeroSimpleSemigroup. 
 

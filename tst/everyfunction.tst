@@ -3763,7 +3763,7 @@ gap> IsGroupHClass(h);
 true
 gap> IsomorphismPermGroup(h);
 MappingByFunction( {Transformation( [ 5, 6, 6, 5, 4, 3, 4 ] )}, Group([ (3,6)
-(4,5) ]), <Attribute "AsPermutation">, function( x ) ... end )
+(4,5) ]), function( x ) ... end, function( x ) ... end )
 gap> SchutzenbergerGroup(h);
 Group([ (3,6)(4,5) ])
 gap> repeat h:=NextIterator(iter); until IsRegularClass(h);
@@ -3793,10 +3793,10 @@ gap> IsGroupHClass(h);
 true
 gap> iso:=IsomorphismPermGroup(h); inv:=InverseGeneralMapping(iso);
 MappingByFunction( {Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )}, Group([ (3,6)
-(4,5) ]), <Attribute "AsPermutation">, function( x ) ... end )
+(4,5) ]), function( x ) ... end, function( x ) ... end )
 MappingByFunction( Group([ (3,6)
 (4,5) ]), {Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )
- }, function( x ) ... end, <Attribute "AsPermutation"> )
+ }, function( x ) ... end, function( x ) ... end )
 gap> ForAll(h, x-> (x^iso)^inv=x);
 true
 
@@ -3836,10 +3836,9 @@ gap> h:=GroupHClass(DClass(h));
 {PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}
 gap> iso:=IsomorphismPermGroup(h); inv:=InverseGeneralMapping(iso);
 MappingByFunction( {PartialPerm( [ 1, 2, 3 ], [ 1, 2, 3 ] )}, Group([ (1,2),
- (2,3) ]), <Attribute "AsPermutation">, function( x ) ... end )
+ (2,3) ]), function( x ) ... end, function( x ) ... end )
 MappingByFunction( Group([ (1,2), (2,3) ]), {PartialPerm(
- [ 1, 2, 3 ], [ 1, 2, 3 ]
-  )}, function( x ) ... end, <Attribute "AsPermutation"> )
+ [ 1, 2, 3 ], [ 1, 2, 3 ] )}, function( x ) ... end, function( x ) ... end )
 gap> ForAll(h, x-> (x^iso)^inv=x);
 true
 gap> repeat h:=NextIterator(iter); until Size(h)>1;
@@ -3922,8 +3921,7 @@ IdentityTransformation
 gap> IsGroupHClass(h);
 true
 gap> KnownPropertiesOfObject(h);
-[ "IsFinite", "IsDuplicateFree", "IsGroupHClass", 
-  "IsActingSemigroupGreensClass", "IsGreensClassNC" ]
+[ "IsFinite", "IsDuplicateFree", "IsGroupHClass", "IsGreensClassNC" ]
 gap> KnownAttributesOfObject(h);
 [ "Representative", "OneImmutable", "ParentAttr", "EquivalenceClassRelation", 
   "LambdaOrbSCCIndex", "RhoOrbSCCIndex", "LambdaOrb", "RhoOrb" ]

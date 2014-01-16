@@ -11,12 +11,12 @@
 DeclareCategory("IsActingSemigroup", IsSemigroup);
 DeclareCategory("IsActingSemigroupWithInverseOp", IsActingSemigroup);
 DeclareProperty("IsGeneratorsOfActingSemigroup", IsAssociativeElementCollection);
-DeclareProperty("IsActingSemigroupGreensClass", IsGreensClass);
+DeclareCategory("IsActingSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("ActionDegree", IsAssociativeElement);
 DeclareAttribute("ActionDegree", IsAssociativeElementCollection);
 DeclareAttribute("ActionRank", IsSemigroup);
-DeclareOperation("ActionRank", [IsAssociativeElement, IsPosInt]);
+DeclareOperation("ActionRank", [IsAssociativeElement, IsInt]);
 DeclareAttribute("MinActionRank", IsSemigroup);
 
 DeclareAttribute("RhoAct", IsSemigroup);
@@ -45,6 +45,10 @@ DeclareAttribute("IdempotentCreator", IsSemigroup);
 DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
 IsSemigroup);
 
-DeclareAttribute("StabiliserAction", IsSemigroup);
+DeclareAttribute("StabilizerAction", IsSemigroup);
+
+DeclareOperation("FakeOne", [IsAssociativeElementCollection]);
+
+DeclareGlobalFunction("ORB_HashFunctionReesZeroMatrixSemigroupElements");
 
 #EOF

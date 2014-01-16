@@ -9,6 +9,8 @@
 ##
 
 DeclareOperation("EvaluateWord", [IsPartialPermCollection, IsList]);
+DeclareOperation("EvaluateWord", 
+[IsReesZeroMatrixSemigroupElementCollection, IsList]);
 DeclareGlobalFunction("EnumeratePosition");
 DeclareGlobalFunction("LookForInOrb");
 DeclareGlobalFunction("OrbSCC");
@@ -19,3 +21,5 @@ DeclareGlobalFunction("SchreierTreeOfSCC");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCForward");
 DeclareGlobalFunction("TraceSchreierTreeOfSCCBack");
 
+DeclareAttribute("ComponentRepsOfTransformationSemigroup",
+IsTransformationSemigroup);

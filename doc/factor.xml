@@ -1,0 +1,69 @@
+#############################################################################
+##
+#W  slp.xml
+#Y  Copyright (C) 2011-13                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="Factorization">
+<ManSection> 
+  <Meth Name="Factorization" Arg="S, f"/>
+    <Returns>A word in the generators.</Returns>
+    <Description> 
+    <List>
+      <Mark>for semigroups</Mark>
+      <Item>
+        When <A>S</A> is a semigroup and <A>f</A> belongs to <A>S</A>, 
+        <C>Factorization</C> return a word in the generators of <A>S</A> that
+        is equal to <A>f</A>. In this case, a word is a list of positive
+        integers where <C>i</C> corresponds to
+        <C>GeneratorsOfSemigroups(S)[i]</C>.  More specifically,
+      <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, f))=f;</Log>
+      </Item>
+      <Mark>for inverse semigroups</Mark>
+      <Item>
+         When <A>S</A> is a inverse semigroup and <A>f</A> belongs to <A>S</A>,
+         <C>Factorization</C> return a word in the generators of <A>S</A> that
+         is equal to <A>f</A>. In this case, a word is a list of non-zero
+         integers where <C>i</C> corresponds to
+         <C>GeneratorsOfSemigroups(S)[i]</C> and <C>-i</C> corresponds to 
+         <C>GeneratorsOfSemigroups(S)[i]^-1</C>.
+         As in the previous case,
+      <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, f))=f;</Log>
+      </Item>
+    </List>
+      
+    Note that <C>Factorization</C> does not return a word of minimum length.
+    <P/> 
+
+    See also <Ref Func="EvaluateWord"/> and 
+    <Ref Func="GeneratorsOfSemigroup" BookName="ref"/>.
+<Example>
+gap> gens:=[ Transformation( [ 2, 2, 9, 7, 4, 9, 5, 5, 4, 8 ] ), 
+> Transformation( [ 4, 10, 5, 6, 4, 1, 2, 7, 1, 2 ] ) ];;
+gap> S:=Semigroup(gens);;
+gap> f:=Transformation( [ 1, 10, 2, 10, 1, 2, 7, 10, 2, 7 ] );;
+gap> Factorization(S, f);
+[ 2, 2, 1, 2 ]
+gap> EvaluateWord(gens, last);
+Transformation( [ 1, 10, 2, 10, 1, 2, 7, 10, 2, 7 ] )
+gap> S:=SymmetricInverseMonoid(8);
+&lt;symmetric inverse semigroup on 8 pts>
+gap> f:=PartialPerm( [ 1, 2, 3, 4, 5, 8 ], [ 7, 1, 4, 3, 2, 6 ] );
+[5,2,1,7][8,6](3,4)
+gap> Factorization(S, f);
+[ -2, -2, -2, -2, -2, -2, -2, 2, 2, 4, 4, 2, 3, 2, 3, -2, -2, -2, 2, 
+  3, 2, 3, -2, -2, -2, 2, 3, 2, 3, -2, -2, -2, 3, 2, 3, 2, 3, -2, -2, 
+  -2, 3, 2, 3, 2, 3, -2, -2, -2, 2, 3, 2, 3, -2, -2, -2, 2, 3, 2, 3, 
+  -2, -2, -2, 2, 3, 2, 3, -2, -2, -2, 2, 3, 2, 3, -2, -2, -2, 3, 2, 
+  3, 2, 3, -2, -2, -2, 2, 3, 2, 3, -2, -2, -2, 2, 3, 2, 3, -2, -2, 
+  -2, 2, 3, 2, 3, -2, -2, -2, 2, 3, 2, 2, 3, 2, 2, 2, 2 ]
+gap> EvaluateWord(GeneratorsOfSemigroup(S), last);
+[5,2,1,7][8,6](3,4)</Example>
+    </Description>
+  </ManSection>
+  <#/GAPDoc>
+
