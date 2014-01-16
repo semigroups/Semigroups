@@ -33,10 +33,10 @@ InstallTrueMethod(IsMatrixSemigroup, IsActingSemigroup);
 #        function(coll) return true; end);
 
 #T What is a sensible notion of degree here?
-#InstallMethod(ActionDegree,
-#        "for a matrix object",
-#        [IsMatrixObj],
-#        x -> 42);
+InstallMethod(ActionDegree,
+        "for a matrix object",
+        [IsPlistVectorRep and IsAssociativeElement],
+        x -> 42);
 #InstallMethod(ActionDegree,
 #        "for a matrix object collection",
 #        [IsMatrixObjCollection],
