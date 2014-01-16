@@ -1514,8 +1514,7 @@ function(x, value, scc, o, onright)
   if HasSemigroupDataIndex(x) then
     data:=SemigroupData(s);
     m:=LambdaOrbSCCIndex(x);
-    if data!.repslens[m][data!.orblookup1[SemigroupDataIndex(x)]]>1
-      then
+    if data!.repslens[m][data!.orblookup1[SemigroupDataIndex(x)]]>1 then
       return false;
     fi;
   fi; 
@@ -1788,32 +1787,39 @@ r-> NrIdempotents@(r, RhoFunc(Parent(r))(Representative(r)), LambdaOrbSCC(r), La
 InstallMethod(NrIdempotents, "for an acting semigroup", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local o, scc, data, reps, lenreps, repslens, rhofunc, tester, nr, rho, m, i, k;
+  local data, lambda, rho, scc, lenreps, repslens, rholookup, repslookup,
+   tester, nr, rhoval, m, ind, i;
 
   if HasIdempotents(s) then 
     return Length(Idempotents(s));
   fi;
 
-  o:=LambdaOrb(s);    scc:=OrbSCC(o);
-  
   data:=Enumerate(SemigroupData(s), infinity, ReturnFalse);
-  reps:=data!.reps; lenreps:=data!.lenreps; repslens:=data!.repslens;
-
-  rhofunc:=RhoFunc(s);
+  
+  lambda:=LambdaOrb(s);    
+  rho:=RhoOrb(s);
+  scc:=OrbSCC(lambda);
+  
+  lenreps:=data!.lenreps;
+  repslens:=data!.repslens;  
+  rholookup:=data!.rholookup;
+  repslookup:=data!.repslookup;
+ 
   tester:=IdempotentTester(s);
-
+  
   nr:=0;
   for m in [2..Length(scc)] do 
-    for i in [1..lenreps[m]] do 
-      rho:=rhofunc(reps[m][i][1]);
-      for k in scc[m] do 
-        if tester(o[k], rho) then 
-          nr:=nr+repslens[m][i];
-        fi;
-      od;
+    for ind in [1..lenreps[m]] do 
+      if repslens[m][ind]=1 then
+        rhoval:=rho[rholookup[repslookup[m][ind][1]]]; #rhofunc(reps[m][ind][1]);
+        for i in scc[m] do 
+          if tester(lambda[i], rhoval) then 
+            nr:=nr+1;
+          fi;
+        od;
+      fi;
     od;
   od;
-
 
   return nr;
 end);
@@ -1825,11 +1831,11 @@ end);
 InstallMethod(PartialOrderOfDClasses, "for an acting semigroup",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(s)
-  local d, n, out, gens, data, graph, datalookup, o, lambdafunc, rhofunc, scc, lookup, lambdarhoht, lambdaperm, repslookup, schutz, mults, reps, repslens, ht, l, m, val, j, f, i, x, k;
+  local d, n, out, data, gens, graph, lambdarhoht, datalookup, reps, repslens, ht, repslookup, lambdafunc, rhofunc, lambdaperm, o, orho, scc, lookup, schutz, mults, f, l, m, val, j, i, x, k;
 
   d:=GreensDClasses(s); 
   n:=Length(d);
-  out:=List([1..n], x-> EmptyPlist(n));
+  out:=List([1..n], x-> []);
   
   data:=SemigroupData(s);
   gens:=data!.gens;
@@ -1846,26 +1852,27 @@ function(s)
   lambdaperm:=LambdaPerm(s);
   
   o:=LambdaOrb(s);
+  orho:=RhoOrb(s);
   scc:=OrbSCC(o); 
   lookup:=OrbSCCLookup(o);
   schutz:=o!.schutzstab;
   mults:=o!.mults;
 
   for i in [1..n] do
-    for x in gens do
-      # collect info about left multiplying R-class reps of d[i] by gens
-      for j in SemigroupDataSCC(d[i]) do 
-        for k in graph[j] do  
-          AddSet(out[i], datalookup[k]);
-        od;
+    # collect info about left multiplying R-class reps of d[i] by gens
+    for j in SemigroupDataSCC(d[i]) do 
+      for k in graph[j] do  
+        AddSet(out[i], datalookup[k]);
       od;
-
+    od;
+    
+    for x in gens do
       for f in LClassReps(d[i]) do
         # the below is an expanded version of Position(data, f * x)
         f:=f*x;
         l:=Position(o, lambdafunc(f));
         m:=lookup[l];
-        val:=HTValue(lambdarhoht, rhofunc(f))[m];
+        val:=lambdarhoht[Position(orho, rhofunc(f))][m];
         if not IsBound(schutz[m]) then 
           LambdaOrbSchutzGp(o, m);
         fi;

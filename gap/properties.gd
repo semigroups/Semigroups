@@ -33,7 +33,9 @@ DeclareOperation("IsSynchronizingTransformationCollection",
 [IsTransformationCollection, IsPosInt]);
 DeclareProperty("IsUnitRegularSemigroup", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
+DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 
+InstallTrueMethod(IsActingSemigroupWithInverseOp, IsInverseSemigroup and IsRegularStarSemigroup and IsActingSemigroup);
 InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
 InstallTrueMethod(IsBlockGroup, IsInverseSemigroup);
@@ -53,6 +55,7 @@ InstallTrueMethod(IsSemilatticeAsSemigroup, IsDTrivial and IsInverseSemigroup);
 InstallTrueMethod(IsMonogenicInverseSemigroup, IsInverseSemigroup and IsMonogenicSemigroup);
 InstallTrueMethod(IsZeroRectangularBand, IsZeroGroup);
 InstallTrueMethod(IsZeroGroup, IsZeroRectangularBand and IsInverseSemigroup);
+InstallTrueMethod(IsRegularSemigroup, IsRegularStarSemigroup);
 InstallTrueMethod(IsInverseSemigroup, IsGroup);
 InstallTrueMethod(IsInverseSemigroup, IsBlockGroup and IsRegularSemigroup);
 #EOF

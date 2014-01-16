@@ -1,0 +1,43 @@
+#############################################################################
+##
+#W  semipperm.xml
+#Y  Copyright (C) 2011-14                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="ComponentRepsOfPartialPermSemigroup">
+<ManSection>
+  <Attr Name="ComponentRepsOfPartialPermSemigroup" Arg="S"/>
+  <Returns>The representatives of components of a partial perm semigroup.</Returns>
+  <Description>
+    This function returns the representatives of the components of the 
+    action of the partial perm semigroup <A>S</A> on the set of positive
+    integers on which it acts. The representatives are the least set of points
+    such that every point can be reached from some representative under the
+    action of <A>S</A>.
+  <Example>
+</Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ComponentsOfPartialPermSemigroup">
+<ManSection>
+  <Attr Name="ComponentsOfPartialPermSemigroup" Arg="S"/>
+  <Returns>The components of a partial perm semigroup.</Returns>
+  <Description>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="CyclesOfPartialPermSemigroup">
+<ManSection>
+  <Attr Name="CyclesOfPartialPermSemigroup" Arg="S"/>
+  <Returns>The cycles of a partial perm semigroup.</Returns>
+  <Description>
+  </Description>
+</ManSection>
+<#/GAPDoc>

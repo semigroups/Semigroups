@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  schreier.tst
+#W  factor.tst
 #Y  Copyright (C) 2011-13                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -9,7 +9,7 @@
 ##
 
 #
-gap> START_TEST("Semigroups package: schreier.tst");
+gap> START_TEST("Semigroups package: factor.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -143,4 +143,4 @@ true
 gap> SemigroupsStopTest();
 
 #
-gap> STOP_TEST("Semigroups package: schreier.tst", 10000);
+gap> STOP_TEST("Semigroups package: factor.tst", 10000);

@@ -9,6 +9,14 @@
 ##
 ## this file contains utilies for use with the Semigroups package. 
 
+#
+
+BindGlobal("SemigroupsDocXMLFiles",
+  ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
+   "attributes-inverse.xml", "bipartition.xml", "blocks.xml", "attributes.xml",
+   "semibipart.xml", "semitrans.xml", "semipperm.xml", "semigroups.xml", 
+   "factor.xml", "freeinverse.xml", "display.xml", "../PackageInfo.g"]);
+
 # <path> to the folder containing the timings, <vers> the version number to
 # check against.
 
@@ -146,16 +154,14 @@ function()
   return PackageInfo("semigroups")[1]!.InstallationPath;
 end);
 
+
 #
 
 InstallGlobalFunction(SemigroupsMakeDoc, 
 function()
   MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.
-   InstallationPath, "/doc"), "main.xml", 
-   ["utils.xml", "greens.xml", "orbits.xml", "properties.xml", "examples.xml",
-    "semigroups.xml", "attributes-inverse.xml", "factor.xml", "freeinverse.xml",
-    "attributes.xml", "display.xml", "../PackageInfo.g"],
-   "semigroups", "MathJax", "../../..");;
+   InstallationPath, "/doc"), "main.xml", SemigroupsDocXMLFiles, "semigroups",
+   "MathJax", "../../..");;
   return;
 end);
 
@@ -244,10 +250,7 @@ InstallGlobalFunction(SemigroupsManualExamples,
 function()
 return 
   ExtractExamples(DirectoriesPackageLibrary("semigroups","doc"), 
-  "main.xml",  [ "utils.xml", "examples.xml", "factor.xml", "greens.xml",
-  "orbits.xml", "properties.xml", "semigroups.xml",  "attributes-inverse.xml", 
-  "freeinverse.xml", "attributes.xml", "display.xml",
-  "../PackageInfo.g" ], "Single" );
+  "main.xml",  SemigroupsDocXMLFiles, "Single" );
 end);
 
 # if <arg> is some strings, then any example containing any of these strings is
@@ -315,7 +318,9 @@ function(arg)
       repeat  
         i:=i+1; line:=IO_ReadLine(file);
       until i=arg[2] or line="";
-      IO_Close(file);
+      if IsString(arg[1]) then 
+        IO_Close(file);
+      fi;
       if line="" then
         Error(arg[1], " only has ", i-1, " lines,"); 
         return;
@@ -362,6 +367,8 @@ function(line)
     Apply(out, TransformationNC); 
   elif line[1]='p' then # partial perms
     Apply(out, DensePartialPermNC);
+  elif line[1]='b' then #bipartitions
+    Apply(out, BipartitionByIntRepNC);
   fi;
 
   return out;
@@ -413,7 +420,7 @@ function(arg)
   elif file[Length(file)] = "xz" then 
     file:=IO_FilteredFile([["xz", ["-9q"]]], arg[1], mode);
   else  
-    file:=IO_File(arg[1]);
+    file:=IO_File(arg[1], mode);
   fi;
   return file;
 end);
@@ -422,7 +429,7 @@ end);
 
 InstallGlobalFunction(WriteGenerators, 
 function(arg)
-  local trans, gens, append, gzip, mode, file, line, deg, nrdigits, i, writin, s, f;
+  local file, trans, gens, append, gzip, mode, line, deg, nrdigits, blocks, i, writin, s, f;
   
   if not (Length(arg)=3 or Length(arg)=2) then
     Error("usage: there should be 2 or 3 arguments,"); 
@@ -443,12 +450,14 @@ function(arg)
   fi;
 
   if IsTransformationCollection(arg[2]) 
-    or IsPartialPermCollection(arg[2]) then 
-    trans:=[arg[2]];
+    or IsPartialPermCollection(arg[2])
+    or IsBipartitionCollection(arg[2]) then 
+      trans:=[arg[2]];
   elif IsList(arg[2]) and IsBound(arg[2][1]) 
    and (IsTransformationCollection(arg[2][1]) 
-    or IsPartialPermCollection(arg[2][1])) then 
-    trans:=arg[2];
+    or IsPartialPermCollection(arg[2][1])
+    or IsBipartitionCollection(arg[2][1])) then 
+      trans:=arg[2];
   else
     Error("usage: the 2nd argument must be transformation or partial perm\n",
     "semigroup or collection, or a list of such semigroups or collections,");
@@ -459,7 +468,8 @@ function(arg)
 
   for i in [1..Length(trans)] do 
     if IsTransformationSemigroup(trans[i]) 
-      or IsPartialPermSemigroup(trans[i]) then 
+     or IsPartialPermSemigroup(trans[i]) 
+     or IsBipartitionSemigroup(trans[i]) then 
       gens[i]:=GeneratorsOfSemigroup(trans[i]);
       # we could use a smaller generating set (i.e. GeneratorsOfMonoid,
       # GeneratorsOfInverseSemigroup etc) but we have no way of knowing which
@@ -512,10 +522,25 @@ function(arg)
           append(line, i^f, nrdigits);
         od;
       od;
+      IO_WriteLine(file, line);
     od;
-    IO_WriteLine(file, line);
+  elif IsBipartitionCollection(gens[1]) then 
+    for s in gens do 
+      line:="b";
+      for f in s do 
+        deg:=String(2*DegreeOfBipartition(f));
+        nrdigits:=Length(deg);
+        Append(line, String(nrdigits));
+        Append(line, deg);
+        blocks:=f!.blocks;
+        for i in [1..Length(blocks)] do 
+          append(line, blocks[i], nrdigits);
+        od;
+      od;
+      IO_WriteLine(file, line);
+    od;
   fi;
-
+  
   if IsString(arg[1]) then  
     IO_Close(file);
   fi;
@@ -548,6 +573,9 @@ function(f)
     deg:=DegreeOfPartialPerm(f);
     strdeg:=String(strdeg);
     nrdigits:=Length(String(Maximum(deg, CodegreeOfPartialPerm(f))));
+  elif IsBipartition(f) then 
+    line:="b";
+    Error("not yet implemented");
   fi;
   
   Append(line, String(nrdigits));

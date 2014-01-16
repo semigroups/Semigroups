@@ -418,8 +418,7 @@ gap> GreensRClasses(D);
       hand, if <A>f</A> is not an element of <A>X</A>, then the results of this
       computation are unpredictable.<P/> 
 
-      For example, if <Log>f:=Transformation( [ 15, 18, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 
-      20, 20, 20, 20, 20, 20 ] );</Log>
+      For example, if <Log>f:=Transformation( [ 15, 18, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20 ] );</Log>
       in the semigroup <A>X</A> of order-preserving mappings on 20 points, then
       <Log>GreensRClassOfElementNC(X, f);;</Log>
       returns an answer relatively quickly, whereas 
@@ -841,7 +840,7 @@ gap> Size(r);
   <Attr Name="NrLClasses" Arg="obj"/>
   <Attr Name="NrRClasses" Arg="obj"/>
   <Returns>
-  A positive integer.
+    A positive integer.
   </Returns>
   <Description>  
   <C>NrXClasses</C> returns the number of Green's classes in <A>obj</A> where
@@ -893,7 +892,7 @@ gap> Size(S);
 6342
 gap> f:=Transformation( [ 1, 3, 3, 1, 3, 5 ] );;
 gap> D:=DClass(S, f);
-{Transformation( [ 2, 1, 1, 2, 1, 4 ] )}
+{Transformation( [ 2, 4, 2, 2, 2, 1 ] )}
 gap> NrRClasses(D);
 87
 gap> s:=SymmetricInverseSemigroup(10);;

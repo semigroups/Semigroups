@@ -8,6 +8,14 @@
 ############################################################################# 
 ##
 
+DeclareCategory("IsAssociativeElementWithStar", IsAssociativeElement);
+DeclareCategoryCollections("IsAssociativeElementWithStar");
+DeclareOperation("StarOp", [IsAssociativeElementWithStar]);
+DeclareAttribute("Star", IsAssociativeElementWithStar);
+
+DeclareSynonym("IsRegularStarSemigroup", IsRegularSemigroup and                 IsAssociativeElementWithStarCollection);
+
+DeclareOperation("InverseOp", [IsAssociativeElementWithStar]);
 
 DeclareOperation("SemigroupByGenerators",
 [IsAssociativeElementCollection, IsRecord]);
@@ -42,7 +50,7 @@ DeclareOperation("ClosureSemigroup",
 [IsActingSemigroup, IsAssociativeElement]);
 DeclareGlobalFunction("ClosureSemigroupNC");
 
-DeclareGlobalFunction("RebaseTransformationSemigroupLambdaOrb");
+DeclareGlobalFunction("ChangeDegreeOfTransformationSemigroupOrb");
 
 DeclareAttribute("Generators", IsSemigroup);
 
@@ -56,6 +64,8 @@ DeclareOperation("RandomTransformationMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomTransformationSemigroup", [IsPosInt, IsPosInt]);
 DeclareSynonym("RandomPartialPermSemigroup", RandomBlockGroup);
 DeclareOperation("RandomPartialPermMonoid", [IsPosInt, IsPosInt]);
+DeclareOperation("RandomBipartitionSemigroup", [IsPosInt, IsPosInt]);
+DeclareOperation("RandomBipartitionMonoid", [IsPosInt, IsPosInt]);
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
 DeclareOperation("SubsemigroupByProperty", 

@@ -13,7 +13,7 @@
 # the first three main functions should be updated!
 
 ## Methods for inverse acting semigroups consisting of acting elements with a
-## ^-1 operator. 
+## method for InverseOp. 
 
 # change f so that its rho value is in the first position of its scc. 
 
@@ -923,13 +923,15 @@ end);
 #
 
 InstallMethod(RClassReps, "for an acting semigroup with inverse op",
-[IsActingSemigroupWithInverseOp], s-> List(LClassReps(s), x-> x^-1));
+[IsActingSemigroupWithInverseOp], s-> List(LClassReps(s), x-> Inverse(x)));
 
 #
 
 InstallMethod(RClassReps, "for a D-class of an acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
-d-> List(LClassReps(d), x-> x^-1));
+d-> List(LClassReps(d), x-> Inverse(x)));
+
+#
 
 InstallMethod(Random, "for an acting semigroup with inverse op",
 [IsActingSemigroupWithInverseOp],
@@ -1142,7 +1144,7 @@ function(s)
     for x in gens do  
       for f in RClassReps(d[i]) do
         AddSet(out[i], lookup[Position(o, lambdafunc(x*f))]-1);      
-        AddSet(out[i], lookup[Position(o, lambdafunc(f^-1*x))]-1);     
+        AddSet(out[i], lookup[Position(o, lambdafunc(Inverse(f)*x))]-1);     
       od; 
     od;
   od; 

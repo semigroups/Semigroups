@@ -273,13 +273,27 @@ end);
 
 InstallMethod(IsHTrivial, "for an acting semigroup with generators", 
 [IsActingSemigroup and HasGeneratorsOfSemigroup], 
-function(s)
-  local iter, d;
+function(S)
+  local iter, x;
 
-  iter:=IteratorOfDClasses(s);
+  if IsTransformationSemigroup(S) then 
+    for x in GeneratorsOfSemigroup(S) do 
+      if IndexPeriodOfTransformation(x)[2]<>1 then 
+        return false;
+      fi;
+    od;
+  elif IsPartialPermSemigroup(S) then 
+    for x in GeneratorsOfSemigroup(S) do 
+      if IndexPeriodOfPartialPerm(x)[2]<>1 then 
+        return false;
+      fi;
+    od;
+  fi;
+
+  iter:=IteratorOfDClasses(S);
   
-  for d in iter do  
-    if not IsTrivial(SchutzenbergerGroup(d)) then 
+  for x in iter do  
+    if not IsTrivial(SchutzenbergerGroup(x)) then 
       return false;
     fi;
   od;
@@ -340,23 +354,48 @@ InstallMethod(IsRTrivial, "for an inverse semigroup",
 
 #
 
+InstallMethod(IsRTrivial, "for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup], 
+function(S)
+  if ForAny(GeneratorsOfSemigroup(S), x-> 
+   ForAny(CyclesOfTransformation(x), y-> Length(y)>1)) then 
+    return false;
+  else
+    return ForAll(CyclesOfTransformationSemigroup(S), x-> Length(x)=1);
+  fi;
+end);
+
+#
+
+InstallMethod(IsRTrivial, "for a partial perm semigroup with generators",
+[IsPartialPermSemigroup], 
+function(S)
+  if ForAny(GeneratorsOfSemigroup(S), x-> 
+   ForAny(CyclesOfPartialPerm(x), y-> Length(y)>1)) then 
+    return false;
+  else
+    return ForAll(CyclesOfPartialPermSemigroup(S), x-> Length(x)=1);
+  fi;
+end);
+
+#
+
 InstallMethod(IsRTrivial, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
+function(S)
   local iter, x;
 
-  if IsClosed(SemigroupData(s)) and IsClosed(RhoOrb(s)) then 
-    for x in GreensDClasses(s) do 
+  if IsClosed(SemigroupData(S)) and IsClosed(RhoOrb(S)) then 
+    for x in GreensDClasses(S) do 
       if (not IsTrivial(SchutzenbergerGroup(x))) or Length(LambdaOrbSCC(x))>1 
        then
         return false;
       fi;
     od;
-	
     return true;
   fi;
 
-  iter:=IteratorOfRClasses(s); 
+  iter:=IteratorOfRClasses(S); 
   
   for x in iter do
     if (not IsTrivial(SchutzenbergerGroup(x))) or
@@ -717,7 +756,7 @@ function(s)
     and IsCompletelyRegularSemigroup(s) then 
     Info(InfoSemigroups, 2, "the semigroup is completely regular");
     return true;
-  elif HasGreensDClasses(s) then 
+  else #HasGreensDClasses(s) then 
     return ForAll(GreensDClasses(s), IsRegularDClass);
   fi;
 
@@ -1136,5 +1175,54 @@ function(S)
   D:=NextIterator(iter);
   return IsDoneIterator(iter) and IsRegularDClass(D);
 end);
+
+#
+
+InstallMethod(IsCongruenceFreeSemigroup,
+"for a finite semigroup",
+[IsSemigroup],
+function(s)
+  local t, p, rowsDiff;
+  
+  rowsDiff := function(p)
+    local i, j;
+    for i in [1..Size(p)-1] do
+      for j in [i+1..Size(p)] do
+        if p[i] = p[j] then
+          return false;
+        fi;
+      od;
+    od;
+    return true;
+  end;
+  
+  if Size(s) <= 2 then
+    return true;
+  fi;
+  
+  if MultiplicativeZero(s) <> fail then
+    # CASE 1: s has zero
+    if IsZeroSimpleSemigroup(s) then
+      # Find an isomorphic RMS
+      t := Range(IsomorphismReesMatrixSemigroup(s));
+      if IsTrivial(UnderlyingSemigroup(t)) then
+        # Check that no two rows or columns are identical
+        p := Matrix(t);
+        if rowsDiff(p) and rowsDiff(TransposedMat(p)) then
+          return true;
+        fi;
+      fi;
+    fi;
+    return false;
+  else
+    # CASE 2: s has no zero
+    return IsGroup(s) and IsSimpleGroup(s);
+  fi;
+end);
+
+# for general semigroups...
+
+InstallMethod(IsRTrivial, "for a semigroup", 
+[IsSemigroup], S-> Size(S)=NrRClasses(S));
 
 #EOF

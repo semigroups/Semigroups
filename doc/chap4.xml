@@ -1,0 +1,136 @@
+<Chapter Label="bipartition">
+  <Heading>
+    Bipartitions and blocks
+  </Heading>
+
+  PREAMBLE...
+
+  In this chapter we describe the functions in &Semigroups; for creating
+  and manipulating bipartitions. 
+  
+  <Section><Heading>The family and categories of bipartitions</Heading>
+    <#Include Label="IsBipartition">
+    <#Include Label="IsBipartitionCollection">
+    <#Include Label="BipartitionFamily">
+  </Section>
+  
+  <Section Label="creating-bipartitions">
+    <Heading>Creating bipartitions</Heading>
+  There are several ways of creating bipartitions in &GAP;, which are
+  described in this section.
+    <#Include Label="Bipartition">
+    <#Include Label="BipartitionByIntRep">
+    <#Include Label="IdentityBipartition">
+    <#Include Label="LeftProjection">
+    <#Include Label="RightProjection">
+    <#Include Label="StarOp">
+    <#Include Label="RandomBipartition">
+  </Section>
+
+  <Section Label="changing-rep-bipartitions">
+    <Heading>Changing the representation of a bipartition</Heading>
+   It  is  possible that a bipartition in &GAP; can be represented as another
+  type  of object, or that another type of &GAP; object can be represented as a
+  bipartition. In this section, we describe the functions in the &Semigroups;
+  package for changing the representation of bipartition, or for changing the
+  representation of another type of object to that of a bipartition.<P/> 
+  
+  The  operations  <Ref Oper="AsPermutation" Label="for a bipartition"/>, 
+  <Ref Oper="AsPartialPerm" Label="for a bipartition"/>, 
+  <Ref Oper="AsTransformation" Label="for a bipartition"/> can be 
+  used  to convert bipartitions into permutations, partial permutations, or
+  transformations where  appropriate.  
+    <#Include Label="AsBipartition"/>
+    <#Include Label="AsBlockBijection"/>
+    <#Include Label="AsTransformation"/>
+    <#Include Label="AsPartialPerm"/>
+    <#Include Label="AsPermutation"/>
+  </Section>
+ 
+  <Section Label="operators-bipartitions">
+  <Heading>Operators for bipartitions</Heading>
+    <List>
+     <Mark><C><A>f</A> * <A>g</A></C></Mark>
+     <Item>
+       <Index Key="*"><C>*</C> (for transformations)</Index>
+       returns the composition of <A>f</A> and <A>g</A> when <A>f</A> and
+       <A>g</A> are transformations or permutations. The product of a
+       permutation and a transformation is returned as a transformation.
+     </Item>
+     <Mark><C><A>f</A> &lt; <A>g</A></C></Mark>
+    <Item>
+      <Index Key="&lt;"><C>&lt;</C> (for transformations)</Index>
+      returns <K>true</K> if the image list of <A>f</A>
+      is lexicographically less than the image list of <A>g</A>
+      and <K>false</K> if it is not.
+    </Item>
+    <Mark><C><A>f</A> = <A>g</A></C></Mark>
+    <Item>
+      <Index Key="="><C>=</C> (for transformations)</Index>
+      returns <K>true</K> if the transformation <A>f</A> equals the
+      transformation <A>g</A> and returns <K>false</K> if it does not.
+    </Item>
+   </List> 
+   
+   <#Include Label="PermLeftQuoBipartition">
+   <#Include Label="OnRightBlocksBipartitionByPerm">
+ </Section>    
+
+  <Section Label="attributes-bipartitions">
+  <Heading>Attributes for bipartitons</Heading>
+     In this section we describe various attributes for bipartitions. 
+    <#Include Label="IsTransBipartition">
+    <#Include Label="IsDualTransBipartition">
+    <#Include Label="IsPermBipartition">
+    <#Include Label="IsPartialPermBipartition">
+    <#Include Label="IsBlockBijection">
+    <#Include Label="DegreeOfBipartition">
+    <#Include Label="RankOfBipartition">
+    <#Include Label="ExtRepOfBipartition">
+    <#Include Label="NrBlocks">
+    <#Include Label="NrLeftBlocks">
+    <#Include Label="NrRightBlocks">
+    <#Include Label="RightBlocks">
+    <#Include Label="LeftBlocks">
+  </Section> 
+
+  <Section><Heading>Creating blocks and their attributes</Heading>
+    As (not) described above the left and right blocks of a bipartition
+    characterise Green's &R;- and &L;-relation on the partition monoid. 
+    In this section, we describe the functions in the &Semigroups; package for
+    creating and manipulating blocks.
+    <#Include Label="ExtRepOfBlocks">
+    <#Include Lable="NrBlocks">
+    <#Include Label="RankOfBlocks">
+    <#Include Label="DegreeOfBlocks">
+  </Section>
+
+  <Section><Heading>Actions on blocks</Heading>
+    <#Include Label="OnRightBlocks">
+    <#Include Label="OnLeftBlocks">
+    <#Include Label="PermRightBlocks">
+    <#Include Label="InverseRightBlocks">
+    <#Include Label="InverseLeftBlocks">
+  </Section>
+
+  <!--  <Section><Heading>Visualising blocks and bipartitions</Heading>
+    There are some functions in &Semigroups; for creating &LaTeX; pictures of
+    bipartitions and blocks. Descriptions of these methods can be found in this
+    section. <P/>
+
+    Many of the functions described herein return a string, which can be
+    written to a file using the function 
+    <Ref Func="FileString" BookName="GAPDoc"/>.
+  </Section>-->
+
+  <Section><Heading>Semigroups of bipartitions</Heading>
+  
+    <#Include Label="IsBipartitionSemigroup">
+    <#Include Label="IsBlockBijectionSemigroup">
+    <#Include Label="DegreeOfBipartitionSemigroup">
+    <#Include Label="IsomorphismBipartitionSemigroup">
+    <#Include Label="IsomorphismBlockBijectionSemigroup">
+
+  </Section>
+</Chapter>
+
