@@ -9,6 +9,11 @@
 #############################################################################
 ##
 
+# This certainly is a collection of associative elements under the assumption
+# that the multiplication only has to be associative if it works.
+InstallTrueMethod(IsAssociativeElementCollection
+        , IsMatrixSemigroupElementCollection);
+
 # Note that for technical reasons we cannot
 # use IsMatrixObjCollection here.
 InstallMethod(SemigroupByGenerators,
@@ -26,8 +31,31 @@ function( gens )
     fi;
 end);
 
-#
-#
+
+InstallTrueMethod(IsActingSemigroup, IsMatrixSemigroup);
+
+#T Are these still needed
+InstallMethod(OneMutable, "for ring element coll coll coll",
+[IsRingElementCollCollColl], x-> One(Representative(x)));
+
+InstallMethod(IsGroupAsSemigroup, "for a matrix semigroup",
+[IsMatrixSemigroup],
+s-> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(s))));
+
+
+#############################################################################
+##
+## Methods for acting semigroups setup
+##
+#############################################################################
+
+
+#############################################################################
+##
+#M IsGeneratorsOfActingSemigroups
+##
+#############################################################################
+##
 ## A homogenous collection of matrices of the same size
 ## This is InstallOtherMethod because a list of matrices
 ## is not in IsAssociativeElementCollection
@@ -59,31 +87,21 @@ function( gens )
     fi;
 end);
 
-
-InstallTrueMethod(IsActingSemigroup, IsMatrixSemigroup);
-
-
-InstallMethod(OneMutable, "for ring element coll coll coll",
-[IsRingElementCollCollColl], x-> One(Representative(x)));
-
-InstallMethod(IsGroupAsSemigroup, "for a matrix semigroup",
-[IsMatrixSemigroup],
-s-> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(s))));
-
-
-
-#############################################################################
-##
-#M  Methods for acting semigroups setup
-##
-#############################################################################
-##
-
+#T Is this still needed?
 InstallTrueMethod(IsMatrixSemigroup, IsActingSemigroup);
-#InstallMethod(IsGeneratorsOfActingSemigroup,
-#        "for a matrix semigroup",
-#        [ IsMatrixSemigroupElementCollection ],
-#        function(coll) return true; end);
+
+InstallOtherMethod(FakeOne, "hack for matrices",
+        [IsHomogeneousList and IsRingElementCollCollColl],
+function(elts)
+    if IsGeneratorsOfActingSemigroup(elts) then
+        return One;
+    else
+        TryNextMethod();
+    fi;
+end);
+
+InstallMethod(FakeOne, "for a collection of MatrixObjs",
+        [IsMatrixSemigroupElementCollection], One);
 
 #T What is a sensible notion of degree here?
 InstallMethod(ActionDegree,

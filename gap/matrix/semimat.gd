@@ -13,6 +13,9 @@
 DeclareSynonym("IsMatrixSemigroup", IsSemigroup and IsRingElementCollCollColl);
 DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
 
+DeclareCategory("IsMatrixSemigroupElement", IsMatrixObj);
+DeclareCategoryCollections("IsMatrixSemigroupElement");
+
 
 #############################################################################
 ##
