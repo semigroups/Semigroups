@@ -17,6 +17,8 @@ DeclareSynonym("IsRegularStarSemigroup", IsRegularSemigroup and                 
 
 DeclareOperation("InverseOp", [IsAssociativeElementWithStar]);
 
+DeclareGlobalFunction("InternalSemigroupByGenerators");
+
 DeclareOperation("SemigroupByGenerators",
 [IsAssociativeElementCollection, IsRecord]);
 
