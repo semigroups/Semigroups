@@ -9,6 +9,21 @@
 #############################################################################
 ##
 
+# Note that for technical reasons we cannot
+# use IsMatrixObjCollection here.
+InstallMethod(SemigroupByGenerators,
+        "for a list of matrices",
+        [IsHomogeneousList and IsRingElementCollCollColl],
+function( gens )
+    if Length(gens) > 0 and
+       IsMatrixObj(gens[1]) and
+       IsAssociativeElement(gens[1]) then
+        # Make a matrix semigroup
+        Error("not implemented\n");
+    else
+        TryNextMethod();
+    fi;
+end);
 
 InstallMethod(OneMutable, "for ring element coll coll coll",
 [IsRingElementCollCollColl], x-> One(Representative(x)));
@@ -35,29 +50,33 @@ InstallTrueMethod(IsMatrixSemigroup, IsActingSemigroup);
 #T What is a sensible notion of degree here?
 InstallMethod(ActionDegree,
         "for a matrix object",
-        [IsPlistVectorRep and IsAssociativeElement],
+        # MatrixObj are not per default IsAssociativeElement
+        [IsMatrixObj and IsAssociativeElement],
         x -> 42);
-#InstallMethod(ActionDegree,
-#        "for a matrix object collection",
-#        [IsMatrixObjCollection],
-#        x->42);
+InstallOtherMethod(ActionDegree,
+        "for a matrix object collection",
+        # note that we have to ensure associativity here
+        # and the type of collection
+        [IsHomogeneousList],
+        x->42);
 #InstallMethod(ActionDegree,
 #        "for a matrix semigroup with generators",
 #        [IsMatrixSemigroup and HasGeneratorsOfSemigroup],
 #        x->42);
-#InstallMethod(ActionRank,
-#        "for a matrix object",
-#        [IsMatrixObj],
-#        x->42);
-#
-#InstallMethod(ActionRank,
-#        "for a matrix object collection",
-#        [IsMatrixObjCollection],
-#        x->42);
+
+InstallMethod(ActionRank,
+        "for a matrix object",
+        [IsMatrixObj and IsAssociativeElement, IsInt],
+function(x,y) 
+    Error("not implemented\n");
+end);
 InstallMethod(ActionRank,
         "for a matrix semigroup with generators",
         [IsMatrixSemigroup and HasGeneratorsOfSemigroup],
-        x->42);
+function( S )
+    Error("not implemented\n");
+end);
+
 InstallMethod(MinActionRank,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
