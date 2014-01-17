@@ -35,12 +35,15 @@ end);
 InstallTrueMethod(IsActingSemigroup, IsMatrixSemigroup);
 
 #T Are these still needed
-InstallMethod(OneMutable, "for ring element coll coll coll",
-[IsRingElementCollCollColl], x-> One(Representative(x)));
+InstallMethod(OneMutable,
+    "for ring element coll coll coll",
+    [IsRingElementCollCollColl],
+    x-> One(Representative(x)));
 
-InstallMethod(IsGroupAsSemigroup, "for a matrix semigroup",
-[IsMatrixSemigroup],
-s-> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(s))));
+InstallMethod(IsGroupAsSemigroup,
+    "for a matrix semigroup",
+    [IsMatrixSemigroup],
+    s-> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(s))));
 
 
 #############################################################################
@@ -65,8 +68,8 @@ s-> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(s))));
 ## empty generating sets
 #
 InstallOtherMethod(IsGeneratorsOfActingSemigroup,
-        "for a list of matrices (special case)",
-        [IsHomogeneousList and IsRingElementCollCollColl],
+    "for a list of matrices (special case)",
+    [IsHomogeneousList and IsRingElementCollCollColl],
 function( gens )
     local m, dims;
 
@@ -90,8 +93,9 @@ end);
 #T Is this still needed?
 InstallTrueMethod(IsMatrixSemigroup, IsActingSemigroup);
 
-InstallOtherMethod(FakeOne, "hack for matrices",
-        [IsHomogeneousList and IsRingElementCollCollColl],
+InstallOtherMethod(FakeOne,
+    "for a list of matrices (hack)",
+    [IsHomogeneousList and IsRingElementCollCollColl],
 function(elts)
     if IsGeneratorsOfActingSemigroup(elts) then
         return One;
@@ -100,17 +104,19 @@ function(elts)
     fi;
 end);
 
-InstallMethod(FakeOne, "for a collection of MatrixObjs",
-        [IsMatrixSemigroupElementCollection], One);
+InstallMethod(FakeOne,
+    "for a collection of elements of a matrix semigroup",
+    [IsMatrixSemigroupElementCollection],
+    One);
 
 #T What is a sensible notion of degree here?
 InstallMethod(ActionDegree,
-        "for a matrix object",
-        # MatrixObj are not per default IsAssociativeElement
-        [IsMatrixObj and IsAssociativeElement],
-        x -> 42);
+    "for a matrix object",
+    # MatrixObj are not per default IsAssociativeElement
+    [IsMatrixObj and IsAssociativeElement],
+    x -> 42);
 InstallOtherMethod(ActionDegree,
-        "for a matrix object collection",
+    "for a matrix object collection",
         # note that we have to ensure associativity here
         # and the type of collection
         [IsHomogeneousList],
