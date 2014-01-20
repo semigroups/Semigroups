@@ -8,6 +8,8 @@
 ##
 #############################################################################
 ##
+## Some of this code is based on code taken from grpmat.gd in the GAP
+## library
 
 #T Is there a better way of saying what a matrix semigroup is?
 DeclareSynonym("IsMatrixSemigroup", IsSemigroup and IsRingElementCollCollColl);
