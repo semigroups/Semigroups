@@ -67,7 +67,7 @@ InstallMethod(IsGroupAsSemigroup,
 ## matrix semigroup in this setting so we don't allow
 ## empty generating sets
 #
-InstallOtherMethod(IsGeneratorsOfActingSemigroup,
+InstallMethod(IsGeneratorsOfActingSemigroup,
     "for a list of matrices (special case)",
     [IsHomogeneousList and IsRingElementCollCollColl],
 function( gens )

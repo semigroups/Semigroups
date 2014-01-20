@@ -16,6 +16,16 @@ DeclareOperation("OneMutable", [IsRingElementCollCollColl]);
 DeclareCategory("IsMatrixSemigroupElement", IsMatrixObj);
 DeclareCategoryCollections("IsMatrixSemigroupElement");
 
+#############################################################################
+##
+#T This should really be IsSemiringCollCollColl or alternatively
+## IsAssociativeElementList.
+## The MatrixObj interface requires the base domain to be a ring,
+## which can be  non-associative, but declares matrices to be a 
+## CollColl, which makes it impossible to tell whether a list
+## of Matrices has IsAssociativeElementCollection
+DeclareProperty("IsGeneratorsOfActingSemigroup",
+    IsHomogeneousList and IsRingElementCollCollColl);
 
 #############################################################################
 ##
