@@ -31,10 +31,11 @@ function( gens )
     fi;
 end);
 
-
-InstallTrueMethod(IsActingSemigroup, IsMatrixSemigroup);
+#T Hack?
+InstallTrueMethod(IsAssociativeElementCollection, IsMatrixSemigroup);
 
 #T Are these still needed
+#T This returns immutable 
 InstallMethod(OneMutable,
     "for ring element coll coll coll",
     [IsRingElementCollCollColl],
@@ -90,9 +91,6 @@ function( gens )
     fi;
 end);
 
-#T Is this still needed?
-InstallTrueMethod(IsMatrixSemigroup, IsActingSemigroup);
-
 InstallOtherMethod(FakeOne,
     "for a list of matrices (hack)",
     [IsHomogeneousList and IsRingElementCollCollColl],
@@ -109,40 +107,53 @@ InstallMethod(FakeOne,
     [IsMatrixSemigroupElementCollection],
     One);
 
-#T What is a sensible notion of degree here?
+## Degree is the number of rows/columns.
+#T It is not checked yet that the dimensions
+#T of the matrix match
 InstallMethod(ActionDegree,
     "for a matrix object",
     # MatrixObj are not per default IsAssociativeElement
     [IsMatrixObj and IsAssociativeElement],
-    x -> 42);
+    RowLength);
 InstallOtherMethod(ActionDegree,
     "for a matrix object collection",
-        # note that we have to ensure associativity here
-        # and the type of collection
-        [IsHomogeneousList],
-        x->42);
-#InstallMethod(ActionDegree,
-#        "for a matrix semigroup with generators",
-#        [IsMatrixSemigroup and HasGeneratorsOfSemigroup],
-#        x->42);
+    # note that we have to ensure associativity here
+    # and the type of collection
+    [IsHomogeneousList and IsRingElementCollCollColl],
+function(coll)
+    if IsGeneratorsOfActingSemigroup(coll) then
+        return RowLength(coll[1]);
+    else
+        #T Error() here?
+        return fail;
+    fi;
+end);
+InstallMethod(ActionDegree,
+        "for a matrix semigroup with generators",
+        [IsMatrixSemigroup],
+function(S)
+    return ActionDegree(GeneratorsOfSemigroup(S));
+end);
 
 InstallMethod(ActionRank,
-        "for a matrix object",
+        "for a matrix object and a positive integer",
         [IsMatrixObj and IsAssociativeElement, IsInt],
-function(x,y)
-    Error("not implemented\n");
+function(x, y)
+    #T I assume that y is supposed to be a larger enclosing
+    ## thing in certain cases (transformations on n points)?
+    return RankMat(x);
 end);
 InstallMethod(ActionRank,
         "for a matrix semigroup with generators",
         [IsMatrixSemigroup and HasGeneratorsOfSemigroup],
-function( S )
-    Error("not implemented\n");
+function( s )
+    return RankMat;
 end);
 
 InstallMethod(MinActionRank,
         "for a matrix semigroup",
         [IsMatrixSemigroup],
-        x -> 1);
+        x -> 0);
 InstallMethod(LambdaOrbOpts,
         "for a matrix semigroup",
         [IsMatrixSemigroup],

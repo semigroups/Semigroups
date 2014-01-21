@@ -29,6 +29,8 @@ DeclareCategoryCollections("IsMatrixSemigroupElement");
 DeclareProperty("IsGeneratorsOfActingSemigroup",
     IsHomogeneousList and IsRingElementCollCollColl);
 
+DeclareAttribute("DegreeOfMatrixSemigroup", IsMatrixSemigroup);
+
 #############################################################################
 ##
 #M  CanComputeSize( <mat-semigrp> )
