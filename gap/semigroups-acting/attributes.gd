@@ -30,6 +30,7 @@ DeclareAttribute("StructureDescriptionSchutzenbergerGroups", IsActingSemigroup);
 DeclareAttribute("StructureDescriptionMaximalSubgroups", IsActingSemigroup);
 DeclareAttribute("MaximalDClasses", IsSemigroup);
 DeclareAttribute("MaximalSubsemigroups", IsSemigroup);
+DeclareAttribute("MaximalCasey", IsReesZeroMatrixSemigroup);
 DeclareAttribute("MinimalDClass", IsSemigroup);
 DeclareAttribute("IsGreensDLeq", IsActingSemigroup);
 

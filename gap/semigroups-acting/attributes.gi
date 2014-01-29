@@ -350,6 +350,49 @@ fi;
 
 #
 
+# Currently assumes that matrix has only one connected component
+# I haven't check that it is actually correct
+InstallMethod(MaximalCasey, "for a Rees zero matrix semigroup",
+[IsReesZeroMatrixSemigroup],
+function(s)
+  local g, max, h, h1, mat, d, hclasses, gpclasses, out, gens, i, j, rep;
+
+  out:=[];
+  g:=UnderlyingSemigroupOfReesZeroMatrixSemigroup(s);
+
+  # pick a group h-class to do stuff with
+  
+  mat:=Matrix(s);
+  d:=DClasses(s)[2];
+  hclasses:=HClasses(d);
+  gpclasses:=Filtered(hclasses,IsGroupHClass);
+  h:=gpclasses[1];
+  
+  for max in MaximalSubgroups(g) do
+  
+    rep:=Representative(h);
+    i:=RowOfReesZeroMatrixSemigroupElement(rep);
+    j:=ColumnOfReesZeroMatrixSemigroupElement(rep);
+    gens:=List(Generators(max), x->
+      ReesZeroMatrixSemigroupElement(s, i, x*(mat[j][i]^-1), j)
+    );    
+    for h1 in Difference(gpclasses,[h]) do
+      rep:=Representative(h1);
+      i:=RowOfReesZeroMatrixSemigroupElement(rep);
+      j:=ColumnOfReesZeroMatrixSemigroupElement(rep);
+      Add(gens, ReesZeroMatrixSemigroupElement(s, i, (mat[j][i]^-1), j));
+    od;
+    
+    Add(out, Semigroup(gens));
+  
+  od;
+  
+  return out;
+
+end);
+
+#
+
 InstallMethod(MaximalSubsemigroups, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
