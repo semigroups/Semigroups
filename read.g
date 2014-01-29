@@ -34,6 +34,8 @@ ReadPackage("semigroups/gap/utils.gi");
 
 ReadPackage("semigroups/gap/display.gi");
 
+ReadPackage("semigroups/gap/quotients.gi");
+
 if TestPackageAvailability("grape")=fail then 
   Add(SemigroupsOmitFromTestManualExamples, "MaximalSubsemigroups");
 elif ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")=fail
