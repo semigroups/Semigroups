@@ -27,8 +27,8 @@ gap> Size(S);
 7039
 
 # Subsemigroups of T2
-gap> T2:=Semigroup(T2);
-<transformation monoid on 2 pts with 2 generators>
+gap> T2:=FullTransformationMonoid(2);         
+<full transformation semigroup on 2 pts>
 gap> Subsemigroups(T2);
 [ <trivial transformation group on 2 pts with 1 generator>, 
   <commutative transformation monoid of size 2, on 2 pts with 1 generator>, 
@@ -38,9 +38,23 @@ gap> Subsemigroups(T2);
   <transformation group of size 2, on 2 pts with 1 generator>, 
   <commutative transformation monoid of size 2, on 2 pts with 1 generator>, 
   <trivial transformation group on 2 pts with 1 generator>, 
-  <transformation monoid of size 4, on 2 pts with 2 generators> ]
+  <full transformation semigroup on 2 pts> ]
 gap> Size(last);
 9
+
+# Calculating connected components of an RZMS
+gap> G:=Group([ (1,2,8,5), (1,8,2,5) ]);
+Group([ (1,2,8,5), (1,8,2,5) ])
+gap> mat1:=[ [ (), (5,8), (1,2,5) ], [ (1,8)(2,5), 0, 0 ], [ (1,5,8,2), 0, (5,8) ] ];;
+gap> r1:=ReesZeroMatrixSemigroup(G,mat1);
+<Rees 0-matrix semigroup 3x3 over Group([ (1,2,8,5), (1,8,2,5) ])>
+gap> RMSConnectedComponents(r1);
+[ [ [ 1, 1 ], [ 1, 2 ], [ 1, 3 ], [ 2, 1 ], [ 3, 1 ], [ 3, 3 ] ] ]
+gap> mat2:=[ [ (), (5,8), 0 ], [ (1,8)(2,5), 0, 0 ], [ 0, 0, (5,8) ] ];;
+gap> r2:=ReesZeroMatrixSemigroup(G,mat2);
+<Rees 0-matrix semigroup 3x3 over Group([ (1,2,8,5), (1,8,2,5) ])>
+gap> RMSConnectedComponents(r2);
+[ [ [ 1, 1 ], [ 1, 2 ], [ 2, 1 ] ], [ [ 3, 3 ] ] ]
 
 #
 gap> SemigroupsStopTest();
